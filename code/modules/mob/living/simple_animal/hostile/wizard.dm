@@ -28,7 +28,7 @@
 	minimum_distance = 3
 	del_on_death = 1
 	loot = list(/obj/effect/mob_spawn/human/corpse/wizard,
-				/obj/item/weapon/staff)
+				/obj/item/staff)
 
 	var/obj/effect/proc_holder/spell/aimed/fireball/fireball = null
 	var/obj/effect/proc_holder/spell/targeted/turf_teleport/blink/blink = null
@@ -37,13 +37,13 @@
 	var/next_cast = 0
 
 /mob/living/simple_animal/hostile/wizard/Initialize()
-	..()
+	. = ..()
 	fireball = new /obj/effect/proc_holder/spell/aimed/fireball
 	fireball.clothes_req = 0
 	fireball.human_req = 0
 	fireball.player_lock = 0
 	AddSpell(fireball)
-	implants += new /obj/item/weapon/implant/exile(src)
+	implants += new /obj/item/implant/exile(src)
 
 	mm = new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile
 	mm.clothes_req = 0

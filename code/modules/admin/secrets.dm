@@ -1,14 +1,15 @@
 /datum/admins/proc/Secrets()
-	if(!check_rights(0))	return
+	if(!check_rights(0))
+		return
 
-	var/dat = "<B>The first rule of adminbuse is: you don't talk about the adminbuse.</B><HR>"
+	var/list/dat = list("<B>The first rule of adminbuse is: you don't talk about the adminbuse.</B><HR>")
 
 	dat +={"
 			<B>General Secrets</B><BR>
 			<BR>
-			<A href='?src=\ref[src];secrets=list_job_debug'>Show Job Debug</A><BR>
-			<A href='?src=\ref[src];secrets=admin_log'>Admin Log</A><BR>
-			<A href='?src=\ref[src];secrets=show_admins'>Show Admin List</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=list_job_debug'>Show Job Debug</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=admin_log'>Admin Log</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=show_admins'>Show Admin List</A><BR>
 			<BR>
 			"}
 
@@ -16,27 +17,27 @@
 		dat += {"
 			<B>Admin Secrets</B><BR>
 			<BR>
-			<A href='?src=\ref[src];secrets=clear_virus'>Cure all diseases currently in existence</A><BR>
-			<A href='?src=\ref[src];secrets=list_bombers'>Bombing List</A><BR>
-			<A href='?src=\ref[src];secrets=check_antagonist'>Show current traitors and objectives</A><BR>
-			<A href='?src=\ref[src];secrets=list_signalers'>Show last [length(GLOB.lastsignalers)] signalers</A><BR>
-			<A href='?src=\ref[src];secrets=list_lawchanges'>Show last [length(GLOB.lawchanges)] law changes</A><BR>
-			<A href='?src=\ref[src];secrets=showailaws'>Show AI Laws</A><BR>
-			<A href='?src=\ref[src];secrets=showgm'>Show Game Mode</A><BR>
-			<A href='?src=\ref[src];secrets=manifest'>Show Crew Manifest</A><BR>
-			<A href='?src=\ref[src];secrets=DNA'>List DNA (Blood)</A><BR>
-			<A href='?src=\ref[src];secrets=fingerprints'>List Fingerprints</A><BR>
-			<A href='?src=\ref[src];secrets=ctfbutton'>Enable/Disable CTF</A><BR><BR>
-			<A href='?src=\ref[src];secrets=tdomereset'>Reset Thunderdome to default state</A><BR>
-			<A href='?src=\ref[src];secrets=set_name'>Rename Station Name</A><BR>
-			<A href='?src=\ref[src];secrets=reset_name'>Reset Station Name</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=clear_virus'>Cure all diseases currently in existence</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=list_bombers'>Bombing List</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=check_antagonist'>Show current traitors and objectives</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=list_signalers'>Show last [length(GLOB.lastsignalers)] signalers</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=list_lawchanges'>Show last [length(GLOB.lawchanges)] law changes</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=showailaws'>Show AI Laws</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=showgm'>Show Game Mode</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=manifest'>Show Crew Manifest</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=DNA'>List DNA (Blood)</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=fingerprints'>List Fingerprints</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=ctfbutton'>Enable/Disable CTF</A><BR><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=tdomereset'>Reset Thunderdome to default state</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=set_name'>Rename Station Name</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=reset_name'>Reset Station Name</A><BR>
 			<BR>
 			<B>Shuttles</B><BR>
 			<BR>
-			<A href='?src=\ref[src];secrets=moveferry'>Move Ferry</A><BR>
-			<A href='?src=\ref[src];secrets=togglearrivals'>Toggle Arrivals Ferry</A><BR>
-			<A href='?src=\ref[src];secrets=moveminingshuttle'>Move Mining Shuttle</A><BR>
-			<A href='?src=\ref[src];secrets=movelaborshuttle'>Move Labor Shuttle</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=moveferry'>Move Ferry</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=togglearrivals'>Toggle Arrivals Ferry</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=moveminingshuttle'>Move Mining Shuttle</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=movelaborshuttle'>Move Labor Shuttle</A><BR>
 			<BR>
 			"}
 
@@ -44,31 +45,29 @@
 		dat += {"
 			<B>Fun Secrets</B><BR>
 			<BR>
-
-			<A href='?src=\ref[src];secrets=virus'>Trigger a Virus Outbreak</A><BR>
-			<A href='?src=\ref[src];secrets=monkey'>Turn all humans into monkeys</A><BR>
-			<A href='?src=\ref[src];secrets=anime'>Chinese Cartoons</A><BR>
-			<A href='?src=\ref[src];secrets=allspecies'>Change the species of all humans</A><BR>
-			<A href='?src=\ref[src];secrets=power'>Make all areas powered</A><BR>
-			<A href='?src=\ref[src];secrets=unpower'>Make all areas unpowered</A><BR>
-			<A href='?src=\ref[src];secrets=quickpower'>Power all SMES</A><BR>
-			<A href='?src=\ref[src];secrets=tripleAI'>Triple AI mode (needs to be used in the lobby)</A><BR>
-			<A href='?src=\ref[src];secrets=traitor_all'>Everyone is the traitor</A><BR>
-			<A href='?src=\ref[src];secrets=guns'>Summon Guns</A><BR>
-			<A href='?src=\ref[src];secrets=magic'>Summon Magic</A><BR>
-			<A href='?src=\ref[src];secrets=events'>Summon Events (Toggle)</A><BR>
-			<A href='?src=\ref[src];secrets=onlyone'>There can only be one!</A><BR>
-			<A href='?src=\ref[src];secrets=delayed_onlyone'>There can only be one! (40-second delay)</A><BR>
-			<A href='?src=\ref[src];secrets=onlyme'>There can only be me!</A><BR>
-			<A href='?src=\ref[src];secrets=retardify'>Make all players retarded</A><BR>
-			<A href='?src=\ref[src];secrets=eagles'>Egalitarian Station Mode</A><BR>
-			<A href='?src=\ref[src];secrets=blackout'>Break all lights</A><BR>
-			<A href='?src=\ref[src];secrets=whiteout'>Fix all lights</A><BR>
-			<A href='?src=\ref[src];secrets=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=virus'>Trigger a Virus Outbreak</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=monkey'>Turn all humans into monkeys</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=anime'>Chinese Cartoons</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=allspecies'>Change the species of all humans</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=power'>Make all areas powered</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=unpower'>Make all areas unpowered</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=quickpower'>Power all SMES</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=tripleAI'>Triple AI mode (needs to be used in the lobby)</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=traitor_all'>Everyone is the traitor</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=guns'>Summon Guns</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=magic'>Summon Magic</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=events'>Summon Events (Toggle)</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=onlyone'>There can only be one!</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=delayed_onlyone'>There can only be one! (40-second delay)</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=retardify'>Make all players retarded</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=eagles'>Egalitarian Station Mode</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=blackout'>Break all lights</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=whiteout'>Fix all lights</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
 			<BR>
-			<A href='?src=\ref[src];secrets=changebombcap'>Change bomb cap</A><BR>
-			<A href='?src=\ref[src];secrets=masspurrbation'>Mass Purrbation</A><BR>
-			<A href='?src=\ref[src];secrets=massremovepurrbation'>Mass Remove Purrbation</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=changebombcap'>Change bomb cap</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=masspurrbation'>Mass Purrbation</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=massremovepurrbation'>Mass Remove Purrbation</A><BR>
 			"}
 
 	dat += "<BR>"
@@ -77,13 +76,13 @@
 		dat += {"
 			<B>Security Level Elevated</B><BR>
 			<BR>
-			<A href='?src=\ref[src];secrets=maint_access_engiebrig'>Change all maintenance doors to engie/brig access only</A><BR>
-			<A href='?src=\ref[src];secrets=maint_access_brig'>Change all maintenance doors to brig access only</A><BR>
-			<A href='?src=\ref[src];secrets=infinite_sec'>Remove cap on security officers</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=maint_access_engiebrig'>Change all maintenance doors to engie/brig access only</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=maint_access_brig'>Change all maintenance doors to brig access only</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=infinite_sec'>Remove cap on security officers</A><BR>
 			<BR>
 			"}
 
-	usr << browse(dat, "window=secrets")
+	usr << browse(dat.Join(), "window=secrets")
 	return
 
 
@@ -104,15 +103,14 @@
 
 		if("list_job_debug")
 			var/dat = "<B>Job Debug info.</B><HR>"
-			if(SSjob)
-				for(var/line in SSjob.job_debug)
-					dat += "[line]<BR>"
-				dat+= "*******<BR><BR>"
-				for(var/datum/job/job in SSjob.occupations)
-					if(!job)
-						continue
-					dat += "job: [job.title], current_positions: [job.current_positions], total_positions: [job.total_positions] <BR>"
-				usr << browse(dat, "window=jobdebug;size=600x500")
+			for(var/line in SSjob.job_debug)
+				dat += "[line]<BR>"
+			dat+= "*******<BR><BR>"
+			for(var/datum/job/job in SSjob.occupations)
+				if(!job)
+					continue
+				dat += "job: [job.title], current_positions: [job.current_positions], total_positions: [job.total_positions] <BR>"
+			usr << browse(dat, "window=jobdebug;size=600x500")
 
 		if("show_admins")
 			var/dat = "<B>Current admins:</B><HR>"
@@ -137,7 +135,7 @@
 				for(var/mob/living/mob in thunderdome)
 					qdel(mob) //Clear mobs
 			for(var/obj/obj in thunderdome)
-				if(!istype(obj,/obj/machinery/camera))
+				if(!istype(obj, /obj/machinery/camera))
 					qdel(obj) //Clear objects
 
 			var/area/template = locate(/area/tdome/arena_source)
@@ -148,15 +146,16 @@
 			var/choice = input("Are you sure you want to cure all disease?") in list("Yes", "Cancel")
 			if(choice == "Yes")
 				message_admins("[key_name_admin(usr)] has cured all diseases.")
-				for(var/datum/disease/D in SSdisease.processing)
-					D.cure(D)
+				for(var/thing in SSdisease.active_diseases)
+					var/datum/disease/D = thing
+					D.cure(0)
 		if("set_name")
 			if(!check_rights(R_ADMIN))
 				return
 			var/new_name = input(usr, "Please input a new name for the station.", "What?", "") as text|null
 			if(!new_name)
 				return
-			change_station_name(new_name)
+			set_station_name(new_name)
 			log_admin("[key_name(usr)] renamed the station to \"[new_name]\".")
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] renamed the station to: [new_name].</span>")
 			priority_announce("[command_name()] has renamed the station to \"[new_name]\".")
@@ -165,7 +164,7 @@
 			if(!check_rights(R_ADMIN))
 				return
 			var/new_name = new_station_name()
-			change_station_name(new_name)
+			set_station_name(new_name)
 			log_admin("[key_name(usr)] reset the station name.")
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] reset the station name.</span>")
 			priority_announce("[command_name()] has renamed the station to \"[new_name]\".")
@@ -173,7 +172,7 @@
 		if("list_bombers")
 			if(!check_rights(R_ADMIN))
 				return
-			var/dat = "<B>Bombing List<HR>"
+			var/dat = "<B>Bombing List</B><HR>"
 			for(var/l in GLOB.bombers)
 				dat += text("[l]<BR>")
 			usr << browse(dat, "window=bombers")
@@ -197,8 +196,7 @@
 		if("moveminingshuttle")
 			if(!check_rights(R_ADMIN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","ShM")
+			SSblackbox.add_details("admin_secrets_fun_used","Send Mining Shuttle")
 			if(!SSshuttle.toggleShuttle("mining","mining_home","mining_away"))
 				message_admins("[key_name_admin(usr)] moved mining shuttle")
 				log_admin("[key_name(usr)] moved the mining shuttle")
@@ -206,8 +204,7 @@
 		if("movelaborshuttle")
 			if(!check_rights(R_ADMIN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","ShL")
+			SSblackbox.add_details("admin_secrets_fun_used","Send Labor Shuttle")
 			if(!SSshuttle.toggleShuttle("laborcamp","laborcamp_home","laborcamp_away"))
 				message_admins("[key_name_admin(usr)] moved labor shuttle")
 				log_admin("[key_name(usr)] moved the labor shuttle")
@@ -215,12 +212,11 @@
 		if("moveferry")
 			if(!check_rights(R_ADMIN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","ShF")
+			SSblackbox.add_details("admin_secrets_fun_used","Send CentCom Ferry")
 			if(!SSshuttle.toggleShuttle("ferry","ferry_home","ferry_away"))
-				message_admins("[key_name_admin(usr)] moved the centcom ferry")
-				log_admin("[key_name(usr)] moved the centcom ferry")
-			
+				message_admins("[key_name_admin(usr)] moved the CentCom ferry")
+				log_admin("[key_name(usr)] moved the CentCom ferry")
+
 		if("togglearrivals")
 			if(!check_rights(R_ADMIN))
 				return
@@ -228,8 +224,7 @@
 			if(A)
 				var/new_perma = !A.perma_docked
 				A.perma_docked = new_perma
-				feedback_inc("admin_secrets_fun_used",1)
-				feedback_add_details("admin_secrets_fun_used","ShA[new_perma ? "s" : "g"]")
+				SSblackbox.add_details("admin_toggle","Permadock Arrivals Shuttle|[new_perma]")
 				message_admins("[key_name_admin(usr)] [new_perma ? "stopped" : "started"] the arrivals shuttle")
 				log_admin("[key_name(usr)] [new_perma ? "stopped" : "started"] the arrivals shuttle")
 			else
@@ -241,7 +236,7 @@
 		if("showgm")
 			if(!check_rights(R_ADMIN))
 				return
-			if(!SSticker || !SSticker.mode)
+			if(!SSticker.HasRoundStarted())
 				alert("The game hasn't started yet!")
 			else if (SSticker.mode)
 				alert("The game mode is [SSticker.mode.name]")
@@ -279,8 +274,7 @@
 		if("monkey")
 			if(!check_rights(R_FUN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","M")
+			SSblackbox.add_details("admin_secrets_fun_used","Monkeyize All Humans")
 			for(var/mob/living/carbon/human/H in GLOB.mob_list)
 				spawn(0)
 					H.monkeyize()
@@ -291,34 +285,23 @@
 				return
 			var/result = input(usr, "Please choose a new species","Species") as null|anything in GLOB.species_list
 			if(result)
+				SSblackbox.add_details("admin_secrets_fun_used","Mass Species Change([result])")
 				log_admin("[key_name(usr)] turned all humans into [result]", 1)
 				message_admins("\blue [key_name_admin(usr)] turned all humans into [result]")
 				var/newtype = GLOB.species_list[result]
 				for(var/mob/living/carbon/human/H in GLOB.mob_list)
 					H.set_species(newtype)
 
-		if("corgi")
-			if(!check_rights(R_FUN))
-				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","M")
-			for(var/mob/living/carbon/human/H in GLOB.mob_list)
-				spawn(0)
-					H.corgize()
-			ok = 1
-
 		if("tripleAI")
 			if(!check_rights(R_FUN))
 				return
 			usr.client.triple_ai()
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","TriAI")
+			SSblackbox.add_details("admin_secrets_fun_used","Triple AI")
 
 		if("power")
 			if(!check_rights(R_FUN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","P")
+			SSblackbox.add_details("admin_secrets_fun_used","Power All APCs")
 			log_admin("[key_name(usr)] made all areas powered", 1)
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] made all areas powered</span>")
 			power_restore()
@@ -326,8 +309,7 @@
 		if("unpower")
 			if(!check_rights(R_FUN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","UP")
+			SSblackbox.add_details("admin_secrets_fun_used","Depower All APCs")
 			log_admin("[key_name(usr)] made all areas unpowered", 1)
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] made all areas unpowered</span>")
 			power_failure()
@@ -335,8 +317,7 @@
 		if("quickpower")
 			if(!check_rights(R_FUN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","QP")
+			SSblackbox.add_details("admin_secrets_fun_used","Power All SMESs")
 			log_admin("[key_name(usr)] made all SMESs powered", 1)
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] made all SMESs powered</span>")
 			power_restore_quick()
@@ -344,76 +325,47 @@
 		if("traitor_all")
 			if(!check_rights(R_FUN))
 				return
-			if(!SSticker || !SSticker.mode)
+			if(!SSticker.HasRoundStarted())
 				alert("The game hasn't started yet!")
 				return
 			var/objective = copytext(sanitize(input("Enter an objective")),1,MAX_MESSAGE_LEN)
 			if(!objective)
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","TA([objective])")
-			for(var/mob/living/carbon/human/H in GLOB.player_list)
-				if(H.stat == 2 || !H.client || !H.mind) continue
-				if(is_special_character(H)) continue
-				//traitorize(H, objective, 0)
-				SSticker.mode.traitors += H.mind
-				H.mind.special_role = "traitor"
+			SSblackbox.add_details("admin_secrets_fun_used","Traitor All ([objective])")
+			for(var/mob/living/H in GLOB.player_list)
+				if(!(ishuman(H)||istype(H, /mob/living/silicon/)))
+					continue
+				if(H.stat == DEAD || !H.client || !H.mind || ispAI(H))
+					continue
+				if(is_special_character(H))
+					continue
+				H.mind.add_antag_datum(ANTAG_DATUM_TRAITOR_CUSTOM)
+				var/datum/antagonist/traitor/traitordatum = H.mind.has_antag_datum(ANTAG_DATUM_TRAITOR) //original datum self deletes
 				var/datum/objective/new_objective = new
 				new_objective.owner = H
 				new_objective.explanation_text = objective
-				H.mind.objectives += new_objective
-				SSticker.mode.greet_traitor(H.mind)
-				//SSticker.mode.forge_traitor_objectives(H.mind)
-				SSticker.mode.finalize_traitor(H.mind)
-			for(var/mob/living/silicon/A in GLOB.player_list)
-				if(A.stat == 2 || !A.client || !A.mind) continue
-				if(ispAI(A)) continue
-				else if(is_special_character(A)) continue
-				SSticker.mode.traitors += A.mind
-				A.mind.special_role = "traitor"
-				var/datum/objective/new_objective = new
-				new_objective.owner = A
-				new_objective.explanation_text = objective
-				A.mind.objectives += new_objective
-				SSticker.mode.greet_traitor(A.mind)
-				SSticker.mode.finalize_traitor(A.mind)
+				traitordatum.add_objective(new_objective)
+				traitordatum.equip(FALSE)
+				traitordatum.greet()
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] used everyone is a traitor secret. Objective is [objective]</span>")
 			log_admin("[key_name(usr)] used everyone is a traitor secret. Objective is [objective]")
 
 		if("changebombcap")
 			if(!check_rights(R_FUN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","BC")
+			SSblackbox.add_details("admin_secrets_fun_used","Bomb Cap")
 
 			var/newBombCap = input(usr,"What would you like the new bomb cap to be. (entered as the light damage range (the 3rd number in common (1,2,3) notation)) Must be above 4)", "New Bomb Cap", GLOB.MAX_EX_LIGHT_RANGE) as num|null
-			if (newBombCap < 4)
+			if (!CONFIG_SET(number/bombcap, newBombCap))
 				return
-
-			GLOB.MAX_EX_DEVESTATION_RANGE = round(newBombCap/4)
-			GLOB.MAX_EX_HEAVY_RANGE = round(newBombCap/2)
-			GLOB.MAX_EX_LIGHT_RANGE = newBombCap
-			//I don't know why these are their own variables, but fuck it, they are.
-			GLOB.MAX_EX_FLASH_RANGE = newBombCap
-			GLOB.MAX_EX_FLAME_RANGE = newBombCap
 
 			message_admins("<span class='boldannounce'>[key_name_admin(usr)] changed the bomb cap to [GLOB.MAX_EX_DEVESTATION_RANGE], [GLOB.MAX_EX_HEAVY_RANGE], [GLOB.MAX_EX_LIGHT_RANGE]</span>")
 			log_admin("[key_name(usr)] changed the bomb cap to [GLOB.MAX_EX_DEVESTATION_RANGE], [GLOB.MAX_EX_HEAVY_RANGE], [GLOB.MAX_EX_LIGHT_RANGE]")
 
-
-		if("lightsout")
-			if(!check_rights(R_FUN))
-				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","LO")
-			message_admins("[key_name_admin(usr)] has broke a lot of lights")
-			E = new /datum/round_event/electrical_storm{lightsoutAmount = 2}()
-
 		if("blackout")
 			if(!check_rights(R_FUN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","BO")
+			SSblackbox.add_details("admin_secrets_fun_used","Break All Lights")
 			message_admins("[key_name_admin(usr)] broke all lights")
 			for(var/obj/machinery/light/L in GLOB.machines)
 				L.break_light_tube()
@@ -429,11 +381,10 @@
 
 			if(animetype == "Cancel" || droptype == "Cancel")
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","CC")
+			SSblackbox.add_details("admin_secrets_fun_used","Chinese Cartoons")
 			message_admins("[key_name_admin(usr)] made everything kawaii.")
 			for(var/mob/living/carbon/human/H in GLOB.mob_list)
-				H << sound('sound/AI/animes.ogg')
+				SEND_SOUND(H, sound('sound/ai/animes.ogg'))
 
 				if(H.dna.species.id == "human")
 					if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
@@ -453,15 +404,14 @@
 						H.equip_to_slot_or_del(I, slot_w_uniform)
 						qdel(olduniform)
 						if(droptype == "Yes")
-							I.flags |= NODROP
+							I.flags_1 |= NODROP_1
 				else
 					to_chat(H, "You're not kawaii enough for this.")
 
 		if("whiteout")
 			if(!check_rights(R_FUN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","WO")
+			SSblackbox.add_details("admin_secrets_fun_used","Fix All Lights")
 			message_admins("[key_name_admin(usr)] fixed all lights")
 			for(var/obj/machinery/light/L in GLOB.machines)
 				L.fix()
@@ -472,8 +422,7 @@
 		if("virus")
 			if(!check_rights(R_FUN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","V")
+			SSblackbox.add_details("admin_secrets_fun_used","Virus Outbreak")
 			switch(alert("Do you want this to be a random disease or do you have something in mind?",,"Make Your Own","Random","Choose"))
 				if("Make Your Own")
 					AdminCreateVirus(usr.client)
@@ -488,8 +437,7 @@
 		if("retardify")
 			if(!check_rights(R_FUN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","RET")
+			SSblackbox.add_details("admin_secrets_fun_used","Mass Braindamage")
 			for(var/mob/living/carbon/human/H in GLOB.player_list)
 				to_chat(H, "<span class='boldannounce'>You suddenly feel stupid.</span>")
 				H.setBrainLoss(60)
@@ -498,19 +446,17 @@
 		if("eagles")//SCRAW
 			if(!check_rights(R_FUN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","EgL")
+			SSblackbox.add_details("admin_secrets_fun_used","Egalitarian Station")
 			for(var/obj/machinery/door/airlock/W in GLOB.machines)
-				if(W.z == ZLEVEL_STATION && !istype(get_area(W), /area/bridge) && !istype(get_area(W), /area/crew_quarters) && !istype(get_area(W), /area/security/prison))
+				if((W.z in GLOB.station_z_levels) && !istype(get_area(W), /area/bridge) && !istype(get_area(W), /area/crew_quarters) && !istype(get_area(W), /area/security/prison))
 					W.req_access = list()
 			message_admins("[key_name_admin(usr)] activated Egalitarian Station mode")
-			priority_announce("Centcom airlock control override activated. Please take this time to get acquainted with your coworkers.", null, 'sound/AI/commandreport.ogg')
+			priority_announce("CentCom airlock control override activated. Please take this time to get acquainted with your coworkers.", null, 'sound/ai/commandreport.ogg')
 
 		if("guns")
 			if(!check_rights(R_FUN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","SG")
+			SSblackbox.add_details("admin_secrets_fun_used","Summon Guns")
 			var/survivor_probability = 0
 			switch(alert("Do you want this to create survivors antagonists?",,"No Antags","Some Antags","All Antags!"))
 				if("Some Antags")
@@ -523,8 +469,7 @@
 		if("magic")
 			if(!check_rights(R_FUN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","SM")
+			SSblackbox.add_details("admin_secrets_fun_used","Summon Magic")
 			var/survivor_probability = 0
 			switch(alert("Do you want this to create survivors antagonists?",,"No Antags","Some Antags","All Antags!"))
 				if("Some Antags")
@@ -540,24 +485,22 @@
 			if(!SSevents.wizardmode)
 				if(alert("Do you want to toggle summon events on?",,"Yes","No") == "Yes")
 					summonevents()
-					feedback_inc("admin_secrets_fun_used",1)
-					feedback_add_details("admin_secrets_fun_used","SE")
+					SSblackbox.add_details("admin_secrets_fun_used","Activate Summon Events")
 
 			else
 				switch(alert("What would you like to do?",,"Intensify Summon Events","Turn Off Summon Events","Nothing"))
 					if("Intensify Summon Events")
 						summonevents()
-						feedback_inc("admin_secrets_fun_used",1)
-						feedback_add_details("admin_secrets_fun_used","SE")
+						SSblackbox.add_details("admin_secrets_fun_used","Intensify Summon Events")
 					if("Turn Off Summon Events")
 						SSevents.toggleWizardmode()
 						SSevents.resetFrequency()
+						SSblackbox.add_details("admin_secrets_fun_used","Disable Summon Events")
 
 		if("dorf")
 			if(!check_rights(R_FUN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","DF")
+			SSblackbox.add_details("admin_secrets_fun_used","Dwarf Beards")
 			for(var/mob/living/carbon/human/B in GLOB.mob_list)
 				B.facial_hair_style = "Dward Beard"
 				B.update_hair()
@@ -566,49 +509,40 @@
 		if("onlyone")
 			if(!check_rights(R_FUN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","OO")
+			SSblackbox.add_details("admin_secrets_fun_used","There Can Be Only One")
 			usr.client.only_one()
-			send_to_playing_players('sound/misc/highlander.ogg')
-//				message_admins("[key_name_admin(usr)] has triggered a battle to the death (only one)")
+			sound_to_playing_players('sound/misc/highlander.ogg')
 
 		if("delayed_onlyone")
 			if(!check_rights(R_FUN))
 				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","OO")
+			SSblackbox.add_details("admin_secrets_fun_used","There Can Be Only One")
 			usr.client.only_one_delayed()
-			send_to_playing_players('sound/misc/highlander_delayed.ogg')
-
-		if("onlyme")
-			if(!check_rights(R_FUN))
-				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","OM")
-			only_me()
+			sound_to_playing_players('sound/misc/highlander_delayed.ogg')
 
 		if("maint_access_brig")
 			if(!check_rights(R_DEBUG))
 				return
 			for(var/obj/machinery/door/airlock/maintenance/M in GLOB.machines)
 				M.check_access()
-				if (GLOB.access_maint_tunnels in M.req_access)
-					M.req_access = list(GLOB.access_brig)
+				if (ACCESS_MAINT_TUNNELS in M.req_access)
+					M.req_access = list(ACCESS_BRIG)
 			message_admins("[key_name_admin(usr)] made all maint doors brig access-only.")
 		if("maint_access_engiebrig")
 			if(!check_rights(R_DEBUG))
 				return
 			for(var/obj/machinery/door/airlock/maintenance/M in GLOB.machines)
 				M.check_access()
-				if (GLOB.access_maint_tunnels in M.req_access)
+				if (ACCESS_MAINT_TUNNELS in M.req_access)
 					M.req_access = list()
-					M.req_one_access = list(GLOB.access_brig,GLOB.access_engine)
+					M.req_one_access = list(ACCESS_BRIG,ACCESS_ENGINE)
 			message_admins("[key_name_admin(usr)] made all maint doors engineering and brig access-only.")
 		if("infinite_sec")
 			if(!check_rights(R_DEBUG))
 				return
 			var/datum/job/J = SSjob.GetJob("Security Officer")
-			if(!J) return
+			if(!J)
+				return
 			J.total_positions = -1
 			J.spawn_positions = -1
 			message_admins("[key_name_admin(usr)] has removed the cap on security officers.")
@@ -633,11 +567,11 @@
 			log_admin("[key_name(usr)] has removed everyone from purrbation.")
 
 	if(E)
-		E.processing = 0
+		E.processing = FALSE
 		if(E.announceWhen>0)
 			if(alert(usr, "Would you like to alert the crew?", "Alert", "Yes", "No") == "No")
 				E.announceWhen = -1
-		E.processing = 1
+		E.processing = TRUE
 	if (usr)
 		log_admin("[key_name(usr)] used secret [item]")
 		if (ok)

@@ -30,7 +30,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 	else if (isloc(var_value))
 		. = VV_ATOM_REFERENCE
 
-	else if (istype(var_value,/client))
+	else if (istype(var_value, /client))
 		. = VV_CLIENT
 
 	else if (istype(var_value, /datum))
@@ -44,7 +44,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 		else
 			. = VV_TYPE
 
-	else if (istype(var_value,/list))
+	else if (islist(var_value))
 		. = VV_LIST
 
 	else if (isfile(var_value))
@@ -433,28 +433,26 @@ GLOBAL_PROTECT(VVpixelmovement)
 
 	to_chat(src, "Variable appears to be <b>[uppertext(default)]</b>.")
 
-	to_chat(src, "Variable contains: [L[index]]")
+	to_chat(src, "Variable contains: [variable]")
 
 	if(default == VV_NUM)
 		var/dir_text = ""
-		if(dir < 0 && dir < 16)
-			if(dir & 1)
+		var/tdir = variable
+		if(tdir > 0 && tdir < 16)
+			if(tdir & 1)
 				dir_text += "NORTH"
-			if(dir & 2)
+			if(tdir & 2)
 				dir_text += "SOUTH"
-			if(dir & 4)
+			if(tdir & 4)
 				dir_text += "EAST"
-			if(dir & 8)
+			if(tdir & 8)
 				dir_text += "WEST"
 
 		if(dir_text)
 			to_chat(usr, "If a direction, direction is: [dir_text]")
 
-	var/original_var
-	if(assoc)
-		original_var = L[assoc_key]
-	else
-		original_var = L[index]
+	var/original_var = variable
+
 	if (O)
 		L = L.Copy()
 	var/class
@@ -528,7 +526,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 		variable = input("Which var?","Var") as null|anything in names
 		if(!variable)
 			return
-	
+
 	if(!O.can_vv_get(variable))
 		return
 
@@ -562,14 +560,14 @@ GLOBAL_PROTECT(VVpixelmovement)
 
 	if(default == VV_NUM)
 		var/dir_text = ""
-		if(dir < 0 && dir < 16)
-			if(dir & 1)
+		if(var_value > 0 && var_value < 16)
+			if(var_value & 1)
 				dir_text += "NORTH"
-			if(dir & 2)
+			if(var_value & 2)
 				dir_text += "SOUTH"
-			if(dir & 4)
+			if(var_value & 4)
 				dir_text += "EAST"
-			if(dir & 8)
+			if(var_value & 8)
 				dir_text += "WEST"
 
 		if(dir_text)
@@ -594,7 +592,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 
 	switch(class)
 		if(VV_LIST)
-			if(!istype(var_value,/list))
+			if(!islist(var_value))
 				mod_list(list(), O, original_name, variable)
 
 			mod_list(var_value, O, original_name, variable)
@@ -612,6 +610,8 @@ GLOBAL_PROTECT(VVpixelmovement)
 	if (O.vv_edit_var(variable, var_new) == FALSE)
 		to_chat(src, "Your edit was rejected by the object.")
 		return
-	log_world("### VarEdit by [src]: [O.type] [variable]=[html_encode("[O.vars[variable]]")]")
-	log_admin("[key_name(src)] modified [original_name]'s [variable] to [O.vars[variable]]")
-	message_admins("[key_name_admin(src)] modified [original_name]'s [variable] to [O.vars[variable]]")
+	log_world("### VarEdit by [src]: [O.type] [variable]=[html_encode("[var_new]")]")
+	log_admin("[key_name(src)] modified [original_name]'s [variable] to [var_new]")
+	var/msg = "[key_name_admin(src)] modified [original_name]'s [variable] to [var_new]"
+	message_admins(msg)
+	admin_ticket_log(O, msg)

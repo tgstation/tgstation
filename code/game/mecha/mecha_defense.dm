@@ -161,7 +161,7 @@
 		var/obj/item/mecha_parts/mecha_equipment/E = W
 		spawn()
 			if(E.can_attach(src))
-				if(!user.drop_item())
+				if(!user.temporarilyRemoveItemFromInventory(W))
 					return
 				E.attach(src)
 				user.visible_message("[user] attaches [W] to [src].", "<span class='notice'>You attach [W] to [src].</span>")
@@ -171,8 +171,8 @@
 	if(W.GetID())
 		if(add_req_access || maint_access)
 			if(internals_access_allowed(user))
-				var/obj/item/weapon/card/id/id_card
-				if(istype(W, /obj/item/weapon/card/id))
+				var/obj/item/card/id/id_card
+				if(istype(W, /obj/item/card/id))
 					id_card = W
 				else
 					var/obj/item/device/pda/pda = W
@@ -183,7 +183,7 @@
 				to_chat(user, "<span class='warning'>Invalid ID: Access denied.</span>")
 		else
 			to_chat(user, "<span class='warning'>Maintenance protocols disabled by operator.</span>")
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(istype(W, /obj/item/wrench))
 		if(state==1)
 			state = 2
 			to_chat(user, "<span class='notice'>You undo the securing bolts.</span>")
@@ -191,7 +191,7 @@
 			state = 1
 			to_chat(user, "<span class='notice'>You tighten the securing bolts.</span>")
 		return
-	else if(istype(W, /obj/item/weapon/crowbar))
+	else if(istype(W, /obj/item/crowbar))
 		if(state==2)
 			state = 3
 			to_chat(user, "<span class='notice'>You open the hatch to the power unit.</span>")
@@ -208,12 +208,11 @@
 			else
 				to_chat(user, "<span class='warning'>You need two lengths of cable to fix this mech!</span>")
 		return
-	else if(istype(W, /obj/item/weapon/screwdriver) && user.a_intent != INTENT_HARM)
+	else if(istype(W, /obj/item/screwdriver) && user.a_intent != INTENT_HARM)
 		if(internal_damage & MECHA_INT_TEMP_CONTROL)
 			clearInternalDamage(MECHA_INT_TEMP_CONTROL)
 			to_chat(user, "<span class='notice'>You repair the damaged temperature controller.</span>")
 		else if(state==3 && cell)
-			cell_power_remaining = max(0.1, cell.charge/cell.maxcharge) //10% charge or whatever is remaining in the current cell
 			cell.forceMove(loc)
 			cell = null
 			state = 4
@@ -224,24 +223,22 @@
 			to_chat(user, "<span class='notice'>You screw the cell in place.</span>")
 		return
 
-	else if(istype(W, /obj/item/weapon/stock_parts/cell))
+	else if(istype(W, /obj/item/stock_parts/cell))
 		if(state==4)
 			if(!cell)
-				if(!user.drop_item())
+				if(!user.transferItemToLoc(W, src))
 					return
-				var/obj/item/weapon/stock_parts/cell/C = W
+				var/obj/item/stock_parts/cell/C = W
 				to_chat(user, "<span class='notice'>You install the powercell.</span>")
-				C.forceMove(src)
-				C.use(max(0, C.charge - C.maxcharge*cell_power_remaining)) //Set inserted cell's power to saved percentage if that's higher
 				cell = C
 				log_message("Powercell installed")
 			else
 				to_chat(user, "<span class='notice'>There's already a powercell installed.</span>")
 		return
 
-	else if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != INTENT_HARM)
+	else if(istype(W, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
 		user.changeNext_move(CLICK_CD_MELEE)
-		var/obj/item/weapon/weldingtool/WT = W
+		var/obj/item/weldingtool/WT = W
 		if(obj_integrity<max_integrity)
 			if (WT.remove_fuel(0,user))
 				if (internal_damage & MECHA_INT_TANK_BREACH)

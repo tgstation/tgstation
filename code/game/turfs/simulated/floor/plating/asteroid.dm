@@ -9,66 +9,38 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "asteroid"
 	icon_plating = "asteroid"
+	postdig_icon_change = TRUE
 	var/environment_type = "asteroid"
 	var/turf_type = /turf/open/floor/plating/asteroid //Because caves do whacky shit to revert to normal
-	var/dug = 0       //0 = has not yet been dug, 1 = has already been dug
-	var/sand_type = /obj/item/weapon/ore/glass
 	var/floor_variance = 20 //probability floor has a different icon state
+	archdrops = list(/obj/item/ore/glass = 5)
 
 /turf/open/floor/plating/asteroid/Initialize()
 	var/proper_name = name
-	..()
+	. = ..()
 	name = proper_name
 	if(prob(floor_variance))
 		icon_state = "[environment_type][rand(0,12)]"
 
+	if(LAZYLEN(archdrops))
+		AddComponent(/datum/component/archaeology, 100, archdrops)
+
 /turf/open/floor/plating/asteroid/burn_tile()
 	return
 
-/turf/open/floor/plating/asteroid/ex_act(severity, target)
-	contents_explosion(severity, target)
-	switch(severity)
-		if(3)
-			return
-		if(2)
-			if(prob(20))
-				src.gets_dug()
-		if(1)
-			src.gets_dug()
+/turf/open/floor/plating/asteroid/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0)
+	return
 
-/turf/open/floor/plating/asteroid/attackby(obj/item/weapon/W, mob/user, params)
-	//note that this proc does not call ..()
-	if(!W || !user)
-		return 0
-	var/digging_speed = 0
-	if (istype(W, /obj/item/weapon/shovel))
-		var/obj/item/weapon/shovel/S = W
-		digging_speed = S.digspeed
-	else if (istype(W, /obj/item/weapon/pickaxe))
-		var/obj/item/weapon/pickaxe/P = W
-		digging_speed = P.digspeed
-	if (digging_speed)
-		var/turf/T = user.loc
-		if(!isturf(T))
-			return
+/turf/open/floor/plating/asteroid/MakeDry(wet_setting = TURF_WET_WATER)
+	return
 
-		if (dug)
-			to_chat(user, "<span class='warning'>This area has already been dug!</span>")
-			return
-
-		to_chat(user, "<span class='notice'>You start digging...</span>")
-		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
-
-		if(do_after(user, digging_speed, target = src))
-			if(istype(src, /turf/open/floor/plating/asteroid))
-				to_chat(user, "<span class='notice'>You dig a hole.</span>")
-				gets_dug()
-				feedback_add_details("pick_used_mining","[W.type]")
-
-	if(istype(W,/obj/item/weapon/storage/bag/ore))
-		var/obj/item/weapon/storage/bag/ore/S = W
+/turf/open/floor/plating/asteroid/attackby(obj/item/W, mob/user, params)
+	if(..())
+		return TRUE
+	if(istype(W, /obj/item/storage/bag/ore))
+		var/obj/item/storage/bag/ore/S = W
 		if(S.collection_mode == 1)
-			for(var/obj/item/weapon/ore/O in src.contents)
+			for(var/obj/item/ore/O in src.contents)
 				O.attackby(W,user)
 				return
 
@@ -77,28 +49,24 @@
 		if(!Z.use(1))
 			return
 		var/turf/open/floor/T = ChangeTurf(Z.turf_type)
-		if(istype(Z,/obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
+		if(istype(Z, /obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
 			var/obj/item/stack/tile/light/L = Z
 			var/turf/open/floor/light/F = T
 			F.state = L.state
-		playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
-
-/turf/open/floor/plating/asteroid/proc/gets_dug()
-	if(dug)
+		playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
 		return
-	for(var/i in 1 to 5)
-		new sand_type(src)
-	dug = 1
-	icon_plating = "[environment_type]_dug"
-	icon_state = "[environment_type]_dug"
-	slowdown = 0
-	return
+
+	return ..()
+
 
 /turf/open/floor/plating/asteroid/singularity_act()
-	return
+	if(turf_z_is_planet(src))
+		return ..()
+	ChangeTurf(/turf/open/space)
 
-/turf/open/floor/plating/asteroid/singularity_pull(S, current_size)
-	return
+/turf/open/floor/plating/asteroid/ex_act(severity, target)
+	. = SendSignal(COMSIG_ATOM_EX_ACT, severity, target)
+	contents_explosion(severity, target)
 
 
 /turf/open/floor/plating/asteroid/basalt
@@ -108,17 +76,17 @@
 	icon_state = "basalt"
 	icon_plating = "basalt"
 	environment_type = "basalt"
-	sand_type = /obj/item/weapon/ore/glass/basalt
+	archdrops = list(/obj/item/ore/glass/basalt = 5)
 	floor_variance = 15
 
 /turf/open/floor/plating/asteroid/basalt/lava //lava underneath
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/lava/smooth
 
 /turf/open/floor/plating/asteroid/basalt/airless
 	initial_gas_mix = "TEMP=2.7"
 
 /turf/open/floor/plating/asteroid/basalt/Initialize()
-	..()
+	. = ..()
 	set_basalt_light(src)
 
 /proc/set_basalt_light(turf/open/floor/B)
@@ -128,18 +96,18 @@
 		if("basalt5", "basalt9")
 			B.set_light(1.4, 0.6, LIGHT_COLOR_LAVA) //barely anything!
 
-/turf/open/floor/plating/asteroid/basalt/gets_dug()
-	if(!dug)
-		set_light(0)
+/turf/open/floor/plating/asteroid/basalt/ComponentActivated(datum/component/C)
 	..()
+	if(istype(C, /datum/component/archaeology))
+		set_light(0)
 
 
 ///////Surface. The surface is warm, but survivable without a suit. Internals are required. The floors break to chasms, which drop you into the underground.
 
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	baseturf = /turf/open/lava/smooth/lava_land_surface
 
 
 
@@ -169,14 +137,14 @@
 	has_data = TRUE
 
 /turf/open/floor/plating/asteroid/airless/cave/volcanic
-	mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/goliath/beast = 50, /mob/living/simple_animal/hostile/spawner/lavaland/goliath = 3, \
-		/mob/living/simple_animal/hostile/asteroid/basilisk/watcher = 40, /mob/living/simple_animal/hostile/spawner/lavaland = 2, \
-		/mob/living/simple_animal/hostile/asteroid/hivelord/legion = 30, /mob/living/simple_animal/hostile/spawner/lavaland/legion = 3, \
+	mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/goliath/beast/random = 50, /mob/living/simple_animal/hostile/spawner/lavaland/goliath = 3, \
+		/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/random = 40, /mob/living/simple_animal/hostile/spawner/lavaland = 2, \
+		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/random = 30, /mob/living/simple_animal/hostile/spawner/lavaland/legion = 3, \
 		SPAWN_MEGAFAUNA = 6, /mob/living/simple_animal/hostile/asteroid/goldgrub = 10)
 
 	data_having_type = /turf/open/floor/plating/asteroid/airless/cave/volcanic/has_data
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 
 /turf/open/floor/plating/asteroid/airless/cave/volcanic/has_data //subtype for producing a tunnel with given data
 	has_data = TRUE
@@ -225,7 +193,7 @@
 
 		var/list/L = list(45)
 		if(IsOdd(dir2angle(dir))) // We're going at an angle and we want thick angled tunnels.
-			L += -45
+			L -= 45
 
 		// Expand the edges of our tunnel
 		for(var/edge_angle in L)
@@ -242,7 +210,7 @@
 		if(istype(tunnel))
 			// Small chance to have forks in our tunnel; otherwise dig our tunnel.
 			if(i > 3 && prob(20))
-				var/turf/open/floor/plating/asteroid/airless/cave/C = tunnel.ChangeTurf(data_having_type,FALSE,TRUE)
+				var/turf/open/floor/plating/asteroid/airless/cave/C = tunnel.ChangeTurf(data_having_type,FALSE,FALSE,TRUE)
 				C.going_backwards = FALSE
 				C.produce_tunnel_from_data(rand(10, 15), dir)
 			else
@@ -268,19 +236,22 @@
 	SpawnFlora(T)
 
 	SpawnMonster(T)
-	T.ChangeTurf(turf_type,FALSE,TRUE)
+	T.ChangeTurf(turf_type,FALSE,FALSE,TRUE)
 
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnMonster(turf/T)
 	if(prob(30))
-		if(istype(loc, /area/mine/explored) || istype(loc, /area/lavaland/surface/outdoors/explored))
+		if(istype(loc, /area/mine/explored) || !istype(loc, /area/lavaland/surface/outdoors/unexplored))
 			return
 		var/randumb = pickweight(mob_spawn_list)
 		while(randumb == SPAWN_MEGAFAUNA)
-			var/maybe_boss = pickweight(megafauna_spawn_list)
-			if(megafauna_spawn_list[maybe_boss])
-				randumb = maybe_boss
-				if(ispath(maybe_boss, /mob/living/simple_animal/hostile/megafauna/bubblegum)) //there can be only one bubblegum, so don't waste spawns on it
-					megafauna_spawn_list[maybe_boss] = 0
+			if(istype(loc, /area/lavaland/surface/outdoors/unexplored/danger)) //this is danger. it's boss time.
+				var/maybe_boss = pickweight(megafauna_spawn_list)
+				if(megafauna_spawn_list[maybe_boss])
+					randumb = maybe_boss
+					if(ispath(maybe_boss, /mob/living/simple_animal/hostile/megafauna/bubblegum)) //there can be only one bubblegum, so don't waste spawns on it
+						megafauna_spawn_list[maybe_boss] = 0
+			else //this is not danger, don't spawn a boss, spawn something else
+				randumb = pickweight(mob_spawn_list)
 
 		for(var/mob/living/simple_animal/hostile/H in urange(12,T)) //prevents mob clumps
 			if((ispath(randumb, /mob/living/simple_animal/hostile/megafauna) || ismegafauna(H)) && get_dist(src, H) <= 7)
@@ -318,7 +289,8 @@
 	initial_gas_mix = "TEMP=180"
 	slowdown = 2
 	environment_type = "snow"
-	sand_type = /obj/item/stack/sheet/mineral/snow
+	flags_1 = NONE
+	archdrops = list(/obj/item/stack/sheet/mineral/snow = 5)
 
 /turf/open/floor/plating/asteroid/snow/airless
 	initial_gas_mix = "TEMP=2.7"

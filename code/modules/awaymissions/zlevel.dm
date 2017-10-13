@@ -20,7 +20,7 @@ GLOBAL_LIST_INIT(potentialRandomZlevels, generateMapList(filename = "config/away
 
 /obj/effect/landmark/awaystart
 	name = "away mission spawn"
-	desc = "Randomly picked away mission spawn points"
+	desc = "Randomly picked away mission spawn points."
 
 /obj/effect/landmark/awaystart/New()
 	GLOB.awaydestinations += src
@@ -32,7 +32,7 @@ GLOBAL_LIST_INIT(potentialRandomZlevels, generateMapList(filename = "config/away
 
 /proc/generateMapList(filename)
 	var/list/potentialMaps = list()
-	var/list/Lines = file2list(filename)
+	var/list/Lines = world.file2list(filename)
 
 	if(!Lines.len)
 		return

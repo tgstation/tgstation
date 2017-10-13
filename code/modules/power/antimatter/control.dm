@@ -3,15 +3,15 @@
 	desc = "This device injects antimatter into connected shielding units, the more antimatter injected the more power produced.  Wrench the device to set it up."
 	icon = 'icons/obj/machines/antimatter.dmi'
 	icon_state = "control"
-	anchored = 0
-	density = 1
-	use_power = 1
+	anchored = FALSE
+	density = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 100
 	active_power_usage = 1000
 
 	var/list/obj/machinery/am_shielding/linked_shielding
 	var/list/obj/machinery/am_shielding/linked_cores
-	var/obj/item/weapon/am_containment/fueljar
+	var/obj/item/am_containment/fueljar
 	var/update_shield_icons = 0
 	var/stability = 100
 	var/exploding = 0
@@ -29,8 +29,8 @@
 	var/stored_power = 0//Power to deploy per tick
 
 
-/obj/machinery/power/am_control_unit/New()
-	..()
+/obj/machinery/power/am_control_unit/Initialize()
+	. = ..()
 	linked_shielding = list()
 	linked_cores = list()
 
@@ -39,8 +39,7 @@
 	for(var/obj/machinery/am_shielding/AMS in linked_shielding)
 		AMS.control_unit = null
 		qdel(AMS)
-	qdel(fueljar)
-	fueljar = null
+	QDEL_NULL(fueljar)
 	return ..()
 
 
@@ -142,10 +141,10 @@
 		if(active)
 			toggle_power(1)
 		else
-			use_power = 0
+			use_power = NO_POWER_USE
 
 	else if(!stat && anchored)
-		use_power = 1
+		use_power = IDLE_POWER_USE
 
 	return
 
@@ -158,25 +157,25 @@
 
 
 /obj/machinery/power/am_control_unit/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(istype(W, /obj/item/wrench))
 		if(!anchored)
 			playsound(src.loc, W.usesound, 75, 1)
 			user.visible_message("[user.name] secures the [src.name] to the floor.", \
 				"<span class='notice'>You secure the anchor bolts to the floor.</span>", \
 				"<span class='italics'>You hear a ratchet.</span>")
-			src.anchored = 1
+			src.anchored = TRUE
 			connect_to_network()
 		else if(!linked_shielding.len > 0)
 			playsound(src.loc, W.usesound, 75, 1)
 			user.visible_message("[user.name] unsecures the [src.name].", \
 				"<span class='notice'>You remove the anchor bolts.</span>", \
 				"<span class='italics'>You hear a ratchet.</span>")
-			src.anchored = 0
+			src.anchored = FALSE
 			disconnect_from_network()
 		else
 			to_chat(user, "<span class='warning'>Once bolted and linked to a shielding unit it the [src.name] is unable to be moved!</span>")
 
-	else if(istype(W, /obj/item/weapon/am_containment))
+	else if(istype(W, /obj/item/am_containment))
 		if(fueljar)
 			to_chat(user, "<span class='warning'>There is already a [fueljar] inside!</span>")
 			return
@@ -201,7 +200,7 @@
 					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
 			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+				playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 		else
 			return
 	if(damage >= 20)
@@ -243,7 +242,7 @@
 /obj/machinery/power/am_control_unit/proc/toggle_power(powerfail = 0)
 	active = !active
 	if(active)
-		use_power = 2
+		use_power = ACTIVE_POWER_USE
 		visible_message("The [src.name] starts up.")
 	else
 		use_power = !powerfail
@@ -307,7 +306,7 @@
 	dat += "Cores: [linked_cores.len]<BR><BR>"
 	dat += "-Current Efficiency: [reported_core_efficiency]<BR>"
 	dat += "-Average Stability: [stored_core_stability] <A href='?src=\ref[src];refreshstability=1'>(update)</A><BR>"
-	dat += "Last Produced: [stored_power]<BR>"
+	dat += "Last Produced: [DisplayPower(stored_power)]<BR>"
 
 	dat += "Fuel: "
 	if(!fueljar)

@@ -3,15 +3,17 @@
 	desc = "A large man-sized tube sporting a complex array of surgical machinery."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "experiment-open"
-	density = 0
-	anchored = 1
-	state_open = 1
+	density = FALSE
+	anchored = TRUE
+	state_open = TRUE
 	var/points = 0
 	var/credits = 0
-	var/list/history = list()
-	var/list/abductee_minds = list()
+	var/list/history
+	var/list/abductee_minds
 	var/flash = " - || - "
 	var/obj/machinery/abductor/console/console
+	var/message_cooldown = 0
+	var/breakout_time = 450
 
 /obj/machinery/abductor/experiment/MouseDrop_T(mob/target, mob/user)
 	if(user.stat || user.lying || !Adjacent(user) || !target.Adjacent(user) || !ishuman(target))
@@ -40,29 +42,27 @@
 /obj/machinery/abductor/experiment/relaymove(mob/user)
 	if(user.stat != CONSCIOUS)
 		return
-	container_resist(user)
+	if(message_cooldown <= world.time)
+		message_cooldown = world.time + 50
+		to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
 
 /obj/machinery/abductor/experiment/container_resist(mob/living/user)
-	var/breakout_time = 600
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	to_chat(user, "<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about a minute.)</span>")
-	user.visible_message("<span class='italics'>You hear a metallic creaking from [src]!</span>")
-
+	user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
+		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
+		"<span class='italics'>You hear a metallic creaking from [src].</span>")
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
 			return
-
-		visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>")
-		to_chat(user, "<span class='notice'>You successfully break out of [src]!</span>")
-
+		user.visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>", \
+			"<span class='notice'>You successfully break out of [src]!</span>")
 		open_machine()
-
 
 /obj/machinery/abductor/experiment/proc/dissection_icon(mob/living/carbon/human/H)
 	var/icon/photo = null
 	var/g = (H.gender == FEMALE) ? "f" : "m"
-	if(!config.mutant_races || H.dna.species.use_skintones)
+	if(!CONFIG_GET(flag/join_with_mutant_race) || H.dna.species.use_skintones)
 		photo = icon("icon" = 'icons/mob/human.dmi', "icon_state" = "[H.skin_tone]_[g]")
 	else
 		photo = icon("icon" = 'icons/mob/human.dmi', "icon_state" = "[H.dna.species.id]_[g]")
@@ -98,7 +98,7 @@
 	var/dat
 	dat += "<h3> Experiment </h3>"
 	if(occupant)
-		var/obj/item/weapon/photo/P = new
+		var/obj/item/photo/P = new
 		P.photocreate(null, icon(dissection_icon(occupant), dir = SOUTH))
 		user << browse_rsc(P.img, "dissection_img")
 		dat += "<table><tr><td>"
@@ -116,12 +116,13 @@
 	else
 		dat += "<h3>Subject Status : </h3>"
 		dat += "[occupant.name] => "
-		switch(occupant.stat)
-			if(0)
+		var/mob/living/mob_occupant = occupant
+		switch(mob_occupant.stat)
+			if(CONSCIOUS)
 				dat += "<span class='good'>Conscious</span>"
-			if(1)
+			if(UNCONSCIOUS)
 				dat += "<span class='average'>Unconscious</span>"
-			else
+			else // DEAD
 				dat += "<span class='bad'>Deceased</span>"
 	dat += "<br>"
 	dat += "[flash]"
@@ -146,13 +147,16 @@
 	if(href_list["close"])
 		close_machine()
 		return
-	if(occupant && occupant.stat != DEAD)
-		if(href_list["experiment"])
-			flash = Experiment(occupant,href_list["experiment"])
+	if(occupant)
+		var/mob/living/mob_occupant = occupant
+		if(mob_occupant.stat != DEAD)
+			if(href_list["experiment"])
+				flash = Experiment(occupant,href_list["experiment"])
 	updateUsrDialog()
 	add_fingerprint(usr)
 
 /obj/machinery/abductor/experiment/proc/Experiment(mob/occupant,type)
+	LAZYINITLIST(history)
 	var/mob/living/carbon/human/H = occupant
 	var/point_reward = 0
 	if(H in history)
@@ -165,8 +169,9 @@
 		say("Experimental dissection not detected!")
 		return "<span class='bad'>No glands detected!</span>"
 	if(H.mind != null && H.ckey != null)
-		history += H
-		abductee_minds += H.mind
+		LAZYINITLIST(abductee_minds)
+		LAZYADD(history, H)
+		LAZYADD(abductee_minds, H.mind)
 		say("Processing specimen...")
 		sleep(5)
 		switch(text2num(type))
@@ -178,7 +183,8 @@
 				to_chat(H, "<span class='warning'>You feel intensely watched.</span>")
 		sleep(5)
 		to_chat(H, "<span class='warning'><b>Your mind snaps!</b></span>")
-		var/objtype = pick(subtypesof(/datum/objective/abductee/))
+		to_chat(H, "<big><span class='warning'><b>You can't remember how you got here...</b></span></big>")
+		var/objtype = (prob(75) ? /datum/objective/abductee/random : pick(subtypesof(/datum/objective/abductee/) - /datum/objective/abductee/random))
 		var/datum/objective/abductee/O = new objtype()
 		SSticker.mode.abductees += H.mind
 		H.mind.objectives += O
@@ -207,14 +213,13 @@
 
 
 /obj/machinery/abductor/experiment/proc/SendBack(mob/living/carbon/human/H)
-	H.Sleeping(8)
+	H.Sleeping(160)
+	H.uncuff()
 	if(console && console.pad && console.pad.teleport_target)
 		H.forceMove(console.pad.teleport_target)
-		H.uncuff()
 		return
 	//Area not chosen / It's not safe area - teleport to arrivals
-	H.forceMove(pick(GLOB.latejoin))
-	H.uncuff()
+	SSjob.SendToLateJoin(H, FALSE)
 	return
 
 

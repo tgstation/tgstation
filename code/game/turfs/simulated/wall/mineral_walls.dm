@@ -82,11 +82,11 @@
 	radiate()
 	..()
 
-/turf/closed/wall/mineral/uranium/attackby(obj/item/weapon/W, mob/user, params)
+/turf/closed/wall/mineral/uranium/attackby(obj/item/W, mob/user, params)
 	radiate()
 	..()
 
-/turf/closed/wall/mineral/uranium/Bumped(AM as mob|obj)
+/turf/closed/wall/mineral/uranium/CollidedWith(atom/movable/AM)
 	radiate()
 	..()
 
@@ -99,10 +99,10 @@
 	thermal_conductivity = 0.04
 	canSmoothWith = list(/turf/closed/wall/mineral/plasma, /obj/structure/falsewall/plasma)
 
-/turf/closed/wall/mineral/plasma/attackby(obj/item/weapon/W, mob/user, params)
+/turf/closed/wall/mineral/plasma/attackby(obj/item/W, mob/user, params)
 	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
-		message_admins("Plasma wall ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-		log_game("Plasma wall ignited by [key_name(user)] in ([x],[y],[z])")
+		message_admins("Plasma wall ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(src)]",0,1)
+		log_game("Plasma wall ignited by [key_name(user)] in [COORD(src)]")
 		ignite(W.is_hot())
 		return
 	..()
@@ -111,7 +111,7 @@
 	new girder_type(src)
 	src.ChangeTurf(/turf/open/floor/plasteel)
 	var/turf/open/T = src
-	T.atmos_spawn_air("plasma=400;TEMP=1000")
+	T.atmos_spawn_air("plasma=400;TEMP=[temperature]")
 
 /turf/closed/wall/mineral/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)//Doesn't fucking work because walls don't interact with air :(
 	if(exposed_temperature > 300)
@@ -122,9 +122,9 @@
 		PlasmaBurn(exposed_temperature)
 
 /turf/closed/wall/mineral/plasma/bullet_act(var/obj/item/projectile/Proj)
-	if(istype(Proj,/obj/item/projectile/beam))
+	if(istype(Proj, /obj/item/projectile/beam))
 		PlasmaBurn(2500)
-	else if(istype(Proj,/obj/item/projectile/ion))
+	else if(istype(Proj, /obj/item/projectile/ion))
 		PlasmaBurn(500)
 	..()
 
@@ -153,8 +153,11 @@
 	icon = 'icons/turf/walls/snow_wall.dmi'
 	icon_state = "snow"
 	hardness = 80
+	explosion_block = 0
+	slicing_duration = 30
 	sheet_type = /obj/item/stack/sheet/mineral/snow
 	canSmoothWith = null
+	girder_type = null
 
 /turf/closed/wall/mineral/abductor
 	name = "alien wall"
@@ -167,14 +170,18 @@
 	explosion_block = 3
 	canSmoothWith = list(/turf/closed/wall/mineral/abductor, /obj/structure/falsewall/abductor)
 
+/////////////////////Titanium walls/////////////////////
+
 /turf/closed/wall/mineral/titanium //has to use this path due to how building walls works
 	name = "wall"
 	desc = "A light-weight titanium wall used in shuttles."
 	icon = 'icons/turf/walls/shuttle_wall.dmi'
 	icon_state = "map-shuttle"
+	explosion_block = 3
+	flags_1 = CAN_BE_DIRTY_1 | CHECK_RICOCHET_1
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
 	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
-	canSmoothWith = list(/turf/closed/wall/mineral/titanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock/, /turf/closed/wall/shuttle, /obj/structure/window/shuttle, /obj/structure/shuttle/engine/heater, /obj/structure/falsewall/titanium)
+	canSmoothWith = list(/turf/closed/wall/mineral/titanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/shuttle, /obj/structure/shuttle/engine/heater, /obj/structure/falsewall/titanium)
 
 /turf/closed/wall/mineral/titanium/nodiagonal
 	smooth = SMOOTH_MORE
@@ -212,13 +219,44 @@
 	. = ..()
 	T.transform = transform
 
+/turf/closed/wall/mineral/titanium/survival
+	name = "pod wall"
+	desc = "An easily-compressable wall used for temporary shelter."
+	icon = 'icons/turf/walls/survival_pod_walls.dmi'
+	icon_state = "smooth"
+	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
+	canSmoothWith = list(/turf/closed/wall/mineral/titanium/survival, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/shuttle/survival_pod, /obj/structure/shuttle/engine)
+
+/turf/closed/wall/mineral/titanium/survival/nodiagonal
+	smooth = SMOOTH_MORE
+
+/turf/closed/wall/mineral/titanium/survival/pod
+	canSmoothWith = list(/turf/closed/wall/mineral/titanium/survival, /obj/machinery/door/airlock, /obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/shuttle, /obj/structure/shuttle/engine)
+
+/////////////////////Plastitanium walls/////////////////////
+
 /turf/closed/wall/mineral/plastitanium
 	name = "wall"
 	desc = "An evil wall of plasma and titanium."
-	icon = 'icons/turf/shuttle.dmi'
-	icon_state = "wall3"
+	icon = 'icons/turf/walls/plastitanium_wall.dmi'
+	icon_state = "map-shuttle"
+	explosion_block = 4
 	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
+	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
+	canSmoothWith = list(/turf/closed/wall/mineral/plastitanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/plastitanium, /obj/structure/shuttle/engine, /obj/structure/falsewall/plastitanium)
+
+/turf/closed/wall/mineral/plastitanium/nodiagonal
+	smooth = SMOOTH_MORE
+	icon_state = "map-shuttle_nd"
+
+/turf/closed/wall/mineral/plastitanium/nosmooth
+	icon = 'icons/turf/shuttle.dmi'
+	icon_state = "wall"
 	smooth = SMOOTH_FALSE
+
+/turf/closed/wall/mineral/plastitanium/overspace
+	icon_state = "map-overspace"
+	fixed_underlay = list("space"=1)
 
 //have to copypaste this code
 /turf/closed/wall/mineral/plastitanium/interior/copyTurf(turf/T)

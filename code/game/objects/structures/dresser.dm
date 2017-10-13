@@ -3,14 +3,32 @@
 	desc = "A nicely-crafted wooden dresser. It's filled with lots of undies."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "dresser"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
+
+/obj/structure/dresser/attackby(obj/item/P, mob/user, params)
+	if(istype(P, /obj/item/wrench))
+		to_chat(user, "<span class='notice'>You begin to [anchored ? "unwrench" : "wrench"] [src].</span>")
+		playsound(src, P.usesound, 50, 1)
+		if(do_after(user, 20, target = src))
+			to_chat(user, "<span class='notice'>You successfully [anchored ? "unwrench" : "wrench"] [src].</span>")
+			anchored = !anchored
+	else
+		return ..()
+
+/obj/structure/dresser/deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/mineral/wood (get_turf(src), 10)
+	qdel(src)
 
 /obj/structure/dresser/attack_hand(mob/user)
 	if(!Adjacent(user))//no tele-grooming
 		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
+
+		if(H.dna && H.dna.species && (NO_UNDERWEAR in H.dna.species.species_traits))
+			to_chat(user, "<span class='warning'>You are not capable of wearing underwear.</span>")
+			return
 
 		var/choice = input(user, "Underwear, Undershirt, or Socks?", "Changing") as null|anything in list("Underwear","Undershirt","Socks")
 

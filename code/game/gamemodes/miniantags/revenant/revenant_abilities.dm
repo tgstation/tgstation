@@ -85,6 +85,7 @@
 	charge_max = 0
 	panel = "Revenant Abilities"
 	message = "<span class='revennotice'>You toggle your night vision.</span>"
+	action_icon = 'icons/mob/actions/actions_revenant.dmi'
 	action_icon_state = "r_nightvision"
 	action_background_icon_state = "bg_revenant"
 
@@ -97,6 +98,7 @@
 	clothes_req = 0
 	range = 7
 	include_user = 0
+	action_icon = 'icons/mob/actions/actions_revenant.dmi'
 	action_icon_state = "r_transmit"
 	action_background_icon_state = "bg_revenant"
 
@@ -106,7 +108,7 @@
 		if(!msg)
 			charge_counter = charge_max
 			return
-		log_say("RevenantTransmit: [key_name(user)]->[key_name(M)] : [msg]")
+		log_talk(user,"RevenantTransmit: [key_name(user)]->[key_name(M)] : [msg]",LOGSAY)
 		to_chat(user, "<span class='revenboldnotice'>You transmit to [M]:</span> <span class='revennotice'>[msg]</span>")
 		to_chat(M, "<span class='revenboldnotice'>You hear something behind you talking...</span> <span class='revennotice'>[msg]</span>")
 		for(var/ded in GLOB.dead_mob_list)
@@ -120,6 +122,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant
 	clothes_req = 0
+	action_icon = 'icons/mob/actions/actions_revenant.dmi'
 	action_background_icon_state = "bg_revenant"
 	panel = "Revenant Abilities (Locked)"
 	name = "Report this to a coder"
@@ -202,7 +205,7 @@
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(4, 0, L)
 		s.start()
-		new /obj/effect/overlay/temp/revenant(L.loc)
+		new /obj/effect/temp_visual/revenant(L.loc)
 		sleep(20)
 		if(!L.on) //wait, wait, don't shock me
 			return
@@ -235,9 +238,9 @@
 			INVOKE_ASYNC(src, .proc/defile, T)
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/defile/proc/defile(turf/T)
-	if(T.flags & NOJAUNT)
-		T.flags -= NOJAUNT
-		new /obj/effect/overlay/temp/revenant(T)
+	if(T.flags_1 & NOJAUNT_1)
+		T.flags_1 &= ~NOJAUNT_1
+		new /obj/effect/temp_visual/revenant(T)
 	if(!istype(T, /turf/open/floor/plating) && !istype(T, /turf/open/floor/engine/cult) && isfloorturf(T) && prob(15))
 		var/turf/open/floor/floor = T
 		if(floor.intact && floor.floor_tile)
@@ -246,10 +249,10 @@
 		floor.burnt = 0
 		floor.make_plating(1)
 	if(T.type == /turf/closed/wall && prob(15))
-		new /obj/effect/overlay/temp/revenant(T)
+		new /obj/effect/temp_visual/revenant(T)
 		T.ChangeTurf(/turf/closed/wall/rust)
 	if(T.type == /turf/closed/wall/r_wall && prob(10))
-		new /obj/effect/overlay/temp/revenant(T)
+		new /obj/effect/temp_visual/revenant(T)
 		T.ChangeTurf(/turf/closed/wall/r_wall/rust)
 	for(var/obj/structure/closet/closet in T.contents)
 		closet.open()
@@ -261,7 +264,7 @@
 	for(var/obj/structure/window/window in T)
 		window.take_damage(rand(30,80))
 		if(window && window.fulltile)
-			new /obj/effect/overlay/temp/revenant/cracks(window.loc)
+			new /obj/effect/temp_visual/revenant/cracks(window.loc)
 	for(var/obj/machinery/light/light in T)
 		light.flicker(20) //spooky
 
@@ -284,31 +287,31 @@
 /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction/proc/malfunction(turf/T, mob/user)
 	for(var/mob/living/simple_animal/bot/bot in T)
 		if(!bot.emagged)
-			new /obj/effect/overlay/temp/revenant(bot.loc)
-			bot.locked = 0
-			bot.open = 1
+			new /obj/effect/temp_visual/revenant(bot.loc)
+			bot.locked = FALSE
+			bot.open = TRUE
 			bot.emag_act()
 	for(var/mob/living/carbon/human/human in T)
 		if(human == user)
 			continue
 		to_chat(human, "<span class='revenwarning'>You feel [pick("your sense of direction flicker out", "a stabbing pain in your head", "your mind fill with static")].</span>")
-		new /obj/effect/overlay/temp/revenant(human.loc)
-		human.emp_act(1)
+		new /obj/effect/temp_visual/revenant(human.loc)
+		human.emp_act(EMP_HEAVY)
 	for(var/obj/thing in T)
 		if(istype(thing, /obj/machinery/dominator) || istype(thing, /obj/machinery/power/apc) || istype(thing, /obj/machinery/power/smes)) //Doesn't work on dominators, SMES and APCs, to prevent kekkery
 			continue
 		if(prob(20))
 			if(prob(50))
-				new /obj/effect/overlay/temp/revenant(thing.loc)
+				new /obj/effect/temp_visual/revenant(thing.loc)
 			thing.emag_act(null)
 		else
 			if(!istype(thing, /obj/machinery/clonepod)) //I hate everything but mostly the fact there's no better way to do this without just not affecting it at all
-				thing.emp_act(1)
+				thing.emp_act(EMP_HEAVY)
 	for(var/mob/living/silicon/robot/S in T) //Only works on cyborgs, not AI
 		playsound(S, 'sound/machines/warning-buzzer.ogg', 50, 1)
-		new /obj/effect/overlay/temp/revenant(S.loc)
+		new /obj/effect/temp_visual/revenant(S.loc)
 		S.spark_system.start()
-		S.emp_act(1)
+		S.emp_act(EMP_HEAVY)
 
 //Blight: Infects nearby humans and in general messes living stuff up.
 /obj/effect/proc_holder/spell/aoe_turf/revenant/blight
@@ -329,7 +332,7 @@
 	for(var/mob/living/mob in T)
 		if(mob == user)
 			continue
-		new /obj/effect/overlay/temp/revenant(mob.loc)
+		new /obj/effect/temp_visual/revenant(mob.loc)
 		if(iscarbon(mob))
 			if(ishuman(mob))
 				var/mob/living/carbon/human/H = mob
@@ -350,14 +353,14 @@
 			mob.adjustToxLoss(5)
 	for(var/obj/structure/spacevine/vine in T) //Fucking with botanists, the ability.
 		vine.add_atom_colour("#823abb", TEMPORARY_COLOUR_PRIORITY)
-		new /obj/effect/overlay/temp/revenant(vine.loc)
+		new /obj/effect/temp_visual/revenant(vine.loc)
 		QDEL_IN(vine, 10)
 	for(var/obj/structure/glowshroom/shroom in T)
 		shroom.add_atom_colour("#823abb", TEMPORARY_COLOUR_PRIORITY)
-		new /obj/effect/overlay/temp/revenant(shroom.loc)
+		new /obj/effect/temp_visual/revenant(shroom.loc)
 		QDEL_IN(shroom, 10)
 	for(var/obj/machinery/hydroponics/tray in T)
-		new /obj/effect/overlay/temp/revenant(tray.loc)
+		new /obj/effect/temp_visual/revenant(tray.loc)
 		tray.pestlevel = rand(8, 10)
 		tray.weedlevel = rand(8, 10)
 		tray.toxic = rand(45, 55)

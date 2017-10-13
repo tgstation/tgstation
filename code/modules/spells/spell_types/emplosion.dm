@@ -6,7 +6,7 @@
 	var/emp_light = 3
 
 	action_icon_state = "emp"
-	sound = 'sound/weapons/ZapBang.ogg'
+	sound = 'sound/weapons/zapbang.ogg'
 
 /obj/effect/proc_holder/spell/targeted/emplosion/cast(list/targets,mob/user = usr)
 	playsound(get_turf(user), sound, 50,1)

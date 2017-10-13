@@ -3,6 +3,11 @@
 	materials = list(MAT_GLASS = 250)
 	var/glass_colour_type = null //colors your vision when worn
 
+/obj/item/clothing/glasses/examine(mob/user)
+	..()
+	if(glass_colour_type && ishuman(user))
+		to_chat(user, "<span class='notice'>Alt-click to toggle its colors.</span>")
+
 /obj/item/clothing/glasses/visor_toggling()
 	..()
 	if(visor_vars_to_toggle & VISOR_VISIONFLAGS)
@@ -30,19 +35,19 @@
 				H.adjust_eye_damage(5)
 
 /obj/item/clothing/glasses/meson
-	name = "Optical Meson Scanner"
-	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
+	name = "optical meson scanner"
+	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting conditions."
 	icon_state = "meson"
 	item_state = "meson"
 	origin_tech = "magnets=1;engineering=2"
 	darkness_view = 2
 	vision_flags = SEE_TURFS
-	lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
 
 /obj/item/clothing/glasses/meson/night
-	name = "Night Vision Optical Meson Scanner"
-	desc = "An Optical Meson Scanner fitted with an amplified visible light spectrum overlay, providing greater visual clarity in darkness."
+	name = "night vision meson scanner"
+	desc = "An optical meson scanner fitted with an amplified visible light spectrum overlay, providing greater visual clarity in darkness."
 	icon_state = "nvgmeson"
 	item_state = "nvgmeson"
 	origin_tech = "magnets=4;engineering=5;plasmatech=4"
@@ -79,12 +84,13 @@
 		return 1
 
 /obj/item/clothing/glasses/night
-	name = "Night Vision Goggles"
+	name = "night vision goggles"
 	desc = "You can totally see in the dark now!"
 	icon_state = "night"
 	item_state = "glasses"
 	origin_tech = "materials=4;magnets=4;plasmatech=4;engineering=4"
 	darkness_view = 8
+	vision_flags = SEE_BLACKNESS
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
@@ -101,7 +107,7 @@
 	item_state = "headset" // lol
 
 /obj/item/clothing/glasses/material
-	name = "Optical Material Scanner"
+	name = "optical material scanner"
 	desc = "Very confusing glasses."
 	icon_state = "material"
 	item_state = "glasses"
@@ -110,7 +116,7 @@
 	glass_colour_type = /datum/client_colour/glass_colour/lightblue
 
 /obj/item/clothing/glasses/material/mining
-	name = "Optical Material Scanner"
+	name = "optical material scanner"
 	desc = "Used by miners to detect ores deep within the rock."
 	icon_state = "material"
 	item_state = "glasses"
@@ -131,20 +137,20 @@
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
 
 /obj/item/clothing/glasses/regular
-	name = "Prescription Glasses"
+	name = "prescription glasses"
 	desc = "Made by Nerd. Co."
 	icon_state = "glasses"
 	item_state = "glasses"
 	vision_correction = 1 //corrects nearsightedness
 
 /obj/item/clothing/glasses/regular/jamjar
-	name = "Jamjar Glasses"
+	name = "jamjar glasses"
 	desc = "Also known as Virginity Protectors."
 	icon_state = "jamjar_glasses"
 	item_state = "jamjar_glasses"
 
 /obj/item/clothing/glasses/regular/hipster
-	name = "Prescription Glasses"
+	name = "prescription glasses"
 	desc = "Made by Uncool. Co."
 	icon_state = "hipster_glasses"
 	item_state = "hipster_glasses"
@@ -152,8 +158,8 @@
 //Here lies green glasses, so ugly they died. RIP
 
 /obj/item/clothing/glasses/sunglasses
-	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks many flashes."
 	name = "sunglasses"
+	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks many flashes."
 	icon_state = "sun"
 	item_state = "sunglasses"
 	darkness_view = 1
@@ -169,8 +175,8 @@
 	scan_reagents = 1
 
 /obj/item/clothing/glasses/sunglasses/garb
-	desc = "Go beyond impossible and kick reason to the curb!"
 	name = "black gar glasses"
+	desc = "Go beyond impossible and kick reason to the curb!"
 	icon_state = "garb"
 	item_state = "garb"
 	force = 10
@@ -181,16 +187,16 @@
 	sharpness = IS_SHARP
 
 /obj/item/clothing/glasses/sunglasses/garb/supergarb
-	desc = "Believe in us humans."
 	name = "black giga gar glasses"
+	desc = "Believe in us humans."
 	icon_state = "supergarb"
 	item_state = "garb"
 	force = 12
 	throwforce = 12
 
 /obj/item/clothing/glasses/sunglasses/gar
-	desc = "Just who the hell do you think I am?!"
 	name = "gar glasses"
+	desc = "Just who the hell do you think I am?!"
 	icon_state = "gar"
 	item_state = "gar"
 	force = 10
@@ -202,8 +208,8 @@
 	glass_colour_type = /datum/client_colour/glass_colour/orange
 
 /obj/item/clothing/glasses/sunglasses/gar/supergar
-	desc = "We evolve past the person we were a minute before. Little by little we advance with each turn. That's how a drill works!"
 	name = "giga gar glasses"
+	desc = "We evolve past the person we were a minute before. Little by little we advance with each turn. That's how a drill works!"
 	icon_state = "supergar"
 	item_state = "gar"
 	force = 12
@@ -242,7 +248,7 @@
 	item_state = "bigsunglasses"
 
 /obj/item/clothing/glasses/thermal
-	name = "Optical Thermal Scanner"
+	name = "optical thermal scanner"
 	desc = "Thermals in the shape of glasses."
 	icon_state = "thermal"
 	item_state = "glasses"
@@ -257,7 +263,7 @@
 	..()
 
 /obj/item/clothing/glasses/thermal/syndi	//These are now a traitor item, concealed as mesons.	-Pete
-	name = "Chameleon Thermals"
+	name = "chameleon thermals"
 	desc = "A pair of thermal optic goggles with an onboard chameleon generator."
 	origin_tech = "magnets=3;syndicate=4"
 	flash_protect = -1
@@ -277,13 +283,22 @@
 	chameleon_action.emp_randomise()
 
 /obj/item/clothing/glasses/thermal/monocle
-	name = "Thermoncle"
-	desc = "A monocle thermal."
+	name = "thermoncle"
+	desc = "Never before has seeing through walls felt so gentlepersonly."
 	icon_state = "thermoncle"
-	flags = null //doesn't protect eyes because it's a monocle, duh
+	flags_1 = null //doesn't protect eyes because it's a monocle, duh
+
+/obj/item/clothing/glasses/thermal/monocle/examine(mob/user) //Different examiners see a different description!
+	var/desk = desc
+	if(user.gender == MALE)
+		desc = replacetext(desc, "person", "man")
+	else if(user.gender == FEMALE)
+		desc = replacetext(desc, "person", "woman")
+	..()
+	desc = desk
 
 /obj/item/clothing/glasses/thermal/eyepatch
-	name = "Optical Thermal Eyepatch"
+	name = "optical thermal eyepatch"
 	desc = "An eyepatch with built-in thermal optics."
 	icon_state = "eyepatch"
 	item_state = "eyepatch"
@@ -322,10 +337,10 @@
 	vision_flags = SEE_TURFS|SEE_MOBS|SEE_OBJS
 	darkness_view = 8
 	scan_reagents = 1
-	flags = NODROP
+	flags_1 = NODROP_1
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 
-/obj/item/clothing/glasses/godeye/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/clothing/glasses/godeye/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(istype(W, src) && W != src && W.loc == user)
 		if(W.icon_state == "godeye")
 			W.icon_state = "doublegodeye"

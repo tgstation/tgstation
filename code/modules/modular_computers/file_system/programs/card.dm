@@ -1,11 +1,15 @@
 /datum/computer_file/program/card_mod
 	filename = "cardmod"
-	filedesc = "ID card modification program"
+	filedesc = "ID Card Modification"
 	program_icon_state = "id"
 	extended_desc = "Program for programming employee ID cards to access parts of the station."
-	transfer_access = GLOB.access_change_ids
+	transfer_access = ACCESS_HEADS
 	requires_ntnet = 0
 	size = 8
+	tgui_id = "ntos_card"
+	ui_x = 600
+	ui_y = 700
+
 	var/mod_mode = 1
 	var/is_centcom = 0
 	var/show_assignments = 0
@@ -15,7 +19,7 @@
 	var/list/region_access = null
 	var/list/head_subordinates = null
 	var/target_dept = 0 //Which department this computer has access to. 0=all departments
-	var/change_position_cooldown = 60
+	var/change_position_cooldown = 30
 	//Jobs you cannot open new positions for
 	var/list/blacklisted = list(
 		"AI",
@@ -35,6 +39,12 @@
 	//Assoc array: "JobName" = (int)<Opened Positions>
 	var/list/opened_positions = list();
 
+/datum/computer_file/program/card_mod/New()
+	..()
+	addtimer(CALLBACK(src, .proc/SetConfigCooldown), 0)
+
+/datum/computer_file/program/card_mod/proc/SetConfigCooldown()
+	change_position_cooldown = CONFIG_GET(number/id_console_jobslot_delay)
 
 /datum/computer_file/program/card_mod/event_idremoved(background, slot)
 	if(!slot || slot == 2)// slot being false means both are removed
@@ -72,23 +82,9 @@
 			return 0
 	return 0
 
-
-/datum/computer_file/program/card_mod/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if (!ui)
-
-		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
-		assets.send(user)
-
-		ui = new(user, src, ui_key, "identification_computer", "ID card modification program", 600, 700, state = state)
-		ui.open()
-		ui.set_autoupdate(state = 1)
-
-
 /datum/computer_file/program/card_mod/proc/format_jobs(list/jobs)
-	var/obj/item/weapon/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
-	var/obj/item/weapon/card/id/id_card = card_slot.stored_card
+	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
+	var/obj/item/card/id/id_card = card_slot.stored_card
 	var/list/formatted = list()
 	for(var/job in jobs)
 		formatted.Add(list(list(
@@ -102,19 +98,19 @@
 	if(..())
 		return 1
 
-	var/obj/item/weapon/computer_hardware/card_slot/card_slot
-	var/obj/item/weapon/computer_hardware/printer/printer
+	var/obj/item/computer_hardware/card_slot/card_slot
+	var/obj/item/computer_hardware/printer/printer
 	if(computer)
 		card_slot = computer.all_components[MC_CARD]
 		printer = computer.all_components[MC_PRINT]
 		if(!card_slot)
 			return
 
-	var/obj/item/weapon/card/id/user_id_card = null
+	var/obj/item/card/id/user_id_card = null
 	var/mob/user = usr
 
-	var/obj/item/weapon/card/id/id_card = card_slot.stored_card
-	var/obj/item/weapon/card/id/auth_card = card_slot.stored_card2
+	var/obj/item/card/id/id_card = card_slot.stored_card
+	var/obj/item/card/id/auth_card = card_slot.stored_card2
 
 	if(auth_card)
 		user_id_card = auth_card
@@ -178,10 +174,9 @@
 							card_slot.try_eject(1, user)
 						else
 							var/obj/item/I = usr.get_active_held_item()
-							if (istype(I, /obj/item/weapon/card/id))
-								if(!usr.drop_item())
+							if (istype(I, /obj/item/card/id))
+								if(!usr.transferItemToLoc(I, computer))
 									return
-								I.forceMove(computer)
 								card_slot.stored_card = I
 					if("auth")
 						if(auth_card)
@@ -194,10 +189,9 @@
 							card_slot.try_eject(2, user)
 						else
 							var/obj/item/I = usr.get_active_held_item()
-							if (istype(I, /obj/item/weapon/card/id))
-								if(!usr.drop_item())
+							if (istype(I, /obj/item/card/id))
+								if(!usr.transferItemToLoc(I, computer))
 									return
-								I.forceMove(computer)
 								card_slot.stored_card2 = I
 		if("PRG_terminate")
 			if(computer && ((id_card.assignment in head_subordinates) || id_card.assignment == "Assistant"))
@@ -289,19 +283,19 @@
 
 	return 1
 
-/datum/computer_file/program/card_mod/proc/remove_nt_access(obj/item/weapon/card/id/id_card)
+/datum/computer_file/program/card_mod/proc/remove_nt_access(obj/item/card/id/id_card)
 	id_card.access -= get_all_accesses()
 	id_card.access -= get_all_centcom_access()
 
-/datum/computer_file/program/card_mod/proc/apply_access(obj/item/weapon/card/id/id_card, list/accesses)
+/datum/computer_file/program/card_mod/proc/apply_access(obj/item/card/id/id_card, list/accesses)
 	id_card.access |= accesses
 
 /datum/computer_file/program/card_mod/ui_data(mob/user)
 
 	var/list/data = get_header_data()
 
-	var/obj/item/weapon/computer_hardware/card_slot/card_slot
-	var/obj/item/weapon/computer_hardware/printer/printer
+	var/obj/item/computer_hardware/card_slot/card_slot
+	var/obj/item/computer_hardware/printer/printer
 
 	if(computer)
 		card_slot = computer.all_components[MC_CARD]
@@ -312,7 +306,7 @@
 	var/authed = 0
 	if(computer)
 		if(card_slot)
-			var/obj/item/weapon/card/id/auth_card = card_slot.stored_card2
+			var/obj/item/card/id/auth_card = card_slot.stored_card2
 			data["auth_name"] = auth_card ? strip_html_simple(auth_card.name) : "-----"
 			authed = authorized()
 
@@ -368,7 +362,7 @@
 
 	if(mod_mode == 1 && computer)
 		if(card_slot)
-			var/obj/item/weapon/card/id/id_card = card_slot.stored_card
+			var/obj/item/card/id/id_card = card_slot.stored_card
 
 			data["has_id"] = !!id_card
 			data["id_rank"] = id_card && id_card.assignment ? html_encode(id_card.assignment) : "Unassigned"
@@ -386,7 +380,7 @@
 
 
 		if(card_slot.stored_card)
-			var/obj/item/weapon/card/id/id_card = card_slot.stored_card
+			var/obj/item/card/id/id_card = card_slot.stored_card
 			if(is_centcom)
 				var/list/all_centcom_access = list()
 				for(var/access in get_all_centcom_access())
@@ -423,7 +417,7 @@
 	return data
 
 
-/datum/computer_file/program/card_mod/proc/build_manage(datum/job,open = 0)
+/datum/computer_file/program/card_mod/proc/build_manage(datum/job,open = FALSE)
 	var/out = "Denied"
 	var/can_change= 0
 	if(open)
@@ -447,30 +441,30 @@
 
 /datum/computer_file/program/card_mod/proc/authorized()
 	if(!authenticated && computer)
-		var/obj/item/weapon/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
+		var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
 		if(card_slot)
-			var/obj/item/weapon/card/id/auth_card = card_slot.stored_card2
+			var/obj/item/card/id/auth_card = card_slot.stored_card2
 			if(auth_card)
 				region_access = list()
-				if(transfer_access in auth_card.GetAccess())
+				if(ACCESS_CHANGE_IDS in auth_card.GetAccess())
 					minor = 0
 					authenticated = 1
 					return 1
 				else
-					if((GLOB.access_hop in auth_card.access) && ((target_dept==1) || !target_dept))
+					if((ACCESS_HOP in auth_card.access) && ((target_dept==1) || !target_dept))
 						region_access |= 1
 						region_access |= 6
 						get_subordinates("Head of Personnel")
-					if((GLOB.access_hos in auth_card.access) && ((target_dept==2) || !target_dept))
+					if((ACCESS_HOS in auth_card.access) && ((target_dept==2) || !target_dept))
 						region_access |= 2
 						get_subordinates("Head of Security")
-					if((GLOB.access_cmo in auth_card.access) && ((target_dept==3) || !target_dept))
+					if((ACCESS_CMO in auth_card.access) && ((target_dept==3) || !target_dept))
 						region_access |= 3
 						get_subordinates("Chief Medical Officer")
-					if((GLOB.access_rd in auth_card.access) && ((target_dept==4) || !target_dept))
+					if((ACCESS_RD in auth_card.access) && ((target_dept==4) || !target_dept))
 						region_access |= 4
 						get_subordinates("Research Director")
-					if((GLOB.access_ce in auth_card.access) && ((target_dept==5) || !target_dept))
+					if((ACCESS_CE in auth_card.access) && ((target_dept==5) || !target_dept))
 						region_access |= 5
 						get_subordinates("Chief Engineer")
 					if(region_access.len)

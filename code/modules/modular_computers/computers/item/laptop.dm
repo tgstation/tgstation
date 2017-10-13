@@ -12,17 +12,22 @@
 	max_hardware_size = 2
 	w_class = WEIGHT_CLASS_NORMAL
 
+	// No running around with open laptops in hands.
+	flags_2 = SLOWS_WHILE_IN_HAND_2
+
 	screen_on = 0 		// Starts closed
-	var/start_open = 1	// unless this var is set to 1
+	var/start_open = TRUE	// unless this var is set to 1
 	var/icon_state_closed = "laptop-closed"
 	var/w_class_open = WEIGHT_CLASS_BULKY
-	var/slowdown_open = 1
+	var/slowdown_open = TRUE
+
+/obj/item/device/modular_computer/laptop/examine(mob/user)
+	..()
+	if(screen_on)
+		to_chat(user, "<span class='notice'>Alt-click to close it.</span>")
 
 /obj/item/device/modular_computer/laptop/Initialize()
-	..()
-
-	// No running around with open laptops in hands.
-	SET_SECONDARY_FLAG(src, SLOWS_WHILE_IN_HAND)
+	. = ..()
 
 	if(start_open && !screen_on)
 		toggle_open()
@@ -100,4 +105,4 @@
 
 // Laptop frame, starts empty and closed.
 /obj/item/device/modular_computer/laptop/buildable
-	start_open = 0
+	start_open = FALSE

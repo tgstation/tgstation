@@ -9,8 +9,8 @@
 	name = "bluespace artillery control"
 	icon_state = "control_boxp1"
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 
 /obj/machinery/artillerycontrol/process()
 	if(reload < reload_cooldown)
@@ -19,11 +19,11 @@
 /obj/structure/artilleryplaceholder
 	name = "artillery"
 	icon = 'icons/obj/machines/artillery.dmi'
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 
 /obj/structure/artilleryplaceholder/decorative
-	density = 0
+	density = FALSE
 
 /obj/machinery/artillerycontrol/attack_hand(mob/user)
 	user.set_machine(src)
@@ -55,16 +55,3 @@
 		var/loc = pick(L)
 		explosion(loc,explosiondev,explosionmed,explosionlight)
 		reload = 0
-
-/*/mob/proc/openfire()
-	var/A
-	A = input("Area to jump bombard", "Open Fire", A) in GLOB.teleportlocs
-	var/area/thearea = GLOB.teleportlocs[A]
-	priority_announce("Bluespace artillery fire detected. Brace for impact.")
-	spawn(30)
-	var/list/L = list()
-
-	for(var/turf/T in get_area_turfs(thearea.type))
-		L+=T
-	var/loc = pick(L)
-	explosion(loc,2,5,11)*/

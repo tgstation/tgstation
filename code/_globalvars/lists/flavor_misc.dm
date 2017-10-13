@@ -43,12 +43,12 @@ GLOBAL_LIST_INIT(security_depts_prefs, list(SEC_DEPT_RANDOM, SEC_DEPT_NONE, SEC_
 	//Backpacks
 #define GBACKPACK "Grey Backpack"
 #define GSATCHEL "Grey Satchel"
-#define GDUFFLEBAG "Grey Dufflebag"
+#define GDUFFELBAG "Grey Duffel Bag"
 #define LSATCHEL "Leather Satchel"
 #define DBACKPACK "Department Backpack"
 #define DSATCHEL "Department Satchel"
-#define DDUFFLEBAG "Department Dufflebag"
-GLOBAL_LIST_INIT(backbaglist, list(DBACKPACK, DSATCHEL, DDUFFLEBAG, GBACKPACK, GSATCHEL, GDUFFLEBAG, LSATCHEL))
+#define DDUFFELBAG "Department Duffel Bag"
+GLOBAL_LIST_INIT(backbaglist, list(DBACKPACK, DSATCHEL, DDUFFELBAG, GBACKPACK, GSATCHEL, GDUFFELBAG, LSATCHEL))
 
 //Uplink spawn loc
 #define UPLINK_PDA		"PDA"
@@ -62,7 +62,7 @@ GLOBAL_LIST_EMPTY(female_clothing_icons)
 	//radical shit
 GLOBAL_LIST_INIT(hit_appends, list("-OOF", "-ACK", "-UGH", "-HRNK", "-HURGH", "-GLORF"))
 
-GLOBAL_LIST_INIT(scarySounds, list('sound/weapons/thudswoosh.ogg','sound/weapons/Taser.ogg','sound/weapons/armbomb.ogg','sound/voice/hiss1.ogg','sound/voice/hiss2.ogg','sound/voice/hiss3.ogg','sound/voice/hiss4.ogg','sound/voice/hiss5.ogg','sound/voice/hiss6.ogg','sound/effects/Glassbr1.ogg','sound/effects/Glassbr2.ogg','sound/effects/Glassbr3.ogg','sound/items/Welder.ogg','sound/items/Welder2.ogg','sound/machines/airlock.ogg','sound/effects/clownstep1.ogg','sound/effects/clownstep2.ogg'))
+GLOBAL_LIST_INIT(scarySounds, list('sound/weapons/thudswoosh.ogg','sound/weapons/taser.ogg','sound/weapons/armbomb.ogg','sound/voice/hiss1.ogg','sound/voice/hiss2.ogg','sound/voice/hiss3.ogg','sound/voice/hiss4.ogg','sound/voice/hiss5.ogg','sound/voice/hiss6.ogg','sound/effects/glassbr1.ogg','sound/effects/glassbr2.ogg','sound/effects/glassbr3.ogg','sound/items/welder.ogg','sound/items/welder2.ogg','sound/machines/airlock.ogg','sound/effects/clownstep1.ogg','sound/effects/clownstep2.ogg'))
 
 
 // Reference list for disposal sort junctions. Set the sortType variable on disposal sort junctions to
@@ -105,59 +105,25 @@ GLOBAL_LIST_INIT(TAGGERLOCATIONS, list("Disposals",
 
 GLOBAL_LIST_INIT(guitar_notes, flist("sound/guitar/"))
 
-GLOBAL_LIST_INIT(station_prefixes, list("", "Imperium", "Heretical", "Cuban",
-	"Psychic", "Elegant", "Common", "Uncommon", "Rare", "Unique",
-	"Houseruled", "Religious", "Atheist", "Traditional", "Houseruled",
-	"Mad", "Super", "Ultra", "Secret", "Top Secret", "Deep", "Death",
-	"Zybourne", "Central", "Main", "Government", "Uoi", "Fat",
-	"Automated", "Experimental", "Augmented"))
+GLOBAL_LIST_INIT(station_prefixes, world.file2list("strings/station_prefixes.txt") + "")
 
-GLOBAL_LIST_INIT(station_names, list("", "Stanford", "Dorf", "Alium",
-	"Prefix", "Clowning", "Aegis", "Ishimura", "Scaredy", "Death-World",
-	"Mime", "Honk", "Rogue", "MacRagge", "Ultrameens", "Safety", "Paranoia",
-	"Explosive", "Neckbear", "Donk", "Muppet", "North", "West", "East",
-	"South", "Slant-ways", "Widdershins", "Rimward", "Expensive",
-	"Procreatory", "Imperial", "Unidentified", "Immoral", "Carp", "Ork",
-	"Pete", "Control", "Nettle", "Aspie", "Class", "Crab", "Fist",
-	"Corrogated","Skeleton","Race", "Fatguy", "Gentleman", "Capitalist",
-	"Communist", "Bear", "Beard", "Derp", "Space", "Spess", "Star", "Moon",
-	"System", "Mining", "Neckbeard", "Research", "Supply", "Military",
-	"Orbital", "Battle", "Science", "Asteroid", "Home", "Production",
-	"Transport", "Delivery", "Extraplanetary", "Orbital", "Correctional",
-	"Robot", "Hats", "Pizza"))
+GLOBAL_LIST_INIT(station_names, world.file2list("strings/station_names.txt" + ""))
 
-GLOBAL_LIST_INIT(station_suffixes, list("Station", "Frontier",
-	"Suffix", "Death-trap", "Space-hulk", "Lab", "Hazard","Spess Junk",
-	"Fishery", "No-Moon", "Tomb", "Crypt", "Hut", "Monkey", "Bomb",
-	"Trade Post", "Fortress", "Village", "Town", "City", "Edition", "Hive",
-	"Complex", "Base", "Facility", "Depot", "Outpost", "Installation",
-	"Drydock", "Observatory", "Array", "Relay", "Monitor", "Platform",
-	"Construct", "Hangar", "Prison", "Center", "Port", "Waystation",
-	"Factory", "Waypoint", "Stopover", "Hub", "HQ", "Office", "Object",
-	"Fortification", "Colony", "Planet-Cracker", "Roost", "Fat Camp",
-	"Airstrip"))
+GLOBAL_LIST_INIT(station_suffixes, world.file2list("strings/station_suffixes.txt"))
 
-GLOBAL_LIST_INIT(greek_letters, list("Alpha", "Beta", "Gamma", "Delta",
-	"Epsilon", "Zeta", "Eta", "Theta", "Iota", "Kappa", "Lambda", "Mu",
-	"Nu", "Xi", "Omicron", "Pi", "Rho", "Sigma", "Tau", "Upsilon", "Phi",
-	"Chi", "Psi", "Omega"))
+GLOBAL_LIST_INIT(greek_letters, world.file2list("strings/greek_letters.txt"))
 
-GLOBAL_LIST_INIT(phonetic_alphabet, list("Alpha", "Bravo", "Charlie",
-	"Delta", "Echo", "Foxtrot", "Golf", "Hotel", "India", "Juliet",
-	"Kilo", "Lima", "Mike", "November", "Oscar", "Papa", "Quebec",
-	"Romeo", "Sierra", "Tango", "Uniform", "Victor", "Whiskey", "X-ray",
-	"Yankee", "Zulu"))
+GLOBAL_LIST_INIT(phonetic_alphabet, world.file2list("strings/phonetic_alphabet.txt"))
 
-GLOBAL_LIST_INIT(numbers_as_words, list("One", "Two", "Three", "Four",
-	"Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve",
-	"Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen",
-	"Eighteen", "Nineteen"))
+GLOBAL_LIST_INIT(numbers_as_words, world.file2list("strings/numbers_as_words.txt"))
 
 /proc/generate_number_strings()
-	var/list/L
+	var/list/L[198]
 	for(var/i in 1 to 99)
 		L += "[i]"
 		L += "\Roman[i]"
 	return L
 
 GLOBAL_LIST_INIT(station_numerals, greek_letters + phonetic_alphabet + numbers_as_words + generate_number_strings())
+
+GLOBAL_LIST_INIT(admiral_messages, list("Do you know how expensive these stations are?","Stop wasting my time.","I was sleeping, thanks a lot.","Stand and fight you cowards!","You knew the risks coming in.","Stop being paranoid.","Whatever's broken just build a new one.","No.", "<i>null</i>","<i>Error: No comment given.</i>", "It's a good day to die!"))

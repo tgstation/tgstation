@@ -196,6 +196,7 @@
 
 
 /datum/datacore/proc/manifest_inject(mob/living/carbon/human/H, client/C)
+	set waitfor = FALSE
 	if(H.mind && (H.mind.assigned_role != H.mind.special_role))
 		var/assignment
 		if(H.mind.assigned_role)
@@ -210,8 +211,8 @@
 		if(!C)
 			C = H.client
 		var/image = get_id_photo(H, C)
-		var/obj/item/weapon/photo/photo_front = new()
-		var/obj/item/weapon/photo/photo_side = new()
+		var/obj/item/photo/photo_front = new()
+		var/obj/item/photo/photo_side = new()
 		photo_front.photocreate(null, icon(image, dir = SOUTH))
 		photo_side.photocreate(null, icon(image, dir = WEST))
 
@@ -222,7 +223,7 @@
 		G.fields["name"]		= H.real_name
 		G.fields["rank"]		= assignment
 		G.fields["age"]			= H.age
-		if(config.mutant_races)
+		if(CONFIG_GET(flag/join_with_mutant_race))
 			G.fields["species"]	= H.dna.species.name
 		G.fields["fingerprint"]	= md5(H.dna.uni_identity)
 		G.fields["p_stat"]		= "Active"
@@ -273,7 +274,7 @@
 		L.fields["species"]		= H.dna.species.type
 		L.fields["features"]	= H.dna.features
 		L.fields["image"]		= image
-		L.fields["reference"]	= H
+		L.fields["mindref"]		= H.mind
 		locked += L
 	return
 
@@ -284,4 +285,4 @@
 		C = H.client
 	if(C)
 		P = C.prefs
-	return get_flat_human_icon(null, J, P)
+	return get_flat_human_icon(null, J, P, DUMMY_HUMAN_SLOT_MANIFEST)

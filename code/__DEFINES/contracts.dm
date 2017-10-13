@@ -3,6 +3,7 @@
 #define CONTRACT_PRESTIGE "prestige"
 #define CONTRACT_MAGIC "magic"
 #define CONTRACT_REVIVE "revive"
+#define CONTRACT_FRIEND "friend"
 #define CONTRACT_KNOWLEDGE "knowledge"
 #define CONTRACT_UNWILLING "unwilling"
 

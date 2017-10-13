@@ -4,6 +4,10 @@
 	broken_states = list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 	burnt_states = list("floorscorched1", "floorscorched2")
 
+/turf/open/floor/plasteel/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>There's a <b>small crack</b> on the edge of it.</span>")
+
 /turf/open/floor/plasteel/update_icon()
 	if(!..())
 		return 0
@@ -17,6 +21,14 @@
 
 /turf/open/floor/plasteel/black
 	icon_state = "dark"
+/turf/open/floor/plasteel/black/telecomms
+	initial_gas_mix = "n2=100;TEMP=80"
+/turf/open/floor/plasteel/black/telecomms/mainframe
+	name = "Mainframe Floor"
+/turf/open/floor/plasteel/black/telecomms/server
+	name = "Server Base"
+/turf/open/floor/plasteel/black/telecomms/server/walkway
+	name = "Server Walkway"
 /turf/open/floor/plasteel/airless/black
 	icon_state = "dark"
 /turf/open/floor/plasteel/black/side
@@ -25,19 +37,28 @@
 	icon_state = "blackcorner"
 
 
+
 /turf/open/floor/plasteel/white
-	icon_state = "white"
-/turf/open/floor/plasteel/airless/white
 	icon_state = "white"
 /turf/open/floor/plasteel/white/side
 	icon_state = "whitehall"
 /turf/open/floor/plasteel/white/corner
+	icon_state = "whitecorner"
+/turf/open/floor/plasteel/airless/white
+	icon_state = "white"
+/turf/open/floor/plasteel/airless/white/side
+	icon_state = "whitehall"
+/turf/open/floor/plasteel/airless/white/corner
 	icon_state = "whitecorner"
 
 
 
 /turf/open/floor/plasteel/brown
 	icon_state = "brown"
+/turf/open/floor/plasteel/brown/telecomms
+	initial_gas_mix = "n2=100;TEMP=80"
+/turf/open/floor/plasteel/brown/telecomms/mainframe
+	name = "Mainframe Floor"
 /turf/open/floor/plasteel/brown/corner
 	icon_state = "browncorner"
 
@@ -54,6 +75,8 @@
 	icon_state = "greenfull"
 /turf/open/floor/plasteel/green/side
 	icon_state = "green"
+/turf/open/floor/plasteel/green/side/telecomms
+	initial_gas_mix = "n2=100;TEMP=80"
 /turf/open/floor/plasteel/green/corner
 	icon_state = "greencorner"
 
@@ -61,6 +84,8 @@
 	icon_state = "darkgreenfull"
 /turf/open/floor/plasteel/darkgreen/side
 	icon_state = "darkgreen"
+/turf/open/floor/plasteel/darkgreen/side/telecomms
+	initial_gas_mix = "n2=100;TEMP=80"
 /turf/open/floor/plasteel/darkgreen/corner
 	icon_state = "darkgreencorners"
 
@@ -84,6 +109,8 @@
 	icon_state = "darkredfull"
 /turf/open/floor/plasteel/darkred/side
 	icon_state = "darkred"
+/turf/open/floor/plasteel/darkred/side/telecomms
+	initial_gas_mix = "n2=100;TEMP=80"
 /turf/open/floor/plasteel/darkred/corner
 	icon_state = "darkredcorners"
 
@@ -107,6 +134,8 @@
 	icon_state = "darkbluefull"
 /turf/open/floor/plasteel/darkblue/side
 	icon_state = "darkblue"
+/turf/open/floor/plasteel/darkblue/side/telecomms
+	initial_gas_mix = "n2=100;TEMP=80"
 /turf/open/floor/plasteel/darkblue/corner
 	icon_state = "darkbluecorners"
 
@@ -114,6 +143,8 @@
 	icon_state = "whitebluefull"
 /turf/open/floor/plasteel/whiteblue/side
 	icon_state = "whiteblue"
+/turf/open/floor/plasteel/whiteblue/side/telecomms
+	initial_gas_mix = "n2=100;TEMP=80"
 /turf/open/floor/plasteel/whiteblue/corner
 	icon_state = "whitebluecorner"
 
@@ -130,6 +161,8 @@
 	icon_state = "darkyellowfull"
 /turf/open/floor/plasteel/darkyellow/side
 	icon_state = "darkyellow"
+/turf/open/floor/plasteel/darkyellow/side/telecomms
+	initial_gas_mix = "n2=100;TEMP=80"
 /turf/open/floor/plasteel/darkyellow/corner
 	icon_state = "darkyellowcorners"
 
@@ -153,6 +186,8 @@
 	icon_state = "darkpurplefull"
 /turf/open/floor/plasteel/darkpurple/side
 	icon_state = "darkpurple"
+/turf/open/floor/plasteel/darkpurple/side/telecomms
+	initial_gas_mix = "n2=100;TEMP=80"
 /turf/open/floor/plasteel/darkpurple/corner
 	icon_state = "darkpurplecorners"
 
@@ -160,6 +195,8 @@
 	icon_state = "whitepurplefull"
 /turf/open/floor/plasteel/whitepurple/side
 	icon_state = "whitepurple"
+/turf/open/floor/plasteel/whitepurple/side/telecomms
+	initial_gas_mix = "n2=100;TEMP=80"
 /turf/open/floor/plasteel/whitepurple/corner
 	icon_state = "whitepurplecorner"
 
@@ -176,6 +213,8 @@
 	icon_state = "neutralfull"
 /turf/open/floor/plasteel/neutral/side
 	icon_state = "neutral"
+/turf/open/floor/plasteel/neutral/side/telecomms
+	initial_gas_mix = "n2=100;TEMP=80"
 /turf/open/floor/plasteel/neutral/corner
 	icon_state = "neutralcorner"
 
@@ -239,11 +278,6 @@
 	icon_state = "blueyellow"
 
 
-/turf/open/floor/plasteel/warningline
-	icon_state = "warningline"
-/turf/open/floor/plasteel/warningline/corner
-	icon_state = "warninglinecorners"
-
 /turf/open/floor/plasteel/yellowsiding
 	icon_state = "yellowsiding"
 /turf/open/floor/plasteel/yellowsiding/corner
@@ -262,34 +296,6 @@
 	icon_state = "loadingareadirty1"
 /turf/open/floor/plasteel/loadingarea/dirtydirty
 	icon_state = "loadingareadirty2"
-
-
-/turf/open/floor/plasteel/shuttle
-	icon_state = "shuttlefloor"
-	floor_tile = /obj/item/stack/tile/mineral/titanium //old shuttle floors so i don't have to change the map paths in this pr
-/turf/open/floor/plasteel/shuttle/red
-	name = "Brig floor"
-	icon_state = "shuttlefloor4"
-	floor_tile = /obj/item/stack/tile/mineral/plastitanium
-/turf/open/floor/plasteel/shuttle/yellow
-	icon_state = "shuttlefloor2"
-/turf/open/floor/plasteel/shuttle/white
-	icon_state = "shuttlefloor3"
-/turf/open/floor/plasteel/shuttle/purple
-	icon_state = "shuttlefloor5"
-
-/turf/open/floor/plasteel/airless/shuttle
-	icon_state = "shuttlefloor"
-/turf/open/floor/plasteel/airless/shuttle/red
-	name = "Brig floor"
-	icon_state = "shuttlefloor4"
-/turf/open/floor/plasteel/airless/shuttle/yellow
-	icon_state = "shuttlefloor2"
-/turf/open/floor/plasteel/airless/shuttle/white
-	icon_state = "shuttlefloor3"
-/turf/open/floor/plasteel/airless/shuttle/purple
-	icon_state = "shuttlefloor5"
-
 
 /turf/open/floor/plasteel/asteroid
 	icon_state = "asteroidfloor"
@@ -353,6 +359,13 @@
 
 /turf/open/floor/plasteel/vault
 	icon_state = "vault"
+/turf/open/floor/plasteel/vault/telecomms
+	initial_gas_mix = "n2=100;TEMP=80"
+/turf/open/floor/plasteel/vault/telecomms/mainframe
+	name = "Mainframe Floor"
+/turf/open/floor/plasteel/vault/killroom
+	name = "Killroom Floor"
+	initial_gas_mix = "n2=500;TEMP=80"
 
 /turf/open/floor/plasteel/cult
 	icon_state = "cult"
@@ -422,16 +435,3 @@
 
 /turf/open/floor/plasteel/sepia
 	icon_state = "sepia"
-
-/turf/open/floor/plasteel/sandy
-	icon_state = "sandy"
-	baseturf = /turf/open/floor/plating/beach/sand
-
-/turf/open/floor/plasteel/sandeffect
-	icon_state = "sandeffect"
-
-/turf/open/floor/plasteel/sandeffect/warning
-	icon_state = "warningsandeffect"
-
-/turf/open/floor/plasteel/sandeffect/warning/corner
-	icon_state = "warningsandeffectcorners"

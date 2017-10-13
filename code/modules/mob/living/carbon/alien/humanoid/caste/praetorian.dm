@@ -13,7 +13,7 @@
 
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno(src))
 	AddAbility(new /obj/effect/proc_holder/alien/royal/praetorian/evolve())
-	..()
+	. = ..()
 
 /mob/living/carbon/alien/humanoid/royal/praetorian/create_internal_organs()
 	internal_organs += new /obj/item/organ/alien/plasmavessel/large
@@ -45,9 +45,6 @@
 	if(!get_alien_type(/mob/living/carbon/alien/humanoid/royal/queen))
 		var/mob/living/carbon/alien/humanoid/royal/queen/new_xeno = new (user.loc)
 		user.alien_evolve(new_xeno)
-		if(new_xeno.client.prefs.unlock_content)
-			var/datum/action/innate/maid/M = new()
-			M.Grant(new_xeno)
 		return 1
 	else
 		to_chat(user, "<span class='notice'>We already have an alive queen.</span>")

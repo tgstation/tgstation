@@ -1,17 +1,26 @@
 /obj/machinery/atmospherics/components/trinary/filter
 	name = "gas filter"
 	icon_state = "filter_off"
-	density = 0
-	can_unwrench = 1
-	var/on = 0
+	desc = "Very useful for filtering gasses."
+	density = FALSE
+	can_unwrench = TRUE
+	var/on = FALSE
 	var/target_pressure = ONE_ATMOSPHERE
-	var/filter_type = ""
+	var/filter_type = null
 	var/frequency = 0
 	var/datum/radio_frequency/radio_connection
 
 /obj/machinery/atmospherics/components/trinary/filter/flipped
 	icon_state = "filter_off_f"
-	flipped = 1
+	flipped = TRUE
+
+// These two filter types have critical_machine flagged to on and thus causes the area they are in to be exempt from the Grid Check event.
+
+/obj/machinery/atmospherics/components/trinary/filter/critical
+	critical_machine = TRUE
+
+/obj/machinery/atmospherics/components/trinary/filter/flipped/critical
+	critical_machine = TRUE
 
 /obj/machinery/atmospherics/components/trinary/filter/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
@@ -19,14 +28,16 @@
 	if(frequency)
 		radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_ATMOSIA)
 
+/obj/machinery/atmospherics/components/trinary/filter/New()
+	..()
+
 /obj/machinery/atmospherics/components/trinary/filter/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src,frequency)
+	SSradio.remove_object(src,frequency)
 	return ..()
 
 /obj/machinery/atmospherics/components/trinary/filter/update_icon()
 	cut_overlays()
-	for(var/direction in GLOB.cardinal)
+	for(var/direction in GLOB.cardinals)
 		if(direction & initialize_directions)
 			var/obj/machinery/atmospherics/node = findConnecting(direction)
 			if(node)
@@ -36,27 +47,21 @@
 	..()
 
 /obj/machinery/atmospherics/components/trinary/filter/update_icon_nopipes()
-
-	if(!(stat & NOPOWER) && on && NODE1 && NODE2 && NODE3)
+	if(on && NODE1 && NODE2 && NODE3 && is_operational())
 		icon_state = "filter_on[flipped?"_f":""]"
 		return
-
 	icon_state = "filter_off[flipped?"_f":""]"
 
 /obj/machinery/atmospherics/components/trinary/filter/power_change()
 	var/old_stat = stat
 	..()
-	if(stat & NOPOWER)
-		on = 0
-	if(old_stat != stat)
+	if(stat != old_stat)
 		update_icon()
 
 /obj/machinery/atmospherics/components/trinary/filter/process_atmos()
 	..()
-	if(!on)
-		return 0
-	if(!(NODE1 && NODE2 && NODE3))
-		return 0
+	if(!on || !(NODE1 && NODE2 && NODE3) || !is_operational())
+		return
 
 	var/datum/gas_mixture/air1 = AIR1
 	var/datum/gas_mixture/air2 = AIR2
@@ -66,7 +71,7 @@
 
 	if(output_starting_pressure >= target_pressure)
 		//No need to mix if target is already full!
-		return 1
+		return
 
 	//Calculate necessary moles to transfer using PV=nRT
 
@@ -83,20 +88,21 @@
 
 		if(!removed)
 			return
-		
-		var/filtering = filter_type ? TRUE : FALSE
-		
-		if(filtering && !istext(filter_type))
-			WARNING("Wrong gas ID in [src]'s filter_type var. filter_type == [filter_type]")
-			filtering = FALSE
-		
+
+		var/filtering = TRUE
+		if(!ispath(filter_type))
+			if(filter_type)
+				filter_type = gas_id2path(filter_type) //support for mappers so they don't need to type out paths
+			else
+				filtering = FALSE
+
 		if(filtering && removed.gases[filter_type])
 			var/datum/gas_mixture/filtered_out = new
-			
+
 			filtered_out.temperature = removed.temperature
-			filtered_out.assert_gas(filter_type)
+			ASSERT_GAS(filter_type, filtered_out)
 			filtered_out.gases[filter_type][MOLES] = removed.gases[filter_type][MOLES]
-			
+
 			removed.gases[filter_type][MOLES] = 0
 			removed.garbage_collect()
 
@@ -106,13 +112,11 @@
 
 	update_parents()
 
-	return 1
-
 /obj/machinery/atmospherics/components/trinary/filter/atmosinit()
 	set_frequency(frequency)
 	return ..()
 
-/obj/machinery/atmospherics/components/trinary/filter/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/machinery/atmospherics/components/trinary/filter/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 																	datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -124,7 +128,10 @@
 	data["on"] = on
 	data["pressure"] = round(target_pressure)
 	data["max_pressure"] = round(MAX_OUTPUT_PRESSURE)
-	data["filter_type"] = filter_type
+	if(filter_type)
+		data["filter_type"] = GLOB.meta_gas_info[filter_type][META_GAS_ID] //ui code is garbage and this is needed for it to work grr
+	else
+		data["filter_type"] = "none"
 	return data
 
 /obj/machinery/atmospherics/components/trinary/filter/ui_act(action, params)
@@ -133,7 +140,7 @@
 	switch(action)
 		if("power")
 			on = !on
-			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
+			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("pressure")
 			var/pressure = params["pressure"]
@@ -149,14 +156,20 @@
 				. = TRUE
 			if(.)
 				target_pressure = Clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
-				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
+				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
 		if("filter")
-			filter_type = ""
+			filter_type = null
 			var/filter_name = "nothing"
-			var/gas = params["mode"]
+			var/gas = text2path(params["mode"]) || gas_id2path(params["mode"])
 			if(gas in GLOB.meta_gas_info)
 				filter_type = gas
 				filter_name	= GLOB.meta_gas_info[gas][META_GAS_NAME]
-			investigate_log("was set to filter [filter_name] by [key_name(usr)]", "atmos")
+			investigate_log("was set to filter [filter_name] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 	update_icon()
+
+/obj/machinery/atmospherics/components/trinary/filter/can_unwrench(mob/user)
+	. = ..()
+	if(. && on && is_operational())
+		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
+		return FALSE

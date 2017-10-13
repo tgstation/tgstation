@@ -19,7 +19,7 @@
   <ui-section label='Credits'>
     <span>{{Math.floor(adata.points)}}</span>
   </ui-section>
-  <ui-section label='Centcom Message'>
+  <ui-section label='CentCom Message'>
       <span>{{data.message}}</span>
   </ui-section>
   {{#if data.loan && !data.requestonly}}
@@ -29,7 +29,7 @@
          state='{{data.away && data.docked ? null : "disabled"}}'
          action='loan'>Loan Shuttle</ui-button>
       {{else}}
-        <span class='bad'>Loaned to Centcom</span>
+        <span class='bad'>Loaned to CentCom</span>
       {{/if}}
     </ui-section>
   {{/if}}

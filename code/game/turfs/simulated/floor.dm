@@ -21,10 +21,10 @@
 		broken_states = list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 	if (!burnt_states)
 		burnt_states = list()
-	..()
+	. = ..()
 	//This is so damaged or burnt tiles or platings don't get remembered as the default tile
 	var/static/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","damaged4",
-					"damaged5","panelscorched","floorscorched1","floorscorched2","platingdmg1","platingdmg2",
+					"damaged5","panelscorched","floorscorched1","floorscorched2","platingdmg1","platingdmg2", "foam_plating",
 					"platingdmg3","plating","light_on","light_on_flicker1","light_on_flicker2",
 					"light_on_clicker3","light_on_clicker4","light_on_clicker5","light_broken",
 					"light_on_broken","light_off","wall_thermite","grass", "sand",
@@ -62,7 +62,8 @@
 			switch(pick(1,2;75,3))
 				if(1)
 					src.ReplaceWithLattice()
-					if(prob(33)) new /obj/item/stack/sheet/metal(src)
+					if(prob(33))
+						new /obj/item/stack/sheet/metal(src)
 				if(2)
 					src.ChangeTurf(src.baseturf)
 				if(3)
@@ -71,7 +72,8 @@
 					else
 						src.break_tile()
 					src.hotspot_expose(1000,CELL_VOLUME)
-					if(prob(33)) new /obj/item/stack/sheet/metal(src)
+					if(prob(33))
+						new /obj/item/stack/sheet/metal(src)
 		if(3)
 			if (prob(50))
 				src.break_tile()
@@ -117,10 +119,10 @@
 /turf/open/floor/proc/make_plating()
 	return ChangeTurf(/turf/open/floor/plating)
 
-/turf/open/floor/ChangeTurf(new_path)
+/turf/open/floor/ChangeTurf(path, new_baseturf, defer_change = FALSE, ignore_air = FALSE, forceop = FALSE)
 	if(!isfloorturf(src))
 		return ..() //fucking turfs switch the fucking src of the fucking running procs
-	if(!ispath(new_path, /turf/open/floor))
+	if(!ispath(path, /turf/open/floor))
 		return ..()
 	var/old_icon = icon_regular_floor
 	var/old_dir = dir
@@ -135,7 +137,7 @@
 		return 1
 	if(..())
 		return 1
-	if(intact && istype(C, /obj/item/weapon/crowbar))
+	if(intact && istype(C, /obj/item/crowbar))
 		return pry_tile(C, user)
 	if(intact && istype(C, /obj/item/stack/tile))
 		try_replace_tile(C, user, params)
@@ -144,7 +146,7 @@
 /turf/open/floor/proc/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	if(T.turf_type == type)
 		return
-	var/obj/item/weapon/crowbar/CB = user.is_holding_item_of_type(/obj/item/weapon/crowbar)
+	var/obj/item/crowbar/CB = user.is_holding_item_of_type(/obj/item/crowbar)
 	if(!CB)
 		return
 	var/turf/open/floor/plating/P = pry_tile(CB, user, TRUE)
@@ -161,15 +163,16 @@
 		broken = 0
 		burnt = 0
 		if(user && !silent)
-			to_chat(user, "<span class='danger'>You remove the broken plating.</span>")
+			to_chat(user, "<span class='notice'>You remove the broken plating.</span>")
 	else
 		if(user && !silent)
-			to_chat(user, "<span class='danger'>You remove the floor tile.</span>")
+			to_chat(user, "<span class='notice'>You remove the floor tile.</span>")
 		if(floor_tile && make_tile)
 			new floor_tile(src)
 	return make_plating()
 
 /turf/open/floor/singularity_pull(S, current_size)
+	..()
 	if(current_size == STAGE_THREE)
 		if(prob(30))
 			if(floor_tile)
@@ -188,8 +191,9 @@
 		else if(prob(50))
 			ReplaceWithLattice()
 
-/turf/open/floor/narsie_act()
-	if(prob(20))
+/turf/open/floor/narsie_act(force, ignore_mobs, probability = 20)
+	. = ..()
+	if(.)
 		ChangeTurf(/turf/open/floor/engine/cult)
 
 /turf/open/floor/ratvar_act(force, ignore_mobs)
@@ -200,19 +204,22 @@
 /turf/open/floor/acid_melt()
 	ChangeTurf(baseturf)
 
-/turf/open/floor/rcd_vals(mob/user, obj/item/weapon/construction/rcd/the_rcd)
+/turf/open/floor/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_FLOORWALL)
 			return list("mode" = RCD_FLOORWALL, "delay" = 20, "cost" = 16)
 		if(RCD_AIRLOCK)
-			return list("mode" = RCD_AIRLOCK, "delay" = 50, "cost" = 16)
+			if(the_rcd.airlock_glass)
+				return list("mode" = RCD_AIRLOCK, "delay" = 50, "cost" = 20)
+			else
+				return list("mode" = RCD_AIRLOCK, "delay" = 50, "cost" = 16)
 		if(RCD_DECONSTRUCT)
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 50, "cost" = 33)
 		if(RCD_WINDOWGRILLE)
-			return list("mode" = RCD_WINDOWGRILLE, "delay" = 40, "cost" = 4)
+			return list("mode" = RCD_WINDOWGRILLE, "delay" = 10, "cost" = 4)
 	return FALSE
 
-/turf/open/floor/rcd_act(mob/user, obj/item/weapon/construction/rcd/the_rcd, passed_mode)
+/turf/open/floor/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
 			to_chat(user, "<span class='notice'>You build a wall.</span>")
@@ -224,7 +231,7 @@
 			to_chat(user, "<span class='notice'>You build an airlock.</span>")
 			var/obj/machinery/door/airlock/A = new the_rcd.airlock_type(src)
 
-			A.electronics = new/obj/item/weapon/electronics/airlock(A)
+			A.electronics = new/obj/item/electronics/airlock(A)
 
 			if(the_rcd.conf_access)
 				A.electronics.accesses = the_rcd.conf_access.Copy()

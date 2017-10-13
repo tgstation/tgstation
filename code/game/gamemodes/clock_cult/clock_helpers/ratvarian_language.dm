@@ -106,6 +106,6 @@ List of nuances:
 		if(!whisper)
 			L.say(message, "clock", spans, language=/datum/language/common)
 		else
-			L.whisper(message)
+			L.whisper(message, "clock", spans, language=/datum/language/common)
 	else
 		AM.say(message, language=/datum/language/common)

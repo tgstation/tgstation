@@ -34,13 +34,13 @@
 	var/list/hostile_types = list()
 	var/number_of_hostiles
 	var/list/station_areas = list()
-	var/image/storm
+	var/mutable_appearance/storm
 
 /datum/round_event/portal_storm/setup()
-	storm = image('icons/obj/tesla_engine/energy_ball.dmi', "energy_ball_fast", layer=FLY_LAYER)
+	storm = 	storm = mutable_appearance('icons/obj/tesla_engine/energy_ball.dmi', "energy_ball_fast", FLY_LAYER)
 	storm.color = "#00FF00"
 
-	station_areas = get_areas_in_z(ZLEVEL_STATION)
+	station_areas = get_areas_in_z(ZLEVEL_STATION_PRIMARY)
 
 	number_of_bosses = 0
 	for(var/boss in boss_types)
@@ -68,11 +68,11 @@
 
 /datum/round_event/portal_storm/announce()
 	set waitfor = 0
-	playsound_global('sound/magic/lightning_chargeup.ogg', repeat=0, channel=1, volume=100)
+	sound_to_playing_players('sound/magic/lightning_chargeup.ogg')
 	sleep(80)
 	priority_announce("Massive bluespace anomaly detected en route to [station_name()]. Brace for impact.")
 	sleep(20)
-	playsound_global('sound/magic/lightningbolt.ogg', repeat=0, channel=1, volume=100)
+	sound_to_playing_players('sound/magic/lightningbolt.ogg')
 
 /datum/round_event/portal_storm/tick()
 	spawn_effects()

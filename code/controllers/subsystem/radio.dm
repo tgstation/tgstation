@@ -1,6 +1,5 @@
 SUBSYSTEM_DEF(radio)
 	name = "Radio"
-	init_order = 18
 	flags = SS_NO_FIRE|SS_NO_INIT
 
 	var/list/datum/radio_frequency/frequencies = list()

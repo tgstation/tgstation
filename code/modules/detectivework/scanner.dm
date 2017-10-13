@@ -8,11 +8,15 @@
 	icon_state = "forensicnew"
 	w_class = WEIGHT_CLASS_SMALL
 	item_state = "electronic"
-	flags = CONDUCT | NOBLUDGEON
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	flags_1 = CONDUCT_1 | NOBLUDGEON_1
 	slot_flags = SLOT_BELT
 	var/scanning = 0
 	var/list/log = list()
 	origin_tech = "engineering=4;biotech=2;programming=5"
+	var/range = 8
+	var/view_check = TRUE
 
 /obj/item/device/detective_scanner/attack_self(mob/user)
 	if(log.len && !scanning)
@@ -27,7 +31,7 @@
 
 /obj/item/device/detective_scanner/proc/PrintReport()
 	// Create our paper
-	var/obj/item/weapon/paper/P = new(get_turf(src))
+	var/obj/item/paper/P = new(get_turf(src))
 	P.name = "paper- 'Scanner Report'"
 	P.info = "<center><font size='6'><B>Scanner Report</B></font></center><HR><BR>"
 	P.info += jointext(log, "<BR>")
@@ -37,13 +41,13 @@
 	if(ismob(loc))
 		var/mob/M = loc
 		M.put_in_hands(P)
-		to_chat(M, "<span class='notice'>Report printed. Log cleared.<span>")
+		to_chat(M, "<span class='notice'>Report printed. Log cleared.</span>")
 
 	// Clear the logs
 	log = list()
 	scanning = 0
 
-/obj/item/device/detective_scanner/pre_attackby(atom/A, mob/user, params)
+/obj/item/device/detective_scanner/afterattack(atom/A, mob/user, params)
 	scan(A, user)
 	return FALSE
 
@@ -51,9 +55,7 @@
 	set waitfor = 0
 	if(!scanning)
 		// Can remotely scan objects and mobs.
-		if(!in_range(A, user) && !(A in view(world.view, user)))
-			return
-		if(loc != user)
+		if((get_dist(A, user) > range) || (!(A in view(range, user)) && view_check) || (loc != user))
 			return
 
 		scanning = 1

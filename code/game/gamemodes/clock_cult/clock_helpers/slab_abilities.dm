@@ -21,69 +21,58 @@
 		remove_ranged_ability()
 		return TRUE
 
-//For the Geis scripture; binds a target to convert.
-/obj/effect/proc_holder/slab/geis
-	ranged_mousepointer = 'icons/effects/geis_target.dmi'
+//For the Hateful Manacles scripture; applies replicant handcuffs to the target.
+/obj/effect/proc_holder/slab/hateful_manacles
 
-/obj/effect/proc_holder/slab/geis/InterceptClickOn(mob/living/caller, params, atom/target)
-	if(target == slab || ..())
+/obj/effect/proc_holder/slab/hateful_manacles/InterceptClickOn(mob/living/caller, params, atom/target)
+	if(..())
 		return TRUE
 
 	var/turf/T = ranged_ability_user.loc
 	if(!isturf(T))
 		return TRUE
 
-	var/target_is_binding = istype(target, /obj/structure/destructible/clockwork/geis_binding)
+	if(iscarbon(target) && target.Adjacent(ranged_ability_user))
+		var/mob/living/carbon/L = target
+		if(is_servant_of_ratvar(L))
+			to_chat(ranged_ability_user, "<span class='neovgre'>\"They're a servant.\"</span>")
+			return TRUE
+		else if(L.stat)
+			to_chat(ranged_ability_user, "<span class='neovgre'>\"There is use in shackling the dead, but for examples.\"</span>")
+			return TRUE
+		else if(L.handcuffed)
+			to_chat(ranged_ability_user, "<span class='neovgre'>\"They are already helpless, no?\"</span>")
+			return TRUE
 
-	if((target_is_binding || isliving(target)) && ranged_ability_user.Adjacent(target))
-		if(target_is_binding)
-			var/obj/structure/destructible/clockwork/geis_binding/GB = target
-			GB.repair_and_interrupt()
-			for(var/m in GB.buckled_mobs)
-				if(m)
-					add_logs(ranged_ability_user, m, "rebound with Geis")
-			successful = TRUE
+		playsound(loc, 'sound/weapons/handcuffs.ogg', 30, TRUE)
+		ranged_ability_user.visible_message("<span class='danger'>[ranged_ability_user] begins forming manacles around [L]'s wrists!</span>", \
+		"<span class='neovgre_small'>You begin shaping replicant alloy into manacles around [L]'s wrists...</span>")
+		to_chat(L, "<span class='userdanger'>[ranged_ability_user] begins forming manacles around your wrists!</span>")
+		if(do_mob(ranged_ability_user, L, 30))
+			if(!L.handcuffed)
+				L.handcuffed = new/obj/item/restraints/handcuffs/clockwork(L)
+				L.update_handcuffed()
+				to_chat(ranged_ability_user, "<span class='neovgre_small'>You shackle [L].</span>")
+				add_logs(ranged_ability_user, L, "handcuffed")
 		else
-			var/mob/living/L = target
-			if(L.null_rod_check())
-				to_chat(ranged_ability_user, "<span class='sevtug'>\"A void weapon? Really, you expect me to be able to do anything?\"</span>")
-				return TRUE
-			if(is_servant_of_ratvar(L))
-				if(L != ranged_ability_user)
-					to_chat(ranged_ability_user, "<span class='sevtug'>\"[L.p_they(TRUE)] already serve[L.p_s()] Ratvar. [text2ratvar("Perhaps [ranged_ability_user.p_theyre()] into bondage?")]\"</span>")
-				return TRUE
-			if(L.stat == DEAD)
-				to_chat(ranged_ability_user, "<span class='sevtug'>\"[L.p_theyre(TRUE)] dead, idiot.\"</span>")
-				return TRUE
+			to_chat(ranged_ability_user, "<span class='warning'>You fail to shackle [L].</span>")
 
-			if(istype(L.buckled, /obj/structure/destructible/clockwork/geis_binding)) //if they're already bound, just stun them
-				var/obj/structure/destructible/clockwork/geis_binding/GB = L.buckled
-				GB.repair_and_interrupt()
-				add_logs(ranged_ability_user, L, "rebound with Geis")
-				successful = TRUE
-			else
-				in_progress = TRUE
-				clockwork_say(ranged_ability_user, text2ratvar("Be bound, heathen!"))
-				remove_mousepointer(ranged_ability_user.client)
-				add_logs(ranged_ability_user, L, "bound with Geis")
-				if(slab.speed_multiplier >= 0.5) //excuse my debug...
-					ranged_ability_user.notransform = TRUE
-					addtimer(CALLBACK(src, .proc/reset_user_notransform, ranged_ability_user), 5) //stop us moving for a little bit so we don't break the scripture following this
-				slab.busy = null
-				var/datum/clockwork_scripture/geis/conversion = new
-				conversion.slab = slab
-				conversion.invoker = ranged_ability_user
-				conversion.target = target
-				conversion.run_scripture()
-				successful = TRUE
+		successful = TRUE
 
 		remove_ranged_ability()
 
 	return TRUE
 
-/obj/effect/proc_holder/slab/geis/proc/reset_user_notransform(mob/living/user)
-	if(user)
-		user.notransform = FALSE
+/obj/item/restraints/handcuffs/clockwork
+	name = "replicant manacles"
+	desc = "Cold, heavy manacles made out of some strange black metal."
+	origin_tech = "materials=2;magnets=5"
+	flags_1 = DROPDEL_1
+
+/obj/item/restraints/handcuffs/clockwork/dropped(mob/user)
+	user.visible_message("<span class='danger'>[user]'s [name] come apart at the seams!</span>", \
+	"<span class='userdanger'>Your [name] break apart as they're removed!</span>")
+	. = ..()
 
 //For the Sentinel's Compromise scripture; heals a target servant.
 /obj/effect/proc_holder/slab/compromise
@@ -116,38 +105,40 @@
 
 		successful = TRUE
 
+		to_chat(ranged_ability_user, "<span class='brass'>You bathe [L == ranged_ability_user ? "yourself":"[L]"] in Inath-neq's power!</span>")
 		var/targetturf = get_turf(L)
+		var/has_holy_water = (L.reagents && L.reagents.has_reagent("holywater"))
+		var/healseverity = max(round(totaldamage*0.05, 1), 1) //shows the general severity of the damage you just healed, 1 glow per 20
+		for(var/i in 1 to healseverity)
+			new /obj/effect/temp_visual/heal(targetturf, "#1E8CE1")
 		if(totaldamage)
 			L.adjustBruteLoss(-brutedamage)
 			L.adjustFireLoss(-burndamage)
 			L.adjustOxyLoss(-oxydamage)
 			L.adjustToxLoss(totaldamage * 0.5, TRUE, TRUE)
-			var/healseverity = max(round(totaldamage*0.05, 1), 1) //shows the general severity of the damage you just healed, 1 glow per 20
-			for(var/i in 1 to healseverity)
-				new /obj/effect/overlay/temp/heal(targetturf, "#1E8CE1")
-			clockwork_say(ranged_ability_user, text2ratvar("Mend wounded flesh!"))
+			clockwork_say(ranged_ability_user, text2ratvar("[has_holy_water ? "Heal tainted" : "Mend wounded"] flesh!"))
 			add_logs(ranged_ability_user, L, "healed with Sentinel's Compromise")
+			L.visible_message("<span class='warning'>A blue light washes over [L], [has_holy_water ? "causing [L.p_them()] to briefly glow as it mends" : " mending"] [L.p_their()] bruises and burns!</span>", \
+			"<span class='heavy_brass'>You feel Inath-neq's power healing your wounds[has_holy_water ? " and purging the darkness within you" : ""], but a deep nausea overcomes you!</span>")
 		else
 			clockwork_say(ranged_ability_user, text2ratvar("Purge foul darkness!"))
 			add_logs(ranged_ability_user, L, "purged of holy water with Sentinel's Compromise")
-		to_chat(ranged_ability_user, "<span class='brass'>You bathe [L == ranged_ability_user ? "yourself":"[L]"] in Inath-neq's power!</span>")
-		L.visible_message("<span class='warning'>A blue light washes over [L], mending [L.p_their()] bruises and burns!</span>", \
-		"<span class='heavy_brass'>You feel Inath-neq's power healing your wounds, but a deep nausea overcomes you!</span>")
-		playsound(targetturf, 'sound/magic/Staff_Healing.ogg', 50, 1)
+			L.visible_message("<span class='warning'>A blue light washes over [L], causing [L.p_them()] to briefly glow!</span>", \
+			"<span class='heavy_brass'>You feel Inath-neq's power purging the darkness within you!</span>")
+		playsound(targetturf, 'sound/magic/staff_healing.ogg', 50, 1)
 
-		if(L.reagents && L.reagents.has_reagent("holywater"))
+		if(has_holy_water)
 			L.reagents.remove_reagent("holywater", 1000)
-			to_chat(L, "<span class='heavy_brass'>Ratvar's light flares, banishing the darkness. Your devotion remains intact!</span>")
 
 		remove_ranged_ability()
 
 	return TRUE
 
-//For the Volt Void scripture, fires a ray of energy at a target location
-/obj/effect/proc_holder/slab/volt
+//For the Kindle scripture; stuns and mutes a target non-servant.
+/obj/effect/proc_holder/slab/kindle
 	ranged_mousepointer = 'icons/effects/volt_target.dmi'
 
-/obj/effect/proc_holder/slab/volt/InterceptClickOn(mob/living/caller, params, atom/target)
+/obj/effect/proc_holder/slab/kindle/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(..())
 		return TRUE
 
@@ -156,28 +147,63 @@
 		return TRUE
 
 	if(target in view(7, get_turf(ranged_ability_user)))
+
 		successful = TRUE
-		ranged_ability_user.visible_message("<span class='warning'>[ranged_ability_user] fires a ray of energy at [target]!</span>", "<span class='nzcrentr'>You fire a volt ray at [target].</span>")
-		playsound(ranged_ability_user, 'sound/effects/light_flicker.ogg', 50, 1)
-		var/turf/targetturf = get_turf(target)
-		var/obj/structure/destructible/clockwork/powered/volt_checker/VC = new/obj/structure/destructible/clockwork/powered/volt_checker(get_turf(ranged_ability_user))
-		var/multiplier = 1
-		var/usable_power = min(Floor(VC.total_accessable_power() * 0.2, MIN_CLOCKCULT_POWER), 1000)
-		if(VC.try_use_power(usable_power))
-			multiplier += (usable_power * 0.001) //should be a multiplier of 2 at maximum power usage
-		if(iscyborg(ranged_ability_user))
-			var/mob/living/silicon/robot/C = ranged_ability_user
-			if(C.cell)
-				var/prev_power = usable_power //we don't want to increase the multiplier past 2
-				usable_power = min(Floor(C.cell.charge * 0.2, MIN_CLOCKCULT_POWER), 1000) - prev_power
-				if(usable_power > 0 && C.cell.use(usable_power))
-					multiplier += (usable_power * 0.001)
-		qdel(VC)
-		new/obj/effect/overlay/temp/ratvar/volt_hit/true(targetturf, ranged_ability_user, multiplier)
-		add_logs(ranged_ability_user, targetturf, "fired a volt ray")
+
+		var/turf/U = get_turf(target)
+		to_chat(ranged_ability_user, "<span class='brass'>You release the light of Ratvar!</span>")
+		clockwork_say(ranged_ability_user, text2ratvar("Purge all untruths and honor Engine!"))
+		add_logs(ranged_ability_user, U, "fired at with Kindle")
+		playsound(ranged_ability_user, 'sound/magic/blink.ogg', 50, TRUE, frequency = 0.5)
+		var/obj/item/projectile/kindle/A = new(T)
+		A.original = target
+		A.starting = T
+		A.current = T
+		A.yo = U.y - T.y
+		A.xo = U.x - T.x
+		A.fire()
+
 		remove_ranged_ability()
 
 	return TRUE
+
+/obj/item/projectile/kindle
+	name = "kindled flame"
+	icon_state = "pulse0"
+	nodamage = TRUE
+	damage = 0 //We're just here for the stunning!
+	damage_type = BURN
+	flag = "bomb"
+	range = 3
+	log_override = TRUE
+
+/obj/item/projectile/kindle/Destroy()
+	visible_message("<span class='warning'>[src] flickers out!</span>")
+	. = ..()
+
+/obj/item/projectile/kindle/on_hit(atom/target, blocked = FALSE)
+	if(isliving(target))
+		var/mob/living/L = target
+		if(is_servant_of_ratvar(L) || L.stat || L.has_status_effect(STATUS_EFFECT_KINDLE))
+			return
+		var/obj/O = L.null_rod_check()
+		playsound(L, 'sound/magic/fireball.ogg', 50, TRUE, frequency = 1.25)
+		if(O)
+			L.visible_message("<span class='warning'>[L]'s eyes flare with dim light as they stumble!</span>", \
+			"<span class='userdanger'>Your [O] glows white-hot against you as it absorbs some sort of power!</span>")
+			L.adjustFireLoss(5)
+			L.Stun(40)
+			playsound(L, 'sound/weapons/sear.ogg', 50, TRUE)
+		else
+			L.visible_message("<span class='warning'>[L]'s eyes blaze with brilliant light!</span>", \
+			"<span class='userdanger'>Your vision suddenly screams with white-hot light!</span>")
+			L.Knockdown(15)
+			L.apply_status_effect(STATUS_EFFECT_KINDLE)
+			L.flash_act(1, 1)
+			if(iscultist(L))
+				L.adjustFireLoss(15)
+	..()
+
 
 //For the cyborg Linked Vanguard scripture, grants you and a nearby ally Vanguard
 /obj/effect/proc_holder/slab/vanguard

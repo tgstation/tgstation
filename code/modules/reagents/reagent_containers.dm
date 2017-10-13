@@ -1,4 +1,4 @@
-/obj/item/weapon/reagent_containers
+/obj/item/reagent_containers
 	name = "Container"
 	desc = "..."
 	icon = 'icons/obj/chemical.dmi'
@@ -12,9 +12,9 @@
 	var/disease_amount = 20
 	var/spillable = 0
 
-/obj/item/weapon/reagent_containers/New(location, vol = 0)
-	..()
-	if (isnum(vol) && vol > 0)
+/obj/item/reagent_containers/Initialize(mapload, vol)
+	. = ..()
+	if(isnum(vol) && vol > 0)
 		volume = vol
 	create_reagents(volume)
 	if(spawned_disease)
@@ -24,11 +24,11 @@
 
 	add_initial_reagents()
 
-/obj/item/weapon/reagent_containers/proc/add_initial_reagents()
+/obj/item/reagent_containers/proc/add_initial_reagents()
 	if(list_reagents)
 		reagents.add_reagent_list(list_reagents)
 
-/obj/item/weapon/reagent_containers/attack_self(mob/user)
+/obj/item/reagent_containers/attack_self(mob/user)
 	if(possible_transfer_amounts.len)
 		var/i=0
 		for(var/A in possible_transfer_amounts)
@@ -41,22 +41,23 @@
 				to_chat(user, "<span class='notice'>[src]'s transfer amount is now [amount_per_transfer_from_this] units.</span>")
 				return
 
-/obj/item/weapon/reagent_containers/attack(mob/M, mob/user, def_zone)
+/obj/item/reagent_containers/attack(mob/M, mob/user, def_zone)
 	if(user.a_intent == INTENT_HARM)
 		return ..()
 
-/obj/item/weapon/reagent_containers/afterattack(obj/target, mob/user , flag)
+/obj/item/reagent_containers/afterattack(obj/target, mob/user , flag)
 	return
 
-/obj/item/weapon/reagent_containers/proc/reagentlist(obj/item/weapon/reagent_containers/snack) //Attack logs for regents in pills
+/obj/item/reagent_containers/proc/reagentlist(obj/item/reagent_containers/snack) //Attack logs for regents in pills
 	var/data
 	if(snack.reagents.reagent_list && snack.reagents.reagent_list.len) //find a reagent list if there is and check if it has entries
 		for (var/datum/reagent/R in snack.reagents.reagent_list) //no reagents will be left behind
 			data += "[R.id]([R.volume] units); " //Using IDs because SOME chemicals(I'm looking at you, chlorhydrate-beer) have the same names as other chemicals.
 		return data
-	else return "No reagents"
+	else
+		return "No reagents"
 
-/obj/item/weapon/reagent_containers/proc/canconsume(mob/eater, mob/user)
+/obj/item/reagent_containers/proc/canconsume(mob/eater, mob/user)
 	if(!iscarbon(eater))
 		return 0
 	var/mob/living/carbon/C = eater
@@ -71,23 +72,23 @@
 		return 0
 	return 1
 
-/obj/item/weapon/reagent_containers/ex_act()
+/obj/item/reagent_containers/ex_act()
 	if(reagents)
 		for(var/datum/reagent/R in reagents.reagent_list)
 			R.on_ex_act()
 	if(!QDELETED(src))
 		..()
 
-/obj/item/weapon/reagent_containers/fire_act(exposed_temperature, exposed_volume)
+/obj/item/reagent_containers/fire_act(exposed_temperature, exposed_volume)
 	reagents.chem_temp += 30
 	reagents.handle_reactions()
 	..()
 
-/obj/item/weapon/reagent_containers/throw_impact(atom/target)
+/obj/item/reagent_containers/throw_impact(atom/target)
 	. = ..()
 	SplashReagents(target, TRUE)
 
-/obj/item/weapon/reagent_containers/proc/SplashReagents(atom/target, thrown = FALSE)
+/obj/item/reagent_containers/proc/SplashReagents(atom/target, thrown = FALSE)
 	if(!reagents || !reagents.total_volume || !spillable)
 		return
 
@@ -122,7 +123,7 @@
 
 	reagents.clear_reagents()
 
-/obj/item/weapon/reagent_containers/microwave_act(obj/machinery/microwave/M)
+/obj/item/reagent_containers/microwave_act(obj/machinery/microwave/M)
 	if(is_open_container())
 		reagents.chem_temp = max(reagents.chem_temp, 1000)
 		reagents.handle_reactions()

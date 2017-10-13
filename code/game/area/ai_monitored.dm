@@ -4,7 +4,7 @@
 	var/list/motionTargets = list()
 
 /area/ai_monitored/Initialize(mapload)
-	..()
+	. = ..()
 	if(mapload)
 		for (var/obj/machinery/camera/M in src)
 			if(M.isMotion())

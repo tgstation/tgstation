@@ -3,9 +3,9 @@
 	desc = "Used to view and edit personnel's security records."
 	icon_screen = "security"
 	icon_keyboard = "security_key"
-	req_one_access = list(GLOB.access_security, GLOB.access_forensics_lockers)
-	circuit = /obj/item/weapon/circuitboard/computer/secure_data
-	var/obj/item/weapon/card/id/scan = null
+	req_one_access = list(ACCESS_SECURITY, ACCESS_FORENSICS_LOCKERS)
+	circuit = /obj/item/circuitboard/computer/secure_data
+	var/obj/item/card/id/scan = null
 	var/authenticated = null
 	var/rank = null
 	var/screen = null
@@ -23,12 +23,22 @@
 
 	light_color = LIGHT_COLOR_RED
 
+/obj/machinery/computer/secure_data/syndie
+	icon_keyboard = "syndie_key"
+
+/obj/machinery/computer/secure_data/laptop
+	name = "security laptop"
+	desc = "A cheap Nanotrasen security laptop, it functions as a security records console. It's bolted to the table."
+	icon_state = "laptop"
+	icon_screen = "seclaptop"
+	icon_keyboard = "laptop_key"
+	clockwork = TRUE //it'd look weird
+
 /obj/machinery/computer/secure_data/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/weapon/card/id))
+	if(istype(O, /obj/item/card/id))
 		if(!scan)
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(O, src))
 				return
-			O.loc = src
 			scan = O
 			to_chat(user, "<span class='notice'>You insert [O].</span>")
 		else
@@ -164,18 +174,18 @@
 				if(3)
 					dat += "<font size='4'><b>Security Record</b></font><br>"
 					if(istype(active1, /datum/data/record) && GLOB.data_core.general.Find(active1))
-						if(istype(active1.fields["photo_front"], /obj/item/weapon/photo))
-							var/obj/item/weapon/photo/P1 = active1.fields["photo_front"]
+						if(istype(active1.fields["photo_front"], /obj/item/photo))
+							var/obj/item/photo/P1 = active1.fields["photo_front"]
 							user << browse_rsc(P1.img, "photo_front")
-						if(istype(active1.fields["photo_side"], /obj/item/weapon/photo))
-							var/obj/item/weapon/photo/P2 = active1.fields["photo_side"]
+						if(istype(active1.fields["photo_side"], /obj/item/photo))
+							var/obj/item/photo/P2 = active1.fields["photo_side"]
 							user << browse_rsc(P2.img, "photo_side")
 						dat += {"<table><tr><td><table>
 						<tr><td>Name:</td><td><A href='?src=\ref[src];choice=Edit Field;field=name'>&nbsp;[active1.fields["name"]]&nbsp;</A></td></tr>
 						<tr><td>ID:</td><td><A href='?src=\ref[src];choice=Edit Field;field=id'>&nbsp;[active1.fields["id"]]&nbsp;</A></td></tr>
 						<tr><td>Sex:</td><td><A href='?src=\ref[src];choice=Edit Field;field=sex'>&nbsp;[active1.fields["sex"]]&nbsp;</A></td></tr>
 						<tr><td>Age:</td><td><A href='?src=\ref[src];choice=Edit Field;field=age'>&nbsp;[active1.fields["age"]]&nbsp;</A></td></tr>"}
-						if(config.mutant_races)
+						if(CONFIG_GET(flag/join_with_mutant_race))
 							dat += "<tr><td>Species:</td><td><A href ='?src=\ref[src];choice=Edit Field;field=species'>&nbsp;[active1.fields["species"]]&nbsp;</A></td></tr>"
 						dat += {"<tr><td>Rank:</td><td><A href='?src=\ref[src];choice=Edit Field;field=rank'>&nbsp;[active1.fields["rank"]]&nbsp;</A></td></tr>
 						<tr><td>Fingerprint:</td><td><A href='?src=\ref[src];choice=Edit Field;field=fingerprint'>&nbsp;[active1.fields["fingerprint"]]&nbsp;</A></td></tr>
@@ -292,17 +302,13 @@ What a mess.*/
 
 			if("Confirm Identity")
 				if(scan)
-					if(ishuman(usr) && !usr.get_active_held_item())
-						usr.put_in_hands(scan)
-					else
-						scan.loc = get_turf(src)
+					usr.put_in_hands(scan)
 					scan = null
 				else
-					var/obj/item/I = usr.get_active_held_item()
-					if(istype(I, /obj/item/weapon/card/id))
-						if(!usr.drop_item())
+					var/obj/item/I = usr.is_holding_item_of_type(/obj/item/card/id)
+					if(I)
+						if(!usr.transferItemToLoc(I, src))
 							return
-						I.loc = src
 						scan = I
 
 			if("Log Out")
@@ -325,7 +331,7 @@ What a mess.*/
 					authenticated = usr.client.holder.admin_signature
 					rank = "Central Command"
 					screen = 1
-				else if(istype(scan, /obj/item/weapon/card/id))
+				else if(istype(scan, /obj/item/card/id))
 					active1 = null
 					active2 = null
 					if(check_access(scan))
@@ -358,11 +364,11 @@ What a mess.*/
 					GLOB.data_core.securityPrintCount++
 					playsound(loc, 'sound/items/poster_being_created.ogg', 100, 1)
 					sleep(30)
-					var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( loc )
+					var/obj/item/paper/P = new /obj/item/paper( loc )
 					P.info = "<CENTER><B>Security Record - (SR-[GLOB.data_core.securityPrintCount])</B></CENTER><BR>"
 					if((istype(active1, /datum/data/record) && GLOB.data_core.general.Find(active1)))
 						P.info += text("Name: [] ID: []<BR>\nSex: []<BR>\nAge: []<BR>", active1.fields["name"], active1.fields["id"], active1.fields["sex"], active1.fields["age"])
-						if(config.mutant_races)
+						if(CONFIG_GET(flag/join_with_mutant_race))
 							P.info += "\nSpecies: [active1.fields["species"]]<BR>"
 						P.info += text("\nFingerprint: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>", active1.fields["fingerprint"], active1.fields["p_stat"], active1.fields["m_stat"])
 					else
@@ -440,8 +446,8 @@ What a mess.*/
 							printing = 1
 							sleep(30)
 							if((istype(active1, /datum/data/record) && GLOB.data_core.general.Find(active1)))//make sure the record still exists.
-								var/obj/item/weapon/photo/photo = active1.fields["photo_front"]
-								new /obj/item/weapon/poster/wanted(src.loc, photo.img, wanted_name, info)
+								var/obj/item/photo/photo = active1.fields["photo_front"]
+								new /obj/item/poster/wanted(src.loc, photo.img, wanted_name, info)
 							printing = 0
 
 //RECORD DELETE
@@ -452,7 +458,7 @@ What a mess.*/
 				temp += "<a href='?src=\ref[src];choice=Clear Screen'>No</a>"
 
 			if("Purge All Records")
-				investigate_log("[usr.name] ([usr.key]) has purged all the security records.", "records")
+				investigate_log("[usr.name] ([usr.key]) has purged all the security records.", INVESTIGATE_RECORDS)
 				for(var/datum/data/record/R in GLOB.data_core.security)
 					qdel(R)
 				GLOB.data_core.security.Cut()
@@ -508,7 +514,7 @@ What a mess.*/
 				G.fields["rank"] = "Unassigned"
 				G.fields["sex"] = "Male"
 				G.fields["age"] = "Unknown"
-				if(config.mutant_races)
+				if(CONFIG_GET(flag/join_with_mutant_race))
 					G.fields["species"] = "Human"
 				G.fields["photo_front"] = new /icon()
 				G.fields["photo_side"] = new /icon()
@@ -565,13 +571,13 @@ What a mess.*/
 							if(istype(active2, /datum/data/record))
 								active2.fields["name"] = t1
 					if("id")
-						if(istype(active2,/datum/data/record) || istype(active1,/datum/data/record))
+						if(istype(active2, /datum/data/record) || istype(active1, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please input id:", "Secure. records", active1.fields["id"], null)
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
-							if(istype(active1,/datum/data/record))
+							if(istype(active1, /datum/data/record))
 								active1.fields["id"] = t1
-							if(istype(active2,/datum/data/record))
+							if(istype(active2, /datum/data/record))
 								active2.fields["id"] = t1
 					if("fingerprint")
 						if(istype(active1, /datum/data/record))
@@ -593,14 +599,14 @@ What a mess.*/
 							active1.fields["age"] = t1
 					if("species")
 						if(istype(active1, /datum/data/record))
-							var/t1 = input("Select a species", "Species Selection") as null|anything in GLOB.roundstart_species
+							var/t1 = input("Select a species", "Species Selection") as null|anything in CONFIG_GET(keyed_flag_list/roundstart_races)
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
 							active1.fields["species"] = t1
 					if("show_photo_front")
 						if(active1.fields["photo_front"])
-							if(istype(active1.fields["photo_front"], /obj/item/weapon/photo))
-								var/obj/item/weapon/photo/P = active1.fields["photo_front"]
+							if(istype(active1.fields["photo_front"], /obj/item/photo))
+								var/obj/item/photo/P = active1.fields["photo_front"]
 								P.show(usr)
 					if("upd_photo_front")
 						var/icon/photo = get_photo(usr)
@@ -609,8 +615,8 @@ What a mess.*/
 							active1.fields["photo_front"] = photo
 					if("show_photo_side")
 						if(active1.fields["photo_side"])
-							if(istype(active1.fields["photo_side"], /obj/item/weapon/photo))
-								var/obj/item/weapon/photo/P = active1.fields["photo_side"]
+							if(istype(active1.fields["photo_side"], /obj/item/photo))
+								var/obj/item/photo/P = active1.fields["photo_side"]
 								P.show(usr)
 					if("upd_photo_side")
 						var/icon/photo = get_photo(usr)
@@ -620,7 +626,7 @@ What a mess.*/
 					if("mi_crim_add")
 						if(istype(active1, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please input minor crime names:", "Secure. records", "", null)
-							var/t2 = stripped_multiline_input(usr, "Please input minor crime details:", "Secure. records", "", null)
+							var/t2 = stripped_input(usr, "Please input minor crime details:", "Secure. records", "", null)
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
 							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, worldtime2text())
@@ -634,7 +640,7 @@ What a mess.*/
 					if("ma_crim_add")
 						if(istype(active1, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please input major crime names:", "Secure. records", "", null)
-							var/t2 = stripped_multiline_input(usr, "Please input major crime details:", "Secure. records", "", null)
+							var/t2 = stripped_input(usr, "Please input major crime details:", "Secure. records", "", null)
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
 							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, worldtime2text())
@@ -696,18 +702,18 @@ What a mess.*/
 									active2.fields["criminal"] = "Parolled"
 								if("released")
 									active2.fields["criminal"] = "Discharged"
-							investigate_log("[active1.fields["name"]] has been set from [old_field] to [active2.fields["criminal"]] by [usr.name] ([usr.key]).", "records")
+							investigate_log("[active1.fields["name"]] has been set from [old_field] to [active2.fields["criminal"]] by [usr.name] ([usr.key]).", INVESTIGATE_RECORDS)
 							for(var/mob/living/carbon/human/H in GLOB.mob_list) //thanks for forcing me to do this, whoever wrote this shitty records system
 								H.sec_hud_set_security_status()
 					if("Delete Record (Security) Execute")
-						investigate_log("[usr.name] ([usr.key]) has deleted the security records for [active1.fields["name"]].", "records")
+						investigate_log("[usr.name] ([usr.key]) has deleted the security records for [active1.fields["name"]].", INVESTIGATE_RECORDS)
 						if(active2)
 							qdel(active2)
 							active2 = null
 
 					if("Delete Record (ALL) Execute")
 						if(active1)
-							investigate_log("[usr.name] ([usr.key]) has deleted all records for [active1.fields["name"]].", "records")
+							investigate_log("[usr.name] ([usr.key]) has deleted all records for [active1.fields["name"]].", INVESTIGATE_RECORDS)
 							for(var/datum/data/record/R in GLOB.data_core.medical)
 								if((R.fields["name"] == active1.fields["name"] || R.fields["id"] == active1.fields["id"]))
 									qdel(R)
@@ -726,14 +732,14 @@ What a mess.*/
 	return
 
 /obj/machinery/computer/secure_data/proc/get_photo(mob/user)
-	var/obj/item/weapon/photo/P = null
+	var/obj/item/photo/P = null
 	if(issilicon(user))
 		var/mob/living/silicon/tempAI = user
 		var/datum/picture/selection = tempAI.GetPhoto()
 		if(selection)
 			P = new()
 			P.photocreate(selection.fields["icon"], selection.fields["img"], selection.fields["desc"])
-	else if(istype(user.get_active_held_item(), /obj/item/weapon/photo))
+	else if(istype(user.get_active_held_item(), /obj/item/photo))
 		P = user.get_active_held_item()
 	return P
 
@@ -761,7 +767,7 @@ What a mess.*/
 				if(6)
 					R.fields["m_stat"] = pick("*Insane*", "*Unstable*", "*Watch*", "Stable")
 				if(7)
-					R.fields["species"] = pick(GLOB.roundstart_species)
+					R.fields["species"] = pick(CONFIG_GET(keyed_flag_list/roundstart_races))
 				if(8)
 					var/datum/data/record/G = pick(GLOB.data_core.general)
 					R.fields["photo_front"] = G.fields["photo_front"]

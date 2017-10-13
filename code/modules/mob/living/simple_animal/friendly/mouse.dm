@@ -13,11 +13,11 @@
 	see_in_dark = 6
 	maxHealth = 5
 	health = 5
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 1)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 1)
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "splats"
-	density = 0
+	density = FALSE
 	ventcrawler = VENTCRAWLER_ALWAYS
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
@@ -26,7 +26,8 @@
 	var/chew_probability = 1
 
 /mob/living/simple_animal/mouse/Initialize()
-	..()
+	. = ..()
+	AddComponent(/datum/component/squeak, list('sound/effects/mousesqueek.ogg'=1), 100)
 	if(!body_color)
 		body_color = pick( list("brown","gray","white") )
 	icon_state = "mouse_[body_color]"
@@ -42,7 +43,7 @@
 /mob/living/simple_animal/mouse/death(gibbed, toast)
 	if(!ckey)
 		..(1)
-		var/obj/item/trash/deadmouse/M = new(src.loc)
+		var/obj/item/reagent_containers/food/snacks/deadmouse/M = new(loc)
 		M.icon_state = icon_dead
 		M.name = name
 		if(toast)
@@ -56,8 +57,7 @@
 	if( ishuman(AM) )
 		if(!stat)
 			var/mob/M = AM
-			to_chat(M, "<span class='notice'>\icon[src] Squeek!</span>")
-			playsound(src, 'sound/effects/mousesqueek.ogg', 100, 1)
+			to_chat(M, "<span class='notice'>[icon2html(src, M)] Squeek!</span>")
 	..()
 
 /mob/living/simple_animal/mouse/handle_automated_action()
@@ -100,8 +100,12 @@
 	response_harm   = "splats"
 	gold_core_spawnable = 0
 
-/obj/item/trash/deadmouse
+/obj/item/reagent_containers/food/snacks/deadmouse
 	name = "dead mouse"
-	desc = "It looks like somebody dropped the bass on it."
+	desc = "It looks like somebody dropped the bass on it. A lizard's favorite meal."
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "mouse_gray_dead"
+	bitesize = 3
+	eatverb = "devours"
+	list_reagents = list("nutriment" = 3, "vitamin" = 2)
+	foodtype = GROSS | MEAT | RAW

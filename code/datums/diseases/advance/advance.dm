@@ -7,7 +7,7 @@
 
 */
 
-#define SYMPTOM_LIMIT 8
+#define SYMPTOM_LIMIT 6
 
 
 
@@ -18,7 +18,6 @@
  */
 
 /datum/disease/advance
-
 	name = "Unknown" // We will always let our Virologist name our disease.
 	desc = "An engineered disease which can contain a multitude of symptoms."
 	form = "Advance Disease" // Will let med-scanners know that this disease was engineered.
@@ -31,8 +30,8 @@
 	var/list/properties = list()
 	var/list/symptoms = list() // The symptoms of the disease.
 	var/id = ""
-	var/processing = 0
-	
+	var/processing = FALSE
+
 	// The order goes from easy to cure to hard to cure.
 	var/static/list/advance_cures = 	list(
 									"sodiumchloride", "sugar", "orangejuice",
@@ -58,7 +57,8 @@
 			symptoms = GenerateSymptoms(0, 2)
 		else
 			for(var/datum/symptom/S in D.symptoms)
-				symptoms += new S.type
+				var/datum/symptom/new_symp = S.Copy()
+				symptoms += new_symp
 
 	Refresh()
 	..(process, D)
@@ -76,7 +76,7 @@
 	if(symptoms && symptoms.len)
 
 		if(!processing)
-			processing = 1
+			processing = TRUE
 			for(var/datum/symptom/S in symptoms)
 				S.Start(src)
 
@@ -91,7 +91,7 @@
 	if(!(istype(D, /datum/disease/advance)))
 		return 0
 
-	if(src.GetDiseaseID() != D.GetDiseaseID())
+	if(GetDiseaseID() != D.GetDiseaseID())
 		return 0
 	return 1
 
@@ -116,14 +116,14 @@
 
 // Mix the symptoms of two diseases (the src and the argument)
 /datum/disease/advance/proc/Mix(datum/disease/advance/D)
-	if(!(src.IsSame(D)))
+	if(!(IsSame(D)))
 		var/list/possible_symptoms = shuffle(D.symptoms)
 		for(var/datum/symptom/S in possible_symptoms)
-			AddSymptom(new S.type)
+			AddSymptom(S.Copy())
 
 /datum/disease/advance/proc/HasSymptom(datum/symptom/S)
 	for(var/datum/symptom/symp in symptoms)
-		if(symp.id == S.id)
+		if(symp.type == S.type)
 			return 1
 	return 0
 
@@ -155,8 +155,7 @@
 
 	return generated
 
-/datum/disease/advance/proc/Refresh(new_name = 0)
-	//to_chat(world, "[src.name] \ref[src] - REFRESH!")
+/datum/disease/advance/proc/Refresh(new_name = FALSE)
 	GenerateProperties()
 	AssignProperties()
 	id = null
@@ -184,21 +183,19 @@
 		properties["stealth"] += S.stealth
 		properties["stage_rate"] += S.stage_speed
 		properties["transmittable"] += S.transmittable
-		properties["severity"] = max(properties["severity"], S.severity) // severity is based on the highest severity symptom
+		if(!S.neutered)
+			properties["severity"] = max(properties["severity"], S.severity) // severity is based on the highest severity non-neutered symptom
 	return
 
 // Assign the properties that are in the list.
 /datum/disease/advance/proc/AssignProperties()
 
 	if(properties && properties.len)
-		switch(properties["stealth"])
-			if(2,3)
-				visibility_flags = HIDDEN_SCANNER
-			if(4 to INFINITY)
-				visibility_flags = HIDDEN_SCANNER|HIDDEN_PANDEMIC
+		if(properties["stealth"] >= 2)
+			visibility_flags = HIDDEN_SCANNER
 
-		// The more symptoms we have, the less transmittable it is but some symptoms can make up for it.
-		SetSpread(Clamp(2 ** (properties["transmittable"] - symptoms.len), BLOOD, AIRBORNE))
+		SetSpread(Clamp(2 ** (properties["transmittable"] - symptoms.len), VIRUS_SPREAD_BLOOD, VIRUS_SPREAD_AIRBORNE))
+
 		permeability_mod = max(Ceiling(0.4 * properties["transmittable"]), 1)
 		cure_chance = 15 - Clamp(properties["resistance"], -5, 5) // can be between 10 and 20
 		stage_prob = max(properties["stage_rate"], 2)
@@ -211,35 +208,43 @@
 // Assign the spread type and give it the correct description.
 /datum/disease/advance/proc/SetSpread(spread_id)
 	switch(spread_id)
-		if(NON_CONTAGIOUS)
+		if(VIRUS_SPREAD_NON_CONTAGIOUS)
+			spread_flags = VIRUS_SPREAD_NON_CONTAGIOUS
 			spread_text = "None"
-		if(SPECIAL)
+		if(VIRUS_SPREAD_SPECIAL)
+			spread_flags = VIRUS_SPREAD_SPECIAL
 			spread_text = "None"
-		if(CONTACT_GENERAL, CONTACT_HANDS, CONTACT_FEET)
-			spread_text = "On contact"
-		if(AIRBORNE)
-			spread_text = "Airborne"
-		if(BLOOD)
+		if(VIRUS_SPREAD_BLOOD)
+			spread_flags = VIRUS_SPREAD_BLOOD
 			spread_text = "Blood"
-
-	spread_flags = spread_id
+		if(VIRUS_SPREAD_CONTACT_FLUIDS)
+			spread_flags = VIRUS_SPREAD_BLOOD | VIRUS_SPREAD_CONTACT_FLUIDS
+			spread_text = "Fluids"
+		if(VIRUS_SPREAD_CONTACT_SKIN)
+			spread_flags = VIRUS_SPREAD_BLOOD | VIRUS_SPREAD_CONTACT_FLUIDS | VIRUS_SPREAD_CONTACT_SKIN
+			spread_text = "On contact"
+		if(VIRUS_SPREAD_AIRBORNE)
+			spread_flags = VIRUS_SPREAD_BLOOD | VIRUS_SPREAD_CONTACT_FLUIDS | VIRUS_SPREAD_CONTACT_SKIN | VIRUS_SPREAD_AIRBORNE
+			spread_text = "Airborne"
 
 /datum/disease/advance/proc/SetSeverity(level_sev)
 
 	switch(level_sev)
 
 		if(-INFINITY to 0)
-			severity = NONTHREAT
+			severity = VIRUS_SEVERITY_POSITIVE
 		if(1)
-			severity = MINOR
+			severity = VIRUS_SEVERITY_NONTHREAT
 		if(2)
-			severity = MEDIUM
+			severity = VIRUS_SEVERITY_MINOR
 		if(3)
-			severity = HARMFUL
+			severity = VIRUS_SEVERITY_MEDIUM
 		if(4)
-			severity = DANGEROUS
-		if(5 to INFINITY)
-			severity = BIOHAZARD
+			severity = VIRUS_SEVERITY_HARMFUL
+		if(5)
+			severity = VIRUS_SEVERITY_DANGEROUS
+		if(6 to INFINITY)
+			severity = VIRUS_SEVERITY_BIOHAZARD
 		else
 			severity = "Unknown"
 
@@ -248,7 +253,6 @@
 /datum/disease/advance/proc/GenerateCure()
 	if(properties && properties.len)
 		var/res = Clamp(properties["resistance"] - (symptoms.len / 2), 1, advance_cures.len)
-		//to_chat(world, "Res = [res]")
 		cures = list(advance_cures[res])
 
 		// Get the cure name from the cure_id
@@ -263,7 +267,7 @@
 	var/s = safepick(GenerateSymptoms(min_level, max_level, 1))
 	if(s)
 		AddSymptom(s)
-		Refresh(1)
+		Refresh(TRUE)
 	return
 
 // Randomly remove a symptom.
@@ -272,7 +276,16 @@
 		var/s = safepick(symptoms)
 		if(s)
 			RemoveSymptom(s)
-			Refresh(1)
+			Refresh(TRUE)
+	return
+
+// Randomly neuter a symptom.
+/datum/disease/advance/proc/Neuter()
+	if(symptoms.len)
+		var/s = safepick(symptoms)
+		if(s)
+			NeuterSymptom(s)
+			Refresh(TRUE)
 	return
 
 // Name the disease.
@@ -285,7 +298,10 @@
 	if(!id)
 		var/list/L = list()
 		for(var/datum/symptom/S in symptoms)
-			L += S.id
+			if(S.neutered)
+				L += "[S.id]N"
+			else
+				L += S.id
 		L = sortList(L) // Sort the list so it doesn't matter which order the symptoms are in.
 		var/result = jointext(L, ":")
 		id = result
@@ -311,6 +327,12 @@
 	symptoms -= S
 	return
 
+// Neuter a symptom, so it will only affect stats
+/datum/disease/advance/proc/NeuterSymptom(datum/symptom/S)
+	if(!S.neutered)
+		S.neutered = TRUE
+		S.name += " (neutered)"
+
 /*
 
 	Static Procs
@@ -319,9 +341,6 @@
 
 // Mix a list of advance diseases and return the mixed result.
 /proc/Advance_Mix(var/list/D_list)
-
-	//to_chat(world, "Mixing!!!!")
-
 	var/list/diseases = list()
 
 	for(var/datum/disease/advance/A in D_list)
@@ -345,7 +364,6 @@
 		D2.Mix(D1)
 
 	 // Should be only 1 entry left, but if not let's only return a single entry
-	//to_chat(world, "END MIXING!!!!!")
 	var/datum/disease/advance/to_return = pick(diseases)
 	to_return.Refresh(1)
 	return to_return
@@ -395,11 +413,11 @@
 		D.AssignName(new_name)
 		D.Refresh()
 
-		for(var/datum/disease/advance/AD in SSdisease.processing)
+		for(var/datum/disease/advance/AD in SSdisease.active_diseases)
 			AD.Refresh()
 
 		for(var/mob/living/carbon/human/H in shuffle(GLOB.living_mob_list))
-			if(H.z != 1)
+			if(!(H.z in GLOB.station_z_levels))
 				continue
 			if(!H.HasDisease(D))
 				H.ForceContractDisease(D)
@@ -409,13 +427,6 @@
 		for(var/datum/symptom/S in D.symptoms)
 			name_symptoms += S.name
 		message_admins("[key_name_admin(user)] has triggered a custom virus outbreak of [D.name]! It has these symptoms: [english_list(name_symptoms)]")
-
-/*
-/mob/verb/test()
-
-	for(var/datum/disease/D in SSdisease.processing)
-		to_chat(src, "<a href='?_src_=vars;Vars=\ref[D]'>[D.name] - [D.holder]</a>")
-*/
 
 
 /datum/disease/advance/proc/totalStageSpeed()

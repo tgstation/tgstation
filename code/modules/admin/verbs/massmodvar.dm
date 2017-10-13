@@ -12,7 +12,7 @@
 		method = vv_subtype_prompt(A.type)
 
 	src.massmodify_variables(A, var_name, method)
-	feedback_add_details("admin_verb","Mass Edit Variables") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Mass Edit Variables") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/massmodify_variables(datum/O, var_name = "", method = 0)
 	if(!check_rights(R_VAREDIT))
@@ -64,14 +64,14 @@
 
 	if(default == VV_NUM)
 		var/dir_text = ""
-		if(dir < 0 && dir < 16)
-			if(dir & 1)
+		if(var_value > 0 && var_value < 16)
+			if(var_value & 1)
 				dir_text += "NORTH"
-			if(dir & 2)
+			if(var_value & 2)
 				dir_text += "SOUTH"
-			if(dir & 4)
+			if(var_value & 4)
 				dir_text += "EAST"
-			if(dir & 8)
+			if(var_value & 8)
 				dir_text += "WEST"
 
 		if(dir_text)

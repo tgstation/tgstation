@@ -8,9 +8,11 @@
 
 
 /obj/machinery/door/airlock/receive_signal(datum/signal/signal)
-	if(!signal || signal.encryption) return
+	if(!signal || signal.encryption)
+		return
 
-	if(id_tag != signal.data["tag"] || !signal.data["command"]) return
+	if(id_tag != signal.data["tag"] || !signal.data["command"])
+		return
 
 	switch(signal.data["command"])
 		if("open")
@@ -20,28 +22,28 @@
 			close(1)
 
 		if("unlock")
-			locked = 0
+			locked = FALSE
 			update_icon()
 
 		if("lock")
-			locked = 1
+			locked = TRUE
 			update_icon()
 
 		if("secure_open")
-			locked = 0
+			locked = FALSE
 			update_icon()
 
 			sleep(2)
 			open(1)
 
-			locked = 1
+			locked = TRUE
 			update_icon()
 
 		if("secure_close")
-			locked = 0
+			locked = FALSE
 			close(1)
 
-			locked = 1
+			locked = TRUE
 			sleep(2)
 			update_icon()
 
@@ -63,12 +65,14 @@
 
 /obj/machinery/door/airlock/open(surpress_send)
 	. = ..()
-	if(!surpress_send) send_status()
+	if(!surpress_send)
+		send_status()
 
 
 /obj/machinery/door/airlock/close(surpress_send)
 	. = ..()
-	if(!surpress_send) send_status()
+	if(!surpress_send)
+		send_status()
 
 
 /obj/machinery/door/airlock/proc/set_frequency(new_frequency)
@@ -88,7 +92,7 @@
 	name = "airlock sensor"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-	anchored = 1
+	anchored = TRUE
 	power_channel = ENVIRON
 
 	var/id_tag
@@ -97,8 +101,8 @@
 
 	var/datum/radio_frequency/radio_connection
 
-	var/on = 1
-	var/alert = 0
+	var/on = TRUE
+	var/alert = FALSE
 
 
 /obj/machinery/airlock_sensor/update_icon()
@@ -143,10 +147,9 @@
 	radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_AIRLOCK)
 
 /obj/machinery/airlock_sensor/Initialize()
-	..()
+	. = ..()
 	set_frequency(frequency)
 
 /obj/machinery/airlock_sensor/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src,frequency)
+	SSradio.remove_object(src,frequency)
 	return ..()

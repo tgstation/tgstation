@@ -18,18 +18,18 @@
 /mob/living/carbon/human/bee_friendly()
 	if(dna && dna.species && dna.species.id == "pod") //bees pollinate plants, duh.
 		return 1
-	if((wear_suit && (wear_suit.flags & THICKMATERIAL)) && (head && (head.flags & THICKMATERIAL)))
+	if((wear_suit && (wear_suit.flags_1 & THICKMATERIAL_1)) && (head && (head.flags_1 & THICKMATERIAL_1)))
 		return 1
 	return 0
 
 
 /obj/structure/beebox
 	name = "apiary"
-	desc = "Dr Miles Manners is just your average wasp-themed super hero by day, but by night he becomes DR BEES!"
+	desc = "Dr. Miles Manners is just your average wasp-themed super hero by day, but by night he becomes DR. BEES!"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "beebox"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	var/mob/living/simple_animal/hostile/poison/bees/queen/queen_bee = null
 	var/list/bees = list() //bees owned by the box, not those inside it
 	var/list/honeycombs = list()
@@ -45,9 +45,7 @@
 /obj/structure/beebox/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	bees.Cut()
-	bees = null
 	honeycombs.Cut()
-	honeycombs = null
 	queen_bee = null
 	return ..()
 
@@ -90,7 +88,7 @@
 		if(bee_resources >= BEE_RESOURCE_HONEYCOMB_COST)
 			if(honeycombs.len < get_max_honeycomb())
 				bee_resources = max(bee_resources-BEE_RESOURCE_HONEYCOMB_COST, 0)
-				var/obj/item/weapon/reagent_containers/honeycomb/HC = new(src)
+				var/obj/item/reagent_containers/honeycomb/HC = new(src)
 				if(queen_bee.beegent)
 					HC.set_reagent(queen_bee.beegent.id)
 				honeycombs += HC
@@ -138,7 +136,7 @@
 		to_chat(user, "<span class='notice'>There [plural? "are" : "is"] [honeycombs.len] uncollected honeycomb[plural ? "s":""] in the apiary.</span>")
 
 	if(honeycombs.len >= get_max_honeycomb())
-		to_chat(user, "<span class='warning'>there's no room for more honeycomb!</span>")
+		to_chat(user, "<span class='warning'>There's no room for more honeycomb!</span>")
 
 
 /obj/structure/beebox/attackby(obj/item/I, mob/user, params)
@@ -151,8 +149,9 @@
 			honey_frames += HF
 		else
 			to_chat(user, "<span class='warning'>There's no room for any more frames in the apiary!</span>")
+		return
 
-	if(istype(I, /obj/item/weapon/wrench))
+	if(istype(I, /obj/item/wrench))
 		if(default_unfasten_wrench(user, I, time = 20))
 			return
 
@@ -187,6 +186,9 @@
 			to_chat(user, "<span class='warning'>The queen bee disappeared! Disappearing bees have been in the news lately...</span>")
 
 		qdel(qb)
+		return
+
+	..()
 
 
 /obj/structure/beebox/attack_hand(mob/user)
@@ -203,8 +205,10 @@
 			bees = TRUE
 		if(bees)
 			visible_message("<span class='danger'>[user] disturbs the bees!</span>")
+		else
+			visible_message("<span class='danger'>[user] disturbs the [name] to no effect!</span>")
 	else
-		var/option = alert(user, "What action do you wish to perform?","Apiary","Remove a Honey Frame","Remove the Queen Bee")
+		var/option = alert(user, "What action do you wish to perform?","Apiary","Remove a Honey Frame","Remove the Queen Bee", "Cancel")
 		if(!Adjacent(user))
 			return
 		switch(option)
@@ -222,7 +226,7 @@
 					var/amtH = HF.honeycomb_capacity
 					var/fallen = 0
 					while(honeycombs.len && amtH) //let's pretend you always grab the frame with the most honeycomb on it
-						var/obj/item/weapon/reagent_containers/honeycomb/HC = pick_n_take(honeycombs)
+						var/obj/item/reagent_containers/honeycomb/HC = pick_n_take(honeycombs)
 						if(HC)
 							HC.loc = get_turf(user)
 							amtH--
@@ -244,3 +248,13 @@
 					QB.loc = get_turf(src)
 				visible_message("<span class='notice'>[user] removes the queen from the apiary.</span>")
 				queen_bee = null
+
+/obj/structure/beebox/deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/mineral/wood (loc, 20)
+	for(var/mob/living/simple_animal/hostile/poison/bees/B in bees)
+		if(B.loc == src)
+			B.loc = get_turf(src)
+	for(var/obj/item/honey_frame/HF in honey_frames)
+		if(HF.loc == src)
+			HF.loc = get_turf(src)
+	qdel(src)

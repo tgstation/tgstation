@@ -4,11 +4,11 @@
 	desc = "A brave janitor cyborg gave its life to produce such an amazing combination of speed and utility."
 	icon_state = "pussywagon"
 
-	var/obj/item/weapon/storage/bag/trash/mybag = null
+	var/obj/item/storage/bag/trash/mybag = null
 	var/floorbuffer = FALSE
 
 /obj/vehicle/janicart/Initialize(mapload)
-	..()
+	. = ..()
 	update_icon()
 
 /obj/vehicle/janicart/Destroy()
@@ -43,14 +43,13 @@
 
 
 /obj/vehicle/janicart/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/storage/bag/trash))
+	if(istype(I, /obj/item/storage/bag/trash))
 		if(mybag)
 			to_chat(user, "<span class='warning'>[src] already has a trashbag hooked!</span>")
 			return
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(I, src))
 			return
 		to_chat(user, "<span class='notice'>You hook the trashbag onto [src].</span>")
-		I.loc = src
 		mybag = I
 		update_icon()
 	else if(istype(I, /obj/item/janiupgrade))
@@ -60,7 +59,7 @@
 		floorbuffer = TRUE
 		qdel(I)
 		to_chat(user, "<span class='notice'>You upgrade [src] with the floor buffer.</span>")
-		flags |= CLEAN_ON_MOVE
+		flags_1 |= CLEAN_ON_MOVE_1
 		update_icon()
 	else
 		return ..()
@@ -78,7 +77,7 @@
 	if(..())
 		return 1
 	else if(mybag)
-		mybag.loc = get_turf(user)
+		mybag.forceMove(get_turf(user))
 		user.put_in_hands(mybag)
 		mybag = null
 		update_icon()

@@ -15,7 +15,7 @@
 	throw_speed	= 4
 	throw_range	= 20
 	origin_tech = "syndicate=1;engineering=3"
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 
 	var/obj/machinery/camera/current = null
 
@@ -124,7 +124,8 @@
 						// 15 second intervals ~ 1/4 minute
 						var/m = round(time_diff/4)
 						var/s = (time_diff - 4*m) * 15
-						if(!s) s = "00"
+						if(!s)
+							s = "00"
 						html += "Last seen near [outstring] ([m]:[s] minute\s ago)<br>"
 					if( C && (C.bug == src)) //Checks to see if the camera has a bug
 						html += "<a href='?src=\ref[src];emp=\ref[C]'>\[Disable\]</a>"
@@ -218,7 +219,7 @@
 		var/list/cameras = flatten_list(bugged_cameras)
 		var/obj/machinery/camera/C = locate(href_list["emp"]) in cameras
 		if(C && istype(C) && C.bug == src)
-			C.emp_act(1)
+			C.emp_act(EMP_HEAVY)
 			C.bug = null
 			bugged_cameras -= C.c_tag
 		interact()

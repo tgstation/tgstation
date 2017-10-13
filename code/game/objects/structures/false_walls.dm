@@ -4,7 +4,7 @@
 /obj/structure/falsewall
 	name = "wall"
 	desc = "A huge chunk of metal used to separate rooms."
-	anchored = 1
+	anchored = TRUE
 	icon = 'icons/turf/walls/wall.dmi'
 	icon_state = "wall"
 	var/mineral = /obj/item/stack/sheet/metal
@@ -12,9 +12,8 @@
 	var/walltype = /turf/closed/wall
 	var/girder_type = /obj/structure/girder/displaced
 	var/opening = 0
-	density = 1
+	density = TRUE
 	opacity = 1
-	obj_integrity = 100
 	max_integrity = 100
 
 	canSmoothWith = list(
@@ -27,7 +26,7 @@
 	/turf/closed/wall/r_wall/rust,
 	/turf/closed/wall/clockwork)
 	smooth = SMOOTH_TRUE
-	can_be_unanchored = 0
+	can_be_unanchored = FALSE
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
 /obj/structure/falsewall/New(loc)
@@ -35,7 +34,7 @@
 	air_update_turf(1)
 
 /obj/structure/falsewall/Destroy()
-	density = 0
+	density = FALSE
 	air_update_turf(1)
 	return ..()
 
@@ -52,7 +51,7 @@
 		do_the_flick()
 		sleep(5)
 		if(!QDELETED(src))
-			density = 0
+			density = FALSE
 			set_opacity(0)
 			update_icon()
 	else
@@ -61,7 +60,7 @@
 			opening = 0
 			return
 		do_the_flick()
-		density = 1
+		density = TRUE
 		sleep(5)
 		if(!QDELETED(src))
 			set_opacity(1)
@@ -92,12 +91,12 @@
 		qdel(src)
 	return T
 
-/obj/structure/falsewall/attackby(obj/item/weapon/W, mob/user, params)
+/obj/structure/falsewall/attackby(obj/item/W, mob/user, params)
 	if(opening)
 		to_chat(user, "<span class='warning'>You must wait until the door has stopped moving!</span>")
 		return
 
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(istype(W, /obj/item/screwdriver))
 		if(density)
 			var/turf/T = get_turf(src)
 			if(T.density)
@@ -111,26 +110,29 @@
 		else
 			to_chat(user, "<span class='warning'>You can't reach, close it first!</span>")
 
-	else if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
+	else if(istype(W, /obj/item/weldingtool))
+		var/obj/item/weldingtool/WT = W
 		if(WT.remove_fuel(0,user))
 			dismantle(user, TRUE)
-	else if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
+	else if(istype(W, /obj/item/gun/energy/plasmacutter))
 		dismantle(user, TRUE)
-	else if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
-		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
+	else if(istype(W, /obj/item/pickaxe/drill/jackhammer))
+		var/obj/item/pickaxe/drill/jackhammer/D = W
 		D.playDigSound()
 		dismantle(user, TRUE)
 	else
 		return ..()
 
-/obj/structure/falsewall/proc/dismantle(mob/user, disassembled = TRUE)
-	user.visible_message("<span class='notice'>[user] dismantles the false wall.</span>", "<span class='notice'>You dismantle the false wall.</span>")
-	playsound(src, 'sound/items/Welder.ogg', 100, 1)
+/obj/structure/falsewall/proc/dismantle(mob/user, disassembled=TRUE, obj/item/tool = null)
+	user.visible_message("[user] dismantles the false wall.", "<span class='notice'>You dismantle the false wall.</span>")
+	if(tool)
+		playsound(src, tool.usesound, 100, 1)
+	else
+		playsound(src, 'sound/items/welder.ogg', 100, 1)
 	deconstruct(disassembled)
 
 /obj/structure/falsewall/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(disassembled)
 			new girder_type(loc)
 		if(mineral_amount)
@@ -138,10 +140,11 @@
 				new mineral(loc)
 	qdel(src)
 
-/obj/structure/falsewall/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
-	return 0
+/obj/structure/falsewall/get_dumping_location(obj/item/storage/source,mob/user)
+	return null
 
 /obj/structure/falsewall/examine_status(mob/user) //So you can't detect falsewalls by examine.
+	to_chat(user, "<span class='notice'>The outer plating is <b>welded</b> firmly in place.</span>")
 	return null
 
 /*
@@ -155,6 +158,15 @@
 	icon_state = "r_wall"
 	walltype = /turf/closed/wall/r_wall
 	mineral = /obj/item/stack/sheet/plasteel
+
+/obj/structure/falsewall/reinforced/examine_status(mob/user)
+	to_chat(user, "<span class='notice'>The outer <b>grille</b> is fully intact.</span>")
+	return null
+
+/obj/structure/falsewall/reinforced/attackby(obj/item/tool, mob/user)
+	..()
+	if(istype(tool, /obj/item/wirecutters))
+		dismantle(user, TRUE, tool)
 
 /*
  * Uranium Falsewalls
@@ -171,7 +183,7 @@
 	var/last_event = 0
 	canSmoothWith = list(/obj/structure/falsewall/uranium, /turf/closed/wall/mineral/uranium)
 
-/obj/structure/falsewall/uranium/attackby(obj/item/weapon/W, mob/user, params)
+/obj/structure/falsewall/uranium/attackby(obj/item/W, mob/user, params)
 	radiate()
 	return ..()
 
@@ -220,7 +232,6 @@
 	mineral = /obj/item/stack/sheet/mineral/diamond
 	walltype = /turf/closed/wall/mineral/diamond
 	canSmoothWith = list(/obj/structure/falsewall/diamond, /turf/closed/wall/mineral/diamond)
-	obj_integrity = 800
 	max_integrity = 800
 
 /obj/structure/falsewall/plasma
@@ -232,16 +243,17 @@
 	walltype = /turf/closed/wall/mineral/plasma
 	canSmoothWith = list(/obj/structure/falsewall/plasma, /turf/closed/wall/mineral/plasma)
 
-/obj/structure/falsewall/plasma/attackby(obj/item/weapon/W, mob/user, params)
+/obj/structure/falsewall/plasma/attackby(obj/item/W, mob/user, params)
 	if(W.is_hot() > 300)
-		message_admins("Plasma falsewall ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-		log_game("Plasma falsewall ignited by [key_name(user)] in ([x],[y],[z])")
+		var/turf/T = get_turf(src)
+		message_admins("Plasma falsewall ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(T)]",0,1)
+		log_game("Plasma falsewall ignited by [key_name(user)] in [COORD(T)]")
 		burnbabyburn()
 	else
 		return ..()
 
 /obj/structure/falsewall/plasma/proc/burnbabyburn(user)
-	playsound(src, 'sound/items/Welder.ogg', 100, 1)
+	playsound(src, 'sound/items/welder.ogg', 100, 1)
 	atmos_spawn_air("plasma=400;TEMP=1000")
 	new /obj/structure/girder/displaced(loc)
 	qdel(src)
@@ -304,16 +316,17 @@
 	mineral = /obj/item/stack/sheet/mineral/titanium
 	walltype = /turf/closed/wall/mineral/titanium
 	smooth = SMOOTH_MORE
-	canSmoothWith = list(/turf/closed/wall/mineral/titanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock/, /turf/closed/wall/shuttle, /obj/structure/window/shuttle, /obj/structure/shuttle/engine, /obj/structure/shuttle/engine/heater, )
+	canSmoothWith = list(/turf/closed/wall/mineral/titanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/shuttle, /obj/structure/shuttle/engine/heater)
 
 /obj/structure/falsewall/plastitanium
 	name = "wall"
 	desc = "An evil wall of plasma and titanium."
-	icon = 'icons/turf/shuttle.dmi'
-	icon_state = "wall3"
+	icon = 'icons/turf/walls/plastitanium_wall.dmi'
+	icon_state = "shuttle"
 	mineral = /obj/item/stack/sheet/mineral/plastitanium
 	walltype = /turf/closed/wall/mineral/plastitanium
-	smooth = SMOOTH_FALSE
+	smooth = SMOOTH_MORE
+	canSmoothWith = list(/turf/closed/wall/mineral/plastitanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/shuttle, /obj/structure/shuttle/engine/heater)
 
 /obj/structure/falsewall/brass
 	name = "clockwork wall"
@@ -330,8 +343,8 @@
 /obj/structure/falsewall/brass/New(loc)
 	..()
 	var/turf/T = get_turf(src)
-	new /obj/effect/overlay/temp/ratvar/wall/false(T)
-	new /obj/effect/overlay/temp/ratvar/beam/falsewall(T)
+	new /obj/effect/temp_visual/ratvar/wall/false(T)
+	new /obj/effect/temp_visual/ratvar/beam/falsewall(T)
 	change_construction_value(4)
 
 /obj/structure/falsewall/brass/Destroy()

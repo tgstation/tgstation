@@ -5,7 +5,7 @@
 	return 0
 
 /mob/living/carbon/isloyal()
-	for(var/obj/item/weapon/implant/mindshield/L in implants)
+	for(var/obj/item/implant/mindshield/L in implants)
 		return 1
 
 
@@ -281,7 +281,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 /mob/proc/abiotic(full_body = 0)
 	for(var/obj/item/I in held_items)
-		if(!(I.flags & NODROP))
+		if(!(I.flags_1 & NODROP_1))
 			return 1
 	return 0
 
@@ -325,8 +325,11 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		return	B.eye_blind
 	return 0
 
+/mob/proc/hallucinating()
+	return FALSE
+
 /proc/is_special_character(mob/M) // returns 1 for special characters and 2 for heroes of gamemode //moved out of admins.dm because things other than admin procs were calling this.
-	if(!SSticker || !SSticker.mode)
+	if(!SSticker.HasRoundStarted())
 		return 0
 	if(!istype(M))
 		return 0
@@ -360,7 +363,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 				if(M.mind in SSticker.mode.changelings)
 					return 2
 			if("wizard")
-				if(M.mind in SSticker.mode.wizards)
+				if(iswizard(M))
 					return 2
 			if("apprentice")
 				if(M.mind in SSticker.mode.apprentices)
@@ -377,14 +380,14 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /mob/proc/reagent_check(datum/reagent/R) // utilized in the species code
 	return 1
 
-/proc/notify_ghosts(var/message, var/ghost_sound = null, var/enter_link = null, var/atom/source = null, var/image/alert_overlay = null, var/action = NOTIFY_JUMP, flashwindow = TRUE) //Easy notification of ghosts.
+/proc/notify_ghosts(var/message, var/ghost_sound = null, var/enter_link = null, var/atom/source = null, var/mutable_appearance/alert_overlay = null, var/action = NOTIFY_JUMP, flashwindow = TRUE) //Easy notification of ghosts.
 	if(SSatoms.initialized != INITIALIZATION_INNEW_REGULAR)	//don't notify for objects created during a map load
 		return
 	for(var/mob/dead/observer/O in GLOB.player_list)
 		if(O.client)
-			to_chat(O, "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""]<span>")
+			to_chat(O, "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""]</span>")
 			if(ghost_sound)
-				O << sound(ghost_sound)
+				SEND_SOUND(O, sound(ghost_sound))
 			if(flashwindow)
 				window_flash(O.client)
 			if(source)
@@ -396,17 +399,10 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 					A.action = action
 					A.target = source
 					if(!alert_overlay)
-						var/old_layer = source.layer
-						var/old_plane = source.plane
-						source.layer = FLOAT_LAYER
-						source.plane = FLOAT_PLANE
-						A.add_overlay(source)
-						source.layer = old_layer
-						source.plane = old_plane
-					else
-						alert_overlay.layer = FLOAT_LAYER
-						alert_overlay.plane = FLOAT_PLANE
-						A.add_overlay(alert_overlay)
+						alert_overlay = new(source)
+					alert_overlay.layer = FLOAT_LAYER
+					alert_overlay.plane = FLOAT_PLANE
+					A.add_overlay(alert_overlay)
 
 /proc/item_heal_robotic(mob/living/carbon/human/H, mob/user, brute_heal, burn_heal)
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
@@ -419,7 +415,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		if((brute_heal > 0 && affecting.brute_dam > 0) || (burn_heal > 0 && affecting.burn_dam > 0))
 			if(affecting.heal_damage(brute_heal, burn_heal, 1, 0))
 				H.update_damage_overlays()
-			user.visible_message("[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting].", "<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting].</span>")
+			user.visible_message("[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.name].", \
+			"<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.name].</span>")
 			return 1 //successful heal
 		else
 			to_chat(user, "<span class='warning'>[affecting] is already in good condition!</span>")
@@ -488,3 +485,6 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	var/list/timestamped_message = list("[LAZYLEN(logging[message_type]) + 1]\[[time_stamp()]\] [key_name(src)]" = message)
 
 	logging[message_type] += timestamped_message
+
+/mob/proc/can_hear()
+	. = TRUE

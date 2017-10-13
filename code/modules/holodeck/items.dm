@@ -7,13 +7,15 @@
 // Items
 //
 
-/obj/item/weapon/holo
+/obj/item/holo
 	damtype = STAMINA
 
-/obj/item/weapon/holo/esword
+/obj/item/holo/esword
 	name = "holographic energy sword"
-	desc = "May the force be with you. Sorta"
+	desc = "May the force be with you. Sorta."
 	icon_state = "sword0"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	force = 3.0
 	throw_speed = 2
 	throw_range = 5
@@ -23,28 +25,28 @@
 	armour_penetration = 50
 	var/active = 0
 
-/obj/item/weapon/holo/esword/green/New()
+/obj/item/holo/esword/green/New()
 	..()
 	item_color = "green"
 
 
-/obj/item/weapon/holo/esword/red/New()
+/obj/item/holo/esword/red/New()
 	..()
 	item_color = "red"
 
-/obj/item/weapon/holo/esword/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+/obj/item/holo/esword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(active)
 		return ..()
 	return 0
 
-/obj/item/weapon/holo/esword/attack(target as mob, mob/user as mob)
+/obj/item/holo/esword/attack(target as mob, mob/user as mob)
 	..()
 
-/obj/item/weapon/holo/esword/New()
+/obj/item/holo/esword/New()
 	item_color = pick("red","blue","green","purple")
 	..()
 
-/obj/item/weapon/holo/esword/attack_self(mob/living/user as mob)
+/obj/item/holo/esword/attack_self(mob/living/user as mob)
 	active = !active
 	if (active)
 		force = 30
@@ -66,7 +68,7 @@
 
 /obj/item/toy/beach_ball/holoball
 	name = "basketball"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "basketball"
 	item_state = "basketball"
 	desc = "Here's your chance, do your dance at the Space Jam."
@@ -85,7 +87,7 @@
 		playsound(src, 'sound/items/dodgeball.ogg', 50, 1)
 		M.apply_damage(10, STAMINA)
 		if(prob(5))
-			M.Weaken(3)
+			M.Knockdown(60)
 			visible_message("<span class='danger'>[M] is knocked right off [M.p_their()] feet!</span>")
 
 //
@@ -97,12 +99,12 @@
 	desc = "Boom, shakalaka!"
 	icon = 'icons/obj/basketball.dmi'
 	icon_state = "hoop"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 
-/obj/structure/holohoop/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/structure/holohoop/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(get_dist(src,user)<2)
-		if(user.drop_item(src))
+		if(user.transferItemToLoc(W, drop_location()))
 			visible_message("<span class='warning'> [user] dunks [W] into \the [src]!</span>")
 
 /obj/structure/holohoop/attack_hand(mob/user)
@@ -112,23 +114,21 @@
 			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 			return
 		L.loc = src.loc
-		L.Weaken(5)
+		L.Knockdown(100)
 		visible_message("<span class='danger'>[user] dunks [L] into \the [src]!</span>")
 		user.stop_pulling()
 	else
 		..()
 
-/obj/structure/holohoop/CanPass(atom/movable/mover, turf/target, height=0)
-	if (istype(mover,/obj/item) && mover.throwing)
-		var/obj/item/I = mover
-		if(istype(I, /obj/item/projectile))
-			return
+/obj/structure/holohoop/hitby(atom/movable/AM)
+	if (isitem(AM) && !istype(AM,/obj/item/projectile))
 		if(prob(50))
-			I.forceMove(get_turf(src))
-			visible_message("<span class='warning'>Swish! [I] lands in [src].</span>")
+			AM.forceMove(get_turf(src))
+			visible_message("<span class='warning'>Swish! [AM] lands in [src].</span>")
+			return
 		else
-			visible_message("<span class='danger'>[I] bounces off of [src]'s rim!</span>")
-		return 0
+			visible_message("<span class='danger'>[AM] bounces off of [src]'s rim!</span>")
+			return ..()
 	else
 		return ..()
 
@@ -145,10 +145,10 @@
 	icon_state = "auth_off"
 	var/ready = 0
 	var/area/currentarea = null
-	var/eventstarted = 0
+	var/eventstarted = FALSE
 
-	anchored = 1.0
-	use_power = 1
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 6
 	power_channel = ENVIRON
@@ -161,7 +161,7 @@
 	to_chat(user, "<span class='warning'>You are too primitive to use this device!</span>")
 	return
 
-/obj/machinery/readybutton/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/machinery/readybutton/attackby(obj/item/W as obj, mob/user as mob, params)
 	to_chat(user, "The device is a solid button, there's nothing you can do with it!")
 
 /obj/machinery/readybutton/attack_hand(mob/user as mob)
@@ -199,10 +199,10 @@
 
 /obj/machinery/readybutton/proc/begin_event()
 
-	eventstarted = 1
+	eventstarted = TRUE
 
 	for(var/obj/structure/window/W in currentarea)
-		if(W.flags&NODECONSTRUCT) // Just in case: only holo-windows
+		if(W.flags_1&NODECONSTRUCT_1) // Just in case: only holo-windows
 			qdel(W)
 
 	for(var/mob/M in currentarea)
@@ -211,11 +211,13 @@
 /obj/machinery/conveyor/holodeck
 
 /obj/machinery/conveyor/holodeck/attackby(obj/item/I, mob/user, params)
-	if(user.drop_item())
-		I.loc = src.loc
-	else
+	if(!user.transferItemToLoc(I, drop_location()))
 		return ..()
 
-/obj/item/weapon/paper/trek_diploma
+/obj/item/paper/fluff/holodeck/trek_diploma
 	name = "paper - Starfleet Academy Diploma"
 	info = {"<h2>Starfleet Academy</h2></br><p>Official Diploma</p></br>"}
+
+/obj/item/paper/fluff/holodeck/disclaimer
+	name = "Holodeck Disclaimer"
+	info = "Brusies sustained in the holodeck can be healed simply by sleeping."

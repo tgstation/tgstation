@@ -5,15 +5,14 @@
 // This was created for firing ranges, but I suppose this could have other applications - Doohl
 
 /obj/machinery/magnetic_module
-
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "floor_magnet-f"
 	name = "electromagnetic generator"
 	desc = "A device that uses station power to create points of magnetic energy."
 	level = 1		// underfloor
 	layer = LOW_OBJ_LAYER
-	anchored = 1
-	use_power = 1
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 
 	var/freq = 1449		// radio frequency
@@ -21,7 +20,7 @@
 	var/magnetic_field = 1 // the range of magnetic attraction
 	var/code = 0 // frequency code, they should be different unless you have a group of magnets working together or something
 	var/turf/center // the center of magnetic attraction
-	var/on = 0
+	var/on = FALSE
 	var/pulling = 0
 
 	// x, y modifiers to the center turf; (0, 0) is centered on the magnet, whereas (1, -1) is one tile right, one tile down
@@ -29,24 +28,21 @@
 	var/center_y = 0
 	var/max_dist = 20 // absolute value of center_x,y cannot exceed this integer
 
-/obj/machinery/magnetic_module/New()
+/obj/machinery/magnetic_module/Initialize()
 	..()
 	var/turf/T = loc
 	hide(T.intact)
 	center = T
+	SSradio.add_object(src, freq, GLOB.RADIO_MAGNETS)
+	return INITIALIZE_HINT_LATELOAD
 
-	spawn(10)	// must wait for map loading to finish
-		if(SSradio)
-			SSradio.add_object(src, freq, GLOB.RADIO_MAGNETS)
-
-	spawn()
-		magnetic_process()
+/obj/machinery/magnetic_module/LateInitialize()
+	magnetic_process()
 
 /obj/machinery/magnetic_module/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src, freq)
-	. = ..()
+	SSradio.remove_object(src, freq)
 	center = null
+	return ..()
 
 // update the invisibility and icon
 /obj/machinery/magnetic_module/hide(intact)
@@ -140,7 +136,7 @@
 
 /obj/machinery/magnetic_module/process()
 	if(stat & NOPOWER)
-		on = 0
+		on = FALSE
 
 	// Sanity checks:
 	if(electricity_level <= 0)
@@ -161,34 +157,24 @@
 
 	// Update power usage:
 	if(on)
-		use_power = 2
+		use_power = ACTIVE_POWER_USE
 		active_power_usage = electricity_level*15
 	else
-		use_power = 0
-
-
-		// Overload conditions:
-		/* // Eeeehhh kinda stupid
-		if(on)
-			if(electricity_level > 11)
-				if(prob(electricity_level))
-					explosion(loc, 0, 1, 2, 3) // ooo dat shit EXPLODES son
-					spawn(2)
-						qdel(src)
-		*/
+		use_power = NO_POWER_USE
 
 	updateicon()
 
 
 /obj/machinery/magnetic_module/proc/magnetic_process() // proc that actually does the pulling
-	if(pulling) return
+	if(pulling)
+		return
 	while(on)
 
 		pulling = 1
 		center = locate(x+center_x, y+center_y, z)
 		if(center)
 			for(var/obj/M in orange(magnetic_field, center))
-				if(!M.anchored && (M.flags & CONDUCT))
+				if(!M.anchored && (M.flags_1 & CONDUCT_1))
 					step_towards(M, center)
 
 			for(var/mob/living/silicon/S in orange(magnetic_field, center))
@@ -208,9 +194,9 @@
 	name = "magnetic control console"
 	icon = 'icons/obj/airlock_machines.dmi' // uses an airlock machine icon, THINK GREEN HELP THE ENVIRONMENT - RECYCLING!
 	icon_state = "airlock_control_standby"
-	density = 0
-	anchored = 1
-	use_power = 1
+	density = FALSE
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 45
 	var/frequency = 1449
 	var/code = 0
@@ -229,29 +215,22 @@
 	var/datum/radio_frequency/radio_connection
 
 
-/obj/machinery/magnetic_controller/New()
-	..()
-
+/obj/machinery/magnetic_controller/Initialize()
+	. = ..()
 	if(autolink)
 		for(var/obj/machinery/magnetic_module/M in GLOB.machines)
 			if(M.freq == frequency && M.code == code)
 				magnets.Add(M)
 
-
-	spawn(45)	// must wait for map loading to finish
-		if(SSradio)
-			radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_MAGNETS)
-
-
 	if(path) // check for default path
 		filter_path() // renders rpath
+	radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_MAGNETS)
 
 /obj/machinery/magnetic_controller/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src, frequency)
-	. = ..()
+	SSradio.remove_object(src, frequency)
 	magnets = null
 	rpath = null
+	return ..()
 
 /obj/machinery/magnetic_controller/process()
 	if(magnets.len == 0 && autolink)
@@ -355,7 +334,8 @@
 	updateUsrDialog()
 
 /obj/machinery/magnetic_controller/proc/MagnetMove()
-	if(looping) return
+	if(looping)
+		return
 
 	while(moving && rpath.len >= 1)
 

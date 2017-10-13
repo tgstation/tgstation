@@ -3,15 +3,15 @@
 	icon_state = "fab-idle"
 	name = "exosuit fabricator"
 	desc = "Nothing is being built."
-	density = 1
-	anchored = 1
-	use_power = 1
+	density = TRUE
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
 	active_power_usage = 5000
-	req_access = list(GLOB.access_robotics)
+	req_access = list(ACCESS_ROBOTICS)
+	circuit = /obj/item/circuitboard/machine/mechfab
 	var/time_coeff = 1
 	var/component_coeff = 1
-	var/datum/material_container/materials
 	var/datum/research/files
 	var/sync = 0
 	var/part_set
@@ -34,45 +34,37 @@
 								"Misc"
 								)
 
-/obj/machinery/mecha_part_fabricator/New()
-	..()
+/obj/machinery/mecha_part_fabricator/Initialize()
+	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container,
+	 list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE),
+		FALSE, list(/obj/item/stack, /obj/item/ore/bluespace_crystal), CALLBACK(src, .proc/is_insertion_ready))
+	materials.precise_insertion = TRUE
+	. = ..()
 	files = new /datum/research(src) //Setup the research data holder.
-	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE))
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/mechfab(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/mechfab
-	name = "Exosuit Fabricator (Machine Board)"
-	build_path = /obj/machinery/mecha_part_fabricator
-	origin_tech = "programming=2;engineering=2"
-	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 2,
-							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/weapon/stock_parts/micro_laser = 1,
-							/obj/item/weapon/stock_parts/console_screen = 1)
 
 /obj/machinery/mecha_part_fabricator/RefreshParts()
 	var/T = 0
 
 	//maximum stocking amount (default 300000, 600000 at T4)
-	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		T += M.rating
+	GET_COMPONENT(materials, /datum/component/material_container)
 	materials.max_amount = (200000 + (T*50000))
 
 	//resources adjustment coefficient (1 -> 0.85 -> 0.7 -> 0.55)
 	T = 1.15
-	for(var/obj/item/weapon/stock_parts/micro_laser/Ma in component_parts)
+	for(var/obj/item/stock_parts/micro_laser/Ma in component_parts)
 		T -= Ma.rating*0.15
 	component_coeff = T
 
 	//building time adjustment coefficient (1 -> 0.8 -> 0.6)
 	T = -1
-	for(var/obj/item/weapon/stock_parts/manipulator/Ml in component_parts)
+	for(var/obj/item/stock_parts/manipulator/Ml in component_parts)
 		T += Ml.rating
 	time_coeff = round(initial(time_coeff) - (initial(time_coeff)*(T))/5,0.01)
 
 
-/obj/machinery/mecha_part_fabricator/check_access(obj/item/weapon/card/id/I)
+/obj/machinery/mecha_part_fabricator/check_access(obj/item/card/id/I)
 	if(istype(I, /obj/item/device/pda))
 		var/obj/item/device/pda/pda = I
 		I = pda.id
@@ -86,8 +78,8 @@
 /obj/machinery/mecha_part_fabricator/emag_act()
 	if(emagged)
 		return
-
-	emagged = 0.5
+	emagged = TRUE
+	req_access = list()
 	say("DB error \[Code 0x00F1\]")
 	sleep(10)
 	say("Attempting auto-repair...")
@@ -95,8 +87,7 @@
 	say("User DB corrupted \[Code 0x00FA\]. Truncating data structure...")
 	sleep(30)
 	say("User DB truncated. Please contact your Nanotrasen system operator for future assistance.")
-	req_access = null
-	emagged = 1
+
 
 /obj/machinery/mecha_part_fabricator/proc/output_parts_list(set_name)
 	var/output = ""
@@ -125,6 +116,7 @@
 
 /obj/machinery/mecha_part_fabricator/proc/output_available_resources()
 	var/output
+	GET_COMPONENT(materials, /datum/component/material_container)
 	for(var/mat_id in materials.materials)
 		var/datum/material/M = materials.materials[mat_id]
 		output += "<span class=\"res_name\">[M.name]: </span>[M.amount] cm&sup3;"
@@ -145,6 +137,7 @@
 /obj/machinery/mecha_part_fabricator/proc/check_resources(datum/design/D)
 	if(D.reagents_list.len) // No reagents storage - no reagent designs.
 		return 0
+	GET_COMPONENT(materials, /datum/component/material_container)
 	if(materials.has_materials(get_resources_w_coeff(D)))
 		return 1
 	return 0
@@ -154,12 +147,13 @@
 	desc = "It's building \a [initial(D.name)]."
 	var/list/res_coef = get_resources_w_coeff(D)
 
+	GET_COMPONENT(materials, /datum/component/material_container)
 	materials.use_amount(res_coef)
 	add_overlay("fab-active")
-	use_power = 2
+	use_power = ACTIVE_POWER_USE
 	updateUsrDialog()
 	sleep(get_construction_time_w_coeff(D))
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	cut_overlay("fab-active")
 	desc = initial(desc)
 
@@ -410,14 +404,27 @@
 					break
 
 	if(href_list["remove_mat"] && href_list["material"])
+		GET_COMPONENT(materials, /datum/component/material_container)
 		materials.retrieve_sheets(text2num(href_list["remove_mat"]), href_list["material"])
 
 	updateUsrDialog()
 	return
 
 /obj/machinery/mecha_part_fabricator/on_deconstruction()
+	GET_COMPONENT(materials, /datum/component/material_container)
 	materials.retrieve_all()
 	..()
+
+/obj/machinery/mecha_part_fabricator/ComponentActivated(datum/component/C)
+	..()
+	if(istype(C, /datum/component/material_container))
+		var/datum/component/material_container/M = C
+		if(!M.last_insert_success)
+			return
+		var/stack_name = material2name(M.last_inserted_id)
+		add_overlay("fab-load-[stack_name]")
+		addtimer(CALLBACK(src, /atom/proc/cut_overlay, "fab-load-[stack_name]"), 10)
+		updateUsrDialog()
 
 /obj/machinery/mecha_part_fabricator/attackby(obj/item/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "fab-o", "fab-idle", W))
@@ -429,55 +436,7 @@
 	if(default_deconstruction_crowbar(W))
 		return 1
 
-	if(istype(W, /obj/item/stack/sheet))
-
-		if(!is_insertion_ready(user))
-			return 1
-
-		var/material_amount = materials.get_item_material_amount(W)
-
-		if(!try_insert(user, W, material_amount))
-			return 1
-
-		var/inserted = materials.insert_item(W)
-		if(inserted)
-			to_chat(user, "<span class='notice'>You insert [inserted] sheet\s into [src].</span>")
-			if(W && W.materials.len)
-				if(!QDELETED(W))
-					user.put_in_active_hand(W)
-				var/mat_overlay = "fab-load-[material2name(W.materials[1])]"
-				add_overlay(mat_overlay)
-				sleep(10)
-				if(!QDELETED(src))
-					cut_overlay(mat_overlay) //No matter what the overlay shall still be deleted
-
-		updateUsrDialog()
-
-	else if(istype(W, /obj/item/weapon/ore/bluespace_crystal))
-
-		if(!is_insertion_ready(user))
-			return 1
-
-		var/material_amount = materials.get_item_material_amount(W)
-
-		if(!try_insert(user, W, material_amount))
-			return 1
-
-		var/inserted = materials.insert_item(W)
-		if(inserted)
-			to_chat(user, "<span class='notice'>You add [W] to the [src].</span>")
-			if(W && W.materials.len)
-				qdel(W)
-				var/mat_overlay = "fab-load-bluespace"
-				add_overlay(mat_overlay)
-				sleep(10)
-				if(!QDELETED(src))
-					cut_overlay(mat_overlay)
-
-		updateUsrDialog()
-
-	else
-		return ..()
+	return ..()
 
 /obj/machinery/mecha_part_fabricator/proc/material2name(ID)
 	return copytext(ID,2)
@@ -488,20 +447,6 @@
 		return FALSE
 	if(being_built)
 		to_chat(user, "<span class='warning'>\The [src] is currently processing! Please wait until completion.</span>")
-		return FALSE
-
-	return TRUE
-
-
-/obj/machinery/mecha_part_fabricator/proc/try_insert(mob/user, obj/item/I, material_amount)
-	if(!material_amount)
-		to_chat(user, "<span class='warning'>This object does not contain sufficient amounts of materials to be accepted by [src].</span>")
-		return FALSE
-	if(!materials.has_space(material_amount))
-		to_chat(user, "<span class='warning'>\The [src] is full. Please remove some materials from [src] in order to insert more.</span>")
-		return FALSE
-	if(!user.temporarilyRemoveItemFromInventory(I))
-		to_chat(user, "<span class='warning'>\The [I] is stuck to you and cannot be placed into [src].</span>")
 		return FALSE
 
 	return TRUE

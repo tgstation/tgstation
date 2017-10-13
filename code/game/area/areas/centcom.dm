@@ -2,26 +2,26 @@
 // CENTCOM
 
 /area/centcom
-	name = "Centcom"
+	name = "CentCom"
 	icon_state = "centcom"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
-	requires_power = 0
-	has_gravity = 1
-	noteleport = 1
-	blob_allowed = 0 //Should go without saying, no blobs should take over centcom as a win condition.
-	flags = NONE
+	requires_power = FALSE
+	has_gravity = TRUE
+	noteleport = TRUE
+	blob_allowed = FALSE //Should go without saying, no blobs should take over centcom as a win condition.
+	flags_1 = NONE
 
 /area/centcom/control
-	name = "Centcom Docks"
+	name = "CentCom Docks"
 
 /area/centcom/evac
-	name = "Centcom Recovery Ship"
+	name = "CentCom Recovery Ship"
 
 /area/centcom/supply
-	name = "Centcom Supply Shuttle Dock"
+	name = "CentCom Supply Shuttle Dock"
 
 /area/centcom/ferry
-	name = "Centcom Transport Shuttle Dock"
+	name = "CentCom Transport Shuttle Dock"
 
 /area/centcom/prison
 	name = "Admin Prison"
@@ -35,8 +35,9 @@
 	name = "Thunderdome"
 	icon_state = "yellow"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
-	requires_power = 0
-	has_gravity = 1
+	requires_power = FALSE
+	has_gravity = TRUE
+	flags_1 = NONE
 
 /area/tdome/arena
 	name = "Thunderdome Arena"
@@ -72,26 +73,29 @@
 	name = "Wizard's Den"
 	icon_state = "yellow"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
-	requires_power = 0
-	has_gravity = 1
-	noteleport = 1
+	requires_power = FALSE
+	has_gravity = TRUE
+	noteleport = TRUE
+	flags_1 = NONE
 
 //Abductors
 /area/abductor_ship
 	name = "Abductor Ship"
 	icon_state = "yellow"
-	requires_power = 0
-	noteleport = 1
-	has_gravity = 1
+	requires_power = FALSE
+	noteleport = TRUE
+	has_gravity = TRUE
+	flags_1 = NONE
 
 //Syndicates
 /area/syndicate_mothership
 	name = "Syndicate Mothership"
 	icon_state = "syndie-ship"
-	requires_power = 0
-	has_gravity = 1
-	noteleport = 1
-	blob_allowed = 0 //Not... entirely sure this will ever come up... but if the bus makes blobs AND ops, it shouldn't aim for the ops to win.
+	requires_power = FALSE
+	has_gravity = TRUE
+	noteleport = TRUE
+	blob_allowed = FALSE //Not... entirely sure this will ever come up... but if the bus makes blobs AND ops, it shouldn't aim for the ops to win.
+	flags_1 = NONE
 
 /area/syndicate_mothership/control
 	name = "Syndicate Control Room"
@@ -109,9 +113,9 @@
 /area/ctf
 	name = "Capture the Flag"
 	icon_state = "yellow"
-	requires_power = 0
-	has_gravity = 1
-	flags = NO_DEATHRATTLE
+	requires_power = FALSE
+	has_gravity = TRUE
+	flags_1 = NO_DEATHRATTLE_1
 
 /area/ctf/control_room
 	name = "Control Room A"
@@ -139,3 +143,18 @@
 
 /area/ctf/flag_room2
 	name = "Flag Room B"
+
+// REEBE
+
+/area/reebe
+	name = "Reebe"
+	icon_state = "yellow"
+	requires_power = FALSE
+	has_gravity = TRUE
+	noteleport = TRUE
+	hidden = TRUE
+
+/area/reebe/city_of_cogs
+	name = "City of Cogs"
+	icon_state = "purple"
+	hidden = FALSE

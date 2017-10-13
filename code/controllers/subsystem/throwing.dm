@@ -6,6 +6,7 @@ SUBSYSTEM_DEF(throwing)
 	priority = 25
 	wait = 1
 	flags = SS_NO_INIT|SS_KEEP_TIMING|SS_TICKER
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/currentrun
 	var/list/processing = list()
@@ -56,11 +57,18 @@ SUBSYSTEM_DEF(throwing)
 	var/pure_diagonal
 	var/diagonal_error
 	var/datum/callback/callback
+	var/paused = FALSE
+	var/delayed_time = 0
+	var/last_move = 0
 
 /datum/thrownthing/proc/tick()
 	var/atom/movable/AM = thrownthing
 	if (!isturf(AM.loc) || !AM.throwing)
 		finalize()
+		return
+
+	if(paused)
+		delayed_time += world.time - last_move
 		return
 
 	if (dist_travelled && hitcheck()) //to catch sneaky things moving on our tile while we slept
@@ -69,8 +77,10 @@ SUBSYSTEM_DEF(throwing)
 
 	var/atom/step
 
+	last_move = world.time
+
 	//calculate how many tiles to move, making up for any missed ticks.
-	var/tilestomove = Ceiling(min(((((world.time+world.tick_lag) - start_time) * speed) - (dist_travelled ? dist_travelled : -1)), speed*MAX_TICKS_TO_MAKE_UP) * (world.tick_lag * SSthrowing.wait))
+	var/tilestomove = Ceiling(min(((((world.time+world.tick_lag) - start_time + delayed_time) * speed) - (dist_travelled ? dist_travelled : -1)), speed*MAX_TICKS_TO_MAKE_UP) * (world.tick_lag * SSthrowing.wait))
 	while (tilestomove-- > 0)
 		if ((dist_travelled >= maxrange || AM.loc == target_turf) && AM.has_gravity(AM.loc))
 			finalize()
@@ -102,7 +112,7 @@ SUBSYSTEM_DEF(throwing)
 			finalize()
 			return
 
-/datum/thrownthing/proc/finalize(hit = FALSE)
+/datum/thrownthing/proc/finalize(hit = FALSE, target=null)
 	set waitfor = 0
 	SSthrowing.processing -= thrownthing
 	//done throwing, either because it hit something or it finished moving
@@ -119,20 +129,21 @@ SUBSYSTEM_DEF(throwing)
 			thrownthing.newtonian_move(init_dir)
 	else
 		thrownthing.newtonian_move(init_dir)
+
+	if(target)
+		thrownthing.throw_impact(target, src)
+
 	if (callback)
 		callback.Invoke()
 
 /datum/thrownthing/proc/hit_atom(atom/A)
-	thrownthing.throw_impact(A, src)
-	thrownthing.newtonian_move(init_dir)
-	finalize(TRUE)
+	finalize(hit=TRUE, target=A)
 
 /datum/thrownthing/proc/hitcheck()
 	for (var/thing in get_turf(thrownthing))
 		var/atom/movable/AM = thing
 		if (AM == thrownthing)
 			continue
-		if (AM.density && !(AM.pass_flags & LETPASSTHROW) && !(AM.flags & ON_BORDER))
-			thrownthing.throwing = null
-			thrownthing.throw_impact(AM, src)
+		if (AM.density && !(AM.pass_flags & LETPASSTHROW) && !(AM.flags_1 & ON_BORDER_1))
+			finalize(hit=TRUE, target=AM)
 			return TRUE

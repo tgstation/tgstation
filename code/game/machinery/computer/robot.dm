@@ -6,8 +6,8 @@
 	desc = "Used to remotely lockdown or detonate linked Cyborgs."
 	icon_screen = "robot"
 	icon_keyboard = "rd_key"
-	req_access = list(GLOB.access_robotics)
-	circuit = /obj/item/weapon/circuitboard/computer/robotics
+	req_access = list(ACCESS_ROBOTICS)
+	circuit = /obj/item/circuitboard/computer/robotics
 	var/temp = null
 
 	light_color = LIGHT_COLOR_PINK
@@ -113,7 +113,8 @@
 							to_chat(R.connected_ai, "<br><br><span class='alert'>ALERT - Cyborg detonation detected: [R.name]</span><br>")
 						R.ResetSecurityCodes()
 					else
-						message_admins("<span class='notice'>[key_name_admin(usr)] (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) detonated [key_name(R, R.client)](<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[R.x];Y=[R.y];Z=[R.z]'>JMP</a>)!</span>")
+						var/turf/T = get_turf(R)
+						message_admins("<span class='notice'>[ADMIN_LOOKUPFLW(usr)] detonated [key_name(R, R.client)][ADMIN_JMP(T)]!</span>")
 						log_game("\<span class='notice'>[key_name(usr)] detonated [key_name(R)]!</span>")
 						if(R.connected_ai)
 							to_chat(R.connected_ai, "<br><br><span class='alert'>ALERT - Cyborg detonation detected: [R.name]</span><br>")
@@ -127,7 +128,7 @@
 			if(can_control(usr, R))
 				var/choice = input("Are you certain you wish to [R.canmove ? "lock down" : "release"] [R.name]?") in list("Confirm", "Abort")
 				if(choice == "Confirm" && can_control(usr, R) && !..())
-					message_admins("<span class='notice'>[key_name_admin(usr)] (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) [R.canmove ? "locked down" : "released"] [key_name(R, R.client)](<A HREF='?_src_=holder;adminplayerobservefollow=\ref[R]'>FLW</A>)!</span>")
+					message_admins("<span class='notice'>[ADMIN_LOOKUPFLW(usr)] [R.canmove ? "locked down" : "released"] [key_name(R, R.client)][ADMIN_LOOKUPFLW(R)]!</span>")
 					log_game("[key_name(usr)] [R.canmove ? "locked down" : "released"] [key_name(R)]!")
 					R.SetLockdown(!R.lockcharge)
 					to_chat(R, "[!R.lockcharge ? "<span class='notice'>Your lockdown has been lifted!" : "<span class='alert'>You have been locked down!"]</span>")
@@ -157,15 +158,19 @@
 
 	else if (href_list["killdrone"])
 		if(src.allowed(usr))
-			var/mob/living/simple_animal/drone/D = locate(href_list["killdrone"])
+			var/mob/living/simple_animal/drone/D = locate(href_list["killdrone"]) in GLOB.mob_list
 			if(D.hacked)
 				to_chat(usr, "<span class='danger'>ERROR: [D] is not responding to external commands.</span>")
 			else
+				var/turf/T = get_turf(D)
+				message_admins("[ADMIN_LOOKUPFLW(usr)] detonated [key_name_admin(D)][ADMIN_JMP(T)]!")
+				log_game("[key_name(usr)] detonated [key_name(D)]!")
 				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 				s.set_up(3, 1, D)
 				s.start()
 				D.visible_message("<span class='danger'>\the [D] self destructs!</span>")
 				D.gib()
+
 
 	src.updateUsrDialog()
 	return

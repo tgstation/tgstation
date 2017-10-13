@@ -18,7 +18,7 @@
 	return
 
 /mob/living/proc/spawn_gibs()
-	new /obj/effect/gibspawner/generic(loc, viruses)
+	new /obj/effect/gibspawner/generic(get_turf(src), null, get_static_viruses())
 
 /mob/living/proc/spill_organs()
 	return
@@ -49,8 +49,10 @@
 	timeofdeath = world.time
 	tod = worldtime2text()
 	var/turf/T = get_turf(src)
-	if(mind && mind.name && mind.active && (!(T.flags & NO_DEATHRATTLE)))
-		var/area/A = get_area(T)
+	var/area/A = get_area(T)
+	for(var/obj/item/I in contents)
+		I.on_mob_death(src, gibbed)
+	if(mind && mind.name && mind.active && (!(T.flags_1 & NO_DEATHRATTLE_1)))
 		var/rendered = "<span class='deadsay'><b>[mind.name]</b> has died at <b>[A.name]</b>.</span>"
 		deadchat_broadcast(rendered, follow_target = src, turf_target = T, message_type=DEADCHAT_DEATHRATTLE)
 	if(mind)
@@ -58,10 +60,8 @@
 	GLOB.living_mob_list -= src
 	if(!gibbed)
 		GLOB.dead_mob_list += src
-	paralysis = 0
-	stunned = 0
-	weakened = 0
 	set_drugginess(0)
+	set_disgust(0)
 	SetSleeping(0, 0)
 	blind_eyes(1)
 	reset_perspective(null)

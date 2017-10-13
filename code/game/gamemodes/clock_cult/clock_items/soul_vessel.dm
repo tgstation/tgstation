@@ -18,13 +18,15 @@
 	The purpose of your existence is to further the goals of the servants and Ratvar himself. Above all else, serve Ratvar.</b>"
 	new_mob_message = "<span class='brass'>The soul vessel emits a jet of steam before its cogwheel smooths out.</span>"
 	dead_message = "<span class='deadsay'>Its cogwheel, scratched and dented, lies motionless.</span>"
+	recharge_message = "<span class='warning'>The soul vessel's internal geis capacitor is still recharging!</span>"
 	possible_names = list("Judge", "Guard", "Servant", "Smith", "Auger")
 	autoping = FALSE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	force_replace_ai_name = TRUE
+	overrides_aicore_laws = TRUE
 
 /obj/item/device/mmi/posibrain/soul_vessel/Initialize()
-	..()
+	. = ..()
 	radio.on = FALSE
 	laws = new /datum/ai_laws/ratvar()
 	braintype = picked_name

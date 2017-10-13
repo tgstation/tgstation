@@ -3,7 +3,7 @@
 GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","Echo","Foxtrot","Zero", "Niner"))
 
 /obj/machinery/computer/telecrystals
-	name = "\improper Telecrystal assignment station"
+	name = "\improper telecrystal assignment station"
 	desc = "A device used to manage telecrystals during group operations. You shouldn't be looking at this particular one..."
 	icon_state = "tcstation"
 	icon_keyboard = "tcstation_key"
@@ -15,35 +15,33 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 
 /////////////////////////////////////////////
 /obj/machinery/computer/telecrystals/uplinker
-	name = "\improper Telecrystal upload/receive station"
+	name = "\improper telecrystal upload/receive station"
 	desc = "A device used to manage telecrystals during group operations. To use, simply insert your uplink. With your uplink installed \
 			you can upload your telecrystals to the group's pool using the console, or be assigned additional telecrystals by your lieutenant."
 	var/obj/item/uplinkholder = null
 	var/obj/machinery/computer/telecrystals/boss/linkedboss = null
 
 /obj/machinery/computer/telecrystals/uplinker/Initialize()
-	..()
+	. = ..()
 
 	var/ID = pick_n_take(GLOB.possible_uplinker_IDs)
 	if(!ID)
 		ID = rand(1,999)
 	name = "[name] [ID]"
 
-/obj/machinery/computer/telecrystals/uplinker/attackby(obj/item/O, mob/user, params)
+/obj/machinery/computer/telecrystals/uplinker/attackby(obj/item/I, mob/user, params)
 	if(uplinkholder)
 		to_chat(user, "<span class='notice'>The [src] already has an uplink in it.</span>")
 		return
-	if(O.hidden_uplink)
-		var/obj/item/I = user.get_active_held_item()
-		if(!user.drop_item())
+	if(I.hidden_uplink)
+		if(!user.transferItemToLoc(I, src))
 			return
 		uplinkholder = I
-		I.loc = src
 		I.add_fingerprint(user)
 		update_icon()
 		updateUsrDialog()
 	else
-		to_chat(user, "<span class='notice'>The [O] doesn't appear to be an uplink...</span>")
+		to_chat(user, "<span class='notice'>[I] doesn't appear to be an uplink...</span>")
 
 /obj/machinery/computer/telecrystals/uplinker/update_icon()
 	..()
@@ -58,7 +56,12 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 
 /obj/machinery/computer/telecrystals/uplinker/proc/donateTC(amt, addLog = 1)
 	if(uplinkholder && linkedboss)
-		if(amt <= uplinkholder.hidden_uplink.telecrystals)
+		if(amt < 0)
+			linkedboss.storedcrystals += uplinkholder.hidden_uplink.telecrystals
+			if(addLog)
+				linkedboss.logTransfer("[src] donated [uplinkholder.hidden_uplink.telecrystals] telecrystals to [linkedboss].")
+			uplinkholder.hidden_uplink.telecrystals = 0
+		else if(amt <= uplinkholder.hidden_uplink.telecrystals)
 			uplinkholder.hidden_uplink.telecrystals -= amt
 			linkedboss.storedcrystals += amt
 			if(addLog)
@@ -66,7 +69,12 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 
 /obj/machinery/computer/telecrystals/uplinker/proc/giveTC(amt, addLog = 1)
 	if(uplinkholder && linkedboss)
-		if(amt <= linkedboss.storedcrystals)
+		if(amt < 0)
+			uplinkholder.hidden_uplink.telecrystals += linkedboss.storedcrystals
+			if(addLog)
+				linkedboss.logTransfer("[src] received [linkedboss.storedcrystals] telecrystals from [linkedboss].")
+			linkedboss.storedcrystals = 0
+		else if(amt <= linkedboss.storedcrystals)
 			uplinkholder.hidden_uplink.telecrystals += amt
 			linkedboss.storedcrystals -= amt
 			if(addLog)
@@ -89,7 +97,7 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 	if(uplinkholder)
 		dat += "[uplinkholder.hidden_uplink.telecrystals] telecrystals remain in this uplink.<BR>"
 		if(linkedboss)
-			dat += "Donate TC: <a href='byond://?src=\ref[src];donate1=1'>1</a> | <a href='byond://?src=\ref[src];donate5=1'>5</a>"
+			dat += "Donate TC: <a href='byond://?src=\ref[src];donate=1'>1</a> | <a href='byond://?src=\ref[src];donate=5'>5</a> | <a href='byond://?src=\ref[src];donate=-1'>All</a>"
 		dat += "<br><a href='byond://?src=\ref[src];eject=1'>Eject Uplink</a>"
 
 
@@ -103,11 +111,9 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 	if(..())
 		return
 
-	if(href_list["donate1"])
-		donateTC(1)
-
-	if(href_list["donate5"])
-		donateTC(5)
+	if(href_list["donate"])
+		var/tcamt = text2num(href_list["donate"])
+		donateTC(tcamt)
 
 	if(href_list["eject"])
 		ejectuplink()
@@ -117,7 +123,7 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 
 /////////////////////////////////////////
 /obj/machinery/computer/telecrystals/boss
-	name = "team Telecrystal management console"
+	name = "team telecrystal management console"
 	desc = "A device used to manage telecrystals during group operations. To use, simply initialize the machine by scanning for nearby uplink stations. \
 	Once the consoles are linked up, you can assign any telecrystals amongst your operatives; be they donated by your agents or rationed to the squad \
 	based on the danger rating of the mission."
@@ -162,7 +168,7 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 
 	var/dat = ""
 	dat += "<a href='byond://?src=\ref[src];scan=1'>Scan for TC stations.</a><BR>"
-	dat += "This [src] has [storedcrystals] telecrystals available for distribution. <BR>"
+	dat += "[storedcrystals] telecrystals are available for distribution. <BR>"
 	dat += "<BR><BR>"
 
 
@@ -171,10 +177,10 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 		if(A.uplinkholder)
 			dat += "[A.uplinkholder.hidden_uplink.telecrystals] telecrystals."
 		if(storedcrystals)
-			dat+= "<BR>Add TC: <a href ='?src=\ref[src];give1=\ref[A]'>1</a> | <a href ='?src=\ref[src];give5=\ref[A]'>5</a>"
+			dat+= "<BR>Add TC: <a href ='?src=\ref[src];target=\ref[A];give=1'>1</a> | <a href ='?src=\ref[src];target=\ref[A];give=5'>5</a> | <a href ='?src=\ref[src];target=\ref[A];give=10'>10</a> | <a href ='?src=\ref[src];target=\ref[A];give=-1'>All</a>"
 		dat += "<BR>"
 
-	if(TCstations.len)
+	if(TCstations.len && storedcrystals)
 		dat += "<BR><BR><a href='byond://?src=\ref[src];distrib=1'>Evenly distribute remaining TC.</a><BR><BR>"
 
 
@@ -195,13 +201,11 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 	if(href_list["scan"])
 		scanUplinkers()
 
-	if(href_list["give1"])
-		var/obj/machinery/computer/telecrystals/uplinker/A = locate(href_list["give1"])
-		A.giveTC(1)
-
-	if(href_list["give5"])
-		var/obj/machinery/computer/telecrystals/uplinker/A = locate(href_list["give5"])
-		A.giveTC(5)
+	if(href_list["give"])
+		var/tcamt = text2num(href_list["give"])
+		if(TCstations.len) // sanity
+			var/obj/machinery/computer/telecrystals/uplinker/A = locate(href_list["target"]) in TCstations
+			A.giveTC(tcamt)
 
 	if(href_list["distrib"])
 		var/sanity = 0

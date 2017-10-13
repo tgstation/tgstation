@@ -3,18 +3,18 @@
 	desc = "Used to monitor the vitals of a patient during surgery."
 	icon_screen = "crew"
 	icon_keyboard = "med_key"
-	circuit = /obj/item/weapon/circuitboard/computer/operating
-	var/mob/living/carbon/human/patient = null
-	var/obj/structure/table/optable/table = null
+	circuit = /obj/item/circuitboard/computer/operating
+	var/mob/living/carbon/human/patient
+	var/obj/structure/table/optable/table
 
 	light_color = LIGHT_COLOR_BLUE
 
 /obj/machinery/computer/operating/Initialize()
-	..()
+	. = ..()
 	find_table()
 
 /obj/machinery/computer/operating/proc/find_table()
-	for(var/dir in GLOB.cardinal)
+	for(var/dir in GLOB.cardinals)
 		table = locate(/obj/structure/table/optable, get_step(src, dir))
 		if(table)
 			table.computer = src
@@ -61,6 +61,14 @@
 		for(var/datum/surgery/procedure in patient.surgeries)
 			dat += "[capitalize(procedure.name)]<BR>"
 			var/datum/surgery_step/surgery_step = procedure.get_surgery_step()
-			dat += "Next step: [capitalize(surgery_step.name)]<BR>"
+			dat += "Next step: [capitalize(surgery_step.name)]"
+			if(surgery_step.repeatable)
+				dat += " or "
+				var/datum/surgery_step/next_step = procedure.get_surgery_next_step()
+				if(next_step)
+					dat += "[capitalize(next_step.name)]"
+				else
+					dat += "finish operation" // Current step is repeatable, but there is no next step. Try to finish it with cautery.
+			dat += "<BR>"
 		dat += "</div>"
 	return dat

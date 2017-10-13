@@ -2,7 +2,7 @@
 
 	track.cameras.Cut()
 
-	if(src.stat == 2)
+	if(src.stat == DEAD)
 		return
 
 	var/list/L = list()
@@ -45,7 +45,7 @@
 	track.humans.Cut()
 	track.others.Cut()
 
-	if(usr.stat == 2)
+	if(usr.stat == DEAD)
 		return list()
 
 	for(var/mob/living/M in GLOB.mob_list)
@@ -58,12 +58,12 @@
 			human = 1
 
 		var/name = M.name
-		if (name in track.names)
+		while(name in track.names)
 			track.namecounts[name]++
 			name = text("[] ([])", name, track.namecounts[name])
-		else
-			track.names.Add(name)
-			track.namecounts[name] = 1
+		track.names.Add(name)
+		track.namecounts[name] = 1
+
 		if(human)
 			track.humans[name] = M
 		else
@@ -136,9 +136,9 @@
 /proc/near_camera(mob/living/M)
 	if (!isturf(M.loc))
 		return 0
-	if(iscyborg(M))
-		var/mob/living/silicon/robot/R = M
-		if(!(R.camera && R.camera.can_use()) && !GLOB.cameranet.checkCameraVis(M))
+	if(issilicon(M))
+		var/mob/living/silicon/S = M
+		if((!QDELETED(S.builtInCamera) || !S.builtInCamera.can_use()) && !GLOB.cameranet.checkCameraVis(M))
 			return 0
 	else if(!GLOB.cameranet.checkCameraVis(M))
 		return 0

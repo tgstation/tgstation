@@ -10,6 +10,7 @@
 	var/list/visibleCameraChunks = list()
 	var/mob/living/silicon/ai/ai = null
 	var/relay_speech = FALSE
+	var/use_static = TRUE
 
 // Use this when setting the aiEye's location.
 // It will also stream the chunk that the new loc is in.
@@ -21,14 +22,15 @@
 			return
 		T = get_turf(T)
 		loc = T
-		GLOB.cameranet.visibility(src)
+		if(use_static)
+			GLOB.cameranet.visibility(src)
 		if(ai.client)
 			ai.client.eye = src
 		update_parallax_contents()
 		//Holopad
 		if(istype(ai.current, /obj/machinery/holopad))
 			var/obj/machinery/holopad/H = ai.current
-			H.move_hologram(ai)
+			H.move_hologram(ai, T)
 
 /mob/camera/aiEye/Move()
 	return 0
@@ -37,6 +39,11 @@
 	if(ai)
 		return ai.client
 	return null
+
+/mob/camera/aiEye/proc/RemoveImages()
+	if(use_static)
+		for(var/datum/camerachunk/chunk in visibleCameraChunks)
+			chunk.remove(src)
 
 /mob/camera/aiEye/Destroy()
 	ai = null
@@ -99,11 +106,11 @@
 	set category = "AI Commands"
 	set name = "Toggle Camera Acceleration"
 
-	if(usr.stat == 2)
-		return //won't work if dead
+	if(incapacitated())
+		return
 	acceleration = !acceleration
 	to_chat(usr, "Camera acceleration has been toggled [acceleration ? "on" : "off"].")
 
 /mob/camera/aiEye/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
 	if(relay_speech && speaker && ai && !radio_freq && speaker != ai && near_camera(speaker))
-		ai.relay_speech(message, speaker, message_language, raw_message, radio_freq, spans)
+		ai.relay_speech(message, speaker, message_language, raw_message, radio_freq, spans, message_mode)

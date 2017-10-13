@@ -1,12 +1,15 @@
 //Please use mob or src (not usr) in these procs. This way they can be called in the same fashion as procs.
-/client/verb/wiki()
+/client/verb/wiki(query as text)
 	set name = "wiki"
-	set desc = "Visit the wiki."
+	set desc = "Type what you want to know about.  This will open the wiki in your web browser. Type nothing to go to the main page."
 	set hidden = 1
-	if(config.wikiurl)
-		if(alert("This will open the wiki in your browser. Are you sure?",,"Yes","No")=="No")
-			return
-		src << link(config.wikiurl)
+	var/wikiurl = CONFIG_GET(string/wikiurl)
+	if(wikiurl)
+		if(query)
+			var/output = wikiurl + "/index.php?title=Special%3ASearch&profile=default&search=" + query
+			src << link(output)
+		else if (query != null)
+			src << link(wikiurl)
 	else
 		to_chat(src, "<span class='danger'>The wiki URL is not set in the server configuration.</span>")
 	return
@@ -15,10 +18,11 @@
 	set name = "forum"
 	set desc = "Visit the forum."
 	set hidden = 1
-	if(config.forumurl)
+	var/forumurl = CONFIG_GET(string/forumurl)
+	if(forumurl)
 		if(alert("This will open the forum in your browser. Are you sure?",,"Yes","No")=="No")
 			return
-		src << link(config.forumurl)
+		src << link(forumurl)
 	else
 		to_chat(src, "<span class='danger'>The forum URL is not set in the server configuration.</span>")
 	return
@@ -27,10 +31,11 @@
 	set name = "rules"
 	set desc = "Show Server Rules."
 	set hidden = 1
-	if(config.rulesurl)
+	var/rulesurl = CONFIG_GET(string/rulesurl)
+	if(rulesurl)
 		if(alert("This will open the rules in your browser. Are you sure?",,"Yes","No")=="No")
 			return
-		src << link(config.rulesurl)
+		src << link(rulesurl)
 	else
 		to_chat(src, "<span class='danger'>The rules URL is not set in the server configuration.</span>")
 	return
@@ -39,10 +44,11 @@
 	set name = "github"
 	set desc = "Visit Github"
 	set hidden = 1
-	if(config.githuburl)
+	var/githuburl = CONFIG_GET(string/githuburl)
+	if(githuburl)
 		if(alert("This will open the Github repository in your browser. Are you sure?",,"Yes","No")=="No")
 			return
-		src << link(config.githuburl)
+		src << link(githuburl)
 	else
 		to_chat(src, "<span class='danger'>The Github URL is not set in the server configuration.</span>")
 	return
@@ -51,14 +57,17 @@
 	set name = "report-issue"
 	set desc = "Report an issue"
 	set hidden = 1
-	if(config.githuburl)
+	var/githuburl = CONFIG_GET(string/githuburl)
+	if(githuburl)
 		var/message = "This will open the Github issue reporter in your browser. Are you sure?"
 		if(GLOB.revdata.testmerge.len)
 			message += "<br>The following experimental changes are active and are probably the cause of any new or sudden issues you may experience. If possible, please try to find a specific thread for your issue instead of posting to the general issue tracker:<br>"
 			message += GLOB.revdata.GetTestMergeInfo(FALSE)
 		if(tgalert(src, message, "Report Issue","Yes","No")=="No")
 			return
-		src << link("[config.githuburl]/issues/new")
+		var/static/issue_template = file2text(".github/ISSUE_TEMPLATE.md")
+		var/servername = CONFIG_GET(string/servername)
+		src << link("[githuburl]/issues/new[GLOB.round_id ? "?body=[url_encode("Issue reported from Round ID: [GLOB.round_id][servername ? " ([servername])" : ""]\n\n[issue_template]")]" : ""]")
 	else
 		to_chat(src, "<span class='danger'>The Github URL is not set in the server configuration.</span>")
 	return
@@ -78,29 +87,13 @@ Admin:
 	mob.hotkey_help()
 
 	if(holder)
-		src << adminhotkeys
+		to_chat(src, adminhotkeys)
 
 /client/verb/changelog()
 	set name = "Changelog"
 	set category = "OOC"
-	getFiles(
-		'html/88x31.png',
-		'html/bug-minus.png',
-		'html/cross-circle.png',
-		'html/hard-hat-exclamation.png',
-		'html/image-minus.png',
-		'html/image-plus.png',
-		'html/music-minus.png',
-		'html/music-plus.png',
-		'html/tick-circle.png',
-		'html/wrench-screwdriver.png',
-		'html/spell-check.png',
-		'html/burn-exclamation.png',
-		'html/chevron.png',
-		'html/chevron-expand.png',
-		'html/changelog.css',
-		'html/changelog.html'
-		)
+	var/datum/asset/changelog = get_asset_datum(/datum/asset/simple/changelog)
+	changelog.send(src)
 	src << browse('html/changelog.html', "window=changes;size=675x650")
 	if(prefs.lastchangelog != GLOB.changelog_hash)
 		prefs.lastchangelog = GLOB.changelog_hash
@@ -165,8 +158,8 @@ Any-Mode: (hotkey doesn't need to be on)
 \tCtrl+Numpad = Body target selection (Press 8 repeatedly for Head->Eyes->Mouth)
 </font>"}
 
-	src << hotkey_mode
-	src << other
+	to_chat(src, hotkey_mode)
+	to_chat(src, other)
 
 /mob/living/silicon/robot/hotkey_help()
 	//h = talk-wheel has a nonsense tag in it because \th is an escape sequence in BYOND.
@@ -217,8 +210,8 @@ Any-Mode: (hotkey doesn't need to be on)
 \tPGDN = activate held object
 </font>"}
 
-	src << hotkey_mode
-	src << other
+	to_chat(src, hotkey_mode)
+	to_chat(src, other)
 
 // Needed to circumvent a bug where .winset does not work when used on the window.on-size event in skins.
 // Used by /datum/html_interface/nanotrasen (code/modules/html_interface/nanotrasen/nanotrasen.dm)

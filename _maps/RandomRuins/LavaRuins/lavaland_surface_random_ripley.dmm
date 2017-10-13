@@ -1,0 +1,84 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+"a" = (
+/turf/template_noop,
+/area/lavaland/surface/outdoors)
+"b" = (
+/turf/closed/mineral/volcanic,
+/area/lavaland/surface/outdoors)
+"c" = (
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"d" = (
+/obj/mecha/working/ripley/mining,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"e" = (
+/obj/item/clothing/shoes/workboots/mining,
+/obj/item/clothing/under/rank/miner/lavaland,
+/obj/effect/decal/remains/human,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+b
+b
+b
+a
+a
+"}
+(3,1,1) = {"
+a
+b
+c
+b
+c
+b
+a
+"}
+(4,1,1) = {"
+a
+b
+c
+d
+e
+b
+a
+"}
+(5,1,1) = {"
+a
+b
+c
+c
+b
+b
+a
+"}
+(6,1,1) = {"
+a
+b
+b
+b
+b
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+"}

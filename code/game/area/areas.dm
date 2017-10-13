@@ -7,31 +7,31 @@
 	icon = 'icons/turf/areas.dmi'
 	icon_state = "unknown"
 	layer = AREA_LAYER
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	invisibility = INVISIBILITY_LIGHTING
 
 	var/map_name // Set in New(); preserves the name set by the map maker, even if renamed by the Blueprints.
 
-	var/valid_territory = 1 // If it's a valid territory for gangs to claim
-	var/blob_allowed = 1 // Does it count for blobs score? By default, all areas count.
+	var/valid_territory = TRUE // If it's a valid territory for gangs to claim
+	var/blob_allowed = TRUE // Does it count for blobs score? By default, all areas count.
 
 	var/eject = null
 
 	var/fire = null
-	var/atmos = 1
-	var/atmosalm = 0
-	var/poweralm = 1
+	var/atmos = TRUE
+	var/atmosalm = FALSE
+	var/poweralm = TRUE
 	var/party = null
-	var/lightswitch = 1
+	var/lightswitch = TRUE
 
-	var/requires_power = 1
-	var/always_unpowered = 0	// This gets overriden to 1 for space in area/New().
+	var/requires_power = TRUE
+	var/always_unpowered = FALSE	// This gets overriden to 1 for space in area/Initialize().
 
-	var/outdoors = 0 //For space, the asteroid, lavaland, etc. Used with blueprints to determine if we are adding a new area (vs editing a station room)
+	var/outdoors = FALSE //For space, the asteroid, lavaland, etc. Used with blueprints to determine if we are adding a new area (vs editing a station room)
 
-	var/power_equip = 1
-	var/power_light = 1
-	var/power_environ = 1
+	var/power_equip = TRUE
+	var/power_light = TRUE
+	var/power_environ = TRUE
 	var/music = null
 	var/used_equip = 0
 	var/used_light = 0
@@ -40,9 +40,10 @@
 	var/static_light = 0
 	var/static_environ
 
-	var/has_gravity = 0
-	var/noteleport = 0			//Are you forbidden from teleporting to the area? (centcomm, mobs, wizard, hand teleporter)
-	var/safe = 0 				//Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
+	var/has_gravity = FALSE
+	var/noteleport = FALSE			//Are you forbidden from teleporting to the area? (centcom, mobs, wizard, hand teleporter)
+	var/hidden = FALSE 			//Hides area from player Teleport function.
+	var/safe = FALSE 				//Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
 
 	var/no_air = null
 	var/list/related			// the other areas of the same type as this
@@ -57,7 +58,7 @@
 									'sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg',\
 									'sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg',\
 									'sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg')
-	flags = CAN_BE_DIRTY
+	flags_1 = CAN_BE_DIRTY_1
 
 	var/list/firedoors
 	var/firedoors_last_closed_on = 0
@@ -74,7 +75,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		if(GLOB.teleportlocs[AR.name])
 			continue
 		var/turf/picked = safepick(get_area_turfs(AR.type))
-		if (picked && (picked.z == ZLEVEL_STATION))
+		if (picked && (picked.z in GLOB.station_z_levels))
 			GLOB.teleportlocs[AR.name] = AR
 
 	sortTim(GLOB.teleportlocs, /proc/cmp_text_dsc)
@@ -88,7 +89,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 // want to find machines, mobs, etc, in the same logical area, you will need to check all the
 // related areas.  This returns a master contents list to assist in that.
 /proc/area_contents(area/A)
-	if(!istype(A)) return null
+	if(!istype(A))
+		return null
 	var/list/contents = list()
 	for(var/area/LSA in A.related)
 		contents += LSA.contents
@@ -107,17 +109,19 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(requires_power)
 		luminosity = 0
 	else
-		power_light = 1
-		power_equip = 1
-		power_environ = 1
+		power_light = TRUE
+		power_equip = TRUE
+		power_environ = TRUE
 
 		if(dynamic_lighting == DYNAMIC_LIGHTING_FORCED)
 			dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 			luminosity = 0
 		else if(dynamic_lighting != DYNAMIC_LIGHTING_IFSTARLIGHT)
 			dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	if(dynamic_lighting == DYNAMIC_LIGHTING_IFSTARLIGHT)
+		dynamic_lighting = CONFIG_GET(flag/starlight) ? DYNAMIC_LIGHTING_ENABLED : DYNAMIC_LIGHTING_DISABLED
 
-	..()
+	. = ..()
 
 	power_change()		// all machines set to current power level, also updates icon
 
@@ -239,7 +243,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	for(var/area/RA in related)
 		if (RA.fire)
 			RA.fire = 0
-			RA.mouse_opacity = 0
+			RA.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 			RA.updateicon()
 			RA.ModifyFiredoors(TRUE)
 			for(var/obj/machinery/firealarm/F in RA)
@@ -290,7 +294,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/proc/set_fire_alarm_effect()
 	fire = 1
 	updateicon()
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /area/proc/readyalert()
 	if(name == "Space")
@@ -310,12 +314,12 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if (!( src.party ))
 		src.party = 1
 		src.updateicon()
-		src.mouse_opacity = 0
+		src.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /area/proc/partyreset()
 	if (src.party)
 		src.party = 0
-		src.mouse_opacity = 0
+		src.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		src.updateicon()
 		for(var/obj/machinery/door/firedoor/D in src)
 			if(!D.welded)
@@ -335,7 +339,14 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		else
 			icon_state = "blue-red"
 	else
-		icon_state = null
+		var/weather_icon
+		for(var/V in SSweather.existing_weather)
+			var/datum/weather/W = V
+			if(src in W.impacted_areas)
+				W.update_areas()
+				weather_icon = TRUE
+		if(!weather_icon)
+			icon_state = null
 
 /area/space/updateicon()
 	icon_state = null
@@ -426,10 +437,10 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(!L.ckey)
 		return
 
-	// Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
+	// Ambience goes down here -- make sure to list each area separately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
 	if(L.client && !L.client.ambience_playing && L.client.prefs.toggles & SOUND_SHIP_AMBIENCE)
 		L.client.ambience_playing = 1
-		L << sound('sound/ambience/shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = 2)
+		SEND_SOUND(L, sound('sound/ambience/shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = CHANNEL_BUZZ))
 
 	if(!(L.client && (L.client.prefs.toggles & SOUND_AMBIENCE)))
 		return //General ambience check is below the ship ambience so one can play without the other
@@ -438,11 +449,12 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		var/sound = pick(ambientsounds)
 
 		if(!L.client.played)
-			L << sound(sound, repeat = 0, wait = 0, volume = 25, channel = 1)
-			L.client.played = 1
-			sleep(600)			//ewww - this is very very bad
-			if(L.&& L.client)
-				L.client.played = 0
+			SEND_SOUND(L, sound(sound, repeat = 0, wait = 0, volume = 25, channel = CHANNEL_AMBIENCE))
+			L.client.played = TRUE
+			addtimer(CALLBACK(L.client, /client/proc/ResetAmbiencePlayed), 600)
+
+/client/proc/ResetAmbiencePlayed()
+	played = FALSE
 
 /atom/proc/has_gravity(turf/T)
 	if(!T || !isturf(T))
@@ -460,10 +472,16 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 /area/proc/setup(a_name)
 	name = a_name
-	power_equip = 0
-	power_light = 0
-	power_environ = 0
-	always_unpowered = 0
-	valid_territory = 0
-	blob_allowed = 0
+	power_equip = FALSE
+	power_light = FALSE
+	power_environ = FALSE
+	always_unpowered = FALSE
+	valid_territory = FALSE
+	blob_allowed = FALSE
 	addSorted()
+
+/area/AllowDrop()
+	CRASH("Bad op: area/AllowDrop() called")
+
+/area/drop_location()
+	CRASH("Bad op: area/drop_location() called")

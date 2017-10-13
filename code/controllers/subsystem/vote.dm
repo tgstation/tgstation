@@ -2,7 +2,9 @@ SUBSYSTEM_DEF(vote)
 	name = "Vote"
 	wait = 10
 
-	flags = SS_FIRE_IN_LOBBY|SS_KEEP_TIMING|SS_NO_INIT
+	flags = SS_KEEP_TIMING|SS_NO_INIT
+
+	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 
 	var/initiator = null
 	var/started_time = null
@@ -16,7 +18,7 @@ SUBSYSTEM_DEF(vote)
 
 /datum/controller/subsystem/vote/fire()	//called by master_controller
 	if(mode)
-		time_remaining = round((started_time + config.vote_period - world.time)/10)
+		time_remaining = round((started_time + CONFIG_GET(number/vote_period) - world.time)/10)
 
 		if(time_remaining < 0)
 			result()
@@ -52,7 +54,7 @@ SUBSYSTEM_DEF(vote)
 		if(votes > greatest_votes)
 			greatest_votes = votes
 	//default-vote for everyone who didn't vote
-	if(!config.vote_no_default && choices.len)
+	if(!CONFIG_GET(flag/default_no_vote) && choices.len)
 		var/list/non_voters = GLOB.directory.Copy()
 		non_voters -= voted
 		for (var/non_voter_ckey in non_voters)
@@ -116,8 +118,8 @@ SUBSYSTEM_DEF(vote)
 					restart = 1
 			if("gamemode")
 				if(GLOB.master_mode != .)
-					world.save_mode(.)
-					if(SSticker && SSticker.mode)
+					SSticker.save_mode(.)
+					if(SSticker.HasRoundStarted())
 						restart = 1
 					else
 						GLOB.master_mode = .
@@ -128,7 +130,7 @@ SUBSYSTEM_DEF(vote)
 				active_admins = 1
 				break
 		if(!active_admins)
-			world.Reboot("Restart vote successful.", "end_error", "restart vote")
+			SSticker.Reboot("Restart vote successful.", "restart vote")
 		else
 			to_chat(world, "<span style='boldannounce'>Notice:Restart vote will not restart the server automatically because there are active admins on.</span>")
 			message_admins("A restart vote has passed, but there are active admins on with +server, so it has been canceled. If you wish, you may restart the server.")
@@ -137,7 +139,7 @@ SUBSYSTEM_DEF(vote)
 
 /datum/controller/subsystem/vote/proc/submit_vote(vote)
 	if(mode)
-		if(config.vote_no_dead && usr.stat == DEAD && !usr.client.holder)
+		if(CONFIG_GET(flag/no_dead_vote) && usr.stat == DEAD && !usr.client.holder)
 			return 0
 		if(!(usr.ckey in voted))
 			if(vote && 1<=vote && vote<=choices.len)
@@ -149,7 +151,7 @@ SUBSYSTEM_DEF(vote)
 /datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key)
 	if(!mode)
 		if(started_time)
-			var/next_allowed_time = (started_time + config.vote_delay)
+			var/next_allowed_time = (started_time + CONFIG_GET(number/vote_delay))
 			if(mode)
 				to_chat(usr, "<span class='warning'>There is already a vote in progress! please wait for it to finish.</span>")
 				return 0
@@ -160,7 +162,7 @@ SUBSYSTEM_DEF(vote)
 				admin = TRUE
 
 			if(next_allowed_time > world.time && !admin)
-				to_chat(usr, "<span class='warning'>A vote was initiated recently, you must wait roughly [(next_allowed_time-world.time)/10] seconds before a new vote can be started!</span>")
+				to_chat(usr, "<span class='warning'>A vote was initiated recently, you must wait [DisplayTimeText(next_allowed_time-world.time)] before a new vote can be started!</span>")
 				return 0
 
 		reset()
@@ -187,8 +189,9 @@ SUBSYSTEM_DEF(vote)
 		if(mode == "custom")
 			text += "\n[question]"
 		log_vote(text)
-		to_chat(world, "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>")
-		time_remaining = round(config.vote_period/10)
+		var/vp = CONFIG_GET(number/vote_period)
+		to_chat(world, "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes.\nYou have [DisplayTimeText(vp)] to vote.</font>")
+		time_remaining = round(vp/10)
 		for(var/c in GLOB.clients)
 			var/client/C = c
 			var/datum/action/vote/V = new
@@ -227,20 +230,22 @@ SUBSYSTEM_DEF(vote)
 	else
 		. += "<h2>Start a vote:</h2><hr><ul><li>"
 		//restart
-		if(trialmin || config.allow_vote_restart)
+		var/avr = CONFIG_GET(flag/allow_vote_restart)
+		if(trialmin || avr)
 			. += "<a href='?src=\ref[src];vote=restart'>Restart</a>"
 		else
 			. += "<font color='grey'>Restart (Disallowed)</font>"
 		if(trialmin)
-			. += "\t(<a href='?src=\ref[src];vote=toggle_restart'>[config.allow_vote_restart?"Allowed":"Disallowed"]</a>)"
+			. += "\t(<a href='?src=\ref[src];vote=toggle_restart'>[avr ? "Allowed" : "Disallowed"]</a>)"
 		. += "</li><li>"
 		//gamemode
-		if(trialmin || config.allow_vote_mode)
+		var/avm = CONFIG_GET(flag/allow_vote_mode)
+		if(trialmin || avm)
 			. += "<a href='?src=\ref[src];vote=gamemode'>GameMode</a>"
 		else
 			. += "<font color='grey'>GameMode (Disallowed)</font>"
 		if(trialmin)
-			. += "\t(<a href='?src=\ref[src];vote=toggle_gamemode'>[config.allow_vote_mode?"Allowed":"Disallowed"]</a>)"
+			. += "\t(<a href='?src=\ref[src];vote=toggle_gamemode'>[avm ? "Allowed" : "Disallowed"]</a>)"
 
 		. += "</li>"
 		//custom
@@ -264,15 +269,15 @@ SUBSYSTEM_DEF(vote)
 				reset()
 		if("toggle_restart")
 			if(usr.client.holder)
-				config.allow_vote_restart = !config.allow_vote_restart
+				CONFIG_SET(flag/allow_vote_restart, !CONFIG_GET(flag/allow_vote_restart))
 		if("toggle_gamemode")
 			if(usr.client.holder)
-				config.allow_vote_mode = !config.allow_vote_mode
+				CONFIG_SET(flag/allow_vote_mode, !CONFIG_GET(flag/allow_vote_mode))
 		if("restart")
-			if(config.allow_vote_restart || usr.client.holder)
+			if(CONFIG_GET(flag/allow_vote_restart) || usr.client.holder)
 				initiate_vote("restart",usr.key)
 		if("gamemode")
-			if(config.allow_vote_mode || usr.client.holder)
+			if(CONFIG_GET(flag/allow_vote_mode) || usr.client.holder)
 				initiate_vote("gamemode",usr.key)
 		if("custom")
 			if(usr.client.holder)

@@ -1,53 +1,55 @@
 #define SYRINGE_DRAW 0
 #define SYRINGE_INJECT 1
 
-/obj/item/weapon/reagent_containers/syringe
+/obj/item/reagent_containers/syringe
 	name = "syringe"
 	desc = "A syringe that can hold up to 15 units."
 	icon = 'icons/obj/syringe.dmi'
 	item_state = "syringe_0"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	icon_state = "0"
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list()
 	volume = 15
 	var/mode = SYRINGE_DRAW
-	var/busy = 0		// needed for delayed drawing of blood
+	var/busy = FALSE		// needed for delayed drawing of blood
 	var/proj_piercing = 0 //does it pierce through thick clothes when shot with syringe gun
 	materials = list(MAT_METAL=10, MAT_GLASS=20)
-	container_type = TRANSPARENT
+	container_type = TRANSPARENT_1
 
-/obj/item/weapon/reagent_containers/syringe/New()
-	..()
+/obj/item/reagent_containers/syringe/Initialize()
+	. = ..()
 	if(list_reagents) //syringe starts in inject mode if its already got something inside
 		mode = SYRINGE_INJECT
 		update_icon()
 
-/obj/item/weapon/reagent_containers/syringe/on_reagent_change()
+/obj/item/reagent_containers/syringe/on_reagent_change()
 	update_icon()
 
-/obj/item/weapon/reagent_containers/syringe/pickup(mob/user)
+/obj/item/reagent_containers/syringe/pickup(mob/user)
 	..()
 	update_icon()
 
-/obj/item/weapon/reagent_containers/syringe/dropped(mob/user)
+/obj/item/reagent_containers/syringe/dropped(mob/user)
 	..()
 	update_icon()
 
-/obj/item/weapon/reagent_containers/syringe/attack_self(mob/user)
+/obj/item/reagent_containers/syringe/attack_self(mob/user)
 	mode = !mode
 	update_icon()
 
-/obj/item/weapon/reagent_containers/syringe/attack_hand()
+/obj/item/reagent_containers/syringe/attack_hand()
 	..()
 	update_icon()
 
-/obj/item/weapon/reagent_containers/syringe/attack_paw(mob/user)
+/obj/item/reagent_containers/syringe/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/item/weapon/reagent_containers/syringe/attackby(obj/item/I, mob/user, params)
+/obj/item/reagent_containers/syringe/attackby(obj/item/I, mob/user, params)
 	return
 
-/obj/item/weapon/reagent_containers/syringe/afterattack(atom/target, mob/user , proximity)
+/obj/item/reagent_containers/syringe/afterattack(atom/target, mob/user , proximity)
 	if(busy)
 		return
 	if(!proximity)
@@ -62,7 +64,7 @@
 			return
 
 	// chance of monkey retaliation
-	if(istype(target, /mob/living/carbon/monkey) && prob(MONKEY_SYRINGE_RETALIATION_PROB))
+	if(ismonkey(target) && prob(MONKEY_SYRINGE_RETALIATION_PROB))
 		var/mob/living/carbon/monkey/M
 		M = target
 		M.retaliate(user)
@@ -79,13 +81,13 @@
 				if(target != user)
 					target.visible_message("<span class='danger'>[user] is trying to take a blood sample from [target]!</span>", \
 									"<span class='userdanger'>[user] is trying to take a blood sample from [target]!</span>")
-					busy = 1
+					busy = TRUE
 					if(!do_mob(user, target, extra_checks=CALLBACK(L, /mob/living/proc/can_inject,user,1)))
-						busy = 0
+						busy = FALSE
 						return
 					if(reagents.total_volume >= reagents.maximum_volume)
 						return
-				busy = 0
+				busy = FALSE
 				if(L.transfer_blood_to(src, drawn_amount))
 					user.visible_message("[user] takes a blood sample from [L].")
 				else
@@ -96,7 +98,7 @@
 					to_chat(user, "<span class='warning'>[target] is empty!</span>")
 					return
 
-				if(!target.is_open_container() && !istype(target,/obj/structure/reagent_dispensers) && !istype(target,/obj/item/slime_extract))
+				if(!target.is_drawable())
 					to_chat(user, "<span class='warning'>You cannot directly remove reagents from [target]!</span>")
 					return
 
@@ -108,18 +110,28 @@
 				update_icon()
 
 		if(SYRINGE_INJECT)
+			//Always log attemped injections for admins
+			var/list/rinject = list()
+			for(var/datum/reagent/R in reagents.reagent_list)
+				rinject += R.name
+			var/contained = english_list(rinject)
+			add_logs(user, L, "attemped to inject", src, addition="which had [contained]")
+
 			if(!reagents.total_volume)
 				to_chat(user, "<span class='notice'>[src] is empty.</span>")
 				return
 
-			if(!target.is_open_container() && !ismob(target) && !istype(target, /obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/slime_extract) && !istype(target, /obj/item/clothing/mask/cigarette) && !istype(target, /obj/item/weapon/storage/fancy/cigarettes))
+			if(!L && !target.is_injectable()) //only checks on non-living mobs, due to how can_inject() handles
 				to_chat(user, "<span class='warning'>You cannot directly fill [target]!</span>")
 				return
+
 			if(target.reagents.total_volume >= target.reagents.maximum_volume)
 				to_chat(user, "<span class='notice'>[target] is full.</span>")
 				return
 
 			if(L) //living mob
+				if(!L.can_inject(user, TRUE))
+					return
 				if(L != user)
 					L.visible_message("<span class='danger'>[user] is trying to inject [L]!</span>", \
 											"<span class='userdanger'>[user] is trying to inject [L]!</span>")
@@ -130,12 +142,7 @@
 					if(L.reagents.total_volume >= L.reagents.maximum_volume)
 						return
 					L.visible_message("<span class='danger'>[user] injects [L] with the syringe!", \
-									"<span class='userdanger'>[user] injects [L] with the syringe!")
-
-				var/list/rinject = list()
-				for(var/datum/reagent/R in reagents.reagent_list)
-					rinject += R.name
-				var/contained = english_list(rinject)
+									"<span class='userdanger'>[user] injects [L] with the syringe!</span>")
 
 				if(L != user)
 					add_logs(user, L, "injected", src, addition="which had [contained]")
@@ -152,7 +159,7 @@
 				update_icon()
 
 
-/obj/item/weapon/reagent_containers/syringe/update_icon()
+/obj/item/reagent_containers/syringe/update_icon()
 	var/rounded_vol = Clamp(round((reagents.total_volume / volume * 15),5), 0, 15)
 	cut_overlays()
 	if(ismob(loc))
@@ -167,87 +174,86 @@
 	item_state = "syringe_[rounded_vol]"
 
 	if(reagents.total_volume)
-		var/image/filling = image('icons/obj/reagentfillings.dmi', src, "syringe10")
-		filling.icon_state = "syringe[rounded_vol]"
-		filling.color = mix_color_from_reagents(reagents.reagent_list)
-		add_overlay(filling)
+		var/image/filling_overlay = mutable_appearance('icons/obj/reagentfillings.dmi', "syringe[rounded_vol]")
+		filling_overlay.color = mix_color_from_reagents(reagents.reagent_list)
+		add_overlay(filling_overlay)
 
-/obj/item/weapon/reagent_containers/syringe/epinephrine
+/obj/item/reagent_containers/syringe/epinephrine
 	name = "syringe (epinephrine)"
 	desc = "Contains epinephrine - used to stabilize patients."
 	list_reagents = list("epinephrine" = 15)
 
-/obj/item/weapon/reagent_containers/syringe/charcoal
+/obj/item/reagent_containers/syringe/charcoal
 	name = "syringe (charcoal)"
 	desc = "Contains charcoal."
 	list_reagents = list("charcoal" = 15)
 
-/obj/item/weapon/reagent_containers/syringe/antiviral
+/obj/item/reagent_containers/syringe/antiviral
 	name = "syringe (spaceacillin)"
 	desc = "Contains antiviral agents."
 	list_reagents = list("spaceacillin" = 15)
 
-/obj/item/weapon/reagent_containers/syringe/bioterror
+/obj/item/reagent_containers/syringe/bioterror
 	name = "bioterror syringe"
 	desc = "Contains several paralyzing reagents."
 	list_reagents = list("neurotoxin" = 5, "mutetoxin" = 5, "sodium_thiopental" = 5)
 
-/obj/item/weapon/reagent_containers/syringe/stimulants
+/obj/item/reagent_containers/syringe/stimulants
 	name = "Stimpack"
 	desc = "Contains stimulants."
 	amount_per_transfer_from_this = 50
 	volume = 50
 	list_reagents = list("stimulants" = 50)
 
-/obj/item/weapon/reagent_containers/syringe/calomel
+/obj/item/reagent_containers/syringe/calomel
 	name = "syringe (calomel)"
 	desc = "Contains calomel."
 	list_reagents = list("calomel" = 15)
 
-/obj/item/weapon/reagent_containers/syringe/lethal
+/obj/item/reagent_containers/syringe/lethal
 	name = "lethal injection syringe"
 	desc = "A syringe used for lethal injections. It can hold up to 50 units."
 	amount_per_transfer_from_this = 50
 	volume = 50
 
-/obj/item/weapon/reagent_containers/syringe/lethal/choral
+/obj/item/reagent_containers/syringe/lethal/choral
 	list_reagents = list("chloralhydrate" = 50)
 
-/obj/item/weapon/reagent_containers/syringe/lethal/execution
+/obj/item/reagent_containers/syringe/lethal/execution
 	list_reagents = list("plasma" = 15, "formaldehyde" = 15, "cyanide" = 10, "facid" = 10)
 
-/obj/item/weapon/reagent_containers/syringe/mulligan
+/obj/item/reagent_containers/syringe/mulligan
 	name = "Mulligan"
 	desc = "A syringe used to completely change the users identity."
 	amount_per_transfer_from_this = 1
 	volume = 1
 	list_reagents = list("mulligan" = 1)
 
-/obj/item/weapon/reagent_containers/syringe/gluttony
+/obj/item/reagent_containers/syringe/gluttony
 	name = "Gluttony's Blessing"
 	desc = "A syringe recovered from a dread place. It probably isn't wise to use."
 	amount_per_transfer_from_this = 1
 	volume = 1
 	list_reagents = list("gluttonytoxin" = 1)
 
-/obj/item/weapon/reagent_containers/syringe/bluespace
+/obj/item/reagent_containers/syringe/bluespace
 	name = "bluespace syringe"
-	desc = "An advanced syringe that can hold 60 units of chemicals"
+	desc = "An advanced syringe that can hold 60 units of chemicals."
 	amount_per_transfer_from_this = 20
 	volume = 60
 	origin_tech = "bluespace=4;materials=4;biotech=4"
 
-/obj/item/weapon/reagent_containers/syringe/noreact
+/obj/item/reagent_containers/syringe/noreact
 	name = "cryo syringe"
 	desc = "An advanced syringe that stops reagents inside from reacting. It can hold up to 20 units."
 	volume = 20
 	origin_tech = "materials=3;engineering=3"
 
-/obj/item/weapon/reagent_containers/syringe/noreact/New()
+/obj/item/reagent_containers/syringe/noreact/Initialize()
 	. = ..()
 	reagents.set_reacting(FALSE)
 
-/obj/item/weapon/reagent_containers/syringe/piercing
+/obj/item/reagent_containers/syringe/piercing
 	name = "piercing syringe"
 	desc = "A diamond-tipped syringe that pierces armor when launched at high velocity. It can hold up to 10 units."
 	volume = 10

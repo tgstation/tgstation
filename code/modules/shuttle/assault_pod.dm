@@ -11,16 +11,18 @@
 
 
 /obj/docking_port/mobile/assault_pod/dock(obj/docking_port/stationary/S1)
-	..()
+	. = ..()
 	if(!istype(S1, /obj/docking_port/stationary/transit))
-		playsound(get_turf(src.loc), 'sound/effects/Explosion1.ogg',50,1)
+		playsound(get_turf(src.loc), 'sound/effects/explosion1.ogg',50,1)
 
 
 
 /obj/item/device/assault_pod
 	name = "Assault Pod Targetting Device"
 	icon_state = "gangtool-red"
-	item_state = "walkietalkie"
+	item_state = "radio"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	desc = "Used to select a landing zone for assault pods."
 	var/shuttle_id = "steel_rain"
 	var/dwidth = 3

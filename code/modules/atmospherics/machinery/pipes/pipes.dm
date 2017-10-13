@@ -4,7 +4,7 @@
 
 	level = 1
 
-	use_power = 0
+	use_power = NO_POWER_USE
 	can_unwrench = 1
 	var/datum/pipeline/parent = null
 
@@ -42,11 +42,6 @@
 		invisibility = i ? INVISIBILITY_MAXIMUM : 0
 	update_icon()
 
-/obj/machinery/atmospherics/pipe/proc/check_pressure(pressure)
-	//Return 1 if parent should continue checking other pipes
-	//Return null if parent should stop checking other pipes. Recall: del(src) will by default return null
-	return 1
-
 /obj/machinery/atmospherics/pipe/proc/releaseAirToTurf()
 	if(air_temporary)
 		var/turf/T = loc
@@ -61,7 +56,7 @@
 		parent = new /datum/pipeline()
 		parent.build_pipeline(src)
 
-/obj/machinery/atmospherics/pipe/attackby(obj/item/weapon/W, mob/user, params)
+/obj/machinery/atmospherics/pipe/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/device/analyzer))
 		atmosanalyzer_scan(parent.air, user)
 	else
@@ -103,3 +98,10 @@
 	if(damage_flag == "melee" && damage_amount < 12)
 		return 0
 	. = ..()
+
+/obj/machinery/atmospherics/pipe/proc/paint(paint_color)
+	add_atom_colour(paint_color, FIXED_COLOUR_PRIORITY)
+	pipe_color = paint_color
+	update_node_icon()
+	return TRUE
+

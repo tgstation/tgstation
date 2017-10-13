@@ -39,13 +39,16 @@
 		////////////////////////////////////
 		//things that require the database//
 		////////////////////////////////////
-	var/player_age = "Requires database"	//So admins know why it isn't working - Used to determine how old the account is - in days.
+	var/player_age = -1	//Used to determine how old the account is - in days.
+	var/player_join_date = null //Date that this account was first seen in the server
 	var/related_accounts_ip = "Requires database"	//So admins know why it isn't working - Used to determine what other accounts previously logged in from this ip
 	var/related_accounts_cid = "Requires database"	//So admins know why it isn't working - Used to determine what other accounts previously logged in from this computer id
+	var/account_join_date = null	//Date of byond account creation in ISO 8601 format
+	var/account_age = -1	//Age of byond account in days
 
 	preload_rsc = PRELOAD_RSC
 
-	var/global/obj/screen/click_catcher/void
+	var/obj/screen/click_catcher/void
 
 	// Used by html_interface module.
 	var/hi_last_pos
@@ -63,3 +66,7 @@
 
 	var/inprefs = FALSE
 	var/list/topiclimiter
+
+	var/datum/chatOutput/chatOutput
+
+	var/list/credits //lazy list of all credit object bound to this client

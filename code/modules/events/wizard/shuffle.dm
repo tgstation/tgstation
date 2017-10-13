@@ -13,7 +13,7 @@
 	var/list/mobs	 = list()
 
 	for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
-		if(H.z != 1)
+		if(!(H.z in GLOB.station_z_levels))
 			continue //lets not try to strand people in space or stuck in the wizards den
 		moblocs += H.loc
 		mobs += H
@@ -82,7 +82,7 @@
 	var/list/mobs	 = list()
 
 	for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
-		if(H.stat || !H.mind || (H.mind in SSticker.mode.wizards) || (H.mind in SSticker.mode.apprentices))
+		if(H.stat || !H.mind || iswizard(H))
 			continue //the wizard(s) are spared on this one
 		mobs += H
 

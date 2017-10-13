@@ -4,7 +4,7 @@
 #define RANDOM_LOWER_X 50
 #define RANDOM_LOWER_Y 50
 
-/proc/spawn_rivers(target_z = 5, nodes = 4, turf_type = /turf/open/floor/plating/lava/smooth/lava_land_surface, whitelist_area = /area/lavaland/surface/outdoors, min_x = RANDOM_LOWER_X, min_y = RANDOM_LOWER_Y, max_x = RANDOM_UPPER_X, max_y = RANDOM_UPPER_Y)
+/proc/spawn_rivers(target_z = 5, nodes = 4, turf_type = /turf/open/lava/smooth/lava_land_surface, whitelist_area = /area/lavaland/surface/outdoors, min_x = RANDOM_LOWER_X, min_y = RANDOM_LOWER_Y, max_x = RANDOM_UPPER_X, max_y = RANDOM_UPPER_Y)
 	var/list/river_nodes = list()
 	var/num_spawned = 0
 	while(num_spawned < nodes)
@@ -20,7 +20,7 @@
 			continue
 		W.connected = 1
 		var/turf/cur_turf = get_turf(W)
-		cur_turf.ChangeTurf(turf_type,FALSE,TRUE)
+		cur_turf.ChangeTurf(turf_type,FALSE,FALSE,TRUE)
 		var/turf/target_turf = get_turf(pick(river_nodes - W))
 		if(!target_turf)
 			break
@@ -49,7 +49,7 @@
 				cur_turf = get_step(cur_turf, cur_dir)
 				continue
 			else
-				var/turf/river_turf = cur_turf.ChangeTurf(turf_type,FALSE,TRUE)
+				var/turf/river_turf = cur_turf.ChangeTurf(turf_type,FALSE,FALSE,TRUE)
 				river_turf.Spread(25, 11, whitelist_area)
 
 	for(var/WP in river_nodes)
@@ -78,23 +78,23 @@
 			var/turf/closed/mineral/M = T
 			logged_turf_type = M.turf_type
 
-		if(get_dir(src, F) in GLOB.cardinal)
+		if(get_dir(src, F) in GLOB.cardinals)
 			cardinal_turfs += F
 		else
 			diagonal_turfs += F
 
 	for(var/F in cardinal_turfs) //cardinal turfs are always changed but don't always spread
 		var/turf/T = F
-		if(!istype(T, logged_turf_type) && T.ChangeTurf(type,FALSE,TRUE) && prob(probability))
+		if(!istype(T, logged_turf_type) && T.ChangeTurf(type,FALSE,FALSE,TRUE) && prob(probability))
 			T.Spread(probability - prob_loss, prob_loss, whitelisted_area)
 
 	for(var/F in diagonal_turfs) //diagonal turfs only sometimes change, but will always spread if changed
 		var/turf/T = F
-		if(!istype(T, logged_turf_type) && prob(probability) && T.ChangeTurf(type,FALSE,TRUE))
+		if(!istype(T, logged_turf_type) && prob(probability) && T.ChangeTurf(type,FALSE,FALSE,TRUE))
 			T.Spread(probability - prob_loss, prob_loss, whitelisted_area)
 		else if(ismineralturf(T))
 			var/turf/closed/mineral/M = T
-			M.ChangeTurf(M.turf_type,FALSE,TRUE)
+			M.ChangeTurf(M.turf_type,FALSE,FALSE,TRUE)
 
 
 #undef RANDOM_UPPER_X

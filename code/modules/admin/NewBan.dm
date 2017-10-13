@@ -11,8 +11,9 @@ GLOBAL_PROTECT(Banlist)
 
 	. = list()
 	var/appeal
-	if(config && config.banappeals)
-		appeal = "\nFor more information on your ban, or to appeal, head to <a href='[config.banappeals]'>[config.banappeals]</a>"
+	var/bran = CONFIG_GET(string/banappeals)
+	if(bran)
+		appeal = "\nFor more information on your ban, or to appeal, head to <a href='[bran]'>[bran]</a>"
 	GLOB.Banlist.cd = "/base"
 	if( "[ckey][id]" in GLOB.Banlist.dir )
 		GLOB.Banlist.cd = "[ckey][id]"
@@ -64,7 +65,8 @@ GLOBAL_PROTECT(Banlist)
 	GLOB.Banlist = new("data/banlist.bdb")
 	log_admin("Loading Banlist")
 
-	if (!length(GLOB.Banlist.dir)) log_admin("Banlist is empty.")
+	if (!length(GLOB.Banlist.dir))
+		log_admin("Banlist is empty.")
 
 	if (!GLOB.Banlist.dir.Find("base"))
 		log_admin("Banlist missing base dir.")
@@ -88,8 +90,10 @@ GLOBAL_PROTECT(Banlist)
 			message_admins("Invalid Ban.")
 			continue
 
-		if (!GLOB.Banlist["temp"]) continue
-		if (GLOB.CMinutes >= GLOB.Banlist["minutes"]) RemoveBan(A)
+		if (!GLOB.Banlist["temp"])
+			continue
+		if (GLOB.CMinutes >= GLOB.Banlist["minutes"])
+			RemoveBan(A)
 
 	return 1
 
@@ -109,14 +113,14 @@ GLOBAL_PROTECT(Banlist)
 	else
 		GLOB.Banlist.dir.Add("[ckey][computerid]")
 		GLOB.Banlist.cd = "/base/[ckey][computerid]"
-		GLOB.Banlist["key"] << ckey
-		GLOB.Banlist["id"] << computerid
-		GLOB.Banlist["ip"] << address
-		GLOB.Banlist["reason"] << reason
-		GLOB.Banlist["bannedby"] << bannedby
-		GLOB.Banlist["temp"] << temp
+		WRITE_FILE(GLOB.Banlist["key"], ckey)
+		WRITE_FILE(GLOB.Banlist["id"], computerid)
+		WRITE_FILE(GLOB.Banlist["ip"], address)
+		WRITE_FILE(GLOB.Banlist["reason"], reason)
+		WRITE_FILE(GLOB.Banlist["bannedby"], bannedby)
+		WRITE_FILE(GLOB.Banlist["temp"], temp)
 		if (temp)
-			GLOB.Banlist["minutes"] << bantimestamp
+			WRITE_FILE(GLOB.Banlist["minutes"], bantimestamp)
 		if(!temp)
 			create_message("note", ckey, bannedby, "Permanently banned - [reason]", null, null, 0, 0)
 		else
@@ -132,7 +136,8 @@ GLOBAL_PROTECT(Banlist)
 	GLOB.Banlist["id"] >> id
 	GLOB.Banlist.cd = "/base"
 
-	if (!GLOB.Banlist.dir.Remove(foldername)) return 0
+	if (!GLOB.Banlist.dir.Remove(foldername))
+		return 0
 
 	if(!usr)
 		log_admin_private("Ban Expired: [key]")
@@ -141,7 +146,7 @@ GLOBAL_PROTECT(Banlist)
 		ban_unban_log_save("[key_name(usr)] unbanned [key]")
 		log_admin_private("[key_name(usr)] unbanned [key]")
 		message_admins("[key_name_admin(usr)] unbanned: [key]")
-		feedback_inc("ban_unban",1)
+		SSblackbox.inc("ban_unban",1)
 		usr.client.holder.DB_ban_unban( ckey(key), BANTYPE_ANY_FULLBAN)
 	for (var/A in GLOB.Banlist.dir)
 		GLOB.Banlist.cd = "/base/[A]"
@@ -211,17 +216,17 @@ GLOBAL_PROTECT(Banlist)
 			GLOB.Banlist.cd = "/base"
 			GLOB.Banlist.dir.Add("trash[i]trashid[i]")
 			GLOB.Banlist.cd = "/base/trash[i]trashid[i]"
-			GLOB.Banlist["key"] << "trash[i]"
+			WRITE_FILE(GLOB.Banlist["key"], "trash[i]")
 		else
 			GLOB.Banlist.cd = "/base"
 			GLOB.Banlist.dir.Add("[last]trashid[i]")
 			GLOB.Banlist.cd = "/base/[last]trashid[i]"
-			GLOB.Banlist["key"] << last
-		GLOB.Banlist["id"] << "trashid[i]"
-		GLOB.Banlist["reason"] << "Trashban[i]."
-		GLOB.Banlist["temp"] << a
-		GLOB.Banlist["minutes"] << GLOB.CMinutes + rand(1,2000)
-		GLOB.Banlist["bannedby"] << "trashmin"
+			WRITE_FILE(GLOB.Banlist["key"], last)
+		WRITE_FILE(GLOB.Banlist["id"], "trashid[i]")
+		WRITE_FILE(GLOB.Banlist["reason"], "Trashban[i].")
+		WRITE_FILE(GLOB.Banlist["temp"], a)
+		WRITE_FILE(GLOB.Banlist["minutes"], GLOB.CMinutes + rand(1,2000))
+		WRITE_FILE(GLOB.Banlist["bannedby"], "trashmin")
 		last = "trash[i]"
 
 	GLOB.Banlist.cd = "/base"

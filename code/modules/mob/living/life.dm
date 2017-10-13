@@ -1,4 +1,4 @@
-/mob/living/Life()
+/mob/living/Life(seconds, times_fired)
 	set invisibility = 0
 	set background = BACKGROUND_ENABLED
 
@@ -19,14 +19,15 @@
 	var/datum/gas_mixture/environment = loc.return_air()
 
 	if(stat != DEAD)
-		//Breathing, if applicable
-		handle_breathing()
-	if(stat != DEAD)
 		//Mutations and radiation
 		handle_mutations_and_radiation()
+
 	if(stat != DEAD)
-		//Chemicals in the body
-		handle_chemicals_in_body()
+		//Breathing, if applicable
+		handle_breathing(times_fired)
+
+	handle_diseases() // DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
+
 	if(stat != DEAD)
 		//Random events (vomiting etc)
 		handle_random_events()
@@ -48,19 +49,19 @@
 	if(stat != DEAD)
 		handle_disabilities() // eye, ear, brain damages
 	if(stat != DEAD)
-		handle_status_effects() //all special effects, stunned, weakened, jitteryness, hallucination, sleeping, etc
+		handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
 
 	if(stat != DEAD)
 		return 1
 
-/mob/living/proc/handle_breathing()
+/mob/living/proc/handle_breathing(times_fired)
 	return
 
 /mob/living/proc/handle_mutations_and_radiation()
 	radiation = 0 //so radiation don't accumulate in simple animals
 	return
 
-/mob/living/proc/handle_chemicals_in_body()
+/mob/living/proc/handle_diseases()
 	return
 
 /mob/living/proc/handle_diginvis()
@@ -88,7 +89,7 @@
 		ExtinguishMob()
 		return
 	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
-	if(!G.gases["o2"] || G.gases["o2"][MOLES] < 1)
+	if(!G.gases[/datum/gas/oxygen] || G.gases[/datum/gas/oxygen][MOLES] < 1)
 		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
 		return
 	var/turf/location = get_turf(src)
@@ -97,14 +98,8 @@
 /mob/living/proc/handle_stomach()
 	return
 
-//this updates all special effects: stunned, sleeping, weakened, druggy, stuttering, etc..
+//this updates all special effects: knockdown, druggy, stuttering, etc..
 /mob/living/proc/handle_status_effects()
-	if(paralysis)
-		AdjustParalysis(-1, 1, 1)
-	if(stunned)
-		AdjustStunned(-1, 1, 1)
-	if(weakened)
-		AdjustWeakened(-1, 1, 1)
 	if(confused)
 		confused = max(0, confused - 1)
 
@@ -123,15 +118,5 @@
 		if(client && !eye_blurry)
 			clear_fullscreen("blurry")
 
-	//Ears
-	if(disabilities & DEAF)		//disabled-deaf, doesn't get better on its own
-		setEarDamage(-1, max(ear_deaf, 1))
-	else
-		// deafness heals slowly over time, unless ear_damage is over 100
-		if(ear_damage < 100)
-			adjustEarDamage(-0.05,-1)
-
 /mob/living/proc/update_damage_hud()
 	return
-
-

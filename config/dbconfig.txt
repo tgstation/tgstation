@@ -2,11 +2,11 @@
 ## This is used for stats, feedback gathering,
 ## administration, and the in game library.
 
-## Should SQL be enabled? Uncomment to enable.
+## Should SQL be enabled? Uncomment to enable
 #SQL_ENABLED
 
 ## Server the MySQL database can be found at.
-# Examples: localhost, 200.135.5.43, www.mysqldb.com, etc.
+## Examples: localhost, 200.135.5.43, www.mysqldb.com, etc.
 ADDRESS localhost
 
 ## MySQL server port (default is 3306).
@@ -16,15 +16,12 @@ PORT 3306
 FEEDBACK_DATABASE feedback
 
 ## Prefix to be added to the name of every table, older databases will require this be set to erro_
-## if left out defaults to erro_ for legacy reasons, if you want no table prefix, give a blank prefix rather then comment out
 ## Note, this does not change the table names in the database, you will have to do that yourself.
 ##IE:
-##	FEEDBACK_TABLEPREFIX erro_
 ##	FEEDBACK_TABLEPREFIX 
 ##	FEEDBACK_TABLEPREFIX SS13_
-##
-## Leave as is if you are using the standard schema file.
-FEEDBACK_TABLEPREFIX 
+## Remove "SS13_" if you are using the standard schema file.
+FEEDBACK_TABLEPREFIX SS13_
 
 ## Username/Login used to access the database.
 FEEDBACK_LOGIN username

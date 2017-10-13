@@ -2,8 +2,9 @@
 	name = "pipe dispenser"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pipe_d"
-	density = 1
-	anchored = 1
+	desc = "Dispenses countless types of pipes. Very useful if you need pipes."
+	density = TRUE
+	anchored = TRUE
 	var/wait = 0
 
 /obj/machinery/pipedispenser/attack_paw(mob/user)
@@ -13,13 +14,14 @@
 	if(..())
 		return 1
 	var/dat = {"
-<b>Regular pipes:</b><BR>
+<b>Pipes:</b><BR>
 <A href='?src=\ref[src];make=[PIPE_SIMPLE];dir=1'>Pipe</A><BR>
 <A href='?src=\ref[src];make=[PIPE_SIMPLE];dir=5'>Bent Pipe</A><BR>
 <A href='?src=\ref[src];make=[PIPE_MANIFOLD];dir=1'>Manifold</A><BR>
 <A href='?src=\ref[src];make=[PIPE_4WAYMANIFOLD];dir=1'>4-Way Manifold</A><BR>
 <A href='?src=\ref[src];make=[PIPE_MVALVE];dir=1'>Manual Valve</A><BR>
 <A href='?src=\ref[src];make=[PIPE_DVALVE];dir=1'>Digital Valve</A><BR>
+<A href='?src=\ref[src];make=[PIPE_BLUESPACE];dir=1'>Bluespace Pipe</A><BR>
 <b>Devices:</b><BR>
 <A href='?src=\ref[src];make=[PIPE_CONNECTOR];dir=1'>Connector</A><BR>
 <A href='?src=\ref[src];make=[PIPE_UVENT];dir=1'>Vent</A><BR>
@@ -53,31 +55,25 @@
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(href_list["make"])
-		if(!wait)
+		if(wait < world.time)
 			var/p_type = text2path(href_list["make"])
 			var/p_dir = text2num(href_list["dir"])
 			var/obj/item/pipe/P = new (src.loc, pipe_type=p_type, dir=p_dir)
 			P.add_fingerprint(usr)
-			wait = 1
-			spawn(10)
-				wait = 0
+			wait = world.time + 10
 	if(href_list["makemeter"])
-		if(!wait)
+		if(wait < world.time )
 			new /obj/item/pipe_meter(src.loc)
-			wait = 1
-			spawn(15)
-				wait = 0
+			wait = world.time + 15
 	return
 
 /obj/machinery/pipedispenser/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
 	if (istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter))
 		to_chat(usr, "<span class='notice'>You put [W] back into [src].</span>")
-		if(!user.drop_item())
-			return
 		qdel(W)
 		return
-	else if (istype(W, /obj/item/weapon/wrench))
+	else if (istype(W, /obj/item/wrench))
 		if (!anchored && !isinspace())
 			playsound(src.loc, W.usesound, 50, 1)
 			to_chat(user, "<span class='notice'>You begin to fasten \the [src] to the floor...</span>")
@@ -87,7 +83,7 @@
 					"[user] fastens \the [src].", \
 					"<span class='notice'>You fasten \the [src]. Now it can dispense pipes.</span>", \
 					"<span class='italics'>You hear ratchet.</span>")
-				anchored = 1
+				anchored = TRUE
 				stat &= MAINT
 				if (usr.machine==src)
 					usr << browse(null, "window=pipedispenser")
@@ -100,7 +96,7 @@
 					"[user] unfastens \the [src].", \
 					"<span class='notice'>You unfasten \the [src]. Now it can be pulled somewhere else.</span>", \
 					"<span class='italics'>You hear ratchet.</span>")
-				anchored = 0
+				anchored = FALSE
 				stat |= ~MAINT
 				power_change()
 	else
@@ -111,8 +107,9 @@
 	name = "disposal pipe dispenser"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pipe_d"
-	density = 1
-	anchored = 1
+	desc = "Dispenses pipes that will ultimately be used to move trash around."
+	density = TRUE
+	anchored = TRUE
 
 /*
 //Allow you to push disposal pipes into it (for those with density 1)
@@ -165,7 +162,7 @@ Nah
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(href_list["dmake"])
-		if(!wait)
+		if(wait < world.time)
 			var/p_type = text2num(href_list["dmake"])
 			var/obj/structure/disposalconstruct/C = new (src.loc,p_type)
 
@@ -176,9 +173,7 @@ Nah
 
 			C.add_fingerprint(usr)
 			C.update_icon()
-			wait = 1
-			spawn(15)
-				wait = 0
+			wait = world.time + 15
 	return
 
 //transit tube dispenser
@@ -187,8 +182,9 @@ Nah
 	name = "transit tube dispenser"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pipe_d"
-	density = 1
-	anchored = 1
+	density = TRUE
+	desc = "Dispenses pipes that will move beings around."
+	anchored = TRUE
 
 /obj/machinery/pipedispenser/disposal/transit_tube/attack_hand(mob/user)
 	if(..())
@@ -216,7 +212,7 @@ Nah
 		return 1
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
-	if(!wait)
+	if(wait < world.time)
 		if(href_list["tube"])
 			var/tube_type = text2num(href_list["tube"])
 			var/obj/structure/C
@@ -241,7 +237,5 @@ Nah
 					C = new /obj/structure/c_transit_tube_pod(loc)
 			if(C)
 				C.add_fingerprint(usr)
-			wait = 1
-			spawn(15)
-				wait = 0
+			wait = world.time + 15
 	return

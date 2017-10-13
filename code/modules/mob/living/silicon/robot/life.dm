@@ -6,6 +6,7 @@
 		return
 
 	..()
+	adjustOxyLoss(-10) //we're a robot!
 	handle_robot_hud_updates()
 	handle_robot_cell()
 
@@ -102,11 +103,11 @@
 	return
 
 /mob/living/silicon/robot/update_fire()
-	var/I = image("icon"='icons/mob/OnFire.dmi', "icon_state"="Generic_mob_burning")
+	var/mutable_appearance/fire_overlay = mutable_appearance('icons/mob/OnFire.dmi', "Generic_mob_burning")
 	if(on_fire)
-		add_overlay(I)
+		add_overlay(fire_overlay)
 	else
-		cut_overlay(I)
+		cut_overlay(fire_overlay)
 
 /mob/living/silicon/robot/update_canmove()
 	if(stat || buckled || lockcharge)

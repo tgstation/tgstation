@@ -10,7 +10,7 @@
 	var/required_other = 0 // an integer required for the reaction to happen
 
 	var/secondary = 0 // set to nonzero if secondary reaction
-	var/mob_react = 0 //Determines if a chemical reaction can occur inside a mob
+	var/mob_react = TRUE //Determines if a chemical reaction can occur inside a mob
 
 	var/required_temp = 0
 	var/is_cold_recipe = 0 // Set to 1 if you want the recipe to only react when it's BELOW the required temp.
@@ -36,12 +36,12 @@
 		var/atom/A = holder.my_atom
 		var/turf/T = get_turf(A)
 		var/area/my_area = get_area(T)
-		var/message = "A [reaction_name] reaction has occurred in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)"
+		var/message = "A [reaction_name] reaction has occurred in [my_area.name] [ADMIN_COORDJMP(T)]"
 		message += " (<A HREF='?_src_=vars;Vars=\ref[A]'>VV</A>)"
 
 		var/mob/M = get(A, /mob)
 		if(M)
-			message += " - Carried By: [key_name_admin(M)](<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</A>)"
+			message += " - Carried By: [ADMIN_LOOKUPFLW(M)]"
 		else
 			message += " - Last Fingerprint: [(A.fingerprintslast ? A.fingerprintslast : "N/A")]"
 

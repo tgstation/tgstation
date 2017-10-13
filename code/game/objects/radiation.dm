@@ -1,5 +1,6 @@
 /proc/radiation_pulse(turf/epicenter, heavy_range, light_range, severity, log=0)
-	if(!epicenter || !severity) return
+	if(!epicenter || !severity)
+		return
 
 	if(!isturf(epicenter))
 		epicenter = get_turf(epicenter.loc)
@@ -53,4 +54,7 @@
 	. = ..(amount, TRUE)
 
 /mob/living/simple_animal/drone/rad_act(amount)
+	. = ..(amount, TRUE)
+
+/mob/living/simple_animal/hostile/swarmer/rad_act(amount)
 	. = ..(amount, TRUE)

@@ -19,7 +19,8 @@
 
 /datum/computer/file/embedded_program/airlock_controller/receive_signal(datum/signal/signal, receive_method, receive_param)
 	var/receive_tag = signal.data["tag"]
-	if(!receive_tag) return
+	if(!receive_tag)
+		return
 
 	if(receive_tag==sensor_tag)
 		if(signal.data["pressure"])
@@ -206,7 +207,7 @@
 	icon_state = "airlock_control_standby"
 
 	name = "airlock console"
-	density = 0
+	density = FALSE
 
 	frequency = 1449
 	power_channel = ENVIRON
@@ -220,7 +221,7 @@
 	var/sanitize_external
 
 /obj/machinery/embedded_controller/radio/airlock_controller/Initialize(mapload)
-	..()
+	. = ..()
 	if(!mapload)
 		return
 

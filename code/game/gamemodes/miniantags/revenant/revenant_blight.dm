@@ -2,7 +2,7 @@
 	name = "Unnatural Wasting"
 	max_stages = 5
 	stage_prob = 10
-	spread_flags = NON_CONTAGIOUS
+	spread_flags = VIRUS_SPREAD_NON_CONTAGIOUS
 	cure_text = "Holy water or extensive rest."
 	spread_text = "A burst of unholy energy"
 	cures = list("holywater")
@@ -11,7 +11,7 @@
 	viable_mobtypes = list(/mob/living/carbon/human)
 	disease_flags = CURABLE
 	permeability_mod = 1
-	severity = BIOHAZARD
+	severity = VIRUS_SEVERITY_HARMFUL
 	var/stagedamage = 0 //Highest stage reached.
 	var/finalstage = 0 //Because we're spawning off the cure in the final stage, we need to check if we've done the final stage's effects.
 
@@ -33,11 +33,11 @@
 			to_chat(affected_mob, "<span class='revennotice'>You suddenly feel [pick("sick and tired", "disoriented", "tired and confused", "nauseated", "faint", "dizzy")]...</span>")
 			affected_mob.confused += 8
 			affected_mob.adjustStaminaLoss(8)
-			new /obj/effect/overlay/temp/revenant(affected_mob.loc)
+			new /obj/effect/temp_visual/revenant(affected_mob.loc)
 		if(stagedamage < stage)
 			stagedamage++
 			affected_mob.adjustToxLoss(stage*2) //should, normally, do about 30 toxin damage.
-			new /obj/effect/overlay/temp/revenant(affected_mob.loc)
+			new /obj/effect/temp_visual/revenant(affected_mob.loc)
 		if(prob(45))
 			affected_mob.adjustStaminaLoss(stage)
 	..() //So we don't increase a stage before applying the stage damage.
@@ -56,7 +56,7 @@
 				finalstage = TRUE
 				to_chat(affected_mob, "<span class='revenbignotice'>You feel like [pick("nothing's worth it anymore", "nobody ever needed your help", "nothing you did mattered", "everything you tried to do was worthless")].</span>")
 				affected_mob.adjustStaminaLoss(45)
-				new /obj/effect/overlay/temp/revenant(affected_mob.loc)
+				new /obj/effect/temp_visual/revenant(affected_mob.loc)
 				if(affected_mob.dna && affected_mob.dna.species)
 					affected_mob.dna.species.handle_mutant_bodyparts(affected_mob,"#1d2953")
 					affected_mob.dna.species.handle_hair(affected_mob,"#1d2953")

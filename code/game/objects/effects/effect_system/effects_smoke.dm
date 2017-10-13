@@ -10,8 +10,8 @@
 	pixel_y = -32
 	opacity = 0
 	layer = FLY_LAYER
-	anchored = 1
-	mouse_opacity = 0
+	anchored = TRUE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	animate_movement = 0
 	var/amount = 4
 	var/lifetime = 5
@@ -74,7 +74,7 @@
 /obj/effect/particle_effect/smoke/proc/spread_smoke()
 	var/turf/t_loc = get_turf(src)
 	if(!t_loc)
-		return 
+		return
 	var/list/newsmokes = list()
 	for(var/turf/T in t_loc.GetAtmosAdjacentTurfs())
 		var/obj/effect/particle_effect/smoke/foundsmoke = locate() in T //Don't spread smoke where there's already smoke!
@@ -84,7 +84,7 @@
 			smoke_mob(L)
 		var/obj/effect/particle_effect/smoke/S = new type(T)
 		reagents.copy_to(S, reagents.total_volume)
-		S.setDir(pick(GLOB.cardinal))
+		S.setDir(pick(GLOB.cardinals))
 		S.amount = amount-1
 		S.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 		S.lifetime = lifetime
@@ -128,13 +128,12 @@
 
 /obj/effect/particle_effect/smoke/bad/smoke_mob(mob/living/carbon/M)
 	if(..())
-		M.drop_item()
+		M.drop_all_held_items()
 		M.adjustOxyLoss(1)
 		M.emote("cough")
 		return 1
 
-/obj/effect/particle_effect/smoke/bad/CanPass(atom/movable/mover, turf/target, height=0)
-	if(height==0) return 1
+/obj/effect/particle_effect/smoke/bad/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover, /obj/item/projectile/beam))
 		var/obj/item/projectile/beam/B = mover
 		B.damage = (B.damage/2)
@@ -169,14 +168,14 @@
 			for(var/obj/effect/hotspot/H in T)
 				qdel(H)
 				var/list/G_gases = G.gases
-				if(G_gases["plasma"])
-					G.assert_gas("n2")
-					G_gases["n2"][MOLES] += (G_gases["plasma"][MOLES])
-					G_gases["plasma"][MOLES] = 0
+				if(G_gases[/datum/gas/plasma])
+					ASSERT_GAS(/datum/gas/nitrogen, G)
+					G_gases[/datum/gas/nitrogen][MOLES] += (G_gases[/datum/gas/plasma][MOLES])
+					G_gases[/datum/gas/plasma][MOLES] = 0
 					G.garbage_collect()
 		for(var/obj/machinery/atmospherics/components/unary/U in T)
 			if(!isnull(U.welded) && !U.welded) //must be an unwelded vent pump or vent scrubber.
-				U.welded = 1
+				U.welded = TRUE
 				U.update_icon()
 				U.visible_message("<span class='danger'>[U] was frozen shut!</span>")
 		for(var/mob/living/L in T)
@@ -206,8 +205,7 @@
 
 /obj/effect/particle_effect/smoke/sleeping/smoke_mob(mob/living/carbon/M)
 	if(..())
-		M.drop_item()
-		M.Sleeping(max(M.sleeping,10))
+		M.Sleeping(200)
 		M.emote("cough")
 		return 1
 
@@ -284,13 +282,13 @@
 		var/area/A = get_area(location)
 
 		var/where = "[A.name] | [location.x], [location.y]"
-		var/whereLink = "<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[location.x];Y=[location.y];Z=[location.z]'>[where]</a>"
+		var/whereLink = "<A HREF='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[location.x];Y=[location.y];Z=[location.z]'>[where]</a>"
 
 		if(carry.my_atom.fingerprintslast)
 			var/mob/M = get_mob_by_key(carry.my_atom.fingerprintslast)
 			var/more = ""
 			if(M)
-				more = "(<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>?</a>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</A>) "
+				more = "(<A HREF='?_src_=holder;[HrefToken()];adminmoreinfo=\ref[M]'>?</a>) (<A HREF='?_src_=holder;[HrefToken()];adminplayerobservefollow=\ref[M]'>FLW</A>) "
 			message_admins("Smoke: ([whereLink])[contained]. Key: [carry.my_atom.fingerprintslast][more].", 0, 1)
 			log_game("A chemical smoke reaction has taken place in ([where])[contained]. Last associated key is [carry.my_atom.fingerprintslast].")
 		else

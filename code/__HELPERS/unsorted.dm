@@ -42,13 +42,13 @@
 		.+=360
 
 //Returns location. Returns null if no location was found.
-/proc/get_teleport_loc(turf/location,mob/target,distance = 1, density = 0, errorx = 0, errory = 0, eoffsetx = 0, eoffsety = 0)
+/proc/get_teleport_loc(turf/location,mob/target,distance = 1, density = FALSE, errorx = 0, errory = 0, eoffsetx = 0, eoffsety = 0)
 /*
 Location where the teleport begins, target that will teleport, distance to go, density checking 0/1(yes/no).
 Random error in tile placement x, error in tile placement y, and block offset.
 Block offset tells the proc how to place the box. Behind teleport location, relative to starting location, forward, etc.
 Negative values for offset are accepted, think of it in relation to North, -x is west, -y is south. Error defaults to positive.
-Turf and target are seperate in case you want to teleport some distance from a turf the target is not standing on or something.
+Turf and target are separate in case you want to teleport some distance from a turf the target is not standing on or something.
 */
 
 	var/dirx = 0//Generic location finding variable.
@@ -137,7 +137,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				return
 			if(destination.y>world.maxy || destination.y<1)
 				return
-	else	return
+	else
+		return
 
 	return destination
 
@@ -289,7 +290,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/list/pois = list()
 	for(var/mob/M in mobs)
 		if(skip_mindless && (!M.mind && !M.ckey))
-			if(!isbot(M) && !istype(M, /mob/camera/))
+			if(!isbot(M) && !iscameramob(M) && !ismegafauna(M))
 				continue
 		if(M.client && M.client.holder && M.client.holder.fakekey) //stealthmins
 			continue
@@ -356,6 +357,17 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/convert2mass(E)
 	var/M = E/(SPEED_OF_LIGHT_SQ)
 	return M
+
+//Takes the value of energy used/produced/ect.
+//Returns a text value of that number in W, kW, MW, or GW.
+/proc/DisplayPower(var/powerused)
+	if(powerused < 1000) //Less than a kW
+		return "[powerused] W"
+	else if(powerused < 1000000) //Less than a MW
+		return "[round((powerused * 0.001),0.01)] kW"
+	else if(powerused < 1000000000) //Less than a GW
+		return "[round((powerused * 0.000001),0.001)] MW"
+	return "[round((powerused * 0.000000001),0.0001)] GW"
 
 /proc/key_name(whom, include_link = null, include_name = 1)
 	var/mob/M
@@ -442,19 +454,23 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/turf/target = locate(A.x, A.y, A.z)
 	if(!A || !target)
 		return 0
-		//since NORTHEAST == NORTH & EAST, etc, doing it this way allows for diagonal mass drivers in the future
+		//since NORTHEAST == NORTH|EAST, etc, doing it this way allows for diagonal mass drivers in the future
 		//and isn't really any more complicated
 
-		// Note diagonal directions won't usually be accurate
+	var/x = A.x
+	var/y = A.y
 	if(direction & NORTH)
-		target = locate(target.x, world.maxy, target.z)
-	if(direction & SOUTH)
-		target = locate(target.x, 1, target.z)
+		y = world.maxy
+	else if(direction & SOUTH) //you should not have both NORTH and SOUTH in the provided direction
+		y = 1
 	if(direction & EAST)
-		target = locate(world.maxx, target.y, target.z)
-	if(direction & WEST)
-		target = locate(1, target.y, target.z)
-	return target
+		x = world.maxx
+	else if(direction & WEST)
+		x = 1
+	if(direction in GLOB.diagonals) //let's make sure it's accurately-placed for diagonals
+		var/lowest_distance_to_map_edge = min(abs(x - A.x), abs(y - A.y))
+		return get_ranged_target_turf(A, direction, lowest_distance_to_map_edge)
+	return locate(x,y,A.z)
 
 // returns turf relative to A in given direction at set range
 // result is bounded to map size
@@ -466,11 +482,11 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/y = A.y
 	if(direction & NORTH)
 		y = min(world.maxy, y + range)
-	if(direction & SOUTH)
+	else if(direction & SOUTH)
 		y = max(1, y - range)
 	if(direction & EAST)
 		x = min(world.maxx, x + range)
-	if(direction & WEST)
+	else if(direction & WEST) //if you have both EAST and WEST in the provided direction, then you're gonna have issues
 		x = max(1, x - range)
 
 	return locate(x,y,A.z)
@@ -487,21 +503,19 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/y=arcsin(x/sqrt(1+x*x))
 	return y
 
-/atom/proc/GetAllContents()
-	var/list/processing_list = list(src)
-	var/list/assembled = list()
+/*
+Recursively gets all contents of contents and returns them all in a list.
 
-	while(processing_list.len)
-		var/atom/A = processing_list[1]
-		processing_list -= A
-
-		for(var/atom/a in A)
-			if(!(a in assembled))
-				processing_list |= a
-
-		assembled |= A
-
-	return assembled
+recursive_depth is useful if you only want a turf and everything on it (recursive_depth=1)
+*/
+/atom/proc/GetAllContents(list/output=list(), recursive_depth=INFINITY)
+	. = output
+	output += src 
+	if(!recursive_depth)
+		return
+	for(var/i in 1 to contents.len) 
+		var/atom/thing = contents[i] 
+		thing.GetAllContents(output, recursive_depth-1) 
 
 //Step-towards method of determining whether one atom can see another. Similar to viewers()
 /proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
@@ -582,7 +596,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		return 0
 
 //Repopulates sortedAreas list
-/proc/SortAreas()
+/proc/repopulate_sorted_areas()
 	GLOB.sortedAreas = list()
 
 	for(var/area/A in world)
@@ -593,6 +607,18 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /area/proc/addSorted()
 	GLOB.sortedAreas.Add(src)
 	sortTim(GLOB.sortedAreas, /proc/cmp_name_asc)
+
+//Takes: Area type as a text string from a variable.
+//Returns: Instance for the area in the world.
+/proc/get_area_instance_from_text(areatext)
+	var/areainstance = null
+	if(istext(areatext))
+		areatext = text2path(areatext)
+	for(var/V in GLOB.sortedAreas)
+		var/area/A = V
+		if(A.type == areatext)
+			areainstance = V
+	return areainstance
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all areas of that type in the world.
@@ -722,11 +748,11 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	//Irregular objects
 	var/icon/AMicon = icon(AM.icon, AM.icon_state)
-	var/icon/AMiconheight = AMicon.Height()
-	var/icon/AMiconwidth = AMicon.Width()	
+	var/AMiconheight = AMicon.Height()
+	var/AMiconwidth = AMicon.Width()
 	if(AMiconheight != world.icon_size || AMiconwidth != world.icon_size)
-		pixel_x_offset += ((AMicon.Width()/world.icon_size)-1)*(world.icon_size*0.5)
-		pixel_y_offset += ((AMicon.Height()/world.icon_size)-1)*(world.icon_size*0.5)
+		pixel_x_offset += ((AMiconwidth/world.icon_size)-1)*(world.icon_size*0.5)
+		pixel_y_offset += ((AMiconheight/world.icon_size)-1)*(world.icon_size*0.5)
 
 	//DY and DX
 	var/rough_x = round(round(pixel_x_offset,world.icon_size)/world.icon_size)
@@ -778,7 +804,7 @@ GLOBAL_LIST_INIT(can_embed_types, typecacheof(list(
 
 
 /*
-Checks if that loc and dir has a item on the wall
+Checks if that loc and dir has an item on the wall
 */
 GLOBAL_LIST_INIT(WALLITEMS, typecacheof(list(
 	/obj/machinery/power/apc, /obj/machinery/airalarm, /obj/item/device/radio/intercom,
@@ -786,8 +812,9 @@ GLOBAL_LIST_INIT(WALLITEMS, typecacheof(list(
 	/obj/machinery/status_display, /obj/machinery/requests_console, /obj/machinery/light_switch, /obj/structure/sign,
 	/obj/machinery/newscaster, /obj/machinery/firealarm, /obj/structure/noticeboard, /obj/machinery/button,
 	/obj/machinery/computer/security/telescreen, /obj/machinery/embedded_controller/radio/simple_vent_controller,
-	/obj/item/weapon/storage/secure/safe, /obj/machinery/door_timer, /obj/machinery/flasher, /obj/machinery/keycard_auth,
-	/obj/structure/mirror, /obj/structure/fireaxecabinet, /obj/machinery/computer/security/telescreen/entertainment
+	/obj/item/storage/secure/safe, /obj/machinery/door_timer, /obj/machinery/flasher, /obj/machinery/keycard_auth,
+	/obj/structure/mirror, /obj/structure/fireaxecabinet, /obj/machinery/computer/security/telescreen/entertainment,
+	/obj/structure/sign/picture_frame
 	)))
 
 GLOBAL_LIST_INIT(WALLITEMS_EXTERNAL, typecacheof(list(
@@ -833,11 +860,11 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 
 /obj/proc/atmosanalyzer_scan(datum/gas_mixture/air_contents, mob/user, obj/target = src)
 	var/obj/icon = target
-	user.visible_message("[user] has used the analyzer on \icon[icon] [target].", "<span class='notice'>You use the analyzer on \icon[icon] [target].</span>")
+	user.visible_message("[user] has used the analyzer on [icon2html(icon, viewers(src))] [target].", "<span class='notice'>You use the analyzer on [icon2html(icon, user)] [target].</span>")
 	var/pressure = air_contents.return_pressure()
 	var/total_moles = air_contents.total_moles()
 
-	to_chat(user, "<span class='notice'>Results of analysis of \icon[icon] [target].</span>")
+	to_chat(user, "<span class='notice'>Results of analysis of [icon2html(icon, user)] [target].</span>")
 	if(total_moles>0)
 		to_chat(user, "<span class='notice'>Pressure: [round(pressure,0.1)] kPa</span>")
 
@@ -1078,18 +1105,17 @@ B --><-- A
 	return L
 
 //similar function to RANGE_TURFS(), but will search spiralling outwards from the center (like the above, but only turfs)
-/proc/spiral_range_turfs(dist=0, center=usr, orange=0)
+/proc/spiral_range_turfs(dist=0, center=usr, orange=0, list/outlist = list(), tick_checked)
+	outlist.Cut()
 	if(!dist)
-		if(!orange)
-			return list(center)
-		else
-			return list()
+		outlist += center
+		return outlist
 
 	var/turf/t_center = get_turf(center)
 	if(!t_center)
-		return list()
+		return outlist
 
-	var/list/L = list()
+	var/list/L = outlist
 	var/turf/T
 	var/y
 	var/x
@@ -1127,6 +1153,8 @@ B --><-- A
 			if(T)
 				L += T
 		c_dist++
+		if(tick_checked)
+			CHECK_TICK
 
 	return L
 
@@ -1137,53 +1165,13 @@ B --><-- A
 		if(location == src)
 			return 1
 
-/proc/add_to_proximity_list(atom/A, range)
-	var/turf/T = get_turf(A)
-	if(!T || !A.loc)
-		throw EXCEPTION("Someone adding a prox sensor in nullspace")
-	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
-	for(var/B in L)
-		var/turf/C = B
-		LAZYINITLIST(C.proximity_checkers)
-		C.proximity_checkers[A] = TRUE
-	return L
-
-/proc/remove_from_proximity_list(atom/A, range, oldloc = null)
-	var/turf/T = get_turf(oldloc ? oldloc : A)
-	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
-	for(var/B in L)
-		var/turf/C = B
-		if (!C.proximity_checkers)
-			continue
-		C.proximity_checkers.Remove(A)
-
-/proc/shift_proximity(atom/checker, atom/A, range, atom/B, newrange)
-	var/turf/T = get_turf(A)
-	var/turf/Q = get_turf(B)
-	if(T == Q && range == newrange)
-		return 0
-	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
-	var/list/M = block(locate(Q.x - newrange, Q.y - newrange, Q.z), locate(Q.x + newrange, Q.y + newrange, Q.z))
-	var/list/N = L - M
-	var/list/O = M - L
-	for(var/C in N)
-		var/turf/D = C
-		if (!D.proximity_checkers)
-			continue
-		D.proximity_checkers.Remove(checker)
-	for(var/E in O)
-		var/turf/F = E
-		LAZYINITLIST(F.proximity_checkers)
-		F.proximity_checkers[checker] = TRUE
-	return 1
-
-/proc/flick_overlay_static(image/I, atom/A, duration)
+/proc/flick_overlay_static(O, atom/A, duration)
 	set waitfor = 0
-	if(!A || !I)
+	if(!A || !O)
 		return
-	A.add_overlay(I)
+	A.add_overlay(O)
 	sleep(duration)
-	A.cut_overlay(I)
+	A.cut_overlay(O)
 
 /proc/get_areas_in_z(zlevel)
 	. = list()
@@ -1245,22 +1233,28 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 
 //Increases delay as the server gets more overloaded,
 //as sleeps aren't cheap and sleeping only to wake up and sleep again is wasteful
-#define DELTA_CALC max(((max(world.tick_usage, world.cpu) / 100) * max(Master.sleep_delta,1)), 1)
+#define DELTA_CALC max(((max(TICK_USAGE, world.cpu) / 100) * max(Master.sleep_delta-1,1)), 1)
 
-/proc/stoplag()
+//returns the number of ticks slept
+/proc/stoplag(initial_delay)
+	if (!Master || !(Master.current_runlevel & RUNLEVELS_DEFAULT))
+		sleep(world.tick_lag)
+		return 1
+	if (!initial_delay)
+		initial_delay = world.tick_lag
 	. = 0
-	var/i = 1
+	var/i = DS2TICKS(initial_delay)
 	do
-		. += round(i*DELTA_CALC)
+		. += Ceiling(i*DELTA_CALC)
 		sleep(i*world.tick_lag*DELTA_CALC)
 		i *= 2
-	while (world.tick_usage > min(TICK_LIMIT_TO_RUN, GLOB.CURRENT_TICKLIMIT))
+	while (TICK_USAGE > min(TICK_LIMIT_TO_RUN, Master.current_ticklimit))
 
 #undef DELTA_CALC
 
 /proc/flash_color(mob_or_client, flash_color="#960000", flash_time=20)
 	var/client/C
-	if(istype(mob_or_client, /mob))
+	if(ismob(mob_or_client))
 		var/mob/M = mob_or_client
 		if(M.client)
 			C = M.client
@@ -1278,10 +1272,17 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 #define RANDOM_COLOUR (rgb(rand(0,255),rand(0,255),rand(0,255)))
 
 #define QDEL_IN(item, time) addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, item), time, TIMER_STOPPABLE)
+#define QDEL_IN_CLIENT_TIME(item, time) addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, item), time, TIMER_STOPPABLE | TIMER_CLIENT_TIME)
 #define QDEL_NULL(item) qdel(item); item = null
 #define QDEL_LIST(L) if(L) { for(var/I in L) qdel(I); L.Cut(); }
+#define QDEL_LIST_IN(L, time) addtimer(CALLBACK(GLOBAL_PROC, .proc/______qdel_list_wrapper, L), time, TIMER_STOPPABLE)
 #define QDEL_LIST_ASSOC(L) if(L) { for(var/I in L) { qdel(L[I]); qdel(I); } L.Cut(); }
-#define QDEL_LIST_ASSOC_VAL(L) if(L) { for(var/I in L) qel(L[I]); L.Cut(); }
+#define QDEL_LIST_ASSOC_VAL(L) if(L) { for(var/I in L) qdel(L[I]); L.Cut(); }
+
+/proc/______qdel_list_wrapper(list/L) //the underscores are to encourage people not to use this directly.
+	QDEL_LIST(L)
+
+
 
 /proc/random_nukecode()
 	var/val = rand(0, 99999)
@@ -1355,6 +1356,8 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	GLOB.dview_mob.see_invisible = invis_flags; \
 	for(type in view(range, GLOB.dview_mob))
 
+#define FOR_DVIEW_END GLOB.dview_mob.loc = null
+
 //can a window be here, or is there a window blocking it?
 /proc/valid_window_location(turf/T, dir_to_check)
 	if(!T)
@@ -1372,66 +1375,35 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 				return FALSE
 	return TRUE
 
-//WHATEVER YOU USE THIS FOR MUST BE SANITIZED TO SHIT, IT USES SHELL
-//It also sleeps
-
-//Set this to TRUE before calling
-//This prevents RCEs from badmins
-//kevinz000 if you touch this I will hunt you down
-GLOBAL_VAR_INIT(valid_HTTPSGet, FALSE)
-/proc/HTTPSGet(url)
-	if(findtext(url, "\""))
-		GLOB.valid_HTTPSGet = FALSE
-
-	if(!GLOB.valid_HTTPSGet)
-		if(usr)
-			CRASH("[usr.ckey]([usr]) just attempted an invalid HTTPSGet on: [url]!")
-		else
-			CRASH("Invalid HTTPSGet call on: [url]")
-	GLOB.valid_HTTPSGet = FALSE
-
-	//"This has got to be the ugliest hack I have ever done"
-	//warning, here be dragons
-	/*
-						|  @___oo
-				/\  /\   / (__,,,,|
-				) /^\) ^\/ _)
-				)   /^\/   _)
-				)   _ /  / _)
-			/\  )/\/ ||  | )_)
-		<  >      |(,,) )__)
-			||      /    \)___)\
-			| \____(      )___) )___
-			\______(_______;;; __;;;
-		*/
-	var/temp_file = "HTTPSGetOutput.txt"
-	var/command
-	if(world.system_type == MS_WINDOWS)
-		command = "powershell -Command \"wget [url] -OutFile [temp_file]\""
-	else if(world.system_type == UNIX)
-		command = "wget -O [temp_file] [url]"
-	else
-		CRASH("Invalid world.system_type ([world.system_type])? Yell at Lummox.")
-
-	log_world("HTTPSGet: [url]")
-	var/result = shell(command)
-	if(result != 0)
-		log_world("Download failed: shell exited with code: [result]")
-		return
-
-	var/f = file(temp_file)
-	if(!f)
-		log_world("Download failed: Temp file not found")
-		return
-
-	. = file2text(f)
-	f = null
-	fdel(temp_file)
-
 #define UNTIL(X) while(!(X)) stoplag()
-
-/proc/to_chat(target, message)
-	target << message
 
 /proc/pass()
 	return
+
+/proc/get_mob_or_brainmob(occupant)
+	var/mob/living/mob_occupant
+
+	if(isliving(occupant))
+		mob_occupant = occupant
+
+	else if(isbodypart(occupant))
+		var/obj/item/bodypart/head/head = occupant
+
+		mob_occupant = head.brainmob
+
+	else if(isorgan(occupant))
+		var/obj/item/organ/brain/brain = occupant
+		mob_occupant = brain.brainmob
+
+	return mob_occupant
+
+//counts the number of bits in Byond's 16-bit width field
+//in constant time and memory!
+/proc/BitCount(bitfield)
+	var/temp = bitfield - ((bitfield>>1)&46811) - ((bitfield>>2)&37449) //0133333 and 0111111 respectively
+	temp = ((temp + (temp>>3))&29127) % 63	//070707
+	return temp
+
+//checks if a turf is in the planet z list.
+/proc/turf_z_is_planet(turf/T)
+	return GLOB.z_is_planet["[T.z]"]

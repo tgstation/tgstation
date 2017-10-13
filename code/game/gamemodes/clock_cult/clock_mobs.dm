@@ -13,13 +13,18 @@
 	speak_emote = list("clanks", "clinks", "clunks", "clangs")
 	verb_ask = "requests"
 	verb_exclaim = "proclaims"
+	verb_whisper = "imparts"
 	verb_yell = "harangues"
-	initial_languages = list(/datum/language/common, /datum/language/ratvar)
-	only_speaks_language = /datum/language/ratvar
+	initial_language_holder = /datum/language_holder/clockmob
 	bubble_icon = "clock"
 	light_color = "#E42742"
 	death_sound = 'sound/magic/clockwork/anima_fragment_death.ogg'
 	var/playstyle_string = "<span class='heavy_brass'>You are a bug, yell at whoever spawned you!</span>"
+	var/empower_string = "<span class='heavy_brass'>You have nothing to empower, yell at the coders!</span>" //Shown to the mob when the herald beacon activates
+
+/mob/living/simple_animal/hostile/clockwork/Initialize()
+	. = ..()
+	update_values()
 
 /mob/living/simple_animal/hostile/clockwork/get_spans()
 	return ..() | SPAN_ROBOT
@@ -28,6 +33,8 @@
 	..()
 	add_servant_of_ratvar(src, TRUE)
 	to_chat(src, playstyle_string)
+	if(GLOB.ratvar_approaches)
+		to_chat(src, empower_string)
 
 /mob/living/simple_animal/hostile/clockwork/ratvar_act()
 	fully_heal(TRUE)
@@ -38,7 +45,7 @@
 /mob/living/simple_animal/hostile/clockwork/examine(mob/user)
 	var/t_He = p_they(TRUE)
 	var/t_s = p_s()
-	var/msg = "<span class='brass'>*---------*\nThis is \icon[src] \a <b>[src]</b>!\n"
+	var/msg = "<span class='brass'>*---------*\nThis is [icon2html(src, user)] \a <b>[src]</b>!\n"
 	msg += "[desc]\n"
 	if(health < maxHealth)
 		msg += "<span class='warning'>"
@@ -50,3 +57,5 @@
 	msg += "*---------*</span>"
 
 	to_chat(user, msg)
+
+/mob/living/simple_animal/hostile/clockwork/proc/update_values() //This is called by certain things to check GLOB.ratvar_awakens and GLOB.ratvar_approaches

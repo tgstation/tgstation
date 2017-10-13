@@ -23,9 +23,6 @@
 
 	var/obj/screen/devil/soul_counter/devilsouldisplay
 
-	var/obj/screen/deity_power_display
-	var/obj/screen/deity_follower_display
-
 	var/obj/screen/nightvisionicon
 	var/obj/screen/action_intent
 	var/obj/screen/zone_select
@@ -58,6 +55,8 @@
 
 	hide_actions_toggle = new
 	hide_actions_toggle.InitialiseIcon(src)
+	if(mymob.client)
+		hide_actions_toggle.locked = mymob.client.prefs.buttons_locked
 
 	hand_slots = list()
 
@@ -112,8 +111,6 @@
 	blobpwrdisplay = null
 	alien_plasma_display = null
 	alien_queen_finder = null
-	deity_power_display = null
-	deity_follower_display = null
 	nightvisionicon = null
 
 	if(plane_masters.len)
@@ -143,6 +140,7 @@
 		return 0
 
 	screenmob.client.screen = list()
+	screenmob.client.apply_clickcatcher()
 
 	var/display_hud_version = version
 	if(!display_hud_version)	//If 0 or blank, display the next hud version
@@ -208,7 +206,6 @@
 	mymob.reload_fullscreen()
 	update_parallax_pref(screenmob)
 
-
 /datum/hud/human/show_hud(version = 0,mob/viewmob)
 	..()
 	hidden_inventory_update(viewmob)
@@ -266,3 +263,6 @@
 		E.screen_loc = ui_equip_position(mymob)
 	if(mymob.hud_used)
 		show_hud(HUD_STYLE_STANDARD,mymob)
+
+/datum/hud/proc/update_locked_slots()
+	return

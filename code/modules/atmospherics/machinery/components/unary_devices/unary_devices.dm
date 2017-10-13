@@ -7,11 +7,10 @@
 /obj/machinery/atmospherics/components/unary/SetInitDirections()
 	initialize_directions = dir
 
-/*
-Iconnery
-*/
+/obj/machinery/atmospherics/components/unary/on_construction()
+	..()
+	update_icon()
 
 /obj/machinery/atmospherics/components/unary/hide(intact)
 	update_icon()
-
 	..(intact)

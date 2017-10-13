@@ -6,7 +6,7 @@
 
 /datum/surgery_step/replace
 	name = "sever muscles"
-	implements = list(/obj/item/weapon/scalpel = 100, /obj/item/weapon/wirecutters = 55)
+	implements = list(/obj/item/scalpel = 100, /obj/item/wirecutters = 55)
 	time = 32
 
 
@@ -53,10 +53,10 @@
 		L.change_bodypart_status(BODYPART_ROBOTIC, TRUE)
 		L.icon = tool.icon
 		L.max_damage = tool.max_damage
-		user.drop_item()
 		qdel(tool)
 		target.update_body_parts()
 		target.updatehealth()
+		target.update_hair()
 		add_logs(user, target, "augmented", addition="by giving him new [parse_zone(target_zone)] INTENT: [uppertext(user.a_intent)]")
 	else
 		to_chat(user, "<span class='warning'>[target] has no organic [parse_zone(target_zone)] there!</span>")

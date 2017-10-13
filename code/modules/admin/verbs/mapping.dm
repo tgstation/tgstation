@@ -21,7 +21,6 @@
 
 GLOBAL_PROTECT(admin_verbs_debug_mapping)
 GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
-	/client/proc/do_not_use_these, 			//-errorage
 	/client/proc/camera_view, 				//-errorage
 	/client/proc/sec_camera_report, 		//-errorage
 	/client/proc/intercom_view, 			//-errorage
@@ -35,13 +34,14 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/startSinglo,
 	/client/proc/set_server_fps,	//allows you to set the ticklag.
 	/client/proc/cmd_admin_grantfullaccess,
-	/client/proc/cmd_admin_areatest,
+	/client/proc/cmd_admin_areatest_all,
+	/client/proc/cmd_admin_areatest_station,
 	/client/proc/cmd_admin_rejuvenate,
 	/datum/admins/proc/show_traitor_panel,
 	/client/proc/disable_communication,
 	/client/proc/print_pointers,
 	/client/proc/cmd_show_at_list,
-	/client/proc/cmd_show_at_list,
+	/client/proc/cmd_show_at_markers,
 	/client/proc/manipulate_organs
 ))
 
@@ -58,20 +58,14 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 /obj/effect/debugging/marker/Move()
 	return 0
 
-/client/proc/do_not_use_these()
-	set category = "Mapping"
-	set name = "-None of these are for ingame use!!"
-
-	..()
-
 /client/proc/camera_view()
 	set category = "Mapping"
 	set name = "Camera Range Display"
 
-	var/on = 0
+	var/on = FALSE
 	for(var/turf/T in world)
 		if(T.maptext)
-			on = 1
+			on = TRUE
 		T.maptext = null
 
 	if(!on)
@@ -81,7 +75,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 				seen[T]++
 		for(var/turf/T in seen)
 			T.maptext = "[seen[T]]"
-	feedback_add_details("admin_verb","Show Camera Range") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Show Camera Range") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 
@@ -123,17 +117,14 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 
 	output += "</ul>"
 	usr << browse(output,"window=airreport;size=1000x500")
-	feedback_add_details("admin_verb","Show Camera Report") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Show Camera Report") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/intercom_view()
 	set category = "Mapping"
 	set name = "Intercom Range Display"
 
-	var/static/intercom_range_display_status = 0
-	if(intercom_range_display_status)
-		intercom_range_display_status = 0
-	else
-		intercom_range_display_status = 1
+	var/static/intercom_range_display_status = FALSE
+	intercom_range_display_status = !intercom_range_display_status //blame cyberboss if this breaks something
 
 	for(var/obj/effect/debugging/marker/M in world)
 		qdel(M)
@@ -144,7 +135,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 				var/obj/effect/debugging/marker/F = new/obj/effect/debugging/marker(T)
 				if (!(F in view(7,I.loc)))
 					qdel(F)
-	feedback_add_details("admin_verb","Show Intercom Range") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Show Intercom Range") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_show_at_list()
 	set category = "Mapping"
@@ -154,13 +145,34 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	var/dat = {"<b>Coordinate list of Active Turfs at Roundstart</b>
 	 <br>Real-time Active Turfs list you can see in Air Subsystem at active_turfs var<br>"}
 
-	for(var/i=1; i<=GLOB.active_turfs_startlist.len; i++)
-		dat += GLOB.active_turfs_startlist[i]
+	for(var/t in GLOB.active_turfs_startlist)
+		var/turf/T = t
+		dat += "[ADMIN_COORDJMP(T)]\n"
 		dat += "<br>"
 
 	usr << browse(dat, "window=at_list")
 
-	feedback_add_details("admin_verb","Show Roundstart Active Turfs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Show Roundstart Active Turfs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/cmd_show_at_markers()
+	set category = "Mapping"
+	set name = "Show roundstart AT markers"
+	set desc = "Places a marker on all active-at-roundstart turfs"
+
+	var/count = 0
+	for(var/obj/effect/abstract/marker/at/AT in GLOB.all_abstract_markers)
+		qdel(AT)
+		count++
+
+	if(count)
+		to_chat(usr, "[count] AT markers removed.")
+	else
+		for(var/t in GLOB.active_turfs_startlist)
+			new /obj/effect/abstract/marker/at(t)
+			count++
+		to_chat(usr, "[count] AT markers placed.")
+
+	SSblackbox.add_details("admin_verb","Show Roundstart Active Turf Markers")
 
 /client/proc/enable_debug_verbs()
 	set category = "Debug"
@@ -169,28 +181,33 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 		return
 	verbs -= /client/proc/enable_debug_verbs
 	verbs.Add(/client/proc/disable_debug_verbs, GLOB.admin_verbs_debug_mapping)
-	feedback_add_details("admin_verb","Enable Debug Verbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Enable Debug Verbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/disable_debug_verbs()
 	set category = "Debug"
 	set name = "Debug verbs - Disable"
 	verbs.Remove(/client/proc/disable_debug_verbs, GLOB.admin_verbs_debug_mapping)
 	verbs += /client/proc/enable_debug_verbs
-	feedback_add_details("admin_verb", "Disable Debug Verbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb", "Disable Debug Verbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/count_objects_on_z_level()
 	set category = "Mapping"
 	set name = "Count Objects On Level"
 	var/level = input("Which z-level?","Level?") as text
-	if(!level) return
+	if(!level)
+		return
 	var/num_level = text2num(level)
-	if(!num_level) return
-	if(!isnum(num_level)) return
+	if(!num_level)
+		return
+	if(!isnum(num_level))
+		return
 
 	var/type_text = input("Which type path?","Path?") as text
-	if(!type_text) return
+	if(!type_text)
+		return
 	var/type_path = text2path(type_text)
-	if(!type_path) return
+	if(!type_path)
+		return
 
 	var/count = 0
 
@@ -219,16 +236,18 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 		to_chat(world, line)*/
 
 	to_chat(world, "There are [count] objects of type [type_path] on z-level [num_level]")
-	feedback_add_details("admin_verb","Count Objects Zlevel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Count Objects Zlevel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/count_objects_all()
 	set category = "Mapping"
 	set name = "Count Objects All"
 
 	var/type_text = input("Which type path?","") as text
-	if(!type_text) return
+	if(!type_text)
+		return
 	var/type_path = text2path(type_text)
-	if(!type_path) return
+	if(!type_path)
+		return
 
 	var/count = 0
 
@@ -246,7 +265,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 		to_chat(world, line)*/
 
 	to_chat(world, "There are [count] objects of type [type_path] in the game world")
-	feedback_add_details("admin_verb","Count Objects All") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Count Objects All") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 //This proc is intended to detect lag problems relating to communication procs

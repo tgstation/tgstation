@@ -8,6 +8,7 @@
 /obj/machinery/computer/telecomms/monitor
 	name = "telecommunications monitoring console"
 	icon_screen = "comm_monitor"
+	desc = "Monitors the details of the telecommunications network it's synced with."
 
 	var/screen = 0				// the screen number:
 	var/list/machinelist = list()	// the machines located by the computer
@@ -16,7 +17,7 @@
 	var/network = "NULL"		// the network to probe
 
 	var/temp = ""				// temporary feedback messages
-	circuit = /obj/item/weapon/circuitboard/computer/comm_monitor
+	circuit = /obj/item/circuitboard/computer/comm_monitor
 
 /obj/machinery/computer/telecomms/monitor/attack_hand(mob/user)
 	if(..())

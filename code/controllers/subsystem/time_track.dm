@@ -1,7 +1,8 @@
 SUBSYSTEM_DEF(time_track)
 	name = "Time Tracking"
 	wait = 600
-	flags = SS_NO_INIT|SS_FIRE_IN_LOBBY|SS_NO_TICK_CHECK
+	flags = SS_NO_INIT|SS_NO_TICK_CHECK
+	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 
 	var/time_dilation_current = 0
 
@@ -34,5 +35,4 @@ SUBSYSTEM_DEF(time_track)
 	last_tick_realtime = current_realtime
 	last_tick_byond_time = current_byondtime
 	last_tick_tickcount = current_tickcount
-
-
+	SSblackbox.add_details("time_dilation_current", time_dilation_current)

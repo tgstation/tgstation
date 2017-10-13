@@ -1,19 +1,17 @@
 
 /obj/vehicle/atv
 	name = "all-terrain vehicle"
-	desc = "An all-terrain vehicle built for traversing rough terrain with ease. One of the few old-earth technologies that are still relevant on most planet-bound outposts."
+	desc = "An all-terrain vehicle built for traversing rough terrain with ease. One of the few old-Earth technologies that are still relevant on most planet-bound outposts."
 	icon_state = "atv"
-	var/static/image/atvcover = null
+	var/static/mutable_appearance/atvcover
 
 /obj/vehicle/atv/buckle_mob(mob/living/buckled_mob, force = 0, check_loc = 1)
 	. = ..()
 	riding_datum = new/datum/riding/atv
 
-/obj/vehicle/atv/New()
-	..()
-	if(!atvcover)
-		atvcover = image("icons/obj/vehicles.dmi", "atvcover")
-		atvcover.layer = ABOVE_MOB_LAYER
+/obj/vehicle/atv/Initialize()
+	. = ..()
+	atvcover = atvcover || mutable_appearance(icon, "atvcover", ABOVE_MOB_LAYER)
 
 
 /obj/vehicle/atv/post_buckle_mob(mob/living/M)
@@ -33,10 +31,10 @@
 	name = "mounted turret"
 	scan_range = 7
 	emp_vunerable = 1
-	density = 0
+	density = FALSE
 
 
-/obj/vehicle/atv/turret/New()
+/obj/vehicle/atv/turret/Initialize()
 	. = ..()
 	turret = new(loc)
 	turret.base = src

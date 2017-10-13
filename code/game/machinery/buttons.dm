@@ -6,13 +6,13 @@
 	var/skin = "doorctrl"
 	power_channel = ENVIRON
 	var/obj/item/device/assembly/device
-	var/obj/item/weapon/electronics/airlock/board
+	var/obj/item/electronics/airlock/board
 	var/device_type = null
 	var/id = null
 	var/initialized_button = 0
 	armor = list(melee = 50, bullet = 50, laser = 50, energy = 50, bomb = 10, bio = 100, rad = 100, fire = 90, acid = 70)
-	anchored = 1
-	use_power = 1
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
@@ -23,7 +23,7 @@
 		setDir(ndir)
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
-		panel_open = 1
+		panel_open = TRUE
 		update_icon()
 
 
@@ -57,7 +57,7 @@
 			icon_state = skin
 
 /obj/machinery/button/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(istype(W, /obj/item/screwdriver))
 		if(panel_open || allowed(user))
 			default_deconstruction_screwdriver(user, "button-open", "[skin]",W)
 			update_icon()
@@ -74,7 +74,7 @@
 			device = W
 			to_chat(user, "<span class='notice'>You add [W] to the button.</span>")
 
-		if(!board && istype(W, /obj/item/weapon/electronics/airlock))
+		if(!board && istype(W, /obj/item/electronics/airlock))
 			if(!user.transferItemToLoc(W, src))
 				to_chat(user, "<span class='warning'>\The [W] is stuck to you!</span>")
 				return
@@ -85,27 +85,30 @@
 				req_access = board.accesses
 			to_chat(user, "<span class='notice'>You add [W] to the button.</span>")
 
-		if(!device && !board && istype(W, /obj/item/weapon/wrench))
+		if(!device && !board && istype(W, /obj/item/wrench))
 			to_chat(user, "<span class='notice'>You start unsecuring the button frame...</span>")
 			playsound(loc, W.usesound, 50, 1)
 			if(do_after(user, 40*W.toolspeed, target = src))
 				to_chat(user, "<span class='notice'>You unsecure the button frame.</span>")
 				transfer_fingerprints_to(new /obj/item/wallframe/button(get_turf(src)))
-				playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 				qdel(src)
 
 		update_icon()
 		return
 
-	if(user.a_intent != INTENT_HARM && !(W.flags & NOBLUDGEON))
+	if(user.a_intent != INTENT_HARM && !(W.flags_1 & NOBLUDGEON_1))
 		return src.attack_hand(user)
 	else
 		return ..()
 
 /obj/machinery/button/emag_act(mob/user)
+	if(emagged)
+		return
 	req_access = list()
 	req_one_access = list()
-	playsound(src.loc, "sparks", 100, 1)
+	playsound(src, "sparks", 100, 1)
+	emagged = TRUE
 
 /obj/machinery/button/attack_ai(mob/user)
 	if(!panel_open)
@@ -124,10 +127,10 @@
 	if(panel_open)
 		if(device || board)
 			if(device)
-				device.loc = get_turf(src)
+				device.forceMove(drop_location())
 				device = null
 			if(board)
-				board.loc = get_turf(src)
+				board.forceMove(drop_location())
 				req_access = list()
 				req_one_access = list()
 				board = null
@@ -215,7 +218,6 @@
 /obj/item/wallframe/button
 	name = "button frame"
 	desc = "Used for building buttons."
-	icon = 'icons/obj/apc_repair.dmi'
-	icon_state = "button_frame"
+	icon_state = "button"
 	result_path = /obj/machinery/button
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)

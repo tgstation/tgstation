@@ -1,10 +1,9 @@
-/mob/living/carbon/human/say_quote(input, spans, message_mode)
+/mob/living/carbon/human/say_mod(input, message_mode)
 	verb_say = dna.species.say_mod
-	. = ..()
-	if(src.slurring)
-		input = attach_spans(input, spans)
-		return "slurs, \"[input]\""
-
+	if(slurring)
+		return "slurs"
+	else
+		. = ..()
 
 /mob/living/carbon/human/treat_message(message)
 	message = dna.species.handle_speech(message,src)
@@ -17,7 +16,8 @@
 			for(var/i=1, ((i <= D.stage) && (i <= temp_message.len)), i++) //Loop for each stage of the disease or until we run out of words
 				if(prob(3 * D.stage)) //Stage 1: 3% Stage 2: 6% Stage 3: 9% Stage 4: 12%
 					var/H = pick(pick_list)
-					if(findtext(temp_message[H], "*") || findtext(temp_message[H], ";") || findtext(temp_message[H], ":")) continue
+					if(findtext(temp_message[H], "*") || findtext(temp_message[H], ";") || findtext(temp_message[H], ":"))
+						continue
 					temp_message[H] = "HONK"
 					pick_list -= H //Make sure that you dont HONK the same word twice
 				message = jointext(temp_message, " ")
@@ -32,7 +32,7 @@
 	if(istype(wear_mask, /obj/item/clothing/mask/chameleon))
 		var/obj/item/clothing/mask/chameleon/V = wear_mask
 		if(V.vchange && wear_id)
-			var/obj/item/weapon/card/id/idcard = wear_id.GetID()
+			var/obj/item/card/id/idcard = wear_id.GetID()
 			if(istype(idcard))
 				return idcard.registered_name
 			else
@@ -70,8 +70,10 @@
 /mob/living/carbon/human/binarycheck()
 	if(ears)
 		var/obj/item/device/radio/headset/dongle = ears
-		if(!istype(dongle)) return 0
-		if(dongle.translate_binary) return 1
+		if(!istype(dongle))
+			return 0
+		if(dongle.translate_binary)
+			return 1
 
 /mob/living/carbon/human/radio(message, message_mode, list/spans, language)
 	. = ..()

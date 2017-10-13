@@ -67,7 +67,7 @@
 	screen_loc = "CENTER-7,CENTER-7"
 	layer = FULLSCREEN_LAYER
 	plane = FULLSCREEN_PLANE
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/severity = 0
 	var/show_when_dead = FALSE
 
@@ -95,9 +95,18 @@
 	layer = CRIT_LAYER
 	plane = FULLSCREEN_PLANE
 
+/obj/screen/fullscreen/crit/vision
+	icon_state = "oxydamageoverlay"
+	layer = BLIND_LAYER
+
 /obj/screen/fullscreen/blind
 	icon_state = "blackimageoverlay"
 	layer = BLIND_LAYER
+	plane = FULLSCREEN_PLANE
+
+/obj/screen/fullscreen/curse
+	icon_state = "curse"
+	layer = CURSE_LAYER
 	plane = FULLSCREEN_PLANE
 
 /obj/screen/fullscreen/impaired

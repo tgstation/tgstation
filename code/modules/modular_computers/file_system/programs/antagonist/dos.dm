@@ -7,6 +7,11 @@
 	requires_ntnet = 1
 	available_on_ntnet = 0
 	available_on_syndinet = 1
+	tgui_id = "ntos_net_dos"
+	ui_style = "syndicate"
+	ui_x = 400
+	ui_y = 250
+
 	var/obj/machinery/ntnet_relay/target = null
 	var/dos_speed = 0
 	var/error = ""
@@ -36,18 +41,6 @@
 
 	..()
 
-
-/datum/computer_file/program/ntnet_dos/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if (!ui)
-		ui = new(user, src, ui_key, "ntnet_dos", "DoS Traffic Generator", 400, 250, state = state)
-		ui.set_style("syndicate")
-		ui.set_autoupdate(state = 1)
-		ui.open()
-
-
-
 /datum/computer_file/program/ntnet_dos/ui_act(action, params)
 	if(..())
 		return 1
@@ -69,7 +62,7 @@
 				executed = 1
 				target.dos_sources.Add(src)
 				if(GLOB.ntnet_global.intrusion_detection_enabled)
-					var/obj/item/weapon/computer_hardware/network_card/network_card = computer.all_components[MC_NET]
+					var/obj/item/computer_hardware/network_card/network_card = computer.all_components[MC_NET]
 					GLOB.ntnet_global.add_log("IDS WARNING - Excess traffic flood targeting relay [target.uid] detected from device: [network_card.get_network_tag()]")
 					GLOB.ntnet_global.intrusion_detection_alarm = 1
 			return 1

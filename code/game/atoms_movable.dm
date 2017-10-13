@@ -1,14 +1,13 @@
 /atom/movable
 	layer = OBJ_LAYER
 	var/last_move = null
-	var/anchored = 0
+	var/anchored = FALSE
 	var/datum/thrownthing/throwing = null
 	var/throw_speed = 2 //How many tiles to move per ds when being thrown. Float values are fully supported
 	var/throw_range = 7
 	var/mob/pulledby = null
-	var/list/languages
-	var/list/initial_languages = list(/datum/language/common)
-	var/only_speaks_language = null
+	var/initial_language_holder = /datum/language_holder
+	var/datum/language_holder/language_holder
 	var/verb_say = "says"
 	var/verb_ask = "asks"
 	var/verb_exclaim = "exclaims"
@@ -24,7 +23,7 @@
 	var/list/client_mobs_in_contents // This contains all the client mobs within this container
 	var/list/acted_explosions	//for explosion dodging
 	glide_size = 8
-	appearance_flags = TILE_BOUND
+	appearance_flags = TILE_BOUND|PIXEL_SCALE
 	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
 	var/floating = FALSE
 
@@ -35,15 +34,35 @@
 		return FALSE	//PLEASE no.
 	if((var_name in careful_edits) && (var_value % world.icon_size) != 0)
 		return FALSE
+	switch(var_name)
+		if("x")
+			var/turf/T = locate(var_value, y, z)
+			if(T)
+				forceMove(T)
+				return TRUE
+			return FALSE
+		if("y")
+			var/turf/T = locate(x, var_value, z)
+			if(T)
+				forceMove(T)
+				return TRUE
+			return FALSE
+		if("z")
+			var/turf/T = locate(x, y, var_value)
+			if(T)
+				forceMove(T)
+				return TRUE
+			return FALSE
+		if("loc")
+			if(var_value == null || istype(var_value, /atom))
+				forceMove(var_value)
+				return TRUE
+			return FALSE
 	return ..()
 
-/atom/movable/Initialize(mapload)
-	..()
-	for(var/L in initial_languages)
-		grant_language(L)
-
 /atom/movable/Move(atom/newloc, direct = 0)
-	if(!loc || !newloc) return 0
+	if(!loc || !newloc)
+		return 0
 	var/atom/oldloc = loc
 
 	if(loc != newloc)
@@ -98,6 +117,7 @@
 
 //Called after a successful Move(). By this point, we've already moved
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
+	SendSignal(COMSIG_MOVABLE_MOVED, OldLoc, Dir)
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
 		newtonian_move(Dir)
@@ -111,8 +131,13 @@
 	if (orbiting)
 		orbiting.Check()
 
-	if(flags & CLEAN_ON_MOVE)
+	if(flags_1 & CLEAN_ON_MOVE_1)
 		clean_on_move()
+
+	var/datum/proximity_monitor/proximity_monitor = src.proximity_monitor
+	if(proximity_monitor)
+		proximity_monitor.HandleMove()
+
 	return 1
 
 /atom/movable/proc/clean_on_move()
@@ -145,8 +170,8 @@
 					to_chat(cleaned_human, "<span class='danger'>[src] cleans your face!</span>")
 
 /atom/movable/Destroy(force)
-	var/inform_admins = HAS_SECONDARY_FLAG(src, INFORM_ADMINS_ON_RELOCATE)
-	var/stationloving = HAS_SECONDARY_FLAG(src, STATIONLOVING)
+	var/inform_admins = (flags_2 & INFORM_ADMINS_ON_RELOCATE_2)
+	var/stationloving = (flags_2 & STATIONLOVING_2)
 
 	if(inform_admins && force)
 		var/turf/T = get_turf(src)
@@ -164,6 +189,11 @@
 	if(stationloving && force)
 		STOP_PROCESSING(SSinbounds, src)
 
+	QDEL_NULL(proximity_monitor)
+	QDEL_NULL(language_holder)
+
+	unbuckle_all_mobs(force=1)
+
 	. = ..()
 	if(loc)
 		loc.handle_atom_del(src)
@@ -177,19 +207,36 @@
 
 // Previously known as HasEntered()
 // This is automatically called when something enters your square
-/atom/movable/Crossed(atom/movable/AM)
-	return
+//oldloc = old location on atom, inserted when forceMove is called and ONLY when forceMove is called!
+/atom/movable/Crossed(atom/movable/AM, oldloc)
+	SendSignal(COMSIG_MOVABLE_CROSSED, AM)
 
-/atom/movable/Bump(atom/A, yes) //the "yes" arg is to differentiate our Bump proc from byond's, without it every Bump() call would become a double Bump().
-	if((A && yes))
+
+//This is tg's equivalent to the byond bump, it used to be called bump with a second arg
+//to differentiate it, naturally everyone forgot about this immediately and so some things
+//would bump twice, so now it's called Collide
+/atom/movable/proc/Collide(atom/A)
+	SendSignal(COMSIG_MOVABLE_COLLIDE, A)
+	if(A)
 		if(throwing)
 			throwing.hit_atom(A)
 			. = 1
 			if(!A || QDELETED(A))
 				return
-		A.Bumped(src)
+		A.CollidedWith(src)
 
 /atom/movable/proc/forceMove(atom/destination)
+	. = FALSE
+	if(destination)
+		. = doMove(destination)
+	else
+		CRASH("No valid destination passed into forceMove")
+
+/atom/movable/proc/moveToNullspace()
+	return doMove(null)
+
+/atom/movable/proc/doMove(atom/destination)
+	. = FALSE
 	if(destination)
 		if(pulledby)
 			pulledby.stop_pulling()
@@ -213,11 +260,20 @@
 			for(var/atom/movable/AM in destination)
 				if(AM == src)
 					continue
-				AM.Crossed(src)
+				AM.Crossed(src, oldloc)
 
 		Moved(oldloc, 0)
-		return 1
-	return 0
+		. = TRUE
+
+	//If no destination, move the atom into nullspace (don't do this unless you know what you're doing)
+	else
+		. = TRUE
+		var/atom/oldloc = loc
+		var/area/old_area = get_area(oldloc)
+		oldloc.Exited(src, null)
+		if(old_area)
+			old_area.Exited(src, null)
+		loc = null
 
 /mob/living/forceMove(atom/destination)
 	stop_pulling()
@@ -226,9 +282,10 @@
 	if(has_buckled_mobs())
 		unbuckle_all_mobs(force=1)
 	. = ..()
-	if(client)
-		reset_perspective(destination)
-	update_canmove() //if the mob was asleep inside a container and then got forceMoved out we need to make them fall.
+	if(.)
+		if(client)
+			reset_perspective(destination)
+		update_canmove() //if the mob was asleep inside a container and then got forceMoved out we need to make them fall.
 
 /mob/living/brain/forceMove(atom/destination)
 	if(container)
@@ -274,15 +331,17 @@
 
 /atom/movable/proc/throw_impact(atom/hit_atom, throwingdatum)
 	set waitfor = 0
+	SendSignal(COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum)
 	return hit_atom.hitby(src)
 
-/atom/movable/hitby(atom/movable/AM, skipcatch, hitpush = 1, blocked)
+/atom/movable/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked)
 	if(!anchored && hitpush)
 		step(src, AM.dir)
 	..()
 
-/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback)
-	if (!target || (flags & NODROP) || speed <= 0)
+/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback) //If this returns FALSE then callback will not be called.
+	. = FALSE
+	if (!target || (flags_1 & NODROP_1) || speed <= 0)
 		return
 
 	if (pulledby)
@@ -310,7 +369,9 @@
 			//then lets add it to speed
 			speed += user_momentum
 			if (speed <= 0)
-				return //no throw speed, the user was moving too fast.
+				return//no throw speed, the user was moving too fast.
+
+	. = TRUE // No failure conditions past this point.
 
 	var/datum/thrownthing/TT = new()
 	TT.thrownthing = src
@@ -369,7 +430,7 @@
 			return 0
 	return 1
 
-/atom/movable/CanPass(atom/movable/mover, turf/target, height=1.5)
+/atom/movable/CanPass(atom/movable/mover, turf/target)
 	if(mover in buckled_mobs)
 		return 1
 	return ..()
@@ -403,6 +464,8 @@
 	if(!no_effect && (visual_effect_icon || used_item))
 		do_item_attack_animation(A, visual_effect_icon, used_item)
 
+	if(A == src)
+		return //don't do an animation if attacking self
 	var/pixel_x_diff = 0
 	var/pixel_y_diff = 0
 	var/final_pixel_y = initial(pixel_y)
@@ -461,7 +524,7 @@
 /atom/movable/vv_get_dropdown()
 	. = ..()
 	. -= "Jump to"
-	.["Follow"] = "?_src_=holder;adminplayerobservefollow=\ref[src]"
+	.["Follow"] = "?_src_=holder;[HrefToken()];adminplayerobservefollow=\ref[src]"
 
 /atom/movable/proc/ex_check(ex_id)
 	if(!ex_id)
@@ -487,7 +550,7 @@
 /* Stationloving
 *
 * A stationloving atom will always teleport back to the station
-* if it ever leaves the station z-levels or Centcom. It will also,
+* if it ever leaves the station z-levels or CentCom. It will also,
 * when Destroy() is called, will teleport to a random turf on the
 * station.
 *
@@ -507,24 +570,24 @@
 */
 
 /atom/movable/proc/set_stationloving(state, inform_admins=FALSE)
-	var/currently = HAS_SECONDARY_FLAG(src, STATIONLOVING)
+	var/currently = (flags_2 & STATIONLOVING_2)
 
 	if(inform_admins)
-		SET_SECONDARY_FLAG(src, INFORM_ADMINS_ON_RELOCATE)
+		flags_2 |= INFORM_ADMINS_ON_RELOCATE_2
 	else
-		CLEAR_SECONDARY_FLAG(src, INFORM_ADMINS_ON_RELOCATE)
+		flags_2 &= ~INFORM_ADMINS_ON_RELOCATE_2
 
 	if(state == currently)
 		return
 	else if(!state)
 		STOP_PROCESSING(SSinbounds, src)
-		CLEAR_SECONDARY_FLAG(src, STATIONLOVING)
+		flags_2 &= ~STATIONLOVING_2
 	else
 		START_PROCESSING(SSinbounds, src)
-		SET_SECONDARY_FLAG(src, STATIONLOVING)
+		flags_2 |= STATIONLOVING_2
 
 /atom/movable/proc/relocate()
-	var/targetturf = find_safe_turf(ZLEVEL_STATION)
+	var/targetturf = find_safe_turf(ZLEVEL_STATION_PRIMARY)
 	if(!targetturf)
 		if(GLOB.blobstart.len > 0)
 			targetturf = get_turf(pick(GLOB.blobstart))
@@ -534,8 +597,8 @@
 	if(ismob(loc))
 		var/mob/M = loc
 		M.transferItemToLoc(src, targetturf, TRUE)	//nodrops disks when?
-	else if(istype(loc, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = loc
+	else if(istype(loc, /obj/item/storage))
+		var/obj/item/storage/S = loc
 		S.remove_from_storage(src, targetturf)
 	else
 		forceMove(targetturf)
@@ -547,58 +610,88 @@
 		return
 	else
 		var/turf/currentturf = get_turf(src)
-		get(src, /mob) << "<span class='danger'>You can't help but feel that you just lost something back there...</span>"
+		to_chat(get(src, /mob), "<span class='danger'>You can't help but feel that you just lost something back there...</span>")
 		var/turf/targetturf = relocate()
 		log_game("[src] has been moved out of bounds in [COORD(currentturf)]. Moving it to [COORD(targetturf)].")
-		if(HAS_SECONDARY_FLAG(src, INFORM_ADMINS_ON_RELOCATE))
+		if(flags_2 & INFORM_ADMINS_ON_RELOCATE_2)
 			message_admins("[src] has been moved out of bounds in [ADMIN_COORDJMP(currentturf)]. Moving it to [ADMIN_COORDJMP(targetturf)].")
 
 /atom/movable/proc/in_bounds()
 	. = FALSE
 	var/turf/currentturf = get_turf(src)
-	if(currentturf && (currentturf.z == ZLEVEL_CENTCOM || currentturf.z == ZLEVEL_STATION))
+	if(currentturf && (currentturf.z == ZLEVEL_CENTCOM || (currentturf.z in GLOB.station_z_levels) || currentturf.z == ZLEVEL_TRANSIT))
 		. = TRUE
 
 
 /* Language procs */
+/atom/movable/proc/get_language_holder(shadow=TRUE)
+	if(language_holder)
+		return language_holder
+	else
+		language_holder = new initial_language_holder(src)
+		return language_holder
+
 /atom/movable/proc/grant_language(datum/language/dt)
-	LAZYINITLIST(languages)
-	languages[dt] = TRUE
+	var/datum/language_holder/H = get_language_holder()
+	H.grant_language(dt)
 
 /atom/movable/proc/grant_all_languages(omnitongue=FALSE)
-	for(var/la in subtypesof(/datum/language))
-		grant_language(la)
-
-	if(omnitongue)
-		SET_SECONDARY_FLAG(src, OMNITONGUE)
+	var/datum/language_holder/H = get_language_holder()
+	H.grant_all_languages(omnitongue)
 
 /atom/movable/proc/get_random_understood_language()
-	var/list/possible = list()
-	for(var/dt in languages)
-		possible += dt
-	. = safepick(possible)
+	var/datum/language_holder/H = get_language_holder()
+	. = H.get_random_understood_language()
 
 /atom/movable/proc/remove_language(datum/language/dt)
-	LAZYREMOVE(languages, dt)
+	var/datum/language_holder/H = get_language_holder()
+	H.remove_language(dt)
 
 /atom/movable/proc/remove_all_languages()
-	LAZYCLEARLIST(languages)
+	var/datum/language_holder/H = get_language_holder()
+	H.remove_all_languages()
 
 /atom/movable/proc/has_language(datum/language/dt)
-	. = is_type_in_typecache(dt, languages)
+	var/datum/language_holder/H = get_language_holder()
+	. = H.has_language(dt)
+
+/atom/movable/proc/copy_known_languages_from(thing, replace=FALSE)
+	var/datum/language_holder/H = get_language_holder()
+	. = H.copy_known_languages_from(thing, replace)
+
+// Whether an AM can speak in a language or not, independent of whether
+// it KNOWS the language
+/atom/movable/proc/could_speak_in_language(datum/language/dt)
+	. = TRUE
 
 /atom/movable/proc/can_speak_in_language(datum/language/dt)
-	. = has_language(dt)
-	if(only_speaks_language && !HAS_SECONDARY_FLAG(src, OMNITONGUE))
-		. = . && ispath(only_speaks_language, dt)
+	var/datum/language_holder/H = get_language_holder()
+
+	if(!H.has_language(dt))
+		return FALSE
+	else if(H.omnitongue)
+		return TRUE
+	else if(could_speak_in_language(dt) && (!H.only_speaks_language || H.only_speaks_language == dt))
+		return TRUE
+	else
+		return FALSE
 
 /atom/movable/proc/get_default_language()
 	// if no language is specified, and we want to say() something, which
 	// language do we use?
+	var/datum/language_holder/H = get_language_holder()
+
+	if(H.selected_default_language)
+		if(can_speak_in_language(H.selected_default_language))
+			return H.selected_default_language
+		else
+			H.selected_default_language = null
+
+
 	var/datum/language/chosen_langtype
 	var/highest_priority
 
-	for(var/lt in languages)
+	for(var/lt in H.languages)
 		var/datum/language/langtype = lt
 		if(!can_speak_in_language(langtype))
 			continue
@@ -608,4 +701,22 @@
 			chosen_langtype = langtype
 			highest_priority = pri
 
+	H.selected_default_language = .
 	. = chosen_langtype
+
+/* End language procs */
+/atom/movable/proc/ConveyorMove(movedir)
+	set waitfor = FALSE
+	if(!anchored && has_gravity())
+		step(src, movedir)
+
+//Returns an atom's power cell, if it has one. Overload for individual items.
+/atom/movable/proc/get_cell()
+	return
+
+/atom/movable/proc/can_be_pulled(user)
+	if(src == user || !isturf(loc))
+		return FALSE
+	if(anchored || throwing)
+		return FALSE
+	return TRUE

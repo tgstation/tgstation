@@ -12,10 +12,12 @@ Construction breaks otherwise
 #define PIPE_HE_MANIFOLD		/obj/machinery/atmospherics/pipe/heat_exchanging/manifold
 #define PIPE_HE_4WAYMANIFOLD	/obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w
 #define PIPE_JUNCTION			/obj/machinery/atmospherics/pipe/heat_exchanging/junction
+#define PIPE_BLUESPACE          /obj/machinery/atmospherics/pipe/bluespace
 //Unary
 #define PIPE_CONNECTOR			/obj/machinery/atmospherics/components/unary/portables_connector
 #define PIPE_UVENT				/obj/machinery/atmospherics/components/unary/vent_pump
 #define PIPE_SCRUBBER			/obj/machinery/atmospherics/components/unary/vent_scrubber
+#define PIPE_INJECTOR			/obj/machinery/atmospherics/components/unary/outlet_injector
 #define PIPE_HEAT_EXCHANGE      /obj/machinery/atmospherics/components/unary/heat_exchanger
 //Binary
 #define PIPE_PUMP				/obj/machinery/atmospherics/components/binary/pump
