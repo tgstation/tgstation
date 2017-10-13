@@ -16,6 +16,9 @@
 		handle_blood()
 
 	if(stat != DEAD)
+		handle_brain_damage()
+
+	if(stat != DEAD)
 		handle_liver()
 
 	if(stat == DEAD)
@@ -440,3 +443,40 @@
 	adjustToxLoss(8)
 	if(prob(30))
 		to_chat(src, "<span class='notice'>You feel confused and nauseous...</span>")//actual symptoms of liver failure
+
+
+////////////////
+//BRAIN DAMAGE//
+////////////////
+
+/mob/living/carbon/proc/handle_brain_damage()
+	var/traumas_amount = length(traumas)
+
+	for(var/datum/brain_trauma/BT in traumas)
+		BT.on_life()
+
+	if(brainloss > 100) //rip
+		to_chat(src, "<span class='userdanger'>Your brain dies!<span>")
+		death()
+		var/obj/item/organ/brain/B = getorganslot("brain")
+		if(B)
+			B.damaged_brain = TRUE
+
+	if(!traumas_amount && brainloss > 30)
+		var/trauma_type = pick(subtypesof(/datum/brain_trauma/mild))
+		traumas += new trauma_type(src)
+
+	if((traumas_amount < 2) && brainloss > 65)
+		var/trauma_type
+		if(prob(100))
+			trauma_type = pick(subtypesof(/datum/brain_trauma/special))
+		else
+			trauma_type = pick(subtypesof(/datum/brain_trauma/severe))
+		traumas += new trauma_type(src)
+
+	if(traumas_amount && !brainloss)
+		for(var/datum/brain_trauma/BT in traumas)
+			if(prob(5))
+				traumas -= BT
+				qdel(BT)
+

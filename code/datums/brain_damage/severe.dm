@@ -1,0 +1,43 @@
+/datum/brain_trauma/severe
+
+/datum/brain_trauma/severe/mute
+	name = "Mutism"
+	desc = "Patient is completely unable to speak."
+	scan_desc = "extensive damage to the brain's language center"
+	gain_text = "<span class='warning'>You forget how to speak!</span>"
+	lose_text = "<span class='notice'>You suddenly remember how to speak.</span>"
+
+/datum/brain_trauma/severe/mute/on_gain()
+	owner.disabilities |= MUTE
+	..()
+
+//no fiddling with genetics to get out of this one
+/datum/brain_trauma/severe/mute/on_life()
+	if(!(owner.disabilities & MUTE))
+		on_gain()
+	..()
+
+/datum/brain_trauma/severe/mute/on_lose()
+	owner.disabilities &= ~MUTE
+	..()
+
+/datum/brain_trauma/severe/blindness
+	name = "Cerebral Blindness"
+	desc = "Patient's brain is no longer connected to its eyes."
+	scan_desc = "extensive damage to the brain's frontal lobe"
+	gain_text = "<span class='warning'>You can't see!</span>"
+	lose_text = "<span class='notice'>Your vision returns.</span>"
+
+/datum/brain_trauma/severe/blindness/on_gain()
+	owner.become_blind()
+	..()
+
+//no fiddling with genetics to get out of this one
+/datum/brain_trauma/severe/blindness/on_life()
+	if(!(owner.disabilities & BLIND))
+		on_gain()
+	..()
+
+/datum/brain_trauma/severe/blindness/on_lose()
+	owner.cure_blind()
+	..()
