@@ -31,8 +31,7 @@
 	return ..()
 
 /datum/component/radioactive/process()
-	if(prob(5))
-		radiation_pulse(get_turf(parent),strength,1,FALSE,can_contaminate)
+	radiation_pulse(get_turf(parent),strength,1,FALSE,can_contaminate)
 
 	if(hl3_release_date && prob(50))
 		strength -= strength / hl3_release_date

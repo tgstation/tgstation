@@ -4,9 +4,9 @@
 #define RAD_LEVEL_VERY_HIGH 800
 #define RAD_LEVEL_CRITICAL 1500
 
-#define RAD_MEASURE_SMOOTHING 10
+#define RAD_MEASURE_SMOOTHING 5
 
-#define RAD_GRACE_PERIOD 3
+#define RAD_GRACE_PERIOD 2
 
 /obj/item/device/geiger_counter //DISCLAIMER: I know nothing about how real-life Geiger counters work. This will not be realistic. ~Xhuis
 	name = "geiger counter"
@@ -136,8 +136,8 @@
 /obj/item/device/geiger_counter/proc/soundLoop()
 	if(muted || !danger)
 		return
-	playsound(src, pickweight(sounds[danger]), 50)
-	addtimer(CALLBACK(src, .proc/soundLoop), 1)
+	playsound(src, pickweight(sounds[danger]), 25)
+	addtimer(CALLBACK(src, .proc/soundLoop), 2)
 
 /obj/item/device/geiger_counter/rad_act(amount)
 	if(amount <= RAD_BACKGROUND_RADIATION || !scanning)
