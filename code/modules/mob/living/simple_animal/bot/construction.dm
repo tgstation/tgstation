@@ -374,7 +374,7 @@
 		if(!user.temporarilyRemoveItemFromInventory(I))
 			return
 		to_chat(user, "<span class='notice'>You add the [I] to [src]! Honk!</span>")
-		var/T = get_turf(loc) //important to spawn new bots on turf.
+		var/T = get_turf(loc) //important to spawn on turf.
 		var/mob/living/simple_animal/bot/honkbot/S = new(drop_location(T))
 		S.name = created_name
 		S.spam_flag = TRUE // only long enough to hear the first ping.
@@ -389,6 +389,8 @@
 		if(!in_range(src, usr) && loc != usr)
 			return
 		created_name = t
+
+	else return ..()
 
 //Secbot Assembly
 /obj/item/secbot_assembly

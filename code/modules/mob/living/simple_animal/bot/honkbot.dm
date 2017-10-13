@@ -16,7 +16,7 @@
 	model = "Honkbot"
 	bot_core_type = /obj/machinery/bot_core/honkbot
 	window_id = "autohonk"
-	window_name = "Honkomatic Bike Horn Unit v1.0.6"
+	window_name = "Honkomatic Bike Horn Unit v1.0.7"
 	data_hud_type = DATA_HUD_SECURITY_BASIC // show jobs
 
 	var/honksound = 'sound/items/bikehorn.ogg' //customizable sound
@@ -29,9 +29,9 @@
 	var/last_found = FALSE	//There's a delay
 	var/threatlevel = FALSE
 	var/declare_arrests = FALSE // speak, you shall not, unless to Honk
-	var/idcheck = TRUE //Chases unknowns
-	var/fcheck = TRUE //And armed people
-	var/check_records = TRUE //Doesn't care about criminals
+	var/idcheck = TRUE
+	var/fcheck = TRUE
+	var/check_records = TRUE
 	var/arrest_type = FALSE
 	var/weaponscheck = TRUE
 
@@ -83,7 +83,7 @@
 	dat += hack(user)
 	dat += showpai(user)
 	dat += text({"
-<TT><B>Honkomatic Bike Horn Unit v1.0.6 controls</B></TT><BR><BR>
+<TT><B>Honkomatic Bike Horn Unit v1.0.7 controls</B></TT><BR><BR>
 Status: []<BR>
 Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
 Maintenance panel panel is [open ? "opened" : "closed"]"},
@@ -169,7 +169,6 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 		addtimer(CALLBACK(src, .proc/spam_flag_false), cooldowntimehorn)
 
 	else if (emagged == 2) //emagged honkbots will spam short and memorable sounds.
-
 		if (!client)
 			playsound(src, "honkbot_e", 50, 0)
 		else
@@ -180,7 +179,6 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 		spawn(30) // keep flashing
 			icon_state = "honkbot[on]"
 		addtimer(CALLBACK(src, .proc/spam_flag_false), cooldowntimehorn)
-
 
 /mob/living/simple_animal/bot/honkbot/proc/honk_attack(mob/living/carbon/C) // horn attack
 	if (!client) //check if a player is controlling
@@ -218,10 +216,8 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 			add_logs(src,C,"honked")
 
-
 			C.visible_message("<span class='danger'>[src] has honked [C]!</span>",\
 					"<span class='userdanger'>[src] has honked you!</span>")
-
 		else
 			C.stuttering = 20
 			C.Knockdown(80)
@@ -256,10 +252,10 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 						honk_attack(target)
 					else
 						if(threatlevel >= 6)
-							spawn(0)
-								stun_attack(target)
-								anchored = FALSE
-								target_lastloc = target.loc
+							set waitfor = 0
+							stun_attack(target)
+							anchored = FALSE
+							target_lastloc = target.loc
 					return
 
 				else	// not next to perp
@@ -280,7 +276,6 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 		if(BOT_PATROL)
 			look_for_perp()
 			bot_patrol()
-
 
 	return
 
@@ -312,9 +307,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 		if(threatlevel <= 3)
 			if(C in view(4,src)) //keep the range short for patrolling
 				if(!spam_flag)
-					spam_flag = TRUE
 					bike_horn()
-					addtimer(CALLBACK(src, .proc/spam_flag_false), cooldowntimehorn)
 
 		else if(threatlevel >= 10)
 			bike_horn() //just spam the shit outta this
