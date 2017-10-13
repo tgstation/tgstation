@@ -1,0 +1,7 @@
+author: "Robustin"
+delete-after: True
+changes: 
+  - tweak: "The wrench-anchoring time of the smoke machine is now doubled to 4 seconds."
+  - tweak: "Smoke Machine smoke is now transparent."
+  - rscadd: "The smoke machine has taken its rightful place in the chemist's office."
+  - bugfix: "Smoke machine will no longer operate while moving/unanchored."
