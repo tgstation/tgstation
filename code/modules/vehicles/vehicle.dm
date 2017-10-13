@@ -36,6 +36,9 @@
 
 
 /obj/vehicle/user_buckle_mob(mob/living/M, mob/user)
+	. = ..()
+	if (!.) 
+		return
 	if(user.incapacitated())
 		return
 	for(var/atom/movable/A in get_turf(src))
@@ -43,7 +46,6 @@
 			if(A != src && A != M)
 				return
 	M.forceMove(get_turf(src))
-	..()
 	if(user.client)
 		user.client.change_view(view_range)
 	if(riding_datum)
