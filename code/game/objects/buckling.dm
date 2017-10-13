@@ -56,7 +56,8 @@
 		M.pulledby.stop_pulling()
 
 	if(!check_loc && M.loc != loc)
-		M.forceMove(loc)
+		if (!M.Move(loc))
+			return FALSE
 
 	M.buckled = src
 	M.setDir(dir)
