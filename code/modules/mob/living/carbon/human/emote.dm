@@ -169,4 +169,11 @@
 		var/turf/T = loc
 		T.Entered(src)
 
+/datum/emote/living/carbon/human/flex
+	key = "flex"
+	message = "flexes their muscles."
+
+/datum/emote/living/carbon/human/flex/select_message_type(mob/user)
+	return "flexes their [pick("arms", "abs", "stomach", "legs")]."
+
 //Ayy lmao
