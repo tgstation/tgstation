@@ -737,8 +737,11 @@
 		ui.set_autoupdate(state = (failure_timer ? 1 : 0))
 
 /obj/machinery/power/apc/ui_data(mob/user)
+	var/apc_lock = locked
+	if(integration_cog && is_servant_of_ratvar(user))
+		apc_lock = FALSE
 	var/list/data = list(
-		"locked" = integration_cog ? !is_servant_of_ratvar(user) : locked,
+		"locked" = apc_lock,
 		"failTime" = failure_timer,
 		"isOperating" = operating,
 		"externalPower" = main_status,
