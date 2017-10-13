@@ -24,3 +24,6 @@ GLOBAL_LIST_EMPTY(spidermobs)				//all sentient spider mobs
 
 GLOBAL_LIST_EMPTY(language_datum_instances)
 GLOBAL_LIST_EMPTY(all_languages)
+
+//Global list of monkeys, used for monkeycap.
+GLOBAL_LIST_EMPTY(monkeys)
