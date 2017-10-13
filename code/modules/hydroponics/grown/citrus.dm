@@ -31,32 +31,6 @@
 	icon_state = "lime"
 	filling_color = "#00FF00"
 
-// Orange
-/obj/item/seeds/orange
-	name = "pack of orange seeds"
-	desc = "Sour seeds."
-	icon_state = "seed-orange"
-	species = "orange"
-	plantname = "Orange Tree"
-	product = /obj/item/reagent_containers/food/snacks/grown/citrus/orange
-	lifespan = 60
-	endurance = 50
-	yield = 5
-	potency = 20
-	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
-	icon_grow = "lime-grow"
-	icon_dead = "lime-dead"
-	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	mutatelist = list(/obj/item/seeds/lime)
-	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.05)
-
-/obj/item/reagent_containers/food/snacks/grown/citrus/orange
-	seed = /obj/item/seeds/orange
-	name = "orange"
-	desc = "It's a tangy fruit."
-	icon_state = "orange"
-	filling_color = "#FFA500"
-
 // Lemon
 /obj/item/seeds/lemon
 	name = "pack of lemon seeds"
