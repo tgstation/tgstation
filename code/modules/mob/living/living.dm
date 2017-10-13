@@ -117,8 +117,8 @@
 		if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
 			ContactContractDisease(D)
 
-if(now_pushing)
-		return 1
+	if(now_pushing)
+		return TRUE
 
 	//TODO FOR LATER PRS: Make passing tables an automatic thing for flying and passable objects be determined better to prevent huge amounts of flags being set when mobs fly.
 	if(((movement_type & FLYING) && !(M.movement_type & FLYING)) || (!(movement_type & FLYING) && (M.movement_type & FLYING)))	//Fly past each other.
