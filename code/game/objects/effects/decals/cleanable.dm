@@ -27,6 +27,11 @@
 	if(mergeable_decal)
 		qdel(C)
 
+/obj/effect/decal/cleanable/Destroy()
+	. = ..()
+	if (reagents)
+		qdel(reagents)
+
 /obj/effect/decal/cleanable/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/reagent_containers/glass) || istype(W, /obj/item/reagent_containers/food/drinks))
 		if(src.reagents && W.reagents)
