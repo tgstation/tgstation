@@ -133,4 +133,4 @@
 
 /proc/log_manifest(datum/mind/mind,mob/body,latejoin = FALSE)
 	if (CONFIG_GET(flag/log_manifest))
-		WRITE_FILE(GLOB.manifest_log, "[mind.key] - [boyd.real_name] - [mind.assigned_role] - [mind.special_role][latejoin ? " - LATEJOIN":""]")
+		WRITE_FILE(GLOB.manifest_log, "[mind.key] - [body.real_name] - [mind.assigned_role] - [mind.special_role][latejoin ? " - LATEJOIN":""]")
