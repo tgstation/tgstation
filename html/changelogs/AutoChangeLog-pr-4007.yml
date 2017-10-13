@@ -1,0 +1,5 @@
+author: "HonkBot"
+delete-after: True
+changes: 
+  - spellcheck: "Fixed many instances of \"the the\" when interacting with objects."
+  - bugfix: "The tracking implant locator now works on the station again."

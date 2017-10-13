@@ -78,6 +78,10 @@
 
 //over reaction stuff
 /datum/chemical_reaction/proc/over_reaction(datum/reagents/holder, created_volume)
+	if(istype(holder, /obj/effect/decal/cleanable/chempile))//smoke spam in chempiles is a big fat sausage of a NO
+		holder.clear_reagents()
+		return
+
 	var/location = get_turf(holder.my_atom)
 	var/datum/effect_system/smoke_spread/chem/S = new
 	S.attach(location)
@@ -85,7 +89,7 @@
 	if(S)
 		S.set_up(holder, 4, location, 0)
 		S.start()
-	if(holder && holder.my_atom)
+	if(holder)
 		holder.clear_reagents()
 
 /datum/chemical_reaction/over_reactible
@@ -203,15 +207,12 @@
 	required_reagents = list("uranium" = 1 , "sparky" = 4 , "volt" = 2)
 	bluespace_recipe = TRUE
 
-/datum/chemical_reaction/over_reactible/emit_on
+/datum/chemical_reaction/emit_on
 	name = "Emittrium_on"
 	id = "emit_on"
 	results = list("emit_on" = 1)
 	required_reagents = list("emit" = 1)
 	required_temp = 400
-	can_overheat = TRUE
-	overheat_threshold = 900
-	exothermic_gain = 400
 
 /datum/chemical_reaction/over_reactible/dizinc
 	name = "Diethyl Mercury"

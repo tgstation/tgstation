@@ -1,14 +1,21 @@
-/obj/effect/particle_effect/smoke
-	alpha = 0
-
-
-/obj/effect/particle_effect/smoke/New(loc)
+GLOBAL_LIST_EMPTY(smoke)
+/obj/effect/particle_effect/smoke/New()
 	..()
-	addtimer(CALLBACK(src, /obj/effect/particle_effect/.proc/smokefoam_fade_in), 0)
+	LAZYADD(GLOB.smoke, src)
+	create_reagents(500)
+	START_PROCESSING(SSreagent_states, src)
 
-/obj/effect/particle_effect/smoke/kill_smoke()
-	..()
-	animate(src, alpha = 0, time = 10)
+
+/obj/effect/particle_effect/smoke/Destroy()
+	LAZYREMOVE(GLOB.smoke, src)
+	STOP_PROCESSING(SSreagent_states, src)
+	return ..()
+
+/obj/effect/particle_effect/smoke/proc/kill_smoke()
+	LAZYREMOVE(GLOB.smoke, src)
+	STOP_PROCESSING(SSreagent_states, src)
+	INVOKE_ASYNC(src, .proc/fade_out)
+	QDEL_IN(src, 10)
 
 /obj/effect/particle_effect/smoke/chem/process()
 	if(..() && reagents)

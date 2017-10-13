@@ -10,21 +10,21 @@
 
 /obj/structure/floodlight_frame/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/wrench) && (state == FLOODLIGHT_NEEDS_WRENCHING))
-		to_chat(user, "<span class='notice'>You secure the [src].</span>")
+		to_chat(user, "<span class='notice'>You secure [src].</span>")
 		anchored = TRUE
 		state = FLOODLIGHT_NEEDS_WIRES
 		desc = "A bare metal frame looking vaguely like a floodlight. Requires wiring."
 	else if(istype(O, /obj/item/stack/cable_coil) && (state == FLOODLIGHT_NEEDS_WIRES))
 		var/obj/item/stack/S = O
 		if(S.use(5))
-			to_chat(user, "<span class='notice'>You wire the [src].</span>")
+			to_chat(user, "<span class='notice'>You wire [src].</span>")
 			name = "wired [name]"
 			desc = "A bare metal frame looking vaguely like a floodlight. Requires securing with a screwdriver."
 			icon_state = "floodlight_c2"
 			state = FLOODLIGHT_NEEDS_SECURING
 	else if(istype(O, /obj/item/light/tube) && (state == FLOODLIGHT_NEEDS_LIGHTS))
 		if(user.transferItemToLoc(O))
-			to_chat(user, "<span class='notice'>You put lights in the [src].</span>")
+			to_chat(user, "<span class='notice'>You put lights in [src].</span>")
 			new /obj/machinery/power/floodlight(src.loc)
 			qdel(src)
 	else if(istype(O, /obj/item/screwdriver) && (state == FLOODLIGHT_NEEDS_SECURING))
@@ -79,7 +79,7 @@
 		if(4)
 			setting_text = "high power"
 	if(user)
-		to_chat(user, "You set the [src] to [setting_text].")
+		to_chat(user, "You set [src] to [setting_text].")
 
 /obj/machinery/power/floodlight/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/wrench))

@@ -683,7 +683,7 @@
 	if(istype(W, /obj/item/pen))
 		//if a pen is used on the sack, dialogue to change its design appears
 		if(contents.len)
-			to_chat(user, "<span class='warning'>You can't modify this [src] with items still inside!</span>")
+			to_chat(user, "<span class='warning'>You can't modify [src] with items still inside!</span>")
 			return
 		var/list/designs = list(NODESIGN, NANOTRASEN, SYNDI, HEART, SMILE, "Cancel")
 		var/switchDesign = input("Select a Design:", "Paper Sack Design", designs[1]) in designs
@@ -693,7 +693,7 @@
 		var/choice = designs.Find(switchDesign)
 		if(design == designs[choice] || designs[choice] == "Cancel")
 			return 0
-		to_chat(usr, "<span class='notice'>You make some modifications to the [src] using your pen.</span>")
+		to_chat(usr, "<span class='notice'>You make some modifications to [src] using your pen.</span>")
 		design = designs[choice]
 		icon_state = "paperbag_[design]"
 		item_state = "paperbag_[design]"
@@ -712,12 +712,12 @@
 	else if(W.is_sharp())
 		if(!contents.len)
 			if(item_state == "paperbag_None")
-				user.show_message("<span class='notice'>You cut eyeholes into the [src].</span>", 1)
+				user.show_message("<span class='notice'>You cut eyeholes into [src].</span>", 1)
 				new /obj/item/clothing/head/papersack(user.loc)
 				qdel(src)
 				return 0
 			else if(item_state == "paperbag_SmileyFace")
-				user.show_message("<span class='notice'>You cut eyeholes into the [src] and modify the design.</span>", 1)
+				user.show_message("<span class='notice'>You cut eyeholes into [src] and modify the design.</span>", 1)
 				new /obj/item/clothing/head/papersack/smiley(user.loc)
 				qdel(src)
 				return 0

@@ -1,0 +1,11 @@
+author: "YoYoBatty"
+delete-after: True
+changes: 
+  - rscadd: "CE now has a separate privacy shutter button for their office."
+  - rscadd: "Added privacy doors to RD, CMO, CE and HOS offices."
+  - rscadd: "Toxins room can now be locked down from RD office."
+  - rscadd: "Engineering windows now have lockdown doors."
+  - tweak: "Changed the doors to the aforementioned offices from glass to solid."
+  - tweak: "Engineering lock down doors moved to behind the first door."
+  - tweak: "Anchored o2 lockers in Engineering."
+  - tweak: "Atmospheric gas chamber air injectors now default to max."
