@@ -1,0 +1,4 @@
+author: "banthebantz"
+delete-after: True
+changes: 
+  - bugfix: "Lag caused by chucklefucks creating looping smoke grenades should be fixed"
