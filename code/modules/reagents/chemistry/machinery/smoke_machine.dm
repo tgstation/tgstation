@@ -1,5 +1,6 @@
 /obj/machinery/smoke_machine
 	name = "Smoke Machine"
+	desc = "Seriously man?"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "smoke0"
 	density = TRUE
@@ -19,6 +20,11 @@
 	carry.copy_to(chemholder, 20)
 	carry.remove_any(setting * 16 / efficiency)
 	location = loc
+
+/datum/effect_system/smoke_spread/chem/smoke_machine
+	effect_type = /obj/effect/particle_effect/smoke/transparent
+
+
 
 /obj/machinery/smoke_machine/Initialize()
 	. = ..()
@@ -64,7 +70,8 @@
 			to_chat(user, "<span class='notice'>You transfer [units] units of the solution to [src].</span>")
 			add_logs(usr, src, "has added [english_list(RC.reagents.reagent_list)] to [src]")
 			return
-	if(default_unfasten_wrench(user, I))
+	if(default_unfasten_wrench(user, I, 40))
+		on = FALSE
 		return
 	return ..()
 

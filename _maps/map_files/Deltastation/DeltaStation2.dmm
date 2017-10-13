@@ -79324,6 +79324,7 @@
 	pixel_y = 7;
 	req_access_txt = "33"
 	},
+/obj/machinery/smoke_machine,
 /turf/open/floor/plasteel/whiteyellow/corner{
 	dir = 8
 	},
