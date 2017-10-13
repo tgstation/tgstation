@@ -79,3 +79,5 @@
 	var/last_words	//used for database logging
 
 	var/list/obj/effect/proc_holder/abilities = list()
+
+	var/ondemand_possessable = 0 //a number, if more than 0, a ghost can ctrl-click a living mob to possess it.

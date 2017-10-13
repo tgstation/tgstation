@@ -440,16 +440,20 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		return
 	return TRUE
 
-/proc/offer_control(mob/M)
-	to_chat(M, "Control of your mob has been offered to dead players.")
-	if(usr)
-		log_admin("[key_name(usr)] has offered control of ([key_name(M)]) to ghosts.")
-		message_admins("[key_name_admin(usr)] has offered control of ([key_name_admin(M)]) to ghosts")
+/proc/control_mob_message(mob/M)
 	var/poll_message = "Do you want to play as [M.real_name]?"
 	if(M.mind && M.mind.assigned_role)
 		poll_message = "[poll_message] Job:[M.mind.assigned_role]."
 	if(M.mind && M.mind.special_role)
 		poll_message = "[poll_message] Status:[M.mind.special_role]."
+	. = poll_message
+
+/proc/offer_control(mob/M)
+	to_chat(M, "Control of your mob has been offered to dead players.")
+	if(usr)
+		log_admin("[key_name(usr)] has offered control of ([key_name(M)]) to ghosts.")
+		message_admins("[key_name_admin(usr)] has offered control of ([key_name_admin(M)]) to ghosts")
+	var/poll_message = control_mob_message(M)
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob(poll_message, "pAI", null, FALSE, 100, M)
 	var/mob/dead/observer/theghost = null
 
