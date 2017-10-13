@@ -18,6 +18,14 @@
 
 
 /mob/living/carbon/monkey/Initialize()
+	if(CONFIG_GET(number/monkeycap) <= GLOB.monkeys.len)
+		var/turf/T = get_turf(src)
+		message_admins("Monkey failed to spawn due to monkeycap at [COORD(T)][ADMIN_JMP(T)]!")
+		log_game("Monkey failed to spawn due to monkeycap at [COORD(T)]")
+		qdel(src)
+	
+	GLOB.monkeys += src
+
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 
@@ -34,6 +42,10 @@
 
 	create_dna(src)
 	dna.initialize_dna(random_blood_type())
+
+/mob/living/carbon/monkey/Destroy()
+	. = ..()
+	GLOB.monkeys -= src
 
 /mob/living/carbon/monkey/create_internal_organs()
 	internal_organs += new /obj/item/organ/appendix
