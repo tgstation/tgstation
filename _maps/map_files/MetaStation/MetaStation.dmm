@@ -72868,7 +72868,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/light_construct/small{
+/obj/machinery/light/small/built{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium,
@@ -78283,7 +78283,7 @@
 /obj/effect/decal/cleanable/greenglow{
 	desc = "Looks like something's sprung a leak"
 	},
-/obj/structure/light_construct/small{
+/obj/machinery/light/small/built{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
@@ -78395,7 +78395,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/light_construct/small{
+/obj/machinery/light/small/built{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -78417,7 +78417,7 @@
 	name = "dust"
 	},
 /obj/effect/turf_decal/bot,
-/obj/structure/light_construct/small{
+/obj/machinery/light/small/built{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -78542,7 +78542,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/light_construct/small{
+/obj/machinery/light/small/built{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
@@ -78575,7 +78575,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/light_construct/small{
+/obj/machinery/light/small/built{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
@@ -78700,7 +78700,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/light_construct/small{
+/obj/machinery/light/small/built{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -78909,7 +78909,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/light_construct{
+/obj/machinery/light/built{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -78945,11 +78945,11 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/light_construct{
-	dir = 1
-	},
 /obj/item/folder/blue,
 /obj/item/pen,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cWU" = (
@@ -78992,7 +78992,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/light_construct/small{
+/obj/machinery/light/small/built{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -79343,10 +79343,14 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/light_construct,
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
+	station_lock_override = 1;
+	view_range = 15;
 	x_offset = -3;
 	y_offset = -7
+	},
+/obj/machinery/light/built{
+	dir = 2
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -79467,7 +79471,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/light_construct/small{
+/obj/machinery/light/small/built{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium,
@@ -79478,7 +79482,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/light_construct/small{
+/obj/machinery/light/small/built{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium,
@@ -79578,7 +79582,7 @@
 /obj/item/wirecutters,
 /obj/item/device/plant_analyzer,
 /obj/item/reagent_containers/glass/bucket,
-/obj/structure/light_construct/small{
+/obj/machinery/light/small/built{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
@@ -79620,7 +79624,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/light_construct/small{
+/obj/machinery/light/small/built{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
@@ -79663,7 +79667,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/light_construct/small{
+/obj/machinery/light/small/built{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -84614,7 +84618,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/light_construct/small{
+/obj/machinery/light/small/built{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -84624,7 +84628,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/light_construct{
+/obj/machinery/light/built{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -84634,7 +84638,9 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/light_construct,
+/obj/machinery/light/built{
+	dir = 2
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "dln" = (
@@ -84660,7 +84666,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/light_construct/small{
+/obj/machinery/light/small/built{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
@@ -86268,6 +86274,107 @@
 	},
 /turf/open/space/basic,
 /area/space)
+"EDb" = (
+/obj/structure/grille,
+/turf/open/floor/plating/airless,
+/area/space)
+"EDc" = (
+/obj/structure/grille,
+/turf/open/floor/plating/airless,
+/area/space)
+"EDd" = (
+/obj/structure/grille,
+/turf/open/floor/plating/airless,
+/area/space)
+"EDe" = (
+/obj/structure/grille,
+/turf/open/floor/plating/airless,
+/area/space)
+"EDf" = (
+/obj/structure/grille,
+/turf/open/floor/plating/airless,
+/area/space)
+"EDg" = (
+/obj/structure/grille,
+/turf/open/floor/plating/airless,
+/area/space)
+"EDh" = (
+/obj/structure/grille,
+/turf/open/floor/plating/airless,
+/area/space)
+"EDi" = (
+/obj/docking_port/mobile{
+	callTime = 250;
+	dheight = 0;
+	dir = 2;
+	dwidth = 11;
+	height = 15;
+	id = "whiteship";
+	launch_status = 0;
+	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
+	name = "NT Recovery White-Ship";
+	port_direction = 8;
+	preferred_direction = 4;
+	roundstart_move = "whiteship_away";
+	width = 28
+	},
+/obj/machinery/door/airlock/titanium{
+	name = "recovery shuttle external airlock"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/docking_port/stationary{
+	dir = 2;
+	dwidth = 11;
+	height = 15;
+	id = "whiteship_home";
+	name = "SS13: Auxiliary Dock, Station-Port";
+	width = 28
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"EDj" = (
+/obj/structure/sign/restroom,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned)
+"EDk" = (
+/obj/structure/sign/cargo,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned)
+"EDl" = (
+/obj/machinery/porta_turret/centcom_shuttle/weak{
+	dir = 4
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned)
+"EDm" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/turretid{
+	icon_state = "control_kill";
+	lethal = 1;
+	locked = 0;
+	pixel_x = -28;
+	req_access = null
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"EDn" = (
+/obj/machinery/porta_turret/aux_base{
+	always_up = 1;
+	desc = "A turret built with substandard parts and run down further with age. Still capable of delivering lethal lasers to the odd space carp, but not much else.";
+	dir = 4;
+	has_cover = 0;
+	icon_state = "standard_lethal";
+	lethal_projectile = /obj/item/projectile/beam/weak;
+	name = "turret"
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned)
 
 (1,1,1) = {"
 aaa
@@ -93094,7 +93201,7 @@ cVF
 cVO
 cVF
 cWu
-cVF
+EDj
 cWo
 cWo
 cWo
@@ -95917,7 +96024,7 @@ aWU
 bOd
 bPA
 bOd
-cbm
+cVI
 cVZ
 cWo
 cVY
@@ -96174,7 +96281,7 @@ aWU
 bOd
 aZZ
 bOd
-cVI
+EDi
 cVY
 cWp
 dlk
@@ -96692,7 +96799,7 @@ cVF
 cWa
 cWq
 cWC
-cVF
+EDk
 cWo
 cXa
 cXr
@@ -97465,7 +97572,7 @@ cWt
 cWE
 cVF
 cWU
-cXa
+EDm
 cWo
 cXa
 dDP
@@ -98491,13 +98598,13 @@ aaa
 aaa
 aaa
 aaa
-cVF
+EDl
 cVG
 cVG
 cVG
 cVG
 cVG
-cVF
+EDl
 aaa
 aaa
 aaa
@@ -134184,7 +134291,7 @@ aaa
 aaa
 aag
 aaa
-anT
+EDb
 aaa
 aaa
 aaa
@@ -134201,7 +134308,7 @@ bzj
 bzj
 aai
 bzj
-anT
+EDb
 bzj
 bzj
 bKK
@@ -134209,7 +134316,7 @@ bzj
 bzj
 bzj
 bzj
-bzj
+EDb
 aai
 bzj
 bzj
@@ -134218,7 +134325,7 @@ bzj
 bKK
 bzj
 bzj
-aaf
+anS
 aaa
 aaa
 aaa
@@ -135743,7 +135850,7 @@ aaa
 aaa
 aai
 aaa
-anT
+EDb
 aaa
 aaa
 aaa
@@ -136000,7 +136107,7 @@ aaa
 aaa
 aai
 aaa
-anT
+EDb
 aaa
 aaa
 aaa
@@ -136754,7 +136861,7 @@ aaa
 aaa
 aag
 aaa
-anT
+EDb
 aaa
 aaa
 aaf
@@ -137285,7 +137392,7 @@ aaf
 aaf
 aag
 aaa
-anT
+EDb
 aaa
 aaa
 aaa
