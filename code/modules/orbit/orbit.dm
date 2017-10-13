@@ -52,9 +52,10 @@
 	orbiter.loc = targetloc
 	orbiter.update_parallax_contents()
 	lastloc = orbiter.loc
-	for(var/other_orbit in orbiter.orbits)
-		var/datum/orbit/OO = other_orbit
-		OO.Check(targetloc)
+	if(orbiter.orbiters)
+		for(var/other_orbit in orbiter.orbiters)
+			var/datum/orbit/OO = other_orbit
+			OO.Check(targetloc)
 
 /atom/movable/var/datum/orbit/orbiting = null
 /atom/var/list/orbiters = null
