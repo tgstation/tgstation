@@ -76,11 +76,7 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 
 /obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/device/multitool))
-<<<<<<< HEAD
-		to_chat(user, "<span class='notice'>The [W.name] detects that [last_power]W were recently produced.</span>")
-=======
 		to_chat(user, "<span class='notice'>[W] detects that [last_power]W is being processed.</span>")
->>>>>>> 7998a3ce6d... Merge pull request #31601 from AutomaticFrenzy/patch/thethe
 		return TRUE
 	else if(istype(W, /obj/item/device/analyzer) && loaded_tank)
 		atmosanalyzer_scan(loaded_tank.air_contents, user)
