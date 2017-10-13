@@ -1,0 +1,7 @@
+author: "WJohnston"
+delete-after: True
+changes: 
+  - rscdel: "Boxstation's guitar white ship is no more."
+  - rscadd: "Metastation's white ship stands in its  place!"
+  - tweak: "Metastation's white ship has a couple of weak laser turrets to protect the cockpit from space carp."
+  - tweak: "Boxstation and metastation now have some plating under the grilles near the AI sat's transit tube to prevent players from deleting the tube by landing there."

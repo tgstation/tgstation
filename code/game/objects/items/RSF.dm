@@ -135,9 +135,9 @@ RSF
 /obj/item/cookiesynth/emag_act(mob/user)
 	emagged = !emagged
 	if(emagged)
-		to_chat(user, "<span class='warning'>You short out the [src]'s reagent safety checker!</span>")
+		to_chat(user, "<span class='warning'>You short out [src]'s reagent safety checker!</span>")
 	else
-		to_chat(user, "<span class='warning'>You reset the [src]'s reagent safety checker!</span>")
+		to_chat(user, "<span class='warning'>You reset [src]'s reagent safety checker!</span>")
 		toxin = 0
 
 /obj/item/cookiesynth/attack_self(mob/user)
@@ -166,7 +166,7 @@ RSF
 	if (!(istype(A, /obj/structure/table) || isfloorturf(A)))
 		return
 	if(matter < 1)
-		to_chat(user, "<span class='warning'>The [src] doesn't have enough matter left. Wait for it to recharge!</span>")
+		to_chat(user, "<span class='warning'>[src] doesn't have enough matter left. Wait for it to recharge!</span>")
 		return
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
