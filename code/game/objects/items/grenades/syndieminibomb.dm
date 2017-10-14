@@ -41,7 +41,7 @@
 /obj/item/grenade/gluon/prime()
 	update_mob()
 	playsound(loc, 'sound/effects/empulse.ogg', 50, 1)
-	radiation_pulse(get_turf(src), rad_damage)
+	radiation_pulse(src, rad_damage)
 	for(var/turf/T in view(freeze_range,loc))
 		if(isfloorturf(T))
 			var/turf/open/floor/F = T

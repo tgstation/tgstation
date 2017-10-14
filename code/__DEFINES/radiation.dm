@@ -15,7 +15,7 @@ Ask ninjanomnom if they're around
 #define RAD_MOB_COEFFICIENT 0.25					// Radiation applied is multiplied by this
 
 #define RAD_LOSS_PER_TICK 1
-#define RAD_TOX_COEFFICIENT 0.1						// Toxin damage per tick coefficient
+#define RAD_TOX_COEFFICIENT 0.05					// Toxin damage per tick coefficient
 
 #define RAD_MOB_SAFE 300							// How much stored radiation in a mob with no ill effects
 #define RAD_MOB_KNOCKDOWN 1500						// How much stored radiation to start stunning
