@@ -69,7 +69,7 @@
 	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
 	attack_generic(user, 15, BRUTE, "melee", 0)
 
-/obj/mecha/attack_animal(mob/living/simple_animal/user)
+/obj/mecha/attack_animal(mob/living/animal/user)
 	log_message("Attack by simple animal. Attacker - [user].",1)
 	if(!user.melee_damage_upper && !user.obj_damage)
 		user.emote("custom", message = "[user.friendly] [src].")

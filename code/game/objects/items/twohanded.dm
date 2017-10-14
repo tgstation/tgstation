@@ -570,10 +570,10 @@
 	user.faction |= "greytide(\ref[user])"
 	if(isliving(AM))
 		var/mob/living/L = AM
-		if(istype (L, /mob/living/simple_animal/hostile/illusion))
+		if(istype (L, /mob/living/animal/hostile/illusion))
 			return
 		if(!L.stat && prob(50))
-			var/mob/living/simple_animal/hostile/illusion/M = new(user.loc)
+			var/mob/living/animal/hostile/illusion/M = new(user.loc)
 			M.faction = user.faction.Copy()
 			M.Copy_Parent(user, 100, user.health/2.5, 12, 30)
 			M.GiveTarget(L)

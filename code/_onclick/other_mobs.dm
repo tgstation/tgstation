@@ -129,24 +129,24 @@
 	Slimes
 	Nothing happening here
 */
-/mob/living/simple_animal/slime/UnarmedAttack(atom/A)
+/mob/living/animal/slime/UnarmedAttack(atom/A)
 	A.attack_slime(src)
 /atom/proc/attack_slime(mob/user)
 	return
-/mob/living/simple_animal/slime/RestrainedClickOn(atom/A)
+/mob/living/animal/slime/RestrainedClickOn(atom/A)
 	return
 
 
 /*
 	Drones
 */
-/mob/living/simple_animal/drone/UnarmedAttack(atom/A)
+/mob/living/animal/drone/UnarmedAttack(atom/A)
 	A.attack_drone(src)
 
-/atom/proc/attack_drone(mob/living/simple_animal/drone/user)
+/atom/proc/attack_drone(mob/living/animal/drone/user)
 	attack_hand(user) //defaults to attack_hand. Override it when you don't want drones to do same stuff as humans.
 
-/mob/living/simple_animal/slime/RestrainedClickOn(atom/A)
+/mob/living/animal/slime/RestrainedClickOn(atom/A)
 	return
 
 
@@ -177,7 +177,7 @@
 	Simple animals
 */
 
-/mob/living/simple_animal/UnarmedAttack(atom/A, proximity)
+/mob/living/animal/UnarmedAttack(atom/A, proximity)
 	if(!dextrous)
 		return ..()
 	if(!ismob(A))
@@ -189,7 +189,7 @@
 	Hostile animals
 */
 
-/mob/living/simple_animal/hostile/UnarmedAttack(atom/A)
+/mob/living/animal/hostile/UnarmedAttack(atom/A)
 	target = A
 	if(dextrous && !is_type_in_typecache(A, environment_target_typecache) && !ismob(A))
 		..()

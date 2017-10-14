@@ -72,7 +72,7 @@
 			B.overmind = null
 			B.update_icon() //reset anything that was ours
 	for(var/BLO in blob_mobs)
-		var/mob/living/simple_animal/hostile/blob/BM = BLO
+		var/mob/living/animal/hostile/blob/BM = BLO
 		if(BM)
 			BM.overmind = null
 			BM.update_icons()
@@ -96,7 +96,7 @@
 /mob/camera/blob/update_health_hud()
 	if(blob_core)
 		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_core.obj_integrity)]</font></div>"
-		for(var/mob/living/simple_animal/hostile/blob/blobbernaut/B in blob_mobs)
+		for(var/mob/living/animal/hostile/blob/blobbernaut/B in blob_mobs)
 			if(B.hud_used && B.hud_used.blobpwrdisplay)
 				B.hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(blob_core.obj_integrity)]</font></div>"
 
@@ -133,7 +133,7 @@
 	var/rendered = "<span class='big'><font color=\"#EE4000\"><b>\[Blob Telepathy\] [name](<font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</font>)</b> [message_a]</font></span>"
 
 	for(var/mob/M in GLOB.mob_list)
-		if(isovermind(M) || istype(M, /mob/living/simple_animal/hostile/blob))
+		if(isovermind(M) || istype(M, /mob/living/animal/hostile/blob))
 			to_chat(M, rendered)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, src)

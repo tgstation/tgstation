@@ -76,8 +76,8 @@
 					var/list/humans = typesof(/mob/living/carbon/human, /mob/living/brain)
 					var/list/monkeys = typesof(/mob/living/carbon/monkey)
 					var/list/silicons = typesof(/mob/living/silicon)
-					var/list/slimes = typesof(/mob/living/simple_animal/slime)
-					var/list/animals = typesof(/mob/living/simple_animal)
+					var/list/slimes = typesof(/mob/living/animal/slime)
+					var/list/animals = typesof(/mob/living/animal)
 
 					if(mobtype in humans)
 						race = "Humanoid"

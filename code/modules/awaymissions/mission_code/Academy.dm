@@ -207,7 +207,7 @@
 			//Swarm of creatures
 			for(var/direction in GLOB.alldirs)
 				var/turf/T = get_turf(src)
-				new /mob/living/simple_animal/hostile/creature(get_step(T,direction))
+				new /mob/living/animal/hostile/creature(get_step(T,direction))
 		if(4)
 			//Destroy Equipment
 			for (var/obj/item/I in user)

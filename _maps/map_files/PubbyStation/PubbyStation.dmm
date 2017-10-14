@@ -1668,7 +1668,7 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "afP" = (
 /obj/machinery/holopad,
-/mob/living/simple_animal/bot/secbot/pingsky,
+/mob/living/animal/bot/secbot/pingsky,
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/aisat_interior)
 "afQ" = (
@@ -3923,7 +3923,7 @@
 /area/security/armory)
 "akN" = (
 /obj/effect/landmark/event_spawn,
-/mob/living/simple_animal/bot/secbot{
+/mob/living/animal/bot/secbot{
 	arrest_type = 1;
 	health = 45;
 	icon_state = "secbot1";
@@ -5520,7 +5520,7 @@
 	departmentType = 5;
 	pixel_x = -32
 	},
-/mob/living/simple_animal/pet/dog/pug{
+/mob/living/animal/pet/dog/pug{
 	name = "McGriff"
 	},
 /turf/open/floor/plasteel/showroomfloor,
@@ -6090,7 +6090,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "apA" = (
-/mob/living/simple_animal/mouse/gray,
+/mob/living/animal/mouse/gray,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -10830,7 +10830,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "azZ" = (
-/mob/living/simple_animal/bot/secbot/beepsky{
+/mob/living/animal/bot/secbot/beepsky{
 	name = "Officer Beepsky"
 	},
 /turf/open/floor/plating,
@@ -11476,7 +11476,7 @@
 	pixel_y = 32
 	},
 /obj/structure/bed/dogbed/ian,
-/mob/living/simple_animal/pet/dog/corgi/Ian,
+/mob/living/animal/pet/dog/corgi/Ian,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "aBG" = (
@@ -15585,7 +15585,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "aKo" = (
-/mob/living/simple_animal/mouse/gray,
+/mob/living/animal/mouse/gray,
 /turf/open/floor/plating{
 	burnt = 1;
 	icon_state = "panelscorched"
@@ -19119,7 +19119,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/mob/living/simple_animal/butterfly,
+/mob/living/animal/butterfly,
 /turf/open/floor/grass,
 /area/hallway/secondary/exit/departure_lounge)
 "aSw" = (
@@ -20335,7 +20335,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
 "aUZ" = (
-/mob/living/simple_animal/hostile/retaliate/goat{
+/mob/living/animal/hostile/retaliate/goat{
 	name = "Pete"
 	},
 /turf/open/floor/plasteel/showroomfloor,
@@ -20591,7 +20591,7 @@
 	location = "QM #1"
 	},
 /obj/effect/turf_decal/bot,
-/mob/living/simple_animal/bot/mulebot{
+/mob/living/animal/bot/mulebot{
 	beacon_freq = 1400;
 	home_destination = "QM #1";
 	suffix = "#1"
@@ -21447,7 +21447,7 @@
 	location = "QM #3"
 	},
 /obj/effect/turf_decal/bot,
-/mob/living/simple_animal/bot/mulebot{
+/mob/living/animal/bot/mulebot{
 	home_destination = "QM #2";
 	suffix = "#2"
 	},
@@ -26247,7 +26247,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/mouse/gray,
+/mob/living/animal/mouse/gray,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "biB" = (
@@ -30537,7 +30537,7 @@
 "bso" = (
 /obj/structure/flora/junglebush,
 /obj/structure/flora/grass/jungle/b,
-/mob/living/simple_animal/butterfly,
+/mob/living/animal/butterfly,
 /turf/open/floor/grass,
 /area/medical/genetics)
 "bsp" = (
@@ -35015,7 +35015,7 @@
 /turf/open/floor/plasteel/cmo,
 /area/crew_quarters/heads/cmo)
 "bBh" = (
-/mob/living/simple_animal/pet/cat/Runtime,
+/mob/living/animal/pet/cat/Runtime,
 /turf/open/floor/plasteel/cmo,
 /area/crew_quarters/heads/cmo)
 "bBi" = (
@@ -35377,7 +35377,7 @@
 /area/science/mixing)
 "bBU" = (
 /obj/effect/landmark/revenantspawn,
-/mob/living/simple_animal/slime,
+/mob/living/animal/slime,
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "bBV" = (
@@ -39214,7 +39214,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/mob/living/simple_animal/chicken{
+/mob/living/animal/chicken{
 	name = "Bloodthirsty Peckins"
 	},
 /turf/open/floor/engine,
@@ -40637,7 +40637,7 @@
 /area/maintenance/department/engine)
 "bNI" = (
 /obj/structure/window/reinforced,
-/mob/living/simple_animal/chicken{
+/mob/living/animal/chicken{
 	name = "Killer Cluck"
 	},
 /turf/open/floor/engine,
@@ -44146,7 +44146,7 @@
 /obj/item/folder/yellow,
 /obj/item/paper/monitorkey,
 /obj/item/pen,
-/mob/living/simple_animal/parrot/Poly,
+/mob/living/animal/parrot/Poly,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 8
 	},
@@ -48584,7 +48584,7 @@
 /turf/open/floor/grass,
 /area/hydroponics/garden/monastery)
 "cgI" = (
-/mob/living/simple_animal/butterfly,
+/mob/living/animal/butterfly,
 /turf/open/floor/grass,
 /area/hydroponics/garden/monastery)
 "cgJ" = (

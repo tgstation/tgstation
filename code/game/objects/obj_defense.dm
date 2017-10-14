@@ -102,7 +102,7 @@
 	if(attack_generic(user, 60, BRUTE, "melee", 0))
 		playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
 
-/obj/attack_animal(mob/living/simple_animal/M)
+/obj/attack_animal(mob/living/animal/M)
 	if(!M.melee_damage_upper && !M.obj_damage)
 		M.emote("custom", message = "[M.friendly] [src].")
 		return 0
@@ -117,7 +117,7 @@
 		if(. && !play_soundeffect)
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 
-/obj/attack_slime(mob/living/simple_animal/slime/user)
+/obj/attack_slime(mob/living/animal/slime/user)
 	if(!user.is_adult)
 		return
 	attack_generic(user, rand(10, 15), "melee", 1)

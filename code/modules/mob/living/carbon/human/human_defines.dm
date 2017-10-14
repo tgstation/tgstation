@@ -45,4 +45,4 @@
 	var/datum/personal_crafting/handcrafting
 	can_buckle = TRUE
 	buckle_lying = FALSE
-	can_ride_typecache = list(/mob/living/carbon/human, /mob/living/simple_animal/slime, /mob/living/simple_animal/parrot)
+	can_ride_typecache = list(/mob/living/carbon/human, /mob/living/animal/slime, /mob/living/animal/parrot)

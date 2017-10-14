@@ -193,7 +193,7 @@
 	var/shatter_msg = "<span class='notice'>You shatter the bottle, no turning back now!</span>"
 	var/veil_msg = "<span class='warning'>You sense a dark presence lurking just beyond the veil...</span>"
 	var/objective_verb = "Kill"
-	var/mob/living/demon_type = /mob/living/simple_animal/slaughter
+	var/mob/living/demon_type = /mob/living/animal/slaughter
 
 
 /obj/item/antag_spawner/slaughter_demon/attack_self(mob/user)
@@ -220,7 +220,7 @@
 /obj/item/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, type = "")
 
 	var/obj/effect/dummy/slaughter/holder = new /obj/effect/dummy/slaughter(T)
-	var/mob/living/simple_animal/slaughter/S = new demon_type(holder)
+	var/mob/living/animal/slaughter/S = new demon_type(holder)
 	S.holder = holder
 	S.key = C.key
 	S.mind.assigned_role = S.name
@@ -253,4 +253,4 @@
 
 	veil_msg = "<span class='warning'>You sense an adorable presence lurking just beyond the veil...</span>"
 	objective_verb = "Hug and Tickle"
-	demon_type = /mob/living/simple_animal/slaughter/laughter
+	demon_type = /mob/living/animal/slaughter/laughter

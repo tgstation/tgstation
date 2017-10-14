@@ -22,7 +22,7 @@
 	to_chat(M, "<span class='userdanger'>[totalmessage]</span>")
 
 /datum/reagent/blob/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
-	if(M.stat == DEAD || istype(M, /mob/living/simple_animal/hostile/blob))
+	if(M.stat == DEAD || istype(M, /mob/living/animal/hostile/blob))
 		return 0 //the dead, and blob mobs, don't cause reactions
 	return round(reac_volume * min(1.5 - touch_protection, 1), 0.1) //full touch protection means 50% volume, any prot below 0.5 means 100% volume.
 
@@ -226,7 +226,7 @@
 	if(O && ishuman(M) && M.stat == UNCONSCIOUS)
 		M.death() //sleeping in a fight? bad plan.
 		var/points = rand(5, 10)
-		var/mob/living/simple_animal/hostile/blob/blobspore/BS = new/mob/living/simple_animal/hostile/blob/blobspore/weak(get_turf(M))
+		var/mob/living/animal/hostile/blob/blobspore/BS = new/mob/living/animal/hostile/blob/blobspore/weak(get_turf(M))
 		BS.overmind = O
 		BS.update_icons()
 		O.blob_mobs.Add(BS)
@@ -237,7 +237,7 @@
 /datum/reagent/blob/zombifying_pods/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
 	if((damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser") && damage <= 20 && B.obj_integrity - damage <= 0 && prob(30)) //if the cause isn't fire or a bomb, the damage is less than 21, we're going to die from that damage, 20% chance of a shitty spore.
 		B.visible_message("<span class='warning'><b>A spore floats free of the blob!</b></span>")
-		var/mob/living/simple_animal/hostile/blob/blobspore/weak/BS = new/mob/living/simple_animal/hostile/blob/blobspore/weak(B.loc)
+		var/mob/living/animal/hostile/blob/blobspore/weak/BS = new/mob/living/animal/hostile/blob/blobspore/weak(B.loc)
 		BS.overmind = B.overmind
 		BS.update_icons()
 		B.overmind.blob_mobs.Add(BS)
@@ -245,7 +245,7 @@
 
 /datum/reagent/blob/zombifying_pods/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T, mob/camera/blob/O)
 	if(prob(10))
-		var/mob/living/simple_animal/hostile/blob/blobspore/weak/BS = new/mob/living/simple_animal/hostile/blob/blobspore/weak(T)
+		var/mob/living/animal/hostile/blob/blobspore/weak/BS = new/mob/living/animal/hostile/blob/blobspore/weak(T)
 		BS.overmind = B.overmind
 		BS.update_icons()
 		newB.overmind.blob_mobs.Add(BS)
@@ -429,7 +429,7 @@
 	message = "The blob stabs you"
 
 /datum/reagent/blob/reactive_spines/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
-	if(M.stat == DEAD || istype(M, /mob/living/simple_animal/hostile/blob))
+	if(M.stat == DEAD || istype(M, /mob/living/animal/hostile/blob))
 		return 0 //the dead, and blob mobs, don't cause reactions
 	M.adjustBruteLoss(0.8*reac_volume)
 

@@ -3082,7 +3082,7 @@
 	},
 /area/ai_monitored/security/armory)
 "aga" = (
-/mob/living/simple_animal/bot/secbot{
+/mob/living/animal/bot/secbot{
 	arrest_type = 1;
 	health = 45;
 	icon_state = "secbot1";
@@ -3604,7 +3604,7 @@
 /area/crew_quarters/heads/hos)
 "aha" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/mob/living/simple_animal/hostile/retaliate/bat{
+/mob/living/animal/hostile/retaliate/bat{
 	desc = "A fierce companion for any person of power, this spider has been carefully trained by Nanotrasen specialists. Its beady, staring eyes send shivers down your spine.";
 	emote_hear = list("chitters");
 	faction = list("spiders");
@@ -11542,7 +11542,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/mob/living/simple_animal/bot/secbot/beepsky{
+/mob/living/animal/bot/secbot/beepsky{
 	desc = "It's Officer Beepsky! Powered by a potato and a shot of whiskey, and with a sturdier reinforced chassis, too. ";
 	health = 45;
 	maxHealth = 45;
@@ -18768,7 +18768,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/delivery,
-/mob/living/simple_animal/bot/mulebot{
+/mob/living/animal/bot/mulebot{
 	beacon_freq = 1400;
 	home_destination = "QM #1";
 	suffix = "#1"
@@ -19108,7 +19108,7 @@
 /turf/open/floor/grass,
 /area/hydroponics/garden)
 "aKv" = (
-/mob/living/simple_animal/chicken{
+/mob/living/animal/chicken{
 	name = "Featherbottom";
 	real_name = "Featherbottom"
 	},
@@ -19932,7 +19932,7 @@
 	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/delivery,
-/mob/living/simple_animal/bot/mulebot{
+/mob/living/animal/bot/mulebot{
 	home_destination = "QM #3";
 	suffix = "#3"
 	},
@@ -20287,7 +20287,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced,
-/mob/living/simple_animal/chicken{
+/mob/living/animal/chicken{
 	name = "Kentucky";
 	real_name = "Kentucky"
 	},
@@ -22323,7 +22323,7 @@
 /turf/open/floor/grass,
 /area/hydroponics/garden)
 "aRh" = (
-/mob/living/simple_animal/cow{
+/mob/living/animal/cow{
 	name = "Betsy";
 	real_name = "Betsy"
 	},
@@ -27326,7 +27326,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/mob/living/simple_animal/bot/cleanbot{
+/mob/living/animal/bot/cleanbot{
 	auto_patrol = 1;
 	icon_state = "cleanbot1";
 	mode = 0;
@@ -29130,7 +29130,7 @@
 "bej" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/mob/living/simple_animal/parrot/Poly,
+/mob/living/animal/parrot/Poly,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -30657,7 +30657,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/portable_atmospherics/canister/water_vapor,
-/mob/living/simple_animal/hostile/lizard{
+/mob/living/animal/hostile/lizard{
 	name = "Wags-His-Tail";
 	real_name = "Wags-His-Tail"
 	},
@@ -35353,7 +35353,7 @@
 /obj/machinery/ai_slipper{
 	uses = 10
 	},
-/mob/living/simple_animal/bot/secbot/pingsky,
+/mob/living/animal/bot/secbot/pingsky,
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/aisat_interior)
 "bpQ" = (
@@ -36715,7 +36715,7 @@
 	dir = 4;
 	pixel_x = -22
 	},
-/mob/living/simple_animal/bot/floorbot,
+/mob/living/animal/bot/floorbot,
 /turf/open/floor/plasteel/darkblue/corner{
 	dir = 8
 	},
@@ -37114,7 +37114,7 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
 "bsO" = (
-/mob/living/simple_animal/pet/dog/corgi/Ian,
+/mob/living/animal/pet/dog/corgi/Ian,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
 "bsP" = (
@@ -40117,7 +40117,7 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/mob/living/simple_animal/bot/cleanbot,
+/mob/living/animal/bot/cleanbot,
 /turf/open/floor/plasteel/darkblue/corner,
 /area/ai_monitored/turret_protected/aisat_interior)
 "byN" = (
@@ -40840,7 +40840,7 @@
 	network = list("MiniSat","tcomm");
 	pixel_y = -29
 	},
-/mob/living/simple_animal/pet/fox/Renault,
+/mob/living/animal/pet/fox/Renault,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain/private)
 "bAf" = (
@@ -48283,7 +48283,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
 "bPa" = (
-/mob/living/simple_animal/hostile/retaliate/goat{
+/mob/living/animal/hostile/retaliate/goat{
 	name = "Pete"
 	},
 /turf/open/floor/plasteel/showroomfloor,
@@ -55800,7 +55800,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/bot/medbot{
+/mob/living/animal/bot/medbot{
 	auto_patrol = 1;
 	desc = "A little medical robot, officially part of the Nanotrasen medical inspectorate. He looks somewhat underwhelmed.";
 	name = "Inspector Johnson"
@@ -57021,7 +57021,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/mob/living/simple_animal/bot/cleanbot{
+/mob/living/animal/bot/cleanbot{
 	name = "Scrubs, MD";
 	on = 0
 	},
@@ -58587,7 +58587,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/mob/living/simple_animal/pet/dog/pug{
+/mob/living/animal/pet/dog/pug{
 	desc = "It's Pugley IV, the research department's lovable pug clone. Hopefully nothing happens to this one - fourth time lucky!";
 	name = "Pugley IV";
 	real_name = "Pugley IV"
@@ -61488,7 +61488,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/mob/living/simple_animal/pet/cat/Runtime,
+/mob/living/animal/pet/cat/Runtime,
 /turf/open/floor/plasteel/barber{
 	dir = 8
 	},
@@ -77227,7 +77227,7 @@
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "cSy" = (
-/mob/living/simple_animal/slime,
+/mob/living/animal/slime,
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "cSz" = (
@@ -78199,7 +78199,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/transport)
 "cVC" = (
-/mob/living/simple_animal/sloth/citrus,
+/mob/living/animal/sloth/citrus,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "cVD" = (
@@ -80109,7 +80109,7 @@
 	},
 /obj/item/lazarus_injector,
 /obj/effect/turf_decal/bot,
-/mob/living/simple_animal/bot/medbot{
+/mob/living/animal/bot/medbot{
 	name = "\improper emergency medibot";
 	pixel_x = -3;
 	pixel_y = 2

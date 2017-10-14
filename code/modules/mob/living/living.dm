@@ -2,7 +2,7 @@
 	. = ..()
 	generateStaticOverlay()
 	if(staticOverlays.len)
-		for(var/mob/living/simple_animal/drone/D in GLOB.player_list)
+		for(var/mob/living/animal/drone/D in GLOB.player_list)
 			if(D && D.seeStatic)
 				if(D.staticChoice in staticOverlays)
 					D.staticOverlays |= staticOverlays[D.staticChoice]
@@ -40,7 +40,7 @@
 		buckled.unbuckle_mob(src,force=1)
 	QDEL_NULL(riding_datum)
 
-	for(var/mob/living/simple_animal/drone/D in GLOB.player_list)
+	for(var/mob/living/animal/drone/D in GLOB.player_list)
 		for(var/image/I in staticOverlays)
 			D.staticOverlays.Remove(I)
 			D.client.images.Remove(I)
@@ -815,7 +815,7 @@
 		for(var/path in butcher_results)
 			for(var/i = 1; i <= butcher_results[path];i++)
 				new path(src.loc)
-			butcher_results.Remove(path) //In case you want to have things like simple_animals drop their butcher results on gib, so it won't double up below.
+			butcher_results.Remove(path) //In case you want to have things like animals drop their butcher results on gib, so it won't double up below.
 	visible_message("<span class='notice'>[user] butchers [src].</span>")
 	gib(0, 0, 1)
 
@@ -890,7 +890,7 @@
 		new_mob.key = key
 
 	for(var/para in hasparasites())
-		var/mob/living/simple_animal/hostile/guardian/G = para
+		var/mob/living/animal/hostile/guardian/G = para
 		G.summoner = new_mob
 		G.Recall()
 		to_chat(G, "<span class='holoparasite'>Your summoner has changed form!</span>")

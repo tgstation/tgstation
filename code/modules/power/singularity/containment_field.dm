@@ -43,7 +43,7 @@
 /obj/machinery/field/containment/ex_act(severity, target)
 	return FALSE
 
-/obj/machinery/field/containment/attack_animal(mob/living/simple_animal/M)
+/obj/machinery/field/containment/attack_animal(mob/living/animal/M)
 	if(!FG1 || !FG2)
 		qdel(src)
 		return

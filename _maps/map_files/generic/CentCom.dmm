@@ -6248,7 +6248,7 @@
 	},
 /area/syndicate_mothership/control)
 "rg" = (
-/mob/living/simple_animal/hostile/carp/cayenne,
+/mob/living/animal/hostile/carp/cayenne,
 /turf/open/floor/plasteel/bar{
 	dir = 2
 	},
@@ -9842,7 +9842,7 @@
 /area/wizard_station)
 "zQ" = (
 /obj/effect/decal/cleanable/blood/splatter,
-/mob/living/simple_animal/hostile/creature{
+/mob/living/animal/hostile/creature{
 	name = "Experiment 35b"
 	},
 /turf/open/floor/grass,
@@ -10260,7 +10260,7 @@
 /turf/open/floor/engine/cult,
 /area/wizard_station)
 "Bg" = (
-/mob/living/simple_animal/bot/medbot/mysterious{
+/mob/living/animal/bot/medbot/mysterious{
 	desc = "If you don't accidentally blow yourself up from time to time you're not really a wizard anyway.";
 	faction = list("neutral","silicon","creature");
 	name = "Nobody's Perfect"

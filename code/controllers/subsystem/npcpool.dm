@@ -37,14 +37,14 @@ SUBSYSTEM_DEF(npcpool)
 	// 5. Do all assignments: goes through the delegated/coordianted bots and assigns the right variables/tasks to them.
 
 	if (!resumed)
-		src.currentrun = GLOB.simple_animals.Copy()
+		src.currentrun = GLOB.animals.Copy()
 		stage = PROCESSING_SIMPLES
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 
 	if(stage == PROCESSING_SIMPLES)
 		while(currentrun.len)
-			var/mob/living/simple_animal/SA = currentrun[currentrun.len]
+			var/mob/living/animal/SA = currentrun[currentrun.len]
 			--currentrun.len
 
 			if(!SA.ckey)

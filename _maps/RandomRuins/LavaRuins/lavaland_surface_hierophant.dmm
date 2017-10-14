@@ -13,7 +13,7 @@
 /turf/open/indestructible/hierophant,
 /area/ruin/unpowered/hierophant)
 "d" = (
-/mob/living/simple_animal/hostile/megafauna/hierophant,
+/mob/living/animal/hostile/megafauna/hierophant,
 /turf/open/indestructible/hierophant/two,
 /area/ruin/unpowered/hierophant)
 "e" = (

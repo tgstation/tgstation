@@ -10,7 +10,7 @@
 
 /obj/screen/swarmer/FabricateTrap/Click()
 	if(isswarmer(usr))
-		var/mob/living/simple_animal/hostile/swarmer/S = usr
+		var/mob/living/animal/hostile/swarmer/S = usr
 		S.CreateTrap()
 
 /obj/screen/swarmer/Barricade
@@ -20,7 +20,7 @@
 
 /obj/screen/swarmer/Barricade/Click()
 	if(isswarmer(usr))
-		var/mob/living/simple_animal/hostile/swarmer/S = usr
+		var/mob/living/animal/hostile/swarmer/S = usr
 		S.CreateBarricade()
 
 /obj/screen/swarmer/Replicate
@@ -30,7 +30,7 @@
 
 /obj/screen/swarmer/Replicate/Click()
 	if(isswarmer(usr))
-		var/mob/living/simple_animal/hostile/swarmer/S = usr
+		var/mob/living/animal/hostile/swarmer/S = usr
 		S.CreateSwarmer()
 
 /obj/screen/swarmer/RepairSelf
@@ -40,7 +40,7 @@
 
 /obj/screen/swarmer/RepairSelf/Click()
 	if(isswarmer(usr))
-		var/mob/living/simple_animal/hostile/swarmer/S = usr
+		var/mob/living/animal/hostile/swarmer/S = usr
 		S.RepairSelf()
 
 /obj/screen/swarmer/ToggleLight
@@ -50,7 +50,7 @@
 
 /obj/screen/swarmer/ToggleLight/Click()
 	if(isswarmer(usr))
-		var/mob/living/simple_animal/hostile/swarmer/S = usr
+		var/mob/living/animal/hostile/swarmer/S = usr
 		S.ToggleLight()
 
 /obj/screen/swarmer/ContactSwarmers
@@ -60,7 +60,7 @@
 
 /obj/screen/swarmer/ContactSwarmers/Click()
 	if(isswarmer(usr))
-		var/mob/living/simple_animal/hostile/swarmer/S = usr
+		var/mob/living/animal/hostile/swarmer/S = usr
 		S.ContactSwarmers()
 
 /datum/hud/swarmer/New(mob/owner)
@@ -92,6 +92,6 @@
 	static_inventory += using
 
 
-/mob/living/simple_animal/hostile/swarmer/create_mob_hud()
+/mob/living/animal/hostile/swarmer/create_mob_hud()
 	if(client && !hud_used)
 		hud_used = new /datum/hud/swarmer(src)

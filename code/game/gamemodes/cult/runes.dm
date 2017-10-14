@@ -74,8 +74,8 @@ To draw a rune, use an arcane tome.
 	else
 		fail_invoke()
 
-/obj/effect/rune/attack_animal(mob/living/simple_animal/M)
-	if(istype(M, /mob/living/simple_animal/shade) || istype(M, /mob/living/simple_animal/hostile/construct))
+/obj/effect/rune/attack_animal(mob/living/animal/M)
+	if(istype(M, /mob/living/animal/shade) || istype(M, /mob/living/animal/hostile/construct))
 		if(construct_invoke || !iscultist(M)) //if you're not a cult construct we want the normal fail message
 			attack_hand(M)
 		else

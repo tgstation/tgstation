@@ -285,7 +285,7 @@
 						C.update_inv_legcuffed()
 						SSblackbox.add_details("handcuffs","[type]")
 			else if(isanimal(L))
-				var/mob/living/simple_animal/SA = L
+				var/mob/living/animal/SA = L
 				if(SA.mob_size > MOB_SIZE_TINY)
 					snap = 1
 			if(L.movement_type & FLYING)

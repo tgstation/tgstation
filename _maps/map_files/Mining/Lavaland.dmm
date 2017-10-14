@@ -720,7 +720,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/mob/living/simple_animal/bot/secbot/beepsky{
+/mob/living/animal/bot/secbot/beepsky{
 	desc = "Powered by the tears and sweat of laborers.";
 	name = "Prison Ofitser"
 	},
@@ -2431,7 +2431,7 @@
 "hg" = (
 /obj/structure/stone_tile/surrounding,
 /obj/structure/stone_tile/center/cracked,
-/mob/living/simple_animal/hostile/megafauna/legion,
+/mob/living/animal/hostile/megafauna/legion,
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
 "hs" = (

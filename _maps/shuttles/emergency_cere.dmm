@@ -725,7 +725,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "ch" = (
-/mob/living/simple_animal/bot/medbot{
+/mob/living/animal/bot/medbot{
 	name = "Speedy* Recovery"
 	},
 /turf/open/floor/plasteel/whiteblue/side{

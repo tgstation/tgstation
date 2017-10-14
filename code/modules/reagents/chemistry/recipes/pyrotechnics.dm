@@ -60,7 +60,7 @@
 	if(created_volume >= 150)
 		playsound(get_turf(holder.my_atom), 'sound/effects/pray.ogg', 80, 0, round(created_volume/48))
 		strengthdiv = 8
-		for(var/mob/living/simple_animal/revenant/R in get_hearers_in_view(7,get_turf(holder.my_atom)))
+		for(var/mob/living/animal/revenant/R in get_hearers_in_view(7,get_turf(holder.my_atom)))
 			var/deity
 			if(SSreligion.deity)
 				deity = SSreligion.deity

@@ -97,16 +97,16 @@
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/abandonedzoo)
 "am" = (
-/mob/living/simple_animal/hostile/poison/bees,
-/mob/living/simple_animal/hostile/poison/bees,
-/mob/living/simple_animal/hostile/poison/bees,
-/mob/living/simple_animal/hostile/poison/bees,
-/mob/living/simple_animal/hostile/poison/bees,
-/mob/living/simple_animal/hostile/poison/bees,
+/mob/living/animal/hostile/poison/bees,
+/mob/living/animal/hostile/poison/bees,
+/mob/living/animal/hostile/poison/bees,
+/mob/living/animal/hostile/poison/bees,
+/mob/living/animal/hostile/poison/bees,
+/mob/living/animal/hostile/poison/bees,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/abandonedzoo)
 "an" = (
-/mob/living/simple_animal/hostile/poison/bees,
+/mob/living/animal/hostile/poison/bees,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/abandonedzoo)
 "ao" = (
@@ -114,7 +114,7 @@
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/abandonedzoo)
 "ap" = (
-/mob/living/simple_animal/hostile/asteroid/goldgrub{
+/mob/living/animal/hostile/asteroid/goldgrub{
 	will_burrow = 0
 	},
 /turf/open/floor/plating/asteroid,
@@ -128,7 +128,7 @@
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/abandonedzoo)
 "as" = (
-/mob/living/simple_animal/hostile/asteroid/basilisk,
+/mob/living/animal/hostile/asteroid/basilisk,
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/abandonedzoo)
 "at" = (
@@ -136,7 +136,7 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "au" = (
 /obj/structure/flora/ausbushes/leafybush,
-/mob/living/simple_animal/hostile/poison/bees,
+/mob/living/animal/hostile/poison/bees,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/abandonedzoo)
 "av" = (
@@ -183,7 +183,7 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "aB" = (
 /obj/machinery/light,
-/mob/living/simple_animal/hostile/poison/bees,
+/mob/living/animal/hostile/poison/bees,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/abandonedzoo)
 "aC" = (
@@ -651,7 +651,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/mob/living/simple_animal/hostile/carp,
+/mob/living/animal/hostile/carp,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedzoo)
 "bx" = (
@@ -721,7 +721,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedzoo)
 "bJ" = (
-/mob/living/simple_animal/crab{
+/mob/living/animal/crab{
 	faction = list("carp")
 	},
 /turf/open/floor/plating,

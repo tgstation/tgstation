@@ -224,7 +224,7 @@
 
 /obj/item/crusher_trophy/watcher_wing/on_mark_detonation(mob/living/target, mob/living/user)
 	if(ishostile(target))
-		var/mob/living/simple_animal/hostile/H = target
+		var/mob/living/animal/hostile/H = target
 		if(H.ranged) //briefly delay ranged attacks
 			if(H.ranged_cooldown_time >= world.time)
 				H.ranged_cooldown_time += bonus_value

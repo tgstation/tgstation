@@ -223,7 +223,7 @@
 /area/shuttle/escape)
 "aN" = (
 /obj/effect/decal/cleanable/blood/old,
-/mob/living/simple_animal/hostile/bear/fightpit,
+/mob/living/animal/hostile/bear/fightpit,
 /turf/open/floor/engine,
 /area/shuttle/escape)
 "aO" = (
@@ -267,7 +267,7 @@
 /area/shuttle/escape)
 "aV" = (
 /obj/item/kitchen/fork,
-/mob/living/simple_animal/hostile/bear/fightpit,
+/mob/living/animal/hostile/bear/fightpit,
 /turf/open/floor/engine,
 /area/shuttle/escape)
 "aW" = (

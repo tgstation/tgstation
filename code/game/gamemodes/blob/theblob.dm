@@ -250,7 +250,7 @@
 	to_chat(user, "<b>Health:</b> <span class='notice'>[obj_integrity]/[max_integrity]</span>")
 	to_chat(user, "<b>Effects:</b> <span class='notice'>[scannerreport()]</span>")
 
-/obj/structure/blob/attack_animal(mob/living/simple_animal/M)
+/obj/structure/blob/attack_animal(mob/living/animal/M)
 	if("blob" in M.faction) //sorry, but you can't kill the blob as a blobbernaut
 		return
 	..()

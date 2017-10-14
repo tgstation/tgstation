@@ -21,7 +21,7 @@
 		return
 	if(isliving(target) && proximity_flag)
 		if(isanimal(target))
-			var/mob/living/simple_animal/M = target
+			var/mob/living/animal/M = target
 			if(M.sentience_type != revive_type)
 				to_chat(user, "<span class='info'>[src] does not work on this sort of creature.</span>")
 				return
@@ -29,7 +29,7 @@
 				M.faction = list("neutral")
 				M.revive(full_heal = 1, admin_revive = 1)
 				if(ishostile(target))
-					var/mob/living/simple_animal/hostile/H = M
+					var/mob/living/animal/hostile/H = M
 					if(malfunctioning)
 						H.faction |= list("lazarus", "\ref[user]")
 						H.robust_searching = 1

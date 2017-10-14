@@ -118,7 +118,7 @@
 	frozen_mobs[L] = L.anchored
 	L.anchored = TRUE
 	if(ishostile(L))
-		var/mob/living/simple_animal/hostile/H = L
+		var/mob/living/animal/hostile/H = L
 		H.AIStatus = AI_OFF
 		H.LoseTarget()
 
@@ -127,5 +127,5 @@
 	L.anchored = frozen_mobs[L]
 	frozen_mobs -= L
 	if(ishostile(L))
-		var/mob/living/simple_animal/hostile/H = L
+		var/mob/living/animal/hostile/H = L
 		H.AIStatus = initial(H.AIStatus)

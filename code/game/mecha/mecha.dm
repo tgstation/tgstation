@@ -740,8 +740,8 @@
 		GrantActions(AI, !AI.can_dominate_mechs)
 
 
-//An actual AI (simple_animal mecha pilot) entering the mech
-/obj/mecha/proc/aimob_enter_mech(mob/living/simple_animal/hostile/syndicate/mecha_pilot/pilot_mob)
+//An actual AI (animal mecha pilot) entering the mech
+/obj/mecha/proc/aimob_enter_mech(mob/living/animal/hostile/syndicate/mecha_pilot/pilot_mob)
 	if(pilot_mob && pilot_mob.Adjacent(src))
 		if(occupant)
 			return
@@ -751,7 +751,7 @@
 		pilot_mob.loc = src
 		GrantActions(pilot_mob)//needed for checks, and incase a badmin puts somebody in the mob
 
-/obj/mecha/proc/aimob_exit_mech(mob/living/simple_animal/hostile/syndicate/mecha_pilot/pilot_mob)
+/obj/mecha/proc/aimob_exit_mech(mob/living/animal/hostile/syndicate/mecha_pilot/pilot_mob)
 	if(occupant == pilot_mob)
 		occupant = null
 	if(pilot_mob.mecha == src)

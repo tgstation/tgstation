@@ -1,5 +1,5 @@
 /datum/wires/mulebot
-	holder_type = /mob/living/simple_animal/bot/mulebot
+	holder_type = /mob/living/animal/bot/mulebot
 	randomize = TRUE
 
 /datum/wires/mulebot/New(atom/holder)
@@ -12,12 +12,12 @@
 	..()
 
 /datum/wires/mulebot/interactable(mob/user)
-	var/mob/living/simple_animal/bot/mulebot/M = holder
+	var/mob/living/animal/bot/mulebot/M = holder
 	if(M.open)
 		return TRUE
 
 /datum/wires/mulebot/on_pulse(wire)
-	var/mob/living/simple_animal/bot/mulebot/M = holder
+	var/mob/living/animal/bot/mulebot/M = holder
 	switch(wire)
 		if(WIRE_POWER1, WIRE_POWER2)
 			holder.visible_message("<span class='notice'>[icon2html(M, viewers(holder))] The charge light flickers.</span>")

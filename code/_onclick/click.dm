@@ -288,7 +288,7 @@
 	else
 		swap_hand()
 
-/mob/living/simple_animal/drone/MiddleClickOn(atom/A)
+/mob/living/animal/drone/MiddleClickOn(atom/A)
 	swap_hand()
 
 // In case of use break glass

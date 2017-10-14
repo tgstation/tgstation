@@ -123,7 +123,7 @@
 
 /datum/crafting_recipe/ed209
 	name = "ED209"
-	result = /mob/living/simple_animal/bot/ed209
+	result = /mob/living/animal/bot/ed209
 	reqs = list(/obj/item/robot_suit = 1,
 				/obj/item/clothing/head/helmet = 1,
 				/obj/item/clothing/suit/armor/vest = 1,
@@ -140,7 +140,7 @@
 
 /datum/crafting_recipe/secbot
 	name = "Secbot"
-	result = /mob/living/simple_animal/bot/secbot
+	result = /mob/living/animal/bot/secbot
 	reqs = list(/obj/item/device/assembly/signaler = 1,
 				/obj/item/clothing/head/helmet/sec = 1,
 				/obj/item/melee/baton = 1,
@@ -152,7 +152,7 @@
 
 /datum/crafting_recipe/cleanbot
 	name = "Cleanbot"
-	result = /mob/living/simple_animal/bot/cleanbot
+	result = /mob/living/animal/bot/cleanbot
 	reqs = list(/obj/item/reagent_containers/glass/bucket = 1,
 				/obj/item/device/assembly/prox_sensor = 1,
 				/obj/item/bodypart/r_arm/robot = 1)
@@ -161,7 +161,7 @@
 
 /datum/crafting_recipe/floorbot
 	name = "Floorbot"
-	result = /mob/living/simple_animal/bot/floorbot
+	result = /mob/living/animal/bot/floorbot
 	reqs = list(/obj/item/storage/toolbox/mechanical = 1,
 				/obj/item/stack/tile/plasteel = 1,
 				/obj/item/device/assembly/prox_sensor = 1,
@@ -171,7 +171,7 @@
 
 /datum/crafting_recipe/medbot
 	name = "Medbot"
-	result = /mob/living/simple_animal/bot/medbot
+	result = /mob/living/animal/bot/medbot
 	reqs = list(/obj/item/device/healthanalyzer = 1,
 				/obj/item/storage/firstaid = 1,
 				/obj/item/device/assembly/prox_sensor = 1,

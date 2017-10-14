@@ -119,7 +119,7 @@
 			updatehealth()
 
 
-/mob/living/carbon/monkey/attack_animal(mob/living/simple_animal/M)
+/mob/living/carbon/monkey/attack_animal(mob/living/animal/M)
 	. = ..()
 	if(.)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
@@ -131,7 +131,7 @@
 			affecting = get_bodypart("chest")
 		apply_damage(damage, M.melee_damage_type, affecting)
 
-/mob/living/carbon/monkey/attack_slime(mob/living/simple_animal/slime/M)
+/mob/living/carbon/monkey/attack_slime(mob/living/animal/slime/M)
 	if(..()) //successful slime attack
 		var/damage = rand(5, 35)
 		if(M.is_adult)

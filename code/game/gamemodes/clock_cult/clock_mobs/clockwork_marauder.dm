@@ -1,5 +1,5 @@
 //Clockwork marauder: A well-rounded frontline construct. Only one can exist for every two human servants.
-/mob/living/simple_animal/hostile/clockwork/marauder
+/mob/living/animal/hostile/clockwork/marauder
 	name = "clockwork marauder"
 	desc = "The stalwart apparition of a soldier, blazing with crimson flames. It's armed with a gladius and shield."
 	icon_state = "clockwork_marauder"
@@ -24,7 +24,7 @@
 	likely to deflect shots.</span>"
 	var/deflect_chance = 40 //Chance to deflect any given projectile (non-damaging energy projectiles are always deflected)
 
-/mob/living/simple_animal/hostile/clockwork/marauder/update_values()
+/mob/living/animal/hostile/clockwork/marauder/update_values()
 	if(GLOB.ratvar_awakens) //Massive attack damage bonuses and health increase, because Ratvar
 		health = 300
 		maxHealth = 300
@@ -41,15 +41,15 @@
 		attacktext = "carves"
 		obj_damage = 50
 
-/mob/living/simple_animal/hostile/clockwork/marauder/death(gibbed)
+/mob/living/animal/hostile/clockwork/marauder/death(gibbed)
 	visible_message("<span class='danger'>[src]'s equipment clatters lifelessly to the ground as the red flames within dissipate.</span>", \
 	"<span class='userdanger'>Dented and scratched, your armor falls away, and your fragile form breaks apart without its protection.</span>")
 	. = ..()
 
-/mob/living/simple_animal/hostile/clockwork/marauder/Process_Spacemove(movement_dir = 0)
+/mob/living/animal/hostile/clockwork/marauder/Process_Spacemove(movement_dir = 0)
 	return TRUE
 
-/mob/living/simple_animal/hostile/clockwork/marauder/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/animal/hostile/clockwork/marauder/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(amount > 0)
 		for(var/mob/living/L in view(2, src))
 			if(L.is_holding_item_of_type(/obj/item/nullrod))
@@ -58,12 +58,12 @@
 				break
 	. = ..()
 
-/mob/living/simple_animal/hostile/clockwork/marauder/bullet_act(obj/item/projectile/P)
+/mob/living/animal/hostile/clockwork/marauder/bullet_act(obj/item/projectile/P)
 	if(deflect_projectile(P))
 		return
 	return ..()
 
-/mob/living/simple_animal/hostile/clockwork/marauder/proc/deflect_projectile(obj/item/projectile/P)
+/mob/living/animal/hostile/clockwork/marauder/proc/deflect_projectile(obj/item/projectile/P)
 	var/final_deflection_chance = deflect_chance
 	var/energy_projectile = istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam)
 	if(P.nodamage || P.damage_type == STAMINA)

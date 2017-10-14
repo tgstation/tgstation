@@ -26,8 +26,8 @@
 	var/static/list/chemical_mob_spawn_nicecritters = list() // and possible friendly mobs
 	if(holder && holder.my_atom)
 		if (chemical_mob_spawn_meancritters.len <= 0 || chemical_mob_spawn_nicecritters.len <= 0)
-			for (var/T in typesof(/mob/living/simple_animal))
-				var/mob/living/simple_animal/SA = T
+			for (var/T in typesof(/mob/living/animal))
+				var/mob/living/animal/SA = T
 				switch(initial(SA.gold_core_spawnable))
 					if(1)
 						chemical_mob_spawn_meancritters += T
@@ -58,7 +58,7 @@
 			else
 				chosen = pick(chemical_mob_spawn_meancritters)
 			var/spawnloc = get_turf(holder.my_atom)
-			var/mob/living/simple_animal/C = new chosen(spawnloc)
+			var/mob/living/animal/C = new chosen(spawnloc)
 			C.faction |= mob_faction
 			if(prob(50))
 				for(var/j = 1, j <= rand(1, 3), j++)

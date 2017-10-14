@@ -39,9 +39,9 @@
 	// No point making the code more complicated if no non-drone
 	// is ever going to use one of these
 
-	var/mob/living/simple_animal/drone/D
+	var/mob/living/animal/drone/D
 
-	if(istype(owner, /mob/living/simple_animal/drone))
+	if(istype(owner, /mob/living/animal/drone))
 		D = owner
 	else
 		return

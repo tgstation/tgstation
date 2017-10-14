@@ -140,7 +140,7 @@
 		to_chat(user, "<span class='warning'>[src] needs to be firmly secured to the floor first!</span>")
 		return 1
 
-/obj/machinery/power/emitter/attack_animal(mob/living/simple_animal/M)
+/obj/machinery/power/emitter/attack_animal(mob/living/animal/M)
 	if(ismegafauna(M) && anchored)
 		state = 0
 		anchored = FALSE

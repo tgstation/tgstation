@@ -32,7 +32,7 @@
 		return MAP_ERROR
 
 	var/obj/effect/dummy/slaughter/holder = new /obj/effect/dummy/slaughter((pick(spawn_locs)))
-	var/mob/living/simple_animal/slaughter/S = new /mob/living/simple_animal/slaughter/(holder)
+	var/mob/living/animal/slaughter/S = new /mob/living/animal/slaughter/(holder)
 	S.holder = holder
 	player_mind.transfer_to(S)
 	player_mind.assigned_role = "Slaughter Demon"

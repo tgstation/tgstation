@@ -2193,7 +2193,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "afp" = (
-/mob/living/simple_animal/cockroach,
+/mob/living/animal/cockroach,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "afq" = (
@@ -3951,7 +3951,7 @@
 /area/security/vacantoffice)
 "aki" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/mob/living/simple_animal/cockroach,
+/mob/living/animal/cockroach,
 /turf/open/floor/wood,
 /area/security/vacantoffice)
 "akj" = (
@@ -4694,7 +4694,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/security/vacantoffice)
 "amg" = (
-/mob/living/simple_animal/cockroach,
+/mob/living/animal/cockroach,
 /turf/open/floor/plasteel/grimy,
 /area/security/vacantoffice)
 "amh" = (
@@ -8281,7 +8281,7 @@
 	},
 /area/maintenance/port/fore)
 "atA" = (
-/mob/living/simple_animal/cockroach,
+/mob/living/animal/cockroach,
 /turf/open/floor/wood,
 /area/maintenance/port/fore)
 "atB" = (
@@ -8919,7 +8919,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/mob/living/simple_animal/cockroach,
+/mob/living/animal/cockroach,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "ava" = (
@@ -8959,7 +8959,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /obj/effect/landmark/event_spawn,
-/mob/living/simple_animal/hostile/lizard{
+/mob/living/animal/hostile/lizard{
 	name = "Eats-The-Roaches";
 	real_name = "Wags-His-Tail"
 	},
@@ -10715,7 +10715,7 @@
 	location = "QM #2"
 	},
 /obj/effect/turf_decal/delivery,
-/mob/living/simple_animal/bot/mulebot{
+/mob/living/animal/bot/mulebot{
 	home_destination = "QM #3";
 	suffix = "#3"
 	},
@@ -11637,7 +11637,7 @@
 	location = "QM #4"
 	},
 /obj/effect/turf_decal/delivery,
-/mob/living/simple_animal/bot/mulebot{
+/mob/living/animal/bot/mulebot{
 	beacon_freq = 1400;
 	home_destination = "QM #1";
 	suffix = "#1"
@@ -13147,7 +13147,7 @@
 	},
 /obj/item/reagent_containers/glass/bucket,
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/mouse,
+/mob/living/animal/mouse,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
@@ -16474,7 +16474,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/mouse,
+/mob/living/animal/mouse,
 /turf/open/floor/plasteel/neutral,
 /area/security/prison)
 "aJS" = (
@@ -18452,7 +18452,7 @@
 "aOa" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/mob/living/simple_animal/cockroach,
+/mob/living/animal/cockroach,
 /turf/open/floor/wood{
 	icon_state = "wood-broken5"
 	},
@@ -20870,7 +20870,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/mob/living/simple_animal/sloth/citrus,
+/mob/living/animal/sloth/citrus,
 /turf/open/floor/plasteel/neutral,
 /area/quartermaster/qm)
 "aSi" = (
@@ -24086,7 +24086,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/kitchen)
 "aYr" = (
-/mob/living/simple_animal/hostile/retaliate/goat{
+/mob/living/animal/hostile/retaliate/goat{
 	name = "Pete"
 	},
 /turf/open/floor/plasteel/freezer,
@@ -24634,7 +24634,7 @@
 /turf/open/floor/engine/o2,
 /area/engine/atmos)
 "aZA" = (
-/mob/living/simple_animal/cockroach,
+/mob/living/animal/cockroach,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aZB" = (
@@ -29066,7 +29066,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/hos)
 "biE" = (
-/mob/living/simple_animal/hostile/carp/cayenne{
+/mob/living/animal/hostile/carp/cayenne{
 	color = "";
 	desc = "A failed experiment of Nanotrasen to create weaponised carp technology. This less than intimidating carp now serves as an authority figure's pet.";
 	health = 200;
@@ -45515,7 +45515,7 @@
 /area/tcommsat/computer)
 "bMC" = (
 /obj/structure/bed/dogbed/renault,
-/mob/living/simple_animal/pet/fox/Renault,
+/mob/living/animal/pet/fox/Renault,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -48335,7 +48335,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/mob/living/simple_animal/bot/secbot/pingsky,
+/mob/living/animal/bot/secbot/pingsky,
 /turf/open/floor/plasteel/grimy,
 /area/ai_monitored/turret_protected/aisat_interior)
 "bRr" = (
@@ -48625,7 +48625,7 @@
 	network = list("Engine");
 	pixel_x = -30
 	},
-/mob/living/simple_animal/parrot/Poly,
+/mob/living/animal/parrot/Poly,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -49300,7 +49300,7 @@
 	codes_txt = "patrol;next_patrol=hall12";
 	location = "hall11"
 	},
-/mob/living/simple_animal/bot/secbot/beepsky{
+/mob/living/animal/bot/secbot/beepsky{
 	desc = "It's Officer Beepsky! Powered by a potato and a shot of whiskey.";
 	name = "Officer Beepsky"
 	},
@@ -56344,7 +56344,7 @@
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/mob/living/simple_animal/pet/dog/corgi/Ian,
+/mob/living/animal/pet/dog/corgi/Ian,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "cgw" = (
@@ -57428,7 +57428,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/mob/living/simple_animal/cockroach,
+/mob/living/animal/cockroach,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "ciE" = (
@@ -70467,7 +70467,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
-/mob/living/simple_animal/cockroach,
+/mob/living/animal/cockroach,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "cHQ" = (
@@ -71238,7 +71238,7 @@
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cJG" = (
-/mob/living/simple_animal/slime,
+/mob/living/animal/slime,
 /turf/open/floor/circuit/green,
 /area/science/xenobiology)
 "cJH" = (
@@ -80411,7 +80411,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/cockroach,
+/mob/living/animal/cockroach,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -83137,7 +83137,7 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/mob/living/simple_animal/cockroach,
+/mob/living/animal/cockroach,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
@@ -84184,7 +84184,7 @@
 "dkv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/mob/living/simple_animal/cockroach,
+/mob/living/animal/cockroach,
 /turf/open/floor/wood,
 /area/crew_quarters/abandoned_gambling_den)
 "dkw" = (
@@ -86365,7 +86365,7 @@
 	},
 /area/science/explab)
 "doY" = (
-/mob/living/simple_animal/pet/dog/pug{
+/mob/living/animal/pet/dog/pug{
 	name = "Swanson"
 	},
 /turf/open/floor/plasteel/vault{
@@ -88058,7 +88058,7 @@
 	},
 /area/crew_quarters/abandoned_gambling_den)
 "dse" = (
-/mob/living/simple_animal/cockroach,
+/mob/living/animal/cockroach,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -89250,7 +89250,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/mob/living/simple_animal/pet/cat/Runtime,
+/mob/living/animal/pet/cat/Runtime,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
@@ -93883,7 +93883,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/cockroach,
+/mob/living/animal/cockroach,
 /turf/open/floor/wood,
 /area/crew_quarters/theatre/abandoned)
 "dDu" = (
@@ -93962,7 +93962,7 @@
 /turf/open/floor/wood,
 /area/security/detectives_office/private_investigators_office)
 "dDE" = (
-/mob/living/simple_animal/cockroach,
+/mob/living/animal/cockroach,
 /turf/open/floor/wood,
 /area/security/detectives_office/private_investigators_office)
 "dDG" = (
@@ -98022,7 +98022,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/cockroach,
+/mob/living/animal/cockroach,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "dLH" = (
@@ -99237,7 +99237,7 @@
 	},
 /area/medical/virology)
 "dOl" = (
-/mob/living/simple_animal/cockroach,
+/mob/living/animal/cockroach,
 /turf/open/floor/wood,
 /area/library/abandoned)
 "dOm" = (
@@ -101778,7 +101778,7 @@
 	},
 /obj/item/lazarus_injector,
 /obj/effect/turf_decal/bot,
-/mob/living/simple_animal/bot/medbot{
+/mob/living/animal/bot/medbot{
 	name = "\improper emergency medibot";
 	pixel_x = -3;
 	pixel_y = 2

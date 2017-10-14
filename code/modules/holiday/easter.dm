@@ -30,11 +30,11 @@
 		if(R.name != "blobspawn")
 			if(prob(35))
 				if(isspaceturf(R.loc))
-					new /mob/living/simple_animal/chicken/rabbit/space(R.loc)
+					new /mob/living/animal/chicken/rabbit/space(R.loc)
 				else
-					new /mob/living/simple_animal/chicken/rabbit(R.loc)
+					new /mob/living/animal/chicken/rabbit(R.loc)
 
-/mob/living/simple_animal/chicken/rabbit
+/mob/living/animal/chicken/rabbit
 	name = "\improper rabbit"
 	desc = "The hippiest hop around."
 	icon = 'icons/mob/easter.dmi'
@@ -54,7 +54,7 @@
 	feedMessages = list("It nibbles happily.","It noms happily.")
 	layMessage = list("hides an egg.","scampers around suspiciously.","begins making a huge racket.","begins shuffling.")
 
-/mob/living/simple_animal/chicken/rabbit/space
+/mob/living/animal/chicken/rabbit/space
 	icon_prefix = "s_rabbit"
 	icon_state = "s_rabbit_white"
 	icon_living = "s_rabbit_white"

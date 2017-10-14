@@ -28,7 +28,7 @@
 	user.gib()
 	. = TRUE
 	sleep(5) // So it's not killed in explosion
-	var/mob/living/simple_animal/hostile/headcrab/crab = new(turf)
+	var/mob/living/animal/hostile/headcrab/crab = new(turf)
 	for(var/obj/item/organ/I in organs)
 		I.forceMove(crab)
 	crab.origin = M

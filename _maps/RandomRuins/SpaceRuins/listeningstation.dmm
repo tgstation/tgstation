@@ -62,7 +62,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/syndicate{
+/mob/living/animal/hostile/syndicate{
 	desc = "A weary looking syndicate operative."
 	},
 /turf/open/floor/plasteel,

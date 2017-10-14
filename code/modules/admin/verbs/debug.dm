@@ -376,7 +376,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 			/turf/closed = "CLOSED",
 			/turf = "T",
 			/mob/living/carbon = "CARBON",
-			/mob/living/simple_animal = "SIMPLE",
+			/mob/living/animal = "SIMPLE",
 			/mob/living = "LIVING",
 			/mob = "M"
 		)

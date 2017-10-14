@@ -18,7 +18,7 @@
 	},
 /area/awaymission/wildwest/vault)
 "af" = (
-/mob/living/simple_animal/hostile/faithless,
+/mob/living/animal/hostile/faithless,
 /turf/open/floor/engine/cult,
 /area/awaymission/wildwest/vault)
 "ag" = (
@@ -54,7 +54,7 @@
 /turf/open/floor/engine/cult,
 /area/awaymission/wildwest/vault)
 "am" = (
-/mob/living/simple_animal/hostile/faithless,
+/mob/living/animal/hostile/faithless,
 /turf/open/floor/circuit/off,
 /area/awaymission/wildwest/vault)
 "an" = (
@@ -142,7 +142,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/vault)
 "aE" = (
-/mob/living/simple_animal/hostile/faithless,
+/mob/living/animal/hostile/faithless,
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/vault)
 "aF" = (
@@ -252,7 +252,7 @@
 	},
 /area/awaymission/wildwest/mines)
 "bf" = (
-/mob/living/simple_animal/hostile/syndicate/ranged,
+/mob/living/animal/hostile/syndicate/ranged,
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
 	},
@@ -289,7 +289,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "bn" = (
-/mob/living/simple_animal/hostile/syndicate/ranged,
+/mob/living/animal/hostile/syndicate/ranged,
 /turf/open/floor/plating,
 /area/awaymission/wildwest/refine)
 "bo" = (
@@ -346,7 +346,7 @@
 	},
 /area/awaymission/wildwest/mines)
 "bz" = (
-/mob/living/simple_animal/hostile/syndicate/ranged,
+/mob/living/animal/hostile/syndicate/ranged,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -369,7 +369,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "bE" = (
-/mob/living/simple_animal/hostile/syndicate/ranged,
+/mob/living/animal/hostile/syndicate/ranged,
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "bF" = (
@@ -727,7 +727,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/gov)
 "cG" = (
-/mob/living/simple_animal/hostile/creature,
+/mob/living/animal/hostile/creature,
 /turf/open/floor/plasteel/stage_bleft,
 /area/awaymission/wildwest/gov)
 "cH" = (
@@ -762,7 +762,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/gov)
 "cN" = (
-/mob/living/simple_animal/hostile/creature,
+/mob/living/animal/hostile/creature,
 /turf/open/floor/wood,
 /area/awaymission/wildwest/gov)
 "cO" = (
@@ -772,7 +772,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/gov)
 "cP" = (
-/mob/living/simple_animal/hostile/creature,
+/mob/living/animal/hostile/creature,
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/gov)
 "cQ" = (
@@ -817,7 +817,7 @@
 /area/awaymission/wildwest/gov)
 "cT" = (
 /obj/effect/decal/remains/human,
-/mob/living/simple_animal/hostile/syndicate/ranged/space{
+/mob/living/animal/hostile/syndicate/ranged/space{
 	name = "Syndicate Commander"
 	},
 /turf/open/floor/plating,
@@ -1025,7 +1025,7 @@
 /area/awaymission/wildwest/gov)
 "dB" = (
 /obj/structure/toilet,
-/mob/living/simple_animal/hostile/creature,
+/mob/living/animal/hostile/creature,
 /turf/open/floor/plasteel/white,
 /area/awaymission/wildwest/gov)
 "dC" = (
@@ -1326,7 +1326,7 @@
 	},
 /area/awaymission/wildwest/mines)
 "ew" = (
-/mob/living/simple_animal/hostile/syndicate/ranged,
+/mob/living/animal/hostile/syndicate/ranged,
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)
 "ex" = (
@@ -1799,7 +1799,7 @@
 /turf/open/space,
 /area/space)
 "fO" = (
-/mob/living/simple_animal/hostile/syndicate,
+/mob/living/animal/hostile/syndicate,
 /turf/open/floor/plasteel,
 /area/awaymission/wildwest/refine)
 "fP" = (
@@ -1930,7 +1930,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "gk" = (
-/mob/living/simple_animal/hostile/syndicate,
+/mob/living/animal/hostile/syndicate,
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "gl" = (
@@ -1942,7 +1942,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "gn" = (
-/mob/living/simple_animal/hostile/creature,
+/mob/living/animal/hostile/creature,
 /turf/open/floor/grass,
 /area/awaymission/wildwest/gov)
 "go" = (

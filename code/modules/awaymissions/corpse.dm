@@ -208,12 +208,12 @@
 	qdel(src)
 
 /obj/effect/mob_spawn/slime
-	mob_type = 	/mob/living/simple_animal/slime
+	mob_type = 	/mob/living/animal/slime
 	var/mobcolour = "grey"
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey baby slime" //sets the icon in the map editor
 
-/obj/effect/mob_spawn/slime/equip(mob/living/simple_animal/slime/S)
+/obj/effect/mob_spawn/slime/equip(mob/living/animal/slime/S)
 	S.colour = mobcolour
 
 /obj/effect/mob_spawn/human/facehugger/create() //Creates a squashed facehugger
@@ -224,7 +224,7 @@
 
 /obj/effect/mob_spawn/mouse
 	name = "sleeper"
-	mob_type = 	/mob/living/simple_animal/mouse
+	mob_type = 	/mob/living/animal/mouse
 	death = FALSE
 	roundstart = FALSE
 	icon = 'icons/obj/Cryogenic2.dmi'
@@ -232,7 +232,7 @@
 
 /obj/effect/mob_spawn/cow
 	name = "sleeper"
-	mob_type = 	/mob/living/simple_animal/cow
+	mob_type = 	/mob/living/animal/cow
 	death = FALSE
 	roundstart = FALSE
 	mob_gender = FEMALE

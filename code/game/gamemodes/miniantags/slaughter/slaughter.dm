@@ -1,6 +1,6 @@
 //////////////////The Monster
 
-/mob/living/simple_animal/slaughter
+/mob/living/animal/slaughter
 	name = "slaughter demon"
 	real_name = "slaughter demon"
 	desc = "A large, menacing creature covered in armored black scales."
@@ -46,14 +46,14 @@
 	del_on_death = 1
 	deathmessage = "screams in anger as it collapses into a puddle of viscera!"
 
-/mob/living/simple_animal/slaughter/Initialize()
+/mob/living/animal/slaughter/Initialize()
 	..()
 	var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell = new
 	AddSpell(bloodspell)
 	if(istype(loc, /obj/effect/dummy/slaughter))
 		bloodspell.phased = 1
 
-/mob/living/simple_animal/slaughter/Life()
+/mob/living/animal/slaughter/Life()
 	..()
 	if(boost<world.time)
 		speed = 1
@@ -67,7 +67,7 @@
 	gender = NEUTER
 	random_icon_states = list("innards")
 
-/mob/living/simple_animal/slaughter/phasein()
+/mob/living/animal/slaughter/phasein()
 	. = ..()
 	speed = 0
 	boost = world.time + 60
@@ -113,7 +113,7 @@
 /obj/item/organ/heart/demon/Stop()
 	return 0 // Always beating.
 
-/mob/living/simple_animal/slaughter/laughter
+/mob/living/animal/slaughter/laughter
 	// The laughter demon! It's everyone's best friend! It just wants to hug
 	// them so much, it wants to hug everyone at once!
 	name = "laughter demon"
@@ -132,7 +132,7 @@
 	icon_living = "bowmon"
 	deathmessage = "fades out, as all of its friends are released from its \
 		prison of hugs."
-	loot = list(/mob/living/simple_animal/pet/cat/kitten{name = "Laughter"})
+	loot = list(/mob/living/animal/pet/cat/kitten{name = "Laughter"})
 
 	// Keep the people we hug!
 	var/list/consumed_mobs = list()
@@ -151,11 +151,11 @@
 	released and fully healed, because in the end it's just a jape, \
 	sibling!</B>"
 
-/mob/living/simple_animal/slaughter/laughter/Destroy()
+/mob/living/animal/slaughter/laughter/Destroy()
 	release_friends()
 	. = ..()
 
-/mob/living/simple_animal/slaughter/laughter/ex_act(severity)
+/mob/living/animal/slaughter/laughter/ex_act(severity)
 	switch(severity)
 		if(1)
 			death()
@@ -164,7 +164,7 @@
 		if(3)
 			adjustBruteLoss(30)
 
-/mob/living/simple_animal/slaughter/laughter/proc/release_friends()
+/mob/living/animal/slaughter/laughter/proc/release_friends()
 	if(!consumed_mobs)
 		return
 
@@ -180,7 +180,7 @@
 			playsound(T, feast_sound, 50, 1, -1)
 			to_chat(M, "<span class='clown'>You leave [src]'s warm embrace,	and feel ready to take on the world.</span>")
 
-/mob/living/simple_animal/slaughter/laughter/bloodcrawl_swallow(var/mob/living/victim)
+/mob/living/animal/slaughter/laughter/bloodcrawl_swallow(var/mob/living/victim)
 	if(consumed_mobs)
 		// Keep their corpse so rescue is possible
 		consumed_mobs += victim

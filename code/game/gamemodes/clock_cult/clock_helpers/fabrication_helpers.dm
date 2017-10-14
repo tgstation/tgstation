@@ -274,7 +274,7 @@
 	var/static/list/damage_heal_order = list(BRUTE, BURN, TOX, OXY)
 	heal_ordered_damage(amount, damage_heal_order)
 
-/mob/living/simple_animal/fabricator_heal_tick(amount)
+/mob/living/animal/fabricator_heal_tick(amount)
 	adjustHealth(-amount)
 
 //Hitting a ratvar'd silicon will also try to repair it.
@@ -287,7 +287,7 @@
 		"<span class='alloy'>You finish repairin[src == user ? "g yourself. You are":"g [src]. [p_they(TRUE)] [p_are()]"] now at <b>[abs(HEALTH_THRESHOLD_DEAD - health)]/[abs(HEALTH_THRESHOLD_DEAD - maxHealth)]</b> health.</span>")
 
 //Same with clockwork mobs.
-/mob/living/simple_animal/hostile/clockwork/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
+/mob/living/animal/hostile/clockwork/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
 	. = TRUE
 	if(health == maxHealth) //if we're at maximum health, replace the turf under us
 		return FALSE
@@ -296,7 +296,7 @@
 		"<span class='alloy'>You finish repairin[src == user ? "g yourself. You are":"g [src]. [p_they(TRUE)] [p_are()]"] now at <b>[health]/[maxHealth]</b> health.</span>")
 
 //Cogscarabs get special interaction because they're drones and have innate self-heals/revives.
-/mob/living/simple_animal/drone/cogscarab/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
+/mob/living/animal/drone/cogscarab/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
 	. = TRUE
 	if(stat == DEAD)
 		try_reactivate(user) //if we're dead, try to repair us

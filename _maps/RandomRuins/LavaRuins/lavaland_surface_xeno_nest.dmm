@@ -43,7 +43,7 @@
 /area/ruin/unpowered/xenonest)
 "j" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/alien,
+/mob/living/animal/hostile/alien,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "k" = (
@@ -94,7 +94,7 @@
 /area/ruin/unpowered/xenonest)
 "t" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/alien/sentinel,
+/mob/living/animal/hostile/alien/sentinel,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "u" = (
@@ -157,14 +157,14 @@
 /area/ruin/unpowered/xenonest)
 "E" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/alien/drone{
+/mob/living/animal/hostile/alien/drone{
 	plants_off = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "F" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/alien/queen/large{
+/mob/living/animal/hostile/alien/queen/large{
 	desc = "A gigantic alien who is in charge of the hive and all of its loyal servants.";
 	name = "alien queen";
 	pixel_x = -16;
@@ -174,7 +174,7 @@
 /area/ruin/unpowered/xenonest)
 "G" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/alien/drone{
+/mob/living/animal/hostile/alien/drone{
 	plants_off = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -196,17 +196,17 @@
 /area/ruin/unpowered/xenonest)
 "J" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/alien/sentinel,
+/mob/living/animal/hostile/alien/sentinel,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "K" = (
 /obj/structure/alien/weeds/node,
-/mob/living/simple_animal/hostile/alien,
+/mob/living/animal/hostile/alien,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "L" = (
 /obj/structure/alien/weeds/node,
-/mob/living/simple_animal/hostile/alien/drone{
+/mob/living/animal/hostile/alien/drone{
 	plants_off = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -239,7 +239,7 @@
 "Q" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood,
-/mob/living/simple_animal/hostile/alien/drone{
+/mob/living/animal/hostile/alien/drone{
 	plants_off = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,

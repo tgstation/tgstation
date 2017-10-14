@@ -62,7 +62,7 @@
 				var/mob/living/L = target
 				if(!L.null_rod_check())
 					if(isrevenant(L))
-						var/mob/living/simple_animal/revenant/R = L
+						var/mob/living/animal/revenant/R = L
 						if(R.revealed)
 							R.unreveal_time += 2
 						else
@@ -115,13 +115,13 @@
 		if(L.stat || L.restrained() || L.buckled || L.lying)
 			continue
 		if(ishostile(L))
-			var/mob/living/simple_animal/hostile/H = L
+			var/mob/living/animal/hostile/H = L
 			if(ismegafauna(H) || (!H.mind && H.AIStatus == AI_OFF))
 				continue
 			if(("ratvar" in H.faction) || ("neutral" in H.faction))
 				continue
 		else if(isrevenant(L))
-			var/mob/living/simple_animal/revenant/R = L
+			var/mob/living/animal/revenant/R = L
 			if(R.stasis) //Don't target any revenants that are respawning
 				continue
 		else if(!L.mind)

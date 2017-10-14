@@ -41,7 +41,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/powered)
 "ak" = (
-/mob/living/simple_animal/hostile/pirate/ranged{
+/mob/living/animal/hostile/pirate/ranged{
 	environment_smash = 0
 	},
 /turf/open/floor/plasteel,
@@ -91,7 +91,7 @@
 /area/ruin/powered)
 "aq" = (
 /obj/structure/table,
-/mob/living/simple_animal/parrot{
+/mob/living/animal/parrot{
 	faction = list("pirate");
 	name = "Pegwing"
 	},
@@ -183,14 +183,14 @@
 /turf/template_noop,
 /area/template_noop)
 "aF" = (
-/mob/living/simple_animal/hostile/pirate,
+/mob/living/animal/hostile/pirate,
 /turf/open/floor/plasteel,
 /area/ruin/powered)
 "aG" = (
 /obj/structure/chair{
 	dir = 1
 	},
-/mob/living/simple_animal/hostile/pirate,
+/mob/living/animal/hostile/pirate,
 /turf/open/floor/plasteel,
 /area/ruin/powered)
 "aH" = (
@@ -340,7 +340,7 @@
 /turf/open/floor/wood/airless,
 /area/ruin/unpowered/no_grav)
 "bi" = (
-/mob/living/simple_animal/hostile/pirate/space{
+/mob/living/animal/hostile/pirate/space{
 	environment_smash = 0
 	},
 /turf/open/floor/wood/airless,
@@ -477,7 +477,7 @@
 /turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/unpowered)
 "bF" = (
-/mob/living/simple_animal/hostile/pirate/space/ranged{
+/mob/living/animal/hostile/pirate/space/ranged{
 	environment_smash = 0
 	},
 /turf/open/floor/mineral/titanium/yellow/airless,
@@ -486,7 +486,7 @@
 /turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/unpowered)
 "bH" = (
-/mob/living/simple_animal/hostile/pirate/space{
+/mob/living/animal/hostile/pirate/space{
 	environment_smash = 0
 	},
 /turf/open/floor/mineral/titanium/blue/airless,
@@ -676,7 +676,7 @@
 /turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/unpowered)
 "cl" = (
-/mob/living/simple_animal/hostile/pirate/space{
+/mob/living/animal/hostile/pirate/space{
 	environment_smash = 0
 	},
 /turf/open/floor/mineral/titanium/yellow/airless,
@@ -727,7 +727,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/mob/living/simple_animal/hostile/syndicate{
+/mob/living/animal/hostile/syndicate{
 	environment_smash = 0;
 	name = "Syndicate Salvage Pilot"
 	},
@@ -763,7 +763,7 @@
 /area/ruin/powered)
 "cv" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/syndicate/ranged/space{
+/mob/living/animal/hostile/syndicate/ranged/space{
 	environment_smash = 0;
 	name = "Syndicate Salvage Worker"
 	},
@@ -820,7 +820,7 @@
 /turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/unpowered)
 "cD" = (
-/mob/living/simple_animal/hostile/pirate/space/ranged{
+/mob/living/animal/hostile/pirate/space/ranged{
 	environment_smash = 0
 	},
 /turf/open/floor/mineral/titanium/blue/airless,
@@ -837,7 +837,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "cG" = (
-/mob/living/simple_animal/hostile/syndicate/melee/space{
+/mob/living/animal/hostile/syndicate/melee/space{
 	environment_smash = 0;
 	name = "Syndicate Salvage Worker"
 	},
@@ -933,7 +933,7 @@
 /area/ruin/powered)
 "cU" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/syndicate/melee/space/stormtrooper{
+/mob/living/animal/hostile/syndicate/melee/space/stormtrooper{
 	environment_smash = 0;
 	name = "Syndicate Salvage Leader"
 	},
@@ -966,7 +966,7 @@
 /turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/unpowered)
 "cZ" = (
-/mob/living/simple_animal/hostile/syndicate/ranged/space/stormtrooper{
+/mob/living/animal/hostile/syndicate/ranged/space/stormtrooper{
 	environment_smash = 0;
 	name = "Syndicate Salvage Leader"
 	},
@@ -975,7 +975,7 @@
 "da" = (
 /obj/item/stack/rods,
 /obj/item/shard,
-/mob/living/simple_animal/hostile/syndicate/melee/space{
+/mob/living/animal/hostile/syndicate/melee/space{
 	environment_smash = 0;
 	name = "Syndicate Salvage Worker"
 	},
@@ -1101,7 +1101,7 @@
 /turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/unpowered)
 "dq" = (
-/mob/living/simple_animal/hostile/syndicate/ranged/space{
+/mob/living/animal/hostile/syndicate/ranged/space{
 	environment_smash = 0;
 	name = "Syndicate Salvage Worker"
 	},
@@ -1133,7 +1133,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/syndicate{
+/mob/living/animal/hostile/syndicate{
 	environment_smash = 0;
 	name = "Syndicate Salvage Pilot"
 	},
@@ -1163,14 +1163,14 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/powered)
 "dy" = (
-/mob/living/simple_animal/hostile/syndicate/ranged/space/stormtrooper{
+/mob/living/animal/hostile/syndicate/ranged/space/stormtrooper{
 	environment_smash = 0;
 	name = "Syndicate Salvage Leader"
 	},
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "dz" = (
-/mob/living/simple_animal/hostile/syndicate/ranged/space{
+/mob/living/animal/hostile/syndicate/ranged/space{
 	environment_smash = 0;
 	name = "Syndicate Salvage Worker"
 	},

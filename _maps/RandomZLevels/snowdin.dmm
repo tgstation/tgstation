@@ -361,7 +361,7 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin)
 "aX" = (
-/mob/living/simple_animal/hostile/skeleton/eskimo,
+/mob/living/animal/hostile/skeleton/eskimo,
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin)
 "aY" = (
@@ -1023,7 +1023,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/bear/snow,
+/mob/living/animal/hostile/bear/snow,
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -1264,7 +1264,7 @@
 	},
 /area/awaymission/snowdin/post)
 "do" = (
-/mob/living/simple_animal/hostile/skeleton/ice,
+/mob/living/animal/hostile/skeleton/ice,
 /turf/open/floor/plating/asteroid/snow{
 	temperature = 140
 	},
@@ -1381,7 +1381,7 @@
 	},
 /area/awaymission/snowdin/post)
 "dF" = (
-/mob/living/simple_animal/hostile/skeleton/eskimo,
+/mob/living/animal/hostile/skeleton/eskimo,
 /turf/open/floor/plating/asteroid/snow{
 	temperature = 140
 	},
@@ -1510,7 +1510,7 @@
 	},
 /area/awaymission/snowdin/post)
 "dU" = (
-/mob/living/simple_animal/hostile/skeleton/eskimo,
+/mob/living/animal/hostile/skeleton/eskimo,
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -1525,7 +1525,7 @@
 	},
 /area/awaymission/snowdin/post)
 "dW" = (
-/mob/living/simple_animal/hostile/bear/snow,
+/mob/living/animal/hostile/bear/snow,
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin)
 "dX" = (
@@ -1622,13 +1622,13 @@
 /turf/open/floor/plating/snowed/colder,
 /area/awaymission/snowdin/dungeon1)
 "ei" = (
-/mob/living/simple_animal/hostile/poison/giant_spider/hunter/ice,
+/mob/living/animal/hostile/poison/giant_spider/hunter/ice,
 /turf/open/floor/plating/asteroid/snow{
 	temperature = 140
 	},
 /area/awaymission/snowdin/dungeon1)
 "ej" = (
-/mob/living/simple_animal/hostile/poison/giant_spider/nurse/ice,
+/mob/living/animal/hostile/poison/giant_spider/nurse/ice,
 /turf/open/floor/plating/asteroid/snow{
 	temperature = 140
 	},
@@ -1649,12 +1649,12 @@
 /area/awaymission/snowdin/dungeon1)
 "em" = (
 /obj/structure/spider/stickyweb,
-/mob/living/simple_animal/hostile/poison/giant_spider/hunter/ice,
+/mob/living/animal/hostile/poison/giant_spider/hunter/ice,
 /turf/closed/wall/mineral/snow,
 /area/awaymission/snowdin/dungeon1)
 "en" = (
 /obj/structure/spider/stickyweb,
-/mob/living/simple_animal/hostile/poison/giant_spider/nurse/ice,
+/mob/living/animal/hostile/poison/giant_spider/nurse/ice,
 /turf/open/floor/plating/asteroid/snow{
 	temperature = 140
 	},
@@ -1700,13 +1700,13 @@
 /area/awaymission/snowdin/dungeon1)
 "ew" = (
 /obj/structure/spider/stickyweb,
-/mob/living/simple_animal/hostile/poison/giant_spider/hunter/ice,
+/mob/living/animal/hostile/poison/giant_spider/hunter/ice,
 /turf/open/floor/plating/asteroid/snow{
 	temperature = 140
 	},
 /area/awaymission/snowdin/dungeon1)
 "ex" = (
-/mob/living/simple_animal/hostile/skeleton,
+/mob/living/animal/hostile/skeleton,
 /turf/open/floor/plating/asteroid/snow{
 	temperature = 140
 	},
@@ -1783,7 +1783,7 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin)
 "eM" = (
-/mob/living/simple_animal/hostile/skeleton/eskimo,
+/mob/living/animal/hostile/skeleton/eskimo,
 /turf/open/floor/plasteel/darkbrown{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	temperature = 180
@@ -1835,7 +1835,7 @@
 /turf/open/floor/plating/ice,
 /area/awaymission/snowdin/cave)
 "eU" = (
-/mob/living/simple_animal/hostile/bear/snow,
+/mob/living/animal/hostile/bear/snow,
 /turf/open/floor/plating/ice/colder,
 /area/awaymission/snowdin/dungeon1)
 "eV" = (
@@ -1884,7 +1884,7 @@
 /turf/open/floor/plating/snowed/colder,
 /area/awaymission/snowdin/dungeon1)
 "fc" = (
-/mob/living/simple_animal/hostile/skeleton/eskimo,
+/mob/living/animal/hostile/skeleton/eskimo,
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "fd" = (
@@ -2015,7 +2015,7 @@
 /turf/open/floor/plating/snowed/colder,
 /area/awaymission/snowdin/post)
 "fx" = (
-/mob/living/simple_animal/hostile/bear/snow,
+/mob/living/animal/hostile/bear/snow,
 /turf/open/floor/plating/asteroid/snow{
 	temperature = 140
 	},
@@ -2160,7 +2160,7 @@
 	},
 /area/awaymission/snowdin/post)
 "fT" = (
-/mob/living/simple_animal/hostile/bear/snow,
+/mob/living/animal/hostile/bear/snow,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	wet = 0
@@ -2255,7 +2255,7 @@
 	},
 /area/awaymission/snowdin/post)
 "gf" = (
-/mob/living/simple_animal/hostile/skeleton/ice,
+/mob/living/animal/hostile/skeleton/ice,
 /turf/open/floor/plating/ice,
 /area/awaymission/snowdin/cave)
 "gg" = (
@@ -2263,7 +2263,7 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin)
 "gh" = (
-/mob/living/simple_animal/hostile/skeleton/ice,
+/mob/living/animal/hostile/skeleton/ice,
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "gi" = (
@@ -2746,7 +2746,7 @@
 	},
 /area/awaymission/snowdin/post)
 "ht" = (
-/mob/living/simple_animal/hostile/skeleton/eskimo,
+/mob/living/animal/hostile/skeleton/eskimo,
 /turf/open/floor/plating{
 	temperature = 220
 	},
@@ -2788,7 +2788,7 @@
 /turf/open/floor/plating/ice,
 /area/awaymission/snowdin/cave)
 "hB" = (
-/mob/living/simple_animal/hostile/bear/snow,
+/mob/living/animal/hostile/bear/snow,
 /turf/open/floor/plating/ice,
 /area/awaymission/snowdin/cave)
 "hC" = (
@@ -2800,7 +2800,7 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "hE" = (
-/mob/living/simple_animal/hostile/bear/snow,
+/mob/living/animal/hostile/bear/snow,
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "hF" = (
@@ -2950,7 +2950,7 @@
 	},
 /area/awaymission/snowdin/sekret)
 "id" = (
-/mob/living/simple_animal/hostile/skeleton/templar,
+/mob/living/animal/hostile/skeleton/templar,
 /turf/open/floor/plating/asteroid/snow{
 	temperature = 140
 	},
@@ -4103,7 +4103,7 @@
 /area/awaymission/snowdin/sekret)
 "la" = (
 /obj/structure/bed/dogbed,
-/mob/living/simple_animal/pet/dog/corgi/puppy{
+/mob/living/animal/pet/dog/corgi/puppy{
 	name = "Mr.Kempsy"
 	},
 /turf/open/floor/wood{
@@ -4660,7 +4660,7 @@
 	},
 /area/awaymission/snowdin/sekret)
 "mu" = (
-/mob/living/simple_animal/bot/medbot{
+/mob/living/animal/bot/medbot{
 	name = "Accidents Happen";
 	faction = list("syndicate")
 	},
@@ -4938,7 +4938,7 @@
 	},
 /area/awaymission/snowdin)
 "nb" = (
-/mob/living/simple_animal/bot/cleanbot{
+/mob/living/animal/bot/cleanbot{
 	name = "\improper Cleanksy"
 	},
 /turf/open/floor/plasteel/darkbrown{
@@ -5010,7 +5010,7 @@
 	},
 /area/awaymission/snowdin/sekret)
 "nk" = (
-/mob/living/simple_animal/hostile/syndicate{
+/mob/living/animal/hostile/syndicate{
 	health = 50;
 	maxHealth = 50;
 	name = "Weakened Syndicate Operative";

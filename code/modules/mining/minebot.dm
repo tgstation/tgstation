@@ -2,7 +2,7 @@
 #define MINEDRONE_COLLECT 1
 #define MINEDRONE_ATTACK 2
 
-/mob/living/simple_animal/hostile/mining_drone
+/mob/living/animal/hostile/mining_drone
 	name = "nanotrasen minebot"
 	desc = "The instructions printed on the side read: This is a small robot used to support miners, can be set to search and collect loose ore, or to help fend off wildlife. A mining scanner can instruct it to drop loose ore. Field repairs can be done with a welder."
 	icon = 'icons/mob/aibots.dmi'
@@ -47,7 +47,7 @@
 	var/datum/action/innate/minedrone/toggle_mode/toggle_mode_action
 	var/datum/action/innate/minedrone/dump_ore/dump_ore_action
 
-/mob/living/simple_animal/hostile/mining_drone/Initialize()
+/mob/living/animal/hostile/mining_drone/Initialize()
 	. = ..()
 	toggle_light_action = new()
 	toggle_light_action.Grant(src)
@@ -58,11 +58,11 @@
 
 	SetCollectBehavior()
 
-/mob/living/simple_animal/hostile/mining_drone/sentience_act()
+/mob/living/animal/hostile/mining_drone/sentience_act()
 	AIStatus = AI_OFF
 	check_friendly_fire = 0
 
-/mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I, mob/user, params)
+/mob/living/animal/hostile/mining_drone/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weldingtool))
 		var/obj/item/weldingtool/W = I
 		if(W.welding && !stat)
@@ -82,7 +82,7 @@
 		return
 	..()
 
-/mob/living/simple_animal/hostile/mining_drone/death()
+/mob/living/animal/hostile/mining_drone/death()
 	..()
 	visible_message("<span class='danger'>[src] is destroyed!</span>")
 	new /obj/effect/decal/cleanable/robot_debris(src.loc)
@@ -90,7 +90,7 @@
 	qdel(src)
 	return
 
-/mob/living/simple_animal/hostile/mining_drone/attack_hand(mob/living/carbon/human/M)
+/mob/living/animal/hostile/mining_drone/attack_hand(mob/living/carbon/human/M)
 	if(M.a_intent == INTENT_HELP)
 		toggle_mode()
 		switch(mode)
@@ -101,7 +101,7 @@
 		return
 	..()
 
-/mob/living/simple_animal/hostile/mining_drone/proc/SetCollectBehavior()
+/mob/living/animal/hostile/mining_drone/proc/SetCollectBehavior()
 	mode = MINEDRONE_COLLECT
 	idle_vision_range = 9
 	search_objects = 2
@@ -112,7 +112,7 @@
 	icon_state = "mining_drone"
 	to_chat(src, "<span class='info'>You are set to collect mode. You can now collect loose ore.</span>")
 
-/mob/living/simple_animal/hostile/mining_drone/proc/SetOffenseBehavior()
+/mob/living/animal/hostile/mining_drone/proc/SetOffenseBehavior()
 	mode = MINEDRONE_ATTACK
 	idle_vision_range = 7
 	search_objects = 0
@@ -123,13 +123,13 @@
 	icon_state = "mining_drone_offense"
 	to_chat(src, "<span class='info'>You are set to attack mode. You can now attack from range.</span>")
 
-/mob/living/simple_animal/hostile/mining_drone/AttackingTarget()
+/mob/living/animal/hostile/mining_drone/AttackingTarget()
 	if(istype(target, /obj/item/ore) && mode ==  MINEDRONE_COLLECT)
 		CollectOre()
 		return
 	return ..()
 
-/mob/living/simple_animal/hostile/mining_drone/proc/CollectOre()
+/mob/living/animal/hostile/mining_drone/proc/CollectOre()
 	var/obj/item/ore/O
 	for(O in src.loc)
 		O.loc = src
@@ -139,7 +139,7 @@
 			O.loc = src
 	return
 
-/mob/living/simple_animal/hostile/mining_drone/proc/DropOre(message = 1)
+/mob/living/animal/hostile/mining_drone/proc/DropOre(message = 1)
 	if(!contents.len)
 		if(message)
 			to_chat(src, "<span class='notice'>You attempt to dump your stored ore, but you have none.</span>")
@@ -151,12 +151,12 @@
 		O.loc = src.loc
 	return
 
-/mob/living/simple_animal/hostile/mining_drone/adjustHealth(amount)
+/mob/living/animal/hostile/mining_drone/adjustHealth(amount)
 	if(mode != MINEDRONE_ATTACK && amount > 0)
 		SetOffenseBehavior()
 	. = ..()
 
-/mob/living/simple_animal/hostile/mining_drone/proc/toggle_mode()
+/mob/living/animal/hostile/mining_drone/proc/toggle_mode()
 	switch(mode)
 		if(MINEDRONE_COLLECT)
 			SetOffenseBehavior()
@@ -178,7 +178,7 @@
 	button_icon_state = "mech_lights_off"
 
 /datum/action/innate/minedrone/toggle_light/Activate()
-	var/mob/living/simple_animal/hostile/mining_drone/user = owner
+	var/mob/living/animal/hostile/mining_drone/user = owner
 
 	if(user.light_on)
 		user.set_light(0)
@@ -192,7 +192,7 @@
 	button_icon_state = "mech_cycle_equip_off"
 
 /datum/action/innate/minedrone/toggle_mode/Activate()
-	var/mob/living/simple_animal/hostile/mining_drone/user = owner
+	var/mob/living/animal/hostile/mining_drone/user = owner
 	user.toggle_mode()
 
 /datum/action/innate/minedrone/dump_ore
@@ -200,7 +200,7 @@
 	button_icon_state = "mech_eject"
 
 /datum/action/innate/minedrone/dump_ore/Activate()
-	var/mob/living/simple_animal/hostile/mining_drone/user = owner
+	var/mob/living/animal/hostile/mining_drone/user = owner
 	user.DropOre()
 
 
@@ -214,12 +214,12 @@
 	icon_state = "door_electronics"
 	icon = 'icons/obj/module.dmi'
 
-/obj/item/device/mine_bot_ugprade/afterattack(mob/living/simple_animal/hostile/mining_drone/M, mob/user, proximity)
+/obj/item/device/mine_bot_ugprade/afterattack(mob/living/animal/hostile/mining_drone/M, mob/user, proximity)
 	if(!istype(M) || !proximity)
 		return
 	upgrade_bot(M, user)
 
-/obj/item/device/mine_bot_ugprade/proc/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
+/obj/item/device/mine_bot_ugprade/proc/upgrade_bot(mob/living/animal/hostile/mining_drone/M, mob/user)
 	if(M.melee_damage_upper != initial(M.melee_damage_upper))
 		to_chat(user, "[src] already has a combat upgrade installed!")
 		return
@@ -232,7 +232,7 @@
 /obj/item/device/mine_bot_ugprade/health
 	name = "minebot chassis upgrade"
 
-/obj/item/device/mine_bot_ugprade/health/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
+/obj/item/device/mine_bot_ugprade/health/upgrade_bot(mob/living/animal/hostile/mining_drone/M, mob/user)
 	if(M.maxHealth != initial(M.maxHealth))
 		to_chat(user, "[src] already has a reinforced chassis!")
 		return
@@ -245,7 +245,7 @@
 /obj/item/device/mine_bot_ugprade/cooldown
 	name = "minebot cooldown upgrade"
 
-/obj/item/device/mine_bot_ugprade/cooldown/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
+/obj/item/device/mine_bot_ugprade/cooldown/upgrade_bot(mob/living/animal/hostile/mining_drone/M, mob/user)
 	name = "minebot cooldown upgrade"
 	if(M.ranged_cooldown_time != initial(M.ranged_cooldown_time))
 		to_chat(user, "[src] already has a decreased weapon cooldown!")

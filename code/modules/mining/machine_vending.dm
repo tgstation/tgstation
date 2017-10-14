@@ -51,7 +51,7 @@
 		new /datum/data/mining_equipment("KA Cooldown Decrease", /obj/item/borg/upgrade/modkit/cooldown,									1000),
 		new /datum/data/mining_equipment("KA AoE Damage",		/obj/item/borg/upgrade/modkit/aoe/mobs,									2000),
 		new /datum/data/mining_equipment("Point Transfer Card",	/obj/item/card/mining_point_card,								500),
-		new /datum/data/mining_equipment("Mining Drone",		/mob/living/simple_animal/hostile/mining_drone,							800),
+		new /datum/data/mining_equipment("Mining Drone",		/mob/living/animal/hostile/mining_drone,							800),
 		new /datum/data/mining_equipment("Drone Melee Upgrade",	/obj/item/device/mine_bot_ugprade,										400),
 		new /datum/data/mining_equipment("Drone Health Upgrade", /obj/item/device/mine_bot_ugprade/health,								400),
 		new /datum/data/mining_equipment("Drone Ranged Upgrade", /obj/item/device/mine_bot_ugprade/cooldown,								600),
@@ -180,7 +180,7 @@
 			new /obj/item/resonator(src.loc)
 			new /obj/item/device/t_scanner/adv_mining_scanner(src.loc)
 		if("Mining Drone")
-			new /mob/living/simple_animal/hostile/mining_drone(src.loc)
+			new /mob/living/animal/hostile/mining_drone(src.loc)
 			new /obj/item/weldingtool/hugetank(src.loc)
 			new /obj/item/clothing/glasses/welding(src.loc)
 		if("Extraction and Rescue Kit")

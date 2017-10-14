@@ -6,9 +6,9 @@
 	earliest_start = 18000
 
 /datum/round_event/portal_storm/syndicate_shocktroop
-	boss_types = list(/mob/living/simple_animal/hostile/syndicate/melee/space/stormtrooper = 2)
-	hostile_types = list(/mob/living/simple_animal/hostile/syndicate/melee/space = 8,\
-						/mob/living/simple_animal/hostile/syndicate/ranged/space = 2)
+	boss_types = list(/mob/living/animal/hostile/syndicate/melee/space/stormtrooper = 2)
+	hostile_types = list(/mob/living/animal/hostile/syndicate/melee/space = 8,\
+						/mob/living/animal/hostile/syndicate/ranged/space = 2)
 
 /datum/round_event_control/portal_storm_narsie
 	name = "Portal Storm: Constructs"
@@ -17,9 +17,9 @@
 	max_occurrences = 0
 
 /datum/round_event/portal_storm/portal_storm_narsie
-	boss_types = list(/mob/living/simple_animal/hostile/construct/builder = 6)
-	hostile_types = list(/mob/living/simple_animal/hostile/construct/armored/hostile = 8,\
-						/mob/living/simple_animal/hostile/construct/wraith/hostile = 6)
+	boss_types = list(/mob/living/animal/hostile/construct/builder = 6)
+	hostile_types = list(/mob/living/animal/hostile/construct/armored/hostile = 8,\
+						/mob/living/animal/hostile/construct/wraith/hostile = 6)
 
 /datum/round_event/portal_storm
 	startWhen = 7

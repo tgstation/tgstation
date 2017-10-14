@@ -18,7 +18,7 @@
 /turf/template_noop,
 /area/ruin/unpowered)
 "f" = (
-/mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon,
+/mob/living/animal/hostile/megafauna/swarmer_swarm_beacon,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/unpowered)
 "g" = (

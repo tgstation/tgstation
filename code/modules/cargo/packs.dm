@@ -66,10 +66,10 @@
 /datum/supply_pack/emergency/equipment
 	name = "Emergency Equipment"
 	cost = 3500
-	contains = list(/mob/living/simple_animal/bot/floorbot,
-					/mob/living/simple_animal/bot/floorbot,
-					/mob/living/simple_animal/bot/medbot,
-					/mob/living/simple_animal/bot/medbot,
+	contains = list(/mob/living/animal/bot/floorbot,
+					/mob/living/animal/bot/floorbot,
+					/mob/living/animal/bot/medbot,
+					/mob/living/animal/bot/medbot,
 					/obj/item/tank/internals/air,
 					/obj/item/tank/internals/air,
 					/obj/item/tank/internals/air,
@@ -1051,39 +1051,39 @@
 /datum/supply_pack/organic/critter/cow
 	name = "Cow Crate"
 	cost = 3000
-	contains = list(/mob/living/simple_animal/cow)
+	contains = list(/mob/living/animal/cow)
 	crate_name = "cow crate"
 
 /datum/supply_pack/organic/critter/goat
 	name = "Goat Crate"
 	cost = 2500
-	contains = list(/mob/living/simple_animal/hostile/retaliate/goat)
+	contains = list(/mob/living/animal/hostile/retaliate/goat)
 	crate_name = "goat crate"
 
 /datum/supply_pack/organic/critter/chick
 	name = "Chicken Crate"
 	cost = 2000
-	contains = list( /mob/living/simple_animal/chick)
+	contains = list( /mob/living/animal/chick)
 	crate_name = "chicken crate"
 
 /datum/supply_pack/organic/critter/corgi
 	name = "Corgi Crate"
 	cost = 5000
-	contains = list(/mob/living/simple_animal/pet/dog/corgi,
+	contains = list(/mob/living/animal/pet/dog/corgi,
 					/obj/item/clothing/neck/petcollar)
 	crate_name = "corgi crate"
 
 /datum/supply_pack/organic/critter/corgi/generate()
 	. = ..()
 	if(prob(50))
-		var/mob/living/simple_animal/pet/dog/corgi/D = locate() in .
+		var/mob/living/animal/pet/dog/corgi/D = locate() in .
 		qdel(D)
-		new /mob/living/simple_animal/pet/dog/corgi/Lisa(.)
+		new /mob/living/animal/pet/dog/corgi/Lisa(.)
 
 /datum/supply_pack/organic/critter/cat
 	name = "Cat Crate"
 	cost = 5000 //Cats are worth as much as corgis.
-	contains = list(/mob/living/simple_animal/pet/cat,
+	contains = list(/mob/living/animal/pet/cat,
 					/obj/item/clothing/neck/petcollar,
                     /obj/item/toy/cattoy)
 	crate_name = "cat crate"
@@ -1091,21 +1091,21 @@
 /datum/supply_pack/organic/critter/cat/generate()
 	. = ..()
 	if(prob(50))
-		var/mob/living/simple_animal/pet/cat/C = locate() in .
+		var/mob/living/animal/pet/cat/C = locate() in .
 		qdel(C)
-		new /mob/living/simple_animal/pet/cat/Proc(.)
+		new /mob/living/animal/pet/cat/Proc(.)
 
 /datum/supply_pack/organic/critter/pug
 	name = "Pug Crate"
 	cost = 5000
-	contains = list(/mob/living/simple_animal/pet/dog/pug,
+	contains = list(/mob/living/animal/pet/dog/pug,
 					/obj/item/clothing/neck/petcollar)
 	crate_name = "pug crate"
 
 /datum/supply_pack/organic/critter/fox
 	name = "Fox Crate"
 	cost = 5000
-	contains = list(/mob/living/simple_animal/pet/fox,
+	contains = list(/mob/living/animal/pet/fox,
 					/obj/item/clothing/neck/petcollar)
 	crate_name = "fox crate"
 
@@ -1113,13 +1113,13 @@
 	name = "Butterflies Crate"
 	contraband = TRUE
 	cost = 5000
-	contains = list(/mob/living/simple_animal/butterfly)
+	contains = list(/mob/living/animal/butterfly)
 	crate_name = "entomology samples crate"
 
 /datum/supply_pack/organic/critter/butterfly/generate()
 	. = ..()
 	for(var/i in 1 to 49)
-		new /mob/living/simple_animal/butterfly(.)
+		new /mob/living/animal/butterfly(.)
 
 /datum/supply_pack/organic/hydroponics
 	name = "Hydroponics Crate"
@@ -1326,7 +1326,7 @@
 /datum/supply_pack/misc/mule
 	name = "MULEbot Crate"
 	cost = 2000
-	contains = list(/mob/living/simple_animal/bot/mulebot)
+	contains = list(/mob/living/animal/bot/mulebot)
 	crate_name = "\improper MULEbot Crate"
 	crate_type = /obj/structure/closet/crate/large
 

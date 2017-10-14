@@ -1,7 +1,7 @@
 /datum/surgery/core_removal
 	name = "core removal"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/extract_core)
-	species = list(/mob/living/simple_animal/slime)
+	species = list(/mob/living/animal/slime)
 	possible_locs = list("r_arm","l_arm","r_leg","l_leg","chest","head")
 
 /datum/surgery/core_removal/can_start(mob/user, mob/living/target)
@@ -19,7 +19,7 @@
 	user.visible_message("[user] begins to extract a core from [target].", "<span class='notice'>You begin to extract a core from [target]...</span>")
 
 /datum/surgery_step/extract_core/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	var/mob/living/simple_animal/slime/slime = target
+	var/mob/living/animal/slime/slime = target
 	if(slime.cores > 0)
 		slime.cores--
 		user.visible_message("[user] successfully extracts a core from [target]!", "<span class='notice'>You successfully extract a core from [target]. [slime.cores] core\s remaining.</span>")

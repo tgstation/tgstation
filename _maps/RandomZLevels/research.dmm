@@ -15,7 +15,7 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/awaymission/research/exterior)
 "af" = (
-/mob/living/simple_animal/hostile/syndicate/ranged/space,
+/mob/living/animal/hostile/syndicate/ranged/space,
 /turf/open/floor/plating/asteroid/airless,
 /area/awaymission/research/exterior)
 "ag" = (
@@ -90,7 +90,7 @@
 /turf/closed/wall/r_wall,
 /area/awaymission/research/interior/engineering)
 "as" = (
-/mob/living/simple_animal/hostile/syndicate/ranged,
+/mob/living/animal/hostile/syndicate/ranged,
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/research/interior/engineering)
 "at" = (
@@ -129,7 +129,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/mob/living/simple_animal/hostile/syndicate,
+/mob/living/animal/hostile/syndicate,
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/research/interior/engineering)
 "az" = (
@@ -237,7 +237,7 @@
 	},
 /area/awaymission/research/interior/engineering)
 "aT" = (
-/mob/living/simple_animal/hostile/syndicate/melee,
+/mob/living/animal/hostile/syndicate/melee,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/engineering)
 "aU" = (
@@ -852,7 +852,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/mob/living/simple_animal/hostile/syndicate/ranged,
+/mob/living/animal/hostile/syndicate/ranged,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "cA" = (
@@ -935,7 +935,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/mob/living/simple_animal/hostile/syndicate/ranged,
+/mob/living/animal/hostile/syndicate/ranged,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "cM" = (
@@ -1128,7 +1128,7 @@
 /area/awaymission/research/interior)
 "dn" = (
 /obj/item/ammo_casing/c45,
-/mob/living/simple_animal/hostile/syndicate,
+/mob/living/animal/hostile/syndicate,
 /turf/open/floor/plasteel/whiteyellow/side{
 	dir = 8
 	},
@@ -1262,7 +1262,7 @@
 /turf/open/floor/plasteel/red,
 /area/awaymission/research/interior/security)
 "dI" = (
-/mob/living/simple_animal/hostile/nanotrasen/ranged,
+/mob/living/animal/hostile/nanotrasen/ranged,
 /turf/open/floor/plasteel/red,
 /area/awaymission/research/interior/security)
 "dJ" = (
@@ -1421,7 +1421,7 @@
 /turf/open/floor/plasteel/stairs,
 /area/awaymission/research/interior/genetics)
 "ec" = (
-/mob/living/simple_animal/hostile/syndicate/ranged,
+/mob/living/animal/hostile/syndicate/ranged,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "ed" = (
@@ -1567,7 +1567,7 @@
 	},
 /area/awaymission/research/interior/cryo)
 "eB" = (
-/mob/living/simple_animal/hostile/nanotrasen/ranged,
+/mob/living/animal/hostile/nanotrasen/ranged,
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 1
 	},
@@ -1627,7 +1627,7 @@
 	},
 /area/awaymission/research/interior)
 "eL" = (
-/mob/living/simple_animal/hostile/syndicate,
+/mob/living/animal/hostile/syndicate,
 /turf/open/floor/plasteel/whiteyellow/side{
 	dir = 5
 	},
@@ -1690,7 +1690,7 @@
 /turf/open/floor/plasteel/black,
 /area/awaymission/research/interior/secure)
 "eV" = (
-/mob/living/simple_animal/hostile/nanotrasen/ranged/smg,
+/mob/living/animal/hostile/nanotrasen/ranged/smg,
 /turf/open/floor/plasteel/black,
 /area/awaymission/research/interior/secure)
 "eW" = (
@@ -1809,7 +1809,7 @@
 /turf/open/floor/plasteel/whiteyellow,
 /area/awaymission/research/interior)
 "fn" = (
-/mob/living/simple_animal/hostile/syndicate/melee,
+/mob/living/animal/hostile/syndicate/melee,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "fo" = (
@@ -1904,7 +1904,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/mob/living/simple_animal/hostile/nanotrasen/ranged/smg,
+/mob/living/animal/hostile/nanotrasen/ranged/smg,
 /turf/open/floor/plasteel/black,
 /area/awaymission/research/interior/secure)
 "fB" = (
@@ -2034,7 +2034,7 @@
 /turf/open/floor/plasteel/whitered,
 /area/awaymission/research/interior/security)
 "fY" = (
-/mob/living/simple_animal/hostile/nanotrasen/ranged/smg,
+/mob/living/animal/hostile/nanotrasen/ranged/smg,
 /turf/open/floor/plasteel/whitered,
 /area/awaymission/research/interior/security)
 "fZ" = (
@@ -2138,7 +2138,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/mob/living/simple_animal/hostile/nanotrasen/ranged/smg,
+/mob/living/animal/hostile/nanotrasen/ranged/smg,
 /turf/open/floor/plasteel/black,
 /area/awaymission/research/interior/secure)
 "gk" = (
@@ -2255,7 +2255,7 @@
 /turf/open/floor/plasteel/whitepurple,
 /area/awaymission/research/interior/cryo)
 "gv" = (
-/mob/living/simple_animal/hostile/nanotrasen/ranged,
+/mob/living/animal/hostile/nanotrasen/ranged,
 /turf/open/floor/plasteel/whitepurple,
 /area/awaymission/research/interior/cryo)
 "gw" = (
@@ -2533,7 +2533,7 @@
 	},
 /area/awaymission/research/interior/security)
 "hj" = (
-/mob/living/simple_animal/hostile/nanotrasen,
+/mob/living/animal/hostile/nanotrasen,
 /turf/open/floor/plasteel/purple,
 /area/awaymission/research/interior/cryo)
 "hk" = (
@@ -2576,7 +2576,7 @@
 	},
 /area/awaymission/research/interior/security)
 "hq" = (
-/mob/living/simple_animal/hostile/nanotrasen/ranged/smg,
+/mob/living/animal/hostile/nanotrasen/ranged/smg,
 /turf/open/floor/plasteel/whitered/side{
 	dir = 1
 	},
@@ -2883,7 +2883,7 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "if" = (
-/mob/living/simple_animal/hostile/syndicate/ranged,
+/mob/living/animal/hostile/syndicate/ranged,
 /turf/open/floor/plasteel/whitegreen,
 /area/awaymission/research/interior)
 "ig" = (
@@ -2911,7 +2911,7 @@
 	},
 /area/awaymission/research/interior/security)
 "ij" = (
-/mob/living/simple_animal/bot/secbot/beepsky{
+/mob/living/animal/bot/secbot/beepsky{
 	desc = "A beefy variant of the standard securitron model.";
 	emagged = 1;
 	faction = list("nanotrasenprivate");
@@ -3189,7 +3189,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/research/interior/bathroom)
 "iQ" = (
-/mob/living/simple_animal/hostile/syndicate,
+/mob/living/animal/hostile/syndicate,
 /turf/open/floor/plasteel/whitegreen/side{
 	dir = 4
 	},
@@ -3359,7 +3359,7 @@
 	pixel_x = 32;
 	pixel_y = 26
 	},
-/mob/living/simple_animal/hostile/syndicate/ranged,
+/mob/living/animal/hostile/syndicate/ranged,
 /turf/open/floor/plasteel/whitegreen,
 /area/awaymission/research/interior)
 "js" = (
@@ -3484,7 +3484,7 @@
 /turf/open/floor/plasteel/whiteblue,
 /area/awaymission/research/interior/medbay)
 "jP" = (
-/mob/living/simple_animal/hostile/syndicate/ranged,
+/mob/living/animal/hostile/syndicate/ranged,
 /turf/open/floor/plasteel/whiteblue,
 /area/awaymission/research/interior/medbay)
 "jQ" = (
@@ -4001,7 +4001,7 @@
 	},
 /area/awaymission/research/interior/medbay)
 "lr" = (
-/mob/living/simple_animal/hostile/syndicate,
+/mob/living/animal/hostile/syndicate,
 /turf/open/floor/plasteel/whiteblue,
 /area/awaymission/research/interior/medbay)
 "ls" = (
@@ -4582,7 +4582,7 @@
 /turf/open/floor/mineral/plasma,
 /area/space)
 "nc" = (
-/mob/living/simple_animal/hostile/creature,
+/mob/living/animal/hostile/creature,
 /turf/open/floor/mineral/plasma,
 /area/space)
 "nd" = (

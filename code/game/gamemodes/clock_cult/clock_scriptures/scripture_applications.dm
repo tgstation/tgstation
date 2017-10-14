@@ -20,7 +20,7 @@
 	quickbind = TRUE
 	quickbind_desc = "Creates a clockwork marauder, used for frontline combat."
 	object_path = /obj/item/clockwork/construct_chassis/clockwork_marauder
-	construct_type = /mob/living/simple_animal/hostile/clockwork/marauder
+	construct_type = /mob/living/animal/hostile/clockwork/marauder
 	combat_construct = TRUE
 
 /datum/clockwork_scripture/create_object/construct/clockwork_marauder/update_construct_limit()

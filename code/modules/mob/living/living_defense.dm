@@ -178,7 +178,7 @@
 		return 1
 
 
-/mob/living/attack_slime(mob/living/simple_animal/slime/M)
+/mob/living/attack_slime(mob/living/animal/slime/M)
 	if(!SSticker.HasRoundStarted())
 		to_chat(M, "You cannot attack people before the game has started.")
 		return
@@ -195,7 +195,7 @@
 				"<span class='userdanger'>The [M.name] glomps [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 		return 1
 
-/mob/living/attack_animal(mob/living/simple_animal/M)
+/mob/living/attack_animal(mob/living/animal/M)
 	M.face_atom(src)
 	if(M.melee_damage_upper == 0)
 		M.visible_message("<span class='notice'>\The [M] [M.friendly] [src]!</span>")
@@ -321,15 +321,15 @@
 			addtimer(CALLBACK(GLOBAL_PROC, .proc/cult_ending_helper, 1), 120)
 			addtimer(CALLBACK(GLOBAL_PROC, .proc/ending_helper), 270)
 	if(client)
-		makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, src, cultoverride = TRUE)
+		makeNewConstruct(/mob/living/animal/hostile/construct/harvester, src, cultoverride = TRUE)
 	else
 		switch(rand(1, 6))
 			if(1)
-				new /mob/living/simple_animal/hostile/construct/armored/hostile(get_turf(src))
+				new /mob/living/animal/hostile/construct/armored/hostile(get_turf(src))
 			if(2)
-				new /mob/living/simple_animal/hostile/construct/wraith/hostile(get_turf(src))
+				new /mob/living/animal/hostile/construct/wraith/hostile(get_turf(src))
 			if(3 to 6)
-				new /mob/living/simple_animal/hostile/construct/builder/hostile(get_turf(src))
+				new /mob/living/animal/hostile/construct/builder/hostile(get_turf(src))
 	spawn_dust()
 	gib()
 	return TRUE

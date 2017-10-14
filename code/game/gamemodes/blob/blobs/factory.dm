@@ -7,7 +7,7 @@
 	health_regen = 1
 	point_return = 25
 	var/list/spores = list()
-	var/mob/living/simple_animal/hostile/blob/blobbernaut/naut = null
+	var/mob/living/animal/hostile/blob/blobbernaut/naut = null
 	var/max_spores = 3
 	var/spore_delay = 0
 	var/spore_cooldown = 80 //8 seconds between spores and after spore death
@@ -19,7 +19,7 @@
 	return "Will produce a blob spore every few seconds."
 
 /obj/structure/blob/factory/Destroy()
-	for(var/mob/living/simple_animal/hostile/blob/blobspore/spore in spores)
+	for(var/mob/living/animal/hostile/blob/blobspore/spore in spores)
 		if(spore.factory == src)
 			spore.factory = null
 	if(naut)
@@ -39,7 +39,7 @@
 		return
 	flick("blob_factory_glow", src)
 	spore_delay = world.time + spore_cooldown
-	var/mob/living/simple_animal/hostile/blob/blobspore/BS = new/mob/living/simple_animal/hostile/blob/blobspore(src.loc, src)
+	var/mob/living/animal/hostile/blob/blobspore/BS = new/mob/living/animal/hostile/blob/blobspore(src.loc, src)
 	if(overmind) //if we don't have an overmind, we don't need to do anything but make a spore
 		BS.overmind = overmind
 		BS.update_icons()

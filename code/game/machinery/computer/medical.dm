@@ -174,7 +174,7 @@
 					dat += "<a href='?src=\ref[src];screen=1'>Back</a>"
 					dat += "<br><b>Medical Robots:</b>"
 					var/bdat = null
-					for(var/mob/living/simple_animal/bot/medbot/M in GLOB.living_mob_list)
+					for(var/mob/living/animal/bot/medbot/M in GLOB.living_mob_list)
 						if(M.z != src.z)
 							continue	//only find medibots on the same z-level as the computer
 						var/turf/bl = get_turf(M)
