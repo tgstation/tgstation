@@ -47,7 +47,7 @@
 	var/list/stored_data = list()
 	var/current_channel
 
-	var/mob/living/simple_animal/bot/active_bot
+	var/mob/living/animal/bot/active_bot
 	var/list/botlist = list()
 
 /obj/item/cartridge/Initialize()
@@ -505,7 +505,7 @@ Code:
 				menu += "<h4>Located Cleanbots:</h4>"
 
 				ldat = null
-				for (var/mob/living/simple_animal/bot/cleanbot/B in GLOB.living_mob_list)
+				for (var/mob/living/animal/bot/cleanbot/B in GLOB.living_mob_list)
 					var/turf/bl = get_turf(B)
 
 					if(bl)
@@ -667,7 +667,7 @@ Code:
 /obj/item/cartridge/proc/bot_control()
 
 
-	var/mob/living/simple_animal/bot/Bot
+	var/mob/living/animal/bot/Bot
 
 //	if(!SC)
 //		menu = "Interlink Error - Please reinsert cartridge."
@@ -688,7 +688,7 @@ Code:
 
 		//MULEs!
 		if(active_bot.bot_type == MULE_BOT)
-			var/mob/living/simple_animal/bot/mulebot/MULE = active_bot
+			var/mob/living/animal/bot/mulebot/MULE = active_bot
 			var/atom/Load = MULE.load
 			menu += "<BR>Current Load: [ !Load ? "<i>none</i>" : "[Load.name] (<A href='byond://?src=\ref[src];mule=unload'><i>unload</i></A>)" ]<BR>"
 			menu += "Destination: [MULE.destination ? MULE.destination : "<i>None</i>"] (<A href='byond://?src=\ref[src];mule=destination'><i>set</i></A>)<BR>"

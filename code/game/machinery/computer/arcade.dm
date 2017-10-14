@@ -704,7 +704,7 @@
 							say("WEEWOO! WEEWOO! Spaceport security en route!")
 							playsound(src, 'sound/items/weeoo1.ogg', 100, FALSE)
 							for(var/i, i<=3, i++)
-								var/mob/living/simple_animal/hostile/syndicate/ranged/orion/O = new/mob/living/simple_animal/hostile/syndicate/ranged/orion(get_turf(src))
+								var/mob/living/animal/hostile/syndicate/ranged/orion/O = new/mob/living/animal/hostile/syndicate/ranged/orion(get_turf(src))
 								O.target = usr
 
 
@@ -1047,7 +1047,7 @@
 	newgame()
 	emagged = TRUE
 
-/mob/living/simple_animal/hostile/syndicate/ranged/orion
+/mob/living/animal/hostile/syndicate/ranged/orion
 	name = "spaceport security"
 	desc = "Premier corporate security forces for all spaceports found along the Orion Trail."
 	faction = list("orion")

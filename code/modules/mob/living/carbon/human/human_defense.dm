@@ -285,7 +285,7 @@
 			apply_damage(damage, BRUTE, affecting, armor_block)
 
 
-/mob/living/carbon/human/attack_animal(mob/living/simple_animal/M)
+/mob/living/carbon/human/attack_animal(mob/living/animal/M)
 	. = ..()
 	if(.)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
@@ -301,7 +301,7 @@
 		apply_damage(damage, M.melee_damage_type, affecting, armor)
 
 
-/mob/living/carbon/human/attack_slime(mob/living/simple_animal/slime/M)
+/mob/living/carbon/human/attack_slime(mob/living/animal/slime/M)
 	if(..()) //successful slime attack
 		var/damage = rand(5, 25)
 		if(M.is_adult)

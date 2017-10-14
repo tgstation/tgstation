@@ -264,7 +264,7 @@
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "aU" = (
-/mob/living/simple_animal/hostile/alien/maid/barmaid,
+/mob/living/animal/hostile/alien/maid/barmaid,
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "aV" = (
@@ -280,7 +280,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/mob/living/simple_animal/drone/snowflake/bardrone,
+/mob/living/animal/drone/snowflake/bardrone,
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "aY" = (

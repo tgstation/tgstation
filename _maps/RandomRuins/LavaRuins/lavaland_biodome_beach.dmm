@@ -301,7 +301,7 @@
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "bz" = (
-/mob/living/simple_animal/crab,
+/mob/living/animal/crab,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "bA" = (

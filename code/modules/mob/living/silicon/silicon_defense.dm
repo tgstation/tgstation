@@ -23,7 +23,7 @@
 			visible_message("<span class='danger'>[M] took a swipe at [src]!</span>", \
 							"<span class='userdanger'>[M] took a swipe at [src]!</span>")
 
-/mob/living/silicon/attack_animal(mob/living/simple_animal/M)
+/mob/living/silicon/attack_animal(mob/living/animal/M)
 	. = ..()
 	if(.)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
@@ -77,7 +77,7 @@
 				"<span class='warning'>[M] punches [src], but doesn't leave a dent.</span>", null, COMBAT_MESSAGE_RANGE)
 	return 0
 
-/mob/living/silicon/attack_drone(mob/living/simple_animal/drone/M)
+/mob/living/silicon/attack_drone(mob/living/animal/drone/M)
 	if(M.a_intent == INTENT_HARM)
 		return
 	return ..()

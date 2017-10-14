@@ -47,7 +47,7 @@ GLOBAL_DATUM_INIT(default_state, /datum/ui_state/default, new)
 		return UI_INTERACTIVE
 	return UI_CLOSE
 
-/mob/living/simple_animal/default_can_use_topic(src_object)
+/mob/living/animal/default_can_use_topic(src_object)
 	. = shared_ui_interaction(src_object)
 	if(. > UI_CLOSE)
 		. = min(., shared_living_ui_distance(src_object)) //simple animals can only use things they're near.

@@ -95,7 +95,7 @@
 	STOP_PROCESSING(SSprocessing, src)
 	icon_state = "interdiction_lens_active"
 	hierophant_message("<span class='big bold brass'>The beacon's activation has given your team great power! Many of your objects are permanently empowered!</span>")
-	for(var/mob/living/simple_animal/hostile/clockwork/C in GLOB.all_clockwork_mobs)
+	for(var/mob/living/animal/hostile/clockwork/C in GLOB.all_clockwork_mobs)
 		if(C.stat == DEAD)
 			continue
 		C.update_values()

@@ -144,7 +144,7 @@
 						path = /mob/living/silicon/robot/modules/syndicate/medical
 					new_mob = new path(M.loc)
 				if("drone")
-					new_mob = new /mob/living/simple_animal/drone/polymorphed(M.loc)
+					new_mob = new /mob/living/animal/drone/polymorphed(M.loc)
 			if(issilicon(new_mob))
 				new_mob.gender = M.gender
 				new_mob.invisibility = 0
@@ -155,7 +155,7 @@
 				Robot.clear_zeroth_law(0, 0)
 				Robot.connected_ai = null
 		if("slime")
-			new_mob = new /mob/living/simple_animal/slime/random(M.loc)
+			new_mob = new /mob/living/animal/slime/random(M.loc)
 		if("xeno")
 			if(prob(50))
 				new_mob = new /mob/living/carbon/alien/humanoid/hunter(M.loc)
@@ -168,74 +168,74 @@
 				var/beast = pick("carp","bear","mushroom","statue", "bat", "goat","killertomato", "spiderbase", "spiderhunter", "blobbernaut", "magicarp", "chaosmagicarp", "watcher", "goliath", "headcrab", "morph", "stickman", "stickdog", "lesserdragon", "gorilla")
 				switch(beast)
 					if("carp")
-						path = /mob/living/simple_animal/hostile/carp
+						path = /mob/living/animal/hostile/carp
 					if("bear")
-						path = /mob/living/simple_animal/hostile/bear
+						path = /mob/living/animal/hostile/bear
 					if("mushroom")
-						path = /mob/living/simple_animal/hostile/mushroom
+						path = /mob/living/animal/hostile/mushroom
 					if("statue")
-						path = /mob/living/simple_animal/hostile/statue
+						path = /mob/living/animal/hostile/statue
 					if("bat")
-						path = /mob/living/simple_animal/hostile/retaliate/bat
+						path = /mob/living/animal/hostile/retaliate/bat
 					if("goat")
-						path = /mob/living/simple_animal/hostile/retaliate/goat
+						path = /mob/living/animal/hostile/retaliate/goat
 					if("killertomato")
-						path = /mob/living/simple_animal/hostile/killertomato
+						path = /mob/living/animal/hostile/killertomato
 					if("spiderbase")
-						path = /mob/living/simple_animal/hostile/poison/giant_spider
+						path = /mob/living/animal/hostile/poison/giant_spider
 					if("spiderhunter")
-						path = /mob/living/simple_animal/hostile/poison/giant_spider/hunter
+						path = /mob/living/animal/hostile/poison/giant_spider/hunter
 					if("blobbernaut")
-						path = /mob/living/simple_animal/hostile/blob/blobbernaut/independent
+						path = /mob/living/animal/hostile/blob/blobbernaut/independent
 					if("magicarp")
-						path = /mob/living/simple_animal/hostile/carp/ranged
+						path = /mob/living/animal/hostile/carp/ranged
 					if("chaosmagicarp")
-						path = /mob/living/simple_animal/hostile/carp/ranged/chaos
+						path = /mob/living/animal/hostile/carp/ranged/chaos
 					if("watcher")
-						path = /mob/living/simple_animal/hostile/asteroid/basilisk/watcher
+						path = /mob/living/animal/hostile/asteroid/basilisk/watcher
 					if("goliath")
-						path = /mob/living/simple_animal/hostile/asteroid/goliath/beast
+						path = /mob/living/animal/hostile/asteroid/goliath/beast
 					if("headcrab")
-						path = /mob/living/simple_animal/hostile/headcrab
+						path = /mob/living/animal/hostile/headcrab
 					if("morph")
-						path = /mob/living/simple_animal/hostile/morph
+						path = /mob/living/animal/hostile/morph
 					if("stickman")
-						path = /mob/living/simple_animal/hostile/stickman
+						path = /mob/living/animal/hostile/stickman
 					if("stickdog")
-						path = /mob/living/simple_animal/hostile/stickman/dog
+						path = /mob/living/animal/hostile/stickman/dog
 					if("lesserdragon")
-						path = /mob/living/simple_animal/hostile/megafauna/dragon/lesser
+						path = /mob/living/animal/hostile/megafauna/dragon/lesser
 					if("gorilla")
-						path = /mob/living/simple_animal/hostile/gorilla
+						path = /mob/living/animal/hostile/gorilla
 			else
 				var/animal = pick("parrot","corgi","crab","pug","cat","mouse","chicken","cow","lizard","chick","fox","butterfly","cak")
 				switch(animal)
 					if("parrot")
-						path = /mob/living/simple_animal/parrot
+						path = /mob/living/animal/parrot
 					if("corgi")
-						path = /mob/living/simple_animal/pet/dog/corgi
+						path = /mob/living/animal/pet/dog/corgi
 					if("crab")
-						path = /mob/living/simple_animal/crab
+						path = /mob/living/animal/crab
 					if("pug")
-						path = /mob/living/simple_animal/pet/dog/pug
+						path = /mob/living/animal/pet/dog/pug
 					if("cat")
-						path = /mob/living/simple_animal/pet/cat
+						path = /mob/living/animal/pet/cat
 					if("mouse")
-						path = /mob/living/simple_animal/mouse
+						path = /mob/living/animal/mouse
 					if("chicken")
-						path = /mob/living/simple_animal/chicken
+						path = /mob/living/animal/chicken
 					if("cow")
-						path = /mob/living/simple_animal/cow
+						path = /mob/living/animal/cow
 					if("lizard")
-						path = /mob/living/simple_animal/hostile/lizard
+						path = /mob/living/animal/hostile/lizard
 					if("fox")
-						path = /mob/living/simple_animal/pet/fox
+						path = /mob/living/animal/pet/fox
 					if("butterfly")
-						path = /mob/living/simple_animal/butterfly
+						path = /mob/living/animal/butterfly
 					if("cak")
-						path = /mob/living/simple_animal/pet/cat/cak
+						path = /mob/living/animal/pet/cat/cak
 					if("chick")
-						path = /mob/living/simple_animal/chick
+						path = /mob/living/animal/chick
 
 			new_mob = new path(M.loc)
 
@@ -300,7 +300,7 @@
 			var/obj/structure/statue/petrified/P = src
 			if(P.petrified_mob)
 				var/mob/living/L = P.petrified_mob
-				var/mob/living/simple_animal/hostile/statue/S = new(P.loc, owner)
+				var/mob/living/animal/hostile/statue/S = new(P.loc, owner)
 				S.name = "statue of [L.name]"
 				if(owner)
 					S.faction = list("\ref[owner]")
@@ -318,13 +318,13 @@
 		else
 			var/obj/O = src
 			if(istype(O, /obj/item/gun))
-				new /mob/living/simple_animal/hostile/mimic/copy/ranged(loc, src, owner)
+				new /mob/living/animal/hostile/mimic/copy/ranged(loc, src, owner)
 			else
-				new /mob/living/simple_animal/hostile/mimic/copy(loc, src, owner)
+				new /mob/living/animal/hostile/mimic/copy(loc, src, owner)
 
-	else if(istype(src, /mob/living/simple_animal/hostile/mimic/copy))
+	else if(istype(src, /mob/living/animal/hostile/mimic/copy))
 		// Change our allegiance!
-		var/mob/living/simple_animal/hostile/mimic/copy/C = src
+		var/mob/living/animal/hostile/mimic/copy/C = src
 		if(owner)
 			C.ChangeOwner(owner)
 

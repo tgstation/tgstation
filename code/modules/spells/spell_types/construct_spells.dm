@@ -240,7 +240,7 @@
 		revert_cast()
 		return
 
-	var/mob/living/simple_animal/S = targets[1]
+	var/mob/living/animal/S = targets[1]
 
 	if(S.ckey)
 		to_chat(user, "<span class='warning'>[S] is too intelligent to dominate!</span>")

@@ -65,7 +65,7 @@
 	construct_name = "clockwork marauder"
 	construct_desc = "<span class='neovgre_small'>It will become a <b>clockwork marauder,</b> a well-rounded frontline combatant.</span>"
 	creation_message = "<span class='neovgre_small bold'>Crimson fire begins to rage in the armor as it rises into the air with its arnaments!</span>"
-	construct_type = /mob/living/simple_animal/hostile/clockwork/marauder
+	construct_type = /mob/living/animal/hostile/clockwork/marauder
 
 
 //Cogscarab shell, used to create cogcarabs - fragile but zippy little drones that build and maintain the base.
@@ -76,7 +76,7 @@
 	construct_name = "cogscarab"
 	construct_desc = "<span class='alloy'>It will become a <b>cogscarab,</b> a small and fragile drone that builds, repairs, and maintains.</span>"
 	creation_message = "<span class='alloy bold'>The cogscarab clicks and whirrs as it hops up and springs to life!</span>"
-	construct_type = /mob/living/simple_animal/drone/cogscarab
+	construct_type = /mob/living/animal/drone/cogscarab
 	w_class = WEIGHT_CLASS_SMALL
 	var/infinite_resources = TRUE
 
@@ -87,7 +87,7 @@
 
 /obj/item/clockwork/construct_chassis/cogscarab/pre_spawn()
 	if(infinite_resources)
-		construct_type = /mob/living/simple_animal/drone/cogscarab/ratvar //During rounds where they can't interact with the station, let them experiment with builds
+		construct_type = /mob/living/animal/drone/cogscarab/ratvar //During rounds where they can't interact with the station, let them experiment with builds
 
 /obj/item/clockwork/construct_chassis/cogscarab/post_spawn(mob/living/construct)
 	if(infinite_resources) //Allow them to build stuff and recite scripture

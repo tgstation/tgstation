@@ -538,7 +538,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
 "bp" = (
-/mob/living/simple_animal/bot/medbot{
+/mob/living/animal/bot/medbot{
 	name = "\improper emergency medibot";
 	pixel_x = -3;
 	pixel_y = 2

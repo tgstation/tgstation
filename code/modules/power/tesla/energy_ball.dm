@@ -169,7 +169,7 @@
 	var/static/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 										/obj/machinery/power/emitter,
 										/obj/machinery/field/generator,
-										/mob/living/simple_animal,
+										/mob/living/animal,
 										/obj/machinery/particle_accelerator/control_box,
 										/obj/structure/particle_accelerator/fuel_chamber,
 										/obj/structure/particle_accelerator/particle_emitter/center,

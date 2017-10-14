@@ -17,10 +17,10 @@
 			else
 				H.set_species(/datum/species/zombie)
 
-	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in GLOB.mob_list)
+	for(var/mob/living/animal/pet/dog/corgi/Ian/Ian in GLOB.mob_list)
 		Ian.place_on_head(new /obj/item/bedsheet(Ian))
-	for(var/mob/living/simple_animal/parrot/Poly/Poly in GLOB.mob_list)
-		new /mob/living/simple_animal/parrot/Poly/ghost(Poly.loc)
+	for(var/mob/living/animal/parrot/Poly/Poly in GLOB.mob_list)
+		new /mob/living/animal/parrot/Poly/ghost(Poly.loc)
 		qdel(Poly)
 
 /datum/round_event/spooky/announce()
@@ -36,7 +36,7 @@
 
 /datum/round_event/carp_migration/eyeballs/start()
 	for(var/obj/effect/landmark/carpspawn/C in GLOB.landmarks_list)
-		new /mob/living/simple_animal/hostile/carp/eyeball(C.loc)
+		new /mob/living/animal/hostile/carp/eyeball(C.loc)
 
 //Pumpking meteors waves
 /datum/round_event_control/meteor_wave/spooky
@@ -92,7 +92,7 @@
 				if(T)
 					spawn_atom_to_turf(/obj/effect/mob_spawn/human/clown/corpse, H, 1)
 			else if (prob(1))
-				spawn_atom_to_turf(/mob/living/simple_animal/hostile/retaliate/clown, H, 1)
+				spawn_atom_to_turf(/mob/living/animal/hostile/retaliate/clown, H, 1)
 
 /datum/round_event/creepy_clowns/announce()
 	priority_announce("Honk... Honk... honk... HONK! HONK! HONKHONKHONKHONKHONK", "HONK!", 'sound/spookoween/scary_horn.ogg')

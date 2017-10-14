@@ -2875,7 +2875,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/mob/living/simple_animal/bot/medbot{
+/mob/living/animal/bot/medbot{
 	name = "Accidents Happen"
 	},
 /turf/open/floor/plasteel/black,
@@ -4609,7 +4609,7 @@
 /turf/closed/wall,
 /area/ruin/space/has_grav/hotel/custodial)
 "me" = (
-/mob/living/simple_animal/bot/cleanbot,
+/mob/living/animal/bot/cleanbot,
 /turf/open/floor/plasteel/neutral,
 /area/ruin/space/has_grav/hotel/custodial)
 "mf" = (

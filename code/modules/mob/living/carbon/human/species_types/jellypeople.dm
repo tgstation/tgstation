@@ -105,7 +105,7 @@
 	say_mod = "says"
 	hair_color = "mutcolor"
 	hair_alpha = 150
-	ignored_by = list(/mob/living/simple_animal/slime)
+	ignored_by = list(/mob/living/animal/slime)
 	burnmod = 0.5
 	coldmod = 2
 	heatmod = 0.5

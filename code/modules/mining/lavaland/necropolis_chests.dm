@@ -853,7 +853,7 @@
 	stage3	= list("<span class='danger'>You have an overwhelming urge to terrorize some peasants.</span>", "<span class='danger'>Your teeth feel sharper.</span>")
 	stage4	= list("<span class='danger'>Your blood burns.</span>")
 	stage5	= list("<span class='danger'>You're a fucking dragon. However, any previous allegiances you held still apply. It'd be incredibly rude to eat your still human friends for no reason.</span>")
-	new_form = /mob/living/simple_animal/hostile/megafauna/dragon/lesser
+	new_form = /mob/living/animal/hostile/megafauna/dragon/lesser
 
 
 //Lava Staff

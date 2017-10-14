@@ -98,7 +98,7 @@
 	var/obj/machinery/computer/camera_advanced/xenobio/X = target
 
 	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
-		for(var/mob/living/simple_animal/slime/S in X.stored_slimes)
+		for(var/mob/living/animal/slime/S in X.stored_slimes)
 			S.loc = remote_eye.loc
 			S.visible_message("[S] warps in!")
 			X.stored_slimes -= S
@@ -118,7 +118,7 @@
 	var/obj/machinery/computer/camera_advanced/xenobio/X = target
 
 	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
-		for(var/mob/living/simple_animal/slime/S in remote_eye.loc)
+		for(var/mob/living/animal/slime/S in remote_eye.loc)
 			if(X.stored_slimes.len >= X.max_slimes)
 				break
 			if(!S.ckey)

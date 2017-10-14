@@ -1,5 +1,5 @@
 
-/datum/hud/guardian/New(mob/living/simple_animal/hostile/guardian/owner)
+/datum/hud/guardian/New(mob/living/animal/hostile/guardian/owner)
 	..()
 	var/obj/screen/using
 
@@ -27,17 +27,17 @@
 	static_inventory += using
 
 
-/mob/living/simple_animal/hostile/guardian/create_mob_hud()
+/mob/living/animal/hostile/guardian/create_mob_hud()
 	if(client && !hud_used)
 		if(dextrous)
 			..()
 		else
 			hud_used = new /datum/hud/guardian(src, ui_style2icon(client.prefs.UI_style))
 
-/datum/hud/dextrous/guardian/New(mob/living/simple_animal/hostile/guardian/owner, ui_style = 'icons/mob/screen_midnight.dmi') //for a dextrous guardian
+/datum/hud/dextrous/guardian/New(mob/living/animal/hostile/guardian/owner, ui_style = 'icons/mob/screen_midnight.dmi') //for a dextrous guardian
 	..()
 	var/obj/screen/using
-	if(istype(owner, /mob/living/simple_animal/hostile/guardian/dextrous))
+	if(istype(owner, /mob/living/animal/hostile/guardian/dextrous))
 		var/obj/screen/inventory/inv_box
 
 		inv_box = new /obj/screen/inventory()
@@ -80,8 +80,8 @@
 /datum/hud/dextrous/guardian/persistent_inventory_update()
 	if(!mymob)
 		return
-	if(istype(mymob, /mob/living/simple_animal/hostile/guardian/dextrous))
-		var/mob/living/simple_animal/hostile/guardian/dextrous/D = mymob
+	if(istype(mymob, /mob/living/animal/hostile/guardian/dextrous))
+		var/mob/living/animal/hostile/guardian/dextrous/D = mymob
 
 		if(hud_shown)
 			if(D.internal_storage)
@@ -103,7 +103,7 @@
 
 /obj/screen/guardian/Manifest/Click()
 	if(isguardian(usr))
-		var/mob/living/simple_animal/hostile/guardian/G = usr
+		var/mob/living/animal/hostile/guardian/G = usr
 		G.Manifest()
 
 
@@ -114,7 +114,7 @@
 
 /obj/screen/guardian/Recall/Click()
 	if(isguardian(usr))
-		var/mob/living/simple_animal/hostile/guardian/G = usr
+		var/mob/living/animal/hostile/guardian/G = usr
 		G.Recall()
 
 /obj/screen/guardian/ToggleMode
@@ -124,7 +124,7 @@
 
 /obj/screen/guardian/ToggleMode/Click()
 	if(isguardian(usr))
-		var/mob/living/simple_animal/hostile/guardian/G = usr
+		var/mob/living/animal/hostile/guardian/G = usr
 		G.ToggleMode()
 
 /obj/screen/guardian/ToggleMode/Inactive
@@ -142,7 +142,7 @@
 
 /obj/screen/guardian/Communicate/Click()
 	if(isguardian(usr))
-		var/mob/living/simple_animal/hostile/guardian/G = usr
+		var/mob/living/animal/hostile/guardian/G = usr
 		G.Communicate()
 
 
@@ -153,5 +153,5 @@
 
 /obj/screen/guardian/ToggleLight/Click()
 	if(isguardian(usr))
-		var/mob/living/simple_animal/hostile/guardian/G = usr
+		var/mob/living/animal/hostile/guardian/G = usr
 		G.ToggleLight()

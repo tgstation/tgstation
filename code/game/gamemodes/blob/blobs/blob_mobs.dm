@@ -4,7 +4,7 @@
 ////////////////
 
 //Do not spawn
-/mob/living/simple_animal/hostile/blob
+/mob/living/animal/hostile/blob
 	icon = 'icons/mob/blob.dmi'
 	pass_flags = PASSBLOB
 	faction = list("blob")
@@ -18,18 +18,18 @@
 	var/mob/camera/blob/overmind = null
 	var/obj/structure/blob/factory/factory = null
 
-/mob/living/simple_animal/hostile/blob/update_icons()
+/mob/living/animal/hostile/blob/update_icons()
 	if(overmind)
 		add_atom_colour(overmind.blob_reagent_datum.color, FIXED_COLOUR_PRIORITY)
 	else
 		remove_atom_colour(FIXED_COLOUR_PRIORITY)
 
-/mob/living/simple_animal/hostile/blob/Destroy()
+/mob/living/animal/hostile/blob/Destroy()
 	if(overmind)
 		overmind.blob_mobs -= src
 	return ..()
 
-/mob/living/simple_animal/hostile/blob/blob_act(obj/structure/blob/B)
+/mob/living/animal/hostile/blob/blob_act(obj/structure/blob/B)
 	if(stat != DEAD && health < maxHealth)
 		for(var/i in 1 to 2)
 			var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src)) //hello yes you are being healed
@@ -39,35 +39,35 @@
 				H.color = "#000000"
 		adjustHealth(-maxHealth*0.0125)
 
-/mob/living/simple_animal/hostile/blob/fire_act(exposed_temperature, exposed_volume)
+/mob/living/animal/hostile/blob/fire_act(exposed_temperature, exposed_volume)
 	..()
 	if(exposed_temperature)
 		adjustFireLoss(Clamp(0.01 * exposed_temperature, 1, 5))
 	else
 		adjustFireLoss(5)
 
-/mob/living/simple_animal/hostile/blob/CanPass(atom/movable/mover, turf/target)
+/mob/living/animal/hostile/blob/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover, /obj/structure/blob))
 		return 1
 	return ..()
 
-/mob/living/simple_animal/hostile/blob/Process_Spacemove(movement_dir = 0)
+/mob/living/animal/hostile/blob/Process_Spacemove(movement_dir = 0)
 	for(var/obj/structure/blob/B in range(1, src))
 		return 1
 	return ..()
 
-/mob/living/simple_animal/hostile/blob/handle_inherent_channels(message, message_mode)
+/mob/living/animal/hostile/blob/handle_inherent_channels(message, message_mode)
 	if(message_mode == MODE_BINARY)
 		blob_chat(message)
 		return 1
 	else
 		..()
 
-/mob/living/simple_animal/hostile/blob/proc/blob_chat(msg)
+/mob/living/animal/hostile/blob/proc/blob_chat(msg)
 	var/spanned_message = say_quote(msg, get_spans())
 	var/rendered = "<font color=\"#EE4000\"><b>\[Blob Telepathy\] [real_name]</b> [spanned_message]</font>"
 	for(var/M in GLOB.mob_list)
-		if(isovermind(M) || istype(M, /mob/living/simple_animal/hostile/blob))
+		if(isovermind(M) || istype(M, /mob/living/animal/hostile/blob))
 			to_chat(M, rendered)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, src)
@@ -77,7 +77,7 @@
 // BLOB SPORE //
 ////////////////
 
-/mob/living/simple_animal/hostile/blob/blobspore
+/mob/living/animal/hostile/blob/blobspore
 	name = "blob spore"
 	desc = "A floating, fragile spore."
 	icon_state = "blobpod"
@@ -102,13 +102,13 @@
 	var/is_zombie = 0
 	gold_core_spawnable = 1
 
-/mob/living/simple_animal/hostile/blob/blobspore/Initialize(mapload, var/obj/structure/blob/factory/linked_node)
+/mob/living/animal/hostile/blob/blobspore/Initialize(mapload, var/obj/structure/blob/factory/linked_node)
 	if(istype(linked_node))
 		factory = linked_node
 		factory.spores += src
 	. = ..()
 
-/mob/living/simple_animal/hostile/blob/blobspore/Life()
+/mob/living/animal/hostile/blob/blobspore/Life()
 	if(!is_zombie && isturf(src.loc))
 		for(var/mob/living/carbon/human/H in view(src,1)) //Only for corpse right next to/on same tile
 			if(H.stat == DEAD)
@@ -118,7 +118,7 @@
 		death()
 	..()
 
-/mob/living/simple_animal/hostile/blob/blobspore/proc/Zombify(mob/living/carbon/human/H)
+/mob/living/animal/hostile/blob/blobspore/proc/Zombify(mob/living/carbon/human/H)
 	is_zombie = 1
 	if(H.wear_suit)
 		var/obj/item/clothing/suit/armor/A = H.wear_suit
@@ -141,7 +141,7 @@
 	update_icons()
 	visible_message("<span class='warning'>The corpse of [H.name] suddenly rises!</span>")
 
-/mob/living/simple_animal/hostile/blob/blobspore/death(gibbed)
+/mob/living/animal/hostile/blob/blobspore/death(gibbed)
 	// On death, create a small smoke of harmful gas (s-Acid)
 	var/datum/effect_system/smoke_spread/chem/S = new
 	var/turf/location = get_turf(src)
@@ -163,7 +163,7 @@
 
 	..()
 
-/mob/living/simple_animal/hostile/blob/blobspore/Destroy()
+/mob/living/animal/hostile/blob/blobspore/Destroy()
 	if(factory)
 		factory.spores -= src
 	factory = null
@@ -172,7 +172,7 @@
 		oldguy = null
 	return ..()
 
-/mob/living/simple_animal/hostile/blob/blobspore/update_icons()
+/mob/living/animal/hostile/blob/blobspore/update_icons()
 	if(overmind)
 		add_atom_colour(overmind.blob_reagent_datum.complementary_color, FIXED_COLOUR_PRIORITY)
 	else
@@ -185,7 +185,7 @@
 		color = initial(color)//looks better.
 		add_overlay(blob_head_overlay)
 
-/mob/living/simple_animal/hostile/blob/blobspore/weak
+/mob/living/animal/hostile/blob/blobspore/weak
 	name = "fragile blob spore"
 	health = 15
 	maxHealth = 15
@@ -197,7 +197,7 @@
 // BLOBBERNAUT //
 /////////////////
 
-/mob/living/simple_animal/hostile/blob/blobbernaut
+/mob/living/animal/hostile/blob/blobbernaut
 	name = "blobbernaut"
 	desc = "A hulking, mobile chunk of blobmass."
 	icon_state = "blobbernaut"
@@ -222,12 +222,12 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	var/independent = FALSE
 
-/mob/living/simple_animal/hostile/blob/blobbernaut/Initialize()
+/mob/living/animal/hostile/blob/blobbernaut/Initialize()
 	. = ..()
 	if(!independent) //no pulling people deep into the blob
 		verbs -= /mob/living/verb/pulled
 
-/mob/living/simple_animal/hostile/blob/blobbernaut/Life()
+/mob/living/animal/hostile/blob/blobbernaut/Life()
 	if(..())
 		var/list/blobs_in_area = range(2, src)
 		if(independent)
@@ -261,23 +261,23 @@
 				I.color = overmind.blob_reagent_datum.complementary_color
 			flick_overlay_view(I, src, 8)
 
-/mob/living/simple_animal/hostile/blob/blobbernaut/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/animal/hostile/blob/blobbernaut/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
 	if(updating_health)
 		update_health_hud()
 
-/mob/living/simple_animal/hostile/blob/blobbernaut/update_health_hud()
+/mob/living/animal/hostile/blob/blobbernaut/update_health_hud()
 	if(hud_used)
 		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round((health / maxHealth) * 100, 0.5)]%</font></div>"
 
-/mob/living/simple_animal/hostile/blob/blobbernaut/AttackingTarget()
+/mob/living/animal/hostile/blob/blobbernaut/AttackingTarget()
 	. = ..()
 	if(. && isliving(target) && overmind)
 		var/mob/living/L = target
 		var/mob_protection = L.get_permeability_protection()
 		overmind.blob_reagent_datum.reaction_mob(L, VAPOR, 20, 0, mob_protection, overmind)//this will do between 10 and 20 damage(reduced by mob protection), depending on chemical, plus 4 from base brute damage.
 
-/mob/living/simple_animal/hostile/blob/blobbernaut/update_icons()
+/mob/living/animal/hostile/blob/blobbernaut/update_icons()
 	..()
 	if(overmind) //if we have an overmind, we're doing chemical reactions instead of pure damage
 		melee_damage_lower = 4
@@ -288,13 +288,13 @@
 		melee_damage_upper = initial(melee_damage_upper)
 		attacktext = initial(attacktext)
 
-/mob/living/simple_animal/hostile/blob/blobbernaut/death(gibbed)
+/mob/living/animal/hostile/blob/blobbernaut/death(gibbed)
 	..(gibbed)
 	if(factory)
 		factory.naut = null //remove this naut from its factory
 		factory.max_integrity = initial(factory.max_integrity)
 	flick("blobbernaut_death", src)
 
-/mob/living/simple_animal/hostile/blob/blobbernaut/independent
+/mob/living/animal/hostile/blob/blobbernaut/independent
 	independent = TRUE
 	gold_core_spawnable = 1

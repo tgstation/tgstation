@@ -2,7 +2,7 @@
 	Mobs
 */
 
-/mob/living/simple_animal/holodeck_monkey
+/mob/living/animal/holodeck_monkey
 	name = "monkey"
 	desc = "A holographic creature fond of bananas."
 	icon = 'icons/mob/monkey.dmi'

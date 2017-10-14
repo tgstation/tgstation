@@ -77,7 +77,7 @@
 /obj/machinery/porta_turret_cover/attack_alien(mob/living/carbon/alien/humanoid/user)
 	parent_turret.attack_alien(user)
 
-/obj/machinery/porta_turret_cover/attack_animal(mob/living/simple_animal/user)
+/obj/machinery/porta_turret_cover/attack_animal(mob/living/animal/user)
 	parent_turret.attack_animal(user)
 
 /obj/machinery/porta_turret_cover/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)

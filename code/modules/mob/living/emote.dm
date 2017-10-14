@@ -17,7 +17,7 @@
 /* EMOTE DATUMS */
 /datum/emote/living
 	mob_type_allowed_typecache = list(/mob/living)
-	mob_type_blacklist_typecache = list(/mob/living/simple_animal/slime, /mob/living/brain)
+	mob_type_blacklist_typecache = list(/mob/living/animal/slime, /mob/living/brain)
 
 /datum/emote/living/blush
 	key = "blush"
@@ -92,7 +92,7 @@
 	stat_allowed = UNCONSCIOUS
 
 /datum/emote/living/deathgasp/run_emote(mob/user, params)
-	var/mob/living/simple_animal/S = user
+	var/mob/living/animal/S = user
 	if(istype(S) && S.deathmessage)
 		message_simple = S.deathmessage
 	. = ..()

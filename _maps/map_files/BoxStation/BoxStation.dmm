@@ -148,7 +148,7 @@
 /turf/open/floor/plating,
 /area/security/prison)
 "aax" = (
-/mob/living/simple_animal/mouse/brown/Tom,
+/mob/living/animal/mouse/brown/Tom,
 /turf/open/floor/plating,
 /area/security/prison)
 "aay" = (
@@ -5490,7 +5490,7 @@
 /turf/open/floor/plasteel/black,
 /area/shuttle/labor)
 "ama" = (
-/mob/living/simple_animal/sloth/paperwork,
+/mob/living/animal/sloth/paperwork,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "amb" = (
@@ -17047,7 +17047,7 @@
 /area/crew_quarters/bar)
 "aNK" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/mob/living/simple_animal/hostile/retaliate/goat{
+/mob/living/animal/hostile/retaliate/goat{
 	name = "Pete"
 	},
 /turf/open/floor/plasteel/showroomfloor,
@@ -27689,7 +27689,7 @@
 "bnQ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/bed/dogbed/ian,
-/mob/living/simple_animal/pet/dog/corgi/Ian{
+/mob/living/animal/pet/dog/corgi/Ian{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -27879,7 +27879,7 @@
 	pixel_x = 30
 	},
 /obj/machinery/light,
-/mob/living/simple_animal/bot/cleanbot{
+/mob/living/animal/bot/cleanbot{
 	name = "C.L.E.A.N."
 	},
 /turf/open/floor/plasteel/white,
@@ -29483,7 +29483,7 @@
 	location = "QM #1"
 	},
 /obj/effect/turf_decal/bot,
-/mob/living/simple_animal/bot/mulebot{
+/mob/living/animal/bot/mulebot{
 	beacon_freq = 1400;
 	home_destination = "QM #1";
 	suffix = "#1"
@@ -30228,7 +30228,7 @@
 	location = "QM #2"
 	},
 /obj/effect/turf_decal/bot,
-/mob/living/simple_animal/bot/mulebot{
+/mob/living/animal/bot/mulebot{
 	home_destination = "QM #2";
 	suffix = "#2"
 	},
@@ -35102,7 +35102,7 @@
 /obj/structure/table/glass,
 /obj/item/pen,
 /obj/item/clothing/neck/stethoscope,
-/mob/living/simple_animal/pet/cat/Runtime,
+/mob/living/animal/pet/cat/Runtime,
 /turf/open/floor/plasteel/barber,
 /area/crew_quarters/heads/cmo)
 "bEk" = (
@@ -43566,7 +43566,7 @@
 /area/medical/virology)
 "bXe" = (
 /obj/effect/landmark/revenantspawn,
-/mob/living/simple_animal/slime,
+/mob/living/animal/slime,
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "bXf" = (
@@ -45474,7 +45474,7 @@
 /obj/structure/filingcabinet/chestdrawer,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/mob/living/simple_animal/parrot/Poly,
+/mob/living/animal/parrot/Poly,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -46575,7 +46575,7 @@
 /area/maintenance/aft)
 "cdM" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/mob/living/simple_animal/mouse,
+/mob/living/animal/mouse,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cdN" = (
@@ -53342,7 +53342,7 @@
 	uses = 10
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
-/mob/living/simple_animal/bot/secbot/pingsky,
+/mob/living/animal/bot/secbot/pingsky,
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/aisat_interior)
 "cuT" = (
@@ -53425,7 +53425,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/mob/living/simple_animal/bot/floorbot,
+/mob/living/animal/bot/floorbot,
 /turf/open/floor/plasteel/darkblue/corner,
 /area/ai_monitored/turret_protected/aisat/atmos)
 "cva" = (
@@ -53494,7 +53494,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/mob/living/simple_animal/bot/cleanbot,
+/mob/living/animal/bot/cleanbot,
 /turf/open/floor/plasteel/darkblue/corner{
 	dir = 8
 	},
@@ -55752,7 +55752,7 @@
 /area/maintenance/port/aft)
 "cAL" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/mob/living/simple_animal/hostile/lizard{
+/mob/living/animal/hostile/lizard{
 	name = "Wags-His-Tail";
 	real_name = "Wags-His-Tail"
 	},
@@ -56366,7 +56366,7 @@
 /area/maintenance/port/aft)
 "cCh" = (
 /obj/item/bedsheet/red,
-/mob/living/simple_animal/bot/secbot/beepsky{
+/mob/living/animal/bot/secbot/beepsky{
 	name = "Officer Beepsky"
 	},
 /turf/open/floor/plating,

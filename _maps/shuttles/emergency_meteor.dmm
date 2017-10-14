@@ -30,7 +30,7 @@
 	luminosity = 0
 	})
 "f" = (
-/mob/living/simple_animal/hostile/asteroid/goliath,
+/mob/living/animal/hostile/asteroid/goliath,
 /turf/open/floor/plating/asteroid,
 /area/shuttle/escape{
 	luminosity = 0

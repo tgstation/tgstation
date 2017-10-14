@@ -87,7 +87,7 @@
 	if(is_servant_of_ratvar(user))
 		attack_hand(user)
 
-/obj/structure/destructible/clockwork/attack_animal(mob/living/simple_animal/M)
+/obj/structure/destructible/clockwork/attack_animal(mob/living/animal/M)
 	if(is_servant_of_ratvar(M))
 		attack_hand(M)
 		return FALSE

@@ -639,7 +639,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/attack_hulk(mob/living/carbon/human/user)
 	return 0
 
-/obj/item/attack_animal(mob/living/simple_animal/M)
+/obj/item/attack_animal(mob/living/animal/M)
 	return 0
 
 /obj/item/mech_melee_attack(obj/mecha/M)

@@ -86,8 +86,8 @@
 /obj/machinery/r_n_d/experimentor/Initialize()
 	. = ..()
 
-	trackedIan = locate(/mob/living/simple_animal/pet/dog/corgi/Ian) in GLOB.mob_list
-	trackedRuntime = locate(/mob/living/simple_animal/pet/cat/Runtime) in GLOB.mob_list
+	trackedIan = locate(/mob/living/animal/pet/dog/corgi/Ian) in GLOB.mob_list
+	trackedRuntime = locate(/mob/living/animal/pet/cat/Runtime) in GLOB.mob_list
 	SetTypeReactions()
 
 /obj/machinery/r_n_d/experimentor/RefreshParts()
@@ -471,7 +471,7 @@
 				trackedIan.forceMove(loc)
 				investigate_log("Experimentor has stolen Ian!", INVESTIGATE_EXPERIMENTOR) //...if anyone ever fixes it...
 			else
-				new /mob/living/simple_animal/pet/dog/corgi(loc)
+				new /mob/living/animal/pet/dog/corgi(loc)
 				investigate_log("Experimentor has spawned a new corgi.", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
 		if(globalMalf > 36 && globalMalf < 50)
@@ -488,7 +488,7 @@
 				trackedRuntime.loc = loc
 				investigate_log("Experimentor has stolen Runtime!", INVESTIGATE_EXPERIMENTOR)
 			else
-				new /mob/living/simple_animal/pet/cat(loc)
+				new /mob/living/animal/pet/cat(loc)
 				investigate_log("Experimentor failed to steal runtime, and instead spawned a new cat.", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
 		if(globalMalf > 76)
@@ -626,7 +626,7 @@
 
 /obj/item/relic/proc/corgicannon(mob/user)
 	playsound(src, "sparks", rand(25,50), 1)
-	var/mob/living/simple_animal/pet/dog/corgi/C = new/mob/living/simple_animal/pet/dog/corgi(get_turf(user))
+	var/mob/living/animal/pet/dog/corgi/C = new/mob/living/animal/pet/dog/corgi(get_turf(user))
 	C.throw_at(pick(oview(10,user)), 10, rand(3,8), callback = CALLBACK(src, .throwSmoke, C))
 	warn_admins(user, "Corgi Cannon", 0)
 
@@ -648,7 +648,7 @@
 	to_chat(user, message)
 	var/animals = rand(1,25)
 	var/counter
-	var/list/valid_animals = list(/mob/living/simple_animal/parrot, /mob/living/simple_animal/butterfly, /mob/living/simple_animal/pet/cat, /mob/living/simple_animal/pet/dog/corgi, /mob/living/simple_animal/crab, /mob/living/simple_animal/pet/fox, /mob/living/simple_animal/hostile/lizard, /mob/living/simple_animal/mouse, /mob/living/simple_animal/pet/dog/pug, /mob/living/simple_animal/hostile/bear, /mob/living/simple_animal/hostile/poison/bees, /mob/living/simple_animal/hostile/carp)
+	var/list/valid_animals = list(/mob/living/animal/parrot, /mob/living/animal/butterfly, /mob/living/animal/pet/cat, /mob/living/animal/pet/dog/corgi, /mob/living/animal/crab, /mob/living/animal/pet/fox, /mob/living/animal/hostile/lizard, /mob/living/animal/mouse, /mob/living/animal/pet/dog/pug, /mob/living/animal/hostile/bear, /mob/living/animal/hostile/poison/bees, /mob/living/animal/hostile/carp)
 	for(counter = 1; counter < animals; counter++)
 		var/mobType = pick(valid_animals)
 		new mobType(get_turf(src))

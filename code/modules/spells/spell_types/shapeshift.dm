@@ -14,18 +14,18 @@
 	var/shapeshift_type
 	var/list/current_shapes = list()
 	var/list/current_casters = list()
-	var/list/possible_shapes = list(/mob/living/simple_animal/mouse,\
-		/mob/living/simple_animal/pet/dog/corgi,\
-		/mob/living/simple_animal/hostile/carp/ranged/chaos,\
-		/mob/living/simple_animal/bot/ed209,\
-		/mob/living/simple_animal/hostile/construct/armored)
+	var/list/possible_shapes = list(/mob/living/animal/mouse,\
+		/mob/living/animal/pet/dog/corgi,\
+		/mob/living/animal/hostile/carp/ranged/chaos,\
+		/mob/living/animal/bot/ed209,\
+		/mob/living/animal/hostile/construct/armored)
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/cast(list/targets,mob/user = usr)
 	for(var/mob/living/M in targets)
 		if(!shapeshift_type)
 			var/list/animal_list = list()
 			for(var/path in possible_shapes)
-				var/mob/living/simple_animal/A = path
+				var/mob/living/animal/A = path
 				animal_list[initial(A.name)] = path
 			var/new_shapeshift_type = input(M, "Choose Your Animal Form!", "It's Morphing Time!", null) as null|anything in animal_list
 			if(shapeshift_type)
@@ -80,7 +80,7 @@
 	desc = "Take on the shape a lesser ash drake."
 	invocation = "RAAAAAAAAWR!"
 
-	shapeshift_type = /mob/living/simple_animal/hostile/megafauna/dragon/lesser
-	list/current_shapes = list(/mob/living/simple_animal/hostile/megafauna/dragon/lesser)
+	shapeshift_type = /mob/living/animal/hostile/megafauna/dragon/lesser
+	list/current_shapes = list(/mob/living/animal/hostile/megafauna/dragon/lesser)
 	list/current_casters = list()
-	list/possible_shapes = list(/mob/living/simple_animal/hostile/megafauna/dragon/lesser)
+	list/possible_shapes = list(/mob/living/animal/hostile/megafauna/dragon/lesser)

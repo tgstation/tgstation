@@ -288,7 +288,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	alerttooltipstyle = "cult"
 	var/static/image/narnar
 	var/angle = 0
-	var/mob/living/simple_animal/hostile/construct/Cviewer = null
+	var/mob/living/animal/hostile/construct/Cviewer = null
 
 /obj/screen/alert/bloodsense/Initialize()
 	. = ..()

@@ -164,7 +164,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,1)
 			for(var/obj/item/device/soulstone/SS in sword.contents)
 				SS.usability = TRUE
-				for(var/mob/living/simple_animal/shade/EX in SS)
+				for(var/mob/living/animal/shade/EX in SS)
 					SSticker.mode.remove_cultist(EX.mind, 1, 0)
 					EX.icon_state = "ghost1"
 					EX.name = "Purified [EX.name]"

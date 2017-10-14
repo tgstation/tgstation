@@ -195,7 +195,7 @@
 
 /datum/reagent/consumable/frostoil/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 5)
-		for(var/mob/living/simple_animal/slime/M in T)
+		for(var/mob/living/animal/slime/M in T)
 			M.adjustToxLoss(rand(15,30))
 	if(reac_volume >= 1) // Make Freezy Foam and anti-fire grenades!
 		if(isopenturf(T))

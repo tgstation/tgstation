@@ -494,7 +494,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 /obj/machinery/power/supermatter_shard/attack_alien(mob/user)
 	dust_mob(user, cause = "alien attack")
 
-/obj/machinery/power/supermatter_shard/attack_animal(mob/living/simple_animal/S)
+/obj/machinery/power/supermatter_shard/attack_animal(mob/living/animal/S)
 	var/murder
 	if(!S.melee_damage_upper && !S.melee_damage_lower)
 		murder = S.friendly

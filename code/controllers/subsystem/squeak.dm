@@ -18,7 +18,7 @@ SUBSYSTEM_DEF(squeak)
 		return
 	find_exposed_wires()
 
-	var/mob/living/simple_animal/mouse/M
+	var/mob/living/animal/mouse/M
 	var/turf/proposed_turf
 
 	while((num_mice > 0) && exposed_wires.len)

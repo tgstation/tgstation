@@ -94,7 +94,7 @@
 	var/turf/central_turf = get_turf(src)
 	for(var/i in template.get_affected_turfs(central_turf, 1))
 		var/turf/T = i
-		for(var/mob/living/simple_animal/monster in T)
+		for(var/mob/living/animal/monster in T)
 			qdel(monster)
 		for(var/obj/structure/flora/ash/plant in T)
 			qdel(plant)

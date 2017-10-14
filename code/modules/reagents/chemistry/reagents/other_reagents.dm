@@ -133,7 +133,7 @@
 	if(reac_volume >= 5)
 		T.MakeSlippery(min_wet_time = 10, wet_time_to_add = min(reac_volume*1.5, 60))
 
-	for(var/mob/living/simple_animal/slime/M in T)
+	for(var/mob/living/animal/slime/M in T)
 		M.apply_water()
 
 	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
@@ -952,7 +952,7 @@
 		for(var/obj/effect/decal/cleanable/C in T)
 			qdel(C)
 
-		for(var/mob/living/simple_animal/slime/M in T)
+		for(var/mob/living/animal/slime/M in T)
 			M.adjustToxLoss(rand(5,10))
 
 /datum/reagent/space_cleaner/reaction_mob(mob/M, method=TOUCH, reac_volume)

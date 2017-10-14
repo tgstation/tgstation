@@ -17,7 +17,7 @@
 	name = replacetext(name, "REAL_NAME", M.real_name)
 	desc = replacetext(desc, "NAME", name)
 
-/datum/dog_fashion/proc/apply(mob/living/simple_animal/pet/dog/D)
+/datum/dog_fashion/proc/apply(mob/living/animal/pet/dog/D)
 	if(name)
 		D.name = name
 	if(desc)

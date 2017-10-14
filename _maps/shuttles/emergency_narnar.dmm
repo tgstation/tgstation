@@ -112,7 +112,7 @@
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "w" = (
-/mob/living/simple_animal/hostile/construct/builder,
+/mob/living/animal/hostile/construct/builder,
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "x" = (
@@ -140,7 +140,7 @@
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "C" = (
-/mob/living/simple_animal/hostile/construct/armored,
+/mob/living/animal/hostile/construct/armored,
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "D" = (
@@ -170,7 +170,7 @@
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "H" = (
-/mob/living/simple_animal/hostile/construct/wraith,
+/mob/living/animal/hostile/construct/wraith,
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "I" = (
@@ -182,14 +182,14 @@
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "J" = (
-/mob/living/simple_animal/hostile/carp/eyeball{
+/mob/living/animal/hostile/carp/eyeball{
 	faction = list("cult");
 	name = "left eyeball"
 	},
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "K" = (
-/mob/living/simple_animal/hostile/carp/eyeball{
+/mob/living/animal/hostile/carp/eyeball{
 	faction = list("cult");
 	name = "right eyeball"
 	},

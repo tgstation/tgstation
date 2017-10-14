@@ -186,7 +186,7 @@
 	stage3	= list("<span class='danger'>Your appendages are melting away.</span>", "<span class='danger'>Your limbs begin to lose their shape.</span>")
 	stage4	= list("<span class='danger'>You are turning into a slime.</span>")
 	stage5	= list("<span class='danger'>You have become a slime.</span>")
-	new_form = /mob/living/simple_animal/slime/random
+	new_form = /mob/living/animal/slime/random
 
 /datum/disease/transformation/slime/stage_act()
 	..()
@@ -213,7 +213,7 @@
 	stage3	= list("<span class='danger'>Must... eat... chocolate....</span>", "<span class='danger'>YAP</span>")
 	stage4	= list("<span class='danger'>Visions of washing machines assail your mind!</span>")
 	stage5	= list("<span class='danger'>AUUUUUU!!!</span>")
-	new_form = /mob/living/simple_animal/pet/dog/corgi
+	new_form = /mob/living/animal/pet/dog/corgi
 
 /datum/disease/transformation/corgi/stage_act()
 	..()
@@ -239,4 +239,4 @@
 	stage3	= list("<span class='danger'>Your appendages are melting away.</span>", "<span class='danger'>Your limbs begin to lose their shape.</span>")
 	stage4	= list("<span class='danger'>You're ravenous.</span>")
 	stage5	= list("<span class='danger'>You have become a morph.</span>")
-	new_form = /mob/living/simple_animal/hostile/morph
+	new_form = /mob/living/animal/hostile/morph

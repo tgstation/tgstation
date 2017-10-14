@@ -1,6 +1,6 @@
 
 //Harvest; activated ly clicking the target, will try to drain their essence.
-/mob/living/simple_animal/revenant/ClickOn(atom/A, params) //revenants can't interact with the world directly.
+/mob/living/animal/revenant/ClickOn(atom/A, params) //revenants can't interact with the world directly.
 	A.examine(src)
 	if(ishuman(A))
 		if(A in drained_mobs)
@@ -8,7 +8,7 @@
 		else if(in_range(src, A))
 			Harvest(A)
 
-/mob/living/simple_animal/revenant/proc/Harvest(mob/living/carbon/human/target)
+/mob/living/animal/revenant/proc/Harvest(mob/living/carbon/human/target)
 	if(!castcheck(0))
 		return
 	if(draining)
@@ -102,7 +102,7 @@
 	action_icon_state = "r_transmit"
 	action_background_icon_state = "bg_revenant"
 
-/obj/effect/proc_holder/spell/targeted/revenant_transmit/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
+/obj/effect/proc_holder/spell/targeted/revenant_transmit/cast(list/targets, mob/living/animal/revenant/user = usr)
 	for(var/mob/living/M in targets)
 		var/msg = stripped_input(usr, "What do you wish to tell [M]?", null, "")
 		if(!msg)
@@ -139,7 +139,7 @@
 	else
 		name = "[initial(name)] ([cast_amount]E)"
 
-/obj/effect/proc_holder/spell/aoe_turf/revenant/can_cast(mob/living/simple_animal/revenant/user = usr)
+/obj/effect/proc_holder/spell/aoe_turf/revenant/can_cast(mob/living/animal/revenant/user = usr)
 	if(charge_counter < charge_max)
 		return FALSE
 	if(!istype(user)) //Badmins, no. Badmins, don't do it.
@@ -153,7 +153,7 @@
 		return FALSE
 	return TRUE
 
-/obj/effect/proc_holder/spell/aoe_turf/revenant/proc/attempt_cast(mob/living/simple_animal/revenant/user = usr)
+/obj/effect/proc_holder/spell/aoe_turf/revenant/proc/attempt_cast(mob/living/animal/revenant/user = usr)
 	if(!istype(user)) //If you're not a revenant, it works. Please, please, please don't give this to a non-revenant.
 		name = "[initial(name)]"
 		if(locked)
@@ -192,7 +192,7 @@
 	var/shock_damage = 15
 	action_icon_state = "overload_lights"
 
-/obj/effect/proc_holder/spell/aoe_turf/revenant/overload/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
+/obj/effect/proc_holder/spell/aoe_turf/revenant/overload/cast(list/targets, mob/living/animal/revenant/user = usr)
 	if(attempt_cast(user))
 		for(var/turf/T in targets)
 			INVOKE_ASYNC(src, .proc/overload, T, user)
@@ -232,7 +232,7 @@
 	cast_amount = 30
 	action_icon_state = "defile"
 
-/obj/effect/proc_holder/spell/aoe_turf/revenant/defile/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
+/obj/effect/proc_holder/spell/aoe_turf/revenant/defile/cast(list/targets, mob/living/animal/revenant/user = usr)
 	if(attempt_cast(user))
 		for(var/turf/T in targets)
 			INVOKE_ASYNC(src, .proc/defile, T)
@@ -279,13 +279,13 @@
 	action_icon_state = "malfunction"
 
 //A note to future coders: do not replace this with an EMP because it will wreck malf AIs and gang dominators and everyone will hate you.
-/obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
+/obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction/cast(list/targets, mob/living/animal/revenant/user = usr)
 	if(attempt_cast(user))
 		for(var/turf/T in targets)
 			INVOKE_ASYNC(src, .proc/malfunction, T, user)
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction/proc/malfunction(turf/T, mob/user)
-	for(var/mob/living/simple_animal/bot/bot in T)
+	for(var/mob/living/animal/bot/bot in T)
 		if(!bot.emagged)
 			new /obj/effect/temp_visual/revenant(bot.loc)
 			bot.locked = FALSE
@@ -323,7 +323,7 @@
 	unlock_amount = 200
 	action_icon_state = "blight"
 
-/obj/effect/proc_holder/spell/aoe_turf/revenant/blight/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
+/obj/effect/proc_holder/spell/aoe_turf/revenant/blight/cast(list/targets, mob/living/animal/revenant/user = usr)
 	if(attempt_cast(user))
 		for(var/turf/T in targets)
 			INVOKE_ASYNC(src, .proc/blight, T, user)

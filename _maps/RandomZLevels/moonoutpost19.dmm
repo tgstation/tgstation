@@ -75,7 +75,7 @@
 /area/awaymission/moonoutpost19/hive)
 "ak" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/alien,
+/mob/living/animal/hostile/alien,
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006
@@ -156,7 +156,7 @@
 /area/awaymission/moonoutpost19/syndicate)
 "au" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/alien/sentinel,
+/mob/living/animal/hostile/alien/sentinel,
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006
@@ -310,7 +310,7 @@
 /area/awaymission/moonoutpost19/hive)
 "aM" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/alien/drone{
+/mob/living/animal/hostile/alien/drone{
 	plants_off = 1
 	},
 /turf/open/floor/plating/asteroid{
@@ -372,7 +372,7 @@
 /area/awaymission/moonoutpost19/main)
 "aT" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/alien/queen/large{
+/mob/living/animal/hostile/alien/queen/large{
 	desc = "A gigantic alien who is in charge of the hive and all of its loyal servants.";
 	name = "alien queen";
 	pixel_x = -16;
@@ -436,7 +436,7 @@
 /area/awaymission/moonoutpost19/main)
 "bb" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/alien/drone{
+/mob/living/animal/hostile/alien/drone{
 	plants_off = 1
 	},
 /turf/open/floor/plating/asteroid{
@@ -508,7 +508,7 @@
 /area/awaymission/moonoutpost19/hive)
 "bk" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/alien/sentinel,
+/mob/living/animal/hostile/alien/sentinel,
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006
@@ -901,7 +901,7 @@
 /area/awaymission/moonoutpost19/syndicate)
 "bW" = (
 /obj/structure/alien/weeds/node,
-/mob/living/simple_animal/hostile/alien,
+/mob/living/animal/hostile/alien,
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006
@@ -1596,7 +1596,7 @@
 /area/awaymission/moonoutpost19/syndicate)
 "dd" = (
 /obj/structure/alien/weeds/node,
-/mob/living/simple_animal/hostile/alien/drone{
+/mob/living/animal/hostile/alien/drone{
 	plants_off = 1
 	},
 /turf/open/floor/plating/asteroid{
@@ -2056,7 +2056,7 @@
 "dS" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood,
-/mob/living/simple_animal/hostile/alien/drone{
+/mob/living/animal/hostile/alien/drone{
 	plants_off = 1
 	},
 /turf/open/floor/plating/asteroid{

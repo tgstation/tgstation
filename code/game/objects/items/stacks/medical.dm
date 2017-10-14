@@ -56,7 +56,7 @@
 	if(user)
 		if (M != user)
 			if (isanimal(M))
-				var/mob/living/simple_animal/critter = M
+				var/mob/living/animal/critter = M
 				if (!(critter.healable))
 					to_chat(user, "<span class='notice'> You cannot use [src] on [M]!</span>")
 					return

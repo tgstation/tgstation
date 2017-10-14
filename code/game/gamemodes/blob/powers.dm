@@ -158,7 +158,7 @@
 	B.update_icon()
 	B.visible_message("<span class='warning'><b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b></span>")
 	playsound(B.loc, 'sound/effects/splat.ogg', 50, 1)
-	var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(B))
+	var/mob/living/animal/hostile/blob/blobbernaut/blobber = new /mob/living/animal/hostile/blob/blobbernaut(get_turf(B))
 	flick("blobbernaut_produce", blobber)
 	B.naut = blobber
 	blobber.factory = B
@@ -299,7 +299,7 @@
 	var/list/surrounding_turfs = block(locate(T.x - 1, T.y - 1, T.z), locate(T.x + 1, T.y + 1, T.z))
 	if(!surrounding_turfs.len)
 		return
-	for(var/mob/living/simple_animal/hostile/blob/blobspore/BS in blob_mobs)
+	for(var/mob/living/animal/hostile/blob/blobspore/BS in blob_mobs)
 		if(isturf(BS.loc) && get_dist(BS, T) <= 35)
 			BS.LoseTarget()
 			BS.Goto(pick(surrounding_turfs), BS.move_to_delay)
@@ -314,7 +314,7 @@
 	else
 		to_chat(src, "You broadcast with your minions, <B>[speak_text]</B>")
 	for(var/BLO in blob_mobs)
-		var/mob/living/simple_animal/hostile/blob/BM = BLO
+		var/mob/living/animal/hostile/blob/BM = BLO
 		if(BM.stat == CONSCIOUS)
 			BM.say(speak_text)
 
@@ -335,7 +335,7 @@
 		var/obj/structure/blob/B = BL
 		B.update_icon()
 	for(var/BLO in blob_mobs)
-		var/mob/living/simple_animal/hostile/blob/BM = BLO
+		var/mob/living/animal/hostile/blob/BM = BLO
 		BM.update_icons() //If it's getting a new chemical, tell it what it does!
 		to_chat(BM, "Your overmind's blob reagent is now: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!")
 		to_chat(BM, "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.shortdesc ? "[blob_reagent_datum.shortdesc]" : "[blob_reagent_datum.description]"]")

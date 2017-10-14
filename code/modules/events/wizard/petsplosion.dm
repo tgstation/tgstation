@@ -7,7 +7,7 @@
 	var/mobs_to_dupe = 0
 
 /datum/round_event_control/wizard/petsplosion/preRunEvent()
-	for(var/mob/living/simple_animal/F in GLOB.living_mob_list)
+	for(var/mob/living/animal/F in GLOB.living_mob_list)
 		if(!ishostile(F) && (F.z in GLOB.station_z_levels))
 			mobs_to_dupe++
 	if(mobs_to_dupe > 100 || !mobs_to_dupe)
@@ -23,7 +23,7 @@
 /datum/round_event/wizard/petsplosion/tick()
 	if(activeFor >= 30 * countdown) // 0 seconds : 2 animals | 30 seconds : 4 animals | 1 minute : 8 animals
 		countdown += 1
-		for(var/mob/living/simple_animal/F in GLOB.living_mob_list) //If you cull the heard before the next replication, things will be easier for you
+		for(var/mob/living/animal/F in GLOB.living_mob_list) //If you cull the heard before the next replication, things will be easier for you
 			if(!ishostile(F) && (F.z in GLOB.station_z_levels))
 				new F.type(F.loc)
 				mobs_duped++

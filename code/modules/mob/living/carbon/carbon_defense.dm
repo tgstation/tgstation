@@ -105,7 +105,7 @@
 				playsound(get_turf(src), I.get_dismember_sound(), 80, 1)
 		return TRUE //successful attack
 
-/mob/living/carbon/attack_drone(mob/living/simple_animal/drone/user)
+/mob/living/carbon/attack_drone(mob/living/animal/drone/user)
 	return //so we don't call the carbon's attack_hand().
 
 /mob/living/carbon/attack_hand(mob/living/carbon/human/user)
@@ -150,7 +150,7 @@
 		return 1
 
 
-/mob/living/carbon/attack_slime(mob/living/simple_animal/slime/M)
+/mob/living/carbon/attack_slime(mob/living/animal/slime/M)
 	if(..()) //successful slime attack
 		if(M.powerlevel > 0)
 			var/stunprob = M.powerlevel * 7 + 10  // 17 at level 1, 80 at level 10

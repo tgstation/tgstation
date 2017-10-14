@@ -84,45 +84,45 @@
 #define ispAI(A) (istype(A, /mob/living/silicon/pai))
 
 //Simple animals
-#define isanimal(A) (istype(A, /mob/living/simple_animal))
+#define isanimal(A) (istype(A, /mob/living/animal))
 
-#define isrevenant(A) (istype(A, /mob/living/simple_animal/revenant))
+#define isrevenant(A) (istype(A, /mob/living/animal/revenant))
 
-#define isbot(A) (istype(A, /mob/living/simple_animal/bot))
+#define isbot(A) (istype(A, /mob/living/animal/bot))
 
-#define iscrab(A) (istype(A, /mob/living/simple_animal/crab))
+#define iscrab(A) (istype(A, /mob/living/animal/crab))
 
-#define isshade(A) (istype(A, /mob/living/simple_animal/shade))
+#define isshade(A) (istype(A, /mob/living/animal/shade))
 
-#define ismouse(A) (istype(A, /mob/living/simple_animal/mouse))
+#define ismouse(A) (istype(A, /mob/living/animal/mouse))
 
-#define isslime(A) (istype(A, /mob/living/simple_animal/slime))
+#define isslime(A) (istype(A, /mob/living/animal/slime))
 
-#define isdrone(A) (istype(A, /mob/living/simple_animal/drone))
+#define isdrone(A) (istype(A, /mob/living/animal/drone))
 
-#define iscat(A) (istype(A, /mob/living/simple_animal/pet/cat))
+#define iscat(A) (istype(A, /mob/living/animal/pet/cat))
 
-#define isdog(A) (istype(A, /mob/living/simple_animal/pet/dog))
+#define isdog(A) (istype(A, /mob/living/animal/pet/dog))
 
-#define iscorgi(A) (istype(A, /mob/living/simple_animal/pet/dog/corgi))
+#define iscorgi(A) (istype(A, /mob/living/animal/pet/dog/corgi))
 
-#define ishostile(A) (istype(A, /mob/living/simple_animal/hostile))
+#define ishostile(A) (istype(A, /mob/living/animal/hostile))
 
-#define isbear(A) (istype(A, /mob/living/simple_animal/hostile/bear))
+#define isbear(A) (istype(A, /mob/living/animal/hostile/bear))
 
-#define iscarp(A) (istype(A, /mob/living/simple_animal/hostile/carp))
+#define iscarp(A) (istype(A, /mob/living/animal/hostile/carp))
 
-#define isswarmer(A) (istype(A, /mob/living/simple_animal/hostile/swarmer))
+#define isswarmer(A) (istype(A, /mob/living/animal/hostile/swarmer))
 
-#define isguardian(A) (istype(A, /mob/living/simple_animal/hostile/guardian))
+#define isguardian(A) (istype(A, /mob/living/animal/hostile/guardian))
 
-#define isclockmob(A) (istype(A, /mob/living/simple_animal/hostile/clockwork))
+#define isclockmob(A) (istype(A, /mob/living/animal/hostile/clockwork))
 
-#define isconstruct(A) (istype(A, /mob/living/simple_animal/hostile/construct))
+#define isconstruct(A) (istype(A, /mob/living/animal/hostile/construct))
 
-#define ismegafauna(A) (istype(A, /mob/living/simple_animal/hostile/megafauna))
+#define ismegafauna(A) (istype(A, /mob/living/animal/hostile/megafauna))
 
-#define isclown(A) (istype(A, /mob/living/simple_animal/hostile/retaliate/clown))
+#define isclown(A) (istype(A, /mob/living/animal/hostile/retaliate/clown))
 
 //Misc mobs
 #define isobserver(A) (istype(A, /mob/dead/observer))

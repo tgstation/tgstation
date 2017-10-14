@@ -377,13 +377,13 @@
 /*~~~~~~~~~
 	Bots!
 ~~~~~~~~~~*/
-/mob/living/simple_animal/bot/proc/diag_hud_set_bothealth()
+/mob/living/animal/bot/proc/diag_hud_set_bothealth()
 	var/image/holder = hud_list[DIAG_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
 	holder.icon_state = "huddiag[RoundDiagBar(health/maxHealth)]"
 
-/mob/living/simple_animal/bot/proc/diag_hud_set_botstat() //On (With wireless on or off), Off, EMP'ed
+/mob/living/animal/bot/proc/diag_hud_set_botstat() //On (With wireless on or off), Off, EMP'ed
 	var/image/holder = hud_list[DIAG_STAT_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
@@ -394,7 +394,7 @@
 	else //Bot is off
 		holder.icon_state = "huddead2"
 
-/mob/living/simple_animal/bot/proc/diag_hud_set_botmode() //Shows a bot's current operation
+/mob/living/animal/bot/proc/diag_hud_set_botmode() //Shows a bot's current operation
 	var/image/holder = hud_list[DIAG_BOT_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size

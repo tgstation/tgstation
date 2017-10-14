@@ -948,7 +948,7 @@
 	},
 /area/ruin/powered/clownplanet)
 "Mv" = (
-/mob/living/simple_animal/hostile/retaliate/clown,
+/mob/living/animal/hostile/retaliate/clown,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
 "MR" = (

@@ -78,7 +78,7 @@
 	else if(trapped == HOWLING_GHOST)
 		visible_message("<span class='userdanger'><font size='5'>[pick("OooOOooooOOOoOoOOooooOOOOO", "BooOOooOooooOOOO", "BOO!", "WoOOoOoooOooo")]</font></span>")
 		playsound(loc, 'sound/spookoween/ghosty_wind.ogg', 300, 1)
-		new /mob/living/simple_animal/shade/howling_ghost(loc)
+		new /mob/living/animal/shade/howling_ghost(loc)
 		trapped = 0
 
 	else if(trapped == SCARY_BATS)
@@ -86,21 +86,21 @@
 		playsound(loc, 'sound/spookoween/bats.ogg', 300, 1)
 		var/number = rand(1,3)
 		for(var/i=0,i < number,i++)
-			new /mob/living/simple_animal/hostile/retaliate/bat(loc)
+			new /mob/living/animal/hostile/retaliate/bat(loc)
 		trapped = 0
 
 	else if(trapped == ANGRY_FAITHLESS)
 		visible_message("<span class='userdanger'>The closet bursts open!</span>")
 		visible_message("<span class='userdanger'><font size='5'>THIS BEING RADIATES PURE EVIL! YOU BETTER RUN!!!</font></span>")
 		playsound(loc, 'sound/hallucinations/wail.ogg', 300, 1)
-		var/mob/living/simple_animal/hostile/faithless/F = new(loc)
+		var/mob/living/animal/hostile/faithless/F = new(loc)
 		trapped = 0
 		QDEL_IN(F, 120)
 
 	else if(trapped == INSANE_CLOWN)
 		visible_message("<span class='userdanger'><font size='5'>...</font></span>")
 		playsound(loc, 'sound/spookoween/scary_clown_appear.ogg', 300, 1)
-		spawn_atom_to_turf(/mob/living/simple_animal/hostile/retaliate/clown/insane, loc, 1, FALSE)
+		spawn_atom_to_turf(/mob/living/animal/hostile/retaliate/clown/insane, loc, 1, FALSE)
 		trapped = 0
 
 //don't spawn in crates
@@ -115,7 +115,7 @@
 //Spookoween Ghost//
 ////////////////////
 
-/mob/living/simple_animal/shade/howling_ghost
+/mob/living/animal/shade/howling_ghost
 	name = "ghost"
 	real_name = "ghost"
 	icon = 'icons/mob/mob.dmi'
@@ -129,14 +129,14 @@
 	layer = 4
 	var/timer = 0
 
-/mob/living/simple_animal/shade/howling_ghost/Initialize()
+/mob/living/animal/shade/howling_ghost/Initialize()
 	. = ..()
 	icon_state = pick("ghost","ghostian","ghostian2","ghostking","ghost1","ghost2")
 	icon_living = icon_state
 	status_flags |= GODMODE
 	timer = rand(1,15)
 
-/mob/living/simple_animal/shade/howling_ghost/Life()
+/mob/living/animal/shade/howling_ghost/Life()
 	..()
 	timer--
 	if(prob(20))
@@ -145,16 +145,16 @@
 		spooky_ghosty()
 		timer = rand(1,15)
 
-/mob/living/simple_animal/shade/howling_ghost/proc/EtherealMove(direction)
+/mob/living/animal/shade/howling_ghost/proc/EtherealMove(direction)
 	loc = get_step(src, direction)
 	setDir(direction)
 
-/mob/living/simple_animal/shade/howling_ghost/proc/roam()
+/mob/living/animal/shade/howling_ghost/proc/roam()
 	if(prob(80))
 		var/direction = pick(NORTH,SOUTH,EAST,WEST,NORTHEAST,NORTHWEST,SOUTHEAST,SOUTHWEST)
 		EtherealMove(direction)
 
-/mob/living/simple_animal/shade/howling_ghost/proc/spooky_ghosty()
+/mob/living/animal/shade/howling_ghost/proc/spooky_ghosty()
 	if(prob(20)) //haunt
 		playsound(loc, pick('sound/spookoween/ghosty_wind.ogg','sound/spookoween/ghost_whisper.ogg','sound/spookoween/chain_rattling.ogg'), 300, 1)
 	if(prob(10)) //flickers
@@ -168,10 +168,10 @@
 			step(I,direction)
 		return
 
-/mob/living/simple_animal/shade/howling_ghost/adjustHealth()
+/mob/living/animal/shade/howling_ghost/adjustHealth()
 	. = 0
 
-/mob/living/simple_animal/shade/howling_ghost/CanPass(atom/movable/mover, turf/target)
+/mob/living/animal/shade/howling_ghost/CanPass(atom/movable/mover, turf/target)
 	return 1
 
 
@@ -179,7 +179,7 @@
 //Spookoween Insane Clown//
 ///////////////////////////
 
-/mob/living/simple_animal/hostile/retaliate/clown/insane
+/mob/living/animal/hostile/retaliate/clown/insane
 	name = "insane clown"
 	desc = "Some clowns do not manage to be accepted, and go insane. This is one of them."
 	icon_state = "scary_clown"
@@ -193,25 +193,25 @@
 	unsuitable_atmos_damage = 0
 	var/timer
 
-/mob/living/simple_animal/hostile/retaliate/clown/insane/Initialize()
+/mob/living/animal/hostile/retaliate/clown/insane/Initialize()
 	. = ..()
 	timer = rand(5,15)
 	status_flags = (status_flags | GODMODE)
 	return
 
-/mob/living/simple_animal/hostile/retaliate/clown/insane/Retaliate()
+/mob/living/animal/hostile/retaliate/clown/insane/Retaliate()
 	return
 
-/mob/living/simple_animal/hostile/retaliate/clown/insane/ex_act()
+/mob/living/animal/hostile/retaliate/clown/insane/ex_act()
 	return
 
-/mob/living/simple_animal/hostile/retaliate/clown/insane/Life()
+/mob/living/animal/hostile/retaliate/clown/insane/Life()
 	timer--
 	if(target)
 		stalk()
 	return
 
-/mob/living/simple_animal/hostile/retaliate/clown/insane/proc/stalk()
+/mob/living/animal/hostile/retaliate/clown/insane/proc/stalk()
 	var/mob/living/M = target
 	if(M.stat == DEAD)
 		playsound(M.loc, 'sound/spookoween/insane_low_laugh.ogg', 300, 1)
@@ -222,18 +222,18 @@
 		spawn(12)
 			loc = M.loc
 
-/mob/living/simple_animal/hostile/retaliate/clown/insane/MoveToTarget()
+/mob/living/animal/hostile/retaliate/clown/insane/MoveToTarget()
 	stalk(target)
 
-/mob/living/simple_animal/hostile/retaliate/clown/insane/AttackingTarget()
+/mob/living/animal/hostile/retaliate/clown/insane/AttackingTarget()
 	return
 
-/mob/living/simple_animal/hostile/retaliate/clown/insane/adjustHealth()
+/mob/living/animal/hostile/retaliate/clown/insane/adjustHealth()
 	. = 0
 	if(prob(5))
 		playsound(loc, 'sound/spookoween/insane_low_laugh.ogg', 300, 1)
 
-/mob/living/simple_animal/hostile/retaliate/clown/insane/attackby(obj/item/O, mob/user)
+/mob/living/animal/hostile/retaliate/clown/insane/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/nullrod))
 		if(prob(5))
 			visible_message("[src] finally found the peace it deserves. <i>You hear honks echoing off into the distance.</i>")
@@ -244,7 +244,7 @@
 	else
 		..()
 
-/mob/living/simple_animal/hostile/retaliate/clown/insane/handle_temperature_damage()
+/mob/living/animal/hostile/retaliate/clown/insane/handle_temperature_damage()
 	return
 
 /////////////////////////

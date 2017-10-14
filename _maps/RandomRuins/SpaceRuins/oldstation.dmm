@@ -3,7 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "ab" = (
-/mob/living/simple_animal/hostile/carp,
+/mob/living/animal/hostile/carp,
 /turf/template_noop,
 /area/template_noop)
 "ac" = (
@@ -23,7 +23,7 @@
 /turf/open/floor/plasteel/black,
 /area/ruin/space/has_grav/ancientstation/hivebot)
 "af" = (
-/mob/living/simple_animal/hostile/hivebot,
+/mob/living/animal/hostile/hivebot,
 /turf/open/floor/plasteel/black,
 /area/ruin/space/has_grav/ancientstation/hivebot)
 "ag" = (
@@ -79,13 +79,13 @@
 /area/ruin/space/has_grav/ancientstation/comm)
 "ao" = (
 /obj/effect/decal/cleanable/oil,
-/mob/living/simple_animal/hostile/hivebot,
+/mob/living/animal/hostile/hivebot,
 /turf/open/floor/plasteel/black,
 /area/ruin/space/has_grav/ancientstation/hivebot)
 "ap" = (
 /obj/effect/decal/cleanable/oil,
 /obj/effect/decal/cleanable/robot_debris,
-/mob/living/simple_animal/hostile/hivebot,
+/mob/living/animal/hostile/hivebot,
 /turf/open/floor/plasteel/black,
 /area/ruin/space/has_grav/ancientstation/hivebot)
 "aq" = (
@@ -156,20 +156,20 @@
 /area/template_noop)
 "aB" = (
 /obj/effect/decal/cleanable/robot_debris,
-/mob/living/simple_animal/hostile/hivebot,
+/mob/living/animal/hostile/hivebot,
 /turf/open/floor/plasteel/black,
 /area/ruin/space/has_grav/ancientstation/hivebot)
 "aC" = (
-/mob/living/simple_animal/hostile/hivebot/range,
+/mob/living/animal/hostile/hivebot/range,
 /turf/open/floor/plasteel/black,
 /area/ruin/space/has_grav/ancientstation/hivebot)
 "aD" = (
-/mob/living/simple_animal/hostile/hivebot/strong,
+/mob/living/animal/hostile/hivebot/strong,
 /turf/open/floor/plasteel/black,
 /area/ruin/space/has_grav/ancientstation/hivebot)
 "aE" = (
 /obj/effect/decal/cleanable/oil,
-/mob/living/simple_animal/hostile/hivebot/strong,
+/mob/living/animal/hostile/hivebot/strong,
 /turf/open/floor/plasteel/black,
 /area/ruin/space/has_grav/ancientstation/hivebot)
 "aF" = (
@@ -359,7 +359,7 @@
 /area/template_noop)
 "be" = (
 /obj/effect/decal/cleanable/oil,
-/mob/living/simple_animal/hostile/hivebot/range,
+/mob/living/animal/hostile/hivebot/range,
 /turf/open/floor/plasteel/black,
 /area/ruin/space/has_grav/ancientstation/hivebot)
 "bf" = (
@@ -638,7 +638,7 @@
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "cc" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/hivebot,
+/mob/living/animal/hostile/hivebot,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "cd" = (
@@ -825,7 +825,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/hivebot/strong,
+/mob/living/animal/hostile/hivebot/strong,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "cA" = (
@@ -856,7 +856,7 @@
 	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/hivebot/range,
+/mob/living/animal/hostile/hivebot/range,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "cD" = (
@@ -879,7 +879,7 @@
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "cF" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/hivebot/range,
+/mob/living/animal/hostile/hivebot/range,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "cG" = (
@@ -1008,7 +1008,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/hivebot,
+/mob/living/animal/hostile/hivebot,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "cZ" = (
@@ -1017,7 +1017,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/mob/living/simple_animal/hostile/hivebot,
+/mob/living/animal/hostile/hivebot,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "da" = (
@@ -1034,7 +1034,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/hivebot/range,
+/mob/living/animal/hostile/hivebot/range,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "dc" = (
@@ -1050,7 +1050,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/hivebot/range,
+/mob/living/animal/hostile/hivebot/range,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "de" = (
@@ -1066,12 +1066,12 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
-/mob/living/simple_animal/hostile/hivebot/strong,
+/mob/living/animal/hostile/hivebot/strong,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "dg" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/hivebot/strong,
+/mob/living/animal/hostile/hivebot/strong,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "dh" = (
@@ -1427,12 +1427,12 @@
 /area/ruin/space/has_grav/ancientstation/rnd)
 "ec" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/hivebot/strong,
+/mob/living/animal/hostile/hivebot/strong,
 /turf/open/floor/plasteel/white/corner,
 /area/ruin/space/has_grav/ancientstation/rnd)
 "ed" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/hivebot,
+/mob/living/animal/hostile/hivebot,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "ee" = (
@@ -1444,7 +1444,7 @@
 	req_access = "0";
 	req_one_access = "0"
 	},
-/mob/living/simple_animal/hostile/hivebot,
+/mob/living/animal/hostile/hivebot,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "ef" = (
@@ -1613,7 +1613,7 @@
 /area/ruin/space/has_grav/ancientstation/rnd)
 "eC" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/hivebot/strong,
+/mob/living/animal/hostile/hivebot/strong,
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/ancientstation/rnd)
 "eD" = (
@@ -1781,20 +1781,20 @@
 	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/hivebot,
+/mob/living/animal/hostile/hivebot,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "eX" = (
 /obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/mob/living/simple_animal/hostile/hivebot,
+/mob/living/animal/hostile/hivebot,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "eY" = (
 /obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/hivebot,
+/mob/living/animal/hostile/hivebot,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "eZ" = (
@@ -1966,7 +1966,7 @@
 /area/ruin/space/has_grav/ancientstation/rnd)
 "fw" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/hivebot/strong,
+/mob/living/animal/hostile/hivebot/strong,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/rnd)
 "fx" = (
@@ -2120,13 +2120,13 @@
 	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/hivebot,
+/mob/living/animal/hostile/hivebot,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "fS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/mob/living/simple_animal/hostile/hivebot,
+/mob/living/animal/hostile/hivebot,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "fT" = (
@@ -3070,7 +3070,7 @@
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "hE" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/hivebot,
+/mob/living/animal/hostile/hivebot,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/rnd)
 "hF" = (
@@ -3416,7 +3416,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/hivebot/range,
+/mob/living/animal/hostile/hivebot/range,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/rnd)
 "ir" = (
@@ -3569,7 +3569,7 @@
 	req_access = "0";
 	req_one_access = "0"
 	},
-/mob/living/simple_animal/hostile/hivebot,
+/mob/living/animal/hostile/hivebot,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "iD" = (
@@ -3909,7 +3909,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/hivebot,
+/mob/living/animal/hostile/hivebot,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "ju" = (
@@ -3933,7 +3933,7 @@
 "jw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
-/mob/living/simple_animal/hostile/hivebot,
+/mob/living/animal/hostile/hivebot,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "jx" = (
@@ -3944,7 +3944,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/hivebot,
+/mob/living/animal/hostile/hivebot,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "jy" = (
@@ -4050,7 +4050,7 @@
 	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/hivebot,
+/mob/living/animal/hostile/hivebot,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "jL" = (

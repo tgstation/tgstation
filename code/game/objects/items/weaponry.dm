@@ -559,9 +559,9 @@
 /obj/item/melee/flyswatter/Initialize()
 	. = ..()
 	strong_against = typecacheof(list(
-					/mob/living/simple_animal/hostile/poison/bees/,
-					/mob/living/simple_animal/butterfly,
-					/mob/living/simple_animal/cockroach,
+					/mob/living/animal/hostile/poison/bees/,
+					/mob/living/animal/butterfly,
+					/mob/living/animal/cockroach,
 					/obj/item/queen_bee
 	))
 

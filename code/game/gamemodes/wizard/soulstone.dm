@@ -74,7 +74,7 @@
 	release_shades(user)
 
 /obj/item/device/soulstone/proc/release_shades(mob/user)
-	for(var/mob/living/simple_animal/shade/A in src)
+	for(var/mob/living/animal/shade/A in src)
 		A.status_flags &= ~GODMODE
 		A.canmove = 1
 		A.forceMove(get_turf(user))
@@ -159,7 +159,7 @@
 					to_chat(user, "<span class='userdanger'>Capture failed!</span>: Kill or maim the victim first!")
 
 		if("SHADE")
-			var/mob/living/simple_animal/shade/T = target
+			var/mob/living/animal/shade/T = target
 			if(contents.len)
 				to_chat(user, "<span class='userdanger'>Capture failed!</span>: The soulstone is full! Free an existing soul to make room.")
 			else
@@ -175,24 +175,24 @@
 
 		if("CONSTRUCT")
 			var/obj/structure/constructshell/T = target
-			var/mob/living/simple_animal/shade/A = locate() in src
+			var/mob/living/animal/shade/A = locate() in src
 			if(A)
 				var/construct_class = alert(user, "Please choose which type of construct you wish to create.",,"Juggernaut","Wraith","Artificer")
 				if(!T || !T.loc)
 					return
 				switch(construct_class)
 					if("Juggernaut")
-						makeNewConstruct(/mob/living/simple_animal/hostile/construct/armored, A, user, 0, T.loc)
+						makeNewConstruct(/mob/living/animal/hostile/construct/armored, A, user, 0, T.loc)
 
 					if("Wraith")
-						makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, A, user, 0, T.loc)
+						makeNewConstruct(/mob/living/animal/hostile/construct/wraith, A, user, 0, T.loc)
 
 					if("Artificer")
 						if(iscultist(user) || iswizard(user))
-							makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder, A, user, 0, T.loc)
+							makeNewConstruct(/mob/living/animal/hostile/construct/builder, A, user, 0, T.loc)
 
 						else
-							makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder/noncult, A, user, 0, T.loc)
+							makeNewConstruct(/mob/living/animal/hostile/construct/builder/noncult, A, user, 0, T.loc)
 				for(var/datum/mind/B in SSticker.mode.cult)
 					if(B == A.mind)
 						SSticker.mode.cult -= A.mind
@@ -203,8 +203,8 @@
 				to_chat(user, "<span class='userdanger'>Creation failed!</span>: The soul stone is empty! Go kill someone!")
 
 
-/proc/makeNewConstruct(mob/living/simple_animal/hostile/construct/ctype, mob/target, mob/stoner = null, cultoverride = 0, loc_override = null)
-	var/mob/living/simple_animal/hostile/construct/newstruct = new ctype((loc_override) ? (loc_override) : (get_turf(target)))
+/proc/makeNewConstruct(mob/living/animal/hostile/construct/ctype, mob/target, mob/stoner = null, cultoverride = 0, loc_override = null)
+	var/mob/living/animal/hostile/construct/newstruct = new ctype((loc_override) ? (loc_override) : (get_turf(target)))
 	if(stoner)
 		newstruct.faction |= "\ref[stoner]"
 		newstruct.master = stoner
@@ -229,7 +229,7 @@
 	new /obj/effect/decal/remains/human(T.loc) //Spawns a skeleton
 	T.invisibility = INVISIBILITY_ABSTRACT
 	T.dust_animation()
-	var/mob/living/simple_animal/shade/S = new /mob/living/simple_animal/shade(src)
+	var/mob/living/animal/shade/S = new /mob/living/animal/shade(src)
 	S.status_flags |= GODMODE //So they won't die inside the stone somehow
 	S.canmove = 0//Can't move out of the soul stone
 	S.name = "Shade of [T.real_name]"

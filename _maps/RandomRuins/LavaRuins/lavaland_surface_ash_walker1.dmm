@@ -273,7 +273,7 @@
 	dir = 1
 	},
 /obj/structure/stone_tile,
-/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck,
+/mob/living/animal/hostile/asteroid/gutlunch/gubbuck,
 /turf/open/indestructible/boss/air,
 /area/ruin/unpowered/ash_walkers)
 "aL" = (
@@ -344,7 +344,7 @@
 /turf/open/lava/smooth,
 /area/ruin/unpowered/ash_walkers)
 "aU" = (
-/mob/living/simple_animal/hostile/spawner/lavaland/ash_walker,
+/mob/living/animal/hostile/spawner/lavaland/ash_walker,
 /turf/open/lava/smooth,
 /area/ruin/unpowered/ash_walkers)
 "aV" = (
@@ -420,7 +420,7 @@
 /obj/structure/stone_tile{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/asteroid/gutlunch/guthen,
+/mob/living/animal/hostile/asteroid/gutlunch/guthen,
 /turf/open/indestructible/boss/air,
 /area/ruin/unpowered/ash_walkers)
 "bd" = (

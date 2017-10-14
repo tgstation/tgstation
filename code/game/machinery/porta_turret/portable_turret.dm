@@ -366,7 +366,7 @@
 
 		if(check_anomalies)//if it's set to check for simple animals
 			if(isanimal(A))
-				var/mob/living/simple_animal/SA = A
+				var/mob/living/animal/SA = A
 				if(SA.stat || in_faction(SA)) //don't target if dead or in faction
 					continue
 				targets += SA

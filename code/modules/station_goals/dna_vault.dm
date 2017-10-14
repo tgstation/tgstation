@@ -96,10 +96,10 @@
 		to_chat(user, "<span class='notice'>Plant data added to local storage.</span>")
 
 	//animals
-	var/static/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey, /mob/living/carbon/alien))
-	if(isanimal(target) || is_type_in_typecache(target,non_simple_animals))
+	var/static/list/non_animals = typecacheof(list(/mob/living/carbon/monkey, /mob/living/carbon/alien))
+	if(isanimal(target) || is_type_in_typecache(target,non_animals))
 		if(isanimal(target))
-			var/mob/living/simple_animal/A = target
+			var/mob/living/animal/A = target
 			if(!A.healable)//simple approximation of being animal not a robot or similar
 				to_chat(user, "<span class='warning'>No compatible DNA detected</span>")
 				return

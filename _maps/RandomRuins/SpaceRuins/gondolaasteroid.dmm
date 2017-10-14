@@ -29,7 +29,7 @@
 	dynamic_lighting = 1
 	})
 "h" = (
-/mob/living/simple_animal/pet/gondola,
+/mob/living/animal/pet/gondola,
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav)
 "i" = (

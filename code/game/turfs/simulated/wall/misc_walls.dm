@@ -18,8 +18,8 @@
 
 /turf/closed/wall/mineral/cult/Exited(atom/movable/AM, atom/newloc)
 	. = ..()
-	if(istype(AM, /mob/living/simple_animal/hostile/construct/harvester)) //harvesters can go through cult walls, dragging something with
-		var/mob/living/simple_animal/hostile/construct/harvester/H = AM
+	if(istype(AM, /mob/living/animal/hostile/construct/harvester)) //harvesters can go through cult walls, dragging something with
+		var/mob/living/animal/hostile/construct/harvester/H = AM
 		var/atom/movable/stored_pulling = H.pulling
 		if(stored_pulling)
 			stored_pulling.setDir(get_dir(stored_pulling.loc, newloc))

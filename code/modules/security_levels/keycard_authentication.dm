@@ -45,7 +45,7 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 
 /obj/machinery/keycard_auth/ui_status(mob/user)
 	if(isanimal(user))
-		var/mob/living/simple_animal/A = user
+		var/mob/living/animal/A = user
 		if(!A.dextrous)
 			to_chat(user, "<span class='warning'>You are too primitive to use this device!</span>")
 			return UI_CLOSE

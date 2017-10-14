@@ -110,7 +110,7 @@
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "at" = (
-/mob/living/simple_animal/hostile/stickman,
+/mob/living/animal/hostile/stickman,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "au" = (
@@ -180,7 +180,7 @@
 	dir = 8
 	},
 /obj/structure/fluff/paper/corner,
-/mob/living/simple_animal/hostile/stickman,
+/mob/living/animal/hostile/stickman,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "aE" = (
@@ -249,7 +249,7 @@
 /obj/structure/fluff/paper/corner{
 	dir = 8
 	},
-/mob/living/simple_animal/hostile/stickman,
+/mob/living/animal/hostile/stickman,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "aM" = (
@@ -269,7 +269,7 @@
 /area/ruin/powered)
 "aO" = (
 /obj/structure/fluff/paper,
-/mob/living/simple_animal/hostile/stickman/dog,
+/mob/living/animal/hostile/stickman/dog,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "aP" = (
@@ -301,7 +301,7 @@
 /area/ruin/powered)
 "aS" = (
 /obj/structure/fluff/paper/corner,
-/mob/living/simple_animal/hostile/stickman/dog,
+/mob/living/animal/hostile/stickman/dog,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "aT" = (
@@ -357,7 +357,7 @@
 /obj/structure/fluff/paper{
 	dir = 1
 	},
-/mob/living/simple_animal/hostile/stickman/dog,
+/mob/living/animal/hostile/stickman/dog,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "bb" = (
@@ -431,7 +431,7 @@
 /obj/structure/fluff/paper/corner{
 	dir = 1
 	},
-/mob/living/simple_animal/hostile/stickman,
+/mob/living/animal/hostile/stickman,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "bl" = (
@@ -442,7 +442,7 @@
 /area/ruin/powered)
 "bm" = (
 /obj/structure/fluff/paper,
-/mob/living/simple_animal/hostile/stickman,
+/mob/living/animal/hostile/stickman,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "bn" = (
@@ -497,7 +497,7 @@
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "bu" = (
-/mob/living/simple_animal/hostile/stickman/ranged,
+/mob/living/animal/hostile/stickman/ranged,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "bv" = (
@@ -561,7 +561,7 @@
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "bE" = (
-/mob/living/simple_animal/hostile/stickman/dog,
+/mob/living/animal/hostile/stickman/dog,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "bF" = (
@@ -576,7 +576,7 @@
 /area/ruin/powered)
 "bG" = (
 /obj/item/toy/crayon/blue,
-/mob/living/simple_animal/hostile/stickman/ranged,
+/mob/living/animal/hostile/stickman/ranged,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "bH" = (
@@ -694,7 +694,7 @@
 /obj/structure/fluff/paper{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/stickman,
+/mob/living/animal/hostile/stickman,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "bV" = (
@@ -741,7 +741,7 @@
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "cc" = (
-/mob/living/simple_animal/hostile/boss/paper_wizard,
+/mob/living/animal/hostile/boss/paper_wizard,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "cd" = (
@@ -793,7 +793,7 @@
 /obj/structure/fluff/paper{
 	dir = 1
 	},
-/mob/living/simple_animal/hostile/stickman,
+/mob/living/animal/hostile/stickman,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "ck" = (
@@ -862,7 +862,7 @@
 /obj/structure/fluff/paper{
 	dir = 1
 	},
-/mob/living/simple_animal/hostile/stickman/dog,
+/mob/living/animal/hostile/stickman/dog,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "ct" = (
@@ -892,7 +892,7 @@
 /obj/structure/fluff/paper{
 	dir = 1
 	},
-/mob/living/simple_animal/hostile/stickman/ranged,
+/mob/living/animal/hostile/stickman/ranged,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 

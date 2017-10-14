@@ -5,7 +5,7 @@
 
 #define INVISIBILITY_REVENANT 50
 
-/mob/living/simple_animal/revenant
+/mob/living/animal/revenant
 	name = "\a Revenant"
 	desc = "A malevolent spirit."
 	icon = 'icons/mob/mob.dmi'
@@ -61,7 +61,7 @@
 	var/perfectsouls = 0 //How many perfect, regen-cap increasing souls the revenant has. //TODO, add objective for getting a perfect soul(s?)
 	var/generated_objectives_and_spells = FALSE
 
-/mob/living/simple_animal/revenant/Login()
+/mob/living/animal/revenant/Login()
 	..()
 	to_chat(src, "<span class='deadsay'><font size=3><b>You are a revenant.</b></font></span>")
 	to_chat(src, "<b>Your formerly mundane spirit has been infused with alien energies and empowered into a revenant.</b>")
@@ -94,7 +94,7 @@
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction(null))
 
 //Life, Stat, Hud Updates, and Say
-/mob/living/simple_animal/revenant/Life()
+/mob/living/animal/revenant/Life()
 	if(stasis)
 		return
 	if(revealed && essence <= 0)
@@ -116,14 +116,14 @@
 	update_health_hud()
 	..()
 
-/mob/living/simple_animal/revenant/Stat()
+/mob/living/animal/revenant/Stat()
 	..()
 	if(statpanel("Status"))
 		stat(null, "Current essence: [essence]/[essence_regen_cap]E")
 		stat(null, "Stolen essence: [essence_accumulated]E")
 		stat(null, "Stolen perfect souls: [perfectsouls]")
 
-/mob/living/simple_animal/revenant/update_health_hud()
+/mob/living/animal/revenant/update_health_hud()
 	if(hud_used)
 		var/essencecolor = "#8F48C6"
 		if(essence > essence_regen_cap)
@@ -132,13 +132,13 @@
 			essencecolor = "#1D2953" //oh jeez you're dying
 		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[essencecolor]'>[essence]E</font></div>"
 
-/mob/living/simple_animal/revenant/med_hud_set_health()
+/mob/living/animal/revenant/med_hud_set_health()
 	return //we use no hud
 
-/mob/living/simple_animal/revenant/med_hud_set_status()
+/mob/living/animal/revenant/med_hud_set_status()
 	return //we use no hud
 
-/mob/living/simple_animal/revenant/say(message)
+/mob/living/animal/revenant/say(message)
 	if(!message)
 		return
 	log_talk(src,"[key_name(src)] : [message]",LOGSAY)
@@ -153,26 +153,26 @@
 
 
 //Immunities
-/mob/living/simple_animal/revenant/Process_Spacemove(movement_dir = 0)
+/mob/living/animal/revenant/Process_Spacemove(movement_dir = 0)
 	return 1
 
-/mob/living/simple_animal/revenant/ex_act(severity, target)
+/mob/living/animal/revenant/ex_act(severity, target)
 	return 1 //Immune to the effects of explosions.
 
-/mob/living/simple_animal/revenant/blob_act(obj/structure/blob/B)
+/mob/living/animal/revenant/blob_act(obj/structure/blob/B)
 	return //blah blah blobs aren't in tune with the spirit world, or something.
 
-/mob/living/simple_animal/revenant/singularity_act()
+/mob/living/animal/revenant/singularity_act()
 	return //don't walk into the singularity expecting to find corpses, okay?
 
-/mob/living/simple_animal/revenant/narsie_act()
+/mob/living/animal/revenant/narsie_act()
 	return //most humans will now be either bones or harvesters, but we're still un-alive.
 
-/mob/living/simple_animal/revenant/ratvar_act()
+/mob/living/animal/revenant/ratvar_act()
 	return //clocks get out reee
 
 //damage, gibbing, and dying
-/mob/living/simple_animal/revenant/attackby(obj/item/W, mob/living/user, params)
+/mob/living/animal/revenant/attackby(obj/item/W, mob/living/user, params)
 	. = ..()
 	if(istype(W, /obj/item/nullrod))
 		visible_message("<span class='warning'>[src] violently flinches!</span>", \
@@ -182,11 +182,11 @@
 		update_action_buttons_icon()
 		addtimer(CALLBACK(src, .proc/reset_inhibit), 30)
 
-/mob/living/simple_animal/revenant/proc/reset_inhibit()
+/mob/living/animal/revenant/proc/reset_inhibit()
 	inhibited = FALSE
 	update_action_buttons_icon()
 
-/mob/living/simple_animal/revenant/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/animal/revenant/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && !revealed)
 		return FALSE
 	. = amount
@@ -196,13 +196,13 @@
 	if(!essence)
 		death()
 
-/mob/living/simple_animal/revenant/dust()
+/mob/living/animal/revenant/dust()
 	death()
 
-/mob/living/simple_animal/revenant/gib()
+/mob/living/animal/revenant/gib()
 	death()
 
-/mob/living/simple_animal/revenant/death()
+/mob/living/animal/revenant/death()
 	if(!revealed || stasis) //Revenants cannot die if they aren't revealed //or are already dead
 		return 0
 	stasis = TRUE
@@ -229,7 +229,7 @@
 
 
 //reveal, stun, icon updates, cast checks, and essence changing
-/mob/living/simple_animal/revenant/proc/reveal(time)
+/mob/living/animal/revenant/proc/reveal(time)
 	if(!src)
 		return
 	if(time <= 0)
@@ -245,7 +245,7 @@
 		unreveal_time = unreveal_time + time
 	update_spooky_icon()
 
-/mob/living/simple_animal/revenant/proc/stun(time)
+/mob/living/animal/revenant/proc/stun(time)
 	if(!src)
 		return
 	if(time <= 0)
@@ -259,7 +259,7 @@
 		unstun_time = unstun_time + time
 	update_spooky_icon()
 
-/mob/living/simple_animal/revenant/proc/update_spooky_icon()
+/mob/living/animal/revenant/proc/update_spooky_icon()
 	if(revealed)
 		if(notransform)
 			if(draining)
@@ -271,7 +271,7 @@
 	else
 		icon_state = icon_idle
 
-/mob/living/simple_animal/revenant/proc/castcheck(essence_cost)
+/mob/living/animal/revenant/proc/castcheck(essence_cost)
 	if(!src)
 		return
 	var/turf/T = get_turf(src)
@@ -290,7 +290,7 @@
 		return FALSE
 	return TRUE
 
-/mob/living/simple_animal/revenant/proc/change_essence_amount(essence_amt, silent = FALSE, source = null)
+/mob/living/animal/revenant/proc/change_essence_amount(essence_amt, silent = FALSE, source = null)
 	if(!src)
 		return
 	if(essence + essence_amt <= 0)
@@ -307,7 +307,7 @@
 			to_chat(src, "<span class='revenminor'>Lost [essence_amt]E[source ? " from [source]":""].</span>")
 	return 1
 
-/mob/living/simple_animal/revenant/proc/death_reset()
+/mob/living/animal/revenant/proc/death_reset()
 	revealed = FALSE
 	unreveal_time = 0
 	notransform = 0
@@ -331,7 +331,7 @@
 	var/reforming = TRUE
 	var/inert = FALSE
 	var/client/client_to_revive
-	var/mob/living/simple_animal/revenant/revenant
+	var/mob/living/animal/revenant/revenant
 
 /obj/item/ectoplasm/revenant/New()
 	..()
@@ -429,7 +429,7 @@
 /datum/objective/revenant/check_completion()
 	if(!isrevenant(owner.current))
 		return FALSE
-	var/mob/living/simple_animal/revenant/R = owner.current
+	var/mob/living/animal/revenant/R = owner.current
 	if(!R || R.stat == DEAD)
 		return FALSE
 	var/essence_stolen = R.essence_accumulated
