@@ -8,24 +8,6 @@
 #define COLD_DAMAGE_LEVEL_2 1.5
 #define COLD_DAMAGE_LEVEL_3 3
 
-// Offsets defines
-
-#define OFFSET_UNIFORM "uniform"
-#define OFFSET_ID "id"
-#define OFFSET_GLOVES "gloves"
-#define OFFSET_GLASSES "glasses"
-#define OFFSET_EARS "ears"
-#define OFFSET_SHOES "shoes"
-#define OFFSET_S_STORE "s_store"
-#define OFFSET_FACEMASK "mask"
-#define OFFSET_HEAD "head"
-#define OFFSET_FACE "face"
-#define OFFSET_BELT "belt"
-#define OFFSET_BACK "back"
-#define OFFSET_SUIT "suit"
-#define OFFSET_NECK "neck"
-
-
 /datum/species
 	var/id	// if the game needs to manually check your race to do something not included in a proc here, it will use this
 	var/limbs_id		//this is used if you want to use a different species limb sprites. Mainly used for angels as they look like humans.
@@ -415,9 +397,9 @@
 				else
 					hair_overlay.color = forced_colour
 				hair_overlay.alpha = hair_alpha
-				if("face" in H.dna.species.offset_features)
-					hair_overlay.pixel_x += H.dna.species.offset_features["face"][1]
-					hair_overlay.pixel_y += H.dna.species.offset_features["face"][2]
+				if(OFFSET_FACE in H.dna.species.offset_features)
+					hair_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FACE][1]
+					hair_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
 		if(hair_overlay.icon)
 			standing += hair_overlay
 
@@ -438,18 +420,18 @@
 		if(H.lip_style && (LIPS in species_traits) && HD)
 			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[H.lip_style]", -BODY_LAYER)
 			lip_overlay.color = H.lip_color
-			if("face" in H.dna.species.offset_features)
-				lip_overlay.pixel_x += H.dna.species.offset_features["face"][1]
-				lip_overlay.pixel_y += H.dna.species.offset_features["face"][2]
+			if(OFFSET_FACE in H.dna.species.offset_features)
+				lip_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FACE][1]
+				lip_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
 			standing += lip_overlay
 
 		// eyes
 		if((EYECOLOR in species_traits) && HD)
 			var/mutable_appearance/eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes", -BODY_LAYER)
 			eye_overlay.color = "#" + H.eye_color
-			if("face" in H.dna.species.offset_features)
-				eye_overlay.pixel_x += H.dna.species.offset_features["face"][1]
-				eye_overlay.pixel_y += H.dna.species.offset_features["face"][2]
+			if(OFFSET_FACE in H.dna.species.offset_features)
+				eye_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FACE][1]
+				eye_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
 			standing += eye_overlay
 
 	//Underwear, Undershirts & Socks
