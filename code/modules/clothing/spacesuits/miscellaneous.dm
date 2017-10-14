@@ -3,6 +3,7 @@
 Contains:
  - Captain's spacesuit
  - Death squad's hardsuit
+ - Incinerator Suit
  - SWAT suit
  - Officer's beret/spacesuit
  - NASA Voidsuit
@@ -40,6 +41,54 @@ Contains:
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/deathsquad
+	dog_fashion = /datum/dog_fashion/back/deathsquad
+
+/obj/item/clothing/head/helmet/space/hardsuit/flamer
+	name = "MK.II FLAME Helmet"
+	desc = "A space proof, fixium-reinforced SWAT mask. The extra reinforcements means it has to be a helmet, though."
+	icon_state = "flamer"
+	item_state = "flamer"
+	armor = list(melee = 40, bullet = 30, laser = 30, energy = 50, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
+	strip_delay = 130
+	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	actions_types = list()
+
+/obj/item/clothing/suit/space/hardsuit/flamer
+	name = "MK.II FLAME Suit"
+	desc = "A very anomalous version of the MK.II SWAT suit, used by NT Flamers. Based on the streamlined MK.II model, the traditional ceramic and graphene plate construction was replaced with Fixium, allowing superior armor against fire and explosives."
+	icon_state = "flamer"
+	item_state = "swat_suit"
+	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals, /obj/item/kitchen/knife/combat)
+	armor = list(melee = 60, bullet = 40, laser = 40, energy = 50, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
+	strip_delay = 130
+	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/flamer
+	dog_fashion = /datum/dog_fashion/back/deathsquad
+
+/obj/item/clothing/head/helmet/space/hardsuit/flamer/com
+	name = "MK.II FLAME Commander Helmet"
+	desc = "A space proof, fixium-reinforced SWAT mask. The extra reinforcements means it has to be a helmet, though. Has a couple flashy visor effects for the squad to enjoy."
+	icon_state = "flamercom"
+	item_state = "flamer"
+	armor = list(melee = 40, bullet = 30, laser = 30, energy = 50, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
+	strip_delay = 130
+	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	actions_types = list()
+
+/obj/item/clothing/suit/space/hardsuit/flamer/com
+	name = "MK.II FLAME Suit"
+	desc = "A very anomalous version of the MK.II SWAT suit, used by NT Flamers. Based on the streamlined MK.II model, the traditional ceramic and graphene plate construction was replaced with Fixium, allowing superior armor against fire and explosives."
+	icon_state = "flamer"
+	item_state = "swat_suit"
+	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals, /obj/item/kitchen/knife/combat)
+	armor = list(melee = 60, bullet = 40, laser = 40, energy = 50, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
+	strip_delay = 130
+	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/flamer/com
 	dog_fashion = /datum/dog_fashion/back/deathsquad
 
 	//NEW SWAT suit
