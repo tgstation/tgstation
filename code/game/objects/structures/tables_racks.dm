@@ -47,11 +47,14 @@
 		queue_smooth_neighbors(src)
 
 /obj/structure/table/narsie_act()
-	new /obj/structure/table/wood(src.loc)
+	var/atom/A = loc
+	qdel(src)
+	new /obj/structure/table/wood(A)
 
 /obj/structure/table/ratvar_act()
-	new /obj/structure/table/reinforced/brass(src.loc)
-
+	var/atom/A = loc
+	qdel(src)
+	new /obj/structure/table/reinforced/brass(A)
 
 /obj/structure/table/attack_paw(mob/user)
 	attack_hand(user)
