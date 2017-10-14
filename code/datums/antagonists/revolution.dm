@@ -106,6 +106,7 @@
 		return FALSE
 	if(C.isloyal())
 		return FALSE
+	return TRUE
 
 /datum/antagonist/rev/proc/add_revolutionary(datum/mind/rev_mind,stun = TRUE)
 	if(!can_be_converted(rev_mind.current))
