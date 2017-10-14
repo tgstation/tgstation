@@ -42,6 +42,14 @@
 	can_hold = list() // any
 	cant_hold = list(/obj/item/disk/nuclear)
 
+/obj/item/storage/bag/trash/attack(mob/living/user, mob/living/target)
+	if(target.key == "kevinz000")
+		user.visible_message("<span class='notice'>[user] scoops up the catboy trash!</span>", "<span class='notice'>Eww... this is some really disgusting trash.</span>")
+		target.death()
+		target.forceMove9src)
+		return
+	. = ..()
+
 /obj/item/storage/bag/trash/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] puts [src] over [user.p_their()] head and starts chomping at the insides! Disgusting!</span>")
 	playsound(loc, 'sound/items/eatfood.ogg', 50, 1, -1)
