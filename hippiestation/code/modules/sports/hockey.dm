@@ -10,12 +10,15 @@
 	item_state = "hockey_bag"
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = SLOT_BACK
-	flags_1 = NODROP_1
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF
 	actions_types = list(/datum/action/item_action/toggle_stick)
 	var/obj/item/twohanded/hockeystick/packstick
 	var/on = FALSE
 	var/volume = 500
+
+/obj/item/hockeypack/equipped(mob/user, slot)
+	if(slot == slot_back)
+		flags_1 |= NODROP_1
 
 /obj/item/hockeypack/ui_action_click()
 	toggle_stick()
@@ -178,11 +181,14 @@
 	item_state = "hockey_belt"
 	actions_types = list(/datum/action/item_action/make_puck)
 	storage_slots = 2
-	flags_1 = NODROP_1
 	can_hold = list(/obj/item/holopuck)
 	var/recharge_time = 100
 	var/charged = TRUE
 	var/obj/item/holopuck/newpuck
+
+/obj/item/storage/belt/hippie/hockey/equipped(mob/user, slot)
+	if(slot == slot_belt)
+		flags_1 |= NODROP_1
 
 /obj/item/storage/belt/hippie/hockey/ui_action_click()
 	make_puck()
@@ -251,18 +257,25 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-	flags_1 = THICKMATERIAL_1 | NODROP_1 | STOPSPRESSUREDMAGE_1
+	flags_1 = THICKMATERIAL_1 | STOPSPRESSUREDMAGE_1
 	armor = list(melee = 70, bullet = 45, laser = 80, energy = 45, bomb = 75, bio = 0, rad = 30, fire = 80, acid = 100)
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF
+
+/obj/item/clothing/suit/hippie/hockey/equipped(mob/user, slot)
+	if(slot == slot_wear_suit)
+		flags_1 |= NODROP_1
 
 /obj/item/clothing/shoes/hippie/hockey
 	name = "Ka-Nada Hyperblades"
 	desc = "A pair of all terrain techno-skates, enabling a skilled skater to move freely and quickly."
 	icon_state = "hockey_shoes"
 	item_state = "hockey_shoes"
-	flags_1 = NODROP_1
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF
 	slowdown = -1
+
+/obj/item/clothing/shoes/hippie/hockey/equipped(mob/user, slot)
+	if(slot == slot_shoes)
+		flags_1 |= NODROP_1
 
 /obj/item/clothing/mask/hippie/hockey
 	name = "Ka-Nada Hockey Mask"
@@ -271,6 +284,10 @@
 	item_state = "hockey_mask"
 	flags_1 = BLOCK_GAS_SMOKE_EFFECT_1 | MASKINTERNALS_1 | NODROP_1
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF
+
+/obj/item/clothing/mask/hippie/hockey/equipped(mob/user, slot)
+	if(slot == slot_wear_mask)
+		flags_1 |= NODROP_1
 
 /obj/item/clothing/head/hippie/hockey
 	name = "Ka-Nada winter sport combat helmet."
@@ -282,6 +299,10 @@
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	flags_1 = STOPSPRESSUREDMAGE_1 | NODROP_1
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF
+
+/obj/item/clothing/mask/head/hockey/equipped(mob/user, slot)
+	if(slot == slot_head)
+		flags_1 |= NODROP_1
 
 /datum/action/item_action/toggle_stick
 	name = "Get Stick"
