@@ -127,18 +127,20 @@
 	efficiency = E - 1
 
 /obj/machinery/teleport/station/proc/link_console_and_hub()
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
-		teleporter_hub = locate(/obj/machinery/teleport/hub, get_step(src, dir))
-		if(teleporter_hub)
-			teleporter_hub.link_power_station()
-			break
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
-		teleporter_console = locate(/obj/machinery/computer/teleporter, get_step(src, dir))
-		if(teleporter_console)
-			teleporter_console.link_power_station()
-			break
+	for (var/obj/machinery/M in oview(2, src))
+		if (istype(M, /obj/machinery/teleport/hub))
+			var/obj/machinery/teleport/hub/H = M
+			if (teleporter_hub == null)
+				teleporter_hub = H
+				H.power_station = src
+		else if (istype(M, /obj/machinery/computer/teleporter))
+			var/obj/machinery/computer/teleporter/C = M
+			if (teleporter_console == null)
+				teleporter_console = C
+				C.power_station = src
+		if (teleporter_hub && teleporter_console)
+			return TRUE
 	return teleporter_hub && teleporter_console
-
 
 /obj/machinery/teleport/station/Destroy()
 	if(teleporter_hub)
