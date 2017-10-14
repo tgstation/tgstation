@@ -203,10 +203,10 @@
 
 	return .
 
-/mob/Moved(oldLoc, dir)
+/mob/Moved(oldLoc, dir, Forced = FALSE)
 	. = ..()
 	for(var/obj/O in contents)
-		O.on_mob_move(dir, src, oldLoc)
+		O.on_mob_move(dir, src, oldLoc, Forced)
 
 /mob/setDir(newDir)
 	. = ..()
