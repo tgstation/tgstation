@@ -89,6 +89,11 @@ Pipelines + Other Objects -> Pipe network
 				break
 	return node_connects
 
+/obj/machinery/atmospherics/proc/normalize_cardinal_directions()
+	if(dir==SOUTH)
+		setDir(NORTH)
+	else if(dir==WEST)
+		setDir(EAST)
 
 //this is called just after the air controller sets up turfs
 /obj/machinery/atmospherics/proc/atmosinit(var/list/node_connects)

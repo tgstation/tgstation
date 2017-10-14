@@ -25,17 +25,11 @@ The regular pipe you see everywhere, including bent ones.
 			initialize_directions = EAST|WEST
 
 /obj/machinery/atmospherics/pipe/simple/atmosinit()
-	normalize_dir()
+	normalize_cardinal_directions()
 	..()
 
-/obj/machinery/atmospherics/pipe/simple/proc/normalize_dir()
-	if(dir==SOUTH)
-		setDir(NORTH)
-	else if(dir==WEST)
-		setDir(EAST)
-
 /obj/machinery/atmospherics/pipe/simple/update_icon()
-	normalize_dir()
+	normalize_cardinal_directions()
 	..()
 
 //Colored pipes, use these for mapping
