@@ -86,7 +86,7 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 		"Manual Valve"		= new /datum/pipe_info(PIPE_MVALVE, 			1,	PIPE_BINARY),
 		"Digital Valve"		= new /datum/pipe_info(PIPE_DVALVE,				1,	PIPE_BINARY),
 		"4-Way Manifold"	= new /datum/pipe_info(PIPE_4WAYMANIFOLD,		1,	PIPE_QUAD),
-		"Layer Manifold"	= new /datum/pipe_info(PIPE_LAYER_MANIFOLD,		2,	PIPE_UNARY),
+		"Layer Manifold"	= new /datum/pipe_info(PIPE_LAYER_MANIFOLD,		2,	PIPE_BINARY),
 		"Bluespace Pipe"	= new /datum/pipe_info(PIPE_BLUESPACE,			1,	PIPE_UNARY),
 	),
 	"Devices"=list(

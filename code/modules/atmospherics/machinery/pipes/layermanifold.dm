@@ -5,15 +5,12 @@
 	desc = "A special pipe to bridge pipe layers with."
 	dir = SOUTH
 	initialize_directions = NORTH|SOUTH
-	pipe_flags = PIPING_ALL_LAYER
+	pipe_flags = PIPING_ALL_LAYER | PIPING_DEFAULT_LAYER_ONLY
 	piping_layer = PIPING_LAYER_DEFAULT
 	device_type = 0
 	volume = 260
 	var/list/front_nodes
 	var/list/back_nodes
-
-/obj/machinery/atmospherics/pipe/layer_manifold/setPipingLayer()
-	return ..(PIPING_LAYER_DEFAULT)
 
 /obj/machinery/atmospherics/pipe/layer_manifold/Initialize()
 	front_nodes = list()
@@ -63,11 +60,13 @@
 			var/image/I = getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full_long[invis]", get_dir(src, A))
 			I.pixel_x = (i - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X
 			I.pixel_y = (i - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y
+			I.color = A.color
 			add_overlay(I)
 	else
 		var/image/I = getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full_long[invis]", get_dir(src, A))
 		I.pixel_x = A.pixel_x
 		I.pixel_y = A.pixel_y
+		I.color = A.color
 		add_overlay(I)
 
 /obj/machinery/atmospherics/pipe/layer_manifold/SetInitDirections()

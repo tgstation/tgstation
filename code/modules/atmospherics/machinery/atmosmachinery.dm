@@ -103,6 +103,8 @@ Pipelines + Other Objects -> Pipe network
 	update_icon()
 
 /obj/machinery/atmospherics/proc/setPipingLayer(new_layer)
+	if(pipe_flags & PIPING_DEFAULT_LAYER_ONLY)
+		new_layer = PIPING_LAYER_DEFAULT
 	piping_layer = new_layer
 	pixel_x = (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X
 	pixel_y = (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y

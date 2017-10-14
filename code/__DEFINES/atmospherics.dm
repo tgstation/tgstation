@@ -185,6 +185,7 @@
 
 #define PIPING_ALL_LAYER 1
 #define PIPING_ONE_PER_TURF 2
+#define PIPING_DEFAULT_LAYER_ONLY 4
 
 #define THERMAL_ENERGY(gas) (gas.temperature * gas.heat_capacity())
 

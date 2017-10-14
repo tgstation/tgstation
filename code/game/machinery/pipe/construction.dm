@@ -229,13 +229,17 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 /obj/item/pipe/attack_self(mob/user)
 	return rotate()
 
-/obj/item/pipe/proc/get_pipe_cache(type)
+/obj/item/pipe/proc/get_pipe_cache(type, direction)
 	var/static/list/obj/machinery/atmospherics/check_cache
 	if(!islist(check_cache))
 		check_cache = list()
 	if(!check_cache[type])
-		check_cache[type] = new type
-	return check_cache[type]
+		check_cache[type] = list()
+	if(!check_cache[type][direction])
+		check_cache[type][direction] = new type
+		type.setDir(direction)
+
+	return check_cache[type][direction]
 
 /obj/item/pipe/attackby(obj/item/W, mob/user, params)
 	if (!istype(W, /obj/item/wrench))
@@ -318,7 +322,7 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 	if(!pipe)
 		to_chat(user, "<span class='warning'>You need to fasten it to a pipe!</span>")
 		return TRUE
-	new/obj/machinery/meter( loc , pipe)
+	new /obj/machinery/meter(loc, piping_layer)
 	playsound(src, I.usesound, 50, 1)
 	to_chat(user, "<span class='notice'>You fasten the meter to the pipe.</span>")
 	qdel(src)

@@ -20,15 +20,19 @@
 	target = null
 	return ..()
 
-/obj/machinery/meter/Initialize(mapload)
+/obj/machinery/meter/Initialize(mapload, new_piping_layer)
+	target_layer = new_piping_layer
 	SSair.atmos_machinery += src
 	if(mapload && !target)
-		for(var/obj/machinery/atmospherics/pipe/pipe in loc)
-			if(pipe.piping_layer == target_layer)
-				target = pipe
-				setAttachLayer(pipe.piping_layer)
-				break
+		reattach_to_layer()
 	return ..()
+
+/obj/machinery/meter/proc/reattach_to_layer()
+	for(var/obj/machinery/atmospherics/pipe/pipe in loc)
+		if(pipe.piping_layer == target_layer)
+			target = pipe
+			setAttachLayer(pipe.piping_layer)
+			break
 
 /obj/machinery/meter/proc/setAttachLayer(var/new_layer)
 	target_layer = new_layer
