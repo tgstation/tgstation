@@ -50,15 +50,19 @@
 	if(isspaceturf(newLoc))
 		to_chat(user, "<span class='warning'>It really would not be wise to go into space.</span>")
 		return
+	if(newLoc.density)
+		var/light_amount = newLoc.get_lumcount()
+		if(light_amount > SHADOW_SPECIES_LIGHT_THRESHOLD)
+			return
 	forceMove(newLoc)
 	check_light_level()
 
 /obj/effect/dummy/shadow/proc/check_light_level()
 	var/turf/T = get_turf(src)
 	var/light_amount = T.get_lumcount()
-	if(light_amount > 0.2) // jaunt ends
+	if(light_amount > SHADOW_SPECIES_LIGHT_THRESHOLD) // jaunt ends
 		end_jaunt(TRUE)
-	else if (light_amount < 0.2 && (!QDELETED(jaunter))) //heal in the dark
+	else if (light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD && (!QDELETED(jaunter))) //heal in the dark
 		jaunter.heal_overall_damage(1,1)
 
 /obj/effect/dummy/shadow/proc/end_jaunt(forced = FALSE)
