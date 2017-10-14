@@ -8,6 +8,23 @@
 #define COLD_DAMAGE_LEVEL_2 1.5
 #define COLD_DAMAGE_LEVEL_3 3
 
+// Offsets defines
+
+#define OFFSET_UNIFORM "uniform"
+#define OFFSET_ID "id"
+#define OFFSET_GLOVES "gloves"
+#define OFFSET_GLASSES "glasses"
+#define OFFSET_EARS "ears"
+#define OFFSET_SHOES "shoes"
+#define OFFSET_S_STORE "s_store"
+#define OFFSET_FACEMASK "mask"
+#define OFFSET_HEAD "head"
+#define OFFSET_FACE "face"
+#define OFFSET_BELT "belt"
+#define OFFSET_BACK "back"
+#define OFFSET_SUIT "suit"
+#define OFFSET_NECK "neck"
+
 
 /datum/species
 	var/id	// if the game needs to manually check your race to do something not included in a proc here, it will use this
@@ -18,7 +35,7 @@
 
 	var/sexes = 1		// whether or not the race has sexual characteristics. at the moment this is only 0 for skeletons and shadows
 
-	var/offset_features = list("uniform" = list(0,0), "id" = list(0,0), "gloves" = list(0,0), "glasses" = list(0,0), "ears" = list(0,0), "shoes" = list(0,0), "s_store" = list(0,0), "mask" = list(0,0), "head" = list(0,0),"face" = list(0,0), "belt" = list(0,0), "back" = list(0,0), "suit" = list(0,0), "neck" = list(0,0))
+	var/offset_features = list(OFFSET_UNIFORM = list(0,0), OFFSET_ID = list(0,0), OFFSET_GLOVES = list(0,0), OFFSET_GLASSES = list(0,0), OFFSET_EARS = list(0,0), OFFSET_SHOES = list(0,0), OFFSET_S_STORE = list(0,0), OFFSET_FACEMASK = list(0,0), OFFSET_HEAD = list(0,0), OFFSET_FACE = list(0,0), OFFSET_BELT = list(0,0), OFFSET_BACK = list(0,0), OFFSET_SUIT = list(0,0), OFFSET_NECK = list(0,0))
 
 	var/hair_color	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
