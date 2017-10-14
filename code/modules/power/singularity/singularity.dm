@@ -114,7 +114,7 @@
 /obj/singularity/process()
 	if(current_size >= STAGE_TWO)
 		move()
-		radiation_pulse(get_turf(src), energy, 0.5)
+		radiation_pulse(src, energy, 0.5)
 		if(prob(event_chance))//Chance for it to run a special event TODO:Come up with one or two more that fit
 			event()
 	eat()
@@ -388,7 +388,7 @@
 	var/radiation = 15
 	if (energy>200)
 		radiation += round((energy-150)/10,1)
-	radiation_pulse(get_turf(src), radiation)
+	radiation_pulse(src, radiation)
 
 
 /obj/singularity/proc/combust_mobs()

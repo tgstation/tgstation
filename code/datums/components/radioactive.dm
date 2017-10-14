@@ -6,12 +6,15 @@
 /datum/component/radioactive
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
+	var/source
+
 	var/hl3_release_date //the half-life measured in ticks
 	var/strength
 	var/can_contaminate
 
-/datum/component/radioactive/Initialize(_strength=0, _half_life=RAD_HALF_LIFE, _can_contaminate=TRUE)
+/datum/component/radioactive/Initialize(_strength=0, _source, _half_life=RAD_HALF_LIFE, _can_contaminate=TRUE)
 	strength = _strength
+	source = _source
 	hl3_release_date = _half_life
 	can_contaminate = _can_contaminate
 
@@ -31,7 +34,7 @@
 	return ..()
 
 /datum/component/radioactive/process()
-	radiation_pulse(get_turf(parent),strength,1,FALSE,can_contaminate)
+	radiation_pulse(parent,strength,1,FALSE,can_contaminate)
 
 	if(hl3_release_date && prob(50))
 		strength -= strength / hl3_release_date
@@ -64,7 +67,7 @@
 	to_chat(user, out.Join())
 
 /datum/component/radioactive/proc/rad_attack(atom/movable/target, mob/living/user)
-	radiation_pulse(get_turf(target), strength/20)
+	radiation_pulse(parent, strength/20)
 	target.rad_act(strength/2)
 
 #undef RAD_AMOUNT_LOW
