@@ -44,8 +44,8 @@
 	dna.initialize_dna(random_blood_type())
 
 /mob/living/carbon/monkey/Destroy()
-	. = ..()
 	GLOB.monkeys -= src
+	return ..()
 
 /mob/living/carbon/monkey/create_internal_organs()
 	internal_organs += new /obj/item/organ/appendix
