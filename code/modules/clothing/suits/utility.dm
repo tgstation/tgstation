@@ -90,17 +90,6 @@
 	equip_delay_other = 70
 	resistance_flags = 0
 
-
-/obj/item/clothing/head/bomb_hood/security
-	icon_state = "bombsuitsec"
-	item_state = "bombsuitsec"
-
-
-/obj/item/clothing/suit/bomb_suit/security
-	icon_state = "bombsuitsec"
-	item_state = "bombsuitsec"
-	allowed = list(/obj/item/gun/energy, /obj/item/melee/baton, /obj/item/restraints/handcuffs)
-
 /*
  * Radiation protection
  */
