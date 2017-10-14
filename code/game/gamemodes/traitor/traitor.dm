@@ -63,7 +63,6 @@
 		addtimer(CALLBACK(traitor, /datum/mind.proc/add_antag_datum, antag_datum), rand(10,100))
 	if(!exchange_blue)
 		exchange_blue = -1 //Block latejoiners from getting exchange objectives
-	modePlayer += traitors
 	..()
 	return TRUE
 

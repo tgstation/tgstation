@@ -53,7 +53,6 @@
 		return 0
 
 /datum/game_mode/traitor/vampire/post_setup()
-	modePlayer += vampires
 	for(var/datum/mind/vamp in vampires)
 		add_vampire(vamp.current)
 	..()
