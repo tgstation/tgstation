@@ -953,6 +953,7 @@
 					var/datum/antagonist/rev/head/new_head = new /datum/antagonist/rev/head(src)
 					new_head.give_flash = TRUE
 					new_head.give_hud = TRUE
+					new_head.remove_clumsy = TRUE
 					add_antag_datum(new_head)
 					to_chat(current, "<span class='userdanger'>You are a member of the revolutionaries' leadership now!</span>")
 				else

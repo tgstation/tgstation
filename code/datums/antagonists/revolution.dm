@@ -76,12 +76,13 @@
 	new_revhead.silent = TRUE
 	old_owner.add_antag_datum(new_revhead,old_team)
 	new_revhead.silent = FALSE
-	to_chat(old_owner, "<span class='userdanger'>You have proved your devotion to revolution! Yea are a head revolutionary now!</span>")
+	to_chat(old_owner, "<span class='userdanger'>You have proved your devotion to revolution! You are a head revolutionary now!</span>")
 				
 
 /datum/antagonist/rev/head
 	name = "Head Revolutionary"
 	hud_type = "rev_head"
+	var/remove_clumsy = FALSE
 	var/give_flash = FALSE
 	var/give_hud = FALSE
 
@@ -158,7 +159,7 @@
 	if(!istype(H))
 		return
 
-	if (owner.assigned_role == "Clown")
+	if(remove_clumsy && owner.assigned_role == "Clown")
 		to_chat(owner, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 		H.dna.remove_mutation(CLOWNMUT)
 	

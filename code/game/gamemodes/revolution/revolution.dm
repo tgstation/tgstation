@@ -94,7 +94,11 @@
 
 	for(var/datum/mind/rev_mind in headrev_candidates)
 		log_game("[rev_mind.key] (ckey) has been selected as a head rev")
-		rev_mind.add_antag_datum(/datum/antagonist/rev/head)
+		var/datum/antagonist/rev/head/new_head = new(rev_mind)
+		new_head.give_flash = TRUE
+		new_head.give_hud = TRUE
+		new_head.remove_clumsy = TRUE
+		rev_mind.add_antag_datum(new_head)
 
 	SSshuttle.registerHostileEnvironment(src)
 	..()
