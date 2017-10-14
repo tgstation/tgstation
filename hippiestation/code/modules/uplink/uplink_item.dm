@@ -231,3 +231,6 @@
 	item = /obj/item/melee/execution_sword
 	cost = 3 //Its weaker than an energy dagger and cannot be concealed.
 	surplus = 30 //Theres a good chance this will end up in surplus crates, so its a great way to add a little spice to any meme round.
+
+/datum/uplink_item/dangerous/guardian
+	exclude_modes = list()
