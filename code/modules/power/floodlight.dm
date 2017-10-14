@@ -104,3 +104,13 @@
 /obj/machinery/power/floodlight/attack_ai(mob/user)
 	attack_hand(user)
 	..()
+
+/obj/machinery/power/floodlight/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+	. = ..()
+	if(. && !QDELETED(src))
+		if(prob(damage_amount * 5))
+			playsound(src, 'sound/effects/glasshit.ogg', 75, 1)
+			var/obj/structure/floodlight_frame/F = new(loc)
+			F.state = FLOODLIGHT_NEEDS_LIGHTS
+			new /obj/item/light/tube/broken(loc)
+			qdel(src)
