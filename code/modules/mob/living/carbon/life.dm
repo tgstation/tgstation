@@ -283,24 +283,9 @@
 				HM.force_lose(src)
 				dna.temporary_mutations.Remove(mut)
 
-	if(radiation)
-		radiation = Clamp(radiation, 0, 100)
-		switch(radiation)
-			if(0 to 50)
-				radiation = max(radiation-1,0)
-				if(prob(25))
-					adjustToxLoss(1)
-
-			if(50 to 75)
-				radiation = max(radiation-2,0)
-				adjustToxLoss(1)
-				if(prob(5))
-					radiation = max(radiation-5,0)
-
-			if(75 to 100)
-				radiation = max(radiation-3,0)
-				adjustToxLoss(3)
-
+	radiation -= min(radiation, RAD_LOSS_PER_TICK)
+	if(radiation > RAD_MOB_SAFE)
+		adjustToxLoss(log(radiation-RAD_MOB_SAFE)*RAD_TOX_COEFFICIENT)
 
 /mob/living/carbon/handle_stomach()
 	set waitfor = 0

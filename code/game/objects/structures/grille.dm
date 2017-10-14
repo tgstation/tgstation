@@ -17,6 +17,10 @@
 	var/grille_type = null
 	var/broken_type = /obj/structure/grille/broken
 
+/obj/structure/grille/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION)
+
 /obj/structure/grille/examine(mob/user)
 	..()
 	if(anchored)
@@ -63,6 +67,10 @@
 	var/mob/M = AM
 	shock(M, 70)
 
+/obj/structure/grille/attack_animal(mob/user)
+	. = ..()
+	if(!shock(user, 70))
+		take_damage(rand(5,10), BRUTE, "melee", 1)
 
 /obj/structure/grille/attack_paw(mob/user)
 	attack_hand(user)

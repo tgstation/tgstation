@@ -1585,7 +1585,7 @@
 /datum/reagent/magillitis/on_mob_life(mob/living/carbon/M)
 	..()
 	if((ismonkey(M) || ishuman(M)) && current_cycle >= 10)
-		return M.gorillize()
+		M.gorillize()
 
 /datum/reagent/growthserum
 	name = "Growth Serum"

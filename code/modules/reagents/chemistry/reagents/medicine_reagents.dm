@@ -455,7 +455,7 @@
 
 /datum/reagent/medicine/potass_iodide/on_mob_life(mob/living/M)
 	if(M.radiation > 0)
-		M.radiation--
+		M.radiation-=2
 	..()
 
 /datum/reagent/medicine/pen_acid
@@ -467,11 +467,8 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/pen_acid/on_mob_life(mob/living/M)
-	if(M.radiation > 0)
-		M.radiation -= 4
+	M.radiation -= min(M.radiation, 8)
 	M.adjustToxLoss(-2*REM, 0)
-	if(M.radiation < 0)
-		M.radiation = 0
 	for(var/datum/reagent/R in M.reagents.reagent_list)
 		if(R != src)
 			M.reagents.remove_reagent(R.id,2)

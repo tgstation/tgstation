@@ -56,7 +56,6 @@
 		return 0
 
 /datum/game_mode/traitor/changeling/post_setup()
-	modePlayer += changelings
 	for(var/datum/mind/changeling in changelings)
 		changeling.current.make_changeling()
 		forge_changeling_objectives(changeling)

@@ -105,8 +105,6 @@
 
 //Called when we bump onto a mob
 /mob/living/proc/MobCollide(mob/M)
-	//Even if we don't push/swap places, we "touched" them, so spread fire
-	spreadFire(M)
 
 	//Also diseases
 	for(var/thing in viruses)
@@ -120,7 +118,31 @@
 			ContactContractDisease(D)
 
 	if(now_pushing)
-		return 1
+		return TRUE
+
+	//TODO FOR LATER PRS: Make passing tables an automatic thing for flying and passable objects be determined better to prevent huge amounts of flags being set when mobs fly.
+	if((movement_type) ^ (M.movement_type))	//Fly past each other.
+		now_pushing = TRUE
+		var/old = pass_flags & PASSMOB
+		var/old_p = pulling? (pulling.pass_flags & PASSMOB) : NONE
+		var/atom/movable/cached = pulling
+		pass_flags |= PASSMOB
+		var/obj/item/I = cached
+		if(cached && (isliving(cached) || (istype(I) && (I.w_class < WEIGHT_CLASS_BULKY))))
+			var/mob/living/l = cached
+			if(l.mob_size <= mob_size)
+				cached.pass_flags |= PASSMOB
+		Move(get_turf(M))
+		if(!old)
+			pass_flags &= ~PASSMOB
+		if(cached && !old_p)
+			cached.pass_flags &= ~PASSMOB
+		cached = null
+		now_pushing = FALSE
+		return TRUE
+
+	//Even if we don't push/swap places, we "touched" them, so spread fire
+	spreadFire(M)
 
 	//Should stop you pushing a restrained person out of the way
 	if(isliving(M))
@@ -872,6 +894,16 @@
 		G.summoner = new_mob
 		G.Recall()
 		to_chat(G, "<span class='holoparasite'>Your summoner has changed form!</span>")
+
+/mob/living/rad_act(amount)
+	amount = max(amount-RAD_BACKGROUND_RADIATION, 0)
+
+	if(amount)
+		var/blocked = getarmor(null, "rad")
+
+		apply_effect(amount * RAD_MOB_COEFFICIENT, IRRADIATE, blocked)
+		if(amount > RAD_AMOUNT_EXTREME)
+			apply_damage((amount-RAD_AMOUNT_EXTREME)/RAD_AMOUNT_EXTREME, BURN, null, blocked)
 
 /mob/living/proc/fakefireextinguish()
 	return

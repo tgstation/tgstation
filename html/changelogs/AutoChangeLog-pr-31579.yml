@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - bugfix: "Reusable projectiles such as foam darts no longer get deleted if they're shot at a shooting range target or a cardboard cutout."

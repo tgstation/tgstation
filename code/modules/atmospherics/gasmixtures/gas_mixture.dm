@@ -71,8 +71,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	for(var/id in cached_gases)
 		var/gas_data = cached_gases[id]
 		. += gas_data[MOLES] * gas_data[GAS_META][META_GAS_SPECIFIC_HEAT]
-	if(!.) //if no heat capacity, we're a vacuum - things get weird like this but this hack sorta works
-		. += HEAT_CAPACITY_VACUUM
+	if(!. && temperature) //if temp isn't defined, this mixture isn't a vacuum like space is. it hasn't been filled with *anything* so we want it to take on the properties of whatever gas enters it
+		. += HEAT_CAPACITY_VACUUM //however, if temp is defined but HC is still 0, then we want the mixture to behave like space does, as a heat sink
 
 
 /datum/gas_mixture/proc/heat_capacity_archived() //joules per kelvin
@@ -371,8 +371,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 			var/heat = conduction_coefficient*temperature_delta* \
 				(self_heat_capacity*sharer_heat_capacity/(self_heat_capacity+sharer_heat_capacity))
 
-			temperature = max(temperature - heat/self_heat_capacity, TCMB)
-			sharer_temperature = max(sharer_temperature + heat/sharer_heat_capacity, TCMB)
+			temperature = max(temperature + heat/self_heat_capacity, TCMB)
+			sharer_temperature = max(sharer_temperature - heat/sharer_heat_capacity, TCMB)
 			if(sharer)
 				sharer.temperature = sharer_temperature
 	return sharer_temperature
@@ -406,8 +406,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 /datum/gas_mixture/react(turf/open/dump_location)
 	. = 0
-	if(temperature < TCMB) //just for safety
-		temperature = TCMB
 	reaction_results = new
 
 	var/list/cached_gases = gases
@@ -447,6 +445,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 			. |= reaction.react(src, dump_location)
 	if(.)
 		garbage_collect()
+		if(temperature < TCMB) //just for safety
+			temperature = TCMB
 
 //Takes the amount of the gas you want to PP as an argument
 //So I don't have to do some hacky switches/defines/magic strings
