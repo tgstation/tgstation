@@ -53,6 +53,7 @@
 	icon_state = "honkbot-c"
 	addtimer(CALLBACK(src, .proc/blink_end), 5)
 
+//honkbots react with sounds.
 /mob/living/simple_animal/bot/honkbot/proc/react_ping()
 	playsound(src, 'sound/machines/ping.ogg', 50, 1, -1) //the first sound upon creation!
 	spam_flag = TRUE
@@ -159,44 +160,30 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 /mob/living/simple_animal/bot/honkbot/proc/bike_horn() //use bike_horn
 	if (emagged <= 1)
-		if(!client) //check if a player is controlling
+		if (!spam_flag)
 			playsound(src, honksound, 50, 1, -1)
-		else
-			if (!spam_flag)
-				playsound(src, honksound, 50, 1, -1)
-				spam_flag = TRUE //prevent spam
-		sensor_blink()
-		addtimer(CALLBACK(src, .proc/spam_flag_false), cooldowntimehorn)
-
+			spam_flag = TRUE //prevent spam
+			sensor_blink()
+			addtimer(CALLBACK(src, .proc/spam_flag_false), cooldowntimehorn)
 	else if (emagged == 2) //emagged honkbots will spam short and memorable sounds.
-		if (!client)
+		if (!spam_flag)
 			playsound(src, "honkbot_e", 50, 0)
-		else
-			if (!spam_flag)
-				playsound(src, "honkbot_e", 50, 0)
-				spam_flag = TRUE // prevent spam
-		icon_state = "honkbot-e"
-		spawn(30) // keep flashing
-			icon_state = "honkbot[on]"
+			spam_flag = TRUE // prevent spam
+			icon_state = "honkbot-e"
+			addtimer(CALLBACK(src, .proc/blink_end), 30)
 		addtimer(CALLBACK(src, .proc/spam_flag_false), cooldowntimehorn)
 
 /mob/living/simple_animal/bot/honkbot/proc/honk_attack(mob/living/carbon/C) // horn attack
-	if (!client) //check if a player is controlling
+	if(!spam_flag)
 		playsound(loc, honksound, 50, 1, -1)
-	else
-		if(!spam_flag)
-			playsound(loc, honksound, 50, 1, -1)
-			spam_flag = TRUE // prevent spam
-	sensor_blink()
-	addtimer(CALLBACK(src, .proc/spam_flag_false), cooldowntimehorn)
+		spam_flag = TRUE // prevent spam
+		sensor_blink()
+		addtimer(CALLBACK(src, .proc/spam_flag_false), cooldowntimehorn)
 
 /mob/living/simple_animal/bot/honkbot/proc/stun_attack(mob/living/carbon/C) // airhorn stun
-	if (!client)
-		playsound(loc, 'sound/items/AirHorn.ogg', 100, 1, -1) //HOOOOOOOOOOOOONK!!
-	else
-		if(!spam_flag)
-			playsound(loc, 'sound/items/AirHorn.ogg', 100, 1, -1) //HEEEEEEEEEEEENK!!
-	sensor_blink()
+	if(!spam_flag)
+		playsound(loc, 'sound/items/AirHorn.ogg', 100, 1, -1) //HEEEEEEEEEEEENK!!
+		sensor_blink()
 	if(spam_flag == 0)
 		if(ishuman(C))
 			C.stuttering = 20
