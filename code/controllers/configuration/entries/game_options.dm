@@ -271,5 +271,5 @@ CONFIG_DEF(number/emergency_shuttle_autocall_threshold)
 	integer = FALSE
 
 CONFIG_DEF(number/monkeycap) //how many monkeys should we allow to exist at once
-	value = 150
+	value = INFINITY
 	min_val = 0
