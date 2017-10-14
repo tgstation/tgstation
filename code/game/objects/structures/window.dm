@@ -650,7 +650,7 @@
 /obj/structure/window/reinforced/clockwork/Initialize(mapload, direct)
 	if(fulltile)
 		made_glow = TRUE
-	..()
+	. = ..()
 	QDEL_LIST(debris)
 	var/amount_of_gears = 2
 	if(fulltile)
