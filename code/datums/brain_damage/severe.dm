@@ -54,7 +54,7 @@
 	lose_text = "<span class='notice'>You can feel your limbs again!</span>"
 
 /datum/brain_trauma/severe/paralysis/on_life()
-	owner.Knockdown(200)
+	owner.Knockdown(200, ignore_canknockdown = TRUE)
 	..()
 
 /datum/brain_trauma/severe/blindness/on_lose()
