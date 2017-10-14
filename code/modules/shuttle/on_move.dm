@@ -330,10 +330,11 @@ All ShuttleMove procs go here
 /atom/movable/light/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, old_dock)
 	return FALSE
 
-/obj/docking_port/stationary/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, old_dock)
+/obj/docking_port/stationary/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, obj/docking_port/stationary/old_dock)
 	if(old_dock == src) //Don't move the dock we're leaving
 		return FALSE
-
+	if(old_dock && !old_dock.can_move_docking_ports_from)
+		return FALSE
 	. = ..()
 
 /obj/docking_port/stationary/public_mining_dock/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, old_dock)
