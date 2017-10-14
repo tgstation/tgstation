@@ -3,7 +3,7 @@
 	desc = "Shallow water."
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "riverwater"
-	baseturf = /turf/open/chasm/straight_down/lava_land_surface
+	baseturf = /turf/open/chasm/drop_delete/lavaland
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 	slowdown = 1

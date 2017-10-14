@@ -1,4 +1,7 @@
 
+#define CHASM_TYPE_DROP_DOWN 1
+#define CHASM_TYPE_DROP_DELETE 2
+
 //////////////CHASM//////////////////
 
 /turf/open/chasm
@@ -10,6 +13,7 @@
 	icon_state = "smooth"
 	canSmoothWith = list(/turf/open/floor/fakepit, /turf/open/chasm)
 	density = TRUE //This will prevent hostile mobs from pathing into chasms, while the canpass override will still let it function like an open turf
+	var/chasm_type = CHASM_TYPE_DROP_DOWN
 	var/static/list/falling_atoms = list() //Atoms currently falling into the chasm
 	var/static/list/forbidden_types = typecacheof(list(/obj/effect/portal, /obj/singularity, /obj/structure/stone_tile, /obj/item/projectile, /obj/effect/abstract, /obj/effect/temp_visual))
 	var/drop_x = 1
@@ -111,86 +115,84 @@
 	//Make sure the item is still there after our sleep
 	if(!AM || QDELETED(AM))
 		return
-	falling_atoms[AM] = TRUE
-	var/turf/T = locate(drop_x, drop_y, drop_z)
-	if(T)
-		AM.visible_message("<span class='boldwarning'>[AM] falls into [src]!</span>", "<span class='userdanger'>GAH! Ah... where are you?</span>")
-		T.visible_message("<span class='boldwarning'>[AM] falls from above!</span>")
-		AM.forceMove(T)
-		if(isliving(AM))
-			var/mob/living/L = AM
-			L.Knockdown(100)
-			L.adjustBruteLoss(30)
-	falling_atoms -= AM
+	switch(chasm_type)
+		if(CHASM_TYPE_DROP_DOWN)
+			falling_atoms[AM] = TRUE
+			var/turf/T = locate(drop_x, drop_y, drop_z)
+			if(T)
+				AM.visible_message("<span class='boldwarning'>[AM] falls into [src]!</span>", "<span class='userdanger'>GAH! Ah... where are you?</span>")
+				T.visible_message("<span class='boldwarning'>[AM] falls from above!</span>")
+				AM.forceMove(T)
+				if(isliving(AM))
+					var/mob/living/L = AM
+					L.Knockdown(100)
+					L.adjustBruteLoss(30)
+			falling_atoms -= AM
+		if(CHASM_TYPE_DROP_DELETE)
+			falling_atoms[AM] = TRUE
+			AM.visible_message("<span class='boldwarning'>[AM] falls into [src]!</span>", "<span class='userdanger'>You stumble and stare into an abyss before you. It stares back, and you fall \
+			into the enveloping dark.</span>")
+			if(isliving(AM))
+				var/mob/living/L = AM
+				L.notransform = TRUE
+				L.Stun(200)
+				L.resting = TRUE
+			var/oldtransform = AM.transform
+			var/oldcolor = AM.color
+			var/oldalpha = AM.alpha
+			animate(AM, transform = matrix() - matrix(), alpha = 0, color = rgb(0, 0, 0), time = 10)
+			for(var/i in 1 to 5)
+				//Make sure the item is still there after our sleep
+				if(!AM || QDELETED(AM))
+					return
+				AM.pixel_y--
+				sleep(2)
 
+			//Make sure the item is still there after our sleep
+			if(!AM || QDELETED(AM))
+				return
 
-/turf/open/chasm/straight_down/Initialize()
+			if(iscyborg(AM))
+				var/mob/living/silicon/robot/S = AM
+				qdel(S.mmi)
+
+			falling_atoms -= AM
+
+			qdel(AM)
+
+			if(AM && !QDELETED(AM))	//It's indestructible
+				visible_message("<span class='boldwarning'>[src] spits out the [AM]!</span>")
+				AM.alpha = oldalpha
+				AM.color = oldcolor
+				AM.transform = oldtransform
+				AM.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1, 10),rand(1, 10))
+
+/turf/open/chasm/Initialize()
 	. = ..()
-	drop_x = x
-	drop_y = y
-	drop_z = z - 1
-	var/turf/T = locate(drop_x, drop_y, drop_z)
-	T.visible_message("<span class='boldwarning'>The ceiling gives way!</span>")
-	playsound(T, 'sound/effects/break_stone.ogg', 50, 1)
+	if(chasm_type == CHASM_TYPE_DROP_DOWN)
+		drop_x = x
+		drop_y = y
+		drop_z = min(z - 1, 1)		//This might be an issue later on due to no sanity checks for not falling into centcom/crap like that.
+		var/turf/T = locate(drop_x, drop_y, drop_z)
+		T.visible_message("<span class='boldwarning'>The ceiling gives way!</span>")
+		playsound(T, 'sound/effects/break_stone.ogg', 50, 1)
 
+/turf/open/chasm/drop_delete
+	chasm_type = CHASM_TYPE_DROP_DELETE
 
-/turf/open/chasm/straight_down/lava_land_surface
+/turf/open/chasm/drop_delete/lavaland
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
-	baseturf = /turf/open/chasm/straight_down/lava_land_surface
+	baseturf = /turf/open/chasm/drop_delete/lavaland
 	light_range = 1.9 //slightly less range than lava
 	light_power = 0.65 //less bright, too
 	light_color = LIGHT_COLOR_LAVA //let's just say you're falling into lava, that makes sense right
 
-/turf/open/chasm/straight_down/lava_land_surface/drop(atom/movable/AM)
-	//Make sure the item is still there after our sleep
-	if(!AM || QDELETED(AM))
-		return
-	falling_atoms[AM] = TRUE
-	AM.visible_message("<span class='boldwarning'>[AM] falls into [src]!</span>", "<span class='userdanger'>You stumble and stare into an abyss before you. It stares back, and you fall \
-	into the enveloping dark.</span>")
-	if(isliving(AM))
-		var/mob/living/L = AM
-		L.notransform = TRUE
-		L.Stun(200)
-		L.resting = TRUE
-	var/oldtransform = AM.transform
-	var/oldcolor = AM.color
-	var/oldalpha = AM.alpha
-	animate(AM, transform = matrix() - matrix(), alpha = 0, color = rgb(0, 0, 0), time = 10)
-	for(var/i in 1 to 5)
-		//Make sure the item is still there after our sleep
-		if(!AM || QDELETED(AM))
-			return
-		AM.pixel_y--
-		sleep(2)
-
-	//Make sure the item is still there after our sleep
-	if(!AM || QDELETED(AM))
-		return
-
-	if(iscyborg(AM))
-		var/mob/living/silicon/robot/S = AM
-		qdel(S.mmi)
-
-	falling_atoms -= AM
-
-	qdel(AM)
-
-	if(AM && !QDELETED(AM))	//It's indestructible
-		visible_message("<span class='boldwarning'>[src] spits out the [AM]!</span>")
-		AM.alpha = oldalpha
-		AM.color = oldcolor
-		AM.transform = oldtransform
-		AM.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1, 10),rand(1, 10))
-
-/turf/open/chasm/straight_down/lava_land_surface/normal_air
+/turf/open/chasm/drop_delete/lavaland/normal_air
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 
-
-
 /turf/open/chasm/CanPass(atom/movable/mover, turf/target)
-	return 1
+	return TRUE
 
 //Jungle
 
@@ -203,8 +205,3 @@
 	underlay_appearance.icon = 'icons/turf/floors.dmi'
 	underlay_appearance.icon_state = "dirt"
 	return TRUE
-
-/turf/open/chasm/straight_down/jungle
-	icon = 'icons/turf/floors/junglechasm.dmi'
-	planetary_atmos = TRUE
-	initial_gas_mix = LAVALAND_DEFAULT_ATMOS

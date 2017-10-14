@@ -137,7 +137,7 @@
 /turf/open/lava/smooth/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
-	baseturf = /turf/open/chasm/straight_down/lava_land_surface
+	baseturf = /turf/open/chasm/drop_delete/lavaland
 
 /turf/open/lava/smooth/airless
 	initial_gas_mix = "TEMP=2.7"
