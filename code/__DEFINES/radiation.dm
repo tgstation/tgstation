@@ -14,17 +14,17 @@ Ask ninjanomnom if they're around
 // apply_effect(amount * RAD_MOB_COEFFICIENT, IRRADIATE, blocked)
 #define RAD_MOB_COEFFICIENT 0.25					// Radiation applied is multiplied by this
 
-#define RAD_LOSS_PER_TICK 1
+#define RAD_LOSS_PER_TICK 5
 #define RAD_TOX_COEFFICIENT 0.1						// Toxin damage per tick coefficient
 
 #define RAD_MOB_SAFE 300							// How much stored radiation in a mob with no ill effects
 #define RAD_MOB_KNOCKDOWN 1500						// How much stored radiation to start stunning
 // If (mutate*2<knockdown) then monkeys will sometimes turn into gorillas before being knocked down
 // otherwise they only turn into gorillas *after* being knocked down
-#define RAD_MOB_MUTATE 800							// How much stored radiation to check for mutation
-#define RAD_MOB_HAIRLOSS 500						// How much stored radiation to check for hair loss
+#define RAD_MOB_MUTATE 2500							// How much stored radiation to check for mutation
+#define RAD_MOB_HAIRLOSS 750						// How much stored radiation to check for hair loss
 
-#define RAD_KNOCKDOWN_TIME 200						// How much knockdown to apply
+#define RAD_KNOCKDOWN_TIME 100						// How much knockdown to apply
 
 #define RAD_NO_INSULATION 1.0						// For things that shouldn't become irradiated for whatever reason
 #define RAD_VERY_LIGHT_INSULATION 0.9				// What girders have
