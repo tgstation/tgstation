@@ -12565,8 +12565,7 @@
 /area/tdome/tdomeobserve)
 "GQ" = (
 /obj/structure/table/wood,
-/obj/machinery/reagentgrinder{
-	desc = "Used to grind things up into raw materials and liquids.";
+/obj/machinery/reagentgrinder/materials{
 	pixel_y = 5
 	},
 /turf/open/floor/plasteel/vault{
@@ -12996,8 +12995,7 @@
 /area/tdome/tdomeobserve)
 "HU" = (
 /obj/structure/table/reinforced,
-/obj/machinery/reagentgrinder{
-	desc = "Used to grind things up into raw materials and liquids.";
+/obj/machinery/reagentgrinder/materials{
 	pixel_y = 5
 	},
 /obj/machinery/light{

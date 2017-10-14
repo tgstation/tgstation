@@ -13519,8 +13519,7 @@
 /area/crew_quarters/bar/atrium)
 "axb" = (
 /obj/structure/table/wood,
-/obj/machinery/reagentgrinder{
-	desc = "Used to grind things up into raw materials and liquids.";
+/obj/machinery/reagentgrinder/materials{
 	pixel_y = 5
 	},
 /obj/machinery/firealarm{
@@ -16671,8 +16670,7 @@
 /area/crew_quarters/kitchen)
 "aDa" = (
 /obj/structure/table/reinforced,
-/obj/machinery/reagentgrinder{
-	desc = "Used to grind things up into raw materials and liquids.";
+/obj/machinery/reagentgrinder/materials{
 	pixel_y = 5
 	},
 /obj/structure/sign/nosmoking_2{
@@ -21249,8 +21247,7 @@
 /area/hydroponics)
 "aKY" = (
 /obj/structure/table/glass,
-/obj/machinery/reagentgrinder{
-	desc = "Used to grind things up into raw materials and liquids.";
+/obj/machinery/reagentgrinder/materials{
 	pixel_y = 5
 	},
 /obj/item/reagent_containers/glass/bottle/nutrient/ez{
