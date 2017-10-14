@@ -66,8 +66,6 @@
 	var/obj/item/organ/lungs/mutantlungs = null
 	var/breathid = "o2"
 
-	//Flight and floating
-	var/override_float = 0
 	var/obj/item/organ/brain/mutant_brain = /obj/item/organ/brain
 	var/obj/item/organ/eyes/mutanteyes = /obj/item/organ/eyes
 	var/obj/item/organ/ears/mutantears = /obj/item/organ/ears
@@ -76,6 +74,7 @@
 
 	var/obj/item/organ/liver/mutantliver
 	var/obj/item/organ/stomach/mutantstomach
+	var/override_float = FALSE
 
 ///////////
 // PROCS //
