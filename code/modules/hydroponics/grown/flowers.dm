@@ -114,6 +114,8 @@
 	name = "sunflower"
 	desc = "It's beautiful! A certain person might beat you to death if you trample these."
 	icon_state = "sunflower"
+	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	damtype = "fire"
 	force = 0
 	slot_flags = SLOT_HEAD
