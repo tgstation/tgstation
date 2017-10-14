@@ -1,0 +1,4 @@
+author: "HonkBot"
+delete-after: True
+changes: 
+  - bugfix: "Scrubbers and filters no longer allow for infinite pressure in pipes."
