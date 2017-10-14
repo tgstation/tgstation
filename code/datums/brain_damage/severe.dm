@@ -1,3 +1,7 @@
+//Severe traumas, when your brain gets abused way too much.
+//These range from very annoying to completely debilitating.
+//They cannot be cured with chemicals, and require brain surgery to solve.
+
 /datum/brain_trauma/severe
 
 /datum/brain_trauma/severe/mute
@@ -40,4 +44,19 @@
 
 /datum/brain_trauma/severe/blindness/on_lose()
 	owner.cure_blind()
+	..()
+
+/datum/brain_trauma/severe/paralysis
+	name = "Paralysis"
+	desc = "Patient's brain can no longer control its motor functions."
+	scan_desc = "cerebral paralysis"
+	gain_text = "<span class='warning'>You can't feel your body anymore!</span>"
+	lose_text = "<span class='notice'>You can feel your limbs again!</span>"
+
+/datum/brain_trauma/severe/paralysis/on_life()
+	owner.Knockdown(200)
+	..()
+
+/datum/brain_trauma/severe/blindness/on_lose()
+	owner.SetKnockdown(0)
 	..()

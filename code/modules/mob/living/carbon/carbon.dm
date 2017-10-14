@@ -761,6 +761,7 @@
 		update_handcuffed()
 		if(reagents)
 			reagents.addiction_list = list()
+	cure_all_traumas(TRUE, TRUE)
 	..()
 	// heal ears after healing disabilities, since ears check DEAF disability
 	// when healing.

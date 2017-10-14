@@ -249,7 +249,7 @@
 		if(bz_pp > BZ_trip_balls_min)
 			H.hallucination += 20
 			if(prob(33))
-				H.adjustBrainLoss(3)
+				H.adjustBrainLoss(3, 150)
 		else if(bz_pp > 0.01)
 			H.hallucination += 5//Removed at 2 per tick so this will slowly build up
 		handle_breath_temperature(breath, H)

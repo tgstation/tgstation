@@ -174,7 +174,7 @@
 				M.pass_flags &= ~PASSMOB
 
 			now_pushing = 0
-			
+
 			if(!move_failed)
 				return 1
 

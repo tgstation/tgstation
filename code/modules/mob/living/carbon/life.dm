@@ -450,8 +450,6 @@
 ////////////////
 
 /mob/living/carbon/proc/handle_brain_damage()
-	var/traumas_amount = length(traumas)
-
 	for(var/datum/brain_trauma/BT in traumas)
 		BT.on_life()
 

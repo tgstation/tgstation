@@ -32,7 +32,7 @@
 /datum/surgery_step/fix_eyes/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(target.getorgan(/obj/item/organ/brain))
 		user.visible_message("<span class='warning'>[user] accidentally stabs [target] right in the brain!</span>", "<span class='warning'>You accidentally stab [target] right in the brain!</span>")
-		target.adjustBrainLoss(100)
+		target.adjustBrainLoss(70)
 	else
 		user.visible_message("<span class='warning'>[user] accidentally stabs [target] right in the brain! Or would have, if [target] had a brain.</span>", "<span class='warning'>You accidentally stab [target] right in the brain! Or would have, if [target] had a brain.</span>")
 	return FALSE

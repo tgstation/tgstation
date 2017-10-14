@@ -63,7 +63,7 @@
 		else
 			msg += "<b>[t_He] [t_is] severely deformed.</b>\n"
 
-	if(getBrainLoss() > 60)
+	if(disabilities & DUMB)
 		msg += "[t_He] seems to be clumsy and unable to think.\n"
 
 	if(fire_stacks > 0)

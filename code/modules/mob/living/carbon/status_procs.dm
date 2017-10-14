@@ -113,32 +113,32 @@
 	update_body()
 	return 1
 
-/mob/living/carbon/has_trauma_type(brain_trauma_type)
+/mob/living/carbon/proc/has_trauma_type(brain_trauma_type)
 	for(var/X in traumas)
 		if(istype(X, brain_trauma_type))
 			return X
 
-/mob/living/carbon/gain_trauma(datum/brain_trauma/trauma, permanent = FALSE)
+/mob/living/carbon/proc/gain_trauma(datum/brain_trauma/trauma, permanent = FALSE)
 	var/trauma_type = trauma
 	traumas += new trauma_type(src, permanent)
 
-/mob/living/carbon/gain_trauma_type(brain_trauma_type = /datum/brain_trauma, permanent = FALSE)
+/mob/living/carbon/proc/gain_trauma_type(brain_trauma_type = /datum/brain_trauma, permanent = FALSE)
 	var/trauma_type = pick(subtypesof(brain_trauma_type))
 	traumas += new trauma_type(src, permanent)
 
-/mob/living/carbon/cure_trauma(datum/brain_trauma/trauma, cure_permanent = FALSE)
+/mob/living/carbon/proc/cure_trauma(datum/brain_trauma/trauma, cure_permanent = FALSE)
 	if(!trauma in traumas)
 		return
 
 	if(cure_permanent || !trauma.permanent)
 		qdel(trauma)
 
-/mob/living/carbon/cure_trauma_type(brain_trauma_type, cure_permanent = FALSE)
+/mob/living/carbon/proc/cure_trauma_type(brain_trauma_type, cure_permanent = FALSE)
 	var/datum/brain_trauma/trauma = has_trauma_type(brain_trauma_type)
 	if(trauma && (cure_permanent || !trauma.permanent))
 		qdel(trauma)
 
-/mob/living/carbon/cure_all_traumas(cure_permanent = FALSE, ignore_thresholds = FALSE)
+/mob/living/carbon/proc/cure_all_traumas(cure_permanent = FALSE, ignore_thresholds = FALSE)
 	for(var/X in traumas)
 		if(ignore_thresholds || (istype(X, BRAIN_TRAUMA_MILD) && brainloss < BRAIN_DAMAGE_MILD))
 			cure_trauma(X)

@@ -194,16 +194,16 @@
 	if(updating_stamina)
 		update_stamina()
 
-/mob/living/carbon/adjustBrainLoss(amount)
+/mob/living/carbon/adjustBrainLoss(amount, maximum)
 	..()
 	if(amount <= 0) //cut this early
 		return
 	if(brainloss > BRAIN_DAMAGE_MILD && !has_trauma_type(BRAIN_TRAUMA_MILD))
-		if(prob((amount * (brainloss)) / 10)
+		if(prob((amount * (brainloss)) / 5))
 			gain_trauma_type(BRAIN_TRAUMA_MILD)
 	if(brainloss > BRAIN_DAMAGE_SEVERE && !has_trauma_type(BRAIN_TRAUMA_SEVERE) && !has_trauma_type(BRAIN_TRAUMA_SPECIAL))
-		if(prob(prob((amount * (brainloss)) / 20)
-			if(prob(25))
+		if(prob((amount * (brainloss)) / 20))
+			if(prob(20))
 				gain_trauma_type(BRAIN_TRAUMA_SPECIAL)
 			else
 				gain_trauma_type(BRAIN_TRAUMA_SEVERE)

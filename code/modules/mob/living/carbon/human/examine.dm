@@ -272,7 +272,7 @@
 		if(stat == UNCONSCIOUS)
 			msg += "[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.\n"
 		else
-			if(getBrainLoss() >= 60)
+			if(disabilities & DUMB)
 				msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 			if(InCritical())
 				msg += "[t_He] is barely conscious.\n"

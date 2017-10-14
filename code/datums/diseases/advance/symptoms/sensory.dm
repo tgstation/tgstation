@@ -27,7 +27,9 @@ Bonus
 	symptom_delay_max = 10
 	var/purge_alcohol = FALSE
 	var/brain_heal = FALSE
+	var/trauma_heal = FALSE
 	threshold_desc = "<b>Resistance 6:</b> Heals brain damage.<br>\
+					  <b>Resistance 9:</b> Heals brain traumas.<br>\
 					  <b>Transmission 8:</b> Purges alcohol in the bloodstream."
 
 /datum/symptom/mind_restoration/Start(datum/disease/advance/A)
@@ -35,6 +37,8 @@ Bonus
 		return
 	if(A.properties["resistance"] >= 6) //heal brain damage
 		brain_heal = TRUE
+	if(A.properties["resistance"] >= 9) //heal brain traumas
+		trauma_heal = TRUE
 	if(A.properties["transmittable"] >= 8) //purge alcohol
 		purge_alcohol = TRUE
 
@@ -66,3 +70,9 @@ Bonus
 
 	if(brain_heal && A.stage >= 5)
 		M.adjustBrainLoss(-3)
+		if(trauma_heal && iscarbon(M))
+			var/mob/living/carbon/C = M
+			if(prob(30) && C.brainloss < BRAIN_DAMAGE_SEVERE && C.has_trauma_type(BRAIN_TRAUMA_SPECIAL))
+				C.cure_trauma_type(BRAIN_TRAUMA_SPECIAL)
+			if(prob(10) && C.brainloss < BRAIN_DAMAGE_MILD && C.has_trauma_type(BRAIN_TRAUMA_MILD))
+				C.cure_trauma_type(BRAIN_TRAUMA_MILD)
