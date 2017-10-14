@@ -64,14 +64,6 @@
 	cost = 10
 	surplus = 45
 
-/* Holo Parasites */
-/datum/uplink_item/dangerous/guardian
-	name = "Holoparasites"
-	desc = "Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, they require an organic host as a home base and source of fuel."
-	item = /obj/item/storage/box/syndie_kit/guardian
-	cost = 20
-	exclude_modes = list(/datum/game_mode/nuclear)
-
 /datum/uplink_item/nukeoffer/blastco
 	name = "Unlock the BlastCo(tm) Armory"
 	desc = "Enough gear to fully equip a team with explosive based weaponry."
