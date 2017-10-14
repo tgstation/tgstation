@@ -124,7 +124,7 @@ There are several things that need to be remembered:
 		else if(U.adjusted == DIGITIGRADE_STYLE)
 			t_color = "[t_color]_l"
 
-		var/mutable_appearance/uniform_overlay = overlays_standing[UNIFORM_LAYER]
+		var/mutable_appearance/uniform_overlay
 
 		if(dna && dna.species.sexes)
 			var/G = (gender == FEMALE) ? "f" : "m"
