@@ -128,10 +128,15 @@
 	data["on"] = on
 	data["pressure"] = round(target_pressure)
 	data["max_pressure"] = round(MAX_OUTPUT_PRESSURE)
-	if(filter_type)
-		data["filter_type"] = GLOB.meta_gas_info[filter_type][META_GAS_ID] //ui code is garbage and this is needed for it to work grr
+
+	if(filter_type) //ui code is garbage and this is needed for it to work grr
+		if(ispath(filter_type))	//we need to send the gas ID. if it's a path, get it from the metainfo list...
+			data["filter_type"] = GLOB.meta_gas_info[filter_type][META_GAS_ID]
+		else //...otherwise, it's already in the form we need.
+			data["filter_type"] = filter_type
 	else
 		data["filter_type"] = "none"
+
 	return data
 
 /obj/machinery/atmospherics/components/trinary/filter/ui_act(action, params)
