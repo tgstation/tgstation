@@ -227,7 +227,7 @@
 
 /datum/mind/proc/remove_rev()
 	var/datum/antagonist/rev/rev = has_antag_datum(/datum/antagonist/rev)
-	qdel(rev)
+	remove_antag_datum(rev.type)
 	special_role = null
 
 
