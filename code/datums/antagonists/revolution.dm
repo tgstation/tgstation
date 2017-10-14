@@ -99,7 +99,7 @@
 /datum/antagonist/rev/proc/can_be_converted(mob/living/candidate)
 	if(!candidate.mind)
 		return FALSE
-	if(!can_be_owned(candidate))
+	if(!can_be_owned(candidate.mind))
 		return FALSE
 	var/mob/living/carbon/C = candidate //Check to see if the potential rev is implanted
 	if(!istype(C)) //Can't convert simple animals
@@ -183,7 +183,7 @@
 
 /datum/objective_team/revolution
 	name = "Revolution"
-	var/list/objectives
+	var/list/objectives = list()
 	var/max_headrevs = 3
 
 /datum/objective_team/revolution/proc/update_objectives(initial = FALSE)
@@ -220,8 +220,9 @@
 				if(khrushchev.current && !khrushchev.current.incapacitated() && !khrushchev.current.restrained() && khrushchev.current.client && khrushchev.current.stat != DEAD)
 					if(ROLE_REV in khrushchev.current.client.prefs.be_special)
 						promotable += khrushchev
-			var/datum/mind/new_leader = pick(promotable)
-			var/datum/antagonist/rev/rev = new_leader.has_antag_datum(/datum/antagonist/rev)
-			rev.promote()
+			if(promotable.len)
+				var/datum/mind/new_leader = pick(promotable)
+				var/datum/antagonist/rev/rev = new_leader.has_antag_datum(/datum/antagonist/rev)
+				rev.promote()
 
 	addtimer(CALLBACK(src,.proc/update_heads),HEAD_UPDATE_PERIOD,TIMER_UNIQUE)
