@@ -196,7 +196,7 @@
 		if(!continuous_sanity_checked) //make sure we have antags to be checking in the first place
 			for(var/mob/Player in GLOB.mob_list)
 				if(Player.mind)
-					if(Player.mind.special_role)
+					if(Player.mind.special_role || LAZYLEN(Player.mind.antag_datums))
 						continuous_sanity_checked = 1
 						return 0
 			if(!continuous_sanity_checked)
