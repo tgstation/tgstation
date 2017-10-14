@@ -90,7 +90,7 @@
 /datum/emote/living/carbon/human/wag/select_message_type(mob/user)
 	. = ..()
 	var/mob/living/carbon/human/H = user
-	if(("waggingtail_lizard" in H.dna.species.mutant_bodyparts) || ("tail_human" in dna.species.mutant_bodyparts))
+	if(("waggingtail_lizard" in H.dna.species.mutant_bodyparts) || ("tail_human" in H.dna.species.mutant_bodyparts))
 		. = null
 
 /datum/emote/living/carbon/human/wing
