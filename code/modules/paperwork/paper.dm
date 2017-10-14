@@ -108,15 +108,16 @@
 	user.visible_message("<span class='suicide'>[user] scratches a grid on [user.p_their()] wrist with the paper! It looks like [user.p_theyre()] trying to commit sudoku...</span>")
 	return (BRUTELOSS)
 
+/obj/item/paper/proc/reset_spamflag()
+	spam_flag = FALSE
 
 /obj/item/paper/attack_self(mob/user)
 	user.examinate(src)
 	if(rigged && (SSevents.holidays && SSevents.holidays[APRIL_FOOLS]))
-		if(spam_flag == 0)
-			spam_flag = 1
+		if(!spam_flag)
+			spam_flag = TRUE
 			playsound(loc, 'sound/items/bikehorn.ogg', 50, 1)
-			spawn(20)
-				spam_flag = 0
+			addtimer(CALLBACK(src, .proc/reset_spamflag), 20)
 
 
 /obj/item/paper/attack_ai(mob/living/silicon/ai/user)
