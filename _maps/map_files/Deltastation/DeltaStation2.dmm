@@ -25204,7 +25204,7 @@
 /area/security/prison)
 "baF" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/bombcloset,
+/obj/structure/closet/bombcloset/security,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
