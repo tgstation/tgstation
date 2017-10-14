@@ -2293,9 +2293,6 @@
 		var/list/dat = list("Related accounts by [uppertext(href_list["showrelatedacc"])]:")
 		dat += thing_to_check
 
-<<<<<<< HEAD
-		usr << browse(dat.Join("<br>"), "window=related_[C];size=420x300")
-=======
 		usr << browse(dat.Join("<br>"), "window=related_[C];size=420x300")
 
 /datum/admins/proc/HandleCMode()
@@ -2326,4 +2323,3 @@
 	dat += {"<A href='?src=\ref[src];[HrefToken()];f_secret2=secret'>Random (default)</A><br>"}
 	dat += {"Now: [GLOB.secret_force_mode]"}
 	usr << browse(dat, "window=f_secret")
->>>>>>> 9a34619e09... Fixes the last Href Token issues (#31666)
