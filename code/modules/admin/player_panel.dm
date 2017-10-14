@@ -410,7 +410,8 @@
 				dat += "in [disk_loc.loc] at ([disk_loc.x], [disk_loc.y], [disk_loc.z])</td></tr>"
 			dat += "</table>"
 
-		if(get_antagonists(/datum/antagonist/rev))
+		var/list/revs = get_antagonists(/datum/antagonist/rev)
+		if(revs.len > 0)
 			dat += "<br><table cellspacing=5><tr><td><B>Revolutionaries</B></td><td></td></tr>"
 			for(var/datum/mind/N in get_antagonists(/datum/antagonist/rev/head))
 				var/mob/M = N.current
