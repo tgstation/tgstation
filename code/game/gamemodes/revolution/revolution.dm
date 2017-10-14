@@ -105,7 +105,6 @@
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		greet_revolutionary(rev_mind)
-	modePlayer += head_revolutionaries
 	SSshuttle.registerHostileEnvironment(src)
 	..()
 
