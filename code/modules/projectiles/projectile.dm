@@ -346,6 +346,7 @@
 	var/turf/targloc = get_turf(target)
 	forceMove(get_turf(source))
 	starting = get_turf(source)
+	original = target
 	yo = targloc.y - curloc.y
 	xo = targloc.x - curloc.x
 
