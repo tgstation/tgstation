@@ -496,5 +496,5 @@ MICE_ROUNDSTART 10
 ## If the percentage of players alive (doesn't count conversions) drops below this threshold the emergency shuttle will be forcefully called (provided it can be)
 #EMERGENCY_SHUTTLE_AUTOCALL_THRESHOLD 0.2
 
-## Maximum amount of monkeys that can exist. Defaults to 150.
-#MONKEYCAP 150
+## Maximum amount of monkeys that can exist. Defaults to infinity.
+#MONKEYCAP 75
