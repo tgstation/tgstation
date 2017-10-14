@@ -134,20 +134,17 @@
 	desc = "Golden? Clearly, it's made with bananium! Honk!"
 	icon_state = "gold_horn"
 	item_state = "gold_horn"
-	var/flip_flag = FALSE
+	var/flip_cooldown = 0
 
 /obj/item/bikehorn/golden/attack()
-	if (!flip_flag)
+	if(flip_cooldown < world.time)
 		flip_mobs()
 	return ..()
 
 /obj/item/bikehorn/golden/attack_self(mob/user)
-	if (!flip_flag)
+	if(flip_cooldown < world.time)
 		flip_mobs()
 	..()
-
-/obj/item/bikehorn/golden/proc/reset_flag()
-	flip_flag = FALSE
 
 /obj/item/bikehorn/golden/proc/flip_mobs(mob/living/carbon/M, mob/user)
 	var/turf/T = get_turf(src)
@@ -157,8 +154,7 @@
 			if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
 				continue
 		M.emote("flip")
-	flip_flag = TRUE
-	addtimer(CALLBACK(src, .proc/reset_flag), 7)
+	flip_cooldown = world.time + 7
 
 //canned laughter
 /obj/item/reagent_containers/food/drinks/soda_cans/canned_laughter
