@@ -939,16 +939,16 @@
 	},
 /area/quartermaster/storage)
 "cv" = (
-/obj/machinery/computer/cargo/request,
+/obj/machinery/computer/cargo/frenzy,
 /turf/open/floor/plasteel/brown{
 	dir = 10
 	},
 /area/quartermaster/storage)
 "cw" = (
-/obj/machinery/computer/teleporter,
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/machinery/computer/teleporter/frenzy,
 /turf/open/floor/plasteel/brown,
 /area/quartermaster/storage)
 "cx" = (
@@ -1298,7 +1298,7 @@
 /turf/open/floor/engine,
 /area/science/lab)
 "dp" = (
-/obj/structure/closet/secure_closet/miner,
+/obj/structure/filingcabinet,
 /turf/open/floor/plasteel/black,
 /area/quartermaster/storage)
 "dq" = (
@@ -1393,13 +1393,13 @@
 /turf/closed/wall,
 /area/quartermaster/storage)
 "dA" = (
-/obj/machinery/mineral/equipment_vendor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/structure/closet/secure_closet/miner,
 /turf/open/floor/plasteel/black,
 /area/quartermaster/storage)
 "dB" = (
@@ -7576,7 +7576,7 @@
 /area/shuttle/pod_3)
 "rE" = (
 /obj/structure/lattice/catwalk,
-/turf/open/space/transit/north,
+/turf/open/space/basic,
 /area/space/nearstation)
 "rF" = (
 /obj/structure/lattice,
@@ -7587,7 +7587,7 @@
 	dir = 6
 	},
 /obj/structure/lattice,
-/turf/open/space/transit/north,
+/turf/open/space/basic,
 /area/space/nearstation)
 "rH" = (
 /obj/structure/lattice/catwalk,
@@ -7596,7 +7596,7 @@
 	icon_state = "intact";
 	dir = 8
 	},
-/turf/open/space/transit/north,
+/turf/open/space/basic,
 /area/space/nearstation)
 "rI" = (
 /obj/machinery/atmospherics/components/binary/pump{
@@ -7768,7 +7768,7 @@
 "sa" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /obj/structure/lattice,
-/turf/open/space/transit/north,
+/turf/open/space/basic,
 /area/space/nearstation)
 "sb" = (
 /obj/effect/turf_decal/stripes/line{
@@ -7903,7 +7903,7 @@
 	dir = 10
 	},
 /obj/structure/lattice/catwalk,
-/turf/open/space/transit/north,
+/turf/open/space/basic,
 /area/space/nearstation)
 "sr" = (
 /obj/effect/turf_decal/stripes/line{
@@ -8070,7 +8070,7 @@
 	dir = 6
 	},
 /obj/structure/lattice/catwalk,
-/turf/open/space/transit/north,
+/turf/open/space/basic,
 /area/space/nearstation)
 "sK" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
@@ -8078,7 +8078,7 @@
 	dir = 4
 	},
 /obj/structure/lattice/catwalk,
-/turf/open/space/transit/north,
+/turf/open/space/basic,
 /area/space/nearstation)
 "sL" = (
 /obj/machinery/atmospherics/components/binary/pump{
@@ -8228,7 +8228,7 @@
 	dir = 5
 	},
 /obj/structure/lattice/catwalk,
-/turf/open/space/transit/north,
+/turf/open/space/basic,
 /area/space/nearstation)
 "ta" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
@@ -8236,7 +8236,7 @@
 	dir = 4
 	},
 /obj/structure/lattice,
-/turf/open/space/transit/north,
+/turf/open/space/basic,
 /area/space/nearstation)
 "tb" = (
 /obj/effect/turf_decal/stripes/line{
@@ -8408,7 +8408,7 @@
 	dir = 9
 	},
 /obj/structure/lattice/catwalk,
-/turf/open/space/transit/north,
+/turf/open/space/basic,
 /area/space/nearstation)
 "tr" = (
 /obj/effect/turf_decal/stripes/line{
@@ -9021,6 +9021,210 @@
 /obj/effect/landmark/start/station_engineer,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"uM" = (
+/obj/docking_port/mobile/emergency{
+	dheight = 0;
+	dwidth = 0;
+	height = 1;
+	name = "not a real emergency shuttle";
+	width = 1
+	},
+/obj/docking_port/stationary{
+	dheight = 0;
+	dir = 4;
+	dwidth = 0;
+	height = 1;
+	id = "emergency_home";
+	name = "not a real evac bay";
+	turf_type = /turf/open/space;
+	width = 1
+	},
+/turf/closed/indestructible/opshuttle,
+/area/shuttle/escape)
+"uN" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/supply)
+"uO" = (
+/turf/open/floor/plasteel,
+/area/shuttle/supply)
+"uP" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/mining)
+"uQ" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/mining)
+"uR" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/toolbox/emergency,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/mining)
+"uS" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/computer/cargo/request,
+/turf/open/floor/plasteel,
+/area/shuttle/mining)
+"uT" = (
+/obj/structure/table/reinforced,
+/obj/item/crowbar/red,
+/obj/item/wrench,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/clothing/mask/gas,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/mining)
+"uU" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "QMLoad2"
+	},
+/obj/machinery/door/poddoor{
+	id = "QMLoaddoor2";
+	name = "supply dock loading door"
+	},
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"uV" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plasteel,
+/area/shuttle/mining)
+"uW" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/mining)
+"uX" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/mining)
+"uY" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Supply Shuttle Airlock";
+	req_access_txt = "31"
+	},
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"uZ" = (
+/obj/machinery/teleport/hub,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel/black,
+/area/shuttle/mining)
+"va" = (
+/turf/open/floor/plasteel/black,
+/area/shuttle/mining)
+"vb" = (
+/obj/docking_port/mobile{
+	dir = 8;
+	dwidth = 3;
+	height = 5;
+	id = "mining";
+	name = "mining shuttle";
+	port_direction = 4;
+	roundstart_move = "mining_away";
+	width = 7
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/door/airlock/mining{
+	name = "Mining Teleporter";
+	req_access_txt = "48"
+	},
+/turf/open/floor/plasteel/black,
+/area/shuttle/mining)
+"vc" = (
+/obj/effect/landmark/frenzy_exports,
+/turf/open/floor/plasteel,
+/area/shuttle/supply)
+"vd" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/mining)
+"ve" = (
+/obj/structure/chair,
+/obj/effect/turf_decal/stripes/line{
+	icon_state = "warningline";
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/mining)
+"vf" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/mining)
+"vg" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Supply Shuttle Airlock";
+	req_access_txt = "31"
+	},
+/obj/docking_port/mobile/supply{
+	dwidth = 5;
+	width = 12
+	},
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"vh" = (
+/obj/machinery/teleport/station,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/mining)
+"vi" = (
+/obj/machinery/computer/teleporter,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/shuttle/mining)
+"vj" = (
+/obj/structure/ore_box,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/mining)
+"vk" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "QMLoad"
+	},
+/obj/machinery/door/poddoor{
+	id = "QMLoaddoor";
+	name = "supply dock loading door"
+	},
+/turf/open/floor/plating,
+/area/shuttle/supply)
 
 (1,1,1) = {"
 aa
@@ -37687,11 +37891,11 @@ aa
 pA
 pT
 pA
-qE
+aa
 rf
 rA
 rf
-qE
+aa
 sH
 sV
 sH
@@ -40002,8 +40206,8 @@ ou
 qp
 qG
 ot
-rF
-rF
+tP
+tP
 rG
 sK
 ta
@@ -44317,7 +44521,7 @@ aa
 aa
 aa
 aa
-bs
+bU
 bH
 bU
 ch
@@ -46632,13 +46836,13 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+uP
+uP
+uQ
+uQ
+uQ
+uP
+uP
 aa
 aa
 aa
@@ -46889,13 +47093,13 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+uP
+uR
+uV
+uZ
+vd
+vh
+uP
 aa
 aa
 aa
@@ -47140,19 +47344,19 @@ aa
 aa
 aa
 aa
+uM
 aa
 aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+uQ
+uS
+uW
+va
+ve
+vi
+uP
 aa
 aa
 aa
@@ -47403,13 +47607,13 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+uP
+uT
+uX
+va
+vf
+vj
+uP
 aa
 aa
 aa
@@ -47660,13 +47864,13 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+uP
+uP
+uQ
+vb
+uQ
+uP
+uP
 aa
 aa
 aa
@@ -49200,18 +49404,18 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+uN
+uN
+uN
+uN
+uN
+uN
+uN
+uN
+uN
+uN
+uN
+uN
 aa
 aa
 aa
@@ -49457,18 +49661,18 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+uN
+uO
+uO
+uO
+uO
+uO
+uO
+uO
+uO
+uO
+uO
+uN
 aa
 aa
 aa
@@ -49714,18 +49918,18 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+uN
+uO
+uO
+uO
+uO
+uO
+uO
+uO
+uO
+uO
+uO
+uN
 aa
 aa
 aa
@@ -49971,18 +50175,18 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+uN
+uO
+uO
+uO
+uO
+vc
+uO
+uO
+uO
+uO
+uO
+uN
 aa
 aa
 aa
@@ -50228,18 +50432,18 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+uN
+uO
+uO
+uO
+uO
+uO
+uO
+uO
+uO
+uO
+uO
+uN
 aa
 aa
 aa
@@ -50485,18 +50689,18 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+uN
+uO
+uO
+uO
+uO
+uO
+uO
+uO
+uO
+uO
+uO
+uN
 aa
 aa
 aa
@@ -50742,18 +50946,18 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+uN
+uN
+uN
+uU
+uY
+uN
+vg
+vk
+uN
+uN
+uN
+uN
 aa
 aa
 aa

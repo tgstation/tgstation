@@ -166,7 +166,7 @@ Frequency:
 		return
 	var/list/L = list(  )
 	for(var/obj/machinery/computer/teleporter/com in GLOB.machines)
-		if(com.target)
+		if(com.target && com.can_teleport(user))
 			var/area/A = get_area(com.target)
 			if(!A || A.noteleport)
 				continue
