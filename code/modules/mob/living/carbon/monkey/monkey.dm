@@ -18,7 +18,7 @@
 
 
 /mob/living/carbon/monkey/Initialize()
-	if(CONFIG_GET(number/monkeycap) <= GLOB.monkeys.len)
+	if(!ckey && CONFIG_GET(number/monkeycap) <= GLOB.monkeys.len)
 		var/turf/T = get_turf(src)
 		message_admins("Monkey failed to spawn due to monkeycap at [COORD(T)][ADMIN_JMP(T)]!")
 		log_game("Monkey failed to spawn due to monkeycap at [COORD(T)]")
