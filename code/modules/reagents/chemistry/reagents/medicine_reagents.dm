@@ -59,6 +59,7 @@
 	M.confused = 0
 	M.SetSleeping(0, 0)
 	M.jitteriness = 0
+	M.cure_all_traumas(TRUE, TRUE)
 	for(var/thing in M.viruses)
 		var/datum/disease/D = thing
 		if(D.severity == VIRUS_SEVERITY_POSITIVE)
@@ -803,7 +804,13 @@
 	color = "#DCDCFF"
 
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/M)
-	M.adjustBrainLoss(-3*REM)
+	M.adjustBrainLoss(-2*REM)
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		if(prob(30) && C.brainloss < BRAIN_DAMAGE_SEVERE has_trauma_type(BRAIN_TRAUMA_SPECIAL))
+			cure_trauma_type(BRAIN_TRAUMA_SPECIAL)
+		if(prob(10) && C.brainloss < BRAIN_DAMAGE_MILD && has_trauma_type(BRAIN_TRAUMA_MILD))
+			cure_trauma_type(BRAIN_TRAUMA_MILD)
 	..()
 
 /datum/reagent/medicine/mutadone

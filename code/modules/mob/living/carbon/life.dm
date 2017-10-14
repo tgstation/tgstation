@@ -455,28 +455,9 @@
 	for(var/datum/brain_trauma/BT in traumas)
 		BT.on_life()
 
-	if(brainloss > 100) //rip
-		to_chat(src, "<span class='userdanger'>Your brain dies!<span>")
+	if(brainloss >= BRAIN_DAMAGE_DEATH) //rip
+		to_chat(src, "<span class='userdanger'>The last spark of life in your brain fizzles out...<span>")
 		death()
 		var/obj/item/organ/brain/B = getorganslot("brain")
 		if(B)
 			B.damaged_brain = TRUE
-
-	if(!traumas_amount && brainloss > 30)
-		var/trauma_type = pick(subtypesof(/datum/brain_trauma/mild))
-		traumas += new trauma_type(src)
-
-	if((traumas_amount < 2) && brainloss > 65)
-		var/trauma_type
-		if(prob(100))
-			trauma_type = pick(subtypesof(/datum/brain_trauma/special))
-		else
-			trauma_type = pick(subtypesof(/datum/brain_trauma/severe))
-		traumas += new trauma_type(src)
-
-	if(traumas_amount && !brainloss)
-		for(var/datum/brain_trauma/BT in traumas)
-			if(prob(5))
-				traumas -= BT
-				qdel(BT)
-

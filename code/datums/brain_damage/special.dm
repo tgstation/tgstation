@@ -1,3 +1,6 @@
+//Brain traumas that are rare and/or somewhat beneficial;
+//they are the easiest to cure, which means that if you want
+//to keep them, you can't cure your other traumas
 /datum/brain_trauma/special
 
 #define OWNER 0
@@ -125,6 +128,7 @@
 		trauma.switch_personalities()
 		qdel(trauma)
 
+	//if one of the two ghosts, the other one stays permanently
 	if(!body.ckey && trauma.initialized)
 		trauma.switch_personalities()
 		qdel(trauma)

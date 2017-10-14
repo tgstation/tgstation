@@ -224,7 +224,7 @@
 /mob/living/proc/adjustBrainLoss(amount)
 	if(status_flags & GODMODE)
 		return 0
-	brainloss = Clamp((brainloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
+	brainloss = Clamp((brainloss + amount), 0, BRAIN_DAMAGE_DEATH)
 
 /mob/living/proc/setBrainLoss(amount)
 	if(status_flags & GODMODE)

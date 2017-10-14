@@ -844,4 +844,6 @@
 	.["Make AI"] = "?_src_=vars;[HrefToken()];makeai=\ref[src]"
 	.["Modify bodypart"] = "?_src_=vars;[HrefToken()];editbodypart=\ref[src]"
 	.["Modify organs"] = "?_src_=vars;[HrefToken()];editorgans=\ref[src]"
+	.["Give brain trauma"] = "?_src_=vars;[HrefToken()];givetrauma=\ref[src]"
+	.["Cure brain traumas"] = "?_src_=vars;[HrefToken()];curetraumas=\ref[src]"
 	.["Hallucinate"] = "?_src_=vars;[HrefToken()];hallucinate=\ref[src]"

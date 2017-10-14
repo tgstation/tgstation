@@ -5,9 +5,11 @@
 	var/mob/living/carbon/owner //the poor bastard
 	var/gain_text = "<span class='notice'>You feel traumatized.</span>"
 	var/lose_text = "<span class='notice'>You no longer feel traumatized.</span>"
+	var/permanent = FALSE //can this be cured by removing the brain damage?
 
-/datum/brain_trauma/New(mob/living/carbon/C)
+/datum/brain_trauma/New(mob/living/carbon/C, _permanent)
 	owner = C
+	permanent = _permanent
 	on_gain()
 
 /datum/brain_trauma/Destroy()
