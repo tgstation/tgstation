@@ -41,12 +41,6 @@
 /obj/structure/table/proc/deconstruction_hints(mob/user)
 	to_chat(user, "<span class='notice'>The top is <b>screwed</b> on, but the main <b>bolts</b> are also visible.</span>")
 
-/obj/structure/table/Initialize()
-	. = ..()
-	for(var/obj/structure/table/T in src.loc)
-		if(T != src)
-			qdel(T)
-
 /obj/structure/table/update_icon()
 	if(smooth)
 		queue_smooth(src)
