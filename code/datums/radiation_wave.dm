@@ -1,4 +1,5 @@
 /datum/radiation_wave
+	var/source
 	var/turf/master_turf //The center of the wave
 	var/steps=0 //How far we've moved
 	var/intensity //How strong it was originaly
@@ -7,8 +8,9 @@
 	var/list/__dirs //The directions to the side of the wave, stored for easy looping
 	var/can_contaminate
 
-/datum/radiation_wave/New(turf/place, dir, _intensity=0, _range_modifier=RAD_DISTANCE_COEFFICIENT, _can_contaminate=TRUE)
-	master_turf = place
+/datum/radiation_wave/New(atom/_source, dir, _intensity=0, _range_modifier=RAD_DISTANCE_COEFFICIENT, _can_contaminate=TRUE)
+	source = _source
+	master_turf = get_turf(_source)
 
 	move_dir = dir
 	__dirs = list()
@@ -87,7 +89,7 @@
 			continue
 		thing.rad_act(strength)
 
-		var/static/list/blacklisted = typecacheof(list(/turf))
+		var/static/list/blacklisted = typecacheof(list(/turf, /obj/structure/cable, /obj/machinery/atmospherics))
 		if(!can_contaminate || blacklisted[thing.type])
 			continue
 		if(prob((strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_CHANCE_COEFFICIENT * min(1/(steps*range_modifier), 1))) // Only stronk rads get to have little baby rads
@@ -95,4 +97,5 @@
 			if(insulation && insulation.contamination_proof)
 				continue
 			else
-				thing.AddComponent(/datum/component/radioactive, (strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_STR_COEFFICIENT * min(1/(steps*range_modifier), 1))
+				var/rad_strength = (strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_STR_COEFFICIENT * min(1/(steps*range_modifier), 1)
+				thing.AddComponent(/datum/component/radioactive, rad_strength, source)
