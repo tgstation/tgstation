@@ -38,7 +38,7 @@
 		var/obj/item/device/gps/L = I
 		if(L.locked_location && !(stat & (NOPOWER|BROKEN)))
 			if(!user.transferItemToLoc(L, src))
-				to_chat(user, "<span class='warning'>\the [I] is stuck to your hand, you cannot put it in \the [src]!</span>")
+				to_chat(user, "<span class='warning'>[I] is stuck to your hand, you cannot put it in \the [src]!</span>")
 				return
 			locked = L
 			to_chat(user, "<span class='caution'>You insert the GPS device into the [name]'s slot.</span>")
