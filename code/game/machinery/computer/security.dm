@@ -308,7 +308,7 @@ What a mess.*/
 				active2 = null
 
 			if("Confirm Identity")
-				eject_id()
+				eject_id(usr)
 
 			if("Log Out")
 				authenticated = null
@@ -791,18 +791,18 @@ What a mess.*/
 	return 0
 
 /obj/machinery/computer/secure_data/AltClick(mob/user)
-	if(user.canUseTopic(src))
-		eject_id()
+	if(user.canUseTopic(src) && scan)
+		eject_id(user)
 
 /obj/machinery/computer/secure_data/proc/eject_id(mob/user)
 	if(scan)
-		usr.put_in_hands(scan)
+		user.put_in_hands(scan)
 		scan = null
 		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 	else //switching the ID with the one you're holding
-		var/obj/item/I = usr.is_holding_item_of_type(/obj/item/card/id)
+		var/obj/item/I = user.is_holding_item_of_type(/obj/item/card/id)
 		if(I)
-			if(!usr.transferItemToLoc(I, src))
+			if(!user.transferItemToLoc(I, src))
 				return
 			scan = I
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)

@@ -355,9 +355,9 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	usr.set_machine(src)
 	switch(href_list["choice"])
 		if ("modify")
-			eject_id_modify()
+			eject_id_modify(usr)
 		if ("scan")
-			eject_id_scan()
+			eject_id_scan(usr)
 		if ("auth")
 			if ((!( authenticated ) && (scan || issilicon(usr)) && (modify || mode)))
 				if (check_access(scan))
@@ -529,27 +529,25 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 /obj/machinery/computer/card/AltClick(mob/user)
 	if(user.canUseTopic(src))
-		if(user.stat)
-			return
 		if(scan)
-			eject_id_scan()
-		else if(modify)
-			eject_id_modify()
+			eject_id_scan(user)
+		if(modify)
+			eject_id_modify(user)
 
 /obj/machinery/computer/card/proc/eject_id_scan(mob/user)
 	if(scan)
 		scan.forceMove(drop_location())
-		scan.verb_pickup()
+		user.put_in_hands(scan)
 		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 		scan = null
 	else //switching the ID with the one you're holding
-		var/obj/item/I = usr.get_active_held_item()
+		var/obj/item/I = user.get_active_held_item()
 		if(istype(I, /obj/item/card/id))
-			if(!usr.transferItemToLoc(I,src))
+			if(!user.transferItemToLoc(I,src))
 				return
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			scan = I
-	authenticated = 0
+	authenticated = FALSE
 	updateUsrDialog()
 
 /obj/machinery/computer/card/proc/eject_id_modify(mob/user)
@@ -557,19 +555,19 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		GLOB.data_core.manifest_modify(modify.registered_name, modify.assignment)
 		modify.update_label()
 		modify.forceMove(drop_location())
-		modify.verb_pickup()
+		user.put_in_hands(modify)
 		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 		modify = null
 		region_access = null
 		head_subordinates = null
 	else //switching the ID with the one you're holding
-		var/obj/item/I = usr.get_active_held_item()
+		var/obj/item/I = user.get_active_held_item()
 		if(istype(I, /obj/item/card/id))
-			if (!usr.transferItemToLoc(I,src))
+			if (!user.transferItemToLoc(I,src))
 				return
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			modify = I
-	authenticated = 0
+	authenticated = FALSE
 	updateUsrDialog()
 
 /obj/machinery/computer/card/proc/get_subordinates(rank)
