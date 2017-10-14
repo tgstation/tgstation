@@ -72,6 +72,7 @@
 	new /obj/item/reagent_containers/hypospray/CMO(src)
 	new /obj/item/device/autosurgeon/cmo(src)
 	new /obj/item/door_remote/chief_medical_officer(src)
+	new /obj/item/clothing/neck/petcollar(src)
 
 /obj/structure/closet/secure_closet/animal
 	name = "animal control"
