@@ -171,38 +171,42 @@
 		if(forcedodge)
 			loc = target_turf
 		return FALSE
-	var/permutation = select_target(A,target_turf) // searches for return value, could be deleted after run so check A isn't null
+
+	var/permutation = A.bullet_act(src, def_zone) // searches for return value, could be deleted after run so check A isn't null
 	if(permutation == -1 || forcedodge)// the bullet passes through a dense object!
 		loc = target_turf
 		if(A)
 			permutated.Add(A)
 		return FALSE
+	else
+		var/atom/alt = select_target(A)
+		if(alt)
+			if(!prehit(alt))
+				return FALSE
+			alt.bullet_act(src, def_zone)
 	qdel(src)
 	return TRUE
 
-/obj/item/projectile/proc/select_target(atom/A,target_turf)
-	if((A && A.density && !(A.flags_1 & ON_BORDER_1)) && !ismob(A)) //if we hit a dense non-border obj or dense turf then we also hit one of the mobs or machines/structures on that tile.
-		var/static/list/machine_and_structure_typecache = typecacheof(/obj/machinery) + typecacheof(/obj/structure)
-		var/static/list/mob_typecache = typecacheof(/mob/living)
-		var/list/mobs_list = typecache_filter_list(A, mob_typecache)
-		var/list/machine_and_structure_list = typecache_filter_list(A, machine_and_structure_typecache)
-		var/permutationbackup
-		if(isturf(A))
-			permutationbackup = A.bullet_act(src, def_zone)		// Just in case the turf can deflect bullets
-		if(length(mobs_list) || length(machine_and_structure_list))
-			var/atom/movable/selected_target
-			if(mobs_list.Find(original) || machine_and_structure_list.Find(original))
-				selected_target = original
-			else if(mobs_list.len)
-				selected_target = pick(mobs_list)
-			else
-				selected_target = pick(machine_and_structure_list)
-			if(!prehit(selected_target))
-				return FALSE
-			return selected_target.bullet_act(src, def_zone)
-		return permutationbackup
-	else
-		return A.bullet_act(src, def_zone)
+
+/obj/item/projectile/proc/select_target(atom/A)				//Selects another target from a wall if we hit a wall.
+	if(!A || !A.density || (A.flags_1 & ON_BORDER_1) || ismob(A))	//if we hit a dense non-border obj or dense turf then we also hit one of the mobs or machines/structures on that tile.
+		return
+	if(A == original || original in A)
+		return original
+	var/list/mob/possible_mobs = typecache_filter_list(A, GLOB.typecache_mob)
+	var/list/mob/mobs = list()
+	for(var/i in possible_mobs)
+		var/mob/M = i
+		if(M.lying)
+			continue
+		mobs += M
+	var/mob/M = safepick(mobs)
+	if(M)
+		return M.lowest_buckled_mob()
+	var/obj/O = safepick(typecache_filter_list(A, GLOB.typecache_machine_or_structure))
+	if(O)
+		return O
+	return A
 
 /obj/item/projectile/proc/check_ricochet()
 	if(prob(ricochet_chance))
