@@ -8,8 +8,10 @@
 	var/shuttlePortId = ""
 	var/shuttlePortName = ""
 	var/list/jumpto_ports = list() //hashset of ports to jump to and ignore for collision purposes
-	var/list/blacklisted_turfs
-	var/obj/docking_port/stationary/custom_placed/my_port
+	var/list/blacklisted_turfs //turfs we cannot go on, by default, any turf covered by a docking port that we did not place and cannot jump to
+	var/obj/docking_port/stationary/my_port //the custom docking port placed by this console
+	var/obj/docking_port/mobile/shuttle_port //the mobile docking port of the connected shuttle
+	var/list/shuttle_port_areas = list() //hashset of areas owned by shuttle_port
 	var/view_range = 7
 	var/x_offset = 0
 	var/y_offset = 0
@@ -31,21 +33,23 @@
 		actions += place_action
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/CreateEye()
-	var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
-	if(QDELETED(M))
+	shuttle_port = SSshuttle.getShuttle(shuttleId)
+	if(QDELETED(shuttle_port))
+		shuttle_port = null
 		return
+
+	for(var/V in shuttle_port.shuttle_areas)
+		var/area/A = V
+		if(!QDELETED(A))
+			shuttle_port_areas[A] = 1
 	eyeobj = new /mob/camera/aiEye/remote/shuttle_docker()
 	var/mob/camera/aiEye/remote/shuttle_docker/the_eye = eyeobj
 	the_eye.origin = src
-	the_eye.dir = M.dir
-
-	var/turf/origin = locate(M.x + x_offset, M.y + y_offset, M.z)
-
-	for(var/i in M.shuttle_areas)
-		var/area/place = i
-		if(QDELETED(place))
-			continue
-		for(var/turf/T in place)
+	the_eye.dir = shuttle_port.dir
+	var/turf/origin = locate(shuttle_port.x + x_offset, shuttle_port.y + y_offset, shuttle_port.z)
+	for(var/V in shuttle_port_areas)
+		var/area/A = V
+		for(var/turf/T in A)
 			if(T.z != origin.z)
 				continue
 			var/image/I = image('icons/effects/alphacolors.dmi', origin, "red")
@@ -127,7 +131,7 @@
 	checkLandingSpot()
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/checkLandingTurf(turf/T)
-	return T && (!blacklisted_turfs || !blacklisted_turfs[T]) && (!space_turfs_only || isspaceturf(T))
+	return T && ((shuttle_port_areas[T.loc]) || (!blacklisted_turfs || !blacklisted_turfs[T]) && (!space_turfs_only || isspaceturf(T)))
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/generateBlacklistedTurfs()
 	blacklisted_turfs = list()
