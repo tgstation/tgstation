@@ -971,36 +971,31 @@
 	return 0
 
 /datum/species/proc/handle_mutations_and_radiation(mob/living/carbon/human/H)
+	. = FALSE
+	var/radiation = H.radiation
 
-	if(!(RADIMMUNE in species_traits))
-		if(H.radiation)
-			if (H.radiation > 100)
-				if(!H.IsKnockdown())
-					H.emote("collapse")
-				H.Knockdown(200)
-				to_chat(H, "<span class='danger'>You feel weak.</span>")
-			switch(H.radiation)
-				if(50 to 75)
-					if(prob(5))
-						if(!H.IsKnockdown())
-							H.emote("collapse")
-						H.Knockdown(60)
-						to_chat(H, "<span class='danger'>You feel weak.</span>")
+	if(RADIMMUNE in species_traits)
+		radiation = 0
+		return TRUE
 
-					if(prob(15))
-						if(!( H.hair_style == "Shaved") || !(H.hair_style == "Bald") || (HAIR in species_traits))
-							to_chat(H, "<span class='danger'>Your hair starts to fall out in clumps...</span>")
-							addtimer(CALLBACK(src, .proc/go_bald, H), 50)
+	if(radiation > RAD_MOB_KNOCKDOWN)
+		if(!H.IsKnockdown())
+			H.emote("collapse")
+		H.Knockdown(RAD_KNOCKDOWN_TIME)
+		to_chat(H, "<span class='danger'>You feel weak.</span>")
+	
+	if(radiation > RAD_MOB_MUTATE)
+		if(prob(1))
+			to_chat(H, "<span class='danger'>You mutate!</span>")
+			H.randmutb()
+			H.emote("gasp")
+			H.domutcheck()
 
-				if(75 to 100)
-					if(prob(1))
-						to_chat(H, "<span class='danger'>You mutate!</span>")
-						H.randmutb()
-						H.emote("gasp")
-						H.domutcheck()
-		return 0
-	H.radiation = 0
-	return 1
+	if(radiation > RAD_MOB_HAIRLOSS)
+		if(prob(15))
+			if(!( H.hair_style == "Shaved") || !(H.hair_style == "Bald") || (HAIR in species_traits))
+				to_chat(H, "<span class='danger'>Your hair starts to fall out in clumps...</span>")
+				addtimer(CALLBACK(src, .proc/go_bald, H), 50)
 
 /datum/species/proc/go_bald(mob/living/carbon/human/H)
 	if(QDELETED(H))	//may be called from a timer

@@ -179,7 +179,7 @@
 	else if(istype(P, /obj/item/stamp))
 		to_chat(user, "<span class='notice'>You stamp the paper with your rubber stamp, however the ink ignites as you release the stamp.</span>")
 	else if(P.is_hot())
-		user.visible_message("<span class='danger'>[user] brings [P] next to [src], but [src] does not catch fire!</span>", "<span class='danger'>The [src] refuses to ignite!</span>")
+		user.visible_message("<span class='danger'>[user] brings [P] next to [src], but [src] does not catch fire!</span>", "<span class='danger'>[src] refuses to ignite!</span>")
 	else
 		return ..()
 

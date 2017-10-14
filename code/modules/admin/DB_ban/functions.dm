@@ -442,7 +442,7 @@
 		output += "<th width='15%'><b>OPTIONS</b></th>"
 		output += "</tr>"
 		var/limit = " LIMIT [bansperpage * page], [bansperpage]"
-		var/datum/DBQuery/query_search_bans = SSdbcore.NewQuery("SELECT id, bantime, bantype, reason, job, duration, expiration_time, ckey, a_ckey, unbanned, unbanned_ckey, unbanned_datetime, edits FROM [format_table_name("ban")] WHERE 1 [playersearch] [adminsearch] ORDER BY bantime DESC[limit]")
+		var/datum/DBQuery/query_search_bans = SSdbcore.NewQuery("SELECT id, bantime, bantype, reason, job, duration, expiration_time, ckey, a_ckey, unbanned, unbanned_ckey, unbanned_datetime, edits, round_id FROM [format_table_name("ban")] WHERE 1 [playersearch] [adminsearch] ORDER BY bantime DESC[limit]")
 		if(!query_search_bans.warn_execute())
 			return
 
@@ -460,6 +460,7 @@
 			var/unbanckey = query_search_bans.item[11]
 			var/unbantime = query_search_bans.item[12]
 			var/edits = query_search_bans.item[13]
+			var/round_id = query_search_bans.item[14]
 
 			var/lcolor = blcolor
 			var/dcolor = bdcolor
@@ -485,7 +486,7 @@
 			output += "<tr bgcolor='[dcolor]'>"
 			output += "<td align='center'>[typedesc]</td>"
 			output += "<td align='center'><b>[ckey]</b></td>"
-			output += "<td align='center'>[bantime]</td>"
+			output += "<td align='center'>[bantime] (Round ID: [round_id])</td>"
 			output += "<td align='center'><b>[ackey]</b></td>"
 			output += "<td align='center'>[(unbanned) ? "" : "<b><a href=\"byond://?src=\ref[src];[HrefToken()];dbbanedit=unban;dbbanid=[banid]\">Unban</a></b>"]</td>"
 			output += "</tr>"

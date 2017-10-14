@@ -503,12 +503,19 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/y=arcsin(x/sqrt(1+x*x))
 	return y
 
-/atom/proc/GetAllContents(list/output=list())
+/*
+Recursively gets all contents of contents and returns them all in a list.
+
+recursive_depth is useful if you only want a turf and everything on it (recursive_depth=1)
+*/
+/atom/proc/GetAllContents(list/output=list(), recursive_depth=INFINITY)
 	. = output
-	output += src
-	for(var/i in 1 to contents.len)
-		var/atom/thing = contents[i]
-		thing.GetAllContents(output)
+	output += src 
+	if(!recursive_depth)
+		return
+	for(var/i in 1 to contents.len) 
+		var/atom/thing = contents[i] 
+		thing.GetAllContents(output, recursive_depth-1) 
 
 //Step-towards method of determining whether one atom can see another. Similar to viewers()
 /proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.

@@ -53,10 +53,10 @@
 		return
 	if(istype(W, /obj/item/wrench))
 		if(anchored)
-			to_chat(user, "Unweld the [src] first!")
+			to_chat(user, "Unweld [src] first!")
 		if(do_after(user, 80*W.toolspeed, target = src))
 			playsound(src.loc, W.usesound, 50, 1)
-			to_chat(user, "You dismantle the [src].")
+			to_chat(user, "You dismantle [src].")
 			new framebuildstacktype(loc, framebuildstackamount)
 			new buildstacktype(loc, buildstackamount)
 			qdel(src)

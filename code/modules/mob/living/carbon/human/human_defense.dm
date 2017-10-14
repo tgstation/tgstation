@@ -203,7 +203,8 @@
 		return 0
 
 	if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stunned instead.
-		if(dropItemToGround(get_active_held_item()))
+		var/obj/item/I = get_active_held_item()
+		if(I && dropItemToGround(I))
 			playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 			visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
 					"<span class='userdanger'>[M] disarmed [src]!</span>")
@@ -255,7 +256,8 @@
 			apply_damage(damage, BRUTE, affecting, armor_block)
 
 		if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stun instead.
-			if(dropItemToGround(get_active_held_item()))
+			var/obj/item/I = get_active_held_item()
+			if(I && dropItemToGround(I))
 				playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 				visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
 						"<span class='userdanger'>[M] disarmed [src]!</span>")
@@ -369,6 +371,9 @@
 				throw_at(throw_target, 200, 4)
 				damage_clothes(400 - bomb_armor, BRUTE, "bomb")
 			else
+				for(var/I in contents)
+					var/atom/A = I
+					A.ex_act(severity)
 				gib()
 				return
 

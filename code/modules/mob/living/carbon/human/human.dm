@@ -705,7 +705,7 @@
 		var/static/mutable_appearance/electrocution_skeleton_anim
 		if(!electrocution_skeleton_anim)
 			electrocution_skeleton_anim = mutable_appearance(icon, "electrocuted_base")
-			electrocution_skeleton_anim.appearance_flags |= RESET_COLOR
+			electrocution_skeleton_anim.appearance_flags |= RESET_COLOR|KEEP_APART
 		add_overlay(electrocution_skeleton_anim)
 		addtimer(CALLBACK(src, .proc/end_electrocution_animation, electrocution_skeleton_anim), anim_duration)
 
