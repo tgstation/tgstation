@@ -9,7 +9,7 @@
 #define RADIATION_DURATION_MAX 30
 #define RADIATION_ACCURACY_MULTIPLIER 3			//larger is less accurate
 
-#define RADIATION_IRRADIATION_MULTIPLIER 10		//multiplier for how much radiation a test subject recieves
+#define RADIATION_IRRADIATION_MULTIPLIER 2		//multiplier for how much radiation a test subject recieves
 
 #define SCANNER_ACTION_SE 1
 #define SCANNER_ACTION_UI 2
@@ -537,7 +537,7 @@
 	var/list/buffer_slot = buffer[buffer_num]
 	var/mob/living/carbon/viable_occupant = get_viable_occupant()
 	if(istype(buffer_slot))
-		viable_occupant.radiation += rand(100/(connected.damage_coeff ** 2),250/(connected.damage_coeff ** 2))
+		viable_occupant.radiation += rand(20/(connected.damage_coeff ** 2),50/(connected.damage_coeff ** 2))
 		//15 and 40 are just magic numbers that were here before so i didnt touch them, they are initial boundaries of damage
 		//Each laser level reduces damage by lvl^2, so no effect on 1 lvl, 4 times less damage on 2 and 9 times less damage on 3
 		//Numbers are this high because other way upgrading laser is just not worth the hassle, and i cant think of anything better to inmrove
