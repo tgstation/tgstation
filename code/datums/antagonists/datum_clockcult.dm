@@ -142,8 +142,9 @@
 		S.make_laws()
 		S.update_icons()
 		S.show_laws()
+	hierophant_network.Remove(current)
 	var/mob/living/temp_owner = current
-	..()
+	. = ..()
 	if(iscyborg(temp_owner))
 		var/mob/living/silicon/robot/R = temp_owner
 		R.module.rebuild_modules()
