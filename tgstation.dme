@@ -1177,6 +1177,7 @@
 #include "code\modules\cargo\exports\organs.dm"
 #include "code\modules\cargo\exports\parts.dm"
 #include "code\modules\cargo\exports\research.dm"
+#include "code\modules\cargo\exports\seeds.dm"
 #include "code\modules\cargo\exports\sheets.dm"
 #include "code\modules\cargo\exports\tools.dm"
 #include "code\modules\cargo\exports\weapons.dm"
