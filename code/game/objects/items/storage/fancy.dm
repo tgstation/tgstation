@@ -29,7 +29,7 @@
 
 /obj/item/storage/fancy/update_icon()
 	if(fancy_open)
-		icon_state = "[icon_type]box[src.contents.len]"
+		icon_state = "[icon_type]box[contents.len]"
 	else
 		icon_state = "[icon_type]box"
 
@@ -37,9 +37,9 @@
 	..()
 	if(fancy_open)
 		if(contents.len == 1)
-			to_chat(user, "There is one [src.icon_type] left.")
+			to_chat(user, "There is one [icon_type] left.")
 		else
-			to_chat(user, "There are [contents.len <= 0 ? "no" : "[src.contents.len]"] [src.icon_type]s left.")
+			to_chat(user, "There are [contents.len <= 0 ? "no" : "[contents.len]"] [icon_type]s left.")
 
 /obj/item/storage/fancy/attack_self(mob/user)
 	fancy_open = !fancy_open
