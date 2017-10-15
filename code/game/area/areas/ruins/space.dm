@@ -427,3 +427,11 @@
 /area/ruin/space/old_ai_sat/bridge
 	name = "Bridge"
 	icon_state = "bridge"
+
+
+//ABANDONED BOX WHITESHIP
+
+/area/ruin/space/has_grav/whiteship/box
+
+	name = "Abandoned Ship"
+	icon_state = "red"
