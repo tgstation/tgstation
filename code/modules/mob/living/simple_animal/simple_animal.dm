@@ -82,12 +82,16 @@
 	var/dextrous_hud_type = /datum/hud/dextrous
 	var/datum/personal_crafting/handcrafting
 
+	var/AIStatus = AI_ON //The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever)
+
+	var/shouldwakeup = FALSE //convenience var for forcibly waking up an idling AI on next check.
+
 	//domestication
 	var/tame = 0
 
 /mob/living/simple_animal/Initialize()
 	. = ..()
-	GLOB.simple_animals += src
+	GLOB.simple_animals[AIStatus] += src
 	handcrafting = new()
 	if(gender == PLURAL)
 		gender = pick(MALE,FEMALE)
@@ -97,7 +101,7 @@
 		stack_trace("Simple animal being instantiated in nullspace")
 
 /mob/living/simple_animal/Destroy()
-	GLOB.simple_animals -= src
+	GLOB.simple_animals[AIStatus] -= src
 	return ..()
 
 /mob/living/simple_animal/updatehealth()
@@ -540,3 +544,19 @@
 /mob/living/simple_animal/buckle_mob(mob/living/buckled_mob, force = 0, check_loc = 1)
 	. = ..()
 	riding_datum = new/datum/riding/animal
+
+/mob/living/simple_animal/proc/toggle_idle()
+	if (AIStatus != AI_IDLE)
+		GLOB.simple_animals[AIStatus] -= src
+		GLOB.simple_animals[AI_IDLE] += src
+		AIStatus = AI_IDLE
+
+/mob/living/simple_animal/proc/toggle_active()
+	if (AIStatus != AI_ON)
+		GLOB.simple_animals[AIStatus] -= src
+		GLOB.simple_animals[AI_ON] += src
+		AIStatus = AI_ON
+
+/mob/living/simple_animal/proc/consider_wakeup()
+	if (pulledby || shouldwakeup)
+		toggle_active()

@@ -46,7 +46,6 @@
 	var/stat_attack = CONSCIOUS //Mobs with stat_attack to UNCONSCIOUS will attempt to attack things that are unconscious, Mobs with stat_attack set to DEAD will attempt to attack the dead.
 	var/stat_exclusive = FALSE //Mobs with this set to TRUE will exclusively attack things defined by stat_attack, stat_attack DEAD means they will only attack corpses
 	var/attack_same = 0 //Set us to 1 to allow us to attack our own faction
-	var/AIStatus = AI_ON //The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever)
 	var/atom/targets_from = null //all range/attack/etc. calculations should be done from this atom, defaults to the mob itself, useful for Vehicles and such
 	var/attack_all_objects = FALSE //if true, equivalent to having a wanted_objects list containing ALL objects.
 
@@ -85,7 +84,8 @@
 		DestroySurroundings()
 		if(!MoveToTarget(possible_targets))     //if we lose our target
 			if(AIShouldSleep(possible_targets))	// we try to acquire a new one
-				AIStatus = AI_IDLE				// otherwise we go idle
+				if (AIStatus != AI_IDLE)
+					toggle_idle()			// otherwise we go idle
 	return 1
 
 /mob/living/simple_animal/hostile/attacked_by(obj/item/I, mob/living/user)
@@ -276,7 +276,7 @@
 			target = null
 			LoseSearchObjects()
 		if(AIStatus == AI_IDLE)
-			AIStatus = AI_ON
+			toggle_active()
 			FindTarget()
 		else if(target != null && prob(40))//No more pulling a mob forever and having a second player attack it, it can switch targets now if it finds a more suitable one
 			FindTarget()
@@ -410,7 +410,7 @@
 		if(AI_IDLE)
 			if(FindTarget(possible_targets, 1))
 				. = 1
-				AIStatus = AI_ON //Wake up for more than one Life() cycle.
+				toggle_active() //Wake up for more than one Life() cycle.
 			else
 				. = 0
 
@@ -441,3 +441,8 @@
 	if(!value)
 		value = initial(search_objects)
 	search_objects = value
+
+/mob/living/simple_animal/hostile/consider_wakeup()
+	..()
+	if(AIStatus == SA_IDLE && FindTarget(ListTargets(), 1))
+		toggle_active()
