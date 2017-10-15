@@ -183,9 +183,10 @@
 #define PIPING_LAYER_P_Y 5
 #define PIPING_LAYER_LCHANGE 0.05
 
-#define PIPING_ALL_LAYER 1
-#define PIPING_ONE_PER_TURF 2
-#define PIPING_DEFAULT_LAYER_ONLY 4
+#define PIPING_ALL_LAYER 1					//intended to connect with all layers, check for all instead of just one.
+#define PIPING_ONE_PER_TURF 2 				//can only be built if nothing else with this flag is on the tile already.
+#define PIPING_DEFAULT_LAYER_ONLY 4			//can only exist at PIPING_LAYER_DEFAULT
+#define PIPING_CARDINAL_AUTONORMALIZE 8		//north/south east/west doesn't matter, auto normalize on build.
 
 #define THERMAL_ENERGY(gas) (gas.temperature * gas.heat_capacity())
 

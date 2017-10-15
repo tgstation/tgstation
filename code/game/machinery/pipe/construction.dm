@@ -220,7 +220,7 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 
 //Helper to clean up dir
 /obj/item/pipe/proc/fixdir()
-	if((pipe_type in list (PIPE_SIMPLE, PIPE_HE, PIPE_MVALVE, PIPE_DVALVE)) && !is_bent)
+	if((pipe_type in list (PIPE_SIMPLE, PIPE_HE, PIPE_MVALVE, PIPE_DVALVE, PIPE_LAYER_MANIFOLD)) && !is_bent)
 		if(dir==SOUTH)
 			setDir(NORTH)
 		else if(dir==WEST)
@@ -253,7 +253,7 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 	if(pipe_type in list(PIPE_GAS_MIXER, PIPE_GAS_FILTER))
 		setDir(unflip(dir))
 
-	var/obj/machinery/atmospherics/fakeA = get_pipe_cache(pipe_type)
+	var/obj/machinery/atmospherics/fakeA = get_pipe_cache(pipe_type, dir)
 
 	for(var/obj/machinery/atmospherics/M in loc)
 		if((M.pipe_flags & PIPING_ONE_PER_TURF) && (fakeA.pipe_flags & PIPING_ONE_PER_TURF))	//Only one dense/requires density object per tile, eg connectors/cryo/heater/coolers.

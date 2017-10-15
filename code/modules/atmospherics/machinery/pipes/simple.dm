@@ -12,10 +12,12 @@ The regular pipe you see everywhere, including bent ones.
 
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH
+	pipe_flags = PIPING_CARDINAL_AUTONORMALIZE
 
 	device_type = BINARY
 
 /obj/machinery/atmospherics/pipe/simple/SetInitDirections()
+	normalize_cardinal_directions()
 	if(dir in GLOB.diagonals)
 		initialize_directions = dir
 	switch(dir)
@@ -23,14 +25,6 @@ The regular pipe you see everywhere, including bent ones.
 			initialize_directions = SOUTH|NORTH
 		if(EAST,WEST)
 			initialize_directions = EAST|WEST
-
-/obj/machinery/atmospherics/pipe/simple/atmosinit()
-	normalize_cardinal_directions()
-	..()
-
-/obj/machinery/atmospherics/pipe/simple/update_icon()
-	normalize_cardinal_directions()
-	..()
 
 //Colored pipes, use these for mapping
 /obj/machinery/atmospherics/pipe/simple/general

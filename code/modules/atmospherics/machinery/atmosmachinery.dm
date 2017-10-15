@@ -42,6 +42,8 @@ Pipelines + Other Objects -> Pipe network
 		to_chat(user, "<span class='notice'>Alt-click to crawl through it.</span>")
 
 /obj/machinery/atmospherics/New(loc, process = TRUE)
+	if(pipe_flags & PIPING_CARDINAL_AUTONORMALIZE)
+		normalize_cardinal_directions()
 	nodes = new(device_type)
 	if (!armor)
 		armor = list(melee = 25, bullet = 10, laser = 10, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 100, acid = 70)
