@@ -235,12 +235,12 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 		check_cache = list()
 	if(!check_cache[type])
 		check_cache[type] = list()
-	if(!check_cache[type][direction])
-		check_cache[type][direction] = new type
-		var/atom/A = check_cache[type][direction]
+	if(!check_cache[type]["[direction]"])
+		check_cache[type]["[direction]"] = new type
+		var/atom/A = check_cache[type]["[direction]"]
 		A.setDir(direction)
 
-	return check_cache[type][direction]
+	return check_cache[type]["[direction]"]
 
 /obj/item/pipe/attackby(obj/item/W, mob/user, params)
 	if (!istype(W, /obj/item/wrench))
