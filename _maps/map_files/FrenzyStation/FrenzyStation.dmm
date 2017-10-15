@@ -3244,7 +3244,13 @@
 /obj/item/device/radio/intercom{
 	pixel_y = 25
 	},
-/obj/structure/table,
+/obj/structure/rack{
+	dir = 1
+	},
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 4;
+	name = "4maintenance loot spawner"
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "hO" = (
@@ -4122,7 +4128,13 @@
 	},
 /area/hallway/primary/central)
 "jT" = (
-/obj/structure/table,
+/obj/structure/rack{
+	dir = 1
+	},
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 4;
+	name = "4maintenance loot spawner"
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
@@ -8628,7 +8640,13 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "tQ" = (
-/obj/machinery/vending/snack,
+/obj/structure/rack{
+	dir = 1
+	},
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 4;
+	name = "4maintenance loot spawner"
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "tR" = (
@@ -9225,6 +9243,16 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/supply)
+"vl" = (
+/obj/structure/rack{
+	dir = 1
+	},
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 4;
+	name = "4maintenance loot spawner"
+	},
+/turf/open/space/basic,
+/area/space)
 
 (1,1,1) = {"
 aa
@@ -39389,7 +39417,7 @@ aa
 aa
 aa
 aa
-aa
+vl
 aa
 aa
 aa
