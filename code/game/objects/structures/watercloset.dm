@@ -199,6 +199,11 @@
 	var/obj/effect/mist/mymist = null
 	var/ismist = 0				//needs a var so we can make it linger~
 	var/watertemp = "normal"	//freezing, normal, or boiling
+	var/datum/looping_sound/showering/soundloop
+
+/obj/machinery/shower/Initialize()
+	. = ..()
+	soundloop = new(list(src), FALSE)
 
 
 /obj/effect/mist
@@ -215,6 +220,7 @@
 	update_icon()
 	add_fingerprint(M)
 	if(on)
+		soundloop.start()
 		wash_turf()
 		for(var/atom/movable/G in loc)
 			if(isliving(G))
@@ -223,6 +229,7 @@
 			else if(isobj(G)) // Skip the light objects
 				wash_obj(G)
 	else
+		soundloop.stop()
 		if(isopenturf(loc))
 			var/turf/open/tile = loc
 			tile.MakeSlippery(min_wet_time = 5, wet_time_to_add = 1)
@@ -368,6 +375,15 @@
 	else
 		L.clean_blood()
 
+/obj/machinery/shower/proc/contamination_cleanse(atom/movable/thing)
+	var/datum/component/radioactive/healthy_green_glow = thing.GetComponent(/datum/component/radioactive)
+	if(!healthy_green_glow || QDELETED(healthy_green_glow))
+		return
+	var/strength = healthy_green_glow.strength
+	if(strength <= 1)
+		qdel(healthy_green_glow)
+		return
+	healthy_green_glow.strength -= min(strength, strength-1)
 
 /obj/machinery/shower/process()
 	if(on)
@@ -377,6 +393,7 @@
 				wash_mob(AM)
 			else if(isobj(AM))
 				wash_obj(AM)
+			contamination_cleanse(AM)
 
 /obj/machinery/shower/deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/metal (loc, 3)
