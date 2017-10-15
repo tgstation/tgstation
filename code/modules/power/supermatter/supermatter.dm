@@ -329,7 +329,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	power = max( (removed.temperature * temp_factor / T0C) * gasmix_power_ratio + power, 0) //Total laser power plus an overload
 
 	if(prob(50))
-		radiation_pulse(src, power * (1 + power_transmission_bonus/10 * freon_transmit_modifier))
+		radiation_pulse(src, power * (1 + power_transmission_bonus/10))
 
 	var/device_energy = power * REACTION_POWER_MODIFIER
 

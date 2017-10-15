@@ -56,42 +56,15 @@
 #define FIRE_MINIMUM_TEMPERATURE_TO_SPREAD	150+T0C
 #define FIRE_MINIMUM_TEMPERATURE_TO_EXIST	100+T0C
 #define FIRE_SPREAD_RADIOSITY_SCALE			0.85
-#define FIRE_CARBON_ENERGY_RELEASED			1000000	//Amount of heat released per mole of burnt carbon into the tile
-#define FIRE_PLASMA_ENERGY_RELEASED			3000000	//Amount of heat released per mole of burnt plasma into the tile
 #define FIRE_GROWTH_RATE					40000	//For small fires
 #define CARBON_LIFEFORM_FIRE_RESISTANCE 	200+T0C	//Resistance to fire damage
 #define CARBON_LIFEFORM_FIRE_DAMAGE			4		//Fire damage
-	//Plasma fire properties
-#define OXYGEN_BURN_RATE_BASE				1.4
-#define PLASMA_BURN_RATE_DELTA				9
-#define PLASMA_MINIMUM_BURN_TEMPERATURE		100+T0C
-#define PLASMA_UPPER_TEMPERATURE			1370+T0C
-#define PLASMA_MINIMUM_OXYGEN_NEEDED		2
-#define PLASMA_MINIMUM_OXYGEN_PLASMA_RATIO	30
-#define PLASMA_OXYGEN_FULLBURN				10
 #define MIN_TOXIC_GAS_DAMAGE				1
 #define MAX_TOXIC_GAS_DAMAGE				10
 #define MOLES_GAS_VISIBLE					0.5		//Moles in a standard cell after which gases are visible
-//General assmos defines.
-#define WATER_VAPOR_FREEZE					200
-#define BROWNS_FORMATION_ENERGY				100000
-#define GAS_STIM_MINIMUM					0.002
-#define TRITIUM_BURN_OXY_FACTOR				1000
-#define SUPER_SATURATION_THRESHOLD			96
-#define STIMULUM_HEAT_SCALE					100000
-#define STIMULUM_FIRST_RISE					0.75
-#define STIMULUM_FIRST_DROP					0.05
-#define STIMULUM_SECOND_RISE				0.001
-#define STIMULUM_ABSOLUTE_DROP				0.0000062
-#define REACTION_OPPRESSION_THRESHOLD		5
 #define STOP_REACTIONS 						2
-	//Plasma fusion properties
-#define PLASMA_BINDING_ENERGY				3000000
-#define MAX_CATALYST_EFFICENCY				9
-#define PLASMA_FUSED_COEFFICENT				0.08
-#define CATALYST_COEFFICENT					0.01
-#define FUSION_PURITY_THRESHOLD				0.9
-#define FUSION_HEAT_DROPOFF					20000+T0C
+#define PLASMA_MINIMUM_BURN_TEMPERATURE		100+T0C
+#define GAS_STIM_MINIMUM					0.002
 
 // Pressure limits.
 #define HAZARD_HIGH_PRESSURE				550		//This determins at what pressure the ultra-high pressure red icon is displayed. (This one is set as a constant)
