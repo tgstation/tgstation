@@ -11,6 +11,7 @@
 	else
 		new /obj/item/storage/backpack/satchel/cap(src)
 	new /obj/item/clothing/neck/cloak/cap(src)
+	new /obj/item/clothing/neck/petcollar(src)
 	new /obj/item/storage/backpack/duffelbag/captain(src)
 	new /obj/item/clothing/head/crown/fancy(src)
 	new /obj/item/clothing/suit/captunic(src)
