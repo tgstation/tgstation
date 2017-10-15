@@ -869,7 +869,7 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
 "aco" = (
-/obj/structure/closet/bombcloset,
+/obj/structure/closet/bombcloset/security,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
 "acp" = (
