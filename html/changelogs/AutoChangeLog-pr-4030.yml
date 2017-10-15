@@ -1,0 +1,9 @@
+author: "yoyobatty"
+delete-after: True
+changes: 
+  - rscadd: "A walk way around AI minisat complete with exteriors lattices and grilles much like metastation"
+  - rscadd: "New AI entrance"
+  - rscadd: "Atmos now has a pipe access much like metastation"
+  - tweak: "Changed Grav Generator doors to high security"
+  - tweak: "Changed Grav Generator walls to reinforced"
+  - rscadd: "A tiny fan on the right air lock of the Engine room"
