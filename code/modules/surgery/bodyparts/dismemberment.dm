@@ -218,7 +218,6 @@
 		for(var/X in list(owner.glasses, owner.ears, owner.wear_mask, owner.head))
 			var/obj/item/I = X
 			owner.dropItemToGround(I, TRUE)
-	owner.wash_cream() //clean overlay, it returns for non-humans anyway..
 	//Handle dental implants
 	for(var/datum/action/item_action/hands_free/activate_pill/AP in owner.actions)
 		AP.Remove(owner)
