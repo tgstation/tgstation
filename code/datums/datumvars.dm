@@ -954,7 +954,7 @@
 			if(!check_rights(0))
 				return
 
-			var/mob/living/carbon/C = locate(href_list["editorgans"]) in GLOB.mob_list
+			var/mob/living/carbon/C = locate(href_list["givetrauma"]) in GLOB.mob_list
 			if(!istype(C))
 				to_chat(usr, "This can only be done to instances of type /mob/living/carbon")
 				return
@@ -977,7 +977,7 @@
 			if(!check_rights(0))
 				return
 
-			var/mob/living/carbon/C = locate(href_list["editorgans"]) in GLOB.mob_list
+			var/mob/living/carbon/C = locate(href_list["curetraumas"]) in GLOB.mob_list
 			if(!istype(C))
 				to_chat(usr, "This can only be done to instances of type /mob/living/carbon")
 				return

@@ -39,7 +39,7 @@
 		if(current_controller != OWNER)
 			switch_personalities()
 		qdel(src)
-	else if(prob(2))
+	else if(prob(3))
 		switch_personalities()
 	..()
 
@@ -129,7 +129,7 @@
 		qdel(trauma)
 
 	//if one of the two ghosts, the other one stays permanently
-	if(!body.ckey && trauma.initialized)
+	if(!body.client && trauma.initialized)
 		trauma.switch_personalities()
 		qdel(trauma)
 
