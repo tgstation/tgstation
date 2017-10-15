@@ -1138,9 +1138,6 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
 /obj/effect/turf_decal/bot{
 	dir = 2
 	},
@@ -7184,6 +7181,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+/obj/structure/window/reinforced,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "apb" = (
@@ -32059,11 +32057,11 @@
 /area/crew_quarters/heads/hop)
 "btF" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/engineering{
-	name = "Gravity Generator";
-	req_access_txt = "11"
-	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/door/airlock/highsecurity{
+	name = "Gravity Generator Room";
+	req_access_txt = "19;23"
+	},
 /turf/open/floor/plasteel{
 	name = "floor"
 	},
@@ -34101,7 +34099,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/engine/gravity_generator)
 "bxJ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -34113,7 +34111,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/engine/gravity_generator)
 "bxL" = (
 /obj/machinery/camera{
@@ -41968,7 +41966,7 @@
 	name = "Mix to Incinerator";
 	on = 0
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/black,
 /area/engine/atmos)
 "bOh" = (
 /obj/structure/grille,
@@ -42403,6 +42401,9 @@
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
 	dir = 4
 	},
+/obj/machinery/door/window/eastleft{
+	name = "Inner pipe access"
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bPg" = (
@@ -42428,9 +42429,7 @@
 	icon_state = "tube1"
 	},
 /obj/machinery/atmospherics/pipe/manifold/yellow/visible,
-/turf/open/floor/plasteel/green/side{
-	dir = 5
-	},
+/turf/open/floor/plasteel/black,
 /area/engine/atmos)
 "bPj" = (
 /obj/machinery/atmospherics/pipe/simple{
@@ -42955,6 +42954,16 @@
 /obj/machinery/atmospherics/pipe/manifold/green/visible{
 	dir = 4
 	},
+/obj/machinery/computer/atmos_control/tank{
+	frequency = 1441;
+	input_tag = "mix_in";
+	name = "Gas Mix Tank Control";
+	output_tag = "mix_out";
+	sensors = list("mix_sensor" = "Tank")
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bQx" = (
@@ -42970,16 +42979,7 @@
 /turf/open/floor/plating,
 /area/engine/atmos)
 "bQz" = (
-/obj/machinery/computer/atmos_control/tank{
-	frequency = 1441;
-	input_tag = "mix_in";
-	name = "Gas Mix Tank Control";
-	output_tag = "mix_out";
-	sensors = list("mix_sensor" = "Tank")
-	},
-/turf/open/floor/plasteel/green/side{
-	dir = 4
-	},
+/turf/open/floor/plasteel/black,
 /area/engine/atmos)
 "bQA" = (
 /obj/structure/grille,
@@ -43462,6 +43462,9 @@
 	dir = 4;
 	initialize_directions = 12
 	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bRH" = (
@@ -43484,9 +43487,7 @@
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
 	},
-/turf/open/floor/plasteel/green/side{
-	dir = 6
-	},
+/turf/open/floor/plasteel/black,
 /area/engine/atmos)
 "bRK" = (
 /obj/structure/lattice,
@@ -44511,8 +44512,13 @@
 /area/engine/atmos)
 "bTT" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible,
-/obj/machinery/atmospherics/pipe/simple/yellow/visible{
+/obj/structure/window/reinforced{
 	dir = 4
+	},
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 8;
+	name = "N2O Outlet Pump";
+	on = 0
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -44523,14 +44529,10 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bTV" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 8;
-	name = "N2O Outlet Pump";
-	on = 0
+/obj/machinery/atmospherics/pipe/simple/yellow/visible{
+	dir = 4
 	},
-/turf/open/floor/plasteel/escape{
-	dir = 5
-	},
+/turf/open/floor/plasteel/black,
 /area/engine/atmos)
 "bTW" = (
 /turf/open/floor/engine/n2o,
@@ -45003,6 +45005,16 @@
 /area/engine/atmos)
 "bUR" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible,
+/obj/machinery/computer/atmos_control/tank{
+	frequency = 1441;
+	input_tag = "n2o_in";
+	name = "Nitrous Oxide Supply Control";
+	output_tag = "n2o_out";
+	sensors = list("n2o_sensor" = "Tank")
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bUS" = (
@@ -45509,6 +45521,9 @@
 	filter_type = "n2o";
 	on = 1
 	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bWc" = (
@@ -45911,7 +45926,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/black,
 /area/engine/atmos)
 "bWV" = (
 /obj/structure/door_assembly/door_assembly_mai,
@@ -46414,15 +46429,13 @@
 	dir = 8;
 	network = list("SS13")
 	},
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 8;
-	name = "Plasma Outlet Pump";
-	on = 0
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/turf/open/floor/plasteel,
+/obj/machinery/atmospherics/pipe/simple/yellow/visible{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
 /area/engine/atmos)
 "bXW" = (
 /turf/open/floor/engine/plasma,
@@ -46792,17 +46805,10 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bYT" = (
-/obj/machinery/computer/atmos_control/tank{
-	frequency = 1441;
-	input_tag = "tox_in";
-	name = "Plasma Supply Control";
-	output_tag = "tox_out";
-	sensors = list("tox_sensor" = "Tank")
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/black,
 /area/engine/atmos)
 "bYU" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
@@ -47165,6 +47171,9 @@
 	filter_type = "plasma";
 	on = 1
 	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bZK" = (
@@ -47174,7 +47183,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/black,
 /area/engine/atmos)
 "bZL" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
@@ -49150,6 +49159,9 @@
 	filter_type = "co2";
 	on = 1
 	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "cdC" = (
@@ -49598,7 +49610,7 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 6
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/black,
 /area/engine/atmos)
 "ceC" = (
 /obj/structure/cable{
@@ -50130,19 +50142,41 @@
 "cfO" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible,
 /obj/machinery/portable_atmospherics/pump,
+/obj/structure/window/reinforced,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "cfP" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
 	},
+/obj/machinery/computer/atmos_control/tank{
+	frequency = 1441;
+	input_tag = "o2_in";
+	name = "Oxygen Supply Control";
+	output_tag = "o2_out";
+	sensors = list("o2_sensor" = "Tank")
+	},
+/obj/structure/window/reinforced,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "cfQ" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 1;
+	name = "N2 Outlet Pump";
+	on = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/door/window/northright{
+	name = "Inner pipe access"
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "cfR" = (
@@ -50151,6 +50185,7 @@
 	filter_type = "o2";
 	on = 1
 	},
+/obj/structure/window/reinforced,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "cfS" = (
@@ -50158,11 +50193,23 @@
 	dir = 4;
 	initialize_directions = 12
 	},
+/obj/structure/window/reinforced,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "cfT" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 9
+	},
+/obj/machinery/computer/atmos_control/tank{
+	frequency = 1441;
+	input_tag = "air_in";
+	name = "Mixed Air Supply Control";
+	output_tag = "air_out";
+	sensors = list("air_sensor" = "Tank")
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -50683,25 +50730,16 @@
 /area/engine/atmos)
 "cgW" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible,
-/obj/machinery/portable_atmospherics/pump,
-/turf/open/floor/plasteel/red/side{
-	dir = 10
-	},
+/turf/open/floor/plasteel/black,
 /area/engine/atmos)
 "cgX" = (
 /obj/machinery/light,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/black,
 /area/engine/atmos)
 "cgY" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 1;
-	name = "N2 Outlet Pump";
-	on = 1
-	},
-/turf/open/floor/plasteel/red/side{
-	dir = 6
-	},
+/obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/turf/open/floor/plasteel/black,
 /area/engine/atmos)
 "cgZ" = (
 /obj/machinery/computer/atmos_control/tank{
@@ -50760,14 +50798,8 @@
 	c_tag = "Atmospherics South East";
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 1;
-	name = "Air Outlet Pump";
-	on = 1
-	},
-/turf/open/floor/plasteel/arrival{
-	dir = 6
-	},
+/obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/turf/open/floor/plasteel/black,
 /area/engine/atmos)
 "chg" = (
 /turf/open/floor/plating,
@@ -55391,6 +55423,7 @@
 	pixel_x = -3;
 	pixel_y = -2
 	},
+/obj/item/storage/firstaid/fire,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cqQ" = (
@@ -55965,6 +55998,7 @@
 /obj/structure/transit_tube/curved/flipped{
 	dir = 1
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space)
 "csj" = (
@@ -55979,6 +56013,7 @@
 /obj/structure/transit_tube/curved{
 	dir = 4
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space)
 "csm" = (
@@ -55989,11 +56024,12 @@
 /area/maintenance/aft)
 "csn" = (
 /obj/structure/transit_tube/horizontal,
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space)
 "cso" = (
-/obj/structure/lattice,
 /obj/structure/transit_tube/crossing/horizontal,
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space)
 "csp" = (
@@ -56110,10 +56146,12 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "csD" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/ai_monitored/turret_protected/aisat_interior)
+/obj/structure/transit_tube/curved{
+	dir = 8
+	},
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space)
 "csE" = (
 /obj/structure/cable{
 	icon_state = "0-2";
@@ -56180,20 +56218,20 @@
 /turf/open/space,
 /area/space)
 "csM" = (
-/obj/structure/lattice,
+/obj/structure/transit_tube/horizontal,
+/obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
-/obj/structure/transit_tube/crossing/horizontal,
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "csN" = (
 /obj/structure/transit_tube/horizontal,
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat_interior)
 "csO" = (
-/obj/structure/window/reinforced/fulltile,
 /obj/structure/transit_tube/horizontal,
-/turf/open/floor/plating,
-/area/ai_monitored/turret_protected/aisat_interior)
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space)
 "csP" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -56312,9 +56350,9 @@
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat_interior)
 "ctd" = (
-/obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
-/turf/open/space,
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
 /area/space)
 "cte" = (
 /obj/item/device/radio/off,
@@ -56340,13 +56378,9 @@
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat_interior)
 "cti" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/obj/structure/sign/securearea{
-	pixel_y = -32
-	},
-/turf/open/floor/plating,
-/area/ai_monitored/turret_protected/aisat_interior)
+/obj/structure/transit_tube/diagonal,
+/turf/open/space/basic,
+/area/space)
 "ctj" = (
 /obj/machinery/camera{
 	c_tag = "MiniSat Pod Access";
@@ -56883,16 +56917,12 @@
 	},
 /area/ai_monitored/turret_protected/aisat/atmos)
 "cuq" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 0;
-	name = "Air Out";
-	on = 0
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
 	},
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating{
-	icon_plating = "warnplate"
-	},
-/area/ai_monitored/turret_protected/aisat/atmos)
+/turf/open/space/basic,
+/area/space)
 "cur" = (
 /obj/structure/showcase{
 	density = 0;
@@ -59833,6 +59863,10 @@
 /area/maintenance/disposal)
 "cAJ" = (
 /obj/structure/closet,
+/obj/effect/spawner/lootdrop/grille_or_trash{
+	loot = list(/obj/item/clothing/head/cone);
+	name = "cone spawner"
+	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "cAK" = (
@@ -59957,16 +59991,10 @@
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/ai)
 "cAU" = (
-/obj/structure/lattice,
-/obj/machinery/camera{
-	c_tag = "MiniSat External SouthWest";
-	dir = 8;
-	network = list("MiniSat");
-	pixel_x = 0;
-	pixel_y = 0;
-	start_active = 1
+/obj/structure/window/reinforced{
+	dir = 4
 	},
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "cAV" = (
 /obj/structure/cable{
@@ -69471,14 +69499,16 @@
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hos)
 "dcK" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/obj/machinery/door/poddoor/preopen{
-	id = "tox1";
-	name = "toxins containment door"
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/airlock/highsecurity{
+	name = "Gravity Generator Foyer";
+	req_access_txt = "10"
 	},
-/turf/open/floor/plating,
-/area/science/mixing)
+/turf/open/floor/plasteel{
+	name = "floor"
+	},
+/area/engine/gravity_generator)
 "dcL" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -69488,6 +69518,3960 @@
 	},
 /turf/open/floor/plating,
 /area/science/mixing)
+"dcM" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/door/poddoor/preopen{
+	id = "tox1";
+	name = "toxins containment door"
+	},
+/turf/open/floor/plating,
+/area/science/mixing)
+"dcN" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 10;
+	initialize_directions = 10
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/engine/atmos)
+"dcO" = (
+/obj/machinery/atmospherics/pipe/simple/yellow/visible{
+	dir = 6
+	},
+/turf/open/floor/plasteel/black,
+/area/engine/atmos)
+"dcP" = (
+/obj/machinery/atmospherics/pipe/manifold/cyan/visible{
+	dir = 8;
+	initialize_directions = 11
+	},
+/obj/machinery/meter,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/engine/atmos)
+"dcQ" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plasteel/black,
+/area/engine/atmos)
+"dcR" = (
+/obj/machinery/atmospherics/pipe/simple/green/visible,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/engine/atmos)
+"dcS" = (
+/obj/machinery/atmospherics/pipe/simple/green/visible,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/machinery/door/window/westright{
+	name = "Inner pipe access"
+	},
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 8;
+	name = "Plasma Outlet Pump";
+	on = 0
+	},
+/turf/open/floor/plasteel,
+/area/engine/atmos)
+"dcT" = (
+/obj/machinery/atmospherics/pipe/simple/green/visible,
+/obj/machinery/computer/atmos_control/tank{
+	frequency = 1441;
+	input_tag = "tox_in";
+	name = "Plasma Supply Control";
+	output_tag = "tox_out";
+	sensors = list("tox_sensor" = "Tank")
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/engine/atmos)
+"dcU" = (
+/obj/machinery/atmospherics/pipe/simple/green/visible,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/engine/atmos)
+"dcV" = (
+/obj/machinery/atmospherics/pipe/simple/green/visible,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 8;
+	name = "CO2 Outlet Pump";
+	on = 0
+	},
+/obj/machinery/door/window/westright{
+	name = "Inner pipe access"
+	},
+/turf/open/floor/plasteel,
+/area/engine/atmos)
+"dcW" = (
+/obj/machinery/atmospherics/pipe/simple/green/visible,
+/obj/machinery/computer/atmos_control/tank{
+	frequency = 1441;
+	input_tag = "co2_in";
+	name = "Carbon Dioxide Supply Control";
+	output_tag = "co2_out";
+	sensors = list("co2_sensor" = "Tank")
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/engine/atmos)
+"dcX" = (
+/obj/machinery/atmospherics/pipe/simple/green/visible,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/engine/atmos)
+"dcY" = (
+/obj/machinery/atmospherics/pipe/simple/green/visible{
+	dir = 6
+	},
+/obj/machinery/portable_atmospherics/pump,
+/turf/open/floor/plasteel,
+/area/engine/atmos)
+"dcZ" = (
+/obj/machinery/atmospherics/pipe/simple/green/visible,
+/obj/machinery/door/window/eastleft{
+	name = "Inner pipe access"
+	},
+/turf/open/floor/plasteel,
+/area/engine/atmos)
+"dda" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 1;
+	name = "Air Outlet Pump";
+	on = 1
+	},
+/turf/open/floor/plasteel/black,
+/area/engine/atmos)
+"ddb" = (
+/obj/machinery/portable_atmospherics/scrubber,
+/obj/structure/window/reinforced,
+/turf/open/floor/plasteel,
+/area/engine/atmos)
+"ddc" = (
+/obj/machinery/atmospherics/pipe/simple/green/visible{
+	dir = 5;
+	initialize_directions = 12
+	},
+/obj/machinery/computer/atmos_control/tank{
+	frequency = 1441;
+	input_tag = "n2_in";
+	name = "Nitrogen Supply Control";
+	output_tag = "n2_out";
+	sensors = list("n2_sensor" = "Tank")
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plasteel,
+/area/engine/atmos)
+"ddd" = (
+/obj/machinery/atmospherics/pipe/simple/green/visible{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 1;
+	name = "O2 Outlet Pump";
+	on = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/door/window/northright{
+	name = "Inner pipe access"
+	},
+/turf/open/floor/plasteel,
+/area/engine/atmos)
+"dde" = (
+/obj/machinery/atmospherics/pipe/simple/green/visible{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/obj/structure/window/reinforced,
+/turf/open/floor/plasteel,
+/area/engine/atmos)
+"ddf" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/turf/open/floor/plasteel/black,
+/area/engine/atmos)
+"ddg" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
+	name = "Engineering External Access";
+	req_access = null;
+	req_access_txt = "10;13"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"ddh" = (
+/obj/machinery/atmospherics/pipe/simple/yellow/visible,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"ddi" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/simple/yellow/visible,
+/turf/open/space/basic,
+/area/space)
+"ddj" = (
+/obj/structure/lattice,
+/obj/structure/grille/broken,
+/turf/open/space/basic,
+/area/space)
+"ddk" = (
+/obj/machinery/camera/emp_proof{
+	c_tag = "Transit Tube Entrance";
+	network = list("MiniSat")
+	},
+/turf/open/space/basic,
+/area/space)
+"ddl" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/simple/yellow/visible,
+/turf/open/space/basic,
+/area/space)
+"ddm" = (
+/obj/structure/grille/broken,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"ddn" = (
+/obj/structure/transit_tube/horizontal,
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space)
+"ddo" = (
+/obj/structure/transit_tube/horizontal,
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space)
+"ddp" = (
+/obj/structure/transit_tube/horizontal,
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space)
+"ddq" = (
+/obj/structure/transit_tube/horizontal,
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space)
+"ddr" = (
+/obj/structure/transit_tube/horizontal,
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space)
+"dds" = (
+/obj/structure/transit_tube/horizontal,
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space)
+"ddt" = (
+/obj/structure/transit_tube/horizontal,
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space)
+"ddu" = (
+/obj/structure/transit_tube/horizontal,
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space)
+"ddv" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"ddw" = (
+/obj/structure/lattice,
+/obj/structure/grille/broken,
+/turf/open/space/basic,
+/area/space)
+"ddx" = (
+/obj/machinery/atmospherics/pipe/simple/yellow/visible,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"ddy" = (
+/obj/structure/transit_tube/curved/flipped,
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space)
+"ddz" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"ddA" = (
+/obj/machinery/atmospherics/pipe/simple/yellow/visible,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"ddB" = (
+/obj/structure/transit_tube/junction/flipped{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space)
+"ddC" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"ddD" = (
+/obj/structure/transit_tube/diagonal/topleft,
+/turf/open/space/basic,
+/area/space)
+"ddE" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"ddF" = (
+/obj/machinery/atmospherics/pipe/simple/yellow/visible{
+	icon_state = "intact";
+	dir = 5
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"ddG" = (
+/obj/machinery/atmospherics/pipe/simple/yellow/visible{
+	dir = 4
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"ddH" = (
+/obj/machinery/atmospherics/pipe/simple/yellow/visible{
+	dir = 4
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"ddI" = (
+/obj/machinery/atmospherics/pipe/simple/yellow/visible{
+	icon_state = "intact";
+	dir = 10
+	},
+/obj/structure/lattice,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"ddJ" = (
+/obj/structure/transit_tube/curved,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"ddK" = (
+/obj/structure/transit_tube/curved/flipped,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"ddL" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"ddM" = (
+/obj/machinery/atmospherics/pipe/simple/yellow/visible,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"ddN" = (
+/obj/structure/transit_tube/crossing,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"ddO" = (
+/obj/structure/transit_tube/crossing,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"ddP" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"ddQ" = (
+/obj/structure/lattice,
+/obj/structure/grille/broken,
+/turf/open/space/basic,
+/area/space)
+"ddR" = (
+/obj/machinery/atmospherics/pipe/simple/yellow/visible,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"ddS" = (
+/obj/structure/transit_tube/curved/flipped{
+	dir = 1
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"ddT" = (
+/obj/structure/lattice,
+/obj/structure/window/reinforced,
+/turf/open/space,
+/area/space)
+"ddU" = (
+/obj/structure/window/reinforced,
+/obj/structure/lattice/catwalk,
+/turf/open/space,
+/area/space)
+"ddV" = (
+/obj/structure/lattice,
+/obj/structure/window/reinforced,
+/turf/open/space,
+/area/space)
+"ddW" = (
+/obj/structure/lattice,
+/obj/structure/window/reinforced,
+/obj/structure/transit_tube/curved{
+	dir = 1
+	},
+/turf/open/space,
+/area/space)
+"ddX" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"ddY" = (
+/obj/structure/lattice,
+/obj/structure/grille/broken,
+/turf/open/space/basic,
+/area/space)
+"ddZ" = (
+/obj/structure/lattice,
+/obj/structure/grille/broken,
+/turf/open/space/basic,
+/area/space)
+"dea" = (
+/obj/structure/lattice,
+/obj/structure/grille/broken,
+/turf/open/space/basic,
+/area/space)
+"deb" = (
+/obj/machinery/atmospherics/pipe/simple/yellow/visible,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dec" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"ded" = (
+/obj/machinery/door/airlock/hatch{
+	name = "MiniSat Access ";
+	req_one_access_txt = "65"
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dee" = (
+/obj/machinery/door/airlock/hatch{
+	name = "MiniSat Access ";
+	req_one_access_txt = "65"
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"def" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"deg" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 2
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/transit_tube/curved{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkblue/corner{
+	dir = 1
+	},
+/area/ai_monitored/turret_protected/aisat/atmos)
+"deh" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 2
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 2
+	},
+/obj/structure/transit_tube/station,
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dei" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 2
+	},
+/obj/structure/transit_tube/curved/flipped{
+	dir = 8
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dej" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 2
+	},
+/turf/open/floor/plasteel/darkblue/corner{
+	dir = 4
+	},
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dek" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"del" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dem" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"den" = (
+/obj/machinery/atmospherics/pipe/simple/yellow/visible,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"deo" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"dep" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"deq" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"der" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkblue/corner{
+	dir = 1
+	},
+/area/ai_monitored/turret_protected/aisat/atmos)
+"des" = (
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"det" = (
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"deu" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkblue/corner{
+	dir = 4
+	},
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dev" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dew" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dex" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dey" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dez" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"deA" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"deB" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"deC" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"deD" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"deE" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"deF" = (
+/obj/structure/window/reinforced,
+/turf/open/space/basic,
+/area/space)
+"deG" = (
+/obj/structure/window/reinforced,
+/turf/open/space/basic,
+/area/space)
+"deH" = (
+/obj/structure/window/reinforced,
+/turf/open/space/basic,
+/area/space)
+"deI" = (
+/obj/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/yellow/visible,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"deJ" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"deK" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	on = 1
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"deL" = (
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"deM" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"deN" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkblue/corner{
+	dir = 1
+	},
+/area/ai_monitored/turret_protected/aisat/atmos)
+"deO" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	on = 1
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"deP" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	on = 1;
+	scrub_N2O = 0;
+	scrub_Toxins = 0
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"deQ" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "MiniSat External Walkway Entrance";
+	dir = 8;
+	network = list("MiniSat");
+	pixel_x = 0;
+	pixel_y = 0;
+	start_active = 1
+	},
+/turf/open/floor/plasteel/darkblue/corner{
+	dir = 4
+	},
+/area/ai_monitored/turret_protected/aisat/atmos)
+"deR" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/open/space/basic,
+/area/space)
+"deS" = (
+/obj/structure/window/reinforced,
+/turf/open/space/basic,
+/area/space)
+"deT" = (
+/obj/structure/window/reinforced,
+/turf/open/space/basic,
+/area/space)
+"deU" = (
+/obj/structure/window/reinforced,
+/turf/open/space/basic,
+/area/space)
+"deV" = (
+/obj/structure/window/reinforced,
+/turf/open/space/basic,
+/area/space)
+"deW" = (
+/obj/structure/window/reinforced,
+/turf/open/space/basic,
+/area/space)
+"deX" = (
+/obj/structure/window/reinforced,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"deY" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"deZ" = (
+/obj/structure/lattice,
+/obj/structure/grille/broken,
+/turf/open/space/basic,
+/area/space)
+"dfa" = (
+/obj/structure/grille/broken,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dfb" = (
+/obj/structure/lattice,
+/obj/structure/grille/broken,
+/turf/open/space/basic,
+/area/space)
+"dfc" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dfd" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dfe" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dff" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dfg" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dfh" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/yellow/visible,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dfi" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dfj" = (
+/obj/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/machinery/door/window/northleft{
+	name = "AI MiniSat Access"
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dfk" = (
+/obj/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/door/window/northright{
+	name = "AI MiniSat Access"
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dfl" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dfm" = (
+/obj/machinery/door/window{
+	base_state = "right";
+	dir = 8;
+	icon_state = "right";
+	name = "MiniSat Airlock Access";
+	req_access_txt = "0"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkblue/corner{
+	dir = 1
+	},
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dfn" = (
+/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
+/obj/machinery/holopad,
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dfo" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dfp" = (
+/obj/machinery/door/window/eastleft{
+	name = "MiniSat AIrlock Access"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkblue/corner{
+	dir = 4
+	},
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dfq" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dfr" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dfs" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dft" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dfu" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dfv" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dfw" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dfx" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dfy" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dfz" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dfA" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"dfB" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1;
+	external_pressure_bound = 0;
+	frequency = 1439;
+	id_tag = null;
+	initialize_directions = 1;
+	internal_pressure_bound = 4000;
+	on = 1;
+	pressure_checks = 2;
+	pump_direction = 1
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dfC" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/turf/open/space/basic,
+/area/space)
+"dfD" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/machinery/atmospherics/pipe/simple/yellow/visible,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dfE" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/turf/open/space/basic,
+/area/space)
+"dfF" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkblue/corner{
+	dir = 1
+	},
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dfG" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dfH" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkblue/corner{
+	dir = 4
+	},
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dfI" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/turf/open/space/basic,
+/area/space)
+"dfJ" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/turf/open/space/basic,
+/area/space)
+"dfK" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1;
+	external_pressure_bound = 0;
+	frequency = 1439;
+	id_tag = null;
+	initialize_directions = 1;
+	internal_pressure_bound = 4000;
+	on = 1;
+	pressure_checks = 2;
+	pump_direction = 1
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dfL" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dfM" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dfN" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dfO" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"dfP" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dfQ" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dfR" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"dfS" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dfT" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dfU" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dfV" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dfW" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"dfX" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dfY" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dfZ" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"dga" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dgb" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dgc" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dgd" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dge" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dgf" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"dgg" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dgh" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dgi" = (
+/obj/machinery/camera{
+	c_tag = "MiniSat External NorthWest 2";
+	dir = 8;
+	network = list("MiniSat");
+	pixel_x = 0;
+	pixel_y = 0;
+	start_active = 1
+	},
+/turf/open/space/basic,
+/area/space)
+"dgj" = (
+/obj/structure/lattice,
+/obj/machinery/camera{
+	c_tag = "MiniSat External NorthEast 2";
+	dir = 4;
+	network = list("MiniSat");
+	pixel_x = 0;
+	pixel_y = 0;
+	start_active = 1
+	},
+/turf/open/space,
+/area/space)
+"dgk" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"dgl" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dgm" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dgn" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dgo" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dgp" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dgq" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/turf/open/space/basic,
+/area/space)
+"dgr" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dgs" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dgt" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"dgu" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dgv" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/open/space/basic,
+/area/space)
+"dgw" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dgx" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dgy" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dgz" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dgA" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dgB" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dgC" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dgD" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dgE" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dgF" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dgG" = (
+/obj/structure/grille/broken,
+/turf/open/space/basic,
+/area/space)
+"dgH" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dgI" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dgJ" = (
+/obj/structure/grille/broken,
+/turf/open/space/basic,
+/area/space)
+"dgK" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dgL" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dgM" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dgN" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"dgO" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dgP" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/turf/open/space/basic,
+/area/space)
+"dgQ" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/turf/open/space/basic,
+/area/space)
+"dgR" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dgS" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dgT" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dgU" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dgV" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"dgW" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dgX" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dgY" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"dgZ" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dha" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dhb" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dhc" = (
+/obj/structure/grille/broken,
+/turf/open/space/basic,
+/area/space)
+"dhd" = (
+/obj/structure/grille/broken,
+/turf/open/space/basic,
+/area/space)
+"dhe" = (
+/obj/structure/grille,
+/obj/structure/grille,
+/turf/open/space/basic,
+/area/space)
+"dhf" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dhg" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"dhh" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dhi" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dhj" = (
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 0;
+	name = "Air Out";
+	on = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating{
+	icon_plating = "warnplate"
+	},
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dhk" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"dhl" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dhm" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dhn" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dho" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dhp" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"dhq" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dhr" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dhs" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dht" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dhu" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dhv" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dhw" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dhx" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"dhy" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dhz" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dhA" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"dhB" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dhC" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dhD" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dhE" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dhF" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"dhG" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dhH" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dhI" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"dhJ" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dhK" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dhL" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dhM" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dhN" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"dhO" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dhP" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/open/space/basic,
+/area/space)
+"dhQ" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/turf/open/space/basic,
+/area/space)
+"dhR" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dhS" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dhT" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dhU" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dhV" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dhW" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dhX" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 2
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dhY" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dhZ" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dia" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dib" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dic" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"did" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"die" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dif" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 2
+	},
+/turf/open/space/basic,
+/area/space)
+"dig" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dih" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dii" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"dij" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dik" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/turf/open/space/basic,
+/area/space)
+"dil" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dim" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"din" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dio" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"dip" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"diq" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dir" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"dis" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dit" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"diu" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"div" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"diw" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dix" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"diy" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"diz" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/open/space/basic,
+/area/space)
+"diA" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/turf/open/space/basic,
+/area/space)
+"diB" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"diC" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"diD" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"diE" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"diF" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"diG" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"diH" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 2
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"diI" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"diJ" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"diK" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"diL" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"diM" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"diN" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"diO" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"diP" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"diQ" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"diR" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"diS" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"diT" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"diU" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"diV" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"diW" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"diX" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"diY" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"diZ" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"dja" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"djb" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/turf/open/space/basic,
+/area/space)
+"djc" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 2
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"djd" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dje" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"djf" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"djg" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"djh" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dji" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"djj" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"djk" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"djl" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"djm" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"djn" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"djo" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"djp" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"djq" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"djr" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"djs" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"djt" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dju" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"djv" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"djw" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"djx" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"djy" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"djz" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"djA" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"djB" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"djC" = (
+/obj/docking_port/stationary{
+	dheight = 9;
+	dir = 2;
+	dwidth = 5;
+	height = 24;
+	id = "syndicate_s";
+	name = "south of station";
+	turf_type = /turf/open/space;
+	width = 18
+	},
+/turf/open/space/basic,
+/area/space)
+"djD" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"djE" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"djF" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"djG" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"djH" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"djI" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"djJ" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"djK" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"djL" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"djM" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"djN" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"djO" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"djP" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"djQ" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"djR" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"djS" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"djT" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"djU" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"djV" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"djW" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"djX" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"djY" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"djZ" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dka" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dkb" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dkc" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dkd" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dke" = (
+/obj/machinery/holopad,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/ai)
+"dkf" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dkg" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dkh" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dki" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dkj" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dkk" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dkl" = (
+/obj/machinery/door/window{
+	dir = 1;
+	name = "AI Core Door";
+	req_access_txt = "16"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/circuit,
+/area/ai_monitored/turret_protected/ai)
+"dkm" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dkn" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dko" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dkp" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dkq" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dkr" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dks" = (
+/obj/effect/landmark/start/ai,
+/obj/item/device/radio/intercom{
+	broadcasting = 0;
+	freerange = 1;
+	listening = 1;
+	name = "Common Channel";
+	pixel_x = -27;
+	pixel_y = -9
+	},
+/obj/item/device/radio/intercom{
+	anyai = 1;
+	freerange = 1;
+	listening = 0;
+	name = "Custom Channel";
+	pixel_x = 0;
+	pixel_y = -31
+	},
+/obj/item/device/radio/intercom{
+	anyai = 1;
+	broadcasting = 0;
+	freerange = 1;
+	frequency = 1447;
+	name = "Private Channel";
+	pixel_x = 27;
+	pixel_y = -9
+	},
+/obj/machinery/newscaster/security_unit{
+	pixel_x = -28;
+	pixel_y = -28
+	},
+/obj/machinery/requests_console{
+	department = "AI";
+	departmentType = 5;
+	pixel_x = 28;
+	pixel_y = -28
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/circuit,
+/area/ai_monitored/turret_protected/ai)
+"dkt" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dku" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dkv" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dkw" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dkx" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/door/window{
+	dir = 2;
+	name = "MiniSat Walkway Access";
+	req_access_txt = "0"
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dky" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dkz" = (
+/obj/structure/lattice,
+/obj/machinery/camera{
+	c_tag = "MiniSat External SouthWest";
+	dir = 8;
+	network = list("MiniSat");
+	pixel_x = 0;
+	pixel_y = 0;
+	start_active = 1
+	},
+/turf/open/space/basic,
+/area/space)
+"dkA" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall,
+/area/ai_monitored/turret_protected/ai)
+"dkB" = (
+/obj/structure/lattice,
+/obj/machinery/camera{
+	c_tag = "MiniSat External SouthEast";
+	dir = 4;
+	network = list("MiniSat");
+	pixel_x = 0;
+	pixel_y = 0;
+	start_active = 1
+	},
+/turf/open/space/basic,
+/area/space)
+"dkC" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/door/window{
+	dir = 2;
+	name = "MiniSat Walkway Access";
+	req_access_txt = "0"
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dkD" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dkE" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dkF" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dkG" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dkH" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dkI" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dkJ" = (
+/obj/machinery/power/smes{
+	charge = 5e+006
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/circuit,
+/area/ai_monitored/turret_protected/ai)
+"dkK" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dkL" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dkM" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dkN" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dkO" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dkP" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dkQ" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dkR" = (
+/obj/machinery/power/terminal{
+	icon_state = "term";
+	dir = 1
+	},
+/obj/machinery/ai_slipper{
+	uses = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/circuit,
+/area/ai_monitored/turret_protected/ai)
+"dkS" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dkT" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dkU" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dkV" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dkW" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dkX" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dkY" = (
+/obj/machinery/airalarm{
+	dir = 1;
+	icon_state = "alarm0";
+	pixel_y = -22
+	},
+/obj/machinery/holopad,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/ai)
+"dkZ" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dla" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dlb" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dlc" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dld" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dle" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dlf" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall/r_wall,
+/area/ai_monitored/turret_protected/ai)
+"dlg" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dlh" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dli" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dlj" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dlk" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dll" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dlm" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall/r_wall,
+/area/ai_monitored/turret_protected/ai)
+"dln" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dlo" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dlp" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dlq" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dlr" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dls" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dlt" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall/r_wall,
+/area/ai_monitored/turret_protected/ai)
+"dlu" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dlv" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dlw" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dlx" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dly" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dlz" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dlA" = (
+/obj/machinery/camera{
+	c_tag = "MiniSat External South";
+	dir = 2;
+	network = list("MiniSat");
+	pixel_x = 0;
+	pixel_y = 0;
+	start_active = 1
+	},
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/space,
+/area/space)
+"dlB" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dlC" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dlD" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dlE" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dlF" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dlG" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/open/space/basic,
+/area/space)
+"dlH" = (
+/obj/structure/window/reinforced,
+/turf/open/space/basic,
+/area/space)
+"dlI" = (
+/obj/structure/window/reinforced,
+/turf/open/space/basic,
+/area/space)
+"dlJ" = (
+/obj/structure/window/reinforced,
+/turf/open/space/basic,
+/area/space)
+"dlK" = (
+/obj/structure/window/reinforced,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dlL" = (
+/obj/structure/window/reinforced,
+/turf/open/space/basic,
+/area/space)
+"dlM" = (
+/obj/structure/window/reinforced,
+/turf/open/space/basic,
+/area/space)
+"dlN" = (
+/obj/structure/window/reinforced,
+/turf/open/space/basic,
+/area/space)
+"dlO" = (
+/obj/structure/window/reinforced,
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/space/basic,
+/area/space)
+"dlP" = (
+/obj/structure/window/reinforced,
+/turf/open/space/basic,
+/area/space)
+"dlQ" = (
+/obj/structure/window/reinforced,
+/turf/open/space/basic,
+/area/space)
+"dlR" = (
+/obj/structure/window/reinforced,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dlS" = (
+/obj/structure/window/reinforced,
+/turf/open/space/basic,
+/area/space)
+"dlT" = (
+/obj/structure/window/reinforced,
+/turf/open/space/basic,
+/area/space)
+"dlU" = (
+/obj/structure/window/reinforced,
+/turf/open/space/basic,
+/area/space)
+"dlV" = (
+/obj/structure/window/reinforced,
+/turf/open/space/basic,
+/area/space)
+"dlW" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/turf/open/space/basic,
+/area/space)
+"dlX" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dlY" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dlZ" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dma" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dmb" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dmc" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dmd" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dme" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dmf" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dmg" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dmh" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dmi" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dmj" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dmk" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dml" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dmm" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dmn" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dmo" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dmp" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dmq" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dmr" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dms" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dmt" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dmu" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dmv" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dmw" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dmx" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dmy" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 2
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dmz" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 2
+	},
+/turf/open/space/basic,
+/area/space)
+"dmA" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 2
+	},
+/turf/open/space/basic,
+/area/space)
+"dmB" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 2
+	},
+/turf/open/space/basic,
+/area/space)
+"dmC" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 2
+	},
+/turf/open/space/basic,
+/area/space)
+"dmD" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 2
+	},
+/turf/open/space/basic,
+/area/space)
+"dmE" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 2
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
+"dmF" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dmG" = (
+/obj/structure/chair,
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dmH" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1;
+	on = 1
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dmI" = (
+/obj/structure/chair,
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dmJ" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dmK" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 2
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
+"dmL" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 2
+	},
+/turf/open/space/basic,
+/area/space)
+"dmM" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 2
+	},
+/turf/open/space/basic,
+/area/space)
+"dmN" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 2
+	},
+/turf/open/space/basic,
+/area/space)
+"dmO" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 2
+	},
+/turf/open/space/basic,
+/area/space)
+"dmP" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 2
+	},
+/turf/open/space/basic,
+/area/space)
+"dmQ" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 2
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dmR" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dmS" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dmT" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dmU" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dmV" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dmW" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dmX" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dmY" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dmZ" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dna" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dnb" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dnc" = (
+/obj/structure/window/reinforced,
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dnd" = (
+/obj/structure/window/reinforced,
+/obj/machinery/holopad,
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dne" = (
+/obj/structure/window/reinforced,
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dnf" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/turret_protected/aisat/atmos)
+"dng" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dnh" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dni" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dnj" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dnk" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dnl" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dnm" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dnn" = (
+/obj/structure/grille,
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dno" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dnp" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dnq" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dnr" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dns" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dnt" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dnu" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dnv" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dnw" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dnx" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dny" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dnz" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dnA" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"dnB" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
 
 (1,1,1) = {"
 aaa
@@ -93616,7 +97600,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+djC
 aaa
 aaa
 aaa
@@ -96683,7 +100667,7 @@ cUa
 aaa
 aaa
 aaa
-aaa
+dgG
 aaa
 aaa
 aaa
@@ -96939,10 +100923,10 @@ cUq
 cUa
 cUa
 cUa
+cUa
+dgH
 aaa
-aaa
-aaa
-aaa
+cWE
 aaa
 aaa
 aaa
@@ -97197,9 +101181,9 @@ aaf
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+cWE
+cEX
+cWE
 aaa
 aaa
 aaa
@@ -97450,13 +101434,13 @@ cAl
 cFb
 ccw
 csF
-cEl
-cEl
-aaa
-aaa
-aaa
-aaa
-aaa
+aaf
+aaf
+cUa
+cUa
+dgI
+cEX
+cWE
 aaa
 aaa
 aaa
@@ -97711,9 +101695,9 @@ cEl
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+cWE
+cEX
+cWE
 aaa
 aaa
 aaa
@@ -97899,9 +101883,9 @@ bpg
 bqD
 bsa
 bgO
-buP
-bwm
-bxH
+bmu
+bgO
+bsb
 byS
 aJq
 aMh
@@ -97968,9 +101952,9 @@ cEl
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+dgJ
+cEX
+cWE
 aaa
 aaa
 aaa
@@ -98225,9 +102209,9 @@ cEl
 aaa
 aaa
 aae
-aaa
-aaa
-aaa
+cWE
+cEX
+dhc
 aaa
 aaa
 aaa
@@ -98415,7 +102399,7 @@ bsc
 btF
 bph
 bsc
-btF
+dcK
 bvW
 bAf
 bBp
@@ -98478,13 +102462,13 @@ cUv
 cEr
 ccw
 cUq
-cEl
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aaf
+cUa
+cUa
+cUa
+dgK
+cEX
+cWE
 aaa
 aaa
 aaa
@@ -98739,9 +102723,9 @@ cEl
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+cWE
+cEX
+cWE
 aaa
 aaa
 aaa
@@ -98927,9 +102911,9 @@ bpi
 bqG
 bse
 bij
-buR
-bwo
-bxJ
+bgR
+bij
+bsg
 bwb
 aJq
 bBr
@@ -98996,6 +102980,9 @@ aaf
 aaa
 aaa
 aaa
+cWE
+cEX
+dhd
 aaa
 aaa
 aaa
@@ -99010,10 +102997,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-cBY
+cEl
 aaa
 aaa
 aaa
@@ -99253,9 +103237,9 @@ aaf
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+cWE
+cEX
+cWE
 aaa
 aaa
 aaa
@@ -99510,9 +103494,9 @@ aaf
 aaf
 cUa
 cUa
-aaa
-aaa
-aaa
+dgL
+cEX
+dhe
 aaa
 aaa
 aaa
@@ -99767,9 +103751,9 @@ aaf
 aaa
 aaa
 aaa
+cWE
 aaa
-aaa
-aaa
+cWE
 aaa
 aaa
 aaa
@@ -100774,7 +104758,7 @@ cTS
 ckH
 cDH
 cTY
-cDH
+ddg
 crM
 crV
 cUg
@@ -101529,9 +105513,9 @@ bOd
 ccv
 cdw
 cex
-bOd
 cfN
-cfN
+ddb
+bQz
 bLK
 apQ
 bOh
@@ -101553,13 +105537,13 @@ aag
 aaa
 aaa
 aaa
+cUa
 aaa
 aaa
+cTZ
 aaa
 aaa
-aaa
-aaa
-cEl
+aba
 aaa
 aaa
 aaa
@@ -101786,7 +105770,7 @@ cbA
 ccy
 bOd
 bOd
-bQu
+dcY
 cfO
 cgW
 cit
@@ -101810,13 +105794,13 @@ aag
 aaa
 aaa
 aaa
+cUa
 aaa
 aaa
-aaa
-aaa
+cTZ
 cEl
 cEl
-cEl
+aaf
 aaa
 aaa
 aae
@@ -102044,8 +106028,8 @@ ccx
 cbA
 cbA
 cfi
-bRH
-cgV
+ddc
+bQz
 bMQ
 apQ
 bQA
@@ -102067,13 +106051,13 @@ aag
 aag
 aag
 aag
+cUa
 aaa
 aaa
+cTZ
 aaa
 aaa
-aaa
-aaa
-aaa
+cTZ
 aaa
 aaa
 aaa
@@ -102324,13 +106308,13 @@ aaf
 aaf
 aaf
 aag
-aaa
+cUa
 aaa
 aae
+cTZ
 aaa
 aaa
-aaa
-aaa
+cTZ
 aaa
 aaa
 aaa
@@ -102581,13 +106565,13 @@ aaa
 aaa
 aaf
 aag
+cUa
 aaa
 aaa
+ddY
 aaa
 aaa
-aaa
-aaa
-aaa
+deZ
 aaa
 aaa
 aaa
@@ -102816,7 +106800,7 @@ cdy
 bOd
 bRy
 cfR
-cha
+cgW
 civ
 cph
 ckb
@@ -102834,17 +106818,17 @@ crA
 crR
 crY
 csi
-aaa
+cVT
 aaa
 aaf
 aag
+cUa
 aaa
 aaa
+cTZ
 aaa
 aaa
-aaa
-aaa
-aaa
+cTZ
 aaa
 aaa
 aaa
@@ -103073,7 +107057,7 @@ cdx
 bOd
 bOd
 cfP
-cgZ
+bQz
 bMQ
 apQ
 bQA
@@ -103090,18 +107074,18 @@ cqY
 cqY
 cqY
 cig
-aaa
+ddk
 csl
 aaa
 aaf
 aag
+cUa
 aaa
 aaa
+cTZ
 aaa
 aaa
-aaa
-aaa
-aaa
+cTZ
 aaa
 aaa
 aaa
@@ -103329,8 +107313,8 @@ ccz
 cdA
 cez
 bOe
-cfQ
-chb
+ddd
+cgY
 ciu
 bVu
 ckb
@@ -103352,13 +107336,13 @@ cso
 aaf
 aaf
 aag
+cUa
 aaa
 aaa
+ddZ
 aaa
 aaa
-aaa
-aaa
-aaa
+cTZ
 aaa
 aaa
 aaa
@@ -103587,7 +107571,7 @@ cdz
 cez
 bUL
 cfS
-bOd
+bQz
 bMQ
 apQ
 bOh
@@ -103609,13 +107593,13 @@ csn
 aaa
 aaf
 aag
+cUa
 aaa
 aaa
+cUa
 aaa
 aaa
-aaa
-aaa
-aaa
+cTZ
 aaa
 aaa
 aaa
@@ -103843,8 +107827,8 @@ bRF
 bMW
 cez
 cez
-cfQ
-chd
+dde
+cgY
 ciw
 cpP
 ckc
@@ -103866,13 +107850,13 @@ csn
 aaa
 aaf
 aag
+cUa
 aaa
 aaa
+cTZ
 aaa
 aaa
-aaa
-aaa
-aaa
+dfa
 aaa
 aaa
 aaa
@@ -104081,8 +108065,8 @@ bIc
 bvd
 bKH
 bLK
-bMW
-bOe
+dcN
+dcP
 bPf
 bQw
 bRG
@@ -104090,18 +108074,18 @@ bSN
 bTT
 bUR
 bWb
-bUR
-bTT
-bUR
+dcR
+dcS
+dcT
 bZJ
-bUR
-bTT
-bUR
+dcU
+dcV
+dcW
 cdB
-bUR
-bUR
+dcX
+dcZ
 cfT
-chc
+bQz
 bMQ
 apQ
 bQA
@@ -104123,13 +108107,13 @@ csn
 aaa
 aaf
 aag
+cUa
 aaa
 aaa
+cTZ
 aaa
 aaa
-aaa
-aaa
-aaa
+cTZ
 aaa
 aaa
 aaa
@@ -104338,26 +108322,26 @@ cCp
 bvd
 bKH
 bLK
-bMZ
+dcO
 bOg
 bPi
 bQz
 bRJ
-bSO
+dcQ
 bTV
-bUT
-bWc
+bQz
+bRJ
 bWU
 bXV
 bYT
 bZK
-bOd
-cbG
-ccA
-cdC
+bQz
+bTV
+bQz
+bRJ
 ceB
-cez
-cez
+dda
+ddf
 chf
 cix
 cpP
@@ -104380,13 +108364,13 @@ cso
 aaf
 aaf
 aag
+cUa
 aaa
 aaa
+cTZ
 aaa
 aaa
-aaa
-aaa
-aaa
+cTZ
 aaa
 aaa
 aaa
@@ -104637,13 +108621,13 @@ csn
 aaa
 aaf
 aag
+cUa
 aaa
 aaa
+cTZ
 aaa
 aaa
-aaa
-aaa
-aaa
+cTZ
 aaa
 aaa
 aaa
@@ -104894,13 +108878,13 @@ csn
 aaa
 aaf
 aag
+cUa
 aaa
 aaa
+cTZ
 aaa
 aaa
-aaa
-aaa
-aaa
+cTZ
 aaa
 aaa
 aaa
@@ -105145,19 +109129,19 @@ apQ
 aoV
 aaa
 aaa
-aaf
+cUa
 aaa
-csn
+ddn
 aaa
-aaf
-aag
-aaa
-aaa
-aaa
+cUF
+cVT
+cUa
 aaa
 aaa
+dea
 aaa
 aaa
+dfb
 aaa
 aaa
 aaa
@@ -105401,20 +109385,20 @@ apQ
 apQ
 apQ
 aaf
-aaf
-aaf
-aaf
-cso
-aaf
-aaf
-aag
+aaa
+cUa
+cUa
+ddo
+cUa
+cUa
+cVT
+cUa
 aaa
 aaa
+cTZ
+cUa
 aaa
-aaa
-aaa
-aaa
-aaa
+cTZ
 aaa
 aaa
 aaa
@@ -105659,35 +109643,35 @@ apQ
 aoV
 aaa
 aaa
-aaf
+cUa
 aaa
-csn
+ddp
 aaa
-aaf
-aag
-aaa
-aaa
-aaa
+cUa
+cVT
+cUa
 aaa
 aaa
+cTZ
 aaa
 aaa
-aaa
-aaa
+cUa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dgd
+dgp
+cWE
+dgM
+dgU
+dhf
+dho
+dhw
+dhE
+dhM
+dhU
+die
+dim
 aaa
 aaa
 aaa
@@ -105916,61 +109900,61 @@ apQ
 aoV
 aaa
 aaa
-aaf
+cUa
 aaa
-csn
+ddq
 aaa
-aaf
-aag
+cUa
+cVT
+cUa
+cUa
+ddQ
+cTZ
+dem
+deE
+dfc
+dfz
+dfN
+dfV
+dge
 aaa
+dgx
+dgN
+dgV
+dhg
+dhp
+dhx
+dhF
+dhN
+dhV
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+din
+diw
+diE
+diO
+diY
+djg
+djo
+djw
+djD
+djJ
+djP
+djV
+dkb
+dki
+dkp
+dkw
+dkF
+dkO
+dkV
+dlc
+dlj
+dlq
+dlx
+dlE
+dma
+dmx
+dmS
 aaa
 aaa
 aaa
@@ -106173,61 +110157,61 @@ apQ
 aoV
 aaa
 aaa
-aaf
+cUa
 aaa
-csn
+ddr
 aaa
-aaf
-aag
-aaa
-aaa
-aaa
-aaa
-aaf
-aaf
-ctZ
-ctZ
-ctZ
-ctZ
-ctZ
-aaf
-aaa
-aaf
-cvF
-aaf
+cUa
+cVT
+cUa
 aaa
 aaa
-aaf
-aaf
-aaf
+cUa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaf
+dfd
+dfA
+dfO
+dfW
+dgf
+dgq
+dgy
+dgO
+dgW
+dhh
+dhq
+dhy
+dhG
+dhO
+dhW
+dif
+dio
+dix
+diF
+diP
+diZ
+djh
+djp
 cAU
-aaf
+cAU
+cAU
+cAU
+cAU
+cAU
+cAU
+cAU
+cAU
+dkG
+cAU
+cAU
+cAU
+cAU
+cAU
+cAU
+cAU
+dmb
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dmT
 aaa
 aaa
 aaa
@@ -106429,62 +110413,62 @@ bVu
 bVu
 bVu
 csw
-csw
-csw
-csw
+ddh
+ddi
+ddl
 csM
-csw
-csw
+ddx
+ddA
 ctd
-csw
-csw
-csw
-csw
-ctO
-ctZ
-ctZ
-cuo
-cuA
-cuM
-ctZ
-cvk
-cvk
-cvk
-cvk
-aaf
-aaf
-aaf
-aaf
-cvk
-cvk
-cvk
-cvk
-cvk
-cvk
-cvk
-cva
-cva
-cva
-cva
-cva
-cva
-cva
-cva
+ddF
 aaa
 aaa
+cUa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+deF
+dfe
+dfB
+dfP
+dfX
+dgg
+dgr
+dgz
+dgP
+dgX
+dhi
+dhr
+dhz
+dhH
+dhP
+dhX
+dig
+dip
+diy
+diG
+diQ
+dja
+dji
+djq
+djx
+djE
+djK
+djQ
+djW
+dkc
+dkj
+dkq
+dkx
+dkH
+dkP
+dkW
+dld
+dlk
+dlr
+dly
+dlF
+dmc
+dmy
+dmU
 aaa
 aaa
 aaa
@@ -106687,61 +110671,61 @@ aoV
 aoV
 aaa
 aaa
-aaf
+cUa
 aaa
-csn
-aag
-aag
-aag
-aag
+dds
+aaa
+cUa
+cVT
+ddG
 aaa
 aaa
+cUa
 aaa
-ctN
-ctY
-cuh
-cun
-cuz
-cuL
-cuY
-cvj
-cvs
-cvD
-cvk
-cvk
-cvk
-cvk
-cvk
-cvk
-cvX
-cvX
-cvX
-cvX
-cwq
-cwq
-cva
-cva
-cva
-cva
-cva
-cva
-cva
-cva
-cva
-aaf
+deG
+dff
+dfC
+dfQ
+dfY
+dgh
+dgs
+dgA
 aaa
 aaa
 aaa
+cUa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dhY
+dih
+diq
+diz
+diH
+diR
+djb
+djj
+djr
+djy
+djF
+djL
+djR
+djX
+dkd
+dkk
+dkr
+dky
+dkI
+dkQ
+dkX
+dle
+dll
+dls
+dlz
+dlG
+dmd
+dmz
+dmV
 aaa
 aaa
 aaa
@@ -106944,48 +110928,40 @@ aoV
 aoV
 aaa
 aaa
+cUa
+aaa
+ddt
+aaa
+cUa
+cVT
+ddH
+aaa
+aaa
+cUa
+aaa
+deH
+dfg
+cuq
+aaa
+aaa
+aaa
+aaa
 aaf
-aaa
-csn
-csD
-cta
-csD
-cua
-aaa
-aaa
-aaa
 aaf
 ctZ
-cui
-cuq
-cuC
-cuO
-cuz
-cvm
-cvt
-cvt
-cvt
-cvL
-cvQ
-cvX
-cvX
-cvX
-cvX
-cva
-cva
-cva
-cva
-cva
-cva
-cva
-cva
-cvx
-cva
-cva
-cva
-cva
-cva
-cva
+ctZ
+ctZ
+ctZ
+ctZ
+aaf
+cUa
+aaf
+cvF
+aaf
+diI
+diS
+aaf
+aaf
 aaf
 aaa
 aaa
@@ -106994,11 +110970,19 @@ aaa
 aaa
 aaa
 aaa
+aaf
+dkz
+aaf
 aaa
 aaa
 aaa
 aaa
 aaa
+aaa
+dlH
+dme
+dmA
+dmW
 aaa
 aaa
 aaa
@@ -107201,61 +111185,61 @@ apQ
 aoV
 aaa
 aaa
-aaf
+cUa
 aaa
-csn
-csD
-csX
-ctg
-cua
-cua
-cua
-cua
-cua
+ddu
+aaa
+cUa
+cVT
+ddI
+ddM
+ddR
+deb
+den
+deI
+dfh
+dfD
+csw
+csw
+csw
+csw
+ctO
 ctZ
 ctZ
-cup
-cuB
-cuN
-cuZ
-cvj
-cvj
-cvj
-cvj
-cvj
-cvP
-cvj
-cvj
-cvj
-cvj
-cva
-cva
-cva
-cva
-cvp
-cwv
-cvr
-cvp
-cvl
-cvr
-cwv
-cvp
-cva
-cva
-cva
+cuo
+cuA
+cuM
+ctZ
+cvk
+cvk
+cvk
+cvk
 aaf
+aaf
+aaf
+aaf
+cvk
+cvk
+cvk
+cvk
+cvk
+cvk
+cvk
+cva
+cva
+cva
+cva
+cva
+cva
+cva
+cva
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dlI
+dmf
+dmB
+dmX
 aaa
 aaa
 aaa
@@ -107458,61 +111442,61 @@ bVw
 bVw
 aaa
 aaa
-aaf
-csD
+cUa
+cUa
 csO
-csD
-czk
-cti
-cua
-cua
-ctw
-ctH
-ctQ
-cuc
-cuj
-cuj
-cuE
-cuQ
-cuj
+cUa
+cUa
+cVT
+aaa
+aaa
+aaa
+dec
+deo
+deJ
+dfi
+cuq
+cEl
+aaa
+aaa
+aaa
+ctN
+ctY
+cuh
+cun
+cuz
+cuL
+cuY
+cvj
+cvs
+cvD
 cvk
-cvw
-cvw
-cvG
-cvM
-cvS
-cvZ
-cvG
-cvw
-cvw
-cvf
-cwh
-cwm
-cwr
-cvp
-cwx
-cwj
-cwu
-cAV
-cAZ
-cvl
-cvl
+cvk
+cvk
+cvk
+cvk
+cvk
+cvX
+cvX
+cvX
+cvX
+cwq
+cwq
 cva
 cva
 cva
+cva
+cva
+cva
+cva
+cva
+cva
+aaf
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dlJ
+dmg
+dmC
+dmY
 aaa
 aaa
 aaa
@@ -107715,63 +111699,63 @@ aaa
 bVw
 aaa
 aaa
+cUa
+aaa
+csO
+aaa
+cUa
+cVT
+aaa
+aaa
+cVT
+ded
+dep
+deK
+dfj
+cuq
+aaa
+aaa
+dgi
+aaa
 aaf
-csD
-csN
-csV
-ctb
-cth
-cua
-ctr
-ctu
-ctG
-ctP
-cub
-cuj
-cur
-cuD
-cuP
-cvc
-cvk
-cvu
-cvu
-cvu
-cvu
-cvR
-cvY
-cwb
-cvu
-cvu
-cva
-cwg
-cwl
-cwr
-cvl
-cww
-cwD
-cvv
-cvv
-cAY
-cBb
-cBd
+ctZ
+cui
+dhj
+cuC
+cuO
+cuz
+cvm
+cvt
+cvt
+cvt
+cvL
+cvQ
+cvX
+cvX
+cvX
+cvX
 cva
 cva
 cva
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cva
+cva
+cva
+cva
+cva
+cvx
+cva
+cva
+cva
+cva
+cva
+cva
+aaf
+dlK
+dmh
+dmD
+dmZ
+dnp
+dnt
 aaa
 aaa
 aaa
@@ -107972,63 +111956,63 @@ aaa
 bVw
 aaa
 aaa
+cUa
+aaa
+csO
+aaa
+cVT
+cVT
+cVT
+cVT
+cVT
+dee
+deq
+deL
+dfk
+cuq
+cua
+cua
+cua
+cua
+cua
+ctZ
+ctZ
+cup
+cuB
+cuN
+cuZ
+cvj
+cvj
+cvj
+cvj
+cvj
+cvP
+cvj
+cvj
+cvj
+cvj
+cva
+cva
+cva
+cva
+cvp
+cwv
+cvr
+cvp
+cvl
+cvr
+cwv
+cvp
+cva
+cva
+cva
 aaf
-csD
-csU
-csW
-ctc
-ctc
-cto
-ctt
-cty
-ctJ
-ctT
-cue
-cul
-cuu
-cuG
-cuS
-cve
-cvo
-cvz
-cvz
-cvI
-cvz
-cvT
-cBS
-cwc
-cvz
-cwd
-cwf
-cwj
-cwo
-cwt
-cwu
-cwA
-cAR
-cAS
-cvv
-cBa
-cBc
-cBe
-cva
-cva
-cva
-cBf
+dlL
+dmi
+dmE
+dna
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dnu
 aaa
 aaa
 aaa
@@ -108229,63 +112213,63 @@ aaa
 bVw
 aaa
 aaa
-aaf
-csD
-ctb
-csV
-ctb
-ctj
-ctk
-cts
-ctx
-ctI
-ctS
-cud
-cuk
-cus
-cuF
-cuR
-cvd
-cvn
-cvy
-cvy
-cvH
-cvy
-cvy
-cvy
-cvy
-cvy
-cvy
-cwe
-cwi
-cwn
-cws
-cwn
-cwz
-cwE
-cvv
-cvv
-cvv
+cUa
+aaa
+csO
+aaa
+cUa
+cUa
+ddJ
+ddN
+ddS
+def
+cEX
+deM
+dfl
+dfE
+cua
+cua
+ctw
+ctH
+ctQ
+cuc
+cuj
+cuj
+cuE
+cuQ
+cuj
+cvk
+cvw
+cvw
+cvG
+cvM
+cvS
+cvZ
+cvG
+cvw
+cvw
+cvf
+cwh
+cwm
+cwr
 cvp
+cwx
+cwj
+cwu
+cAV
+cAZ
+cvl
 cvl
 cva
 cva
 cva
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dlM
+dmj
+dmF
+dnb
+dnq
+dnv
 aaa
 aaa
 aaa
@@ -108486,63 +112470,63 @@ bVw
 bVw
 aaa
 aaa
-aaf
+cUa
+aaa
 csD
-csD
-csD
-csD
+cVT
+aaa
 cti
-ctq
+aaa
+cUa
+ddT
+deg
+der
+deN
+dfm
+dfF
 cua
-ctA
-cuy
-ctV
-cug
+ctr
+ctu
+ctG
+ctP
+cub
 cuj
-cuj
-cuE
-cuU
-cuj
+cur
+cuD
+cuP
+cvc
 cvk
-cvw
-cvw
-cvJ
-cvw
-cvV
-cwa
-cvJ
-cvw
-cvw
-cvb
-cwk
-cwp
+cvu
+cvu
+cvu
+cvu
+cvR
+cvY
+cwb
+cvu
+cvu
+cva
+cwg
+cwl
 cwr
-cvp
-cwC
-cwn
-cAT
-cAW
 cvl
-cvl
-cvl
+cww
+cwD
+cvv
+cvv
+cAY
+cBb
+cBd
 cva
 cva
 cva
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dlN
+dmk
+dmG
+dnc
+cuq
+dnw
 aaa
 aaa
 aaa
@@ -108743,63 +112727,63 @@ apQ
 aaa
 aaa
 aaa
+cUa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-ctp
-cua
-ctz
-ctK
-ctU
-cuf
-cuf
-cuv
-cuH
-cuT
-cvg
-cvj
-cvj
-cvj
-cvj
-cvj
-cvU
-cvj
-cvj
-cvj
-cvj
-cva
-cva
-cva
-cva
-cvp
-cwB
-cvr
-cvp
-cvl
-cvr
-cwB
-cvp
-cva
-cva
-cva
-aaf
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cVT
+ddy
+ddB
+cVT
+cVT
+cVT
+ddU
+deh
+des
+deO
+dfn
+cuz
+cto
+ctt
+cty
+ctJ
+ctT
+cue
+cul
+cuu
+cuG
+cuS
+cve
+cvo
+cvz
+cvz
+cvI
+cvz
+cvT
+cBS
+cwc
+cvz
+cwd
+cwf
+cwj
+cwo
+cwt
+cwu
+dke
+dkl
+dks
+dkA
+dkJ
+dkR
+dkY
+dlf
+dlm
+dlt
+dlA
+dlO
+dml
+dmH
+dnd
+cuq
+dnx
 aaa
 aaa
 aaa
@@ -108996,67 +112980,67 @@ bzs
 apQ
 apQ
 aaa
+cUa
 aaa
 aaa
 aaa
+cUa
+cUa
 aaa
 aaa
 aaa
+ddD
 aaa
-aaa
-aaa
-aaa
-aaf
-cua
-ctF
-ctM
-ctX
-cuf
-cum
-cuw
-cuJ
-cuW
-cvi
-cvq
-cvC
-cvC
-cvC
-cvN
-cvW
-cvX
-cvX
-cvX
-cvX
+cUa
+ddV
+dei
+det
+deP
+dfo
+dfG
+ctk
+cts
+ctx
+ctI
+ctS
+cud
+cuk
+cus
+cuF
+cuR
+cvd
+cvn
+cvy
+cvy
+cvH
+cvy
+cvy
+cvy
+cvy
+cvy
+cvy
+cwe
+cwi
+cwn
+cws
+cwn
+cwz
+cwE
+cvv
+cvv
+cvv
+cvp
+cvl
 cva
 cva
 cva
-cva
-cva
-cva
-cva
-cva
-cvA
-cva
-cva
-cva
-cva
-cva
-cva
-aaf
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dlP
+dmm
+dmI
+dne
+cuq
+dny
 aaa
 aaa
 aaa
@@ -109253,67 +113237,67 @@ ceI
 aaa
 aaa
 aaa
+cUa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaf
+cUa
+cUa
+cUa
+cUa
+cUa
+cUa
+ddK
+ddO
+ddW
+dej
+deu
+deQ
+dfp
+dfH
+ctq
 cua
-ctE
-ctL
-ctW
-cuf
-cum
-cuw
-cuI
-cuV
-cvh
-cvj
-cvB
-cvE
+ctA
+cuy
+ctV
+cug
+cuj
+cuj
+cuE
+cuU
+cuj
 cvk
-cvk
-cvk
-cvk
-cvk
-cvk
-cvX
-cvX
-cvX
-cvX
-cwq
-cwq
+cvw
+cvw
+cvJ
+cvw
+cvV
+cwa
+cvJ
+cvw
+cvw
+cvb
+cwk
+cwp
+cwr
+cvp
+cwC
+cwn
+cAT
+cAW
+cvl
+cvl
+cvl
 cva
 cva
 cva
-cva
-cva
-cva
-cva
-cva
-cva
-aaf
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dlQ
+dmn
+dmJ
+dnf
+dnr
+dnz
 aaa
 aaa
 aaa
@@ -109510,6 +113494,7 @@ cot
 csc
 csm
 aaa
+cUa
 aaa
 aaa
 aaa
@@ -109519,58 +113504,57 @@ aaa
 aaa
 aaa
 aaa
+cUa
 aaa
-aaf
+aaa
+dek
+dev
+deR
+dfq
+dfI
+ctp
 cua
-cua
-cua
-cua
+ctz
+ctK
+ctU
 cuf
 cuf
-cux
-cuK
-cuX
-cuf
-cvk
-cvk
-cvk
-cvk
+cuv
+cuH
+cuT
+cvg
+cvj
+cvj
+cvj
+cvj
+cvj
+cvU
+cvj
+cvj
+cvj
+cvj
+cva
+cva
+cva
+cva
+cvp
+cwB
+cvr
+cvp
+cvl
+cvr
+cwB
+cvp
+cva
+cva
+cva
 aaf
-aaf
-aaf
-aaf
-cvk
-cvk
-cvk
-cvk
-cvk
-cvk
-cvk
-cva
-cva
-cva
-cva
-cva
-cva
-cva
-cva
+dlR
+dmo
+dmK
+dng
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dnA
 aaa
 aaa
 aaa
@@ -109764,70 +113748,70 @@ cmh
 cnd
 cnE
 bPn
-aoV
-aoV
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+apQ
+apQ
+cUa
+cUF
+cUa
+cUF
+cUa
+cUa
+ddm
+ddv
+ddz
+ddC
+ddE
+ddL
+ddP
+ddX
+del
+dew
+deS
+dfr
+cuq
 aaf
-aaf
-aaf
-aaf
-aaf
-aaf
+cua
+ctF
+ctM
+ctX
 cuf
-cuf
-cuf
-cuf
-cuf
+cum
+cuw
+cuJ
+cuW
+cvi
+cvq
+cvC
+cvC
+cvC
+cvN
+cvW
+cvX
+cvX
+cvX
+cvX
+cva
+cva
+cva
+cva
+cva
+cva
+cva
+cva
+cvA
+cva
+cva
+cva
+cva
+cva
+cva
 aaf
-aaa
-aaf
-cvK
-aaf
-aaa
-aaa
-aaf
-aaf
-aaf
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaf
-cAX
-aaf
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dlS
+dmp
+dmL
+dnh
+dns
+dnB
 aaa
 aaa
 aaa
@@ -110026,6 +114010,7 @@ aaa
 aaa
 aaa
 aaa
+cUa
 aaa
 aaa
 aaa
@@ -110037,52 +114022,51 @@ aaa
 aaa
 aaa
 aaa
+dex
+deT
+dfs
+cuq
+aaf
+cua
+ctE
+ctL
+ctW
+cuf
+cum
+cuw
+cuI
+cuV
+cvh
+cvj
+cvB
+cvE
+cvk
+cvk
+cvk
+cvk
+cvk
+cvk
+cvX
+cvX
+cvX
+cvX
+cwq
+cwq
+cva
+cva
+cva
+cva
+cva
+cva
+cva
+cva
+cva
+aaf
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dlT
+dmq
+dmM
+dni
 aaa
 aaa
 aaa
@@ -110283,6 +114267,7 @@ aaa
 aaa
 aaa
 aaa
+cUa
 aaa
 aaa
 aaa
@@ -110294,52 +114279,51 @@ aaa
 aaa
 aaa
 aaa
+dey
+deU
+dft
+cuq
+aaf
+cua
+cua
+cua
+cua
+cuf
+cuf
+cux
+cuK
+cuX
+cuf
+cvk
+cvk
+cvk
+cvk
+aaf
+aaf
+aaf
+aaf
+cvk
+cvk
+cvk
+cvk
+cvk
+cvk
+cvk
+cva
+cva
+cva
+cva
+cva
+cva
+cva
+cva
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dlU
+dmr
+dmN
+dnj
 aaa
 aaa
 aaa
@@ -110540,6 +114524,43 @@ aaa
 aaa
 aaa
 aaa
+cUa
+cUa
+ddj
+cTZ
+ddw
+cTZ
+cTZ
+cTZ
+cTZ
+cTZ
+cTZ
+cTZ
+dez
+deV
+dfu
+cuq
+aaf
+aaf
+dgj
+aaf
+aaf
+aaf
+cuf
+cuf
+cuf
+cuf
+cuf
+aaf
+cUa
+aaf
+cvK
+aaf
+diJ
+diT
+aaf
+aaf
+aaf
 aaa
 aaa
 aaa
@@ -110547,56 +114568,19 @@ aaa
 aaa
 aaa
 aaa
+aaf
+dkB
+aaf
 aaa
 aaa
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dlV
+dms
+dmO
+dnk
 aaa
 aaa
 aaa
@@ -110797,6 +114781,7 @@ aaa
 aaa
 aaa
 aaa
+cUa
 aaa
 aaa
 aaa
@@ -110808,52 +114793,51 @@ aaa
 aaa
 aaa
 aaa
+deA
+deW
+dfv
+dfJ
+dfR
+dfZ
+dgk
+dgt
+dgB
 aaa
 aaa
 aaa
+cUa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dhZ
+dii
+dir
+diA
+diK
+diU
+djc
+djk
+djs
+cAU
+cAU
+cAU
+cAU
+cAU
+cAU
+cAU
+cAU
+cAU
+dkK
+cAU
+cAU
+cAU
+cAU
+cAU
+cAU
+dlW
+dmt
+dmP
+dnl
 aaa
 aaa
 aaa
@@ -111049,6 +115033,12 @@ bzs
 bzs
 bzs
 aaf
+cUa
+cUa
+cUa
+cUa
+cUa
+cUa
 aaa
 aaa
 aaa
@@ -111060,57 +115050,51 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+deB
+deX
+dfw
+dfK
+dfS
+dga
+dgl
+dgu
+dgC
+dgQ
+dgY
+dhk
+dhs
+dhA
+dhI
+dhQ
+dia
+dij
+dis
+diB
+diL
+diV
+djd
+djl
+djt
+djz
+djG
+djM
+djS
+djY
+dkf
+dkm
+dkt
+dkC
+dkL
+dkS
+dkZ
+dlg
+dln
+dlu
+dlB
+dlX
+dmu
+dmQ
+dnm
 aaa
 aaa
 aaa
@@ -111311,6 +115295,7 @@ aaa
 aaa
 aaa
 aaa
+cUa
 aaa
 aaa
 aaa
@@ -111322,52 +115307,51 @@ aaa
 aaa
 aaa
 aaa
+deC
 aaa
+dfx
+dfL
+dfT
+dgb
+dgm
+dgv
+dgD
+dgR
+dgZ
+dhl
+dht
+dhB
+dhJ
+dhR
+dib
+dik
+dit
+diC
+diM
+diW
+dje
+djm
+dju
+djA
+djH
+djN
+djT
+djZ
+dkg
+dkn
+dku
+dkD
+dkM
+dkT
+dla
+dlh
+dlo
+dlv
+dlC
+dlY
+dmv
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dnn
 aaa
 aaa
 aaa
@@ -111568,6 +115552,7 @@ aaa
 aaa
 aaa
 aaa
+cUa
 aaa
 aaa
 aaa
@@ -111579,52 +115564,51 @@ aaa
 aaa
 aaa
 aaa
+deD
+deY
+dfy
+dfM
+dfU
+dgc
+dgn
 aaa
+dgE
+dgS
+dha
+dhm
+dhu
+dhC
+dhK
+dhS
+dic
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+diu
+diD
+diN
+diX
+djf
+djn
+djv
+djB
+djI
+djO
+djU
+dka
+dkh
+dko
+dkv
+dkE
+dkN
+dkU
+dlb
+dli
+dlp
+dlw
+dlD
+dlZ
+dmw
+dmR
+dno
 aaa
 aaa
 aaa
@@ -111825,6 +115809,7 @@ aaa
 aaa
 aaa
 aaa
+cUa
 aaa
 aaa
 aaa
@@ -111842,20 +115827,19 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dgo
+dgw
+dgF
+dgT
+dhb
+dhn
+dhv
+dhD
+dhL
+dhT
+did
+dil
+div
 aaa
 aaa
 aaa
@@ -112082,7 +116066,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cUa
 aaa
 aaa
 aaa
@@ -112339,7 +116323,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cUa
 aaa
 aaa
 aaa
@@ -112596,7 +116580,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cUa
 aaa
 aaa
 aaa
@@ -112853,7 +116837,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cUa
 aaa
 aaa
 aaa
@@ -113110,7 +117094,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cUa
 aaa
 aaa
 aaa
@@ -113367,7 +117351,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cUa
 aaa
 aaa
 aaa
@@ -113624,7 +117608,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cUa
 aaa
 aaa
 aaa
@@ -113881,7 +117865,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cUa
 aaa
 aaa
 aaa
@@ -116411,9 +120395,9 @@ bxP
 bCf
 bvK
 bEs
-dcK
-bHm
 dcL
+bHm
+dcM
 bEs
 bEs
 aaf
