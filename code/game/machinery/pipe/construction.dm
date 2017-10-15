@@ -236,9 +236,7 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 	if(!check_cache[type])
 		check_cache[type] = list()
 	if(!check_cache[type]["[direction]"])
-		check_cache[type]["[direction]"] = new type
-		var/atom/A = check_cache[type]["[direction]"]
-		A.setDir(direction)
+		check_cache[type]["[direction]"] = new type(null, null, direction)
 
 	return check_cache[type]["[direction]"]
 

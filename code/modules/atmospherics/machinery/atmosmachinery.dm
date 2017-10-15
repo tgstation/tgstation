@@ -41,7 +41,9 @@ Pipelines + Other Objects -> Pipe network
 	if(is_type_in_list(src, GLOB.ventcrawl_machinery) && user.ventcrawler)
 		to_chat(user, "<span class='notice'>Alt-click to crawl through it.</span>")
 
-/obj/machinery/atmospherics/New(loc, process = TRUE)
+/obj/machinery/atmospherics/New(loc, process = TRUE, setdir)
+	if(!isnull(setdir))
+		setDir(setdir)
 	if(pipe_flags & PIPING_CARDINAL_AUTONORMALIZE)
 		normalize_cardinal_directions()
 	nodes = new(device_type)

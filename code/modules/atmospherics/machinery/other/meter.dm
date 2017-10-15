@@ -21,7 +21,8 @@
 	return ..()
 
 /obj/machinery/meter/Initialize(mapload, new_piping_layer)
-	target_layer = new_piping_layer
+	if(!isnull(new_piping_layer))
+		target_layer = new_piping_layer
 	SSair.atmos_machinery += src
 	if(mapload && !target)
 		reattach_to_layer()

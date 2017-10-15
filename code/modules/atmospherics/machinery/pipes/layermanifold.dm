@@ -57,14 +57,14 @@
 	var/invis = A.invisibility ? "-f" : ""
 	if(istype(A, /obj/machinery/atmospherics/pipe/layer_manifold))
 		for(var/i = PIPING_LAYER_MIN, i <= PIPING_LAYER_MAX, i++)
-			var/image/I = getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full_long[invis]", get_dir(src, A))
+			var/image/I = getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full_layer_long[invis]", get_dir(src, A))
 			I.pixel_x = (i - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X
 			I.pixel_y = (i - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y
 			I.color = A.color
 			I.layer = layer - 0.01
 			add_overlay(I)
 	else
-		var/image/I = getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full_long[invis]", get_dir(src, A))
+		var/image/I = getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full_layer_long[invis]", get_dir(src, A))
 		I.pixel_x = A.pixel_x
 		I.pixel_y = A.pixel_y
 		I.color = A.color

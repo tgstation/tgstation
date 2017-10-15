@@ -189,6 +189,7 @@
 #define PIPING_ONE_PER_TURF 2 				//can only be built if nothing else with this flag is on the tile already.
 #define PIPING_DEFAULT_LAYER_ONLY 4			//can only exist at PIPING_LAYER_DEFAULT
 #define PIPING_CARDINAL_AUTONORMALIZE 8		//north/south east/west doesn't matter, auto normalize on build.
+#define PIPING_ONE_PER_DIRECTION 16			//PIPING_ONE_PER_TURF but only conflicts if atleast one initialize_direction matches.
 
 #define THERMAL_ENERGY(gas) (gas.temperature * gas.heat_capacity())
 
