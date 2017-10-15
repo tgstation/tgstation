@@ -233,4 +233,4 @@
 	surplus = 30 //Theres a good chance this will end up in surplus crates, so its a great way to add a little spice to any meme round.
 
 /datum/uplink_item/dangerous/guardian
-	exclude_modes = list()
+	player_minimum = 0
