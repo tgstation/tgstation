@@ -430,14 +430,14 @@
 	if(!istype(T))
 		return
 	var/datum/gas_mixture/GM = new
-	ASSERT_GAS("plasma", GM)
+	ADD_GAS(/datum/gas/plasma, GM.gases)
 	if(prob(10))
-		GM.gases["plasma"][MOLES] += 100
+		GM.gases[/datum/gas/plasma][MOLES] += 100
 		GM.temperature = 1500+T0C //should be enough to start a fire
 		T.visible_message("[src] suddenly disgorges a cloud of heated plasma.")
 		qdel(src)
 	else
-		GM.gases["plasma"][MOLES] += 5
+		GM.gases[/datum/gas/plasma][MOLES] += 5
 		GM.temperature = istype(T) ? T.air.return_temperature() : T20C
 		T.visible_message("[src] suddenly disgorges a cloud of plasma.")
 	T.assume_air(GM)
@@ -478,7 +478,7 @@
 	fuel_per_cycle_idle = 10
 	fuel_per_cycle_active = 30
 	power_per_cycle = 50
-	var/rad_per_cycle = 0.3
+	var/rad_per_cycle = 3
 
 /obj/item/mecha_parts/mecha_equipment/generator/nuclear/generator_init()
 	fuel = new /obj/item/stack/sheet/mineral/uranium(src)
@@ -489,4 +489,4 @@
 
 /obj/item/mecha_parts/mecha_equipment/generator/nuclear/process()
 	if(..())
-		radiation_pulse(get_turf(src), 2, 7, rad_per_cycle, 1)
+		radiation_pulse(get_turf(src), rad_per_cycle)

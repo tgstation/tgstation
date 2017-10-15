@@ -112,6 +112,8 @@
 			D.stop_pulling()
 			if(A.a_intent == INTENT_GRAB)
 				add_logs(A, D, "grabbed", addition="aggressively")
+				D.visible_message("<span class='warning'>[A] violently grabs [D]!</span>", \
+				  "<span class='userdanger'>[A] violently grabs you!</span>")
 				A.grab_state = GRAB_AGGRESSIVE //Instant aggressive grab
 			else
 				add_logs(A, D, "grabbed", addition="passively")

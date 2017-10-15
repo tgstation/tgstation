@@ -206,7 +206,8 @@
 				if(A && isturf(A.loc))
 					var/atom/movable/AM = A
 					if(istype(AM, /obj/effect/decal/cleanable))
-						qdel(AM)
+						for(var/obj/effect/decal/cleanable/C in A.loc)
+							qdel(C)
 
 				anchored = FALSE
 				target = null

@@ -85,6 +85,16 @@
 
 /obj/item/projectile/proc/on_hit(atom/target, blocked = FALSE)
 	var/turf/target_loca = get_turf(target)
+	if(!nodamage && (damage_type == BRUTE || damage_type == BURN) && istype(target_loca, /turf/closed/wall) && prob(75))
+		var/turf/closed/wall/W = target_loca
+		var/mutable_appearance/decal = mutable_appearance('icons/effects/effects.dmi', "bullet_hole", TURF_DECAL_LAYER)
+		if(target == original)
+			decal.pixel_x = target.pixel_x + p_x - 16
+			decal.pixel_y = target.pixel_y + p_y - 16
+		else
+			decal.pixel_x = target.pixel_x + rand(2, -2)
+			decal.pixel_y = target.pixel_y + rand(2, -2)
+		W.add_damage_decal(decal)
 	if(!isliving(target))
 		if(impact_effect_type)
 			new impact_effect_type(target_loca, target, src)
@@ -161,26 +171,41 @@
 		if(forcedodge)
 			loc = target_turf
 		return FALSE
-	var/permutation = A.bullet_act(src, def_zone) // searches for return value, could be deleted after run so check A isn't null
+	var/permutation = select_target(A,target_turf) // searches for return value, could be deleted after run so check A isn't null
 	if(permutation == -1 || forcedodge)// the bullet passes through a dense object!
 		loc = target_turf
 		if(A)
 			permutated.Add(A)
 		return FALSE
-	else
-		if(A && A.density && !ismob(A) && !(A.flags_1 & ON_BORDER_1)) //if we hit a dense non-border obj or dense turf then we also hit one of the mobs on that tile.
-			var/list/mobs_list = list()
-			for(var/mob/living/L in target_turf)
-				mobs_list += L
-			if(mobs_list.len)
-				var/mob/living/picked_mob = pick(mobs_list)
-				if(!prehit(picked_mob))
-					return FALSE
-				if(ismob(picked_mob.buckled))
-					picked_mob = picked_mob.buckled
-				picked_mob.bullet_act(src, def_zone)
 	qdel(src)
 	return TRUE
+
+/obj/item/projectile/proc/select_target(atom/A,target_turf)
+	if((A && A.density && !(A.flags_1 & ON_BORDER_1)) && (istype(A,/obj/machinery) || isturf(A))) //if we hit a dense non-border obj or dense turf then we also hit one of the mobs on that tile.
+		var/list/mobs_list = list()
+		var/list/machine_list = list()
+		for(var/mob/living/L in target_turf)
+			mobs_list += L
+		for(var/obj/machinery/m in target_turf)
+			if(m.density)
+				machine_list += m
+		var/permutationbackup
+		if(isturf(A))
+			permutationbackup = A.bullet_act(src, def_zone)		// Just in case the turf can deflect bullets
+		if(mobs_list.len || machine_list.len)
+			var/atom/movable/selected_target
+			if(mobs_list.Find(original) || machine_list.Find(original))
+				selected_target = original
+			else if(mobs_list.len)
+				selected_target = pick(mobs_list)
+			else
+				selected_target = pick(machine_list)
+			if(!prehit(selected_target))
+				return FALSE
+			return selected_target.bullet_act(src, def_zone)
+		return permutationbackup
+	else
+		return A.bullet_act(src, def_zone)
 
 /obj/item/projectile/proc/check_ricochet()
 	if(prob(ricochet_chance))
@@ -213,7 +238,7 @@
 		while(loc)
 			if(paused)
 				next_run = world.time
-				sleep(1)
+				stoplag(1)
 				continue
 
 			if((!( current ) || loc == current))

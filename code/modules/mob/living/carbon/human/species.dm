@@ -66,8 +66,6 @@
 	var/obj/item/organ/lungs/mutantlungs = null
 	var/breathid = "o2"
 
-	//Flight and floating
-	var/override_float = 0
 	var/obj/item/organ/brain/mutant_brain = /obj/item/organ/brain
 	var/obj/item/organ/eyes/mutanteyes = /obj/item/organ/eyes
 	var/obj/item/organ/ears/mutantears = /obj/item/organ/ears
@@ -76,6 +74,7 @@
 
 	var/obj/item/organ/liver/mutantliver
 	var/obj/item/organ/stomach/mutantstomach
+	var/override_float = FALSE
 
 ///////////
 // PROCS //
@@ -238,7 +237,7 @@
 	if(DIGITIGRADE in species_traits)
 		C.Digitigrade_Leg_Swap(FALSE)
 
-	regenerate_organs(C,old_species)		
+	regenerate_organs(C,old_species)
 
 	if(exotic_bloodtype && C.dna.blood_type != exotic_bloodtype)
 		C.dna.blood_type = exotic_bloodtype
@@ -257,6 +256,11 @@
 				C.dropItemToGround(I)
 			else	//Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
 				C.put_in_hands(new mutanthands())
+	
+	if(VIRUSIMMUNE in species_traits)
+		for(var/datum/disease/A in C.viruses)
+			A.cure(FALSE)
+		
 
 /datum/species/proc/on_species_loss(mob/living/carbon/C)
 	if(C.dna.species.exotic_bloodtype)
@@ -966,36 +970,31 @@
 	return 0
 
 /datum/species/proc/handle_mutations_and_radiation(mob/living/carbon/human/H)
+	. = FALSE
+	var/radiation = H.radiation
 
-	if(!(RADIMMUNE in species_traits))
-		if(H.radiation)
-			if (H.radiation > 100)
-				if(!H.IsKnockdown())
-					H.emote("collapse")
-				H.Knockdown(200)
-				to_chat(H, "<span class='danger'>You feel weak.</span>")
-			switch(H.radiation)
-				if(50 to 75)
-					if(prob(5))
-						if(!H.IsKnockdown())
-							H.emote("collapse")
-						H.Knockdown(60)
-						to_chat(H, "<span class='danger'>You feel weak.</span>")
+	if(RADIMMUNE in species_traits)
+		radiation = 0
+		return TRUE
 
-					if(prob(15))
-						if(!( H.hair_style == "Shaved") || !(H.hair_style == "Bald") || (HAIR in species_traits))
-							to_chat(H, "<span class='danger'>Your hair starts to fall out in clumps...</span>")
-							addtimer(CALLBACK(src, .proc/go_bald, H), 50)
+	if(radiation > RAD_MOB_KNOCKDOWN)
+		if(!H.IsKnockdown())
+			H.emote("collapse")
+		H.Knockdown(RAD_KNOCKDOWN_TIME)
+		to_chat(H, "<span class='danger'>You feel weak.</span>")
+	
+	if(radiation > RAD_MOB_MUTATE)
+		if(prob(1))
+			to_chat(H, "<span class='danger'>You mutate!</span>")
+			H.randmutb()
+			H.emote("gasp")
+			H.domutcheck()
 
-				if(75 to 100)
-					if(prob(1))
-						to_chat(H, "<span class='danger'>You mutate!</span>")
-						H.randmutb()
-						H.emote("gasp")
-						H.domutcheck()
-		return 0
-	H.radiation = 0
-	return 1
+	if(radiation > RAD_MOB_HAIRLOSS)
+		if(prob(15))
+			if(!( H.hair_style == "Shaved") || !(H.hair_style == "Bald") || (HAIR in species_traits))
+				to_chat(H, "<span class='danger'>Your hair starts to fall out in clumps...</span>")
+				addtimer(CALLBACK(src, .proc/go_bald, H), 50)
 
 /datum/species/proc/go_bald(mob/living/carbon/human/H)
 	if(QDELETED(H))	//may be called from a timer
@@ -1455,9 +1454,6 @@
 
 	else
 		H.clear_alert("temp")
-
-	// Account for massive pressure differences.  Done by Polymorph
-	// Made it possible to actually have something that can protect against high pressure... Done by Errorage. Polymorph now has an axe sticking from his head for his previous hardcoded nonsense!
 
 	var/pressure = environment.return_pressure()
 	var/adjusted_pressure = H.calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.

@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - bugfix: "Ghosts no longer inherit the movement delay of their former bodies."

@@ -381,7 +381,7 @@
 				initial_matrix = matrix(M.transform)
 				initial_matrix.Translate(-3,0)
 				animate(M, transform = initial_matrix, time = 1, loop = 0)
-		sleep (1)
+		sleep(1)
 	M.lying_fix()
 
 
@@ -428,7 +428,7 @@
 				initial_matrix = matrix(M.transform)
 				initial_matrix.Translate(-3,0)
 				animate(M, transform = initial_matrix, time = 1, loop = 0)
-		sleep (1)
+		sleep(1)
 	M.lying_fix()
 
 

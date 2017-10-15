@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - bugfix: "Internals now properly work if set to 0 pressure, and will prevent breathing gas from the external atmosphere."

@@ -61,6 +61,10 @@
 /obj/structure/holosign/barrier/engineering
 	icon_state = "holosign_engi"
 
+/obj/structure/holosign/barrier/engineering/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_LIGHT_INSULATION)
+
 /obj/structure/holosign/barrier/atmos
 	name = "holo firelock"
 	desc = "A holographic barrier resembling a firelock. Though it does not prevent solid objects from passing through, gas is kept out."

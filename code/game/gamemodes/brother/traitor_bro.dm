@@ -92,7 +92,6 @@
 		team.forge_brother_objectives()
 		for(var/datum/mind/M in team.members)
 			M.add_antag_datum(ANTAG_DATUM_BROTHER, team)
-			modePlayer += M
 	brother_teams += pre_brother_teams
 	return ..()
 

@@ -1,4 +1,0 @@
-author: "Cobby"
-delete-after: True
-changes: 
-  - admin: "Players will now be notified automatically when an admin resolves their ahelp."

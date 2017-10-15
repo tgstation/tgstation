@@ -1,4 +1,4 @@
-#define HIGHLIGHT_DYNAMIC_TRANSIT 1
+#define HIGHLIGHT_DYNAMIC_TRANSIT 0
 #define MAX_TRANSIT_REQUEST_RETRIES 10
 
 SUBSYSTEM_DEF(shuttle)
@@ -67,7 +67,8 @@ SUBSYSTEM_DEF(shuttle)
 			continue
 		supply_packs[P.type] = P
 
-	setup_transit_zone()
+	if(!transit_turfs.len)
+		setup_transit_zone()
 	initial_move()
 #ifdef HIGHLIGHT_DYNAMIC_TRANSIT
 	color_space()
@@ -150,7 +151,7 @@ SUBSYSTEM_DEF(shuttle)
 			break
 
 /datum/controller/subsystem/shuttle/proc/CheckAutoEvac()
-	if(emergencyNoEscape || emergencyNoRecall || !emergency)
+	if(emergencyNoEscape || emergencyNoRecall || !emergency || !SSticker.HasRoundStarted())
 		return
 
 	var/threshold = CONFIG_GET(number/emergency_shuttle_autocall_threshold)
@@ -522,6 +523,7 @@ SUBSYSTEM_DEF(shuttle)
 		if(!M.roundstart_move)
 			continue
 		M.dockRoundstart()
+		M.roundstart_move = FALSE
 		CHECK_TICK
 
 /datum/controller/subsystem/shuttle/Recover()
@@ -531,24 +533,56 @@ SUBSYSTEM_DEF(shuttle)
 		stationary = SSshuttle.stationary
 	if (istype(SSshuttle.transit))
 		transit = SSshuttle.transit
+
+	if (istype(SSshuttle.transit_turfs))
+		transit_turfs = SSshuttle.transit_turfs
+	if (istype(SSshuttle.transit_requesters))
+		transit_requesters = SSshuttle.transit_requesters
+	if (istype(SSshuttle.transit_request_failures))
+		transit_request_failures = SSshuttle.transit_request_failures
+
+	if (istype(SSshuttle.emergency))
+		emergency = SSshuttle.emergency
+	if (istype(SSshuttle.arrivals))
+		arrivals = SSshuttle.arrivals
+	if (istype(SSshuttle.backup_shuttle))
+		backup_shuttle = SSshuttle.backup_shuttle
+
+	if (istype(SSshuttle.emergencyLastCallLoc))
+		emergencyLastCallLoc = SSshuttle.emergencyLastCallLoc
+
+	if (istype(SSshuttle.hostileEnvironments))
+		hostileEnvironments = SSshuttle.hostileEnvironments
+
+	if (istype(SSshuttle.supply))
+		supply = SSshuttle.supply
+
 	if (istype(SSshuttle.discoveredPlants))
 		discoveredPlants = SSshuttle.discoveredPlants
+
+	if (istype(SSshuttle.shoppinglist))
+		shoppinglist = SSshuttle.shoppinglist
 	if (istype(SSshuttle.requestlist))
 		requestlist = SSshuttle.requestlist
 	if (istype(SSshuttle.orderhistory))
 		orderhistory = SSshuttle.orderhistory
-	if (istype(SSshuttle.emergency))
-		emergency = SSshuttle.emergency
-	if (istype(SSshuttle.backup_shuttle))
-		backup_shuttle = SSshuttle.backup_shuttle
-	if (istype(SSshuttle.supply))
-		supply = SSshuttle.supply
-	if (istype(SSshuttle.transit_turfs))
-		transit_turfs = SSshuttle.transit_turfs
+
+	if (istype(SSshuttle.shuttle_loan))
+		shuttle_loan = SSshuttle.shuttle_loan
+
+	if (istype(SSshuttle.shuttle_purchase_requirements_met))
+		shuttle_purchase_requirements_met = SSshuttle.shuttle_purchase_requirements_met
+
+	if (clear_transit)
+		WARNING("The shuttle subsystem crashed and was recovered while clearing transit.")
 
 	centcom_message = SSshuttle.centcom_message
 	ordernum = SSshuttle.ordernum
 	points = SSshuttle.points
+	emergencyNoEscape = SSshuttle.emergencyNoEscape
+	emergencyCallAmount = SSshuttle.emergencyCallAmount
+	shuttle_purchased = SSshuttle.shuttle_purchased
+	lockdown = SSshuttle.lockdown
 
 
 /datum/controller/subsystem/shuttle/proc/is_in_shuttle_bounds(atom/A)

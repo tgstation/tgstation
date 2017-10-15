@@ -1,0 +1,4 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - refactor: "Clockwork scripture now has one progress bar for the entire recital instead of multiple ones for each sentence in the invocation."

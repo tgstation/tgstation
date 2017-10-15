@@ -18,7 +18,7 @@
 	return
 
 /mob/living/proc/spawn_gibs()
-	new /obj/effect/gibspawner/generic(get_turf(src))
+	new /obj/effect/gibspawner/generic(get_turf(src), null, get_static_viruses())
 
 /mob/living/proc/spill_organs()
 	return
@@ -72,6 +72,9 @@
 	update_canmove()
 	med_hud_set_health()
 	med_hud_set_status()
+
+	if (client)
+		client.move_delay = initial(client.move_delay)
 
 	for(var/s in ownedSoullinks)
 		var/datum/soullink/S = s

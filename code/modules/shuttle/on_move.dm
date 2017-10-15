@@ -15,6 +15,10 @@ All ShuttleMove procs go here
 // Only gets called if fromShuttleMove returns true first
 // returns the new move_mode (based on the old)
 /turf/proc/toShuttleMove(turf/oldT, move_mode, obj/docking_port/mobile/shuttle)
+	. = move_mode
+	if(!(. & MOVE_TURF))
+		return
+
 	var/shuttle_dir = shuttle.dir
 	for(var/i in contents)
 		var/atom/movable/thing = i
@@ -40,8 +44,6 @@ All ShuttleMove procs go here
 				step(thing, shuttle_dir)
 			else
 				qdel(thing)
-
-	return move_mode
 
 // Called on the old turf to move the turf data
 /turf/proc/onShuttleMove(turf/newT, turf_type, baseturf_type, rotation, list/movement_force, move_dir)
@@ -85,14 +87,15 @@ All ShuttleMove procs go here
 	if(rotation)
 		shuttleRotate(rotation) //see shuttle_rotate.dm
 	loc = newT
-	if(length(client_mobs_in_contents))
-		update_parallax_contents()
 	return TRUE
 
 // Called on atoms after everything has been moved
 /atom/movable/proc/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir)
 	if(light)
 		update_light()
+
+	update_parallax_contents()
+	
 	return TRUE
 
 /////////////////////////////////////////////////////////////////////////////////////
@@ -160,15 +163,11 @@ All ShuttleMove procs go here
 /obj/machinery/camera/beforeShuttleMove(turf/newT, rotation, move_mode)
 	. = ..()
 	GLOB.cameranet.removeCamera(src)
-	GLOB.cameranet.updateChunk()
 	. |= MOVE_CONTENTS
 
 /obj/machinery/camera/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir)
 	. = ..()
-	if(can_use())
-		GLOB.cameranet.addCamera(src)
-	var/datum/camerachunk/chunk = GLOB.cameranet.getCameraChunk(x, y, z)
-	chunk.hasChanged(TRUE)
+	GLOB.cameranet.addCamera(src)
 
 /obj/machinery/telecomms/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir)
 	. = ..()
@@ -317,7 +316,7 @@ All ShuttleMove procs go here
 	var/turf/T = loc
 	if(level==1)
 		hide(T.intact)
-		
+
 /obj/structure/shuttle/beforeShuttleMove(turf/newT, rotation, move_mode)
 	. = ..()
 	. |= MOVE_CONTENTS

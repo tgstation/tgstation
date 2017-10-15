@@ -77,7 +77,7 @@
 	if(..())
 		return 1
 	else if(mybag)
-		mybag.loc = get_turf(user)
+		mybag.forceMove(get_turf(user))
 		user.put_in_hands(mybag)
 		mybag = null
 		update_icon()
