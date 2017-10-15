@@ -1,0 +1,4 @@
+author: "Kor/Thefastfoodguy"
+delete-after: True
+changes: 
+  - rscadd: "Alt+clicking on an airlock will now send a request to the AI to open it. The door must be on camera for this to work."
