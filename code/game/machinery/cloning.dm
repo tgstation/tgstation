@@ -163,7 +163,7 @@
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
 
 	if(clonemind.changeling)
-		var/obj/item/organ/brain/B = H.getorganslot("brain")
+		var/obj/item/organ/brain/B = H.getorganslot(ORGAN_SLOT_BRAIN)
 		B.vital = FALSE
 		B.decoy_override = TRUE
 
