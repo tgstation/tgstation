@@ -444,5 +444,5 @@
 
 /mob/living/simple_animal/hostile/consider_wakeup()
 	..()
-	if(AIStatus == SA_IDLE && FindTarget(ListTargets(), 1))
+	if(AIStatus == AI_IDLE && FindTarget(ListTargets(), 1))
 		toggle_active()

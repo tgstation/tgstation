@@ -557,6 +557,18 @@
 		GLOB.simple_animals[AI_ON] += src
 		AIStatus = AI_ON
 
+/mob/living/simple_animal/proc/toggle_off()
+	if (AIStatus != AI_OFF)
+		GLOB.simple_animals[AIStatus] -= src
+		GLOB.simple_animals[AI_OFF] += src
+		AIStatus = AI_OFF
+
+/mob/living/simple_animal/proc/toggle_initial()
+	if (AIStatus != initial(AIStatus))
+		GLOB.simple_animals[AIStatus] -= src
+		GLOB.simple_animals[initial(AIStatus)] += src
+		AIStatus = initial(AIStatus)
+
 /mob/living/simple_animal/proc/consider_wakeup()
 	if (pulledby || shouldwakeup)
 		toggle_active()
