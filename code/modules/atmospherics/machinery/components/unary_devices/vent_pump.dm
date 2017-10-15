@@ -235,6 +235,9 @@
 	if("reset_external_pressure" in signal.data)
 		external_pressure_bound = ONE_ATMOSPHERE
 
+	if("reset_internal_pressure" in signal.data)
+		internal_pressure_bound = 0
+
 	if("adjust_internal_pressure" in signal.data)
 		internal_pressure_bound = Clamp(internal_pressure_bound + text2num(signal.data["adjust_internal_pressure"]),0,ONE_ATMOSPHERE*50)
 

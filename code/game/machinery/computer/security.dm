@@ -23,6 +23,11 @@
 
 	light_color = LIGHT_COLOR_RED
 
+/obj/machinery/computer/secure_data/examine(mob/user)
+	..()
+	if(scan)
+		to_chat(user, "<span class='notice'>Alt-click to eject the ID card.</span>")
+
 /obj/machinery/computer/secure_data/syndie
 	icon_keyboard = "syndie_key"
 
@@ -41,6 +46,8 @@
 				return
 			scan = O
 			to_chat(user, "<span class='notice'>You insert [O].</span>")
+			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+			updateUsrDialog()
 		else
 			to_chat(user, "<span class='warning'>There's already an ID card in the console.</span>")
 	else
@@ -301,15 +308,7 @@ What a mess.*/
 				active2 = null
 
 			if("Confirm Identity")
-				if(scan)
-					usr.put_in_hands(scan)
-					scan = null
-				else
-					var/obj/item/I = usr.is_holding_item_of_type(/obj/item/card/id)
-					if(I)
-						if(!usr.transferItemToLoc(I, src))
-							return
-						scan = I
+				eject_id(usr)
 
 			if("Log Out")
 				authenticated = null
@@ -790,3 +789,20 @@ What a mess.*/
 					if(!record2 || record2 == active2)
 						return 1
 	return 0
+
+/obj/machinery/computer/secure_data/AltClick(mob/user)
+	if(user.canUseTopic(src) && scan)
+		eject_id(user)
+
+/obj/machinery/computer/secure_data/proc/eject_id(mob/user)
+	if(scan)
+		user.put_in_hands(scan)
+		scan = null
+		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+	else //switching the ID with the one you're holding
+		var/obj/item/I = user.is_holding_item_of_type(/obj/item/card/id)
+		if(I)
+			if(!user.transferItemToLoc(I, src))
+				return
+			scan = I
+			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)

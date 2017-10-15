@@ -24,8 +24,10 @@
 		synthesizing = TRUE
 		to_chat(owner, "<span class='notice'>You feel less hungry...</span>")
 		owner.nutrition += 50
-		sleep(50)
-		synthesizing = FALSE
+		addtimer(CALLBACK(src, .proc/synth_cool), 50)
+
+/obj/item/organ/cyberimp/chest/nutriment/proc/synth_cool()
+	synthesizing = FALSE
 
 /obj/item/organ/cyberimp/chest/nutriment/emp_act(severity)
 	if(!owner)

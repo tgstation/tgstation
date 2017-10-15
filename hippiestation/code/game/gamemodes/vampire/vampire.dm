@@ -69,8 +69,7 @@
 
 /datum/game_mode/vampire/post_setup()
 	for(var/datum/mind/vamp in pre_vamps)
-		spawn(rand(10,100))
-			vamp.add_antag_datum(ANTAG_DATUM_VAMPIRE)
+		addtimer(CALLBACK(vamp, /datum/mind.proc/add_antag_datum, ANTAG_DATUM_VAMPIRE), rand(10,100))
 	..()
 	return TRUE
 

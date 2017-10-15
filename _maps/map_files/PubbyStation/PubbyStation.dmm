@@ -2788,7 +2788,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
 "aip" = (
-/obj/structure/closet/bombcloset,
+/obj/structure/closet/bombcloset/security,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)

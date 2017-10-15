@@ -102,7 +102,8 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/mass_zombie_cure,
 	/client/proc/polymorph_all,
 	/client/proc/show_tip,
-	/client/proc/smite
+	/client/proc/smite,
+	/client/proc/spawn_floor_cluwne
 	))
 GLOBAL_PROTECT(admin_verbs_spawn)
 GLOBAL_LIST_INIT(admin_verbs_spawn, list(/datum/admins/proc/spawn_atom, /client/proc/respawn_character))

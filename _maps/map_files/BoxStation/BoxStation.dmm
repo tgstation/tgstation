@@ -869,7 +869,7 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
 "aco" = (
-/obj/structure/closet/bombcloset,
+/obj/structure/closet/bombcloset/security,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
 "acp" = (
@@ -37932,6 +37932,9 @@
 "bKh" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
+	},
+/obj/machinery/camera/all{
+	c_tag = "Toxins Test"
 	},
 /turf/open/floor/plating/airless,
 /area/science/test_area)

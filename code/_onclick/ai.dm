@@ -150,7 +150,7 @@
 	if(emagged)
 		return
 	if(!secondsElectrified)
-		// permenant shock
+		// permanent shock
 		Topic("aiEnable=6", list("aiEnable"="6"), 1) // 1 meaning no window (consistency!)
 	else
 		// disable/6 is not in Topic; disable/5 disables both temporary and permenant shock
