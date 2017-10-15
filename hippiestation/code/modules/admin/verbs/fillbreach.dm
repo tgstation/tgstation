@@ -25,13 +25,4 @@
 /client/proc/cleanair(var/wrange)
 	for(var/turf/open/T in range(wrange))
 		if(T.air)
-			var/datum/gas_mixture/A = T.air
-			if(A)
-				A.gases.Cut()
-				if(TRUE)
-					ADD_GAS("o2", A.gases)
-				if (TRUE)
-					ADD_GAS("n2", A.gases)
-				A.gases["o2"][MOLES] = 22
-				A.gases["n2"][MOLES] = 82
-				A.temperature = 293.15
+			T.air.parse_gas_string("o2=22;n2=82;TEMP=293.15")
