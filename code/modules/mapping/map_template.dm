@@ -26,8 +26,11 @@
 	var/list/obj/structure/cable/cables = list()
 	var/list/atom/atoms = list()
 
-	for(var/L in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
-	                   locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
+	var/list/turfs = block(	locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
+							locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ]))
+	var/list/border = block(locate(bounds[MAP_MINX]-1, bounds[MAP_MINY]-1, bounds[MAP_MINZ]),
+							locate(bounds[MAP_MAXX]+1, bounds[MAP_MAXY]+1, bounds[MAP_MAXZ])) - turfs
+	for(var/L in turfs)
 		var/turf/B = L
 		atoms += B
 		for(var/A in B)
@@ -37,6 +40,9 @@
 				continue
 			if(istype(A, /obj/machinery/atmospherics))
 				atmos_machines += A
+	for(var/L in border)
+		var/turf/T = L
+		L.air_update_turf(TRUE) //calculate adjacent turfs along the border to prevent runtimes
 
 	SSatoms.InitializeAtoms(atoms)
 	SSmachines.setup_template_powernets(cables)
@@ -74,7 +80,7 @@
 
 	if(!SSmapping.loading_ruins) //Will be done manually during mapping ss init
 		repopulate_sorted_areas()
-	
+
 	//initialize things that are normally initialized after map load
 	initTemplateBounds(bounds)
 
