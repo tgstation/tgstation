@@ -1,9 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - bugfix: "Fixes camera mobs being considered a target by radiation"
-  - bugfix: "Cables can no longer be contaminated as well"
-  - balance: "Buffs radiation cleansing chems"
-  - balance: "Toxin damage per tick from radiation is halved"
-  - admin: "Contaminated objects keep track of what contaminated them"
-  - admin: "Radiation pulses over 3000 are logged now"

@@ -1,5 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - code_imp: "Fixed dusting code, supermatter-suicides no longer spam the runtime logs."
-  - code_imp: "Fixed some initialize paths."
