@@ -26,7 +26,29 @@
 	var/fire_mode = PCANNON_FIREALL
 	var/automatic = FALSE
 	var/clumsyCheck = TRUE
+	var/list/allowed_typecache		//Leave as null to allow all.
+	var/charge_amount = 1
+	var/charge_ticks = 1
+	var/charge_tick = 0
+	var/charge_type
 	trigger_guard = TRIGGER_GUARD_NORMAL
+
+
+/obj/item/pneumatic_cannon/Initialize()
+	. = ..()
+	if(selfcharge)
+		init_charge()
+
+/obj/item/pneumatic_cannon/proc/init_charge()	//wrapper so it can be vv'd easier
+	START_PROCESSING(SSobj, src)
+
+/obj/item/pneumatic_cannon/process()
+	if(++charge_tick >= charge_ticks)
+		fill_with_type(/obj/item/reagent_containers/food/snacks/pie/cream, charge_amount)
+
+/obj/item/pneumatic_cannon/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
 
 /obj/item/pneumatic_cannon/CanItemAutoclick()
 	return automatic
@@ -75,6 +97,10 @@
 		load_item(IW, user)
 
 /obj/item/pneumatic_cannon/proc/can_load_item(obj/item/I, mob/user)
+	if(!isnull(allowed_typecache) && !allowed_typecache[I.type])
+		if(user)
+			to_chat(user, "<span class='warning'>\The [src] won't fit [I]!</span>")
+		return
 	if((loadedWeightClass + I.w_class) > maxWeightClass)	//Only make messages if there's a user
 		if(user)
 			to_chat(user, "<span class='warning'>\The [I] won't fit into \the [src]!</span>")
@@ -234,27 +260,12 @@
 	maxWeightClass = 150	//50 pies. :^)
 	clumsyCheck = FALSE
 
-/obj/item/pneumatic_cannon/pie/can_load_item(obj/item/I, mob/user)
-	if(istype(I, /obj/item/reagent_containers/food/snacks/pie))
-		return ..()
-	to_chat(user, "<span class='warning'>[src] only accepts pies!</span>")
-	return FALSE
-
+/obj/item/pneumatic_cannon/pie/Initialize()
+	. = ..()
+	allowed_typecache = typecacheof(/obj/item/reagent_containers/food/snacks/pie)
+	
 /obj/item/pneumatic_cannon/pie/selfcharge
 	automatic = TRUE
-	var/charge_amount = 1
-	var/charge_ticks = 1
-	var/charge_tick = 0
+	selfcharge = TRUE
+	charge_type = /obj/item/reagent_containers/food/snacks/pie/cream
 	maxWeightClass = 60	//20 pies.
-
-/obj/item/pneumatic_cannon/pie/selfcharge/Initialize()
-	. = ..()
-	START_PROCESSING(SSobj, src)
-
-/obj/item/pneumatic_cannon/pie/selfcharge/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
-/obj/item/pneumatic_cannon/pie/selfcharge/process()
-	if(++charge_tick >= charge_ticks)
-		fill_with_type(/obj/item/reagent_containers/food/snacks/pie/cream, charge_amount)
