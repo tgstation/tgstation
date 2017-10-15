@@ -311,7 +311,7 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/update_inv_head()
 	..()
 	update_mutant_bodyparts()
-	if(head)
+	if(overlays_standing[HEAD_LAYER])
 		var/mutable_appearance/head_overlay = overlays_standing[HEAD_LAYER]
 		remove_overlay(HEAD_LAYER)
 		if(OFFSET_HEAD in dna.species.offset_features)
@@ -399,24 +399,26 @@ There are several things that need to be remembered:
 
 /mob/living/carbon/human/update_inv_wear_mask()
 	..()
-	var/mutable_appearance/mask_overlay = overlays_standing[FACEMASK_LAYER]
-	remove_overlay(FACEMASK_LAYER)
-	if(OFFSET_FACEMASK in dna.species.offset_features)
-		mask_overlay.pixel_x += dna.species.offset_features[OFFSET_FACEMASK][1]
-		mask_overlay.pixel_y += dna.species.offset_features[OFFSET_FACEMASK][2]
-		overlays_standing[FACEMASK_LAYER] = mask_overlay
-	apply_overlay(FACEMASK_LAYER)
+	if(overlays_standing[FACEMASK_LAYER])
+		var/mutable_appearance/mask_overlay = overlays_standing[FACEMASK_LAYER]
+		remove_overlay(FACEMASK_LAYER)
+		if(OFFSET_FACEMASK in dna.species.offset_features)
+			mask_overlay.pixel_x += dna.species.offset_features[OFFSET_FACEMASK][1]
+			mask_overlay.pixel_y += dna.species.offset_features[OFFSET_FACEMASK][2]
+			overlays_standing[FACEMASK_LAYER] = mask_overlay
+		apply_overlay(FACEMASK_LAYER)
 	update_mutant_bodyparts() //e.g. upgate needed because mask now hides lizard snout
 
 /mob/living/carbon/human/update_inv_back()
 	..()
-	var/mutable_appearance/back_overlay = overlays_standing[BACK_LAYER]
-	remove_overlay(BACK_LAYER)
-	if(OFFSET_BACK in dna.species.offset_features)
-		back_overlay.pixel_x += dna.species.offset_features[OFFSET_BACK][1]
-		back_overlay.pixel_y += dna.species.offset_features[OFFSET_BACK][2]
-		overlays_standing[BACK_LAYER] = back_overlay
-	apply_overlay(BACK_LAYER)
+	if(overlays_standing[BACK_LAYER])
+		var/mutable_appearance/back_overlay = overlays_standing[BACK_LAYER]
+		remove_overlay(BACK_LAYER)
+		if(OFFSET_BACK in dna.species.offset_features)
+			back_overlay.pixel_x += dna.species.offset_features[OFFSET_BACK][1]
+			back_overlay.pixel_y += dna.species.offset_features[OFFSET_BACK][2]
+			overlays_standing[BACK_LAYER] = back_overlay
+		apply_overlay(BACK_LAYER)
 
 /mob/living/carbon/human/update_inv_legcuffed()
 	remove_overlay(LEGCUFF_LAYER)
