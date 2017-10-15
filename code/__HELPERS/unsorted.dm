@@ -517,6 +517,18 @@ recursive_depth is useful if you only want a turf and everything on it (recursiv
 		var/atom/thing = contents[i] 
 		thing.GetAllContents(output, recursive_depth-1) 
 
+/atom/proc/GetAllContentsIgnoring(list/output = list(), recursive_depth = INFINITY, list/ignore_typecache)
+	if(!islist(ignore_typecache))	//why use this proc??
+		return GetAllContents(output, recursive_depth)
+	. = output
+	if(!recursive_depth)
+		return
+	for(var/i in 1 to contents.len)
+		var/atom/thing = contents[i]
+		if(ignore_typecache[thing.type])
+			continue
+		thing.GetAllContentsIgnoring(output, recursive_depth, ignore_typecache)
+
 //Step-towards method of determining whether one atom can see another. Similar to viewers()
 /proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
 	var/turf/current = get_turf(source)
