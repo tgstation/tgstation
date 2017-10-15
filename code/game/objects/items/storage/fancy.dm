@@ -29,8 +29,7 @@
 
 /obj/item/storage/fancy/update_icon(itemremoved = 0)
 	if(fancy_open)
-		var/total_contents = src.contents.len - itemremoved
-		icon_state = "[icon_type]box[total_contents]"
+		icon_state = "[icon_type]box[src.contents.len]"
 	else
 		icon_state = "[icon_type]box"
 
