@@ -51,8 +51,7 @@
 /mob/dead/observer/CtrlClickOn(atom/A)
 	if(isliving(A))
 		var/mob/living/target = A
-		var/target_possessable = target.ondemand_possessable
-		if(isnum(target_possessable) && target_possessable > 0)
+		if(target.ondemand_possessable)
 			ondemand_possess(target)
 			return
 	..()

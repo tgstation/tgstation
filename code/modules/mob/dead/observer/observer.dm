@@ -778,16 +778,14 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		change_mob_type( /mob/living/carbon/human , null, null, TRUE) //always delmob, ghosts shouldn't be left lingering
 
 /mob/dead/observer/proc/ondemand_possess(mob/living/target)
-	var/possessable = target.ondemand_possessable
-	if(!isnum(possessable) || possessable <= 0)
+	if(!target.ondemand_possessable)
 		return
 	var/original_key = target.key
 	var/control_message = control_mob_message(target)
 	var/confirmation = tgalert(src, control_message, "[target] can be possessed", "Yes", "No", Timeout=FALSE)
 	if(confirmation == "Yes" && !QDELETED(target))
 		if(target.key == original_key)
-			possessable = target.ondemand_possessable
-			if(isnum(possessable) && possessable > 0)
+			if(target.ondemand_possessable)
 				to_chat(target, "<span class='ghostalert'>Your mob has been taken over by a ghost!</span>")
 				message_admins("[key_name_admin(src)] has taken control of ([key_name_admin(target)])")
 				target.ghostize(0)
@@ -802,8 +800,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	. = ..()
 	if(isliving(A))
 		var/mob/living/L = A
-		var/L_possessable = L.ondemand_possessable
-		if(isnum(L_possessable) && L_possessable > 0)
+		if(L.ondemand_possessable)
 			to_chat(src, "<span class='ghostalert'>[L.p_they(TRUE)] can be possessed! Ctrl-click to possess [L.p_them()].<b></span>")
 
 /mob/dead/observer/examine(mob/user)
