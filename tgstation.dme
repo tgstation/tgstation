@@ -257,10 +257,7 @@
 #include "code\datums\world_topic.dm"
 #include "code\datums\actions\flightsuit.dm"
 #include "code\datums\actions\ninja.dm"
-<<<<<<< b1e43efec3647831bbed42f5304cbe82ed0478a2
-=======
 #include "code\datums\antagonists\abductor.dm"
->>>>>>> unifies file names
 #include "code\datums\antagonists\antag_datum.dm"
 #include "code\datums\antagonists\brother.dm"
 #include "code\datums\antagonists\clockcult.dm"
