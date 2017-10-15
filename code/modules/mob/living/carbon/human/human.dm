@@ -691,7 +691,7 @@
 
 
 /mob/living/carbon/human/wash_cream()
-	if (creamed == TRUE) //clean both to prevent a rare bug
+	if(creamed) //clean both to prevent a rare bug
 		cut_overlay(mutable_appearance('icons/effects/creampie.dmi', "creampie_lizard"))
 		cut_overlay(mutable_appearance('icons/effects/creampie.dmi', "creampie_human"))
 		creamed = FALSE
