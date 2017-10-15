@@ -82,7 +82,6 @@
 #include "code\__DEFINES\~hippie_defines\antagonists.dm"
 #include "code\__DEFINES\~hippie_defines\atmospherics.dm"
 #include "code\__DEFINES\~hippie_defines\atom_hud.dm"
-#include "code\__DEFINES\~hippie_defines\cinematics.dm"
 #include "code\__DEFINES\~hippie_defines\dna.dm"
 #include "code\__DEFINES\~hippie_defines\mobs.dm"
 #include "code\__HELPERS\_lists.dm"
