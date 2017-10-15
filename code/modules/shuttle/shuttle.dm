@@ -175,7 +175,7 @@
 
 //return first-found touching dockingport
 /obj/docking_port/proc/get_docked()
-	return null
+	return locate(/obj/docking_port/stationary) in loc
 
 /obj/docking_port/proc/getDockedId()
 	var/obj/docking_port/P = get_docked()
@@ -192,8 +192,6 @@
 	var/list/baseturf_cache
 
 	var/last_dock_time
-
-	var/can_move_docking_ports_from = TRUE
 
 /obj/docking_port/stationary/Initialize(mapload)
 	. = ..()
@@ -274,8 +272,6 @@
 
 	var/obj/docking_port/stationary/transit/assigned_transit
 
-	var/obj/docking_port/stationary/last_docked_at
-
 	var/launch_status = NOLAUNCH
 
 	var/list/movement_force = list("KNOCKDOWN" = 3, "THROW" = 0)
@@ -288,6 +284,7 @@
 	var/engine_coeff = 1 //current engine coeff
 	var/current_engines = 0 //current engine power
 	var/initial_engines = 0 //initial engine power
+	var/can_move_docking_ports = FALSE //if this shuttle can move docking ports other than the one it is docked at
 
 /obj/docking_port/mobile/proc/register()
 	SSshuttle.mobile += src
@@ -325,11 +322,6 @@
 	#ifdef DOCKING_PORT_HIGHLIGHT
 	highlight("#0f0")
 	#endif
-
-/obj/docking_port/mobile/get_docked()
-	if(last_docked_at)
-		return last_docked_at
-	return locate(/obj/docking_port/stationary) in loc
 
 //this is a hook for custom behaviour. Maybe at some point we could add checks to see if engines are intact
 /obj/docking_port/mobile/proc/canMove()
@@ -521,7 +513,6 @@
 			return DOCKING_IMMOBILIZED
 
 	var/obj/docking_port/stationary/old_dock = get_docked()
-	last_docked_at = new_dock
 	var/underlying_turf_type = /turf/open/space //The turf that gets placed under where the shuttle moved from
 	var/underlying_baseturf_type = /turf/open/space //The baseturf that the gets assigned to the turf_type above
 	var/underlying_area_type = /area/space //The area that gets placed under where the shuttle moved from
@@ -610,7 +601,7 @@
 				var/atom/movable/moving_atom = thing
 				if(moving_atom.loc != oldT) //fix for multi-tile objects
 					continue
-				moving_atom.onShuttleMove(newT, oldT, rotation, movement_force, movement_direction, old_dock)//atoms
+				moving_atom.onShuttleMove(newT, oldT, rotation, movement_force, movement_direction, old_dock, src)//atoms
 				moved_atoms += moving_atom
 		if(move_mode & MOVE_TURF)
 			oldT.onShuttleMove(newT, underlying_turf_type, underlying_baseturf_type, rotation, movement_force, movement_direction)//turfs
@@ -930,8 +921,5 @@
 
 /obj/docking_port/mobile/emergency/on_emergency_dock()
 	return
-
-/obj/docking_port/stationary/custom_placed
-	can_move_docking_ports_from = FALSE
 
 #undef DOCKING_PORT_HIGHLIGHT
