@@ -1,0 +1,5 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - bugfix: "Directional windows shouldn't leak air anymore"
+  - tweak: "Windows only block air while anchored"
