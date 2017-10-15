@@ -1,4 +1,0 @@
-author: "HonkBot"
-delete-after: True
-changes: 
-  - rscadd: "Alt-clicking on a computer now ejects the ID card inside it."
