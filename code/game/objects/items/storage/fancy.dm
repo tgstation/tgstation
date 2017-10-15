@@ -27,7 +27,7 @@
 	for(var/i = 1 to storage_slots)
 		new spawn_type(src)
 
-/obj/item/storage/fancy/update_icon(itemremoved = 0)
+/obj/item/storage/fancy/update_icon()
 	if(fancy_open)
 		icon_state = "[icon_type]box[src.contents.len]"
 	else
