@@ -37933,6 +37933,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/machinery/camera/all{
+	c_tag = "Toxins Test"
+	},
 /turf/open/floor/plating/airless,
 /area/science/test_area)
 "bKi" = (
