@@ -55,8 +55,8 @@
 			meeseeks.alpha = 0
 			meeseeks.forceMove(get_turf(user))
 			var/datum/species/meeseeks/SM = new
-			meeseeks.hardset_dna(null, null, "Mr. Meeseeks", null, SM)
 			SM.master = user
+			meeseeks.hardset_dna(null, null, "Mr. Meeseeks", null, SM)
 			meeseeks.set_cloned_appearance()
 			meeseeks.job = "Mr. Meeseeks"
 			new /obj/effect/cloud(get_turf(user))
