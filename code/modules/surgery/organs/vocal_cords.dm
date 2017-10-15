@@ -253,6 +253,7 @@
 	var/static/regex/honk_words = regex("ho+nk") //hooooooonk
 	var/static/regex/multispin_words = regex("like a record baby|right round")
 
+	var/i = 0
 	//STUN
 	if(findtext(message, stun_words))
 		cooldown = COOLDOWN_STUN
@@ -362,28 +363,30 @@
 		cooldown = COOLDOWN_MEME
 		for(var/V in listeners)
 			var/mob/living/L = V
+			var/text = ""
 			if(is_devil(L))
 				var/datum/antagonist/devil/devilinfo = is_devil(L)
-				L.say("[devilinfo.truename]")
+				text = devilinfo.truename
 			else
-				L.say("[L.real_name]")
-			sleep(5) //So the chat flows more naturally
+				text = L.real_name
+			addtimer(CALLBACK(L, /atom/movable/proc/say, text), 5 * i)
+			i++
 
 	//SAY MY NAME
 	else if((findtext(message, saymyname_words)))
 		cooldown = COOLDOWN_MEME
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.say("[user.name]!") //"Unknown!"
-			sleep(5) //So the chat flows more naturally
+			addtimer(CALLBACK(L, /atom/movable/proc/say, user.name), 5 * i)
+			i++
 
 	//KNOCK KNOCK
 	else if((findtext(message, knockknock_words)))
 		cooldown = COOLDOWN_MEME
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.say("Who's there?")
-			sleep(5) //So the chat flows more naturally
+			addtimer(CALLBACK(L, /atom/movable/proc/say, "Who's there?"), 5 * i)
+			i++
 
 	//STATE LAWS
 	else if((findtext(message, statelaws_words)))
@@ -403,11 +406,10 @@
 			direction = WEST
 		else if(findtext(message, right_words))
 			direction = EAST
-		for(var/i=1, i<=(5*power_multiplier), i++)
+		for(var/iter in 1 to 5 * power_multiplier)
 			for(var/V in listeners)
 				var/mob/living/L = V
-				step(L, direction ? direction : pick(GLOB.cardinals))
-			sleep(10)
+				addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, L, direction? direction : pick(GLOB.cardinals)), 10 * (iter - 1))
 
 	//WALK
 	else if((findtext(message, walk_words)))
@@ -429,33 +431,33 @@
 	else if((findtext(message, helpintent_words)))
 		cooldown = COOLDOWN_MEME
 		for(var/mob/living/carbon/human/H in listeners)
-			H.a_intent_change(INTENT_HELP)
-			H.click_random_mob()
-			sleep(2) //delay to make it feel more natural
+			addtimer(CALLBACK(H, /mob/verb/a_intent_change, INTENT_HELP), i * 2)
+			addtimer(CALLBACK(H, /mob/proc/click_random_mob), i * 2)
+			i++
 
 	//DISARM INTENT
 	else if((findtext(message, disarmintent_words)))
 		cooldown = COOLDOWN_MEME
 		for(var/mob/living/carbon/human/H in listeners)
-			H.a_intent_change(INTENT_DISARM)
-			H.click_random_mob()
-			sleep(2) //delay to make it feel more natural
+			addtimer(CALLBACK(H, /mob/verb/a_intent_change, INTENT_DISARM), i * 2)
+			addtimer(CALLBACK(H, /mob/proc/click_random_mob), i * 2)
+			i++
 
 	//GRAB INTENT
 	else if((findtext(message, grabintent_words)))
 		cooldown = COOLDOWN_MEME
 		for(var/mob/living/carbon/human/H in listeners)
-			H.a_intent_change(INTENT_GRAB)
-			H.click_random_mob()
-			sleep(2) //delay to make it feel more natural
+			addtimer(CALLBACK(H, /mob/verb/a_intent_change, INTENT_GRAB), i * 2)
+			addtimer(CALLBACK(H, /mob/proc/click_random_mob), i * 2)
+			i++
 
 	//HARM INTENT
 	else if((findtext(message, harmintent_words)))
 		cooldown = COOLDOWN_MEME
 		for(var/mob/living/carbon/human/H in listeners)
-			H.a_intent_change(INTENT_HARM)
-			H.click_random_mob()
-			sleep(2) //delay to make it feel more natural
+			addtimer(CALLBACK(H, /mob/verb/a_intent_change, INTENT_HARM), i * 2)
+			addtimer(CALLBACK(H, /mob/proc/click_random_mob), i * 2)
+			i++
 
 	//THROW/CATCH
 	else if((findtext(message, throwmode_words)))
@@ -475,8 +477,8 @@
 		cooldown = COOLDOWN_MEME
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.say(pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage"))
-			sleep(5) //So the chat flows more naturally
+			addtimer(CALLBACK(L, /atom/movable/proc/say, pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage")), 5 * i)
+			i++
 
 	//GET UP
 	else if((findtext(message, getup_words)))
@@ -511,8 +513,8 @@
 		cooldown = COOLDOWN_MEME
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.emote("dance")
-			sleep(5) //So the chat flows more naturally
+			addtimer(CALLBACK(L, /mob/living/.proc/emote, "dance"), 5 * i)
+			i++
 
 	//JUMP
 	else if((findtext(message, jump_words)))
@@ -520,33 +522,33 @@
 		for(var/V in listeners)
 			var/mob/living/L = V
 			if(prob(25))
-				L.say("HOW HIGH?!!")
-			L.emote("jump")
-			sleep(5) //So the chat flows more naturally
+				addtimer(CALLBACK(L, /atom/movable/proc/say, "HOW HIGH?!!"), 5 * i)
+			addtimer(CALLBACK(L, /mob/living/.proc/emote, "jump"), 5 * i)
+			i++
 
 	//SALUTE
 	else if((findtext(message, salute_words)))
 		cooldown = COOLDOWN_MEME
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.emote("salute")
-			sleep(5) //So the chat flows more naturally
+			addtimer(CALLBACK(L, /mob/living/.proc/emote, "salute"), 5 * i)
+			i++
 
 	//PLAY DEAD
 	else if((findtext(message, deathgasp_words)))
 		cooldown = COOLDOWN_MEME
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.emote("deathgasp")
-			sleep(5) //So the chat flows more naturally
+			addtimer(CALLBACK(L, /mob/living/.proc/emote, "deathgasp"), 5 * i)
+			i++
 
 	//PLEASE CLAP
 	else if((findtext(message, clap_words)))
 		cooldown = COOLDOWN_MEME
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.emote("clap")
-			sleep(5) //So the chat flows more naturally
+			addtimer(CALLBACK(L, /mob/living/.proc/emote, "clap"), 5 * i)
+			i++
 
 	//HONK
 	else if((findtext(message, honk_words)))
