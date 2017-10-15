@@ -471,8 +471,7 @@
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
-/obj/machinery/reagentgrinder{
-	desc = "Used to grind things up into raw materials and liquids.";
+/obj/machinery/reagentgrinder/materials{
 	pixel_y = 5
 	},
 /obj/structure/table/reinforced,
@@ -528,8 +527,7 @@
 /area/ruin/powered/syndicate_lava_base)
 "bp" = (
 /obj/structure/table/reinforced,
-/obj/machinery/reagentgrinder{
-	desc = "Used to grind things up into raw materials and liquids.";
+/obj/machinery/reagentgrinder/materials{
 	pixel_y = 5
 	},
 /obj/structure/noticeboard{

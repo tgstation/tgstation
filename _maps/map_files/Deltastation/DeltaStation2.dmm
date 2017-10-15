@@ -15077,8 +15077,7 @@
 /area/crew_quarters/bar)
 "aGU" = (
 /obj/structure/table/wood,
-/obj/machinery/reagentgrinder{
-	desc = "Used to grind things up into raw materials and liquids.";
+/obj/machinery/reagentgrinder/materials{
 	pixel_y = 5
 	},
 /turf/open/floor/plasteel/vault{
@@ -26635,8 +26634,7 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bdL" = (
-/obj/machinery/reagentgrinder{
-	desc = "Used to grind things up into raw materials and liquids.";
+/obj/machinery/reagentgrinder/materials{
 	pixel_y = 5
 	},
 /obj/structure/table/glass,
@@ -28641,8 +28639,7 @@
 /area/crew_quarters/kitchen)
 "bhG" = (
 /obj/structure/table/reinforced,
-/obj/machinery/reagentgrinder{
-	desc = "Used to grind things up into raw materials and liquids.";
+/obj/machinery/reagentgrinder/materials{
 	pixel_y = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -100209,8 +100206,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/reagentgrinder{
-	desc = "Used to grind things up into raw materials and liquids.";
+/obj/machinery/reagentgrinder/materials{
 	pixel_y = 5
 	},
 /obj/effect/turf_decal/stripes/line{

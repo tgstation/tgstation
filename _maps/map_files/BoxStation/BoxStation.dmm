@@ -38935,8 +38935,7 @@
 	pixel_y = 23
 	},
 /obj/structure/table/glass,
-/obj/machinery/reagentgrinder{
-	desc = "Used to grind things up into raw materials and liquids.";
+/obj/machinery/reagentgrinder/materials{
 	pixel_y = 5
 	},
 /obj/effect/turf_decal/stripes/line,

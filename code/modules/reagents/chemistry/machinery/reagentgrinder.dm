@@ -86,6 +86,9 @@
 
 	var/list/holdingitems
 
+/obj/machinery/reagentgrinder/materials
+	desc = "Used to grind things up into raw materials and liquids."
+
 /obj/machinery/reagentgrinder/Initialize()
 	. = ..()
 	holdingitems = list()
