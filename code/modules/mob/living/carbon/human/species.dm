@@ -8,7 +8,6 @@
 #define COLD_DAMAGE_LEVEL_2 1.5
 #define COLD_DAMAGE_LEVEL_3 3
 
-
 /datum/species
 	var/id	// if the game needs to manually check your race to do something not included in a proc here, it will use this
 	var/limbs_id		//this is used if you want to use a different species limb sprites. Mainly used for angels as they look like humans.
@@ -18,8 +17,7 @@
 
 	var/sexes = 1		// whether or not the race has sexual characteristics. at the moment this is only 0 for skeletons and shadows
 
-	var/face_y_offset = 0
-	var/hair_y_offset = 0
+	var/list/offset_features = list(OFFSET_UNIFORM = list(0,0), OFFSET_ID = list(0,0), OFFSET_GLOVES = list(0,0), OFFSET_GLASSES = list(0,0), OFFSET_EARS = list(0,0), OFFSET_SHOES = list(0,0), OFFSET_S_STORE = list(0,0), OFFSET_FACEMASK = list(0,0), OFFSET_HEAD = list(0,0), OFFSET_FACE = list(0,0), OFFSET_BELT = list(0,0), OFFSET_BACK = list(0,0), OFFSET_SUIT = list(0,0), OFFSET_NECK = list(0,0))
 
 	var/hair_color	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
@@ -256,11 +254,11 @@
 				C.dropItemToGround(I)
 			else	//Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
 				C.put_in_hands(new mutanthands())
-	
+
 	if(VIRUSIMMUNE in species_traits)
 		for(var/datum/disease/A in C.viruses)
 			A.cure(FALSE)
-		
+
 
 /datum/species/proc/on_species_loss(mob/living/carbon/C)
 	if(C.dna.species.exotic_bloodtype)
@@ -398,7 +396,9 @@
 				else
 					hair_overlay.color = forced_colour
 				hair_overlay.alpha = hair_alpha
-				hair_overlay.pixel_y += hair_y_offset
+				if(OFFSET_FACE in H.dna.species.offset_features)
+					hair_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FACE][1]
+					hair_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
 		if(hair_overlay.icon)
 			standing += hair_overlay
 
@@ -419,14 +419,18 @@
 		if(H.lip_style && (LIPS in species_traits) && HD)
 			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[H.lip_style]", -BODY_LAYER)
 			lip_overlay.color = H.lip_color
-			lip_overlay.pixel_y += face_y_offset
+			if(OFFSET_FACE in H.dna.species.offset_features)
+				lip_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FACE][1]
+				lip_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
 			standing += lip_overlay
 
 		// eyes
 		if((EYECOLOR in species_traits) && HD)
 			var/mutable_appearance/eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes", -BODY_LAYER)
 			eye_overlay.color = "#" + H.eye_color
-			eye_overlay.pixel_y += face_y_offset
+			if(OFFSET_FACE in H.dna.species.offset_features)
+				eye_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FACE][1]
+				eye_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
 			standing += eye_overlay
 
 	//Underwear, Undershirts & Socks
