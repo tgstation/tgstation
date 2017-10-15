@@ -434,14 +434,15 @@
 	sound_to_playing_players('sound/machines/alarm.ogg')
 	if(SSticker && SSticker.mode)
 		SSticker.roundend_check_paused = TRUE
-	sleep(100)
+	addtimer(CALLBACK(src, .proc/actually_explode), 100)
 
+/obj/machinery/nuclearbomb/proc/actually_explode()
 	if(!core)
 		Cinematic(CINEMATIC_NUKE_NO_CORE,world)
 		SSticker.roundend_check_paused = FALSE
 		return
 
-	GLOB.enter_allowed = 0
+	GLOB.enter_allowed = FALSE
 
 	var/off_station = 0
 	var/turf/bomb_location = get_turf(src)
@@ -533,9 +534,9 @@ This is here to make the tiles around the station mininuke change when it's arme
 			H.nuke_disk = null
 			return
 		user.visible_message("<span class='warning'>[user] captures [src]!</span>", "<span class='userdanger'>You've got the disk! Defend it with your life!</span>")
-		loc = H
+		forceMove(H)
 		H.nuke_disk = src
-		return 1
+		return TRUE
 	return ..()
 
 /obj/item/disk/nuclear/Destroy(force=FALSE)
@@ -547,20 +548,13 @@ This is here to make the tiles around the station mininuke change when it's arme
 /obj/item/disk/nuclear/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is going delta! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(user.loc, 'sound/machines/alarm.ogg', 50, -1, 1)
-	var/end_time = world.time + 100
-	var/newcolor = "#00FF00"
-	while(world.time < end_time)
-		if(!user)
-			return
-		if(newcolor == "#FF0000")
-			newcolor = "#00FF00"
-		else
-			newcolor = "#FF0000"
-		user.add_atom_colour(newcolor, ADMIN_COLOUR_PRIORITY)
-		sleep(1)
-	user.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
-	user.visible_message("<span class='suicide'>[user] was destroyed by the nuclear blast!</span>")
-	return OXYLOSS
+	for(var/i in 1 to 100)
+		addtimer(CALLBACK(user, /atom/proc/add_atom_colour, (i % 2)? "#00FF00" : "#FF0000", ADMIN_COLOUR_PRIORITY), i)
+	addtimer(CALLBACK(user, /atom/proc/remove_atom_colour, ADMIN_COLOUR_PRIORITY), 101)
+	addtimer(CALLBACK(user, /atom/proc/visible_message, "<span class='suicide'>[user] was destroyed by the nuclear blast!</span>"), 101)
+	addtimer(CALLBACK(user, /mob/living/proc/adjustOxyLoss, 200), 101)
+	addtimer(CALLBACK(user, /mob/proc/death, 0), 101)
+	return MANUAL_SUICIDE
 
 /obj/item/disk/fakenucleardisk
 	name = "cheap plastic imitation of the nuclear authentication disk"

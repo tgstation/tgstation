@@ -329,7 +329,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	power = max( (removed.temperature * temp_factor / T0C) * gasmix_power_ratio + power, 0) //Total laser power plus an overload
 
 	if(prob(50))
-		radiation_pulse(get_turf(src), power * (1 + power_transmission_bonus/10 * freon_transmit_modifier))
+		radiation_pulse(src, power * (1 + power_transmission_bonus/10 * freon_transmit_modifier))
 
 	var/device_energy = power * REACTION_POWER_MODIFIER
 
@@ -539,7 +539,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 		Consume(W)
 		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
 
-		radiation_pulse(get_turf(src), 150, 4)
+		radiation_pulse(src, 150, 4)
 
 
 /obj/machinery/power/supermatter_shard/CollidedWith(atom/movable/AM)
@@ -573,7 +573,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	matter_power += 200
 
 	//Some poor sod got eaten, go ahead and irradiate people nearby.
-	radiation_pulse(get_turf(src), 3000, 2, TRUE)
+	radiation_pulse(src, 3000, 2, TRUE)
 	for(var/mob/living/L in range(10))
 		investigate_log("has irradiated [L] after consuming [AM].", INVESTIGATE_SUPERMATTER)
 		if(L in view())
