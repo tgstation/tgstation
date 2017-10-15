@@ -118,7 +118,7 @@
 			var/mob/living/simple_animal/hostile/H = L
 			if(ismegafauna(H) || (!H.mind && H.AIStatus == AI_OFF))
 				continue
-			if(("ratvar" in H.faction) || ("neutral" in H.faction))
+			if(("ratvar" in H.faction) || (!H.mind && "neutral" in H.faction))
 				continue
 		else if(isrevenant(L))
 			var/mob/living/simple_animal/revenant/R = L
@@ -127,10 +127,15 @@
 		else if(!L.mind)
 			continue
 		. += L
+	var/list/viewcache = list()
 	for(var/N in GLOB.mechas_list)
 		var/obj/mecha/M = N
-		if(get_dist(M, src) <= sight_range && M.occupant && !is_servant_of_ratvar(M.occupant) && (M in view(sight_range, src)))
-			. += M
+		if(get_dist(M, src) <= sight_range && M.occupant && !is_servant_of_ratvar(M.occupant))
+			if(!length(viewcache))
+				for (var/obj/Z in view(sight_range, src))
+					viewcache += Z
+			if (M in viewcache)
+				. += M
 
 /obj/structure/destructible/clockwork/ocular_warden/proc/lose_target()
 	if(!target)
