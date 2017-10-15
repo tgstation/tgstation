@@ -393,8 +393,8 @@
 
 	eating = FALSE
 	switch_stage = switch_stage * 0.75 //he gets faster after each feast
-	Acquire_Victim()
 	interest = 0
+	Acquire_Victim()
 
 //manifestation animation
 /obj/effect/temp_visual/fcluwne_manifest
