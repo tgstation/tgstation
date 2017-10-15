@@ -280,27 +280,6 @@
 	},
 /area/shuttle/syndicate)
 "aaL" = (
-/obj/machinery/door/poddoor{
-	id = "smindicate";
-	name = "outer blast door"
-	},
-/obj/machinery/button/door{
-	id = "smindicate";
-	name = "external door control";
-	pixel_x = -26;
-	req_access_txt = "150"
-	},
-/obj/docking_port/mobile{
-	dheight = 9;
-	dir = 2;
-	dwidth = 5;
-	height = 24;
-	id = "syndicate";
-	name = "syndicate infiltrator";
-	port_direction = 1;
-	roundstart_move = "syndicate_away";
-	width = 18
-	},
 /obj/docking_port/stationary{
 	dheight = 9;
 	dir = 2;
@@ -311,11 +290,8 @@
 	turf_type = /turf/open/space;
 	width = 18
 	},
-/obj/structure/fans/tiny,
-/turf/open/floor/plasteel/podhatch{
-	dir = 1
-	},
-/area/shuttle/syndicate)
+/turf/open/space/basic,
+/area/space)
 "aaM" = (
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
@@ -6385,12 +6361,13 @@
 /area/hallway/primary/fore)
 "aoS" = (
 /obj/structure/closet/wardrobe/chemistry_white,
-/obj/item/clothing/glasses/science,
 /obj/machinery/airalarm{
 	dir = 4;
 	locked = 0;
 	pixel_x = -23
 	},
+/obj/item/circuitboard/machine/smoke_machine,
+/obj/item/clothing/glasses/science,
 /turf/open/floor/plasteel/whiteyellow/corner{
 	dir = 1
 	},
@@ -24797,19 +24774,24 @@
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "bcq" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8";
+	d1 = 4;
+	d2 = 8
+	},
+/turf/open/floor/engine,
+/area/engine/supermatter)
+"bcr" = (
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 8
+	},
+/obj/structure/window/plasma/reinforced/spawner/east,
 /obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/open/floor/engine,
-/area/engine/supermatter)
-"bcr" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
-	dir = 8
-	},
-/turf/open/floor/plating,
 /area/engine/supermatter)
 "bcs" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -24827,22 +24809,27 @@
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "bcv" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4
 	},
-/turf/open/floor/plating,
-/area/engine/supermatter)
-"bcw" = (
+/obj/structure/window/plasma/reinforced/spawner/west,
 /obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow{
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/turf/open/floor/engine,
+/area/engine/supermatter)
+"bcw" = (
 /obj/machinery/camera{
 	c_tag = "Supermatter Chamber";
 	dir = 2;
 	network = list("Engine")
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8";
+	d1 = 4;
+	d2 = 8
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
@@ -25178,18 +25165,28 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "bdj" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
 	},
-/turf/open/floor/plating,
+/obj/structure/window/plasma/reinforced/spawner/east,
+/obj/machinery/power/rad_collector/anchored,
+/obj/structure/cable/yellow{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/engine,
 /area/engine/supermatter)
 "bdk" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
-/turf/open/floor/plating,
+/obj/structure/window/plasma/reinforced/spawner/west,
+/obj/machinery/power/rad_collector/anchored,
+/obj/structure/cable/yellow{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/open/floor/engine,
 /area/engine/supermatter)
 "bdl" = (
 /obj/effect/turf_decal/stripes/line{
@@ -27244,6 +27241,14 @@
 "bie" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/mining)
+"bif" = (
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/engine,
+/area/engine/supermatter)
 
 (1,1,1) = {"
 aaa
@@ -45038,16 +45043,16 @@ aaa
 aaa
 aaa
 aaa
-aab
-aac
-aac
-aac
-aac
-aac
-aac
-aac
-aac
-aat
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -45289,22 +45294,22 @@ aaa
 aaa
 aaa
 aaa
-aab
-aac
-aac
-aac
-aac
-aac
-aac
-abd
-abm
-abd
-abv
-abz
-abK
-abN
-abQ
-abT
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -45546,22 +45551,22 @@ aaa
 aaa
 aaa
 aaa
-aac
-aaH
-aaJ
-aaJ
-aaJ
-aaW
-aac
-aaT
-aas
-aaz
-aaz
-abA
-aaz
-abO
-abQ
-abU
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -45803,22 +45808,22 @@ aaa
 aaa
 aaa
 aaa
-aac
-aaz
-aaz
-aaz
-aaz
-aaz
-abb
-abe
-aas
-abq
-abw
-abB
-abL
-abP
-abQ
-abV
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -46053,29 +46058,29 @@ aaa
 aaa
 aaa
 aaa
-aab
-aac
-aac
-aac
-aat
 aaa
 aaa
-aac
-aaz
-aaz
-aaz
-aaz
-aaz
-aac
-abf
-aas
-abr
-aaR
-abC
-aac
-aac
-aac
-aaB
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -46310,26 +46315,26 @@ aaa
 aaa
 aaa
 aaa
-aac
-aaf
-aam
-aas
-aac
-aax
 aaa
-aac
-aaI
-aaK
-aaN
-aaT
-aaX
-aac
-abg
-aas
-abr
-aaR
-abD
-aac
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -46567,28 +46572,28 @@ aaa
 aaa
 aaa
 aaa
-aad
-aag
-aan
-aas
-aac
-aac
-aac
-aac
-aac
-aac
-aac
-aaU
-aaO
-aac
-aac
-aac
-abs
-aaO
-aac
-aac
-aac
-aat
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -46824,28 +46829,28 @@ aaa
 aaa
 aaa
 aaa
-aad
-aah
-aao
-aas
-aau
-aay
-aaC
-aaE
-aaC
-aaC
-aaO
-aaz
-aaz
-aaz
-aaz
-abn
-abr
-aaR
-aas
-aaO
-abQ
-abT
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -47081,28 +47086,28 @@ aaa
 aaa
 aaa
 aaa
-aad
-aai
-aap
-aas
-aav
-aaz
-aao
-aao
-aao
-aaz
-aaP
-aaz
-aao
-aao
-aao
-aao
-abr
-aaR
-aas
-abM
-abQ
-abU
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -47338,28 +47343,28 @@ aaa
 aaa
 aaa
 aaa
-aad
-aaj
-aao
-aas
-aac
-aaA
-aaD
-aaF
-aaD
-aaD
-aaO
-aaz
-aaz
-aaz
-aaz
-abo
-abr
-aaR
-aas
-aaO
-abQ
-abV
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -47595,28 +47600,28 @@ aaa
 aaa
 aaa
 aaa
-aad
-aak
-aaq
-aas
-aac
-aac
-aac
-aaG
-aac
-aac
-aac
-aaV
-aaO
-aac
-aac
-aac
-abs
-aaO
-aac
-aac
-aac
-aaw
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -47852,26 +47857,26 @@ aaa
 aaa
 aaa
 aaa
-aac
-aal
-aar
-aas
-aac
-aaB
 aaa
 aaa
 aaa
-aac
-aaQ
-aaz
-aaY
-aac
-abh
-aas
-abr
-aaR
-abE
-aac
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -48109,29 +48114,29 @@ aaa
 aaa
 aaa
 aaa
-aae
-aac
-aac
-aac
-aaw
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
 aaa
 aaL
-aaR
-aaz
-aaY
-aac
-abi
-aas
-abr
-aaR
-abF
-aac
-aac
-aac
-aax
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -48375,20 +48380,20 @@ aaa
 aaa
 aaa
 aaa
-aaM
-aaS
-aaz
-aaZ
-aau
-abj
-aas
-abt
-abx
-abB
-aaz
-abR
-abQ
-abT
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -48632,20 +48637,20 @@ aaa
 aaa
 aaa
 aaa
-aae
-aac
-aac
-aac
-aac
-abk
-aas
-aaz
-aaz
-abG
-aaz
-abS
-abQ
-abU
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -48892,17 +48897,17 @@ aaa
 aaa
 aaa
 aaa
-aba
-aac
-abl
-aas
-abu
-aby
-abH
-abo
-abR
-abQ
-abV
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -49150,16 +49155,16 @@ aaa
 aaa
 aaa
 aaa
-aae
-aac
-aac
-aac
-aac
-aac
-aac
-aac
-aac
-aaw
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -62094,8 +62099,8 @@ baP
 bby
 bbz
 bcq
-bcq
-bcq
+bif
+bif
 bbz
 bdU
 bep
@@ -63636,8 +63641,8 @@ baU
 bbD
 bbz
 bcw
-bcN
-bcN
+bif
+bif
 bbz
 bdV
 bev
@@ -76903,7 +76908,7 @@ aaa
 aaa
 aaa
 aaa
-bhY
+aaa
 aaa
 aaa
 aaa
@@ -79493,7 +79498,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bhY
 aaa
 aaa
 aaa
