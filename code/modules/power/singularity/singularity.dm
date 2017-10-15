@@ -114,7 +114,7 @@
 /obj/singularity/process()
 	if(current_size >= STAGE_TWO)
 		move()
-		pulse()
+		radiation_pulse(src, energy, 0.5)
 		if(prob(event_chance))//Chance for it to run a special event TODO:Come up with one or two more that fit
 			event()
 	eat()
@@ -385,14 +385,10 @@
 
 
 /obj/singularity/proc/toxmob()
-	var/toxrange = 10
 	var/radiation = 15
-	var/radiationmin = 3
 	if (energy>200)
 		radiation += round((energy-150)/10,1)
-		radiationmin = round((radiation/5),1)
-	for(var/mob/living/M in view(toxrange, src.loc))
-		M.rad_act(rand(radiationmin,radiation))
+	radiation_pulse(src, radiation)
 
 
 /obj/singularity/proc/combust_mobs()
@@ -427,12 +423,6 @@
 /obj/singularity/proc/emp_area()
 	empulse(src, 8, 10)
 	return
-
-
-/obj/singularity/proc/pulse()
-	for(var/obj/machinery/power/rad_collector/R in GLOB.rad_collectors)
-		if(R.z == z && get_dist(R, src) <= 15) // Better than using orange() every process
-			R.receive_pulse(energy)
 
 /obj/singularity/singularity_act()
 	var/gain = (energy/2)

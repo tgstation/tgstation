@@ -38,10 +38,13 @@
 	user.visible_message("<B>[user]</B> laughs so hard they begin to suffocate!")
 	return (OXYLOSS)
 
+//Banana Peel
 /obj/item/grown/bananapeel
 	seed = /obj/item/seeds/banana
 	name = "banana peel"
 	desc = "A peel from a banana."
+	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	icon_state = "banana_peel"
 	item_state = "banana_peel"
 	w_class = WEIGHT_CLASS_TINY
@@ -81,6 +84,7 @@
 	name = "mimana peel"
 	desc = "A mimana peel."
 	icon_state = "mimana_peel"
+	item_state = "mimana_peel"
 
 // Bluespace Banana
 /obj/item/seeds/banana/bluespace
@@ -100,6 +104,7 @@
 	seed = /obj/item/seeds/banana/bluespace
 	name = "bluespace banana"
 	icon_state = "banana_blue"
+	item_state = "bluespace_peel"
 	trash = /obj/item/grown/bananapeel/bluespace
 	filling_color = "#0000FF"
 	origin_tech = "biotech=3;bluespace=5"

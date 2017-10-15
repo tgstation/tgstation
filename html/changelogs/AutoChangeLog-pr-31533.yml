@@ -1,0 +1,4 @@
+author: "Improvedname"
+delete-after: True
+changes: 
+  - rscadd: "You can now put custom name and lore on your holy weapon by using a pen on it!"

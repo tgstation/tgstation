@@ -180,7 +180,7 @@
 	..()
 
 /obj/machinery/door/airlock/uranium/proc/radiate()
-	radiation_pulse(get_turf(src), 3, 3, 15, 0)
+	radiation_pulse(get_turf(src), 150)
 	return
 
 /obj/machinery/door/airlock/plasma

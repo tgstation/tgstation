@@ -282,13 +282,13 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 	user.visible_message( \
 		"[user] fastens \the [src].", \
 		"<span class='notice'>You fasten \the [src].</span>", \
-		"<span class='italics'>You hear ratchet.</span>")
+		"<span class='italics'>You hear ratcheting.</span>")
 
 	qdel(src)
 
 /obj/item/pipe/suicide_act(mob/user)
 	if(pipe_type in list(PIPE_PUMP, PIPE_PASSIVE_GATE, PIPE_VOLUME_PUMP))
-		user.visible_message("<span class='suicide'>[user] shoves the [src] in [user.p_their()] mouth and turns it on!  It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		user.visible_message("<span class='suicide'>[user] shoves [src] in [user.p_their()] mouth and turns it on!  It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		if(iscarbon(user))
 			var/mob/living/carbon/C = user
 			for(var/i=1 to 20)

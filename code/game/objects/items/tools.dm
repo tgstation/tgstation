@@ -131,7 +131,7 @@
 	name = "screwdriver"
 	desc = "You can be totally screwy with this."
 	icon = 'icons/obj/tools.dmi'
-	icon_state = "screwdriver"
+	icon_state = "screwdriver_map"
 	item_state = "screwdriver"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
@@ -166,6 +166,7 @@
 /obj/item/screwdriver/Initialize()
 	. = ..()
 	if(random_color) //random colors!
+		icon_state = "screwdriver"
 		var/our_color = pick(screwdriver_colors)
 		add_atom_colour(screwdriver_colors[our_color], FIXED_COLOUR_PRIORITY)
 		update_icon()
@@ -269,7 +270,7 @@
 	name = "wirecutters"
 	desc = "This cuts wires."
 	icon = 'icons/obj/tools.dmi'
-	icon_state = null
+	icon_state = "cutters"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -285,11 +286,12 @@
 	origin_tech = "materials=1;engineering=1"
 	toolspeed = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
+	var/random_color = TRUE
 
 
 /obj/item/wirecutters/New(loc, var/param_color = null)
 	..()
-	if(!icon_state)
+	if(random_color)
 		if(!param_color)
 			param_color = pick("yellow","red")
 		icon_state = "cutters_[param_color]"
@@ -316,6 +318,7 @@
 	desc = "A pair of wirecutters made of brass. The handle feels freezing cold to the touch."
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	icon_state = "cutters_brass"
+	random_color = FALSE
 	toolspeed = 0.5
 
 /obj/item/wirecutters/abductor
@@ -325,6 +328,7 @@
 	icon_state = "cutters"
 	toolspeed = 0.1
 	origin_tech = "materials=5;engineering=4;abductor=3"
+	random_color = FALSE
 
 /obj/item/wirecutters/cyborg
 	name = "wirecutters"
@@ -340,6 +344,7 @@
 	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25)
 	usesound = 'sound/items/jaws_cut.ogg'
 	toolspeed = 0.25
+	random_color = FALSE
 
 /obj/item/wirecutters/power/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is wrapping \the [src] around [user.p_their()] neck. It looks like [user.p_theyre()] trying to rip [user.p_their()] head off!</span>")
