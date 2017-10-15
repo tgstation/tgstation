@@ -98,7 +98,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	return	dat
 
 /mob/living/simple_animal/bot/honkbot/proc/judgement_criteria()
-	var/final = FALSE
+	var/final = NONE
 	if(check_records)
 		final = final|JUDGE_RECORDCHECK
 	if(emagged)
