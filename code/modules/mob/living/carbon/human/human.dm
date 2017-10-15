@@ -691,17 +691,10 @@
 
 
 /mob/living/carbon/human/wash_cream()
-<<<<<<< HEAD
-	if(creamed) //clean both to prevent a rare bug
-		cut_overlay(mutable_appearance('icons/effects/creampie.dmi', "creampie_lizard"))
-		cut_overlay(mutable_appearance('icons/effects/creampie.dmi', "creampie_human"))
-		creamed = FALSE
-=======
 	//clean both to prevent a rare bug
 	cut_overlay(mutable_appearance('icons/effects/creampie.dmi', "creampie_lizard"))
 	cut_overlay(mutable_appearance('icons/effects/creampie.dmi', "creampie_human"))
 
->>>>>>> parent of cb1d5bf254... creampie fixes
 
 //Turns a mob black, flashes a skeleton overlay
 //Just like a cartoon!
