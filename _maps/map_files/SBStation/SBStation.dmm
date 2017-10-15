@@ -1590,7 +1590,7 @@
 /area/maintenance/port/fore)
 "adu" = (
 /obj/machinery/door/airlock/external{
-	cyclelinkeddir = 8;
+	cyclelinkeddir = 2;
 	req_access_txt = "13"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -1766,7 +1766,6 @@
 /area/security/courtroom)
 "adN" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "adO" = (
@@ -2836,7 +2835,7 @@
 /area/maintenance/starboard/fore)
 "agr" = (
 /obj/machinery/door/airlock/external{
-	cyclelinkeddir = 8;
+	cyclelinkeddir = 2;
 	req_access_txt = "13"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -2999,7 +2998,6 @@
 /area/security/courtroom)
 "agO" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "agP" = (
@@ -3477,7 +3475,6 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "ahR" = (
-/obj/structure/fans/tiny,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
@@ -3690,7 +3687,7 @@
 /area/hallway/secondary/entry)
 "ais" = (
 /obj/machinery/door/airlock/external{
-	cyclelinkeddir = 4;
+	cyclelinkeddir = 2;
 	name = "External Docking Port"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -10591,7 +10588,7 @@
 /area/hallway/primary/central)
 "ayI" = (
 /obj/machinery/door/airlock/glass_command{
-	cyclelinkeddir = 8;
+	cyclelinkeddir = 4;
 	name = "Bridge";
 	req_access_txt = "19"
 	},
@@ -10774,7 +10771,7 @@
 /area/bridge)
 "ayT" = (
 /obj/machinery/door/airlock/glass_command{
-	cyclelinkeddir = 8;
+	cyclelinkeddir = 4;
 	name = "Bridge";
 	req_access_txt = "19"
 	},
@@ -10845,7 +10842,7 @@
 /area/hallway/primary/central)
 "ayY" = (
 /obj/machinery/door/airlock/research{
-	cyclelinkeddir = 1;
+	cyclelinkeddir = 4;
 	name = "Research Division Access";
 	req_access_txt = "47"
 	},
@@ -13303,7 +13300,6 @@
 /area/hallway/secondary/exit)
 "aEd" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/hallway/secondary/exit)
 "aEe" = (
@@ -15973,6 +15969,7 @@
 /area/shuttle/supply)
 "aJB" = (
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
 	name = "Supply Dock Airlock";
 	req_access_txt = "31"
 	},
@@ -15982,7 +15979,6 @@
 /turf/open/floor/plating,
 /area/quartermaster/storage)
 "aJC" = (
-/obj/structure/fans/tiny,
 /obj/machinery/light/small,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plating,
@@ -17045,6 +17041,7 @@
 /area/shuttle/supply)
 "aLN" = (
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
 	name = "Supply Dock Airlock";
 	req_access_txt = "31"
 	},
@@ -17054,7 +17051,6 @@
 /turf/open/floor/plating,
 /area/quartermaster/storage)
 "aLO" = (
-/obj/structure/fans/tiny,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -19504,7 +19500,7 @@
 /area/maintenance/starboard/aft)
 "aRb" = (
 /obj/machinery/door/airlock/external{
-	cyclelinkeddir = 8;
+	cyclelinkeddir = 2;
 	req_access_txt = "13"
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -19545,6 +19541,7 @@
 /area/shuttle/mining)
 "aRf" = (
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
 	name = "Mining Dock Airlock";
 	req_access = null;
 	req_access_txt = "48"
@@ -19555,7 +19552,6 @@
 /turf/open/floor/plating,
 /area/quartermaster/miningdock)
 "aRg" = (
-/obj/structure/fans/tiny,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -19782,7 +19778,6 @@
 /area/maintenance/starboard/aft)
 "aRN" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "aRO" = (
@@ -21694,7 +21689,6 @@
 /area/maintenance/port/aft)
 "aVN" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "aVO" = (
@@ -25740,7 +25734,6 @@
 /area/tcommsat/server)
 "beA" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/tcommsat/server)
 "beB" = (
@@ -27249,6 +27242,136 @@
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
+"big" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
+	req_access_txt = "13"
+	},
+/obj/effect/turf_decal/stripes/line{
+	icon_state = "warningline";
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
+"bih" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
+	req_access_txt = "13"
+	},
+/obj/effect/turf_decal/stripes/line{
+	icon_state = "warningline";
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
+"bii" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
+	name = "External Docking Port"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
+"bij" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
+	name = "External Docking Port"
+	},
+/obj/effect/turf_decal/stripes/line{
+	icon_state = "warningline";
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
+"bik" = (
+/obj/machinery/door/airlock/research{
+	cyclelinkeddir = 8;
+	name = "Research Division Access";
+	req_access_txt = "47"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel/whitepurple/side{
+	dir = 8
+	},
+/area/science/research)
+"bil" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
+	name = "Escape Airlock"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/exit)
+"bim" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
+	name = "Supply Dock Airlock";
+	req_access_txt = "31"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/quartermaster/storage)
+"bin" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
+	name = "Supply Dock Airlock";
+	req_access_txt = "31"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/quartermaster/storage)
+"bio" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
+	name = "Mining Dock Airlock";
+	req_access = null;
+	req_access_txt = "48"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"bip" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
+	req_access_txt = "13"
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
+"biq" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
+	req_access_txt = "13"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"bir" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
+	name = "Communications External Access";
+	req_access = null;
+	req_access_txt = "65;13"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/tcommsat/server)
 
 (1,1,1) = {"
 aaa
@@ -49985,13 +50108,13 @@ azp
 aAj
 aBq
 aCP
-aEc
+bil
 aAk
 aGp
 aHC
 aIn
 aAk
-aEc
+bil
 aCP
 aBq
 aAj
@@ -52338,7 +52461,7 @@ abI
 abI
 aaa
 bec
-bez
+bir
 bec
 aaa
 abI
@@ -54102,9 +54225,9 @@ arK
 aGu
 aHI
 aIx
-aJB
+bim
 aAv
-aLN
+bin
 aMS
 aAv
 aaa
@@ -55395,7 +55518,7 @@ aAv
 aOA
 aPw
 aQk
-aRf
+bio
 aQj
 abp
 abp
@@ -57665,7 +57788,7 @@ agc
 agt
 agS
 ahp
-ahQ
+bii
 ags
 aiL
 aiL
@@ -57913,7 +58036,7 @@ abc
 abc
 adu
 adN
-adu
+big
 aeD
 afi
 aeD
@@ -57973,7 +58096,7 @@ aRY
 aaa
 aaa
 aRY
-aVM
+biq
 aRY
 aaa
 aaa
@@ -59210,7 +59333,7 @@ agU
 ahU
 ais
 ahR
-ais
+bij
 ajR
 akv
 agc
@@ -60495,7 +60618,7 @@ agU
 ahU
 ais
 ahR
-ais
+bij
 ajT
 aky
 agc
@@ -67970,7 +68093,7 @@ aum
 akd
 axx
 ayg
-ayY
+bik
 azN
 aAW
 aCu
@@ -68457,7 +68580,7 @@ abc
 abc
 agr
 agO
-agr
+bih
 ahh
 ail
 aiG
@@ -73386,7 +73509,7 @@ aPp
 aQc
 aRb
 aRN
-aRb
+bip
 aaa
 aaa
 aaa
