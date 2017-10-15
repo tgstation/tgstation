@@ -1,0 +1,7 @@
+author: "Onule"
+delete-after: True
+changes: 
+  - tweak: "Sunflower sprites were changed, small edits to variants."
+  - imageadd: "Sunflower and variant's inhands sprites."
+  - imageadd: "Tweaked growing sprites to match the new sunflower."
+  - imageadd: "Moonflower and novaflowers now have slightly different growing sprites."
