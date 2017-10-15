@@ -83,7 +83,7 @@
 		if(SSticker.current_state == GAME_STATE_PREGAME)
 			var/time_remaining = SSticker.GetTimeLeft()
 			if(time_remaining > 0)
-				stat("Time To Start:", "[round(time_remaining/10)]s")			
+				stat("Time To Start:", "[round(time_remaining/10)]s")
 			else if(time_remaining == -10)
 				stat("Time To Start:", "DELAYED")
 			else
@@ -346,10 +346,26 @@
 	SSticker.queued_players -= src
 	SSticker.queue_delay = 4
 
-	SSjob.AssignRole(src, rank, 1)
-
 	var/mob/living/character = create_character(TRUE)	//creates the human and transfers vars and mind
+
+	var/mob/living/carbon/human/humanc
+	if(ishuman(character))
+		humanc = character	//Let's retypecast the var to be human,
+
+	if(CONFIG_GET(flag/allow_latejoin_antagonists) && humanc)	//Borgs aren't allowed to be antags. Will need to be tweaked if we get true latejoin ais.
+		if(SSshuttle.emergency)
+			switch(SSshuttle.emergency.mode)
+				if(SHUTTLE_RECALL, SHUTTLE_IDLE)
+					if(SSticker.mode.handle_late_join(humanc))
+						return
+				if(SHUTTLE_CALL)
+					if(SSshuttle.emergency.timeLeft(1) > initial(SSshuttle.emergencyCallTime)*0.5)
+						if(SSticker.mode.handle_late_join(humanc))
+							return
+
+	SSjob.AssignRole(src, rank, 1)
 	var/equip = SSjob.EquipRank(character, rank, 1)
+
 	if(isliving(equip))	//Borgs get borged in the equip, so we need to make sure we handle the new mob.
 		character = equip
 
@@ -364,9 +380,7 @@
 
 	SSticker.minds += character.mind
 
-	var/mob/living/carbon/human/humanc
-	if(ishuman(character))
-		humanc = character	//Let's retypecast the var to be human,
+
 
 	if(humanc)	//These procs all expect humans
 		GLOB.data_core.manifest_inject(humanc)
@@ -380,15 +394,6 @@
 			humanc.make_scottish()
 
 	GLOB.joined_player_list += character.ckey
-
-	if(CONFIG_GET(flag/allow_latejoin_antagonists) && humanc)	//Borgs aren't allowed to be antags. Will need to be tweaked if we get true latejoin ais.
-		if(SSshuttle.emergency)
-			switch(SSshuttle.emergency.mode)
-				if(SHUTTLE_RECALL, SHUTTLE_IDLE)
-					SSticker.mode.make_antag_chance(humanc)
-				if(SHUTTLE_CALL)
-					if(SSshuttle.emergency.timeLeft(1) > initial(SSshuttle.emergencyCallTime)*0.5)
-						SSticker.mode.make_antag_chance(humanc)
 
 /mob/dead/new_player/proc/AddEmploymentContract(mob/living/carbon/human/employee)
 	//TODO:  figure out a way to exclude wizards/nukeops/demons from this.

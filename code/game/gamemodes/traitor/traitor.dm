@@ -81,7 +81,9 @@
 /datum/game_mode/traitor/proc/add_latejoin_traitor(datum/mind/character)
 	character.add_antag_datum(antag_datum)
 
-
+/datum/game_mode/traitor/handle_late_join(mob/living/carbon/human/character)
+	addtimer(CALLBACK(src, .proc/make_antag_chance, character), 100)
+	return 0
 
 /datum/game_mode/traitor/declare_completion()
 	..()
