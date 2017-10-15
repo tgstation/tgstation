@@ -311,8 +311,8 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/update_inv_head()
 	..()
 	update_mutant_bodyparts()
-	if(overlays_standing[HEAD_LAYER])
-		var/mutable_appearance/head_overlay = overlays_standing[HEAD_LAYER]
+	var/mutable_appearance/head_overlay = overlays_standing[HEAD_LAYER]
+	if(head_overlay)
 		remove_overlay(HEAD_LAYER)
 		if(OFFSET_HEAD in dna.species.offset_features)
 			head_overlay.pixel_x += dna.species.offset_features[OFFSET_HEAD][1]
@@ -399,8 +399,8 @@ There are several things that need to be remembered:
 
 /mob/living/carbon/human/update_inv_wear_mask()
 	..()
-	if(overlays_standing[FACEMASK_LAYER])
-		var/mutable_appearance/mask_overlay = overlays_standing[FACEMASK_LAYER]
+	var/mutable_appearance/mask_overlay = overlays_standing[FACEMASK_LAYER]
+	if(mask_overlay)
 		remove_overlay(FACEMASK_LAYER)
 		if(OFFSET_FACEMASK in dna.species.offset_features)
 			mask_overlay.pixel_x += dna.species.offset_features[OFFSET_FACEMASK][1]
@@ -411,8 +411,8 @@ There are several things that need to be remembered:
 
 /mob/living/carbon/human/update_inv_back()
 	..()
-	if(overlays_standing[BACK_LAYER])
-		var/mutable_appearance/back_overlay = overlays_standing[BACK_LAYER]
+	var/mutable_appearance/back_overlay = overlays_standing[BACK_LAYER]
+	if(back_overlay)
 		remove_overlay(BACK_LAYER)
 		if(OFFSET_BACK in dna.species.offset_features)
 			back_overlay.pixel_x += dna.species.offset_features[OFFSET_BACK][1]
