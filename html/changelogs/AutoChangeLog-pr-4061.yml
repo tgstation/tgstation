@@ -1,0 +1,4 @@
+author: "Kor"
+delete-after: True
+changes: 
+  - balance: "You can now smash the bulbs out of floodlights rather than having to entirely destroy the object."
