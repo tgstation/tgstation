@@ -48,7 +48,6 @@
 	charge_delay = 10
 
 /obj/item/melee/baton/stungun/Initialize()
-	. = ..()
 	if(cell_type)
 		cell = new cell_type(src)
 	else
@@ -58,6 +57,7 @@
 	if(selfcharge)
 		START_PROCESSING(SSobj, src)
 	update_icon()
+	. = ..()
 
 /obj/item/melee/baton/stungun/attack_self(mob/user)
 	if(cell && cell.charge >= hitcost)
