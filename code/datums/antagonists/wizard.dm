@@ -166,10 +166,10 @@
 	owner.announce_objectives()
 
 /datum/antagonist/wizard/apprentice/register()
-	SSticker.mode.apprentices |= src
+	SSticker.mode.apprentices |= owner
 
 /datum/antagonist/wizard/apprentice/unregister()
-	SSticker.mode.apprentices -= src
+	SSticker.mode.apprentices -= owner
 
 /datum/antagonist/wizard/apprentice/equip_wizard()
 	. = ..()
