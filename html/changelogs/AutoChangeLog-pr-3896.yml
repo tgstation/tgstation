@@ -1,5 +1,0 @@
-author: "Thefastfoodguy"
-delete-after: True
-changes: 
-  - bugfix: "Execution sword should no longer rape your ears"
-  - bugfix: "Execution sword should now respect volume and MIDI preferences"

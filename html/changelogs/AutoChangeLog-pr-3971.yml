@@ -1,4 +1,0 @@
-author: "HonkBot"
-delete-after: True
-changes: 
-  - bugfix: "AI eye camera static is now correctly positioned on Lavaland."

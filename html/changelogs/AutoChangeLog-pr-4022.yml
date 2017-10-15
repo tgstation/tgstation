@@ -1,9 +1,0 @@
-author: "HonkBot"
-delete-after: True
-changes: 
-  - bugfix: "Flightsuits now allow proper pulling
-experimental: Moved now has an argument for if it was a regular Move or a forceMove."
-  - rscadd: "Instead of dumb sleep()s, follow trails now use SSfastprocess for processing!"
-  - rscadd: "Mobs now float while flying automatically!"
-  - rscdel: "Flightsuits can no longer be safely shut off if you're still barreling down the hallway.
-experimental: Flightsuits should be less shitcode. Hope this PR doesn't blow anything important up!"
