@@ -143,6 +143,7 @@
 		if(H && ishuman(H) && H.stat != DEAD && H != current_victim && H.has_dna() && !H.dna.check_mutation(CLUWNEMUT) && !is_type_in_typecache(get_area(H.loc), invalid_area_typecache))
 			current_victim = H
 			interest = 0
+			stage = STAGE_HAUNT
 			return target = current_victim
 
 	message_admins("Floor Cluwne was deleted due to a lack of valid targets, if this was a manually targeted instance please re-evaluate your choice.")
@@ -394,6 +395,7 @@
 	eating = FALSE
 	switch_stage = switch_stage * 0.75 //he gets faster after each feast
 	interest = 0
+	stage = STAGE_HAUNT
 	Acquire_Victim()
 
 //manifestation animation
