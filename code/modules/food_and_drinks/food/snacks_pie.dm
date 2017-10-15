@@ -50,9 +50,7 @@
 		H.adjust_blurriness(1)
 		H.visible_message("<span class='warning'>[H] is creamed by [src]!</span>", "<span class='userdanger'>You've been creamed by [src]!</span>")
 		playsound(H, "desceration", 50, TRUE)
-		if (!H.creamed) // one layer at a time
-			H.add_overlay(creamoverlay)
-			H.creamed = TRUE
+		H.add_overlay(creamoverlay)
 	qdel(src)
 
 
