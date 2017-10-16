@@ -1,7 +1,0 @@
-author: "HonkBot"
-delete-after: True
-changes: 
-  - rscadd: "Use the Clown Stamp on some cardboard to begin... the honkbot!"
-  - rscadd: "These honkbots are just adorable, and totally not annoying. I swear! Honk!"
-  - rscadd: "You can even slot in a pAI! Just don't emag them... oh boy. oh no. oh geez."
-  - soundadd: "Honkbots now release an evil laugh when emagged."
