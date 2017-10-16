@@ -37,6 +37,7 @@
 	var/target_area
 	var/invalid_area_typecache = list(/area/space, /area/lavaland, /area/centcom, /area/reebe)
 	var/eating = FALSE
+	var/obj/effect/dummy/floorcluwne_orbit/poi
 
 
 /mob/living/simple_animal/hostile/floor_cluwne/Initialize()
@@ -48,6 +49,10 @@
 	Manifest()
 	if(!current_victim)
 		Acquire_Victim()
+	poi = new /obj/effect/dummy/floorcluwne_orbit
+
+/mob/living/simple_animal/hostile/floor_cluwne/Destroy()
+	QDEL_NULL(poi)
 
 
 /mob/living/simple_animal/hostile/floor_cluwne/attack_hand(mob/living/carbon/human/M)
@@ -102,15 +107,6 @@
 		stage = STAGE_HAUNT
 
 	..()
-
-/mob/living/simple_animal/hostile/floor_cluwne/Initialize()
-	. = ..()
-	if(!(src in GLOB.poi_list))
-		GLOB.poi_list += src
-
-/mob/living/simple_animal/hostile/floor_cluwne/Destroy()
-	. = ..()
-	GLOB.poi_list -= src
 
 /mob/living/simple_animal/hostile/floor_cluwne/Goto(target, delay, minimum_distance)
 	if(!manifested && !is_type_in_typecache(get_area(current_victim.loc), invalid_area_typecache))
@@ -418,6 +414,18 @@
 /obj/effect/temp_visual/fcluwne_manifest/Initialize()
 	. = ..()
 	playsound(src, 'hippiestation/sound/misc/floor_cluwne_emerge.ogg', 100, 1)
+
+/obj/dummy/floorcluwne_orbit
+	name = "floor cluwne"
+	desc = "If you have this, tell a coder or admin!"
+	
+/obj/effect/dummy/floorcluwne_orbit/Initialize()
+	. = ..()
+	GLOB.poi_list += src
+
+/obj/effect/dummy/floorcluwne_orbit/Destroy()
+	. = ..()
+	GLOB.poi_list -= src
 
 #undef STAGE_HAUNT
 #undef STAGE_SPOOK
