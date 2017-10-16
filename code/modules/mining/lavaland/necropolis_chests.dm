@@ -9,6 +9,10 @@
 
 /obj/structure/closet/crate/necropolis/tendril
 	desc = "It's watching you suspiciously."
+	var/cursed_prob = 20
+
+/obj/structure/closet/crate/necropolis/tendril/cursed
+	cursed_prob = 100
 
 /obj/structure/closet/crate/necropolis/tendril/PopulateContents()
 	var/loot = rand(1,27)
@@ -75,7 +79,38 @@
 		if(27)
 			new /obj/item/borg/upgrade/modkit/lifesteal(src)
 			new /obj/item/bedsheet/cult(src)
+	if(prob(cursed_prob))
+		for(var/obj/item/I in contents)
+			new /obj/item/cursed_necro(src,I)
 
+/obj/item/cursed_necro
+	name = "cursed item"
+	desc = "You shouldn't see it. Report it to devs."
+	var/obj/item/original
+
+/obj/item/cursed_necro/New(Loc,obj/item/I)
+	. = ..()
+	original = I
+	if(!original)
+		return
+	name = I.name
+	icon = I.icon
+	desc = I.desc
+	icon_state = I.icon_state
+	item_state = I.item_state
+	I.forceMove(src)
+
+/obj/item/cursed_necro/pickup(mob/living/user)
+	..()
+	if(user.mind && user.mind.isholy)
+		user.visible_message("<span class='boldannounce'>[usr] flashes in bright warm light, consecrating [src] and purging it of malevolent curses</span>","<span class='boldannounce'>The power of your faith purges curses of the [src]!</span>")
+	else
+		user.visible_message("<span class='boldannounce'>As [usr] touches [src], some dark mist erupts from it's surface and spreads in air around [user.p_them()]</span>","<span class='userdanger'>You feel like you unleashed something horrible on yourself</span>")
+		user.apply_necropolis_curse()
+	if(original)
+		original.forceMove(drop_location())
+		qdel(src)
+		user.put_in_active_hand(original)
 
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
