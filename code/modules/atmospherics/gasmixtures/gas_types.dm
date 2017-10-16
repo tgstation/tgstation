@@ -106,6 +106,8 @@ GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /
 	layer = FLY_LAYER
 	appearance_flags = TILE_BOUND
 
+INITIALIZE_IMMEDIATE(/obj/effect/overlay/gas)
+
 /obj/effect/overlay/gas/Initialize(mapload, state)
 	. = ..()
 	icon_state = state
