@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - bugfix: "Player-controlled \"neutral\" mobs such as minebots are now considered valid targets by clock cult's ocular wardens."
