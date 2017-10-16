@@ -35,12 +35,13 @@
 	canMouseDown = TRUE
 	pin = null
 	var/aiming = FALSE
-	var/aiming_time = 7
-	var/aiming_time_fire_threshold = 2
-	var/aiming_time_left = 7
+	var/aiming_time = 12
+	var/aiming_time_fire_threshold = 5
+	var/aiming_time_left = 12
 	var/aiming_time_increase_user_movement = 3
 	var/scoped_slow = 1
 	var/aiming_time_increase_angle_multiplier = 0.3
+	var/last_process = 0
 
 	var/lastangle = 0
 	var/aiming_lastangle = 0
@@ -202,7 +203,7 @@
 
 /obj/item/gun/energy/beam_rifle/Initialize()
 	. = ..()
-	START_PROCESSING(SSfastprocess, src)
+	START_PROCESSING(SSprojectiles, src)
 	zoom_speed_action = new(src)
 	zoom_lock_action = new(src)
 
@@ -238,7 +239,7 @@
 		if(!istype(curloc))
 			return
 		targloc = get_turf_in_angle(lastangle, curloc, 10)
-	P.preparePixelProjectile(targloc, targloc, current_user, current_user.client.mouseParams, 0)
+	P.preparePixelProjectile(targloc, current_user, current_user.client.mouseParams, 0)
 	P.fire(lastangle)
 
 /obj/item/gun/energy/beam_rifle/process()
@@ -246,9 +247,9 @@
 		return
 	check_user()
 	handle_zooming()
-	if(aiming_time_left > 0)
-		aiming_time_left--
-		aiming_beam(TRUE)
+	aiming_time_left = max(0, aiming_time_left - (world.time - last_process))
+	aiming_beam(TRUE)
+	last_process = world.time
 
 /obj/item/gun/energy/beam_rifle/proc/check_user(automatic_cleanup = TRUE)
 	if(!istype(current_user) || !isturf(current_user.loc) || !(src in current_user.held_items) || current_user.incapacitated())	//Doesn't work if you're not holding it!
@@ -440,7 +441,7 @@
 		firing_dir = BB.firer.dir
 	if(!BB.suppressed && firing_effect_type)
 		new firing_effect_type(get_turf(src), firing_dir)
-	BB.preparePixelProjectile(target, targloc, user, params, spread)
+	BB.preparePixelProjectile(target, user, params, spread)
 	BB.fire(gun? gun.lastangle : null, null)
 	BB = null
 	return TRUE
@@ -636,10 +637,6 @@
 	while(loc)
 		if(++safety > (range * 3))	//If it's looping for way, way too long...
 			return	//Kill!
-		if((!( current ) || loc == current))
-			current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
-		if(!Angle)
-			Angle=round(Get_Angle(src,current))
 		if(spread)
 			Angle += (rand() - 0.5) * spread
 		var/matrix/M = new
