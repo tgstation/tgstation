@@ -595,6 +595,7 @@
 	flags_1 = DROPDEL_1 | ABSTRACT_1
 	attack_verb = list("slapped")
 	hitsound = 'sound/effects/snap.ogg'
+	var/slaps = 0
 
 /obj/item/slapper/attack(mob/M, mob/living/carbon/human/user)
 	if(ishuman(M))
@@ -607,6 +608,10 @@
 		user.visible_message("<span class='danger'>[user] slaps [M] in the [(aim_for_face)?"face":user.zone_selected]!</span>",
  		"<span class='notice'>You slap [M] in the [(aim_for_face)?"face":user.zone_selected]! </span>",\
  		"You hear a slap.")
+		slaps++
+		if(slaps > 30 && !(flags_1 & NODROP_1))
+			to_chat(user, "<span class='bold notice'>Congrats, you are now a REAL MAN! Nobody can disarm you of your slapping abilities now!</span>")
+			flags_1 |= NODROP_1
 		return
 	else
 		..()
