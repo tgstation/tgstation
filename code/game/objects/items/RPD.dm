@@ -86,7 +86,7 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 		"Manual Valve"		= new /datum/pipe_info(PIPE_MVALVE, 			1,	PIPE_BINARY),
 		"Digital Valve"		= new /datum/pipe_info(PIPE_DVALVE,				1,	PIPE_BINARY),
 		"4-Way Manifold"	= new /datum/pipe_info(PIPE_4WAYMANIFOLD,		1,	PIPE_QUAD),
-		"Layer Manifold"	= new /datum/pipe_info(PIPE_LAYER_MANIFOLD,		2,	PIPE_BINARY),
+		"Layer Manifold"	= new /datum/pipe_info(PIPE_LAYER_MANIFOLD,		1,	PIPE_BINARY),
 		"Bluespace Pipe"	= new /datum/pipe_info(PIPE_BLUESPACE,			1,	PIPE_UNARY),
 	),
 	"Devices"=list(
@@ -565,10 +565,8 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 		if(PAINT_MODE) //Paint pipes
 			var/obj/machinery/atmospherics/pipe/P = A
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			P.add_atom_colour(paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
-			P.pipe_color = paint_colors[paint_color]
+			P.paint(paint_colors[paint_color])
 			user.visible_message("<span class='notice'>[user] paints \the [P] [paint_color].</span>","<span class='notice'>You paint \the [P] [paint_color].</span>")
-			P.update_node_icon()
 			return
 
 		if(EATING_MODE) //Eating pipes
