@@ -70,6 +70,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		set_security_level("delta")
 		max_blob_points = INFINITY
 		blob_points = INFINITY
+		addtimer(CALLBACK(src, .proc/victory), 660)
 	..()
 
 
@@ -98,6 +99,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			A.color = color
 			A.name = "blob"
 			A.icon = 'icons/mob/blob.dmi'
+			A.icon_state = "blob_shield"
 			A.layer = BELOW_MOB_LAYER
 			A.invisibility = 0
 			A.blend_mode = 0
