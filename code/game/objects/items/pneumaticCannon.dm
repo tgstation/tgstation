@@ -31,6 +31,7 @@
 	var/charge_ticks = 1
 	var/charge_tick = 0
 	var/charge_type
+	var/selfcharge = FALSE
 	trigger_guard = TRIGGER_GUARD_NORMAL
 
 
