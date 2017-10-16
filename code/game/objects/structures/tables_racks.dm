@@ -41,23 +41,20 @@
 /obj/structure/table/proc/deconstruction_hints(mob/user)
 	to_chat(user, "<span class='notice'>The top is <b>screwed</b> on, but the main <b>bolts</b> are also visible.</span>")
 
-/obj/structure/table/Initialize()
-	. = ..()
-	for(var/obj/structure/table/T in src.loc)
-		if(T != src)
-			qdel(T)
-
 /obj/structure/table/update_icon()
 	if(smooth)
 		queue_smooth(src)
 		queue_smooth_neighbors(src)
 
 /obj/structure/table/narsie_act()
-	new /obj/structure/table/wood(src.loc)
+	var/atom/A = loc
+	qdel(src)
+	new /obj/structure/table/wood(A)
 
 /obj/structure/table/ratvar_act()
-	new /obj/structure/table/reinforced/brass(src.loc)
-
+	var/atom/A = loc
+	qdel(src)
+	new /obj/structure/table/reinforced/brass(A)
 
 /obj/structure/table/attack_paw(mob/user)
 	attack_hand(user)
