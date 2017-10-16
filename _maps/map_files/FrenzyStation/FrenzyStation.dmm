@@ -347,24 +347,7 @@
 "bd" = (
 /obj/structure/window/reinforced{
 	dir = 1;
-	pixel_y = 2
-	},
-/obj/structure/safe,
-/obj/item/gun/ballistic/revolver/russian,
-/obj/item/folder/documents,
-/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka,
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
-/obj/item/stack/sheet/mineral/gold{
-	pixel_x = 1;
-	pixel_y = -2
-	},
-/obj/item/stack/sheet/mineral/gold{
-	pixel_x = 1;
-	pixel_y = -2
-	},
-/obj/item/stack/sheet/mineral/gold{
-	pixel_x = 1;
-	pixel_y = -2
+	layer = 2.9
 	},
 /turf/open/floor/plasteel/black,
 /area/bridge)
@@ -5051,6 +5034,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 1
+	},
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "mb" = (
@@ -5992,9 +5978,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9
-	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "op" = (
@@ -6005,11 +5989,17 @@
 	name = "Station Intercom (General)";
 	pixel_y = -29
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "oq" = (
 /obj/structure/cable/white{
 	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -6147,15 +6137,17 @@
 /turf/closed/wall/r_wall,
 /area/tcommsat/server)
 "oI" = (
-/obj/machinery/door/airlock/command{
-	cyclelinkeddir = 2;
-	name = "Telecomms Server Room";
-	req_access = null;
-	req_access_txt = "61"
-	},
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/command{
+	cyclelinkeddir = 0;
+	name = "Telecomms Control Room";
+	req_access = null;
+	req_access_txt = "61"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/black,
 /area/tcommsat/server)
 "oJ" = (
@@ -6217,6 +6209,11 @@
 	},
 /obj/item/device/radio/intercom{
 	pixel_y = 25
+	},
+/obj/structure/cable/white{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 1
@@ -6429,11 +6426,10 @@
 /turf/open/floor/plasteel/black,
 /area/tcommsat/server)
 "pi" = (
-/obj/machinery/door/firedoor/heavy,
-/obj/effect/turf_decal/delivery,
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/black,
 /area/tcommsat/server)
 "pj" = (
@@ -6586,7 +6582,9 @@
 /area/engine/engineering)
 "py" = (
 /obj/structure/chair/stool,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "pz" = (
@@ -6605,6 +6603,9 @@
 	pixel_y = 0
 	},
 /obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -6649,6 +6650,9 @@
 /obj/item/electronics/airlock,
 /obj/machinery/light{
 	light_color = "#c9d3e8"
+	},
+/obj/structure/cable/white{
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/yellow/side,
 /area/engine/engineering)
@@ -6715,15 +6719,17 @@
 /turf/open/floor/plasteel/yellow/side,
 /area/engine/engineering)
 "pO" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = -26
+/obj/machinery/computer/telecomms/monitor{
+	network = "tcommsat"
 	},
 /turf/open/floor/plasteel/black,
 /area/tcommsat/server)
 "pP" = (
+/obj/machinery/computer/telecomms/server{
+	network = "tcommsat"
+	},
 /obj/structure/cable/white{
-	icon_state = "1-2"
+	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/black,
 /area/tcommsat/server)
@@ -6930,14 +6936,8 @@
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
 "qk" = (
-/obj/machinery/r_n_d/server/core,
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/circuit{
-	name = "Server Base";
-	initial_gas_mix = "n2=500;TEMP=80"
-	},
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
 /area/tcommsat/server)
 "ql" = (
 /obj/machinery/atmospherics/pipe/simple{
@@ -6951,10 +6951,9 @@
 /turf/open/floor/plasteel/black,
 /area/tcommsat/server)
 "qm" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
-/turf/open/floor/plasteel/black,
+/obj/machinery/atmospherics/pipe/simple,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
 /area/tcommsat/server)
 "qn" = (
 /obj/machinery/atmospherics/pipe/manifold{
@@ -6965,17 +6964,15 @@
 /turf/open/floor/plasteel/black,
 /area/tcommsat/server)
 "qo" = (
-/obj/machinery/computer/message_monitor,
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 9
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/door/firedoor/heavy,
+/obj/machinery/door/airlock/command{
+	cyclelinkeddir = 9;
+	name = "Telecomms Server Room";
+	req_access = null;
+	req_access_txt = "61"
 	},
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/circuit{
-	name = "Server Base";
-	initial_gas_mix = "n2=500;TEMP=80"
-	},
+/turf/open/floor/plasteel/black,
 /area/tcommsat/server)
 "qp" = (
 /obj/machinery/power/emitter,
@@ -7081,51 +7078,36 @@
 	},
 /area/engine/atmos)
 "qA" = (
-/obj/machinery/computer/rdservercontrol,
-/obj/structure/cable/white{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc/highcap/five_k{
-	areastring = "/area/tcommsat/server";
-	dir = 8;
-	layer = 4;
-	name = "Telecomms Server APC";
-	pixel_x = -26;
-	pixel_y = 0
-	},
-/turf/open/floor/circuit{
-	name = "Server Base";
-	initial_gas_mix = "n2=500;TEMP=80"
-	},
+/obj/machinery/r_n_d/server/core,
+/turf/open/floor/circuit/telecomms,
 /area/tcommsat/server)
 "qB" = (
-/obj/machinery/atmospherics/pipe/simple,
-/obj/structure/cable/white{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 6;
+	icon_state = "intact";
+	tag = ""
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/black/telecomms,
 /area/tcommsat/server)
 "qC" = (
-/obj/structure/chair/office/light{
-	icon_state = "officechair_white";
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple{
+	tag = "icon-intact (SOUTHWEST)";
+	icon_state = "intact";
+	dir = 10
 	},
-/obj/machinery/atmospherics/pipe/simple,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/black/telecomms,
 /area/tcommsat/server)
 "qD" = (
-/obj/machinery/computer/telecomms/monitor,
-/obj/item/paper/monitorkey,
-/obj/item/device/radio/intercom{
-	pixel_x = 25
+/obj/machinery/power/apc/highcap/five_k{
+	areastring = "/area/tcommsat/server";
+	dir = 4;
+	layer = 4;
+	name = "Telecomms Server APC";
+	pixel_x = 26;
+	pixel_y = 0
 	},
-/turf/open/floor/circuit{
-	name = "Server Base";
-	initial_gas_mix = "n2=500;TEMP=80"
-	},
+/obj/structure/cable/white,
+/turf/open/floor/plasteel/black,
 /area/tcommsat/server)
 "qE" = (
 /turf/open/space/transit/north,
@@ -7389,10 +7371,7 @@
 /area/engine/atmos)
 "rb" = (
 /obj/machinery/r_n_d/server/robotics,
-/turf/open/floor/circuit{
-	name = "Server Base";
-	initial_gas_mix = "n2=500;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms,
 /area/tcommsat/server)
 "rc" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
@@ -7400,13 +7379,13 @@
 	external_pressure_bound = 120;
 	name = "server vent"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/black/telecomms,
 /area/tcommsat/server)
 "rd" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/black/telecomms,
 /area/tcommsat/server)
 "re" = (
 /obj/machinery/computer/telecomms/server,
@@ -7566,6 +7545,11 @@
 	layer = 4
 	},
 /obj/item/device/radio/off,
+/obj/machinery/airalarm{
+	dir = 4;
+	locked = 0;
+	pixel_x = -23
+	},
 /turf/open/floor/plasteel/black,
 /area/tcommsat/server)
 "ry" = (
@@ -7574,7 +7558,7 @@
 /area/tcommsat/server)
 "rz" = (
 /obj/machinery/announcement_system,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/black/telecomms,
 /area/tcommsat/server)
 "rA" = (
 /obj/effect/spawner/structure/window/shuttle,
@@ -7655,6 +7639,9 @@
 	layer = 2.9
 	},
 /obj/effect/turf_decal/delivery,
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "rJ" = (
@@ -7928,9 +7915,6 @@
 /area/engine/atmos)
 "sn" = (
 /obj/machinery/announcement_system,
-/obj/machinery/light{
-	dir = 8
-	},
 /turf/open/floor/circuit/green/telecomms,
 /area/tcommsat/server)
 "so" = (
@@ -7939,9 +7923,6 @@
 /area/tcommsat/server)
 "sp" = (
 /obj/machinery/telecomms/server/presets/common/birdstation,
-/obj/machinery/light{
-	dir = 4
-	},
 /turf/open/floor/circuit/green/telecomms,
 /area/tcommsat/server)
 "sq" = (
@@ -8147,6 +8128,9 @@
 	layer = 2.9
 	},
 /obj/effect/turf_decal/delivery,
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "sM" = (
@@ -8713,12 +8697,22 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/open/floor/engine,
 /area/engine/engineering)
 "tS" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 4
+	},
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -8733,12 +8727,22 @@
 /obj/machinery/light{
 	light_color = "#c9d3e8"
 	},
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/open/floor/engine,
 /area/engine/engineering)
 "tU" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
+	},
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -8748,6 +8752,11 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
+	},
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -8759,6 +8768,10 @@
 /obj/machinery/power/emitter/anchored{
 	dir = 1;
 	state = 2
+	},
+/obj/structure/cable/white{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -9392,14 +9405,11 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/engine/engineering)
 "vD" = (
-/obj/machinery/door/airlock/command{
-	cyclelinkeddir = 1;
-	name = "Telecomms Server Room";
-	req_access = null;
-	req_access_txt = "61"
-	},
 /obj/structure/cable/white{
 	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
 /turf/open/floor/plasteel/black,
 /area/tcommsat/server)
@@ -9417,6 +9427,148 @@
 "vG" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/engine/atmos)
+"vH" = (
+/obj/structure/safe,
+/obj/item/gun/ballistic/revolver/russian,
+/obj/item/folder/documents,
+/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/item/stack/sheet/mineral/gold{
+	pixel_x = 1;
+	pixel_y = -2
+	},
+/obj/item/stack/sheet/mineral/gold{
+	pixel_x = 1;
+	pixel_y = -2
+	},
+/obj/item/stack/sheet/mineral/gold{
+	pixel_x = 1;
+	pixel_y = -2
+	},
+/turf/open/floor/circuit/green,
+/area/bridge)
+"vI" = (
+/obj/structure/closet/secure_closet/captains,
+/turf/open/floor/circuit/green,
+/area/bridge)
+"vJ" = (
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/engine/engineering)
+"vK" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/closed/wall/r_wall,
+/area/engine/engineering)
+"vL" = (
+/obj/structure/chair/office/light,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/item/device/radio/intercom{
+	pixel_x = -25
+	},
+/turf/open/floor/plasteel/black,
+/area/tcommsat/server)
+"vM" = (
+/obj/item/device/radio/intercom{
+	pixel_x = 25
+	},
+/obj/machinery/atmospherics/pipe/simple,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = 28;
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/black,
+/area/tcommsat/server)
+"vN" = (
+/obj/machinery/atmospherics/pipe/simple,
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/black,
+/area/tcommsat/server)
+"vO" = (
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/door/firedoor/heavy,
+/obj/machinery/door/airlock/command{
+	cyclelinkeddir = 6;
+	name = "Telecomms Server Room";
+	req_access = null;
+	req_access_txt = "61"
+	},
+/turf/open/floor/plasteel/black,
+/area/tcommsat/server)
+"vP" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/power/apc/highcap/five_k{
+	areastring = "/area/tcommsat/server";
+	dir = 4;
+	layer = 4;
+	name = "Telecomms Server APC";
+	pixel_x = 26;
+	pixel_y = 0
+	},
+/obj/structure/cable/white{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/black,
+/area/tcommsat/server)
+"vQ" = (
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
+/turf/closed/wall/r_wall,
+/area/engine/engineering)
+"vR" = (
+/obj/machinery/atmospherics/pipe/manifold,
+/turf/open/floor/plasteel/black/telecomms,
+/area/tcommsat/server)
+"vS" = (
+/obj/machinery/atmospherics/pipe/simple,
+/turf/open/floor/plasteel/black/telecomms,
+/area/tcommsat/server)
+"vT" = (
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/engine/engineering)
+"vU" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black/telecomms,
+/area/tcommsat/server)
+"vV" = (
+/turf/open/floor/plasteel/black/telecomms,
+/area/tcommsat/server)
+"vW" = (
+/obj/structure/cable/white{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/engine/engineering)
 
 (1,1,1) = {"
 aa
@@ -41420,20 +41572,20 @@ hM
 of
 oy
 oQ
-pk
+vJ
 pF
-ou
-ou
-ou
-ot
+vQ
+vQ
+vQ
+vT
 rI
-ot
-ot
+vT
+vT
 sL
-ot
-ot
-ot
-ot
+vT
+vT
+vT
+vW
 ot
 ot
 ot
@@ -42656,7 +42808,7 @@ aD
 aM
 am
 bd
-bl
+vH
 bb
 bA
 bO
@@ -43169,8 +43321,8 @@ aw
 aF
 aO
 am
-bf
-bm
+bd
+vI
 bb
 bC
 bQ
@@ -44193,9 +44345,9 @@ aa
 aa
 aa
 aj
+bm
+bl
 ay
-aI
-aR
 ba
 bh
 bp
@@ -46046,7 +46198,7 @@ cq
 oo
 oy
 oy
-oy
+vK
 oy
 qj
 qj
@@ -46302,13 +46454,13 @@ mK
 hM
 op
 oH
-ph
-oH
+rx
+vL
 pO
 qk
 qA
 rb
-rx
+vV
 rX
 sn
 sF
@@ -46562,13 +46714,13 @@ oI
 pi
 vD
 pP
-ql
+qk
 qB
+vS
 rc
-pQ
-pQ
-pQ
-pQ
+vV
+vV
+vV
 qf
 tl
 tx
@@ -46816,16 +46968,16 @@ vB
 hM
 hM
 oH
-ph
-oH
-pQ
+pR
+vM
+vN
 qm
-pQ
-pQ
+vR
+rz
 ry
 rY
 so
-pQ
+vV
 qf
 tm
 ty
@@ -47075,14 +47227,14 @@ hx
 oJ
 oJ
 vE
-pQ
-qn
+vO
+oH
 qC
+vS
 rd
-pQ
-pQ
-pQ
-pQ
+vV
+vV
+vV
 qf
 tn
 tz
@@ -47332,11 +47484,11 @@ aa
 aa
 aa
 oJ
-pR
+vP
 qo
-qD
-re
-rz
+vV
+vV
+vU
 rZ
 sp
 sG
