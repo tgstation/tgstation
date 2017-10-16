@@ -491,7 +491,9 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		return
 	if(handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
-
+	
+	msg = trim(msg)
+	
 	if(!msg)
 		return
 
