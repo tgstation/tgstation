@@ -22178,7 +22178,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/open/floor/engine,
+/turf/open/floor/circuit/green,
 /area/engine/supermatter)
 "aMT" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -22205,7 +22205,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/turf/open/floor/engine,
+/turf/open/floor/circuit/green,
 /area/engine/supermatter)
 "aMX" = (
 /obj/structure/cable{
@@ -23115,7 +23115,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/open/floor/engine,
+/turf/open/floor/circuit/green,
 /area/engine/supermatter)
 "aOD" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
@@ -23127,7 +23127,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/turf/open/floor/engine,
+/turf/open/floor/circuit/green,
 /area/engine/supermatter)
 "aOE" = (
 /obj/structure/cable{
