@@ -222,6 +222,7 @@
 #include "code\controllers\subsystem\processing\obj.dm"
 #include "code\controllers\subsystem\processing\overlays.dm"
 #include "code\controllers\subsystem\processing\processing.dm"
+#include "code\controllers\subsystem\processing\projectiles.dm"
 #include "code\datums\action.dm"
 #include "code\datums\ai_laws.dm"
 #include "code\datums\beam.dm"
