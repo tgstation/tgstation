@@ -119,7 +119,7 @@
 	L.anchored = TRUE
 	if(ishostile(L))
 		var/mob/living/simple_animal/hostile/H = L
-		H.toggle_off()
+		H.toggle_ai(AI_OFF)
 		H.LoseTarget()
 
 /datum/proximity_monitor/advanced/timestop/proc/unfreeze_mob(mob/living/L)
@@ -128,4 +128,4 @@
 	frozen_mobs -= L
 	if(ishostile(L))
 		var/mob/living/simple_animal/hostile/H = L
-		H.toggle_initial()
+		H.toggle_ai(initial(H.AIStatus))

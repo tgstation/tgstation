@@ -545,30 +545,23 @@
 	. = ..()
 	riding_datum = new/datum/riding/animal
 
-/mob/living/simple_animal/proc/toggle_idle()
-	if (AIStatus != AI_IDLE)
-		GLOB.simple_animals[AIStatus] -= src
-		GLOB.simple_animals[AI_IDLE] += src
-		AIStatus = AI_IDLE
 
-/mob/living/simple_animal/proc/toggle_active()
-	if (AIStatus != AI_ON)
-		GLOB.simple_animals[AIStatus] -= src
-		GLOB.simple_animals[AI_ON] += src
-		AIStatus = AI_ON
+/mob/living/simple_animal/proc/toggle_ai(togglestatus)
+	if (AIStatus != togglestatus)
+		if (togglestatus > 0 && togglestatus < 4)
+			GLOB.simple_animals[AIStatus] -= src
+			GLOB.simple_animals[togglestatus] += src
+			AIStatus = togglestatus
+		else
+			stack_trace("Something attempted to set simple animals AI to an invalid state: [togglestatus]")
 
-/mob/living/simple_animal/proc/toggle_off()
-	if (AIStatus != AI_OFF)
-		GLOB.simple_animals[AIStatus] -= src
-		GLOB.simple_animals[AI_OFF] += src
-		AIStatus = AI_OFF
 
-/mob/living/simple_animal/proc/toggle_initial()
-	if (AIStatus != initial(AIStatus))
-		GLOB.simple_animals[AIStatus] -= src
-		GLOB.simple_animals[initial(AIStatus)] += src
-		AIStatus = initial(AIStatus)
+// /mob/living/simple_animal/proc/toggle_initial()
+//	if (AIStatus != initial(AIStatus))
+//		GLOB.simple_animals[AIStatus] -= src
+//		GLOB.simple_animals[initial(AIStatus)] += src
+//		AIStatus = initial(AIStatus)
 
 /mob/living/simple_animal/proc/consider_wakeup()
 	if (pulledby || shouldwakeup)
-		toggle_active()
+		toggle_ai(AI_ON)

@@ -84,8 +84,7 @@
 		DestroySurroundings()
 		if(!MoveToTarget(possible_targets))     //if we lose our target
 			if(AIShouldSleep(possible_targets))	// we try to acquire a new one
-				if (AIStatus != AI_IDLE)
-					toggle_idle()			// otherwise we go idle
+				toggle_ai(AI_IDLE)			// otherwise we go idle
 	return 1
 
 /mob/living/simple_animal/hostile/attacked_by(obj/item/I, mob/living/user)
@@ -276,7 +275,7 @@
 			target = null
 			LoseSearchObjects()
 		if(AIStatus == AI_IDLE)
-			toggle_active()
+			toggle_ai(AI_ON)
 			FindTarget()
 		else if(target != null && prob(40))//No more pulling a mob forever and having a second player attack it, it can switch targets now if it finds a more suitable one
 			FindTarget()
@@ -410,7 +409,7 @@
 		if(AI_IDLE)
 			if(FindTarget(possible_targets, 1))
 				. = 1
-				toggle_active() //Wake up for more than one Life() cycle.
+				toggle_ai(AI_ON) //Wake up for more than one Life() cycle.
 			else
 				. = 0
 
@@ -445,4 +444,4 @@
 /mob/living/simple_animal/hostile/consider_wakeup()
 	..()
 	if(AIStatus == AI_IDLE && FindTarget(ListTargets(), 1))
-		toggle_active()
+		toggle_ai(AI_ON)
