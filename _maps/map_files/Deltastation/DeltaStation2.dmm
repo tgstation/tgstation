@@ -8745,7 +8745,7 @@
 	network = list("Engine");
 	pixel_x = 23
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
@@ -8755,12 +8755,12 @@
 "auD" = (
 /obj/structure/window/plasma/reinforced/spawner/east,
 /obj/machinery/power/rad_collector/anchored,
-/obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 6
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/open/floor/circuit/green,
 /area/engine/supermatter)
@@ -8779,17 +8779,17 @@
 "auG" = (
 /obj/structure/window/plasma/reinforced/spawner/west,
 /obj/machinery/power/rad_collector/anchored,
-/obj/structure/cable/yellow{
-	d2 = 4;
-	icon_state = "0-4"
-	},
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
 	},
 /turf/open/floor/circuit/green,
 /area/engine/supermatter)
 "auH" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
@@ -9316,12 +9316,12 @@
 "avP" = (
 /obj/structure/window/plasma/reinforced/spawner/east,
 /obj/machinery/power/rad_collector/anchored,
-/obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/open/floor/circuit/green,
 /area/engine/supermatter)
@@ -9332,12 +9332,12 @@
 "avR" = (
 /obj/structure/window/plasma/reinforced/spawner/west,
 /obj/machinery/power/rad_collector/anchored,
-/obj/structure/cable/yellow{
-	d2 = 4;
-	icon_state = "0-4"
-	},
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
 	},
 /turf/open/floor/circuit/green,
 /area/engine/supermatter)
@@ -109429,7 +109429,7 @@
 	},
 /obj/structure/window/plasma/reinforced/spawner/east,
 /obj/machinery/power/rad_collector/anchored,
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
@@ -109441,7 +109441,7 @@
 	},
 /obj/structure/window/plasma/reinforced/spawner/west,
 /obj/machinery/power/rad_collector/anchored,
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
