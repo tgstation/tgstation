@@ -7,7 +7,7 @@
 	name = "vocal cords"
 	icon_state = "appendix"
 	zone = "mouth"
-	slot = "vocal_cords"
+	slot = ORGAN_SLOT_VOICE
 	gender = PLURAL
 	var/list/spans = null
 
@@ -24,15 +24,13 @@
 	name = "adamantine resonator"
 	desc = "Fragments of adamantine exist in all golems, stemming from their origins as purely magical constructs. These are used to \"hear\" messages from their leaders."
 	zone = "head"
-	slot = "adamantine_resonator"
+	slot = ORGAN_SLOT_ADAMANTINE_RESONATOR
 	icon_state = "adamantine_resonator"
 
 /obj/item/organ/vocal_cords/adamantine
 	name = "adamantine vocal cords"
 	desc = "When adamantine resonates, it causes all nearby pieces of adamantine to resonate as well. Adamantine golems use this to broadcast messages to nearby golems."
 	actions_types = list(/datum/action/item_action/organ_action/use/adamantine_vocal_cords)
-	zone = "mouth"
-	slot = "vocal_cords"
 	icon_state = "adamantine_cords"
 
 /datum/action/item_action/organ_action/use/adamantine_vocal_cords/Trigger()
@@ -48,7 +46,7 @@
 	for(var/m in GLOB.player_list)
 		if(iscarbon(m))
 			var/mob/living/carbon/C = m
-			if(C.getorganslot("adamantine_resonator"))
+			if(C.getorganslot(ORGAN_SLOT_ADAMANTINE_RESONATOR))
 				to_chat(C, msg)
 		if(isobserver(m))
 			var/link = FOLLOW_LINK(m, owner)
@@ -59,8 +57,6 @@
 	name = "divine vocal cords"
 	desc = "They carry the voice of an ancient god."
 	icon_state = "voice_of_god"
-	zone = "mouth"
-	slot = "vocal_cords"
 	actions_types = list(/datum/action/item_action/organ_action/colossus)
 	var/next_command = 0
 	var/cooldown_mod = 1

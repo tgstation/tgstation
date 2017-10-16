@@ -12,7 +12,7 @@
 	name = "lungs"
 	icon_state = "lungs"
 	zone = "chest"
-	slot = "lungs"
+	slot = ORGAN_SLOT_LUNGS
 	gender = PLURAL
 	w_class = WEIGHT_CLASS_NORMAL
 

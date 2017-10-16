@@ -156,3 +156,20 @@
 #define MEGAFAUNA_DEFAULT_RECOVERY_TIME 5
 
 #define SHADOW_SPECIES_LIGHT_THRESHOLD 0.2
+
+// Offsets defines
+
+#define OFFSET_UNIFORM "uniform"
+#define OFFSET_ID "id"
+#define OFFSET_GLOVES "gloves"
+#define OFFSET_GLASSES "glasses"
+#define OFFSET_EARS "ears"
+#define OFFSET_SHOES "shoes"
+#define OFFSET_S_STORE "s_store"
+#define OFFSET_FACEMASK "mask"
+#define OFFSET_HEAD "head"
+#define OFFSET_FACE "face"
+#define OFFSET_BELT "belt"
+#define OFFSET_BACK "back"
+#define OFFSET_SUIT "suit"
+#define OFFSET_NECK "neck"

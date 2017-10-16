@@ -1,4 +1,0 @@
-author: "armie"
-delete-after: True
-changes: 
-  - bugfix: "mob spawners are no longer possessable"
