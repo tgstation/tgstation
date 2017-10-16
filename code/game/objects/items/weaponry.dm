@@ -596,6 +596,7 @@
 	attack_verb = list("slapped")
 	hitsound = 'sound/effects/snap.ogg'
 	var/slaps = 0
+	var/ascended = FALSE
 
 /obj/item/slapper/attack(mob/M, mob/living/carbon/human/user)
 	if(ishuman(M))
@@ -609,18 +610,25 @@
  		"<span class='notice'>You slap [M] in the [(aim_for_face)?"face":user.zone_selected]! </span>",\
  		"You hear a slap.")
 		slaps++
-		if(slaps > 50 && !(flags_1 & NODROP_1))
+		if(slaps >= 50 && !(flags_1 & NODROP_1))
 			to_chat(user, "<span class='bold notice'>Congrats, you are now a REAL MAN! Nobody can disarm you of your slapping abilities now!</span>")
 			flags_1 |= NODROP_1
-		if(slaps > 150 && icon_state != "disintegrate")
+		if(slaps >= 150 && !ascended)
 			to_chat(user, "<span class='bold danger'>YOU HAVE ASCENDED PAST MANLIHOOD, INTO GODHOOD!</span>")
-			icon_state = "disintegrate"
-			item_state = "disintegrate"
 			name = "godly slapper"
 			desc = "You are a god among men, slapper!"
+			ascended = TRUE
+			update_icon()
 		return
 	else
 		..()
+
+/obj/item/slapper/update_icon()
+	. = ..()
+	if(slaps >= 150 && !ascended)
+		icon_state = "disintegrate"
+		item_state = "disintegrate"
+	
 
 /obj/item/proc/can_trigger_gun(mob/living/user)
 	if(!user.can_use_guns(src))
