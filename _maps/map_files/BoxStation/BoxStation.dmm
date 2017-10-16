@@ -60798,6 +60798,11 @@
 /obj/structure/grille,
 /turf/open/space/basic,
 /area/space)
+"Qov" = (
+/obj/structure/bed/dogbed/renault,
+/mob/living/simple_animal/pet/fox/Renault,
+/turf/open/floor/wood,
+/area/crew_quarters/heads/captain)
 
 (1,1,1) = {"
 aaa
@@ -93049,7 +93054,7 @@ aVv
 aXg
 aYF
 aZV
-bbw
+Qov
 bcn
 bbw
 ben

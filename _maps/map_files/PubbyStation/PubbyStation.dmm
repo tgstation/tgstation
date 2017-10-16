@@ -54065,6 +54065,11 @@
 /obj/machinery/smoke_machine,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"YXI" = (
+/obj/structure/bed/dogbed/renault,
+/mob/living/simple_animal/pet/fox/Renault,
+/turf/open/floor/plasteel/black,
+/area/crew_quarters/heads/captain)
 
 (1,1,1) = {"
 aaa
@@ -82687,7 +82692,7 @@ aAy
 aBp
 aCC
 aDG
-aBm
+YXI
 aFz
 aGm
 awR
