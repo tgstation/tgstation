@@ -31,9 +31,7 @@
 			else
 				not_on_station = TRUE
 
-		if (on_station == not_on_station)
-			message_admins("[A] ([A.type]), on_station=[on_station], not_on_station=[not_on_station]")
-		if (on_station)
+		if (on_station && !not_on_station)
 			A.parallax_movedir = dir
 
 	qdel(src)
@@ -263,3 +261,13 @@ GLOBAL_VAR(frenzy_exports)
 	var/obj/machinery/computer/teleporter/com = power_station.teleporter_console
 	if (is_ready() && com.can_teleport(AM))
 		return ..()
+
+// ----------------------------------------------------------------------------
+// A spiffy signpost for our lobby
+
+/obj/structure/sign/frenzy
+	name = "\proper the NSS Frenzy logo"
+	desc = "Try not to forget what ship you're on."
+	icon = 'icons/obj/nss-frenzy.dmi'
+	icon_state = "nss0"
+	buildable_sign = FALSE
