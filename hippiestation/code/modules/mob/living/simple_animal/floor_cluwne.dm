@@ -416,7 +416,7 @@
 	. = ..()
 	playsound(src, 'hippiestation/sound/misc/floor_cluwne_emerge.ogg', 100, 1)
 
-/obj/dummy/floorcluwne_orbit
+/obj/effect/dummy/floorcluwne_orbit
 	name = "floor cluwne"
 	desc = "If you have this, tell a coder or admin!"
 	
