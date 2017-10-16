@@ -275,7 +275,6 @@
 			target = null
 			LoseSearchObjects()
 		if(AIStatus == AI_IDLE)
-			toggle_ai(AI_ON)
 			FindTarget()
 		else if(target != null && prob(40))//No more pulling a mob forever and having a second player attack it, it can switch targets now if it finds a more suitable one
 			FindTarget()

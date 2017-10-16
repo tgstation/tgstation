@@ -51,6 +51,7 @@
 	var/icon_base = "bee"
 	var/static/beehometypecache = typecacheof(/obj/structure/beebox)
 	var/static/hydroponicstypecache = typecacheof(/obj/machinery/hydroponics)
+	var/beetype = 1
 
 
 /mob/living/simple_animal/hostile/poison/bees/Process_Spacemove(movement_dir = 0)
@@ -60,6 +61,8 @@
 /mob/living/simple_animal/hostile/poison/bees/Initialize()
 	. = ..()
 	generate_bee_visuals()
+	if (prob(50))
+		beetype = 2
 
 
 /mob/living/simple_animal/hostile/poison/bees/Destroy()
@@ -287,3 +290,24 @@
 	QDEL_NULL(queen)
 	return ..()
 
+/mob/living/simple_animal/hostile/poison/bees/ListTargets()
+	if (beetype == 2)
+		return NewListTargets()
+	return OldListTargets()
+
+/mob/living/simple_animal/hostile/poison/bees/proc/NewListTargets()
+	if (beehome)
+		return beehome.targetslist
+	else
+		. = list()
+		for (var/obj/A in oview(vision_range, targets_from))
+			. += A
+		for (var/mob/A in oview(vision_range, targets_from))
+			. += A
+
+/mob/living/simple_animal/hostile/poison/bees/proc/OldListTargets()
+	. = list()
+	for (var/obj/A in oview(vision_range, targets_from))
+		. += A
+	for (var/mob/A in oview(vision_range, targets_from))
+		. += A

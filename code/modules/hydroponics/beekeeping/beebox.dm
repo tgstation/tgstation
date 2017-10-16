@@ -35,6 +35,8 @@
 	var/list/honeycombs = list()
 	var/list/honey_frames = list()
 	var/bee_resources = 0
+	var/list/targetslist = list()
+	var/tickhalver = FALSE
 
 
 /obj/structure/beebox/New()
@@ -84,6 +86,13 @@
 
 
 /obj/structure/beebox/process()
+	tickhalver = !tickhalver
+	if (tickhalver)
+		targetslist = list()
+		for (var/obj/A in view(initial(queen_bee.vision_range), src))
+			targetslist += A
+		for (var/mob/A in view(initial(queen_bee.vision_range), src))
+			targetslist += A
 	if(queen_bee)
 		if(bee_resources >= BEE_RESOURCE_HONEYCOMB_COST)
 			if(honeycombs.len < get_max_honeycomb())
