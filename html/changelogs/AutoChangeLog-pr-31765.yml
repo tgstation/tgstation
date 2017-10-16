@@ -1,0 +1,4 @@
+author: "DaxDupont"
+delete-after: True
+changes: 
+  - bugfix: "Fancy boxes(ie: donut boxes) now show the proper content amount in the sprite and no longer go invisible when empty."
