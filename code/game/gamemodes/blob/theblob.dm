@@ -21,9 +21,6 @@
 	var/mob/camera/blob/overmind
 
 /obj/structure/blob/Initialize()
-	var/area/Ablob = get_area(loc)
-	if(Ablob.blob_allowed) //Is this area allowed for winning as blob?
-		GLOB.blobs_legit += src
 	GLOB.blobs += src //Keep track of the blob in the normal list either way
 	setDir(pick(GLOB.cardinals))
 	update_icon()
@@ -31,6 +28,9 @@
 	if(atmosblock)
 		air_update_turf(1)
 	ConsumeTile()
+	var/area/Ablob = get_area(loc)
+	if(Ablob.blob_allowed) //Is this area allowed for winning as blob?
+		overmind.blobs_legit += src
 
 /obj/structure/blob/proc/creation_action() //When it's created by the overmind, do this.
 	return
@@ -39,7 +39,8 @@
 	if(atmosblock)
 		atmosblock = FALSE
 		air_update_turf(1)
-	GLOB.blobs_legit -= src  //if it was in the legit blobs list, it isn't now
+	if(overmind)
+		overmind.blobs_legit -= src  //if it was in the legit blobs list, it isn't now
 	GLOB.blobs -= src //it's no longer in the all blobs list either
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Expand() is no longer broken, no check necessary.
 	return ..()
@@ -232,6 +233,7 @@
 		user.changeNext_move(CLICK_CD_MELEE)
 		to_chat(user, "<b>The analyzer beeps once, then reports:</b><br>")
 		SEND_SOUND(user, sound('sound/machines/ping.ogg'))
+		to_chat(user, "<b>Progress to Critical Mass:</b> <span class='notice'>[overmind.blobs_legit.len]/[overmind.blobwincount].</span>")
 		chemeffectreport(user)
 		typereport(user)
 	else
