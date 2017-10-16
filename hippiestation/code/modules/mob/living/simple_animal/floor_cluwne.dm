@@ -49,7 +49,7 @@
 	Manifest()
 	if(!current_victim)
 		Acquire_Victim()
-	poi = new /obj/effect/dummy/floorcluwne_orbit
+	poi = new /obj/effect/dummy/floorcluwne_orbit(src)
 
 /mob/living/simple_animal/hostile/floor_cluwne/Destroy()
 	QDEL_NULL(poi)
