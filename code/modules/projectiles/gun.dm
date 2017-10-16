@@ -212,7 +212,7 @@
 		firing_burst = FALSE
 		return FALSE
 	if(!issilicon(user))
-		if( iteration > 1 && !(user.is_holding(src))) //for burst firing
+		if(iteration > 1 && !(user.is_holding(src))) //for burst firing
 			firing_burst = FALSE
 			return FALSE
 	if(chambered && chambered.BB)
@@ -230,6 +230,8 @@
 				shoot_live_shot(user, 1, target, message)
 			else
 				shoot_live_shot(user, 0, target, message)
+			if (iteration >= burst_size)
+				firing_burst = FALSE
 	else
 		shoot_with_empty_chamber(user)
 		firing_burst = FALSE
@@ -254,8 +256,7 @@
 	if(burst_size > 1)
 		firing_burst = TRUE
 		for(var/i = 1 to burst_size)
-			addtimer(CALLBACK(src, .proc/process_burst, user, target, message, params, zone_override, sprd, randomized_gun_spread, randomized_bonus_spread, rand_spr, i), min(fire_delay * (i - 1), 0))
-		firing_burst = FALSE
+			addtimer(CALLBACK(src, .proc/process_burst, user, target, message, params, zone_override, sprd, randomized_gun_spread, randomized_bonus_spread, rand_spr, i), fire_delay * (i - 1))
 	else
 		if(chambered)
 			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
