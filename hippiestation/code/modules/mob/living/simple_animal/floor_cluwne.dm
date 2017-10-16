@@ -103,6 +103,14 @@
 
 	..()
 
+/mob/living/simple_animal/hostile/floor_cluwne/Initialize()
+	. = ..()
+	if(!(src in GLOB.poi_list))
+		GLOB.poi_list += src
+
+/mob/living/simple_animal/hostile/floor_cluwne/Destroy()
+	. = ..()
+	GLOB.poi_list -= src
 
 /mob/living/simple_animal/hostile/floor_cluwne/Goto(target, delay, minimum_distance)
 	if(!manifested && !is_type_in_typecache(get_area(current_victim.loc), invalid_area_typecache))
