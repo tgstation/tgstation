@@ -9,8 +9,8 @@
 	level = 0
 	layer = GAS_FILTER_LAYER
 
-/obj/machinery/atmospherics/components/unary/portables_connector/New()
-	..()
+/obj/machinery/atmospherics/components/unary/portables_connector/Initialize()
+	. = ..()
 	var/datum/gas_mixture/air_contents = AIR1
 
 	air_contents.volume = 0

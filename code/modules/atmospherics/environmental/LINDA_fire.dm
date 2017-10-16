@@ -57,8 +57,8 @@
 	var/just_spawned = 1
 	var/bypassing = 0
 
-/obj/effect/hotspot/New()
-	..()
+/obj/effect/hotspot/Initialize()
+	. = ..()
 	SSair.hotspots += src
 	perform_exposure()
 	setDir(pick(GLOB.cardinals))

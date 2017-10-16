@@ -39,11 +39,11 @@ Pipelines + Other Objects -> Pipe network
 	if(is_type_in_list(src, GLOB.ventcrawl_machinery) && user.ventcrawler)
 		to_chat(user, "<span class='notice'>Alt-click to crawl through it.</span>")
 
-/obj/machinery/atmospherics/New(loc, process = TRUE)
+/obj/machinery/atmospherics/Initialize(mapload, process = TRUE)
+	. = ..()
 	nodes = new(device_type)
 	if (!armor)
 		armor = list(melee = 25, bullet = 10, laser = 10, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 100, acid = 70)
-	..()
 	if(process)
 		SSair.atmos_machinery += src
 	SetInitDirections()

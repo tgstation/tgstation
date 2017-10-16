@@ -26,8 +26,8 @@
 	else
 		icon_state = "o2gen_on"
 
-/obj/machinery/atmospherics/components/unary/oxygen_generator/New()
-	..()
+/obj/machinery/atmospherics/components/unary/oxygen_generator/Initialize()
+	. = ..()
 	var/datum/gas_mixture/air_contents = AIR1
 	air_contents.volume = 50
 	AIR1 = air_contents

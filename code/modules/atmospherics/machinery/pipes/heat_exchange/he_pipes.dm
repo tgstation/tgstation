@@ -9,8 +9,8 @@
 	var/icon_temperature = T20C //stop small changes in temperature causing icon refresh
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 
-/obj/machinery/atmospherics/pipe/heat_exchanging/New()
-	..()
+/obj/machinery/atmospherics/pipe/heat_exchanging/Initialize()
+	. = ..()
 	add_atom_colour("#404040", FIXED_COLOUR_PRIORITY)
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/can_be_node(obj/machinery/atmospherics/pipe/heat_exchanging/target)

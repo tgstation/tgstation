@@ -41,8 +41,8 @@
 	if(stat != old_stat)
 		update_icon()
 
-/obj/machinery/atmospherics/components/trinary/mixer/New()
-	..()
+/obj/machinery/atmospherics/components/trinary/mixer/Initialize()
+	. = ..()
 	var/datum/gas_mixture/air3 = AIR3
 	air3.volume = 300
 	AIR3 = air3

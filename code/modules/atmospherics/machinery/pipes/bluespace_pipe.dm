@@ -10,10 +10,10 @@ GLOBAL_LIST_EMPTY(bluespace_pipes)
 	device_type = UNARY
 	can_buckle = FALSE
 
-/obj/machinery/atmospherics/pipe/bluespace/New()
+/obj/machinery/atmospherics/pipe/bluespace/Initialize()
+	. = ..()
 	icon_state = "pipe"
 	GLOB.bluespace_pipes += src
-	..()
 
 /obj/machinery/atmospherics/pipe/bluespace/Destroy()
 	GLOB.bluespace_pipes -= src
