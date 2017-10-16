@@ -22161,7 +22161,7 @@
 	network = list("Engine");
 	pixel_x = 23
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
@@ -22174,7 +22174,7 @@
 	},
 /obj/structure/window/plasma/reinforced/spawner/east,
 /obj/machinery/power/rad_collector/anchored,
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
@@ -22201,14 +22201,14 @@
 	},
 /obj/structure/window/plasma/reinforced/spawner/west,
 /obj/machinery/power/rad_collector/anchored,
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "aMX" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
@@ -23111,7 +23111,7 @@
 	},
 /obj/structure/window/plasma/reinforced/spawner/east,
 /obj/machinery/power/rad_collector/anchored,
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
@@ -23123,7 +23123,7 @@
 	},
 /obj/structure/window/plasma/reinforced/spawner/west,
 /obj/machinery/power/rad_collector/anchored,
-/obj/structure/cable/yellow{
+/obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
