@@ -51,6 +51,8 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	if(blob_core)
 		blob_core.update_icon()
 
+	SSshuttle.registerHostileEnvironment(src)
+
 	.= ..()
 
 /mob/camera/blob/Life()
@@ -119,6 +121,8 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			BM.overmind = null
 			BM.update_icons()
 	GLOB.overminds -= src
+
+	SSshuttle.clearHostileEnvironment(src)
 
 	return ..()
 
