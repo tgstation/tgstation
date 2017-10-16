@@ -2,7 +2,6 @@
 	name = "arm-mounted implant"
 	desc = "You shouldn't see this! Adminhelp and report this as an issue on github!"
 	zone = "r_arm"
-	slot = "r_arm_device"
 	icon_state = "implant-toolkit"
 	w_class = WEIGHT_CLASS_NORMAL
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
@@ -20,8 +19,17 @@
 		holder = new holder(src)
 
 	update_icon()
-	slot = zone + "_device"
+	SetSlotFromZone()
 	items_list = contents.Copy()
+
+/obj/item/organ/cyberimp/arm/proc/SetSlotFromZone()
+	switch(zone)
+		if("l_arm")
+			slot = ORGAN_SLOT_LEFT_ARM_AUG
+		if("r_arm")
+			slot = ORGAN_SLOT_RIGHT_ARM_AUG
+		else
+			CRASH("Invalid zone for [type]")
 
 /obj/item/organ/cyberimp/arm/update_icon()
 	if(zone == "r_arm")
@@ -40,7 +48,7 @@
 			zone = "l_arm"
 		else
 			zone = "r_arm"
-		slot = zone + "_device"
+		SetSlotFromZone()
 		to_chat(user, "<span class='notice'>You modify [src] to be installed on the [zone == "r_arm" ? "right" : "left"] arm.</span>")
 		update_icon()
 	else if(istype(W, /obj/item/card/emag))

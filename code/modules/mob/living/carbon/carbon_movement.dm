@@ -39,7 +39,7 @@
 		return 1
 
 	// Do we have a jetpack implant (and is it on)?
-	var/obj/item/organ/cyberimp/chest/thrusters/T = getorganslot("thrusters")
+	var/obj/item/organ/cyberimp/chest/thrusters/T = getorganslot(ORGAN_SLOT_THRUSTERS)
 	if(istype(T) && movement_dir && T.allow_thrust(0.01))
 		return 1
 

@@ -8,7 +8,7 @@
 	origin_tech = "biotech=3"
 	w_class = WEIGHT_CLASS_NORMAL
 	zone = "chest"
-	slot = "liver"
+	slot = ORGAN_SLOT_LIVER
 	desc = "Pairing suggestion: chianti and fava beans."
 	var/damage = 0 //liver damage, 0 is no damage, damage=maxHealth causes liver failure
 	var/alcohol_tolerance = ALCOHOL_RATE//affects how much damage the liver takes from alcohol

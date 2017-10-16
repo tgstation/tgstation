@@ -2,7 +2,7 @@
 	name = "festering ooze"
 	desc = "A black web of pus and viscera."
 	zone = "head"
-	slot = "zombie_infection"
+	slot = ORGAN_SLOT_ZOMBIE
 	icon_state = "blacktumor"
 	origin_tech = "biotech=5"
 	var/datum/species/old_species = /datum/species/human
