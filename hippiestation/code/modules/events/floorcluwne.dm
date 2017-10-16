@@ -7,7 +7,7 @@
 
 /datum/round_event/floor_cluwne/start()
 	var/list/spawn_locs = list()
-	for(var/X in GLOB.xeno_spawn)
+	for(var/obj/effect/landmark/X in GLOB.xeno_spawn)
 		spawn_locs += X.loc
 
 	if(!spawn_locs.len)
