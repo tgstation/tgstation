@@ -101,7 +101,7 @@
 
 /obj/item/projectile/proc/on_hit(atom/target, blocked = FALSE)
 	var/turf/target_loca = get_turf(target)
-	if(!nodamage && (damage_type == BRUTE || damage_type == BURN) && istype(target_loca, /turf/closed/wall) && prob(75))
+	if(!nodamage && (damage_type == BRUTE || damage_type == BURN) && iswallturf(target_loca) && prob(75))
 		var/turf/closed/wall/W = target_loca
 		var/mutable_appearance/decal = mutable_appearance('icons/effects/effects.dmi', "bullet_hole", TURF_DECAL_LAYER)
 		if(target == original)
