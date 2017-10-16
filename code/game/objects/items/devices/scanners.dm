@@ -277,9 +277,11 @@ MASS SPECTROMETER
 	var/datum/gas_mixture/environment = location.return_air()
 
 	var/pressure = environment.return_pressure()
+	var/volume = environment.return_volume()
 	var/total_moles = environment.total_moles()
 
 	to_chat(user, "<span class='info'><B>Results:</B></span>")
+	to_chat(user, "<span class='notice'>Local volume: [round(volume,0.01)] liters</span>")
 	if(abs(pressure - ONE_ATMOSPHERE) < 10)
 		to_chat(user, "<span class='info'>Pressure: [round(pressure,0.1)] kPa</span>")
 	else
