@@ -8739,12 +8739,6 @@
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "auC" = (
-/obj/machinery/camera{
-	c_tag = "Supermatter Chamber";
-	dir = 2;
-	network = list("Engine");
-	pixel_x = 23
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -8753,7 +8747,6 @@
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "auD" = (
-/obj/structure/window/plasma/reinforced/spawner/east,
 /obj/machinery/power/rad_collector/anchored,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 6
@@ -8761,6 +8754,9 @@
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 4
 	},
 /turf/open/floor/circuit/green,
 /area/engine/supermatter)
@@ -8777,7 +8773,6 @@
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "auG" = (
-/obj/structure/window/plasma/reinforced/spawner/west,
 /obj/machinery/power/rad_collector/anchored,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10
@@ -8786,6 +8781,9 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/structure/window/plasma/reinforced{
+	dir = 8
+	},
 /turf/open/floor/circuit/green,
 /area/engine/supermatter)
 "auH" = (
@@ -8793,6 +8791,11 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/camera{
+	c_tag = "Supermatter Chamber";
+	dir = 2;
+	network = list("Engine");
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
@@ -9314,7 +9317,6 @@
 /turf/open/floor/plasteel,
 /area/engine/atmospherics_engine)
 "avP" = (
-/obj/structure/window/plasma/reinforced/spawner/east,
 /obj/machinery/power/rad_collector/anchored,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
@@ -9323,6 +9325,9 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/structure/window/plasma/reinforced{
+	dir = 4
+	},
 /turf/open/floor/circuit/green,
 /area/engine/supermatter)
 "avQ" = (
@@ -9330,7 +9335,6 @@
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "avR" = (
-/obj/structure/window/plasma/reinforced/spawner/west,
 /obj/machinery/power/rad_collector/anchored,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4
@@ -9338,6 +9342,9 @@
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 8
 	},
 /turf/open/floor/circuit/green,
 /area/engine/supermatter)
@@ -109427,11 +109434,13 @@
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
 	},
-/obj/structure/window/plasma/reinforced/spawner/east,
 /obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 4
 	},
 /turf/open/floor/circuit/green,
 /area/engine/supermatter)
@@ -109439,11 +109448,13 @@
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4
 	},
-/obj/structure/window/plasma/reinforced/spawner/west,
 /obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 8
 	},
 /turf/open/floor/circuit/green,
 /area/engine/supermatter)
@@ -134456,8 +134467,8 @@ ard
 asi
 ehy
 auC
-auH
-auH
+auC
+auC
 ehy
 azc
 aAc
@@ -135998,8 +136009,8 @@ ebP
 aso
 ehy
 auH
-auH
-auH
+auC
+auC
 ehy
 azg
 aAe
