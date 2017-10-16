@@ -155,13 +155,9 @@
 		// if they have no mutant tongues, give them a regular one
 		T.Insert(src)
 
-<<<<<<< HEAD
 	src.regeneratebutt()
 
-	if(!getorganslot("eye_sight"))
-=======
 	if(!getorganslot(ORGAN_SLOT_EYES))
->>>>>>> 04c05d8e5c... Adds defines for organ slots (#31737)
 		var/obj/item/organ/eyes/E
 
 		if(dna && dna.species && dna.species.mutanteyes)
