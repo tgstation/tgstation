@@ -53,6 +53,7 @@
 
 /mob/living/simple_animal/hostile/floor_cluwne/Destroy()
 	QDEL_NULL(poi)
+	return ..()
 
 
 /mob/living/simple_animal/hostile/floor_cluwne/attack_hand(mob/living/carbon/human/M)
