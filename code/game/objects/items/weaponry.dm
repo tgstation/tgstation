@@ -616,8 +616,6 @@
 			to_chat(user, "<span class='bold danger'>YOU HAVE ASCENDED PAST MANLIHOOD, INTO GODHOOD!</span>")
 			icon_state = "disintegrate"
 			item_state = "disintegrate"
-			lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
-			righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 		return
 	else
 		..()
