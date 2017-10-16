@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - bugfix: "Pinned notes will now show up on vault, abductor, centcom and large glass airlocks."
