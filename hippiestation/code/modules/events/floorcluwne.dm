@@ -8,7 +8,7 @@
 /datum/round_event/floor_cluwne/start()
 	var/list/spawn_locs = list()
 	for(var/X in GLOB.xeno_spawn)
-    	spawn_locs += T
+		spawn_locs += T
 
 	if(!spawn_locs.len)
 		message_admins("No valid spawn locations found, aborting...")
