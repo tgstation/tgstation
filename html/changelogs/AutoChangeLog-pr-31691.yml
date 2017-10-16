@@ -1,4 +1,4 @@
 author: "More Robust Than You"
 delete-after: True
 changes: 
-  - bugfix: "Diseases will now cure if species is changed"
+  - rscadd: "EI NATH! now causes a flash of light"
