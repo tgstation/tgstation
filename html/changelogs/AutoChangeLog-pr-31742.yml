@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - spellcheck: "Removed a misleading message when handling full stacks of sheets."
