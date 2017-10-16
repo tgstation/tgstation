@@ -86,7 +86,7 @@
 #define HUMAN_CRIT_MAX_OXYLOSS (SSmobs.wait/30)
 /mob/living/carbon/human/check_breath(datum/gas_mixture/breath)
 
-	var/L = getorganslot("lungs")
+	var/L = getorganslot(ORGAN_SLOT_LUNGS)
 
 	if(!L)
 		if(health >= HEALTH_THRESHOLD_CRIT)
@@ -320,7 +320,7 @@
 /mob/living/carbon/human/proc/undergoing_cardiac_arrest()
 	if(!can_heartattack())
 		return FALSE
-	var/obj/item/organ/heart/heart = getorganslot("heart")
+	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
 	if(istype(heart) && heart.beating)
 		return FALSE
 	return TRUE
@@ -329,7 +329,7 @@
 	if(!can_heartattack())
 		return FALSE
 
-	var/obj/item/organ/heart/heart = getorganslot("heart")
+	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
 	if(!istype(heart))
 		return
 

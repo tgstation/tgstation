@@ -164,7 +164,7 @@
 			dissipate_track = 0
 			dissipate_strength = 1
 		if(STAGE_TWO)
-			if((check_turfs_in(1,1))&&(check_turfs_in(2,1))&&(check_turfs_in(4,1))&&(check_turfs_in(8,1)))
+			if(check_cardinals_range(1, TRUE))
 				current_size = STAGE_TWO
 				icon = 'icons/effects/96x96.dmi'
 				icon_state = "singularity_s3"
@@ -176,7 +176,7 @@
 				dissipate_track = 0
 				dissipate_strength = 5
 		if(STAGE_THREE)
-			if((check_turfs_in(1,2))&&(check_turfs_in(2,2))&&(check_turfs_in(4,2))&&(check_turfs_in(8,2)))
+			if(check_cardinals_range(2, TRUE))
 				current_size = STAGE_THREE
 				icon = 'icons/effects/160x160.dmi'
 				icon_state = "singularity_s5"
@@ -188,7 +188,7 @@
 				dissipate_track = 0
 				dissipate_strength = 20
 		if(STAGE_FOUR)
-			if((check_turfs_in(1,3))&&(check_turfs_in(2,3))&&(check_turfs_in(4,3))&&(check_turfs_in(8,3)))
+			if(check_cardinals_range(3, TRUE))
 				current_size = STAGE_FOUR
 				icon = 'icons/effects/224x224.dmi'
 				icon_state = "singularity_s7"
@@ -296,6 +296,16 @@
 
 	step(src, movement_dir)
 
+/obj/singularity/proc/check_cardinals_range(steps, retry_with_move = FALSE)
+	. = length(GLOB.cardinals)			//Should be 4.
+	for(var/i in GLOB.cardinals)
+		. -= check_turfs_in(i, steps)	//-1 for each working direction
+	if(. && retry_with_move)			//If there's still a positive value it means it didn't pass. Retry with move if applicable
+		for(var/i in GLOB.cardinals)
+			if(step(src, i))			//Move in each direction.
+				if(check_cardinals_range(steps, FALSE))		//New location passes, return true.
+					return TRUE
+	. = !.
 
 /obj/singularity/proc/check_turfs_in(direction = 0, step = 0)
 	if(!direction)

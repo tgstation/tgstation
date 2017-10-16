@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - bugfix: "Pre-filled glass bottles (uplink, medbay, botany) will now give visual feedback about how much stuff is left inside, and the color of contents will match an empty bottle being filled with the same reagent."

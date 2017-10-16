@@ -2,7 +2,7 @@
 	name = "tail"
 	desc = "What did you cut this off of?"
 	zone = "groin"
-	slot = "tail"
+	slot = ORGAN_SLOT_TAIL
 
 /obj/item/organ/tail/cat
 	name = "cat tail"
