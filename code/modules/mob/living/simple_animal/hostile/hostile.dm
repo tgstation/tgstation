@@ -349,7 +349,6 @@
 	else if(projectiletype)
 		var/obj/item/projectile/P = new projectiletype(startloc)
 		playsound(src, projectilesound, 100, 1)
-		P.current = startloc
 		P.starting = startloc
 		P.firer = src
 		P.yo = targeted_atom.y - startloc.y
@@ -357,6 +356,7 @@
 		if(AIStatus != AI_ON)//Don't want mindless mobs to have their movement screwed up firing in space
 			newtonian_move(get_dir(targeted_atom, targets_from))
 		P.original = targeted_atom
+		P.preparePixelProjectile(targeted_atom, src)
 		P.fire()
 		return P
 
