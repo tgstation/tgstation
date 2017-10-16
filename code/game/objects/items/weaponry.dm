@@ -616,6 +616,8 @@
 			to_chat(user, "<span class='bold danger'>YOU HAVE ASCENDED PAST MANLIHOOD, INTO GODHOOD!</span>")
 			icon_state = "disintegrate"
 			item_state = "disintegrate"
+			name = "godly slapper"
+			desc = "You are a god among men, slapper!"
 		return
 	else
 		..()
