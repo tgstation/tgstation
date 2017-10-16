@@ -276,6 +276,7 @@
 		return 1
 
 /mob/living/simple_animal/death(gibbed)
+	movement_type &= ~FLYING
 	if(nest)
 		nest.spawned_mobs -= src
 		nest = null
