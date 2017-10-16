@@ -237,7 +237,7 @@ DINNERWARE
 		/obj/item/kitchen/fork = 6,
 		/obj/item/kitchen/knife = 6,
 		/obj/item/kitchen/rollingpin = 2,
-		/obj/item/sharpener = 2,
+		/obj/item/sharpener = 1,
 		/obj/item/reagent_containers/food/drinks/drinkingglass = 8,
 		/obj/item/clothing/suit/apron/chef = 2,
 		/obj/item/reagent_containers/food/condiment/pack/ketchup = 5,
@@ -249,7 +249,7 @@ DINNERWARE
 	contraband = list(
 		/obj/item/kitchen/rollingpin = 2,
 		/obj/item/kitchen/knife/butcher = 2,
-		/obj/item/sharpener = 1
+		/obj/item/sharpener = 2
 		)
 
 /*
