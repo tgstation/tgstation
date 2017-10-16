@@ -68,7 +68,8 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		victory_in_progress = TRUE
 		priority_announce("Biohazard has reached critical mass. Station loss is imminent.", "Biohazard Alert")
 		set_security_level("delta")
-		addtimer(CALLBACK(src, .proc/victory), 300)
+		max_blob_points = INFINITY
+		blob_points = INFINITY
 	..()
 
 
@@ -77,10 +78,29 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		var/turf/T = get_turf(L)
 		if(!T || !(T.z in GLOB.station_z_levels))
 			continue
+
 		if(L in GLOB.overminds || L.checkpass(PASSBLOB))
 			continue
+
+		var/area/Ablob = get_area(T)
+
+		if(!Ablob.blob_allowed)
+			continue
+
+		playsound(L, 'sound/effects/splat.ogg', 50, 1)
 		L.death()
 		new/mob/living/simple_animal/hostile/blob/blobspore(T)
+
+		for(var/V in GLOB.sortedAreas)
+			var/area/A = V
+			if(!A.blob_allowed)
+				continue
+			A.color = color
+			A.name = "blob"
+			A.icon = 'icons/mob/blob.dmi'
+			A.layer = BELOW_MOB_LAYER
+			A.invisibility = 0
+			A.blend_mode = 0
 	to_chat(world, "<B>[real_name] consumed the station in an unstoppable tide!</B>")
 	SSticker.news_report = BLOB_WIN
 	SSticker.force_ending = 1
