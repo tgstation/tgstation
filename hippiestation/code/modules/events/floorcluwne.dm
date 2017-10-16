@@ -16,8 +16,8 @@
   
 	var/turf/T = get_turf(pick(spawn_locs))
 	var/mob/living/simple_animal/hostile/floor_cluwne/S = new(T)
-		playsound(S, 'hippiestation/sound/misc/bikehorn_creepy.ogg', 50, 1, -1)
-		message_admins("A floor cluwne has been spawned at [COORD(T)][ADMIN_JMP(T)]")
-		log_game(""A floor cluwne has been spawned at [COORD(T)]")
-		spawned_mobs += S
-		return SUCCESSFUL_SPAWN
+	playsound(S, 'hippiestation/sound/misc/bikehorn_creepy.ogg', 50, 1, -1)
+	message_admins("A floor cluwne has been spawned at [COORD(T)][ADMIN_JMP(T)]")
+	log_game("A floor cluwne has been spawned at [COORD(T)]")
+	spawned_mobs += S
+	return SUCCESSFUL_SPAWN
