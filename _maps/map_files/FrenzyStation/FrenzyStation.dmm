@@ -54,6 +54,11 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced,
+/obj/item/storage/box/ids,
+/obj/item/storage/box/silver_ids{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /turf/open/floor/circuit/green,
 /area/bridge)
 "al" = (
@@ -301,6 +306,10 @@
 /obj/structure/fireaxecabinet{
 	pixel_y = -32
 	},
+/obj/machinery/camera{
+	c_tag = "Bridge";
+	dir = 1
+	},
 /turf/open/floor/plasteel/black,
 /area/bridge)
 "aY" = (
@@ -491,6 +500,10 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/structure/sign/poster/official/ian{
+	pixel_x = 0;
+	pixel_y = 32
+	},
 /turf/open/floor/plating,
 /area/hallway/primary/central)
 "bw" = (
@@ -539,9 +552,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/light{
-	dir = 1
-	},
 /obj/structure/sign/frenzy{
 	icon_state = "nss1";
 	pixel_y = 32
@@ -576,6 +586,9 @@
 /obj/structure/sign/frenzy{
 	icon_state = "nss3";
 	pixel_y = 32
+	},
+/obj/machinery/light{
+	dir = 1
 	},
 /turf/open/floor/plasteel/darkblue/side{
 	dir = 1;
@@ -613,9 +626,6 @@
 /area/hallway/primary/central)
 "bE" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 1
-	},
-/obj/machinery/light{
 	dir = 1
 	},
 /obj/structure/sign/frenzy{
@@ -908,6 +918,9 @@
 	},
 /obj/machinery/light/small{
 	dir = 1
+	},
+/obj/machinery/camera{
+	dir = 8
 	},
 /turf/open/floor/circuit{
 	name = "Killroom Floor";
@@ -1418,6 +1431,10 @@
 	dir = 8
 	},
 /obj/structure/closet/secure_closet/miner,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = -26
+	},
 /turf/open/floor/plasteel/black,
 /area/quartermaster/storage)
 "dB" = (
@@ -1515,6 +1532,10 @@
 	},
 /obj/item/device/radio/intercom{
 	pixel_x = 25
+	},
+/obj/machinery/camera{
+	c_tag = "Science Lab";
+	dir = 8
 	},
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 4
@@ -1630,17 +1651,24 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/closed/wall,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/machinery/mineral/ore_redemption{
+	dir = 1;
+	input_dir = 4;
+	output_dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "ea" = (
-/obj/machinery/disposal/bin,
-/obj/effect/turf_decal/delivery,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = -26
-	},
-/obj/structure/disposalpipe/trunk{
-	dir = 8
+/obj/structure/ore_box,
+/obj/effect/turf_decal/bot,
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/open/floor/plasteel/brown{
 	dir = 8
@@ -1652,26 +1680,26 @@
 	},
 /area/quartermaster/storage)
 "ec" = (
-/obj/machinery/mineral/ore_redemption{
-	dir = 1;
-	input_dir = 4;
-	output_dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
 /obj/machinery/light{
 	light_color = "#c9d3e8"
+	},
+/obj/machinery/camera{
+	c_tag = "Cargo Bay";
+	dir = 1
+	},
+/obj/machinery/disposal/bin,
+/obj/effect/turf_decal/delivery,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "ed" = (
-/obj/effect/turf_decal/bot,
-/obj/structure/ore_box,
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
 	},
+/obj/machinery/mineral/equipment_vendor,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "ee" = (
@@ -1915,6 +1943,9 @@
 	},
 /obj/item/clothing/suit/armor/vest,
 /obj/item/clothing/suit/armor/vest,
+/obj/machinery/camera{
+	c_tag = "Armory"
+	},
 /turf/open/floor/plasteel/red/side{
 	dir = 1
 	},
@@ -2566,6 +2597,10 @@
 	pixel_x = 0;
 	pixel_y = -28
 	},
+/obj/machinery/camera{
+	c_tag = "Primary Tool Storage";
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "ge" = (
@@ -3086,6 +3121,10 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
+/obj/machinery/camera{
+	c_tag = "Brig";
+	dir = 1
+	},
 /turf/open/floor/plasteel/red/side,
 /area/security/brig)
 "hr" = (
@@ -3228,6 +3267,9 @@
 	pixel_y = 3
 	},
 /obj/item/reagent_containers/dropper,
+/obj/machinery/camera{
+	c_tag = "Medbay"
+	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1
 	},
@@ -3314,6 +3356,10 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/machinery/camera{
+	c_tag = "Intensive Care";
+	dir = 8
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "hX" = (
@@ -3355,6 +3401,8 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/bed/dogbed/runtime,
+/mob/living/simple_animal/pet/cat/Runtime,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "ib" = (
@@ -4759,6 +4807,9 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/machinery/camera{
+	c_tag = "Bar"
+	},
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "lr" = (
@@ -5139,6 +5190,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/camera{
+	c_tag = "Dormitories";
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "mm" = (
@@ -5348,6 +5403,10 @@
 	},
 /obj/item/storage/bag/tray,
 /obj/item/reagent_containers/food/snacks/pie/cream,
+/obj/machinery/camera{
+	c_tag = "Kitchen";
+	dir = 8
+	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "mP" = (
@@ -5910,6 +5969,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Aft Hallway";
+	dir = 1
 	},
 /turf/open/floor/plasteel/yellow/side,
 /area/hallway/primary/central)
@@ -6654,6 +6717,10 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
+/obj/machinery/camera{
+	c_tag = "Engineering Port";
+	dir = 1
+	},
 /turf/open/floor/plasteel/yellow/side,
 /area/engine/engineering)
 "pG" = (
@@ -6675,6 +6742,10 @@
 /obj/item/clothing/gloves/color/yellow,
 /obj/machinery/light{
 	light_color = "#c9d3e8"
+	},
+/obj/machinery/camera{
+	c_tag = "Engineering Starboard";
+	dir = 1
 	},
 /turf/open/floor/plasteel/yellow/side,
 /area/engine/engineering)
@@ -7079,6 +7150,10 @@
 /area/engine/atmos)
 "qA" = (
 /obj/machinery/r_n_d/server/core,
+/obj/machinery/camera{
+	c_tag = "Telecomms";
+	dir = 4
+	},
 /turf/open/floor/circuit/telecomms,
 /area/tcommsat/server)
 "qB" = (
@@ -7226,6 +7301,11 @@
 	},
 /obj/machinery/light{
 	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "Supermatter Fore";
+	dir = 2;
+	network = list("Engine","SS13")
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -8212,6 +8292,10 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/machinery/camera{
+	c_tag = "Life Support";
+	dir = 8
+	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 4
 	},
@@ -8602,9 +8686,9 @@
 	dir = 9
 	},
 /obj/machinery/camera{
-	c_tag = "Supermatter Engine - South";
+	c_tag = "Supermatter Aft";
 	dir = 2;
-	network = list("SS13")
+	network = list("Engine","SS13")
 	},
 /obj/machinery/light{
 	dir = 1
@@ -9033,7 +9117,7 @@
 "uC" = (
 /obj/structure/window/reinforced{
 	dir = 1;
-	pixel_y = 2
+	pixel_y = 0
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /turf/open/floor/plating/airless,
@@ -9569,6 +9653,81 @@
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/engine/engineering)
+"vX" = (
+/obj/structure/bed/dogbed/ian{
+	desc = "Howl's bed! Looks comfy.";
+	name = "Howl's bed"
+	},
+/mob/living/simple_animal/pet/dog/corgi/Ian{
+	emote_see = list("shakes its head.","chases its tail.","shivers.","howls at the moon.");
+	name = "Howl";
+	real_name = "Howl"
+	},
+/turf/open/floor/plasteel/black,
+/area/bridge)
+"vY" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Bridge Hallway";
+	dir = 1
+	},
+/turf/open/floor/plasteel/black,
+/area/hallway/primary/central)
+"vZ" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/loadingarea{
+	dir = 8
+	},
+/area/hallway/primary/central)
+"wa" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
+"wb" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/camera{
+	c_tag = "Fore Hallway";
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"wc" = (
+/obj/machinery/atmospherics/pipe/manifold/general/visible,
+/obj/machinery/camera{
+	c_tag = "Cryostasis";
+	dir = 1
+	},
+/turf/open/floor/plasteel/black,
+/area/medical/sleeper)
+"wd" = (
+/obj/machinery/camera{
+	c_tag = "Gravity Generator"
+	},
+/turf/open/floor/circuit/green,
+/area/engine/gravity_generator)
+"we" = (
+/obj/machinery/camera{
+	c_tag = "Holodeck";
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"wf" = (
+/obj/machinery/camera{
+	c_tag = "Escape Pods";
+	dir = 8
+	},
+/turf/open/floor/plasteel/escape{
+	dir = 4
+	},
+/area/hallway/primary/central)
 
 (1,1,1) = {"
 aa
@@ -39779,7 +39938,7 @@ pX
 oM
 oM
 rh
-oM
+wf
 oM
 oM
 pC
@@ -40259,7 +40418,7 @@ fI
 gb
 gx
 gK
-hd
+wc
 gx
 hC
 hV
@@ -43059,7 +43218,7 @@ aa
 ab
 af
 an
-am
+vX
 av
 aE
 aN
@@ -43333,13 +43492,13 @@ dc
 cs
 dy
 dO
-dY
+vZ
 ep
 dO
 dy
 fj
 dO
-cs
+wb
 cs
 gA
 gR
@@ -43582,7 +43741,7 @@ bb
 bb
 bb
 bD
-bR
+vY
 cf
 cg
 cM
@@ -44104,7 +44263,7 @@ df
 cP
 uH
 cP
-cP
+wa
 er
 eC
 uI
@@ -44361,7 +44520,7 @@ dg
 cP
 dC
 cP
-eb
+wa
 er
 eD
 eR
@@ -44373,7 +44532,7 @@ gE
 eU
 hn
 hv
-hL
+wd
 hK
 iE
 hK
@@ -45407,7 +45566,7 @@ hM
 hM
 hM
 jA
-hM
+we
 hM
 hM
 kH
