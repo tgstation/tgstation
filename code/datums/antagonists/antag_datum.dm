@@ -25,9 +25,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist/proc/can_be_owned(datum/mind/new_owner)
 	. = TRUE
-	if(owner.has_antag_datum(type))
+	var/datum/mind/tested = new_owner || owner
+	if(tested.has_antag_datum(type))
 		return FALSE
-	for(var/i in owner.antag_datums)
+	for(var/i in tested.antag_datums)
 		var/datum/antagonist/A = i
 		if(is_type_in_typecache(src, A.typecache_datum_blacklist))
 			return FALSE
