@@ -34,10 +34,12 @@ Pipelines + Other Objects -> Pipe network
 	var/device_type = 0
 	var/list/obj/machinery/atmospherics/nodes
 
-/obj/machinery/atmospherics/examine(mob/living/user)
+/obj/machinery/atmospherics/examine(mob/user)
 	..()
-	if(is_type_in_list(src, GLOB.ventcrawl_machinery) && user.ventcrawler)
-		to_chat(user, "<span class='notice'>Alt-click to crawl through it.</span>")
+	if(is_type_in_list(src, GLOB.ventcrawl_machinery) && isliving(user))
+		var/mob/living/L = user
+		if(L.ventcrawler)
+			to_chat(L, "<span class='notice'>Alt-click to crawl through it.</span>")
 
 /obj/machinery/atmospherics/New(loc, process = TRUE)
 	nodes = new(device_type)
