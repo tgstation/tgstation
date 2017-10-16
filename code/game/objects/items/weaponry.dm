@@ -612,12 +612,12 @@
 		if(slaps > 50 && !(flags_1 & NODROP_1))
 			to_chat(user, "<span class='bold notice'>Congrats, you are now a REAL MAN! Nobody can disarm you of your slapping abilities now!</span>")
 			flags_1 |= NODROP_1
-		if(slaps > 150 && !(flags_1 & NODROP_1))
+		if(slaps > 150 && icon_state != "disintegrate")
 			to_chat(user, "<span class='bold danger'>YOU HAVE ASCENDED PAST MANLIHOOD, INTO GODHOOD!</span>")
-				icon_state = "disintegrate"
-				item_state = "disintegrate"
-				lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
-				righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+			icon_state = "disintegrate"
+			item_state = "disintegrate"
+			lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+			righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 		return
 	else
 		..()
