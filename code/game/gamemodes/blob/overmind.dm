@@ -64,7 +64,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 				place_blob_core(base_point_rate, 1)
 		else
 			qdel(src)
-	if(!victory_in_progress && blobs_legit >= blobwincount)
+	else if(!victory_in_progress && (blobs_legit.len >= blobwincount))
 		victory_in_progress = TRUE
 		priority_announce("Biohazard has reached critical mass. Station loss is imminent.", "Biohazard Alert")
 		set_security_level("delta")

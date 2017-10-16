@@ -20,7 +20,11 @@
 	var/atmosblock = FALSE //if the blob blocks atmos and heat spread
 	var/mob/camera/blob/overmind
 
-/obj/structure/blob/Initialize()
+/obj/structure/blob/Initialize(mapload, owner_overmind)
+	overmind = owner_overmind
+	var/area/Ablob = get_area(loc)
+	if(Ablob.blob_allowed) //Is this area allowed for winning as blob?
+		overmind.blobs_legit += src
 	GLOB.blobs += src //Keep track of the blob in the normal list either way
 	setDir(pick(GLOB.cardinals))
 	update_icon()
@@ -28,9 +32,6 @@
 	if(atmosblock)
 		air_update_turf(1)
 	ConsumeTile()
-	var/area/Ablob = get_area(loc)
-	if(Ablob.blob_allowed) //Is this area allowed for winning as blob?
-		overmind.blobs_legit += src
 
 /obj/structure/blob/proc/creation_action() //When it's created by the overmind, do this.
 	return
@@ -183,11 +184,7 @@
 		A.blob_act(src) //also hit everything in the turf
 
 	if(make_blob) //well, can we?
-		var/obj/structure/blob/B = new /obj/structure/blob/normal(src.loc)
-		if(controller)
-			B.overmind = controller
-		else
-			B.overmind = overmind
+		var/obj/structure/blob/B = new /obj/structure/blob/normal(src.loc, overmind)
 		B.density = TRUE
 		if(T.Enter(B,src)) //NOW we can attempt to move into the tile
 			B.density = initial(B.density)
@@ -298,9 +295,7 @@
 	if(!ispath(type))
 		throw EXCEPTION("change_to(): invalid type for blob")
 		return
-	var/obj/structure/blob/B = new type(src.loc)
-	if(controller)
-		B.overmind = controller
+	var/obj/structure/blob/B = new type(src.loc, controller)
 	B.creation_action()
 	B.update_icon()
 	B.setDir(dir)

@@ -48,6 +48,7 @@
 	else
 		var/obj/structure/blob/core/core = new(get_turf(src), null, point_rate, 1)
 		core.overmind = src
+		blobs_legit += src
 		blob_core = core
 		core.update_icon()
 	update_health_hud()
