@@ -96,7 +96,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			var/area/A = V
 			if(!A.blob_allowed)
 				continue
-			A.color = color
+			A.color = blob_reagent_datum.color
 			A.name = "blob"
 			A.icon = 'icons/mob/blob.dmi'
 			A.icon_state = "blob_shield"
