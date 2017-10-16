@@ -1,3 +1,5 @@
+GLOBAL_VAR_INIT(floor_cluwnes, 0)
+
 #define STAGE_HAUNT 1
 #define STAGE_SPOOK 2
 #define STAGE_TORMENT 3
@@ -422,6 +424,8 @@
 	
 /obj/effect/dummy/floorcluwne_orbit/Initialize()
 	. = ..()
+	GLOB.floor_cluwnes += 1
+	name += " ([GLOB.floor_cluwnes])"
 	GLOB.poi_list += src
 
 /obj/effect/dummy/floorcluwne_orbit/Destroy()
