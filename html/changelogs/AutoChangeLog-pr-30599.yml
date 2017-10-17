@@ -1,5 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - refactor: "Legacy projectiles have been removed. Instead, all projectiles are now PIXEL PROJECTILES!"
-  - rscadd: "Reflectors can now be at any angle you want. Alt click them to set angle!"
