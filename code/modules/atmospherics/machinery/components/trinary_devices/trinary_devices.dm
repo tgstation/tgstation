@@ -5,6 +5,7 @@
 	use_power = IDLE_POWER_USE
 	device_type = TRINARY
 	layer = GAS_FILTER_LAYER
+	pipe_flags = PIPING_ONE_PER_TURF
 
 	var/flipped = FALSE
 
