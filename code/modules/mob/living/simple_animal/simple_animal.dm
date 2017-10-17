@@ -555,12 +555,13 @@
 		else
 			stack_trace("Something attempted to set simple animals AI to an invalid state: [togglestatus]")
 
+
+// /mob/living/simple_animal/proc/toggle_initial()
+//	if (AIStatus != initial(AIStatus))
+//		GLOB.simple_animals[AIStatus] -= src
+//		GLOB.simple_animals[initial(AIStatus)] += src
+//		AIStatus = initial(AIStatus)
+
 /mob/living/simple_animal/proc/consider_wakeup()
 	if (pulledby || shouldwakeup)
 		toggle_ai(AI_ON)
-
-/mob/living/simple_animal/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	. = ..()
-	if(!ckey && !stat)//Not unconscious
-		if(AIStatus == AI_IDLE)
-			toggle_ai(AI_ON)
