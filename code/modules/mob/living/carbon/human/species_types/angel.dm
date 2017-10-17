@@ -146,7 +146,7 @@
 	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
 	mutant_bodyparts = list("tail_human", "ears", "wings")
-	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "Angel")
+	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
 	use_skintones = 1
 	no_equip = list(slot_back)
 	mutant_brain = /obj/item/organ/brain/dullahan
