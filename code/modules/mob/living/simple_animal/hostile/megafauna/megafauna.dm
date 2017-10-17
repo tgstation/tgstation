@@ -71,6 +71,12 @@
 /mob/living/simple_animal/hostile/megafauna/proc/spawn_crusher_loot()
 	loot = crusher_loot
 
+
+/mob/living/simple_animal/hostile/megafauna/Life()
+	if(z != ZLEVEL_MINING)
+		z = ZLEVEL_MINING  
+	..()
+	
 /mob/living/simple_animal/hostile/megafauna/gib()
 	if(health > 0)
 		return
