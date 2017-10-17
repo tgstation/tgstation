@@ -5,5 +5,5 @@
 
 GLOBAL_LIST_INIT(typecache_mob, typecacheof(list(/mob)))
 
-
+GLOBAL_LIST_INIT(typecache_living, typecacheof(list(/mob/living)))
 

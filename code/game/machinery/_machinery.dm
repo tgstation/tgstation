@@ -117,7 +117,7 @@ Class Procs:
 	var/panel_open = FALSE
 	var/state_open = FALSE
 	var/critical_machine = FALSE //If this machine is critical to station operation and should have the area be excempted from power failures.
-	var/list/occupant_typecache = list(/mob/living) // turned into typecache in Initialize
+	var/list/occupant_typecache //if set, turned into typecache in Initialize, other wise, defaults to mob/living typecache
 	var/atom/movable/occupant = null
 	var/unsecuring_tool = /obj/item/wrench
 	var/interact_open = FALSE // Can the machine be interacted with when in maint/when the panel is open.
@@ -141,7 +141,8 @@ Class Procs:
 		START_PROCESSING(SSfastprocess, src)
 	power_change()
 
-	occupant_typecache = typecacheof(occupant_typecache)
+	if (occupant_typecache)
+		occupant_typecache = typecacheof(occupant_typecache)
 
 /obj/machinery/Destroy()
 	GLOB.machines.Remove(src)
@@ -189,7 +190,7 @@ Class Procs:
 	density = TRUE
 	if(!target)
 		for(var/am in loc)
-			if(!is_type_in_typecache(am, occupant_typecache))
+			if(!is_type_in_typecache(am, THISORTHAT(occupant_typecache, typecache_living)))
 				continue
 			var/atom/movable/AM = am
 			if(AM.has_buckled_mobs())
