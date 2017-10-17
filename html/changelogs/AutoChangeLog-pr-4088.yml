@@ -1,0 +1,4 @@
+author: "Arzion5"
+delete-after: True
+changes: 
+  - rscadd: "Added new traitor category for items that require collaborative effort from multiple traitors to acquire."
