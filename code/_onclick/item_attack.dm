@@ -114,9 +114,13 @@
 	if(hit_area)
 		message_hit_area = " in the [hit_area]"
 	var/attack_message = "[src] has been [message_verb][message_hit_area] with [I]."
+	var/agnosia_message = "Someone has been [message_verb][message_hit_area] with [I]."
 	if(user in viewers(src, null))
 		attack_message = "[user] has [message_verb] [src][message_hit_area] with [I]!"
+		agnosia_message = "Someone has [message_verb] someone else[message_hit_area] with [I]!"
 	visible_message("<span class='danger'>[attack_message]</span>", \
-		"<span class='userdanger'>[attack_message]</span>", null, COMBAT_MESSAGE_RANGE)
+		"<span class='userdanger'>[attack_message]</span>", null, COMBAT_MESSAGE_RANGE, ,\
+		"<span class='danger'>[agnosia_message]</span>", \
+		"<span class='userdanger'>[agnosia_message]</span>")
 	return 1
 

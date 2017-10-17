@@ -97,8 +97,10 @@
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
 // vision_distance (optional) define how many tiles away the message can be seen.
 // ignored_mob (optional) doesn't show any message to a given mob if TRUE.
+// agnosia_message gives a redacted version of the message to those who suffer from agnosia, to avoid identifying people's names
+// agnosia_self_message is the same, for the self_message
 
-/atom/proc/visible_message(message, self_message, blind_message, vision_distance, ignored_mob)
+/atom/proc/visible_message(message, self_message, blind_message, vision_distance, ignored_mob, agnosia_message, agnosia_self_message)
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
@@ -111,7 +113,20 @@
 		if(M == ignored_mob)
 			continue
 		var/msg = message
-		if(M == src) //the src always see the main message or self message
+
+		//agnosiacs have redacted messages to hide people's names
+		if(M.disabilities & AGNOSIA)
+			if(M == src)
+				if(agnosia_self_message)
+					msg = agnosia_self_message
+				//else keep the normal self message
+			else if(agnosia_message)
+				msg = agnosia_message
+
+			if(ishuman(src))
+				msg = replacetext(msg, "[src]", "Unknown") //Should catch most names in procs without a specific agnosia message
+
+		else if(M == src) //the src always see the main message or self message
 			if(self_message)
 				msg = self_message
 		else
@@ -326,7 +341,9 @@
 
 	if(AM.pulledby)
 		if(!supress_message)
-			visible_message("<span class='danger'>[src] has pulled [AM] from [AM.pulledby]'s grip.</span>")
+			visible_message("<span class='danger'>[src] has pulled [AM] from [AM.pulledby]'s grip.</span>",\
+				agnosia_message = "<span class='danger'>Someone has pulled something from someone else's grip.</span>",\
+				agnosia_self_message = "<span class='danger'>You have pulled something from someone else's grip.</span>")
 		add_logs(AM, AM.pulledby, "pulled from", src)
 		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
 
@@ -352,7 +369,9 @@
 
 		add_logs(src, M, "grabbed", addition="passive grab")
 		if(!supress_message)
-			visible_message("<span class='warning'>[src] has grabbed [M] passively!</span>")
+			visible_message("<span class='warning'>[src] has grabbed [M] passively!</span>",\
+			agnosia_message = "<span class='warning'>Someone has grabbed someone else passively!</span>",\
+			agnosia_self_message = "<span class='warning'>You have grabbed someone passively!</span>")
 		if(!iscarbon(src))
 			M.LAssailant = null
 		else

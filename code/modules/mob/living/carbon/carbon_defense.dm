@@ -61,7 +61,7 @@
 					if(isturf(I.loc))
 						I.attack_hand(src)
 						if(get_active_held_item() == I) //if our attack_hand() picks up the item...
-							visible_message("<span class='warning'>[src] catches [I]!</span>") //catch that sucker!
+							visible_message("<span class='warning'>[src] catches [I]!</span>", agnosia_message = "<span class='warning'>Someone catches [I]!</span>") //catch that sucker!
 							throw_mode_off()
 							return 1
 	..()
@@ -225,8 +225,8 @@
 	visible_message(
 		"<span class='danger'>[src] was shocked by \the [source]!</span>", \
 		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
-		"<span class='italics'>You hear a heavy electrical crack.</span>" \
-	)
+		"<span class='italics'>You hear a heavy electrical crack.</span>", \
+		agnosia_message = "<span class='danger'>Someone was shocked by \the [source]!</span>")
 	jitteriness += 1000 //High numbers for violent convulsions
 	do_jitter_animation(jitteriness)
 	stuttering += 2
@@ -250,13 +250,17 @@
 
 		if(lying)
 			if(buckled)
-				to_chat(M, "<span class='warning'>You need to unbuckle [src] first to do that!")
+				to_chat(M, "<span class='warning'>You need to unbuckle them first to do that!")
 				return
 			M.visible_message("<span class='notice'>[M] shakes [src] trying to get [p_them()] up!</span>", \
-							"<span class='notice'>You shake [src] trying to get [p_them()] up!</span>")
+							"<span class='notice'>You shake [src] trying to get [p_them()] up!</span>",\
+							agnosia_message = "<span class='notice'>Someone shakes someone else trying to get them up!</span>",\
+							agnosia_self_message = "<span class='notice'>You shake someone trying to get them up!</span>")
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
-						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
+						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>",\
+						agnosia_message = "<span class='notice'>Someone hugs someone else to make them feel better!</span>",\
+						agnosia_self_message = "<span class='notice'>You hug someone to make them feel better!</span>")
 		AdjustStun(-60)
 		AdjustKnockdown(-60)
 		AdjustUnconscious(-60)

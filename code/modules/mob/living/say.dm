@@ -215,7 +215,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		deaf_type = 2 // Since you should be able to hear yourself without looking
 
 	// Recompose message for AI hrefs, language incomprehension.
-	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode)
+	var/speaker_name = null
+	if(disabilities & AGNOSIA)
+		speaker_name = "Unknown"
+	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode, , speaker_name)
 	show_message(message, 2, deaf_message, deaf_type)
 	return message
 

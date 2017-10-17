@@ -28,6 +28,12 @@
 
 	. = ..()
 
+	//Image override for agnosiacs
+	var/image/I = image(icon = 'icons/mob/simple_human.dmi', icon_state = "faceless", loc = src)
+	I.override = 1
+	I.name = "Unknown"
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/agnosia, "agnosia", I, FALSE)
+
 /mob/living/carbon/human/OpenCraftingMenu()
 	handcrafting.ui_interact(src)
 

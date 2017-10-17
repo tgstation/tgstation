@@ -133,7 +133,10 @@
 		return
 
 	if(!(status_flags & CANPUSH))
-		to_chat(user, "<span class='warning'>[src] can't be grabbed more aggressively!</span>")
+		if(disabilities & AGNOSIA)
+			to_chat(user, "<span class='warning'>They can't be grabbed more aggressively!</span>")
+		else
+			to_chat(user, "<span class='warning'>[src] can't be grabbed more aggressively!</span>")
 		return 0
 	grippedby(user)
 
@@ -147,7 +150,9 @@
 			var/old_grab_state = user.grab_state
 			var/grab_upgrade_time = 30
 			visible_message("<span class='danger'>[user] starts to tighten [user.p_their()] grip on [src]!</span>", \
-				"<span class='userdanger'>[user] starts to tighten [user.p_their()] grip on you!</span>")
+				"<span class='userdanger'>[user] starts to tighten [user.p_their()] grip on you!</span>",\
+				agnosia_message = "<span class='danger'>Someone starts to tighten their grip on someone else!</span>",\
+				agnosia_self_message = "<span class='userdanger'>Someone starts to tighten their grip on you!</span>")
 			add_logs(user, src, "attempted to strangle", addition="grab")
 			if(!do_mob(user, src, grab_upgrade_time))
 				return 0
@@ -158,20 +163,26 @@
 			if(GRAB_AGGRESSIVE)
 				add_logs(user, src, "grabbed", addition="aggressive grab")
 				visible_message("<span class='danger'>[user] has grabbed [src] aggressively!</span>", \
-								"<span class='userdanger'>[user] has grabbed [src] aggressively!</span>")
+					"<span class='userdanger'>[user] has grabbed [src] aggressively!</span>",\
+					agnosia_message = "<span class='danger'>Someone has grabbed someone else aggressively!</span>",\
+					agnosia_self_message = "<span class='userdanger'>Someone has grabbed you aggressively!</span>")
 				drop_all_held_items()
 				stop_pulling()
 			if(GRAB_NECK)
 				add_logs(user, src, "grabbed", addition="neck grab")
 				visible_message("<span class='danger'>[user] has grabbed [src] by the neck!</span>",\
-								"<span class='userdanger'>[user] has grabbed you by the neck!</span>")
+								"<span class='userdanger'>[user] has grabbed you by the neck!</span>",\
+					agnosia_message = "<span class='danger'>Someone has grabbed someone else by the neck!</span>",\
+					agnosia_self_message = "<span class='userdanger'>Someone has grabbed you by the neck!</span>")
 				update_canmove() //we fall down
 				if(!buckled && !density)
 					Move(user.loc)
 			if(GRAB_KILL)
 				add_logs(user, src, "strangled", addition="grab")
 				visible_message("<span class='danger'>[user] is strangling [src]!</span>", \
-								"<span class='userdanger'>[user] is strangling you!</span>")
+					"<span class='userdanger'>[user] is strangling you!</span>",\
+					agnosia_message = "<span class='danger'>Someone is strangling someone else!</span>",\
+					agnosia_self_message = "<span class='userdanger'>Someone is strangling you!</span>")
 				update_canmove() //we fall down
 				if(!buckled && !density)
 					Move(user.loc)

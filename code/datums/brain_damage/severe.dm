@@ -60,3 +60,49 @@
 /datum/brain_trauma/severe/blindness/on_lose()
 	owner.SetKnockdown(0)
 	..()
+
+/datum/brain_trauma/severe/narcolepsy
+	name = "Narcolepsy"
+	desc = "Patient may involuntarily fall asleep during normal activities."
+	scan_desc = "traumatic narcolepsy"
+	gain_text = "<span class='warning'>You have a constant feeling of drowsiness...</span>"
+	lose_text = "<span class='notice'>You feel awake and aware again.</span>"
+
+/datum/brain_trauma/severe/narcolepsy/on_life()
+	..()
+	if(owner.IsSleeping())
+		return
+	var/sleep_chance = 1
+	if(owner.m_intent == MOVE_INTENT_RUN)
+		sleep_chance += 2
+	if(owner.drowsyness)
+		sleep_chance += 3
+	if(prob(sleep_chance))
+		to_chat(owner, "<span class='warning'>You fall asleep.</span>")
+		owner.Sleeping(60)
+	else if(!owner.drowsyness && prob(sleep_chance * 2))
+		to_chat(owner, "<span class='warning'>You feel tired...</span>")
+		owner.drowsyness += 10
+
+GLOBAL_LIST_EMPTY(agnosiac_mobs)
+
+/datum/brain_trauma/severe/agnosia
+	name = "Agnosia"
+	desc = "Patient cannot tell people apart."
+	scan_desc = "chronic agnosia"
+	gain_text = "<span class='warning'>You can't remember anyone's face...</span>"
+	lose_text = "<span class='notice'>You suddenly remember who everyone is.</span>"
+
+/datum/brain_trauma/severe/agnosia/on_gain()
+	..()
+	owner.disabilities |= AGNOSIA
+	GLOB.agnosiac_mobs += owner
+	for(var/datum/atom_hud/alternate_appearance/basic/agnosia/AA in GLOB.active_agnosia_appearances)
+		AA.add_hud_to(owner)
+
+/datum/brain_trauma/severe/agnosia/on_lose()
+	..()
+	GLOB.agnosiac_mobs -= owner
+	for(var/datum/atom_hud/alternate_appearance/basic/agnosia/AA in GLOB.active_agnosia_appearances)
+		AA.remove_hud_from(owner)
+	owner.disabilities &= ~AGNOSIA

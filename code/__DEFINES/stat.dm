@@ -19,6 +19,7 @@
 #define NOCLONE		128
 #define CLUMSY		256
 #define DUMB        512
+#define AGNOSIA     1024
 
 // bitflags for machine stat variable
 #define BROKEN		1

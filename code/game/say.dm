@@ -44,7 +44,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 /atom/movable/proc/get_spans()
 	return list()
 
-/atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode, face_name = FALSE)
+/atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode, face_name = FALSE, force_name)
 	//This proc uses text() because it is faster than appending strings. Thanks BYOND.
 	//Basic span
 	var/spanpart1 = "<span class='[radio_freq ? get_radio_span(radio_freq) : "game say"]'>"
@@ -57,6 +57,8 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	if(face_name && ishuman(speaker))
 		var/mob/living/carbon/human/H = speaker
 		namepart = "[H.get_face_name()]" //So "fake" speaking like in hallucinations does not give the speaker away if disguised
+	if(force_name)
+		namepart = force_name
 	//End name span.
 	var/endspanpart = "</span>"
 

@@ -108,7 +108,8 @@
 			take_bodypart_damage(10)
 			victim.Knockdown(20)
 			Knockdown(20)
-			visible_message("<span class='danger'>[src] crashes into [victim], knocking them both over!</span>", "<span class='userdanger'>You violently crash into [victim]!</span>")
+			visible_message("<span class='danger'>[src] crashes into [victim], knocking them both over!</span>", "<span class='userdanger'>You violently crash into [victim]!</span>",\
+			agnosia_message = "<span class='danger'>Someone crashes into someone else, knocking them both over!</span>", agnosia_self_message = "<span class='userdanger'>You violently crash into someone!</span>")
 		playsound(src,'sound/weapons/punch1.ogg',50,1)
 
 
@@ -164,7 +165,7 @@
 		dropItemToGround(I)
 
 	if(thrown_thing)
-		visible_message("<span class='danger'>[src] has thrown [thrown_thing].</span>")
+		visible_message("<span class='danger'>[src] has thrown [thrown_thing].</span>", agnosia_message = "<span class='danger'>Someone has thrown [thrown_thing].</span>")
 		add_logs(src, thrown_thing, "has thrown")
 		newtonian_move(get_dir(target, src))
 		thrown_thing.throw_at(target, thrown_thing.throw_range, thrown_thing.throw_speed, src)
@@ -216,7 +217,9 @@
 			var/obj/item/ITEM = get_item_by_slot(slot)
 			if(ITEM && istype(ITEM, /obj/item/tank) && wear_mask && (wear_mask.flags_1 & MASKINTERNALS_1))
 				visible_message("<span class='danger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name].</span>", \
-								"<span class='userdanger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name].</span>")
+					"<span class='userdanger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name].</span>", \
+					agnosia_message = "<span class='danger'>Someone tries to [internal ? "close" : "open"] the valve on someone else's [ITEM.name].</span>", \
+					agnosia_self_message = "<span class='userdanger'>Someone tries to [internal ? "close" : "open"] the valve on your [ITEM.name].</span>")
 				if(do_mob(usr, src, POCKET_STRIP_DELAY))
 					if(internal)
 						internal = null
@@ -227,7 +230,9 @@
 							update_internals_hud_icon(1)
 
 					visible_message("<span class='danger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name].</span>", \
-									"<span class='userdanger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name].</span>")
+							"<span class='userdanger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name].</span>", \
+							agnosia_message = "<span class='danger'>Someone [internal ? "opens" : "closes"] the valve on someone else's [ITEM.name].</span>", \
+							agnosia_self_message = "<span class='userdanger'>Someone [internal ? "opens" : "closes"] the valve on your [ITEM.name].</span>")
 
 
 /mob/living/carbon/fall(forced)

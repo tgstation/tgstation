@@ -23,10 +23,12 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 
 /datum/atom_hud/alternate_appearance
 	var/appearance_key
+	var/add_to_global = TRUE
 
 /datum/atom_hud/alternate_appearance/New(key)
 	..()
-	GLOB.active_alternate_appearances += src
+	if(add_to_global)
+		GLOB.active_alternate_appearances += src
 	appearance_key = key
 
 /datum/atom_hud/alternate_appearance/Destroy()
@@ -34,7 +36,8 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 		remove_hud_from(v)
 	for(var/v in hudatoms)
 		remove_from_hud(v)
-	GLOB.active_alternate_appearances -= src
+	if(add_to_global)
+		GLOB.active_alternate_appearances -= src
 	return ..()
 
 /datum/atom_hud/alternate_appearance/proc/onNewMob(mob/M)
@@ -116,6 +119,25 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	if(issilicon(M))
 		return TRUE
 	return FALSE
+
+//Putting these in a separate list so every new mob doesn't have to cycle through every single human
+GLOBAL_LIST_EMPTY(active_agnosia_appearances)
+
+/datum/atom_hud/alternate_appearance/basic/agnosia
+	add_to_global = FALSE
+
+/datum/atom_hud/alternate_appearance/basic/agnosia/New()
+	GLOB.active_agnosia_appearances += src
+	..()
+	for(var/mob in GLOB.agnosiac_mobs)
+		add_hud_to(mob)
+
+/datum/atom_hud/alternate_appearance/basic/agnosia/Destroy()
+	GLOB.active_agnosia_appearances -= src
+	return ..()
+
+/datum/atom_hud/alternate_appearance/basic/agnosia/mobShouldSee(mob/M)
+	return TRUE
 
 /datum/atom_hud/alternate_appearance/basic/observers
 	add_ghost_version = FALSE //just in case, to prevent infinite loops

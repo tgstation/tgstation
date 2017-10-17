@@ -633,7 +633,8 @@
 	if(health >= 0)
 		if(src == M)
 			visible_message("[src] examines [p_them()]self.", \
-				"<span class='notice'>You check yourself for injuries.</span>")
+				"<span class='notice'>You check yourself for injuries.</span>", \
+				agnosia_message = "Someone examines themselves.")
 
 			var/list/missing = list("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg")
 			for(var/X in bodyparts)

@@ -32,3 +32,10 @@
 /datum/brain_trauma/proc/on_lose()
 	to_chat(owner, lose_text)
 
+//Called when hearing a spoken message
+/datum/brain_trauma/proc/on_hear(message, speaker, message_language, raw_message, radio_freq)
+	return message
+
+//Called when speaking
+/datum/brain_trauma/proc/on_say(message)
+	return message

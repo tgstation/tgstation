@@ -1,4 +1,6 @@
 /mob/living/carbon/treat_message(message)
+	for(var/datum/brain_trauma/trauma in traumas)
+		message = trauma.on_say(message)
 	message = ..(message)
 	var/obj/item/organ/tongue/T = getorganslot("tongue")
 	if(!T) //hoooooouaah!
@@ -35,3 +37,10 @@
 		. = T.could_speak_in_language(dt)
 	else
 		. = initial(dt.flags) & TONGUELESS_SPEECH
+
+/mob/living/carbon/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
+	if(!client)
+		return
+	for(var/datum/brain_trauma/trauma in traumas)
+		message = trauma.on_hear(message, speaker, message_language, raw_message, radio_freq)
+	return ..()

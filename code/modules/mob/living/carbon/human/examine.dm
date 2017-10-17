@@ -1,5 +1,11 @@
 /mob/living/carbon/human/examine(mob/user)
-//this is very slightly better than it was because you can use it more places. still can't do \his[src] though.
+
+	if(user.disabilities & AGNOSIA)
+		var/msg = "<span class='warning'>You can't seem to focus on anything on this person...</span>"
+		to_chat(user, msg)
+		return
+
+	//this is very slightly better than it was because you can use it more places. still can't do \his[src] though.
 	var/t_He = p_they(TRUE)
 	var/t_His = p_their(TRUE)
 	var/t_his = p_their()
@@ -7,7 +13,7 @@
 	var/t_has = p_have()
 	var/t_is = p_are()
 
-	var/msg = "<span class='info'>*---------*\nThis is <EM>[src.name]</EM>!\n"
+	var/msg = "<span class='info'>*---------*\nThis is <EM>[name]</EM>!\n"
 
 	var/list/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
