@@ -50,4 +50,4 @@
 		L.clear_fullscreen("flash", 5)
 		var/obj/item/device/transfer_valve/TTV = locate() in L.GetAllContents()
 		if(TTV)
-			to_chat(L, "<span class='userdanger'>The air here resonates with the Ark's presence; your explosives will be significantly dampened here!</span>")
+			to_chat(L, "<span class='userdanger'>The air resonates with the Ark's presence; your explosives will be significantly dampened here!</span>")
