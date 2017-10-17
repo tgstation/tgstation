@@ -116,7 +116,7 @@ Hotkey-Mode: (hotkey-mode must be on)
 \tt = say
 \to = OOC
 \tb = resist
-\th = stop pulling
+\t<B></B>h = stop pulling
 \tx = swap-hand
 \tz = activate held object (or y)
 \tf = cycle-intents-left
@@ -173,10 +173,9 @@ Hotkey-Mode: (hotkey-mode must be on)
 \td = right
 \tw = up
 \tq = unequip active module
-\th = stop pulling
+\t<B></B>h = stop pulling
 \tm = me
 \tt = say
-\t<B></B>h = talk-wheel
 \to = OOC
 \tx = cycle active modules
 \tb = resist
@@ -199,7 +198,6 @@ Any-Mode: (hotkey doesn't need to be on)
 \tCtrl+x = cycle active modules
 \tCtrl+b = resist
 \tCtrl+h = stop pulling
-\tCtrl+h = talk-wheel
 \tCtrl+o = OOC
 \tCtrl+z = activate held object (or Ctrl+y)
 \tCtrl+f = cycle-intents-left
