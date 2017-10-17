@@ -137,3 +137,65 @@
 		override_float = FALSE
 		H.pass_flags &= ~PASSTABLE
 		H.CloseWings()
+
+
+
+/datum/species/dullahan
+	name = "dullahan"
+	id = "dullahan"
+	default_color = "FFFFFF"
+	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
+	mutant_bodyparts = list("tail_human", "ears", "wings")
+	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "Angel")
+	use_skintones = 1
+	no_equip = list(slot_back)
+	mutant_brain = /obj/item/organ/brain/dullahan
+	mutanteyes = /obj/item/organ/eyes/dullahan
+	mutanttongue = /obj/item/organ/tongue/dullahan
+	mutantears = /obj/item/organ/ears/dullahan
+	blacklisted = 1
+	limbs_id = "human"
+	skinned_type = /obj/item/stack/sheet/animalhide/human
+
+	var/obj/item/bodypart/head/myhead
+
+/datum/species/dullahan/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
+	..()
+	var/obj/item/bodypart/head/head = H.get_bodypart("head")
+	if(head)
+		myhead = head
+		head.dismember()
+
+/datum/species/dullahan/spec_life(mob/living/carbon/human/H)
+	if(myhead)
+		H.reset_perspective(myhead)
+	else
+		H.gib()
+		if(myhead in view(7,src))
+		//	myhead.speech_relay = FALSE
+			H.disabilities &= ~DEAF
+		else
+			H.disabilities |= DEAF
+
+/obj/item/organ/eyes/dullahan
+	zone = "chest"
+
+/obj/item/organ/brain/dullahan
+	decoy_override = TRUE
+	zone = "chest"
+
+/obj/item/organ/tongue/dullahan
+	zone = "chest"
+
+/obj/item/organ/tongue/dullahan/TongueSpeech(var/message)
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		if(H.dna.species.id == "dullahan")
+			var/datum/species/dullahan/D = H.dna.species
+			D.myhead.say(message)
+	message = ""
+	return message
+
+
+/obj/item/organ/ears/dullahan
+	zone = "chest"
