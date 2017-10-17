@@ -3622,7 +3622,7 @@
 	min_oxy = 5;
 	name = "Sergeant Araneus";
 	real_name = "Sergeant Araneus";
-	movement_type = GROUND
+	movement_type = 1;
 	response_help = "pets";
 	turns_per_move = 10;
 	voice_name = "unidentifiable voice"
