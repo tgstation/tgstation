@@ -331,9 +331,7 @@ All ShuttleMove procs go here
 	return FALSE
 
 /obj/docking_port/stationary/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)
-	if(old_dock == src) //Don't move the dock we're leaving
-		return FALSE
-	if(moving_dock && !moving_dock.can_move_docking_ports)
+	if(!moving_dock.can_move_docking_ports || (old_dock == src))
 		return FALSE
 	. = ..()
 
