@@ -485,6 +485,7 @@
 
 //Picks from the list, with some safeties, and returns the "default" arg if it fails
 #define DEFAULTPICK(L, default) ((islist(L) && length(L)) ? pick(L) : default)
+
 #define LAZYINITLIST(L) if (!L) L = list()
 #define UNSETEMPTY(L) if (L && !L.len) L = null
 #define LAZYREMOVE(L, I) if(L) { L -= I; if(!L.len) { L = null; } }
