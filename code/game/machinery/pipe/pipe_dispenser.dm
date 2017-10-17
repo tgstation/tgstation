@@ -15,30 +15,30 @@
 		return 1
 	var/dat = {"
 <b>Pipes:</b><BR>
-<A href='?src=\ref[src];make=[PIPE_SIMPLE];dir=1'>Pipe</A><BR>
-<A href='?src=\ref[src];make=[PIPE_SIMPLE];dir=5'>Bent Pipe</A><BR>
-<A href='?src=\ref[src];make=[PIPE_MANIFOLD];dir=1'>Manifold</A><BR>
-<A href='?src=\ref[src];make=[PIPE_4WAYMANIFOLD];dir=1'>4-Way Manifold</A><BR>
-<A href='?src=\ref[src];make=[PIPE_MVALVE];dir=1'>Manual Valve</A><BR>
-<A href='?src=\ref[src];make=[PIPE_DVALVE];dir=1'>Digital Valve</A><BR>
-<A href='?src=\ref[src];make=[PIPE_BLUESPACE];dir=1'>Bluespace Pipe</A><BR>
+<A href='?src=[REF(src)];make=[PIPE_SIMPLE];dir=1'>Pipe</A><BR>
+<A href='?src=[REF(src)];make=[PIPE_SIMPLE];dir=5'>Bent Pipe</A><BR>
+<A href='?src=[REF(src)];make=[PIPE_MANIFOLD];dir=1'>Manifold</A><BR>
+<A href='?src=[REF(src)];make=[PIPE_4WAYMANIFOLD];dir=1'>4-Way Manifold</A><BR>
+<A href='?src=[REF(src)];make=[PIPE_MVALVE];dir=1'>Manual Valve</A><BR>
+<A href='?src=[REF(src)];make=[PIPE_DVALVE];dir=1'>Digital Valve</A><BR>
+<A href='?src=[REF(src)];make=[PIPE_BLUESPACE];dir=1'>Bluespace Pipe</A><BR>
 <b>Devices:</b><BR>
-<A href='?src=\ref[src];make=[PIPE_CONNECTOR];dir=1'>Connector</A><BR>
-<A href='?src=\ref[src];make=[PIPE_UVENT];dir=1'>Vent</A><BR>
-<A href='?src=\ref[src];make=[PIPE_PUMP];dir=1'>Gas Pump</A><BR>
-<A href='?src=\ref[src];make=[PIPE_PASSIVE_GATE];dir=1'>Passive Gate</A><BR>
-<A href='?src=\ref[src];make=[PIPE_VOLUME_PUMP];dir=1'>Volume Pump</A><BR>
-<A href='?src=\ref[src];make=[PIPE_SCRUBBER];dir=1'>Scrubber</A><BR>
-<A href='?src=\ref[src];makemeter=1'>Meter</A><BR>
-<A href='?src=\ref[src];make=[PIPE_GAS_FILTER];dir=1'>Gas Filter</A><BR>
-<A href='?src=\ref[src];make=[PIPE_GAS_MIXER];dir=1'>Gas Mixer</A><BR>
+<A href='?src=[REF(src)];make=[PIPE_CONNECTOR];dir=1'>Connector</A><BR>
+<A href='?src=[REF(src)];make=[PIPE_UVENT];dir=1'>Vent</A><BR>
+<A href='?src=[REF(src)];make=[PIPE_PUMP];dir=1'>Gas Pump</A><BR>
+<A href='?src=[REF(src)];make=[PIPE_PASSIVE_GATE];dir=1'>Passive Gate</A><BR>
+<A href='?src=[REF(src)];make=[PIPE_VOLUME_PUMP];dir=1'>Volume Pump</A><BR>
+<A href='?src=[REF(src)];make=[PIPE_SCRUBBER];dir=1'>Scrubber</A><BR>
+<A href='?src=[REF(src)];makemeter=1'>Meter</A><BR>
+<A href='?src=[REF(src)];make=[PIPE_GAS_FILTER];dir=1'>Gas Filter</A><BR>
+<A href='?src=[REF(src)];make=[PIPE_GAS_MIXER];dir=1'>Gas Mixer</A><BR>
 <b>Heat exchange:</b><BR>
-<A href='?src=\ref[src];make=[PIPE_HE];dir=1'>Pipe</A><BR>
-<A href='?src=\ref[src];make=[PIPE_HE];dir=5'>Bent Pipe</A><BR>
-<A href='?src=\ref[src];make=[PIPE_HE_MANIFOLD];dir=1'>Manifold</A><BR>
-<A href='?src=\ref[src];make=[PIPE_HE_4WAYMANIFOLD];dir=1'>4-Way Manifold</A><BR>
-<A href='?src=\ref[src];make=[PIPE_JUNCTION];dir=1'>Junction</A><BR>
-<A href='?src=\ref[src];make=[PIPE_HEAT_EXCHANGE];dir=1'>Heat Exchanger</A><BR>
+<A href='?src=[REF(src)];make=[PIPE_HE];dir=1'>Pipe</A><BR>
+<A href='?src=[REF(src)];make=[PIPE_HE];dir=5'>Bent Pipe</A><BR>
+<A href='?src=[REF(src)];make=[PIPE_HE_MANIFOLD];dir=1'>Manifold</A><BR>
+<A href='?src=[REF(src)];make=[PIPE_HE_4WAYMANIFOLD];dir=1'>4-Way Manifold</A><BR>
+<A href='?src=[REF(src)];make=[PIPE_JUNCTION];dir=1'>Junction</A><BR>
+<A href='?src=[REF(src)];make=[PIPE_HEAT_EXCHANGE];dir=1'>Heat Exchanger</A><BR>
 "}
 
 
@@ -143,15 +143,15 @@ Nah
 		return 1
 
 	var/dat = {"<b>Disposal Pipes</b><br><br>
-<A href='?src=\ref[src];dmake=[DISP_PIPE_STRAIGHT]'>Pipe</A><BR>
-<A href='?src=\ref[src];dmake=[DISP_PIPE_BENT]'>Bent Pipe</A><BR>
-<A href='?src=\ref[src];dmake=[DISP_JUNCTION]'>Junction</A><BR>
-<A href='?src=\ref[src];dmake=[DISP_YJUNCTION]'>Y-Junction</A><BR>
-<A href='?src=\ref[src];dmake=[DISP_END_TRUNK]'>Trunk</A><BR>
-<A href='?src=\ref[src];dmake=[DISP_END_BIN]'>Bin</A><BR>
-<A href='?src=\ref[src];dmake=[DISP_END_OUTLET]'>Outlet</A><BR>
-<A href='?src=\ref[src];dmake=[DISP_END_CHUTE]'>Chute</A><BR>
-<A href='?src=\ref[src];dmake=[DISP_SORTJUNCTION]'>Sort Junction</A><BR>
+<A href='?src=[REF(src)];dmake=[DISP_PIPE_STRAIGHT]'>Pipe</A><BR>
+<A href='?src=[REF(src)];dmake=[DISP_PIPE_BENT]'>Bent Pipe</A><BR>
+<A href='?src=[REF(src)];dmake=[DISP_JUNCTION]'>Junction</A><BR>
+<A href='?src=[REF(src)];dmake=[DISP_YJUNCTION]'>Y-Junction</A><BR>
+<A href='?src=[REF(src)];dmake=[DISP_END_TRUNK]'>Trunk</A><BR>
+<A href='?src=[REF(src)];dmake=[DISP_END_BIN]'>Bin</A><BR>
+<A href='?src=[REF(src)];dmake=[DISP_END_OUTLET]'>Outlet</A><BR>
+<A href='?src=[REF(src)];dmake=[DISP_END_CHUTE]'>Chute</A><BR>
+<A href='?src=[REF(src)];dmake=[DISP_SORTJUNCTION]'>Sort Junction</A><BR>
 "}
 
 	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
@@ -193,16 +193,16 @@ Nah
 		return 1
 
 	var/dat = {"<B>Transit Tubes:</B><BR>
-<A href='?src=\ref[src];tube=[TRANSIT_TUBE_STRAIGHT]'>Straight Tube</A><BR>
-<A href='?src=\ref[src];tube=[TRANSIT_TUBE_STRAIGHT_CROSSING]'>Straight Tube with Crossing</A><BR>
-<A href='?src=\ref[src];tube=[TRANSIT_TUBE_CURVED]'>Curved Tube</A><BR>
-<A href='?src=\ref[src];tube=[TRANSIT_TUBE_DIAGONAL]'>Diagonal Tube</A><BR>
-<A href='?src=\ref[src];tube=[TRANSIT_TUBE_DIAGONAL_CROSSING]'>Diagonal Tube with Crossing</A><BR>
-<A href='?src=\ref[src];tube=[TRANSIT_TUBE_JUNCTION]'>Junction</A><BR>
+<A href='?src=[REF(src)];tube=[TRANSIT_TUBE_STRAIGHT]'>Straight Tube</A><BR>
+<A href='?src=[REF(src)];tube=[TRANSIT_TUBE_STRAIGHT_CROSSING]'>Straight Tube with Crossing</A><BR>
+<A href='?src=[REF(src)];tube=[TRANSIT_TUBE_CURVED]'>Curved Tube</A><BR>
+<A href='?src=[REF(src)];tube=[TRANSIT_TUBE_DIAGONAL]'>Diagonal Tube</A><BR>
+<A href='?src=[REF(src)];tube=[TRANSIT_TUBE_DIAGONAL_CROSSING]'>Diagonal Tube with Crossing</A><BR>
+<A href='?src=[REF(src)];tube=[TRANSIT_TUBE_JUNCTION]'>Junction</A><BR>
 <b>Station Equipment:</b><BR>
-<A href='?src=\ref[src];tube=[TRANSIT_TUBE_STATION]'>Through Tube Station</A><BR>
-<A href='?src=\ref[src];tube=[TRANSIT_TUBE_TERMINUS]'>Terminus Tube Station</A><BR>
-<A href='?src=\ref[src];tube=[TRANSIT_TUBE_POD]'>Transit Tube Pod</A><BR>
+<A href='?src=[REF(src)];tube=[TRANSIT_TUBE_STATION]'>Through Tube Station</A><BR>
+<A href='?src=[REF(src)];tube=[TRANSIT_TUBE_TERMINUS]'>Terminus Tube Station</A><BR>
+<A href='?src=[REF(src)];tube=[TRANSIT_TUBE_POD]'>Transit Tube Pod</A><BR>
 "}
 
 	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")

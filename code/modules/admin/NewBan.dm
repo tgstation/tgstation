@@ -176,7 +176,7 @@ GLOBAL_PROTECT(Banlist)
 	for (var/A in GLOB.Banlist.dir)
 		count++
 		GLOB.Banlist.cd = "/base/[A]"
-		var/ref		= "\ref[src]"
+		var/ref		= "[REF(src)]"
 		var/key		= GLOB.Banlist["key"]
 		var/id		= GLOB.Banlist["id"]
 		var/ip		= GLOB.Banlist["ip"]

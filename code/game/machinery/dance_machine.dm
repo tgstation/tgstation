@@ -92,21 +92,21 @@
 	user.set_machine(src)
 	var/list/dat = list()
 	dat +="<div class='statusDisplay' style='text-align:center'>"
-	dat += "<b><A href='?src=\ref[src];action=toggle'>[!active ? "BREAK IT DOWN" : "SHUT IT DOWN"]<b></A><br>"
+	dat += "<b><A href='?src=[REF(src)];action=toggle'>[!active ? "BREAK IT DOWN" : "SHUT IT DOWN"]<b></A><br>"
 	dat += "</div><br>"
-	dat += "<A href='?src=\ref[src];action=select'> Select Track</A><br>"
+	dat += "<A href='?src=[REF(src)];action=select'> Select Track</A><br>"
 	dat += "Track Selected: [selection.song_name]<br>"
 	dat += "Track Length: [DisplayTimeText(selection.song_length)]<br><br>"
 	dat += "<br>DJ's Soundboard:<b><br>"
 	dat +="<div class='statusDisplay'><div style='text-align:center'>"
-	dat += "<A href='?src=\ref[src];action=horn'>Air Horn</A>  "
-	dat += "<A href='?src=\ref[src];action=alert'>Station Alert</A>  "
-	dat += "<A href='?src=\ref[src];action=siren'>Warning Siren</A>  "
-	dat += "<A href='?src=\ref[src];action=honk'>Honk</A><br>"
-	dat += "<A href='?src=\ref[src];action=pump'>Shotgun Pump</A>"
-	dat += "<A href='?src=\ref[src];action=pop'>Gunshot</A>"
-	dat += "<A href='?src=\ref[src];action=saber'>Esword</A>"
-	dat += "<A href='?src=\ref[src];action=harm'>Harm Alarm</A>"
+	dat += "<A href='?src=[REF(src)];action=horn'>Air Horn</A>  "
+	dat += "<A href='?src=[REF(src)];action=alert'>Station Alert</A>  "
+	dat += "<A href='?src=[REF(src)];action=siren'>Warning Siren</A>  "
+	dat += "<A href='?src=[REF(src)];action=honk'>Honk</A><br>"
+	dat += "<A href='?src=[REF(src)];action=pump'>Shotgun Pump</A>"
+	dat += "<A href='?src=[REF(src)];action=pop'>Gunshot</A>"
+	dat += "<A href='?src=[REF(src)];action=saber'>Esword</A>"
+	dat += "<A href='?src=[REF(src)];action=harm'>Harm Alarm</A>"
 	var/datum/browser/popup = new(user, "vending", "Radiance Dance Machine - Mark IV", 400, 350)
 	popup.set_content(dat.Join())
 	popup.open()

@@ -116,7 +116,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 		to_chat(usr, "<span class='adminnotice'>Running your proc</span>")
 	GLOB.LastAdminCalledProc = procname
 	if(target != GLOBAL_PROC)
-		GLOB.LastAdminCalledTargetRef = "\ref[target]"
+		GLOB.LastAdminCalledTargetRef = "[REF(target)]"
 	GLOB.AdminProcCaller = ckey	//if this runtimes, too bad for you
 	++GLOB.AdminProcCallCount
 	. = world.WrapAdminProcCall(target, procname, arguments)

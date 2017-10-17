@@ -333,7 +333,7 @@
 				"desc_close" = status_close["desc"])))
 		data["slots"] = pos
 
-	data["src"] = "\ref[src]"
+	data["src"] = "[REF(src)]"
 	data["station_name"] = station_name()
 
 

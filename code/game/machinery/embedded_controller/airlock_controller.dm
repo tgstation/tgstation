@@ -264,21 +264,21 @@
 
 	switch(state)
 		if(AIRLOCK_STATE_INOPEN)
-			state_options = {"<A href='?src=\ref[src];command=cycle_closed'>Close Interior Airlock</A><BR>
-<A href='?src=\ref[src];command=cycle_exterior'>Cycle to Exterior Airlock</A><BR>"}
+			state_options = {"<A href='?src=[REF(src)];command=cycle_closed'>Close Interior Airlock</A><BR>
+<A href='?src=[REF(src)];command=cycle_exterior'>Cycle to Exterior Airlock</A><BR>"}
 			current_status = "Interior Airlock Open<BR><span class='good'>Chamber Pressurized</span>"
 		if(AIRLOCK_STATE_PRESSURIZE)
-			state_options = "<A href='?src=\ref[src];command=abort'>Abort Cycling</A><BR>"
+			state_options = "<A href='?src=[REF(src)];command=abort'>Abort Cycling</A><BR>"
 			current_status = "Cycling to Interior Airlock<BR><span class='average'>Chamber Pressurizing</span>"
 		if(AIRLOCK_STATE_CLOSED)
-			state_options = {"<A href='?src=\ref[src];command=cycle_interior'>Open Interior Airlock</A><BR>
-<A href='?src=\ref[src];command=cycle_exterior'>Open Exterior Airlock</A><BR>"}
+			state_options = {"<A href='?src=[REF(src)];command=cycle_interior'>Open Interior Airlock</A><BR>
+<A href='?src=[REF(src)];command=cycle_exterior'>Open Exterior Airlock</A><BR>"}
 		if(AIRLOCK_STATE_DEPRESSURIZE)
-			state_options = "<A href='?src=\ref[src];command=abort'>Abort Cycling</A><BR>"
+			state_options = "<A href='?src=[REF(src)];command=abort'>Abort Cycling</A><BR>"
 			current_status = "Cycling to Exterior Airlock<BR><span class='average'>Chamber Depressurizing</span>"
 		if(AIRLOCK_STATE_OUTOPEN)
-			state_options = {"<A href='?src=\ref[src];command=cycle_interior'>Cycle to Interior Airlock</A><BR>
-<A href='?src=\ref[src];command=cycle_closed'>Close Exterior Airlock</A><BR>"}
+			state_options = {"<A href='?src=[REF(src)];command=cycle_interior'>Cycle to Interior Airlock</A><BR>
+<A href='?src=[REF(src)];command=cycle_closed'>Close Exterior Airlock</A><BR>"}
 			current_status = "Exterior Airlock Open<BR><span class='bad'>Chamber Depressurized</span>"
 
 	var/output = {"<h3>Airlock Status</h3>

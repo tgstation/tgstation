@@ -65,13 +65,13 @@
 
 	var/dat = 	"<div align='center'><b>Inventory of [name]</b></div><p>"
 	if(inventory_head)
-		dat +=	"<br><b>Head:</b> [inventory_head] (<a href='?src=\ref[src];remove_inv=head'>Remove</a>)"
+		dat +=	"<br><b>Head:</b> [inventory_head] (<a href='?src=[REF(src)];remove_inv=head'>Remove</a>)"
 	else
-		dat +=	"<br><b>Head:</b> <a href='?src=\ref[src];add_inv=head'>Nothing</a>"
+		dat +=	"<br><b>Head:</b> <a href='?src=[REF(src)];add_inv=head'>Nothing</a>"
 	if(inventory_back)
-		dat +=	"<br><b>Back:</b> [inventory_back] (<a href='?src=\ref[src];remove_inv=back'>Remove</a>)"
+		dat +=	"<br><b>Back:</b> [inventory_back] (<a href='?src=[REF(src)];remove_inv=back'>Remove</a>)"
 	else
-		dat +=	"<br><b>Back:</b> <a href='?src=\ref[src];add_inv=back'>Nothing</a>"
+		dat +=	"<br><b>Back:</b> <a href='?src=[REF(src)];add_inv=back'>Nothing</a>"
 
 	user << browse(dat, text("window=mob[];size=325x500", real_name))
 	onclose(user, "mob[real_name]")

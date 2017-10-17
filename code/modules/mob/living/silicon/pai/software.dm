@@ -277,11 +277,11 @@
 /mob/living/silicon/pai/proc/softwareMenu()			// Populate the right menu
 	var/dat = ""
 
-	dat += "<A href='byond://?src=\ref[src];software=refresh'>Refresh</A><br>"
+	dat += "<A href='byond://?src=[REF(src)];software=refresh'>Refresh</A><br>"
 	// Built-in
-	dat += "<A href='byond://?src=\ref[src];software=directives'>Directives</A><br>"
-	dat += "<A href='byond://?src=\ref[src];software=radio;sub=0'>Radio Configuration</A><br>"
-	dat += "<A href='byond://?src=\ref[src];software=image'>Screen Display</A><br>"
+	dat += "<A href='byond://?src=[REF(src)];software=directives'>Directives</A><br>"
+	dat += "<A href='byond://?src=[REF(src)];software=radio;sub=0'>Radio Configuration</A><br>"
+	dat += "<A href='byond://?src=[REF(src)];software=image'>Screen Display</A><br>"
 	//dat += "Text Messaging <br>"
 	dat += "<br>"
 
@@ -289,42 +289,42 @@
 	dat += "<b>Basic</b> <br>"
 	for(var/s in src.software)
 		if(s == "digital messenger")
-			dat += "<a href='byond://?src=\ref[src];software=pdamessage;sub=0'>Digital Messenger</a> <br>"
+			dat += "<a href='byond://?src=[REF(src)];software=pdamessage;sub=0'>Digital Messenger</a> <br>"
 		if(s == "crew manifest")
-			dat += "<a href='byond://?src=\ref[src];software=manifest;sub=0'>Crew Manifest</a> <br>"
+			dat += "<a href='byond://?src=[REF(src)];software=manifest;sub=0'>Crew Manifest</a> <br>"
 		if(s == "medical records")
-			dat += "<a href='byond://?src=\ref[src];software=medicalrecord;sub=0'>Medical Records</a> <br>"
+			dat += "<a href='byond://?src=[REF(src)];software=medicalrecord;sub=0'>Medical Records</a> <br>"
 		if(s == "security records")
-			dat += "<a href='byond://?src=\ref[src];software=securityrecord;sub=0'>Security Records</a> <br>"
+			dat += "<a href='byond://?src=[REF(src)];software=securityrecord;sub=0'>Security Records</a> <br>"
 		if(s == "camera")
-			dat += "<a href='byond://?src=\ref[src];software=[s]'>Camera Jack</a> <br>"
+			dat += "<a href='byond://?src=[REF(src)];software=[s]'>Camera Jack</a> <br>"
 		if(s == "remote signaller")
-			dat += "<a href='byond://?src=\ref[src];software=signaller;sub=0'>Remote Signaller</a> <br>"
+			dat += "<a href='byond://?src=[REF(src)];software=signaller;sub=0'>Remote Signaller</a> <br>"
 	dat += "<br>"
 
 	// Advanced
 	dat += "<b>Advanced</b> <br>"
 	for(var/s in src.software)
 		if(s == "atmosphere sensor")
-			dat += "<a href='byond://?src=\ref[src];software=atmosensor;sub=0'>Atmospheric Sensor</a> <br>"
+			dat += "<a href='byond://?src=[REF(src)];software=atmosensor;sub=0'>Atmospheric Sensor</a> <br>"
 		if(s == "heartbeat sensor")
-			dat += "<a href='byond://?src=\ref[src];software=[s]'>Heartbeat Sensor</a> <br>"
+			dat += "<a href='byond://?src=[REF(src)];software=[s]'>Heartbeat Sensor</a> <br>"
 		if(s == "security HUD")
-			dat += "<a href='byond://?src=\ref[src];software=securityhud;sub=0'>Facial Recognition Suite</a>[(src.secHUD) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
+			dat += "<a href='byond://?src=[REF(src)];software=securityhud;sub=0'>Facial Recognition Suite</a>[(src.secHUD) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
 		if(s == "medical HUD")
-			dat += "<a href='byond://?src=\ref[src];software=medicalhud;sub=0'>Medical Analysis Suite</a>[(src.medHUD) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
+			dat += "<a href='byond://?src=[REF(src)];software=medicalhud;sub=0'>Medical Analysis Suite</a>[(src.medHUD) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
 		if(s == "universal translator")
 			var/translator_on = (flags_2 & OMNITONGUE_2)
-			dat += "<a href='byond://?src=\ref[src];software=translator;sub=0'>Universal Translator</a>[translator_on ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
+			dat += "<a href='byond://?src=[REF(src)];software=translator;sub=0'>Universal Translator</a>[translator_on ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
 		if(s == "projection array")
-			dat += "<a href='byond://?src=\ref[src];software=projectionarray;sub=0'>Projection Array</a> <br>"
+			dat += "<a href='byond://?src=[REF(src)];software=projectionarray;sub=0'>Projection Array</a> <br>"
 		if(s == "camera jack")
-			dat += "<a href='byond://?src=\ref[src];software=camerajack;sub=0'>Camera Jack</a> <br>"
+			dat += "<a href='byond://?src=[REF(src)];software=camerajack;sub=0'>Camera Jack</a> <br>"
 		if(s == "door jack")
-			dat += "<a href='byond://?src=\ref[src];software=doorjack;sub=0'>Door Jack</a> <br>"
+			dat += "<a href='byond://?src=[REF(src)];software=doorjack;sub=0'>Door Jack</a> <br>"
 	dat += "<br>"
 	dat += "<br>"
-	dat += "<a href='byond://?src=\ref[src];software=buy;sub=0'>Download additional software</a>"
+	dat += "<a href='byond://?src=[REF(src)];software=buy;sub=0'>Download additional software</a>"
 	return dat
 
 
@@ -340,7 +340,7 @@
 		if(!software.Find(s))
 			var/cost = src.available_software[s]
 			var/displayName = uppertext(s)
-			dat += "<a href='byond://?src=\ref[src];software=buy;sub=1;buy=[s]'>[displayName]</a> ([cost]) <br>"
+			dat += "<a href='byond://?src=[REF(src)];software=buy;sub=1;buy=[s]'>[displayName]</a> ([cost]) <br>"
 		else
 			var/displayName = lowertext(s)
 			dat += "[displayName] (Download Complete) <br>"
@@ -353,7 +353,7 @@
 
 	dat += "[(src.master) ? "Your master: [src.master] ([src.master_dna])" : "You are bound to no one."]"
 	dat += "<br><br>"
-	dat += "<a href='byond://?src=\ref[src];software=directive;getdna=1'>Request carrier DNA sample</a><br>"
+	dat += "<a href='byond://?src=[REF(src)];software=directive;getdna=1'>Request carrier DNA sample</a><br>"
 	dat += "<h2>Directives</h2><br>"
 	dat += "<b>Prime Directive</b><br>"
 	dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[src.laws.zeroth]<br>"
@@ -396,20 +396,20 @@
 	dat += "<h3>Remote Signaller</h3><br><br>"
 	dat += {"<B>Frequency/Code</B> for signaler:<BR>
 	Frequency:
-	<A href='byond://?src=\ref[src];software=signaller;freq=-10;'>-</A>
-	<A href='byond://?src=\ref[src];software=signaller;freq=-2'>-</A>
+	<A href='byond://?src=[REF(src)];software=signaller;freq=-10;'>-</A>
+	<A href='byond://?src=[REF(src)];software=signaller;freq=-2'>-</A>
 	[format_frequency(src.sradio.frequency)]
-	<A href='byond://?src=\ref[src];software=signaller;freq=2'>+</A>
-	<A href='byond://?src=\ref[src];software=signaller;freq=10'>+</A><BR>
+	<A href='byond://?src=[REF(src)];software=signaller;freq=2'>+</A>
+	<A href='byond://?src=[REF(src)];software=signaller;freq=10'>+</A><BR>
 
 	Code:
-	<A href='byond://?src=\ref[src];software=signaller;code=-5'>-</A>
-	<A href='byond://?src=\ref[src];software=signaller;code=-1'>-</A>
+	<A href='byond://?src=[REF(src)];software=signaller;code=-5'>-</A>
+	<A href='byond://?src=[REF(src)];software=signaller;code=-1'>-</A>
 	[src.sradio.code]
-	<A href='byond://?src=\ref[src];software=signaller;code=1'>+</A>
-	<A href='byond://?src=\ref[src];software=signaller;code=5'>+</A><BR>
+	<A href='byond://?src=[REF(src)];software=signaller;code=1'>+</A>
+	<A href='byond://?src=[REF(src)];software=signaller;code=5'>+</A><BR>
 
-	<A href='byond://?src=\ref[src];software=signaller;send=1'>Send Signal</A><BR>"}
+	<A href='byond://?src=[REF(src)];software=signaller;send=1'>Send Signal</A><BR>"}
 	return dat
 
 // Crew Manifest
@@ -428,7 +428,7 @@
 			. += "<h3>Medical Records</h3><HR>"
 			if(GLOB.data_core.general)
 				for(var/datum/data/record/R in sortRecord(GLOB.data_core.general))
-					. += "<A href='?src=\ref[src];med_rec=[R.fields["id"]];software=medicalrecord;sub=1'>[R.fields["id"]]: [R.fields["name"]]<BR>"
+					. += "<A href='?src=[REF(src)];med_rec=[R.fields["id"]];software=medicalrecord;sub=1'>[R.fields["id"]]: [R.fields["name"]]<BR>"
 		if(1)
 			. += "<CENTER><B>Medical Record</B></CENTER><BR>"
 			if(medicalActive1 in GLOB.data_core.general)
@@ -436,10 +436,10 @@
 			else
 				. += "<pre>Requested medical record not found.</pre><BR>"
 			if(medicalActive2 in GLOB.data_core.medical)
-				. += "<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: <A href='?src=\ref[src];field=blood_type'>[medicalActive2.fields["blood_type"]]</A><BR>\nDNA: <A href='?src=\ref[src];field=b_dna'>[medicalActive2.fields["b_dna"]]</A><BR>\n<BR>\nMinor Disabilities: <A href='?src=\ref[src];field=mi_dis'>[medicalActive2.fields["mi_dis"]]</A><BR>\nDetails: <A href='?src=\ref[src];field=mi_dis_d'>[medicalActive2.fields["mi_dis_d"]]</A><BR>\n<BR>\nMajor Disabilities: <A href='?src=\ref[src];field=ma_dis'>[medicalActive2.fields["ma_dis"]]</A><BR>\nDetails: <A href='?src=\ref[src];field=ma_dis_d'>[medicalActive2.fields["ma_dis_d"]]</A><BR>\n<BR>\nAllergies: <A href='?src=\ref[src];field=alg'>[medicalActive2.fields["alg"]]</A><BR>\nDetails: <A href='?src=\ref[src];field=alg_d'>[medicalActive2.fields["alg_d"]]</A><BR>\n<BR>\nCurrent Diseases: <A href='?src=\ref[src];field=cdi'>[medicalActive2.fields["cdi"]]</A> (per disease info placed in log/comment section)<BR>\nDetails: <A href='?src=\ref[src];field=cdi_d'>[medicalActive2.fields["cdi_d"]]</A><BR>\n<BR>\nImportant Notes:<BR>\n\t<A href='?src=\ref[src];field=notes'>[medicalActive2.fields["notes"]]</A><BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
+				. += "<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: <A href='?src=[REF(src)];field=blood_type'>[medicalActive2.fields["blood_type"]]</A><BR>\nDNA: <A href='?src=[REF(src)];field=b_dna'>[medicalActive2.fields["b_dna"]]</A><BR>\n<BR>\nMinor Disabilities: <A href='?src=[REF(src)];field=mi_dis'>[medicalActive2.fields["mi_dis"]]</A><BR>\nDetails: <A href='?src=[REF(src)];field=mi_dis_d'>[medicalActive2.fields["mi_dis_d"]]</A><BR>\n<BR>\nMajor Disabilities: <A href='?src=[REF(src)];field=ma_dis'>[medicalActive2.fields["ma_dis"]]</A><BR>\nDetails: <A href='?src=[REF(src)];field=ma_dis_d'>[medicalActive2.fields["ma_dis_d"]]</A><BR>\n<BR>\nAllergies: <A href='?src=[REF(src)];field=alg'>[medicalActive2.fields["alg"]]</A><BR>\nDetails: <A href='?src=[REF(src)];field=alg_d'>[medicalActive2.fields["alg_d"]]</A><BR>\n<BR>\nCurrent Diseases: <A href='?src=[REF(src)];field=cdi'>[medicalActive2.fields["cdi"]]</A> (per disease info placed in log/comment section)<BR>\nDetails: <A href='?src=[REF(src)];field=cdi_d'>[medicalActive2.fields["cdi_d"]]</A><BR>\n<BR>\nImportant Notes:<BR>\n\t<A href='?src=[REF(src)];field=notes'>[medicalActive2.fields["notes"]]</A><BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
 			else
 				. += "<pre>Requested medical record not found.</pre><BR>"
-			. += "<BR>\n<A href='?src=\ref[src];software=medicalrecord;sub=0'>Back</A><BR>"
+			. += "<BR>\n<A href='?src=[REF(src)];software=medicalrecord;sub=0'>Back</A><BR>"
 	return .
 
 // Security Records
@@ -450,18 +450,18 @@
 			. += "<h3>Security Records</h3><HR>"
 			if(GLOB.data_core.general)
 				for(var/datum/data/record/R in sortRecord(GLOB.data_core.general))
-					. += "<A href='?src=\ref[src];sec_rec=[R.fields["id"]];software=securityrecord;sub=1'>[R.fields["id"]]: [R.fields["name"]]<BR>"
+					. += "<A href='?src=[REF(src)];sec_rec=[R.fields["id"]];software=securityrecord;sub=1'>[R.fields["id"]]: [R.fields["name"]]<BR>"
 		if(1)
 			. += "<h3>Security Record</h3>"
 			if(securityActive1 in GLOB.data_core.general)
-				. += "Name: <A href='?src=\ref[src];field=name'>[securityActive1.fields["name"]]</A> ID: <A href='?src=\ref[src];field=id'>[securityActive1.fields["id"]]</A><BR>\nSex: <A href='?src=\ref[src];field=sex'>[securityActive1.fields["sex"]]</A><BR>\nAge: <A href='?src=\ref[src];field=age'>[securityActive1.fields["age"]]</A><BR>\nRank: <A href='?src=\ref[src];field=rank'>[securityActive1.fields["rank"]]</A><BR>\nFingerprint: <A href='?src=\ref[src];field=fingerprint'>[securityActive1.fields["fingerprint"]]</A><BR>\nPhysical Status: [securityActive1.fields["p_stat"]]<BR>\nMental Status: [securityActive1.fields["m_stat"]]<BR>"
+				. += "Name: <A href='?src=[REF(src)];field=name'>[securityActive1.fields["name"]]</A> ID: <A href='?src=[REF(src)];field=id'>[securityActive1.fields["id"]]</A><BR>\nSex: <A href='?src=[REF(src)];field=sex'>[securityActive1.fields["sex"]]</A><BR>\nAge: <A href='?src=[REF(src)];field=age'>[securityActive1.fields["age"]]</A><BR>\nRank: <A href='?src=[REF(src)];field=rank'>[securityActive1.fields["rank"]]</A><BR>\nFingerprint: <A href='?src=[REF(src)];field=fingerprint'>[securityActive1.fields["fingerprint"]]</A><BR>\nPhysical Status: [securityActive1.fields["p_stat"]]<BR>\nMental Status: [securityActive1.fields["m_stat"]]<BR>"
 			else
 				. += "<pre>Requested security record not found,</pre><BR>"
 			if(securityActive2 in GLOB.data_core.security)
-				. += "<BR>\nSecurity Data<BR>\nCriminal Status: [securityActive2.fields["criminal"]]<BR>\n<BR>\nMinor Crimes: <A href='?src=\ref[src];field=mi_crim'>[securityActive2.fields["mi_crim"]]</A><BR>\nDetails: <A href='?src=\ref[src];field=mi_crim_d'>[securityActive2.fields["mi_crim_d"]]</A><BR>\n<BR>\nMajor Crimes: <A href='?src=\ref[src];field=ma_crim'>[securityActive2.fields["ma_crim"]]</A><BR>\nDetails: <A href='?src=\ref[src];field=ma_crim_d'>[securityActive2.fields["ma_crim_d"]]</A><BR>\n<BR>\nImportant Notes:<BR>\n\t<A href='?src=\ref[src];field=notes'>[securityActive2.fields["notes"]]</A><BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
+				. += "<BR>\nSecurity Data<BR>\nCriminal Status: [securityActive2.fields["criminal"]]<BR>\n<BR>\nMinor Crimes: <A href='?src=[REF(src)];field=mi_crim'>[securityActive2.fields["mi_crim"]]</A><BR>\nDetails: <A href='?src=[REF(src)];field=mi_crim_d'>[securityActive2.fields["mi_crim_d"]]</A><BR>\n<BR>\nMajor Crimes: <A href='?src=[REF(src)];field=ma_crim'>[securityActive2.fields["ma_crim"]]</A><BR>\nDetails: <A href='?src=[REF(src)];field=ma_crim_d'>[securityActive2.fields["ma_crim_d"]]</A><BR>\n<BR>\nImportant Notes:<BR>\n\t<A href='?src=[REF(src)];field=notes'>[securityActive2.fields["notes"]]</A><BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
 			else
 				. += "<pre>Requested security record not found,</pre><BR>"
-			. += text("<BR>\n<A href='?src=\ref[];software=securityrecord;sub=0'>Back</A><BR>", src)
+			. += "<BR>\n<A href='?src=[REF(src)];software=securityrecord;sub=0'>Back</A><BR>"
 	return .
 
 // Universal Translator
@@ -469,7 +469,7 @@
 	var/translator_on = (flags_2 & OMNITONGUE_2)
 	. = {"<h3>Universal Translator</h3><br>
 				When enabled, this device will permamently be able to speak and understand all known forms of communication.<br><br>
-				The device is currently [translator_on ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>[translator_on ? "" : "<a href='byond://?src=\ref[src];software=translator;sub=0;toggle=1'>Activate Translation Module</a><br>"]"}
+				The device is currently [translator_on ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>[translator_on ? "" : "<a href='byond://?src=[REF(src)];software=translator;sub=0;toggle=1'>Activate Translation Module</a><br>"]"}
 	return .
 
 // Security HUD
@@ -477,7 +477,7 @@
 	var/dat = {"<h3>Facial Recognition Suite</h3><br>
 				When enabled, this package will scan all viewable faces and compare them against the known criminal database, providing real-time graphical data about any detected persons of interest.<br><br>
 				The package is currently [ (src.secHUD) ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>
-				<a href='byond://?src=\ref[src];software=securityhud;sub=0;toggle=1'>Toggle Package</a><br>
+				<a href='byond://?src=[REF(src)];software=securityhud;sub=0;toggle=1'>Toggle Package</a><br>
 				"}
 	return dat
 
@@ -489,9 +489,9 @@
 				 <h4>Visual Status Overlay</h4><br>
 					When enabled, this package will scan all nearby crewmembers' vitals and provide real-time graphical data about their state of health.<br><br>
 					The suite is currently [ (src.medHUD) ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>
-					<a href='byond://?src=\ref[src];software=medicalhud;sub=0;toggle=1'>Toggle Suite</a><br>
+					<a href='byond://?src=[REF(src)];software=medicalhud;sub=0;toggle=1'>Toggle Suite</a><br>
 					<br>
-					<a href='byond://?src=\ref[src];software=medicalhud;sub=1'>Host Bioscan</a><br>
+					<a href='byond://?src=[REF(src)];software=medicalhud;sub=1'>Host Bioscan</a><br>
 					"}
 	if(src.subscreen == 1)
 		dat += {"<h3>Medical Analysis Suite</h3><br>
@@ -522,7 +522,7 @@
 					 Stage: [D.stage]/[D.max_stages]<br>
 					 Possible Cure: [D.cure_text]<br>
 					"}
-		dat += "<a href='byond://?src=\ref[src];software=medicalhud;sub=0'>Visual Status Overlay</a><br>"
+		dat += "<a href='byond://?src=[REF(src)];software=medicalhud;sub=0'>Visual Status Overlay</a><br>"
 	return dat
 
 // Atmospheric Scanner
@@ -547,7 +547,7 @@
 				if(gas_level > 0.01)
 					dat += "[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_level*100)]%<br>"
 		dat += "Temperature: [round(environment.temperature-T0C)]&deg;C<br>"
-	dat += "<a href='byond://?src=\ref[src];software=atmosensor;sub=0'>Refresh Reading</a> <br>"
+	dat += "<a href='byond://?src=[REF(src)];software=atmosensor;sub=0'>Refresh Reading</a> <br>"
 	dat += "<br>"
 	return dat
 
@@ -576,7 +576,7 @@
 	dat += "Cable status : "
 	if(!src.cable)
 		dat += "<font color=#FF5555>Retracted</font> <br>"
-		dat += "<a href='byond://?src=\ref[src];software=doorjack;cable=1;sub=0'>Extend Cable</a> <br>"
+		dat += "<a href='byond://?src=[REF(src)];software=doorjack;cable=1;sub=0'>Extend Cable</a> <br>"
 		return dat
 	if(!src.cable.machine)
 		dat += "<font color=#FFFF55>Extended</font> <br>"
@@ -590,10 +590,10 @@
 //	var/obj/machinery/airlock/door = machine
 
 	if(!src.hackdoor)
-		dat += "<a href='byond://?src=\ref[src];software=doorjack;jack=1;sub=0'>Begin Airlock Jacking</a> <br>"
+		dat += "<a href='byond://?src=[REF(src)];software=doorjack;jack=1;sub=0'>Begin Airlock Jacking</a> <br>"
 	else
 		dat += "Jack in progress... [src.hackprogress]% complete.<br>"
-		dat += "<a href='byond://?src=\ref[src];software=doorjack;cancel=1;sub=0'>Cancel Airlock Jack</a> <br>"
+		dat += "<a href='byond://?src=[REF(src)];software=doorjack;cancel=1;sub=0'>Cancel Airlock Jack</a> <br>"
 	//src.hackdoor = machine
 	//src.hackloop()
 	return dat
@@ -628,16 +628,16 @@
 /mob/living/silicon/pai/proc/pdamessage()
 
 	var/dat = "<h3>Digital Messenger</h3>"
-	dat += {"<b>Signal/Receiver Status:</b> <A href='byond://?src=\ref[src];software=pdamessage;toggler=1'>
+	dat += {"<b>Signal/Receiver Status:</b> <A href='byond://?src=[REF(src)];software=pdamessage;toggler=1'>
 	[(pda.toff) ? "<font color='red'>\[Off\]</font>" : "<font color='green'>\[On\]</font>"]</a><br>
-	<b>Ringer Status:</b> <A href='byond://?src=\ref[src];software=pdamessage;ringer=1'>
+	<b>Ringer Status:</b> <A href='byond://?src=[REF(src)];software=pdamessage;ringer=1'>
 	[(pda.silent) ? "<font color='red'>\[Off\]</font>" : "<font color='green'>\[On\]</font>"]</a><br><br>"}
 	dat += "<ul>"
 	if(!pda.toff)
 		for (var/obj/item/device/pda/P in sortNames(get_viewable_pdas()))
 			if (P == src.pda)
 				continue
-			dat += "<li><a href='byond://?src=\ref[src];software=pdamessage;target=\ref[P]'>[P]</a>"
+			dat += "<li><a href='byond://?src=[REF(src)];software=pdamessage;target=[REF(P)]'>[P]</a>"
 			dat += "</li>"
 	dat += "</ul>"
 	dat += "<br><br>"

@@ -68,7 +68,7 @@
 		var/mob/thismob = i
 		var/list/mob_info = list()
 		mob_info["name"] = thismob.real_name
-		mob_info["mob"] = "\ref[thismob]"
+		mob_info["mob"] = "[REF(thismob)]"
 		mobs += list(mob_info)
 
 	data["mobs"] = mobs

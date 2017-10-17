@@ -121,7 +121,7 @@
 
 /proc/SDQL_gen_vv_href(t)
 	var/text = ""
-	text += "<A HREF='?_src_=vars;[HrefToken()];Vars=\ref[t]'>\ref[t]</A>"
+	text += "<A HREF='?_src_=vars;[HrefToken()];Vars=[REF(t)]'>[REF(t)]</A>"
 	if(istype(t, /atom))
 		var/atom/a = t
 		var/turf/T = a.loc

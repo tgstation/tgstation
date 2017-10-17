@@ -43,20 +43,20 @@
 		dat += "Collected Samples : [points] <br>"
 		dat += "Gear Credits: [credits] <br>"
 		dat += "<b>Transfer data in exchange for supplies:</b><br>"
-		dat += "<a href='?src=\ref[src];dispense=baton'>Advanced Baton</A><br>"
-		dat += "<a href='?src=\ref[src];dispense=helmet'>Agent Helmet</A><br>"
-		dat += "<a href='?src=\ref[src];dispense=vest'>Agent Vest</A><br>"
-		dat += "<a href='?src=\ref[src];dispense=silencer'>Radio Silencer</A><br>"
-		dat += "<a href='?src=\ref[src];dispense=tool'>Science Tool</A><br>"
+		dat += "<a href='?src=[REF(src)];dispense=baton'>Advanced Baton</A><br>"
+		dat += "<a href='?src=[REF(src)];dispense=helmet'>Agent Helmet</A><br>"
+		dat += "<a href='?src=[REF(src)];dispense=vest'>Agent Vest</A><br>"
+		dat += "<a href='?src=[REF(src)];dispense=silencer'>Radio Silencer</A><br>"
+		dat += "<a href='?src=[REF(src)];dispense=tool'>Science Tool</A><br>"
 	else
 		dat += "<span class='bad'>NO EXPERIMENT MACHINE DETECTED</span> <br>"
 
 	if(pad)
 		dat += "<span class='bad'>Emergency Teleporter System.</span>"
 		dat += "<span class='bad'>Consider using primary observation console first.</span>"
-		dat += "<a href='?src=\ref[src];teleporter_send=1'>Activate Teleporter</A><br>"
+		dat += "<a href='?src=[REF(src)];teleporter_send=1'>Activate Teleporter</A><br>"
 		if(gizmo && gizmo.marked)
-			dat += "<a href='?src=\ref[src];teleporter_retrieve=1'>Retrieve Mark</A><br>"
+			dat += "<a href='?src=[REF(src)];teleporter_retrieve=1'>Retrieve Mark</A><br>"
 		else
 			dat += "<span class='linkOff'>Retrieve Mark</span><br>"
 	else
@@ -66,15 +66,15 @@
 		dat += "<h4> Agent Vest Mode </h4><br>"
 		var/mode = vest.mode
 		if(mode == VEST_STEALTH)
-			dat += "<a href='?src=\ref[src];flip_vest=1'>Combat</A>"
+			dat += "<a href='?src=[REF(src)];flip_vest=1'>Combat</A>"
 			dat += "<span class='linkOff'>Stealth</span>"
 		else
 			dat += "<span class='linkOff'>Combat</span>"
-			dat += "<a href='?src=\ref[src];flip_vest=1'>Stealth</A>"
+			dat += "<a href='?src=[REF(src)];flip_vest=1'>Stealth</A>"
 
 		dat+="<br>"
-		dat += "<a href='?src=\ref[src];select_disguise=1'>Select Agent Vest Disguise</a><br>"
-		dat += "<a href='?src=\ref[src];toggle_vest=1'>[vest.flags_1 & NODROP_1 ? "Unlock" : "Lock"] Vest</a><br>"
+		dat += "<a href='?src=[REF(src)];select_disguise=1'>Select Agent Vest Disguise</a><br>"
+		dat += "<a href='?src=[REF(src)];toggle_vest=1'>[vest.flags_1 & NODROP_1 ? "Unlock" : "Lock"] Vest</a><br>"
 	else
 		dat += "<span class='bad'>NO AGENT VEST DETECTED</span>"
 	var/datum/browser/popup = new(user, "computer", "Abductor Console", 400, 500)

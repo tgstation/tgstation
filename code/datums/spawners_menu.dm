@@ -21,7 +21,7 @@
 		this["desc"] = ""
 		this["refs"] = list()
 		for(var/spawner_obj in GLOB.mob_spawners[spawner])
-			this["refs"] += "\ref[spawner_obj]"
+			this["refs"] += "[REF(spawner_obj)]"
 			if(!this["desc"])
 				var/obj/effect/mob_spawn/MS = spawner_obj
 				this["desc"] = MS.flavour_text

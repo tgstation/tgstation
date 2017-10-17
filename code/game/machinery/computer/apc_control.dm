@@ -52,9 +52,9 @@
 		if(!checking_logs)
 			dat += "Logged in as [auth_id].<br><br>"
 			dat += "<i>Filters</i><br>"
-			dat += "<b>Name:</b> <a href='?src=\ref[src];name_filter=1'>[result_filters["Name"] ? result_filters["Name"] : "None set"]</a><br>"
-			dat += "<b>Charge:</b> <a href='?src=\ref[src];above_filter=1'>\>[result_filters["Charge Above"] ? result_filters["Charge Above"] : "NaN"]%</a> and <a href='?src=\ref[src];below_filter=1'>\<[result_filters["Charge Below"] ? result_filters["Charge Below"] : "NaN"]%</a><br>"
-			dat += "<b>Accessible:</b> <a href='?src=\ref[src];access_filter=1'>[result_filters["Responsive"] ? "Non-Responsive Only" : "All"]</a><br><br>"
+			dat += "<b>Name:</b> <a href='?src=[REF(src)];name_filter=1'>[result_filters["Name"] ? result_filters["Name"] : "None set"]</a><br>"
+			dat += "<b>Charge:</b> <a href='?src=[REF(src)];above_filter=1'>\>[result_filters["Charge Above"] ? result_filters["Charge Above"] : "NaN"]%</a> and <a href='?src=[REF(src)];below_filter=1'>\<[result_filters["Charge Below"] ? result_filters["Charge Below"] : "NaN"]%</a><br>"
+			dat += "<b>Accessible:</b> <a href='?src=[REF(src)];access_filter=1'>[result_filters["Responsive"] ? "Non-Responsive Only" : "All"]</a><br><br>"
 			for(var/A in apcs)
 				var/obj/machinery/power/apc/APC = apcs[A]
 				if(result_filters["Name"] && !findtext(APC.name, result_filters["Name"]) && !findtext(APC.area.name, result_filters["Name"]))
@@ -65,15 +65,15 @@
 					continue
 				if(result_filters["Responsive"] && !APC.aidisabled)
 					continue
-				dat += "<a href='?src=\ref[src];access_apc=\ref[APC]'>[A]</a><br>\
+				dat += "<a href='?src=[REF(src)];access_apc=[REF(APC)]'>[A]</a><br>\
 				<b>Charge:</b> [DisplayPower(APC.cell.charge)] / [DisplayPower(APC.cell.maxcharge)] ([round((APC.cell.charge / APC.cell.maxcharge) * 100)]%)<br>\
 				<b>Area:</b> [APC.area]<br>\
 				[APC.aidisabled || APC.panel_open ? "<font color='#FF0000'>APC does not respond to interface query.</font>" : "<font color='#00FF00'>APC responds to interface query.</font>"]<br><br>"
-			dat += "<a href='?src=\ref[src];check_logs=1'>Check Logs</a><br>"
-			dat += "<a href='?src=\ref[src];log_out=1'>Log Out</a><br>"
+			dat += "<a href='?src=[REF(src)];check_logs=1'>Check Logs</a><br>"
+			dat += "<a href='?src=[REF(src)];log_out=1'>Log Out</a><br>"
 			if(emagged)
 				dat += "<font color='#FF0000'>WARNING: Logging functionality partially disabled from outside source.</font><br>"
-				dat += "<a href='?src=\ref[src];restore_logging=1'>Restore logging functionality?</a><br>"
+				dat += "<a href='?src=[REF(src)];restore_logging=1'>Restore logging functionality?</a><br>"
 		else
 			if(logs.len)
 				for(var/entry in logs)
@@ -81,11 +81,11 @@
 			else
 				dat += "<i>No activity has been recorded at this time.</i><br>"
 			if(emagged)
-				dat += "<a href='?src=\ref[src];clear_logs=1'><font color='#FF0000'>@#%! CLEAR LOGS</a>"
-			dat += "<a href='?src=\ref[src];check_apcs=1'>Return</a>"
+				dat += "<a href='?src=[REF(src)];clear_logs=1'><font color='#FF0000'>@#%! CLEAR LOGS</a>"
+			dat += "<a href='?src=[REF(src)];check_apcs=1'>Return</a>"
 		operator = user
 	else
-		dat = "<a href='?src=\ref[src];authenticate=1'>Please swipe a valid ID to log in...</a>"
+		dat = "<a href='?src=[REF(src)];authenticate=1'>Please swipe a valid ID to log in...</a>"
 	var/datum/browser/popup = new(user, "apc_control", name, 600, 400)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
