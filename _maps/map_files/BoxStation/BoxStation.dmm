@@ -57674,7 +57674,9 @@
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
 "cGU" = (
-/obj/structure/reflector/double/anchored,
+/obj/structure/reflector/double/anchored{
+	rotation_angle = 315
+	},
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
 "cGV" = (
@@ -57782,13 +57784,13 @@
 /area/engine/engineering)
 "cHo" = (
 /obj/structure/reflector/single/anchored{
-	dir = 1
+	rotation_angle = 315
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cHp" = (
 /obj/structure/reflector/single/anchored{
-	dir = 4
+	rotation_angle = 45
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
