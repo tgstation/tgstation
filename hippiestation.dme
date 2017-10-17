@@ -2318,6 +2318,7 @@
 #include "hippiestation\code\game\objects\items\ducttape.dm"
 #include "hippiestation\code\game\objects\items\execution_sword.dm"
 #include "hippiestation\code\game\objects\items\extinguisher.dm"
+#include "hippiestation\code\game\objects\items\garrote.dm"
 #include "hippiestation\code\game\objects\items\holotool.dm"
 #include "hippiestation\code\game\objects\items\meat.dm"
 #include "hippiestation\code\game\objects\items\special_attacks.dm"
