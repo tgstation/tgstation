@@ -681,6 +681,11 @@
 				var/msg = "A mobile dock in transit exited dock() with an error. This is most likely a mapping problem: Error: [error],  ([src]) ([previous])"
 				WARNING(msg)
 				message_admins(msg)
+				mode = SHUTTLE_IDLE
+				return
+			else if(error)
+				setTimer(20)
+				return
 		if(SHUTTLE_RECALL)
 			if(dock(previous) != DOCKING_SUCCESS)
 				setTimer(20)
