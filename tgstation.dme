@@ -2078,6 +2078,7 @@
 #include "code\modules\ruins\objects_and_mobs\sin_ruins.dm"
 #include "code\modules\ruins\spaceruin_code\asteroid4.dm"
 #include "code\modules\ruins\spaceruin_code\bigderelict1.dm"
+#include "code\modules\ruins\spaceruin_code\caravanambush.dm"
 #include "code\modules\ruins\spaceruin_code\crashedclownship.dm"
 #include "code\modules\ruins\spaceruin_code\crashedship.dm"
 #include "code\modules\ruins\spaceruin_code\deepstorage.dm"
