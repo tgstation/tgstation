@@ -64,7 +64,7 @@ macro "default"
 		command = "delete-key-pressed"
 		is-disabled = false
 	elem
-		name = "CTRL+V"
+		name = "CTRL+H"
 		command = "delete-key-pressed"
 		is-disabled = false
 	elem
@@ -290,7 +290,7 @@ macro "hotkeys"
 		command = "delete-key-pressed"
 		is-disabled = false
 	elem
-		name = "V"
+		name = "H"
 		command = "delete-key-pressed"
 		is-disabled = false
 	elem
@@ -592,7 +592,7 @@ macro "robot-default"
 		command = "delete-key-pressed"
 		is-disabled = false
 	elem
-		name = "CTRL+V"
+		name = "CTRL+H"
 		command = "delete-key-pressed"
 		is-disabled = false
 	elem
@@ -790,7 +790,7 @@ macro "robot-hotkeys"
 		command = "delete-key-pressed"
 		is-disabled = false
 	elem
-		name = "V"
+		name = "H"
 		command = "delete-key-pressed"
 		is-disabled = false
 	elem
