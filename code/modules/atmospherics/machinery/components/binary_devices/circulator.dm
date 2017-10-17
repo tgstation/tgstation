@@ -11,6 +11,7 @@
 	var/status = 0
 
 	var/last_pressure_delta = 0
+	pipe_flags = PIPING_ONE_PER_TURF
 
 	anchored = TRUE
 	density = TRUE
