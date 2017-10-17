@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "The tools on the Caravan Ambush space ruin have had their speeds corrected."
