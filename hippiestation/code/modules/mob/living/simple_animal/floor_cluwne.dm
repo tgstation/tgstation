@@ -394,6 +394,9 @@
 
 	eating = FALSE
 	switch_stage = switch_stage * 0.75 //he gets faster after each feast
+	for(var/mob/M in GLOB.player_list)
+		M.playsound_local(get_turf(M), 'hippiestation/sound/misc/honk_echo_distant.ogg', 50, 1, pressure_affected = FALSE)
+
 	interest = 0
 	stage = STAGE_HAUNT
 	Acquire_Victim()
