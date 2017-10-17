@@ -590,6 +590,7 @@
 	name = "slapper"
 	desc = "This is how real men fight."
 	icon_state = "latexballon"
+	item_state = "nothing"
 	force = 1
 	throwforce = 0
 	flags_1 = DROPDEL_1 | ABSTRACT_1
