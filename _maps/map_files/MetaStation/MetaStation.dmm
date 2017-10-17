@@ -80920,9 +80920,9 @@
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 1
 	},
-/obj/structure/window/plasma/reinforced/spawner,
 /obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable,
+/obj/structure/window/plasma/reinforced,
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "dbb" = (
@@ -82734,9 +82734,9 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10
 	},
-/obj/structure/window/plasma/reinforced/spawner,
 /obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable,
+/obj/structure/window/plasma/reinforced,
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "deU" = (
@@ -82847,11 +82847,13 @@
 /area/engine/supermatter)
 "dfk" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
-/obj/structure/window/plasma/reinforced/spawner/north,
 /obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable{
 	icon_state = "0-2";
 	d2 = 2
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
@@ -82859,11 +82861,13 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
-/obj/structure/window/plasma/reinforced/spawner/north,
 /obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable{
 	icon_state = "0-2";
 	d2 = 2
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
