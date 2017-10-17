@@ -190,7 +190,7 @@ Class Procs:
 	density = TRUE
 	if(!target)
 		for(var/am in loc)
-			if(!is_type_in_typecache(am, THISORTHAT(occupant_typecache, typecache_living)))
+			if(!is_type_in_typecache(am, (occupant_typecache || GLOB.typecache_living)))
 				continue
 			var/atom/movable/AM = am
 			if(AM.has_buckled_mobs())
