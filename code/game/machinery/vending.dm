@@ -189,9 +189,8 @@
 		var/obj/item/reagent_containers/food/snacks/S = W
 		if(!S.junkiness)
 			if(!iscompartmentfull(user))
-				if(!user.drop_item())
+				if(!user.transferItemToLoc(W, src))
 					return
-				W.loc = src
 				food_load(W)
 				to_chat(user, "<span class='notice'>You insert [W] into [src]'s chef compartment.</span>")
 		else
@@ -260,7 +259,7 @@
 			cut_overlays()
 			if(panel_open)
 				add_overlay("[initial(icon_state)]-panel")
-			playsound(src.loc, W.usesound, 50, 1)
+			playsound(src, W.usesound, 50, 1)
 			updateUsrDialog()
 		else
 			to_chat(user, "<span class='warning'>You must first secure [src].</span>")
@@ -279,9 +278,8 @@
 		if(!premium.len)
 			to_chat(user, "<span class='warning'>[src] doesn't have a coin slot.</span>")
 			return
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(W, src))
 			return
-		W.loc = src
 		coin = W
 		to_chat(user, "<span class='notice'>You insert [W] into [src].</span>")
 		return
@@ -405,23 +403,13 @@
 
 	var/datum/browser/popup = new(user, "vending", (name))
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
 
 /obj/machinery/vending/Topic(href, href_list)
 	if(..())
 		return
-
-	if(issilicon(usr))
-		if(iscyborg(usr))
-			var/mob/living/silicon/robot/R = usr
-			if(!(R.module && istype(R.module, /obj/item/robot_module/butler) ))
-				to_chat(usr, "<span class='notice'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>")
-				return
-		else
-			to_chat(usr, "<span class='notice'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>")
-			return
 
 	if(href_list["remove_coin"])
 		if(!(coin || bill))
@@ -455,7 +443,7 @@
 		dish_quants[N] = max(dish_quants[N] - 1, 0)
 		for(var/obj/O in contents)
 			if(O.name == N)
-				O.loc = src.loc
+				O.forceMove(drop_location())
 				break
 		vend_ready = 1
 		updateUsrDialog()
@@ -522,7 +510,7 @@
 		if(icon_vend) //Show the vending animation if needed
 			flick(icon_vend,src)
 		new R.product_path(get_turf(src))
-		SSblackbox.add_details("vending_machine_usage","[src.type]|[R.product_path]")
+		SSblackbox.add_details("vending_machine_usage","[type]|[R.product_path]")
 		vend_ready = 1
 		return
 
@@ -808,7 +796,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 //This one's from bay12
 /obj/machinery/vending/cart
 	name = "\improper PTech"
-	desc = "Cartridges for PDAs"
+	desc = "Cartridges for PDAs."
 	product_slogans = "Carts to go!"
 	icon_state = "cart"
 	icon_deny = "cart-deny"
@@ -902,7 +890,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 
 /obj/machinery/vending/security
 	name = "\improper SecTech"
-	desc = "A security equipment vendor"
+	desc = "A security equipment vendor."
 	product_ads = "Crack capitalist skulls!;Beat some heads in!;Don't forget - harm is good!;Your weapons are right here.;Handcuffs!;Freeze, scumbag!;Don't tase me bro!;Tase them, bro.;Why not have a donut?"
 	icon_state = "sec"
 	icon_deny = "sec-deny"
@@ -1009,15 +997,16 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/clothing/mask/joy = 1,
 					/obj/item/clothing/head/cueball = 1,
 					/obj/item/clothing/under/scratch = 1,
-        			/obj/item/clothing/under/sailor = 1,
-        			/obj/item/clothing/ears/headphones = 2)
+					/obj/item/clothing/under/sailor = 1,
+					/obj/item/clothing/ears/headphones = 2,
+					/obj/item/clothing/head/wig/random = 3)
 	contraband = list(/obj/item/clothing/suit/judgerobe = 1, /obj/item/clothing/head/powdered_wig = 1, /obj/item/gun/magic/wand = 2, /obj/item/clothing/glasses/sunglasses/garb = 2, /obj/item/clothing/glasses/sunglasses/blindfold = 1, /obj/item/clothing/mask/muzzle = 2)
 	premium = list(/obj/item/clothing/suit/pirate/captain = 2, /obj/item/clothing/head/pirate/captain = 2, /obj/item/clothing/head/helmet/roman = 1, /obj/item/clothing/head/helmet/roman/legionaire = 1, /obj/item/clothing/under/roman = 1, /obj/item/clothing/shoes/roman = 1, /obj/item/shield/riot/roman = 1, /obj/item/skub = 1)
 	refill_canister = /obj/item/vending_refill/autodrobe
 
 /obj/machinery/vending/dinnerware
 	name = "\improper Plasteel Chef's Dinnerware Vendor"
-	desc = "A kitchen and restaurant equipment vendor"
+	desc = "A kitchen and restaurant equipment vendor."
 	product_ads = "Mm, food stuffs!;Food and food accessories.;Get your plates!;You like forks?;I like forks.;Woo, utensils.;You don't really need these..."
 	icon_state = "dinnerware"
 	products = list(/obj/item/storage/bag/tray = 8, /obj/item/kitchen/fork = 6, /obj/item/kitchen/knife = 6, /obj/item/kitchen/rollingpin = 2, /obj/item/reagent_containers/food/drinks/drinkingglass = 8, /obj/item/clothing/suit/apron/chef = 2, /obj/item/reagent_containers/food/condiment/pack/ketchup = 5, /obj/item/reagent_containers/food/condiment/pack/hotsauce = 5, /obj/item/reagent_containers/food/condiment/saltshaker = 5, /obj/item/reagent_containers/food/condiment/peppermill = 5, /obj/item/reagent_containers/glass/bowl = 20)
@@ -1027,7 +1016,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 
 /obj/machinery/vending/sovietsoda
 	name = "\improper BODA"
-	desc = "Old sweet water vending machine"
+	desc = "Old sweet water vending machine."
 	icon_state = "sovietsoda"
 	product_ads = "For Tsar and Country.;Have you fulfilled your nutrition quota today?;Very nice!;We are simple people, for this is all we eat.;If there is a person, there is a problem. If there is no person, then there is no problem."
 	products = list(/obj/item/reagent_containers/food/drinks/drinkingglass/filled/soda = 30)

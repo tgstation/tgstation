@@ -31,7 +31,8 @@ Bonus
 					  <b>Stealth 4:</b> The symptom remains hidden until active."
 
 /datum/symptom/sneeze/Start(datum/disease/advance/A)
-	..()
+	if(!..())
+		return
 	if(A.properties["transmittable"] >= 9) //longer spread range
 		power = 2
 	if(A.properties["stealth"] >= 4)

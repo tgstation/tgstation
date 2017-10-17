@@ -33,7 +33,7 @@
 	if(cooldown < world.time - 60)
 		cooldown = world.time
 		flick(pulseicon, src)
-		radiation_pulse(get_turf(src), 1, 4, 40, 1)
+		radiation_pulse(src, 400, 2)
 
 //nuke core box, for carrying the core
 /obj/item/nuke_core_container
@@ -104,11 +104,11 @@
 /obj/item/paper/guides/antag/supermatter_sliver
 	info = "How to safely extract a supermatter sliver:<br>\
 	<ul>\
-	<li>Approach an active supermatter crystal with proper protective gear. DO NOT MAKE PHYSICAL CONTACT.</li>\
+	<li>Approach an active supermatter crystal with radiation shielded personal protective equipment. DO NOT MAKE PHYSICAL CONTACT.</li>\
 	<li>Use a supermatter scalpel (provided) to slice off a sliver of the crystal.</li>\
-	<li>Use supermatter extraction tongs (also provided) to safely remove the sliver.</li>\
+	<li>Use supermatter extraction tongs (also provided) to safely pick up the sliver you sliced off.</li>\
 	<li>Physical contact of any object with the sliver will dust the object, as well as yourself.</li>\
-	<li>Use the tongs to place the sliver into the provided container, which will take some time to seal</li>\
+	<li>Use the tongs to place the sliver into the provided container, which will take some time to seal.</li>\
 	<li>Get the hell out before the crystal delaminates.</li>\
 	<li>???</li>\
 	</ul>"
@@ -140,7 +140,7 @@
 		return
 	else
 		to_chat(user, "<span class='notice'>As it touches \the [src], both \the [src] and \the [W] burst into dust!</span>")
-		radiation_pulse(get_turf(user), 1, 2, 10, 1)
+		radiation_pulse(user, 100)
 		playsound(src, 'sound/effects/supermatter.ogg', 50, 1)
 		qdel(W)
 		qdel(src)
@@ -151,7 +151,7 @@
 		return FALSE
 	var/mob/ded = user
 	to_chat(user, "<span class='warning'>You reach for the supermatter sliver with your hands. That was dumb.</span>")
-	radiation_pulse(get_turf(user), 2, 4, 50, 1)
+	radiation_pulse(user, 500, 2)
 	playsound(get_turf(user), 'sound/effects/supermatter.ogg', 50, 1)
 	ded.dust()
 
@@ -240,7 +240,7 @@
 	user.visible_message("<span class='danger'>As [user] touches \the [AM] with \a [src], silence fills the room...</span>",\
 			"<span class='userdanger'>You touch \the [AM] with \the [src], and everything suddenly goes silent.</span>\n<span class='notice'>\The [AM] flashes into dust, and soon as you can register this, you do as well.</span>",\
 			"<span class='italics'>Everything suddenly goes silent.</span>")
-	radiation_pulse(get_turf(user), 2, 4, 50, 1)
+	radiation_pulse(user, 500, 2)
 	playsound(src, 'sound/effects/supermatter.ogg', 50, 1)
 	user.dust()
 	icon_state = "supermatter_tongs"

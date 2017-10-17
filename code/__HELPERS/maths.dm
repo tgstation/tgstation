@@ -13,7 +13,8 @@ GLOBAL_LIST_INIT(sqrtTable, list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4,
 	return x!=0?x/abs(x):0
 
 /proc/Atan2(x, y)
-	if(!x && !y) return 0
+	if(!x && !y)
+		return 0
 	var/a = arccos(x / sqrt(x*x + y*y))
 	return y >= 0 ? a : -a
 
@@ -24,6 +25,9 @@ GLOBAL_LIST_INIT(sqrtTable, list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4,
 	return round(x / y) * y
 
 #define Clamp(CLVALUE,CLMIN,CLMAX) ( max( (CLMIN), min((CLVALUE), (CLMAX)) ) )
+
+/proc/Modulus(x, y)	//Byond's modulus doesn't work with decimals.
+	return x - y * round(x / y)
 
 // cotangent
 /proc/Cot(x)
@@ -42,6 +46,8 @@ GLOBAL_LIST_INIT(sqrtTable, list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4,
 
 /proc/Inverse(x)
 	return 1 / x
+
+#define InverseSquareLaw(initial_strength,cur_distance,initial_distance) (initial_strength*(initial_distance**2/cur_distance**2))
 
 /proc/IsAboutEqual(a, b, deviation = 0.1)
 	return abs(a - b) <= deviation
@@ -98,10 +104,12 @@ GLOBAL_LIST_INIT(sqrtTable, list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4,
 	. = list()
 	var/d		= b*b - 4 * a * c
 	var/bottom  = 2 * a
-	if(d < 0) return
+	if(d < 0)
+		return
 	var/root = sqrt(d)
 	. += (-b + root) / bottom
-	if(!d) return
+	if(!d)
+		return
 	. += (-b - root) / bottom
 
 // tangent
@@ -155,7 +163,6 @@ GLOBAL_LIST_INIT(sqrtTable, list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4,
 		var/size_factor = ((-cos(inputToDegrees) +1) /2) //returns a value from 0 to 1
 
 		return size_factor + scaling_modifier //scale mod of 0 results in a number from 0 to 1. A scale modifier of +0.5 returns 0.5 to 1.5
-		//to_chat(world, "Transform multiplier of [src] is [size_factor + scaling_modifer]")
 
 //converts a uniform distributed random number into a normal distributed one
 //since this method produces two random numbers, one is saved for subsequent calls
@@ -220,3 +227,8 @@ GLOBAL_LIST_INIT(sqrtTable, list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4,
 	new_x = Clamp(new_x, 0, world.maxx)
 	new_y = Clamp(new_y, 0, world.maxy)
 	return locate(new_x, new_y, starting.z)
+
+/proc/round_down(num)
+	if(round(num) != num)
+		return round(num--)
+	else return num

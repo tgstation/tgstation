@@ -193,7 +193,7 @@
 
 //Floorbot assemblies
 /obj/item/toolbox_tiles
-	desc = "It's a toolbox with tiles sticking out the top"
+	desc = "It's a toolbox with tiles sticking out the top."
 	name = "tiles and toolbox"
 	icon = 'icons/mob/aibots.dmi'
 	icon_state = "toolbox_tiles"
@@ -205,7 +205,7 @@
 	var/created_name = "Floorbot"
 
 /obj/item/toolbox_tiles_sensor
-	desc = "It's a toolbox with tiles sticking out the top and a sensor attached"
+	desc = "It's a toolbox with tiles sticking out the top and a sensor attached."
 	name = "tiles, toolbox and sensor arrangement"
 	icon = 'icons/mob/aibots.dmi'
 	icon_state = "toolbox_tiles_sensor"
@@ -347,6 +347,51 @@
 					S.name = created_name
 					qdel(src)
 
+
+//Honkbot Assembly
+/obj/item/honkbot_assembly
+	name = "incomplete honkbot assembly"
+	desc = "The clown's up to no good once more"
+	icon = 'icons/mob/aibots.dmi'
+	icon_state = "honkbot_arm"
+	var/build_step = ASSEMBLY_FIRST_STEP
+	var/created_name = "Honkbot"
+
+/obj/item/honkbot_assembly/attackby(obj/item/I, mob/user, params)
+
+	if(isprox(I) && (build_step == ASSEMBLY_FIRST_STEP))
+		if(!user.temporarilyRemoveItemFromInventory(I))
+			return
+		build_step++
+		to_chat(user, "<span class='notice'>You add the [I] to [src]!</span>")
+		icon_state = "honkbot_proxy"
+		name = "incomplete Honkbot assembly"
+		qdel(I)
+
+	else if(istype(I, /obj/item/bikehorn) && (build_step == ASSEMBLY_SECOND_STEP))
+		if(istype(loc, /obj/item/storage/backpack)) //don't build them in your backpacks!
+			return
+		if(!user.temporarilyRemoveItemFromInventory(I))
+			return
+		to_chat(user, "<span class='notice'>You add the [I] to [src]! Honk!</span>")
+		var/T = get_turf(loc) //important to spawn on turf.
+		var/mob/living/simple_animal/bot/honkbot/S = new(drop_location(T))
+		S.name = created_name
+		S.spam_flag = TRUE // only long enough to hear the first ping.
+		addtimer(CALLBACK (S, .mob/living/simple_animal/bot/honkbot/proc/react_ping), 5)
+		qdel(I)
+		qdel(src)
+
+	else if(istype(I, /obj/item/pen))
+		var/t = stripped_input(user, "Enter new robot name", name, created_name,MAX_NAME_LEN)
+		if(!t)
+			return
+		if(!in_range(src, usr) && loc != usr)
+			return
+		created_name = t
+
+	else return ..()
+
 //Secbot Assembly
 /obj/item/secbot_assembly
 	name = "incomplete securitron assembly"
@@ -356,28 +401,6 @@
 	item_state = "helmet"
 	var/build_step = 0
 	var/created_name = "Securitron" //To preserve the name if it's a unique securitron I guess
-
-/obj/item/clothing/head/helmet/attackby(obj/item/device/assembly/signaler/S, mob/user, params)
-	..()
-	if(!issignaler(S))
-		..()
-		return
-
-	if(type != /obj/item/clothing/head/helmet/sec) //Eh, but we don't want people making secbots out of space helmets.
-		return
-
-	if(F) //Has a flashlight. Player must remove it, else it will be lost forever.
-		to_chat(user, "<span class='warning'>The mounted flashlight is in the way, remove it first!</span>")
-		return
-
-	if(S.secured)
-		qdel(S)
-		var/obj/item/secbot_assembly/A = new /obj/item/secbot_assembly
-		user.put_in_hands(A)
-		to_chat(user, "<span class='notice'>You add the signaler to the helmet.</span>")
-		qdel(src)
-	else
-		return
 
 /obj/item/secbot_assembly/attackby(obj/item/I, mob/user, params)
 	..()

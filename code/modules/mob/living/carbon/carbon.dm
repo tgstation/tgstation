@@ -222,7 +222,7 @@
 						internal = null
 						update_internals_hud_icon(0)
 					else if(ITEM && istype(ITEM, /obj/item/tank))
-						if((wear_mask && (wear_mask.flags_1 & MASKINTERNALS_1)) || getorganslot("breathing_tube"))
+						if((wear_mask && (wear_mask.flags_1 & MASKINTERNALS_1)) || getorganslot(ORGAN_SLOT_BREATHING_TUBE))
 							internal = ITEM
 							update_internals_hud_icon(1)
 
@@ -291,11 +291,14 @@
 
 
 /mob/living/carbon/proc/cuff_resist(obj/item/I, breakouttime = 600, cuff_break = 0)
+	if(I.being_removed)
+		to_chat(src, "<span class='warning'>You're already attempting to remove [I]!</span>")
+		return
+	I.being_removed = TRUE
 	breakouttime = I.breakouttime
-	var/displaytime = breakouttime / 600
 	if(!cuff_break)
 		visible_message("<span class='warning'>[src] attempts to remove [I]!</span>")
-		to_chat(src, "<span class='notice'>You attempt to remove [I]... (This will take around [displaytime] minutes and you need to stand still.)</span>")
+		to_chat(src, "<span class='notice'>You attempt to remove [I]... (This will take around [DisplayTimeText(breakouttime)] and you need to stand still.)</span>")
 		if(do_after(src, breakouttime, 0, target = src))
 			clear_cuffs(I, cuff_break)
 		else
@@ -312,6 +315,7 @@
 
 	else if(cuff_break == INSTANT_CUFFBREAK)
 		clear_cuffs(I, cuff_break)
+	I.being_removed = FALSE
 
 /mob/living/carbon/proc/uncuff()
 	if (handcuffed)
@@ -415,23 +419,6 @@
 			var/turf/target = get_turf(loc)
 			I.throw_at(target,I.throw_range,I.throw_speed,src)
 
-/mob/living/carbon/proc/AddAbility(obj/effect/proc_holder/alien/A)
-	abilities.Add(A)
-	A.on_gain(src)
-	if(A.has_action)
-		A.action.Grant(src)
-	sortInsert(abilities, /proc/cmp_abilities_cost, 0)
-
-/mob/living/carbon/proc/RemoveAbility(obj/effect/proc_holder/alien/A)
-	abilities.Remove(A)
-	A.on_lose(src)
-	if(A.action)
-		A.action.Remove(src)
-
-/mob/living/carbon/proc/add_abilities_to_panel()
-	for(var/obj/effect/proc_holder/alien/A in abilities)
-		statpanel("[A.panel]",A.plasma_cost > 0?"([A.plasma_cost])":"",A)
-
 /mob/living/carbon/Stat()
 	..()
 	if(statpanel("Status"))
@@ -534,7 +521,7 @@
 
 	sight = initial(sight)
 	lighting_alpha = initial(lighting_alpha)
-	var/obj/item/organ/eyes/E = getorganslot("eye_sight")
+	var/obj/item/organ/eyes/E = getorganslot(ORGAN_SLOT_EYES)
 	if(!E)
 		update_tint()
 	else
@@ -591,7 +578,7 @@
 	if(wear_mask)
 		. += wear_mask.tint
 
-	var/obj/item/organ/eyes/E = getorganslot("eye_sight")
+	var/obj/item/organ/eyes/E = getorganslot(ORGAN_SLOT_EYES)
 	if(E)
 		. += E.tint
 
@@ -763,7 +750,7 @@
 		B.damaged_brain = 0
 	for(var/thing in viruses)
 		var/datum/disease/D = thing
-		if(D.severity != NONTHREAT)
+		if(D.severity != VIRUS_SEVERITY_POSITIVE)
 			D.cure(0)
 	if(admin_revive)
 		regenerate_limbs()

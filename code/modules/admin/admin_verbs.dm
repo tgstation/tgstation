@@ -27,6 +27,7 @@ GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
 	/client/proc/invisimin,				/*allows our mob to go invisible/visible*/
 //	/datum/admins/proc/show_traitor_panel,	/*interface which shows a mob's mind*/ -Removed due to rare practical use. Moved to debug verbs ~Errorage
 	/datum/admins/proc/show_player_panel,	/*shows an interface for individual players, with various links (links require additional flags*/
+	/datum/verbs/menu/Admin/verb/playerpanel,
 	/client/proc/game_panel,			/*game panel, allows to change game-mode etc*/
 	/client/proc/check_ai_laws,			/*shows AI and borg laws*/
 	/datum/admins/proc/toggleooc,		/*toggles ooc on/off for everyone*/
@@ -261,7 +262,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 			verbs += GLOB.admin_verbs_poll
 		if(rights & R_SOUNDS)
 			verbs += GLOB.admin_verbs_sounds
-			if(config.invoke_youtubedl)
+			if(CONFIG_GET(string/invoke_youtubedl))
 				verbs += /client/proc/play_web_sound
 		if(rights & R_SPAWN)
 			verbs += GLOB.admin_verbs_spawn
@@ -390,7 +391,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	if(holder)
 		holder.check_antagonists()
 		log_admin("[key_name(usr)] checked antagonists.")	//for tsar~
-		if(!isobserver(usr))
+		if(!isobserver(usr) && SSticker.HasRoundStarted())
 			message_admins("[key_name_admin(usr)] checked antagonists.")
 	SSblackbox.add_details("admin_verb","Check Antagonists") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -398,7 +399,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	set name = "Unban Panel"
 	set category = "Admin"
 	if(holder)
-		if(config.ban_legacy_system)
+		if(CONFIG_GET(flag/ban_legacy_system))
 			holder.unbanpanel()
 		else
 			holder.DB_ban_panel()
@@ -593,7 +594,8 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	set name = "Give Disease"
 	set desc = "Gives a Disease to a mob."
 	var/datum/disease/D = input("Choose the disease to give to that guy", "ACHOO") as null|anything in SSdisease.diseases
-	if(!D) return
+	if(!D)
+		return
 	T.ForceContractDisease(new D)
 	SSblackbox.add_details("admin_verb","Give Disease") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] the disease [D].")

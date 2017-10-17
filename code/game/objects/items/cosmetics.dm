@@ -125,6 +125,9 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/location = user.zone_selected
+		if((location in list("eyes", "mouth", "head")) && !H.get_bodypart("head"))
+			to_chat(user, "<span class='warning'>[H] doesn't have a head!</span>")
+			return
 		if(location == "mouth")
 			if(!(FACEHAIR in H.dna.species.species_traits))
 				to_chat(user, "<span class='warning'>There is no facial hair to shave!</span>")

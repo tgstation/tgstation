@@ -485,7 +485,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Boo!"
 	set desc= "Scare your crew members because of boredom!"
 
-	if(bootime > world.time) return
+	if(bootime > world.time)
+		return
 	var/obj/machinery/light/L = locate(/obj/machinery/light) in view(1, src)
 	if(L)
 		L.flicker()
@@ -585,6 +586,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='warning'>This creature is too powerful for you to possess!</span>")
 		return 0
 
+	if(istype (target, /mob/living/simple_animal/hostile/spawner))
+		to_chat(src, "<span class='warning'>This isn't really a creature, now is it!</span>")
+		return 0
+
 	if(can_reenter_corpse && mind && mind.current)
 		if(alert(src, "Your soul is still tied to your former life as [mind.current.name], if you go forward there is no going back to that life. Are you sure you wish to continue?", "Move On", "Yes", "No") == "No")
 			return 0
@@ -595,14 +600,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	target.key = key
 	target.faction = list("neutral")
 	return 1
-
-/proc/show_server_hop_transfer_screen(expected_key)
-	//only show it to incoming ghosts
-	for(var/mob/dead/observer/O in GLOB.player_list)
-		if(O.key == expected_key)
-			if(O.client)
-				new /obj/screen/splash(O.client, TRUE)
-			break
 
 //this is a mob verb instead of atom for performance reasons
 //see /mob/verb/examinate() in mob.dm for more info
@@ -625,7 +622,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 //this is called when a ghost is drag clicked to something.
 /mob/dead/observer/MouseDrop(atom/over)
-	if(!usr || !over) return
+	if(!usr || !over)
+		return
 	if (isobserver(usr) && usr.client.holder && isliving(over))
 		if (usr.client.holder.cmd_ghost_drag(src,over))
 			return
@@ -710,9 +708,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	update_icon()
 
 /mob/dead/observer/canUseTopic(atom/movable/AM,be_close = FALSE)
-	if(check_rights(R_ADMIN, 0))
-		return 1
-	return
+	return IsAdminGhost(usr)
 
 /mob/dead/observer/is_literate()
 	return 1

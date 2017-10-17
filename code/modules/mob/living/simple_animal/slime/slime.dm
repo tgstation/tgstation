@@ -94,6 +94,12 @@
 	set_colour(new_colour)
 	. = ..()
 
+/mob/living/simple_animal/slime/Destroy()
+	for (var/A in actions)
+		var/datum/action/AC = A
+		AC.Remove(src)
+	return ..()
+
 /mob/living/simple_animal/slime/proc/set_colour(new_colour)
 	colour = new_colour
 	update_name()
@@ -146,7 +152,10 @@
 	if(health <= 0) // if damaged, the slime moves twice as slow
 		. *= 2
 
-	. += config.slime_delay
+	var/static/config_slime_delay
+	if(isnull(config_slime_delay))
+		config_slime_delay = CONFIG_GET(number/slime_delay)
+	. += config_slime_delay
 
 /mob/living/simple_animal/slime/ObjCollide(obj/O)
 	if(!client && powerlevel > 0)

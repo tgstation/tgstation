@@ -17,6 +17,7 @@
 #define META_GAS_MOLES_VISIBLE	3
 #define META_GAS_OVERLAY		4
 #define META_GAS_DANGER			5
+#define META_GAS_ID				6
 
 //stuff you should probably leave well alone!
 //ATMOS
@@ -49,6 +50,7 @@
 #define SPACE_HEAT_TRANSFER_COEFFICIENT		0.2		//a hack to partly simulate radiative heat
 #define OPEN_HEAT_TRANSFER_COEFFICIENT		0.4
 #define WINDOW_HEAT_TRANSFER_COEFFICIENT	0.1		//a hack for now
+#define HEAT_CAPACITY_VACUUM				7000	//a hack to help make vacuums "cold", sacrificing realism for gameplay
 	//Must be between 0 and 1. Values closer to 1 equalize temperature faster
 	//Should not exceed 0.4 else strange heat flow occur
 #define FIRE_MINIMUM_TEMPERATURE_TO_SPREAD	150+T0C
@@ -118,8 +120,8 @@
 
 
 #define PRESSURE_DAMAGE_COEFFICIENT			4		//The amount of pressure damage someone takes is equal to (pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT, with the maximum of MAX_PRESSURE_DAMAGE
-#define MAX_HIGH_PRESSURE_DAMAGE			4		//This used to be 20... I got this much random rage for some retarded decision by polymorph?! Polymorph now lies in a pool of blood with a katana jammed in his spleen. ~Errorage --PS: The katana did less than 20 damage to him :(
-#define LOW_PRESSURE_DAMAGE					2		//The amounb of damage someone takes when in a low pressure area (The pressure threshold is so low that it doesn't make sense to do any calculations, so it just applies this flat value).
+#define MAX_HIGH_PRESSURE_DAMAGE			4
+#define LOW_PRESSURE_DAMAGE					2		//The amount of damage someone takes when in a low pressure area (The pressure threshold is so low that it doesn't make sense to do any calculations, so it just applies this flat value).
 
 #define COLD_SLOWDOWN_FACTOR				20		//Humans are slowed by the difference between bodytemp and BODYTEMP_COLD_DAMAGE_LIMIT divided by this
 
@@ -174,3 +176,26 @@
 
 #define LAVALAND_EQUIPMENT_EFFECT_PRESSURE 50 //what pressure you have to be under to increase the effect of equipment meant for lavaland
 #define LAVALAND_DEFAULT_ATMOS "o2=14;n2=23;TEMP=300"
+
+//IF YOU EVER CHANGE THESE CHANGE SPRITES TO MATCH.
+#define PIPING_LAYER_MIN 1
+#define PIPING_LAYER_MAX 3
+#define PIPING_LAYER_DEFAULT 2
+#define PIPING_LAYER_P_X 5
+#define PIPING_LAYER_P_Y 5
+#define PIPING_LAYER_LCHANGE 0.05
+
+#define PIPING_ALL_LAYER 1					//intended to connect with all layers, check for all instead of just one.
+#define PIPING_ONE_PER_TURF 2 				//can only be built if nothing else with this flag is on the tile already.
+#define PIPING_DEFAULT_LAYER_ONLY 4			//can only exist at PIPING_LAYER_DEFAULT
+#define PIPING_CARDINAL_AUTONORMALIZE 8		//north/south east/west doesn't matter, auto normalize on build.
+
+#define THERMAL_ENERGY(gas) (gas.temperature * gas.heat_capacity())
+
+#define ADD_GAS(gas_id, out_list)\
+	var/list/tmp_gaslist = GLOB.gaslist_cache[gas_id];\
+	out_list[gas_id] = tmp_gaslist.Copy();
+
+//ASSERT_GAS(gas_id, gas_mixture) - used to guarantee that the gas list for this id exists in gas_mixture.gases.
+//Must be used before adding to a gas. May be used before reading from a gas.
+#define ASSERT_GAS(gas_id, gas_mixture) if (!gas_mixture.gases[gas_id]) { ADD_GAS(gas_id, gas_mixture.gases) };

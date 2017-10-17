@@ -96,12 +96,9 @@
 	if(!loc)
 		stack_trace("Simple animal being instantiated in nullspace")
 
-
-/mob/living/simple_animal/Login()
-	if(src && src.client)
-		src.client.screen = list()
-		client.screen += client.void
-	..()
+/mob/living/simple_animal/Destroy()
+	GLOB.simple_animals -= src
+	return ..()
 
 /mob/living/simple_animal/updatehealth()
 	..()
@@ -188,10 +185,10 @@
 			var/ST_gases = ST.air.gases
 			ST.air.assert_gases(arglist(GLOB.hardcoded_gases))
 
-			var/tox = ST_gases["plasma"][MOLES]
-			var/oxy = ST_gases["o2"][MOLES]
-			var/n2  = ST_gases["n2"][MOLES]
-			var/co2 = ST_gases["co2"][MOLES]
+			var/tox = ST_gases[/datum/gas/plasma][MOLES]
+			var/oxy = ST_gases[/datum/gas/oxygen][MOLES]
+			var/n2  = ST_gases[/datum/gas/nitrogen][MOLES]
+			var/co2 = ST_gases[/datum/gas/carbon_dioxide][MOLES]
 
 			ST.air.garbage_collect()
 
@@ -228,7 +225,6 @@
 		if( abs(areatemp - bodytemperature) > 40 )
 			var/diff = areatemp - bodytemperature
 			diff = diff / 5
-			//to_chat(world, "changed from [bodytemperature] by [diff] to [bodytemperature + diff]")
 			bodytemperature += diff
 
 	if(!environment_is_safe(environment))
@@ -267,11 +263,11 @@
 
 
 /mob/living/simple_animal/movement_delay()
-	. = ..()
-
-	. = speed
-
-	. += config.animal_delay
+	var/static/config_animal_delay
+	if(isnull(config_animal_delay))
+		config_animal_delay = CONFIG_GET(number/animal_delay)
+	. += config_animal_delay
+	return ..() + speed + config_animal_delay
 
 /mob/living/simple_animal/Stat()
 	..()
@@ -313,7 +309,7 @@
 		var/mob/living/L = the_target
 		if(L.stat != CONSCIOUS)
 			return 0
-	if (istype(the_target, /obj/mecha))
+	if (ismecha(the_target))
 		var/obj/mecha/M = the_target
 		if (M.occupant)
 			return 0

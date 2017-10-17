@@ -78,6 +78,8 @@
 
 /datum/datacore/proc/manifest()
 	for(var/mob/dead/new_player/N in GLOB.player_list)
+		if(N.new_character)
+			log_manifest(N.ckey,N.new_character.mind,N.new_character)
 		if(ishuman(N.new_character))
 			manifest_inject(N.new_character, N.client)
 		CHECK_TICK
@@ -223,7 +225,7 @@
 		G.fields["name"]		= H.real_name
 		G.fields["rank"]		= assignment
 		G.fields["age"]			= H.age
-		if(config.mutant_races)
+		if(CONFIG_GET(flag/join_with_mutant_race))
 			G.fields["species"]	= H.dna.species.name
 		G.fields["fingerprint"]	= md5(H.dna.uni_identity)
 		G.fields["p_stat"]		= "Active"

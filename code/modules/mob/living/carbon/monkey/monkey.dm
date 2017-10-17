@@ -62,7 +62,11 @@
 
 	if (bodytemperature < 283.222)
 		. += (283.222 - bodytemperature) / 10 * 1.75
-	return . + config.monkey_delay
+		
+	var/static/config_monkey_delay
+	if(isnull(config_monkey_delay))
+		config_monkey_delay = CONFIG_GET(number/monkey_delay)
+	. += config_monkey_delay
 
 /mob/living/carbon/monkey/Stat()
 	..()
@@ -136,7 +140,7 @@
 	return protection
 
 /mob/living/carbon/monkey/IsVocal()
-	if(!getorganslot("lungs"))
+	if(!getorganslot(ORGAN_SLOT_LUNGS))
 		return 0
 	return 1
 

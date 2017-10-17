@@ -78,7 +78,8 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	var/turf/T = get_turf(src)			// hide if turf is not intact
 
-	if(level==1) hide(T.intact)
+	if(level==1)
+		hide(T.intact)
 	GLOB.cable_list += src //add it to the global cable list
 
 	if(d1)
@@ -389,7 +390,8 @@ By design, d1 is the smallest direction and d2 is the highest
 //needed as this can, unlike other placements, disconnect cables
 /obj/structure/cable/proc/denode()
 	var/turf/T1 = loc
-	if(!T1) return
+	if(!T1)
+		return
 
 	var/list/powerlist = power_list(T1,src,0,0) //find the other cables that ended in the centre of the turf, with or without a powernet
 	if(powerlist.len>0)
@@ -398,6 +400,11 @@ By design, d1 is the smallest direction and d2 is the highest
 
 		if(PN.is_empty()) //can happen with machines made nodeless when smoothing cables
 			qdel(PN)
+
+/obj/structure/cable/proc/auto_propogate_cut_cable(obj/O)
+	if(O && !QDELETED(O))
+		var/datum/powernet/newPN = new()// creates a new powernet...
+		propagate_network(O, newPN)//... and propagates it to the other side of the cable
 
 // cut the cable's powernet at this cable and updates the powergrid
 /obj/structure/cable/proc/cut_cable_from_powernet(remove=TRUE)
@@ -426,31 +433,13 @@ By design, d1 is the smallest direction and d2 is the highest
 		loc = null
 	powernet.remove_cable(src) //remove the cut cable from its powernet
 
-	spawn(0) //so we don't rebuild the network X times when singulo/explosion destroys a line of X cables
-		if(O && !QDELETED(O))
-			var/datum/powernet/newPN = new()// creates a new powernet...
-			propagate_network(O, newPN)//... and propagates it to the other side of the cable
+	addtimer(CALLBACK(src, .proc/auto_propogate_cut_cable, O), 0) //so we don't rebuild the network X times when singulo/explosion destroys a line of X cables
 
 	// Disconnect machines connected to nodes
 	if(d1 == 0) // if we cut a node (O-X) cable
 		for(var/obj/machinery/power/P in T1)
 			if(!P.connect_to_network()) //can't find a node cable on a the turf to connect to
 				P.disconnect_from_network() //remove from current network
-
-/obj/structure/cable/shuttleRotate(rotation)
-	//..() is not called because wires are not supposed to have a non-default direction
-	//Rotate connections
-	if(d1)
-		d1 = angle2dir(rotation+dir2angle(d1))
-	if(d2)
-		d2 = angle2dir(rotation+dir2angle(d2))
-
-	//d1 should be less than d2 for cable icons to work
-	if(d1 > d2)
-		var/temp = d1
-		d1 = d2
-		d2 = temp
-	update_icon()
 
 
 ///////////////////////////////////////////////

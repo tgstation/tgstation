@@ -313,11 +313,11 @@
 		else if (plant_health <= (myseed.endurance / 2))
 			to_chat(user, "<span class='warning'>It looks unhealthy.</span>")
 	else
-		to_chat(user, "<span class='info'>[src] is empty.</span>")
+		to_chat(user, "<span class='info'>It's empty.</span>")
 
 	if(!self_sustaining)
-		to_chat(user, "<span class='info'>Water: [waterlevel]/[maxwater]</span>")
-		to_chat(user, "<span class='info'>Nutrient: [nutrilevel]/[maxnutri]</span>")
+		to_chat(user, "<span class='info'>Water: [waterlevel]/[maxwater].</span>")
+		to_chat(user, "<span class='info'>Nutrient: [nutrilevel]/[maxnutri].</span>")
 		if(self_sufficiency_progress > 0)
 			var/percent_progress = round(self_sufficiency_progress * 100 / self_sufficiency_req)
 			to_chat(user, "<span class='info'>Treatment for self-sustenance are [percent_progress]% complete.</span>")
@@ -325,9 +325,9 @@
 		to_chat(user, "<span class='info'>It doesn't require any water or nutrients.</span>")
 
 	if(weedlevel >= 5)
-		to_chat(user, "<span class='warning'>[src] is filled with weeds!</span>")
+		to_chat(user, "<span class='warning'>It's filled with weeds!</span>")
 	if(pestlevel >= 5)
-		to_chat(user, "<span class='warning'>[src] is filled with tiny worms!</span>")
+		to_chat(user, "<span class='warning'>It's filled with tiny worms!</span>")
 	to_chat(user, "" )
 
 
@@ -913,6 +913,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 /obj/machinery/hydroponics/soil //Not actually hydroponics at all! Honk!
 	name = "soil"
+	desc = "A patch of dirt."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "soil"
 	circuit = null

@@ -29,10 +29,19 @@
 /datum/status_effect/incapacitating/knockdown
 	id = "knockdown"
 
+/datum/status_effect/incapacitating/knockdown/tick()
+	if(owner.staminaloss)
+		owner.adjustStaminaLoss(-0.3) //reduce stamina loss by 0.3 per tick, 6 per 2 seconds
+
+
 //UNCONSCIOUS
 /datum/status_effect/incapacitating/unconscious
 	id = "unconscious"
 	needs_update_stat = TRUE
+
+/datum/status_effect/incapacitating/unconscious/tick()
+	if(owner.staminaloss)
+		owner.adjustStaminaLoss(-0.3) //reduce stamina loss by 0.3 per tick, 6 per 2 seconds
 
 //SLEEPING
 /datum/status_effect/incapacitating/sleeping
@@ -57,7 +66,7 @@
 
 /datum/status_effect/incapacitating/sleeping/tick()
 	if(owner.staminaloss)
-		owner.adjustStaminaLoss(-0.35) //reduce stamina loss by 0.35 per tick, 7 per 2 seconds
+		owner.adjustStaminaLoss(-0.5) //reduce stamina loss by 0.5 per tick, 10 per 2 seconds
 	if(human_owner && human_owner.drunkenness)
 		human_owner.drunkenness *= 0.997 //reduce drunkenness by 0.3% per tick, 6% per 2 seconds
 	if(prob(20))
@@ -139,21 +148,6 @@
 	if(owner.m_intent == MOVE_INTENT_WALK)
 		owner.toggle_move_intent()
 
-/datum/status_effect/geis_tracker
-	id = "geis_tracker"
-	duration = -1
-	alert_type = null
-	var/obj/structure/destructible/clockwork/geis_binding/binding
-
-/datum/status_effect/geis_tracker/on_creation(mob/living/new_owner, obj/structure/destructible/clockwork/geis_binding/new_binding)
-	. = ..()
-	if(.)
-		binding = new_binding
-
-/datum/status_effect/geis_tracker/tick()
-	if(QDELETED(binding))
-		qdel(src)
-
 /datum/status_effect/maniamotor
 	id = "maniamotor"
 	duration = -1
@@ -191,7 +185,7 @@
 		return
 	if(!motor.active) //it being off makes it fall off much faster
 		if(!is_servant && !warned_turnoff)
-			if(motor.total_accessable_power() > motor.mania_cost)
+			if(can_access_clockwork_power(motor, motor.mania_cost))
 				to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar(pick(turnoff_messages))]\"</span>")
 			else
 				var/pickedmessage = pick(powerloss_messages)
@@ -439,11 +433,7 @@
 	playsound(spawn_turf, 'sound/effects/curse2.ogg', 80, 1, -1)
 	var/turf/ownerloc = get_turf(owner)
 	var/obj/item/projectile/curse_hand/C = new (spawn_turf)
-	C.current = spawn_turf
-	C.starting = spawn_turf
-	C.yo = ownerloc.y - spawn_turf.y
-	C.xo = ownerloc.x - spawn_turf.x
-	C.original = owner
+	C.preparePixelProjectile(ownerloc, spawn_turf)
 	C.fire()
 
 /obj/effect/temp_visual/curse
@@ -452,3 +442,40 @@
 /obj/effect/temp_visual/curse/Initialize()
 	. = ..()
 	deltimer(timerid)
+
+
+//Kindle: Used by servants of Ratvar. 10-second knockdown, reduced by 1 second per 5 damage taken while the effect is active.
+/datum/status_effect/kindle
+	id = "kindle"
+	status_type = STATUS_EFFECT_UNIQUE
+	tick_interval = 5
+	duration = 100
+	alert_type = /obj/screen/alert/status_effect/kindle
+	var/old_health
+
+/datum/status_effect/kindle/tick()
+	owner.Knockdown(15)
+	if(iscarbon(owner))
+		var/mob/living/carbon/C = owner
+		C.silent = max(2, C.silent)
+		C.stuttering = max(5, C.stuttering)
+	if(!old_health)
+		old_health = owner.health
+	var/health_difference = old_health - owner.health
+	if(!health_difference)
+		return
+	owner.visible_message("<span class='warning'>The light in [owner]'s eyes dims as they're harmed!</span>", \
+	"<span class='boldannounce'>The dazzling lights dim as you're harmed!</span>")
+	health_difference *= 2 //so 10 health difference translates to 20 deciseconds of stun reduction
+	duration -= health_difference
+	old_health = owner.health
+
+/datum/status_effect/kindle/on_remove()
+	owner.visible_message("<span class='warning'>The light in [owner]'s eyes fades!</span>", \
+	"<span class='boldannounce'>You snap out of your daze!</span>")
+
+/obj/screen/alert/status_effect/kindle
+	name = "Dazzling Lights"
+	desc = "Blinding light dances in your vision, stunning and silencing you. <i>Any damage taken will shorten the light's effects!</i>"
+	icon_state = "kindle"
+	alerttooltipstyle = "clockcult"

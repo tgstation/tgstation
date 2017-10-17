@@ -89,7 +89,7 @@
 	name = "Easter Bunny Head"
 	icon_state = "bunnyhead"
 	item_state = "bunnyhead"
-	desc = "Considerably more cute than 'Frank'"
+	desc = "Considerably more cute than 'Frank'."
 	slowdown = -1
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
@@ -135,7 +135,7 @@
 /obj/item/reagent_containers/food/snacks/egg/attack_self(mob/user)
 	..()
 	if(containsPrize)
-		to_chat(user, "<span class='notice'>You unwrap the [src] and find a prize inside!</span>")
+		to_chat(user, "<span class='notice'>You unwrap [src] and find a prize inside!</span>")
 		dispensePrize(get_turf(user))
 		containsPrize = FALSE
 		qdel(src)

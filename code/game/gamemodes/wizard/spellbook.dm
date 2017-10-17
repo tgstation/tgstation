@@ -478,7 +478,7 @@
 /datum/spellbook_entry/summon/guns/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return 0
-	return (!config.no_summon_guns)
+	return !CONFIG_GET(flag/no_summon_guns)
 
 /datum/spellbook_entry/summon/guns/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
 	SSblackbox.add_details("wizard_spell_learned", name)
@@ -495,7 +495,7 @@
 /datum/spellbook_entry/summon/magic/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return 0
-	return (!config.no_summon_magic)
+	return !CONFIG_GET(flag/no_summon_magic)
 
 /datum/spellbook_entry/summon/magic/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
 	SSblackbox.add_details("wizard_spell_learned", name)
@@ -513,7 +513,7 @@
 /datum/spellbook_entry/summon/events/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return 0
-	return (!config.no_summon_events)
+	return !CONFIG_GET(flag/no_summon_events)
 
 /datum/spellbook_entry/summon/events/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
 	SSblackbox.add_details("wizard_spell_learned", name)
@@ -737,7 +737,7 @@
 	for(var/obj/effect/proc_holder/spell/knownspell in user.mind.spell_list)
 		if(knownspell.type == S.type)
 			if(user.mind)
-				if(user.mind.special_role == "apprentice" || user.mind.special_role == "Wizard")
+				if(iswizard(user))
 					to_chat(user,"<span class='notice'>You're already far more versed in this spell than this flimsy how-to book can provide.</span>")
 				else
 					to_chat(user,"<span class='notice'>You've already read this one.</span>")

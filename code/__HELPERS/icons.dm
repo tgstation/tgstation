@@ -308,7 +308,8 @@ world
  */
 
 /proc/ReadRGB(rgb)
-	if(!rgb) return
+	if(!rgb)
+		return
 
 	// interpret the HSV or HSVA value
 	var/i=1,start=1
@@ -317,19 +318,27 @@ world
 	var/digits=0
 	for(i=start, i<=length(rgb), ++i)
 		ch = text2ascii(rgb, i)
-		if(ch < 48 || (ch > 57 && ch < 65) || (ch > 70 && ch < 97) || ch > 102) break
+		if(ch < 48 || (ch > 57 && ch < 65) || (ch > 70 && ch < 97) || ch > 102)
+			break
 		++digits
-		if(digits == 8) break
+		if(digits == 8)
+			break
 
 	var/single = digits < 6
-	if(digits != 3 && digits != 4 && digits != 6 && digits != 8) return
-	if(digits == 4 || digits == 8) usealpha = 1
+	if(digits != 3 && digits != 4 && digits != 6 && digits != 8)
+		return
+	if(digits == 4 || digits == 8)
+		usealpha = 1
 	for(i=start, digits>0, ++i)
 		ch = text2ascii(rgb, i)
-		if(ch >= 48 && ch <= 57) ch -= 48
-		else if(ch >= 65 && ch <= 70) ch -= 55
-		else if(ch >= 97 && ch <= 102) ch -= 87
-		else break
+		if(ch >= 48 && ch <= 57)
+			ch -= 48
+		else if(ch >= 65 && ch <= 70)
+			ch -= 55
+		else if(ch >= 97 && ch <= 102)
+			ch -= 87
+		else
+			break
 		--digits
 		switch(which)
 			if(0)
@@ -337,69 +346,91 @@ world
 				if(single)
 					r |= r << 4
 					++which
-				else if(!(digits & 1)) ++which
+				else if(!(digits & 1))
+					++which
 			if(1)
 				g = (g << 4) | ch
 				if(single)
 					g |= g << 4
 					++which
-				else if(!(digits & 1)) ++which
+				else if(!(digits & 1))
+					++which
 			if(2)
 				b = (b << 4) | ch
 				if(single)
 					b |= b << 4
 					++which
-				else if(!(digits & 1)) ++which
+				else if(!(digits & 1))
+					++which
 			if(3)
 				alpha = (alpha << 4) | ch
-				if(single) alpha |= alpha << 4
+				if(single)
+					alpha |= alpha << 4
 
 	. = list(r, g, b)
-	if(usealpha) . += alpha
+	if(usealpha)
+		. += alpha
 
 /proc/ReadHSV(hsv)
-	if(!hsv) return
+	if(!hsv)
+		return
 
 	// interpret the HSV or HSVA value
 	var/i=1,start=1
-	if(text2ascii(hsv) == 35) ++start // skip opening #
+	if(text2ascii(hsv) == 35)
+		++start // skip opening #
 	var/ch,which=0,hue=0,sat=0,val=0,alpha=0,usealpha
 	var/digits=0
 	for(i=start, i<=length(hsv), ++i)
 		ch = text2ascii(hsv, i)
-		if(ch < 48 || (ch > 57 && ch < 65) || (ch > 70 && ch < 97) || ch > 102) break
+		if(ch < 48 || (ch > 57 && ch < 65) || (ch > 70 && ch < 97) || ch > 102)
+			break
 		++digits
-		if(digits == 9) break
-	if(digits > 7) usealpha = 1
-	if(digits <= 4) ++which
-	if(digits <= 2) ++which
+		if(digits == 9)
+			break
+	if(digits > 7)
+		usealpha = 1
+	if(digits <= 4)
+		++which
+	if(digits <= 2)
+		++which
 	for(i=start, digits>0, ++i)
 		ch = text2ascii(hsv, i)
-		if(ch >= 48 && ch <= 57) ch -= 48
-		else if(ch >= 65 && ch <= 70) ch -= 55
-		else if(ch >= 97 && ch <= 102) ch -= 87
-		else break
+		if(ch >= 48 && ch <= 57)
+			ch -= 48
+		else if(ch >= 65 && ch <= 70)
+			ch -= 55
+		else if(ch >= 97 && ch <= 102)
+			ch -= 87
+		else
+			break
 		--digits
 		switch(which)
 			if(0)
 				hue = (hue << 4) | ch
-				if(digits == (usealpha ? 6 : 4)) ++which
+				if(digits == (usealpha ? 6 : 4))
+					++which
 			if(1)
 				sat = (sat << 4) | ch
-				if(digits == (usealpha ? 4 : 2)) ++which
+				if(digits == (usealpha ? 4 : 2))
+					++which
 			if(2)
 				val = (val << 4) | ch
-				if(digits == (usealpha ? 2 : 0)) ++which
+				if(digits == (usealpha ? 2 : 0))
+					++which
 			if(3)
 				alpha = (alpha << 4) | ch
 
 	. = list(hue, sat, val)
-	if(usealpha) . += alpha
+	if(usealpha)
+		. += alpha
 
 /proc/HSVtoRGB(hsv)
-	if(!hsv) return "#000000"
+	if(!hsv)
+		return "#000000"
 	var/list/HSV = ReadHSV(hsv)
-	if(!HSV) return "#000000"
+	if(!HSV)
+		return "#000000"
 
 	var/hue = HSV[1]
 	var/sat = HSV[2]
@@ -407,27 +438,30 @@ world
 
 	// Compress hue into easier-to-manage range
 	hue -= hue >> 8
-	if(hue >= 0x5fa) hue -= 0x5fa
+	if(hue >= 0x5fa)
+		hue -= 0x5fa
 
 	var/hi,mid,lo,r,g,b
 	hi = val
 	lo = round((255 - sat) * val / 255, 1)
 	mid = lo + round(abs(round(hue, 510) - hue) * (hi - lo) / 255, 1)
 	if(hue >= 765)
-		if(hue >= 1275)      {r=hi;  g=lo;  b=mid}
+		if(hue >= 1275) {r=hi;  g=lo;  b=mid}
 		else if(hue >= 1020) {r=mid; g=lo;  b=hi }
-		else                 {r=lo;  g=mid; b=hi }
+		else {r=lo;  g=mid; b=hi }
 	else
-		if(hue >= 510)       {r=lo;  g=hi;  b=mid}
-		else if(hue >= 255)  {r=mid; g=hi;  b=lo }
-		else                 {r=hi;  g=mid; b=lo }
+		if(hue >= 510) {r=lo;  g=hi;  b=mid}
+		else if(hue >= 255) {r=mid; g=hi;  b=lo }
+		else {r=hi;  g=mid; b=lo }
 
 	return (HSV.len > 3) ? rgb(r,g,b,HSV[4]) : rgb(r,g,b)
 
 /proc/RGBtoHSV(rgb)
-	if(!rgb) return "#0000000"
+	if(!rgb)
+		return "#0000000"
 	var/list/RGB = ReadRGB(rgb)
-	if(!RGB) return "#0000000"
+	if(!RGB)
+		return "#0000000"
 
 	var/r = RGB[1]
 	var/g = RGB[2]
@@ -456,15 +490,22 @@ world
 	return hsv(hue, sat, val, (RGB.len>3 ? RGB[4] : null))
 
 /proc/hsv(hue, sat, val, alpha)
-	if(hue < 0 || hue >= 1536) hue %= 1536
-	if(hue < 0) hue += 1536
+	if(hue < 0 || hue >= 1536)
+		hue %= 1536
+	if(hue < 0)
+		hue += 1536
 	if((hue & 0xFF) == 0xFF)
 		++hue
-		if(hue >= 1536) hue = 0
-	if(sat < 0) sat = 0
-	if(sat > 255) sat = 255
-	if(val < 0) val = 0
-	if(val > 255) val = 255
+		if(hue >= 1536)
+			hue = 0
+	if(sat < 0)
+		sat = 0
+	if(sat > 255)
+		sat = 255
+	if(val < 0)
+		val = 0
+	if(val > 255)
+		val = 255
 	. = "#"
 	. += TO_HEX_DIGIT(hue >> 8)
 	. += TO_HEX_DIGIT(hue >> 4)
@@ -474,8 +515,10 @@ world
 	. += TO_HEX_DIGIT(val >> 4)
 	. += TO_HEX_DIGIT(val)
 	if(!isnull(alpha))
-		if(alpha < 0) alpha = 0
-		if(alpha > 255) alpha = 255
+		if(alpha < 0)
+			alpha = 0
+		if(alpha > 255)
+			alpha = 255
 		. += TO_HEX_DIGIT(alpha >> 4)
 		. += TO_HEX_DIGIT(alpha)
 
@@ -493,32 +536,44 @@ world
 	var/list/HSV2 = ReadHSV(hsv2)
 
 	// add missing alpha if needed
-	if(HSV1.len < HSV2.len) HSV1 += 255
-	else if(HSV2.len < HSV1.len) HSV2 += 255
+	if(HSV1.len < HSV2.len)
+		HSV1 += 255
+	else if(HSV2.len < HSV1.len)
+		HSV2 += 255
 	var/usealpha = HSV1.len > 3
 
 	// normalize hsv values in case anything is screwy
-	if(HSV1[1] > 1536) HSV1[1] %= 1536
-	if(HSV2[1] > 1536) HSV2[1] %= 1536
-	if(HSV1[1] < 0) HSV1[1] += 1536
-	if(HSV2[1] < 0) HSV2[1] += 1536
+	if(HSV1[1] > 1536)
+		HSV1[1] %= 1536
+	if(HSV2[1] > 1536)
+		HSV2[1] %= 1536
+	if(HSV1[1] < 0)
+		HSV1[1] += 1536
+	if(HSV2[1] < 0)
+		HSV2[1] += 1536
 	if(!HSV1[3]) {HSV1[1] = 0; HSV1[2] = 0}
 	if(!HSV2[3]) {HSV2[1] = 0; HSV2[2] = 0}
 
 	// no value for one color means don't change saturation
-	if(!HSV1[3]) HSV1[2] = HSV2[2]
-	if(!HSV2[3]) HSV2[2] = HSV1[2]
+	if(!HSV1[3])
+		HSV1[2] = HSV2[2]
+	if(!HSV2[3])
+		HSV2[2] = HSV1[2]
 	// no saturation for one color means don't change hues
-	if(!HSV1[2]) HSV1[1] = HSV2[1]
-	if(!HSV2[2]) HSV2[1] = HSV1[1]
+	if(!HSV1[2])
+		HSV1[1] = HSV2[1]
+	if(!HSV2[2])
+		HSV2[1] = HSV1[1]
 
 	// Compress hues into easier-to-manage range
 	HSV1[1] -= HSV1[1] >> 8
 	HSV2[1] -= HSV2[1] >> 8
 
 	var/hue_diff = HSV2[1] - HSV1[1]
-	if(hue_diff > 765) hue_diff -= 1530
-	else if(hue_diff <= -765) hue_diff += 1530
+	if(hue_diff > 765)
+		hue_diff -= 1530
+	else if(hue_diff <= -765)
+		hue_diff += 1530
 
 	var/hue = round(HSV1[1] + hue_diff * amount, 1)
 	var/sat = round(HSV1[2] + (HSV2[2] - HSV1[2]) * amount, 1)
@@ -526,8 +581,10 @@ world
 	var/alpha = usealpha ? round(HSV1[4] + (HSV2[4] - HSV1[4]) * amount, 1) : null
 
 	// normalize hue
-	if(hue < 0 || hue >= 1530) hue %= 1530
-	if(hue < 0) hue += 1530
+	if(hue < 0 || hue >= 1530)
+		hue %= 1530
+	if(hue < 0)
+		hue += 1530
 	// decompress hue
 	hue += round(hue / 255)
 
@@ -547,8 +604,10 @@ world
 	var/list/RGB2 = ReadRGB(rgb2)
 
 	// add missing alpha if needed
-	if(RGB1.len < RGB2.len) RGB1 += 255
-	else if(RGB2.len < RGB1.len) RGB2 += 255
+	if(RGB1.len < RGB2.len)
+		RGB1 += 255
+	else if(RGB2.len < RGB1.len)
+		RGB2 += 255
 	var/usealpha = RGB1.len > 3
 
 	var/r = round(RGB1[1] + (RGB2[1] - RGB1[1]) * amount, 1)
@@ -563,15 +622,18 @@ world
 
 /proc/HueToAngle(hue)
 	// normalize hsv in case anything is screwy
-	if(hue < 0 || hue >= 1536) hue %= 1536
-	if(hue < 0) hue += 1536
+	if(hue < 0 || hue >= 1536)
+		hue %= 1536
+	if(hue < 0)
+		hue += 1536
 	// Compress hue into easier-to-manage range
 	hue -= hue >> 8
 	return hue / (1530/360)
 
 /proc/AngleToHue(angle)
 	// normalize hsv in case anything is screwy
-	if(angle < 0 || angle >= 360) angle -= 360 * round(angle / 360)
+	if(angle < 0 || angle >= 360)
+		angle -= 360 * round(angle / 360)
 	var/hue = angle * (1530/360)
 	// Decompress hue
 	hue += round(hue / 255)
@@ -583,18 +645,23 @@ world
 	var/list/HSV = ReadHSV(hsv)
 
 	// normalize hsv in case anything is screwy
-	if(HSV[1] >= 1536) HSV[1] %= 1536
-	if(HSV[1] < 0) HSV[1] += 1536
+	if(HSV[1] >= 1536)
+		HSV[1] %= 1536
+	if(HSV[1] < 0)
+		HSV[1] += 1536
 
 	// Compress hue into easier-to-manage range
 	HSV[1] -= HSV[1] >> 8
 
-	if(angle < 0 || angle >= 360) angle -= 360 * round(angle / 360)
+	if(angle < 0 || angle >= 360)
+		angle -= 360 * round(angle / 360)
 	HSV[1] = round(HSV[1] + angle * (1530/360), 1)
 
 	// normalize hue
-	if(HSV[1] < 0 || HSV[1] >= 1530) HSV[1] %= 1530
-	if(HSV[1] < 0) HSV[1] += 1530
+	if(HSV[1] < 0 || HSV[1] >= 1530)
+		HSV[1] %= 1530
+	if(HSV[1] < 0)
+		HSV[1] += 1530
 	// decompress hue
 	HSV[1] += round(HSV[1] / 255)
 
@@ -614,8 +681,10 @@ world
 	var/gray = RGB[1]*0.3 + RGB[2]*0.59 + RGB[3]*0.11
 	var/tone_gray = TONE[1]*0.3 + TONE[2]*0.59 + TONE[3]*0.11
 
-	if(gray <= tone_gray) return BlendRGB("#000000", tone, gray/(tone_gray || 1))
-	else return BlendRGB(tone, "#ffffff", (gray-tone_gray)/((255-tone_gray) || 1))
+	if(gray <= tone_gray)
+		return BlendRGB("#000000", tone, gray/(tone_gray || 1))
+	else
+		return BlendRGB(tone, "#ffffff", (gray-tone_gray)/((255-tone_gray) || 1))
 
 
 //Used in the OLD chem colour mixing algorithm
@@ -715,7 +784,8 @@ The _flatIcons list is a cache for generated icon files.
 			var/image/I = current
 			currentLayer = I.layer
 			if(currentLayer<0) // Special case for FLY_LAYER
-				if(currentLayer <= -1000) return flat
+				if(currentLayer <= -1000)
+					return flat
 				if(pSet == 0) // Underlay
 					currentLayer = A.layer+currentLayer/1000
 				else // Overlay
@@ -968,9 +1038,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 /image/proc/setDir(newdir)
 	dir = newdir
 
-#define FROZEN_RED_COLOR "#2E5E69"
-#define FROZEN_GREEN_COLOR "#60A2A8"
-#define FROZEN_BLUE_COLOR "#A1AFB1"
+GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0,0,0)))
 
 /obj/proc/make_frozen_visual()
 	// Used to make the frozen item visuals for Freon.
@@ -978,7 +1046,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 		return
 	if(!(flags_2 & FROZEN_2))
 		name = "frozen [name]"
-		add_atom_colour(list(FROZEN_RED_COLOR, FROZEN_GREEN_COLOR, FROZEN_BLUE_COLOR, rgb(0,0,0)), TEMPORARY_COLOUR_PRIORITY)
+		add_atom_colour(GLOB.freon_color_matrix, TEMPORARY_COLOUR_PRIORITY)
 		alpha -= 25
 		flags_2 |= FROZEN_2
 
@@ -986,13 +1054,9 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 /obj/proc/make_unfrozen()
 	if(flags_2 & FROZEN_2)
 		name = replacetext(name, "frozen ", "")
-		remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, list(FROZEN_RED_COLOR, FROZEN_GREEN_COLOR, FROZEN_BLUE_COLOR, rgb(0,0,0)))
+		remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, GLOB.freon_color_matrix)
 		alpha += 25
 		flags_2 &= ~FROZEN_2
-
-#undef FROZEN_RED_COLOR
-#undef FROZEN_GREEN_COLOR
-#undef FROZEN_BLUE_COLOR
 
 
 //Converts an icon to base64. Operates by putting the icon in the iconCache savefile,

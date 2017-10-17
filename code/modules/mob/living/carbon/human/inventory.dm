@@ -225,7 +225,7 @@
 /mob/living/carbon/human/wear_mask_update(obj/item/clothing/C, toggle_off = 1)
 	if((C.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || (initial(C.flags_inv) & (HIDEHAIR|HIDEFACIALHAIR)))
 		update_hair()
-	if(toggle_off && internal && !getorganslot("breathing_tube"))
+	if(toggle_off && internal && !getorganslot(ORGAN_SLOT_BREATHING_TUBE))
 		update_internals_hud_icon(0)
 		internal = null
 	if(C.flags_inv & HIDEEYES)
@@ -260,3 +260,11 @@
 		return 0
 
 	return O.equip(src, visualsOnly)
+
+
+//delete all equipment without dropping anything
+/mob/living/carbon/human/proc/delete_equipment()
+	for(var/slot in get_all_slots())//order matters, dependant slots go first
+		qdel(slot)
+	for(var/obj/item/I in held_items)
+		qdel(I)

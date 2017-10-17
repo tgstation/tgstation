@@ -25,6 +25,13 @@
 	if(!iscarbon(M))
 		return
 
+	//Always log attemped injects for admins
+	var/list/injected = list()
+	for(var/datum/reagent/R in reagents.reagent_list)
+		injected += R.name
+	var/contained = english_list(injected)
+	add_logs(user, M, "attempted to inject", src, "([contained])")
+
 	if(reagents.total_volume && (ignore_flags || M.can_inject(user, 1))) // Ignore flag should be checked first or there will be an error message.
 		to_chat(M, "<span class='warning'>You feel a tiny prick!</span>")
 		to_chat(user, "<span class='notice'>You inject [M] with [src].</span>")
@@ -32,9 +39,6 @@
 		var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
 		reagents.reaction(M, INJECT, fraction)
 		if(M.reagents)
-			var/list/injected = list()
-			for(var/datum/reagent/R in reagents.reagent_list)
-				injected += R.name
 			var/trans = 0
 			if(!infinite)
 				trans = reagents.trans_to(M, amount_per_transfer_from_this)
@@ -43,7 +47,6 @@
 
 			to_chat(user, "<span class='notice'>[trans] unit\s injected.  [reagents.total_volume] unit\s remaining in [src].</span>")
 
-			var/contained = english_list(injected)
 
 			add_logs(user, M, "injected", src, "([contained])")
 
@@ -98,13 +101,14 @@
 		reagents.maximum_volume = 0 //Makes them useless afterwards
 		container_type = NONE
 	update_icon()
-	spawn(80)
-		if(iscyborg(user) && !reagents.total_volume)
-			var/mob/living/silicon/robot/R = user
-			if(R.cell.use(100))
-				reagents.add_reagent_list(list_reagents)
-				update_icon()
-	return
+	addtimer(CALLBACK(src, .proc/cyborg_recharge, user), 80)
+
+/obj/item/reagent_containers/hypospray/medipen/proc/cyborg_recharge(mob/living/silicon/robot/user)
+	if(!reagents.total_volume && iscyborg(user))
+		var/mob/living/silicon/robot/R = user
+		if(R.cell.use(100))
+			reagents.add_reagent_list(list_reagents)
+			update_icon()
 
 /obj/item/reagent_containers/hypospray/medipen/update_icon()
 	if(reagents.total_volume > 0)

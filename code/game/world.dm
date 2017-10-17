@@ -6,35 +6,31 @@ GLOBAL_PROTECT(security_mode)
 
 	SetupExternalRSC()
 
-	GLOB.config_error_log = GLOB.world_pda_log = GLOB.sql_error_log = GLOB.world_href_log = GLOB.world_runtime_log = GLOB.world_attack_log = GLOB.world_game_log = file("data/logs/config_error.log") //temporary file used to record errors with loading config, moved to log directory once logging is set bl
+	GLOB.config_error_log = GLOB.manifest_log = GLOB.world_pda_log = GLOB.sql_error_log = GLOB.world_href_log = GLOB.world_runtime_log = GLOB.world_attack_log = GLOB.world_game_log = file("data/logs/config_error.log") //temporary file used to record errors with loading config, moved to log directory once logging is set bl
 
 	CheckSecurityMode()
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
-	config = new
+	new /datum/controller/configuration
 
 	CheckSchemaVersion()
 	SetRoundID()
 
 	SetupLogs()
 
-	if(!RunningService())	//tgs2 support
-		GLOB.revdata.DownloadPRDetails()
+	SERVER_TOOLS_ON_NEW
 
 	load_motd()
 	load_admins()
 	LoadVerbs(/datum/verbs/menu)
-	if(config.usewhitelist)
+	if(CONFIG_GET(flag/usewhitelist))
 		load_whitelist()
 	LoadBans()
 
 	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
 
 	Master.Initialize(10, FALSE)
-
-	if(config.irc_announce_new_game)
-		IRCBroadcast("New round starting on [SSmapping.config.map_name]!")
 
 /world/proc/SetupExternalRSC()
 #if (PRELOAD_RSC == 0)
@@ -48,7 +44,7 @@ GLOBAL_PROTECT(security_mode)
 #endif
 
 /world/proc/CheckSchemaVersion()
-	if(config.sql_enabled)
+	if(CONFIG_GET(flag/sql_enabled))
 		if(SSdbcore.Connect())
 			log_world("Database connection established.")
 			var/datum/DBQuery/query_db_version = SSdbcore.NewQuery("SELECT major, minor FROM [format_table_name("schema_revision")] ORDER BY date DESC LIMIT 1")
@@ -68,7 +64,7 @@ GLOBAL_PROTECT(security_mode)
 			log_world("Your server failed to establish a connection with the database.")
 
 /world/proc/SetRoundID()
-	if(config.sql_enabled)
+	if(CONFIG_GET(flag/sql_enabled))
 		if(SSdbcore.Connect())
 			var/datum/DBQuery/query_round_start = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (start_datetime, server_ip, server_port) VALUES (Now(), INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]')")
 			query_round_start.Execute()
@@ -90,10 +86,12 @@ GLOBAL_PROTECT(security_mode)
 	GLOB.world_href_log = file("[GLOB.log_directory]/hrefs.html")
 	GLOB.world_pda_log = file("[GLOB.log_directory]/pda.log")
 	GLOB.sql_error_log = file("[GLOB.log_directory]/sql.log")
+	GLOB.manifest_log = file("[GLOB.log_directory]/manifest.log")
 	WRITE_FILE(GLOB.world_game_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
 	WRITE_FILE(GLOB.world_attack_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
 	WRITE_FILE(GLOB.world_runtime_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
 	WRITE_FILE(GLOB.world_pda_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
+	WRITE_FILE(GLOB.manifest_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
 	GLOB.changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
 	if(fexists(GLOB.config_error_log))
 		fcopy(GLOB.config_error_log, "[GLOB.log_directory]/config_error.log")
@@ -117,119 +115,25 @@ GLOBAL_PROTECT(security_mode)
 		warning("/tg/station 13 uses many file operations, a few shell()s, and some external call()s. Trusted mode is recommended. You can download our source code for your own browsing and compilation at https://github.com/tgstation/tgstation")
 
 /world/Topic(T, addr, master, key)
+	var/static/list/topic_handlers = TopicHandlers()
+
 	var/list/input = params2list(T)
-
-	var/pinging = ("ping" in input)
-	var/playing = ("players" in input)
-
-	if(!pinging && !playing && config && config.log_world_topic)
+	var/datum/world_topic/handler
+	for(var/I in topic_handlers)
+		if(I in input)
+			handler = topic_handlers[I]
+			break
+	
+	if((!handler || initial(handler.log)) && config && CONFIG_GET(flag/log_world_topic))
 		WRITE_FILE(GLOB.world_game_log, "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
 
-	if(input[SERVICE_CMD_PARAM_KEY])
-		return ServiceCommand(input)
-	var/key_valid = (global.comms_allowed && input["key"] == global.comms_key)
+	SERVER_TOOLS_ON_TOPIC	//redirect to server tools if necessary
 
-	if(pinging)
-		var/x = 1
-		for (var/client/C in GLOB.clients)
-			x++
-		return x
+	if(!handler)
+		return
 
-	else if(playing)
-		var/n = 0
-		for(var/mob/M in GLOB.player_list)
-			if(M.client)
-				n++
-		return n
-
-	else if("ircstatus" in input)	//tgs2 support
-		var/static/last_irc_status = 0
-		if(world.time - last_irc_status < 50)
-			return
-		var/list/adm = get_admin_counts()
-		var/list/allmins = adm["total"]
-		var/status = "Admins: [allmins.len] (Active: [english_list(adm["present"])] AFK: [english_list(adm["afk"])] Stealth: [english_list(adm["stealth"])] Skipped: [english_list(adm["noflags"])]). "
-		status += "Players: [GLOB.clients.len] (Active: [get_active_player_count(0,1,0)]). Mode: [SSticker.mode.name]."
-		send2irc("Status", status)
-		last_irc_status = world.time
-
-	else if("status" in input)
-		var/list/s = list()
-		s["version"] = GLOB.game_version
-		s["mode"] = GLOB.master_mode
-		s["respawn"] = config ? GLOB.abandon_allowed : 0
-		s["enter"] = GLOB.enter_allowed
-		s["vote"] = config.allow_vote_mode
-		s["ai"] = config.allow_ai
-		s["host"] = host ? host : null
-		s["active_players"] = get_active_player_count()
-		s["players"] = GLOB.clients.len
-		s["revision"] = GLOB.revdata.commit
-		s["revision_date"] = GLOB.revdata.date
-
-		var/list/adm = get_admin_counts()
-		var/list/presentmins = adm["present"]
-		var/list/afkmins = adm["afk"]
-		s["admins"] = presentmins.len + afkmins.len //equivalent to the info gotten from adminwho
-		s["gamestate"] = SSticker.current_state
-
-		s["map_name"] = SSmapping.config.map_name
-
-		if(key_valid && SSticker.HasRoundStarted())
-			s["real_mode"] = SSticker.mode.name
-			// Key-authed callers may know the truth behind the "secret"
-
-		s["security_level"] = get_security_level()
-		s["round_duration"] = SSticker ? round((world.time-SSticker.round_start_time)/10) : 0
-		// Amount of world's ticks in seconds, useful for calculating round duration
-
-		if(SSshuttle && SSshuttle.emergency)
-			s["shuttle_mode"] = SSshuttle.emergency.mode
-			// Shuttle status, see /__DEFINES/stat.dm
-			s["shuttle_timer"] = SSshuttle.emergency.timeLeft()
-			// Shuttle timer, in seconds
-
-		return list2params(s)
-
-	else if("announce" in input)
-		if(!key_valid)
-			return "Bad Key"
-		else
-			AnnouncePR(input["announce"], json_decode(input["payload"]))
-
-	else if("crossmessage" in input)
-		if(!key_valid)
-			return
-		else
-			if(input["crossmessage"] == "Ahelp")
-				relay_msg_admins("<span class='adminnotice'><b><font color=red>HELP: </font> [input["source"]] [input["message_sender"]]: [input["message"]]</b></span>")
-			if(input["crossmessage"] == "Comms_Console")
-				minor_announce(input["message"], "Incoming message from [input["message_sender"]]")
-				for(var/obj/machinery/computer/communications/CM in GLOB.machines)
-					CM.overrideCooldown()
-			if(input["crossmessage"] == "News_Report")
-				minor_announce(input["message"], "Breaking Update From [input["message_sender"]]")
-
-	else if("adminmsg" in input)	//tgs2 support
-		if(!key_valid)
-			return "Bad Key"
-		else
-			return IrcPm(input["adminmsg"],input["msg"],input["sender"])
-
-	else if("namecheck" in input)	//tgs2 support
-		if(!key_valid)
-			return "Bad Key"
-		else
-			log_admin("IRC Name Check: [input["sender"]] on [input["namecheck"]]")
-			message_admins("IRC name checking on [input["namecheck"]] from [input["sender"]]")
-			return keywords_lookup(input["namecheck"],1)
-	else if("adminwho" in input)	//tgs2 support
-		if(!key_valid)
-			return "Bad Key"
-		else
-			return ircadminwho()
-	else if("server_hop" in input)
-		show_server_hop_transfer_screen(input["server_hop"])
+	handler = new handler()
+	return handler.TryRun(input)
 
 /world/proc/AnnouncePR(announcement, list/payload)
 	var/static/list/PRcounts = list()	//PR id -> number of times announced this round
@@ -246,7 +150,7 @@ GLOBAL_PROTECT(security_mode)
 		C.AnnouncePR(final_composed)
 
 /world/Reboot(reason = 0, fast_track = FALSE)
-	ServiceReboot() //handles alternative actions if necessary
+	SERVER_TOOLS_ON_REBOOT
 	if (reason || fast_track) //special reboot, do none of the normal stuff
 		if (usr)
 			log_admin("[key_name(usr)] Has requested an immediate world restart via client side debugging tools")
@@ -262,17 +166,6 @@ GLOBAL_PROTECT(security_mode)
 	GLOB.join_motd = file2text("config/motd.txt") + "<br>" + GLOB.revdata.GetTestMergeInfo()
 
 /world/proc/update_status()
-	var/s = ""
-
-	if (config && config.server_name)
-		s += "<b>[config.server_name]</b> &#8212; "
-
-	s += "<b>[station_name()]</b>";
-	s += " ("
-	s += "<a href=\"http://\">" //Change this to wherever you want the hub to link to.
-	s += "Default"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
-	s += "</a>"
-	s += ")"
 
 	var/list/features = list()
 
@@ -282,13 +175,25 @@ GLOBAL_PROTECT(security_mode)
 	if (!GLOB.enter_allowed)
 		features += "closed"
 
-	features += GLOB.abandon_allowed ? "respawn" : "no respawn"
+	var/s = ""
+	var/hostedby
+	if(config)
+		var/server_name = CONFIG_GET(string/servername)
+		if (server_name)
+			s += "<b>[server_name]</b> &#8212; "
+		features += "[CONFIG_GET(flag/norespawn) ? "no " : ""]respawn"
+		if(CONFIG_GET(flag/allow_vote_mode))
+			features += "vote"
+		if(CONFIG_GET(flag/allow_ai))
+			features += "AI allowed"
+		hostedby = CONFIG_GET(string/hostedby)
 
-	if (config && config.allow_vote_mode)
-		features += "vote"
-
-	if (config && config.allow_ai)
-		features += "AI allowed"
+	s += "<b>[station_name()]</b>";
+	s += " ("
+	s += "<a href=\"http://\">" //Change this to wherever you want the hub to link to.
+	s += "Default"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
+	s += "</a>"
+	s += ")"
 
 	var/n = 0
 	for (var/mob/M in GLOB.player_list)
@@ -300,8 +205,8 @@ GLOBAL_PROTECT(security_mode)
 	else if (n > 0)
 		features += "~[n] player"
 
-	if (!host && config && config.hostedby)
-		features += "hosted by <b>[config.hostedby]</b>"
+	if (!host && hostedby)
+		features += "hosted by <b>[hostedby]</b>"
 
 	if (features)
 		s += ": [jointext(features, ", ")]"

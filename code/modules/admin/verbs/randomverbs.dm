@@ -174,7 +174,7 @@
 		return
 
 	if(automute)
-		if(!config.automute_on)
+		if(!CONFIG_GET(flag/automute_on))
 			return
 	else
 		if(!check_rights())
@@ -344,7 +344,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		new_character.real_name = record_found.fields["name"]
 		new_character.gender = record_found.fields["sex"]
 		new_character.age = record_found.fields["age"]
-		new_character.hardset_dna(record_found.fields["identity"], record_found.fields["enzymes"], record_found.fields["name"], record_found.fields["blood_type"], record_found.fields["species"], record_found.fields["features"])
+		new_character.hardset_dna(record_found.fields["identity"], record_found.fields["enzymes"], record_found.fields["name"], record_found.fields["blood_type"], new record_found.fields["species"], record_found.fields["features"])
 	else
 		var/datum/preferences/A = new()
 		A.copy_to(new_character)
@@ -381,24 +381,20 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	switch(new_character.mind.special_role)
 		if("Wizard")
-			new_character.loc = pick(GLOB.wizardstart)
-			//SSticker.mode.learn_basic_spells(new_character)
-			SSticker.mode.equip_wizard(new_character)
+			new_character.forceMove(pick(GLOB.wizardstart))
+			var/datum/antagonist/wizard/A = new_character.mind.has_antag_datum(/datum/antagonist/wizard,TRUE)
+			A.equip_wizard()
 		if("Syndicate")
-			var/obj/effect/landmark/synd_spawn = locate("landmark*Syndicate-Spawn")
-			if(synd_spawn)
-				new_character.loc = get_turf(synd_spawn)
+			new_character.forceMove(pick(GLOB.nukeop_start))
 			call(/datum/game_mode/proc/equip_syndicate)(new_character)
 		if("Space Ninja")
 			var/list/ninja_spawn = list()
-			for(var/obj/effect/landmark/L in GLOB.landmarks_list)
-				if(L.name=="carpspawn")
-					ninja_spawn += L
+			for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
+				ninja_spawn += L
 			var/datum/antagonist/ninja/ninjadatum = new_character.mind.has_antag_datum(ANTAG_DATUM_NINJA)
 			ninjadatum.equip_space_ninja()
 			if(ninja_spawn.len)
-				var/obj/effect/landmark/ninja_spawn_here = pick(ninja_spawn)
-				new_character.loc = ninja_spawn_here.loc
+				new_character.forceMove(pick(ninja_spawn))
 
 		else//They may also be a cyborg or AI.
 			switch(new_character.mind.assigned_role)
@@ -549,15 +545,20 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 
 	var/devastation = input("Range of total devastation. -1 to none", text("Input"))  as num|null
-	if(devastation == null) return
+	if(devastation == null)
+		return
 	var/heavy = input("Range of heavy impact. -1 to none", text("Input"))  as num|null
-	if(heavy == null) return
+	if(heavy == null)
+		return
 	var/light = input("Range of light impact. -1 to none", text("Input"))  as num|null
-	if(light == null) return
+	if(light == null)
+		return
 	var/flash = input("Range of flash. -1 to none", text("Input"))  as num|null
-	if(flash == null) return
+	if(flash == null)
+		return
 	var/flames = input("Range of flames. -1 to none", text("Input"))  as num|null
-	if(flames == null) return
+	if(flames == null)
+		return
 
 	if ((devastation != -1) || (heavy != -1) || (light != -1) || (flash != -1) || (flames != -1))
 		if ((devastation > 20) || (heavy > 20) || (light > 20) || (flames > 20))
@@ -581,9 +582,11 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 
 	var/heavy = input("Range of heavy pulse.", text("Input"))  as num|null
-	if(heavy == null) return
+	if(heavy == null)
+		return
 	var/light = input("Range of light pulse.", text("Input"))  as num|null
-	if(light == null) return
+	if(light == null)
+		return
 
 	if (heavy || light)
 
@@ -707,8 +710,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		to_chat(usr, "Nope you can't do this, the game's already started. This only works before rounds!")
 		return
 
-	if(config.force_random_names)
-		config.force_random_names = 0
+	var/frn = CONFIG_GET(flag/force_random_names)
+	if(frn)
+		CONFIG_SET(flag/force_random_names, FALSE)
 		message_admins("Admin [key_name_admin(usr)] has disabled \"Everyone is Special\" mode.")
 		to_chat(usr, "Disabled.")
 		return
@@ -726,7 +730,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	to_chat(usr, "<i>Remember: you can always disable the randomness by using the verb again, assuming the round hasn't started yet</i>.")
 
-	config.force_random_names = 1
+	CONFIG_SET(flag/force_random_names, TRUE)
 	SSblackbox.add_details("admin_verb","Make Everyone Random") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -734,15 +738,15 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Server"
 	set name = "Toggle random events on/off"
 	set desc = "Toggles random events such as meteors, black holes, blob (but not space dust) on/off"
-	if(!config.allow_random_events)
-		config.allow_random_events = 1
+	var/new_are = !CONFIG_GET(flag/allow_random_events)
+	CONFIG_SET(flag/allow_random_events, new_are)
+	if(new_are)
 		to_chat(usr, "Random events enabled")
 		message_admins("Admin [key_name_admin(usr)] has enabled random events.")
 	else
-		config.allow_random_events = 0
 		to_chat(usr, "Random events disabled")
 		message_admins("Admin [key_name_admin(usr)] has disabled random events.")
-	SSblackbox.add_details("admin_toggle","Toggle Random Events|[config.allow_random_events]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_toggle","Toggle Random Events|[new_are]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /client/proc/admin_change_sec_level()
@@ -844,8 +848,9 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 
 	var/dat = {"
 	<html><head><title>Create Outfit</title></head><body>
-	<form name="outfit" action="byond://?src=\ref[src]" method="get">
+	<form name="outfit" action="byond://?src=\ref[src];[HrefToken()]" method="get">
 	<input type="hidden" name="src" value="\ref[src]">
+	[HrefTokenFormField()]
 	<input type="hidden" name="create_outfit" value="1">
 	<table>
 		<tr>
@@ -962,7 +967,8 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	set name = "Toggle AntagHUD"
 	set desc = "Toggles the Admin AntagHUD"
 
-	if(!holder) return
+	if(!holder)
+		return
 
 	var/adding_hud = !has_antag_hud()
 
@@ -1168,7 +1174,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	if(!holder)
 		return
 
-	var/list/punishment_list = list(ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_BSA)
+	var/list/punishment_list = list(ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_BSA, ADMIN_PUNISHMENT_FIREBALL)
 
 	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in punishment_list
 
@@ -1188,6 +1194,8 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 			target.gib(FALSE)
 		if(ADMIN_PUNISHMENT_BSA)
 			bluespace_artillery(target)
+		if(ADMIN_PUNISHMENT_FIREBALL)
+			new /obj/effect/temp_visual/target(get_turf(target))
 
 	var/msg = "[key_name_admin(usr)] punished [key_name_admin(target)] with [punishment]."
 	message_admins(msg)

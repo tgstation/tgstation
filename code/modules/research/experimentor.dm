@@ -113,7 +113,7 @@
 		if(!is_insertion_ready(user))
 			return
 		if(!checkCircumstances(O))
-			to_chat(user, "<span class='warning'>The [O] is not yet valid for the [src] and must be completed!</span>")
+			to_chat(user, "<span class='warning'>[O] is not yet valid for [src] and must be completed!</span>")
 			return
 		if(!O.origin_tech)
 			to_chat(user, "<span class='warning'>This doesn't seem to have a tech origin!</span>")
@@ -122,11 +122,10 @@
 		if (temp_tech.len == 0)
 			to_chat(user, "<span class='warning'>You cannot experiment on this item!</span>")
 			return
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(O, src))
 			return
 		loaded_item = O
-		O.loc = src
-		to_chat(user, "<span class='notice'>You add the [O.name] to the machine.</span>")
+		to_chat(user, "<span class='notice'>You add [O] to the machine.</span>")
 		flick("h_lathe_load", src)
 
 
@@ -256,7 +255,7 @@
 			ejectItem()
 		else if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='danger'>[src] malfunctions, melting [exp_on] and leaking radiation!</span>")
-			radiation_pulse(get_turf(src), 1, 1, 25, 1)
+			radiation_pulse(src, 500)
 			ejectItem(TRUE)
 		else if(prob(EFFECT_PROB_LOW-badThingCoeff))
 			visible_message("<span class='warning'>[src] malfunctions, spewing toxic waste!</span>")
@@ -338,10 +337,7 @@
 				visible_message("<span class='danger'>[src] dangerously overheats, launching a flaming fuel orb!</span>")
 				investigate_log("Experimentor has launched a <font color='red'>fireball</font> at [M]!", INVESTIGATE_EXPERIMENTOR)
 				var/obj/item/projectile/magic/aoe/fireball/FB = new /obj/item/projectile/magic/aoe/fireball(start)
-				FB.original = MT
-				FB.current = start
-				FB.yo = MT.y - start.y
-				FB.xo = MT.x - start.x
+				FB.preparePixelProjectile(MT, start)
 				FB.fire()
 		else if(prob(EFFECT_PROB_LOW-badThingCoeff))
 			visible_message("<span class='danger'>[src] malfunctions, melting [exp_on] and releasing a burst of flame!</span>")
@@ -688,13 +684,13 @@
 		qdel(src) //Comment this line to produce a light grenade (the bomb that keeps on exploding when used)!!
 
 /obj/item/relic/proc/teleport(mob/user)
-	to_chat(user, "<span class='notice'>The [src] begins to vibrate!</span>")
+	to_chat(user, "<span class='notice'>[src] begins to vibrate!</span>")
 	addtimer(CALLBACK(src, .proc/do_teleport, user), rand(10, 30))
 
 /obj/item/relic/proc/do_teleport(mob/user)
 	var/turf/userturf = get_turf(user)
 	if(loc == user && userturf.z != ZLEVEL_CENTCOM) //Because Nuke Ops bringing this back on their shuttle, then looting the ERT area is 2fun4you!
-		visible_message("<span class='notice'>The [src] twists and bends, relocating itself!</span>")
+		visible_message("<span class='notice'>[src] twists and bends, relocating itself!</span>")
 		throwSmoke(userturf)
 		do_teleport(user, userturf, 8, asoundin = 'sound/effects/phasein.ogg')
 		throwSmoke(get_turf(user))

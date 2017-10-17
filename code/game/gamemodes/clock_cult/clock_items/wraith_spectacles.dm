@@ -83,7 +83,7 @@
 		return
 	set_vision_vars(TRUE)
 	if(is_servant_of_ratvar(user))
-		to_chat(user, "<span class='heavy_brass'>As you put on the spectacles, all is revealed to you.[GLOB.ratvar_awakens ? "" : " Your eyes begin to itch - you cannot do this for long."]</span>")
+		to_chat(user, "<span class='heavy_brass'>As you put on the spectacles, all is revealed to you.[GLOB.ratvar_awakens || GLOB.ratvar_approaches ? "" : " Your eyes begin to itch - you cannot do this for long."]</span>")
 		var/datum/status_effect/wraith_spectacles/WS = user.has_status_effect(STATUS_EFFECT_WRAITHSPECS)
 		if(WS)
 			WS.apply_eye_damage(user)
@@ -138,7 +138,7 @@
 	var/mob/living/carbon/human/H = owner
 	var/glasses_right = istype(H.glasses, /obj/item/clothing/glasses/wraith_spectacles)
 	var/obj/item/clothing/glasses/wraith_spectacles/WS = H.glasses
-	if(glasses_right && !WS.up && !GLOB.ratvar_awakens)
+	if(glasses_right && !WS.up && !GLOB.ratvar_awakens && !GLOB.ratvar_approaches)
 		apply_eye_damage(H)
 	else
 		if(GLOB.ratvar_awakens)
@@ -148,15 +148,15 @@
 			eye_damage_done = 0
 		else if(prob(50) && eye_damage_done)
 			H.adjust_eye_damage(-1)
-			eye_damage_done--
+			eye_damage_done = max(0, eye_damage_done - 1)
 		if(!eye_damage_done)
 			qdel(src)
 
 /datum/status_effect/wraith_spectacles/proc/apply_eye_damage(mob/living/carbon/human/H)
 	if(H.disabilities & BLIND)
 		return
-	H.adjust_eye_damage(1)
-	eye_damage_done++
+	H.adjust_eye_damage(0.5)
+	eye_damage_done += 0.5
 	if(eye_damage_done >= 20)
 		H.adjust_blurriness(2)
 	if(eye_damage_done >= nearsight_breakpoint)

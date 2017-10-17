@@ -83,7 +83,7 @@
 			new /obj/item/clothing/suit/hooded/ian_costume(src)
 		if(67 to 68)
 			for(var/i in 1 to rand(4, 7))
-				var /newitem = pick(subtypesof(/obj/item/stock_parts) - /obj/item/stock_parts/subspace)
+				var/newitem = pick(subtypesof(/obj/item/stock_parts) - /obj/item/stock_parts/subspace)
 				new newitem(src)
 		if(69 to 70)
 			for(var/i in 1 to 5)
@@ -184,7 +184,7 @@
 /obj/structure/closet/crate/secure/loot/AltClick(mob/living/user)
 	if(!user.canUseTopic(src))
 		return
-	attack_hand(user)
+	attack_hand(user) //this helps you not blow up so easily by overriding unlocking which results in an immediate boom.
 
 /obj/structure/closet/crate/secure/loot/attackby(obj/item/W, mob/user)
 	if(locked)

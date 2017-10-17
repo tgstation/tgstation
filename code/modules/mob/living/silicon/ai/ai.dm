@@ -86,7 +86,7 @@
 	var/chnotify = 0
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
-	..()
+	. = ..()
 	if(!target_ai) //If there is no player/brain inside.
 		new/obj/structure/AIcore/deactivated(loc) //New empty terminal.
 		qdel(src)//Delete AI.
@@ -740,7 +740,7 @@
 	var/list/obj/machinery/camera/visible = list()
 	for (var/datum/camerachunk/CC in eyeobj.visibleCameraChunks)
 		for (var/obj/machinery/camera/C in CC.cameras)
-			if (!C.can_use() || get_dist(C, eyeobj) > 7)
+			if (!C.can_use() || get_dist(C, eyeobj) > 7 || !C.internal_light)
 				continue
 			visible |= C
 
@@ -988,6 +988,6 @@
 	return
 
 /mob/living/silicon/ai/spawned/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
+	. = ..()
 	if(!target_ai)
 		target_ai = src //cheat! just give... ourselves as the spawned AI, because that's technically correct
-	..()

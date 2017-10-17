@@ -11,8 +11,9 @@ GLOBAL_PROTECT(Banlist)
 
 	. = list()
 	var/appeal
-	if(config && config.banappeals)
-		appeal = "\nFor more information on your ban, or to appeal, head to <a href='[config.banappeals]'>[config.banappeals]</a>"
+	var/bran = CONFIG_GET(string/banappeals)
+	if(bran)
+		appeal = "\nFor more information on your ban, or to appeal, head to <a href='[bran]'>[bran]</a>"
 	GLOB.Banlist.cd = "/base"
 	if( "[ckey][id]" in GLOB.Banlist.dir )
 		GLOB.Banlist.cd = "[ckey][id]"
@@ -24,7 +25,7 @@ GLOBAL_PROTECT(Banlist)
 				.["desc"] = "\nReason: [GLOB.Banlist["reason"]]\nExpires: [GetExp(GLOB.Banlist["minutes"])]\nBy: [GLOB.Banlist["bannedby"]][appeal]"
 		else
 			GLOB.Banlist.cd	= "/base/[ckey][id]"
-			.["desc"]	= "\nReason: [GLOB.Banlist["reason"]]\nExpires: <B>PERMENANT</B>\nBy: [GLOB.Banlist["bannedby"]][appeal]"
+			.["desc"]	= "\nReason: [GLOB.Banlist["reason"]]\nExpires: <B>PERMANENT</B>\nBy: [GLOB.Banlist["bannedby"]][appeal]"
 		.["reason"]	= "ckey/id"
 		return .
 	else
@@ -64,7 +65,8 @@ GLOBAL_PROTECT(Banlist)
 	GLOB.Banlist = new("data/banlist.bdb")
 	log_admin("Loading Banlist")
 
-	if (!length(GLOB.Banlist.dir)) log_admin("Banlist is empty.")
+	if (!length(GLOB.Banlist.dir))
+		log_admin("Banlist is empty.")
 
 	if (!GLOB.Banlist.dir.Find("base"))
 		log_admin("Banlist missing base dir.")
@@ -88,8 +90,10 @@ GLOBAL_PROTECT(Banlist)
 			message_admins("Invalid Ban.")
 			continue
 
-		if (!GLOB.Banlist["temp"]) continue
-		if (GLOB.CMinutes >= GLOB.Banlist["minutes"]) RemoveBan(A)
+		if (!GLOB.Banlist["temp"])
+			continue
+		if (GLOB.CMinutes >= GLOB.Banlist["minutes"])
+			RemoveBan(A)
 
 	return 1
 
@@ -132,7 +136,8 @@ GLOBAL_PROTECT(Banlist)
 	GLOB.Banlist["id"] >> id
 	GLOB.Banlist.cd = "/base"
 
-	if (!GLOB.Banlist.dir.Remove(foldername)) return 0
+	if (!GLOB.Banlist.dir.Remove(foldername))
+		return 0
 
 	if(!usr)
 		log_admin_private("Ban Expired: [key]")

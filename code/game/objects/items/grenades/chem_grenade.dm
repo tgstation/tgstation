@@ -292,7 +292,7 @@
 		var/mob/last = get_mob_by_ckey(nadeassembly.fingerprintslast)
 		var/turf/T = get_turf(src)
 		var/area/A = get_area(T)
-		message_admins("grenade primed by an assembly, attached by [key_name_admin(M)]<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>(?)</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</A>) and last touched by [key_name_admin(last)]<A HREF='?_src_=holder;adminmoreinfo=\ref[last]'>(?)</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[last]'>FLW</A>) ([nadeassembly.a_left.name] and [nadeassembly.a_right.name]) at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[A.name] (JMP)</a>.")
+		message_admins("grenade primed by an assembly, attached by [key_name_admin(M)]<A HREF='?_src_=holder;[HrefToken()];adminmoreinfo=\ref[M]'>(?)</A> (<A HREF='?_src_=holder;[HrefToken()];adminplayerobservefollow=\ref[M]'>FLW</A>) and last touched by [key_name_admin(last)]<A HREF='?_src_=holder;[HrefToken()];adminmoreinfo=\ref[last]'>(?)</A> (<A HREF='?_src_=holder;[HrefToken()];adminplayerobservefollow=\ref[last]'>FLW</A>) ([nadeassembly.a_left.name] and [nadeassembly.a_right.name]) at <A HREF='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[A.name] (JMP)</a>.")
 		log_game("grenade primed by an assembly, attached by [key_name(M)] and last touched by [key_name(last)] ([nadeassembly.a_left.name] and [nadeassembly.a_right.name]) at [A.name] ([T.x], [T.y], [T.z])")
 	else
 		addtimer(CALLBACK(src, .proc/prime), det_time)
@@ -529,7 +529,7 @@
 
 /obj/item/grenade/chem_grenade/bioterrorfoam
 	name = "Bio terror foam grenade"
-	desc = "Tiger Cooperative chemical foam grenade. Causes temporary irration, blindness, confusion, mutism, and mutations to carbon based life forms. Contains additional spore toxin"
+	desc = "Tiger Cooperative chemical foam grenade. Causes temporary irration, blindness, confusion, mutism, and mutations to carbon based life forms. Contains additional spore toxin."
 	stage = READY
 
 /obj/item/grenade/chem_grenade/bioterrorfoam/Initialize()

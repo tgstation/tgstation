@@ -193,8 +193,8 @@
 	H.equip_to_slot_or_del(new hat(H), slot_head)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/roman(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(H), slot_shoes)
-	H.put_in_hands_or_del(new /obj/item/shield/riot/roman(H))
-	H.put_in_hands_or_del(new /obj/item/claymore(H))
+	H.put_in_hands(new /obj/item/shield/riot/roman(H), TRUE)
+	H.put_in_hands(new /obj/item/claymore(H), TRUE)
 	H.equip_to_slot_or_del(new /obj/item/twohanded/spear(H), slot_back)
 
 
@@ -234,11 +234,10 @@
 
 	if(!link)
 		if(I.loc == user && istype(I) && I.w_class <= WEIGHT_CLASS_SMALL)
-			user.drop_item()
-			I.loc = src
-			link = I
-			to_chat(user, "You attach [I] to the doll.")
-			update_targets()
+			if (user.transferItemToLoc(I,src))
+				link = I
+				to_chat(user, "You attach [I] to the doll.")
+				update_targets()
 
 /obj/item/voodoo/check_eye(mob/user)
 	if(loc != user)

@@ -74,7 +74,7 @@
 						break
 
 /obj/item/device/multitool/ai_detect/admin
-	desc = "Used for pulsing wires to test which to cut. Not recommended by doctors. Has a strange tag that says 'Grief in Safety'" //What else should I say for a meme item?
+	desc = "Used for pulsing wires to test which to cut. Not recommended by doctors. Has a strange tag that says 'Grief in Safety'." //What else should I say for a meme item?
 	track_delay = 5
 
 /obj/item/device/multitool/ai_detect/admin/multitool_detect()

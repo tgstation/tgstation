@@ -62,10 +62,10 @@
 	if(!active)
 		if(istype(O, /obj/item/wrench))
 			if(!anchored && !isinspace())
-				to_chat(user,"<span class='notice'>You secure the [src] to the floor.</span>")
+				to_chat(user,"<span class='notice'>You secure [src] to the floor.</span>")
 				anchored = TRUE
 			else if(anchored)
-				to_chat(user,"<span class='notice'>You unsecure and disconnect the [src].</span>")
+				to_chat(user,"<span class='notice'>You unsecure and disconnect [src].</span>")
 				anchored = FALSE
 			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 			return
@@ -96,7 +96,7 @@
 	dat += "</div><br>"
 	dat += "<A href='?src=\ref[src];action=select'> Select Track</A><br>"
 	dat += "Track Selected: [selection.song_name]<br>"
-	dat += "Track Length: [selection.song_length/10] seconds<br><br>"
+	dat += "Track Length: [DisplayTimeText(selection.song_length)]<br><br>"
 	dat += "<br>DJ's Soundboard:<b><br>"
 	dat +="<div class='statusDisplay'><div style='text-align:center'>"
 	dat += "<A href='?src=\ref[src];action=horn'>Air Horn</A>  "
@@ -122,7 +122,7 @@
 				return
 			if(!active)
 				if(stop > world.time)
-					to_chat(usr, "<span class='warning'>Error: The device is still resetting from the last activation, it will be ready again in [round((stop-world.time)/10)] seconds.</span>")
+					to_chat(usr, "<span class='warning'>Error: The device is still resetting from the last activation, it will be ready again in [DisplayTimeText(stop-world.time)].</span>")
 					playsound(src, 'sound/misc/compiler-failure.ogg', 50, 1)
 					return
 				active = TRUE
@@ -381,7 +381,7 @@
 				initial_matrix = matrix(M.transform)
 				initial_matrix.Translate(-3,0)
 				animate(M, transform = initial_matrix, time = 1, loop = 0)
-		sleep (1)
+		sleep(1)
 	M.lying_fix()
 
 
@@ -428,7 +428,7 @@
 				initial_matrix = matrix(M.transform)
 				initial_matrix.Translate(-3,0)
 				animate(M, transform = initial_matrix, time = 1, loop = 0)
-		sleep (1)
+		sleep(1)
 	M.lying_fix()
 
 

@@ -218,7 +218,7 @@
 
 /obj/structure/spider/cocoon/abductor/proc/Copy(mob/living/carbon/human/H)
 	var/mob/living/carbon/human/interactive/greytide/clone = new(src)
-	clone.hardset_dna(H.dna.uni_identity,H.dna.struc_enzymes,H.real_name, H.dna.blood_type, H.dna.species.type, H.dna.features)
+	clone.hardset_dna(H.dna.uni_identity,H.dna.struc_enzymes,H.real_name, H.dna.blood_type, H.dna.species, H.dna.features)
 
 /obj/structure/spider/cocoon/abductor/proc/Start()
 	hatch_time = world.time + 600
@@ -241,11 +241,12 @@
 
 /obj/item/organ/heart/gland/plasma/activate()
 	to_chat(owner, "<span class='warning'>You feel bloated.</span>")
-	sleep(150)
-	if(!owner) return
-	to_chat(owner, "<span class='userdanger'>A massive stomachache overcomes you.</span>")
-	sleep(50)
-	if(!owner) return
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, owner, "<span class='userdanger'>A massive stomachache overcomes you.</span>"), 150)
+	addtimer(CALLBACK(src, .proc/vomit_plasma), 200)
+
+/obj/item/organ/heart/gland/plasma/proc/vomit_plasma()
+	if(!owner)
+		return
 	owner.visible_message("<span class='danger'>[owner] vomits a cloud of plasma!</span>")
 	var/turf/open/T = get_turf(owner)
 	if(istype(T))

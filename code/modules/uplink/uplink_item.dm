@@ -368,6 +368,15 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 12
 	surplus = 35
 	include_modes = list(/datum/game_mode/nuclear)
+	
+/datum/uplink_item/dangerous/guardian
+	name = "Holoparasites"
+	desc = "Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, they require an \
+			organic host as a home base and source of fuel."
+	item = /obj/item/storage/box/syndie_kit/guardian
+	cost = 18
+	exclude_modes = list(/datum/game_mode/nuclear)
+	player_minimum = 25
 
 // Ammunition
 /datum/uplink_item/ammo
@@ -404,6 +413,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	desc = "An additional 15-round 9mm magazine, compatible with the Stetchkin APS pistol, found in the Spetsnaz Pyro bundle."
 	item = /obj/item/ammo_box/magazine/pistolm9mm
 	cost = 2
+	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/bolt_action
 	name = "Surplus Rifle Clip"
@@ -632,7 +642,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Sleepy Pen"
 	desc = "A syringe disguised as a functional pen, filled with a potent mix of drugs, including a \
 			strong anesthetic and a chemical that prevents the target from speaking. \
-			The pen holds one dose of the mixture, and cannot be refilled. Note that before the target \
+			The pen holds one dose of the mixture, and can be refilled. Note that before the target \
 			falls asleep, they will be able to move and act."
 	item = /obj/item/pen/sleepy
 	cost = 4
@@ -1300,7 +1310,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /datum/uplink_item/role_restricted/magillitis_serum
 	name = "Magillitis Serum Autoinjector"
-	desc = "A single-use autoinjector which contains an experimental serum that causes rapid muscular growth in basic primates."
+	desc = "A single-use autoinjector which contains an experimental serum that causes rapid muscular growth in Hominidae. Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas."
 	item = /obj/item/reagent_containers/hypospray/magillitis
 	cost = 15
 	restricted_roles = list("Geneticist", "Chief Medical Officer")

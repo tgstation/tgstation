@@ -44,21 +44,21 @@
 /datum/gas_reaction/agent_b/init_reqs()
 	min_requirements = list(
 		"TEMP" = 900,
-		"agent_b" = MINIMUM_HEAT_CAPACITY,
-		"plasma" = MINIMUM_HEAT_CAPACITY,
-		"co2" = MINIMUM_HEAT_CAPACITY
+		/datum/gas/oxygen_agent_b = MINIMUM_HEAT_CAPACITY,
+		/datum/gas/plasma = MINIMUM_HEAT_CAPACITY,
+		/datum/gas/carbon_dioxide = MINIMUM_HEAT_CAPACITY
 	)
 
 
 /datum/gas_reaction/agent_b/react(datum/gas_mixture/air)
 	var/list/cached_gases = air.gases
-	var/reaction_rate = min(cached_gases["co2"][MOLES]*0.75, cached_gases["plasma"][MOLES]*0.25, cached_gases["agent_b"][MOLES]*0.05)
+	var/reaction_rate = min(cached_gases[/datum/gas/carbon_dioxide][MOLES]*0.75, cached_gases[/datum/gas/plasma][MOLES]*0.25, cached_gases[/datum/gas/oxygen_agent_b][MOLES]*0.05)
 
-	cached_gases["co2"][MOLES] -= reaction_rate
-	cached_gases["agent_b"][MOLES] -= reaction_rate*0.05
+	cached_gases[/datum/gas/carbon_dioxide][MOLES] -= reaction_rate
+	cached_gases[/datum/gas/oxygen_agent_b][MOLES] -= reaction_rate*0.05
 
-	air.assert_gas("o2") //only need to assert oxygen, as this reaction doesn't occur without the other gases existing
-	cached_gases["o2"][MOLES] += reaction_rate
+	ASSERT_GAS(/datum/gas/oxygen, air) //only need to assert oxygen, as this reaction doesn't occur without the other gases existing
+	cached_gases[/datum/gas/oxygen][MOLES] += reaction_rate
 
 	air.temperature -= (reaction_rate*20000)/air.heat_capacity()
 
@@ -71,7 +71,7 @@
 	id = "freon"
 
 /datum/gas_reaction/freon/init_reqs()
-	min_requirements = list("freon" = MOLES_PLASMA_VISIBLE)
+	min_requirements = list(/datum/gas/freon = MOLES_PLASMA_VISIBLE)
 
 /datum/gas_reaction/freon/react(datum/gas_mixture/air, turf/open/location)
 	. = NO_REACTION
@@ -85,12 +85,12 @@
 	id = "vapor"
 
 /datum/gas_reaction/water_vapor/init_reqs()
-	min_requirements = list("water_vapor" = MOLES_PLASMA_VISIBLE)
+	min_requirements = list(/datum/gas/water_vapor = MOLES_PLASMA_VISIBLE)
 
 /datum/gas_reaction/water_vapor/react(datum/gas_mixture/air, turf/open/location)
 	. = NO_REACTION
 	if(location && location.water_vapor_gas_act())
-		air.gases["water_vapor"][MOLES] -= MOLES_PLASMA_VISIBLE
+		air.gases[/datum/gas/water_vapor][MOLES] -= MOLES_PLASMA_VISIBLE
 		. = REACTING
 
 //fire: combustion of plasma and volatile fuel (treated as hydrocarbons). creates hotspots. exothermic
@@ -108,33 +108,31 @@
 	var/list/cached_gases = air.gases //this speeds things up because accessing datum vars is slow
 	var/temperature = air.temperature
 	var/list/cached_results = air.reaction_results
-
-	//to_chat(world, "pre [temperature], [cached_gases["o2"][MOLES]], [cached_gases["plasma"][MOLES]]")
 	cached_results[id] = 0
 
 	//General volatile gas burn
-	if(cached_gases["v_fuel"] && cached_gases["v_fuel"][MOLES])
+	if(cached_gases[/datum/gas/volatile_fuel] && cached_gases[/datum/gas/volatile_fuel][MOLES])
 		var/burned_fuel
-		if(!cached_gases["o2"])
+		if(!cached_gases[/datum/gas/oxygen])
 			burned_fuel = 0
-		else if(cached_gases["o2"][MOLES] < cached_gases["v_fuel"][MOLES])
-			burned_fuel = cached_gases["o2"][MOLES]
-			cached_gases["v_fuel"][MOLES] -= burned_fuel
-			cached_gases["o2"][MOLES] = 0
+		else if(cached_gases[/datum/gas/oxygen][MOLES] < cached_gases[/datum/gas/volatile_fuel][MOLES])
+			burned_fuel = cached_gases[/datum/gas/oxygen][MOLES]
+			cached_gases[/datum/gas/volatile_fuel][MOLES] -= burned_fuel
+			cached_gases[/datum/gas/oxygen][MOLES] = 0
 		else
-			burned_fuel = cached_gases["v_fuel"][MOLES]
-			cached_gases["o2"][MOLES] -= cached_gases["v_fuel"][MOLES]
+			burned_fuel = cached_gases[/datum/gas/volatile_fuel][MOLES]
+			cached_gases[/datum/gas/oxygen][MOLES] -= cached_gases[/datum/gas/volatile_fuel][MOLES]
 
 		if(burned_fuel)
 			energy_released += FIRE_CARBON_ENERGY_RELEASED * burned_fuel
 
-			air.assert_gas("co2")
-			cached_gases["co2"][MOLES] += burned_fuel
+			ASSERT_GAS(/datum/gas/carbon_dioxide, air)
+			cached_gases[/datum/gas/carbon_dioxide][MOLES] += burned_fuel
 
 			cached_results[id] += burned_fuel
 
 	//Handle plasma burning
-	if(cached_gases["plasma"] && cached_gases["plasma"][MOLES] > MINIMUM_HEAT_CAPACITY)
+	if(cached_gases[/datum/gas/plasma] && cached_gases[/datum/gas/plasma][MOLES] > MINIMUM_HEAT_CAPACITY)
 		var/plasma_burn_rate = 0
 		var/oxygen_burn_rate = 0
 		//more plasma released at higher temperatures
@@ -144,17 +142,17 @@
 		else
 			temperature_scale = (temperature-PLASMA_MINIMUM_BURN_TEMPERATURE)/(PLASMA_UPPER_TEMPERATURE-PLASMA_MINIMUM_BURN_TEMPERATURE)
 		if(temperature_scale > 0)
-			air.assert_gas("o2")
+			var/o2 = cached_gases[/datum/gas/oxygen] ? cached_gases[/datum/gas/oxygen][MOLES] : 0
 			oxygen_burn_rate = OXYGEN_BURN_RATE_BASE - temperature_scale
-			if(cached_gases["o2"][MOLES] > cached_gases["plasma"][MOLES]*PLASMA_OXYGEN_FULLBURN)
-				plasma_burn_rate = (cached_gases["plasma"][MOLES]*temperature_scale)/PLASMA_BURN_RATE_DELTA
+			if(o2 > cached_gases[/datum/gas/plasma][MOLES]*PLASMA_OXYGEN_FULLBURN)
+				plasma_burn_rate = (cached_gases[/datum/gas/plasma][MOLES]*temperature_scale)/PLASMA_BURN_RATE_DELTA
 			else
-				plasma_burn_rate = (temperature_scale*(cached_gases["o2"][MOLES]/PLASMA_OXYGEN_FULLBURN))/PLASMA_BURN_RATE_DELTA
+				plasma_burn_rate = (temperature_scale*(o2/PLASMA_OXYGEN_FULLBURN))/PLASMA_BURN_RATE_DELTA
 			if(plasma_burn_rate > MINIMUM_HEAT_CAPACITY)
-				air.assert_gas("co2")
-				cached_gases["plasma"][MOLES] = QUANTIZE(cached_gases["plasma"][MOLES] - plasma_burn_rate)
-				cached_gases["o2"][MOLES] = QUANTIZE(cached_gases["o2"][MOLES] - (plasma_burn_rate * oxygen_burn_rate))
-				cached_gases["co2"][MOLES] += plasma_burn_rate
+				ASSERT_GAS(/datum/gas/carbon_dioxide, air) //don't need to assert o2, since if it isn't present we'll never reach this point anyway
+				cached_gases[/datum/gas/plasma][MOLES] = QUANTIZE(cached_gases[/datum/gas/plasma][MOLES] - plasma_burn_rate)
+				cached_gases[/datum/gas/oxygen][MOLES] = QUANTIZE(cached_gases[/datum/gas/oxygen][MOLES] - (plasma_burn_rate * oxygen_burn_rate))
+				cached_gases[/datum/gas/carbon_dioxide][MOLES] += plasma_burn_rate
 
 				energy_released += FIRE_PLASMA_ENERGY_RELEASED * (plasma_burn_rate)
 
@@ -164,8 +162,6 @@
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			air.temperature = (temperature*old_heat_capacity + energy_released)/new_heat_capacity
-
-	//to_chat(world, "post [temperature], [cached_gases["o2"][MOLES]], [cached_gases["plasma"][MOLES]]")
 
 	//let the floor know a fire is happening
 	if(istype(location))
@@ -189,44 +185,42 @@
 /datum/gas_reaction/fusion/init_reqs()
 	min_requirements = list(
 		"ENER" = PLASMA_BINDING_ENERGY * 10,
-		"plasma" = MINIMUM_HEAT_CAPACITY,
-		"co2" = MINIMUM_HEAT_CAPACITY
+		/datum/gas/plasma = MINIMUM_HEAT_CAPACITY,
+		/datum/gas/carbon_dioxide = MINIMUM_HEAT_CAPACITY
 	)
 
 /datum/gas_reaction/fusion/react(datum/gas_mixture/air)
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
 
-	if((cached_gases["plasma"][MOLES]+cached_gases["co2"][MOLES])/air.total_moles() < FUSION_PURITY_THRESHOLD)
+	if((cached_gases[/datum/gas/plasma][MOLES]+cached_gases[/datum/gas/carbon_dioxide][MOLES])/air.total_moles() < FUSION_PURITY_THRESHOLD)
 		//Fusion wont occur if the level of impurities is too high.
 		return NO_REACTION
 
-	//to_chat(world, "pre [temperature, [cached_gases["plasma"][MOLES]], [cached_gases["co2"][MOLES]])
 	var/old_heat_capacity = air.heat_capacity()
-	var/carbon_efficency = min(cached_gases["plasma"][MOLES]/cached_gases["co2"][MOLES],MAX_CARBON_EFFICENCY)
-	var/reaction_energy = air.thermal_energy()
-	var/moles_impurities = air.total_moles()-(cached_gases["plasma"][MOLES]+cached_gases["co2"][MOLES])
+	var/carbon_efficency = min(cached_gases[/datum/gas/plasma][MOLES]/cached_gases[/datum/gas/carbon_dioxide][MOLES],MAX_CARBON_EFFICENCY)
+	var/reaction_energy = THERMAL_ENERGY(air)
+	var/moles_impurities = air.total_moles()-(cached_gases[/datum/gas/plasma][MOLES]+cached_gases[/datum/gas/carbon_dioxide][MOLES])
 
 	var/plasma_fused = (PLASMA_FUSED_COEFFICENT*carbon_efficency)*(temperature/PLASMA_BINDING_ENERGY)
 	var/carbon_catalyzed = (CARBON_CATALYST_COEFFICENT*carbon_efficency)*(temperature/PLASMA_BINDING_ENERGY)
 	var/oxygen_added = carbon_catalyzed
-	var/nitrogen_added = (plasma_fused-oxygen_added)-(air.thermal_energy()/PLASMA_BINDING_ENERGY)
+	var/nitrogen_added = (plasma_fused-oxygen_added)-(THERMAL_ENERGY(air)/PLASMA_BINDING_ENERGY)
 
-	reaction_energy = max(reaction_energy+((carbon_efficency*cached_gases["plasma"][MOLES])/((moles_impurities/carbon_efficency)+2)*10)+((plasma_fused/(moles_impurities/carbon_efficency))*PLASMA_BINDING_ENERGY),0)
+	reaction_energy = max(reaction_energy+((carbon_efficency*cached_gases[/datum/gas/plasma][MOLES])/((moles_impurities/carbon_efficency)+2)*10)+((plasma_fused/(moles_impurities/carbon_efficency))*PLASMA_BINDING_ENERGY),0)
 
-	air.assert_gases("o2", "n2")
+	air.assert_gases(/datum/gas/oxygen, /datum/gas/nitrogen)
 
-	cached_gases["plasma"][MOLES] -= plasma_fused
-	cached_gases["co2"][MOLES] -= carbon_catalyzed
-	cached_gases["o2"][MOLES] += oxygen_added
-	cached_gases["n2"][MOLES] += nitrogen_added
+	cached_gases[/datum/gas/plasma][MOLES] -= plasma_fused
+	cached_gases[/datum/gas/carbon_dioxide][MOLES] -= carbon_catalyzed
+	cached_gases[/datum/gas/oxygen][MOLES] += oxygen_added
+	cached_gases[/datum/gas/nitrogen][MOLES] += nitrogen_added
 
 	if(reaction_energy > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			air.temperature = max(((temperature*old_heat_capacity + reaction_energy)/new_heat_capacity),TCMB)
 			//Prevents whatever mechanism is causing it to hit negative temperatures.
-		//to_chat(world, "post [temperature], [cached_gases["plasma"][MOLES]], [cached_gases["co2"][MOLES]])
 		return REACTING
 
 #undef REACTING

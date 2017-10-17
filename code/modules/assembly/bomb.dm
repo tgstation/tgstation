@@ -34,11 +34,11 @@
 
 		to_chat(user, "<span class='notice'>You disassemble [src].</span>")
 
-		bombassembly.loc = user.loc
+		bombassembly.forceMove(user.drop_location())
 		bombassembly.master = null
 		bombassembly = null
 
-		bombtank.loc = user.loc
+		bombtank.forceMove(user.drop_location())
 		bombtank.master = null
 		bombtank = null
 
@@ -51,15 +51,11 @@
 			GLOB.bombers += "[key_name(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]"
 			message_admins("[key_name_admin(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]")
 			to_chat(user, "<span class='notice'>A pressure hole has been bored to [bombtank] valve. \The [bombtank] can now be ignited.</span>")
-		else
-			status = FALSE
-			GLOB.bombers += "[key_name(user)] unwelded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]"
-			to_chat(user, "<span class='notice'>The hole has been closed.</span>")
 	add_fingerprint(user)
 	..()
 
 /obj/item/device/onetankbomb/attack_self(mob/user) //pressing the bomb accesses its assembly
-	bombassembly.attack_self(user, 1)
+	bombassembly.attack_self(user, TRUE)
 	add_fingerprint(user)
 	return
 
@@ -89,28 +85,26 @@
 	var/mob/M = user
 	if(isigniter(S.a_left) == isigniter(S.a_right))		//Check if either part of the assembly has an igniter, but if both parts are igniters, then fuck it
 		return
-	if(!M.drop_item())			//Remove the assembly from your hands
+	if(!M.temporarilyRemoveItemFromInventory(src))			//Remove the assembly from your hands
 		return
 
-	var/obj/item/device/onetankbomb/R = new /obj/item/device/onetankbomb(loc)
+	var/obj/item/device/onetankbomb/R = new
 
-	M.temporarilyRemoveItemFromInventory(src, TRUE)	//Remove the tank from your character,in case you were holding it
-	if(!M.put_in_hands(R))		//Equips the bomb if possible, or puts it on the floor.
-		forceMove(get_turf(M))
+	M.put_in_hands(R)		//Equips the bomb if possible, or puts it on the floor.
 
 	R.bombassembly = S	//Tell the bomb about its assembly part
 	S.master = R		//Tell the assembly about its new owner
-	S.loc = R			//Move the assembly out of the fucking way
+	S.forceMove(R)			//Move the assembly out of the fucking way
 
 	R.bombtank = src	//Same for tank
 	master = R
-	loc = R
+	forceMove(R)
 	R.update_icon()
 	return
 
 /obj/item/tank/proc/ignite()	//This happens when a bomb is told to explode
-	air_contents.assert_gases("plasma", "o2")
-	var/fuel_moles = air_contents.gases["plasma"][MOLES] + air_contents.gases["o2"][MOLES]/6
+	air_contents.assert_gases(/datum/gas/plasma, /datum/gas/oxygen)
+	var/fuel_moles = air_contents.gases[/datum/gas/plasma][MOLES] + air_contents.gases[/datum/gas/oxygen][MOLES]/6
 	air_contents.garbage_collect()
 
 	var/strength = 1

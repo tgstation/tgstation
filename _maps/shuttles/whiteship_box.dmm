@@ -11,17 +11,19 @@
 "ad" = (
 /obj/machinery/door/airlock/titanium,
 /obj/docking_port/mobile{
+	callTime = 250;
 	dheight = 0;
 	dir = 2;
 	dwidth = 11;
 	height = 22;
 	id = "whiteship";
 	launch_status = 0;
+	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
 	name = "NT Medical Ship";
 	port_direction = 8;
 	preferred_direction = 4;
 	roundstart_move = "whiteship_away";
-	timid = null;
+	timid = 1;
 	width = 35
 	},
 /turf/open/floor/mineral/titanium,
@@ -372,6 +374,12 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
+/area/shuttle/abandoned)
+"bu" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
+	view_range = 18
+	},
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 
 (1,1,1) = {"
@@ -1148,7 +1156,7 @@ aa
 aC
 ax
 aC
-bb
+bu
 aJ
 aj
 aj

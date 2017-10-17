@@ -39,6 +39,8 @@
 	// Upgrades bitflag
 	var/upgrades = 0
 
+	var/internal_light = TRUE //Whether it can light up when an AI views it
+
 /obj/machinery/camera/Initialize(mapload)
 	. = ..()
 	assembly = new(src)
@@ -147,10 +149,10 @@
 
 		else if(istype(W, /obj/item/device/analyzer))
 			if(!isXRay())
-				if(!user.drop_item(W))
+				if(!user.temporarilyRemoveItemFromInventory(W))
 					return
-				upgradeXRay()
 				qdel(W)
+				upgradeXRay()
 				to_chat(user, "[msg]")
 			else
 				to_chat(user, "[msg2]")
@@ -244,7 +246,7 @@
 		if(disassembled)
 			if(!assembly)
 				assembly = new()
-			assembly.loc = src.loc
+			assembly.forceMove(drop_location())
 			assembly.state = 1
 			assembly.setDir(dir)
 			assembly = null

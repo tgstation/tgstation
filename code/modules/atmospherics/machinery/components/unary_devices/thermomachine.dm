@@ -11,6 +11,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 80, acid = 30)
 	layer = OBJ_LAYER
 	circuit = /obj/item/circuitboard/machine/thermomachine
+	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 
 	var/on = FALSE
 	var/min_temperature = 0
@@ -128,8 +129,10 @@
 	return data
 
 /obj/machinery/atmospherics/components/unary/thermomachine/ui_act(action, params)
+
 	if(..())
 		return
+
 	switch(action)
 		if("power")
 			on = !on
@@ -141,7 +144,7 @@
 			var/adjust = text2num(params["adjust"])
 			if(target == "input")
 				target = input("Set new target ([min_temperature]-[max_temperature] K):", name, target_temperature) as num|null
-				if(!isnull(target) && !..())
+				if(!isnull(target))
 					. = TRUE
 			else if(adjust)
 				target = target_temperature + adjust
@@ -152,6 +155,7 @@
 			if(.)
 				target_temperature = Clamp(target, min_temperature, max_temperature)
 				investigate_log("was set to [target_temperature] K by [key_name(usr)]", INVESTIGATE_ATMOS)
+
 	update_icon()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer

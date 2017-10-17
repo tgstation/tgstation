@@ -127,7 +127,6 @@
 					here.ChangeTurf(T.type)
 					return INITIALIZE_HINT_QDEL
 				here.ChangeTurf(/turf/closed/wall)
-				return INITIALIZE_HINT_QDEL
 			if(9 to 11)
 				lights = FALSE
 				locked = TRUE
@@ -142,8 +141,11 @@
 	diag_hud.add_to_hud(src)
 	diag_hud_set_electrified()
 
-
 	update_icon()
+
+/obj/machinery/door/airlock/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_MEDIUM_INSULATION)
 
 /obj/machinery/door/airlock/proc/update_other_id()
 	for(var/obj/machinery/door/airlock/A in GLOB.airlocks)
@@ -235,6 +237,8 @@
 		for(var/obj/machinery/doorButtons/D in GLOB.machines)
 			D.removeMe(src)
 	qdel(note)
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.remove_from_hud(src)
 	return ..()
 
 /obj/machinery/door/airlock/handle_atom_del(atom/A)
@@ -273,7 +277,7 @@
 	var/image/electrocution_skeleton_anim = image('icons/mob/human.dmi', user, icon_state = "electrocuted_base", layer=ABOVE_MOB_LAYER)
 	shock_image.color = rgb(0,0,0)
 	shock_image.override = TRUE
-	electrocution_skeleton_anim.appearance_flags = RESET_COLOR
+	electrocution_skeleton_anim.appearance_flags |= RESET_COLOR|KEEP_APART
 
 	to_chat(user, "<span class='userdanger'>You feel a powerful shock course through your body!</span>")
 	if(user.client)
@@ -567,24 +571,24 @@
 	if(panel_open)
 		switch(security_level)
 			if(AIRLOCK_SECURITY_NONE)
-				to_chat(user, "Wires are exposed!")
+				to_chat(user, "Its wires are exposed!")
 			if(AIRLOCK_SECURITY_METAL)
-				to_chat(user, "Wires are hidden behind welded metal cover")
+				to_chat(user, "Its wires are hidden behind a welded metal cover.")
 			if(AIRLOCK_SECURITY_PLASTEEL_I_S)
-				to_chat(user, "There is some shredded plasteel inside")
+				to_chat(user, "There is some shredded plasteel inside.")
 			if(AIRLOCK_SECURITY_PLASTEEL_I)
-				to_chat(user, "Wires are behind inner layer of plasteel")
+				to_chat(user, "Its wires are behind an inner layer of plasteel.")
 			if(AIRLOCK_SECURITY_PLASTEEL_O_S)
-				to_chat(user, "There is some shredded plasteel inside")
+				to_chat(user, "There is some shredded plasteel inside.")
 			if(AIRLOCK_SECURITY_PLASTEEL_O)
-				to_chat(user, "There is welded plasteel cover hiding wires")
+				to_chat(user, "There is a welded plasteel cover hiding its wires.")
 			if(AIRLOCK_SECURITY_PLASTEEL)
-				to_chat(user, "There is protective grille over panel")
+				to_chat(user, "There is a protective grille over its panel.")
 	else if(security_level)
 		if(security_level == AIRLOCK_SECURITY_METAL)
-			to_chat(user, "It looks a bit stronger")
+			to_chat(user, "It looks a bit stronger.")
 		else
-			to_chat(user, "It looks very robust")
+			to_chat(user, "It looks very robust.")
 
 /obj/machinery/door/airlock/attack_ai(mob/user)
 	if(!src.canAIControl(user))
@@ -751,6 +755,11 @@
 		aiHacking = FALSE
 		if(user)
 			src.attack_ai(user)
+
+/obj/machinery/door/airlock/attack_animal(mob/user)
+	. = ..()
+	if(isElectrified())
+		shock(user, 100)
 
 /obj/machinery/door/airlock/attack_paw(mob/user)
 	return src.attack_hand(user)
@@ -1014,7 +1023,7 @@
 					if(S.get_amount() < 2)
 						to_chat(user, "<span class='warning'>You need at least 2 metal sheets to reinforce [src].</span>")
 						return
-					to_chat(user, "<span class='notice'>You start reinforcing [src]</span>")
+					to_chat(user, "<span class='notice'>You start reinforcing [src].</span>")
 					if(do_after(user, 20, 1, target = src))
 						if(!panel_open || !S.use(2))
 							return
@@ -1170,10 +1179,9 @@
 			to_chat(user, "<span class='warning'>The maintenance panel is destroyed!</span>")
 			return
 		to_chat(user, "<span class='warning'>You apply [C]. Next time someone opens the door, it will explode.</span>")
-		user.drop_item()
 		panel_open = FALSE
 		update_icon()
-		C.forceMove(src)
+		user.transferItemToLoc(C, src, TRUE)
 		charge = C
 	else if(istype(C, /obj/item/paper) || istype(C, /obj/item/photo))
 		if(note)
@@ -1298,7 +1306,7 @@
 			if(result)
 				open(2)
 				if(density && !open(2))
-					to_chat(user, "<span class='warning'>Despite your attempts, the [src] refuses to open.</span>")
+					to_chat(user, "<span class='warning'>Despite your attempts, [src] refuses to open.</span>")
 
 /obj/machinery/door/airlock/plasma/attackby(obj/item/C, mob/user, params)
 	if(C.is_hot() > 300)//If the temperature of the object is over 300, then ignite
@@ -1347,19 +1355,19 @@
 		return TRUE
 	operating = TRUE
 	update_icon(AIRLOCK_OPENING, 1)
-	src.set_opacity(0)
-	sleep(5)
-	density = FALSE
-	sleep(9)
-	src.layer = OPEN_DOOR_LAYER
-	update_icon(AIRLOCK_OPEN, 1)
+	sleep(1)
 	set_opacity(0)
-	operating = FALSE
-	air_update_turf(1)
 	update_freelook_sight()
+	sleep(4)
+	density = FALSE
+	air_update_turf(1)
+	sleep(1)
+	layer = OPEN_DOOR_LAYER
+	update_icon(AIRLOCK_OPEN, 1)
+	operating = FALSE
 	if(delayed_close_requested)
 		delayed_close_requested = FALSE
-		addtimer(CALLBACK(src, .proc/close), 2)
+		addtimer(CALLBACK(src, .proc/close), 1)
 	return TRUE
 
 
@@ -1391,21 +1399,24 @@
 		return TRUE
 	operating = TRUE
 	update_icon(AIRLOCK_CLOSING, 1)
-	src.layer = CLOSED_DOOR_LAYER
+	layer = CLOSED_DOOR_LAYER
 	if(air_tight)
 		density = TRUE
-	sleep(5)
-	density = TRUE
+		air_update_turf(1)
+	sleep(1)
+	if(!air_tight)
+		density = TRUE
+		air_update_turf(1)
+	sleep(4)
 	if(!safe)
 		crush()
-	sleep(9)
-	update_icon(AIRLOCK_CLOSED, 1)
 	if(visible && !glass)
 		set_opacity(1)
+	update_freelook_sight()
+	sleep(1)
+	update_icon(AIRLOCK_CLOSED, 1)
 	operating = FALSE
 	delayed_close_requested = FALSE
-	air_update_turf(1)
-	update_freelook_sight()
 	if(safe)
 		CheckForMobs()
 	return TRUE

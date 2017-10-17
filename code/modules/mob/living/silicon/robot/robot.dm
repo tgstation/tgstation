@@ -129,6 +129,7 @@
 		builtInCamera = new (src)
 		builtInCamera.c_tag = real_name
 		builtInCamera.network = list("SS13")
+		builtInCamera.internal_light = FALSE
 		if(wires.is_cut(WIRE_CAMERA))
 			builtInCamera.status = 0
 	module = new /obj/item/robot_module(src)
@@ -166,7 +167,7 @@
 	if(mmi && mind)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
 		var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
 		if(T)
-			mmi.loc = T
+			mmi.forceMove(T)
 		if(mmi.brainmob)
 			if(mmi.brainmob.stat == DEAD)
 				mmi.brainmob.stat = CONSCIOUS
@@ -207,9 +208,9 @@
 	"Miner" = /obj/item/robot_module/miner, \
 	"Janitor" = /obj/item/robot_module/janitor, \
 	"Service" = /obj/item/robot_module/butler)
-	if(!config.forbid_peaceborg)
+	if(!CONFIG_GET(flag/disable_peaceborg))
 		modulelist["Peacekeeper"] = /obj/item/robot_module/peacekeeper
-	if(!config.forbid_secborg)
+	if(!CONFIG_GET(flag/disable_secborg))
 		modulelist["Security"] = /obj/item/robot_module/security
 
 	var/input_module = input("Please, select a module!", "Robot", null, null) as null|anything in modulelist
@@ -423,9 +424,8 @@
 		else if(cell)
 			to_chat(user, "<span class='warning'>There is a power cell already installed!</span>")
 		else
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(W, src))
 				return
-			W.loc = src
 			cell = W
 			to_chat(user, "<span class='notice'>You insert the power cell.</span>")
 		update_icons()
@@ -514,7 +514,7 @@
 		else if(U.locked)
 			to_chat(user, "<span class='warning'>The upgrade is locked and cannot be used yet!</span>")
 		else
-			if(!user.drop_item())
+			if(!user.temporarilyRemoveItemFromInventory(U))
 				return
 			if(U.action(src))
 				to_chat(user, "<span class='notice'>You apply the upgrade to [src].</span>")
@@ -525,12 +525,13 @@
 					upgrades += U
 			else
 				to_chat(user, "<span class='danger'>Upgrade error.</span>")
+				U.forceMove(drop_location())
 
 	else if(istype(W, /obj/item/device/toner))
 		if(toner >= tonermax)
 			to_chat(user, "<span class='warning'>The toner level of [src] is at its highest level possible!</span>")
 		else
-			if(!user.drop_item())
+			if(!user.temporarilyRemoveItemFromInventory(W))
 				return
 			toner = tonermax
 			qdel(W)
@@ -741,24 +742,24 @@
 /mob/living/silicon/robot/proc/deconstruct()
 	var/turf/T = get_turf(src)
 	if (robot_suit)
-		robot_suit.loc = T
-		robot_suit.l_leg.loc = T
+		robot_suit.forceMove(T)
+		robot_suit.l_leg.forceMove(T)
 		robot_suit.l_leg = null
-		robot_suit.r_leg.loc = T
+		robot_suit.r_leg.forceMove(T)
 		robot_suit.r_leg = null
 		new /obj/item/stack/cable_coil(T, robot_suit.chest.wired)
-		robot_suit.chest.loc = T
+		robot_suit.chest.forceMove(T)
 		robot_suit.chest.wired = 0
 		robot_suit.chest = null
-		robot_suit.l_arm.loc = T
+		robot_suit.l_arm.forceMove(T)
 		robot_suit.l_arm = null
-		robot_suit.r_arm.loc = T
+		robot_suit.r_arm.forceMove(T)
 		robot_suit.r_arm = null
-		robot_suit.head.loc = T
-		robot_suit.head.flash1.loc = T
+		robot_suit.head.forceMove(T)
+		robot_suit.head.flash1.forceMove(T)
 		robot_suit.head.flash1.burn_out()
 		robot_suit.head.flash1 = null
-		robot_suit.head.flash2.loc = T
+		robot_suit.head.flash2.forceMove(T)
 		robot_suit.head.flash2.burn_out()
 		robot_suit.head.flash2 = null
 		robot_suit.head = null
@@ -777,11 +778,39 @@
 			var/obj/item/device/assembly/flash/handheld/F = new /obj/item/device/assembly/flash/handheld(T)
 			F.burn_out()
 	if (cell) //Sanity check.
-		cell.loc = T
+		cell.forceMove(T)
 		cell = null
 	qdel(src)
 
-/mob/living/silicon/robot/syndicate
+/mob/living/silicon/robot/modules
+	var/set_module = null
+
+/mob/living/silicon/robot/modules/Initialize()
+	. = ..()
+	module.transform_to(set_module)
+
+/mob/living/silicon/robot/modules/standard
+	set_module = /obj/item/robot_module/standard
+
+/mob/living/silicon/robot/modules/medical
+	set_module = /obj/item/robot_module/medical
+
+/mob/living/silicon/robot/modules/engineering
+	set_module = /obj/item/robot_module/engineering
+
+/mob/living/silicon/robot/modules/security
+	set_module = /obj/item/robot_module/security
+
+/mob/living/silicon/robot/modules/peacekeeper
+	set_module = /obj/item/robot_module/peacekeeper
+
+/mob/living/silicon/robot/modules/miner
+	set_module = /obj/item/robot_module/miner
+
+/mob/living/silicon/robot/modules/janitor
+	set_module = /obj/item/robot_module/janitor
+
+/mob/living/silicon/robot/modules/syndicate
 	icon_state = "syndie_bloodhound"
 	faction = list("syndicate")
 	bubble_icon = "syndibot"
@@ -793,25 +822,24 @@
 							<b>You are armed with powerful offensive tools to aid you in your mission: help the operatives secure the nuclear authentication disk. \
 							Your cyborg LMG will slowly produce ammunition from your power supply, and your operative pinpointer will find and locate fellow nuclear operatives. \
 							<i>Help the operatives secure the disk at all costs!</i></b>"
-	var/set_module = /obj/item/robot_module/syndicate
+	set_module = /obj/item/robot_module/syndicate
 
-/mob/living/silicon/robot/syndicate/Initialize()
+/mob/living/silicon/robot/modules/syndicate/Initialize()
 	. = ..()
 	cell.maxcharge = 25000
 	cell.charge = 25000
 	radio = new /obj/item/device/radio/borg/syndicate(src)
-	module.transform_to(set_module)
 	laws = new /datum/ai_laws/syndicate_override()
 	addtimer(CALLBACK(src, .proc/show_playstyle), 5)
 
-/mob/living/silicon/robot/syndicate/proc/show_playstyle()
+/mob/living/silicon/robot/modules/syndicate/proc/show_playstyle()
 	if(playstyle_string)
 		to_chat(src, playstyle_string)
 
-/mob/living/silicon/robot/syndicate/ResetModule()
+/mob/living/silicon/robot/modules/syndicate/ResetModule()
 	return
 
-/mob/living/silicon/robot/syndicate/medical
+/mob/living/silicon/robot/modules/syndicate/medical
 	icon_state = "syndi-medi"
 	playstyle_string = "<span class='userdanger'>You are a Syndicate medical cyborg!</span><br>\
 						<b>You are armed with powerful medical tools to aid you in your mission: help the operatives secure the nuclear authentication disk. \
@@ -867,6 +895,7 @@
 	see_invisible = initial(see_invisible)
 	see_in_dark = initial(see_in_dark)
 	sight = initial(sight)
+	lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 
 	if(client.eye != src)
 		var/atom/A = client.eye
@@ -1092,7 +1121,7 @@
 
 /mob/living/silicon/robot/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(!is_type_in_typecache(M, can_ride_typecache))
-		M.visible_message("<span class='warning'>[M] really can't seem to mount the [src]...</span>")
+		M.visible_message("<span class='warning'>[M] really can't seem to mount [src]...</span>")
 		return
 	if(!riding_datum)
 		riding_datum = new /datum/riding/cyborg(src)

@@ -211,6 +211,13 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
+/obj/item/clothing/under/chameleon/ratvar
+	name = "ratvarian engineer's jumpsuit"
+	desc = "A tough jumpsuit woven from alloy threads. It can take on the appearance of other jumpsuits."
+	icon_state = "engine"
+	item_state = "engi_suit"
+	item_color = "engine"
+
 /obj/item/clothing/under/chameleon/New()
 	..()
 	chameleon_action = new(src)
@@ -376,7 +383,7 @@
 	randomise_action.UpdateButtonIcon()
 
 /obj/item/clothing/mask/chameleon/drone/attack_self(mob/user)
-	to_chat(user, "<span class='notice'>The [src] does not have a voice changer.</span>")
+	to_chat(user, "<span class='notice'>[src] does not have a voice changer.</span>")
 
 /obj/item/clothing/shoes/chameleon
 	name = "black shoes"

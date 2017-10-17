@@ -131,7 +131,7 @@
 	if(!active)
 		if(world.time > last_event+15)
 			active = 1
-			radiation_pulse(get_turf(src), 3, 3, 12, 0)
+			radiation_pulse(src, 30)
 			last_event = world.time
 			active = null
 			return
@@ -244,7 +244,7 @@
 /obj/structure/statue/diamond
 	max_integrity = 1000
 	material_drop_type = /obj/item/stack/sheet/mineral/diamond
-	desc = "This is a very expensive diamond statue"
+	desc = "This is a very expensive diamond statue."
 
 /obj/structure/statue/diamond/captain
 	name = "statue of THE captain."

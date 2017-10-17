@@ -95,8 +95,7 @@
 		var/json_file = file("data/npc_saves/snpc.json")
 		if(!fexists(json_file))
 			return
-		var/list/json = list()
-		json = json_decode(file2text(json_file))
+		var/list/json = json_decode(file2text(json_file))
 		knownStrings = json["knownStrings"]
 	if(isnull(knownStrings))
 		knownStrings = list()
@@ -658,7 +657,7 @@
 						insert_into_backpack()
 			//---------FASHION
 			if(istype(TARGET, /obj/item/clothing))
-				drop_item()
+				temporarilyRemoveItemFromInventory(TARGET, TRUE)
 				dressup(TARGET)
 				update_hands = 1
 				if(MYPDA in src.loc || MYID in src.loc)
@@ -668,7 +667,7 @@
 						equip_to_appropriate_slot(MYID)
 		//THIEVING SKILLS END
 		//-------------TOUCH ME
-		if(istype(TARGET, /obj/structure))
+		if(isstructure(TARGET))
 			var/obj/structure/STR = TARGET
 			if(main_hand)
 				var/obj/item/W = main_hand

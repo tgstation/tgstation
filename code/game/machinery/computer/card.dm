@@ -45,33 +45,36 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 	light_color = LIGHT_COLOR_BLUE
 
+/obj/machinery/computer/card/examine(mob/user)
+	..()
+	if(scan || modify)
+		to_chat(user, "<span class='notice'>Alt-click to eject the ID card.</span>")
+
 /obj/machinery/computer/card/Initialize()
 	. = ..()
-	change_position_cooldown = config.id_console_jobslot_delay
+	change_position_cooldown = CONFIG_GET(number/id_console_jobslot_delay)
 
 /obj/machinery/computer/card/attackby(obj/O, mob/user, params)//TODO:SANITY
 	if(istype(O, /obj/item/card/id))
 		var/obj/item/card/id/idcard = O
 		if(check_access(idcard))
 			if(!scan)
-				if(!usr.drop_item())
+				if (!user.transferItemToLoc(idcard,src))
 					return
-				idcard.loc = src
 				scan = idcard
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			else if(!modify)
-				if(!usr.drop_item())
+				if (!user.transferItemToLoc(idcard,src))
 					return
-				idcard.loc = src
 				modify = idcard
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 		else
 			if(!modify)
-				if(!usr.drop_item())
+				if (!user.transferItemToLoc(idcard,src))
 					return
-				idcard.loc = src
 				modify = idcard
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+		updateUsrDialog()
 	else
 		return ..()
 
@@ -95,10 +98,10 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 /obj/machinery/computer/card/on_deconstruction()
 	if(scan)
-		scan.forceMove(loc)
+		scan.forceMove(drop_location())
 		scan = null
 	if(modify)
-		modify.forceMove(loc)
+		modify.forceMove(drop_location())
 		modify = null
 
 //Check if you can't open a new position for a certain job
@@ -352,40 +355,9 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	usr.set_machine(src)
 	switch(href_list["choice"])
 		if ("modify")
-			if (modify)
-				GLOB.data_core.manifest_modify(modify.registered_name, modify.assignment)
-				modify.update_label()
-				modify.loc = loc
-				modify.verb_pickup()
-				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-				modify = null
-				region_access = null
-				head_subordinates = null
-			else
-				var/obj/item/I = usr.get_active_held_item()
-				if (istype(I, /obj/item/card/id))
-					if(!usr.drop_item())
-						return
-					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-					I.loc = src
-					modify = I
-			authenticated = 0
-
+			eject_id_modify(usr)
 		if ("scan")
-			if (scan)
-				scan.loc = src.loc
-				scan.verb_pickup()
-				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-				scan = null
-			else
-				var/obj/item/I = usr.get_active_held_item()
-				if (istype(I, /obj/item/card/id))
-					if(!usr.drop_item())
-						return
-					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-					I.loc = src
-					scan = I
-			authenticated = 0
+			eject_id_scan(usr)
 		if ("auth")
 			if ((!( authenticated ) && (scan || issilicon(usr)) && (modify || mode)))
 				if (check_access(scan))
@@ -554,6 +526,49 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		modify.update_label()
 	updateUsrDialog()
 	return
+
+/obj/machinery/computer/card/AltClick(mob/user)
+	if(user.canUseTopic(src))
+		if(scan)
+			eject_id_scan(user)
+		if(modify)
+			eject_id_modify(user)
+
+/obj/machinery/computer/card/proc/eject_id_scan(mob/user)
+	if(scan)
+		scan.forceMove(drop_location())
+		user.put_in_hands(scan)
+		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+		scan = null
+	else //switching the ID with the one you're holding
+		var/obj/item/I = user.get_active_held_item()
+		if(istype(I, /obj/item/card/id))
+			if(!user.transferItemToLoc(I,src))
+				return
+			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+			scan = I
+	authenticated = FALSE
+	updateUsrDialog()
+
+/obj/machinery/computer/card/proc/eject_id_modify(mob/user)
+	if(modify)
+		GLOB.data_core.manifest_modify(modify.registered_name, modify.assignment)
+		modify.update_label()
+		modify.forceMove(drop_location())
+		user.put_in_hands(modify)
+		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+		modify = null
+		region_access = null
+		head_subordinates = null
+	else //switching the ID with the one you're holding
+		var/obj/item/I = user.get_active_held_item()
+		if(istype(I, /obj/item/card/id))
+			if (!user.transferItemToLoc(I,src))
+				return
+			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+			modify = I
+	authenticated = FALSE
+	updateUsrDialog()
 
 /obj/machinery/computer/card/proc/get_subordinates(rank)
 	for(var/datum/job/job in SSjob.occupations)

@@ -44,10 +44,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/revolution/pre_setup()
 
-	if(config.protect_roles_from_antagonist)
+	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		restricted_jobs += protected_jobs
 
-	if(config.protect_assistant_from_antagonist)
+	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		restricted_jobs += "Assistant"
 
 	for (var/i=1 to max_headrevs)
@@ -59,10 +59,9 @@
 		lenin.restricted_roles = restricted_jobs
 
 	if(head_revolutionaries.len < required_enemies)
-		return 0
+		return FALSE
 
-	return 1
-
+	return TRUE
 
 /datum/game_mode/revolution/post_setup()
 	var/list/heads = get_living_heads()
@@ -102,14 +101,10 @@
 		for(var/datum/mind/head_mind in heads)
 			mark_for_death(rev_mind, head_mind)
 
-		spawn(rand(10,100))
-		//	equip_traitor(rev_mind.current, 1) //changing how revs get assigned their uplink so they can get PDA uplinks. --NEO
-		//	Removing revolutionary uplinks.	-Pete
-			equip_revolutionary(rev_mind.current)
+		addtimer(CALLBACK(src, .proc/equip_revolutionary, rev_mind.current), rand(10, 100))
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		greet_revolutionary(rev_mind)
-	modePlayer += head_revolutionaries
 	SSshuttle.registerHostileEnvironment(src)
 	..()
 
@@ -121,7 +116,7 @@
 			check_heads()
 			SSticker.mode.check_win()
 		check_counter = 0
-	return 0
+	return FALSE
 
 
 /datum/game_mode/proc/forge_revolutionary_objectives(datum/mind/rev_mind)
@@ -154,8 +149,7 @@
 
 
 	var/obj/item/device/assembly/flash/T = new(mob)
-	var/obj/item/toy/crayon/spraycan/R = new(mob)
-	var/obj/item/clothing/glasses/hud/security/chameleon/C = new(mob)
+	var/obj/item/organ/cyberimp/eyes/hud/security/syndicate/S = new(mob)
 
 	var/list/slots = list (
 		"backpack" = slot_in_backpack,
@@ -163,19 +157,14 @@
 		"right pocket" = slot_r_store
 	)
 	var/where = mob.equip_in_one_of_slots(T, slots)
-	var/where2 = mob.equip_in_one_of_slots(C, slots)
-	mob.equip_in_one_of_slots(R,slots)
-
-	if (!where2)
-		to_chat(mob, "The Syndicate were unfortunately unable to get you a chameleon security HUD.")
-	else
-		to_chat(mob, "The chameleon security HUD in your [where2] will help you keep track of who is mindshield-implanted, and unable to be recruited.")
+	S.Insert(mob, special = FALSE, drop_if_replaced = FALSE)
+	to_chat(mob, "Your eyes have been implanted with a cybernetic security HUD which will help you keep track of who is mindshield-implanted, and therefore unable to be recruited.")
 
 	if (!where)
 		to_chat(mob, "The Syndicate were unfortunately unable to get you a flash.")
 	else
 		to_chat(mob, "The flash in your [where] will help you to persuade the crew to join your cause.")
-		return 1
+		return TRUE
 
 /////////////////////////////////
 //Gives head revs their targets//
@@ -236,12 +225,12 @@
 //Checks if the round is over//
 ///////////////////////////////
 /datum/game_mode/revolution/check_finished()
-	if(config.continuous["revolution"])
+	if(CONFIG_GET(keyed_flag_list/continuous)["revolution"])
 		if(finished)
 			SSshuttle.clearHostileEnvironment(src)
 		return ..()
 	if(finished != 0)
-		return 1
+		return TRUE
 	else
 		return ..()
 
@@ -259,12 +248,14 @@
 
 /datum/game_mode/proc/add_revolutionary(datum/mind/rev_mind)
 	if(rev_mind.assigned_role in GLOB.command_positions)
-		return 0
+		return FALSE
 	var/mob/living/carbon/human/H = rev_mind.current//Check to see if the potential rev is implanted
 	if(H.isloyal())
-		return 0
+		return FALSE
 	if((rev_mind in revolutionaries) || (rev_mind in head_revolutionaries))
-		return 0
+		return FALSE
+	if(rev_mind.unconvertable)
+		return FALSE
 	revolutionaries += rev_mind
 	if(iscarbon(rev_mind.current))
 		var/mob/living/carbon/carbon_mob = rev_mind.current
@@ -277,11 +268,11 @@
 	update_rev_icons_added(rev_mind)
 	if(jobban_isbanned(rev_mind.current, ROLE_REV))
 		INVOKE_ASYNC(src, .proc/replace_jobbaned_player, rev_mind.current, ROLE_REV, ROLE_REV)
-	return 1
+	return TRUE
 //////////////////////////////////////////////////////////////////////////////
 //Deals with players being converted from the revolution (Not a rev anymore)//  // Modified to handle borged MMIs.  Accepts another var if the target is being borged at the time  -- Polymorph.
 //////////////////////////////////////////////////////////////////////////////
-/datum/game_mode/proc/remove_revolutionary(datum/mind/rev_mind , beingborged)
+/datum/game_mode/proc/remove_revolutionary(datum/mind/rev_mind , beingborged, deconverter)
 	var/remove_head = 0
 	if(beingborged && (rev_mind in head_revolutionaries))
 		head_revolutionaries -= rev_mind
@@ -290,17 +281,16 @@
 	if((rev_mind in revolutionaries) || remove_head)
 		revolutionaries -= rev_mind
 		rev_mind.special_role = null
-		rev_mind.current.log_message("<font color='red'>Has renounced the revolution!</font>", INDIVIDUAL_ATTACK_LOG)
+		log_attack("[rev_mind.current] (Key: [key_name(rev_mind.current)]) has been deconverted from the revolution by [deconverter] (Key: [key_name(deconverter)])!")
 
 		if(beingborged)
-			rev_mind.current.visible_message("The frame beeps contentedly, purging the hostile memory engram from the MMI before initalizing it.",\
-				"<span class='danger'><FONT size = 3>The frame's firmware detects and deletes your neural reprogramming! You remember nothing[remove_head ? "." : " but the name of the one who flashed you."]</FONT></span>")
+			rev_mind.current.visible_message("The frame beeps contentedly, purging the hostile memory engram from the MMI before initalizing it.", \
+				"<span class='userdanger'><FONT size = 3>The frame's firmware detects and deletes your neural reprogramming! You remember nothing[remove_head ? "." : " but the name of the one who flashed you."]</FONT></span>")
 			message_admins("[ADMIN_LOOKUPFLW(rev_mind.current)] has been borged while being a [remove_head ? "leader" : " member"] of the revolution.")
-
 		else
+			rev_mind.current.visible_message("[rev_mind.current] looks like they just remembered their real allegiance!", \
+				"<span class='userdanger'><FONT size = 3>You are no longer a brainwashed revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you...</FONT></span>")
 			rev_mind.current.Unconscious(100)
-			rev_mind.current.visible_message("[rev_mind.current] looks like they just remembered their real allegiance!",\
-				"<span class='danger'><FONT size = 3>You have been brainwashed! You are no longer a revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you...</FONT></span>")
 		update_rev_icons_removed(rev_mind)
 
 /////////////////////////////////////
@@ -326,9 +316,9 @@
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		for(var/datum/objective/mutiny/objective in rev_mind.objectives)
 			if(!(objective.check_completion()))
-				return 0
+				return FALSE
 
-		return 1
+		return TRUE
 
 /////////////////////////////
 //Checks for a head victory//
@@ -336,10 +326,10 @@
 /datum/game_mode/revolution/proc/check_heads_victory()
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		var/turf/T = get_turf(rev_mind.current)
-		if((rev_mind) && (rev_mind.current) && (rev_mind.current.stat != DEAD) && T && (T.z in GLOB.station_z_levels))
+		if(!considered_afk(rev_mind) && considered_alive(rev_mind) && (T.z in GLOB.station_z_levels))
 			if(ishuman(rev_mind.current))
-				return 0
-	return 1
+				return FALSE
+	return TRUE
 
 //////////////////////////////////////////////////////////////////////
 //Announces the end of the game with all relavent information stated//
@@ -357,7 +347,7 @@
 
 		SSticker.news_report = REVS_LOSE
 	..()
-	return 1
+	return TRUE
 
 /datum/game_mode/proc/auto_declare_completion_revolution()
 	var/list/targets = list()

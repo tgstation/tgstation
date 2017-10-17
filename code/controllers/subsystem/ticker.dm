@@ -51,13 +51,13 @@ SUBSYSTEM_DEF(ticker)
 	var/queue_delay = 0
 	var/list/queued_players = list()		//used for join queues when the server exceeds the hard population cap
 
-	var/obj/screen/cinematic = null			//used for station explosion cinematic
-
 	var/maprotatechecked = 0
 
 	var/news_report
 
 	var/late_join_disabled
+
+	var/roundend_check_paused = FALSE
 
 	var/round_start_time = 0
 	var/list/round_start_events
@@ -66,27 +66,78 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	load_mode()
-	var/list/music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
+
+	var/list/byond_sound_formats = list(
+		"mid"  = TRUE,
+		"midi" = TRUE,
+		"mod"  = TRUE,
+		"it"   = TRUE,
+		"s3m"  = TRUE,
+		"xm"   = TRUE,
+		"oxm"  = TRUE,
+		"wav"  = TRUE,
+		"ogg"  = TRUE,
+		"raw"  = TRUE,
+		"wma"  = TRUE,
+		"aiff" = TRUE
+	)
+
+	var/list/provisional_title_music = flist("config/title_music/sounds/")
+	var/list/music = list()
+	var/use_rare_music = prob(1)
+	
+	for(var/S in provisional_title_music)
+		var/lower = lowertext(S)
+		var/list/L = splittext(lower,"+")
+		switch(L.len)
+			if(3) //rare+MAP+sound.ogg or MAP+rare.sound.ogg -- Rare Map-specific sounds
+				if(use_rare_music)
+					if(L[1] == "rare" && L[2] == SSmapping.config.map_name)
+						music += S
+					else if(L[2] == "rare" && L[1] == SSmapping.config.map_name)
+						music += S
+			if(2) //rare+sound.ogg or MAP+sound.ogg -- Rare sounds or Map-specific sounds
+				if((use_rare_music && L[1] == "rare") || (L[1] == SSmapping.config.map_name))
+					music += S
+			if(1) //sound.ogg -- common sound
+				music += S
+
 	var/old_login_music = trim(file2text("data/last_round_lobby_music.txt"))
 	if(music.len > 1)
 		music -= old_login_music
-	login_music = pick(music)
+
+	for(var/S in music)
+		var/list/L = splittext(S,".")
+		if(L.len >= 2)
+			var/ext = lowertext(L[L.len]) //pick the real extension, no 'honk.ogg.exe' nonsense here
+			if(byond_sound_formats[ext])
+				continue
+		music -= S
+				
+	if(isemptylist(music))
+		music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
+		login_music = pick(music)
+	else
+		login_music = "config/title_music/sounds/[pick(music)]"
+	
 
 	if(!GLOB.syndicate_code_phrase)
 		GLOB.syndicate_code_phrase	= generate_code_phrase()
 	if(!GLOB.syndicate_code_response)
 		GLOB.syndicate_code_response = generate_code_phrase()
 	..()
-	start_at = world.time + (config.lobby_countdown * 10)
+	start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
 
 /datum/controller/subsystem/ticker/fire()
 	switch(current_state)
 		if(GAME_STATE_STARTUP)
 			if(Master.initializations_finished_with_no_players_logged_in)
-				start_at = world.time + (config.lobby_countdown * 10)
+				start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
 			for(var/client/C in GLOB.clients)
 				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
 			to_chat(world, "<span class='boldnotice'>Welcome to [station_name()]!</span>")
+			if(CONFIG_GET(flag/irc_announce_new_game))
+				SERVER_TOOLS_CHAT_BROADCAST("New round starting on [SSmapping.config.map_name]!")
 			current_state = GAME_STATE_PREGAME
 			//Everyone who wants to be an observer is now spawned
 			create_observers()
@@ -132,7 +183,7 @@ SUBSYSTEM_DEF(ticker)
 			check_maprotate()
 			scripture_states = scripture_unlock_alert(scripture_states)
 
-			if(!mode.explosion_in_progress && mode.check_finished(force_ending) || force_ending)
+			if(!roundend_check_paused && mode.check_finished(force_ending) || force_ending)
 				current_state = GAME_STATE_FINISHED
 				toggle_ooc(TRUE) // Turn it on
 				toggle_dooc(TRUE)
@@ -202,7 +253,7 @@ SUBSYSTEM_DEF(ticker)
 	else
 		mode.announce()
 
-	if(!config.ooc_during_round)
+	if(!CONFIG_GET(flag/ooc_during_round))
 		toggle_ooc(FALSE) // Turn it off
 
 	CHECK_TICK
@@ -269,144 +320,6 @@ SUBSYSTEM_DEF(ticker)
 		if(epi)
 			explosion(epi, 0, 256, 512, 0, TRUE, TRUE, 0, TRUE)
 
-//Plus it provides an easy way to make cinematics for other events. Just use this as a template
-/datum/controller/subsystem/ticker/proc/station_explosion_cinematic(station_missed=0, override = null, atom/bomb = null)
-	if( cinematic )
-		return	//already a cinematic in progress!
-
-	for (var/datum/html_interface/hi in GLOB.html_interfaces)
-		hi.closeAll()
-	SStgui.close_all_uis()
-
-	//Turn off the shuttles, there's no escape now
-	if(!station_missed && bomb)
-		SSshuttle.registerHostileEnvironment(src)
-		SSshuttle.lockdown = TRUE
-
-	//initialise our cinematic screen object
-	cinematic = new /obj/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=21;mouse_opacity = MOUSE_OPACITY_TRANSPARENT;screen_loc="1,0";}(src)
-
-	for(var/mob/M in GLOB.mob_list)
-		M.notransform = TRUE //stop everything moving
-		if(M.client)
-			M.client.screen += cinematic	//show every client the cinematic
-
-	var/actually_blew_up = TRUE
-	//Now animate the cinematic
-	switch(station_missed)
-		if(NUKE_NEAR_MISS)	//nuke was nearby but (mostly) missed
-			if(mode && !override )
-				override = mode.name
-			switch( override )
-				if("nuclear emergency") //Nuke wasn't on station when it blew up
-					flick("intro_nuke",cinematic)
-					sleep(35)
-					SEND_SOUND(world, sound('sound/effects/explosion_distant.ogg'))
-					station_explosion_detonation(bomb)
-					flick("station_intact_fade_red",cinematic)
-					cinematic.icon_state = "summary_nukefail"
-				if("cult")
-					cinematic.icon_state = null
-					flick("intro_cult",cinematic)
-					sleep(25)
-					SEND_SOUND(world, sound('sound/magic/enter_blood.ogg'))
-					sleep(28)
-					SEND_SOUND(world, sound('sound/machines/terminal_off.ogg'))
-					sleep(20)
-					flick("station_corrupted",cinematic)
-					SEND_SOUND(world, sound('sound/effects/ghost.ogg'))
-					actually_blew_up = FALSE
-					sleep(70)
-				if("fake") //The round isn't over, we're just freaking people out for fun
-					flick("intro_nuke",cinematic)
-					sleep(35)
-					SEND_SOUND(world, sound('sound/items/bikehorn.ogg'))
-					flick("summary_selfdes",cinematic)
-					actually_blew_up = FALSE
-				else
-					flick("intro_nuke",cinematic)
-					sleep(35)
-					SEND_SOUND(world, sound('sound/effects/explosion_distant.ogg'))
-					station_explosion_detonation(bomb)
-
-
-		if(NUKE_MISS_STATION || NUKE_SYNDICATE_BASE)	//nuke was nowhere nearby	//TODO: a really distant explosion animation
-			sleep(50)
-			SEND_SOUND(world, sound('sound/effects/explosion_distant.ogg'))
-			station_explosion_detonation(bomb)
-			actually_blew_up = station_missed == NUKE_SYNDICATE_BASE	//don't kill everyone on station if it detonated off station
-		else	//station was destroyed
-			if( mode && !override )
-				override = mode.name
-			switch( override )
-				if("nuclear emergency") //Nuke Ops successfully bombed the station
-					flick("intro_nuke",cinematic)
-					sleep(35)
-					flick("station_explode_fade_red",cinematic)
-					SEND_SOUND(world, sound('sound/effects/explosion_distant.ogg'))
-					station_explosion_detonation(bomb)
-					cinematic.icon_state = "summary_nukewin"
-				if("AI malfunction") //Malf (screen,explosion,summary)
-					flick("intro_malf",cinematic)
-					sleep(76)
-					flick("station_explode_fade_red",cinematic)
-					SEND_SOUND(world, sound('sound/effects/explosion_distant.ogg'))
-					station_explosion_detonation(bomb)	//TODO: If we ever decide to actually detonate the vault bomb
-					cinematic.icon_state = "summary_malf"
-				if("blob") //Station nuked (nuke,explosion,summary)
-					flick("intro_nuke",cinematic)
-					sleep(35)
-					flick("station_explode_fade_red",cinematic)
-					SEND_SOUND(world, sound('sound/effects/explosion_distant.ogg'))
-					station_explosion_detonation(bomb)	//TODO: no idea what this case could be
-					cinematic.icon_state = "summary_selfdes"
-				if("cult") //Station nuked (nuke,explosion,summary)
-					flick("intro_nuke",cinematic)
-					sleep(35)
-					flick("station_explode_fade_red",cinematic)
-					SEND_SOUND(world, sound('sound/effects/explosion_distant.ogg'))
-					station_explosion_detonation(bomb)	//TODO: no idea what this case could be
-					cinematic.icon_state = "summary_cult"
-				if("no_core") //Nuke failed to detonate as it had no core
-					flick("intro_nuke",cinematic)
-					sleep(35)
-					flick("station_intact",cinematic)
-					SEND_SOUND(world, sound('sound/ambience/signal.ogg'))
-					addtimer(CALLBACK(src, .proc/finish_cinematic, null, FALSE), 100)
-					return	//Faster exit, since nothing happened
-				else //Station nuked (nuke,explosion,summary)
-					flick("intro_nuke",cinematic)
-					sleep(35)
-					flick("station_explode_fade_red", cinematic)
-					SEND_SOUND(world, sound('sound/effects/explosion_distant.ogg'))
-					station_explosion_detonation(bomb)
-					cinematic.icon_state = "summary_selfdes"
-	//If its actually the end of the round, wait for it to end.
-	//Otherwise if its a verb it will continue on afterwards.
-
-	var/bombloc = null
-	if(actually_blew_up)
-		if(bomb && bomb.loc)
-			bombloc = bomb.z
-		else if(!station_missed)
-			bombloc = ZLEVEL_STATION_PRIMARY
-
-		if(mode)
-			mode.explosion_in_progress = 0
-			to_chat(world, "<B>The station was destoyed by the nuclear blast!</B>")
-			mode.station_was_nuked = (station_missed<2)	//station_missed==1 is a draw. the station becomes irradiated and needs to be evacuated.
-
-	addtimer(CALLBACK(src, .proc/finish_cinematic, bombloc, actually_blew_up), 300)
-
-/datum/controller/subsystem/ticker/proc/finish_cinematic(killz, actually_blew_up)
-	if(cinematic)
-		qdel(cinematic)		//end the cinematic
-		cinematic = null
-	for(var/mob/M in GLOB.mob_list)
-		M.notransform = FALSE
-		if(actually_blew_up && !isnull(killz) && M.stat != DEAD && M.z == killz)
-			M.gib()
-
 /datum/controller/subsystem/ticker/proc/create_characters()
 	for(var/mob/dead/new_player/player in GLOB.player_list)
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
@@ -466,10 +379,11 @@ SUBSYSTEM_DEF(ticker)
 	var/num_shuttle_escapees = 0
 
 	to_chat(world, "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>")
+	if(LAZYLEN(GLOB.round_end_notifiees))
+		send2irc("Notice", "[GLOB.round_end_notifiees.Join(", ")] the round has ended.")
 
-	var/nocredits = config.no_credits_round_end
 	for(var/client/C in GLOB.clients)
-		if(!C.credits && !nocredits)
+		if(!C.credits)
 			C.RollCredits()
 		C.playtitlemusic(40)
 
@@ -501,7 +415,7 @@ SUBSYSTEM_DEF(ticker)
 	end_state.count()
 	var/station_integrity = min(PERCENT(GLOB.start_state.score(end_state)), 100)
 
-	to_chat(world, "<BR>[GLOB.TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B>")
+	to_chat(world, "<BR>[GLOB.TAB]Shift Duration: <B>[DisplayTimeText(world.time - SSticker.round_start_time)]</B>")
 	to_chat(world, "<BR>[GLOB.TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>")
 	if(mode.station_was_nuked)
 		SSticker.news_report = STATION_DESTROYED_NUKE
@@ -562,7 +476,7 @@ SUBSYSTEM_DEF(ticker)
 
 	CHECK_TICK
 
-	if(config.cross_allowed)
+	if(CONFIG_GET(string/cross_server_address))
 		send_news_report()
 
 	CHECK_TICK
@@ -628,7 +542,8 @@ SUBSYSTEM_DEF(ticker)
 		to_chat(world, "<font color='purple'><b>Tip of the round: </b>[html_encode(m)]</font>")
 
 /datum/controller/subsystem/ticker/proc/check_queue()
-	if(!queued_players.len || !config.hard_popcap)
+	var/hpc = CONFIG_GET(number/hard_popcap)
+	if(!queued_players.len || !hpc)
 		return
 
 	queue_delay++
@@ -636,7 +551,7 @@ SUBSYSTEM_DEF(ticker)
 
 	switch(queue_delay)
 		if(5) //every 5 ticks check if there is a slot available
-			if(living_player_count() < config.hard_popcap)
+			if(living_player_count() < hpc)
 				if(next_in_line && next_in_line.client)
 					to_chat(next_in_line, "<span class='userdanger'>A slot has opened! You have approximately 20 seconds to join. <a href='?src=\ref[next_in_line];late_join=override'>\>\>Join Game\<\<</a></span>")
 					SEND_SOUND(next_in_line, sound('sound/misc/notice1.ogg'))
@@ -650,7 +565,7 @@ SUBSYSTEM_DEF(ticker)
 			queue_delay = 0
 
 /datum/controller/subsystem/ticker/proc/check_maprotate()
-	if (!config.maprotation)
+	if (!CONFIG_GET(flag/maprotation))
 		return
 	if (SSshuttle.emergency && SSshuttle.emergency.mode != SHUTTLE_ESCAPE || SSshuttle.canRecall())
 		return
@@ -660,7 +575,7 @@ SUBSYSTEM_DEF(ticker)
 	maprotatechecked = 1
 
 	//map rotate chance defaults to 75% of the length of the round (in minutes)
-	if (!prob((world.time/600)*config.maprotatechancedelta))
+	if (!prob((world.time/600)*CONFIG_GET(number/maprotatechancedelta)))
 		return
 	INVOKE_ASYNC(SSmapping, /datum/controller/subsystem/mapping/.proc/maprotate)
 
@@ -700,13 +615,11 @@ SUBSYSTEM_DEF(ticker)
 
 	queue_delay = SSticker.queue_delay
 	queued_players = SSticker.queued_players
-	cinematic = SSticker.cinematic
 	maprotatechecked = SSticker.maprotatechecked
 	round_start_time = SSticker.round_start_time
 
 	queue_delay = SSticker.queue_delay
 	queued_players = SSticker.queued_players
-	cinematic = SSticker.cinematic
 	maprotatechecked = SSticker.maprotatechecked
 
 	switch (current_state)
@@ -813,7 +726,7 @@ SUBSYSTEM_DEF(ticker)
 		return
 
 	if(!delay)
-		delay = config.round_end_countdown * 10
+		delay = CONFIG_GET(number/round_end_countdown) * 10
 
 	var/skip_delay = check_rights()
 	if(delay_end && !skip_delay)

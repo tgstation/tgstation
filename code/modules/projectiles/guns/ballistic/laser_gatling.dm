@@ -3,7 +3,7 @@
 //The ammo/gun is stored in a back slot item
 /obj/item/minigunpack
 	name = "backpack power source"
-	desc = "The massive external power source for the laser gatling gun"
+	desc = "The massive external power source for the laser gatling gun."
 	icon = 'icons/obj/guns/minigun.dmi'
 	icon_state = "holstered"
 	item_state = "backpack"
@@ -109,7 +109,7 @@
 	weapon_weight = WEAPON_HEAVY
 	fire_sound = 'sound/weapons/laser.ogg'
 	mag_type = /obj/item/ammo_box/magazine/internal/minigun
-	casing_ejector = 0
+	casing_ejector = FALSE
 	flags_2 = SLOWS_WHILE_IN_HAND_2
 	var/obj/item/minigunpack/ammo_pack
 

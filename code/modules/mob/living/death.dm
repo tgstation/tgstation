@@ -18,7 +18,7 @@
 	return
 
 /mob/living/proc/spawn_gibs()
-	new /obj/effect/gibspawner/generic(get_turf(src))
+	new /obj/effect/gibspawner/generic(get_turf(src), null, get_static_viruses())
 
 /mob/living/proc/spill_organs()
 	return
@@ -34,7 +34,7 @@
 
 	dust_animation()
 	spawn_dust(just_ash)
-	qdel(src)
+	QDEL_IN(src,5) // since this is sometimes called in the middle of movement, allow half a second for movement to finish, ghosting to happen and animation to play. Looks much nicer and doesn't cause multiple runtimes.
 
 /mob/living/proc/dust_animation()
 	return
@@ -72,6 +72,9 @@
 	update_canmove()
 	med_hud_set_health()
 	med_hud_set_status()
+
+	if (client)
+		client.move_delay = initial(client.move_delay)
 
 	for(var/s in ownedSoullinks)
 		var/datum/soullink/S = s

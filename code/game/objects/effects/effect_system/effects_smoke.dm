@@ -128,7 +128,7 @@
 
 /obj/effect/particle_effect/smoke/bad/smoke_mob(mob/living/carbon/M)
 	if(..())
-		M.drop_item()
+		M.drop_all_held_items()
 		M.adjustOxyLoss(1)
 		M.emote("cough")
 		return 1
@@ -168,10 +168,10 @@
 			for(var/obj/effect/hotspot/H in T)
 				qdel(H)
 				var/list/G_gases = G.gases
-				if(G_gases["plasma"])
-					G.assert_gas("n2")
-					G_gases["n2"][MOLES] += (G_gases["plasma"][MOLES])
-					G_gases["plasma"][MOLES] = 0
+				if(G_gases[/datum/gas/plasma])
+					ASSERT_GAS(/datum/gas/nitrogen, G)
+					G_gases[/datum/gas/nitrogen][MOLES] += (G_gases[/datum/gas/plasma][MOLES])
+					G_gases[/datum/gas/plasma][MOLES] = 0
 					G.garbage_collect()
 		for(var/obj/machinery/atmospherics/components/unary/U in T)
 			if(!isnull(U.welded) && !U.welded) //must be an unwelded vent pump or vent scrubber.
@@ -205,7 +205,6 @@
 
 /obj/effect/particle_effect/smoke/sleeping/smoke_mob(mob/living/carbon/M)
 	if(..())
-		M.drop_item()
 		M.Sleeping(200)
 		M.emote("cough")
 		return 1
@@ -283,13 +282,13 @@
 		var/area/A = get_area(location)
 
 		var/where = "[A.name] | [location.x], [location.y]"
-		var/whereLink = "<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[location.x];Y=[location.y];Z=[location.z]'>[where]</a>"
+		var/whereLink = "<A HREF='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[location.x];Y=[location.y];Z=[location.z]'>[where]</a>"
 
 		if(carry.my_atom.fingerprintslast)
 			var/mob/M = get_mob_by_key(carry.my_atom.fingerprintslast)
 			var/more = ""
 			if(M)
-				more = "(<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>?</a>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</A>) "
+				more = "(<A HREF='?_src_=holder;[HrefToken()];adminmoreinfo=\ref[M]'>?</a>) (<A HREF='?_src_=holder;[HrefToken()];adminplayerobservefollow=\ref[M]'>FLW</A>) "
 			message_admins("Smoke: ([whereLink])[contained]. Key: [carry.my_atom.fingerprintslast][more].", 0, 1)
 			log_game("A chemical smoke reaction has taken place in ([where])[contained]. Last associated key is [carry.my_atom.fingerprintslast].")
 		else

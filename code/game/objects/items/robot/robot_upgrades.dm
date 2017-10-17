@@ -172,7 +172,7 @@
 
 /obj/item/borg/upgrade/syndicate
 	name = "illegal equipment module"
-	desc = "Unlocks the hidden, deadlier functions of a cyborg"
+	desc = "Unlocks the hidden, deadlier functions of a cyborg."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 	origin_tech = "combat=4;syndicate=1"

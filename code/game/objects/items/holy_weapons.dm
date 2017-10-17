@@ -10,6 +10,7 @@
 	throw_range = 4
 	throwforce = 10
 	w_class = WEIGHT_CLASS_TINY
+	unique_rename = TRUE
 	var/reskinned = FALSE
 
 /obj/item/nullrod/suicide_act(mob/user)
@@ -51,6 +52,8 @@
 /obj/item/nullrod/godhand
 	icon_state = "disintegrate"
 	item_state = "disintegrate"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	name = "god hand"
 	desc = "This hand of yours glows with an awesome power!"
 	flags_1 = ABSTRACT_1 | NODROP_1 | DROPDEL_1
@@ -244,6 +247,7 @@
 		S.name = name
 		S.ckey = theghost.ckey
 		S.status_flags |= GODMODE
+		S.language_holder = user.language_holder.copy(S)
 		var/input = stripped_input(S,"What are you named?", ,"", MAX_NAME_LEN)
 
 		if(src && input)
@@ -293,6 +297,26 @@
 	hitsound = 'sound/items/bikehorn.ogg'
 	sharpness = IS_SHARP
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	
+/obj/item/nullrod/pride_hammer
+	icon_state = "pride"
+	name = "Pride-struck Hammer"
+	desc = "It resonates an aura of Pride."
+	force = 16
+	throwforce = 15
+	w_class = 4
+	slot_flags = SLOT_BACK
+	attack_verb = list("attacked", "smashed", "crushed", "splattered", "cracked")
+	hitsound = 'sound/weapons/blade1.ogg'
+	
+/obj/item/nullrod/pride_hammer/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
+	if(!proximity)
+		return
+	if(prob(30) && ishuman(A))
+		var/mob/living/carbon/human/H = A
+		user.reagents.trans_to(H, user.reagents.total_volume, 1, 1, 0)
+		to_chat(user, "<span class='notice'>Your pride reflects on [H].</span>")
+		to_chat(H, "<span class='userdanger'>You feel insecure, taking on [user]'s burden.</span>")
 
 /obj/item/nullrod/whip
 	name = "holy whip"
@@ -338,8 +362,8 @@
 /obj/item/nullrod/carp
 	name = "carp-sie plushie"
 	desc = "An adorable stuffed toy that resembles the god of all carp. The teeth look pretty sharp. Activate it to receive the blessing of Carp-Sie."
-	icon = 'icons/obj/toy.dmi'
-	icon_state = "carpplushie"
+	icon = 'icons/obj/plushes.dmi'
+	icon_state = "carpplush"
 	item_state = "carp_plushie"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
@@ -386,11 +410,9 @@
 	flags_2 = SLOWS_WHILE_IN_HAND_2
 
 /obj/item/nullrod/tribal_knife/Initialize(mapload)
-	..()
-
-/obj/item/nullrod/tribal_knife/New()
-	..()
+	. = ..()
 	START_PROCESSING(SSobj, src)
+
 
 /obj/item/nullrod/tribal_knife/Destroy()
 	STOP_PROCESSING(SSobj, src)

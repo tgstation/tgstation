@@ -14,6 +14,9 @@ SUBSYSTEM_DEF(augury)
 /datum/controller/subsystem/augury/proc/register_doom(atom/A, severity)
 	doombringers[A] = severity
 
+/datum/controller/subsystem/augury/proc/unregister_doom(atom/A)
+	doombringers -= A
+
 /datum/controller/subsystem/augury/fire()
 	var/biggest_doom = null
 	var/biggest_threat = null

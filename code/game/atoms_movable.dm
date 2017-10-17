@@ -61,7 +61,8 @@
 	return ..()
 
 /atom/movable/Move(atom/newloc, direct = 0)
-	if(!loc || !newloc) return 0
+	if(!loc || !newloc)
+		return 0
 	var/atom/oldloc = loc
 
 	if(loc != newloc)
@@ -115,8 +116,8 @@
 		. = 0
 
 //Called after a successful Move(). By this point, we've already moved
-/atom/movable/proc/Moved(atom/OldLoc, Dir)
-	SendSignal(COMSIG_MOVABLE_MOVED, OldLoc, Dir)
+/atom/movable/proc/Moved(atom/OldLoc, Dir, Forced = FALSE)
+	SendSignal(COMSIG_MOVABLE_MOVED, OldLoc, Dir, Forced)
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
 		newtonian_move(Dir)
@@ -219,12 +220,23 @@
 	if(A)
 		if(throwing)
 			throwing.hit_atom(A)
-			. = 1
+			. = TRUE
 			if(!A || QDELETED(A))
 				return
 		A.CollidedWith(src)
 
 /atom/movable/proc/forceMove(atom/destination)
+	. = FALSE
+	if(destination)
+		. = doMove(destination)
+	else
+		CRASH("No valid destination passed into forceMove")
+
+/atom/movable/proc/moveToNullspace()
+	return doMove(null)
+
+/atom/movable/proc/doMove(atom/destination)
+	. = FALSE
 	if(destination)
 		if(pulledby)
 			pulledby.stop_pulling()
@@ -249,21 +261,30 @@
 				if(AM == src)
 					continue
 				AM.Crossed(src, oldloc)
+		Moved(oldloc, NONE, TRUE)
+		. = TRUE
 
-		Moved(oldloc, 0)
-		return 1
-	return 0
+	//If no destination, move the atom into nullspace (don't do this unless you know what you're doing)
+	else
+		. = TRUE
+		var/atom/oldloc = loc
+		var/area/old_area = get_area(oldloc)
+		oldloc.Exited(src, null)
+		if(old_area)
+			old_area.Exited(src, null)
+		loc = null
 
 /mob/living/forceMove(atom/destination)
 	stop_pulling()
 	if(buckled)
-		buckled.unbuckle_mob(src,force=1)
+		buckled.unbuckle_mob(src, force = TRUE)
 	if(has_buckled_mobs())
-		unbuckle_all_mobs(force=1)
+		unbuckle_all_mobs(force = TRUE)
 	. = ..()
-	if(client)
-		reset_perspective(destination)
-	update_canmove() //if the mob was asleep inside a container and then got forceMoved out we need to make them fall.
+	if(.)
+		if(client)
+			reset_perspective(destination)
+		update_canmove() //if the mob was asleep inside a container and then got forceMoved out we need to make them fall.
 
 /mob/living/brain/forceMove(atom/destination)
 	if(container)
@@ -317,7 +338,8 @@
 		step(src, AM.dir)
 	..()
 
-/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback)
+/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback) //If this returns FALSE then callback will not be called.
+	. = FALSE
 	if (!target || (flags_1 & NODROP_1) || speed <= 0)
 		return
 
@@ -346,7 +368,9 @@
 			//then lets add it to speed
 			speed += user_momentum
 			if (speed <= 0)
-				return //no throw speed, the user was moving too fast.
+				return//no throw speed, the user was moving too fast.
+
+	. = TRUE // No failure conditions past this point.
 
 	var/datum/thrownthing/TT = new()
 	TT.thrownthing = src
@@ -510,6 +534,7 @@
 	acted_explosions += ex_id
 	return TRUE
 
+//TODO: Better floating
 /atom/movable/proc/float(on)
 	if(throwing)
 		return
