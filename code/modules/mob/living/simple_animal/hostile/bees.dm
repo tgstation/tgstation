@@ -134,6 +134,7 @@
 		if(target == beehome)
 			var/obj/structure/beebox/BB = target
 			forceMove(BB)
+			toggle_ai(AI_IDLE)
 			target = null
 			wanted_objects -= beehometypecache //so we don't attack beeboxes when not going home
 		return //no don't attack the goddamm box
@@ -189,6 +190,7 @@
 		if(loc == beehome)
 			idle = min(100, ++idle)
 			if(idle >= BEE_IDLE_ROAMING && prob(BEE_PROB_GOROAM))
+				toggle_ai(AI_ON)
 				forceMove(beehome.drop_location())
 		else
 			idle = max(0, --idle)
@@ -287,3 +289,10 @@
 	QDEL_NULL(queen)
 	return ..()
 
+/mob/living/simple_animal/hostile/poison/bees/consider_wakeup()
+	..()
+	if (beehome && loc == beehome)
+		idle = min(100, ++idle)
+		if(idle >= BEE_IDLE_ROAMING && prob(BEE_PROB_GOROAM))
+			toggle_ai(AI_ON)
+			forceMove(beehome.drop_location())

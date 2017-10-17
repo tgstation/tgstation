@@ -445,3 +445,4 @@
 	..()
 	if(AIStatus == AI_IDLE && FindTarget(ListTargets(), 1))
 		toggle_ai(AI_ON)
+
