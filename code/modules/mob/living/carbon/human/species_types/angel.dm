@@ -168,24 +168,27 @@
 
 /datum/species/dullahan/spec_life(mob/living/carbon/human/H)
 	if(myhead)
-		H.reset_perspective(myhead)
-	else
-		H.gib()
+		var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
+		if(eyes.tint)
+			H.reset_perspective(H)
+		else
+			H.reset_perspective(myhead)
+
 		if(myhead in view(7,src))
 		//	myhead.speech_relay = FALSE
 			H.disabilities &= ~DEAF
 		else
 			H.disabilities |= DEAF
+	else
+		H.gib()
 
-/obj/item/organ/eyes/dullahan
-	zone = "chest"
 
 /obj/item/organ/brain/dullahan
 	decoy_override = TRUE
-	zone = "chest"
+	zone = "abstract"
 
 /obj/item/organ/tongue/dullahan
-	zone = "chest"
+	zone = "abstract"
 
 /obj/item/organ/tongue/dullahan/TongueSpeech(var/message)
 	if(ishuman(owner))
@@ -198,4 +201,17 @@
 
 
 /obj/item/organ/ears/dullahan
-	zone = "chest"
+	zone = "abstract"
+
+/obj/item/organ/eyes/dullahan
+	name = "head vision"
+	desc = "An abstraction."
+	actions_types = list(/datum/action/item_action/organ_action/use)
+	zone = "abstract"
+
+/obj/item/organ/eyes/night_vision/ui_action_click()
+	if(tint)
+		tint = 0
+	else
+		tint = INFINITY
+	owner.update_sight()
