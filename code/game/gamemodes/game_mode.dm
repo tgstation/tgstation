@@ -184,6 +184,8 @@
 
 
 /datum/game_mode/proc/check_finished(force_ending) //to be called by SSticker
+	if(!SSticker.setup_done)
+		return FALSE
 	if(replacementmode && round_converted == 2)
 		return replacementmode.check_finished()
 	if(SSshuttle.emergency && (SSshuttle.emergency.mode == SHUTTLE_ENDGAME))
