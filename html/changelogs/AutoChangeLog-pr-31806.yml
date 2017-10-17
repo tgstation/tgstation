@@ -1,0 +1,4 @@
+author: "Robustin"
+delete-after: True
+changes: 
+  - bugfix: "The smoke machine now properly generates transparent smoke, transmits chemicals, and displays the proper icons."

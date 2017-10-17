@@ -26,6 +26,9 @@ GLOBAL_LIST_INIT(sqrtTable, list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4,
 
 #define Clamp(CLVALUE,CLMIN,CLMAX) ( max( (CLMIN), min((CLVALUE), (CLMAX)) ) )
 
+/proc/Modulus(x, y)	//Byond's modulus doesn't work with decimals.
+	return x - y * round(x / y)
+
 // cotangent
 /proc/Cot(x)
 	return 1 / Tan(x)
@@ -43,6 +46,8 @@ GLOBAL_LIST_INIT(sqrtTable, list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4,
 
 /proc/Inverse(x)
 	return 1 / x
+
+#define InverseSquareLaw(initial_strength,cur_distance,initial_distance) (initial_strength*(initial_distance**2/cur_distance**2))
 
 /proc/IsAboutEqual(a, b, deviation = 0.1)
 	return abs(a - b) <= deviation

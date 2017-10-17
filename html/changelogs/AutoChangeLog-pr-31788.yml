@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - tweak: "You can no longer build reinforced floors directly on top of dirt, asteroid sand, ice, or beaches. You'll have to first construct flooring on top of it instead."

@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
@@ -22155,25 +22155,32 @@
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "aMR" = (
-/obj/machinery/power/rad_collector/anchored,
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /obj/machinery/camera{
-	c_tag = "Engineering Supermatter Chamber";
+	c_tag = "Supermatter Chamber";
 	dir = 2;
-	network = list("SS13","Engine");
+	network = list("Engine");
 	pixel_x = 23
 	},
-/turf/open/floor/circuit/green,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/engine,
 /area/engine/supermatter)
 "aMS" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
 	},
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/turf/open/floor/plating,
+/obj/machinery/power/rad_collector/anchored,
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 4
+	},
+/turf/open/floor/circuit/green,
 /area/engine/supermatter)
 "aMT" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -22194,16 +22201,23 @@
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4
 	},
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/turf/open/floor/plating,
-/area/engine/supermatter)
-"aMX" = (
 /obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 8
 	},
 /turf/open/floor/circuit/green,
+/area/engine/supermatter)
+"aMX" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/engine,
 /area/engine/supermatter)
 "aMY" = (
 /obj/structure/cable{
@@ -22838,14 +22852,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aOa" = (
-/obj/machinery/power/supermatter_shard/engine{
-	anchored = 1;
-	base_icon_state = "darkmatter";
-	explosion_power = 20;
-	gasefficency = 0.15;
-	icon_state = "darkmatter";
-	name = "supermatter crystal"
-	},
+/obj/machinery/power/supermatter_shard/crystal/engine,
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "aOb" = (
@@ -23106,15 +23113,29 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
 	},
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/turf/open/floor/plating,
+/obj/machinery/power/rad_collector/anchored,
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 4
+	},
+/turf/open/floor/circuit/green,
 /area/engine/supermatter)
 "aOD" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/turf/open/floor/plating,
+/obj/machinery/power/rad_collector/anchored,
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 8
+	},
+/turf/open/floor/circuit/green,
 /area/engine/supermatter)
 "aOE" = (
 /obj/structure/cable{
@@ -67194,8 +67215,8 @@ aJs
 aKz
 buW
 aMR
-buZ
-buZ
+aMX
+aMX
 buW
 aQK
 aRI

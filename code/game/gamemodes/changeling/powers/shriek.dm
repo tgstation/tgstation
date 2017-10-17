@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/changeling/resonant_shriek
 	name = "Resonant Shriek"
-	desc = "Our lungs and vocal chords shift, allowing us to briefly emit a noise that deafens and confuses the weak-minded."
+	desc = "Our lungs and vocal cords shift, allowing us to briefly emit a noise that deafens and confuses the weak-minded."
 	helptext = "Emits a high-frequency sound that confuses and deafens humans, blows out nearby lights and overloads cyborg sensors."
 	chemical_cost = 20
 	dna_cost = 1

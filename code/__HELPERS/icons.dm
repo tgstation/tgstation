@@ -1038,9 +1038,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 /image/proc/setDir(newdir)
 	dir = newdir
 
-#define FROZEN_RED_COLOR "#2E5E69"
-#define FROZEN_GREEN_COLOR "#60A2A8"
-#define FROZEN_BLUE_COLOR "#A1AFB1"
+GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0,0,0)))
 
 /obj/proc/make_frozen_visual()
 	// Used to make the frozen item visuals for Freon.
@@ -1048,7 +1046,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 		return
 	if(!(flags_2 & FROZEN_2))
 		name = "frozen [name]"
-		add_atom_colour(list(FROZEN_RED_COLOR, FROZEN_GREEN_COLOR, FROZEN_BLUE_COLOR, rgb(0,0,0)), TEMPORARY_COLOUR_PRIORITY)
+		add_atom_colour(GLOB.freon_color_matrix, TEMPORARY_COLOUR_PRIORITY)
 		alpha -= 25
 		flags_2 |= FROZEN_2
 
@@ -1056,13 +1054,9 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 /obj/proc/make_unfrozen()
 	if(flags_2 & FROZEN_2)
 		name = replacetext(name, "frozen ", "")
-		remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, list(FROZEN_RED_COLOR, FROZEN_GREEN_COLOR, FROZEN_BLUE_COLOR, rgb(0,0,0)))
+		remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, GLOB.freon_color_matrix)
 		alpha += 25
 		flags_2 &= ~FROZEN_2
-
-#undef FROZEN_RED_COLOR
-#undef FROZEN_GREEN_COLOR
-#undef FROZEN_BLUE_COLOR
 
 
 //Converts an icon to base64. Operates by putting the icon in the iconCache savefile,

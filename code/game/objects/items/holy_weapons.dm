@@ -52,6 +52,8 @@
 /obj/item/nullrod/godhand
 	icon_state = "disintegrate"
 	item_state = "disintegrate"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	name = "god hand"
 	desc = "This hand of yours glows with an awesome power!"
 	flags_1 = ABSTRACT_1 | NODROP_1 | DROPDEL_1
@@ -295,6 +297,26 @@
 	hitsound = 'sound/items/bikehorn.ogg'
 	sharpness = IS_SHARP
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	
+/obj/item/nullrod/pride_hammer
+	icon_state = "pride"
+	name = "Pride-struck Hammer"
+	desc = "It resonates an aura of Pride."
+	force = 16
+	throwforce = 15
+	w_class = 4
+	slot_flags = SLOT_BACK
+	attack_verb = list("attacked", "smashed", "crushed", "splattered", "cracked")
+	hitsound = 'sound/weapons/blade1.ogg'
+	
+/obj/item/nullrod/pride_hammer/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
+	if(!proximity)
+		return
+	if(prob(30) && ishuman(A))
+		var/mob/living/carbon/human/H = A
+		user.reagents.trans_to(H, user.reagents.total_volume, 1, 1, 0)
+		to_chat(user, "<span class='notice'>Your pride reflects on [H].</span>")
+		to_chat(H, "<span class='userdanger'>You feel insecure, taking on [user]'s burden.</span>")
 
 /obj/item/nullrod/whip
 	name = "holy whip"

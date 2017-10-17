@@ -1,0 +1,5 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - bugfix: "Fixed turfs not rotating"
+  - bugfix: "Fixed stealing structures you shouldn't be moving"

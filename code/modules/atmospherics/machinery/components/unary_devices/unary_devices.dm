@@ -3,6 +3,7 @@
 	dir = SOUTH
 	initialize_directions = SOUTH
 	device_type = UNARY
+	pipe_flags = PIPING_ONE_PER_TURF
 
 /obj/machinery/atmospherics/components/unary/SetInitDirections()
 	initialize_directions = dir

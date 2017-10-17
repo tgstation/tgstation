@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Corrected mapping issues introduced with the latest SM engine/radiation update across all relevant maps."

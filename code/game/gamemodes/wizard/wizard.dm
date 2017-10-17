@@ -21,7 +21,6 @@
 /datum/game_mode/wizard/pre_setup()
 	var/datum/mind/wizard = pick(antag_candidates)
 	wizards += wizard
-	modePlayer += wizard
 	wizard.assigned_role = "Wizard"
 	wizard.special_role = "Wizard"
 	log_game("[wizard.key] (ckey) has been selected as a Wizard") //TODO: Move these to base antag datum
