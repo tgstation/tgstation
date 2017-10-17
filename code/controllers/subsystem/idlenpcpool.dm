@@ -1,4 +1,4 @@
-SUBSYSTEM_DEF(npcidlepool)
+SUBSYSTEM_DEF(idlenpcpool)
 	name = "Idling NPC Pool"
 	flags = SS_POST_FIRE_TIMING|SS_NO_INIT|SS_BACKGROUND
 	priority = 10
@@ -7,11 +7,11 @@ SUBSYSTEM_DEF(npcidlepool)
 
 	var/list/currentrun = list()
 
-/datum/controller/subsystem/npcidlepool/stat_entry()
+/datum/controller/subsystem/idlenpcpool/stat_entry()
 	var/list/idlelist = GLOB.simple_animals[AI_IDLE]
 	..("IdleNPCS:[idlelist.len]")
 
-/datum/controller/subsystem/npcidlepool/fire(resumed = FALSE)
+/datum/controller/subsystem/idlenpcpool/fire(resumed = FALSE)
 
 	if (!resumed)
 		var/list/idlelist = GLOB.simple_animals[AI_IDLE]
