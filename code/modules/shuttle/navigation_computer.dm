@@ -80,7 +80,7 @@
 		return FALSE
 	var/mob/camera/aiEye/remote/shuttle_docker/the_eye = eyeobj
 	if(!my_port)
-		my_port = new /obj/docking_port/stationary
+		my_port = new /obj/docking_port/stationary()
 		my_port.name = shuttlePortName
 		my_port.id = shuttlePortId
 		var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
