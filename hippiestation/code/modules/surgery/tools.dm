@@ -26,6 +26,9 @@
 	name = "syndicate surgical drill"
 	desc = "Outfitted with plasmic nanotubes in the bit and a stronger motor."
 	icon = 'hippiestation/icons/obj/surgery.dmi'
+	icon_state = "sdrill"
+	lefthand_file = 'hippiestation/icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'hippiestation/icons/mob/inhands/equipment/medical_righthand.dmi'
 	force = 20
 	origin_tech = "materials=3;biotech=3;syndicate=3"
 	toolspeed = 0.3  
