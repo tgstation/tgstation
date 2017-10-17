@@ -75,7 +75,7 @@
 /mob/living/simple_animal/hostile/megafauna/Life()
 	if(z != ZLEVEL_MINING)
 		var/turf/LZ = safepick(Z_TURFS(ZLEVEL_MINING))
-		forcemove(LZ)
+		forceMove(LZ)
 	..()
 	
 /mob/living/simple_animal/hostile/megafauna/gib()
