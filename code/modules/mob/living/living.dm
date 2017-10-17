@@ -685,7 +685,7 @@
 // The src mob is trying to strip an item from someone
 // Override if a certain type of mob should be behave differently when stripping items (can't, for example)
 /mob/living/stripPanelUnequip(obj/item/what, mob/who, where)
-	if(what.flags_1 & NODROP_1)
+	if(!canUnEquip(what))
 		to_chat(src, "<span class='warning'>You can't remove \the [what.name], it appears to be stuck!</span>")
 		return
 	who.visible_message("<span class='danger'>[src] tries to remove [who]'s [what.name].</span>", \
@@ -706,10 +706,10 @@
 // Override if a certain mob should be behave differently when placing items (can't, for example)
 /mob/living/stripPanelEquip(obj/item/what, mob/who, where)
 	what = src.get_active_held_item()
-	if(what && (what.flags_1 & NODROP_1))
-		to_chat(src, "<span class='warning'>You can't put \the [what.name] on [who], it's stuck to your hand!</span>")
-		return
 	if(what)
+		if(!canUnEquip(what))
+			to_chat(src, "<span class='warning'>You can't put \the [what.name] on [who], it's stuck to your hand!</span>")
+			return
 		var/list/where_list
 		var/final_where
 
@@ -719,13 +719,13 @@
 		else
 			final_where = where
 
-		if(!what.mob_can_equip(who, src, final_where, TRUE, TRUE))
+		if(what.mob_can_equip(who, src, final_where, TRUE, TRUE) != EQUIP_ABLE)
 			to_chat(src, "<span class='warning'>\The [what.name] doesn't fit in that place!</span>")
 			return
 
 		visible_message("<span class='notice'>[src] tries to put [what] on [who].</span>")
 		if(do_mob(src, who, what.equip_delay_other))
-			if(what && Adjacent(who) && what.mob_can_equip(who, src, final_where, TRUE, TRUE))
+			if(what && Adjacent(who) && what.mob_can_equip(who, src, final_where, TRUE, TRUE) != EQUIP_ABLE)
 				if(temporarilyRemoveItemFromInventory(what))
 					if(where_list)
 						if(!who.put_in_hand(what, where_list[2]))

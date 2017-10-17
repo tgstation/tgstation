@@ -198,16 +198,37 @@
 //unset redraw_mob to prevent the mob from being redrawn at the end.
 /mob/proc/equip_to_slot_if_possible(obj/item/W, slot, qdel_on_fail = FALSE, disable_warning = FALSE, redraw_mob = TRUE, bypass_equip_delay_self = FALSE)
 	if(!istype(W))
-		return 0
-	if(!W.mob_can_equip(src, null, slot, disable_warning, bypass_equip_delay_self))
+		return FALSE
+	var/equip_type = W.mob_can_equip(src, null, slot, disable_warning, bypass_equip_delay_self)
+	if(equip_type == EQUIP_UNABLE)
 		if(qdel_on_fail)
 			qdel(W)
 		else
 			if(!disable_warning)
 				to_chat(src, "<span class='warning'>You are unable to equip that!</span>" )
-		return 0
+		return FALSE
+	else if(equip_type == EQUIP_REPLACEABLE)
+		return replace_to_slot_if_possible(W, slot, qdel_on_fail, disable_warning, redraw_mob, bypass_equip_delay_self)
+
 	equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
-	return 1
+	return TRUE
+
+//remove current item in the slot, holding all child supported inv items in place (since we are swapping out)
+//then put the passed in item into the slot, putting the now removed item in the active hand, or panic drop to ground
+//if this is not possible
+/mob/proc/replace_to_slot_if_possible(obj/item/W, slot, qdel_on_fail = FALSE, disable_warning = FALSE, redraw_mob = TRUE, bypass_equip_delay_self = FALSE)
+	var/obj/item/to_remove = get_item_by_slot(slot)
+	if(do_after(src, 20, needhand=TRUE, target=src))
+		if(temporarilyRemoveItemFromInventory(to_remove, force=FALSE, idrop=FALSE))
+			equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
+			//given that the active hand is now theoretically empty, we can put the item in it
+			if(!put_in_active_hand(to_remove))
+				//if for some reason the hand put ever fails, panic drop it to the ground and stacktrace
+				stack_trace("Could not put replaced item into active hand")
+				dropItemToGround(to_remove, force=TRUE)
+			return TRUE
+	else
+		return FALSE
 
 //This is an UNSAFE proc. It merely handles the actual job of equipping. All the checks on whether you can or can't eqip need to be done before! Use mob_can_equip() for that task.
 //In most cases you will want to use equip_to_slot_if_possible()
@@ -239,7 +260,7 @@
 		)
 
 	for(var/slot in slot_priority)
-		if(equip_to_slot_if_possible(W, slot, 0, 1, 1)) //qdel_on_fail = 0; disable_warning = 1; redraw_mob = 1
+		if(equip_to_slot_if_possible(W, slot, qdel_on_fail=0, disable_warning=1, redraw_mob=1))
 			return 1
 
 	return 0

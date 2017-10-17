@@ -682,10 +682,31 @@
 	// handles the equipping of species-specific gear
 	return
 
+/datum/species/proc/body_part_check(mob/living/carbon/human/H, body_part_slot, must_not_be_robotic=FALSE)
+	var/obj/item/bodypart/O = H.get_bodypart(body_part_slot)
+	if(must_not_be_robotic && O && O.status != BODYPART_ROBOTIC)
+		return TRUE
+	else if (!must_not_be_robotic && O)
+		return TRUE
+	return FALSE
+
+/datum/species/proc/slot_check(obj/item/I, slot_flag, holder, mob/living/carbon/human/H, bypass_equip_delay=FALSE, replaceable=FALSE)
+	if(I.slot_flags & slot_flag)
+		if(equip_delay_self_check(I, H, bypass_equip_delay))
+			//full but we can swap out items in this slot with one click
+			if(holder && replaceable)
+				return EQUIP_REPLACEABLE
+			//full
+			else if(holder)
+				return EQUIP_UNABLE
+			return EQUIP_ABLE
+
+	return EQUIP_UNABLE
+
 /datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H, bypass_equip_delay_self = FALSE)
 	if(slot in no_equip)
 		if(!I.species_exception || !is_type_in_list(src, I.species_exception))
-			return 0
+			return EQUIP_UNABLE
 
 	var/num_arms = H.get_num_arms()
 	var/num_legs = H.get_num_legs()
@@ -693,185 +714,162 @@
 	switch(slot)
 		if(slot_hands)
 			if(H.get_empty_held_indexes())
-				return TRUE
-			return FALSE
+				return EQUIP_ABLE
+			return EQUIP_UNABLE
+
 		if(slot_wear_mask)
-			if(H.wear_mask)
-				return 0
-			if( !(I.slot_flags & SLOT_MASK) )
-				return 0
-			if(!H.get_bodypart("head"))
-				return 0
-			return equip_delay_self_check(I, H, bypass_equip_delay_self)
+			if(!body_part_check(H, "head"))
+				return EQUIP_UNABLE
+			return slot_check(I, SLOT_MASK, H.wear_mask, H, bypass_equip_delay=bypass_equip_delay_self)
+
 		if(slot_neck)
-			if(H.wear_neck)
-				return 0
-			if( !(I.slot_flags & SLOT_NECK) )
-				return 0
-			return 1
+			return slot_check(I, SLOT_NECK, H.wear_neck, H, bypass_equip_delay=bypass_equip_delay_self)
+
 		if(slot_back)
-			if(H.back)
-				return 0
-			if( !(I.slot_flags & SLOT_BACK) )
-				return 0
-			return equip_delay_self_check(I, H, bypass_equip_delay_self)
+			return slot_check(I, SLOT_BACK, H.back, H, bypass_equip_delay=bypass_equip_delay_self)
+
 		if(slot_wear_suit)
-			if(H.wear_suit)
-				return 0
-			if( !(I.slot_flags & SLOT_OCLOTHING) )
-				return 0
-			return equip_delay_self_check(I, H, bypass_equip_delay_self)
+			return slot_check(I, SLOT_OCLOTHING, H.wear_suit, H, bypass_equip_delay=bypass_equip_delay_self)
+
 		if(slot_gloves)
-			if(H.gloves)
-				return 0
-			if( !(I.slot_flags & SLOT_GLOVES) )
-				return 0
 			if(num_arms < 2)
-				return 0
-			return equip_delay_self_check(I, H, bypass_equip_delay_self)
+				return EQUIP_UNABLE
+
+			return slot_check(I, SLOT_GLOVES, H.gloves, H, bypass_equip_delay=bypass_equip_delay_self)
+
 		if(slot_shoes)
-			if(H.shoes)
-				return 0
-			if( !(I.slot_flags & SLOT_FEET) )
-				return 0
-			if(num_legs < 2)
-				return 0
 			if(DIGITIGRADE in species_traits)
 				if(!disable_warning)
 					to_chat(H, "<span class='warning'>The footwear around here isn't compatible with your feet!</span>")
-				return 0
-			return equip_delay_self_check(I, H, bypass_equip_delay_self)
+				return EQUIP_UNABLE
+			if(num_legs < 2)
+				return EQUIP_UNABLE
+
+			return slot_check(I, SLOT_FEET, H.shoes, H, bypass_equip_delay=bypass_equip_delay_self)
+
 		if(slot_belt)
-			if(H.belt)
-				return 0
-
-			var/obj/item/bodypart/O = H.get_bodypart("chest")
-
-			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
+			if(!body_part_check(H, "chest", must_not_be_robotic=TRUE))
+				return EQUIP_UNABLE
+			if(!H.w_uniform && !nojumpsuit)
 				if(!disable_warning)
 					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
-				return 0
-			if( !(I.slot_flags & SLOT_BELT) )
-				return
-			return equip_delay_self_check(I, H, bypass_equip_delay_self)
+				return EQUIP_UNABLE
+			return slot_check(I, SLOT_BELT, H.belt, H, bypass_equip_delay=bypass_equip_delay_self)
+
 		if(slot_glasses)
-			if(H.glasses)
-				return 0
-			if( !(I.slot_flags & SLOT_EYES) )
-				return 0
-			if(!H.get_bodypart("head"))
-				return 0
-			return equip_delay_self_check(I, H, bypass_equip_delay_self)
+			if(!body_part_check(H, "head"))
+				return EQUIP_UNABLE
+			return slot_check(I, SLOT_EYES, H.glasses, H, bypass_equip_delay=bypass_equip_delay_self)
+
 		if(slot_head)
-			if(H.head)
-				return 0
-			if( !(I.slot_flags & SLOT_HEAD) )
-				return 0
-			if(!H.get_bodypart("head"))
-				return 0
-			return equip_delay_self_check(I, H, bypass_equip_delay_self)
+			if(!body_part_check(H, "head"))
+				return EQUIP_UNABLE
+			return slot_check(I, SLOT_HEAD, H.head, H, bypass_equip_delay=bypass_equip_delay_self)
+
 		if(slot_ears)
-			if(H.ears)
-				return 0
-			if( !(I.slot_flags & SLOT_EARS) )
-				return 0
-			if(!H.get_bodypart("head"))
-				return 0
-			return equip_delay_self_check(I, H, bypass_equip_delay_self)
+			if(!body_part_check(H, "head"))
+				return EQUIP_UNABLE
+			return slot_check(I, SLOT_EARS, H.ears, H, bypass_equip_delay=bypass_equip_delay_self)
+
 		if(slot_w_uniform)
-			if(H.w_uniform)
-				return 0
-			if( !(I.slot_flags & SLOT_ICLOTHING) )
-				return 0
-			return equip_delay_self_check(I, H, bypass_equip_delay_self)
+			return slot_check(I, SLOT_ICLOTHING, H.w_uniform, H, bypass_equip_delay=bypass_equip_delay_self, replaceable=TRUE)
+
 		if(slot_wear_id)
 			if(H.wear_id)
-				return 0
-
-			var/obj/item/bodypart/O = H.get_bodypart("chest")
-			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
+				return EQUIP_UNABLE
+			if(!body_part_check(H, "chest", must_not_be_robotic=TRUE))
+				return EQUIP_UNABLE
+			if(!H.w_uniform && !nojumpsuit)
 				if(!disable_warning)
 					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
-				return 0
-			if( !(I.slot_flags & SLOT_ID) )
-				return 0
-			return equip_delay_self_check(I, H, bypass_equip_delay_self)
+				return EQUIP_UNABLE
+			return slot_check(I, SLOT_ID, H.wear_id, H, bypass_equip_delay=bypass_equip_delay_self)
+
 		if(slot_l_store)
 			if(I.flags_1 & NODROP_1) //Pockets aren't visible, so you can't move NODROP_1 items into them.
-				return 0
+				return EQUIP_UNABLE
 			if(H.l_store)
-				return 0
+				return EQUIP_UNABLE
 
 			var/obj/item/bodypart/O = H.get_bodypart("l_leg")
 
 			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
 				if(!disable_warning)
 					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
-				return 0
+				return EQUIP_UNABLE
 			if(I.slot_flags & SLOT_DENYPOCKET)
-				return
+				return EQUIP_UNABLE
 			if( I.w_class <= WEIGHT_CLASS_SMALL || (I.slot_flags & SLOT_POCKET) )
-				return 1
+				return EQUIP_ABLE
+			return EQUIP_UNABLE
+
 		if(slot_r_store)
 			if(I.flags_1 & NODROP_1)
+				return EQUIP_UNABLE
 				return 0
 			if(H.r_store)
-				return 0
+				return EQUIP_UNABLE
 
 			var/obj/item/bodypart/O = H.get_bodypart("r_leg")
 
 			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
 				if(!disable_warning)
 					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
-				return 0
+				return EQUIP_UNABLE
 			if(I.slot_flags & SLOT_DENYPOCKET)
-				return 0
+				return EQUIP_UNABLE
 			if( I.w_class <= WEIGHT_CLASS_SMALL || (I.slot_flags & SLOT_POCKET) )
-				return 1
-			return 0
+				return EQUIP_ABLE
+			return EQUIP_UNABLE
+
 		if(slot_s_store)
 			if(I.flags_1 & NODROP_1)
-				return 0
+				return EQUIP_UNABLE
 			if(H.s_store)
-				return 0
+				return EQUIP_UNABLE
 			if(!H.wear_suit)
 				if(!disable_warning)
 					to_chat(H, "<span class='warning'>You need a suit before you can attach this [I.name]!</span>")
-				return 0
+				return EQUIP_UNABLE
 			if(!H.wear_suit.allowed)
 				if(!disable_warning)
 					to_chat(H, "You somehow have a suit with no defined allowed items for suit storage, stop that.")
-				return 0
+				return EQUIP_UNABLE
 			if(I.w_class > WEIGHT_CLASS_BULKY)
 				if(!disable_warning)
 					to_chat(H, "The [I.name] is too big to attach.") //should be src?
-				return 0
+				return EQUIP_UNABLE
 			if( istype(I, /obj/item/device/pda) || istype(I, /obj/item/pen) || is_type_in_list(I, H.wear_suit.allowed) )
-				return 1
-			return 0
+				return EQUIP_ABLE
+			return EQUIP_UNABLE
+
 		if(slot_handcuffed)
 			if(H.handcuffed)
-				return 0
+				return EQUIP_UNABLE
 			if(!istype(I, /obj/item/restraints/handcuffs))
-				return 0
+				return EQUIP_UNABLE
 			if(num_arms < 2)
-				return 0
-			return 1
+				return EQUIP_UNABLE
+			return EQUIP_ABLE
+
 		if(slot_legcuffed)
 			if(H.legcuffed)
-				return 0
+				return EQUIP_UNABLE
 			if(!istype(I, /obj/item/restraints/legcuffs))
-				return 0
+				return EQUIP_UNABLE
 			if(num_legs < 2)
-				return 0
-			return 1
+				return EQUIP_UNABLE
+			return EQUIP_ABLE
+
 		if(slot_in_backpack)
 			if(H.back && istype(H.back, /obj/item/storage))
 				var/obj/item/storage/B = H.back
 				if(B.can_be_inserted(I, 1, H))
-					return 1
-			return 0
-	return 0 //Unsupported slot
+					return EQUIP_ABLE
+			return EQUIP_UNABLE
+
+	//Unsupported slot
+	return EQUIP_UNABLE
 
 /datum/species/proc/equip_delay_self_check(obj/item/I, mob/living/carbon/human/H, bypass_equip_delay_self)
 	if(!I.equip_delay_self || bypass_equip_delay_self)

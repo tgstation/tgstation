@@ -143,10 +143,10 @@
 
 
 
-//Returns if a certain item can be equipped to a certain slot.
-// Currently invalid for two-handed items - call obj/item/mob_can_equip() instead.
+//Returns if a certain item can be equipped to a certain slot, called from
+// item mob_can_equip callback by default (assuming the item confirms the mob can equip)
 /mob/proc/can_equip(obj/item/I, slot, disable_warning = 0)
-	return FALSE
+	return EQUIP_UNABLE
 
 /mob/proc/can_put_in_hand(I, hand_index)
 	if(!put_in_hand_check(I))

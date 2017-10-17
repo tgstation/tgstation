@@ -71,8 +71,8 @@
 	switch(slot)
 		if(slot_generic_dextrous_storage)
 			if(internal_storage)
-				return 0
-			return 1
+				return EQUIP_UNABLE
+			return EQUIP_ABLE
 	..()
 
 /mob/living/simple_animal/hostile/guardian/dextrous/equip_to_slot(obj/item/I, slot)

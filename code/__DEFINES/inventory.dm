@@ -161,3 +161,8 @@
 
 #define TINT_DARKENED 2			//Threshold of tint level to apply weld mask overlay
 #define TINT_BLIND 3			//Threshold of tint level to obscure vision fully
+
+//What solutions are possible from canEquip
+#define EQUIP_ABLE 1
+#define EQUIP_UNABLE 2
+#define EQUIP_REPLACEABLE 3

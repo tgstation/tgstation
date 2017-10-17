@@ -116,7 +116,7 @@
 	if(hud && hud.mymob && slot_id)
 		var/obj/item/inv_item = hud.mymob.get_item_by_slot(slot_id)
 		if(inv_item)
-			return inv_item.Click(location, control, params)
+			inv_item.Click(location, control, params)
 
 	if(usr.attack_ui(slot_id))
 		usr.update_inv_hands()
