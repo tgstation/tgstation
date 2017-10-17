@@ -22,8 +22,6 @@
 
 /datum/reagent/proc/handle_state_change(turf/T, volume, atom)
 	var/touch_msg
-	var/list/holder_blacklist_typecache = list(/obj/effect/particle_effect/water, /obj/effect/decal/cleanable, /mob/living)//blacklisted to prevent spam or other unforeseen consequences
-	holder_blacklist_typecache = typecacheof(holder_blacklist_typecache)
 	if(!istype(T))
 		return
 	if(isspaceturf(T))
@@ -34,7 +32,7 @@
 		return
 
 	if(atom)
-		if(is_type_in_typecache(atom, holder_blacklist_typecache))
+		if(is_type_in_typecache(atom, GLOB.no_reagent_statechange_typecache))
 			return
 		if(istype(atom, /obj/item))
 			var/obj/item/I = atom

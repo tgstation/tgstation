@@ -2236,6 +2236,7 @@
 #include "hippiestation\code\_globalvars\lists\maintenance_loot.dm"
 #include "hippiestation\code\_globalvars\lists\names.dm"
 #include "hippiestation\code\_globalvars\lists\poll_ignore.dm"
+#include "hippiestation\code\_globalvars\lists\typecache.dm"
 #include "hippiestation\code\_onclick\item_attack.dm"
 #include "hippiestation\code\_onclick\hud\combo.dm"
 #include "hippiestation\code\_onclick\hud\human.dm"

@@ -18,8 +18,6 @@
 	var/list/cached_reagents = reagent_list
 	var/list/cached_reactions = GLOB.chemical_reactions_list
 	var/datum/cached_my_atom = my_atom
-	var/list/holder_blacklist_typecache = list(/obj/effect/particle_effect, /obj/effect/decal/cleanable, /mob/living, /obj/item/reagent_containers/food)//preventing message spam
-	holder_blacklist_typecache = typecacheof(holder_blacklist_typecache)
 	if(flags & REAGENT_NOREACT)
 		return //Yup, no reactions here. No siree.
 
@@ -34,27 +32,27 @@
 				if(GAS)
 					if(chem_temp < R.boiling_point)
 						R.reagent_state = LIQUID
-						if(!is_type_in_typecache(cached_my_atom, holder_blacklist_typecache) && SSticker.HasRoundStarted())
+						if(!is_type_in_typecache(cached_my_atom, GLOB.no_reagent_message_typecache) && SSticker.HasRoundStarted())
 							for(var/mob/M in viewers(3, T))
 								to_chat(M, ("<span class='notice'>[icon2html(cached_my_atom, viewers(cached_my_atom))] The vapour condenses into a liquid!</span>"))
 
 				if(SOLID)
 					if(chem_temp > R.melting_point)
 						R.reagent_state = LIQUID
-						if(!is_type_in_typecache(cached_my_atom, holder_blacklist_typecache) && SSticker.HasRoundStarted())
+						if(!is_type_in_typecache(cached_my_atom, GLOB.no_reagent_message_typecache) && SSticker.HasRoundStarted())
 							for(var/mob/M in viewers(3, T))
 								to_chat(M, ("<span class='notice'>[icon2html(cached_my_atom, viewers(cached_my_atom))] The solid chemicals melt into a liquid!</span>"))
 
 				if(LIQUID)
 					if(chem_temp > R.boiling_point)
 						R.reagent_state = GAS
-						if(!is_type_in_typecache(cached_my_atom, holder_blacklist_typecache) && SSticker.HasRoundStarted())
+						if(!is_type_in_typecache(cached_my_atom, GLOB.no_reagent_message_typecache) && SSticker.HasRoundStarted())
 							for(var/mob/M in viewers(4, T))
 								to_chat(M, ("<span class='notice'>[icon2html(cached_my_atom, viewers(cached_my_atom))] The solution rapidly boils into a vapour!</span>"))
 
 					else if(chem_temp < R.melting_point)
 						R.reagent_state = SOLID
-						if(!is_type_in_typecache(cached_my_atom, holder_blacklist_typecache) && SSticker.HasRoundStarted())
+						if(!is_type_in_typecache(cached_my_atom, GLOB.no_reagent_message_typecache) && SSticker.HasRoundStarted())
 							for(var/mob/M in viewers(3, T))
 								to_chat(M, ("<span class='notice'>[icon2html(cached_my_atom, viewers(cached_my_atom))] The solution solidifies!</span>"))
 
