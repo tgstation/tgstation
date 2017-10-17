@@ -814,7 +814,8 @@
 	M.jitteriness = 0
 	if(M.has_dna())
 		M.dna.remove_all_mutations()
-	..()
+	if(!QDELETED(M)) //We were a monkey, now a human
+		..()
 
 /datum/reagent/medicine/antihol
 	name = "Antihol"
