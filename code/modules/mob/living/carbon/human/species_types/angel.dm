@@ -165,6 +165,8 @@
 	if(head)
 		myhead = head
 		head.dismember()
+		var/obj/item/dullahan_relay/DR = new (myhead)
+		DR.owner = H
 
 /datum/species/dullahan/spec_life(mob/living/carbon/human/H)
 	if(myhead)
@@ -175,7 +177,6 @@
 			H.reset_perspective(myhead)
 
 		if(myhead in view(7,src))
-		//	myhead.speech_relay = FALSE
 			H.disabilities &= ~DEAF
 		else
 			H.disabilities |= DEAF
@@ -215,3 +216,17 @@
 	else
 		tint = INFINITY
 	owner.update_sight()
+
+
+/obj/item/dullahan_relay
+	var/mob/living/owner
+	flags_1 = ABSTRACT_1 | DROPDEL_1
+
+/obj/item/dullahan_relay/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
+	if(speaker in view(7,owner))
+		return //Don't double up messages
+	raw_message = lang_treat(speaker, message_langs, raw_message, spans)
+	var/name_used = speaker.GetVoice()
+	var/rendered = "<i><span class='game say'>Relayed Speech: <span class='name'>[name_used]</span> <span class='message'>[raw_message]</span></span></i>"
+	if(owner)
+		owner.show_message(rendered, 2)
