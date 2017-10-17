@@ -3,7 +3,7 @@ PIPE CONSTRUCTION DEFINES
 Update these any time a path is changed
 Construction breaks otherwise
 */
-
+/*
 //Pipes
 #define PIPE_SIMPLE				/obj/machinery/atmospherics/pipe/simple
 #define PIPE_MANIFOLD			/obj/machinery/atmospherics/pipe/manifold
@@ -28,6 +28,14 @@ Construction breaks otherwise
 //Trinary
 #define PIPE_GAS_FILTER			/obj/machinery/atmospherics/components/trinary/filter
 #define PIPE_GAS_MIXER			/obj/machinery/atmospherics/components/trinary/mixer
+*/
+//Construction Categories
+#define PIPE_BINARY			0 //2 directions: N/S, E/W
+#define PIPE_BENDABLE		1 //6 directions: N/S, E/W, N/E, N/W, S/E, S/W
+#define PIPE_TRINARY		2 //4 directions: N/E/S, E/S/W, S/W/N, W/N/E
+#define PIPE_TRIN_F			3 //8 directions: N->S+E, S->N+E, N->S+W, S->N+W, E->W+S, W->E+S, E->W+N, W->E+N
+#define PIPE_DIRECTIONAL	4 //4 directions: N, S, E, W
+#define PIPE_QUAD			5 //1 directions: N/S/E/W
 
 //Disposal piping numbers - do NOT hardcode these, use the defines
 #define DISP_PIPE_STRAIGHT		0

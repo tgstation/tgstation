@@ -23,7 +23,7 @@ Buildable meters
 	var/is_bent = FALSE
 	var/piping_layer = PIPING_LAYER_DEFAULT
 
-	var/static/list/pipe_types = list(
+	var/static/list/pipe_types = list( //TODO
 		PIPE_SIMPLE, \
 		PIPE_LAYER_MANIFOLD, \
 		PIPE_MANIFOLD, \
@@ -49,11 +49,23 @@ Buildable meters
 		PIPE_GAS_MIXER, \
 	)
 
+
+/*
+TODO:	auto-generate pipe info
+		make pipe info create /obj/item/pipes
+		OOP it up
+		deal with RPD and pipe dispensers
+		use a bunch of loops and stuff
+		fix bugs
+		enhance RPD
+*/
+
+
 /obj/item/pipe/examine(mob/user)
 	..()
 	to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
 
-/obj/item/pipe/Initialize(mapload, _pipe_type, _dir, obj/machinery/atmospherics/make_from)
+/obj/item/pipe/Initialize(mapload, _pipe_type, _dir, obj/machinery/atmospherics/make_from) //TODO
 	if(make_from)
 		setDir(make_from.dir)
 		pipename = make_from.name
@@ -89,7 +101,7 @@ Buildable meters
 		setPipingLayer(piping_layer)
 	return ..()
 
-/obj/item/pipe/proc/setPipingLayer(new_layer = PIPING_LAYER_DEFAULT)
+/obj/item/pipe/proc/setPipingLayer(new_layer = PIPING_LAYER_DEFAULT) //TODO
 	var/obj/machinery/atmospherics/fakeA = get_pipe_cache(pipe_type)
 	var/nolayer = (fakeA.pipe_flags & PIPING_ALL_LAYER)
 	if(nolayer)
@@ -101,7 +113,7 @@ Buildable meters
 		layer = initial(layer) + ((piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE)
 
 //update the name and icon of the pipe item depending on the type
-GLOBAL_LIST_INIT(pipeID2State, list(
+GLOBAL_LIST_INIT(pipeID2State, list( //TODO
 	"[PIPE_SIMPLE]"			 = "simple", \
 	"[PIPE_MANIFOLD]"		 = "manifold", \
 	"[PIPE_LAYER_MANIFOLD]"	 = "layer_manifold", \
@@ -157,7 +169,7 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 		)
 	//fix_pipe_type()
 	name = nlist["[pipe_type][is_bent ? "_b" : ""]"] + " fitting"
-	icon_state = GLOB.pipeID2State["[pipe_type]"]
+	icon_state = GLOB.pipeID2State["[pipe_type]"] //TODO
 
 // rotate the pipe item clockwise
 
@@ -173,9 +185,9 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 
 	fixdir()
 
-	return
+	return //TODO
 
-/obj/item/pipe/verb/flip()
+/obj/item/pipe/verb/flip() //TODO
 	set category = "Object"
 	set name = "Flip Pipe"
 	set src in view(1)
@@ -216,7 +228,7 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 	return direction
 
 //Helper to clean up dir
-/obj/item/pipe/proc/fixdir()
+/obj/item/pipe/proc/fixdir() //TODO
 	if((pipe_type in list (PIPE_SIMPLE, PIPE_HE, PIPE_MVALVE, PIPE_DVALVE, PIPE_LAYER_MANIFOLD)) && !is_bent)
 		if(dir==SOUTH)
 			setDir(NORTH)
@@ -226,7 +238,7 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 /obj/item/pipe/attack_self(mob/user)
 	return rotate()
 
-/obj/item/pipe/proc/get_pipe_cache(type, direction)
+/obj/item/pipe/proc/get_pipe_cache(type, direction) //TODO
 	var/static/list/obj/machinery/atmospherics/check_cache
 	if(!islist(check_cache))
 		check_cache = list()
@@ -237,7 +249,7 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 
 	return check_cache[type]["[direction]"]
 
-/obj/item/pipe/attackby(obj/item/W, mob/user, params)
+/obj/item/pipe/attackby(obj/item/W, mob/user, params) //TODO
 	if (!istype(W, /obj/item/wrench))
 		return ..()
 	if (!isturf(loc))
@@ -332,4 +344,3 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 	piping_layer = new_layer
 	pixel_x = (new_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X
 	pixel_y = (new_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y
-

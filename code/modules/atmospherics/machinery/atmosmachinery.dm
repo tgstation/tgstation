@@ -36,6 +36,8 @@ Pipelines + Other Objects -> Pipe network
 	var/device_type = 0
 	var/list/obj/machinery/atmospherics/nodes
 
+	var/construction_type
+
 /obj/machinery/atmospherics/examine(mob/user)
 	..()
 	if(is_type_in_list(src, GLOB.ventcrawl_machinery) && isliving(user))

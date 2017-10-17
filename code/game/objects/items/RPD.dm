@@ -4,12 +4,6 @@
 CONTAINS:
 RPD
 */
-#define PIPE_BINARY		0
-#define PIPE_BENDABLE	1
-#define PIPE_TRINARY	2
-#define PIPE_TRIN_M		3
-#define PIPE_UNARY		4
-#define PIPE_QUAD		5
 
 #define PAINT_MODE -2
 #define EATING_MODE -1
