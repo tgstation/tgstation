@@ -174,7 +174,7 @@
 		return
 
 /turf/closed/wall/proc/try_clean(obj/item/W, mob/user, turf/T)
-	if((user.a_intent != INTENT_HELP) || !damage_decals.len || !istype(W, /obj/item/weldingtool))
+	if((user.a_intent != INTENT_HELP) || !damage_decals || !damage_decals.len || !istype(W, /obj/item/weldingtool))
 		return FALSE
 	var/obj/item/weldingtool/WT = W
 	if(WT.remove_fuel(0, user))
