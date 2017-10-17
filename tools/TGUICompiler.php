@@ -156,7 +156,7 @@ try{
 			exec('rmdir "' . str_replace('/', '\\', $target_node) . '"');	//improtant
 			rrmdir($target_path);
 		}
-		else if(!$$updated_git)
+		else if(!$updated_git)
 			throw new RuntimeException('No valid files uploaded!');
 	}
 }

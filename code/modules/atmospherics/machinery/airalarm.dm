@@ -237,7 +237,9 @@
 					"incheck"	= info["checks"]&2,
 					"direction"	= info["direction"],
 					"external"	= info["external"],
-					"extdefault"= (info["external"] == ONE_ATMOSPHERE)
+					"internal"	= info["internal"],
+					"extdefault"= (info["external"] == ONE_ATMOSPHERE),
+					"intdefault"= (info["internal"] == 0)
 				))
 		data["scrubbers"] = list()
 		for(var/id_tag in A.air_scrub_names)
@@ -321,14 +323,17 @@
 		if("incheck")
 			send_signal(device_id, list("checks" = text2num(params["val"])^2))
 			. = TRUE
-		if("set_external_pressure")
+		if("set_external_pressure", "set_internal_pressure")
 			var/area/A = get_area(src)
-			var/target = input("New target pressure:", name, A.air_vent_info[device_id]["external"]) as num|null
+			var/target = input("New target pressure:", name, A.air_vent_info[device_id][(action == "set_external_pressure" ? "external" : "internal")]) as num|null
 			if(!isnull(target) && !..())
-				send_signal(device_id, list("set_external_pressure" = target))
+				send_signal(device_id, list("[action]" = target))
 				. = TRUE
 		if("reset_external_pressure")
 			send_signal(device_id, list("reset_external_pressure"))
+			. = TRUE
+		if("reset_internal_pressure")
+			send_signal(device_id, list("reset_internal_pressure"))
 			. = TRUE
 		if("threshold")
 			var/env = params["env"]

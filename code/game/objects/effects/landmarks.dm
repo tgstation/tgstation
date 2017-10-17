@@ -254,7 +254,7 @@
 	..()
 	GLOB.prisonwarp += loc
 	return INITIALIZE_HINT_QDEL
-	
+
 /obj/effect/landmark/ert_spawn
 	name = "Emergencyresponseteam"
 
@@ -310,7 +310,7 @@
 /obj/effect/landmark/servant_of_ratvar/Initialize(mapload)
 	..()
 	GLOB.servant_spawns += loc
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 //City of Cogs entrances
 /obj/effect/landmark/city_of_cogs
@@ -320,7 +320,7 @@
 /obj/effect/landmark/city_of_cogs/Initialize(mapload)
 	..()
 	GLOB.city_of_cogs_spawns += loc
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 //generic event spawns
 /obj/effect/landmark/event_spawn

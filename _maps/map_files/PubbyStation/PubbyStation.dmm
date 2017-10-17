@@ -2788,7 +2788,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
 "aip" = (
-/obj/structure/closet/bombcloset,
+/obj/structure/closet/bombcloset/security,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
@@ -54061,6 +54061,10 @@
 	},
 /turf/open/space/basic,
 /area/space)
+"YXH" = (
+/obj/machinery/smoke_machine,
+/turf/open/floor/plasteel/white,
+/area/medical/chemistry)
 
 (1,1,1) = {"
 aaa
@@ -85294,8 +85298,8 @@ bpX
 brl
 bsL
 bul
-bsK
 bwU
+YXH
 bsK
 bAg
 bpY

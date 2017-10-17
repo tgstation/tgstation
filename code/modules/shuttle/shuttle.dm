@@ -193,7 +193,7 @@
 
 	var/last_dock_time
 
-/obj/docking_port/stationary/Initialize()
+/obj/docking_port/stationary/Initialize(mapload)
 	. = ..()
 	SSshuttle.stationary += src
 	if(!id)
@@ -201,6 +201,10 @@
 	if(name == "dock")
 		name = "dock[SSshuttle.stationary.len]"
 	baseturf_cache = typecacheof(baseturf_type)
+
+	if(mapload)
+		for(var/turf/T in return_turfs())
+			T.flags_1 |= NO_RUINS_1
 
 	#ifdef DOCKING_PORT_HIGHLIGHT
 	highlight("#f00")
@@ -280,6 +284,7 @@
 	var/engine_coeff = 1 //current engine coeff
 	var/current_engines = 0 //current engine power
 	var/initial_engines = 0 //initial engine power
+	var/can_move_docking_ports = FALSE //if this shuttle can move docking ports other than the one it is docked at
 
 /obj/docking_port/mobile/proc/register()
 	SSshuttle.mobile += src
@@ -596,7 +601,7 @@
 				var/atom/movable/moving_atom = thing
 				if(moving_atom.loc != oldT) //fix for multi-tile objects
 					continue
-				moving_atom.onShuttleMove(newT, oldT, rotation, movement_force, movement_direction, old_dock)//atoms
+				moving_atom.onShuttleMove(newT, oldT, rotation, movement_force, movement_direction, old_dock, src)//atoms
 				moved_atoms += moving_atom
 		if(move_mode & MOVE_TURF)
 			oldT.onShuttleMove(newT, underlying_turf_type, underlying_baseturf_type, rotation, movement_force, movement_direction)//turfs
