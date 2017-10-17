@@ -6,8 +6,13 @@
 
 /mob/living/carbon/isloyal()
 	for(var/obj/item/implant/mindshield/L in implants)
-		return 1
+		return TRUE
 
+/mob/proc/lowest_buckled_mob()
+	. = src
+	if(buckled && ismob(buckled))
+		var/mob/Buckled = buckled
+		. = Buckled.lowest_buckled_mob()
 
 /proc/check_zone(zone)
 	if(!zone)
