@@ -22,8 +22,11 @@
 	location = loc
 
 /datum/effect_system/smoke_spread/chem/smoke_machine
-	effect_type = /obj/effect/particle_effect/smoke/transparent
+	effect_type = /obj/effect/particle_effect/smoke/chem/smoke_machine
 
+/obj/effect/particle_effect/smoke/chem/smoke_machine
+	opaque = FALSE
+	alpha = 100
 
 
 /obj/machinery/smoke_machine/Initialize()
