@@ -625,7 +625,7 @@
 
 /obj/item/slapper/update_icon()
 	. = ..()
-	if(slaps >= 150 && !ascended)
+	if(slaps >= 150)
 		icon_state = "disintegrate"
 		item_state = "disintegrate"
 	
