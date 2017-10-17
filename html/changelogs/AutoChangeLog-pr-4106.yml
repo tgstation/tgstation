@@ -1,4 +1,0 @@
-author: "HonkBot"
-delete-after: True
-changes: 
-  - tweak: "Portable air pumps can output to a maximum of 25 atmospheres."

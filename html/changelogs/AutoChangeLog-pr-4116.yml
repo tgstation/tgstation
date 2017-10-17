@@ -1,4 +1,0 @@
-author: "Jambread"
-delete-after: True
-changes: 
-  - bugfix: "Lag should be significantly reduced on high pop."

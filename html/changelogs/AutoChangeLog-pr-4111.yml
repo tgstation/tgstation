@@ -1,4 +1,0 @@
-author: "HonkBot"
-delete-after: True
-changes: 
-  - rscadd: "Pipes can now be layered up to 3 layers."

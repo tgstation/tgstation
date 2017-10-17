@@ -1,8 +1,0 @@
-author: "Jambread/Crystalwarrior"
-delete-after: True
-changes: 
-  - rscadd: "Adds garrotes into the game! They are similar to damp rags in functionality, but have a different purpose. It''s MUCH faster to choke someone out with a garrote.  You can find the Garrote Handles in the crafting menu."
-  - rscadd: "'HOW TO USE GARROTES:
-Step 1. Make sure you are aiming for head.
-Step 2. Click on target, click on target again to reinforce the grab.
-Step 3. Reinforce up to neckgrab if you want choking to start, reinforcing into KILL grab will kill your target much faster!'"
