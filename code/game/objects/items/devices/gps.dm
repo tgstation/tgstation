@@ -124,6 +124,8 @@ GLOBAL_LIST_EMPTY(GPS_list)
 			a = copytext(sanitize(a), 1, 20)
 			gpstag = a
 			. = TRUE
+			name = "global positioning system ([gpstag])"
+
 		if("power")
 			toggletracking(usr)
 			. = TRUE
@@ -134,15 +136,6 @@ GLOBAL_LIST_EMPTY(GPS_list)
 			global_mode = !global_mode
 			. = TRUE
 
-/obj/item/device/gps/Topic(href, href_list)
-	..()
-	if(href_list["tag"] )
-		var/a = input("Please enter desired tag.", name, gpstag) as text
-		a = uppertext(copytext(sanitize(a), 1, 5))
-		if(in_range(src, usr))
-			gpstag = a
-			name = "global positioning system ([gpstag])"
-			attack_self(usr)
 
 /obj/item/device/gps/science
 	icon_state = "gps-s"
