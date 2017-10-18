@@ -260,7 +260,12 @@
 		return 0
 	if(!..())
 		return 0
-	visible_message("<b>[src]</b> points to [A]")
+	var/is_human = FALSE
+	if(ishuman(A))
+		is_human = TRUE
+	visible_message("<b>[src]</b> points to [A]","You point to [A]",\
+		agnosia_message = is_human ? "<b>[src]</b> points to someone" : "",
+		agnosia_self_message = is_human ? "You point to someone" : "")
 	return 1
 
 /mob/living/verb/succumb(whispered as null)

@@ -130,13 +130,15 @@ GLOBAL_LIST_EMPTY(active_agnosia_appearances)
 	GLOB.active_agnosia_appearances += src
 	..()
 	for(var/mob in GLOB.agnosiac_mobs)
-		add_hud_to(mob)
+		onNewMob(mob)
 
 /datum/atom_hud/alternate_appearance/basic/agnosia/Destroy()
 	GLOB.active_agnosia_appearances -= src
 	return ..()
 
 /datum/atom_hud/alternate_appearance/basic/agnosia/mobShouldSee(mob/M)
+	if(M == target)
+		return FALSE
 	return TRUE
 
 /datum/atom_hud/alternate_appearance/basic/observers

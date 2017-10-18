@@ -1586,6 +1586,7 @@
 #include "code\modules\mob\living\carbon\examine.dm"
 #include "code\modules\mob\living\carbon\inventory.dm"
 #include "code\modules\mob\living\carbon\life.dm"
+#include "code\modules\mob\living\carbon\login.dm"
 #include "code\modules\mob\living\carbon\say.dm"
 #include "code\modules\mob\living\carbon\status_procs.dm"
 #include "code\modules\mob\living\carbon\update_icons.dm"

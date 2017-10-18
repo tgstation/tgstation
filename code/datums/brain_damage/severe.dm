@@ -98,7 +98,7 @@ GLOBAL_LIST_EMPTY(agnosiac_mobs)
 	owner.disabilities |= AGNOSIA
 	GLOB.agnosiac_mobs += owner
 	for(var/datum/atom_hud/alternate_appearance/basic/agnosia/AA in GLOB.active_agnosia_appearances)
-		AA.add_hud_to(owner)
+		AA.onNewMob(owner)
 
 /datum/brain_trauma/severe/agnosia/on_lose()
 	..()

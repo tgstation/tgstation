@@ -1,6 +1,6 @@
 /mob/living/carbon/human/examine(mob/user)
 
-	if(user.disabilities & AGNOSIA)
+	if(user.disabilities & AGNOSIA && user != src)
 		var/msg = "<span class='warning'>You can't seem to focus on anything on this person...</span>"
 		to_chat(user, msg)
 		return
