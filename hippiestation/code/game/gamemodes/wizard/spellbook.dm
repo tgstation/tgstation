@@ -183,6 +183,12 @@ F
 	category = "Mobility"
 	cost = 1
 
+/datum/spellbook_entry/voice_of_god
+	name = "Voice Of God Implanter"
+	spell_type = /obj/item/device/autosurgeon/voice_of_god
+	category = "Assistance"
+	cost = 1
+
 /datum/spellbook_entry/fleshtostone
 	name = "Flesh to Stone"
 	spell_type = /obj/effect/proc_holder/spell/targeted/touch/flesh_to_stone
