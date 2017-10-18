@@ -64,7 +64,6 @@ SUBSYSTEM_DEF(air)
 /datum/controller/subsystem/air/Initialize(timeofday)
 	map_loading = FALSE
 	setup_allturfs()
-	setup_atmos_machinery()
 	setup_pipenets()
 	gas_reactions = init_gas_reactions()
 	..()
@@ -352,11 +351,6 @@ SUBSYSTEM_DEF(air)
 /turf/open/space/resolve_active_graph()
 	return list()
 
-/datum/controller/subsystem/air/proc/setup_atmos_machinery()
-	for (var/obj/machinery/atmospherics/AM in atmos_machinery)
-		AM.atmosinit()
-		CHECK_TICK
-
 //this can't be done with setup_atmos_machinery() because
 //	all atmos machinery has to initalize before the first
 //	pipenet can be built.
@@ -366,11 +360,6 @@ SUBSYSTEM_DEF(air)
 		CHECK_TICK
 
 /datum/controller/subsystem/air/proc/setup_template_machinery(list/atmos_machines)
-	for(var/A in atmos_machines)
-		var/obj/machinery/atmospherics/AM = A
-		AM.atmosinit()
-		CHECK_TICK
-
 	for(var/A in atmos_machines)
 		var/obj/machinery/atmospherics/AM = A
 		AM.build_network()
