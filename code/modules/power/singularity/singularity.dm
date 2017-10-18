@@ -278,7 +278,7 @@
 		desc = "[initial(desc)] It glows fiercely with inner fire."
 		name = "supermatter-charged [initial(name)]"
 		consumedSupermatter = 1
-		light_range = 10
+		set_light = 10
 	return
 
 
