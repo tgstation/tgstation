@@ -1,8 +1,10 @@
 #define SUMMON_POSSIBILITIES 3
 
 /datum/antagonist/cult
+	name = "Cultist"
 	var/datum/action/innate/cult/comm/communion = new
 	var/datum/action/innate/cult/mastervote/vote = new
+	job_rank = ROLE_CULTIST
 
 /datum/antagonist/cult/Destroy()
 	QDEL_NULL(communion)
@@ -73,7 +75,7 @@
 		add_objectives()
 	SSticker.mode.cult += owner // Only add after they've been given objectives
 	cult_memorization(owner)
-	if(jobban_isbanned(current, ROLE_CULTIST) || jobban_isbanned(current, CLUWNEBAN) || jobban_isbanned(current, CATBAN))
+	if(jobban_isbanned(current, CLUWNEBAN) || jobban_isbanned(current, CATBAN))
 		addtimer(CALLBACK(SSticker.mode, /datum/game_mode.proc/replace_jobbaned_player, current, ROLE_CULTIST, ROLE_CULTIST), 0)
 	SSticker.mode.update_cult_icons_added(owner)
 	current.log_message("<font color=#960000>Has been converted to the cult of Nar'Sie!</font>", INDIVIDUAL_ATTACK_LOG)
