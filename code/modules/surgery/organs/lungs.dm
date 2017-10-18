@@ -12,7 +12,7 @@
 	name = "lungs"
 	icon_state = "lungs"
 	zone = "chest"
-	slot = "lungs"
+	slot = ORGAN_SLOT_LUNGS
 	gender = PLURAL
 	w_class = WEIGHT_CLASS_NORMAL
 
@@ -332,7 +332,7 @@
 
 /obj/item/organ/lungs/cybernetic/upgraded
 	name = "upgraded cybernetic lungs"
-	desc = "A more advanced version of the stock cybernetic lungs. They are capable of filtering out lower levels of toxins and carbon-dioxide."
+	desc = "A more advanced version of the stock cybernetic lungs. They are capable of filtering out lower levels of toxins and carbon dioxide."
 	icon_state = "lungs-c-u"
 	origin_tech = "biotech=5"
 

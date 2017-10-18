@@ -1242,6 +1242,9 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 /proc/stack_trace(msg)
 	CRASH(msg)
 
+/datum/proc/stack_trace(msg)
+	CRASH(msg)
+
 //Key thing that stops lag. Cornerstone of performance in ss13, Just sitting here, in unsorted.dm.
 
 //Increases delay as the server gets more overloaded,

@@ -30,10 +30,10 @@ RPD
 	var/selected=0
 
 /datum/pipe_info/New(pid,direction,dt)
-	src.id=pid
-	src.icon_state=GLOB.pipeID2State["[pid]"]
-	src.dir = direction
-	src.dirtype=dt
+	id=pid
+	icon_state=GLOB.pipeID2State["[pid]"]
+	dir = direction
+	dirtype=dt
 
 /datum/pipe_info/proc/Render(dispenser,label)
 	return "<li><a href='?src=\ref[dispenser];makepipe=[id];dir=[dir];type=[dirtype]'>[label]</a></li>"
@@ -67,10 +67,10 @@ GLOBAL_LIST_INIT(disposalpipeID2State, list(
 	icon_state = "meterX"
 
 /datum/pipe_info/disposal/New(var/pid,var/dt)
-	src.id=pid
-	src.icon_state=GLOB.disposalpipeID2State[pid+1]
-	src.dir = SOUTH
-	src.dirtype=dt
+	id=pid
+	icon_state=GLOB.disposalpipeID2State[pid+1]
+	dir = SOUTH
+	dirtype=dt
 	if(pid<DISP_END_BIN || pid>DISP_END_CHUTE)
 		icon_state = "con[icon_state]"
 
@@ -80,13 +80,14 @@ GLOBAL_LIST_INIT(disposalpipeID2State, list(
 //find these defines in code\game\machinery\pipe\consruction.dm
 GLOBAL_LIST_INIT(RPD_recipes, list(
 	"Pipes" = list(
-		"Pipe"           = new /datum/pipe_info(PIPE_SIMPLE,			1, PIPE_BENDABLE),
-		//"Bent Pipe"      = new /datum/pipe_info(PIPE_SIMPLE,	 		5, PIPE_BENT),
-		"Manifold"       = new /datum/pipe_info(PIPE_MANIFOLD, 			1, PIPE_TRINARY),
-		"Manual Valve"   = new /datum/pipe_info(PIPE_MVALVE, 			1, PIPE_BINARY),
-		"Digital Valve"  = new /datum/pipe_info(PIPE_DVALVE,			1, PIPE_BINARY),
-		"4-Way Manifold" = new /datum/pipe_info(PIPE_4WAYMANIFOLD,		1, PIPE_QUAD),
-		"Bluespace Pipe" = new /datum/pipe_info(PIPE_BLUESPACE,			1, PIPE_UNARY),
+		"Pipe"				= new /datum/pipe_info(PIPE_SIMPLE,				1,	PIPE_BENDABLE),
+		//"Bent Pipe"		= new /datum/pipe_info(PIPE_SIMPLE,	 			5,	PIPE_BENT),
+		"Manifold"			= new /datum/pipe_info(PIPE_MANIFOLD, 			1,	PIPE_TRINARY),
+		"Manual Valve"		= new /datum/pipe_info(PIPE_MVALVE, 			1,	PIPE_BINARY),
+		"Digital Valve"		= new /datum/pipe_info(PIPE_DVALVE,				1,	PIPE_BINARY),
+		"4-Way Manifold"	= new /datum/pipe_info(PIPE_4WAYMANIFOLD,		1,	PIPE_QUAD),
+		"Layer Manifold"	= new /datum/pipe_info(PIPE_LAYER_MANIFOLD,		1,	PIPE_BINARY),
+		"Bluespace Pipe"	= new /datum/pipe_info(PIPE_BLUESPACE,			1,	PIPE_UNARY),
 	),
 	"Devices"=list(
 		"Connector"      = new /datum/pipe_info(PIPE_CONNECTOR,			1, PIPE_UNARY),
@@ -153,6 +154,7 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 	)
 	var/paint_color="grey"
 	var/screen = CATEGORY_ATMOS //Starts on the atmos tab.
+	var/piping_layer = PIPING_LAYER_DEFAULT
 
 /obj/item/pipe_dispenser/New()
 	. = ..()
@@ -201,6 +203,14 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 		dat += "<span class='linkOn'>Atmospherics</span> <A href='?src=\ref[src];screen=[CATEGORY_DISPOSALS];dmake=0;type=0'>Disposals</A><BR>"
 	else if(screen == CATEGORY_DISPOSALS)
 		dat += "<A href='?src=\ref[src];screen=[CATEGORY_ATMOS];makepipe=0;dir=1;type=0'>Atmospherics</A> <span class='linkOn'>Disposals</span><BR>"
+	var/generated_layer_list = ""
+	var/layers_total = PIPING_LAYER_MAX - PIPING_LAYER_MIN + 1
+	for(var/iter = PIPING_LAYER_MIN, iter <= layers_total, iter++)
+		if(iter == piping_layer)
+			generated_layer_list += "<span class='linkOn'><A href='?src=\ref[src];setlayer=[iter]'>[iter]</A></span>"
+		else
+			generated_layer_list += "<A href='?src=\ref[src];setlayer=[iter]'>[iter]</A>"
+	dat += "Atmospherics Piping Layer: [generated_layer_list]<BR>"
 	dat += "</ul>"
 
 	var/icon/preview=null
@@ -459,7 +469,7 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 		usr << browse(null, "window=pipedispenser")
 		return
 	usr.set_machine(src)
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	if(href_list["screen"])
 		screen = text2num(href_list["screen"])
 		show_menu(usr)
@@ -469,11 +479,18 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 		p_flipped = text2num(href_list["flipped"])
 		show_menu(usr)
 
+	if(href_list["setlayer"])
+		if(!isnum(href_list["setlayer"]))
+			piping_layer = text2num(href_list["setlayer"])
+		else
+			piping_layer = href_list["setlayer"]
+		show_menu(usr)
+
 	if(href_list["eatpipes"])
 		p_class = EATING_MODE
 		p_conntype=-1
 		p_dir=1
-		src.spark_system.start()
+		spark_system.start()
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 		show_menu(usr)
 
@@ -481,13 +498,13 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 		p_class = PAINT_MODE
 		p_conntype = -1
 		p_dir = 1
-		src.spark_system.start()
+		spark_system.start()
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 		show_menu(usr)
 
 	if(href_list["set_color"])
 		paint_color = href_list["set_color"]
-		src.spark_system.start()
+		spark_system.start()
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 		show_menu(usr)
 
@@ -496,7 +513,7 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 		p_dir = text2num(href_list["dir"])
 		p_conntype = text2num(href_list["type"])
 		p_class = ATMOS_MODE
-		src.spark_system.start()
+		spark_system.start()
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 		show_menu(usr)
 
@@ -504,7 +521,7 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 		p_class = METER_MODE
 		p_conntype = -1
 		p_dir = 1
-		src.spark_system.start()
+		spark_system.start()
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 		show_menu(usr)
 
@@ -513,7 +530,7 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 		p_conntype = text2num(href_list["type"])
 		p_dir = 1
 		p_class = DISPOSALS_MODE
-		src.spark_system.start()
+		spark_system.start()
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 		show_menu(usr)
 
@@ -522,10 +539,18 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 	if(!user.IsAdvancedToolUser() || istype(A, /turf/open/space/transit))
 		return ..()
 
+	var/atmos_piping_mode = p_class == ATMOS_MODE || p_class == METER_MODE
+	var/temp_piping_layer
+	if(atmos_piping_mode)
+		if(istype(A, /obj/machinery/atmospherics))
+			var/obj/machinery/atmospherics/AM = A
+			temp_piping_layer = AM.piping_layer
+			A = get_turf(user)
+
 	//make sure what we're clicking is valid for the current mode
 	var/is_paintable = (p_class == PAINT_MODE && istype(A, /obj/machinery/atmospherics/pipe))
 	var/is_consumable = (p_class == EATING_MODE && (istype(A, /obj/item/pipe) || istype(A, /obj/item/pipe_meter) || istype(A, /obj/structure/disposalconstruct)))
-	var/can_make_pipe = ((p_class == ATMOS_MODE || p_class == METER_MODE || p_class == DISPOSALS_MODE) && isturf(A))
+	var/can_make_pipe = ((atmos_piping_mode || p_class == DISPOSALS_MODE) && isturf(A))
 
 	if(!is_paintable && !is_consumable && !can_make_pipe)
 		return ..()
@@ -540,10 +565,8 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 		if(PAINT_MODE) //Paint pipes
 			var/obj/machinery/atmospherics/pipe/P = A
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			P.add_atom_colour(paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
-			P.pipe_color = paint_colors[paint_color]
+			P.paint(paint_colors[paint_color])
 			user.visible_message("<span class='notice'>[user] paints \the [P] [paint_color].</span>","<span class='notice'>You paint \the [P] [paint_color].</span>")
-			P.update_node_icon()
 			return
 
 		if(EATING_MODE) //Eating pipes
@@ -558,21 +581,29 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 2, target = A))
 				activate()
-				var/obj/item/pipe/P = new (A, pipe_type=queued_p_type, dir=queued_p_dir)
+				var/obj/item/pipe/P = new(A, queued_p_type, queued_p_dir)
 				P.flipped = queued_p_flipped
 				P.update()
 				P.add_fingerprint(usr)
+				if(!isnull(temp_piping_layer))
+					P.setPipingLayer(temp_piping_layer)
+				else
+					P.setPipingLayer(piping_layer)
 
 		if(METER_MODE) //Making pipe meters
 			to_chat(user, "<span class='notice'>You start building a meter...</span>")
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 2, target = A))
 				activate()
-				new /obj/item/pipe_meter(A)
+				var/obj/item/pipe_meter/PM = new /obj/item/pipe_meter(A)
+				if(!isnull(temp_piping_layer))
+					PM.setAttachLayer(temp_piping_layer)
+				else
+					PM.setAttachLayer(piping_layer)
 
 		if(DISPOSALS_MODE) //Making disposals pipes
 			if(isclosedturf(A))
-				to_chat(user, "<span class='warning'>[src]'s error light flickers; there's something in the way!</span>")
+				to_chat(user, "<span class='warning'>\the [src]'s error light flickers; there's something in the way!</span>")
 				return
 			to_chat(user, "<span class='notice'>You start building a disposals pipe...</span>")
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)

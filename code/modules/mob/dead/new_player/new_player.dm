@@ -83,7 +83,7 @@
 		if(SSticker.current_state == GAME_STATE_PREGAME)
 			var/time_remaining = SSticker.GetTimeLeft()
 			if(time_remaining > 0)
-				stat("Time To Start:", "[round(time_remaining/10)]s")			
+				stat("Time To Start:", "[round(time_remaining/10)]s")
 			else if(time_remaining == -10)
 				stat("Time To Start:", "DELAYED")
 			else
@@ -325,7 +325,7 @@
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
 	if(!IsJobAvailable(rank))
 		alert(src, "[rank] is not available. Please try another.")
-		return 0
+		return FALSE
 
 	if(SSticker.late_join_disabled)
 		alert(src, "An administrator has disabled late join spawning.")
@@ -389,6 +389,8 @@
 				if(SHUTTLE_CALL)
 					if(SSshuttle.emergency.timeLeft(1) > initial(SSshuttle.emergencyCallTime)*0.5)
 						SSticker.mode.make_antag_chance(humanc)
+
+	log_manifest(character.mind.key,character.mind,character,latejoin = TRUE)
 
 /mob/dead/new_player/proc/AddEmploymentContract(mob/living/carbon/human/employee)
 	//TODO:  figure out a way to exclude wizards/nukeops/demons from this.
