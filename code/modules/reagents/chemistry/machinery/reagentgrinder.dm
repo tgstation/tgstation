@@ -285,7 +285,9 @@
 	updateUsrDialog()
 
 /obj/machinery/reagentgrinder/proc/get_allowed_by_obj(obj/item/O)
-	return blend_items[O.type]
+	for (var/i in blend_items)
+		if (istype(O, i))
+			return blend_items[i]
 
 /obj/machinery/reagentgrinder/proc/get_allowed_juice_by_obj(obj/item/reagent_containers/food/snacks/O)
 	for(var/i in juice_items)
@@ -410,7 +412,7 @@
 					remove_object(O)
 					break
 		//Plants
-		else if(istype(I, /obj/item/grown))
+		if(istype(I, /obj/item/grown))
 			var/obj/item/grown/O = I
 			var/list/allowed = get_allowed_by_obj(O)
 			for (var/r_id in allowed)
@@ -433,7 +435,7 @@
 			if (O.Uses > 0)
 				beaker.reagents.add_reagent("slimejelly",min(20, space))
 			remove_object(O)
-		else if(istype(I, /obj/item/reagent_containers))
+		if(istype(I, /obj/item/reagent_containers))
 			var/obj/item/reagent_containers/O = I
 			var/amount = O.reagents.total_volume
 			O.reagents.trans_to(beaker, amount)
