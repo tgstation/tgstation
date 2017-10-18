@@ -54,7 +54,7 @@
 	. = 1
 
 /datum/reagent/clf3/reaction_turf(turf/T, reac_volume)
-	if(istype(T, /turf/open/floor/plating))
+	if(isplatingturf(T))
 		var/turf/open/floor/plating/F = T
 		if(prob(10 + F.burnt + 5*F.broken)) //broken or burnt plating is more susceptible to being destroyed
 			F.ChangeTurf(F.baseturf)
