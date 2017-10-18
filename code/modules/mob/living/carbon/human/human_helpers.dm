@@ -164,5 +164,5 @@
 		T.Remove(src)
 	if(E)
 		E.Remove(src)
-	var/obj/item/organ/ears/NE = new /obj/item/organ/ears()
-	NE.Insert(src)
+		var/obj/item/organ/ears/NE = new /obj/item/organ/ears()
+		NE.Insert(src)
