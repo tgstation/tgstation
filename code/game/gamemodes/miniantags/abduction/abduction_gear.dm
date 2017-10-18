@@ -143,7 +143,7 @@
 
 	var/mob/living/carbon/human/H = user
 	var/datum/species/abductor/S = H.dna.species
-	if(S.scientist)
+	if(S.scientist || (H.mind && H.mind.has_antag_datum(ANTAG_DATUM_ABDUCTOR_SCIENTIST)))
 		return TRUE
 	to_chat(user, "<span class='warning'>You're not trained to use this!</span>")
 	return FALSE
