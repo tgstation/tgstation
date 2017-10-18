@@ -1,0 +1,4 @@
+author: "duncathan"
+delete-after: True
+changes: 
+  - bugfix: "Filters no longer stop passing any gas through if the filtered output is full."

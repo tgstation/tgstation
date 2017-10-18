@@ -621,7 +621,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			P.show_recieved_message(msg,src)
 			if(!multiple)
 				show_to_ghosts(user,msg)
-				log_talk(user,"[key_name(user)] (PDA: [initial(name)]) sent \"[message]\" to [key_name(P,null,TRUE)]",LOGPDA)
+				log_talk(user,"[key_name(user)] (PDA: [initial(name)]) sent \"[message]\" to [P.name]",LOGPDA)
 		else
 			if(!multiple)
 				to_chat(user, "<span class='notice'>ERROR: Server isn't responding.</span>")

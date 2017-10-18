@@ -996,11 +996,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		radiation = 0
 		return TRUE
 
-	if(radiation > RAD_MOB_KNOCKDOWN)
+	if(radiation > RAD_MOB_KNOCKDOWN && prob(RAD_MOB_KNOCKDOWN_PROB))
 		if(!H.IsKnockdown())
 			H.emote("collapse")
-		H.Knockdown(RAD_KNOCKDOWN_TIME)
+		H.Knockdown(RAD_MOB_KNOCKDOWN_AMOUNT)
 		to_chat(H, "<span class='danger'>You feel weak.</span>")
+
+	if(radiation > RAD_MOB_VOMIT && prob(RAD_MOB_VOMIT_PROB))
+		H.vomit(10, TRUE)
 
 	if(radiation > RAD_MOB_MUTATE)
 		if(prob(1))
@@ -1010,10 +1013,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			H.domutcheck()
 
 	if(radiation > RAD_MOB_HAIRLOSS)
-		if(prob(15))
-			if(!( H.hair_style == "Shaved") || !(H.hair_style == "Bald") || (HAIR in species_traits))
-				to_chat(H, "<span class='danger'>Your hair starts to fall out in clumps...</span>")
-				addtimer(CALLBACK(src, .proc/go_bald, H), 50)
+		if(prob(15) && !(H.hair_style == "Bald") && (HAIR in species_traits))
+			to_chat(H, "<span class='danger'>Your hair starts to fall out in clumps...</span>")
+			addtimer(CALLBACK(src, .proc/go_bald, H), 50)
 
 /datum/species/proc/go_bald(mob/living/carbon/human/H)
 	if(QDELETED(H))	//may be called from a timer
@@ -1319,7 +1321,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						H.adjust_blurriness(10)
 
 					if(prob(I.force + ((100 - H.health)/2)) && H != user)
-						SSticker.mode.remove_revolutionary(H.mind, FALSE, user)
+						var/datum/antagonist/rev/rev = H.mind.has_antag_datum(/datum/antagonist/rev)
+						if(rev)
+							rev.remove_revolutionary(FALSE, user)
 
 				if(bloody)	//Apply blood
 					if(H.wear_mask)

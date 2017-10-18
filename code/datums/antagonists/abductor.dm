@@ -18,9 +18,15 @@
 	landmark_type = /obj/effect/landmark/abductor/scientist
 	greet_text = "Use your stealth technology and equipment to incapacitate humans for your scientist to retrieve."
 
-/datum/antagonist/abductor/New(datum/mind/new_owner, datum/objective_team/abductor_team/T)
-	team = T
-	return ..()
+/datum/antagonist/abductor/create_team(datum/objective_team/abductor_team/new_team)
+	if(!new_team)
+		return
+	if(!istype(new_team))
+		stack_trace("Wrong team type passed to [type] initialization.")
+	team = new_team
+
+/datum/antagonist/abductor/get_team()
+	return team
 
 /datum/antagonist/abductor/on_gain()
 	SSticker.mode.abductors += owner
@@ -31,7 +37,6 @@
 
 /datum/antagonist/abductor/on_removal()
 	SSticker.mode.abductors -= owner
-	team.members -= owner
 	owner.objectives -= team.objectives
 	if(owner.current)
 		to_chat(owner.current,"<span class='userdanger'>You are no longer the [owner.special_role]!</span>")
