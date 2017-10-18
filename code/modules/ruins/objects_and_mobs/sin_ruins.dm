@@ -108,10 +108,10 @@
 //can't be bothered to do sloth right now, will make later
 
 /obj/item/kitchen/knife/envy //Envy's knife: Found in the Envy ruin. Attackers take on the appearance of whoever they strike.
-	name = "envy's knife"
+	name = "envy's blade"
 	desc = "Their success will be yours."
 	icon = 'icons/obj/wizard.dmi'
-	icon_state = "render"
+	icon_state = "envy"
 	item_state = "knife"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
