@@ -989,7 +989,7 @@
 
 	if(radiation > RAD_MOB_VOMIT && prob(RAD_MOB_VOMIT_PROB))
 		H.vomit(10, TRUE)
-	
+
 	if(radiation > RAD_MOB_MUTATE)
 		if(prob(1))
 			to_chat(H, "<span class='danger'>You mutate!</span>")
@@ -1327,6 +1327,8 @@
 						H.confused = max(H.confused, 20)
 						H.adjustBrainLoss(20)
 						H.adjust_blurriness(10)
+						if(prob(20))
+							H.gain_trauma(/datum/brain_trauma/mild/concussion)
 
 					if(prob(I.force + ((100 - H.health)/2)) && H != user)
 						var/datum/antagonist/rev/rev = H.mind.has_antag_datum(/datum/antagonist/rev)

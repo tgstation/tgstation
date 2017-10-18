@@ -151,7 +151,7 @@ MASS SPECTROMETER
 	else if (M.getBrainLoss() >= 120)
 		to_chat(user, "\t<span class='alert'>Severe brain damage detected. Subject likely to have mental traumas.</span>")
 	else if (M.getBrainLoss() >= 45)
-		to_chat(user, "\t<span class='alert'>Brain damage detected. Subject may have had a concussion.</span>")
+		to_chat(user, "\t<span class='alert'>Brain damage detected.</span>")
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		if(LAZYLEN(C.traumas))

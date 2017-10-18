@@ -41,6 +41,7 @@
 /mob/living/carbon/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
 	if(!client)
 		return
-	for(var/datum/brain_trauma/trauma in traumas)
+	for(var/T in traumas)
+		var/datum/brain_trauma/trauma = T
 		message = trauma.on_hear(message, speaker, message_language, raw_message, radio_freq)
 	return ..()

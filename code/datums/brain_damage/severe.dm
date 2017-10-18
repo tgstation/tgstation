@@ -57,7 +57,7 @@
 	owner.Knockdown(200, ignore_canknockdown = TRUE)
 	..()
 
-/datum/brain_trauma/severe/blindness/on_lose()
+/datum/brain_trauma/severe/paralysis/on_lose()
 	owner.SetKnockdown(0)
 	..()
 
