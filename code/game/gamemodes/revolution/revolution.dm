@@ -6,9 +6,6 @@
 // this will also check they're not a head, so it can just be called freely
 // If the game somtimes isn't registering a win properly, then SSticker.mode.check_win() isn't being called somewhere.
 
-/datum/game_mode
-	var/list/datum/mind/head_revolutionaries = list()
-	var/list/datum/mind/revolutionaries = list()
 
 /datum/game_mode/revolution
 	name = "revolution"
@@ -29,7 +26,8 @@
 	var/finished = 0
 	var/check_counter = 0
 	var/max_headrevs = 3
-	var/list/datum/mind/heads_to_kill = list()
+	var/datum/objective_team/revolution/revolution
+	var/list/datum/mind/headrev_candidates = list()
 
 ///////////////////////////
 //Announces the game type//
@@ -55,23 +53,22 @@
 			break
 		var/datum/mind/lenin = pick(antag_candidates)
 		antag_candidates -= lenin
-		head_revolutionaries += lenin
+		headrev_candidates += lenin
 		lenin.restricted_roles = restricted_jobs
 
-	if(head_revolutionaries.len < required_enemies)
+	if(headrev_candidates.len < required_enemies)
 		return FALSE
 
 	return TRUE
 
 /datum/game_mode/revolution/post_setup()
-	var/list/heads = get_living_heads()
-	var/list/sec = get_living_sec()
+	var/list/heads = SSjob.get_living_heads()
+	var/list/sec = SSjob.get_living_sec()
 	var/weighted_score = min(max(round(heads.len - ((8 - sec.len) / 3)),1),max_headrevs)
 
-
-	for(var/datum/mind/rev_mind in head_revolutionaries)	//People with return to lobby may still be in the lobby. Let's pick someone else in that case.
+	for(var/datum/mind/rev_mind in headrev_candidates)	//People with return to lobby may still be in the lobby. Let's pick someone else in that case.
 		if(isnewplayer(rev_mind.current))
-			head_revolutionaries -= rev_mind
+			headrev_candidates -= rev_mind
 			var/list/newcandidates = shuffle(antag_candidates)
 			if(newcandidates.len == 0)
 				continue
@@ -87,24 +84,27 @@
 						antag_candidates += lenin	//Let's let them keep antag chance for other antags
 						continue
 
-					head_revolutionaries += lenin
+					headrev_candidates += lenin
 					break
 
-	while(weighted_score < head_revolutionaries.len) //das vi danya
-		var/datum/mind/trotsky = pick(head_revolutionaries)
+	while(weighted_score < headrev_candidates.len) //das vi danya
+		var/datum/mind/trotsky = pick(headrev_candidates)
 		antag_candidates += trotsky
-		head_revolutionaries -= trotsky
-		update_rev_icons_removed(trotsky)
+		headrev_candidates -= trotsky
 
-	for(var/datum/mind/rev_mind in head_revolutionaries)
+	revolution = new()
+
+	for(var/datum/mind/rev_mind in headrev_candidates)
 		log_game("[rev_mind.key] (ckey) has been selected as a head rev")
-		for(var/datum/mind/head_mind in heads)
-			mark_for_death(rev_mind, head_mind)
+		var/datum/antagonist/rev/head/new_head = new(rev_mind)
+		new_head.give_flash = TRUE
+		new_head.give_hud = TRUE
+		new_head.remove_clumsy = TRUE
+		rev_mind.add_antag_datum(new_head,revolution)
 
-		addtimer(CALLBACK(src, .proc/equip_revolutionary, rev_mind.current), rand(10, 100))
+	revolution.update_objectives()
+	revolution.update_heads()
 
-	for(var/datum/mind/rev_mind in head_revolutionaries)
-		greet_revolutionary(rev_mind)
 	SSshuttle.registerHostileEnvironment(src)
 	..()
 
@@ -113,103 +113,9 @@
 	check_counter++
 	if(check_counter >= 5)
 		if(!finished)
-			check_heads()
 			SSticker.mode.check_win()
 		check_counter = 0
 	return FALSE
-
-
-/datum/game_mode/proc/forge_revolutionary_objectives(datum/mind/rev_mind)
-	var/list/heads = get_living_heads()
-	for(var/datum/mind/head_mind in heads)
-		var/datum/objective/mutiny/rev_obj = new
-		rev_obj.owner = rev_mind
-		rev_obj.target = head_mind
-		rev_obj.explanation_text = "Assassinate or exile [head_mind.name], the [head_mind.assigned_role]."
-		rev_mind.objectives += rev_obj
-
-/datum/game_mode/proc/greet_revolutionary(datum/mind/rev_mind, you_are=1)
-	update_rev_icons_added(rev_mind)
-	if (you_are)
-		to_chat(rev_mind.current, "<span class='userdanger'>You are a member of the revolutionaries' leadership!</span>")
-	rev_mind.special_role = "Head Revolutionary"
-	rev_mind.announce_objectives()
-
-/////////////////////////////////////////////////////////////////////////////////
-//This are equips the rev heads with their gear, and makes the clown not clumsy//
-/////////////////////////////////////////////////////////////////////////////////
-/datum/game_mode/proc/equip_revolutionary(mob/living/carbon/human/mob)
-	if(!istype(mob))
-		return
-
-	if (mob.mind)
-		if (mob.mind.assigned_role == "Clown")
-			to_chat(mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
-			mob.dna.remove_mutation(CLOWNMUT)
-
-
-	var/obj/item/device/assembly/flash/T = new(mob)
-	var/obj/item/organ/cyberimp/eyes/hud/security/syndicate/S = new(mob)
-
-	var/list/slots = list (
-		"backpack" = slot_in_backpack,
-		"left pocket" = slot_l_store,
-		"right pocket" = slot_r_store
-	)
-	var/where = mob.equip_in_one_of_slots(T, slots)
-	S.Insert(mob, special = FALSE, drop_if_replaced = FALSE)
-	to_chat(mob, "Your eyes have been implanted with a cybernetic security HUD which will help you keep track of who is mindshield-implanted, and therefore unable to be recruited.")
-
-	if (!where)
-		to_chat(mob, "The Syndicate were unfortunately unable to get you a flash.")
-	else
-		to_chat(mob, "The flash in your [where] will help you to persuade the crew to join your cause.")
-		return TRUE
-
-/////////////////////////////////
-//Gives head revs their targets//
-/////////////////////////////////
-/datum/game_mode/revolution/proc/mark_for_death(datum/mind/rev_mind, datum/mind/head_mind)
-	var/datum/objective/mutiny/rev_obj = new
-	rev_obj.owner = rev_mind
-	rev_obj.target = head_mind
-	rev_obj.explanation_text = "Assassinate [head_mind.name], the [head_mind.assigned_role]."
-	rev_mind.objectives += rev_obj
-	heads_to_kill += head_mind
-
-////////////////////////////////////////////
-//Checks if new heads have joined midround//
-////////////////////////////////////////////
-/datum/game_mode/revolution/proc/check_heads()
-	var/list/heads = get_all_heads()
-	var/list/sec = get_all_sec()
-	if(heads_to_kill.len < heads.len)
-		var/list/new_heads = heads - heads_to_kill
-		for(var/datum/mind/head_mind in new_heads)
-			for(var/datum/mind/rev_mind in head_revolutionaries)
-				mark_for_death(rev_mind, head_mind)
-
-	if(head_revolutionaries.len < max_headrevs && head_revolutionaries.len < round(heads.len - ((8 - sec.len) / 3)))
-		latejoin_headrev()
-
-///////////////////////////////
-//Adds a new headrev midround//
-///////////////////////////////
-/datum/game_mode/revolution/proc/latejoin_headrev()
-	if(revolutionaries) //Head Revs are not in this list
-		var/list/promotable_revs = list()
-		for(var/datum/mind/khrushchev in revolutionaries)
-			if(khrushchev.current && !khrushchev.current.incapacitated() && !khrushchev.current.restrained() && khrushchev.current.client && khrushchev.current.stat != DEAD)
-				if(ROLE_REV in khrushchev.current.client.prefs.be_special)
-					promotable_revs += khrushchev
-		if(promotable_revs.len)
-			var/datum/mind/stalin = pick(promotable_revs)
-			revolutionaries -= stalin
-			head_revolutionaries += stalin
-			log_game("[stalin.key] (ckey) has been promoted to a head rev")
-			equip_revolutionary(stalin.current)
-			forge_revolutionary_objectives(stalin)
-			greet_revolutionary(stalin)
 
 //////////////////////////////////////
 //Checks if the revs have won or not//
@@ -238,9 +144,10 @@
 //Deals with converting players to the revolution//
 ///////////////////////////////////////////////////
 /proc/is_revolutionary(mob/M)
-	return M && istype(M) && M.mind && SSticker && SSticker.mode && M.mind in SSticker.mode.revolutionaries
+	return M && istype(M) && M.mind && M.mind.has_antag_datum(/datum/antagonist/rev)
 
 /proc/is_head_revolutionary(mob/M)
+<<<<<<< HEAD
 	return M && istype(M) && M.mind && SSticker && SSticker.mode && M.mind in SSticker.mode.head_revolutionaries
 
 /proc/is_revolutionary_in_general(mob/M)
@@ -308,23 +215,24 @@
 	var/datum/atom_hud/antag/revhud = GLOB.huds[ANTAG_HUD_REV]
 	revhud.leave_hud(rev_mind.current)
 	set_antag_hud(rev_mind.current, null)
+=======
+	return M && istype(M) && M.mind && M.mind.has_antag_datum(/datum/antagonist/rev/head)
+>>>>>>> bfc5a2cca8... Datum rev & related upgrades to base datum antag (#31630)
 
 //////////////////////////
 //Checks for rev victory//
 //////////////////////////
 /datum/game_mode/revolution/proc/check_rev_victory()
-	for(var/datum/mind/rev_mind in head_revolutionaries)
-		for(var/datum/objective/mutiny/objective in rev_mind.objectives)
-			if(!(objective.check_completion()))
-				return FALSE
-
-		return TRUE
+	for(var/datum/objective/mutiny/objective in revolution.objectives)
+		if(!(objective.check_completion()))
+			return FALSE
+	return TRUE
 
 /////////////////////////////
 //Checks for a head victory//
 /////////////////////////////
 /datum/game_mode/revolution/proc/check_heads_victory()
-	for(var/datum/mind/rev_mind in head_revolutionaries)
+	for(var/datum/mind/rev_mind in revolution.head_revolutionaries())
 		var/turf/T = get_turf(rev_mind.current)
 		if(!considered_afk(rev_mind) && considered_alive(rev_mind) && (T.z in GLOB.station_z_levels))
 			if(ishuman(rev_mind.current))
@@ -351,33 +259,35 @@
 
 /datum/game_mode/proc/auto_declare_completion_revolution()
 	var/list/targets = list()
-	if(head_revolutionaries.len || istype(SSticker.mode, /datum/game_mode/revolution))
+	var/list/datum/mind/headrevs = get_antagonists(/datum/antagonist/rev/head)
+	var/list/datum/mind/revs = get_antagonists(/datum/antagonist/rev,TRUE)
+	if(headrevs.len)
 		var/num_revs = 0
 		var/num_survivors = 0
 		for(var/mob/living/carbon/survivor in GLOB.living_mob_list)
 			if(survivor.ckey)
 				num_survivors++
 				if(survivor.mind)
-					if((survivor.mind in head_revolutionaries) || (survivor.mind in revolutionaries))
+					if(is_revolutionary(survivor))
 						num_revs++
 		if(num_survivors)
 			to_chat(world, "[GLOB.TAB]Command's Approval Rating: <B>[100 - round((num_revs/num_survivors)*100, 0.1)]%</B>" )
 		var/text = "<br><font size=3><b>The head revolutionaries were:</b></font>"
-		for(var/datum/mind/headrev in head_revolutionaries)
+		for(var/datum/mind/headrev in headrevs)
 			text += printplayer(headrev, 1)
 		text += "<br>"
 		to_chat(world, text)
 
-	if(revolutionaries.len || istype(SSticker.mode, /datum/game_mode/revolution))
+	if(revs.len)
 		var/text = "<br><font size=3><b>The revolutionaries were:</b></font>"
-		for(var/datum/mind/rev in revolutionaries)
+		for(var/datum/mind/rev in revs)
 			text += printplayer(rev, 1)
 		text += "<br>"
 		to_chat(world, text)
 
-	if( head_revolutionaries.len || revolutionaries.len || istype(SSticker.mode, /datum/game_mode/revolution) )
+	if(revs.len || headrevs.len)
 		var/text = "<br><font size=3><b>The heads of staff were:</b></font>"
-		var/list/heads = get_all_heads()
+		var/list/heads = SSjob.get_all_heads()
 		for(var/datum/mind/head in heads)
 			var/target = (head in targets)
 			if(target)
