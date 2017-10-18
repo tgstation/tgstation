@@ -54000,7 +54000,7 @@
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"YXG" = (
+"cBO" = (
 /obj/docking_port/stationary{
 	dheight = 9;
 	dir = 2;
@@ -54013,11 +54013,11 @@
 	},
 /turf/open/space/basic,
 /area/space)
-"YXH" = (
+"cBP" = (
 /obj/machinery/smoke_machine,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
-"YXI" = (
+"cBQ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "Singularity";
@@ -54028,21 +54028,21 @@
 	},
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
-"YXJ" = (
+"cBR" = (
 /obj/machinery/power/rad_collector/anchored,
 /turf/open/floor/plating,
 /area/engine/engineering)
-"YXK" = (
+"cBS" = (
 /obj/machinery/power/rad_collector/anchored,
 /turf/open/floor/plating,
 /area/engine/engineering)
-"YXL" = (
+"cBT" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
-"YXM" = (
+"cBU" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -54056,7 +54056,7 @@
 /obj/item/tank/internals/plasma,
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
-"YXN" = (
+"cBV" = (
 /obj/structure/window/plasma/reinforced{
 	dir = 8
 	},
@@ -54067,7 +54067,7 @@
 	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
-"YXO" = (
+"cBW" = (
 /obj/structure/window/plasma/reinforced{
 	dir = 8
 	},
@@ -54078,7 +54078,7 @@
 	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
-"YXP" = (
+"cBX" = (
 /obj/structure/window/plasma/reinforced{
 	dir = 8
 	},
@@ -62876,7 +62876,7 @@ aaa
 aaa
 aaa
 aaa
-YXG
+cBO
 aaa
 aaa
 aaa
@@ -81757,7 +81757,7 @@ bOG
 bva
 bDi
 bXk
-YXJ
+cBR
 cbX
 cdK
 bXk
@@ -82014,7 +82014,7 @@ bOG
 bTE
 cae
 bXk
-YXK
+cBS
 cbX
 cdK
 bXk
@@ -83823,7 +83823,7 @@ cfU
 cgu
 cgU
 chw
-YXM
+cBU
 chw
 chw
 chw
@@ -85323,7 +85323,7 @@ brl
 bsL
 bul
 bwU
-YXH
+cBP
 bsK
 bAg
 bpY
@@ -85611,8 +85611,8 @@ bYi
 bYV
 bZA
 cdN
-YXI
-YXL
+cBQ
+cBT
 cda
 cdV
 cex
@@ -86650,11 +86650,11 @@ cfV
 cgv
 cfV
 chz
-YXN
+cBV
 chz
-YXO
+cBW
 chz
-YXP
+cBX
 chz
 cfV
 cfV
