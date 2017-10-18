@@ -128,7 +128,7 @@
 /datum/brain_trauma/mild/phobia/New(mob/living/carbon/C, _permanent, specific_type)
 	phobia_type = specific_type
 	if(!phobia_type)
-		phobia_type = pick("spiders", "space", "security", "clowns", "greytide", "lizards", "spooky skeletons") // todo: add eldritch, cogs, magic, doctors(additionally do each department), lava, monsters, and mimes
+		phobia_type = pick("spiders", "space", "security", "clowns", "greytide", "lizards")
 
 	gain_text = "<span class='warning'>You start finding [phobia_type] very unnerving...</span>"
 	lose_text = "<span class='notice'>You no longer feel afraid of [phobia_type].</span>"
