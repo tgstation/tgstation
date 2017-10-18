@@ -6,7 +6,6 @@
 	mutant_bodyparts = list("tail_human", "ears", "wings")
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
 	use_skintones = 1
-	no_equip = list(slot_back)
 	mutant_brain = /obj/item/organ/brain/dullahan
 	mutanteyes = /obj/item/organ/eyes/dullahan
 	mutanttongue = /obj/item/organ/tongue/dullahan
@@ -32,7 +31,7 @@
 	if(myhead)
 		update_vision_perspective(H)
 
-		if(myhead in view(7, get_turf(H)))
+		if(get_turf(myhead) in view(7, get_turf(H)))
 			H.disabilities &= ~DEAF
 		else
 			H.disabilities |= DEAF
@@ -98,7 +97,8 @@
 
 /obj/item/dullahan_relay/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
 	if(owner)
-		if(speaker in view(7, get_turf(owner))) //Do not relay things we can already hear
+		var/turf/T = get_turf(speaker)
+		if(T in view(7, get_turf(owner))) //Do not relay things we can already hear
 			return
 		message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode)
 		to_chat(owner,message)
