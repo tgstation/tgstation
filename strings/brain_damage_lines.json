@@ -157,8 +157,8 @@
         "aluminium",
         "chemistry",
         "@pick(mutations)",
-		"@pick(servers)",
-		"@pick()"
+        "@pick(servers)",
+        "@pick(random_gibberish)"
     ]
 
 }
