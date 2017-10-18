@@ -51,7 +51,16 @@ Made by Xhuis
 	var/shadowling_dead = 0 //is shadowling kill
 	var/objective_explanation
 	var/thrall_ratio = 1
-
+	
+/datum/game_mode/proc/replace_jobbaned_player(mob/living/M, role_type, pref)
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [role_type]?", "[role_type]", null, pref, 50, M)
+	var/mob/dead/observer/theghost = null
+	if(candidates.len)
+		theghost = pick(candidates)
+		to_chat(M, "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!")
+		message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(M)]) to replace a jobbaned player.")
+		M.ghostize(0)
+		M.key = theghost.key
 
 /proc/is_thrall(var/mob/living/M)
 	return istype(M) && M.mind && SSticker && SSticker.mode && (M.mind in SSticker.mode.thralls)
