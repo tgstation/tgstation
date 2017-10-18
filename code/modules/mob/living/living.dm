@@ -196,7 +196,7 @@
 				M.pass_flags &= ~PASSMOB
 
 			now_pushing = 0
-			
+
 			if(!move_failed)
 				return 1
 
@@ -586,7 +586,7 @@
 	if(!force_moving)
 		..(pressure_difference, direction, pressure_resistance_prob_delta)
 
-/mob/living/proc/can_resist()
+/mob/living/can_resist()
 	return !((next_move > world.time) || incapacitated(ignore_restraints = TRUE))
 
 /mob/living/verb/resist()
