@@ -818,6 +818,8 @@
 
 /datum/reagent/toxin/acid/reaction_obj(obj/O, reac_volume)
 	if(istype(O, /obj/effect/decal/remains))
+		O.visible_message("<span class='warning'>[O] dissolve[O.gender==PLURAL?"":"s"] into a puddle of sizzling goop!</span>")
+		new /obj/effect/decal/cleanable/greenglow(O.drop_location())
 		qdel(O)
 	if(ismob(O.loc)) //handled in human acid_act()
 		return
