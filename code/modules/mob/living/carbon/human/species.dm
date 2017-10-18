@@ -981,11 +981,14 @@
 		radiation = 0
 		return TRUE
 
-	if(radiation > RAD_MOB_KNOCKDOWN)
+	if(radiation > RAD_MOB_KNOCKDOWN && prob(RAD_MOB_KNOCKDOWN_PROB))
 		if(!H.IsKnockdown())
 			H.emote("collapse")
-		H.Knockdown(RAD_KNOCKDOWN_TIME)
+		H.Knockdown(RAD_MOB_KNOCKDOWN_AMOUNT)
 		to_chat(H, "<span class='danger'>You feel weak.</span>")
+
+	if(radiation > RAD_MOB_VOMIT && prob(RAD_MOB_VOMIT_PROB))
+		H.vomit(10, TRUE)
 	
 	if(radiation > RAD_MOB_MUTATE)
 		if(prob(1))
@@ -995,10 +998,9 @@
 			H.domutcheck()
 
 	if(radiation > RAD_MOB_HAIRLOSS)
-		if(prob(15))
-			if(!( H.hair_style == "Shaved") || !(H.hair_style == "Bald") || (HAIR in species_traits))
-				to_chat(H, "<span class='danger'>Your hair starts to fall out in clumps...</span>")
-				addtimer(CALLBACK(src, .proc/go_bald, H), 50)
+		if(prob(15) && !(H.hair_style == "Bald") && (HAIR in species_traits))
+			to_chat(H, "<span class='danger'>Your hair starts to fall out in clumps...</span>")
+			addtimer(CALLBACK(src, .proc/go_bald, H), 50)
 
 /datum/species/proc/go_bald(mob/living/carbon/human/H)
 	if(QDELETED(H))	//may be called from a timer

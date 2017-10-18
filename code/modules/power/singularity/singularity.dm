@@ -21,7 +21,7 @@
 	var/move_self = 1 //Do we move on our own?
 	var/grav_pull = 4 //How many tiles out do we pull?
 	var/consume_range = 0 //How many tiles out do we eat
-	var/event_chance = 15 //Prob for event each tick
+	var/event_chance = 10 //Prob for event each tick
 	var/target = null //its target. moves towards the target if it has one
 	var/last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
 	var/last_warning
@@ -114,7 +114,7 @@
 /obj/singularity/process()
 	if(current_size >= STAGE_TWO)
 		move()
-		radiation_pulse(src, energy, 0.5)
+		radiation_pulse(src, min(5000, (energy*3)+1000), RAD_DISTANCE_COEFFICIENT*0.5)
 		if(prob(event_chance))//Chance for it to run a special event TODO:Come up with one or two more that fit
 			event()
 	eat()
@@ -377,28 +377,19 @@
 
 
 /obj/singularity/proc/event()
-	var/numb = pick(1,2,3,4,5,6)
+	var/numb = rand(1,4)
 	switch(numb)
 		if(1)//EMP
 			emp_area()
-		if(2,3)//tox damage all carbon mobs in area
-			toxmob()
-		if(4)//Stun mobs who lack optic scanners
+		if(2)//Stun mobs who lack optic scanners
 			mezzer()
-		if(5,6) //Sets all nearby mobs on fire
+		if(3,4) //Sets all nearby mobs on fire
 			if(current_size < STAGE_SIX)
 				return 0
 			combust_mobs()
 		else
 			return 0
 	return 1
-
-
-/obj/singularity/proc/toxmob()
-	var/radiation = 15
-	if (energy>200)
-		radiation += round((energy-150)/10,1)
-	radiation_pulse(src, radiation)
 
 
 /obj/singularity/proc/combust_mobs()
