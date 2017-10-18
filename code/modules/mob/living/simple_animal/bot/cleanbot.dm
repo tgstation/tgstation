@@ -216,9 +216,11 @@
 						var/sprayed = FALSE
 						for(var/obj/effect/decal/remains/R in A.loc)
 							if(!sprayed)
+								visible_message("<span class='danger'>[src] sprays [R] with hydrofluoric acid!</span>")
 								playsound(src, 'sound/effects/spray2.ogg', 50, 1, -6)
 								sprayed = TRUE
-							visible_message("<span class='danger'>[src] sprays [A] with hydrofluoric acid!</span>")
+								new /obj/effect/decal/cleanable/greenglow(R.drop_location())
+							R.visible_message("<span class='warning'>[R] dissolve[R.gender==PLURAL?"":"s"] into a puddle of sizzling goop!</span>")
 							qdel(R)
 
 				anchored = FALSE
