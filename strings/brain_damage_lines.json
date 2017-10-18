@@ -63,6 +63,7 @@
         "@pick(semicolon)wtf??????????? @pick(bug)",
         "@pick(semicolon)i ran into the supermattre ten i dsappeard @pick(bug)",
         "DON'T EVER TUCH ME",
+        "@pick(semicolon)EM OH OH EN, that speels @pick(the_stand)"
     ],
 
     "mutations": [
@@ -73,7 +74,12 @@
         "eksrey",
         "glowey skin",
         "fungal tb",
-        "stun gloves"
+        "stun gloves",
+        "dorf",
+        "catte",
+        "aelvas",
+        "domb",
+        "eantellgent"
     ],
 
     "george": [
@@ -139,7 +145,20 @@
     "semicolon": [
         "",
         ";",
-        ".h"
+        ".h",
+        ";g"
+    ],
+	
+    "the_stand": [
+        "Syndicate",
+        "Nanotrasen",
+        "illegal",
+        "graytide",
+        "aluminium",
+        "chemistry",
+        "@pick(mutations)",
+        "@pick(servers)",
+        "@pick(random_gibberish)"
     ]
 
 }
