@@ -5,36 +5,61 @@
 	var/spread_delay = 10
 	var/decay_factor = 2//the rate at which it dies
 
+
 /obj/effect/particle_effect/vapour/master/Initialize()
 	VM = src
 	LAZYADD(newvapes, src)
-	spawn(0)
-		for(var/obj/effect/particle_effect/vapour/master/M in orange(10, src))//a little costly but it only does it once and is much better than calling it on process
-			if(M.reagent_type == reagent_type)
-				volume += M.volume * 0.05
-				M.kill_vapour()
-		spread_delay = Clamp(100 / (volume * 0.001), 2, 60) //spread delay is inversely proportional to volume
-		decay_factor = min(volume * 0.00005, 10)//decay is proportional to volume so higher volume means faster spread but also a relatively faster death
+	addtimer(CALLBACK(src, .proc/Merge_Master), 0)
+	START_PROCESSING(SSreagent_states, src)
 	. = ..()
+
+/obj/effect/particle_effect/vapour/master/kill_vapour()
+	LAZYREMOVE(newvapes, src)
+	STOP_PROCESSING(SSreagent_states, src)
+	if(LAZYLEN(newvapes))
+		for(var/I in newvapes)
+			var/obj/effect/particle_effect/vapour/V = I
+			V.VM = null
+			V.On_Tick()
+	..()
+
+
+/obj/effect/particle_effect/vapour/master/Destroy()
+	LAZYREMOVE(VM.newvapes, src)
+	STOP_PROCESSING(SSreagent_states, src)
+	if(LAZYLEN(newvapes))
+		for(var/I in newvapes)
+			var/obj/effect/particle_effect/vapour/V = I
+			V.VM = null
+			V.On_Tick()
+	return ..()
+
+
+/obj/effect/particle_effect/vapour/master/proc/Merge_Master()
+	for(var/obj/effect/particle_effect/vapour/master/M in orange(5, src))//a little costly but it only does it once and is much better than calling it on process
+		if(M.reagent_type == reagent_type)
+			volume += M.volume * 0.05
+			M.kill_vapour()
+
+	spread_delay = Clamp(100 / (volume * 0.001), 2, 60) //spread delay is inversely proportional to volume
+	decay_factor = min(volume * 0.00005, 10)//decay is proportional to volume so higher volume means faster spread but also a relatively faster death
+
 
 /obj/effect/particle_effect/vapour/master/process()
 	volume -= decay_factor * LAZYLEN(newvapes)
-	var/turf/t_loc = get_turf(src)
-	if(!t_loc)
-		return
-	if(volume <= 40 && prob(33))//if it can't spread any more
-		for(var/I in newvapes)//killing vapour
-			var/obj/effect/particle_effect/vapour/V = I
-			V.kill_vapour()
+	if(volume <= 40)
 		kill_vapour()
 
 	for(var/I in newvapes)//scrubbing
 		var/obj/effect/particle_effect/vapour/V = I
+		V.On_Tick()
 		var/turf/T = get_turf(V)
 		if(!T)
-			return
+			V.kill_vapour()
 
+	CHECK_TICK
 	..()
+
 
 GLOBAL_LIST_EMPTY(vapour)
 /obj/effect/particle_effect/vapour
@@ -48,25 +73,22 @@ GLOBAL_LIST_EMPTY(vapour)
 	var/datum/reagent/reagent_type//much simpler than having it actually store and transfer
 	var/obj/effect/particle_effect/vapour/master/VM
 	var/reac_count = 0//running tally of the amount of inter gas reactions that have occured
+	var/spread_cooldown = 0
 
 /obj/effect/particle_effect/vapour/Initialize()
 	. = ..()
 	LAZYADD(GLOB.vapour, src)
-	create_reagents(50)//used just for in air reactions
-	START_PROCESSING(SSreagent_states, src)
 
 
 /obj/effect/particle_effect/vapour/Destroy()
 	LAZYREMOVE(GLOB.vapour, src)
-	STOP_PROCESSING(SSreagent_states, src)
 	return ..()
 
 /obj/effect/particle_effect/vapour/proc/kill_vapour()
 	LAZYREMOVE(GLOB.vapour, src)
-	STOP_PROCESSING(SSreagent_states, src)
 	qdel(src)
 
-/obj/effect/particle_effect/vapour/process()//attempts to spread and smoke mobs, slowly decays at a fixed rate + the amount of mobs currently being affected
+/obj/effect/particle_effect/vapour/proc/On_Tick()//attempts to spread and smoke mobs, slowly decays at a fixed rate + the amount of mobs currently being affected
 	var/turf/t_loc = get_turf(src)
 	if(!t_loc)
 		return
@@ -75,11 +97,9 @@ GLOBAL_LIST_EMPTY(vapour)
 	if(isspaceturf(t_loc) || isnull(reagent_type) || isnull(VM))
 		kill_vapour()
 
-	if(VM.volume <= 0)//extra check in case the first one fails
-		kill_vapour()
-
-	if(!QDELETED(src))
-		addtimer(CALLBACK(src, .proc/spread_vapour), VM.spread_delay)
+	if(!QDELETED(src) && spread_cooldown <= world.time)
+		spread_vapour()
+		spread_cooldown = world.time + VM.spread_delay
 
 	if(color != reagent_type.color)
 		add_atom_colour(reagent_type.color, FIXED_COLOUR_PRIORITY)
@@ -96,12 +116,11 @@ GLOBAL_LIST_EMPTY(vapour)
 		kill_vapour()
 
 	var/obj/machinery/atmospherics/components/unary/vent_scrubber/S = locate() in view(t_loc, 3)//max range is 3x3 for a unary scrubber
-	if(S && S.on && !S.welded && S.is_operational())
-		if(S.scrubbing == FALSE || S.widenet)//if either panic siphoning or set to contaminated mode /rather than offer you the i
+	if(S && S.on && !S.welded && S.is_operational() && src != VM)
+		if(S.scrubbing == FALSE || S.widenet)//if either panic siphoning or set to contaminated mode
 			VM.volume -= S.volume_rate * 0.5
 			kill_vapour()
 
-	CHECK_TICK
 
 /obj/effect/particle_effect/vapour/proc/spread_vapour()
 	var/turf/t_loc = get_turf(src)
@@ -109,6 +128,7 @@ GLOBAL_LIST_EMPTY(vapour)
 	var/supply = 0
 	if(!t_loc)
 		return
+
 
 	for(var/turf/T in t_loc.GetAtmosAdjacentTurfs())
 		if(isspaceturf(T))//space will drain volume
@@ -120,9 +140,11 @@ GLOBAL_LIST_EMPTY(vapour)
 				var/obj/effect/particle_effect/vapour/foundvape = I
 				if(foundvape && foundvape.reagent_type != reagent_type)
 					clear = TRUE
-					if(prob(3) && reac_count < 1 && reagents)//BIG safety check
+					if(prob(3) && reac_count < 1)//BIG safety check
+						create_reagents(50)//used just for in air reactions
 						reagents.add_reagent(reagent_type.id, 5)
 						reagents.add_reagent(foundvape.reagent_type.id, 5)
+						qdel(reagents)
 						reac_count++
 
 				if(foundvape && foundvape.reagent_type == reagent_type)
@@ -131,17 +153,19 @@ GLOBAL_LIST_EMPTY(vapour)
 					break
 			else
 				clear = TRUE
+
 		if(supply <= 0 && src != VM)//prevents master from dying instantly
 			kill_vapour()//no connecting tiles of same type
+
 		if(clear)
 			if(VM.volume > 40)
 				var/obj/effect/particle_effect/vapour/V = new(T)
 				V.reagent_type = reagent_type
 				V.VM = VM
-				V.setDir(pick(GLOB.cardinals))
 				V.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 				VM.volume -= 40
 				LAZYADD(VM.newvapes, V)
+
 
 /obj/effect/particle_effect/vapour/proc/vape_mob(mob/living/carbon/M)
 	if(VM.volume<1)
@@ -157,6 +181,7 @@ GLOBAL_LIST_EMPTY(vapour)
 	C.reagents.add_reagent(reagent_type.id, 1.5)//doesn't actually carry reagents but just adds them to mobs at a slow fixed rate
 	C.reagents.reaction(C, INGEST, 1.5)
 	return FALSE
+
 
 /obj/effect/particle_effect/vapour/ex_act()//just in case
 	return
