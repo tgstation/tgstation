@@ -421,7 +421,7 @@
 
 
 /mob/living/simple_animal/proc/sentience_act() //Called when a simple animal gains sentience via gold slime potion
-	return
+	toggle_ai(AI_OFF) // To prevent any weirdness.
 
 /mob/living/simple_animal/update_sight()
 	if(!client)
