@@ -138,8 +138,6 @@
 		H.pass_flags &= ~PASSTABLE
 		H.CloseWings()
 
-
-
 /datum/species/dullahan
 	name = "dullahan"
 	id = "dullahan"
@@ -165,24 +163,30 @@
 	if(head)
 		myhead = head
 		head.drop_limb()
+		myhead.flags_1 = HEAR_1
 		var/obj/item/dullahan_relay/DR = new (myhead)
 		DR.owner = H
+		START_PROCESSING(SSobj, DR)
 
 /datum/species/dullahan/spec_life(mob/living/carbon/human/H)
 	if(myhead)
-		var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
+		update_vision_perspective(H)
+
+		if(myhead in view(7, get_turf(H)))
+			H.disabilities &= ~DEAF
+		else
+			H.disabilities |= DEAF
+	else
+		H.gib()
+
+/datum/species/dullahan/proc/update_vision_perspective(mob/living/carbon/human/H)
+	var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
+	if(eyes)
+		H.update_tint()
 		if(eyes.tint)
 			H.reset_perspective(H)
 		else
 			H.reset_perspective(myhead)
-
-	//	if(myhead in view(7, get_turf(H)))
-//			H.disabilities &= ~DEAF
-//		else
-//			H.disabilities |= DEAF
-	else
-		H.gib()
-
 
 /obj/item/organ/brain/dullahan
 	decoy_override = TRUE
@@ -200,7 +204,6 @@
 	message = ""
 	return message
 
-
 /obj/item/organ/ears/dullahan
 	zone = "abstract"
 
@@ -210,22 +213,32 @@
 	actions_types = list(/datum/action/item_action/organ_action/use)
 	zone = "abstract"
 
-/obj/item/organ/eyes/night_vision/ui_action_click()
+/obj/item/organ/eyes/dullahan/ui_action_click()
 	if(tint)
 		tint = 0
 	else
 		tint = INFINITY
-	owner.update_sight()
 
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		if(H.dna.species.id == "dullahan")
+			var/datum/species/dullahan/D = H.dna.species
+			D.update_vision_perspective(H)
 
 /obj/item/dullahan_relay
 	var/mob/living/owner
+	flags_1 = HEAR_1
 
-/obj/item/dullahan_relay/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
-//	if(speaker in view(7, get_turf(owner)))
-//		return //Don't double up messages
-	raw_message = lang_treat(speaker, message_langs, raw_message, spans)
-	var/name_used = speaker.GetVoice()
-	var/rendered = "<i><span class='game say'>Relayed Speech: <span class='name'>[name_used]</span> <span class='message'>[raw_message]</span></span></i>"
+/obj/item/dullahan_relay/process()
+	if(!istype(loc, /obj/item/bodypart/head))
+		if(owner)
+			owner.gib()
+		STOP_PROCESSING(SSobj, src)
+		qdel(src)
+
+/obj/item/dullahan_relay/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
 	if(owner)
-		to_chat(owner, "[rendered]")
+		if(speaker in view(7, get_turf(owner))) //Do not relay things we can already hear
+			return
+		message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode)
+		to_chat(owner,message)
