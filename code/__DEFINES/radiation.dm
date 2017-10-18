@@ -29,8 +29,6 @@ Ask ninjanomnom if they're around
 #define RAD_MOB_MUTATE 1000							// How much stored radiation to check for mutation
 #define RAD_MOB_HAIRLOSS 500						// How much stored radiation to check for hair loss
 
-#define RAD_KNOCKDOWN_TIME 200						// How much knockdown to apply
-
 #define RAD_NO_INSULATION 1.0						// For things that shouldn't become irradiated for whatever reason
 #define RAD_VERY_LIGHT_INSULATION 0.9				// What girders have
 #define RAD_LIGHT_INSULATION 0.8
