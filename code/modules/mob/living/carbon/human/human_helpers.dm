@@ -156,3 +156,13 @@
 			return FALSE
 
 	return .
+
+/mob/living/carbon/human/proc/cure_cancer()
+	var/obj/item/organ/ears/cat/T = getorganslot(ORGAN_SLOT_TAIL)
+	var/obj/item/organ/tail/E = getorganslot(ORGAN_SLOT_EARS)
+	if(T)
+		T.Remove(src)
+	if(E)
+		E.Remove(src)
+	var/obj/item/organ/ears/NE = new /obj/item/organ/ears()
+	NE.Insert(src)
