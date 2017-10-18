@@ -689,8 +689,8 @@
 "bJ" = (
 /obj/machinery/computer/shuttle/pod{
 	pixel_y = -32;
-	possible_destinations = "pod_lavaland3";
-	shuttleId = "pod3"
+	possible_destinations = "pod_lavaland1";
+	shuttleId = "pod1"
 	},
 /obj/structure/chair{
 	dir = 4
@@ -707,7 +707,7 @@
 "bL" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
-	id = "pod_lavaland3";
+	id = "pod_lavaland1";
 	name = "lavaland"
 	},
 /turf/open/space/basic,
@@ -7647,8 +7647,8 @@
 "rB" = (
 /obj/machinery/computer/shuttle/pod{
 	pixel_y = -32;
-	possible_destinations = "pod_lavaland2";
-	shuttleId = "pod2"
+	possible_destinations = "pod_lavaland3";
+	shuttleId = "pod3"
 	},
 /obj/structure/chair{
 	dir = 8
@@ -8310,8 +8310,8 @@
 "sW" = (
 /obj/machinery/computer/shuttle/pod{
 	pixel_y = -32;
-	possible_destinations = "pod_lavaland2";
-	shuttleId = "pod2"
+	possible_destinations = "pod_lavaland4";
+	shuttleId = "pod4"
 	},
 /obj/structure/chair{
 	dir = 8
@@ -9728,6 +9728,22 @@
 	dir = 4
 	},
 /area/hallway/primary/central)
+"wg" = (
+/obj/docking_port/stationary/random{
+	dir = 8;
+	id = "pod_lavaland3";
+	name = "lavaland"
+	},
+/turf/open/space/basic,
+/area/space)
+"wh" = (
+/obj/docking_port/stationary/random{
+	dir = 8;
+	id = "pod_lavaland4";
+	name = "lavaland"
+	},
+/turf/open/space/basic,
+/area/space)
 
 (1,1,1) = {"
 aa
@@ -38139,11 +38155,11 @@ pS
 aa
 aa
 aa
-pS
+wg
 aa
 aa
 aa
-pS
+wh
 aa
 aa
 aa
