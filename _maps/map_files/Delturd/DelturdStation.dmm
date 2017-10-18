@@ -58392,11 +58392,6 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "chp" = (
-/obj/machinery/power/rad_collector/anchored,
-/obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -59031,6 +59026,7 @@
 	dir = 1
 	},
 /obj/machinery/power/tesla_coil,
+/obj/structure/window/plasma/reinforced,
 /turf/open/floor/plating/airless,
 /area/space)
 "ciJ" = (
@@ -59049,21 +59045,6 @@
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "engpa";
 	name = "Engineering Chamber Shutters"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -59772,11 +59753,6 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ckj" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -60740,11 +60716,6 @@
 	id = "engpa";
 	name = "Engineering Chamber Shutters"
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
@@ -61477,11 +61448,6 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -62166,11 +62132,6 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/yellow,
 /area/engine/engineering)
@@ -62719,11 +62680,6 @@
 /area/engine/engineering)
 "cqb" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
@@ -62794,11 +62750,6 @@
 "cqj" = (
 /obj/machinery/holopad,
 /obj/structure/cable/white{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -63590,11 +63541,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -63602,11 +63548,6 @@
 /area/engine/engineering)
 "crL" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
@@ -63615,11 +63556,6 @@
 "crM" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/yellow,
@@ -64453,41 +64389,21 @@
 	},
 /area/aisat)
 "ctg" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cth" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cti" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "ctj" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/machinery/camera/emp_proof{
 	c_tag = "Containment - Particle Accelerator";
 	dir = 1;
@@ -65834,11 +65750,6 @@
 	id = "engpa";
 	name = "Engineering Chamber Shutters"
 	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -66743,6 +66654,11 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/power/tesla_coil,
+/obj/structure/window/plasma/reinforced{
+	tag = "icon-plasmarwindow (NORTH)";
+	icon_state = "plasmarwindow";
+	dir = 1
+	},
 /turf/open/floor/plating/airless,
 /area/space)
 "cxJ" = (
@@ -67395,12 +67311,7 @@
 /turf/open/space,
 /area/space)
 "cza" = (
-/obj/machinery/power/rad_collector/anchored,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -70060,6 +69971,8 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/power/emitter{
+	tag = "icon-emitter (NORTH)";
+	icon_state = "emitter";
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
@@ -70101,7 +70014,13 @@
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "cEc" = (
+/obj/structure/cable/white{
+	d2 = 2;
+	icon_state = "0-2"
+	},
 /obj/machinery/power/emitter{
+	tag = "icon-emitter (NORTH)";
+	icon_state = "emitter";
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
@@ -110226,6 +110145,229 @@
 	},
 /turf/open/space,
 /area/space)
+"efn" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/open/space,
+/area/space)
+"efo" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/open/space,
+/area/space)
+"efp" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/open/space,
+/area/space)
+"efq" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/open/space,
+/area/space)
+"efr" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/structure/window/plasma/reinforced,
+/obj/machinery/power/rad_collector/anchored,
+/turf/open/floor/plating/airless,
+/area/space)
+"efs" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/structure/window/plasma/reinforced,
+/obj/machinery/power/rad_collector/anchored,
+/turf/open/floor/plating/airless,
+/area/space)
+"eft" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/structure/window/plasma/reinforced,
+/obj/machinery/power/rad_collector/anchored,
+/turf/open/floor/plating/airless,
+/area/space)
+"efu" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/structure/window/plasma/reinforced,
+/obj/machinery/power/rad_collector/anchored,
+/turf/open/floor/plating/airless,
+/area/space)
+"efv" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
+"efw" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "engpa";
+	name = "Engineering Chamber Shutters"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/engine/engineering)
+"efx" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/structure/window/plasma/reinforced{
+	tag = "icon-plasmarwindow (NORTH)";
+	icon_state = "plasmarwindow";
+	dir = 1
+	},
+/obj/machinery/power/rad_collector/anchored,
+/turf/open/floor/plating/airless,
+/area/space)
+"efy" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/structure/window/plasma/reinforced{
+	tag = "icon-plasmarwindow (NORTH)";
+	icon_state = "plasmarwindow";
+	dir = 1
+	},
+/obj/machinery/power/rad_collector/anchored,
+/turf/open/floor/plating/airless,
+/area/space)
+"efz" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/structure/window/plasma/reinforced{
+	tag = "icon-plasmarwindow (NORTH)";
+	icon_state = "plasmarwindow";
+	dir = 1
+	},
+/obj/machinery/power/rad_collector/anchored,
+/turf/open/floor/plating/airless,
+/area/space)
+"efA" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/structure/window/plasma/reinforced{
+	tag = "icon-plasmarwindow (NORTH)";
+	icon_state = "plasmarwindow";
+	dir = 1
+	},
+/obj/machinery/power/rad_collector/anchored,
+/turf/open/floor/plating/airless,
+/area/space)
+"efB" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/open/space,
+/area/space)
+"efC" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/open/space,
+/area/space)
+"efD" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/open/space,
+/area/space)
+"efE" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/open/space,
+/area/space)
 
 (1,1,1) = {"
 aaa
@@ -131176,9 +131318,9 @@ bYA
 bZZ
 cbN
 cdJ
-aaa
-chk
-ciH
+cfD
+efn
+efr
 aae
 aaa
 aaI
@@ -131188,9 +131330,9 @@ aaI
 aaI
 aaa
 aae
-cxH
-chk
-aaa
+efx
+efB
+cfD
 cCi
 cDZ
 cFw
@@ -131434,8 +131576,8 @@ bYA
 bZY
 cdJ
 aaI
-chk
-ciH
+efo
+efs
 cke
 aaI
 aaI
@@ -131445,8 +131587,8 @@ crC
 aaI
 aaI
 aaI
-cxH
-chk
+efy
+efC
 aaI
 cCi
 cEa
@@ -131948,8 +132090,8 @@ bYA
 bZY
 cdJ
 aaI
-chk
-ciH
+efp
+eft
 aaI
 aaI
 aaI
@@ -131959,8 +132101,8 @@ crE
 aaI
 aaI
 cvS
-cxH
-chk
+efz
+efD
 aaI
 cCi
 cEa
@@ -132204,9 +132346,9 @@ bYA
 caa
 cbO
 cdJ
-aaa
-chk
-ciH
+cfD
+efq
+efu
 aae
 aaa
 aaI
@@ -132216,9 +132358,9 @@ aaI
 aaI
 aaa
 aae
-cxH
-chk
-aaa
+efA
+efE
+cfD
 cCi
 cEb
 cFx
@@ -133497,7 +133639,7 @@ cho
 cnl
 coE
 cqb
-coE
+efv
 ctg
 cho
 cho
@@ -133757,7 +133899,7 @@ cqc
 crG
 cth
 cho
-cvU
+chp
 chp
 cza
 cAH
@@ -134004,9 +134146,9 @@ cae
 cbS
 bYA
 cfF
-chq
+cfF
 ciK
-ckh
+cfF
 clO
 cnm
 coG
@@ -134015,8 +134157,8 @@ crH
 cti
 clO
 cvV
-cxK
-ckh
+cfF
+cfF
 cfF
 bYA
 cEg
@@ -134262,7 +134404,7 @@ cbT
 cdM
 cfG
 chr
-ciL
+cfG
 cki
 clP
 cnn
@@ -134272,7 +134414,7 @@ crI
 ctj
 clP
 cvW
-ciL
+cfG
 cfG
 cfG
 cCl
@@ -134519,17 +134661,17 @@ cbU
 cdN
 cfH
 chs
-ciM
+chy
 ckj
 clQ
 cno
 coI
 cqf
-crJ
-ctk
+crH
+cth
 clQ
 ckj
-cxL
+chy
 czb
 cAI
 cCm
@@ -134782,7 +134924,7 @@ bYA
 cnp
 coJ
 cqg
-coJ
+chp
 ctl
 bYA
 cvX
@@ -135039,7 +135181,7 @@ clR
 bYA
 coK
 bYA
-coK
+efw
 bYA
 bYA
 cvY
