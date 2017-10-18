@@ -184,7 +184,7 @@
 		A.blob_act(src) //also hit everything in the turf
 
 	if(make_blob) //well, can we?
-		var/obj/structure/blob/B = new /obj/structure/blob/normal(src.loc, overmind)
+		var/obj/structure/blob/B = new /obj/structure/blob/normal(src.loc, (controller || overmind))
 		B.density = TRUE
 		if(T.Enter(B,src)) //NOW we can attempt to move into the tile
 			B.density = initial(B.density)
