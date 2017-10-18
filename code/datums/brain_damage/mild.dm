@@ -123,11 +123,12 @@
 	var/list/trigger_mobs = list()
 	var/list/trigger_objs = list() //also checked in mob equipment
 	var/list/trigger_turfs = list()
+	var/list/trigger_species = list()
 
 /datum/brain_trauma/mild/phobia/New(mob/living/carbon/C, _permanent, specific_type)
 	phobia_type = specific_type
 	if(!phobia_type)
-		phobia_type = pick("spiders", "space", "security", "clowns", "assistants")
+		phobia_type = pick("spiders", "space", "security", "clowns", "greytide", "lizards")
 
 	gain_text = "<span class='warning'>You start finding [phobia_type] very unnerving...</span>"
 	lose_text = "<span class='notice'>You no longer feel afraid of [phobia_type].</span>"
@@ -149,14 +150,21 @@
 			trigger_words = list("clown", "honk", "banana", "slip")
 			trigger_objs = list(/obj/item/clothing/under/rank/clown, /obj/item/clothing/shoes/clown_shoes, /obj/item/clothing/mask/gas/clown_hat,\
 				/obj/item/device/instrument/bikehorn, /obj/item/device/pda/clown, /obj/item/grown/bananapeel)
-		if("assistants")
-			trigger_words = list("assistant", "grey", "gasmask", "gas mask", "stunprod", "spear", "revolution")
+		if("greytide")
+			trigger_words = list("assistant", "grey", "gasmask", "gas mask", "stunprod", "spear", "revolution", "viva")
 			trigger_objs = list(/obj/item/clothing/under/color/grey, /obj/item/melee/baton/cattleprod, /obj/item/twohanded/spear,\
 				/obj/item/clothing/mask/gas)
+		if("lizards")
+			trigger_words = list("lizard", "ligger", "hiss", " wag ")
+			trigger_objs = list(/obj/item/toy/plush/lizardplushie, /obj/item/reagent_containers/food/snacks/kebab/tail, /obj/item/severedtail,\
+				/obj/item/reagent_containers/food/drinks/bottle/lizardwine)
+			trigger_mobs = list(/mob/living/simple_animal/hostile/lizard) //they're hostile! of course they're scary!
+			trigger_species = list(/datum/species/lizard)
 
 	trigger_turfs = typecacheof(trigger_turfs)
 	trigger_mobs = typecacheof(trigger_mobs)
 	trigger_objs = typecacheof(trigger_objs)
+	trigger_species = typecacheof(trigger_species)
 	..()
 
 /datum/brain_trauma/mild/phobia/on_life()
@@ -166,26 +174,32 @@
 	if(world.time > next_check && world.time > next_scare)
 		next_check = world.time + 200
 		next_scare = world.time + 200
+		var/list/seen_atoms = view(7, owner)
+
 		if(LAZYLEN(trigger_objs))
-			for(var/obj/O in view(7, owner))
+			for(var/obj/O in seen_atoms)
 				if(is_type_in_typecache(O, trigger_objs))
 					freak_out(O)
 					return
 
 		if(LAZYLEN(trigger_turfs))
-			for(var/turf/T in view(7, owner))
+			for(var/turf/T in seen_atoms)
 				if(is_type_in_typecache(T, trigger_turfs))
 					freak_out(T)
 					return
 
 		if(LAZYLEN(trigger_mobs) || LAZYLEN(trigger_objs))
-			for(var/mob/M in view(7, owner))
+			for(var/mob/M in seen_atoms)
 				if(is_type_in_typecache(M, trigger_mobs))
 					freak_out(M)
 					return
 
 				else if(ishuman(M)) //check their equipment for trigger items
 					var/mob/living/carbon/human/H = M
+
+					if(LAZYLEN(trigger_species) && H.dna && H.dna.species && is_type_in_typecache(H.dna.species, trigger_species))
+						freak_out(H)
+
 					for(var/X in H.get_all_slots() | H.held_items)
 						var/obj/I = X
 						if(!QDELETED(I) && is_type_in_typecache(I, trigger_objs))
