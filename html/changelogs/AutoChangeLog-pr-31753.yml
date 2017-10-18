@@ -1,0 +1,10 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - rscadd: "You can vomit blood at high enough radiation."
+  - balance: "Radiation knockdown is far far shorter."
+  - balance: "Genetics modification is less harmful but still, upgrade your machines."
+  - balance: "Pentetic acid is useless for low amounts of radiation but indispensable for high amounts now."
+  - balance: "Singularity radiation has been normalized and Pubby engine has been remapped."
+  - bugfix: "No more hair loss spam"
+  - bugfix: "Mob rad contamination has been disabled for now. Regular contamination is still a thing."
