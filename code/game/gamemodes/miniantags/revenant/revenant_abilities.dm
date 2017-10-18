@@ -241,7 +241,7 @@
 	if(T.flags_1 & NOJAUNT_1)
 		T.flags_1 &= ~NOJAUNT_1
 		new /obj/effect/temp_visual/revenant(T)
-	if(!istype(T, /turf/open/floor/plating) && !istype(T, /turf/open/floor/engine/cult) && isfloorturf(T) && prob(15))
+	if(!isplatingturf(T) && !istype(T, /turf/open/floor/engine/cult) && isfloorturf(T) && prob(15))
 		var/turf/open/floor/floor = T
 		if(floor.intact && floor.floor_tile)
 			new floor.floor_tile(floor)
