@@ -157,7 +157,7 @@
 
 	return .
 
-/mob/living/carbon/human/proc/cure_cancer()
+/mob/living/carbon/human/proc/remove_catshit()
 	var/obj/item/organ/ears/cat/T = getorganslot(ORGAN_SLOT_TAIL)
 	var/obj/item/organ/tail/E = getorganslot(ORGAN_SLOT_EARS)
 	if(T)
@@ -166,3 +166,4 @@
 		E.Remove(src)
 		var/obj/item/organ/ears/NE = new /obj/item/organ/ears()
 		NE.Insert(src)
+	regenerate_icons()
