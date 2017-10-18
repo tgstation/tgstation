@@ -76,8 +76,7 @@
 		announce(H)
 
 	if(CONFIG_GET(flag/enforce_human_authority) && (title in GLOB.command_positions))
-		H.cure_cancer()
-		H.regenerate_icons()
+		H.remove_catshit()
 
 /datum/job/proc/get_access()
 	if(!config)	//Needed for robots.
