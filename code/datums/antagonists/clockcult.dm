@@ -49,11 +49,6 @@
 	var/mob/living/current = owner.current
 	SSticker.mode.servants_of_ratvar += owner
 	SSticker.mode.update_servant_icons_added(owner)
-<<<<<<< HEAD:code/datums/antagonists/datum_clockcult.dm
-	if(jobban_isbanned(current, ROLE_SERVANT_OF_RATVAR) || jobban_isbanned(current, CLUWNEBAN) || jobban_isbanned(current, CATBAN))
-		addtimer(CALLBACK(SSticker.mode, /datum/game_mode.proc/replace_jobbaned_player, current, ROLE_SERVANT_OF_RATVAR, ROLE_SERVANT_OF_RATVAR), 0)
-=======
->>>>>>> bfc5a2cca8... Datum rev & related upgrades to base datum antag (#31630):code/datums/antagonists/clockcult.dm
 	owner.special_role = "Servant of Ratvar"
 	owner.current.log_message("<font color=#BE8700>Has been converted to the cult of Ratvar!</font>", INDIVIDUAL_ATTACK_LOG)
 	if(issilicon(current))
