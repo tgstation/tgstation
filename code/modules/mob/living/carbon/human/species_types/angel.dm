@@ -164,7 +164,7 @@
 	var/obj/item/bodypart/head/head = H.get_bodypart("head")
 	if(head)
 		myhead = head
-		head.dismember()
+		head.drop_limb()
 		var/obj/item/dullahan_relay/DR = new (myhead)
 		DR.owner = H
 
@@ -176,17 +176,17 @@
 		else
 			H.reset_perspective(myhead)
 
-		if(myhead in view(7,src))
-			H.disabilities &= ~DEAF
-		else
-			H.disabilities |= DEAF
+	//	if(myhead in view(7, get_turf(H)))
+//			H.disabilities &= ~DEAF
+//		else
+//			H.disabilities |= DEAF
 	else
 		H.gib()
 
 
 /obj/item/organ/brain/dullahan
 	decoy_override = TRUE
-	zone = "abstract"
+	vital = FALSE
 
 /obj/item/organ/tongue/dullahan
 	zone = "abstract"
@@ -220,13 +220,12 @@
 
 /obj/item/dullahan_relay
 	var/mob/living/owner
-	flags_1 = ABSTRACT_1 | DROPDEL_1
 
 /obj/item/dullahan_relay/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
-	if(speaker in view(7,owner))
-		return //Don't double up messages
+//	if(speaker in view(7, get_turf(owner)))
+//		return //Don't double up messages
 	raw_message = lang_treat(speaker, message_langs, raw_message, spans)
 	var/name_used = speaker.GetVoice()
 	var/rendered = "<i><span class='game say'>Relayed Speech: <span class='name'>[name_used]</span> <span class='message'>[raw_message]</span></span></i>"
 	if(owner)
-		owner.show_message(rendered, 2)
+		to_chat(owner, "[rendered]")
