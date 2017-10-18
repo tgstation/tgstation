@@ -64,7 +64,7 @@
         "@pick(semicolon)wtf??????????? @pick(bug)",
         "@pick(semicolon)i ran into the supermattre ten i dsappeard @pick(bug)",
         "DON'T EVER TUCH ME",
-		"@pick(semicolon)REMOVE CA@pick(t_replacements)!!!",
+		"@pick(semicolon)REMOVE CA@pick(t_replacements)@pick(s_replacements)!!!",
     ],
 
     "mutations": [
@@ -113,6 +113,11 @@
         "t",
         "r",
         "p"
+    ],
+
+	"s_replacements": [
+        "z",
+        "s"
     ],
 
     "servers": [
