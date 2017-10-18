@@ -62,7 +62,6 @@
 					// redirect the projectile
 					P.original = locate(new_x, new_y, P.z)
 					P.starting = curloc
-					P.current = curloc
 					P.firer = src
 					P.yo = new_y - curloc.y
 					P.xo = new_x - curloc.x
@@ -449,7 +448,7 @@
 		siemens_coeff = gloves_siemens_coeff
 	if(undergoing_cardiac_arrest() && !illusion)
 		if(shock_damage * siemens_coeff >= 1 && prob(25))
-			var/obj/item/organ/heart/heart = getorganslot("heart")
+			var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
 			heart.beating = TRUE
 			if(stat == CONSCIOUS)
 				to_chat(src, "<span class='notice'>You feel your heart beating again!</span>")

@@ -3622,6 +3622,7 @@
 	min_oxy = 5;
 	name = "Sergeant Araneus";
 	real_name = "Sergeant Araneus";
+	movement_type = 1;
 	response_help = "pets";
 	turns_per_move = 10;
 	voice_name = "unidentifiable voice"
@@ -4763,7 +4764,7 @@
 /turf/open/floor/plasteel,
 /area/security/warden)
 "ajw" = (
-/obj/structure/closet/bombcloset,
+/obj/structure/closet/bombcloset/security,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
 	},
@@ -40840,6 +40841,7 @@
 	network = list("MiniSat","tcomm");
 	pixel_y = -29
 	},
+/obj/structure/bed/dogbed/renault,
 /mob/living/simple_animal/pet/fox/Renault,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain/private)
@@ -80919,9 +80921,9 @@
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 1
 	},
-/obj/structure/window/plasma/reinforced/spawner,
 /obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable,
+/obj/structure/window/plasma/reinforced,
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "dbb" = (
@@ -82733,9 +82735,9 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10
 	},
-/obj/structure/window/plasma/reinforced/spawner,
 /obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable,
+/obj/structure/window/plasma/reinforced,
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "deU" = (
@@ -82846,11 +82848,13 @@
 /area/engine/supermatter)
 "dfk" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
-/obj/structure/window/plasma/reinforced/spawner/north,
 /obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable{
 	icon_state = "0-2";
 	d2 = 2
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
@@ -82858,11 +82862,13 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
-/obj/structure/window/plasma/reinforced/spawner/north,
 /obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable{
 	icon_state = "0-2";
 	d2 = 2
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)

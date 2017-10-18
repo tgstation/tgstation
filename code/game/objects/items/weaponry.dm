@@ -201,7 +201,7 @@
 	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 40
 	throwforce = 10
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_HUGE
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 50
@@ -590,6 +590,7 @@
 	name = "slapper"
 	desc = "This is how real men fight."
 	icon_state = "latexballon"
+	item_state = "nothing"
 	force = 1
 	throwforce = 0
 	flags_1 = DROPDEL_1 | ABSTRACT_1

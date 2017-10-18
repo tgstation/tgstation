@@ -118,3 +118,25 @@
 #define NOLIVER			27
 #define NOSTOMACH		28
 #define NO_DNA_COPY     29
+
+#define ORGAN_SLOT_BRAIN "brain"
+#define ORGAN_SLOT_APPENDIX "appendix"
+#define ORGAN_SLOT_RIGHT_ARM_AUG "r_arm_device"
+#define ORGAN_SLOT_LEFT_ARM_AUG "l_arm_device"
+#define ORGAN_SLOT_STOMACH "stomach"
+#define ORGAN_SLOT_BREATHING_TUBE "breathing_tube"
+#define ORGAN_SLOT_EARS "ears"
+#define ORGAN_SLOT_EYES "eye_sight"
+#define ORGAN_SLOT_LUNGS "lungs"
+#define ORGAN_SLOT_HEART "heart"
+#define ORGAN_SLOT_ZOMBIE "zombie_infection"
+#define ORGAN_SLOT_THRUSTERS "thrusters"
+#define ORGAN_SLOT_HUD "eye_hud"
+#define ORGAN_SLOT_LIVER "liver"
+#define ORGAN_SLOT_TONGUE "tongue"
+#define ORGAN_SLOT_VOICE "vocal_cords"
+#define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"
+#define ORGAN_SLOT_HEART_AID "heartdrive"
+#define ORGAN_SLOT_BRAIN_ANTIDROP "brain_antidrop"
+#define ORGAN_SLOT_BRAIN_ANTISTUN "brain_antistun"
+#define ORGAN_SLOT_TAIL "tail"

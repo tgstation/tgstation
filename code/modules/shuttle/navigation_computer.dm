@@ -38,22 +38,25 @@
 	var/mob/camera/aiEye/remote/shuttle_docker/the_eye = eyeobj
 	the_eye.origin = src
 	the_eye.dir = M.dir
-	var/area/A = get_area(M)
-	if(QDELETED(A))
-		return
+
 	var/turf/origin = locate(M.x + x_offset, M.y + y_offset, M.z)
-	for(var/turf/T in A)
-		if(T.z != origin.z)
+
+	for(var/i in M.shuttle_areas)
+		var/area/place = i
+		if(QDELETED(place))
 			continue
-		var/image/I = image('icons/effects/alphacolors.dmi', origin, "red")
-		I.layer = ABOVE_NORMAL_TURF_LAYER
-		I.plane = 0
-		I.mouse_opacity = 0
-		var/x_off = T.x - origin.x
-		var/y_off = T.y - origin.y
-		I.pixel_x = x_off * 32
-		I.pixel_y = y_off * 32
-		the_eye.placement_images[I] = list(x_off, y_off)
+		for(var/turf/T in place)
+			if(T.z != origin.z)
+				continue
+			var/image/I = image('icons/effects/alphacolors.dmi', origin, "red")
+			I.layer = ABOVE_NORMAL_TURF_LAYER
+			I.plane = 0
+			I.mouse_opacity = 0
+			var/x_off = T.x - origin.x
+			var/y_off = T.y - origin.y
+			I.pixel_x = x_off * 32
+			I.pixel_y = y_off * 32
+			the_eye.placement_images[I] = list(x_off, y_off)
 	generateBlacklistedTurfs()
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/give_eye_control(mob/user)
@@ -77,7 +80,7 @@
 		return FALSE
 	var/mob/camera/aiEye/remote/shuttle_docker/the_eye = eyeobj
 	if(!my_port)
-		my_port = new /obj/docking_port/stationary
+		my_port = new /obj/docking_port/stationary()
 		my_port.name = shuttlePortName
 		my_port.id = shuttlePortId
 		var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
@@ -124,7 +127,7 @@
 	checkLandingSpot()
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/checkLandingTurf(turf/T)
-	return T && (!blacklisted_turfs || !blacklisted_turfs[T]) && (!space_turfs_only || isspaceturf(T))
+	return T && (!blacklisted_turfs || !blacklisted_turfs[T]) && (!space_turfs_only || isspaceturf(T)) && (T.x > 1 && T.y > 1 && T.x < world.maxx && T.y < world.maxy)
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/generateBlacklistedTurfs()
 	blacklisted_turfs = list()

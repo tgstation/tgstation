@@ -14,7 +14,7 @@
 		var/obj/item/clothing/mask/MFP = src.wear_mask
 		number += MFP.flash_protect
 
-	var/obj/item/organ/eyes/E = getorganslot("eye_sight")
+	var/obj/item/organ/eyes/E = getorganslot(ORGAN_SLOT_EYES)
 	if(!E)
 		number = INFINITY //Can't get flashed without eyes
 	else
@@ -28,7 +28,7 @@
 		number += 1
 	if(head && (head.flags_2 & BANG_PROTECT_2))
 		number += 1
-	var/obj/item/organ/ears/E = getorganslot("ears")
+	var/obj/item/organ/ears/E = getorganslot(ORGAN_SLOT_EARS)
 	if(!E)
 		number = INFINITY
 	else
@@ -277,7 +277,7 @@
 
 	var/damage = intensity - get_eye_protection()
 	if(.) // we've been flashed
-		var/obj/item/organ/eyes/eyes = getorganslot("eye_sight")
+		var/obj/item/organ/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
 		if (!eyes)
 			return
 		if(visual)
@@ -321,7 +321,7 @@
 
 /mob/living/carbon/soundbang_act(intensity = 1, stun_pwr = 20, damage_pwr = 5, deafen_pwr = 15)
 	var/ear_safety = get_ear_protection()
-	var/obj/item/organ/ears/ears = getorganslot("ears")
+	var/obj/item/organ/ears/ears = getorganslot(ORGAN_SLOT_EARS)
 	var/effect_amount = intensity - ear_safety
 	if(effect_amount > 0)
 		if(stun_pwr)
@@ -361,6 +361,6 @@
 
 /mob/living/carbon/can_hear()
 	. = FALSE
-	var/obj/item/organ/ears/ears = getorganslot("ears")
+	var/obj/item/organ/ears/ears = getorganslot(ORGAN_SLOT_EARS)
 	if(istype(ears) && !ears.deaf)
 		. = TRUE

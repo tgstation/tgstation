@@ -65,22 +65,17 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	//PV = nRT
 
-/datum/gas_mixture/proc/heat_capacity() //joules per kelvin
+/datum/gas_mixture/proc/heat_capacity(data = MOLES) //joules per kelvin
 	var/list/cached_gases = gases
 	. = 0
 	for(var/id in cached_gases)
 		var/gas_data = cached_gases[id]
-		. += gas_data[MOLES] * gas_data[GAS_META][META_GAS_SPECIFIC_HEAT]
-	if(!. && temperature) //if temp isn't defined, this mixture isn't a vacuum like space is. it hasn't been filled with *anything* so we want it to take on the properties of whatever gas enters it
-		. += HEAT_CAPACITY_VACUUM //however, if temp is defined but HC is still 0, then we want the mixture to behave like space does, as a heat sink
+		. += gas_data[data] * gas_data[GAS_META][META_GAS_SPECIFIC_HEAT]
 
-
-/datum/gas_mixture/proc/heat_capacity_archived() //joules per kelvin
-	var/list/cached_gases = gases
-	. = 0
-	for(var/id in cached_gases)
-		var/gas_data = cached_gases[id]
-		. += gas_data[ARCHIVE] * gas_data[GAS_META][META_GAS_SPECIFIC_HEAT]
+/datum/gas_mixture/turf/heat_capacity()
+	. = ..()
+	if(!.)
+		. += HEAT_CAPACITY_VACUUM //we want vacuums in turfs to have the same heat capacity as space
 
 //prefer this in performance critical areas
 #define TOTAL_MOLES(cached_gases, out_var)\
@@ -195,7 +190,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	amount = min(amount, sum) //Can not take more air than tile has!
 	if(amount <= 0)
 		return null
-	var/datum/gas_mixture/removed = new
+	var/datum/gas_mixture/removed = new type
 	var/list/removed_gases = removed.gases //accessing datum vars is slower than proc vars
 
 	removed.temperature = temperature
@@ -213,7 +208,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	ratio = min(ratio, 1)
 
 	var/list/cached_gases = gases
-	var/datum/gas_mixture/removed = new
+	var/datum/gas_mixture/removed = new type
 	var/list/removed_gases = removed.gases //accessing datum vars is slower than proc vars
 
 	removed.temperature = temperature
@@ -228,7 +223,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 /datum/gas_mixture/copy()
 	var/list/cached_gases = gases
-	var/datum/gas_mixture/copy = new
+	var/datum/gas_mixture/copy = new type
 	var/list/copy_gases = copy.gases
 
 	copy.temperature = temperature
@@ -364,15 +359,15 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		sharer_temperature = sharer.temperature_archived
 	var/temperature_delta = temperature_archived - sharer_temperature
 	if(abs(temperature_delta) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-		var/self_heat_capacity = heat_capacity_archived()
-		sharer_heat_capacity = sharer_heat_capacity || sharer.heat_capacity_archived()
+		var/self_heat_capacity = heat_capacity(ARCHIVE)
+		sharer_heat_capacity = sharer_heat_capacity || sharer.heat_capacity(ARCHIVE)
 
 		if((sharer_heat_capacity > MINIMUM_HEAT_CAPACITY) && (self_heat_capacity > MINIMUM_HEAT_CAPACITY))
 			var/heat = conduction_coefficient*temperature_delta* \
 				(self_heat_capacity*sharer_heat_capacity/(self_heat_capacity+sharer_heat_capacity))
 
-			temperature = max(temperature + heat/self_heat_capacity, TCMB)
-			sharer_temperature = max(sharer_temperature - heat/sharer_heat_capacity, TCMB)
+			temperature = max(temperature - heat/self_heat_capacity, TCMB)
+			sharer_temperature = max(sharer_temperature + heat/sharer_heat_capacity, TCMB)
 			if(sharer)
 				sharer.temperature = sharer_temperature
 	return sharer_temperature

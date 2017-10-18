@@ -12,7 +12,7 @@
 	time = 64
 
 /datum/surgery/eye_surgery/can_start(mob/user, mob/living/carbon/target)
-	var/obj/item/organ/eyes/E = target.getorganslot("eye_sight")
+	var/obj/item/organ/eyes/E = target.getorganslot(ORGAN_SLOT_EYES)
 	if(!E)
 		to_chat(user, "It's hard to do surgery on someones eyes when they don't have any.")
 		return FALSE
