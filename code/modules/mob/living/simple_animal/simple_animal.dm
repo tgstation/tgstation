@@ -332,6 +332,7 @@
 		density = initial(density)
 		lying = 0
 		. = 1
+		movement_type = initial(movement_type)
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
 	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || !SSticker.IsRoundInProgress())
