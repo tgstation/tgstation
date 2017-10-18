@@ -8502,7 +8502,7 @@
 	autoclose = 0;
 	frequency = 1449;
 	heat_proof = 1;
-	icon_state = "door_locked";
+	icon_state = "closed";
 	id_tag = "incinerator_airlock_interior";
 	locked = 1;
 	name = "Turbine Interior Airlock";
@@ -8517,7 +8517,7 @@
 	dir = 8;
 	frequency = 1441;
 	id = "mix_in";
-	pixel_y = 1
+	pixel_y = 0
 	},
 /turf/open/floor/engine/vacuum,
 /area/engine/atmos)
