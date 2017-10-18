@@ -158,8 +158,8 @@
 	return .
 
 /mob/living/carbon/human/proc/remove_catshit()
-	var/obj/item/organ/ears/cat/T = getorganslot(ORGAN_SLOT_EARS)
-	var/obj/item/organ/tail/E = getorganslot(ORGAN_SLOT_TAIL)
+	var/obj/item/organ/ears/cat/E = getorganslot(ORGAN_SLOT_EARS)
+	var/obj/item/organ/tail/T = getorganslot(ORGAN_SLOT_TAIL)
 	if(T)
 		T.Remove(src)
 	if(E)
