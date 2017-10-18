@@ -37,6 +37,10 @@ Construction breaks otherwise
 #define PIPE_DIRECTIONAL	4 //4 directions: N, S, E, W
 #define PIPE_QUAD			5 //1 directions: N/S/E/W
 
+#define SUBCAT_PIPE		"Pipes"
+#define SUBCAT_DEVICE	"Devices"
+#define SUBCAT_HEATEXCH	"Heat Exchange"
+
 //Disposal piping numbers - do NOT hardcode these, use the defines
 #define DISP_PIPE_STRAIGHT		0
 #define DISP_PIPE_BENT			1

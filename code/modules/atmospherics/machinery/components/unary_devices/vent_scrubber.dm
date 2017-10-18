@@ -34,6 +34,8 @@
 	var/radio_filter_out
 	var/radio_filter_in
 
+	pipe_state = "scrubber"
+
 /obj/machinery/atmospherics/components/unary/vent_scrubber/New()
 	..()
 	if(!id_tag)

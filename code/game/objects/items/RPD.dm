@@ -16,18 +16,22 @@ RPD
 
 /datum/pipe_info
 	var/id=-1
-	var/categoryId = CATEGORY_ATMOS
+	var/categoryId
 	var/dir=SOUTH
 	var/dirtype = PIPE_BENDABLE
-	var/icon = 'icons/obj/atmospherics/pipes/pipe_item.dmi'
-	var/icon_state=""
+	var/icon
+	var/icon_state
 	var/selected=0
 
-/datum/pipe_info/New(pid,direction,dt)
-	id=pid
-	icon_state=GLOB.pipeID2State["[pid]"]
-	dir = direction
-	dirtype=dt
+/datum/pipe_info/pipe
+	categoryId = CATEGORY_ATMOS
+	icon = 'icons/obj/atmospherics/pipes/pipe_item.dmi'
+
+/datum/pipe_info/pipe/New(path, _icon_state, _dir, _dirtype)
+	id = path
+	icon_state = _icon_state
+	dir = _dir
+	dirtype = _dirtype
 
 /datum/pipe_info/proc/Render(dispenser,label)
 	return "<li><a href='?src=\ref[dispenser];makepipe=[id];dir=[dir];type=[dirtype]'>[label]</a></li>"
@@ -114,6 +118,23 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 		"Sort Junction" = new /datum/pipe_info/disposal(DISP_SORTJUNCTION,	PIPE_TRINARY),
 	)
 ))
+/*
+/proc/pipe_recipes()
+	var/list/recipes = list()
+	var/static/list/concrete_atmos
+	if(!concrete_atmos)
+	 	concrete_atmos = subtypesof(/obj/machinery/atmospherics) - list(/obj/machinery/atmospherics/components, /obj/machinery/atmospherics/unary, \
+		/obj/machinery/atmospherics/binary, /obj/machinery/atmospherics/trinary, /obj/machinery/atmospherics/pipe, /obj/machinery/atmospherics/pipe/heat_exchanging)
+	for(var/P in concrete_atmos)
+		var/obj/machinery/atmospherics/path = P
+
+		var/icon_state = initial(path.icon_state)
+		var/dirtype = initial(path.construction_type)
+		var/datum/pipe_info/info = new(path, icon_state, SOUTH, dirtype)
+
+		recipes[path] = info
+	return recipes
+*/
 /obj/item/pipe_dispenser
 	name = "Rapid Piping Device (RPD)"
 	desc = "A device used to rapidly pipe things."
@@ -621,12 +642,6 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 /obj/item/pipe_dispenser/proc/activate()
 	playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, 1)
 
-#undef PIPE_BINARY
-#undef PIPE_BENT
-#undef PIPE_TRINARY
-#undef PIPE_TRIN_M
-#undef PIPE_UNARY
-#undef PIPE_QUAD
 #undef PAINT_MODE
 #undef EATING_MODE
 #undef ATMOS_MODE

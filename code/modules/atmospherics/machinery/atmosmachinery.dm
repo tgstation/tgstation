@@ -37,6 +37,7 @@ Pipelines + Other Objects -> Pipe network
 	var/list/obj/machinery/atmospherics/nodes
 
 	var/construction_type
+	var/pipe_state //icon_state as a pipe item
 
 /obj/machinery/atmospherics/examine(mob/user)
 	..()
@@ -241,7 +242,7 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(can_unwrench)
-			var/obj/item/pipe/stored = new(loc, piping_layer, dir, src)
+			var/obj/item/pipe/stored = new construction_type(loc, null, dir, src)
 			stored.setPipingLayer(piping_layer)
 			if(!disassembled)
 				stored.obj_integrity = stored.max_integrity * 0.5
@@ -273,7 +274,7 @@ Pipelines + Other Objects -> Pipe network
 		if(unconnected & direction)
 			underlays += getpipeimage('icons/obj/atmospherics/components/binary_devices.dmi', "pipe_exposed", direction)
 
-/obj/machinery/atmospherics/on_construction(pipe_type, obj_color, set_layer)
+/obj/machinery/atmospherics/on_construction(obj_color, set_layer)
 	if(can_unwrench)
 		add_atom_colour(obj_color, FIXED_COLOUR_PRIORITY)
 		pipe_color = obj_color
