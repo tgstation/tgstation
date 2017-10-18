@@ -1,4 +1,0 @@
-author: "Gun Hog"
-delete-after: True
-changes: 
-  - bugfix: "The GPS item now correctly changes its name when the GPS tag is changed."
