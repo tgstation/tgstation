@@ -76,8 +76,7 @@
 		announce(H)
 
 	if(CONFIG_GET(flag/enforce_human_authority) && (title in GLOB.command_positions))
-		H.dna.features["tail_human"] = "None"
-		H.dna.features["ears"] = "None"
+		H.cure_cancer()
 		H.regenerate_icons()
 
 /datum/job/proc/get_access()
