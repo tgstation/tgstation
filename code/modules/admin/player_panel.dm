@@ -410,9 +410,10 @@
 				dat += "in [disk_loc.loc] at ([disk_loc.x], [disk_loc.y], [disk_loc.z])</td></tr>"
 			dat += "</table>"
 
-		if(SSticker.mode.head_revolutionaries.len || SSticker.mode.revolutionaries.len)
+		var/list/revs = get_antagonists(/datum/antagonist/rev)
+		if(revs.len > 0)
 			dat += "<br><table cellspacing=5><tr><td><B>Revolutionaries</B></td><td></td></tr>"
-			for(var/datum/mind/N in SSticker.mode.head_revolutionaries)
+			for(var/datum/mind/N in get_antagonists(/datum/antagonist/rev/head))
 				var/mob/M = N.current
 				if(!M)
 					dat += "<tr><td><a href='?_src_=vars;[HrefToken()];Vars=\ref[N]'>[N.name]([N.key])</a><i>Head Revolutionary body destroyed!</i></td>"
@@ -421,14 +422,14 @@
 					dat += "<tr><td><a href='?_src_=holder;[HrefToken()];adminplayeropts=\ref[M]'>[M.real_name]</a> <b>(Leader)</b>[M.client ? "" : " <i>(No Client)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
 					dat += "<td><A href='?_src_=holder;[HrefToken()];adminplayerobservefollow=\ref[M]'>FLW</a></td></tr>"
-			for(var/datum/mind/N in SSticker.mode.revolutionaries)
+			for(var/datum/mind/N in get_antagonists(/datum/antagonist/rev,TRUE))
 				var/mob/M = N.current
 				if(M)
 					dat += "<tr><td><a href='?_src_=holder;[HrefToken()];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
 					dat += "<td><A href='?_src_=holder;[HrefToken()];adminplayerobservefollow=\ref[M]'>FLW</a></td></tr>"
 			dat += "</table><table cellspacing=5><tr><td><B>Target(s)</B></td><td></td><td><B>Location</B></td></tr>"
-			for(var/datum/mind/N in SSticker.mode.get_living_heads())
+			for(var/datum/mind/N in SSjob.get_living_heads())
 				var/mob/M = N.current
 				if(M)
 					dat += "<tr><td><a href='?_src_=holder;[HrefToken()];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"

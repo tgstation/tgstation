@@ -8,6 +8,12 @@
 	var/next_splash = 1
 	var/obj/effect/overlay/water/watereffect
 
+
+/turf/open/pool/Initialize()
+	. =..()
+	create_reagents(100)
+
+
 /turf/open/pool/proc/update_icon()
 	if(!filled)
 		name = "drained pool"

@@ -52,25 +52,41 @@
 /obj/machinery/poolcontroller/attackby(obj/item/W, mob/user)
 	if(shocked && !(stat & NOPOWER))
 		shock(user,50)
+
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if (istype(W,/obj/item/reagent_containers/glass/beaker))
+
+	if(istype(W,/obj/item/reagent_containers/glass/beaker))
 		if(beaker)
 			to_chat(user, "A beaker is already loaded into the machine.")
 			return
+
 		if(W.reagents.total_volume >= 100 && W.reagents.reagent_list.len == 1) //check if full and allow one reageant only.
-			beaker =  W
-			user.dropItemToGround(W)
-			W.loc = src
-			to_chat(user, "You add the beaker to the machine!")
-			updateUsrDialog()
-			for(var/X in beaker.reagents.reagent_list)
-				var/datum/reagent/R  = X
-				cur_reagent = "[R.name]"
-				if(GLOB.adminlog)
-					log_say("[key_name(user)] has changed the pool's chems to [R.name]")
-					message_admins("[key_name_admin(user)] has changed the pool's chems to [R.name].")
-			timer = 15
+
+			for(var/X in W.reagents.reagent_list)
+				var/datum/reagent/R = X
+				if(R.reagent_state == SOLID)
+					to_chat(user, "The pool cannot accept reagents in solid form!.")
+					return
+
+				else
+					beaker =  W
+					user.dropItemToGround(W)
+					W.loc = src
+					to_chat(user, "You add the beaker to the machine!")
+					updateUsrDialog()
+					cur_reagent = "[R.name]"
+
+					for(var/I in linkedturfs)
+						var/turf/open/pool/P = I
+						if(P.reagents)
+							P.reagents.clear_reagents()
+							P.reagents.add_reagent(R.id, 100)
+
+					if(GLOB.adminlog)
+						log_say("[key_name(user)] has changed the pool's chems to [R.name]")
+						message_admins("[key_name_admin(user)] has changed the pool's chems to [R.name].")
+					timer = 15
 		else
 			to_chat(user, "<span class='notice'>This machine only accepts full large beakers of one reagent.</span>")
 		return
@@ -104,14 +120,18 @@
 	for(var/X in linkedturfs)
 		var/turf/open/pool/W = X
 		for(var/mob/living/carbon/human/swimee in W)
-			if(beaker && cur_reagent)
-				beaker.reagents.reaction(swimee, VAPOR, 0.03) //3 percent
-				for(var/Q in beaker.reagents.reagent_list)
+			if(beaker && cur_reagent && W.reagents)
+				for(var/Q in W.reagents.reagent_list)
+					var/datum/reagent/R = Q
+					if(R.reagent_state == SOLID)
+						R.reagent_state = LIQUID
+				W.reagents.reaction(swimee, VAPOR, 0.03) //3 percent
+				for(var/Q in W.reagents.reagent_list)
 					var/datum/reagent/R = Q
 					swimee.reagents.add_reagent(R.id, 0.5) //osmosis
 		for(var/obj/objects in W)
-			if(beaker && cur_reagent)
-				beaker.reagents.reaction(objects, VAPOR, 1)
+			if(beaker && cur_reagent && W.reagents)
+				W.reagents.reaction(objects, VAPOR, 1)
 			reagenttimer = 4
 	changecolor()
 
