@@ -2788,7 +2788,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
 "aip" = (
-/obj/structure/closet/bombcloset,
+/obj/structure/closet/bombcloset/security,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
@@ -46291,11 +46291,6 @@
 /area/engine/engineering)
 "car" = (
 /obj/structure/cable/yellow{
-	icon_state = "1-4";
-	d1 = 1;
-	d2 = 4
-	},
-/obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
@@ -47261,16 +47256,6 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ccV" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -47282,22 +47267,12 @@
 	id = "Singularity";
 	name = "radiation shutters"
 	},
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/effect/turf_decal/bot{
 	dir = 2
 	},
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
 "ccX" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/structure/cable/yellow{
 	d1 = 2;
 	d2 = 4;
@@ -47326,11 +47301,6 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cda" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -47346,16 +47316,6 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cdc" = (
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -47599,19 +47559,9 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cdQ" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /turf/open/floor/plasteel/yellow/side,
 /area/engine/engineering)
 "cdR" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/button/door{
 	id = "Singularity";
 	name = "Shutters Control";
@@ -47666,11 +47616,6 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cdX" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/button/door{
 	id = "Singularity";
 	name = "Shutters Control";
@@ -47850,14 +47795,10 @@
 	id = "Singularity";
 	name = "radiation shutters"
 	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "ceu" = (
@@ -48053,9 +47994,6 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "ceY" = (
-/obj/machinery/power/rad_collector/anchored,
-/obj/item/tank/internals/plasma,
-/obj/structure/cable/yellow,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -48872,6 +48810,9 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/tesla_coil,
+/obj/structure/window/plasma/reinforced{
+	dir = 4
+	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "chy" = (
@@ -48884,6 +48825,9 @@
 	d2 = 4
 	},
 /obj/machinery/power/tesla_coil,
+/obj/structure/window/plasma/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "chA" = (
@@ -49000,7 +48944,15 @@
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "chQ" = (
-/turf/open/space/basic,
+/obj/structure/window/plasma/reinforced{
+	dir = 4
+	},
+/obj/machinery/power/rad_collector/anchored,
+/obj/structure/cable/yellow{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plating/airless,
 /area/engine/engineering)
 "chR" = (
 /obj/structure/cable{
@@ -54065,6 +54017,78 @@
 /obj/machinery/smoke_machine,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"YXI" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "Singularity";
+	name = "radiation shutters"
+	},
+/obj/effect/turf_decal/bot{
+	dir = 2
+	},
+/turf/open/floor/plasteel/black,
+/area/engine/engineering)
+"YXJ" = (
+/obj/machinery/power/rad_collector/anchored,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"YXK" = (
+/obj/machinery/power/rad_collector/anchored,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"YXL" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
+"YXM" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4";
+	d1 = 1;
+	d2 = 4
+	},
+/obj/item/tank/internals/plasma,
+/turf/open/floor/plating/airless,
+/area/engine/engineering)
+"YXN" = (
+/obj/structure/window/plasma/reinforced{
+	dir = 8
+	},
+/obj/machinery/power/rad_collector/anchored,
+/obj/structure/cable/yellow{
+	icon_state = "0-4";
+	d2 = 4
+	},
+/turf/open/floor/plating/airless,
+/area/engine/engineering)
+"YXO" = (
+/obj/structure/window/plasma/reinforced{
+	dir = 8
+	},
+/obj/machinery/power/rad_collector/anchored,
+/obj/structure/cable/yellow{
+	icon_state = "0-4";
+	d2 = 4
+	},
+/turf/open/floor/plating/airless,
+/area/engine/engineering)
+"YXP" = (
+/obj/structure/window/plasma/reinforced{
+	dir = 8
+	},
+/obj/machinery/power/rad_collector/anchored,
+/obj/structure/cable/yellow{
+	icon_state = "0-4";
+	d2 = 4
+	},
+/turf/open/floor/plating/airless,
+/area/engine/engineering)
 
 (1,1,1) = {"
 aaa
@@ -81733,7 +81757,7 @@ bOG
 bva
 bDi
 bXk
-cbX
+YXJ
 cbX
 cdK
 bXk
@@ -81990,7 +82014,7 @@ bOG
 bTE
 cae
 bXk
-cbX
+YXK
 cbX
 cdK
 bXk
@@ -83790,20 +83814,20 @@ bZC
 cal
 cbh
 cam
-ccT
+cam
 cdQ
 cet
 ceY
-cfa
+cbX
 cfU
 cgu
 cgU
 chw
-cgU
+YXM
 chw
-cgU
 chw
-cgU
+chw
+chw
 cjs
 cfV
 cfV
@@ -84047,18 +84071,18 @@ bZA
 cam
 cam
 cam
-ccU
+cam
 cdQ
 cet
-ceZ
-cfa
+ceY
+cbX
 cfV
 cgv
 cfV
 chx
 chQ
 chx
-cfV
+chQ
 chx
 chQ
 chx
@@ -84307,8 +84331,8 @@ ccc
 ccV
 cdR
 cet
-ceZ
-cfa
+ceY
+cbX
 cfU
 cgv
 cgV
@@ -85586,9 +85610,9 @@ bXo
 bYi
 bYV
 bZA
-cas
-cbk
-cce
+cdN
+YXI
+YXL
 cda
 cdV
 cex
@@ -85846,7 +85870,7 @@ bZF
 cat
 bXk
 ccg
-cdb
+cey
 cdW
 cey
 cey
@@ -86363,8 +86387,8 @@ cch
 cdc
 cdX
 cet
-ceZ
-cfa
+ceY
+cbX
 cfU
 cgv
 cgV
@@ -86617,20 +86641,20 @@ bZA
 cam
 cam
 cam
-cdd
+cam
 cdQ
 cet
-ceZ
-cfa
+ceY
+cbX
 cfV
 cgv
 cfV
 chz
-chQ
+YXN
 chz
-cfV
+YXO
 chz
-chQ
+YXP
 chz
 cfV
 cfV
@@ -86874,20 +86898,20 @@ bZC
 cal
 cbm
 cci
-cde
+cam
 cdQ
 cet
-ceZ
-cfa
+ceY
+cbX
 cfU
 cgx
 cgU
 chA
-cgU
 chA
-cgU
 chA
-cgU
+chA
+chA
+chA
 cjt
 cfV
 cfV

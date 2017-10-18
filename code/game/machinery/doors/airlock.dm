@@ -756,6 +756,11 @@
 		if(user)
 			src.attack_ai(user)
 
+/obj/machinery/door/airlock/attack_animal(mob/user)
+	. = ..()
+	if(isElectrified())
+		shock(user, 100)
+
 /obj/machinery/door/airlock/attack_paw(mob/user)
 	return src.attack_hand(user)
 

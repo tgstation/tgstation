@@ -59,7 +59,6 @@ As an Engineer, you can electrify grilles by placing wire "nodes" beneath them: 
 As an Engineer, return to Engineering once in a while to check on the singularity or energy ball and the SMES cells. It's always a good idea to make sure containment isn't compromised.
 As an Engineer, you can power the station solely with the solar arrays. While uninteresting, it is a much safer alternative to the singularity engine.
 As an Engineer, you can repair windows by using a welding tool on them while on any intent other than harm.
-As an Engineer, your construction permit allows you to create a new area, but has only one use.
 As an Engineer, you can lock emitters using your ID card to prevent others from disabling them.
 As an Atmospheric Technician, you can unwrench a pipe regardless of the pressures of the gases inside, but if they're too high they can burst out and injure you!
 As an Atmospheric Technician, look into replacing your gas pumps with volumetric gas pumps, as those move air in flat numerical amounts, rather than percentages which leave trace gases.

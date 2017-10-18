@@ -368,6 +368,15 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 12
 	surplus = 35
 	include_modes = list(/datum/game_mode/nuclear)
+	
+/datum/uplink_item/dangerous/guardian
+	name = "Holoparasites"
+	desc = "Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, they require an \
+			organic host as a home base and source of fuel."
+	item = /obj/item/storage/box/syndie_kit/guardian
+	cost = 18
+	exclude_modes = list(/datum/game_mode/nuclear)
+	player_minimum = 25
 
 // Ammunition
 /datum/uplink_item/ammo

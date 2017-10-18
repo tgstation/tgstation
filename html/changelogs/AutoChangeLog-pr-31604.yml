@@ -1,5 +1,0 @@
-author: "Epoc"
-delete-after: True
-changes: 
-  - rscadd: "Added a Toggle Underline button to the PDA menu"
-  - code_imp: "Cleaned HTML spacing"

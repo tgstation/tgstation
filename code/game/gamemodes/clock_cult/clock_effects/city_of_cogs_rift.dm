@@ -38,7 +38,7 @@
 		beckon(AM)
 
 /obj/effect/clockwork/city_of_cogs_rift/proc/beckon(atom/movable/AM)
-	AM.visible_message("<span class='danger'>[AM] passes through [src]!</span>", ignore_mob = AM)
+	AM.visible_message("<span class='danger'>[AM] passes through [src]!</span>", ignored_mob = AM)
 	AM.forceMove(pick(!is_servant_of_ratvar(AM) ? GLOB.city_of_cogs_spawns : GLOB.servant_spawns))
 	AM.visible_message("<span class='danger'>[AM] materializes from the air!</span>", \
 	"<span class='boldannounce'>You pass through [src] and appear [is_servant_of_ratvar(AM) ? "back at the City of Cogs" : "somewhere unfamiliar. Looks like it was a one-way trip.."].</span>")

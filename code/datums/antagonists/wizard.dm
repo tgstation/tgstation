@@ -5,6 +5,7 @@
 
 /datum/antagonist/wizard
 	name = "Space Wizard"
+	job_rank = ROLE_WIZARD
 	var/give_objectives = TRUE
 	var/strip = TRUE //strip before equipping
 	var/allow_rename = TRUE
@@ -31,6 +32,16 @@
 
 /datum/antagonist/wizard/proc/unregister()
 	SSticker.mode.wizards -= src
+
+/datum/antagonist/wizard/create_team(datum/objective_team/wizard/new_team)
+	if(!new_team)
+		return
+	if(!istype(new_team))
+		stack_trace("Wrong team type passed to [type] initialization.")
+	wiz_team = new_team
+
+/datum/antagonist/wizard/get_team()
+	return wiz_team
 
 /datum/objective_team/wizard
 	name = "wizard team"
@@ -99,6 +110,8 @@
 
 /datum/antagonist/wizard/on_removal()
 	unregister()
+	for(var/objective in objectives)
+		owner.objectives -= objective
 	owner.RemoveAllSpells() // TODO keep track which spells are wizard spells which innate stuff
 	return ..()
 
@@ -166,10 +179,10 @@
 	owner.announce_objectives()
 
 /datum/antagonist/wizard/apprentice/register()
-	SSticker.mode.apprentices |= src
+	SSticker.mode.apprentices |= owner
 
 /datum/antagonist/wizard/apprentice/unregister()
-	SSticker.mode.apprentices -= src
+	SSticker.mode.apprentices -= owner
 
 /datum/antagonist/wizard/apprentice/equip_wizard()
 	. = ..()

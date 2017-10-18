@@ -295,7 +295,7 @@
 	if(!active)
 		if(world.time > last_event+30)
 			active = 1
-			radiation_pulse(get_turf(H), 50)
+			radiation_pulse(H, 50)
 			last_event = world.time
 			active = null
 	..()
@@ -360,16 +360,9 @@
 			if(P.starting)
 				var/new_x = P.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
 				var/new_y = P.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
-				var/turf/curloc = get_turf(H)
-
+				var/turf/target = get_turf(P.starting)
 				// redirect the projectile
-				P.original = locate(new_x, new_y, P.z)
-				P.starting = curloc
-				P.current = curloc
-				P.firer = H
-				P.yo = new_y - curloc.y
-				P.xo = new_x - curloc.x
-				P.Angle = null
+				P.preparePixelProjectile(locate(Clamp(target.x + new_x, 1, world.maxx), Clamp(target.y + new_y, 1, world.maxy), H.z), H)
 			return -1
 	return 0
 

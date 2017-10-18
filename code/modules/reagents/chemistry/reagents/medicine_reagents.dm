@@ -454,7 +454,7 @@
 
 /datum/reagent/medicine/potass_iodide/on_mob_life(mob/living/M)
 	if(M.radiation > 0)
-		M.radiation-=2
+		M.radiation -= min(M.radiation, 4)
 	..()
 
 /datum/reagent/medicine/pen_acid
@@ -466,7 +466,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/pen_acid/on_mob_life(mob/living/M)
-	M.radiation -= min(M.radiation, 8)
+	M.radiation -= min(M.radiation-RAD_MOB_SAFE, 0)/100
 	M.adjustToxLoss(-2*REM, 0)
 	for(var/datum/reagent/R in M.reagents.reagent_list)
 		if(R != src)
@@ -671,7 +671,7 @@
 	taste_description = "dull toxin"
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/M)
-	var/obj/item/organ/eyes/eyes = M.getorganslot("eye_sight")
+	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 	if (!eyes)
 		return
 	if(M.disabilities & BLIND)
@@ -814,7 +814,8 @@
 	M.jitteriness = 0
 	if(M.has_dna())
 		M.dna.remove_all_mutations()
-	..()
+	if(!QDELETED(M)) //We were a monkey, now a human
+		..()
 
 /datum/reagent/medicine/antihol
 	name = "Antihol"
