@@ -128,7 +128,7 @@
 /datum/brain_trauma/mild/phobia/New(mob/living/carbon/C, _permanent, specific_type)
 	phobia_type = specific_type
 	if(!phobia_type)
-		phobia_type = pick("spiders", "space", "security", "clowns", "greytide", "lizards")
+		phobia_type = pick("spiders", "space", "security", "clowns", "greytide", "lizards", "spooky skeletons") // todo: add eldritch, cogs, magic, doctors(additionally do each department), lava, monsters, and mimes
 
 	gain_text = "<span class='warning'>You start finding [phobia_type] very unnerving...</span>"
 	lose_text = "<span class='notice'>You no longer feel afraid of [phobia_type].</span>"
@@ -160,6 +160,11 @@
 				/obj/item/reagent_containers/food/drinks/bottle/lizardwine)
 			trigger_mobs = list(/mob/living/simple_animal/hostile/lizard) //they're hostile! of course they're scary!
 			trigger_species = list(/datum/species/lizard)
+		if("spooky skeletons")
+			trigger_words = list("skeleton", "rattle me bones", "milk", "xylophone", "bone", "calcium", "i want to get off mr bones wild ride", "the ride never ends")
+			trigger_objs = list() // todo: find paths for all above
+			trigger_mobs = list() // i forget if we have 
+			trigger_species = list(/datum/species/skeleton)
 
 	trigger_turfs = typecacheof(trigger_turfs)
 	trigger_mobs = typecacheof(trigger_mobs)
