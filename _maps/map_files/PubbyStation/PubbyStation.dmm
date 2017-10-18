@@ -54018,31 +54018,10 @@
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "cBQ" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "Singularity";
-	name = "radiation shutters"
-	},
-/obj/effect/turf_decal/bot{
-	dir = 2
-	},
-/turf/open/floor/plasteel/black,
+/obj/machinery/power/rad_collector/anchored,
+/turf/open/floor/plating,
 /area/engine/engineering)
 "cBR" = (
-/obj/machinery/power/rad_collector/anchored,
-/turf/open/floor/plating,
-/area/engine/engineering)
-"cBS" = (
-/obj/machinery/power/rad_collector/anchored,
-/turf/open/floor/plating,
-/area/engine/engineering)
-"cBT" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/engine/engineering)
-"cBU" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -54056,29 +54035,7 @@
 /obj/item/tank/internals/plasma,
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
-"cBV" = (
-/obj/structure/window/plasma/reinforced{
-	dir = 8
-	},
-/obj/machinery/power/rad_collector/anchored,
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/turf/open/floor/plating/airless,
-/area/engine/engineering)
-"cBW" = (
-/obj/structure/window/plasma/reinforced{
-	dir = 8
-	},
-/obj/machinery/power/rad_collector/anchored,
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/turf/open/floor/plating/airless,
-/area/engine/engineering)
-"cBX" = (
+"cBS" = (
 /obj/structure/window/plasma/reinforced{
 	dir = 8
 	},
@@ -81757,7 +81714,7 @@ bOG
 bva
 bDi
 bXk
-cBR
+cBQ
 cbX
 cdK
 bXk
@@ -82014,7 +81971,7 @@ bOG
 bTE
 cae
 bXk
-cBS
+cBQ
 cbX
 cdK
 bXk
@@ -83823,7 +83780,7 @@ cfU
 cgu
 cgU
 chw
-cBU
+cBR
 chw
 chw
 chw
@@ -85611,8 +85568,8 @@ bYi
 bYV
 bZA
 cdN
-cBQ
-cBT
+ccW
+ceY
 cda
 cdV
 cex
@@ -86650,11 +86607,11 @@ cfV
 cgv
 cfV
 chz
-cBV
+cBS
 chz
-cBW
+cBS
 chz
-cBX
+cBS
 chz
 cfV
 cfV
