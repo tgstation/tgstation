@@ -598,7 +598,7 @@ What a mess.*/
 							active1.fields["age"] = t1
 					if("species")
 						if(istype(active1, /datum/data/record))
-							var/t1 = input("Select a species", "Species Selection") as null|anything in CONFIG_GET(keyed_flag_list/roundstart_races)
+							var/t1 = input("Select a species", "Species Selection") as null|anything in GLOB.roundstart_races
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
 							active1.fields["species"] = t1
@@ -766,7 +766,7 @@ What a mess.*/
 				if(6)
 					R.fields["m_stat"] = pick("*Insane*", "*Unstable*", "*Watch*", "Stable")
 				if(7)
-					R.fields["species"] = pick(CONFIG_GET(keyed_flag_list/roundstart_races))
+					R.fields["species"] = pick(GLOB.roundstart_races)
 				if(8)
 					var/datum/data/record/G = pick(GLOB.data_core.general)
 					R.fields["photo_front"] = G.fields["photo_front"]

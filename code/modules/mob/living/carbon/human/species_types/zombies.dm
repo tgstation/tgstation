@@ -14,6 +14,12 @@
 	disliked_food = NONE
 	liked_food = GROSS | MEAT | RAW
 
+/datum/species/zombie/check_roundstart_eligible()
+	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
+		return TRUE
+	else
+		..()
+
 /datum/species/zombie/infectious
 	name = "Infectious Zombie"
 	id = "memezombies"
@@ -23,6 +29,10 @@
 	speedmod = 2
 	mutanteyes = /obj/item/organ/eyes/night_vision/zombie
 	var/regen_cooldown = 0
+
+/datum/species/zombie/infectious/check_roundstart_eligible()
+	return FALSE
+
 
 /datum/species/zombie/infectious/spec_stun(mob/living/carbon/human/H,amount)
 	. = min(2, amount)

@@ -24,6 +24,11 @@
 		else if (light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD) //heal in the dark
 			H.heal_overall_damage(1,1)
 
+/datum/species/shadow/check_roundstart_eligible()
+	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
+		return TRUE
+	else
+		..()
 
 /datum/species/shadow/nightmare
 	name = "Nightmare"
@@ -60,7 +65,8 @@
 			return -1
 	return 0
 
-
+/datum/species/shadow/nightmare/check_roundstart_eligible()
+	return FALSE
 
 //Organs
 
