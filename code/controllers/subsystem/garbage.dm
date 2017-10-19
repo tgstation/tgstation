@@ -363,8 +363,13 @@ SUBSYSTEM_DEF(garbage)
 	testing("Beginning search for references to a [type].")
 	last_find_references = world.time
 	DoSearchVar(GLOB)
+	var/counter = 0
+	var/maxlen = length(world.contents)
 	for(var/datum/thing in world)
+		if (counter % 100 == 0)
+			testing("World search progress: [counter] / [maxlen]")
 		DoSearchVar(thing, "WorldRef: [thing]")
+		counter++
 	testing("Completed search for references to a [type].")
 	if(usr && usr.client)
 		usr.client.running_find_references = null
@@ -384,11 +389,20 @@ SUBSYSTEM_DEF(garbage)
 	if(!running_find_references)
 		find_references(TRUE)
 
-/datum/proc/DoSearchVar(X, Xname)
+/datum/proc/DoSearchVar(X, Xname, TTL = GC_LOOKUP_MAX_ITERATION_DEPTH)
+	if (TTL <= 0)
+		testing("TTL Exceeded on [X], [Xname]")
+		return
 	if(usr && usr.client && !usr.client.running_find_references)
 		return
 	if(istype(X, /datum))
 		var/datum/D = X
+#ifdef GC_LOOKUP_RESTRICT_ATOM_Z
+		if (istype(D, /atom))
+			var/atom/A = D
+			if(!A.loc || A.loc.z != 2)
+				return
+#endif
 		if(D.last_find_references == last_find_references)
 			return
 		D.last_find_references = last_find_references
@@ -400,18 +414,18 @@ SUBSYSTEM_DEF(garbage)
 				else if(islist(variable))
 					if(src in variable)
 						testing("Found [src.type] \ref[src] in [D.type]'s [varname] list var. Global: [Xname]")
-#ifdef GC_FAILURE_HARD_LOOKUP
+#ifdef GC_FAILURE_HARDER_LOOKUP
 					for(var/I in variable)
-						DoSearchVar(I, TRUE)
+						DoSearchVar(I, TRUE, TTL-1)
 				else
-					DoSearchVar(variable, "[Xname]: [varname]")
+					DoSearchVar(variable, "[Xname]: [varname]", TTL-1)
 #endif
 	else if(islist(X))
 		if(src in X)
 			testing("Found [src.type] \ref[src] in list [Xname].")
-#ifdef GC_FAILURE_HARD_LOOKUP
+#ifdef GC_FAILURE_HARDER_LOOKUP
 		for(var/I in X)
-			DoSearchVar(I, Xname + ": list")
+			DoSearchVar(I, Xname + ": list", TTL-1)
 #else
 	CHECK_TICK
 #endif
