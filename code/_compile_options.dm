@@ -16,7 +16,7 @@
 
 #define GC_LOOKUP_MAX_ITERATION_DEPTH 64 //Maximum iteration depth for DoSearchVar used for finding references to things. Adjust this to prevent stack overflows.
 
-#define GC_LOOKUP_RESTRICT_ATOM_Z 2 //Restrict GC find_references lookups to this Z level, for atoms
+//#define GC_LOOKUP_RESTRICT_ATOM_Z 2 //Restrict GC find_references lookups to this Z level, for atoms
 
 #define PRELOAD_RSC	1			/*set to:
 								0 to allow using external resources or on-demand behaviour;
