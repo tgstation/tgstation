@@ -134,6 +134,27 @@
 	else
 		..()
 
+/obj/item/organ/brain/proc/get_brain_damage()
+	var/brain_damage_threshold = max_integrity * BRAIN_DAMAGE_INTEGRITY_MULTIPLIER
+	var/offset_integrity = obj_integrity - (max_integrity - brain_damage_threshold)
+	. = (1 - (offset_integrity / brain_damage_threshold)) * BRAIN_DAMAGE_DEATH
+
+/obj/item/organ/brain/proc/adjust_brain_damage(amount, maximum)
+	var/adjusted_amount
+	if(maximum)
+		var/brainloss = get_brain_damage()
+		var/new_brainloss = brainloss + amount
+		adjusted_amount = Clamp(new_brainloss, 0, maximum) - brainloss
+	else
+		adjusted_amount = amount
+	adjusted_amount *= BRAIN_DAMAGE_INTEGRITY_MULTIPLIER
+	if(adjusted_amount)
+		if(adjusted_amount >= 0.1)
+			take_damage(adjusted_amount)
+		else if(adjusted_amount <= -0.1)
+			obj_integrity = min(max_integrity, obj_integrity-adjusted_amount)
+	. = adjusted_amount
+
 /obj/item/organ/brain/Destroy() //copypasted from MMIs.
 	if(brainmob)
 		qdel(brainmob)

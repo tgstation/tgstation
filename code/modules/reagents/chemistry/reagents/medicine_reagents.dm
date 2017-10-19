@@ -804,9 +804,10 @@
 	M.adjustBrainLoss(-2*REM)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		if(prob(30) && C.brainloss < BRAIN_DAMAGE_SEVERE && C.has_trauma_type(BRAIN_TRAUMA_SPECIAL))
+		var/C_brainloss = C.getBrainLoss()
+		if(prob(30) && C_brainloss < BRAIN_DAMAGE_SEVERE && C.has_trauma_type(BRAIN_TRAUMA_SPECIAL))
 			C.cure_trauma_type(BRAIN_TRAUMA_SPECIAL)
-		if(prob(10) && C.brainloss < BRAIN_DAMAGE_MILD && C.has_trauma_type(BRAIN_TRAUMA_MILD))
+		if(prob(10) && C_brainloss < BRAIN_DAMAGE_MILD && C.has_trauma_type(BRAIN_TRAUMA_MILD))
 			C.cure_trauma_type(BRAIN_TRAUMA_MILD)
 	..()
 

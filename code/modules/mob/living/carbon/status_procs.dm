@@ -139,6 +139,7 @@
 		qdel(trauma)
 
 /mob/living/carbon/proc/cure_all_traumas(cure_permanent = FALSE, ignore_thresholds = FALSE)
+	var/brainloss = getBrainLoss()
 	for(var/X in traumas)
 		if(ignore_thresholds || (istype(X, BRAIN_TRAUMA_MILD) && brainloss < BRAIN_DAMAGE_MILD))
 			cure_trauma(X)
