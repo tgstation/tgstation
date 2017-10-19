@@ -7,17 +7,17 @@
 
 /obj/item/clothing/glasses/meson/engine
 	name = "engineering scanner goggles"
-	desc = "Goggles used by engineers. The Meson Scanner mode lets you see basic structural and terrain layouts through walls, regardless of lighting condition. The T-ray Scanner mode lets you see underfloor objects such as cables and pipes."
+	desc = "Goggles used by engineers. The Meson Scanner mode lets you see basic structural and terrain layouts through walls, the T-ray Scanner mode lets you see underfloor objects such as cables and pipes, and the Radiation Scanner mode let's you see objects contaminated by radiation."
 	icon_state = "trayson"
 	actions_types = list(/datum/action/item_action/toggle_mode)
 	origin_tech = "materials=3;magnets=3;engineering=3;plasmatech=3"
 
-	vision_flags = 0
+	vision_flags = NONE
 	darkness_view = 2
 	invis_view = SEE_INVISIBLE_LIVING
 
 	var/list/modes = list(MODE_NONE = MODE_MESON, MODE_MESON = MODE_TRAY, MODE_TRAY = MODE_RAD, MODE_RAD = MODE_NONE)
-	var/mode = MODE_NONE //if set to FALSE, these goggles work as t-ray scanners.
+	var/mode = MODE_NONE
 	var/range = 1
 
 /obj/item/clothing/glasses/meson/engine/Initialize()
@@ -40,7 +40,7 @@
 			lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 
 		if(MODE_TRAY) //undoes the last mode, meson
-			vision_flags = 0
+			vision_flags = NONE
 			darkness_view = 2
 			lighting_alpha = null
 
@@ -104,6 +104,8 @@
 
 	for(var/i in rad_places)
 		var/turf/place = i
+		if(get_dist(user, place) >= range*2)	//Rads are easier to see than wires under the floor
+			continue
 		var/strength = round(rad_places[i] / 1000, 0.1)
 		var/image/pic = new(loc = place)
 		var/mutable_appearance/MA = new()
