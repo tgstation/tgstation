@@ -279,6 +279,10 @@
 		if(visual)
 			return
 
+		var/obj/item/bodypart/head/head = H.get_bodypart("head")
+		if(!head)
+			return
+
 		if (damage == 1)
 			to_chat(src, "<span class='warning'>Your eyes sting a little.</span>")
 			if(prob(40))
