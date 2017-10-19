@@ -3,6 +3,10 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 
 #ifdef DEBUG
 /world/Error(exception/E, datum/e_src)
+	if(findtext(E.name, "Maximum recursion level reached", 1, 31))
+		//We cannot call procs when it's a recursed runtime
+		GLOB.world_runtime_log << "Recursion level limit reached in [E.file],[E.line]: [E], [E.dec]"
+		return ..()
 	if(!istype(E)) //Something threw an unusual exception
 		log_world("\[[time_stamp()]] Uncaught exception: [E]")
 		return ..()
