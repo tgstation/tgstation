@@ -4,7 +4,7 @@
 								//uncommented, but not visible in the release version)
 
 #ifdef TESTING
-#define GC_FAILURE_HARD_LOOKUP	//makes paths that fail to GC call find_references before del'ing.
+//#define GC_FAILURE_HARD_LOOKUP	//makes paths that fail to GC call find_references before del'ing.
 								//Sets world.loop_checks to false and prevents find references from sleeping
 
 //#define GC_FAILURE_HARDER_LOOKUP	//Allows for recursive reference searching of datums.
