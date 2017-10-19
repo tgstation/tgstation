@@ -16,7 +16,7 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 		E.desc = jointext(split, "\n")
 		//log to world while intentionally triggering the byond bug.
 		log_world("\[[time2text(world.timeofday,"hh:mm:ss")]\]runtime error: [E.name]\n[E.desc]")
-		//if we got to here without sliently ending, the byond bug has been fixed.
+		//if we got to here without silently ending, the byond bug has been fixed.
 		log_world("The bug with recursion runtimes has been fixed. Please remove the snowflake check from world/Error in [__FILE__]:[__LINE__]")
 		return //this will never happen.
 
