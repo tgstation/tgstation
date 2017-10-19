@@ -365,6 +365,12 @@ SUBSYSTEM_DEF(garbage)
 	DoSearchVar(GLOB)
 	for(var/datum/thing in world)
 		DoSearchVar(thing, "WorldRef: [thing]")
+	for(var/datum/thing)
+		DoSearchVar(thing, "WorldRef: [thing]")
+	for(var/thing in world)
+		if(!istype(thing, /datum)
+			continue
+		DoSearchVar(thing, "WorldRef: [thing]")
 	testing("Completed search for references to a [type].")
 	if(usr && usr.client)
 		usr.client.running_find_references = null
@@ -400,19 +406,10 @@ SUBSYSTEM_DEF(garbage)
 				else if(islist(variable))
 					if(src in variable)
 						testing("Found [src.type] \ref[src] in [D.type]'s [varname] list var. Global: [Xname]")
-#ifdef GC_FAILURE_HARD_LOOKUP
-					for(var/I in variable)
-						DoSearchVar(I, TRUE)
-				else
-					DoSearchVar(variable, "[Xname]: [varname]")
-#endif
 	else if(islist(X))
 		if(src in X)
 			testing("Found [src.type] \ref[src] in list [Xname].")
-#ifdef GC_FAILURE_HARD_LOOKUP
-		for(var/I in X)
-			DoSearchVar(I, Xname + ": list")
-#else
+#ifndef GC_FAILURE_HARD_LOOKUP
 	CHECK_TICK
 #endif
 
