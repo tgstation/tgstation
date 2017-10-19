@@ -401,7 +401,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "<b>Ghost Form:</b> <a href='?_src_=prefs;task=input;preference=ghostform'>[ghost_form]</a><br>"
 					dat += "<B>Ghost Orbit: </B> <a href='?_src_=prefs;task=input;preference=ghostorbit'>[ghost_orbit]</a><br>"
 			
-			var/icon_readable_name = "Scale To Window"
+			var/icon_readable_name = "Strech To Fit"
 			switch(icon_size)
 				if(ICON96)
 					icon_readable_name = "96x"
