@@ -182,6 +182,10 @@
 /datum/game_mode/process()
 	return 0
 
+//For things that do not die easily
+/datum/game_mode/proc/are_special_antags_dead()
+	return TRUE
+
 
 /datum/game_mode/proc/check_finished(force_ending) //to be called by SSticker
 	if(!SSticker.setup_done)
@@ -217,6 +221,9 @@
 				if(Player.mind.special_role || LAZYLEN(Player.mind.antag_datums)) //Someone's still antaging!
 					living_antag_player = Player
 					return 0
+
+		if(!are_special_antags_dead())
+			return FALSE
 
 		if(!continuous[config_tag] || force_ending)
 			return 1
