@@ -358,6 +358,9 @@
 		else
 			M.LAssailant = usr
 
+/mob/proc/can_resist()
+	return FALSE		//overridden in living.dm
+
 /mob/proc/spin(spintime, speed)
 	set waitfor = 0
 	var/D = dir
