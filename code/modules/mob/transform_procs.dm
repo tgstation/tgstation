@@ -462,8 +462,8 @@
 	. = new_slime
 	qdel(src)
 
-/mob/proc/become_overmind(mode_made, starting_points = 60)
-	var/mob/camera/blob/B = new /mob/camera/blob(loc, 0, mode_made, starting_points)
+/mob/proc/become_overmind(starting_points = 60)
+	var/mob/camera/blob/B = new /mob/camera/blob(loc, starting_points)
 	if(mind)
 		mind.transfer_to(B)
 	else
