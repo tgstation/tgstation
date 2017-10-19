@@ -1,0 +1,5 @@
+author: "Mercenaryblue"
+delete-after: True
+changes: 
+  - tweak: "You will no longer trip on inactive honkbots."
+  - bugfix: "Sentient Honkbots are no longer forced to speak when somebody trip on them."
