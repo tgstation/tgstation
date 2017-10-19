@@ -5,6 +5,7 @@
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,NOBREATH)
 	mutant_bodyparts = list("tail_human", "ears", "wings")
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
+	use_skintones = TRUE
 	mutant_brain = /obj/item/organ/brain/dullahan
 	mutanteyes = /obj/item/organ/eyes/dullahan
 	mutanttongue = /obj/item/organ/tongue/dullahan
@@ -77,7 +78,11 @@
 
 /datum/action/item_action/organ_action/dullahan/Trigger()
 	. = ..()
+	var/obj/item/organ/eyes/dullahan/DE = target
+	if(DE.tint)
+		DE.tint = 0
 	else
+		DE.tint = INFINITY
 
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
