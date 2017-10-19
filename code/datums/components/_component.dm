@@ -70,7 +70,7 @@
 /datum/component/Destroy()
 	enabled = FALSE	//for sanity
 	var/datum/P = parent
-	P._RemoveNoSignal()
+	_RemoveNoSignal()
 	parent = null
 	P.SendSignal(COMSIG_COMPONENT_REMOVING, src)
 	LAZYCLEARLIST(signal_procs)
