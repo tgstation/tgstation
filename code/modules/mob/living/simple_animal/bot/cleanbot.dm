@@ -200,7 +200,7 @@
 	target_types = typecacheof(target_types)
 
 /mob/living/simple_animal/bot/cleanbot/UnarmedAttack(atom/A)
-	if(istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/decal/remains))
+	if(istype(A, /obj/effect/decal/cleanable))
 		anchored = TRUE
 		icon_state = "cleanbot-c"
 		visible_message("<span class='notice'>[src] begins to clean up [A].</span>")
@@ -212,22 +212,12 @@
 					if(istype(AM, /obj/effect/decal/cleanable))
 						for(var/obj/effect/decal/cleanable/C in A.loc)
 							qdel(C)
-					if(istype(AM, /obj/effect/decal/remains))
-						var/sprayed = FALSE
-						for(var/obj/effect/decal/remains/R in A.loc)
-							if(!sprayed)
-								visible_message("<span class='danger'>[src] sprays [R] with hydrofluoric acid!</span>")
-								playsound(src, 'sound/effects/spray2.ogg', 50, 1, -6)
-								sprayed = TRUE
-								new /obj/effect/decal/cleanable/greenglow(R.drop_location())
-							R.visible_message("<span class='warning'>[R] dissolve[R.gender==PLURAL?"":"s"] into a puddle of sizzling goop!</span>")
-							qdel(R)
 
 				anchored = FALSE
 				target = null
 			mode = BOT_IDLE
 			icon_state = "cleanbot[on]"
-	else if(istype(A, /obj/item))
+	else if(istype(A, /obj/item) || istype(A, /obj/effect/decal/remains))
 		visible_message("<span class='danger'>[src] sprays hydrofluoric acid at [A]!</span>")
 		playsound(src, 'sound/effects/spray2.ogg', 50, 1, -6)
 		A.acid_act(75, 10)
