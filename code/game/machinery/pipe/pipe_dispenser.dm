@@ -24,7 +24,6 @@ PIPING LAYER: <A href='?src=\ref[src];layer_down=1'>--</A><b>[piping_layer]</b><
 <A href='?src=\ref[src];make=[PIPE_4WAYMANIFOLD];dir=1'>4-Way Manifold</A><BR>
 <A href='?src=\ref[src];make=[PIPE_MVALVE];dir=1'>Manual Valve</A><BR>
 <A href='?src=\ref[src];make=[PIPE_DVALVE];dir=1'>Digital Valve</A><BR>
-<A href='?src=\ref[src];make=[PIPE_BLUESPACE];dir=1'>Bluespace Pipe</A><BR>
 <b>Devices:</b><BR>
 <A href='?src=\ref[src];make=[PIPE_CONNECTOR];dir=1'>Connector</A><BR>
 <A href='?src=\ref[src];make=[PIPE_UVENT];dir=1'>Vent</A><BR>
