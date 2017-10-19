@@ -1011,6 +1011,9 @@
 		if(client)
 			client.move_delay = world.time + movement_delay()
 	lying_prev = lying
+	if(!canmove && !lying && client)
+		playsound_local(src, 'sound/misc/omaewamoushindeiru.ogg', 50, FALSE, pressure_affected = FALSE)
+		to_chat(src, "Omae wa, mou shindeiru.")
 	return canmove
 
 /mob/living/proc/AddAbility(obj/effect/proc_holder/A)
