@@ -596,7 +596,9 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 			if(do_after(user, 2, target = A))
 				activate()
 				var/obj/item/pipe/P = new(A, queued_p_type, queued_p_dir)
-				P.flipped = queued_p_flipped
+				if(queued_p_flipped)
+					var/obj/item/pipe/trinary/flippable/F = P
+					F.flipped = queued_p_flipped
 				P.update()
 				P.add_fingerprint(usr)
 				if(!isnull(temp_piping_layer))

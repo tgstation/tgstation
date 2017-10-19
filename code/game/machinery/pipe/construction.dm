@@ -31,9 +31,8 @@ Buildable meters
 /*
 TODO:	auto-generate pipe info
 		make pipe info create /obj/item/pipes
-		OOP it up
+		~~OOP it up~~
 		deal with RPD and pipe dispensers
-		use a bunch of loops and stuff
 		fix bugs
 		enhance RPD
 */
