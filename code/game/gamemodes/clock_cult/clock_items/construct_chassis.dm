@@ -82,7 +82,7 @@
 
 /obj/item/clockwork/construct_chassis/cogscarab/Initialize()
 	. = ..()
-	if(servants_active)
+	if(GLOB.servants_active)
 		infinite_resources = FALSE //For any that are somehow spawned in late
 
 /obj/item/clockwork/construct_chassis/cogscarab/pre_spawn()
