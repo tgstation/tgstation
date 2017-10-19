@@ -252,12 +252,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Species
 	var/species_id
 	S["species"]			>> species_id
-	var/list/roundstart_races = GLOB.roundstart_races.Copy()
-	if(species_id && (species_id in roundstart_races) && CONFIG_GET(flag/join_with_mutant_race))
+	if(species_id && (species_id in GLOB.roundstart_races) && CONFIG_GET(flag/join_with_mutant_race))
 		var/newtype = GLOB.species_list[species_id]
 		pref_species = new newtype()
-	else if (roundstart_races.len)
-		var/rando_race = pick(roundstart_races)
+	else if (GLOB.roundstart_races.len)
+		var/rando_race = pick(GLOB.roundstart_races)
 		if (rando_race)
 			pref_species = new rando_race()
 

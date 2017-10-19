@@ -12,7 +12,7 @@ SUBSYSTEM_DEF(ticker)
 	var/force_ending = 0					//Round was ended by admin intervention
 	// If true, there is no lobby phase, the game starts immediately.
 	var/start_immediately = FALSE
-	var/setup_done = FALSE //All game setup done including mode post setup and 
+	var/setup_done = FALSE //All game setup done including mode post setup and
 
 	var/hide_mode = 0
 	var/datum/game_mode/mode = null
@@ -127,7 +127,6 @@ SUBSYSTEM_DEF(ticker)
 	if(!GLOB.syndicate_code_response)
 		GLOB.syndicate_code_response = generate_code_phrase()
 
-	generate_selectable_species()
 	..()
 	start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
 

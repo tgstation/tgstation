@@ -15,5 +15,4 @@
 /datum/species/skeleton/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
 		return TRUE
-	else
-		..()
+	return ..()

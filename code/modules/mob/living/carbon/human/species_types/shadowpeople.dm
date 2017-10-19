@@ -27,8 +27,7 @@
 /datum/species/shadow/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
 		return TRUE
-	else
-		..()
+	return ..()
 
 /datum/species/shadow/nightmare
 	name = "Nightmare"

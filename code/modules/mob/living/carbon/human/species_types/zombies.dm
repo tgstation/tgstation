@@ -17,8 +17,7 @@
 /datum/species/zombie/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
 		return TRUE
-	else
-		..()
+	return ..()
 
 /datum/species/zombie/infectious
 	name = "Infectious Zombie"
