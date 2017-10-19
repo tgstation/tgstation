@@ -68,32 +68,30 @@
 	return
 
 /datum/component/Destroy()
-	enabled = FALSE
+	enabled = FALSE	//for sanity
 	var/datum/P = parent
-	if(P)
-		_RemoveNoSignal()
-		P.SendSignal(COMSIG_COMPONENT_REMOVING, src)
+	P._RemoveNoSignal()
+	parent = null
+	P.SendSignal(COMSIG_COMPONENT_REMOVING, src)
 	LAZYCLEARLIST(signal_procs)
 	return ..()
 
 /datum/component/proc/_RemoveNoSignal()
 	var/datum/P = parent
-	if(P)
-		var/list/dc = P.datum_components
-		var/our_type = type
-		for(var/I in _GetInverseTypeList(our_type))
-			var/list/components_of_type = dc[I]
-			if(islist(components_of_type))	//
-				var/list/subtracted = components_of_type - src
-				if(subtracted.len == 1)	//only 1 guy left
-					dc[I] = subtracted[1]	//make him special
-				else
-					dc[I] = subtracted
-			else	//just us
-				dc -= I
-		if(!dc.len)
-			P.datum_components = null
-		parent = null
+	var/list/dc = P.datum_components
+	var/our_type = type
+	for(var/I in _GetInverseTypeList(our_type))
+		var/list/components_of_type = dc[I]
+		if(islist(components_of_type))	//
+			var/list/subtracted = components_of_type - src
+			if(subtracted.len == 1)	//only 1 guy left
+				dc[I] = subtracted[1]	//make him special
+			else
+				dc[I] = subtracted
+		else	//just us
+			dc -= I
+	if(!dc.len)
+		P.datum_components = null
 
 /datum/component/proc/RegisterSignal(sig_type_or_types, proc_on_self, override = FALSE)
 	if(QDELETED(src))
