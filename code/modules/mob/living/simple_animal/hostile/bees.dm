@@ -136,13 +136,8 @@
 			forceMove(BB)
 			toggle_ai(AI_IDLE)
 			target = null
-<<<<<<< HEAD
-			wanted_objects -= typecacheof(/obj/structure/beebox) //so we don't attack beeboxes when not going home
-		return //no don't attack the goddamm box you fucking retard
-=======
 			wanted_objects -= beehometypecache //so we don't attack beeboxes when not going home
 		return //no don't attack the goddamm box
->>>>>>> a927f2a64c... expand simple_animals/hostile/aistatus into a simple_animals-wide system for putting mobs into idling mode (#31778)
 	else
 		. = ..()
 		if(. && beegent && isliving(target))
