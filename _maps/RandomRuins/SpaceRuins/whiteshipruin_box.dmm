@@ -52,7 +52,7 @@
 /area/ruin/space/has_grav/whiteship/box)
 "ak" = (
 /obj/machinery/computer/pod{
-	id = "oldship_gun"
+	id = "oldship_ruin_gun"
 	},
 /turf/open/floor/mineral/titanium,
 /area/ruin/space/has_grav/whiteship/box)
@@ -77,13 +77,13 @@
 /obj/machinery/mass_driver{
 	dir = 4;
 	icon_state = "mass_driver";
-	id = "oldship_gun"
+	id = "oldship_ruin_gun"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/whiteship/box)
 "aq" = (
 /obj/machinery/door/poddoor{
-	id = "oldship_gun";
+	id = "oldship_ruin_gun";
 	name = "pod bay door"
 	},
 /turf/open/floor/plating,
@@ -128,7 +128,7 @@
 /turf/open/floor/mineral/titanium,
 /area/ruin/space/has_grav/whiteship/box)
 "ax" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
+/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship/ruin{
 	view_range = 18
 	},
 /turf/open/floor/mineral/titanium,
@@ -211,7 +211,7 @@
 /turf/open/floor/mineral/titanium,
 /area/ruin/space/has_grav/whiteship/box)
 "aM" = (
-/obj/machinery/computer/shuttle/white_ship,
+/obj/machinery/computer/shuttle/white_ship/ruin,
 /turf/open/floor/mineral/titanium,
 /area/ruin/space/has_grav/whiteship/box)
 "aN" = (
