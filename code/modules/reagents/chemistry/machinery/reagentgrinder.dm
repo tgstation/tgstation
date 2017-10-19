@@ -412,7 +412,7 @@
 					remove_object(O)
 					break
 		//Plants
-		if(istype(I, /obj/item/grown))
+		else if(istype(I, /obj/item/grown))
 			var/obj/item/grown/O = I
 			var/list/allowed = get_allowed_by_obj(O)
 			for (var/r_id in allowed)
