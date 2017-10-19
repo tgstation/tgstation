@@ -399,8 +399,6 @@
 #include "code\game\gamemodes\objective.dm"
 #include "code\game\gamemodes\objective_items.dm"
 #include "code\game\gamemodes\objective_team.dm"
-#include "code\game\gamemodes\blob\blob.dm"
-#include "code\game\gamemodes\blob\blob_finish.dm"
 #include "code\game\gamemodes\blob\blob_report.dm"
 #include "code\game\gamemodes\blob\overmind.dm"
 #include "code\game\gamemodes\blob\powers.dm"
