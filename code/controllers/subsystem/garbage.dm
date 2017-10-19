@@ -363,13 +363,8 @@ SUBSYSTEM_DEF(garbage)
 	testing("Beginning search for references to a [type].")
 	last_find_references = world.time
 	DoSearchVar(GLOB)
-	var/counter = 0
-	var/maxlen = length(world.contents)
 	for(var/datum/thing in world)
-		if (counter % 100 == 0)
-			testing("World search progress: [counter] / [maxlen]")
 		DoSearchVar(thing, "WorldRef: [thing]")
-		counter++
 	testing("Completed search for references to a [type].")
 	if(usr && usr.client)
 		usr.client.running_find_references = null
@@ -391,7 +386,6 @@ SUBSYSTEM_DEF(garbage)
 
 /datum/proc/DoSearchVar(X, Xname, TTL = GC_LOOKUP_MAX_ITERATION_DEPTH)
 	if (TTL <= 0)
-		testing("TTL Exceeded on [X], [Xname]")
 		return
 	if(usr && usr.client && !usr.client.running_find_references)
 		return
@@ -400,7 +394,7 @@ SUBSYSTEM_DEF(garbage)
 #ifdef GC_LOOKUP_RESTRICT_ATOM_Z
 		if (istype(D, /atom))
 			var/atom/A = D
-			if(!A.loc || A.loc.z != 2)
+			if(!A.loc || A.loc.z != GC_LOOKUP_RESTRICT_ATOM_Z)
 				return
 #endif
 		if(D.last_find_references == last_find_references)
@@ -426,7 +420,8 @@ SUBSYSTEM_DEF(garbage)
 #ifdef GC_FAILURE_HARDER_LOOKUP
 		for(var/I in X)
 			DoSearchVar(I, Xname + ": list", TTL-1)
-#else
+#endif
+#ifdef GC_FAILURE_LOOKUP_CHECK_TICK
 	CHECK_TICK
 #endif
 
