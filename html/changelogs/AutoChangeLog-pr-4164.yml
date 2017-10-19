@@ -1,0 +1,5 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - rscadd: "Objects placed under showers are cleansed of radioactive contamination over a short time."
+  - soundadd: "Showers make sound now."
