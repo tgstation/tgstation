@@ -1,0 +1,4 @@
+author: "GuyonBroadway"
+delete-after: True
+changes: 
+  - bugfix: "Fixed the singularity generator, its now usable again. Due to the new space based radiation collectors an extra hardsuit was added to engineering, just in case we get two greytiding little shits in engineering."
