@@ -37,6 +37,9 @@
 			H.disabilities |= DEAF
 	else
 		H.gib()
+	var/obj/item/bodypart/head/head = H.get_bodypart("head")
+	if(head)
+		H.gib()
 
 /datum/species/dullahan/proc/update_vision_perspective(mob/living/carbon/human/H)
 	var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
