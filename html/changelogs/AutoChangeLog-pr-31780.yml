@@ -1,0 +1,9 @@
+author: "Kor"
+delete-after: True
+changes: 
+  - rscadd: "Blob is now a side antagonist."
+  - rscadd: "Event and admin blobs will now be able to choose their spawn location."
+  - rscadd: "Blob can now win in any mode by gaining enough tiles to reach Critical Mass."
+  - rscadd: "Blobs that have Critical Mass have unlimited points, and a minute after achieving critical mass, they will spread to every tile on station, killing anyone still on board and ending the round."
+  - rscadd: "Using an analyzer on a blob will now reveal its progress towards Critical Mass."
+  - rscadd: "The blob event is now more common."
