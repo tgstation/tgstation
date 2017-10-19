@@ -85,8 +85,8 @@
 	name = "Concussion"
 	desc = "Patient's brain is concussed."
 	scan_desc = "a concussion"
-	gain_text = "<span class='warning'>You feel a pressure inside of your head.</span>"
-	lose_text = "<span class='notice'>Your head feels more clear.</span>"
+	gain_text = "<span class='warning'>Your head hurts!</span>"
+	lose_text = "<span class='notice'>The pressure inside your head starts fading.</span>"
 
 /datum/brain_trauma/mild/concussion/on_life()
 	if(prob(5))
@@ -163,7 +163,7 @@
 		if("spooky skeletons")
 			trigger_words = list("skeleton", "rattle me bones", "milk", "xylophone", "bone", "calcium", "i want to get off mr bones wild ride", "the ride never ends")
 			trigger_objs = list() // todo: find paths for all above
-			trigger_mobs = list() // i forget if we have 
+			trigger_mobs = list() // i forget if we have
 			trigger_species = list(/datum/species/skeleton)
 
 	trigger_turfs = typecacheof(trigger_turfs)
