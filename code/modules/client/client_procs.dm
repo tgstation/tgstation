@@ -241,6 +241,10 @@ GLOBAL_LIST(external_rsc_urls)
 	connection_realtime = world.realtime
 	connection_timeofday = world.timeofday
 	winset(src, null, "command=\".configure graphics-hwmode on\"")
+	
+	if(prefs.icon_size)
+		winset(src, null, prefs.icon_size)
+	
 	var/cev = CONFIG_GET(number/client_error_version)
 	var/cwv = CONFIG_GET(number/client_warn_version)
 	if (byond_version < cev)		//Out of date client.

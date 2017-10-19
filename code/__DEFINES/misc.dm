@@ -463,3 +463,9 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 #define PR_ANNOUNCEMENTS_PER_ROUND 5 //The number of unique PR announcements allowed per round
 									//This makes sure that a single person can only spam 3 reopens and 3 closes before being ignored
+
+#define ICON_STF "mapwindow.map.icon-size=0"
+#define ICON96 "mapwindow.map.icon-size=96"
+#define ICON64 "mapwindow.map.icon-size=64"
+#define ICON48 "mapwindow.map.icon-size=48"
+#define ICON32 "mapwindow.map.icon-size=32"
