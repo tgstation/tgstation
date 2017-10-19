@@ -1,6 +1,6 @@
 /obj/item/retractor/syndicate
 	name = "syndicate retractor"
-	desc = "Reinforced with carbon-plasma alloy for a stronger grip."
+	desc = "Reinforced with carbon-plasma alloy for a stalwart grip."
 	icon = 'hippiestation/icons/obj/surgery.dmi'
 	icon_state = "sretractor"
 	origin_tech = "materials=3;biotech=3;syndicate=3"
@@ -24,7 +24,7 @@
 
 /obj/item/surgicaldrill/syndicate
 	name = "syndicate surgical drill"
-	desc = "Outfitted with plasmic nanotubes in the bit and a stronger motor."
+	desc = "Outfitted with plasmic nanotubes in the bit and a suped-up motor."
 	icon = 'hippiestation/icons/obj/surgery.dmi'
 	icon_state = "sdrill"
 	lefthand_file = 'hippiestation/icons/mob/inhands/equipment/medical_lefthand.dmi'
