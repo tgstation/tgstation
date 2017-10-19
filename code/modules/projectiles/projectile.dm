@@ -207,9 +207,9 @@
 /obj/item/projectile/proc/select_target(atom/A)				//Selects another target from a wall if we hit a wall.
 	if(!A || !A.density || (A.flags_1 & ON_BORDER_1) || ismob(A) || A == original)	//if we hit a dense non-border obj or dense turf then we also hit one of the mobs or machines/structures on that tile.
 		return
-	if(original in A)
+	if(original in get_turf(A))
 		return original
-	var/list/mob/possible_mobs = typecache_filter_list(A, GLOB.typecache_mob) - A
+	var/list/mob/possible_mobs = typecache_filter_list(get_turf(A), GLOB.typecache_mob) - A
 	var/list/mob/mobs = list()
 	for(var/i in possible_mobs)
 		var/mob/M = i
@@ -219,7 +219,7 @@
 	var/mob/M = safepick(mobs)
 	if(M)
 		return M.lowest_buckled_mob()
-	var/obj/O = safepick(typecache_filter_list(A, GLOB.typecache_machine_or_structure)) - A
+	var/obj/O = safepick(typecache_filter_list(get_turf(A), GLOB.typecache_machine_or_structure)) - A
 	if(O)
 		return O
 
