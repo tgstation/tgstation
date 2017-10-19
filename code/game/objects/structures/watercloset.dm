@@ -205,6 +205,9 @@
 	. = ..()
 	soundloop = new(list(src), FALSE)
 
+/obj/machinery/shower/Destroy()
+	QDEL_NULL(soundloop)
+	return ..()
 
 /obj/effect/mist
 	name = "mist"
@@ -380,10 +383,10 @@
 	if(!healthy_green_glow || QDELETED(healthy_green_glow))
 		return
 	var/strength = healthy_green_glow.strength
-	if(strength <= 1)
+	if(strength <= RAD_BACKGROUND_RADIATION)
 		qdel(healthy_green_glow)
 		return
-	healthy_green_glow.strength -= min(strength, strength-1)
+	healthy_green_glow.strength = max(strength-1, 0)
 
 /obj/machinery/shower/process()
 	if(on)
