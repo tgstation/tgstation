@@ -1,0 +1,5 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - refactor: "mobs will enter a deep power-saving state when there's not much to do except wander around.
+change: bees are slightly more passive in general"
