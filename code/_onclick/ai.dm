@@ -38,11 +38,12 @@
 	if(isnull(pixel_turf))
 		return
 	if(!can_see(A))
-		log_admin("[key_name_admin(src)] might be running a modified client! (failed can_see on AI click of [A]([COORD(pixel_turf)]))")
 		message_admins("[key_name_admin(src)] might be running a modified client! (failed can_see on AI click of [A]([ADMIN_COORDJMP(pixel_turf)]))")
+		var/message = "[key_name(src)] might be running a modified client! (failed can_see on AI click of [A]([COORD(pixel_turf)]))"
+		log_admin(message)
 		if(REALTIMEOFDAY >= chnotify + 9000)
 			chnotify = REALTIMEOFDAY
-			send2irc_adminless_only("NOCHEAT", "[key_name(src)] might be running a modified client! (failed can_see on AI click of [A]([COORD(pixel_turf)]))")
+			send2irc_adminless_only("NOCHEAT", message)
 		return
 
 	var/list/modifiers = params2list(params)
