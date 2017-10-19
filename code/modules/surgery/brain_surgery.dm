@@ -18,7 +18,7 @@
 	time = 120 //long and complicated
 
 /datum/surgery/brain_surgery/can_start(mob/user, mob/living/carbon/target)
-	var/obj/item/organ/brain/B = target.getorganslot("brain")
+	var/obj/item/organ/brain/B = target.getorganslot(ORGAN_SLOT_BRAIN)
 	if(!B)
 		to_chat(user, "It's hard to do surgery on someone's brain when they don't have one.")
 		return FALSE
@@ -33,7 +33,7 @@
 	return TRUE
 
 /datum/surgery_step/fix_brain/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(target.getorganslot("brain"))
+	if(target.getorganslot(ORGAN_SLOT_BRAIN))
 		user.visible_message("<span class='warning'>[user] screws up, causing more damage!</span>", "<span class='warning'>You screw up, causing more damage!</span>")
 		target.adjustBrainLoss(80)
 	else

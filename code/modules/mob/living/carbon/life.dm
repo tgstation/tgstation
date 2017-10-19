@@ -441,6 +441,6 @@
 	if(getBrainLoss() >= BRAIN_DAMAGE_DEATH) //rip
 		to_chat(src, "<span class='userdanger'>The last spark of life in your brain fizzles out...<span>")
 		death()
-		var/obj/item/organ/brain/B = getorganslot("brain")
+		var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
 		if(B)
 			B.damaged_brain = TRUE
