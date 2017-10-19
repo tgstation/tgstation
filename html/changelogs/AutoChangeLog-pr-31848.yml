@@ -1,0 +1,4 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - tweak: "You can now press Ctrl+H to stop pulling, or simply H to stop pulling if you're in hotkey mode."
