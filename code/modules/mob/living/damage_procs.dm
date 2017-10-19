@@ -219,19 +219,11 @@
 	return amount
 
 /mob/living/proc/getBrainLoss()
-	return brainloss
+	. = 0
 
-//Some sources of brain damage shouldn't be deadly
 /mob/living/proc/adjustBrainLoss(amount, maximum = BRAIN_DAMAGE_DEATH)
-	if(status_flags & GODMODE)
-		return 0
-	brainloss = Clamp((brainloss + amount), 0, maximum)
-	return
 
 /mob/living/proc/setBrainLoss(amount)
-	if(status_flags & GODMODE)
-		return 0
-	brainloss = amount
 
 /mob/living/proc/getStaminaLoss()
 	return staminaloss

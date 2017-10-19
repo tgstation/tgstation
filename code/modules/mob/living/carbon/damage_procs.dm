@@ -194,10 +194,23 @@
 	if(updating_stamina)
 		update_stamina()
 
-/mob/living/carbon/adjustBrainLoss(amount, maximum)
-	..()
+/mob/living/carbon/getBrainLoss()
+	. = BRAIN_DAMAGE_DEATH
+	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
+	if(B)
+		. = B.get_brain_damage()
+
+//Some sources of brain damage shouldn't be deadly
+/mob/living/carbon/adjustBrainLoss(amount, maximum = BRAIN_DAMAGE_DEATH)
+	if(status_flags & GODMODE)
+		return 0
+	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
+	if(!B)
+		return
+	B.adjust_brain_damage(amount, maximum)
 	if(amount <= 0) //cut this early
 		return
+	var/brainloss = getBrainLoss()
 	if(brainloss > BRAIN_DAMAGE_MILD && !has_trauma_type(BRAIN_TRAUMA_MILD))
 		if(prob((amount * (brainloss)) / 5))
 			gain_trauma_type(BRAIN_TRAUMA_MILD)
@@ -207,4 +220,10 @@
 				gain_trauma_type(BRAIN_TRAUMA_SPECIAL)
 			else
 				gain_trauma_type(BRAIN_TRAUMA_SEVERE)
+
+/mob/living/carbon/setBrainLoss(amount)
+	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
+	if(B)
+		var/adjusted_amount = amount - B.get_brain_damage()
+		B.adjust_brain_damage(adjusted_amount, null)
 
