@@ -1,2 +1,2 @@
 /obj/item/gun/energy/alien
-	selfcharge = 1
+	selfcharge = TRUE
