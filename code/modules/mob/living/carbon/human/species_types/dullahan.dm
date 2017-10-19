@@ -23,6 +23,7 @@
 		myhead = head
 		head.drop_limb()
 		myhead.flags_1 = HEAR_1
+		myhead.throwforce = 25
 		var/obj/item/dullahan_relay/DR = new (myhead)
 		DR.owner = H
 		START_PROCESSING(SSobj, DR)
