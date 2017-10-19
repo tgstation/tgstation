@@ -160,6 +160,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["enable_tips"]		>> enable_tips
 	S["tip_delay"]			>> tip_delay
 	S["pda_style"]			>> pda_style
+	S["icon_size"]			>> icon_size
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -185,8 +186,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	menuoptions		= SANITIZE_LIST(menuoptions)
 	be_special		= SANITIZE_LIST(be_special)
 	pda_style		= sanitize_inlist(MONO, VT, SHARE, ORBITRON)
+	icon_size		= sanitize_inlist(ICON96, ICON64, ICON48, ICON32, ICON_STF)
 
-	return 1
+	return TRUE
 
 /datum/preferences/proc/save_preferences()
 	if(!path)
@@ -225,8 +227,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["enable_tips"], enable_tips)
 	WRITE_FILE(S["tip_delay"], tip_delay)
 	WRITE_FILE(S["pda_style"], pda_style)
+	WRITE_FILE(S["icon_size"], icon_size)
 
-	return 1
+	return TRUE
 
 /datum/preferences/proc/load_character(slot)
 	if(!path)
