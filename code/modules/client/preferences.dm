@@ -109,6 +109,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/list/exp
 	var/list/menuoptions
+	
+	var/icon_size = ICON_STF
 
 /datum/preferences/New(client/C)
 	parent = C
