@@ -6,18 +6,24 @@
 	var/desc = "A trauma caused by brain damage, which causes issues to the patient."
 	var/scan_desc = "a generic brain trauma" //description when detected by a health scanner
 	var/mob/living/carbon/owner //the poor bastard
+	var/obj/item/organ/brain/brain //the poor bastard's brain
 	var/gain_text = "<span class='notice'>You feel traumatized.</span>"
 	var/lose_text = "<span class='notice'>You no longer feel traumatized.</span>"
-	var/permanent = FALSE //can this be cured by removing the brain damage?
+	var/permanent = FALSE //can this be cured?
 
-/datum/brain_trauma/New(mob/living/carbon/C, _permanent)
-	owner = C
+/datum/brain_trauma/New(obj/item/organ/brain/B, _permanent)
+	brain = B
+	owner = B.owner
 	permanent = _permanent
-	on_gain()
+	if(owner)
+		on_gain()
 
 /datum/brain_trauma/Destroy()
-	owner.traumas -= src
-	on_lose()
+	brain.traumas -= src
+	if(owner)
+		on_lose()
+	brain = null
+	owner = null
 	return ..()
 
 //Called on life ticks

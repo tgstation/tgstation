@@ -14,6 +14,8 @@
 	var/damaged_brain = FALSE //whether the brain organ is damaged.
 	var/decoy_override = FALSE	//I apologize to the security players, and myself, who abused this, but this is going to go.
 
+	var/list/datum/brain_trauma/traumas = list()
+
 /obj/item/organ/brain/changeling_brain
 	vital = FALSE
 	decoy_override = TRUE
@@ -41,6 +43,11 @@
 
 		QDEL_NULL(brainmob)
 
+	for(var/X in traumas)
+		var/datum/brain_trauma/BT = X
+		BT.owner = owner
+		BT.on_gain()
+
 	//Update the body's icon so it doesnt appear debrained anymore
 	C.update_hair()
 
@@ -49,6 +56,11 @@
 	if((!gc_destroyed || (owner && !owner.gc_destroyed)) && !no_id_transfer)
 		transfer_identity(C)
 	C.update_hair()
+
+	for(var/X in traumas)
+		var/datum/brain_trauma/BT = X
+		BT.on_lose() //owner will already have transferred to the brainmob and shouldn't see the messages
+		BT.owner = null
 
 /obj/item/organ/brain/prepare_eat()
 	return // Too important to eat.
@@ -166,3 +178,39 @@
 	desc = "We barely understand the brains of terrestial animals. Who knows what we may find in the brain of such an advanced species?"
 	icon_state = "brain-x"
 	origin_tech = "biotech=6"
+
+
+////////////////////////////////////TRAUMAS////////////////////////////////////////
+
+/obj/item/organ/brain/proc/has_trauma_type(brain_trauma_type)
+	for(var/X in traumas)
+		if(istype(X, brain_trauma_type))
+			return X
+
+/obj/item/organ/brain/proc/gain_trauma(datum/brain_trauma/trauma, permanent = FALSE)
+	var/trauma_type = trauma
+	traumas += new trauma_type(src, permanent)
+
+/obj/item/organ/brain/proc/gain_trauma_type(brain_trauma_type = /datum/brain_trauma, permanent = FALSE)
+	var/trauma_type = pick(subtypesof(brain_trauma_type))
+	traumas += new trauma_type(src, permanent)
+
+/obj/item/organ/brain/proc/cure_trauma(datum/brain_trauma/trauma, cure_permanent = FALSE)
+	if(!trauma in traumas)
+		return
+
+	if(cure_permanent || !trauma.permanent)
+		qdel(trauma)
+
+/obj/item/organ/brain/proc/cure_trauma_type(brain_trauma_type, cure_permanent = FALSE)
+	var/datum/brain_trauma/trauma = has_trauma_type(brain_trauma_type)
+	if(trauma && (cure_permanent || !trauma.permanent))
+		qdel(trauma)
+
+/obj/item/organ/brain/proc/cure_all_traumas(cure_permanent = FALSE, ignore_thresholds = FALSE)
+	var/brainloss = get_brain_damage()
+	for(var/X in traumas)
+		if(ignore_thresholds || (istype(X, BRAIN_TRAUMA_MILD) && brainloss < BRAIN_DAMAGE_MILD))
+			cure_trauma(X)
+		else if(ignore_thresholds || ((istype(X, BRAIN_TRAUMA_SEVERE) || istype(X, BRAIN_TRAUMA_SPECIAL)) && brainloss < BRAIN_DAMAGE_SEVERE))
+			cure_trauma(X)

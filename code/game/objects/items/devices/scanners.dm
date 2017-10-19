@@ -154,9 +154,9 @@ MASS SPECTROMETER
 		to_chat(user, "\t<span class='alert'>Brain damage detected.</span>")
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		if(LAZYLEN(C.traumas))
+		if(LAZYLEN(C.get_traumas()))
 			var/list/trauma_text = list()
-			for(var/datum/brain_trauma/B in C.traumas)
+			for(var/datum/brain_trauma/B in C.get_traumas())
 				trauma_text += B.scan_desc
 			to_chat(user, "\t<span class='alert'>Cerebral traumas detected: subjects appears to be suffering from [english_list(trauma_text)].</span>")
 	if(advanced)

@@ -169,7 +169,7 @@
 				<font color="[patient.getFireLoss() < 60 ? "blue" : "red"]"><b>Burn Severity:</b> [patient.getFireLoss()]%</font><br />
 				<font color="red">[patient.getCloneLoss() ? "Subject appears to have cellular damage." : ""]</font><br />
 				<font color="red">[patient.getBrainLoss() ? "Significant brain damage detected." : ""]</font><br />
-				<font color="red">[length(patient.traumas) ? "Brain Traumas detected." : ""]</font><br />
+				<font color="red">[length(patient.get_traumas()) ? "Brain Traumas detected." : ""]</font><br />
 				"}
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/get_patient_reagents()
