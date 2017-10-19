@@ -5,13 +5,13 @@
 
 #ifdef TESTING
 //#define GC_FAILURE_HARD_LOOKUP	//makes paths that fail to GC call find_references before del'ing.
-								//Sets world.loop_checks to false and prevents find references from sleeping
+
 
 //#define GC_FAILURE_HARDER_LOOKUP	//Allows for recursive reference searching of datums.
 									//Very convenient for triggering a stack overflow crash every time.
 									//See GC_LOOKUP_MAX_ITERATION_DEPTH below
 
-#define GC_FAILURE_LOOKUP_CHECK_TICK  //CHECK_TICK in DoSearchVar. Undef this for a big speed boost, allowing you to finish in mere 10 hours.
+#define GC_FAILURE_LOOKUP_CHECK_TICK  //CHECK_TICK in DoSearchVar. Undef this to prevent find references from sleeping
 
 //#define VISUALIZE_ACTIVE_TURFS	//Highlights atmos active turfs in green
 
