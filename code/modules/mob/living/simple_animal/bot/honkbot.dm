@@ -348,7 +348,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 		mode = BOT_HUNT
 
 /mob/living/simple_animal/bot/honkbot/Crossed(atom/movable/AM)
-	if(ismob(AM))
+	if(ismob(AM) && (on)) //only if its online
 		if(prob(30)) //you're far more likely to trip on a honkbot
 			var/mob/living/carbon/C = AM
 			if(!istype(C) || !C || in_range(src, target))
@@ -362,7 +362,8 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 						  	"[C] leaps out of [src]'s way!")]</span>")
 			C.Knockdown(10)
 			playsound(loc, 'sound/misc/sadtrombone.ogg', 50, 1, -1)
-			speak("Honk!")
+			if(!client)
+				speak("Honk!")
 			sensor_blink()
 			return
 	..()
