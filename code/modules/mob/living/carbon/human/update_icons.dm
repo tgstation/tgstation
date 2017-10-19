@@ -63,7 +63,7 @@ There are several things that need to be remembered:
 	..()
 
 /mob/living/carbon/human/update_fire()
-	..("Standing")
+	..((fire_stacks > 3) ? "Standing" : "Generic_mob_burning")
 
 
 /* --------------------------------------- */
@@ -225,10 +225,11 @@ There are several things that need to be remembered:
 			overlays_standing[GLASSES_LAYER] = glasses.build_worn_icon(state = glasses.icon_state, default_layer = GLASSES_LAYER, default_icon_file = 'icons/mob/eyes.dmi')
 
 		var/mutable_appearance/glasses_overlay = overlays_standing[GLASSES_LAYER]
-		if(OFFSET_GLASSES in dna.species.offset_features)
-			glasses_overlay.pixel_x += dna.species.offset_features[OFFSET_GLASSES][1]
-			glasses_overlay.pixel_y += dna.species.offset_features[OFFSET_GLASSES][2]
-		overlays_standing[GLASSES_LAYER] = glasses_overlay
+		if(glasses_overlay)
+			if(OFFSET_GLASSES in dna.species.offset_features)
+				glasses_overlay.pixel_x += dna.species.offset_features[OFFSET_GLASSES][1]
+				glasses_overlay.pixel_y += dna.species.offset_features[OFFSET_GLASSES][2]
+			overlays_standing[GLASSES_LAYER] = glasses_overlay
 	apply_overlay(GLASSES_LAYER)
 
 

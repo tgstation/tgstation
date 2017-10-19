@@ -9,6 +9,7 @@
 	density = TRUE
 	var/gas_type = 0
 	layer = ABOVE_WINDOW_LAYER
+	pipe_flags = PIPING_ONE_PER_TURF
 
 /obj/machinery/atmospherics/components/unary/tank/Initialize()
 	. = ..()

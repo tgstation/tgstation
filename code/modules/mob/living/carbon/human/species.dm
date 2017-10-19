@@ -115,15 +115,15 @@
 
 //Will regenerate missing organs
 /datum/species/proc/regenerate_organs(mob/living/carbon/C,datum/species/old_species,replace_current=TRUE)
-	var/obj/item/organ/brain/brain = C.getorganslot("brain")
-	var/obj/item/organ/heart/heart = C.getorganslot("heart")
-	var/obj/item/organ/lungs/lungs = C.getorganslot("lungs")
-	var/obj/item/organ/appendix/appendix = C.getorganslot("appendix")
-	var/obj/item/organ/eyes/eyes = C.getorganslot("eye_sight")
-	var/obj/item/organ/ears/ears = C.getorganslot("ears")
-	var/obj/item/organ/tongue/tongue = C.getorganslot("tongue")
-	var/obj/item/organ/liver/liver = C.getorganslot("liver")
-	var/obj/item/organ/stomach/stomach = C.getorganslot("stomach")
+	var/obj/item/organ/brain/brain = C.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/heart/heart = C.getorganslot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/lungs/lungs = C.getorganslot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/appendix/appendix = C.getorganslot(ORGAN_SLOT_APPENDIX)
+	var/obj/item/organ/eyes/eyes = C.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/ears/ears = C.getorganslot(ORGAN_SLOT_EARS)
+	var/obj/item/organ/tongue/tongue = C.getorganslot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/liver/liver = C.getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/stomach/stomach = C.getorganslot(ORGAN_SLOT_STOMACH)
 
 	var/should_have_brain = TRUE
 	var/should_have_heart = !(NOBLOOD in species_traits)
@@ -981,11 +981,14 @@
 		radiation = 0
 		return TRUE
 
-	if(radiation > RAD_MOB_KNOCKDOWN)
+	if(radiation > RAD_MOB_KNOCKDOWN && prob(RAD_MOB_KNOCKDOWN_PROB))
 		if(!H.IsKnockdown())
 			H.emote("collapse")
-		H.Knockdown(RAD_KNOCKDOWN_TIME)
+		H.Knockdown(RAD_MOB_KNOCKDOWN_AMOUNT)
 		to_chat(H, "<span class='danger'>You feel weak.</span>")
+
+	if(radiation > RAD_MOB_VOMIT && prob(RAD_MOB_VOMIT_PROB))
+		H.vomit(10, TRUE)
 	
 	if(radiation > RAD_MOB_MUTATE)
 		if(prob(1))
@@ -995,10 +998,9 @@
 			H.domutcheck()
 
 	if(radiation > RAD_MOB_HAIRLOSS)
-		if(prob(15))
-			if(!( H.hair_style == "Shaved") || !(H.hair_style == "Bald") || (HAIR in species_traits))
-				to_chat(H, "<span class='danger'>Your hair starts to fall out in clumps...</span>")
-				addtimer(CALLBACK(src, .proc/go_bald, H), 50)
+		if(prob(15) && !(H.hair_style == "Bald") && (HAIR in species_traits))
+			to_chat(H, "<span class='danger'>Your hair starts to fall out in clumps...</span>")
+			addtimer(CALLBACK(src, .proc/go_bald, H), 50)
 
 /datum/species/proc/go_bald(mob/living/carbon/human/H)
 	if(QDELETED(H))	//may be called from a timer
@@ -1039,7 +1041,7 @@
 	if(!gravity)
 		var/obj/item/tank/jetpack/J = H.back
 		var/obj/item/clothing/suit/space/hardsuit/C = H.wear_suit
-		var/obj/item/organ/cyberimp/chest/thrusters/T = H.getorganslot("thrusters")
+		var/obj/item/organ/cyberimp/chest/thrusters/T = H.getorganslot(ORGAN_SLOT_THRUSTERS)
 		if(!istype(J) && istype(C))
 			J = C.jetpack
 		if(istype(J) && J.full_speed && J.allow_thrust(0.01, H))	//Prevents stacking
@@ -1095,7 +1097,7 @@
 		return 1
 	else
 		var/we_breathe = (!(NOBREATH in user.dna.species.species_traits))
-		var/we_lung = user.getorganslot("lungs")
+		var/we_lung = user.getorganslot(ORGAN_SLOT_LUNGS)
 
 		if(we_breathe && we_lung)
 			user.do_cpr(target)
@@ -1304,7 +1306,9 @@
 						H.adjust_blurriness(10)
 
 					if(prob(I.force + ((100 - H.health)/2)) && H != user)
-						SSticker.mode.remove_revolutionary(H.mind, FALSE, user)
+						var/datum/antagonist/rev/rev = H.mind.has_antag_datum(/datum/antagonist/rev)
+						if(rev)
+							rev.remove_revolutionary(FALSE, user)
 
 				if(bloody)	//Apply blood
 					if(H.wear_mask)

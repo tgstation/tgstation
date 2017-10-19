@@ -135,7 +135,7 @@
 				flash2.forceMove(user.loc)
 				flash2 = null
 		else
-			to_chat(user, "<span class='warning'>There are no flash to remove from [src].</span>")
+			to_chat(user, "<span class='warning'>There is no flash to remove from [src].</span>")
 
 	else
 		return ..()

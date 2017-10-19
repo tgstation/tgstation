@@ -35,10 +35,8 @@
 		var/obj/item/projectile/A = new projectile(curloc)
 		A.firer = chassis.occupant
 		A.original = target
-		A.current = curloc
 		if(!A.suppressed && firing_effect_type)
 			new firing_effect_type(get_turf(src), chassis.dir)
-
 
 		var/spread = 0
 		if(variance)
@@ -46,7 +44,7 @@
 				spread = round((rand() - 0.5) * variance)
 			else
 				spread = round((i / projectiles_per_shot - 0.5) * variance)
-		A.preparePixelProjectile(target, targloc, chassis.occupant, params, spread)
+		A.preparePixelProjectile(target, chassis.occupant, params, spread)
 
 		A.fire()
 		playsound(chassis, fire_sound, 50, 1)

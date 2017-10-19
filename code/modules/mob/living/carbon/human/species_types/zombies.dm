@@ -52,7 +52,7 @@
 	//  Infection organ needs to be handled separately from mutant_organs
 	//  because it persists through species transitions
 	var/obj/item/organ/zombie_infection/infection
-	infection = C.getorganslot("zombie_infection")
+	infection = C.getorganslot(ORGAN_SLOT_ZOMBIE)
 	if(!infection)
 		infection = new()
 		infection.Insert(C)

@@ -1,6 +1,8 @@
 //CLOCKCULT PROOF OF CONCEPT
 /datum/antagonist/clockcult
+	name = "Clock Cultist"
 	var/datum/action/innate/hierophant/hierophant_network = new()
+	job_rank = ROLE_SERVANT_OF_RATVAR
 
 /datum/antagonist/clockcult/silent
 	silent = TRUE
@@ -47,8 +49,6 @@
 	var/mob/living/current = owner.current
 	SSticker.mode.servants_of_ratvar += owner
 	SSticker.mode.update_servant_icons_added(owner)
-	if(jobban_isbanned(current, ROLE_SERVANT_OF_RATVAR))
-		addtimer(CALLBACK(SSticker.mode, /datum/game_mode.proc/replace_jobbaned_player, current, ROLE_SERVANT_OF_RATVAR, ROLE_SERVANT_OF_RATVAR), 0)
 	owner.special_role = "Servant of Ratvar"
 	owner.current.log_message("<font color=#BE8700>Has been converted to the cult of Ratvar!</font>", INDIVIDUAL_ATTACK_LOG)
 	if(issilicon(current))
