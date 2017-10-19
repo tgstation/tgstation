@@ -400,6 +400,19 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "<b>BYOND Membership Publicity:</b> <a href='?_src_=prefs;preference=publicity'>[(toggles & MEMBER_PUBLIC) ? "Public" : "Hidden"]</a><br>"
 					dat += "<b>Ghost Form:</b> <a href='?_src_=prefs;task=input;preference=ghostform'>[ghost_form]</a><br>"
 					dat += "<B>Ghost Orbit: </B> <a href='?_src_=prefs;task=input;preference=ghostorbit'>[ghost_orbit]</a><br>"
+			
+			var/icon_readable_name = "Scale To Window"
+			switch(icon_size)
+				if(ICON96)
+					icon_readable_name = "96x"
+				if(ICON64)
+					icon_readable_name = "64x"
+				if(ICON48)
+					icon_readable_name = "48x"
+				if(ICON32)
+					icon_readable_name = "32x"
+					
+			dat += "<b>Icon Size:</b> <a href='?_src_=prefs;task=input;preference=iconsize'>[icon_readable_name]</a><br>"
 
 			var/button_name = "If you see this something went wrong."
 			switch(ghost_accs)
@@ -848,7 +861,21 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/new_orbit = input(user, "Thanks for supporting BYOND - Choose your ghostly orbit:","Thanks for supporting BYOND", null) as null|anything in GLOB.ghost_orbits
 						if(new_orbit)
 							ghost_orbit = new_orbit
-
+				
+				if("iconsize")
+					var/newsize = input(user, "Choose your icon size:","Choose your icon size", null) as null|anything in list("Stretch To Fit", "96x96 (3x)", "64x64 (2x)", "48x48 (1.5x)", "32x32 (1x)")
+					switch(newsize)
+						if("Stretch To Fit")
+							icon_size = ICON_STF
+						if("96x96 (3x)")
+							icon_size = ICON96
+						if("64x64 (2x)")
+							icon_size = ICON64
+						if("48x48 (1.5x)")
+							icon_size = ICON48
+						if("32x32 (1x)")
+							icon_size = ICON32
+					winset(src, null, icon_size)
 				if("ghostaccs")
 					var/new_ghost_accs = alert("Do you want your ghost to show full accessories where possible, hide accessories but still use the directional sprites where possible, or also ignore the directions and stick to the default sprites?",,GHOST_ACCS_FULL_NAME, GHOST_ACCS_DIR_NAME, GHOST_ACCS_NONE_NAME)
 					switch(new_ghost_accs)
