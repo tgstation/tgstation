@@ -79,23 +79,23 @@ GLOBAL_LIST_EMPTY(menulist)
 	default = /datum/verbs/menu/Icon/Size/verb/iconstretchtofit
 
 /datum/verbs/menu/Icon/Size/verb/iconstretchtofit()
-	set name = "@.winset [ICON_STF]"
+	set name = "@.winset \"mapwindow.map.icon-size=0\""
 	set desc = "&Auto (stretch-to-fit)"
 
 /datum/verbs/menu/Icon/Size/verb/icon96()
-	set name = "@.winset [ICON96]"
+	set name = "@.winset \"mapwindow.map.icon-size=96\""
 	set desc = "&96x96 (3x)"
 
 /datum/verbs/menu/Icon/Size/verb/icon64()
-	set name = "@.winset [ICON64]"
+	set name = "@.winset \"mapwindow.map.icon-size=64\""
 	set desc = "&64x64 (2x)"
 
 /datum/verbs/menu/Icon/Size/verb/icon48()
-	set name = "@.winset [ICON48]"
+	set name = "@.winset \"mapwindow.map.icon-size=48\""
 	set desc = "&48x48 (1.5x)"
 
 /datum/verbs/menu/Icon/Size/verb/icon32()
-	set name = "@.winset [ICON32]"
+	set name = "@.winset \"mapwindow.map.icon-size=32\""
 	set desc = "&32x32 (1x)"
 
 
@@ -115,4 +115,3 @@ GLOBAL_LIST_EMPTY(menulist)
 /datum/verbs/menu/Icon/Scaling/verb/BL()
 	set name = "@.winset \"mapwindow.map.zoom-mode=blur\""
 	set desc = "Bilinear"
-
