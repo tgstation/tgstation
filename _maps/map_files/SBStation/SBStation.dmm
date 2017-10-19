@@ -8573,7 +8573,6 @@
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
 	d2 = 2
 	},
 /obj/machinery/camera{
@@ -9496,7 +9495,6 @@
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
 	d2 = 2
 	},
 /turf/open/floor/plating,
@@ -9515,7 +9513,6 @@
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
 	d2 = 2
 	},
 /obj/structure/cable{
@@ -10181,7 +10178,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
 	d2 = 2
 	},
 /turf/open/floor/plating,
@@ -13770,7 +13766,6 @@
 /obj/structure/cable,
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
 	d2 = 2
 	},
 /turf/open/floor/engine,
@@ -16181,7 +16176,6 @@
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
 	d2 = 2
 	},
 /obj/effect/turf_decal/delivery,
@@ -21939,8 +21933,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 8;
 	frequency = 1441;
-	id = "mix_in";
-	pixel_y = 1
+	id = "mix_in"
 	},
 /turf/open/floor/engine/vacuum,
 /area/engine/atmos)
@@ -22591,8 +22584,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 8;
 	frequency = 1441;
-	id = "n2o_in";
-	pixel_y = 1
+	id = "n2o_in"
 	},
 /turf/open/floor/engine/n2o,
 /area/engine/atmos)
@@ -23283,8 +23275,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 8;
 	frequency = 1441;
-	id = "tox_in";
-	pixel_y = 1
+	id = "tox_in"
 	},
 /turf/open/floor/engine/plasma,
 /area/engine/atmos)
@@ -24036,8 +24027,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 8;
 	frequency = 1441;
-	id = "co2_in";
-	pixel_y = 1
+	id = "co2_in"
 	},
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
