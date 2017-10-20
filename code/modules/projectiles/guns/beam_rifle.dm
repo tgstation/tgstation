@@ -507,7 +507,7 @@
 		if(wall_pierce++ < wall_pierce_amount)
 			loc = target
 			if(prob(wall_devastate))
-				if(istype(target, /turf/closed/wall))
+				if(iswallturf(target))
 					var/turf/closed/wall/W = target
 					W.dismantle_wall(TRUE, TRUE)
 				else

@@ -101,7 +101,7 @@
 
 /obj/item/projectile/proc/on_hit(atom/target, blocked = FALSE)
 	var/turf/target_loca = get_turf(target)
-	if(!nodamage && (damage_type == BRUTE || damage_type == BURN) && istype(target_loca, /turf/closed/wall) && prob(75))
+	if(!nodamage && (damage_type == BRUTE || damage_type == BURN) && iswallturf(target_loca) && prob(75))
 		var/turf/closed/wall/W = target_loca
 		var/mutable_appearance/decal = mutable_appearance('icons/effects/effects.dmi', "bullet_hole", TURF_DECAL_LAYER)
 		if(target == original)
@@ -265,10 +265,10 @@
 	if(!log_override && firer && original)
 		add_logs(firer, original, "fired at", src, " [get_area(src)]")
 	if(direct_target)
-		prehit(direct_target)
-		direct_target.bullet_act(src, def_zone)
-		qdel(src)
-		return
+		if(prehit(direct_target))
+			direct_target.bullet_act(src, def_zone)
+			qdel(src)
+			return
 	if(isnum(angle))
 		setAngle(angle)
 	if(spread)
@@ -394,7 +394,7 @@
 
 /obj/item/projectile/Crossed(atom/movable/AM) //A mob moving on a tile with a projectile is hit by it.
 	..()
-	if(isliving(AM) && AM.density && !checkpass(PASSMOB))
+	if(isliving(AM) && (AM.density || AM == original) && !checkpass(PASSMOB))
 		Collide(AM)
 
 /obj/item/projectile/Destroy()
