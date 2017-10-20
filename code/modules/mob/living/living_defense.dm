@@ -371,7 +371,6 @@
 /mob/living/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y)
 	if(A != src)
 		end_pixel_y = get_standard_pixel_y_offset(lying)
-	if(!used_item)
-		used_item = get_active_held_item()
+	used_item = get_active_held_item()
 	..()
 	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.
