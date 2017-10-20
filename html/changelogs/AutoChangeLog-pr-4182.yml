@@ -1,0 +1,4 @@
+author: "Robustin"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a bug where detonating maxcaps, especially multiple maxcaps, on Reebe guaranteed that everyone would die and thus the Clock Cult would immediately lose; Reebe maxcap is now 2/5/10."
