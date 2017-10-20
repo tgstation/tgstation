@@ -1,0 +1,4 @@
+author: "Robustin"
+delete-after: True
+changes: 
+  - balance: "Spray tan no longer stuns when ingested."
