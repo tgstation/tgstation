@@ -398,8 +398,8 @@ ROUNDSTART_RACES human
 ROUNDSTART_RACES lizard
 #ROUNDSTART_RACES fly
 ROUNDSTART_RACES plasmaman
+#ROUNDSTART_RACES sap
 #ROUNDSTART_RACES shadow
-ROUNDSTART_RACES sap
 
 ## Races that are better than humans in some ways, but worse in others
 #ROUNDSTART_RACES jelly
