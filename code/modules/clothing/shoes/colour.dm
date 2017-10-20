@@ -19,6 +19,7 @@
 	desc = "A pair of brown shoes."
 	icon_state = "brown"
 	item_color = "brown"
+	fanciness = FANCY
 
 /obj/item/clothing/shoes/sneakers/brown/captain
 	item_color = "captain"	//Exists for washing machines. Is not different from brown shoes in any way.

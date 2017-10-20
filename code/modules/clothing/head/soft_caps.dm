@@ -4,6 +4,7 @@
 	icon_state = "cargosoft"
 	item_state = "helmet"
 	item_color = "cargo"
+	fanciness = FANCY_UGLY
 
 	dog_fashion = /datum/dog_fashion/head/cargo_tech
 
@@ -64,6 +65,7 @@
 	desc = "It's a baseball hat in a tasteless green colour."
 	icon_state = "greensoft"
 	item_color = "green"
+	fanciness = FANCY //Acceptable, since it's green!
 	dog_fashion = null
 
 /obj/item/clothing/head/soft/yellow
@@ -129,4 +131,5 @@
 	desc = "It's a baseball hat with a dark turquoise color and a reflective cross on the top."
 	icon_state = "emtsoft"
 	item_color = "emt"
+	fanciness = NOT_FANCY
 	dog_fashion = null

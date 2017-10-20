@@ -88,6 +88,7 @@
 	var/earflaps = 1
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
+	fanciness = FANCY
 
 	dog_fashion = /datum/dog_fashion/head/ushanka
 
@@ -116,6 +117,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	brightness_on = 2 //luminosity when on
 	flags_cover = HEADCOVERSEYES
+	fanciness = FANCY
 
 /*
  * Kitty ears
@@ -163,6 +165,7 @@
 	item_state = "cardborg_h"
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	fanciness = FANCY_UGLY
 
 	dog_fashion = /datum/dog_fashion/head/cardborg
 

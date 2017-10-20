@@ -29,6 +29,7 @@
 	item_state = "scratch"
 	item_color = "scratch"
 	can_adjust = 0
+	fanciness = FANCY
 
 /obj/item/clothing/under/sl_suit
 	desc = "It's a very amish looking suit."
@@ -54,6 +55,7 @@
 	item_state = "waiter"
 	item_color = "waiter"
 	can_adjust = 0
+	fanciness = FANCY
 
 /obj/item/clothing/under/rank/prisoner
 	name = "prison jumpsuit"
@@ -64,6 +66,7 @@
 	has_sensor = LOCKED_SENSORS
 	sensor_mode = SENSOR_COORDS
 	random_sensor = 0
+	fanciness = FANCY_UGLY
 
 /obj/item/clothing/under/rank/mailman
 	name = "mailman's jumpsuit"
@@ -94,6 +97,7 @@
 	item_state = "darkholme"
 	item_color = "darkholme"
 	can_adjust = 0
+	fanciness = FANCY_DISTASTEFUL
 
 /obj/item/clothing/under/rank/vice
 	name = "vice officer's jumpsuit"
@@ -110,6 +114,7 @@
 	item_state = "g_suit"
 	item_color = "officer"
 	alt_covers_chest = 1
+	fanciness = FANCY_LAVISH
 
 /obj/item/clothing/under/rank/centcom_commander
 	desc = "It's a jumpsuit worn by CentCom's highest-tier Commanders."
@@ -117,6 +122,7 @@
 	icon_state = "centcom"
 	item_state = "dg_suit"
 	item_color = "centcom"
+	fanciness = FANCY_CHIC
 
 /obj/item/clothing/under/space
 	name = "\improper NASA jumpsuit"
@@ -196,6 +202,7 @@
 	item_state = "bl_suit"
 	item_color = "black_suit"
 	can_adjust = 0
+	fanciness = FANCY_LAVISH
 
 /obj/item/clothing/under/suit_jacket/really_black
 	name = "executive suit"
@@ -283,6 +290,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
+	fanciness = FANCY_LAVISH
 
 /obj/item/clothing/under/skirt/blue
 	name = "blue skirt"
@@ -324,6 +332,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
+	fanciness = FANCY_UGLY
 
 /obj/item/clothing/under/schoolgirl/red
 	name = "red schoolgirl uniform"
@@ -384,6 +393,7 @@
 	body_parts_covered = CHEST|GROIN|FEET
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
+	fanciness = FANCY_UGLY
 
 /obj/item/clothing/under/kilt/highlander
 	desc = "You're the only one worthy of this kilt."
@@ -398,6 +408,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
+	fanciness = FANCY_DISTASTEFUL
 
 /obj/item/clothing/under/gladiator
 	name = "gladiator uniform"
@@ -431,6 +442,7 @@
 	item_state = "by_suit"
 	item_color = "captain_parade"
 	can_adjust = 0
+	fanciness = FANCY
 
 /obj/item/clothing/under/hosparademale
 	name = "head of security's parade uniform"
@@ -439,6 +451,7 @@
 	item_state = "r_suit"
 	item_color = "hos_parade_male"
 	can_adjust = 0
+	fanciness = FANCY
 
 /obj/item/clothing/under/hosparadefem
 	name = "head of security's parade uniform"
@@ -448,6 +461,7 @@
 	item_color = "hos_parade_fem"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
+	fanciness = FANCY
 
 /obj/item/clothing/under/assistantformal
 	name = "assistant's formal uniform"
@@ -456,6 +470,7 @@
 	item_state = "gy_suit"
 	item_color = "assistant_formal"
 	can_adjust = 0
+	fanciness = FANCY
 
 /obj/item/clothing/under/blacktango
 	name = "black tango dress"
@@ -465,6 +480,7 @@
 	item_color = "black_tango"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
+	fanciness = FANCY
 
 /obj/item/clothing/under/stripeddress
 	name = "striped dress"
@@ -474,6 +490,7 @@
 	item_color = "striped_dress"
 	fitted = FEMALE_UNIFORM_FULL
 	can_adjust = 0
+	fanciness = FANCY
 
 /obj/item/clothing/under/sailordress
 	name = "sailor dress"
@@ -492,6 +509,7 @@
 	item_color = "red_evening_gown"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
+	fanciness = FANCY_LAVISH
 
 /obj/item/clothing/under/maid
 	name = "maid costume"
@@ -584,6 +602,7 @@
 	icon_state = "jester"
 	item_color = "jester"
 	can_adjust = 0
+	fanciness = FANCY_DISTASTEFUL
 
 /obj/item/clothing/under/jester/alt
 	icon_state = "jester2"
@@ -601,6 +620,7 @@
 	icon_state = "villain"
 	item_color = "villain"
 	can_adjust = 0
+	fanciness = FANCY_UGLY
 
 /obj/item/clothing/under/sailor
 	name = "sailor suit"
@@ -620,6 +640,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	can_adjust = 0
 	strip_delay = 80
+	fanciness = FANCY_UGLY
 	var/next_extinguish = 0
 	var/extinguish_cooldown = 100
 	var/extinguishes_left = 5
@@ -719,6 +740,7 @@
 	item_color = "lobster"
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
+	fanciness = FANCY_DISTASTEFUL
 
 /obj/item/clothing/under/skeleton
 	name = "skeleton jumpsuit"

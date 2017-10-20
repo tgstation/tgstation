@@ -61,6 +61,7 @@
 	icon_state = "justice"
 	item_state = "justice"
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	fanciness = FANCY_UGLY
 
 
 /obj/item/clothing/suit/judgerobe
@@ -90,6 +91,7 @@
 	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/toy)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	resistance_flags = 0
+	fanciness = FANCY_UGLY
 
 /obj/item/clothing/suit/hastur
 	name = "\improper Hastur's robe"
@@ -117,6 +119,7 @@
 	item_state = "chickensuit"
 	body_parts_covered = CHEST|ARMS|GROIN|LEGS|FEET
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
+	fanciness = FANCY_DISTASTEFUL
 
 
 /obj/item/clothing/suit/monkeysuit
@@ -126,6 +129,7 @@
 	item_state = "monkeysuit"
 	body_parts_covered = CHEST|ARMS|GROIN|LEGS|FEET|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	fanciness = FANCY_DISTASTEFUL
 
 /obj/item/clothing/suit/toggle/owlwings
 	name = "owl cloak"
@@ -136,12 +140,14 @@
 	body_parts_covered = ARMS|CHEST
 	allowed = list(/obj/item/gun/energy, /obj/item/reagent_containers/spray/pepper, /obj/item/gun/ballistic, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/device/flashlight/seclite, /obj/item/melee/classic_baton/telescopic)
 	actions_types = list(/datum/action/item_action/toggle_wings)
+	fanciness = FANCY_UGLY
 
 /obj/item/clothing/suit/toggle/owlwings/griffinwings
 	name = "griffon cloak"
 	desc = "A plush white cloak made of synthetic feathers. Soft to the touch, stylish, and a 2 meter wing span that will drive your captives mad."
 	icon_state = "griffin_wings"
 	item_state = "griffin_wings"
+	fanciness = FANCY_UGLY
 
 
 /obj/item/clothing/suit/holidaypriest
@@ -161,6 +167,7 @@
 	body_parts_covered = CHEST|GROIN
 	flags_inv = HIDEJUMPSUIT
 	dog_fashion = /datum/dog_fashion/back
+	fanciness = FANCY_UGLY
 
 /obj/item/clothing/suit/cardborg/equipped(mob/living/user, slot)
 	..()
@@ -189,6 +196,7 @@
 	item_state = "snowman"
 	body_parts_covered = CHEST|GROIN
 	flags_inv = HIDEJUMPSUIT
+	fanciness = FANCY_DISTASTEFUL
 
 /obj/item/clothing/suit/poncho
 	name = "poncho"
@@ -214,6 +222,7 @@
 	icon_state = "ponchoshame"
 	item_state = "ponchoshame"
 	flags_1 = NODROP_1
+	fanciness = FANCY_DISTASTEFUL
 
 /obj/item/clothing/suit/whitedress
 	name = "white dress"
@@ -233,6 +242,7 @@
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT	//Space carp like space, so you should too
 	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/gun/ballistic/automatic/speargun)
 	hoodtype = /obj/item/clothing/head/hooded/carp_hood
+	fanciness = FANCY_DISTASTEFUL
 
 /obj/item/clothing/head/hooded/carp_hood
 	name = "carp hood"
@@ -242,6 +252,7 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags_inv = HIDEHAIR|HIDEEARS
+	fanciness = FANCY_DISTASTEFUL
 
 /obj/item/clothing/suit/hooded/ian_costume	//It's Ian, rub his bell- oh god what happened to his inside parts?
 	name = "corgi costume"
@@ -254,6 +265,7 @@
 	allowed = list()
 	hoodtype = /obj/item/clothing/head/hooded/ian_hood
 	dog_fashion = /datum/dog_fashion/back
+	fanciness = FANCY_DISTASTEFUL
 
 /obj/item/clothing/head/hooded/ian_hood
 	name = "corgi hood"
@@ -263,6 +275,7 @@
 	//cold_protection = HEAD
 	//min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags_inv = HIDEHAIR|HIDEEARS
+	fanciness = FANCY_DISTASTEFUL
 
 /obj/item/clothing/suit/hooded/bee_costume // It's Hip!
 	name = "bee costume"
@@ -291,6 +304,7 @@
 	allowed = list()
 	actions_types = list(/datum/action/item_action/toggle_human_head)
 	hoodtype = /obj/item/clothing/head/hooded/human_head
+	fanciness = FANCY_DISTASTEFUL
 
 
 /obj/item/clothing/head/hooded/human_head
@@ -300,6 +314,7 @@
 	body_parts_covered = HEAD
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	fanciness = FANCY_DISTASTEFUL
 
 /obj/item/clothing/suit/security/officer/russian
 	name = "russian officer's jacket"
@@ -322,6 +337,7 @@
 	equip_delay_self = 50
 	strip_delay = 60
 	breakouttime = 3000
+	fanciness = FANCY_DISTASTEFUL
 
 /obj/item/clothing/suit/ianshirt
 	name = "worn shirt"
@@ -334,12 +350,14 @@
 	desc = "A baggy shirt with vintage game character Phanic the Weasel. Why would anyone wear this?"
 	icon_state = "nerdshirt"
 	item_state = "nerdshirt"
+	fanciness = FANCY_UGLY
 
 /obj/item/clothing/suit/vapeshirt //wearing this is asking to get beat.
 	name = "Vape Naysh shirt"
 	desc = "A cheap white T-shirt with a big tacky \"VN\" on the front, Why would you wear this unironically?"
 	icon_state = "vapeshirt"
 	item_state = "vapeshirt"
+	fanciness = FANCY_UGLY
 
 /obj/item/clothing/suit/jacket
 	name = "bomber jacket"
@@ -440,6 +458,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	allowed = list(/obj/item/clothing/mask/facehugger/toy)
+	fanciness = FANCY_UGLY
 
 /obj/item/clothing/suit/nemes
 	name = "pharoah tunic"
@@ -447,6 +466,7 @@
 	icon_state = "pharoah"
 	icon_state = "pharoah"
 	body_parts_covered = CHEST|GROIN
+	fanciness = FANCY
 
 
 

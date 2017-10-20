@@ -4,6 +4,7 @@
 /obj/item/clothing/head/collectable
 	name = "collectable hat"
 	desc = "A rare collectable hat."
+	fanciness = FANCY_LAVISH //Rarity is by default very fancy.
 
 /obj/item/clothing/head/collectable/petehat
 	name = "ultra rare Pete's hat!"

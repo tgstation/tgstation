@@ -7,6 +7,7 @@
 	item_state = "bar_suit"
 	item_color = "barman"
 	alt_covers_chest = 1
+	fanciness = FANCY
 
 /obj/item/clothing/under/rank/captain //Alright, technically not a 'civilian' but its better then giving a .dm file for a single define.
 	desc = "It's a blue jumpsuit with some gold markings denoting the rank of \"Captain\"."
@@ -16,6 +17,7 @@
 	item_color = "captain"
 	sensor_mode = SENSOR_COORDS
 	random_sensor = 0
+	fanciness = FANCY_LAVISH
 
 /obj/item/clothing/under/rank/cargo
 	name = "quartermaster's jumpsuit"
@@ -23,6 +25,7 @@
 	icon_state = "qm"
 	item_state = "lb_suit"
 	item_color = "qm"
+	fanciness = FANCY
 
 /obj/item/clothing/under/rank/cargotech
 	name = "cargo technician's jumpsuit"
@@ -58,6 +61,7 @@
 	item_color = "clown"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
+	fanciness = FANCY_DISTASTEFUL
 
 /obj/item/clothing/under/rank/clown/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	playsound(loc, 'sound/items/bikehorn.ogg', 50, 1, -1)
@@ -70,6 +74,7 @@
 	item_state = "b_suit"
 	item_color = "hop"
 	can_adjust = 0
+	fanciness = FANCY
 
 /obj/item/clothing/under/rank/hydroponics
 	desc = "It's a jumpsuit designed to protect against minor plant-related hazards."
@@ -90,6 +95,7 @@
 	desc = "Slick threads."
 	name = "Lawyer suit"
 	can_adjust = 0
+	fanciness = FANCY
 
 /obj/item/clothing/under/lawyer/black
 	icon_state = "lawyer_black"
@@ -145,6 +151,7 @@
 	item_state = "red_suit"
 	item_color = "red_suit"
 	can_adjust = 0
+	fanciness = FANCY
 
 /obj/item/clothing/under/rank/curator/treasure_hunter
 	name = "treasure hunter uniform"
@@ -159,6 +166,7 @@
 	icon_state = "mime"
 	item_state = "mime"
 	item_color = "mime"
+	fanciness = FANCY_UGLY
 
 /obj/item/clothing/under/rank/miner
 	desc = "It's a snappy jumpsuit with a sturdy set of overalls. It is very dirty."

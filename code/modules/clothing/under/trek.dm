@@ -3,6 +3,7 @@
 
 /obj/item/clothing/under/trek
 	can_adjust = 0
+	fanciness = FANCY
 
 
 //TOS

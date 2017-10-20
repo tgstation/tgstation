@@ -9,6 +9,7 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDEFACE
 	resistance_flags = ACID_PROOF
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	fanciness = FANCY_UGLY
 
 /obj/item/clothing/suit/bio_suit
 	name = "bio suit"
@@ -27,6 +28,7 @@
 	strip_delay = 70
 	equip_delay_other = 70
 	resistance_flags = ACID_PROOF
+	fanciness = FANCY_UGLY
 
 //Standard biosuit, orange stripe
 /obj/item/clothing/head/bio_hood/general

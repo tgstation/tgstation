@@ -40,6 +40,7 @@
 	strip_delay = 50
 	equip_delay_other = 50
 	permeability_coefficient = 0.9
+	fanciness = FANCY //One with nature!
 
 /obj/item/clothing/shoes/sandal/marisa
 	desc = "A pair of magic black shoes."
@@ -63,6 +64,7 @@
 	equip_delay_other = 50
 	resistance_flags = 0
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 40, acid = 75)
+	fanciness = FANCY_UGLY
 
 /obj/item/clothing/shoes/galoshes/dry
 	name = "absorbent galoshes"
@@ -83,6 +85,7 @@
 	slowdown = SHOES_SLOWDOWN+1
 	item_color = "clown"
 	pockets = /obj/item/storage/internal/pocket/shoes/clown
+	fanciness = FANCY_DISTASTEFUL
 
 /obj/item/clothing/shoes/clown_shoes/Initialize()
 	. = ..()
@@ -168,6 +171,7 @@
 	desc = "The height of fashion, and they're pre-polished!"
 	icon_state = "laceups"
 	equip_delay_other = 50
+	fanciness = FANCY
 
 /obj/item/clothing/shoes/roman
 	name = "roman sandals"
@@ -184,6 +188,7 @@
 	icon_state = "griffinboots"
 	item_state = "griffinboots"
 	pockets = /obj/item/storage/internal/pocket/shoes
+	fanciness = FANCY_UGLY
 
 /obj/item/clothing/shoes/bhop
 	name = "jump boots"

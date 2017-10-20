@@ -20,6 +20,7 @@
 	item_state = "bio_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT
+	fanciness = FANCY
 	allowed = list(/obj/item/disk, /obj/item/stamp, /obj/item/reagent_containers/food/drinks/flask, /obj/item/melee, /obj/item/storage/lockbox/medal, /obj/item/device/assembly/flash/handheld, /obj/item/storage/box/matches, /obj/item/lighter, /obj/item/clothing/mask/cigarette, /obj/item/storage/fancy/cigarettes, /obj/item/tank/internals/emergency_oxygen)
 
 //Chaplain
@@ -54,6 +55,7 @@
 	icon_state = "studentuni"
 	item_state = "studentuni"
 	body_parts_covered = ARMS|CHEST
+	fanciness = FANCY
 	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen)
 
 /obj/item/clothing/suit/witchhunter
@@ -75,6 +77,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	allowed = list(/obj/item/kitchen)
 	togglename = "sleeves"
+	fanciness = FANCY
 
 //Cook
 /obj/item/clothing/suit/apron/chef
@@ -98,6 +101,7 @@
 	armor = list(melee = 25, bullet = 10, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 45)
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
+	fanciness = FANCY
 
 /obj/item/clothing/suit/det_suit/grey
 	name = "noir trenchcoat"
@@ -114,6 +118,7 @@
 	blood_overlay_type = "armor"
 	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/device/t_scanner, /obj/item/device/radio)
 	resistance_flags = 0
+	fanciness = FANCY_UGLY
 //Lawyer
 /obj/item/clothing/suit/toggle/lawyer
 	name = "blue suit jacket"
@@ -123,6 +128,7 @@
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
 	togglename = "buttons"
+	fanciness = FANCY
 
 /obj/item/clothing/suit/toggle/lawyer/purple
 	name = "purple suit jacket"
@@ -186,3 +192,4 @@
 	armor = list(melee = 25, bullet = 10, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 45)
 	cold_protection = CHEST|ARMS
 	heat_protection = CHEST|ARMS
+	fanciness = FANCY

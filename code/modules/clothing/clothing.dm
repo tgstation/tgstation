@@ -7,6 +7,7 @@
 	var/flash_protect = 0		//What level of bright light protection item has. 1 = Flashers, Flashes, & Flashbangs | 2 = Welding | -1 = OH GOD WELDING BURNT OUT MY RETINAS
 	var/tint = 0				//Sets the item's level of visual impairment tint, normally set to the same as flash_protect
 	var/up = 0					//but separated to allow items to protect but not impair vision, like space helmets
+	var/fanciness = NOT_FANCY	//Used by saps to determine how fancy they are; see "__DEFINES/fanciness.dm" for a list
 	var/visor_flags = 0			//flags that are added/removed when an item is adjusted up/down
 	var/visor_flags_inv = 0		//same as visor_flags, but for flags_inv
 	var/visor_flags_cover = 0	//same as above, but for flags_cover
@@ -473,6 +474,7 @@ BLIND     // can't see anything
 	equip_delay_other = 50
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	resistance_flags = 0
+	fanciness = FANCY_UGLY
 	dog_fashion = null
 
 /obj/item/clothing/suit/space
@@ -496,6 +498,7 @@ BLIND     // can't see anything
 	strip_delay = 80
 	equip_delay_other = 80
 	resistance_flags = 0
+	fanciness = FANCY_UGLY
 
 //Under clothing
 

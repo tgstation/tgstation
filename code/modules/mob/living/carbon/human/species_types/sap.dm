@@ -22,142 +22,6 @@
 	var/fanciness = 0 //Percentage of fanciness, determined by clothing worn. Below 50% fanciness you begin to starve, and above it you are nourished!
 	var/list/fancy_clothing_info //Used so saps can track their fanciness in an alert
 
-
-	var/static/list/despicable_clothing_typecache = typecacheof(list(\
-	/obj/item/clothing/head/radiation, \
-	/obj/item/clothing/suit/radiation, \
-	/obj/item/clothing/suit/armor/bone, \
-	/obj/item/clothing/head/wizard/fake, \
-	/obj/item/clothing/gloves/boxing, \
-	/obj/item/clothing/gloves/bracer, \
-	/obj/item/clothing/head/helmet/justice, \
-	/obj/item/clothing/head/helmet/skull, \
-	/obj/item/clothing/head/cueball, \
-	/obj/item/clothing/head/snowman, \
-	/obj/item/clothing/head/chicken, \
-	/obj/item/clothing/head/griffin, \
-	/obj/item/clothing/head/bearpelt, \
-	/obj/item/clothing/head/xenos, \
-	/obj/item/clothing/head/fedora, \
-	/obj/item/clothing/head/sombrero, \
-	/obj/item/clothing/head/cone, \
-	/obj/item/clothing/head/jester, \
-	/obj/item/clothing/head/papersack/smiley, \
-	/obj/item/clothing/head/lobsterhat, \
-	/obj/item/clothing/under/rank/clown/sexy, \
-	/obj/item/clothing/under/jabroni, \
-	/obj/item/clothing/under/jester, \
-	/obj/item/clothing/under/villain, \
-	/obj/item/clothing/under/lobster, \
-	/obj/item/clothing/under/shorts, \
-	/obj/item/clothing/under/rank/clown, \
-	)) //Each worn item reduces fanciness by 10%
-
-
-	var/static/list/ugly_clothing_typecache = typecacheof(list(\
-	/obj/item/clothing/head/helmet/space, \
-	/obj/item/clothing/suit/space, \
-	/obj/item/clothing/head/hardhat, \
-	/obj/item/clothing/suit/fire, \
-	/obj/item/clothing/head/bomb_hood, \
-	/obj/item/clothing/suit/bomb_suit, \
-	/obj/item/clothing/head/bio_hood, \
-	/obj/item/clothing/suit/bio_suit, \
-	/obj/item/clothing/suit/hazardvest, \
-	/obj/item/clothing/suit/armor, \
-	/obj/item/clothing/suit/wizrobe/fake, \
-	/obj/item/clothing/glasses/meson, \
-	/obj/item/clothing/glasses/material, \
-	/obj/item/clothing/glasses/regular/jamjar, \
-	/obj/item/clothing/glasses/godeye, \
-	/obj/item/clothing/gloves, \
-	/obj/item/clothing/head/helmet, \
-	/obj/item/clothing/head/papersack, \
-	/obj/item/clothing/under/color/grey, \
-	/obj/item/clothing/under/rank/prisoner, \
-	/obj/item/clothing/under/owl, \
-	/obj/item/clothing/under/griffin, \
-	/obj/item/clothing/under/schoolgirl, \
-	/obj/item/clothing/under/kilt, \
-	/obj/item/clothing/under/sexymime, \
-	/obj/item/clothing/under/pants, \
-	)) //Reduces fanciness by 5%
-
-
-	var/static/list/fancy_clothing_typecache = typecacheof(list(\
-	/obj/item/clothing/neck/cloak, \
-	/obj/item/clothing/suit/apron, \
-	/obj/item/clothing/suit/studentuni, \
-	/obj/item/clothing/suit/toggle/chef, \
-	/obj/item/clothing/suit/det_suit, \
-	/obj/item/clothing/suit/toggle/lawyer, \
-	/obj/item/clothing/suit/curator, \
-	/obj/item/clothing/suit/armor/vest, \
-	/obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard, \
-	/obj/item/clothing/suit/space/hardsuit/shielded/wizard, \
-	/obj/item/clothing/glasses/meson/gar, \
-	/obj/item/clothing/glasses/science, \
-	/obj/item/clothing/glasses/sunglasses, \
-	/obj/item/clothing/glasses/welding, \
-	/obj/item/clothing/glasses/cold, \
-	/obj/item/clothing/glasses/heat, \
-	/obj/item/clothing/glasses/orange, \
-	/obj/item/clothing/glasses/red, \
-	/obj/item/clothing/gloves/color/captain, \
-	/obj/item/clothing/gloves/botanic_leather, \
-	/obj/item/clothing/head/beanie, \
-	/obj/item/clothing/head/collectable, \
-	/obj/item/clothing/head/helmet/roman, \
-	/obj/item/clothing/head/hasturhood, \
-	/obj/item/clothing/head/rice_hat, \
-	/obj/item/clothing/head/nemes, \
-	/obj/item/clothing/under/scratch, \
-	/obj/item/clothing/under/rank/vice, \
-	/obj/item/clothing/under/suit_jacket, \
-	/obj/item/clothing/under/assistantformal, \
-	/obj/item/clothing/under/plaid_skirt, \
-	/obj/item/clothing/under/trek, \
-	/obj/item/clothing/under/rank/bartender, \
-	/obj/item/clothing/under/lawyer, \
-	/obj/item/clothing/under/rank/curator, \
-	/obj/item/clothing/under/rank/chief_engineer, \
-	/obj/item/clothing/under/rank/research_director, \
-	/obj/item/clothing/under/rank/chief_medical_officer, \
-	/obj/item/clothing/under/rank/head_of_security, \
-	/obj/item/clothing/under/rank/det, \
-	)) //Each worn item increases fanciness by 5%
-
-
-	var/static/list/lavish_clothing_typecache = typecacheof(list(\
-	/obj/item/clothing/suit/captunic, \
-	/obj/item/clothing/suit/armor/vest/capcarapace/alt, \
-	/obj/item/clothing/head/wizard, \
-	/obj/item/clothing/suit/wizrobe, \
-	/obj/item/clothing/head/that, \
-	/obj/item/clothing/head/crown, \
-	/obj/item/clothing/under/waiter, \
-	/obj/item/clothing/under/rank/centcom_officer, \
-	/obj/item/clothing/under/suit_jacket/really_black, \
-	/obj/item/clothing/under/captainparade, \
-	/obj/item/clothing/under/hosparademale, \
-	/obj/item/clothing/under/hosparadefem, \
-	/obj/item/clothing/under/blacktango, \
-	/obj/item/clothing/under/redeveninggown, \
-	/obj/item/clothing/under/rank/captain, \
-	)) //Increases fanciness by 10%
-
-
-	var/static/list/chichi_clothing_typecache = typecacheof(list(\
-	/obj/item/clothing/glasses/monocle, \
-	/obj/item/clothing/glasses/thermal/monocle, \
-	/obj/item/clothing/head/centhat, \
-	/obj/item/clothing/head/bowler, \
-	/obj/item/clothing/head/crown/fancy, \
-	/obj/item/clothing/under/rank/centcom_commander, \
-	/obj/item/clothing/under/syndicate, \
-	)) //Increases fanciness by 15%
-
-
 /datum/species/sap/random_name(gender,unique)
 	if(unique)
 		return random_unique_sap_name(gender)
@@ -199,31 +63,23 @@
 	fancy_clothing_info = list()
 	var/total_fanciness = 50
 	var/item_fanciness
-	var/obj/item/cycled_clothing
-	if(sap.mind && sap.mind.special_role) //Antagonists don't need to worry about fanciness
-		fancy_clothing_info[sap.mind.special_role] = 80
-		total_fanciness = 80
-	else
-		var/list/slots = list(slot_wear_suit, slot_shoes, slot_head, slot_wear_mask, slot_gloves, slot_glasses, slot_w_uniform)
-		for(var/slot in slots)
-			item_fanciness = 0
-			cycled_clothing = sap.get_item_by_slot(slot)
-			if(cycled_clothing)
-				if(is_type_in_typecache(cycled_clothing, chichi_clothing_typecache))
-					item_fanciness = 15
-				else if(is_type_in_typecache(cycled_clothing, lavish_clothing_typecache))
-					item_fanciness = 10
-				else if(is_type_in_typecache(cycled_clothing, fancy_clothing_typecache))
-					item_fanciness = 5
-				else if(is_type_in_typecache(cycled_clothing, ugly_clothing_typecache))
-					item_fanciness = -5
-				else if(is_type_in_typecache(cycled_clothing, despicable_clothing_typecache))
-					item_fanciness = -10
-				if(slot == slot_head) //Fancy hats are by far the most important to a sap's class.
-					item_fanciness *= 2
-				total_fanciness += item_fanciness
-				if(item_fanciness)
-					fancy_clothing_info[cycled_clothing.name] = item_fanciness
+	var/obj/item/clothing/cycled_clothing
+	var/list/slots = list(slot_wear_suit, slot_shoes, slot_head, slot_wear_mask, slot_gloves, slot_glasses, slot_w_uniform)
+	for(var/slot in slots)
+		item_fanciness = 0
+		cycled_clothing = sap.get_item_by_slot(slot)
+		if(cycled_clothing)
+			item_fanciness = cycled_clothing.fanciness
+			total_fanciness += item_fanciness
+			if(item_fanciness && istype(cycled_clothing))
+				fancy_clothing_info[cycled_clothing.name] = item_fanciness > 0 ? "+[item_fanciness]" : item_fanciness
+	if(sap.mind)
+		if(sap.mind.special_role)
+			total_fanciness += 20
+			fancy_clothing_info[sap.mind.special_role] = "+20"
+		if(sap.mind.assigned_role == "Clown")
+			total_fanciness += 50 //Very ugly starting gear
+			fancy_clothing_info["Clown shamelessness"] = "+50"
 	total_fanciness = Clamp(total_fanciness, 0, 100)
 	fanciness = total_fanciness
 	return

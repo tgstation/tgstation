@@ -44,6 +44,7 @@
 	vision_flags = SEE_TURFS
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
+	fanciness = FANCY_UGLY
 
 /obj/item/clothing/glasses/meson/night
 	name = "night vision meson scanner"
@@ -66,6 +67,7 @@
 	attack_verb = list("sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
+	fanciness = FANCY
 
 /obj/item/clothing/glasses/science
 	name = "science goggles"
@@ -105,6 +107,7 @@
 	desc = "Such a dapper eyepiece!"
 	icon_state = "monocle"
 	item_state = "headset" // lol
+	fanciness = FANCY_CHIC
 
 /obj/item/clothing/glasses/material
 	name = "optical material scanner"
@@ -114,6 +117,7 @@
 	origin_tech = "magnets=3;engineering=3"
 	vision_flags = SEE_OBJS
 	glass_colour_type = /datum/client_colour/glass_colour/lightblue
+	fanciness = FANCY_UGLY
 
 /obj/item/clothing/glasses/material/mining
 	name = "optical material scanner"
@@ -135,6 +139,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
+	fanciness = FANCY
 
 /obj/item/clothing/glasses/regular
 	name = "prescription glasses"
@@ -148,12 +153,14 @@
 	desc = "Also known as Virginity Protectors."
 	icon_state = "jamjar_glasses"
 	item_state = "jamjar_glasses"
+	fanciness = FANCY_DISTASTEFUL
 
 /obj/item/clothing/glasses/regular/hipster
 	name = "prescription glasses"
 	desc = "Made by Uncool. Co."
 	icon_state = "hipster_glasses"
 	item_state = "hipster_glasses"
+	fanciness = FANCY_UGLY
 
 //Here lies green glasses, so ugly they died. RIP
 
@@ -167,6 +174,7 @@
 	tint = 1
 	glass_colour_type = /datum/client_colour/glass_colour/gray
 	dog_fashion = /datum/dog_fashion/head
+	fanciness = FANCY
 
 /obj/item/clothing/glasses/sunglasses/reagent
 	name = "beer goggles"
@@ -193,6 +201,7 @@
 	item_state = "garb"
 	force = 12
 	throwforce = 12
+	fanciness = FANCY_LAVISH
 
 /obj/item/clothing/glasses/sunglasses/gar
 	name = "gar glasses"
@@ -308,12 +317,14 @@
 	desc = "A pair of goggles meant for low temperatures."
 	icon_state = "cold"
 	item_state = "cold"
+	fanciness = FANCY
 
 /obj/item/clothing/glasses/heat
 	name = "heat goggles"
 	desc = "A pair of goggles meant for high temperatures."
 	icon_state = "heat"
 	item_state = "heat"
+	fanciness = FANCY
 
 /obj/item/clothing/glasses/orange
 	name = "orange glasses"
@@ -321,6 +332,7 @@
 	icon_state = "orangeglasses"
 	item_state = "orangeglasses"
 	glass_colour_type = /datum/client_colour/glass_colour/lightorange
+	fanciness = FANCY
 
 /obj/item/clothing/glasses/red
 	name = "red glasses"
@@ -328,6 +340,7 @@
 	icon_state = "redglasses"
 	item_state = "redglasses"
 	glass_colour_type = /datum/client_colour/glass_colour/red
+	fanciness = FANCY
 
 /obj/item/clothing/glasses/godeye
 	name = "eye of god"
@@ -339,6 +352,7 @@
 	scan_reagents = 1
 	flags_1 = NODROP_1
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	fanciness = FANCY_UGLY
 
 /obj/item/clothing/glasses/godeye/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(istype(W, src) && W != src && W.loc == user)
