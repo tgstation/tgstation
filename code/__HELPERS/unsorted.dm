@@ -507,13 +507,14 @@ Turf and target are separate in case you want to teleport some distance from a t
 Recursively gets all contents of contents and returns them all in a list.
 
 recursive_depth is useful if you only want a turf and everything on it (recursive_depth=1)
+Do not set recursive depth higher than MAX_PROC_DEPTH as byond breaks when that limit is reached.
 */
-/atom/proc/GetAllContents(list/output=list(), recursive_depth=199, _current_depth=0)	// 200 proc calls in and we break shit
+/atom/proc/GetAllContents(list/output=list(), recursive_depth=MAX_PROC_DEPTH, _current_depth=0)
 	. = output
 	output += src 
 	if(_current_depth == recursive_depth)
-		if(_current_depth == 199)
-			WARNING("Get all contents reached the max recursive depth of 199. One more and we would break shit. Offending atom: [src]")
+		if(_current_depth == MAX_PROC_DEPTH)
+			WARNING("Get all contents reached the max recursive depth of [MAX_PROC_DEPTH]. More and we would break shit. Offending atom: [src]")
 		return
 	for(var/i in 1 to contents.len) 
 		var/atom/thing = contents[i] 
