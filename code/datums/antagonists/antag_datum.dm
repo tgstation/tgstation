@@ -9,6 +9,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/delete_on_mind_deletion = TRUE
 	var/job_rank
 	var/replace_banned = TRUE //Should replace jobbaned player with ghosts if granted.
+	var/marked_possessable //Ckey of person that was in the mob when it was possessed.
 
 /datum/antagonist/New(datum/mind/new_owner)
 	GLOB.antagonists += src
@@ -66,14 +67,24 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/replace_banned_player()
 	set waitfor = FALSE
 
+	var/reason = is_banned(owner.current)
+	to_chat(owner, "<span class='boldannounce'><BIG>You are jobbanned from this role. Ghosts can take your place.</BIG></span>")
+	if(istext(reason))
+		to_chat(owner, "<span class='boldannounce'>The reason is: [reason]</span>")
+	to_chat(owner, "<span class='danger'>Appeal your job ban if you want to avoid this in the future!</span>")
+
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [name]?", "[name]", null, job_rank, 50, owner.current)
 	var/mob/dead/observer/theghost = null
 	if(candidates.len)
 		theghost = pick(candidates)
-		to_chat(owner, "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!")
+		to_chat(owner, "<span class='ghostalert'>Your mob has been taken over by a ghost!</span>")
 		message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(owner.current)]) to replace a jobbaned player.")
 		owner.current.ghostize(0)
 		owner.current.key = theghost.key
+	else
+		message_admins("Unable to find a ghost to take control of ([key_name_admin(owner.current)]), so they were made possessable.")
+		marked_possessable = owner.current.ckey
+		owner.current.ondemand_possessable += 1
 
 /datum/antagonist/proc/on_removal()
 	remove_innate_effects()
@@ -84,6 +95,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/datum/objective_team/team = get_team()
 	if(team)
 		team.remove_member(owner)
+	if(owner.current.ckey == marked_possessable)
+		owner.current.ondemand_possessable = max(owner.current.ondemand_possessable - 1, 0)
+		marked_possessable = null
 	qdel(src)
 
 /datum/antagonist/proc/greet()
