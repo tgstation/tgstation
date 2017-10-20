@@ -2329,6 +2329,7 @@
 #include "hippiestation\code\game\objects\items\staples.dm"
 #include "hippiestation\code\game\objects\items\stunbaton.dm"
 #include "hippiestation\code\game\objects\items\twohanded.dm"
+#include "hippiestation\code\game\objects\items\vending_items.dm"
 #include "hippiestation\code\game\objects\items\weaponry.dm"
 #include "hippiestation\code\game\objects\items\circuitboards\machine_circuitboards.dm"
 #include "hippiestation\code\game\objects\items\devices\meeseeks_box.dm"
