@@ -16,6 +16,12 @@
 
 	var/obj/item/bodypart/head/myhead
 
+
+/datum/species/dullahan/check_roundstart_eligible()
+	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
+		return TRUE
+	return FALSE
+
 /datum/species/dullahan/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	. = ..()
 	var/obj/item/bodypart/head/head = H.get_bodypart("head")
@@ -100,9 +106,10 @@
 	START_PROCESSING(SSobj, src)
 
 /obj/item/dullahan_relay/process()
-	if(!istype(loc, /obj/item/bodypart/head))
-		if(owner)
+	if(!istype(loc, /obj/item/bodypart/head) || QDELETED(owner))
+		if(!QDELETED(owner))
 			owner.gib()
+		owner = null
 		. = PROCESS_KILL
 		qdel(src)
 
