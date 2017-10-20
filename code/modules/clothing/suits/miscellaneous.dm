@@ -573,16 +573,19 @@
 	user_vars_to_edit = list("name" = "Spooky Ghost", "real_name" = "Spooky Ghost" , "incorporeal_move" = INCORPOREAL_MOVE_BASIC, "appearance_flags" = KEEP_TOGETHER|TILE_BOUND, "alpha" = 150)
 	alternate_worn_layer = ABOVE_BODY_FRONT_LAYER //so the bedsheet goes over everything but fire
 
-
 /obj/item/clothing/suit/hooded/flashsuit
 	name = "flash suit"
 	desc = "a suit that parodies those who use the defense item of the same name."
 	icon_state = "flashsuit"
-	body_parts_covered = CHEST|GROIN|HEAD
+	item_state = "armor"
+	body_parts_covered = CHEST|GROIN
+	flags = THICKMATERIAL
 	hoodtype = /obj/item/clothing/head/hooded/flashsuit
 
 /obj/item/clothing/head/hooded/flashsuit
 	name = "flash button"
 	desc = "Smash the flash!"
 	icon_state = "flashsuit"
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	body_parts_covered = HEAD
+	flags = THICKMATERIAL
+	flags_inv = HIDEHAIR|HIDEEARS
