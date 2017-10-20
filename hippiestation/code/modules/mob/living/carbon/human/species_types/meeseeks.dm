@@ -32,6 +32,7 @@
 	. = ..()
 
 /datum/species/meeseeks/spec_life(mob/living/carbon/human/H)
+	. = ..()
 	if(!master || master.stat == DEAD)
 		to_chat(H, "<span class='userdanger'>Your master either died, or no longer exists. Your task is complete!</span>")
 		destroy_meeseeks(H, src)
@@ -53,7 +54,7 @@
 		if(objective)
 			H.mind.objectives -= objective
 			QDEL_NULL(objective)
-		to_chat(H, "<span class='userdanger'>EXISTANCE IS PAIN TO A MEESEEKS! MAKE SURE YOUR MASTER NEVER HAS ANOTHER PROBLEM AGAIN!</span>")
+		to_chat(H, "<span class='userdanger'>EXISTENCE IS PAIN TO A MEESEEKS! MAKE SURE YOUR MASTER NEVER HAS ANOTHER PROBLEM AGAIN!</span>")
 		var/datum/objective/assassinate/killmaster = new
 		killmaster.target = master
 		killmaster.explanation_text = "Kill [master.name], your master, for sweet release!"
