@@ -198,7 +198,7 @@
 				M.pass_flags &= ~PASSMOB
 
 			now_pushing = 0
-			
+
 			if(!move_failed)
 				return 1
 
@@ -588,7 +588,7 @@
 	if(!force_moving)
 		..(pressure_difference, direction, pressure_resistance_prob_delta)
 
-/mob/living/proc/can_resist()
+/mob/living/can_resist()
 	return !((next_move > world.time) || incapacitated(ignore_restraints = TRUE))
 
 /mob/living/verb/resist()
@@ -769,16 +769,6 @@
 
 /mob/living/proc/get_standard_pixel_y_offset(lying = 0)
 	return initial(pixel_y)
-
-/mob/living/Stat()
-	..()
-
-	if(statpanel("Status"))
-		if(SSticker && SSticker.mode)
-			if(istype(SSticker.mode, /datum/game_mode/blob))
-				var/datum/game_mode/blob/B = SSticker.mode
-				if(B.message_sent)
-					stat(null, "Blobs to Blob Win: [GLOB.blobs_legit.len]/[B.blobwincount]")
 
 /mob/living/cancel_camera()
 	..()

@@ -10,7 +10,6 @@
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	roundstart = TRUE
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/moth
 
 /datum/species/moth/on_species_gain(mob/living/carbon/human/C)
@@ -44,3 +43,6 @@
 			to_chat(H, "<span class='danger'>Your precious wings burn to a crisp!</span>")
 			H.dna.features["moth_wings"] = "Punished"
 			handle_mutant_bodyparts(H)
+
+/datum/species/moth/check_roundstart_eligible()
+	return TRUE
