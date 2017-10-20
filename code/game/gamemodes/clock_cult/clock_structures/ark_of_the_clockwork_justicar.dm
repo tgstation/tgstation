@@ -245,7 +245,7 @@
 				SSticker.force_ending = TRUE
 				var/x0 = T.x
 				var/y0 = T.y
-				for(var/I in spiral_range_turfs(255, startpoint, tick_checked = TRUE))
+				for(var/I in spiral_range_turfs(255, T, tick_checked = TRUE))
 					var/turf/T2 = I
 					if(!T2)
 						continue
