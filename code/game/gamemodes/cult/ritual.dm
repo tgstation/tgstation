@@ -197,8 +197,11 @@ This file contains the arcane tome files.
 	if(!src || QDELETED(src) || !Adjacent(user) || user.incapacitated() || !check_rune_turf(Turf, user))
 		return
 	if(ispath(rune_to_scribe, /obj/effect/rune/narsie))
-		if(!("eldergod" in SSticker.mode.cult_objectives))
+		if(!SSticker.mode.cult_team || !LAZYLEN(SSticker.mode.cult_team.objectives) || !(/datum/objective/cult/eldergod in SSticker.mode.cult_team.objectives))
 			to_chat(user, "<span class='warning'>Nar-Sie does not wish to be summoned!</span>")
+			return
+		if(!SSticker.mode.check_blood())
+			to_chat(user, "<span class='warning'>The station has not been properly prepared for Nar-Sie -- spread more blood!</span>")
 			return
 		if(!GLOB.sac_complete)
 			to_chat(user, "<span class='warning'>The sacrifice is not complete. The portal would lack the power to open if you tried!</span>")

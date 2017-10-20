@@ -490,6 +490,7 @@
 #include "code\game\gamemodes\cult\cult.dm"
 #include "code\game\gamemodes\cult\cult_comms.dm"
 #include "code\game\gamemodes\cult\cult_items.dm"
+#include "code\game\gamemodes\cult\cult_objectives.dm"
 #include "code\game\gamemodes\cult\cult_structures.dm"
 #include "code\game\gamemodes\cult\ritual.dm"
 #include "code\game\gamemodes\cult\rune_spawn_action.dm"

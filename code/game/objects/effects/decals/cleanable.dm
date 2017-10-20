@@ -1,3 +1,5 @@
+GLOBAL_LIST_EMPTY(bloody_tiles)
+
 /obj/effect/decal/cleanable
 	gender = PLURAL
 	layer = ABOVE_NORMAL_TURF_LAYER
@@ -21,7 +23,12 @@
 				diseases_to_add += D
 		if(LAZYLEN(diseases_to_add))
 			AddComponent(/datum/component/infective, diseases_to_add)
+	update_bloodiness()
 	. = ..()
+
+/obj/effect/decal/cleanable/Destroy()
+	. = ..()
+	update_bloodiness()
 
 /obj/effect/decal/cleanable/proc/replace_decal(obj/effect/decal/cleanable/C)
 	if(mergeable_decal)
@@ -87,11 +94,23 @@
 			S.blood_state = blood_state
 			update_icon()
 			H.update_inv_shoes()
+		update_bloodiness()
 
+/obj/effect/decal/cleanable/proc/update_bloodiness()
+	var/turf/T = get_turf(src)
+	var/is_bloody = FALSE
+	var/turf/I = (T in GLOB.bloody_tiles)
+	for(var/obj/effect/decal/cleanable/C in T.contents)
+		if((C.blood_state != BLOOD_STATE_OIL) && (C.blood_state != BLOOD_STATE_NOT_BLOODY))
+			is_bloody = TRUE
 
+	if(is_bloody && !I)
+		GLOB.bloody_tiles += src
+	if(!is_bloody && I)
+		GLOB.bloody_tiles -= src
 
 /obj/effect/decal/cleanable/proc/can_bloodcrawl_in()
 	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))
 		return bloodiness
 	else
-		return 0
+		return FALSE

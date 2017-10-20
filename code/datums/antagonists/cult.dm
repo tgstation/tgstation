@@ -12,6 +12,10 @@
 	return ..()
 
 /datum/antagonist/cult/proc/add_objectives()
+	if(!SSticker.mode.cult_team)
+		SSticker.mode.cult_team = new
+	if(SSticker.mode.cult_team.objectives.len > 0)
+		return FALSE //gamemode already generated objectives
 	var/list/target_candidates = list()
 	for(var/mob/living/carbon/human/player in GLOB.player_list)
 		if(player.mind && !player.mind.has_antag_datum(ANTAG_DATUM_CULT) && !is_convertable_to_cult(player) && (player != owner) && player.stat != DEAD)
@@ -35,33 +39,29 @@
 			reshape.Crop(7,4,26,31)
 			reshape.Crop(-5,-3,26,30)
 			GLOB.sac_image = reshape
+			SSticker.mode.cult_team.add_objective(new/datum/objective/cult/sacrifice)
 	else
 		message_admins("Cult Sacrifice: Could not find unconvertable or convertable target. WELP!")
 		GLOB.sac_complete = TRUE
-	SSticker.mode.cult_objectives += "sacrifice"
+	if(prob(25))
+		SSticker.mode.cult_team.add_objective(new/datum/objective/cult/spread_blood)
 	if(!GLOB.summon_spots.len)
 		while(GLOB.summon_spots.len < SUMMON_POSSIBILITIES)
 			var/area/summon = pick(GLOB.sortedAreas - GLOB.summon_spots)
 			if(summon && (summon.z in GLOB.station_z_levels) && summon.valid_territory)
 				GLOB.summon_spots += summon
-	SSticker.mode.cult_objectives += "eldergod"
+	SSticker.mode.cult_team.add_objective(new/datum/objective/cult/eldergod)
 
 /datum/antagonist/cult/proc/cult_memorization(datum/mind/cult_mind)
 	var/mob/living/current = cult_mind.current
-	for(var/obj_count = 1,obj_count <= SSticker.mode.cult_objectives.len,obj_count++)
-		var/explanation
-		switch(SSticker.mode.cult_objectives[obj_count])
-			if("sacrifice")
-				if(GLOB.sac_mind)
-					explanation = "Sacrifice [GLOB.sac_mind], the [GLOB.sac_mind.assigned_role] via invoking a Sacrifice rune with them on it and three acolytes around it."
-				else
-					explanation = "The veil has already been weakened here, proceed to the final objective."
-					GLOB.sac_complete = TRUE
-			if("eldergod")
-				explanation = "Summon Nar-Sie by invoking the rune 'Summon Nar-Sie'. <b>The summoning can only be accomplished in [english_list(GLOB.summon_spots)] - where the veil is weak enough for the ritual to begin.</b>"
-		if(!silent)
-			to_chat(current, "<B>Objective #[obj_count]</B>: [explanation]")
-		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
+	if(SSticker.mode.cult_team && SSticker.mode.cult_team.objectives.len)
+		text += "<br><b>The cultists' objectives were:</b>"
+		var/obj_count = 1
+		for(var/datum/objective/cult/O in SSticker.mode.cult_team.objectives)
+			if(!silent)
+				to_chat(current, "<B>Objective #[obj_count]</B>: [O.memorization_text()]")
+			cult_mind.memory += "<B>Objective #[obj_count]</B>: [O.memorization_text()]<BR>"
+			obj_count++
 
 /datum/antagonist/cult/can_be_owned(datum/mind/new_owner)
 	. = ..()
@@ -71,14 +71,15 @@
 /datum/antagonist/cult/on_gain()
 	. = ..()
 	var/mob/living/current = owner.current
-	if(!LAZYLEN(SSticker.mode.cult_objectives))
-		add_objectives()
 	SSticker.mode.cult += owner // Only add after they've been given objectives
 	cult_memorization(owner)
 	SSticker.mode.update_cult_icons_added(owner)
 	current.log_message("<font color=#960000>Has been converted to the cult of Nar'Sie!</font>", INDIVIDUAL_ATTACK_LOG)
 	if(GLOB.blood_target && GLOB.blood_target_image && current.client)
 		current.client.images += GLOB.blood_target_image
+	if(!SSticker.mode.cult_team)
+		SSticker.mode.cult_team = new
+	SSticker.mode.cult_team.add_member(owner)
 
 /datum/antagonist/cult/apply_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -115,6 +116,8 @@
 		owner.current.log_message("<font color=#960000>Has renounced the cult of Nar'Sie!</font>", INDIVIDUAL_ATTACK_LOG)
 	if(GLOB.blood_target && GLOB.blood_target_image && owner.current.client)
 		owner.current.client.images -= GLOB.blood_target_image
+	if(SSticker.mode.cult_team)
+		SSticker.mode.cult_team.remove_member(owner)
 	. = ..()
 
 /datum/antagonist/cult/master

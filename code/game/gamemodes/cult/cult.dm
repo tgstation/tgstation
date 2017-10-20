@@ -1,7 +1,7 @@
 /datum/game_mode
 	var/list/datum/mind/cult = list()
-	var/list/cult_objectives = list()
-	var/eldergod = 1 //for the summon god objective
+	var/eldergod = TRUE //for the summon god objective
+	var/datum/objective_team/cult/cult_team
 
 /proc/iscultist(mob/living/M)
 	return istype(M) && M.mind && M.mind.has_antag_datum(ANTAG_DATUM_CULT)
@@ -54,8 +54,9 @@
 	var/list/cultists_to_cult = list() //the cultists we'll convert
 
 
+
 /datum/game_mode/cult/pre_setup()
-	cult_objectives += "sacrifice"
+	cult_team = new /datum/objective_team/cult()
 
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		restricted_jobs += protected_jobs
@@ -81,41 +82,45 @@
 
 
 /datum/game_mode/cult/post_setup()
-	if("sacrifice" in cult_objectives)
-		var/list/possible_targets = get_unconvertables()
-		if(!possible_targets.len)
-			message_admins("Cult Sacrifice: Could not find unconvertable target, checking for convertable target.")
-			for(var/mob/living/carbon/human/player in GLOB.player_list)
-				if(player.mind && !(player.mind in cultists_to_cult))
-					possible_targets += player.mind
-		if(possible_targets.len > 0)
-			GLOB.sac_mind = pick(possible_targets)
-			if(!GLOB.sac_mind)
-				message_admins("Cult Sacrifice: ERROR -  Null target chosen!")
-			else
-				var/datum/job/sacjob = SSjob.GetJob(GLOB.sac_mind.assigned_role)
-				var/datum/preferences/sacface = GLOB.sac_mind.current.client.prefs
-				var/icon/reshape = get_flat_human_icon(null, sacjob, sacface)
-				reshape.Shift(SOUTH, 4)
-				reshape.Shift(EAST, 1)
-				reshape.Crop(7,4,26,31)
-				reshape.Crop(-5,-3,26,30)
-				GLOB.sac_image = reshape
+	if(SSticker.mode.cult_team && SSticker.mode.cult_team.objectives.len > 0)
+		return FALSE //antag datum already generated objectives
+	var/list/possible_targets = get_unconvertables()
+	if(!possible_targets.len)
+		message_admins("Cult Sacrifice: Could not find unconvertable target, checking for convertable target.")
+		for(var/mob/living/carbon/human/player in GLOB.player_list)
+			if(player.mind && !(player.mind in cultists_to_cult))
+				possible_targets += player.mind
+	if(possible_targets.len > 0)
+		GLOB.sac_mind = pick(possible_targets)
+		if(!GLOB.sac_mind)
+			message_admins("Cult Sacrifice: ERROR -  Null target chosen!")
 		else
-			message_admins("Cult Sacrifice: Could not find unconvertable or convertable target. WELP!")
+			var/datum/job/sacjob = SSjob.GetJob(GLOB.sac_mind.assigned_role)
+			var/datum/preferences/sacface = GLOB.sac_mind.current.client.prefs
+			var/icon/reshape = get_flat_human_icon(null, sacjob, sacface)
+			reshape.Shift(SOUTH, 4)
+			reshape.Shift(EAST, 1)
+			reshape.Crop(7,4,26,31)
+			reshape.Crop(-5,-3,26,30)
+			GLOB.sac_image = reshape
+			cult_team.add_objective(new/datum/objective/cult/sacrifice)
+	else
+		message_admins("Cult Sacrifice: Could not find unconvertable or convertable target. WELP!")
+	if(prob(25))
+		cult_team.add_objective(new/datum/objective/cult/spread_blood)
 	if(!GLOB.summon_spots.len)
 		while(GLOB.summon_spots.len < SUMMON_POSSIBILITIES)
 			var/area/summon = pick(GLOB.sortedAreas - GLOB.summon_spots)
 			if((summon.z in GLOB.station_z_levels) && summon.valid_territory)
 				GLOB.summon_spots += summon
-	cult_objectives += "eldergod"
+	cult_team.add_objective(new/datum/objective/cult/eldergod)
 
 	for(var/datum/mind/cult_mind in cultists_to_cult)
 		equip_cultist(cult_mind.current)
 		update_cult_icons_added(cult_mind)
 		to_chat(cult_mind.current, "<span class='userdanger'>You are a member of the cult!</span>")
 		cult_mind.current.playsound_local(get_turf(cult_mind.current), 'sound/ambience/antag/bloodcult.ogg', 100, FALSE, pressure_affected = FALSE)//subject to change
-		add_cultist(cult_mind, 0)
+		add_cultist(cult_mind, FALSE)
 	..()
 
 /datum/game_mode/proc/equip_cultist(mob/living/carbon/human/mob,tome = 0)
@@ -190,15 +195,10 @@
 	return ucs
 
 /datum/game_mode/cult/proc/check_cult_victory()
-	var/cult_fail = 0
-	if(cult_objectives.Find("survive"))
-		cult_fail += check_survive() //the proc returns 1 if there are not enough cultists on the shuttle, 0 otherwise
-	if(cult_objectives.Find("eldergod"))
-		cult_fail += eldergod //1 by default, 0 if the elder god has been summoned at least once
-	if(cult_objectives.Find("sacrifice"))
-		if(GLOB.sac_mind && !GLOB.sac_complete) //if the target has been GLOB.sacrificed, ignore this step. otherwise, add 1 to cult_fail
-			cult_fail++
-	return cult_fail //if any objectives aren't met, failure
+	for(var/datum/objective/O in cult_team.objectives)
+		if(!O.check_completion())
+			return FALSE
+	return TRUE //if any objectives aren't met, failure
 
 
 /datum/game_mode/cult/proc/check_survive()
@@ -212,6 +212,11 @@
 	else
 		return 1
 
+/datum/game_mode/proc/check_blood()
+	if(!cult_team || !LAZYLEN(cult_team.objectives) || !(/datum/objective/cult/spread_blood in cult_team.objectives))
+		return TRUE
+	var/datum/objective/cult/spread_blood/O = (/datum/objective/cult/spread_blood in cult_team.objectives)
+	return O.check_completion()
 
 /datum/game_mode/cult/declare_completion()
 
@@ -220,42 +225,20 @@
 		to_chat(world, "<span class='greentext'>The cult has succeeded! Nar-sie has snuffed out another torch in the void!</span>")
 	else
 		SSticker.mode_result = "loss - staff stopped the cult"
+		SSticker.news_report = CULT_FAILURE
 		to_chat(world, "<span class='redtext'>The staff managed to stop the cult! Dark words and heresy are no match for Nanotrasen's finest!</span>")
 
 	var/text = ""
 
-	if(cult_objectives.len)
+	if(cult_team && cult_team.objectives.len)
 		text += "<br><b>The cultists' objectives were:</b>"
-		for(var/obj_count=1, obj_count <= cult_objectives.len, obj_count++)
+		var/obj_count = 1
+		for(var/datum/objective/O in cult_team.objectives)
 			var/explanation
-			switch(cult_objectives[obj_count])
-				if("survive")
-					if(!check_survive())
-						explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. ([acolytes_survived] escaped) <span class='greenannounce'>Success!</span>"
-						SSblackbox.add_details("cult_objective","cult_survive|SUCCESS|[acolytes_needed]")
-						SSticker.news_report = CULT_ESCAPE
-					else
-						explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. ([acolytes_survived] escaped) <span class='boldannounce'>Fail.</span>"
-						SSblackbox.add_details("cult_objective","cult_survive|FAIL|[acolytes_needed]")
-						SSticker.news_report = CULT_FAILURE
-				if("sacrifice")
-					if(GLOB.sac_complete)
-						explanation = "Sacrifice [GLOB.sac_mind], the [GLOB.sac_mind.assigned_role]. <span class='greenannounce'>Success!</span>"
-						SSblackbox.add_details("cult_objective","cult_sacrifice|SUCCESS")
-					else
-						explanation = "Sacrifice [GLOB.sac_mind], the [GLOB.sac_mind.assigned_role]. <span class='boldannounce'>Fail.</span>"
-						SSblackbox.add_details("cult_objective","cult_sacrifice|FAIL")
-				if("eldergod")
-					if(!eldergod)
-						explanation = "Summon Nar-Sie. The summoning can only be accomplished in [english_list(GLOB.summon_spots)].<span class='greenannounce'>Success!</span>"
-						SSblackbox.add_details("cult_objective","cult_narsie|SUCCESS")
-						SSticker.news_report = CULT_SUMMON
-					else
-						explanation = "Summon Nar-Sie. The summoning can only be accomplished in [english_list(GLOB.summon_spots)]<span class='boldannounce'>Fail.</span>"
-						SSblackbox.add_details("cult_objective","cult_narsie|FAIL")
-						SSticker.news_report = CULT_FAILURE
-
-			text += "<br><B>Objective #[obj_count]</B>: [explanation]"
+			text += "<br><B>Objective #[obj_count]</B>: [explanation]. [O.check_completion() ? "<span class='greenannounce'>Success!</span>" : "<span class='boldannounce'>Fail.</span>"]"
+			obj_count++
+		if(istype(GLOB.cult_narsie, /obj/singularity/narsie/large) || SSticker.mode.eldergod)
+			SSticker.news_report = CULT_SUMMON
 	to_chat(world, text)
 	..()
 	return 1
@@ -279,27 +262,15 @@
 	else
 		SSticker.mode_result = "loss - staff stopped the cult"
 		to_chat(world, "<span class='redtext'>The staff managed to stop the cult! Dark words and heresy are no match for Nanotrasen's finest!</span>")
-	if(cult_objectives.len)
+		SSticker.news_report = CULT_FAILURE
+
+	if(cult_team && cult_team.objectives.len)
 		text += "<br><b>The cultists' objectives were:</b>"
-		for(var/obj_count in 1 to 2)
+		var/obj_count = 1
+		for(var/datum/objective/O in cult_team.objectives)
 			var/explanation
-			switch(cult_objectives[obj_count])
-				if("sacrifice")
-					if(GLOB.sac_mind)
-						if(GLOB.sac_complete)
-							explanation = "Sacrifice [GLOB.sac_mind], the [GLOB.sac_mind.assigned_role]. <span class='greenannounce'>Success!</span>"
-							SSblackbox.add_details("cult_objective","cult_sacrifice|SUCCESS")
-						else
-							explanation = "Sacrifice [GLOB.sac_mind], the [GLOB.sac_mind.assigned_role]. <span class='boldannounce'>Fail.</span>"
-							SSblackbox.add_details("cult_objective","cult_sacrifice|FAIL")
-				if("eldergod")
-					if(!eldergod)
-						explanation = "Summon Nar-Sie. <span class='greenannounce'>Success!</span>"
-						SSblackbox.add_details("cult_objective","cult_narsie|SUCCESS")
-						SSticker.news_report = CULT_SUMMON
-					else
-						explanation = "Summon Nar-Sie. <span class='boldannounce'>Fail.</span>"
-						SSblackbox.add_details("cult_objective","cult_narsie|FAIL")
-						SSticker.news_report = CULT_FAILURE
-			text += "<br><B>Objective #[obj_count]</B>: [explanation]"
+			text += "<br><B>Objective #[obj_count]</B>: [explanation]. [O.check_completion() ? "<span class='greenannounce'>Success!</span>" : "<span class='boldannounce'>Fail.</span>"]"
+			obj_count++
+		if(istype(GLOB.cult_narsie, /obj/singularity/narsie/large) || SSticker.mode.eldergod)
+			SSticker.news_report = CULT_SUMMON
 	to_chat(world, text)
