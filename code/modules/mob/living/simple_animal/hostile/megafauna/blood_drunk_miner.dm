@@ -170,7 +170,7 @@ Difficulty: Medium
 	if(dashing || next_move > world.time || !Adjacent(target))
 		if(dashing && next_move <= world.time)
 			next_move = world.time + 1
-		addtimer(1, CALLBACK(src, .proc/quick_attack_loop)) //lets try that again.
+		INVOKE_ASYNC(src, .proc/quick_attack_loop) //lets try that again.
 		return
 	AttackingTarget()
 
