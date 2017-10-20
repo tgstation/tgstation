@@ -275,18 +275,14 @@
 			H.adjustFireLoss(brown_pp/4)
 		gas_breathed = breath_gases[/datum/gas/brown_gas][MOLES]
 		if (gas_breathed > GAS_STIM_MINIMUM)
-			H.status_flags |= GOTTAGOFAST
-		else
-			H.status_flags &= ~GOTTAGOFAST
+			H.reagents.add_reagent("brown_gas",1)
 
 		breath_gases[/datum/gas/brown_gas][MOLES]-=gas_breathed
 		gas_breathed = 0
 	//Stimulum
 		gas_breathed = breath_gases[/datum/gas/stimulum][MOLES]
 		if (gas_breathed > GAS_STIM_MINIMUM)
-			H.status_flags |= GOTTAGOREALLYFAST
-		else
-			H.status_flags &= ~GOTTAGOREALLYFAST
+			H.reagents.add_reagent("stimulum",1)
 		breath_gases[/datum/gas/stimulum][MOLES]-=gas_breathed
 		handle_breath_temperature(breath, H)
 		breath.garbage_collect()

@@ -438,7 +438,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 			*/
 
 			. |= reaction.react(src, dump_location)
-			to_chat(world,reaction.name)
+			//to_chat(world,reaction.name)
 			if (. & STOP_REACTIONS)
 				break
 	if(.)

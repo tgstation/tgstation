@@ -7,7 +7,7 @@
 #define PLASMA_MINIMUM_OXYGEN_NEEDED		2
 #define PLASMA_MINIMUM_OXYGEN_PLASMA_RATIO	30
 #define PLASMA_OXYGEN_FULLBURN				10
-#define FIRE_CARBON_ENERGY_RELEASED			1000000	//Amount of heat released per mole of burnt carbon into the tile
+#define FIRE_CARBON_ENERGY_RELEASED			100000	//Amount of heat released per mole of burnt carbon into the tile
 #define FIRE_PLASMA_ENERGY_RELEASED			3000000	//Amount of heat released per mole of burnt plasma into the tile
 //General assmos defines.
 #define WATER_VAPOR_FREEZE					200
@@ -216,8 +216,8 @@
 
 	air.assert_gases(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/water_vapor, /datum/gas/nitrous_oxide, /datum/gas/brown_gas)
 	//Fusion produces an absurd amount of waste products now, requiring active filtration.
-	cached_gases[/datum/gas/plasma][MOLES] -= plasma_fused
-	cached_gases[/datum/gas/tritium][MOLES] -= tritium_catalyzed
+	cached_gases[/datum/gas/plasma][MOLES] = max(cached_gases[/datum/gas/plasma][MOLES] - plasma_fused,0)
+	cached_gases[/datum/gas/tritium][MOLES] = max(cached_gases[/datum/gas/tritium][MOLES] - tritium_catalyzed,0)
 	cached_gases[/datum/gas/oxygen][MOLES] += oxygen_added
 	cached_gases[/datum/gas/nitrogen][MOLES] += waste_added
 	cached_gases[/datum/gas/water_vapor][MOLES] += waste_added
@@ -231,7 +231,7 @@
 			//Prevents whatever mechanism is causing it to hit negative temperatures.
 		return REACTING
 
-/datum/gas_reaction/brownsformation //The formation of brown gas. Endothermic.
+/datum/gas_reaction/brownsformation //The formation of brown gas. Endothermic. Requires N2O as a catalyst.
 	priority = 3
 	name = "Brown Gas formation"
 	id = "brownsformation"
@@ -240,6 +240,7 @@
 	min_requirements = list(
 		/datum/gas/oxygen = 20,
 		/datum/gas/nitrogen = 20,
+		/datum/gas/nitrous_oxide = 5,
 		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST*400
 	)
 
@@ -280,14 +281,13 @@
 	var/pressure = air.return_pressure()
 
 	var/old_heat_capacity = air.heat_capacity()
-	var/reaction_efficency = pressure/(0.1*ONE_ATMOSPHERE)
+	var/reaction_efficency = 1/((pressure/(0.1*ONE_ATMOSPHERE))*(max(cached_gases[/datum/gas/plasma][MOLES]/cached_gases[/datum/gas/tritium][MOLES],1)))
 	var/energy_released = 2*reaction_efficency*FIRE_CARBON_ENERGY_RELEASED
-
 
 	ASSERT_GAS(/datum/gas/bz,air)
 	cached_gases[/datum/gas/bz][MOLES]+= reaction_efficency
-	cached_gases[/datum/gas/tritium][MOLES]-= 2*reaction_efficency
-	cached_gases[/datum/gas/plasma][MOLES]-= reaction_efficency
+	cached_gases[/datum/gas/tritium][MOLES] = max(cached_gases[/datum/gas/tritium][MOLES]- 2*reaction_efficency,0)
+	cached_gases[/datum/gas/plasma][MOLES] = max(cached_gases[/datum/gas/plasma][MOLES] - reaction_efficency,0)
 
 
 	if(energy_released > 0)
@@ -318,9 +318,9 @@
 
 	ASSERT_GAS(/datum/gas/stimulum,air)
 	cached_gases[/datum/gas/stimulum][MOLES]+= heat_scale/10
-	cached_gases[/datum/gas/tritium][MOLES]-= heat_scale
-	cached_gases[/datum/gas/plasma][MOLES]-= heat_scale
-	cached_gases[/datum/gas/brown_gas][MOLES]-= heat_scale
+	cached_gases[/datum/gas/tritium][MOLES] = max(cached_gases[/datum/gas/tritium][MOLES]- heat_scale,0)
+	cached_gases[/datum/gas/plasma][MOLES] = max(cached_gases[/datum/gas/plasma][MOLES]- heat_scale,0)
+	cached_gases[/datum/gas/brown_gas][MOLES] = max(cached_gases[/datum/gas/brown_gas][MOLES]- heat_scale,0)
 
 	if(stim_energy_change)
 		var/new_heat_capacity = air.heat_capacity()
@@ -337,16 +337,16 @@
 	min_requirements = list(
 		/datum/gas/nitrogen = 10,
 		/datum/gas/tritium = 5,
-		"TEMP" = 500000)
+		"TEMP" = 5000000)
 
 /datum/gas_reaction/nobliumformation/react(datum/gas_mixture/air)
 	var/list/cached_gases = air.gases
 	air.assert_gases(/datum/gas/hypernoblium,/datum/gas/bz)
 	var/old_heat_capacity = air.heat_capacity()
 	var/nob_formed = (cached_gases[/datum/gas/nitrogen][MOLES]*cached_gases[/datum/gas/tritium][MOLES])/100
-	var/energy_taken = nob_formed*(1000000/(max(cached_gases[/datum/gas/bz][MOLES],1)))
-	cached_gases[/datum/gas/tritium][MOLES]-= 10*nob_formed
-	cached_gases[/datum/gas/nitrogen][MOLES]-= 20*nob_formed
+	var/energy_taken = nob_formed*(10000000/(max(cached_gases[/datum/gas/bz][MOLES],1)))
+	cached_gases[/datum/gas/tritium][MOLES] = max(cached_gases[/datum/gas/tritium][MOLES]- 10*nob_formed,0)
+	cached_gases[/datum/gas/nitrogen][MOLES] = max(cached_gases[/datum/gas/nitrogen][MOLES]- 20*nob_formed,0)
 	cached_gases[/datum/gas/hypernoblium][MOLES]+= nob_formed
 
 
