@@ -38,6 +38,15 @@
 	if(H)
 		H.endTailWag()
 
+/datum/species/lizard/check_roundstart_eligible()
+	var/DDD = text2num(time2text(world.timeofday, "DDD"))
+	var/hh = text2num(time2text(world.timeofday, "hh"))
+	var/mm = text2num(time2text(world.timeofday, "mm"))
+	var/ss = text2num(time2text(world.timeofday, "ss"))
+	if(DDD == MONDAY && IsOdd(hh) && ((mm / ss) > 3))
+		return ..()
+	return FALSE
+
 /*
  Lizard subspecies: ASHWALKERS
 */
