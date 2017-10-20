@@ -144,7 +144,7 @@
 		var/turf/pos = get_turf(food)
 		if(!pos)
 			continue
-		if(pos.z != src.z)
+		if(pos.z != z)
 			continue
 
 		if(iscultist(food))
@@ -167,7 +167,7 @@
 		var/turf/pos = get_turf(ghost)
 		if(!pos)
 			continue
-		if(pos.z != src.z)
+		if(pos.z != z)
 			continue
 		cultists += ghost
 	if(cultists.len)
