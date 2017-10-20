@@ -47,7 +47,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/allow_midround_antag = 1
 	var/preferred_map = null
 	var/pda_style = MONO
-	
+
 	var/uses_glasses_colour = 0
 
 	//character preferences
@@ -974,7 +974,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("species")
 
-					var/result = input(user, "Select a species", "Species Selection") as null|anything in CONFIG_GET(keyed_flag_list/roundstart_races)
+					var/result = input(user, "Select a species", "Species Selection") as null|anything in GLOB.roundstart_races
 
 					if(result)
 						var/newtype = GLOB.species_list[result]
