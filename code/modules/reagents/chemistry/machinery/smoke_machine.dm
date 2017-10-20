@@ -13,7 +13,7 @@
 	var/useramount = 30 // Last used amount
 	var/volume = 1000
 	var/setting = 3
-	var/list/possible_settings = list(3,6,9,12,15)
+	var/list/possible_settings = list(3,6,9)
 
 /datum/effect_system/smoke_spread/chem/smoke_machine/set_up(datum/reagents/carry, setting = 3, efficiency = 10, loc)
 	amount = setting
