@@ -1,0 +1,5 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - tweak: "Changelings using biodegrade to escape restraints will now leave a pile of goop."
+  - bugfix: "Fixed messages related to changelings using biodegrade not appearing."
