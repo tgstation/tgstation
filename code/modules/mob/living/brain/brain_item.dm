@@ -187,9 +187,9 @@
 		if(istype(X, brain_trauma_type))
 			return X
 
-/obj/item/organ/brain/proc/gain_trauma(datum/brain_trauma/trauma, permanent = FALSE)
+/obj/item/organ/brain/proc/gain_trauma(datum/brain_trauma/trauma, permanent = FALSE, ...)
 	var/trauma_type = trauma
-	traumas += new trauma_type(src, permanent)
+	traumas += new trauma_type(src, permanent, args)
 
 /obj/item/organ/brain/proc/gain_trauma_type(brain_trauma_type = /datum/brain_trauma, permanent = FALSE)
 	var/trauma_type = pick(subtypesof(brain_trauma_type))
