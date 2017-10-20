@@ -582,7 +582,7 @@
 	hoodtype = /obj/item/clothing/head/hooded/flashsuit
 
 /obj/item/clothing/head/hooded/flashsuit
-	name = "flash suit head"
-	desc = "Why are you examining this? You'll go blind!"
+	name = "flash button"
+	desc = "Smash the flash!"
 	icon_state = "flashsuit"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
