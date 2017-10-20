@@ -1,0 +1,4 @@
+author: "Arzion5"
+delete-after: True
+changes: 
+  - tweak: "Made abductor agent's gun self-recharging"
