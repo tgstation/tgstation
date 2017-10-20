@@ -27,16 +27,18 @@ RPD
 	categoryId = CATEGORY_ATMOS
 	icon = 'icons/obj/atmospherics/pipes/pipe_item.dmi'
 
-/datum/pipe_info/pipe/New(path, _icon_state, _dir, _dirtype)
+/datum/pipe_info/pipe/New(obj/machinery/atmospherics/path)
 	id = path
-	icon_state = _icon_state
-	dir = _dir
-	dirtype = _dirtype
+	icon_state = initial(path.pipe_state)
+	dirtype = initial(path.construction_type)
 
 /datum/pipe_info/proc/Render(dispenser,label)
+
+/datum/pipe_info/pipe/Render(dispenser,label,dir=NORTH)
 	return "<li><a href='?src=\ref[dispenser];makepipe=[id];dir=[dir];type=[dirtype]'>[label]</a></li>"
 
 /datum/pipe_info/meter
+	categoryId = CATEGORY_ATMOS
 	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
 	icon_state = "meterX"
 
@@ -62,7 +64,6 @@ GLOBAL_LIST_INIT(disposalpipeID2State, list(
 /datum/pipe_info/disposal
 	categoryId = CATEGORY_DISPOSALS
 	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
-	icon_state = "meterX"
 
 /datum/pipe_info/disposal/New(var/pid,var/dt)
 	id=pid
@@ -78,33 +79,31 @@ GLOBAL_LIST_INIT(disposalpipeID2State, list(
 //find these defines in code\game\machinery\pipe\consruction.dm
 GLOBAL_LIST_INIT(RPD_recipes, list(
 	"Pipes" = list(
-		"Pipe"				= new /datum/pipe_info(PIPE_SIMPLE,				1,	PIPE_BENDABLE),
-		//"Bent Pipe"		= new /datum/pipe_info(PIPE_SIMPLE,	 			5,	PIPE_BENT),
-		"Manifold"			= new /datum/pipe_info(PIPE_MANIFOLD, 			1,	PIPE_TRINARY),
-		"Manual Valve"		= new /datum/pipe_info(PIPE_MVALVE, 			1,	PIPE_BINARY),
-		"Digital Valve"		= new /datum/pipe_info(PIPE_DVALVE,				1,	PIPE_BINARY),
-		"4-Way Manifold"	= new /datum/pipe_info(PIPE_4WAYMANIFOLD,		1,	PIPE_QUAD),
-		"Layer Manifold"	= new /datum/pipe_info(PIPE_LAYER_MANIFOLD,		1,	PIPE_BINARY),
+		"Pipe"				= new /datum/pipe_info/pipe(/obj/machinery/atmospherics/pipe/simple),
+		"Manifold"			= new /datum/pipe_info/pipe(/obj/machinery/atmospherics/pipe/manifold),
+		"Manual Valve"		= new /datum/pipe_info/pipe(/obj/machinery/atmospherics/components/binary/valve),
+		"Digital Valve"		= new /datum/pipe_info/pipe(/obj/machinery/atmospherics/components/binary/valve/digital),
+		"4-Way Manifold"	= new /datum/pipe_info/pipe(/obj/machinery/atmospherics/pipe/manifold4w),
+		"Layer Manifold"	= new /datum/pipe_info/pipe(/obj/machinery/atmospherics/pipe/layer_manifold),
 	),
-	"Devices"=list(
-		"Connector"      = new /datum/pipe_info(PIPE_CONNECTOR,			1, PIPE_UNARY),
-		"Unary Vent"     = new /datum/pipe_info(PIPE_UVENT,				1, PIPE_UNARY),
-		"Gas Pump"       = new /datum/pipe_info(PIPE_PUMP,				1, PIPE_UNARY),
-		"Passive Gate"   = new /datum/pipe_info(PIPE_PASSIVE_GATE,		1, PIPE_UNARY),
-		"Volume Pump"    = new /datum/pipe_info(PIPE_VOLUME_PUMP,		1, PIPE_UNARY),
-		"Scrubber"       = new /datum/pipe_info(PIPE_SCRUBBER,			1, PIPE_UNARY),
-		"Injector"       = new /datum/pipe_info(PIPE_INJECTOR,     		1, PIPE_UNARY),
+	"Devices" = list(
+		"Connector"      = new /datum/pipe_info/pipe(/obj/machinery/atmospherics/components/unary/portables_connector),
+		"Unary Vent"     = new /datum/pipe_info/pipe(/obj/machinery/atmospherics/components/unary/vent_pump),
+		"Gas Pump"       = new /datum/pipe_info/pipe(/obj/machinery/atmospherics/components/binary/pump),
+		"Passive Gate"   = new /datum/pipe_info/pipe(/obj/machinery/atmospherics/components/binary/passive_gate),
+		"Volume Pump"    = new /datum/pipe_info/pipe(/obj/machinery/atmospherics/components/binary/volume_pump),
+		"Scrubber"       = new /datum/pipe_info/pipe(/obj/machinery/atmospherics/components/unary/vent_scrubber),
+		"Injector"       = new /datum/pipe_info/pipe(/obj/machinery/atmospherics/components/unary/outlet_injector),
 		"Meter"          = new /datum/pipe_info/meter(),
-		"Gas Filter"     = new /datum/pipe_info(PIPE_GAS_FILTER,		1, PIPE_TRIN_M),
-		"Gas Mixer"      = new /datum/pipe_info(PIPE_GAS_MIXER,			1, PIPE_TRIN_M),
+		"Gas Filter"     = new /datum/pipe_info/pipe(/obj/machinery/atmospherics/components/trinary/filter),
+		"Gas Mixer"      = new /datum/pipe_info/pipe(/obj/machinery/atmospherics/components/trinary/mixer),
 	),
 	"Heat Exchange" = list(
-		"Pipe"           = new /datum/pipe_info(PIPE_HE,				1, PIPE_BENDABLE),
-		//"Bent Pipe"      = new /datum/pipe_info(PIPE_HE,				5, PIPE_BENT),
-		"Manifold"       = new /datum/pipe_info(PIPE_HE_MANIFOLD, 		1, PIPE_TRINARY),
-		"4-Way Manifold" = new /datum/pipe_info(PIPE_HE_4WAYMANIFOLD,	1, PIPE_QUAD),
-		"Junction"       = new /datum/pipe_info(PIPE_JUNCTION,			1, PIPE_UNARY),
-		"Heat Exchanger" = new /datum/pipe_info(PIPE_HEAT_EXCHANGE,		1, PIPE_UNARY),
+		"Pipe"           = new /datum/pipe_info/pipe(/obj/machinery/atmospherics/pipe/heat_exchanging/simple),
+		"Manifold"       = new /datum/pipe_info/pipe(/obj/machinery/atmospherics/pipe/heat_exchanging/manifold),
+		"4-Way Manifold" = new /datum/pipe_info/pipe(/obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w),
+		"Junction"       = new /datum/pipe_info/pipe(/obj/machinery/atmospherics/pipe/heat_exchanging/junction),
+		"Heat Exchanger" = new /datum/pipe_info/pipe(/obj/machinery/atmospherics/components/unary/heat_exchanger),
 	),
 	"Disposal Pipes" = list(
 		"Pipe"          = new /datum/pipe_info/disposal(DISP_PIPE_STRAIGHT,	PIPE_BINARY),
@@ -118,23 +117,7 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 		"Sort Junction" = new /datum/pipe_info/disposal(DISP_SORTJUNCTION,	PIPE_TRINARY),
 	)
 ))
-/*
-/proc/pipe_recipes()
-	var/list/recipes = list()
-	var/static/list/concrete_atmos
-	if(!concrete_atmos)
-	 	concrete_atmos = subtypesof(/obj/machinery/atmospherics) - list(/obj/machinery/atmospherics/components, /obj/machinery/atmospherics/unary, \
-		/obj/machinery/atmospherics/binary, /obj/machinery/atmospherics/trinary, /obj/machinery/atmospherics/pipe, /obj/machinery/atmospherics/pipe/heat_exchanging)
-	for(var/P in concrete_atmos)
-		var/obj/machinery/atmospherics/path = P
 
-		var/icon_state = initial(path.icon_state)
-		var/dirtype = initial(path.construction_type)
-		var/datum/pipe_info/info = new(path, icon_state, SOUTH, dirtype)
-
-		recipes[path] = info
-	return recipes
-*/
 /obj/item/pipe_dispenser
 	name = "Rapid Piping Device (RPD)"
 	desc = "A device used to rapidly pipe things."
@@ -216,7 +199,7 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 	if(screen == CATEGORY_ATMOS)
 		dat += "<span class='linkOn'>Atmospherics</span> <A href='?src=\ref[src];screen=[CATEGORY_DISPOSALS];dmake=0;type=0'>Disposals</A><BR>"
 	else if(screen == CATEGORY_DISPOSALS)
-		dat += "<A href='?src=\ref[src];screen=[CATEGORY_ATMOS];makepipe=0;dir=1;type=0'>Atmospherics</A> <span class='linkOn'>Disposals</span><BR>"
+		dat += "<A href='?src=\ref[src];screen=[CATEGORY_ATMOS];makepipe=[/obj/machinery/atmospherics/pipe/simple];dir=1;type=0'>Atmospherics</A> <span class='linkOn'>Disposals</span><BR>"
 	var/generated_layer_list = ""
 	var/layers_total = PIPING_LAYER_MAX - PIPING_LAYER_MIN + 1
 	for(var/iter = PIPING_LAYER_MIN, iter <= layers_total, iter++)
@@ -235,9 +218,9 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 			var/datum/pipe_info/I = cat[label]
 			var/found=0
 			if(I.id == p_type)
-				if((p_class == ATMOS_MODE || p_class == METER_MODE) && (I.type == /datum/pipe_info || I.type == /datum/pipe_info/meter))
+				if((p_class == ATMOS_MODE || p_class == METER_MODE) && (istype(I, /datum/pipe_info/pipe) || istype(I, /datum/pipe_info/meter)))
 					found=1
-				else if(p_class == DISPOSALS_MODE && I.type==/datum/pipe_info/disposal)
+				else if(p_class == DISPOSALS_MODE && istype(I, /datum/pipe_info/disposal))
 					found=1
 			if(found)
 				preview=new /icon(I.icon,I.icon_state)
@@ -525,7 +508,8 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 	if(href_list["makepipe"])
 		p_type = text2path(href_list["makepipe"])
 		p_dir = text2num(href_list["dir"])
-		p_conntype = text2num(href_list["type"])
+		var/obj/item/pipe/path = text2path(href_list["type"])
+		p_conntype = initial(path.RPD_type)
 		p_class = ATMOS_MODE
 		spark_system.start()
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
