@@ -45,7 +45,6 @@
 /obj/machinery/power/tracker,
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
 	d2 = 2
 	},
 /turf/open/floor/plasteel/airless/solarpanel,
@@ -3465,7 +3464,6 @@
 /obj/machinery/power/tracker,
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
 	d2 = 2
 	},
 /turf/open/floor/plasteel/airless/solarpanel,
@@ -5716,7 +5714,6 @@
 "aoH" = (
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
 	d2 = 2
 	},
 /obj/machinery/power/emitter/anchored{
@@ -9767,7 +9764,6 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
 	d2 = 2
 	},
 /turf/open/space,

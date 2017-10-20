@@ -853,7 +853,6 @@
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
 	d2 = 2
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -21118,7 +21117,6 @@
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
 	d2 = 2
 	},
 /turf/open/floor/plating,
@@ -44603,7 +44601,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
 	d2 = 2
 	},
 /obj/structure/cable,
@@ -45458,7 +45455,6 @@
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
 	d2 = 2
 	},
 /obj/structure/cable{
@@ -58418,7 +58414,6 @@
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
 	d2 = 2
 	},
 /turf/open/floor/plating,
@@ -58915,7 +58910,6 @@
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
 	d2 = 2
 	},
 /turf/open/floor/plating,

@@ -1115,7 +1115,6 @@
 "dh" = (
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
 	d2 = 2
 	},
 /obj/machinery/power/apc{
@@ -1546,7 +1545,6 @@
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
 	d2 = 2
 	},
 /turf/open/floor/plasteel,
