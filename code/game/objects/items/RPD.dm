@@ -135,7 +135,7 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 	resistance_flags = FIRE_PROOF
 	var/datum/effect_system/spark_spread/spark_system
 	var/working = 0
-	var/p_type = PIPE_SIMPLE
+	var/p_type = /obj/machinery/atmospherics/pipe/simple
 	var/p_conntype = PIPE_BENDABLE
 	var/p_dir = 1
 	var/p_flipped = 0

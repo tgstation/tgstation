@@ -35,15 +35,6 @@ Buildable meters
 	var/flipped = FALSE
 /obj/item/pipe/quaternary
 	RPD_type = PIPE_QUAD
-/*
-TODO:	auto-generate pipe info
-		make pipe info create /obj/item/pipes
-		~~OOP it up~~
-		deal with RPD and pipe dispensers
-		fix bugs
-		enhance RPD
-*/
-
 
 /obj/item/pipe/examine(mob/user)
 	..()
