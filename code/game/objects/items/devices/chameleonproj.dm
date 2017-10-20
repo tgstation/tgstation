@@ -29,7 +29,7 @@
 	disrupt()
 
 /obj/item/device/chameleon/attack_self(mob/user)
-	if(!isTurf(user.loc))
+	if(!isturf(user.loc))
 		to_chat(user, "<span class='warning'>You must be standing on a regular floor to use this.</span>")
 		return
 	toggle()
