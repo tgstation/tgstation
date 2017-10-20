@@ -82757,7 +82757,7 @@
 /area/engine/engineering)
 "deY" = (
 /obj/structure/reflector/single/anchored{
-	dir = 1
+	dir = 9
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -82798,13 +82798,13 @@
 /area/engine/engineering)
 "dff" = (
 /obj/structure/reflector/double/anchored{
-	dir = 1
+	dir = 5
 	},
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
 "dfg" = (
 /obj/structure/reflector/single/anchored{
-	dir = 8
+	dir = 10
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
