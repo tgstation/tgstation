@@ -28,7 +28,10 @@
 	..()
 	disrupt()
 
-/obj/item/device/chameleon/attack_self()
+/obj/item/device/chameleon/attack_self(mob/user)
+	if(!isTurf(user.loc))
+		to_chat(user, "<span class='warning'>You must be standing on a regular floor to use this.</span>")
+		return
 	toggle()
 
 /obj/item/device/chameleon/afterattack(atom/target, mob/user , proximity)
