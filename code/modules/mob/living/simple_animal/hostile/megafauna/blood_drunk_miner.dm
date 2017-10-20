@@ -160,11 +160,9 @@ Difficulty: Medium
 		changeNext_move(CLICK_CD_RANGE)
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/proc/quick_attack_loop()
-	if(next_move <= world.time)
-		stoplag(1)
-		.() //retry
-		return
-	sleep((next_move - world.time) * 1.5)
+	while(next_move <= world.time) //this is done this way because next_move can change to be sooner while we sleep.
+		stoplag(1) 
+	sleep((next_move - world.time) * 1.5) //but don't ask me what the fuck this is about
 	if(QDELETED(target))
 		return
 	if(dashing || next_move > world.time || !Adjacent(target))
