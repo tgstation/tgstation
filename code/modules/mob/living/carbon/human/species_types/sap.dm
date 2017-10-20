@@ -21,9 +21,10 @@
 	disliked_food = MEAT | DAIRY
 	liked_food = VEGETABLES | FRUIT | GRAIN
 	var/fanciness = 0 //Percentage of fanciness, determined by clothing worn. Below 50% fanciness you begin to starve, and above it you are nourished!
+	var/list/fancy_clothing_info //Used so saps can track their fanciness in an alert
 
 
-	var/static/list/despicable_clothing_typecache = list(\
+	var/static/list/despicable_clothing_typecache = typecacheof(list(\
 	/obj/item/clothing/head/radiation, \
 	/obj/item/clothing/suit/radiation, \
 	/obj/item/clothing/suit/armor/bone, \
@@ -44,10 +45,17 @@
 	/obj/item/clothing/head/jester, \
 	/obj/item/clothing/head/papersack/smiley, \
 	/obj/item/clothing/head/lobsterhat, \
-	) //Each worn item reduces fanciness by 10%
+	/obj/item/clothing/under/rank/clown/sexy, \
+	/obj/item/clothing/under/jabroni, \
+	/obj/item/clothing/under/jester, \
+	/obj/item/clothing/under/villain, \
+	/obj/item/clothing/under/lobster, \
+	/obj/item/clothing/under/shorts, \
+	/obj/item/clothing/under/rank/clown, \
+	)) //Each worn item reduces fanciness by 10%
 
 
-	var/static/list/ugly_clothing_typecache = list(\
+	var/static/list/ugly_clothing_typecache = typecacheof(list(\
 	/obj/item/clothing/head/helmet/space, \
 	/obj/item/clothing/suit/space, \
 	/obj/item/clothing/head/hardhat, \
@@ -66,10 +74,18 @@
 	/obj/item/clothing/gloves, \
 	/obj/item/clothing/head/helmet, \
 	/obj/item/clothing/head/papersack, \
-	) //Reduces fanciness by 5%
+	/obj/item/clothing/under/color/grey, \
+	/obj/item/clothing/under/rank/prisoner, \
+	/obj/item/clothing/under/owl, \
+	/obj/item/clothing/under/griffin, \
+	/obj/item/clothing/under/schoolgirl, \
+	/obj/item/clothing/under/kilt, \
+	/obj/item/clothing/under/sexymime, \
+	/obj/item/clothing/under/pants, \
+	)) //Reduces fanciness by 5%
 
 
-	var/static/list/fancy_clothing_typecache = list(\
+	var/static/list/fancy_clothing_typecache = typecacheof(list(\
 	/obj/item/clothing/neck/cloak, \
 	/obj/item/clothing/suit/apron, \
 	/obj/item/clothing/suit/studentuni, \
@@ -96,26 +112,51 @@
 	/obj/item/clothing/head/hasturhood, \
 	/obj/item/clothing/head/rice_hat, \
 	/obj/item/clothing/head/nemes, \
-	) //Each worn item increases fanciness by 5%
+	/obj/item/clothing/under/scratch, \
+	/obj/item/clothing/under/rank/vice, \
+	/obj/item/clothing/under/suit_jacket, \
+	/obj/item/clothing/under/assistantformal, \
+	/obj/item/clothing/under/plaid_skirt, \
+	/obj/item/clothing/under/trek, \
+	/obj/item/clothing/under/rank/bartender, \
+	/obj/item/clothing/under/lawyer, \
+	/obj/item/clothing/under/rank/curator, \
+	/obj/item/clothing/under/rank/chief_engineer, \
+	/obj/item/clothing/under/rank/research_director, \
+	/obj/item/clothing/under/rank/chief_medical_officer, \
+	/obj/item/clothing/under/rank/head_of_security, \
+	/obj/item/clothing/under/rank/det, \
+	)) //Each worn item increases fanciness by 5%
 
 
-	var/static/list/lavish_clothing_typecache = list(\
+	var/static/list/lavish_clothing_typecache = typecacheof(list(\
 	/obj/item/clothing/suit/captunic, \
 	/obj/item/clothing/suit/armor/vest/capcarapace/alt, \
 	/obj/item/clothing/head/wizard, \
 	/obj/item/clothing/suit/wizrobe, \
 	/obj/item/clothing/head/that, \
 	/obj/item/clothing/head/crown, \
-	) //Increases fanciness by 10%
+	/obj/item/clothing/under/waiter, \
+	/obj/item/clothing/under/rank/centcom_officer, \
+	/obj/item/clothing/under/suit_jacket/really_black, \
+	/obj/item/clothing/under/captainparade, \
+	/obj/item/clothing/under/hosparademale, \
+	/obj/item/clothing/under/hosparadefem, \
+	/obj/item/clothing/under/blacktango, \
+	/obj/item/clothing/under/redeveninggown, \
+	/obj/item/clothing/under/rank/captain, \
+	)) //Increases fanciness by 10%
 
 
-	var/static/list/chichi_clothing_typecache = list(\
+	var/static/list/chichi_clothing_typecache = typecacheof(list(\
 	/obj/item/clothing/glasses/monocle, \
 	/obj/item/clothing/glasses/thermal/monocle, \
 	/obj/item/clothing/head/centhat, \
 	/obj/item/clothing/head/bowler, \
 	/obj/item/clothing/head/crown/fancy, \
-	) //Increases fanciness by 15%
+	/obj/item/clothing/under/rank/centcom_commander, \
+	/obj/item/clothing/under/syndicate, \
+	)) //Increases fanciness by 15%
 
 
 
@@ -127,9 +168,47 @@
 		light = T.get_lumcount()
 		if(sap.nutrition < NUTRITION_LEVEL_WELL_FED && light >= SAP_NUTRITION_THRESHOLD)
 			sap.nutrition += -0.5 + (0.01 * fanciness) //Past 50% fanciness is no hunger loss, and above it is hunger gain
-			if(sap.nutrition <= NUTRITION_LEVEL_STARVING && prob(1))
+			if(sap.nutrition <= NUTRITION_LEVEL_HUNGRY && prob(1))
 				to_chat(sap, "<span class='warning'>[pick("These clothes really stick out...", "You feel ugly.", "Your outfit is doing dreadful things for your bark.", \
 				"These clothes don't accentuate your canopy at all.", "You stick out like a green thumb. You should probably get some nicer clothing.")]<span>")
 
 /datum/species/sap/proc/calculate_fanciness(mob/living/carbon/human/sap)
+	fancy_clothing_info = list()
+	var/total_fanciness = 50
+	var/item_fanciness
+	var/obj/item/cycled_clothing
+	if(sap.mind && sap.mind.special_role) //Antagonists don't need to worry about fanciness
+		fancy_clothing_info[sap.mind.special_role] = 80
+		total_fanciness = 80
+	else
+		var/list/slots = list(slot_wear_suit, slot_shoes, slot_head, slot_wear_mask, slot_gloves, slot_glasses, slot_w_uniform)
+		for(var/slot in slots)
+			item_fanciness = 0
+			cycled_clothing = sap.get_item_by_slot(slot)
+			if(cycled_clothing)
+				if(is_type_in_typecache(cycled_clothing, chichi_clothing_typecache))
+					item_fanciness = 15
+				else if(is_type_in_typecache(cycled_clothing, lavish_clothing_typecache))
+					item_fanciness = 10
+				else if(is_type_in_typecache(cycled_clothing, fancy_clothing_typecache))
+					item_fanciness = 5
+				else if(is_type_in_typecache(cycled_clothing, ugly_clothing_typecache))
+					item_fanciness = -5
+				else if(is_type_in_typecache(cycled_clothing, despicable_clothing_typecache))
+					item_fanciness = -10
+				if(slot == slot_head) //Fancy hats are by far the most important to a sap's class.
+					item_fanciness *= 2
+				total_fanciness += item_fanciness
+				if(item_fanciness)
+					fancy_clothing_info[cycled_clothing.name] = item_fanciness
+	total_fanciness = Clamp(total_fanciness, 0, 100)
+	fanciness = total_fanciness
 	return
+
+/datum/species/sap/on_species_gain(mob/living/carbon/C)
+	. = ..()
+	C.throw_alert("fanciness", /obj/screen/alert/fanciness)
+
+/datum/species/sap/on_species_loss(mob/living/carbon/C)
+	. = ..()
+	C.clear_alert("fanciness")
