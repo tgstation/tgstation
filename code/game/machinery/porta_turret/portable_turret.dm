@@ -208,6 +208,10 @@
 				check_anomalies = !check_anomalies
 		interact(usr)
 
+/obj/machinery/porta_turret/proc/nullify_power()
+	stat |= NOPOWER
+	update_icon()
+
 /obj/machinery/porta_turret/power_change()
 	if(!anchored)
 		update_icon()
@@ -219,9 +223,7 @@
 			stat &= ~NOPOWER
 			update_icon()
 		else
-			spawn(rand(0, 15))
-				stat |= NOPOWER
-				update_icon()
+			addtimer(CALLBACK(src, .proc/nullify_power), rand(0, 15))
 
 
 /obj/machinery/porta_turret/attackby(obj/item/I, mob/user, params)
@@ -277,6 +279,9 @@
 	else
 		return ..()
 
+/obj/machinery/porta_turret/proc/turn_on()	//this is just for addtimers
+	on = TRUE
+
 /obj/machinery/porta_turret/emag_act(mob/user)
 	if(emagged)
 		return
@@ -299,10 +304,9 @@
 		auth_weapons = pick(0, 1)
 		stun_all = pick(0, 0, 0, 0, 1)	//stun_all is a pretty big deal, so it's least likely to get turned on
 
-		on=0
-		spawn(rand(60,600))
-			if(!on)
-				on=1
+		on = FALSE
+		addtimer(CALLBACK(src, .proc/turn_on), rand(60,600))
+
 
 	..()
 
@@ -922,10 +926,8 @@
 		if(team_color == "blue")
 			if(istype(P, /obj/item/projectile/beam/lasertag/redtag))
 				on = FALSE
-				spawn(100)
-					on = TRUE
+				addtimer(CALLBACK(src, .proc/turn_on), 100)
 		else if(team_color == "red")
 			if(istype(P, /obj/item/projectile/beam/lasertag/bluetag))
 				on = FALSE
-				spawn(100)
-					on = TRUE
+				addtimer(CALLBACK(src, .proc/turn_on), 100)
