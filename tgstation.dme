@@ -1135,7 +1135,6 @@
 #include "code\modules\atmospherics\machinery\other\meter.dm"
 #include "code\modules\atmospherics\machinery\other\miner.dm"
 #include "code\modules\atmospherics\machinery\other\zvent.dm"
-#include "code\modules\atmospherics\machinery\pipes\bluespace_pipe.dm"
 #include "code\modules\atmospherics\machinery\pipes\layermanifold.dm"
 #include "code\modules\atmospherics\machinery\pipes\manifold.dm"
 #include "code\modules\atmospherics\machinery\pipes\manifold4w.dm"
