@@ -1040,6 +1040,7 @@
 #include "code\modules\admin\NewBan.dm"
 #include "code\modules\admin\player_panel.dm"
 #include "code\modules\admin\secrets.dm"
+#include "code\modules\admin\sound_emitter.dm"
 #include "code\modules\admin\sql_message_system.dm"
 #include "code\modules\admin\stickyban.dm"
 #include "code\modules\admin\topic.dm"
