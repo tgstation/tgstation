@@ -335,7 +335,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 /proc/is_special_character(mob/M) // returns 1 for special characters and 2 for heroes of gamemode //moved out of admins.dm because things other than admin procs were calling this.
 	if(!SSticker.HasRoundStarted())
-		return FAKSE
+		return FALSE
 	if(!istype(M))
 		return FALSE
 	if(issilicon(M))
