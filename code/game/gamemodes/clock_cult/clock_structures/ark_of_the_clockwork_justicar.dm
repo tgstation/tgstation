@@ -245,7 +245,7 @@
 				SSticker.force_ending = TRUE
 				var/x0 = T.x
 				var/y0 = T.y
-				for(var/I in spiral_range_turfs(255, startpoint))
+				for(var/I in spiral_range_turfs(255, startpoint, tick_checked = TRUE))
 					var/turf/T2 = I
 					if(!T2)
 						continue
@@ -255,7 +255,6 @@
 					else
 						dist = FALSE
 					T.ratvar_act(dist)
-					CHECK_TICK
 
 
 
