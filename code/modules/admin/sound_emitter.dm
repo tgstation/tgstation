@@ -1,6 +1,7 @@
 #define SOUND_EMITTER_LOCAL "local" //Plays the sound like a normal heard sound
 #define SOUND_EMITTER_DIRECT "direct" //Plays the sound directly to hearers regardless of pressure/proximity/et cetera
 
+#define SOUND_EMITTER_RADIUS "radius" //Plays the sound to everyone in a radius
 #define SOUND_EMITTER_ZLEVEL "zlevel" //Plays the sound to everyone on the z-level
 #define SOUND_EMITTER_GLOBAL "global" //Plays the sound to everyone in the game world
 
@@ -17,8 +18,9 @@
 	alpha = 175
 	var/sound_file //The sound file the emitter plays
 	var/sound_volume = 50 //The volume the sound file is played at
+	var/play_radius = 3 //Any mobs within this many tiles will hear the sounds played if it's using the appropriate mode
 	var/motus_operandi = SOUND_EMITTER_LOCAL //The mode this sound emitter is using
-	var/emitter_range = SOUND_EMITTER_LOCAL //The range this emitter's sound is heard at; this isn't a number, but a string (see the defines above)
+	var/emitter_range = SOUND_EMITTER_ZLEVEL //The range this emitter's sound is heard at; this isn't a number, but a string (see the defines above)
 
 /obj/effect/sound_emitter/Destroy(force)
 	if(!force)
@@ -59,7 +61,7 @@
 	dat += "<br>"
 	dat += "<b>Mode:</b> <a href='?src=\ref[src];edit_mode=1'>[motus_operandi]</a><br>"
 	if(motus_operandi != SOUND_EMITTER_LOCAL)
-		dat += "<b>Range:</b> <a href='?src=\ref[src];edit_range=1'>[emitter_range]</a><br>"
+		dat += "<b>Range:</b> <a href='?src=\ref[src];edit_range=1'>[emitter_range]</a>[emitter_range == SOUND_EMITTER_RADIUS ? "<a href='?src=\ref[src];edit_radius=1'>[play_radius]-tile radius</a>" : ""]<br>"
 	dat += "<br>"
 	dat += "<a href='?src=\ref[src];play=1'>Play Sound</a> (interrupts other sound emitter sounds)"
 	var/datum/browser/popup = new(user, "emitter", "", 500, 600)
@@ -100,12 +102,19 @@
 		to_chat(user, "<span class='notice'>Mode set to [motus_operandi].</span>")
 	if(href_list["edit_range"])
 		var/new_range
-		var/range_list = list("Local (normal sound)" = SOUND_EMITTER_LOCAL, "Z-Level (all mobs on the same z)" = SOUND_EMITTER_ZLEVEL, "Global (all players)" = SOUND_EMITTER_GLOBAL)
+		var/range_list = list("Radius (all mobs within a radius)" = SOUND_EMITTER_RADIUS, "Z-Level (all mobs on the same z)" = SOUND_EMITTER_ZLEVEL, "Global (all players)" = SOUND_EMITTER_GLOBAL)
 		new_range = input(user, "Choose a new range.", "Sound Emitter") as null|anything in range_list
 		if(!new_range)
 			return
 		emitter_range = range_list[new_range]
 		to_chat(user, "<span class='notice'>Range set to [emitter_range].</span>")
+	if(href_list["edit_radius"])
+		var/new_radius = input(user, "Choose a radius.", "Sound Emitter", sound_volume) as null|num
+		if(isnull(new_radius))
+			return
+		new_radius = Clamp(new_radius, 0, 127)
+		play_radius = new_radius
+		to_chat(user, "<span class='notice'>Audible radius set to [play_radius].</span>")
 	if(href_list["play"])
 		activate(user)
 	edit_emitter(user) //Refresh the UI to see our changes
@@ -116,6 +125,10 @@
 		playsound(src, sound_file, sound_volume, FALSE)
 		return
 	switch(emitter_range)
+		if(SOUND_EMITTER_RADIUS)
+			for(var/mob/M in GLOB.player_list)
+				if(get_dist(src, M) <= play_radius)
+					hearing_mobs += M
 		if(SOUND_EMITTER_ZLEVEL)
 			for(var/mob/M in GLOB.player_list)
 				if(M.z == z)
@@ -127,3 +140,9 @@
 	if(user)
 		log_admin("[ADMIN_LOOKUPFLW(user)] activated a sound emitter with file \"[sound_file]\" at [COORD(src)]")
 	flick("shield1", src)
+
+#undef SOUND_EMITTER_LOCAL
+#undef SOUND_EMITTER_DIRECT
+#undef SOUND_EMITTER_RADIUS
+#undef SOUND_EMITTER_ZLEVEL
+#undef SOUND_EMITTER_GLOBAL
