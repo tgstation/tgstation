@@ -249,6 +249,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				dat += "</td>"
 
+			if(HAIRCOLOR in pref_species.species_traits)
+
+				dat += "<td valign='top' width='21%'>"
+
+				dat += "<h3>Hair Color</h3>"
+
+				dat += "<span style='border:1px solid #161616; background-color: #[hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hair;task=input'>Change</a><BR>"
+
 			if(EYECOLOR in pref_species.species_traits)
 
 				dat += "<td valign='top' width='21%'>"

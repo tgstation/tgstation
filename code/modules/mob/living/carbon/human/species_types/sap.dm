@@ -2,9 +2,8 @@
 /datum/species/sap
 	name = "Sap"
 	id = "sap"
-	limbs_id = "plant"
 	default_color = "59CE00"
-	species_traits = list(MUTCOLORS, EYECOLOR, NO_UNDERWEAR)
+	species_traits = list(MUTCOLORS, EYECOLOR, HAIRCOLOR, NO_UNDERWEAR)
 	mutant_bodyparts = list("canopy")
 	default_features = list("mcolor" = "59CE00", "canopy" = "Oakley Traditional")
 	attack_verb = "smashed"
@@ -16,7 +15,7 @@
 	burnmod = 1.1
 	heatmod = 1.5
 	siemens_coeff = 0.4 //They're plants and are less vulnerable to shocks
-	exotic_blood = "ez_nut"
+	exotic_blood = "eznutriment"
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/plant
 	disliked_food = MEAT | DAIRY
 	liked_food = VEGETABLES | FRUIT | GRAIN
@@ -159,6 +158,11 @@
 	)) //Increases fanciness by 15%
 
 
+/datum/species/sap/random_name(gender,unique)
+	if(unique)
+		return random_unique_sap_name(gender)
+	var/randname = sap_name(gender)
+	return randname
 
 /datum/species/sap/spec_life(mob/living/carbon/human/sap)
 	calculate_fanciness(sap)
@@ -171,6 +175,25 @@
 			if(sap.nutrition <= NUTRITION_LEVEL_HUNGRY && prob(1))
 				to_chat(sap, "<span class='warning'>[pick("These clothes really stick out...", "You feel ugly.", "Your outfit is doing dreadful things for your bark.", \
 				"These clothes don't accentuate your canopy at all.", "You stick out like a green thumb. You should probably get some nicer clothing.")]<span>")
+
+/datum/species/sap/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/sap)
+	. = ..()
+	switch(chem.id)
+		if("plantbgone")
+			sap.adjustToxLoss(4)
+			sap.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
+		if("left4zednutriment")
+			sap.adjustBruteLoss(-0.5)
+			sap.adjustFireLoss(-0.5)
+			sap.radiation += rand(1, 3)
+			sap.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
+		if("robustharvestnutriment")
+			sap.adjustBruteLoss(-1)
+			sap.adjustFireLoss(-1)
+			sap.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
+		if("water")
+			sap.nutrition += 0.1 //Water is nourishing! Barely.
+			sap.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
 
 /datum/species/sap/proc/calculate_fanciness(mob/living/carbon/human/sap)
 	fancy_clothing_info = list()

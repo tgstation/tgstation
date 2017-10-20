@@ -1273,13 +1273,16 @@
 	icon_state = "angler"
 
 /datum/sprite_accessory/canopy
-	name = "Oakley Traditional"
-	icon_state = "leafy"
 	icon = 'icons/mob/mutant_bodyparts.dmi'
+	color_src = HAIR
 
 /datum/sprite_accessory/canopy/leafy
 	name = "Oakley Traditional"
 	icon_state = "leafy"
+
+/datum/sprite_accessory/canopy/buds
+	name = "Springston's Blooms"
+	icon_state = "buds"
 
 /datum/sprite_accessory/ears
 	icon = 'icons/mob/mutant_bodyparts.dmi'
