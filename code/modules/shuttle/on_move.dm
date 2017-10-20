@@ -62,6 +62,9 @@ All ShuttleMove procs go here
 	//Source turf changes
 	ChangeTurf(turf_type, baseturf_type, FALSE, TRUE)
 
+	if(rotation)
+		newT.shuttleRotate(rotation) //see shuttle_rotate.dm
+
 	return TRUE
 
 // Called on the new turf after everything has been moved
@@ -76,7 +79,7 @@ All ShuttleMove procs go here
 	return move_mode
 
 // Called on atoms to move the atom to the new location
-/atom/movable/proc/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, old_dock)
+/atom/movable/proc/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)
 	if(newT == oldT) // In case of in place shuttle rotation shenanigans.
 		return
 
@@ -162,8 +165,9 @@ All ShuttleMove procs go here
 
 /obj/machinery/camera/beforeShuttleMove(turf/newT, rotation, move_mode)
 	. = ..()
-	GLOB.cameranet.removeCamera(src)
-	. |= MOVE_CONTENTS
+	if(. & MOVE_AREA)
+		. |= MOVE_CONTENTS
+		GLOB.cameranet.removeCamera(src)
 
 /obj/machinery/camera/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir)
 	. = ..()
@@ -200,7 +204,8 @@ All ShuttleMove procs go here
 
 /obj/machinery/thruster/beforeShuttleMove(turf/newT, rotation, move_mode)
 	. = ..()
-	. |= MOVE_CONTENTS
+	if(. & MOVE_AREA)
+		. |= MOVE_CONTENTS
 
 /obj/machinery/atmospherics/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir)
 	. = ..()
@@ -268,7 +273,7 @@ All ShuttleMove procs go here
 
 /************************************Mob move procs************************************/
 
-/mob/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, old_dock)
+/mob/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)
 	if(!move_on_shuttle)
 		return
 	. = ..()
@@ -293,7 +298,7 @@ All ShuttleMove procs go here
 		if(movement_force["KNOCKDOWN"])
 			Knockdown(movement_force["KNOCKDOWN"])
 
-/mob/living/simple_animal/hostile/megafauna/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, old_dock)
+/mob/living/simple_animal/hostile/megafauna/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)
 	. = ..()
 	message_admins("Megafauna [src] [ADMIN_FLW(src)] moved via shuttle from [ADMIN_COORDJMP(oldT)] to [ADMIN_COORDJMP(loc)]")
 
@@ -301,11 +306,13 @@ All ShuttleMove procs go here
 
 /obj/structure/grille/beforeShuttleMove(turf/newT, rotation, move_mode)
 	. = ..()
-	. |= MOVE_CONTENTS
+	if(. & MOVE_AREA)
+		. |= MOVE_CONTENTS
 
 /obj/structure/lattice/beforeShuttleMove(turf/newT, rotation, move_mode)
 	. = ..()
-	. |= MOVE_CONTENTS
+	if(. & MOVE_AREA)
+		. |= MOVE_CONTENTS
 
 /obj/structure/disposalpipe/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir)
 	. = ..()
@@ -319,26 +326,26 @@ All ShuttleMove procs go here
 
 /obj/structure/shuttle/beforeShuttleMove(turf/newT, rotation, move_mode)
 	. = ..()
-	. |= MOVE_CONTENTS
+	if(. & MOVE_AREA)
+		. |= MOVE_CONTENTS
 
 
 /************************************Misc move procs************************************/
 
-/atom/movable/lighting_object/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, old_dock)
+/atom/movable/lighting_object/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)
 	return FALSE
 
-/atom/movable/light/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, old_dock)
+/atom/movable/light/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)
 	return FALSE
 
-/obj/docking_port/stationary/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, old_dock)
-	if(old_dock == src) //Don't move the dock we're leaving
+/obj/docking_port/stationary/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)
+	if(!moving_dock.can_move_docking_ports || (old_dock == src))
 		return FALSE
-
 	. = ..()
 
-/obj/docking_port/stationary/public_mining_dock/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, old_dock)
+/obj/docking_port/stationary/public_mining_dock/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)
 	id = "mining_public" //It will not move with the base, but will become enabled as a docking point.
 
-/obj/effect/abstract/proximity_checker/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, old_dock)
+/obj/effect/abstract/proximity_checker/onShuttleMove(turf/newT, turf/oldT, rotation, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)
 	//timer so it only happens once
 	addtimer(CALLBACK(monitor, /datum/proximity_monitor/proc/SetRange, monitor.current_range, TRUE), 0, TIMER_UNIQUE)

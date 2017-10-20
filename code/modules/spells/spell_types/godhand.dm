@@ -54,6 +54,9 @@
 		return
 	var/mob/M = target
 	do_sparks(4, FALSE, M.loc)
+	for(var/mob/living/L in view(src, 7))
+		if(L != user)
+			L.flash_act(affect_silicon = FALSE)
 	M.gib()
 	..()
 

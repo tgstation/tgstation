@@ -165,6 +165,19 @@
 #define LAVALAND_EQUIPMENT_EFFECT_PRESSURE 50 //what pressure you have to be under to increase the effect of equipment meant for lavaland
 #define LAVALAND_DEFAULT_ATMOS "o2=14;n2=23;TEMP=300"
 
+//IF YOU EVER CHANGE THESE CHANGE SPRITES TO MATCH.
+#define PIPING_LAYER_MIN 1
+#define PIPING_LAYER_MAX 3
+#define PIPING_LAYER_DEFAULT 2
+#define PIPING_LAYER_P_X 5
+#define PIPING_LAYER_P_Y 5
+#define PIPING_LAYER_LCHANGE 0.05
+
+#define PIPING_ALL_LAYER 1					//intended to connect with all layers, check for all instead of just one.
+#define PIPING_ONE_PER_TURF 2 				//can only be built if nothing else with this flag is on the tile already.
+#define PIPING_DEFAULT_LAYER_ONLY 4			//can only exist at PIPING_LAYER_DEFAULT
+#define PIPING_CARDINAL_AUTONORMALIZE 8		//north/south east/west doesn't matter, auto normalize on build.
+
 #define THERMAL_ENERGY(gas) (gas.temperature * gas.heat_capacity())
 
 #define ADD_GAS(gas_id, out_list)\

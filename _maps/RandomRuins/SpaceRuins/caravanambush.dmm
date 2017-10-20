@@ -735,30 +735,10 @@
 /area/ruin/powered)
 "cu" = (
 /obj/structure/closet/crate/secure/engineering,
-/obj/item/wrench{
-	color = "#ff0000";
-	desc = "A prototype of a new wrench design, allegedly the red color scheme makes it go faster.";
-	name = "experimental wrench";
-	toolspeed = 3
-	},
-/obj/item/screwdriver{
-	color = "#ff0000";
-	desc = "A prototype of a new screwdriver design, allegedly the red color scheme makes it go faster.";
-	name = "experimental screwdriver";
-	toolspeed = 3
-	},
-/obj/item/wirecutters{
-	color = "#ff0000";
-	desc = "A prototype of a new wirecutter design, allegedly the red color scheme makes it go faster.";
-	name = "experimental wirecutters";
-	toolspeed = 3
-	},
-/obj/item/crowbar/red{
-	color = "#ff0000";
-	desc = "A prototype of a new crowbar design, allegedly the red color scheme makes it go faster.";
-	name = "experimental crowbar";
-	toolspeed = 3
-	},
+/obj/item/wrench/caravan,
+/obj/item/screwdriver/caravan,
+/obj/item/wirecutters/caravan,
+/obj/item/crowbar/red/caravan,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/powered)
 "cv" = (

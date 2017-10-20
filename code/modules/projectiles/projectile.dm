@@ -1,3 +1,6 @@
+
+#define MOVES_HITSCAN -1		//Not actually hitscan but close as we get.
+
 /obj/item/projectile
 	name = "projectile"
 	icon = 'icons/obj/projectiles.dmi'
@@ -16,18 +19,31 @@
 	var/suppressed = FALSE	//Attack message
 	var/yo = null
 	var/xo = null
-	var/current = null
 	var/atom/original = null // the original target clicked
 	var/turf/starting = null // the projectile's starting turf
 	var/list/permutated = list() // we've passed through these atoms, don't try to hit them again
-	var/paused = FALSE //for suspending the projectile midair
 	var/p_x = 16
 	var/p_y = 16			// the pixel location of the tile that the player clicked. Default is the center
+
+	//Fired processing vars
+	var/fired = FALSE	//Have we been fired yet
+	var/paused = FALSE	//for suspending the projectile midair
+	var/last_projectile_move = 0
+	var/last_process = 0
+	var/time_offset = 0
+	var/old_pixel_x = 0
+	var/old_pixel_y = 0
+	var/pixel_x_increment = 0
+	var/pixel_y_increment = 0
+	var/pixel_x_offset = 0
+	var/pixel_y_offset = 0
+	var/new_x = 0
+	var/new_y = 0
+
 	var/speed = 0.8			//Amount of deciseconds it takes for projectile to travel
 	var/Angle = 0
 	var/nondirectional_sprite = FALSE //Set TRUE to prevent projectiles from having their sprites rotated based on firing angle
 	var/spread = 0			//amount (in degrees) of projectile spread
-	var/legacy = 0			//legacy projectile system
 	animate_movement = 0	//Use SLIDE_STEPS in conjunction with legacy
 	var/ricochets = 0
 	var/ricochets_max = 2
@@ -85,7 +101,7 @@
 
 /obj/item/projectile/proc/on_hit(atom/target, blocked = FALSE)
 	var/turf/target_loca = get_turf(target)
-	if(!nodamage && (damage_type == BRUTE || damage_type == BURN) && istype(target_loca, /turf/closed/wall) && prob(75))
+	if(!nodamage && (damage_type == BRUTE || damage_type == BURN) && iswallturf(target_loca) && prob(75))
 		var/turf/closed/wall/W = target_loca
 		var/mutable_appearance/decal = mutable_appearance('icons/effects/effects.dmi', "bullet_hole", TURF_DECAL_LAYER)
 		if(target == original)
@@ -146,7 +162,7 @@
 		return 50 //if the projectile doesn't do damage, play its hitsound at 50% volume
 
 /obj/item/projectile/Collide(atom/A)
-	if(check_ricochet() && check_ricochet_flag(A) && ricochets < ricochets_max)
+	if(check_ricochet(A) && check_ricochet_flag(A) && ricochets < ricochets_max)
 		ricochets++
 		if(A.handle_ricochet(src))
 			ignore_source_check = TRUE
@@ -171,41 +187,42 @@
 		if(forcedodge)
 			loc = target_turf
 		return FALSE
-	var/permutation = select_target(A,target_turf) // searches for return value, could be deleted after run so check A isn't null
+
+	var/permutation = A.bullet_act(src, def_zone) // searches for return value, could be deleted after run so check A isn't null
 	if(permutation == -1 || forcedodge)// the bullet passes through a dense object!
 		loc = target_turf
 		if(A)
 			permutated.Add(A)
 		return FALSE
+	else
+		var/atom/alt = select_target(A)
+		if(alt)
+			if(!prehit(alt))
+				return FALSE
+			alt.bullet_act(src, def_zone)
 	qdel(src)
 	return TRUE
 
-/obj/item/projectile/proc/select_target(atom/A,target_turf)
-	if((A && A.density && !(A.flags_1 & ON_BORDER_1)) && (istype(A,/obj/machinery) || isturf(A))) //if we hit a dense non-border obj or dense turf then we also hit one of the mobs on that tile.
-		var/list/mobs_list = list()
-		var/list/machine_list = list()
-		for(var/mob/living/L in target_turf)
-			mobs_list += L
-		for(var/obj/machinery/m in target_turf)
-			if(m.density)
-				machine_list += m
-		var/permutationbackup
-		if(isturf(A))
-			permutationbackup = A.bullet_act(src, def_zone)		// Just in case the turf can deflect bullets
-		if(mobs_list.len || machine_list.len)
-			var/atom/movable/selected_target
-			if(mobs_list.Find(original) || machine_list.Find(original))
-				selected_target = original
-			else if(mobs_list.len)
-				selected_target = pick(mobs_list)
-			else
-				selected_target = pick(machine_list)
-			if(!prehit(selected_target))
-				return FALSE
-			return selected_target.bullet_act(src, def_zone)
-		return permutationbackup
-	else
-		return A.bullet_act(src, def_zone)
+
+/obj/item/projectile/proc/select_target(atom/A)				//Selects another target from a wall if we hit a wall.
+	if(!A || !A.density || (A.flags_1 & ON_BORDER_1) || ismob(A))	//if we hit a dense non-border obj or dense turf then we also hit one of the mobs or machines/structures on that tile.
+		return
+	if(A == original || original in A)
+		return original
+	var/list/mob/possible_mobs = typecache_filter_list(A, GLOB.typecache_mob)
+	var/list/mob/mobs = list()
+	for(var/i in possible_mobs)
+		var/mob/M = i
+		if(M.lying)
+			continue
+		mobs += M
+	var/mob/M = safepick(mobs)
+	if(M)
+		return M.lowest_buckled_mob()
+	var/obj/O = safepick(typecache_filter_list(A, GLOB.typecache_machine_or_structure))
+	if(O)
+		return O
+	return A
 
 /obj/item/projectile/proc/check_ricochet()
 	if(prob(ricochet_chance))
@@ -218,94 +235,104 @@
 	return FALSE
 
 /obj/item/projectile/Process_Spacemove(var/movement_dir = 0)
-	return 1 //Bullets don't drift in space
+	return TRUE	//Bullets don't drift in space
 
-/obj/item/projectile/proc/fire(setAngle, atom/direct_target)
+/obj/item/projectile/process()
+	last_process = world.time
+	if(!loc || !fired)
+		fired = FALSE
+		return PROCESS_KILL
+	if(paused || !isturf(loc))
+		last_projectile_move += world.time - last_process		//Compensates for pausing, so it doesn't become a hitscan projectile when unpaused from charged up ticks.
+		return
+	var/elapsed_time_deciseconds = (world.time - last_projectile_move) + time_offset
+	time_offset = 0
+	var/required_moves = speed > 0? Floor(elapsed_time_deciseconds / speed) : MOVES_HITSCAN			//Would be better if a 0 speed made hitscan but everyone hates those so I can't make it a universal system :<
+	if(required_moves == MOVES_HITSCAN)
+		required_moves = SSprojectiles.global_max_tick_moves
+	else
+		if(required_moves > SSprojectiles.global_max_tick_moves)
+			var/overrun = required_moves - SSprojectiles.global_max_tick_moves
+			required_moves = SSprojectiles.global_max_tick_moves
+			time_offset += overrun * speed
+		time_offset += Modulus(elapsed_time_deciseconds, speed)
+
+	for(var/i in 1 to required_moves)
+		pixel_move(required_moves)
+
+/obj/item/projectile/proc/fire(angle, atom/direct_target)
+	//If no angle needs to resolve it from xo/yo!
 	if(!log_override && firer && original)
 		add_logs(firer, original, "fired at", src, " [get_area(src)]")
 	if(direct_target)
-		prehit(direct_target)
-		direct_target.bullet_act(src, def_zone)
-		qdel(src)
-		return
-	if(isnum(setAngle))
-		Angle = setAngle
-	var/old_pixel_x = pixel_x
-	var/old_pixel_y = pixel_y
-	if(!legacy) //new projectiles
-		set waitfor = 0
-		var/next_run = world.time
-		while(loc)
-			if(paused)
-				next_run = world.time
-				stoplag(1)
-				continue
+		if(prehit(direct_target))
+			direct_target.bullet_act(src, def_zone)
+			qdel(src)
+			return
+	if(isnum(angle))
+		setAngle(angle)
+	if(spread)
+		setAngle(Angle + ((rand() - 0.5) * spread))
+	if(isnull(Angle))	//Try to resolve through offsets if there's no angle set.
+		var/turf/starting = get_turf(src)
+		var/turf/target = locate(Clamp(starting + xo, 1, world.maxx), Clamp(starting + yo, 1, world.maxy), starting.z)
+		setAngle(Get_Angle(src, target))
+	if(!nondirectional_sprite)
+		var/matrix/M = new
+		M.Turn(Angle)
+		transform = M
+	old_pixel_x = pixel_x
+	old_pixel_y = pixel_y
+	last_projectile_move = world.time
+	fired = TRUE
+	if(!isprocessing)
+		START_PROCESSING(SSprojectiles, src)
 
-			if((!( current ) || loc == current))
-				current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
+/obj/item/projectile/proc/setAngle(new_angle)	//wrapper for overrides.
+	Angle = new_angle
+	return TRUE
 
-			if(!Angle)
-				Angle=round(Get_Angle(src,current))
-			if(spread)
-				Angle += (rand() - 0.5) * spread
-			if(!nondirectional_sprite)
-				var/matrix/M = new
-				M.Turn(Angle)
-				transform = M
+/obj/item/projectile/proc/pixel_move(moves)
+	if(!nondirectional_sprite)
+		var/matrix/M = new
+		M.Turn(Angle)
+		transform = M
 
-			var/Pixel_x=round((sin(Angle)+16*sin(Angle)*2), 1)	//round() is a floor operation when only one argument is supplied, we don't want that here
-			var/Pixel_y=round((cos(Angle)+16*cos(Angle)*2), 1)
-			var/pixel_x_offset = old_pixel_x + Pixel_x
-			var/pixel_y_offset = old_pixel_y + Pixel_y
-			var/new_x = x
-			var/new_y = y
+	pixel_x_increment=round((sin(Angle)+16*sin(Angle)*2), 1)	//round() is a floor operation when only one argument is supplied, we don't want that here
+	pixel_y_increment=round((cos(Angle)+16*cos(Angle)*2), 1)
+	pixel_x_offset = old_pixel_x + pixel_x_increment
+	pixel_y_offset = old_pixel_y + pixel_y_increment
+	new_x = x
+	new_y = y
 
-			while(pixel_x_offset > 16)
-				pixel_x_offset -= 32
-				old_pixel_x -= 32
-				new_x++// x++
-			while(pixel_x_offset < -16)
-				pixel_x_offset += 32
-				old_pixel_x += 32
-				new_x--
-			while(pixel_y_offset > 16)
-				pixel_y_offset -= 32
-				old_pixel_y -= 32
-				new_y++
-			while(pixel_y_offset < -16)
-				pixel_y_offset += 32
-				old_pixel_y += 32
-				new_y--
+	while(pixel_x_offset > 16)
+		pixel_x_offset -= 32
+		old_pixel_x -= 32
+		new_x++// x++
+	while(pixel_x_offset < -16)
+		pixel_x_offset += 32
+		old_pixel_x += 32
+		new_x--
+	while(pixel_y_offset > 16)
+		pixel_y_offset -= 32
+		old_pixel_y -= 32
+		new_y++
+	while(pixel_y_offset < -16)
+		pixel_y_offset += 32
+		old_pixel_y += 32
+		new_y--
 
-			pixel_x = old_pixel_x
-			pixel_y = old_pixel_y
-			step_towards(src, locate(new_x, new_y, z))
-			next_run += max(world.tick_lag, speed)
-			var/delay = next_run - world.time
-			if(delay <= world.tick_lag*2)
-				pixel_x = pixel_x_offset
-				pixel_y = pixel_y_offset
-			else
-				animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = max(1, (delay <= 3 ? delay - 1 : delay)), flags = ANIMATION_END_NOW)
-			old_pixel_x = pixel_x_offset
-			old_pixel_y = pixel_y_offset
-			if(can_hit_target(original, permutated))
-				Collide(original)
-			Range()
-			if (delay > 0)
-				sleep(delay)
-
-	else //old projectile system
-		set waitfor = 0
-		while(loc)
-			if(!paused)
-				if((!( current ) || loc == current))
-					current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
-				step_towards(src, current)
-				if(can_hit_target(original, permutated))
-					Collide(original)
-				Range()
-			sleep(CONFIG_GET(number/run_delay) * 0.9)
+	step_towards(src, locate(new_x, new_y, z))
+	pixel_x = old_pixel_x
+	pixel_y = old_pixel_y
+	//var/animation_time = ((SSprojectiles.flags & SS_TICKER? (SSprojectiles.wait * world.tick_lag) : SSprojectiles.wait) / moves)
+	animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = 1, flags = ANIMATION_END_NOW)
+	old_pixel_x = pixel_x_offset
+	old_pixel_y = pixel_y_offset
+	if(can_hit_target(original, permutated))
+		Collide(original)
+	Range()
+	last_projectile_move = world.time
 
 //Returns true if the target atom is on our current turf and above the right layer
 /obj/item/projectile/proc/can_hit_target(atom/target, var/list/passthrough)
@@ -315,21 +342,26 @@
 				return TRUE
 	return FALSE
 
-/obj/item/projectile/proc/preparePixelProjectile(atom/target, var/turf/targloc, mob/living/user, params, spread)
-	var/turf/curloc = get_turf(user)
-	forceMove(get_turf(user))
-	starting = get_turf(user)
-	current = curloc
+/obj/item/projectile/proc/preparePixelProjectile(atom/target, atom/source, params, spread = 0)
+	var/turf/curloc = get_turf(source)
+	var/turf/targloc = get_turf(target)
+	forceMove(get_turf(source))
+	starting = get_turf(source)
+	original = target
 	yo = targloc.y - curloc.y
 	xo = targloc.x - curloc.x
 
-	var/list/calculated = calculate_projectile_angle_and_pixel_offsets(user, params)
-	Angle = calculated[1]
-	p_x = calculated[2]
-	p_y = calculated[3]
+	if(isliving(source) && params)
+		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source, params)
+		p_x = calculated[2]
+		p_y = calculated[3]
 
-	if(spread)
-		src.Angle += spread
+		if(spread)
+			setAngle(calculated[1] + spread)
+		else
+			setAngle(calculated[1])
+	else
+		setAngle(Get_Angle(src, targloc))
 
 /proc/calculate_projectile_angle_and_pixel_offsets(mob/user, params)
 	var/list/mouse_control = params2list(params)
@@ -362,10 +394,11 @@
 
 /obj/item/projectile/Crossed(atom/movable/AM) //A mob moving on a tile with a projectile is hit by it.
 	..()
-	if(isliving(AM) && AM.density && !checkpass(PASSMOB))
+	if(isliving(AM) && (AM.density || AM == original) && !checkpass(PASSMOB))
 		Collide(AM)
 
 /obj/item/projectile/Destroy()
+	STOP_PROCESSING(SSprojectiles, src)
 	return ..()
 
 /obj/item/projectile/experience_pressure_difference()

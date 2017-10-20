@@ -80,7 +80,7 @@
 	app.wiz_team = master_antag.wiz_team
 	app.master = wizard
 	app.school = school
-	master_antag.wiz_team.members += app_mind
+	master_antag.wiz_team.add_member(app_mind)
 	app_mind.add_antag_datum(app)
 	//TODO Kill these if possible
 	app_mind.assigned_role = "Apprentice"

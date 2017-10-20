@@ -53,7 +53,7 @@
 
 	var/datum/gas_mixture/breath
 
-	if(!getorganslot("breathing_tube"))
+	if(!getorganslot(ORGAN_SLOT_BREATHING_TUBE))
 		if(health <= HEALTH_THRESHOLD_FULLCRIT || (pulledby && pulledby.grab_state >= GRAB_KILL))
 			losebreath++  //You can't breath at all when in critical or when being choked, so you're going to miss a breath
 
@@ -104,7 +104,7 @@
 	if((status_flags & GODMODE))
 		return
 
-	var/lungs = getorganslot("lungs")
+	var/lungs = getorganslot(ORGAN_SLOT_LUNGS)
 	if(!lungs)
 		adjustOxyLoss(2)
 
@@ -225,7 +225,7 @@
 		if(internal.loc != src)
 			internal = null
 			update_internals_hud_icon(0)
-		else if ((!wear_mask || !(wear_mask.flags_1 & MASKINTERNALS_1)) && !getorganslot("breathing_tube"))
+		else if ((!wear_mask || !(wear_mask.flags_1 & MASKINTERNALS_1)) && !getorganslot(ORGAN_SLOT_BREATHING_TUBE))
 			internal = null
 			update_internals_hud_icon(0)
 		else
@@ -401,7 +401,7 @@
 /////////
 
 /mob/living/carbon/proc/handle_liver()
-	var/obj/item/organ/liver/liver = getorganslot("liver")
+	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
 	if((!dna && !liver) || (NOLIVER in dna.species.species_traits))
 		return
 	if(liver)
@@ -414,17 +414,17 @@
 		liver_failure()
 
 /mob/living/carbon/proc/undergoing_liver_failure()
-	var/obj/item/organ/liver/liver = getorganslot("liver")
+	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
 	if(liver && liver.failing)
 		return TRUE
 
 /mob/living/carbon/proc/return_liver_damage()
-	var/obj/item/organ/liver/liver = getorganslot("liver")
+	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
 	if(liver)
 		return liver.damage
 
 /mob/living/carbon/proc/applyLiverDamage(var/d)
-	var/obj/item/organ/liver/L = getorganslot("liver")
+	var/obj/item/organ/liver/L = getorganslot(ORGAN_SLOT_LIVER)
 	if(L)
 		L.damage += d
 
