@@ -142,6 +142,8 @@
 
 	for(var/mob/living/carbon/food in GLOB.living_mob_list) //we don't care about constructs or cult-Ians or whatever. cult-monkeys are fair game i guess
 		var/turf/pos = get_turf(food)
+		if(!pos)
+			continue
 		if(pos.z != src.z)
 			continue
 
@@ -163,6 +165,8 @@
 		if(!ghost.client)
 			continue
 		var/turf/pos = get_turf(ghost)
+		if(!pos)
+			continue
 		if(pos.z != src.z)
 			continue
 		cultists += ghost
