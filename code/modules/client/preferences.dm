@@ -47,7 +47,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/allow_midround_antag = 1
 	var/preferred_map = null
 	var/pda_style = MONO
-	
+
 	var/uses_glasses_colour = 0
 
 	//character preferences
@@ -67,7 +67,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/skin_tone = "caucasian1"		//Skin color
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
-	var/list/features = list("mcolor" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs")
+	var/list/features = list("mcolor" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "canopy" = "Oakley Traditional", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs")
 
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
 	var/prefered_security_department = SEC_DEPT_RANDOM
@@ -324,6 +324,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "<a href='?_src_=prefs;preference=body_markings;task=input'>[features["body_markings"]]</a><BR>"
 
 					dat += "</td>"
+
 				if("legs" in pref_species.mutant_bodyparts)
 					dat += "<td valign='top' width='7%'>"
 
@@ -332,6 +333,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "<a href='?_src_=prefs;preference=legs;task=input'>[features["legs"]]</a><BR>"
 
 					dat += "</td>"
+
+				if("canopy" in pref_species.mutant_bodyparts)
+					dat += "<td valign='top' width='7%'>"
+
+					dat += "<h3>Canopy</h3>"
+
+					dat += "<a href='?_src_=prefs;preference=canopy;task=input'>[features["canopy"]]</a><BR>"
+
+					dat += "</td>"
+
 			if(CONFIG_GET(flag/join_with_mutant_humans))
 
 				if("tail_human" in pref_species.mutant_bodyparts)
@@ -1012,6 +1023,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					new_horns = input(user, "Choose your character's horns:", "Character Preference") as null|anything in GLOB.horns_list
 					if(new_horns)
 						features["horns"] = new_horns
+
+				if("canopy")
+					var/new_canopy
+					new_canopy = input(user, "Choose your beautifully-groomed leaves.", "Character Preference") as null|anything in GLOB.canopy_list
+					if(new_canopy)
+						features["canopy"] = new_canopy
 
 				if("ears")
 					var/new_ears

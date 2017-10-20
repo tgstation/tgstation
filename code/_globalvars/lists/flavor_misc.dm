@@ -27,6 +27,9 @@ GLOBAL_LIST_EMPTY(spines_list)
 GLOBAL_LIST_EMPTY(legs_list)
 GLOBAL_LIST_EMPTY(animated_spines_list)
 
+	//Sap canopies
+GLOBAL_LIST_EMPTY(canopy_list)
+
 	//Mutant Human bits
 GLOBAL_LIST_EMPTY(tails_list_human)
 GLOBAL_LIST_EMPTY(animated_tails_list_human)
