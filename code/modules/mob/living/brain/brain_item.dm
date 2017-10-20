@@ -192,7 +192,13 @@
 	traumas += new trauma_type(src, permanent, args)
 
 /obj/item/organ/brain/proc/gain_trauma_type(brain_trauma_type = /datum/brain_trauma, permanent = FALSE)
-	var/trauma_type = pick(subtypesof(brain_trauma_type))
+	var/list/datum/brain_trauma/possible_traumas = list()
+	for(var/T in subtypesof(brain_trauma_type))
+		var/datum/brain_trauma/BT = T
+		if(initial(BT.can_gain))
+			possible_traumas += BT
+
+	var/trauma_type = pick(possible_traumas)
 	traumas += new trauma_type(src, permanent)
 
 /obj/item/organ/brain/proc/cure_trauma(datum/brain_trauma/trauma, cure_permanent = FALSE)

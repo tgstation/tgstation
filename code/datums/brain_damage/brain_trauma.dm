@@ -9,6 +9,7 @@
 	var/obj/item/organ/brain/brain //the poor bastard's brain
 	var/gain_text = "<span class='notice'>You feel traumatized.</span>"
 	var/lose_text = "<span class='notice'>You no longer feel traumatized.</span>"
+	var/can_gain = TRUE //can this be gained through random traumas?
 	var/permanent = FALSE //can this be cured?
 
 /datum/brain_trauma/New(obj/item/organ/brain/B, _permanent)
