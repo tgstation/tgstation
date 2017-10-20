@@ -353,8 +353,6 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			if(A.laws && A.laws.zeroth && A.mind && A.mind.special_role)
 				return TRUE
 		return FALSE
-	if(M.mind && LAZYLEN(M.mind.antag_datums)) //they have an antag datum!
-		return TRUE
 	if(M.mind && M.mind.special_role)//If they have a mind and special role, they are some type of traitor or antagonist.
 		switch(SSticker.mode.config_tag)
 			if("revolution")
@@ -381,8 +379,10 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			if("abductor")
 				if(M.mind in SSticker.mode.abductors)
 					return 2
-		return 1
-	return 0
+		return TRUE
+	if(M.mind && LAZYLEN(M.mind.antag_datums)) //they have an antag datum!
+		return TRUE
+	return FALSE
 
 /mob/proc/reagent_check(datum/reagent/R) // utilized in the species code
 	return 1
