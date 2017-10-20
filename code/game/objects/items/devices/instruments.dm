@@ -110,6 +110,22 @@
 	item_state = "accordion"
 	instrumentId = "accordion"
 
+/obj/item/device/instrument/brass/trumpet
+	name = "trumpet"
+	desc = "To announce the arrival of the king!"
+	icon_state = "trumpet"
+	item_state = "trombone"
+	instrumentId = "trombone"
+
+/obj/item/device/instrument/brass/trumpet/spectral
+	name = "spectral trumpet"
+	desc = "Things are about to get spooky!"
+	icon_state = "trumpet"
+	item_state = "trombone"
+	force = 0
+	instrumentId = "trombone"
+	attack_verb = list("played","jazzed","trumpeted","mourned","dooted")
+
 /obj/item/device/instrument/saxophone
 	name = "saxophone"
 	desc = "This soothing sound will be sure to leave your audience in tears."
@@ -117,12 +133,30 @@
 	item_state = "saxophone"
 	instrumentId = "saxophone"
 
+/obj/item/device/instrument/brass/saxophone/spectral
+	name = "spectral saxophone"
+	desc = "This spooky sound will be sure to leave mortals in bones."
+	icon_state = "saxophone"
+	item_state = "saxophone"
+	instrumentId = "saxophone"
+	force = 0
+	attack_verb = list("played","jazzed","saxxed","mourned","dooted")
+
 /obj/item/device/instrument/trombone
 	name = "trombone"
 	desc = "How can any pool table ever hope to compete?"
 	icon_state = "trombone"
 	item_state = "trombone"
 	instrumentId = "trombone"
+
+/obj/item/device/instrument/brass/trombone/spectral
+	name = "spectral trombone"
+	desc = "A skeleton's favorite instrument. Apply directly on the mortals."
+	instrumentId = "trombone"
+	icon_state = "trombone"
+	item_state = "trombone"
+	force = 0
+	attack_verb = list("played","jazzed","tromboned","mourned","dooted")
 
 /obj/item/device/instrument/recorder
 	name = "recorder"
@@ -164,3 +198,60 @@
 	throw_range = 15
 	hitsound = 'sound/items/bikehorn.ogg'
 
+//spooky stuff
+/obj/item/device/instrument/brass/trumpet/spectral/attack(mob/living/carbon/C, mob/user)
+	playsound (loc, 'sound/instruments/trombone/En4.mid', 100,1,-1)
+	spectral_attack(C, user)
+	..()
+
+/obj/item/device/instrument/brass/saxophone/spectral/attack(mob/living/carbon/C, mob/user)
+	playsound (loc, 'sound/instruments/saxophone/En4.mid', 100,1,-1)
+	spectral_attack(C, user)
+	..()
+
+/obj/item/device/instrument/brass/trombone/spectral/attack(mob/living/carbon/C, mob/user)
+	playsound (loc, 'sound/instruments/trombone/Cn4.mid', 100,1,-1)
+	spectral_attack(C, user)
+	..()
+
+//spooky procs
+/obj/item/device/instrument/brass/proc/spectral_attack(mob/living/carbon/C, mob/user)
+	if(ishuman(user)) //this weapon wasn't meant for mortals.
+		var/mob/living/carbon/human/U = user
+		if(!istype(U.dna.species, /datum/species/skeleton))
+			U.adjustStaminaLoss(25) //Extra Damage
+			attack(user)
+			U.Knockdown(30)
+			to_chat(U, "<span class= 'danger'> Your ears weren't meant for this spectral sound.</span>")
+			return ..()
+
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		if(istype(H.dna.species, /datum/species/skeleton))
+			return ..() //undead are unaffected by the spook-pocalypse.
+		if(istype(H.dna.species, /datum/species/zombie))
+			H.adjustStaminaLoss(25) //zombies can't resist the doot
+		C.Knockdown(15)
+		C.Jitter(15)
+		C.stuttering = 20
+		C.adjustStaminaLoss(25) //only humanoids lose the will to live
+		to_chat(C, "<font color='red' size='4'><B>DOOT</B></span>")
+
+		if((H.getStaminaLoss() > 95) && (!istype(H.dna.species, /datum/species/skeleton)) && (!istype(H.dna.species, /datum/species/golem)) && (!istype(H.dna.species, /datum/species/android)) && (!istype(H.dna.species, /datum/species/jelly)))
+			H.Knockdown(30) //doot!
+			H.set_species(/datum/species/skeleton)
+			H.visible_message("<span class='warning'>[H] has given up on life as a mortal.</span>")
+			to_chat(H, "<B>You are the spooky skeleton!</B>")
+			to_chat(H, "A new life and identity has begun. Help your fellow skeletons into bringing out the spooky-pocalypse. You haven't forgotten your past life, but you are no longer beholden to any past loyalties.")
+			change_name(H)	//time for a new name!
+
+	else
+		C.Knockdown(15)
+		C.Jitter(15)
+		C.stuttering = 20
+
+/obj/item/device/instrument/brass/proc/change_name(mob/living/carbon/human/H)
+	var/t = stripped_input(H, "Enter your new skeleton name", H.real_name, null, MAX_NAME_LEN)
+	if(!t)
+		t = "spooky skeleton"
+	H.real_name = t
