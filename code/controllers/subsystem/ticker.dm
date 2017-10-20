@@ -12,7 +12,7 @@ SUBSYSTEM_DEF(ticker)
 	var/force_ending = 0					//Round was ended by admin intervention
 	// If true, there is no lobby phase, the game starts immediately.
 	var/start_immediately = FALSE
-	var/setup_done = FALSE //All game setup done including mode post setup and 
+	var/setup_done = FALSE //All game setup done including mode post setup and
 
 	var/hide_mode = 0
 	var/datum/game_mode/mode = null
@@ -86,7 +86,7 @@ SUBSYSTEM_DEF(ticker)
 	var/list/provisional_title_music = flist("config/title_music/sounds/")
 	var/list/music = list()
 	var/use_rare_music = prob(1)
-	
+
 	for(var/S in provisional_title_music)
 		var/lower = lowertext(S)
 		var/list/L = splittext(lower,"+")
@@ -114,18 +114,19 @@ SUBSYSTEM_DEF(ticker)
 			if(byond_sound_formats[ext])
 				continue
 		music -= S
-				
+
 	if(isemptylist(music))
 		music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
 		login_music = pick(music)
 	else
 		login_music = "config/title_music/sounds/[pick(music)]"
-	
+
 
 	if(!GLOB.syndicate_code_phrase)
 		GLOB.syndicate_code_phrase	= generate_code_phrase()
 	if(!GLOB.syndicate_code_response)
 		GLOB.syndicate_code_response = generate_code_phrase()
+
 	..()
 	start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
 
