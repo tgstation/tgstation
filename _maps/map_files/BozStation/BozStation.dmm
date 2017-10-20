@@ -1414,7 +1414,6 @@
 /obj/structure/cable,
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
 	d2 = 2
 	},
 /obj/machinery/door/poddoor/preopen{
@@ -1700,7 +1699,6 @@
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
 	d2 = 2
 	},
 /obj/machinery/camera{
@@ -4173,7 +4171,6 @@
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
 	d2 = 2
 	},
 /obj/structure/cable,
@@ -4332,7 +4329,6 @@
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
 	d2 = 2
 	},
 /turf/open/floor/plating,
@@ -4599,7 +4595,6 @@
 /obj/structure/closet/secure_closet/CMO,
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
 	d2 = 2
 	},
 /obj/machinery/power/apc{
@@ -4795,7 +4790,6 @@
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
 	d2 = 2
 	},
 /obj/structure/cable,
@@ -9468,7 +9462,6 @@
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
 	d2 = 2
 	},
 /turf/open/floor/plasteel{
@@ -20792,7 +20785,6 @@
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
 	d2 = 2
 	},
 /obj/structure/cable,
@@ -21284,7 +21276,6 @@
 "aUn" = (
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
 	d2 = 2
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -21381,7 +21372,6 @@
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
 	d2 = 2
 	},
 /turf/open/floor/plasteel,
