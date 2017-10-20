@@ -1789,7 +1789,6 @@
 #include "code\modules\mob\living\simple_animal\hostile\jungle\mega_arachnid.dm"
 #include "code\modules\mob\living\simple_animal\hostile\jungle\mook.dm"
 #include "code\modules\mob\living\simple_animal\hostile\jungle\seedling.dm"
-#include "code\modules\mob\living\simple_animal\hostile\megafauna\blood_drunk_miner.dm"
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\bubblegum.dm"
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\colossus.dm"
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\dragon.dm"
