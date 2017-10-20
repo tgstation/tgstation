@@ -6,19 +6,22 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 
 /************************************Base proc************************************/
 
-/atom/proc/shuttleRotate(rotation)
-	//rotate our direction
-	setDir(angle2dir(rotation+dir2angle(dir)))
+/atom/proc/shuttleRotate(rotation, params=ROTATE_DIR|ROTATE_SMOOTH|ROTATE_OFFSET)
+	SendSignal(COMSIG_ATOM_ROTATE, rotation, params)
+	
+	if(params & ROTATE_DIR)
+		//rotate our direction
+		setDir(angle2dir(rotation+dir2angle(dir)))
 
 	//resmooth if need be.
-	if(smooth)
+	if(smooth && params & ROTATE_SMOOTH)
 		queue_smooth(src)
 
 	//rotate the pixel offsets too.
-	if (pixel_x || pixel_y)
-		if (rotation < 0)
+	if((pixel_x || pixel_y) && params & ROTATE_OFFSET)
+		if(rotation < 0)
 			rotation += 360
-		for (var/turntimes=rotation/90;turntimes>0;turntimes--)
+		for(var/turntimes=rotation/90;turntimes>0;turntimes--)
 			var/oldPX = pixel_x
 			var/oldPY = pixel_y
 			pixel_x = oldPY
@@ -26,30 +29,28 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 
 /************************************Turf rotate procs************************************/
 
-/turf/closed/mineral/shuttleRotate(rotation)
-	setDir(angle2dir(rotation+dir2angle(dir)))
-	queue_smooth(src)
+/turf/closed/mineral/shuttleRotate(rotation, params=ROTATE_DIR|ROTATE_SMOOTH)
+	return ..()
 
 /************************************Mob rotate procs************************************/
 
 //override to avoid rotating pixel_xy on mobs
-/mob/shuttleRotate(rotation)
+/mob/shuttleRotate(rotation, params=ROTATE_SMOOTH|ROTATE_OFFSET)
 	if(!buckled)
 		setDir(angle2dir(rotation+dir2angle(dir)))
 
-/mob/dead/observer/shuttleRotate(rotation)
+/mob/dead/observer/shuttleRotate(rotation, params=ROTATE_DIR|ROTATE_SMOOTH|ROTATE_OFFSET)
 	. = ..()
 	update_icon()
 
 /************************************Structure rotate procs************************************/
 
-/obj/structure/door_assembly/door_assembly_pod/shuttleRotate(rotation)
+/obj/structure/door_assembly/door_assembly_pod/shuttleRotate(rotation, params=ROTATE_DIR|ROTATE_SMOOTH|ROTATE_OFFSET)
 	. = ..()
 	expected_dir = angle2dir(rotation+dir2angle(dir))
 
-/obj/structure/cable/shuttleRotate(rotation)
-	//..() is not called because wires are not supposed to have a non-default direction
-	//Rotate connections
+/obj/structure/cable/shuttleRotate(rotation, params=ROTATE_SMOOTH|ROTATE_OFFSET)
+	. = ..()
 	if(d1)
 		d1 = angle2dir(rotation+dir2angle(d1))
 	if(d2)
@@ -63,7 +64,7 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 	update_icon()
 
 //Fixes dpdir on shuttle rotation
-/obj/structure/disposalpipe/shuttleRotate(rotation)
+/obj/structure/disposalpipe/shuttleRotate(rotation, params=ROTATE_DIR|ROTATE_SMOOTH|ROTATE_OFFSET)
 	. = ..()
 	var/new_dpdir = 0
 	for(var/D in GLOB.cardinals)
@@ -71,16 +72,16 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 			new_dpdir = new_dpdir | angle2dir(rotation+dir2angle(D))
 	dpdir = new_dpdir
 
-/obj/structure/table/wood/bar/shuttleRotate(rotation)
+/obj/structure/table/wood/bar/shuttleRotate(rotation, params=ROTATE_DIR|ROTATE_SMOOTH|ROTATE_OFFSET)
 	. = ..()
 	boot_dir = angle2dir(rotation + dir2angle(boot_dir))
 
-/obj/structure/alien/weeds/shuttleRotate(rotation)
-	return
+/obj/structure/alien/weeds/shuttleRotate(rotation, params=ROTATE_DIR|ROTATE_SMOOTH)
+	return ..()
 
 /************************************Machine rotate procs************************************/
 
-/obj/machinery/atmospherics/shuttleRotate(rotation)
+/obj/machinery/atmospherics/shuttleRotate(rotation, params=ROTATE_DIR|ROTATE_SMOOTH|ROTATE_OFFSET)
 	var/list/real_node_connect = getNodeConnects()
 	for(DEVICE_TYPE_LOOP)
 		real_node_connect[I] = angle2dir(rotation+dir2angle(real_node_connect[I]))
@@ -95,13 +96,13 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 		nodes[new_pos] = nodes_copy[I]
 
 //prevents shuttles attempting to rotate this since it messes up sprites
-/obj/machinery/gateway/shuttleRotate()
-	return
+/obj/machinery/gateway/shuttleRotate(rotation, params=NONE)
+	return ..()
 
-/obj/machinery/door/airlock/survival_pod/shuttleRotate(rotation)
+/obj/machinery/door/airlock/survival_pod/shuttleRotate(rotation, params=ROTATE_DIR|ROTATE_SMOOTH|ROTATE_OFFSET)
 	expected_dir = angle2dir(rotation+dir2angle(dir))
 	return ..()
 
 //prevents shuttles attempting to rotate this since it messes up sprites
-/obj/machinery/gravity_generator/shuttleRotate()
-	return
+/obj/machinery/gravity_generator/shuttleRotate(rotation, params=NONE)
+	return ..()

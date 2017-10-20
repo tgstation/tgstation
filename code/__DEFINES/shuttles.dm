@@ -65,3 +65,8 @@
 #define MOVE_TURF 1
 #define MOVE_AREA 2
 #define MOVE_CONTENTS 4
+
+//Rotation params
+#define ROTATE_DIR 		1
+#define ROTATE_SMOOTH 	2
+#define ROTATE_OFFSET	4

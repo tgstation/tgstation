@@ -284,6 +284,8 @@
 #include "code\datums\components\spooky.dm"
 #include "code\datums\components\squeek.dm"
 #include "code\datums\components\thermite.dm"
+#include "code\datums\components\turf_decals\td_paint.dm"
+#include "code\datums\components\turf_decals\turf_decal.dm"
 #include "code\datums\diseases\_disease.dm"
 #include "code\datums\diseases\_MobProcs.dm"
 #include "code\datums\diseases\anxiety.dm"

@@ -603,10 +603,10 @@
 				var/atom/movable/moving_atom = thing
 				if(moving_atom.loc != oldT) //fix for multi-tile objects
 					continue
-				moving_atom.onShuttleMove(newT, oldT, rotation, movement_force, movement_direction, old_dock, src)//atoms
+				moving_atom.onShuttleMove(newT, oldT, movement_force, movement_direction, old_dock, src)	//atoms
 				moved_atoms += moving_atom
 		if(move_mode & MOVE_TURF)
-			oldT.onShuttleMove(newT, underlying_turf_type, underlying_baseturf_type, rotation, movement_force, movement_direction)//turfs
+			oldT.onShuttleMove(newT, movement_force, movement_direction)									//turfs
 		if(move_mode & MOVE_AREA)
 			var/area/shuttle_area = oldT.loc
 			shuttle_area.onShuttleMove(oldT, newT, underlying_old_area)										//areas
@@ -618,12 +618,12 @@
 		index++
 		var/turf/oldT = thing
 		var/turf/newT = new_turfs[index]
-		newT.afterShuttleMove(oldT)																			//turfs
+		newT.afterShuttleMove(oldT, underlying_turf_type, underlying_baseturf_type, rotation)				//turfs
 		CHECK_TICK
 
 	for(var/i in 1 to moved_atoms.len)
 		var/atom/movable/moved_object = moved_atoms[i]
-		moved_object.afterShuttleMove(movement_force, dir, preferred_direction, movement_direction)			//atoms
+		moved_object.afterShuttleMove(movement_force, dir, preferred_direction, movement_direction, rotation)//atoms
 		CHECK_TICK
 
 	underlying_old_area.afterShuttleMove()
