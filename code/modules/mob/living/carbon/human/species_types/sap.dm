@@ -1,4 +1,4 @@
-//Posh and vain plant-based creatures with woody skin.
+//Posh plant-based humanoids with woody skin. Their mood and by extension nutrition is determined by how fancy they are.
 /datum/species/sap
 	name = "Sap"
 	id = "sap"
@@ -20,9 +20,116 @@
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/plant
 	disliked_food = MEAT | DAIRY
 	liked_food = VEGETABLES | FRUIT | GRAIN
-	var/fanciness = 0 //Percentage of fanciness, determined by clothing worn. Non-fancy clothing makes you heal slower.
-	var/static/list/despicable_clothing_typecache = list() //Each worn item reduces fanciness by 10%
-	var/static/list/ugly_clothing_typecache = list() //Reduces fanciness by 5%
-	var/static/list/fancy_clothing_typecache = list() //Each worn item increases fanciness by 5%
-	var/static/list/lavish_clothing_typecache = list() //Increases fanciness by 10%
-	var/static/list/chichi_clothing_typecache = list() //Increases fanciness by 15%
+	var/fanciness = 0 //Percentage of fanciness, determined by clothing worn. Below 50% fanciness you begin to starve, and above it you are nourished!
+
+
+	var/static/list/despicable_clothing_typecache = list(\
+	/obj/item/clothing/head/radiation, \
+	/obj/item/clothing/suit/radiation, \
+	/obj/item/clothing/suit/armor/bone, \
+	/obj/item/clothing/head/wizard/fake, \
+	/obj/item/clothing/gloves/boxing, \
+	/obj/item/clothing/gloves/bracer, \
+	/obj/item/clothing/head/helmet/justice, \
+	/obj/item/clothing/head/helmet/skull, \
+	/obj/item/clothing/head/cueball, \
+	/obj/item/clothing/head/snowman, \
+	/obj/item/clothing/head/chicken, \
+	/obj/item/clothing/head/griffin, \
+	/obj/item/clothing/head/bearpelt, \
+	/obj/item/clothing/head/xenos, \
+	/obj/item/clothing/head/fedora, \
+	/obj/item/clothing/head/sombrero, \
+	/obj/item/clothing/head/cone, \
+	/obj/item/clothing/head/jester, \
+	/obj/item/clothing/head/papersack/smiley, \
+	/obj/item/clothing/head/lobsterhat, \
+	) //Each worn item reduces fanciness by 10%
+
+
+	var/static/list/ugly_clothing_typecache = list(\
+	/obj/item/clothing/head/helmet/space, \
+	/obj/item/clothing/suit/space, \
+	/obj/item/clothing/head/hardhat, \
+	/obj/item/clothing/suit/fire, \
+	/obj/item/clothing/head/bomb_hood, \
+	/obj/item/clothing/suit/bomb_suit, \
+	/obj/item/clothing/head/bio_hood, \
+	/obj/item/clothing/suit/bio_suit, \
+	/obj/item/clothing/suit/hazardvest, \
+	/obj/item/clothing/suit/armor, \
+	/obj/item/clothing/suit/wizrobe/fake, \
+	/obj/item/clothing/glasses/meson, \
+	/obj/item/clothing/glasses/material, \
+	/obj/item/clothing/glasses/regular/jamjar, \
+	/obj/item/clothing/glasses/godeye, \
+	/obj/item/clothing/gloves, \
+	/obj/item/clothing/head/helmet, \
+	/obj/item/clothing/head/papersack, \
+	) //Reduces fanciness by 5%
+
+
+	var/static/list/fancy_clothing_typecache = list(\
+	/obj/item/clothing/neck/cloak, \
+	/obj/item/clothing/suit/apron, \
+	/obj/item/clothing/suit/studentuni, \
+	/obj/item/clothing/suit/toggle/chef, \
+	/obj/item/clothing/suit/det_suit, \
+	/obj/item/clothing/suit/toggle/lawyer, \
+	/obj/item/clothing/suit/curator, \
+	/obj/item/clothing/suit/armor/vest, \
+	/obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard, \
+	/obj/item/clothing/suit/space/hardsuit/shielded/wizard, \
+	/obj/item/clothing/glasses/meson/gar, \
+	/obj/item/clothing/glasses/science, \
+	/obj/item/clothing/glasses/sunglasses, \
+	/obj/item/clothing/glasses/welding, \
+	/obj/item/clothing/glasses/cold, \
+	/obj/item/clothing/glasses/heat, \
+	/obj/item/clothing/glasses/orange, \
+	/obj/item/clothing/glasses/red, \
+	/obj/item/clothing/gloves/color/captain, \
+	/obj/item/clothing/gloves/botanic_leather, \
+	/obj/item/clothing/head/beanie, \
+	/obj/item/clothing/head/collectable, \
+	/obj/item/clothing/head/helmet/roman, \
+	/obj/item/clothing/head/hasturhood, \
+	/obj/item/clothing/head/rice_hat, \
+	/obj/item/clothing/head/nemes, \
+	) //Each worn item increases fanciness by 5%
+
+
+	var/static/list/lavish_clothing_typecache = list(\
+	/obj/item/clothing/suit/captunic, \
+	/obj/item/clothing/suit/armor/vest/capcarapace/alt, \
+	/obj/item/clothing/head/wizard, \
+	/obj/item/clothing/suit/wizrobe, \
+	/obj/item/clothing/head/that, \
+	/obj/item/clothing/head/crown, \
+	) //Increases fanciness by 10%
+
+
+	var/static/list/chichi_clothing_typecache = list(\
+	/obj/item/clothing/glasses/monocle, \
+	/obj/item/clothing/glasses/thermal/monocle, \
+	/obj/item/clothing/head/centhat, \
+	/obj/item/clothing/head/bowler, \
+	/obj/item/clothing/head/crown/fancy, \
+	) //Increases fanciness by 15%
+
+
+
+/datum/species/sap/spec_life(mob/living/carbon/human/sap)
+	calculate_fanciness(sap)
+	var/light = 0
+	if(isturf(sap.loc))
+		var/turf/T = sap.loc
+		light = T.get_lumcount()
+		if(sap.nutrition < NUTRITION_LEVEL_WELL_FED && light >= SAP_NUTRITION_THRESHOLD)
+			sap.nutrition += -0.5 + (0.01 * fanciness) //Past 50% fanciness is no hunger loss, and above it is hunger gain
+			if(sap.nutrition <= NUTRITION_LEVEL_STARVING && prob(1))
+				to_chat(sap, "<span class='warning'>[pick("These clothes really stick out...", "You feel ugly.", "Your outfit is doing dreadful things for your bark.", \
+				"These clothes don't accentuate your canopy at all.", "You stick out like a green thumb. You should probably get some nicer clothing.")]<span>")
+
+/datum/species/sap/proc/calculate_fanciness(mob/living/carbon/human/sap)
+	return
