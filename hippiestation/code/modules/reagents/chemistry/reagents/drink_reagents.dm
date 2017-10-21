@@ -55,8 +55,8 @@
 /datum/reagent/consumable/lean/on_mob_life(mob/living/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		M.adjustBruteLoss(-1)
-		M.set_drugginess(5)
+		H.adjustBruteLoss(-2*REM)
+		H.set_drugginess(5)
 		if(prob(2))
 			playsound(get_turf(H), 'hippiestation/sound/misc/syrupSippin.ogg', 50, 1)
 		if(prob(8))
