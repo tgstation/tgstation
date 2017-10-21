@@ -367,8 +367,8 @@
 		if(method == INGEST)
 			if(show_message)
 				to_chat(M, "<span class='notice'>That tasted horrible.</span>")
-			M.AdjustStun(40)
-			M.AdjustKnockdown(40)
+			M.AdjustStun(20)
+			M.AdjustKnockdown(20)
 	..()
 
 
