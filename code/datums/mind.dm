@@ -1347,8 +1347,9 @@
 
 /datum/mind/proc/make_Traitor()
 	if(!(has_antag_datum(ANTAG_DATUM_TRAITOR)))
-		var/datum/antagonist/traitor/traitordatum = add_antag_datum(ANTAG_DATUM_TRAITOR)
-		return traitordatum
+		var/datum/antagonist/traitor/T = new(src)
+		T.should_specialise = TRUE
+		add_antag_datum(T)
 
 
 /datum/mind/proc/make_Nuke(turf/spawnloc, nuke_code, leader=0, telecrystals = TRUE)

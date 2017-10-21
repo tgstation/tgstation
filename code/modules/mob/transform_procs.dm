@@ -376,8 +376,6 @@
 		if(!transfer_after)
 			mind.active = FALSE
 		mind.transfer_to(R)
-		if(mind.special_role)
-			R.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
 	else if(transfer_after)
 		R.key = key
 
