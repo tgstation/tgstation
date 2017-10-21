@@ -15,6 +15,8 @@
 	bodyparts = list(/obj/item/bodypart/chest/monkey, /obj/item/bodypart/head/monkey, /obj/item/bodypart/l_arm/monkey,
 					 /obj/item/bodypart/r_arm/monkey, /obj/item/bodypart/r_leg/monkey, /obj/item/bodypart/l_leg/monkey)
 
+	var/is_in_cap = FALSE //so we don't subtract 2 from GLOB.monkeys
+
 
 
 /mob/living/carbon/monkey/Initialize()
@@ -23,8 +25,10 @@
 		message_admins("Monkey failed to spawn due to monkeycap at [COORD(T)][ADMIN_JMP(T)]!")
 		log_game("Monkey failed to spawn due to monkeycap at [COORD(T)]")
 		qdel(src)
-	
-	GLOB.monkeys += src
+
+	if(!ckey)
+		GLOB.monkeys++
+		is_in_cap = TRUE
 
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
@@ -44,7 +48,15 @@
 	dna.initialize_dna(random_blood_type())
 
 /mob/living/carbon/monkey/Destroy()
-	GLOB.monkeys -= src
+	if(is_in_cap)
+		GLOB.monkeys--
+		is_in_cap = FALSE
+	return ..()
+
+/mob/living/carbon/monkey/Death()
+	if(is_in_cap)
+		GLOB.monkeys--
+		is_in_cap = FALSE
 	return ..()
 
 /mob/living/carbon/monkey/create_internal_organs()
@@ -74,7 +86,7 @@
 
 	if (bodytemperature < 283.222)
 		. += (283.222 - bodytemperature) / 10 * 1.75
-		
+
 	var/static/config_monkey_delay
 	if(isnull(config_monkey_delay))
 		config_monkey_delay = CONFIG_GET(number/monkey_delay)
