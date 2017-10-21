@@ -1296,6 +1296,12 @@
 	icon_state = "warden"
 	toysay = "Seventeen minutes for coughing at an officer!"
 
+/obj/item/toy/figure/duck
+	name = "Rubber duck"
+	icon_state = "rubber_duck"
+	toysay = "Quack!"
+	toysound = 'sound/voice/duck.ogg'
+
 
 /obj/item/toy/dummy
 	name = "ventriloquist dummy"
