@@ -1,13 +1,14 @@
 /datum/component/turf_decal
-	var/icon = 'icons/turf/decals.dmi'
-	var/icon_state = "warningline"
-	var/layer = TURF_DECAL_LAYER
-	var/group = TURF_DECAL_PAINT
 	var/dir
+	var/icon
+	var/icon_state
+	var/layer
+	var/group
 
-/datum/component/turf_decal/Initialize(_dir)
+/datum/component/turf_decal/Initialize(_dir, _icon, _icon_state, _layer=TURF_DECAL_LAYER, _group=TURF_DECAL_PAINT)
 	. = ..()
-	if(!istype(parent, /turf))
+	if(!istype(parent, /turf) || !_icon || !_icon_state)
+		WARNING("A turf decal was applied without the necesary args in initialize: [parent]")
 		qdel(src)
 
 	dir = _dir
