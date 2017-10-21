@@ -23,7 +23,11 @@
 	if(overmind)
 		update_icon()
 	point_rate = new_rate
+	addtimer(CALLBACK(src, .proc/generate_announcement), 1800)
 	. = ..()
+
+/obj/structure/blob/core/proc/generate_announcement()
+	priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/ai/outbreak5.ogg')
 
 /obj/structure/blob/core/scannerreport()
 	return "Directs the blob's expansion, gradually expands, and sustains nearby blob spores and blobbernauts."
