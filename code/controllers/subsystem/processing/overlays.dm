@@ -29,14 +29,16 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 #define COMPILE_OVERLAYS(A)\
 	var/list/oo = A.our_overlays;\
 	var/list/po = A.priority_overlays;\
-	if(LAZYLEN(po) && LAZYLEN(oo)){
-		A.overlays = oo + po;\
+	if(LAZYLEN(po)){\
+		if(LAZYLEN(oo)){
+			A.overlays = oo + po;\
+		}\
+		else{\
+			A.overlays = po;\
+		}\
 	}\
 	else if(LAZYLEN(oo)){\
 		A.overlays = oo;\
-	}\
-	else if(LAZYLEN(po)){\
-		A.overlays = po;\
 	}\
 	else{\
 		A.overlays.Cut();\
