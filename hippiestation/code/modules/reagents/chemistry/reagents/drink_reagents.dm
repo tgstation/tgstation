@@ -68,5 +68,6 @@
 			H.skin_tone = "african1"
 			H.hair_style = "Big Afro"
 			H.update_body()
+			H.update_hair()
 
 	..()
