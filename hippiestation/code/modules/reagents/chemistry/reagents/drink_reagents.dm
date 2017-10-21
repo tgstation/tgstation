@@ -48,8 +48,8 @@
     glass_icon_state = "lean"
     glass_desc = "A huge cup full of drank."
     glass_name = "lean cup"
-	var/list/leanTalk = list("Sipping on some sizzurp, sip, sipping on some, sip..", "I'M LEANIN!!", "Drop some syrup in it, get on my waffle house!", "Dat purple stuff..", "We wuz.. sippin...", "Bup-bup-bup-bup...", "ME AND MY DRANK, ME AND MY DRANK!!!", "Pour you a glass, mane..", "...purple...", "Can't nobody sip mo' than me!")
-	var/list/syrup_message = list("You feel relaxed.", "You feel calmed.","You feel like melting into the floor.","The world moves slowly..")
+    var/list/leanTalk = list("Sipping on some sizzurp, sip, sipping on some, sip..", "I'M LEANIN!!", "Drop some syrup in it, get on my waffle house!", "Dat purple stuff..", "We wuz.. sippin...", "Bup-bup-bup-bup...", "ME AND MY DRANK, ME AND MY DRANK!!!", "Pour you a glass, mane..", "...purple...", "Can't nobody sip mo' than me!")
+    var/list/syrup_message = list("You feel relaxed.", "You feel calmed.","You feel like melting into the floor.","The world moves slowly..")
 
 
 /datum/reagent/consumable/lean/on_mob_life(mob/living/M)
