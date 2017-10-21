@@ -32,6 +32,7 @@ map omegastation
 	maxplayers 35
 endmap
 
+	disabled
 map deltastation
 	minplayers 50
 	disabled
