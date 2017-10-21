@@ -2257,6 +2257,7 @@
 #include "hippiestation\code\datums\progressbar.dm"
 #include "hippiestation\code\datums\riding.dm"
 #include "hippiestation\code\datums\antagonists\vampire.dm"
+#include "hippiestation\code\datums\diseases\fluxitus.dm"
 #include "hippiestation\code\datums\martial\cqc.dm"
 #include "hippiestation\code\datums\martial\krav_maga.dm"
 #include "hippiestation\code\datums\martial\plasma_fist.dm"
