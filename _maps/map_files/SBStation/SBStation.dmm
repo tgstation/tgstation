@@ -1092,6 +1092,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
 	},
+/obj/structure/closet/bombcloset/security,
 /turf/open/floor/plasteel,
 /area/security/main)
 "acB" = (
@@ -25930,7 +25931,9 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "bfc" = (
-/obj/structure/reflector/double/anchored,
+/obj/structure/reflector/double/anchored{
+	dir = 6
+	},
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
 "bfd" = (
@@ -26248,15 +26251,13 @@
 /area/engine/engineering)
 "bfO" = (
 /obj/structure/reflector/single/anchored{
-	dir = 1
+	dir = 9
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "bfP" = (
 /obj/structure/reflector/single/anchored{
-	dir = 4;
-	icon_state = "reflector";
-	tag = ""
+	dir = 5
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
