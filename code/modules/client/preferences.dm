@@ -47,7 +47,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/allow_midround_antag = 1
 	var/preferred_map = null
 	var/pda_style = MONO
-	
+
 	var/uses_glasses_colour = 0
 
 	//character preferences
@@ -522,6 +522,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		var/datum/job/lastJob
 
 		for(var/datum/job/job in SSjob.occupations)
+			if (job.spawn_positions == 0)
+				// Latejoin-only jobs don't show up in preferences.
+				continue
 
 			index += 1
 			if((index >= limit) || (job.title in splitJobs))

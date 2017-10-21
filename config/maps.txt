@@ -32,15 +32,6 @@ map omegastation
 	maxplayers 35
 endmap
 
-map bozstation
-	maxplayers 35
-endmap
-
-map sbstation
-	default
-	maxplayers 35
-endmap
-
 map deltastation
 	minplayers 50
 	disabled
@@ -53,4 +44,18 @@ endmap
 
 map runtimestation
 	disabled
+endmap
+
+map sbstation
+	default
+	maxplayers 35
+endmap
+
+map nssfrenzy
+	maxplayers 20
+endmap
+
+map bozstation
+	disabled
+	maxplayers 35
 endmap
