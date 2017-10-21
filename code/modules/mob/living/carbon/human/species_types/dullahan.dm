@@ -114,10 +114,12 @@
 		qdel(src)
 
 /obj/item/dullahan_relay/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
-	if(owner)
+	if(!QDELETED(owner))
 		var/turf/T = get_turf(speaker)
 		var/turf/owner_turf = get_turf(owner)
 		if(T == owner_turf || (T in oview(7, owner_turf))) //Do not relay things we can already hear
 			return
 		message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode)
 		to_chat(owner,message)
+	else
+		qdel(src)
