@@ -10,12 +10,6 @@
 	var/should_give_codewords = TRUE
 	var/list/objectives_given = list()
 
-/datum/antagonist/traitor/proc/transfer_important_variables(datum/antagonist/traitor/other)
-	other.silent = silent
-	other.employer = employer
-	other.special_role = special_role
-	other.objectives_given = objectives_given
-
 /datum/antagonist/traitor/human
 	var/should_equip = TRUE
 

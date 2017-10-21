@@ -31,18 +31,6 @@
 	var/last_man_standing = FALSE
 	var/list/datum/mind/targets_stolen
 	
-/datum/antagonist/traitor/human/internal_affairs/transfer_important_variables(datum/antagonist/traitor/human/internal_affairs/other)
-	..(other)
-	other.syndicate = syndicate
-	other.last_man_standing = last_man_standing
-	other.targets_stolen = targets_stolen
-
-/datum/antagonist/traitor/AI/internal_affairs/transfer_important_variables(datum/antagonist/traitor/human/internal_affairs/other)
-	..(other)
-	other.syndicate = syndicate
-	other.last_man_standing = last_man_standing
-	other.targets_stolen = targets_stolen
-
 /datum/antagonist/traitor/human/internal_affairs/proc/give_pinpointer()
 	if(owner && owner.current)
 		owner.current.apply_status_effect(/datum/status_effect/agent_pinpointer)
