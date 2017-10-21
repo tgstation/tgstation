@@ -48,11 +48,12 @@
     glass_icon_state = "lean"
     glass_desc = "A huge cup full of drank."
     glass_name = "lean cup"
+	var/list/leanTalk = list("Sipping on some sizzurp, sip, sipping on some, sip..", "I'M LEANIN!!", "Drop some syrup in it, get on my waffle house!", "Dat purple stuff..", "We wuz.. sippin...", "Bup-bup-bup-bup...", "ME AND MY DRANK, ME AND MY DRANK!!!", "Pour you a glass, mane..", "...purple...", "Can't nobody sip mo' than me!")
+
 
 /datum/reagent/consumable/lean/on_mob_life(mob/living/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/list/leanTalk = list("Sipping on some sizzurp, sip, sipping on some, sip..", "I'M LEANIN!!", "Drop some syrup in it, get on my waffle house!", "Dat purple stuff..", "We wuz.. sippin...", "Bup-bup-bup-bup...", "ME AND MY DRANK, ME AND MY DRANK!!!", "Pour you a glass, mane..", "...purple...", "Can't nobody sip mo' than me!")
 		M.adjustBruteLoss(-1)
 		M.set_drugginess(5)
 		if(prob(2))
