@@ -55,10 +55,6 @@
 	},
 /obj/structure/table/reinforced,
 /obj/item/storage/box/ids,
-/obj/item/storage/box/silver_ids{
-	pixel_x = 3;
-	pixel_y = 3
-	},
 /turf/open/floor/circuit/green,
 /area/bridge)
 "al" = (
@@ -2879,12 +2875,16 @@
 /turf/closed/wall,
 /area/security/brig)
 "gI" = (
-/obj/structure/closet/secure_closet/medical3,
+/obj/machinery/latejoin_cryo,
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel/black,
 /area/medical/sleeper)
 "gJ" = (
-/obj/machinery/light{
-	dir = 1
+/obj/machinery/latejoin_cryo,
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
 	},
 /turf/open/floor/plasteel/black,
 /area/medical/sleeper)
@@ -2893,24 +2893,26 @@
 /turf/open/floor/plasteel/black,
 /area/medical/sleeper)
 "gL" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/item/device/radio/intercom{
 	pixel_y = 25
+	},
+/obj/structure/closet/wardrobe/white/medical,
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
 	},
 /turf/open/floor/plasteel/black,
 /area/medical/sleeper)
 "gM" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/obj/structure/closet/secure_closet/medical3,
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
+	},
 /turf/open/floor/plasteel/black,
 /area/medical/sleeper)
 "gN" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 2;
-	min_temperature = 80;
-	on = 1;
-	target_temperature = 80
+/obj/machinery/latejoin_cryo_computer,
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 4
 	},
 /turf/open/floor/plasteel/black,
 /area/medical/sleeper)
@@ -3021,9 +3023,6 @@
 /turf/open/floor/plasteel/black,
 /area/medical/sleeper)
 "hf" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 9
-	},
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
@@ -9441,7 +9440,8 @@
 "vq" = (
 /obj/machinery/door/airlock/external{
 	cyclelinkeddir = 8;
-	name = "Escape Airlock"
+	name = "external airlock";
+	req_access_txt = "13"
 	},
 /turf/open/floor/plating,
 /area/hallway/primary/central)
@@ -9699,7 +9699,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "wc" = (
-/obj/machinery/atmospherics/pipe/manifold/general/visible,
 /obj/machinery/camera{
 	c_tag = "Cryostasis";
 	dir = 1
@@ -9744,6 +9743,14 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"wi" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
+	name = "external airlock";
+	req_access_txt = "13"
+	},
+/turf/open/floor/plating,
+/area/hallway/primary/central)
 
 (1,1,1) = {"
 aa
@@ -39663,7 +39670,7 @@ fH
 fY
 gx
 gI
-ha
+hb
 gx
 hz
 hT
@@ -40176,8 +40183,8 @@ ft
 fH
 ga
 gx
-gK
-hc
+gJ
+hb
 gx
 hB
 hU
@@ -40433,7 +40440,7 @@ fu
 fI
 gb
 gx
-gK
+gJ
 wc
 gx
 hC
@@ -40690,8 +40697,8 @@ fv
 fJ
 fb
 gx
-gK
-hd
+gJ
+im
 gx
 hD
 hW
@@ -40948,7 +40955,7 @@ fK
 gc
 gx
 gL
-hd
+hb
 gx
 gx
 hX
@@ -41186,7 +41193,7 @@ uF
 uF
 uF
 bq
-bu
+wi
 bq
 vt
 ck
@@ -41205,7 +41212,7 @@ fL
 gd
 gx
 gM
-he
+hb
 gx
 hE
 hY

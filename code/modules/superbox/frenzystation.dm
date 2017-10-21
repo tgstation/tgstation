@@ -38,51 +38,165 @@
 
 // ----------------------------------------------------------------------------
 // Cryo cell which also acts as arrivals
-/obj/machinery/atmospherics/components/unary/cryo_cell/latejoin
-	var/occupant_is_latejoiner = FALSE
+/obj/machinery/latejoin_cryo
+	name = "cryostasis pod"
+	desc = "A special deep-sleep pod for ship personnel."
+	icon = 'icons/obj/cryogenics.dmi'
+	icon_state = "pod-on"
+	dir = 4
+	layer = ABOVE_WINDOW_LAYER
+	density = TRUE
+	anchored = TRUE
+	var/state = S_IDLE
+	var/obj/machinery/latejoin_cryo_computer/computer
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/latejoin/Initialize()
-	. = ..()
-	SSjob.latejoin_trackers += src
+	var/const/S_IDLE = 1
+	var/const/S_CHARGING = 2
+	var/const/S_OPEN = 3
+	var/const/S_OCCUPIED = 4
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/latejoin/Destroy()
-	..()
-	SSjob.latejoin_trackers -= src
-
-/obj/machinery/atmospherics/components/unary/cryo_cell/latejoin/open_machine()
-	occupant_is_latejoiner = FALSE
-	return ..()
-
-/obj/machinery/atmospherics/components/unary/cryo_cell/latejoin/process()
-	if (occupant_is_latejoiner)
-		return 1  // they'll be ejected by the timer, appear on until then
-	else
-		return ..()
-
-/obj/machinery/atmospherics/components/unary/cryo_cell/latejoin/proc/emplace(mob/living/target)
-	if (occupant && !awaken(occupant) && !istype(target))
+/obj/machinery/latejoin_cryo/proc/emplace(mob/living/target, severity)
+	if (severity > state)
 		return FALSE
 
-	occupant_is_latejoiner = TRUE
-	state_open = TRUE
-	panel_open = FALSE
-	on = TRUE
+	if (occupant)
+		awaken(occupant, TRUE)
+
+	state = S_OCCUPIED
 	close_machine(target)
-	addtimer(CALLBACK(src, .proc/awaken, target), 10 SECONDS)
+	target.SetSleeping(60 SECONDS)
+	addtimer(CALLBACK(src, .proc/awaken, target, FALSE), 5 SECONDS, TIMER_UNIQUE)
 	return TRUE
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/latejoin/proc/awaken(mob/living/target)
-	if (occupant != target || !occupant_is_latejoiner)
+/obj/machinery/latejoin_cryo/proc/awaken(mob/living/target, forced)
+	if (!forced && (occupant != target || state != S_OCCUPIED))
 		return FALSE
 
 	var/turf/T = get_turf(src)
-	playsound(T, 'sound/machines/cryo_warning.ogg', volume)
+	playsound(T, 'sound/machines/cryo_warning.ogg', 100)
+	state = S_OPEN
 	open_machine()
+
+	// bump the once-occupant and any dropped items outwards
+	target.SetSleeping(10)
 	target.Knockdown(10)
+	for (var/atom/movable/AM in T.contents)
+		if (!AM.anchored)
+			step(AM, SOUTH)
+
+	close_machine()
+	if (!forced)
+		addtimer(CALLBACK(src, .proc/cooled_off), 5 SECONDS, TIMER_UNIQUE)
 	return TRUE
 
+/obj/machinery/latejoin_cryo/proc/cooled_off()
+	if (state != S_OPEN)
+		return
+	state = S_CHARGING
+	update_icon()
+	addtimer(CALLBACK(src, .proc/idle), 5 SECONDS, TIMER_UNIQUE)
+
+/obj/machinery/latejoin_cryo/proc/idle()
+	if (state != S_CHARGING)
+		return
+	state = S_IDLE
+	update_icon()
+
+/obj/machinery/latejoin_cryo/open_machine()
+	for(var/mob/M in contents) //only drop mobs
+		M.forceMove(get_turf(src))
+		if(isliving(M))
+			var/mob/living/L = M
+			L.update_canmove()
+	occupant = null
+	update_icon()
+
+/obj/machinery/latejoin_cryo/update_icon(by_computer=FALSE)
+	// if the computer is dead, look visibly dead
+	cut_overlays()
+	if (!computer)
+		icon_state = "pod-off"
+		add_overlay("cover-off")
+		return
+
+	// otherwise look like a cryo tube
+	if (!by_computer)
+		computer.update_icon()
+	switch (state)
+		if (S_IDLE, S_OCCUPIED)
+			var/image/occupant_overlay
+			if (ishuman(occupant))
+				occupant_overlay = image(occupant.icon, occupant.icon_state)
+				occupant_overlay.copy_overlays(occupant)
+			else
+				occupant_overlay = image('icons/obj/cryo_mobs.dmi', "generic")
+			occupant_overlay.dir = SOUTH
+			occupant_overlay.pixel_y = 22
+
+			icon_state = "pod-on"
+			add_overlay(occupant_overlay)
+			add_overlay("cover-on")
+
+		if (S_OPEN)
+			icon_state = "pod-open"
+
+		if (S_CHARGING)
+			icon_state = "pod-off"
+			add_overlay("cover-on")
+
+// control computer for the above
+/obj/machinery/latejoin_cryo_computer
+	name = "cryostasis console"
+	desc = "A console monitoring the status of the deep-sleep pods."
+	icon = 'icons/obj/machines/particle_accelerator.dmi'
+	icon_state = "control_boxp0"
+	density = TRUE
+	anchored = TRUE
+	var/list/cells
+
+/obj/machinery/latejoin_cryo_computer/Initialize()
+	. = ..()
+	SSjob.latejoin_trackers += src
+	cells = list()
+	for (var/obj/machinery/latejoin_cryo/cell in view(7, get_turf(src)))
+		cells += cell
+		cell.computer = src
+		cell.update_icon(TRUE)
+
+/obj/machinery/latejoin_cryo_computer/Destroy()
+	..()
+	SSjob.latejoin_trackers -= src
+	for (var/C in cells)
+		var/obj/machinery/latejoin_cryo/cell = C
+		cell.computer = null
+
+/obj/machinery/latejoin_cryo_computer/proc/emplace(mob/living/target)
+	var/list/shuffled = shuffle(cells)
+
+	// try at the severities in order
+	for (var/severity = 1; severity <= 4; ++severity)
+		for (var/C in shuffled)
+			var/obj/machinery/latejoin_cryo/cell = C
+			if (cell.emplace(target, severity))
+				return TRUE
+
+	return FALSE  // fall back to default behavior
+
+/obj/machinery/latejoin_cryo_computer/update_icon()
+	var/total = 0
+	for (var/C in cells)
+		var/obj/machinery/latejoin_cryo/cell = C
+		if (cell.state != 1)
+			total++
+	if (total == 0)
+		icon_state = "control_boxp0"
+	else if (total <= 3)
+		icon_state = "control_boxp1"
+	else
+		icon_state = "control_boxp3"
+
 /datum/controller/subsystem/job/SendToAtom(mob/M, atom/A, buckle)
-	var/obj/machinery/atmospherics/components/unary/cryo_cell/latejoin/C = A
+	var/obj/machinery/latejoin_cryo_computer/C = A
 	if (!istype(C) || !C.emplace(M))
 		..()
 
