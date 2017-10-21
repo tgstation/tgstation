@@ -575,7 +575,7 @@
 
 /obj/item/clothing/suit/hooded/flashsuit
 	name = "flash suit"
-	desc = "a suit that parodies those who use the defense item of the same name."
+	desc = "I will now preform my people's native dance! Flash! Bzz! Burnout!"
 	icon_state = "flashsuit"
 	item_state = "armor"
 	body_parts_covered = CHEST|GROIN
