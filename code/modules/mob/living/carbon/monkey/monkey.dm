@@ -53,7 +53,7 @@
 		is_in_cap = FALSE
 	return ..()
 
-/mob/living/carbon/monkey/Death()
+/mob/living/carbon/monkey/death()
 	if(is_in_cap)
 		GLOB.monkeys--
 		is_in_cap = FALSE
