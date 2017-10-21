@@ -328,22 +328,22 @@
 		src.secondsMainPowerLost = 0
 
 /obj/machinery/door/airlock/proc/handlePowerRestore()
-	var/cont = 1
+	var/cont = TRUE
 	while (cont)
 		sleep(10)
 		if(QDELETED(src))
 			return
-		cont = 0
+		cont = FALSE
 		if(secondsMainPowerLost>0)
 			if(!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
 				secondsMainPowerLost -= 1
 				updateDialog()
-			cont = 1
+			cont = TRUE
 		if(secondsBackupPowerLost>0)
 			if(!wires.is_cut(WIRE_BACKUP1) && !wires.is_cut(WIRE_BACKUP2))
 				secondsBackupPowerLost -= 1
 				updateDialog()
-			cont = 1
+			cont = TRUE
 	spawnPowerRestoreRunning = FALSE
 	updateDialog()
 
