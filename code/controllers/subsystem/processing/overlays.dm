@@ -30,7 +30,7 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 	var/list/oo = A.our_overlays;\
 	var/list/po = A.priority_overlays;\
 	if(LAZYLEN(po)){\
-		if(LAZYLEN(oo)){
+		if(LAZYLEN(oo)){\
 			A.overlays = oo + po;\
 		}\
 		else{\
