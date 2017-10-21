@@ -535,6 +535,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(!H.dna.features["ears"] || H.dna.features["ears"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD || HD.status == BODYPART_ROBOTIC)
 			bodyparts_to_add -= "ears"
 
+	if("canopy" in mutant_bodyparts)
+		if(!H.dna.features["canopy"] || H.dna.features["canopy"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD || HD.status == BODYPART_ROBOTIC)
+			bodyparts_to_add -= "canopy"
+
 	if("wings" in mutant_bodyparts)
 		if(!H.dna.features["wings"] || H.dna.features["wings"] == "None" || (H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT) && (!H.wear_suit.species_exception || !is_type_in_list(src, H.wear_suit.species_exception))))
 			bodyparts_to_add -= "wings"
@@ -598,6 +602,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					S = GLOB.frills_list[H.dna.features["frills"]]
 				if("horns")
 					S = GLOB.horns_list[H.dna.features["horns"]]
+				if("canopy")
+					S = GLOB.canopy_list[H.dna.features["canopy"]]
 				if("ears")
 					S = GLOB.ears_list[H.dna.features["ears"]]
 				if("body_markings")

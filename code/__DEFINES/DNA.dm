@@ -118,6 +118,7 @@
 #define NOLIVER			27
 #define NOSTOMACH		28
 #define NO_DNA_COPY     29
+#define HAIRCOLOR		30 //If we want hair color, but not hairstyles; use this for mutant parts that take from hair color
 
 #define ORGAN_SLOT_BRAIN "brain"
 #define ORGAN_SLOT_APPENDIX "appendix"

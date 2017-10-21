@@ -85,6 +85,7 @@
 	alt_covers_chest = 1
 	sensor_mode = 3
 	random_sensor = 0
+	fanciness = FANCY
 
 /obj/item/clothing/under/rank/head_of_security/grey
 	name = "head of security's grey jumpsuit"

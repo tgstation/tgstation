@@ -5,6 +5,7 @@
 	item_state = "syndicate"
 	desc = "Has a tag on it: Totally not property of an enemy corporation, honest!"
 	armor = list(melee = 40, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 80, acid = 85)
+	fanciness = NOT_FANCY
 
 /obj/item/clothing/suit/space/syndicate
 	name = "red space suit"
@@ -14,6 +15,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/melee/transforming/energy/sword/saber, /obj/item/restraints/handcuffs, /obj/item/tank/internals)
 	armor = list(melee = 40, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 80, acid = 85)
+	fanciness = NOT_FANCY
 
 
 //Green syndicate space suit

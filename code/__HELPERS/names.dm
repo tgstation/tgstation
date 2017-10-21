@@ -9,6 +9,12 @@
 /proc/plasmaman_name()
 	return "[pick(GLOB.plasmaman_names)] \Roman[rand(1,99)]"
 
+/proc/sap_name(gender)
+	if(gender == MALE)
+		return "[pick(GLOB.sap_names)][pick(GLOB.sap_suffixes_male)] [pick(GLOB.sap_names)][prob(50) ? " [pick(GLOB.sap_titles)]" : ""]"
+	else
+		return "[pick(GLOB.sap_names)][pick(GLOB.sap_suffixes_female)] [pick(GLOB.sap_names)][prob(50) ? " [pick(GLOB.sap_titles)]" : ""]"
+
 /proc/church_name()
 	var/static/church_name
 	if (church_name)

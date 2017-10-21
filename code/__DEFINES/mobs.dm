@@ -157,6 +157,7 @@
 #define MEGAFAUNA_DEFAULT_RECOVERY_TIME 5
 
 #define SHADOW_SPECIES_LIGHT_THRESHOLD 0.2
+#define SAP_NUTRITION_THRESHOLD 0.4 //Lumcount must be at least this for saps to be satiated
 
 // Offsets defines
 

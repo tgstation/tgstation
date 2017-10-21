@@ -8,6 +8,7 @@
 	flags_inv = 0
 	armor = list(melee = 30, bullet = 15, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 50, acid = 50)
 	strip_delay = 80
+	fanciness = FANCY_LAVISH
 
 /obj/item/clothing/head/powdered_wig
 	name = "powdered wig"
@@ -51,6 +52,7 @@
 	icon_state = "hasturhood"
 	flags_inv = HIDEHAIR
 	flags_cover = HEADCOVERSEYES
+	fanciness = FANCY_UGLY
 
 /obj/item/clothing/head/nursehat
 	name = "nurse's hat"
@@ -66,6 +68,7 @@
 	item_state = "syndicate-helm-black-red"
 	desc = "A plastic replica of a Syndicate agent's space helmet. You'll look just like a real murderous Syndicate agent in this! This is a toy, it is not made for use in space!"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	fanciness = FANCY_UGLY
 
 /obj/item/clothing/head/cueball
 	name = "cueball helmet"
@@ -74,6 +77,7 @@
 	item_state="cueball"
 	flags_cover = HEADCOVERSEYES|HEADCOVERSMOUTH
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	fanciness = FANCY_DISTASTEFUL
 
 /obj/item/clothing/head/snowman
 	name = "Snowman Head"
@@ -82,6 +86,7 @@
 	item_state = "snowman_h"
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	fanciness = FANCY_DISTASTEFUL
 
 /obj/item/clothing/head/justice
 	name = "justice hat"
@@ -112,6 +117,7 @@
 	desc = "Wearing these makes you look useless, and only good for your sex appeal."
 	icon_state = "bunny"
 	dynamic_hair_suffix = ""
+	fanciness = FANCY_UGLY
 
 	dog_fashion = /datum/dog_fashion/head/rabbit
 
@@ -146,6 +152,7 @@
 	icon_state = "bowler"
 	item_state = "bowler"
 	dynamic_hair_suffix = ""
+	fanciness = FANCY_CHIC
 
 /obj/item/clothing/head/witchwig
 	name = "witch costume wig"
@@ -160,6 +167,7 @@
 	icon_state = "chickenhead"
 	item_state = "chickensuit"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	fanciness = FANCY_DISTASTEFUL
 
 /obj/item/clothing/head/griffin
 	name = "griffon head"
@@ -167,12 +175,14 @@
 	icon_state = "griffinhat"
 	item_state = "griffinhat"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	fanciness = FANCY_DISTASTEFUL
 
 /obj/item/clothing/head/bearpelt
 	name = "bear pelt hat"
 	desc = "Fuzzy."
 	icon_state = "bearpelt"
 	item_state = "bearpelt"
+	fanciness = FANCY_UGLY
 
 /obj/item/clothing/head/xenos
 	name = "xenos helmet"
@@ -180,6 +190,7 @@
 	item_state = "xenos_helm"
 	desc = "A helmet made out of chitinous alien hide."
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	fanciness = FANCY_UGLY
 
 /obj/item/clothing/head/fedora
 	name = "fedora"
@@ -188,6 +199,7 @@
 	armor = list(melee = 25, bullet = 5, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0, fire = 30, acid = 50)
 	desc = "A really cool hat if you're a mobster. A really lame hat if you're not."
 	pockets = /obj/item/storage/internal/pocket/small
+	fanciness = FANCY_UGLY //Fedoras? Really?
 
 /obj/item/clothing/head/fedora/suicide_act(mob/user)
 	if(user.gender == FEMALE)
@@ -207,6 +219,7 @@
 	flags_inv = HIDEHAIR
 
 	dog_fashion = /datum/dog_fashion/head/sombrero
+	fanciness = FANCY_UGLY
 
 /obj/item/clothing/head/sombrero/green
 	name = "green sombrero"
@@ -223,6 +236,7 @@
 	desc = "Once it's on, it never comes off."
 	flags_1 = NODROP_1
 	dog_fashion = null
+	fanciness = FANCY_DISTASTEFUL
 
 /obj/item/clothing/head/cone
 	desc = "This cone is trying to warn you of something!"
@@ -237,6 +251,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("warned", "cautioned", "smashed")
 	resistance_flags = 0
+	fanciness = FANCY_UGLY
 
 /obj/item/clothing/head/santa
 	name = "santa hat"
@@ -252,6 +267,7 @@
 	desc = "A hat with bells, to add some merriness to the suit."
 	icon_state = "jester_hat"
 	dynamic_hair_suffix = ""
+	fanciness = FANCY_DISTASTEFUL
 
 /obj/item/clothing/head/rice_hat
 	name = "rice hat"
@@ -268,6 +284,7 @@
 	desc = "A paper sack with crude holes cut out for eyes. Useful for hiding one's identity or ugliness."
 	icon_state = "papersack"
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
+	fanciness = FANCY_UGLY
 
 /obj/item/clothing/head/papersack/smiley
 	name = "paper sack hat"
@@ -282,11 +299,13 @@
 	armor = list(melee = 15, bullet = 0, laser = 0,energy = 15, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
 	dynamic_hair_suffix = ""
+	fanciness = FANCY
 
 /obj/item/clothing/head/crown/fancy
 	name = "magnificent crown"
 	desc = "A crown worn by only the highest emperors of the <s>land</s> space."
 	icon_state = "fancycrown"
+	fanciness = FANCY_LAVISH
 
 /obj/item/clothing/head/scarecrow_hat
 	name = "scarecrow hat"
@@ -298,6 +317,7 @@
 	desc = "When everything's going to crab, protecting your head is the best choice."
 	icon_state = "lobster_hat"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	fanciness = FANCY_DISTASTEFUL
 
 /obj/item/clothing/head/drfreezehat
 	name = "doctor freeze's wig"
@@ -310,6 +330,7 @@
 	desc = "Walk like an Egyptian."
 	icon_state = "pharoah_hat"
 	icon_state = "pharoah_hat"
+	fanciness = FANCY
 
 /obj/item/clothing/head/jester/alt
 	name = "jester hat"
@@ -322,3 +343,4 @@
 	desc = "Lavish space tomb not included."
 	icon_state = "nemes_headdress"
 	icon_state = "nemes_headdress"
+	fanciness = FANCY

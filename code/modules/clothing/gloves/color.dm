@@ -86,6 +86,7 @@
 	icon_state = "rainbow"
 	item_state = "rainbowgloves"
 	item_color = "rainbow"
+	fanciness = FANCY_UGLY
 
 /obj/item/clothing/gloves/color/rainbow/clown
 	item_color = "clown"
@@ -166,6 +167,7 @@
 	item_color="white"
 	transfer_prints = TRUE
 	resistance_flags = 0
+	fanciness = FANCY_UGLY
 
 /obj/item/clothing/gloves/color/latex/nitrile
 	name = "nitrile gloves"

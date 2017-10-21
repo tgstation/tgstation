@@ -507,6 +507,32 @@ so as to remain in compliance with the most up-to-date laws."
 	desc = "Mech integrity is low."
 	icon_state = "low_mech_integrity"
 
+// SAPS
+
+/obj/screen/alert/fanciness
+	name = "Your Fanciness"
+	desc = "Without fancy clothing, what's a sap to do? You will slowly starve below 50% fanciness."
+	icon_state = "fanciness"
+	var/datum/species/sap/sap
+
+/obj/screen/alert/fanciness/MouseEntered(location, control, params)
+	if(!sap)
+		if(issap(mob_viewer))
+			var/mob/living/carbon/human/H = mob_viewer
+			sap = H.dna.species
+		else
+			mob_viewer.clear_alert("fanciness")
+			return
+	var/list/dat = list()
+	var/list/clothing_info = sap.fancy_clothing_info
+	if(!clothing_info.len)
+		dat += "<b>Nothing is affecting your fanciness.</b><br>"
+	else
+		for(var/i in 1 to clothing_info.len)
+			dat += "<b>[clothing_info[i]]:</b> [clothing_info[clothing_info[i]]]%<br>"
+	dat += "<b>Total Fanciness:</b> [sap.fanciness]%"
+	desc = "[initial(desc)]<br>[dat.Join()]"
+	. = ..()
 
 //GHOSTS
 //TODO: expand this system to replace the pollCandidates/CheckAntagonist/"choose quickly"/etc Yes/No messages
