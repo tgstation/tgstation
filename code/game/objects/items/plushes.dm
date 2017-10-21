@@ -60,7 +60,7 @@
 /obj/item/toy/plush/examine(mob/user)
 	..()
 	if(user.Adjacent(src))
-		if(!stuffing)
+		if(!stuffed)
 			if(grenade)
 				to_chat(user, "<span class='warning'>[grenade] has been hidden in its body!</span>")
 			else
