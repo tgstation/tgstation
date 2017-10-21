@@ -11,7 +11,7 @@
 		return
 	
 	for(var/i in 1 to location.contents.len)
-		var/static/list/ignored_things = typecacheof(list(/mob/dead, /obj/effect, /obj/docking_port, /turf, /atom/movable/lighting_object, /mob/camera))
+		var/static/list/ignored_things = typecacheof(list(/mob/dead, /mob/living/simple_animal/revenant, /obj/effect, /obj/docking_port, /turf, /atom/movable/lighting_object, /mob/camera))
 		var/atom/thing = location.contents[i]
 		if(ignored_things[thing.type])
 			continue
