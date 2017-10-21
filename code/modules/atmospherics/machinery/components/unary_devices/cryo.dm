@@ -312,10 +312,15 @@
 		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
 		log_game("[key_name(user)] added an [I] to cyro containing [reagentlist]")
 		return
-	if(!on && !occupant && !state_open && (default_deconstruction_screwdriver(user, "pod-o", "pod-off", I) || exchange_parts(user, I)) \
+	if(!on && !occupant && !state_open && (default_deconstruction_screwdriver(user, "pod-off", "pod-off", I) || exchange_parts(user, I)) \
 		|| default_change_direction_wrench(user, I) \
 		|| default_pry_open(I) \
 		|| default_deconstruction_crowbar(I))
+		update_icon()
+		return
+	else if(istype(I, /obj/item/screwdriver))
+		to_chat(user, "<span class='notice'>You can't access the maintenance panel while the pod is " \
+		+ (on ? "active" : (occupant ? "full" : "open")) + ".</span>")
 		return
 	return ..()
 
