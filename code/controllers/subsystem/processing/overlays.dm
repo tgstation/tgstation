@@ -26,13 +26,30 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 	overlay_icon_cache = SSoverlays.overlay_icon_cache
 	processing = SSoverlays.processing
 
+#define COMPILE_OVERLAYS(A)\
+	var/list/oo = A.our_overlays;\
+	var/list/po = A.priority_overlays;\
+	if(LAZYLEN(po) && LAZYLEN(oo)){
+		A.overlays = oo + po;\
+	}\
+	else if(LAZYLEN(oo)){\
+		A.overlays = oo;\
+	}\
+	else if(LAZYLEN(po)){\
+		A.overlays = po;\
+	}\
+	else{\
+		A.overlays.Cut();\
+	}\
+	A.flags_1 &= ~OVERLAY_QUEUED_1
+
 /datum/controller/subsystem/processing/overlays/fire(resumed = FALSE, mc_check = TRUE)
 	var/list/processing = src.processing
 	while(processing.len)
 		var/atom/thing = processing[processing.len]
 		processing.len--
 		if(thing)
-			thing.compile_overlays()
+			COMPILE_OVERLAYS(thing)
 		if(mc_check)
 			if(MC_TICK_CHECK)
 				break
@@ -43,19 +60,6 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 	if(processing.len)
 		testing("Flushing [processing.len] overlays")
 		fire(mc_check = FALSE)	//pair this thread up with the MC to get extra compile time
-
-/atom/proc/compile_overlays()
-	var/list/oo = our_overlays
-	var/list/po = priority_overlays
-	if(LAZYLEN(po) && LAZYLEN(oo))
-		overlays = oo + po
-	else if(LAZYLEN(oo))
-		overlays = oo
-	else if(LAZYLEN(po))
-		overlays = po
-	else
-		overlays.Cut()
-	flags_1 &= ~OVERLAY_QUEUED_1
 
 /proc/iconstate2appearance(icon, iconstate)
 	var/static/image/stringbro = new()
