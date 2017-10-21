@@ -220,7 +220,7 @@
 	var/mob/M = safepick(mobs)
 	if(M)
 		return M.lowest_buckled_mob()
-	var/obj/O = safepick(typecache_filter_list(T, GLOB.typecache_machine_or_structure)) - A
+	var/obj/O = safepick(typecache_filter_list(T, GLOB.typecache_machine_or_structure) - A)
 	if(O)
 		return O
 
