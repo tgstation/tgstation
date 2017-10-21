@@ -159,18 +159,18 @@ Difficulty: Medium
 		Shoot(target)
 		changeNext_move(CLICK_CD_RANGE)
 
+//I'm still of the belief that this entire proc needs to be wiped from existence.
+//  do not take my touching of it to be endorsement of it. ~mso
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/proc/quick_attack_loop()
-	if(next_move <= world.time)
-		stoplag(1)
-		.() //retry
-		return
-	sleep((next_move - world.time) * 1.5)
+	while(!QDELETED(target) && next_move <= world.time) //this is done this way because next_move can change to be sooner while we sleep.
+		stoplag(1) 
+	sleep((next_move - world.time) * 1.5) //but don't ask me what the fuck this is about
 	if(QDELETED(target))
 		return
 	if(dashing || next_move > world.time || !Adjacent(target))
 		if(dashing && next_move <= world.time)
 			next_move = world.time + 1
-		.() //recurse
+		INVOKE_ASYNC(src, .proc/quick_attack_loop) //lets try that again.
 		return
 	AttackingTarget()
 
