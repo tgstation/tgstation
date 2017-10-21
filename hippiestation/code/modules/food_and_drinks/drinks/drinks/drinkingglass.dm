@@ -5,3 +5,5 @@
 		user.say("Aww hol up mane.. dat too much drank..")
 		H.vomit(80)
 		return(TOXLOSS)
+	else 
+		..()
