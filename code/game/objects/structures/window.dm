@@ -212,6 +212,7 @@
 				to_chat(user, "<span class='notice'>You begin to [anchored ? "unscrew the window from":"screw the window to"] the floor...</span>")
 				if(do_after(user, decon_speed*I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/check_anchored, anchored)))
 					anchored = !anchored
+					air_update_turf(TRUE)
 					update_nearby_icons()
 					to_chat(user, "<span class='notice'>You [anchored ? "fasten the window to":"unfasten the window from"] the floor.</span>")
 			return
@@ -334,7 +335,6 @@
 		return FALSE
 
 	setDir(target_dir)
-	air_update_turf(1)
 	ini_dir = dir
 	add_fingerprint(usr)
 	return TRUE
@@ -363,11 +363,9 @@
 	move_update_air(T)
 
 /obj/structure/window/CanAtmosPass(turf/T)
-	if(get_dir(loc, T) == dir)
-		return !density
-	if(dir == FULLTILE_WINDOW_DIR)
-		return !density
-	return 1
+	if(!anchored || !density)
+		return TRUE
+	return !(FULLTILE_WINDOW_DIR == dir || dir == get_dir(loc, T))
 
 //This proc is used to update the icons of nearby windows.
 /obj/structure/window/proc/update_nearby_icons()
@@ -650,7 +648,7 @@
 /obj/structure/window/reinforced/clockwork/Initialize(mapload, direct)
 	if(fulltile)
 		made_glow = TRUE
-	..()
+	. = ..()
 	QDEL_LIST(debris)
 	var/amount_of_gears = 2
 	if(fulltile)

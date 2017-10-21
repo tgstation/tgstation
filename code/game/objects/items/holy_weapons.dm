@@ -52,6 +52,8 @@
 /obj/item/nullrod/godhand
 	icon_state = "disintegrate"
 	item_state = "disintegrate"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	name = "god hand"
 	desc = "This hand of yours glows with an awesome power!"
 	flags_1 = ABSTRACT_1 | NODROP_1 | DROPDEL_1

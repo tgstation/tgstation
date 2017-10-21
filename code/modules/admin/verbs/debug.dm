@@ -262,10 +262,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	if(ishuman(M))
 		log_admin("[key_name(src)] has blobized [M.key].")
 		var/mob/living/carbon/human/H = M
-		spawn(0)
-			var/mob/camera/blob/B = H.become_overmind(FALSE)
-			B.place_blob_core(B.base_point_rate, -1) //place them wherever they are
-
+		H.become_overmind()
 	else
 		alert("Invalid mob")
 

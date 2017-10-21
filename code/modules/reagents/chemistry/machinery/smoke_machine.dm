@@ -22,8 +22,11 @@
 	location = loc
 
 /datum/effect_system/smoke_spread/chem/smoke_machine
-	effect_type = /obj/effect/particle_effect/smoke/transparent
+	effect_type = /obj/effect/particle_effect/smoke/chem/smoke_machine
 
+/obj/effect/particle_effect/smoke/chem/smoke_machine
+	opaque = FALSE
+	alpha = 100
 
 
 /obj/machinery/smoke_machine/Initialize()
@@ -114,7 +117,7 @@
 			on = !on
 			if(on)
 				message_admins("[key_name_admin(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [ADMIN_COORDJMP(src)].")
-				log_admin("[key_name(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [COORD(src)].")
+				log_game("[key_name(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [COORD(src)].")
 				add_logs(usr, src, "has activated [src] which contains [english_list(reagents.reagent_list)].")
 		if("goScreen")
 			screen = params["screen"]

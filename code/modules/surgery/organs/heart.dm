@@ -3,7 +3,7 @@
 	desc = "I feel bad for the heartless bastard who lost this."
 	icon_state = "heart-on"
 	zone = "chest"
-	slot = "heart"
+	slot = ORGAN_SLOT_HEART
 	origin_tech = "biotech=5"
 	// Heart attack code is in code/modules/mob/living/carbon/human/life.dm
 	var/beating = 1

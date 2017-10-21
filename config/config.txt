@@ -93,6 +93,9 @@ LOG_PRAYER
 ## log lawchanges
 LOG_LAW
 
+## log crew manifest to seperate file
+LOG_MANIFEST
+
 ## log all world.Topic() calls
 # LOG_WORLD_TOPIC
 

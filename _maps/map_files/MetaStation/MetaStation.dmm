@@ -3629,6 +3629,7 @@
 	min_oxy = 5;
 	name = "Sergeant Araneus";
 	real_name = "Sergeant Araneus";
+	movement_type = 1;
 	response_help = "pets";
 	turns_per_move = 10;
 	voice_name = "unidentifiable voice"
@@ -4770,7 +4771,7 @@
 /turf/open/floor/plasteel,
 /area/security/warden)
 "ajw" = (
-/obj/structure/closet/bombcloset,
+/obj/structure/closet/bombcloset/security,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
 	},
@@ -40847,6 +40848,7 @@
 	network = list("MiniSat","tcomm");
 	pixel_y = -29
 	},
+/obj/structure/bed/dogbed/renault,
 /mob/living/simple_animal/pet/fox/Renault,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain/private)
@@ -78562,11 +78564,8 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/effect/decal/cleanable/ash{
+/obj/effect/decal/remains/human{
 	desc = "They look like human remains, and have clearly been gnawed at.";
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "remains";
-	name = "remains"
 	},
 /obj/item/gun/energy/laser/retro,
 /turf/open/floor/mineral/titanium/blue,
@@ -78620,11 +78619,8 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/effect/decal/cleanable/ash{
+/obj/effect/decal/remains/human{
 	desc = "They look like human remains, and have clearly been gnawed at.";
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "remains";
-	name = "remains"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -78690,11 +78686,8 @@
 	name = "dust"
 	},
 /obj/item/soap/nanotrasen,
-/obj/effect/decal/cleanable/ash{
+/obj/effect/decal/remains/human{
 	desc = "They look like human remains, and have clearly been gnawed at.";
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "remains";
-	name = "remains"
 	},
 /obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/floor/mineral/titanium,
@@ -79179,11 +79172,8 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/effect/decal/cleanable/ash{
+/obj/effect/decal/remains/human{
 	desc = "They look like human remains, and have clearly been gnawed at.";
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "remains";
-	name = "remains"
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -79316,11 +79306,8 @@
 	desc = "There's a gouge through the top where something has clawed clean through it. Whoever was wearing it probably doesn't need a hat any more.";
 	name = "\improper damaged CentCom hat"
 	},
-/obj/effect/decal/cleanable/ash{
+/obj/effect/decal/remains/human{
 	desc = "They look like human remains, and have clearly been gnawed at.";
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "remains";
-	name = "remains"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -79686,11 +79673,8 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/effect/decal/cleanable/ash{
+/obj/effect/decal/remains/xeno{
 	desc = "A pile of remains that look vaguely humanoid. The skull is abnormally elongated, and there are burns through some of the other bones.";
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "remainsxeno";
-	name = "remains"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -80926,9 +80910,9 @@
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 1
 	},
-/obj/structure/window/plasma/reinforced/spawner,
 /obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable,
+/obj/structure/window/plasma/reinforced,
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "dbb" = (
@@ -82740,9 +82724,9 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10
 	},
-/obj/structure/window/plasma/reinforced/spawner,
 /obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable,
+/obj/structure/window/plasma/reinforced,
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "deU" = (
@@ -82780,7 +82764,7 @@
 /area/engine/engineering)
 "deY" = (
 /obj/structure/reflector/single/anchored{
-	dir = 1
+	dir = 9
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -82821,13 +82805,13 @@
 /area/engine/engineering)
 "dff" = (
 /obj/structure/reflector/double/anchored{
-	dir = 1
+	dir = 5
 	},
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
 "dfg" = (
 /obj/structure/reflector/single/anchored{
-	dir = 8
+	dir = 10
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -82853,11 +82837,13 @@
 /area/engine/supermatter)
 "dfk" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
-/obj/structure/window/plasma/reinforced/spawner/north,
 /obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable{
 	icon_state = "0-2";
 	d2 = 2
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
@@ -82865,11 +82851,13 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
-/obj/structure/window/plasma/reinforced/spawner/north,
 /obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable{
 	icon_state = "0-2";
 	d2 = 2
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)

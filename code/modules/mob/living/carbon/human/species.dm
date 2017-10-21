@@ -1,5 +1,7 @@
 // This code handles different species in the game.
 
+GLOBAL_LIST_EMPTY(roundstart_races)
+
 #define HEAT_DAMAGE_LEVEL_1 2
 #define HEAT_DAMAGE_LEVEL_2 3
 #define HEAT_DAMAGE_LEVEL_3 8
@@ -8,18 +10,15 @@
 #define COLD_DAMAGE_LEVEL_2 1.5
 #define COLD_DAMAGE_LEVEL_3 3
 
-
 /datum/species
 	var/id	// if the game needs to manually check your race to do something not included in a proc here, it will use this
 	var/limbs_id		//this is used if you want to use a different species limb sprites. Mainly used for angels as they look like humans.
 	var/name	// this is the fluff name. these will be left generic (such as 'Lizardperson' for the lizard race) so servers can change them to whatever
-	var/roundstart = 0	// can this mob be chosen at roundstart? (assuming the config option is checked?)
 	var/default_color = "#FFF"	// if alien colors are disabled, this is the color that will be used by that race
 
 	var/sexes = 1		// whether or not the race has sexual characteristics. at the moment this is only 0 for skeletons and shadows
 
-	var/face_y_offset = 0
-	var/hair_y_offset = 0
+	var/list/offset_features = list(OFFSET_UNIFORM = list(0,0), OFFSET_ID = list(0,0), OFFSET_GLOVES = list(0,0), OFFSET_GLASSES = list(0,0), OFFSET_EARS = list(0,0), OFFSET_SHOES = list(0,0), OFFSET_S_STORE = list(0,0), OFFSET_FACEMASK = list(0,0), OFFSET_HEAD = list(0,0), OFFSET_FACE = list(0,0), OFFSET_BELT = list(0,0), OFFSET_BACK = list(0,0), OFFSET_SUIT = list(0,0), OFFSET_NECK = list(0,0))
 
 	var/hair_color	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
@@ -88,6 +87,20 @@
 	..()
 
 
+/proc/generate_selectable_species()
+	for(var/I in subtypesof(/datum/species))
+		var/datum/species/S = new I
+		if(S.check_roundstart_eligible())
+			GLOB.roundstart_races += S.id
+			qdel(S)
+	if(!GLOB.roundstart_races.len)
+		GLOB.roundstart_races += "human"
+
+/datum/species/proc/check_roundstart_eligible()
+	if(id in (CONFIG_GET(keyed_flag_list/roundstart_races)))
+		return TRUE
+	return FALSE
+
 /datum/species/proc/random_name(gender,unique,lastname)
 	if(unique)
 		return random_unique_name(gender)
@@ -117,15 +130,15 @@
 
 //Will regenerate missing organs
 /datum/species/proc/regenerate_organs(mob/living/carbon/C,datum/species/old_species,replace_current=TRUE)
-	var/obj/item/organ/brain/brain = C.getorganslot("brain")
-	var/obj/item/organ/heart/heart = C.getorganslot("heart")
-	var/obj/item/organ/lungs/lungs = C.getorganslot("lungs")
-	var/obj/item/organ/appendix/appendix = C.getorganslot("appendix")
-	var/obj/item/organ/eyes/eyes = C.getorganslot("eye_sight")
-	var/obj/item/organ/ears/ears = C.getorganslot("ears")
-	var/obj/item/organ/tongue/tongue = C.getorganslot("tongue")
-	var/obj/item/organ/liver/liver = C.getorganslot("liver")
-	var/obj/item/organ/stomach/stomach = C.getorganslot("stomach")
+	var/obj/item/organ/brain/brain = C.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/heart/heart = C.getorganslot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/lungs/lungs = C.getorganslot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/appendix/appendix = C.getorganslot(ORGAN_SLOT_APPENDIX)
+	var/obj/item/organ/eyes/eyes = C.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/ears/ears = C.getorganslot(ORGAN_SLOT_EARS)
+	var/obj/item/organ/tongue/tongue = C.getorganslot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/liver/liver = C.getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/stomach/stomach = C.getorganslot(ORGAN_SLOT_STOMACH)
 
 	var/should_have_brain = TRUE
 	var/should_have_heart = !(NOBLOOD in species_traits)
@@ -256,11 +269,11 @@
 				C.dropItemToGround(I)
 			else	//Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
 				C.put_in_hands(new mutanthands())
-	
+
 	if(VIRUSIMMUNE in species_traits)
 		for(var/datum/disease/A in C.viruses)
 			A.cure(FALSE)
-		
+
 
 /datum/species/proc/on_species_loss(mob/living/carbon/C)
 	if(C.dna.species.exotic_bloodtype)
@@ -398,7 +411,9 @@
 				else
 					hair_overlay.color = forced_colour
 				hair_overlay.alpha = hair_alpha
-				hair_overlay.pixel_y += hair_y_offset
+				if(OFFSET_FACE in H.dna.species.offset_features)
+					hair_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FACE][1]
+					hair_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
 		if(hair_overlay.icon)
 			standing += hair_overlay
 
@@ -419,14 +434,18 @@
 		if(H.lip_style && (LIPS in species_traits) && HD)
 			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[H.lip_style]", -BODY_LAYER)
 			lip_overlay.color = H.lip_color
-			lip_overlay.pixel_y += face_y_offset
+			if(OFFSET_FACE in H.dna.species.offset_features)
+				lip_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FACE][1]
+				lip_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
 			standing += lip_overlay
 
 		// eyes
 		if((EYECOLOR in species_traits) && HD)
 			var/mutable_appearance/eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes", -BODY_LAYER)
 			eye_overlay.color = "#" + H.eye_color
-			eye_overlay.pixel_y += face_y_offset
+			if(OFFSET_FACE in H.dna.species.offset_features)
+				eye_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FACE][1]
+				eye_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
 			standing += eye_overlay
 
 	//Underwear, Undershirts & Socks
@@ -977,12 +996,15 @@
 		radiation = 0
 		return TRUE
 
-	if(radiation > RAD_MOB_KNOCKDOWN)
+	if(radiation > RAD_MOB_KNOCKDOWN && prob(RAD_MOB_KNOCKDOWN_PROB))
 		if(!H.IsKnockdown())
 			H.emote("collapse")
-		H.Knockdown(RAD_KNOCKDOWN_TIME)
+		H.Knockdown(RAD_MOB_KNOCKDOWN_AMOUNT)
 		to_chat(H, "<span class='danger'>You feel weak.</span>")
-	
+
+	if(radiation > RAD_MOB_VOMIT && prob(RAD_MOB_VOMIT_PROB))
+		H.vomit(10, TRUE)
+
 	if(radiation > RAD_MOB_MUTATE)
 		if(prob(1))
 			to_chat(H, "<span class='danger'>You mutate!</span>")
@@ -991,10 +1013,9 @@
 			H.domutcheck()
 
 	if(radiation > RAD_MOB_HAIRLOSS)
-		if(prob(15))
-			if(!( H.hair_style == "Shaved") || !(H.hair_style == "Bald") || (HAIR in species_traits))
-				to_chat(H, "<span class='danger'>Your hair starts to fall out in clumps...</span>")
-				addtimer(CALLBACK(src, .proc/go_bald, H), 50)
+		if(prob(15) && !(H.hair_style == "Bald") && (HAIR in species_traits))
+			to_chat(H, "<span class='danger'>Your hair starts to fall out in clumps...</span>")
+			addtimer(CALLBACK(src, .proc/go_bald, H), 50)
 
 /datum/species/proc/go_bald(mob/living/carbon/human/H)
 	if(QDELETED(H))	//may be called from a timer
@@ -1035,7 +1056,7 @@
 	if(!gravity)
 		var/obj/item/tank/jetpack/J = H.back
 		var/obj/item/clothing/suit/space/hardsuit/C = H.wear_suit
-		var/obj/item/organ/cyberimp/chest/thrusters/T = H.getorganslot("thrusters")
+		var/obj/item/organ/cyberimp/chest/thrusters/T = H.getorganslot(ORGAN_SLOT_THRUSTERS)
 		if(!istype(J) && istype(C))
 			J = C.jetpack
 		if(istype(J) && J.full_speed && J.allow_thrust(0.01, H))	//Prevents stacking
@@ -1091,7 +1112,7 @@
 		return 1
 	else
 		var/we_breathe = (!(NOBREATH in user.dna.species.species_traits))
-		var/we_lung = user.getorganslot("lungs")
+		var/we_lung = user.getorganslot(ORGAN_SLOT_LUNGS)
 
 		if(we_breathe && we_lung)
 			user.do_cpr(target)
@@ -1300,7 +1321,9 @@
 						H.adjust_blurriness(10)
 
 					if(prob(I.force + ((100 - H.health)/2)) && H != user)
-						SSticker.mode.remove_revolutionary(H.mind, FALSE, user)
+						var/datum/antagonist/rev/rev = H.mind.has_antag_datum(/datum/antagonist/rev)
+						if(rev)
+							rev.remove_revolutionary(FALSE, user)
 
 				if(bloody)	//Apply blood
 					if(H.wear_mask)

@@ -80,7 +80,7 @@
 		return FALSE
 	var/mob/camera/aiEye/remote/shuttle_docker/the_eye = eyeobj
 	if(!my_port)
-		my_port = new /obj/docking_port/stationary
+		my_port = new /obj/docking_port/stationary()
 		my_port.name = shuttlePortName
 		my_port.id = shuttlePortId
 		var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
@@ -127,7 +127,7 @@
 	checkLandingSpot()
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/checkLandingTurf(turf/T)
-	return T && (!blacklisted_turfs || !blacklisted_turfs[T]) && (!space_turfs_only || isspaceturf(T))
+	return T && (!blacklisted_turfs || !blacklisted_turfs[T]) && (!space_turfs_only || isspaceturf(T)) && (T.x > 1 && T.y > 1 && T.x < world.maxx && T.y < world.maxy)
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/generateBlacklistedTurfs()
 	blacklisted_turfs = list()

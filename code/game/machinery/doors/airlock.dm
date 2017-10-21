@@ -798,7 +798,7 @@
 	// Otherwise it will runtime with this kind of error: null.Topic()
 	if(!nowindow)
 		..()
-	if(usr.incapacitated() && !IsAdminGhost(usr))
+	if(!usr.canUseTopic(src) && !IsAdminGhost(usr))
 		return
 	add_fingerprint(usr)
 	if(href_list["close"])

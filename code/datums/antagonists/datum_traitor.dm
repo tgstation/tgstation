@@ -1,5 +1,6 @@
 /datum/antagonist/traitor
 	name = "Traitor"
+	job_rank = ROLE_TRAITOR
 	var/should_specialise = TRUE //do we split into AI and human
 	var/base_datum_custom = ANTAG_DATUM_TRAITOR_CUSTOM //used for body transfer
 	var/ai_datum = ANTAG_DATUM_TRAITOR_AI
