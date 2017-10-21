@@ -19,8 +19,6 @@
 	Check()
 	lock = _lock
 
-
-
 //do not qdel directly, use stop_orbit on the orbiter. (This way the orbiter can bind to the orbit stopping)
 /datum/orbit/Destroy(force = FALSE)
 	SSorbit.processing -= src
@@ -54,7 +52,11 @@
 	orbiter.loc = targetloc
 	orbiter.update_parallax_contents()
 	lastloc = orbiter.loc
-
+	for(var/other_orbit in orbiter.orbiters)
+		var/datum/orbit/OO = other_orbit
+		if(OO == src)
+			continue
+		OO.Check(targetloc)
 
 /atom/movable/var/datum/orbit/orbiting = null
 /atom/var/list/orbiters = null

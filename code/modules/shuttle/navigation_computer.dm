@@ -126,7 +126,7 @@
 	checkLandingSpot()
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/checkLandingTurf(turf/T)
-	return T && ((shuttle_port.shuttle_areas[T.loc]) || (!blacklisted_turfs || !blacklisted_turfs[T]) && (!space_turfs_only || isspaceturf(T)))
+	return T && (shuttle_port.shuttle_areas[T.loc] || (!blacklisted_turfs || !blacklisted_turfs[T]) && (!space_turfs_only || isspaceturf(T)) ) && (T.x > 1 && T.y > 1 && T.x < world.maxx && T.y < world.maxy)
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/generateBlacklistedTurfs()
 	blacklisted_turfs = list()

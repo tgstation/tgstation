@@ -11,3 +11,8 @@
 	damage_overlay_type = ""//let's not show bloody wounds or burns over bones.
 	disliked_food = NONE
 	liked_food = GROSS | MEAT | RAW
+
+/datum/species/skeleton/check_roundstart_eligible()
+	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
+		return TRUE
+	return ..()

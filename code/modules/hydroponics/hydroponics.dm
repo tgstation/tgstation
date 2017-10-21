@@ -913,6 +913,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 /obj/machinery/hydroponics/soil //Not actually hydroponics at all! Honk!
 	name = "soil"
+	desc = "A patch of dirt."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "soil"
 	circuit = null

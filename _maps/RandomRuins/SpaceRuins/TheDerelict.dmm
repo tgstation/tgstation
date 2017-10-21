@@ -1691,7 +1691,6 @@
 /obj/structure/grille/broken,
 /obj/effect/decal/remains/human{
 	desc = "This guy seemed to have died in terrible way! Half his remains are dust.";
-	icon_state = "remains";
 	name = "Syndicate agent remains"
 	},
 /turf/open/floor/plasteel/airless{
@@ -4665,7 +4664,6 @@
 "oi" = (
 /obj/effect/decal/remains/human{
 	desc = "This guy seemed to have died in terrible way! Half his remains are dust.";
-	icon_state = "remains";
 	name = "Syndicate agent remains"
 	},
 /turf/open/floor/plasteel/airless,

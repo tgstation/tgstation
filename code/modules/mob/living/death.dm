@@ -34,7 +34,7 @@
 
 	dust_animation()
 	spawn_dust(just_ash)
-	qdel(src)
+	QDEL_IN(src,5) // since this is sometimes called in the middle of movement, allow half a second for movement to finish, ghosting to happen and animation to play. Looks much nicer and doesn't cause multiple runtimes.
 
 /mob/living/proc/dust_animation()
 	return

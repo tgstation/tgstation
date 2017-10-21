@@ -304,15 +304,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/is_active()
 	return 0
 
-/mob/dead/observer/Stat()
-	..()
-	if(statpanel("Status"))
-		if(SSticker.HasRoundStarted())
-			if(istype(SSticker.mode, /datum/game_mode/blob))
-				var/datum/game_mode/blob/B = SSticker.mode
-				if(B.message_sent)
-					stat(null, "Blobs to Blob Win: [GLOB.blobs_legit.len]/[B.blobwincount]")
-
 /mob/dead/observer/verb/reenter_corpse()
 	set category = "Ghost"
 	set name = "Re-enter Corpse"
@@ -584,6 +575,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(ismegafauna(target))
 		to_chat(src, "<span class='warning'>This creature is too powerful for you to possess!</span>")
+		return 0
+
+	if(istype (target, /mob/living/simple_animal/hostile/spawner))
+		to_chat(src, "<span class='warning'>This isn't really a creature, now is it!</span>")
 		return 0
 
 	if(can_reenter_corpse && mind && mind.current)
