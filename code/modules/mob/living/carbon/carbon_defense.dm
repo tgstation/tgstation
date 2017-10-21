@@ -279,6 +279,9 @@
 		if(visual)
 			return
 
+	if(!get_bodypart("head"))
+		return
+
 		if (damage == 1)
 			to_chat(src, "<span class='warning'>Your eyes sting a little.</span>")
 			if(prob(40))
