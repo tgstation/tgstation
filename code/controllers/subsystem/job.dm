@@ -18,6 +18,7 @@ SUBSYSTEM_DEF(job)
 		SetupOccupations()
 	if(CONFIG_GET(flag/load_jobs_from_txt))
 		LoadJobs()
+	generate_selectable_species()
 	..()
 
 
@@ -567,3 +568,41 @@ SUBSYSTEM_DEF(job)
 			var/msg = "Unable to send mob [M] to late join!"
 			message_admins(msg)
 			CRASH(msg)
+
+
+///////////////////////////////////
+//Keeps track of all living heads//
+///////////////////////////////////
+/datum/controller/subsystem/job/proc/get_living_heads()
+	. = list()
+	for(var/mob/living/carbon/human/player in GLOB.mob_list)
+		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in GLOB.command_positions))
+			. |= player.mind
+
+
+////////////////////////////
+//Keeps track of all heads//
+////////////////////////////
+/datum/controller/subsystem/job/proc/get_all_heads()
+	. = list()
+	for(var/mob/player in GLOB.mob_list)
+		if(player.mind && (player.mind.assigned_role in GLOB.command_positions))
+			. |= player.mind
+
+//////////////////////////////////////////////
+//Keeps track of all living security members//
+//////////////////////////////////////////////
+/datum/controller/subsystem/job/proc/get_living_sec()
+	. = list()
+	for(var/mob/living/carbon/human/player in GLOB.mob_list)
+		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in GLOB.security_positions))
+			. |= player.mind
+
+////////////////////////////////////////
+//Keeps track of all  security members//
+////////////////////////////////////////
+/datum/controller/subsystem/job/proc/get_all_sec()
+	. = list()
+	for(var/mob/living/carbon/human/player in GLOB.mob_list)
+		if(player.mind && (player.mind.assigned_role in GLOB.security_positions))
+			. |= player.mind

@@ -30,7 +30,7 @@
 	spawned_mobs = null
 	return ..()
 
-/mob/living/simple_animal/hostile/spawner/handle_automated_action()
+/mob/living/simple_animal/hostile/spawner/Life()
 	. = ..()
 	spawn_mob()
 

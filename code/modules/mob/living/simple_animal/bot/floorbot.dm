@@ -287,11 +287,11 @@
 				anchored = TRUE
 		if(PLACE_TILE)
 			F = scan_target
-			if(istype(F, /turf/open/floor/plating)) //The floor must not already have a tile.
+			if(isplatingturf(F)) //The floor must not already have a tile.
 				result = F
 		if(REPLACE_TILE)
 			F = scan_target
-			if(isfloorturf(F) && !istype(F, /turf/open/floor/plating)) //The floor must already have a tile.
+			if(isfloorturf(F) && !isplatingturf(F)) //The floor must already have a tile.
 				result = F
 		if(FIX_TILE)	//Selects only damaged floors.
 			F = scan_target
@@ -299,7 +299,7 @@
 				result = F
 		if(TILE_EMAG) //Emag mode! Rip up the floor and cause breaches to space!
 			F = scan_target
-			if(!istype(F, /turf/open/floor/plating))
+			if(!isplatingturf(F))
 				result = F
 		else //If no special processing is needed, simply return the result.
 			result = scan_target
@@ -329,7 +329,7 @@
 	else
 		var/turf/open/floor/F = target_turf
 
-		if(F.type != initial(tiletype.turf_type) && (F.broken || F.burnt || istype(F, /turf/open/floor/plating)) || F.type == (initial(tiletype.turf_type) && (F.broken || F.burnt)))
+		if(F.type != initial(tiletype.turf_type) && (F.broken || F.burnt || isplatingturf(F)) || F.type == (initial(tiletype.turf_type) && (F.broken || F.burnt)))
 			anchored = TRUE
 			icon_state = "floorbot-c"
 			mode = BOT_REPAIRING
@@ -340,7 +340,7 @@
 				F.burnt = 0
 				F.ChangeTurf(/turf/open/floor/plasteel)
 
-		if(replacetiles && F.type != initial(tiletype.turf_type) && specialtiles && !istype(F, /turf/open/floor/plating))
+		if(replacetiles && F.type != initial(tiletype.turf_type) && specialtiles && !isplatingturf(F))
 			anchored = TRUE
 			icon_state = "floorbot-c"
 			mode = BOT_REPAIRING

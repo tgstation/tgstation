@@ -3792,7 +3792,9 @@
 /turf/open/space,
 /area/solar/port/fore)
 "ajK" = (
-/obj/structure/reflector/single/anchored,
+/obj/structure/reflector/single/anchored{
+	dir = 6
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -3804,8 +3806,7 @@
 /area/engine/atmospherics_engine)
 "ajM" = (
 /obj/structure/reflector/box/anchored{
-	dir = 4;
-	icon_state = "reflector_box"
+	dir = 4
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -3831,7 +3832,7 @@
 /area/engine/atmospherics_engine)
 "ajP" = (
 /obj/structure/reflector/single/anchored{
-	dir = 8
+	dir = 10
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -4156,14 +4157,16 @@
 	},
 /area/engine/atmospherics_engine)
 "akQ" = (
-/obj/structure/reflector/double/anchored,
+/obj/structure/reflector/double/anchored{
+	dir = 6
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
 /area/engine/atmospherics_engine)
 "akR" = (
 /obj/structure/reflector/double/anchored{
-	dir = 1
+	dir = 10
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -4578,7 +4581,7 @@
 /area/solar/port/fore)
 "alP" = (
 /obj/structure/reflector/double/anchored{
-	dir = 4
+	dir = 6
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -5485,7 +5488,7 @@
 /area/solar/port/fore)
 "aoa" = (
 /obj/structure/reflector/single/anchored{
-	dir = 1
+	dir = 9
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -8795,7 +8798,7 @@
 /obj/machinery/camera{
 	c_tag = "Supermatter Chamber";
 	dir = 2;
-	network = list("Engine");
+	network = list("Engine")
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
@@ -109431,6 +109434,14 @@
 /turf/open/space/basic,
 /area/space)
 "YGJ" = (
+/obj/structure/reflector/double/anchored{
+	dir = 5
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/engine/atmospherics_engine)
+"YGK" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
 	},
@@ -109444,7 +109455,7 @@
 	},
 /turf/open/floor/circuit/green,
 /area/engine/supermatter)
-"YGK" = (
+"YGL" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4
 	},
@@ -134460,7 +134471,7 @@ ajL
 ajL
 alP
 ajL
-akR
+YGJ
 eqb
 eqc
 ard
@@ -134724,7 +134735,7 @@ are
 asj
 ehy
 auD
-YGJ
+YGK
 avP
 axP
 ehJ
@@ -135752,7 +135763,7 @@ ari
 asn
 ehy
 auG
-YGK
+YGL
 avR
 axT
 ehJ
@@ -136515,7 +136526,7 @@ aiW
 ajL
 akR
 ajL
-akQ
+alP
 ajL
 eps
 epu
