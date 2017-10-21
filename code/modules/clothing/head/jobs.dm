@@ -105,7 +105,6 @@
 	desc = "A beret, a mime's favorite headwear."
 	icon_state = "beret"
 	dog_fashion = /datum/dog_fashion/head/beret
-	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/beret/black
 	name = "black beret"
