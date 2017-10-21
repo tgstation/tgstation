@@ -7,6 +7,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
 	var/list/squeak_override //Weighted list; If you want your plush to have different squeak sounds use this
+	var/stuffed = TRUE //If the plushie has stuffing in it
+	var/obj/item/grenade/grenade //You can remove the stuffing from a plushie and add a grenade to it for *nefarious uses*
 
 /obj/item/toy/plush/Initialize()
 	. = ..()
@@ -14,7 +16,55 @@
 
 /obj/item/toy/plush/attack_self(mob/user)
 	. = ..()
-	to_chat(user, "<span class='notice'>You pet [src]. D'awww.</span>")
+	if(stuffed || grenade)
+		to_chat(user, "<span class='notice'>You pet [src]. D'awww.</span>")
+		if(grenade && !grenade.active)
+			if(istype(grenade, /obj/item/grenade/chem_grenade))
+				var/obj/item/grenade/chem_grenade/G = grenade
+				if(G.nadeassembly) //We're activated through different methods
+					return
+			playsound(user, 'sound/weapons/armbomb.ogg', 10, TRUE)
+			addtimer(CALLBACK(grenade, /obj/item/grenade/proc/prime), grenade.det_time)
+	else
+		to_chat(user, "<span class='notice'>You try to pet [src], but it has no stuffing. Aww...</span>")
+
+/obj/item/toy/plush/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/wirecutters))
+		if(!grenade)
+			if(!stuffed)
+				to_chat(user, "<span class='danger'>You already murdered it!</span>")
+				return
+			user.visible_message("<span class='notice'>[user] tears out the stuffing from [src]!</span>", "<span class='notice'>You rip a bunch of the stuffing from [src]. Murderer.</span>")
+			playsound(user, 'sound/items/wirecutter.ogg', 50, TRUE)
+			stuffed = FALSE
+		else
+			to_chat(user, "<span class='notice'>You remove the grenade from [src].</span>")
+			grenade.forceMove(get_turf(user))
+			user.put_in_hands(grenade)
+			grenade = null
+		return
+	if(istype(I, /obj/item/grenade))
+		if(stuffed)
+			to_chat(user, "<span class='danger'>You need to remove some stuffing first!</span>")
+			return
+		if(grenade)
+			to_chat(user, "<span class='danger'>[src] already has a grenade!</span>")
+			return
+		user.visible_message("<span class='warning'>[user] slides [grenade] into [src].</span>", \
+		"<span class='danger'>You slide [I] into [src].</span>")
+		grenade = I
+		user.transferItemToLoc(I, src)
+		return
+	. = ..()
+
+/obj/item/toy/plush/examine(mob/user)
+	..()
+	if(user.Adjacent(src))
+		if(!stuffing)
+			if(grenade)
+				to_chat(user, "<span class='warning'>[grenade] has been hidden in its body!</span>")
+			else
+				to_chat(user, "Its stuffing has been torn out.")
 
 /obj/item/toy/plush/carpplushie
 	name = "space carp plushie"
