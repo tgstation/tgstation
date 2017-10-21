@@ -49,6 +49,7 @@
     glass_desc = "A huge cup full of drank."
     glass_name = "lean cup"
 	 var/list/leanTalk = list("Sipping on some sizzurp, sip, sipping on some, sip..", "I'M LEANIN!!", "Drop some syrup in it, get on my waffle house!", "Dat purple stuff..", "We wuz.. sippin...", "Bup-bup-bup-bup...", "ME AND MY DRANK, ME AND MY DRANK!!!", "Pour you a glass, mane..", "...purple...", "Can't nobody sip mo' than me!")
+	 var/syrup_message = list("You feel relaxed.", "You feel calmed.","You feel like melting into the floor.","The world moves slowly..")
 
 
 /datum/reagent/consumable/lean/on_mob_life(mob/living/M)
@@ -61,8 +62,8 @@
 		if(prob(8))
 			H.say(pick(leanTalk))
 		if(prob(1))
-			var/syrup_message = pick("You feel relaxed.", "You feel calmed.","You feel like melting into the floor.","The world moves slowly..")
-			to_chat(H,"<span class='notice'>[syrup_message]</span>")
+			var/syrup_feeling = pick(syrup_message)
+			to_chat(H,"<span class='notice'>[syrup_feeling]</span>")
 		if(prob(3))
 			H.skin_tone = "african1"
 			H.hair_style = "Big Afro"
