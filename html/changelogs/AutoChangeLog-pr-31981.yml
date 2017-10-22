@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - code_imp: "Removed dangling mob references to last attacker/attacked"
