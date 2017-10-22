@@ -95,8 +95,8 @@
 	holder.screen -= buttons
 	holder.click_intercept = null
 	holder.show_popup_menus = 1
-	preview.Cut()
 	usr.client.images -= preview
+	preview.Cut()
 	qdel(src)
 	return
 
