@@ -181,23 +181,7 @@
 		damaged_clothes = 0
 		cut_overlay(damaged_clothes_icons[index], TRUE)
 
-//Glasses
-/obj/item/clothing/glasses
-	name = "glasses"
-	icon = 'icons/obj/clothing/glasses.dmi'
-	w_class = WEIGHT_CLASS_SMALL
-	flags_cover = GLASSESCOVERSEYES
-	slot_flags = SLOT_EYES
-	var/vision_flags = 0
-	var/darkness_view = 2//Base human is 2
-	var/invis_view = SEE_INVISIBLE_LIVING
-	var/invis_override = 0 //Override to allow glasses to set higher than normal see_invis
-	var/lighting_alpha
-	var/list/icon/current = list() //the current hud icons
-	var/vision_correction = 0 //does wearing these glasses correct some of our vision defects?
-	strip_delay = 20
-	equip_delay_other = 25
-	resistance_flags = 0
+
 /*
 SEE_SELF  // can see self, no matter what
 SEE_MOBS  // can see all mobs, no matter what
@@ -208,6 +192,7 @@ SEE_PIXELS// if an object is located on an unlit area, but some of its pixels ar
 BLIND     // can't see anything
 */
 
+<<<<<<< HEAD
 
 //Gloves
 /obj/item/clothing/gloves
@@ -657,6 +642,8 @@ BLIND     // can't see anything
 	if(attached_accessory)
 		to_chat(user, "\A [attached_accessory] is attached to it.")
 
+=======
+>>>>>>> f910aa9c25... Merge pull request #31960 from lzimann/split
 /proc/generate_female_clothing(index,t_color,icon,type)
 	var/icon/female_clothing_icon	= icon("icon"=icon, "icon_state"=t_color)
 	var/icon/female_s				= icon("icon"='icons/mob/uniform.dmi', "icon_state"="[(type == FEMALE_UNIFORM_FULL) ? "female_full" : "female_top"]")
