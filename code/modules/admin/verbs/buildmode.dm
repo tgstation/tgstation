@@ -363,7 +363,7 @@
 					G.defineRegion(cornerA, cornerB, 1)
 					for(var/t in G.map)
 						preview += image('icons/turf/overlays.dmi', t ,"greenOverlay")
-					user.client.images += preview
+					usr.client.images += preview
 					var/confirm = alert("Are you sure you want run the map generator?", "Run generator", "Yes", "No")
 					if(confirm == "Yes")
 						G.generate()
