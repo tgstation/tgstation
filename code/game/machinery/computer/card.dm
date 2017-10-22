@@ -537,7 +537,8 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 /obj/machinery/computer/card/proc/eject_id_scan(mob/user)
 	if(scan)
 		scan.forceMove(drop_location())
-		user.put_in_hands(scan)
+		if(!isAI(user))
+			user.put_in_hands(scan)
 		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 		scan = null
 	else //switching the ID with the one you're holding
@@ -555,7 +556,8 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		GLOB.data_core.manifest_modify(modify.registered_name, modify.assignment)
 		modify.update_label()
 		modify.forceMove(drop_location())
-		user.put_in_hands(modify)
+		if(!isAI(user))
+			user.put_in_hands(modify)
 		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 		modify = null
 		region_access = null
