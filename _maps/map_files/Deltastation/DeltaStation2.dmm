@@ -45863,6 +45863,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
 /obj/item/gun/ballistic/shotgun/riot,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
 "bNh" = (
@@ -46823,6 +46829,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
 "bOX" = (
@@ -48142,6 +48151,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
 "bRd" = (
@@ -49583,6 +49595,10 @@
 	dir = 9
 	},
 /obj/effect/turf_decal/bot,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
 "bTv" = (
@@ -134469,7 +134485,7 @@ aaa
 aiW
 ajL
 ajL
-alP
+akQ
 ajL
 YGJ
 eqb
@@ -136526,7 +136542,7 @@ aiW
 ajL
 akR
 ajL
-alP
+akQ
 ajL
 eps
 epu
