@@ -1,3 +1,6 @@
+/obj/item/clothing/under
+	sensor_mode = SENSOR_COORDS
+
 /obj/item/clothing/ears/hippie
 	alternate_worn_icon = 'hippiestation/icons/mob/ears.dmi'
 	icon = 'hippiestation/icons/obj/clothing/ears.dmi'
