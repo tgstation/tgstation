@@ -375,8 +375,8 @@
 						G.generate()
 					cornerA = null
 					cornerB = null
-					preview.Cut()
 					usr.client.images -= preview
+					preview.Cut()
 					return
 			//Something wrong - Reset
 			cornerA = null
