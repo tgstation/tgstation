@@ -54608,6 +54608,9 @@
 /area/security/range)
 "ckl" = (
 /obj/structure/table/reinforced,
+/obj/machinery/magnetic_controller{
+	autolink = 1
+	},
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
@@ -77484,6 +77487,9 @@
 /area/science/research)
 "dhv" = (
 /obj/structure/table/reinforced,
+/obj/machinery/magnetic_controller{
+	autolink = 1
+	},
 /obj/item/gun/energy/laser/practice{
 	pixel_x = 3;
 	pixel_y = -3
@@ -127641,7 +127647,7 @@ aaa
 aiW
 ajL
 ajL
-alP
+akQ
 ajL
 YGJ
 eqb
@@ -129698,7 +129704,7 @@ aiW
 ajL
 akR
 ajL
-alP
+akQ
 ajL
 eps
 epu
