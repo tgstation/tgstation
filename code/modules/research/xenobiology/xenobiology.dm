@@ -486,7 +486,7 @@
 /obj/effect/golemrune/Initialize()
 	. = ..()
 	START_PROCESSING(SSobj, src)
-	notify_ghosts("Golem rune created in [get_area(src)].", 'sound/effects/ghost2.ogg', source = src)
+	notify_ghosts("[src] has been created in [get_area(src)].", 'sound/effects/ghost2.ogg', source = src)
 
 /obj/effect/golemrune/Destroy()
 	STOP_PROCESSING(SSobj, src)

@@ -1,0 +1,5 @@
+/mob/living/carbon/breathe()
+	if(!getorganslot("breathing_tube"))
+		if(pulledby && pulledby.grab_state == GRAB_KILL)
+			adjustOxyLoss(1)
+	..()

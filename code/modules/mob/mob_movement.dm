@@ -1,3 +1,5 @@
+#define SW_LIGHT_FACTOR 2.75
+
 /mob/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover, /obj/item/projectile) || mover.throwing)
 		return (!density || lying)
@@ -161,9 +163,18 @@
 	if(!mob.Process_Spacemove(direct))
 		return FALSE
 
+
+	var/delay = mob.movement_delay()
+
+	if(Can_ShadowWalk(mob))
+		if(Process_ShadowWalk(direct))
+			moving = FALSE
+			return TRUE
+		else
+			delay = delay*SW_LIGHT_FACTOR
+
 	//We are now going to move
 	moving = 1
-	var/delay = mob.movement_delay()
 	if (old_move_delay + (delay*MOVEMENT_DELAY_BUFFER_DELTA) + MOVEMENT_DELAY_BUFFER > world.time)
 		move_delay = old_move_delay + delay
 	else

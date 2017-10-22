@@ -14,6 +14,7 @@ GLOBAL_PROTECT(security_mode)
 
 	new /datum/controller/configuration
 
+	hippie_initialize()
 	CheckSchemaVersion()
 	SetRoundID()
 
@@ -64,9 +65,10 @@ GLOBAL_PROTECT(security_mode)
 			log_world("Your server failed to establish a connection with the database.")
 
 /world/proc/SetRoundID()
+	var/internet_address_to_use = CONFIG_GET(string/internet_address_to_use)
 	if(CONFIG_GET(flag/sql_enabled))
 		if(SSdbcore.Connect())
-			var/datum/DBQuery/query_round_start = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (start_datetime, server_ip, server_port) VALUES (Now(), INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]')")
+			var/datum/DBQuery/query_round_start = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (start_datetime, server_ip, server_port) VALUES (Now(), INET_ATON(IF('[internet_address_to_use]' LIKE '', '0', '[internet_address_to_use]')), '[world.port]')")
 			query_round_start.Execute()
 			var/datum/DBQuery/query_round_last_id = SSdbcore.NewQuery("SELECT LAST_INSERT_ID()")
 			query_round_last_id.Execute()
@@ -166,50 +168,30 @@ GLOBAL_PROTECT(security_mode)
 	GLOB.join_motd = file2text("config/motd.txt") + "<br>" + GLOB.revdata.GetTestMergeInfo()
 
 /world/proc/update_status()
-
-	var/list/features = list()
-
-	if(GLOB.master_mode)
-		features += GLOB.master_mode
-
-	if (!GLOB.enter_allowed)
-		features += "closed"
-
 	var/s = ""
 	var/hostedby
+	var/forumurl
+	var/githuburl
 	if(config)
 		var/server_name = CONFIG_GET(string/servername)
-		if (server_name)
-			s += "<b>[server_name]</b> &#8212; "
-		features += "[CONFIG_GET(flag/norespawn) ? "no " : ""]respawn"
-		if(CONFIG_GET(flag/allow_vote_mode))
-			features += "vote"
-		if(CONFIG_GET(flag/allow_ai))
-			features += "AI allowed"
 		hostedby = CONFIG_GET(string/hostedby)
-
-	s += "<b>[station_name()]</b>";
-	s += " ("
-	s += "<a href=\"http://\">" //Change this to wherever you want the hub to link to.
-	s += "Default"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
+		forumurl = CONFIG_GET(string/forumurl)
+		githuburl = CONFIG_GET(string/githuburl)
+		if (server_name)
+			s += "<a href=\"[forumurl]\"><big><b>[server_name]</b> &#8212; [station_name()]</big></a>"
+	if(SSticker)
+		if(GLOB.master_mode)
+			s += "<br>Mode: <b>[GLOB.master_mode]</b>"
+	else
+		s += "<br>Mode: <b>STARTING</b>"
+	if (hostedby)
+		s += "<br>Hosted by <b>[hostedby]</b>."
+	s += "<img src=\"https://i.imgur.com/xfWVypg.png\">" //Banner image
+	s += "<br>("
+	s += "<a href=\"[githuburl]\">"
+	s += "Github"
 	s += "</a>"
-	s += ")"
-
-	var/n = 0
-	for (var/mob/M in GLOB.player_list)
-		if (M.client)
-			n++
-
-	if (n > 1)
-		features += "~[n] players"
-	else if (n > 0)
-		features += "~[n] player"
-
-	if (!host && hostedby)
-		features += "hosted by <b>[hostedby]</b>"
-
-	if (features)
-		s += ": [jointext(features, ", ")]"
+	s += ") "
 
 	status = s
 

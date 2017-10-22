@@ -18,6 +18,7 @@
 	var/template_id = "shelter_alpha"
 	var/datum/map_template/shelter/template
 	var/used = FALSE
+	var/can_use_on_station = FALSE
 
 /obj/item/survivalcapsule/proc/get_template()
 	if(template)
@@ -36,6 +37,10 @@
 	get_template()
 	to_chat(user, "This capsule has the [template.name] stored.")
 	to_chat(user, template.description)
+
+/obj/item/survivalcapsule/emag_act(mob/user)
+	can_use_on_station = TRUE
+	playsound(src.loc, "sparks", 100, 1)
 
 /obj/item/survivalcapsule/attack_self()
 	//Can't grab when capsule is New() because templates aren't loaded then
@@ -62,6 +67,11 @@
 
 		var/turf/T = deploy_location
 		if(T.z != ZLEVEL_MINING && T.z != ZLEVEL_LAVALAND)//only report capsules away from the mining/lavaland level
+			if(!can_use_on_station)
+				playsound(get_turf(src), 'sound/misc/sadtrombone.ogg', 100, 1)
+				new /obj/effect/particle_effect/smoke(get_turf(src))
+				used = FALSE
+				return
 			message_admins("[ADMIN_LOOKUPFLW(usr)] activated a bluespace capsule away from the mining level! [ADMIN_JMP(T)]")
 			log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [get_area(T)][COORD(T)]")
 		template.load(deploy_location, centered = TRUE)

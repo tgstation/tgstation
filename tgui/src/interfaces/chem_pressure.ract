@@ -1,0 +1,28 @@
+<ui-display title='Pressure Gauge'>
+  <ui-section label='Power'>
+    <ui-button icon='{{data.isActive ? "power-off" : "close"}}'
+		style='{{data.isActive ? "selected" : null}}'
+		action='power'>{{data.isActive ? "On" : "Off"}}</ui-button>
+  </ui-section>
+  <ui-section label='Chamber Pressure'>
+    <ui-bar min='0' max='100' value='{{data.internalPressure}}'>{{Math.round(data.internalPressure)}}</ui-bar>
+  </ui-section>
+</ui-display>
+<ui-display title='Beaker' button>
+  {{#partial button}}
+    <ui-button icon='eject' state='{{data.isBeakerLoaded ? null : "disabled"}}' action='eject'>Eject</ui-button>
+  {{/partial}}
+  <ui-section label='Contents'>
+    {{#if data.isBeakerLoaded}}
+      <span>Pressure: {{Math.round(adata.currentPressure)}} bars</span>
+      <br />
+      {{#each adata.beakerContents}}
+        <span class='highlight' intro-outro='fade'>{{Math.fixed(volume, 2)}} units of {{name}}</span><br/>
+      {{else}}
+        <span class='bad'>Beaker Empty</span>
+      {{/each}}
+    {{else}}
+      <span class='average'>No Beaker</span>
+    {{/if}}
+  </ui-section>
+</ui-display>

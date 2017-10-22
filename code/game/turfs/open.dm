@@ -202,7 +202,10 @@
 			to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
 			C.log_message("<font color='orange'>Slipped[O ? " on the [O.name]" : ""][(lube&SLIDE)? " (LUBE)" : ""]!</font>", INDIVIDUAL_ATTACK_LOG)
 		if(!(lube&SLIDE_ICE))
-			playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+			if(prob(95))
+				playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+			else
+				playsound(C.loc, 'hippiestation/sound/misc/oof.ogg', 50, 1, -3)
 
 		for(var/obj/item/I in C.held_items)
 			C.accident(I)

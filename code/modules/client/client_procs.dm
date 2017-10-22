@@ -83,6 +83,24 @@
 		cmd_admin_pm(href_list["priv_msg"],null)
 		return
 
+	//Mentor Msg
+	if(href_list["mentor_msg"])
+		if(CONFIG_GET(flag/mentors_mobname_only))
+			var/mob/M = locate(href_list["mentor_msg"])
+			cmd_mentor_pm(M,null)
+		else
+			cmd_mentor_pm(href_list["mentor_msg"],null)
+		return
+
+	//Mentor Follow
+	if(href_list["mentor_follow"])
+		var/mob/living/M = locate(href_list["mentor_follow"])
+
+		if(istype(M))
+			mentor_follow(M)
+
+		return
+
 	switch(href_list["_src_"])
 		if("holder")
 			hsrc = holder
@@ -280,6 +298,9 @@ GLOBAL_LIST(external_rsc_urls)
 		to_chat(src, get_message_output("memo"))
 		adminGreet()
 
+		if(!check_rights_for(src, R_ADMIN) && check_rights_for(src, R_MENTOR))
+			mentor_memo_output("Show")
+
 	add_verbs_from_config()
 	var/cached_player_age = set_client_age_from_db(tdata) //we have to cache this because other shit may change it and we need it's current value now down below.
 	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
@@ -472,7 +493,8 @@ GLOBAL_LIST(external_rsc_urls)
 			return
 	if(!account_join_date)
 		account_join_date = "Error"
-	var/datum/DBQuery/query_log_connection = SSdbcore.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`round_id`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')),'[world.port]','[GLOB.round_id]','[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]')")
+	var/internet_address_to_use = CONFIG_GET(string/internet_address_to_use)
+	var/datum/DBQuery/query_log_connection = SSdbcore.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`round_id`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),INET_ATON(IF('[internet_address_to_use]' LIKE '', '0', '[internet_address_to_use]')),'[world.port]','[GLOB.round_id]','[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]')")
 	query_log_connection.Execute()
 	if(new_player)
 		player_age = -1

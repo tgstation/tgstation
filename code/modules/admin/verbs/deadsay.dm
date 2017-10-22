@@ -26,7 +26,7 @@
 	for (var/mob/M in GLOB.player_list)
 		if(isnewplayer(M))
 			continue
-		if (M.stat == DEAD || (M.client && M.client.holder && (M.client.prefs.chat_toggles & CHAT_DEAD))) //admins can toggle deadchat on and off. This is a proc in admin.dm and is only give to Administrators and above
+		if (M.stat == DEAD || (M.client && M.client.holder && (M.client.prefs.chat_toggles & CHAT_DEAD) && check_rights_for(M.client, R_ADMIN))) //admins can toggle deadchat on and off. This is a proc in admin.dm and is only give to Administrators and above
 			M.show_message(rendered, 2)
 
 	SSblackbox.add_details("admin_verb","Dsay") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

@@ -42,7 +42,8 @@
 /obj/item/extinguisher/New()
 	..()
 	create_reagents(max_water)
-	reagents.add_reagent("water", max_water)
+	reagents.add_reagent("water", max_water-10) // Hippie: max_water-10 so we have room for cyrogenic_fluid
+	reagents.add_reagent("cryogenic_fluid", 10) // Hippie: improved turf extinguishing
 
 /obj/item/extinguisher/attack_self(mob/user)
 	safety = !safety

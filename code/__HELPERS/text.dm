@@ -417,7 +417,6 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 /proc/parsemarkdown_basic_step1(t, limited=FALSE)
 	if(length(t) <= 0)
 		return
-
 	// This parses markdown with no custom rules
 
 	// Escape backslashed
@@ -491,7 +490,6 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		while(listlevel >= 0)
 			t += "</ul>"
 			listlevel--
-
 	else
 		t = replacetext(t, "((", "")
 		t = replacetext(t, "))", "")

@@ -323,6 +323,9 @@
 
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
+	if(jobban_isbanned(src, CATBAN) || jobban_isbanned(src, CLUWNEBAN))
+		rank = "Assistant"
+
 	if(!IsJobAvailable(rank))
 		alert(src, "[rank] is not available. Please try another.")
 		return FALSE
@@ -358,7 +361,7 @@
 	if(!arrivals_docked)
 		var/obj/screen/splash/Spl = new(character.client, TRUE)
 		Spl.Fade(TRUE)
-		character.playsound_local(get_turf(character), 'sound/voice/ApproachingTG.ogg', 25)
+		character.playsound_local(get_turf(character), 'hippiestation/sound/voice/approaching.ogg', 25)
 
 	character.update_parallax_teleport()
 

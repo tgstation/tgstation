@@ -1,0 +1,4 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - bugfix: "Contents of silicon mobs are no longer considered for targets of radiation. This blocks them from being contaminated."

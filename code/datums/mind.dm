@@ -587,6 +587,25 @@
 
 		sections["revolution"] = text
 
+		/** SHADOWLING **/
+		text = "shadowling"
+		if(SSticker.mode.config_tag == "shadowling")
+			text = uppertext(text)
+		text = "<i><b>[text]</b></i>: "
+		if(src in SSticker.mode.shadows)
+			text += "<b>SHADOWLING</b> | thrall | <a href='?src=\ref[src];shadowling=clear'>human</a>"
+		else if(src in SSticker.mode.thralls)
+			text += "shadowling | <b>THRALL</b> | <a href='?src=\ref[src];shadowling=clear'>human</a>"
+		else
+			text += "<a href='?src=\ref[src];shadowling=shadowling'>shadowling</a> | <a href='?src=\ref[src];shadowling=thrall'>thrall</a> | <b>HUMAN</b>"
+
+		if(current && current.client && (ROLE_SHADOWLING in current.client.prefs.be_special))
+			text += " | Enabled in Prefs"
+		else
+			text += " | Disabled in Prefs"
+
+		sections["shadowling"] = text
+
 		/** ABDUCTION **/
 		text = "abductor"
 		if(SSticker.mode.config_tag == "abductor")
@@ -667,6 +686,9 @@
 			text += " | Disabled in Prefs"
 
 		sections["cult"] = text
+
+		/** VAMPIRE **/
+		sections["vampire"] = vampire_hook()
 
 
 	if(ishuman(current) || issilicon(current))
@@ -1140,7 +1162,45 @@
 					log_admin("[key_name(usr)] has forged objectives for [current] as part of autoobjectives.")
 					traitordatum.forge_traitor_objectives()
 					to_chat(usr, "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>")
-
+	else if(href_list["vampire"])
+		vampire_href(href_list["vampire"], usr)
+	else if(href_list["shadowling"])
+		switch(href_list["shadowling"])
+			if("clear")
+				SSticker.mode.update_shadow_icons_removed(src)
+				if(src in SSticker.mode.shadows)
+					SSticker.mode.shadows -= src
+					special_role = null
+					to_chat(current, "<span class='userdanger'>Your powers have been quenched! You are no longer a shadowling!</span>")
+					RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_hatch)
+					RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_ascend)
+					RemoveSpell(/obj/effect/proc_holder/spell/targeted/enthrall)
+					RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_hivemind)
+					message_admins("[key_name_admin(usr)] has de-shadowling'ed [current].")
+					log_admin("[key_name(usr)] has de-shadowling'ed [current].")
+				else if(src in SSticker.mode.thralls)
+					SSticker.mode.remove_thrall(src,0)
+					message_admins("[key_name_admin(usr)] has de-thrall'ed [current].")
+					log_admin("[key_name(usr)] has de-thrall'ed [current].")
+			if("shadowling")
+				if(!ishuman(current))
+					to_chat(usr, "<span class='warning'>This only works on humans!</span>")
+					return
+				SSticker.mode.shadows += src
+				special_role = "shadowling"
+				to_chat(current,"<span class='shadowling'><b>Something stirs deep in your mind. A red light floods your vision, and slowly you remember. Though your human disguise has served you well, the \
+				time is nigh to cast it off and enter your true form. You have disguised yourself amongst the humans, but you are not one of them. You are a shadowling, and you are to ascend at all costs.\
+				</b></span>")
+				SSticker.mode.finalize_shadowling(src)
+				SSticker.mode.update_shadow_icons_added(src)
+				current.playsound_local(get_turf(current), 'hippiestation/sound/ambience/antag/sling.ogg', 100, FALSE, pressure_affected = FALSE)
+			if("thrall")
+				if(!ishuman(current))
+					to_chat(usr, "<span class='warning'>This only works on humans!</span>")
+					return
+				SSticker.mode.add_thrall(src)
+				message_admins("[key_name_admin(usr)] has thrall'ed [current].")
+				log_admin("[key_name(usr)] has thrall'ed [current].")
 	else if(href_list["devil"])
 		var/datum/antagonist/devil/devilinfo = has_antag_datum(ANTAG_DATUM_DEVIL)
 		switch(href_list["devil"])

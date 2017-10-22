@@ -18,7 +18,7 @@
 		message_admins("[usr.key] has attempted to override the admin panel!")
 		log_admin("[key_name(usr)] tried to use the admin panel without authorization.")
 		return
-	
+
 	if(!CheckAdminHref(href, href_list))
 		return
 
@@ -135,8 +135,15 @@
 					message_admins("[key_name(usr)] created a CentCom response team.")
 					log_admin("[key_name(usr)] created a CentCom response team.")
 				else
-					message_admins("[key_name_admin(usr)] tried to create a CentCom response team. Unfortunately, there were not enough candidates available.")
-					log_admin("[key_name(usr)] failed to create a CentCom response team.")
+					message_admins("[key_name_admin(usr)] tried to create a Centcom response team. Unfortunately, there were not enough candidates available.")
+					log_admin("[key_name(usr)] failed to create a Centcom response team.")
+			if("messiah")
+				if(src.makeJesus())
+					message_admins("[key_name(usr)] created a messiah.")
+					log_admin("[key_name(usr)] created a messiah.")
+				else
+					message_admins("[key_name_admin(usr)] tried to create a messiah. Unfortunately, there were no candidates available.")
+					log_admin("[key_name(usr)] failed to create a messiah.")
 			if("abductors")
 				message_admins("[key_name(usr)] is creating an abductor team...")
 				if(src.makeAbductorTeam())
@@ -159,6 +166,10 @@
 				else
 					message_admins("[key_name_admin(usr)] tried to create a revenant. Unfortunately, there were no candidates available.")
 					log_admin("[key_name(usr)] failed to create a revenant.")
+			if("shadowling")
+				hippie_makeShadowling(src)
+			if("vampire")
+				hippie_makeVampire(src)
 
 	else if(href_list["forceevent"])
 		if(!check_rights(R_FUN))
@@ -377,7 +388,7 @@
 		check_antagonists()
 
 	else if(href_list["delay_round_end"])
-		if(!check_rights(R_SERVER))
+		if(!check_rights(R_ADMIN))
 			return
 		if(!SSticker.delay_end)
 			SSticker.admin_delay_notice = input(usr, "Enter a reason for delaying the round end", "Round Delay Reason") as null|text
@@ -866,6 +877,22 @@
 		else
 			dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=alien candidate;jobban4=\ref[M]'>Alien</a></td>"
 
+	//Misc (Gray)
+		dat += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		dat += "<tr bgcolor='ffeeaa'><th colspan='5'>Misc</th></tr><tr align='center'>"
+
+		//Catban
+		if(jobban_isbanned(M, CATBAN) || isbanned_dept)
+			dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=catban;jobban4=\ref[M]'><font color=red>Catbanned</font></a></td>"
+		else
+			dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=catban;jobban4=\ref[M]'>Catban</a></td>"
+
+		//Cluwneban
+		if(jobban_isbanned(M, CLUWNEBAN) || isbanned_dept)
+			dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=cluwneban;jobban4=\ref[M]'><font color=red>Cluwnebanned</font></a></td>"
+		else
+			dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=cluwneban;jobban4=\ref[M]'>Cluwneban</a></td>"
+
 		dat += "</tr></table>"
 		usr << browse(dat, "window=jobban2;size=800x450")
 		return
@@ -1133,7 +1160,7 @@
 		if(!ismob(M))
 			return
 
-		if(M.client && M.client.holder)
+		if(M.client && check_rights_for(M.client, R_ADMIN))
 			return	//admins cannot be banned. Even if they could, the ban doesn't affect them anyway
 
 		switch(alert("Temporary Ban?",,"Yes","No", "Cancel"))
