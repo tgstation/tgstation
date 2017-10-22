@@ -14,6 +14,10 @@
 	. = ..()
 	AddComponent(/datum/component/squeak, squeak_override)
 
+/obj/item/toy/plush/Destroy()
+	QDEL_NULL(grenade)
+	. = ..()
+
 /obj/item/toy/plush/attack_self(mob/user)
 	. = ..()
 	if(stuffed || grenade)
@@ -23,8 +27,7 @@
 				var/obj/item/grenade/chem_grenade/G = grenade
 				if(G.nadeassembly) //We're activated through different methods
 					return
-			playsound(user, 'sound/weapons/armbomb.ogg', 10, TRUE)
-			addtimer(CALLBACK(grenade, /obj/item/grenade/proc/prime), grenade.det_time)
+			grenade.preprime(volume = 10)
 	else
 		to_chat(user, "<span class='notice'>You try to pet [src], but it has no stuffing. Aww...</span>")
 
@@ -32,39 +35,30 @@
 	if(istype(I, /obj/item/wirecutters))
 		if(!grenade)
 			if(!stuffed)
-				to_chat(user, "<span class='danger'>You already murdered it!</span>")
+				to_chat(user, "<span class='warning'>You already murdered it!</span>")
 				return
 			user.visible_message("<span class='notice'>[user] tears out the stuffing from [src]!</span>", "<span class='notice'>You rip a bunch of the stuffing from [src]. Murderer.</span>")
-			playsound(user, 'sound/items/wirecutter.ogg', 50, TRUE)
+			playsound(user, I.usesound, 50, TRUE)
 			stuffed = FALSE
 		else
 			to_chat(user, "<span class='notice'>You remove the grenade from [src].</span>")
-			grenade.forceMove(get_turf(user))
 			user.put_in_hands(grenade)
 			grenade = null
 		return
 	if(istype(I, /obj/item/grenade))
 		if(stuffed)
-			to_chat(user, "<span class='danger'>You need to remove some stuffing first!</span>")
+			to_chat(user, "<span class='warning'>You need to remove some stuffing first!</span>")
 			return
 		if(grenade)
-			to_chat(user, "<span class='danger'>[src] already has a grenade!</span>")
+			to_chat(user, "<span class='warning'>[src] already has a grenade!</span>")
+			return
+		if(!user.transferItemToLoc(I, src))
 			return
 		user.visible_message("<span class='warning'>[user] slides [grenade] into [src].</span>", \
 		"<span class='danger'>You slide [I] into [src].</span>")
 		grenade = I
-		user.transferItemToLoc(I, src)
 		return
 	. = ..()
-
-/obj/item/toy/plush/examine(mob/user)
-	..()
-	if(user.Adjacent(src))
-		if(!stuffed)
-			if(grenade)
-				to_chat(user, "<span class='warning'>[grenade] has been hidden in its body!</span>")
-			else
-				to_chat(user, "Its stuffing has been torn out.")
 
 /obj/item/toy/plush/carpplushie
 	name = "space carp plushie"
