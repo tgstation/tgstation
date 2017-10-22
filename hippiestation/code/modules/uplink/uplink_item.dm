@@ -3,7 +3,7 @@
 	surplus = 0
 	exclude_modes = list(/datum/game_mode/nuclear)
 	cant_discount = TRUE
-	
+
 /* Stimpak */
 /datum/uplink_item/stealthy_tools/stimpack
 	name = "Syndicate Nano-Booster"
@@ -240,13 +240,28 @@
 
 /datum/uplink_item/dangerous/guardian
 	player_minimum = 0
-	
+
 /datum/uplink_item/colab/romerol_kit
 	name = "Romerol"
 	desc = "A highly experimental bioterror agent which creates dormant nodules to be etched into the grey matter of the brain. On death, these nodules take control of the dead body, causing limited revivification, along with slurred speech, aggression, and the ability to infect others with this agent."
 	item = /obj/item/storage/box/syndie_kit/romerol
 	cost = 25
 	surplus = 5
-	
+
 /datum/uplink_item/stealthy_weapons/romerol_kit
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/traitor)
+
+/datum/uplink_item/badass/banhammer
+	name = "Banhammer"
+	desc = "Mimick an imperfect version of god's wrath with this unholy weapon. Found in an abandoned bus."
+	item = /obj/item/banhammer
+	cost = 1
+	surplus = 40
+
+/datum/uplink_item/dangerous/syndiebanhammer
+	name = "Syndicate Banhammer"
+	desc = "By inserting small kinetic pounders into a banhammer, the banhammer becomes a dangerous object that is able to kill people before they even realize what happened. Completely stealthy unless someone examines it. Don't try this at home."
+	item = /obj/item/banhammer/syndicate
+	cost = 10
+	surplus = 10
+	exclude_modes = list(/datum/game_mode/nuclear)
