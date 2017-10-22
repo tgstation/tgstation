@@ -459,16 +459,12 @@
 /area/mine/laborcamp)
 "by" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "bz" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -479,8 +475,6 @@
 	req_access_txt = "2"
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -492,13 +486,10 @@
 	pixel_y = 24
 	},
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/structure/cable{
-	icon_state = "0-2";
-	d2 = 2
+	icon_state = "0-2"
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
@@ -571,8 +562,6 @@
 	req_access_txt = "2"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
@@ -583,8 +572,6 @@
 	req_access_txt = "2"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 10;
 	icon_state = "1-10"
 	},
 /turf/open/floor/plating,
@@ -608,8 +595,6 @@
 /area/mine/production)
 "bQ" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -622,8 +607,6 @@
 	dir = 4
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/brown{
@@ -632,8 +615,6 @@
 /area/mine/production)
 "bS" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/glass_mining{
@@ -647,16 +628,12 @@
 /area/mine/eva)
 "bT" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/brown{
@@ -668,8 +645,6 @@
 	dir = 4
 	},
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel,
@@ -716,8 +691,6 @@
 "cc" = (
 /obj/structure/chair/office/dark,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /mob/living/simple_animal/bot/secbot/beepsky{
@@ -743,20 +716,15 @@
 	network = list("Labor")
 	},
 /obj/structure/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "ce" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/structure/cable{
-	d1 = 5;
-	d2 = 6;
 	icon_state = "5-6"
 	},
 /turf/open/floor/plating,
@@ -764,7 +732,6 @@
 "cf" = (
 /obj/machinery/power/terminal,
 /obj/structure/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/open/floor/plating,
@@ -803,8 +770,6 @@
 	dir = 4
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
@@ -888,12 +853,9 @@
 	charge = 5e+006
 	},
 /obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
+	icon_state = "0-4"
 	},
 /obj/structure/cable{
-	d1 = 0;
-	d2 = 9;
 	icon_state = "0-9"
 	},
 /turf/open/floor/plating,
@@ -914,8 +876,6 @@
 "cE" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
@@ -997,15 +957,12 @@
 	charge = 5e+006
 	},
 /obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
+	icon_state = "0-4"
 	},
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "cT" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/light/small{
@@ -1017,8 +974,6 @@
 "cU" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/open/floor/plating,
@@ -1038,8 +993,7 @@
 	pixel_y = 2
 	},
 /obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
+	icon_state = "0-4"
 	},
 /obj/machinery/light{
 	dir = 8
@@ -1051,13 +1005,9 @@
 "cY" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel,
@@ -1114,9 +1064,7 @@
 /area/mine/maintenance)
 "dh" = (
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1;
-	d2 = 2
+	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
 	dir = 1;
@@ -1178,15 +1126,12 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	icon_state = "0-2";
-	d2 = 2
+	icon_state = "0-2"
 	},
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "dp" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -1234,8 +1179,6 @@
 /area/mine/production)
 "dx" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/effect/baseturf_helper/lava_land/surface,
@@ -1243,8 +1186,6 @@
 /area/mine/maintenance)
 "dy" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -1317,8 +1258,6 @@
 "dF" = (
 /obj/structure/cable,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/machinery/power/port_gen/pacman{
@@ -1331,15 +1270,12 @@
 	anchored = 1
 	},
 /obj/structure/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "dH" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -1420,8 +1356,6 @@
 	req_access_txt = "48"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -1442,8 +1376,6 @@
 /area/mine/living_quarters)
 "dS" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/maintenance{
@@ -1451,8 +1383,6 @@
 	req_access_txt = "48"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -1504,8 +1434,6 @@
 "eb" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/brown{
@@ -1545,9 +1473,7 @@
 	pixel_y = 25
 	},
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1;
-	d2 = 2
+	icon_state = "0-2"
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
@@ -1560,8 +1486,6 @@
 /area/mine/living_quarters)
 "ei" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -1619,8 +1543,6 @@
 "eq" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel,
@@ -1630,8 +1552,6 @@
 	dir = 4
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -1639,8 +1559,6 @@
 "es" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -1650,26 +1568,18 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "eu" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
@@ -1677,8 +1587,6 @@
 /area/mine/living_quarters)
 "ev" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -1691,8 +1599,6 @@
 	dir = 4
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/brown{
@@ -1701,8 +1607,6 @@
 /area/mine/living_quarters)
 "ex" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/glass_mining{
@@ -1719,8 +1623,6 @@
 	dir = 4
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/brown{
@@ -1732,16 +1634,12 @@
 	dir = 4
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)
 "eA" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/glass_mining{
@@ -1755,8 +1653,6 @@
 /area/mine/production)
 "eB" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -1769,8 +1665,6 @@
 "eC" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel,
