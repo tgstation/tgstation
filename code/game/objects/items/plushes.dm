@@ -18,6 +18,10 @@
 	QDEL_NULL(grenade)
 	. = ..()
 
+/obj/item/toy/plush/handle_atom_del(atom/A)
+	if(A == grenade)
+		grenade = null
+
 /obj/item/toy/plush/attack_self(mob/user)
 	. = ..()
 	if(stuffed || grenade)
@@ -27,18 +31,19 @@
 				var/obj/item/grenade/chem_grenade/G = grenade
 				if(G.nadeassembly) //We're activated through different methods
 					return
-			grenade.preprime(volume = 10)
+			log_game("[key_name(user)] activated a hidden grenade in [src].")
+			grenade.preprime(user, msg = FALSE, volume = 10)
 	else
 		to_chat(user, "<span class='notice'>You try to pet [src], but it has no stuffing. Aww...</span>")
 
 /obj/item/toy/plush/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/wirecutters))
+	if(I.is_sharp())
 		if(!grenade)
 			if(!stuffed)
 				to_chat(user, "<span class='warning'>You already murdered it!</span>")
 				return
 			user.visible_message("<span class='notice'>[user] tears out the stuffing from [src]!</span>", "<span class='notice'>You rip a bunch of the stuffing from [src]. Murderer.</span>")
-			playsound(user, I.usesound, 50, TRUE)
+			playsound(I, I.usesound, 50, TRUE)
 			stuffed = FALSE
 		else
 			to_chat(user, "<span class='notice'>You remove the grenade from [src].</span>")
@@ -57,6 +62,8 @@
 		user.visible_message("<span class='warning'>[user] slides [grenade] into [src].</span>", \
 		"<span class='danger'>You slide [I] into [src].</span>")
 		grenade = I
+		var/turf/T = get_turf(user)
+		log_game("[key_name(user)] added a grenade ([I.name]) to [src] at [COORD(T)].")
 		return
 	. = ..()
 
