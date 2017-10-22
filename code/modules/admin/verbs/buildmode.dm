@@ -82,6 +82,7 @@
 	var/valueholder = "derp"
 	var/objholder = /obj/structure/closet
 	var/atom/movable/stored = null
+	var/list/preview = list()
 
 /datum/buildmode/New(client/c)
 	create_buttons()
@@ -94,6 +95,7 @@
 	holder.screen -= buttons
 	holder.click_intercept = null
 	holder.show_popup_menus = 1
+	usr.client.images -= preview
 	qdel(src)
 	return
 
@@ -341,9 +343,15 @@
 			if(left_click) //rectangular
 				if(!cornerA)
 					cornerA = get_turf(object)
+					preview += image('icons/turf/overlays.dmi',cornerA,"greenOverlay")
+					usr.client.images += preview
 					return
 				if(cornerA && !cornerB)
 					cornerB = get_turf(object)
+					preview += image('icons/turf/overlays.dmi',cornerB,"blueOverlay")
+					usr.client.images -= preview // is this needed? or is it a reference to the list?
+					usr.client.images += preview
+					return
 				if(cornerA && cornerB)
 					if(!generator_path)
 						to_chat(user, "<span class='warning'>Select generator type first.</span>")
@@ -353,12 +361,17 @@
 						if(GLOB.reloading_map)
 							to_chat(user, "<span class='boldwarning'>You are already reloading an area! Please wait for it to fully finish loading before trying to load another!</span>")
 							return
+					for(var/S in block(cornerA, cornerB))
+						preview += image('icons/turf/overlays.dmi',S,"redOverlay")
+					usr.client.images -= preview // is this needed? or is it a reference to the list?
+					usr.client.images += preview
 					var/confirm = alert("Are you sure you want run the map generator?", "Run generator", "Yes", "No")
 					if(confirm == "Yes")
 						G.defineRegion(cornerA,cornerB,1)
 						G.generate()
 					cornerA = null
 					cornerB = null
+					usr.client.images -= preview
 					return
 			//Something wrong - Reset
 			cornerA = null
