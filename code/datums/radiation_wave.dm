@@ -89,7 +89,12 @@
 			continue
 		thing.rad_act(strength)
 
-		var/static/list/blacklisted = typecacheof(list(/turf, /mob, /obj/structure/cable, /obj/machinery/atmospherics))
+		var/static/list/blacklisted = typecacheof(list( //These types will never be contaminated
+			/turf,
+			/mob,
+			/obj/structure/cable,
+			/obj/machinery/atmospherics
+			))
 		if(!can_contaminate || blacklisted[thing.type])
 			continue
 		if(prob((strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_CHANCE_COEFFICIENT * min(1/(steps*range_modifier), 1))) // Only stronk rads get to have little baby rads
