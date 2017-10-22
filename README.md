@@ -5,14 +5,7 @@
 **Wiki** https://wiki.hippiestation.com/index.php?title=Main_Page <BR>
 **Discord:** [Request access here.](https://hippiestation.com/threads/discord-invites.6055) <BR>
 
-<<<<<<< HEAD
 ## ABOUT
-=======
-**Website:** https://www.tgstation13.org <BR>
-**Code:** https://github.com/tgstation/tgstation <BR>
-**Wiki** https://tgstation13.org/wiki/Main_Page <BR>
-**IRC:** irc://irc.rizon.net/coderbus or if you dont have an IRC client, you can click  [here](https://kiwiirc.com/client/irc.rizon.net:6667/?&theme=cli#coderbus).<BR>
->>>>>>> f8233d0a13... Updates the readme.md of the repo by changing the links to have https:// (#31854)
 
 This is the Github page for the HippieStation codebase, used on the Space Station 13 server. This codebase is built off the work of many different servers, primarily that of /tg/station 13.
 Because of this, the repository inherits /tg/station's licensing, among other things.
@@ -21,17 +14,10 @@ If you would like to contribute to this codebase, first take a look at the [CONT
 
 ## DOWNLOADING
 
-<<<<<<< HEAD
 There are a number of ways to download the source code. Some are described here, an alternative all-inclusive guide is also located at https://wiki.hippiestation.com/index.php?title=Downloading_the_source_code
 
 Option 1:
 Follow this: https://wiki.hippiestation.com/index.php?title=Setting_up_git
-=======
-There are a number of ways to download the source code. Some are described here, an alternative all-inclusive guide is also located at https://www.tgstation13.org/wiki/Downloading_the_source_code
-
-Option 1:
-Follow this: https://www.tgstation13.org/wiki/Setting_up_git
->>>>>>> f8233d0a13... Updates the readme.md of the repo by changing the links to have https:// (#31854)
 
 Option 2: Download the source code as a zip by clicking the ZIP button in the
 code tab of https://github.com/hippiestation/hippiestation
@@ -97,15 +83,8 @@ the new version.
 
 ## MAPS
 Hippie Station currently comes equipped with six maps.
-
-<<<<<<< HEAD
-* [Hippie BoxStation (default)](http://tgstation13.org/wiki/Boxstation)
-* [BoxStation (default)](http://tgstation13.org/wiki/Boxstation)
-=======
-/tg/station currently comes equipped with five maps.
-
+* [Hippie BoxStation (default)](https://tgstation13.org/wiki/Boxstation)
 * [BoxStation (default)](https://tgstation13.org/wiki/Boxstation)
->>>>>>> f8233d0a13... Updates the readme.md of the repo by changing the links to have https:// (#31854)
 * [MetaStation](https://tgstation13.org/wiki/MetaStation)
 * [DeltaStation](https://tgstation13.org/wiki/DeltaStation)
 * [OmegaStation](https://tgstation13.org/wiki/OmegaStation)
@@ -159,8 +138,4 @@ See tgui/LICENSE.md for the MIT license.
 See tgui/assets/fonts/SIL-OFL-1.1-LICENSE.md for the SIL Open Font License.
 See the footers of code/\_\_DEFINES/server\_tools.dm, code/modules/server\_tools/st\_commands.dm, and code/modules/server\_tools/st\_inteface.dm for the MIT license.
 
-<<<<<<< HEAD
-All assets including icons and sound are under a [Creative Commons 3.0 BY-SA license](http://creativecommons.org/licenses/by-sa/3.0/) unless otherwise indicated..
-=======
 All assets including icons and sound are under a [Creative Commons 3.0 BY-SA license](https://creativecommons.org/licenses/by-sa/3.0/) unless otherwise indicated.
->>>>>>> f8233d0a13... Updates the readme.md of the repo by changing the links to have https:// (#31854)
