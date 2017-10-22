@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - server: "Paper bins no longer let server admins know that pens were eaten."
