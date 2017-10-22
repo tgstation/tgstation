@@ -338,13 +338,12 @@
 					throw_atom.throw_at(object, 10, 1,user)
 					log_admin("Build Mode: [key_name(user)] threw [throw_atom] at [object] ([object.x],[object.y],[object.z])")
 		if(AREA_BUILDMODE)
-			if(!cornerA)
-				cornerA = get_turf(object)
-				return
-			if(cornerA && !cornerB)
-				cornerB = get_turf(object)
-
 			if(left_click) //rectangular
+				if(!cornerA)
+					cornerA = get_turf(object)
+					return
+				if(cornerA && !cornerB)
+					cornerB = get_turf(object)
 				if(cornerA && cornerB)
 					if(!generator_path)
 						to_chat(user, "<span class='warning'>Select generator type first.</span>")
@@ -354,6 +353,9 @@
 						if(GLOB.reloading_map)
 							to_chat(user, "<span class='boldwarning'>You are already reloading an area! Please wait for it to fully finish loading before trying to load another!</span>")
 							return
+					var/confirm = alert("Are you sure you want run the map generator?", "Run generator", "Yes", "No")
+					if(confirm == "No")
+						return
 					G.defineRegion(cornerA,cornerB,1)
 					G.generate()
 					cornerA = null
