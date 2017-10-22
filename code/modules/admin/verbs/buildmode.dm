@@ -82,6 +82,7 @@
 	var/valueholder = "derp"
 	var/objholder = /obj/structure/closet
 	var/atom/movable/stored = null
+	var/list/preview = list()
 
 /datum/buildmode/New(client/c)
 	create_buttons()
@@ -94,6 +95,8 @@
 	holder.screen -= buttons
 	holder.click_intercept = null
 	holder.show_popup_menus = 1
+	preview.Cut()
+	usr.client.images -= preview
 	qdel(src)
 	return
 
@@ -338,13 +341,16 @@
 					throw_atom.throw_at(object, 10, 1,user)
 					log_admin("Build Mode: [key_name(user)] threw [throw_atom] at [object] ([object.x],[object.y],[object.z])")
 		if(AREA_BUILDMODE)
-			if(!cornerA)
-				cornerA = get_turf(object)
-				return
-			if(cornerA && !cornerB)
-				cornerB = get_turf(object)
-
 			if(left_click) //rectangular
+				if(!cornerA)
+					cornerA = get_turf(object)
+					preview += image('icons/turf/overlays.dmi',cornerA,"greenOverlay")
+					usr.client.images += preview
+					return
+				if(cornerA && !cornerB)
+					cornerB = get_turf(object)
+					preview += image('icons/turf/overlays.dmi',cornerB,"blueOverlay")
+					return
 				if(cornerA && cornerB)
 					if(!generator_path)
 						to_chat(user, "<span class='warning'>Select generator type first.</span>")
@@ -354,10 +360,17 @@
 						if(GLOB.reloading_map)
 							to_chat(user, "<span class='boldwarning'>You are already reloading an area! Please wait for it to fully finish loading before trying to load another!</span>")
 							return
-					G.defineRegion(cornerA,cornerB,1)
-					G.generate()
+					G.defineRegion(cornerA, cornerB, 1)
+					for(var/t in G.map)
+						preview += image('icons/turf/overlays.dmi', t ,"greenOverlay")
+					usr.client.images += preview
+					var/confirm = alert("Are you sure you want run the map generator?", "Run generator", "Yes", "No")
+					if(confirm == "Yes")
+						G.generate()
 					cornerA = null
 					cornerB = null
+					preview.Cut()
+					usr.client.images -= preview
 					return
 			//Something wrong - Reset
 			cornerA = null
