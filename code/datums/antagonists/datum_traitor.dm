@@ -1,8 +1,7 @@
 /datum/antagonist/traitor
 	name = "Traitor"
 	job_rank = ROLE_TRAITOR
-	var/should_specialise = TRUE //do we split into AI and human
-	var/base_datum_custom = ANTAG_DATUM_TRAITOR_CUSTOM //used for body transfer
+	var/should_specialise = FALSE //do we split into AI and human, set to true on inital assignment only
 	var/ai_datum = ANTAG_DATUM_TRAITOR_AI
 	var/human_datum = ANTAG_DATUM_TRAITOR_HUMAN
 	var/special_role = "traitor"
@@ -11,71 +10,24 @@
 	var/should_give_codewords = TRUE
 	var/list/objectives_given = list()
 
-/datum/antagonist/traitor/proc/transfer_important_variables(datum/antagonist/traitor/other)
-	other.silent = silent
-	other.employer = employer
-	other.special_role = special_role
-	other.objectives_given = objectives_given
-
-/datum/antagonist/traitor/custom
-	ai_datum = ANTAG_DATUM_TRAITOR_AI_CUSTOM
-	human_datum = ANTAG_DATUM_TRAITOR_HUMAN_CUSTOM
-
 /datum/antagonist/traitor/human
-	should_specialise = FALSE
 	var/should_equip = TRUE
 
-/datum/antagonist/traitor/human/custom
-	silent = TRUE
-	should_give_codewords = FALSE
-	give_objectives = FALSE
-	should_equip = FALSE //Duplicating TCs is dangerous
-
 /datum/antagonist/traitor/AI
-	should_specialise = FALSE
-
-/datum/antagonist/traitor/AI/custom
-	silent = TRUE
-	should_give_codewords = FALSE
-	give_objectives = FALSE
-
-
-/datum/antagonist/traitor/on_body_transfer(mob/living/old_body, mob/living/new_body)
-	// human <-> silicon only
-	if(old_body && issilicon(new_body) ^ issilicon(old_body))
-		silent = TRUE
-		owner.add_antag_datum(base_datum_custom)
-		for(var/datum/antagonist/traitor/new_datum in owner.antag_datums)
-			if(new_datum == src)
-				continue
-			transfer_important_variables(new_datum)
-			break
-		on_removal()
-	else
-		..()
-
-/datum/antagonist/traitor/human/custom //used to give custom objectives
-	silent = TRUE
-	give_objectives = FALSE
-	should_give_codewords = FALSE
-
-/datum/antagonist/traitor/AI/custom //used to give custom objectives
-	silent = TRUE
-	give_objectives = FALSE
-	should_give_codewords = FALSE
 
 /datum/antagonist/traitor/proc/specialise()
 	silent = TRUE
-	if(owner.current&&isAI(owner.current))
+	if(owner.current && isAI(owner.current))
 		owner.add_antag_datum(ai_datum)
-	else owner.add_antag_datum(human_datum)
+	else 
+		owner.add_antag_datum(human_datum)
 	on_removal()
 
 /datum/antagonist/traitor/on_gain()
 	if(should_specialise)
 		specialise()
 		return
-	SSticker.mode.traitors+=owner
+	SSticker.mode.traitors += owner
 	owner.special_role = special_role
 	if(give_objectives)
 		forge_traitor_objectives()
@@ -85,7 +37,7 @@
 /datum/antagonist/traitor/apply_innate_effects()
 	if(owner.assigned_role == "Clown")
 		var/mob/living/carbon/human/traitor_mob = owner.current
-		if(traitor_mob&&istype(traitor_mob))
+		if(traitor_mob && istype(traitor_mob))
 			if(!silent)
 				to_chat(traitor_mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 			traitor_mob.dna.remove_mutation(CLOWNMUT)
@@ -93,7 +45,7 @@
 /datum/antagonist/traitor/remove_innate_effects()
 	if(owner.assigned_role == "Clown")
 		var/mob/living/carbon/human/traitor_mob = owner.current
-		if(traitor_mob&&istype(traitor_mob))
+		if(traitor_mob && istype(traitor_mob))
 			traitor_mob.dna.add_mutation(CLOWNMUT)
 
 /datum/antagonist/traitor/on_removal()
@@ -245,6 +197,7 @@
 			yandere_two.update_explanation_text() // normally called in find_target()
 			add_objective(yandere_two)
 			.=2
+
 /datum/antagonist/traitor/greet()
 	to_chat(owner.current, "<B><font size=3 color=red>You are the [owner.special_role].</font></B>")
 	owner.announce_objectives()
@@ -293,6 +246,8 @@
 	killer.add_malf_picker()
 
 /datum/antagonist/traitor/proc/equip(var/silent = FALSE)
+	return
+
 /datum/antagonist/traitor/human/equip(var/silent = FALSE)
 	owner.equip_traitor(employer, silent)
 
