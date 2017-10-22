@@ -121,3 +121,12 @@
 #define RCD_AIRLOCK 2
 #define RCD_DECONSTRUCT 3
 #define RCD_WINDOWGRILLE 4
+
+#define NO_DECONSTRUCT -1
+#define CONSTRUCTION_TRANSFORMATION_TYPE_AT_RUNTIME -1
+#define CONSTRUCTION_ITEM "__construction_item_replace__"
+#define CONSTRUCTION_VOLUME 50  //for all construction sounds
+
+#define DECONSTRUCTING 0
+#define CONSTRUCTING 1
+#define REPAIRING 2
