@@ -32,7 +32,7 @@
 
 /obj/item/banhammer/syndicate
 	desc = "A banhammer. Upon closer inspection, it appears to have a red tag around its handle."
-	icon = '"hippiestation/icons/obj/items_and_weapons.dmi"
+	icon = "hippiestation/icons/obj/items_and_weapons.dmi"
 	icon_state = "toyhammertagged"
 	throwforce = 20
 	force = 20
