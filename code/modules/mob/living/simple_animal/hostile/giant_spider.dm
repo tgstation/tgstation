@@ -150,6 +150,8 @@
 	. = ..()
 	if(. && isliving(target) && /mob/living/simple_animal/hostile/poison/giant_spider)
 		var/mob/living/L = target
+		L.adjustBruteLoss(30) //chorizopes eats other spiders, much like how sec eats the station
+		heal_overall_damage(10, 10)
 
 //vipers are the rare variant of the hunter, no IMMEDIATE damage but so much poison medical care will be needed fast.
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter/viper
