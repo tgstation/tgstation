@@ -95,7 +95,7 @@
 	holder.screen -= buttons
 	holder.click_intercept = null
 	holder.show_popup_menus = 1
-	GLOBAL_LIST_EMPTY(preview)
+	preview.Cut()
 	usr.client.images -= preview
 	qdel(src)
 	return
@@ -369,7 +369,7 @@
 						G.generate()
 					cornerA = null
 					cornerB = null
-					GLOBAL_LIST_EMPTY(preview)
+					preview.Cut()
 					usr.client.images -= preview
 					return
 			//Something wrong - Reset
