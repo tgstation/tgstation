@@ -27,3 +27,7 @@
 		if(health <= 0)
 			visible_message("<span class='warning'>[src] collapses in on itself!</span>")
 			qdel(src)
+
+/mob/living/carbon/regenerate_organs()
+	. = ..()
+	regeneratebutt()
