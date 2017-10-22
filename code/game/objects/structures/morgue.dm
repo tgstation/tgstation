@@ -168,6 +168,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	icon_state = "crema1"
 	opendir = SOUTH
 	var/id = 1
+	max_integrity = 4000
 
 /obj/structure/bodycontainer/crematorium/attack_robot(mob/user) //Borgs can't use crematoriums without help
 	to_chat(user, "<span class='warning'>[src] is locked against you.</span>")
