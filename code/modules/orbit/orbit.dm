@@ -54,6 +54,8 @@
 	lastloc = orbiter.loc
 	for(var/other_orbit in orbiter.orbiters)
 		var/datum/orbit/OO = other_orbit
+		if(OO == src)
+			continue
 		OO.Check(targetloc)
 
 /atom/movable/var/datum/orbit/orbiting = null

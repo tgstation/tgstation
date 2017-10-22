@@ -117,7 +117,7 @@
 			on = !on
 			if(on)
 				message_admins("[key_name_admin(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [ADMIN_COORDJMP(src)].")
-				log_admin("[key_name(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [COORD(src)].")
+				log_game("[key_name(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [COORD(src)].")
 				add_logs(usr, src, "has activated [src] which contains [english_list(reagents.reagent_list)].")
 		if("goScreen")
 			screen = params["screen"]

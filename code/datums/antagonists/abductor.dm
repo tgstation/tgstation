@@ -1,5 +1,6 @@
 /datum/antagonist/abductor
 	name = "Abductor"
+	job_rank = ROLE_ABDUCTOR
 	var/datum/objective_team/abductor_team/team
 	var/sub_role
 	var/outfit
