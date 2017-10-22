@@ -366,7 +366,7 @@
 					user.client.images += preview
 					var/confirm = alert("Are you sure you want run the map generator?", "Run generator", "Yes", "No")
 					if(confirm == "Yes")
-    					G.generate()
+						G.generate()
 					cornerA = null
 					cornerB = null
 					GLOBAL_LIST_EMPTY(preview)
