@@ -317,13 +317,15 @@
 	if(actually_paints)
 		switch(paint_mode)
 			if(PAINT_NORMAL)
-				new /obj/effect/decal/cleanable/crayon(target, paint_color, drawing, temp, graf_rot)
+				var/obj/effect/decal/cleanable/crayon/C = new(target, paint_color, drawing, temp, graf_rot)
+				C.add_hiddenprint(user)
 				affected_turfs += target
 			if(PAINT_LARGE_HORIZONTAL)
 				var/turf/left = locate(target.x-1,target.y,target.z)
 				var/turf/right = locate(target.x+1,target.y,target.z)
 				if(is_type_in_list(left, validSurfaces) && is_type_in_list(right, validSurfaces))
-					new /obj/effect/decal/cleanable/crayon(left, paint_color, drawing, temp, graf_rot, PAINT_LARGE_HORIZONTAL_ICON)
+					var/obj/effect/decal/cleanable/crayon/C = new(left, paint_color, drawing, temp, graf_rot, PAINT_LARGE_HORIZONTAL_ICON)
+					C.add_hiddenprint(user)
 					affected_turfs += left
 					affected_turfs += right
 					affected_turfs += target
