@@ -1,3 +1,5 @@
+
+
 /datum/species/human
 	name = "Human"
 	id = "human"
@@ -10,6 +12,11 @@
 	disliked_food = GROSS | RAW
 	liked_food = JUNKFOOD | FRIED
 
+
+/datum/species/human/New()
+	if(!CONFIG_GET(flag/join_with_mutant_humans))
+		mutant_bodyparts = list()
+	..()
 
 /datum/species/human/qualifies_for_rank(rank, list/features)
 	return TRUE	//Pure humans are always allowed in all roles.
@@ -25,9 +32,10 @@
 		return TRUE
 
 datum/species/human/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
-	if(H.dna.features["ears"] == "Cat")
-		mutantears = /obj/item/organ/ears/cat
-	if(H.dna.features["tail_human"] == "Cat")
-		var/tail = /obj/item/organ/tail/cat
-		mutant_organs += tail
+	if(CONFIG_GET(flag/join_with_mutant_humans))
+		if(H.dna.features["ears"] == "Cat")
+			mutantears = /obj/item/organ/ears/cat
+		if(H.dna.features["tail_human"] == "Cat")
+			var/tail = /obj/item/organ/tail/cat
+			mutant_organs += tail
 	..()
