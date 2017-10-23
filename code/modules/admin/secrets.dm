@@ -65,10 +65,11 @@
 			<A href='?src=\ref[src];[HrefToken()];secrets=whiteout'>Fix all lights</A><BR>
 			<A href='?src=\ref[src];[HrefToken()];secrets=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
 			<BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=changebombcap'>Change bomb cap</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=masspurrbation'>Mass Purrbation</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=massremovepurrbation'>Mass Remove Purrbation</A><BR>
-			"}
+			<A href='?src=\ref[src];[HrefToken()];secrets=changebombcap'>Change bomb cap</A><BR>"
+		if(CONFIG_GET(flag/join_with_mutant_humans))
+			dat += "<A href='?src=\ref[src];[HrefToken()];secrets=masspurrbation'>Mass Purrbation</A><BR>"
+			dat += "<A href='?src=\ref[src];[HrefToken()];secrets=massremovepurrbation'>Mass Remove Purrbation</A><BR>"
+		dat += "}"
 
 	dat += "<BR>"
 
@@ -551,6 +552,9 @@
 				return
 			toggle_all_ctf(usr)
 		if("masspurrbation")
+			if(!CONFIG_GET(flag/join_with_mutant_humans))
+				log_admin("[key_name(usr)] has attempted to href exploit apply masspurrbation.")
+				return
 			if(!check_rights(R_FUN))
 				return
 			mass_purrbation()
@@ -558,6 +562,9 @@
 				purrbation!")
 			log_admin("[key_name(usr)] has put everyone on purrbation.")
 		if("massremovepurrbation")
+			if(!CONFIG_GET(flag/join_with_mutant_humans))
+				log_admin("[key_name(usr)] has attempted to href exploit apply massremovepurrbation.")
+				return
 			if(!check_rights(R_FUN))
 				return
 			mass_remove_purrbation()
