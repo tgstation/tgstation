@@ -32,9 +32,7 @@
 	if (detectTime == 0)
 		detectTime = world.time // start the clock
 	var/list/targets = getTargetList()
-	var/ref = "\ref[target]"
-	if (!(ref in targets))
-		targets += ref
+	targets |= "\ref[target]"
 	return 1
 
 /obj/machinery/camera/Destroy()
@@ -45,9 +43,7 @@
 
 /obj/machinery/camera/proc/lostTarget(mob/target)
 	var/list/targets = getTargetList()
-	var/ref = "\ref[target]"
-	if (ref in targets)
-		targets -= ref
+	targets -= "\ref[target]"
 	if (targets.len == 0)
 		cancelAlarm()
 
