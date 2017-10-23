@@ -826,11 +826,14 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 
 /client/proc/clear_dynamic_transit()
 	set category = "Debug"
-	set name = "Clear Dynamic Transit"
-	set desc = "Deallocates all transit space, restoring it to round start conditions."
+	set name = "Clear Dynamic Turf Reservations"
+	set desc = "Deallocates all reserved space, restoring it to round start conditions."
 	if(!holder)
 		return
-	SSshuttle.clear_transit = TRUE
+	var/answer = alert("WARNING: THIS WILL WIPE ALL RESERVED SPACE TO A CLEAN SLATE! ANY MOVING SHUTTLES, ELEVATORS, OR IN-PROGRESS PHOTOGRAPHY WILL BE DELETED!", "Really wipe dynamic turfs?", "YES", "NO")
+	if(answer != "YES")
+		return
+	SSmapping.clear_reserved_spaces()
 	message_admins("<span class='adminnotice'>[key_name_admin(src)] cleared dynamic transit space.</span>")
 	SSblackbox.add_details("admin_verb","Clear Dynamic Transit") // If...
 	log_admin("[key_name(src)] cleared dynamic transit space.")

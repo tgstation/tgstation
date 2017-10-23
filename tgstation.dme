@@ -255,6 +255,7 @@
 #include "code\datums\shuttles.dm"
 #include "code\datums\soullink.dm"
 #include "code\datums\spawners_menu.dm"
+#include "code\datums\turf_reservation.dm"
 #include "code\datums\verbs.dm"
 #include "code\datums\world_topic.dm"
 #include "code\datums\actions\flightsuit.dm"

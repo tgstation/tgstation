@@ -19,6 +19,11 @@ SUBSYSTEM_DEF(mapping)
 	var/list/shelter_templates = list()
 
 	var/loading_ruins = FALSE
+	var/list/turf/unused_turfs = list()				//Not actually unused turfs they're unused but reserved for use for whatever requests them. "[zlevel_of_turf]" = list(turfs)
+	var/list/datum/turf_reservations = list()		//list of turf reservations
+	var/list/turf/used_turfs = list()				//list of turf = datum/turf_reservations
+
+	var/clearing_reserved_areas
 
 /datum/controller/subsystem/mapping/PreInit()
 	if(!config)
@@ -50,7 +55,7 @@ SUBSYSTEM_DEF(mapping)
 	var/space_zlevels = list()
 	for(var/i in ZLEVEL_SPACEMIN to ZLEVEL_SPACEMAX)
 		switch(i)
-			if(ZLEVEL_MINING, ZLEVEL_LAVALAND, ZLEVEL_EMPTY_SPACE, ZLEVEL_TRANSIT, ZLEVEL_CITYOFCOGS)
+			if(ZLEVEL_MINING, ZLEVEL_LAVALAND, ZLEVEL_EMPTY_SPACE, ZLEVEL_RESERVED, ZLEVEL_CITYOFCOGS)
 				continue
 			else
 				space_zlevels += i
@@ -60,6 +65,7 @@ SUBSYSTEM_DEF(mapping)
 	repopulate_sorted_areas()
 	// Set up Z-level transistions.
 	setup_map_transitions()
+	initialize_reserved_level()
 	..()
 
 /* Nuke threats, for making the blue tiles on the station go RED
@@ -91,6 +97,9 @@ SUBSYSTEM_DEF(mapping)
 	lava_ruins_templates = SSmapping.lava_ruins_templates
 	shuttle_templates = SSmapping.shuttle_templates
 	shelter_templates = SSmapping.shelter_templates
+	unused_turfs = SSmapping.unused_turfs
+	turf_reservations = SSmapping.turf_reservations.
+	used_turfs = SSmapping.used_turfs
 
 	config = SSmapping.config
 	next_map_config = SSmapping.next_map_config
@@ -253,3 +262,28 @@ SUBSYSTEM_DEF(mapping)
 
 		shelter_templates[S.shelter_id] = S
 		map_templates[S.shelter_id] = S
+
+/datum/controller/subsystem/mapping/proc/RequestBlockReservation(width, height, z = ZLEVEL_RESERVED)
+	var/datum/turf_reservation/reserve = new
+	if(!reserve.Reserve(width, height, z))
+		return
+	return reserve
+
+/datum/controller/subsystem/mapping/proc/initialize_reserved_level()
+	// transit zone
+	var/turf/A = get_turf(locate(SHUTTLE_TRANSIT_BORDER,SHUTTLE_TRANSIT_BORDER,ZLEVEL_RESERVED))
+	var/turf/B = get_turf(locate(world.maxx - SHUTTLE_TRANSIT_BORDER,world.maxy - SHUTTLE_TRANSIT_BORDER,ZLEVEL_RESERVED))
+	reserve_turfs(block(A, B))
+
+/datum/controller/subsystem/mapping/proc/reserve_turfs(list/turfs)
+	for(var/i in turfs)
+		RESERVE_TURF(i)
+
+/datum/controller/subsystem/mapping/proc/wipe_turf_reservations()
+	for(var/i in turf_reservations)
+		var/datum/turf_reservation/TR = i
+		TR.wipe_reservation_on_delete = TRUE
+		qdel(TR)
+	for(var/i in (used_turfs + unused_turfs))
+		qdel(i, TRUE)
+		RESERVE_TURF(i)
