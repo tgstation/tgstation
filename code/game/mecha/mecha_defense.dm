@@ -25,6 +25,8 @@
 
 /obj/mecha/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	. = ..()
+	if(!damage_amount)
+		return 0
 	var/booster_deflection_modifier = 1
 	var/booster_damage_modifier = 1
 	if(damage_flag == "bullet" || damage_flag == "laser" || damage_flag == "energy")
