@@ -12,6 +12,9 @@
 	var/node1_concentration = 0.5
 	var/node2_concentration = 0.5
 
+	construction_type = /obj/item/pipe/trinary/flippable
+	pipe_state = "mixer"
+
 	//node 3 is the outlet, nodes 1 & 2 are intakes
 
 /obj/machinery/atmospherics/components/trinary/mixer/flipped
@@ -171,4 +174,3 @@
 	if(. && on && is_operational())
 		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		return FALSE
-
