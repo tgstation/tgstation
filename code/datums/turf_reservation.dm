@@ -70,10 +70,9 @@
 	return TRUE
 
 /datum/turf_reservation/New()
-	SSmapping.turf_reservations += src
-	return ..()
+	LAZYADD(SSmapping.turf_reservations, src)
 
 /datum/turf_reservation/Destroy()
 	Release()
-	SSmapping.turf_reservations -= src
+	LAZYREMOVE(SSmapping.turf_reservations, src)
 	return ..()
