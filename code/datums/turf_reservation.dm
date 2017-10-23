@@ -12,19 +12,9 @@
 	turf_type = /turf/open/space/transit
 
 /datum/turf_reservation/proc/Release()
-	var/datum/mapGenerator/massdelete/MD = new
-	MD.map = reserved_turfs.Copy()
 	for(var/i in reserved_turfs)
-		var/turf/T = i
-		T.flags_1 &= ~UNUSED_RESERVED_TURF_1
-		reserved_turfs -= T
-	if(wipe_reservation_on_release)
-		MD.generate()
-		for(var/i in MD.map)
-			RESERVE_TURF(i)
-			var/turf/T = i
-			T.ChangeTurf(turf_type)
-	SSmapping.used_turfs -= src
+		reserved_turfs -= i
+		UNRESERVE_TURF(i)
 
 /datum/turf_reservation/proc/Reserve(width, height, zlevel = ZLEVEL_RESERVED)
 	if(width > world.maxx || height > world.maxy)
@@ -37,12 +27,12 @@
 	for(var/i in avail)
 		CHECK_TICK
 		TL = i
-		if(!(TL.flags_1 & UNUSED_RESERVED_TURF_1))
+		if(!(TL.flags_1 & UNUSED_RESERVATION_TURF_1))
 			continue
 		if(TL.x + width > world.maxx || TL.y + height > world.maxy)
 			continue
 		BR = locate(TL.x + width, TL.y + height, TL.z)
-		if(!(BR.flags_1 & UNUSED_RESERVED_TURF_1))
+		if(!(BR.flags_1 & UNUSED_RESERVATION_TURF_1))
 			continue
 		final = block(TL, BR)
 		if(!final)
@@ -50,7 +40,7 @@
 		passing = TRUE
 		for(var/I in final)
 			var/turf/checking = I
-			if(!(checking.flags_1 & UNUSED_RESERVED_TURF_1))
+			if(!(checking.flags_1 & UNUSED_RESERVATION_TURF_1))
 				passing = FALSE
 				break
 		if(!passing)
@@ -63,10 +53,8 @@
 	bottom_right_coords = list(BR.x, BR.y, BR.z)
 	for(var/i in final)
 		var/turf/T = i
-		T.flags_1 &= ~UNUSED_RESERVED_TURF_1
-		reserved_turfs += T
-		SSmapping.used_turfs[src] += T
-		SSmapping.unused_turfs -= T
+		RESERVE_TURF(T, src)
+		T.ChangeTurf(turf_type, turf_type)
 	return TRUE
 
 /datum/turf_reservation/New()

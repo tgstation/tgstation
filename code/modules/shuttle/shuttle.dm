@@ -235,7 +235,6 @@
 		QDEL_NULL(reserved_area)
 	. = ..()
 
-
 /obj/docking_port/mobile
 	name = "shuttle"
 	icon_state = "pinonclose"

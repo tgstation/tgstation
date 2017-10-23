@@ -277,14 +277,20 @@ SUBSYSTEM_DEF(mapping)
 
 /datum/controller/subsystem/mapping/proc/reserve_turfs(list/turfs)
 	for(var/i in turfs)
-		RESERVE_TURF(i)
+		SET_RESERVATION_TURF(i)
 
 /datum/controller/subsystem/mapping/proc/wipe_turf_reservations()
 	for(var/i in turf_reservations)
 		var/datum/turf_reservation/TR = i
-		TR.wipe_reservation_on_release = TRUE
-		qdel(TR)
-	for(var/i in (used_turfs + unused_turfs))
-		qdel(i, TRUE)
-		RESERVE_TURF(i)
+		qdel(TR, TRUE)
+	var/list/clearing = list()
+	for(var/l in unused_turfs)
+		for(var/i in l)
+			clearing |= i
+	for(var/i in used_turfs)
+		clearing |= i
+	unused_turfs = list()
+	used_turfs = list()
+	for(var/i in clearing)
+		SET_RESERVATION_TURF(i)
 	UNSETEMPTY(turf_reservations)
