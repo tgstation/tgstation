@@ -130,8 +130,8 @@
 	L.apply_effect(STUTTER, 7) //Duration of sec baton
 	user.changeNext_move(CLICK_CD_MELEE * MAKESHIFT_BATON_CD)
 	if(user)
-		user.lastattacked = L
-		L.lastattacker = user
+		L.lastattacker = user.real_name
+		L.lastattackerckey = user.ckey
 		L.visible_message("<span class='danger'>[user] has stunned [L] with [src]!</span>", \
 								"<span class='userdanger'>[user] has stunned you with [src]!</span>")
 		add_logs(user, L, "stunned")
