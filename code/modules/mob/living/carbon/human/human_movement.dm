@@ -29,10 +29,13 @@
 	. = ..()
 	for(var/datum/mutation/human/HM in dna.mutations)
 		HM.on_move(src, NewLoc)
-
-	if(shoes)
-		if(!lying && !buckled)
-			if(loc == NewLoc)
+		
+	if(!lying && !buckled)
+		if(loc == NewLoc)
+			if(hair_style == "Floorlength Braid" && prob(1))
+				Knockdown(10)
+				visible_message("[src] trips on their hair.", "You trip on your hair.", "You hear a thump.")
+			if(shoes)
 				if(!has_gravity(loc))
 					return
 				var/obj/item/clothing/shoes/S = shoes
