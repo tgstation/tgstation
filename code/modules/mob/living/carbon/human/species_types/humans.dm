@@ -1,5 +1,3 @@
-
-
 /datum/species/human
 	name = "Human"
 	id = "human"
