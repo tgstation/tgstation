@@ -450,11 +450,13 @@
 			playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 100, 1, -1)
 			playsound(loc, 'sound/weapons/egloves.ogg', 100, 1, -1)
 			H.emote("scream")
-			if(H.can_heartattack() && !H.undergoing_cardiac_arrest())
-				if(!H.stat)
-					H.visible_message("<span class='warning'>[H] thrashes wildly, clutching at their chest!</span>",
-						"<span class='userdanger'>You feel a horrible agony in your chest!</span>")
-				H.set_heartattack(TRUE)
+			if(ishuman(H))
+				var/mob/living/carbon/human/I = H
+				if(I.can_heartattack() && !I.undergoing_cardiac_arrest())
+					if(!I.stat)
+						I.visible_message("<span class='warning'>[I] thrashes wildly, clutching at their chest!</span>",
+							"<span class='userdanger'>You feel a horrible agony in your chest!</span>")
+					H.set_heartattack(TRUE)
 			H.apply_damage(50, BURN, "chest")
 			add_logs(user, H, "overloaded the heart of", defib)
 			H.Knockdown(100)
