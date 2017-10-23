@@ -46,7 +46,7 @@
 	var/recharge_message = "pings."
 	var/recharging_text = "It is whirring and clicking. It seems to be recharging."
 
-	var/break_message = "lets out a tiny alarm before falling dark."
+	var/break_message = "lets out a tinny alarm before falling dark."
 	var/break_sound = 'sound/machines/warning-buzzer.ogg'
 
 /obj/machinery/droneDispenser/Initialize()
