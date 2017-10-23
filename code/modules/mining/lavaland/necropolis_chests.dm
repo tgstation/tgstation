@@ -875,11 +875,7 @@
 	var/create_delay = 30
 	var/reset_cooldown = 50
 	var/timer = 0
-	var/banned_turfs
-
-/obj/item/lava_staff/Initialize()
-	. = ..()
-	banned_turfs = typecacheof(list(/turf/open/space/transit, /turf/closed))
+	var/static/list/banned_turfs = typecacheof(list(/turf/open/space/transit, /turf/closed))
 
 /obj/item/lava_staff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	..()
