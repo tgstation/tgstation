@@ -29917,6 +29917,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -30972,6 +30973,7 @@
 /area/security/main)
 "bpz" = (
 /obj/effect/landmark/secequipment,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -31636,6 +31638,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -32246,6 +32249,7 @@
 	pixel_x = 32
 	},
 /obj/effect/landmark/secequipment,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -43064,6 +43068,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
 /obj/item/gun/ballistic/shotgun/riot,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
 "bNh" = (
@@ -43987,6 +43997,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
 "bOX" = (
@@ -45221,6 +45234,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
 "bRd" = (
@@ -46501,6 +46517,10 @@
 	dir = 9
 	},
 /obj/effect/turf_decal/bot,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
 "bTv" = (
@@ -50192,12 +50212,14 @@
 /area/security/brig)
 "caT" = (
 /obj/structure/closet/secure_closet/security/sec,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/red/side{
 	dir = 5
 	},
 /area/security/brig)
 "caU" = (
 /obj/structure/closet/secure_closet/security/sec,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/red,
 /area/security/brig)
 "caV" = (
@@ -51801,6 +51823,7 @@
 /area/security/brig)
 "cei" = (
 /obj/structure/closet/secure_closet/security/sec,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
@@ -51813,6 +51836,7 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/red/side{
 	dir = 10
 	},
@@ -51852,6 +51876,7 @@
 /obj/machinery/ai_status_display{
 	pixel_y = -32
 	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
@@ -127641,7 +127666,7 @@ aaa
 aiW
 ajL
 ajL
-alP
+akQ
 ajL
 YGJ
 eqb
@@ -129698,7 +129723,7 @@ aiW
 ajL
 akR
 ajL
-alP
+akQ
 ajL
 eps
 epu
