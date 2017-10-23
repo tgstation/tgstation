@@ -58,7 +58,7 @@
 				V.reagent_type = src
 			log_game("Reagent vapour of type [src.name] was released at [COORD(T)] Last Fingerprint: [touch_msg] ")
 //liquid
-	var/list/chempile_reagent_blacklist = list("water", "lube", "bleach", "cleaner", "colorful_reagent", "condensedcapsaicin", "radium", "thermite", "smoke_powder")//add stuff that doesn't make sense/is too op for turfchems
+	var/list/chempile_reagent_blacklist = list("water", "lube", "bleach", "cleaner", "colorful_reagent", "condensedcapsaicin", "radium", "thermite", "smoke_powder", "sugar")//add stuff that doesn't make sense/is too op for turfchems
 	if(src.reagent_state == LIQUID)
 		if(src.id in chempile_reagent_blacklist)
 			return
