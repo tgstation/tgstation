@@ -21,7 +21,7 @@ SUBSYSTEM_DEF(mapping)
 	var/loading_ruins = FALSE
 	var/list/turf/unused_turfs = list()				//Not actually unused turfs they're unused but reserved for use for whatever requests them. "[zlevel_of_turf]" = list(turfs)
 	var/list/datum/turf_reservations		//list of turf reservations
-	var/list/turf/used_turfs = list()				//list of turf = datum/turf_reservations
+	var/list/used_turfs = list()				//list of turf = datum/turf_reservation
 
 	var/clearing_reserved_areas
 
