@@ -286,6 +286,7 @@
 	var/req_defib = 1
 	var/combat = 0 //If it penetrates armor and gives additional functionality
 	var/grab_ghost = FALSE
+	var/tlimit = DEFIB_TIME_LIMIT * 10
 
 /obj/item/twohanded/shockpaddles/proc/recharge(var/time)
 	if(req_defib || !time)
@@ -387,7 +388,7 @@
 	if((!req_defib && grab_ghost) || (req_defib && defib.grab_ghost))
 		H.notify_ghost_cloning("Your heart is being defibrillated!")
 		H.grab_ghost() // Shove them back in their body.
-	else if(!H.suiciding && !(H.disabilities & NOCLONE)&& !H.hellbound)
+	else if(!H.suiciding && !(H.disabilities & NOCLONE) && !H.hellbound && !((world.time - H.timeofdeath) > tlimit) && !(H.getBruteLoss() >= 180 || H.getFireLoss() >= 180) && H.getorgan(/obj/item/organ/heart))
 		H.notify_ghost_cloning("Your heart is being defibrillated. Re-enter your corpse if you want to be revived!", source = src)
 
 	do_help(H, user)
@@ -481,7 +482,6 @@
 		var/tplus = world.time - H.timeofdeath
 		// past this much time the patient is unrecoverable
 		// (in deciseconds)
-		var/tlimit = DEFIB_TIME_LIMIT * 10
 		// brain damage starts setting in on the patient after
 		// some time left rotting
 		var/tloss = DEFIB_TIME_LOSS * 10
