@@ -367,13 +367,13 @@
 		do_disarm(M, user)
 		return
 
-	if(!ishuman(M))
+	if(!iscarbon(M))
 		if(req_defib)
 			to_chat(user, "<span class='warning'>The instructions on [defib] don't mention how to revive that...</span>")
 		else
 			to_chat(user, "<span class='warning'>You aren't sure how to revive that...</span>")
 		return
-	var/mob/living/carbon/human/H = M
+	var/mob/living/carbon/H = M
 
 
 	if(user.zone_selected != "chest")
@@ -471,7 +471,7 @@
 	busy = FALSE
 	update_icon()
 
-/obj/item/twohanded/shockpaddles/proc/do_help(mob/living/carbon/human/H, mob/living/user)
+/obj/item/twohanded/shockpaddles/proc/do_help(mob/living/carbon/H, mob/living/user)
 	user.visible_message("<span class='warning'>[user] begins to place [src] on [H]'s chest.</span>", "<span class='warning'>You begin to place [src] on [H]'s chest...</span>")
 	busy = TRUE
 	update_icon()
