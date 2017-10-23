@@ -4784,6 +4784,7 @@
 	pixel_y = 30
 	},
 /obj/structure/closet/secure_closet/security/sec,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "ajz" = (
@@ -4794,6 +4795,7 @@
 /obj/machinery/airalarm{
 	pixel_y = 28
 	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "ajB" = (
@@ -5360,6 +5362,7 @@
 "akH" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/structure/closet/secure_closet/security/sec,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "akI" = (
@@ -5373,6 +5376,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "akK" = (
@@ -7394,6 +7398,7 @@
 	icon_state = "4-8"
 	},
 /obj/structure/closet/secure_closet/security/sec,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "aoA" = (
@@ -8728,6 +8733,7 @@
 /area/security/warden)
 "arj" = (
 /obj/structure/closet/secure_closet/security/sec,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "ark" = (

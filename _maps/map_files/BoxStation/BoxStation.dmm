@@ -661,6 +661,7 @@
 /area/security/main)
 "abP" = (
 /obj/structure/closet/secure_closet/security/sec,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
 "abQ" = (
@@ -680,6 +681,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
 "abS" = (

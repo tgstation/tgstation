@@ -53584,12 +53584,14 @@
 /area/security/brig)
 "caT" = (
 /obj/structure/closet/secure_closet/security/sec,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/red/side{
 	dir = 5
 	},
 /area/security/brig)
 "caU" = (
 /obj/structure/closet/secure_closet/security/sec,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/red,
 /area/security/brig)
 "caV" = (
@@ -55344,6 +55346,7 @@
 /area/security/brig)
 "cei" = (
 /obj/structure/closet/secure_closet/security/sec,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
@@ -55358,6 +55361,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/red/side{
 	dir = 10
 	},
@@ -55405,6 +55409,7 @@
 /obj/machinery/ai_status_display{
 	pixel_y = -32
 	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
