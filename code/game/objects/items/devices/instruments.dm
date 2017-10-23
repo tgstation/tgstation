@@ -219,9 +219,8 @@
 	if(ishuman(user)) //this weapon wasn't meant for mortals.
 		var/mob/living/carbon/human/U = user
 		if(!istype(U.dna.species, /datum/species/skeleton))
-			U.adjustStaminaLoss(25) //Extra Damage
+			U.adjustStaminaLoss(15) //Extra Damage
 			attack(user)
-			U.Knockdown(30)
 			to_chat(U, "<span class= 'danger'> Your ears weren't meant for this spectral sound.</span>")
 			return ..()
 
@@ -230,23 +229,22 @@
 		if(istype(H.dna.species, /datum/species/skeleton))
 			return ..() //undead are unaffected by the spook-pocalypse.
 		if(istype(H.dna.species, /datum/species/zombie))
-			H.adjustStaminaLoss(25) //zombies can't resist the doot
-		C.Knockdown(15)
-		C.Jitter(15)
+			H.adjustStaminaLoss(20)
+			H.Knockdown(15) //zombies can't resist the doot
+		C.Jitter(35)
 		C.stuttering = 20
-		C.adjustStaminaLoss(25) //only humanoids lose the will to live
+		C.adjustStaminaLoss(20) //only humanoids lose the will to live
 		to_chat(C, "<font color='red' size='4'><B>DOOT</B></span>")
 
 		if((H.getStaminaLoss() > 95) && (!istype(H.dna.species, /datum/species/skeleton)) && (!istype(H.dna.species, /datum/species/golem)) && (!istype(H.dna.species, /datum/species/android)) && (!istype(H.dna.species, /datum/species/jelly)))
-			H.Knockdown(30) //doot!
+			H.Knockdown(20)
 			H.set_species(/datum/species/skeleton)
 			H.visible_message("<span class='warning'>[H] has given up on life as a mortal.</span>")
 			to_chat(H, "<B>You are the spooky skeleton!</B>")
-			to_chat(H, "A new life and identity has begun. Help your fellow skeletons into bringing out the spooky-pocalypse. You haven't forgotten your past life, but you are no longer beholden to any past loyalties.")
+			to_chat(H, "A new life and identity has begun. Help your fellow skeletons into bringing out the spooky-pocalypse. You haven't forgotten your past life, and are still beholden to past loyalties.")
 			change_name(H)	//time for a new name!
 
 	else
-		C.Knockdown(15)
 		C.Jitter(15)
 		C.stuttering = 20
 
