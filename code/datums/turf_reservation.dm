@@ -50,7 +50,6 @@
 		break
 	if(!passing || !istype(TL) || !istype(BR))
 		return FALSE
-	LAZYINITLIST(SSmapping.used_turfs[src])
 	top_left_coords = list(TL.x, TL.y, TL.z)
 	bottom_right_coords = list(BR.x, BR.y, BR.z)
 	for(var/i in final)
