@@ -6,7 +6,7 @@
 SUBSYSTEM_DEF(atoms)
 	name = "Atoms"
 	init_order = INIT_ORDER_ATOMS
-	can_fire = FALSE
+	flags = SS_NO_FIRE
 
 	var/initialized = INITIALIZATION_INSSATOMS
 	var/old_initialized
@@ -33,23 +33,23 @@ SUBSYSTEM_DEF(atoms)
 	
 	var/count
 	var/list/mapload_arg = list(TRUE)
-	if(!atoms)
+	if(atoms)
+		created_atoms = list()
+		count = atoms.len
+		for(var/I in atoms)
+			var/atom/A = I
+			if(!A.initialized)
+				if(InitAtom(I, mapload_arg))
+					atoms -= I
+				CHECK_TICK
+	else
 		count = 0
 		for(var/atom/A in world)
 			if(!A.initialized)
 				InitAtom(A, mapload_arg)
 				++count
 				CHECK_TICK
-	else
-		created_atoms = list()
-		count = atoms.len
-	
-	current_job = atoms
-	for(var/I in atoms)
-		if(InitAtom(I, mapload_arg))
-			atoms -= I
-		CHECK_TICK
-	current_job = null
+
 	log_world("Initialized [count] atoms")
 
 	initialized = INITIALIZATION_INNEW_REGULAR
@@ -62,9 +62,8 @@ SUBSYSTEM_DEF(atoms)
 		late_loaders.Cut()
 	
 	if(atoms)
-		. = created_atoms
-		created_atoms = null
-		. += atoms
+		. = created_atoms + atoms
+		created_atoms = null 
 
 /datum/controller/subsystem/atoms/proc/InitAtom(atom/A, list/arguments)
 	var/the_type = A.type
@@ -99,11 +98,7 @@ SUBSYSTEM_DEF(atoms)
 	else if(!A.initialized)
 		BadInitializeCalls[the_type] |= BAD_INIT_DIDNT_INIT
 	
-	. =  qdeleted || QDELING(A)
-	if(!.)
-		var/list/_created_atoms = created_atoms
-		if(__created_atoms)
-			_created_atoms += A
+	return qdeleted || QDELING(A)
 
 /datum/controller/subsystem/atoms/proc/map_loader_begin()
 	old_initialized = initialized
