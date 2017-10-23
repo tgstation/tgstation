@@ -5,10 +5,9 @@ SUBSYSTEM_DEF(minimap)
 	var/const/MINIMAP_SIZE = 2048
 	var/const/TILE_SIZE = 8
 
-	var/list/z_levels = list(ZLEVEL_STATION_PRIMARY)
-
 /datum/controller/subsystem/minimap/Initialize(timeofday)
 	var/hash = md5(SSmapping.config.GetFullMapPath())
+	var/list/z_levels = SSmapping.levels_by_trait(STATION_LEVEL)
 	if(CONFIG_GET(flag/generate_minimaps))
 		if(hash == trim(file2text(hash_path())))
 			for(var/z in z_levels)	//We have these files cached, let's register them
@@ -22,12 +21,12 @@ SUBSYSTEM_DEF(minimap)
 	else
 		to_chat(world, "<span class='boldannounce'>Minimap generation disabled. Loading from cache...</span>")
 		var/fileloc = 0
-		if(check_files(0))	//Let's first check if we have maps cached in the data folder. NOTE: This will override the backup files even if this map is older.
+		if(check_files(FALSE, z_levels))	//Let's first check if we have maps cached in the data folder. NOTE: This will override the backup files even if this map is older.
 			if(hash != trim(file2text(hash_path())))
 				to_chat(world, "<span class='boldannounce'>Loaded cached minimap is outdated. There may be minor discrepancies in layout.</span>"	)
 			fileloc = 0
 		else
-			if(!check_files(1))
+			if(!check_files(TRUE, z_levels))
 				to_chat(world, "<span class='boldannounce'>Failed to load backup minimap file. Aborting.</span>"	)
 				return
 			fileloc = 1	//No map image cached with the current map, and we have a backup. Let's fall back to it.
@@ -36,7 +35,7 @@ SUBSYSTEM_DEF(minimap)
 			register_asset("minimap_[z].png", fcopy_rsc(map_path(z,fileloc)))
 	..()
 
-/datum/controller/subsystem/minimap/proc/check_files(backup)	// If the backup argument is true, looks in the icons folder. If false looks in the data folder.
+/datum/controller/subsystem/minimap/proc/check_files(backup, list/z_levels)	// If the backup argument is true, looks in the icons folder. If false looks in the data folder.
 	for(var/z in z_levels)
 		if(!fexists(file(map_path(z,backup))))	//Let's make sure we have a file for this map
 			if(backup)

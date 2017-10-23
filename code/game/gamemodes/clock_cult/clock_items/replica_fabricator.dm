@@ -94,7 +94,7 @@
 		fabrication_values["power_cost"] = 0
 
 	var/turf/Y = get_turf(user)
-	if(!Y || (!(Y.z in GLOB.station_z_levels) && Y.z != ZLEVEL_CENTCOM && Y.z != ZLEVEL_MINING && Y.z != ZLEVEL_LAVALAND))
+	if(!Y || !SSmapping.check_level_has_trait(Y.z, list(STATION_LEVEL, CENTCOM, MINING_LEVEL))
 		fabrication_values["operation_time"] *= 2
 		if(fabrication_values["power_cost"] > 0)
 			fabrication_values["power_cost"] *= 2

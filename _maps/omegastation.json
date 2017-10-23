@@ -3,6 +3,6 @@
     "map_path": "map_files/OmegaStation",
     "map_file": "OmegaStation.dmm",
     "minetype": "lavaland",
-    "transition_config": "default",
+    "traits": "default",
     "allow_custom_shuttles": "yes"
 }

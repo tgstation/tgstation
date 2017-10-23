@@ -14,7 +14,8 @@
 	range = RANGED
 
 /obj/item/mecha_parts/mecha_equipment/teleporter/action(atom/target)
-	if(!action_checks(target) || src.loc.z == ZLEVEL_CENTCOM)
+	var/turf/T = get_turf(src)
+	if(!action_checks(target) || is_centcom(T.z))
 		return
 	var/turf/T = get_turf(target)
 	if(T)
@@ -36,7 +37,8 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/wormhole_generator/action(atom/target)
-	if(!action_checks(target) || src.loc.z == ZLEVEL_CENTCOM)
+	var/turf/T = get_turf(src)
+	if(!action_checks(target) || is_centcom(T.z))
 		return
 	var/list/theareas = get_areas_in_range(100, chassis)
 	if(!theareas.len)

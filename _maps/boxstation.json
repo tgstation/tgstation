@@ -3,6 +3,6 @@
     "map_path": "map_files/BoxStation",
     "map_file": "BoxStation.dmm",
     "minetype": "lavaland",
-    "transition_config": "default",
+    "traits": "default",
     "allow_custom_shuttles": "yes"
 }

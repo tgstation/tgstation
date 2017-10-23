@@ -110,7 +110,7 @@
 	if(!(user.mind in SSticker.mode.syndicates))
 		to_chat(user, "<span class='danger'>AUTHENTICATION FAILURE. ACCESS DENIED.</span>")
 		return FALSE
-	if(user.z != ZLEVEL_CENTCOM)
+	if(!is_centcom(user.z))
 		to_chat(user, "<span class='warning'>[src] is out of range! It can only be used at your base!</span>")
 		return FALSE
 	return TRUE

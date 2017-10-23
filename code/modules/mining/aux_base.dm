@@ -101,7 +101,10 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 
 	if(href_list["random"] && !possible_destinations)
 		usr.changeNext_move(CLICK_CD_RAPID) //Anti-spam
-		var/turf/LZ = safepick(Z_TURFS(ZLEVEL_MINING)) //Pick a random mining Z-level turf
+		var/list/L = list()
+		for(var/I in SSmapping.levels_by_trait(MINING_LEVEL))
+			L += Z_TURFS(I)
+		var/turf/LZ = safepick(L) //Pick a random mining Z-level turf
 		if(!ismineralturf(LZ) && !istype(LZ, /turf/open/floor/plating/asteroid))
 		//Find a suitable mining turf. Reduces chance of landing in a bad area
 			to_chat(usr, "<span class='warning'>Landing zone scan failed. Please try again.</span>")
@@ -128,7 +131,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	updateUsrDialog()
 
 /obj/machinery/computer/auxillary_base/proc/set_mining_mode()
-	if(z == ZLEVEL_MINING) //The console switches to controlling the mining shuttle once landed.
+	if(is_mining_level(z)) //The console switches to controlling the mining shuttle once landed.
 		req_one_access = list()
 		shuttleId = "mining" //The base can only be dropped once, so this gives the console a new purpose.
 		possible_destinations = "mining_home;mining_away;landing_zone_dock;mining_public"

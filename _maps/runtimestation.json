@@ -3,6 +3,6 @@
     "map_path": "map_files/debug",
     "map_file": "runtimestation.dmm",
     "minetype": "lavaland",
-    "transition_config": "default",
+    "traits": "default",
     "allow_custom_shuttles": "no"
 }

@@ -164,7 +164,7 @@
 			var/turf/T = get_turf(R)
 			if(!T)
 				continue
-			if(T.z == ZLEVEL_CENTCOM || T.z > ZLEVEL_SPACEMAX)
+			if(is_centcom(T.z) || is_away_mission(T.z))
 				continue
 			L[avoid_assoc_duplicate_keys(T.loc.name, areaindex)] = R
 
@@ -179,7 +179,7 @@
 				var/turf/T = get_turf(M)
 				if(!T)
 					continue
-				if(T.z == ZLEVEL_CENTCOM)
+				if(is_centcom(T.z))
 					continue
 				L[avoid_assoc_duplicate_keys(M.real_name, areaindex)] = I
 
@@ -195,7 +195,7 @@
 			var/turf/T = get_turf(R)
 			if(!T || !R.teleporter_hub || !R.teleporter_console)
 				continue
-			if(T.z == ZLEVEL_CENTCOM || T.z > ZLEVEL_SPACEMAX)
+			if(is_centcom(T.z) || is_away_mission(T.z))
 				continue
 			L[avoid_assoc_duplicate_keys(T.loc.name, areaindex)] = R
 		var/desc = input("Please select a station to lock in.", "Locking Computer") as null|anything in L

@@ -18,16 +18,17 @@ SUBSYSTEM_DEF(mapping)
 	var/list/shuttle_templates = list()
 	var/list/shelter_templates = list()
 
+	var/loading_ruins = FALSE
+
 	///Stuff for the z manager
 	
 	// A list of z-levels
 	var/list/z_list
+	var/list/zs_being_cleared
 	var/list/levels_by_name
 	var/list/heaps
 
 /datum/controller/subsystem/mapping/PreInit()
-	if(!space_manager)
-		space_manager = new
 	if(!config)
 #ifdef FORCE_MAP
 		config = new(FORCE_MAP)
@@ -56,12 +57,9 @@ SUBSYSTEM_DEF(mapping)
 
 	// deep space ruins
 	var/space_zlevels = list()
-	for(var/i in ZLEVEL_SPACEMIN to ZLEVEL_SPACEMAX)
-		switch(i)
-			if(ZLEVEL_MINING, ZLEVEL_LAVALAND, ZLEVEL_EMPTY_SPACE, ZLEVEL_TRANSIT, ZLEVEL_CITYOFCOGS)
-				continue
-			else
-				space_zlevels += i
+	for(var/I in 1 to ZLEVEL_EMPTY_SPACE_COUNT)
+		var/datum/space_level/S = add_new_zlevel("Empty Space #[I]", CROSSLINKED, list(AI_OK = TRUE, STATION_CONTACT = TRUE))
+		space_zlevels += I
 
 	seedRuins(space_zlevels, CONFIG_GET(number/space_budget), /area/space, space_ruins_templates)
 	loading_ruins = FALSE
@@ -104,6 +102,7 @@ SUBSYSTEM_DEF(mapping)
 	next_map_config = SSmapping.next_map_config
 
 	z_list = SSmapping.z_list
+	zs_being_cleared = SSmapping.zs_being_cleared
 	levels_by_name = SSmapping.levels_by_name
 	heaps = SSmapping.heaps
 

@@ -178,7 +178,7 @@ Difficulty: Medium
 	var/datum/weather/A
 	for(var/V in SSweather.existing_weather)
 		var/datum/weather/W = V
-		if(W.target_z == user.z && W.area_type == user_area.type)
+		if(SSmapping.check_level_trait(user.z, W.target_z_trait) && W.area_type == user_area.type)
 			A = W
 			break
 	if(A)

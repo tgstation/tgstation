@@ -23,7 +23,7 @@ SUBSYSTEM_DEF(weather)
 			if(WE.target_z == Z && WE.probability) //Another check so that it doesn't run extra weather
 				possible_weather_for_this_z[WE] = WE.probability
 		var/datum/weather/W = pickweight(possible_weather_for_this_z)
-		run_weather(W.name, Z)
+		run_weather(W.name, MINING_LEVEL)	//HACK ALERT
 		eligible_zlevels -= Z
 		addtimer(CALLBACK(src, .proc/make_z_eligible, Z), rand(3000, 6000) + W.weather_duration_upper, TIMER_UNIQUE) //Around 5-10 minutes between weathers
 
@@ -32,12 +32,13 @@ SUBSYSTEM_DEF(weather)
 	for(var/V in subtypesof(/datum/weather))
 		new V //Weather's New() will handle adding stuff to the list
 
-/datum/controller/subsystem/weather/proc/run_weather(weather_name, Z)
+/datum/controller/subsystem/weather/proc/run_weather(weather_name, z_trait)
 	if(!weather_name)
 		return
+	
 	for(var/V in existing_weather)
 		var/datum/weather/W = V
-		if(W.name == weather_name && W.target_z == Z)
+		if(W.name == weather_name && W.target_z_trait == z_trait)
 			W.telegraph()
 
 /datum/controller/subsystem/weather/proc/make_z_eligible(zlevel)

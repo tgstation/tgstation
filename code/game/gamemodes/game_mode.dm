@@ -251,14 +251,16 @@
 	for(var/mob/M in GLOB.player_list)
 		if(M.client)
 			clients++
+			var/mob_on_centcom
 			if(ishuman(M))
 				if(!M.stat)
 					surviving_humans++
-					if(M.z == ZLEVEL_CENTCOM)
+					mob_on_centcom = is_centcom(M.z)
+					if(mob_on_centcom)
 						escaped_humans++
 			if(!M.stat)
 				surviving_total++
-				if(M.z == ZLEVEL_CENTCOM)
+				if(mob_on_centcom || (mob_on_centcom == null && is_centcom(M.z)))
 					escaped_total++
 
 

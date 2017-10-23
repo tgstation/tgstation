@@ -17,6 +17,8 @@
 	allowAtomsOnSpace = TRUE
 
 /datum/mapGeneratorModule/reload_station_map/generate()
+	CRASH("[type] is still broken, fix it")
+	//TODO Fix this
 	if(!istype(mother, /datum/mapGenerator/repair/reload_station_map))
 		return
 	var/datum/mapGenerator/repair/reload_station_map/mother1 = mother
@@ -24,7 +26,7 @@
 		return			//This is only for reloading station blocks!
 	GLOB.reloading_map = TRUE
 	var/static/dmm_suite/reloader = new
-	var/list/bounds = reloader.load_map(file(SSmapping.config.GetFullMapPath()),measureOnly = FALSE, no_changeturf = FALSE,x_offset = 0, y_offset = 0, z_offset = ZLEVEL_STATION_PRIMARY, cropMap=TRUE, lower_crop_x = mother1.x_low, lower_crop_y = mother1.y_low, upper_crop_x = mother1.x_high, upper_crop_y = mother1.y_high)
+	var/list/bounds// = reloader.load_map(file(SSmapping.config.GetFullMapPath()),measureOnly = FALSE, no_changeturf = FALSE,x_offset = 0, y_offset = 0, z_offset = ZLEVEL_STATION_PRIMARY, cropMap=TRUE, lower_crop_x = mother1.x_low, lower_crop_y = mother1.y_low, upper_crop_x = mother1.x_high, upper_crop_y = mother1.y_high)
 
 	var/list/obj/machinery/atmospherics/atmos_machines = list()
 	var/list/obj/structure/cable/cables = list()

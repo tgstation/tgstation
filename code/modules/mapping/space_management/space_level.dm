@@ -4,7 +4,7 @@
 	var/list/flags	// We'll use this to keep track of whether you can teleport/etc
 
 	// Map transition stuff
-	var/list/neighbors
+	var/list/neighbours
 	// # How this level connects with others. See __MAP_DEFINES.dm for defines
 	// It's UNAFFECTED by default because none of the space turfs are normally linked up
 	// so we don't need to rebuild transitions if an UNAFFECTED level is requested
@@ -19,13 +19,12 @@
 
 	var/list/direction_cache
 
-/datum/space_level/New(z, new_name, transition_type = SELFLOOPING, traits = list())
+/datum/space_level/New(z, new_name, transition_type = SELFLOOPING, list/traits = list())
 	transit_north = list()
 	transit_south = list()
 	transit_east = list()
 	transit_west = list()
-	init_list = list()
-	neighbors = list()
+	neighbours = list()
 	direction_cache = list()
 	name = new_name
 	zpos = z
@@ -42,7 +41,7 @@
 // We skip `add_to_transit` here because we want to skip the checks in order to save time
 	// Bottom border
 	var/_zpos = src.zpos
-	for(var/turf/open/space/S in block(locate(1, 1,  __zpos), locate(world.maxx, TRANSITIONEDGE + 1, _zpos)))
+	for(var/turf/open/space/S in block(locate(1, 1,  _zpos), locate(world.maxx, TRANSITIONEDGE + 1, _zpos)))
 		transit_south |= S
 
 	// Top border

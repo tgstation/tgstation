@@ -54,20 +54,21 @@ GLOBAL_LIST_EMPTY(explosions)
 	var/orig_heavy_range = heavy_impact_range
 	var/orig_light_range = light_impact_range
 
-	if(!ignorecap && epicenter.z != ZLEVEL_MINING)
-		//Clamp all values to MAX_EXPLOSION_RANGE
-		devastation_range = min(GLOB.MAX_EX_DEVESTATION_RANGE, devastation_range)
-		heavy_impact_range = min(GLOB.MAX_EX_HEAVY_RANGE, heavy_impact_range)
-		light_impact_range = min(GLOB.MAX_EX_LIGHT_RANGE, light_impact_range)
-		flash_range = min(GLOB.MAX_EX_FLASH_RANGE, flash_range)
-		flame_range = min(GLOB.MAX_EX_FLAME_RANGE, flame_range)
+	if(!ignorecap)
+		if(level_ignores_bomb_cap(epicenter.z))
+			//Clamp all values to MAX_EXPLOSION_RANGE
+			devastation_range = min(GLOB.MAX_EX_DEVESTATION_RANGE, devastation_range)
+			heavy_impact_range = min(GLOB.MAX_EX_HEAVY_RANGE, heavy_impact_range)
+			light_impact_range = min(GLOB.MAX_EX_LIGHT_RANGE, light_impact_range)
+			flash_range = min(GLOB.MAX_EX_FLASH_RANGE, flash_range)
+			flame_range = min(GLOB.MAX_EX_FLAME_RANGE, flame_range)
 		
-	if(!ignorecap && epicenter.z == ZLEVEL_CITYOFCOGS)
-		devastation_range = min(GLOB.MAX_EX_DEVESTATION_RANGE * REEBE_HUGBOX_COEFFICIENT, devastation_range)
-		heavy_impact_range = min(GLOB.MAX_EX_HEAVY_RANGE * REEBE_HUGBOX_COEFFICIENT, heavy_impact_range)
-		light_impact_range = min(GLOB.MAX_EX_LIGHT_RANGE * REEBE_HUGBOX_COEFFICIENT, light_impact_range)
-		flash_range = min(GLOB.MAX_EX_FLASH_RANGE * REEBE_HUGBOX_COEFFICIENT, flash_range)
-		flame_range = min(GLOB.MAX_EX_FLAME_RANGE * REEBE_HUGBOX_COEFFICIENT, flame_range)
+		else if(level_nerfs_bombs(epicenter.z))
+			devastation_range = min(GLOB.MAX_EX_DEVESTATION_RANGE * REEBE_HUGBOX_COEFFICIENT, devastation_range)
+			heavy_impact_range = min(GLOB.MAX_EX_HEAVY_RANGE * REEBE_HUGBOX_COEFFICIENT, heavy_impact_range)
+			light_impact_range = min(GLOB.MAX_EX_LIGHT_RANGE * REEBE_HUGBOX_COEFFICIENT, light_impact_range)
+			flash_range = min(GLOB.MAX_EX_FLASH_RANGE * REEBE_HUGBOX_COEFFICIENT, flash_range)
+			flame_range = min(GLOB.MAX_EX_FLAME_RANGE * REEBE_HUGBOX_COEFFICIENT, flame_range)
 
 	//DO NOT REMOVE THIS STOPLAG, IT BREAKS THINGS
 	//not sleeping causes us to ex_act() the thing that triggered the explosion

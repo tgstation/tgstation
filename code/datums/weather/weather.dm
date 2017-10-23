@@ -30,7 +30,7 @@
 	var/area_type = /area/space //Types of area to affect
 	var/list/impacted_areas = list() //Areas to be affected by the weather, calculated when the weather begins
 	var/list/protected_areas = list()//Areas that are protected and excluded from the affected areas.
-	var/target_z = ZLEVEL_STATION_PRIMARY //The z-level to affect
+	var/target_z_trait = STATION_LEVEL //The z-level types to affect
 
 	var/overlay_layer = AREA_LAYER //Since it's above everything else, this is the layer used by default. TURF_LAYER is below mobs and walls if you need to use that.
 	var/aesthetic = FALSE //If the weather has no purpose other than looks
@@ -59,13 +59,13 @@
 		affectareas -= get_areas(V)
 	for(var/V in affectareas)
 		var/area/A = V
-		if(A.z == target_z)
+		if(SSmapping.check_level_trait(A.z, target_z_trait))
 			impacted_areas |= A
 	weather_duration = rand(weather_duration_lower, weather_duration_upper)
 	update_areas()
 	for(var/V in GLOB.player_list)
 		var/mob/M = V
-		if(M.z == target_z)
+		if(SSmapping.check_level_trait(M.z, target_z_trait))
 			if(telegraph_message)
 				to_chat(M, telegraph_message)
 			if(telegraph_sound)
@@ -79,7 +79,7 @@
 	update_areas()
 	for(var/V in GLOB.player_list)
 		var/mob/M = V
-		if(M.z == target_z)
+		if(SSmapping.check_level_trait(M.z, target_z_trait))
 			if(weather_message)
 				to_chat(M, weather_message)
 			if(weather_sound)
@@ -94,7 +94,7 @@
 	update_areas()
 	for(var/V in GLOB.player_list)
 		var/mob/M = V
-		if(M.z == target_z)
+		if(SSmapping.check_level_trait(M.z, target_z_trait))
 			if(end_message)
 				to_chat(M, end_message)
 			if(end_sound)
@@ -110,7 +110,7 @@
 
 /datum/weather/proc/can_weather_act(mob/living/L) //Can this weather impact a mob?
 	var/turf/mob_turf = get_turf(L)
-	if(mob_turf && (mob_turf.z != target_z))
+	if(mob_turf && !SSmapping.check_level_trait(mob_turf.z, target_z_trait))
 		return
 	if(immunity_type in L.weather_immunities)
 		return

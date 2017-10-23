@@ -69,7 +69,7 @@
 	if(GLOB.player_list.len < CHALLENGE_MIN_PLAYERS)
 		to_chat(user, "The enemy crew is too small to be worth declaring war on.")
 		return 0
-	if(user.z != ZLEVEL_CENTCOM)
+	if(!is_centcom(user.z))
 		to_chat(user, "You have to be at your base to use this.")
 		return 0
 	if(world.time-SSticker.round_start_time > CHALLENGE_TIME_LIMIT)

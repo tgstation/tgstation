@@ -580,7 +580,7 @@
 	var/ladder_y = T.y
 	to_chat(user, "<span class='notice'>You unfold the ladder. It extends much farther than you were expecting.</span>")
 	for(var/i in 1 to world.maxz)
-		if(i == ZLEVEL_CENTCOM || i == ZLEVEL_TRANSIT)
+		if(is_centcom(i) || i == ZLEVEL_TRANSIT)
 			continue
 		var/turf/T2 = locate(ladder_x, ladder_y, i)
 		new /obj/structure/ladder/unbreakable/jacob(T2)

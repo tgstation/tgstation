@@ -617,11 +617,8 @@
 			message_admins("[src] has been moved out of bounds in [ADMIN_COORDJMP(currentturf)]. Moving it to [ADMIN_COORDJMP(targetturf)].")
 
 /atom/movable/proc/in_bounds()
-	. = FALSE
 	var/turf/currentturf = get_turf(src)
-	if(currentturf && (currentturf.z == ZLEVEL_CENTCOM || (currentturf.z in GLOB.station_z_levels) || currentturf.z == ZLEVEL_TRANSIT))
-		. = TRUE
-
+	return is_secure_level(currentturf.z)
 
 /* Language procs */
 /atom/movable/proc/get_language_holder(shadow=TRUE)

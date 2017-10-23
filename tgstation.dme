@@ -50,7 +50,7 @@
 #include "code\__DEFINES\lighting.dm"
 #include "code\__DEFINES\logging.dm"
 #include "code\__DEFINES\machines.dm"
-#include "code\__DEFINES\maps.dm"
+#include "code\__DEFINES\mapping.dm"
 #include "code\__DEFINES\math.dm"
 #include "code\__DEFINES\MC.dm"
 #include "code\__DEFINES\menu.dm"

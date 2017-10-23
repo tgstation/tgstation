@@ -29,9 +29,17 @@ Everything else = Handled by mapping subsystem
 // Enhances telecomms signals
 #define BOOSTS_SIGNAL "Boosts signals"
 // Currently used for determining mining score
-#define ORE_LEVEL "Mining"
+#define MINING_LEVEL "Mining"
 // Levels the AI can control bots on
 #define AI_OK "AI Allowed"
+// Level doesn't respect bomb cap
+#define IGNORES_BOMBCAP "Ignores Bombcap"
+// Level makes the bombcap strings
+#define NERFS_BOMBS "Nerfs Bombs"
+// It's Centcom
+#define CENTCOM "Centcom"
+// It's Reebe
+#define REEBE "Reebe"
 
 //for modifying jobs
 #define MAP_JOB_CHECK if(SSmapping.config.map_name != JOB_MODIFICATION_MAP_NAME) { return; }
@@ -45,9 +53,20 @@ Everything else = Handled by mapping subsystem
 #define DL_ATTRS "attributes"
 
 #define DECLARE_LEVEL(NAME,LINKS,TRAITS) list(DL_NAME = NAME, DL_LINKAGE = LINKS, DL_ATTRS = TRAITS)
+#define STATION_TRAITS list(STATION_LEVEL = TRUE, STATION_CONTACT = TRUE, AI_OK = TRUE)
 
 #define DEFAULT_MAP_TRAITS list(\
-DECLARE_LEVEL("Centcom", SELFLOOPING, list(ADMIN_LEVEL = TRUE, BLOCK_TELEPORT = TRUE, IMPEDES_MAGIC = TRUE)),\
-DECLARE_LEVEL("Mining Asteroid", UNAFFECTED, list(STATION_LEVEL = TRUE, STATION_CONTACT = TRUE, AI_OK = TRUE, ORE_LEVEL = TRUE)),\
-DECLARE_LEVEL("Main Station", CROSSLINKED, list(STATION_LEVEL = TRUE, STATION_CONTACT = TRUE, AI_OK = TRUE)),\
-))
+DECLARE_LEVEL(CENTCOM, SELFLOOPING, list(CENTCOM = TRUE, ADMIN_LEVEL = TRUE, BLOCK_TELEPORT = TRUE, IMPEDES_MAGIC = TRUE, STATION_CONTACT = TRUE)),\
+DECLARE_LEVEL("Mining Asteroid", UNAFFECTED, list(STATION_LEVEL = TRUE, STATION_CONTACT = TRUE, AI_OK = TRUE, ORE_LEVEL = TRUE, IGNORES_BOMBCAP = TRUE)),\
+DECLARE_LEVEL("Main Station", CROSSLINKED, STATION_TRAITS),\
+)
+
+#define ZLEVEL_STATION_PRIMARY 3    //kept for legacy reasons, should be removed eventually
+
+// How many levels of empty space there should be
+#define ZLEVEL_EMPTY_SPACE_COUNT 5  // 
+
+#define Z_LEVEL_NORTH "[NORTH]"
+#define Z_LEVEL_SOUTH "[SOUTH]"
+#define Z_LEVEL_EAST "[EAST]"
+#define Z_LEVEL_WEST "[WEST]"

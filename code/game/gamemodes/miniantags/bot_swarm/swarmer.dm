@@ -458,7 +458,7 @@
 	if(target == src)
 		return
 
-	if(!(z in GLOB.station_z_levels) && z != ZLEVEL_LAVALAND)
+	if(is_station_contact_level(z))
 		to_chat(src, "<span class='warning'>Our bluespace transceiver cannot locate a viable bluespace link, our teleportation abilities are useless in this area.</span>")
 		return
 

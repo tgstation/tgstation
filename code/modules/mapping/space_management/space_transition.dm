@@ -1,13 +1,8 @@
 //This is a simple 3 by 3 grid working off the corpse of the space torus. The donut is dead, cube has been avenged!
 
-#define Z_LEVEL_NORTH 		"[NORTH]"
-#define Z_LEVEL_SOUTH 		"[SOUTH]"
-#define Z_LEVEL_EAST 		"[EAST]"
-#define Z_LEVEL_WEST 		"[WEST]"
-
-/datum/space_level/New(transition_type)
-	linked = transition_type
-	if(linked == SELFLOOPING)
+/datum/space_level/proc/set_linkage(new_linkage)
+	linkage = new_linkage
+	if(new_linkage == SELFLOOPING)
 		neigbours = list()
 		var/list/L = list(Z_LEVEL_NORTH,Z_LEVEL_SOUTH,Z_LEVEL_EAST,Z_LEVEL_WEST)
 		for(var/A in L)
@@ -64,7 +59,7 @@
 	if(y-1 >= 1)
 		neigbours |= grid[x][y-1]
 
-/datum/contoller/subsystem/mapping/proc/setup_map_transitions() //listamania
+/datum/controller/subsystem/mapping/proc/setup_map_transitions() //listamania
 	var/list/SLS = list()
 	var/list/cached_z_list = z_list
 	var/conf_set_len = cached_transitions.len
@@ -137,8 +132,3 @@
 				S.maptext = "[zdestination]" // for debugging
 				#endif
 			CHECK_TICK
-
-#undef Z_LEVEL_NORTH
-#undef Z_LEVEL_SOUTH
-#undef Z_LEVEL_EAST
-#undef Z_LEVEL_WEST

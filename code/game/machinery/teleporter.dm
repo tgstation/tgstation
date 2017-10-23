@@ -42,7 +42,7 @@
 	return power_station
 
 /obj/machinery/teleport/hub/CollidedWith(atom/movable/AM)
-	if(z == ZLEVEL_CENTCOM)
+	if(is_centcom(z))
 		to_chat(AM, "You can't use this here.")
 	if(is_ready())
 		teleport(AM)

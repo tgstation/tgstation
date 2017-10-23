@@ -124,7 +124,7 @@
 /obj/machinery/computer/security/proc/get_available_cameras()
 	var/list/L = list()
 	for (var/obj/machinery/camera/C in GLOB.cameranet.cameras)
-		if((z > ZLEVEL_SPACEMAX || C.z > ZLEVEL_SPACEMAX) && (C.z != z))//if on away mission, can only recieve feed from same z_level cameras
+		if(is_away_mission(z) && (C.z != z))//if on away mission, can only recieve feed from same z_level cameras
 			continue
 		L.Add(C)
 

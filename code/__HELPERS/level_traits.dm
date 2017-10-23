@@ -1,33 +1,24 @@
-/proc/is_station_level(z)
-	return SSmapping.check_level_trait(z, STATION_LEVEL)
+#define is_station_level(z) SSmapping.check_level_trait(z, STATION_LEVEL)
 
-/proc/is_station_contact(z)
-	return SSmapping.check_level_trait(z, STATION_CONTACT)
+#define is_station_contact(z) SSmapping.check_level_trait(z, STATION_CONTACT)
 
-/proc/is_teleport_allowed(z)
-	return !SSmapping.check_level_trait(z, BLOCK_TELEPORT)
+#define is_teleport_allowed(z) !SSmapping.check_level_trait(z, BLOCK_TELEPORT)
 
-/proc/is_admin_level(z)
-	return SSmapping.check_level_trait(z, ADMIN_LEVEL)
+#define is_away_level(z) SSmapping.check_level_trait(z, AWAY_LEVEL)
 
-/proc/is_away_level(z)
-	return SSmapping.check_level_trait(z, AWAY_LEVEL)
+#define is_mining_level(z) SSmapping.check_level_trait(z, MINING_LEVEL)
 
-/proc/is_mining_level(z)
-	return SSmapping.check_level_trait(z, ORE_LEVEL)
+#define is_ai_allowed(z) SSmapping.check_level_trait(z, AI_OK)
 
-/proc/is_ai_allowed(z)
-	return SSmapping.check_level_trait(z, AI_OK)
+#define is_reebe(z) SSmapping.check_level_trait(z, REEBE)
 
-/proc/level_blocks_magic(z)
-	return SSmapping.check_level_trait(z, IMPEDES_MAGIC)
+#define is_centcom(z) SSmapping.check_level_trait(z, CENTCOM)
 
-/proc/level_boosts_signal(z)
-	return SSmapping.check_level_trait(z, BOOSTS_SIGNAL)
+#define level_blocks_magic(z) SSmapping.check_level_trait(z, IMPEDES_MAGIC)
+
+#define level_ignores_bombcap(z) SSmapping.check_level_trait(z, IGNORES_BOMBCAP)
+
+#define level_nerfs_bombs(z) SSmapping.check_level_trait(z, NERFS_BOMBS)
 
 // Used for the nuke disk, or for checking if players survived through xenos
-/proc/is_secure_level(z)
-	. = SSmapping.check_level_trait(z, STATION_LEVEL)
-	if(!.)
-		// This is to allow further admin levels later, other than centcomm
-		return z == level_name_to_num(CENTCOMM)
+#define is_secure_level(z) SSmapping.check_level_has_trait(z, list(STATION_LEVEL, CENTCOM))
