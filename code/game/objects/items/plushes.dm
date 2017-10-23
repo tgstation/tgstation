@@ -21,6 +21,7 @@
 /obj/item/toy/plush/handle_atom_del(atom/A)
 	if(A == grenade)
 		grenade = null
+	..()
 
 /obj/item/toy/plush/attack_self(mob/user)
 	. = ..()
