@@ -381,7 +381,7 @@ SUBSYSTEM_DEF(shuttle)
 		[transit_height] in height. The travel dir is [travel_dir]."
 */
 
-	var/datum/turf_reservation/proposal = SSmapping.RequestBlockReservation(transit_width, transit_height, ZLEVEL_TRANSIT)
+	var/datum/turf_reservation/proposal = SSmapping.RequestBlockReservation(transit_width, transit_height, ZLEVEL_TRANSIT, /datum/turf_reservation/transit)
 
 	if(!istype(proposal))
 		return FALSE

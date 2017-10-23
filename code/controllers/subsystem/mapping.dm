@@ -263,8 +263,8 @@ SUBSYSTEM_DEF(mapping)
 		shelter_templates[S.shelter_id] = S
 		map_templates[S.shelter_id] = S
 
-/datum/controller/subsystem/mapping/proc/RequestBlockReservation(width, height, z = ZLEVEL_RESERVED)
-	var/datum/turf_reservation/reserve = new
+/datum/controller/subsystem/mapping/proc/RequestBlockReservation(width, height, z = ZLEVEL_RESERVED, type = /datum/turf_reservation)
+	var/datum/turf_reservation/reserve = new type
 	if(!reserve.Reserve(width, height, z))
 		return
 	return reserve

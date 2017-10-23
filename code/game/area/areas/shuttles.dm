@@ -1,5 +1,5 @@
 
-//These are shuttle areas; all subtypes are only used as teleportation markers, they have no actual function beyond that. 
+//These are shuttle areas; all subtypes are only used as teleportation markers, they have no actual function beyond that.
 //Multi area shuttles are a thing now, use subtypes! ~ninjanomnom
 
 /area/shuttle
@@ -41,6 +41,7 @@
 /area/shuttle/transit
 	name = "Hyperspace"
 	desc = "Weeeeee"
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 /area/shuttle/arrival
 	name = "Arrival Shuttle"
