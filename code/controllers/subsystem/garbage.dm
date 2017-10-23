@@ -159,9 +159,12 @@ SUBSYSTEM_DEF(garbage)
 		fail_counts[level]++
 		switch (level)
 			if (GC_QUEUE_CHECK)
+
+			/*
 				#ifdef GC_FAILURE_HARD_LOOKUP
 				D.find_references()
 				#endif
+			*/
 				var/type = D.type
 				var/datum/qdel_item/I = items[type]
 				testing("GC: -- \ref[D] | [type] was unable to be GC'd --")
@@ -361,10 +364,37 @@ SUBSYSTEM_DEF(garbage)
 		usr.client.running_find_references = type
 
 	testing("Beginning search for references to a [type].")
+	PROFILE_START
 	last_find_references = world.time
+	PROFILE_TICK
 	DoSearchVar(GLOB)
-	for(var/datum/thing in world)
-		DoSearchVar(thing, "WorldRef: [thing]")
+	PROFILE_TICK
+	var/starting_time_of_day = REALTIMEOFDAY
+	for(var/datum/thing in world) //atoms (don't beleive it's lies)
+		PROFILE_TICK
+		DoSearchVar(thing, "World -> [thing]")
+		if (starting_time_of_day + 6000 < REALTIMEOFDAY)
+			PROFILE_SHOW(usr)
+			return
+		PROFILE_TICK
+	PROFILE_TICK
+	for (var/datum/thing) //datums
+		PROFILE_TICK
+		DoSearchVar(thing, "World -> [thing]")
+		if (starting_time_of_day + 6000 < REALTIMEOFDAY)
+			PROFILE_SHOW(usr)
+			return
+		PROFILE_TICK
+	PROFILE_TICK
+	for (var/client/thing) //clients
+		PROFILE_TICK
+		DoSearchVar(thing, "World -> [thing]")
+		if (starting_time_of_day + 6000 < REALTIMEOFDAY)
+			PROFILE_SHOW(usr)
+			return
+		PROFILE_TICK
+	PROFILE_TICK
+
 	testing("Completed search for references to a [type].")
 	if(usr && usr.client)
 		usr.client.running_find_references = null
@@ -384,35 +414,66 @@ SUBSYSTEM_DEF(garbage)
 	if(!running_find_references)
 		find_references(TRUE)
 
-/datum/proc/DoSearchVar(X, Xname)
+/datum/proc/DoSearchVar(X, Xname, recursive_limit = 64)
+	PROFILE_TICK
 	if(usr && usr.client && !usr.client.running_find_references)
 		return
+	PROFILE_TICK
+	if (!recursive_limit)
+		return
+	PROFILE_TICK
 	if(istype(X, /datum))
+		PROFILE_TICK
 		var/datum/D = X
+		PROFILE_TICK
 		if(D.last_find_references == last_find_references)
+			PROFILE_TICK
 			return
+		PROFILE_TICK
 		D.last_find_references = last_find_references
-		for(var/V in D.vars)
-			for(var/varname in D.vars)
-				var/variable = D.vars[varname]
-				if(variable == src)
-					testing("Found [src.type] \ref[src] in [D.type]'s [varname] var. [Xname]")
-				else if(islist(variable))
-					if(src in variable)
-						testing("Found [src.type] \ref[src] in [D.type]'s [varname] list var. Global: [Xname]")
-#ifdef GC_FAILURE_HARD_LOOKUP
-					for(var/I in variable)
-						DoSearchVar(I, TRUE)
-				else
-					DoSearchVar(variable, "[Xname]: [varname]")
-#endif
+		PROFILE_TICK
+		var/list/L = D.vars
+		PROFILE_TICK
+		var/list/varslist = L.Copy()
+		PROFILE_TICK
+		for(var/varname in varslist)
+			PROFILE_TICK
+			if (varname == "vars")
+				continue
+			PROFILE_TICK
+			var/variable
+			PROFILE_TICK
+			variable = varslist[varname]
+			PROFILE_TICK
+			if(variable == src)
+				PROFILE_TICK
+				testing("Found [src.type] \ref[src] in [D.type]'s [varname] var. [Xname]")
+				PROFILE_TICK
+			else if(islist(variable))
+				PROFILE_TICK
+				DoSearchVar(variable, "[Xname] -> list", recursive_limit-1)
+				PROFILE_TICK
+			PROFILE_TICK
 	else if(islist(X))
-		if(src in X)
-			testing("Found [src.type] \ref[src] in list [Xname].")
-#ifdef GC_FAILURE_HARD_LOOKUP
+		PROFILE_TICK
+		var/normal = IS_NORMAL_LIST(X)
+		PROFILE_TICK
 		for(var/I in X)
-			DoSearchVar(I, Xname + ": list")
-#else
+			PROFILE_TICK
+			if (I == src)
+				PROFILE_TICK
+				testing("Found [src.type] \ref[src] in list [Xname].")
+				PROFILE_TICK
+			else if (I && !isnum(I) && normal && X[I] == src)
+				PROFILE_TICK
+				testing("Found [src.type] \ref[src] in list [Xname]\[[I]\]")
+				PROFILE_TICK
+			else if (islist(I))
+				PROFILE_TICK
+				DoSearchVar(I, "[Xname] -> list", recursive_limit-1)
+				PROFILE_TICK
+			PROFILE_TICK
+#ifndef FIND_REF_NO_CHECK_TICK
 	CHECK_TICK
 #endif
 
