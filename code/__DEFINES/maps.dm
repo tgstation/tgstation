@@ -55,5 +55,5 @@ Last space-z level = empty
 	var/turf/_turf_being_reserved = T;\
 	_turf_being_reserved.ChangeTurf(/turf/open/space);\
 	LAZYINITLIST(SSmapping.unused_turfs["[_turf_being_reserved.z]"]);\
-	SSmapping.unused_turfs["[_turf_being_reserved.z]"] += _turf_being_reserved;\
+	SSmapping.unused_turfs["[_turf_being_reserved.z]"] |= _turf_being_reserved;\
 	_turf_being_reserved.flags_1 |= UNUSED_RESERVED_TURF_1;

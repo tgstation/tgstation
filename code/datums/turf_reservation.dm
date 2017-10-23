@@ -55,6 +55,7 @@
 				break
 		if(!passing)
 			continue
+		break
 	if(!passing || !istype(TL) || !istype(BR))
 		return FALSE
 	LAZYINITLIST(SSmapping.used_turfs[src])
@@ -65,6 +66,7 @@
 		T.flags_1 &= ~UNUSED_RESERVED_TURF_1
 		reserved_turfs += T
 		SSmapping.used_turfs[src] += T
+		SSmapping.unused_turfs -= T
 	return TRUE
 
 /datum/turf_reservation/New()
