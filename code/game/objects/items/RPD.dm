@@ -141,17 +141,18 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 	var/p_flipped = FALSE
 	var/p_class = ATMOS_MODE
 	var/list/paint_colors = list(
-		"grey"		= rgb(255,255,255),
-		"red"		= rgb(255,0,0),
-		"blue"		= rgb(0,0,255),
-		"cyan"		= rgb(0,256,249),
-		"green"		= rgb(30,255,0),
-		"yellow"	= rgb(255,198,0),
-		"purple"	= rgb(130,43,255)
+		"Grey"		= rgb(255,255,255),
+		"Red"		= rgb(255,0,0),
+		"Blue"		= rgb(0,0,255),
+		"Cyan"		= rgb(0,256,249),
+		"Green"		= rgb(30,255,0),
+		"Yellow"	= rgb(255,198,0),
+		"Purple"	= rgb(130,43,255)
 	)
-	var/paint_color="grey"
+	var/paint_color="Grey"
 	var/screen = CATEGORY_ATMOS //Starts on the atmos tab.
 	var/piping_layer = PIPING_LAYER_DEFAULT
+	var/datum/pipe_info/recipe
 
 /obj/item/pipe_dispenser/New()
 	. = ..()
@@ -165,13 +166,82 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 	return ..()
 
 /obj/item/pipe_dispenser/attack_self(mob/user)
-	show_menu(user)
+	ui_interact(user)
 
 /obj/item/pipe_dispenser/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] points the end of the RPD down [user.p_their()] throat and presses a button! It looks like [user.p_theyre()] trying to commit suicide...</span>")
 	playsound(get_turf(user), 'sound/machines/click.ogg', 50, 1)
 	playsound(get_turf(user), 'sound/items/deconstruct.ogg', 50, 1)
 	return(BRUTELOSS)
+
+/obj/item/pipe_dispenser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "rpd", name, 300, 550, master_ui, state)
+		ui.open()
+
+/obj/item/pipe_dispenser/ui_data(mob/user)
+	var/list/data = list(
+		"mode" = p_class,
+		"screen" = screen,
+		"piping_layer" = piping_layer
+	)
+
+	var/list/recipes
+	if(screen == ATMOS_MODE)
+		var/static/list/atmos_recipes
+		if(!atmos_recipes)
+			atmos_recipes = GLOB.RPD_recipes - "Disposals"
+		recipes = atmos_recipes
+	else if(screen == DISPOSALS_MODE)
+		var/static/list/disp_recipes
+		if(!disp_recipes)
+			disp_recipes = GLOB.RPD_recipes & "Disposals"
+		recipes = disp_recipes
+	for(var/c in recipes)
+		var/list/cat = recipes[c]
+		for(var/i in 1 to cat.len)
+			var/label = cat[i]
+			cat[i] = list("pipe_name" = label, "selected" = (cat[label] == p_type), "category" = c)
+	data["recipes"] = recipes
+
+	var/list/colors = new(paint_colors.len)
+	for(var/i in 1 to paint_colors.len)
+		var/c = paint_colors[i]
+		colors[i] = list("color_name" = c, "color_hex" = paint_colors[c], "selected" = (c == paint_color))
+
+	//data["preview"] = recipe.get_preview()
+
+	return data
+
+/obj/item/pipe_dispenser/ui_act(action, params)
+	if(..())
+		return
+	if(!usr.canUseTopic(src))
+		return
+	var/playeffect = TRUE
+	switch(action)
+		if("color")
+			paint_color = params["paint_color"]
+		if("mode")
+			p_class = text2num(params["mode"])
+		if("screen")
+			screen = text2num(params["screen"])
+			playeffect = FALSE
+		if("piping_layer")
+			piping_layer = text2num(params["piping_layer"])
+			playeffect = FALSE
+		if("pipe_type")
+			recipe = GLOB.RPD_recipes[params["category"]][params["pipe_type"]]
+			p_type = recipe.id
+			p_dir = recipe.dir
+			p_conntype = recipe.dirtype
+		//if("makepipe") TODO
+		//if("setdir") playeffect = FALSE TODO
+	if(playeffect)
+		spark_system.start()
+		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 
 /obj/item/pipe_dispenser/proc/render_dir_img(_dir,pic,title,flipped=0)
 	var/selected=" class=\"imglink\""
