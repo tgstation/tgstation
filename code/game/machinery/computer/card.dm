@@ -537,11 +537,13 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 /obj/machinery/computer/card/proc/eject_id_scan(mob/user)
 	if(scan)
 		scan.forceMove(drop_location())
-		if(!isAI(user))
+		if(!issilicon(user) && Adjacent(user))
 			user.put_in_hands(scan)
 		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 		scan = null
 	else //switching the ID with the one you're holding
+		if(issilicon(user) || !Adjacent(user))
+			return
 		var/obj/item/I = user.get_active_held_item()
 		if(istype(I, /obj/item/card/id))
 			if(!user.transferItemToLoc(I,src))
@@ -556,13 +558,15 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		GLOB.data_core.manifest_modify(modify.registered_name, modify.assignment)
 		modify.update_label()
 		modify.forceMove(drop_location())
-		if(!isAI(user))
+		if(!issilicon(user) && Adjacent(user))
 			user.put_in_hands(modify)
 		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 		modify = null
 		region_access = null
 		head_subordinates = null
 	else //switching the ID with the one you're holding
+		if(issilicon(user) || !Adjacent(user))
+			return
 		var/obj/item/I = user.get_active_held_item()
 		if(istype(I, /obj/item/card/id))
 			if (!user.transferItemToLoc(I,src))
