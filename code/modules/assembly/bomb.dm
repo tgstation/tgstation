@@ -34,11 +34,11 @@
 
 		to_chat(user, "<span class='notice'>You disassemble [src].</span>")
 
-		bombassembly.loc = user.loc
+		bombassembly.forceMove(user.drop_location())
 		bombassembly.master = null
 		bombassembly = null
 
-		bombtank.loc = user.loc
+		bombtank.forceMove(user.drop_location())
 		bombtank.master = null
 		bombtank = null
 
@@ -55,7 +55,7 @@
 	..()
 
 /obj/item/device/onetankbomb/attack_self(mob/user) //pressing the bomb accesses its assembly
-	bombassembly.attack_self(user, 1)
+	bombassembly.attack_self(user, TRUE)
 	add_fingerprint(user)
 	return
 

@@ -363,7 +363,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 
 
 /obj/machinery/gravity_generator/main/proc/pulse_radiation()
-	radiation_pulse(get_turf(src), 3, 7, 20)
+	radiation_pulse(src, 200)
 
 // Shake everyone on the z level to let them know that gravity was enagaged/disenagaged.
 /obj/machinery/gravity_generator/main/proc/shake_everyone()

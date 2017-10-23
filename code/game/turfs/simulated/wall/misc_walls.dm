@@ -59,7 +59,7 @@
 	var/obj/effect/clockwork/overlay/wall/realappearence
 
 /turf/closed/wall/clockwork/Initialize()
-	..()
+	. = ..()
 	new /obj/effect/temp_visual/ratvar/wall(src)
 	new /obj/effect/temp_visual/ratvar/beam(src)
 	realappearence = new /obj/effect/clockwork/overlay/wall(src)

@@ -6,7 +6,7 @@ GLOBAL_PROTECT(security_mode)
 
 	SetupExternalRSC()
 
-	GLOB.config_error_log = GLOB.world_pda_log = GLOB.sql_error_log = GLOB.world_href_log = GLOB.world_runtime_log = GLOB.world_attack_log = GLOB.world_game_log = file("data/logs/config_error.log") //temporary file used to record errors with loading config, moved to log directory once logging is set bl
+	GLOB.config_error_log = GLOB.manifest_log = GLOB.world_pda_log = GLOB.sql_error_log = GLOB.world_href_log = GLOB.world_runtime_log = GLOB.world_attack_log = GLOB.world_game_log = file("data/logs/config_error.log") //temporary file used to record errors with loading config, moved to log directory once logging is set bl
 
 	CheckSecurityMode()
 
@@ -86,10 +86,12 @@ GLOBAL_PROTECT(security_mode)
 	GLOB.world_href_log = file("[GLOB.log_directory]/hrefs.html")
 	GLOB.world_pda_log = file("[GLOB.log_directory]/pda.log")
 	GLOB.sql_error_log = file("[GLOB.log_directory]/sql.log")
+	GLOB.manifest_log = file("[GLOB.log_directory]/manifest.log")
 	WRITE_FILE(GLOB.world_game_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
 	WRITE_FILE(GLOB.world_attack_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
 	WRITE_FILE(GLOB.world_runtime_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
 	WRITE_FILE(GLOB.world_pda_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
+	WRITE_FILE(GLOB.manifest_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
 	GLOB.changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
 	if(fexists(GLOB.config_error_log))
 		fcopy(GLOB.config_error_log, "[GLOB.log_directory]/config_error.log")
@@ -118,8 +120,8 @@ GLOBAL_PROTECT(security_mode)
 	var/list/input = params2list(T)
 	var/datum/world_topic/handler
 	for(var/I in topic_handlers)
-		if(input[I])
-			handler = I
+		if(I in input)
+			handler = topic_handlers[I]
 			break
 	
 	if((!handler || initial(handler.log)) && config && CONFIG_GET(flag/log_world_topic))
@@ -131,7 +133,7 @@ GLOBAL_PROTECT(security_mode)
 		return
 
 	handler = new handler()
-	return handler.Run(input)
+	return handler.TryRun(input)
 
 /world/proc/AnnouncePR(announcement, list/payload)
 	var/static/list/PRcounts = list()	//PR id -> number of times announced this round

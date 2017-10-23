@@ -451,7 +451,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		if(!L.client.played)
 			SEND_SOUND(L, sound(sound, repeat = 0, wait = 0, volume = 25, channel = CHANNEL_AMBIENCE))
 			L.client.played = TRUE
-			addtimer(CALLBACK(L.client, /client/proc/ResetAmbiencePlayed), 600) 
+			addtimer(CALLBACK(L.client, /client/proc/ResetAmbiencePlayed), 600)
 
 /client/proc/ResetAmbiencePlayed()
 	played = FALSE
@@ -461,14 +461,14 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		T = get_turf(src)
 	var/area/A = get_area(T)
 	if(isspaceturf(T)) // Turf never has gravity
-		return 0
+		return FALSE
 	else if(A && A.has_gravity) // Areas which always has gravity
-		return 1
+		return TRUE
 	else
 		// There's a gravity generator on our z level
 		if(T && GLOB.gravity_generators["[T.z]"] && length(GLOB.gravity_generators["[T.z]"]))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /area/proc/setup(a_name)
 	name = a_name

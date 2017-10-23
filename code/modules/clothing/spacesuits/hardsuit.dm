@@ -51,7 +51,8 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/rad_act(severity)
 	..()
-	display_visor_message("Radiation pulse detected! Magnitude: <span class='green'>[severity]</span> RADs.")
+	if(severity > RAD_AMOUNT_EXTREME)
+		display_visor_message("Radiation pulse detected! Magnitude: <span class='green'>[severity]</span> RADs.")
 
 /obj/item/clothing/head/helmet/space/hardsuit/emp_act(severity)
 	..()
@@ -393,7 +394,7 @@
 	item_state = "medical_helm"
 	item_color = "medical"
 	flash_protect = 0
-	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 50, fire = 75, acid = 75)
+	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 75, fire = 75, acid = 75)
 	scan_reagents = 1
 
 /obj/item/clothing/suit/space/hardsuit/medical
@@ -402,7 +403,7 @@
 	desc = "A special suit that protects against hazardous, low pressure environments. Built with lightweight materials for easier movement."
 	item_state = "medical_hardsuit"
 	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals, /obj/item/storage/firstaid, /obj/item/device/healthanalyzer, /obj/item/stack/medical)
-	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 50, fire = 75, acid = 75)
+	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 75, fire = 75, acid = 75)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/medical
 
 	//Research Director hardsuit

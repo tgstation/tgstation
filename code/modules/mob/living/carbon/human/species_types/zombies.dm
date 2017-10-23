@@ -14,6 +14,11 @@
 	disliked_food = NONE
 	liked_food = GROSS | MEAT | RAW
 
+/datum/species/zombie/check_roundstart_eligible()
+	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
+		return TRUE
+	return ..()
+
 /datum/species/zombie/infectious
 	name = "Infectious Zombie"
 	id = "memezombies"
@@ -23,6 +28,10 @@
 	speedmod = 2
 	mutanteyes = /obj/item/organ/eyes/night_vision/zombie
 	var/regen_cooldown = 0
+
+/datum/species/zombie/infectious/check_roundstart_eligible()
+	return FALSE
+
 
 /datum/species/zombie/infectious/spec_stun(mob/living/carbon/human/H,amount)
 	. = min(2, amount)
@@ -52,7 +61,7 @@
 	//  Infection organ needs to be handled separately from mutant_organs
 	//  because it persists through species transitions
 	var/obj/item/organ/zombie_infection/infection
-	infection = C.getorganslot("zombie_infection")
+	infection = C.getorganslot(ORGAN_SLOT_ZOMBIE)
 	if(!infection)
 		infection = new()
 		infection.Insert(C)

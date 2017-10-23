@@ -245,6 +245,7 @@
 	S.copy_evidences(src)
 	use(transfer, TRUE)
 	S.add(transfer)
+	return transfer
 
 /obj/item/stack/Crossed(obj/o)
 	if(istype(o, merge_type) && !o.throwing)
@@ -299,8 +300,8 @@
 /obj/item/stack/attackby(obj/item/W, mob/user, params)
 	if(istype(W, merge_type))
 		var/obj/item/stack/S = W
-		merge(S)
-		to_chat(user, "<span class='notice'>Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s.</span>")
+		if(merge(S))
+			to_chat(user, "<span class='notice'>Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s.</span>")
 	else
 		. = ..()
 

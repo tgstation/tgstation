@@ -137,14 +137,14 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 /mob/living/simple_animal/hostile/swarmer/ai/Move(atom/newloc)
 	if(newloc)
 		if(newloc.z == z) //so these actions are Z-specific
-			if(istype(newloc, /turf/open/lava))
+			if(islava(newloc))
 				var/turf/open/lava/L = newloc
 				if(!L.is_safe())
 					StartAction(20)
 					new /obj/structure/lattice/catwalk/swarmer_catwalk(newloc)
 					return FALSE
 
-			if(istype(newloc, /turf/open/chasm) && !throwing)
+			if(ischasm(newloc) && !throwing)
 				throw_at(get_edge_target_turf(src, get_dir(src, newloc)), 7 , 3, spin = FALSE) //my planet needs me
 				return FALSE
 
@@ -172,15 +172,8 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	search_objects = 1
 	attack_all_objects = TRUE //attempt to nibble everything
 	lose_patience_timeout = 150
-	var/static/list/sharedWanted = list(/turf/closed/mineral, /turf/closed/wall) //eat rocks and walls
+	var/static/list/sharedWanted = typecacheof(list(/turf/closed/mineral, /turf/closed/wall)) //eat rocks and walls
 	var/static/list/sharedIgnore = list()
-
-
-/mob/living/simple_animal/hostile/swarmer/ai/resource/Initialize()
-	. = ..()
-	sharedWanted = typecacheof(sharedWanted)
-	sharedIgnore = typecacheof(sharedIgnore)
-
 
 //This handles viable things to eat/attack
 //Place specific cases of AI derpiness here
@@ -239,16 +232,13 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 
 //So swarmers can learn what is and isn't food
 /mob/living/simple_animal/hostile/swarmer/ai/resource/proc/add_type_to_wanted(typepath)
-	LAZYINITLIST(sharedWanted)
 	if(!sharedWanted[typepath])// this and += is faster than |=
 		sharedWanted += typecacheof(typepath)
 
 
 /mob/living/simple_animal/hostile/swarmer/ai/resource/proc/add_type_to_ignore(typepath)
-	LAZYINITLIST(sharedIgnore)
 	if(!sharedIgnore[typepath])
 		sharedIgnore += typecacheof(typepath)
-
 
 
 //RANGED SWARMER

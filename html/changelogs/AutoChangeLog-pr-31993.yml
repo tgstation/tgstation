@@ -1,0 +1,6 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - tweak: "Deltastation's armory now contains reinforced windows surrounding the lethal weaponry. This makes Delta's armory consistent with Box."
+  - tweak: "There are now decals in places where extra Security lockers can spawn."
+  - tweak: "Cleaned up semicolons in Meta and Boxstation's .dmms"

@@ -116,8 +116,8 @@
 		. = 0
 
 //Called after a successful Move(). By this point, we've already moved
-/atom/movable/proc/Moved(atom/OldLoc, Dir)
-	SendSignal(COMSIG_MOVABLE_MOVED, OldLoc, Dir)
+/atom/movable/proc/Moved(atom/OldLoc, Dir, Forced = FALSE)
+	SendSignal(COMSIG_MOVABLE_MOVED, OldLoc, Dir, Forced)
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
 		newtonian_move(Dir)
@@ -220,7 +220,7 @@
 	if(A)
 		if(throwing)
 			throwing.hit_atom(A)
-			. = 1
+			. = TRUE
 			if(!A || QDELETED(A))
 				return
 		A.CollidedWith(src)
@@ -261,8 +261,7 @@
 				if(AM == src)
 					continue
 				AM.Crossed(src, oldloc)
-
-		Moved(oldloc, 0)
+		Moved(oldloc, NONE, TRUE)
 		. = TRUE
 
 	//If no destination, move the atom into nullspace (don't do this unless you know what you're doing)
@@ -278,9 +277,9 @@
 /mob/living/forceMove(atom/destination)
 	stop_pulling()
 	if(buckled)
-		buckled.unbuckle_mob(src,force=1)
+		buckled.unbuckle_mob(src, force = TRUE)
 	if(has_buckled_mobs())
-		unbuckle_all_mobs(force=1)
+		unbuckle_all_mobs(force = TRUE)
 	. = ..()
 	if(.)
 		if(client)
@@ -535,6 +534,7 @@
 	acted_explosions += ex_id
 	return TRUE
 
+//TODO: Better floating
 /atom/movable/proc/float(on)
 	if(throwing)
 		return

@@ -9,7 +9,7 @@
 #define RADIATION_DURATION_MAX 30
 #define RADIATION_ACCURACY_MULTIPLIER 3			//larger is less accurate
 
-#define RADIATION_IRRADIATION_MULTIPLIER 0.2	//multiplier for how much radiation a test subject recieves
+#define RADIATION_IRRADIATION_MULTIPLIER 1		//multiplier for how much radiation a test subject recieves
 
 #define SCANNER_ACTION_SE 1
 #define SCANNER_ACTION_UI 2
@@ -92,7 +92,7 @@
 						occupant_status += "<span class='bad'>DEAD</span>"
 				occupant_status += "</div></div>"
 				occupant_status += "<div class='line'><div class='statusLabel'>Health:</div><div class='progressBar'><div style='width: [viable_occupant.health]%;' class='progressFill good'></div></div><div class='statusValue'>[viable_occupant.health] %</div></div>"
-				occupant_status += "<div class='line'><div class='statusLabel'>Radiation Level:</div><div class='progressBar'><div style='width: [viable_occupant.radiation]%;' class='progressFill bad'></div></div><div class='statusValue'>[viable_occupant.radiation] %</div></div>"
+				occupant_status += "<div class='line'><div class='statusLabel'>Radiation Level:</div><div class='progressBar'><div style='width: [viable_occupant.radiation/(RAD_MOB_SAFE/100)]%;' class='progressFill bad'></div></div><div class='statusValue'>[viable_occupant.radiation/(RAD_MOB_SAFE/100)] %</div></div>"
 				var/rejuvenators = viable_occupant.reagents.get_reagent_amount("potass_iodide")
 				occupant_status += "<div class='line'><div class='statusLabel'>Rejuvenators:</div><div class='progressBar'><div style='width: [round((rejuvenators / REJUVENATORS_MAX) * 100)]%;' class='progressFill highlight'></div></div><div class='statusValue'>[rejuvenators] units</div></div>"
 				occupant_status += "<div class='line'><div class='statusLabel'>Unique Enzymes :</div><div class='statusValue'><span class='highlight'>[viable_occupant.dna.unique_enzymes]</span></div></div>"
@@ -537,7 +537,7 @@
 	var/list/buffer_slot = buffer[buffer_num]
 	var/mob/living/carbon/viable_occupant = get_viable_occupant()
 	if(istype(buffer_slot))
-		viable_occupant.radiation += rand(10/(connected.damage_coeff ** 2),25/(connected.damage_coeff ** 2))
+		viable_occupant.radiation += rand(100/(connected.damage_coeff ** 2),250/(connected.damage_coeff ** 2))
 		//15 and 40 are just magic numbers that were here before so i didnt touch them, they are initial boundaries of damage
 		//Each laser level reduces damage by lvl^2, so no effect on 1 lvl, 4 times less damage on 2 and 9 times less damage on 3
 		//Numbers are this high because other way upgrading laser is just not worth the hassle, and i cant think of anything better to inmrove

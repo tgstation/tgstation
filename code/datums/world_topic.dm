@@ -26,7 +26,7 @@
 	var/require_comms_key = FALSE
 
 /datum/world_topic/proc/TryRun(list/input)
-	key_valid = !config || CONFIG_GET(string/comms_key) != input["key"]
+	key_valid = config && (CONFIG_GET(string/comms_key) == input["key"])
 	if(require_comms_key && !key_valid)
 		return "Bad Key"
 	input -= "key"
@@ -110,19 +110,22 @@
 
 /datum/world_topic/adminmsg
 	keyword = "adminmsg"
+	require_comms_key = TRUE
 
 /datum/world_topic/adminmsg/Run(list/input)
 	return IrcPm(input[keyword], input["msg"], input["sender"])
 
 /datum/world_topic/namecheck
 	keyword = "namecheck"
+	require_comms_key = TRUE
 
 /datum/world_topic/namecheck/Run(list/input)
 	var/datum/server_tools_command/namecheck/NC = new
 	return NC.Run(input["sender"], input["namecheck"])
 
 /datum/world_topic/adminwho
-	keyword = "namecheck"
+	keyword = "adminwho"
+	require_comms_key = TRUE
 
 /datum/world_topic/adminwho/Run(list/input)
 	return ircadminwho()

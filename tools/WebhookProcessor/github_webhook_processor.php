@@ -26,7 +26,7 @@ $path_to_script = 'tools/WebhookProcessor/github_webhook_processor.php';
 $tracked_branch = "master";
 $trackPRBalance = true;
 $prBalanceJson = '';
-$startingPRBalance = 3;
+$startingPRBalance = 5;
 $maintainer_team_id = 133041;
 $validation = "org";
 $validation_count = 1;
@@ -241,7 +241,7 @@ function tag_pr($payload, $opened) {
 function remove_ready_for_review($payload, $labels = null){
 	if($labels == null)
 		$labels = get_labels($payload);
-	$index = array_search('Ready for Review', $labels);
+	$index = array_search('Review Again', $labels);
 	if($index !== FALSE)
 		unset($labels[$index]);
 	$url = $payload['pull_request']['issue_url'] . '/labels';
@@ -258,7 +258,7 @@ function get_reviews($payload){
 }
 
 function check_ready_for_review($payload, $labels = null){
-	$r4rlabel = 'Ready for Review';
+	$r4rlabel = 'Review Again';
 	$labels_which_should_not_be_ready = array('Do Not Merge', 'Work In Progress', 'Merge Conflict');
 	$has_label_already = false;
 	$should_not_have_label = false;

@@ -11,6 +11,7 @@
 	layer = ABOVE_WINDOW_LAYER
 	state_open = FALSE
 	circuit = /obj/item/circuitboard/machine/cryo_tube
+	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 
 	var/on = FALSE
 	var/autoeject = FALSE
@@ -217,7 +218,9 @@
 
 		if(abs(temperature_delta) > 1)
 			var/air_heat_capacity = air1.heat_capacity()
-			var/heat = ((1 - cold_protection) * 0.1 + conduction_coefficient) * temperature_delta * (1 / air_heat_capacity + 1 / heat_capacity)
+
+			var/heat = ((1 - cold_protection) * 0.1 + conduction_coefficient) * temperature_delta * (air_heat_capacity * heat_capacity / (air_heat_capacity + heat_capacity))
+
 			air1.temperature = max(air1.temperature - heat / air_heat_capacity, TCMB)
 			mob_occupant.bodytemperature = max(mob_occupant.bodytemperature + heat / heat_capacity, TCMB)
 
@@ -291,10 +294,15 @@
 		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
 		log_game("[key_name(user)] added an [I] to cyro containing [reagentlist]")
 		return
-	if(!on && !occupant && !state_open && (default_deconstruction_screwdriver(user, "pod-o", "pod-off", I) || exchange_parts(user, I)) \
+	if(!on && !occupant && !state_open && (default_deconstruction_screwdriver(user, "pod-off", "pod-off", I) || exchange_parts(user, I)) \
 		|| default_change_direction_wrench(user, I) \
 		|| default_pry_open(I) \
 		|| default_deconstruction_crowbar(I))
+		update_icon()
+		return
+	else if(istype(I, /obj/item/screwdriver))
+		to_chat(user, "<span class='notice'>You can't access the maintenance panel while the pod is " \
+		+ (on ? "active" : (occupant ? "full" : "open")) + ".</span>")
 		return
 	return ..()
 
