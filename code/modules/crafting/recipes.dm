@@ -492,7 +492,7 @@
 	time = 60
 	reqs = list(/obj/item/stack/sheet/bone = 10,
 				/obj/item/stack/sheet/sinew = 2,
-				/obj/item/stack/sheet/animalhide/ashdrake = 5)
+				/obj/item/stack/sheet/animalhide/ashdrake = 10)
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/gold_horn
