@@ -454,7 +454,7 @@
 
 /datum/reagent/medicine/potass_iodide/on_mob_life(mob/living/M)
 	if(M.radiation > 0)
-		M.radiation -= min(M.radiation, 4)
+		M.radiation -= Clamp(M.radiation, 0, 4)
 	..()
 
 /datum/reagent/medicine/pen_acid
