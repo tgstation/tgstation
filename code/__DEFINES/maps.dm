@@ -3,49 +3,51 @@ The /tg/ codebase currently requires you to have 11 z-levels of the same size di
 z-level order is important, the order you put them in inside the map config.dm will determine what z level number they are assigned ingame.
 Names of z-level do not matter, but order does greatly, for instances such as checking alive status of revheads on z1
 
-current as of september 17, 2017
-z1 = station
-z2 = centcom
-z5 = mining
-z6 = city of cogs
-Everything else = randomized space
-Last space-z level = empty
+current as of October 23, 2017
+z1 = centcom
+z2 = mining
+z3-x = station
+Everything else = Handled by mapping subsystem
 */
 
 #define CROSSLINKED 2
 #define SELFLOOPING 1
 #define UNAFFECTED 0
 
-#define MAIN_STATION "Main Station"
-#define CENTCOM "CentCom"
-#define CITY_OF_COGS "City of Cogs"
-#define EMPTY_AREA_1 "Empty Area 1"
-#define EMPTY_AREA_2 "Empty Area 2"
-#define MINING "Mining Asteroid"
-#define EMPTY_AREA_3 "Empty Area 3"
-#define EMPTY_AREA_4 "Empty Area 4"
-#define EMPTY_AREA_5 "Empty Area 5"
-#define EMPTY_AREA_6 "Empty Area 6"
-#define EMPTY_AREA_7 "Empty Area 7"
-#define EMPTY_AREA_8 "Empty Area 8"
-#define AWAY_MISSION "Away Mission"
+// Attributes (In text for the convenience of those using VV)
+#define BLOCK_TELEPORT "Blocks Teleport"
+// Impedes with the casting of some spells
+#define IMPEDES_MAGIC "Impedes Magic"
+// A level the station exists on
+#define STATION_LEVEL "Station Level"
+// A level affected by Code Red announcements, cargo telepads, or similar
+#define STATION_CONTACT "Station Contact"
+// A level dedicated to admin use
+#define ADMIN_LEVEL "Admin Level"
+// For away missions - used by some consoles
+#define AWAY_LEVEL "Away"
+// Enhances telecomms signals
+#define BOOSTS_SIGNAL "Boosts signals"
+// Currently used for determining mining score
+#define ORE_LEVEL "Mining"
+// Levels the AI can control bots on
+#define AI_OK "AI Allowed"
 
 //for modifying jobs
 #define MAP_JOB_CHECK if(SSmapping.config.map_name != JOB_MODIFICATION_MAP_NAME) { return; }
 #define MAP_JOB_CHECK_BASE if(SSmapping.config.map_name != JOB_MODIFICATION_MAP_NAME) { return ..(); }
 #define MAP_REMOVE_JOB(jobpath) /datum/job/##jobpath/map_check() { return (SSmapping.config.map_name != JOB_MODIFICATION_MAP_NAME) && ..() }
 
-//zlevel defines, can be overridden for different maps in the appropriate _maps file.
-#define ZLEVEL_CENTCOM 1
-#define ZLEVEL_STATION_PRIMARY 2
-#define ZLEVEL_MINING 5
-#define ZLEVEL_LAVALAND 5
-#define ZLEVEL_CITYOFCOGS 6
-#define ZLEVEL_EMPTY_SPACE 12
-//Unless you modify it in map config should be equal to ZLEVEL_SPACEMAX
-#define ZLEVEL_TRANSIT 13
-
-#define ZLEVEL_SPACEMIN 3
-#define ZLEVEL_SPACEMAX 13
-
 #define SPACERUIN_MAP_EDGE_PAD 15
+
+#define DL_NAME "name"
+#define DL_LINKAGE "linkage"
+#define DL_ATTRS "attributes"
+
+#define DECLARE_LEVEL(NAME,LINKS,TRAITS) list(DL_NAME = NAME, DL_LINKAGE = LINKS, DL_ATTRS = TRAITS)
+
+#define DEFAULT_MAP_TRAITS list(\
+DECLARE_LEVEL("Centcom", SELFLOOPING, list(ADMIN_LEVEL = TRUE, BLOCK_TELEPORT = TRUE, IMPEDES_MAGIC = TRUE)),\
+DECLARE_LEVEL("Mining Asteroid", UNAFFECTED, list(STATION_LEVEL = TRUE, STATION_CONTACT = TRUE, AI_OK = TRUE, ORE_LEVEL = TRUE)),\
+DECLARE_LEVEL("Main Station", CROSSLINKED, list(STATION_LEVEL = TRUE, STATION_CONTACT = TRUE, AI_OK = TRUE)),\
+))
