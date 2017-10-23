@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(mapping)
 	name = "Mapping"
 	init_order = INIT_ORDER_MAPPING
-	flags = SS_NO_FIRE
+	flags = NONE
 
 	var/list/nuke_tiles = list()
 	var/list/nuke_threats = list()
@@ -21,6 +21,11 @@ SUBSYSTEM_DEF(mapping)
 	var/list/areas_in_z = list()
 
 	var/loading_ruins = FALSE
+	var/list/turf/unused_turfs = list()				//Not actually unused turfs they're unused but reserved for use for whatever requests them. "[zlevel_of_turf]" = list(turfs)
+	var/list/datum/turf_reservations		//list of turf reservations
+	var/list/used_turfs = list()				//list of turf = datum/turf_reservation
+
+	var/clearing_reserved_areas = FALSE
 
 	// Z-manager stuff
 	var/station_start  // should only be used for maploading-related tasks
@@ -58,11 +63,12 @@ SUBSYSTEM_DEF(mapping)
 		++space_levels_so_far
 		empty_space = add_new_zlevel("Empty Area [space_levels_so_far]", list(ZTRAIT_LINKAGE = CROSSLINKED))
 	// and the transit level
-	transit = add_new_zlevel("Transit", list(ZTRAIT_TRANSIT = TRUE))
+	transit = add_new_zlevel("Transit/Reserved", list(ZTRAIT_RESERVED = TRUE))
 
 	// Pick a random away mission.
 	if(CONFIG_GET(flag/roundstart_away))
 		createRandomZlevel()
+
 
 	// Generate mining ruins
 	loading_ruins = TRUE
@@ -83,11 +89,16 @@ SUBSYSTEM_DEF(mapping)
 	setup_map_transitions()
 	generate_station_area_list()
 	QDEL_NULL(loader)
+	initialize_reserved_level()
 	..()
 
 /* Nuke threats, for making the blue tiles on the station go RED
    Used by the AI doomsday and the self destruct nuke.
 */
+
+/datum/controller/subsystem/mapping/fire()
+	if(clearing_reserved_areas)
+		wipe_turf_reservations()
 
 /datum/controller/subsystem/mapping/proc/add_nuke_threat(datum/nuke)
 	nuke_threats[nuke] = TRUE
@@ -114,9 +125,14 @@ SUBSYSTEM_DEF(mapping)
 	lava_ruins_templates = SSmapping.lava_ruins_templates
 	shuttle_templates = SSmapping.shuttle_templates
 	shelter_templates = SSmapping.shelter_templates
+	unused_turfs = SSmapping.unused_turfs
+	turf_reservations = SSmapping.turf_reservations.
+	used_turfs = SSmapping.used_turfs
 
 	config = SSmapping.config
 	next_map_config = SSmapping.next_map_config
+
+	clearing_reserved_areas = SSmapping.clearing_reserved_areas
 
 	z_list = SSmapping.z_list
 
@@ -328,7 +344,6 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		shelter_templates[S.shelter_id] = S
 		map_templates[S.shelter_id] = S
 
-
 //Manual loading of away missions.
 /client/proc/admin_away()
 	set name = "Load Away Mission"
@@ -382,3 +397,51 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		//Link station gate with away gate and remove wait time.
 		GLOB.the_gateway.awaygate = new_gate
 		GLOB.the_gateway.wait = world.time
+
+/datum/controller/subsystem/mapping/proc/RequestBlockReservation(width, height, z, type = /datum/turf_reservation, turf_type_override)
+	var/datum/turf_reservation/reserve = new type
+	if(turf_type_override)
+		reserve.turf_type = turf_type_override
+	if(!z)
+		for(var/i in levels_by_trait(ZTRAIT_RESERVED))
+			if(reserve.Reserve(width, height, i))
+				return reserve
+	else
+		if(!level_trait(z, ZTRAIT_RESERVED))
+			return
+		else
+			if(reserve.Reserve(width, height, z))
+				return reserve
+	QDEL_NULL(reserve)
+
+/datum/controller/subsystem/mapping/proc/initialize_reserved_level()
+	// transit zone
+	for(var/i in levels_by_trait(ZTRAIT_RESERVED))
+		var/turf/A = get_turf(locate(SHUTTLE_TRANSIT_BORDER,SHUTTLE_TRANSIT_BORDER,i))
+		var/turf/B = get_turf(locate(world.maxx - SHUTTLE_TRANSIT_BORDER,world.maxy - SHUTTLE_TRANSIT_BORDER,i))
+		reserve_turfs(block(A, B))
+
+/datum/controller/subsystem/mapping/proc/reserve_turfs(list/turfs)
+	for(var/i in turfs)
+		var/turf/T = i
+		T.empty(RESERVED_TURF_TYPE, RESERVED_TURF_TYPE, null, TRUE)
+		LAZYINITLIST(unused_turfs["[T.z]"])
+		unused_turfs["[T.z]"] |= T
+		T.flags_1 |= UNUSED_RESERVATION_TURF_1
+
+/datum/controller/subsystem/mapping/proc/wipe_turf_reservations()
+	if(SSshuttle && SSshuttle.transit_requesters)
+		SSshuttle.transit_requesters.Cut()
+	for(var/i in turf_reservations)
+		var/datum/turf_reservation/TR = i
+		qdel(TR, TRUE)
+	var/list/clearing = list()
+	for(var/l in unused_turfs)
+		for(var/i in l)
+			clearing |= i
+	for(var/i in used_turfs)
+		clearing |= i
+	unused_turfs = list()
+	used_turfs = list()
+	reserve_turfs(clearing)
+	UNSETEMPTY(turf_reservations)

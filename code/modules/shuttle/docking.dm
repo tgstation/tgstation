@@ -16,7 +16,7 @@
 
 	// The area that gets placed under where the shuttle moved from
 	var/underlying_area_type = SHUTTLE_DEFAULT_UNDERLYING_AREA
-	
+
 	if(old_dock) //Dock overwrites
 		underlying_area_type = old_dock.area_type
 
@@ -105,7 +105,7 @@
 	list/areas_to_move,
 	rotation,
 	)
-	
+
 	for(var/i in 1 to old_turfs.len)
 		CHECK_TICK
 		var/turf/oldT = old_turfs[i]
@@ -173,7 +173,7 @@
 	movement_direction,
 	area/underlying_old_area,
 	)
-	
+
 	underlying_old_area.afterShuttleMove()
 
 	// Parallax handling

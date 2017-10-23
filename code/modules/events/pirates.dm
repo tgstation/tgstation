@@ -209,7 +209,7 @@
 
 /obj/docking_port/mobile/pirate/initiate_docking(obj/docking_port/stationary/new_dock, movement_direction, force=FALSE)
 	. = ..()
-	if(. == DOCKING_SUCCESS && !is_transit_level(new_dock.z))
+	if(. == DOCKING_SUCCESS && !is_reserved_level(new_dock.z))
 		engines_cooling = TRUE
 		addtimer(CALLBACK(src,.proc/reset_cooldown),engine_cooldown,TIMER_UNIQUE)
 
