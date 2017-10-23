@@ -5,7 +5,7 @@
 	var/list/reserved_turfs = list()
 	var/top_left_coords[3]
 	var/bottom_right_coords[3]
-	var/delete_reservation_on_release = TRUE
+	var/wipe_reservation_on_release = TRUE
 	var/turf_type = /turf/open/space
 
 /datum/turf_reservation/transit
@@ -18,7 +18,7 @@
 		var/turf/T = i
 		T.flags_1 &= ~UNUSED_RESERVED_TURF_1
 		reserved_turfs -= T
-	if(delete_reservation_on_release)
+	if(wipe_reservation_on_release)
 		MD.generate()
 		for(var/i in MD.map)
 			RESERVE_TURF(i)

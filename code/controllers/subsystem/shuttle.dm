@@ -78,7 +78,6 @@ SUBSYSTEM_DEF(shuttle)
 		var/obj/docking_port/stationary/transit/T = thing
 		if(!T.owner)
 			qdel(T, force=TRUE)
-			changed_transit = TRUE
 		// This next one removes transit docks/zones that aren't
 		// immediately being used. This will mean that the zone creation
 		// code will be running a lot.
@@ -89,7 +88,6 @@ SUBSYSTEM_DEF(shuttle)
 			var/not_in_use = (!T.get_docked())
 			if(idle && not_centcom_evac && not_in_use)
 				qdel(T, force=TRUE)
-				changed_transit = TRUE
 	CheckAutoEvac()
 
 	while(transit_requesters.len)

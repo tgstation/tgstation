@@ -282,7 +282,7 @@ SUBSYSTEM_DEF(mapping)
 /datum/controller/subsystem/mapping/proc/wipe_turf_reservations()
 	for(var/i in turf_reservations)
 		var/datum/turf_reservation/TR = i
-		TR.wipe_reservation_on_delete = TRUE
+		TR.wipe_reservation_on_release = TRUE
 		qdel(TR)
 	for(var/i in (used_turfs + unused_turfs))
 		qdel(i, TRUE)
