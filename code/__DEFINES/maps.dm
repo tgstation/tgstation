@@ -55,19 +55,18 @@ Last space-z level = empty
 
 #define SET_RESERVATION_TURF(T){\
 	var/turf/_turf_being_reserved = T;\
-	qdel(T, TRUE);\
-	_turf_being_reserved.ChangeTurf(RESERVED_TURF_TYPE, RESERVED_TURF_TYPE);\
+	_turf_being_reserved.empty(RESERVED_TURF_TYPE, RESERVED_TURF_TYPE, null, TRUE);\
 	LAZYINITLIST(SSmapping.unused_turfs["[_turf_being_reserved.z]"]);\
 	SSmapping.unused_turfs["[_turf_being_reserved.z]"] |= _turf_being_reserved;\
 	_turf_being_reserved.flags_1 |= UNUSED_RESERVATION_TURF_1;}
 
 #define RESERVE_TURF(T, reservation){\
 	var/turf/_turf_to_be_busy = T;\
-	var/datum/_turf_reservation_recieving = reservation;\
-	_turf_reservation_recieving[reserved_turfs] += T;\
+	var/datum/turf_reservation/_turf_reservation_recieving = reservation;\
+	_turf_reservation_recieving[reserved_turfs] |= T;\
 	_turf_to_be_busy.flags_1 &= ~UNUSED_RESERVATION_TURF_1;\
 	SSmapping.unused_turfs["[_turf_to_be_busy.z]"] -= _turf_to_be_busy;\
-	SSmapping.used_turfs[T] = reservation;}
+	SSmapping.used_turfs[T] = _turf_reservation_recieving}
 
 #define UNRESERVE_TURF(T){\
 	SSmapping.used_turfs -= T;\
