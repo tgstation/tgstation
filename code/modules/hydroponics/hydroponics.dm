@@ -693,10 +693,13 @@
 		var/target = myseed ? myseed.plantname : src
 		var/visi_msg = ""
 		var/irrigate = 0	//How am I supposed to irrigate pill contents?
+		var/transfer_amount
 
 		if(istype(reagent_source, /obj/item/reagent_containers/food/snacks) || istype(reagent_source, /obj/item/reagent_containers/pill))
 			visi_msg="[user] composts [reagent_source], spreading it through [target]"
+			transfer_amount = reagent_source.reagents.total_volume
 		else
+			transfer_amount = reagent_source.amount_per_transfer_from_this
 			if(istype(reagent_source, /obj/item/reagent_containers/syringe/))
 				var/obj/item/reagent_containers/syringe/syr = reagent_source
 				visi_msg="[user] injects [target] with [syr]"
@@ -706,14 +709,14 @@
 				visi_msg="[user] sprays [target] with [reagent_source]"
 				playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
 				irrigate = 1
-			else if(reagent_source.amount_per_transfer_from_this) // Droppers, cans, beakers, what have you.
+			else if(transfer_amount) // Droppers, cans, beakers, what have you.
 				visi_msg="[user] uses [reagent_source] on [target]"
 				irrigate = 1
 			// Beakers, bottles, buckets, etc.  Can't use is_open_container though.
 			if(istype(reagent_source, /obj/item/reagent_containers/glass/))
 				playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 
-		if(irrigate && reagent_source.amount_per_transfer_from_this > 30 && reagent_source.reagents.total_volume >= 30 && using_irrigation)
+		if(irrigate && transfer_amount > 30 && reagent_source.reagents.total_volume >= 30 && using_irrigation)
 			trays = FindConnected()
 			if (trays.len > 1)
 				visi_msg += ", setting off the irrigation system"
@@ -721,7 +724,7 @@
 		if(visi_msg)
 			visible_message("<span class='notice'>[visi_msg].</span>")
 
-		var/split = round(reagent_source.amount_per_transfer_from_this/trays.len)
+		var/split = round(transfer_amount/trays.len)
 
 		for(var/obj/machinery/hydroponics/H in trays)
 		//cause I don't want to feel like im juggling 15 tamagotchis and I can get to my real work of ripping flooring apart in hopes of validating my life choices of becoming a space-gardener
@@ -913,6 +916,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 /obj/machinery/hydroponics/soil //Not actually hydroponics at all! Honk!
 	name = "soil"
+	desc = "A patch of dirt."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "soil"
 	circuit = null

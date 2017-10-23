@@ -78,7 +78,7 @@
 /datum/reagent/blob/networked_fibers
 	name = "Networked Fibers"
 	id = "networked_fibers"
-	description = "will do high brute and burn damage but non-manual expansion will only generate resources."
+	description = "will do high brute and burn damage and will generate resources quicker, but can only expand manually."
 	shortdesc = "will do high brute and burn damage."
 	effectdesc = "will move your core when manually expanding near it."
 	analyzerdescdamage = "Does high brute and burn damage."

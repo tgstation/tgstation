@@ -11,13 +11,17 @@
 	name = "plating"
 	icon_state = "plating"
 	intact = FALSE
+	var/attachment_holes = TRUE
 
 /turf/open/floor/plating/examine(mob/user)
 	..()
 	if(broken || burnt)
 		to_chat(user, "<span class='notice'>It looks like the dents could be <i>welded</i> smooth.</span>")
 		return
-	to_chat(user, "<span class='notice'>There are few attachment holes for a new <i>tile</i> or reinforcement <i>rods</i>.</span>")
+	if(attachment_holes)
+		to_chat(user, "<span class='notice'>There are few attachment holes for a new <i>tile</i> or reinforcement <i>rods</i>.</span>")
+	else
+		to_chat(user, "<span class='notice'>You might be able to build ontop of it with some <i>tiles</i>...</span>")
 
 /turf/open/floor/plating/Initialize()
 	if (!broken_states)
@@ -36,7 +40,7 @@
 /turf/open/floor/plating/attackby(obj/item/C, mob/user, params)
 	if(..())
 		return
-	if(istype(C, /obj/item/stack/rods))
+	if(istype(C, /obj/item/stack/rods) && attachment_holes)
 		if(broken || burnt)
 			to_chat(user, "<span class='warning'>Repair the plating first!</span>")
 			return

@@ -567,8 +567,10 @@
 		index++
 		var/turf/oldT = place
 		var/turf/newT = new_turfs[index]
-		if(!newT || !oldT)
-			continue
+		if(!newT)
+			return DOCKING_NULL_DESTINATION
+		if(!oldT)
+			return DOCKING_NULL_SOURCE
 
 		var/area/old_area = oldT.loc
 		var/move_mode = old_area.beforeShuttleMove(shuttle_areas)											//areas
@@ -675,7 +677,14 @@
 	// then try again
 	switch(mode)
 		if(SHUTTLE_CALL)
-			if(dock(destination, preferred_direction) != DOCKING_SUCCESS)
+			var/error = dock(destination, preferred_direction)
+			if(error && error & (DOCKING_NULL_DESTINATION | DOCKING_NULL_SOURCE))
+				var/msg = "A mobile dock in transit exited dock() with an error. This is most likely a mapping problem: Error: [error],  ([src]) ([previous])"
+				WARNING(msg)
+				message_admins(msg)
+				mode = SHUTTLE_IDLE
+				return
+			else if(error)
 				setTimer(20)
 				return
 		if(SHUTTLE_RECALL)

@@ -376,8 +376,6 @@
 		if(!transfer_after)
 			mind.active = FALSE
 		mind.transfer_to(R)
-		if(mind.special_role)
-			R.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
 	else if(transfer_after)
 		R.key = key
 
@@ -462,12 +460,9 @@
 	. = new_slime
 	qdel(src)
 
-/mob/proc/become_overmind(mode_made, starting_points = 60)
-	var/mob/camera/blob/B = new /mob/camera/blob(loc, 0, mode_made, starting_points)
-	if(mind)
-		mind.transfer_to(B)
-	else
-		B.key = key
+/mob/proc/become_overmind(starting_points = 60)
+	var/mob/camera/blob/B = new /mob/camera/blob(loc, starting_points)
+	B.key = key
 	. = B
 	qdel(src)
 

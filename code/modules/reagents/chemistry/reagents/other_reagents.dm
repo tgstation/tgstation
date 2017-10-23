@@ -369,8 +369,6 @@
 		if(method == INGEST)
 			if(show_message)
 				to_chat(M, "<span class='notice'>That tasted horrible.</span>")
-			M.AdjustStun(40)
-			M.AdjustKnockdown(40)
 	..()
 
 
@@ -1332,7 +1330,7 @@
 	taste_description = "carpet" // Your tounge feels furry.
 
 /datum/reagent/carpet/reaction_turf(turf/T, reac_volume)
-	if(istype(T, /turf/open/floor/plating) || istype(T, /turf/open/floor/plasteel))
+	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
 		var/turf/open/floor/F = T
 		F.ChangeTurf(/turf/open/floor/carpet)
 	..()

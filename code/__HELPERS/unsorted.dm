@@ -507,22 +507,27 @@ Turf and target are separate in case you want to teleport some distance from a t
 Recursively gets all contents of contents and returns them all in a list.
 
 recursive_depth is useful if you only want a turf and everything on it (recursive_depth=1)
+Do not set recursive depth higher than MAX_PROC_DEPTH as byond breaks when that limit is reached.
 */
-/atom/proc/GetAllContents(list/output=list(), recursive_depth=INFINITY)
+/atom/proc/GetAllContents(list/output=list(), recursive_depth=MAX_PROC_DEPTH, _current_depth=0)
 	. = output
-	output += src
-	if(!recursive_depth)
+	output += src 
+	if(_current_depth == recursive_depth)
+		if(_current_depth == MAX_PROC_DEPTH)
+			WARNING("Get all contents reached the max recursive depth of [MAX_PROC_DEPTH]. More and we would break shit. Offending atom: [src]")
 		return
-	for(var/i in 1 to contents.len)
-		var/atom/thing = contents[i]
-		thing.GetAllContents(output, recursive_depth-1)
+	for(var/i in 1 to contents.len) 
+		var/atom/thing = contents[i] 
+		thing.GetAllContents(output, recursive_depth, ++_current_depth) 
 
-/atom/proc/GetAllContentsIgnoring(list/output = list(), recursive_depth = INFINITY, list/ignore_typecache)
+/atom/proc/GetAllContentsIgnoring(list/output = list(), recursive_depth = INFINITY, _current_depth = 0, list/ignore_typecache)
 	if(!islist(ignore_typecache))	//why use this proc??
 		return GetAllContents(output, recursive_depth)
 	. = output
 	output += src			//If the atom itself is in the ignore typecache guess we're just rolling with it, coder fault.
-	if(!recursive_depth)
+	if(_current_depth == recursive_depth)
+		if(_current_depth == MAX_PROC_DEPTH)
+			WARNING("Get all contents reached the max recursive depth of [MAX_PROC_DEPTH]. More and we would break shit. Offending atom: [src]")
 		return
 	for(var/i in 1 to contents.len)
 		var/atom/thing = contents[i]

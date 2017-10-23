@@ -1,7 +1,22 @@
+//Glasses
 /obj/item/clothing/glasses
 	name = "glasses"
+	icon = 'icons/obj/clothing/glasses.dmi'
+	w_class = WEIGHT_CLASS_SMALL
+	flags_cover = GLASSESCOVERSEYES
+	slot_flags = SLOT_EYES
+	strip_delay = 20
+	equip_delay_other = 25
+	resistance_flags = 0
 	materials = list(MAT_GLASS = 250)
-	var/glass_colour_type = null //colors your vision when worn
+	var/vision_flags = 0
+	var/darkness_view = 2//Base human is 2
+	var/invis_view = SEE_INVISIBLE_LIVING
+	var/invis_override = 0 //Override to allow glasses to set higher than normal see_invis
+	var/lighting_alpha
+	var/list/icon/current = list() //the current hud icons
+	var/vision_correction = 0 //does wearing these glasses correct some of our vision defects?
+	var/glass_colour_type //colors your vision when worn
 
 /obj/item/clothing/glasses/examine(mob/user)
 	..()

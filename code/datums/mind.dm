@@ -142,6 +142,10 @@
 		qdel(A)
 		return
 	LAZYADD(antag_datums, A)
+	A.create_team(team)
+	var/datum/objective_team/antag_team = A.get_team()
+	if(antag_team)
+		antag_team.add_member(src)
 	A.on_gain()
 	return A
 
@@ -222,15 +226,9 @@
 	remove_antag_equip()
 
 /datum/mind/proc/remove_rev()
-	if(src in SSticker.mode.revolutionaries)
-		SSticker.mode.revolutionaries -= src
-		SSticker.mode.update_rev_icons_removed(src)
-	if(src in SSticker.mode.head_revolutionaries)
-		SSticker.mode.head_revolutionaries -= src
-		SSticker.mode.update_rev_icons_removed(src)
+	var/datum/antagonist/rev/rev = has_antag_datum(/datum/antagonist/rev)
+	remove_antag_datum(rev.type)
 	special_role = null
-	remove_objectives()
-	remove_antag_equip()
 
 
 /datum/mind/proc/remove_antag_equip()
@@ -254,7 +252,6 @@
 	SSticker.mode.update_changeling_icons_removed(src)
 	SSticker.mode.update_traitor_icons_removed(src)
 	SSticker.mode.update_cult_icons_removed(src)
-	SSticker.mode.update_rev_icons_removed(src)
 
 /datum/mind/proc/equip_traitor(var/employer = "The Syndicate", var/silent = FALSE)
 	if(!current)
@@ -333,8 +330,9 @@
 	if(iscultist(creator))
 		SSticker.mode.add_cultist(src)
 
-	else if(is_revolutionary_in_general(creator))
-		SSticker.mode.add_revolutionary(src)
+	else if(is_revolutionary(creator))
+		var/datum/antagonist/rev/converter = creator.mind.has_antag_datum(/datum/antagonist/rev)
+		converter.add_revolutionary(src,FALSE)
 
 	else if(is_servant_of_ratvar(creator))
 		add_servant_of_ratvar(current)
@@ -549,9 +547,10 @@
 		text = "<i><b>[text]</b></i>: "
 		if (assigned_role in GLOB.command_positions)
 			text += "<b>HEAD</b> | not mindshielded | employee | headrev | rev"
-		else if (src in SSticker.mode.head_revolutionaries)
+		else if (has_antag_datum(/datum/antagonist/rev/head))
+			var/datum/antagonist/rev/head = has_antag_datum(/datum/antagonist/rev/head)
 			var/last_healthy_headrev = TRUE
-			for(var/datum/mind/I in SSticker.mode.head_revolutionaries)
+			for(var/datum/mind/I in head.rev_team.head_revolutionaries())
 				if(I == src)
 					continue
 				var/mob/M = I.current
@@ -576,7 +575,7 @@
 				text += "<br>Objectives are empty! <a href='?src=\ref[src];revolution=autoobjectives'>Set to kill all heads</a>."
 		else if(current.isloyal())
 			text += "head | <b>MINDSHIELDED</b> | employee | <a href='?src=\ref[src];revolution=headrev'>headrev</a> | rev"
-		else if (src in SSticker.mode.revolutionaries)
+		else if (has_antag_datum(/datum/antagonist/rev))
 			text += "head | not mindshielded | <a href='?src=\ref[src];revolution=clear'>employee</a> | <a href='?src=\ref[src];revolution=headrev'>headrev</a> | <b>REV</b>"
 		else
 			text += "head | not mindshielded | <b>EMPLOYEE</b> | <a href='?src=\ref[src];revolution=headrev'>headrev</a> | <a href='?src=\ref[src];revolution=rev'>rev</a>"
@@ -721,8 +720,7 @@
 			out += sections[i]+"<br>"
 
 
-	if(((src in SSticker.mode.head_revolutionaries) || (src in SSticker.mode.traitors) || (src in SSticker.mode.syndicates)) && ishuman(current))
-
+	if(((src in SSticker.mode.traitors) || (src in SSticker.mode.syndicates)) && ishuman(current))
 		text = "Uplink: <a href='?src=\ref[src];common=uplink'>give</a>"
 		var/obj/item/device/uplink/U = find_syndicate_uplink()
 		if(U)
@@ -932,57 +930,41 @@
 		switch(href_list["revolution"])
 			if("clear")
 				remove_rev()
-				to_chat(current, "<span class='userdanger'>You have been brainwashed! You are no longer a revolutionary!</span>")
 				message_admins("[key_name_admin(usr)] has de-rev'ed [current].")
 				log_admin("[key_name(usr)] has de-rev'ed [current].")
 			if("rev")
-				if(src in SSticker.mode.head_revolutionaries)
-					SSticker.mode.head_revolutionaries -= src
-					SSticker.mode.update_rev_icons_removed(src)
-					to_chat(current, "<span class='userdanger'>Revolution has been disappointed of your leader traits! You are a regular revolutionary now!</span>")
-				else if(!(src in SSticker.mode.revolutionaries))
-					to_chat(current, "<span class='danger'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT></span>")
+				if(has_antag_datum(/datum/antagonist/rev/head))
+					var/datum/antagonist/rev/head/head = has_antag_datum(/datum/antagonist/rev/head)
+					head.demote()
+				else if(!has_antag_datum(/datum/antagonist/rev))
+					add_antag_datum(/datum/antagonist/rev)
+					special_role = "Revolutionary"
+					message_admins("[key_name_admin(usr)] has rev'ed [current].")
+					log_admin("[key_name(usr)] has rev'ed [current].")
 				else
 					return
-				SSticker.mode.revolutionaries += src
-				SSticker.mode.update_rev_icons_added(src)
-				special_role = "Revolutionary"
-				message_admins("[key_name_admin(usr)] has rev'ed [current].")
-				log_admin("[key_name(usr)] has rev'ed [current].")
-
+				
 			if("headrev")
-				if(src in SSticker.mode.revolutionaries)
-					SSticker.mode.revolutionaries -= src
-					SSticker.mode.update_rev_icons_removed(src)
-					to_chat(current, "<span class='userdanger'>You have proved your devotion to revoltion! Yea are a head revolutionary now!</span>")
-				else if(!(src in SSticker.mode.head_revolutionaries))
+				if(has_antag_datum(/datum/antagonist/rev))
+					var/datum/antagonist/rev/rev = has_antag_datum(/datum/antagonist/rev)
+					rev.promote()
+				else if(!has_antag_datum(/datum/antagonist/rev/head))
+					//what about the team here.
+					var/datum/antagonist/rev/head/new_head = new /datum/antagonist/rev/head(src)
+					new_head.give_flash = TRUE
+					new_head.give_hud = TRUE
+					new_head.remove_clumsy = TRUE
+					add_antag_datum(new_head)
 					to_chat(current, "<span class='userdanger'>You are a member of the revolutionaries' leadership now!</span>")
 				else
 					return
-				if (SSticker.mode.head_revolutionaries.len>0)
-					// copy targets
-					var/datum/mind/valid_head = locate() in SSticker.mode.head_revolutionaries
-					if (valid_head)
-						for (var/datum/objective/mutiny/O in valid_head.objectives)
-							var/datum/objective/mutiny/rev_obj = new
-							rev_obj.owner = src
-							rev_obj.target = O.target
-							rev_obj.explanation_text = "Assassinate [O.target.name], the [O.target.assigned_role]."
-							objectives += rev_obj
-						SSticker.mode.greet_revolutionary(src,0)
-				SSticker.mode.head_revolutionaries += src
-				SSticker.mode.update_rev_icons_added(src)
 				special_role = "Head Revolutionary"
 				message_admins("[key_name_admin(usr)] has head-rev'ed [current].")
 				log_admin("[key_name(usr)] has head-rev'ed [current].")
 
-			if("autoobjectives")
-				SSticker.mode.forge_revolutionary_objectives(src)
-				SSticker.mode.greet_revolutionary(src,0)
-				to_chat(usr, "<span class='notice'>The objectives for revolution have been generated and shown to [key]</span>")
-
 			if("flash")
-				if (!SSticker.mode.equip_revolutionary(current))
+				var/datum/antagonist/rev/head/head = has_antag_datum(/datum/antagonist/rev/head)
+				if(!head.equip_rev())
 					to_chat(usr, "<span class='danger'>Spawning flash failed!</span>")
 
 			if("takeflash")
@@ -1365,8 +1347,9 @@
 
 /datum/mind/proc/make_Traitor()
 	if(!(has_antag_datum(ANTAG_DATUM_TRAITOR)))
-		var/datum/antagonist/traitor/traitordatum = add_antag_datum(ANTAG_DATUM_TRAITOR)
-		return traitordatum
+		var/datum/antagonist/traitor/T = new(src)
+		T.should_specialise = TRUE
+		add_antag_datum(T)
 
 
 /datum/mind/proc/make_Nuke(turf/spawnloc, nuke_code, leader=0, telecrystals = TRUE)
@@ -1441,30 +1424,11 @@
 		to_chat(H, "Spawning an amulet from your Master failed.")
 
 /datum/mind/proc/make_Rev()
-	if (SSticker.mode.head_revolutionaries.len>0)
-		// copy targets
-		var/datum/mind/valid_head = locate() in SSticker.mode.head_revolutionaries
-		if (valid_head)
-			for (var/datum/objective/mutiny/O in valid_head.objectives)
-				var/datum/objective/mutiny/rev_obj = new
-				rev_obj.owner = src
-				rev_obj.target = O.target
-				rev_obj.explanation_text = "Assassinate [O.target.current.real_name], the [O.target.assigned_role]."
-				objectives += rev_obj
-			SSticker.mode.greet_revolutionary(src,0)
-	SSticker.mode.head_revolutionaries += src
-	SSticker.mode.update_rev_icons_added(src)
+	var/datum/antagonist/rev/head/head = new(src)
+	head.give_flash = TRUE
+	head.give_hud = TRUE
+	add_antag_datum(head)
 	special_role = "Head Revolutionary"
-
-	SSticker.mode.forge_revolutionary_objectives(src)
-	SSticker.mode.greet_revolutionary(src,0)
-
-	var/list/L = current.get_contents()
-	var/obj/item/device/assembly/flash/flash = locate() in L
-	qdel(flash)
-	take_uplink()
-	var/fail = 0
-	fail |= !SSticker.mode.equip_revolutionary(current)
 
 /datum/mind/proc/AddSpell(obj/effect/proc_holder/spell/S)
 	spell_list += S
