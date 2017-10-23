@@ -1094,6 +1094,8 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 #define ON_PURRBATION(H) (!(H.dna.features["tail_human"] == "None" && H.dna.features["ears"] == "None"))
 
 /proc/mass_purrbation()
+	if(!CONFIG_GET(flag/join_with_mutant_humans))
+		return
 	for(var/M in GLOB.mob_list)
 		if(ishumanbasic(M))
 			purrbation_apply(M)
@@ -1106,6 +1108,8 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 		CHECK_TICK
 
 /proc/purrbation_toggle(mob/living/carbon/human/H)
+	if(!CONFIG_GET(flag/join_with_mutant_humans))
+		return
 	if(!ishumanbasic(H))
 		return
 	if(!ON_PURRBATION(H))
@@ -1116,6 +1120,8 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 		. = FALSE
 
 /proc/purrbation_apply(mob/living/carbon/human/H)
+	if(!CONFIG_GET(flag/join_with_mutant_humans))
+		return
 	if(!ishuman(H))
 		return
 	if(ON_PURRBATION(H))
@@ -1127,6 +1133,8 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	playsound(get_turf(H), 'sound/effects/meow1.ogg', 50, 1, -1)
 
 /proc/purrbation_remove(mob/living/carbon/human/H)
+	if(!CONFIG_GET(flag/join_with_mutant_humans))
+		return
 	if(!ishuman(H))
 		return
 	if(!ON_PURRBATION(H))
