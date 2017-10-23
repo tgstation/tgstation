@@ -643,6 +643,7 @@
 /area/security/main)
 "abP" = (
 /obj/structure/closet/secure_closet/security/sec,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
 "abQ" = (
@@ -662,6 +663,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
 "abS" = (
@@ -853,6 +855,7 @@
 /area/security/main)
 "acq" = (
 /obj/effect/landmark/secequipment,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
 "acr" = (
@@ -56280,7 +56283,7 @@
 	name = "dust"
 	},
 /obj/effect/decal/remains/human{
-	desc = "They look like human remains, and have clearly been gnawed at.";
+	desc = "They look like human remains, and have clearly been gnawed at."
 	},
 /obj/item/gun/energy/laser/retro,
 /turf/open/floor/mineral/titanium/blue,
@@ -56356,7 +56359,7 @@
 	name = "dust"
 	},
 /obj/effect/decal/remains/human{
-	desc = "They look like human remains, and have clearly been gnawed at.";
+	desc = "They look like human remains, and have clearly been gnawed at."
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -56435,7 +56438,7 @@
 	},
 /obj/item/soap/nanotrasen,
 /obj/effect/decal/remains/human{
-	desc = "They look like human remains, and have clearly been gnawed at.";
+	desc = "They look like human remains, and have clearly been gnawed at."
 	},
 /obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/floor/mineral/titanium,
@@ -56997,7 +57000,7 @@
 	name = "dust"
 	},
 /obj/effect/decal/remains/human{
-	desc = "They look like human remains, and have clearly been gnawed at.";
+	desc = "They look like human remains, and have clearly been gnawed at."
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -57164,7 +57167,7 @@
 	name = "\improper damaged CentCom hat"
 	},
 /obj/effect/decal/remains/human{
-	desc = "They look like human remains, and have clearly been gnawed at.";
+	desc = "They look like human remains, and have clearly been gnawed at."
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -57546,7 +57549,7 @@
 	name = "dust"
 	},
 /obj/effect/decal/remains/xeno{
-	desc = "A pile of remains that look vaguely humanoid. The skull is abnormally elongated, and there are burns through some of the other bones.";
+	desc = "A pile of remains that look vaguely humanoid. The skull is abnormally elongated, and there are burns through some of the other bones."
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
