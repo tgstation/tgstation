@@ -123,3 +123,30 @@
 		our_heap = add_new_heap()
 		heaps += our_heap
 	return our_heap.allocate(width, height)
+
+/// TRAIT stuff
+
+/datum/subsystem/mapping/proc/check_level_trait(z, trait)
+	if(z == 0)
+		return 0 // If you're nowhere, you have no traits
+	var/list/trait_list
+	if(z_list)
+		var/datum/space_level/S = get_zlev(z)
+		trait_list = S.flags
+	else
+		var/list/default_map_traits = DEFAULT_MAP_TRAITS
+		trait_list = default_map_traits[z]
+		trait_list = trait_list[DL_ATTR]
+	return trait_list[trait]
+
+/datum/subsystem/mapping/proc/levels_by_trait(trait)
+	. = list()
+	var/list/_z_list = z_list
+	for(var/A in _z_list)
+		var/datum/space_level/S = _z_list[A]
+		if(S.flags[trait])
+			. |= S
+
+/datum/subsystem/mapping/proc/level_name_to_num(name)
+	var/datum/space_level/S = get_zlev_by_name(name)
+	return S.zpos

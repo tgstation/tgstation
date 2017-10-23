@@ -25,11 +25,6 @@ SUBSYSTEM_DEF(mapping)
 	var/list/levels_by_name
 	var/list/heaps
 
-	// Levels that need their transitions rebuilt
-	var/list/unbuilt_space_transitions
-
-	var/datum/spacewalk_grid/linkage_map
-
 /datum/controller/subsystem/mapping/PreInit()
 	if(!space_manager)
 		space_manager = new
@@ -108,7 +103,9 @@ SUBSYSTEM_DEF(mapping)
 	config = SSmapping.config
 	next_map_config = SSmapping.next_map_config
 
-	space_manager = SSmapping.space_manager
+	z_list = SSmapping.z_list
+	levels_by_name = SSmapping.levels_by_name
+	heaps = SSmapping.heaps
 
 /datum/controller/subsystem/mapping/proc/TryLoadZ(filename, errorList, forceLevel, last)
 	var/static/dmm_suite/loader
@@ -268,28 +265,3 @@ SUBSYSTEM_DEF(mapping)
 
 		shelter_templates[S.shelter_id] = S
 		map_templates[S.shelter_id] = S
-
-/datum/subsystem/mapping/proc/check_level_trait(z, trait)
-	if(z == 0)
-		return 0 // If you're nowhere, you have no traits
-	var/list/trait_list
-	if(space_manager.initialized)
-		var/datum/space_level/S = space_manager.get_zlev(z)
-		trait_list = S.flags
-	else
-		var/list/default_map_traits = DEFAULT_MAP_TRAITS
-		trait_list = default_map_traits[z]
-		trait_list = trait_list[DL_ATTR]
-	return trait_list[trait]
-
-/datum/subsystem/mapping/proc/levels_by_trait(trait)
-	. = list()
-	for(var/A in space_manager.z_list)
-		var/datum/space_level/S = space_manager.z_list[A]
-		if(S.flags[trait])
-			result |= S
-  . result
-
-/datum/subsystem/mapping/proc/level_name_to_num(name)
-	var/datum/space_level/S = space_manager.get_zlev_by_name(name)
-	return S.zpos
