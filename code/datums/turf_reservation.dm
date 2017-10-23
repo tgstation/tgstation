@@ -12,9 +12,11 @@
 	turf_type = /turf/open/space/transit
 
 /datum/turf_reservation/proc/Release()
+	var/v = reserved_turfs.Copy()
 	for(var/i in reserved_turfs)
 		reserved_turfs -= i
-		UNRESERVE_TURF(i)
+		SSmapping.used_turfs -= i
+	SSmapping.reserve_turfs(v)
 
 /datum/turf_reservation/proc/Reserve(width, height, zlevel = ZLEVEL_RESERVED)
 	if(width > world.maxx || height > world.maxy)
@@ -53,7 +55,10 @@
 	bottom_right_coords = list(BR.x, BR.y, BR.z)
 	for(var/i in final)
 		var/turf/T = i
-		RESERVE_TURF(T, src)
+		reserved_turfs |= T
+		T.flags_1 &= ~UNUSED_RESERVATION_TURF_1
+		SSmapping.unused_turfs["[T.z]"] -= T
+		SSmapping.used_turfs[T] = src
 		T.ChangeTurf(turf_type, turf_type)
 	return TRUE
 

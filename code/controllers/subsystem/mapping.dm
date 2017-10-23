@@ -277,7 +277,11 @@ SUBSYSTEM_DEF(mapping)
 
 /datum/controller/subsystem/mapping/proc/reserve_turfs(list/turfs)
 	for(var/i in turfs)
-		SET_RESERVATION_TURF(i)
+		var/turf/T = i
+		T.empty(RESERVED_TURF_TYPE, RESERVED_TURF_TYPE, null, TRUE)
+		LAZYINITLIST(unused_turfs["[T.z]"])
+		unused_turfs["[T.z]"] |= T
+		T.flags_1 |= UNUSED_RESERVATION_TURF_1
 
 /datum/controller/subsystem/mapping/proc/wipe_turf_reservations()
 	for(var/i in turf_reservations)
@@ -291,6 +295,5 @@ SUBSYSTEM_DEF(mapping)
 		clearing |= i
 	unused_turfs = list()
 	used_turfs = list()
-	for(var/i in clearing)
-		SET_RESERVATION_TURF(i)
+	reserve_turfs(clearing)
 	UNSETEMPTY(turf_reservations)
