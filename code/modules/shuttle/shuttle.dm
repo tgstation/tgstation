@@ -217,20 +217,13 @@
 /obj/docking_port/stationary/transit
 	name = "In Transit"
 	turf_type = /turf/open/space/transit
-	var/list/turf/assigned_turfs = list()
+	var/datum/turf_reservation/reserved_area
 	var/area/shuttle/transit/assigned_area
 	var/obj/docking_port/mobile/owner
 
 /obj/docking_port/stationary/transit/Initialize()
 	. = ..()
 	SSshuttle.transit += src
-
-/obj/docking_port/stationary/transit/proc/dezone()
-	for(var/i in 1 to assigned_turfs.len)
-		var/turf/T = assigned_turfs[i]
-		if(T.type == turf_type)
-			T.ChangeTurf(/turf/open/space,/turf/open/space)
-			T.flags_1 |= UNUSED_TRANSIT_TURF_1
 
 /obj/docking_port/stationary/transit/Destroy(force=FALSE)
 	if(force)
@@ -239,12 +232,8 @@
 		SSshuttle.transit -= src
 		if(owner)
 			owner = null
-		if(assigned_turfs)
-			dezone()
-			assigned_turfs.Cut()
-		assigned_turfs = null
+		QDEL_NULL(reserved_area)
 	. = ..()
-
 
 /obj/docking_port/mobile
 	name = "shuttle"
@@ -294,7 +283,7 @@
 		SSshuttle.mobile -= src
 		destination = null
 		previous = null
-		assigned_transit = null
+		QDEL_NULL(assigned_transit)		//don't need it where we're goin'!
 		shuttle_areas = null
 	. = ..()
 

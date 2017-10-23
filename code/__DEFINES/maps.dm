@@ -43,9 +43,12 @@ Last space-z level = empty
 #define ZLEVEL_CITYOFCOGS 6
 #define ZLEVEL_EMPTY_SPACE 12
 //Unless you modify it in map config should be equal to ZLEVEL_SPACEMAX
-#define ZLEVEL_TRANSIT 13
+#define ZLEVEL_RESERVED 13
+#define ZLEVEL_TRANSIT 13		//Transit is currently as the reserve level.
 
 #define ZLEVEL_SPACEMIN 3
 #define ZLEVEL_SPACEMAX 13
 
 #define SPACERUIN_MAP_EDGE_PAD 15
+
+#define RESERVED_TURF_TYPE /turf/open/space

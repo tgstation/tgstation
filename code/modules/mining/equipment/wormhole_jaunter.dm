@@ -21,7 +21,7 @@
 
 /obj/item/device/wormhole_jaunter/proc/turf_check(mob/user)
 	var/turf/device_turf = get_turf(user)
-	if(!device_turf || device_turf.z == ZLEVEL_CENTCOM || device_turf.z == ZLEVEL_TRANSIT)
+	if(!device_turf || device_turf.z == ZLEVEL_CENTCOM || device_turf.z == ZLEVEL_RESERVED)
 		to_chat(user, "<span class='notice'>You're having difficulties getting the [src.name] to work.</span>")
 		return FALSE
 	return TRUE
