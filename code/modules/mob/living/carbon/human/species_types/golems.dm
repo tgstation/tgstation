@@ -52,7 +52,6 @@
 	for(var/V in golem_types)
 		var/datum/species/golem/G = V
 		if(!initial(G.random_eligible))
-			to_chat(world, "Excluding golem type [initial(G.name)]")
 			golem_types -= G
 	var/datum/species/golem/golem_type = pick(golem_types)
 	var/mob/living/carbon/human/H = C
