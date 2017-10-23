@@ -136,6 +136,23 @@
 	poison_per_bite = 5
 	move_to_delay = 5
 
+//variant of the hunter granted as the hos's pet, it has no poison but deals more damage to other spiders and heals when attacking them.
+/mob/living/simple_animal/hostile/poison/giant_spider/hunter/hos
+	name = "Commander Chorizopes"
+	desc = "An extremely rare variant of spider found one day chomping on Araneus, He prefers spider meat moreso than human meat so we kept him around in Araneus's place."
+	icon_state = "hunter"
+	icon_living = "hunter"
+	icon_dead = "hunter_dead"
+	poison_per_bite = 0
+	move_to_delay = 5
+
+/mob/living/simple_animal/hostile/poison/giant_spider/hunter/hos/AttackingTarget()
+	. = ..()
+	if(. && isliving(target) && /mob/living/simple_animal/hostile/poison/giant_spider)
+		var/mob/living/L = target
+		L.adjustBruteLoss(30) //chorizopes eats other spiders, much like how sec eats the station
+		heal_overall_damage(10, 10)
+
 //vipers are the rare variant of the hunter, no IMMEDIATE damage but so much poison medical care will be needed fast.
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter/viper
 	name = "viper"
