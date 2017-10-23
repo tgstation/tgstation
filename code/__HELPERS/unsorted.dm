@@ -737,7 +737,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 */
 
-/proc/get_turf_pixel(atom/movable/AM)
+/proc/get_turf_pixel(atom/AM)
 	if(!istype(AM))
 		return
 
