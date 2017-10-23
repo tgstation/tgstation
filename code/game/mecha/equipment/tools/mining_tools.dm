@@ -82,6 +82,7 @@
 	add_logs(user, target, "attacked", "[name]", "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 	if(target.stat == DEAD)
 		if(target.butcher_results)
+			add_logs(user, target, "gibbed", "[name]")
 			target.harvest(chassis)//Butcher the mob with our drill.
 		else
 			target.gib()
