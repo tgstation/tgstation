@@ -135,9 +135,10 @@
 		var/obj/item/clothing/shoes/S = H.shoes
 		if(S && S.bloody_shoes[blood_state])
 			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
-			entered_dirs|= H.dir
 			shoe_types |= H.shoes.type
-	update_icon()
+			if ((entered_dir & H.dir))
+				entered_dirs |= H.dir
+				update_icon()
 
 /obj/effect/decal/cleanable/blood/footprints/Uncrossed(atom/movable/O)
 	..()
@@ -146,9 +147,11 @@
 		var/obj/item/clothing/shoes/S = H.shoes
 		if(S && S.bloody_shoes[blood_state])
 			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
-			exited_dirs|= H.dir
-			shoe_types |= H.shoes.type
-	update_icon()
+			shoe_types  |= S.type
+			if (!(exited_dir & H.dir))
+				exited_dirs |= H.dir
+				update_icon()
+			
 
 /obj/effect/decal/cleanable/blood/footprints/update_icon()
 	cut_overlays()
