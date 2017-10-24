@@ -81,8 +81,9 @@ Buildable meters
 
 /obj/item/pipe/proc/update()
 	var/obj/machinery/atmospherics/A = get_pipe_cache(pipe_type)
-	name = "[A.name] fitting"
-	icon_state = A.pipe_state
+	if(A)
+		name = "[A.name] fitting"
+		icon_state = A.pipe_state
 
 // rotate the pipe item clockwise
 
