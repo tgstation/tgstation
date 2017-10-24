@@ -1,5 +1,0 @@
-author: "Kor"
-delete-after: True
-changes: 
-  - rscadd: "Added dullahans, which will be available from the character set up menu during the Halloween event."
-  - bugfix: "Severed heads will no longer appear bald."
