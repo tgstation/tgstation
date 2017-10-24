@@ -235,13 +235,25 @@
 				sleep(125)
 				make_glow()
 				animate(glow, transform = matrix() * 3, alpha = 0, time = 5)
-				var/turf/startpoint = get_turf(src)
 				QDEL_IN(src, 3)
 				sleep(3)
 				GLOB.clockwork_gateway_activated = TRUE
-				var/obj/structure/destructible/clockwork/massive/ratvar/R = new(startpoint)
 				var/turf/T =  locate(round(world.maxx * 0.5, 1), round(world.maxy * 0.5, 1), ZLEVEL_STATION_PRIMARY) //approximate center of the station
-				R.forceMove(T)
+				new /obj/structure/destructible/clockwork/massive/ratvar(T)
+				SSticker.force_ending = TRUE
+				var/x0 = T.x
+				var/y0 = T.y
+				for(var/I in spiral_range_turfs(255, T, tick_checked = TRUE))
+					var/turf/T2 = I
+					if(!T2)
+						continue
+					var/dist = cheap_hypotenuse(T2.x, T2.y, x0, y0)
+					if(dist < 100)
+						dist = TRUE
+					else
+						dist = FALSE
+					T.ratvar_act(dist)
+					CHECK_TICK
 
 
 
