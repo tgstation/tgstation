@@ -825,7 +825,7 @@
 /turf/open/floor/plating/snowed/temperatre,
 /area/awaymission/cabin)
 "cT" = (
-/obj/vehicle/atv,
+/obj/vehicle/ridden/atv,
 /turf/open/floor/plating/snowed/temperatre,
 /area/awaymission/cabin)
 "cU" = (

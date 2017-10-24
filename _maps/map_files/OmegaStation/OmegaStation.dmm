@@ -6039,7 +6039,7 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "akW" = (
-/obj/vehicle/secway,
+/obj/vehicle/ridden/secway,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -19060,7 +19060,7 @@
 /turf/open/floor/plasteel,
 /area/janitor)
 "aJJ" = (
-/obj/vehicle/janicart,
+/obj/vehicle/ridden/janicart,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/bag/trash,
 /obj/item/key/janitor,

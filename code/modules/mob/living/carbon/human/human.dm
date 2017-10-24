@@ -885,8 +885,11 @@
 	if(!is_type_in_typecache(M, can_ride_typecache))
 		M.visible_message("<span class='warning'>[M] really can't seem to mount [src]...</span>")
 		return
-	if(!riding_datum)
-		riding_datum = new /datum/riding/human(src)
+	var/datum/component/riding/human/riding_datum = LoadComponent(/datum/component/riding/human)
+	riding_datum.ride_check_rider_incapacitated = TRUE
+	riding_datum.ride_check_ridden_incapacitated = TRUE
+	riding_datum.ride_check_rider_restrained = TRUE
+	riding_datum.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 6), TEXT_SOUTH = list(0, 6), TEXT_EAST = list(-6, 4), TEXT_WEST = list( 6, 4)))
 	if(buckled_mobs && ((M in buckled_mobs) || (buckled_mobs.len >= max_buckled_mobs)) || buckled || (M.stat != CONSCIOUS))
 		return
 	visible_message("<span class='notice'>[M] starts to climb onto [src]...</span>")
@@ -902,13 +905,6 @@
 		stop_pulling()
 	else
 		visible_message("<span class='warning'>[M] fails to climb onto [src]!</span>")
-
-/mob/living/carbon/human/unbuckle_mob(mob/living/M, force=FALSE)
-	if(iscarbon(M))
-		if(riding_datum)
-			riding_datum.unequip_buckle_inhands(M)
-			riding_datum.restore_position(M)
-	. = ..(M, force)
 
 /mob/living/carbon/human/species
 	var/race = null
