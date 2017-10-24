@@ -511,7 +511,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/list/assembled = list()
 	while(processing_list.len)
 		var/atom/A = processing_list[1]
-		processing_list -= A
+		processing_list.Cut(1, 2)
 		//Byond does not allow things to be in multiple contents, or double parent-child hierarchies, so only += is needed
 		//This is also why we don't need to check against assembled as we go along
 		processing_list += A.contents 
