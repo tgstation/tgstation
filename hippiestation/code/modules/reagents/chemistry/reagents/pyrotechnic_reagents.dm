@@ -107,18 +107,17 @@
 			var/obj/item/projectile/beam/emitter/P = new /obj/item/projectile/beam/emitter(get_turf(holder.my_atom))
 			switch(direction)
 				if(1)
-					P.yo = 20
-					P.xo = 0
+					P.fire(dir2angle(1))
+
 				if(2)
-					P.yo = 0
-					P.xo = 20
+					P.fire(dir2angle(2))
+
 				if(4)
-					P.yo = 0
-					P.xo = -20
+					P.fire(dir2angle(4))
+
 				if(8)
-					P.yo = -20
-					P.xo = 0
-			P.fire()
+					P.fire(dir2angle(8))
+
 		holder.remove_reagent(src.id,10,safety = 1)
 	..()
 
@@ -143,7 +142,7 @@
 	if(M.m_intent == MOVE_INTENT_RUN && current_cycle <= 5)
 		var/location = get_turf(holder.my_atom)
 		var/datum/effect_system/reagents_explosion/e = new()
-		e.set_up(round(volume, 1), location, 0, 0, message = 0)
+		e.set_up(round(volume, 0.5), location, 0, 0, message = 0)
 		e.start()
 		holder.clear_reagents()
 	..()
@@ -151,7 +150,7 @@
 /datum/reagent/superboom/on_ex_act()
 	var/location = get_turf(holder.my_atom)
 	var/datum/effect_system/reagents_explosion/e = new()
-	e.set_up(round(volume, 1), location, 0, 0, message = 0)
+	e.set_up(round(volume, 0.5), location, 0, 0, message = 0)
 	e.start()
 	holder.clear_reagents()
 	..()
@@ -160,7 +159,7 @@
 	if(prob(0.5) && holder) //even if you do nothing it can explode
 		var/location = get_turf(holder.my_atom)
 		var/datum/effect_system/reagents_explosion/e = new()
-		e.set_up(round(volume, 1), location, 0, 0, message = 0)
+		e.set_up(round(volume, 0.5), location, 0, 0, message = 0)
 		e.start()
 		holder.clear_reagents()
 	..()
@@ -184,7 +183,6 @@
 		M.adjustFireLoss(3)//extremely weak damage
 		do_sparks(2, TRUE, M)
 	if(prob(5))
-		M.IgniteMob()
 		M.adjust_fire_stacks(2)
 		holder.remove_reagent(src.id,5,safety = 1)
 	..()
@@ -245,6 +243,12 @@
 	id = "proto"
 	description = "An exceedingly pyrophoric state of plasma that superheats air and lifeforms alike"
 	color = "#FF0000"
+
+/datum/reagent/proto/reaction_mob(mob/living/M, method=TOUCH)
+	var/turf/T = get_turf(M)
+	for(var/turf/F in range(1,T))
+		new /obj/effect/hotspot(F)
+	..()
 
 /datum/reagent/proto/on_mob_life(mob/living/M)
 	if(M.on_fire)

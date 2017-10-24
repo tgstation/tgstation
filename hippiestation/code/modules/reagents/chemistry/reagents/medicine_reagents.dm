@@ -53,7 +53,7 @@ datum/reagent/medicine/superzine/on_mob_life(mob/living/M as mob)
 	..()
 
 /datum/reagent/medicine/superzine/overdose_process(mob/living/M)
-	if(prob(2))//changed from gib to heart attack
+	if(prob(5))//changed from gib to heart attack
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(!H.undergoing_cardiac_arrest() && H.can_heartattack())
@@ -84,7 +84,8 @@ datum/reagent/medicine/superzine/on_mob_life(mob/living/M as mob)
 					return
 			else
 				holder.clear_reagents()
-				M.revive(full_heal = 1)
+				M.revive(full_heal = TRUE)
+				M.adjustToxLoss(95)//you get revived near crit
 				M.updatehealth()
 				M.emote("gasp")
 				add_logs(M, M, "revived", src)
@@ -98,7 +99,7 @@ datum/reagent/medicine/superzine/on_mob_life(mob/living/M as mob)
 /datum/reagent/medicine/sodiumf/on_mob_life(mob/living/M)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		if(prob(10))
+		if(prob(5))
 			C.vomit(20)//no longer oxyloss deathchem
 		C.reagents.remove_all_type(/datum/reagent/toxin, 1*REM, 0, 1)
 		C.hallucination = max(0, M.hallucination - 5*REM)
@@ -115,7 +116,7 @@ datum/reagent/medicine/superzine/on_mob_life(mob/living/M as mob)
 
 /datum/reagent/medicine/aluminiumf/on_mob_life(mob/living/M)
 	M.adjustToxLoss(1)//deals minor toxin damage  designed to be very potent
-	M.hallucination += 2 //just a weeny bit
+	M.hallucination++ //just a weeny bit
 	M.adjustFireLoss(-5 * REM)
 	M.adjustBruteLoss(-5 * REM)
 	..()
@@ -125,8 +126,9 @@ datum/reagent/medicine/superzine/on_mob_life(mob/living/M as mob)
 	id = "liquid_life"
 	description = "The purest form of healing avaliable, unfortunately extremely painful for the user when regenerating"
 	color = "#C8A5DC" // rgb: 200, 165, 220
-	taste_description = "the tastiest taste"
 	overdose_threshold = 40 //gib nuke
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	taste_description = "the tastiest taste"
 	var/message= TRUE
 
 /datum/reagent/medicine/liquid_life/on_mob_life(mob/living/M)//rebalanced to cripple the person being healed essentially acting as a sort of hunker down chem
@@ -135,7 +137,7 @@ datum/reagent/medicine/superzine/on_mob_life(mob/living/M as mob)
 			to_chat(M, "<span class='warning'>You double over in pain as you begin to violently regenerate!</span>")
 			M.emote("scream")
 			message = FALSE
-		M.setStaminaLoss(50)//or your devil
+		M.setStaminaLoss(40)//or your devil
 		M.drowsyness = max(M.drowsyness, 1)
 		M.setToxLoss(0)//i can be yuor angle
 		M.hallucination = 0
