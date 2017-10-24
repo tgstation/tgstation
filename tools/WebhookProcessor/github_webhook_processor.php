@@ -217,8 +217,7 @@ function tag_pr($payload, $opened) {
 			$tags[] = $tag;
 
 	check_tag_and_replace($payload, '[dnm]', 'Do Not Merge', $tags);
-	if(!check_tag_and_replace($payload, '[wip]', 'Work In Progress', $tags))
-		check_tag_and_replace($payload, '[ready]', 'Work In Progress', $remove);
+	check_tag_and_replace($payload, '[wip]', 'Work In Progress', $tags);
 
 	$url = $payload['pull_request']['issue_url'] . '/labels';
 
