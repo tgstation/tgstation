@@ -118,13 +118,6 @@
 
 /obj/item/dullahan_relay/process()
 	if(!istype(loc, /obj/item/bodypart/head) || QDELETED(owner))
-		if(!QDELETED(owner))
-			var/mob/living/carbon/human/H = owner
-			if(H.dna.species.id == "dullahan")
-				var/datum/species/dullahan/D = H.dna.species
-				D.myhead = null
-			owner.gib()
-		owner = null
 		. = PROCESS_KILL
 		qdel(src)
 
@@ -138,3 +131,14 @@
 		to_chat(owner,message)
 	else
 		qdel(src)
+
+
+/obj/item/dullahan_relay/Destroy()
+	if(!QDELETED(owner))
+		var/mob/living/carbon/human/H = owner
+		if(H.dna.species.id == "dullahan")
+			var/datum/species/dullahan/D = H.dna.species
+			D.myhead = null
+			owner.gib()
+	owner = null
+	..()
