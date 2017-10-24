@@ -81886,7 +81886,7 @@
 	},
 /area/science/mixing)
 "dqG" = (
-/obj/machinery/atmospherics/components/unary/vent_pump,
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/neutral,
 /area/science/mixing)
 "dqH" = (
