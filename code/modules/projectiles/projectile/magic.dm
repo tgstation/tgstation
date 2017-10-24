@@ -158,9 +158,15 @@
 			new_mob = new /mob/living/simple_animal/slime/random(M.loc)
 		if("xeno")
 			if(prob(50))
-				new_mob = new /mob/living/carbon/alien/humanoid/hunter(M.loc)
+				if(!M.ckey) //spawn an AI alien if it isn't a player controlled mob.
+					new_mob = new /mob/living/simple_animal/hostile/alien(M.loc)
+				else
+					new_mob = new /mob/living/carbon/alien/humanoid/hunter(M.loc)
 			else
-				new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
+				if(!M.ckey)
+					new_mob = new /mob/living/simple_animal/hostile/alien/sentinel(M.loc)
+				else
+					new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
 
 		if("animal")
 			var/path
