@@ -616,7 +616,7 @@ Difficulty: Very Hard
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	ventcrawler = VENTCRAWLER_ALWAYS
 	mob_size = MOB_SIZE_TINY
-	gold_core_spawnable = 0
+	gold_core_spawnable = TRUE
 	verb_say = "warps"
 	verb_ask = "floats inquisitively"
 	verb_exclaim = "zaps"
@@ -634,7 +634,6 @@ Difficulty: Very Hard
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	AIStatus = AI_OFF
 	stop_automated_movement = 1
-	gold_core_spawnable = TRUE
 	var/heal_power = 5
 
 /mob/living/simple_animal/hostile/lightgeist/Initialize()
