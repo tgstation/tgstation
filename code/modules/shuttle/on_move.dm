@@ -31,10 +31,7 @@ All ShuttleMove procs go here
 					M.pulledby.stop_pulling()
 				M.stop_pulling()
 				M.visible_message("<span class='warning'>[shuttle] slams into [M]!</span>")
-				if(M.key || M.get_ghost(TRUE))
-					SSblackbox.add_details("shuttle_gib", "[type]")
-				else
-					SSblackbox.add_details("shuttle_gib_unintelligent", "[type]")
+				SSblackbox.record_feedback("tally", "shuttle_gib", 1, M.type)
 				M.gib()
 
 		else //non-living mobs shouldn't be affected by shuttles, which is why this is an else
@@ -95,7 +92,7 @@ All ShuttleMove procs go here
 		update_light()
 
 	update_parallax_contents()
-	
+
 	return TRUE
 
 /////////////////////////////////////////////////////////////////////////////////////

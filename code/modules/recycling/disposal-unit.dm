@@ -382,7 +382,6 @@
 
 /obj/machinery/disposal/bin/proc/do_flush()
 	set waitfor = FALSE
-	SSblackbox.inc("disposal_auto_flush")
 	flush()
 
 //timed process

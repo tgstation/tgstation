@@ -217,7 +217,7 @@
 	linked.teleporting = TRUE
 	var/turf/T = get_turf(src)
 	new /obj/effect/temp_visual/warp_cube(T, user, teleport_color, TRUE)
-	SSblackbox.add_details("warp_cube","[src.type]")
+	SSblackbox.record_feedback("tally", "warp_cube", 1, type)
 	new /obj/effect/temp_visual/warp_cube(get_turf(linked), user, linked.teleport_color, FALSE)
 	var/obj/effect/warp_cube/link_holder = new /obj/effect/warp_cube(T)
 	user.forceMove(link_holder) //mess around with loc so the user can't wander around
@@ -1291,5 +1291,3 @@
 	for(var/t in RANGE_TURFS(1, T))
 		var/obj/effect/temp_visual/hierophant/blast/B = new(t, user, friendly_fire_check)
 		B.damage = 15 //keeps monster damage boost due to lower damage
-
-

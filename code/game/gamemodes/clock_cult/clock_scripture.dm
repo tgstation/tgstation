@@ -65,7 +65,7 @@ Applications: 8 servants, 3 caches, and 100 CV
 		else
 			successful = TRUE
 			if(slab && !slab.no_cost && !GLOB.ratvar_awakens) //if the slab exists and isn't debug and ratvar isn't up, log the scripture as being used
-				SSblackbox.add_details("clockcult_scripture_recited", name)
+				SSblackbox.record_feedback("tally", "clockcult_scripture_recited", 1, name)
 	if(slab)
 		slab.busy = null
 	post_recital()

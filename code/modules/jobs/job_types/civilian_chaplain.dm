@@ -80,8 +80,8 @@ Chaplain
 
 	H.equip_to_slot_or_del(B, slot_in_backpack)
 
-	SSblackbox.set_details("religion_name","[new_religion]")
-	SSblackbox.set_details("religion_deity","[new_deity]")
+	SSblackbox.record_feedback("text", "religion_name", 0, "[new_religion]", 1)
+	SSblackbox.record_feedback("text", "religion_deity", 0, "[new_deity]", 1)
 
 /datum/outfit/job/chaplain
 	name = "Chaplain"

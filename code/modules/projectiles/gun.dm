@@ -271,7 +271,7 @@
 
 	if(user)
 		user.update_inv_hands()
-	SSblackbox.add_details("gun_fired","[src.type]")
+	SSblackbox.record_feedback("tally", "gun_fired", 1, type)
 	return 1
 
 /obj/item/gun/update_icon()

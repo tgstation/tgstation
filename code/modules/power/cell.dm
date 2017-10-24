@@ -74,7 +74,7 @@
 		return 0
 	charge = (charge - amount)
 	if(!istype(loc, /obj/machinery/power/apc))
-		SSblackbox.add_details("cell_used","[src.type]")
+		SSblackbox.record_feedback("tally", "cell_used", 1, type)
 	return 1
 
 // recharge the cell

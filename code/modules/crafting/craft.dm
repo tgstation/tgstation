@@ -137,7 +137,7 @@
 				var/atom/movable/I = new R.result (get_turf(user.loc))
 				I.CheckParts(parts, R)
 				if(send_feedback)
-					SSblackbox.add_details("object_crafted","[I.type]")
+					SSblackbox.record_feedback("tally", "object_crafted", 1, I.type)
 				return 0
 			return "."
 		return ", missing tool."

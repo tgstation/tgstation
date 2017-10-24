@@ -172,7 +172,7 @@
 					if(istype(A, B))
 						continue contents_loop
 				qdel(A)
-	SSblackbox.add_details("food_made","[type]")
+	SSblackbox.record_feedback("tally", "food_made", 1, type)
 
 	if(bonus_reagents && bonus_reagents.len)
 		for(var/r_id in bonus_reagents)
@@ -266,7 +266,7 @@
 			initialize_cooked_food(S, M.efficiency)
 		else
 			initialize_cooked_food(S, 1)
-		SSblackbox.add_details("food_made","[type]")
+		SSblackbox.record_feedback("tally", "food_made", 1, type)
 	else
 		new /obj/item/reagent_containers/food/snacks/badrecipe(src)
 		if(M && M.dirty < 100)

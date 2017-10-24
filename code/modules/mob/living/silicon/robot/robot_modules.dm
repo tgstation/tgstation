@@ -227,8 +227,7 @@
 	R.notify_ai(NEW_MODULE)
 	if(R.hud_used)
 		R.hud_used.update_robot_modules_display()
-	if(feedback_key && !did_feedback)
-		SSblackbox.inc(feedback_key, 1)
+	SSblackbox.record_feedback("tally", "cyborg_modules", 1, R.module)
 
 /obj/item/robot_module/standard
 	name = "Standard"
