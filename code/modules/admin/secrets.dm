@@ -42,33 +42,32 @@
 			"}
 
 	if(check_rights(R_FUN,0))
-		dat += {"
-			<B>Fun Secrets</B><BR>
-			<BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=virus'>Trigger a Virus Outbreak</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=monkey'>Turn all humans into monkeys</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=anime'>Chinese Cartoons</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=allspecies'>Change the species of all humans</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=power'>Make all areas powered</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=unpower'>Make all areas unpowered</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=quickpower'>Power all SMES</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=tripleAI'>Triple AI mode (needs to be used in the lobby)</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=traitor_all'>Everyone is the traitor</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=guns'>Summon Guns</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=magic'>Summon Magic</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=events'>Summon Events (Toggle)</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=onlyone'>There can only be one!</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=delayed_onlyone'>There can only be one! (40-second delay)</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=retardify'>Make all players retarded</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=eagles'>Egalitarian Station Mode</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=blackout'>Break all lights</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=whiteout'>Fix all lights</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
-			<BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=changebombcap'>Change bomb cap</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=masspurrbation'>Mass Purrbation</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=massremovepurrbation'>Mass Remove Purrbation</A><BR>
-			"}
+		dat += "<B>Fun Secrets</B><BR>"
+		dat += "<BR>"
+		dat += "<A href='?src=\ref[src];[HrefToken()];secrets=virus'>Trigger a Virus Outbreak</A><BR>"
+		dat += "<A href='?src=\ref[src];[HrefToken()];secrets=monkey'>Turn all humans into monkeys</A><BR>"
+		dat += "<A href='?src=\ref[src];[HrefToken()];secrets=anime'>Chinese Cartoons</A><BR>"
+		dat += "<A href='?src=\ref[src];[HrefToken()];secrets=allspecies'>Change the species of all humans</A><BR>"
+		dat += "<A href='?src=\ref[src];[HrefToken()];secrets=power'>Make all areas powered</A><BR>"
+		dat += "<A href='?src=\ref[src];[HrefToken()];secrets=unpower'>Make all areas unpowered</A><BR>"
+		dat += "<A href='?src=\ref[src];[HrefToken()];secrets=quickpower'>Power all SMES</A><BR>"
+		dat += "<A href='?src=\ref[src];[HrefToken()];secrets=tripleAI'>Triple AI mode (needs to be used in the lobby)</A><BR>"
+		dat += "<A href='?src=\ref[src];[HrefToken()];secrets=traitor_all'>Everyone is the traitor</A><BR>"
+		dat += "<A href='?src=\ref[src];[HrefToken()];secrets=guns'>Summon Guns</A><BR>"
+		dat += "<A href='?src=\ref[src];[HrefToken()];secrets=magic'>Summon Magic</A><BR>"
+		dat += "<A href='?src=\ref[src];[HrefToken()];secrets=events'>Summon Events (Toggle)</A><BR>"
+		dat += "<A href='?src=\ref[src];[HrefToken()];secrets=onlyone'>There can only be one!</A><BR>"
+		dat += "<A href='?src=\ref[src];[HrefToken()];secrets=delayed_onlyone'>There can only be one! (40-second delay)</A><BR>"
+		dat += "<A href='?src=\ref[src];[HrefToken()];secrets=retardify'>Make all players retarded</A><BR>"
+		dat += "<A href='?src=\ref[src];[HrefToken()];secrets=eagles'>Egalitarian Station Mode</A><BR>"
+		dat += "<A href='?src=\ref[src];[HrefToken()];secrets=blackout'>Break all lights</A><BR>"
+		dat += "<A href='?src=\ref[src];[HrefToken()];secrets=whiteout'>Fix all lights</A><BR>"
+		dat += "<A href='?src=\ref[src];[HrefToken()];secrets=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>"
+		dat += "<BR>"
+		dat += "<A href='?src=\ref[src];[HrefToken()];secrets=changebombcap'>Change bomb cap</A><BR>"
+		if(CONFIG_GET(flag/join_with_mutant_humans))
+			dat += "<A href='?src=\ref[src];[HrefToken()];secrets=masspurrbation'>Mass Purrbation</A><BR>"
+			dat += "<A href='?src=\ref[src];[HrefToken()];secrets=massremovepurrbation'>Mass Remove Purrbation</A><BR>"
 
 	dat += "<BR>"
 
@@ -551,6 +550,9 @@
 				return
 			toggle_all_ctf(usr)
 		if("masspurrbation")
+			if(!CONFIG_GET(flag/join_with_mutant_humans))
+				log_admin("[key_name(usr)] has attempted to href exploit apply masspurrbation.")
+				return
 			if(!check_rights(R_FUN))
 				return
 			mass_purrbation()
@@ -558,6 +560,9 @@
 				purrbation!")
 			log_admin("[key_name(usr)] has put everyone on purrbation.")
 		if("massremovepurrbation")
+			if(!CONFIG_GET(flag/join_with_mutant_humans))
+				log_admin("[key_name(usr)] has attempted to href exploit apply massremovepurrbation.")
+				return
 			if(!check_rights(R_FUN))
 				return
 			mass_remove_purrbation()
