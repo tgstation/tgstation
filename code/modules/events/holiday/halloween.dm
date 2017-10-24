@@ -33,6 +33,7 @@
 	holidayID = HALLOWEEN
 	weight = 25
 	earliest_start = 0
+	max_occurrences = 1
 
 /datum/round_event/carp_migration/eyeballs/start()
 	for(var/obj/effect/landmark/carpspawn/C in GLOB.landmarks_list)
@@ -44,7 +45,7 @@
 	typepath = /datum/round_event/meteor_wave/spooky
 	holidayID = HALLOWEEN
 	weight = 20
-	max_occurrences = 2
+	max_occurrences = 1
 
 /datum/round_event/meteor_wave/spooky
 	endWhen	= 40
@@ -58,8 +59,9 @@
 	name = "Clowns"
 	typepath = /datum/round_event/creepy_clowns
 	holidayID = HALLOWEEN
-	weight = 20
+	weight = 5
 	earliest_start = 0
+	max_occurrences = 1
 
 /datum/round_event/creepy_clowns
 	endWhen = 40
