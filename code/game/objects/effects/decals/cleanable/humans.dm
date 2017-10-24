@@ -135,8 +135,8 @@
 		var/obj/item/clothing/shoes/S = H.shoes
 		if(S && S.bloody_shoes[blood_state])
 			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
-			shoe_types |= H.shoes.type
-			if ((entered_dir & H.dir))
+			shoe_types |= S.type
+			if (!(entered_dirs & H.dir))
 				entered_dirs |= H.dir
 				update_icon()
 
@@ -148,7 +148,7 @@
 		if(S && S.bloody_shoes[blood_state])
 			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
 			shoe_types  |= S.type
-			if (!(exited_dir & H.dir))
+			if (!(exited_dirs & H.dir))
 				exited_dirs |= H.dir
 				update_icon()
 			
