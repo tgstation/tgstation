@@ -222,23 +222,6 @@
 	O.Die() //call the facehugger's death proc
 	qdel(src)
 
-/obj/effect/mob_spawn/mouse
-	name = "sleeper"
-	mob_type = 	/mob/living/simple_animal/mouse
-	death = FALSE
-	roundstart = FALSE
-	icon = 'icons/obj/Cryogenic2.dmi'
-	icon_state = "sleeper"
-
-/obj/effect/mob_spawn/cow
-	name = "sleeper"
-	mob_type = 	/mob/living/simple_animal/cow
-	death = FALSE
-	roundstart = FALSE
-	mob_gender = FEMALE
-	icon = 'icons/obj/Cryogenic2.dmi'
-	icon_state = "sleeper"
-
 // I'll work on making a list of corpses people request for maps, or that I think will be commonly used. Syndicate operatives for example.
 
 ///////////Civilians//////////////////////
