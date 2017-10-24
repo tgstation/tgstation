@@ -258,7 +258,7 @@ function get_reviews($payload){
 }
 
 function check_ready_for_review($payload, $labels = null){
-	$r4rlabel = 'Review Again';
+	$r4rlabel = 'Needs Review';
 	$labels_which_should_not_be_ready = array('Do Not Merge', 'Work In Progress', 'Merge Conflict');
 	$has_label_already = false;
 	$should_not_have_label = false;
