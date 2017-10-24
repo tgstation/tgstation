@@ -44,3 +44,9 @@
 	results = list("liquid_life" = 3, "methpos" = 2)
 	required_reagents = list("superzine" = 1, "virogone" = 1,"defib" = 1)
 	bluespace_recipe = TRUE
+
+/datum/chemical_reaction/kelotane
+	name = "Kelotane"
+	id = "kelotane"
+	results = list("kelotane" = 3)
+	required_reagents = list("carbon" = 1, "silicon" = 1)
