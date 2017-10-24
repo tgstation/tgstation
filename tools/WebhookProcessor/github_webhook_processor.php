@@ -167,7 +167,6 @@ function check_tag_and_replace($payload, $title_tag, $label, &$array_to_add_labe
 	$title = $payload['pull_request']['title'];
 	if(stripos($title, $title_tag) !== FALSE){
 		$array_to_add_label_to[] = $label;
-		$title = trim(str_ireplace($title_tag, '', $title));
 		apisend($payload['pull_request']['url'], 'PATCH', array('title' => $title));
 		return true;
 	}
