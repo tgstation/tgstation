@@ -83,23 +83,20 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 		. = iconbro.appearance
 		icon_cache[icon] = .
 
-/atom/proc/build_appearance_list(new_overlays)
-	var/static/image/appearance_bro = new()
-	if (!islist(new_overlays))
-		new_overlays = list(new_overlays)
+/atom/proc/build_appearance_list(old_overlays)
+	var/list/new_overlays = list()
+	if (!islist(old_overlays))
+		old_overlays = list(old_overlays)
 	else
-		listclearnulls(new_overlays)
-	for (var/i in 1 to length(new_overlays))
-		var/image/cached_overlay = new_overlays[i]
-		if (istext(cached_overlay))
-			new_overlays[i] = iconstate2appearance(icon, cached_overlay)
-		else if(isicon(cached_overlay))
-			new_overlays[i] = icon2appearance(cached_overlay)
-		else	//image/mutable_appearance probable
-			appearance_bro.appearance = cached_overlay
-			if(!ispath(cached_overlay))
-				appearance_bro.dir = cached_overlay.dir
-			new_overlays[i] = appearance_bro.appearance
+		listclearnulls(old_overlays)
+	for (var/overlay in old_overlays)
+		if (istext(overlay))
+			new_overlays += iconstate2appearance(icon, overlay)
+		else if(isicon(overlay))
+			new_overlays += icon2appearance(overlay)
+		else if(istype(overlay, /image))
+			var/image/image = overlay
+			new_overlays += image.appearance
 	return new_overlays
 
 #define NOT_QUEUED_ALREADY (!(flags_1 & OVERLAY_QUEUED_1))
@@ -136,7 +133,7 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 	if(priority)
 		LAZYREMOVE(cached_priority, overlays)
 
-	if(NOT_QUEUED_ALREADY && ((init_o_len != LAZYLEN(cached_priority)) || (init_p_len != LAZYLEN(cached_overlays))))
+	if(NOT_QUEUED_ALREADY && ((init_o_len != LAZYLEN(cached_overlays)) || (init_p_len != LAZYLEN(cached_priority))))
 		QUEUE_FOR_COMPILE
 
 /atom/proc/add_overlay(list/overlays, priority = FALSE)
