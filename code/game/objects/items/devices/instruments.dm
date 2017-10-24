@@ -255,7 +255,7 @@
 				else
 					to_chat(H, "The spooky gods forgot to ship your instrument. Better luck next unlife.")
 			to_chat(H, "<B>You are the spooky skeleton!</B>")
-			to_chat(H, "A new life and identity has begun. Help your fellow skeletons into bringing out the spooky-pocalypse. You haven't forgotten your past life, but you are no longer beholden to any past loyalties.")
+			to_chat(H, "A new life and identity has begun. Help your fellow skeletons into bringing out the spooky-pocalypse. You haven't forgotten your past life, and are still beholden to past loyalties.")
 			change_name(H)	//time for a new name!
 
 	else
