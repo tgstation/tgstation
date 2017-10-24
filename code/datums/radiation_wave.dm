@@ -102,5 +102,5 @@
 			if(insulation && insulation.contamination_proof)
 				continue
 			else
-				var/rad_strength = (strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_STR_COEFFICIENT * min(1/(steps*range_modifier), 1)
+				var/rad_strength = (strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_STR_COEFFICIENT
 				thing.AddComponent(/datum/component/radioactive, rad_strength, source)

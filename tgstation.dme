@@ -336,6 +336,7 @@
 #include "code\datums\helper_datums\icon_snapshot.dm"
 #include "code\datums\helper_datums\teleport.dm"
 #include "code\datums\helper_datums\topic_input.dm"
+#include "code\datums\looping_sounds\item_sounds.dm"
 #include "code\datums\looping_sounds\looping_sound.dm"
 #include "code\datums\looping_sounds\machinery_sounds.dm"
 #include "code\datums\martial\boxing.dm"
