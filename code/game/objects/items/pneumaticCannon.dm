@@ -260,10 +260,11 @@
 	throw_amount = 1
 	maxWeightClass = 150	//50 pies. :^)
 	clumsyCheck = FALSE
+	var/static/list/pie_typecache = typecacheof(/obj/item/reagent_containers/food/snacks/pie)
 
 /obj/item/pneumatic_cannon/pie/Initialize()
 	. = ..()
-	allowed_typecache = typecacheof(/obj/item/reagent_containers/food/snacks/pie)
+	allowed_typecache = pie_typecache
 	
 /obj/item/pneumatic_cannon/pie/selfcharge
 	automatic = TRUE
