@@ -217,8 +217,8 @@ function tag_pr($payload, $opened) {
 			$tags[] = $tag;
 
 	check_tag_and_replace($payload, '[dnm]', 'Do Not Merge', $tags);
-	if(!check_tag_and_replace($payload, '[wip]', 'Work In Progress', $tags))
-		check_tag_and_replace($payload, '[ready]', 'Work In Progress', $remove);
+	if(!check_tag_and_replace($payload, '[wip]', 'Work In Progress', $tags) && check_tag_and_replace($payload, '[ready]', 'Work In Progress', $remove))
+		$tags[] = 'Needs Review';
 
 	$url = $payload['pull_request']['issue_url'] . '/labels';
 
@@ -241,7 +241,7 @@ function tag_pr($payload, $opened) {
 function remove_ready_for_review($payload, $labels = null){
 	if($labels == null)
 		$labels = get_labels($payload);
-	$index = array_search('Review Again', $labels);
+	$index = array_search('Needs Review', $labels);
 	if($index !== FALSE)
 		unset($labels[$index]);
 	$url = $payload['pull_request']['issue_url'] . '/labels';
@@ -258,7 +258,7 @@ function get_reviews($payload){
 }
 
 function check_ready_for_review($payload, $labels = null){
-	$r4rlabel = 'Review Again';
+	$r4rlabel = 'Needs Review';
 	$labels_which_should_not_be_ready = array('Do Not Merge', 'Work In Progress', 'Merge Conflict');
 	$has_label_already = false;
 	$should_not_have_label = false;
