@@ -482,7 +482,6 @@
 	. = H
 	new_character = .
 	if(transfer_after)
-		mind.late_joiner = TRUE
 		transfer_character()
 
 /mob/dead/new_player/proc/transfer_character()
