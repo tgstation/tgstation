@@ -601,12 +601,11 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/L = M
 		L.endTailWag()
-	if(user.a_intent != INTENT_HARM)
-		var/aim_for_face = ((user.zone_selected == "mouth") || (user.zone_selected == "eyes") || (user.zone_selected == "head"))
+	if(user.a_intent != INTENT_HARM && ((user.zone_selected == "mouth") || (user.zone_selected == "eyes") || (user.zone_selected == "head")))
 		user.do_attack_animation(M)
 		playsound(M, 'sound/weapons/slap.ogg', 50, 1, -1)
-		user.visible_message("<span class='danger'>[user] slaps [M] in the [(aim_for_face)?"face":user.zone_selected]!</span>",
- 		"<span class='notice'>You slap [M] in the [(aim_for_face)?"face":user.zone_selected]! </span>",\
+		user.visible_message("<span class='danger'>[user] slaps [M]!</span>",
+ 		"<span class='notice'>You slap [M]!</span>",\
  		"You hear a slap.")
 		return
 	else
