@@ -132,16 +132,14 @@
 		if("monkey")
 			new_mob = new /mob/living/carbon/monkey(M.loc)
 		if("robot")
-			var/robot = pick("cyborg","syndiborg","drone")
+			var/robot = pick("random_cyborg","syndiborg","drone")
+			var/path
 			switch(robot)
-				if("cyborg")
-					new_mob = new /mob/living/silicon/robot(M.loc)
+				if("random_cyborg")
+					path = pick(typesof(/mob/living/silicon/robot/modules) - typesof(/mob/living/silicon/robot/modules/syndicate))
+					new_mob = new path(M.loc)
 				if("syndiborg")
-					var/path
-					if(prob(50))
-						path = /mob/living/silicon/robot/modules/syndicate
-					else
-						path = /mob/living/silicon/robot/modules/syndicate/medical
+					path = pick(typesof(/mob/living/silicon/robot/modules/syndicate))
 					new_mob = new path(M.loc)
 				if("drone")
 					new_mob = new /mob/living/simple_animal/drone/polymorphed(M.loc)
