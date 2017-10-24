@@ -50,7 +50,7 @@
 	else
 		is_charge=0
 	return FALSE
-
+/*
 // For implants.
 /obj/item/integrated_circuit/passive/power/metabolic_siphon
 	name = "metabolic siphon"
@@ -91,7 +91,7 @@
 	if(!host || !host.isSynthetic() || host.stat == DEAD || host.nutrition <= 10)
 		return FALSE // This time we don't want a metabolism.
 	return TRUE
-
+*/
 // For fat machines that need fat power, like drones.
 /obj/item/integrated_circuit/passive/power/relay
 	name = "tesla power relay"
@@ -112,7 +112,7 @@
 	icon_state = "chemical_cell"
 	extended_desc = "This is effectively an internal beaker.It will consume and produce power from phoron, slime jelly, welding fuel, carbon,\
 	 ethanol, nutriments and blood , in order of decreasing efficiency. It will consume fuel only if the battery can take more energy."
-	flags = OPENCONTAINER
+	container_type = OPENCONTAINER_1
 	complexity = 4
 	inputs = list()
 	outputs = list("volume used" = IC_PINTYPE_NUMBER,"self reference" = IC_PINTYPE_REF)
@@ -138,7 +138,7 @@
 /obj/item/integrated_circuit/passive/power/chemical_cell/make_energy()
 	if(assembly)
 		for(var/I in fuel)
-			if((assembly.battery.maxcharge-assembly.battery.charge) / CELLRATE > fuel[I])
+			if((assembly.battery.maxcharge-assembly.battery.charge) / GLOB.CELLRATE > fuel[I])
 				if(reagents.remove_reagent(I, 1))
 					assembly.give_power(fuel[I])
 

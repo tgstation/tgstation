@@ -11,8 +11,7 @@
 	used for power or data transmission."
 	icon = 'icons/obj/electronic_assemblies.dmi'
 	icon_state = "wirer-wire"
-	item_state = "wirer"
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	w_class = 2
 	var/datum/integrated_io/selected_io = null
 	var/mode = WIRE
@@ -110,14 +109,14 @@
 	settings to specific circuits, or for debugging purposes.  It can also pulse activation pins."
 	icon = 'icons/obj/electronic_assemblies.dmi'
 	icon_state = "debugger"
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	w_class = 2
 	var/data_to_write = null
 	var/accepting_refs = 0
 
 /obj/item/device/integrated_electronics/debugger/attack_self(mob/user)
 	var/type_to_use = input("Please choose a type to use.","[src] type setting") as null|anything in list("string","number","ref", "null")
-	if(!CanInteract(user, physical_state))
+	if(!user.IsAdvancedToolUser())
 		return
 
 	var/new_data = null
@@ -125,13 +124,13 @@
 		if("string")
 			accepting_refs = 0
 			new_data = input("Now type in a string.","[src] string writing") as null|text
-			if(istext(new_data) && CanInteract(user, physical_state))
+			if(istext(new_data) && user.IsAdvancedToolUser())
 				data_to_write = new_data
 				to_chat(user, "<span class='notice'>You set \the [src]'s memory to \"[new_data]\".</span>")
 		if("number")
 			accepting_refs = 0
 			new_data = input("Now type in a number.","[src] number writing") as null|num
-			if(isnum(new_data) && CanInteract(user, physical_state))
+			if(isnum(new_data) && user.IsAdvancedToolUser())
 				data_to_write = new_data
 				to_chat(user, "<span class='notice'>You set \the [src]'s memory to [new_data].</span>")
 		if("ref")
@@ -246,23 +245,17 @@
 	desc = "This tool can scan an assembly in generate code necessary to recreate it in a circuit printer."
 	icon = 'icons/obj/electronic_assemblies.dmi'
 	icon_state = "analyzer"
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	w_class = 2
 	var/list/circuit_list = list()
-	var/list/assembly_list = list()
-
-/obj/item/device/integrated_electronics/analyzer/initialize()
-
-	assembly_list.Add(
-			new /obj/item/device/electronic_assembly(null),
+	var/list/assembly_list = list(new /obj/item/device/electronic_assembly(null),
 			new /obj/item/device/electronic_assembly/medium(null),
 			new /obj/item/device/electronic_assembly/large(null),
-			new /obj/item/device/electronic_assembly/drone(null),
-		)
+			new /obj/item/device/electronic_assembly/drone(null))
 
 /obj/item/device/integrated_electronics/analyzer/afterattack(var/atom/A, var/mob/living/user)
 	visible_message( "<span class='notice'>attempt to scan</span>")
-	if(ispath(A.type,/obj/item/device/electronic_assembly)||ispath(A.type,/obj/item/weapon/implant/integrated_circuit))
+	if(ispath(A.type,/obj/item/device/electronic_assembly))
 		var/i = 0
 		var/j = 0
 		var/HTML ="start.assembly{{*}}"  //1-st in chapters.1-st block is just to secure start of program from excess symbols.{{*}} is delimeter for chapters.

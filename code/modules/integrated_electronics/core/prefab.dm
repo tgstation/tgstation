@@ -20,8 +20,8 @@
 			new /obj/item/device/electronic_assembly/medium(null),
 			new /obj/item/device/electronic_assembly/large(null),
 			new /obj/item/device/electronic_assembly/drone(null),
-			new /obj/item/weapon/implant/integrated_circuit(null),
-			new /obj/item/device/assembly/electronic_assembly(null)
+			//new /obj/item/weapon/implant/integrated_circuit(null),
+			//new /obj/item/device/assembly/electronic_assembly(null)
 		)
 	for(var/obj/item/I in assembly_list)
 		as_names[I.name] = I.type

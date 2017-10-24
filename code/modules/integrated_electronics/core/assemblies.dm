@@ -7,12 +7,16 @@
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/electronic_assemblies.dmi'
 	icon_state = "setup_small"
-	show_messages = TRUE
 	var/max_components = IC_COMPONENTS_BASE
 	var/max_complexity = IC_COMPLEXITY_BASE
 	var/opened = 0
-	var/obj/item/weapon/cell/device/battery = null // Internal cell which most circuits need to work.
-
+	var/obj/item/stock_parts/cell/battery = null // Internal cell which most circuits need to work.
+	var/cell_type = /obj/item/stock_parts/cell
+	var/can_charge = 1 //Can it be charged in a recharger?
+	var/charge_sections = 4
+	var/charge_tick = 0
+	var/charge_delay = 4
+	var/use_cyborg_cell = 1
 
 /obj/item/device/electronic_assembly/medium
 	name = "electronic mechanism"
@@ -111,7 +115,7 @@
 	return implant
 */
 /obj/item/device/electronic_assembly/proc/check_interactivity(mob/user)
-	if(!CanInteract(user, physical_state))
+	if(!user.IsAdvancedToolUser())
 		return 0
 	return 1
 
@@ -192,7 +196,7 @@
 	if(!check_interactivity(M))
 		return
 
-	var/input = sanitizeSafe(input("What do you want to name this?", "Rename", src.name) as null|text, MAX_NAME_LEN)
+	var/input = reject_bad_name(input("What do you want to name this?", "Rename", src.name) as null|text,1)
 	if(src && input)
 		to_chat(M, "<span class='notice'>The machine now has a label reading '[input]'.</span>")
 		name = input
@@ -282,34 +286,34 @@
 
 /obj/item/device/electronic_assembly/attackby(var/obj/item/I, var/mob/user)
 	if(istype(I, /obj/item/integrated_circuit))
-		if(!user.unEquip(I))
+		if(!user.transferItemToLoc(I, src))
 			return FALSE
 		if(add_circuit(I, user))
 			to_chat(user, "<span class='notice'>You slide \the [I] inside \the [src].</span>")
 			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 			interact(user)
 			return TRUE
-	else if(istype(I, /obj/item/weapon/crowbar))
+	else if(istype(I, /obj/item/crowbar))
 		playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 		opened = !opened
 		to_chat(user, "<span class='notice'>You [opened ? "opened" : "closed"] \the [src].</span>")
 		update_icon()
 		return TRUE
-	else if(istype(I, /obj/item/device/integrated_electronics/wirer) || istype(I, /obj/item/device/integrated_electronics/debugger) || istype(I, /obj/item/weapon/screwdriver))
+	else if(istype(I, /obj/item/device/integrated_electronics/wirer) || istype(I, /obj/item/device/integrated_electronics/debugger) || istype(I, /obj/item/screwdriver))
 		if(opened)
 			interact(user)
 		else
 			to_chat(user, "<span class='warning'>\The [src] isn't opened, so you can't fiddle with the internal components.  \
 			Try using a crowbar.</span>")
-	else if(istype(I, /obj/item/weapon/cell/device))
+	else if(istype(I, /obj/item/stock_parts/cell))
 		if(!opened)
 			to_chat(user, "<span class='warning'>\The [src] isn't opened, so you can't put anything inside.  Try using a crowbar.</span>")
 			return FALSE
 		if(battery)
 			to_chat(user, "<span class='warning'>\The [src] already has \a [battery] inside.  Remove it first if you want to replace it.</span>")
 			return FALSE
-		var/obj/item/weapon/cell/device/cell = I
-		user.drop_item(cell)
+		var/obj/item/stock_parts/cell = I
+		user.transferItemToLoc(I, loc)
 		cell.forceMove(src)
 		battery = cell
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
@@ -356,13 +360,13 @@
 
 // Returns true if power was successfully drawn.
 /obj/item/device/electronic_assembly/proc/draw_power(amount)
-	if(battery && battery.checked_use(amount * CELLRATE))
+	if(battery && battery.use(amount * GLOB.CELLRATE))
 		return TRUE
 	return FALSE
 
 // Ditto for giving.
 /obj/item/device/electronic_assembly/proc/give_power(amount)
-	if(battery && battery.give(amount * CELLRATE))
+	if(battery && battery.give(amount * GLOB.CELLRATE))
 		return TRUE
 	return FALSE
 

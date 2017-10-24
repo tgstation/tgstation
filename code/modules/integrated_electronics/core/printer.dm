@@ -54,8 +54,8 @@
 			new /obj/item/device/electronic_assembly/medium(null),
 			new /obj/item/device/electronic_assembly/large(null),
 			new /obj/item/device/electronic_assembly/drone(null),
-			new /obj/item/weapon/implant/integrated_circuit(null),
-			new /obj/item/device/assembly/electronic_assembly(null)
+//			new /obj/item/weapon/implant/integrated_circuit(null),
+//			new /obj/item/device/assembly/electronic_assembly(null)
 		)
 		recipe_list["Assemblies"] = assembly_list
 
@@ -69,33 +69,32 @@
 
 
 /obj/item/device/integrated_circuit_printer/attackby(var/obj/item/O, var/mob/user)
-	if(istype(O,/obj/item/stack/material))
-		var/obj/item/stack/material/stack = O
-		if(stack.material.name == DEFAULT_WALL_MATERIAL)
-			var/num = min((max_metal - metal) / metal_per_sheet, stack.amount)
-			if(num < 1)
-				to_chat(user, "<span class='warning'>\The [src] is too full to add more metal.</span>")
-				return
-			if(stack.use(num))
-				to_chat(user, "<span class='notice'>You add [num] sheet\s to \the [src].</span>")
-				metal += num * metal_per_sheet
-				if(as_printing)
-					if(as_needs <= metal)
-						PR = new/obj/item/device/integrated_electronics/prefab(get_turf(loc))
-						PR.program = program
-						metal = metal - as_needs
-						to_chat(user, "<span class='notice'>Assembly has been printed.</span>")
-						as_printing = FALSE
-						as_needs = 0
-						max_metal = init_max_metal
-					else
-						to_chat(user, "<span class='notice'>Please insert [as_needs-metal] more metal!</span>")
-				interact(user)
-				return TRUE
+	if(istype(O,/obj/item/stack/sheet/metal))
+		var/obj/item/stack/sheet/metal/stack = O
+		var/num = min((max_metal - metal) / metal_per_sheet, stack.amount)
+		if(num < 1)
+			to_chat(user, "<span class='warning'>\The [src] is too full to add more metal.</span>")
+			return
+		if(stack.use(num))
+			to_chat(user, "<span class='notice'>You add [num] sheet\s to \the [src].</span>")
+			metal += num * metal_per_sheet
+			if(as_printing)
+				if(as_needs <= metal)
+					PR = new/obj/item/device/integrated_electronics/prefab(get_turf(loc))
+					PR.program = program
+					metal = metal - as_needs
+					to_chat(user, "<span class='notice'>Assembly has been printed.</span>")
+					as_printing = FALSE
+					as_needs = 0
+					max_metal = init_max_metal
+				else
+					to_chat(user, "<span class='notice'>Please insert [as_needs-metal] more metal!</span>")
+			interact(user)
+			return TRUE
 
 	if(istype(O,/obj/item/integrated_circuit))
 		to_chat(user, "<span class='notice'>You insert the circuit into \the [src]. </span>")
-		user.unEquip(O)
+		user.temporarilyRemoveItemFromInventory(O)
 		metal = min(metal + O.w_class, max_metal)
 		qdel(O)
 		interact(user)
