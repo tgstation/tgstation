@@ -14,7 +14,7 @@
 	limbs_id = "human"
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 
-	var/obj/item/bodypart/head/myhead
+	var/obj/item/dullahan_relay/myhead
 
 
 /datum/species/dullahan/check_roundstart_eligible()
@@ -26,14 +26,21 @@
 	. = ..()
 	var/obj/item/bodypart/head/head = H.get_bodypart("head")
 	if(head)
-		myhead = head
 		head.drop_limb()
-		myhead.flags_1 = HEAR_1
-		myhead.throwforce = 25
-		new /obj/item/dullahan_relay (myhead, H)
+		head.flags_1 = HEAR_1
+		head.throwforce = 25
+		myhead = new /obj/item/dullahan_relay (head, H)
+
+/datum/species/dullahan/on_species_loss(mob/living/carbon/human/H)
+	if(myhead)
+		var/obj/item/dullahan_relay/DR = myhead
+		myhead = null
+		DR.owner = null
+		qdel(DR)
+	..()
 
 /datum/species/dullahan/spec_life(mob/living/carbon/human/H)
-	if(myhead)
+	if(!QDELETED(myhead))
 		update_vision_perspective(H)
 
 		var/turf/Me = get_turf(H)
@@ -43,9 +50,11 @@
 		else
 			H.disabilities |= DEAF
 	else
+		myhead = null
 		H.gib()
 	var/obj/item/bodypart/head/head2 = H.get_bodypart("head")
 	if(head2)
+		myhead = null
 		H.gib()
 
 /datum/species/dullahan/proc/update_vision_perspective(mob/living/carbon/human/H)
@@ -69,7 +78,9 @@
 		var/mob/living/carbon/human/H = owner
 		if(H.dna.species.id == "dullahan")
 			var/datum/species/dullahan/D = H.dna.species
-			D.myhead.say(message)
+			if(isobj(D.myhead.loc))
+				var/obj/O = D.myhead.loc
+				O.say(message)
 	message = ""
 	return message
 
@@ -108,6 +119,10 @@
 /obj/item/dullahan_relay/process()
 	if(!istype(loc, /obj/item/bodypart/head) || QDELETED(owner))
 		if(!QDELETED(owner))
+			var/mob/living/carbon/human/H = owner
+			if(H.dna.species.id == "dullahan")
+				var/datum/species/dullahan/D = H.dna.species
+				D.myhead = null
 			owner.gib()
 		owner = null
 		. = PROCESS_KILL
