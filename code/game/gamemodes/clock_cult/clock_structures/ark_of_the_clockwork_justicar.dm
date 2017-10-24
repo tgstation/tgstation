@@ -253,6 +253,7 @@
 					else
 						dist = FALSE
 					T.ratvar_act(dist)
+					CHECK_TICK
 
 
 
