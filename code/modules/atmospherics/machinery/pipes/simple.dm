@@ -16,6 +16,9 @@ The regular pipe you see everywhere, including bent ones.
 
 	device_type = BINARY
 
+	construction_type = /obj/item/pipe/binary/bendable
+	pipe_state = "simple"
+
 /obj/machinery/atmospherics/pipe/simple/SetInitDirections()
 	normalize_cardinal_directions()
 	if(dir in GLOB.diagonals)

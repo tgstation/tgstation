@@ -593,7 +593,8 @@
 		var/list/blob_minds = list()
 		for(var/mob/camera/blob/B in GLOB.mob_list)
 			blob_minds |= B.mind
-
+			if(blob_minds.len)
+				dat += "<br><table cellspacing=5><tr><td><B>Blob</B></td><td></td><td></td></tr>"
 			for(var/datum/mind/blob in blob_minds)
 				var/mob/camera/blob/M = blob.current
 				if(M)

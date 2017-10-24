@@ -155,8 +155,6 @@
 		// if they have no mutant tongues, give them a regular one
 		T.Insert(src)
 
-	src.regeneratebutt()
-
 	if(!getorganslot(ORGAN_SLOT_EYES))
 		var/obj/item/organ/eyes/E
 

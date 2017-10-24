@@ -5,7 +5,6 @@
 #define TRAITOR_AGENT_ROLE "Syndicate External Affairs Agent"
 
 /datum/antagonist/traitor/internal_affairs
-	base_datum_custom = ANTAG_DATUM_IAA_CUSTOM
 	human_datum = ANTAG_DATUM_IAA_HUMAN
 	ai_datum = ANTAG_DATUM_IAA_AI
 
@@ -15,7 +14,6 @@
 	name = "Internal Affairs Agent"
 	employer = "Nanotrasen"
 	special_role = "internal affairs agent"
-	base_datum_custom = ANTAG_DATUM_IAA_CUSTOM
 	var/syndicate = FALSE
 	var/last_man_standing = FALSE
 	var/list/datum/mind/targets_stolen
@@ -29,46 +27,23 @@
 	name = "Internal Affairs Agent"
 	employer = "Nanotrasen"
 	special_role = "internal affairs agent"
-	base_datum_custom = ANTAG_DATUM_IAA_CUSTOM
 	var/syndicate = FALSE
 	var/last_man_standing = FALSE
 	var/list/datum/mind/targets_stolen
 	
-/datum/antagonist/traitor/human/internal_affairs/custom
-	silent = TRUE
-	should_give_codewords = FALSE
-	give_objectives = FALSE
-	should_equip = FALSE //Duplicating TCs is dangerous
-
-/datum/antagonist/traitor/human/internal_affairs/transfer_important_variables(datum/antagonist/traitor/human/internal_affairs/other)
-	..(other)
-	other.syndicate = syndicate
-	other.last_man_standing = last_man_standing
-	other.targets_stolen = targets_stolen
-
-/datum/antagonist/traitor/AI/internal_affairs/transfer_important_variables(datum/antagonist/traitor/human/internal_affairs/other)
-	..(other)
-	other.syndicate = syndicate
-	other.last_man_standing = last_man_standing
-	other.targets_stolen = targets_stolen
-
 /datum/antagonist/traitor/human/internal_affairs/proc/give_pinpointer()
 	if(owner && owner.current)
 		owner.current.apply_status_effect(/datum/status_effect/agent_pinpointer)
 	
 /datum/antagonist/traitor/human/internal_affairs/apply_innate_effects()
 	.=..() //in case the base is used in future
-	if(owner&&owner.current)
+	if(owner && owner.current)
 		give_pinpointer(owner.current)
 
 /datum/antagonist/traitor/human/internal_affairs/remove_innate_effects()
 	.=..()
-	if(owner&&owner.current)
+	if(owner && owner.current)
 		owner.current.remove_status_effect(/datum/status_effect/agent_pinpointer)
-
-/datum/antagonist/traitor/internal_affairs/custom
-	ai_datum = ANTAG_DATUM_IAA_AI_CUSTOM
-	human_datum = ANTAG_DATUM_IAA_HUMAN_CUSTOM
 
 /datum/antagonist/traitor/human/internal_affairs/on_gain()
 	START_PROCESSING(SSprocessing, src)

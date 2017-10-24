@@ -37,7 +37,7 @@ GLOBAL_VAR_INIT(floor_cluwnes, 0)
 	var/stage = STAGE_HAUNT
 	var/interest = 0
 	var/target_area
-	var/invalid_area_typecache = list(/area/space, /area/lavaland, /area/centcom, /area/reebe)
+	var/invalid_area_typecache = list(/area/space, /area/lavaland, /area/centcom, /area/reebe, /area/shuttle/syndicate)
 	var/eating = FALSE
 	var/obj/effect/dummy/floorcluwne_orbit/poi
 
@@ -71,7 +71,7 @@ GLOBAL_VAR_INIT(floor_cluwnes, 0)
 	do_jitter_animation(1000)
 	pixel_y = 8
 
-	if(is_type_in_typecache(get_area(src.loc), invalid_area_typecache))
+	if(is_type_in_typecache(get_area(src.loc), invalid_area_typecache) || z != ZLEVEL_STATION_PRIMARY)
 		var/area = pick(GLOB.teleportlocs)
 		var/area/tp = GLOB.teleportlocs[area]
 		forceMove(pick(get_area_turfs(tp.type)))
@@ -90,7 +90,7 @@ GLOBAL_VAR_INIT(floor_cluwnes, 0)
 
 	var/turf/T = get_turf(current_victim)
 	if(prob(5))//checks roughly every 20 ticks
-		if(current_victim.stat == DEAD || current_victim.dna.check_mutation(CLUWNEMUT) || is_type_in_typecache(get_area(T), invalid_area_typecache))
+		if(current_victim.stat == DEAD || current_victim.dna.check_mutation(CLUWNEMUT) || is_type_in_typecache(get_area(T), invalid_area_typecache) || current_victim.z != ZLEVEL_STATION_PRIMARY)
 			Acquire_Victim()
 
 	if(get_dist(src, current_victim) > 9 && !manifested &&  !is_type_in_typecache(get_area(T), invalid_area_typecache))//if cluwne gets stuck he just teleports
@@ -112,7 +112,7 @@ GLOBAL_VAR_INIT(floor_cluwnes, 0)
 	..()
 
 /mob/living/simple_animal/hostile/floor_cluwne/Goto(target, delay, minimum_distance)
-	if(!manifested && !is_type_in_typecache(get_area(current_victim.loc), invalid_area_typecache))
+	if(!manifested && !is_type_in_typecache(get_area(current_victim.loc), invalid_area_typecache) && current_victim.z == ZLEVEL_STATION_PRIMARY)
 		walk_to(src, target, minimum_distance, delay)
 	else
 		walk_to(src,0)
@@ -144,10 +144,10 @@ GLOBAL_VAR_INIT(floor_cluwnes, 0)
 
 		if(specific)
 			H = specific
-			if(H.stat != DEAD && H.has_dna() && !H.dna.check_mutation(CLUWNEMUT) && !is_type_in_typecache(get_area(H.loc), invalid_area_typecache))
+			if(H.stat != DEAD && H.has_dna() && !H.dna.check_mutation(CLUWNEMUT) && !is_type_in_typecache(get_area(H.loc), invalid_area_typecache) && H.z == ZLEVEL_STATION_PRIMARY)
 				return target = current_victim
 
-		if(H && ishuman(H) && H.stat != DEAD && H != current_victim && H.has_dna() && !H.dna.check_mutation(CLUWNEMUT) && !is_type_in_typecache(get_area(H.loc), invalid_area_typecache))
+		if(H && ishuman(H) && H.stat != DEAD && H != current_victim && H.has_dna() && !H.dna.check_mutation(CLUWNEMUT) && !is_type_in_typecache(get_area(H.loc), invalid_area_typecache) && H.z == ZLEVEL_STATION_PRIMARY)
 			current_victim = H
 			interest = 0
 			stage = STAGE_HAUNT
@@ -424,7 +424,7 @@ GLOBAL_VAR_INIT(floor_cluwnes, 0)
 /obj/effect/dummy/floorcluwne_orbit
 	name = "floor cluwne"
 	desc = "If you have this, tell a coder or admin!"
-	
+
 /obj/effect/dummy/floorcluwne_orbit/Initialize()
 	. = ..()
 	GLOB.floor_cluwnes += 1
