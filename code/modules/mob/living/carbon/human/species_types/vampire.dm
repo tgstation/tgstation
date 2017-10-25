@@ -48,6 +48,7 @@
 	name = "vampire tongue"
 	actions_types = list(/datum/action/item_action/organ_action/vampire)
 	color = "#1C1C1C"
+	var/drain_cooldown = 0
 
 /datum/action/item_action/organ_action/vampire
 	name = "Drain Victim"
@@ -57,21 +58,26 @@
 	. = ..()
 	if(iscarbon(owner))
 		var/mob/living/carbon/H = owner
+		var/obj/item/organ/tongue/vampire/V = target
+		if(V.drain_cooldown >= world.time)
+			to_chat(H, "<span class='notice'>You just drained blood, wait a few seconds.</span>")
+			return
 		if(H.pulling && iscarbon(H.pulling))
 			var/mob/living/carbon/victim = H.pulling
 			if(victim.stat == DEAD)
 				to_chat(H, "<span class='notice'>You need a living victim!</span>")
 				return
-			if(victim.blood_volume < 50)
+			if(victim.blood_volume < 100)
 				to_chat(H, "<span class='notice'>Your victim doesn't have enough blood left.</span>")
 				return
+			V.drain_cooldown = world.time + 30
 			if(!do_after(H, 30, target = victim))
 				return
 			to_chat(victim, "<span class='danger'>[H] is draining your blood!</span>")
 			to_chat(H, "<span class='notice'>You drain some blood!</span>")
 			playsound(H, 'sound/items/drink.ogg', 30, 1, -2)
-			victim.blood_volume = Clamp(victim.blood_volume - 50, 0, BLOOD_VOLUME_MAXIMUM)
-			H.blood_volume = Clamp(H.blood_volume + 50, 0, BLOOD_VOLUME_MAXIMUM)
+			victim.blood_volume = Clamp(victim.blood_volume - 100, 0, BLOOD_VOLUME_MAXIMUM)
+			H.blood_volume = Clamp(H.blood_volume + 100, 0, BLOOD_VOLUME_MAXIMUM)
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/bat
 	name = "Bat Form"
