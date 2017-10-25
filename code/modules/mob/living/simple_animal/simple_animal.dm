@@ -280,6 +280,7 @@
 		return 1
 
 /mob/living/simple_animal/death(gibbed)
+	movement_type &= ~FLYING
 	if(nest)
 		nest.spawned_mobs -= src
 		nest = null
@@ -335,6 +336,7 @@
 		density = initial(density)
 		lying = 0
 		. = 1
+		movement_type = initial(movement_type)
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
 	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || !SSticker.IsRoundInProgress())

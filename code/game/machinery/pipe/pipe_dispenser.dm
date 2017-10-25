@@ -17,31 +17,30 @@
 	var/dat = {"
 PIPING LAYER: <A href='?src=\ref[src];layer_down=1'>--</A><b>[piping_layer]</b><A href='?src=\ref[src];layer_up=1'>++</A><BR>
 <b>Pipes:</b><BR>
-<A href='?src=\ref[src];make=[PIPE_SIMPLE];dir=1'>Pipe</A><BR>
-<A href='?src=\ref[src];make=[PIPE_SIMPLE];dir=5'>Bent Pipe</A><BR>
-<A href='?src=\ref[src];make=[PIPE_MANIFOLD];dir=1'>Manifold</A><BR>
-<A href='?src=\ref[src];make=[PIPE_LAYER_MANIFOLD];dir=1'>Layer Manifold</A><BR>
-<A href='?src=\ref[src];make=[PIPE_4WAYMANIFOLD];dir=1'>4-Way Manifold</A><BR>
-<A href='?src=\ref[src];make=[PIPE_MVALVE];dir=1'>Manual Valve</A><BR>
-<A href='?src=\ref[src];make=[PIPE_DVALVE];dir=1'>Digital Valve</A><BR>
-<A href='?src=\ref[src];make=[PIPE_BLUESPACE];dir=1'>Bluespace Pipe</A><BR>
+<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/pipe/simple];dir=1'>Pipe</A><BR>
+<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/pipe/simple];dir=5'>Bent Pipe</A><BR>
+<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/pipe/manifold];dir=1'>Manifold</A><BR>
+<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/pipe/layer_manifold];dir=1'>Layer Manifold</A><BR>
+<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/pipe/manifold4w];dir=1'>4-Way Manifold</A><BR>
+<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/components/binary/valve];dir=1'>Manual Valve</A><BR>
+<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/components/binary/valve/digital];dir=1'>Digital Valve</A><BR>
 <b>Devices:</b><BR>
-<A href='?src=\ref[src];make=[PIPE_CONNECTOR];dir=1'>Connector</A><BR>
-<A href='?src=\ref[src];make=[PIPE_UVENT];dir=1'>Vent</A><BR>
-<A href='?src=\ref[src];make=[PIPE_PUMP];dir=1'>Gas Pump</A><BR>
-<A href='?src=\ref[src];make=[PIPE_PASSIVE_GATE];dir=1'>Passive Gate</A><BR>
-<A href='?src=\ref[src];make=[PIPE_VOLUME_PUMP];dir=1'>Volume Pump</A><BR>
-<A href='?src=\ref[src];make=[PIPE_SCRUBBER];dir=1'>Scrubber</A><BR>
+<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/components/unary/portables_connector];dir=1'>Connector</A><BR>
+<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/components/unary/vent_pump];dir=1'>Vent</A><BR>
+<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/components/binary/pump];dir=1'>Gas Pump</A><BR>
+<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/components/binary/passive_gate];dir=1'>Passive Gate</A><BR>
+<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/components/binary/volume_pump];dir=1'>Volume Pump</A><BR>
+<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/components/unary/vent_scrubber];dir=1'>Scrubber</A><BR>
 <A href='?src=\ref[src];makemeter=1'>Meter</A><BR>
-<A href='?src=\ref[src];make=[PIPE_GAS_FILTER];dir=1'>Gas Filter</A><BR>
-<A href='?src=\ref[src];make=[PIPE_GAS_MIXER];dir=1'>Gas Mixer</A><BR>
+<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/components/trinary/filter];dir=1'>Gas Filter</A><BR>
+<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/components/trinary/mixer];dir=1'>Gas Mixer</A><BR>
 <b>Heat exchange:</b><BR>
-<A href='?src=\ref[src];make=[PIPE_HE];dir=1'>Pipe</A><BR>
-<A href='?src=\ref[src];make=[PIPE_HE];dir=5'>Bent Pipe</A><BR>
-<A href='?src=\ref[src];make=[PIPE_HE_MANIFOLD];dir=1'>Manifold</A><BR>
-<A href='?src=\ref[src];make=[PIPE_HE_4WAYMANIFOLD];dir=1'>4-Way Manifold</A><BR>
-<A href='?src=\ref[src];make=[PIPE_JUNCTION];dir=1'>Junction</A><BR>
-<A href='?src=\ref[src];make=[PIPE_HEAT_EXCHANGE];dir=1'>Heat Exchanger</A><BR>
+<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/pipe/heat_exchanging/simple];dir=1'>Pipe</A><BR>
+<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/pipe/heat_exchanging/simple];dir=5'>Bent Pipe</A><BR>
+<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/pipe/heat_exchanging/manifold];dir=1'>Manifold</A><BR>
+<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w];dir=1'>4-Way Manifold</A><BR>
+<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/pipe/heat_exchanging/junction];dir=1'>Junction</A><BR>
+<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/components/unary/heat_exchanger];dir=1'>Heat Exchanger</A><BR>
 "}
 
 

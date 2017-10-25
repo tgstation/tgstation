@@ -26,6 +26,9 @@ Thus, the two variables affect pump operation are set in New():
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
+	construction_type = /obj/item/pipe/directional
+	pipe_state = "pump"
+
 /obj/machinery/atmospherics/components/binary/pump/on
 	on = TRUE
 
@@ -170,4 +173,3 @@ Thus, the two variables affect pump operation are set in New():
 	if(. && on && is_operational())
 		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		return FALSE
-

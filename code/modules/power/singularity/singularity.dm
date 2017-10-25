@@ -8,7 +8,7 @@
 	anchored = TRUE
 	density = TRUE
 	layer = MASSIVE_OBJ_LAYER
-	luminosity = 6
+	light_range = 6
 	appearance_flags = 0
 	var/current_size = 1
 	var/allowed_size = 1
@@ -278,7 +278,7 @@
 		desc = "[initial(desc)] It glows fiercely with inner fire."
 		name = "supermatter-charged [initial(name)]"
 		consumedSupermatter = 1
-		luminosity = 10
+		set_light(10)
 	return
 
 

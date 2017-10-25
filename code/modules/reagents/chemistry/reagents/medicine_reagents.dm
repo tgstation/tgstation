@@ -466,7 +466,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/pen_acid/on_mob_life(mob/living/M)
-	M.radiation -= min(M.radiation-RAD_MOB_SAFE, 0)/100
+	M.radiation -= max(M.radiation-RAD_MOB_SAFE, 0)/100
 	M.adjustToxLoss(-2*REM, 0)
 	for(var/datum/reagent/R in M.reagents.reagent_list)
 		if(R != src)

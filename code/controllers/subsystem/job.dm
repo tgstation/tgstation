@@ -18,6 +18,7 @@ SUBSYSTEM_DEF(job)
 		SetupOccupations()
 	if(CONFIG_GET(flag/load_jobs_from_txt))
 		LoadJobs()
+	generate_selectable_species()
 	..()
 
 

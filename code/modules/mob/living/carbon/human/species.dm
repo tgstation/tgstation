@@ -1,5 +1,7 @@
 // This code handles different species in the game.
 
+GLOBAL_LIST_EMPTY(roundstart_races)
+
 #define HEAT_DAMAGE_LEVEL_1 2
 #define HEAT_DAMAGE_LEVEL_2 3
 #define HEAT_DAMAGE_LEVEL_3 8
@@ -12,7 +14,6 @@
 	var/id	// if the game needs to manually check your race to do something not included in a proc here, it will use this
 	var/limbs_id		//this is used if you want to use a different species limb sprites. Mainly used for angels as they look like humans.
 	var/name	// this is the fluff name. these will be left generic (such as 'Lizardperson' for the lizard race) so servers can change them to whatever
-	var/roundstart = 0	// can this mob be chosen at roundstart? (assuming the config option is checked?)
 	var/default_color = "#FFF"	// if alien colors are disabled, this is the color that will be used by that race
 
 	var/sexes = 1		// whether or not the race has sexual characteristics. at the moment this is only 0 for skeletons and shadows
@@ -85,6 +86,20 @@
 		limbs_id = id
 	..()
 
+
+/proc/generate_selectable_species()
+	for(var/I in subtypesof(/datum/species))
+		var/datum/species/S = new I
+		if(S.check_roundstart_eligible())
+			GLOB.roundstart_races += S.id
+			qdel(S)
+	if(!GLOB.roundstart_races.len)
+		GLOB.roundstart_races += "human"
+
+/datum/species/proc/check_roundstart_eligible()
+	if(id in (CONFIG_GET(keyed_flag_list/roundstart_races)))
+		return TRUE
+	return FALSE
 
 /datum/species/proc/random_name(gender,unique,lastname)
 	if(unique)
@@ -989,7 +1004,7 @@
 
 	if(radiation > RAD_MOB_VOMIT && prob(RAD_MOB_VOMIT_PROB))
 		H.vomit(10, TRUE)
-	
+
 	if(radiation > RAD_MOB_MUTATE)
 		if(prob(1))
 			to_chat(H, "<span class='danger'>You mutate!</span>")

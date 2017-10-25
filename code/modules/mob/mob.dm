@@ -26,7 +26,6 @@
 	else
 		GLOB.living_mob_list += src
 	prepare_huds()
-	can_ride_typecache = typecacheof(can_ride_typecache)
 	for(var/v in GLOB.active_alternate_appearances)
 		if(!v)
 			continue
@@ -386,12 +385,14 @@
 
 	if(pulling)
 		pulling.pulledby = null
-		if(isliving(pulling))
-			var/mob/living/L = pulling
-			L.update_canmove()// mob gets up if it was lyng down in a chokehold
+		var/mob/living/ex_pulled = pulling
 		pulling = null
 		grab_state = 0
 		update_pull_hud_icon()
+		
+		if(isliving(ex_pulled))
+			var/mob/living/L = ex_pulled
+			L.update_canmove()// mob gets up if it was lyng down in a chokehold
 
 /mob/proc/update_pull_hud_icon()
 	if(hud_used)
