@@ -58,6 +58,9 @@
 			/obj/item/photo = list ("iodine" = 4),
 			/obj/item/pen = list ("iodine" = 2, "iron" = 1),
 			/obj/item/reagent_containers/food/drinks/soda_cans = list ("aluminium" = 10),
+			/obj/item/device/flashlight/flare = list ("sulfur" = 15),
+			/obj/item/device/flashlight/glowstick = list ("phenol" = 15, "hydrodgen" = 10, "oxygen" = 5),
+			/obj/item/stock_parts/cell = list ("lithium" = 15, "iron" = 5, "silicon" = 5),
 			//All types that you can put into the grinder to transfer the reagents to the beaker. !Put all recipes above this.!
 			/obj/item/slime_extract = list(),
 			/obj/item/reagent_containers/pill = list(),
