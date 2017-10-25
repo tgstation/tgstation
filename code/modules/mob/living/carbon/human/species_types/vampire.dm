@@ -2,7 +2,7 @@
 	name = "vampire"
 	id = "vampire"
 	default_color = "FFFFFF"
-	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,NOHUNGER)
+	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,NOHUNGER,NOBREATH)
 	mutant_bodyparts = list("tail_human", "ears", "wings")
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
 	use_skintones = TRUE
@@ -32,9 +32,10 @@
 		C.heal_overall_damage(4,4)
 		C.adjustToxLoss(-4)
 		C.adjustOxyLoss(-4)
+		C.adjustCloneLoss(-4)
 		return
 	C.blood_volume -= 1.5
-	if(C.blood_volume <= 0)
+	if(C.blood_volume <= BLOOD_VOLUME_SURVIVE)
 		to_chat(C, "<span class='danger'>You ran out of blood!</span>")
 		C.dust()
 	var/area/A = get_area(C)
@@ -67,6 +68,9 @@
 			if(victim.stat == DEAD)
 				to_chat(H, "<span class='notice'>You need a living victim!</span>")
 				return
+			if(victim.dna && ((NOBLOOD in victim.dna.species.species_traits) || victim.dna.species.exotic_bloodtype))
+				to_chat(H, "<span class='notice'>Your victim doesn't have blood!</span>")
+				return
 			if(victim.blood_volume < 50)
 				to_chat(H, "<span class='notice'>Your victim doesn't have enough blood left.</span>")
 				return
@@ -85,6 +89,6 @@
 	invocation = "Squeak!"
 
 	shapeshift_type = /mob/living/simple_animal/hostile/retaliate/bat
-	list/current_shapes = list(/mob/living/simple_animal/hostile/retaliate/bat)
-	list/current_casters = list()
-	list/possible_shapes = list(/mob/living/simple_animal/hostile/retaliate/bat)
+	current_shapes = list(/mob/living/simple_animal/hostile/retaliate/bat)
+	current_casters = list()
+	possible_shapes = list(/mob/living/simple_animal/hostile/retaliate/bat)
