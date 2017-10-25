@@ -216,25 +216,23 @@
 	. = list()
 	if(!bloodtype)
 		return
-	switch(bloodtype)
-		if("A-")
-			return list("A-", "O-")
-		if("A+")
-			return list("A-", "A+", "O-", "O+")
-		if("B-")
-			return list("B-", "O-")
-		if("B+")
-			return list("B-", "B+", "O-", "O+")
-		if("AB-")
-			return list("A-", "B-", "O-", "AB-")
-		if("AB+")
-			return list("A-", "A+", "B-", "B+", "O-", "O+", "AB-", "AB+")
-		if("O-")
-			return list("O-")
-		if("O+")
-			return list("O-", "O+")
-		if("L")
-			return list("L")
+
+	var/static/list/bloodtypes_safe = list(
+		"A-" = list("A-", "O-"),
+		"A+" = list("A-", "A+", "O-", "O+"),
+		"B-" = list("B-", "O-"),
+		"B+" = list("B-", "B+", "O-", "O+"),
+		"AB-" = list("A-", "B-", "O-", "AB-"),
+		"AB+" = list("A-", "A+", "B-", "B+", "O-", "O+", "AB-", "AB+"),
+		"O-" = list("O-"),
+		"O+" = list("O-", "O+"),
+		"L" = list("L"),
+		"V" = list("A-", "A+", "B-", "B+", "O-", "O+", "AB-", "AB+", "L", "V")
+	)
+
+	var/safe = bloodtypes_safe[bloodtype]
+	if(safe)
+		. = safe
 
 //to add a splatter of blood or other mob liquid.
 /mob/living/proc/add_splatter_floor(turf/T, small_drip)
