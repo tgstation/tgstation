@@ -50,12 +50,20 @@
 			/obj/item/reagent_containers/food/snacks/grown/coffee = list("coffeepowder" = 0),
 			/obj/item/reagent_containers/food/snacks/grown/tea/astra = list("teapowder" = 0, "salglu_solution" = 0),
 			/obj/item/reagent_containers/food/snacks/grown/tea = list("teapowder" = 0),
+			/obj/structure/cable = list ("copper" = 5),
+			/obj/item/electronics = list ("iron" = 10, "silicon" = 10),
+			/obj/item/circuitboard = list ("silicon" = 20, "sacid" = 0.5), // Retrieving acid this way is extremely inefficient
+			/obj/item/match = list ("phosphorus" = 2),
+			/obj/item/device/toner = list ("iodine" = 40, "iron" = 10),
+			/obj/item/photo = list ("iodine" = 4),
+			/obj/item/pen = list ("iodine" = 2, "iron" = 1),
 			//All types that you can put into the grinder to transfer the reagents to the beaker. !Put all recipes above this.!
 			/obj/item/slime_extract = list(),
 			/obj/item/reagent_containers/pill = list(),
 			/obj/item/reagent_containers/food = list(),
 			/obj/item/reagent_containers/honeycomb = list(),
 			/obj/item/toy/crayon = list())
+			
 
 	var/static/list/juice_items = list(
 			//Juicer Stuff
