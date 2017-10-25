@@ -5,7 +5,7 @@
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,NOHUNGER,NOBREATH,DRINKSBLOOD)
 	mutant_bodyparts = list("tail_human", "ears", "wings")
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
-	exotic_bloodtype = "V"
+	exotic_bloodtype = "U"
 	use_skintones = TRUE
 	mutanteyes = /obj/item/organ/eyes/night_vision
 	mutanttongue = /obj/item/organ/tongue/vampire
@@ -26,8 +26,16 @@
 	C.update_body(0)
 	if(C.mind)
 		var/obj/effect/proc_holder/spell/targeted/shapeshift/bat/B = new
-		var/datum/mind/C_mind = C.mind
-		C_mind.AddSpell(B)
+		C.mind.AddSpell(B)
+
+/datum/species/vampire/on_species_loss(mob/living/carbon/C)
+	. = ..()
+	if(C.mind)
+		for(var/S in C.mind.spell_list)
+			var/obj/effect/proc_holder/spell/S2 = S
+			if(S2.type == /obj/effect/proc_holder/spell/targeted/shapeshift/bat)
+				C.mind.spell_list.Remove(S2)
+				qdel(S2)
 
 /datum/species/vampire/spec_life(mob/living/carbon/human/C)
 	. = ..()
@@ -70,6 +78,9 @@
 			return
 		if(H.pulling && iscarbon(H.pulling))
 			var/mob/living/carbon/victim = H.pulling
+			if(H.blood_volume >= BLOOD_VOLUME_MAXIMUM)
+				to_chat(H, "<span class='notice'>You're already full!</span>")
+				return
 			if(victim.stat == DEAD)
 				to_chat(H, "<span class='notice'>You need a living victim!</span>")
 				return
@@ -79,7 +90,7 @@
 			V.drain_cooldown = world.time + 30
 			if(!do_after(H, 30, target = victim))
 				return
-			var/blood_volume_difference = BLOOD_VOLUME_MAXIMUM - H.blood_volume
+			var/blood_volume_difference = BLOOD_VOLUME_MAXIMUM - H.blood_volume //How much capacity we have left to absorb blood
 			var/drained_blood = min(victim.blood_volume, VAMP_DRAIN_AMOUNT, blood_volume_difference)
 			to_chat(victim, "<span class='danger'>[H] is draining your blood!</span>")
 			to_chat(H, "<span class='notice'>You drain some blood!</span>")
