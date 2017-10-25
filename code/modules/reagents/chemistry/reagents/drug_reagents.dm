@@ -15,8 +15,7 @@
 	M.set_drugginess(15)
 	if(isturf(M.loc) && !isspaceturf(M.loc))
 		if(M.canmove)
-			if(prob(10))
-				step(M, pick(GLOB.cardinals))
+			if(prob(10)) step(M, pick(GLOB.cardinals))
 	if(prob(7))
 		M.emote(pick("twitch","drool","moan","giggle"))
 	..()
@@ -57,53 +56,6 @@
 	taste_description = "mint"
 	reagent_state = LIQUID
 	color = "#80AF9C"
-
-/datum/reagent/drug/crank
-	name = "Crank"
-	id = "crank"
-	description = "Reduces stun times by about 200%. If overdosed or addicted it will deal significant Toxin, Brute and Brain damage."
-	reagent_state = LIQUID
-	color = "#FA00C8"
-	overdose_threshold = 20
-	addiction_threshold = 10
-
-/datum/reagent/drug/crank/on_mob_life(mob/living/M)
-	if(prob(5))
-		var/high_message = pick("You feel jittery.", "You feel like you gotta go fast.", "You feel like you need to step it up.")
-		to_chat(M, "<span class='notice'>[high_message]</span>")
-	M.AdjustStun(-20, 0)
-	M.AdjustKnockdown(-20, 0)
-	M.AdjustUnconscious(-20, 0)
-	..()
-	. = 1
-
-/datum/reagent/drug/crank/overdose_process(mob/living/M)
-	M.adjustBrainLoss(2*REM)
-	M.adjustToxLoss(2*REM, 0)
-	M.adjustBruteLoss(2*REM, 0)
-	..()
-	. = 1
-
-/datum/reagent/drug/crank/addiction_act_stage1(mob/living/M)
-	M.adjustBrainLoss(5*REM)
-	..()
-
-/datum/reagent/drug/crank/addiction_act_stage2(mob/living/M)
-	M.adjustToxLoss(5*REM, 0)
-	..()
-	. = 1
-
-/datum/reagent/drug/crank/addiction_act_stage3(mob/living/M)
-	M.adjustBruteLoss(5*REM, 0)
-	..()
-	. = 1
-
-/datum/reagent/drug/crank/addiction_act_stage4(mob/living/M)
-	M.adjustBrainLoss(5*REM)
-	M.adjustToxLoss(5*REM, 0)
-	M.adjustBruteLoss(5*REM, 0)
-	..()
-	. = 1
 
 /datum/reagent/drug/krokodil
 	name = "Krokodil"
@@ -156,80 +108,6 @@
 	..()
 	. = 1
 
-/datum/reagent/drug/methamphetamine
-	name = "Methamphetamine"
-	id = "methamphetamine"
-	description = "Reduces stun times by about 300%, speeds the user up, and allows the user to quickly recover stamina while dealing a small amount of Brain damage. If overdosed the subject will move randomly, laugh randomly, drop items and suffer from Toxin and Brain damage. If addicted the subject will constantly jitter and drool, before becoming dizzy and losing motor control and eventually suffer heavy toxin damage."
-	reagent_state = LIQUID
-	color = "#FAFAFA"
-	overdose_threshold = 20
-	addiction_threshold = 10
-	metabolization_rate = 0.75 * REAGENTS_METABOLISM
-
-/datum/reagent/drug/methamphetamine/on_mob_life(mob/living/M)
-	var/high_message = pick("You feel hyper.", "You feel like you need to go faster.", "You feel like you can run the world.")
-	if(prob(5))
-		to_chat(M, "<span class='notice'>[high_message]</span>")
-	M.AdjustStun(-40, 0)
-	M.AdjustKnockdown(-40, 0)
-	M.AdjustUnconscious(-40, 0)
-	M.adjustStaminaLoss(-2, 0)
-	M.status_flags |= GOTTAGOREALLYFAST
-	M.Jitter(2)
-	M.adjustBrainLoss(0.25)
-	if(prob(5))
-		M.emote(pick("twitch", "shiver"))
-	..()
-	. = 1
-
-/datum/reagent/drug/methamphetamine/overdose_process(mob/living/M)
-	if(M.canmove && !ismovableatom(M.loc))
-		for(var/i in 1 to 4)
-			step(M, pick(GLOB.cardinals))
-	if(prob(20))
-		M.emote("laugh")
-	if(prob(33))
-		M.visible_message("<span class='danger'>[M]'s hands flip out and flail everywhere!</span>")
-		M.drop_all_held_items()
-	..()
-	M.adjustToxLoss(1, 0)
-	M.adjustBrainLoss(pick(0.5, 0.6, 0.7, 0.8, 0.9, 1))
-	. = 1
-
-/datum/reagent/drug/methamphetamine/addiction_act_stage1(mob/living/M)
-	M.Jitter(5)
-	if(prob(20))
-		M.emote(pick("twitch","drool","moan"))
-	..()
-
-/datum/reagent/drug/methamphetamine/addiction_act_stage2(mob/living/M)
-	M.Jitter(10)
-	M.Dizzy(10)
-	if(prob(30))
-		M.emote(pick("twitch","drool","moan"))
-	..()
-
-/datum/reagent/drug/methamphetamine/addiction_act_stage3(mob/living/M)
-	if(M.canmove && !ismovableatom(M.loc))
-		for(var/i = 0, i < 4, i++)
-			step(M, pick(GLOB.cardinals))
-	M.Jitter(15)
-	M.Dizzy(15)
-	if(prob(40))
-		M.emote(pick("twitch","drool","moan"))
-	..()
-
-/datum/reagent/drug/methamphetamine/addiction_act_stage4(mob/living/carbon/human/M)
-	if(M.canmove && !ismovableatom(M.loc))
-		for(var/i = 0, i < 8, i++)
-			step(M, pick(GLOB.cardinals))
-	M.Jitter(20)
-	M.Dizzy(20)
-	M.adjustToxLoss(5, 0)
-	if(prob(50))
-		M.emote(pick("twitch","drool","moan"))
-	..()
-	. = 1
 
 /datum/reagent/drug/bath_salts
 	name = "Bath Salts"
@@ -337,3 +215,172 @@
 		M.adjustOxyLoss(1, 0)
 	..()
 	. = 1
+
+
+//Amphetamines
+//Amphetamine sulfate
+/datum/reagent/drug/amphetamine
+	name = "Amphetamine"
+	id = "amphetamine"
+	description = "A potent CNS stimulant renowned for it's innocuous metabolization. Dangerous in high doses."
+	reagent_state = LIQUID
+	color = "#FAFAFA"
+	overdose_threshold = 30
+	addiction_threshold = 20
+	metabolization_rate = 0.75 * REAGENTS_METABOLISM
+
+
+/datum/reagent/drug/amphetamine/on_mob_life(mob/living/M)
+	var/high_message = pick("You feel hyper.", "You have a pit in your stomach.", "Your head is pounding.")
+	if(prob(3))
+		to_chat(M, "<span class='notice'>[high_message]</span>")
+	M.AdjustStun(-2, 0)
+	M.AdjustKnockdown(-2, 0)
+	M.AdjustUnconscious(-40, 0)
+	M.adjustStaminaLoss(-2, 0)
+	M.status_flags |= GOTTAGOFAST
+	M.Jitter(2)
+	if(prob(5))
+		M.emote(pick("twitch", "shiver"))
+	..()
+	. = 1
+
+/datum/reagent/drug/amphetamine/overdose_process(mob/living/M)
+	if(M.canmove && !ismovableatom(M.loc))
+		for(var/i in 1 to 4)
+			step(M, pick(GLOB.cardinals))
+	if(prob(33))
+		M.visible_message("<span class='danger'>[M] shivers violently!</span>")
+		var/obj/item/I = M.get_active_held_item()
+		if(I)
+			M.drop_item()
+	..()
+	. = 1
+
+
+/datum/reagent/drug/amphetamine/addiction_act_stage4(mob/living/M)
+	if(prob(30))
+		M.adjustStaminaLoss(2, 0)
+		to_chat(M, "<span class='boldannounce'>You're not feeling good at all! You really need some [name].</span>")
+	return
+
+
+
+//Methamphetamine
+/datum/reagent/drug/amphetamine/methamphetamine
+	name = "Methmphetamine"
+	id = "methamphetamine"
+	description = "Amphetamine with an extra methyl group attached to the N isonomer. While more potent, it is also much more toxic and introduces muscular atrophy due to cortisol release."
+	reagent_state = LIQUID
+	color = "#FAFAFA"
+	overdose_threshold = 20
+	addiction_threshold = 3
+	metabolization_rate = 1 * REAGENTS_METABOLISM //meth is metabolized quicker. usually because it's smoked or injected, but reagent metabolization code is super primitive so this will do.
+	var/heart_attack_chance = 0.001
+
+/datum/reagent/drug/amphetamine/methamphetamine/on_mob_life(mob/living/M)
+	var/high_message = pick("You feel hyper.", "You feel like you need to go faster.", "You feel like you can run the world.")
+	if(prob(5))
+		to_chat(M, "<span class='notice'>[high_message]</span>")
+	M.AdjustStun(-20, 0)
+	M.AdjustKnockdown(-20, 0)
+	M.AdjustUnconscious(-40, 0)
+	M.adjustStaminaLoss(-1, 0)//meth isn't actually that great of a stamina booster.
+	M.status_flags |= GOTTAGOREALLYFAST
+	M.Jitter(4)
+	M.adjustBrainLoss(0.25)
+	if(prob(5))
+		M.emote(pick("twitch", "shiver"))
+	if(prob(heart_attack_chance))
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(!H.undergoing_cardiac_arrest() && H.can_heartattack())
+				H.set_heartattack(TRUE)
+				if(H.stat == CONSCIOUS)
+					H.visible_message("<span class='userdanger'>[H] clutches at [H.p_their()] chest as if [H.p_their()] heart stopped!</span>")
+					//meth is super cardiotoxic in recreational doses. don't do meth kids.
+	if(prob(1))
+		M.visible_message("<span class='danger'>[M]'s eyes dart around the room.</span>")
+		M.hallucination += 5
+	..()
+	. = 1
+
+
+
+/datum/reagent/drug/amphetamine/methamphetamine/overdose_process(mob/living/M)
+	if(M.canmove && !ismovableatom(M.loc))
+		for(var/i in 1 to 4)
+			step(M, pick(GLOB.cardinals))
+	if(prob(20))
+		M.visible_message("<span class='danger'>[M]'s eyes dart around the room wildly!</span>")
+		M.hallucination += 10 //meth psychosis
+	if(prob(33))
+		M.visible_message("<span class='danger'>[M] shivers violently!</span>")
+		var/obj/item/I = M.get_active_held_item()
+		if(I)
+			M.drop_item()
+	if(prob(heart_attack_chance*100))
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(!H.undergoing_cardiac_arrest() && H.can_heartattack())
+				H.set_heartattack(TRUE)
+				if(H.stat == CONSCIOUS)
+					H.visible_message("<span class='userdanger'>[H] clutches at [H.p_their()] chest as if [H.p_their()] heart stopped!</span>")
+					//meth is super cardiotoxic in recreational doses. don't do meth kids.
+	..()
+	M.adjustToxLoss(3, 0)
+	M.adjustBrainLoss(pick(0.5, 0.6, 0.7, 0.8, 0.9, 1))
+	. = 1
+
+
+
+/datum/reagent/drug/amphetamine/methamphetamine/addiction_act_stage1(mob/living/M)
+	M.Jitter(5)
+	if(prob(20))
+		M.emote(pick("twitch","drool","moan"))
+	..()
+
+/datum/reagent/drug/amphetamine/methamphetamine/addiction_act_stage2(mob/living/M)
+	M.Jitter(10)
+	M.Dizzy(10)
+	if(prob(30))
+		M.emote(pick("twitch","drool","moan"))
+	..()
+
+/datum/reagent/drug/amphetamine/methamphetamine/addiction_act_stage3(mob/living/M)
+	if(M.canmove && !ismovableatom(M.loc))
+		for(var/i = 0, i < 4, i++)
+			step(M, pick(GLOB.cardinals))
+	M.Jitter(15)
+	M.Dizzy(15)
+	if(prob(40))
+		M.emote(pick("twitch","drool","moan"))
+	..()
+
+/datum/reagent/drug/amphetamine/methamphetamine/addiction_act_stage4(mob/living/carbon/human/M)
+	if(M.canmove && !ismovableatom(M.loc))
+		for(var/i = 0, i < 8, i++)
+			step(M, pick(GLOB.cardinals))
+	M.Jitter(20)
+	M.Dizzy(20)
+	M.hallucination += 10
+	M.adjustToxLoss(5, 0)
+	if(prob(50))
+		M.emote(pick("twitch","drool","moan"))
+	..()
+	. = 1
+
+
+
+
+//shake and bake meth
+/datum/reagent/drug/amphetamine/methamphetamine/crank
+	name = "Crank"
+	id = "crank"
+	description = "Very poorly synthesized methamphetamine."
+	reagent_state = LIQUID
+	color = "#FA00C8"
+	overdose_threshold = 10
+	addiction_threshold = 5
+	metabolization_rate = 3 * REAGENTS_METABOLISM
+	heart_attack_chance = 0.1

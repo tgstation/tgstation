@@ -4,13 +4,7 @@
 	results = list("space_drugs" = 3)
 	required_reagents = list("mercury" = 1, "sugar" = 1, "lithium" = 1)
 
-/datum/chemical_reaction/crank
-	name = "Crank"
-	id = "crank"
-	results = list("crank" = 5)
-	required_reagents = list("diphenhydramine" = 1, "ammonia" = 1, "lithium" = 1, "sacid" = 1, "welding_fuel" = 1)
-	mix_message = "The mixture violently reacts, leaving behind a few crystalline shards."
-	required_temp = 390
+
 
 
 /datum/chemical_reaction/krokodil
@@ -27,6 +21,16 @@
 	results = list("methamphetamine" = 4)
 	required_reagents = list("ephedrine" = 1, "iodine" = 1, "phosphorus" = 1, "hydrogen" = 1)
 	required_temp = 374
+
+
+/datum/chemical_reaction/crank
+	name = "Crank"
+	id = "crank"
+	results = list("crank" = 5)
+	required_reagents = list("cleaner" = 1, "diethylamine" = 1, "sacid" = 1, "bicaridine" = 1, "welding_fuel" = 1)
+	mix_message = "The mixture violently reacts, leaving behind a few crystalline shards."
+	//required_temp = 390
+	//shake and bake baby
 
 /datum/chemical_reaction/bath_salts
 	name = "bath_salts"
