@@ -70,6 +70,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/obj/item/organ/ears/mutantears = /obj/item/organ/ears
 	var/obj/item/mutanthands
 	var/obj/item/organ/tongue/mutanttongue = /obj/item/organ/tongue
+	var/obj/item/organ/tail/mutanttail = null
 
 	var/obj/item/organ/liver/mutantliver
 	var/obj/item/organ/stomach/mutantstomach
@@ -139,6 +140,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/obj/item/organ/tongue/tongue = C.getorganslot(ORGAN_SLOT_TONGUE)
 	var/obj/item/organ/liver/liver = C.getorganslot(ORGAN_SLOT_LIVER)
 	var/obj/item/organ/stomach/stomach = C.getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/tail/tail = C.getorganslot(ORGAN_SLOT_TAIL)
 
 	var/should_have_brain = TRUE
 	var/should_have_heart = !(NOBLOOD in species_traits)
@@ -149,6 +151,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/should_have_tongue = TRUE
 	var/should_have_liver = !(NOLIVER in species_traits)
 	var/should_have_stomach = !(NOSTOMACH in species_traits)
+	var/should_have_tail = mutanttail
 
 	if(brain && (replace_current || !should_have_brain))
 		if(!brain.decoy_override)//Just keep it if it's fake
@@ -165,7 +168,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		heart = new()
 		heart.Insert(C)
 
-	if(lungs && (replace_current || !should_have_lungs))
+	if(lungs && (!should_have_lungs || replace_current))
 		lungs.Remove(C,1)
 		QDEL_NULL(lungs)
 	if(should_have_lungs && !lungs)
@@ -201,6 +204,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(should_have_appendix && !appendix)
 		appendix = new()
 		appendix.Insert(C)
+
+	if(tail && (!should_have_tail || replace_current))
+		tail.Remove(C,1)
+		QDEL_NULL(tail)
+	if(should_have_tail && !tail)
+		tail = new mutanttail()
+		tail.Insert(C)
 
 	if(C.get_bodypart("head"))
 		if(eyes && (replace_current || !should_have_eyes))

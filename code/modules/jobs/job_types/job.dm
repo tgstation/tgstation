@@ -76,7 +76,7 @@
 		announce(H)
 
 	if(CONFIG_GET(flag/enforce_human_authority) && (title in GLOB.command_positions))
-		H.remove_catshit()
+		purrbation_remove(H, silent=TRUE)
 
 /datum/job/proc/get_access()
 	if(!config)	//Needed for robots.

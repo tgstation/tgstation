@@ -173,3 +173,9 @@
 			ears = new
 
 		ears.Insert(src)
+
+	if(!getorganslot(ORGAN_SLOT_TAIL))
+		var/obj/item/organ/tail/tail
+		if(dna && dna.species && dna.species.mutanttail)
+			tail = new dna.species.mutanttail
+			tail.Insert(src)
