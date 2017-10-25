@@ -56,7 +56,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.adjustBruteLoss(-2*REM)
-		H.set_drugginess(5)
+		H.adjust_drugginess(5)
 		if(prob(2))
 			playsound(get_turf(H), 'hippiestation/sound/misc/syrupSippin.ogg', 50, 1)
 		if(prob(8))
@@ -67,5 +67,7 @@
 		if(prob(3))
 			H.skin_tone = "african1"
 			H.hair_style = "Big Afro"
+			H.update_body()
+			H.update_hair()
 
 	..()
