@@ -24,8 +24,10 @@
 	to_chat(C, "[info_text]")
 	C.skin_tone = "albino"
 	C.update_body(0)
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/bat/B = new
-	C.AddSpell(B)
+	if(C.mind)
+		var/obj/effect/proc_holder/spell/targeted/shapeshift/bat/B = new
+		var/datum/mind/C_mind = C.mind
+		C_mind.AddSpell(B)
 
 /datum/species/vampire/spec_life(mob/living/carbon/human/C)
 	. = ..()
@@ -52,6 +54,8 @@
 	color = "#1C1C1C"
 	var/drain_cooldown = 0
 
+#define VAMP_DRAIN_AMOUNT 50
+
 /datum/action/item_action/organ_action/vampire
 	name = "Drain Victim"
 	desc = "Leech blood from any carbon victim you are passively grabbing."
@@ -69,25 +73,30 @@
 			if(victim.stat == DEAD)
 				to_chat(H, "<span class='notice'>You need a living victim!</span>")
 				return
-			if(victim.dna && ((NOBLOOD in victim.dna.species.species_traits) || victim.dna.species.exotic_bloodtype))
-				to_chat(H, "<span class='notice'>Your victim doesn't have blood!</span>")
-				return
-			if(victim.blood_volume < 50)
-				to_chat(H, "<span class='notice'>Your victim doesn't have enough blood left.</span>")
+			if(!victim.blood_volume || (victim.dna && ((NOBLOOD in victim.dna.species.species_traits) || victim.dna.species.exotic_blood)))
+				to_chat(H, "<span class='notice'>[victim] doesn't have blood!</span>")
 				return
 			V.drain_cooldown = world.time + 30
 			if(!do_after(H, 30, target = victim))
 				return
+			var/blood_volume_difference = BLOOD_VOLUME_MAXIMUM - H.blood_volume
+			var/drained_blood = min(victim.blood_volume, VAMP_DRAIN_AMOUNT, blood_volume_difference)
 			to_chat(victim, "<span class='danger'>[H] is draining your blood!</span>")
 			to_chat(H, "<span class='notice'>You drain some blood!</span>")
 			playsound(H, 'sound/items/drink.ogg', 30, 1, -2)
-			victim.blood_volume = Clamp(victim.blood_volume - 50, 0, BLOOD_VOLUME_MAXIMUM)
-			H.blood_volume = Clamp(H.blood_volume + 50, 0, BLOOD_VOLUME_MAXIMUM)
+			victim.blood_volume = Clamp(victim.blood_volume - drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
+			H.blood_volume = Clamp(H.blood_volume + drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
+			if(!victim.blood_volume)
+				to_chat(H, "<span class='warning'>You finish off [victim]'s blood supply!</span>")
+
+#undef VAMP_DRAIN_AMOUNT
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/bat
 	name = "Bat Form"
 	desc = "Take on the shape a space bat."
 	invocation = "Squeak!"
+	charge_max = 50
+	cooldown_min = 50
 
 	shapeshift_type = /mob/living/simple_animal/hostile/retaliate/bat
 	current_shapes = list(/mob/living/simple_animal/hostile/retaliate/bat)
