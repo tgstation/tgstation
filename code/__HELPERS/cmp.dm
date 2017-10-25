@@ -59,5 +59,3 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 	if (!.)
 		. = B.qdels - A.qdels
 
-/proc/cmp_profile_avg_time_dsc(list/A, list/B)
-	return (B["TIME"]/(B["COUNT"] || 1)) - (A["TIME"]/(A["COUNT"] || 1))
