@@ -227,7 +227,7 @@
 		"O-" = list("O-"),
 		"O+" = list("O-", "O+"),
 		"L" = list("L"),
-		"V" = list("A-", "A+", "B-", "B+", "O-", "O+", "AB-", "AB+", "L", "V")
+		"U" = list("A-", "A+", "B-", "B+", "O-", "O+", "AB-", "AB+", "L", "U")
 	)
 
 	var/safe = bloodtypes_safe[bloodtype]
