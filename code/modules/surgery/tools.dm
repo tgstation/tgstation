@@ -290,7 +290,7 @@
 
 /obj/item/circular_saw/syndicate
 	name = "syndicate circular saw"
-	desc = "It has a little sub-sentient AI on it to correct errors in the cutting process and guide the blade for extremely efficient cuts."
+	desc = "Modified with a guidance computer for superhuman precision."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "ssaw"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
