@@ -143,7 +143,7 @@
 	instrumentId = "saxophone"
 	force = 0
 	attack_verb = list("played","jazzed","saxxed","mourned","dooted")
-
+	too_spooky = TRUE
 
 /obj/item/device/instrument/trombone
 	name = "trombone"
@@ -225,7 +225,6 @@
 		if(!istype(U.dna.species, /datum/species/skeleton))
 			U.adjustStaminaLoss(25) //Extra Damage
 			attack(user)
-			//U.Knockdown(30)
 			to_chat(U, "<span class= 'danger'> Your ears weren't meant for this spectral sound.</span>")
 			return ..()
 
