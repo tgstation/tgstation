@@ -67,7 +67,7 @@
 			if(victim.stat == DEAD)
 				to_chat(H, "<span class='notice'>You need a living victim!</span>")
 				return
-			if(victim.blood_volume < 100)
+			if(victim.blood_volume < 50)
 				to_chat(H, "<span class='notice'>Your victim doesn't have enough blood left.</span>")
 				return
 			V.drain_cooldown = world.time + 30
@@ -76,8 +76,8 @@
 			to_chat(victim, "<span class='danger'>[H] is draining your blood!</span>")
 			to_chat(H, "<span class='notice'>You drain some blood!</span>")
 			playsound(H, 'sound/items/drink.ogg', 30, 1, -2)
-			victim.blood_volume = Clamp(victim.blood_volume - 100, 0, BLOOD_VOLUME_MAXIMUM)
-			H.blood_volume = Clamp(H.blood_volume + 100, 0, BLOOD_VOLUME_MAXIMUM)
+			victim.blood_volume = Clamp(victim.blood_volume - 50, 0, BLOOD_VOLUME_MAXIMUM)
+			H.blood_volume = Clamp(H.blood_volume + 50, 0, BLOOD_VOLUME_MAXIMUM)
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/bat
 	name = "Bat Form"
