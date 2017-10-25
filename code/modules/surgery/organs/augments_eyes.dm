@@ -40,6 +40,12 @@
 	origin_tech = "materials=4;programming=4;biotech=3;combat=3"
 	HUD_type = DATA_HUD_SECURITY_ADVANCED
 
+/obj/item/organ/cyberimp/eyes/hud/diagnostics
+	name = "Diagnostics HUD implant"
+	desc = "These Cybernetic eye implants will display a diagnostic HUD over robots and mechas."
+	origin_tech = "materials=4;programming=4;biotech=4;engineering=4"
+	HUD_type = DATA_HUD_DIAGNOSTIC
+
 /obj/item/organ/cyberimp/eyes/hud/security/syndicate
 	name = "Contraband Security HUD Implant"
 	desc = "A Cybersun Industries brand Security HUD Implant. These illicit cybernetic eye implants will display a security HUD over everything you see."

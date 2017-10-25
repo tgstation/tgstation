@@ -68,10 +68,20 @@
 			if(!uses)
 				desc = "[initial(desc)] Looks like it's been used up."
 
-/obj/item/device/autosurgeon/cmo
-	desc = "A single use autosurgeon that contains a medical heads-up display augment. A screwdriver can be used to remove it, but implants can't be placed back in."
+/obj/item/device/autosurgeon/single_use
 	uses = 1
+
+/obj/item/device/autosurgeon/single_use/cmo
+	desc = "A single use autosurgeon that contains a medical heads-up display augment. A screwdriver can be used to remove it, but implants can't be placed back in."
 	starting_organ = /obj/item/organ/cyberimp/eyes/hud/medical
+
+/obj/item/device/autosurgeon/single_use/hos
+	desc = "A single use autosurgeon that contains a security heads-up display augment. A screwdriver can be used to remove it, but implants can't be placed back in."
+	starting_organ = /obj/item/organ/cyberimp/eyes/hud/security
+
+/obj/item/device/autosurgeon/single_use/rd
+	desc = "A single use autosurgeon that contains a diagnostics heads-up display augment. A screwdriver can be used to remove it, but implants can't be placed back in."
+	starting_organ = /obj/item/organ/cyberimp/eyes/hud/diagnostics
 
 
 /obj/item/device/autosurgeon/thermal_eyes
