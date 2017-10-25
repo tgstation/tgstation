@@ -251,9 +251,7 @@
 			step(M, pick(GLOB.cardinals))
 	if(prob(33))
 		M.visible_message("<span class='danger'>[M] shivers violently!</span>")
-		var/obj/item/I = M.get_active_held_item()
-		if(I)
-			M.drop_item()
+		M.drop_all_held_items()
 	..()
 	. = 1
 
@@ -316,9 +314,7 @@
 		M.hallucination += 10 //meth psychosis
 	if(prob(33))
 		M.visible_message("<span class='danger'>[M] shivers violently!</span>")
-		var/obj/item/I = M.get_active_held_item()
-		if(I)
-			M.drop_item()
+		M.drop_all_held_items()
 	if(prob(heart_attack_chance*100))
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
