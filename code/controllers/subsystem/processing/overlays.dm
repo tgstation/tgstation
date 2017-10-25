@@ -84,19 +84,23 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 		icon_cache[icon] = .
 
 /atom/proc/build_appearance_list(old_overlays)
+	var/static/image/appearance_bro = new()
 	var/list/new_overlays = list()
 	if (!islist(old_overlays))
 		old_overlays = list(old_overlays)
-	else
-		listclearnulls(old_overlays)
 	for (var/overlay in old_overlays)
+		if(isnull(overlay))
+			continue
 		if (istext(overlay))
 			new_overlays += iconstate2appearance(icon, overlay)
 		else if(isicon(overlay))
 			new_overlays += icon2appearance(overlay)
-		else if(istype(overlay, /image))
-			var/image/image = overlay
-			new_overlays += image.appearance
+		else
+			appearance_bro.appearance = overlay //this works for images and atoms too!
+			if(!ispath(overlay))
+				var/image/I = overlay
+				appearance_bro.dir = I.dir
+			new_overlays += appearance_bro.appearance
 	return new_overlays
 
 #define NOT_QUEUED_ALREADY (!(flags_1 & OVERLAY_QUEUED_1))
