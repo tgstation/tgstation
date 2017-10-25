@@ -50,13 +50,13 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	for(var/datum/integrated_io/A in activators)
 		qdel(A)
 	. = ..()
-
+/*
 /obj/item/integrated_circuit/nano_host()
 	if(istype(src.loc, /obj/item/device/electronic_assembly))
 		var/obj/item/device/electronic_assembly/assembly = loc
 		return assembly.resolve_nano_host()
 	return ..()
-
+*/
 /obj/item/integrated_circuit/emp_act(severity)
 	for(var/datum/integrated_io/io in inputs + outputs + activators)
 		io.scramble()
@@ -64,7 +64,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 /obj/item/integrated_circuit/proc/check_interactivity(mob/user)
 	if(assembly)
 		return assembly.check_interactivity(user)
-	else if(!CanInteract(user, physical_state))
+	else if(!user.IsAdvancedToolUser())
 		return 0
 	return 1
 
@@ -77,7 +77,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	if(!check_interactivity(M))
 		return
 
-	var/input = sanitizeSafe(input("What do you want to name the circuit?", "Rename", src.name) as null|text, MAX_NAME_LEN)
+	var/input = reject_bad_name(input("What do you want to name this?", "Rename", src.name) as null|text,1)
 	if(src && input && assembly.check_interactivity(M))
 		to_chat(M, "<span class='notice'>The circuit '[src.name]' is now labeled '[input]'.</span>")
 		displayed_name = input
@@ -194,7 +194,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 
 	onclose(user, "assembly-\ref[src.assembly]")
 
-/obj/item/integrated_circuit/Topic(href, href_list, state = interactive_state)
+/obj/item/integrated_circuit/Topic(href, href_list)
 	if(!check_interactivity(usr))
 		return
 	if(..())
@@ -208,7 +208,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	if(href_list["link"])
 		linked = locate(href_list["link"]) in pin.linked
 
-	var/obj/held_item = usr.get_active_hand()
+	var/obj/held_item = usr.get_active_held_item()
 
 	if(href_list["rename"])
 		rename_component(usr)
