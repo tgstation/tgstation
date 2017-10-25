@@ -1,4 +1,0 @@
-author: "Cruix"
-delete-after: True
-changes: 
-  - rscadd: "Shuttle navigation computers can now place new transit locations over the shuttle's current position."
