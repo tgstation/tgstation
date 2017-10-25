@@ -121,6 +121,7 @@ Quiltyquilty = Game Master
 SnipeDragon = Game Master
 Fjeld = Game Master
 kevinz000 = Game Master
+Improvedname = Game Master
 Tacolizard = Game Master
 TrustyGun = Game Master
 Cyberboss = Game Master
