@@ -49,6 +49,10 @@
 	actions_types = list(/datum/action/item_action/organ_action/vampire)
 	color = "#1C1C1C"
 
+/datum/action/item_action/organ_action/vampire
+	name = "Drain Victim"
+	desc = "Leech blood from any carbon victim you are passively grabbing."
+
 /datum/action/item_action/organ_action/vampire/Trigger()
 	. = ..()
 	if(iscarbon(owner))
