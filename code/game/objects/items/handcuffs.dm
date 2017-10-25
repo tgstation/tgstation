@@ -99,14 +99,11 @@
 	cuffsound = 'sound/weapons/cablecuff.ogg'
 	var/datum/robot_energy_storage/wirestorage = null
 
-/obj/item/restraints/handcuffs/cable/Initialize(mapload, color_override)
+/obj/item/restraints/handcuffs/cable/Initialize(mapload, param_color)
 	. = ..()
 
 	var/list/cable_colors = GLOB.cable_colors
-	if(color_override)
-		item_color = color_override
-	if(!item_color)
-		item_color = pick(cable_colors)
+	item_color = param_color || item_color || pick(cable_colors)
 	if(cable_colors[item_color])
 		item_color = cable_colors[item_color]
 	update_icon()
@@ -223,6 +220,7 @@
 	materials = list()
 	breakouttime = 450 //Deciseconds = 45s
 	trashtype = /obj/item/restraints/handcuffs/cable/zipties/used
+	item_color = "white"
 
 /obj/item/restraints/handcuffs/cable/zipties/used
 	desc = "A pair of broken zipties."

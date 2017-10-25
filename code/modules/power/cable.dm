@@ -1,12 +1,12 @@
 GLOBAL_LIST_INIT(cable_colors, list(
-	"yellow" = rgb(255, 255, 0),
-	"green" = rgb(0, 170, 0),
-	"blue" = rgb(25, 25, 200),
-	"pink" = rgb(255, 60, 200),
-	"orange" = rgb(255, 128, 0),
-	"cyan" = rgb(0, 255, 255),
-	"white" = rgb(255, 255, 255),
-	"red" = rgb(255, 0, 0)
+	"yellow" = "#ffff00",
+	"green" = "#00aa00",
+	"blue" = "#1919c8",
+	"pink" = "#ff3cc8",
+	"orange" = "#ff8000",
+	"cyan" = "#00ffff",
+	"white" = "#ffffff",
+	"red" = "#ff0000"
 	))
 
 ///////////////////////////////
@@ -71,7 +71,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	cable_color = "white"
 
 // the power cable object
-/obj/structure/cable/Initialize(mapload, override_color)
+/obj/structure/cable/Initialize(mapload, param_color)
 	. = ..()
 
 	// ensure d1 & d2 reflect the icon_state for entering and exiting cable
@@ -90,10 +90,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		stored = new/obj/item/stack/cable_coil(null,1,cable_color)
 
 	var/list/cable_colors = GLOB.cable_colors
-	if(override_color)
-		cable_color = override_color
-	if(!cable_color)
-		cable_color = pick(cable_colors)
+	cable_color = param_color || cable_color || pick(cable_colors)
 	if(cable_colors[cable_color])
 		cable_color = cable_colors[cable_color]
 	update_icon()
@@ -491,10 +488,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 		amount = new_amount
 
 	var/list/cable_colors = GLOB.cable_colors
-	if(param_color)
-		item_color = param_color
-	if(!item_color)
-		item_color = pick(cable_colors)
+	item_color = param_color || item_color || pick(cable_colors)
 	if(cable_colors[item_color])
 		item_color = cable_colors[item_color]
 
@@ -527,7 +521,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 
 
 /obj/item/stack/cable_coil/update_icon()
-	item_state = "[initial(item_state)][amount < 3 ? amount : ""]"
+	icon_state = "[initial(item_state)][amount < 3 ? amount : ""]"
 	name = "cable [amount < 3 ? "piece" : "coil"]"
 	add_atom_colour(item_color, FIXED_COLOUR_PRIORITY)
 
@@ -770,6 +764,9 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 
 /obj/item/stack/cable_coil/white
 	item_color = "white"
+
+/obj/item/stack/cable_coil/random
+	item_color = null
 
 /obj/item/stack/cable_coil/random/five
 	amount = 5
