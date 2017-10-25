@@ -64,7 +64,6 @@
 			/obj/item/reagent_containers/food = list(),
 			/obj/item/reagent_containers/honeycomb = list(),
 			/obj/item/toy/crayon = list())
-			
 
 	var/static/list/juice_items = list(
 			//Juicer Stuff
