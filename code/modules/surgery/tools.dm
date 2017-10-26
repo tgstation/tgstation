@@ -273,18 +273,18 @@
 	icon_state = "sdrill"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	force = 18
+	force = 15
 	origin_tech = "materials=3;biotech=3;syndicate=3"
 	toolspeed = 0.3
 
 /obj/item/scalpel/syndicate
 	name = "syndicate scalpel"
-	desc = "It incises effortlessly with it's fixium blade."
+	desc = "It incises effortlessly with its fixium blade."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "sscalpel"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	force = 15
+	force = 12
 	origin_tech = "materials=3;biotech=3;syndicate=3"
 	toolspeed = 0.3
 
@@ -295,6 +295,6 @@
 	icon_state = "ssaw"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	force = 18
+	force = 15
 	origin_tech = "biotech=3;combat=3;syndicate=3"
 	toolspeed = 0.3
