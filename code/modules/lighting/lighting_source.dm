@@ -203,6 +203,9 @@
 /datum/light_source/proc/update_corners()
 	var/update = FALSE
 
+	if(QDELETED(src))
+		return
+
 	if (!source_atom || QDELETED(source_atom))
 		qdel(src)
 		return
