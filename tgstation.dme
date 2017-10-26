@@ -1658,6 +1658,7 @@
 #include "code\modules\mob\living\carbon\human\species_types\shadowpeople.dm"
 #include "code\modules\mob\living\carbon\human\species_types\skeletons.dm"
 #include "code\modules\mob\living\carbon\human\species_types\synths.dm"
+#include "code\modules\mob\living\carbon\human\species_types\vampire.dm"
 #include "code\modules\mob\living\carbon\human\species_types\zombies.dm"
 #include "code\modules\mob\living\carbon\monkey\combat.dm"
 #include "code\modules\mob\living\carbon\monkey\death.dm"
