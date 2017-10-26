@@ -89,7 +89,7 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 	if (!islist(old_overlays))
 		old_overlays = list(old_overlays)
 	for (var/overlay in old_overlays)
-		if(isnull(overlay))
+		if(!overlay)
 			continue
 		if (istext(overlay))
 			new_overlays += iconstate2appearance(icon, overlay)
