@@ -548,7 +548,7 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 	//make sure what we're clicking is valid for the current mode
 	var/is_paintable = (p_class == PAINT_MODE && istype(A, /obj/machinery/atmospherics/pipe))
 	var/is_consumable = (p_class == EATING_MODE && (istype(A, /obj/item/pipe) || istype(A, /obj/item/pipe_meter) || istype(A, /obj/structure/disposalconstruct)))
-	var/can_make_pipe = ((atmos_piping_mode || p_class == DISPOSALS_MODE) && (isturf(A) || istype(A, /obj/structure/lattice/catwalk))
+	var/can_make_pipe = ((atmos_piping_mode || p_class == DISPOSALS_MODE) && (isturf(A) || istype(A, /obj/structure/lattice/catwalk || istype(A, /obj/structure/girder))
 
 	if(!is_paintable && !is_consumable && !can_make_pipe)
 		return ..()
