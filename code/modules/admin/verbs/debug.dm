@@ -131,7 +131,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	else if(target != world)
 		return call(target, procname)(arglist(arguments))
 	else
-		admin_log_private("[key_name(usr)] attempted to call world/proc/[procname] with arguments: [english_list(arguments)]")
+		log_admin_private("[key_name(usr)] attempted to call world/proc/[procname] with arguments: [english_list(arguments)]")
 
 /proc/IsAdminAdvancedProcCall()
 #ifdef TESTING
