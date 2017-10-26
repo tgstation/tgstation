@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "You will no longer be prompted to reenter your body while being defibbed if you can't actually be revived."
