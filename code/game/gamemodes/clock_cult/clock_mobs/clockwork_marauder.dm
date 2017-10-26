@@ -1,3 +1,6 @@
+#define MARAUDER_SLOWDOWN_PERCENTAGE 0.40 //Below this percentage of health, marauders will become slower
+#define MARAUDER_SHIELD_REGEN_TIME 100 //In deciseconds, how long it takes for shields to regenerate after breaking
+
 //Clockwork marauder: A well-rounded frontline construct. Only one can exist for every two human servants.
 /mob/living/simple_animal/hostile/clockwork/marauder
 	name = "clockwork marauder"
@@ -20,9 +23,26 @@
 	playstyle_string = "<b><span class='neovgre'>You are a clockwork marauder,</span> a well-rounded frontline construct of Ratvar. Although you have no \
 	unique abilities, you're a fearsome fighter in one-on-one combat, and your shield protects from projectiles!<br><br>Obey the Servants and do as they \
 	tell you. Your primary goal is to defend the Ark from destruction; they are your allies in this, and should be protected from harm.</b>"
-	empower_string = "<span class='neovgre'>The Anima Bulwark's power flows through you! Your weapon will strike harder, your armor is sturdier, and your shield is considerably more \
-	likely to deflect shots.</span>"
+	empower_string = "<span class='neovgre'>The Anima Bulwark's power flows through you! Your weapon will strike harder, your armor is sturdier, and your shield is more durable.</span>"
 	var/deflect_chance = 40 //Chance to deflect any given projectile (non-damaging energy projectiles are always deflected)
+	var/max_shield_health = 3
+	var/shield_health = 3 //Amount of projectiles that can be deflected within
+	var/shield_health_regen = 0 //When world.time equals this, shield health will regenerate
+
+/mob/living/simple_animal/hostile/clockwork/marauder/examine_info()
+	if(!shield_health)
+		return "<span class='warning'>Its shield has been destroyed!</span>"
+
+/mob/living/simple_animal/hostile/clockwork/marauder/Life()
+	..()
+	if(!GLOB.ratvar_awakens && health / maxHealth <= MARAUDER_SLOWDOWN_PERCENTAGE)
+		speed = initial(speed) + 1 //Yes, this slows them down
+	else
+		speed = initial(speed)
+	if(shield_health != max_shield_health && world.time >= shield_health_regen)
+		to_chat(src, "<span class='neovgre'>Your shield has recovered. <b>[max_shield_health]</b> blocks remaining!</span>")
+		playsound_local(src, "shatter", 75, TRUE, frequency = -1)
+		shield_health = max_shield_health
 
 /mob/living/simple_animal/hostile/clockwork/marauder/update_values()
 	if(GLOB.ratvar_awakens) //Massive attack damage bonuses and health increase, because Ratvar
@@ -33,6 +53,7 @@
 		attacktext = "devastates"
 		speed = -1
 		obj_damage = 100
+		max_shield_health = INFINITY
 	else if(GLOB.ratvar_approaches) //Hefty health bonus and slight attack damage increase
 		health = 200
 		maxHealth = 200
@@ -40,6 +61,7 @@
 		melee_damage_lower = 15
 		attacktext = "carves"
 		obj_damage = 50
+		max_shield_health = 4
 
 /mob/living/simple_animal/hostile/clockwork/marauder/death(gibbed)
 	visible_message("<span class='danger'>[src]'s equipment clatters lifelessly to the ground as the red flames within dissipate.</span>", \
@@ -64,21 +86,21 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/clockwork/marauder/proc/deflect_projectile(obj/item/projectile/P)
-	var/final_deflection_chance = deflect_chance
+	if(!shield_health)
+		return
 	var/energy_projectile = istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam)
-	if(P.nodamage || P.damage_type == STAMINA)
-		final_deflection_chance = 100
-	else if(!energy_projectile) //Flat 40% chance against energy projectiles; ballistic projectiles are 40% - (damage of projectile)%, min. 10%
-		final_deflection_chance = max(10, deflect_chance - P.damage)
-	if(GLOB.ratvar_awakens)
-		final_deflection_chance = 100
-	else if(GLOB.ratvar_approaches)
-		final_deflection_chance = min(100, final_deflection_chance + 20) //20% bonus to deflection if the servants heralded Ratvar
-	if(prob(final_deflection_chance))
-		visible_message("<span class='danger'>[src] deflects [P] with their shield!</span>", \
-		"<span class='danger'>You block [P] with your shield!</span>")
-		if(energy_projectile)
-			playsound(src, 'sound/weapons/effects/searwall.ogg', 50, TRUE)
-		else
-			playsound(src, "ricochet", 50, TRUE)
-		. = TRUE
+	visible_message("<span class='danger'>[src] deflects [P] with their shield!</span>", \
+	"<span class='danger'>You block [P] with your shield! <i>Blocks left:</i> <b>[shield_health - 1]</b></span>")
+	if(energy_projectile)
+		playsound(src, 'sound/weapons/effects/searwall.ogg', 50, TRUE)
+	else
+		playsound(src, "ricochet", 50, TRUE)
+	shield_health--
+	if(!shield_health)
+		visible_message("<span class='warning'>[src]'s shield breaks from deflecting the attack!</span>", "<span class='boldwarning'>Your shield breaks! Give it some time to recover...</span>")
+		playsound(src, "shatter", 100, TRUE)
+	shield_health_regen = world.time + MARAUDER_SHIELD_REGEN_TIME
+	return TRUE
+
+#undef MARAUDER_SLOWDOWN_PERCENTAGE
+#undef MARAUDER_SHIELD_REGEN_TIME
