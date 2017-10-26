@@ -166,7 +166,7 @@ MASS SPECTROMETER
 	if(advanced)
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
-			var/obj/item/organ/ears/ears = C.getorganslot("ears")
+			var/obj/item/organ/ears/ears = C.getorganslot(ORGAN_SLOT_EARS)
 			to_chat(user, "\t<span class='info'><b>==EAR STATUS==</b></span>")
 			if(istype(ears))
 				var/healthy = TRUE
@@ -184,7 +184,7 @@ MASS SPECTROMETER
 					to_chat(user, "\t<span class='info'>Healthy.</span>")
 			else
 				to_chat(user, "\t<span class='alert'>Subject does not have ears.</span>")
-			var/obj/item/organ/eyes/eyes = C.getorganslot("eye_sight")
+			var/obj/item/organ/eyes/eyes = C.getorganslot(ORGAN_SLOT_EYES)
 			to_chat(user, "\t<span class='info'><b>==EYE STATUS==</b></span>")
 			if(istype(eyes))
 				var/healthy = TRUE
@@ -353,10 +353,10 @@ MASS SPECTROMETER
 		var/list/env_gases = environment.gases
 
 		environment.assert_gases(arglist(GLOB.hardcoded_gases))
-		var/o2_concentration = env_gases["o2"][MOLES]/total_moles
-		var/n2_concentration = env_gases["n2"][MOLES]/total_moles
-		var/co2_concentration = env_gases["co2"][MOLES]/total_moles
-		var/plasma_concentration = env_gases["plasma"][MOLES]/total_moles
+		var/o2_concentration = env_gases[/datum/gas/oxygen][MOLES]/total_moles
+		var/n2_concentration = env_gases[/datum/gas/nitrogen][MOLES]/total_moles
+		var/co2_concentration = env_gases[/datum/gas/carbon_dioxide][MOLES]/total_moles
+		var/plasma_concentration = env_gases[/datum/gas/plasma][MOLES]/total_moles
 		environment.garbage_collect()
 
 		if(abs(n2_concentration - N2STANDARD) < 20)

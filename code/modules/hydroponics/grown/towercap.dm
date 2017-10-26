@@ -44,15 +44,11 @@
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 	var/plank_type = /obj/item/stack/sheet/mineral/wood
 	var/plank_name = "wooden planks"
-	var/list/accepted = list(/obj/item/reagent_containers/food/snacks/grown/tobacco,
+	var/static/list/accepted = typecacheof(list(/obj/item/reagent_containers/food/snacks/grown/tobacco,
 	/obj/item/reagent_containers/food/snacks/grown/tea,
 	/obj/item/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
 	/obj/item/reagent_containers/food/snacks/grown/ambrosia/deus,
-	/obj/item/reagent_containers/food/snacks/grown/wheat)
-
-/obj/item/grown/log/Initialize()
-	. = ..()
-	accepted = typecacheof(accepted)
+	/obj/item/reagent_containers/food/snacks/grown/wheat))
 
 /obj/item/grown/log/attackby(obj/item/W, mob/user, params)
 	if(W.sharpness)
@@ -69,7 +65,7 @@
 			to_chat(user, "<span class='notice'>You add the newly-formed [plank_name] to the stack. It now contains [plank.amount] [plank_name].</span>")
 		qdel(src)
 
-	if(is_type_in_typecache(W,accepted))
+	if(CheckAccepted(W))
 		var/obj/item/reagent_containers/food/snacks/grown/leaf = W
 		if(leaf.dry)
 			user.show_message("<span class='notice'>You wrap \the [W] around the log, turning it into a torch!</span>")
@@ -84,6 +80,9 @@
 	else
 		return ..()
 
+/obj/item/grown/log/proc/CheckAccepted(obj/item/I)
+	return is_type_in_typecache(I, accepted)
+
 /obj/item/grown/log/tree
 	seed = null
 	name = "wood log"
@@ -94,10 +93,11 @@
 	name = "steel-cap log"
 	desc = "It's made of metal."
 	icon_state = "steellogs"
-	accepted = list()
 	plank_type = /obj/item/stack/rods
 	plank_name = "rods"
 
+/obj/item/grown/log/steel/CheckAccepted(obj/item/I)
+	return FALSE
 
 /////////BONFIRES//////////
 
@@ -181,8 +181,8 @@
 	if(isopenturf(loc))
 		var/turf/open/O = loc
 		if(O.air)
-			var/G = O.air.gases
-			if(G["o2"][MOLES] > 13)
+			var/loc_gases = O.air.gases
+			if(loc_gases[/datum/gas/oxygen][MOLES] > 13)
 				return 1
 	return 0
 

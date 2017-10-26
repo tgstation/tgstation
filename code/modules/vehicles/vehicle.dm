@@ -42,7 +42,7 @@
 		if(A.density)
 			if(A != src && A != M)
 				return
-	M.loc = get_turf(src)
+	M.forceMove(get_turf(src))
 	..()
 	if(user.client)
 		user.client.change_view(view_range)

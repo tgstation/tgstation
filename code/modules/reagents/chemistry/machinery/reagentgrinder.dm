@@ -35,6 +35,7 @@
 			/obj/item/grown/nettle/death = list("facid" = 0, "sacid" = 0),
 			/obj/item/grown/novaflower = list("capsaicin" = 0, "condensedcapsaicin" = 0),
 			//Blender Stuff
+			/obj/item/reagent_containers/food/snacks/donkpocket/warm = list("omnizine" = 3),
 			/obj/item/reagent_containers/food/snacks/grown/soybeans = list("soymilk" = 0),
 			/obj/item/reagent_containers/food/snacks/grown/tomato = list("ketchup" = 0),
 			/obj/item/reagent_containers/food/snacks/grown/wheat = list("flour" = -5),
@@ -284,7 +285,9 @@
 	updateUsrDialog()
 
 /obj/machinery/reagentgrinder/proc/get_allowed_by_obj(obj/item/O)
-	return blend_items[O.type]
+	for (var/i in blend_items)
+		if (istype(O, i))
+			return blend_items[i]
 
 /obj/machinery/reagentgrinder/proc/get_allowed_juice_by_obj(obj/item/reagent_containers/food/snacks/O)
 	for(var/i in juice_items)
@@ -432,7 +435,7 @@
 			if (O.Uses > 0)
 				beaker.reagents.add_reagent("slimejelly",min(20, space))
 			remove_object(O)
-		else if(istype(I, /obj/item/reagent_containers))
+		if(istype(I, /obj/item/reagent_containers))
 			var/obj/item/reagent_containers/O = I
 			var/amount = O.reagents.total_volume
 			O.reagents.trans_to(beaker, amount)

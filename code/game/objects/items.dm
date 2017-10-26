@@ -342,7 +342,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 					var/datum/progressbar/progress = new(user, len, loc)
 
 					while (do_after(user, 10, TRUE, S, FALSE, CALLBACK(src, .proc/handle_mass_pickup, S, things, loc, rejections, progress)))
-						sleep(1)
+						stoplag(1)
 
 					qdel(progress)
 
@@ -517,7 +517,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	M.adjust_blurriness(3)
 	M.adjust_eye_damage(rand(2,4))
-	var/obj/item/organ/eyes/eyes = M.getorganslot("eye_sight")
+	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 	if (!eyes)
 		return
 	if(eyes.eye_damage >= 10)

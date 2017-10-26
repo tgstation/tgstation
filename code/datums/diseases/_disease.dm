@@ -98,10 +98,10 @@
 					V = Temp
 
 
-/datum/disease/proc/cure()
+/datum/disease/proc/cure(add_resistance = TRUE)
 	if(affected_mob)
 		if(disease_flags & CAN_RESIST)
-			if(!(type in affected_mob.resistances))
+			if(add_resistance && !(type in affected_mob.resistances))
 				affected_mob.resistances += type
 		remove_virus()
 	qdel(src)

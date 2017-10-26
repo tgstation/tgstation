@@ -262,10 +262,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	if(ishuman(M))
 		log_admin("[key_name(src)] has blobized [M.key].")
 		var/mob/living/carbon/human/H = M
-		spawn(0)
-			var/mob/camera/blob/B = H.become_overmind(FALSE)
-			B.place_blob_core(B.base_point_rate, -1) //place them wherever they are
-
+		H.become_overmind()
 	else
 		alert("Invalid mob")
 
@@ -716,8 +713,8 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 		if(Rad.anchored)
 			if(!Rad.loaded_tank)
 				var/obj/item/tank/internals/plasma/Plasma = new/obj/item/tank/internals/plasma(Rad)
-				ASSERT_GAS("plasma", Plasma.air_contents)
-				Plasma.air_contents.gases["plasma"][MOLES] = 70
+				ASSERT_GAS(/datum/gas/plasma, Plasma.air_contents)
+				Plasma.air_contents.gases[/datum/gas/plasma][MOLES] = 70
 				Rad.drainratio = 0
 				Rad.loaded_tank = Plasma
 				Plasma.loc = Rad

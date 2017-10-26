@@ -1106,7 +1106,7 @@
 /obj/item/toy/figure/attack_self(mob/user as mob)
 	if(cooldown <= world.time)
 		cooldown = world.time + 50
-		to_chat(user, "<span class='notice'>The [src] says \"[toysay]\"</span>")
+		to_chat(user, "<span class='notice'>[src] says \"[toysay]\"</span>")
 		playsound(user, toysound, 20, 1)
 
 /obj/item/toy/figure/cmo

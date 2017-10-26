@@ -53,7 +53,7 @@
 
 	var/datum/gas_mixture/breath
 
-	if(!getorganslot("breathing_tube"))
+	if(!getorganslot(ORGAN_SLOT_BREATHING_TUBE))
 		if(health <= HEALTH_THRESHOLD_FULLCRIT || (pulledby && pulledby.grab_state >= GRAB_KILL))
 			losebreath++  //You can't breath at all when in critical or when being choked, so you're going to miss a breath
 
@@ -104,7 +104,7 @@
 	if((status_flags & GODMODE))
 		return
 
-	var/lungs = getorganslot("lungs")
+	var/lungs = getorganslot(ORGAN_SLOT_LUNGS)
 	if(!lungs)
 		adjustOxyLoss(2)
 
@@ -127,11 +127,10 @@
 	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 
 	var/list/breath_gases = breath.gases
-	breath.assert_gases("o2","plasma","co2","n2o", "bz")
-
-	var/O2_partialpressure = (breath_gases["o2"][MOLES]/breath.total_moles())*breath_pressure
-	var/Toxins_partialpressure = (breath_gases["plasma"][MOLES]/breath.total_moles())*breath_pressure
-	var/CO2_partialpressure = (breath_gases["co2"][MOLES]/breath.total_moles())*breath_pressure
+	breath.assert_gases(/datum/gas/oxygen, /datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/bz)
+	var/O2_partialpressure = (breath_gases[/datum/gas/oxygen][MOLES]/breath.total_moles())*breath_pressure
+	var/Toxins_partialpressure = (breath_gases[/datum/gas/plasma][MOLES]/breath.total_moles())*breath_pressure
+	var/CO2_partialpressure = (breath_gases[/datum/gas/carbon_dioxide][MOLES]/breath.total_moles())*breath_pressure
 
 
 	//OXYGEN
@@ -142,7 +141,7 @@
 			var/ratio = 1 - O2_partialpressure/safe_oxy_min
 			adjustOxyLoss(min(5*ratio, 3))
 			failed_last_breath = 1
-			oxygen_used = breath_gases["o2"][MOLES]*ratio
+			oxygen_used = breath_gases[/datum/gas/oxygen][MOLES]*ratio
 		else
 			adjustOxyLoss(3)
 			failed_last_breath = 1
@@ -152,11 +151,11 @@
 		failed_last_breath = 0
 		if(health >= HEALTH_THRESHOLD_CRIT)
 			adjustOxyLoss(-5)
-		oxygen_used = breath_gases["o2"][MOLES]
+		oxygen_used = breath_gases[/datum/gas/oxygen][MOLES]
 		clear_alert("not_enough_oxy")
 
-	breath_gases["o2"][MOLES] -= oxygen_used
-	breath_gases["co2"][MOLES] += oxygen_used
+	breath_gases[/datum/gas/oxygen][MOLES] -= oxygen_used
+	breath_gases[/datum/gas/carbon_dioxide][MOLES] += oxygen_used
 
 	//CARBON DIOXIDE
 	if(CO2_partialpressure > safe_co2_max)
@@ -175,15 +174,15 @@
 
 	//TOXINS/PLASMA
 	if(Toxins_partialpressure > safe_tox_max)
-		var/ratio = (breath_gases["plasma"][MOLES]/safe_tox_max) * 10
+		var/ratio = (breath_gases[/datum/gas/plasma][MOLES]/safe_tox_max) * 10
 		adjustToxLoss(Clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
 		throw_alert("too_much_tox", /obj/screen/alert/too_much_tox)
 	else
 		clear_alert("too_much_tox")
 
 	//NITROUS OXIDE
-	if(breath_gases["n2o"])
-		var/SA_partialpressure = (breath_gases["n2o"][MOLES]/breath.total_moles())*breath_pressure
+	if(breath_gases[/datum/gas/nitrous_oxide])
+		var/SA_partialpressure = (breath_gases[/datum/gas/nitrous_oxide][MOLES]/breath.total_moles())*breath_pressure
 		if(SA_partialpressure > SA_para_min)
 			Unconscious(60)
 			if(SA_partialpressure > SA_sleep_min)
@@ -193,8 +192,8 @@
 				emote(pick("giggle","laugh"))
 
 	//BZ (Facepunch port of their Agent B)
-	if(breath_gases["bz"])
-		var/bz_partialpressure = (breath_gases["bz"][MOLES]/breath.total_moles())*breath_pressure
+	if(breath_gases[/datum/gas/bz])
+		var/bz_partialpressure = (breath_gases[/datum/gas/bz][MOLES]/breath.total_moles())*breath_pressure
 		if(bz_partialpressure > 1)
 			hallucination += 20
 		else if(bz_partialpressure > 0.01)
@@ -216,7 +215,7 @@
 		if(internal.loc != src)
 			internal = null
 			update_internals_hud_icon(0)
-		else if ((!wear_mask || !(wear_mask.flags_1 & MASKINTERNALS_1)) && !getorganslot("breathing_tube"))
+		else if ((!wear_mask || !(wear_mask.flags_1 & MASKINTERNALS_1)) && !getorganslot(ORGAN_SLOT_BREATHING_TUBE))
 			internal = null
 			update_internals_hud_icon(0)
 		else
@@ -281,24 +280,9 @@
 				HM.force_lose(src)
 				dna.temporary_mutations.Remove(mut)
 
-	if(radiation)
-		radiation = Clamp(radiation, 0, 100)
-		switch(radiation)
-			if(0 to 50)
-				radiation = max(radiation-1,0)
-				if(prob(25))
-					adjustToxLoss(1)
-
-			if(50 to 75)
-				radiation = max(radiation-2,0)
-				adjustToxLoss(1)
-				if(prob(5))
-					radiation = max(radiation-5,0)
-
-			if(75 to 100)
-				radiation = max(radiation-3,0)
-				adjustToxLoss(3)
-
+	radiation -= min(radiation, RAD_LOSS_PER_TICK)
+	if(radiation > RAD_MOB_SAFE)
+		adjustToxLoss(log(radiation-RAD_MOB_SAFE)*RAD_TOX_COEFFICIENT)
 
 /mob/living/carbon/handle_stomach()
 	set waitfor = 0
@@ -407,7 +391,7 @@
 /////////
 
 /mob/living/carbon/proc/handle_liver()
-	var/obj/item/organ/liver/liver = getorganslot("liver")
+	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
 	if((!dna && !liver) || (NOLIVER in dna.species.species_traits))
 		return
 	if(liver)
@@ -420,17 +404,17 @@
 		liver_failure()
 
 /mob/living/carbon/proc/undergoing_liver_failure()
-	var/obj/item/organ/liver/liver = getorganslot("liver")
+	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
 	if(liver && liver.failing)
 		return TRUE
 
 /mob/living/carbon/proc/return_liver_damage()
-	var/obj/item/organ/liver/liver = getorganslot("liver")
+	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
 	if(liver)
 		return liver.damage
 
 /mob/living/carbon/proc/applyLiverDamage(var/d)
-	var/obj/item/organ/liver/L = getorganslot("liver")
+	var/obj/item/organ/liver/L = getorganslot(ORGAN_SLOT_LIVER)
 	if(L)
 		L.damage += d
 

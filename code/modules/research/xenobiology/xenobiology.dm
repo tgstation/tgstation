@@ -194,7 +194,7 @@
 		SM.mind.enslave_mind_to_creator(user)
 		SM.sentience_act()
 		to_chat(SM, "<span class='warning'>All at once it makes sense: you know what you are and who you are! Self awareness is yours!</span>")
-		to_chat(SM, "<span class='userdanger'>You are grateful to be self aware and owe [user] a great debt. Serve [user], and assist [user.p_them()] in completing [user.p_their()] goals at any cost.</span>")
+		to_chat(SM, "<span class='userdanger'>You are grateful to be self aware and owe [user.real_name] a great debt. Serve [user.real_name], and assist [user.p_them()] in completing [user.p_their()] goals at any cost.</span>")
 		to_chat(user, "<span class='notice'>[SM] accepts [src] and suddenly becomes attentive and aware. It worked!</span>")
 		qdel(src)
 	else
@@ -473,74 +473,6 @@
 	desc = "A golem's head."
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	flags_1 = ABSTRACT_1 | NODROP_1
-
-/obj/effect/golemrune
-	anchored = TRUE
-	desc = "A strange rune used to create golems. It glows when spirits are nearby."
-	name = "rune"
-	icon = 'icons/obj/rune.dmi'
-	icon_state = "golem"
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	layer = TURF_LAYER
-
-/obj/effect/golemrune/Initialize()
-	. = ..()
-	START_PROCESSING(SSobj, src)
-	notify_ghosts("Golem rune created in [get_area(src)].", 'sound/effects/ghost2.ogg', source = src)
-
-/obj/effect/golemrune/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
-/obj/effect/golemrune/process()
-	var/mob/dead/observer/ghost
-	for(var/mob/dead/observer/O in src.loc)
-		if(!O.client)
-			continue
-		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)
-			continue
-		if (O.orbiting)
-			continue
-		ghost = O
-		break
-	if(ghost)
-		icon_state = "golem2"
-	else
-		icon_state = "golem"
-
-/obj/effect/golemrune/attack_hand(mob/living/user)
-	var/mob/dead/observer/ghost
-	for(var/mob/dead/observer/O in src.loc)
-		if(!O.client)
-			continue
-		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)
-			continue
-		if (O.orbiting)
-			continue
-		ghost = O
-		break
-	if(!ghost)
-		to_chat(user, "<span class='warning'>The rune fizzles uselessly! There is no spirit nearby.</span>")
-		return
-	var/mob/living/carbon/human/G = new /mob/living/carbon/human
-	G.set_species(/datum/species/golem/adamantine)
-	G.set_cloned_appearance()
-	G.real_name = G.dna.species.random_name()
-	G.name = G.real_name
-	G.dna.unique_enzymes = G.dna.generate_unique_enzymes()
-	G.dna.species.auto_equip(G)
-	G.loc = src.loc
-	G.key = ghost.key
-	to_chat(G, "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. \
-	Serve [user], and assist [user.p_them()] in completing their goals at any cost.")
-	G.mind.store_memory("<b>Serve [user.real_name], your creator.</b>")
-	G.mind.assigned_role = "Servant Golem"
-
-	G.mind.enslave_mind_to_creator(user)
-
-	log_game("[key_name(G)] was made a golem by [key_name(user)].")
-	log_admin("[key_name(G)] was made a golem by [key_name(user)].")
-	qdel(src)
 
 /obj/item/stack/tile/bluespace
 	name = "bluespace floor tile"

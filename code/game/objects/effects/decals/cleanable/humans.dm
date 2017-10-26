@@ -50,7 +50,7 @@
 	icon_state = "gibbl5"
 	layer = LOW_OBJ_LAYER
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
-	mergeable_decal = 0
+	mergeable_decal = FALSE
 
 /obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
@@ -135,9 +135,10 @@
 		var/obj/item/clothing/shoes/S = H.shoes
 		if(S && S.bloody_shoes[blood_state])
 			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
-			entered_dirs|= H.dir
-			shoe_types |= H.shoes.type
-	update_icon()
+			shoe_types |= S.type
+			if (!(entered_dirs & H.dir))
+				entered_dirs |= H.dir
+				update_icon()
 
 /obj/effect/decal/cleanable/blood/footprints/Uncrossed(atom/movable/O)
 	..()
@@ -146,9 +147,11 @@
 		var/obj/item/clothing/shoes/S = H.shoes
 		if(S && S.bloody_shoes[blood_state])
 			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
-			exited_dirs|= H.dir
-			shoe_types |= H.shoes.type
-	update_icon()
+			shoe_types  |= S.type
+			if (!(exited_dirs & H.dir))
+				exited_dirs |= H.dir
+				update_icon()
+			
 
 /obj/effect/decal/cleanable/blood/footprints/update_icon()
 	cut_overlays()

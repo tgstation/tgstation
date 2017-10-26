@@ -59,7 +59,7 @@
 	SetCollectBehavior()
 
 /mob/living/simple_animal/hostile/mining_drone/sentience_act()
-	AIStatus = AI_OFF
+	..()
 	check_friendly_fire = 0
 
 /mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I, mob/user, params)

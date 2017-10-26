@@ -6,8 +6,13 @@
 
 /mob/living/carbon/isloyal()
 	for(var/obj/item/implant/mindshield/L in implants)
-		return 1
+		return TRUE
 
+/mob/proc/lowest_buckled_mob()
+	. = src
+	if(buckled && ismob(buckled))
+		var/mob/Buckled = buckled
+		. = Buckled.lowest_buckled_mob()
 
 /proc/check_zone(zone)
 	if(!zone)
@@ -330,9 +335,9 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 /proc/is_special_character(mob/M) // returns 1 for special characters and 2 for heroes of gamemode //moved out of admins.dm because things other than admin procs were calling this.
 	if(!SSticker.HasRoundStarted())
-		return 0
+		return FALSE
 	if(!istype(M))
-		return 0
+		return FALSE
 	if(issilicon(M))
 		if(iscyborg(M)) //For cyborgs, returns 1 if the cyborg has a law 0 and special_role. Returns 0 if the borg is merely slaved to an AI traitor.
 			var/mob/living/silicon/robot/R = M
@@ -341,17 +346,17 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 					if(R.connected_ai)
 						if(is_special_character(R.connected_ai) && R.connected_ai.laws && (R.connected_ai.laws.zeroth_borg == R.laws.zeroth || R.connected_ai.laws.zeroth == R.laws.zeroth))
 							return 0 //AI is the real traitor here, so the borg itself is not a traitor
-						return 1 //Slaved but also a traitor
-					return 1 //Unslaved, traitor
+						return TRUE//Slaved but also a traitor
+					return TRUE //Unslaved, traitor
 		else if(isAI(M))
 			var/mob/living/silicon/ai/A = M
 			if(A.laws && A.laws.zeroth && A.mind && A.mind.special_role)
-				return 1
-		return 0
+				return TRUE
+		return FALSE
 	if(M.mind && M.mind.special_role)//If they have a mind and special role, they are some type of traitor or antagonist.
 		switch(SSticker.mode.config_tag)
 			if("revolution")
-				if((M.mind in SSticker.mode.head_revolutionaries) || (M.mind in SSticker.mode.revolutionaries))
+				if(is_revolutionary(M))
 					return 2
 			if("cult")
 				if(M.mind in SSticker.mode.cult)
@@ -363,7 +368,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 				if(M.mind in SSticker.mode.changelings)
 					return 2
 			if("wizard")
-				if(M.mind in SSticker.mode.wizards)
+				if(iswizard(M))
 					return 2
 			if("apprentice")
 				if(M.mind in SSticker.mode.apprentices)
@@ -374,8 +379,10 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			if("abductor")
 				if(M.mind in SSticker.mode.abductors)
 					return 2
-		return 1
-	return 0
+		return TRUE
+	if(M.mind && LAZYLEN(M.mind.antag_datums)) //they have an antag datum!
+		return TRUE
+	return FALSE
 
 /mob/proc/reagent_check(datum/reagent/R) // utilized in the species code
 	return 1

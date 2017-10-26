@@ -1,0 +1,5 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - soundadd: "Portable generators have a sound while active."
+  - soundadd: "The supermatter has a sound that scales with stored energy."

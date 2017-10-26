@@ -25,7 +25,7 @@
 	gold_core_spawnable = 2
 
 /mob/living/simple_animal/pet/penguin/emperor/shamebrero
-	name = "Shamebrero penguin."
+	name = "Shamebrero penguin"
 	desc = "Shameful of all he surveys."
 	icon_state = "penguin_shamebrero"
 	icon_living = "penguin_shamebrero"
