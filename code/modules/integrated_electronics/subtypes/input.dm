@@ -54,7 +54,7 @@
 
 /obj/item/integrated_circuit/input/numberpad/ask_for_input(mob/user)
 	var/new_input = input(user, "Enter a number, please.","Number pad") as null|num
-	if(isnum(new_input) && CanInteract(user, physical_state))
+	if(isnum(new_input) && user.IsAdvancedToolUser())
 		set_pin_data(IC_OUTPUT, 1, new_input)
 		push_data()
 		activate_pin(1)
@@ -73,7 +73,7 @@
 
 /obj/item/integrated_circuit/input/textpad/ask_for_input(mob/user)
 	var/new_input = input(user, "Enter some words, please.","Number pad") as null|text
-	if(istext(new_input) && CanInteract(user, physical_state))
+	if(istext(new_input) && user.IsAdvancedToolUser())
 		set_pin_data(IC_OUTPUT, 1, new_input)
 		push_data()
 		activate_pin(1)
@@ -433,9 +433,10 @@
 
 /obj/item/integrated_circuit/input/signaler/Destroy()
 	if(radio_controller)
-		radio_controller.remove_object(src,frequency)
+		SSradio.remove_object(src,frequency)
+
 	frequency = 0
-	. = ..()
+	return ..()
 
 /obj/item/integrated_circuit/input/signaler/on_data_written()
 	var/new_freq = get_pin_data(IC_INPUT, 1)
@@ -450,11 +451,12 @@
 	if(!radio_connection)
 		return
 
-	var/datum/signal/signal = new()
+	var/datum/signal/signal = new
 	signal.source = src
 	signal.encryption = code
 	signal.data["message"] = "ACTIVATE"
 	radio_connection.post_signal(src, signal)
+
 	activate_pin(2)
 
 /obj/item/integrated_circuit/input/signaler/proc/set_frequency(new_frequency)
@@ -464,9 +466,9 @@
 		sleep(20)
 	if(!radio_controller)
 		return
-	radio_controller.remove_object(src, frequency)
+	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = radio_controller.add_object(src, frequency, RADIO_CHAT)
+	radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_CHAT)
 
 /obj/item/integrated_circuit/input/signaler/receive_signal(datum/signal/signal)
 	var/new_code = get_pin_data(IC_INPUT, 2)
@@ -693,11 +695,11 @@
 	if(AM)
 
 
-		var/obj/item/weapon/cell/cell = null
-		if(istype(AM, /obj/item/weapon/cell)) // Is this already a cell?
+		var/obj/item/stock_parts/cell/cell = null
+		if(istype(AM, /obj/item/stock_parts/cell)) // Is this already a cell?
 			cell = AM
 		else // If not, maybe there's a cell inside it?
-			for(var/obj/item/weapon/cell/C in AM.contents)
+			for(var/obj/item/stock_parts/cell/C in AM.contents)
 				if(C) // Find one cell to charge.
 					cell = C
 					break
