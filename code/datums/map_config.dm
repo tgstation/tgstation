@@ -100,7 +100,7 @@
 		for(var/I in tc)
 			if(isnull(TransitionStringToEnum(I)))
 				log_world("Invalid transition_config option: [I]!")
-			if(isnull(TransitionStringToEnum(jtcl[I])))
+			if(isnull(TransitionStringToEnum(tc[I])))
 				log_world("Invalid transition_config option: [I]!")
 
 	return TRUE
