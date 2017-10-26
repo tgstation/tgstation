@@ -135,6 +135,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 
 	var/is_main_engine = FALSE
 
+	var/datum/looping_sound/supermatter/soundloop
+
 /obj/machinery/power/supermatter_shard/Initialize()
 	. = ..()
 	SSair.atmos_machinery += src
@@ -149,6 +151,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	if(is_main_engine)
 		GLOB.main_supermatter_engine = src
 
+	soundloop = new(list(src), TRUE)
+
 /obj/machinery/power/supermatter_shard/Destroy()
 	investigate_log("has been destroyed.", INVESTIGATE_SUPERMATTER)
 	SSair.atmos_machinery -= src
@@ -157,7 +161,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	QDEL_NULL(countdown)
 	if(is_main_engine && GLOB.main_supermatter_engine == src)
 		GLOB.main_supermatter_engine = null
-	. = ..()
+	QDEL_NULL(soundloop)
+	return ..()
 
 /obj/machinery/power/supermatter_shard/examine(mob/user)
 	..()
@@ -250,6 +255,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 
 	if(!istype(T)) 	//We are in a crate or somewhere that isn't turf, if we return to turf resume processing but for now.
 		return  //Yeah just stop.
+
+	if(power)
+		soundloop.volume = min(50, (round(power, 50)/50)+1) // 5 +1 volume per 20 power. 2500 power is max
 
 	//Ok, get the air from the turf
 	var/datum/gas_mixture/env = T.return_air()
