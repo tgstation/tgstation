@@ -165,6 +165,7 @@
 			return
 		var/datum/round_event_control/E = locate(href_list["forceevent"]) in SSevents.control
 		if(E)
+			E.admin_setup(usr)
 			var/datum/round_event/event = E.runEvent()
 			if(event.announceWhen>0)
 				event.processing = FALSE

@@ -9,7 +9,7 @@
 	density = FALSE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	use_power = NO_POWER_USE
-	luminosity = 4
+	light_range = 4
 	layer = ABOVE_OBJ_LAYER
 	var/obj/machinery/field/generator/FG1 = null
 	var/obj/machinery/field/generator/FG2 = null
