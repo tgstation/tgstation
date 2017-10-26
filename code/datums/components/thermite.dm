@@ -1,28 +1,24 @@
 /datum/component/thermite
-	var/static/list/blacklist
-	var/static/list/resistlist
+	dupe_mode = COMPONENT_DUPE_UNIQUE
 	var/amount
+	var/overlay
+
+	var/static/list/blacklist = typecacheof(/turf/closed/wall/mineral/diamond)
+	var/static/list/resistlist = typecacheof(/turf/closed/wall/r_wall)
 
 /datum/component/thermite/Initialize(_amount)
-	. = ..()
-	blacklist = typecacheof(/turf/closed/wall/mineral/diamond)
-	resistlist = typecacheof(/turf/closed/wall/r_wall)
-
+	if(!istype(parent, /turf))
+		return COMPONENT_INCOMPATIBLE
 	if(blacklist[parent.type])
-		qdel(src)
-		return
+		_amount*=0 //Yeah the overlay can still go on it and be cleaned but you arent burning down a diamond wall
 	if(resistlist[parent.type])
 		_amount*=0.25
 
 	amount = _amount*10
 
-	if(!istype(parent, /turf))
-		qdel(src)
-		return
-
 	var/turf/master = parent
-	master.cut_overlays()
-	master.add_overlay(mutable_appearance('icons/effects/effects.dmi', "thermite"))
+	overlay = mutable_appearance('icons/effects/effects.dmi', "thermite")
+	master.add_overlay(overlay)
 
 	RegisterSignal(COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_react)
 	RegisterSignal(COMSIG_PARENT_ATTACKBY, .proc/attackby_react)
@@ -30,12 +26,17 @@
 
 /datum/component/thermite/Destroy()
 	var/turf/master = parent
-	master.cut_overlays()
+	master.cut_overlay(overlay)
 	return ..()
+
+/datum/component/thermite/InheritComponent(datum/component/thermite/newC, i_am_original)
+	if(!i_am_original)
+		return
+	amount += newC.amount
 
 /datum/component/thermite/proc/thermite_melt(mob/user)
 	var/turf/master = parent
-	master.cut_overlays()
+	master.cut_overlay(overlay)
 	var/obj/effect/overlay/thermite/fakefire = new(master)
 
 	playsound(master, 'sound/items/welder.ogg', 100, 1)
@@ -51,6 +52,7 @@
 		QDEL_IN(fakefire, 50)
 
 /datum/component/thermite/proc/clean_react(strength)
+	//Thermite is just some loose powder, you could probably clean it with your hands. << todo?
 	qdel(src)
 
 /datum/component/thermite/proc/flame_react(exposed_temperature, exposed_volume)
@@ -60,13 +62,3 @@
 /datum/component/thermite/proc/attackby_react(obj/item/thing, mob/user, params)
 	if(thing.is_hot())
 		thermite_melt(user)
-
-/obj/effect/overlay/thermite
-	name = "thermite"
-	desc = "Looks hot."
-	icon = 'icons/effects/fire.dmi'
-	icon_state = "2" //what?
-	anchored = TRUE
-	opacity = 1
-	density = TRUE
-	layer = FLY_LAYER
