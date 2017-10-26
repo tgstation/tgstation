@@ -5,6 +5,16 @@
 #define SEND_TEXT(target, text) DIRECT_OUTPUT(target, text)
 #define WRITE_FILE(file, text) DIRECT_OUTPUT(file, text)
 
+//To avoid certain admin exploits
+/proc/do_locate(X, Y, Z)
+	if(isnull(Y))
+		if(X != "\ref[world]")
+			. = locate(X)
+		return
+	return locate(X, Y, Z)
+
+#define locate do_locate
+
 //print a warning message to world.log
 #define WARNING(MSG) warning("[MSG] in [__FILE__] at line [__LINE__] src: [src] usr: [usr].")
 /proc/warning(msg)
