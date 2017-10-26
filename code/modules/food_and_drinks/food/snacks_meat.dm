@@ -184,10 +184,13 @@
 	foodtype = MEAT | SUGAR
 
 /obj/item/reagent_containers/food/snacks/monkeycube/proc/Expand()
+	if(CONFIG_GET(number/monkeycap) <= GLOB.monkeys)
+		visible_message("<span class='warning'>[src] gives a single shudder, before drying out.</span>")
+		return FALSE
 	visible_message("<span class='notice'>[src] expands!</span>")
 	var/mob/spammer = get_mob_by_key(fingerprintslast)
 	var/mob/living/carbon/monkey/bananas = new(drop_location())
-	bananas.log_message("Spawned via [src] at [COORD(src)], Last attached mob: [key_name(spammer)].", INDIVIDUAL_ATTACK_LOG) 
+	bananas.log_message("Spawned via [src] at [COORD(src)], Last attached mob: [key_name(spammer)].", INDIVIDUAL_ATTACK_LOG)
 	qdel(src)
 
 /obj/item/reagent_containers/food/snacks/enchiladas
