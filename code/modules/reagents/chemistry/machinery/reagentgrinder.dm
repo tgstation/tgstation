@@ -50,6 +50,7 @@
 			/obj/item/reagent_containers/food/snacks/grown/coffee = list("coffeepowder" = 0),
 			/obj/item/reagent_containers/food/snacks/grown/tea/astra = list("teapowder" = 0, "salglu_solution" = 0),
 			/obj/item/reagent_containers/food/snacks/grown/tea = list("teapowder" = 0),
+			//Stuff that doesn't quite fit in the other categories
 			/obj/structure/cable = list ("copper" = 5),
 			/obj/item/electronics = list ("iron" = 10, "silicon" = 10),
 			/obj/item/circuitboard = list ("silicon" = 20, "sacid" = 0.5), // Retrieving acid this way is extremely inefficient
