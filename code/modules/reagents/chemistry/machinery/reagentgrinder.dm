@@ -46,6 +46,7 @@
 			/obj/item/reagent_containers/food/snacks/grown/cherries = list("cherryjelly" = 0),
 			/obj/item/reagent_containers/food/snacks/grown/bluecherries = list("bluecherryjelly" = 0),
 			/obj/item/reagent_containers/food/snacks/egg = list("eggyolk" = -5),
+			/obj/item/reagent_containers/food/snacks/deadmouse = list ("blood" = 20, "gibs" = 5), // You monster
 			//Grinder stuff, but only if dry
 			/obj/item/reagent_containers/food/snacks/grown/coffee/robusta = list("coffeepowder" = 0, "morphine" = 0),
 			/obj/item/reagent_containers/food/snacks/grown/coffee = list("coffeepowder" = 0),
@@ -64,12 +65,15 @@
 			/obj/item/stock_parts/cell = list ("lithium" = 15, "iron" = 5, "silicon" = 5),
 			/obj/item/soap = list ("lye" = 10),
 			/obj/item/device/analyzer = list ("mercury" = 5, "iron" = 5, "silicon" = 5),
+			/obj/item/lighter = list ("iron" = 1, "weldingfuel" = 5, "oil" = 5),
+			/obj/item/light = list ("silicon" = 5, "nitrogen" = 10), //Nitrogen is used as a cheaper alternative to argo in incandescent lighbulbs
 			//All types that you can put into the grinder to transfer the reagents to the beaker. !Put all recipes above this.!
 			/obj/item/slime_extract = list(),
 			/obj/item/reagent_containers/pill = list(),
 			/obj/item/reagent_containers/food = list(),
 			/obj/item/reagent_containers/honeycomb = list(),
-			/obj/item/toy/crayon = list())
+			/obj/item/toy/crayon = list()),
+			/obj/item/clothing/mask/cigarette = list()
 
 	var/static/list/juice_items = list(
 			//Juicer Stuff
