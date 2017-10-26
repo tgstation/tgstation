@@ -77,7 +77,7 @@
 			/obj/item/reagent_containers/pill = list(),
 			/obj/item/reagent_containers/food = list(),
 			/obj/item/reagent_containers/honeycomb = list(),
-			/obj/item/toy/crayon = list()),
+			/obj/item/toy/crayon = list(),
 			/obj/item/clothing/mask/cigarette = list())
 
 	var/static/list/juice_items = list(
