@@ -107,9 +107,6 @@ SUBSYSTEM_DEF(job)
 		if(player.mind && job.title in player.mind.restricted_roles)
 			Debug("FOC incompatible with antagonist role, Player: [player]")
 			continue
-		if(CONFIG_GET(flag/enforce_human_authority) && !player.client.prefs.pref_species.qualifies_for_rank(job.title, player.client.prefs.features))
-			Debug("FOC non-human failed, Player: [player]")
-			continue
 		if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
 			Debug("FOC pass, Player: [player], Level:[level]")
 			candidates += player
@@ -143,11 +140,6 @@ SUBSYSTEM_DEF(job)
 		if(player.mind && job.title in player.mind.restricted_roles)
 			Debug("GRJ incompatible with antagonist role, Player: [player], Job: [job.title]")
 			continue
-
-		if(CONFIG_GET(flag/enforce_human_authority) && !player.client.prefs.pref_species.qualifies_for_rank(job.title, player.client.prefs.features))
-			Debug("GRJ non-human failed, Player: [player]")
-			continue
-
 
 		if((job.current_positions < job.spawn_positions) || job.spawn_positions == -1)
 			Debug("GRJ Random job given, Player: [player], Job: [job]")
@@ -317,10 +309,6 @@ SUBSYSTEM_DEF(job)
 
 				if(player.mind && job.title in player.mind.restricted_roles)
 					Debug("DO incompatible with antagonist role, Player: [player], Job:[job.title]")
-					continue
-
-				if(CONFIG_GET(flag/enforce_human_authority) && !player.client.prefs.pref_species.qualifies_for_rank(job.title, player.client.prefs.features))
-					Debug("DO non-human failed, Player: [player], Job:[job.title]")
 					continue
 
 				// If the player wants that job on this level, then try give it to him.

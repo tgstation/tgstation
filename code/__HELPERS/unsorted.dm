@@ -200,6 +200,8 @@ Turf and target are separate in case you want to teleport some distance from a t
 			newname = C.prefs.custom_names[role]
 		else
 			switch(role)
+				if("human")
+					newname = random_unique_name(gender)
 				if("clown")
 					newname = pick(GLOB.clown_names)
 				if("mime")
@@ -514,7 +516,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 		processing_list.Cut(1, 2)
 		//Byond does not allow things to be in multiple contents, or double parent-child hierarchies, so only += is needed
 		//This is also why we don't need to check against assembled as we go along
-		processing_list += A.contents 
+		processing_list += A.contents
 		assembled += A
 	return assembled
 
