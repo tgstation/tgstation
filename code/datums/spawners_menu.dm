@@ -23,8 +23,12 @@
 		for(var/spawner_obj in GLOB.mob_spawners[spawner])
 			this["refs"] += "\ref[spawner_obj]"
 			if(!this["desc"])
-				var/obj/effect/mob_spawn/MS = spawner_obj
-				this["desc"] = MS.flavour_text
+				if(istype(spawner_obj, /obj/effect/mob_spawn))
+					var/obj/effect/mob_spawn/MS = spawner_obj
+					this["desc"] = MS.flavour_text
+				else
+					var/obj/O = spawner_obj
+					this["desc"] = O.desc
 		this["amount_left"] = LAZYLEN(GLOB.mob_spawners[spawner])
 		data["spawners"] += list(this)
 
