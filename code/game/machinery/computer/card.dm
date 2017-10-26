@@ -145,18 +145,18 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		var/crew = ""
 		for(var/datum/data/record/t in sortRecord(GLOB.data_core.general))
 			crew += t.fields["name"] + " - " + t.fields["rank"] + "<br>"
-		dat = "<tt><b>Crew Manifest:</b><br>Please use security record computer to modify entries.<br><br>[crew]<a href='?src=\ref[src];choice=print'>Print</a><br><br><a href='?src=\ref[src];choice=mode;mode_target=0'>Access ID modification console.</a><br></tt>"
+		dat = "<tt><b>Crew Manifest:</b><br>Please use security record computer to modify entries.<br><br>[crew]<a href='?src=[REF(src)];choice=print'>Print</a><br><br><a href='?src=[REF(src)];choice=mode;mode_target=0'>Access ID modification console.</a><br></tt>"
 
 	else if(mode == 2)
 		// JOB MANAGEMENT
-		dat = "<a href='?src=\ref[src];choice=return'>Return</a>"
+		dat = "<a href='?src=[REF(src)];choice=return'>Return</a>"
 		dat += " || Confirm Identity: "
 		var/S
 		if(scan)
 			S = html_encode(scan.name)
 		else
 			S = "--------"
-		dat += "<a href='?src=\ref[src];choice=scan'>[S]</a>"
+		dat += "<a href='?src=[REF(src)];choice=scan'>[S]</a>"
 		dat += "<table>"
 		dat += "<tr><td style='width:25%'><b>Job</b></td><td style='width:25%'><b>Slots</b></td><td style='width:25%'><b>Open job</b></td><td style='width:25%'><b>Close job</b><td style='width:25%'><b>Prioritize</b></td></td></tr>"
 		var/ID
@@ -174,7 +174,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			switch(can_open_job(job))
 				if(1)
 					if(ID)
-						dat += "<a href='?src=\ref[src];choice=make_job_available;job=[job.title]'>Open Position</a><br>"
+						dat += "<a href='?src=[REF(src)];choice=make_job_available;job=[job.title]'>Open Position</a><br>"
 					else
 						dat += "Open Position"
 				if(-1)
@@ -190,7 +190,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			switch(can_close_job(job))
 				if(1)
 					if(ID)
-						dat += "<a href='?src=\ref[src];choice=make_job_unavailable;job=[job.title]'>Close Position</a>"
+						dat += "<a href='?src=[REF(src)];choice=make_job_unavailable;job=[job.title]'>Close Position</a>"
 					else
 						dat += "Close Position"
 				if(-1)
@@ -209,10 +209,10 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				else
 					if(ID)
 						if(job in SSjob.prioritized_jobs)
-							dat += "<a href='?src=\ref[src];choice=prioritize_job;job=[job.title]'>Deprioritize</a>"
+							dat += "<a href='?src=[REF(src)];choice=prioritize_job;job=[job.title]'>Deprioritize</a>"
 						else
 							if(SSjob.prioritized_jobs.len < 5)
-								dat += "<a href='?src=\ref[src];choice=prioritize_job;job=[job.title]'>Prioritize</a>"
+								dat += "<a href='?src=[REF(src)];choice=prioritize_job;job=[job.title]'>Prioritize</a>"
 							else
 								dat += "Denied"
 					else
@@ -247,14 +247,14 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 		if(!authenticated)
 			header += "<br><i>Please insert the cards into the slots</i><br>"
-			header += "Target: <a href='?src=\ref[src];choice=modify'>[target_name]</a><br>"
-			header += "Confirm Identity: <a href='?src=\ref[src];choice=scan'>[scan_name]</a><br>"
+			header += "Target: <a href='?src=[REF(src)];choice=modify'>[target_name]</a><br>"
+			header += "Confirm Identity: <a href='?src=[REF(src)];choice=scan'>[scan_name]</a><br>"
 		else
 			header += "<div align='center'><br>"
-			header += "<a href='?src=\ref[src];choice=modify'>Remove [target_name]</a> || "
-			header += "<a href='?src=\ref[src];choice=scan'>Remove [scan_name]</a> <br> "
-			header += "<a href='?src=\ref[src];choice=mode;mode_target=1'>Access Crew Manifest</a> <br> "
-			header += "<a href='?src=\ref[src];choice=logout'>Log Out</a></div>"
+			header += "<a href='?src=[REF(src)];choice=modify'>Remove [target_name]</a> || "
+			header += "<a href='?src=[REF(src)];choice=scan'>Remove [scan_name]</a> <br> "
+			header += "<a href='?src=[REF(src)];choice=mode;mode_target=1'>Access Crew Manifest</a> <br> "
+			header += "<a href='?src=[REF(src)];choice=logout'>Log Out</a></div>"
 
 		header += "<hr>"
 
@@ -262,7 +262,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		var/list/alljobs = list("Unassigned")
 		alljobs += (istype(src, /obj/machinery/computer/card/centcom)? get_all_centcom_jobs() : get_all_jobs()) + "Custom"
 		for(var/job in alljobs)
-			jobs_all += "<a href='?src=\ref[src];choice=assign;assign_target=[job]'>[replacetext(job, " ", "&nbsp")]</a> " //make sure there isn't a line break in the middle of a job
+			jobs_all += "<a href='?src=[REF(src)];choice=assign;assign_target=[job]'>[replacetext(job, " ", "&nbsp")]</a> " //make sure there isn't a line break in the middle of a job
 
 
 		var/body
@@ -290,8 +290,8 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 										allJobsSlot.innerHTML = "<a href='#' onclick='showAll()'>show</a>";
 									}
 								</script>"}
-				carddesc += "<form name='cardcomp' action='?src=\ref[src]' method='get'>"
-				carddesc += "<input type='hidden' name='src' value='\ref[src]'>"
+				carddesc += "<form name='cardcomp' action='?src=[REF(src)]' method='get'>"
+				carddesc += "<input type='hidden' name='src' value='[REF(src)]'>"
 				carddesc += "<input type='hidden' name='choice' value='reg'>"
 				carddesc += "<b>registered name:</b> <input type='text' id='namefield' name='reg' value='[target_owner]' style='width:250px; background-color:white;' onchange='markRed()'>"
 				carddesc += "<input type='submit' value='Rename' onclick='markGreen()'>"
@@ -302,16 +302,16 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 			else
 				carddesc += "<b>registered_name:</b> [target_owner]</span>"
-				jobs += "<b>Assignment:</b> [target_rank] (<a href='?src=\ref[src];choice=demote'>Demote</a>)</span>"
+				jobs += "<b>Assignment:</b> [target_rank] (<a href='?src=[REF(src)];choice=demote'>Demote</a>)</span>"
 
 			var/accesses = ""
 			if(istype(src, /obj/machinery/computer/card/centcom))
 				accesses += "<h5>Central Command:</h5>"
 				for(var/A in get_all_centcom_access())
 					if(A in modify.access)
-						accesses += "<a href='?src=\ref[src];choice=access;access_target=[A];allowed=0'><font color=\"red\">[replacetext(get_centcom_access_desc(A), " ", "&nbsp")]</font></a> "
+						accesses += "<a href='?src=[REF(src)];choice=access;access_target=[A];allowed=0'><font color=\"red\">[replacetext(get_centcom_access_desc(A), " ", "&nbsp")]</font></a> "
 					else
-						accesses += "<a href='?src=\ref[src];choice=access;access_target=[A];allowed=1'>[replacetext(get_centcom_access_desc(A), " ", "&nbsp")]</a> "
+						accesses += "<a href='?src=[REF(src)];choice=access;access_target=[A];allowed=1'>[replacetext(get_centcom_access_desc(A), " ", "&nbsp")]</a> "
 			else
 				accesses += "<div align='center'><b>Access</b></div>"
 				accesses += "<table style='width:100%'>"
@@ -327,19 +327,19 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 					accesses += "<td style='width:14%' valign='top'>"
 					for(var/A in get_region_accesses(i))
 						if(A in modify.access)
-							accesses += "<a href='?src=\ref[src];choice=access;access_target=[A];allowed=0'><font color=\"red\">[replacetext(get_access_desc(A), " ", "&nbsp")]</font></a> "
+							accesses += "<a href='?src=[REF(src)];choice=access;access_target=[A];allowed=0'><font color=\"red\">[replacetext(get_access_desc(A), " ", "&nbsp")]</font></a> "
 						else
-							accesses += "<a href='?src=\ref[src];choice=access;access_target=[A];allowed=1'>[replacetext(get_access_desc(A), " ", "&nbsp")]</a> "
+							accesses += "<a href='?src=[REF(src)];choice=access;access_target=[A];allowed=1'>[replacetext(get_access_desc(A), " ", "&nbsp")]</a> "
 						accesses += "<br>"
 					accesses += "</td>"
 				accesses += "</tr></table>"
 			body = "[carddesc]<br>[jobs]<br><br>[accesses]" //CHECK THIS
 
 		else
-			body = "<a href='?src=\ref[src];choice=auth'>{Log in}</a> <br><hr>"
-			body += "<a href='?src=\ref[src];choice=mode;mode_target=1'>Access Crew Manifest</a>"
+			body = "<a href='?src=[REF(src)];choice=auth'>{Log in}</a> <br><hr>"
+			body += "<a href='?src=[REF(src)];choice=mode;mode_target=1'>Access Crew Manifest</a>"
 			if(!target_dept)
-				body += "<br><hr><a href = '?src=\ref[src];choice=mode;mode_target=2'>Job Management</a>"
+				body += "<br><hr><a href = '?src=[REF(src)];choice=mode;mode_target=2'>Job Management</a>"
 
 		dat = "<tt>[header][body]<hr><br></tt>"
 	var/datum/browser/popup = new(user, "id_com", src.name, 900, 620)

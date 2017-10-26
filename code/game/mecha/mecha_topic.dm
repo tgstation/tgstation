@@ -22,7 +22,7 @@
 						[js_dropdowns]
 						function SSticker() {
 						    setInterval(function(){
-						        window.location='byond://?src=\ref[src]&update_content=1';
+						        window.location='byond://?src=[REF(src)]&update_content=1';
 						    }, 1000);
 						}
 
@@ -55,7 +55,7 @@
 		"[MECHA_INT_FIRE]" = "<span class='userdanger'>INTERNAL FIRE</span>",
 		"[MECHA_INT_TEMP_CONTROL]" = "<span class='userdanger'>LIFE SUPPORT SYSTEM MALFUNCTION</span>",
 		"[MECHA_INT_TANK_BREACH]" = "<span class='userdanger'>GAS TANK BREACH</span>",
-		"[MECHA_INT_CONTROL_LOST]" = "<span class='userdanger'>COORDINATION SYSTEM CALIBRATION FAILURE</span> - <a href='?src=\ref[src];repair_int_control_lost=1'>Recalibrate</a>",
+		"[MECHA_INT_CONTROL_LOST]" = "<span class='userdanger'>COORDINATION SYSTEM CALIBRATION FAILURE</span> - <a href='?src=[REF(src)];repair_int_control_lost=1'>Recalibrate</a>",
 		"[MECHA_INT_SHORT_CIRCUIT]" = "<span class='userdanger'>SHORT CIRCUIT</span>"
 								)
 	for(var/tflag in dam_reports)
@@ -84,7 +84,7 @@
 						<b>Airtank temperature: </b>[tank_temperature]&deg;K|[tank_temperature - T0C]&deg;C<br>
 						<b>Cabin pressure: </b>[cabin_pressure>WARNING_HIGH_PRESSURE ? "<span class='danger'>[cabin_pressure]</span>": cabin_pressure]kPa<br>
 						<b>Cabin temperature: </b> [return_temperature()]&deg;K|[return_temperature() - T0C]&deg;C<br>
-						[dna_lock?"<b>DNA-locked:</b><br> <span style='font-size:10px;letter-spacing:-1px;'>[dna_lock]</span> \[<a href='?src=\ref[src];reset_dna=1'>Reset</a>\]<br>":""]<br>
+						[dna_lock?"<b>DNA-locked:</b><br> <span style='font-size:10px;letter-spacing:-1px;'>[dna_lock]</span> \[<a href='?src=[REF(src)];reset_dna=1'>Reset</a>\]<br>":""]<br>
 						[thrusters_action.owner ? "<b>Thrusters: </b> [thrusters_active ? "Enabled" : "Disabled"]<br>" : ""]
 						[defense_action.owner ? "<b>Defence Mode: </b> [defence_mode ? "Enabled" : "Disabled"]<br>" : ""]
 						[overload_action.owner ? "<b>Leg Actuators Overload: </b> [leg_overload_mode ? "Enabled" : "Disabled"]<br>" : ""]
@@ -100,25 +100,25 @@
 						<div class='header'>Electronics</div>
 						<div class='links'>
 						<b>Radio settings:</b><br>
-						Microphone: <a href='?src=\ref[src];rmictoggle=1'><span id="rmicstate">[radio.broadcasting?"Engaged":"Disengaged"]</span></a><br>
-						Speaker: <a href='?src=\ref[src];rspktoggle=1'><span id="rspkstate">[radio.listening?"Engaged":"Disengaged"]</span></a><br>
+						Microphone: <a href='?src=[REF(src)];rmictoggle=1'><span id="rmicstate">[radio.broadcasting?"Engaged":"Disengaged"]</span></a><br>
+						Speaker: <a href='?src=[REF(src)];rspktoggle=1'><span id="rspkstate">[radio.listening?"Engaged":"Disengaged"]</span></a><br>
 						Frequency:
-						<a href='?src=\ref[src];rfreq=-10'>-</a>
-						<a href='?src=\ref[src];rfreq=-2'>-</a>
+						<a href='?src=[REF(src)];rfreq=-10'>-</a>
+						<a href='?src=[REF(src)];rfreq=-2'>-</a>
 						<span id="rfreq">[format_frequency(radio.frequency)]</span>
-						<a href='?src=\ref[src];rfreq=2'>+</a>
-						<a href='?src=\ref[src];rfreq=10'>+</a><br>
+						<a href='?src=[REF(src)];rfreq=2'>+</a>
+						<a href='?src=[REF(src)];rfreq=10'>+</a><br>
 						</div>
 						</div>
 						<div class='wr'>
 						<div class='header'>Permissions & Logging</div>
 						<div class='links'>
-						<a href='?src=\ref[src];toggle_id_upload=1'><span id='t_id_upload'>[add_req_access?"L":"Unl"]ock ID upload panel</span></a><br>
-						<a href='?src=\ref[src];toggle_maint_access=1'><span id='t_maint_access'>[maint_access?"Forbid":"Permit"] maintenance protocols</span></a><br>
-						<a href='?src=\ref[src];toggle_port_connection=1'><span id='t_port_connection'>[internal_tank.connected_port?"Disconnect from":"Connect to"] gas port</span></a><br>
-						<a href='?src=\ref[src];dna_lock=1'>DNA-lock</a><br>
-						<a href='?src=\ref[src];view_log=1'>View internal log</a><br>
-						<a href='?src=\ref[src];change_name=1'>Change exosuit name</a><br>
+						<a href='?src=[REF(src)];toggle_id_upload=1'><span id='t_id_upload'>[add_req_access?"L":"Unl"]ock ID upload panel</span></a><br>
+						<a href='?src=[REF(src)];toggle_maint_access=1'><span id='t_maint_access'>[maint_access?"Forbid":"Permit"] maintenance protocols</span></a><br>
+						<a href='?src=[REF(src)];toggle_port_connection=1'><span id='t_port_connection'>[internal_tank.connected_port?"Disconnect from":"Connect to"] gas port</span></a><br>
+						<a href='?src=[REF(src)];dna_lock=1'>DNA-lock</a><br>
+						<a href='?src=[REF(src)];view_log=1'>View internal log</a><br>
+						<a href='?src=[REF(src)];change_name=1'>Change exosuit name</a><br>
 						</div>
 						</div>
 						<div id='equipment_menu'>[get_equipment_menu()]</div>
@@ -133,7 +133,7 @@
 						<div class='links'>"}
 		for(var/X in equipment)
 			var/obj/item/mecha_parts/mecha_equipment/W = X
-			. += "[W.name] <a href='?src=\ref[W];detach=1'>Detach</a><br>"
+			. += "[W.name] <a href='?src=[REF(W)];detach=1'>Detach</a><br>"
 		. += "<b>Available equipment slots:</b> [max_equip-equipment.len]"
 		. += "</div></div>"
 
@@ -143,7 +143,7 @@
 		return
 	. = "<b>Equipment:</b><div style=\"margin-left: 15px;\">"
 	for(var/obj/item/mecha_parts/mecha_equipment/MT in equipment)
-		. += "<div id='\ref[MT]'>[MT.get_equip_info()]</div>"
+		. += "<div id='[REF(MT)]'>[MT.get_equip_info()]</div>"
 	. += "</div>"
 
 
@@ -171,7 +171,7 @@
 						<body>
 						<h1>Following keycodes are present in this system:</h1>"}
 	for(var/a in operation_req_access)
-		. += "[get_access_desc(a)] - <a href='?src=\ref[src];del_req_access=[a];user=\ref[user];id_card=\ref[id_card]'>Delete</a><br>"
+		. += "[get_access_desc(a)] - <a href='?src=[REF(src)];del_req_access=[a];user=[REF(user)];id_card=[REF(id_card)]'>Delete</a><br>"
 	. += "<hr><h1>Following keycodes were detected on portable device:</h1>"
 	for(var/a in id_card.access)
 		if(a in operation_req_access)
@@ -179,8 +179,8 @@
 		var/a_name = get_access_desc(a)
 		if(!a_name)
 			continue //there's some strange access without a name
-		. += "[a_name] - <a href='?src=\ref[src];add_req_access=[a];user=\ref[user];id_card=\ref[id_card]'>Add</a><br>"
-	. += "<hr><a href='?src=\ref[src];finish_req_access=1;user=\ref[user]'>Finish</a> "
+		. += "[a_name] - <a href='?src=[REF(src)];add_req_access=[a];user=[REF(user)];id_card=[REF(id_card)]'>Add</a><br>"
+	. += "<hr><a href='?src=[REF(src)];finish_req_access=1;user=[REF(user)]'>Finish</a> "
 	. += "<span class='danger'>(Warning! The ID upload panel will be locked. It can be unlocked only through Exosuit Interface.)</span>"
 	. += "</body></html>"
 	user << browse(., "window=exosuit_add_access")
@@ -198,9 +198,9 @@
 						</style>
 						</head>
 						<body>
-						[add_req_access?"<a href='?src=\ref[src];req_access=1;id_card=\ref[id_card];user=\ref[user]'>Edit operation keycodes</a>":null]
-						[maint_access?"<a href='?src=\ref[src];maint_access=1;id_card=\ref[id_card];user=\ref[user]'>Initiate maintenance protocol</a>":null]
-						[(state>0) ?"<a href='?src=\ref[src];set_internal_tank_valve=1;user=\ref[user]'>Set Cabin Air Pressure</a>":null]
+						[add_req_access?"<a href='?src=[REF(src)];req_access=1;id_card=[REF(id_card)];user=[REF(user)]'>Edit operation keycodes</a>":null]
+						[maint_access?"<a href='?src=[REF(src)];maint_access=1;id_card=[REF(id_card)];user=[REF(user)]'>Initiate maintenance protocol</a>":null]
+						[(state>0) ?"<a href='?src=[REF(src)];set_internal_tank_valve=1;user=[REF(user)]'>Set Cabin Air Pressure</a>":null]
 						</body>
 						</html>"}
 	user << browse(., "window=exosuit_maint_console")

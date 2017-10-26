@@ -171,18 +171,18 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/dat = "<!DOCTYPE html><html><head><title>Personal Data Assistant</title><link href=\"https://fonts.googleapis.com/css?family=Orbitron|Share+Tech+Mono|VT323\" rel=\"stylesheet\"></head><body bgcolor=\"" + background_color + "\"><style>body{" + font_mode + "}ul,ol{list-style-type: none;}a, a:link, a:visited, a:active, a:hover { color: #000000;text-decoration:none; }img {border-style:none;}a img{padding-right: 9px;}</style>"
 
 
-	dat += "<a href='byond://?src=\ref[src];choice=Refresh'><img src=pda_refresh.png>Refresh</a>"
+	dat += "<a href='byond://?src=[REF(src)];choice=Refresh'><img src=pda_refresh.png>Refresh</a>"
 
 	if ((!isnull(cartridge)) && (mode == 0))
-		dat += " | <a href='byond://?src=\ref[src];choice=Eject'><img src=pda_eject.png>Eject [cartridge]</a>"
+		dat += " | <a href='byond://?src=[REF(src)];choice=Eject'><img src=pda_eject.png>Eject [cartridge]</a>"
 	if (mode)
-		dat += " | <a href='byond://?src=\ref[src];choice=Return'><img src=pda_menu.png>Return</a>"
+		dat += " | <a href='byond://?src=[REF(src)];choice=Return'><img src=pda_menu.png>Return</a>"
 
 	if (mode == 0)
 		dat += "<div align=\"center\">"
-		dat += "<br><a href='byond://?src=\ref[src];choice=Toggle_Font'>Toggle Font</a>"
-		dat += " | <a href='byond://?src=\ref[src];choice=Change_Color'>Change Color</a>"
-		dat += " | <a href='byond://?src=\ref[src];choice=Toggle_Underline'>Toggle Underline</a>" //underline button
+		dat += "<br><a href='byond://?src=[REF(src)];choice=Toggle_Font'>Toggle Font</a>"
+		dat += " | <a href='byond://?src=[REF(src)];choice=Change_Color'>Change Color</a>"
+		dat += " | <a href='byond://?src=[REF(src)];choice=Toggle_Underline'>Toggle Underline</a>" //underline button
 
 		dat += "</div>"
 
@@ -190,14 +190,14 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	if (!owner)
 		dat += "Warning: No owner information entered.  Please swipe card.<br><br>"
-		dat += "<a href='byond://?src=\ref[src];choice=Refresh'><img src=pda_refresh.png>Retry</a>"
+		dat += "<a href='byond://?src=[REF(src)];choice=Refresh'><img src=pda_refresh.png>Retry</a>"
 	else
 		switch (mode)
 			if (0)
 				dat += "<h2>PERSONAL DATA ASSISTANT v.1.2</h2>"
 				dat += "Owner: [owner], [ownjob]<br>"
-				dat += text("ID: <a href='?src=\ref[src];choice=Authenticate'>[id ? "[id.registered_name], [id.assignment]" : "----------"]")
-				dat += text("<br><a href='?src=\ref[src];choice=UpdateInfo'>[id ? "Update PDA Info" : ""]</A><br><br>")
+				dat += text("ID: <a href='?src=[REF(src)];choice=Authenticate'>[id ? "[id.registered_name], [id.assignment]" : "----------"]")
+				dat += text("<br><a href='?src=[REF(src)];choice=UpdateInfo'>[id ? "Update PDA Info" : ""]</A><br><br>")
 
 				dat += "[worldtime2text()]<br>" //:[world.time / 100 % 6][world.time / 100 % 10]"
 				dat += "[time2text(world.realtime, "MMM DD")] [GLOB.year_integer+540]"
@@ -206,38 +206,38 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 				dat += "<h4>General Functions</h4>"
 				dat += "<ul>"
-				dat += "<li><a href='byond://?src=\ref[src];choice=1'><img src=pda_notes.png>Notekeeper</a></li>"
-				dat += "<li><a href='byond://?src=\ref[src];choice=2'><img src=pda_mail.png>Messenger</a></li>"
+				dat += "<li><a href='byond://?src=[REF(src)];choice=1'><img src=pda_notes.png>Notekeeper</a></li>"
+				dat += "<li><a href='byond://?src=[REF(src)];choice=2'><img src=pda_mail.png>Messenger</a></li>"
 
 				if (cartridge)
 					if (cartridge.access & CART_CLOWN)
-						dat += "<li><a href='byond://?src=\ref[src];choice=Honk'><img src=pda_honk.png>Honk Synthesizer</a></li>"
-						dat += "<li><a href='byond://?src=\ref[src];choice=Trombone'><img src=pda_honk.png>Sad Trombone</a></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=Honk'><img src=pda_honk.png>Honk Synthesizer</a></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=Trombone'><img src=pda_honk.png>Sad Trombone</a></li>"
 					if (cartridge.access & CART_MANIFEST)
-						dat += "<li><a href='byond://?src=\ref[src];choice=41'><img src=pda_notes.png>View Crew Manifest</a></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=41'><img src=pda_notes.png>View Crew Manifest</a></li>"
 					if(cartridge.access & CART_STATUS_DISPLAY)
-						dat += "<li><a href='byond://?src=\ref[src];choice=42'><img src=pda_status.png>Set Status Display</a></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=42'><img src=pda_status.png>Set Status Display</a></li>"
 					dat += "</ul>"
 					if (cartridge.access & CART_ENGINE)
 						dat += "<h4>Engineering Functions</h4>"
 						dat += "<ul>"
-						dat += "<li><a href='byond://?src=\ref[src];choice=43'><img src=pda_power.png>Power Monitor</a></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=43'><img src=pda_power.png>Power Monitor</a></li>"
 						dat += "</ul>"
 					if (cartridge.access & CART_MEDICAL)
 						dat += "<h4>Medical Functions</h4>"
 						dat += "<ul>"
-						dat += "<li><a href='byond://?src=\ref[src];choice=44'><img src=pda_medical.png>Medical Records</a></li>"
-						dat += "<li><a href='byond://?src=\ref[src];choice=Medical Scan'><img src=pda_scanner.png>[scanmode == 1 ? "Disable" : "Enable"] Medical Scanner</a></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=44'><img src=pda_medical.png>Medical Records</a></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=Medical Scan'><img src=pda_scanner.png>[scanmode == 1 ? "Disable" : "Enable"] Medical Scanner</a></li>"
 						dat += "</ul>"
 					if (cartridge.access & CART_SECURITY)
 						dat += "<h4>Security Functions</h4>"
 						dat += "<ul>"
-						dat += "<li><a href='byond://?src=\ref[src];choice=45'><img src=pda_cuffs.png>Security Records</A></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=45'><img src=pda_cuffs.png>Security Records</A></li>"
 						dat += "</ul>"
 					if(cartridge.access & CART_QUARTERMASTER)
 						dat += "<h4>Quartermaster Functions:</h4>"
 						dat += "<ul>"
-						dat += "<li><a href='byond://?src=\ref[src];choice=47'><img src=pda_crate.png>Supply Records</A></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=47'><img src=pda_crate.png>Supply Records</A></li>"
 						dat += "</ul>"
 				dat += "</ul>"
 
@@ -245,47 +245,47 @@ GLOBAL_LIST_EMPTY(PDAs)
 				dat += "<ul>"
 				if (cartridge)
 					if(cartridge.bot_access_flags)
-						dat += "<li><a href='byond://?src=\ref[src];choice=54'><img src=pda_medbot.png>Bots Access</a></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=54'><img src=pda_medbot.png>Bots Access</a></li>"
 					if (cartridge.access & CART_JANITOR)
-						dat += "<li><a href='byond://?src=\ref[src];choice=49'><img src=pda_bucket.png>Custodial Locator</a></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=49'><img src=pda_bucket.png>Custodial Locator</a></li>"
 					if (istype(cartridge.radio, /obj/item/radio/integrated/signal))
-						dat += "<li><a href='byond://?src=\ref[src];choice=40'><img src=pda_signaler.png>Signaler System</a></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=40'><img src=pda_signaler.png>Signaler System</a></li>"
 					if (cartridge.access & CART_NEWSCASTER)
-						dat += "<li><a href='byond://?src=\ref[src];choice=53'><img src=pda_notes.png>Newscaster Access </a></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=53'><img src=pda_notes.png>Newscaster Access </a></li>"
 					if (cartridge.access & CART_REAGENT_SCANNER)
-						dat += "<li><a href='byond://?src=\ref[src];choice=Reagent Scan'><img src=pda_reagent.png>[scanmode == 3 ? "Disable" : "Enable"] Reagent Scanner</a></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=Reagent Scan'><img src=pda_reagent.png>[scanmode == 3 ? "Disable" : "Enable"] Reagent Scanner</a></li>"
 					if (cartridge.access & CART_ENGINE)
-						dat += "<li><a href='byond://?src=\ref[src];choice=Halogen Counter'><img src=pda_reagent.png>[scanmode == 4 ? "Disable" : "Enable"] Halogen Counter</a></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=Halogen Counter'><img src=pda_reagent.png>[scanmode == 4 ? "Disable" : "Enable"] Halogen Counter</a></li>"
 					if (cartridge.access & CART_ATMOS)
-						dat += "<li><a href='byond://?src=\ref[src];choice=Gas Scan'><img src=pda_reagent.png>[scanmode == 5 ? "Disable" : "Enable"] Gas Scanner</a></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=Gas Scan'><img src=pda_reagent.png>[scanmode == 5 ? "Disable" : "Enable"] Gas Scanner</a></li>"
 					if (cartridge.access & CART_REMOTE_DOOR)
-						dat += "<li><a href='byond://?src=\ref[src];choice=Toggle Door'><img src=pda_rdoor.png>Toggle Remote Door</a></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=Toggle Door'><img src=pda_rdoor.png>Toggle Remote Door</a></li>"
 					if (cartridge.access & CART_DRONEPHONE)
-						dat += "<li><a href='byond://?src=\ref[src];choice=Drone Phone'><img src=pda_dronephone.png>Drone Phone</a></li>"
-				dat += "<li><a href='byond://?src=\ref[src];choice=3'><img src=pda_atmos.png>Atmospheric Scan</a></li>"
-				dat += "<li><a href='byond://?src=\ref[src];choice=Light'><img src=pda_flashlight.png>[fon ? "Disable" : "Enable"] Flashlight</a></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=Drone Phone'><img src=pda_dronephone.png>Drone Phone</a></li>"
+				dat += "<li><a href='byond://?src=[REF(src)];choice=3'><img src=pda_atmos.png>Atmospheric Scan</a></li>"
+				dat += "<li><a href='byond://?src=[REF(src)];choice=Light'><img src=pda_flashlight.png>[fon ? "Disable" : "Enable"] Flashlight</a></li>"
 				if (pai)
 					if(pai.loc != src)
 						pai = null
 						update_icon()
 					else
-						dat += "<li><a href='byond://?src=\ref[src];choice=pai;option=1'>pAI Device Configuration</a></li>"
-						dat += "<li><a href='byond://?src=\ref[src];choice=pai;option=2'>Eject pAI Device</a></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=pai;option=1'>pAI Device Configuration</a></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=pai;option=2'>Eject pAI Device</a></li>"
 				dat += "</ul>"
 
 			if (1)
 				dat += "<h4><img src=pda_notes.png> Notekeeper V2.2</h4>"
-				dat += "<a href='byond://?src=\ref[src];choice=Edit'>Edit</a><br>"
+				dat += "<a href='byond://?src=[REF(src)];choice=Edit'>Edit</a><br>"
 				if(notescanned)
 					dat += "(This is a scanned image, editing it may cause some text formatting to change.)<br>"
 				dat += "<HR><font face=\"[PEN_FONT]\">[(!notehtml ? note : notehtml)]</font>"
 
 			if (2)
 				dat += "<h4><img src=pda_mail.png> SpaceMessenger V3.9.6</h4>"
-				dat += "<a href='byond://?src=\ref[src];choice=Toggle Ringer'><img src=pda_bell.png>Ringer: [silent == 1 ? "Off" : "On"]</a> | "
-				dat += "<a href='byond://?src=\ref[src];choice=Toggle Messenger'><img src=pda_mail.png>Send / Receive: [toff == 1 ? "Off" : "On"]</a> | "
-				dat += "<a href='byond://?src=\ref[src];choice=Ringtone'><img src=pda_bell.png>Set Ringtone</a> | "
-				dat += "<a href='byond://?src=\ref[src];choice=21'><img src=pda_mail.png>Messages</a><br>"
+				dat += "<a href='byond://?src=[REF(src)];choice=Toggle Ringer'><img src=pda_bell.png>Ringer: [silent == 1 ? "Off" : "On"]</a> | "
+				dat += "<a href='byond://?src=[REF(src)];choice=Toggle Messenger'><img src=pda_mail.png>Send / Receive: [toff == 1 ? "Off" : "On"]</a> | "
+				dat += "<a href='byond://?src=[REF(src)];choice=Ringtone'><img src=pda_bell.png>Set Ringtone</a> | "
+				dat += "<a href='byond://?src=[REF(src)];choice=21'><img src=pda_mail.png>Messages</a><br>"
 
 				if(cartridge)
 					dat += cartridge.message_header()
@@ -299,7 +299,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 					for (var/obj/item/device/pda/P in sortNames(get_viewable_pdas()))
 						if (P == src)
 							continue
-						dat += "<li><a href='byond://?src=\ref[src];choice=Message;target=\ref[P]'>[P]</a>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=Message;target=[REF(P)]'>[P]</a>"
 						if(cartridge)
 							dat += cartridge.message_special(P)
 						dat += "</li>"
@@ -308,11 +308,11 @@ GLOBAL_LIST_EMPTY(PDAs)
 				if (count == 0)
 					dat += "None detected.<br>"
 				else if(cartridge && cartridge.spam_enabled)
-					dat += "<a href='byond://?src=\ref[src];choice=MessageAll'>Send To All</a>"
+					dat += "<a href='byond://?src=[REF(src)];choice=MessageAll'>Send To All</a>"
 
 			if(21)
 				dat += "<h4><img src=pda_mail.png> SpaceMessenger V3.9.6</h4>"
-				dat += "<a href='byond://?src=\ref[src];choice=Clear'><img src=pda_blank.png>Clear Messages</a>"
+				dat += "<a href='byond://?src=[REF(src)];choice=Clear'><img src=pda_blank.png>Clear Messages</a>"
 
 				dat += "<h4><img src=pda_mail.png> Messages</h4>"
 
@@ -637,7 +637,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	tnote += "<i><b>&rarr; To [multiple ? "Everyone" : msg.recipient]:</b></i><br>[msg.message][msg.get_photo_ref()]<br>"
 
 /obj/item/device/pda/proc/show_recieved_message(datum/data_pda_msg/msg,obj/item/device/pda/source)
-	tnote += "<i><b>&larr; From <a href='byond://?src=\ref[src];choice=Message;target=\ref[source]'>[source.owner]</a> ([source.ownjob]):</b></i><br>[msg.message][msg.get_photo_ref()]<br>"
+	tnote += "<i><b>&larr; From <a href='byond://?src=[REF(src)];choice=Message;target=[REF(source)]'>[source.owner]</a> ([source.ownjob]):</b></i><br>[msg.message][msg.get_photo_ref()]<br>"
 
 	if (!silent)
 		playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
@@ -655,10 +655,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 		var/hrefstart
 		var/hrefend
 		if (isAI(L))
-			hrefstart = "<a href='?src=\ref[L];track=[html_encode(source.owner)]'>"
+			hrefstart = "<a href='?src=[REF(L)];track=[html_encode(source.owner)]'>"
 			hrefend = "</a>"
 
-		to_chat(L, "[icon2html(src)] <b>Message from [hrefstart][source.owner] ([source.ownjob])[hrefend], </b>\"[msg.message]\"[msg.get_photo_ref()] (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[source]'>Reply</a>)")
+		to_chat(L, "[icon2html(src)] <b>Message from [hrefstart][source.owner] ([source.ownjob])[hrefend], </b>\"[msg.message]\"[msg.get_photo_ref()] (<a href='byond://?src=[REF(src)];choice=Message;skiprefresh=1;target=[REF(source)]'>Reply</a>)")
 
 	update_icon()
 	add_overlay(icon_alert)

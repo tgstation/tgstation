@@ -1429,3 +1429,16 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	var/time_clock = num2hex(TICK_DELTA_TO_MS(world.tick_usage), 3)
 
 	return "{[time_high]-[time_mid]-[GUID_VERSION][time_low]-[GUID_VARIANT][time_clock]-[node_id]}"
+
+// \ref behaviour got changed in 512 so this is necesary to replicate old behaviour.
+// If it ever becomes necesary to get a more performant REF(), this lies here in wait
+// #define REF(thing) (thing && istype(thing, /datum) && thing:use_tag && thing:tag ? "[thing:tag]" : "\ref[thing]")
+/proc/REF(input)
+	if(istype(input, /datum))
+		var/datum/thing = input
+		if(thing.use_tag)
+			if(!thing.tag)
+				WARNING("A ref was requested of an object with use_tag set but no tag: [thing]")
+			else
+				return thing.tag
+	return "\ref[input]"
