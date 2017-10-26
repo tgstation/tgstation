@@ -1,0 +1,6 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - balance: "Clockwork marauders now move more slowly below 40% health."
+  - balance: "Instead of a 40% chance (or more) chance to block projectiles, clockwork marauders now have three fixed 100% blocks; after using those three, they cannot block anymore without avoiding projectiles for ten seconds. This number increases to four if war is declared."
+  - balance: "Projectiles that deal no damage DO reduce marauders' shield health. Use disabler shots to open them up, then use lasers to go for the kill!"
