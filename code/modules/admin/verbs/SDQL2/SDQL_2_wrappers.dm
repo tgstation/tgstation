@@ -54,6 +54,9 @@
 
 /proc/_locate(X, Y, Z)
 	if (isnull(Y)) // Assuming that it's only a single-argument call.
+		if(X == "\ref[world]")
+			admin_log_private("[key_name(usr)] tried to obtain a world reference")
+			return
 		return locate(X)
 
 	return locate(X, Y, Z)
