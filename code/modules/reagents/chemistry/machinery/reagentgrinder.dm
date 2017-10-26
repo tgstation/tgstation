@@ -30,6 +30,7 @@
 			/obj/item/stack/sheet/mineral/silver = list("silver" = 20),
 			/obj/item/stack/sheet/mineral/gold = list("gold" = 20),
 			/obj/item/stack/sheet/bluespace_crystal = list("bluespace" = 20),
+			/obj/item/stack/cable_coil = list ("copper" = 5),
 			/obj/item/ore/bluespace_crystal = list("bluespace" = 20),
 			/obj/item/grown/nettle/basic = list("sacid" = 0),
 			/obj/item/grown/nettle/death = list("facid" = 0, "sacid" = 0),
@@ -51,7 +52,6 @@
 			/obj/item/reagent_containers/food/snacks/grown/tea/astra = list("teapowder" = 0, "salglu_solution" = 0),
 			/obj/item/reagent_containers/food/snacks/grown/tea = list("teapowder" = 0),
 			//Stuff that doesn't quite fit in the other categories
-			/obj/structure/cable = list ("copper" = 5),
 			/obj/item/electronics = list ("iron" = 10, "silicon" = 10),
 			/obj/item/circuitboard = list ("silicon" = 20, "sacid" = 0.5), // Retrieving acid this way is extremely inefficient
 			/obj/item/match = list ("phosphorus" = 2),
@@ -62,6 +62,8 @@
 			/obj/item/device/flashlight/flare = list ("sulfur" = 15),
 			/obj/item/device/flashlight/glowstick = list ("phenol" = 15, "hydrodgen" = 10, "oxygen" = 5),
 			/obj/item/stock_parts/cell = list ("lithium" = 15, "iron" = 5, "silicon" = 5),
+			/obj/item/soap = list ("lye" = 10),
+			/obj/item/device/analyzer = list ("mercury" = 5, "iron" = 5, "silicon" = 5),
 			//All types that you can put into the grinder to transfer the reagents to the beaker. !Put all recipes above this.!
 			/obj/item/slime_extract = list(),
 			/obj/item/reagent_containers/pill = list(),
