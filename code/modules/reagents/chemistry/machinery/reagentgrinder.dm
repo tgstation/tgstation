@@ -70,6 +70,8 @@
 			/obj/item/light = list ("silicon" = 5, "nitrogen" = 10), //Nitrogen is used as a cheaper alternative to argon in incandescent lighbulbs
 			/obj/item/cigbutt/ = list ("carbon" = 2),
 			/obj/item/trash/coal = list ("carbon" = 20),
+			/obj/item/stack/medical/bruise_pack = list ("styptic_powder" = 5),
+			/obj/item/stack/medical/ointment - list ("silver_sulfadiazine" = 5),
 			//All types that you can put into the grinder to transfer the reagents to the beaker. !Put all recipes above this.!
 			/obj/item/slime_extract = list(),
 			/obj/item/reagent_containers/pill = list(),
