@@ -66,7 +66,7 @@
 			/obj/item/soap = list ("lye" = 10),
 			/obj/item/device/analyzer = list ("mercury" = 5, "iron" = 5, "silicon" = 5),
 			/obj/item/lighter = list ("iron" = 1, "weldingfuel" = 5, "oil" = 5),
-			/obj/item/light = list ("silicon" = 5, "nitrogen" = 10), //Nitrogen is used as a cheaper alternative to argo in incandescent lighbulbs
+			/obj/item/light = list ("silicon" = 5, "nitrogen" = 10), //Nitrogen is used as a cheaper alternative to argon in incandescent lighbulbs
 			//All types that you can put into the grinder to transfer the reagents to the beaker. !Put all recipes above this.!
 			/obj/item/slime_extract = list(),
 			/obj/item/reagent_containers/pill = list(),
