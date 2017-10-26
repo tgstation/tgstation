@@ -4,7 +4,7 @@
     var/list/datum_components //for /datum/components
     var/ui_screen = "home"  //for tgui
 	var/var_edited = FALSE //Warrenty void if seal is broken
-	var/fingerprintslast = null
+	var/fingerprintslast
 
 #ifdef TESTING
     var/running_find_references
