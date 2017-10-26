@@ -114,7 +114,7 @@
 /obj/item/melee/baton/proc/baton_stun_hippie_makeshift(mob/living/L, mob/user)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
-		if(H.check_shields(0, "[user]'s [name]", src, MELEE_ATTACK)) //No message; check_shields() handles that
+		if(H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK)) //No message; check_shields() handles that
 			playsound(L, 'sound/weapons/Genhit.ogg', 50, 1)
 			return 0
 	if(iscyborg(loc))
@@ -143,5 +143,48 @@
 		H.forcesay(GLOB.hit_appends)
 
 	return 1
+
+/obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user)
+	if(status && user.disabilities & CLUMSY && prob(50))
+		user.visible_message("<span class='danger'>[user] accidentally hits themself with [src]!</span>", \
+							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
+		user.Knockdown(stamforce)
+		deductcharge(hitcost)
+		return
+
+	if(iscyborg(M))
+		..()
+		return
+
+
+	if(ishuman(M))
+		var/mob/living/carbon/human/L = M
+		if(check_martial_counter(L, user))
+			return
+
+	if(user.a_intent != INTENT_HARM)
+		if(status)
+			if(istype(src, /obj/item/melee/baton/cattleprod/hippie_cattleprod))
+				if(baton_stun_hippie_makeshift(M, user))
+					user.do_attack_animation(M)
+					return
+			else
+				if(baton_stun(M, user))
+					user.do_attack_animation(M)
+					return
+		else
+			M.visible_message("<span class='warning'>[user] has prodded [M] with [src]. Luckily it was off.</span>", \
+							"<span class='warning'>[user] has prodded you with [src]. Luckily it was off</span>")
+	else
+		if(status)
+			if(istype(src, /obj/item/melee/baton/cattleprod/hippie_cattleprod))
+				baton_stun_hippie_makeshift(M, user)
+			else
+				baton_stun(M, user)
+		..()
+
+
+
+
 
 #undef MAKESHIFT_BATON_CD
