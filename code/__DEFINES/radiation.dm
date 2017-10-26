@@ -9,7 +9,7 @@ Ask ninjanomnom if they're around
 
 // apply_effect((amount*RAD_MOB_COEFFICIENT)/max(1, (radiation**2)*RAD_OVERDOSE_REDUCTION), IRRADIATE, blocked)
 #define RAD_MOB_COEFFICIENT 0.20					// Radiation applied is multiplied by this
-#define RAD_MOB_SKIN_PROTECTION (1/RAD_MOB_COEFFICIENT)+RAD_BACKGROUND_RADIATION
+#define RAD_MOB_SKIN_PROTECTION ((1/RAD_MOB_COEFFICIENT)+RAD_BACKGROUND_RADIATION)
 
 #define RAD_LOSS_PER_TICK 0.5
 #define RAD_TOX_COEFFICIENT 0.05					// Toxin damage per tick coefficient
@@ -40,9 +40,9 @@ Ask ninjanomnom if they're around
 
 // WARNING: The deines below could have disastrous consequences if tweaked incorrectly. See: The great SM purge of Oct.6.2017
 // contamination_chance = 		(strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_CHANCE_COEFFICIENT * min(1/(steps*RAD_DISTANCE_COEFFICIENT), 1))
-// contamination_strength = 	(strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_STR_COEFFICIENT * min(1/(steps*RAD_DISTANCE_COEFFICIENT), 1)
+// contamination_strength = 	(strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_STR_COEFFICIENT
 #define RAD_MINIMUM_CONTAMINATION 350				// How strong does a radiation wave have to be to contaminate objects
-#define RAD_CONTAMINATION_CHANCE_COEFFICIENT 0.0075	// Higher means higher strength scaling contamination chance
+#define RAD_CONTAMINATION_CHANCE_COEFFICIENT 0.005	// Higher means higher strength scaling contamination chance
 #define RAD_CONTAMINATION_STR_COEFFICIENT 0.3		// Higher means higher strength scaling contamination strength
 #define RAD_DISTANCE_COEFFICIENT 1					// Lower means further rad spread
 

@@ -27,12 +27,8 @@
 		CRASH("Something that wasn't an atom was given /datum/component/radioactive")
 		return
 
-	var/static/list/warned = list()
-	var/ref = "\ref[parent]"
-	if(strength > RAD_MINIMUM_CONTAMINATION && !warned[ref])
-		warned[ref] = TRUE
-		var/atom/master = parent
-		message_admins("[master][ADMIN_JMP(master)][ADMIN_VV(master)] has become contaminated by [source] and has a strength of [strength]. It is able to contaminate other objects")
+	if(strength > RAD_MINIMUM_CONTAMINATION)
+		SSradiation.warn(src)
 
 	START_PROCESSING(SSradiation, src)
 

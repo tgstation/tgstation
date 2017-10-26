@@ -24,6 +24,8 @@
 			danger = 3
 		if(RAD_GEIGER_HIGH to INFINITY)
 			danger = 4
+		else
+			return null
 	return ..(looped, mid_sounds[danger])
 
 /datum/looping_sound/geiger/stop()

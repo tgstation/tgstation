@@ -45,6 +45,7 @@
 	..()
 	if(suit)
 		suit.RemoveHelmet()
+		soundloop.stop(user)
 
 /obj/item/clothing/head/helmet/space/hardsuit/item_action_slot_check(slot)
 	if(slot == slot_head)
@@ -55,8 +56,11 @@
 	if(slot != slot_head)
 		if(suit)
 			suit.RemoveHelmet()
+			soundloop.stop(user)
 		else
 			qdel(src)
+	else
+		soundloop.start(user)
 
 /obj/item/clothing/head/helmet/space/hardsuit/proc/display_visor_message(var/msg)
 	var/mob/wearer = loc
@@ -68,21 +72,10 @@
 	rad_count += severity
 
 /obj/item/clothing/head/helmet/space/hardsuit/process()
-	if(!istype(loc, /mob))
-		grace_count = 0
-		soundloop.stop()
-		return
-	var/mob/user = loc
-	if(!user.client)
-		grace_count = 0
-		soundloop.stop()
-		return
-	soundloop.output_atoms |= user
 	if(!rad_count)
 		grace_count++
 		if(grace_count == 2)
 			soundloop.last_radiation = 0
-			soundloop.stop()
 		return
 
 	grace_count = 0
@@ -91,7 +84,6 @@
 	rad_count = 0
 
 	soundloop.last_radiation = rad_record
-	soundloop.start()
 
 /obj/item/clothing/head/helmet/space/hardsuit/emp_act(severity)
 	..()

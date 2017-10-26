@@ -44,13 +44,17 @@
 	output_atoms = null
 	return ..()
 
-/datum/looping_sound/proc/start()
+/datum/looping_sound/proc/start(atom/add_thing)
+	if(add_thing)
+		output_atoms |= add_thing
 	if(!muted)
 		return
 	muted = FALSE
 	on_start()
 
-/datum/looping_sound/proc/stop()
+/datum/looping_sound/proc/stop(atom/remove_thing)
+	if(remove_thing)
+		output_atoms -= remove_thing
 	if(muted)
 		return
 	muted = TRUE
@@ -66,10 +70,12 @@
 /datum/looping_sound/proc/play(soundfile)
 	var/list/atoms_cache = output_atoms
 	var/sound/S = sound(soundfile)
+	if(direct)
+		S.channel = open_sound_channel()
+		S.volume = volume
 	for(var/i in 1 to atoms_cache.len)
 		var/atom/thing = atoms_cache[i]
 		if(direct)
-			S.volume = volume
 			SEND_SOUND(thing, S)
 		else
 			playsound(thing, S, volume)
