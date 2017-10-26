@@ -164,7 +164,7 @@ SUBSYSTEM_DEF(garbage)
 				#endif
 				var/type = D.type
 				var/datum/qdel_item/I = items[type]
-				testing("GC: -- \ref[D] | [type] was unable to be GC'd --")
+				testing("GC: -- [REF(D)] | [type] was unable to be GC'd --")
 				I.failures++
 			if (GC_QUEUE_HARDDELETE)
 				HardDelete(D)
@@ -194,7 +194,7 @@ SUBSYSTEM_DEF(garbage)
 		HardDelete(D)
 		return
 	var/gctime = world.time
-	var/refid = "\ref[D]"
+	var/refid = "[REF(D)]"
 
 	D.gc_destroyed = gctime
 	var/list/queue = queues[level]
@@ -211,7 +211,7 @@ SUBSYSTEM_DEF(garbage)
 	++delslasttick
 	++totaldels
 	var/type = D.type
-	var/refID = "\ref[D]"
+	var/refID = "[REF(D)]"
 
 	del(D)
 
@@ -395,10 +395,10 @@ SUBSYSTEM_DEF(garbage)
 			for(var/varname in D.vars)
 				var/variable = D.vars[varname]
 				if(variable == src)
-					testing("Found [src.type] \ref[src] in [D.type]'s [varname] var. [Xname]")
+					testing("Found [src.type] [REF(src)] in [D.type]'s [varname] var. [Xname]")
 				else if(islist(variable))
 					if(src in variable)
-						testing("Found [src.type] \ref[src] in [D.type]'s [varname] list var. Global: [Xname]")
+						testing("Found [src.type] [REF(src)] in [D.type]'s [varname] list var. Global: [Xname]")
 #ifdef GC_FAILURE_HARD_LOOKUP
 					for(var/I in variable)
 						DoSearchVar(I, TRUE)
@@ -407,7 +407,7 @@ SUBSYSTEM_DEF(garbage)
 #endif
 	else if(islist(X))
 		if(src in X)
-			testing("Found [src.type] \ref[src] in list [Xname].")
+			testing("Found [src.type] [REF(src)] in list [Xname].")
 #ifdef GC_FAILURE_HARD_LOOKUP
 		for(var/I in X)
 			DoSearchVar(I, Xname + ": list")

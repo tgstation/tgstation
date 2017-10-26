@@ -132,13 +132,13 @@
 
 	var/output =  {"<center><b>[Message]</b></center><br />
 		<div style="text-align:center">
-		<a style="font-size:large;float:[( Button2 ? "left" : "right" )]" href="?src=\ref[src];button=1">[Button1]</a>"}
+		<a style="font-size:large;float:[( Button2 ? "left" : "right" )]" href="?src=[REF(src)];button=1">[Button1]</a>"}
 
 	if (Button2)
-		output += {"<a style="font-size:large;[( Button3 ? "" : "float:right" )]" href="?src=\ref[src];button=2">[Button2]</a>"}
+		output += {"<a style="font-size:large;[( Button3 ? "" : "float:right" )]" href="?src=[REF(src)];button=2">[Button2]</a>"}
 
 	if (Button3)
-		output += {"<a style="font-size:large;float:right" href="?src=\ref[src];button=3">[Button3]</a>"}
+		output += {"<a style="font-size:large;float:right" href="?src=[REF(src)];button=3">[Button3]</a>"}
 
 	output += {"</div>"}
 
@@ -252,7 +252,7 @@
 	if(!user.client) return
 	var/param = "null"
 	if(ref)
-		param = "\ref[ref]"
+		param = "[REF(ref)]"
 
 	winset(user, windowid, "on-close=\".windowclose [param]\"")
 

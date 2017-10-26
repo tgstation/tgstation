@@ -29,13 +29,13 @@
 		dat += "<I>Using this contract, you may summon an apprentice to aid you on your mission.</I><BR>"
 		dat += "<I>If you are unable to establish contact with your apprentice, you can feed the contract back to the spellbook to refund your points.</I><BR>"
 		dat += "<B>Which school of magic is your apprentice studying?:</B><BR>"
-		dat += "<A href='byond://?src=\ref[src];school=destruction'>Destruction</A><BR>"
+		dat += "<A href='byond://?src=[REF(src)];school=destruction'>Destruction</A><BR>"
 		dat += "<I>Your apprentice is skilled in offensive magic. They know Magic Missile and Fireball.</I><BR>"
-		dat += "<A href='byond://?src=\ref[src];school=bluespace'>Bluespace Manipulation</A><BR>"
+		dat += "<A href='byond://?src=[REF(src)];school=bluespace'>Bluespace Manipulation</A><BR>"
 		dat += "<I>Your apprentice is able to defy physics, melting through solid objects and travelling great distances in the blink of an eye. They know Teleport and Ethereal Jaunt.</I><BR>"
-		dat += "<A href='byond://?src=\ref[src];school=healing'>Healing</A><BR>"
+		dat += "<A href='byond://?src=[REF(src)];school=healing'>Healing</A><BR>"
 		dat += "<I>Your apprentice is training to cast spells that will aid your survival. They know Forcewall and Charge and come with a Staff of Healing.</I><BR>"
-		dat += "<A href='byond://?src=\ref[src];school=robeless'>Robeless</A><BR>"
+		dat += "<A href='byond://?src=[REF(src)];school=robeless'>Robeless</A><BR>"
 		dat += "<I>Your apprentice is training to cast spells without their robes. They know Knock and Mindswap.</I><BR>"
 	user << browse(dat, "window=radio")
 	onclose(user, "radio")
