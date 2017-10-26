@@ -93,7 +93,7 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
     * Called before the new `parent` is assigned in `TakeComponent()`, after the remove signal, before the added signal
     * Allows the component to react to ownership transfers
 1. `/datum/component/proc/_RemoveNoSignal()` (private, final)
-    * Internal, clears the parent var and removes the component from the parents component list
+    * Internal, removes the component from the parents component list
 1. `/datum/component/proc/RegisterSignal(signal(string/list of strings), proc_ref(type), override(boolean))` (protected, final) (Consider removing for performance gainz)
     * If signal is a list it will be as if RegisterSignal was called for each of the entries with the same following arguments
     * Makes a component listen for the specified `signal` on it's `parent` datum.
