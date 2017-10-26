@@ -97,8 +97,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			L.death()
 			new/mob/living/simple_animal/hostile/blob/blobspore(T)
 		else
-			L.maxHealth = INFINITY
-			L.health = INFINITY
+			L.health = L.maxHealth
 
 		for(var/V in GLOB.sortedAreas)
 			var/area/A = V
