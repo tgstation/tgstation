@@ -20,5 +20,4 @@ Hint: This is usually Space_Station_13_areas.dm.
 	icon = 'hippiestation/icons/turf/areas.dmi'
 
 /area/space
-	ambientsounds = list('hippiestation/sound/ambience/ambispace.ogg','hippiestation/sound/ambience/space_stutter.ogg','hippiestation/sound/ambience/space_ambience.ogg',\
-				'hippiestation/sound/ambience/title1.ogg','hippiestation/sound/ambience/title2.ogg','hippiestation/sound/ambience/title3.ogg',)
+	ambientsounds = list('hippiestation/sound/ambience/ambispace.ogg','hippiestation/sound/ambience/space_stutter.ogg','hippiestation/sound/ambience/space_ambience.ogg')
