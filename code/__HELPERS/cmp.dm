@@ -58,3 +58,4 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 		. = B.failures - A.failures
 	if (!.)
 		. = B.qdels - A.qdels
+
