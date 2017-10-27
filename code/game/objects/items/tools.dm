@@ -461,7 +461,7 @@
 		var/amountNeeded = max_fuel - getFuel()
 		var/obj/item/reagent_containers/container = I
 		if(amountNeeded > 0 && container.reagents.has_reagent("welding_fuel"))
-			trans_id_to(src, "welding_fuel", amountNeeded)
+			container.reagents.trans_id_to(src, "welding_fuel", amountNeeded)
 	else
 		return ..()
 
