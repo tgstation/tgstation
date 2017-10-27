@@ -641,6 +641,7 @@
 #include "code\game\machinery\doors\door.dm"
 #include "code\game\machinery\doors\firedoor.dm"
 #include "code\game\machinery\doors\poddoor.dm"
+#include "hippiestation\code\game\machinery\doors\poddoor.dm"
 #include "code\game\machinery\doors\shutters.dm"
 #include "code\game\machinery\doors\unpowered.dm"
 #include "code\game\machinery\doors\windowdoor.dm"
