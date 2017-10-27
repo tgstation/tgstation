@@ -24,6 +24,14 @@
 	if(oldN)
 		oldN.build_network()
 
+/obj/machinery/atmospherics/pipe/destroy_network()
+	QDEL_NULL(parent)
+
+/obj/machinery/atmospherics/pipe/build_network()
+	if(QDELETED(parent))
+		parent = new
+		parent.build_pipeline(src)
+
 /obj/machinery/atmospherics/pipe/update_icon() //overridden by manifolds
 	if(NODE1&&NODE2)
 		icon_state = "intact[invisibility ? "-f" : "" ]"
@@ -51,14 +59,13 @@
 /obj/machinery/atmospherics/pipe/return_air()
 	return parent.air
 
-/obj/machinery/atmospherics/pipe/build_network()
-	if(!parent)
-		parent = new /datum/pipeline()
-		parent.build_pipeline(src)
-
 /obj/machinery/atmospherics/pipe/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/device/analyzer))
 		atmosanalyzer_scan(parent.air, user)
+	if(istype(W, /obj/item/pipe_meter))
+		var/obj/item/pipe_meter/meter = W
+		user.dropItemToGround(meter)
+		meter.setAttachLayer(piping_layer)
 	else
 		return ..()
 
@@ -81,9 +88,7 @@
 			qdel(meter)
 	. = ..()
 
-	if(parent && !QDELETED(parent))
-		qdel(parent)
-	parent = null
+	QDEL_NULL(parent)
 
 /obj/machinery/atmospherics/pipe/proc/update_node_icon()
 	for(DEVICE_TYPE_LOOP)

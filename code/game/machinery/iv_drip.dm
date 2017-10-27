@@ -10,14 +10,13 @@
 	var/mob/living/carbon/attached = null
 	var/mode = IV_INJECTING
 	var/obj/item/reagent_containers/beaker = null
-	var/list/drip_containers = list(/obj/item/reagent_containers/blood,
+	var/static/list/drip_containers = typecacheof(list(/obj/item/reagent_containers/blood,
 									/obj/item/reagent_containers/food,
-									/obj/item/reagent_containers/glass)
+									/obj/item/reagent_containers/glass))
 
 /obj/machinery/iv_drip/Initialize()
 	. = ..()
 	update_icon()
-	drip_containers = typecacheof(drip_containers)
 
 /obj/machinery/iv_drip/Destroy()
 	attached = null
@@ -95,10 +94,8 @@
 		if(beaker)
 			to_chat(user, "<span class='warning'>There is already a reagent container loaded!</span>")
 			return
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(W, src))
 			return
-
-		W.forceMove(src)
 		beaker = W
 		to_chat(user, "<span class='notice'>You attach [W] to [src].</span>")
 		update_icon()

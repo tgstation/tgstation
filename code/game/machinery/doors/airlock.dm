@@ -127,7 +127,6 @@
 					here.ChangeTurf(T.type)
 					return INITIALIZE_HINT_QDEL
 				here.ChangeTurf(/turf/closed/wall)
-				return INITIALIZE_HINT_QDEL
 			if(9 to 11)
 				lights = FALSE
 				locked = TRUE
@@ -142,8 +141,11 @@
 	diag_hud.add_to_hud(src)
 	diag_hud_set_electrified()
 
-
 	update_icon()
+
+/obj/machinery/door/airlock/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_MEDIUM_INSULATION)
 
 /obj/machinery/door/airlock/proc/update_other_id()
 	for(var/obj/machinery/door/airlock/A in GLOB.airlocks)
@@ -235,6 +237,8 @@
 		for(var/obj/machinery/doorButtons/D in GLOB.machines)
 			D.removeMe(src)
 	qdel(note)
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.remove_from_hud(src)
 	return ..()
 
 /obj/machinery/door/airlock/handle_atom_del(atom/A)
@@ -242,14 +246,16 @@
 		note = null
 		update_icon()
 
+/obj/machinery/door/airlock/proc/unzap() //for addtimer
+	justzap = FALSE
+
 /obj/machinery/door/airlock/bumpopen(mob/living/user) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
 	if(!issilicon(usr))
-		if(src.isElectrified())
-			if(!src.justzap)
-				if(src.shock(user, 100))
-					src.justzap = TRUE
-					spawn (10)
-						justzap = FALSE
+		if(isElectrified())
+			if(!justzap)
+				if(shock(user, 100))
+					justzap = TRUE
+					addtimer(CALLBACK(src, .proc/unzap), 10)
 					return
 			else /*if(src.justzap)*/
 				return
@@ -273,7 +279,7 @@
 	var/image/electrocution_skeleton_anim = image('icons/mob/human.dmi', user, icon_state = "electrocuted_base", layer=ABOVE_MOB_LAYER)
 	shock_image.color = rgb(0,0,0)
 	shock_image.override = TRUE
-	electrocution_skeleton_anim.appearance_flags = RESET_COLOR
+	electrocution_skeleton_anim.appearance_flags |= RESET_COLOR|KEEP_APART
 
 	to_chat(user, "<span class='userdanger'>You feel a powerful shock course through your body!</span>")
 	if(user.client)
@@ -321,33 +327,34 @@
 	if(src.secondsMainPowerLost > 0)
 		src.secondsMainPowerLost = 0
 
-/obj/machinery/door/airlock/proc/loseMainPower()
-	if(src.secondsMainPowerLost <= 0)
-		src.secondsMainPowerLost = 60
-		if(src.secondsBackupPowerLost < 10)
-			src.secondsBackupPowerLost = 10
-	if(!src.spawnPowerRestoreRunning)
-		spawnPowerRestoreRunning = TRUE
-		spawn(0)
-			var/cont = 1
-			while (cont)
-				sleep(10)
-				if(QDELETED(src))
-					return
-				cont = 0
-				if(secondsMainPowerLost>0)
-					if(!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
-						secondsMainPowerLost -= 1
-						updateDialog()
-					cont = 1
+/obj/machinery/door/airlock/proc/handlePowerRestore()
+	var/cont = TRUE
+	while (cont)
+		sleep(10)
+		if(QDELETED(src))
+			return
+		cont = FALSE
+		if(secondsMainPowerLost>0)
+			if(!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
+				secondsMainPowerLost -= 1
+				updateDialog()
+			cont = TRUE
+		if(secondsBackupPowerLost>0)
+			if(!wires.is_cut(WIRE_BACKUP1) && !wires.is_cut(WIRE_BACKUP2))
+				secondsBackupPowerLost -= 1
+				updateDialog()
+			cont = TRUE
+	spawnPowerRestoreRunning = FALSE
+	updateDialog()
 
-				if(secondsBackupPowerLost>0)
-					if(!wires.is_cut(WIRE_BACKUP1) && !wires.is_cut(WIRE_BACKUP2))
-						secondsBackupPowerLost -= 1
-						updateDialog()
-					cont = 1
-			spawnPowerRestoreRunning = FALSE
-			updateDialog()
+/obj/machinery/door/airlock/proc/loseMainPower()
+	if(secondsMainPowerLost <= 0)
+		secondsMainPowerLost = 60
+		if(secondsBackupPowerLost < 10)
+			secondsBackupPowerLost = 10
+	if(!spawnPowerRestoreRunning)
+		spawnPowerRestoreRunning = TRUE
+	INVOKE_ASYNC(src, .proc/handlePowerRestore)
 
 /obj/machinery/door/airlock/proc/loseBackupPower()
 	if(src.secondsBackupPowerLost < 60)
@@ -567,24 +574,24 @@
 	if(panel_open)
 		switch(security_level)
 			if(AIRLOCK_SECURITY_NONE)
-				to_chat(user, "Wires are exposed!")
+				to_chat(user, "Its wires are exposed!")
 			if(AIRLOCK_SECURITY_METAL)
-				to_chat(user, "Wires are hidden behind welded metal cover")
+				to_chat(user, "Its wires are hidden behind a welded metal cover.")
 			if(AIRLOCK_SECURITY_PLASTEEL_I_S)
-				to_chat(user, "There is some shredded plasteel inside")
+				to_chat(user, "There is some shredded plasteel inside.")
 			if(AIRLOCK_SECURITY_PLASTEEL_I)
-				to_chat(user, "Wires are behind inner layer of plasteel")
+				to_chat(user, "Its wires are behind an inner layer of plasteel.")
 			if(AIRLOCK_SECURITY_PLASTEEL_O_S)
-				to_chat(user, "There is some shredded plasteel inside")
+				to_chat(user, "There is some shredded plasteel inside.")
 			if(AIRLOCK_SECURITY_PLASTEEL_O)
-				to_chat(user, "There is welded plasteel cover hiding wires")
+				to_chat(user, "There is a welded plasteel cover hiding its wires.")
 			if(AIRLOCK_SECURITY_PLASTEEL)
-				to_chat(user, "There is protective grille over panel")
+				to_chat(user, "There is a protective grille over its panel.")
 	else if(security_level)
 		if(security_level == AIRLOCK_SECURITY_METAL)
-			to_chat(user, "It looks a bit stronger")
+			to_chat(user, "It looks a bit stronger.")
 		else
-			to_chat(user, "It looks very robust")
+			to_chat(user, "It looks very robust.")
 
 /obj/machinery/door/airlock/attack_ai(mob/user)
 	if(!src.canAIControl(user))
@@ -752,6 +759,11 @@
 		if(user)
 			src.attack_ai(user)
 
+/obj/machinery/door/airlock/attack_animal(mob/user)
+	. = ..()
+	if(isElectrified())
+		shock(user, 100)
+
 /obj/machinery/door/airlock/attack_paw(mob/user)
 	return src.attack_hand(user)
 
@@ -783,13 +795,20 @@
 		..()
 	return
 
+/obj/machinery/door/airlock/proc/electrified_loop()
+	while (secondsElectrified > 0)
+		secondsElectrified--
+		if(secondsElectrified <= 0)
+			set_electrified(NOT_ELECTRIFIED)
+			updateUsrDialog()
+			sleep(10)
 
 /obj/machinery/door/airlock/Topic(href, href_list, var/nowindow = 0)
 	// If you add an if(..()) check you must first remove the var/nowindow parameter.
 	// Otherwise it will runtime with this kind of error: null.Topic()
 	if(!nowindow)
 		..()
-	if(usr.incapacitated() && !IsAdminGhost(usr))
+	if(!usr.canUseTopic(src) && !IsAdminGhost(usr))
 		return
 	add_fingerprint(usr)
 	if(href_list["close"])
@@ -927,13 +946,7 @@
 						shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
 						add_logs(usr, src, "electrified")
 						set_electrified(30)
-						spawn(10)
-							while (secondsElectrified > 0)
-								secondsElectrified--
-								if(secondsElectrified <= 0)
-									set_electrified(NOT_ELECTRIFIED)
-								updateUsrDialog()
-								sleep(10)
+						addtimer(CALLBACK(src, .proc/electrified_loop), 10)
 				if(6)
 					//electrify door indefinitely
 					if(wires.is_cut(WIRE_SHOCK))
@@ -1014,7 +1027,7 @@
 					if(S.get_amount() < 2)
 						to_chat(user, "<span class='warning'>You need at least 2 metal sheets to reinforce [src].</span>")
 						return
-					to_chat(user, "<span class='notice'>You start reinforcing [src]</span>")
+					to_chat(user, "<span class='notice'>You start reinforcing [src].</span>")
 					if(do_after(user, 20, 1, target = src))
 						if(!panel_open || !S.use(2))
 							return
@@ -1170,10 +1183,9 @@
 			to_chat(user, "<span class='warning'>The maintenance panel is destroyed!</span>")
 			return
 		to_chat(user, "<span class='warning'>You apply [C]. Next time someone opens the door, it will explode.</span>")
-		user.drop_item()
 		panel_open = FALSE
 		update_icon()
-		C.forceMove(src)
+		user.transferItemToLoc(C, src, TRUE)
 		charge = C
 	else if(istype(C, /obj/item/paper) || istype(C, /obj/item/photo))
 		if(note)
@@ -1258,19 +1270,11 @@
 		if(!beingcrowbarred) //being fireaxe'd
 			var/obj/item/twohanded/fireaxe/F = I
 			if(F.wielded)
-				spawn(0)
-					if(density)
-						open(2)
-					else
-						close(2)
+				INVOKE_ASYNC(src, (density ? .proc/open : .proc/close), 2)
 			else
 				to_chat(user, "<span class='warning'>You need to be wielding the fire axe to do that!</span>")
 		else
-			spawn(0)
-				if(density)
-					open(2)
-				else
-					close(2)
+			INVOKE_ASYNC(src, (density ? .proc/open : .proc/close), 2)
 
 	if(istype(I, /obj/item/crowbar/power))
 		if(isElectrified())
@@ -1298,7 +1302,7 @@
 			if(result)
 				open(2)
 				if(density && !open(2))
-					to_chat(user, "<span class='warning'>Despite your attempts, the [src] refuses to open.</span>")
+					to_chat(user, "<span class='warning'>Despite your attempts, [src] refuses to open.</span>")
 
 /obj/machinery/door/airlock/plasma/attackby(obj/item/C, mob/user, params)
 	if(C.is_hot() > 300)//If the temperature of the object is over 300, then ignite

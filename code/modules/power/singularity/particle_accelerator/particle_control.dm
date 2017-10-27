@@ -257,11 +257,11 @@
 	..()
 	switch(construction_state)
 		if(PA_CONSTRUCTION_UNSECURED)
-			to_chat(user, "Looks like it's not attached to the flooring")
+			to_chat(user, "Looks like it's not attached to the flooring.")
 		if(PA_CONSTRUCTION_UNWIRED)
-			to_chat(user, "It is missing some cables")
+			to_chat(user, "It is missing some cables.")
 		if(PA_CONSTRUCTION_PANEL_OPEN)
-			to_chat(user, "The panel is open")
+			to_chat(user, "The panel is open.")
 
 
 /obj/machinery/particle_accelerator/control_box/attackby(obj/item/W, mob/user, params)

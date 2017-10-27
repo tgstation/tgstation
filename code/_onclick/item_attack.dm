@@ -20,7 +20,7 @@
 	return SendSignal(COMSIG_PARENT_ATTACKBY, W, user, params)
 
 /obj/attackby(obj/item/I, mob/living/user, params)
-	return ..() || I.attack_obj(src, user)
+	return ..() || (can_be_hit && I.attack_obj(src, user))
 
 /mob/living/attackby(obj/item/I, mob/living/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -44,8 +44,8 @@
 	else if(hitsound)
 		playsound(loc, hitsound, get_clamped_volume(), 1, -1)
 
-	user.lastattacked = M
-	M.lastattacker = user
+	M.lastattacker = user.real_name
+	M.lastattackerckey = user.ckey
 
 	user.do_attack_animation(M)
 	M.attacked_by(src, user)

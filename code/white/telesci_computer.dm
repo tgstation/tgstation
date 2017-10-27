@@ -60,7 +60,7 @@
 		if(crystals.len >= max_crystals)
 			to_chat(user, "<span class='warning'>There are not enough crystal slots.</span>")
 			return
-		if(!user.drop_item())
+		if(!user.dropItemToGround())
 			return
 		crystals += W
 		W.loc = null

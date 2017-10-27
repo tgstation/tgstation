@@ -6,10 +6,10 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
 	anchored = TRUE
+	desc = "Make dark."
 	var/on = TRUE
 	var/area/area = null
 	var/otherarea = null
-	//	luminosity = 1
 
 /obj/machinery/light_switch/Initialize()
 	. = ..()

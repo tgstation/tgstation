@@ -137,7 +137,8 @@ Turf and target are separate in case you want to teleport some distance from a t
 				return
 			if(destination.y>world.maxy || destination.y<1)
 				return
-	else	return
+	else
+		return
 
 	return destination
 
@@ -289,7 +290,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/list/pois = list()
 	for(var/mob/M in mobs)
 		if(skip_mindless && (!M.mind && !M.ckey))
-			if(!isbot(M) && !istype(M, /mob/camera) && !ismegafauna(M))
+			if(!isbot(M) && !iscameramob(M) && !ismegafauna(M))
 				continue
 		if(M.client && M.client.holder && M.client.holder.fakekey) //stealthmins
 			continue
@@ -502,27 +503,19 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/y=arcsin(x/sqrt(1+x*x))
 	return y
 
-/atom/proc/GetAllContents(list/ignore_typecache)
+/*
+	Gets all contents of contents and returns them all in a list.
+*/
+/atom/proc/GetAllContents()
 	var/list/processing_list = list(src)
 	var/list/assembled = list()
-	if(ignore_typecache)		//If there's a typecache, use it.
-		while(processing_list.len)
-			var/atom/A = processing_list[1]
-			processing_list -= A
-			if(ignore_typecache[A.type])
-				continue
-			processing_list |= (A.contents - assembled)
-			assembled |= A
-
-	else		//If there's none, only make this check once for performance.
-		while(processing_list.len)
-			var/atom/A = processing_list[1]
-			processing_list -= A
-
-			processing_list |= (A.contents - assembled)
-
-			assembled |= A
-
+	while(processing_list.len)
+		var/atom/A = processing_list[1]
+		processing_list.Cut(1, 2)
+		//Byond does not allow things to be in multiple contents, or double parent-child hierarchies, so only += is needed
+		//This is also why we don't need to check against assembled as we go along
+		processing_list += A.contents 
+		assembled += A
 	return assembled
 
 //Step-towards method of determining whether one atom can see another. Similar to viewers()
@@ -744,7 +737,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 */
 
-/proc/get_turf_pixel(atom/movable/AM)
+/proc/get_turf_pixel(atom/AM)
 	if(!istype(AM))
 		return
 
@@ -1237,20 +1230,26 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 /proc/stack_trace(msg)
 	CRASH(msg)
 
+/datum/proc/stack_trace(msg)
+	CRASH(msg)
+
 //Key thing that stops lag. Cornerstone of performance in ss13, Just sitting here, in unsorted.dm.
 
 //Increases delay as the server gets more overloaded,
 //as sleeps aren't cheap and sleeping only to wake up and sleep again is wasteful
-#define DELTA_CALC max(((max(TICK_USAGE, world.cpu) / 100) * max(Master.sleep_delta,1)), 1)
+#define DELTA_CALC max(((max(TICK_USAGE, world.cpu) / 100) * max(Master.sleep_delta-1,1)), 1)
 
-/proc/stoplag()
+//returns the number of ticks slept
+/proc/stoplag(initial_delay)
 	if (!Master || !(Master.current_runlevel & RUNLEVELS_DEFAULT))
 		sleep(world.tick_lag)
 		return 1
+	if (!initial_delay)
+		initial_delay = world.tick_lag
 	. = 0
-	var/i = 1
+	var/i = DS2TICKS(initial_delay)
 	do
-		. += round(i*DELTA_CALC)
+		. += Ceiling(i*DELTA_CALC)
 		sleep(i*world.tick_lag*DELTA_CALC)
 		i *= 2
 	while (TICK_USAGE > min(TICK_LIMIT_TO_RUN, Master.current_ticklimit))
@@ -1282,7 +1281,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 #define QDEL_LIST(L) if(L) { for(var/I in L) qdel(I); L.Cut(); }
 #define QDEL_LIST_IN(L, time) addtimer(CALLBACK(GLOBAL_PROC, .proc/______qdel_list_wrapper, L), time, TIMER_STOPPABLE)
 #define QDEL_LIST_ASSOC(L) if(L) { for(var/I in L) { qdel(L[I]); qdel(I); } L.Cut(); }
-#define QDEL_LIST_ASSOC_VAL(L) if(L) { for(var/I in L) qel(L[I]); L.Cut(); }
+#define QDEL_LIST_ASSOC_VAL(L) if(L) { for(var/I in L) qdel(L[I]); L.Cut(); }
 
 /proc/______qdel_list_wrapper(list/L) //the underscores are to encourage people not to use this directly.
 	QDEL_LIST(L)
@@ -1379,63 +1378,6 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 			if(W.ini_dir == dir_to_check || W.ini_dir == FULLTILE_WINDOW_DIR || dir_to_check == FULLTILE_WINDOW_DIR)
 				return FALSE
 	return TRUE
-
-//WHATEVER YOU USE THIS FOR MUST BE SANITIZED TO SHIT, IT USES SHELL
-//It also sleeps
-
-//Set this to TRUE before calling
-//This prevents RCEs from badmins
-//kevinz000 if you touch this I will hunt you down
-GLOBAL_VAR_INIT(valid_HTTPSGet, FALSE)
-GLOBAL_PROTECT(valid_HTTPSGet)
-/proc/HTTPSGet(url)	//tgs2 support
-	if(findtext(url, "\""))
-		GLOB.valid_HTTPSGet = FALSE
-
-	if(!GLOB.valid_HTTPSGet)
-		if(usr)
-			CRASH("[usr.ckey]([usr]) just attempted an invalid HTTPSGet on: [url]!")
-		else
-			CRASH("Invalid HTTPSGet call on: [url]")
-	GLOB.valid_HTTPSGet = FALSE
-
-	//"This has got to be the ugliest hack I have ever done"
-	//warning, here be dragons
-	/*
-						|  @___oo
-				/\  /\   / (__,,,,|
-				) /^\) ^\/ _)
-				)   /^\/   _)
-				)   _ /  / _)
-			/\  )/\/ ||  | )_)
-		<  >      |(,,) )__)
-			||      /    \)___)\
-			| \____(      )___) )___
-			\______(_______;;; __;;;
-		*/
-	var/temp_file = "data/HTTPSGetOutput.txt"
-	var/command
-	if(world.system_type == MS_WINDOWS)
-		command = "powershell -Command \"wget [url] -OutFile [temp_file]\""
-	else if(world.system_type == UNIX)
-		command = "wget -O [temp_file] [url]"
-	else
-		CRASH("Invalid world.system_type ([world.system_type])? Yell at Lummox.")
-
-	log_world("HTTPSGet: [url]")
-	var/result = shell(command)
-	if(result != 0)
-		log_world("Download failed: shell exited with code: [result]")
-		return
-
-	var/f = file(temp_file)
-	if(!f)
-		log_world("Download failed: Temp file not found")
-		return
-
-	. = file2text(f)
-	f = null
-	fdel(temp_file)
 
 #define UNTIL(X) while(!(X)) stoplag()
 

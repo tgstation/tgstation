@@ -11,6 +11,7 @@
 	layer = ABOVE_WINDOW_LAYER
 	state_open = FALSE
 	circuit = /obj/item/circuitboard/machine/cryo_tube
+	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 
 	var/on = FALSE
 	var/autoeject = FALSE
@@ -20,7 +21,7 @@
 	var/sleep_factor = 750
 	var/unconscious_factor = 1000
 	var/heat_capacity = 20000
-	var/conduction_coefficient = 0.30
+	var/conduction_coefficient = 0.3
 
 	var/obj/item/reagent_containers/glass/beaker = null
 	var/reagent_transfer = 0
@@ -29,11 +30,11 @@
 	var/radio_key = /obj/item/device/encryptionkey/headset_med
 	var/radio_channel = "Medical"
 
-	var/running_bob_anim = FALSE
+	var/running_anim = FALSE
 
 	var/escape_in_progress = FALSE
 	var/message_cooldown
-	var/breakout_time = 0.5
+	var/breakout_time = 300
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Initialize()
 	. = ..()
@@ -83,46 +84,51 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_icon()
 	cut_overlays()
 
+	if(panel_open)
+		add_overlay("pod-panel")
+
 	if(state_open)
 		icon_state = "pod-open"
-	else if(occupant)
+		return
+
+	if(occupant)
 		var/image/occupant_overlay
 
-		if(ismonkey(occupant)) // Monkey
-			occupant_overlay = mutable_appearance(CRYOMOBS, "monkey")
-
-		else if(isalienadult(occupant))
-
-			if(isalienroyal(occupant)) // Queen and prae
-				occupant_overlay = image(CRYOMOBS, "alienq")
-
-			else if(isalienhunter(occupant)) // Hunter
-				occupant_overlay = image(CRYOMOBS, "alienh")
-
-			else if(isaliensentinel(occupant)) // Sentinel
-				occupant_overlay = image(CRYOMOBS, "aliens")
-
-			else // Drone (or any other alien that isn't any of the above)
-				occupant_overlay = image(CRYOMOBS, "aliend")
-
-		else if(ishuman(occupant) || islarva(occupant) || (isanimal(occupant) && !ismegafauna(occupant))) // Mobs that are smaller than cryotube
+		if(ishuman(occupant) || islarva(occupant) || (isanimal(occupant) && !ismegafauna(occupant))) // Mobs that are smaller than cryotube
 			occupant_overlay = image(occupant.icon, occupant.icon_state)
 			occupant_overlay.copy_overlays(occupant)
 
-		else // Anything else
+		else if(ismonkey(occupant)) // Monkey
+			occupant_overlay = image(CRYOMOBS, "monkey")
+			occupant_overlay.copy_overlays(occupant)
+
+		else if(!isalienadult(occupant))
 			occupant_overlay = image(CRYOMOBS, "generic")
+
+		else if(isalienroyal(occupant)) // Queen and prae
+			occupant_overlay = image(CRYOMOBS, "alienq")
+
+		else if(isalienhunter(occupant)) // Hunter
+			occupant_overlay = image(CRYOMOBS, "alienh")
+
+		else if(isaliensentinel(occupant)) // Sentinel
+			occupant_overlay = image(CRYOMOBS, "aliens")
+
+		else // Drone or other
+			occupant_overlay = image(CRYOMOBS, "aliend")
 
 		occupant_overlay.dir = SOUTH
 		occupant_overlay.pixel_y = 22
 
-		if(on && !running_bob_anim && is_operational())
+		if(on && !running_anim && is_operational())
 			icon_state = "pod-on"
-			running_bob_anim = TRUE
-			run_bob_anim(TRUE, occupant_overlay)
+			running_anim = TRUE
+			run_anim(TRUE, occupant_overlay)
 		else
 			icon_state = "pod-off"
 			add_overlay(occupant_overlay)
 			add_overlay("cover-off")
+
 	else if(on && is_operational())
 		icon_state = "pod-on"
 		add_overlay("cover-on")
@@ -130,12 +136,9 @@
 		icon_state = "pod-off"
 		add_overlay("cover-off")
 
-	if(panel_open)
-		add_overlay("pod-panel")
-
-/obj/machinery/atmospherics/components/unary/cryo_cell/proc/run_bob_anim(anim_up, image/occupant_overlay)
+/obj/machinery/atmospherics/components/unary/cryo_cell/proc/run_anim(anim_up, image/occupant_overlay)
 	if(!on || !occupant || !is_operational())
-		running_bob_anim = FALSE
+		running_anim = FALSE
 		return
 	cut_overlays()
 	if(occupant_overlay.pixel_y != 23) // Same effect as occupant_overlay.pixel_y == 22 || occupant_overlay.pixel_y == 24
@@ -146,7 +149,7 @@
 		occupant_overlay.pixel_y--
 	add_overlay(occupant_overlay)
 	add_overlay("cover-on")
-	addtimer(CALLBACK(src, .proc/run_bob_anim, anim_up, occupant_overlay), 7, TIMER_UNIQUE)
+	addtimer(CALLBACK(src, .proc/run_anim, anim_up, occupant_overlay), 7, TIMER_UNIQUE)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/process()
 	..()
@@ -157,64 +160,71 @@
 		on = FALSE
 		update_icon()
 		return
-	var/datum/gas_mixture/air1 = AIR1
-	var/turf/T = get_turf(src)
-	if(occupant)
-		var/mob/living/mob_occupant = occupant
-		if(mob_occupant.health >= mob_occupant.getMaxHealth()) // Don't bother with fully healed people.
-			on = FALSE
-			update_icon()
-			playsound(T, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.
-			radio.talk_into(src, "Patient fully restored", radio_channel, get_spans(), get_default_language())
-			if(autoeject) // Eject if configured.
-				radio.talk_into(src, "Auto ejecting patient now", radio_channel, get_spans(), get_default_language())
-				open_machine()
-			return
-		else if(mob_occupant.stat == DEAD) // We don't bother with dead people.
-			return
-			if(autoeject) // Eject if configured.
-				open_machine()
-			return
-		if(air1.gases.len)
-			if(mob_occupant.bodytemperature < T0C) // Sleepytime. Why? More cryo magic.
-				mob_occupant.Sleeping((mob_occupant.bodytemperature / sleep_factor) * 2000)
-				mob_occupant.Unconscious((mob_occupant.bodytemperature / unconscious_factor) * 2000)
+	if(!occupant)
+		return
 
-			if(beaker)
-				if(reagent_transfer == 0) // Magically transfer reagents. Because cryo magic.
-					beaker.reagents.trans_to(occupant, 1, 10 * efficiency) // Transfer reagents, multiplied because cryo magic.
-					beaker.reagents.reaction(occupant, VAPOR)
-					air1.gases["o2"][MOLES] -= 2 / efficiency // Lets use gas for this.
-				if(++reagent_transfer >= 10 * efficiency) // Throttle reagent transfer (higher efficiency will transfer the same amount but consume less from the beaker).
-					reagent_transfer = 0
+	var/mob/living/mob_occupant = occupant
+
+	if(mob_occupant.stat == DEAD) // We don't bother with dead people.
+		return
+
+	if(mob_occupant.health >= mob_occupant.getMaxHealth()) // Don't bother with fully healed people.
+		on = FALSE
+		update_icon()
+		playsound(src, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.
+		radio.talk_into(src, "Patient fully restored", radio_channel, get_spans(), get_default_language())
+		if(autoeject) // Eject if configured.
+			radio.talk_into(src, "Auto ejecting patient now", radio_channel, get_spans(), get_default_language())
+			open_machine()
+		return
+
+	var/datum/gas_mixture/air1 = AIR1
+
+	if(air1.gases.len)
+		if(mob_occupant.bodytemperature < T0C) // Sleepytime. Why? More cryo magic.
+			mob_occupant.Sleeping((mob_occupant.bodytemperature / sleep_factor) * 2000)
+			mob_occupant.Unconscious((mob_occupant.bodytemperature / unconscious_factor) * 2000)
+		if(beaker)
+			if(reagent_transfer == 0) // Magically transfer reagents. Because cryo magic.
+				beaker.reagents.trans_to(occupant, 1, 10 * efficiency) // Transfer reagents, multiplied because cryo magic.
+				beaker.reagents.reaction(occupant, VAPOR)
+				air1.gases[/datum/gas/oxygen][MOLES] -= 2 / efficiency //Let's use gas for this
+			if(++reagent_transfer >= 10 * efficiency) // Throttle reagent transfer (higher efficiency will transfer the same amount but consume less from the beaker).
+				reagent_transfer = 0
+
 	return 1
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/process_atmos()
 	..()
+
 	if(!on)
 		return
+
 	var/datum/gas_mixture/air1 = AIR1
-	if(!NODE1 || !AIR1 || !air1.gases.len || air1.gases["o2"][MOLES] < 5) // Turn off if the machine won't work.
+
+	if(!NODE1 || !AIR1 || !air1.gases.len || air1.gases[/datum/gas/oxygen][MOLES] < 5) // Turn off if the machine won't work.
 		on = FALSE
 		update_icon()
 		return
+
 	if(occupant)
 		var/mob/living/mob_occupant = occupant
 		var/cold_protection = 0
-		var/mob/living/carbon/human/H = occupant
-		if(istype(H))
+		var/temperature_delta = air1.temperature - mob_occupant.bodytemperature // The only semi-realistic thing here: share temperature between the cell and the occupant.
+
+		if(ishuman(occupant))
+			var/mob/living/carbon/human/H = occupant
 			cold_protection = H.get_cold_protection(air1.temperature)
 
-		var/temperature_delta = air1.temperature - mob_occupant.bodytemperature // The only semi-realistic thing here: share temperature between the cell and the occupant.
 		if(abs(temperature_delta) > 1)
 			var/air_heat_capacity = air1.heat_capacity()
-			var/heat = ((1 - cold_protection) / 10 + conduction_coefficient) \
-						* temperature_delta * \
-						(air_heat_capacity * heat_capacity / (air_heat_capacity + heat_capacity))
+
+			var/heat = ((1 - cold_protection) * 0.1 + conduction_coefficient) * temperature_delta * (air_heat_capacity * heat_capacity / (air_heat_capacity + heat_capacity))
+
 			air1.temperature = max(air1.temperature - heat / air_heat_capacity, TCMB)
 			mob_occupant.bodytemperature = max(mob_occupant.bodytemperature + heat / heat_capacity, TCMB)
 
-		air1.gases["o2"][MOLES] -= 0.5 / efficiency // Magically consume gas? Why not, we run on cryo magic.
+		air1.gases[/datum/gas/oxygen][MOLES] -= 0.5 / efficiency // Magically consume gas? Why not, we run on cryo magic.
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/power_change()
 	..()
@@ -246,9 +256,9 @@
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='notice'>You see [user] kicking against the glass of [src]!</span>", \
-		"<span class='notice'>You struggle inside [src], kicking the release with your foot... (this will take about [(breakout_time<1) ? "[breakout_time*60] seconds" : "[breakout_time] minute\s"].)</span>", \
+		"<span class='notice'>You struggle inside [src], kicking the release with your foot... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
 		"<span class='italics'>You hear a thump from [src].</span>")
-	if(do_after(user,(breakout_time*60*10), target = src)) //minutes * 60seconds * 10deciseconds
+	if(do_after(user, breakout_time, target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src )
 			return
 		user.visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>", \
@@ -276,25 +286,23 @@
 		if(beaker)
 			to_chat(user, "<span class='warning'>A beaker is already loaded into [src]!</span>")
 			return
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(I, src))
 			return
 		beaker = I
-		I.loc = src
 		user.visible_message("[user] places [I] in [src].", \
 							"<span class='notice'>You place [I] in [src].</span>")
 		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
 		log_game("[key_name(user)] added an [I] to cyro containing [reagentlist]")
 		return
-	if(!on && !occupant && !state_open)
-		if(default_deconstruction_screwdriver(user, "pod-off", "pod-off", I))
-			return
-		if(exchange_parts(user, I))
-			return
-	if(default_change_direction_wrench(user, I))
+	if(!on && !occupant && !state_open && (default_deconstruction_screwdriver(user, "pod-off", "pod-off", I) || exchange_parts(user, I)) \
+		|| default_change_direction_wrench(user, I) \
+		|| default_pry_open(I) \
+		|| default_deconstruction_crowbar(I))
+		update_icon()
 		return
-	if(default_pry_open(I))
-		return
-	if(default_deconstruction_crowbar(I))
+	else if(istype(I, /obj/item/screwdriver))
+		to_chat(user, "<span class='notice'>You can't access the maintenance panel while the pod is " \
+		+ (on ? "active" : (occupant ? "full" : "open")) + ".</span>")
 		return
 	return ..()
 
@@ -348,7 +356,7 @@
 	data["cellTemperature"] = round(air1.temperature, 1)
 
 	data["isBeakerLoaded"] = beaker ? TRUE : FALSE
-	var beakerContents = list()
+	var/beakerContents = list()
 	if(beaker && beaker.reagents && beaker.reagents.reagent_list.len)
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
 			beakerContents += list(list("name" = R.name, "volume" = R.volume))
@@ -377,21 +385,23 @@
 		if("ejectbeaker")
 			if(beaker)
 				beaker.forceMove(loc)
+				if(Adjacent(usr) && !issilicon(usr))
+					usr.put_in_hands(beaker)
 				beaker = null
 				. = TRUE
 	update_icon()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_remote_sight(mob/living/user)
-	return //we don't see the pipe network while inside cryo.
+	return // we don't see the pipe network while inside cryo.
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/get_remote_view_fullscreens(mob/user)
 	user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 1)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/can_crawl_through()
-	return //can't ventcrawl in or out of cryo.
+	return // can't ventcrawl in or out of cryo.
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/can_see_pipes()
-	return 0 //you can't see the pipe network when inside a cryo cell.
+	return 0 // you can't see the pipe network when inside a cryo cell.
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/return_temperature()
 	var/datum/gas_mixture/G = AIR1

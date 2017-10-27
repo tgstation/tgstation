@@ -11,7 +11,7 @@
 	opacity = 0
 	anchored = TRUE
 	density = FALSE
-	layer = WALL_OBJ_LAYER
+	layer = EDGED_TURF_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/amount = 3
 	animate_movement = 0
@@ -216,6 +216,7 @@
 	density = TRUE
 	opacity = 1 	// changed in New()
 	anchored = TRUE
+	layer = EDGED_TURF_LAYER
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall."
@@ -259,13 +260,12 @@
 
 //Atmos Backpack Resin, transparent, prevents atmos and filters the air
 /obj/structure/foamedmetal/resin
-	name = "ATMOS Resin"
-	desc = "A lightweight, transparent resin used to suffocate fires, scrub the air of toxins, and restore the air to a safe temperature"
+	name = "\improper ATMOS Resin"
+	desc = "A lightweight, transparent resin used to suffocate fires, scrub the air of toxins, and restore the air to a safe temperature."
 	opacity = FALSE
 	icon_state = "atmos_resin"
 	alpha = 120
 	max_integrity = 10
-	layer = EDGED_TURF_LAYER
 
 /obj/structure/foamedmetal/resin/Initialize()
 	. = ..()
@@ -279,8 +279,9 @@
 				qdel(H)
 			var/list/G_gases = G.gases
 			for(var/I in G_gases)
-				if(I != "o2" && I != "n2")
-					G.gases[I][MOLES] = 0
+				if(I == /datum/gas/oxygen || I == /datum/gas/nitrogen)
+					continue
+				G_gases[I][MOLES] = 0
 			G.garbage_collect()
 			O.air_update_turf()
 		for(var/obj/machinery/atmospherics/components/unary/U in O)

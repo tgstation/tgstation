@@ -27,9 +27,8 @@
 
 /obj/machinery/computer/med_data/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/card/id) && !scan)
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(O, src))
 			return
-		O.loc = src
 		scan = O
 		to_chat(user, "<span class='notice'>You insert [O].</span>")
 	else
@@ -124,8 +123,7 @@
 						dat += "<tr><td>ID:</td><td>[active1.fields["id"]]</td></tr>"
 						dat += "<tr><td>Sex:</td><td><A href='?src=\ref[src];field=sex'>&nbsp;[active1.fields["sex"]]&nbsp;</A></td></tr>"
 						dat += "<tr><td>Age:</td><td><A href='?src=\ref[src];field=age'>&nbsp;[active1.fields["age"]]&nbsp;</A></td></tr>"
-						if(config.mutant_races)
-							dat += "<tr><td>Species:</td><td><A href='?src=\ref[src];field=species'>&nbsp;[active1.fields["species"]]&nbsp;</A></td></tr>"
+						dat += "<tr><td>Species:</td><td><A href='?src=\ref[src];field=species'>&nbsp;[active1.fields["species"]]&nbsp;</A></td></tr>"
 						dat += "<tr><td>Fingerprint:</td><td><A href='?src=\ref[src];field=fingerprint'>&nbsp;[active1.fields["fingerprint"]]&nbsp;</A></td></tr>"
 						dat += "<tr><td>Physical Status:</td><td><A href='?src=\ref[src];field=p_stat'>&nbsp;[active1.fields["p_stat"]]&nbsp;</A></td></tr>"
 						dat += "<tr><td>Mental Status:</td><td><A href='?src=\ref[src];field=m_stat'>&nbsp;[active1.fields["m_stat"]]&nbsp;</A></td></tr>"
@@ -215,17 +213,13 @@
 			src.temp = null
 		if(href_list["scan"])
 			if(src.scan)
-				if(ishuman(usr) && !usr.get_active_held_item())
-					usr.put_in_hands(scan)
-				else
-					scan.loc = get_turf(src)
-				src.scan = null
+				usr.put_in_hands(scan)
+				scan = null
 			else
-				var/obj/item/I = usr.get_active_held_item()
-				if(istype(I, /obj/item/card/id))
-					if(!usr.drop_item())
+				var/obj/item/I = usr.is_holding_item_of_type(/obj/item/card/id)
+				if(I)
+					if(!usr.transferItemToLoc(I, src))
 						return
-					I.loc = src
 					src.scan = I
 		else if(href_list["logout"])
 			src.authenticated = null
@@ -543,8 +537,7 @@
 					P.info = "<CENTER><B>Medical Record - (MR-[GLOB.data_core.medicalPrintCount])</B></CENTER><BR>"
 					if(active1 in GLOB.data_core.general)
 						P.info += text("Name: [] ID: []<BR>\nSex: []<BR>\nAge: []<BR>", src.active1.fields["name"], src.active1.fields["id"], src.active1.fields["sex"], src.active1.fields["age"])
-						if(config.mutant_races)
-							P.info += "\nSpecies: [active1.fields["species"]]<BR>"
+						P.info += "\nSpecies: [active1.fields["species"]]<BR>"
 						P.info += text("\nFingerprint: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>", src.active1.fields["fingerprint"], src.active1.fields["p_stat"], src.active1.fields["m_stat"])
 					else
 						P.info += "<B>General Record Lost!</B><BR>"

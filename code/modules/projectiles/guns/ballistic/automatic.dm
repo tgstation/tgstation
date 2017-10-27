@@ -366,7 +366,8 @@
 	can_suppress = 1
 	w_class = WEIGHT_CLASS_NORMAL
 	zoomable = TRUE
-	zoom_amt = 7 //Long range, enough to see in front of you, but no tiles behind you.
+	zoom_amt = 10 //Long range, enough to see in front of you, but no tiles behind you.
+	zoom_out_amt = 13
 	slot_flags = SLOT_BACK
 	actions_types = list()
 

@@ -84,11 +84,9 @@
 		if(open)
 			on = FALSE
 	else if(istype(I, /obj/item/stock_parts/cell) && open && !cell)
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(I, src))
 			return
-		var/obj/item/stock_parts/cell/C = I
-		C.loc = src
-		cell = C
+		cell = I
 		visible_message("[user] inserts a cell into [src].",
 						"<span class='notice'>You insert the new cell into [src].</span>")
 	else if(istype(I, /obj/item/crowbar) && open && cell)
@@ -117,7 +115,7 @@
 		emagged = TRUE
 	if(!open)
 		locked = !locked
-		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the [src]'s controls!</span>")
+		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] [src]'s controls!</span>")
 	flick("mulebot-emagged", src)
 	playsound(src, "sparks", 100, 0)
 
@@ -495,7 +493,8 @@
 
 					var/oldloc = loc
 					var/moved = step_towards(src, next)	// attempt to move
-					if(cell) cell.use(1)
+					if(cell)
+						cell.use(1)
 					if(moved && oldloc!=loc)	// successful move
 						//to_chat(world, "Successful move.")
 						blockcount = 0

@@ -12,7 +12,7 @@
 
 /obj/item/holo/esword
 	name = "holographic energy sword"
-	desc = "May the force be with you. Sorta"
+	desc = "May the force be with you. Sorta."
 	icon_state = "sword0"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -104,7 +104,7 @@
 
 /obj/structure/holohoop/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(get_dist(src,user)<2)
-		if(user.drop_item(src))
+		if(user.transferItemToLoc(W, drop_location()))
 			visible_message("<span class='warning'> [user] dunks [W] into \the [src]!</span>")
 
 /obj/structure/holohoop/attack_hand(mob/user)
@@ -154,7 +154,7 @@
 	power_channel = ENVIRON
 
 /obj/machinery/readybutton/attack_ai(mob/user as mob)
-	to_chat(user, "The station AI is not to interact with these devices")
+	to_chat(user, "The station AI is not to interact with these devices.")
 	return
 
 /obj/machinery/readybutton/attack_paw(mob/user as mob)
@@ -211,9 +211,7 @@
 /obj/machinery/conveyor/holodeck
 
 /obj/machinery/conveyor/holodeck/attackby(obj/item/I, mob/user, params)
-	if(user.drop_item())
-		I.loc = src.loc
-	else
+	if(!user.transferItemToLoc(I, drop_location()))
 		return ..()
 
 /obj/item/paper/fluff/holodeck/trek_diploma
@@ -222,4 +220,4 @@
 
 /obj/item/paper/fluff/holodeck/disclaimer
 	name = "Holodeck Disclaimer"
-	info = "Brusies sustained in the holodeck can be healed simply by sleeping."
+	info = "Bruises sustained in the holodeck can be healed simply by sleeping."

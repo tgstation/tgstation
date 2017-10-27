@@ -4,7 +4,7 @@
 
 /obj/item/wallframe/firealarm
 	name = "fire alarm frame"
-	desc = "Used for building fire alarms"
+	desc = "Used for building fire alarms."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire_bitem"
 	result_path = /obj/machinery/firealarm
@@ -82,7 +82,7 @@
 		return
 	emagged = TRUE
 	if(user)
-		user.visible_message("<span class='warning'>Sparks fly out of the [src]!</span>",
+		user.visible_message("<span class='warning'>Sparks fly out of [src]!</span>",
 							"<span class='notice'>You emag [src], disabling its thermal sensors.</span>")
 	playsound(src, "sparks", 50, 1)
 

@@ -78,7 +78,7 @@
 			var/datum/mind/bro = pick(possible_brothers)
 			possible_brothers -= bro
 			antag_candidates -= bro
-			team.members += bro
+			team.add_member(bro)
 			bro.restricted_roles = restricted_jobs
 			log_game("[bro.key] (ckey) has been selected as a Brother")
 		pre_brother_teams += team
@@ -91,7 +91,6 @@
 		team.forge_brother_objectives()
 		for(var/datum/mind/M in team.members)
 			M.add_antag_datum(ANTAG_DATUM_BROTHER, team)
-			modePlayer += M
 	brother_teams += pre_brother_teams
 	return ..()
 

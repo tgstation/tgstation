@@ -32,7 +32,8 @@ Bonus
 					  <b>Stealth 4:</b> The symptom remains hidden until active."
 
 /datum/symptom/choking/Start(datum/disease/advance/A)
-	..()
+	if(!..())
+		return
 	if(A.properties["stage_rate"] >= 8)
 		symptom_delay_min = 7
 		symptom_delay_max = 24
@@ -93,14 +94,15 @@ Bonus
 	stage_speed = -1
 	transmittable = -2
 	level = 7
-	severity = 3
+	severity = 6
 	base_message_chance = 15
 	symptom_delay_min = 14
 	symptom_delay_max = 30
 	var/paralysis = FALSE
 
 /datum/symptom/asphyxiation/Start(datum/disease/advance/A)
-	..()
+	if(!..())
+		return
 	if(A.properties["stage_rate"] >= 8)
 		paralysis = TRUE
 	if(A.properties["transmission"] >= 8)

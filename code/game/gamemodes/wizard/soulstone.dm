@@ -44,6 +44,11 @@
 		if(spent)
 			to_chat(user, "<span class='cult'>This shard is spent; it is now just a creepy rock.</span>")
 
+/obj/item/device/soulstone/Destroy() //Stops the shade from being qdel'd immediately and their ghost being sent back to the arrival shuttle.
+	for(var/mob/living/simple_animal/shade/A in src)
+		A.death()
+	return ..()
+
 //////////////////////////////Capturing////////////////////////////////////////////////////////
 
 /obj/item/device/soulstone/attack(mob/living/carbon/human/M, mob/living/user)
@@ -60,7 +65,6 @@
 		to_chat(user, "<span class='cultlarge'>\"Come now, do not capture your bretheren's soul.\"</span>")
 		return
 	add_logs(user, M, "captured [M.name]'s soul", src)
-
 	transfer_soul("VICTIM", M, user)
 
 ///////////////////Options for using captured souls///////////////////////////////////////
@@ -199,7 +203,6 @@
 						SSticker.mode.cult -= A.mind
 						SSticker.mode.update_cult_icons_removed(A.mind)
 				qdel(T)
-				user.drop_item()
 				qdel(src)
 			else
 				to_chat(user, "<span class='userdanger'>Creation failed!</span>: The soul stone is empty! Go kill someone!")
@@ -229,6 +232,7 @@
 
 /obj/item/device/soulstone/proc/init_shade(mob/living/carbon/human/T, mob/U, vic = 0)
 	new /obj/effect/decal/remains/human(T.loc) //Spawns a skeleton
+	T.stop_sound_channel(CHANNEL_HEARTBEAT)
 	T.invisibility = INVISIBILITY_ABSTRACT
 	T.dust_animation()
 	var/mob/living/simple_animal/shade/S = new /mob/living/simple_animal/shade(src)

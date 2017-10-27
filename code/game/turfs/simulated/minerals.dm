@@ -38,10 +38,6 @@
 				if(istype(T, /turf/closed/mineral/random))
 					Spread(T)
 
-/turf/closed/mineral/shuttleRotate(rotation)
-	setDir(angle2dir(rotation+dir2angle(dir)))
-	queue_smooth(src)
-
 /turf/closed/mineral/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	if(turf_type)
 		underlay_appearance.icon = initial(turf_type.icon)
@@ -111,12 +107,6 @@
 		if(istype(R.module_active, /obj/item/pickaxe))
 			src.attackby(R.module_active,R)
 			return
-/*	else if(istype(AM, /obj/mecha))
-		var/obj/mecha/M = AM
-		if(istype(M.selected, /obj/item/mecha_parts/mecha_equipment/drill))
-			src.attackby(M.selected,M)
-			return*/
-//Aparantly mechs are just TOO COOL to call Collide())
 	else
 		return
 

@@ -190,10 +190,16 @@
 		break_light_tube(1)
 	return ..()
 
+/obj/machinery/light/built
+	icon_state = "tube-empty"
+
 /obj/machinery/light/built/New()
 	status = LIGHT_EMPTY
 	update(0)
 	..()
+
+/obj/machinery/light/small/built
+	icon_state = "bulb-empty"
 
 /obj/machinery/light/small/built/New()
 	status = LIGHT_EMPTY
@@ -315,7 +321,7 @@
 			src.add_fingerprint(user)
 			var/obj/item/light/L = W
 			if(istype(L, light_type))
-				if(!user.drop_item())
+				if(!user.temporarilyRemoveItemFromInventory(L))
 					return
 
 				src.add_fingerprint(user)
@@ -418,11 +424,13 @@
 
 /obj/machinery/light/proc/flicker(var/amount = rand(10, 20))
 	set waitfor = 0
-	if(flickering) return
+	if(flickering)
+		return
 	flickering = 1
 	if(on && status == LIGHT_OK)
 		for(var/i = 0; i < amount; i++)
-			if(status != LIGHT_OK) break
+			if(status != LIGHT_OK)
+				break
 			on = !on
 			update(0)
 			sleep(rand(5, 15))
@@ -582,6 +590,9 @@
 	item_state = "c_tube"
 	brightness = 8
 
+/obj/item/light/tube/broken
+	status = LIGHT_BROKEN
+
 /obj/item/light/bulb
 	name = "light bulb"
 	desc = "A replacement light bulb."
@@ -591,6 +602,9 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	brightness = 4
+
+/obj/item/light/bulb/broken
+	status = LIGHT_BROKEN
 
 /obj/item/light/throw_impact(atom/hit_atom)
 	if(!..()) //not caught by a mob

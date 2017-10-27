@@ -459,7 +459,7 @@
 //Ancient cryogenic sleepers. Players become NT crewmen from a hundred year old space station, now on the verge of collapse.
 /obj/effect/mob_spawn/human/oldsec
 	name = "old cryogenics pod"
-	desc = "A humming cryo pod. You can barely recognise a security uniform underneath the built up ice. The machine is attempting to wake up its occupant"
+	desc = "A humming cryo pod. You can barely recognise a security uniform underneath the built up ice. The machine is attempting to wake up its occupant."
 	mob_name = "a security officer"
 	icon = 'icons/obj/cryogenic2.dmi'
 	icon_state = "sleeper"
@@ -483,7 +483,7 @@
 
 /obj/effect/mob_spawn/human/oldeng
 	name = "old cryogenics pod"
-	desc = "A humming cryo pod. You can barely recognise an engineering uniform underneath the built up ice. The machine is attempting to wake up its occupant"
+	desc = "A humming cryo pod. You can barely recognise an engineering uniform underneath the built up ice. The machine is attempting to wake up its occupant."
 	mob_name = "an engineer"
 	icon = 'icons/obj/cryogenic2.dmi'
 	icon_state = "sleeper"
@@ -507,7 +507,7 @@
 
 /obj/effect/mob_spawn/human/oldsci
 	name = "old cryogenics pod"
-	desc = "A humming cryo pod. You can barely recognise a science uniform underneath the built up ice. The machine is attempting to wake up its occupant"
+	desc = "A humming cryo pod. You can barely recognise a science uniform underneath the built up ice. The machine is attempting to wake up its occupant."
 	mob_name = "a scientist"
 	icon = 'icons/obj/cryogenic2.dmi'
 	icon_state = "sleeper"

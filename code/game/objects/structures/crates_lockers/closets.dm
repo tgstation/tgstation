@@ -4,6 +4,7 @@
 	icon = 'icons/obj/closet.dmi'
 	icon_state = "generic"
 	density = TRUE
+	layer = BELOW_OBJ_LAYER
 	var/icon_door = null
 	var/icon_door_override = FALSE //override to have open overlay use icon different to its base's
 	var/secure = FALSE //secure locker or not, also used if overriding a non-secure locker with a secure door overlay to add fancy lights
@@ -53,6 +54,7 @@
 /obj/structure/closet/update_icon()
 	cut_overlays()
 	if(!opened)
+		layer = OBJ_LAYER
 		if(icon_door)
 			add_overlay("[icon_door]_door")
 		else
@@ -69,6 +71,7 @@
 				add_overlay("off")
 
 	else
+		layer = BELOW_OBJ_LAYER
 		if(icon_door_override)
 			add_overlay("[icon_door]_open")
 		else
@@ -76,8 +79,12 @@
 
 /obj/structure/closet/examine(mob/user)
 	..()
+	if(welded)
+		to_chat(user, "<span class='notice'>It's welded shut.</span>")
 	if(anchored)
-		to_chat(user, "It is anchored to the ground.")
+		to_chat(user, "<span class='notice'>It is <b>bolted</b> to the ground.</span>")
+	if(opened)
+		to_chat(user, "<span class='notice'>The parts are <b>welded</b> together.</span>")
 	else if(secure && !opened)
 		to_chat(user, "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"].</span>")
 
@@ -225,8 +232,7 @@
 									"<span class='notice'>You cut \the [src] apart with \the [W].</span>")
 				deconstruct(TRUE)
 				return 0
-		if(user.drop_item()) // so we put in unlit welder too
-			W.forceMove(loc)
+		if(user.transferItemToLoc(W, drop_location())) // so we put in unlit welder too
 			return 1
 	else if(istype(W, /obj/item/weldingtool) && can_weld_shut)
 		var/obj/item/weldingtool/WT = W

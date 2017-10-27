@@ -26,6 +26,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	max_integrity = 200
 
+	can_be_hit = FALSE
+
 	var/hitsound = null
 	var/usesound = null
 	var/throwhitsound = null
@@ -319,6 +321,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // Due to storage type consolidation this should get used more now.
 // I have cleaned it up a little, but it could probably use more.  -Sayu
 // The lack of ..() is intentional, do not add one
+// added one, fuck the police
 /obj/item/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/storage))
 		var/obj/item/storage/S = W
@@ -338,14 +341,17 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 					var/datum/progressbar/progress = new(user, len, loc)
 
 					while (do_after(user, 10, TRUE, S, FALSE, CALLBACK(src, .proc/handle_mass_pickup, S, things, loc, rejections, progress)))
-						sleep(1)
+						stoplag(1)
 
 					qdel(progress)
 
 					to_chat(user, "<span class='notice'>You put everything you could [S.preposition] [S].</span>")
+					return
 
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
+				return
+	return ..()
 
 /obj/item/proc/handle_mass_pickup(obj/item/storage/S, list/things, atom/thing_loc, list/rejections, datum/progressbar/progress)
 	for(var/obj/item/I in things)
@@ -510,7 +516,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	M.adjust_blurriness(3)
 	M.adjust_eye_damage(rand(2,4))
-	var/obj/item/organ/eyes/eyes = M.getorganslot("eye_sight")
+	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 	if (!eyes)
 		return
 	if(eyes.eye_damage >= 10)
@@ -522,7 +528,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 				to_chat(M, "<span class='danger'>You become nearsighted!</span>")
 		if(prob(50))
 			if(M.stat != DEAD)
-				if(M.drop_item())
+				if(M.drop_all_held_items())
 					to_chat(M, "<span class='danger'>You drop what you're holding and clutch at your eyes!</span>")
 			M.adjust_blurriness(10)
 			M.Unconscious(20)
@@ -549,7 +555,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	..()
 	if(current_size >= STAGE_FOUR)
 		throw_at(S,14,3, spin=0)
-	else return
+	else
+		return
 
 /obj/item/throw_impact(atom/A)
 	if(A && !QDELETED(A))

@@ -20,6 +20,7 @@
 	icon_screen = "library"
 	icon_keyboard = null
 	circuit = /obj/item/circuitboard/computer/libraryconsole
+	desc = "Checked out books MUST be returned on time."
 	var/screenstate = 0
 	var/title
 	var/category = "Any"
@@ -161,6 +162,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 // It's December 25th, 2014, and this is STILL here, and it's STILL relevant. Kill me
 /obj/machinery/computer/libraryconsole/bookmanagement
 	name = "book inventory management console"
+	desc = "Librarian's command station."
 	var/arcanecheckout = 0
 	screenstate = 0 // 0 - Main Menu, 1 - Inventory, 2 - Checked Out, 3 - Check Out a Book
 	verb_say = "beeps"
@@ -498,15 +500,15 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	name = "scanner control interface"
 	icon = 'icons/obj/library.dmi'
 	icon_state = "bigscanner"
+	desc = "It servers the purpose of scanning stuff."
 	anchored = TRUE
 	density = TRUE
 	var/obj/item/book/cache		// Last scanned book
 
 /obj/machinery/libraryscanner/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/book))
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(O, src))
 			return
-		O.loc = src
 	else
 		return ..()
 
@@ -554,6 +556,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	name = "book binder"
 	icon = 'icons/obj/library.dmi'
 	icon_state = "binder"
+	desc = "Only intended for binding paper products."
 	anchored = TRUE
 	density = TRUE
 	var/busy = FALSE
@@ -572,9 +575,8 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	if(busy)
 		to_chat(user, "<span class='warning'>The book binder is busy. Please wait for completion of previous operation.</span>")
 		return
-	if(!user.drop_item())
+	if(!user.transferItemToLoc(P, src))
 		return
-	P.loc = src
 	user.visible_message("[user] loads some paper into [src].", "You load some paper into [src].")
 	audible_message("[src] begins to hum as it warms up its printing drums.")
 	busy = TRUE

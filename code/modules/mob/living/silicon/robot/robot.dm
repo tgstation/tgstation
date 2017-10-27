@@ -95,7 +95,7 @@
 
 	can_buckle = TRUE
 	buckle_lying = FALSE
-	can_ride_typecache = list(/mob/living/carbon/human)
+	var/static/list/can_ride_typecache = typecacheof(/mob/living/carbon/human)
 
 /mob/living/silicon/robot/get_cell()
 	return cell
@@ -166,7 +166,7 @@
 	if(mmi && mind)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
 		var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
 		if(T)
-			mmi.loc = T
+			mmi.forceMove(T)
 		if(mmi.brainmob)
 			if(mmi.brainmob.stat == DEAD)
 				mmi.brainmob.stat = CONSCIOUS
@@ -423,9 +423,8 @@
 		else if(cell)
 			to_chat(user, "<span class='warning'>There is a power cell already installed!</span>")
 		else
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(W, src))
 				return
-			W.loc = src
 			cell = W
 			to_chat(user, "<span class='notice'>You insert the power cell.</span>")
 		update_icons()
@@ -514,7 +513,7 @@
 		else if(U.locked)
 			to_chat(user, "<span class='warning'>The upgrade is locked and cannot be used yet!</span>")
 		else
-			if(!user.drop_item())
+			if(!user.temporarilyRemoveItemFromInventory(U))
 				return
 			if(U.action(src))
 				to_chat(user, "<span class='notice'>You apply the upgrade to [src].</span>")
@@ -525,12 +524,13 @@
 					upgrades += U
 			else
 				to_chat(user, "<span class='danger'>Upgrade error.</span>")
+				U.forceMove(drop_location())
 
 	else if(istype(W, /obj/item/device/toner))
 		if(toner >= tonermax)
 			to_chat(user, "<span class='warning'>The toner level of [src] is at its highest level possible!</span>")
 		else
-			if(!user.drop_item())
+			if(!user.temporarilyRemoveItemFromInventory(W))
 				return
 			toner = tonermax
 			qdel(W)
@@ -741,24 +741,24 @@
 /mob/living/silicon/robot/proc/deconstruct()
 	var/turf/T = get_turf(src)
 	if (robot_suit)
-		robot_suit.loc = T
-		robot_suit.l_leg.loc = T
+		robot_suit.forceMove(T)
+		robot_suit.l_leg.forceMove(T)
 		robot_suit.l_leg = null
-		robot_suit.r_leg.loc = T
+		robot_suit.r_leg.forceMove(T)
 		robot_suit.r_leg = null
 		new /obj/item/stack/cable_coil(T, robot_suit.chest.wired)
-		robot_suit.chest.loc = T
+		robot_suit.chest.forceMove(T)
 		robot_suit.chest.wired = 0
 		robot_suit.chest = null
-		robot_suit.l_arm.loc = T
+		robot_suit.l_arm.forceMove(T)
 		robot_suit.l_arm = null
-		robot_suit.r_arm.loc = T
+		robot_suit.r_arm.forceMove(T)
 		robot_suit.r_arm = null
-		robot_suit.head.loc = T
-		robot_suit.head.flash1.loc = T
+		robot_suit.head.forceMove(T)
+		robot_suit.head.flash1.forceMove(T)
 		robot_suit.head.flash1.burn_out()
 		robot_suit.head.flash1 = null
-		robot_suit.head.flash2.loc = T
+		robot_suit.head.flash2.forceMove(T)
 		robot_suit.head.flash2.burn_out()
 		robot_suit.head.flash2 = null
 		robot_suit.head = null
@@ -777,7 +777,7 @@
 			var/obj/item/device/assembly/flash/handheld/F = new /obj/item/device/assembly/flash/handheld(T)
 			F.burn_out()
 	if (cell) //Sanity check.
-		cell.loc = T
+		cell.forceMove(T)
 		cell = null
 	qdel(src)
 
@@ -867,6 +867,7 @@
 	see_invisible = initial(see_invisible)
 	see_in_dark = initial(see_in_dark)
 	sight = initial(sight)
+	lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 
 	if(client.eye != src)
 		var/atom/A = client.eye
@@ -1092,7 +1093,7 @@
 
 /mob/living/silicon/robot/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(!is_type_in_typecache(M, can_ride_typecache))
-		M.visible_message("<span class='warning'>[M] really can't seem to mount the [src]...</span>")
+		M.visible_message("<span class='warning'>[M] really can't seem to mount [src]...</span>")
 		return
 	if(!riding_datum)
 		riding_datum = new /datum/riding/cyborg(src)

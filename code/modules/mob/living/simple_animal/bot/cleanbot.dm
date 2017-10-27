@@ -124,6 +124,9 @@
 
 	if(!target) //Search for decals then.
 		target = scan(/obj/effect/decal/cleanable)
+	
+	if(!target) //Checks for remains
+		target = scan(/obj/effect/decal/remains)
 
 	if(!target && trash) //Then for trash.
 		target = scan(/obj/item/trash)
@@ -178,7 +181,8 @@
 		/obj/effect/decal/cleanable/ash,
 		/obj/effect/decal/cleanable/greenglow,
 		/obj/effect/decal/cleanable/dirt,
-		/obj/effect/decal/cleanable/deadcockroach
+		/obj/effect/decal/cleanable/deadcockroach,
+		/obj/effect/decal/remains
 		)
 
 	if(blood)
@@ -206,15 +210,16 @@
 				if(A && isturf(A.loc))
 					var/atom/movable/AM = A
 					if(istype(AM, /obj/effect/decal/cleanable))
-						qdel(AM)
+						for(var/obj/effect/decal/cleanable/C in A.loc)
+							qdel(C)
 
 				anchored = FALSE
 				target = null
 			mode = BOT_IDLE
 			icon_state = "cleanbot[on]"
-	else if(istype(A, /obj/item))
+	else if(istype(A, /obj/item) || istype(A, /obj/effect/decal/remains))
 		visible_message("<span class='danger'>[src] sprays hydrofluoric acid at [A]!</span>")
-		playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
+		playsound(src, 'sound/effects/spray2.ogg', 50, 1, -6)
 		A.acid_act(75, 10)
 	else if(istype(A, /mob/living/simple_animal/cockroach) || istype(A, /mob/living/simple_animal/mouse))
 		var/mob/living/simple_animal/M = target

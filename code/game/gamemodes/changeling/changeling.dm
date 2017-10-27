@@ -67,7 +67,8 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 
 	if(antag_candidates.len>0)
 		for(var/i = 0, i < num_changelings, i++)
-			if(!antag_candidates.len) break
+			if(!antag_candidates.len)
+				break
 			var/datum/mind/changeling = pick(antag_candidates)
 			antag_candidates -= changeling
 			changelings += changeling
@@ -98,7 +99,6 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 		forge_changeling_objectives(changeling)
 		greet_changeling(changeling)
 		SSticker.mode.update_changeling_icons_added(changeling)
-	modePlayer += changelings
 	..()
 
 /datum/game_mode/changeling/make_antag_chance(mob/living/carbon/human/character) //Assigns changeling to latejoiners

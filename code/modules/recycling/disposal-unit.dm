@@ -27,6 +27,7 @@
 
 /obj/machinery/disposal/Initialize(mapload, obj/structure/disposalconstruct/make_from)
 	. = ..()
+
 	if(make_from)
 		setDir(make_from.dir)
 		make_from.loc = 0
@@ -39,6 +40,12 @@
 	air_contents = new/datum/gas_mixture()
 	//gas.volume = 1.05 * CELLSTANDARD
 	update_icon()
+
+	return INITIALIZE_HINT_LATELOAD //we need turfs to have air
+
+/obj/machinery/disposal/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION)
 
 /obj/machinery/disposal/proc/trunk_check()
 	trunk = locate() in loc
@@ -61,10 +68,6 @@
 	..()
 	if(current_size >= STAGE_FIVE)
 		deconstruct()
-
-/obj/machinery/disposal/Initialize(mapload)
-	..()
-	return INITIALIZE_HINT_LATELOAD //we need turfs to have air
 
 /obj/machinery/disposal/LateInitialize()
 	//this will get a copy of the air turf and take a SEND PRESSURE amount of air from it
@@ -96,7 +99,7 @@
 			return
 
 	if(user.a_intent != INTENT_HARM)
-		if(!user.drop_item() || (I.flags_1 & ABSTRACT_1))
+		if((I.flags_1 & ABSTRACT_1) || !user.temporarilyRemoveItemFromInventory(I))
 			return
 		place_item_in_disposal(I, user)
 		update_icon()
@@ -465,13 +468,17 @@
 		return
 	switch(dir)
 		if(NORTH)
-			if(AM.loc.y != loc.y+1) return
+			if(AM.loc.y != loc.y+1)
+				return
 		if(EAST)
-			if(AM.loc.x != loc.x+1) return
+			if(AM.loc.x != loc.x+1)
+				return
 		if(SOUTH)
-			if(AM.loc.y != loc.y-1) return
+			if(AM.loc.y != loc.y-1)
+				return
 		if(WEST)
-			if(AM.loc.x != loc.x-1) return
+			if(AM.loc.x != loc.x-1)
+				return
 
 	if(isobj(AM))
 		var/obj/O = AM

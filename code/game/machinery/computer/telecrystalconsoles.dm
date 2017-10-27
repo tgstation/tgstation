@@ -29,21 +29,19 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 		ID = rand(1,999)
 	name = "[name] [ID]"
 
-/obj/machinery/computer/telecrystals/uplinker/attackby(obj/item/O, mob/user, params)
+/obj/machinery/computer/telecrystals/uplinker/attackby(obj/item/I, mob/user, params)
 	if(uplinkholder)
-		to_chat(user, "<span class='notice'>The [src] already has an uplink in it.</span>")
+		to_chat(user, "<span class='notice'>[src] already has an uplink in it.</span>")
 		return
-	if(O.hidden_uplink)
-		var/obj/item/I = user.get_active_held_item()
-		if(!user.drop_item())
+	if(I.hidden_uplink)
+		if(!user.transferItemToLoc(I, src))
 			return
 		uplinkholder = I
-		I.loc = src
 		I.add_fingerprint(user)
 		update_icon()
 		updateUsrDialog()
 	else
-		to_chat(user, "<span class='notice'>The [O] doesn't appear to be an uplink...</span>")
+		to_chat(user, "<span class='notice'>[I] doesn't appear to be an uplink...</span>")
 
 /obj/machinery/computer/telecrystals/uplinker/update_icon()
 	..()

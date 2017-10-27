@@ -76,7 +76,7 @@
 		OpenDoor(target)
 	else
 		var/turf/T = get_turf(target)
-		if(isclosedturf(T) && !istype(T, /turf/closed/indestructible))
+		if(isclosedturf(T) && !isindestructiblewall(T))
 			CreateDoor(T)
 
 /obj/item/projectile/magic/door/proc/CreateDoor(turf/T)
@@ -132,16 +132,14 @@
 		if("monkey")
 			new_mob = new /mob/living/carbon/monkey(M.loc)
 		if("robot")
-			var/robot = pick("cyborg","syndiborg","drone")
+			var/robot = pick("random_cyborg","syndiborg","drone")
+			var/path
 			switch(robot)
-				if("cyborg")
-					new_mob = new /mob/living/silicon/robot(M.loc)
+				if("random_cyborg")
+					path = pick(typesof(/mob/living/silicon/robot/modules) - typesof(/mob/living/silicon/robot/modules/syndicate))
+					new_mob = new path(M.loc)
 				if("syndiborg")
-					var/path
-					if(prob(50))
-						path = /mob/living/silicon/robot/syndicate
-					else
-						path = /mob/living/silicon/robot/syndicate/medical
+					path = pick(typesof(/mob/living/silicon/robot/modules/syndicate))
 					new_mob = new path(M.loc)
 				if("drone")
 					new_mob = new /mob/living/simple_animal/drone/polymorphed(M.loc)
@@ -158,9 +156,15 @@
 			new_mob = new /mob/living/simple_animal/slime/random(M.loc)
 		if("xeno")
 			if(prob(50))
-				new_mob = new /mob/living/carbon/alien/humanoid/hunter(M.loc)
+				if(!M.ckey) //spawn an AI alien if it isn't a player controlled mob.
+					new_mob = new /mob/living/simple_animal/hostile/alien(M.loc)
+				else
+					new_mob = new /mob/living/carbon/alien/humanoid/hunter(M.loc)
 			else
-				new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
+				if(!M.ckey)
+					new_mob = new /mob/living/simple_animal/hostile/alien/sentinel(M.loc)
+				else
+					new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
 
 		if("animal")
 			var/path
@@ -276,7 +280,9 @@
 
 	to_chat(new_mob, "<span class='warning'>Your form morphs into that of a [randomize].</span>")
 
-	to_chat(new_mob, config.policies["polymorph"])
+	var/poly_msg = CONFIG_GET(keyed_string_list/policy)["polymorph"]
+	if(poly_msg)
+		to_chat(new_mob, poly_msg)
 
 	qdel(M)
 	return new_mob
@@ -293,7 +299,7 @@
 	..()
 
 /atom/proc/animate_atom_living(var/mob/living/owner = null)
-	if((isitem(src) || istype(src, /obj/structure)) && !is_type_in_list(src, GLOB.protected_objects))
+	if((isitem(src) || isstructure(src)) && !is_type_in_list(src, GLOB.protected_objects))
 		if(istype(src, /obj/structure/statue/petrified))
 			var/obj/structure/statue/petrified/P = src
 			if(P.petrified_mob)

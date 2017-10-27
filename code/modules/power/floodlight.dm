@@ -10,21 +10,21 @@
 
 /obj/structure/floodlight_frame/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/wrench) && (state == FLOODLIGHT_NEEDS_WRENCHING))
-		to_chat(user, "<span class='notice'>You secure the [src].</span>")
+		to_chat(user, "<span class='notice'>You secure [src].</span>")
 		anchored = TRUE
 		state = FLOODLIGHT_NEEDS_WIRES
 		desc = "A bare metal frame looking vaguely like a floodlight. Requires wiring."
 	else if(istype(O, /obj/item/stack/cable_coil) && (state == FLOODLIGHT_NEEDS_WIRES))
 		var/obj/item/stack/S = O
 		if(S.use(5))
-			to_chat(user, "<span class='notice'>You wire the [src].</span>")
+			to_chat(user, "<span class='notice'>You wire [src].</span>")
 			name = "wired [name]"
 			desc = "A bare metal frame looking vaguely like a floodlight. Requires securing with a screwdriver."
 			icon_state = "floodlight_c2"
 			state = FLOODLIGHT_NEEDS_SECURING
 	else if(istype(O, /obj/item/light/tube) && (state == FLOODLIGHT_NEEDS_LIGHTS))
 		if(user.transferItemToLoc(O))
-			to_chat(user, "<span class='notice'>You put lights in the [src].</span>")
+			to_chat(user, "<span class='notice'>You put lights in [src].</span>")
 			new /obj/machinery/power/floodlight(src.loc)
 			qdel(src)
 	else if(istype(O, /obj/item/screwdriver) && (state == FLOODLIGHT_NEEDS_SECURING))
@@ -43,6 +43,8 @@
 	icon_state = "floodlight"
 	anchored = TRUE
 	density = TRUE
+	max_integrity = 100
+	integrity_failure = 80
 	idle_power_usage = 100
 	active_power_usage = 1000
 	var/list/light_setting_list = list(0, 5, 10, 15)
@@ -79,7 +81,7 @@
 		if(4)
 			setting_text = "high power"
 	if(user)
-		to_chat(user, "You set the [src] to [setting_text].")
+		to_chat(user, "You set [src] to [setting_text].")
 
 /obj/machinery/power/floodlight/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/wrench))
@@ -104,3 +106,14 @@
 /obj/machinery/power/floodlight/attack_ai(mob/user)
 	attack_hand(user)
 	..()
+
+/obj/machinery/power/floodlight/obj_break(damage_flag)
+	if(!(flags_1 & NODECONSTRUCT_1))
+		playsound(loc, 'sound/effects/glassbr3.ogg', 100, 1)
+		var/obj/structure/floodlight_frame/F = new(loc)
+		F.state = FLOODLIGHT_NEEDS_LIGHTS
+		new /obj/item/light/tube/broken(loc)
+		qdel(src)
+
+/obj/machinery/power/floodlight/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	playsound(src, 'sound/effects/glasshit.ogg', 75, 1)

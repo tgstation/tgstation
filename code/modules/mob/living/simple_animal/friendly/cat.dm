@@ -36,7 +36,7 @@
 
 /mob/living/simple_animal/pet/cat/update_canmove()
 	..()
-	if(client)
+	if(client && stat != DEAD)
 		if (resting)
 			icon_state = "[icon_living]_rest"
 		else

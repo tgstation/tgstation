@@ -168,7 +168,7 @@
 	var/sentience_type = SENTIENCE_ORGANIC
 
 /obj/item/slimepotion/sentience/afterattack(mob/living/M, mob/user)
-	if(being_used || !ismob(M))
+	if(being_used || !ismob(M) || !user.Adjacent(M))
 		return
 	if(!isanimal(M) || M.ckey) //only works on animals that aren't player controlled
 		to_chat(user, "<span class='warning'>[M] is already too intelligent for this to work!</span>")
@@ -194,7 +194,7 @@
 		SM.mind.enslave_mind_to_creator(user)
 		SM.sentience_act()
 		to_chat(SM, "<span class='warning'>All at once it makes sense: you know what you are and who you are! Self awareness is yours!</span>")
-		to_chat(SM, "<span class='userdanger'>You are grateful to be self aware and owe [user] a great debt. Serve [user], and assist [user.p_them()] in completing [user.p_their()] goals at any cost.</span>")
+		to_chat(SM, "<span class='userdanger'>You are grateful to be self aware and owe [user.real_name] a great debt. Serve [user.real_name], and assist [user.p_them()] in completing [user.p_their()] goals at any cost.</span>")
 		to_chat(user, "<span class='notice'>[SM] accepts [src] and suddenly becomes attentive and aware. It worked!</span>")
 		qdel(src)
 	else
@@ -415,7 +415,7 @@
 
 /obj/item/clothing/under/golem
 	name = "adamantine skin"
-	desc = "a golem's skin"
+	desc = "A golem's skin."
 	icon_state = "golem"
 	item_state = "golem"
 	item_color = "golem"
@@ -425,7 +425,7 @@
 
 /obj/item/clothing/suit/golem
 	name = "adamantine shell"
-	desc = "a golem's thick outer shell"
+	desc = "A golem's thick outer shell."
 	icon_state = "golem"
 	item_state = "golem"
 	w_class = WEIGHT_CLASS_BULKY
@@ -438,7 +438,7 @@
 
 /obj/item/clothing/shoes/golem
 	name = "golem's feet"
-	desc = "sturdy adamantine feet"
+	desc = "Sturdy adamantine feet."
 	icon_state = "golem"
 	item_state = null
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -447,7 +447,7 @@
 
 /obj/item/clothing/mask/breath/golem
 	name = "golem's face"
-	desc = "the imposing face of an adamantine golem"
+	desc = "The imposing face of an adamantine golem."
 	icon_state = "golem"
 	item_state = "golem"
 	siemens_coefficient = 0
@@ -457,7 +457,7 @@
 
 /obj/item/clothing/gloves/golem
 	name = "golem's hands"
-	desc = "strong adamantine hands"
+	desc = "Strong adamantine hands."
 	icon_state = "golem"
 	item_state = null
 	siemens_coefficient = 0
@@ -470,160 +470,14 @@
 	item_state = "dermal"
 	item_color = "dermal"
 	name = "golem's head"
-	desc = "a golem's head"
+	desc = "A golem's head."
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	flags_1 = ABSTRACT_1 | NODROP_1
-
-/obj/effect/golemrune
-	anchored = TRUE
-	desc = "a strange rune used to create golems. It glows when spirits are nearby."
-	name = "rune"
-	icon = 'icons/obj/rune.dmi'
-	icon_state = "golem"
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	layer = TURF_LAYER
-
-/obj/effect/golemrune/Initialize()
-	. = ..()
-	START_PROCESSING(SSobj, src)
-	notify_ghosts("Golem rune created in [get_area(src)].", 'sound/effects/ghost2.ogg', source = src)
-
-/obj/effect/golemrune/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
-/obj/effect/golemrune/process()
-	var/mob/dead/observer/ghost
-	for(var/mob/dead/observer/O in src.loc)
-		if(!O.client)
-			continue
-		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)
-			continue
-		if (O.orbiting)
-			continue
-		ghost = O
-		break
-	if(ghost)
-		icon_state = "golem2"
-	else
-		icon_state = "golem"
-
-/obj/effect/golemrune/attack_hand(mob/living/user)
-	var/mob/dead/observer/ghost
-	for(var/mob/dead/observer/O in src.loc)
-		if(!O.client)
-			continue
-		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)
-			continue
-		if (O.orbiting)
-			continue
-		ghost = O
-		break
-	if(!ghost)
-		to_chat(user, "<span class='warning'>The rune fizzles uselessly! There is no spirit nearby.</span>")
-		return
-	var/mob/living/carbon/human/G = new /mob/living/carbon/human
-	G.set_species(/datum/species/golem/adamantine)
-	G.set_cloned_appearance()
-	G.real_name = G.dna.species.random_name()
-	G.name = G.real_name
-	G.dna.unique_enzymes = G.dna.generate_unique_enzymes()
-	G.dna.species.auto_equip(G)
-	G.loc = src.loc
-	G.key = ghost.key
-	to_chat(G, "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. \
-	Serve [user], and assist [user.p_them()] in completing their goals at any cost.")
-	G.mind.store_memory("<b>Serve [user.real_name], your creator.</b>")
-	G.mind.assigned_role = "Servant Golem"
-
-	G.mind.enslave_mind_to_creator(user)
-
-	log_game("[key_name(G)] was made a golem by [key_name(user)].")
-	log_admin("[key_name(G)] was made a golem by [key_name(user)].")
-	qdel(src)
-
-
-
-
-/obj/effect/timestop
-	anchored = TRUE
-	name = "chronofield"
-	desc = "ZA WARUDO"
-	icon = 'icons/effects/160x160.dmi'
-	icon_state = "time"
-	layer = FLY_LAYER
-	pixel_x = -64
-	pixel_y = -64
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	var/mob/living/immune = list() // the one who creates the timestop is immune
-	var/list/stopped_atoms = list()
-	var/freezerange = 2
-	var/duration = 140
-	alpha = 125
-
-/obj/effect/timestop/Initialize()
-	. = ..()
-	for(var/mob/living/L in GLOB.player_list)
-		if(locate(/obj/effect/proc_holder/spell/aoe_turf/conjure/timestop) in L.mind.spell_list) //People who can stop time are immune to its effects
-			immune += L
-	timestop()
-
-
-/obj/effect/timestop/proc/timestop()
-	set waitfor = FALSE
-	playsound(src, 'sound/magic/timeparadox2.ogg', 75, 1, -1)
-	for(var/i in 1 to duration-1)
-		for(var/atom/A in orange (freezerange, src.loc))
-			if(isliving(A))
-				var/mob/living/M = A
-				if(M in immune)
-					continue
-				M.Stun(200, 1, 1)
-				M.anchored = TRUE
-				if(ishostile(M))
-					var/mob/living/simple_animal/hostile/H = M
-					H.AIStatus = AI_OFF
-					H.LoseTarget()
-				stopped_atoms |= M
-			else if(istype(A, /obj/item/projectile))
-				var/obj/item/projectile/P = A
-				P.paused = TRUE
-				stopped_atoms |= P
-
-		for(var/mob/living/M in stopped_atoms)
-			if(get_dist(get_turf(M),get_turf(src)) > freezerange) //If they lagged/ran past the timestop somehow, just ignore them
-				unfreeze_mob(M)
-				stopped_atoms -= M
-		stoplag()
-
-	//End
-	playsound(src, 'sound/magic/timeparadox2.ogg', 75, TRUE, frequency = -1) //reverse!
-	for(var/mob/living/M in stopped_atoms)
-		unfreeze_mob(M)
-
-	for(var/obj/item/projectile/P in stopped_atoms)
-		P.paused = FALSE
-	qdel(src)
-	return
-
-
-
-/obj/effect/timestop/proc/unfreeze_mob(mob/living/M)
-	M.AdjustStun(-200, 1, 1)
-	M.anchored = FALSE
-	if(ishostile(M))
-		var/mob/living/simple_animal/hostile/H = M
-		H.AIStatus = initial(H.AIStatus)
-
-
-/obj/effect/timestop/wizard
-	duration = 100
-
 
 /obj/item/stack/tile/bluespace
 	name = "bluespace floor tile"
 	singular_name = "floor tile"
-	desc = "Through a series of micro-teleports these tiles let people move at incredible speeds"
+	desc = "Through a series of micro-teleports these tiles let people move at incredible speeds."
 	icon_state = "tile-bluespace"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 6
@@ -639,7 +493,7 @@
 /obj/item/stack/tile/sepia
 	name = "sepia floor tile"
 	singular_name = "floor tile"
-	desc = "Time seems to flow very slowly around these tiles"
+	desc = "Time seems to flow very slowly around these tiles."
 	icon_state = "tile-sepia"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 6

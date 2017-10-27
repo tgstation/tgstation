@@ -12,13 +12,14 @@
 
 /obj/effect/decal/HandleTurfChange(turf/T)
 	..()
-	if(T == loc && (isspaceturf(T) || isclosedturf(T) || islava(T) || istype(T, /turf/open/water) || istype(T, /turf/open/chasm)))
+	if(T == loc && (isspaceturf(T) || isclosedturf(T) || islava(T) || istype(T, /turf/open/water) || ischasm(T)))
 		qdel(src)
 
 /obj/effect/turf_decal
 	var/group = TURF_DECAL_PAINT
 	icon = 'icons/turf/decals.dmi'
 	icon_state = "warningline"
+	layer = TURF_DECAL_LAYER
 	anchored = TRUE
 
 //in case we need some special decals

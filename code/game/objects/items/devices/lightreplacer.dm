@@ -192,7 +192,8 @@
 
 	if(target.status != LIGHT_OK)
 		if(CanUse(U))
-			if(!Use(U)) return
+			if(!Use(U))
+				return
 			to_chat(U, "<span class='notice'>You replace the [target.fitting] with \the [src].</span>")
 
 			if(target.status != LIGHT_EMPTY)

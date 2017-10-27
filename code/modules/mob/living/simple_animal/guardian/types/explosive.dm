@@ -70,7 +70,7 @@
 /obj/guardian_bomb/proc/detonate(mob/living/user)
 	if(isliving(user))
 		if(user != spawner && user != spawner.summoner && !spawner.hasmatchingsummoner(user))
-			to_chat(user, "<span class='danger'><B>The [src] was boobytrapped!</span></B>")
+			to_chat(user, "<span class='danger'><B>[src] was boobytrapped!</span></B>")
 			to_chat(spawner, "<span class='danger'><B>Success! Your trap caught [user]</span></B>")
 			var/turf/T = get_turf(src)
 			stored_obj.forceMove(T)

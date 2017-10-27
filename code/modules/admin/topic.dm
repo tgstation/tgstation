@@ -165,6 +165,7 @@
 			return
 		var/datum/round_event_control/E = locate(href_list["forceevent"]) in SSevents.control
 		if(E)
+			E.admin_setup(usr)
 			var/datum/round_event/event = E.runEvent()
 			if(event.announceWhen>0)
 				event.processing = FALSE
@@ -1199,33 +1200,10 @@
 		cmd_admin_mute(href_list["mute"], text2num(href_list["mute_type"]))
 
 	else if(href_list["c_mode"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		if(SSticker.HasRoundStarted())
-			return alert(usr, "The game has already started.", null, null, null, null)
-		var/dat = {"<B>What mode do you wish to play?</B><HR>"}
-		for(var/mode in config.modes)
-			dat += {"<A href='?src=\ref[src];[HrefToken()];c_mode2=[mode]'>[config.mode_names[mode]]</A><br>"}
-		dat += {"<A href='?src=\ref[src];[HrefToken()];c_mode2=secret'>Secret</A><br>"}
-		dat += {"<A href='?src=\ref[src];[HrefToken()];c_mode2=random'>Random</A><br>"}
-		dat += {"Now: [GLOB.master_mode]"}
-		usr << browse(dat, "window=c_mode")
+		return HandleCMode()
 
 	else if(href_list["f_secret"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		if(SSticker.HasRoundStarted())
-			return alert(usr, "The game has already started.", null, null, null, null)
-		if(GLOB.master_mode != "secret")
-			return alert(usr, "The game mode has to be secret!", null, null, null, null)
-		var/dat = {"<B>What game mode do you want to force secret to be? Use this if you want to change the game mode, but want the players to believe it's secret. This will only work if the current game mode is secret.</B><HR>"}
-		for(var/mode in config.modes)
-			dat += {"<A href='?src=\ref[src];[HrefToken()];f_secret2=[mode]'>[config.mode_names[mode]]</A><br>"}
-		dat += {"<A href='?src=\ref[src];[HrefToken()];f_secret2=secret'>Random (default)</A><br>"}
-		dat += {"Now: [GLOB.secret_force_mode]"}
-		usr << browse(dat, "window=f_secret")
+		return HandleFSecret()
 
 	else if(href_list["c_mode2"])
 		if(!check_rights(R_ADMIN|R_SERVER))
@@ -1239,7 +1217,7 @@
 		to_chat(world, "<span class='adminnotice'><b>The mode is now: [GLOB.master_mode]</b></span>")
 		Game() // updates the main game menu
 		SSticker.save_mode(GLOB.master_mode)
-		.(href, list("c_mode"=1))
+		HandleCMode()
 
 	else if(href_list["f_secret2"])
 		if(!check_rights(R_ADMIN|R_SERVER))
@@ -1253,7 +1231,7 @@
 		log_admin("[key_name(usr)] set the forced secret mode as [GLOB.secret_force_mode].")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] set the forced secret mode as [GLOB.secret_force_mode].</span>")
 		Game() // updates the main game menu
-		.(href, list("f_secret"=1))
+		HandleFSecret()
 
 	else if(href_list["monkeyone"])
 		if(!check_rights(R_SPAWN))
@@ -2252,7 +2230,7 @@
 			if(!newname)
 				return
 			G.name = newname
-			var/description = input("Enter centcom message contents:") as message|null
+			var/description = input("Enter CentCom message contents:") as message|null
 			if(!description)
 				return
 			G.report_message = description
@@ -2285,3 +2263,32 @@
 		dat += thing_to_check
 
 		usr << browse(dat.Join("<br>"), "window=related_[C];size=420x300")
+
+/datum/admins/proc/HandleCMode()
+	if(!check_rights(R_ADMIN))
+		return
+
+	if(SSticker.HasRoundStarted())
+		return alert(usr, "The game has already started.", null, null, null, null)
+	var/dat = {"<B>What mode do you wish to play?</B><HR>"}
+	for(var/mode in config.modes)
+		dat += {"<A href='?src=\ref[src];[HrefToken()];c_mode2=[mode]'>[config.mode_names[mode]]</A><br>"}
+	dat += {"<A href='?src=\ref[src];[HrefToken()];c_mode2=secret'>Secret</A><br>"}
+	dat += {"<A href='?src=\ref[src];[HrefToken()];c_mode2=random'>Random</A><br>"}
+	dat += {"Now: [GLOB.master_mode]"}
+	usr << browse(dat, "window=c_mode")
+
+/datum/admins/proc/HandleFSecret()
+	if(!check_rights(R_ADMIN))
+		return
+
+	if(SSticker.HasRoundStarted())
+		return alert(usr, "The game has already started.", null, null, null, null)
+	if(GLOB.master_mode != "secret")
+		return alert(usr, "The game mode has to be secret!", null, null, null, null)
+	var/dat = {"<B>What game mode do you want to force secret to be? Use this if you want to change the game mode, but want the players to believe it's secret. This will only work if the current game mode is secret.</B><HR>"}
+	for(var/mode in config.modes)
+		dat += {"<A href='?src=\ref[src];[HrefToken()];f_secret2=[mode]'>[config.mode_names[mode]]</A><br>"}
+	dat += {"<A href='?src=\ref[src];[HrefToken()];f_secret2=secret'>Random (default)</A><br>"}
+	dat += {"Now: [GLOB.secret_force_mode]"}
+	usr << browse(dat, "window=f_secret")

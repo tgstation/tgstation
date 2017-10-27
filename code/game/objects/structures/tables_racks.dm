@@ -34,11 +34,12 @@
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/table, /obj/structure/table/reinforced)
 
-/obj/structure/table/Initialize()
-	. = ..()
-	for(var/obj/structure/table/T in src.loc)
-		if(T != src)
-			qdel(T)
+/obj/structure/table/examine(mob/user)
+	..()
+	deconstruction_hints(user)
+
+/obj/structure/table/proc/deconstruction_hints(mob/user)
+	to_chat(user, "<span class='notice'>The top is <b>screwed</b> on, but the main <b>bolts</b> are also visible.</span>")
 
 /obj/structure/table/update_icon()
 	if(smooth)
@@ -46,11 +47,14 @@
 		queue_smooth_neighbors(src)
 
 /obj/structure/table/narsie_act()
-	new /obj/structure/table/wood(src.loc)
+	var/atom/A = loc
+	qdel(src)
+	new /obj/structure/table/wood(A)
 
 /obj/structure/table/ratvar_act()
-	new /obj/structure/table/reinforced/brass(src.loc)
-
+	var/atom/A = loc
+	qdel(src)
+	new /obj/structure/table/reinforced/brass(A)
 
 /obj/structure/table/attack_paw(mob/user)
 	attack_hand(user)
@@ -124,8 +128,7 @@
 		// If the tray IS empty, continue on (tray will be placed on the table like other items)
 
 	if(user.a_intent != INTENT_HARM && !(I.flags_1 & ABSTRACT_1))
-		if(user.drop_item())
-			I.Move(loc)
+		if(user.transferItemToLoc(I, drop_location()))
 			var/list/click_params = params2list(params)
 			//Center the icon where the user clicked.
 			if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
@@ -285,7 +288,7 @@
  */
 /obj/structure/table/reinforced
 	name = "reinforced table"
-	desc = "A reinforced version of the four legged table, much harder to simply deconstruct."
+	desc = "A reinforced version of the four legged table."
 	icon = 'icons/obj/smooth_structures/reinforced_table.dmi'
 	icon_state = "r_table"
 	deconstruction_ready = 0
@@ -295,6 +298,12 @@
 	integrity_failure = 50
 	armor = list(melee = 10, bullet = 30, laser = 30, energy = 100, bomb = 20, bio = 0, rad = 0, fire = 80, acid = 70)
 
+/obj/structure/table/reinforced/deconstruction_hints(mob/user)
+	if(deconstruction_ready)
+		to_chat(user, "<span class='notice'>The top cover has been <i>welded</i> loose and the main frame's <b>bolts</b> are exposed.</span>")
+	else
+		to_chat(user, "<span class='notice'>The top cover is firmly <b>welded</b> on.</span>")
+
 /obj/structure/table/reinforced/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weldingtool))
 		var/obj/item/weldingtool/WT = W
@@ -303,13 +312,15 @@
 			if(deconstruction_ready)
 				to_chat(user, "<span class='notice'>You start strengthening the reinforced table...</span>")
 				if (do_after(user, 50*W.toolspeed, target = src))
-					if(!src || !WT.isOn()) return
+					if(!src || !WT.isOn())
+						return
 					to_chat(user, "<span class='notice'>You strengthen the table.</span>")
 					deconstruction_ready = 0
 			else
 				to_chat(user, "<span class='notice'>You start weakening the reinforced table...</span>")
 				if (do_after(user, 50*W.toolspeed, target = src))
-					if(!src || !WT.isOn()) return
+					if(!src || !WT.isOn())
+						return
 					to_chat(user, "<span class='notice'>You weaken the table.</span>")
 					deconstruction_ready = 1
 	else
@@ -405,6 +416,10 @@
 	pass_flags = LETPASSTHROW //You can throw objects over this, despite it's density.
 	max_integrity = 20
 
+/obj/structure/rack/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>")
+
 /obj/structure/rack/CanPass(atom/movable/mover, turf/target)
 	if(src.density == 0) //Because broken racks -Agouri |TODO: SPRITE!|
 		return 1
@@ -422,7 +437,7 @@
 /obj/structure/rack/MouseDrop_T(obj/O, mob/user)
 	if ((!( istype(O, /obj/item) ) || user.get_active_held_item() != O))
 		return
-	if(!user.drop_item())
+	if(!user.dropItemToGround(O))
 		return
 	if(O.loc != src.loc)
 		step(O, get_dir(O, src))
@@ -435,8 +450,7 @@
 		return
 	if(user.a_intent == INTENT_HARM)
 		return ..()
-	if(user.drop_item())
-		W.Move(loc)
+	if(user.transferItemToLoc(W, drop_location()))
 		return 1
 
 /obj/structure/rack/attack_paw(mob/living/user)
@@ -499,7 +513,7 @@
 	building = TRUE
 	to_chat(user, "<span class='notice'>You start constructing a rack...</span>")
 	if(do_after(user, 50, target = user, progress=TRUE))
-		if(!user.drop_item())
+		if(!user.temporarilyRemoveItemFromInventory(src))
 			return
 		var/obj/structure/rack/R = new /obj/structure/rack(user.loc)
 		user.visible_message("<span class='notice'>[user] assembles \a [R].\

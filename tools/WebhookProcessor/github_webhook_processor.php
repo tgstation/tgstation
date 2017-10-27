@@ -26,7 +26,7 @@ $path_to_script = 'tools/WebhookProcessor/github_webhook_processor.php';
 $tracked_branch = "master";
 $trackPRBalance = true;
 $prBalanceJson = '';
-$startingPRBalance = 3;
+$startingPRBalance = 5;
 $maintainer_team_id = 133041;
 $validation = "org";
 $validation_count = 1;
@@ -99,11 +99,8 @@ switch (strtolower($_SERVER['HTTP_X_GITHUB_EVENT'])) {
 	case 'pull_request_review':
 		if($payload['action'] == 'submitted'){
 			$lower_state = strtolower($payload['review']['state']);
-			if(($lower_state == 'approved' || $lower_state == 'changes_requested') && is_maintainer($payload, $payload['review']['user']['login'])){
-				$lower_association = strtolower($payload['review']['author_association']);
-				if($lower_association == 'member' || $lower_association == 'contributor' || $lower_association == 'owner')
-					remove_ready_for_review($payload);
-			}
+			if(($lower_state == 'approved' || $lower_state == 'changes_requested') && is_maintainer($payload, $payload['review']['user']['login']))
+				remove_ready_for_review($payload);
 		}
 		break;
 	default:
@@ -170,8 +167,6 @@ function check_tag_and_replace($payload, $title_tag, $label, &$array_to_add_labe
 	$title = $payload['pull_request']['title'];
 	if(stripos($title, $title_tag) !== FALSE){
 		$array_to_add_label_to[] = $label;
-		$title = trim(str_ireplace($title_tag, '', $title));
-		apisend($payload['pull_request']['url'], 'PATCH', array('title' => $title));
 		return true;
 	}
 	return false;
@@ -209,7 +204,7 @@ function tag_pr($payload, $opened) {
 		$tags[] = 'Merge Conflict';
 
 	$treetags = array('_maps' => 'Map Edit', 'tools' => 'Tools', 'SQL' => 'SQL');
-	$addonlytags = array('icons' => 'Sprites', 'sounds' => 'Sound', 'config' => 'Config Update');
+	$addonlytags = array('icons' => 'Sprites', 'sounds' => 'Sound', 'config' => 'Config Update', 'code/controllers/configuration/entries' => 'Config Update', 'tgui' => 'UI');
 	foreach($treetags as $tree => $tag)
 		if(has_tree_been_edited($payload, $tree))
 			$tags[] = $tag;
@@ -244,7 +239,7 @@ function tag_pr($payload, $opened) {
 function remove_ready_for_review($payload, $labels = null){
 	if($labels == null)
 		$labels = get_labels($payload);
-	$index = array_search('Ready for Review', $labels);
+	$index = array_search('Review Again', $labels);
 	if($index !== FALSE)
 		unset($labels[$index]);
 	$url = $payload['pull_request']['issue_url'] . '/labels';
@@ -261,7 +256,7 @@ function get_reviews($payload){
 }
 
 function check_ready_for_review($payload, $labels = null){
-	$r4rlabel = 'Ready for Review';
+	$r4rlabel = 'Review Again';
 	$labels_which_should_not_be_ready = array('Do Not Merge', 'Work In Progress', 'Merge Conflict');
 	$has_label_already = false;
 	$should_not_have_label = false;
@@ -286,9 +281,8 @@ function check_ready_for_review($payload, $labels = null){
 	$reviews_ids_with_changes_requested = array();
 	$dismissed_an_approved_review = false;
 
-	foreach($reviews as $R){
-		$lower_association = strtolower($R['author_association']);
-		if($lower_association == 'member' || $lower_association == 'contributor' || $lower_association == 'owner'){
+	foreach($reviews as $R)
+		if(is_maintainer($R['user']['login'])){
 			$lower_state = strtolower($R['state']);
 			if($lower_state == 'changes_requested')
 				$reviews_ids_with_changes_requested[] = $R['id'];
@@ -297,7 +291,6 @@ function check_ready_for_review($payload, $labels = null){
 				$dismissed_an_approved_review = true;
 			}
 		}
-	}
 
 	if(!$dismissed_an_approved_review && count($reviews_ids_with_changes_requested) == 0){
 		if($has_label_already)

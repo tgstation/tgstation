@@ -150,7 +150,7 @@
 	if(prob(60))
 		I = D.get_active_held_item()
 		if(I)
-			if(D.drop_item())
+			if(D.temporarilyRemoveItemFromInventory(I))
 				A.put_in_hands(I)
 		D.visible_message("<span class='danger'>[A] has disarmed [D]!</span>", \
 							"<span class='userdanger'>[A] has disarmed [D]!</span>")

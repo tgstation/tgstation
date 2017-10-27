@@ -110,7 +110,7 @@
 
 	if(usr.incapacitated())
 		return 1
-	if(istype(usr.loc, /obj/mecha)) // stops inventory actions in a mech
+	if(ismecha(usr.loc)) // stops inventory actions in a mech
 		return 1
 
 	if(hud && hud.mymob && slot_id)
@@ -167,7 +167,7 @@
 		return 1
 	if(usr.incapacitated() || isobserver(usr))
 		return 1
-	if (istype(usr.loc, /obj/mecha)) // stops inventory actions in a mech
+	if (ismecha(usr.loc)) // stops inventory actions in a mech
 		return 1
 
 	if(hud.mymob.active_hand_index == held_index)
@@ -196,7 +196,8 @@
 	plane = HUD_PLANE
 
 /obj/screen/drop/Click()
-	usr.drop_item_v()
+	if(usr.stat == CONSCIOUS)
+		usr.dropItemToGround(usr.get_active_held_item())
 
 /obj/screen/act_intent
 	name = "intent"
@@ -250,7 +251,7 @@
 		to_chat(C, "<span class='notice'>You are no longer running on internals.</span>")
 		icon_state = "internal0"
 	else
-		if(!C.getorganslot("breathing_tube"))
+		if(!C.getorganslot(ORGAN_SLOT_BREATHING_TUBE))
 			if(!istype(C.wear_mask, /obj/item/clothing/mask))
 				to_chat(C, "<span class='warning'>You are not wearing an internals mask!</span>")
 				return 1
@@ -324,7 +325,8 @@
 	usr.stop_pulling()
 
 /obj/screen/pull/update_icon(mob/mymob)
-	if(!mymob) return
+	if(!mymob)
+		return
 	if(mymob.pulling)
 		icon_state = "pull"
 	else
@@ -350,7 +352,7 @@
 		return 1
 	if(usr.stat || usr.IsUnconscious() || usr.IsKnockdown() || usr.IsStun())
 		return 1
-	if (istype(usr.loc, /obj/mecha)) // stops inventory actions in a mech
+	if (ismecha(usr.loc)) // stops inventory actions in a mech
 		return 1
 	if(master)
 		var/obj/item/I = usr.get_active_held_item()
@@ -484,11 +486,6 @@
 /obj/screen/healths/robot
 	icon = 'icons/mob/screen_cyborg.dmi'
 	screen_loc = ui_borg_health
-
-/obj/screen/healths/deity
-	name = "Nexus Health"
-	icon_state = "deity_nexus"
-	screen_loc = ui_deityhealth
 
 /obj/screen/healths/blob
 	name = "blob health"

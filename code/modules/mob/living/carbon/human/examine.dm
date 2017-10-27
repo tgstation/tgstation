@@ -181,11 +181,11 @@
 		msg += "<B>[capitalize(t_his)] [parse_zone(t)] is missing!</B>\n"
 
 	if(l_limbs_missing >= 2 && r_limbs_missing == 0)
-		msg += "[t_He] looks all right now.\n"
+		msg += "[t_He] look[p_s()] all right now.\n"
 	else if(l_limbs_missing == 0 && r_limbs_missing >= 2)
 		msg += "[t_He] really keeps to the left.\n"
 	else if(l_limbs_missing >= 2 && r_limbs_missing >= 2)
-		msg += "[t_He] doesn't seem all there.\n"
+		msg += "[t_He] [p_do()]n't seem all there.\n"
 
 	if(temp)
 		if(temp < 30)
@@ -211,7 +211,7 @@
 	if(fire_stacks > 0)
 		msg += "[t_He] [t_is] covered in something flammable.\n"
 	if(fire_stacks < 0)
-		msg += "[t_He] looks a little soaked.\n"
+		msg += "[t_He] look[p_s()] a little soaked.\n"
 
 
 	if(pulledby && pulledby.grab_state)
@@ -244,7 +244,7 @@
 			msg += "<B>[t_He] [t_is] bleeding!</B>\n"
 
 	if(reagents.has_reagent("teslium"))
-		msg += "[t_He] is emitting a gentle blue glow!\n"
+		msg += "[t_He] [t_is] emitting a gentle blue glow!\n"
 
 	if(islist(stun_absorption))
 		for(var/i in stun_absorption)
@@ -260,9 +260,9 @@
 			if(41.01 to 51)
 				msg += "[t_He] [t_is] quite flushed and [t_his] breath smells of alcohol.\n"
 			if(51.01 to 61)
-				msg += "[t_He] is very flushed and [t_his] movements jerky, with breath reeking of alcohol.\n"
+				msg += "[t_He] [t_is] very flushed and [t_his] movements jerky, with breath reeking of alcohol.\n"
 			if(61.01 to 91)
-				msg += "[t_He] looks like a drunken mess.\n"
+				msg += "[t_He] look[p_s()] like a drunken mess.\n"
 			if(91.01 to INFINITY)
 				msg += "[t_He] [t_is] a shitfaced, slobbering wreck.\n"
 
@@ -270,15 +270,17 @@
 
 	if(!appears_dead)
 		if(stat == UNCONSCIOUS)
-			msg += "[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.\n"
-		else if(getBrainLoss() >= 60)
-			msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
-
+			msg += "[t_He] [t_is]n't responding to anything around [t_him] and seem[p_s()] to be asleep.\n"
+		else
+			if(getBrainLoss() >= 60)
+				msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
+			if(InCritical())
+				msg += "[t_He] [t_is] barely conscious.\n"
 		if(getorgan(/obj/item/organ/brain))
 			if(istype(src, /mob/living/carbon/human/interactive))
 				var/mob/living/carbon/human/interactive/auto = src
 				if(auto.showexaminetext)
-					msg += "<span class='deadsay'>[t_He] [t_is] appears to be some sort of sick automaton, [t_his] eyes are glazed over and [t_his] mouth is slightly agape.</span>\n"
+					msg += "<span class='deadsay'>[t_He] appear[p_s()] to be some sort of sick automaton, [t_his] eyes are glazed over and [t_his] mouth is slightly agape.</span>\n"
 				if(auto.debugexamine)
 					var/dodebug = auto.doing2string(auto.doing)
 					var/interestdebug = auto.interest2string(auto.interest)

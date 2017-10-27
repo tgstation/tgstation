@@ -22,7 +22,6 @@
 	else
 		A.move_camera_by_click()
 
-
 /mob/living/silicon/ai/ClickOn(var/atom/A, params)
 	if(world.time <= next_click)
 		return
@@ -36,20 +35,16 @@
 		return
 
 	var/turf/pixel_turf = get_turf_pixel(A)
-	var/turf_visible
-	if(pixel_turf)
-		turf_visible = GLOB.cameranet.checkTurfVis(pixel_turf)
-		if(!turf_visible)
-			if(istype(loc, /obj/item/device/aicard) && (pixel_turf in view(client.view, loc)))
-				turf_visible = TRUE
-			else
-				if (pixel_turf.obscured)
-					log_admin("[key_name_admin(src)] might be running a modified client! (failed checkTurfVis on AI click of [A]([COORD(pixel_turf)])")
-					message_admins("[key_name_admin(src)] might be running a modified client! (failed checkTurfVis on AI click of [A]([ADMIN_COORDJMP(pixel_turf)]))")
-					if(REALTIMEOFDAY >= chnotify + 9000)
-						chnotify = REALTIMEOFDAY
-						send2irc_adminless_only("NOCHEAT", "[key_name(src)] might be running a modified client! (failed checkTurfVis on AI click of [A]([COORD(pixel_turf)]))")
-				return
+	if(isnull(pixel_turf))
+		return
+	if(!can_see(A))
+		message_admins("[key_name_admin(src)] might be running a modified client! (failed can_see on AI click of [A]([ADMIN_COORDJMP(pixel_turf)]))")
+		var/message = "[key_name(src)] might be running a modified client! (failed can_see on AI click of [A]([COORD(pixel_turf)]))"
+		log_admin(message)
+		if(REALTIMEOFDAY >= chnotify + 9000)
+			chnotify = REALTIMEOFDAY
+			send2irc_adminless_only("NOCHEAT", message)
+		return
 
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["ctrl"])
@@ -74,7 +69,7 @@
 	if(world.time <= next_move)
 		return
 
-	if(aicamera.in_camera_mode && pixel_turf && turf_visible)
+	if(aicamera.in_camera_mode)
 		aicamera.camera_mode_off()
 		aicamera.captureimage(pixel_turf, usr)
 		return
@@ -150,7 +145,7 @@
 	if(emagged)
 		return
 	if(!secondsElectrified)
-		// permenant shock
+		// permanent shock
 		Topic("aiEnable=6", list("aiEnable"="6"), 1) // 1 meaning no window (consistency!)
 	else
 		// disable/6 is not in Topic; disable/5 disables both temporary and permenant shock

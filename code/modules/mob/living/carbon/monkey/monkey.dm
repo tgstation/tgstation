@@ -136,7 +136,7 @@
 	return protection
 
 /mob/living/carbon/monkey/IsVocal()
-	if(!getorganslot("lungs"))
+	if(!getorganslot(ORGAN_SLOT_LUNGS))
 		return 0
 	return 1
 

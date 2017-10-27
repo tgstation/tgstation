@@ -1,4 +1,4 @@
-#define HIGHLIGHT_DYNAMIC_TRANSIT 1
+#define HIGHLIGHT_DYNAMIC_TRANSIT 0
 #define MAX_TRANSIT_REQUEST_RETRIES 10
 
 SUBSYSTEM_DEF(shuttle)
@@ -67,7 +67,8 @@ SUBSYSTEM_DEF(shuttle)
 			continue
 		supply_packs[P.type] = P
 
-	setup_transit_zone()
+	if(!transit_turfs.len)
+		setup_transit_zone()
 	initial_move()
 #ifdef HIGHLIGHT_DYNAMIC_TRANSIT
 	color_space()
@@ -134,6 +135,7 @@ SUBSYSTEM_DEF(shuttle)
 	if(changed_transit)
 		color_space()
 #endif
+	CheckAutoEvac()
 
 	while(transit_requesters.len)
 		var/requester = popleft(transit_requesters)
@@ -146,7 +148,32 @@ SUBSYSTEM_DEF(shuttle)
 				var/obj/docking_port/mobile/M = requester
 				M.transit_failure()
 		if(MC_TICK_CHECK)
-			return
+			break
+
+/datum/controller/subsystem/shuttle/proc/CheckAutoEvac()
+	if(emergencyNoEscape || emergencyNoRecall || !emergency || !SSticker.HasRoundStarted())
+		return
+
+	var/threshold = CONFIG_GET(number/emergency_shuttle_autocall_threshold)
+	if(!threshold)
+		return
+
+	var/alive = 0
+	for(var/I in GLOB.player_list)
+		var/mob/M = I
+		if(M.stat != DEAD)
+			++alive
+
+	var/total = GLOB.joined_player_list.len
+
+	if(alive / total <= threshold)
+		var/msg = "Automatically dispatching shuttle due to crew death."
+		message_admins(msg)
+		log_game("[msg] Alive: [alive], Roundstart: [total], Threshold: [threshold]")
+		emergencyNoRecall = TRUE
+		priority_announce("Catastrophic casualties detected: crisis shuttle protocols activated - jamming recall signals across all frequencies.")
+		if(emergency.timeLeft(1) > emergencyCallTime * 0.4)
+			emergency.request(null, set_coefficient = 0.4)
 
 /datum/controller/subsystem/shuttle/proc/getShuttle(id)
 	for(var/obj/docking_port/mobile/M in mobile)
@@ -210,9 +237,9 @@ SUBSYSTEM_DEF(shuttle)
 	var/security_num = seclevel2num(get_security_level())
 	switch(security_num)
 		if(SEC_LEVEL_RED,SEC_LEVEL_DELTA)
-			emergency.request(null, signal_origin, html_decode(emergency_reason), 1) //There is a serious threat we gotta move no time to give them five minutes.
+			emergency.request(null, signal_origin, rhtml_decode(emergency_reason), 1) //There is a serious threat we gotta move no time to give them five minutes.
 		else
-			emergency.request(null, signal_origin, html_decode(emergency_reason), 0)
+			emergency.request(null, signal_origin, rhtml_decode(emergency_reason), 0)
 
 	log_game("[key_name(user)] has called the shuttle.")
 	if(call_reason)
@@ -501,6 +528,7 @@ SUBSYSTEM_DEF(shuttle)
 		if(!M.roundstart_move)
 			continue
 		M.dockRoundstart()
+		M.roundstart_move = FALSE
 		CHECK_TICK
 
 /datum/controller/subsystem/shuttle/Recover()
@@ -510,24 +538,56 @@ SUBSYSTEM_DEF(shuttle)
 		stationary = SSshuttle.stationary
 	if (istype(SSshuttle.transit))
 		transit = SSshuttle.transit
+
+	if (istype(SSshuttle.transit_turfs))
+		transit_turfs = SSshuttle.transit_turfs
+	if (istype(SSshuttle.transit_requesters))
+		transit_requesters = SSshuttle.transit_requesters
+	if (istype(SSshuttle.transit_request_failures))
+		transit_request_failures = SSshuttle.transit_request_failures
+
+	if (istype(SSshuttle.emergency))
+		emergency = SSshuttle.emergency
+	if (istype(SSshuttle.arrivals))
+		arrivals = SSshuttle.arrivals
+	if (istype(SSshuttle.backup_shuttle))
+		backup_shuttle = SSshuttle.backup_shuttle
+
+	if (istype(SSshuttle.emergencyLastCallLoc))
+		emergencyLastCallLoc = SSshuttle.emergencyLastCallLoc
+
+	if (istype(SSshuttle.hostileEnvironments))
+		hostileEnvironments = SSshuttle.hostileEnvironments
+
+	if (istype(SSshuttle.supply))
+		supply = SSshuttle.supply
+
 	if (istype(SSshuttle.discoveredPlants))
 		discoveredPlants = SSshuttle.discoveredPlants
+
+	if (istype(SSshuttle.shoppinglist))
+		shoppinglist = SSshuttle.shoppinglist
 	if (istype(SSshuttle.requestlist))
 		requestlist = SSshuttle.requestlist
 	if (istype(SSshuttle.orderhistory))
 		orderhistory = SSshuttle.orderhistory
-	if (istype(SSshuttle.emergency))
-		emergency = SSshuttle.emergency
-	if (istype(SSshuttle.backup_shuttle))
-		backup_shuttle = SSshuttle.backup_shuttle
-	if (istype(SSshuttle.supply))
-		supply = SSshuttle.supply
-	if (istype(SSshuttle.transit_turfs))
-		transit_turfs = SSshuttle.transit_turfs
+
+	if (istype(SSshuttle.shuttle_loan))
+		shuttle_loan = SSshuttle.shuttle_loan
+
+	if (istype(SSshuttle.shuttle_purchase_requirements_met))
+		shuttle_purchase_requirements_met = SSshuttle.shuttle_purchase_requirements_met
+
+	if (clear_transit)
+		WARNING("The shuttle subsystem crashed and was recovered while clearing transit.")
 
 	centcom_message = SSshuttle.centcom_message
 	ordernum = SSshuttle.ordernum
 	points = SSshuttle.points
+	emergencyNoEscape = SSshuttle.emergencyNoEscape
+	emergencyCallAmount = SSshuttle.emergencyCallAmount
+	shuttle_purchased = SSshuttle.shuttle_purchased
+	lockdown = SSshuttle.lockdown
 
 
 /datum/controller/subsystem/shuttle/proc/is_in_shuttle_bounds(atom/A)

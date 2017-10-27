@@ -15,6 +15,15 @@
 	var/power_output = 1
 	var/consumption = 0
 	var/base_icon = "portgen0"
+	var/datum/looping_sound/generator/soundloop
+
+/obj/machinery/power/port_gen/Initialize()
+	. = ..()
+	soundloop = new(list(src), active)
+
+/obj/machinery/power/port_gen/Destroy()
+	QDEL_NULL(soundloop)
+	return ..()
 
 /obj/machinery/power/port_gen/proc/HasFuel() //Placeholder for fuel check.
 	return 1
@@ -36,11 +45,13 @@
 		add_avail(power_gen * power_output)
 		UseFuel()
 		src.updateDialog()
+		soundloop.start()
 
 	else
 		active = 0
 		handleInactive()
 		update_icon()
+		soundloop.stop()
 
 /obj/machinery/power/port_gen/attack_hand(mob/user)
 	if(..())
@@ -94,7 +105,8 @@
 /obj/machinery/power/port_gen/pacman/examine(mob/user)
 	..()
 	to_chat(user, "<span class='notice'>The generator has [sheets] units of [sheet_name] fuel left, producing [power_gen] per cycle.</span>")
-	if(crit_fail) to_chat(user, "<span class='danger'>The generator seems to have broken down.</span>")
+	if(crit_fail)
+		to_chat(user, "<span class='danger'>The generator seems to have broken down.</span>")
 
 /obj/machinery/power/port_gen/pacman/HasFuel()
 	if(sheets >= 1 / (time_per_sheet / power_output) - sheet_left)

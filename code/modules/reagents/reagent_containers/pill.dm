@@ -54,7 +54,8 @@
 
 
 /obj/item/reagent_containers/pill/afterattack(obj/target, mob/user , proximity)
-	if(!proximity) return
+	if(!proximity)
+		return
 	if(target.is_open_container() != 0 && target.reagents)
 		if(!target.reagents.total_volume)
 			to_chat(user, "<span class='warning'>[target] is empty! There's nothing to dissolve [src] in.</span>")

@@ -330,6 +330,20 @@
 		afk_bracket += 600 // Add a minute to the bracket, for every attempt
 	return candidates
 
+/proc/considered_alive(datum/mind/M, enforce_human = TRUE)
+	if(M && M.current)
+		if(enforce_human)
+			var/mob/living/carbon/human/H
+			if(ishuman(M.current))
+				H = M.current
+			return M.current.stat != DEAD && !issilicon(M.current) && !isbrain(M.current) && (!H || H.dna.species.id != "memezombies")
+		else if(isliving(M.current))
+			return M.current.stat != DEAD
+	return FALSE
+
+/proc/considered_afk(datum/mind/M)
+	return !M || !M.current || !M.current.client || M.current.client.is_afk()
+
 /proc/ScreenText(obj/O, maptext="", screen_loc="CENTER-7,CENTER-7", maptext_height=480, maptext_width=480)
 	if(!isobj(O))
 		O = new /obj/screen/text()
@@ -555,9 +569,12 @@
 	return hex2num(copytext(hexa, 6, 8))
 
 /proc/lavaland_equipment_pressure_check(turf/T)
+	. = FALSE
 	if(!istype(T))
 		return
 	var/datum/gas_mixture/environment = T.return_air()
+	if(!istype(environment))
+		return
 	var/pressure = environment.return_pressure()
 	if(pressure <= LAVALAND_EQUIPMENT_EFFECT_PRESSURE)
-		return TRUE
+		. = TRUE

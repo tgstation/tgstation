@@ -21,6 +21,8 @@
 			return FALSE
 		if(M.mind.enslaved_to && !iscultist(M.mind.enslaved_to))
 			return FALSE
+		if(M.mind.unconvertable)
+			return FALSE
 	else
 		return FALSE
 	if(M.isloyal() || issilicon(M) || isbot(M) || isdrone(M) || is_servant_of_ratvar(M))
@@ -79,7 +81,6 @@
 
 
 /datum/game_mode/cult/post_setup()
-	modePlayer += cultists_to_cult
 	if("sacrifice" in cult_objectives)
 		var/list/possible_targets = get_unconvertables()
 		if(!possible_targets.len)

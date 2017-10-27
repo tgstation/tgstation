@@ -298,32 +298,31 @@
 			if(suit)
 				to_chat(user, "<span class='warning'>The unit already contains a suit!.</span>")
 				return
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(I, src))
 				return
 			suit = I
 		else if(istype(I, /obj/item/clothing/head/helmet))
 			if(helmet)
 				to_chat(user, "<span class='warning'>The unit already contains a helmet!</span>")
 				return
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(I, src))
 				return
 			helmet = I
 		else if(istype(I, /obj/item/clothing/mask))
 			if(mask)
 				to_chat(user, "<span class='warning'>The unit already contains a mask!</span>")
 				return
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(I, src))
 				return
 			mask = I
 		else
 			if(storage)
 				to_chat(user, "<span class='warning'>The auxiliary storage compartment is full!</span>")
 				return
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(I, src))
 				return
 			storage = I
 
-		I.loc = src
 		visible_message("<span class='notice'>[user] inserts [I] into [src]</span>", "<span class='notice'>You load [I] into [src].</span>")
 		update_icon()
 		return

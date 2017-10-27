@@ -41,7 +41,8 @@
 
 	var/obj/item/reagent_containers/syringe/S = syringes[syringes.len]
 
-	if(!S) return 0
+	if(!S)
+		return 0
 	S.loc = user.loc
 
 	syringes.Remove(S)
@@ -76,18 +77,18 @@
 	w_class = WEIGHT_CLASS_SMALL
 	origin_tech = "combat=2;syndicate=2;biotech=3"
 	force = 2 //Also very weak because it's smaller
-	suppressed = 1 //Softer fire sound
-	can_unsuppress = 0 //Permanently silenced
-	
+	suppressed = TRUE //Softer fire sound
+	can_unsuppress = FALSE //Permanently silenced
+
 /obj/item/gun/syringe/dna
 	name = "modified syringe gun"
 	desc = "A syringe gun that has been modified to fit DNA injectors instead of normal syringes."
 	origin_tech = "combat=2;syndicate=2;biotech=3"
-	
+
 /obj/item/gun/syringe/dna/Initialize()
 	. = ..()
 	chambered = new /obj/item/ammo_casing/dnainjector(src)
-	
+
 /obj/item/gun/syringe/dna/attackby(obj/item/A, mob/user, params, show_msg = TRUE)
 	if(istype(A, /obj/item/dnainjector))
 		var/obj/item/dnainjector/D = A

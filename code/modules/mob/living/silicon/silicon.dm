@@ -47,6 +47,10 @@
 	diag_hud_set_status()
 	diag_hud_set_health()
 
+/mob/living/silicon/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION, TRUE, TRUE)
+
 /mob/living/silicon/med_hud_set_health()
 	return //we use a different hud
 
@@ -141,9 +145,6 @@
 				alarm_types_show[key] = 0
 			for(var/key in alarm_types_clear)
 				alarm_types_clear[key] = 0
-
-/mob/living/silicon/drop_item()
-	return
 
 /mob/living/silicon/can_inject(mob/user, error_msg)
 	if(error_msg)

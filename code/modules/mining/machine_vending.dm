@@ -114,9 +114,8 @@
 		else if(href_list["choice"] == "insert")
 			var/obj/item/card/id/I = usr.get_active_held_item()
 			if(istype(I))
-				if(!usr.drop_item())
+				if(!usr.transferItemToLoc(I, src))
 					return
-				I.loc = src
 				inserted_id = I
 			else to_chat(usr, "<span class='danger'>No valid ID.</span>")
 	if(href_list["purchase"])
@@ -142,9 +141,8 @@
 	if(istype(I, /obj/item/card/id))
 		var/obj/item/card/id/C = usr.get_active_held_item()
 		if(istype(C) && !istype(inserted_id))
-			if(!usr.drop_item())
+			if(!usr.transferItemToLoc(C, src))
 				return
-			C.loc = src
 			inserted_id = C
 			interact(user)
 		return

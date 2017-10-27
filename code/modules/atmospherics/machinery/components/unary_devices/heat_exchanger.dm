@@ -3,7 +3,7 @@
 	icon_state = "he_intact"
 
 	name = "heat exchanger"
-	desc = "Exchanges heat between two input gases. Setup for fast heat transfer"
+	desc = "Exchanges heat between two input gases. Set up for fast heat transfer."
 
 	can_unwrench = TRUE
 
@@ -11,6 +11,8 @@
 
 	var/obj/machinery/atmospherics/components/unary/heat_exchanger/partner = null
 	var/update_cycle
+
+	pipe_state = "heunary"
 
 /obj/machinery/atmospherics/components/unary/heat_exchanger/update_icon()
 	if(NODE1)

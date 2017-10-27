@@ -1,13 +1,17 @@
 /obj/machinery/atmospherics/components/trinary/filter
 	name = "gas filter"
 	icon_state = "filter_off"
+	desc = "Very useful for filtering gasses."
 	density = FALSE
 	can_unwrench = TRUE
 	var/on = FALSE
 	var/target_pressure = ONE_ATMOSPHERE
-	var/filter_type = ""
+	var/filter_type = null
 	var/frequency = 0
 	var/datum/radio_frequency/radio_connection
+
+	construction_type = /obj/item/pipe/trinary/flippable
+	pipe_state = "filter"
 
 /obj/machinery/atmospherics/components/trinary/filter/flipped
 	icon_state = "filter_off_f"
@@ -26,6 +30,9 @@
 	frequency = new_frequency
 	if(frequency)
 		radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_ATMOSIA)
+
+/obj/machinery/atmospherics/components/trinary/filter/New()
+	..()
 
 /obj/machinery/atmospherics/components/trinary/filter/Destroy()
 	SSradio.remove_object(src,frequency)
@@ -66,7 +73,7 @@
 	var/output_starting_pressure = air3.return_pressure()
 
 	if(output_starting_pressure >= target_pressure)
-		//No need to mix if target is already full!
+		//No need to transfer if target is already full!
 		return
 
 	//Calculate necessary moles to transfer using PV=nRT
@@ -85,23 +92,25 @@
 		if(!removed)
 			return
 
-		var/filtering = filter_type ? TRUE : FALSE
-
-		if(filtering && !istext(filter_type))
-			WARNING("Wrong gas ID in [src]'s filter_type var. filter_type == [filter_type]")
-			filtering = FALSE
+		var/filtering = TRUE
+		if(!ispath(filter_type))
+			if(filter_type)
+				filter_type = gas_id2path(filter_type) //support for mappers so they don't need to type out paths
+			else
+				filtering = FALSE
 
 		if(filtering && removed.gases[filter_type])
 			var/datum/gas_mixture/filtered_out = new
 
 			filtered_out.temperature = removed.temperature
-			filtered_out.assert_gas(filter_type)
+			ASSERT_GAS(filter_type, filtered_out)
 			filtered_out.gases[filter_type][MOLES] = removed.gases[filter_type][MOLES]
 
 			removed.gases[filter_type][MOLES] = 0
 			removed.garbage_collect()
 
-			air2.merge(filtered_out)
+			var/datum/gas_mixture/target = (air2.return_pressure() < target_pressure ? air2 : air1) //if there's no room for the filtered gas; just leave it in air1
+			target.merge(filtered_out)
 
 		air3.merge(removed)
 
@@ -123,7 +132,15 @@
 	data["on"] = on
 	data["pressure"] = round(target_pressure)
 	data["max_pressure"] = round(MAX_OUTPUT_PRESSURE)
-	data["filter_type"] = filter_type
+
+	if(filter_type) //ui code is garbage and this is needed for it to work grr
+		if(ispath(filter_type))	//we need to send the gas ID. if it's a path, get it from the metainfo list...
+			data["filter_type"] = GLOB.meta_gas_info[filter_type][META_GAS_ID]
+		else //...otherwise, it's already in the form we need.
+			data["filter_type"] = filter_type
+	else
+		data["filter_type"] = "none"
+
 	return data
 
 /obj/machinery/atmospherics/components/trinary/filter/ui_act(action, params)
@@ -150,9 +167,9 @@
 				target_pressure = Clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
 				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
 		if("filter")
-			filter_type = ""
+			filter_type = null
 			var/filter_name = "nothing"
-			var/gas = params["mode"]
+			var/gas = text2path(params["mode"]) || gas_id2path(params["mode"])
 			if(gas in GLOB.meta_gas_info)
 				filter_type = gas
 				filter_name	= GLOB.meta_gas_info[gas][META_GAS_NAME]
@@ -165,4 +182,3 @@
 	if(. && on && is_operational())
 		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		return FALSE
-

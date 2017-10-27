@@ -32,7 +32,8 @@
 	toggle()
 
 /obj/item/device/chameleon/afterattack(atom/target, mob/user , proximity)
-	if(!proximity) return
+	if(!proximity)
+		return
 	if(!check_sprite(target))
 		return
 	if(!active_dummy)
@@ -51,7 +52,8 @@
 	return FALSE
 
 /obj/item/device/chameleon/proc/toggle()
-	if(!can_use || !saved_appearance) return
+	if(!can_use || !saved_appearance)
+		return
 	if(active_dummy)
 		eject_all()
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
@@ -65,6 +67,7 @@
 		C.activate(usr, saved_appearance, src)
 		to_chat(usr, "<span class='notice'>You activate \the [src].</span>")
 		new /obj/effect/temp_visual/emp/pulse(get_turf(src))
+	usr.cancel_camera()
 
 /obj/item/device/chameleon/proc/disrupt(delete_dummy = 1)
 	if(active_dummy)

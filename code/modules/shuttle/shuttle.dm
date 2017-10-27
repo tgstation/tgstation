@@ -179,7 +179,8 @@
 
 /obj/docking_port/proc/getDockedId()
 	var/obj/docking_port/P = get_docked()
-	if(P) return P.id
+	if(P)
+		return P.id
 
 /obj/docking_port/stationary
 	name = "dock"
@@ -192,7 +193,7 @@
 
 	var/last_dock_time
 
-/obj/docking_port/stationary/Initialize()
+/obj/docking_port/stationary/Initialize(mapload)
 	. = ..()
 	SSshuttle.stationary += src
 	if(!id)
@@ -200,6 +201,10 @@
 	if(name == "dock")
 		name = "dock[SSshuttle.stationary.len]"
 	baseturf_cache = typecacheof(baseturf_type)
+
+	if(mapload)
+		for(var/turf/T in return_turfs())
+			T.flags_1 |= NO_RUINS_1
 
 	#ifdef DOCKING_PORT_HIGHLIGHT
 	highlight("#f00")
@@ -279,6 +284,7 @@
 	var/engine_coeff = 1 //current engine coeff
 	var/current_engines = 0 //current engine power
 	var/initial_engines = 0 //initial engine power
+	var/can_move_docking_ports = FALSE //if this shuttle can move docking ports other than the one it is docked at
 
 /obj/docking_port/mobile/proc/register()
 	SSshuttle.mobile += src
@@ -553,14 +559,18 @@
 	var/list/moved_atoms = list() //Everything not a turf that gets moved in the shuttle
 	var/list/areas_to_move = list() //unique assoc list of areas on turfs being moved
 
+	CHECK_TICK
+
 	/****************************************All beforeShuttleMove procs*****************************************/
 	var/index = 0
 	for(var/place in old_turfs)
 		index++
 		var/turf/oldT = place
 		var/turf/newT = new_turfs[index]
-		if(!newT || !oldT)
-			continue
+		if(!newT)
+			return DOCKING_NULL_DESTINATION
+		if(!oldT)
+			return DOCKING_NULL_SOURCE
 
 		var/area/old_area = oldT.loc
 		var/move_mode = old_area.beforeShuttleMove(shuttle_areas)											//areas
@@ -571,13 +581,14 @@
 				continue
 			move_mode = moving_atom.beforeShuttleMove(newT, rotation, move_mode)							//atoms
 
-		move_mode = oldT.fromShuttleMove(newT, underlying_turf_type, baseturf_cache, move_mode)	//turfs
+		move_mode = oldT.fromShuttleMove(newT, underlying_turf_type, baseturf_cache, move_mode)				//turfs
 		move_mode = newT.toShuttleMove(oldT, move_mode , src)												//turfs
 
 		if(move_mode & MOVE_AREA)
 			areas_to_move[old_area] = TRUE
 
 		old_turfs[place] = move_mode
+		CHECK_TICK
 
 	/*******************************************All onShuttleMove procs******************************************/
 
@@ -592,7 +603,7 @@
 				var/atom/movable/moving_atom = thing
 				if(moving_atom.loc != oldT) //fix for multi-tile objects
 					continue
-				moving_atom.onShuttleMove(newT, oldT, rotation, movement_force, movement_direction, old_dock)//atoms
+				moving_atom.onShuttleMove(newT, oldT, rotation, movement_force, movement_direction, old_dock, src)//atoms
 				moved_atoms += moving_atom
 		if(move_mode & MOVE_TURF)
 			oldT.onShuttleMove(newT, underlying_turf_type, underlying_baseturf_type, rotation, movement_force, movement_direction)//turfs
@@ -608,16 +619,19 @@
 		var/turf/oldT = thing
 		var/turf/newT = new_turfs[index]
 		newT.afterShuttleMove(oldT)																			//turfs
+		CHECK_TICK
 
 	for(var/i in 1 to moved_atoms.len)
 		var/atom/movable/moved_object = moved_atoms[i]
 		moved_object.afterShuttleMove(movement_force, dir, preferred_direction, movement_direction)			//atoms
+		CHECK_TICK
 
 	underlying_old_area.afterShuttleMove()
 
 	for(var/thing in areas_to_move)
 		var/area/internal_area = thing
 		internal_area.afterShuttleMove()																	//areas
+		CHECK_TICK
 
 	// Parallax handling
 	var/new_parallax_dir = FALSE
@@ -626,6 +640,7 @@
 	for(var/i in shuttle_areas)
 		var/area/place = i
 		place.parallax_movedir = new_parallax_dir
+		CHECK_TICK
 
 	check_poddoors()
 	new_dock.last_dock_time = world.time
@@ -662,7 +677,14 @@
 	// then try again
 	switch(mode)
 		if(SHUTTLE_CALL)
-			if(dock(destination, preferred_direction) != DOCKING_SUCCESS)
+			var/error = dock(destination, preferred_direction)
+			if(error && error & (DOCKING_NULL_DESTINATION | DOCKING_NULL_SOURCE))
+				var/msg = "A mobile dock in transit exited dock() with an error. This is most likely a mapping problem: Error: [error],  ([src]) ([previous])"
+				WARNING(msg)
+				message_admins(msg)
+				mode = SHUTTLE_IDLE
+				return
+			else if(error)
 				setTimer(20)
 				return
 		if(SHUTTLE_RECALL)

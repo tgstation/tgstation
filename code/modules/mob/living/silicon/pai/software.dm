@@ -28,44 +28,44 @@
 	var/dat = ""
 	var/left_part = ""
 	var/right_part = softwareMenu()
-	src.set_machine(src)
+	set_machine(src)
 
 	if(temp)
 		left_part = temp
-	else if(src.stat == DEAD)						// Show some flavor text if the pAI is dead
+	else if(stat == DEAD)						// Show some flavor text if the pAI is dead
 		left_part = "<b><font color=red>�Rr�R �a�� ��Rr����o�</font></b>"
 		right_part = "<pre>Program index hash not found</pre>"
 
 	else
-		switch(src.screen)							// Determine which interface to show here
+		switch(screen)							// Determine which interface to show here
 			if("main")
 				left_part = ""
 			if("directives")
-				left_part = src.directives()
+				left_part = directives()
 			if("pdamessage")
-				left_part = src.pdamessage()
+				left_part = pdamessage()
 			if("buy")
 				left_part = downloadSoftware()
 			if("manifest")
-				left_part = src.softwareManifest()
+				left_part = softwareManifest()
 			if("medicalrecord")
-				left_part = src.softwareMedicalRecord()
+				left_part = softwareMedicalRecord()
 			if("securityrecord")
-				left_part = src.softwareSecurityRecord()
+				left_part = softwareSecurityRecord()
 			if("translator")
-				left_part = src.softwareTranslator()
+				left_part = softwareTranslator()
 			if("atmosensor")
-				left_part = src.softwareAtmo()
+				left_part = softwareAtmo()
 			if("securityhud")
-				left_part = src.facialRecognition()
+				left_part = facialRecognition()
 			if("medicalhud")
-				left_part = src.medicalAnalysis()
+				left_part = medicalAnalysis()
 			if("doorjack")
-				left_part = src.softwareDoor()
+				left_part = softwareDoor()
 			if("camerajack")
-				left_part = src.softwareCamera()
+				left_part = softwareCamera()
 			if("signaller")
-				left_part = src.softwareSignal()
+				left_part = softwareSignal()
 
 	//usr << browse_rsc('windowbak.png')		// This has been moved to the mob's Login() proc
 
@@ -119,16 +119,16 @@
 	var/soft = href_list["software"]
 	var/sub = href_list["sub"]
 	if(soft)
-		src.screen = soft
+		screen = soft
 	if(sub)
-		src.subscreen = text2num(sub)
+		subscreen = text2num(sub)
 	switch(soft)
 		// Purchasing new software
 		if("buy")
 			if(subscreen == 1)
 				var/target = href_list["buy"]
 				if(available_software.Find(target) && !software.Find(target))
-					var/cost = src.available_software[target]
+					var/cost = available_software[target]
 					if(ram >= cost)
 						software.Add(target)
 						ram -= cost
@@ -196,7 +196,8 @@
 				var/mob/living/M = card.loc
 				var/count = 0
 				while(!isliving(M))
-					if(!M || !M.loc) return 0 //For a runtime where M ends up in nullspace (similar to bluespace but less colourful)
+					if(!M || !M.loc)
+						return 0 //For a runtime where M ends up in nullspace (similar to bluespace but less colourful)
 					M = M.loc
 					count++
 					if(count >= 6)
@@ -248,7 +249,7 @@
 				medHUD = !medHUD
 				if(medHUD)
 					add_med_hud()
-					
+
 				else
 					var/datum/atom_hud/med = GLOB.huds[med_hud]
 					med.remove_hud_from(src)
@@ -259,17 +260,17 @@
 					// this is PERMAMENT.
 		if("doorjack")
 			if(href_list["jack"])
-				if(src.cable && src.cable.machine)
-					src.hackdoor = src.cable.machine
-					src.hackloop()
+				if(cable && cable.machine)
+					hackdoor = cable.machine
+					hackloop()
 			if(href_list["cancel"])
-				src.hackdoor = null
+				hackdoor = null
 			if(href_list["cable"])
-				var/turf/T = get_turf(src.loc)
+				var/turf/T = get_turf(loc)
 				cable = new /obj/item/pai_cable(T)
-				T.visible_message("<span class='warning'>A port on [src] opens to reveal [src.cable], which promptly falls to the floor.</span>", "<span class='italics'>You hear the soft click of something light and hard falling to the ground.</span>")
-	//src.updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
-	src.paiInterface()		 // So we'll just call the update directly rather than doing some default checks
+				T.visible_message("<span class='warning'>A port on [src] opens to reveal [cable], which promptly falls to the floor.</span>", "<span class='italics'>You hear the soft click of something light and hard falling to the ground.</span>")
+	//updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
+	paiInterface()		 // So we'll just call the update directly rather than doing some default checks
 	return
 
 // MENUS
@@ -287,7 +288,7 @@
 
 	// Basic
 	dat += "<b>Basic</b> <br>"
-	for(var/s in src.software)
+	for(var/s in software)
 		if(s == "digital messenger")
 			dat += "<a href='byond://?src=\ref[src];software=pdamessage;sub=0'>Digital Messenger</a> <br>"
 		if(s == "crew manifest")
@@ -304,15 +305,15 @@
 
 	// Advanced
 	dat += "<b>Advanced</b> <br>"
-	for(var/s in src.software)
+	for(var/s in software)
 		if(s == "atmosphere sensor")
 			dat += "<a href='byond://?src=\ref[src];software=atmosensor;sub=0'>Atmospheric Sensor</a> <br>"
 		if(s == "heartbeat sensor")
 			dat += "<a href='byond://?src=\ref[src];software=[s]'>Heartbeat Sensor</a> <br>"
 		if(s == "security HUD")
-			dat += "<a href='byond://?src=\ref[src];software=securityhud;sub=0'>Facial Recognition Suite</a>[(src.secHUD) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
+			dat += "<a href='byond://?src=\ref[src];software=securityhud;sub=0'>Facial Recognition Suite</a>[(secHUD) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
 		if(s == "medical HUD")
-			dat += "<a href='byond://?src=\ref[src];software=medicalhud;sub=0'>Medical Analysis Suite</a>[(src.medHUD) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
+			dat += "<a href='byond://?src=\ref[src];software=medicalhud;sub=0'>Medical Analysis Suite</a>[(medHUD) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
 		if(s == "universal translator")
 			var/translator_on = (flags_2 & OMNITONGUE_2)
 			dat += "<a href='byond://?src=\ref[src];software=translator;sub=0'>Universal Translator</a>[translator_on ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
@@ -333,12 +334,12 @@
 	var/dat = ""
 
 	dat += "<h2>CentCom pAI Module Subversion Network</h2><br>"
-	dat += "<pre>Remaining Available Memory: [src.ram]</pre><br>"
+	dat += "<pre>Remaining Available Memory: [ram]</pre><br>"
 	dat += "<p style=\"text-align:center\"><b>Trunks available for checkout</b><br>"
 
 	for(var/s in available_software)
 		if(!software.Find(s))
-			var/cost = src.available_software[s]
+			var/cost = available_software[s]
 			var/displayName = uppertext(s)
 			dat += "<a href='byond://?src=\ref[src];software=buy;sub=1;buy=[s]'>[displayName]</a> ([cost]) <br>"
 		else
@@ -351,12 +352,12 @@
 /mob/living/silicon/pai/proc/directives()
 	var/dat = ""
 
-	dat += "[(src.master) ? "Your master: [src.master] ([src.master_dna])" : "You are bound to no one."]"
+	dat += "[(master) ? "Your master: [master] ([master_dna])" : "You are bound to no one."]"
 	dat += "<br><br>"
 	dat += "<a href='byond://?src=\ref[src];software=directive;getdna=1'>Request carrier DNA sample</a><br>"
 	dat += "<h2>Directives</h2><br>"
 	dat += "<b>Prime Directive</b><br>"
-	dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[src.laws.zeroth]<br>"
+	dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[laws.zeroth]<br>"
 	dat += "<b>Supplemental Directives</b><br>"
 	for(var/slaws in laws.supplied)
 		dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[slaws]<br>"
@@ -398,14 +399,14 @@
 	Frequency:
 	<A href='byond://?src=\ref[src];software=signaller;freq=-10;'>-</A>
 	<A href='byond://?src=\ref[src];software=signaller;freq=-2'>-</A>
-	[format_frequency(src.sradio.frequency)]
+	[format_frequency(sradio.frequency)]
 	<A href='byond://?src=\ref[src];software=signaller;freq=2'>+</A>
 	<A href='byond://?src=\ref[src];software=signaller;freq=10'>+</A><BR>
 
 	Code:
 	<A href='byond://?src=\ref[src];software=signaller;code=-5'>-</A>
 	<A href='byond://?src=\ref[src];software=signaller;code=-1'>-</A>
-	[src.sradio.code]
+	[sradio.code]
 	<A href='byond://?src=\ref[src];software=signaller;code=1'>+</A>
 	<A href='byond://?src=\ref[src];software=signaller;code=5'>+</A><BR>
 
@@ -476,7 +477,7 @@
 /mob/living/silicon/pai/proc/facialRecognition()
 	var/dat = {"<h3>Facial Recognition Suite</h3><br>
 				When enabled, this package will scan all viewable faces and compare them against the known criminal database, providing real-time graphical data about any detected persons of interest.<br><br>
-				The package is currently [ (src.secHUD) ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>
+				The package is currently [ (secHUD) ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>
 				<a href='byond://?src=\ref[src];software=securityhud;sub=0;toggle=1'>Toggle Package</a><br>
 				"}
 	return dat
@@ -484,16 +485,16 @@
 // Medical HUD
 /mob/living/silicon/pai/proc/medicalAnalysis()
 	var/dat = ""
-	if(src.subscreen == 0)
+	if(subscreen == 0)
 		dat += {"<h3>Medical Analysis Suite</h3><br>
 				 <h4>Visual Status Overlay</h4><br>
 					When enabled, this package will scan all nearby crewmembers' vitals and provide real-time graphical data about their state of health.<br><br>
-					The suite is currently [ (src.medHUD) ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>
+					The suite is currently [ (medHUD) ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>
 					<a href='byond://?src=\ref[src];software=medicalhud;sub=0;toggle=1'>Toggle Suite</a><br>
 					<br>
 					<a href='byond://?src=\ref[src];software=medicalhud;sub=1'>Host Bioscan</a><br>
 					"}
-	if(src.subscreen == 1)
+	if(subscreen == 1)
 		dat += {"<h3>Medical Analysis Suite</h3><br>
 				 <h4>Host Bioscan</h4><br>
 				"}
@@ -501,8 +502,8 @@
 		if(!isliving(M))
 			while(!isliving(M))
 				if(isturf(M))
-					src.temp = "Error: No biological host found. <br>"
-					src.subscreen = 0
+					temp = "Error: No biological host found. <br>"
+					subscreen = 0
 					return dat
 				M = M.loc
 		dat += {"Bioscan Results for [M]: <br>"
@@ -529,7 +530,7 @@
 /mob/living/silicon/pai/proc/softwareAtmo()
 	var/dat = "<h3>Atmospheric Sensor</h4>"
 
-	var/turf/T = get_turf(src.loc)
+	var/turf/T = get_turf(loc)
 	if (isnull(T))
 		dat += "Unable to obtain a reading.<br>"
 	else
@@ -556,14 +557,14 @@
 	var/dat = "<h3>Camera Jack</h3>"
 	dat += "Cable status : "
 
-	if(!src.cable)
+	if(!cable)
 		dat += "<font color=#FF5555>Retracted</font> <br>"
 		return dat
-	if(!src.cable.machine)
+	if(!cable.machine)
 		dat += "<font color=#FFFF55>Extended</font> <br>"
 		return dat
 
-	var/obj/machinery/machine = src.cable.machine
+	var/obj/machinery/machine = cable.machine
 	dat += "<font color=#55FF55>Connected</font> <br>"
 
 	if(!istype(machine, /obj/machinery/camera))
@@ -574,55 +575,37 @@
 /mob/living/silicon/pai/proc/softwareDoor()
 	var/dat = "<h3>Airlock Jack</h3>"
 	dat += "Cable status : "
-	if(!src.cable)
+	if(!cable)
 		dat += "<font color=#FF5555>Retracted</font> <br>"
 		dat += "<a href='byond://?src=\ref[src];software=doorjack;cable=1;sub=0'>Extend Cable</a> <br>"
 		return dat
-	if(!src.cable.machine)
+	if(!cable.machine)
 		dat += "<font color=#FFFF55>Extended</font> <br>"
 		return dat
 
-	var/obj/machinery/machine = src.cable.machine
+	var/obj/machinery/machine = cable.machine
 	dat += "<font color=#55FF55>Connected</font> <br>"
 	if(!istype(machine, /obj/machinery/door))
 		dat += "Connected device's firmware does not appear to be compatible with Airlock Jack protocols.<br>"
 		return dat
 //	var/obj/machinery/airlock/door = machine
 
-	if(!src.hackdoor)
+	if(!hackdoor)
 		dat += "<a href='byond://?src=\ref[src];software=doorjack;jack=1;sub=0'>Begin Airlock Jacking</a> <br>"
 	else
-		dat += "Jack in progress... [src.hackprogress]% complete.<br>"
+		dat += "Jack in progress... [hackprogress]% complete.<br>"
 		dat += "<a href='byond://?src=\ref[src];software=doorjack;cancel=1;sub=0'>Cancel Airlock Jack</a> <br>"
-	//src.hackdoor = machine
-	//src.hackloop()
 	return dat
 
 // Door Jack - supporting proc
 /mob/living/silicon/pai/proc/hackloop()
-	var/turf/T = get_turf(src.loc)
+	var/turf/T = get_turf(src)
 	for(var/mob/living/silicon/ai/AI in GLOB.player_list)
 		if(T.loc)
 			to_chat(AI, "<font color = red><b>Network Alert: Brute-force encryption crack in progress in [T.loc].</b></font>")
 		else
 			to_chat(AI, "<font color = red><b>Network Alert: Brute-force encryption crack in progress. Unable to pinpoint location.</b></font>")
-	while(src.hackprogress < 100)
-		if(src.cable && src.cable.machine && istype(src.cable.machine, /obj/machinery/door) && src.cable.machine == src.hackdoor && get_dist(src, src.hackdoor) <= 1)
-			hackprogress += rand(1, 10)
-		else
-			src.temp = "Door Jack: Connection to airlock has been lost. Hack aborted."
-			hackprogress = 0
-			src.hackdoor = null
-			return
-		if(hackprogress >= 100)		// This is clunky, but works. We need to make sure we don't ever display a progress greater than 100,
-			hackprogress = 100		// but we also need to reset the progress AFTER it's been displayed
-		if(src.screen == "doorjack" && src.subscreen == 0) // Update our view, if appropriate
-			src.paiInterface()
-		if(hackprogress >= 100)
-			src.hackprogress = 0
-			var/obj/machinery/door/D = cable.machine
-			D.open()
-		sleep(50)			// Update every 5 seconds
+	hacking = TRUE
 
 // Digital Messenger
 /mob/living/silicon/pai/proc/pdamessage()
@@ -635,7 +618,7 @@
 	dat += "<ul>"
 	if(!pda.toff)
 		for (var/obj/item/device/pda/P in sortNames(get_viewable_pdas()))
-			if (P == src.pda)
+			if (P == pda)
 				continue
 			dat += "<li><a href='byond://?src=\ref[src];software=pdamessage;target=\ref[P]'>[P]</a>"
 			dat += "</li>"

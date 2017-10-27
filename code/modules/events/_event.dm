@@ -100,6 +100,10 @@
 
 	return E
 
+//Special admins setup
+/datum/round_event_control/proc/admin_setup()
+	return
+
 /datum/round_event	//NOTE: Times are measured in master controller ticks!
 	var/processing = TRUE
 	var/datum/round_event_control/control
@@ -158,19 +162,28 @@
 		return
 
 	if(activeFor == startWhen)
+		processing = FALSE
 		start()
+		processing = TRUE
 
 	if(activeFor == announceWhen)
+		processing = FALSE
 		announce()
+		processing = TRUE
 
 	if(startWhen < activeFor && activeFor < endWhen)
+		processing = FALSE
 		tick()
+		processing = TRUE
 
 	if(activeFor == endWhen)
+		processing = FALSE
 		end()
+		processing = TRUE
 
 	// Everything is done, let's clean up.
 	if(activeFor >= endWhen && activeFor >= announceWhen && activeFor >= startWhen)
+		processing = FALSE
 		kill()
 
 	activeFor++

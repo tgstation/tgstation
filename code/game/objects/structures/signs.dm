@@ -8,6 +8,10 @@
 	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 	var/buildable_sign = 1 //unwrenchable and modifiable
 
+/obj/structure/sign/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION) // Since this is on a wall if it becomes irradiated it will smuggle the radiation past the wall
+
 /obj/structure/sign/basic
 	name = "blank sign"
 	desc = "How can signs be real if our eyes aren't real?"
@@ -104,7 +108,6 @@
 							 "<span class='notice'>You attach the sign to [T].</span>")
 		playsound(T, 'sound/items/deconstruct.ogg', 50, 1)
 		new sign_path(T)
-		user.drop_item()
 		qdel(src)
 	else
 		return ..()
@@ -209,7 +212,7 @@
 
 /obj/structure/sign/kiddieplaque
 	name = "AI developers plaque"
-	desc = "Next to the extremely long list of names and job titles, there is a drawing of a little child. The child appears to be retarded. Beneath the image, someone has scratched the word \"PACKETS\""
+	desc = "Next to the extremely long list of names and job titles, there is a drawing of a little child. The child appears to be retarded. Beneath the image, someone has scratched the word \"PACKETS\"."
 	icon_state = "kiddieplaque"
 
 /obj/structure/sign/kiddieplaque/badger

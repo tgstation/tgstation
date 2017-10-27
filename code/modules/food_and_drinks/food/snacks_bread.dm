@@ -19,7 +19,7 @@
 
 /obj/item/reagent_containers/food/snacks/store/bread/plain
 	name = "bread"
-	desc = "Some plain old Earthen bread."
+	desc = "Some plain old earthen bread."
 	icon_state = "bread"
 	bonus_reagents = list("nutriment" = 7)
 	list_reagents = list("nutriment" = 10)

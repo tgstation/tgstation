@@ -1,7 +1,7 @@
 /datum/antagonist/traitor
 	name = "Traitor"
-	var/should_specialise = TRUE //do we split into AI and human
-	var/base_datum_custom = ANTAG_DATUM_TRAITOR_CUSTOM //used for body transfer
+	job_rank = ROLE_TRAITOR
+	var/should_specialise = FALSE //do we split into AI and human, set to true on inital assignment only
 	var/ai_datum = ANTAG_DATUM_TRAITOR_AI
 	var/human_datum = ANTAG_DATUM_TRAITOR_HUMAN
 	var/special_role = "traitor"
@@ -10,71 +10,24 @@
 	var/should_give_codewords = TRUE
 	var/list/objectives_given = list()
 
-/datum/antagonist/traitor/proc/transfer_important_variables(datum/antagonist/traitor/other)
-	other.silent = silent
-	other.employer = employer
-	other.special_role = special_role
-	other.objectives_given = objectives_given
-
-/datum/antagonist/traitor/custom
-	ai_datum = ANTAG_DATUM_TRAITOR_AI_CUSTOM
-	human_datum = ANTAG_DATUM_TRAITOR_HUMAN_CUSTOM
-
 /datum/antagonist/traitor/human
-	should_specialise = FALSE
 	var/should_equip = TRUE
 
-/datum/antagonist/traitor/human/custom
-	silent = TRUE
-	should_give_codewords = FALSE
-	give_objectives = FALSE
-	should_equip = FALSE //Duplicating TCs is dangerous
-
 /datum/antagonist/traitor/AI
-	should_specialise = FALSE
-
-/datum/antagonist/traitor/AI/custom
-	silent = TRUE
-	should_give_codewords = FALSE
-	give_objectives = FALSE
-
-
-/datum/antagonist/traitor/on_body_transfer(mob/living/old_body, mob/living/new_body)
-	// human <-> silicon only
-	if(old_body && issilicon(new_body) ^ issilicon(old_body))
-		silent = TRUE
-		owner.add_antag_datum(base_datum_custom)
-		for(var/datum/antagonist/traitor/new_datum in owner.antag_datums)
-			if(new_datum == src)
-				continue
-			transfer_important_variables(new_datum)
-			break
-		on_removal()
-	else
-		..()
-
-/datum/antagonist/traitor/human/custom //used to give custom objectives
-	silent = TRUE
-	give_objectives = FALSE
-	should_give_codewords = FALSE
-
-/datum/antagonist/traitor/AI/custom //used to give custom objectives
-	silent = TRUE
-	give_objectives = FALSE
-	should_give_codewords = FALSE
 
 /datum/antagonist/traitor/proc/specialise()
 	silent = TRUE
-	if(owner.current&&isAI(owner.current))
+	if(owner.current && isAI(owner.current))
 		owner.add_antag_datum(ai_datum)
-	else owner.add_antag_datum(human_datum)
+	else 
+		owner.add_antag_datum(human_datum)
 	on_removal()
 
 /datum/antagonist/traitor/on_gain()
 	if(should_specialise)
 		specialise()
 		return
-	SSticker.mode.traitors+=owner
+	SSticker.mode.traitors += owner
 	owner.special_role = special_role
 	if(give_objectives)
 		forge_traitor_objectives()
@@ -84,15 +37,15 @@
 /datum/antagonist/traitor/apply_innate_effects()
 	if(owner.assigned_role == "Clown")
 		var/mob/living/carbon/human/traitor_mob = owner.current
-		if(traitor_mob&&istype(traitor_mob))
-			if(!silent) 
+		if(traitor_mob && istype(traitor_mob))
+			if(!silent)
 				to_chat(traitor_mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 			traitor_mob.dna.remove_mutation(CLOWNMUT)
 
 /datum/antagonist/traitor/remove_innate_effects()
 	if(owner.assigned_role == "Clown")
 		var/mob/living/carbon/human/traitor_mob = owner.current
-		if(traitor_mob&&istype(traitor_mob))
+		if(traitor_mob && istype(traitor_mob))
 			traitor_mob.dna.add_mutation(CLOWNMUT)
 
 /datum/antagonist/traitor/on_removal()
@@ -138,10 +91,11 @@
 			assign_exchange_role(SSticker.mode.exchange_red)
 			assign_exchange_role(SSticker.mode.exchange_blue)
 		objective_count += 1					//Exchange counts towards number of objectives
-	for(var/i = objective_count, i < config.traitor_objectives_amount, i++)
+	var/toa = CONFIG_GET(number/traitor_objectives_amount)
+	for(var/i = objective_count, i < toa, i++)
 		forge_single_objective()
 
-	if(is_hijacker && objective_count <= config.traitor_objectives_amount) //Don't assign hijack if it would exceed the number of objectives set in config.traitor_objectives_amount
+	if(is_hijacker && objective_count <= toa) //Don't assign hijack if it would exceed the number of objectives set in config.traitor_objectives_amount
 		if (!(locate(/datum/objective/hijack) in owner.objectives))
 			var/datum/objective/hijack/hijack_objective = new
 			hijack_objective.owner = owner
@@ -174,15 +128,15 @@
 	if(prob(30))
 		objective_count += forge_single_objective()
 
-	for(var/i = objective_count, i < config.traitor_objectives_amount, i++)
+	for(var/i = objective_count, i < CONFIG_GET(number/traitor_objectives_amount), i++)
 		var/datum/objective/assassinate/kill_objective = new
 		kill_objective.owner = owner
 		kill_objective.find_target()
 		add_objective(kill_objective)
 
-	var/datum/objective/survive/survive_objective = new
-	survive_objective.owner = owner
-	add_objective(survive_objective)
+	var/datum/objective/survive/exist/exist_objective = new
+	exist_objective.owner = owner
+	add_objective(exist_objective)
 /datum/antagonist/traitor/proc/forge_single_objective()
 	return 0
 /datum/antagonist/traitor/human/forge_single_objective() //Returns how many objectives are added
@@ -205,10 +159,16 @@
 			kill_objective.find_target()
 			add_objective(kill_objective)
 	else
-		var/datum/objective/steal/steal_objective = new
-		steal_objective.owner = owner
-		steal_objective.find_target()
-		add_objective(steal_objective)
+		if(prob(15) && !(locate(/datum/objective/download in owner.objectives)))
+			var/datum/objective/download/download_objective = new
+			download_objective.owner = owner
+			download_objective.gen_amount_goal()
+			add_objective(download_objective)
+		else
+			var/datum/objective/steal/steal_objective = new
+			steal_objective.owner = owner
+			steal_objective.find_target()
+			add_objective(steal_objective)
 
 /datum/antagonist/traitor/AI/forge_single_objective()
 	.=1
@@ -237,6 +197,7 @@
 			yandere_two.update_explanation_text() // normally called in find_target()
 			add_objective(yandere_two)
 			.=2
+
 /datum/antagonist/traitor/greet()
 	to_chat(owner.current, "<B><font size=3 color=red>You are the [owner.special_role].</font></B>")
 	owner.announce_objectives()
@@ -285,6 +246,8 @@
 	killer.add_malf_picker()
 
 /datum/antagonist/traitor/proc/equip(var/silent = FALSE)
+	return
+
 /datum/antagonist/traitor/human/equip(var/silent = FALSE)
 	owner.equip_traitor(employer, silent)
 

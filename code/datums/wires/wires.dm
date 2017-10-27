@@ -250,9 +250,10 @@
 				if(istype(I, /obj/item/device/assembly))
 					var/obj/item/device/assembly/A = I
 					if(A.attachable)
-						if(!L.drop_item())
+						if(!L.temporarilyRemoveItemFromInventory(A))
 							return
-						attach_assembly(target_wire, A)
+						if(!attach_assembly(target_wire, A))
+							A.forceMove(L.drop_location())
 						. = TRUE
 					else
 						to_chat(L, "<span class='warning'>You need an attachable assembly!</span>")

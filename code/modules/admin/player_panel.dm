@@ -410,9 +410,10 @@
 				dat += "in [disk_loc.loc] at ([disk_loc.x], [disk_loc.y], [disk_loc.z])</td></tr>"
 			dat += "</table>"
 
-		if(SSticker.mode.head_revolutionaries.len || SSticker.mode.revolutionaries.len)
+		var/list/revs = get_antagonists(/datum/antagonist/rev)
+		if(revs.len > 0)
 			dat += "<br><table cellspacing=5><tr><td><B>Revolutionaries</B></td><td></td></tr>"
-			for(var/datum/mind/N in SSticker.mode.head_revolutionaries)
+			for(var/datum/mind/N in get_antagonists(/datum/antagonist/rev/head))
 				var/mob/M = N.current
 				if(!M)
 					dat += "<tr><td><a href='?_src_=vars;[HrefToken()];Vars=\ref[N]'>[N.name]([N.key])</a><i>Head Revolutionary body destroyed!</i></td>"
@@ -421,14 +422,14 @@
 					dat += "<tr><td><a href='?_src_=holder;[HrefToken()];adminplayeropts=\ref[M]'>[M.real_name]</a> <b>(Leader)</b>[M.client ? "" : " <i>(No Client)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
 					dat += "<td><A href='?_src_=holder;[HrefToken()];adminplayerobservefollow=\ref[M]'>FLW</a></td></tr>"
-			for(var/datum/mind/N in SSticker.mode.revolutionaries)
+			for(var/datum/mind/N in get_antagonists(/datum/antagonist/rev,TRUE))
 				var/mob/M = N.current
 				if(M)
 					dat += "<tr><td><a href='?_src_=holder;[HrefToken()];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
 					dat += "<td><A href='?_src_=holder;[HrefToken()];adminplayerobservefollow=\ref[M]'>FLW</a></td></tr>"
 			dat += "</table><table cellspacing=5><tr><td><B>Target(s)</B></td><td></td><td><B>Location</B></td></tr>"
-			for(var/datum/mind/N in SSticker.mode.get_living_heads())
+			for(var/datum/mind/N in SSjob.get_living_heads())
 				var/mob/M = N.current
 				if(M)
 					dat += "<tr><td><a href='?_src_=holder;[HrefToken()];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
@@ -530,7 +531,7 @@
 					else
 						dat += "<tr><td><a href='?_src_=vars;[HrefToken()];Vars=\ref[brother]'>[brother.name]([brother.key])</a><i>Brother body destroyed!</i></td>"
 						dat += "<td><A href='?priv_msg=[brother.key]'>PM</A></td></tr>"
-				dat += "</table>"
+			dat += "</table>"
 
 		if(SSticker.mode.abductors.len)
 			dat += "<br><table cellspacing=5><tr><td><B>Abductors</B></td><td></td><td></td></tr>"
@@ -592,20 +593,15 @@
 		var/list/blob_minds = list()
 		for(var/mob/camera/blob/B in GLOB.mob_list)
 			blob_minds |= B.mind
-
-		if(istype(SSticker.mode, /datum/game_mode/blob) || blob_minds.len)
-			dat += "<br><table cellspacing=5><tr><td><B>Blob</B></td><td></td><td></td></tr>"
-			if(istype(SSticker.mode, /datum/game_mode/blob))
-				var/datum/game_mode/blob/mode = SSticker.mode
-				blob_minds |= mode.blob_overminds
-				dat += "<tr><td><i>Progress: [GLOB.blobs_legit.len]/[mode.blobwincount]</i></td></tr>"
-
+			if(blob_minds.len)
+				dat += "<br><table cellspacing=5><tr><td><B>Blob</B></td><td></td><td></td></tr>"
 			for(var/datum/mind/blob in blob_minds)
-				var/mob/M = blob.current
+				var/mob/camera/blob/M = blob.current
 				if(M)
 					dat += "<tr><td><a href='?_src_=holder;[HrefToken()];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
 					dat += "<td><A href='?_src_=holder;[HrefToken()];adminplayerobservefollow=\ref[M]'>FLW</a></td></tr>"
+					dat += "<tr><td><i>Progress: [M.blobs_legit.len]/[M.blobwincount]</i></td></tr>"
 				else
 					dat += "<tr><td><a href='?_src_=vars;[HrefToken()];Vars=\ref[blob]'>[blob.name]([blob.key])</a><i>Blob not found!</i></td>"
 					dat += "<td><A href='?priv_msg=[blob.key]'>PM</A></td></tr>"

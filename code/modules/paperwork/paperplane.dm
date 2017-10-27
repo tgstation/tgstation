@@ -1,6 +1,6 @@
 /obj/item/paperplane
 	name = "paper plane"
-	desc = "Paper, folded in the shape of a plane"
+	desc = "Paper, folded in the shape of a plane."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paperplane"
 	throw_range = 7
@@ -33,7 +33,7 @@
 
 /obj/item/paperplane/suicide_act(mob/living/user)
 	user.Stun(200)
-	user.visible_message("<span class='suicide'>[user] jams the [src] in [user.p_their()] nose. It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[user] jams [src] in [user.p_their()] nose. It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	user.adjust_blurriness(6)
 	user.adjust_eye_damage(rand(6,8))
 	sleep(10)
@@ -67,7 +67,7 @@
 	else if(P.is_hot())
 		if(user.disabilities & CLUMSY && prob(10))
 			user.visible_message("<span class='warning'>[user] accidentally ignites themselves!</span>", \
-				"<span class='userdanger'>You miss the [src] and accidentally light yourself on fire!</span>")
+				"<span class='userdanger'>You miss [src] and accidentally light yourself on fire!</span>")
 			user.dropItemToGround(P)
 			user.adjust_fire_stacks(1)
 			user.IgniteMob()
