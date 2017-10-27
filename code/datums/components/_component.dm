@@ -6,6 +6,10 @@
 	var/datum/parent
 
 /datum/component/New(datum/P, ...)
+	if(type == /datum/component)
+		qdel(src)
+		CRASH("[type] instantiated!")
+
 	parent = P
 	var/list/arguments = args.Copy()
 	arguments.Cut(1, 2)
