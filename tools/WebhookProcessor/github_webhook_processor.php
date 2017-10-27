@@ -546,7 +546,7 @@ function auto_update($payload){
 			$content = "``" . "`DIFF\n" . $script_diff ."\n``" . "`";
 		}
 	}
-	create_comment($payload, "Edit detected. Self updating... Here are my changes:\n" . $content)
+	create_comment($payload, "Edit detected. Self updating... Here are my changes:\n" . $content);
 
 	$code_file = fopen(basename($path_to_script), 'w');
 	fwrite($code_file, $content);
