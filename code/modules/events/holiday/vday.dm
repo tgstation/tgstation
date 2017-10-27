@@ -125,11 +125,13 @@
 	               "You must be liquid dark matter, because you're pulling me closer.",
 	               "Not even sorium can drive me away from you.",
 	               "Wanna make like a borg and do some heavy petting?",
-	               "Are you the CE? Because you super matter to me.",
+	               "Are you powering the station? Because you super matter to me.",
 	               "I wish science could make me a bag of holding you.",
 	               "Let's call the emergency CUDDLE.",
 	               "I must be tripping on BZ, because I saw an angel walk by.",
-	               "Wanna empty out my primary tool storage?" )
+	               "Wanna empty out my primary tool storage?",
+	               "Did you visit the medbay after you fell from heaven?",
+	               "Are you wearing space pants? Wanna not be?" )
 
 /obj/item/valentine/attackby(obj/item/W, mob/user, params)
 	..()
@@ -179,8 +181,9 @@
                 "A heart-shaped candy that reads: WAG MY TAIL",
                 "A heart-shaped candy that reads: VALIDTINES",
                 "A heart-shaped candy that reads: FACEHUGGER",
-                "A heart-shaped candy that reads: GET TESLA'D",
+                "A heart-shaped candy that reads: BOX OF HUGS",
                 "A heart-shaped candy that reads: REEBE MINE",
                 "A heart-shaped candy that reads: PET ME",
-                "A heart-shaped candy that reads: TO THE DORMS")
+                "A heart-shaped candy that reads: TO THE DORMS",
+                "A heart-shaped candy that reads: DIS MEMBER")
 	icon_state = pick("candyheart", "candyheart2", "candyheart3", "candyheart4")
