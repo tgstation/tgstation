@@ -778,7 +778,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 
 /client/proc/cmd_display_init_log()
 	set category = "Debug"
-	set name = "Display Initialzie() Log"
+	set name = "Display Initialize() Log"
 	set desc = "Displays a list of things that didn't handle Initialize() properly"
 
 	usr << browse(replacetext(SSatoms.InitLog(), "\n", "<br>"), "window=initlog")
