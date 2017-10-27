@@ -6,7 +6,7 @@ Hint: This is usually Space_Station_13_areas.dm.
 */
 
 /area
-	var/list/ambientsounds = list('sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg',\
+	ambientsounds = list('sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg',\
 									'sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg',\
 									'sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg',\
 									'sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg',\
