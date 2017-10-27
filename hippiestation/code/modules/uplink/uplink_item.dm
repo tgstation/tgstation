@@ -251,3 +251,7 @@
 
 /datum/uplink_item/stealthy_weapons/romerol_kit
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/traitor)
+
+
+/datum/uplink_item/badass/surplus
+	player_minimum = 0
