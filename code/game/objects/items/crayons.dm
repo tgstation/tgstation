@@ -31,7 +31,7 @@
 	var/drawtype
 	var/text_buffer = ""
 
-	var/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","arrow","star","poseur tag")
+	var/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","arrow","star","poseur tag","prolizard","antilizard")
 	var/list/letters = list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
 	var/list/numerals = list("0","1","2","3","4","5","6","7","8","9")
 	var/list/oriented = list("arrow","body") // These turn to face the same way as the drawer
@@ -77,10 +77,6 @@
 	// Makes crayons identifiable in things like grinders
 	if(name == "crayon")
 		name = "[item_color] crayon"
-
-	if(CONFIG_GET(flag/join_with_mutant_race))
-		graffiti |= "antilizard"
-		graffiti |= "prolizard"
 
 	all_drawables = graffiti + letters + numerals + oriented + runes + graffiti_large_h
 	drawtype = pick(all_drawables)
@@ -317,13 +313,15 @@
 	if(actually_paints)
 		switch(paint_mode)
 			if(PAINT_NORMAL)
-				new /obj/effect/decal/cleanable/crayon(target, paint_color, drawing, temp, graf_rot)
+				var/obj/effect/decal/cleanable/crayon/C = new(target, paint_color, drawing, temp, graf_rot)
+				C.add_hiddenprint(user)
 				affected_turfs += target
 			if(PAINT_LARGE_HORIZONTAL)
 				var/turf/left = locate(target.x-1,target.y,target.z)
 				var/turf/right = locate(target.x+1,target.y,target.z)
 				if(is_type_in_list(left, validSurfaces) && is_type_in_list(right, validSurfaces))
-					new /obj/effect/decal/cleanable/crayon(left, paint_color, drawing, temp, graf_rot, PAINT_LARGE_HORIZONTAL_ICON)
+					var/obj/effect/decal/cleanable/crayon/C = new(left, paint_color, drawing, temp, graf_rot, PAINT_LARGE_HORIZONTAL_ICON)
+					C.add_hiddenprint(user)
 					affected_turfs += left
 					affected_turfs += right
 					affected_turfs += target
