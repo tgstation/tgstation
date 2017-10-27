@@ -24,7 +24,7 @@
 	var/list/dc = datum_components
 	if(dc)
 		var/all_components = dc[/datum/component]
-		if(islist(all_components))
+		if(length(all_components))
 			for(var/I in all_components)
 				var/datum/component/C = I
 				C._RemoveNoSignal()
