@@ -6,7 +6,7 @@
 /datum/brain_trauma/special/godwoken
 	name = "Godwoken Syndrome"
 	desc = "Patient occasionally and uncontrollably channels an eldritch god when speaking."
-	scan_desc = "divine inspiration"
+	scan_desc = "god delusion"
 	gain_text = "<span class='notice'>You feel a higher power inside your mind...</span>"
 	lose_text = "<span class='warning'>The divinity leaves your head, no longer interested.</span>"
 	var/next_speech = 0

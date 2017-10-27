@@ -182,15 +182,25 @@
 
 ////////////////////////////////////TRAUMAS////////////////////////////////////////
 
-/obj/item/organ/brain/proc/has_trauma_type(brain_trauma_type)
+/obj/item/organ/brain/proc/has_trauma_type(brain_trauma_type, consider_permanent = FALSE)
 	for(var/X in traumas)
-		if(istype(X, brain_trauma_type))
-			return X
+		var/datum/brain_trauma/BT = X
+		if(istype(BT, brain_trauma_type) && (consider_permanent || !BT.permanent))
+			return BT
 
+
+//Add a specific trauma
 /obj/item/organ/brain/proc/gain_trauma(datum/brain_trauma/trauma, permanent = FALSE, ...)
-	var/trauma_type = trauma
+	var/trauma_type
+	if(ispath(trauma))
+		trauma_type = trauma
+	else
+		trauma_type = trauma.type
+
 	traumas += new trauma_type(src, permanent, args)
 
+
+//Add a random trauma of a certain subtype
 /obj/item/organ/brain/proc/gain_trauma_type(brain_trauma_type = /datum/brain_trauma, permanent = FALSE)
 	var/list/datum/brain_trauma/possible_traumas = list()
 	for(var/T in subtypesof(brain_trauma_type))
@@ -201,6 +211,8 @@
 	var/trauma_type = pick(possible_traumas)
 	traumas += new trauma_type(src, permanent)
 
+
+//Cure a specific trauma
 /obj/item/organ/brain/proc/cure_trauma(datum/brain_trauma/trauma, cure_permanent = FALSE)
 	if(!trauma in traumas)
 		return
@@ -208,6 +220,7 @@
 	if(cure_permanent || !trauma.permanent)
 		qdel(trauma)
 
+//Cure a random trauma of a certain subtype
 /obj/item/organ/brain/proc/cure_trauma_type(brain_trauma_type, cure_permanent = FALSE)
 	var/datum/brain_trauma/trauma = has_trauma_type(brain_trauma_type)
 	if(trauma && (cure_permanent || !trauma.permanent))
