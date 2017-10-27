@@ -199,7 +199,6 @@ Borg Shaker
 		to_chat(usr, "<span class='warning'>It is currently empty! Please allow some time for the synthesizer to produce more.</span>")
 
 /obj/item/reagent_containers/borghypo/borgshaker/hacked
-	..()
 	name = "cyborg shaker"
 	desc = "Will mix drinks that knock them dead."
 	icon = 'icons/obj/drinks.dmi'
