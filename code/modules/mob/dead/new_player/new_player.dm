@@ -477,6 +477,8 @@
 	client.prefs.copy_to(H)
 	H.dna.update_dna_identity()
 	if(mind)
+		if(transfer_after)
+			mind.late_joiner = TRUE
 		mind.active = 0					//we wish to transfer the key manually
 		mind.transfer_to(H)					//won't transfer key since the mind is not active
 
