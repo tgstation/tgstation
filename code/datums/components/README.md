@@ -26,7 +26,7 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
 
 ### Defines
 
-1. `COMPONENT_INCOMPATIBLE` Return this from `/datum/component/Initialize` to have the component be deleted if it's applied to an incorrect type. `parent` must not be modified if this is to be returned.
+1. `COMPONENT_INCOMPATIBLE` Return this from `/datum/component/Initialize` or `datum/component/OnTransfer` to have the component be deleted if it's applied to an incorrect type. `parent` must not be modified if this is to be returned.
 
 ### Vars
 
