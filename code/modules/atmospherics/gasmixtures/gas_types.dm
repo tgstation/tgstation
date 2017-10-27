@@ -79,16 +79,16 @@ GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /
 /datum/gas/nitrous_oxide
 	id = "n2o"
 	specific_heat = 40
-	name = "Nitrous Oxide"
+	name = "Nitrous"
 	gas_overlay = "nitrous_oxide"
 	moles_visible = 1
 	dangerous = TRUE
 
-/datum/gas/brown_gas //This is nitric oxide, but given generic name to avoid confusion with nitrous oxide(N20 vs. NO2)
-	id = "browns"
+/datum/gas/nitrogen_dioxide
+	id = "no2"
 	specific_heat = 20
-	name = "Brown Gas"
-	gas_overlay = "browns"
+	name = "Nitro Dioxide"
+	gas_overlay = "nitrogen_dioxide"
 	moles_visible = MOLES_GAS_VISIBLE
 	dangerous = TRUE
 
@@ -106,10 +106,10 @@ GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /
 	name = "BZ"
 	dangerous = TRUE
 
-/datum/gas/stimulum
+/datum/gas/stim
 	id = "stim"
 	specific_heat = 5
-	name = "Stimulum"
+	name = "Nikolayev"
 
 /datum/gas/pluoxium
 	id = "pluox"
