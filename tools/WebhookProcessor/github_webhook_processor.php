@@ -534,7 +534,7 @@ function get_diff($payload) {
 function auto_update($payload){
 	global $enable_live_tracking;
 	global $path_to_script;
-	global github_diff;
+	global $github_diff;
 	if(!$enable_live_tracking || !has_tree_been_edited($payload, $path_to_script) || $payload['pull_request']['base']['ref'] != $tracked_branch)
 		return;
 
