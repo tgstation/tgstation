@@ -458,7 +458,7 @@
 	else if(istype(I, /obj/item/stack/rods))
 		flamethrower_rods(I, user)
 	else if(istype(I, /obj/item/reagent_containers) && (I.container_type & OPENCONTAINER_1))
-		var/amountNeeded = max_fuel - getFuel()
+		var/amountNeeded = max_fuel - get_fuel()
 		var/obj/item/reagent_containers/container = I
 		if(amountNeeded > 0 && container.reagents.has_reagent("welding_fuel"))
 			container.reagents.trans_id_to(src, "welding_fuel", amountNeeded)
