@@ -5,7 +5,7 @@
 		return
 	var/msg = !auth ? "no" : "a bad"
 	message_admins("[key_name_admin(usr)] clicked an href with [msg] authorization key!")
-	if(config.debug_admin_hrefs)
+	if(CONFIG_GET(flag/debug_admin_hrefs))
 		message_admins("Debug mode enabled, call not blocked. Please ask your coders to review this round's logs.")
 		log_world("UAH: [href]")
 		return TRUE
@@ -319,35 +319,36 @@
 	else if(href_list["toggle_continuous"])
 		if(!check_rights(R_ADMIN))
 			return
-
-		if(!config.continuous[SSticker.mode.config_tag])
-			config.continuous[SSticker.mode.config_tag] = 1
+		var/list/continuous = CONFIG_GET(keyed_flag_list/continuous)
+		if(!continuous[SSticker.mode.config_tag])
+			continuous[SSticker.mode.config_tag] = TRUE
 		else
-			config.continuous[SSticker.mode.config_tag] = 0
+			continuous[SSticker.mode.config_tag] = FALSE
 
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled the round to [config.continuous[SSticker.mode.config_tag] ? "continue if all antagonists die" : "end with the antagonists"].</span>")
+		message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled the round to [continuous[SSticker.mode.config_tag] ? "continue if all antagonists die" : "end with the antagonists"].</span>")
 		check_antagonists()
 
 	else if(href_list["toggle_midround_antag"])
 		if(!check_rights(R_ADMIN))
 			return
 
-		if(!config.midround_antag[SSticker.mode.config_tag])
-			config.midround_antag[SSticker.mode.config_tag] = 1
+		var/list/midround_antag = CONFIG_GET(keyed_flag_list/midround_antag)
+		if(!midround_antag[SSticker.mode.config_tag])
+			midround_antag[SSticker.mode.config_tag] = TRUE
 		else
-			config.midround_antag[SSticker.mode.config_tag] = 0
+			midround_antag[SSticker.mode.config_tag] = FALSE
 
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled the round to [config.midround_antag[SSticker.mode.config_tag] ? "use" : "skip"] the midround antag system.</span>")
+		message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled the round to [midround_antag[SSticker.mode.config_tag] ? "use" : "skip"] the midround antag system.</span>")
 		check_antagonists()
 
 	else if(href_list["alter_midround_time_limit"])
 		if(!check_rights(R_ADMIN))
 			return
 
-		var/timer = input("Enter new maximum time",, config.midround_antag_time_check ) as num|null
+		var/timer = input("Enter new maximum time",, CONFIG_GET(number/midround_antag_time_check)) as num|null
 		if(!timer)
 			return
-		config.midround_antag_time_check = timer
+		CONFIG_SET(number/midround_antag_time_check, timer)
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the maximum midround antagonist time to [timer] minutes.</span>")
 		check_antagonists()
 
@@ -355,9 +356,10 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		var/ratio = input("Enter new life ratio",, config.midround_antag_life_check*100) as num
-		if(ratio)
-			config.midround_antag_life_check = ratio/100
+		var/ratio = input("Enter new life ratio",, CONFIG_GET(number/midround_antag_life_check) * 100) as num
+		if(!ratio)
+			return
+		CONFIG_SET(number/midround_antag_life_check, ratio / 100)
 
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the midround antagonist living crew ratio to [ratio]% alive.</span>")
 		check_antagonists()
@@ -587,8 +589,9 @@
 				to_chat(M, "<span class='boldannounce'><BIG>You have been appearance banned by [usr.client.ckey].</BIG></span>")
 				to_chat(M, "<span class='boldannounce'>The reason is: [reason]</span>")
 				to_chat(M, "<span class='danger'>Appearance ban can be lifted only upon request.</span>")
-				if(config.banappeals)
-					to_chat(M, "<span class='danger'>To try to resolve this matter head to [config.banappeals]</span>")
+				var/bran = CONFIG_GET(string/banappeals)
+				if(bran)
+					to_chat(M, "<span class='danger'>To try to resolve this matter head to [bran]</span>")
 				else
 					to_chat(M, "<span class='danger'>No ban appeals URL has been set.</span>")
 			if("No")
@@ -1151,8 +1154,9 @@
 				to_chat(M, "<span class='danger'>This is a temporary ban, it will be removed in [mins] minutes.</span>")
 				SSblackbox.inc("ban_tmp",1)
 				SSblackbox.inc("ban_tmp_mins",mins)
-				if(config.banappeals)
-					to_chat(M, "<span class='danger'>To try to resolve this matter head to [config.banappeals]</span>")
+				var/bran = CONFIG_GET(string/banappeals)
+				if(bran)
+					to_chat(M, "<span class='danger'>To try to resolve this matter head to [bran]</span>")
 				else
 					to_chat(M, "<span class='danger'>No ban appeals URL has been set.</span>")
 				log_admin_private("[key_name(usr)] has banned [M.ckey].\nReason: [key_name(M)]\nThis will be removed in [mins] minutes.")
@@ -1175,8 +1179,9 @@
 						AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0)
 				to_chat(M, "<span class='boldannounce'><BIG>You have been banned by [usr.client.ckey].\nReason: [reason]</BIG></span>")
 				to_chat(M, "<span class='danger'>This is a permanent ban.</span>")
-				if(config.banappeals)
-					to_chat(M, "<span class='danger'>To try to resolve this matter head to [config.banappeals]</span>")
+				var/bran = CONFIG_GET(string/banappeals)
+				if(bran)
+					to_chat(M, "<span class='danger'>To try to resolve this matter head to [bran]</span>")
 				else
 					to_chat(M, "<span class='danger'>No ban appeals URL has been set.</span>")
 				if(!DB_ban_record(BANTYPE_PERMA, M, -1, reason))

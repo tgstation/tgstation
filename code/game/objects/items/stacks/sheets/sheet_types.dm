@@ -325,6 +325,7 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 	null,
 	new/datum/stack_recipe("directional brass window", /obj/structure/window/reinforced/clockwork/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
 	new/datum/stack_recipe("fulltile brass window", /obj/structure/window/reinforced/clockwork/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE), \
+	new/datum/stack_recipe("brass chair", /obj/structure/chair/brass, 1, time = 0, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("brass table frame", /obj/structure/table_frame/brass, 1, time = 5, one_per_turf = TRUE, on_floor = TRUE) \
 ))
 
@@ -346,11 +347,20 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 	new /obj/item/stack/sheet/runed_metal(loc, amount)
 	qdel(src)
 
+/obj/item/stack/tile/brass/attack_self(mob/living/user)
+	if(!is_servant_of_ratvar(user))
+		to_chat(user, "<span class='danger'>[src] seems far too fragile and rigid to build with.</span>") //haha that's because it's actually replicant alloy you DUMMY
+		return
+	..()
+
 /obj/item/stack/tile/brass/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.brass_recipes
 	. = ..()
 	pixel_x = 0
 	pixel_y = 0
+
+/obj/item/stack/tile/brass/fifty
+	amount = 50
 
 /obj/item/stack/sheet/lessergem
 	name = "lesser gems"
@@ -398,7 +408,6 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	singular_name = "plastic sheet"
 	icon_state = "sheet-plastic"
 	throwforce = 7
-	origin_tech = "materials=1"
 	origin_tech = "materials=1;biotech=1"
 	merge_type = /obj/item/stack/sheet/plastic
 

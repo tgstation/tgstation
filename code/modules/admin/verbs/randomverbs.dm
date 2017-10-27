@@ -174,7 +174,7 @@
 		return
 
 	if(automute)
-		if(!config.automute_on)
+		if(!CONFIG_GET(flag/automute_on))
 			return
 	else
 		if(!check_rights())
@@ -710,8 +710,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		to_chat(usr, "Nope you can't do this, the game's already started. This only works before rounds!")
 		return
 
-	if(config.force_random_names)
-		config.force_random_names = 0
+	var/frn = CONFIG_GET(flag/force_random_names)
+	if(frn)
+		CONFIG_SET(flag/force_random_names, FALSE)
 		message_admins("Admin [key_name_admin(usr)] has disabled \"Everyone is Special\" mode.")
 		to_chat(usr, "Disabled.")
 		return
@@ -729,7 +730,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	to_chat(usr, "<i>Remember: you can always disable the randomness by using the verb again, assuming the round hasn't started yet</i>.")
 
-	config.force_random_names = 1
+	CONFIG_SET(flag/force_random_names, TRUE)
 	SSblackbox.add_details("admin_verb","Make Everyone Random") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -737,15 +738,15 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Server"
 	set name = "Toggle random events on/off"
 	set desc = "Toggles random events such as meteors, black holes, blob (but not space dust) on/off"
-	if(!config.allow_random_events)
-		config.allow_random_events = 1
+	var/new_are = !CONFIG_GET(flag/allow_random_events)
+	CONFIG_SET(flag/allow_random_events, new_are)
+	if(new_are)
 		to_chat(usr, "Random events enabled")
 		message_admins("Admin [key_name_admin(usr)] has enabled random events.")
 	else
-		config.allow_random_events = 0
 		to_chat(usr, "Random events disabled")
 		message_admins("Admin [key_name_admin(usr)] has disabled random events.")
-	SSblackbox.add_details("admin_toggle","Toggle Random Events|[config.allow_random_events]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_toggle","Toggle Random Events|[new_are]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /client/proc/admin_change_sec_level()
@@ -847,8 +848,9 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 
 	var/dat = {"
 	<html><head><title>Create Outfit</title></head><body>
-	<form name="outfit" action="byond://?src=\ref[src]" method="get">
+	<form name="outfit" action="byond://?src=\ref[src];[HrefToken()]" method="get">
 	<input type="hidden" name="src" value="\ref[src]">
+	[HrefTokenFormField()]
 	<input type="hidden" name="create_outfit" value="1">
 	<table>
 		<tr>

@@ -26,74 +26,74 @@
 
 /proc/log_admin(text)
 	GLOB.admin_log.Add(text)
-	if (config.log_admin)
+	if (CONFIG_GET(flag/log_admin))
 		WRITE_FILE(GLOB.world_game_log, "\[[time_stamp()]]ADMIN: [text]")
 
 //Items using this proc are stripped from public logs - use with caution
 /proc/log_admin_private(text)
 	GLOB.admin_log.Add(text)
-	if (config.log_admin)
+	if (CONFIG_GET(flag/log_admin))
 		WRITE_FILE(GLOB.world_game_log, "\[[time_stamp()]]ADMINPRIVATE: [text]")
 
 /proc/log_adminsay(text)
-	if (config.log_adminchat)
+	if (CONFIG_GET(flag/log_adminchat))
 		log_admin_private("ASAY: [text]")
 
 /proc/log_dsay(text)
-	if (config.log_adminchat)
+	if (CONFIG_GET(flag/log_adminchat))
 		log_admin("DSAY: [text]")
 
 /proc/log_game(text)
-	if (config.log_game)
+	if (CONFIG_GET(flag/log_game))
 		WRITE_FILE(GLOB.world_game_log, "\[[time_stamp()]]GAME: [text]")
 
 /proc/log_vote(text)
-	if (config.log_vote)
+	if (CONFIG_GET(flag/log_vote))
 		WRITE_FILE(GLOB.world_game_log, "\[[time_stamp()]]VOTE: [text]")
 
 /proc/log_access(text)
-	if (config.log_access)
+	if (CONFIG_GET(flag/log_access))
 		WRITE_FILE(GLOB.world_game_log, "\[[time_stamp()]]ACCESS: [text]")
 
 /proc/log_say(text)
-	if (config.log_say)
+	if (CONFIG_GET(flag/log_say))
 		WRITE_FILE(GLOB.world_game_log, "\[[time_stamp()]]SAY: [text]")
 
 /proc/log_prayer(text)
-	if (config.log_prayer)
+	if (CONFIG_GET(flag/log_prayer))
 		WRITE_FILE(GLOB.world_game_log, "\[[time_stamp()]]PRAY: [text]")
 
 /proc/log_law(text)
-	if (config.log_law)
+	if (CONFIG_GET(flag/log_law))
 		WRITE_FILE(GLOB.world_game_log, "\[[time_stamp()]]LAW: [text]")
 
 /proc/log_ooc(text)
-	if (config.log_ooc)
+	if (CONFIG_GET(flag/log_ooc))
 		WRITE_FILE(GLOB.world_game_log, "\[[time_stamp()]]OOC: [text]")
 
 /proc/log_whisper(text)
-	if (config.log_whisper)
+	if (CONFIG_GET(flag/log_whisper))
 		WRITE_FILE(GLOB.world_game_log, "\[[time_stamp()]]WHISPER: [text]")
 
 /proc/log_emote(text)
-	if (config.log_emote)
+	if (CONFIG_GET(flag/log_emote))
 		WRITE_FILE(GLOB.world_game_log, "\[[time_stamp()]]EMOTE: [text]")
 
 /proc/log_attack(text)
-	if (config.log_attack)
+	if (CONFIG_GET(flag/log_attack))
 		WRITE_FILE(GLOB.world_attack_log, "\[[time_stamp()]]ATTACK: [text]")
 
 /proc/log_pda(text)
-	if (config.log_pda)
+	if (CONFIG_GET(flag/log_pda))
 		WRITE_FILE(GLOB.world_pda_log, "\[[time_stamp()]]PDA: [text]")
 
 /proc/log_comment(text)
-	if (config.log_pda)
+	if (CONFIG_GET(flag/log_pda))
 		//reusing the PDA option because I really don't think news comments are worth a config option
 		WRITE_FILE(GLOB.world_game_log, "\[[time_stamp()]]COMMENT: [text]")
 
 /proc/log_chat(text)
-	if (config.log_pda)
+	if (CONFIG_GET(flag/log_pda))
 		WRITE_FILE(GLOB.world_game_log, "\[[time_stamp()]]CHAT: [text]")
 
 /proc/log_qdel(text)
@@ -101,6 +101,10 @@
 
 /proc/log_sql(text)
 	WRITE_FILE(GLOB.sql_error_log, "\[[time_stamp()]]SQL: [text]")
+
+/proc/log_config(text)
+	WRITE_FILE(GLOB.config_error_log, text)
+	SEND_TEXT(world.log, text)
 
 //This replaces world.log so it displays both in DD and the file
 /proc/log_world(text)

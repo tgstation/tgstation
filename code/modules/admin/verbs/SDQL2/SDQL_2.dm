@@ -37,7 +37,6 @@
 	if(!query_text || length(query_text) < 1)
 		return
 
-	//to_chat(world, query_text)
 
 	var/list/query_list = SDQL2_tokenize(query_text)
 
@@ -115,7 +114,7 @@
 	end_time -= start_time
 	to_chat(usr, "<span class='admin'>SDQL query results: [query_text]</span>")
 	to_chat(usr, "<span class='admin'>SDQL query completed: [objs_all] objects selected by path, and [objs_eligible] objects executed on after WHERE filtering if applicable.</span>")
-	to_chat(usr, "<span class='admin'>SDQL query took [end_time/10] seconds to complete.</span>")
+	to_chat(usr, "<span class='admin'>SDQL query took [DisplayTimeText(end_time)] to complete.</span>")
 
 /proc/SDQL_qdel_datum(datum/d)
 	qdel(d)

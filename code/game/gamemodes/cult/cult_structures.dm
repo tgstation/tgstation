@@ -10,7 +10,7 @@
 	..()
 	to_chat(user, "<span class='notice'>\The [src] is [anchored ? "":"not "]secured to the floor.</span>")
 	if((iscultist(user) || isobserver(user)) && cooldowntime > world.time)
-		to_chat(user, "<span class='cultitalic'>The magic in [src] is too weak, [p_they()] will be ready to use again in [getETA()].</span>")
+		to_chat(user, "<span class='cultitalic'>The magic in [src] is too weak, [p_they()] will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
 
 /obj/structure/destructible/cult/examine_status(mob/user)
 	if(iscultist(user) || isobserver(user))
@@ -50,13 +50,6 @@
 		animate(src, color = previouscolor, time = 8)
 		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 
-/obj/structure/destructible/cult/proc/getETA()
-	var/time = (cooldowntime - world.time)/600
-	var/eta = "[round(time, 1)] minutes"
-	if(time <= 1)
-		time = (cooldowntime - world.time)*0.1
-		eta = "[round(time, 1)] seconds"
-	return eta
 
 /obj/structure/destructible/cult/talisman
 	name = "altar"
@@ -72,7 +65,7 @@
 		to_chat(user, "<span class='cultitalic'>You need to anchor [src] to the floor with a tome first.</span>")
 		return
 	if(cooldowntime > world.time)
-		to_chat(user, "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>")
+		to_chat(user, "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
 		return
 	var/choice = alert(user,"You study the schematics etched into the forge...",,"Eldritch Whetstone","Zealot's Blindfold","Flask of Unholy Water")
 	var/pickedtype
@@ -105,7 +98,7 @@
 		to_chat(user, "<span class='cultitalic'>You need to anchor [src] to the floor with a tome first.</span>")
 		return
 	if(cooldowntime > world.time)
-		to_chat(user, "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>")
+		to_chat(user, "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
 		return
 	var/choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Bastard Sword")
 	var/pickedtype
@@ -218,7 +211,7 @@
 		to_chat(user, "<span class='cultitalic'>You need to anchor [src] to the floor with a tome first.</span>")
 		return
 	if(cooldowntime > world.time)
-		to_chat(user, "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>")
+		to_chat(user, "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
 		return
 	var/choice = alert(user,"You flip through the black pages of the archives...",,"Supply Talisman","Shuttle Curse","Veil Walker Set")
 	var/list/pickedtype = list()

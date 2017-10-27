@@ -12019,8 +12019,7 @@
 	pixel_x = -1;
 	pixel_y = 9
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
-	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
 /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
 	pixel_x = 7;
 	pixel_y = 2
@@ -14889,6 +14888,7 @@
 	id = "trash";
 	name = "disposal bay door"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "aLo" = (
@@ -38029,6 +38029,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/science/mineral_storeroom)
 "bMr" = (
@@ -41980,7 +41981,7 @@
 /area/storage/tech)
 "bVL" = (
 /obj/structure/table,
-/obj/item/storage/box/metalfoam{
+/obj/item/storage/box/smart_metal_foam{
 	pixel_x = 4;
 	pixel_y = 7
 	},
@@ -96945,8 +96946,8 @@ aaa
 aaa
 aaa
 aLn
-aLn
 aNT
+aQo
 aPg
 aQl
 aRu

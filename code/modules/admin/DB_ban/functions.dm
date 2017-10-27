@@ -362,6 +362,7 @@
 
 	output += "<form method='GET' action='?src=\ref[src]'><b>Add custom ban:</b> (ONLY use this if you can't ban through any other method)"
 	output += "<input type='hidden' name='src' value='\ref[src]'>"
+	output += HrefTokenFormField()
 	output += "<table width='100%'><tr>"
 	output += "<td><b>Ban type:</b><select name='dbbanaddtype'>"
 	output += "<option value=''>--</option>"
@@ -395,6 +396,7 @@
 
 	output += "<form method='GET' action='?src=\ref[src]'><b>Search:</b> "
 	output += "<input type='hidden' name='src' value='\ref[src]'>"
+	output += HrefTokenFormField()
 	output += "<b>Ckey:</b> <input type='text' name='dbsearchckey' value='[playerckey]'>"
 	output += "<b>Admin ckey:</b> <input type='text' name='dbsearchadmin' value='[adminckey]'>"
 	output += "<input type='submit' value='search'>"

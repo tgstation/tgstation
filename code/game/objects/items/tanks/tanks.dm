@@ -178,7 +178,7 @@
 		if("pressure")
 			var/pressure = params["pressure"]
 			if(pressure == "reset")
-				pressure = TANK_DEFAULT_RELEASE_PRESSURE
+				pressure = initial(distribute_pressure)
 				. = TRUE
 			else if(pressure == "min")
 				pressure = TANK_MIN_RELEASE_PRESSURE
@@ -237,7 +237,6 @@
 		if(!istype(src.loc, /obj/item/device/transfer_valve))
 			message_admins("Explosive tank rupture! Last key to touch the tank was [src.fingerprintslast].")
 			log_game("Explosive tank rupture! Last key to touch the tank was [src.fingerprintslast].")
-		//to_chat(world, "\blue[x],[y] tank is exploding: [pressure] kPa")
 		//Give the gas a chance to build up more pressure through reacting
 		air_contents.react()
 		air_contents.react()
@@ -246,7 +245,6 @@
 		var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE
 		var/turf/epicenter = get_turf(loc)
 
-		//to_chat(world, "\blue Exploding Pressure: [pressure] kPa, intensity: [range]")
 
 		explosion(epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
 		if(istype(src.loc, /obj/item/device/transfer_valve))
@@ -255,7 +253,6 @@
 			qdel(src)
 
 	else if(pressure > TANK_RUPTURE_PRESSURE)
-		//to_chat(world, "\blue[x],[y] tank is rupturing: [pressure] kPa, integrity [integrity]")
 		if(integrity <= 0)
 			var/turf/T = get_turf(src)
 			if(!T)
@@ -267,7 +264,6 @@
 			integrity--
 
 	else if(pressure > TANK_LEAK_PRESSURE)
-		//to_chat(world, "\blue[x],[y] tank is leaking: [pressure] kPa, integrity [integrity]")
 		if(integrity <= 0)
 			var/turf/T = get_turf(src)
 			if(!T)

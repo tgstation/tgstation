@@ -307,7 +307,7 @@
 				if(istype(H.glasses, /obj/item/clothing/glasses/hud/health) || istype(CIH, /obj/item/organ/cyberimp/eyes/hud/medical))
 					var/cyberimp_detect
 					for(var/obj/item/organ/cyberimp/CI in internal_organs)
-						if(CI.status == ORGAN_ROBOTIC)
+						if(CI.status == ORGAN_ROBOTIC && !CI.syndicate_implant)
 							cyberimp_detect += "[name] is modified with a [CI.name].<br>"
 					if(cyberimp_detect)
 						msg += "Detected cybernetic modifications:<br>"

@@ -355,15 +355,8 @@
 			SSblackbox.add_details("admin_secrets_fun_used","Bomb Cap")
 
 			var/newBombCap = input(usr,"What would you like the new bomb cap to be. (entered as the light damage range (the 3rd number in common (1,2,3) notation)) Must be above 4)", "New Bomb Cap", GLOB.MAX_EX_LIGHT_RANGE) as num|null
-			if (newBombCap < 4)
+			if (!CONFIG_SET(number/bombcap, newBombCap))
 				return
-
-			GLOB.MAX_EX_DEVESTATION_RANGE = round(newBombCap/4)
-			GLOB.MAX_EX_HEAVY_RANGE = round(newBombCap/2)
-			GLOB.MAX_EX_LIGHT_RANGE = newBombCap
-			//I don't know why these are their own variables, but fuck it, they are.
-			GLOB.MAX_EX_FLASH_RANGE = newBombCap
-			GLOB.MAX_EX_FLAME_RANGE = newBombCap
 
 			message_admins("<span class='boldannounce'>[key_name_admin(usr)] changed the bomb cap to [GLOB.MAX_EX_DEVESTATION_RANGE], [GLOB.MAX_EX_HEAVY_RANGE], [GLOB.MAX_EX_LIGHT_RANGE]</span>")
 			log_admin("[key_name(usr)] changed the bomb cap to [GLOB.MAX_EX_DEVESTATION_RANGE], [GLOB.MAX_EX_HEAVY_RANGE], [GLOB.MAX_EX_LIGHT_RANGE]")

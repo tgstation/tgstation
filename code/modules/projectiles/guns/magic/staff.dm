@@ -2,6 +2,7 @@
 	slot_flags = SLOT_BACK
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
+	flags_2 = NO_MAT_REDEMPTION_2
 
 /obj/item/gun/magic/staff/change
 	name = "staff of change"

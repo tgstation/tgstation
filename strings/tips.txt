@@ -75,7 +75,6 @@ As a Security Officer, communicate and coordinate with your fellow officers usin
 As a Security Officer, your sechuds or HUDsunglasses can not only see crewmates' job assignments and criminal status, but also if they are mindshield implanted. Use this to your advantage in a revolution to definitively tell who is on your side!
 As a Security Officer, mindshield implants can only prevent someone from being turned into a cultist: unlike revolutionaries, it will not de-cult them if they have already been converted.
 As a Security Officer, examining someone while wearing sechuds or HUDsunglasses will let you set their arrest level, which will cause Beepsky and other security bots to chase after them.
-As a Security Officer, implanting a gang member the first time will deconvert them, but destroy the implant. You must implant them a second time to protect them from further conversion attempts. Keep in mind that gang members have ways to destroy implants in people!
 As the Detective, people leave fingerprints everywhere and on everything. With the exception of white latex, gloves will hide them. All is not lost, however, as gloves leave fibers specific to their kind such as black or nitrile, pointing to a general department.
 As the Detective, you can use your forensics scanner from a distance.
 As the Lawyer, try to negotiate with the Warden if sentences seem too high for the crime.
@@ -172,10 +171,6 @@ As a Wizard, the fireball spell performs very poorly at close range, as it can e
 As a Wizard, summoning guns will turn a large portion of the crew against themselves, but will also give everyone anything from a pea shooter to a BFG 9000. Use at your own risk!
 As a Wizard, the staff of chaos can fire any type of bolts from the magical wands. This can range from bolts of instant death to healing or reviving someone.
 As a Wizard, most spells become unusable if you are not wearing your robe, hat, and sandals.
-As a Gangster, you can destroy mindshield implants with an implant breaker, letting you reconvert that person.
-As a Gangster, your influence is based on how many areas you have tagged and how many people are wearing your gang's outfit; more areas and more people wearing the outfit will give you more influence.
-As a Gangster, your gang outfits are very robust, giving moderate resistances to most direct damage at the cost of stealth.
-As a Gang Boss, don't wait too long to promote lieutenants! If you get caught by security or enemy gangsters, hopefully you have a backup.
 As an Abductor, you can select where your victims will be sent on the ship control console.
 As an Abductor Agent, the combat mode vest has much higher resistance to every kind of weapon, and your helmet prevents the AI from tracking you.
 As an Abductor, the baton can cycle between four modes: stun, sleep, cuff and probe.

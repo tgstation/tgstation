@@ -206,7 +206,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 /datum/antagonist/devil/proc/regress_blood_lizard()
 	var/mob/living/carbon/true_devil/D = owner.current
 	to_chat(D, "<span class='warning'>Your powers weaken, have more contracts be signed to regain power.</span>")
-	D.oldform.loc = D.loc
+	D.oldform.forceMove(D.drop_location())
 	owner.transfer_to(D.oldform)
 	give_appropriate_spells()
 	qdel(D)
@@ -237,7 +237,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	sleep(50)
 	var/mob/living/carbon/true_devil/A = new /mob/living/carbon/true_devil(owner.current.loc)
 	A.faction |= "hell"
-	owner.current.loc = A
+	owner.current.forceMove(A)
 	A.oldform = owner.current
 	owner.transfer_to(A)
 	A.set_name()

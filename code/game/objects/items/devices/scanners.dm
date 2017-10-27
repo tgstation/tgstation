@@ -235,7 +235,7 @@ MASS SPECTROMETER
 		to_chat(user, "<span class='info'>Time of Death:</span> [M.tod]")
 		var/tdelta = round(world.time - M.timeofdeath)
 		if(tdelta < (DEFIB_TIME_LIMIT * 10))
-			to_chat(user, "<span class='danger'>Subject died [tdelta / 10] seconds ago, defibrillation may be possible!</span>")
+			to_chat(user, "<span class='danger'>Subject died [DisplayTimeText(tdelta)] ago, defibrillation may be possible!</span>")
 
 	for(var/thing in M.viruses)
 		var/datum/disease/D = thing
@@ -268,7 +268,7 @@ MASS SPECTROMETER
 
 		var/cyberimp_detect
 		for(var/obj/item/organ/cyberimp/CI in C.internal_organs)
-			if(CI.status == ORGAN_ROBOTIC)
+			if(CI.status == ORGAN_ROBOTIC && !CI.syndicate_implant)
 				cyberimp_detect += "[C.name] is modified with a [CI.name].<br>"
 		if(cyberimp_detect)
 			to_chat(user, "<span class='notice'>Detected cybernetic modifications:</span>")

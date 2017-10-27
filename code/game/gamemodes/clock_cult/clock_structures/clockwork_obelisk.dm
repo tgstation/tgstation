@@ -42,7 +42,7 @@
 	return affected
 
 /obj/structure/destructible/clockwork/powered/clockwork_obelisk/attack_hand(mob/living/user)
-	if(!is_servant_of_ratvar(user) || total_accessable_power() < hierophant_cost || !anchored)
+	if(!is_servant_of_ratvar(user) || !can_access_clockwork_power(src, hierophant_cost) || !anchored)
 		to_chat(user, "<span class='warning'>You place your hand on [src], but it doesn't react.</span>")
 		return
 	var/choice = alert(user,"You place your hand on [src]...",,"Hierophant Broadcast","Spatial Gateway","Cancel")
@@ -87,7 +87,7 @@
 					active = TRUE
 					clockwork_say(user, text2ratvar("Spatial Gateway, activate!"))
 					return
-			return_power(gateway_cost) //if we didn't return above, ie, successfully create a gateway, we give the power back
+			adjust_clockwork_power(gateway_cost) //if we didn't return above, ie, successfully create a gateway, we give the power back
 
 /obj/structure/destructible/clockwork/powered/clockwork_obelisk/process()
 	if(!anchored)

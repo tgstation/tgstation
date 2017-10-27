@@ -108,8 +108,6 @@
 	var/list/cached_gases = air.gases //this speeds things up because accessing datum vars is slow
 	var/temperature = air.temperature
 	var/list/cached_results = air.reaction_results
-
-	//to_chat(world, "pre [temperature], [cached_gases["o2"][MOLES]], [cached_gases["plasma"][MOLES]]")
 	cached_results[id] = 0
 
 	//General volatile gas burn
@@ -165,8 +163,6 @@
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			air.temperature = (temperature*old_heat_capacity + energy_released)/new_heat_capacity
 
-	//to_chat(world, "post [temperature], [cached_gases["o2"][MOLES]], [cached_gases["plasma"][MOLES]]")
-
 	//let the floor know a fire is happening
 	if(istype(location))
 		temperature = air.temperature
@@ -201,7 +197,6 @@
 		//Fusion wont occur if the level of impurities is too high.
 		return NO_REACTION
 
-	//to_chat(world, "pre [temperature, [cached_gases["plasma"][MOLES]], [cached_gases["co2"][MOLES]])
 	var/old_heat_capacity = air.heat_capacity()
 	var/carbon_efficency = min(cached_gases[/datum/gas/plasma][MOLES]/cached_gases[/datum/gas/carbon_dioxide][MOLES],MAX_CARBON_EFFICENCY)
 	var/reaction_energy = THERMAL_ENERGY(air)
@@ -226,7 +221,6 @@
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			air.temperature = max(((temperature*old_heat_capacity + reaction_energy)/new_heat_capacity),TCMB)
 			//Prevents whatever mechanism is causing it to hit negative temperatures.
-		//to_chat(world, "post [temperature], [cached_gases["plasma"][MOLES]], [cached_gases["co2"][MOLES]])
 		return REACTING
 
 #undef REACTING

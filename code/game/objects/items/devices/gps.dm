@@ -1,7 +1,7 @@
 GLOBAL_LIST_EMPTY(GPS_list)
 /obj/item/device/gps
 	name = "global positioning system"
-	desc = "Helping lost spacemen find their way through the planets since 2016. Alt+click to toggle power."
+	desc = "Helping lost spacemen find their way through the planets since 2016."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "gps-c"
 	w_class = WEIGHT_CLASS_SMALL
@@ -15,6 +15,9 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	var/updating = TRUE //Automatic updating of GPS list. Can be set to manual by user.
 	var/global_mode = TRUE //If disabled, only GPS signals of the same Z level are shown
 
+/obj/item/device/gps/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Alt-click to switch it [tracking ? "off":"on"].</span>")
 
 /obj/item/device/gps/Initialize()
 	. = ..()

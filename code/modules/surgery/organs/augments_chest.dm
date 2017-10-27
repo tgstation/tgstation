@@ -63,7 +63,7 @@
 		else
 			cooldown = revive_cost + world.time
 			reviving = FALSE
-			to_chat(owner, "<span class='notice'>Your reviver implant shuts down and starts recharging. It will be ready again in [revive_cost/10] seconds.</span>")
+			to_chat(owner, "<span class='notice'>Your reviver implant shuts down and starts recharging. It will be ready again in [DisplayTimeText(revive_cost)].</span>")
 		return
 
 	if(cooldown > world.time)

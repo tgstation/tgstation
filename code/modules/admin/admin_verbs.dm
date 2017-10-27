@@ -264,7 +264,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 			verbs += GLOB.admin_verbs_poll
 		if(rights & R_SOUNDS)
 			verbs += GLOB.admin_verbs_sounds
-			if(config.invoke_youtubedl)
+			if(CONFIG_GET(string/invoke_youtubedl))
 				verbs += /client/proc/play_web_sound
 		if(rights & R_SPAWN)
 			verbs += GLOB.admin_verbs_spawn
@@ -401,7 +401,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	set name = "Unban Panel"
 	set category = "Admin"
 	if(holder)
-		if(config.ban_legacy_system)
+		if(CONFIG_GET(flag/ban_legacy_system))
 			holder.unbanpanel()
 		else
 			holder.DB_ban_panel()

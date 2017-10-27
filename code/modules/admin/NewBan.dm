@@ -11,8 +11,9 @@ GLOBAL_PROTECT(Banlist)
 
 	. = list()
 	var/appeal
-	if(config && config.banappeals)
-		appeal = "\nFor more information on your ban, or to appeal, head to <a href='[config.banappeals]'>[config.banappeals]</a>"
+	var/bran = CONFIG_GET(string/banappeals)
+	if(bran)
+		appeal = "\nFor more information on your ban, or to appeal, head to <a href='[bran]'>[bran]</a>"
 	GLOB.Banlist.cd = "/base"
 	if( "[ckey][id]" in GLOB.Banlist.dir )
 		GLOB.Banlist.cd = "[ckey][id]"

@@ -132,13 +132,13 @@
 		data["pillBotMaxContent"] = bottle.storage_slots
 
 
-	var beakerContents[0]
+	var/beakerContents[0]
 	if(beaker)
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
 			beakerContents.Add(list(list("name" = R.name, "id" = R.id, "volume" = R.volume))) // list in a list because Byond merges the first list...
 		data["beakerContents"] = beakerContents
 
-	var bufferContents[0]
+	var/bufferContents[0]
 	if(reagents.total_volume)
 		for(var/datum/reagent/N in reagents.reagent_list)
 			bufferContents.Add(list(list("name" = N.name, "id" = N.id, "volume" = N.volume))) // ^

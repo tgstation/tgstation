@@ -123,7 +123,7 @@
 ////////////////////////////Proc for moving soul in and out off stone//////////////////////////////////////
 
 
-/obj/item/device/soulstone/proc/transfer_soul(choice as text, target, mob/user).
+/obj/item/device/soulstone/proc/transfer_soul(choice as text, target, mob/user)
 	switch(choice)
 		if("FORCE")
 			if(!iscarbon(target))		//TODO: Add sacrifice stoning for non-organics, just because you have no body doesnt mean you dont have a soul
@@ -168,7 +168,7 @@
 			if(contents.len)
 				to_chat(user, "<span class='userdanger'>Capture failed!</span>: The soulstone is full! Free an existing soul to make room.")
 			else
-				T.loc = src //put shade in stone
+				T.forceMove(src) //put shade in stone
 				T.status_flags |= GODMODE
 				T.canmove = 0
 				T.health = T.maxHealth
@@ -241,6 +241,7 @@
 	S.name = "Shade of [T.real_name]"
 	S.real_name = "Shade of [T.real_name]"
 	S.key = T.key
+	S.language_holder = U.language_holder.copy(S)
 	if(U)
 		S.faction |= "\ref[U]" //Add the master as a faction, allowing inter-mob cooperation
 	if(U && iscultist(U))

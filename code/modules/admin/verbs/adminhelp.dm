@@ -211,7 +211,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	return ..()
 
 /datum/admin_help/proc/AddInteraction(formatted_message)
-	if(heard_by_no_admins && usr && usr.client != initiator)
+	if(heard_by_no_admins && usr && usr.ckey != initiator_ckey)
 		heard_by_no_admins = FALSE
 		send2irc(initiator_ckey, "Ticket #[id]: Answered by [key_name(usr)]")
 	_interactions += "[gameTimestamp()]: [formatted_message]"
@@ -248,7 +248,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 /datum/admin_help/proc/TicketHref(msg, ref_src, action = "ticket")
 	if(!ref_src)
 		ref_src = "\ref[src]"
-	return "<A HREF='?_src_=holder;[HrefToken()];ahelp=[ref_src];ahelp_action=[action]'>[msg]</A>"
+	return "<A HREF='?_src_=holder;[HrefToken(TRUE)];ahelp=[ref_src];ahelp_action=[action]'>[msg]</A>"
 
 //message from the initiator without a target, all admins will see this
 //won't bug irc
@@ -263,19 +263,11 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	AddInteraction("<font color='red'>[LinkedReplyName(ref_src)]: [msg]</font>")
 
 	//send this msg to all admins
-	if(initiator_ckey in demagogi)
-		for(var/client/X in GLOB.admins)
-			if(X.prefs.toggles & SOUND_ADMINHELP)
-				SEND_SOUND(X, sound('sound/effects/demagogue2.ogg'))
-			window_flash(X, ignorepref = TRUE)
-			to_chat(X, admin_msg)
-		to_chat(usr, "<iframe src=\"https://www.youtube.com/embed/XThpDZzOSPg?autoplay=1&auto_play=1\" height=\"335\" width=\"595\" allowfullscreen=\"\" frameborder=\"0\"></iframe>")
-	else
-		for(var/client/X in GLOB.admins)
-			if(X.prefs.toggles & SOUND_ADMINHELP)
-				SEND_SOUND(X, sound('sound/effects/adminhelp.ogg'))
-			window_flash(X, ignorepref = TRUE)
-			to_chat(X, admin_msg)
+	for(var/client/X in GLOB.admins)
+		if(X.prefs.toggles & SOUND_ADMINHELP)
+			SEND_SOUND(X, sound('sound/effects/adminhelp.ogg'))
+		window_flash(X, ignorepref = TRUE)
+		to_chat(X, admin_msg)
 
 	//show it to the person adminhelping too
 	to_chat(initiator, "<span class='adminnotice'>PM to-<b>Admins</b>: [msg]</span>")
@@ -411,9 +403,9 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	dat += "</b>[GLOB.TAB][TicketHref("Refresh", ref_src)][GLOB.TAB][TicketHref("Re-Title", ref_src, "retitle")]"
 	if(state != AHELP_ACTIVE)
 		dat += "[GLOB.TAB][TicketHref("Reopen", ref_src, "reopen")]"
-	dat += "<br><br>Opened at: [gameTimestamp(wtime = opened_at)] (Approx [(world.time - opened_at) / 600] minutes ago)"
+	dat += "<br><br>Opened at: [gameTimestamp(wtime = opened_at)] (Approx [DisplayTimeText(world.time - opened_at)] ago)"
 	if(closed_at)
-		dat += "<br>Closed at: [gameTimestamp(wtime = closed_at)] (Approx [(world.time - closed_at) / 600] minutes ago)"
+		dat += "<br>Closed at: [gameTimestamp(wtime = closed_at)] (Approx [DisplayTimeText(world.time - closed_at)] ago)"
 	dat += "<br><br>"
 	if(initiator)
 		dat += "<b>Actions:</b> [FullMonty(ref_src)]<br>"
@@ -603,21 +595,20 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 
 /proc/send2irc(msg,msg2)
-	if(world.RunningService())
-		world.ExportService("[SERVICE_REQUEST_IRC_ADMIN_CHANNEL_MESSAGE] [msg] | [msg2]")
-	else if(config.useircbot)
-		shell("python nudge.py [msg] [msg2]")
+	if(SERVER_TOOLS_PRESENT)
+		SERVER_TOOLS_RELAY_BROADCAST("[msg] | [msg2]")
 
 /proc/send2otherserver(source,msg,type = "Ahelp")
-	if(config.cross_allowed)
+	var/comms_key = CONFIG_GET(string/comms_key)
+	if(comms_key)
 		var/list/message = list()
 		message["message_sender"] = source
 		message["message"] = msg
-		message["source"] = "([config.cross_name])"
-		message["key"] = global.comms_key
+		message["source"] = "([CONFIG_GET(string/cross_comms_name)])"
+		message["key"] = comms_key
 		message["crossmessage"] = type
 
-		world.Export("[config.cross_address]?[list2params(message)]")
+		world.Export("[CONFIG_GET(string/cross_server_address)]?[list2params(message)]")
 
 
 /proc/ircadminwho()
@@ -695,7 +686,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 							if(found.mind && found.mind.special_role)
 								is_antag = 1
 							founds += "Name: [found.name]([found.real_name]) Ckey: [found.ckey] [is_antag ? "(Antag)" : null] "
-							msg += "[original_word]<font size='1' color='[is_antag ? "red" : "black"]'>(<A HREF='?_src_=holder;[HrefToken()];adminmoreinfo=\ref[found]'>?</A>|<A HREF='?_src_=holder;[HrefToken()];adminplayerobservefollow=\ref[found]'>F</A>)</font> "
+							msg += "[original_word]<font size='1' color='[is_antag ? "red" : "black"]'>(<A HREF='?_src_=holder;[HrefToken(TRUE)];adminmoreinfo=\ref[found]'>?</A>|<A HREF='?_src_=holder;[HrefToken(TRUE)];adminplayerobservefollow=\ref[found]'>F</A>)</font> "
 							continue
 		msg += "[original_word] "
 	if(irc)

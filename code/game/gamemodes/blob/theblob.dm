@@ -188,7 +188,7 @@
 		B.density = TRUE
 		if(T.Enter(B,src)) //NOW we can attempt to move into the tile
 			B.density = initial(B.density)
-			B.loc = T
+			B.forceMove(T)
 			B.update_icon()
 			if(B.overmind && expand_reaction)
 				B.overmind.blob_reagent_datum.expand_reaction(src, B, T, controller)

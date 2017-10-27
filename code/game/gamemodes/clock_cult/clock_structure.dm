@@ -77,14 +77,10 @@
 		return FALSE
 	return ..()
 
-/obj/structure/destructible/clockwork/proc/get_efficiency_mod(increasing)
+/obj/structure/destructible/clockwork/proc/get_efficiency_mod()
 	if(GLOB.ratvar_awakens)
-		if(increasing)
-			return 0.5
 		return 2
 	. = max(sqrt(obj_integrity/max(max_integrity, 1)), 0.5)
-	if(increasing)
-		. *= min(max_integrity/max(obj_integrity, 1), 4)
 	. = round(., 0.01)
 
 /obj/structure/destructible/clockwork/attack_ai(mob/user)
@@ -116,7 +112,7 @@
 	else
 		icon_state = unanchored_icon
 		if(do_damage)
-			playsound(src, break_sound, 10 * get_efficiency_mod(TRUE), 1)
+			playsound(src, break_sound, 10 * (40 * (1 - get_efficiency_mod())), 1)
 			take_damage(round(max_integrity * 0.25, 1), BRUTE)
 			to_chat(user, "<span class='warning'>As you unsecure [src] from the floor, you see cracks appear in its surface!</span>")
 
@@ -158,10 +154,10 @@
 /obj/structure/destructible/clockwork/powered/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		var/powered = total_accessable_power()
-		var/sigil_number = LAZYLEN(check_apc_and_sigils())
-		to_chat(user, "<span class='[powered ? "brass":"alloy"]'>It has access to <b>[powered == INFINITY ? "INFINITE</b>":"[DisplayPower(powered)]</b> of"] power, \
-		and <b>[sigil_number]</b> Sigil[sigil_number == 1 ? "":"s"] of Transmission [sigil_number == 1 ? "is":"are"] in range.</span>")
+		if(!can_access_clockwork_power(src))
+			to_chat(user, "<span class='alloy'>It has no access to the power network! Create a sigil of transmission nearby.</span>")
+		else
+			to_chat(user, "<span class='brass'>It has access to <b>[DisplayPower(get_clockwork_power())]</b> of power.</span>")
 
 /obj/structure/destructible/clockwork/powered/Destroy()
 	SSfastprocess.processing -= src
@@ -169,7 +165,7 @@
 	return ..()
 
 /obj/structure/destructible/clockwork/powered/process()
-	var/powered = total_accessable_power()
+	var/powered = can_access_clockwork_power(src)
 	return powered == PROCESS_KILL ? 25 : powered //make sure we don't accidentally return the arbitrary PROCESS_KILL define
 
 /obj/structure/destructible/clockwork/powered/can_be_unfasten_wrench(mob/user, silent)
@@ -210,102 +206,12 @@
 	if(forced_disable(TRUE))
 		new /obj/effect/temp_visual/emp(loc)
 
-/obj/structure/destructible/clockwork/powered/proc/total_accessable_power() //how much power we have and can use
-	if(!needs_power || GLOB.ratvar_awakens)
-		return INFINITY //oh yeah we've got power why'd you ask
-
-	var/power = 0
-	power += accessable_apc_power()
-	power += accessable_sigil_power()
-	return power
-
-/obj/structure/destructible/clockwork/powered/proc/accessable_apc_power()
-	var/power = 0
-	var/area/A = get_area(src)
-	var/area/targetAPCA
-	for(var/obj/machinery/power/apc/APC in GLOB.apcs_list)
-		var/area/APCA = get_area(APC)
-		if(APCA == A)
-			target_apc = APC
-	if(target_apc)
-		targetAPCA = get_area(target_apc)
-		if(targetAPCA != A)
-			target_apc = null
-		else if(target_apc.cell)
-			var/apccharge = target_apc.cell.charge
-			if(apccharge >= MIN_CLOCKCULT_POWER)
-				power += apccharge
-	return power
-
-/obj/structure/destructible/clockwork/powered/proc/accessable_sigil_power()
-	var/power = 0
-	for(var/obj/effect/clockwork/sigil/transmission/T in range(SIGIL_ACCESS_RANGE, src))
-		power += T.power_charge
-	return power
-
-
 /obj/structure/destructible/clockwork/powered/proc/try_use_power(amount) //try to use an amount of power
-	if(!needs_power || GLOB.ratvar_awakens)
-		return 1
-	if(amount <= 0)
-		return FALSE
-	var/power = total_accessable_power()
-	if(!power || power < amount)
-		return FALSE
+	if(!needs_power || GLOB.ratvar_awakens || !amount)
+		return TRUE
+	if(!can_access_clockwork_power(src, amount))
+		return
 	return use_power(amount)
 
 /obj/structure/destructible/clockwork/powered/proc/use_power(amount) //we've made sure we had power, so now we use it
-	var/sigilpower = accessable_sigil_power()
-	var/list/sigils_in_range = list()
-	for(var/obj/effect/clockwork/sigil/transmission/T in range(SIGIL_ACCESS_RANGE, src))
-		sigils_in_range += T
-	while(sigilpower && amount >= MIN_CLOCKCULT_POWER)
-		for(var/S in sigils_in_range)
-			var/obj/effect/clockwork/sigil/transmission/T = S
-			if(amount >= MIN_CLOCKCULT_POWER && T.modify_charge(MIN_CLOCKCULT_POWER))
-				sigilpower -= MIN_CLOCKCULT_POWER
-				amount -= MIN_CLOCKCULT_POWER
-	var/apcpower = accessable_apc_power()
-	while(apcpower >= MIN_CLOCKCULT_POWER && amount >= MIN_CLOCKCULT_POWER)
-		if(target_apc.cell.use(MIN_CLOCKCULT_POWER))
-			apcpower -= MIN_CLOCKCULT_POWER
-			amount -= MIN_CLOCKCULT_POWER
-			target_apc.charging = 1
-			target_apc.chargemode = TRUE
-			target_apc.update()
-			target_apc.update_icon()
-			target_apc.updateUsrDialog()
-		else
-			apcpower = 0
-	if(amount)
-		return FALSE
-	else
-		return TRUE
-
-/obj/structure/destructible/clockwork/powered/proc/return_power(amount) //returns a given amount of power to all nearby sigils or if there are no sigils, to the APC
-	if(amount <= 0)
-		return FALSE
-	var/list/sigils_in_range = check_apc_and_sigils()
-	if(!istype(sigils_in_range))
-		return FALSE
-	if(sigils_in_range.len)
-		while(amount >= MIN_CLOCKCULT_POWER)
-			for(var/S in sigils_in_range)
-				var/obj/effect/clockwork/sigil/transmission/T = S
-				if(amount >= MIN_CLOCKCULT_POWER && T.modify_charge(-MIN_CLOCKCULT_POWER))
-					amount -= MIN_CLOCKCULT_POWER
-	if(target_apc && target_apc.cell && target_apc.cell.give(amount))
-		target_apc.charging = 1
-		target_apc.chargemode = TRUE
-		target_apc.update()
-		target_apc.update_icon()
-		target_apc.updateUsrDialog()
-	return TRUE
-
-/obj/structure/destructible/clockwork/powered/proc/check_apc_and_sigils() //checks for sigils and an APC, returning FALSE if it finds neither, and a list of sigils otherwise
-	. = list()
-	for(var/obj/effect/clockwork/sigil/transmission/T in range(SIGIL_ACCESS_RANGE, src))
-		. += T
-	var/list/L = .
-	if(!L.len && (!target_apc || !target_apc.cell))
-		return FALSE
+	return adjust_clockwork_power(-amount)

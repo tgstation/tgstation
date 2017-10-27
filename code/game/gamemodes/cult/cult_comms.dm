@@ -96,7 +96,7 @@
 
 /proc/pollCultists(var/mob/living/Nominee) //Cult Master Poll
 	if(world.time < CULT_POLL_WAIT)
-		to_chat(Nominee, "It would be premature to select a leader while everyone is still settling in, try again in [round((CULT_POLL_WAIT-world.time)/10)] seconds.")
+		to_chat(Nominee, "It would be premature to select a leader while everyone is still settling in, try again in [DisplayTimeText(CULT_POLL_WAIT-world.time)].")
 		return
 	GLOB.cult_vote_called = TRUE //somebody's trying to be a master, make sure we don't let anyone else try
 	for(var/datum/mind/B in SSticker.mode.cult)
@@ -232,7 +232,7 @@
 		return FALSE
 	if(cooldown > world.time)
 		if(!CM.active)
-			to_chat(owner, "<span class='cultlarge'><b>You need to wait [round((cooldown - world.time) * 0.1)] seconds before you can mark another target!</b></span>")
+			to_chat(owner, "<span class='cultlarge'><b>You need to wait [DisplayTimeText(cooldown - world.time)] before you can mark another target!</b></span>")
 		return FALSE
 	return ..()
 
@@ -324,7 +324,7 @@
 		return FALSE
 	if(cooldown > world.time)
 		if(!PM.active)
-			to_chat(owner, "<span class='cultlarge'><b>You need to wait [round((cooldown - world.time) * 0.1)] seconds before you can pulse again!</b></span>")
+			to_chat(owner, "<span class='cultlarge'><b>You need to wait [DisplayTimeText(cooldown - world.time)] before you can pulse again!</b></span>")
 		return FALSE
 	return ..()
 

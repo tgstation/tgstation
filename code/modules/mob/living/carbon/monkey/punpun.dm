@@ -5,7 +5,7 @@
 	var/ancestor_chain = 1
 	var/relic_hat	//Note: these two are paths
 	var/relic_mask
-	var/memory_saved = 0
+	var/memory_saved = FALSE
 	var/list/pet_monkey_names = list("Pun Pun", "Bubbles", "Mojo", "George", "Darwin", "Aldo", "Caeser", "Kanzi", "Kong", "Terk", "Grodd", "Mala", "Bojangles", "Coco", "Able", "Baker", "Scatter", "Norbit", "Travis")
 	var/list/rare_pet_monkey_names = list("Professor Bobo", "Deempisi's Revenge", "Furious George", "King Louie", "Dr. Zaius", "Jimmy Rustles", "Dinner", "Lanky")
 
@@ -32,13 +32,14 @@
 		equip_to_slot_or_del(new relic_mask, slot_wear_mask)
 
 /mob/living/carbon/monkey/punpun/Life()
-	if(SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
-		Write_Memory(0)
+	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
+		Write_Memory(FALSE, FALSE)
+		memory_saved = TRUE
 	..()
 
 /mob/living/carbon/monkey/punpun/death(gibbed)
-	if(!memory_saved || gibbed)
-		Write_Memory(1,gibbed)
+	if(!memory_saved)
+		Write_Memory(TRUE, gibbed)
 	..()
 
 /mob/living/carbon/monkey/punpun/proc/Read_Memory()
@@ -53,8 +54,7 @@
 		var/json_file = file("data/npc_saves/Punpun.json")
 		if(!fexists(json_file))
 			return
-		var/list/json = list()
-		json = json_decode(file2text(json_file))
+		var/list/json = json_decode(file2text(json_file))
 		ancestor_name = json["ancestor_name"]
 		ancestor_chain = json["ancestor_chain"]
 		relic_hat = json["relic_hat"]
@@ -68,14 +68,10 @@
 		file_data["ancestor_chain"] = null
 		file_data["relic_hat"] = null
 		file_data["relic_mask"] = null
-	if(dead)
-		file_data["ancestor_name"] = ancestor_name
-		file_data["ancestor_chain"] = ancestor_chain + 1
-	file_data["relic_hat"] = head ? head.type : null
-	file_data["relic_mask"] = wear_mask ? wear_mask.type : null
-	if(!ancestor_name)
-		file_data["ancestor_name"] = name
+	else
+		file_data["ancestor_name"] = ancestor_name ? ancestor_name : name
+		file_data["ancestor_chain"] = dead ? ancestor_chain + 1 : ancestor_chain
+		file_data["relic_hat"] = head ? head.type : null
+		file_data["relic_mask"] = wear_mask ? wear_mask.type : null
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
-	if(!dead)
-		memory_saved = 1

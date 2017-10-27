@@ -10,6 +10,10 @@
 	var/obj/item/extinguisher/stored_extinguisher
 	var/opened = 0
 
+/obj/structure/extinguisher_cabinet/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Alt-click to [opened ? "close":"open"] it.</span>")
+
 /obj/structure/extinguisher_cabinet/New(loc, ndir, building)
 	..()
 	if(building)

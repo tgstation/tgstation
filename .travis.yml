@@ -1,7 +1,5 @@
 language: generic
 sudo: false
-dist: precise
-
 env:
     global:
     - BYOND_MAJOR="511"

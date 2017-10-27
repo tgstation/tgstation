@@ -302,7 +302,6 @@
 			user.visible_message(feedmsg)
 			qdel(O)
 			eggsleft += rand(1, 4)
-			//to_chat(world, eggsleft)
 		else
 			to_chat(user, "<span class='warning'>[name] doesn't seem hungry!</span>")
 	else

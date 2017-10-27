@@ -33,12 +33,11 @@
 	return
 
 /obj/structure/lattice/ratvar_act()
-	if(IsEven(x + y))
-		new /obj/structure/lattice/clockwork(loc)
-	else
-		new /obj/structure/lattice/clockwork/large(loc)
+	new /obj/structure/lattice/clockwork(loc)
 
 /obj/structure/lattice/attackby(obj/item/C, mob/user, params)
+	if(resistance_flags & INDESTRUCTIBLE)
+		return
 	if(istype(C, /obj/item/wirecutters))
 		to_chat(user, "<span class='notice'>Slicing [name] joints ...</span>")
 		deconstruct()
@@ -52,7 +51,6 @@
 	qdel(src)
 
 /obj/structure/lattice/singularity_pull(S, current_size)
-	..()
 	if(current_size >= STAGE_FOUR)
 		deconstruct()
 
@@ -62,22 +60,22 @@
 	icon = 'icons/obj/smooth_structures/lattice_clockwork.dmi'
 
 /obj/structure/lattice/clockwork/Initialize(mapload)
+	canSmoothWith += /turf/open/indestructible/clock_spawn_room //list overrides are a terrible thing
 	. = ..()
 	ratvar_act()
+	if(z == ZLEVEL_CITYOFCOGS)
+		resistance_flags |= INDESTRUCTIBLE
 
 /obj/structure/lattice/clockwork/ratvar_act()
 	if(IsOdd(x+y))
-		new /obj/structure/lattice/clockwork/large(loc) // deletes old one
-
-/obj/structure/lattice/clockwork/large/Initialize(mapload)
-	. = ..()
-	icon = 'icons/obj/smooth_structures/lattice_clockwork_large.dmi'
-	pixel_x = -9
-	pixel_y = -9
-
-/obj/structure/lattice/clockwork/large/ratvar_act()
-	if(IsEven(x + y))
-		new /obj/structure/lattice/clockwork(loc)
+		icon = 'icons/obj/smooth_structures/lattice_clockwork_large.dmi'
+		pixel_x = -9
+		pixel_y = -9
+	else
+		icon = 'icons/obj/smooth_structures/lattice_clockwork.dmi'
+		pixel_x = 0
+		pixel_y = 0
+	return TRUE
 
 /obj/structure/lattice/catwalk
 	name = "catwalk"
@@ -109,11 +107,29 @@
 /obj/structure/lattice/catwalk/clockwork
 	name = "clockwork catwalk"
 	icon = 'icons/obj/smooth_structures/catwalk_clockwork.dmi'
+	canSmoothWith = list(/obj/structure/lattice,
+	/turf/open/floor,
+	/turf/open/indestructible/clock_spawn_room,
+	/turf/closed/wall,
+	/obj/structure/falsewall)
+	smooth = SMOOTH_MORE
 
 /obj/structure/lattice/catwalk/clockwork/Initialize(mapload)
 	. = ..()
-	new /obj/effect/temp_visual/ratvar/floor/catwalk(loc)
-	new /obj/effect/temp_visual/ratvar/beam/catwalk(loc)
+	ratvar_act()
+	if(!mapload)
+		new /obj/effect/temp_visual/ratvar/floor/catwalk(loc)
+		new /obj/effect/temp_visual/ratvar/beam/catwalk(loc)
+	if(z == ZLEVEL_CITYOFCOGS)
+		resistance_flags |= INDESTRUCTIBLE
 
 /obj/structure/lattice/catwalk/clockwork/ratvar_act()
-	return
+	if(IsOdd(x+y))
+		icon = 'icons/obj/smooth_structures/catwalk_clockwork_large.dmi'
+		pixel_x = -9
+		pixel_y = -9
+	else
+		icon = 'icons/obj/smooth_structures/catwalk_clockwork.dmi'
+		pixel_x = 0
+		pixel_y = 0
+	return TRUE

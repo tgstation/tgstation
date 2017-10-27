@@ -118,6 +118,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/Destroy()
 	GLOB.meteor_list -= src
+	SSaugury.unregister_doom(src)
 	walk(src,0) //this cancels the walk_towards() proc
 	. = ..()
 

@@ -314,10 +314,11 @@
 
 // Will return a list of active candidates. It increases the buffer 5 times until it finds a candidate which is active within the buffer.
 
-/proc/get_candidates(be_special_type, afk_bracket = config.inactivity_period, jobbanType)
+/proc/get_candidates(be_special_type, afk_bracket = CONFIG_GET(number/inactivity_period), jobbanType)
 	var/list/candidates = list()
 	// Keep looping until we find a non-afk candidate within the time bracket (we limit the bracket to 10 minutes (6000))
-	while(!candidates.len && afk_bracket < config.afk_period)
+	var/afk_period = CONFIG_GET(number/afk_period)
+	while(!candidates.len && afk_bracket < afk_period)
 		for(var/mob/dead/observer/G in GLOB.player_list)
 			if(G.client != null)
 				if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
@@ -435,7 +436,7 @@
 	SEND_SOUND(M, 'sound/misc/notice2.ogg') //Alerting them to their consideration
 	if(flashwindow)
 		window_flash(M.client)
-	switch(ignore_category ? askuser(M,Question,"Please answer in [poll_time/10] seconds!","Yes","No","Never for this round", StealFocus=0, Timeout=poll_time) : askuser(M,Question,"Please answer in [poll_time/10] seconds!","Yes","No", StealFocus=0, Timeout=poll_time))
+	switch(ignore_category ? askuser(M,Question,"Please answer in [DisplayTimeText(poll_time)]!","Yes","No","Never for this round", StealFocus=0, Timeout=poll_time) : askuser(M,Question,"Please answer in [DisplayTimeText(poll_time)]!","Yes","No", StealFocus=0, Timeout=poll_time))
 		if(1)
 			to_chat(M, "<span class='notice'>Choice registered: Yes.</span>")
 			if(time_passed + poll_time <= world.time)

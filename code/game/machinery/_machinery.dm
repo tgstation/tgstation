@@ -431,7 +431,7 @@ Class Procs:
 							W.handle_item_insertion(A, 1)
 							component_parts -= A
 							component_parts += B
-							B.loc = null
+							B.moveToNullspace()
 							to_chat(user, "<span class='notice'>[A.name] replaced with [B.name].</span>")
 							shouldplaysound = 1 //Only play the sound when parts are actually replaced!
 							break

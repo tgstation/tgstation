@@ -21,9 +21,9 @@
 	attack_verb = list("struck", "hit", "bashed")
 
 	var/fire_sound = "gunshot"
-	var/suppressed = 0					//whether or not a message is displayed when fired
-	var/can_suppress = 0
-	var/can_unsuppress = 1
+	var/suppressed = null					//whether or not a message is displayed when fired
+	var/can_suppress = FALSE
+	var/can_unsuppress = TRUE
 	var/recoil = 0						//boom boom shake the room
 	var/clumsy_check = TRUE
 	var/obj/item/ammo_casing/chambered = null
