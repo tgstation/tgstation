@@ -513,9 +513,17 @@
 			return DOCKING_IMMOBILIZED
 
 	var/obj/docking_port/stationary/old_dock = get_docked()
-	var/underlying_turf_type = /turf/open/space //The turf that gets placed under where the shuttle moved from
-	var/underlying_baseturf_type = /turf/open/space //The baseturf that the gets assigned to the turf_type above
-	var/underlying_area_type = /area/space //The area that gets placed under where the shuttle moved from
+
+	// The turf that gets placed under where the shuttle moved from
+	var/underlying_turf_type = /turf/open/space
+
+	// The baseturf that the gets assigned to the turf_type above
+	var/underlying_baseturf_type = /turf/open/space
+	
+	// The area that gets placed under where the shuttle moved from
+	var/underlying_area_type = /area/space
+
+	// The baseturf cache is a typecache of what counts as a baseturf to be left behind
 	var/list/baseturf_cache
 	if(old_dock) //Dock overwrites
 		if(old_dock.turf_type)
@@ -527,7 +535,6 @@
 		if(old_dock.baseturf_cache)
 			baseturf_cache = old_dock.baseturf_cache
 	if(!baseturf_cache)
-		//Don't want to call this needlessly
 		baseturf_cache = typecacheof(underlying_baseturf_type)
 
 	/**************************************************************************************************************
@@ -540,6 +547,8 @@
 	var/list/new_turfs = return_ordered_turfs(new_dock.x, new_dock.y, new_dock.z, new_dock.dir)
 	/**************************************************************************************************************/
 
+	// The underlying old area is the area assumed to be under the shuttle's starting location
+	// If it no longer/has never existed it will be created
 	var/area/underlying_old_area = locate(underlying_area_type) in GLOB.sortedAreas
 	if(!underlying_old_area)
 		underlying_old_area = new underlying_area_type(null)
@@ -564,6 +573,7 @@
 	/****************************************All beforeShuttleMove procs*****************************************/
 	var/index = 0
 	for(var/place in old_turfs)
+		CHECK_TICK
 		index++
 		var/turf/oldT = place
 		var/turf/newT = new_turfs[index]
@@ -588,7 +598,6 @@
 			areas_to_move[old_area] = TRUE
 
 		old_turfs[place] = move_mode
-		CHECK_TICK
 
 	/*******************************************All onShuttleMove procs******************************************/
 
@@ -615,44 +624,48 @@
 
 	index = 0
 	for(var/thing in old_turfs)
+		CHECK_TICK
 		index++
+		if(!(old_turfs[thing] & MOVE_TURF))
+			continue
 		var/turf/oldT = thing
 		var/turf/newT = new_turfs[index]
 		newT.afterShuttleMove(oldT, underlying_turf_type, underlying_baseturf_type, rotation)				//turfs
-		CHECK_TICK
 
 	for(var/i in 1 to moved_atoms.len)
+		CHECK_TICK
 		var/atom/movable/moved_object = moved_atoms[i]
 		moved_object.afterShuttleMove(movement_force, dir, preferred_direction, movement_direction, rotation)//atoms
-		CHECK_TICK
 
-	// This would be in afterShuttleMove but atoms that block airflow need to arrive before we let air move again
 	index = 0
 	for(var/place in old_turfs)
+		CHECK_TICK
 		index++
+		// Objects can block air so either turf or content changes means an air update is needed
+		if(!(old_turfs[place] & MOVE_CONTENTS | MOVE_TURF))
+			continue
 		var/turf/oldT = place
 		var/turf/newT = new_turfs[index]
 		oldT.blocks_air = initial(oldT.blocks_air)
 		oldT.air_update_turf(TRUE)
 		newT.blocks_air = initial(newT.blocks_air)
 		newT.air_update_turf(TRUE)
-		CHECK_TICK
 
 	underlying_old_area.afterShuttleMove()
 
 	for(var/thing in areas_to_move)
+		CHECK_TICK
 		var/area/internal_area = thing
 		internal_area.afterShuttleMove()																	//areas
-		CHECK_TICK
 
 	// Parallax handling
 	var/new_parallax_dir = FALSE
 	if(istype(new_dock, /obj/docking_port/stationary/transit))
 		new_parallax_dir = preferred_direction
 	for(var/i in shuttle_areas)
+		CHECK_TICK
 		var/area/place = i
 		place.parallax_movedir = new_parallax_dir
-		CHECK_TICK
 
 	check_poddoors()
 	new_dock.last_dock_time = world.time

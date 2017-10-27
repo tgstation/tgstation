@@ -67,7 +67,19 @@ All ShuttleMove procs go here
 // Called on the new turf after everything has been moved
 /turf/proc/afterShuttleMove(turf/oldT, turf_type, baseturf_type, rotation)
 	//Dealing with the turf we left behind
-	//oldT.TransferComponents(src)
+	/*	TODO: Replace with a real component transfer function
+	/	Doesn't work because cyberboss didn't finish TakeComponent() either >:(
+	/
+	var/list/dc = oldT.datum_components
+	if(dc)
+		var/comps = dc[/datum/component]
+		if(islist(comps))
+			for(var/i in comps)
+				TakeComponent(i)
+		else
+			TakeComponent(comps)
+	*/
+
 	oldT.ChangeTurf(turf_type, baseturf_type, FALSE, TRUE)
 
 	// Rotate and let the air move again

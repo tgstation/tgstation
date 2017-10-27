@@ -7,8 +7,6 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 /************************************Base proc************************************/
 
 /atom/proc/shuttleRotate(rotation, params=ROTATE_DIR|ROTATE_SMOOTH|ROTATE_OFFSET)
-	SendSignal(COMSIG_ATOM_ROTATE, rotation, params)
-	
 	if(params & ROTATE_DIR)
 		//rotate our direction
 		setDir(angle2dir(rotation+dir2angle(dir)))
@@ -26,6 +24,8 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 			var/oldPY = pixel_y
 			pixel_x = oldPY
 			pixel_y = (oldPX*(-1))
+
+	SendSignal(COMSIG_ATOM_ROTATE, rotation, params)
 
 /************************************Turf rotate procs************************************/
 
