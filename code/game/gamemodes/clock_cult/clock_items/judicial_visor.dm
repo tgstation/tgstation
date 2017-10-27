@@ -169,7 +169,7 @@
 		var/datum/status_effect/belligerent/B = C.apply_status_effect(STATUS_EFFECT_BELLIGERENT)
 		if(!QDELETED(B))
 			B.duration = world.time + 30
-			C.Knockdown(5) //knocks down for half a second if affected
+			C.Knockdown(90) //knocks down for 9 seconds if affected
 	sleep(!GLOB.ratvar_approaches ? 16 : 10)
 	name = "judicial blast"
 	layer = ABOVE_ALL_MOB_LAYER
