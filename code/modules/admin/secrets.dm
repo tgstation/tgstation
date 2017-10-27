@@ -346,14 +346,13 @@
 					continue
 				if(is_special_character(H))
 					continue
-				H.mind.add_antag_datum(ANTAG_DATUM_TRAITOR_CUSTOM)
-				var/datum/antagonist/traitor/traitordatum = H.mind.has_antag_datum(ANTAG_DATUM_TRAITOR) //original datum self deletes
+				var/datum/antagonist/traitor/human/T = new(H.mind)
+				T.give_objectives = FALSE
 				var/datum/objective/new_objective = new
 				new_objective.owner = H
 				new_objective.explanation_text = objective
-				traitordatum.add_objective(new_objective)
-				traitordatum.equip(FALSE)
-				traitordatum.greet()
+				T.add_objective(new_objective)
+				H.mind.add_antag_datum(T)
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] used everyone is a traitor secret. Objective is [objective]</span>")
 			log_admin("[key_name(usr)] used everyone is a traitor secret. Objective is [objective]")
 

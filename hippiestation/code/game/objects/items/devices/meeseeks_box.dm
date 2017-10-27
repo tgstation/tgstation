@@ -56,7 +56,8 @@
 			meeseeks.forceMove(get_turf(user))
 			var/datum/species/meeseeks/SM = new
 			meeseeks.hardset_dna(null, null, "Mr. Meeseeks", null, SM)
-			SM.master = user
+			var/datum/species/meeseeks/SV = meeseeks.dna.species
+			SV.master = user
 			meeseeks.set_cloned_appearance()
 			meeseeks.job = "Mr. Meeseeks"
 			new /obj/effect/cloud(get_turf(user))
@@ -91,4 +92,4 @@
 
 /obj/item/device/meeseeks_box/Destroy()
 	destroy_meeseeks(meeseeks, meeseeks.dna.species)
-	..()
+	. = ..()

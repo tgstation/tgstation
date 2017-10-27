@@ -128,23 +128,15 @@
 
 	if(user.a_intent != INTENT_HARM)
 		if(status)
-			if(istype(src, /obj/item/melee/baton/cattleprod/hippie_cattleprod))
-				if(baton_stun_hippie_makeshift(M, user))
-					user.do_attack_animation(M)
-					return
-			else
-				if(baton_stun(M, user))
-					user.do_attack_animation(M)
-					return
+			if(baton_stun(M, user))
+				user.do_attack_animation(M)
+				return
 		else
 			M.visible_message("<span class='warning'>[user] has prodded [M] with [src]. Luckily it was off.</span>", \
 							"<span class='warning'>[user] has prodded you with [src]. Luckily it was off</span>")
 	else
 		if(status)
-			if(istype(src, /obj/item/melee/baton/cattleprod/hippie_cattleprod))
-				baton_stun_hippie_makeshift(M, user)
-			else
-				baton_stun(M, user)
+			baton_stun(M, user)
 		..()
 
 
@@ -165,8 +157,8 @@
 	L.Knockdown(stunforce)
 	L.apply_effect(STUTTER, stunforce)
 	if(user)
-		user.lastattacked = L
-		L.lastattacker = user
+		L.lastattacker = user.real_name
+		L.lastattackerckey = user.ckey
 		L.visible_message("<span class='danger'>[user] has stunned [L] with [src]!</span>", \
 								"<span class='userdanger'>[user] has stunned you with [src]!</span>")
 		add_logs(user, L, "stunned")

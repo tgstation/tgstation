@@ -1,0 +1,16 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - bugfix: "Hardsuit helmets work like geiger counters for the user."
+  - code_imp: "Radiation should perform a little better in places."
+  - balance: "Various radiation symptom thresholds have been tweaked."
+  - balance: "Contamination strengths at different ranges have been tweaked."
+  - balance: "Contaminated objects have less range for their radiation."
+  - balance: "Hitting something with a contaminated object reduces its strength faster."
+  - balance: "Contaminated objects decay faster."
+  - balance: "Both radiation healing medicines have been buffed a bit."
+  - balance: "Passive radiation loss for mobs is nerfed."
+  - balance: "There is a soft cap for mob radiation now."
+  - balance: "Projectiles, ammo casings, and implants are disallowed from becoming contaminated."
+  - rscadd: "Suit storage units can completely cleanse contamination from stored objects"
+  - admin: "The first time an object is contaminated enough to spread more contamination admins will be warned. This is also added to stat tracking."

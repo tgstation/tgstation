@@ -1,0 +1,6 @@
+author: "ninjanomnom & Wjohn"
+delete-after: True
+changes: 
+  - bugfix: "Cable cuffs now inherit the color of the cables used to make them."
+  - bugfix: "Split cable stacks keep their color."
+  - tweak: "The blue cable color is now a better blue."

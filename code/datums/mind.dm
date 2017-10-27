@@ -64,6 +64,7 @@
 	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
 	var/datum/language_holder/language_holder
 	var/unconvertable = FALSE
+	var/late_joiner = FALSE
 
 /datum/mind/New(var/key)
 	src.key = key
@@ -227,8 +228,9 @@
 
 /datum/mind/proc/remove_rev()
 	var/datum/antagonist/rev/rev = has_antag_datum(/datum/antagonist/rev)
-	remove_antag_datum(rev.type)
-	special_role = null
+	if(rev)
+		remove_antag_datum(rev.type)
+		special_role = null
 
 
 /datum/mind/proc/remove_antag_equip()
@@ -1407,8 +1409,9 @@
 
 /datum/mind/proc/make_Traitor()
 	if(!(has_antag_datum(ANTAG_DATUM_TRAITOR)))
-		var/datum/antagonist/traitor/traitordatum = add_antag_datum(ANTAG_DATUM_TRAITOR)
-		return traitordatum
+		var/datum/antagonist/traitor/T = new(src)
+		T.should_specialise = TRUE
+		add_antag_datum(T)
 
 
 /datum/mind/proc/make_Nuke(turf/spawnloc, nuke_code, leader=0, telecrystals = TRUE)

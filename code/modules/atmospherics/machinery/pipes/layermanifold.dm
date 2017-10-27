@@ -11,6 +11,8 @@
 	volume = 260
 	var/list/front_nodes
 	var/list/back_nodes
+	construction_type = /obj/item/pipe/binary
+	pipe_state = "layer_manifold"
 
 /obj/machinery/atmospherics/pipe/layer_manifold/Initialize()
 	front_nodes = list()
@@ -31,17 +33,7 @@
 		A.build_network()
 
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/get_all_connected_nodes()
-	var/list/obj/machinery/atmospherics/all_connected = list()
-	for(var/obj/machinery/atmospherics/I in front_nodes)
-		all_connected[I] = I
-	for(var/obj/machinery/atmospherics/I in back_nodes)
-		all_connected[I] = I
-	for(var/obj/machinery/atmospherics/I in nodes)
-		all_connected[I] = I
-	var/list/obj/machinery/atmospherics/returnlist = list()
-	for(var/obj/machinery/atmospherics/A in all_connected)
-		returnlist += all_connected[A]
-	return returnlist
+	return front_nodes + back_nodes + nodes
 
 /obj/machinery/atmospherics/pipe/layer_manifold/update_icon()	//HEAVILY WIP FOR UPDATE ICONS!!
 	layer = (initial(layer) + (PIPING_LAYER_MAX * PIPING_LAYER_LCHANGE))	//This is above everything else.

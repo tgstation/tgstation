@@ -232,6 +232,7 @@
 
 /obj/item/device/soulstone/proc/init_shade(mob/living/carbon/human/T, mob/U, vic = 0)
 	new /obj/effect/decal/remains/human(T.loc) //Spawns a skeleton
+	T.stop_sound_channel(CHANNEL_HEARTBEAT)
 	T.invisibility = INVISIBILITY_ABSTRACT
 	T.dust_animation()
 	var/mob/living/simple_animal/shade/S = new /mob/living/simple_animal/shade(src)
