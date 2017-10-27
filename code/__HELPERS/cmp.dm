@@ -58,4 +58,12 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 		. = B.failures - A.failures
 	if (!.)
 		. = B.qdels - A.qdels
+    
+/proc/cmp_profile_avg_time_dsc(list/A, list/B)
+	return (B[PROFILE_ITEM_TIME]/(B[PROFILE_ITEM_COUNT] || 1)) - (A[PROFILE_ITEM_TIME]/(A[PROFILE_ITEM_COUNT] || 1))
 
+/proc/cmp_profile_time_dsc(list/A, list/B)
+	return B[PROFILE_ITEM_TIME] - A[PROFILE_ITEM_TIME]
+
+/proc/cmp_profile_count_dsc(list/A, list/B)
+	return B[PROFILE_ITEM_COUNT] - A[PROFILE_ITEM_COUNT]
