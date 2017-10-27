@@ -336,6 +336,7 @@
 #include "code\datums\diseases\advance\symptoms\youth.dm"
 #include "code\datums\helper_datums\construction_datum.dm"
 #include "code\datums\helper_datums\events.dm"
+#include "code\datums\looping_sounds\item_sounds.dm"
 #include "code\datums\helper_datums\getrev.dm"
 #include "code\datums\helper_datums\icon_snapshot.dm"
 #include "code\datums\helper_datums\teleport.dm"
