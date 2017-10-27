@@ -129,7 +129,7 @@
 	               "I wish science could make me a bag of holding you.",
 	               "Let's call the emergency CUDDLE.",
 	               "I must be tripping on BZ, because I saw an angel walk by.",
-	               "Wanna empty out my primary tool storage?",
+	               "Wanna empty out my tool storage?",
 	               "Did you visit the medbay after you fell from heaven?",
 	               "Are you wearing space pants? Wanna not be?" )
 
