@@ -97,7 +97,7 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
 1. `/datum/component/proc/AfterComponentActivated()` (abstract, async)
     * Called on a component that was activated after it's `parent`'s `ComponentActivated()` is called
 1. `/datum/component/proc/OnTransfer(datum/new_parent)` (abstract, no-sleep)
-    * Called after the new `parent` is assigned in `TakeComponent()`, after the remove signal
+    * Called before `new_parent` is assigned to `parent` in `TakeComponent()`
     * Allows the component to react to ownership transfers
 1. `/datum/component/proc/_RemoveFromParent()` (private, final)
     * Clears `parent` and removes the component from it's component list

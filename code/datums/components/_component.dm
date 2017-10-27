@@ -223,11 +223,10 @@
 	if(helicopter == src)
 		//if we're taking to the same thing no need for anything
 		return
-	C._RemoveFromParent()
-	helicopter.SendSignal(COMSIG_COMPONENT_REMOVING, C)
-	C.parent = P
 	if(C.OnTransfer(src) == COMPONENT_INCOMPATIBLE)
-		C.parent = null
 		qdel(C)
 		return
+	C._RemoveFromParent()
+	helicopter.SendSignal(COMSIG_COMPONENT_REMOVING, C)
+	C.parent = src
 	C._CheckDupesAndJoinParent()
