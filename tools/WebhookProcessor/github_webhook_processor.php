@@ -519,32 +519,43 @@ function update_pr_balance($payload) {
 	fclose($balances_file);
 }
 
-function auto_update($payload){
-	global $enable_live_tracking;
-	global $path_to_script;
-	global $repoOwnerAndName;
-	global $tracked_branch;
-	if(!$enable_live_tracking || !has_tree_been_edited($payload, $path_to_script) || $payload['pull_request']['base']['ref'] != $tracked_branch)
-		return;
-	
-	$content = file_get_contents('https://raw.githubusercontent.com/' . $repoOwnerAndName . '/' . $tracked_branch . '/'. $path_to_script);
-
-	create_comment($payload, "Edit detected. Self updating... Here is my new code:\n``" . "`HTML+PHP\n" . $content . "\n``" . '`');
-
-	$code_file = fopen(basename($path_to_script), 'w');
-	fwrite($code_file, $content);
-	fclose($code_file);
-}
-
 $github_diff = null;
 
-function has_tree_been_edited($payload, $tree){
+function get_diff($payload) {
 	global $github_diff;
 	if ($github_diff === null) {
 		//go to the diff url
 		$url = $payload['pull_request']['diff_url'];
 		$github_diff = file_get_contents($url);
 	}
+	return $github_diff;
+}
+
+function auto_update($payload){
+	global $enable_live_tracking;
+	global $path_to_script;
+	global github_diff;
+	if(!$enable_live_tracking || !has_tree_been_edited($payload, $path_to_script) || $payload['pull_request']['base']['ref'] != $tracked_branch)
+		return;
+
+	get_diff($payload);
+	$content = "### Diff not available. :slightly_frowning_face:";
+	if($github_diff && preg_match('/(diff --git a\/' . preg_quote($path_to_script) . '.+?)^diff/s', $github_diff, $matches)) {
+		$script_diff = matches[1];
+		if($script_diff) {
+			$content = "``" . "`DIFF\n" . $script_diff ."\n``" . "`";
+		}
+	}
+	create_comment($payload, "Edit detected. Self updating... Here are my changes:\n" . $content)
+
+	$code_file = fopen(basename($path_to_script), 'w');
+	fwrite($code_file, $content);
+	fclose($code_file);
+}
+
+function has_tree_been_edited($payload, $tree){
+	global $github_diff;
+	get_diff($payload);
 	//find things in the _maps/map_files tree
 	//e.g. diff --git a/_maps/map_files/Cerestation/cerestation.dmm b/_maps/map_files/Cerestation/cerestation.dmm
 	return $github_diff !== FALSE && strpos($github_diff, 'diff --git a/' . $tree) !== FALSE;
