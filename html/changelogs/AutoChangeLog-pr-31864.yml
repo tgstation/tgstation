@@ -1,0 +1,6 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - rscadd: "Thermite works on floors and can be ignited by sufficiently hot fires now"
+  - refactor: "Thermite has been made into a component"
+  - bugfix: "Thermite no longer removes existing overlays on turfs"
