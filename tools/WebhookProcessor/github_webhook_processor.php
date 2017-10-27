@@ -362,6 +362,7 @@ function handle_pr($payload) {
 			tag_pr($payload, true);
 			if($no_changelog)
 				check_dismiss_changelog_review($payload);
+			update_pr_balance($payload, -0.25);
 			if(get_pr_code_friendliness($payload) < 0){
 				$balances = pr_balances();
 				$author = $payload['pull_request']['user']['login'];
@@ -382,6 +383,7 @@ function handle_pr($payload) {
 		case 'closed':
 			if (!$payload['pull_request']['merged']) {
 				$action = 'closed';
+
 			}
 			else {
 				$action = 'merged';
@@ -497,7 +499,7 @@ function is_maintainer($payload, $author){
 }
 
 //payload is a merged pull request, updates the pr balances file with the correct positive or negative balance based on comments
-function update_pr_balance($payload) {
+function update_pr_balance($payload, $delta = null) {
 	global $startingPRBalance;
 	global $trackPRBalance;
 	if(!$trackPRBalance)
@@ -506,7 +508,9 @@ function update_pr_balance($payload) {
 	$balances = pr_balances();
 	if(!isset($balances[$author]))
 		$balances[$author] = $startingPRBalance;
-	$friendliness = get_pr_code_friendliness($payload, $balances[$author]);
+	$friendliness = $delta;
+	if ($delta === NULL)
+		$friendliness = 0.25+get_pr_code_friendliness($payload, $balances[$author]);
 	$balances[$author] += $friendliness;
 	if(!is_maintainer($payload, $author)){	//immune
 		if($balances[$author] < 0 && $friendliness < 0)
