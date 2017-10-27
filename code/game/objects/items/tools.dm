@@ -462,6 +462,7 @@
 		var/obj/item/reagent_containers/container = I
 		if(amountNeeded > 0 && container.reagents.has_reagent("welding_fuel"))
 			container.reagents.trans_id_to(src, "welding_fuel", amountNeeded)
+			to_chat(user, "<span class='notice'>You transfer some fuel from \the [container] to \the [src].</span>")
 	else
 		return ..()
 
