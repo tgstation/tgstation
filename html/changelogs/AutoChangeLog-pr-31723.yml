@@ -1,0 +1,4 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - balance: "Servants can no longer teleport into the gravity generator, EVA, or telecomms."
