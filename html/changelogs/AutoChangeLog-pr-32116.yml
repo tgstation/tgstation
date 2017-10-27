@@ -1,0 +1,4 @@
+author: "MrStonedOne"
+delete-after: True
+changes: 
+  - code_imp: "Created a system to profile code on a line by line basis and return detailed info about how much time was spent (in milliseconds) on each line(s)."
