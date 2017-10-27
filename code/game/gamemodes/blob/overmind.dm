@@ -72,11 +72,13 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		set_security_level("delta")
 		max_blob_points = INFINITY
 		blob_points = INFINITY
-		addtimer(CALLBACK(src, .proc/victory), 660)
+		addtimer(CALLBACK(src, .proc/victory), 450)
 	..()
 
 
 /mob/camera/blob/proc/victory()
+	sound_to_playing_players('sound/machines/alarm.ogg')
+	sleep(100)
 	for(var/mob/living/L in GLOB.mob_list)
 		var/turf/T = get_turf(L)
 		if(!T || !(T.z in GLOB.station_z_levels))

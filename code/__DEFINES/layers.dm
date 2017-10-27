@@ -33,6 +33,7 @@
 #define HIGH_SIGIL_LAYER 2.56
 
 #define BELOW_OPEN_DOOR_LAYER 2.6
+#define SHUTTER_LAYER 2.65 //Prevents shutters from being placed above doors. It's overridden by /obj/machinery/door/New() & poddoor/shutters/New()
 #define OPEN_DOOR_LAYER 2.7
 #define PROJECTILE_HIT_THRESHHOLD_LAYER 2.75 //projectiles won't hit objects at or below this layer if possible
 #define TABLE_LAYER 2.8

@@ -56,10 +56,11 @@
 
 	if (top_atom)
 		LAZYREMOVE(top_atom.light_sources, src)
-
+	
+	if (needs_update)
+		GLOB.lighting_update_lights -= src
+	
 	. = ..()
-	if(!force)
-		return QDEL_HINT_IWILLGC
 
 // Yes this doesn't align correctly on anything other than 4 width tabs.
 // If you want it to go switch everybody to elastic tab stops.

@@ -5,7 +5,7 @@
 	icon = 'icons/mob/aibots.dmi'
 	layer = MOB_LAYER
 	gender = NEUTER
-	luminosity = 3
+	light_range = 3
 	stop_automated_movement = 1
 	wander = 0
 	healable = 0

@@ -156,3 +156,14 @@
 			return FALSE
 
 	return .
+
+/mob/living/carbon/human/proc/remove_catshit()
+	var/obj/item/organ/ears/cat/E = getorganslot(ORGAN_SLOT_EARS)
+	var/obj/item/organ/tail/T = getorganslot(ORGAN_SLOT_TAIL)
+	if(T)
+		T.Remove(src)
+	if(E)
+		E.Remove(src)
+		var/obj/item/organ/ears/NE = new /obj/item/organ/ears()
+		NE.Insert(src)
+	regenerate_icons()

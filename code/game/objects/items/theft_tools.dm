@@ -134,7 +134,7 @@
 			return FALSE
 		forceMove(tongs)
 		tongs.sliver = src
-		tongs.icon_state = "supermatter_tongs_loaded"
+		tongs.update_icon()
 		to_chat(user, "<span class='notice'>You carefully pick up [src] with [tongs].</span>")
 	else if(istype(W, /obj/item/scalpel/supermatter) || istype(W, /obj/item/nuke_core_container/supermatter/)) // we don't want it to dust
 		return
@@ -213,6 +213,12 @@
 	QDEL_NULL(sliver)
 	return ..()
 
+/obj/item/hemostat/supermatter/update_icon()
+	if(sliver)
+		icon_state = "supermatter_tongs_loaded"
+	else
+		icon_state = "supermatter_tongs"
+
 /obj/item/hemostat/supermatter/afterattack(atom/O, mob/user, proximity)
 	if(!sliver)
 		return
@@ -226,6 +232,7 @@
 		sliver.forceMove(loc)
 		to_chat(usr, "<span class='notice'>\The [sliver] falls out of \the [src] as you throw them.</span>")
 		sliver = null
+		update_icon()
 	..()
 
 /obj/item/hemostat/supermatter/proc/Consume(atom/movable/AM, mob/user)
@@ -243,6 +250,5 @@
 	radiation_pulse(user, 500, 2)
 	playsound(src, 'sound/effects/supermatter.ogg', 50, 1)
 	user.dust()
-	icon_state = "supermatter_tongs"
 	QDEL_NULL(sliver)
-
+	update_icon()

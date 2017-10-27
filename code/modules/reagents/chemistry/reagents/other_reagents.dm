@@ -24,9 +24,9 @@
 			else //ingest, patch or inject
 				M.ForceContractDisease(D)
 
-	if(method == INJECT && iscarbon(M))
+	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		if(C.get_blood_id() == "blood")
+		if(C.get_blood_id() == "blood" && (method == INJECT || (method == INGEST && C.dna && C.dna.species && (DRINKSBLOOD in C.dna.species.species_traits))))
 			if(!data || !(data["blood_type"] in get_safe_blood(C.dna.blood_type)))
 				C.reagents.add_reagent("toxin", reac_volume * 0.5)
 			else
@@ -369,8 +369,6 @@
 		if(method == INGEST)
 			if(show_message)
 				to_chat(M, "<span class='notice'>That tasted horrible.</span>")
-			M.AdjustStun(40)
-			M.AdjustKnockdown(40)
 	..()
 
 
