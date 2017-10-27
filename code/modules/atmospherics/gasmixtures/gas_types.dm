@@ -79,7 +79,7 @@ GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /
 /datum/gas/nitrous_oxide
 	id = "n2o"
 	specific_heat = 40
-	name = "Nitrous"
+	name = "Nitrous Oxide"
 	gas_overlay = "nitrous_oxide"
 	moles_visible = 1
 	dangerous = TRUE
