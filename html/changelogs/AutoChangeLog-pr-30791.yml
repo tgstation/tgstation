@@ -1,0 +1,19 @@
+author: "as334"
+delete-after: True
+changes: 
+  - rscadd: "Massively Expands Atmospherics."
+  - rscadd: "New gases have been added:Brown Gas, Pluoxium, Stimulum, Hyper-Noblium and Tritium"
+  - rscadd: "Brown gas is acidic to breath, but mildly stimulation."
+  - rscadd: "Stimulum is more stimulating and much safer."
+  - rscadd: "Pluoxium is a non-reactive form of oxygen that delivers more oxygen into the bloodstream."
+  - rscadd: "Hyper-Noblium is an extremely noble gas, and stops gases from reacting."
+  - rscadd: "Tritium is radioactive and flammable."
+  - rscadd: "New reactions have also been added."
+  - rscadd: "Fusion. Plasma will fuse when heated to a high thermal energy, with tritium as a catalyst. Make
+sure to manage the waste products."
+  - rscadd: "Brown gas formation: Heat oxygen and nitrogen."
+  - rscadd: "BZ fixation: Heat Tritium and Plasma."
+  - rscadd: "Stimulum formation: Heated tritium,plasma,bz and browns."
+  - rscadd: "Hyper-Noblium condensation: Needs nitrogen and tritium at a high heat. Cools rapidly."
+  - rscdel: "Freon has been removed."
+  - rscadd: "Water vapor now freezes the tile it is on when it is cooled heavily."
