@@ -56,6 +56,8 @@ All ShuttleMove procs go here
 	//Air stuff
 	newT.blocks_air = TRUE
 	newT.air_update_turf(TRUE)
+	blocks_air = TRUE
+	air_update_turf(TRUE)
 	if(isopenturf(newT))
 		var/turf/open/new_open = newT
 		new_open.copy_air_with_tile(src)
@@ -71,7 +73,6 @@ All ShuttleMove procs go here
 	// Rotate and let the air move again
 	if(rotation)
 		shuttleRotate(rotation) //see shuttle_rotate.dm
-	blocks_air = initial(blocks_air)
 
 	return TRUE
 
@@ -137,15 +138,6 @@ All ShuttleMove procs go here
 	return TRUE
 
 /************************************Turf move procs************************************/
-
-/turf/open/afterShuttleMove(turf/oldT, turf_type, baseturf_type, rotation)
-	. = ..()
-	addtimer(CALLBACK(src, /atom/.proc/air_update_turf, TRUE), 0)
-	addtimer(CALLBACK(oldT, /atom/.proc/air_update_turf, TRUE), 0)
-	/* This causes air to leak instead
-	air_update_turf(TRUE)
-	oldT.air_update_turf(TRUE)
-	*/
 
 /************************************Area move procs************************************/
 

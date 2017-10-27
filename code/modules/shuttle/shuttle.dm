@@ -626,6 +626,18 @@
 		moved_object.afterShuttleMove(movement_force, dir, preferred_direction, movement_direction, rotation)//atoms
 		CHECK_TICK
 
+	// This would be in afterShuttleMove but atoms that block airflow need to arrive before we let air move again
+	index = 0
+	for(var/place in old_turfs)
+		index++
+		var/turf/oldT = place
+		var/turf/newT = new_turfs[index]
+		oldT.blocks_air = initial(oldT.blocks_air)
+		oldT.air_update_turf(TRUE)
+		newT.blocks_air = initial(newT.blocks_air)
+		newT.air_update_turf(TRUE)
+		CHECK_TICK
+
 	underlying_old_area.afterShuttleMove()
 
 	for(var/thing in areas_to_move)

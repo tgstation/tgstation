@@ -35,11 +35,12 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 /************************************Mob rotate procs************************************/
 
 //override to avoid rotating pixel_xy on mobs
-/mob/shuttleRotate(rotation, params=ROTATE_SMOOTH|ROTATE_OFFSET)
+/mob/shuttleRotate(rotation, params=NONE)
+	. = ..()
 	if(!buckled)
 		setDir(angle2dir(rotation+dir2angle(dir)))
 
-/mob/dead/observer/shuttleRotate(rotation, params=ROTATE_DIR|ROTATE_SMOOTH|ROTATE_OFFSET)
+/mob/dead/observer/shuttleRotate(rotation, params=NONE)
 	. = ..()
 	update_icon()
 
