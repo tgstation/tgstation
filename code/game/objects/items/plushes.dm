@@ -37,23 +37,17 @@
 	icon_state = "plushvar"
 	var/obj/item/toy/plush/narplush/clash_target
 
-/obj/item/toy/plush/plushvar/Initialize()
+/obj/item/toy/plush/plushvar/Moved()
 	. = ..()
-	START_PROCESSING(SSobj, src)
-
-/obj/item/toy/plush/plushvar/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	. = ..()
-
-/obj/item/toy/plush/plushvar/process()
 	if(clash_target)
 		return
 	var/obj/item/toy/plush/narplush/P = locate() in range(1, src)
-	if(P && istype(P.loc, /turf/open))
+	if(P && istype(P.loc, /turf/open) && !P.clashing)
 		clash_of_the_plushies(P)
 
 /obj/item/toy/plush/plushvar/proc/clash_of_the_plushies(obj/item/toy/plush/narplush/P)
 	clash_target = P
+	P.clashing = TRUE
 	say("YOU.")
 	P.say("Ratvar?!")
 	var/obj/item/toy/plush/a_winnar_is
@@ -64,6 +58,7 @@
 		if(!Adjacent(P))
 			visible_message("<span class='warning'>The two plushies angrily flail at each other before giving up.</span>")
 			clash_target = null
+			P.clashing = FALSE
 			return
 		playsound(src, 'sound/magic/clockwork/ratvar_attack.ogg', 50, TRUE, frequency = 2)
 		sleep(2.4)
@@ -87,7 +82,7 @@
 		P.say(pick("Nooooo...", "Not die. To y-", "Die. Ratv-", "Sas tyen re-"))
 		playsound(src, 'sound/magic/clockwork/anima_fragment_attack.ogg', 50, TRUE, frequency = 2)
 		playsound(P, 'sound/magic/demon_dies.ogg', 50, TRUE, frequency = 2)
-		explosion(get_turf(P), 0, 0, 1)
+		explosion(P, 0, 0, 1)
 		qdel(P)
 		clash_target = null
 	else
@@ -95,13 +90,21 @@
 		P.say(pick("Ha.", "Ra'sha fonn dest.", "You fool. To come here."))
 		playsound(src, 'sound/magic/clockwork/anima_fragment_death.ogg', 50, TRUE, frequency = 2)
 		playsound(P, 'sound/magic/demon_attack1.ogg', 50, TRUE, frequency = 2)
-		explosion(get_turf(src), 0, 0, 1)
+		explosion(src, 0, 0, 1)
 		qdel(src)
+		P.clashing = FALSE
 
 /obj/item/toy/plush/narplush
 	name = "nar'sie plushie"
 	desc = "A small stuffed doll of the elder god nar'sie. Who thought this was a good children's toy?"
 	icon_state = "narplush"
+	var/clashing
+
+/obj/item/toy/plush/narplush/Moved()
+	. = ..()
+	var/obj/item/toy/plush/plushvar/P = locate() in range(1, src)
+	if(P && istype(P.loc, /turf/open) && !P.clash_target && !clashing)
+		P.clash_of_the_plushies(src)
 
 /obj/item/toy/plush/lizardplushie
 	name = "lizard plushie"
