@@ -7,7 +7,7 @@
 
 /datum/gas_reaction/hippie_fusion/init_reqs()
 	min_requirements = list(
-		"ENER" = PLASMA_BINDING_ENERGY,
+		"ENER" = PLASMA_BINDING_ENERGY_HIPPIE,
 		/datum/gas/plasma = MINIMUM_HEAT_CAPACITY,
 		/datum/gas/carbon_dioxide = MINIMUM_HEAT_CAPACITY
 	)
