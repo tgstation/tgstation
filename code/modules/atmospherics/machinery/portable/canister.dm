@@ -97,17 +97,17 @@
 
 /obj/machinery/portable_atmospherics/canister/tritium
 	name = "tritium canister"
-	desc = "Tritium, inhalation might cause radiation."
+	desc = "Tritium. Inhalation might cause irradiation."
 	gas_type = /datum/gas/tritium
 
 /obj/machinery/portable_atmospherics/canister/nob
-	name = "hyper-nobelium canister"
-	desc = "Hyper-Nobelium. More noble than all other gases."
+	name = "hyper-noblium canister"
+	desc = "Hyper-Noblium. More noble than all other gases."
 	gas_type = /datum/gas/hypernoblium
 
 /obj/machinery/portable_atmospherics/canister/browns
 	name = "brown gas canister"
-	desc = "Browns gas. Feels great till the acid eats your lungs"
+	desc = "Browns gas. Feels great 'til the acid eats your lungs."
 	gas_type = /datum/gas/brown_gas
 
 /obj/machinery/portable_atmospherics/canister/stimulum
@@ -117,7 +117,7 @@
 
 /obj/machinery/portable_atmospherics/canister/pluoxium
 	name = "pluoxium canister"
-	desc = "Pluoxium. Like oygen, but more bang for your buck."
+	desc = "Pluoxium. Like oxygen, but more bang for your buck."
 	gas_type = /datum/gas/pluoxium
 
 /obj/machinery/portable_atmospherics/canister/water_vapor
