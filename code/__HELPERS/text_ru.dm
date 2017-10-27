@@ -89,7 +89,7 @@ JSON на выходе - строго ASCII, строки закодированы в Unicode, все Unicode-символ
 /proc/rhtml_decode(var/t)
 	t = replacetext(t, "&#x044f;", "€")
 	t = replacetext(t, "&#255;", "€")
-	//t = rhtml_decode(t) // Ќеебу, зачем оно тут, но если его тут оставл€ть, оно уходит в бесконечную рекурсию и валитс€ по соответствующему рантайму.
+	t = html_decode(t) //ѕодозреваю, именно это имелось ввиду, а не rhtml_decode(t)
 	return t
 
 
