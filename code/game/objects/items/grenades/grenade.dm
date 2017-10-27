@@ -54,8 +54,8 @@
 
 /obj/item/grenade/proc/preprime(mob/user, delayoverride, msg = TRUE, volume = 60)
 	var/turf/T = get_turf(src)
+	log_grenade(user, T) //Inbuilt admin procs already handle null users
 	if(user)
-		log_grenade(user, T)
 		add_fingerprint(user)
 		if(iscarbon(user))
 			var/mob/living/carbon/C = user
