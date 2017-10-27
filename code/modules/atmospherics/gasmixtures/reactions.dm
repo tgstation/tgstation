@@ -12,7 +12,8 @@
 //General assmos defines.
 #define WATER_VAPOR_FREEZE					200
 #define BROWNS_FORMATION_ENERGY				100000
-#define TRITIUM_BURN_OXY_FACTOR				1000
+#define TRITIUM_BURN_OXY_FACTOR				100
+#define TRITIUM_BURN_TRIT_FACTOR			10
 #define SUPER_SATURATION_THRESHOLD			96
 #define STIMULUM_HEAT_SCALE					100000
 #define STIMULUM_FIRST_RISE					0.65
@@ -115,7 +116,8 @@
 			burned_fuel = cached_gases[/datum/gas/oxygen][MOLES]/TRITIUM_BURN_OXY_FACTOR
 			cached_gases[/datum/gas/tritium][MOLES] -= burned_fuel
 		else
-			burned_fuel = cached_gases[/datum/gas/tritium][MOLES]*TRITIUM_BURN_OXY_FACTOR
+			burned_fuel = cached_gases[/datum/gas/tritium][MOLES]*TRITIUM_BURN_TRIT_FACTOR
+			cached_gases[/datum/gas/tritium][MOLES] -= cached_gases[/datum/gas/tritium][MOLES]/TRITIUM_BURN_TRIT_FACTOR
 			cached_gases[/datum/gas/oxygen][MOLES] -= cached_gases[/datum/gas/tritium][MOLES]
 
 		if(burned_fuel)
