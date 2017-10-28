@@ -139,6 +139,18 @@
 	explosion_block = 0
 	canSmoothWith = list(/turf/closed/wall/mineral/wood, /obj/structure/falsewall/wood)
 
+/turf/closed/wall/mineral/wood/try_decon(obj/item/W, mob/user, turf/T)
+	if(istype(W, /obj/item/twohanded/fireaxe))
+		var/obj/item/twohanded/fireaxe/A = W
+		if(!iswallturf(src) || !user || !W || !A)
+			return TRUE
+		if( user.loc == A && user.get_active_held_item() == W )
+			playsound(src.loc, 'sound/weapons/slashmiss.ogg', 75, 1)
+			dismantle_wall()
+			visible_message("<span class='warning'>[user] smashes through the wooden plating with the [W.name]!</span>", "<span class='italics'>You hear chopping sounds.</span>")
+			return TRUE
+	..()
+
 /turf/closed/wall/mineral/iron
 	name = "rough metal wall"
 	desc = "A wall with rough metal plating."
