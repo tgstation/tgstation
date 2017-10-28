@@ -8866,6 +8866,7 @@
 	},
 /area/hallway/primary/central)
 "auR" = (
+/obj/effect/landmark/observer_start,
 /turf/open/floor/plasteel{
 	icon_state = "L8"
 	},
@@ -25241,6 +25242,7 @@
 /area/tcommsat/server)
 "bdw" = (
 /obj/machinery/door/airlock/hatch{
+	cyclelinkeddir = 2;
 	name = "Telecomms Server Room"
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -27362,6 +27364,14 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
+/area/tcommsat/server)
+"bis" = (
+/obj/machinery/door/airlock/hatch{
+	cyclelinkeddir = 1;
+	name = "Telecomms Server Room"
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel/black,
 /area/tcommsat/server)
 
 (1,1,1) = {"
@@ -54250,7 +54260,7 @@ bbk
 bcY
 bdw
 bdK
-bdw
+bis
 beF
 beS
 bfj

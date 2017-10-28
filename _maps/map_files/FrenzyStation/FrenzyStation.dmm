@@ -731,6 +731,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/effect/landmark/observer_start,
 /turf/open/floor/plasteel/black,
 /area/hallway/primary/central)
 "bQ" = (
@@ -2886,10 +2887,6 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
 	},
-/turf/open/floor/plasteel/black,
-/area/medical/sleeper)
-"gK" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell/latejoin,
 /turf/open/floor/plasteel/black,
 /area/medical/sleeper)
 "gL" = (
