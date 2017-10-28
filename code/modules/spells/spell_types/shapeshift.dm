@@ -22,6 +22,9 @@
 		/mob/living/simple_animal/hostile/construct/armored)
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/cast(list/targets,mob/user = usr)
+	if(src in user.mob_spell_list)
+		user.mob_spell_list.Remove(src)
+		user.mind.AddSpell(src)
 	for(var/mob/living/M in targets)
 		if(!shapeshift_type)
 			var/list/animal_list = list()
