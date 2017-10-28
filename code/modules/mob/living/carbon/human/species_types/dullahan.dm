@@ -94,6 +94,10 @@
 	actions_types = list(/datum/action/item_action/organ_action/dullahan)
 	zone = "abstract"
 
+/datum/action/item_action/organ_action/dullahan
+	name = "Toggle Perspective"
+	desc = "Switch between seeing normally from your head, or blindly from your body."
+
 /datum/action/item_action/organ_action/dullahan/Trigger()
 	. = ..()
 	var/obj/item/organ/eyes/dullahan/DE = target
