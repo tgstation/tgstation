@@ -18,6 +18,8 @@
 
 
 /datum/species/dullahan/check_roundstart_eligible()
+	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
+		return TRUE
 	return FALSE
 
 /datum/species/dullahan/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
@@ -28,6 +30,7 @@
 		head.flags_1 = HEAR_1
 		head.throwforce = 25
 		myhead = new /obj/item/dullahan_relay (head, H)
+		H.put_in_hands(head)
 
 /datum/species/dullahan/on_species_loss(mob/living/carbon/human/H)
 	if(myhead)
