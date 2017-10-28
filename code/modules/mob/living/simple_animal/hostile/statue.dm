@@ -45,8 +45,6 @@
 	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS
 	anchored = TRUE
 
-	gold_core_spawnable = FALSE
-
 	var/cannot_be_seen = 1
 	var/mob/living/creator = null
 
