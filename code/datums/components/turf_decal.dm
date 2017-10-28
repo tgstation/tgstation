@@ -19,6 +19,11 @@
 	apply_decal()
 
 	RegisterSignal(COMSIG_ATOM_ROTATE, .proc/rotate_react)
+	RegisterSignal(COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_react)
+
+/datum/component/turf_decal/Destroy()
+	remove_decal()
+	return ..()
 
 /datum/component/turf_decal/OnTransfer(turf/newT)
 	remove_decal()
@@ -40,3 +45,7 @@
 		dir = angle2dir(rotation+dir2angle(dir))
 		remove_decal()
 		apply_decal()
+
+/datum/component/turf_decal/proc/clean_react(strength)
+	if(strength >= CLEAN_IMPRESSIVE)
+		qdel(src)
