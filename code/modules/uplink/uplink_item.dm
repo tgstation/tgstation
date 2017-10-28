@@ -91,7 +91,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /datum/uplink_item/proc/spawn_item(turf/loc, obj/item/device/uplink/U)
 	if(item)
-		SSblackbox.add_details("traitor_uplink_items_bought", "[name]|[cost]")
+		SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(name)]", "[cost]"))
 		return new item(loc)
 
 /datum/uplink_item/proc/buy(mob/user, obj/item/device/uplink/U)
@@ -1190,7 +1190,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/cyber_implants/spawn_item(turf/loc, obj/item/device/uplink/U)
 	if(item)
 		if(istype(item, /obj/item/organ))
-			SSblackbox.add_details("traitor_uplink_items_bought", "[item]|[cost]")
+			SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(name)]", "[cost]"))
 			return new /obj/item/storage/box/cyber_implants(loc, item)
 		else
 			return ..()
@@ -1388,7 +1388,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 		var/obj/goods = new I.item(C)
 		U.purchase_log += "<big>[icon2base64html(goods)]</big>"
 
-	SSblackbox.add_details("traitor_uplink_items_bought", "[name]|[cost]")
+	SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(name)]", "[cost]"))
 	return C
 
 /datum/uplink_item/badass/random
@@ -1414,6 +1414,6 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 		var/datum/uplink_item/I = pick(possible_items)
 		U.telecrystals -= I.cost
 		U.spent_telecrystals += I.cost
-		SSblackbox.add_details("traitor_uplink_items_bought","[name]|[I.cost]")
-		SSblackbox.add_details("traitor_random_uplink_items_gotten","[I.name]")
+		SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(I.name)]", "[cost]"))
+		SSblackbox.record_feedback("tally", "traitor_random_uplink_items_gotten", 1, initial(I.name))
 		return new I.item(loc)

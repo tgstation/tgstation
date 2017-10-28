@@ -8,6 +8,7 @@ SUBSYSTEM_DEF(blackbox)
 	var/list/feedback = list()	//list of datum/feedback_variable
 	var/triggertime = 0
 	var/sealed = FALSE	//time to stop tracking stats?
+	var/list/research_levels = list() //list of highest tech levels attained that isn't lost lost by destruction of RD computers
 
 
 /datum/controller/subsystem/blackbox/Initialize()
@@ -52,6 +53,8 @@ SUBSYSTEM_DEF(blackbox)
 			record_feedback("tally", "radio_usage", MS.pda_msgs.len, "PDA")
 		if (MS.rc_msgs.len)
 			record_feedback("tally", "radio_usage", MS.rc_msgs.len, "request console")
+	if(research_levels.len)
+		SSblackbox.record_feedback("associative", "high_research_level", 1, research_levels)
 
 	if (!SSdbcore.Connect())
 		return
@@ -73,6 +76,10 @@ SUBSYSTEM_DEF(blackbox)
 		message_admins("[key_name_admin(usr)] sealed the blackbox!")
 	log_game("Blackbox sealed[IsAdminAdvancedProcCall() ? " by [key_name(usr)]" : ""].")
 	sealed = TRUE
+
+/datum/controller/subsystem/blackbox/proc/log_research(tech, level)
+	if(!(tech in research_levels) || research_levels[tech] < level)
+		research_levels[tech] = level
 
 /datum/controller/subsystem/blackbox/proc/LogBroadcast(freq)
 	if(sealed)
@@ -116,18 +123,18 @@ SUBSYSTEM_DEF(blackbox)
 	feedback += FV
 	return FV
 /*
-feedback data can be recorded in 4 formats:
+feedback data can be recorded in 5 formats:
 "text"
 	used for simple single-string records i.e. the current map
 	further calls to the same key will append saved data unless the overwrite argument is true or it already exists
-	calls: 	SSblackbox.record_feedback("text", "example", 0, "sample text")
-			SSblackbox.record_feedback("text", "example", 0, "other text")
+	calls: 	SSblackbox.record_feedback("text", "example", 1, "sample text")
+			SSblackbox.record_feedback("text", "example", 1, "other text")
 	json: {"data":["sample text","other text"]}
 "amount"
 	used to record simple counts of data i.e. the number of ahelps recieved
 	further calls to the same key will add or subtract (if increment argument is a negative) from the saved amount
-	calls:	SSblackbox.record_feedback("amount", 8, "example")
-			SSblackbox.record_feedback("amount", 2, "example")
+	calls:	SSblackbox.record_feedback("amount", "example", 8)
+			SSblackbox.record_feedback("amount", "example", 2)
 	json: {"data":10}
 "tally"
 	used to track the number of occurances of multiple related values i.e. how many times each type of gun is fired
@@ -154,6 +161,12 @@ feedback data can be recorded in 4 formats:
 	tracking values associated with a number can't merge with a nesting value, trying to do so will append the list
 	call:	SSblackbox.record_feedback("nested tally", "example", 3, list("fruit", "orange"))
 	json: {"data":{"fruit":{"orange":{"apricot":4,"orange":2},"red":{"apple":10},"orange":3},"vegetable":{"orange":{"carrot":1}}}}
+"associative"
+	used to record text that's associated with a value i.e. coordinates
+	further calls to the same key will append a new list to existing data
+	calls:	SSblackbox.record_feedback("associative", "example", 1, list("text" = "example", "path" = /obj/item, "number" = 4))
+			SSblackbox.record_feedback("associative", "example", 1, list("number" = 7, "text" = "example", "other text" = "sample"))
+	json: {"data":{"1":{"text":"example","path":"/obj/item","number":"4"},"2":{"number":"7","text":"example","other text":"sample"}}}
 */
 /datum/controller/subsystem/blackbox/proc/record_feedback(type, key, increment, data, overwrite)
 	if(sealed || !type || !istext(key) || !isnum(increment))
@@ -179,6 +192,14 @@ feedback data can be recorded in 4 formats:
 			if(!islist(data))
 				return
 			FV.json = record_feedback_recurse_list(FV.json, data, increment)
+		if("associative")
+			if(!islist(data))
+				return
+			if(!islist(FV.json["data"]))
+				FV.json["data"] = list()
+			FV.json["data"]["[FV.json["data"].len+1]"] = list()
+			for(var/i in data)
+				FV.json["data"]["[FV.json["data"].len]"]["[i]"] = "[data[i]]"
 
 /datum/controller/subsystem/blackbox/proc/record_feedback_recurse_list(list/L, list/key_list, increment, depth = 1)
 	if(depth == key_list.len)

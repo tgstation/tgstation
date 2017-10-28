@@ -57,10 +57,10 @@
 						aspell.name = "Instant [aspell.name]"
 				if(aspell.spell_level >= aspell.level_max)
 					to_chat(user, "<span class='notice'>This spell cannot be strengthened any further.</span>")
-				SSblackbox.add_details("wizard_spell_improved", "[name]|[aspell.level]")
+				SSblackbox.record_feedback("nested tally", "wizard_spell_improved", 1, list("[name]", "[aspell.level]")
 				return 1
 	//No same spell found - just learn it
-	SSblackbox.add_details("wizard_spell_learned", name)
+	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	user.mind.AddSpell(S)
 	to_chat(user, "<span class='notice'>You have learned [S.name].</span>")
 	return 1
@@ -265,7 +265,7 @@
 
 /datum/spellbook_entry/item/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
 	new item_path(get_turf(user))
-	SSblackbox.add_details("wizard_spell_learned", name)
+	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	return 1
 
 /datum/spellbook_entry/item/GetInfo()
@@ -464,7 +464,7 @@
 		return TRUE
 
 /datum/spellbook_entry/summon/ghosts/Buy(mob/living/carbon/human/user, obj/item/spellbook/book)
-	SSblackbox.add_details("wizard_spell_learned", name)
+	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	new /datum/round_event/wizard/ghost()
 	active = TRUE
 	to_chat(user, "<span class='notice'>You have cast summon ghosts!</span>")
@@ -481,7 +481,7 @@
 	return !CONFIG_GET(flag/no_summon_guns)
 
 /datum/spellbook_entry/summon/guns/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
-	SSblackbox.add_details("wizard_spell_learned", name)
+	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	rightandwrong(0, user, 25)
 	active = 1
 	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, 1)
@@ -498,7 +498,7 @@
 	return !CONFIG_GET(flag/no_summon_magic)
 
 /datum/spellbook_entry/summon/magic/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
-	SSblackbox.add_details("wizard_spell_learned", name)
+	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	rightandwrong(1, user, 25)
 	active = 1
 	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, 1)
@@ -516,7 +516,7 @@
 	return !CONFIG_GET(flag/no_summon_events)
 
 /datum/spellbook_entry/summon/events/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
-	SSblackbox.add_details("wizard_spell_learned", name)
+	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	summonevents()
 	times++
 	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, 1)

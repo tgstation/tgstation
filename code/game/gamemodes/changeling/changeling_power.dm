@@ -19,7 +19,7 @@
 
 /obj/effect/proc_holder/changeling/proc/on_purchase(mob/user, is_respec)
 	if(!is_respec)
-		SSblackbox.add_details("changeling_power_purchase",name)
+		SSblackbox.record_feedback("tally", "changeling_power_purchase", 1, name)
 
 /obj/effect/proc_holder/changeling/proc/on_refund(mob/user)
 	return
@@ -35,7 +35,7 @@
 		return
 	var/datum/changeling/c = user.mind.changeling
 	if(sting_action(user, target))
-		SSblackbox.add_details("changeling_powers",name)
+		SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("[name]"))
 		sting_feedback(user, target)
 		c.chem_charges -= chemical_cost
 

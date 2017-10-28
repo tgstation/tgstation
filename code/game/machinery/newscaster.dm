@@ -533,7 +533,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 				if(choice=="Confirm")
 					scan_user(usr)
 					GLOB.news_network.CreateFeedChannel(channel_name, scanned_user, c_locked)
-					SSblackbox.record_feedback("tally", "newscaster_channels", 1, channel_name)
+					SSblackbox.record_feedback("text", "newscaster_channels", 0, channel_name)
 					screen=5
 			updateUsrDialog()
 		else if(href_list["set_channel_receiving"])

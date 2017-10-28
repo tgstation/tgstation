@@ -68,7 +68,7 @@
 				mind.changeling.purchasedpowers+=S
 			S.on_purchase(src, is_respec)
 	if(is_respec)
-		SSblackbox.add_details("changeling_power_purchase","Readapt")
+		SSblackbox.record_feedback("tally", "changeling_power_purchase", 1, "Readapt")
 
 	var/mob/living/carbon/C = src	//only carbons have dna now, so we have to typecaste
 	if(ishuman(C))

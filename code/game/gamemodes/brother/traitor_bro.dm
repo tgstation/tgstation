@@ -1,6 +1,6 @@
 /datum/objective_team/brother_team
-	name = "brotherhood" 
-	member_name = "blood brother" 
+	name = "brotherhood"
+	member_name = "blood brother"
 	var/list/objectives = list()
 	var/meeting_area
 
@@ -71,7 +71,7 @@
 		num_teams = max(1, round(num_players() / bsc))
 
 	for(var/j = 1 to num_teams)
-		if(possible_brothers.len < min_team_size || antag_candidates.len <= required_enemies) 
+		if(possible_brothers.len < min_team_size || antag_candidates.len <= required_enemies)
 			break
 		var/datum/objective_team/brother_team/team = new
 		var/team_size = prob(10) ? min(3, possible_brothers.len) : 2
@@ -115,18 +115,19 @@
 		for(var/datum/objective/objective in team.objectives)
 			if(objective.check_completion())
 				text += "<br><B>Objective #[objective_count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
-				SSblackbox.add_details("traitor_objective","[objective.type]|SUCCESS")
+				SSblackbox.record_feedback("nested tally", "traitor_objective", 1, list("[objective.type]", "SUCCESS"))
 			else
 				text += "<br><B>Objective #[objective_count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
-				SSblackbox.add_details("traitor_objective","[objective.type]|FAIL")
+				SSblackbox.record_feedback("nested tally", "traitor_objective", 1, list("[objective.type]", "FAIL"))
 				win = FALSE
 			objective_count++
 		if(win)
 			text += "<br><font color='green'><B>The blood brothers were successful!</B></font>"
-			SSblackbox.add_details("brother_success","SUCCESS")
+			SSblackbox.record_feedback("tally", "brother_success", 1, "SUCCESS")
 		else
 			text += "<br><font color='red'><B>The blood brothers have failed!</B></font>"
-			SSblackbox.add_details("brother_success","FAIL")
+			SSblackbox.record_feedback("tally", "brother_success", 1, "FAIL")
+
 		text += "<br>"
 	to_chat(world, text)
 

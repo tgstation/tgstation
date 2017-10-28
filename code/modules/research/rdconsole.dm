@@ -317,15 +317,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					return
 
 				for(var/T in temp_tech)
-					var/datum/tech/KT = files.known_tech[T] //For stat logging of high levels
-					if(files.IsTechHigher(T, temp_tech[T]) && KT.level >= 5) //For stat logging of high levels
-						SSblackbox.add_details("high_research_level","[KT][KT.level + 1]") //+1 to show the level which we're about to get
 					files.UpdateTech(T, temp_tech[T])
 
 				if(linked_lathe) //Also sends salvaged materials to a linked protolathe, if any.
 					for(var/material in linked_destroy.loaded_item.materials)
 						linked_materials.insert_amount(min((linked_materials.max_amount - linked_materials.total_amount), (min(linked_destroy.loaded_item.materials[material]*(linked_destroy.decon_mod/10), linked_destroy.loaded_item.materials[material]))), material)
-					SSblackbox.add_details("item_deconstructed","[linked_destroy.loaded_item.type]")
+					record_feedback("tally", "item_deconstructed", 1, linked_destroy.loaded_item.type)
 				linked_destroy.loaded_item = null
 				for(var/obj/I in linked_destroy.contents)
 					for(var/mob/M in I.contents)
@@ -462,7 +459,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 							new_item.materials = efficient_mats.Copy()
 						new_item.loc = linked_lathe.loc
 						if(!already_logged)
-							SSblackbox.add_details("item_printed","[new_item.type]|[amount]")
+							SSblackbox.record_feedback("tally", "item_printed", amount, new_item.type)
 							already_logged = 1
 				screen = old_screen
 				linked_lathe.busy = FALSE
@@ -529,7 +526,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					var/obj/item/new_item = new P(src)
 					new_item.loc = linked_imprinter.loc
 					new_item.materials = efficient_mats.Copy()
-					SSblackbox.add_details("circuit_printed","[new_item.type]")
+					SSblackbox.record_feedback("tally", "circuit_printed", 1, new_item.type)
 				screen = old_screen
 				linked_imprinter.busy = FALSE
 			else

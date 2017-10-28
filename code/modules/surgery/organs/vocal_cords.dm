@@ -569,7 +569,7 @@
 
 	message_admins("[key_name_admin(user)] has said '[log_message]' with a Voice of God, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
 	log_game("[key_name(user)] has said '[log_message]' with a Voice of God, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
-	SSblackbox.record_feedback("tally", "gun_fired", 1, log_message)
+	SSblackbox.record_feedback("tally", "voice_of_god", 1, log_message)
 
 	return cooldown
 

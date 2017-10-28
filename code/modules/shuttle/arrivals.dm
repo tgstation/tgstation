@@ -200,5 +200,5 @@
 /obj/docking_port/mobile/arrivals/vv_edit_var(var_name, var_value)
 	switch(var_name)
 		if("perma_docked")
-			SSblackbox.add_details("admin_secrets_fun_used","ShA[var_value ? "s" : "g"]")
+			SSblackbox.record_feedback("tally", "admin_secrets_fun_used", 1, "ShA[var_value ? "s" : "g"]")
 	return ..()

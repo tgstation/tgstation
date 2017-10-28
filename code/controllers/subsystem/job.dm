@@ -461,36 +461,37 @@ SUBSYSTEM_DEF(job)
 
 /datum/controller/subsystem/job/proc/HandleFeedbackGathering()
 	for(var/datum/job/job in occupations)
-		var/tmp_str = "|[job.title]|"
-
-		var/level1 = 0 //high
-		var/level2 = 0 //medium
-		var/level3 = 0 //low
-		var/level4 = 0 //never
-		var/level5 = 0 //banned
-		var/level6 = 0 //account too young
+		var/high = 0 //high
+		var/medium = 0 //medium
+		var/low = 0 //low
+		var/never = 0 //never
+		var/banned = 0 //banned
+		var/young = 0 //account too young
 		for(var/mob/dead/new_player/player in GLOB.player_list)
 			if(!(player.ready == PLAYER_READY_TO_PLAY && player.mind && !player.mind.assigned_role))
 				continue //This player is not ready
 			if(jobban_isbanned(player, job.title))
-				level5++
+				banned++
 				continue
 			if(!job.player_old_enough(player.client))
-				level6++
+				young++
 				continue
 			if(job.required_playtime_remaining(player.client))
-				level6++
+				young++
 				continue
 			if(player.client.prefs.GetJobDepartment(job, 1) & job.flag)
-				level1++
+				high++
 			else if(player.client.prefs.GetJobDepartment(job, 2) & job.flag)
-				level2++
+				medium++
 			else if(player.client.prefs.GetJobDepartment(job, 3) & job.flag)
-				level3++
-			else level4++ //not selected
-
-		tmp_str += "HIGH=[level1]|MEDIUM=[level2]|LOW=[level3]|NEVER=[level4]|BANNED=[level5]|YOUNG=[level6]|-"
-		SSblackbox.add_details("job_preferences",tmp_str)
+				low++
+			else never++ //not selected
+		SSblackbox.record_feedback("nested tally", "job_preferences", high, list("[job.title]", "high"))
+		SSblackbox.record_feedback("nested tally", "job_preferences", medium, list("[job.title]", "medium"))
+		SSblackbox.record_feedback("nested tally", "job_preferences", low, list("[job.title]", "low"))
+		SSblackbox.record_feedback("nested tally", "job_preferences", never, list("[job.title]", "never"))
+		SSblackbox.record_feedback("nested tally", "job_preferences", banned, list("[job.title]", "banned"))
+		SSblackbox.record_feedback("nested tally", "job_preferences", young, list("[job.title]", "young"))
 
 /datum/controller/subsystem/job/proc/PopcapReached()
 	var/hpc = CONFIG_GET(number/hard_popcap)
