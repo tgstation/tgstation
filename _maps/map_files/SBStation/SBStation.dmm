@@ -18885,7 +18885,7 @@
 /turf/closed/wall,
 /area/maintenance/starboard/aft)
 "aPs" = (
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/escape)
 "aPt" = (
 /obj/structure/shuttle/engine/heater,
@@ -27373,6 +27373,32 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/black,
 /area/tcommsat/server)
+"bit" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Emergency Shuttle Airlock"
+	},
+/obj/docking_port/mobile/emergency{
+	dheight = 0;
+	dir = 8;
+	dwidth = 6;
+	height = 9;
+	id = "emergency";
+	name = "SB emergency shuttle";
+	port_direction = 4;
+	width = 17
+	},
+/obj/docking_port/stationary{
+	dheight = 0;
+	dir = 8;
+	dwidth = 11;
+	height = 20;
+	id = "emergency_home";
+	name = "SB evac bay";
+	turf_type = /turf/open/space;
+	width = 25
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aaa
@@ -47282,7 +47308,7 @@ azn
 azo
 azn
 aCK
-aDZ
+aEb
 azn
 azo
 azo
@@ -49344,7 +49370,7 @@ azo
 azo
 azo
 azn
-aEb
+bit
 aCK
 azn
 azn
