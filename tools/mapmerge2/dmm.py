@@ -290,53 +290,49 @@ def _parse(map_raw_text):
     curr_z = 0
     grid = dict()
 
-    for char in map_raw_text:
+    it = iter(map_raw_text)
 
-        if not in_map_block:
+    # map block
+    for char in it:
+        if char == "\n":
+            in_comment_line = False
+            comment_trigger = False
+            continue
+        elif in_comment_line:
+            continue
+        elif char == "\t":
+            continue
 
-            if char == "\n":
-                in_comment_line = False
-                comment_trigger = False
+        if char == "/" and not in_quote_block:
+            if comment_trigger:
+                in_comment_line = True
                 continue
-
-            if in_comment_line:
-                continue
-
-            if char == "\t":
-                continue
-
-            if char == "/" and not in_quote_block:
-                if comment_trigger:
-                    in_comment_line = True
-                    continue
-                else:
-                    comment_trigger = True
             else:
-                comment_trigger = False
+                comment_trigger = True
+        else:
+            comment_trigger = False
 
-            if in_data_block:
+        if in_data_block:
 
-                if in_varedit_block:
+            if in_varedit_block:
 
-                    if in_quote_block:
-                        if char == "\\":
-                            curr_datum = curr_datum + char
-                            escaping = True
-                            continue
-
-                        if escaping:
-                            curr_datum = curr_datum + char
-                            escaping = False
-                            continue
-
-                        if char == "\"":
-                            curr_datum = curr_datum + char
-                            in_quote_block = False
-                            continue
-
+                if in_quote_block:
+                    if char == "\\":
                         curr_datum = curr_datum + char
-                        continue
+                        escaping = True
 
+                    elif escaping:
+                        curr_datum = curr_datum + char
+                        escaping = False
+
+                    elif char == "\"":
+                        curr_datum = curr_datum + char
+                        in_quote_block = False
+
+                    else:
+                        curr_datum = curr_datum + char
+
+                else:
                     if skip_whitespace and char == " ":
                         skip_whitespace = False
                         continue
@@ -345,131 +341,118 @@ def _parse(map_raw_text):
                     if char == "\"":
                         curr_datum = curr_datum + char
                         in_quote_block = True
-                        continue
 
-                    if char == ";":
+                    elif char == ";":
                         skip_whitespace = True
                         curr_datum = curr_datum + char
-                        continue
 
-                    if char == "}":
+                    elif char == "}":
                         curr_datum = curr_datum + char
                         in_varedit_block = False
-                        continue
 
-                    curr_datum = curr_datum + char
-                    continue
+                    else:
+                        curr_datum = curr_datum + char
 
-                if char == "{":
-                    curr_datum = curr_datum + char
-                    in_varedit_block = True
-                    continue
-
-                if char == ",":
-                    curr_data.append(curr_datum)
-                    curr_datum = ""
-                    continue
-
-                if char == ")":
-                    curr_data.append(curr_datum)
-                    curr_data = tuple(curr_data)
-                    try:
-                        dictionary[curr_key] = curr_data
-                    except bidict.ValueDuplicationError:
-                        # if the map has duplicate values, eliminate them now
-                        duplicate_keys[curr_key] = dictionary.inv[curr_data]
-                    curr_data = list()
-                    curr_datum = ""
-                    curr_key = ""
-                    in_data_block = False
-                    after_data_block = True
-                    continue
-
+            elif char == "{":
                 curr_datum = curr_datum + char
-                continue
+                in_varedit_block = True
 
-            if in_key_block:
-                if char == "\"":
-                    in_key_block = False
-                    if key_length == 0:
-                        key_length = len(curr_key)
-                    else:
-                        assert key_length == len(curr_key)
-                else:
-                    curr_key = curr_key + char
-                continue
-            #else we're looking for a key block, a data block or the map block
+            elif char == ",":
+                curr_data.append(curr_datum)
+                curr_datum = ""
 
+            elif char == ")":
+                curr_data.append(curr_datum)
+                curr_data = tuple(curr_data)
+                try:
+                    dictionary[curr_key] = curr_data
+                except bidict.ValueDuplicationError:
+                    # if the map has duplicate values, eliminate them now
+                    duplicate_keys[curr_key] = dictionary.inv[curr_data]
+                curr_data = list()
+                curr_datum = ""
+                curr_key = ""
+                in_data_block = False
+                after_data_block = True
+
+            else:
+                curr_datum = curr_datum + char
+
+        elif in_key_block:
             if char == "\"":
-                in_key_block = True
-                after_data_block = False
-                continue
-
-            if char == "(":
-                if after_data_block:
-                    in_map_block = True
-                    in_coord_block = True
-                    after_data_block = False
-                    curr_key = ""
-                    continue
+                in_key_block = False
+                if key_length == 0:
+                    key_length = len(curr_key)
                 else:
-                    in_data_block = True
-                    after_data_block = False
-                    continue
+                    assert key_length == len(curr_key)
+            else:
+                curr_key = curr_key + char
 
-        else:
+        # else we're looking for a key block, a data block or the map block
+        elif char == "\"":
+            in_key_block = True
+            after_data_block = False
 
-            if in_coord_block:
-                if char == ",":
-                    if reading_coord == "x":
-                        curr_x = int(curr_num)
-                        if curr_x > maxx:
-                            maxx = curr_x
-                        iter_x = 0
-                        curr_num = ""
-                        reading_coord = "y"
-                    elif reading_coord == "y":
-                        curr_y = int(curr_num)
-                        if curr_y > maxy:
-                            maxy = curr_y
-                        curr_num = ""
-                        reading_coord = "z"
-                    else:
-                        pass
-                    continue
+        elif char == "(":
+            if after_data_block:
+                in_coord_block = True
+                after_data_block = False
+                curr_key = ""
+                break
+            else:
+                in_data_block = True
+                after_data_block = False
 
-                if char == ")":
-                    curr_z = int(curr_num)
-                    if curr_z > maxz:
-                        maxz = curr_z
-                    in_coord_block = False
-                    reading_coord = "x"
-                    curr_num = ""
-                    continue
-
-                curr_num = curr_num + char
-                continue
-
-            if in_map_string:
-
-                if char == "\"":
-                    in_map_string = False
-                    adjust_y = True
-                    curr_y -= 1
-                    continue
-
-                if char == "\n":
-                    if adjust_y:
-                        adjust_y = False
-                    else:
-                        curr_y += 1
+    # grid block
+    for char in it:
+        if in_coord_block:
+            if char == ",":
+                if reading_coord == "x":
+                    curr_x = int(curr_num)
                     if curr_x > maxx:
                         maxx = curr_x
-                    if iter_x > 1:
-                        curr_x = 1
                     iter_x = 0
-                    continue
+                    curr_num = ""
+                    reading_coord = "y"
+                elif reading_coord == "y":
+                    curr_y = int(curr_num)
+                    if curr_y > maxy:
+                        maxy = curr_y
+                    curr_num = ""
+                    reading_coord = "z"
+                else:
+                    raise ValueError("too many dimensions")
 
+            elif char == ")":
+                curr_z = int(curr_num)
+                if curr_z > maxz:
+                    maxz = curr_z
+                in_coord_block = False
+                reading_coord = "x"
+                curr_num = ""
+
+            else:
+                curr_num = curr_num + char
+
+        elif in_map_string:
+
+            if char == "\"":
+                in_map_string = False
+                adjust_y = True
+                curr_y -= 1
+
+            elif char == "\n":
+                if adjust_y:
+                    adjust_y = False
+                else:
+                    curr_y += 1
+                if curr_x > maxx:
+                    maxx = curr_x
+                if iter_x > 1:
+                    curr_x = 1
+                iter_x = 0
+
+            else:
                 curr_key = curr_key + char
                 if len(curr_key) == key_length:
                     iter_x += 1
@@ -478,17 +461,12 @@ def _parse(map_raw_text):
 
                     grid[curr_x, curr_y, curr_z] = duplicate_keys.get(curr_key, curr_key)
                     curr_key = ""
-                continue
 
-
-            #else look for coordinate block or a map string
-
-            if char == "(":
-                in_coord_block = True
-                continue
-            if char == "\"":
-                in_map_string = True
-                continue
+        # else look for coordinate block or a map string
+        elif char == "(":
+            in_coord_block = True
+        elif char == "\"":
+            in_map_string = True
 
     if curr_y > maxy:
         maxy = curr_y
