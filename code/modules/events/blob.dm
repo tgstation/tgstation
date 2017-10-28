@@ -22,10 +22,11 @@
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 	var/mob/dead/observer/new_blob = pick(candidates)
-	var/mob/camera/blob/BC = new_blob.become_overmind()
+	var/turf/spawnloc = new_blob.loc
 	if(LAZYLEN(GLOB.blobstart))
 		var/obj/effect/landmark/BLM = pick(GLOB.blobstart)
-		BC.forceMove(BLM.loc)
+		spawnloc = BLM.loc
+	var/mob/camera/blob/BC = new_blob.become_overmind(spawnloc)
 	spawned_mobs += BC
 	message_admins("[key_name_admin(BC)] has been made into a blob overmind by an event.")
 	log_game("[key_name(BC)] was spawned as a blob overmind by an event.")
