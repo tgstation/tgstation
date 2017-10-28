@@ -2,6 +2,7 @@
 /obj/item/device/instrument
 	name = "generic instrument"
 	resistance_flags = FLAMMABLE
+	force = 10
 	max_integrity = 100
 	icon = 'icons/obj/musician.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/instruments_lefthand.dmi'
@@ -49,7 +50,6 @@
 	desc = "A wooden musical instrument with four strings and a bow. \"The devil went down to space, he was looking for an assistant to grief.\""
 	icon_state = "violin"
 	item_state = "violin"
-	force = 10
 	hitsound = "swing_hit"
 	instrumentId = "violin"
 
@@ -80,7 +80,6 @@
 	icon_state = "guitar"
 	item_state = "guitar"
 	instrumentExt = "ogg"
-	force = 10
 	attack_verb = list("played metal on", "serenaded", "crashed", "smashed")
 	hitsound = 'sound/weapons/stringsmash.ogg'
 	instrumentId = "guitar"
@@ -127,6 +126,7 @@
 /obj/item/device/instrument/recorder
 	name = "recorder"
 	desc = "Just like in school, playing ability and all."
+	force = 5
 	icon_state = "recorder"
 	item_state = "recorder"
 	instrumentId = "recorder"
