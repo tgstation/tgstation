@@ -39,6 +39,8 @@
 	return FALSE //RIP you
 
 /datum/weather/ash_storm/weather_act(mob/living/L)
+	if(!isturf(L.loc))
+		return
 	if(is_ash_immune(L))
 		return
 	L.adjustFireLoss(4)
