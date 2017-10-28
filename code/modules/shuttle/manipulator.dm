@@ -151,7 +151,7 @@
 					message_admins("[key_name_admin(usr)] fast travelled \
 						[M]")
 					log_admin("[key_name(usr)] fast travelled [M]")
-					SSblackbox.record_feedback("text", "shuttle_manipulator", 0, "[M.name]")
+					SSblackbox.record_feedback("text", "shuttle_manipulator", 1, "[M.name]")
 					break
 
 		if("preview")
@@ -178,7 +178,7 @@
 						with the shuttle manipulator.")
 					log_admin("[key_name(usr)] loaded [mdp] with the \
 						shuttle manipulator.</span>")
-					SSblackbox.record_feedback("text", "shuttle_manipulator", 0, "[mdp.name]")
+					SSblackbox.record_feedback("text", "shuttle_manipulator", 1, "[mdp.name]")
 
 	update_icon()
 

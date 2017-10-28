@@ -85,7 +85,7 @@
 	name = "station charter for [station_name()]"
 	desc = "An official document entrusting the governance of \
 		[station_name()] and surrounding space to Captain [uname]."
-	SSblackbox.record_feedback("text", "station_renames", 0, "[station_name()]")
+	SSblackbox.record_feedback("text", "station_renames", 1, "[station_name()]")
 	if(!unlimited_uses)
 		used = TRUE
 
@@ -112,7 +112,7 @@
 	log_game("[ukey] has renamed the planet as [station_name()].")
 	name = "banner of [station_name()]"
 	desc = "The banner bears the official coat of arms of Nanotrasen, signifying that [station_name()] has been claimed by Captain [uname] in the name of the company."
-	SSblackbox.record_feedback("text", "station_renames", 0, "[station_name()]")
+	SSblackbox.record_feedback("text", "station_renames", 1, "[station_name()]")
 	if(!unlimited_uses)
 		used = TRUE
 

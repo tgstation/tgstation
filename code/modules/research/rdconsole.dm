@@ -322,7 +322,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				if(linked_lathe) //Also sends salvaged materials to a linked protolathe, if any.
 					for(var/material in linked_destroy.loaded_item.materials)
 						linked_materials.insert_amount(min((linked_materials.max_amount - linked_materials.total_amount), (min(linked_destroy.loaded_item.materials[material]*(linked_destroy.decon_mod/10), linked_destroy.loaded_item.materials[material]))), material)
-					record_feedback("tally", "item_deconstructed", 1, linked_destroy.loaded_item.type)
+					SSblackbox.record_feedback("tally", "item_deconstructed", 1, linked_destroy.loaded_item.type)
 				linked_destroy.loaded_item = null
 				for(var/obj/I in linked_destroy.contents)
 					for(var/mob/M in I.contents)

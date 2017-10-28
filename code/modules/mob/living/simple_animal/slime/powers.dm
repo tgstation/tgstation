@@ -167,7 +167,7 @@
 				M.Friends = Friends.Copy()
 				babies += M
 				M.mutation_chance = Clamp(mutation_chance+(rand(5,-5)),0,100)
-				record_feedback("tally", "slime_babies_born", 1, M.colour)
+				SSblackbox.record_feedback("tally", "slime_babies_born", 1, M.colour)
 
 			var/mob/living/simple_animal/slime/new_slime = pick(babies)
 			new_slime.a_intent = INTENT_HARM

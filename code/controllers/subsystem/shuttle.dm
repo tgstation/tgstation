@@ -242,7 +242,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	log_game("[key_name(user)] has called the shuttle.")
 	if(call_reason)
-		SSblackbox.record_feedback("text", "shuttle_reason", 0, call_reason)
+		SSblackbox.record_feedback("text", "shuttle_reason", 1, "[call_reason]")
 		log_game("Shuttle call reason: [call_reason]")
 	message_admins("[key_name_admin(user)] has called the shuttle. (<A HREF='?_src_=holder;[HrefToken()];trigger_centcom_recall=1'>TRIGGER CENTCOM RECALL</A>)")
 

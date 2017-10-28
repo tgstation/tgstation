@@ -287,7 +287,7 @@
 			switch(cult_objectives[obj_count])
 				if("sacrifice")
 					if(GLOB.sac_mind)
-						if(GLOB.sac_complete
+						if(GLOB.sac_complete)
 							explanation = "Sacrifice [GLOB.sac_mind], the [GLOB.sac_mind.assigned_role]. <span class='greenannounce'>Success!</span>"
 							SSblackbox.record_feedback("nested tally", "cult_objective", 1, list("cult_sacrifice", "SUCCESS"))
 						else

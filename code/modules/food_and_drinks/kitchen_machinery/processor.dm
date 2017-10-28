@@ -111,7 +111,7 @@
 		return
 	for(var/i in 1 to (C+processor.rating_amount-1))
 		new S.coretype(loc)
-		record_feedback("tally", "slime_core_harvested", 1, S.colour)
+		SSblackbox.record_feedback("tally", "slime_core_harvested", 1, S.colour)
 	..()
 
 /datum/food_processor_process/mob/slime/input = /mob/living/simple_animal/slime

@@ -160,7 +160,7 @@
 		user.sight |= SEE_MOBS
 		icon_state = "lantern"
 		wisp.orbit(user, 20)
-		record_feedback("tally", "wisp_lantern", 1, "Freed")
+		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Freed")
 
 	else
 		to_chat(user, "<span class='notice'>You return the wisp to the lantern.</span>")
@@ -175,7 +175,7 @@
 		wisp.stop_orbit()
 		wisp.loc = src
 		icon_state = "lantern-blue"
-		record_feedback("tally", "wisp_lantern", 1, "Returned")
+		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Returned")
 
 /obj/item/device/wisp_lantern/Initialize()
 	. = ..()

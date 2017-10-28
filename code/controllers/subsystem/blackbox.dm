@@ -62,7 +62,7 @@ SUBSYSTEM_DEF(blackbox)
 	var/list/sqlrowlist = list()
 
 	for (var/datum/feedback_variable/FV in feedback)
-		sqlrowlist += list(list("datetime" = "Now()", "round_id" = GLOB.round_id, "key" =  "'[sanitizeSQL(FV.key)]'", "details" = "'[sanitizeSQL(json_encode(FV.json))]'"))
+		sqlrowlist += list(list("datetime" = "Now()", "round_id" = GLOB.round_id, "key_name" =  "'[sanitizeSQL(FV.key)]'", "json" = "'[sanitizeSQL(json_encode(FV.json))]'"))
 
 	if (!length(sqlrowlist))
 		return
@@ -87,29 +87,29 @@ SUBSYSTEM_DEF(blackbox)
 	switch(freq)
 		if(1459)
 			record_feedback("tally", "radio_usage", 1, "common")
-		if(SCI_FREQ)
+		if(GLOB.SCI_FREQ)
 			record_feedback("tally", "radio_usage", 1, "science")
-		if(COMM_FREQ)
+		if(GLOB.COMM_FREQ)
 			record_feedback("tally", "radio_usage", 1, "command")
-		if(MED_FREQ)
+		if(GLOB.MED_FREQ)
 			record_feedback("tally", "radio_usage", 1, "medical")
-		if(ENG_FREQ)
+		if(GLOB.ENG_FREQ)
 			record_feedback("tally", "radio_usage", 1, "engineering")
-		if(SEC_FREQ)
+		if(GLOB.SEC_FREQ)
 			record_feedback("tally", "radio_usage", 1, "security")
-		if(SYND_FREQ)
+		if(GLOB.SYND_FREQ)
 			record_feedback("tally", "radio_usage", 1, "syndicate")
-		if(SERV_FREQ)
+		if(GLOB.SERV_FREQ)
 			record_feedback("tally", "radio_usage", 1, "service")
-		if(SUPP_FREQ)
+		if(GLOB.SUPP_FREQ)
 			record_feedback("tally", "radio_usage", 1, "supply")
-		if(CENTCOM_FREQ)
+		if(GLOB.CENTCOM_FREQ)
 			record_feedback("tally", "radio_usage", 1, "centcom")
-		if(AIPRIV_FREQ)
+		if(GLOB.AIPRIV_FREQ)
 			record_feedback("tally", "radio_usage", 1, "ai private")
-		if(REDTEAM_FREQ)
+		if(GLOB.REDTEAM_FREQ)
 			record_feedback("tally", "radio_usage", 1, "CTF red team")
-		if(BLUETEAM_FREQ)
+		if(GLOB.BLUETEAM_FREQ)
 			record_feedback("tally", "radio_usage", 1, "CTF blue team")
 		else
 			record_feedback("tally", "radio_usage", 1, "other")
@@ -127,6 +127,7 @@ feedback data can be recorded in 5 formats:
 "text"
 	used for simple single-string records i.e. the current map
 	further calls to the same key will append saved data unless the overwrite argument is true or it already exists
+	when encoded calls made with overwrite will lack square brackets
 	calls: 	SSblackbox.record_feedback("text", "example", 1, "sample text")
 			SSblackbox.record_feedback("text", "example", 1, "other text")
 	json: {"data":["sample text","other text"]}
@@ -169,7 +170,7 @@ feedback data can be recorded in 5 formats:
 	json: {"data":{"1":{"text":"example","path":"/obj/item","number":"4"},"2":{"number":"7","text":"example","other text":"sample"}}}
 */
 /datum/controller/subsystem/blackbox/proc/record_feedback(type, key, increment, data, overwrite)
-	if(sealed || !type || !istext(key) || !isnum(increment))
+	if(sealed || !type || !istext(key) || !isnum(increment || !data))
 		return
 	var/datum/feedback_variable/FV = find_feedback_datum(key)
 	switch(type)
@@ -187,31 +188,34 @@ feedback data can be recorded in 5 formats:
 		if("tally")
 			if(!islist(FV.json["data"]))
 				FV.json["data"] = list()
-			FV.json["data"][data] += increment
+			FV.json["data"]["[data]"] += increment
 		if("nested tally")
 			if(!islist(data))
 				return
-			FV.json = record_feedback_recurse_list(FV.json, data, increment)
+			if(!islist(FV.json["data"]))
+				FV.json["data"] = list()
+			FV.json["data"] = record_feedback_recurse_list(FV.json["data"], data, increment)
 		if("associative")
 			if(!islist(data))
 				return
 			if(!islist(FV.json["data"]))
 				FV.json["data"] = list()
-			FV.json["data"]["[FV.json["data"].len+1]"] = list()
+			var/pos = length(FV.json["data"]) + 1
+			FV.json["data"]["[pos]"] = list() //in 512 "pos" can be replaced with "[FV.json["data"].len+1]"
 			for(var/i in data)
-				FV.json["data"]["[FV.json["data"].len]"]["[i]"] = "[data[i]]"
+				FV.json["data"]["[pos]"]["[i]"] = "[data[i]]" //and here with "[FV.json["data"].len]"
 
 /datum/controller/subsystem/blackbox/proc/record_feedback_recurse_list(list/L, list/key_list, increment, depth = 1)
 	if(depth == key_list.len)
 		if(L.Find(key_list[depth]))
 			L["[key_list[depth]]"] += increment
 		else
-			var/list/asd = list(key_list[depth] = increment)
-			L += asd
+			var/list/LFI = list(key_list[depth] = increment)
+			L += LFI
 	else
 		if(!L.Find(key_list[depth]))
-			var/list/mmx = list(key_list[depth] = list())
-			L += mmx
+			var/list/LGD = list(key_list[depth] = list())
+			L += LGD
 		L["[key_list[depth-1]]"] = .(L["[key_list[depth]]"], key_list, increment, ++depth)
 	return L
 

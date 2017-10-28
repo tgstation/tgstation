@@ -79,7 +79,7 @@ GLOBAL_VAR_INIT(security_level, 0)
 						FA.update_icon()
 				for(var/obj/machinery/computer/shuttle/pod/pod in GLOB.machines)
 					pod.admin_controlled = 0
-			SSblackbox.record_feedback("tally", "security_level_changes", 1, level)
+		SSblackbox.record_feedback("tally", "security_level_changes", 1, level)
 	else
 		return
 
