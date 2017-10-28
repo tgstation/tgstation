@@ -4,9 +4,11 @@
 	desc = "A box of ammo."
 	icon_state = "357"
 	icon = 'icons/obj/ammo.dmi'
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	slot_flags = SLOT_BELT
 	item_state = "syringe_kit"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	materials = list(MAT_METAL=30000)
 	throwforce = 2
 	w_class = WEIGHT_CLASS_TINY
@@ -79,13 +81,13 @@
 	if(istype(A, /obj/item/ammo_casing))
 		var/obj/item/ammo_casing/AC = A
 		if(give_round(AC, replace_spent))
-			user.drop_item()
-			AC.forceMove(src)
+			user.transferItemToLoc(AC, src, TRUE)
 			num_loaded++
 
 	if(num_loaded)
 		if(!silent)
 			to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>")
+			playsound(user, 'hippiestation/sound/weapons/loadbullet.ogg', 60, 1)
 		A.update_icon()
 		update_icon()
 
@@ -96,6 +98,7 @@
 	if(A)
 		user.put_in_hands(A)
 		to_chat(user, "<span class='notice'>You remove a round from \the [src]!</span>")
+		playsound(user, 'sound/weapons/bulletremove.ogg', 60, 1)
 		update_icon()
 
 /obj/item/ammo_box/update_icon()

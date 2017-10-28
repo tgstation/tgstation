@@ -9,6 +9,14 @@ We do not have a list of goals and features to add. Instead, there is freedom fo
 
 If you want to contribute the first thing you'll need to do is [set up Git](https://wiki.hippiestation.com/index.php?title=Setting_up_git) so you can download the source code.
 
+
+We have a [list of guides on the wiki](https://wiki.hippiestation.com/index.php/Guides#Development_and_Contribution_Guides) that will help you get started contributing to /tg/station with Git and Dream Maker. For beginners, it is recommended you work on small projects like bugfixes at first. If you need help learning to program in BYOND, check out this [repository of resources](http://www.byond.com/developer/articles/resources).
+
+There is an open list of approachable issues for [your inspiration here](https://github.com/HippieStation/HippieStation/issues?q=is%3Aopen+is%3Aissue+label%3A%22Good+First+Issue%22).
+
+You can of course, as always, ask for help at [#coderbus](irc://irc.rizon.net/coderbus) on irc.rizon.net. We're just here to have fun and help out, so please don't expect professional support.
+
+
 We have a [list of guides on the wiki](https://wiki.hippiestation.com/index.php?title=Guides#Development_and_Contribution_Guides) to get started. We recommend beginners start with small projects. For information on BYOND programming, take a look at BYOND's [repository of resources](http://www.byond.com/developer/articles/resources).
 
 There is an open list of approachable issues for [your inspiration here](https://www.github.com/HippieStation/HippieStation/issues?&q=is%3Aissue%20is%3Aopen%20label%3A"Easy%20Fix"%20).
@@ -94,13 +102,16 @@ It is rarely allowed to put type paths in a text format, as there are no compile
 
 ```C++
 //Good
-var/path_type = /obj/item/weapon/baseball_bat
+var/path_type = /obj/item/baseball_bat
 
 //Bad
-var/path_type = "/obj/item/weapon/baseball_bat"
+var/path_type = "/obj/item/baseball_bat"
 ```
 
-### Tabs not spaces
+### Use var/name format when declaring variables
+While DM allows other ways of declaring variables, this one should be used for consistency.
+
+### Tabs, not spaces
 You must use tabs to indent your code, NOT SPACES.
 
 (You may use spaces to align something, but you should tab to the block level first, then add the remaining spaces)
@@ -182,6 +193,28 @@ This prevents nesting levels from getting deeper then they need to be.
 
 * Files and path accessed and referenced by code above simply being #included should be strictly lowercase to avoid issues on filesystems where case matters.
 
+### SQL
+* Do not use the shorthand sql insert format (where no column names are specified) because it unnecessarily breaks all queries on minor column changes and prevents using these tables for tracking outside related info such as in a connected site/forum.
+
+* All changes to the database's layout(schema) must be specified in the database changelog in SQL, as well as reflected in the schema files
+
+* Any time the schema is changed the `schema_revision` table and `DB_MAJOR_VERSION` or `DB_MINOR_VERSION` defines must be incremented.
+
+* Queries must never specify the database, be it in code, or in text files in the repo.
+
+### Mapping Standards
+* TGM Format & Map Merge
+	* All new maps submitted to the repo through a pull request must be in TGM format (unless there is a valid reason present to have it in the default BYOND format.) This is done using the [Map Merge](https://github.com/tgstation/tgstation/wiki/Map-Merger) utility included in the repo to convert the file to TGM format.
+	* Likewise, you MUST run `Map Merge - TGM.bat` prior to opening your PR when updating existing maps to minimize the change differences (even when using third party mapping programs such as FastDMM.)
+		* Failure to run Map Merge on a map after using third party mapping programs (such as FastDMM) greatly increases the risk of the map's key dictionary becoming corrupted by future edits after running map merge. Resolving the corruption issue involves rebuilding the map's key dictionary; id est rewriting all the keys contained within the map by reconverting it from BYOND to TGM format - which creates very large differences that ultimately delay the PR process and is extremely likely to cause merge conflicts with other pull requests.
+
+* Variable Editing (Var-edits)
+	* While var-editing an item within the editor is perfectly fine, it is preferred that when you are changing the base behavior of an item (how it functions) that you make a new subtype of that item within the code, especially if you plan to use the item in multiple locations on the same map, or across multiple maps. This makes it easier to make corrections as needed to all instances of the item at one time as opposed to having to find each instance of it and change them all individually.
+		* Subtypes only intended to be used on away mission or ruin maps should be contained within an .dm file with a name corresponding to that map within `code\modules\awaymissions` or `code\modules\ruins` respectively. This is so in the event that the map is removed, that subtype will be removed at the same time as well to minimize leftover/unused data within the repo.
+	* Please attempt to clean out any dirty variables that may be contained within items you alter through var-editing. For example, due to how DM functions, changing the `pixel_x` variable from 23 to 0 will leave a dirty record in the map's code of `pixel_x = 0`. Likewise this can happen when changing an item's icon to something else and then back. This can lead to some issues where an item's icon has changed within the code, but becomes broken on the map due to it still attempting to use the old entry.
+	* Areas should not be var-edited on a map to change it's name or attributes. All areas of a single type and it's altered instances are considered the same area within the code, and editing their variables on a map can lead to issues with powernets and event subsystems which are difficult to debug.
+
+
 ### Other Notes
 * Code should be modular where possible, if you are working on a new class then it is best if you put it in a new file.
 
@@ -190,6 +223,8 @@ This prevents nesting levels from getting deeper then they need to be.
 * You are expected to help maintain the code that you add, meaning if there is a problem then you are likely to be approached in order to fix any issues, runtimes or bugs.
 
 * Do not divide when you can easily convert it to a multiplication. (ie `4/2` should be done as `4*0.5`)
+
+* If you used regex to replace code during development of your code, post the regex in your PR for the benefit of future developers and downstream users.
 
 #### Enforced not enforced
 The following different coding styles are not only not enforced, but it is generally frowned upon to change them over from one to the other for little reason:
@@ -214,7 +249,18 @@ The following different coding styles are not only not enforced, but it is gener
 
 Math operators like +, -, /, *, etc are up in the air, just choose which version looks more readable.
 
-### Dream Maker Quirks/Tricks:
+#### Use
+* Bitwise AND - '&'
+	* Should be written as ```bitfield & bitflag``` NEVER ```bitflag & bitfield```, both are valid, but the latter is confusing and nonstandard.
+* Associated lists declarations must have their key value quoted if it's a string
+	* WRONG: list(a = "b")
+	* RIGHT: list("a" = "b")
+* Do not define new variables as `null`. Instead, leave it blank because the default value is null. Variables already defined on a parent object must have `= null`, though.
+	* WRONG: `var/variable = null`
+	* RIGHT: `var/variable`
+	
+
+### Dream Maker Quirks/Tricks
 Like all languages, Dream Maker has its quirks, some of them are beneficial to us, like these
 
 * In-To for loops: ```for(var/i = 1, i <= some_value, i++)``` is a fairly standard way to write an incremental for loop in most languages (especially those in the C family) however DM's ```for(var/i in 1 to some_value)``` syntax is oddly faster than its implementation of the former syntax; where possible it's advised to use DM's syntax. (Note, the ```to``` keyword is inclusive, so it automatically defaults to replacing ```<=```, if you want ```<``` then you should write it as ```1 to some_value-1```).
@@ -224,28 +270,28 @@ HOWEVER, if either ```some_value``` or ```i``` changes within the body of the fo
 * Istypeless for loops: a name for a differing syntax for writing for-each style loops in DM, however it is NOT DM's standard syntax hence why this is considered a quirk. Take a look at this:
 ```
 var/list/bag_of_items = list(sword, apple, coinpouch, sword, sword)
-var/obj/item/sword/best_sword = null
+var/obj/item/sword/best_sword
 for(var/obj/item/sword/S in bag_of_items)
 	if(!best_sword || S.damage > best_sword.damage)
-    		best_sword = S
+		best_sword = S
 ```
 The above is a simple proc for checking all swords in a container and returning the one with the highest damage, it uses DM's standard syntax for a for loop, it does this by specifying a type in the variable of the for header which byond interprets as a type to filter by, it performs this filter using ```istype()``` (or some internal-magic similar to ```istype()```, I wouldn't put it past byond), the above example is fine with the data currently contained in ```bag_of_items```, however if ```bag_of_items``` contained ONLY swords, or only SUBTYPES of swords, then the above is inefficient, for example:
 ```
 var/list/bag_of_swords = list(sword, sword, sword, sword)
-var/obj/item/sword/best_sword = null
+var/obj/item/sword/best_sword
 for(var/obj/item/sword/S in bag_of_swords)
 	if(!best_sword || S.damage > best_sword.damage)
-    		best_sword = S
+		best_sword = S
 ```
 specifies a type for DM to filter by, with the previous example that's perfectly fine, we only want swords, but here the bag only contains swords? is DM still going to try to filter because we gave it a type to filter by? YES, and here comes the inefficiency. Whereever a list (or other container, such as an atom (in which case you're technically accessing their special contents list but I digress)) contains datums of the same datatype or subtypes of the datatype you require for your for body
 you can circumvent DM's filtering and automatic ```istype()``` checks by writing the loop as such:
 ```
 var/list/bag_of_swords = list(sword, sword, sword, sword)
-var/obj/item/sword/best_sword = null
+var/obj/item/sword/best_sword
 for(var/s in bag_of_swords)
 	var/obj/item/sword/S = s
 	if(!best_sword || S.damage > best_sword.damage)
-    		best_sword = S
+		best_sword = S
 ```
 Of course, if the list contains data of a mixed type then the above optimisation is DANGEROUS, as it will blindly typecast all data in the list as the specified type, even if it isn't really that type! which will cause runtime errors.
 
@@ -255,8 +301,27 @@ eg:
 var/mob/living/carbon/human/H = YOU_THE_READER
 H.gib()
 ```
-however DM also has a dot variable, accessed just as ```.``` on it's own, defaulting to a value of null, now what's special about the dot operator is that it is automatically returned (as in the ```return``` statment) at the end of a proc, provided the proc does not already manually return (```return count``` for example). Why is this special? well the ```return``` statement should ideally be free from overhead (functionally free, of course nothing's free) but DM fails to fulfill this,  DM's return statement is actually fairly costly for what it does and for what it's used for.
-With ```.``` being everpresent in every proc can we use it as a temporary variable? Of course we can! However the ```.``` operator cannot replace a typecasted variable, it can hold data any other var in DM can, it just can't be accessed as one, however the ```.``` operator is compatible with a few operators that look weird but work perfectly fine, such as: ```.++``` for incrementing ```.'s``` value, or ```.[1]``` for accessing the first element of ```.``` (provided it's a list).
+However, DM also has a dot variable, accessed just as ```.``` on its own, defaulting to a value of null. Now, what's special about the dot operator is that it is automatically returned (as in the ```return``` statement) at the end of a proc, provided the proc does not already manually return (```return count``` for example.) Why is this special? 
+
+Well, the ```return``` statement should ideally be free from overhead (functionally free, although of course nothing's free), but DM fails to fulfill this. DM's return statement is actually fairly costly for what it does and for what it's used for.
+
+With ```.``` being everpresent in every proc, can we use it as a temporary variable? Of course we can! However, the ```.``` operator cannot replace a typecasted variable - it can hold data any other var in DM can, it just can't be accessed as one, although the ```.``` operator is compatible with a few operators that look weird but work perfectly fine, such as: ```.++``` for incrementing ```.'s``` value, or ```.[1]``` for accessing the first element of ```.```, provided that it's a list.
+
+## Globals versus static
+
+DM has a var keyword, called global. This var keyword is for vars inside of types. For instance:
+
+```DM
+mob
+	var
+		global
+			thing = TRUE
+```
+This does NOT mean that you can access it everywhere like a global var. Instead, it means that that var will only exist once for all instances of its type, in this case that var will only exist once for all mobs - it's shared across everything in its type. (Much more like the keyword `static` in other languages like PHP/C++/C#/Java)
+
+Isn't that confusing? 
+
+There is also an undocumented keyword called `static` that has the same behaviour as global but more correctly describes BYOND's behaviour. Therefore, we always use static instead of global where we need it, as it reduces suprise when reading BYOND code.
 
 ## Pull Request Process
 

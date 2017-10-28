@@ -20,27 +20,23 @@
 	var/obj/docking_port/mobile/preview_shuttle
 	var/datum/map_template/shuttle/preview_template
 
-/obj/machinery/shuttle_manipulator/New()
+/obj/machinery/shuttle_manipulator/Initialize()
 	. = ..()
 	update_icon()
 
 /obj/machinery/shuttle_manipulator/update_icon()
 	cut_overlays()
-	var/image/hologram_projection = image(icon, "hologram_on")
+	var/mutable_appearance/hologram_projection = mutable_appearance(icon, "hologram_on")
 	hologram_projection.pixel_y = 22
-	var/image/hologram_ship = image(icon, "hologram_whiteship")
+	var/mutable_appearance/hologram_ship = mutable_appearance(icon, "hologram_whiteship")
 	hologram_ship.pixel_y = 27
 	add_overlay(hologram_projection)
 	add_overlay(hologram_ship)
 
-/obj/machinery/shuttle_manipulator/ui_interact(mob/user, ui_key = "main", \
-	datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, \
-	datum/ui_state/state = admin_state)
-
+/obj/machinery/shuttle_manipulator/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.admin_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "shuttle_manipulator", name, 800, 600, \
-			master_ui, state)
+		ui = new(user, src, ui_key, "shuttle_manipulator", name, 800, 600, master_ui, state)
 		ui.open()
 
 /proc/shuttlemode2str(mode)
@@ -62,7 +58,7 @@
 		if(SHUTTLE_ENDGAME)
 			. = "endgame"
 	if(!.)
-		throw EXCEPTION("shuttlemode2str(): invalid mode [mode]")
+		CRASH("shuttlemode2str(): invalid mode [mode]")
 
 
 /obj/machinery/shuttle_manipulator/ui_data(mob/user)
@@ -155,7 +151,7 @@
 					message_admins("[key_name_admin(usr)] fast travelled \
 						[M]")
 					log_admin("[key_name(usr)] fast travelled [M]")
-					feedback_add_details("shuttle_fasttravel", M.name)
+					SSblackbox.add_details("shuttle_fasttravel", M.name)
 					break
 
 		if("preview")
@@ -182,7 +178,7 @@
 						with the shuttle manipulator.")
 					log_admin("[key_name(usr)] loaded [mdp] with the \
 						shuttle manipulator.</span>")
-					feedback_add_details("shuttle_manipulator", mdp.name)
+					SSblackbox.add_details("shuttle_manipulator", mdp.name)
 
 	update_icon()
 
@@ -246,7 +242,7 @@
 /obj/machinery/shuttle_manipulator/proc/load_template(
 	datum/map_template/shuttle/S)
 	// load shuttle template, centred at shuttle import landmark,
-	var/turf/landmark_turf = get_turf(locate("landmark*Shuttle Import"))
+	var/turf/landmark_turf = get_turf(locate(/obj/effect/landmark/shuttle_import) in GLOB.landmarks_list)
 	S.load(landmark_turf, centered = TRUE)
 
 	var/affected = S.get_affected_turfs(landmark_turf, centered=TRUE)
@@ -285,6 +281,9 @@
 
 		message_admins(msg)
 		WARNING(msg)
+		return
+	//Everything fine
+	S.on_bought()
 
 /obj/machinery/shuttle_manipulator/proc/unload_preview()
 	if(preview_shuttle)

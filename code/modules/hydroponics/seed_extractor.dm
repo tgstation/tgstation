@@ -10,10 +10,10 @@
 	if(extractor)
 		seedloc = extractor.loc
 
-	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/))
-		var/obj/item/weapon/reagent_containers/food/snacks/grown/F = O
+	if(istype(O, /obj/item/reagent_containers/food/snacks/grown/))
+		var/obj/item/reagent_containers/food/snacks/grown/F = O
 		if(F.seed)
-			if(user && !user.drop_item()) //couldn't drop the item
+			if(user && !user.temporarilyRemoveItemFromInventory(O)) //couldn't drop the item
 				return
 			while(t_amount < t_max)
 				var/obj/item/seeds/t_prod = F.seed.Copy()
@@ -22,10 +22,10 @@
 			qdel(O)
 			return 1
 
-	else if(istype(O, /obj/item/weapon/grown))
-		var/obj/item/weapon/grown/F = O
+	else if(istype(O, /obj/item/grown))
+		var/obj/item/grown/F = O
 		if(F.seed)
-			if(user && !user.drop_item())
+			if(user && !user.temporarilyRemoveItemFromInventory(O))
 				return
 			while(t_amount < t_max)
 				var/obj/item/seeds/t_prod = F.seed.Copy()
@@ -42,29 +42,17 @@
 	desc = "Extracts and bags seeds from produce."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "sextractor"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
+	circuit = /obj/item/circuitboard/machine/seed_extractor
 	var/piles = list()
 	var/max_seeds = 1000
 	var/seed_multiplier = 1
 
-/obj/machinery/seed_extractor/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/seed_extractor(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/seed_extractor
-	name = "Seed Extractor (Machine Board)"
-	build_path = /obj/machinery/seed_extractor
-	origin_tech = "programming=1"
-	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1)
-
 /obj/machinery/seed_extractor/RefreshParts()
-	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		max_seeds = 1000 * B.rating
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		seed_multiplier = M.rating
 
 /obj/machinery/seed_extractor/attackby(obj/item/O, mob/user, params)
@@ -84,8 +72,8 @@
 	if(default_deconstruction_crowbar(O))
 		return
 
-	if (istype(O,/obj/item/weapon/storage/bag/plants))
-		var/obj/item/weapon/storage/P = O
+	if (istype(O, /obj/item/storage/bag/plants))
+		var/obj/item/storage/P = O
 		var/loaded = 0
 		for(var/obj/item/seeds/G in P.contents)
 			if(contents.len >= max_seeds)
@@ -101,7 +89,7 @@
 	else if(seedify(O,-1, src, user))
 		to_chat(user, "<span class='notice'>You extract some seeds.</span>")
 		return
-	else if (istype(O,/obj/item/seeds))
+	else if (istype(O, /obj/item/seeds))
 		if(add_seed(O))
 			to_chat(user, "<span class='notice'>You add [O] to [src.name].</span>")
 			updateUsrDialog()
@@ -191,15 +179,14 @@
 		to_chat(usr, "<span class='notice'>\The [src] is full.</span>")
 		return 0
 
-	if(istype(O.loc,/mob))
+	if(ismob(O.loc))
 		var/mob/M = O.loc
-		if(!M.drop_item())
+		if(!M.transferItemToLoc(O, src))
 			return 0
-	else if(istype(O.loc,/obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = O.loc
+	else if(istype(O.loc, /obj/item/storage))
+		var/obj/item/storage/S = O.loc
 		S.remove_from_storage(O,src)
 
-	O.loc = src
 	. = 1
 	for (var/datum/seed_pile/N in piles)
 		if (O.plantname == N.name && O.lifespan == N.lifespan && O.endurance == N.endurance && O.maturation == N.maturation && O.production == N.production && O.yield == N.yield && O.potency == N.potency)

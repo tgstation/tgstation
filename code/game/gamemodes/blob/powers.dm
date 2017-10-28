@@ -41,13 +41,14 @@
 			to_chat(src, "<span class='warning'>It is too early to place your blob core!</span>")
 			return 0
 	else if(placement_override == 1)
-		var/turf/T = pick(blobstart)
+		var/turf/T = pick(GLOB.blobstart)
 		loc = T //got overrided? you're somewhere random, motherfucker
 	if(placed && blob_core)
 		blob_core.forceMove(loc)
 	else
-		var/obj/structure/blob/core/core = new(get_turf(src), null, point_rate, 1)
+		var/obj/structure/blob/core/core = new(get_turf(src), src, point_rate, 1)
 		core.overmind = src
+		blobs_legit += src
 		blob_core = core
 		core.update_icon()
 	update_health_hud()
@@ -59,16 +60,16 @@
 	set name = "Jump to Core"
 	set desc = "Move your camera to your core."
 	if(blob_core)
-		src.loc = blob_core.loc
+		forceMove(blob_core.drop_location())
 
 /mob/camera/blob/verb/jump_to_node()
 	set category = "Blob"
 	set name = "Jump to Node"
 	set desc = "Move your camera to a selected node."
-	if(blob_nodes.len)
+	if(GLOB.blob_nodes.len)
 		var/list/nodes = list()
-		for(var/i in 1 to blob_nodes.len)
-			var/obj/structure/blob/node/B = blob_nodes[i]
+		for(var/i in 1 to GLOB.blob_nodes.len)
+			var/obj/structure/blob/node/B = GLOB.blob_nodes[i]
 			nodes["Blob Node #[i] ([B.overmind ? "[B.overmind.blob_reagent_datum.name]":"No Chemical"])"] = B
 		var/node_name = input(src, "Choose a node to jump to.", "Node Jump") in nodes
 		var/obj/structure/blob/node/chosen_node = nodes[node_name]
@@ -171,8 +172,8 @@
 	if(candidates.len) //if we got at least one candidate, they're a blobbernaut now.
 		var/client/C = pick(candidates)
 		blobber.key = C.key
-		blobber << 'sound/effects/blobattack.ogg'
-		blobber << 'sound/effects/attackblob.ogg'
+		SEND_SOUND(blobber, sound('sound/effects/blobattack.ogg'))
+		SEND_SOUND(blobber, sound('sound/effects/attackblob.ogg'))
 		to_chat(blobber, "<b>You are a blobbernaut!</b>")
 		to_chat(blobber, "You are powerful, hard to kill, and slowly regenerate near nodes and cores, but will slowly die if not near the blob or if the factory that made you is killed.")
 		to_chat(blobber, "You can communicate with other blobbernauts and overminds via <b>:b</b>")
@@ -267,7 +268,7 @@
 			var/list/diagonalblobs = list()
 			for(var/I in possibleblobs)
 				var/obj/structure/blob/IB = I
-				if(get_dir(IB, T) in cardinal)
+				if(get_dir(IB, T) in GLOB.cardinals)
 					cardinalblobs += IB
 				else
 					diagonalblobs += IB
@@ -331,7 +332,7 @@
 	var/datum/reagent/blob/BC = pick((subtypesof(/datum/reagent/blob) - blob_reagent_datum.type))
 	blob_reagent_datum = new BC
 	color = blob_reagent_datum.complementary_color
-	for(var/BL in blobs)
+	for(var/BL in GLOB.blobs)
 		var/obj/structure/blob/B = BL
 		B.update_icon()
 	for(var/BLO in blob_mobs)
@@ -365,5 +366,5 @@
 	to_chat(src, "<b>Shortcuts:</b> Click = Expand Blob <b>|</b> Middle Mouse Click = Rally Spores <b>|</b> Ctrl Click = Create Shield Blob <b>|</b> Alt Click = Remove Blob")
 	to_chat(src, "Attempting to talk will send a message to all other overminds, allowing you to coordinate with them.")
 	if(!placed && autoplace_max_time <= world.time)
-		to_chat(src, "<span class='big'><font color=\"#EE4000\">You will automatically place your blob core in [round((autoplace_max_time - world.time)/600, 0.5)] minutes.</font></span>")
+		to_chat(src, "<span class='big'><font color=\"#EE4000\">You will automatically place your blob core in [DisplayTimeText(autoplace_max_time - world.time)].</font></span>")
 		to_chat(src, "<span class='big'><font color=\"#EE4000\">You [manualplace_min_time ? "will be able to":"can"] manually place your blob core by pressing the Place Blob Core button in the bottom right corner of the screen.</font></span>")

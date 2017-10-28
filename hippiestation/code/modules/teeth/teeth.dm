@@ -17,7 +17,7 @@
 	name = "human teeth"
 	singular_name = "human tooth"
 
-/obj/item/stack/teeth/human/New()
+/obj/item/stack/teeth/human/Initialize()
 	..()
 	transform *= TransformUsingVariable(0.25, 1, 0.5) //Half-size the teeth
 
@@ -36,7 +36,12 @@
 /obj/item/stack/teeth/generic //Used for species without unique teeth defined yet
 	name = "teeth"
 
-/obj/item/stack/teeth/generic/New()
+/obj/item/stack/teeth/meeseeks
+	name = "teethseeks"
+	singular_name = "toothseeks"
+	desc = "I'm Mr. Teethseeks, look at me!"
+
+/obj/item/stack/teeth/generic/Initialize()
 	..()
 	transform *= TransformUsingVariable(0.25, 1, 0.5) //Half-size the teeth
 
@@ -47,7 +52,7 @@
 	desc = "First teeth, now replacements. When does it end?"
 	icon_state = "dentals"
 
-/obj/item/stack/teeth/replacement/New()
+/obj/item/stack/teeth/replacement/Initialize()
 	..()
 	transform *= TransformUsingVariable(0.25, 1, 0.5) //Half-size the teeth
 
@@ -58,7 +63,7 @@
 	sharpness = IS_SHARP
 	icon_state = "teeth_cat"
 
-/obj/item/stack/teeth/cat/New()
+/obj/item/stack/teeth/cat/Initialize()
 	..()
 	transform *= TransformUsingVariable(0.35, 1, 0.5) //resize the teeth
 
@@ -69,7 +74,7 @@
 	sharpness = IS_SHARP
 	icon_state = "teeth_cat"
 
-/obj/item/stack/teeth/lizard/New()
+/obj/item/stack/teeth/lizard/Initialize()
 	..()
 	transform *= TransformUsingVariable(0.30, 1, 0.5) //resize the teeth
 
@@ -164,6 +169,3 @@
 
 /datum/species/skeleton
 	teeth_type = /obj/item/stack/teeth/human
-
-/datum/species/lizard
-	teeth_type = /obj/item/stack/teeth/lizard

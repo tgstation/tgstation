@@ -16,9 +16,8 @@
 	var/mob/dead/selected = pick_n_take(candidates)
 
 	var/list/spawn_locs = list()
-	for(var/obj/effect/landmark/L in landmarks_list)
-		if(L.name in list("ninjaspawn","carpspawn"))
-			spawn_locs += L.loc
+	for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
+		spawn_locs += L.loc
 	if(!spawn_locs.len)
 		return MAP_ERROR
 
@@ -32,10 +31,10 @@
 	var/datum/mind/Mind = new /datum/mind(selected.key)
 	Mind.assigned_role = "Lone Operative"
 	Mind.special_role = "Lone Operative"
-	ticker.mode.traitors |= Mind
+	SSticker.mode.traitors |= Mind
 	Mind.active = 1
 
-	var/obj/machinery/nuclearbomb/selfdestruct/nuke = locate() in machines
+	var/obj/machinery/nuclearbomb/selfdestruct/nuke = locate() in GLOB.machines
 	if(nuke)
 		var/nuke_code
 		if(!nuke.r_code || nuke.r_code == "ADMIN")

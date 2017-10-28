@@ -5,6 +5,7 @@
 	name = "monkey"
 	config_tag = "monkey"
 	antag_flag = ROLE_MONKEY
+	false_report_weight = 1
 
 	required_players = 20
 	required_enemies = 1
@@ -41,16 +42,16 @@
 
 /datum/game_mode/monkey/announce()
 	to_chat(world, "<B>The current game mode is - Monkey!</B>")
-	to_chat(world, "<B>One or more crewmembers have been infected with Jungle Fever! Crew: Contain the outbreak. None of the infected monkeys may escape alive to Centcom. \
-				Monkeys: Ensure that your kind lives on! Rise up against your captors!</B>")
+	to_chat(world, "<B>One or more crewmembers have been infected with Jungle Fever! Crew: Contain the outbreak. None of the infected monkeys may escape alive to CentCom. Monkeys: Ensure that your kind lives on! Rise up against your captors!</B>")
 
 
 /datum/game_mode/monkey/proc/greet_carrier(datum/mind/carrier)
-	to_chat(carrier.current, "<B><span class='notice'>You are the Jungle Fever patient zero!!</B>")
+	to_chat(carrier.current, "<B><span class='notice'>You are the Jungle Fever patient zero!!</B></span>")
 	to_chat(carrier.current, "<b>You have been planted onto this station by the Animal Rights Consortium.</b>")
 	to_chat(carrier.current, "<b>Soon the disease will transform you into an ape. Afterwards, you will be able spread the infection to others with a bite.</b>")
 	to_chat(carrier.current, "<b>While your infection strain is undetectable by scanners, any other infectees will show up on medical equipment.</b>")
-	to_chat(carrier.current, "<b>Your mission will be deemed a success if any of the live infected monkeys reach Centcom.</b>")
+	to_chat(carrier.current, "<b>Your mission will be deemed a success if any of the live infected monkeys reach CentCom.</b>")
+	carrier.current.playsound_local(get_turf(carrier.current), 'sound/ambience/antag/monkey.ogg', 100, FALSE, pressure_affected = FALSE)
 	return
 
 /datum/game_mode/monkey/post_setup()
@@ -60,7 +61,6 @@
 
 		var/datum/disease/D = new /datum/disease/transformation/jungle_fever
 		D.visibility_flags = HIDDEN_SCANNER|HIDDEN_PANDEMIC
-		D.holder = carriermind.current
 		D.affected_mob = carriermind.current
 		carriermind.current.viruses += D
 	..()
@@ -76,7 +76,7 @@
 				return 0
 
 		var/datum/disease/D = new /datum/disease/transformation/jungle_fever() //ugly but unfortunately needed
-		for(var/mob/living/carbon/human/H in living_mob_list)
+		for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
 			if(H.mind && H.stat != DEAD)
 				if(H.HasDisease(D))
 					return 0
@@ -87,9 +87,9 @@
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return 0
 	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
-	for(var/mob/living/carbon/monkey/M in living_mob_list)
+	for(var/mob/living/carbon/monkey/M in GLOB.living_mob_list)
 		if (M.HasDisease(D))
-			if(M.onCentcom() || M.onSyndieBase())
+			if(M.onCentCom() || M.onSyndieBase())
 				escaped_monkeys++
 	if(escaped_monkeys >= monkeys_to_win)
 		return 1
@@ -107,10 +107,11 @@
 
 /datum/game_mode/monkey/declare_completion()
 	if(check_monkey_victory())
-		feedback_set_details("round_end_result","win - monkey win")
-		feedback_set("round_end_result",escaped_monkeys)
+		SSticker.mode_result = "win - monkey win"
 		to_chat(world, "<span class='userdanger'>The monkeys have overthrown their captors! Eeek eeeek!!</span>")
 	else
-		feedback_set_details("round_end_result","loss - staff stopped the monkeys")
-		feedback_set("round_end_result",escaped_monkeys)
+		SSticker.mode_result = "loss - staff stopped the monkeys"
 		to_chat(world, "<span class='userdanger'>The staff managed to contain the monkey infestation!</span>")
+
+/datum/game_mode/monkey/generate_report()
+	return "Reports of an ancient [pick("retrovirus", "flesh eating bacteria", "disease", "magical curse blamed on viruses", "banana blight")] outbreak that turn humans into monkeys has been reported in your quadrant.  Any such infections may be treated with banana juice.  If an outbreak occurs, ensure the station is quarantined to prevent a largescale outbreak at CentCom."

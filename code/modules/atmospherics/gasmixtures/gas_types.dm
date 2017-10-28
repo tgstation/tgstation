@@ -1,9 +1,9 @@
-var/list/hardcoded_gases = list("o2","n2","co2","plasma") //the main four gases, which were at one time hardcoded
+GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/plasma)) //the main four gases, which were at one time hardcoded
 
 /proc/meta_gas_list()
-	. = new /list
-	for(var/gas_path in subtypesof(/datum/gas))
-		var/list/gas_info = new(4)
+	. = subtypesof(/datum/gas)
+	for(var/gas_path in .)
+		var/list/gas_info = new(6)
 		var/datum/gas/gas = gas_path
 
 		gas_info[META_GAS_SPECIFIC_HEAT] = initial(gas.specific_heat)
@@ -11,7 +11,15 @@ var/list/hardcoded_gases = list("o2","n2","co2","plasma") //the main four gases,
 		gas_info[META_GAS_MOLES_VISIBLE] = initial(gas.moles_visible)
 		if(initial(gas.moles_visible) != null)
 			gas_info[META_GAS_OVERLAY] = new /obj/effect/overlay/gas(initial(gas.gas_overlay))
-		.[initial(gas.id)] = gas_info
+		gas_info[META_GAS_DANGER] = initial(gas.dangerous)
+		gas_info[META_GAS_ID] = initial(gas.id)
+		.[gas_path] = gas_info
+
+/proc/gas_id2path(id)
+	var/list/meta_gas = GLOB.meta_gas_info
+	for(var/path in meta_gas)
+		if(meta_gas[path][META_GAS_ID] == id)
+			return path
 
 /*||||||||||||||/----------\||||||||||||||*\
 ||||||||||||||||[GAS DATUMS]||||||||||||||||
@@ -28,6 +36,7 @@ var/list/hardcoded_gases = list("o2","n2","co2","plasma") //the main four gases,
 	var/name = ""
 	var/gas_overlay = "" //icon_state in icons/effects/tile_effects.dmi
 	var/moles_visible = null
+	var/dangerous = FALSE //currently used by canisters
 
 /datum/gas/oxygen
 	id = "o2"
@@ -50,6 +59,7 @@ var/list/hardcoded_gases = list("o2","n2","co2","plasma") //the main four gases,
 	name = "Plasma"
 	gas_overlay = "plasma"
 	moles_visible = MOLES_PLASMA_VISIBLE
+	dangerous = TRUE
 
 /datum/gas/water_vapor
 	id = "water_vapor"
@@ -64,6 +74,7 @@ var/list/hardcoded_gases = list("o2","n2","co2","plasma") //the main four gases,
 	name = "Freon"
 	gas_overlay = "freon"
 	moles_visible = MOLES_PLASMA_VISIBLE
+	dangerous = TRUE
 
 /datum/gas/nitrous_oxide
 	id = "n2o"
@@ -71,6 +82,7 @@ var/list/hardcoded_gases = list("o2","n2","co2","plasma") //the main four gases,
 	name = "Nitrous Oxide"
 	gas_overlay = "nitrous_oxide"
 	moles_visible = 1
+	dangerous = TRUE
 
 /datum/gas/oxygen_agent_b
 	id = "agent_b"
@@ -86,10 +98,11 @@ var/list/hardcoded_gases = list("o2","n2","co2","plasma") //the main four gases,
 	id = "bz"
 	specific_heat = 20
 	name = "BZ"
+	dangerous = TRUE
 
 /obj/effect/overlay/gas
 	icon = 'icons/effects/tile_effects.dmi'
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	layer = FLY_LAYER
 	appearance_flags = TILE_BOUND
 

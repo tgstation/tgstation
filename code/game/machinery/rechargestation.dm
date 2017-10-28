@@ -2,41 +2,29 @@
 	name = "cyborg recharging station"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "borgcharger0"
-	density = 0
-	anchored = 1
-	use_power = 1
+	density = FALSE
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 1000
-	req_access = list(access_robotics)
+	req_access = list(ACCESS_ROBOTICS)
+	state_open = TRUE
+	circuit = /obj/item/circuitboard/machine/cyborgrecharger
 	var/recharge_speed
 	var/repairs
-	state_open = 1
 
-/obj/machinery/recharge_station/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/cyborgrecharger(null)
-	B.apply_default_parts(src)
+/obj/machinery/recharge_station/Initialize()
+	. = ..()
 	update_icon()
-
-/obj/item/weapon/circuitboard/machine/cyborgrecharger
-	name = "Cyborg Recharger (Machine Board)"
-	build_path = /obj/machinery/recharge_station
-	origin_tech = "powerstorage=3;engineering=3"
-	req_components = list(
-							/obj/item/weapon/stock_parts/capacitor = 2,
-							/obj/item/weapon/stock_parts/cell = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1)
-	def_components = list(
-		/obj/item/weapon/stock_parts/cell = /obj/item/weapon/stock_parts/cell/high)
 
 /obj/machinery/recharge_station/RefreshParts()
 	recharge_speed = 0
 	repairs = 0
-	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
+	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		recharge_speed += C.rating * 100
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		repairs += M.rating - 1
-	for(var/obj/item/weapon/stock_parts/cell/C in component_parts)
+	for(var/obj/item/stock_parts/cell/C in component_parts)
 		recharge_speed *= C.maxcharge / 10000
 
 /obj/machinery/recharge_station/process()
@@ -95,18 +83,18 @@
 
 /obj/machinery/recharge_station/open_machine()
 	..()
-	use_power = 1
+	use_power = IDLE_POWER_USE
 
 /obj/machinery/recharge_station/close_machine()
 	if(!panel_open)
 		for(var/mob/living/silicon/robot/R in loc)
 			R.forceMove(src)
 			occupant = R
-			use_power = 2
+			use_power = ACTIVE_POWER_USE
 			add_fingerprint(R)
 			break
-		state_open = 0
-		density = 1
+		state_open = FALSE
+		density = TRUE
 		update_icon()
 
 /obj/machinery/recharge_station/update_icon()

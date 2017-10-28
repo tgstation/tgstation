@@ -3,7 +3,7 @@
 	icon_state = "intact"
 
 	name = "junction"
-	desc = "A one meter junction that connects regular and heat-exchanging pipe"
+	desc = "A one meter junction that connects regular and heat-exchanging pipe."
 
 	minimum_temperature_difference = 300
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
@@ -13,6 +13,9 @@
 	initialize_directions_he = SOUTH
 
 	device_type = BINARY
+	
+	construction_type = /obj/item/pipe/directional
+	pipe_state = "junction"
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction/SetInitDirections()
 	switch(dir)
@@ -29,12 +32,8 @@
 			initialize_directions = EAST
 			initialize_directions_he = WEST
 
-/obj/machinery/atmospherics/pipe/heat_exchanging/junction/atmosinit()
-	var/node2_connect = dir
-	var/node1_connect = turn(dir, 180)
-	var/list/node_connects = list(node1_connect, node2_connect)
-
-	..(node_connects)
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction/getNodeConnects()
+	return list(turn(dir, 180), dir)
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction/can_be_node(obj/machinery/atmospherics/target, iteration)
 	var/init_dir

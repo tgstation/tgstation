@@ -15,6 +15,10 @@
 	var/tomail = 0 //changes if contains wrapped package
 	var/hasmob = 0 //If it contains a mob
 
+/obj/structure/disposalholder/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION)
+
 /obj/structure/disposalholder/Destroy()
 	qdel(gas)
 	active = 0
@@ -97,7 +101,7 @@
 	return null
 
 // merge two holder objects
-// used when a a holder meets a stuck holder
+// used when a holder meets a stuck holder
 /obj/structure/disposalholder/proc/merge(obj/structure/disposalholder/other)
 	for(var/atom/movable/AM in other)
 		AM.loc = src		// move everything in other holder to this one
@@ -121,8 +125,8 @@
 	T.assume_air(gas)
 	T.air_update_turf()
 
-/obj/structure/disposalholder/allow_drop()
-	return 1
+/obj/structure/disposalholder/AllowDrop()
+	return TRUE
 
 /obj/structure/disposalholder/ex_act(severity, target)
 	return
@@ -133,13 +137,12 @@
 	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
 	name = "disposal pipe"
 	desc = "An underfloor disposal pipe."
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	on_blueprints = TRUE
 	level = 1			// underfloor only
 	var/dpdir = 0		// bitmask of pipe directions
 	dir = 0// dir will contain dominant direction for junction pipes
-	obj_integrity = 200
 	max_integrity = 200
 	armor = list(melee = 25, bullet = 10, laser = 10, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 30)
 	layer = DISPOSAL_PIPE_LAYER			// slightly lower than wires and other pipes
@@ -147,8 +150,8 @@
 	var/obj/structure/disposalconstruct/stored
 
 	// new pipe, set the icon_state as on map
-/obj/structure/disposalpipe/New(loc,var/obj/structure/disposalconstruct/make_from)
-	..()
+/obj/structure/disposalpipe/Initialize(mapload, obj/structure/disposalconstruct/make_from)
+	. = ..()
 
 	if(make_from && !QDELETED(make_from))
 		base_icon_state = make_from.base_state
@@ -176,8 +179,10 @@
 				stored.ptype = DISP_SORTJUNCTION
 			if("pipe-j2s")
 				stored.ptype = DISP_SORTJUNCTION_FLIP
-	return
 
+/obj/structure/disposalpipe/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION)
 
 	// pipe is deleted
 	// ensure if holder is present, it is expelled
@@ -298,15 +303,16 @@
 	if(T.intact)
 		return		// prevent interaction with T-scanner revealed pipes
 	add_fingerprint(user)
-	if(istype(I, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/W = I
+	if(istype(I, /obj/item/weldingtool))
+		var/obj/item/weldingtool/W = I
 		if(can_be_deconstructed(user))
 			if(W.remove_fuel(0,user))
-				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
+				playsound(src.loc, 'sound/items/welder2.ogg', 100, 1)
 				to_chat(user, "<span class='notice'>You start slicing the disposal pipe...</span>")
 				// check if anything changed over 2 seconds
 				if(do_after(user,30, target = src))
-					if(!src || !W.isOn()) return
+					if(!src || !W.isOn())
+						return
 					deconstruct()
 					to_chat(user, "<span class='notice'>You slice the disposal pipe.</span>")
 	else
@@ -318,18 +324,18 @@
 
 // called when pipe is cut with welder
 /obj/structure/disposalpipe/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(disassembled)
 			if(stored)
 				var/turf/T = loc
 				stored.loc = T
 				transfer_fingerprints_to(stored)
 				stored.setDir(dir)
-				stored.density = 0
-				stored.anchored = 1
+				stored.density = FALSE
+				stored.anchored = TRUE
 				stored.update_icon()
 		else
-			for(var/D in cardinal)
+			for(var/D in GLOB.cardinals)
 				if(D & dpdir)
 					var/obj/structure/disposalpipe/broken/P = new(src.loc)
 					P.setDir(D)
@@ -337,6 +343,7 @@
 
 
 /obj/structure/disposalpipe/singularity_pull(S, current_size)
+	..()
 	if(current_size >= STAGE_FIVE)
 		deconstruct()
 
@@ -349,15 +356,14 @@
 /obj/structure/disposalpipe/segment
 	icon_state = "pipe-s"
 
-/obj/structure/disposalpipe/segment/New()
-	..()
+/obj/structure/disposalpipe/segment/Initialize()
+	. = ..()
 	if(stored.ptype == DISP_PIPE_STRAIGHT)
 		dpdir = dir | turn(dir, 180)
 	else
 		dpdir = dir | turn(dir, -90)
 
 	update()
-	return
 
 
 
@@ -366,8 +372,8 @@
 /obj/structure/disposalpipe/junction
 	icon_state = "pipe-j1"
 
-/obj/structure/disposalpipe/junction/New()
-	..()
+/obj/structure/disposalpipe/junction/Initialize()
+	. = ..()
 	switch(stored.ptype)
 		if(DISP_JUNCTION)
 			dpdir = dir | turn(dir, -90) | turn(dir,180)
@@ -376,7 +382,6 @@
 		if(DISP_YJUNCTION)
 			dpdir = dir | turn(dir,90) | turn(dir, -90)
 	update()
-	return
 
 
 // next direction to move
@@ -425,7 +430,7 @@
 	if(sortTypes.len>0)
 		to_chat(user, "It is tagged with the following tags:")
 		for(var/t in sortTypes)
-			to_chat(user, TAGGERLOCATIONS[t])
+			to_chat(user, "\t[GLOB.TAGGERLOCATIONS[t]].")
 	else
 		to_chat(user, "It has no sorting tags set.")
 
@@ -442,8 +447,8 @@
 
 	dpdir = sortdir | posdir | negdir
 
-/obj/structure/disposalpipe/sortjunction/New()
-	..()
+/obj/structure/disposalpipe/sortjunction/Initialize()
+	. = ..()
 
 	// Generate a list of soring tags.
 	if(sortType)
@@ -458,7 +463,6 @@
 
 	updatedir()
 	update()
-	return
 
 /obj/structure/disposalpipe/sortjunction/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/destTagger))
@@ -467,10 +471,10 @@
 		if(O.currTag > 0)// Tag set
 			if(O.currTag in sortTypes)
 				sortTypes -= O.currTag
-				to_chat(user, "<span class='notice'>Removed \"[TAGGERLOCATIONS[O.currTag]]\" filter.</span>")
+				to_chat(user, "<span class='notice'>Removed \"[GLOB.TAGGERLOCATIONS[O.currTag]]\" filter.</span>")
 			else
 				sortTypes |= O.currTag
-				to_chat(user, "<span class='notice'>Added \"[TAGGERLOCATIONS[O.currTag]]\" filter.</span>")
+				to_chat(user, "<span class='notice'>Added \"[GLOB.TAGGERLOCATIONS[O.currTag]]\" filter.</span>")
 			playsound(src.loc, 'sound/machines/twobeep.ogg', 100, 1)
 	else
 		return ..()
@@ -506,8 +510,8 @@
 	var/negdir = 0
 	var/sortdir = 0
 
-/obj/structure/disposalpipe/wrapsortjunction/New()
-	..()
+/obj/structure/disposalpipe/wrapsortjunction/Initialize()
+	. = ..()
 	posdir = dir
 	if(stored.ptype == DISP_SORTJUNCTION)
 		sortdir = turn(posdir, -90)
@@ -519,7 +523,6 @@
 	dpdir = sortdir | posdir | negdir
 
 	update()
-	return
 
 // next direction to move
 // if coming in from negdir, then next is primary dir or sortdir
@@ -547,14 +550,11 @@
 	icon_state = "pipe-t"
 	var/obj/linked 	// the linked obj/machinery/disposal or obj/disposaloutlet
 
-/obj/structure/disposalpipe/trunk/New()
-	..()
+/obj/structure/disposalpipe/trunk/Initialize()
+	. = ..()
 	dpdir = dir
-	spawn(1)
-		getlinked()
-
+	getlinked()
 	update()
-	return
 
 /obj/structure/disposalpipe/trunk/Destroy()
 	if(linked)
@@ -621,8 +621,8 @@
 					// i.e. will be treated as an empty turf
 	desc = "A broken piece of disposal pipe."
 
-/obj/structure/disposalpipe/broken/New()
-	..()
+/obj/structure/disposalpipe/broken/Initialize()
+	. = ..()
 	update()
 
 // the disposal outlet machine
@@ -635,8 +635,8 @@
 	desc = "An outlet for the pneumatic disposal system."
 	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
 	icon_state = "outlet"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/active = 0
 	var/turf/target	// this will be where the output objects are 'thrown' to.
 	var/obj/structure/disposalpipe/trunk/trunk = null // the attached pipe trunk
@@ -645,9 +645,9 @@
 	var/start_eject = 0
 	var/eject_range = 2
 
-/obj/structure/disposaloutlet/New(loc, var/obj/structure/disposalconstruct/make_from)
-	..()
-
+/obj/structure/disposaloutlet/Initialize(mapload, obj/structure/disposalconstruct/make_from)
+	. = ..()
+	
 	if(make_from)
 		setDir(make_from.dir)
 		make_from.loc = src
@@ -655,12 +655,15 @@
 	else
 		stored = new (src, DISP_END_OUTLET,dir)
 
-	spawn(1)
-		target = get_ranged_target_turf(src, dir, 10)
+	target = get_ranged_target_turf(src, dir, 10)
 
-		trunk = locate() in src.loc
-		if(trunk)
-			trunk.linked = src	// link the pipe trunk to self
+	trunk = locate() in loc
+	if(trunk)
+		trunk.linked = src	// link the pipe trunk to self
+
+/obj/structure/disposaloutlet/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION)
 
 /obj/structure/disposaloutlet/Destroy()
 	if(trunk)
@@ -691,7 +694,7 @@
 
 /obj/structure/disposaloutlet/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(istype(I, /obj/item/screwdriver))
 		if(mode==0)
 			mode=1
 			playsound(src.loc, I.usesound, 50, 1)
@@ -701,19 +704,20 @@
 			playsound(src.loc, I.usesound, 50, 1)
 			to_chat(user, "<span class='notice'>You attach the screws around the power connection.</span>")
 
-	else if(istype(I,/obj/item/weapon/weldingtool) && mode==1)
-		var/obj/item/weapon/weldingtool/W = I
+	else if(istype(I, /obj/item/weldingtool) && mode==1)
+		var/obj/item/weldingtool/W = I
 		if(W.remove_fuel(0,user))
-			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/welder2.ogg', 100, 1)
 			to_chat(user, "<span class='notice'>You start slicing the floorweld off \the [src]...</span>")
 			if(do_after(user,20*I.toolspeed, target = src))
-				if(!src || !W.isOn()) return
+				if(!src || !W.isOn())
+					return
 				to_chat(user, "<span class='notice'>You slice the floorweld off \the [src].</span>")
 				stored.loc = loc
 				src.transfer_fingerprints_to(stored)
 				stored.update_icon()
-				stored.anchored = 0
-				stored.density = 1
+				stored.anchored = FALSE
+				stored.density = TRUE
 				qdel(src)
 	else
 		return ..()
@@ -731,7 +735,7 @@
 	if(direction)
 		dirs = list( direction, turn(direction, -45), turn(direction, 45))
 	else
-		dirs = alldirs.Copy()
+		dirs = GLOB.alldirs.Copy()
 
 	src.streak(dirs)
 
@@ -740,6 +744,6 @@
 	if(direction)
 		dirs = list( direction, turn(direction, -45), turn(direction, 45))
 	else
-		dirs = alldirs.Copy()
+		dirs = GLOB.alldirs.Copy()
 
 	src.streak(dirs)

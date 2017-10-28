@@ -45,31 +45,57 @@
 
 
 
-<ui-display title='{{data.category}}'>
+<ui-display title='{{data.category}}{{#if data.subcategory}} : {{data.subcategory}} {{/if}}'>
 	{{#if data.busy}}
 		<ui-section>
 			Crafting... <i class='fa-spin fa fa-spinner'></i>
 		</ui-section>
 	{{else}}
 		<ui-section>
-			<ui-button icon='arrow-left' action='backwardCat'>
-				{{data.prev_cat}}
-			</ui-button>
-			<ui-button icon='arrow-right' action='forwardCat'>
-				{{data.next_cat}}
-			</ui-button>
-			{{#if data.display_craftable_only}}
-				<ui-button icon='lock' action='toggle_recipes'>
-					Showing Craftable Recipes
-				</ui-button>
-			{{else}}
-				<ui-button icon='unlock' action='toggle_recipes'>
-					Showing All Recipes
-				</ui-button>
-			{{/if}}
-			<ui-button icon='{{data.display_compact ? "check-square-o" : "square-o"}}' action='toggle_compact'>
-				Compact
-			</ui-button>
+			<table style='width:100%'>
+				<tr>
+					<td style='width:150px!important'>
+						<ui-button icon='arrow-left' action='backwardCat'>
+							{{data.prev_cat}}
+						</ui-button>
+					</td>
+					<td style='width:150px!important'>
+						<ui-button icon='arrow-right' action='forwardCat'>
+						{{data.next_cat}}
+						</ui-button>
+					</td>
+					<td style='float:right!important'>
+					{{#if data.display_craftable_only}}
+						<ui-button icon='lock' action='toggle_recipes'>
+							Showing Craftable Recipes
+						</ui-button>
+					{{else}}
+						<ui-button icon='unlock' action='toggle_recipes'>
+							Showing All Recipes
+						</ui-button>
+					{{/if}}
+					</td>
+					<td style='float:right!important'>
+						<ui-button icon='{{data.display_compact ? "check-square-o" : "square-o"}}' action='toggle_compact'>
+							Compact
+						</ui-button>
+					</td>
+				</tr>
+				<tr>
+				{{#if data.subcategory}}
+					<td style='width:150px!important'>
+						<ui-button icon='arrow-left' action='backwardSubCat'>
+							{{data.prev_subcat}}
+						</ui-button>
+					</td>
+					<td style='width:150px!important'>
+						<ui-button icon='arrow-right' action='forwardSubCat'>
+							{{data.next_subcat}}
+						</ui-button>
+					</td>
+				{{/if}}
+				</tr>
+			</table>
 			{{#if config.fancy}}
 				{{^data.display_compact}} {{! This doesn't work in compact mode, so let's hide it}}
 					<ui-input value='{{filter}}' placeholder='Filter..'/>

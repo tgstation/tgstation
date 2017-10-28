@@ -11,7 +11,7 @@
 /datum/outfit/job/New()
 	..()
 	MAP_JOB_CHECK
-	box = /obj/item/weapon/storage/box/survival/radio
+	box = /obj/item/storage/box/survival/radio
 
 /datum/job/assistant // Here so assistant appears on the top of the select job list.
 
@@ -38,24 +38,24 @@
 	MAP_JOB_CHECK
 	total_positions = 3
 	spawn_positions = 3
-	access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels, access_morgue, access_weapons, access_forensics_lockers)
-	minimal_access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels, access_morgue, access_weapons, access_forensics_lockers)
+	access = list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_ARMORY, ACCESS_COURT, ACCESS_MAINT_TUNNELS, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_FORENSICS_LOCKERS)
+	minimal_access = list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_ARMORY, ACCESS_COURT, ACCESS_MAINT_TUNNELS, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_FORENSICS_LOCKERS)
 
 /datum/outfit/job/officer/New()
 	..()
 	MAP_JOB_CHECK
-	box = /obj/item/weapon/storage/box/security/radio
+	box = /obj/item/storage/box/security/radio
 
 /datum/job/detective/New()
 	..()
 	MAP_JOB_CHECK
-	access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels, access_morgue, access_weapons, access_forensics_lockers)
-	minimal_access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels, access_morgue, access_weapons, access_forensics_lockers)
+	access = list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_ARMORY, ACCESS_COURT, ACCESS_MAINT_TUNNELS, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_FORENSICS_LOCKERS)
+	minimal_access = list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_ARMORY, ACCESS_COURT, ACCESS_MAINT_TUNNELS, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_FORENSICS_LOCKERS)
 
 /datum/outfit/job/detective/New()
 	..()
 	MAP_JOB_CHECK
-	box = /obj/item/weapon/storage/box/security/radio
+	box = /obj/item/storage/box/security/radio
 
 //Medbay
 
@@ -65,8 +65,8 @@
 	selection_color = "#ffffff"
 	total_positions = 3
 	spawn_positions = 3
-	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics)
-	minimal_access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics)
+	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_CHEMISTRY, ACCESS_VIROLOGY, ACCESS_GENETICS)
+	minimal_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_CHEMISTRY, ACCESS_VIROLOGY, ACCESS_GENETICS)
 
 //Engineering
 
@@ -75,13 +75,13 @@
 	MAP_JOB_CHECK
 	total_positions = 2
 	spawn_positions = 2
-	access = list(access_eva, access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_construction, access_atmospherics, access_tcomsat)
-	minimal_access = list(access_eva, access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_construction, access_atmospherics, access_tcomsat)
+	access = list(ACCESS_EVA, ACCESS_ENGINE, ACCESS_ENGINE_EQUIP, ACCESS_TECH_STORAGE, ACCESS_MAINT_TUNNELS, ACCESS_EXTERNAL_AIRLOCKS, ACCESS_CONSTRUCTION, ACCESS_ATMOSPHERICS, ACCESS_TCOMSAT)
+	minimal_access = list(ACCESS_EVA, ACCESS_ENGINE, ACCESS_ENGINE_EQUIP, ACCESS_TECH_STORAGE, ACCESS_MAINT_TUNNELS, ACCESS_EXTERNAL_AIRLOCKS, ACCESS_CONSTRUCTION, ACCESS_ATMOSPHERICS, ACCESS_TCOMSAT)
 
 /datum/outfit/job/engineer/New()
 	..()
 	MAP_JOB_CHECK
-	box = /obj/item/weapon/storage/box/engineer/radio
+	box = /obj/item/storage/box/engineer/radio
 
 /datum/job/atmos/New()
 	..()
@@ -96,8 +96,8 @@
 	MAP_JOB_CHECK
 	total_positions = 3
 	spawn_positions = 3
-	access = list(access_robotics, access_tox, access_tox_storage, access_research, access_xenobiology, access_mineral_storeroom, access_tech_storage)
-	minimal_access = list(access_robotics, access_tox, access_tox_storage, access_research, access_xenobiology, access_mineral_storeroom, access_tech_storage)
+	access = list(ACCESS_ROBOTICS, ACCESS_TOX, ACCESS_TOX_STORAGE, ACCESS_RESEARCH, ACCESS_XENOBIOLOGY, ACCESS_MINERAL_STOREROOM, ACCESS_TECH_STORAGE)
+	minimal_access = list(ACCESS_ROBOTICS, ACCESS_TOX, ACCESS_TOX_STORAGE, ACCESS_RESEARCH, ACCESS_XENOBIOLOGY, ACCESS_MINERAL_STOREROOM, ACCESS_TECH_STORAGE)
 
 //Cargo
 
@@ -106,47 +106,47 @@
 	MAP_JOB_CHECK
 	total_positions = 2
 	spawn_positions = 2
-	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_station, access_mineral_storeroom)
-	minimal_access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_station, access_mineral_storeroom)
+	access = list(ACCESS_MAINT_TUNNELS, ACCESS_MAILSORTING, ACCESS_CARGO, ACCESS_CARGO_BOT, ACCESS_QM, ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MINERAL_STOREROOM)
+	minimal_access = list(ACCESS_MAINT_TUNNELS, ACCESS_MAILSORTING, ACCESS_CARGO, ACCESS_CARGO_BOT, ACCESS_QM, ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MINERAL_STOREROOM)
 
 /datum/job/mining/New()
 	..()
 	MAP_JOB_CHECK
 	total_positions = 2
 	spawn_positions = 2
-	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_station, access_mineral_storeroom)
-	minimal_access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_station, access_mineral_storeroom)
+	access = list(ACCESS_MAINT_TUNNELS, ACCESS_MAILSORTING, ACCESS_CARGO, ACCESS_CARGO_BOT, ACCESS_QM, ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MINERAL_STOREROOM)
+	minimal_access = list(ACCESS_MAINT_TUNNELS, ACCESS_MAILSORTING, ACCESS_CARGO, ACCESS_CARGO_BOT, ACCESS_QM, ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MINERAL_STOREROOM)
 
 /datum/outfit/job/mining/New()
 	..()
-	box = /obj/item/weapon/storage/box/engineer/radio
+	box = /obj/item/storage/box/engineer/radio
 
 //Service
 
 /datum/job/bartender/New()
 	..()
 	MAP_JOB_CHECK
-	access = list(access_hydroponics, access_bar, access_kitchen, access_morgue, access_weapons)
-	minimal_access = list(access_hydroponics, access_bar, access_kitchen, access_morgue, access_weapons)
+	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_WEAPONS)
+	minimal_access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_WEAPONS)
 
 /datum/job/cook/New()
 	..()
 	MAP_JOB_CHECK
-	access = list(access_hydroponics, access_bar, access_kitchen, access_morgue, access_weapons)
-	minimal_access = list(access_hydroponics, access_bar, access_kitchen, access_morgue, access_weapons)
+	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_WEAPONS)
+	minimal_access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_WEAPONS)
 
 /datum/job/hydro/New()
 	..()
 	MAP_JOB_CHECK
-	access = list(access_hydroponics, access_bar, access_kitchen, access_morgue, access_maint_tunnels)
-	minimal_access = list(access_hydroponics, access_bar, access_kitchen, access_morgue, access_maint_tunnels)
+	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_MAINT_TUNNELS)
+	minimal_access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_MAINT_TUNNELS)
 	// they get maint access because of all the hydro content in maint
 
 /datum/job/janitor/New()
 	..()
 	MAP_JOB_CHECK
-	access = list(access_janitor, access_hydroponics, access_bar, access_kitchen, access_morgue, access_maint_tunnels)
-	minimal_access = list(access_janitor, access_hydroponics, access_bar, access_kitchen, access_morgue, access_maint_tunnels)
+	access = list(ACCESS_JANITOR, ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_MAINT_TUNNELS)
+	minimal_access = list(ACCESS_JANITOR, ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_MAINT_TUNNELS)
 
 
 //Civilian

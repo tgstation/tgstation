@@ -5,10 +5,14 @@
 		play_attack_sound(damage_amount, damage_type, damage_flag)
 	if(!(resistance_flags & INDESTRUCTIBLE) && obj_integrity > 0)
 		damage_amount = run_obj_armor(damage_amount, damage_type, damage_flag, attack_dir)
-		if(damage_amount >= 1)
+		if(damage_amount >= 0.1)
 			. = damage_amount
-			obj_integrity = max(obj_integrity - damage_amount, 0)
+			var/old_integ = obj_integrity
+			obj_integrity = max(old_integ - damage_amount, 0)
 			if(obj_integrity <= 0)
+				var/int_fail = integrity_failure
+				if(int_fail && old_integ > int_fail)
+					obj_break(damage_flag)
 				obj_destruction(damage_flag)
 			else if(integrity_failure)
 				if(obj_integrity <= integrity_failure)
@@ -35,7 +39,7 @@
 			else
 				playsound(src, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 
 /obj/hitby(atom/movable/AM)
 	..()
@@ -48,12 +52,16 @@
 	take_damage(tforce, BRUTE, "melee", 1, get_dir(src, AM))
 
 /obj/ex_act(severity, target)
+	if(resistance_flags & INDESTRUCTIBLE)
+		return
 	..() //contents explosion
 	if(target == src)
+		obj_integrity = 0
 		qdel(src)
 		return
 	switch(severity)
 		if(1)
+			obj_integrity = 0
 			qdel(src)
 		if(2)
 			take_damage(rand(100, 250), BRUTE, "bomb", 0)
@@ -100,7 +108,7 @@
 
 /obj/attack_animal(mob/living/simple_animal/M)
 	if(!M.melee_damage_upper && !M.obj_damage)
-		M.emote("custom", message = "[M.friendly] [src]")
+		M.emote("custom", message = "[M.friendly] [src].")
 		return 0
 	else
 		var/play_soundeffect = 1
@@ -130,7 +138,7 @@
 			if(BRUTE)
 				playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
 			if(BURN)
-				playsound(src, 'sound/items/Welder.ogg', 50, 1)
+				playsound(src, 'sound/items/welder.ogg', 50, 1)
 			if(TOX)
 				playsound(src, 'sound/effects/spray2.ogg', 50, 1)
 				return 0
@@ -140,7 +148,7 @@
 	return take_damage(M.force*3, mech_damtype, "melee", play_soundeffect, get_dir(src, M)) // multiplied by 3 so we can hit objs hard but not be overpowered against mobs.
 
 /obj/singularity_act()
-	ex_act(1)
+	ex_act(EXPLODE_DEVASTATE)
 	if(src && !QDELETED(src))
 		qdel(src)
 	return 2
@@ -148,7 +156,7 @@
 
 ///// ACID
 
-var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "icon_state" = "acid")
+GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/effects/effects.dmi', "acid"))
 
 //the obj's reaction when touched by acid
 /obj/acid_act(acidpwr, acid_volume)
@@ -156,7 +164,7 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 
 		if(!acid_level)
 			SSacid.processing[src] = src
-			add_overlay(acid_overlay, TRUE)
+			add_overlay(GLOB.acid_overlay, TRUE)
 		var/acid_cap = acidpwr * 300 //so we cannot use huge amounts of weak acids to do as well as strong acids.
 		if(acid_level < acid_cap)
 			acid_level = min(acid_level + acidpwr * acid_volume, acid_cap)
@@ -170,7 +178,7 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 			if(armour_value != "acid" && armour_value != "fire")
 				armor[armour_value] = max(armor[armour_value] - round(sqrt(acid_level)*0.1), 0)
 		if(prob(33))
-			playsound(loc, 'sound/items/Welder.ogg', 150, 1)
+			playsound(loc, 'sound/items/welder.ogg', 150, 1)
 		take_damage(min(1 + round(sqrt(acid_level)*0.3), 300), BURN, "acid", 0)
 
 	acid_level = max(acid_level - (5 + 3*round(sqrt(acid_level))), 0)
@@ -194,7 +202,7 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 	if(!(resistance_flags & ON_FIRE) && (resistance_flags & FLAMMABLE))
 		resistance_flags |= ON_FIRE
 		SSfire_burning.processing[src] = src
-		add_overlay(fire_overlay, TRUE)
+		add_overlay(GLOB.fire_overlay, TRUE)
 		return 1
 
 //called when the obj is destroyed by fire
@@ -206,19 +214,19 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 /obj/proc/extinguish()
 	if(resistance_flags & ON_FIRE)
 		resistance_flags &= ~ON_FIRE
-		cut_overlay(fire_overlay, TRUE)
+		cut_overlay(GLOB.fire_overlay, TRUE)
 		SSfire_burning.processing -= src
 
 
 
 /obj/proc/tesla_act(var/power)
-	being_shocked = 1
+	being_shocked = TRUE
 	var/power_bounced = power / 2
 	tesla_zap(src, 3, power_bounced)
 	addtimer(CALLBACK(src, .proc/reset_shocked), 10)
 
 /obj/proc/reset_shocked()
-	being_shocked = 0
+	being_shocked = FALSE
 
 //the obj is deconstructed into pieces, whether through careful disassembly or when destroyed.
 /obj/proc/deconstruct(disassembled = TRUE)
@@ -257,3 +265,7 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 		obj_break(damage_type)
 		return TRUE
 	return FALSE
+
+//returns how much the object blocks an explosion
+/obj/proc/GetExplosionBlock()
+	CRASH("Unimplemented GetExplosionBlock()")

@@ -33,7 +33,7 @@
 
 /obj/effect/ebeam/vine
 	name = "thick vine"
-	mouse_opacity = 1
+	mouse_opacity = MOUSE_OPACITY_ICON
 	desc = "A thick vine, painful to the touch."
 
 
@@ -94,7 +94,7 @@
 				if(prob(grasp_pull_chance))
 					setDir(get_dir(src,L) )//staaaare
 					step(L,get_dir(L,src)) //reel them in
-					L.Weaken(3) //you can't get away now~
+					L.Knockdown(60) //you can't get away now~
 
 		if(grasping.len < max_grasps)
 			grasping:

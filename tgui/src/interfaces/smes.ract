@@ -34,7 +34,7 @@
     [<span class='{{inputState}}'>{{data.capacityPercent >= 100 ? "Fully Charged" : data.inputting ? "Charging" : "Not Charging"}}</span>]
 	</ui-section>
   <ui-section label='Target Input'>
-    <ui-bar min='0' max='{{data.inputLevelMax}}' value='{{data.inputLevel}}'>{{Math.round(adata.inputLevel)}}W</ui-bar>
+    <ui-bar min='0' max='{{data.inputLevelMax}}' value='{{data.inputLevel}}'>{{adata.inputLevel_text}}</ui-bar>
 	</ui-section>
   <ui-section label='Adjust Input'>
     <ui-button icon='fast-backward' state='{{data.inputLevel == 0 ? "disabled" : null}}' action='input' params='{"target": "min"}'/>
@@ -44,7 +44,7 @@
     <ui-button icon='fast-forward' state='{{data.inputLevel == data.inputLevelMax ? "disabled" : null}}' action='input' params='{"target": "max"}'/>
   </ui-section>
   <ui-section label='Available'>
-		<span>{{Math.round(adata.inputAvailable)}}W</span>
+		<span>{{adata.inputAvailable}}</span>
 	</ui-section>
 </ui-display>
 <ui-display title='Output'>
@@ -55,7 +55,7 @@
     [<span class='{{outputState}}'>{{data.outputting ? "Sending" : data.charge > 0 ? "Not Sending" : "No Charge"}}</span>]
 	</ui-section>
   <ui-section label='Target Output'>
-    <ui-bar min='0' max='{{data.outputLevelMax}}' value='{{data.outputLevel}}'>{{Math.round(adata.outputLevel)}}W</ui-bar>
+    <ui-bar min='0' max='{{data.outputLevelMax}}' value='{{data.outputLevel}}'>{{adata.outputLevel_text}}</ui-bar>
 	</ui-section>
   <ui-section label='Adjust Output'>
     <ui-button icon='fast-backward' state='{{data.outputLevel == 0 ? "disabled" : null}}' action='output' params='{"target": "min"}'/>
@@ -65,6 +65,6 @@
     <ui-button icon='fast-forward' state='{{data.outputLevel == data.outputLevelMax ? "disabled" : null}}' action='output' params='{"target": "max"}'/>
   </ui-section>
   <ui-section label='Outputting'>
-		<span>{{Math.round(adata.outputUsed)}}W</span>
+		<span>{{adata.outputUsed}}</span>
 	</ui-section>
 </ui-display>

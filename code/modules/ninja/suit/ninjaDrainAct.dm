@@ -52,8 +52,9 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 		if(!emagged)
 			flick("apc-spark", G)
-			emagged = 1
-			locked = 0
+			playsound(loc, "sparks", 50, 1)
+			emagged = TRUE
+			locked = FALSE
 			update_icon()
 
 
@@ -96,7 +97,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 
 //CELL//
-/obj/item/weapon/stock_parts/cell/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/S, mob/living/carbon/human/H, obj/item/clothing/gloves/space_ninja/G)
+/obj/item/stock_parts/cell/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/S, mob/living/carbon/human/H, obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
 		return INVALID_DRAIN
 
@@ -111,8 +112,13 @@ They *could* go in their appropriate files, but this is supposed to be modular
 				S.cell.charge += charge
 			charge = 0
 			corrupt()
-			updateicon()
+			update_icon()
 
+/obj/machinery/proc/AI_notify_hack()
+	var/turf/location = get_turf(src)
+	var/alertstr = "<span class='userdanger'>Network Alert: Hacking attempt detected[location?" in [location]":". Unable to pinpoint location"]</span>."
+	for(var/mob/living/silicon/ai/AI in GLOB.player_list)
+		to_chat(AI, alertstr)
 
 //RDCONSOLE//
 /obj/machinery/computer/rdconsole/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/S, mob/living/carbon/human/H, obj/item/clothing/gloves/space_ninja/G)
@@ -122,16 +128,14 @@ They *could* go in their appropriate files, but this is supposed to be modular
 	. = DRAIN_RD_HACK_FAILED
 
 	to_chat(H, "<span class='notice'>Hacking \the [src]...</span>")
-	spawn(0)
-		var/turf/location = get_turf(H)
-		for(var/mob/living/silicon/ai/AI in player_list)
-			to_chat(AI, "<span class='userdanger'>Network Alert: Hacking attempt detected[location?" in [location]":". Unable to pinpoint location"]</span>.")
+	AI_notify_hack()
 
 	if(files && files.known_tech.len)
 		for(var/datum/tech/current_data in S.stored_research)
 			to_chat(H, "<span class='notice'>Checking \the [current_data.name] database.</span>")
 			if(do_after(H, S.s_delay, target = src) && G.candrain && src)
-				for(var/datum/tech/analyzing_data in files.known_tech)
+				for(var/id in files.known_tech)
+					var/datum/tech/analyzing_data = files.known_tech[id]
 					if(current_data.id == analyzing_data.id)
 						if(analyzing_data.level > current_data.level)
 							to_chat(H, "<span class='notice'>Database:</span> <b>UPDATED</b>.")
@@ -143,7 +147,6 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 	to_chat(H, "<span class='notice'>Data analyzed. Process finished.</span>")
 
-
 //RD SERVER//
 //Shamelessly copypasted from above, since these two used to be the same proc, but with MANY colon operators
 /obj/machinery/r_n_d/server/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/S, mob/living/carbon/human/H, obj/item/clothing/gloves/space_ninja/G)
@@ -153,16 +156,14 @@ They *could* go in their appropriate files, but this is supposed to be modular
 	. = DRAIN_RD_HACK_FAILED
 
 	to_chat(H, "<span class='notice'>Hacking \the [src]...</span>")
-	spawn(0)
-		var/turf/location = get_turf(H)
-		for(var/mob/living/silicon/ai/AI in player_list)
-			to_chat(AI, "<span class='userdanger'>Network Alert: Hacking attempt detected[location?" in [location]":". Unable to pinpoint location"]</span>.")
+	AI_notify_hack()
 
 	if(files && files.known_tech.len)
 		for(var/datum/tech/current_data in S.stored_research)
 			to_chat(H, "<span class='notice'>Checking \the [current_data.name] database.</span>")
 			if(do_after(H, S.s_delay, target = src) && G.candrain && src)
-				for(var/datum/tech/analyzing_data in files.known_tech)
+				for(var/id in files.known_tech)
+					var/datum/tech/analyzing_data = files.known_tech[id]
 					if(current_data.id == analyzing_data.id)
 						if(analyzing_data.level > current_data.level)
 							to_chat(H, "<span class='notice'>Database:</span> <b>UPDATED</b>.")

@@ -12,16 +12,29 @@
 	strip_delay = 60
 	resistance_flags = 0
 	flags_cover = HEADCOVERSEYES
+	flags_inv = HIDEHAIR
+	flags_2 = BANG_PROTECT_2
 
 	dog_fashion = /datum/dog_fashion/head/helmet
 
-
-/obj/item/clothing/head/helmet/Initialize()
-	..()
-	SET_SECONDARY_FLAG(src, BANG_PROTECT)
-
 /obj/item/clothing/head/helmet/sec
 	can_flashlight = 1
+
+/obj/item/clothing/head/helmet/sec/attackby(obj/item/I, mob/user, params)
+	if(issignaler(I))
+		var/obj/item/device/assembly/signaler/S = I
+		if(F) //Has a flashlight. Player must remove it, else it will be lost forever.
+			to_chat(user, "<span class='warning'>The mounted flashlight is in the way, remove it first!</span>")
+			return
+
+		if(S.secured)
+			qdel(S)
+			var/obj/item/secbot_assembly/A = new /obj/item/secbot_assembly
+			user.put_in_hands(A)
+			to_chat(user, "<span class='notice'>You add the signaler to the helmet.</span>")
+			qdel(src)
+			return
+	return ..()
 
 /obj/item/clothing/head/helmet/alt
 	name = "bulletproof helmet"
@@ -31,6 +44,11 @@
 	armor = list(melee = 15, bullet = 60, laser = 10, energy = 10, bomb = 40, bio = 0, rad = 0, fire = 50, acid = 50)
 	can_flashlight = 1
 	dog_fashion = null
+
+/obj/item/clothing/head/helmet/old
+	name = "degrading helmet"
+	desc = "Standard issue security helmet. Due to degradation the helmet's visor obstructs the users ability to see long distances."
+	tint = 2
 
 /obj/item/clothing/head/helmet/blueshirt
 	icon_state = "blueshift"
@@ -59,7 +77,7 @@
 		if(world.time > cooldown + toggle_cooldown)
 			cooldown = world.time
 			up = !up
-			flags ^= visor_flags
+			flags_1 ^= visor_flags
 			flags_inv ^= visor_flags_inv
 			flags_cover ^= visor_flags_cover
 			icon_state = "[initial(icon_state)][up ? "up" : ""]"
@@ -84,7 +102,7 @@
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	can_toggle = 1
 	toggle_cooldown = 20
-	active_sound = 'sound/items/WEEOO1.ogg'
+	active_sound = 'sound/items/weeoo1.ogg'
 	dog_fashion = null
 
 /obj/item/clothing/head/helmet/justice/escape
@@ -104,7 +122,7 @@
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
-	flags = STOPSPRESSUREDMAGE
+	flags_1 = STOPSPRESSUREDMAGE_1
 	strip_delay = 80
 	dog_fashion = null
 
@@ -185,11 +203,11 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 80
 	dog_fashion = null
+	// old knight helmets do not offer protection against loud noises
+	flags_2 = NONE
 
 /obj/item/clothing/head/helmet/knight/Initialize(mapload)
-	..()
-	// old knight helmets do not offer protection against loud noises
-	CLEAR_SECONDARY_FLAG(src, BANG_PROTECT)
+	. = ..()
 
 /obj/item/clothing/head/helmet/knight/blue
 	icon_state = "knight_blue"
@@ -260,7 +278,7 @@
 					A.Grant(user)
 		return
 
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(istype(I, /obj/item/screwdriver))
 		if(F)
 			for(var/obj/item/device/flashlight/seclite/S in src)
 				to_chat(user, "<span class='notice'>You unscrew the seclite from [src].</span>")
@@ -275,7 +293,7 @@
 				qdel(THL)
 			return
 
-	..()
+	return ..()
 
 /obj/item/clothing/head/helmet/proc/toggle_helmlight()
 	set name = "Toggle Helmetlight"

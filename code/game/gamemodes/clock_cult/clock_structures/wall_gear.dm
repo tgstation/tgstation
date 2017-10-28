@@ -5,7 +5,6 @@
 	unanchored_icon = "wall_gear"
 	climbable = TRUE
 	max_integrity = 100
-	obj_integrity = 100
 	layer = BELOW_OBJ_LAYER
 	construction_value = 3
 	desc = "A massive brass gear. You could probably secure or unsecure it with a wrench, or just climb over it."
@@ -17,18 +16,18 @@
 /obj/structure/destructible/clockwork/wall_gear/displaced
 	anchored = FALSE
 
-/obj/structure/destructible/clockwork/wall_gear/New()
-	..()
-	new /obj/effect/overlay/temp/ratvar/gear(get_turf(src))
+/obj/structure/destructible/clockwork/wall_gear/Initialize()
+	. = ..()
+	new /obj/effect/temp_visual/ratvar/gear(get_turf(src))
 
 /obj/structure/destructible/clockwork/wall_gear/emp_act(severity)
 	return
 
 /obj/structure/destructible/clockwork/wall_gear/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/wrench))
+	if(istype(I, /obj/item/wrench))
 		default_unfasten_wrench(user, I, 10)
 		return 1
-	else if(istype(I, /obj/item/weapon/screwdriver))
+	else if(istype(I, /obj/item/screwdriver))
 		if(anchored)
 			to_chat(user, "<span class='warning'>[src] needs to be unsecured to disassemble it!</span>")
 		else
@@ -71,6 +70,6 @@
 	return ..()
 
 /obj/structure/destructible/clockwork/wall_gear/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT) && disassembled)
+	if(!(flags_1 & NODECONSTRUCT_1) && disassembled)
 		new /obj/item/stack/tile/brass(loc, 3)
 	return ..()

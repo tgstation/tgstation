@@ -11,27 +11,27 @@
 
 /obj/item/clothing/under/rank/security
 	name = "security jumpsuit"
-	desc = "A tactical security jumpsuit for officers complete with nanotrasen belt buckle."
+	desc = "A tactical security jumpsuit for officers complete with Nanotrasen belt buckle."
 	icon_state = "rsecurity"
 	item_state = "r_suit"
 	item_color = "rsecurity"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 30, acid = 30)
 	strip_delay = 50
 	alt_covers_chest = 1
-	sensor_mode = 3
+	sensor_mode = SENSOR_COORDS
 	random_sensor = 0
 
 /obj/item/clothing/under/rank/security/grey
 	name = "grey security jumpsuit"
-	desc = "A tactical relic of years past before nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood."
+	desc = "A tactical relic of years past before Nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood."
 	icon_state = "security"
 	item_state = "gy_suit"
 	item_color = "security"
-	
+
 
 /obj/item/clothing/under/rank/warden
 	name = "security suit"
-	desc = "A formal security suit for officers complete with nanotrasen belt buckle."
+	desc = "A formal security suit for officers complete with Nanotrasen belt buckle."
 	icon_state = "rwarden"
 	item_state = "r_suit"
 	item_color = "rwarden"
@@ -43,7 +43,7 @@
 
 /obj/item/clothing/under/rank/warden/grey
 	name = "grey security suit"
-	desc = "A formal relic of years past before nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood."
+	desc = "A formal relic of years past before Nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood."
 	icon_state = "warden"
 	item_state = "gy_suit"
 	item_color = "warden"

@@ -134,8 +134,8 @@
 
 	if(stat != DEAD)
 		var/bz_percentage =0
-		if("bz" in environment.gases)
-			bz_percentage = environment.gases["bz"][MOLES] / environment.total_moles()
+		if(environment.gases[/datum/gas/bz])
+			bz_percentage = environment.gases[/datum/gas/bz][MOLES] / environment.total_moles()
 		var/stasis = (bz_percentage >= 0.05 && bodytemperature < (T0C + 100)) || force_stasis
 
 		if(stat == CONSCIOUS && stasis)
@@ -234,7 +234,7 @@
 		Feedstop(0, 0)
 		return
 
-	add_nutrition((rand(7,15) * config.damage_multiplier))
+	add_nutrition((rand(7, 15) * CONFIG_GET(number/damage_multiplier)))
 
 	//Heal yourself.
 	adjustBruteLoss(-3)
@@ -309,11 +309,11 @@
 
 		if(Target)
 			--target_patience
-			if (target_patience <= 0 || SStun || Discipline || attacked || docile) // Tired of chasing or something draws out attention
+			if (target_patience <= 0 || SStun > world.time || Discipline || attacked || docile) // Tired of chasing or something draws out attention
 				target_patience = 0
 				Target = null
 
-		if(AIproc && SStun)
+		if(AIproc && SStun > world.time)
 			return
 
 		var/hungry = 0 // determines if the slime is hungry
@@ -383,7 +383,7 @@
 				if (holding_still)
 					holding_still = max(holding_still - hungry, 0)
 				else if(canmove && isturf(loc) && prob(50))
-					step(src, pick(cardinal))
+					step(src, pick(GLOB.cardinals))
 
 			else
 				if(holding_still)
@@ -391,7 +391,7 @@
 				else if (docile && pulledby)
 					holding_still = 10
 				else if(canmove && isturf(loc) && prob(33))
-					step(src, pick(cardinal))
+					step(src, pick(GLOB.cardinals))
 		else if(!AIproc)
 			INVOKE_ASYNC(src, .proc/AIprocess)
 

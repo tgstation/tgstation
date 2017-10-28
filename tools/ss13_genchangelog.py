@@ -56,7 +56,13 @@ validPrefixes = [
     'imagedel',
     'spellcheck',
     'experiment',
-    'tgs'
+    'tgs',
+    'balance',
+    'code_imp',
+    'refactor',
+    'config',
+    'admin',
+    'server'
 ]
 
 def dictToTuples(inp):
@@ -190,6 +196,8 @@ with open(args.targetFile.replace('.htm', '.dry.htm') if args.dryRun else args.t
                 if change in changes_added: continue
                 write_entry = True
                 changes_added += [change] 
+                css_class = css_class.encode('ascii', 'ignore').decode('ascii')
+                change = change.encode('ascii', 'ignore').decode('ascii')
                 author_htm += '\t\t\t\t<li class="{css_class}">{change}</li>\n'.format(css_class=css_class, change=change.strip())
             author_htm += '\t\t\t</ul>\n'
             if len(changes_added) > 0:

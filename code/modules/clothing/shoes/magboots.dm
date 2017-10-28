@@ -5,9 +5,10 @@
 	var/magboot_state = "magboots"
 	var/magpulse = 0
 	var/slowdown_active = 2
+	permeability_coefficient = 0.05
 	actions_types = list(/datum/action/item_action/toggle)
 	strip_delay = 70
-	put_on_delay = 70
+	equip_delay_other = 70
 	resistance_flags = FIRE_PROOF
 	origin_tech = "materials=3;magnets=4;engineering=4"
 
@@ -22,10 +23,10 @@
 
 /obj/item/clothing/shoes/magboots/attack_self(mob/user)
 	if(src.magpulse)
-		src.flags &= ~NOSLIP
+		src.flags_1 &= ~NOSLIP_1
 		src.slowdown = SHOES_SLOWDOWN
 	else
-		src.flags |= NOSLIP
+		src.flags_1 |= NOSLIP_1
 		src.slowdown = slowdown_active
 	magpulse = !magpulse
 	icon_state = "[magboot_state][magpulse]"
@@ -37,7 +38,7 @@
 		A.UpdateButtonIcon()
 
 /obj/item/clothing/shoes/magboots/negates_gravity()
-	return flags & NOSLIP
+	return flags_1 & NOSLIP_1
 
 /obj/item/clothing/shoes/magboots/examine(mob/user)
 	..()

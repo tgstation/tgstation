@@ -3,7 +3,10 @@
 
 	var/wet = 0
 	var/wet_time = 0 // Time in seconds that this floor will be wet for.
-	var/image/wet_overlay = null
+	var/mutable_appearance/wet_overlay
+	var/postdig_icon_change = FALSE
+	var/postdig_icon
+	var/list/archdrops
 
 /turf/open/indestructible
 	name = "floor"
@@ -18,6 +21,7 @@
 	var/sound
 
 /turf/open/indestructible/sound/Entered(var/mob/AM)
+	..()
 	if(istype(AM))
 		playsound(src,sound,50,1)
 
@@ -27,28 +31,72 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "necro1"
 	baseturf = /turf/open/indestructible/necropolis
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 
 /turf/open/indestructible/necropolis/Initialize()
-	..()
+	. = ..()
 	if(prob(12))
 		icon_state = "necro[rand(2,3)]"
 
 /turf/open/indestructible/necropolis/air
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 
+/turf/open/indestructible/boss //you put stone tiles on this and use it as a base
+	name = "necropolis floor"
+	icon = 'icons/turf/boss_floors.dmi'
+	icon_state = "boss"
+	baseturf = /turf/open/indestructible/boss
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+
+/turf/open/indestructible/boss/air
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+
 /turf/open/indestructible/hierophant
 	icon = 'icons/turf/floors/hierophant_floor.dmi'
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	baseturf = /turf/open/indestructible/hierophant
 	smooth = SMOOTH_TRUE
 
 /turf/open/indestructible/hierophant/two
 
+/turf/open/indestructible/hierophant/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	return FALSE
+
 /turf/open/indestructible/paper
 	name = "notebook floor"
 	desc = "A floor made of invulnerable notebook paper."
 	icon_state = "paperfloor"
+
+/turf/open/indestructible/clock_spawn_room
+	name = "cogmetal"
+	desc = "Brass plating that gently radiates heat. For some reason, it reminds you of blood."
+	icon_state = "reebe"
+	baseturf = /turf/open/indestructible/clock_spawn_room
+
+/turf/open/indestructible/clock_spawn_room/Entered()
+	..()
+	START_PROCESSING(SSfastprocess, src)
+
+/turf/open/indestructible/clock_spawn_room/Destroy()
+	STOP_PROCESSING(SSfastprocess, src)
+	. = ..()
+
+/turf/open/indestructible/clock_spawn_room/process()
+	if(!port_servants())
+		STOP_PROCESSING(SSfastprocess, src)
+
+/turf/open/indestructible/clock_spawn_room/proc/port_servants()
+	. = FALSE
+	for(var/mob/living/L in src)
+		if(is_servant_of_ratvar(L))
+			. = TRUE
+			L.forceMove(get_turf(pick(GLOB.servant_spawns)))
+			visible_message("<span class='warning'>[L] vanishes in a flash of red!</span>")
+			L.visible_message("<span class='warning'>[L] appears in a flash of red!</span>", \
+			"<span class='bold cult'>sas'so c'arta forbici</span><br><span class='danger'>You're yanked away from [src]!</span>")
+			playsound(src, 'sound/magic/enter_blood.ogg', 50, TRUE)
+			playsound(L, 'sound/magic/exit_blood.ogg', 50, TRUE)
+			flash_color(L, flash_color = "#C80000", flash_time = 10)
 
 /turf/open/Initalize_Atmos(times_fired)
 	excited = 0
@@ -57,11 +105,9 @@
 	current_cycle = times_fired
 
 	//cache some vars
-	var/datum/gas_mixture/air = src.air
-	air.holder = src
 	var/list/atmos_adjacent_turfs = src.atmos_adjacent_turfs
 
-	for(var/direction in cardinal)
+	for(var/direction in GLOB.cardinals)
 		var/turf/open/enemy_tile = get_step(src, direction)
 		if(!istype(enemy_tile))
 			if (atmos_adjacent_turfs)
@@ -109,9 +155,11 @@
 	air.temperature += temp
 	air_update_turf()
 
-/turf/open/freon_gas_act()
+/turf/open/proc/freon_gas_act()
 	for(var/obj/I in contents)
-		if(!HAS_SECONDARY_FLAG(I, FROZEN)) //let it go
+		if(I.resistance_flags & FREEZE_PROOF)
+			return
+		if(!(I.flags_2 & FROZEN_2)) //let it go
 			I.make_frozen_visual()
 	for(var/mob/living/L in contents)
 		if(L.bodytemperature <= 50)
@@ -119,7 +167,7 @@
 	MakeSlippery(TURF_WET_PERMAFROST, 5)
 	return 1
 
-/turf/open/water_vapor_gas_act()
+/turf/open/proc/water_vapor_gas_act()
 	MakeSlippery(min_wet_time = 10, wet_time_to_add = 5)
 
 	for(var/mob/living/simple_animal/slime/M in src)
@@ -136,7 +184,7 @@
 		qdel(hotspot)
 	return 1
 
-/turf/open/handle_slip(mob/living/carbon/C, s_amount, w_amount, obj/O, lube)
+/turf/open/handle_slip(mob/living/carbon/C, knockdown_amount, obj/O, lube)
 	if(C.movement_type & FLYING)
 		return 0
 	if(has_gravity(src))
@@ -146,7 +194,7 @@
 			if(!(lube&GALOSHES_DONT_HELP)) //can't slip while buckled unless it's lube.
 				return 0
 		else
-			if(C.lying || !(C.status_flags & CANWEAKEN)) // can't slip unbuckled mob if they're lying or can't fall.
+			if(C.lying || !(C.status_flags & CANKNOCKDOWN)) // can't slip unbuckled mob if they're lying or can't fall.
 				return 0
 			if(C.m_intent == MOVE_INTENT_WALK && (lube&NO_SLIP_WHEN_WALKING))
 				return 0
@@ -154,18 +202,20 @@
 			to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
 			C.log_message("<font color='orange'>Slipped[O ? " on the [O.name]" : ""][(lube&SLIDE)? " (LUBE)" : ""]!</font>", INDIVIDUAL_ATTACK_LOG)
 		if(!(lube&SLIDE_ICE))
-			playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+			if(prob(95))
+				playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+			else
+				playsound(C.loc, 'hippiestation/sound/misc/oof.ogg', 50, 1, -3)
 
 		for(var/obj/item/I in C.held_items)
 			C.accident(I)
 
 		var/olddir = C.dir
 		if(!(lube & SLIDE_ICE))
-			C.Stun(s_amount)
-			C.Weaken(w_amount)
+			C.Knockdown(knockdown_amount)
 			C.stop_pulling()
 		else
-			C.Stun(1)
+			C.Stun(20)
 
 		if(buckled_obj)
 			buckled_obj.unbuckle_mob(C)
@@ -177,27 +227,74 @@
 			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 1), 1, FALSE)	//spinning would be bad for ice, fucks up the next dir
 		return 1
 
+/turf/open/copyTurf(turf/T)
+	. = ..()
+	if(. && isopenturf(T) && wet_time)
+		var/turf/open/O = T
+		O.MakeSlippery(wet_setting = wet, wet_time_to_add = wet_time) //we're copied, copy how wet we are also
+
 /turf/open/proc/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0) // 1 = Water, 2 = Lube, 3 = Ice, 4 = Permafrost, 5 = Slide
 	wet_time = max(wet_time+wet_time_to_add, min_wet_time)
 	if(wet >= wet_setting)
 		return
 	wet = wet_setting
+	UpdateSlip()
 	if(wet_setting != TURF_DRY)
 		if(wet_overlay)
 			cut_overlay(wet_overlay)
-			wet_overlay = null
+		else
+			wet_overlay = mutable_appearance()
 		var/turf/open/floor/F = src
 		if(istype(F))
 			if(wet_setting == TURF_WET_PERMAFROST)
-				wet_overlay = image('icons/effects/water.dmi', src, "ice_floor")
+				wet_overlay.icon = 'icons/effects/water.dmi'
+				wet_overlay.icon_state = "ice_floor"
 			else if(wet_setting == TURF_WET_ICE)
-				wet_overlay = image('icons/turf/overlays.dmi', src, "snowfloor")
+				wet_overlay.icon = 'icons/turf/overlays.dmi'
+				wet_overlay.icon_state = "snowfloor"
 			else
-				wet_overlay = image('icons/effects/water.dmi', src, "wet_floor_static")
+				wet_overlay.icon = 'icons/effects/water.dmi'
+				wet_overlay.icon_state = "wet_floor_static"
 		else
-			wet_overlay = image('icons/effects/water.dmi', src, "wet_static")
+			wet_overlay.icon = 'icons/effects/water.dmi'
+			wet_overlay.icon_state = "wet_static"
 		add_overlay(wet_overlay)
 	HandleWet()
+
+/turf/open/proc/UpdateSlip()
+	var/intensity
+	var/lube_flags
+	switch(wet)
+		if(TURF_WET_WATER)
+			intensity = 60
+			lube_flags = NO_SLIP_WHEN_WALKING
+		if(TURF_WET_LUBE)
+			intensity = 80
+			lube_flags = SLIDE | GALOSHES_DONT_HELP
+		if(TURF_WET_ICE)
+			intensity = 120
+			lube_flags = SLIDE | GALOSHES_DONT_HELP
+		if(TURF_WET_PERMAFROST)
+			intensity = 120
+			lube_flags = SLIDE_ICE | GALOSHES_DONT_HELP
+		if(TURF_WET_SLIDE)
+			intensity = 80
+			lube_flags = SLIDE | GALOSHES_DONT_HELP
+		else
+			qdel(GetComponent(/datum/component/slippery))
+			return
+	var/datum/component/slippery/S = LoadComponent(/datum/component/slippery)
+	S.intensity = intensity
+	S.lube_flags = lube_flags
+
+/turf/open/ComponentActivated(datum/component/C)
+	..()
+	var/datum/component/slippery/S = C
+	if(!istype(S))
+		return
+	if(wet == TURF_WET_LUBE)
+		var/mob/living/L = S.slip_victim
+		L.confused = max(L.confused, 8)
 
 /turf/open/proc/MakeDry(wet_setting = TURF_WET_WATER)
 	if(wet > wet_setting || !wet)
@@ -211,6 +308,7 @@
 			wet = TURF_DRY
 			if(wet_overlay)
 				cut_overlay(wet_overlay)
+		UpdateSlip()
 
 /turf/open/proc/HandleWet()
 	if(!wet)
@@ -223,7 +321,7 @@
 		wet_time = MAXIMUM_WET_TIME
 	if(wet == TURF_WET_ICE && air.temperature > T0C)
 		for(var/obj/O in contents)
-			if(HAS_SECONDARY_FLAG(O, FROZEN))
+			if(O.flags_2 & FROZEN_2)
 				O.make_unfrozen()
 		MakeDry(TURF_WET_ICE)
 		MakeSlippery(TURF_WET_WATER)
@@ -255,3 +353,13 @@
 		wet_time = 0
 	if(wet)
 		addtimer(CALLBACK(src, .proc/HandleWet), 15, TIMER_UNIQUE)
+
+/turf/open/get_dumping_location()
+	return src
+
+/turf/open/proc/ClearWet()//Nuclear option of immediately removing slipperyness from the tile instead of the natural drying over time
+	wet = TURF_DRY
+	UpdateSlip()
+	if(wet_overlay)
+		cut_overlay(wet_overlay)
+

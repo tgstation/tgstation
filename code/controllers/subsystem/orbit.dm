@@ -1,6 +1,4 @@
-var/datum/controller/subsystem/orbit/SSorbit
-
-/datum/controller/subsystem/orbit
+SUBSYSTEM_DEF(orbit)
 	name = "Orbits"
 	priority = 35
 	wait = 2
@@ -8,10 +6,6 @@ var/datum/controller/subsystem/orbit/SSorbit
 
 	var/list/currentrun = list()
 	var/list/processing = list()
-
-/datum/controller/subsystem/orbit/New()
-	NEW_SS_GLOBAL(SSorbit)
-
 
 /datum/controller/subsystem/orbit/stat_entry()
 	..("P:[processing.len]")
@@ -46,5 +40,4 @@ var/datum/controller/subsystem/orbit/SSorbit
 			O.Check(targetloc)
 		if (MC_TICK_CHECK)
 			return
-
 

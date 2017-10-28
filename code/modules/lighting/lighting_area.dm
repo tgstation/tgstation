@@ -21,3 +21,10 @@
 				T.lighting_clear_overlay()
 
 	return TRUE
+
+/area/vv_edit_var(var_name, var_value)
+	switch(var_name)
+		if("dynamic_lighting")
+			set_dynamic_lighting(var_value)
+			return TRUE
+	return ..()

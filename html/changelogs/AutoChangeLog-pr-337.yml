@@ -1,4 +1,0 @@
-author: "HonkBot"
-delete-after: True
-changes: 
-  - bugfix: "Temperature changes will now properly cause atmospherics simulation to activate"

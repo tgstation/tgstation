@@ -68,10 +68,7 @@
 	damage = 0
 	damage_type = OXY
 	nodamage = 1
-	var/list/door_types = list(/obj/structure/mineral_door/wood,/obj/structure/mineral_door/iron,/obj/structure/mineral_door/silver,\
-		/obj/structure/mineral_door/gold,/obj/structure/mineral_door/uranium,/obj/structure/mineral_door/sandstone,/obj/structure/mineral_door/transparent/plasma,\
-		/obj/structure/mineral_door/transparent/diamond)
-
+	var/list/door_types = list(/obj/structure/mineral_door/wood, /obj/structure/mineral_door/iron, /obj/structure/mineral_door/silver, /obj/structure/mineral_door/gold, /obj/structure/mineral_door/uranium, /obj/structure/mineral_door/sandstone, /obj/structure/mineral_door/transparent/plasma, /obj/structure/mineral_door/transparent/diamond)
 
 /obj/item/projectile/magic/door/on_hit(atom/target)
 	. = ..()
@@ -79,7 +76,7 @@
 		OpenDoor(target)
 	else
 		var/turf/T = get_turf(target)
-		if(isclosedturf(T) && !istype(T, /turf/closed/indestructible))
+		if(isclosedturf(T) && !isindestructiblewall(T))
 			CreateDoor(T)
 
 /obj/item/projectile/magic/door/proc/CreateDoor(turf/T)
@@ -89,9 +86,9 @@
 	D.Open()
 
 /obj/item/projectile/magic/door/proc/OpenDoor(var/obj/machinery/door/D)
-	if(istype(D,/obj/machinery/door/airlock))
+	if(istype(D, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/A = D
-		A.locked = 0
+		A.locked = FALSE
 	D.open()
 
 /obj/item/projectile/magic/change
@@ -135,16 +132,14 @@
 		if("monkey")
 			new_mob = new /mob/living/carbon/monkey(M.loc)
 		if("robot")
-			var/robot = pick("cyborg","syndiborg","drone")
+			var/robot = pick("random_cyborg","syndiborg","drone")
+			var/path
 			switch(robot)
-				if("cyborg")
-					new_mob = new /mob/living/silicon/robot(M.loc)
+				if("random_cyborg")
+					path = pick(typesof(/mob/living/silicon/robot/modules) - typesof(/mob/living/silicon/robot/modules/syndicate))
+					new_mob = new path(M.loc)
 				if("syndiborg")
-					var/path
-					if(prob(50))
-						path = /mob/living/silicon/robot/syndicate
-					else
-						path = /mob/living/silicon/robot/syndicate/medical
+					path = pick(typesof(/mob/living/silicon/robot/modules/syndicate))
 					new_mob = new path(M.loc)
 				if("drone")
 					new_mob = new /mob/living/simple_animal/drone/polymorphed(M.loc)
@@ -161,14 +156,20 @@
 			new_mob = new /mob/living/simple_animal/slime/random(M.loc)
 		if("xeno")
 			if(prob(50))
-				new_mob = new /mob/living/carbon/alien/humanoid/hunter(M.loc)
+				if(!M.ckey) //spawn an AI alien if it isn't a player controlled mob.
+					new_mob = new /mob/living/simple_animal/hostile/alien(M.loc)
+				else
+					new_mob = new /mob/living/carbon/alien/humanoid/hunter(M.loc)
 			else
-				new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
+				if(!M.ckey)
+					new_mob = new /mob/living/simple_animal/hostile/alien/sentinel(M.loc)
+				else
+					new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
 
 		if("animal")
 			var/path
 			if(prob(50))
-				var/beast = pick("carp","bear","mushroom","statue", "bat", "goat","killertomato", "spiderbase", "spiderhunter", "blobbernaut", "magicarp", "chaosmagicarp", "watcher", "goliath", "headcrab", "morph", "stickman", "stickdog", "lesserdragon")
+				var/beast = pick("carp","bear","mushroom","statue", "bat", "goat","killertomato", "spiderbase", "spiderhunter", "blobbernaut", "magicarp", "chaosmagicarp", "watcher", "goliath", "headcrab", "morph", "stickman", "stickdog", "lesserdragon", "gorilla")
 				switch(beast)
 					if("carp")
 						path = /mob/living/simple_animal/hostile/carp
@@ -208,6 +209,8 @@
 						path = /mob/living/simple_animal/hostile/stickman/dog
 					if("lesserdragon")
 						path = /mob/living/simple_animal/hostile/megafauna/dragon/lesser
+					if("gorilla")
+						path = /mob/living/simple_animal/hostile/gorilla
 			else
 				var/animal = pick("parrot","corgi","crab","pug","cat","mouse","chicken","cow","lizard","chick","fox","butterfly","cak")
 				switch(animal)
@@ -261,9 +264,8 @@
 
 	if(!new_mob)
 		return
-
-	new_mob.languages_spoken |= HUMAN
-	new_mob.languages_understood |= HUMAN
+	new_mob.grant_language(/datum/language/common)
+	new_mob.flags_2 |= OMNITONGUE_2
 	new_mob.logging = M.logging
 
 	// Some forms can still wear some items
@@ -278,6 +280,10 @@
 
 	to_chat(new_mob, "<span class='warning'>Your form morphs into that of a [randomize].</span>")
 
+	var/poly_msg = CONFIG_GET(keyed_string_list/policy)["polymorph"]
+	if(poly_msg)
+		to_chat(new_mob, poly_msg)
+
 	qdel(M)
 	return new_mob
 
@@ -288,12 +294,12 @@
 	damage_type = BURN
 	nodamage = 1
 
-/obj/item/projectile/magic/animate/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/magic/animate/on_hit(atom/target, blocked = FALSE)
 	target.animate_atom_living(firer)
 	..()
 
 /atom/proc/animate_atom_living(var/mob/living/owner = null)
-	if((istype(src, /obj/item) || istype(src, /obj/structure)) && !is_type_in_list(src, protected_objects))
+	if((isitem(src) || isstructure(src)) && !is_type_in_list(src, GLOB.protected_objects))
 		if(istype(src, /obj/structure/statue/petrified))
 			var/obj/structure/statue/petrified/P = src
 			if(P.petrified_mob)
@@ -315,7 +321,7 @@
 				return
 		else
 			var/obj/O = src
-			if(istype(O, /obj/item/weapon/gun))
+			if(istype(O, /obj/item/gun))
 				new /mob/living/simple_animal/hostile/mimic/copy/ranged(loc, src, owner)
 			else
 				new /mob/living/simple_animal/hostile/mimic/copy(loc, src, owner)
@@ -352,21 +358,9 @@
 
 /obj/item/projectile/magic/aoe/Range()
 	if(proxdet)
-		var/turf/T1 = get_step(src,turn(dir, -45))
-		var/turf/T2 = get_step(src,turn(dir, 45))
-		var/turf/T3 = get_step(src,dir)
-		var/mob/living/L = locate(/mob/living) in T1 //if there's a mob alive in our front right diagonal, we hit it.
-		if(L && L.stat != DEAD)
-			Bump(L,1) //Magic Bullet #teachthecontroversy
-			return
-		L = locate(/mob/living) in T2
-		if(L && L.stat != DEAD)
-			Bump(L,1)
-			return
-		L = locate(/mob/living) in T3
-		if(L && L.stat != DEAD)
-			Bump(L,1)
-			return
+		for(var/mob/living/L in range(1, get_turf(src)))
+			if(L.stat != DEAD && L != firer)
+				return Collide(L)
 	..()
 
 /obj/item/projectile/magic/aoe/lightning
@@ -425,3 +419,9 @@
 	exp_light = -1
 	exp_flash = 4
 	exp_fire= 5
+
+/obj/item/projectile/magic/aoe/fireball/infernal/on_hit(target)
+	. = ..()
+	var/turf/T = get_turf(target)
+	for(var/i=0, i<50, i+=10)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/explosion, T, -1, exp_heavy, exp_light, exp_flash, FALSE, FALSE, exp_fire), i)

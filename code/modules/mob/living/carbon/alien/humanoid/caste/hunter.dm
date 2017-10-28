@@ -38,11 +38,11 @@
 #define MAX_ALIEN_LEAP_DIST 7
 
 /mob/living/carbon/alien/humanoid/hunter/proc/leap_at(atom/A)
-	if(pounce_cooldown)
-		to_chat(src, "<span class='alertalien'>You are too fatigued to pounce right now!</span>")
+	if(!canmove || leaping)
 		return
 
-	if(leaping || stat || buckled || lying)
+	if(pounce_cooldown > world.time)
+		to_chat(src, "<span class='alertalien'>You are too fatigued to pounce right now!</span>")
 		return
 
 	if(!has_gravity() || !A.has_gravity())
@@ -66,29 +66,27 @@
 	if(!leaping)
 		return ..()
 
+	pounce_cooldown = world.time + pounce_cooldown_time
 	if(A)
 		if(isliving(A))
 			var/mob/living/L = A
-			var/blocked = 0
+			var/blocked = FALSE
 			if(ishuman(A))
 				var/mob/living/carbon/human/H = A
-				if(H.check_shields(0, "the [name]", src, attack_type = LEAP_ATTACK))
-					blocked = 1
+				if(H.check_shields(src, 0, "the [name]", attack_type = LEAP_ATTACK))
+					blocked = TRUE
 			if(!blocked)
 				L.visible_message("<span class ='danger'>[src] pounces on [L]!</span>", "<span class ='userdanger'>[src] pounces on you!</span>")
-				L.Weaken(5)
+				L.Knockdown(100)
 				sleep(2)//Runtime prevention (infinite bump() calls on hulks)
 				step_towards(src,L)
 			else
-				Weaken(2, 1, 1)
+				Knockdown(40, 1, 1)
 
 			toggle_leap(0)
-			pounce_cooldown = !pounce_cooldown
-			spawn(pounce_cooldown_time) //3s by default
-				pounce_cooldown = !pounce_cooldown
 		else if(A.density && !A.CanPass(src))
 			visible_message("<span class ='danger'>[src] smashes into [A]!</span>", "<span class ='alertalien'>[src] smashes into [A]!</span>")
-			Weaken(2, 1, 1)
+			Knockdown(40, 1, 1)
 
 		if(leaping)
 			leaping = 0

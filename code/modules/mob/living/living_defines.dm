@@ -1,7 +1,5 @@
 /mob/living
 	see_invisible = SEE_INVISIBLE_LIVING
-	languages_spoken = HUMAN
-	languages_understood = HUMAN
 	sight = 0
 	see_in_dark = 2
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD)
@@ -18,7 +16,7 @@
 	var/fireloss = 0	//Burn damage caused by being way too hot, too cold or burnt.
 	var/cloneloss = 0	//Damage caused by being cloned or ejected from the cloner early. slimes also deal cloneloss damage to victims
 	var/brainloss = 0	//'Retardation' damage caused by someone hitting you in the head with a bible or being infected with brainrot.
-	var/staminaloss = 0		//Stamina damage, or exhaustion. You recover it slowly naturally, and are stunned if it gets too high. Holodeck and hallucinations deal this.
+	var/staminaloss = 0		//Stamina damage, or exhaustion. You recover it slowly naturally, and are knocked down if it gets too high. Holodeck and hallucinations deal this.
 
 
 	var/hallucination = 0 //Directly affects how long a mob will hallucinate for
@@ -26,11 +24,12 @@
 	var/last_special = 0 //Used by the resist verb, likely used to prevent players from bypassing next_move by logging in/out.
 
 	//Allows mobs to move through dense areas without restriction. For instance, in space or out of holder objects.
-	var/incorporeal_move = 0 //0 is off, 1 is normal, 2 is for ninjas.
+	var/incorporeal_move = FALSE //FALSE is off, INCORPOREAL_MOVE_BASIC is normal, INCORPOREAL_MOVE_SHADOW is for ninjas
+								 //and INCORPOREAL_MOVE_JAUNT is blocked by holy water/salt
 
 	var/list/surgeries = list()	//a list of surgery datums. generally empty, they're added when the player wants them.
 
-	var/now_pushing = null //used by living/Bump() and living/PushAM() to prevent potential infinite loop.
+	var/now_pushing = null //used by living/Collide() and living/PushAM() to prevent potential infinite loop.
 
 	var/cameraFollow = null
 
@@ -72,6 +71,11 @@
 	var/list/status_effects //a list of all status effects the mob has
 
 	var/list/implants = null
-	var/tesla_ignore = FALSE
 
 	var/datum/riding/riding_datum
+
+	var/datum/language/selected_default_language
+
+	var/last_words	//used for database logging
+
+	var/list/obj/effect/proc_holder/abilities = list()

@@ -20,6 +20,8 @@
 		determine_wave_type()
 
 /datum/round_event/meteor_wave/proc/determine_wave_type()
+	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
+		wave_name = "halloween"
 	if(!wave_name)
 		wave_name = pickweight(list(
 			"normal" = 50,
@@ -27,21 +29,23 @@
 			"catastrophic" = 10))
 	switch(wave_name)
 		if("normal")
-			wave_type = meteors_normal
+			wave_type = GLOB.meteors_normal
 		if("threatening")
-			wave_type = meteors_threatening
+			wave_type = GLOB.meteors_threatening
 		if("catastrophic")
-			wave_type = meteors_catastrophic
+			wave_type = GLOB.meteors_catastrophic
 		if("meaty")
-			wave_type = meteorsB
+			wave_type = GLOB.meteorsB
 		if("space dust")
-			wave_type = meteorsC
+			wave_type = GLOB.meteorsC
+		if("halloween")
+			wave_type = GLOB.meteorsSPOOKY
 		else
 			WARNING("Wave name of [wave_name] not recognised.")
 			kill()
 
 /datum/round_event/meteor_wave/announce()
-	priority_announce("Meteors have been detected on collision course with the station.", "Meteor Alert", 'sound/AI/meteors.ogg')
+	priority_announce("Meteors have been detected on collision course with the station.", "Meteor Alert", 'sound/ai/meteors.ogg')
 
 /datum/round_event/meteor_wave/tick()
 	if(IsMultiple(activeFor, 3))

@@ -6,15 +6,11 @@
 /turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/escape)
 "ac" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ad" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "ae" = (
 /turf/open/floor/mineral/titanium,
@@ -37,17 +33,17 @@
 /area/shuttle/escape)
 "ai" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/weapon/crowbar,
-/obj/item/weapon/storage/firstaid/fire,
+/obj/item/crowbar,
+/obj/item/storage/firstaid/fire,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aj" = (
-/turf/open/floor/plasteel/shuttle/white,
-/turf/closed/wall/shuttle/interior{
+/turf/open/floor/mineral/titanium,
+/turf/closed/wall/mineral/titanium/interior{
 	icon_state = "swall_f5"
 	},
 /area/shuttle/escape)
@@ -86,7 +82,6 @@
 	dir = 8
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 0;
 	pixel_y = -30
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -94,7 +89,6 @@
 "as" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -29
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -113,22 +107,13 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "av" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall13";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aw" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "ax" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall14";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "ay" = (
 /obj/machinery/door/airlock/glass{
@@ -165,12 +150,12 @@
 /area/shuttle/escape)
 "aE" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/weapon/crowbar,
+/obj/item/crowbar,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aF" = (
@@ -228,16 +213,10 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aN" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall7";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aO" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swallc4";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aP" = (
 /obj/machinery/door/airlock/titanium{
@@ -245,7 +224,7 @@
 	},
 /obj/docking_port/mobile/emergency{
 	name = "Box emergency shuttle";
-	timid = 0
+	timid = 1
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -258,8 +237,7 @@
 /area/shuttle/escape)
 "aR" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27;
-	pixel_y = 0
+	pixel_x = 27
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -298,7 +276,6 @@
 /area/shuttle/escape)
 "aW" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 0;
 	pixel_y = -30
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -311,10 +288,7 @@
 /area/shuttle/escape)
 "aY" = (
 /obj/machinery/status_display,
-/turf/closed/wall/shuttle{
-	icon_state = "swall14";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aZ" = (
 /obj/machinery/door/airlock/glass{
@@ -323,39 +297,33 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "ba" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall11";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "bb" = (
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "bc" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27;
-	pixel_y = 0
+	pixel_x = 27
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "bd" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "be" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/weapon/crowbar,
+/obj/item/crowbar,
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27;
-	pixel_y = 0
+	pixel_x = 27
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -371,10 +339,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "bh" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "bi" = (
 /obj/structure/window/reinforced{
@@ -399,7 +364,6 @@
 "bm" = (
 /obj/structure/table,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,

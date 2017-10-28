@@ -46,11 +46,10 @@
 		if(WIRE_OPEN) // Pulse to open door (only works not emagged and ID wire is cut or no access is required).
 			if(A.emagged)
 				return
-			if(!A.requiresID() || A.check_access(null))
-				if(A.density)
-					A.open()
-				else
-					A.close()
+			if(A.density)
+				A.open()
+			else
+				A.close()
 		if(WIRE_BOLTS) // Pulse to toggle bolts (but only raise if power is on).
 			if(!A.locked)
 				A.bolt()
@@ -155,4 +154,5 @@
 			A.lights = mend
 			A.update_icon()
 		if(WIRE_ZAP1, WIRE_ZAP2) // Ouch.
-			A.shock(usr, 50)
+			if(usr)
+				A.shock(usr, 50)

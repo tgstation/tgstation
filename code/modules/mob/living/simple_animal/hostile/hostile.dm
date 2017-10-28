@@ -2,7 +2,7 @@
 	faction = list("hostile")
 	stop_automated_movement_when_pulled = 0
 	obj_damage = 40
-	environment_smash = 1 //Set to 1 to break closets,tables,racks, etc; 2 for walls; 3 for rwalls
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES //Bitflags. Set to ENVIRONMENT_SMASH_STRUCTURES to break closets,tables,racks, etc; ENVIRONMENT_SMASH_WALLS for walls; ENVIRONMENT_SMASH_RWALLS for rwalls
 	var/atom/target
 	var/ranged = 0
 	var/rapid = 0
@@ -43,10 +43,9 @@
 	var/search_objects_timer_id //Timer for regaining our old search_objects value after being attacked
 	var/search_objects_regain_time = 30 //the delay between being attacked and gaining our old search_objects value back
 	var/list/wanted_objects = list() //A typecache of objects types that will be checked against to attack, should we have search_objects enabled
-	var/stat_attack = 0 //Mobs with stat_attack to 1 will attempt to attack things that are unconscious, Mobs with stat_attack set to 2 will attempt to attack the dead.
-	var/stat_exclusive = 0 //Mobs with this set to 1 will exclusively attack things defined by stat_attack, stat_attack 2 means they will only attack corpses
-	var/attack_same = 0 //Set us to 1 to allow us to attack our own faction, or 2, to only ever attack our own faction
-	var/AIStatus = AI_ON //The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever)
+	var/stat_attack = CONSCIOUS //Mobs with stat_attack to UNCONSCIOUS will attempt to attack things that are unconscious, Mobs with stat_attack set to DEAD will attempt to attack the dead.
+	var/stat_exclusive = FALSE //Mobs with this set to TRUE will exclusively attack things defined by stat_attack, stat_attack DEAD means they will only attack corpses
+	var/attack_same = 0 //Set us to 1 to allow us to attack our own faction
 	var/atom/targets_from = null //all range/attack/etc. calculations should be done from this atom, defaults to the mob itself, useful for Vehicles and such
 	var/attack_all_objects = FALSE //if true, equivalent to having a wanted_objects list containing ALL objects.
 
@@ -55,7 +54,7 @@
 
 
 /mob/living/simple_animal/hostile/Initialize()
-	..()
+	. = ..()
 
 	if(!targets_from)
 		targets_from = src
@@ -85,7 +84,7 @@
 		DestroySurroundings()
 		if(!MoveToTarget(possible_targets))     //if we lose our target
 			if(AIShouldSleep(possible_targets))	// we try to acquire a new one
-				AIStatus = AI_IDLE				// otherwise we go idle
+				toggle_ai(AI_IDLE)			// otherwise we go idle
 	return 1
 
 /mob/living/simple_animal/hostile/attacked_by(obj/item/I, mob/living/user)
@@ -112,7 +111,11 @@
 			if(can_see(targets_from, HM, vision_range))
 				. += HM
 	else
-		. = oview(vision_range, targets_from)
+		. = list() // The following code is only very slightly slower than just returning oview(vision_range, targets_from), but it saves us much more work down the line, particularly when bees are involved
+		for (var/obj/A in oview(vision_range, targets_from))
+			. += A
+		for (var/mob/A in oview(vision_range, targets_from))
+			. += A
 
 /mob/living/simple_animal/hostile/proc/FindTarget(var/list/possible_targets, var/HasTargetsList = 0)//Step 2, filter down possible targets to things we actually care about
 	. = list()
@@ -161,56 +164,55 @@
 	var/chosen_target = pick(Targets)//Pick the remaining targets (if any) at random
 	return chosen_target
 
+// Please do not add one-off mob AIs here, but override this function for your mob
 /mob/living/simple_animal/hostile/CanAttack(atom/the_target)//Can we actually attack a possible target?
-	if(!the_target)
-		return 0
+	if(isturf(the_target) || !the_target || the_target.type == /atom/movable/lighting_object) // bail out on invalids
+		return FALSE
+
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
-		return 0
+		return FALSE
 	if(search_objects < 2)
 		if(isliving(the_target))
 			var/mob/living/L = the_target
 			var/faction_check = faction_check_mob(L)
 			if(robust_searching)
-				if(L.stat > stat_attack || L.stat != stat_attack && stat_exclusive == 1)
-					return 0
-				if(faction_check && !attack_same || !faction_check && attack_same == 2)
-					return 0
-				if(L in friends)
-					return 0
-			else
-				if(L.stat)
-					return 0
 				if(faction_check && !attack_same)
-					return 0
-			return 1
+					return FALSE
+				if(L.stat > stat_attack)
+					return FALSE
+				if(L in friends)
+					return FALSE
+			else
+				if((faction_check && !attack_same) || L.stat)
+					return FALSE
+			return TRUE
 
-		if(istype(the_target, /obj/mecha))
+		if(ismecha(the_target))
 			var/obj/mecha/M = the_target
 			if(M.occupant)//Just so we don't attack empty mechs
 				if(CanAttack(M.occupant))
-					return 1
+					return TRUE
 
 		if(istype(the_target, /obj/machinery/porta_turret))
 			var/obj/machinery/porta_turret/P = the_target
 			if(P.faction in faction)
-				return 0
+				return FALSE
 			if(P.has_cover &&!P.raised) //Don't attack invincible turrets
-				return 0
+				return FALSE
 			if(P.stat & BROKEN) //Or turrets that are already broken
-				return 0
-			return 1
+				return FALSE
+			return TRUE
 
 		if(istype(the_target, /obj/structure/destructible/clockwork/ocular_warden))
 			var/obj/structure/destructible/clockwork/ocular_warden/OW = the_target
 			if(OW.target != src)
 				return FALSE
 			return TRUE
-
-
 	if(isobj(the_target))
 		if(attack_all_objects || is_type_in_typecache(the_target, wanted_objects))
-			return 1
-	return 0
+			return TRUE
+
+	return FALSE
 
 /mob/living/simple_animal/hostile/proc/GiveTarget(new_target)//Step 4, give us our selected target
 	target = new_target
@@ -253,7 +255,7 @@
 		if(target.loc != null && get_dist(targets_from, target.loc) <= vision_range) //We can't see our target, but he's in our vision range still
 			if(ranged_ignores_vision && ranged_cooldown <= world.time) //we can't see our target... but we can fire at them!
 				OpenFire(target)
-			if(environment_smash >= 2) //If we're capable of smashing through walls, forget about vision completely after finding our target
+			if((environment_smash & ENVIRONMENT_SMASH_WALLS) || (environment_smash & ENVIRONMENT_SMASH_RWALLS)) //If we're capable of smashing through walls, forget about vision completely after finding our target
 				Goto(target,move_to_delay,minimum_distance)
 				FindHidden()
 				return 1
@@ -273,7 +275,7 @@
 			target = null
 			LoseSearchObjects()
 		if(AIStatus == AI_IDLE)
-			AIStatus = AI_ON
+			toggle_ai(AI_ON)
 			FindTarget()
 		else if(target != null && prob(40))//No more pulling a mob forever and having a second player attack it, it can switch targets now if it finds a more suitable one
 			FindTarget()
@@ -346,7 +348,6 @@
 	else if(projectiletype)
 		var/obj/item/projectile/P = new projectiletype(startloc)
 		playsound(src, projectilesound, 100, 1)
-		P.current = startloc
 		P.starting = startloc
 		P.firer = src
 		P.yo = targeted_atom.y - startloc.y
@@ -354,23 +355,26 @@
 		if(AIStatus != AI_ON)//Don't want mindless mobs to have their movement screwed up firing in space
 			newtonian_move(get_dir(targeted_atom, targets_from))
 		P.original = targeted_atom
+		P.preparePixelProjectile(targeted_atom, src)
 		P.fire()
 		return P
 
+/mob/living/simple_animal/hostile/proc/CanSmashTurfs(turf/T)
+	return iswallturf(T) || ismineralturf(T)
 
 /mob/living/simple_animal/hostile/proc/DestroySurroundings()
 	if(environment_smash)
 		EscapeConfinement()
-		for(var/dir in cardinal)
+		for(var/dir in GLOB.cardinals)
 			var/turf/T = get_step(targets_from, dir)
-			if(iswallturf(T) || ismineralturf(T))
+			if(CanSmashTurfs(T))
 				if(T.Adjacent(targets_from))
 					T.attack_animal(src)
 			for(var/a in T)
 				var/atom/A = a
 				if(!A.Adjacent(targets_from))
 					continue
-				if(is_type_in_typecache(A, environment_target_typecache))
+				if(is_type_in_typecache(A, environment_target_typecache) && !A.IsObscured())
 					A.attack_animal(src)
 
 /mob/living/simple_animal/hostile/proc/EscapeConfinement()
@@ -405,7 +409,7 @@
 		if(AI_IDLE)
 			if(FindTarget(possible_targets, 1))
 				. = 1
-				AIStatus = AI_ON //Wake up for more than one Life() cycle.
+				toggle_ai(AI_ON) //Wake up for more than one Life() cycle.
 			else
 				. = 0
 
@@ -436,3 +440,9 @@
 	if(!value)
 		value = initial(search_objects)
 	search_objects = value
+
+/mob/living/simple_animal/hostile/consider_wakeup()
+	..()
+	if(AIStatus == AI_IDLE && FindTarget(ListTargets(), 1))
+		toggle_ai(AI_ON)
+

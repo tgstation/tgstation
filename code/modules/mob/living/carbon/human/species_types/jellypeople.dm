@@ -5,10 +5,11 @@
 	default_color = "00FF90"
 	say_mod = "chirps"
 	species_traits = list(MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE,TOXINLOVER)
-	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime
+	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = "slimejelly"
 	damage_overlay_type = ""
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
+	liked_food = MEAT
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)
@@ -58,6 +59,7 @@
 	name = "Regenerate Limbs"
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "slimeheal"
+	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
 
 /datum/action/innate/regenerate_limbs/IsAvailable()
@@ -138,6 +140,10 @@
 
 	C.faction |= "slime"
 
+//If you're cloned you get your body pool back
+/datum/species/jelly/slime/copy_properties_from(datum/species/jelly/slime/old_species)
+	bodies = old_species.bodies
+
 /datum/species/jelly/slime/spec_life(mob/living/carbon/human/H)
 	if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
 		if(prob(5))
@@ -152,6 +158,7 @@
 	name = "Split Body"
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "slimesplit"
+	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
 
 /datum/action/innate/split_body/IsAvailable()
@@ -218,6 +225,7 @@
 	name = "Swap Body"
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "slimeswap"
+	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
 
 /datum/action/innate/swap_body/Activate()
@@ -227,7 +235,7 @@
 	else
 		ui_interact(owner)
 
-/datum/action/innate/swap_body/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = conscious_state)
+/datum/action/innate/swap_body/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.conscious_state)
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)

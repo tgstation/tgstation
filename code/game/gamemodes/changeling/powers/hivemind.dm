@@ -6,7 +6,7 @@
 	dna_cost = 0
 	chemical_cost = -1
 
-/obj/effect/proc_holder/changeling/hivemind_comms/on_purchase(var/mob/user)
+/obj/effect/proc_holder/changeling/hivemind_comms/on_purchase(mob/user, is_respec)
 	..()
 	var/datum/changeling/changeling=user.mind.changeling
 	changeling.changeling_speak = 1
@@ -17,10 +17,9 @@
 	var/obj/effect/proc_holder/changeling/hivemind_download/S2 = new
 	if(!changeling.has_sting(S2))
 		changeling.purchasedpowers+=S2
-	return
 
 // HIVE MIND UPLOAD/DOWNLOAD DNA
-var/list/datum/dna/hivemind_bank = list()
+GLOBAL_LIST_EMPTY(hivemind_bank)
 
 /obj/effect/proc_holder/changeling/hivemind_upload
 	name = "Hive Channel DNA"
@@ -32,7 +31,7 @@ var/list/datum/dna/hivemind_bank = list()
 	var/datum/changeling/changeling = user.mind.changeling
 	var/list/names = list()
 	for(var/datum/changelingprofile/prof in changeling.stored_profiles)
-		if(!(prof in hivemind_bank))
+		if(!(prof in GLOB.hivemind_bank))
 			names += prof.name
 
 	if(names.len <= 0)
@@ -49,10 +48,9 @@ var/list/datum/dna/hivemind_bank = list()
 
 	var/datum/changelingprofile/uploaded_dna = new chosen_dna.type
 	chosen_dna.copy_profile(uploaded_dna)
-	hivemind_bank += uploaded_dna
+	GLOB.hivemind_bank += uploaded_dna
 	to_chat(user, "<span class='notice'>We channel the DNA of [chosen_name] to the air.</span>")
-	feedback_add_details("changeling_powers","HU")
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/changeling/hivemind_download
 	name = "Hive Absorb DNA"
@@ -73,7 +71,7 @@ var/list/datum/dna/hivemind_bank = list()
 /obj/effect/proc_holder/changeling/hivemind_download/sting_action(mob/user)
 	var/datum/changeling/changeling = user.mind.changeling
 	var/list/names = list()
-	for(var/datum/changelingprofile/prof in hivemind_bank)
+	for(var/datum/changelingprofile/prof in GLOB.hivemind_bank)
 		if(!(prof in changeling.stored_profiles))
 			names[prof.name] = prof
 
@@ -92,5 +90,4 @@ var/list/datum/dna/hivemind_bank = list()
 	chosen_prof.copy_profile(downloaded_prof)
 	changeling.add_profile(downloaded_prof)
 	to_chat(user, "<span class='notice'>We absorb the DNA of [S] from the air.</span>")
-	feedback_add_details("changeling_powers","HD")
-	return 1
+	return TRUE

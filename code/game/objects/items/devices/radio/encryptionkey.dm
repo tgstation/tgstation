@@ -122,11 +122,11 @@
 	channels = list("Service" = 1)
 
 /obj/item/device/encryptionkey/headset_cent
-	name = "centcom radio encryption key"
-	desc = "An encryption key for a radio headset.  To access the centcom channel, use :y."
+	name = "\improper CentCom radio encryption key"
+	desc = "An encryption key for a radio headset.  To access the CentCom channel, use :y."
 	icon_state = "cent_cypherkey"
 	independent = TRUE
-	channels = list("Centcom" = 1)
+	channels = list("CentCom" = 1)
 
 /obj/item/device/encryptionkey/ai //ported from NT, this goes 'inside' the AI.
 	channels = list("Command" = 1, "Security" = 1, "Engineering" = 1, "Science" = 1, "Medical" = 1, "Supply" = 1, "Service" = 1, "AI Private" = 1)

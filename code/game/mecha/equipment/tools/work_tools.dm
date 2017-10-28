@@ -36,11 +36,11 @@
 		if(!O.anchored)
 			if(cargo_holder.cargo.len < cargo_holder.cargo_capacity)
 				chassis.visible_message("[chassis] lifts [target] and starts to load it into cargo compartment.")
-				O.anchored = 1
+				O.anchored = TRUE
 				if(do_after_cooldown(target))
 					cargo_holder.cargo += O
 					O.loc = chassis
-					O.anchored = 0
+					O.anchored = FALSE
 					occupant_message("<span class='notice'>[target] successfully loaded.</span>")
 					log_message("Loaded [O]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.cargo.len]")
 				else
@@ -52,7 +52,8 @@
 
 	else if(isliving(target))
 		var/mob/living/M = target
-		if(M.stat == DEAD) return
+		if(M.stat == DEAD)
+			return
 		if(chassis.occupant.a_intent == INTENT_HARM)
 			M.take_overall_damage(dam_force)
 			if(!M)
@@ -87,11 +88,11 @@
 		if(!O.anchored)
 			if(cargo_holder.cargo.len < cargo_holder.cargo_capacity)
 				chassis.visible_message("[chassis] lifts [target] and starts to load it into cargo compartment.")
-				O.anchored = 1
+				O.anchored = TRUE
 				if(do_after_cooldown(target))
 					cargo_holder.cargo += O
 					O.loc = chassis
-					O.anchored = 0
+					O.anchored = FALSE
 					occupant_message("<span class='notice'>[target] successfully loaded.</span>")
 					log_message("Loaded [O]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.cargo.len]")
 				else
@@ -103,7 +104,8 @@
 
 	else if(isliving(target))
 		var/mob/living/M = target
-		if(M.stat == DEAD) return
+		if(M.stat == DEAD)
+			return
 		if(chassis.occupant.a_intent == INTENT_HARM)
 			target.visible_message("<span class='danger'>[chassis] destroys [target] in an unholy fury.</span>", \
 								"<span class='userdanger'>[chassis] destroys [target] in an unholy fury.</span>")
@@ -196,14 +198,15 @@
 	equip_cooldown = 10
 	energy_drain = 250
 	range = MELEE|RANGED
+	flags_2 = NO_MAT_REDEMPTION_2
 	var/mode = 0 //0 - deconstruct, 1 - wall or floor, 2 - airlock.
 
 /obj/item/mecha_parts/mecha_equipment/rcd/New()
-	rcd_list += src
+	GLOB.rcd_list += src
 	..()
 
 /obj/item/mecha_parts/mecha_equipment/rcd/Destroy()
- 	rcd_list -= src
+ 	GLOB.rcd_list -= src
  	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/rcd/action(atom/target)
@@ -224,34 +227,34 @@
 				if(do_after_cooldown(W))
 					chassis.spark_system.start()
 					W.ChangeTurf(/turf/open/floor/plating)
-					playsound(W, 'sound/items/Deconstruct.ogg', 50, 1)
+					playsound(W, 'sound/items/deconstruct.ogg', 50, 1)
 			else if(isfloorturf(target))
 				var/turf/open/floor/F = target
 				occupant_message("Deconstructing [F]...")
 				if(do_after_cooldown(target))
 					chassis.spark_system.start()
 					F.ChangeTurf(F.baseturf)
-					playsound(F, 'sound/items/Deconstruct.ogg', 50, 1)
+					playsound(F, 'sound/items/deconstruct.ogg', 50, 1)
 			else if (istype(target, /obj/machinery/door/airlock))
 				occupant_message("Deconstructing [target]...")
 				if(do_after_cooldown(target))
 					chassis.spark_system.start()
 					qdel(target)
-					playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
+					playsound(target, 'sound/items/deconstruct.ogg', 50, 1)
 		if(1)
 			if(isspaceturf(target))
 				var/turf/open/space/S = target
 				occupant_message("Building Floor...")
 				if(do_after_cooldown(S))
 					S.ChangeTurf(/turf/open/floor/plating)
-					playsound(S, 'sound/items/Deconstruct.ogg', 50, 1)
+					playsound(S, 'sound/items/deconstruct.ogg', 50, 1)
 					chassis.spark_system.start()
 			else if(isfloorturf(target))
 				var/turf/open/floor/F = target
 				occupant_message("Building Wall...")
 				if(do_after_cooldown(F))
 					F.ChangeTurf(/turf/closed/wall)
-					playsound(F, 'sound/items/Deconstruct.ogg', 50, 1)
+					playsound(F, 'sound/items/deconstruct.ogg', 50, 1)
 					chassis.spark_system.start()
 		if(2)
 			if(isfloorturf(target))
@@ -259,8 +262,8 @@
 				if(do_after_cooldown(target))
 					chassis.spark_system.start()
 					var/obj/machinery/door/airlock/T = new /obj/machinery/door/airlock(target)
-					T.autoclose = 1
-					playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
+					T.autoclose = TRUE
+					playsound(target, 'sound/items/deconstruct.ogg', 50, 1)
 					playsound(target, 'sound/effects/sparks2.ogg', 50, 1)
 
 
@@ -390,7 +393,7 @@
 /obj/item/mecha_parts/mecha_equipment/cable_layer/proc/dismantleFloor(var/turf/new_turf)
 	if(isfloorturf(new_turf))
 		var/turf/open/floor/T = new_turf
-		if(!istype(T, /turf/open/floor/plating))
+		if(!isplatingturf(T))
 			if(!T.broken && !T.burnt)
 				new T.floor_tile(T)
 			T.make_plating()
@@ -405,22 +408,21 @@
 			return reset()
 	if(!use_cable(1))
 		return reset()
-	var/obj/structure/cable/NC = new(new_turf)
-	NC.cableColor("red")
+	var/obj/structure/cable/NC = new(new_turf, "red")
 	NC.d1 = 0
 	NC.d2 = fdirn
-	NC.updateicon()
+	NC.update_icon()
 
 	var/datum/powernet/PN
 	if(last_piece && last_piece.d2 != chassis.dir)
 		last_piece.d1 = min(last_piece.d2, chassis.dir)
 		last_piece.d2 = max(last_piece.d2, chassis.dir)
-		last_piece.updateicon()
+		last_piece.update_icon()
 		PN = last_piece.powernet
 
 	if(!PN)
 		PN = new()
-		powernets += PN
+		GLOB.powernets += PN
 	NC.powernet = PN
 	PN.cables += NC
 	NC.mergeConnectedNetworks(NC.d2)

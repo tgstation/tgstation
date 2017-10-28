@@ -18,6 +18,8 @@
 				S.cell.use(200)
 		if(ismonkey(user))
 			sound = 'hippiestation/sound/voice/scream_monkey.ogg'
+		if(istype(user, /mob/living/simple_animal/hostile/gorilla))
+			sound = 'sound/creatures/gorilla.ogg'
 		if(ishuman(user))
 			user.adjustOxyLoss(5)
 			sound = pick('hippiestation/sound/voice/scream_m1.ogg', 'hippiestation/sound/voice/scream_m2.ogg')
@@ -27,12 +29,14 @@
 				sound = 'hippiestation/sound/voice/scream_silicon.ogg'
 			if(is_species(user, /datum/species/lizard))
 				sound = 'hippiestation/sound/voice/scream_lizard.ogg'
-			if(is_species(user, get_all_of_type(/datum/species/skeleton)))
+			if(is_species(user, /datum/species/skeleton))
 				sound = 'hippiestation/sound/voice/scream_skeleton.ogg'
-			if (is_species(user, /datum/species/fly))
+			if (is_species(user, /datum/species/fly) || is_species(user, /datum/species/moth))
 				sound = 'hippiestation/sound/voice/scream_moth.ogg'
 			if (is_species(user, /datum/species/bird))
 				sound = 'hippiestation/sound/voice/caw.ogg'
+			if (is_species(user, /datum/species/tarajan))
+				sound = 'hippiestation/sound/voice/cat.ogg'
 		if(isalien(user))
 			sound = 'sound/voice/hiss6.ogg'
 		LAZYINITLIST(user.alternate_screams)
@@ -64,4 +68,46 @@
 			coughsound = pick('hippiestation/sound/voice/cough_f1.ogg', 'hippiestation/sound/voice/cough_f2.ogg', 'hippiestation/sound/voice/cough_f3.ogg')
 		playsound(user.loc, coughsound, 50, 1, 5)
 		user.adjustOxyLoss(5)
+	. = ..()
+
+/datum/emote/living/snap
+	key = "snap"
+	key_third_person = "snaps"
+	message = "snaps."
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/snap/run_emote(mob/living/user, params)
+	if(ishuman(user))
+		if(user.nextsoundemote >= world.time)
+			return
+		user.nextsoundemote = world.time + 7
+		playsound(user, 'hippiestation/sound/voice/snap.ogg', 50, 1, -1)
+	. = ..()
+
+/datum/emote/living/snap2
+	key = "snap2"
+	key_third_person = "snaps twice"
+	message = "snaps twice."
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/snap2/run_emote(mob/living/user, params)
+	if(ishuman(user))
+		if(user.nextsoundemote >= world.time)
+			return
+		user.nextsoundemote = world.time + 7
+		playsound(user, 'hippiestation/sound/voice/snap2.ogg', 50, 1, -1)
+	. = ..()
+
+/datum/emote/living/snap3
+	key = "snap3"
+	key_third_person = "snaps thrice"
+	message = "snaps thrice."
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/snap3/run_emote(mob/living/user, params)
+	if(ishuman(user))
+		if(user.nextsoundemote >= world.time)
+			return
+		user.nextsoundemote = world.time + 7
+		playsound(user, 'hippiestation/sound/voice/snap3.ogg', 50, 1, -1)
 	. = ..()

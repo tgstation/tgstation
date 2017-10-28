@@ -1,5 +1,3 @@
-var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_state"="plasmaman")
-
 /datum/species/plasmaman
 	name = "Plasmaman"
 	id = "plasmaman"
@@ -8,6 +6,9 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	meat = /obj/item/stack/sheet/mineral/plasma
 	species_traits = list(NOBLOOD,RESISTCOLD,RADIMMUNE,NOTRANSSTING,VIRUSIMMUNE,NOHUNGER)
 	mutantlungs = /obj/item/organ/lungs/plasmaman
+	mutanttongue = /obj/item/organ/tongue/bone/plasmaman
+	mutantliver = /obj/item/organ/liver/plasmaman
+	mutantstomach = /obj/item/organ/stomach/plasmaman
 	dangerous_existence = 1 //So so much
 	blacklisted = 1 //See above
 	burnmod = 1.5
@@ -16,14 +17,16 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	speedmod = 1
 	damage_overlay_type = ""//let's not show bloody wounds or burns over bones.
 	var/internal_fire = FALSE //If the bones themselves are burning clothes won't help you much
+	disliked_food = FRUIT
+	liked_food = VEGETABLES
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
 	var/datum/gas_mixture/environment = H.loc.return_air()
-	var/atmos_sealed = (H.wear_suit && (H.wear_suit.flags & STOPSPRESSUREDMAGE)) && (H.head && (H.head.flags & STOPSPRESSUREDMAGE))
+	var/atmos_sealed = (H.wear_suit && (H.wear_suit.flags_1 & STOPSPRESSUREDMAGE_1)) && (H.head && (H.head.flags_1 & STOPSPRESSUREDMAGE_1))
 	if((!istype(H.w_uniform, /obj/item/clothing/under/plasmaman) || !istype(H.head, /obj/item/clothing/head/helmet/space/plasmaman)) && !atmos_sealed)
 		if(environment)
 			if(environment.total_moles())
-				if(environment.gases["o2"] && (environment.gases["o2"][MOLES]) >= 1) //Same threshhold that extinguishes fire
+				if(environment.gases[/datum/gas/oxygen] && (environment.gases[/datum/gas/oxygen][MOLES]) >= 1) //Same threshhold that extinguishes fire
 					H.adjust_fire_stacks(0.5)
 					if(!H.on_fire && H.fire_stacks > 0)
 						H.visible_message("<span class='danger'>[H]'s body reacts with the atmosphere and bursts into flames!</span>","<span class='userdanger'>Your body reacts with the atmosphere and bursts into flame!</span>")
@@ -52,7 +55,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	return 0
 
 /datum/species/plasmaman/qualifies_for_rank(rank, list/features)
-	if(rank in security_positions)
+	if(rank in GLOB.security_positions)
 		return 0
 	if(rank == "Clown" || rank == "Mime")//No funny bussiness
 		return 0

@@ -1,25 +1,21 @@
 //Used for all kinds of weather, ex. lavaland ash storms.
-
-var/datum/controller/subsystem/weather/SSweather
-/datum/controller/subsystem/weather
+SUBSYSTEM_DEF(weather)
 	name = "Weather"
 	flags = SS_BACKGROUND
 	wait = 10
+	runlevels = RUNLEVEL_GAME
 	var/list/processing = list()
 	var/list/existing_weather = list()
 	var/list/eligible_zlevels = list(ZLEVEL_LAVALAND)
-
-/datum/controller/subsystem/weather/New()
-	NEW_SS_GLOBAL(SSweather)
 
 /datum/controller/subsystem/weather/fire()
 	for(var/V in processing)
 		var/datum/weather/W = V
 		if(W.aesthetic)
 			continue
-		for(var/mob/living/L in mob_list)
-			if(W.can_impact(L))
-				W.impact(L)
+		for(var/mob/living/L in GLOB.mob_list)
+			if(W.can_weather_act(L))
+				W.weather_act(L)
 	for(var/Z in eligible_zlevels)
 		var/list/possible_weather_for_this_z = list()
 		for(var/V in existing_weather)
@@ -34,8 +30,7 @@ var/datum/controller/subsystem/weather/SSweather
 /datum/controller/subsystem/weather/Initialize(start_timeofday)
 	..()
 	for(var/V in subtypesof(/datum/weather))
-		var/datum/weather/W = V
-		new W	//weather->New will handle adding itself to the list
+		new V //Weather's New() will handle adding stuff to the list
 
 /datum/controller/subsystem/weather/proc/run_weather(weather_name, Z)
 	if(!weather_name)

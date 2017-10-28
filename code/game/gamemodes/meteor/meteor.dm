@@ -1,6 +1,7 @@
 /datum/game_mode/meteor
 	name = "meteor"
 	config_tag = "meteor"
+	false_report_weight = 1
 	var/meteordelay = 2000
 	var/nometeors = 0
 	var/rampupdelta = 5
@@ -11,18 +12,18 @@
 
 
 /datum/game_mode/meteor/process()
-	if(nometeors || meteordelay > world.time - round_start_time)
+	if(nometeors || meteordelay > world.time - SSticker.round_start_time)
 		return
 
-	var/list/wavetype = meteors_normal
-	var/meteorminutes = (world.time - round_start_time - meteordelay) / 10 / 60
+	var/list/wavetype = GLOB.meteors_normal
+	var/meteorminutes = (world.time - SSticker.round_start_time - meteordelay) / 10 / 60
 
 
 	if (prob(meteorminutes))
-		wavetype = meteors_threatening
+		wavetype = GLOB.meteors_threatening
 
 	if (prob(meteorminutes/2))
-		wavetype = meteors_catastrophic
+		wavetype = GLOB.meteors_catastrophic
 
 	var/ramp_up_final = Clamp(round(meteorminutes/rampupdelta), 1, 10)
 
@@ -33,12 +34,12 @@
 	var/text
 	var/survivors = 0
 
-	for(var/mob/living/player in player_list)
+	for(var/mob/living/player in GLOB.player_list)
 		if(player.stat != DEAD)
 			++survivors
 
-			if(player.onCentcom())
-				text += "<br><b><font size=2>[player.real_name] escaped to the safety of Centcom.</font></b>"
+			if(player.onCentCom())
+				text += "<br><b><font size=2>[player.real_name] escaped to the safety of CentCom.</font></b>"
 			else if(player.onSyndieBase())
 				text += "<br><b><font size=2>[player.real_name] escaped to the (relative) safety of Syndicate Space.</font></b>"
 			else
@@ -50,8 +51,10 @@
 	else
 		to_chat(world, "<span class='boldnotice'>Nobody survived the meteor storm!</span>")
 
-	feedback_set_details("round_end_result","end - evacuation")
-	feedback_set("round_end_result",survivors)
-
+	SSticker.mode_result = "end - evacuation"
 	..()
 	return 1
+
+/datum/game_mode/meteor/generate_report()
+	return "[pick("Asteroids have", "Meteors have", "Large rocks have", "Stellar minerals have", "Space hail has", "Debris has")] been detected near your station, and a collision is possible, \
+			though unlikely.  Be prepared for largescale impacts and destruction.  Please note that the debris will prevent the escape shuttle from arriving quickly."

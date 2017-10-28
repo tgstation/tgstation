@@ -23,6 +23,8 @@
 	if (l_color != NONSENSICAL_VALUE)
 		light_color = l_color
 
+	SendSignal(COMSIG_ATOM_SET_LIGHT, l_range, l_power, l_color)
+
 	update_light()
 
 #undef NONSENSICAL_VALUE
@@ -35,11 +37,9 @@
 		return
 
 	if (!light_power || !light_range) // We won't emit light anyways, destroy the light source.
-		if(light)
-			light.destroy()
-			light = null
+		QDEL_NULL(light)
 	else
-		if (!istype(loc, /atom/movable)) // We choose what atom should be the top atom of the light here.
+		if (!ismovableatom(loc)) // We choose what atom should be the top atom of the light here.
 			. = src
 		else
 			. = loc
@@ -48,13 +48,6 @@
 			light.update(.)
 		else
 			light = new/datum/light_source(src, .)
-
-// Destroy our light source so we GC correctly.
-/atom/Destroy()
-	if (light)
-		light.destroy()
-		light = null
-	. = ..()
 
 // If we have opacity, make sure to tell (potentially) affected light sources.
 /atom/movable/Destroy()

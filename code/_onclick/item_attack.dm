@@ -1,49 +1,51 @@
 
-/proc/melee_item_attack_chain(mob/user, obj/item/I, atom/target, params)
-	if(I.pre_attackby(target, user, params))
+/obj/item/proc/melee_attack_chain(mob/user, atom/target, params)
+	if(pre_attackby(target, user, params))
 		// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
-		var/resolved = target.attackby(I,user,params)
-		if(!resolved && target && I)
-			I.afterattack(target, user, 1, params) // 1: clicking something Adjacent
+		var/resolved = target.attackby(src, user, params)
+		if(!resolved && target && !QDELETED(src))
+			afterattack(target, user, 1, params) // 1: clicking something Adjacent
 
 
 // Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user)
-	return
+	SendSignal(COMSIG_ITEM_ATTACK_SELF, user)
+	interact(user)
 
 /obj/item/proc/pre_attackby(atom/A, mob/living/user, params) //do stuff before attackby!
 	return TRUE //return FALSE to avoid calling attackby after this proc does stuff
 
 // No comment
 /atom/proc/attackby(obj/item/W, mob/user, params)
-	return
+	return SendSignal(COMSIG_PARENT_ATTACKBY, W, user, params)
 
 /obj/attackby(obj/item/I, mob/living/user, params)
-	return I.attack_obj(src, user)
+	return ..() || (can_be_hit && I.attack_obj(src, user))
 
-/mob/living/attackby(obj/item/I, mob/user, params)
+/mob/living/attackby(obj/item/I, mob/living/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(user.a_intent == INTENT_HARM && stat == DEAD && butcher_results) //can we butcher it?
 		var/sharpness = I.is_sharp()
 		if(sharpness)
 			to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
 			playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
-			if(do_mob(user, src, 80/sharpness))
+			if(do_mob(user, src, 80/sharpness) && Adjacent(I))
 				harvest(user)
 			return 1
 	return I.attack(src, user)
 
 
 /obj/item/proc/attack(mob/living/M, mob/living/user)
-	if(flags & NOBLUDGEON)
+	SendSignal(COMSIG_ITEM_ATTACK, M, user)
+	if(flags_1 & NOBLUDGEON_1)
 		return
 	if(!force)
 		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), 1, -1)
 	else if(hitsound)
 		playsound(loc, hitsound, get_clamped_volume(), 1, -1)
 
-	user.lastattacked = M
-	M.lastattacker = user
+	M.lastattacker = user.real_name
+	M.lastattackerckey = user.ckey
 
 	user.do_attack_animation(M)
 	M.attacked_by(src, user)
@@ -54,7 +56,8 @@
 
 //the equivalent of the standard version of attack() but for object targets.
 /obj/item/proc/attack_obj(obj/O, mob/living/user)
-	if(flags & NOBLUDGEON)
+	SendSignal(COMSIG_ITEM_ATTACK_OBJ, O, user)
+	if(flags_1 & NOBLUDGEON_1)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(O)

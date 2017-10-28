@@ -26,7 +26,7 @@
 /datum/airlock_maker/New(var/atom/target_loc)
 	linked = new(target_loc)
 	linked.maker = src
-	linked.anchored = 0
+	linked.anchored = FALSE
 	access_used = list()
 
 	interact()
@@ -69,7 +69,8 @@
 	usr << browse(dat,"window=airlockmaker")
 
 /datum/airlock_maker/Topic(var/href,var/list/href_list)
-	if(!usr) return
+	if(!usr)
+		return
 	if(!src || !linked || !linked.loc)
 		usr << browse(null,"window=airlockmaker")
 		return

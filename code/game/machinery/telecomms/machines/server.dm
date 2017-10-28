@@ -11,12 +11,12 @@
 	name = "telecommunication server"
 	icon_state = "comm_server"
 	desc = "A machine used to store data and network statistics."
-	density = 1
-	anchored = 1
-	use_power = 1
+	density = TRUE
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 15
 	machinetype = 4
-	//heatgen = 50
+	circuit = /obj/item/circuitboard/machine/telecomms/server
 	var/list/log_entries = list()
 	var/list/stored_names = list()
 	var/list/TrafficActions = list()
@@ -32,20 +32,9 @@
 	var/obj/item/device/radio/headset/server_radio = null
 	var/last_signal = 0 	// Last time it sent a signal
 
-/obj/machinery/telecomms/server/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/telecomms/server(null)
-	B.apply_default_parts(src)
-	server_radio = new()
-
-/obj/item/weapon/circuitboard/machine/telecomms/server
-	name = "Telecommunication Server (Machine Board)"
-	build_path = /obj/machinery/telecomms/server
-	origin_tech = "programming=2;engineering=2"
-	req_components = list(
-							/obj/item/weapon/stock_parts/manipulator = 2,
-							/obj/item/stack/cable_coil = 1,
-							/obj/item/weapon/stock_parts/subspace/filter = 1)
+/obj/machinery/telecomms/server/Initialize()
+	. = ..()
+	server_radio = new
 
 /obj/machinery/telecomms/server/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 	if(signal.data["message"])
@@ -72,7 +61,8 @@
 				log.parameters["name"] = signal.data["name"]
 				log.parameters["realname"] = signal.data["realname"]
 
-				log.parameters["uspeech"] = signal.data["languages"] & HUMAN //good enough
+				//log.parameters["uspeech"] = signal.data["languages"] & HUMAN //good enough
+				// TODO languages: ^ I don't know what this does
 
 				// If the signal is still compressed, make the log entry gibberish
 				if(signal.data["compression"] > 0)
@@ -134,29 +124,29 @@
 /obj/machinery/telecomms/server/presets
 	network = "tcommsat"
 
-/obj/machinery/telecomms/server/presets/New()
-	..()
+/obj/machinery/telecomms/server/presets/Initialize()
+	. = ..()
 	name = id
 
 
 /obj/machinery/telecomms/server/presets/science
 	id = "Science Server"
-	freq_listening = list(SCI_FREQ)
+	freq_listening = list(GLOB.SCI_FREQ)
 	autolinkers = list("science")
 
 /obj/machinery/telecomms/server/presets/medical
 	id = "Medical Server"
-	freq_listening = list(MED_FREQ)
+	freq_listening = list(GLOB.MED_FREQ)
 	autolinkers = list("medical")
 
 /obj/machinery/telecomms/server/presets/supply
 	id = "Supply Server"
-	freq_listening = list(SUPP_FREQ)
+	freq_listening = list(GLOB.SUPP_FREQ)
 	autolinkers = list("supply")
 
 /obj/machinery/telecomms/server/presets/service
 	id = "Service Server"
-	freq_listening = list(SERV_FREQ)
+	freq_listening = list(GLOB.SERV_FREQ)
 	autolinkers = list("service")
 
 /obj/machinery/telecomms/server/presets/common
@@ -166,26 +156,26 @@
 
 	//Common and other radio frequencies for people to freely use
 	// 1441 to 1489
-/obj/machinery/telecomms/server/presets/common/New()
+/obj/machinery/telecomms/server/presets/common/Initialize()
+	. = ..()
 	for(var/i = 1441, i < 1489, i += 2)
 		freq_listening |= i
-	..()
 
 /obj/machinery/telecomms/server/presets/command
 	id = "Command Server"
-	freq_listening = list(COMM_FREQ)
+	freq_listening = list(GLOB.COMM_FREQ)
 	autolinkers = list("command")
 
 /obj/machinery/telecomms/server/presets/engineering
 	id = "Engineering Server"
-	freq_listening = list(ENG_FREQ)
+	freq_listening = list(GLOB.ENG_FREQ)
 	autolinkers = list("engineering")
 
 /obj/machinery/telecomms/server/presets/security
 	id = "Security Server"
-	freq_listening = list(SEC_FREQ)
+	freq_listening = list(GLOB.SEC_FREQ)
 	autolinkers = list("security")
 
-/obj/machinery/telecomms/server/presets/common/birdstation/New()
-	..()
+/obj/machinery/telecomms/server/presets/common/birdstation/Initialize()
+	. = ..()
 	freq_listening = list()

@@ -4,7 +4,6 @@
 /area/space)
 "b" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
 	dir = 4
 	},
 /turf/closed/wall/mineral/titanium,
@@ -18,8 +17,7 @@
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "e" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "f" = (
@@ -59,7 +57,7 @@
 	id = "ferry";
 	name = "ferry shuttle";
 	roundstart_move = "ferry_away";
-	port_angle = 180;
+	port_direction = 2;
 	width = 5;
 	timid = 1
 	},
@@ -67,19 +65,13 @@
 /area/shuttle/transport)
 "n" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
 	dir = 4
 	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "o" = (
 /turf/open/floor/plasteel/shuttle,
-/turf/closed/wall/shuttle/interior{
-	icon_state = "swall_f10"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "p" = (
 /obj/structure/closet/crate,
@@ -92,10 +84,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "r" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 
 (1,1,1) = {"

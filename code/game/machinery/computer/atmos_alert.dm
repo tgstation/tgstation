@@ -1,7 +1,7 @@
 /obj/machinery/computer/atmos_alert
 	name = "atmospheric alert console"
 	desc = "Used to monitor the station's air alarms."
-	circuit = /obj/item/weapon/circuitboard/computer/atmos_alert
+	circuit = /obj/item/circuitboard/computer/atmos_alert
 	icon_screen = "alert:0"
 	icon_keyboard = "atmos_key"
 	var/list/priority_alarms = list()
@@ -12,16 +12,15 @@
 	light_color = LIGHT_COLOR_CYAN
 
 /obj/machinery/computer/atmos_alert/Initialize()
-	..()
+	. = ..()
 	set_frequency(receive_frequency)
 
 /obj/machinery/computer/atmos_alert/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src, receive_frequency)
+	SSradio.remove_object(src, receive_frequency)
 	return ..()
 
-/obj/machinery/computer/atmos_alert/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+/obj/machinery/computer/atmos_alert/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "atmos_alert", name, 350, 300, master_ui, state)
@@ -58,15 +57,17 @@
 /obj/machinery/computer/atmos_alert/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, receive_frequency)
 	receive_frequency = new_frequency
-	radio_connection = SSradio.add_object(src, receive_frequency, RADIO_ATMOSIA)
+	radio_connection = SSradio.add_object(src, receive_frequency, GLOB.RADIO_ATMOSIA)
 
 /obj/machinery/computer/atmos_alert/receive_signal(datum/signal/signal)
-	if(!signal || signal.encryption) return
+	if(!signal || signal.encryption)
+		return
 
 	var/zone = signal.data["zone"]
 	var/severity = signal.data["alert"]
 
-	if(!zone || !severity) return
+	if(!zone || !severity)
+		return
 
 	minor_alarms -= zone
 	priority_alarms -= zone

@@ -1,4 +1,4 @@
-//Judicial visor: Grants the ability to smite an area and stun the unfaithful nearby every thirty seconds.
+//Judicial visor: Grants the ability to smite an area and knocking down the unfaithful nearby every thirty seconds.
 /obj/item/clothing/glasses/judicial_visor
 	name = "judicial visor"
 	desc = "A strange purple-lensed visor. Looking at it inspires an odd sense of guilt."
@@ -10,17 +10,17 @@
 	var/active = FALSE //If the visor is online
 	var/recharging = FALSE //If the visor is currently recharging
 	var/obj/effect/proc_holder/judicial_visor/blaster
-	var/recharge_cooldown = 100 //divided by 10 if ratvar is alive
+	var/recharge_cooldown = 300 //divided by 10 if ratvar is alive
 	actions_types = list(/datum/action/item_action/clock/toggle_visor)
 
-/obj/item/clothing/glasses/judicial_visor/New()
-	..()
-	all_clockwork_objects += src
+/obj/item/clothing/glasses/judicial_visor/Initialize()
+	. = ..()
+	GLOB.all_clockwork_objects += src
 	blaster = new(src)
 	blaster.visor = src
 
 /obj/item/clothing/glasses/judicial_visor/Destroy()
-	all_clockwork_objects -= src
+	GLOB.all_clockwork_objects -= src
 	if(blaster.ranged_ability_user)
 		blaster.remove_ranged_ability()
 	blaster.visor = null
@@ -131,7 +131,7 @@
 				continue
 			V.recharging = TRUE //To prevent exploiting multiple visors to bypass the cooldown
 			V.update_status()
-			addtimer(CALLBACK(V, /obj/item/clothing/glasses/judicial_visor.proc/recharge_visor, ranged_ability_user), (ratvar_awakens ? visor.recharge_cooldown*0.2 : visor.recharge_cooldown) * 2)
+			addtimer(CALLBACK(V, /obj/item/clothing/glasses/judicial_visor.proc/recharge_visor, ranged_ability_user), (GLOB.ratvar_awakens ? visor.recharge_cooldown*0.1 : visor.recharge_cooldown) * 2)
 		clockwork_say(ranged_ability_user, text2ratvar("Kneel, heathens!"))
 		ranged_ability_user.visible_message("<span class='warning'>[ranged_ability_user]'s judicial visor fires a stream of energy at [target], creating a strange mark!</span>", "<span class='heavy_brass'>You direct [visor]'s power to [target]. You must wait for some time before doing this again.</span>")
 		var/turf/targetturf = get_turf(target)
@@ -139,13 +139,13 @@
 		add_logs(ranged_ability_user, targetturf, "created a judicial marker")
 		ranged_ability_user.update_action_buttons_icon()
 		ranged_ability_user.update_inv_glasses()
-		addtimer(CALLBACK(visor, /obj/item/clothing/glasses/judicial_visor.proc/recharge_visor, ranged_ability_user), ratvar_awakens ? visor.recharge_cooldown*0.1 : visor.recharge_cooldown)//Cooldown is reduced by 10x if Ratvar is up
+		addtimer(CALLBACK(visor, /obj/item/clothing/glasses/judicial_visor.proc/recharge_visor, ranged_ability_user), GLOB.ratvar_awakens ? visor.recharge_cooldown*0.1 : visor.recharge_cooldown)//Cooldown is reduced by 10x if Ratvar is up
 		remove_ranged_ability()
 
 		return TRUE
 	return FALSE
 
-//Judicial marker: Created by the judicial visor. After three seconds, stuns any non-servants nearby and damages Nar-Sian cultists.
+//Judicial marker: Created by the judicial visor. Immediately applies Belligerent and briefly knocks down, then after 3 seconds does large damage and briefly knocks down again
 /obj/effect/clockwork/judicial_marker
 	name = "judicial marker"
 	desc = "You get the feeling that you shouldn't be standing here."
@@ -156,20 +156,27 @@
 	layer = BELOW_MOB_LAYER
 	var/mob/user
 
-/obj/effect/clockwork/judicial_marker/New(loc, caster)
-	..()
+/obj/effect/clockwork/judicial_marker/Initialize(mapload, caster)
+	. = ..()
 	set_light(1.4, 2, "#FE9C11")
 	user = caster
 	INVOKE_ASYNC(src, .proc/judicialblast)
 
 /obj/effect/clockwork/judicial_marker/proc/judicialblast()
-	playsound(src, 'sound/magic/MAGIC_MISSILE.ogg', 50, 1, 1, 1)
+	playsound(src, 'sound/magic/magic_missile.ogg', 50, 1, 1, 1)
 	flick("judicial_marker", src)
-	sleep(16)
+	for(var/mob/living/carbon/C in range(1, src))
+		var/datum/status_effect/belligerent/B = C.apply_status_effect(STATUS_EFFECT_BELLIGERENT)
+		if(!QDELETED(B))
+			B.duration = world.time + 30
+			C.Knockdown(5) //knocks down for half a second if affected
+	sleep(!GLOB.ratvar_approaches ? 16 : 10)
+	name = "judicial blast"
 	layer = ABOVE_ALL_MOB_LAYER
 	flick("judicial_explosion", src)
 	set_light(1.4, 2, "#B451A1")
 	sleep(13)
+	name = "judicial explosion"
 	var/targetsjudged = 0
 	playsound(src, 'sound/effects/explosionfar.ogg', 100, 1, 1, 1)
 	set_light(0)
@@ -181,21 +188,19 @@
 			L.visible_message("<span class='warning'>Strange energy flows into [L]'s [I.name]!</span>", \
 			"<span class='userdanger'>Your [I.name] shields you from [src]!</span>")
 			continue
+		L.Knockdown(15) //knocks down briefly when exploding
 		if(!iscultist(L))
 			L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
 			"<span class='userdanger'>[!issilicon(L) ? "An unseen force slams you into the ground!" : "ERROR: Motor servos disabled by external source!"]</span>")
-			L.Weaken(8) //stun targets for 14-16 seconds
 		else
 			L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
 			"<span class='heavy_brass'>\"Keep an eye out, filth.\"</span>\n<span class='userdanger'>A burst of heat crushes you against the ground!</span>")
-			L.Weaken(4) //stun for 6-8 seconds, but set cultist targets on fire
-			L.adjust_fire_stacks(2)
+			L.adjust_fire_stacks(2) //sets cultist targets on fire
 			L.IgniteMob()
-		if(iscarbon(L))
-			var/mob/living/carbon/C = L
-			C.silent += 6
+			L.adjustFireLoss(5)
 		targetsjudged++
-		L.adjustBruteLoss(10) //do a small amount of damage
+		if(!QDELETED(L))
+			L.adjustBruteLoss(20) //does a decent amount of damage
 		add_logs(user, L, "struck with a judicial blast")
 	to_chat(user, "<span class='brass'><b>[targetsjudged ? "Successfully judged <span class='neovgre'>[targetsjudged]</span>":"Judged no"] heretic[targetsjudged == 1 ? "":"s"].</b></span>")
 	sleep(3) //so the animation completes properly

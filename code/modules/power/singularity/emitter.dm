@@ -1,19 +1,19 @@
-
-
 /obj/machinery/power/emitter
-	name = "Emitter"
-	desc = "A heavy duty industrial laser.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
+	name = "emitter"
+	desc = "A heavy-duty industrial laser, often used in containment fields and power generation.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "emitter"
-	var/icon_state_on = "emitter_+a"
-	anchored = 0
-	density = 1
-	req_access = list(access_engine_equip)
 
-	use_power = 0
+	anchored = FALSE
+	density = TRUE
+	req_access = list(ACCESS_ENGINE_EQUIP)
+	circuit = /obj/item/circuitboard/machine/emitter
+
+	use_power = NO_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 300
 
+	var/icon_state_on = "emitter_+a"
 	var/active = 0
 	var/powered = 0
 	var/fire_delay = 100
@@ -22,40 +22,56 @@
 	var/last_shot = 0
 	var/shot_number = 0
 	var/state = 0
-	var/locked = 0
+	var/locked = FALSE
 
 	var/projectile_type = /obj/item/projectile/beam/emitter
 
 	var/projectile_sound = 'sound/weapons/emitter.ogg'
 
-/obj/machinery/power/emitter/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/emitter(null)
-	B.apply_default_parts(src)
+	var/datum/effect_system/spark_spread/sparks
+
+	// The following 3 vars are mostly for the prototype
+	var/manual = FALSE
+	var/charge = 0
+	var/last_projectile_params
+
+/obj/machinery/power/emitter/anchored
+	anchored = TRUE
+
+/obj/machinery/power/emitter/ctf
+	name = "Energy Cannon"
+	active = TRUE
+	active_power_usage = FALSE
+	idle_power_usage = FALSE
+	locked = TRUE
+	req_access_txt = "100"
+	state = 2
+	use_power = FALSE
+
+/obj/machinery/power/emitter/Initialize()
+	. = ..()
 	RefreshParts()
 	wires = new /datum/wires/emitter(src)
+	if(state == 2 && anchored)
+		connect_to_network()
 
-/obj/item/weapon/circuitboard/machine/emitter
-	name = "Emitter (Machine Board)"
-	build_path = /obj/machinery/power/emitter
-	origin_tech = "programming=3;powerstorage=4;engineering=4"
-	req_components = list(
-							/obj/item/weapon/stock_parts/micro_laser = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1)
+	sparks = new
+	sparks.attach(src)
+	sparks.set_up(5, TRUE, src)
 
 /obj/machinery/power/emitter/RefreshParts()
 	var/max_firedelay = 120
 	var/firedelay = 120
 	var/min_firedelay = 24
 	var/power_usage = 350
-	for(var/obj/item/weapon/stock_parts/micro_laser/L in component_parts)
+	for(var/obj/item/stock_parts/micro_laser/L in component_parts)
 		max_firedelay -= 20 * L.rating
 		min_firedelay -= 4 * L.rating
 		firedelay -= 20 * L.rating
 	maximum_fire_delay = max_firedelay
 	minimum_fire_delay = min_firedelay
 	fire_delay = firedelay
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		power_usage -= 50 * M.rating
 	active_power_usage = power_usage
 
@@ -82,16 +98,13 @@
 	else
 		rotate()
 
-/obj/machinery/power/emitter/Initialize()
-	..()
-	if(state == 2 && anchored)
-		connect_to_network()
-
 /obj/machinery/power/emitter/Destroy()
-	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
-		message_admins("Emitter deleted at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-		log_game("Emitter deleted at ([x],[y],[z])")
-		investigate_log("<font color='red'>deleted</font> at ([x],[y],[z]) at [get_area(src)]","singulo")
+	if(SSticker.IsRoundInProgress())
+		var/turf/T = get_turf(src)
+		message_admins("Emitter deleted at [ADMIN_COORDJMP(T)]",0,1)
+		log_game("Emitter deleted at [COORD(T)]")
+		investigate_log("<font color='red'>deleted</font> at [get_area(src)] [COORD(T)]", INVESTIGATE_SINGULO)
+	QDEL_NULL(sparks)
 	return ..()
 
 /obj/machinery/power/emitter/update_icon()
@@ -111,20 +124,20 @@
 			if(src.active==1)
 				src.active = 0
 				to_chat(user, "<span class='notice'>You turn off \the [src].</span>")
-				message_admins("Emitter turned off by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-				log_game("Emitter turned off by [key_name(user)] in ([x],[y],[z])")
-				investigate_log("turned <font color='red'>off</font> by [key_name(user)] at [get_area(src)]","singulo")
+				message_admins("Emitter turned off by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(src)]",0,1)
+				log_game("Emitter turned off by [key_name(user)] in [COORD(src)]")
+				investigate_log("turned <font color='red'>off</font> by [key_name(user)] at [get_area(src)]", INVESTIGATE_SINGULO)
 			else
 				src.active = 1
 				to_chat(user, "<span class='notice'>You turn on \the [src].</span>")
 				src.shot_number = 0
 				src.fire_delay = maximum_fire_delay
-				investigate_log("turned <font color='green'>on</font> by [key_name(user)] at [get_area(src)]","singulo")
+				investigate_log("turned <font color='green'>on</font> by [key_name(user)] at [get_area(src)]", INVESTIGATE_SINGULO)
 			update_icon()
 		else
 			to_chat(user, "<span class='warning'>The controls are locked!</span>")
 	else
-		to_chat(user, "<span class='warning'>The [src] needs to be firmly secured to the floor first!</span>")
+		to_chat(user, "<span class='warning'>[src] needs to be firmly secured to the floor first!</span>")
 		return 1
 
 /obj/machinery/power/emitter/attack_animal(mob/living/simple_animal/M)
@@ -143,7 +156,7 @@
 /*	if((severity == 1)&&prob(1)&&prob(1))
 		if(src.active)
 			src.active = 0
-			src.use_power = 1	*/
+			src.use_power = IDLE_POWER_USE	*/
 	return 1
 
 
@@ -160,15 +173,17 @@
 			if(!powered)
 				powered = 1
 				update_icon()
-				investigate_log("regained power and turned <font color='green'>on</font> at [get_area(src)]","singulo")
+				investigate_log("regained power and turned <font color='green'>on</font> at [get_area(src)]", INVESTIGATE_SINGULO)
 		else
 			if(powered)
 				powered = 0
 				update_icon()
-				investigate_log("lost power and turned <font color='red'>off</font> at [get_area(src)]","singulo")
+				investigate_log("lost power and turned <font color='red'>off</font> at [get_area(src)]", INVESTIGATE_SINGULO)
 				log_game("Emitter lost power in ([x],[y],[z])")
 			return
-		if(!check_delay())
+		if(charge <=80)
+			charge+=5
+		if(!check_delay() || manual == TRUE)
 			return FALSE
 		fire_beam()
 
@@ -186,36 +201,28 @@
 		add_load(active_power_usage)
 		fire_beam()
 
-/obj/machinery/power/emitter/proc/fire_beam()
-	src.last_shot = world.time
-	if(src.shot_number < 3)
-		src.fire_delay = 20
-		src.shot_number ++
-	else
-		src.fire_delay = rand(minimum_fire_delay,maximum_fire_delay)
-		src.shot_number = 0
-	var/obj/item/projectile/A = new projectile_type(src.loc)
-	A.setDir(src.dir)
-	playsound(src.loc, projectile_sound, 25, 1)
+/obj/machinery/power/emitter/proc/fire_beam(mob/user)
+	var/obj/item/projectile/P = new projectile_type(get_turf(src))
+	playsound(get_turf(src), projectile_sound, 50, 1)
 	if(prob(35))
-		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-		s.set_up(5, 1, src)
-		s.start()
-	switch(dir)
-		if(NORTH)
-			A.yo = 20
-			A.xo = 0
-		if(EAST)
-			A.yo = 0
-			A.xo = 20
-		if(WEST)
-			A.yo = 0
-			A.xo = -20
-		else // Any other
-			A.yo = -20
-			A.xo = 0
-	A.starting = loc
-	A.fire()
+		sparks.start()
+	P.firer = user? user : src
+	if(last_projectile_params)
+		P.p_x = last_projectile_params[2]
+		P.p_y = last_projectile_params[3]
+		P.fire(last_projectile_params[1])
+	else
+		P.fire(dir2angle(dir))
+	if(!manual)
+		last_shot = world.time
+		if(shot_number < 3)
+			fire_delay = 20
+			shot_number ++
+		else
+			fire_delay = rand(minimum_fire_delay,maximum_fire_delay)
+			shot_number = 0
+	P.fire()
+	return P
 
 /obj/machinery/power/emitter/can_be_unfasten_wrench(mob/user, silent)
 	if(state == EM_WELDED)
@@ -224,7 +231,7 @@
 		return FAILED_UNFASTEN
 	return ..()
 
-/obj/machinery/power/emitter/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
+/obj/machinery/power/emitter/default_unfasten_wrench(mob/user, obj/item/wrench/W, time = 20)
 	. = ..()
 	if(. == SUCCESSFUL_UNFASTEN)
 		if(anchored)
@@ -233,15 +240,15 @@
 			state = EM_UNSECURED
 
 /obj/machinery/power/emitter/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(istype(W, /obj/item/wrench))
 		if(active)
 			to_chat(user, "<span class='warning'>Turn \the [src] off first!</span>")
 			return
 		default_unfasten_wrench(user, W, 0)
 		return
 
-	if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
+	if(istype(W, /obj/item/weldingtool))
+		var/obj/item/weldingtool/WT = W
 		if(active)
 			to_chat(user, "Turn \the [src] off first.")
 			return
@@ -303,8 +310,155 @@
 	return ..()
 
 /obj/machinery/power/emitter/emag_act(mob/user)
-	if(!emagged)
-		locked = 0
-		emagged = 1
-		if(user)
-			user.visible_message("[user.name] emags the [src.name].","<span class='notice'>You short out the lock.</span>")
+	if(emagged)
+		return
+	locked = FALSE
+	emagged = TRUE
+	if(user)
+		user.visible_message("[user.name] emags [src].","<span class='notice'>You short out the lock.</span>")
+
+
+/obj/machinery/power/emitter/prototype
+	name = "Prototype Emitter"
+	icon = 'icons/obj/turrets.dmi'
+	icon_state = "protoemitter"
+	icon_state_on = "protoemitter_+a"
+	can_buckle = TRUE
+	buckle_lying = 0
+	var/view_range = 12
+	var/datum/action/innate/protoemitter/firing/auto
+
+//BUCKLE HOOKS
+
+/obj/machinery/power/emitter/prototype/unbuckle_mob(mob/living/buckled_mob,force = 0)
+	playsound(src,'sound/mecha/mechmove01.ogg', 50, 1)
+	manual = FALSE
+	for(var/obj/item/I in buckled_mob.held_items)
+		if(istype(I, /obj/item/turret_control))
+			qdel(I)
+	if(istype(buckled_mob))
+		buckled_mob.pixel_x = 0
+		buckled_mob.pixel_y = 0
+		if(buckled_mob.client)
+			buckled_mob.client.change_view(world.view)
+	auto.Remove(buckled_mob)
+	. = ..()
+
+/obj/machinery/power/emitter/prototype/user_buckle_mob(mob/living/M, mob/living/carbon/user)
+	if(user.incapacitated() || !istype(user))
+		return
+	for(var/atom/movable/A in get_turf(src))
+		if(A.density && (A != src && A != M))
+			return
+	M.forceMove(get_turf(src))
+	..()
+	playsound(src,'sound/mecha/mechmove01.ogg', 50, 1)
+	M.pixel_y = 14
+	layer = 4.1
+	if(M.client)
+		M.client.change_view(view_range)
+	if(!auto)
+		auto = new()
+	auto.Grant(M, src)
+
+/datum/action/innate/protoemitter
+	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUN | AB_CHECK_CONSCIOUS
+	var/obj/machinery/power/emitter/prototype/PE
+	var/mob/living/carbon/U
+
+
+/datum/action/innate/protoemitter/Grant(mob/living/carbon/L, obj/machinery/power/emitter/prototype/proto)
+	PE = proto
+	U = L
+	. = ..()
+
+/datum/action/innate/protoemitter/firing
+	name = "Switch to Manual Firing"
+	desc = "The emitter will only fire on your command and at your designated target"
+	button_icon_state = "mech_zoom_on"
+
+/datum/action/innate/protoemitter/firing/Activate()
+	if(PE.manual)
+		playsound(PE,'sound/mecha/mechmove01.ogg', 50, 1)
+		PE.manual = FALSE
+		name = "Switch to Manual Firing"
+		desc = "The emitter will only fire on your command and at your designated target"
+		button_icon_state = "mech_zoom_on"
+		for(var/obj/item/I in U.held_items)
+			if(istype(I, /obj/item/turret_control))
+				qdel(I)
+		UpdateButtonIcon()
+		return
+	else
+		playsound(PE,'sound/mecha/mechmove01.ogg', 50, 1)
+		name = "Switch to Automatic Firing"
+		desc = "Emitters will switch to periodic firing at your last target"
+		button_icon_state = "mech_zoom_off"
+		PE.manual = TRUE
+		for(var/V in U.held_items)
+			var/obj/item/I = V
+			if(istype(I))
+				if(U.dropItemToGround(I))
+					var/obj/item/turret_control/TC = new /obj/item/turret_control()
+					U.put_in_hands(TC)
+			else	//Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
+				var/obj/item/turret_control/TC = new /obj/item/turret_control()
+				U.put_in_hands(TC)
+		UpdateButtonIcon()
+
+
+/obj/item/turret_control
+	name = "turret controls"
+	icon_state = "offhand"
+	w_class = WEIGHT_CLASS_HUGE
+	flags_1 = ABSTRACT_1 | NODROP_1
+	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF | NOBLUDGEON_1
+	var/delay = 0
+
+/obj/item/turret_control/afterattack(atom/targeted_atom, mob/user, proxflag, clickparams)
+	..()
+	var/obj/machinery/power/emitter/E = user.buckled
+	E.setDir(get_dir(E,targeted_atom))
+	user.setDir(E.dir)
+	switch(E.dir)
+		if(NORTH)
+			E.layer = 3.9
+			user.pixel_x = 0
+			user.pixel_y = -14
+		if(NORTHEAST)
+			E.layer = 3.9
+			user.pixel_x = -8
+			user.pixel_y = -12
+		if(EAST)
+			E.layer = 4.1
+			user.pixel_x = -14
+			user.pixel_y = 0
+		if(SOUTHEAST)
+			E.layer = 3.9
+			user.pixel_x = -8
+			user.pixel_y = 12
+		if(SOUTH)
+			E.layer = 4.1
+			user.pixel_x = 0
+			user.pixel_y = 14
+		if(SOUTHWEST)
+			E.layer = 3.9
+			user.pixel_x = 8
+			user.pixel_y = 12
+		if(WEST)
+			E.layer = 4.1
+			user.pixel_x = 14
+			user.pixel_y = 0
+		if(NORTHWEST)
+			E.layer = 3.9
+			user.pixel_x = 8
+			user.pixel_y = -12
+
+	E.last_projectile_params = calculate_projectile_angle_and_pixel_offsets(user, clickparams)
+
+	if(E.charge >= 10 && world.time > delay)
+		E.charge -= 10
+		E.fire_beam(user)
+		delay = world.time + 10
+	else if (E.charge < 10)
+		playsound(get_turf(user),'sound/machines/buzz-sigh.ogg', 50, 1)

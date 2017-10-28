@@ -2,9 +2,8 @@
 	desc = "A secure crate."
 	name = "secure crate"
 	icon_state = "securecrate"
-	secure = 1
-	locked = 1
-	obj_integrity = 500
+	secure = TRUE
+	locked = TRUE
 	max_integrity = 500
 	armor = list(melee = 30, bullet = 50, laser = 50, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 80)
 	var/tamperproof = 0
@@ -33,7 +32,7 @@
 	if(user)
 		to_chat(user, "<span class='danger'>The crate's anti-tamper system activates!</span>")
 		var/message = "[ADMIN_LOOKUPFLW(user)] has detonated [src.name]."
-		bombers += message
+		GLOB.bombers += message
 		message_admins(message)
 		log_game("[key_name(user)] has detonated [src.name].")
 	for(var/atom/movable/AM in src)

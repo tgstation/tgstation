@@ -4,8 +4,6 @@
 /area/space)
 "ab" = (
 /obj/structure/shuttle/engine/propulsion{
-	tag = "icon-propulsion (NORTH)";
-	icon_state = "propulsion";
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -19,8 +17,6 @@
 "ad" = (
 /obj/structure/window/reinforced,
 /obj/structure/shuttle/engine/heater{
-	tag = "icon-heater (NORTH)";
-	icon_state = "heater";
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -60,19 +56,19 @@
 	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
 	name = "emergency lifejacket"
 	},
-/obj/item/weapon/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen/double{
 	pixel_x = 3
 	},
-/obj/item/weapon/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen/double{
 	pixel_x = 3
 	},
-/obj/item/weapon/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen/double{
 	pixel_x = 3
 	},
-/obj/item/weapon/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen/double{
 	pixel_x = 3
 	},
-/obj/item/weapon/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen/double{
 	pixel_x = 3
 	},
 /obj/item/clothing/mask/breath{
@@ -125,7 +121,7 @@
 	},
 /area/shuttle/escape)
 "aj" = (
-/obj/item/weapon/defibrillator/loaded,
+/obj/item/defibrillator/loaded,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/cmo,
 /area/shuttle/escape)
@@ -135,18 +131,18 @@
 /area/shuttle/escape)
 "al" = (
 /obj/structure/table/optable,
-/obj/item/weapon/surgical_drapes,
+/obj/item/surgical_drapes,
 /turf/open/floor/plasteel/cmo,
 /area/shuttle/escape)
 "am" = (
-/obj/item/weapon/scalpel{
+/obj/item/scalpel{
 	pixel_y = 12
 	},
-/obj/item/weapon/circular_saw,
-/obj/item/weapon/retractor{
+/obj/item/circular_saw,
+/obj/item/retractor{
 	pixel_x = 4
 	},
-/obj/item/weapon/hemostat{
+/obj/item/hemostat{
 	pixel_x = -4
 	},
 /obj/item/clothing/gloves/color/latex,
@@ -155,9 +151,8 @@
 /turf/open/floor/plasteel/cmo,
 /area/shuttle/escape)
 "an" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
-	layer = 4.1;
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -170,9 +165,8 @@
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/escape)
 "ap" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
-	layer = 4.1;
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -188,40 +182,38 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "ar" = (
-/obj/item/weapon/reagent_containers/glass/bottle/epinephrine{
-	pixel_x = 6;
-	pixel_y = 0
+/obj/item/reagent_containers/glass/bottle/epinephrine{
+	pixel_x = 6
 	},
-/obj/item/weapon/reagent_containers/glass/bottle/charcoal{
+/obj/item/reagent_containers/glass/bottle/charcoal{
 	pixel_x = -3
 	},
-/obj/item/weapon/reagent_containers/glass/bottle/epinephrine{
+/obj/item/reagent_containers/glass/bottle/epinephrine{
 	pixel_x = -3;
 	pixel_y = 8
 	},
-/obj/item/weapon/reagent_containers/glass/bottle/charcoal{
+/obj/item/reagent_containers/glass/bottle/charcoal{
 	pixel_x = 6;
 	pixel_y = 8
 	},
-/obj/item/weapon/reagent_containers/syringe/epinephrine{
+/obj/item/reagent_containers/syringe/epinephrine{
 	pixel_x = 3;
 	pixel_y = -2
 	},
-/obj/item/weapon/reagent_containers/syringe/epinephrine{
+/obj/item/reagent_containers/syringe/epinephrine{
 	pixel_x = 4;
 	pixel_y = 1
 	},
-/obj/item/weapon/reagent_containers/syringe/epinephrine{
+/obj/item/reagent_containers/syringe/epinephrine{
 	pixel_x = -2;
 	pixel_y = 5
 	},
-/obj/item/weapon/reagent_containers/syringe/epinephrine{
+/obj/item/reagent_containers/syringe/epinephrine{
 	pixel_x = 2;
 	pixel_y = 8
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/cmo,
@@ -280,21 +272,17 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (NORTH)";
-	icon_state = "whiteblue";
 	dir = 1
 	},
 /area/shuttle/escape)
 "aA" = (
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (NORTH)";
-	icon_state = "whiteblue";
 	dir = 1
 	},
 /area/shuttle/escape)
 "aB" = (
-/obj/item/weapon/storage/firstaid/toxin,
-/obj/item/weapon/storage/firstaid/o2{
+/obj/item/storage/firstaid/toxin,
+/obj/item/storage/firstaid/o2{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -305,11 +293,11 @@
 /area/shuttle/escape)
 "aC" = (
 /obj/machinery/ai_status_display,
-/turf/closed/wall/shuttle/smooth/nodiagonal,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "aD" = (
 /obj/machinery/status_display,
-/turf/closed/wall/shuttle/smooth/nodiagonal,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "aE" = (
 /obj/effect/turf_decal/delivery,
@@ -327,8 +315,8 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aG" = (
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
@@ -343,8 +331,7 @@
 	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = -26;
-	pixel_y = 0
+	pixel_x = -26
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -364,14 +351,13 @@
 	name = "emergency shower"
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 4;
-	tag = "icon-whiteblue (EAST)"
+	baseturf = /turf/open/lava/smooth/lava_land_surface;
+	dir = 4
 	},
 /area/shuttle/escape)
 "aK" = (
 /obj/structure/extinguisher_cabinet,
-/turf/closed/wall/shuttle/smooth/nodiagonal,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "aL" = (
 /obj/structure/bed/roller,
@@ -410,7 +396,6 @@
 /area/shuttle/escape)
 "aQ" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 4
 	},
 /turf/open/floor/plasteel/cmo,
@@ -420,7 +405,6 @@
 /area/shuttle/escape)
 "aS" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /turf/open/floor/plasteel/cmo,
@@ -432,7 +416,6 @@
 "aU" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -446,9 +429,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
-	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aW" = (
 /obj/machinery/door/airlock/shuttle{
@@ -461,7 +442,8 @@
 	name = "Delta emergency shuttle";
 	width = 30;
 	preferred_direction = 2;
-	port_angle = 90
+	port_direction = 4;
+	timid = 1
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -483,15 +465,14 @@
 /area/shuttle/escape)
 "aZ" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/toolbox/electrical{
+/obj/item/storage/toolbox/electrical{
 	pixel_x = -3;
 	pixel_y = 1
 	},
-/obj/item/weapon/storage/toolbox/mechanical{
-	pixel_x = 0;
+/obj/item/storage/toolbox/mechanical{
 	pixel_y = -1
 	},
-/obj/item/weapon/storage/toolbox/emergency{
+/obj/item/storage/toolbox/emergency{
 	pixel_x = 3;
 	pixel_y = -5
 	},
@@ -505,8 +486,7 @@
 /obj/structure/reagent_dispensers/fueltank,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = -26;
-	pixel_y = 0
+	pixel_x = -26
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -527,12 +507,12 @@
 /obj/structure/closet/crate/medical{
 	name = "medical crate"
 	},
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/storage/firstaid/o2{
+/obj/item/storage/firstaid/regular,
+/obj/item/storage/firstaid/o2{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/firstaid/toxin{
+/obj/item/storage/firstaid/toxin{
 	pixel_x = -4;
 	pixel_y = 3
 	},
@@ -540,7 +520,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/lazarus_injector,
+/obj/item/lazarus_injector,
 /obj/effect/turf_decal/bot,
 /mob/living/simple_animal/bot/medbot{
 	name = "\improper emergency medibot";
@@ -578,8 +558,8 @@
 /obj/structure/closet/crate{
 	name = "emergency supplies crate"
 	},
-/obj/item/weapon/storage/toolbox/emergency,
-/obj/item/weapon/storage/toolbox/emergency,
+/obj/item/storage/toolbox/emergency,
+/obj/item/storage/toolbox/emergency,
 /obj/item/device/flashlight/flare{
 	pixel_x = 3;
 	pixel_y = 3
@@ -588,8 +568,8 @@
 	pixel_x = -6;
 	pixel_y = -2
 	},
-/obj/item/weapon/crowbar,
-/obj/item/weapon/wrench,
+/obj/item/crowbar,
+/obj/item/wrench,
 /obj/item/device/radio,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -597,12 +577,10 @@
 "bj" = (
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
-	pixel_x = 0;
-	pixel_y = 0;
 	req_access_txt = "0";
 	use_power = 0
 	},
-/turf/closed/wall/shuttle/smooth/nodiagonal,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "bk" = (
 /obj/machinery/door/airlock/shuttle{
@@ -616,12 +594,11 @@
 "bl" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/fire/firefighter,
-/obj/item/weapon/tank/internals/oxygen/red,
+/obj/item/tank/internals/oxygen/red,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/head/hardhat/red,
 /obj/effect/turf_decal/bot,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -651,9 +628,9 @@
 /area/shuttle/escape)
 "bq" = (
 /obj/structure/table,
-/obj/item/weapon/clipboard,
-/obj/item/weapon/folder/yellow,
-/obj/item/weapon/pen,
+/obj/item/clipboard,
+/obj/item/folder/yellow,
+/obj/item/pen,
 /obj/item/hand_labeler_refill,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -666,7 +643,7 @@
 "bs" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/weapon/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
@@ -675,7 +652,7 @@
 	name = "Holding Area";
 	req_access_txt = "2"
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "bu" = (
 /obj/machinery/door/airlock/glass_command{
@@ -685,9 +662,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
-	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bv" = (
 /obj/machinery/door/airlock/shuttle{
@@ -700,21 +675,20 @@
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "bw" = (
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "bx" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "by" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "bz" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-21"
 	},
 /obj/machinery/button/flasher{
 	id = "shuttleflash";
@@ -726,9 +700,8 @@
 	},
 /area/shuttle/escape)
 "bA" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
@@ -736,7 +709,7 @@
 /area/shuttle/escape)
 "bB" = (
 /obj/structure/table,
-/obj/item/weapon/clipboard,
+/obj/item/clipboard,
 /obj/item/toy/figure/ninja,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -758,7 +731,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "bF" = (
 /turf/open/floor/plasteel/red/corner{
@@ -785,7 +758,6 @@
 "bJ" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = 0;
 	pixel_y = 58
 	},
 /turf/open/floor/plasteel/neutral/side,
@@ -811,18 +783,18 @@
 /obj/machinery/status_display{
 	pixel_x = -32
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "bN" = (
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "bO" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/lockbox/loyalty,
-/turf/open/floor/plasteel/shuttle/red,
+/obj/item/storage/lockbox/loyalty,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "bP" = (
 /obj/structure/table/reinforced,
@@ -844,9 +816,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
-	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bS" = (
 /turf/open/floor/plasteel/neutral/corner{
@@ -862,22 +832,21 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "bV" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/zipties,
+/obj/item/storage/box/zipties,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = 0;
 	pixel_y = -26
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "bW" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/open/floor/plasteel/red/corner{
 	dir = 8
 	},
@@ -894,9 +863,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (NORTH)"
-	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bZ" = (
 /obj/machinery/suit_storage_unit/standard_unit,
@@ -911,9 +878,8 @@
 	},
 /area/shuttle/escape)
 "cb" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
-	layer = 4.1;
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -921,21 +887,17 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/vault{
-	tag = "icon-vault (NORTHEAST)";
-	icon_state = "vault";
 	dir = 5
 	},
 /area/shuttle/escape)
 "cc" = (
 /turf/open/floor/plasteel/vault{
-	tag = "icon-vault (NORTHEAST)";
-	icon_state = "vault";
 	dir = 5
 	},
 /area/shuttle/escape)
 "cd" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},
@@ -943,8 +905,6 @@
 "ce" = (
 /obj/machinery/computer/security,
 /turf/open/floor/plasteel/darkred/side{
-	tag = "icon-darkred (NORTHWEST)";
-	icon_state = "darkred";
 	dir = 9
 	},
 /area/shuttle/escape)
@@ -953,8 +913,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
-	tag = "icon-vault (NORTHEAST)";
-	icon_state = "vault";
 	dir = 5
 	},
 /area/shuttle/escape)
@@ -965,8 +923,6 @@
 	pixel_y = 58
 	},
 /turf/open/floor/plasteel/vault{
-	tag = "icon-vault (NORTHEAST)";
-	icon_state = "vault";
 	dir = 5
 	},
 /area/shuttle/escape)
@@ -975,24 +931,18 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault{
-	tag = "icon-vault (NORTHEAST)";
-	icon_state = "vault";
 	dir = 5
 	},
 /area/shuttle/escape)
 "ci" = (
 /obj/machinery/computer/station_alert,
 /turf/open/floor/plasteel/darkyellow/side{
-	tag = "icon-darkyellow (NORTHEAST)";
-	icon_state = "darkyellow";
 	dir = 5
 	},
 /area/shuttle/escape)
 "cj" = (
 /obj/machinery/computer/secure_data,
 /turf/open/floor/plasteel/darkred/side{
-	tag = "icon-darkred (SOUTHWEST)";
-	icon_state = "darkred";
 	dir = 10
 	},
 /area/shuttle/escape)
@@ -1008,13 +958,13 @@
 /area/shuttle/escape)
 "cm" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/plasteel/vault,
 /area/shuttle/escape)
 "cn" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/folder/blue,
-/obj/item/weapon/pen,
+/obj/item/folder/blue,
+/obj/item/pen,
 /turf/open/floor/plasteel/vault,
 /area/shuttle/escape)
 "co" = (
@@ -1026,23 +976,21 @@
 "cp" = (
 /obj/machinery/computer/atmos_alert,
 /turf/open/floor/plasteel/darkyellow/side{
-	tag = "icon-darkyellow (SOUTHEAST)";
-	icon_state = "darkyellow";
 	dir = 6
 	},
 /area/shuttle/escape)
 "cq" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},
 /area/shuttle/escape)
 "cr" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/restraints/handcuffs,
+/obj/item/folder/red,
+/obj/item/restraints/handcuffs,
 /obj/item/device/assembly/flash/handheld,
 /turf/open/floor/plasteel/vault,
 /area/shuttle/escape)
@@ -1068,13 +1016,13 @@
 /area/shuttle/escape)
 "cw" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plasteel/vault,
 /area/shuttle/escape)
 "cx" = (
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
-/obj/item/weapon/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},
@@ -1096,14 +1044,12 @@
 	},
 /area/shuttle/escape)
 "cA" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
-	layer = 4.1;
 	pixel_x = -3;
 	pixel_y = 3
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -1130,14 +1076,12 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "cE" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
-	layer = 4.1;
 	pixel_x = -3;
 	pixel_y = 3
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -1154,7 +1098,7 @@
 	dir = 1
 	},
 /obj/machinery/light,
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "cH" = (
 /obj/effect/turf_decal/bot,
@@ -1210,7 +1154,7 @@ an
 av
 av
 av
-cE
+cA
 aE
 af
 bw
@@ -1383,7 +1327,7 @@ ag
 ac
 ac
 af
-cz
+cy
 ao
 aw
 aw
@@ -1674,7 +1618,7 @@ aZ
 bd
 bi
 cC
-cD
+cC
 ah
 bs
 af

@@ -1,13 +1,12 @@
 /mob/living/silicon
 	gender = NEUTER
 	voice_name = "synthesized voice"
-	languages_spoken = ROBOT | HUMAN
-	languages_understood = ROBOT | HUMAN
 	has_unlimited_silicon_privilege = 1
 	verb_say = "states"
 	verb_ask = "queries"
 	verb_exclaim = "declares"
 	verb_yell = "alarms"
+	initial_language_holder = /datum/language_holder/synthetic
 	see_in_dark = 8
 	bubble_icon = "machine"
 	weather_immunities = list("ash")
@@ -37,14 +36,20 @@
 	var/d_hud = DATA_HUD_DIAGNOSTIC //There is only one kind of diag hud
 
 	var/law_change_counter = 0
+	var/obj/machinery/camera/builtInCamera = null
+	var/updating = FALSE //portable camera camerachunk update
 
 /mob/living/silicon/Initialize()
-	..()
-	silicon_mobs += src
-	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
+	. = ..()
+	GLOB.silicon_mobs += src
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 	diag_hud_set_status()
 	diag_hud_set_health()
+
+/mob/living/silicon/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION, TRUE, TRUE)
 
 /mob/living/silicon/med_hud_set_health()
 	return //we use a different hud
@@ -55,7 +60,8 @@
 /mob/living/silicon/Destroy()
 	radio = null
 	aicamera = null
-	silicon_mobs -= src
+	QDEL_NULL(builtInCamera)
+	GLOB.silicon_mobs -= src
 	return ..()
 
 /mob/living/silicon/contents_explosion(severity, target)
@@ -139,9 +145,6 @@
 				alarm_types_show[key] = 0
 			for(var/key in alarm_types_clear)
 				alarm_types_clear[key] = 0
-
-/mob/living/silicon/drop_item()
-	return
 
 /mob/living/silicon/can_inject(mob/user, error_msg)
 	if(error_msg)
@@ -306,9 +309,9 @@
 	else if(Autochan == "None") //Prevents use of the radio for automatic annoucements.
 		radiomod = ""
 	else	//For department channels, if any, given by the internal radio.
-		for(var/key in department_radio_keys)
-			if(department_radio_keys[key] == Autochan)
-				radiomod = key
+		for(var/key in GLOB.department_radio_keys)
+			if(GLOB.department_radio_keys[key] == Autochan)
+				radiomod = ":" + key
 				break
 
 	to_chat(src, "<span class='notice'>Automatic announcements [Autochan == "None" ? "will not use the radio." : "set to [Autochan]."]</span>")
@@ -322,27 +325,27 @@
 	return 0
 
 
-/mob/living/silicon/assess_threat() //Secbots won't hunt silicon units
+/mob/living/silicon/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //Secbots won't hunt silicon units
 	return -10
 
 /mob/living/silicon/proc/remove_med_sec_hud()
-	var/datum/atom_hud/secsensor = huds[sec_hud]
-	var/datum/atom_hud/medsensor = huds[med_hud]
-	var/datum/atom_hud/diagsensor = huds[d_hud]
+	var/datum/atom_hud/secsensor = GLOB.huds[sec_hud]
+	var/datum/atom_hud/medsensor = GLOB.huds[med_hud]
+	var/datum/atom_hud/diagsensor = GLOB.huds[d_hud]
 	secsensor.remove_hud_from(src)
 	medsensor.remove_hud_from(src)
 	diagsensor.remove_hud_from(src)
 
 /mob/living/silicon/proc/add_sec_hud()
-	var/datum/atom_hud/secsensor = huds[sec_hud]
+	var/datum/atom_hud/secsensor = GLOB.huds[sec_hud]
 	secsensor.add_hud_to(src)
 
 /mob/living/silicon/proc/add_med_hud()
-	var/datum/atom_hud/medsensor = huds[med_hud]
+	var/datum/atom_hud/medsensor = GLOB.huds[med_hud]
 	medsensor.add_hud_to(src)
 
 /mob/living/silicon/proc/add_diag_hud()
-	var/datum/atom_hud/diagsensor = huds[d_hud]
+	var/datum/atom_hud/diagsensor = GLOB.huds[d_hud]
 	diagsensor.add_hud_to(src)
 
 /mob/living/silicon/proc/sensor_mode()

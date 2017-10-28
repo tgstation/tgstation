@@ -8,7 +8,7 @@
 	return DEFAULT_TASTE_SENSITIVITY
 
 /mob/living/carbon/get_taste_sensitivity()
-	var/obj/item/organ/tongue/tongue = getorganslot("tongue")
+	var/obj/item/organ/tongue/tongue = getorganslot(ORGAN_SLOT_TONGUE)
 	if(istype(tongue))
 		. = tongue.taste_sensitivity
 	else
@@ -22,7 +22,7 @@
 		// We dont want to spam the same message over and over again at the
 		// person. Give it a bit of a buffer.
 		if(hallucination > 50 && prob(25))
-			text_output = pick("spiders","[pick(wire_colors)]","dreams","nightmares","the future","the past","victory",\
+			text_output = pick("spiders","dreams","nightmares","the future","the past","victory",\
 			"defeat","pain","bliss","revenge","poison","time","space","death","life","truth","lies","justice","memory",\
 			"regrets","your soul","suffering","music","noise","blood","hunger","the american way")
 		if(text_output != last_taste_text || last_taste_time + 100 < world.time)

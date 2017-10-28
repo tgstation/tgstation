@@ -21,6 +21,10 @@
 		return
 	if(active)
 		msg = "<span class='notice'>[deactive_msg]</span>"
+		if(charge_type == "recharge")
+			var/refund_percent = current_amount/projectile_amount
+			charge_counter = charge_max * refund_percent
+			start_recharge()
 		remove_ranged_ability(msg)
 	else
 		msg = "<span class='notice'>[active_msg]<B>Left-click to shoot it at a target!</B></span>"
@@ -36,12 +40,12 @@
 /obj/effect/proc_holder/spell/aimed/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(..())
 		return FALSE
-	var/ignore = (current_amount <= 0)
-	if(!cast_check(ignore, ranged_ability_user))
+	var/ran_out = (current_amount <= 0)
+	if(!cast_check(!ran_out, ranged_ability_user))
 		remove_ranged_ability()
 		return FALSE
 	var/list/targets = list(target)
-	perform(targets,user = ranged_ability_user)
+	perform(targets, ran_out, user = ranged_ability_user)
 	return TRUE
 
 /obj/effect/proc_holder/spell/aimed/cast(list/targets, mob/living/user)
@@ -52,15 +56,17 @@
 		return FALSE
 	fire_projectile(user, target)
 	user.newtonian_move(get_dir(U, T))
-	if(--current_amount <= 0)
+	if(current_amount <= 0)
 		remove_ranged_ability() //Auto-disable the ability once you run out of bullets.
+		charge_counter = 0
+		start_recharge()
 	return TRUE
 
 /obj/effect/proc_holder/spell/aimed/proc/fire_projectile(mob/living/user, atom/target)
+	current_amount--
 	var/obj/item/projectile/P = new projectile_type(user.loc)
-	P.current = get_turf(user)
 	P.firer = user
-	P.preparePixelProjectile(target, get_turf(target), user)
+	P.preparePixelProjectile(target, user)
 	for(var/V in projectile_var_overrides)
 		if(P.vars[V])
 			P.vars[V] = projectile_var_overrides[V]
@@ -98,7 +104,7 @@
 	projectile_type = /obj/item/projectile/magic/aoe/fireball
 	base_icon_state = "fireball"
 	action_icon_state = "fireball0"
-	sound = 'sound/magic/Fireball.ogg'
+	sound = 'sound/magic/fireball.ogg'
 	active_msg = "You prepare to cast your fireball spell!"
 	deactive_msg = "You extinguish your fireball... for now."
 	active = FALSE

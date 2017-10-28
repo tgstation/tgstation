@@ -4,7 +4,6 @@
 // https://creativecommons.org/licenses/by-nc-sa/2.0/legalcode
 // Original code by Zuhayr, Polaris Station, ported with modifications
 
-var/global/list/cards_against_space
 
 /obj/item/toy/cards/deck/cas
 	name = "\improper CAS deck (white)"
@@ -29,8 +28,7 @@ var/global/list/cards_against_space
 	card_text_file = "strings/cas_black.txt"
 
 /obj/item/toy/cards/deck/cas/New()
-	if(!cards_against_space)  //saves loading from the files every single time a new deck is created, but still lets each deck have a random assortment, it's purely an optimisation
-		cards_against_space = list("cas_white" = file2list("strings/cas_white.txt"),"cas_black" = file2list("strings/cas_black.txt"))
+	var/static/list/cards_against_space = list("cas_white" = world.file2list("strings/cas_white.txt"),"cas_black" = world.file2list("strings/cas_black.txt"))
 	allcards = cards_against_space[card_face]
 	var/list/possiblecards = allcards.Copy()
 	if(possiblecards.len < decksize) // sanity check
@@ -53,7 +51,7 @@ var/global/list/cards_against_space
 		P.name = "Blank Card"
 		P.card_icon = "cas_white"
 		cards += P
-	shuffle(cards) // distribute blank cards throughout deck
+	shuffle_inplace(cards) // distribute blank cards throughout deck
 	..()
 
 /obj/item/toy/cards/deck/cas/attack_hand(mob/user)
@@ -106,12 +104,14 @@ var/global/list/cards_against_space
 	var/buffertext = "A funny bit of text."
 
 /obj/item/toy/cards/singlecard/cas/examine(mob/user)
+	..()
 	if (flipped)
 		to_chat(user, "<span class='notice'>The card is face down.</span>")
 	else if (blank)
 		to_chat(user, "<span class='notice'>The card is blank. Write on it with a pen.</span>")
 	else
 		to_chat(user, "<span class='notice'>The card reads: [name]</span>")
+	to_chat(user, "<span class='notice'>Alt-click to flip it.</span>")
 
 /obj/item/toy/cards/singlecard/cas/Flip()
 	set name = "Flip Card"
@@ -138,7 +138,7 @@ var/global/list/cards_against_space
 		icon_state = "[card_face]"
 
 /obj/item/toy/cards/singlecard/cas/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon/pen))
+	if(istype(I, /obj/item/pen))
 		if(!blank)
 			to_chat(user, "You cannot write on that card.")
 			return

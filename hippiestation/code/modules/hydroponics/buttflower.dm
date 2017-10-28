@@ -5,7 +5,7 @@
 	icon_state = "seed-butt"
 	species = "butt"
 	plantname = "Replica Butt Flower"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/shell/buttflower
+	product = /obj/item/reagent_containers/food/snacks/grown/shell/buttflower
 	lifespan = 25
 	endurance = 10
 	maturation = 8
@@ -16,7 +16,7 @@
 	growthstages = 3
 	reagents_add = list("fartium" = 4)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/shell/buttflower
+/obj/item/reagent_containers/food/snacks/grown/shell/buttflower
 	seed = /obj/item/seeds/buttseed
 	icon = 'hippiestation/icons/obj/hydroponics/harvest.dmi'
 	name = "buttflower"

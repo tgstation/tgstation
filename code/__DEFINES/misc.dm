@@ -4,6 +4,19 @@
 // #define EAST 4
 // #define WEST 8
 
+//These get to go at the top, because they're special
+//You can use these defines to get the typepath of the currently running proc/verb (yes procs + verbs are objects)
+/* eg:
+/mob/living/carbon/human/death()
+	to_chat(world, THIS_PROC_TYPE_STR) //You can only output the string versions
+Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a string with () (eg: the _WITH_ARGS defines) to make it look nicer)
+*/
+#define THIS_PROC_TYPE .....
+#define THIS_PROC_TYPE_STR "[THIS_PROC_TYPE]" //Because you can only obtain a string of THIS_PROC_TYPE using "[]", and it's nice to just +/+= strings
+#define THIS_PROC_TYPE_STR_WITH_ARGS "[THIS_PROC_TYPE]([args.Join(",")])"
+#define THIS_PROC_TYPE_WEIRD ...... //This one is WEIRD, in some cases (When used in certain defines? (eg: ASSERT)) THIS_PROC_TYPE will fail to work, but THIS_PROC_TYPE_WEIRD will work instead
+#define THIS_PROC_TYPE_WEIRD_STR "[THIS_PROC_TYPE_WEIRD]" //Included for completeness
+#define THIS_PROC_TYPE_WEIRD_STR_WITH_ARGS "[THIS_PROC_TYPE_WEIRD]([args.Join(",")])" //Ditto
 
 #define MIDNIGHT_ROLLOVER		864000	//number of deciseconds in a day
 
@@ -143,16 +156,12 @@
 #define STAGE_FIVE 9
 #define STAGE_SIX 11 //From supermatter shard
 
-//ticker.current_state values
+//SSticker.current_state values
 #define GAME_STATE_STARTUP		0
 #define GAME_STATE_PREGAME		1
 #define GAME_STATE_SETTING_UP	2
 #define GAME_STATE_PLAYING		3
 #define GAME_STATE_FINISHED		4
-//SOUND:
-#define SOUND_MINIMUM_PRESSURE 10
-#define FALLOFF_SOUNDS	1
-#define SURROUND_CAP	7
 
 //FONTS:
 // Used by Paper and PhotoCopier (and PaperBin once a year).
@@ -160,6 +169,7 @@
 // Used by NewsCaster and NewsPaper.
 // Used by Modular Computers
 #define PEN_FONT "Verdana"
+#define FOUNTAIN_PEN_FONT "Segoe Script"
 #define CRAYON_FONT "Comic Sans MS"
 #define PRINTER_FONT "Times New Roman"
 #define SIGNFONT "Times New Roman"
@@ -182,13 +192,14 @@
 //Key:
 //"entered-[blood_state]-[dir_of_image]"
 //or: "exited-[blood_state]-[dir_of_image]"
-var/list/bloody_footprints_cache = list()
+GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 
 //Bloody shoes/footprints
 #define MAX_SHOE_BLOODINESS			100
 #define BLOODY_FOOTPRINT_BASE_ALPHA	150
 #define BLOOD_GAIN_PER_STEP			100
 #define BLOOD_LOSS_PER_STEP			5
+#define BLOOD_LOSS_IN_SPREAD		20
 #define BLOOD_FADEOUT_TIME			2
 
 //Bloody shoe blood states
@@ -196,6 +207,21 @@ var/list/bloody_footprints_cache = list()
 #define BLOOD_STATE_XENO			"xeno"
 #define BLOOD_STATE_OIL				"oil"
 #define BLOOD_STATE_NOT_BLOODY		"no blood whatsoever"
+
+//suit sensors: sensor_mode defines
+
+#define SENSOR_OFF 0
+#define SENSOR_LIVING 1
+#define SENSOR_VITALS 2
+#define SENSOR_COORDS 3
+
+//suit sensors: has_sensor defines
+
+#define BROKEN_SENSORS -1
+#define NO_SENSORS 0
+#define HAS_SENSORS 1
+#define LOCKED_SENSORS 2
+
 //Turf wet states
 #define TURF_DRY		0
 #define TURF_WET_WATER	1
@@ -215,13 +241,6 @@ var/list/bloody_footprints_cache = list()
 #define POLLTYPE_IRV		"IRV"
 
 
-
-//lighting area defines
-#define DYNAMIC_LIGHTING_DISABLED 0 //dynamic lighting disabled (area stays at full brightness)
-#define DYNAMIC_LIGHTING_ENABLED 1 //dynamic lighting enabled
-#define DYNAMIC_LIGHTING_FORCED 2 //dynamic lighting enabled even if the area doesn't require power
-#define DYNAMIC_LIGHTING_IFSTARLIGHT 3 //dynamic lighting enabled only if starlight is.
-#define IS_DYNAMIC_LIGHTING(A) ( A.dynamic_lighting == DYNAMIC_LIGHTING_IFSTARLIGHT ? config.starlight : A.dynamic_lighting )
 
 //subtypesof(), typesof() without the parent path
 #define subtypesof(typepath) ( typesof(typepath) - typepath )
@@ -247,7 +266,7 @@ var/list/bloody_footprints_cache = list()
 
 #define GHOST_ACCS_DEFAULT_OPTION	GHOST_ACCS_FULL
 
-var/global/list/ghost_accs_options = list(GHOST_ACCS_NONE, GHOST_ACCS_DIR, GHOST_ACCS_FULL) //So save files can be sanitized properly.
+GLOBAL_LIST_INIT(ghost_accs_options, list(GHOST_ACCS_NONE, GHOST_ACCS_DIR, GHOST_ACCS_FULL)) //So save files can be sanitized properly.
 
 #define GHOST_OTHERS_SIMPLE 			1
 #define GHOST_OTHERS_DEFAULT_SPRITE		50
@@ -263,7 +282,13 @@ var/global/list/ghost_accs_options = list(GHOST_ACCS_NONE, GHOST_ACCS_DIR, GHOST
 #define GHOST_MAX_VIEW_RANGE_MEMBER 14
 
 
-var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DEFAULT_SPRITE, GHOST_OTHERS_THEIR_SETTING) //Same as ghost_accs_options.
+GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DEFAULT_SPRITE, GHOST_OTHERS_THEIR_SETTING)) //Same as ghost_accs_options.
+
+//pda fonts
+#define MONO		"Monospaced"
+#define VT			"VT323"
+#define ORBITRON	"Orbitron"
+#define SHARE		"Share Tech Mono"
 
 //Color Defines
 #define OOC_COLOR  "#002eb8"
@@ -292,9 +317,16 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define APPEARANCE_CONSIDER_ALPHA			~RESET_ALPHA
 #define APPEARANCE_LONG_GLIDE				LONG_GLIDE
 
+#ifndef PIXEL_SCALE
+#define PIXEL_SCALE 0
+#if DM_VERSION >= 512
+#error HEY, PIXEL_SCALE probably exists now, remove this gross ass shim.
+#endif
+#endif
+
 // Consider these images/atoms as part of the UI/HUD
-#define APPEARANCE_UI_IGNORE_ALPHA			RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|RESET_ALPHA
-#define APPEARANCE_UI						RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR
+#define APPEARANCE_UI_IGNORE_ALPHA			RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|RESET_ALPHA|PIXEL_SCALE
+#define APPEARANCE_UI						RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|PIXEL_SCALE
 
 //Just space
 #define SPACE_ICON_STATE	"[((x + y) ^ ~(x * y) + z) % 25]"
@@ -326,11 +358,11 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define SHELTER_DEPLOY_ANCHORED_OBJECTS "anchored objects"
 
 //debug printing macros
-#define debug_world(msg) if (Debug2) to_chat(world, "DEBUG: [msg]")
-#define debug_admins(msg) if (Debug2) to_chat(admins, "DEBUG: [msg]")
-#define debug_world_log(msg) if (Debug2) log_world("DEBUG: [msg]")
+#define debug_world(msg) if (GLOB.Debug2) to_chat(world, "DEBUG: [msg]")
+#define debug_usr(msg) if (GLOB.Debug2&&usr) to_chat(usr, "DEBUG: [msg]")
+#define debug_admins(msg) if (GLOB.Debug2) to_chat(GLOB.admins, "DEBUG: [msg]")
+#define debug_world_log(msg) if (GLOB.Debug2) log_world("DEBUG: [msg]")
 
-#define COORD(A) "([A.x],[A.y],[A.z])"
 #define INCREMENT_TALLY(L, stat) if(L[stat]){L[stat]++}else{L[stat] = 1}
 
 // Medal names
@@ -368,8 +400,6 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define NUKE_SYNDICATE_BASE 3
 #define STATION_DESTROYED_NUKE 4
 #define STATION_EVACUATED 5
-#define GANG_LOSS 6
-#define GANG_TAKEOVER 7
 #define BLOB_WIN 8
 #define BLOB_NUKE 9
 #define BLOB_DESTROYED 10
@@ -394,3 +424,45 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 //Error handler defines
 #define ERROR_USEFUL_LEN 2
+
+#define NO_FIELD 0
+#define FIELD_TURF 1
+#define FIELD_EDGE 2
+
+//gibtonite state defines
+#define GIBTONITE_UNSTRUCK 0
+#define GIBTONITE_ACTIVE 1
+#define GIBTONITE_STABLE 2
+#define GIBTONITE_DETONATE 3
+
+//for obj explosion block calculation
+#define EXPLOSION_BLOCK_PROC -1
+
+//for determining which type of heartbeat sound is playing
+#define BEAT_FAST 1
+#define BEAT_SLOW 2
+#define BEAT_NONE 0
+
+//http://www.byond.com/docs/ref/info.html#/atom/var/mouse_opacity
+#define MOUSE_OPACITY_TRANSPARENT 0
+#define MOUSE_OPACITY_ICON 1
+#define MOUSE_OPACITY_OPAQUE 2
+
+//world/proc/shelleo
+#define SHELLEO_ERRORLEVEL 1
+#define SHELLEO_STDOUT 2
+#define SHELLEO_STDERR 3
+
+//server security mode
+#define SECURITY_SAFE 1
+#define SECURITY_ULTRASAFE 2
+#define SECURITY_TRUSTED 3
+
+//Dummy mob reserve slots
+#define DUMMY_HUMAN_SLOT_PREFERENCES "dummy_preference_preview"
+#define DUMMY_HUMAN_SLOT_MANIFEST "dummy_manifest_generation"
+
+#define PR_ANNOUNCEMENTS_PER_ROUND 5 //The number of unique PR announcements allowed per round
+									//This makes sure that a single person can only spam 3 reopens and 3 closes before being ignored
+
+#define MAX_PROC_DEPTH 195 // 200 proc calls deep and shit breaks, this is a bit lower to give some safety room

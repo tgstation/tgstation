@@ -1,12 +1,14 @@
 /datum/computer_file/program/filemanager
 	filename = "filemanager"
-	filedesc = "NTOS File Manager"
+	filedesc = "File Manager"
 	extended_desc = "This program allows management of files."
 	program_icon_state = "generic"
 	size = 8
 	requires_ntnet = 0
 	available_on_ntnet = 0
 	undeletable = 1
+	tgui_id = "ntos_file_manager"
+
 	var/open_file
 	var/error
 
@@ -14,9 +16,9 @@
 	if(..())
 		return 1
 
-	var/obj/item/weapon/computer_hardware/hard_drive/HDD = computer.all_components[MC_HDD]
-	var/obj/item/weapon/computer_hardware/hard_drive/RHDD = computer.all_components[MC_SDD]
-	var/obj/item/weapon/computer_hardware/printer/printer = computer.all_components[MC_PRINT]
+	var/obj/item/computer_hardware/hard_drive/HDD = computer.all_components[MC_HDD]
+	var/obj/item/computer_hardware/hard_drive/RHDD = computer.all_components[MC_SDD]
+	var/obj/item/computer_hardware/printer/printer = computer.all_components[MC_PRINT]
 
 	switch(action)
 		if("PRG_openfile")
@@ -144,7 +146,7 @@
 	t = replacetext(t, "\[u\]", "<U>")
 	t = replacetext(t, "\[/u\]", "</U>")
 	t = replacetext(t, "\[time\]", "[worldtime2text()]")
-	t = replacetext(t, "\[date\]", "[time2text(world.realtime, "MMM DD")] [year_integer+540]")
+	t = replacetext(t, "\[date\]", "[time2text(world.realtime, "MMM DD")] [GLOB.year_integer+540]")
 	t = replacetext(t, "\[large\]", "<font size=\"4\">")
 	t = replacetext(t, "\[/large\]", "</font>")
 	t = replacetext(t, "\[h1\]", "<H1>")
@@ -168,31 +170,26 @@
 	t = replacetext(t, "\[td\]", "<td>")
 	t = replacetext(t, "\[cell\]", "<td>")
 	t = replacetext(t, "\[tab\]", "&nbsp;&nbsp;&nbsp;&nbsp;")
+
+	t = parsemarkdown_basic(t)
+
 	return t
 
 /datum/computer_file/program/filemanager/proc/prepare_printjob(t) // Additional stuff to parse if we want to print it and make a happy Head of Personnel. Forms FTW.
 	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
 	t = replacetext(t, "\[sign\]", "<span class=\"paper_field\"></span>")
+
 	t = parse_tags(t)
+
+	t = replacetext(t, regex("(?:%s(?:ign)|%f(?:ield))(?=\\s|$)", "ig"), "<span class=\"paper_field\"></span>")
+
 	return t
-
-/datum/computer_file/program/filemanager/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
-
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if (!ui)
-
-		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
-		assets.send(user)
-
-		ui = new(user, src, ui_key, "file_manager", "NTOS File Manager", 575, 700, state = state)
-		ui.open()
-		ui.set_autoupdate(state = 1)
 
 /datum/computer_file/program/filemanager/ui_data(mob/user)
 	var/list/data = get_header_data()
 
-	var/obj/item/weapon/computer_hardware/hard_drive/HDD = computer.all_components[MC_HDD]
-	var/obj/item/weapon/computer_hardware/hard_drive/portable/RHDD = computer.all_components[MC_SDD]
+	var/obj/item/computer_hardware/hard_drive/HDD = computer.all_components[MC_HDD]
+	var/obj/item/computer_hardware/hard_drive/portable/RHDD = computer.all_components[MC_SDD]
 	if(error)
 		data["error"] = error
 	if(open_file)

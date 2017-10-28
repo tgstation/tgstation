@@ -91,6 +91,7 @@
 
 	if(see_override)
 		see_invisible = see_override
+	sync_lighting_plane_alpha()
 
 
 /mob/living/silicon/ai/proc/start_RestorePowerRoutine()
@@ -138,16 +139,19 @@
 				ai_restore_power()
 				return
 		switch(PRP)
-			if (1) to_chat(src, "APC located. Optimizing route to APC to avoid needless power waste.")
-			if (2) to_chat(src, "Best route identified. Hacking offline APC power port.")
-			if (3) to_chat(src, "Power port upload access confirmed. Loading control program into APC power port software.")
+			if (1)
+				to_chat(src, "APC located. Optimizing route to APC to avoid needless power waste.")
+			if (2)
+				to_chat(src, "Best route identified. Hacking offline APC power port.")
+			if (3)
+				to_chat(src, "Power port upload access confirmed. Loading control program into APC power port software.")
 			if (4)
 				to_chat(src, "Transfer complete. Forcing APC to execute program.")
 				sleep(50)
 				to_chat(src, "Receiving control information from APC.")
 				sleep(2)
 				apc_override = 1
-				theAPC.ui_interact(src, state = conscious_state)
+				theAPC.ui_interact(src, state = GLOB.conscious_state)
 				apc_override = 0
 				aiRestorePowerRoutine = POWER_RESTORATION_APC_FOUND
 		sleep(50)

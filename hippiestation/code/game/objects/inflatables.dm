@@ -30,8 +30,8 @@
 	var/torntype = /obj/item/inflatable/torn
 	var/itemtype = /obj/item/inflatable
 
-/obj/structure/inflatable/New(location)
-	..()
+/obj/structure/inflatable/Initialize(location)
+	. = ..()
 	air_update_turf(1)
 
 /obj/structure/inflatable/Destroy()
@@ -92,7 +92,7 @@
 /obj/structure/inflatable/attack_slime(mob/user)
 	attack_generic(user, rand(10, 15))
 
-/obj/structure/inflatable/attackby(obj/item/weapon/W, mob/user, params)
+/obj/structure/inflatable/attackby(obj/item/W, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(!istype(W))
 		return
@@ -256,7 +256,7 @@
 	icon_state = "folded_door_torn"
 	fixedtype = /obj/item/inflatable/door
 
-/obj/item/weapon/storage/inflatable
+/obj/item/storage/inflatable
 	icon = 'hippiestation/icons/obj/storage.dmi'
 	name = "inflatable barrier box"
 	desc = "Contains inflatable walls and doors."
@@ -265,7 +265,7 @@
 	max_combined_w_class = 21
 	w_class = 3
 
-/obj/item/weapon/storage/inflatable/New()
+/obj/item/storage/inflatable/Initialize()
 	..()
 	for(var/i = 0, i < 8, i++)
 		new /obj/item/inflatable/door(src)

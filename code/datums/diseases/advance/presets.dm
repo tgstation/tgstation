@@ -1,6 +1,6 @@
 // Cold
 
-/datum/disease/advance/cold/New(var/process = 1, var/datum/disease/advance/D, var/copy = 0)
+/datum/disease/advance/cold/New(var/process = TRUE, var/datum/disease/advance/D, var/copy = FALSE)
 	if(!D)
 		name = "Cold"
 		symptoms = list(new/datum/symptom/sneeze)
@@ -9,7 +9,7 @@
 
 // Flu
 
-/datum/disease/advance/flu/New(var/process = 1, var/datum/disease/advance/D, var/copy = 0)
+/datum/disease/advance/flu/New(var/process = TRUE, var/datum/disease/advance/D, var/copy = FALSE)
 	if(!D)
 		name = "Flu"
 		symptoms = list(new/datum/symptom/cough)
@@ -18,7 +18,7 @@
 
 // Voice Changing
 
-/datum/disease/advance/voice_change/New(var/process = 1, var/datum/disease/advance/D, var/copy = 0)
+/datum/disease/advance/voice_change/New(var/process = TRUE, var/datum/disease/advance/D, var/copy = FALSE)
 	if(!D)
 		name = "Epiglottis Mutation"
 		symptoms = list(new/datum/symptom/voice_change)
@@ -27,33 +27,33 @@
 
 // Toxin Filter
 
-/datum/disease/advance/heal/New(var/process = 1, var/datum/disease/advance/D, var/copy = 0)
+/datum/disease/advance/heal/New(var/process = TRUE, var/datum/disease/advance/D, var/copy = FALSE)
 	if(!D)
 		name = "Liver Enhancer"
 		symptoms = list(new/datum/symptom/heal)
 	..(process, D, copy)
 
 
-// Hullucigen
+// Hallucigen
 
-/datum/disease/advance/hullucigen/New(var/process = 1, var/datum/disease/advance/D, var/copy = 0)
+/datum/disease/advance/hallucigen/New(var/process = TRUE, var/datum/disease/advance/D, var/copy = FALSE)
 	if(!D)
-		name = "Reality Impairment"
+		name = "Second Sight"
 		symptoms = list(new/datum/symptom/hallucigen)
 	..(process, D, copy)
 
 // Sensory Restoration
 
-/datum/disease/advance/sensory_restoration/New(var/process = 1, var/datum/disease/advance/D, var/copy = 0)
+/datum/disease/advance/mind_restoration/New(var/process = TRUE, var/datum/disease/advance/D, var/copy = FALSE)
 	if(!D)
-		name = "Reality Enhancer"
-		symptoms = list(new/datum/symptom/sensory_restoration)
+		name = "Intelligence Booster"
+		symptoms = list(new/datum/symptom/mind_restoration)
 	..(process, D, copy)
 
 // Sensory Destruction
 
-/datum/disease/advance/sensory_destruction/New(var/process = 1, var/datum/disease/advance/D, var/copy = 0)
+/datum/disease/advance/narcolepsy/New(var/process = TRUE, var/datum/disease/advance/D, var/copy = FALSE)
 	if(!D)
-		name = "Reality Destruction"
-		symptoms = list(new/datum/symptom/sensory_destruction)
+		name = "Experimental Insomnia Cure"
+		symptoms = list(new/datum/symptom/narcolepsy)
 	..(process, D, copy)

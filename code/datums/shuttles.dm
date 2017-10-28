@@ -21,6 +21,10 @@
 	mappath = "[prefix][shuttle_id].dmm"
 	. = ..()
 
+//Whatever special stuff you want
+/datum/map_template/shuttle/proc/on_bought()
+	return
+
 /datum/map_template/shuttle/emergency
 	port_id = "emergency"
 	name = "Base Shuttle Template (Emergency)"
@@ -47,7 +51,13 @@
 
 /datum/map_template/shuttle/emergency/airless/prerequisites_met()
 	// first 10 minutes only
-	return world.time - round_start_time < 6000
+	return world.time - SSticker.round_start_time < 6000
+
+/datum/map_template/shuttle/emergency/airless/on_bought()
+	//enable buying engines from cargo
+	var/datum/supply_pack/P = SSshuttle.supply_packs[/datum/supply_pack/engineering/shuttle_engine]
+	P.special_enabled = TRUE
+
 
 /datum/map_template/shuttle/emergency/asteroid
 	suffix = "asteroid"
@@ -72,7 +82,7 @@
 
 /datum/map_template/shuttle/emergency/meteor
 	suffix = "meteor"
-	name = "An Asteroid With Engines Strapped To It"
+	name = "Asteroid With Engines Strapped To It"
 	description = "A hollowed out asteroid with engines strapped to it. Due to its size and difficulty in steering it, this shuttle may damage the docking area."
 	admin_notes = "This shuttle will likely crush escape, killing anyone there."
 	credit_cost = -5000
@@ -123,7 +133,7 @@
 /datum/map_template/shuttle/emergency/cramped
 	suffix = "cramped"
 	name = "Secure Transport Vessel 5 (STV5)"
-	description = "Well, looks like Centcomm only had this ship in the area, they probably weren't expecting you to need evac for a while. \
+	description = "Well, looks like CentCom only had this ship in the area, they probably weren't expecting you to need evac for a while. \
 	Probably best if you don't rifle around in whatever equipment they were transporting. I hope you're friendly with your coworkers, because there is very little space in this thing.\n\
 	\n\
 	Contains contraband armory guns, maintenance loot, and abandoned crates!"
@@ -161,11 +171,17 @@
 	description = "A small, but feature complete shuttle. It boasts a card table to keep crew members occupied on the long flight home."
 	credit_cost = 1000
 
+/datum/map_template/shuttle/emergency/cere
+	suffix = "cere"
+	name = "Cere Station Emergency Shuttle"
+	description = "The large, beefed-up version of the box-standard shuttle. Includes an expanded brig, fully stocked medbay, enhanced cargo storage with mech chargers, \
+		an engine room stocked with various supplies, and a crew capacity of 80+ to top it all off. Live large, live Cere."
+
 /datum/map_template/shuttle/emergency/supermatter
 	suffix = "supermatter"
 	name = "Hyperfractal Gigashuttle"
 	description = "\"I dunno, this seems kinda needlessly complicated.\"\n\
-	\"This shuttle has very a very high safety record, according to Centcom Officer Cadet Yins.\"\n\
+	\"This shuttle has very a very high safety record, according to CentCom Officer Cadet Yins.\"\n\
 	\"Are you sure?\"\n\
 	\"Yes, it has a safety record of N-A-N, which is apparently larger than 100%.\""
 	admin_notes = "Supermatter that spawns on shuttle is special anchored 'hugbox' supermatter that cannot take damage and does not take in or emit gas. \
@@ -199,7 +215,7 @@
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"
 	name = "transport ferry"
-	description = "Standard issue Box/Metastation Centcom ferry."
+	description = "Standard issue Box/Metastation CentCom ferry."
 
 /datum/map_template/shuttle/ferry/meat
 	suffix = "meat"
@@ -230,6 +246,10 @@
 	suffix = "pubby"
 	name = "NT White UFO"
 
+/datum/map_template/shuttle/whiteship/cere
+	suffix = "cere"
+	name = "NT Construction Vessel"
+
 /datum/map_template/shuttle/cargo/box
 	suffix = "box"
 	name = "supply shuttle (Box)"
@@ -247,7 +267,7 @@
 
 /datum/map_template/shuttle/emergency/raven
 	suffix = "raven"
-	name = "Centcomm Raven Battlecruiser"
-	description = "The Centcomm Raven Battlecruiser is currently docked at the Centcomm ship bay awaiting a mission, this Battlecruiser has been reassigned as an emergency escape shuttle for currently unknown reasons. The Centcomm Raven Battlecruiser should comfortably fit a medium to large crew size crew and is complete with all required facitlities including a top of the range Centcomm Medical Bay."
+	name = "CentCom Raven Battlecruiser"
+	description = "The CentCom Raven Battlecruiser is currently docked at the CentCom ship bay awaiting a mission, this Battlecruiser has been reassigned as an emergency escape shuttle for currently unknown reasons. The CentCom Raven Battlecruiser should comfortably fit a medium to large crew size crew and is complete with all required facitlities including a top of the range CentCom Medical Bay."
 	admin_notes = "The long way home"
 	credit_cost = 12500

@@ -1,0 +1,4 @@
+author: "GuyonBroadway"
+delete-after: True
+changes: 
+  - bugfix: "Makeshift prods are fixed again."

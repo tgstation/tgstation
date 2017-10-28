@@ -8,4 +8,4 @@
 	/datum/mapGeneratorModule/randBushes, \
 	/datum/mapGeneratorModule/randRocks, \
 	/datum/mapGeneratorModule/denseLayer/grassTufts)
-
+	buildmode_name = "Pattern: Nature"

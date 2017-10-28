@@ -1,0 +1,229 @@
+{
+    "suspicion": [
+        "I'm watching you...",
+	"I know what you're doing",
+	"What are you hiding?",
+	"I saw that"
+    ],
+
+    "greetings": [
+        "",
+	"Hey, ",
+	"Hi ",
+	"Hello ",
+	"Wait, ",
+	"It's "
+    ],
+
+    "getout": [
+        "Get out",
+	"Get out!",
+	"Go away",
+	"Fuck off",
+	"OUT!",
+	"Out!"
+    ],
+
+    "weird": [
+        "Kchck-Chkck? Kchchck!",
+	"Kchckchk...",
+        "EEEeeeeEEEE",
+	"khhhhh",
+        "#@§*&£",
+	"H**p m*",
+	"H-hhhhh..."
+    ],
+
+    "didyouhearthat": [
+        "Did you hear that?",
+	"Did you see that?",
+	"What was that?"
+    ],
+
+    "imatraitor": [
+        "Hail Ratvar",
+	"Hail Nar'Sie",
+	"Hey, i've got some TC left, want something?",
+	"Viva!",
+	"I'll spare you if you don't tell anybody about me",
+	"Hey, are you a traitor too?",
+	"You're my target, but @pick(excuses)",
+	"Are you mr. @pick(ling_names)?"
+    ],
+
+    "excuses": [
+	"i like you, so i'll spare you",
+	"i don't really feel like following objectives today",
+	"i'm not robust enough to fight you",
+	"who cares",
+	"i'll kill you later"
+    ]
+
+    "ling_names": [
+	"Alpha",
+	"Beta",
+	"Gamma",
+	"Delta",
+	"Epsilon",
+	"Eta",
+	"Theta",
+	"Lambda",
+	"Mu",
+	"Xi",
+	"Rho",
+	"Sigma",
+	"Tau",
+	"Upsilon",
+	"Phi",
+	"Psi",
+	"Omega"
+    ]
+
+    "doubt": [
+        "Why?",
+	"What?",
+	"Wait, what?",
+	"Wait",
+	"Hold on",
+	"Uh..."
+    ],
+
+    "aggressive": [
+        "Give me that!",
+        "I'm going to kill you!",
+        "Fuck you!"
+    ],
+
+    "help": [
+        "HELP",
+        "HELP ME",
+        "HELP HIM",
+	"HELP HER",
+	"HELP THEM",
+	"HELP US",
+	"HELP YOURSELF"
+    ],
+
+    "escape": [
+        "RUN!!",
+        "They're behind me!",
+        "It's here!",
+        "Follow me!",
+        "Follow me"
+    ]
+
+    "infection_advice": [
+	"stay away",
+	"don't get close",
+	"be careful",
+	"help me",
+	"kill me"
+    ]
+
+    "people": [
+	"Captain",
+	"Hos",
+	"Cmo",
+	"Rd",
+	"Ce",
+	"Hop",
+	"Janitor",
+	"AI",
+	"Viro",
+	"Qm",
+	"[target.first_name()]"
+    ]
+
+    "accusations": [
+	"rogue",
+	"cult",
+	"a cultist",
+	"clockcult",
+	"a clock cultist",
+	"a revhead",
+	"a rev",
+	"a gang leader",
+	"a gangster",
+	"a traitor",
+	"a tator",
+	"a ling",
+	"a changeling"
+    ]
+
+    "threat": [
+	"Cult",
+ 	"Wizard",
+ 	"Blob",
+ 	"Ling",
+ 	"Ops",
+ 	"Swarmers",
+ 	"Revenant",
+ 	"Traitor",
+ 	"Harm",
+ 	"I hear flashing",
+ 	"Help"
+    ]
+
+    "location": [
+	"bridge",
+	"armory",
+	"sec",
+	"security",
+	"science",
+	"engineering",
+	"cargo",
+	"medbay",
+	"atmos",
+	"maint",
+	"hops office",
+	"captains office",
+	"chapel",
+	"library",
+	"tool storage",
+	"botany",
+	"kitchen",
+	"the ai sat"
+    ]
+
+    "advice": [
+	"Hmm...not sure about that.",
+	"Yes. You're doing the right thing.",
+	"No. Stop what you're doing.",
+	"You should be wary of that person.",
+	"Trust that person.",
+	"That person wants to kill you.",
+	"Kill that person. You know who.",
+	"You should go somewhere else. Quickly.",
+	"Good luck. You'll need it.",
+	"You have my permission. Do it."
+    ]
+
+    "chemicals": [
+	"Ooze",
+	"Fire",
+	"Earth",
+	"Lightning",
+	"Air",
+	"Magic",
+	"Spiders",
+	"Button",
+	"Surprise",
+	"Happiness",
+	"Despair",
+	"Blood",
+	"Awesome",
+	"Infinity",
+	"Electronics",
+	"Time",
+	"Space",
+	"Pain",
+	"Guts",
+	"Life",
+	"Death",
+	"Phlebotinium",
+	"Mana",
+	"Energy",
+	"?????"
+    ]
+
+}

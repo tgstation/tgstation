@@ -5,25 +5,25 @@
 	icon_state = "cardboard"
 	mob_storage_capacity = 1
 	resistance_flags = FLAMMABLE
-	obj_integrity = 70
 	max_integrity = 70
 	integrity_failure = 0
 	can_weld_shut = 0
-	cutting_tool = /obj/item/weapon/wirecutters
+	cutting_tool = /obj/item/wirecutters
 	open_sound = "rustle"
 	cutting_sound = 'sound/items/poster_ripped.ogg'
 	material_drop = /obj/item/stack/sheet/cardboard
 	delivery_icon = "deliverybox"
+	anchorable = FALSE
 	var/move_speed_multiplier = 1
 	var/move_delay = 0
 	var/egged = 0
 
 /obj/structure/closet/cardboard/relaymove(mob/user, direction)
-	if(opened || move_delay || user.stat || user.stunned || user.weakened || user.paralysis || !isturf(loc) || !has_gravity(loc))
+	if(opened || move_delay || user.stat || user.IsStun() || user.IsKnockdown() || user.IsUnconscious() || !isturf(loc) || !has_gravity(loc))
 		return
 	move_delay = 1
 	if(step(src, direction))
-		spawn(config.walk_speed*move_speed_multiplier)
+		spawn(CONFIG_GET(number/walk_delay) * move_speed_multiplier)
 			move_delay = 0
 	else
 		move_delay = 0
@@ -60,12 +60,12 @@
 	name = "large metal box"
 	desc = "THE COWARDS! THE FOOLS!"
 	icon_state = "metalbox"
-	obj_integrity = 500
+	max_integrity = 500
 	mob_storage_capacity = 5
 	resistance_flags = 0
 	move_speed_multiplier = 2
-	cutting_tool = /obj/item/weapon/weldingtool
+	cutting_tool = /obj/item/weldingtool
 	open_sound = 'sound/machines/click.ogg'
-	cutting_sound = 'sound/items/Welder.ogg'
+	cutting_sound = 'sound/items/welder.ogg'
 	material_drop = /obj/item/stack/sheet/plasteel
 #undef SNAKE_SPAM_TICKS

@@ -3,12 +3,13 @@
 	icon_state = "o2gen_map"
 
 	name = "oxygen generator"
-	desc = "Generates oxygen"
+	desc = "Generates oxygen."
 
 	dir = SOUTH
 	initialize_directions = SOUTH
+	layer = GAS_SCRUBBER_LAYER
 
-	var/on = 0
+	var/on = FALSE
 
 	var/oxygen_content = 10
 
@@ -18,7 +19,7 @@
 	if(showpipe)
 		add_overlay(getpipeimage('icons/obj/atmospherics/components/unary_devices.dmi', "scrub_cap", initialize_directions)) //it works for now
 
-	if(!NODE1 || !on || stat & BROKEN)
+	if(!NODE1 || !on || !is_operational())
 		icon_state = "o2gen_off"
 		return
 
@@ -32,7 +33,9 @@
 	AIR1 = air_contents
 
 /obj/machinery/atmospherics/components/unary/oxygen_generator/process_atmos()
+
 	..()
+
 	if(!on)
 		return 0
 
@@ -46,8 +49,8 @@
 		var/added_oxygen = oxygen_content - total_moles
 
 		air_contents.temperature = (current_heat_capacity*air_contents.temperature + 20*added_oxygen*T0C)/(current_heat_capacity+20*added_oxygen)
-		air_contents.assert_gas("o2")
-		air_contents.gases["o2"][MOLES] += added_oxygen
+		ASSERT_GAS(/datum/gas/oxygen, air_contents)
+		air_contents.gases[/datum/gas/oxygen][MOLES] += added_oxygen
 
 		update_parents()
 

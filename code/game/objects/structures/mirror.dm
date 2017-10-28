@@ -4,9 +4,8 @@
 	desc = "Mirror mirror on the wall, who's the most robust of them all?"
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "mirror"
-	density = 0
-	anchored = 1
-	obj_integrity = 200
+	density = FALSE
+	anchored = TRUE
 	max_integrity = 200
 	integrity_failure = 100
 
@@ -25,7 +24,7 @@
 
 		//handle facial hair (if necessary)
 		if(H.gender == MALE)
-			var/new_style = input(user, "Select a facial hair style", "Grooming")  as null|anything in facial_hair_styles_list
+			var/new_style = input(user, "Select a facial hair style", "Grooming")  as null|anything in GLOB.facial_hair_styles_list
 			if(userloc != H.loc)
 				return	//no tele-grooming
 			if(new_style)
@@ -34,7 +33,7 @@
 			H.facial_hair_style = "Shaved"
 
 		//handle normal hair
-		var/new_style = input(user, "Select a hair style", "Grooming")  as null|anything in hair_styles_list
+		var/new_style = input(user, "Select a hair style", "Grooming")  as null|anything in GLOB.hair_styles_list
 		if(userloc != H.loc)
 			return	//no tele-grooming
 		if(new_style)
@@ -48,26 +47,26 @@
 	..()
 
 /obj/structure/mirror/obj_break(damage_flag)
-	if(!broken && !(flags & NODECONSTRUCT))
+	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		icon_state = "mirror_broke"
 		playsound(src, "shatter", 70, 1)
 		desc = "Oh no, seven years of bad luck!"
 		broken = 1
 
 /obj/structure/mirror/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(!disassembled)
-			new /obj/item/weapon/shard( src.loc )
+			new /obj/item/shard( src.loc )
 	qdel(src)
 
 /obj/structure/mirror/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent != INTENT_HARM)
-		var/obj/item/weapon/weldingtool/WT = I
+	if(istype(I, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
+		var/obj/item/weldingtool/WT = I
 		if(broken)
 			user.changeNext_move(CLICK_CD_MELEE)
 			if(WT.remove_fuel(0, user))
 				to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
-				playsound(src, 'sound/items/Welder.ogg', 100, 1)
+				playsound(src, 'sound/items/welder.ogg', 100, 1)
 				if(do_after(user, 10*I.toolspeed, target = src))
 					if(!user || !WT || !WT.isOn())
 						return
@@ -90,7 +89,7 @@
 	name = "magic mirror"
 	desc = "Turn and face the strange... face."
 	icon_state = "magic_mirror"
-	var/list/races_blacklist = list("skeleton", "agent", "angel", "military_synth")
+	var/list/races_blacklist = list("skeleton", "agent", "angel", "military_synth", "memezombie")
 	var/list/choosable_races = list()
 
 /obj/structure/mirror/magic/New()
@@ -102,7 +101,7 @@
 	..()
 
 /obj/structure/mirror/magic/lesser/New()
-	choosable_races = roundstart_species
+	choosable_races = GLOB.roundstart_races.Copy()
 	..()
 
 /obj/structure/mirror/magic/badmin/New()
@@ -140,7 +139,7 @@
 		if("race")
 			var/newrace
 			var/racechoice = input(H, "What are we again?", "Race change") as null|anything in choosable_races
-			newrace = species_list[racechoice]
+			newrace = GLOB.species_list[racechoice]
 
 			if(!newrace)
 				return
@@ -149,7 +148,7 @@
 			H.set_species(newrace, icon_update=0)
 
 			if(H.dna.species.use_skintones)
-				var/new_s_tone = input(user, "Choose your skin tone:", "Race change")  as null|anything in skin_tones
+				var/new_s_tone = input(user, "Choose your skin tone:", "Race change")  as null|anything in GLOB.skin_tones
 
 				if(new_s_tone)
 					H.skin_tone = new_s_tone

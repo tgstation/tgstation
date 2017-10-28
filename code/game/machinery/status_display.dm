@@ -15,9 +15,9 @@
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "frame"
 	name = "status display"
-	anchored = 1
-	density = 0
-	use_power = 1
+	anchored = TRUE
+	density = FALSE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	var/mode = 1	// 0 = Blank
 					// 1 = Emergency Shuttle timer
@@ -45,12 +45,13 @@
 	// register for radio system
 
 /obj/machinery/status_display/Initialize()
-	..()
+	. = ..()
+	GLOB.ai_status_displays.Add(src)
 	SSradio.add_object(src, frequency)
 
 /obj/machinery/status_display/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src,frequency)
+	SSradio.remove_object(src,frequency)
+	GLOB.ai_status_displays.Remove(src)
 	return ..()
 
 // timed process
@@ -106,7 +107,7 @@
 			var/line1
 			var/line2
 			if(SSshuttle.supply.mode == SHUTTLE_IDLE)
-				if(SSshuttle.supply.z == ZLEVEL_STATION)
+				if(SSshuttle.supply.z in GLOB.station_z_levels)
 					line1 = "CARGO"
 					line2 = "Docked"
 			else
@@ -122,10 +123,37 @@
 /obj/machinery/status_display/examine(mob/user)
 	. = ..()
 	switch(mode)
-		if(1,2,4,5)
-			to_chat(user, "The display says:<br>\t<xmp>[message1]</xmp><br>\t<xmp>[message2]</xmp>")
-	if(mode == 1 && SSshuttle.emergency)
-		to_chat(user, "Current Shuttle: [SSshuttle.emergency.name]")
+		if(1,5)  // Emergency or generic shuttle
+			var/obj/docking_port/mobile/shuttle
+			if(mode == 1)
+				shuttle = SSshuttle.emergency
+			else
+				shuttle = SSshuttle.getShuttle(shuttle_id)
+
+			if (!shuttle)
+				to_chat(user, "The display says:<br>\t<xmp>Shuttle?</xmp>")
+			else if (shuttle.timer)
+				to_chat(user, "The display says:<br>\t<xmp>[shuttle.getModeStr()]: [shuttle.getTimerStr()]</xmp>")
+			if (mode == 1 && shuttle)
+				to_chat(user, "Current shuttle: [shuttle.name].")
+		if(4)  // Supply shuttle
+			var/obj/docking_port/mobile/shuttle = SSshuttle.supply
+			var/shuttleMsg = null
+			if (shuttle.mode == SHUTTLE_IDLE)
+				if (shuttle.z in GLOB.station_z_levels)
+					shuttleMsg = "Docked"
+			else
+				shuttleMsg = "[shuttle.getModeStr()]: [shuttle.getTimerStr()]"
+			if (shuttleMsg)
+				to_chat(user, "The display says:<br>\t<xmp>[shuttleMsg]</xmp>")
+		if(2)  // Custom message
+			if (message1 || message2)
+				var/msg = "The display says:"
+				if (message1)
+					msg += "<br>\t<xmp>[message1]</xmp>"
+				if (message2)
+					msg += "<br>\t<xmp>[message2]</xmp>"
+				to_chat(user, msg)
 
 
 /obj/machinery/status_display/proc/set_message(m1, m2)
@@ -146,7 +174,7 @@
 /obj/machinery/status_display/proc/set_picture(state)
 	picture_state = state
 	remove_display()
-	add_overlay(image('icons/obj/status_display.dmi', icon_state=picture_state))
+	add_overlay(picture_state)
 
 /obj/machinery/status_display/proc/update_display(line1, line2)
 	var/new_text = {"<div style="font-size:[FONT_SIZE];color:[FONT_COLOR];font:'[FONT_STYLE]';text-align:center;" valign="top">[line1]<br>[line2]</div>"}
@@ -200,8 +228,8 @@
 	desc = "A small screen which the AI can use to present itself."
 	icon_state = "frame"
 	name = "\improper AI display"
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 
 	var/mode = 0	// 0 = Blank
 					// 1 = AI emoticon
@@ -210,6 +238,14 @@
 	var/picture_state	// icon_state of ai picture
 
 	var/emotion = "Neutral"
+
+/obj/machinery/ai_status_display/Initialize()
+	. = ..()
+	GLOB.ai_status_displays.Add(src)
+
+/obj/machinery/ai_status_display/Destroy()
+	GLOB.ai_status_displays.Remove(src)
+	. = ..()
 
 /obj/machinery/ai_status_display/attack_ai(mob/living/silicon/ai/user)
 	if(isAI(user))
@@ -278,7 +314,7 @@
 /obj/machinery/ai_status_display/proc/set_picture(state)
 	picture_state = state
 	cut_overlays()
-	add_overlay(image('icons/obj/status_display.dmi', icon_state=picture_state))
+	add_overlay(picture_state)
 
 #undef CHARS_PER_LINE
 #undef FOND_SIZE

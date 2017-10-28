@@ -5,7 +5,7 @@
 	icon = 'icons/mob/aibots.dmi'
 	layer = MOB_LAYER
 	gender = NEUTER
-	luminosity = 3
+	light_range = 3
 	stop_automated_movement = 1
 	wander = 0
 	healable = 0
@@ -20,6 +20,7 @@
 	verb_ask = "queries"
 	verb_exclaim = "declares"
 	verb_yell = "alarms"
+	initial_language_holder = /datum/language_holder/synthetic
 	bubble_icon = "machine"
 
 	faction = list("neutral", "silicon" , "turret")
@@ -36,12 +37,12 @@
 	var/bot_name
 
 	var/list/player_access = list() //Additonal access the bots gets when player controlled
-	var/emagged = 0
+	var/emagged = FALSE
 	var/list/prev_access = list()
-	var/on = 1
-	var/open = 0//Maint panel
-	var/locked = 1
-	var/hacked = 0 //Used to differentiate between being hacked by silicons and emagged by humans.
+	var/on = TRUE
+	var/open = FALSE//Maint panel
+	var/locked = TRUE
+	var/hacked = FALSE //Used to differentiate between being hacked by silicons and emagged by humans.
 	var/text_hack = ""		//Custom text returned to a silicon upon hacking a bot.
 	var/text_dehack = "" 	//Text shown when resetting a bots hacked status to normal.
 	var/text_dehack_fail = "" //Shown when a silicon tries to reset a bot emagged with the emag item, which cannot be reset.
@@ -102,23 +103,25 @@
 /mob/living/simple_animal/bot/proc/turn_on()
 	if(stat)
 		return 0
-	on = 1
+	on = TRUE
+	canmove = TRUE
 	set_light(initial(light_range))
 	update_icon()
 	diag_hud_set_botstat()
 	return 1
 
 /mob/living/simple_animal/bot/proc/turn_off()
-	on = 0
+	on = FALSE
+	canmove = FALSE
 	set_light(0)
 	bot_reset() //Resets an AI's call, should it exist.
 	update_icon()
 
 /mob/living/simple_animal/bot/Initialize()
-	..()
-	access_card = new /obj/item/weapon/card/id(src)
+	. = ..()
+	access_card = new /obj/item/card/id(src)
 //This access is so bots can be immediately set to patrol and leave Robotics, instead of having to be let out first.
-	access_card.access += access_robotics
+	access_card.access += ACCESS_ROBOTICS
 	set_custom_texts()
 	Radio = new/obj/item/device/radio(src)
 	if(radio_key)
@@ -131,7 +134,7 @@
 
 	//Adds bot to the diagnostic HUD system
 	prepare_huds()
-	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 	diag_hud_set_bothealth()
 	diag_hud_set_botstat()
@@ -167,14 +170,14 @@
 
 /mob/living/simple_animal/bot/emag_act(mob/user)
 	if(locked) //First emag application unlocks the bot's interface. Apply a screwdriver to use the emag again.
-		locked = 0
+		locked = FALSE
 		emagged = 1
 		to_chat(user, "<span class='notice'>You bypass [src]'s controls.</span>")
 		return
 	if(!locked && open) //Bot panel is unlocked by ID or emag, and the panel is screwed open. Ready for emagging.
 		emagged = 2
 		remote_disabled = 1 //Manually emagging the bot locks out the AI built in panel.
-		locked = 1 //Access denied forever!
+		locked = TRUE //Access denied forever!
 		bot_reset()
 		turn_on() //The bot automatically turns on when emagged, unless recently hit with EMP.
 		to_chat(src, "<span class='userdanger'>(#$*#$^^( OVERRIDE DETECTED</span>")
@@ -240,14 +243,14 @@
 /mob/living/simple_animal/bot/interact(mob/user)
 	show_controls(user)
 
-/mob/living/simple_animal/bot/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/screwdriver))
+/mob/living/simple_animal/bot/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/screwdriver))
 		if(!locked)
 			open = !open
 			to_chat(user, "<span class='notice'>The maintenance panel is now [open ? "opened" : "closed"].</span>")
 		else
 			to_chat(user, "<span class='warning'>The maintenance panel is locked.</span>")
-	else if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
+	else if(istype(W, /obj/item/card/id) || istype(W, /obj/item/device/pda))
 		if(bot_core.allowed(user) && !open && !emagged)
 			locked = !locked
 			to_chat(user, "Controls are now [locked ? "locked." : "unlocked."]")
@@ -260,7 +263,7 @@
 				to_chat(user, "<span class='warning'>Access denied.</span>")
 	else if(istype(W, /obj/item/device/paicard))
 		insertpai(user, W)
-	else if(istype(W, /obj/item/weapon/hemostat) && paicard)
+	else if(istype(W, /obj/item/hemostat) && paicard)
 		if(open)
 			to_chat(user, "<span class='warning'>Close the access panel before manipulating the personality slot!</span>")
 		else
@@ -271,14 +274,14 @@
 					ejectpai(user)
 	else
 		user.changeNext_move(CLICK_CD_MELEE)
-		if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != INTENT_HARM)
+		if(istype(W, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
 			if(health >= maxHealth)
 				to_chat(user, "<span class='warning'>[src] does not need a repair!</span>")
 				return
 			if(!open)
 				to_chat(user, "<span class='warning'>Unable to repair with the maintenance panel closed!</span>")
 				return
-			var/obj/item/weapon/weldingtool/WT = W
+			var/obj/item/weldingtool/WT = W
 			if(WT.remove_fuel(0, user))
 				adjustHealth(-10)
 				user.visible_message("[user] repairs [src]!","<span class='notice'>You repair [src].</span>")
@@ -286,23 +289,19 @@
 				to_chat(user, "<span class='warning'>The welder must be on for this task!</span>")
 		else
 			if(W.force) //if force is non-zero
-				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-				s.set_up(5, 1, src)
-				s.start()
+				do_sparks(5, TRUE, src)
 			..()
 
 /mob/living/simple_animal/bot/bullet_act(obj/item/projectile/Proj)
 	if(Proj && (Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		if(prob(75) && Proj.damage > 0)
-			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-			s.set_up(5, 1, src)
-			s.start()
+			do_sparks(5, TRUE, src)
 	return ..()
 
 /mob/living/simple_animal/bot/emp_act(severity)
 	var/was_on = on
 	stat |= EMPED
-	new /obj/effect/overlay/temp/emp(loc)
+	new /obj/effect/temp_visual/emp(loc)
 	if(paicard)
 		paicard.emp_act(severity)
 		src.visible_message("[paicard] is flies out of [bot_name]!","<span class='warning'>You are forcefully ejected from [bot_name]!</span>")
@@ -323,30 +322,29 @@
 	if((!on) || (!message))
 		return
 	if(channel && Radio.channels[channel])// Use radio if we have channel key
-		Radio.talk_into(src, message, channel, get_spans())
+		Radio.talk_into(src, message, channel, get_spans(), get_default_language())
 	else
 		say(message)
-	return
 
 /mob/living/simple_animal/bot/get_spans()
 	return ..() | SPAN_ROBOT
 
-/mob/living/simple_animal/bot/radio(message, message_mode, list/spans)
+/mob/living/simple_animal/bot/radio(message, message_mode, list/spans, language)
 	. = ..()
 	if(. != 0)
 		return .
 
 	switch(message_mode)
 		if(MODE_HEADSET)
-			Radio.talk_into(src, message, , spans)
+			Radio.talk_into(src, message, , spans, language)
 			return REDUCE_RANGE
 
 		if(MODE_DEPARTMENT)
-			Radio.talk_into(src, message, message_mode, spans)
+			Radio.talk_into(src, message, message_mode, spans, language)
 			return REDUCE_RANGE
 
-	if(message_mode in radiochannels)
-		Radio.talk_into(src, message, message_mode, spans)
+	if(message_mode in GLOB.radiochannels)
+		Radio.talk_into(src, message, message_mode, spans, language)
 		return REDUCE_RANGE
 	return 0
 
@@ -473,10 +471,10 @@ Pass a positive integer as an argument to override a bot's default speed.
 	var/area/end_area = get_area(waypoint)
 
 	if(client) //Player bots instead get a location command from the AI
-		to_chat(src, "<span class='noticebig'>Priority waypoint set by \icon[caller] <b>[caller]</b>. Proceed to <b>[end_area.name]<\b>.")
+		to_chat(src, "<span class='noticebig'>Priority waypoint set by [icon2html(caller, src)] <b>[caller]</b>. Proceed to <b>[end_area.name]<\b>.")
 
 	//For giving the bot temporary all-access.
-	var/obj/item/weapon/card/id/all_access = new /obj/item/weapon/card/id
+	var/obj/item/card/id/all_access = new /obj/item/card/id
 	var/datum/job/captain/All = new/datum/job/captain
 	all_access.access = All.get_access()
 
@@ -489,7 +487,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 			turn_on() //Saves the AI the hassle of having to activate a bot manually.
 		access_card = all_access //Give the bot all-access while under the AI's command.
 		if(message)
-			to_chat(calling_ai, "<span class='notice'>\icon[src] [name] called to [end_area.name]. [path.len-1] meters to destination.</span>")
+			to_chat(calling_ai, "<span class='notice'>[icon2html(src, calling_ai)] [name] called to [end_area.name]. [path.len-1] meters to destination.</span>")
 		pathset = 1
 		mode = BOT_RESPONDING
 		tries = 0
@@ -504,7 +502,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	var/success = bot_move(ai_waypoint, 3)
 	if(!success)
 		if(calling_ai)
-			to_chat(calling_ai, "\icon[src] [get_turf(src) == ai_waypoint ? "<span class='notice'>[src] successfully arrived to waypoint.</span>" : "<span class='danger'>[src] failed to reach waypoint.</span>"]")
+			to_chat(calling_ai, "[icon2html(src, calling_ai)] [get_turf(src) == ai_waypoint ? "<span class='notice'>[src] successfully arrived to waypoint.</span>" : "<span class='danger'>[src] failed to reach waypoint.</span>"]")
 			calling_ai = null
 		bot_reset()
 
@@ -607,7 +605,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/proc/get_next_patrol_target()
 	// search the beacon list for the next target in the list.
-	for(var/obj/machinery/navbeacon/NB in navbeacons["[z]"])
+	for(var/obj/machinery/navbeacon/NB in GLOB.navbeacons["[z]"])
 		if(NB.location == next_destination) //Does the Beacon location text match the destination?
 			destination = new_destination //We now know the name of where we want to go.
 			patrol_target = NB.loc //Get its location and set it as the target.
@@ -615,7 +613,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 			return 1
 
 /mob/living/simple_animal/bot/proc/find_nearest_beacon()
-	for(var/obj/machinery/navbeacon/NB in navbeacons["[z]"])
+	for(var/obj/machinery/navbeacon/NB in GLOB.navbeacons["[z]"])
 		var/dist = get_dist(src, NB)
 		if(nearest_beacon) //Loop though the beacon net to find the true closest beacon.
 			//Ignore the beacon if were are located on it.
@@ -723,7 +721,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	else	// no path, so calculate new one
 		calc_summon_path()
 
-/mob/living/simple_animal/bot/Bump(M as mob|obj) //Leave no door unopened!
+/mob/living/simple_animal/bot/Collide(M as mob|obj) //Leave no door unopened!
 	. = ..()
 	if((istype(M, /obj/machinery/door/airlock) ||  istype(M, /obj/machinery/door/window)) && (!isnull(access_card)))
 		var/obj/machinery/door/D = M
@@ -775,15 +773,15 @@ Pass a positive integer as an argument to override a bot's default speed.
 		if("hack")
 			if(emagged != 2)
 				emagged = 2
-				hacked = 1
-				locked = 1
+				hacked = TRUE
+				locked = TRUE
 				to_chat(usr, "<span class='warning'>[text_hack]</span>")
 				bot_reset()
 			else if(!hacked)
 				to_chat(usr, "<span class='boldannounce'>[text_dehack_fail]</span>")
 			else
-				emagged = 0
-				hacked = 0
+				emagged = FALSE
+				hacked = FALSE
 				to_chat(usr, "<span class='notice'>[text_dehack]</span>")
 				bot_reset()
 		if("ejectpai")
@@ -797,11 +795,11 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 // Machinery to simplify topic and access calls
 /obj/machinery/bot_core
-	use_power = 0
+	use_power = NO_POWER_USE
 	var/mob/living/simple_animal/bot/owner = null
 
 /obj/machinery/bot_core/Initialize()
-	..()
+	. = ..()
 	owner = loc
 	if(!istype(owner))
 		qdel(src)
@@ -850,9 +848,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 	else if(allow_pai && !key)
 		if(!locked && !open)
 			if(card.pai && card.pai.mind)
-				if(!user.drop_item())
+				if(!user.transferItemToLoc(card, src))
 					return
-				card.forceMove(src)
 				paicard = card
 				user.visible_message("[user] inserts [card] into [src]!","<span class='notice'>You insert [card] into [src].</span>")
 				paicard.pai.mind.transfer_to(src)
@@ -860,6 +857,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 				bot_name = name
 				name = paicard.pai.name
 				faction = user.faction.Copy()
+				language_holder = paicard.pai.language_holder.copy(src)
 				add_logs(user, paicard.pai, "uploaded to [bot_name],")
 				return 1
 			else
@@ -922,5 +920,5 @@ Pass a positive integer as an argument to override a bot's default speed.
 //If a bot has its own HUD (for player bots), provide it.
 	if(!data_hud_type)
 		return
-	var/datum/atom_hud/datahud = huds[data_hud_type]
+	var/datum/atom_hud/datahud = GLOB.huds[data_hud_type]
 	datahud.add_hud_to(src)

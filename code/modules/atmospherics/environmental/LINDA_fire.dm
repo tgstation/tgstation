@@ -12,8 +12,8 @@
 	if(!air_contents)
 		return 0
 
-	var/oxy = air_contents.gases["o2"] ? air_contents.gases["o2"][MOLES] : 0
-	var/tox = air_contents.gases["plasma"] ? air_contents.gases["plasma"][MOLES] : 0
+	var/oxy = air_contents.gases[/datum/gas/oxygen] ? air_contents.gases[/datum/gas/oxygen][MOLES] : 0
+	var/tox = air_contents.gases[/datum/gas/plasma] ? air_contents.gases[/datum/gas/plasma][MOLES] : 0
 
 	if(active_hotspot)
 		if(soh)
@@ -44,12 +44,12 @@
 
 //This is the icon for fire on turfs, also helps for nurturing small fires until they are full tile
 /obj/effect/hotspot
-	anchored = 1
-	mouse_opacity = 0
+	anchored = TRUE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "1"
 	layer = ABOVE_OPEN_TURF_LAYER
-	light_range = 3
+	light_range = LIGHT_RANGE_FIRE
 	light_color = LIGHT_COLOR_FIRE
 
 	var/volume = 125
@@ -61,9 +61,8 @@
 	..()
 	SSair.hotspots += src
 	perform_exposure()
-	setDir(pick(cardinal))
+	setDir(pick(GLOB.cardinals))
 	air_update_turf()
-
 
 /obj/effect/hotspot/proc/perform_exposure()
 	var/turf/open/location = loc
@@ -79,14 +78,14 @@
 
 	if(bypassing)
 		if(!just_spawned)
-			volume = location.air.fuel_burnt*FIRE_GROWTH_RATE
+			volume = location.air.reaction_results["fire"]*FIRE_GROWTH_RATE
 			temperature = location.air.temperature
 	else
 		var/datum/gas_mixture/affected = location.air.remove_ratio(volume/location.air.volume)
 		affected.temperature = temperature
 		affected.react()
 		temperature = affected.temperature
-		volume = affected.fuel_burnt*FIRE_GROWTH_RATE
+		volume = affected.reaction_results["fire"]*FIRE_GROWTH_RATE
 		location.assume_air(affected)
 
 	for(var/A in loc)
@@ -113,7 +112,7 @@
 		qdel(src)
 		return
 
-	if(!(location.air) || !location.air.gases["plasma"] || !location.air.gases["o2"] || location.air.gases["plasma"][MOLES] < 0.5 || location.air.gases["o2"][MOLES] < 0.5)
+	if(!(location.air) || !location.air.gases[/datum/gas/plasma] || !location.air.gases[/datum/gas/oxygen] || location.air.gases[/datum/gas/plasma][MOLES] < 0.5 || location.air.gases[/datum/gas/oxygen][MOLES] < 0.5)
 		qdel(src)
 		return
 
@@ -176,3 +175,15 @@
 	..()
 	if(isliving(L))
 		L.fire_act(temperature, volume)
+
+/obj/effect/dummy/fire
+	name = "fire"
+	desc = "OWWWWWW. IT BURNS. Tell a coder if you're seeing this."
+	icon_state = "nothing"
+	light_color = LIGHT_COLOR_FIRE
+	light_range = LIGHT_RANGE_FIRE
+
+/obj/effect/dummy/fire/Initialize()
+	. = ..()
+	if(!isliving(loc))
+		qdel(src)

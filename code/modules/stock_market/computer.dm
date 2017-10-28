@@ -6,14 +6,14 @@
 	icon_keyboard = "no_keyboard"
 	var/logged_in = "Cargo Department"
 	var/vmode = 1
-	circuit = /obj/item/weapon/circuitboard/computer/stockexchange
+	circuit = /obj/item/circuitboard/computer/stockexchange
 	clockwork = TRUE //it'd look weird
 
 	light_color = LIGHT_COLOR_GREEN
 
-/obj/machinery/computer/stockexchange/New()
-	..()
-	logged_in = "[station_name()] Cargo Department"
+/obj/machinery/computer/stockexchange/Initialize()
+	. = ..()
+	logged_in = "SS13 Cargo Department"
 
 /obj/machinery/computer/stockexchange/proc/balance()
 	if (!logged_in)
@@ -63,9 +63,9 @@ a.updated {
 </style>"}
 	var/dat = "<html><head><title>[station_name()] Stock Exchange</title>[css]</head><body>"
 
-	dat += "<span class='user'>Welcome, <b>[logged_in]</b></span><br><span class='balance'><b>Credits:</b> [balance()] </span><br>"
-	for (var/datum/stock/S in stockExchange.last_read)
-		var/list/LR = stockExchange.last_read[S]
+	dat += "<span class='user'>Welcome, <b>[station_name()] Cargo Department</b></span><br><span class='balance'><b>Credits:</b> [balance()] </span><br>"
+	for (var/datum/stock/S in GLOB.stockExchange.last_read)
+		var/list/LR = GLOB.stockExchange.last_read[S]
 		if (!(logged_in in LR))
 			LR[logged_in] = 0
 	dat += "<b>View mode:</b> <a href='?src=\ref[src];cycleview=1'>[vmode ? "Compact" : "Full"]</a> "
@@ -76,13 +76,13 @@ a.updated {
 	dat += "<h3>Listed stocks</h3>"
 
 	if (vmode == 0)
-		for (var/datum/stock/S in stockExchange.stocks)
+		for (var/datum/stock/S in GLOB.stockExchange.stocks)
 			var/mystocks = 0
 			if (logged_in && (logged_in in S.shareholders))
 				mystocks = S.shareholders[logged_in]
 			dat += "<hr /><div class='stock'><span class='company'>[S.name]</span> <span class='s_company'>([S.short_name])</span>[S.bankrupt ? " <b style='color:red'>BANKRUPT</b>" : null]<br>"
 			if (S.last_unification)
-				dat += "<b>Unified shares</b> [(world.time - S.last_unification) / 600] minutes ago.<br>"
+				dat += "<b>Unified shares</b> [DisplayTimeText(world.time - S.last_unification)] ago.<br>"
 			dat += "<b>Current value per share:</b> [S.current_value] | <a href='?src=\ref[src];viewhistory=\ref[S]'>View history</a><br><br>"
 			dat += "You currently own <b>[mystocks]</b> shares in this company. There are [S.available_shares] purchasable shares on the market currently.<br>"
 			if (S.bankrupt)
@@ -94,7 +94,7 @@ a.updated {
 				dat += "<i>[prod]</i><br>"
 			var/news = 0
 			if (logged_in)
-				var/list/LR = stockExchange.last_read[S]
+				var/list/LR = GLOB.stockExchange.last_read[S]
 				var/lrt = LR[logged_in]
 				for (var/datum/article/A in S.articles)
 					if (A.ticks > lrt)
@@ -111,7 +111,7 @@ a.updated {
 		dat += "<table class='stable'>"
 		dat += "<tr><th>&nbsp;</th><th>ID</th><th>Name</th><th>Value</th><th>Owned</th><th>Avail</th><th>Actions</th></tr>"
 
-		for (var/datum/stock/S in stockExchange.stocks)
+		for (var/datum/stock/S in GLOB.stockExchange.stocks)
 			var/mystocks = 0
 			if (logged_in && (logged_in in S.shareholders))
 				mystocks = S.shareholders[logged_in]
@@ -144,7 +144,7 @@ a.updated {
 			dat += "<td>[S.available_shares]</td>"
 			var/news = 0
 			if (logged_in)
-				var/list/LR = stockExchange.last_read[S]
+				var/list/LR = GLOB.stockExchange.last_read[S]
 				var/lrt = LR[logged_in]
 				for (var/datum/article/A in S.articles)
 					if (A.ticks > lrt)
@@ -205,7 +205,7 @@ a.updated {
 		to_chat(user, "<span class='danger'>Could not complete transaction.</span>")
 		return
 	to_chat(user, "<span class='notice'>Sold [amt] shares of [S.name] at [S.current_value] a share for [total] credits.</span>")
-	stockExchange.add_log(/datum/stock_log/sell, user.name, S.name, amt, S.current_value, total)
+	GLOB.stockExchange.add_log(/datum/stock_log/sell, user.name, S.name, amt, S.current_value, total)
 
 /obj/machinery/computer/stockexchange/proc/buy_some_shares(var/datum/stock/S, var/mob/user)
 	if (!user || !S)
@@ -235,17 +235,17 @@ a.updated {
 	if (!amt)
 		return
 	if (!S.buyShares(logged_in, amt))
-		to_chat(user, "<<span class='danger'>Could not complete transaction.</span>")
+		to_chat(user, "<span class='danger'>Could not complete transaction.</span>")
 		return
 
 	var/total = amt * S.current_value
 	to_chat(user, "<span class='notice'>Bought [amt] shares of [S.name] at [S.current_value] a share for [total] credits.</span>")
-	stockExchange.add_log(/datum/stock_log/buy, user.name, S.name, amt, S.current_value,  total)
+	GLOB.stockExchange.add_log(/datum/stock_log/buy, user.name, S.name, amt, S.current_value,  total)
 
 /obj/machinery/computer/stockexchange/proc/do_borrowing_deal(var/datum/borrow/B, var/mob/user)
 	if (B.stock.borrow(B, logged_in))
 		to_chat(user, "<span class='notice'>You successfully borrowed [B.share_amount] shares. Deposit: [B.deposit].</span>")
-		stockExchange.add_log(/datum/stock_log/borrow, user.name, B.stock.name, B.share_amount, B.deposit)
+		GLOB.stockExchange.add_log(/datum/stock_log/borrow, user.name, B.stock.name, B.share_amount, B.deposit)
 	else
 		to_chat(user, "<span class='danger'>Could not complete transaction. Check your account balance.</span>")
 
@@ -257,7 +257,7 @@ a.updated {
 		usr.machine = src
 
 	if (href_list["viewhistory"])
-		var/datum/stock/S = locate(href_list["viewhistory"]) in stockExchange.stocks
+		var/datum/stock/S = locate(href_list["viewhistory"]) in GLOB.stockExchange.stocks
 		if (S)
 			S.displayValues(usr)
 
@@ -265,18 +265,18 @@ a.updated {
 		logged_in = null
 
 	if (href_list["buyshares"])
-		var/datum/stock/S = locate(href_list["buyshares"]) in stockExchange.stocks
+		var/datum/stock/S = locate(href_list["buyshares"]) in GLOB.stockExchange.stocks
 		if (S)
 			buy_some_shares(S, usr)
 
 	if (href_list["sellshares"])
-		var/datum/stock/S = locate(href_list["sellshares"]) in stockExchange.stocks
+		var/datum/stock/S = locate(href_list["sellshares"]) in GLOB.stockExchange.stocks
 		if (S)
 			sell_some_shares(S, usr)
 
 	if (href_list["show_logs"])
 		var/dat = "<html><head><title>Stock Transaction Logs</title></head><body><h2>Stock Transaction Logs</h2><div><a href='?src=\ref[src];show_logs=1'>Refresh</a></div><br>"
-		for(var/D in stockExchange.logs)
+		for(var/D in GLOB.stockExchange.logs)
 			var/datum/stock_log/L = D
 			if(istype(L, /datum/stock_log/buy))
 				dat += "[L.time] | <b>[L.user_name]</b> bought <b>[L.stocks]</b> stocks at [L.shareprice] a share for <b>[L.money]</b> total credits in <b>[L.company_name]</b>.<br>"
@@ -295,7 +295,7 @@ a.updated {
 	if (href_list["archive"])
 		var/datum/stock/S = locate(href_list["archive"])
 		if (logged_in && logged_in != "")
-			var/list/LR = stockExchange.last_read[S]
+			var/list/LR = GLOB.stockExchange.last_read[S]
 			LR[logged_in] = world.time
 		var/dat = "<html><head><title>News feed for [S.name]</title></head><body><h2>News feed for [S.name]</h2><div><a href='?src=\ref[src];archive=\ref[S]'>Refresh</a></div>"
 		dat += "<div><h3>Events</h3>"

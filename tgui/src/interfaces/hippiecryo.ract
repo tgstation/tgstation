@@ -25,7 +25,7 @@
   </ui-section>
   {{#if data.hasOccupant}}
     <ui-section label='State'>
-      <span class='{{occupantStatState}}'>{{data.occupant.stat == 0 ? "Conscious" : data.occupant.stat == 1 ? "Unconcious" : "Dead"}}</span>
+      <span class='{{data.occupant.statstate}}'>{{data.occupant.stat}}</span>
   	</ui-section>
   	<ui-section label='Temperature'>
   	  <span class='{{temperatureStatus(adata.occupant.bodyTemperature)}}'>{{Math.round(adata.occupant.bodyTemperature)}} K</span>

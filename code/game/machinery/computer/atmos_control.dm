@@ -6,7 +6,7 @@
 	name = "gas sensor"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "gsensor1"
-	anchored = 1
+	anchored = TRUE
 
 	var/on = TRUE
 
@@ -37,23 +37,22 @@
 				var/gas_name = air_sample.gases[gas_id][GAS_META][META_GAS_NAME]
 				signal.data["gases"][gas_name] = air_sample.gases[gas_id][MOLES] / total_moles * 100
 
-		radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
+		radio_connection.post_signal(src, signal, filter = GLOB.RADIO_ATMOSIA)
 
 
 /obj/machinery/air_sensor/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, RADIO_ATMOSIA)
+	radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_ATMOSIA)
 
 /obj/machinery/air_sensor/Initialize()
-	..()
+	. = ..()
 	SSair.atmos_machinery += src
 	set_frequency(frequency)
 
 /obj/machinery/air_sensor/Destroy()
 	SSair.atmos_machinery -= src
-	if(SSradio)
-		SSradio.remove_object(src, frequency)
+	SSradio.remove_object(src, frequency)
 	return ..()
 
 /////////////////////////////////////////////////////////////
@@ -61,11 +60,11 @@
 /////////////////////////////////////////////////////////////
 
 /obj/machinery/computer/atmos_control
-	name = "Atmospherics Monitoring"
+	name = "atmospherics monitoring"
 	desc = "Used to monitor the station's atmospherics sensors."
 	icon_screen = "tank"
 	icon_keyboard = "atmos_key"
-	circuit = /obj/item/weapon/circuitboard/computer/atmos_control
+	circuit = /obj/item/circuitboard/computer/atmos_control
 
 	var/frequency = 1441
 	var/list/sensors = list(
@@ -85,16 +84,15 @@
 	light_color = LIGHT_COLOR_CYAN
 
 /obj/machinery/computer/atmos_control/Initialize()
-	..()
+	. = ..()
 	set_frequency(frequency)
 
 /obj/machinery/computer/atmos_control/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src, frequency)
+	SSradio.remove_object(src, frequency)
 	return ..()
 
-/obj/machinery/computer/atmos_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+/obj/machinery/computer/atmos_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "atmos_control", name, 400, 925, master_ui, state)
@@ -131,7 +129,7 @@
 /obj/machinery/computer/atmos_control/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, RADIO_ATMOSIA)
+	radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_ATMOSIA)
 
 /////////////////////////////////////////////////////////////
 // LARGE TANK CONTROL
@@ -141,7 +139,7 @@
 	var/input_tag
 	var/output_tag
 	frequency = 1441
-	circuit = /obj/item/weapon/circuitboard/computer/atmos_control/tank
+	circuit = /obj/item/circuitboard/computer/atmos_control/tank
 
 	var/list/input_info
 	var/list/output_info
@@ -176,8 +174,8 @@
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in devices)
 		U.broadcast_status()
 
-/obj/machinery/computer/atmos_control/tank/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+/obj/machinery/computer/atmos_control/tank/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "atmos_control", name, 500, 305, master_ui, state)
@@ -211,12 +209,12 @@
 			signal.data += list("tag" = output_tag, "power_toggle" = TRUE)
 			. = TRUE
 		if("pressure")
-			var/target = input("New target pressure:", name, output_info["internal"]) as num|null
+			var/target = input("New target pressure:", name, output_info ? output_info["internal"] : 0) as num|null
 			if(!isnull(target) && !..())
 				target =  Clamp(target, 0, 50 * ONE_ATMOSPHERE)
 				signal.data += list("tag" = output_tag, "set_internal_pressure" = target)
 				. = TRUE
-	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
+	radio_connection.post_signal(src, signal, filter = GLOB.RADIO_ATMOSIA)
 
 /obj/machinery/computer/atmos_control/tank/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption)

@@ -1,7 +1,7 @@
 /mob/living/simple_animal/shade
 	name = "Shade"
 	real_name = "Shade"
-	desc = "A bound spirit"
+	desc = "A bound spirit."
 	gender = PLURAL
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "shade"
@@ -27,8 +27,9 @@
 	faction = list("cult")
 	status_flags = CANPUSH
 	movement_type = FLYING
-	loot = list(/obj/item/weapon/ectoplasm)
-	del_on_death = 1
+	loot = list(/obj/item/ectoplasm)
+	del_on_death = TRUE
+	initial_language_holder = /datum/language_holder/construct
 
 /mob/living/simple_animal/shade/death()
 	deathmessage = "lets out a contented sigh as [p_their()] form unwinds."
@@ -43,7 +44,10 @@
 	return TRUE //this doesn't make much sense; you'd thing TRUE would mean it'd process spacemove but it means it doesn't
 
 /mob/living/simple_animal/shade/attack_animal(mob/living/simple_animal/M)
-	if(istype(M, /mob/living/simple_animal/hostile/construct/builder))
+	if(isconstruct(M))
+		var/mob/living/simple_animal/hostile/construct/C = M
+		if(!C.can_repair_constructs)
+			return
 		if(health < maxHealth)
 			adjustHealth(-25)
 			Beam(M,icon_state="sendbeam",time=4)
@@ -59,4 +63,4 @@
 		var/obj/item/device/soulstone/SS = O
 		SS.transfer_soul("SHADE", src, user)
 	else
-		..()
+		. = ..()

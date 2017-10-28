@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "b" = (
 /turf/closed/mineral/random,
 /area/ruin/unpowered/no_grav)
@@ -27,11 +27,11 @@
 /area/ruin/unpowered)
 "i" = (
 /obj/structure/closet/crate,
-/obj/item/weapon/ore/bananium,
-/obj/item/weapon/ore/bananium,
-/obj/item/weapon/ore/bananium,
-/obj/item/weapon/ore/bananium,
-/obj/item/weapon/ore/bananium,
+/obj/item/ore/bananium,
+/obj/item/ore/bananium,
+/obj/item/ore/bananium,
+/obj/item/ore/bananium,
+/obj/item/ore/bananium,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "j" = (
@@ -39,7 +39,7 @@
 	icon_state = "crateopen";
 	opened = 1
 	},
-/obj/item/weapon/ore/bananium,
+/obj/item/ore/bananium,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "k" = (
@@ -57,8 +57,7 @@
 "l" = (
 /obj/structure/shuttle/engine/heater{
 	color = "#FFFF00";
-	dir = 4;
-	icon_state = "heater"
+	dir = 4
 	},
 /obj/structure/window/reinforced{
 	color = "#FFFF00";
@@ -69,28 +68,27 @@
 	},
 /area/ruin/unpowered)
 "m" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/structure/shuttle/engine/propulsion/left{
 	color = "#FFFF00";
-	dir = 4;
-	icon_state = "propulsion_l"
+	dir = 4
 	},
-/turf/open/space,
+/turf/template_noop,
 /area/ruin/unpowered)
 "n" = (
 /turf/closed/mineral/random,
 /area/ruin/unpowered)
 "o" = (
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "small"
 	},
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered)
 "p" = (
-/obj/item/weapon/ore/bananium,
+/obj/item/ore/bananium,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "q" = (
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "medium"
 	},
 /obj/structure/chair{
@@ -105,9 +103,7 @@
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "s" = (
-/obj/item/weapon/paper{
-	info = "The call has gone out! Our ancestral home has been rediscovered! Not a small patch of land, but a true clown nation, a true Clown Planet! We're on our way home at last!"
-	},
+/obj/item/paper/fluff/ruins/crashedclownship/true_nation,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "t" = (
@@ -130,36 +126,36 @@
 	},
 /area/ruin/unpowered)
 "u" = (
-/obj/item/weapon/shard,
+/obj/item/shard,
 /obj/structure/chair{
 	dir = 8
 	},
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "v" = (
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "medium"
 	},
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "w" = (
-/obj/item/weapon/storage/bag/ore,
+/obj/item/storage/bag/ore,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "x" = (
-/obj/item/weapon/pickaxe,
+/obj/item/pickaxe,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "y" = (
 /obj/structure/closet/crate,
-/obj/item/weapon/ore/bananium,
-/obj/item/weapon/ore/bananium,
-/obj/item/weapon/ore/bananium,
-/obj/item/weapon/ore/bananium,
+/obj/item/ore/bananium,
+/obj/item/ore/bananium,
+/obj/item/ore/bananium,
+/obj/item/ore/bananium,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "z" = (
-/obj/item/weapon/shovel,
+/obj/item/shovel,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 

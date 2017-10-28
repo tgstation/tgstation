@@ -10,7 +10,7 @@
 
 
 /obj/machinery/computer/pod/Initialize()
-	..()
+	. = ..()
 	for(var/obj/machinery/mass_driver/M in range(range, src))
 		if(M.id == id)
 			connected = M
@@ -21,7 +21,7 @@
 		return
 
 	if(!connected)
-		viewers(null, null) << "Cannot locate mass driver connector. Cancelling firing sequence!"
+		say("Cannot locate mass driver connector. Cancelling firing sequence!")
 		return
 
 	for(var/obj/machinery/door/poddoor/M in range(range, src))
@@ -51,9 +51,7 @@
 			d2 = "<A href='?src=\ref[src];time=0'>Stop Time Launch</A>"
 		else
 			d2 = "<A href='?src=\ref[src];time=1'>Initiate Time Launch</A>"
-		var/second = time % 60
-		var/minute = (time - second) / 60
-		dat += "<HR>\nTimer System: [d2]\nTime Left: [minute ? "[minute]:" : null][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>"
+		dat += "<HR>\nTimer System: [d2]\nTime Left: [DisplayTimeText(time)] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>"
 		var/temp = ""
 		var/list/L = list( 0.25, 0.5, 1, 2, 4, 8, 16 )
 		for(var/t in L)
@@ -130,7 +128,7 @@
 	name = "\improper ProComp Executive IIc"
 	desc = "The Syndicate operate on a tight budget. Operates external airlocks."
 	title = "External Airlock Controls"
-	req_access = list(access_syndicate)
+	req_access = list(ACCESS_SYNDICATE)
 
 /obj/machinery/computer/pod/old/syndicate/attack_hand(mob/user)
 	if(!allowed(user))
@@ -142,4 +140,4 @@
 
 /obj/machinery/computer/pod/old/swf
 	name = "\improper Magix System IV"
-	desc = "An arcane artifact that holds much magic. Running E-Knock 2.2: Sorceror's Edition"
+	desc = "An arcane artifact that holds much magic. Running E-Knock 2.2: Sorceror's Edition."

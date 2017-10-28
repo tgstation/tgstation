@@ -3,7 +3,7 @@ Chief Medical Officer
 */
 /datum/job/cmo
 	title = "Chief Medical Officer"
-	flag = CMO
+	flag = CMO_JF
 	department_head = list("Captain")
 	department_flag = MEDSCI
 	head_announce = list("Medical")
@@ -14,33 +14,37 @@ Chief Medical Officer
 	selection_color = "#ffddf0"
 	req_admin_notify = 1
 	minimal_player_age = 7
+	exp_requirements = 180
+	exp_type = EXP_TYPE_CREW
+	exp_type_department = EXP_TYPE_MEDICAL
 
 	outfit = /datum/outfit/job/cmo
 
-	access = list(access_medical, access_morgue, access_genetics, access_cloning, access_heads, access_mineral_storeroom,
-			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
-			access_keycard_auth, access_sec_doors, access_maint_tunnels)
-	minimal_access = list(access_medical, access_morgue, access_genetics, access_cloning, access_heads, access_mineral_storeroom,
-			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
-			access_keycard_auth, access_sec_doors, access_maint_tunnels)
+	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_HEADS, ACCESS_MINERAL_STOREROOM,
+			ACCESS_CHEMISTRY, ACCESS_VIROLOGY, ACCESS_CMO, ACCESS_SURGERY, ACCESS_RC_ANNOUNCE,
+			ACCESS_KEYCARD_AUTH, ACCESS_SEC_DOORS, ACCESS_MAINT_TUNNELS)
+	minimal_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_HEADS, ACCESS_MINERAL_STOREROOM,
+			ACCESS_CHEMISTRY, ACCESS_VIROLOGY, ACCESS_CMO, ACCESS_SURGERY, ACCESS_RC_ANNOUNCE,
+			ACCESS_KEYCARD_AUTH, ACCESS_SEC_DOORS, ACCESS_MAINT_TUNNELS)
 
 /datum/outfit/job/cmo
 	name = "Chief Medical Officer"
 	jobtype = /datum/job/cmo
 
-	id = /obj/item/weapon/card/id/silver
+	id = /obj/item/card/id/silver
 	belt = /obj/item/device/pda/heads/cmo
+	l_pocket = /obj/item/pinpointer/crew
 	ears = /obj/item/device/radio/headset/heads/cmo
 	uniform = /obj/item/clothing/under/rank/chief_medical_officer
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	suit = /obj/item/clothing/suit/toggle/labcoat/cmo
-	l_hand = /obj/item/weapon/storage/firstaid/regular
+	l_hand = /obj/item/storage/firstaid/regular
 	suit_store = /obj/item/device/flashlight/pen
-	backpack_contents = list(/obj/item/weapon/melee/classic_baton/telescopic=1)
+	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1)
 
-	backpack = /obj/item/weapon/storage/backpack/medic
-	satchel = /obj/item/weapon/storage/backpack/satchel/med
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/med
+	backpack = /obj/item/storage/backpack/medic
+	satchel = /obj/item/storage/backpack/satchel/med
+	duffelbag = /obj/item/storage/backpack/duffelbag/med
 
 /*
 Medical Doctor
@@ -58,8 +62,8 @@ Medical Doctor
 
 	outfit = /datum/outfit/job/doctor
 
-	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_genetics, access_cloning, access_mineral_storeroom)
-	minimal_access = list(access_medical, access_morgue, access_surgery, access_cloning)
+	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_CHEMISTRY, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_MINERAL_STOREROOM)
+	minimal_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_CLONING)
 
 /datum/outfit/job/doctor
 	name = "Medical Doctor"
@@ -70,12 +74,12 @@ Medical Doctor
 	uniform = /obj/item/clothing/under/rank/medical
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	suit =  /obj/item/clothing/suit/toggle/labcoat
-	l_hand = /obj/item/weapon/storage/firstaid/regular
+	l_hand = /obj/item/storage/firstaid/regular
 	suit_store = /obj/item/device/flashlight/pen
 
-	backpack = /obj/item/weapon/storage/backpack/medic
-	satchel = /obj/item/weapon/storage/backpack/satchel/med
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/med
+	backpack = /obj/item/storage/backpack/medic
+	satchel = /obj/item/storage/backpack/satchel/med
+	duffelbag = /obj/item/storage/backpack/duffelbag/med
 
 /*
 Chemist
@@ -90,11 +94,13 @@ Chemist
 	spawn_positions = 2
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
+	exp_type = EXP_TYPE_CREW
+	exp_requirements = 60
 
 	outfit = /datum/outfit/job/chemist
 
-	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_genetics, access_cloning, access_mineral_storeroom)
-	minimal_access = list(access_medical, access_chemistry, access_mineral_storeroom)
+	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_CHEMISTRY, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_MINERAL_STOREROOM)
+	minimal_access = list(ACCESS_MEDICAL, ACCESS_CHEMISTRY, ACCESS_MINERAL_STOREROOM)
 
 /datum/outfit/job/chemist
 	name = "Chemist"
@@ -106,10 +112,10 @@ Chemist
 	uniform = /obj/item/clothing/under/rank/chemist
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	suit =  /obj/item/clothing/suit/toggle/labcoat/chemist
-
-	backpack = /obj/item/weapon/storage/backpack/chemistry
-	satchel = /obj/item/weapon/storage/backpack/satchel/chem
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/med
+	accessory = /obj/item/clothing/accessory/pocketprotector/full
+	backpack = /obj/item/storage/backpack/chemistry
+	satchel = /obj/item/storage/backpack/satchel/chem
+	duffelbag = /obj/item/storage/backpack/duffelbag/med
 
 /*
 Geneticist
@@ -124,11 +130,13 @@ Geneticist
 	spawn_positions = 2
 	supervisors = "the chief medical officer and research director"
 	selection_color = "#ffeef0"
+	exp_type = EXP_TYPE_CREW
+	exp_requirements = 60
 
 	outfit = /datum/outfit/job/geneticist
 
-	access = list(access_medical, access_morgue, access_chemistry, access_genetics, access_cloning, access_research, access_xenobiology, access_robotics, access_mineral_storeroom, access_tech_storage)
-	minimal_access = list(access_medical, access_morgue, access_genetics, access_cloning, access_research)
+	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_CHEMISTRY, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_RESEARCH, ACCESS_XENOBIOLOGY, ACCESS_ROBOTICS, ACCESS_MINERAL_STOREROOM, ACCESS_TECH_STORAGE)
+	minimal_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_RESEARCH)
 
 /datum/outfit/job/geneticist
 	name = "Geneticist"
@@ -141,9 +149,9 @@ Geneticist
 	suit =  /obj/item/clothing/suit/toggle/labcoat/genetics
 	suit_store =  /obj/item/device/flashlight/pen
 
-	backpack = /obj/item/weapon/storage/backpack/genetics
-	satchel = /obj/item/weapon/storage/backpack/satchel/gen
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/med
+	backpack = /obj/item/storage/backpack/genetics
+	satchel = /obj/item/storage/backpack/satchel/gen
+	duffelbag = /obj/item/storage/backpack/duffelbag/med
 
 /*
 Virologist
@@ -158,11 +166,13 @@ Virologist
 	spawn_positions = 1
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
+	exp_type = EXP_TYPE_CREW
+	exp_requirements = 60
 
 	outfit = /datum/outfit/job/virologist
 
-	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_cloning, access_mineral_storeroom)
-	minimal_access = list(access_medical, access_virology, access_mineral_storeroom)
+	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_CHEMISTRY, ACCESS_VIROLOGY, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_MINERAL_STOREROOM)
+	minimal_access = list(ACCESS_MEDICAL, ACCESS_VIROLOGY, ACCESS_MINERAL_STOREROOM)
 
 /datum/outfit/job/virologist
 	name = "Virologist"
@@ -176,6 +186,6 @@ Virologist
 	suit =  /obj/item/clothing/suit/toggle/labcoat/virologist
 	suit_store =  /obj/item/device/flashlight/pen
 
-	backpack = /obj/item/weapon/storage/backpack/virology
-	satchel = /obj/item/weapon/storage/backpack/satchel/vir
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/med
+	backpack = /obj/item/storage/backpack/virology
+	satchel = /obj/item/storage/backpack/satchel/vir
+	duffelbag = /obj/item/storage/backpack/duffelbag/med

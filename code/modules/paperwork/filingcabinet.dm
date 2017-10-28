@@ -15,8 +15,8 @@
 	desc = "A large cabinet with drawers."
 	icon = 'hippiestation/icons/obj/bureaucracy.dmi'
 	icon_state = "filingcabinet"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 
 /obj/structure/filingcabinet/chestdrawer
 	name = "chest drawer"
@@ -25,37 +25,36 @@
 /obj/structure/filingcabinet/chestdrawer/wheeled
 	name = "rolling chest drawer"
 	desc = "A small cabinet with drawers. This one has wheels!"
-	anchored = 0
+	anchored = FALSE
 
-/obj/structure/filingcabinet/filingcabinet	//not changing the path to avoid unecessary map issues, but please don't name stuff like this in the future -Pete
+/obj/structure/filingcabinet/filingcabinet	//not changing the path to avoid unnecessary map issues, but please don't name stuff like this in the future -Pete
 	icon_state = "tallcabinet"
 
 
 /obj/structure/filingcabinet/Initialize(mapload)
-	..()
+	. = ..()
 	if(mapload)
 		for(var/obj/item/I in loc)
-			if(istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/folder) || istype(I, /obj/item/weapon/photo))
+			if(istype(I, /obj/item/paper) || istype(I, /obj/item/folder) || istype(I, /obj/item/photo))
 				I.loc = src
 
 /obj/structure/filingcabinet/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		new /obj/item/stack/sheet/metal(loc, 2)
 		for(var/obj/item/I in src)
 			I.forceMove(loc)
 	qdel(src)
 
 /obj/structure/filingcabinet/attackby(obj/item/P, mob/user, params)
-	if(istype(P, /obj/item/weapon/paper) || istype(P, /obj/item/weapon/folder) || istype(P, /obj/item/weapon/photo) || istype(P, /obj/item/documents))
-		if(!user.drop_item())
+	if(istype(P, /obj/item/paper) || istype(P, /obj/item/folder) || istype(P, /obj/item/photo) || istype(P, /obj/item/documents))
+		if(!user.transferItemToLoc(P, src))
 			return
 		to_chat(user, "<span class='notice'>You put [P] in [src].</span>")
-		P.loc = src
 		icon_state = "[initial(icon_state)]-open"
 		sleep(5)
 		icon_state = initial(icon_state)
 		updateUsrDialog()
-	else if(istype(P, /obj/item/weapon/wrench))
+	else if(istype(P, /obj/item/wrench))
 		to_chat(user, "<span class='notice'>You begin to [anchored ? "unwrench" : "wrench"] [src].</span>")
 		playsound(loc, P.usesound, 50, 1)
 		if(do_after(user, 20, target = src))
@@ -120,11 +119,11 @@
 
 /obj/structure/filingcabinet/security/proc/populate()
 	if(virgin)
-		for(var/datum/data/record/G in data_core.general)
-			var/datum/data/record/S = find_record("name", G.fields["name"], data_core.security)
+		for(var/datum/data/record/G in GLOB.data_core.general)
+			var/datum/data/record/S = find_record("name", G.fields["name"], GLOB.data_core.security)
 			if(!S)
 				continue
-			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(src)
+			var/obj/item/paper/P = new /obj/item/paper(src)
 			P.info = "<CENTER><B>Security Record</B></CENTER><BR>"
 			P.info += "Name: [G.fields["name"]] ID: [G.fields["id"]]<BR>\nSex: [G.fields["sex"]]<BR>\nAge: [G.fields["age"]]<BR>\nFingerprint: [G.fields["fingerprint"]]<BR>\nPhysical Status: [G.fields["p_stat"]]<BR>\nMental Status: [G.fields["m_stat"]]<BR>"
 			P.info += "<BR>\n<CENTER><B>Security Data</B></CENTER><BR>\nCriminal Status: [S.fields["criminal"]]<BR>\n<BR>\nMinor Crimes: [S.fields["mi_crim"]]<BR>\nDetails: [S.fields["mi_crim_d"]]<BR>\n<BR>\nMajor Crimes: [S.fields["ma_crim"]]<BR>\nDetails: [S.fields["ma_crim_d"]]<BR>\n<BR>\nImportant Notes:<BR>\n\t[S.fields["notes"]]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
@@ -152,11 +151,11 @@
 
 /obj/structure/filingcabinet/medical/proc/populate()
 	if(virgin)
-		for(var/datum/data/record/G in data_core.general)
-			var/datum/data/record/M = find_record("name", G.fields["name"], data_core.medical)
+		for(var/datum/data/record/G in GLOB.data_core.general)
+			var/datum/data/record/M = find_record("name", G.fields["name"], GLOB.data_core.medical)
 			if(!M)
 				continue
-			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(src)
+			var/obj/item/paper/P = new /obj/item/paper(src)
 			P.info = "<CENTER><B>Medical Record</B></CENTER><BR>"
 			P.info += "Name: [G.fields["name"]] ID: [G.fields["id"]]<BR>\nSex: [G.fields["sex"]]<BR>\nAge: [G.fields["age"]]<BR>\nFingerprint: [G.fields["fingerprint"]]<BR>\nPhysical Status: [G.fields["p_stat"]]<BR>\nMental Status: [G.fields["m_stat"]]<BR>"
 			P.info += "<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: [M.fields["blood_type"]]<BR>\nDNA: [M.fields["b_dna"]]<BR>\n<BR>\nMinor Disabilities: [M.fields["mi_dis"]]<BR>\nDetails: [M.fields["mi_dis_d"]]<BR>\n<BR>\nMajor Disabilities: [M.fields["ma_dis"]]<BR>\nDetails: [M.fields["ma_dis_d"]]<BR>\n<BR>\nAllergies: [M.fields["alg"]]<BR>\nDetails: [M.fields["alg_d"]]<BR>\n<BR>\nCurrent Diseases: [M.fields["cdi"]] (per disease info placed in log/comment section)<BR>\nDetails: [M.fields["cdi_d"]]<BR>\n<BR>\nImportant Notes:<BR>\n\t[M.fields["notes"]]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
@@ -179,7 +178,7 @@
  * Employment contract Cabinets
  */
 
-var/list/employmentCabinets = list()
+GLOBAL_LIST_EMPTY(employmentCabinets)
 
 /obj/structure/filingcabinet/employment
 	var/cooldown = 0
@@ -187,25 +186,26 @@ var/list/employmentCabinets = list()
 	var/virgin = 1
 
 /obj/structure/filingcabinet/employment/New()
-	employmentCabinets += src
+	GLOB.employmentCabinets += src
 	return ..()
 
 /obj/structure/filingcabinet/employment/Destroy()
-	employmentCabinets -= src
+	GLOB.employmentCabinets -= src
 	return ..()
 
 /obj/structure/filingcabinet/employment/proc/fillCurrent()
 	//This proc fills the cabinet with the current crew.
-	for(var/record in data_core.locked)
+	for(var/record in GLOB.data_core.locked)
 		var/datum/data/record/G = record
 		if(!G)
 			continue
-		if(G.fields["reference"])
-			addFile(G.fields["reference"])
+		var/datum/mind/M = G.fields["mindref"]
+		if(M && ishuman(M.current))
+			addFile(M.current)
 
 
 /obj/structure/filingcabinet/employment/proc/addFile(mob/living/carbon/human/employee)
-	new /obj/item/weapon/paper/contract/employment(src, employee)
+	new /obj/item/paper/contract/employment(src, employee)
 
 /obj/structure/filingcabinet/employment/attack_hand(mob/user)
 	if(!cooldown)
@@ -217,4 +217,4 @@ var/list/employmentCabinets = list()
 		sleep(100) // prevents the devil from just instantly emptying the cabinet, ensuring an easy win.
 		cooldown = 0
 	else
-		to_chat(user, "<span class='warning'>The [src] is jammed, give it a few seconds.</span>")
+		to_chat(user, "<span class='warning'>[src] is jammed, give it a few seconds.</span>")

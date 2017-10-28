@@ -23,8 +23,10 @@ effective or pretty fucking useless.
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	origin_tech = "magnets=3;combat=3;syndicate=3"
 
 	var/times_used = 0 //Number of times it's been used.
@@ -42,9 +44,7 @@ effective or pretty fucking useless.
 	for(var/mob/living/carbon/human/M in urange(10, user, 1))
 		if(prob(50))
 
-			M.Weaken(rand(10,20))
-			if(prob(25))
-				M.Stun(rand(5,10))
+			M.Knockdown(rand(200,400))
 			to_chat(M, "<span class='userdanger'>You feel a tremendous, paralyzing wave flood your mind.</span>")
 
 		else
@@ -75,14 +75,16 @@ effective or pretty fucking useless.
 	var/intensity = 10 // how much damage the radiation does
 	var/wavelength = 10 // time it takes for the radiation to kick in, in seconds
 	var/used = 0 // is it cooling down?
+	var/stealth = FALSE
 
 /obj/item/device/healthanalyzer/rad_laser/attack(mob/living/M, mob/living/user)
-	..()
+	if(!stealth || !irradiate)
+		..()
 	if(!irradiate)
 		return
 	if(!used)
 		add_logs(user, M, "irradiated", src)
-		var/cooldown = round(max(10, (intensity*5 - wavelength/4))) * 10
+		var/cooldown = GetCooldown()
 		used = 1
 		icon_state = "health1"
 		handle_cooldown(cooldown) // splits off to handle the cooldown while handling wavelength
@@ -90,7 +92,7 @@ effective or pretty fucking useless.
 		spawn((wavelength+(intensity*4))*5)
 			if(M)
 				if(intensity >= 5)
-					M.apply_effect(round(intensity/1.5), PARALYZE)
+					M.apply_effect(round(intensity/0.075), UNCONSCIOUS)
 				M.rad_act(intensity*10)
 	else
 		to_chat(user, "<span class='warning'>The radioactive microlaser is still recharging.</span>")
@@ -103,11 +105,14 @@ effective or pretty fucking useless.
 /obj/item/device/healthanalyzer/rad_laser/attack_self(mob/user)
 	interact(user)
 
+/obj/item/device/healthanalyzer/rad_laser/proc/GetCooldown()
+	return round(max(10, (stealth*30 + intensity*5 - wavelength/4)))
+
 /obj/item/device/healthanalyzer/rad_laser/interact(mob/user)
 	user.set_machine(src)
 
-	var/cooldown = round(max(10, (intensity*5 - wavelength/4)))
 	var/dat = "Irradiation: <A href='?src=\ref[src];rad=1'>[irradiate ? "On" : "Off"]</A><br>"
+	dat += "Stealth Mode (NOTE: Deactivates automatically while Irradiation is off): <A href='?src=\ref[src];stealthy=[TRUE]'>[stealth ? "On" : "Off"]</A><br>"
 	dat += "Scan Mode: <a href='?src=\ref[src];mode=1'>"
 	if(!scanmode)
 		dat += "Scan Health"
@@ -127,7 +132,7 @@ effective or pretty fucking useless.
 	<A href='?src=\ref[src];radwav=-5'>-</A><A href='?src=\ref[src];radwav=-1'>-</A>
 	[(wavelength+(intensity*4))]
 	<A href='?src=\ref[src];radwav=1'>+</A><A href='?src=\ref[src];radwav=5'>+</A><BR>
-	Laser Cooldown: [cooldown] Seconds<BR>
+	Laser Cooldown: [DisplayTimeText(GetCooldown())]<BR>
 	"}
 
 	var/datum/browser/popup = new(user, "radlaser", "Radioactive Microlaser Interface", 400, 240)
@@ -141,6 +146,9 @@ effective or pretty fucking useless.
 	usr.set_machine(src)
 	if(href_list["rad"])
 		irradiate = !irradiate
+
+	else if(href_list["stealthy"])
+		stealth = !stealth
 
 	else if(href_list["mode"])
 		scanmode += 1
@@ -173,7 +181,7 @@ effective or pretty fucking useless.
 	var/mob/living/carbon/human/user = null
 	var/charge = 300
 	var/max_charge = 300
-	var/on = 0
+	var/on = FALSE
 	var/old_alpha = 0
 	actions_types = list(/datum/action/item_action/toggle)
 
@@ -196,14 +204,14 @@ effective or pretty fucking useless.
 	src.user = user
 	START_PROCESSING(SSobj, src)
 	old_alpha = user.alpha
-	on = 1
+	on = TRUE
 
 /obj/item/device/shadowcloak/proc/Deactivate()
 	to_chat(user, "<span class='notice'>You deactivate [src].</span>")
 	STOP_PROCESSING(SSobj, src)
 	if(user)
 		user.alpha = old_alpha
-	on = 0
+	on = FALSE
 	user = null
 
 /obj/item/device/shadowcloak/dropped(mob/user)
@@ -233,12 +241,10 @@ effective or pretty fucking useless.
 	var/range = 12
 
 /obj/item/device/jammer/attack_self(mob/user)
-	to_chat(user,"<span class='notice'>You [active ? "deactivate" : "activate"] the [src]<span>") 
+	to_chat(user,"<span class='notice'>You [active ? "deactivate" : "activate"] [src].</span>")
 	active = !active
 	if(active)
-		active_jammers |= src
+		GLOB.active_jammers |= src
 	else
-		active_jammers -= src
+		GLOB.active_jammers -= src
 	update_icon()
-
-	

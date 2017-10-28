@@ -1,11 +1,5 @@
 
 
-var/const/TOUCH = 1 //splashing
-var/const/INGEST = 2 //ingestion
-var/const/VAPOR = 3 //foam, spray, blob attack
-var/const/PATCH = 4 //patches
-var/const/INJECT = 5 //injection
-
 ///////////////////////////////////////////////////////////////////////////////////
 
 /datum/reagents
@@ -22,25 +16,23 @@ var/const/INJECT = 5 //injection
 /datum/reagents/New(maximum=100)
 	maximum_volume = maximum
 
-	if(!(flags & REAGENT_NOREACT))
-		START_PROCESSING(SSobj, src)
 
 	//I dislike having these here but map-objects are initialised before world/New() is called. >_>
-	if(!chemical_reagents_list)
+	if(!GLOB.chemical_reagents_list)
 		//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
 		var/paths = subtypesof(/datum/reagent)
-		chemical_reagents_list = list()
+		GLOB.chemical_reagents_list = list()
 		for(var/path in paths)
 			var/datum/reagent/D = new path()
-			chemical_reagents_list[D.id] = D
-	if(!chemical_reactions_list)
+			GLOB.chemical_reagents_list[D.id] = D
+	if(!GLOB.chemical_reactions_list)
 		//Chemical Reactions - Initialises all /datum/chemical_reaction into a list
 		// It is filtered into multiple lists within a list.
 		// For example:
 		// chemical_reaction_list["plasma"] is a list of all reactions relating to plasma
 
 		var/paths = subtypesof(/datum/chemical_reaction)
-		chemical_reactions_list = list()
+		GLOB.chemical_reactions_list = list()
 
 		for(var/path in paths)
 
@@ -53,14 +45,13 @@ var/const/INJECT = 5 //injection
 
 			// Create filters based on each reagent id in the required reagents list
 			for(var/id in reaction_ids)
-				if(!chemical_reactions_list[id])
-					chemical_reactions_list[id] = list()
-				chemical_reactions_list[id] += D
+				if(!GLOB.chemical_reactions_list[id])
+					GLOB.chemical_reactions_list[id] = list()
+				GLOB.chemical_reactions_list[id] += D
 				break // Don't bother adding ourselves to other reagent ids, it is redundant.
 
 /datum/reagents/Destroy()
 	. = ..()
-	STOP_PROCESSING(SSobj, src)
 	var/list/cached_reagents = reagent_list
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
@@ -294,24 +285,11 @@ var/const/INJECT = 5 //injection
 		C.update_stamina()
 	update_total()
 
-/datum/reagents/process()
-	var/list/cached_reagents = reagent_list
-	if(flags & REAGENT_NOREACT)
-		STOP_PROCESSING(SSobj, src)
-		return
-
-	for(var/reagent in cached_reagents)
-		var/datum/reagent/R = reagent
-		R.on_tick()
 
 /datum/reagents/proc/set_reacting(react = TRUE)
 	if(react)
-		// Order is important, process() can remove from processing if
-		// the flag is present
 		flags &= ~(REAGENT_NOREACT)
-		START_PROCESSING(SSobj, src)
 	else
-		STOP_PROCESSING(SSobj, src)
 		flags |= REAGENT_NOREACT
 
 /datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
@@ -327,10 +305,12 @@ var/const/INJECT = 5 //injection
 		var/datum/reagent/R = reagent
 		R.on_update (A)
 	update_total()
+/*
+this has been modified and moved over to the hippie folder to allow for custom reaction conditions
 
 /datum/reagents/proc/handle_reactions()
 	var/list/cached_reagents = reagent_list
-	var/list/cached_reactions = chemical_reactions_list
+	var/list/cached_reactions = GLOB.chemical_reactions_list
 	var/datum/cached_my_atom = my_atom
 	if(flags & REAGENT_NOREACT)
 		return //Yup, no reactions here. No siree.
@@ -376,9 +356,8 @@ var/const/INJECT = 5 //injection
 					else
 						if(cached_my_atom.type == C.required_container)
 							matching_container = 1
-					if (isliving(cached_my_atom)) //Makes it so certain chemical reactions don't occur in mobs
-						if (C.mob_react)
-							return
+					if (isliving(cached_my_atom) && !C.mob_react) //Makes it so certain chemical reactions don't occur in mobs
+						return
 					if(!C.required_other)
 						matching_other = 1
 
@@ -402,24 +381,26 @@ var/const/INJECT = 5 //injection
 						remove_reagent(B, (multiplier * cached_required_reagents[B]), safety = 1)
 
 					for(var/P in C.results)
-						feedback_add_details("chemical_reaction", "[P]|[cached_results[P]*multiplier]")
+						SSblackbox.add_details("chemical_reaction", "[P]|[cached_results[P]*multiplier]")
 						multiplier = max(multiplier, 1) //this shouldnt happen ...
 						add_reagent(P, cached_results[P]*multiplier, null, chem_temp)
 
 					var/list/seen = viewers(4, get_turf(my_atom))
+					var/iconhtml = icon2html(cached_my_atom, seen)
 					if(cached_my_atom)
 						if(!ismob(cached_my_atom)) // No bubbling mobs
 							if(C.mix_sound)
 								playsound(get_turf(cached_my_atom), C.mix_sound, 80, 1)
+
 							for(var/mob/M in seen)
-								to_chat(M, "<span class='notice'>\icon[my_atom] [C.mix_message]</span>")
+								to_chat(M, "<span class='notice'>[iconhtml] [C.mix_message]</span>")
 
 						if(istype(cached_my_atom, /obj/item/slime_extract))
 							var/obj/item/slime_extract/ME2 = my_atom
 							ME2.Uses--
 							if(ME2.Uses <= 0) // give the notification that the slime core is dead
 								for(var/mob/M in seen)
-									to_chat(M, "<span class='notice'>\icon[my_atom] \The [my_atom]'s power is consumed in the reaction.</span>")
+									to_chat(M, "<span class='notice'>[iconhtml] \The [my_atom]'s power is consumed in the reaction.</span>")
 									ME2.name = "used slime extract"
 									ME2.desc = "This extract has been used up."
 
@@ -430,7 +411,7 @@ var/const/INJECT = 5 //injection
 	while(reaction_occurred)
 	update_total()
 	return 0
-
+*/
 /datum/reagents/proc/isolate_reagent(reagent)
 	var/list/cached_reagents = reagent_list
 	for(var/_reagent in cached_reagents)
@@ -458,21 +439,21 @@ var/const/INJECT = 5 //injection
 	return 1
 
 /datum/reagents/proc/check_ignoreslow(mob/M)
-	if(istype(M, /mob))
-		if(M.reagents.has_reagent("morphine")||M.reagents.has_reagent("ephedrine"))
+	if(ismob(M))
+		if(M.reagents.has_reagent("morphine"))
 			return 1
 		else
 			M.status_flags &= ~IGNORESLOWDOWN
 
 /datum/reagents/proc/check_gofast(mob/M)
-	if(istype(M, /mob))
-		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola")||M.reagents.has_reagent("stimulants"))
+	if(ismob(M))
+		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola")||M.reagents.has_reagent("stimulants")||M.reagents.has_reagent("ephedrine"))
 			return 1
 		else
 			M.status_flags &= ~GOTTAGOFAST
 
 /datum/reagents/proc/check_goreallyfast(mob/M)
-	if(istype(M, /mob))
+	if(ismob(M))
 		if(M.reagents.has_reagent("methamphetamine"))
 			return 1
 		else
@@ -555,7 +536,7 @@ var/const/INJECT = 5 //injection
 				handle_reactions()
 			return TRUE
 
-	var/datum/reagent/D = chemical_reagents_list[reagent]
+	var/datum/reagent/D = GLOB.chemical_reagents_list[reagent]
 	if(D)
 
 		var/datum/reagent/R = new D.type(data)
@@ -571,6 +552,8 @@ var/const/INJECT = 5 //injection
 			my_atom.on_reagent_change()
 		if(!no_react)
 			handle_reactions()
+		if(isliving(my_atom))
+			R.on_mob_add(my_atom)
 		return TRUE
 
 	else
@@ -647,7 +630,8 @@ var/const/INJECT = 5 //injection
 	return jointext(names, ",")
 
 /datum/reagents/proc/remove_all_type(reagent_type, amount, strict = 0, safety = 1) // Removes all reagent of X type. @strict set to 1 determines whether the childs of the type are included.
-	if(!isnum(amount)) return 1
+	if(!isnum(amount))
+		return 1
 	var/list/cached_reagents = reagent_list
 	var/has_removed_reagent = 0
 
@@ -674,7 +658,6 @@ var/const/INJECT = 5 //injection
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
 		if(R.id == reagent_id)
-			//to_chat(world, "proffering a data-carrying reagent ([reagent_id])")
 			return R.data
 
 /datum/reagents/proc/set_data(reagent_id, new_data)
@@ -682,7 +665,6 @@ var/const/INJECT = 5 //injection
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
 		if(R.id == reagent_id)
-			//to_chat(world, "reagent data set ([reagent_id])")
 			R.data = new_data
 
 /datum/reagents/proc/copy_data(datum/reagent/current_reagent)

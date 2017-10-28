@@ -4,8 +4,8 @@
 	desc = "A little cleaning robot, he looks so excited!"
 	icon = 'icons/mob/aibots.dmi'
 	icon_state = "cleanbot0"
-	density = 0
-	anchored = 0
+	density = FALSE
+	anchored = FALSE
 	health = 25
 	maxHealth = 25
 	radio_key = /obj/item/device/encryptionkey/headset_service
@@ -21,7 +21,7 @@
 	var/trash = 0
 	var/pests = 0
 
-	var/list/target_types = list()
+	var/list/target_types
 	var/obj/effect/decal/cleanable/target
 	var/max_targets = 50 //Maximum number of targets a cleanbot can ignore.
 	var/oldloc = null
@@ -32,7 +32,7 @@
 	var/next_dest_loc
 
 /mob/living/simple_animal/bot/cleanbot/Initialize()
-	..()
+	. = ..()
 	get_targets()
 	icon_state = "cleanbot[on]"
 
@@ -61,8 +61,8 @@
 	text_dehack = "[name]'s software has been reset!"
 	text_dehack_fail = "[name] does not seem to respond to your repair code!"
 
-/mob/living/simple_animal/bot/cleanbot/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+/mob/living/simple_animal/bot/cleanbot/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/card/id)||istype(W, /obj/item/device/pda))
 		if(bot_core.allowed(user) && !open && !emagged)
 			locked = !locked
 			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] \the [src] behaviour controls.</span>")
@@ -87,7 +87,7 @@
 		var/mob/living/carbon/C = A
 		if(C.stat != DEAD && C.lying)
 			return C
-	else if(is_type_in_list(A, target_types))
+	else if(is_type_in_typecache(A, target_types))
 		return A
 
 /mob/living/simple_animal/bot/cleanbot/handle_automated_action()
@@ -124,6 +124,9 @@
 
 	if(!target) //Search for decals then.
 		target = scan(/obj/effect/decal/cleanable)
+	
+	if(!target) //Checks for remains
+		target = scan(/obj/effect/decal/remains)
 
 	if(!target && trash) //Then for trash.
 		target = scan(/obj/item/trash)
@@ -178,7 +181,8 @@
 		/obj/effect/decal/cleanable/ash,
 		/obj/effect/decal/cleanable/greenglow,
 		/obj/effect/decal/cleanable/dirt,
-		/obj/effect/decal/cleanable/deadcockroach
+		/obj/effect/decal/cleanable/deadcockroach,
+		/obj/effect/decal/remains
 		)
 
 	if(blood)
@@ -193,9 +197,11 @@
 	if(trash)
 		target_types += /obj/item/trash
 
+	target_types = typecacheof(target_types)
+
 /mob/living/simple_animal/bot/cleanbot/UnarmedAttack(atom/A)
 	if(istype(A, /obj/effect/decal/cleanable))
-		anchored = 1
+		anchored = TRUE
 		icon_state = "cleanbot-c"
 		visible_message("<span class='notice'>[src] begins to clean up [A].</span>")
 		mode = BOT_CLEANING
@@ -204,15 +210,16 @@
 				if(A && isturf(A.loc))
 					var/atom/movable/AM = A
 					if(istype(AM, /obj/effect/decal/cleanable))
-						qdel(AM)
+						for(var/obj/effect/decal/cleanable/C in A.loc)
+							qdel(C)
 
-				anchored = 0
+				anchored = FALSE
 				target = null
 			mode = BOT_IDLE
 			icon_state = "cleanbot[on]"
-	else if(istype(A, /obj/item))
+	else if(istype(A, /obj/item) || istype(A, /obj/effect/decal/remains))
 		visible_message("<span class='danger'>[src] sprays hydrofluoric acid at [A]!</span>")
-		playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
+		playsound(src, 'sound/effects/spray2.ogg', 50, 1, -6)
 		A.acid_act(75, 10)
 	else if(istype(A, /mob/living/simple_animal/cockroach) || istype(A, /mob/living/simple_animal/mouse))
 		var/mob/living/simple_animal/M = target
@@ -248,24 +255,22 @@
 		..()
 
 /mob/living/simple_animal/bot/cleanbot/explode()
-	on = 0
+	on = FALSE
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
-	new /obj/item/weapon/reagent_containers/glass/bucket(Tsec)
+	new /obj/item/reagent_containers/glass/bucket(Tsec)
 
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
 	if(prob(50))
 		new /obj/item/bodypart/l_arm/robot(Tsec)
 
-	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-	s.set_up(3, 1, src)
-	s.start()
+	do_sparks(3, TRUE, src)
 	..()
 
 /obj/machinery/bot_core/cleanbot
-	req_one_access = list(access_janitor, access_robotics)
+	req_one_access = list(ACCESS_JANITOR, ACCESS_ROBOTICS)
 
 
 /mob/living/simple_animal/bot/cleanbot/get_controls(mob/user)

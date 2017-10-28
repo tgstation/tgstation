@@ -2,11 +2,11 @@
 	name = "Transformation"
 	max_stages = 5
 	spread_text = "Acute"
-	spread_flags = SPECIAL
+	spread_flags = VIRUS_SPREAD_SPECIAL
 	cure_text = "A coder's love (theoretical)."
 	agent = "Shenanigans"
 	viable_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey, /mob/living/carbon/alien)
-	severity = HARMFUL
+	severity = VIRUS_SEVERITY_BIOHAZARD
 	stage_prob = 10
 	visibility_flags = HIDDEN_SCANNER|HIDDEN_PANDEMIC
 	disease_flags = CURABLE
@@ -68,14 +68,13 @@
 	cure_text = "Bananas"
 	cures = list("banana")
 	spread_text = "Monkey Bites"
-	spread_flags = SPECIAL
+	spread_flags = VIRUS_SPREAD_SPECIAL
 	viable_mobtypes = list(/mob/living/carbon/monkey, /mob/living/carbon/human)
 	permeability_mod = 1
 	cure_chance = 1
 	disease_flags = CAN_CARRY|CAN_RESIST
-	longevity = 30
 	desc = "Monkeys with this disease will bite humans, causing humans to mutate into a monkey."
-	severity = BIOHAZARD
+	severity = VIRUS_SEVERITY_BIOHAZARD
 	stage_prob = 4
 	visibility_flags = 0
 	agent = "Kongey Vibrion M-909"
@@ -90,7 +89,7 @@
 
 /datum/disease/transformation/jungle_fever/do_disease_transformation(mob/living/carbon/affected_mob)
 	if(!ismonkey(affected_mob))
-		ticker.mode.add_monkey(affected_mob.mind)
+		SSticker.mode.add_monkey(affected_mob.mind)
 		affected_mob.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
 
 /datum/disease/transformation/jungle_fever/stage_act()
@@ -108,7 +107,7 @@
 				affected_mob.say(pick("Eeek, ook ook!", "Eee-eeek!", "Eeee!", "Ungh, ungh."))
 
 /datum/disease/transformation/jungle_fever/cure()
-	ticker.mode.remove_monkey(affected_mob.mind)
+	SSticker.mode.remove_monkey(affected_mob.mind)
 	..()
 
 
@@ -120,7 +119,7 @@
 	cure_chance = 5
 	agent = "R2D2 Nanomachines"
 	desc = "This disease, actually acute nanomachine infection, converts the victim into a cyborg."
-	severity = DANGEROUS
+	severity = VIRUS_SEVERITY_BIOHAZARD
 	visibility_flags = 0
 	stage1	= null
 	stage2	= list("Your joints feel stiff.", "<span class='danger'>Beep...boop..</span>")
@@ -138,7 +137,7 @@
 				affected_mob.say(pick("Beep, boop", "beep, beep!", "Boop...bop"))
 			if (prob(4))
 				to_chat(affected_mob, "<span class='danger'>You feel a stabbing pain in your head.</span>")
-				affected_mob.Paralyse(2)
+				affected_mob.Unconscious(40)
 		if(4)
 			if (prob(20))
 				affected_mob.say(pick("beep, beep!", "Boop bop boop beep.", "kkkiiiill mmme", "I wwwaaannntt tttoo dddiiieeee..."))
@@ -152,7 +151,7 @@
 	cure_chance = 5
 	agent = "Rip-LEY Alien Microbes"
 	desc = "This disease changes the victim into a xenomorph."
-	severity = BIOHAZARD
+	severity = VIRUS_SEVERITY_BIOHAZARD
 	visibility_flags = 0
 	stage1	= null
 	stage2	= list("Your throat feels scratchy.", "<span class='danger'>Kill...</span>")
@@ -167,7 +166,7 @@
 		if(3)
 			if (prob(4))
 				to_chat(affected_mob, "<span class='danger'>You feel a stabbing pain in your head.</span>")
-				affected_mob.Paralyse(2)
+				affected_mob.Unconscious(40)
 		if(4)
 			if (prob(20))
 				affected_mob.say(pick("You look delicious.", "Going to... devour you...", "Hsssshhhhh!"))
@@ -180,7 +179,7 @@
 	cure_chance = 80
 	agent = "Advanced Mutation Toxin"
 	desc = "This highly concentrated extract converts anything into more of itself."
-	severity = BIOHAZARD
+	severity = VIRUS_SEVERITY_BIOHAZARD
 	visibility_flags = 0
 	stage1	= list("You don't feel very well.")
 	stage2	= list("Your skin feels a little slimy.")
@@ -207,6 +206,7 @@
 	cures = list("adminordrazine")
 	agent = "Fell Doge Majicks"
 	desc = "This disease transforms the victim into a corgi."
+	severity = VIRUS_SEVERITY_BIOHAZARD
 	visibility_flags = 0
 	stage1	= list("BARK.")
 	stage2	= list("You feel the need to wear silly hats.")
@@ -232,7 +232,7 @@
 	agent = "Gluttony's Blessing"
 	desc = "A 'gift' from somewhere terrible."
 	stage_prob = 20
-	severity = BIOHAZARD
+	severity = VIRUS_SEVERITY_BIOHAZARD
 	visibility_flags = 0
 	stage1	= list("Your stomach rumbles.")
 	stage2	= list("Your skin feels saggy.")

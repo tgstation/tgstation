@@ -4,20 +4,20 @@
 	name = "stacking machine console"
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "console"
-	density = 0
-	anchored = 1
+	desc = "Controls a stacking machine... in theory."
+	density = FALSE
+	anchored = TRUE
 	var/obj/machinery/mineral/stacking_machine/machine = null
 	var/machinedir = SOUTHEAST
 	speed_process = 1
 
-/obj/machinery/mineral/stacking_unit_console/New()
-	..()
-	spawn(7)
-		src.machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, machinedir))
-		if (machine)
-			machine.CONSOLE = src
-		else
-			qdel(src)
+/obj/machinery/mineral/stacking_unit_console/Initialize()
+	. = ..()
+	machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, machinedir))
+	if (machine)
+		machine.CONSOLE = src
+	else
+		qdel(src)
 
 /obj/machinery/mineral/stacking_unit_console/attack_hand(mob/user)
 
@@ -43,7 +43,8 @@
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(href_list["release"])
-		if(!(text2path(href_list["release"]) in machine.stack_list)) return //someone tried to spawn materials by spoofing hrefs
+		if(!(text2path(href_list["release"]) in machine.stack_list))
+			return //someone tried to spawn materials by spoofing hrefs
 		var/obj/item/stack/sheet/inp = machine.stack_list[text2path(href_list["release"])]
 		var/obj/item/stack/sheet/out = new inp.type()
 		out.amount = inp.amount
@@ -61,8 +62,9 @@
 	name = "stacking machine"
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "stacker"
-	density = 1
-	anchored = 1
+	desc = "A machine that automatically stacks acquired materials. Controlled by a nearby console."
+	density = TRUE
+	anchored = TRUE
 	var/obj/machinery/mineral/stacking_unit_console/CONSOLE
 	var/stk_types = list()
 	var/stk_amt   = list()
@@ -70,6 +72,14 @@
 	var/stack_amt = 50; //ammount to stack before releassing
 	input_dir = EAST
 	output_dir = WEST
+
+/obj/machinery/mineral/stacking_machine/Initialize()
+	. = ..()
+	proximity_monitor = new(src, 1)
+
+/obj/machinery/mineral/stacking_machine/HasProximity(atom/movable/AM)
+	if(istype(AM, /obj/item/stack/sheet) && AM.loc == get_step(src, input_dir))
+		process_sheet(AM)
 
 /obj/machinery/mineral/stacking_machine/proc/process_sheet(obj/item/stack/sheet/inp)
 	if(!(inp.type in stack_list)) //It's the first of this sheet added
@@ -84,9 +94,3 @@
 		out.amount = stack_amt
 		unload_mineral(out)
 		storage.amount -= stack_amt
-
-/obj/machinery/mineral/stacking_machine/process()
-	var/turf/T = get_step(src, input_dir)
-	if(T)
-		for(var/obj/item/stack/sheet/S in T)
-			process_sheet(S)

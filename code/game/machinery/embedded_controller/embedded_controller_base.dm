@@ -21,10 +21,10 @@
 	var/datum/computer/file/embedded_program/program
 
 	name = "embedded controller"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 
-	var/on = 1
+	var/on = TRUE
 
 /obj/machinery/embedded_controller/interact(mob/user)
 	user.set_machine(src)
@@ -44,7 +44,8 @@
 	return 0
 
 /obj/machinery/embedded_controller/receive_signal(datum/signal/signal, receive_method, receive_param)
-	if(!signal || signal.encryption) return
+	if(!signal || signal.encryption)
+		return
 
 	if(program)
 		program.receive_signal(signal, receive_method, receive_param)
@@ -73,12 +74,11 @@
 	var/datum/radio_frequency/radio_connection
 
 /obj/machinery/embedded_controller/radio/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src,frequency)
+	SSradio.remove_object(src,frequency)
 	return ..()
 
 /obj/machinery/embedded_controller/radio/Initialize()
-	..()
+	. = ..()
 	set_frequency(frequency)
 
 /obj/machinery/embedded_controller/radio/post_signal(datum/signal/signal)

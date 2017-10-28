@@ -20,7 +20,7 @@
 /datum/station_goal/dna_vault/New()
 	..()
 	animal_count = rand(15,20) //might be too few given ~15 roundstart stationside ones
-	human_count = rand(round(0.75 * ticker.totalPlayersReady) , ticker.totalPlayersReady) // 75%+ roundstart population.
+	human_count = rand(round(0.75 * SSticker.totalPlayersReady) , SSticker.totalPlayersReady) // 75%+ roundstart population.
 	var/non_standard_plants = non_standard_plants_count()
 	plant_count = rand(round(0.5 * non_standard_plants),round(0.7 * non_standard_plants))
 
@@ -53,7 +53,7 @@
 /datum/station_goal/dna_vault/check_completion()
 	if(..())
 		return TRUE
-	for(var/obj/machinery/dna_vault/V in machines)
+	for(var/obj/machinery/dna_vault/V in GLOB.machines)
 		if(V.animals.len >= animal_count && V.plants.len >= plant_count && V.dna.len >= human_count)
 			return TRUE
 	return FALSE
@@ -64,8 +64,10 @@
 	desc = "Can be used to take chemical and genetic samples of pretty much anything."
 	icon = 'icons/obj/syringe.dmi'
 	item_state = "hypo"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	icon_state = "hypo"
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 	var/list/animals = list()
 	var/list/plants = list()
 	var/list/dna = list()
@@ -75,27 +77,26 @@
 	plants = list()
 	dna = list()
 
-var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/living/carbon/alien))
-
 /obj/item/device/dna_probe/afterattack(atom/target, mob/user, proximity)
 	..()
 	if(!proximity || !target)
 		return
 	//tray plants
-	if(istype(target,/obj/machinery/hydroponics))
+	if(istype(target, /obj/machinery/hydroponics))
 		var/obj/machinery/hydroponics/H = target
 		if(!H.myseed)
 			return
 		if(!H.harvest)// So it's bit harder.
-			to_chat(user, "<span clas='warning'>Plant needs to be ready to harvest to perform full data scan.</span>") //Because space dna is actually magic
+			to_chat(user, "<span class='warning'>Plant needs to be ready to harvest to perform full data scan.</span>") //Because space dna is actually magic
 			return
 		if(plants[H.myseed.type])
-			to_chat(user, "<span class='notice'>Plant data already present in local storage.<span>")
+			to_chat(user, "<span class='notice'>Plant data already present in local storage.</span>")
 			return
 		plants[H.myseed.type] = 1
-		to_chat(user, "<span class='notice'>Plant data added to local storage.<span>")
+		to_chat(user, "<span class='notice'>Plant data added to local storage.</span>")
 
 	//animals
+	var/static/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey, /mob/living/carbon/alien))
 	if(isanimal(target) || is_type_in_typecache(target,non_simple_animals))
 		if(isanimal(target))
 			var/mob/living/simple_animal/A = target
@@ -103,37 +104,27 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/li
 				to_chat(user, "<span class='warning'>No compatible DNA detected</span>")
 				return
 		if(animals[target.type])
-			to_chat(user, "<span class='notice'>Animal data already present in local storage.<span>")
+			to_chat(user, "<span class='notice'>Animal data already present in local storage.</span>")
 			return
 		animals[target.type] = 1
-		to_chat(user, "<span class='notice'>Animal data added to local storage.<span>")
+		to_chat(user, "<span class='notice'>Animal data added to local storage.</span>")
 
 	//humans
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(dna[H.dna.uni_identity])
-			to_chat(user, "<span class='notice'>Humanoid data already present in local storage.<span>")
+			to_chat(user, "<span class='notice'>Humanoid data already present in local storage.</span>")
 			return
 		dna[H.dna.uni_identity] = 1
-		to_chat(user, "<span class='notice'>Humanoid data added to local storage.<span>")
-
-
-/obj/item/weapon/circuitboard/machine/dna_vault
-	name = "DNA Vault (Machine Board)"
-	build_path = /obj/machinery/dna_vault
-	origin_tech = "engineering=2;combat=2;bluespace=2" //No freebies!
-	req_components = list(
-							/obj/item/weapon/stock_parts/capacitor/super = 5,
-							/obj/item/weapon/stock_parts/manipulator/pico = 5,
-							/obj/item/stack/cable_coil = 2)
+		to_chat(user, "<span class='notice'>Humanoid data added to local storage.</span>")
 
 /obj/machinery/dna_vault
 	name = "DNA Vault"
 	desc = "Break glass in case of apocalypse."
 	icon = 'icons/obj/machines/dna_vault.dmi'
 	icon_state = "vault"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	idle_power_usage = 5000
 	pixel_x = -32
 	pixel_y = -64
@@ -152,7 +143,7 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/li
 
 	var/list/obj/structure/fillers = list()
 
-/obj/machinery/dna_vault/New()
+/obj/machinery/dna_vault/Initialize()
 	//TODO: Replace this,bsa and gravgen with some big machinery datum
 	var/list/occupied = list()
 	for(var/direct in list(EAST,WEST,SOUTHEAST,SOUTHWEST))
@@ -165,12 +156,13 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/li
 		F.parent = src
 		fillers += F
 
-	if(ticker.mode)
-		for(var/datum/station_goal/dna_vault/G in ticker.mode.station_goals)
+	if(SSticker.mode)
+		for(var/datum/station_goal/dna_vault/G in SSticker.mode.station_goals)
 			animals_max = G.animal_count
 			plants_max = G.plant_count
 			dna_max = G.human_count
 			break
+	. = ..()
 
 /obj/machinery/dna_vault/Destroy()
 	for(var/V in fillers)
@@ -180,7 +172,7 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/li
 	. = ..()
 
 
-/obj/machinery/dna_vault/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = physical_state)
+/obj/machinery/dna_vault/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		roll_powers(user)
@@ -261,7 +253,7 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/li
 		if(VAULT_TOXIN)
 			to_chat(H, "<span class='notice'>You feel resistant to airborne toxins.</span>")
 			if(locate(/obj/item/organ/lungs) in H.internal_organs)
-				var/obj/item/organ/lungs/L = H.internal_organs_slot["lungs"]
+				var/obj/item/organ/lungs/L = H.internal_organs_slot[ORGAN_SLOT_LUNGS]
 				L.tox_breath_dam_min = 0
 				L.tox_breath_dam_max = 0
 			S.species_traits |= VIRUSIMMUNE

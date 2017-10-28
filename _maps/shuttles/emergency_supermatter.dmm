@@ -10,15 +10,11 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "ad" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ae" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "af" = (
 /turf/closed/wall/mineral/titanium,
@@ -45,10 +41,7 @@
 /area/shuttle/escape)
 "ak" = (
 /obj/structure/sign/radiation,
-/turf/closed/wall/shuttle{
-	tag = "icon-swall3";
-	icon_state = "swall3"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "al" = (
 /obj/machinery/shower{
@@ -57,8 +50,8 @@
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "am" = (
-/obj/structure/reflector/single{
-	anchored = 1
+/obj/structure/reflector/single/anchored{
+	dir = 6
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -66,17 +59,13 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "an" = (
-/obj/structure/reflector/box{
-	anchored = 1
-	},
+/obj/structure/reflector/box/anchored,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ao" = (
 /obj/structure/reflector/single{
-	tag = "icon-reflector (WEST)";
-	icon_state = "reflector";
-	dir = 8;
-	anchored = 1
+	anchored = 1;
+	dir = 10
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -128,15 +117,10 @@
 /turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/escape)
 "ay" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f5";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "az" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swallc1"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aA" = (
 /obj/machinery/door/airlock/titanium{
@@ -157,13 +141,13 @@
 /area/shuttle/escape)
 "aC" = (
 /obj/structure/sign/radiation,
-/turf/closed/wall/shuttle/smooth,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aD" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/firstaid/toxin,
-/obj/item/weapon/crowbar/red,
-/obj/item/weapon/storage/box/snappops{
+/obj/item/storage/firstaid/toxin,
+/obj/item/crowbar/red,
+/obj/item/storage/box/snappops{
 	pixel_x = 4;
 	pixel_y = -4
 	},
@@ -184,15 +168,11 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "aG" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swallc3"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aH" = (
 /obj/machinery/status_display,
-/turf/closed/wall/shuttle{
-	icon_state = "swall12"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aI" = (
 /obj/structure/sign/radiation,
@@ -200,16 +180,10 @@
 /area/shuttle/escape)
 "aJ" = (
 /obj/structure/sign/radiation,
-/turf/closed/wall/shuttle{
-	icon_state = "swallc2";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aK" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swallc4";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aL" = (
 /obj/machinery/door/airlock/external{
@@ -223,32 +197,28 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "aN" = (
-/obj/structure/reflector/single{
-	anchored = 1
+/obj/structure/reflector/single/anchored{
+	dir = 6
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "aO" = (
-/obj/structure/reflector/double{
-	anchored = 1
+/obj/structure/reflector/double/anchored{
+	dir = 6
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "aP" = (
 /obj/structure/reflector/double{
-	tag = "icon-reflector_double (NORTH)";
-	icon_state = "reflector_double";
-	dir = 1;
-	anchored = 1
+	anchored = 1;
+	dir = 10
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "aQ" = (
 /obj/structure/reflector/single{
-	tag = "icon-reflector (WEST)";
-	icon_state = "reflector";
-	dir = 8;
-	anchored = 1
+	anchored = 1;
+	dir = 10
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
@@ -356,7 +326,6 @@
 	},
 /obj/item/clothing/glasses/meson/engine,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/yellow,
@@ -376,7 +345,6 @@
 	dir = 8
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -400,7 +368,7 @@ aa
 aa
 aw
 aA
-aC
+ac
 aF
 aw
 aa
@@ -640,7 +608,7 @@ aa
 aa
 aw
 aA
-aC
+ac
 aA
 aw
 aa

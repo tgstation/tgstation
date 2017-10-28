@@ -1,13 +1,13 @@
 //computer that handle the points and teleports the prisoner
 /obj/machinery/computer/gulag_teleporter_computer
 	name = "labor camp teleporter console"
-	desc = "Used to send criminals to the Labor Camp"
+	desc = "Used to send criminals to the Labor Camp."
 	icon_screen = "explosive"
 	icon_keyboard = "security_key"
-	req_access = list(access_armory)
-	circuit = /obj/item/weapon/circuitboard/computer/gulag_teleporter_console
+	req_access = list(ACCESS_ARMORY)
+	circuit = /obj/item/circuitboard/computer/gulag_teleporter_console
 	var/default_goal = 200
-	var/obj/item/weapon/card/id/prisoner/id = null
+	var/obj/item/card/id/prisoner/id = null
 	var/obj/machinery/gulag_teleporter/teleporter = null
 	var/obj/structure/gulag_beacon/beacon = null
 	var/mob/living/carbon/human/prisoner = null
@@ -15,9 +15,9 @@
 
 	light_color = LIGHT_COLOR_RED
 
-/obj/machinery/computer/gulag_teleporter_computer/New()
-	..()
-	addtimer(CALLBACK(src, .proc/scan_machinery), 5)
+/obj/machinery/computer/gulag_teleporter_computer/Initialize()
+	. = ..()
+	scan_machinery()
 
 /obj/machinery/computer/gulag_teleporter_computer/Destroy()
 	if(id)
@@ -25,11 +25,10 @@
 	return ..()
 
 /obj/machinery/computer/gulag_teleporter_computer/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/weapon/card/id/prisoner))
+	if(istype(W, /obj/item/card/id/prisoner))
 		if(!id)
-			if(!user.drop_item())
+			if (!user.transferItemToLoc(W,src))
 				return
-			W.forceMove(src)
 			id = W
 			to_chat(user, "<span class='notice'>You insert [W].</span>")
 			return
@@ -37,8 +36,8 @@
 			to_chat(user, "<span class='notice'>There's an ID inserted already.</span>")
 	return ..()
 
-/obj/machinery/computer/gulag_teleporter_computer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+/obj/machinery/computer/gulag_teleporter_computer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "gulag_console", name, 455, 440, master_ui, state)
@@ -55,8 +54,8 @@
 		prisoner_list["name"] = prisoner.real_name
 		if(id)
 			can_teleport = TRUE
-		if(!isnull(data_core.general))
-			for(var/r in data_core.security)
+		if(!isnull(GLOB.data_core.general))
+			for(var/r in GLOB.data_core.security)
 				var/datum/data/record/R = r
 				if(R.fields["name"] == prisoner_list["name"])
 					temporary_record = R
@@ -93,18 +92,13 @@
 			beacon = findbeacon()
 		if("handle_id")
 			if(id)
-				if(!usr.get_active_held_item())
-					usr.put_in_hands(id)
-					id = null
-				else
-					id.forceMove(get_turf(src))
-					id = null
+				usr.put_in_hands(id)
+				id = null
 			else
-				var/obj/item/I = usr.get_active_held_item()
-				if(istype(I, /obj/item/weapon/card/id/prisoner))
-					if(!usr.drop_item())
+				var/obj/item/I = usr.is_holding_item_of_type(/obj/item/card/id/prisoner)
+				if(I)
+					if(!usr.transferItemToLoc(I, src))
 						return
-					I.forceMove(src)
 					id = I
 		if("set_goal")
 			var/new_goal = input("Set the amount of points:", "Points", id.goal) as num|null
@@ -135,7 +129,7 @@
 /obj/machinery/computer/gulag_teleporter_computer/proc/findteleporter()
 	var/obj/machinery/gulag_teleporter/teleporterf = null
 
-	for(dir in cardinal)
+	for(dir in GLOB.cardinals)
 		teleporterf = locate(/obj/machinery/gulag_teleporter, get_step(src, dir))
 		if(teleporterf && teleporterf.is_operational())
 			return teleporterf
@@ -148,7 +142,7 @@
 	teleporter.handle_prisoner(id, temporary_record)
 	playsound(loc, 'sound/weapons/emitter.ogg', 50, 1)
 	prisoner.forceMove(get_turf(beacon))
-	prisoner.Weaken(2) // small travel dizziness
+	prisoner.Knockdown(40) // small travel dizziness
 	to_chat(prisoner, "<span class='warning'>The teleportation makes you a little dizzy.</span>")
 	new /obj/effect/particle_effect/sparks(prisoner.loc)
 	playsound(src.loc, "sparks", 50, 1)

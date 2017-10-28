@@ -4,7 +4,7 @@
   * Checks a number of things -- mostly physical distance for humans and view for robots.
  **/
 
-/var/global/datum/ui_state/default/default_state = new()
+GLOBAL_DATUM_INIT(default_state, /datum/ui_state/default, new)
 
 /datum/ui_state/default/can_use_topic(src_object, mob/user)
 	return user.default_can_use_topic(src_object) // Call the individual mob-overriden procs.
@@ -42,8 +42,8 @@
 	if(. < UI_INTERACTIVE)
 		return
 
-	// The AI can interact with anything it can see nearby, or with cameras.
-	if((get_dist(src, src_object) <= client.view) || cameranet.checkTurfVis(get_turf_pixel(src_object)))
+	// The AI can interact with anything it can see nearby, or with cameras while wireless control is enabled.
+	if(!control_disabled && can_see(src_object))
 		return UI_INTERACTIVE
 	return UI_CLOSE
 

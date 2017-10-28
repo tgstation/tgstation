@@ -12,18 +12,20 @@ Passive gate is similar to the regular pump except:
 	name = "passive gate"
 	desc = "A one-way air valve that does not require power."
 
-	can_unwrench = 1
+	can_unwrench = TRUE
 
-	var/on = 0
+	var/on = FALSE
 	var/target_pressure = ONE_ATMOSPHERE
 
 	var/frequency = 0
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
+	construction_type = /obj/item/pipe/directional
+	pipe_state = "passivegate"
+
 /obj/machinery/atmospherics/components/binary/passive_gate/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src,frequency)
+	SSradio.remove_object(src,frequency)
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/passive_gate/update_icon_nopipes()
@@ -37,7 +39,7 @@ Passive gate is similar to the regular pump except:
 /obj/machinery/atmospherics/components/binary/passive_gate/process_atmos()
 	..()
 	if(!on)
-		return 0
+		return
 
 	var/datum/gas_mixture/air1 = AIR1
 	var/datum/gas_mixture/air2 = AIR2
@@ -48,7 +50,7 @@ Passive gate is similar to the regular pump except:
 	if(output_starting_pressure >= min(target_pressure,input_starting_pressure-10))
 		//No need to pump gas if target is already reached or input pressure is too low
 		//Need at least 10 KPa difference to overcome friction in the mechanism
-		return 1
+		return
 
 	//Calculate necessary moles to transfer using PV = nRT
 	if((air1.total_moles() > 0) && (air1.temperature>0))
@@ -70,11 +72,11 @@ Passive gate is similar to the regular pump except:
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
-		radio_connection = SSradio.add_object(src, frequency, filter = RADIO_ATMOSIA)
+		radio_connection = SSradio.add_object(src, frequency, filter = GLOB.RADIO_ATMOSIA)
 
 /obj/machinery/atmospherics/components/binary/passive_gate/proc/broadcast_status()
 	if(!radio_connection)
-		return 0
+		return
 
 	var/datum/signal/signal = new
 	signal.transmission_method = 1 //radio signal
@@ -88,12 +90,10 @@ Passive gate is similar to the regular pump except:
 		"sigtype" = "status"
 	)
 
-	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
+	radio_connection.post_signal(src, signal, filter = GLOB.RADIO_ATMOSIA)
 
-	return 1
-
-/obj/machinery/atmospherics/components/binary/passive_gate/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-																		datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+/obj/machinery/atmospherics/components/binary/passive_gate/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+																		datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "atmos_pump", name, 335, 115, master_ui, state)
@@ -112,7 +112,7 @@ Passive gate is similar to the regular pump except:
 	switch(action)
 		if("power")
 			on = !on
-			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
+			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("pressure")
 			var/pressure = params["pressure"]
@@ -128,7 +128,7 @@ Passive gate is similar to the regular pump except:
 				. = TRUE
 			if(.)
 				target_pressure = Clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
-				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
+				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_icon()
 
 /obj/machinery/atmospherics/components/binary/passive_gate/atmosinit()
@@ -138,7 +138,7 @@ Passive gate is similar to the regular pump except:
 
 /obj/machinery/atmospherics/components/binary/passive_gate/receive_signal(datum/signal/signal)
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
-		return 0
+		return
 
 	var/old_on = on //for logging
 
@@ -152,7 +152,7 @@ Passive gate is similar to the regular pump except:
 		target_pressure = Clamp(text2num(signal.data["set_output_pressure"]),0,ONE_ATMOSPHERE*50)
 
 	if(on != old_on)
-		investigate_log("was turned [on ? "on" : "off"] by a remote signal", "atmos")
+		investigate_log("was turned [on ? "on" : "off"] by a remote signal", INVESTIGATE_ATMOS)
 
 	if("status" in signal.data)
 		broadcast_status()
@@ -160,16 +160,13 @@ Passive gate is similar to the regular pump except:
 
 	broadcast_status()
 	update_icon()
-	return
 
 /obj/machinery/atmospherics/components/binary/passive_gate/power_change()
 	..()
 	update_icon()
 
 /obj/machinery/atmospherics/components/binary/passive_gate/can_unwrench(mob/user)
-	if(..())
-		if(on)
-			to_chat(user, "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>")
-		else
-			return 1
-
+	. = ..()
+	if(. && on)
+		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
+		return FALSE

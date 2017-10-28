@@ -94,7 +94,7 @@
 	<ui-display title='Power Channels'>
 	  {{#each data.powerChannels}}
 		<ui-section label='{{title}}' nowrap>
-		  <div class='content'>{{Math.round(adata.powerChannels[@index].powerLoad)}} W</div>
+		  <div class='content'>{{adata.powerChannels[@index].powerLoad}}</div>
 		  <div class='content'><span class='{{status >= 2 ? "good" : "bad"}}'>{{status >= 2 ? "On" : "Off"}}</span></div>
 		  <div class='content'>[<span>{{status == 1 || status == 3 ? "Auto" : "Manual"}}</span>]</div>
 		  <div class='content' style='float:right'>
@@ -110,7 +110,7 @@
 		</ui-section>
 	  {{/each}}
 	  <ui-section label='Total Load'>
-		<span class='bold'>{{Math.round(adata.totalLoad)}} W</span>
+		<span class='bold'>{{adata.totalLoad}}</span>
 	  </ui-section>
 	</ui-display>
 	{{#if data.siliconUser}}

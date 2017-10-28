@@ -22,11 +22,12 @@
 #define SHUTTLE_ALREADY_DOCKED "we_are_already_docked"
 #define SHUTTLE_SOMEONE_ELSE_DOCKED "someone_else_docked"
 
-//Launching Shuttles to Centcomm
+//Launching Shuttles to CentCom
 #define NOLAUNCH -1
 #define UNLAUNCHED 0
 #define ENDGAME_LAUNCHED 1
 #define EARLY_LAUNCHED 2
+#define ENDGAME_TRANSIT 3
 
 // Ripples, effects that signal a shuttle's arrival
 #define SHUTTLE_RIPPLE_TIME 100
@@ -44,3 +45,23 @@
 #define HYPERSPACE_WARMUP 1
 #define HYPERSPACE_LAUNCH 2
 #define HYPERSPACE_END 3
+
+#define CALL_SHUTTLE_REASON_LENGTH 12
+
+//Engine related
+#define ENGINE_COEFF_MIN 0.5
+#define ENGINE_COEFF_MAX 2
+#define ENGINE_DEFAULT_MAXSPEED_ENGINES 5
+
+//Docking error flags
+#define DOCKING_SUCCESS 0
+#define DOCKING_BLOCKED 1
+#define DOCKING_IMMOBILIZED 2
+#define DOCKING_AREA_EMPTY 4
+#define DOCKING_NULL_DESTINATION 8
+#define DOCKING_NULL_SOURCE 16
+
+//Docking turf movements
+#define MOVE_TURF 1
+#define MOVE_AREA 2
+#define MOVE_CONTENTS 4

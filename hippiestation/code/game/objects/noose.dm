@@ -11,11 +11,11 @@
 	icon_state = "noose"
 	icon = 'hippiestation/icons/obj/objects.dmi'
 	layer = FLY_LAYER
-	flags = NODECONSTRUCT
+	flags_1 = NODECONSTRUCT_1
 	var/image/over
 
 /obj/structure/chair/noose/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/wirecutters))
+	if(istype(W, /obj/item/wirecutters))
 		user.visible_message("[user] cuts the noose.", "<span class='notice'>You cut the noose.</span>")
 		if(has_buckled_mobs())
 			for(var/m in buckled_mobs)
@@ -30,8 +30,8 @@
 		return
 	..()
 
-/obj/structure/chair/noose/New()
-	..()
+/obj/structure/chair/noose/Initialize()
+	. = ..()
 	pixel_y += 16 //Noose looks like it's "hanging" in the air
 	over = image(icon, "noose_overlay")
 	over.layer = FLY_LAYER
@@ -76,7 +76,7 @@
 			M.visible_message(\
 				"<span class='warning'>[M] unties the noose over their neck!</span>",\
 				"<span class='notice'>You untie the noose over your neck!</span>")
-			M.Weaken(3)
+			M.Knockdown(60)
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
 			H.noosed = FALSE

@@ -21,11 +21,6 @@
 	R.add_fingerprint(user)
 	qdel(src)
 
-/obj/item/weapon/storage/box/bodybags/New()
-	..()
-	for(var/i in 1 to 7)
-		new /obj/item/bodybag(src)
-
 
 // Bluespace bodybag
 
@@ -36,12 +31,14 @@
 	icon_state = "bluebodybag_folded"
 	unfoldedbag_path = /obj/structure/closet/body_bag/bluespace
 	w_class = WEIGHT_CLASS_SMALL
+	flags_2 = NO_MAT_REDEMPTION_2
 	origin_tech = "bluespace=4;materials=4;plasmatech=4"
 
 /obj/item/bodybag/bluespace/examine(mob/user)
 	..()
 	if(contents.len)
-		to_chat(user, "<span class='notice'>You can make out the shapes of [contents.len] objects through the fabric.</span>")
+		var/s = contents.len == 1 ? "" : "s"
+		to_chat(user, "<span class='notice'>You can make out the shape[s] of [contents.len] object[s] through the fabric.</span>")
 
 /obj/item/bodybag/bluespace/Destroy()
 	for(var/atom/movable/A in contents)

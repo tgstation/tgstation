@@ -13,15 +13,14 @@
 	name = "telecommunication hub"
 	icon_state = "hub"
 	desc = "A mighty piece of hardware used to send/receive massive amounts of data."
-	density = 1
-	anchored = 1
-	use_power = 1
+	density = TRUE
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 80
 	machinetype = 7
-	//heatgen = 40
 	long_range_link = 1
 	netspeed = 40
-
+	circuit = /obj/item/circuitboard/machine/telecomms/hub
 
 /obj/machinery/telecomms/hub/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 	if(is_freq_listening(signal))
@@ -33,29 +32,12 @@
 			relay_information(signal, "/obj/machinery/telecomms/relay", 1)
 			relay_information(signal, "/obj/machinery/telecomms/broadcaster", 1) // Send it to a broadcaster.
 
-/obj/machinery/telecomms/hub/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/telecomms/hub(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/telecomms/hub
-	name = "Hub Mainframe (Machine Board)"
-	build_path = /obj/machinery/telecomms/hub
-	origin_tech = "programming=2;engineering=2"
-	req_components = list(
-							/obj/item/weapon/stock_parts/manipulator = 2,
-							/obj/item/stack/cable_coil = 2,
-							/obj/item/weapon/stock_parts/subspace/filter = 2)
-
-
-
-
 //Preset HUB
 
 /obj/machinery/telecomms/hub/preset
 	id = "Hub"
 	network = "tcommsat"
-	autolinkers = list("hub", "relay", "s_relay", "m_relay", "r_relay", "science", "medical",
+	autolinkers = list("hub", "relay", "s_relay", "m_relay", "r_relay", "h_relay", "science", "medical",
 	"supply", "service", "common", "command", "engineering", "security",
 	"receiverA", "receiverB", "broadcasterA", "broadcasterB")
 

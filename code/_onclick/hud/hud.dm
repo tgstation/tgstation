@@ -23,17 +23,12 @@
 
 	var/obj/screen/devil/soul_counter/devilsouldisplay
 
-	var/obj/screen/deity_power_display
-	var/obj/screen/deity_follower_display
-
 	var/obj/screen/nightvisionicon
 	var/obj/screen/action_intent
 	var/obj/screen/zone_select
 	var/obj/screen/pull_icon
 	var/obj/screen/throw_icon
 	var/obj/screen/module_store_icon
-
-	var/list/wheels = list() //list of the wheel screen objects
 
 	var/list/static_inventory = list() //the screen objects which are static
 	var/list/toggleable_inventory = list() //the screen objects which can be hidden
@@ -60,6 +55,8 @@
 
 	hide_actions_toggle = new
 	hide_actions_toggle.InitialiseIcon(src)
+	if(mymob.client)
+		hide_actions_toggle.locked = mymob.client.prefs.buttons_locked
 
 	hand_slots = list()
 
@@ -77,8 +74,6 @@
 
 	qdel(module_store_icon)
 	module_store_icon = null
-
-	wheels = null //all wheels are also in static_inventory
 
 	if(static_inventory.len)
 		for(var/thing in static_inventory)
@@ -110,14 +105,13 @@
 	healths = null
 	healthdoll = null
 	internals = null
+	staminas = null
 	lingchemdisplay = null
 	devilsouldisplay = null
 	lingstingdisplay = null
 	blobpwrdisplay = null
 	alien_plasma_display = null
 	alien_queen_finder = null
-	deity_power_display = null
-	deity_follower_display = null
 	nightvisionicon = null
 
 	if(plane_masters.len)
@@ -136,6 +130,7 @@
 /mob/proc/create_mob_hud()
 	if(client && !hud_used)
 		hud_used = new /datum/hud(src)
+		update_sight()
 
 //Version denotes which style should be displayed. blank or 0 means "next version"
 /datum/hud/proc/show_hud(version = 0,mob/viewmob)
@@ -146,6 +141,7 @@
 		return 0
 
 	screenmob.client.screen = list()
+	screenmob.client.apply_clickcatcher()
 
 	var/display_hud_version = version
 	if(!display_hud_version)	//If 0 or blank, display the next hud version
@@ -211,7 +207,6 @@
 	mymob.reload_fullscreen()
 	update_parallax_pref(screenmob)
 
-
 /datum/hud/human/show_hud(version = 0,mob/viewmob)
 	..()
 	hidden_inventory_update(viewmob)
@@ -226,16 +221,6 @@
 /datum/hud/proc/persistent_inventory_update(mob/viewer)
 	if(!mymob)
 		return
-	var/mob/living/L = mymob
-
-	var/mob/screenmob = viewer || L
-
-	for(var/X in wheels)
-		var/obj/screen/wheel/W = X
-		if(W.toggled)
-			screenmob.client.screen |= W.buttons_list
-		else
-			screenmob.client.screen -= W.buttons_list
 
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)
 /mob/verb/button_pressed_F12()
@@ -279,3 +264,6 @@
 		E.screen_loc = ui_equip_position(mymob)
 	if(mymob.hud_used)
 		show_hud(HUD_STYLE_STANDARD,mymob)
+
+/datum/hud/proc/update_locked_slots()
+	return

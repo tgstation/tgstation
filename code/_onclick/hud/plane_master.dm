@@ -5,10 +5,10 @@
 	blend_mode = BLEND_OVERLAY
 	var/show_alpha = 255
 	var/hide_alpha = 0
-	
+
 /obj/screen/plane_master/proc/Show(override)
 	alpha = override || show_alpha
-	
+
 /obj/screen/plane_master/proc/Hide(override)
 	alpha = override || hide_alpha
 
@@ -19,24 +19,20 @@
 /obj/screen/plane_master/game_world
 	name = "game world plane master"
 	plane = GAME_PLANE
+	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
 
 /obj/screen/plane_master/lighting
 	name = "lighting plane master"
 	plane = LIGHTING_PLANE
 	blend_mode = BLEND_MULTIPLY
-	mouse_opacity = 0
-
-/obj/screen/plane_master/lighting/proc/params2color(params)
-	color = params2list(params)
-/obj/screen/plane_master/lighting/proc/basecolor()
-	color = LIGHTING_BASE_MATRIX
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/screen/plane_master/parallax
 	name = "parallax plane master"
 	plane = PLANE_SPACE_PARALLAX
 	blend_mode = BLEND_MULTIPLY
-	mouse_opacity = FALSE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/screen/plane_master/parallax_white
 	name = "parallax whitifier plane master"

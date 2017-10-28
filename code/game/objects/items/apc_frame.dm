@@ -1,18 +1,21 @@
 /obj/item/wallframe
+	icon = 'icons/obj/wallframe.dmi'
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT*2)
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	origin_tech = "materials=1;engineering=1"
 	item_state = "syringe_kit"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	var/result_path
-	var/inverse = 0
-	// For inverse dir frames like light fixtures.
+	var/inverse = 0 // For inverse dir frames like light fixtures.
+	var/pixel_shift //The amount of pixels
 
 /obj/item/wallframe/proc/try_build(turf/on_wall, mob/user)
 	if(get_dist(on_wall,user)>1)
 		return
 	var/ndir = get_dir(on_wall, user)
-	if(!(ndir in cardinal))
+	if(!(ndir in GLOB.cardinals))
 		return
 	var/turf/T = get_turf(user)
 	var/area/A = get_area(T)
@@ -38,7 +41,17 @@
 		if(inverse)
 			ndir = turn(ndir, 180)
 
-		var/obj/O = new result_path(get_turf(user), ndir, 1)
+		var/obj/O = new result_path(get_turf(user), ndir, TRUE)
+		if(pixel_shift)
+			switch(ndir)
+				if(NORTH)
+					O.pixel_y = pixel_shift
+				if(SOUTH)
+					O.pixel_y = -pixel_shift
+				if(EAST)
+					O.pixel_x = pixel_shift
+				if(WEST)
+					O.pixel_x = -pixel_shift
 		after_attach(O)
 
 	qdel(src)
@@ -46,9 +59,9 @@
 /obj/item/wallframe/proc/after_attach(var/obj/O)
 	transfer_fingerprints_to(O)
 
-/obj/item/wallframe/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/wallframe/attackby(obj/item/W, mob/user, params)
 	..()
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(istype(W, /obj/item/screwdriver))
 		// For camera-building borgs
 		var/turf/T = get_step(get_turf(user), user.dir)
 		if(iswallturf(T))
@@ -57,7 +70,7 @@
 	var/metal_amt = round(materials[MAT_METAL]/MINERAL_MATERIAL_AMOUNT)
 	var/glass_amt = round(materials[MAT_GLASS]/MINERAL_MATERIAL_AMOUNT)
 
-	if(istype(W, /obj/item/weapon/wrench) && (metal_amt || glass_amt))
+	if(istype(W, /obj/item/wrench) && (metal_amt || glass_amt))
 		to_chat(user, "<span class='notice'>You dismantle [src].</span>")
 		if(metal_amt)
 			new /obj/item/stack/sheet/metal(get_turf(src), metal_amt)
@@ -70,9 +83,8 @@
 // APC HULL
 /obj/item/wallframe/apc
 	name = "\improper APC frame"
-	desc = "Used for repairing or building APCs"
-	icon = 'icons/obj/apc_repair.dmi'
-	icon_state = "apc_frame"
+	desc = "Used for repairing or building APCs."
+	icon_state = "apc"
 	result_path = /obj/machinery/power/apc
 	inverse = 1
 
@@ -100,12 +112,14 @@
 	return TRUE
 
 
-/obj/item/weapon/electronics
+/obj/item/electronics
 	desc = "Looks like a circuit. Probably is."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "door_electronics"
 	item_state = "electronic"
-	flags = CONDUCT
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_SMALL
 	origin_tech = "engineering=2;programming=1"
 	materials = list(MAT_METAL=50, MAT_GLASS=50)

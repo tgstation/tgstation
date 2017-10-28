@@ -1,11 +1,10 @@
-var/datum/controller/subsystem/processing/overlays/SSoverlays
-
-/datum/controller/subsystem/processing/overlays
+PROCESSING_SUBSYSTEM_DEF(overlays)
 	name = "Overlay"
-	flags = SS_TICKER|SS_FIRE_IN_LOBBY
+	flags = SS_TICKER
 	wait = 1
 	priority = 500
-	init_order = -6
+	init_order = INIT_ORDER_OVERLAY
+	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_SETUP
 
 	stat_tag = "Ov"
 	currentrun = null
@@ -13,8 +12,7 @@ var/datum/controller/subsystem/processing/overlays/SSoverlays
 	var/list/overlay_icon_cache
 	var/initialized = FALSE
 
-/datum/controller/subsystem/processing/overlays/New()
-	NEW_SS_GLOBAL(SSoverlays)
+/datum/controller/subsystem/processing/overlays/PreInit()
 	LAZYINITLIST(overlay_icon_state_caches)
 	LAZYINITLIST(overlay_icon_cache)
 
@@ -28,12 +26,32 @@ var/datum/controller/subsystem/processing/overlays/SSoverlays
 	overlay_icon_cache = SSoverlays.overlay_icon_cache
 	processing = SSoverlays.processing
 
+#define COMPILE_OVERLAYS(A)\
+	var/list/oo = A.our_overlays;\
+	var/list/po = A.priority_overlays;\
+	if(LAZYLEN(po)){\
+		if(LAZYLEN(oo)){\
+			A.overlays = oo + po;\
+		}\
+		else{\
+			A.overlays = po;\
+		}\
+	}\
+	else if(LAZYLEN(oo)){\
+		A.overlays = oo;\
+	}\
+	else{\
+		A.overlays.Cut();\
+	}\
+	A.flags_1 &= ~OVERLAY_QUEUED_1
+
 /datum/controller/subsystem/processing/overlays/fire(resumed = FALSE, mc_check = TRUE)
+	var/list/processing = src.processing
 	while(processing.len)
 		var/atom/thing = processing[processing.len]
 		processing.len--
 		if(thing)
-			thing.compile_overlays(FALSE)
+			COMPILE_OVERLAYS(thing)
 		if(mc_check)
 			if(MC_TICK_CHECK)
 				break
@@ -45,20 +63,9 @@ var/datum/controller/subsystem/processing/overlays/SSoverlays
 		testing("Flushing [processing.len] overlays")
 		fire(mc_check = FALSE)	//pair this thread up with the MC to get extra compile time
 
-/atom/proc/compile_overlays()
-	if(LAZYLEN(priority_overlays) && LAZYLEN(our_overlays))
-		overlays = our_overlays + priority_overlays
-	else if(LAZYLEN(our_overlays))
-		overlays = our_overlays
-	else if(LAZYLEN(priority_overlays))
-		overlays = priority_overlays
-	else
-		overlays.Cut()
-	flags &= ~OVERLAY_QUEUED
-
 /proc/iconstate2appearance(icon, iconstate)
 	var/static/image/stringbro = new()
-	var/list/icon_states_cache = SSoverlays.overlay_icon_state_caches 
+	var/list/icon_states_cache = SSoverlays.overlay_icon_state_caches
 	var/list/cached_icon = icon_states_cache[icon]
 	if (cached_icon)
 		var/cached_appearance = cached_icon["[iconstate]"]
@@ -94,19 +101,19 @@ var/datum/controller/subsystem/processing/overlays/SSoverlays
 			new_overlays[i] = iconstate2appearance(icon, cached_overlay)
 		else if(isicon(cached_overlay))
 			new_overlays[i] = icon2appearance(cached_overlay)
-		else	//image probable
+		else	//image/mutable_appearance probable
 			appearance_bro.appearance = cached_overlay
 			if(!ispath(cached_overlay))
 				appearance_bro.dir = cached_overlay.dir
 			new_overlays[i] = appearance_bro.appearance
 	return new_overlays
 
-#define NOT_QUEUED_ALREADY (!(flags & OVERLAY_QUEUED))
-#define QUEUE_FOR_COMPILE flags |= OVERLAY_QUEUED; SSoverlays.processing += src; 
+#define NOT_QUEUED_ALREADY (!(flags_1 & OVERLAY_QUEUED_1))
+#define QUEUE_FOR_COMPILE flags_1 |= OVERLAY_QUEUED_1; SSoverlays.processing += src;
 /atom/proc/cut_overlays(priority = FALSE)
 	var/list/cached_overlays = our_overlays
 	var/list/cached_priority = priority_overlays
-	
+
 	var/need_compile = FALSE
 
 	if(LAZYLEN(cached_overlays)) //don't queue empty lists, don't cut priority overlays
@@ -163,12 +170,12 @@ var/datum/controller/subsystem/processing/overlays/SSoverlays
 	if(NOT_QUEUED_ALREADY && need_compile) //have we caught more pokemon?
 		QUEUE_FOR_COMPILE
 
-/atom/proc/copy_overlays(atom/other, cut_old = FALSE)	//copys our_overlays from another atom
+/atom/proc/copy_overlays(atom/other, cut_old)	//copys our_overlays from another atom
 	if(!other)
 		if(cut_old)
 			cut_overlays()
 		return
-	
+
 	var/list/cached_other = other.our_overlays
 	if(cached_other)
 		if(cut_old || !LAZYLEN(our_overlays))
@@ -192,3 +199,18 @@ var/datum/controller/subsystem/processing/overlays/SSoverlays
 
 /image/proc/cut_overlays(x)
 	overlays.Cut()
+
+/image/proc/copy_overlays(atom/other, cut_old)
+	if(!other)
+		if(cut_old)
+			cut_overlays()
+		return
+
+	var/list/cached_other = other.our_overlays
+	if(cached_other)
+		if(cut_old || !overlays.len)
+			overlays = cached_other.Copy()
+		else
+			overlays |= cached_other
+	else if(cut_old)
+		cut_overlays()

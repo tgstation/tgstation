@@ -6,3 +6,4 @@
 #define EVENT_CANT_RUN 0
 #define EVENT_READY 1
 #define EVENT_CANCELLED 2
+#define EVENT_INTERRUPTED 3

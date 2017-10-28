@@ -5,8 +5,8 @@
 #define MAX_TIMER 9000
 
 #define PRESET_SHORT 1200
-#define PRESET_MEDIUM 3000
-#define PRESET_LONG 6000
+#define PRESET_MEDIUM 1800
+#define PRESET_LONG 3000
 
 
 
@@ -23,9 +23,9 @@
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "frame"
 	desc = "A remote control for a door."
-	req_access = list(access_security)
-	anchored = 1
-	density = 0
+	req_access = list(ACCESS_SECURITY)
+	anchored = TRUE
+	density = FALSE
 	var/id = null // id of linked machinery/lockers
 
 	var/activation_time = 0
@@ -45,7 +45,7 @@
 	Radio.listening = 0
 
 /obj/machinery/door_timer/Initialize()
-	..()
+	. = ..()
 	if(id != null)
 		for(var/obj/machinery/door/window/brigdoor/M in urange(20, src))
 			if (M.id == id)
@@ -58,6 +58,9 @@
 		for(var/obj/structure/closet/secure_closet/brig/C in urange(20, src))
 			if(C.id == id)
 				targets += C
+		for(var/obj/machinery/disposal/trapdoor/T in urange(20, src))
+			if(T.id == src.id)
+				targets += T
 
 	if(!targets.len)
 		stat |= BROKEN
@@ -101,8 +104,10 @@
 			continue
 		if(C.opened && !C.close())
 			continue
-		C.locked = 1
+		C.locked = TRUE
 		C.update_icon()
+	for(var/obj/machinery/disposal/trapdoor/T in targets)
+		T.close()
 	return 1
 
 
@@ -112,8 +117,8 @@
 		return 0
 
 	if(!forced)
-		Radio.set_frequency(SEC_FREQ)
-		Radio.talk_into(src, "Timer has expired. Releasing prisoner.", SEC_FREQ)
+		Radio.set_frequency(GLOB.SEC_FREQ)
+		Radio.talk_into(src, "Timer has expired. Releasing prisoner.", GLOB.SEC_FREQ, get_default_language())
 
 	timing = FALSE
 	activation_time = null
@@ -130,8 +135,10 @@
 			continue
 		if(C.opened)
 			continue
-		C.locked = 0
+		C.locked = FALSE
 		C.update_icon()
+	for(var/obj/machinery/disposal/trapdoor/T in targets)
+		T.open()
 
 	return 1
 
@@ -146,8 +153,8 @@
 	. = new_time == timer_duration //return 1 on no change
 	timer_duration = new_time
 
-/obj/machinery/door_timer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-										datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+/obj/machinery/door_timer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "brig_timer", name, 300, 200, master_ui, state)
@@ -184,7 +191,7 @@
 	if(maptext)
 		maptext = ""
 	cut_overlays()
-	add_overlay(image('icons/obj/status_display.dmi', icon_state=state))
+	add_overlay(mutable_appearance('icons/obj/status_display.dmi', state))
 
 
 //Checks to see if there's 1 line or 2, adds text-icons-numbers/letters over display
@@ -212,6 +219,11 @@
 	if(..())
 		return
 	. = TRUE
+
+	if(!allowed(usr))
+		to_chat(usr, "<span class='warning'>Access denied.</span>")
+		return FALSE
+
 	switch(action)
 		if("time")
 			var/value = text2num(params["adjust"])

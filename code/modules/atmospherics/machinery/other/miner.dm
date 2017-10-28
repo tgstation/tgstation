@@ -29,10 +29,14 @@
 	idle_power_usage = 150
 	active_power_usage = 2000
 
+/obj/machinery/atmospherics/miner/Initialize()
+	. = ..()
+	set_active(active)				//Force overlay update.
+
 /obj/machinery/atmospherics/miner/examine(mob/user)
 	..()
 	if(broken)
-		to_chat(user, "Its debug output is printing \"[broken_message]\"")
+		to_chat(user, "Its debug output is printing \"[broken_message]\".")
 
 /obj/machinery/atmospherics/miner/proc/check_operation()
 	if(!active)
@@ -40,30 +44,40 @@
 	var/turf/T = get_turf(src)
 	if(!isopenturf(T))
 		broken_message = "<span class='boldnotice'>VENT BLOCKED</span>"
-		broken = TRUE
+		set_broken(TRUE)
 		return FALSE
 	var/turf/open/OT = T
 	if(OT.planetary_atmos)
 		broken_message = "<span class='boldwarning'>DEVICE NOT ENCLOSED IN A PRESSURIZED ENVIRONMENT</span>"
-		broken = TRUE
+		set_broken(TRUE)
 		return FALSE
 	if(isspaceturf(T))
 		broken_message = "<span class='boldnotice'>AIR VENTING TO SPACE</span>"
-		broken = TRUE
+		set_broken(TRUE)
 		return FALSE
 	var/datum/gas_mixture/G = OT.return_air()
 	if(G.return_pressure() > (max_ext_kpa - ((spawn_mol*spawn_temp*R_IDEAL_GAS_EQUATION)/(CELL_VOLUME))))
 		broken_message = "<span class='boldwarning'>EXTERNAL PRESSURE OVER THRESHOLD</span>"
-		broken = TRUE
+		set_broken(TRUE)
 		return FALSE
 	if(G.total_moles() > max_ext_mol)
 		broken_message = "<span class='boldwarning'>EXTERNAL AIR CONCENTRATION OVER THRESHOLD</span>"
-		broken = TRUE
+		set_broken(TRUE)
 		return FALSE
 	if(broken)
-		broken = FALSE
+		set_broken(FALSE)
 		broken_message = ""
 	return TRUE
+
+/obj/machinery/atmospherics/miner/proc/set_active(setting)
+	if(active != setting)
+		active = setting
+		update_icon()
+
+/obj/machinery/atmospherics/miner/proc/set_broken(setting)
+	if(broken != setting)
+		broken = setting
+		update_icon()
 
 /obj/machinery/atmospherics/miner/proc/update_power()
 	if(!active)
@@ -96,18 +110,16 @@
 	return FALSE
 
 /obj/machinery/atmospherics/miner/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(broken)
-		var/image/A = image(icon, "broken")
-		add_overlay(A)
+		add_overlay("broken")
 	else if(active)
-		var/image/A = image(icon, "on")
-		A.color = overlay_color
-		add_overlay(A)
+		var/mutable_appearance/on_overlay = mutable_appearance(icon, "on")
+		on_overlay.color = overlay_color
+		add_overlay(on_overlay)
 
 /obj/machinery/atmospherics/miner/process()
 	update_power()
-	update_icon()
 	check_operation()
 	if(active && !broken)
 		if(isnull(spawn_id))
@@ -120,7 +132,7 @@
 	if(!isopenturf(O))
 		return FALSE
 	var/datum/gas_mixture/merger = new
-	merger.assert_gas(spawn_id)
+	ASSERT_GAS(spawn_id, merger)
 	merger.gases[spawn_id][MOLES] = (spawn_mol)
 	merger.temperature = spawn_temp
 	O.assume_air(merger)
@@ -134,49 +146,49 @@
 /obj/machinery/atmospherics/miner/n2o
 	name = "\improper N2O Gas Miner"
 	overlay_color = "#FFCCCC"
-	spawn_id = "n2o"
+	spawn_id = /datum/gas/nitrous_oxide
 
 /obj/machinery/atmospherics/miner/nitrogen
 	name = "\improper N2 Gas Miner"
 	overlay_color = "#CCFFCC"
-	spawn_id = "n2"
+	spawn_id = /datum/gas/nitrogen
 
 /obj/machinery/atmospherics/miner/oxygen
 	name = "\improper O2 Gas Miner"
 	overlay_color = "#007FFF"
-	spawn_id = "o2"
+	spawn_id = /datum/gas/oxygen
 
 /obj/machinery/atmospherics/miner/toxins
 	name = "\improper Plasma Gas Miner"
 	overlay_color = "#FF0000"
-	spawn_id = "plasma"
+	spawn_id = /datum/gas/plasma
 
 /obj/machinery/atmospherics/miner/carbon_dioxide
 	name = "\improper CO2 Gas Miner"
 	overlay_color = "#CDCDCD"
-	spawn_id = "co2"
+	spawn_id = /datum/gas/carbon_dioxide
 
 /obj/machinery/atmospherics/miner/bz
 	name = "\improper BZ Gas Miner"
 	overlay_color = "#FAFF00"
-	spawn_id = "bz"
+	spawn_id = /datum/gas/bz
 
 /obj/machinery/atmospherics/miner/freon
 	name = "\improper Freon Gas Miner"
 	overlay_color = "#00FFE5"
-	spawn_id = "freon"
+	spawn_id = /datum/gas/freon
 
 /obj/machinery/atmospherics/miner/volatile_fuel
 	name = "\improper Volatile Fuel Gas Miner"
 	overlay_color = "#564040"
-	spawn_id = "v_fuel"
+	spawn_id = /datum/gas/volatile_fuel
 
 /obj/machinery/atmospherics/miner/agent_b
 	name = "\improper Agent B Gas Miner"
 	overlay_color = "#E81E24"
-	spawn_id = "agent_b"
+	spawn_id = /datum/gas/oxygen_agent_b
 
 /obj/machinery/atmospherics/miner/water_vapor
 	name = "\improper Water Vapor Gas Miner"
 	overlay_color = "#99928E"
-	spawn_id = "water_vapor"
+	spawn_id = /datum/gas/water_vapor

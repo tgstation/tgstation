@@ -14,26 +14,41 @@
 	name = "bookcase"
 	icon = 'icons/obj/library.dmi'
 	icon_state = "bookempty"
-	anchored = 0
-	density = 1
+	desc = "A great place for storing knowledge."
+	anchored = FALSE
+	density = TRUE
 	opacity = 0
 	resistance_flags = FLAMMABLE
-	obj_integrity = 200
 	max_integrity = 200
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 0)
 	var/state = 0
-	var/list/allowed_books = list(/obj/item/weapon/book, /obj/item/weapon/spellbook, /obj/item/weapon/storage/book) //Things allowed in the bookcase
+	var/list/allowed_books = list(/obj/item/book, /obj/item/spellbook, /obj/item/storage/book) //Things allowed in the bookcase
+
+
+/obj/structure/bookcase/examine(mob/user)
+	..()
+	if(!anchored)
+		to_chat(user, "<span class='notice'>The <i>bolts</i> on the bottom are unsecured.</span>")
+	if(anchored)
+		to_chat(user, "<span class='notice'>It's secured in place with <b>bolts</b>.</span>")
+	switch(state)
+		if(0)
+			to_chat(user, "<span class='notice'>There's a <b>small crack</b> visible on the back panel.</span>")
+		if(1)
+			to_chat(user, "<span class='notice'>There's space inside for a <i>wooden</i> shelf.</span>")
+		if(2)
+			to_chat(user, "<span class='notice'>There's a <b>small crack</b> visible on the shelf.</span>")
 
 
 /obj/structure/bookcase/Initialize(mapload)
-	..()
+	. = ..()
 	if(!mapload)
 		return
 	state = 2
 	icon_state = "book-0"
-	anchored = 1
+	anchored = TRUE
 	for(var/obj/item/I in loc)
-		if(istype(I, /obj/item/weapon/book))
+		if(istype(I, /obj/item/book))
 			I.loc = src
 	update_icon()
 
@@ -41,13 +56,13 @@
 /obj/structure/bookcase/attackby(obj/item/I, mob/user, params)
 	switch(state)
 		if(0)
-			if(istype(I, /obj/item/weapon/wrench))
+			if(istype(I, /obj/item/wrench))
 				playsound(loc, I.usesound, 100, 1)
 				if(do_after(user, 20*I.toolspeed, target = src))
 					to_chat(user, "<span class='notice'>You wrench the frame into place.</span>")
-					anchored = 1
+					anchored = TRUE
 					state = 1
-			if(istype(I, /obj/item/weapon/crowbar))
+			if(istype(I, /obj/item/crowbar))
 				playsound(loc, I.usesound, 100, 1)
 				if(do_after(user, 20*I.toolspeed, target = src))
 					to_chat(user, "<span class='notice'>You pry the frame apart.</span>")
@@ -61,32 +76,31 @@
 					to_chat(user, "<span class='notice'>You add a shelf.</span>")
 					state = 2
 					icon_state = "book-0"
-			if(istype(I, /obj/item/weapon/wrench))
+			if(istype(I, /obj/item/wrench))
 				playsound(loc, I.usesound, 100, 1)
 				to_chat(user, "<span class='notice'>You unwrench the frame.</span>")
-				anchored = 0
+				anchored = FALSE
 				state = 0
 
 		if(2)
 			if(is_type_in_list(I, allowed_books))
-				if(!user.drop_item())
+				if(!user.transferItemToLoc(I, src))
 					return
-				I.loc = src
 				update_icon()
-			else if(istype(I, /obj/item/weapon/storage/bag/books))
-				var/obj/item/weapon/storage/bag/books/B = I
+			else if(istype(I, /obj/item/storage/bag/books))
+				var/obj/item/storage/bag/books/B = I
 				for(var/obj/item/T in B.contents)
-					if(istype(T, /obj/item/weapon/book) || istype(T, /obj/item/weapon/spellbook))
+					if(istype(T, /obj/item/book) || istype(T, /obj/item/spellbook))
 						B.remove_from_storage(T, src)
 				to_chat(user, "<span class='notice'>You empty \the [I] into \the [src].</span>")
 				update_icon()
-			else if(istype(I, /obj/item/weapon/pen))
+			else if(istype(I, /obj/item/pen))
 				var/newname = stripped_input(user, "What would you like to title this bookshelf?")
 				if(!newname)
 					return
 				else
 					name = ("bookcase ([sanitize(newname)])")
-			else if(istype(I, /obj/item/weapon/crowbar))
+			else if(istype(I, /obj/item/crowbar))
 				if(contents.len)
 					to_chat(user, "<span class='warning'>You need to remove the books first!</span>")
 				else
@@ -101,7 +115,7 @@
 
 /obj/structure/bookcase/attack_hand(mob/user)
 	if(contents.len)
-		var/obj/item/weapon/book/choice = input("Which book would you like to remove from the shelf?") as null|obj in contents
+		var/obj/item/book/choice = input("Which book would you like to remove from the shelf?") as null|obj in contents
 		if(choice)
 			if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
 				return
@@ -115,7 +129,7 @@
 
 /obj/structure/bookcase/deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/mineral/wood(loc, 4)
-	for(var/obj/item/weapon/book/B in contents)
+	for(var/obj/item/book/B in contents)
 		B.forceMove(get_turf(src))
 	qdel(src)
 
@@ -132,7 +146,7 @@
 
 /obj/structure/bookcase/manuals/medical/New()
 	..()
-	new /obj/item/weapon/book/manual/medical_cloning(src)
+	new /obj/item/book/manual/medical_cloning(src)
 	update_icon()
 
 
@@ -141,12 +155,12 @@
 
 /obj/structure/bookcase/manuals/engineering/New()
 	..()
-	new /obj/item/weapon/book/manual/wiki/engineering_construction(src)
-	new /obj/item/weapon/book/manual/engineering_particle_accelerator(src)
-	new /obj/item/weapon/book/manual/wiki/engineering_hacking(src)
-	new /obj/item/weapon/book/manual/wiki/engineering_guide(src)
-	new /obj/item/weapon/book/manual/engineering_singularity_safety(src)
-	new /obj/item/weapon/book/manual/robotics_cyborgs(src)
+	new /obj/item/book/manual/wiki/engineering_construction(src)
+	new /obj/item/book/manual/engineering_particle_accelerator(src)
+	new /obj/item/book/manual/wiki/engineering_hacking(src)
+	new /obj/item/book/manual/wiki/engineering_guide(src)
+	new /obj/item/book/manual/engineering_singularity_safety(src)
+	new /obj/item/book/manual/robotics_cyborgs(src)
 	update_icon()
 
 
@@ -155,17 +169,18 @@
 
 /obj/structure/bookcase/manuals/research_and_development/New()
 	..()
-	new /obj/item/weapon/book/manual/research_and_development(src)
+	new /obj/item/book/manual/research_and_development(src)
 	update_icon()
 
 
 /*
  * Book
  */
-/obj/item/weapon/book
+/obj/item/book
 	name = "book"
 	icon = 'icons/obj/library.dmi'
 	icon_state ="book"
+	desc = "Crack it open, inhale the musk of its pages, and learn something new."
 	throw_speed = 1
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL		 //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
@@ -178,7 +193,7 @@
 	var/title			//The real name of the book.
 	var/window_size = null // Specific window size for the book, i.e: "1920x1080", Size x Width
 
-/obj/item/weapon/book/attack_self(mob/user)
+/obj/item/book/attack_self(mob/user)
 	if(is_blind(user))
 		to_chat(user, "<span class='warning'>As you are trying to read, you suddenly feel very stupid!</span>")
 		return
@@ -193,8 +208,8 @@
 		to_chat(user, "<span class='notice'>This book is completely blank!</span>")
 
 
-/obj/item/weapon/book/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/pen))
+/obj/item/book/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/pen))
 		if(is_blind(user))
 			to_chat(user, "<span class='warning'> As you are trying to write on the book, you suddenly feel very stupid!</span>")
 			return
@@ -231,8 +246,8 @@
 			else
 				return
 
-	else if(istype(I, /obj/item/weapon/barcodescanner))
-		var/obj/item/weapon/barcodescanner/scanner = I
+	else if(istype(I, /obj/item/barcodescanner))
+		var/obj/item/barcodescanner/scanner = I
 		if(!scanner.computer)
 			to_chat(user, "[I]'s screen flashes: 'No associated computer found!'")
 		else
@@ -254,18 +269,18 @@
 					to_chat(user, "[I]'s screen flashes: 'Book stored in buffer. No active check-out record found for current title.'")
 				if(3)
 					scanner.book = src
-					for(var/obj/item/weapon/book in scanner.computer.inventory)
+					for(var/obj/item/book in scanner.computer.inventory)
 						if(book == src)
 							to_chat(user, "[I]'s screen flashes: 'Book stored in buffer. Title already present in inventory, aborting to avoid duplicate entry.'")
 							return
 					scanner.computer.inventory.Add(src)
 					to_chat(user, "[I]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'")
 
-	else if(istype(I, /obj/item/weapon/kitchen/knife) || istype(I, /obj/item/weapon/wirecutters))
+	else if(istype(I, /obj/item/kitchen/knife) || istype(I, /obj/item/wirecutters))
 		to_chat(user, "<span class='notice'>You begin to carve out [title]...</span>")
 		if(do_after(user, 30, target = src))
 			to_chat(user, "<span class='notice'>You carve out the pages from [title]! You didn't want to read it anyway.</span>")
-			var/obj/item/weapon/storage/book/B = new
+			var/obj/item/storage/book/B = new
 			B.name = src.name
 			B.title = src.title
 			B.icon_state = src.icon_state
@@ -285,18 +300,19 @@
 /*
  * Barcode Scanner
  */
-/obj/item/weapon/barcodescanner
+/obj/item/barcodescanner
 	name = "barcode scanner"
 	icon = 'icons/obj/library.dmi'
 	icon_state ="scanner"
+	desc = "A fabulous tool if you need to scan a barcode."
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
 	var/obj/machinery/computer/libraryconsole/bookmanagement/computer	//Associated computer - Modes 1 to 3 use this
-	var/obj/item/weapon/book/book			//Currently scanned book
+	var/obj/item/book/book			//Currently scanned book
 	var/mode = 0							//0 - Scan only, 1 - Scan and Set Buffer, 2 - Scan and Attempt to Check In, 3 - Scan and Attempt to Add to Inventory
 
-/obj/item/weapon/barcodescanner/attack_self(mob/user)
+/obj/item/barcodescanner/attack_self(mob/user)
 	mode += 1
 	if(mode > 3)
 		mode = 0

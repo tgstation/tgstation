@@ -1,13 +1,10 @@
-var/datum/controller/subsystem/machines/SSmachine
-
-/datum/controller/subsystem/machines
+SUBSYSTEM_DEF(machines)
 	name = "Machines"
-	init_order = 9
+	init_order = INIT_ORDER_MACHINES
 	flags = SS_KEEP_TIMING
 	var/list/processing = list()
 	var/list/currentrun = list()
 	var/list/powernets = list()
-
 
 /datum/controller/subsystem/machines/Initialize()
 	makepowernets()
@@ -19,15 +16,11 @@ var/datum/controller/subsystem/machines/SSmachine
 		qdel(PN)
 	powernets.Cut()
 
-	for(var/obj/structure/cable/PC in cable_list)
+	for(var/obj/structure/cable/PC in GLOB.cable_list)
 		if(!PC.powernet)
 			var/datum/powernet/NewPN = new()
 			NewPN.add_cable(PC)
 			propagate_network(PC,PC.powernet)
-
-/datum/controller/subsystem/machines/New()
-	NEW_SS_GLOBAL(SSmachine)
-
 
 /datum/controller/subsystem/machines/stat_entry()
 	..("M:[processing.len]|PN:[powernets.len]")
@@ -44,15 +37,16 @@ var/datum/controller/subsystem/machines/SSmachine
 
 	var/seconds = wait * 0.1
 	while(currentrun.len)
-		var/datum/thing = currentrun[currentrun.len]
+		var/obj/machinery/thing = currentrun[currentrun.len]
 		currentrun.len--
-		if(thing && thing.process(seconds) != PROCESS_KILL)
-			if(thing:use_power)
-				thing:auto_use_power() //add back the power state
+		if(!QDELETED(thing) && thing.process(seconds) != PROCESS_KILL)
+			thing.SendSignal(COMSIG_MACHINE_PROCESS)
+			if(thing.use_power)
+				thing.auto_use_power() //add back the power state
 		else
 			processing -= thing
-			if (thing)
-				thing.isprocessing = 0
+			if (!QDELETED(thing))
+				thing.isprocessing = FALSE
 		if (MC_TICK_CHECK)
 			return
 
@@ -65,7 +59,7 @@ var/datum/controller/subsystem/machines/SSmachine
 			propagate_network(PC,PC.powernet)
 
 /datum/controller/subsystem/machines/Recover()
-	if (istype(SSmachine.processing))
-		processing = SSmachine.processing
-	if (istype(SSmachine.powernets))
-		powernets = SSmachine.powernets
+	if (istype(SSmachines.processing))
+		processing = SSmachines.processing
+	if (istype(SSmachines.powernets))
+		powernets = SSmachines.powernets

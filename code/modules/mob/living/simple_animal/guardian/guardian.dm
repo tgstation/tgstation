@@ -1,5 +1,5 @@
 
-var/global/list/parasites = list() //all currently existing/living guardians
+GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 #define GUARDIAN_HANDS_LAYER 1
 #define GUARDIAN_TOTAL_LAYERS 1
@@ -31,11 +31,11 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	health = INFINITY
 	healable = FALSE //don't brusepack the guardian
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0.5, CLONE = 0.5, STAMINA = 0, OXY = 0.5) //how much damage from each damage type we transfer to the owner
-	environment_smash = 1
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	obj_damage = 40
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	butcher_results = list(/obj/item/weapon/ectoplasm = 1)
+	butcher_results = list(/obj/item/ectoplasm = 1)
 	AIStatus = AI_OFF
 	dextrous_hud_type = /datum/hud/dextrous/guardian //if we're set to dextrous, account for it.
 	var/list/guardian_overlays[GUARDIAN_TOTAL_LAYERS]
@@ -51,10 +51,10 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	var/carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP SOME SORT OF HORRIFIC BUG BLAME THE CODERS CARP CARP CARP</span>"
 
 /mob/living/simple_animal/hostile/guardian/Initialize(mapload, theme)
-	parasites |= src
+	GLOB.parasites += src
 	setthemename(theme)
 
-	..()
+	. = ..()
 
 /mob/living/simple_animal/hostile/guardian/med_hud_set_health()
 	if(summoner)
@@ -72,7 +72,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 			holder.icon_state = "hudhealthy"
 
 /mob/living/simple_animal/hostile/guardian/Destroy()
-	parasites -= src
+	GLOB.parasites -= src
 	return ..()
 
 /mob/living/simple_animal/hostile/guardian/proc/setthemename(pickedtheme) //set the guardian's theme to something cool!
@@ -129,7 +129,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	update_health_hud() //we need to update all of our health displays to match our summoner and we can't practically give the summoner a hook to do it
 	med_hud_set_health()
 	med_hud_set_status()
-	if(summoner)
+	if(!QDELETED(summoner))
 		if(summoner.stat == DEAD)
 			forceMove(summoner.loc)
 			to_chat(src, "<span class='danger'>Your summoner has died!</span>")
@@ -143,7 +143,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 			qdel(src)
 	else
 		to_chat(src, "<span class='danger'>Your summoner has died!</span>")
-		visible_message("<span class='danger'><B>The [src] dies along with its user!</B></span>")
+		visible_message("<span class='danger'><B>[src] dies along with its user!</B></span>")
 		death(TRUE)
 		qdel(src)
 	snapback()
@@ -159,7 +159,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 				resulthealth = round((summoner.health / summoner.maxHealth) * 100, 0.5)
 			stat(null, "Summoner Health: [resulthealth]%")
 		if(cooldown >= world.time)
-			stat(null, "Manifest/Recall Cooldown Remaining: [max(round((cooldown - world.time)*0.1, 0.1), 0)] seconds")
+			stat(null, "Manifest/Recall Cooldown Remaining: [DisplayTimeText(cooldown - world.time)]")
 
 /mob/living/simple_animal/hostile/guardian/Move() //Returns to summoner if they move out of range
 	. = ..()
@@ -175,15 +175,18 @@ var/global/list/parasites = list() //all currently existing/living guardians
 			if(istype(summoner.loc, /obj/effect))
 				Recall(TRUE)
 			else
-				new /obj/effect/overlay/temp/guardian/phase/out(loc)
+				new /obj/effect/temp_visual/guardian/phase/out(loc)
 				forceMove(summoner.loc)
-				new /obj/effect/overlay/temp/guardian/phase(loc)
+				new /obj/effect/temp_visual/guardian/phase(loc)
 
 /mob/living/simple_animal/hostile/guardian/canSuicide()
-	return 0
+	return FALSE
+
+/mob/living/simple_animal/hostile/guardian/proc/is_deployed()
+	return loc != summoner
 
 /mob/living/simple_animal/hostile/guardian/AttackingTarget()
-	if(loc == summoner)
+	if(!is_deployed())
 		to_chat(src, "<span class='danger'><B>You must be manifested to attack!</span></B>")
 		return FALSE
 	else
@@ -260,9 +263,8 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	I.plane = ABOVE_HUD_PLANE
 
 /mob/living/simple_animal/hostile/guardian/proc/apply_overlay(cache_index)
-	var/I = guardian_overlays[cache_index]
-	if(I)
-		add_overlay(I)
+	if((. = guardian_overlays[cache_index]))
+		add_overlay(.)
 
 /mob/living/simple_animal/hostile/guardian/proc/remove_overlay(cache_index)
 	var/I = guardian_overlays[cache_index]
@@ -281,9 +283,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		if(!r_state)
 			r_state = r_hand.icon_state
 
-		var/image/r_hand_image = r_hand.build_worn_icon(state = r_state, default_layer = GUARDIAN_HANDS_LAYER, default_icon_file = r_hand.righthand_file, isinhands = TRUE)
-
-		hands_overlays += r_hand_image
+		hands_overlays += r_hand.build_worn_icon(state = r_state, default_layer = GUARDIAN_HANDS_LAYER, default_icon_file = r_hand.righthand_file, isinhands = TRUE)
 
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 			r_hand.layer = ABOVE_HUD_LAYER
@@ -296,9 +296,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		if(!l_state)
 			l_state = l_hand.icon_state
 
-		var/image/l_hand_image = l_hand.build_worn_icon(state = l_state, default_layer = GUARDIAN_HANDS_LAYER, default_icon_file = l_hand.lefthand_file, isinhands = TRUE)
-
-		hands_overlays += l_hand_image
+		hands_overlays +=  l_hand.build_worn_icon(state = l_state, default_layer = GUARDIAN_HANDS_LAYER, default_icon_file = l_hand.lefthand_file, isinhands = TRUE)
 
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 			l_hand.layer = ABOVE_HUD_LAYER
@@ -320,7 +318,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		return FALSE
 	if(loc == summoner)
 		forceMove(summoner.loc)
-		new /obj/effect/overlay/temp/guardian/phase(loc)
+		new /obj/effect/temp_visual/guardian/phase(loc)
 		cooldown = world.time + 10
 		return TRUE
 	return FALSE
@@ -328,7 +326,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/proc/Recall(forced)
 	if(!summoner || loc == summoner || (cooldown > world.time && !forced))
 		return FALSE
-	new /obj/effect/overlay/temp/guardian/phase/out(loc)
+	new /obj/effect/temp_visual/guardian/phase/out(loc)
 
 	forceMove(summoner)
 	cooldown = world.time + 10
@@ -338,7 +336,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	to_chat(src, "<span class='danger'><B>You don't have another mode!</span></B>")
 
 /mob/living/simple_animal/hostile/guardian/proc/ToggleLight()
-	if(!luminosity)
+	if(light_range<3)
 		to_chat(src, "<span class='notice'>You activate your light.</span>")
 		set_light(3)
 	else
@@ -366,11 +364,11 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		var/list/guardians = summoner.hasparasites()
 		for(var/para in guardians)
 			to_chat(para, my_message)
-		for(var/M in dead_mob_list)
+		for(var/M in GLOB.dead_mob_list)
 			var/link = FOLLOW_LINK(M, src)
 			to_chat(M, "[link] [my_message]")
 
-		log_say("[src.real_name]/[src.key] : [input]")
+		log_talk(src,"GUARDIAN:[key_name(src)]: [input]",LOGSAY)
 
 /mob/living/proc/guardian_comm()
 	set name = "Communicate"
@@ -388,11 +386,11 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	for(var/para in guardians)
 		var/mob/living/simple_animal/hostile/guardian/G = para
 		to_chat(G, "<font color=\"[G.namedatum.colour]\"><b><i>[src]:</i></b></font> [preliminary_message]" )
-	for(var/M in dead_mob_list)
+	for(var/M in GLOB.dead_mob_list)
 		var/link = FOLLOW_LINK(M, src)
 		to_chat(M, "[link] [my_message]")
 
-	log_say("[src.real_name]/[src.key] : [text]")
+	log_talk(src,"GUARDIAN:[key_name(src)]: [input]",LOGSAY)
 
 //FORCE RECALL/RESET
 
@@ -419,7 +417,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		var/mob/living/simple_animal/hostile/guardian/G = input(src, "Pick the guardian you wish to reset", "Guardian Reset") as null|anything in guardians
 		if(G)
 			to_chat(src, "<span class='holoparasite'>You attempt to reset <font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font>'s personality...</span>")
-			var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as [src.real_name]'s [G.real_name]?", "pAI", null, FALSE, 100)
+			var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as [src.real_name]'s [G.real_name]?", "pAI", null, FALSE, 100)
 			var/mob/dead/observer/new_stand = null
 			if(candidates.len)
 				new_stand = pick(candidates)
@@ -449,10 +447,10 @@ var/global/list/parasites = list() //all currently existing/living guardians
 
 /mob/living/proc/hasparasites() //returns a list of guardians the mob is a summoner for
 	. = list()
-	for(var/P in parasites)
+	for(var/P in GLOB.parasites)
 		var/mob/living/simple_animal/hostile/guardian/G = P
 		if(G.summoner == src)
-			. |= G
+			. += G
 
 /mob/living/simple_animal/hostile/guardian/proc/hasmatchingsummoner(mob/living/simple_animal/hostile/guardian/G) //returns 1 if the summoner matches the target's summoner
 	return (istype(G) && G.summoner == summoner)
@@ -460,9 +458,9 @@ var/global/list/parasites = list() //all currently existing/living guardians
 
 ////////Creation
 
-/obj/item/weapon/guardiancreator
+/obj/item/guardiancreator
 	name = "deck of tarot cards"
-	desc = "An enchanted deck of tarot cards, rumored to be a source of unimaginable power. "
+	desc = "An enchanted deck of tarot cards, rumored to be a source of unimaginable power."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "deck_syndicate_full"
 	var/used = FALSE
@@ -478,7 +476,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	var/allowling = TRUE
 	var/allowguardian = FALSE
 
-/obj/item/weapon/guardiancreator/attack_self(mob/living/user)
+/obj/item/guardiancreator/attack_self(mob/living/user)
 	if(isguardian(user) && !allowguardian)
 		to_chat(user, "<span class='holoparasite'>[mob_name] chains are not allowed.</span>")
 		return
@@ -494,7 +492,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		return
 	used = TRUE
 	to_chat(user, "[use_message]")
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as the [mob_name] of [user.real_name]?", ROLE_PAI, null, FALSE, 100)
+	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the [mob_name] of [user.real_name]?", ROLE_PAI, null, FALSE, 100, POLL_IGNORE_HOLOPARASITE)
 	var/mob/dead/observer/theghost = null
 
 	if(candidates.len)
@@ -505,7 +503,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		used = FALSE
 
 
-/obj/item/weapon/guardiancreator/proc/spawn_guardian(var/mob/living/user, var/key)
+/obj/item/guardiancreator/proc/spawn_guardian(var/mob/living/user, var/key)
 	var/guardiantype = "Standard"
 	if(random)
 		guardiantype = pick(possible_guardians)
@@ -557,6 +555,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	G.summoner = user
 	G.key = key
 	G.mind.enslave_mind_to_creator(user)
+	log_game("[key_name(user)] has summoned [key_name(G)], a [guardiantype] holoparasite.")
 	switch(theme)
 		if("tech")
 			to_chat(user, "[G.tech_fluff_string]")
@@ -571,17 +570,17 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	user.verbs += /mob/living/proc/guardian_recall
 	user.verbs += /mob/living/proc/guardian_reset
 
-/obj/item/weapon/guardiancreator/choose
+/obj/item/guardiancreator/choose
 	random = FALSE
 
-/obj/item/weapon/guardiancreator/choose/dextrous
+/obj/item/guardiancreator/choose/dextrous
 	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 
-/obj/item/weapon/guardiancreator/choose/wizard
+/obj/item/guardiancreator/choose/wizard
 	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard")
 	allowmultiple = TRUE
 
-/obj/item/weapon/guardiancreator/tech
+/obj/item/guardiancreator/tech
 	name = "holoparasite injector"
 	desc = "It contains an alien nanoswarm of unknown origin. Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, it requires an organic host as a home base and source of fuel."
 	icon = 'icons/obj/syringe.dmi'
@@ -593,16 +592,16 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	failure_message = "<span class='holoparasitebold'>...ERROR. BOOT SEQUENCE ABORTED. AI FAILED TO INTIALIZE. PLEASE CONTACT SUPPORT OR TRY AGAIN LATER.</span>"
 	ling_failure = "<span class='holoparasitebold'>The holoparasites recoil in horror. They want nothing to do with a creature like you.</span>"
 
-/obj/item/weapon/guardiancreator/tech/choose/traitor
+/obj/item/guardiancreator/tech/choose/traitor
 	possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 
-/obj/item/weapon/guardiancreator/tech/choose
+/obj/item/guardiancreator/tech/choose
 	random = FALSE
 
-/obj/item/weapon/guardiancreator/tech/choose/dextrous
+/obj/item/guardiancreator/tech/choose/dextrous
 	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 
-/obj/item/weapon/paper/guardian
+/obj/item/paper/guides/antag/guardian
 	name = "Holoparasite Guide"
 	icon_state = "paper_words"
 	info = {"<b>A list of Holoparasite Types</b><br>
@@ -626,10 +625,10 @@ var/global/list/parasites = list() //all currently existing/living guardians
  <br>
 "}
 
-/obj/item/weapon/paper/guardian/update_icon()
+/obj/item/paper/guides/antag/guardian/update_icon()
 	return
 
-/obj/item/weapon/paper/guardian/wizard
+/obj/item/paper/guides/antag/guardian/wizard
 	name = "Guardian Guide"
 	info = {"<b>A list of Guardian Types</b><br>
 
@@ -655,16 +654,16 @@ var/global/list/parasites = list() //all currently existing/living guardians
 "}
 
 
-/obj/item/weapon/storage/box/syndie_kit/guardian
+/obj/item/storage/box/syndie_kit/guardian
 	name = "holoparasite injector kit"
 
-/obj/item/weapon/storage/box/syndie_kit/guardian/Initialize()
-	..()
-	new /obj/item/weapon/guardiancreator/tech/choose/traitor(src)
-	new /obj/item/weapon/paper/guardian(src)
+/obj/item/storage/box/syndie_kit/guardian/Initialize()
+	. = ..()
+	new /obj/item/guardiancreator/tech/choose/traitor(src)
+	new /obj/item/paper/guides/antag/guardian(src)
 	return
 
-/obj/item/weapon/guardiancreator/carp
+/obj/item/guardiancreator/carp
 	name = "holocarp fishsticks"
 	desc = "Using the power of Carp'sie, you can catch a carp from byond the veil of Carpthulu, and bind it to your fleshy flesh form."
 	icon = 'icons/obj/food/food.dmi'
@@ -679,5 +678,5 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	allowling = TRUE
 	random = TRUE
 
-/obj/item/weapon/guardiancreator/carp/choose
+/obj/item/guardiancreator/carp/choose
 	random = FALSE

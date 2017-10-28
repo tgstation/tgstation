@@ -80,7 +80,7 @@
 	else
 		H.endTailWag()
 
-/datum/emote/living/carbon/human/wag/can_run_emote(mob/user)
+/datum/emote/living/carbon/human/wag/can_run_emote(mob/user, status_check = TRUE)
 	if(!..())
 		return FALSE
 	var/mob/living/carbon/human/H = user
@@ -90,7 +90,7 @@
 /datum/emote/living/carbon/human/wag/select_message_type(mob/user)
 	. = ..()
 	var/mob/living/carbon/human/H = user
-	if(("waggingtail_lizard" in H.dna.species.mutant_bodyparts) || ("waggingtail_human" in H.dna.species.mutant_bodyparts))
+	if(("waggingtail_lizard" in H.dna.species.mutant_bodyparts) || ("tail_human" in H.dna.species.mutant_bodyparts))
 		. = null
 
 /datum/emote/living/carbon/human/wing
@@ -115,7 +115,7 @@
 	else
 		. = "closes " + message
 
-/datum/emote/living/carbon/human/wing/can_run_emote(mob/user)
+/datum/emote/living/carbon/human/wing/can_run_emote(mob/user, status_check = TRUE)
 	if(!..())
 		return FALSE
 	var/mob/living/carbon/human/H = user
@@ -165,5 +165,8 @@
 		dna.species.mutant_bodyparts -= "wingsopen"
 		dna.species.mutant_bodyparts |= "wings"
 	update_body()
+	if(isturf(loc))
+		var/turf/T = loc
+		T.Entered(src)
 
 //Ayy lmao

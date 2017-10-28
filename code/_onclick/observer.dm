@@ -9,7 +9,7 @@
 			return									// seems legit.
 
 	// Things you might plausibly want to follow
-	if(istype(A, /atom/movable))
+	if(ismovableatom(A))
 		ManualFollow(A)
 
 	// Otherwise jump
@@ -25,6 +25,9 @@
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["middle"])
 		ShiftMiddleClickOn(A)
+		return
+	if(modifiers["shift"] && modifiers["ctrl"])
+		CtrlShiftClickOn(A)
 		return
 	if(modifiers["middle"])
 		MiddleClickOn(A)
@@ -64,8 +67,8 @@
 		user.forceMove(get_turf(com.locked))
 
 /obj/effect/portal/attack_ghost(mob/user)
-	if(target)
-		user.forceMove(get_turf(target))
+	if(linked)
+		user.forceMove(get_turf(linked))
 
 /obj/machinery/gateway/centerstation/attack_ghost(mob/user)
 	if(awaygate)
@@ -79,23 +82,10 @@
 	else
 		to_chat(user, "[src] has no destination.")
 
-/obj/item/weapon/storage/attack_ghost(mob/user)
+/obj/item/storage/attack_ghost(mob/user)
 	orient2hud(user)
 	show_to(user)
 
 /obj/machinery/teleport/hub/attack_ghost(mob/user)
 	if(power_station && power_station.engaged && power_station.teleporter_console && power_station.teleporter_console.target)
 		user.forceMove(get_turf(power_station.teleporter_console.target))
-
-// -------------------------------------------
-// This was supposed to be used by adminghosts
-// I think it is a *terrible* idea
-// but I'm leaving it here anyway
-// commented out, of course.
-/*
-/atom/proc/attack_admin(mob/user as mob)
-	if(!user || !user.client || !user.client.holder)
-		return
-	attack_hand(user)
-
-*/

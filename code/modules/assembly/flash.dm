@@ -3,6 +3,8 @@
 	desc = "A powerful and versatile flashbulb device, with applications ranging from disorienting attackers to acting as visual receptors in robot production."
 	icon_state = "flash"
 	item_state = "flashtool"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	materials = list(MAT_METAL = 300, MAT_GLASS = 300)
@@ -90,7 +92,7 @@
 		if(M.flash_act(1, 1))
 			M.confused += power
 			terrible_conversion_proc(M, user)
-			M.Weaken(rand(4,6))
+			M.Knockdown(rand(80,120))
 			visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
 			to_chat(user, "<span class='danger'>You blind [M] with the flash!</span>")
 			to_chat(M, "<span class='userdanger'>[user] blinds you with the flash!</span>")
@@ -114,7 +116,7 @@
 		var/mob/living/silicon/robot/R = M
 		add_logs(user, R, "flashed", src)
 		update_icon(1)
-		M.Weaken(rand(4,6))
+		M.Knockdown(rand(80,120))
 		R.confused += 5
 		R.flash_act(affect_silicon = 1)
 		user.visible_message("<span class='disarm'>[user] overloads [R]'s sensors with the flash!</span>", "<span class='danger'>You overload [R]'s sensors with the flash!</span>")
@@ -142,29 +144,22 @@
 	..()
 
 
-/obj/item/device/assembly/flash/proc/terrible_conversion_proc(mob/M, mob/user)
-	if(ishuman(M) && ishuman(user) && M.stat != DEAD)
-		if(user.mind && (user.mind in ticker.mode.head_revolutionaries))
-			if(M.client)
-				if(M.stat == CONSCIOUS)
-					M.mind_initialize() //give them a mind datum if they don't have one.
-					var/resisted
-					if(!M.isloyal())
-						if(user.mind in ticker.mode.head_revolutionaries)
-							if(ticker.mode.add_revolutionary(M.mind))
-								M.Stun(3)
-								times_used -- //Flashes less likely to burn out for headrevs when used for conversion
-							else
-								resisted = 1
-					else
-						resisted = 1
-
-					if(resisted)
-						to_chat(user, "<span class='warning'>This mind seems resistant to the flash!</span>")
-				else
-					to_chat(user, "<span class='warning'>They must be conscious before you can convert them!</span>")
-			else
+/obj/item/device/assembly/flash/proc/terrible_conversion_proc(mob/living/carbon/human/H, mob/user)
+	if(istype(H) && ishuman(user) && H.stat != DEAD)
+		if(user.mind)
+			var/datum/antagonist/rev/head/converter = user.mind.has_antag_datum(/datum/antagonist/rev/head)
+			if(!converter)
+				return
+			if(!H.client)
 				to_chat(user, "<span class='warning'>This mind is so vacant that it is not susceptible to influence!</span>")
+				return
+			if(H.stat != CONSCIOUS)
+				to_chat(user, "<span class='warning'>They must be conscious before you can convert them!</span>")
+				return
+			if(converter.add_revolutionary(H.mind))
+				times_used -- //Flashes less likely to burn out for headrevs when used for conversion
+			else
+				to_chat(user, "<span class='warning'>This mind seems resistant to the flash!</span>")
 
 
 /obj/item/device/assembly/flash/cyborg
@@ -172,13 +167,13 @@
 
 /obj/item/device/assembly/flash/cyborg/attack(mob/living/M, mob/user)
 	..()
-	new /obj/effect/overlay/temp/borgflash(get_turf(src))
+	new /obj/effect/temp_visual/borgflash(get_turf(src))
 
 /obj/item/device/assembly/flash/cyborg/attack_self(mob/user)
 	..()
-	new /obj/effect/overlay/temp/borgflash(get_turf(src))
+	new /obj/effect/temp_visual/borgflash(get_turf(src))
 
-/obj/item/device/assembly/flash/cyborg/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/device/assembly/flash/cyborg/attackby(obj/item/W, mob/user, params)
 	return
 
 /obj/item/device/assembly/flash/memorizer
@@ -222,9 +217,11 @@
 /obj/item/device/assembly/flash/shield
 	name = "strobe shield"
 	desc = "A shield with a built in, high intensity light capable of blinding and disorienting suspects. Takes regular handheld flashes as bulbs."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "flashshield"
 	item_state = "flashshield"
+	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	slot_flags = SLOT_BACK
 	force = 10
 	throwforce = 5
@@ -243,7 +240,7 @@
 		return 0
 	return 1
 
-/obj/item/device/assembly/flash/shield/attackby(obj/item/weapon/W, mob/user)
+/obj/item/device/assembly/flash/shield/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/device/assembly/flash/handheld))
 		var/obj/item/device/assembly/flash/handheld/flash = W
 		if(flash.crit_fail)
@@ -256,7 +253,7 @@
 					return
 				crit_fail = FALSE
 				times_used = 0
-				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 				update_icon()
 				flash.crit_fail = TRUE
 				flash.update_icon()
@@ -278,6 +275,6 @@
 	if(holder)
 		holder.update_icon()
 
-/obj/item/device/assembly/flash/shield/hit_reaction(obj/item/weapon/W, mob/user, params)
+/obj/item/device/assembly/flash/shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	activate()
 	return ..()

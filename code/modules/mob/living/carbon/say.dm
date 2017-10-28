@@ -1,6 +1,6 @@
 /mob/living/carbon/treat_message(message)
 	message = ..(message)
-	var/obj/item/organ/tongue/T = getorganslot("tongue")
+	var/obj/item/organ/tongue/T = getorganslot(ORGAN_SLOT_TONGUE)
 	if(!T) //hoooooouaah!
 		var/regex/tongueless_lower = new("\[gdntke]+", "g")
 		var/regex/tongueless_upper = new("\[GDNTKE]+", "g")
@@ -21,10 +21,17 @@
 
 /mob/living/carbon/get_spans()
 	. = ..()
-	var/obj/item/organ/tongue/T = getorganslot("tongue")
+	var/obj/item/organ/tongue/T = getorganslot(ORGAN_SLOT_TONGUE)
 	if(T)
 		. |= T.get_spans()
 
 	var/obj/item/I = get_active_held_item()
 	if(I)
 		. |= I.get_held_item_speechspans(src)
+
+/mob/living/carbon/could_speak_in_language(datum/language/dt)
+	var/obj/item/organ/tongue/T = getorganslot(ORGAN_SLOT_TONGUE)
+	if(T)
+		. = T.could_speak_in_language(dt)
+	else
+		. = initial(dt.flags) & TONGUELESS_SPEECH
