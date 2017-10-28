@@ -534,19 +534,22 @@ function get_diff($payload) {
 function auto_update($payload){
 	global $enable_live_tracking;
 	global $path_to_script;
+	global $repoOwnerAndName;
+	global $tracked_branch;
 	global $github_diff;
 	if(!$enable_live_tracking || !has_tree_been_edited($payload, $path_to_script) || $payload['pull_request']['base']['ref'] != $tracked_branch)
 		return;
 
 	get_diff($payload);
-	$content = "### Diff not available. :slightly_frowning_face:";
+	$content = file_get_contents('https://raw.githubusercontent.com/' . $repoOwnerAndName . '/' . $tracked_branch . '/'. $path_to_script);
+	$content_diff = "### Diff not available. :slightly_frowning_face:";
 	if($github_diff && preg_match('/(diff --git a\/' . preg_quote($path_to_script, '/') . '.+?)(?:^diff)?/sm', $github_diff, $matches)) {
 		$script_diff = matches[1];
 		if($script_diff) {
-			$content = "``" . "`DIFF\n" . $script_diff ."\n``" . "`";
+			$content_diff = "``" . "`DIFF\n" . $script_diff ."\n``" . "`";
 		}
 	}
-	create_comment($payload, "Edit detected. Self updating... Here are my changes:\n" . $content);
+	create_comment($payload, "Edit detected. Self updating... Here are my changes:\n" . $content_diff . "\n<details><summary>Here is my new code:</summary>\n\n``" . "`HTML+PHP\n" . $content . "\n``" . '`\n</details>');
 
 	$code_file = fopen(basename($path_to_script), 'w');
 	fwrite($code_file, $content);
