@@ -937,23 +937,6 @@
 	crate_type = /obj/structure/closet/crate/secure/science
 	dangerous = TRUE
 
-/datum/supply_pack/science/bz_canister
-	name = "BZ Canister"
-	cost = 2000
-	access_any = list(ACCESS_RD, ACCESS_ATMOSPHERICS)
-	contains = list(/obj/machinery/portable_atmospherics/canister/bz)
-	crate_name = "bz canister crate"
-	crate_type = /obj/structure/closet/crate/secure/science
-	dangerous = TRUE
-
-/datum/supply_pack/science/freon_canister
-	name = "Freon Canister"
-	cost = 6000
-	access_any = list(ACCESS_RD, ACCESS_ATMOSPHERICS)
-	contains = list(/obj/machinery/portable_atmospherics/canister/freon)
-	crate_name = "freon canister crate"
-	crate_type = /obj/structure/closet/crate/secure/science
-	dangerous = TRUE
 
 /datum/supply_pack/science/research
 	name = "Machine Prototype Crate"
