@@ -25171,7 +25171,6 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/obj/machinery/smoke_machine,
 /mob/living/simple_animal/bot/cleanbot{
 	name = "C.L.E.A.N."
 	},
@@ -38548,6 +38547,7 @@
 /obj/item/circuitboard/machine/clonescanner,
 /obj/item/circuitboard/machine/clonepod,
 /obj/item/circuitboard/computer/scan_consolenew,
+/obj/item/circuitboard/machine/smoke_machine,
 /turf/open/floor/plating,
 /area/storage/tech)
 "bGE" = (
