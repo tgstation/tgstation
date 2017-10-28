@@ -79,7 +79,7 @@
 		L.Knockdown(120, FALSE)
 	L.visible_message("<span class='warning'>[src] appears around [L] in a burst of light!</span>", \
 	"<span class='userdanger'>[target_flashed ? "An unseen force":"The glowing sigil around you"] holds you in place!</span>")
-	L.Stun(40)
+	L.Stun(100)
 	L.apply_status_effect(STATUS_EFFECT_BELLIGERENT)
 	new /obj/effect/temp_visual/ratvar/sigil/transgression(get_turf(src))
 	qdel(src)
