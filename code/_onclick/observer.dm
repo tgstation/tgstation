@@ -57,10 +57,9 @@
 			user.examinate(src)
 
 /mob/living/attack_ghost(mob/dead/observer/user)
-	if(user.client)
-		if(user.health_scan)
-			healthscan(user, src, 1, TRUE)
-			return
+	if(user.client && user.health_scan)
+		healthscan(user, src, 1, TRUE)
+		return
 	..()
 
 // ---------------------------------------
