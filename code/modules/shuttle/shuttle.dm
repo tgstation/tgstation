@@ -571,12 +571,11 @@
 	CHECK_TICK
 
 	/****************************************All beforeShuttleMove procs*****************************************/
-	var/index = 0
-	for(var/place in old_turfs)
+	
+	for(var/i in 1 to old_turfs.len)
 		CHECK_TICK
-		index++
-		var/turf/oldT = place
-		var/turf/newT = new_turfs[index]
+		var/turf/oldT = old_turfs[i]
+		var/turf/newT = new_turfs[i]
 		if(!newT)
 			return DOCKING_NULL_DESTINATION
 		if(!oldT)
@@ -585,8 +584,9 @@
 		var/area/old_area = oldT.loc
 		var/move_mode = old_area.beforeShuttleMove(shuttle_areas)											//areas
 
-		for(var/i in 1 to oldT.contents.len)
-			var/atom/movable/moving_atom = oldT.contents[i]
+		var/list/old_contents = oldT.contents
+		for(var/k in 1 to old_contents.len)
+			var/atom/movable/moving_atom = old_contents[k]
 			if(moving_atom.loc != oldT) //fix for multi-tile objects
 				continue
 			move_mode = moving_atom.beforeShuttleMove(newT, rotation, move_mode)							//atoms
@@ -597,39 +597,38 @@
 		if(move_mode & MOVE_AREA)
 			areas_to_move[old_area] = TRUE
 
-		old_turfs[place] = move_mode
+		old_turfs[oldT] = move_mode
 
 	/*******************************************All onShuttleMove procs******************************************/
 
-	index = 0
-	for(var/place in old_turfs)
-		index++
-		var/turf/oldT = place
-		var/turf/newT = new_turfs[index]
-		var/move_mode = old_turfs[place]
+	for(var/i in 1 to old_turfs.len)
+		var/turf/oldT = old_turfs[i]
+		var/turf/newT = new_turfs[i]
+		var/move_mode = old_turfs[oldT]
 		if(move_mode & MOVE_CONTENTS)
-			for(var/thing in oldT)
-				var/atom/movable/moving_atom = thing
+			var/list/old_contents = oldT.contents.Copy()
+			for(var/k in 1 to old_contents.len)
+				var/atom/movable/moving_atom = old_contents[k]
 				if(moving_atom.loc != oldT) //fix for multi-tile objects
 					continue
 				moving_atom.onShuttleMove(newT, oldT, movement_force, movement_direction, old_dock, src)	//atoms
 				moved_atoms += moving_atom
+		
 		if(move_mode & MOVE_TURF)
 			oldT.onShuttleMove(newT, movement_force, movement_direction)									//turfs
+		
 		if(move_mode & MOVE_AREA)
 			var/area/shuttle_area = oldT.loc
 			shuttle_area.onShuttleMove(oldT, newT, underlying_old_area)										//areas
 
 	/******************************************All afterShuttleMove procs****************************************/
 
-	index = 0
-	for(var/thing in old_turfs)
+	for(var/i in 1 to old_turfs.len)
 		CHECK_TICK
-		index++
-		if(!(old_turfs[thing] & MOVE_TURF))
+		if(!(old_turfs[old_turfs[i]] & MOVE_TURF))
 			continue
-		var/turf/oldT = thing
-		var/turf/newT = new_turfs[index]
+		var/turf/oldT = old_turfs[i]
+		var/turf/newT = new_turfs[i]
 		newT.afterShuttleMove(oldT, underlying_turf_type, underlying_baseturf_type, rotation)				//turfs
 
 	for(var/i in 1 to moved_atoms.len)
@@ -637,15 +636,13 @@
 		var/atom/movable/moved_object = moved_atoms[i]
 		moved_object.afterShuttleMove(movement_force, dir, preferred_direction, movement_direction, rotation)//atoms
 
-	index = 0
-	for(var/place in old_turfs)
+	for(var/i in 1 to old_turfs.len)
 		CHECK_TICK
-		index++
 		// Objects can block air so either turf or content changes means an air update is needed
-		if(!(old_turfs[place] & MOVE_CONTENTS | MOVE_TURF))
+		if(!(old_turfs[old_turfs[i]] & MOVE_CONTENTS | MOVE_TURF))
 			continue
-		var/turf/oldT = place
-		var/turf/newT = new_turfs[index]
+		var/turf/oldT = old_turfs[i]
+		var/turf/newT = new_turfs[i]
 		oldT.blocks_air = initial(oldT.blocks_air)
 		oldT.air_update_turf(TRUE)
 		newT.blocks_air = initial(newT.blocks_air)
@@ -653,19 +650,14 @@
 
 	underlying_old_area.afterShuttleMove()
 
-	for(var/thing in areas_to_move)
-		CHECK_TICK
-		var/area/internal_area = thing
-		internal_area.afterShuttleMove()																	//areas
-
 	// Parallax handling
 	var/new_parallax_dir = FALSE
 	if(istype(new_dock, /obj/docking_port/stationary/transit))
 		new_parallax_dir = preferred_direction
-	for(var/i in shuttle_areas)
+	for(var/i in 1 to areas_to_move.len)
 		CHECK_TICK
-		var/area/place = i
-		place.parallax_movedir = new_parallax_dir
+		var/area/internal_area = areas_to_move[i]
+		internal_area.afterShuttleMove(new_parallax_dir)													//areas
 
 	check_poddoors()
 	new_dock.last_dock_time = world.time

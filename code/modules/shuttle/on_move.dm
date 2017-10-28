@@ -67,18 +67,7 @@ All ShuttleMove procs go here
 // Called on the new turf after everything has been moved
 /turf/proc/afterShuttleMove(turf/oldT, turf_type, baseturf_type, rotation)
 	//Dealing with the turf we left behind
-	/*	TODO: Replace with a real component transfer function
-	/	Doesn't work because cyberboss didn't finish TakeComponent() either >:(
-	/
-	var/list/dc = oldT.datum_components
-	if(dc)
-		var/comps = dc[/datum/component]
-		if(islist(comps))
-			for(var/i in comps)
-				TakeComponent(i)
-		else
-			TakeComponent(comps)
-	*/
+	oldT.TransferComponents(src)
 
 	oldT.ChangeTurf(turf_type, baseturf_type, FALSE, TRUE)
 
@@ -92,6 +81,7 @@ All ShuttleMove procs go here
 
 // Called on every atom in shuttle turf contents before anything has been moved
 // returns the new move_mode (based on the old)
+// WARNING: Do not leave turf contents in beforeShuttleMove or dock() will runtime
 /atom/movable/proc/beforeShuttleMove(turf/newT, rotation, move_mode)
 	return move_mode
 
@@ -146,7 +136,8 @@ All ShuttleMove procs go here
 	return TRUE
 
 // Called on areas after everything has been moved
-/area/proc/afterShuttleMove()
+/area/proc/afterShuttleMove(new_parallax_dir)
+	parallax_movedir = new_parallax_dir
 	return TRUE
 
 /************************************Turf move procs************************************/
