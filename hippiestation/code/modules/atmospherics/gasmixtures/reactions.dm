@@ -1,3 +1,4 @@
+#define PLASMA_BINDING_ENERGY 3000000
 
 /datum/gas_reaction/hippie_fusion
 	exclude = FALSE
@@ -47,7 +48,7 @@
 				location.set_light(4, 30)
 				location.light_color = LIGHT_COLOR_GREEN
 				radiation_pulse(location, 8, energy_released * FUSION_POWER_GENERATION_COEFFICIENT_HIPPIE)//set to an arbitrary value for now because radiation scaling with reaction energy is insane
-						
+
 				addtimer(CALLBACK(location, .atom/proc/set_light, 0, 0), 30)
 			return TRUE
 

@@ -271,8 +271,6 @@
 		source_turf.luminosity = Ceiling(light_range)
 		for(T in view(Ceiling(light_range), source_turf))
 			for (thing in T.get_corners(source_turf))
-				if(!thing)
-					continue
 				C = thing
 				corners[C] = 0
 			turfs += T
@@ -294,8 +292,6 @@
 	LAZYINITLIST(effect_str)
 	if (needs_update == LIGHTING_VIS_UPDATE)
 		for (thing in  corners - effect_str) // New corners
-			if(!thing)
-				continue
 			C = thing
 			LAZYADD(C.affecting, src)
 			if (!C.active)
@@ -305,8 +301,6 @@
 	else
 		L = corners - effect_str
 		for (thing in L) // New corners
-			if(!thing)
-				continue
 			C = thing
 			LAZYADD(C.affecting, src)
 			if (!C.active)
@@ -315,8 +309,6 @@
 			APPLY_CORNER(C)
 
 		for (thing in corners - L) // Existing corners
-			if(!thing)
-				continue
 			C = thing
 			if (!C.active)
 				effect_str[C] = 0
@@ -325,8 +317,6 @@
 
 	L = effect_str - corners
 	for (thing in L) // Old, now gone, corners.
-		if(!thing)
-			continue
 		C = thing
 		REMOVE_CORNER(C)
 		LAZYREMOVE(C.affecting, src)

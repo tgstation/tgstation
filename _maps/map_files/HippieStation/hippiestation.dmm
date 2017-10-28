@@ -57788,7 +57788,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cvJ" = (
-/obj/machinery/portable_atmospherics/canister/freon,
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cvK" = (
