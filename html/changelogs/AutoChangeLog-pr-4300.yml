@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - tweak: "The Staff of Change will now randomly assign a cyborg module when transforming a mob into a cyborg."

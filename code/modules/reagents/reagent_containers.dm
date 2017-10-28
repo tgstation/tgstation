@@ -60,16 +60,6 @@
 /obj/item/reagent_containers/proc/canconsume(mob/eater, mob/user)
 	if(!iscarbon(eater))
 		return 0
-	var/mob/living/carbon/C = eater
-	var/covered = ""
-	if(C.is_mouth_covered(head_only = 1))
-		covered = "headgear"
-	else if(C.is_mouth_covered(mask_only = 1))
-		covered = "mask"
-	if(covered)
-		var/who = (isnull(user) || eater == user) ? "your" : "[eater.p_their()]"
-		to_chat(user, "<span class='warning'>You have to remove [who] [covered] first!</span>")
-		return 0
 	return 1
 
 /obj/item/reagent_containers/ex_act()

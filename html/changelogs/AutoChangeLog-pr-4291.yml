@@ -1,0 +1,4 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - bugfix: "Cogscarab shells and marauder armor now appear in the spawners menu."

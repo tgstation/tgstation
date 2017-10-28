@@ -1,5 +1,5 @@
 /proc/attempt_initiate_surgery(obj/item/I, mob/living/M, mob/user)
-	if(!istype(M))
+	if(!istype(M) && M != user)
 		return
 
 	var/mob/living/carbon/C
@@ -10,7 +10,7 @@
 		C = M
 		affecting = C.get_bodypart(check_zone(selected_zone))
 
-	if(!M.lying && !isslime(M))	//if they're prone or a slime
+	if(!M.lying && !isslime(M) && M != user)	//if they're prone or a slime
 		return
 
 	var/datum/surgery/current_surgery

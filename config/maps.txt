@@ -13,12 +13,20 @@ Format:
 	disabled (disables the map)
 endmap
 
-map boxstation
+map hippiestation
 	default
 	#voteweight 1.5
 endmap
 
+map boxstation
+endmap
+
 map metastation
+	minplayers 25
+	#voteweight 0.5
+endmap
+
+map delturd
 	minplayers 25
 	#voteweight 0.5
 endmap

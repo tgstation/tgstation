@@ -300,6 +300,8 @@
 	for(var/datum/mind/synd_mind in syndicates)
 		var/mob/living/carbon/human/H = synd_mind.current
 		synd_mind.name = H.dna.species.random_name(H.gender,0,lastname)
+		if(lastname == "Thundercock")
+			synd_mind.name = "Chad Thundercock" //THE WHOLE FAMILY!
 		synd_mind.current.real_name = synd_mind.name
 	return
 

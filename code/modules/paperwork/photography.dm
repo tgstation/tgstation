@@ -193,6 +193,8 @@
 	for(var/turf/T in turfs)
 		atoms.Add(T)
 		for(var/atom/movable/A in T)
+			if(isliving(A) && is_vampire(A))
+				continue
 			if(A.invisibility)
 				if(see_ghosts && isobserver(A))
 					var/mob/dead/observer/O = A

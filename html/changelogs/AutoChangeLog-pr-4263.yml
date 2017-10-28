@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Creatures made via gold slime cores will now be given the proper name of their master."

@@ -331,7 +331,12 @@
 				limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"
 			else
 				limb.icon_state = "[species_id]_[body_zone]"
-
+		if(should_draw_hippie)
+			limb.icon = 'hippiestation/icons/mob/mutant_bodyparts.dmi'
+			if(should_draw_gender)
+				limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"
+			else
+				limb.icon_state = "[species_id]_[body_zone]"
 	else
 		limb.icon = icon
 		if(should_draw_gender)

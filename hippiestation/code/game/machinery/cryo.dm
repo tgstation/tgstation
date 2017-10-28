@@ -1,0 +1,392 @@
+#define CRYOMOBS 'icons/obj/cryo_mobs.dmi'
+
+/obj/machinery/atmospherics/components/unary/cryo_cell
+	name = "cryo cell"
+	icon = 'icons/obj/cryogenics.dmi'
+	icon_state = "pod-off"
+	density = 1
+	anchored = 1
+	obj_integrity = 350
+	max_integrity = 350
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 30, acid = 30)
+	layer = ABOVE_WINDOW_LAYER
+
+	var/on = FALSE
+	state_open = FALSE
+	var/volume = 100
+
+	var/efficiency = 1
+	var/sleep_factor = 750
+	var/paralyze_factor = 1000
+	var/heat_capacity = 20000
+	var/conduction_coefficient = 0.30
+
+	var/obj/item/reagent_containers/glass/beaker = null
+	var/reagent_transfer = 0
+
+	var/obj/item/device/radio/radio
+	var/radio_key = /obj/item/device/encryptionkey/headset_med
+	var/radio_channel = "Medical"
+
+	var/running_bob_anim = FALSE
+	var/opening = FALSE
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/Initialize()
+	. = ..()
+	initialize_directions = dir
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/cryo_tube(null)
+	B.apply_default_parts(src)
+
+	radio = new(src)
+	radio.keyslot = new radio_key
+	radio.subspace_transmission = 1
+	radio.canhear_range = 0
+	radio.recalculateChannels()
+
+/obj/item/circuitboard/machine/cryo_tube
+	name = "Cryotube (Machine Board)"
+	build_path = /obj/machinery/atmospherics/components/unary/cryo_cell
+	origin_tech = "programming=4;biotech=3;engineering=4;plasmatech=3"
+	req_components = list(
+							/obj/item/stock_parts/matter_bin = 1,
+							/obj/item/stack/cable_coil = 1,
+							/obj/item/stock_parts/console_screen = 1,
+							/obj/item/stack/sheet/glass = 2)
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/on_construction()
+	..(dir, dir)
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/RefreshParts()
+	var/C
+	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
+		C += M.rating
+
+	efficiency = initial(efficiency) * C
+	sleep_factor = initial(sleep_factor) * C
+	paralyze_factor = initial(paralyze_factor) * C
+	heat_capacity = initial(heat_capacity) / C
+	conduction_coefficient = initial(conduction_coefficient) * C
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/Destroy()
+	qdel(radio)
+	radio = null
+	if(beaker)
+		qdel(beaker)
+		beaker = null
+	return ..()
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/contents_explosion(severity, target)
+	..()
+	if(beaker)
+		beaker.ex_act(severity, target)
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/handle_atom_del(atom/A)
+	..()
+	if(A == beaker)
+		beaker = null
+		updateUsrDialog()
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/on_deconstruction()
+	if(beaker)
+		beaker.forceMove(loc)
+		beaker = null
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/update_icon()
+	cut_overlays()
+
+	if(state_open)
+		icon_state = "pod-open"
+	else if(occupant)
+		var/image/occupant_overlay
+
+		if(ismonkey(occupant)) // Monkey
+			occupant_overlay = mutable_appearance(CRYOMOBS, "monkey")
+
+		else if(isalienadult(occupant))
+
+			if(istype(occupant, /mob/living/carbon/alien/humanoid/royal)) // Queen and prae
+				occupant_overlay = image(CRYOMOBS, "alienq")
+
+			else if(istype(occupant, /mob/living/carbon/alien/humanoid/hunter)) // Hunter
+				occupant_overlay = image(CRYOMOBS, "alienh")
+
+			else if(istype(occupant, /mob/living/carbon/alien/humanoid/sentinel)) // Sentinel
+				occupant_overlay = image(CRYOMOBS, "aliens")
+
+			else // Drone (or any other alien that isn't any of the above)
+				occupant_overlay = image(CRYOMOBS, "aliend")
+
+		else if(ishuman(occupant) || islarva(occupant) || (isanimal(occupant) && !ismegafauna(occupant))) // Mobs that are smaller than cryotube
+			occupant_overlay = image(occupant.icon, occupant.icon_state)
+			occupant_overlay.copy_overlays(occupant)
+
+		else // Anything else
+			occupant_overlay = image(CRYOMOBS, "generic")
+
+		occupant_overlay.dir = SOUTH
+		occupant_overlay.pixel_y = 22
+
+		if(on && is_operational() && !running_bob_anim)
+			icon_state = "pod-on"
+			running_bob_anim = TRUE
+			run_bob_anim(TRUE, occupant_overlay)
+		else
+			icon_state = "pod-off"
+			add_overlay(occupant_overlay)
+			add_overlay("cover-off")
+	else if(on && is_operational())
+		icon_state = "pod-on"
+		add_overlay("cover-on")
+	else
+		icon_state = "pod-off"
+		add_overlay("cover-off")
+
+	if(panel_open)
+		add_overlay("pod-panel")
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/proc/run_bob_anim(anim_up, image/occupant_overlay)
+	if(!on || !occupant || !is_operational())
+		running_bob_anim = FALSE
+		return
+	cut_overlays()
+	if(occupant_overlay.pixel_y != 23) // Same effect as occupant_overlay.pixel_y == 22 || occupant_overlay.pixel_y == 24
+		anim_up = occupant_overlay.pixel_y == 22 // Same effect as if(occupant_overlay.pixel_y == 22) anim_up = TRUE ; if(occupant_overlay.pixel_y == 24) anim_up = FALSE
+	if(anim_up)
+		occupant_overlay.pixel_y++
+	else
+		occupant_overlay.pixel_y--
+	add_overlay(occupant_overlay)
+	add_overlay("cover-on")
+	addtimer(CALLBACK(src, .proc/run_bob_anim, anim_up, occupant_overlay), 7, TIMER_UNIQUE)
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/process()
+	..()
+
+	if(!on)
+		return
+	if(!is_operational())
+		on = FALSE
+		update_icon()
+		return
+	var/datum/gas_mixture/air1 = AIR1
+	var/turf/T = get_turf(src)
+	if(occupant)
+		var/mob/living/mob_occupant = occupant
+		if(mob_occupant.health >= 100) // Don't bother with fully healed people.
+			on = FALSE
+			update_icon()
+			playsound(T, 'sound/machines/ding.ogg', volume) // Bug the doctors.
+			open_machine()
+			return
+		else if(mob_occupant.stat == DEAD) // We don't bother with dead people.
+			playsound(T, 'sound/machines/cryo_warning.ogg', 50, 1)
+			open_machine()
+		if(air1.gases.len)
+			if(beaker)
+				if(reagent_transfer == 0) // Magically transfer reagents. Because cryo magic.
+					beaker.reagents.trans_to(occupant, 1, 10 * efficiency) // Transfer reagents, multiplied because cryo magic.
+					beaker.reagents.reaction(occupant, VAPOR)
+					air1.gases["o2"][MOLES] -= 2 / efficiency // Lets use gas for this.
+				if(++reagent_transfer >= 10 * efficiency) // Throttle reagent transfer (higher efficiency will transfer the same amount but consume less from the beaker).
+					reagent_transfer = 0
+	return 1
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/process_atmos()
+	..()
+
+	if(!on)
+		return
+
+	var/datum/gas_mixture/air1 = AIR1
+
+	if(!NODE1 || !AIR1 || !air1.gases.len || air1.gases[/datum/gas/oxygen][MOLES] < 5) // Turn off if the machine won't work.
+		on = FALSE
+		update_icon()
+		return
+
+	if(occupant)
+		var/mob/living/mob_occupant = occupant
+		var/cold_protection = 0
+		var/temperature_delta = air1.temperature - mob_occupant.bodytemperature // The only semi-realistic thing here: share temperature between the cell and the occupant.
+
+		if(ishuman(occupant))
+			var/mob/living/carbon/human/H = occupant
+			cold_protection = H.get_cold_protection(air1.temperature)
+
+		if(abs(temperature_delta) > 1)
+			var/air_heat_capacity = air1.heat_capacity()
+
+			var/heat = ((1 - cold_protection) * 0.1 + conduction_coefficient) * temperature_delta * (air_heat_capacity * heat_capacity / (air_heat_capacity + heat_capacity))
+
+			air1.temperature = max(air1.temperature - heat / air_heat_capacity, TCMB)
+			mob_occupant.bodytemperature = max(mob_occupant.bodytemperature + heat / heat_capacity, TCMB)
+
+		air1.gases[/datum/gas/oxygen][MOLES] -= 0.5 / efficiency // Magically consume gas? Why not, we run on cryo magic.
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/power_change()
+	..()
+	update_icon()
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/user)
+	container_resist(user)
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/open_machine(drop = 0)
+	opening = FALSE
+	if(!state_open && !panel_open)
+		on = FALSE
+		..()
+	for(var/mob/M in contents) //only drop mobs
+		M.forceMove(get_turf(src))
+		if(isliving(M))
+			var/mob/living/L = M
+			L.update_canmove()
+	occupant = null
+	update_icon()
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user)
+	if((isnull(user) || istype(user)) && state_open && !panel_open)
+		..(user)
+		return occupant
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/container_resist(mob/living/user)
+	if(opening)
+		return
+	opening = TRUE
+	to_chat(user, "<span class='notice'>You begin to struggle out of [src].</span>")
+	if(do_mob(user, user, 50))
+		open_machine()
+	else
+		opening = FALSE
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/examine(mob/user)
+	..()
+	if(occupant)
+		if(on)
+			to_chat(user, "Someone's inside [src]!")
+		else
+			to_chat(user, "You can barely make out a form floating in [src].")
+	else
+		to_chat(user, "[src] seems empty.")
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/MouseDrop_T(mob/target, mob/user)
+	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
+		return
+	close_machine(target)
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/reagent_containers/glass))
+		. = 1 //no afterattack
+		if(beaker)
+			to_chat(user, "<span class='warning'>A beaker is already loaded into [src]!</span>")
+			return
+		if(!user.dropItemToGround(I))
+			return
+		beaker = I
+		I.loc = src
+		user.visible_message("[user] places [I] in [src].", \
+							"<span class='notice'>You place [I] in [src].</span>")
+		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
+		log_game("[key_name(user)] added an [I] to cyro containing [reagentlist]")
+		return
+	if(!on && !occupant && !state_open)
+		if(default_deconstruction_screwdriver(user, "cell-o", "cell-off", I))
+			return
+		if(exchange_parts(user, I))
+			return
+	if(default_change_direction_wrench(user, I))
+		return
+	if(default_pry_open(I))
+		return
+	if(default_deconstruction_crowbar(I))
+		return
+	return ..()
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+																	datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "hippiecryo", name, 400, 550, master_ui, state)
+		ui.open()
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/ui_data()
+	var/list/data = list()
+	data["isOperating"] = on
+	data["hasOccupant"] = occupant ? 1 : 0
+	data["isOpen"] = state_open
+
+	var/list/occupantData = list()
+	if(occupant)
+		var/mob/living/mob_occupant = occupant
+		switch(mob_occupant.stat)
+			if(CONSCIOUS)
+				occupantData["stat"] = "Conscious"
+				occupantData["statstate"] = "good"
+			if(SOFT_CRIT)
+				occupantData["stat"] = "Conscious"
+				occupantData["statstate"] = "average"
+			if(UNCONSCIOUS)
+				occupantData["stat"] = "Unconscious"
+				occupantData["statstate"] = "average"
+			if(DEAD)
+				occupantData["stat"] = "Dead"
+				occupantData["statstate"] = "bad"
+		occupantData["name"] = mob_occupant.name
+		occupantData["health"] = mob_occupant.health
+		occupantData["maxHealth"] = mob_occupant.maxHealth
+		occupantData["minHealth"] = HEALTH_THRESHOLD_DEAD
+		occupantData["bruteLoss"] = mob_occupant.getBruteLoss()
+		occupantData["oxyLoss"] = mob_occupant.getOxyLoss()
+		occupantData["toxLoss"] = mob_occupant.getToxLoss()
+		occupantData["fireLoss"] = mob_occupant.getFireLoss()
+		occupantData["bodyTemperature"] = mob_occupant.bodytemperature
+	data["occupant"] = occupantData
+
+
+	var/datum/gas_mixture/air1 = AIR1
+	data["cellTemperature"] = round(air1.temperature)
+
+	data["isBeakerLoaded"] = beaker ? 1 : 0
+	var beakerContents = list()
+	if(beaker && beaker.reagents && beaker.reagents.reagent_list.len)
+		for(var/datum/reagent/R in beaker.reagents.reagent_list)
+			beakerContents += list(list("name" = R.name, "volume" = R.volume))
+	data["beakerContents"] = beakerContents
+	return data
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/ui_act(action, params)
+	if(..())
+		return
+	switch(action)
+		if("power")
+			if(on)
+				on = FALSE
+			else if(!state_open)
+				on = TRUE
+			. = TRUE
+		if("door")
+			if(state_open)
+				if (close_machine() == usr)
+					on = TRUE
+			else
+				open_machine()
+			. = TRUE
+		if("ejectbeaker")
+			if(beaker)
+				beaker.forceMove(loc)
+				beaker = null
+				. = TRUE
+	update_icon()
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/update_remote_sight(mob/living/user)
+	return //we don't see the pipe network while inside cryo.
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/get_remote_view_fullscreens(mob/user)
+	user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/blind)
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/can_crawl_through()
+	return //can't ventcrawl in or out of cryo.
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/can_see_pipes()
+	return 0 //you can't see the pipe network when inside a cryo cell.
+
+#undef CRYOMOBS

@@ -50,6 +50,8 @@
 	SSticker.mode.servants_of_ratvar += owner
 	SSticker.mode.update_servant_icons_added(owner)
 	owner.special_role = "Servant of Ratvar"
+	if(jobban_isbanned(current, CLUWNEBAN) || jobban_isbanned(current, CATBAN))
+		addtimer(CALLBACK(SSticker.mode, /datum/game_mode.proc/replace_jobbaned_player, current, ROLE_SERVANT_OF_RATVAR, ROLE_SERVANT_OF_RATVAR), 0)
 	owner.current.log_message("<font color=#BE8700>Has been converted to the cult of Ratvar!</font>", INDIVIDUAL_ATTACK_LOG)
 	if(issilicon(current))
 		if(iscyborg(current) && !silent)

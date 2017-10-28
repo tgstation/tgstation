@@ -11,7 +11,9 @@
 					D.staticOverlays |= staticOverlays["static"]
 					D.client.images |= staticOverlays["static"]
 	if(unique_name)
-		name = "[name] ([rand(1, 1000)])"
+		var/rand_int = rand(1, 1000)
+		name = "[name] ([rand_int])"
+		hippie_equip_mob_with_items(rand_int) /* This equips shit for the mob based on the random int they are given */
 		real_name = name
 	var/datum/atom_hud/data/human/medical/advanced/medhud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	medhud.add_to_hud(src)
@@ -982,7 +984,7 @@
 /mob/living/proc/update_canmove()
 	var/ko = IsKnockdown() || IsUnconscious() || (stat && (stat != SOFT_CRIT || pulledby)) || (status_flags & FAKEDEATH)
 	var/move_and_fall = stat == SOFT_CRIT && !pulledby
-	var/chokehold = pulledby && pulledby.grab_state >= GRAB_NECK
+	var/chokehold = pulledby && pulledby.grab_state >= GRAB_KILL
 	var/buckle_lying = !(buckled && !buckled.buckle_lying)
 	var/has_legs = get_num_legs()
 	var/has_arms = get_num_arms()

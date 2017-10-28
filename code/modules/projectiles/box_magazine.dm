@@ -87,7 +87,7 @@
 	if(num_loaded)
 		if(!silent)
 			to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>")
-			playsound(user, 'sound/weapons/bulletinsert.ogg', 60, 1)
+			playsound(user, 'hippiestation/sound/weapons/loadbullet.ogg', 60, 1)
 		A.update_icon()
 		update_icon()
 

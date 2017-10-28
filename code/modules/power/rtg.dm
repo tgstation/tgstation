@@ -18,6 +18,7 @@
 
 	var/power_gen = 1000 // Enough to power a single APC. 4000 output with T4 capacitor.
 
+
 	var/irradiate = TRUE // RTGs irradiate surroundings, but only when panel is open.
 
 /obj/machinery/power/rtg/Initialize()

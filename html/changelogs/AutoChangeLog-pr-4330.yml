@@ -1,0 +1,6 @@
+author: "JamieH"
+delete-after: True
+changes: 
+  - rscadd: "Buildmode map generators will now show you a preview of the area you're changing"
+  - rscadd: "Buildmode map generators will now ask before nuking the map"
+  - bugfix: "Buildmode map generator corners can now only be set by left clicking"

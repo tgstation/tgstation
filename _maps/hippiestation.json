@@ -1,0 +1,8 @@
+{
+    "map_name": "Hippie Station",
+    "map_path": "map_files/HippieStation",
+    "map_file": "hippiestation.dmm",
+    "minetype": "lavaland",
+    "transition_config": "default",
+    "allow_custom_shuttles": "yes"    
+}

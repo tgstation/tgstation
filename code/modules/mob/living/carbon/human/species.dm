@@ -609,6 +609,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					S = GLOB.wings_open_list[H.dna.features["wings"]]
 				if("legs")
 					S = GLOB.legs_list[H.dna.features["legs"]]
+				else
+					S = hippie_mutant_bodyparts(bodypart, H)
 
 			if(!S || S.icon_state == "none")
 				continue
@@ -1168,6 +1170,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			"<span class='userdanger'>[user] has attempted to [atk_verb] [target]!</span>", null, COMBAT_MESSAGE_RANGE)
 			return 0
 
+		punchouttooth(target,user,affecting,rand(0,9))
 
 		var/armor_block = target.run_armor_check(affecting, "melee")
 
@@ -1267,6 +1270,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/species/proc/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
 	// Allows you to put in item-specific reactions based on species
+	if(H.checkbuttinsert(I, user))
+		return 0
 	if(user != H)
 		if(H.check_shields(I, I.force, "the [I.name]", MELEE_ATTACK, I.armour_penetration))
 			return 0
@@ -1336,6 +1341,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					if(H.glasses && prob(33))
 						H.glasses.add_mob_blood(H)
 						H.update_inv_glasses()
+				punchouttooth(H,user,I.force,affecting)
 
 			if("chest")
 				if(H.stat == CONSCIOUS && armor_block < 50)

@@ -1,0 +1,26 @@
+<ui-display title='Centrifuge Interface'>
+  <ui-section label='Power'>
+    <ui-button icon='{{data.isActive ? "power-off" : "close"}}'
+		style='{{data.isActive ? "selected" : null}}'
+		action='power'>{{data.isActive ? "On" : "Off"}}</ui-button>
+  </ui-section>
+  <ui-section label='Time remaining'>
+    <ui-bar min='0' max='30' value='{{data.timeRemaining}}'>{{Math.round(data.timeRemaining)}}</ui-bar>
+  </ui-section>
+</ui-display>
+<ui-display title='Beaker' button>
+  {{#partial button}}
+    <ui-button icon='eject' state='{{data.isBeakerLoaded ? null : "disabled"}}' action='eject'>Eject</ui-button>
+  {{/partial}}
+  <ui-section label='Contents'>
+    {{#if data.isBeakerLoaded}}
+      {{#each adata.beakerContents}}
+        <span class='highlight' intro-outro='fade'>{{Math.fixed(volume, 2)}} units of {{name}}</span><br/>
+      {{else}}
+        <span class='bad'>Beaker Empty</span>
+      {{/each}}
+    {{else}}
+      <span class='average'>No Beaker</span>
+    {{/if}}
+  </ui-section>
+</ui-display>

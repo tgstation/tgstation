@@ -40,7 +40,9 @@
 	. = ..()
 	if(illustration)
 		cut_overlays()
-		add_overlay(illustration)
+		var/image/I = image(icon = 'icons/obj/storage.dmi', icon_state = illustration)
+		I.pixel_y = 5
+		add_overlay(I)
 
 /obj/item/storage/box/attack_self(mob/user)
 	..()
