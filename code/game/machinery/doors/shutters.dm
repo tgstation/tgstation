@@ -3,7 +3,7 @@
 	name = "shutters"
 	desc = "Heavy duty metal shutters that opens mechanically."
 	icon = 'icons/obj/doors/shutters.dmi'
-	layer = CLOSED_DOOR_LAYER
+	layer = SHUTTER_LAYER
 	damage_deflection = 20
 
 /obj/machinery/door/poddoor/shutters/preopen

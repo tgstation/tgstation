@@ -100,7 +100,6 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 		forge_changeling_objectives(changeling)
 		greet_changeling(changeling)
 		SSticker.mode.update_changeling_icons_added(changeling)
-	modePlayer += changelings
 	..()
 
 /datum/game_mode/changeling/make_antag_chance(mob/living/carbon/human/character) //Assigns changeling to latejoiners

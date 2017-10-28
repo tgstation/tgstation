@@ -59,6 +59,8 @@
 	flags_1 = THICKMATERIAL_1
 	armor = list(melee = 20, bullet = 0, laser = 20,energy = 10, bomb = 100, bio = 0, rad = 0, fire = 80, acid = 50)
 	flags_inv = HIDEFACE|HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR
+	dynamic_hair_suffix = ""
+	dynamic_fhair_suffix = ""
 	cold_protection = HEAD
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	heat_protection = HEAD
@@ -92,18 +94,27 @@
 
 
 /obj/item/clothing/head/bomb_hood/security
-	icon_state = "bombsuitsec"
-	item_state = "bombsuitsec"
-
+	icon_state = "bombsuit_sec"
+	item_state = "bombsuit_sec"
 
 /obj/item/clothing/suit/bomb_suit/security
-	icon_state = "bombsuitsec"
-	item_state = "bombsuitsec"
+	icon_state = "bombsuit_sec"
+	item_state = "bombsuit_sec"
 	allowed = list(/obj/item/gun/energy, /obj/item/melee/baton, /obj/item/restraints/handcuffs)
 
+
+/obj/item/clothing/head/bomb_hood/white
+	icon_state = "bombsuit_white"
+	item_state = "bombsuit_white"
+
+/obj/item/clothing/suit/bomb_suit/white
+	icon_state = "bombsuit_white"
+	item_state = "bombsuit_white"
+
 /*
- * Radiation protection
- */
+* Radiation protection
+*/
+
 /obj/item/clothing/head/radiation
 	name = "radiation hood"
 	icon_state = "rad"
@@ -115,6 +126,10 @@
 	equip_delay_other = 60
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	resistance_flags = 0
+
+/obj/item/clothing/head/radiation/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION, TRUE, FALSE)
 
 /obj/item/clothing/suit/radiation
 	name = "radiation suit"
@@ -133,3 +148,9 @@
 	equip_delay_other = 60
 	flags_inv = HIDEJUMPSUIT
 	resistance_flags = 0
+
+/obj/item/clothing/suit/radiation/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION, TRUE, FALSE) 
+	// Just don't want things to be irradiated inside this
+	// Except things on the mob aren't even inside the suit so ehhhhhh

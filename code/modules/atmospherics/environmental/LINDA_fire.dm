@@ -14,10 +14,10 @@
 
 	var/oxy = air_contents.gases[/datum/gas/oxygen] ? air_contents.gases[/datum/gas/oxygen][MOLES] : 0
 	var/tox = air_contents.gases[/datum/gas/plasma] ? air_contents.gases[/datum/gas/plasma][MOLES] : 0
-
+	var/trit = air_contents.gases[/datum/gas/tritium] ? air_contents.gases[/datum/gas/tritium][MOLES] : 0
 	if(active_hotspot)
 		if(soh)
-			if(tox > 0.5 && oxy > 0.5)
+			if((tox > 0.5 || trit > 0.5) && oxy > 0.5)
 				if(active_hotspot.temperature < exposed_temperature)
 					active_hotspot.temperature = exposed_temperature
 				if(active_hotspot.volume < exposed_volume)
@@ -26,11 +26,11 @@
 
 	var/igniting = 0
 
-	if((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && tox > 0.5)
+	if((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && (tox > 0.5 || trit > 0.5))
 		igniting = 1
 
 	if(igniting)
-		if(oxy < 0.5 || tox < 0.5)
+		if(oxy < 0.5)
 			return 0
 
 		active_hotspot = new /obj/effect/hotspot(src)
@@ -112,7 +112,7 @@
 		qdel(src)
 		return
 
-	if(!(location.air) || !location.air.gases[/datum/gas/plasma] || !location.air.gases[/datum/gas/oxygen] || location.air.gases[/datum/gas/plasma][MOLES] < 0.5 || location.air.gases[/datum/gas/oxygen][MOLES] < 0.5)
+	if(!(location.air) || !(location.air.gases[/datum/gas/plasma] || location.air.gases[/datum/gas/tritium]) || !location.air.gases[/datum/gas/oxygen] || (location.air.gases[/datum/gas/plasma][MOLES] < 0.5 && location.air.gases[/datum/gas/tritium][MOLES] < 0.5) || location.air.gases[/datum/gas/oxygen][MOLES] < 0.5)
 		qdel(src)
 		return
 

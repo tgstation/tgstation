@@ -154,7 +154,7 @@ Actual Adjacent procs :
 /turf/proc/reachableAdjacentTurfs(caller, ID, simulated_only)
 	var/list/L = new()
 	var/turf/T
-	var/static/space_type_cache = typecacheof(list(/turf/open/space))
+	var/static/space_type_cache = typecacheof(/turf/open/space)
 
 	for(var/dir in GLOB.cardinals)
 		T = get_step(src,dir)

@@ -295,7 +295,7 @@
 	if(!active)
 		if(world.time > last_event+30)
 			active = 1
-			radiation_pulse(get_turf(H), 3, 3, 5, 0)
+			radiation_pulse(H, 50)
 			last_event = world.time
 			active = null
 	..()
@@ -360,16 +360,9 @@
 			if(P.starting)
 				var/new_x = P.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
 				var/new_y = P.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
-				var/turf/curloc = get_turf(H)
-
+				var/turf/target = get_turf(P.starting)
 				// redirect the projectile
-				P.original = locate(new_x, new_y, P.z)
-				P.starting = curloc
-				P.current = curloc
-				P.firer = H
-				P.yo = new_y - curloc.y
-				P.xo = new_x - curloc.x
-				P.Angle = null
+				P.preparePixelProjectile(locate(Clamp(target.x + new_x, 1, world.maxx), Clamp(target.y + new_y, 1, world.maxy), H.z), H)
 			return -1
 	return 0
 
@@ -426,6 +419,7 @@
 	if(ishuman(C))
 		unstable_teleport = new
 		unstable_teleport.Grant(C)
+		last_teleport = world.time
 
 /datum/species/golem/bluespace/on_species_loss(mob/living/carbon/C)
 	if(unstable_teleport)
@@ -485,6 +479,11 @@
 	var/last_banana = 0
 	var/banana_cooldown = 100
 	var/active = null
+
+/datum/species/golem/bananium/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	..()
+	last_banana = world.time
+	last_honk = world.time
 
 /datum/species/golem/bananium/random_name(gender,unique,lastname)
 	var/clown_name = pick(GLOB.clown_names)
@@ -560,10 +559,13 @@
 	. = ..()
 	C.faction |= "cult"
 	phase_shift = new
+	phase_shift.charge_counter = 0
 	C.AddSpell(phase_shift)
 	abyssal_gaze = new
+	abyssal_gaze.charge_counter = 0
 	C.AddSpell(abyssal_gaze)
 	dominate = new
+	dominate.charge_counter = 0
 	C.AddSpell(dominate)
 
 /datum/species/golem/runic/on_species_loss(mob/living/carbon/C)
@@ -653,6 +655,11 @@
 	punchstunthreshold = 7
 	punchdamagehigh = 8 // not as heavy as stone
 	prefix = "Cloth"
+
+/datum/species/golem/cloth/check_roundstart_eligible()
+	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
+		return TRUE
+	return ..()
 
 /datum/species/golem/cloth/random_name(gender,unique,lastname)
 	var/pharaoh_name = pick("Neferkare", "Hudjefa", "Khufu", "Mentuhotep", "Ahmose", "Amenhotep", "Thutmose", "Hatshepsut", "Tutankhamun", "Ramses", "Seti", \

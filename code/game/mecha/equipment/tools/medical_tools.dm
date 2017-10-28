@@ -472,7 +472,7 @@
 		occupant_message("Syringe loaded.")
 		update_equip_info()
 		return 1
-	occupant_message("The [src] syringe chamber is full.")
+	occupant_message("[src]'s syringe chamber is full.")
 	return 0
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/analyze_reagents(atom/A)

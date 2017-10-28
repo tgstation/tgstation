@@ -5,10 +5,10 @@
 	var/max2
 
 /datum/tlv/New(min2 as num, min1 as num, max1 as num, max2 as num)
-	src.min2 = min2
-	src.min1 = min1
-	src.max1 = max1
-	src.max2 = max2
+	if(min2) src.min2 = min2
+	if(min1) src.min1 = min1
+	if(max1) src.max1 = max1
+	if(max2) src.max2 = max2
 
 /datum/tlv/proc/get_danger_level(val as num)
 	if(max2 != -1 && val >= max2)
@@ -20,6 +20,18 @@
 	if(min1 != -1 && val <= min1)
 		return 1
 	return 0
+
+/datum/tlv/no_checks
+	min2 = -1
+	min1 = -1
+	max1 = -1
+	max2 = -1
+
+/datum/tlv/dangerous
+	min2 = -1
+	min1 = -1
+	max1 = 0.2
+	max2 = 0.5
 
 /obj/item/electronics/airalarm
 	name = "air alarm electronics"
@@ -78,25 +90,33 @@
 		/datum/gas/oxygen			= new/datum/tlv(16, 19, 135, 140), // Partial pressure, kpa
 		/datum/gas/nitrogen			= new/datum/tlv(-1, -1, 1000, 1000), // Partial pressure, kpa
 		/datum/gas/carbon_dioxide	= new/datum/tlv(-1, -1, 5, 10), // Partial pressure, kpa
-		/datum/gas/plasma			= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
-		/datum/gas/nitrous_oxide	= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
-		/datum/gas/bz				= new/datum/tlv(-1, -1, 0.2, 0.5),
-		/datum/gas/freon			= new/datum/tlv(-1, -1, 0.2, 0.5),
-		/datum/gas/water_vapor		= new/datum/tlv(-1, -1, 0.2, 0.5)
+		/datum/gas/plasma			= new/datum/tlv/dangerous, // Partial pressure, kpa
+		/datum/gas/nitrous_oxide	= new/datum/tlv/dangerous, // Partial pressure, kpa
+		/datum/gas/bz				= new/datum/tlv/dangerous,
+		/datum/gas/hypernoblium			= new/datum/tlv/dangerous,
+		/datum/gas/water_vapor		= new/datum/tlv/dangerous,
+		/datum/gas/tritium			= new/datum/tlv/dangerous,
+		/datum/gas/stimulum			= new/datum/tlv/dangerous,
+		/datum/gas/brown_gas			= new/datum/tlv/dangerous,
+		/datum/gas/pluoxium			= new/datum/tlv/dangerous
 	)
 
 /obj/machinery/airalarm/server // No checks here.
 	TLV = list(
-		"pressure"					= new/datum/tlv(-1, -1, -1, -1),
-		"temperature"				= new/datum/tlv(-1, -1, -1, -1),
-		/datum/gas/oxygen			= new/datum/tlv(-1, -1, -1, -1),
-		/datum/gas/nitrogen			= new/datum/tlv(-1, -1, -1, -1),
-		/datum/gas/carbon_dioxide	= new/datum/tlv(-1, -1, -1, -1),
-		/datum/gas/plasma			= new/datum/tlv(-1, -1, -1, -1),
-		/datum/gas/nitrous_oxide	= new/datum/tlv(-1, -1, -1, -1),
-		/datum/gas/bz				= new/datum/tlv(-1, -1, -1, -1),
-		/datum/gas/freon			= new/datum/tlv(-1, -1, -1, -1),
-		/datum/gas/water_vapor		= new/datum/tlv(-1, -1, -1, -1)
+		"pressure"					= new/datum/tlv/no_checks,
+		"temperature"				= new/datum/tlv/no_checks,
+		/datum/gas/oxygen			= new/datum/tlv/no_checks,
+		/datum/gas/nitrogen			= new/datum/tlv/no_checks,
+		/datum/gas/carbon_dioxide	= new/datum/tlv/no_checks,
+		/datum/gas/plasma			= new/datum/tlv/no_checks,
+		/datum/gas/nitrous_oxide	= new/datum/tlv/no_checks,
+		/datum/gas/bz				= new/datum/tlv/no_checks,
+		/datum/gas/hypernoblium			= new/datum/tlv/no_checks,
+		/datum/gas/water_vapor		= new/datum/tlv/no_checks,
+		/datum/gas/tritium			= new/datum/tlv/no_checks,
+		/datum/gas/stimulum			= new/datum/tlv/no_checks,
+		/datum/gas/brown_gas			= new/datum/tlv/no_checks,
+		/datum/gas/pluoxium			= new/datum/tlv/no_checks
 	)
 
 /obj/machinery/airalarm/kitchen_cold_room // Copypasta: to check temperatures.
@@ -106,11 +126,15 @@
 		/datum/gas/oxygen			= new/datum/tlv(16, 19, 135, 140), // Partial pressure, kpa
 		/datum/gas/nitrogen			= new/datum/tlv(-1, -1, 1000, 1000), // Partial pressure, kpa
 		/datum/gas/carbon_dioxide	= new/datum/tlv(-1, -1, 5, 10), // Partial pressure, kpa
-		/datum/gas/plasma			= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
-		/datum/gas/nitrous_oxide	= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
-		/datum/gas/bz				= new/datum/tlv(-1, -1, 0.2, 0.5),
-		/datum/gas/freon			= new/datum/tlv(-1, -1, 0.2, 0.5),
-		/datum/gas/water_vapor		= new/datum/tlv(-1, -1, 0.2, 0.5)
+		/datum/gas/plasma			= new/datum/tlv/dangerous, // Partial pressure, kpa
+		/datum/gas/nitrous_oxide	= new/datum/tlv/dangerous, // Partial pressure, kpa
+		/datum/gas/bz				= new/datum/tlv/dangerous,
+		/datum/gas/hypernoblium		= new/datum/tlv/dangerous,
+		/datum/gas/water_vapor		= new/datum/tlv/dangerous,
+		/datum/gas/tritium			= new/datum/tlv/dangerous,
+		/datum/gas/stimulum			= new/datum/tlv/dangerous,
+		/datum/gas/brown_gas		= new/datum/tlv/dangerous,
+		/datum/gas/pluoxium			= new/datum/tlv/dangerous
 	)
 
 /obj/machinery/airalarm/engine
@@ -237,7 +261,9 @@
 					"incheck"	= info["checks"]&2,
 					"direction"	= info["direction"],
 					"external"	= info["external"],
-					"extdefault"= (info["external"] == ONE_ATMOSPHERE)
+					"internal"	= info["internal"],
+					"extdefault"= (info["external"] == ONE_ATMOSPHERE),
+					"intdefault"= (info["internal"] == 0)
 				))
 		data["scrubbers"] = list()
 		for(var/id_tag in A.air_scrub_names)
@@ -254,8 +280,7 @@
 					"filter_co2"			= info["filter_co2"],
 					"filter_toxins"			= info["filter_toxins"],
 					"filter_n2o"			= info["filter_n2o"],
-					"filter_bz"				= info["filter_bz"],
-					"filter_freon"			= info["filter_freon"],
+					"filter_rare"			= info["filter_rare"],
 					"filter_water_vapor"	= info["filter_water_vapor"]
 				))
 		data["mode"] = mode
@@ -312,7 +337,7 @@
 			if(usr.has_unlimited_silicon_privilege && !wires.is_cut(WIRE_IDSCAN))
 				locked = !locked
 				. = TRUE
-		if("power", "co2_scrub", "tox_scrub", "n2o_scrub", "bz_scrub", "freon_scrub","water_vapor_scrub", "widenet", "scrubbing")
+		if("power", "co2_scrub", "tox_scrub", "n2o_scrub", "rare_scrub","water_vapor_scrub", "widenet", "scrubbing")
 			send_signal(device_id, list("[action]" = text2num(params["val"])))
 			. = TRUE
 		if("excheck")
@@ -321,14 +346,17 @@
 		if("incheck")
 			send_signal(device_id, list("checks" = text2num(params["val"])^2))
 			. = TRUE
-		if("set_external_pressure")
+		if("set_external_pressure", "set_internal_pressure")
 			var/area/A = get_area(src)
-			var/target = input("New target pressure:", name, A.air_vent_info[device_id]["external"]) as num|null
+			var/target = input("New target pressure:", name, A.air_vent_info[device_id][(action == "set_external_pressure" ? "external" : "internal")]) as num|null
 			if(!isnull(target) && !..())
-				send_signal(device_id, list("set_external_pressure" = target))
+				send_signal(device_id, list("[action]" = target))
 				. = TRUE
 		if("reset_external_pressure")
 			send_signal(device_id, list("reset_external_pressure"))
+			. = TRUE
+		if("reset_internal_pressure")
+			send_signal(device_id, list("reset_internal_pressure"))
 			. = TRUE
 		if("threshold")
 			var/env = params["env"]
@@ -428,8 +456,7 @@
 					"co2_scrub" = 1,
 					"tox_scrub" = 0,
 					"n2o_scrub" = 0,
-					"bz_scrub"	= 0,
-					"freon_scrub"= 0,
+					"rare_scrub"= 0,
 					"water_vapor_scrub"= 0,
 					"scrubbing" = 1,
 					"widenet" = 0,
@@ -447,8 +474,7 @@
 					"co2_scrub" = 1,
 					"tox_scrub" = 1,
 					"n2o_scrub" = 1,
-					"bz_scrub"	= 1,
-					"freon_scrub"= 1,
+					"rare_scrub"= 1,
 					"water_vapor_scrub"= 1,
 					"scrubbing" = 1,
 					"widenet" = 1,
@@ -479,8 +505,7 @@
 					"co2_scrub" = 1,
 					"tox_scrub" = 0,
 					"n2o_scrub" = 0,
-					"bz_scrub"	= 0,
-					"freon_scrub"= 0,
+					"rare_scrub"= 0,
 					"water_vapor_scrub"= 0,
 					"scrubbing" = 1,
 					"widenet" = 0,

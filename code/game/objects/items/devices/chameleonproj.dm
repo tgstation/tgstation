@@ -67,6 +67,7 @@
 		C.activate(usr, saved_appearance, src)
 		to_chat(usr, "<span class='notice'>You activate \the [src].</span>")
 		new /obj/effect/temp_visual/emp/pulse(get_turf(src))
+	usr.cancel_camera()
 
 /obj/item/device/chameleon/proc/disrupt(delete_dummy = 1)
 	if(active_dummy)

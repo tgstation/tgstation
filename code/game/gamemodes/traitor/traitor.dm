@@ -60,10 +60,11 @@
 
 /datum/game_mode/traitor/post_setup()
 	for(var/datum/mind/traitor in pre_traitors)
-		addtimer(CALLBACK(traitor, /datum/mind.proc/add_antag_datum, antag_datum), rand(10,100))
+		var/datum/antagonist/traitor/new_antag = new antag_datum(traitor)
+		new_antag.should_specialise = TRUE
+		addtimer(CALLBACK(traitor, /datum/mind.proc/add_antag_datum, new_antag), rand(10,100))
 	if(!exchange_blue)
 		exchange_blue = -1 //Block latejoiners from getting exchange objectives
-	modePlayer += traitors
 	..()
 	return TRUE
 
@@ -80,6 +81,8 @@
 						add_latejoin_traitor(character.mind)
 
 /datum/game_mode/traitor/proc/add_latejoin_traitor(datum/mind/character)
+	var/datum/antagonist/traitor/new_antag = new antag_datum(character)
+	new_antag.should_specialise = TRUE
 	character.add_antag_datum(antag_datum)
 
 

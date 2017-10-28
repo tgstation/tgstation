@@ -99,7 +99,7 @@
 	if(ismob(AM))
 		return
 
-	to_chat(user, "<span class='notice'>You start planting the [src]. The timer is set to [det_time]...</span>")
+	to_chat(user, "<span class='notice'>You start planting [src]. The timer is set to [det_time]...</span>")
 
 	if(do_after(user, 30, target = AM))
 		if(!user.temporarilyRemoveItemFromInventory(src))
@@ -126,7 +126,7 @@
 /obj/item/grenade/plastic/suicide_act(mob/user)
 	message_admins("[ADMIN_LOOKUPFLW(user)] suicided with [src] at [ADMIN_COORDJMP(user)]",0,1)
 	log_game("[key_name(user)] suicided with [src] at [COORD(user)]")
-	user.visible_message("<span class='suicide'>[user] activates the [src] and holds it above [user.p_their()] head! It looks like [user.p_theyre()] going out with a bang!</span>")
+	user.visible_message("<span class='suicide'>[user] activates [src] and holds it above [user.p_their()] head! It looks like [user.p_theyre()] going out with a bang!</span>")
 	var/message_say = "FOR NO RAISIN!"
 	if(user.mind)
 		if(user.mind.special_role)
@@ -137,7 +137,7 @@
 				message_say = "FOR THE HIVE!"
 			else if(role == "cultist")
 				message_say = "FOR NAR-SIE!"
-			else if(role == "revolutionary" || role == "head revolutionary")
+			else if(is_revolutionary(user))
 				message_say = "VIVA LA REVOLUTION!"
 	user.say(message_say)
 	explosion(user,0,2,0) //Cheap explosion imitation because putting prime() here causes runtimes
@@ -183,7 +183,7 @@
 				message_say = "FOR THE HIVE!"
 			else if(role == "cultist")
 				message_say = "FOR NAR-SIE!"
-			else if(role == "revolutionary" || role == "head revolutionary")
+			else if(is_revolutionary(user))
 				message_say = "VIVA LA REVOLUTION!"
 	user.say(message_say)
 	target = user

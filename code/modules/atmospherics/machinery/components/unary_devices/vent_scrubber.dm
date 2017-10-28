@@ -20,8 +20,7 @@
 	var/scrub_CO2 = TRUE
 	var/scrub_Toxins = FALSE
 	var/scrub_N2O = FALSE
-	var/scrub_BZ = FALSE
-	var/scrub_Freon = FALSE
+	var/scrub_Rare = FALSE
 	var/scrub_WaterVapor = FALSE
 
 
@@ -33,6 +32,8 @@
 	var/datum/radio_frequency/radio_connection
 	var/radio_filter_out
 	var/radio_filter_in
+
+	pipe_state = "scrubber"
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/New()
 	..()
@@ -70,9 +71,7 @@
 			amount += idle_power_usage
 		if(scrub_N2O)
 			amount += idle_power_usage
-		if(scrub_BZ)
-			amount += idle_power_usage
-		if(scrub_Freon)
+		if(scrub_Rare)
 			amount += idle_power_usage
 		if(scrub_WaterVapor)
 			amount += idle_power_usage
@@ -125,8 +124,7 @@
 		"filter_co2" = scrub_CO2,
 		"filter_toxins" = scrub_Toxins,
 		"filter_n2o" = scrub_N2O,
-		"filter_bz" = scrub_BZ,
-		"filter_freon" = scrub_Freon,
+		"filter_rare" =scrub_Rare,
 		"filter_water_vapor" = scrub_WaterVapor,
 		"sigtype" = "status"
 	)
@@ -171,6 +169,9 @@
 	var/datum/gas_mixture/air_contents = AIR1
 	var/list/env_gases = environment.gases
 
+	if(air_contents.return_pressure() >= 50*ONE_ATMOSPHERE)
+		return FALSE
+
 	if(scrubbing & SCRUBBING)
 		var/should_we_scrub = FALSE
 		for(var/id in env_gases)
@@ -195,37 +196,52 @@
 			filtered_out.temperature = removed.temperature
 
 			if(scrub_Toxins && removed_gases[/datum/gas/plasma])
-				ADD_GAS(/datum/gas/plasma, filtered_out.gases)
+				ADD_GAS(/datum/gas/plasma, filtered_gases)
 				filtered_gases[/datum/gas/plasma][MOLES] = removed_gases[/datum/gas/plasma][MOLES]
 				removed_gases[/datum/gas/plasma][MOLES] = 0
 
 			if(scrub_CO2 && removed_gases[/datum/gas/carbon_dioxide])
-				ADD_GAS(/datum/gas/carbon_dioxide, filtered_out.gases)
+				ADD_GAS(/datum/gas/carbon_dioxide, filtered_gases)
 				filtered_gases[/datum/gas/carbon_dioxide][MOLES] = removed_gases[/datum/gas/carbon_dioxide][MOLES]
 				removed_gases[/datum/gas/carbon_dioxide][MOLES] = 0
 
-			if(removed_gases[/datum/gas/oxygen_agent_b])
-				ADD_GAS(/datum/gas/oxygen_agent_b, filtered_out.gases)
-				filtered_gases[/datum/gas/oxygen_agent_b][MOLES] = removed_gases[/datum/gas/oxygen_agent_b][MOLES]
-				removed_gases[/datum/gas/oxygen_agent_b][MOLES] = 0
-
 			if(scrub_N2O && removed_gases[/datum/gas/nitrous_oxide])
-				ADD_GAS(/datum/gas/nitrous_oxide, filtered_out.gases)
+				ADD_GAS(/datum/gas/nitrous_oxide, filtered_gases)
 				filtered_gases[/datum/gas/nitrous_oxide][MOLES] = removed_gases[/datum/gas/nitrous_oxide][MOLES]
 				removed_gases[/datum/gas/nitrous_oxide][MOLES] = 0
 
-			if(scrub_BZ && removed_gases[/datum/gas/bz])
-				ADD_GAS(/datum/gas/bz, filtered_out.gases)
+			if(scrub_Rare && removed_gases[/datum/gas/bz])
+				ADD_GAS(/datum/gas/bz, filtered_gases)
 				filtered_gases[/datum/gas/bz][MOLES] = removed_gases[/datum/gas/bz][MOLES]
 				removed_gases[/datum/gas/bz][MOLES] = 0
 
-			if(scrub_Freon && removed_gases[/datum/gas/freon])
-				ADD_GAS(/datum/gas/freon, filtered_out.gases)
-				filtered_gases[/datum/gas/freon][MOLES] = removed_gases[/datum/gas/freon][MOLES]
-				removed_gases[/datum/gas/freon][MOLES] = 0
+			if(scrub_Rare && removed_gases[/datum/gas/hypernoblium])
+				ADD_GAS(/datum/gas/hypernoblium, filtered_gases)
+				filtered_gases[/datum/gas/hypernoblium][MOLES] = removed_gases[/datum/gas/hypernoblium][MOLES]
+				removed_gases[/datum/gas/hypernoblium][MOLES] = 0
+
+			if(scrub_Rare && removed_gases[/datum/gas/stimulum])
+				ADD_GAS(/datum/gas/stimulum, filtered_gases)
+				filtered_gases[/datum/gas/stimulum][MOLES] = removed_gases[/datum/gas/stimulum][MOLES]
+				removed_gases[/datum/gas/stimulum][MOLES] = 0
+
+			if(scrub_Rare && removed_gases[/datum/gas/pluoxium])
+				ADD_GAS(/datum/gas/pluoxium, filtered_gases)
+				filtered_gases[/datum/gas/pluoxium][MOLES] = removed_gases[/datum/gas/pluoxium][MOLES]
+				removed_gases[/datum/gas/pluoxium][MOLES] = 0
+
+			if(scrub_Rare && removed_gases[/datum/gas/brown_gas])
+				ADD_GAS(/datum/gas/brown_gas, filtered_gases)
+				filtered_gases[/datum/gas/brown_gas][MOLES] = removed_gases[/datum/gas/brown_gas][MOLES]
+				removed_gases[/datum/gas/brown_gas][MOLES] = 0
+
+			if(scrub_Rare && removed_gases[/datum/gas/tritium])
+				ADD_GAS(/datum/gas/tritium, filtered_gases)
+				filtered_gases[/datum/gas/tritium][MOLES] = removed_gases[/datum/gas/tritium][MOLES]
+				removed_gases[/datum/gas/tritium][MOLES] = 0
 
 			if(scrub_WaterVapor && removed_gases[/datum/gas/water_vapor])
-				ADD_GAS(/datum/gas/water_vapor, filtered_out.gases)
+				ADD_GAS(/datum/gas/water_vapor, filtered_gases)
 				filtered_gases[/datum/gas/water_vapor][MOLES] = removed_gases[/datum/gas/water_vapor][MOLES]
 				removed_gases[/datum/gas/water_vapor][MOLES] = 0
 
@@ -238,8 +254,6 @@
 			tile.air_update_turf()
 
 	else //Just siphoning all air
-		if(air_contents.return_pressure()>=50*ONE_ATMOSPHERE)
-			return FALSE
 
 		var/transfer_moles = environment.total_moles()*(volume_rate/environment.volume)
 
@@ -302,15 +316,10 @@
 	if("toggle_n2o_scrub" in signal.data)
 		scrub_N2O = !scrub_N2O
 
-	if("bz_scrub" in signal.data)
-		scrub_BZ = text2num(signal.data["bz_scrub"])
-	if("toggle_bz_scrub" in signal.data)
-		scrub_BZ = !scrub_BZ
-
-	if("freon_scrub" in signal.data)
-		scrub_Freon = text2num(signal.data["freon_scrub"])
-	if("toggle_freon_scrub" in signal.data)
-		scrub_Freon = !scrub_Freon
+	if("rare_scrub" in signal.data)
+		scrub_Rare = text2num(signal.data["rare_scrub"])
+	if("toggle_rare_scrub" in signal.data)
+		scrub_Rare = !scrub_Rare
 
 	if("water_vapor_scrub" in signal.data)
 		scrub_WaterVapor = text2num(signal.data["water_vapor_scrub"])

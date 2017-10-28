@@ -20,7 +20,6 @@
 	var/false_report_weight = 0 //How often will this show up incorrectly in a centcom report?
 	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
 	var/round_ends_with_antag_death = 0 //flags the "one verse the station" antags as such
-	var/list/datum/mind/modePlayer = new
 	var/list/datum/mind/antag_candidates = list()	// List of possible starting antags goes here
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
 	var/list/protected_jobs = list()	// Jobs that can't be traitors because
@@ -174,7 +173,8 @@
 		round_converted = 0
 		return 1
 	for(var/mob/living/carbon/human/H in antag_candidates)
-		replacementmode.make_antag_chance(H)
+		if(H.client)
+			replacementmode.make_antag_chance(H)
 	round_converted = 2
 	message_admins("-- IMPORTANT: The roundtype has been converted to [replacementmode.name], antagonists may have been created! --")
 
@@ -183,8 +183,14 @@
 /datum/game_mode/process()
 	return 0
 
+//For things that do not die easily
+/datum/game_mode/proc/are_special_antags_dead()
+	return TRUE
+
 
 /datum/game_mode/proc/check_finished(force_ending) //to be called by SSticker
+	if(!SSticker.setup_done)
+		return FALSE
 	if(replacementmode && round_converted == 2)
 		return replacementmode.check_finished()
 	if(SSshuttle.emergency && (SSshuttle.emergency.mode == SHUTTLE_ENDGAME))
@@ -197,7 +203,7 @@
 		if(!continuous_sanity_checked) //make sure we have antags to be checking in the first place
 			for(var/mob/Player in GLOB.mob_list)
 				if(Player.mind)
-					if(Player.mind.special_role)
+					if(Player.mind.special_role || LAZYLEN(Player.mind.antag_datums))
 						continuous_sanity_checked = 1
 						return 0
 			if(!continuous_sanity_checked)
@@ -213,9 +219,12 @@
 
 		for(var/mob/Player in GLOB.living_mob_list)
 			if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player) && Player.client)
-				if(Player.mind.special_role) //Someone's still antaging!
+				if(Player.mind.special_role || LAZYLEN(Player.mind.antag_datums)) //Someone's still antaging!
 					living_antag_player = Player
 					return 0
+
+		if(!are_special_antags_dead())
+			return FALSE
 
 		if(!continuous[config_tag] || force_ending)
 			return 1
@@ -394,43 +403,6 @@
 		if(P.client && P.ready == PLAYER_READY_TO_PLAY)
 			. ++
 
-///////////////////////////////////
-//Keeps track of all living heads//
-///////////////////////////////////
-/datum/game_mode/proc/get_living_heads()
-	. = list()
-	for(var/mob/living/carbon/human/player in GLOB.mob_list)
-		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in GLOB.command_positions))
-			. |= player.mind
-
-
-////////////////////////////
-//Keeps track of all heads//
-////////////////////////////
-/datum/game_mode/proc/get_all_heads()
-	. = list()
-	for(var/mob/player in GLOB.mob_list)
-		if(player.mind && (player.mind.assigned_role in GLOB.command_positions))
-			. |= player.mind
-
-//////////////////////////////////////////////
-//Keeps track of all living security members//
-//////////////////////////////////////////////
-/datum/game_mode/proc/get_living_sec()
-	. = list()
-	for(var/mob/living/carbon/human/player in GLOB.mob_list)
-		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in GLOB.security_positions))
-			. |= player.mind
-
-////////////////////////////////////////
-//Keeps track of all  security members//
-////////////////////////////////////////
-/datum/game_mode/proc/get_all_sec()
-	. = list()
-	for(var/mob/living/carbon/human/player in GLOB.mob_list)
-		if(player.mind && (player.mind.assigned_role in GLOB.security_positions))
-			. |= player.mind
-
 //////////////////////////
 //Reports player logouts//
 //////////////////////////
@@ -531,19 +503,11 @@
 
 	return max(0, enemy_minimum_age - C.player_age)
 
-/datum/game_mode/proc/replace_jobbaned_player(mob/living/M, role_type, pref)
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [role_type]?", "[role_type]", null, pref, 50, M)
-	var/mob/dead/observer/theghost = null
-	if(candidates.len)
-		theghost = pick(candidates)
-		to_chat(M, "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!")
-		message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(M)]) to replace a jobbaned player.")
-		M.ghostize(0)
-		M.key = theghost.key
-
 /datum/game_mode/proc/remove_antag_for_borging(datum/mind/newborgie)
 	SSticker.mode.remove_cultist(newborgie, 0, 0)
-	SSticker.mode.remove_revolutionary(newborgie, 0)
+	var/datum/antagonist/rev/rev = newborgie.has_antag_datum(/datum/antagonist/rev)
+	if(rev)
+		rev.remove_revolutionary(TRUE)
 
 /datum/game_mode/proc/generate_station_goals()
 	var/list/possible = list()

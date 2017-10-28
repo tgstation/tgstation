@@ -105,8 +105,6 @@
 
 //Called when we bump onto a mob
 /mob/living/proc/MobCollide(mob/M)
-	//Even if we don't push/swap places, we "touched" them, so spread fire
-	spreadFire(M)
 
 	//Also diseases
 	for(var/thing in viruses)
@@ -120,7 +118,31 @@
 			ContactContractDisease(D)
 
 	if(now_pushing)
-		return 1
+		return TRUE
+
+	//TODO FOR LATER PRS: Make passing tables an automatic thing for flying and passable objects be determined better to prevent huge amounts of flags being set when mobs fly.
+	if((movement_type) ^ (M.movement_type))	//Fly past each other.
+		now_pushing = TRUE
+		var/old = pass_flags & PASSMOB
+		var/old_p = pulling? (pulling.pass_flags & PASSMOB) : NONE
+		var/atom/movable/cached = pulling
+		pass_flags |= PASSMOB
+		var/obj/item/I = cached
+		if(cached && (isliving(cached) || (istype(I) && (I.w_class < WEIGHT_CLASS_BULKY))))
+			var/mob/living/l = cached
+			if(l.mob_size <= mob_size)
+				cached.pass_flags |= PASSMOB
+		Move(get_turf(M))
+		if(!old)
+			pass_flags &= ~PASSMOB
+		if(cached && !old_p)
+			cached.pass_flags &= ~PASSMOB
+		cached = null
+		now_pushing = FALSE
+		return TRUE
+
+	//Even if we don't push/swap places, we "touched" them, so spread fire
+	spreadFire(M)
 
 	//Should stop you pushing a restrained person out of the way
 	if(isliving(M))
@@ -174,7 +196,7 @@
 				M.pass_flags &= ~PASSMOB
 
 			now_pushing = 0
-			
+
 			if(!move_failed)
 				return 1
 
@@ -564,7 +586,7 @@
 	if(!force_moving)
 		..(pressure_difference, direction, pressure_resistance_prob_delta)
 
-/mob/living/proc/can_resist()
+/mob/living/can_resist()
 	return !((next_move > world.time) || incapacitated(ignore_restraints = TRUE))
 
 /mob/living/verb/resist()
@@ -746,16 +768,6 @@
 /mob/living/proc/get_standard_pixel_y_offset(lying = 0)
 	return initial(pixel_y)
 
-/mob/living/Stat()
-	..()
-
-	if(statpanel("Status"))
-		if(SSticker && SSticker.mode)
-			if(istype(SSticker.mode, /datum/game_mode/blob))
-				var/datum/game_mode/blob/B = SSticker.mode
-				if(B.message_sent)
-					stat(null, "Blobs to Blob Win: [GLOB.blobs_legit.len]/[B.blobwincount]")
-
 /mob/living/cancel_camera()
 	..()
 	cameraFollow = null
@@ -872,6 +884,19 @@
 		G.summoner = new_mob
 		G.Recall()
 		to_chat(G, "<span class='holoparasite'>Your summoner has changed form!</span>")
+
+/mob/living/rad_act(amount)
+	if(!amount || amount < RAD_MOB_SKIN_PROTECTION)
+		return
+
+	amount -= RAD_BACKGROUND_RADIATION // This will always be at least 1 because of how skin protection is calculated
+
+	var/blocked = getarmor(null, "rad")
+
+	if(amount > RAD_BURN_THRESHOLD)
+		apply_damage((amount-RAD_BURN_THRESHOLD)/RAD_BURN_THRESHOLD, BURN, null, blocked)
+
+	apply_effect((amount*RAD_MOB_COEFFICIENT)/max(1, (radiation**2)*RAD_OVERDOSE_REDUCTION), IRRADIATE, blocked)
 
 /mob/living/proc/fakefireextinguish()
 	return

@@ -12,6 +12,8 @@
 	var/obj/machinery/atmospherics/components/unary/heat_exchanger/partner = null
 	var/update_cycle
 
+	pipe_state = "heunary"
+
 /obj/machinery/atmospherics/components/unary/heat_exchanger/update_icon()
 	if(NODE1)
 		icon_state = "he_intact"

@@ -38,9 +38,6 @@
 	explosion_block = 3
 	canSmoothWith = list(/turf/closed/wall/mineral/diamond, /obj/structure/falsewall/diamond)
 
-/turf/closed/wall/mineral/diamond/thermitemelt(mob/user)
-	return
-
 /turf/closed/wall/mineral/clown
 	name = "bananium wall"
 	desc = "A wall with bananium plating. Honk!"
@@ -70,7 +67,7 @@
 	if(!active)
 		if(world.time > last_event+15)
 			active = 1
-			radiation_pulse(get_turf(src), 3, 3, 4, 0)
+			radiation_pulse(src, 40)
 			for(var/turf/closed/wall/mineral/uranium/T in orange(1,src))
 				T.radiate()
 			last_event = world.time
@@ -257,6 +254,12 @@
 /turf/closed/wall/mineral/plastitanium/overspace
 	icon_state = "map-overspace"
 	fixed_underlay = list("space"=1)
+
+/turf/closed/wall/mineral/plastitanium/explosive/dismantle_wall(devastated, explode)
+	var/obj/item/bombcore/large/bombcore = new(get_turf(src))
+	if(devastated || explode)
+		bombcore.detonate()
+	..()
 
 //have to copypaste this code
 /turf/closed/wall/mineral/plastitanium/interior/copyTurf(turf/T)

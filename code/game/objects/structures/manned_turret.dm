@@ -68,14 +68,15 @@
 	START_PROCESSING(SSfastprocess, src)
 
 /obj/machinery/manned_turret/process()
-	if(!LAZYLEN(buckled_mobs))
+	if (!update_positioning())
 		return PROCESS_KILL
-	update_positioning()
 
 /obj/machinery/manned_turret/proc/update_positioning()
+	if (!LAZYLEN(buckled_mobs))
+		return FALSE
 	var/mob/living/controller = buckled_mobs[1]
 	if(!istype(controller))
-		return
+		return FALSE
 	var/client/C = controller.client
 	if(C)
 		var/atom/A = C.mouseObject
@@ -143,14 +144,13 @@
 		addtimer(CALLBACK(src, /obj/machinery/manned_turret/.proc/fire_helper, user), i*rate_of_fire)
 
 /obj/machinery/manned_turret/proc/fire_helper(mob/user)
-	if(user.incapacitated())
+	if(user.incapacitated() || !(user in buckled_mobs))
 		return
 	update_positioning()						//REFRESH MOUSE TRACKING!!
 	var/turf/targets_from = get_turf(src)
 	if(QDELETED(target))
 		target = target_turf
 	var/obj/item/projectile/P = new projectile_type(targets_from)
-	P.current = targets_from
 	P.starting = targets_from
 	P.firer = user
 	P.original = target
@@ -201,8 +201,8 @@
 	O.attacked_by(src, user)
 
 /obj/item/gun_control/attack(mob/living/M, mob/living/user)
-	user.lastattacked = M
-	M.lastattacker = user
+	M.lastattacker = user.real_name
+	M.lastattackerckey = user.ckey
 	M.attacked_by(src, user)
 	add_fingerprint(user)
 

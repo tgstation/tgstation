@@ -25,6 +25,8 @@
 	/turf/closed/wall/clockwork)
 	smooth = SMOOTH_TRUE
 
+	var/list/damage_decals
+
 /turf/closed/wall/examine(mob/user)
 	..()
 	deconstruction_hints(user)
@@ -113,7 +115,7 @@
 			playsound(src, 'sound/items/welder.ogg', 100, 1)
 		if(TOX)
 			playsound(src, 'sound/effects/spray2.ogg', 100, 1)
-			return 0
+			return FALSE
 
 /turf/closed/wall/attack_paw(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -137,7 +139,7 @@
 	else
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 		to_chat(user, text("<span class='notice'>You punch the wall.</span>"))
-	return 1
+	return TRUE
 
 /turf/closed/wall/attack_hand(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -159,18 +161,26 @@
 
 	add_fingerprint(user)
 
-	//THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
-	if( thermite )
-		if(W.is_hot())
-			thermitemelt(user)
-			return
-
 	var/turf/T = user.loc	//get user's location for delay checks
 
 	//the istype cascade has been spread among various procs for easy overriding
-	if(try_wallmount(W,user,T) || try_decon(W,user,T) || try_destroy(W,user,T))
+	if(try_clean(W, user, T) || try_wallmount(W, user, T) || try_decon(W, user, T) || try_destroy(W, user, T))
 		return
 
+/turf/closed/wall/proc/try_clean(obj/item/W, mob/user, turf/T)
+	if((user.a_intent != INTENT_HELP) || !LAZYLEN(damage_decals) || !istype(W, /obj/item/weldingtool))
+		return FALSE
+	var/obj/item/weldingtool/WT = W
+	if(WT.remove_fuel(0, user))
+		to_chat(user, "<span class='notice'>You begin fixing dents on the wall...</span>")
+		playsound(src, W.usesound, 100, 1)
+		if(do_after(user, slicing_duration * W.toolspeed * 0.5, target = src))
+			if(iswallturf(src) && user && !QDELETED(WT) && WT.isOn() && !QDELETED(T) && (user.loc == T) && (user.get_active_held_item() == WT) && damage_decals.len)
+				to_chat(user, "<span class='notice'>You fix some dents on the wall.</span>")
+				cut_overlay(damage_decals)
+				LAZYCLEARLIST(damage_decals)
+			return TRUE
+	return FALSE
 
 /turf/closed/wall/proc/try_wallmount(obj/item/W, mob/user, turf/T)
 	//check for wall mounted frames
@@ -178,78 +188,50 @@
 		var/obj/item/wallframe/F = W
 		if(F.try_build(src, user))
 			F.attach(src, user)
-		return 1
+		return TRUE
 	//Poster stuff
 	else if(istype(W, /obj/item/poster))
 		place_poster(W,user)
-		return 1
+		return TRUE
 
-	return 0
-
+	return FALSE
 
 /turf/closed/wall/proc/try_decon(obj/item/W, mob/user, turf/T)
-	if( istype(W, /obj/item/weldingtool) )
+	if(istype(W, /obj/item/weldingtool))
 		var/obj/item/weldingtool/WT = W
-		if( WT.remove_fuel(0,user) )
+		if(WT.remove_fuel(0, user))
 			to_chat(user, "<span class='notice'>You begin slicing through the outer plating...</span>")
 			playsound(src, W.usesound, 100, 1)
-			if(do_after(user, slicing_duration*W.toolspeed, target = src))
-				if(!iswallturf(src) || !user || !WT || !WT.isOn() || !T)
-					return 1
-				if( user.loc == T && user.get_active_held_item() == WT )
+			if(do_after(user, slicing_duration * W.toolspeed, target = src))
+				if(iswallturf(src) && user && !QDELETED(WT) && WT.isOn() && !QDELETED(T) && (user.loc == T) && (user.get_active_held_item() == WT))
 					to_chat(user, "<span class='notice'>You remove the outer plating.</span>")
 					dismantle_wall()
-					return 1
-	else if( istype(W, /obj/item/gun/energy/plasmacutter) )
+				return TRUE
+	else if(istype(W, /obj/item/gun/energy/plasmacutter))
 		to_chat(user, "<span class='notice'>You begin slicing through the outer plating...</span>")
 		playsound(src, 'sound/items/welder.ogg', 100, 1)
-		if(do_after(user, slicing_duration*W.toolspeed, target = src))
-			if(!iswallturf(src) || !user || !W || !T)
-				return 1
-			if( user.loc == T && user.get_active_held_item() == W )
+		if(do_after(user, slicing_duration * W.toolspeed, target = src))
+			if(!iswallturf(src) || !user || QDELETED(W) || QDELETED(T))
+				return TRUE
+			if((user.loc == T) && (user.get_active_held_item() == W))
 				to_chat(user, "<span class='notice'>You remove the outer plating.</span>")
 				dismantle_wall()
 				visible_message("The wall was sliced apart by [user]!", "<span class='italics'>You hear metal being sliced apart.</span>")
-				return 1
-	return 0
+				return TRUE
+	return FALSE
 
 
 /turf/closed/wall/proc/try_destroy(obj/item/W, mob/user, turf/T)
 	if(istype(W, /obj/item/pickaxe/drill/jackhammer))
 		var/obj/item/pickaxe/drill/jackhammer/D = W
 		if(!iswallturf(src) || !user || !W || !T)
-			return 1
+			return TRUE
 		if( user.loc == T && user.get_active_held_item() == W )
 			D.playDigSound()
 			dismantle_wall()
 			visible_message("<span class='warning'>[user] smashes through the [name] with the [W.name]!</span>", "<span class='italics'>You hear the grinding of metal.</span>")
-			return 1
-	return 0
-
-
-/turf/closed/wall/proc/thermitemelt(mob/user)
-	cut_overlays()
-	var/obj/effect/overlay/O = new/obj/effect/overlay( src )
-	O.name = "thermite"
-	O.desc = "Looks hot."
-	O.icon = 'icons/effects/fire.dmi'
-	O.icon_state = "2"
-	O.anchored = TRUE
-	O.opacity = 1
-	O.density = TRUE
-	O.layer = FLY_LAYER
-
-	playsound(src, 'sound/items/welder.ogg', 100, 1)
-
-	if(thermite >= 50)
-		var/burning_time = max(100,300 - thermite)
-		var/turf/open/floor/F = ChangeTurf(/turf/open/floor/plating)
-		F.burn_tile()
-		F.add_hiddenprint(user)
-		QDEL_IN(O, burning_time)
-	else
-		thermite = 0
-		QDEL_IN(O, 50)
+			return TRUE
+	return FALSE
 
 /turf/closed/wall/singularity_pull(S, current_size)
 	..()
@@ -295,3 +277,8 @@
 			ChangeTurf(/turf/open/floor/plating)
 			return TRUE
 	return FALSE
+
+/turf/closed/wall/proc/add_damage_decal(var/mutable_appearance/decal)
+	cut_overlay(damage_decals)
+	LAZYADD(damage_decals, decal)
+	add_overlay(damage_decals)

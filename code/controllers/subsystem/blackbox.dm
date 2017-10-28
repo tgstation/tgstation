@@ -239,12 +239,8 @@ feedback data can be recorded in 5 formats:
 	var/sqljob = sanitizeSQL(L.mind.assigned_role)
 	var/sqlspecial = sanitizeSQL(L.mind.special_role)
 	var/sqlpod = sanitizeSQL(placeofdeath.name)
-	var/laname
-	var/lakey
-	if(L.lastattacker && ismob(L.lastattacker))
-		var/mob/LA = L.lastattacker
-		laname = sanitizeSQL(LA.real_name)
-		lakey = sanitizeSQL(LA.key)
+	var/laname = sanitizeSQL(L.lastattacker)
+	var/lakey = sanitizeSQL(L.lastattackerckey)
 	var/sqlbrute = sanitizeSQL(L.getBruteLoss())
 	var/sqlfire = sanitizeSQL(L.getFireLoss())
 	var/sqlbrain = sanitizeSQL(L.getBrainLoss())

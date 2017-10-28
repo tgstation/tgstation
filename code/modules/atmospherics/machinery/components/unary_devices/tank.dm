@@ -9,6 +9,7 @@
 	density = TRUE
 	var/gas_type = 0
 	layer = ABOVE_WINDOW_LAYER
+	pipe_flags = PIPING_ONE_PER_TURF
 
 /obj/machinery/atmospherics/components/unary/tank/New()
 	..()
@@ -27,9 +28,6 @@
 	icon_state = "orange"
 	gas_type = /datum/gas/plasma
 
-/obj/machinery/atmospherics/components/unary/tank/oxygen_agent_b
-	icon_state = "orange_2"
-	gas_type = /datum/gas/oxygen_agent_b
 
 /obj/machinery/atmospherics/components/unary/tank/oxygen
 	icon_state = "blue"

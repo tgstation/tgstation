@@ -5,7 +5,7 @@
 	icon = 'icons/mob/aibots.dmi'
 	layer = MOB_LAYER
 	gender = NEUTER
-	luminosity = 3
+	light_range = 3
 	stop_automated_movement = 1
 	wander = 0
 	healable = 0
@@ -104,6 +104,7 @@
 	if(stat)
 		return 0
 	on = TRUE
+	canmove = TRUE
 	set_light(initial(light_range))
 	update_icon()
 	diag_hud_set_botstat()
@@ -111,6 +112,7 @@
 
 /mob/living/simple_animal/bot/proc/turn_off()
 	on = FALSE
+	canmove = FALSE
 	set_light(0)
 	bot_reset() //Resets an AI's call, should it exist.
 	update_icon()

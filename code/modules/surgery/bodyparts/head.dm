@@ -124,39 +124,37 @@
 	cut_overlays()
 	. = ..()
 	if(dropped) //certain overlays only appear when the limb is being detached from its owner.
-		var/datum/sprite_accessory/S
 
 		if(status != BODYPART_ROBOTIC) //having a robotic head hides certain features.
 			//facial hair
 			if(facial_hair_style)
-				S = GLOB.facial_hair_styles_list[facial_hair_style]
+				var/datum/sprite_accessory/S = GLOB.facial_hair_styles_list[facial_hair_style]
 				if(S)
 					var/image/facial_overlay = image(S.icon, "[S.icon_state]", -HAIR_LAYER, SOUTH)
 					facial_overlay.color = "#" + facial_hair_color
 					facial_overlay.alpha = hair_alpha
 					. += facial_overlay
 
-			var/image/hair_overlay = image(layer = -HAIR_LAYER, dir = SOUTH)
-			. += hair_overlay
 			//Applies the debrained overlay if there is no brain
 			if(!brain)
+				var/image/debrain_overlay = image(layer = -HAIR_LAYER, dir = SOUTH)
 				if(animal_origin == ALIEN_BODYPART)
-					hair_overlay.icon = 'icons/mob/animal_parts.dmi'
-					hair_overlay.icon_state = "debrained_alien"
+					debrain_overlay.icon = 'icons/mob/animal_parts.dmi'
+					debrain_overlay.icon_state = "debrained_alien"
 				else if(animal_origin == LARVA_BODYPART)
-					hair_overlay.icon = 'icons/mob/animal_parts.dmi'
-					hair_overlay.icon_state = "debrained_larva"
+					debrain_overlay.icon = 'icons/mob/animal_parts.dmi'
+					debrain_overlay.icon_state = "debrained_larva"
 				else if(!(NOBLOOD in species_flags_list))
-					hair_overlay.icon = 'icons/mob/human_face.dmi'
-					hair_overlay.icon_state = "debrained"
+					debrain_overlay.icon = 'icons/mob/human_face.dmi'
+					debrain_overlay.icon_state = "debrained"
+				. += debrain_overlay
 			else
-				if(hair_style)
-					S = GLOB.hair_styles_list[hair_style]
-					if(S)
-						hair_overlay.icon = icon
-						hair_overlay.icon_state = "[S.icon_state]"
-						hair_overlay.color = "#" + hair_color
-						hair_overlay.alpha = hair_alpha
+				var/datum/sprite_accessory/S2 = GLOB.hair_styles_list[hair_style]
+				if(S2)
+					var/image/hair_overlay = image(S2.icon, "[S2.icon_state]", -HAIR_LAYER, SOUTH)
+					hair_overlay.color = "#" + hair_color
+					hair_overlay.alpha = hair_alpha
+					. += hair_overlay
 
 
 		// lipstick

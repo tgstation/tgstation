@@ -205,20 +205,20 @@
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(4, 0, L)
 		s.start()
-		new /obj/effect/temp_visual/revenant(L.loc)
-		sleep(20)
-		if(!L.on) //wait, wait, don't shock me
-			return
-		flick("[L.base_state]2", L)
-		for(var/mob/living/carbon/human/M in view(shock_range, L))
-			if(M == user)
-				continue
-			L.Beam(M,icon_state="purple_lightning",time=5)
-			M.electrocute_act(shock_damage, L, safety=1)
-			var/datum/effect_system/spark_spread/z = new /datum/effect_system/spark_spread
-			z.set_up(4, 0, M)
-			z.start()
-			playsound(M, 'sound/machines/defib_zap.ogg', 50, 1, -1)
+		new /obj/effect/temp_visual/revenant(get_turf(L))
+		addtimer(CALLBACK(src, .proc/overload_shock, L, user), 20)
+
+/obj/effect/proc_holder/spell/aoe_turf/revenant/overload/proc/overload_shock(obj/machinery/light/L, mob/user)
+	if(!L.on) //wait, wait, don't shock me
+		return
+	flick("[L.base_state]2", L)
+	for(var/mob/living/carbon/human/M in view(shock_range, L))
+		if(M == user)
+			continue
+		L.Beam(M,icon_state="purple_lightning",time=5)
+		M.electrocute_act(shock_damage, L, safety=1)
+		do_sparks(4, FALSE, M)
+		playsound(M, 'sound/machines/defib_zap.ogg', 50, 1, -1)
 
 //Defile: Corrupts nearby stuff, unblesses floor tiles.
 /obj/effect/proc_holder/spell/aoe_turf/revenant/defile
@@ -241,7 +241,7 @@
 	if(T.flags_1 & NOJAUNT_1)
 		T.flags_1 &= ~NOJAUNT_1
 		new /obj/effect/temp_visual/revenant(T)
-	if(!istype(T, /turf/open/floor/plating) && !istype(T, /turf/open/floor/engine/cult) && isfloorturf(T) && prob(15))
+	if(!isplatingturf(T) && !istype(T, /turf/open/floor/engine/cult) && isfloorturf(T) && prob(15))
 		var/turf/open/floor/floor = T
 		if(floor.intact && floor.floor_tile)
 			new floor.floor_tile(floor)
