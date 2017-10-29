@@ -68,11 +68,12 @@
 	map_path = json["map_path"]
 	map_file = json["map_file"]
 
-	minetype = json["minetype"] || minetype
-	allow_custom_shuttles = json["allow_custom_shuttles"] == TRUE
+	minetype = json["minetype"]
+	allow_custom_shuttles = json["allow_custom_shuttles"]
 
-	var/jtcl = json["transition_config"]
-	if(jtcl && jtcl != "default")
+	var/list/jtcl = json["transition_config"]
+
+	if(jtcl != "default")
 		transition_config.Cut()
 
 		for(var/I in jtcl)
@@ -85,22 +86,25 @@
 	CHECK_EXISTS("map_name")
 	CHECK_EXISTS("map_path")
 	CHECK_EXISTS("map_file")
+	CHECK_EXISTS("minetype")
+	CHECK_EXISTS("transition_config")
+	CHECK_EXISTS("allow_custom_shuttles")
 
 	var/path = GetFullMapPath(json["map_path"], json["map_file"])
 	if(!fexists(path))
 		log_world("Map file ([path]) does not exist!")
 		return
 
-	var/tc = json["transition_config"]
-	if(tc != "default")
-		if(!islist(tc))
+	if(json["transition_config"] != "default")
+		if(!islist(json["transition_config"]))
 			log_world("transition_config is not a list!")
 			return
 
-		for(var/I in tc)
+		var/list/jtcl = json["transition_config"]
+		for(var/I in jtcl)
 			if(isnull(TransitionStringToEnum(I)))
 				log_world("Invalid transition_config option: [I]!")
-			if(isnull(TransitionStringToEnum(tc[I])))
+			if(isnull(TransitionStringToEnum(jtcl[I])))
 				log_world("Invalid transition_config option: [I]!")
 
 	return TRUE
