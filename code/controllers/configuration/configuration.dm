@@ -124,7 +124,7 @@ GLOBAL_PROTECT(config_dir)
 	stat("[name]:", statclick)
 
 /datum/controller/configuration/proc/Get(entry_type)
-	if(IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "Get" && GLOB.LastAdminCalledTargetRef == "\ref[src]")
+	if(IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "Get" && GLOB.LastAdminCalledTargetRef == "[REF(src)]")
 		log_admin_private("Config access of [entry_type] attempted by [key_name(usr)]")
 		return
 	var/datum/config_entry/E = entry_type
@@ -137,7 +137,7 @@ GLOBAL_PROTECT(config_dir)
 	return E.value
 
 /datum/controller/configuration/proc/Set(entry_type, new_val)
-	if(IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "Set" && GLOB.LastAdminCalledTargetRef == "\ref[src]")
+	if(IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "Set" && GLOB.LastAdminCalledTargetRef == "[REF(src)]")
 		log_admin_private("Config rewrite of [entry_type] to [new_val] attempted by [key_name(usr)]")
 		return
 	var/datum/config_entry/E = entry_type

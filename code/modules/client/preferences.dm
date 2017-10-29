@@ -329,6 +329,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<a href='?_src_=prefs;preference=legs;task=input'>[features["legs"]]</a><BR>"
 
 				dat += "</td>"
+			
 			dat = add_hippie_choices(dat)
 			if(CONFIG_GET(flag/join_with_mutant_humans))
 

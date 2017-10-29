@@ -37,7 +37,7 @@
 		var/turf/T = get_turf(A)
 		var/area/my_area = get_area(T)
 		var/message = "A [reaction_name] reaction has occurred in [my_area.name] [ADMIN_COORDJMP(T)]"
-		message += " (<A HREF='?_src_=vars;Vars=\ref[A]'>VV</A>)"
+		message += " (<A HREF='?_src_=vars;Vars=[REF(A)]'>VV</A>)"
 
 		var/mob/M = get(A, /mob)
 		if(M)

@@ -38,47 +38,47 @@
 		body += " played by <b>[M.client]</b> "
 		body += "\[<A href='?_src_=holder;[HrefToken()];editrights=rank;ckey=[M.ckey]'>[M.client.holder ? M.client.holder.rank : "Player"]</A>\]"
 		if(CONFIG_GET(flag/use_exp_tracking))
-			body += "\[<A href='?_src_=holder;[HrefToken()];getplaytimewindow=\ref[M]'>" + M.client.get_exp_living() + "</a>\]"
+			body += "\[<A href='?_src_=holder;[HrefToken()];getplaytimewindow=[REF(M)]'>" + M.client.get_exp_living() + "</a>\]"
 
 	if(isnewplayer(M))
 		body += " <B>Hasn't Entered Game</B> "
 	else
-		body += " \[<A href='?_src_=holder;[HrefToken()];revive=\ref[M]'>Heal</A>\] "
+		body += " \[<A href='?_src_=holder;[HrefToken()];revive=[REF(M)]'>Heal</A>\] "
 
 	if(M.client)
 		body += "<br>\[<b>First Seen:</b> [M.client.player_join_date]\]\[<b>Byond account registered on:</b> [M.client.account_join_date]\]"
 		body += "<br><br><b>Show related accounts by:</b> "
-		body += "\[ <a href='?_src_=holder;[HrefToken()];showrelatedacc=cid;client=\ref[M.client]'>CID</a> | "
-		body += "<a href='?_src_=holder;[HrefToken()];showrelatedacc=ip;client=\ref[M.client]'>IP</a> \]"
+		body += "\[ <a href='?_src_=holder;[HrefToken()];showrelatedacc=cid;client=[REF(M.client)]'>CID</a> | "
+		body += "<a href='?_src_=holder;[HrefToken()];showrelatedacc=ip;client=[REF(M.client)]'>IP</a> \]"
 
 
 	body += "<br><br>\[ "
-	body += "<a href='?_src_=vars;[HrefToken()];Vars=\ref[M]'>VV</a> - "
-	body += "<a href='?_src_=holder;[HrefToken()];traitor=\ref[M]'>TP</a> - "
+	body += "<a href='?_src_=vars;[HrefToken()];Vars=[REF(M)]'>VV</a> - "
+	body += "<a href='?_src_=holder;[HrefToken()];traitor=[REF(M)]'>TP</a> - "
 	body += "<a href='?priv_msg=[M.ckey]'>PM</a> - "
-	body += "<a href='?_src_=holder;[HrefToken()];subtlemessage=\ref[M]'>SM</a> - "
-	body += "<a href='?_src_=holder;[HrefToken()];adminplayerobservefollow=\ref[M]'>FLW</a> - "
-	body += "<a href='?_src_=holder;[HrefToken()];individuallog=\ref[M]'>LOGS</a>\] <br>"
+	body += "<a href='?_src_=holder;[HrefToken()];subtlemessage=[REF(M)]'>SM</a> - "
+	body += "<a href='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(M)]'>FLW</a> - "
+	body += "<a href='?_src_=holder;[HrefToken()];individuallog=[REF(M)]'>LOGS</a>\] <br>"
 
 	body += "<b>Mob type</b> = [M.type]<br><br>"
 
-	body += "<A href='?_src_=holder;[HrefToken()];boot2=\ref[M]'>Kick</A> | "
-	body += "<A href='?_src_=holder;[HrefToken()];newban=\ref[M]'>Ban</A> | "
-	body += "<A href='?_src_=holder;[HrefToken()];jobban2=\ref[M]'>Jobban</A> | "
-	body += "<A href='?_src_=holder;[HrefToken()];appearanceban=\ref[M]'>Identity Ban</A> | "
+	body += "<A href='?_src_=holder;[HrefToken()];boot2=[REF(M)]'>Kick</A> | "
+	body += "<A href='?_src_=holder;[HrefToken()];newban=[REF(M)]'>Ban</A> | "
+	body += "<A href='?_src_=holder;[HrefToken()];jobban2=[REF(M)]'>Jobban</A> | "
+	body += "<A href='?_src_=holder;[HrefToken()];appearanceban=[REF(M)]'>Identity Ban</A> | "
 	if(jobban_isbanned(M, "OOC"))
-		body+= "<A href='?_src_=holder;[HrefToken()];jobban3=OOC;jobban4=\ref[M]'><font color=red>OOCBan</font></A> | "
+		body+= "<A href='?_src_=holder;[HrefToken()];jobban3=OOC;jobban4=[REF(M)]'><font color=red>OOCBan</font></A> | "
 	else
-		body+= "<A href='?_src_=holder;[HrefToken()];jobban3=OOC;jobban4=\ref[M]'>OOCBan</A> | "
+		body+= "<A href='?_src_=holder;[HrefToken()];jobban3=OOC;jobban4=[REF(M)]'>OOCBan</A> | "
 	if(jobban_isbanned(M, "emote"))
-		body+= "<A href='?_src_=holder;[HrefToken()];jobban3=emote;jobban4=\ref[M]'><font color=red>EmoteBan</font></A> | "
+		body+= "<A href='?_src_=holder;[HrefToken()];jobban3=emote;jobban4=[REF(M)]'><font color=red>EmoteBan</font></A> | "
 	else
-		body+= "<A href='?_src_=holder;[HrefToken()];jobban3=emote;jobban4=\ref[M]'>Emoteban</A> | "
+		body+= "<A href='?_src_=holder;[HrefToken()];jobban3=emote;jobban4=[REF(M)]'>Emoteban</A> | "
 
 	body += "<A href='?_src_=holder;[HrefToken()];showmessageckey=[M.ckey]'>Notes | Messages | Watchlist</A> | "
 	if(M.client)
-		body += "| <A href='?_src_=holder;[HrefToken()];sendtoprison=\ref[M]'>Prison</A> | "
-		body += "\ <A href='?_src_=holder;[HrefToken()];sendbacktolobby=\ref[M]'>Send back to Lobby</A> | "
+		body += "| <A href='?_src_=holder;[HrefToken()];sendtoprison=[REF(M)]'>Prison</A> | "
+		body += "\ <A href='?_src_=holder;[HrefToken()];sendbacktolobby=[REF(M)]'>Send back to Lobby</A> | "
 		var/muted = M.client.prefs.muted
 		body += "<br><b>Mute: </b> "
 		body += "\[<A href='?_src_=holder;[HrefToken()];mute=[M.ckey];mute_type=[MUTE_IC]'><font color='[(muted & MUTE_IC)?"red":"blue"]'>IC</font></a> | "
@@ -89,15 +89,15 @@
 		body += "(<A href='?_src_=holder;[HrefToken()];mute=[M.ckey];mute_type=[MUTE_ALL]'><font color='[(muted & MUTE_ALL)?"red":"blue"]'>toggle all</font></a>)"
 
 	body += "<br><br>"
-	body += "<A href='?_src_=holder;[HrefToken()];jumpto=\ref[M]'><b>Jump to</b></A> | "
-	body += "<A href='?_src_=holder;[HrefToken()];getmob=\ref[M]'>Get</A> | "
-	body += "<A href='?_src_=holder;[HrefToken()];sendmob=\ref[M]'>Send To</A>"
+	body += "<A href='?_src_=holder;[HrefToken()];jumpto=[REF(M)]'><b>Jump to</b></A> | "
+	body += "<A href='?_src_=holder;[HrefToken()];getmob=[REF(M)]'>Get</A> | "
+	body += "<A href='?_src_=holder;[HrefToken()];sendmob=[REF(M)]'>Send To</A>"
 
 	body += "<br><br>"
-	body += "<A href='?_src_=holder;[HrefToken()];traitor=\ref[M]'>Traitor panel</A> | "
-	body += "<A href='?_src_=holder;[HrefToken()];narrateto=\ref[M]'>Narrate to</A> | "
-	body += "<A href='?_src_=holder;[HrefToken()];subtlemessage=\ref[M]'>Subtle message</A> | "
-	body += "<A href='?_src_=holder;[HrefToken()];languagemenu=\ref[M]'>Language Menu</A>"
+	body += "<A href='?_src_=holder;[HrefToken()];traitor=[REF(M)]'>Traitor panel</A> | "
+	body += "<A href='?_src_=holder;[HrefToken()];narrateto=[REF(M)]'>Narrate to</A> | "
+	body += "<A href='?_src_=holder;[HrefToken()];subtlemessage=[REF(M)]'>Subtle message</A> | "
+	body += "<A href='?_src_=holder;[HrefToken()];languagemenu=[REF(M)]'>Language Menu</A>"
 
 	if (M.client)
 		if(!isnewplayer(M))
@@ -109,76 +109,76 @@
 			if(ishuman(M))
 				body += "<B>Human</B> | "
 			else
-				body += "<A href='?_src_=holder;[HrefToken()];humanone=\ref[M]'>Humanize</A> | "
+				body += "<A href='?_src_=holder;[HrefToken()];humanone=[REF(M)]'>Humanize</A> | "
 
 			//Monkey
 			if(ismonkey(M))
 				body += "<B>Monkeyized</B> | "
 			else
-				body += "<A href='?_src_=holder;[HrefToken()];monkeyone=\ref[M]'>Monkeyize</A> | "
+				body += "<A href='?_src_=holder;[HrefToken()];monkeyone=[REF(M)]'>Monkeyize</A> | "
 
 			//Corgi
 			if(iscorgi(M))
 				body += "<B>Corgized</B> | "
 			else
-				body += "<A href='?_src_=holder;[HrefToken()];corgione=\ref[M]'>Corgize</A> | "
+				body += "<A href='?_src_=holder;[HrefToken()];corgione=[REF(M)]'>Corgize</A> | "
 
 			//AI / Cyborg
 			if(isAI(M))
 				body += "<B>Is an AI</B> "
 			else if(ishuman(M))
-				body += "<A href='?_src_=holder;[HrefToken()];makeai=\ref[M]'>Make AI</A> | "
-				body += "<A href='?_src_=holder;[HrefToken()];makerobot=\ref[M]'>Make Robot</A> | "
-				body += "<A href='?_src_=holder;[HrefToken()];makealien=\ref[M]'>Make Alien</A> | "
-				body += "<A href='?_src_=holder;[HrefToken()];makeslime=\ref[M]'>Make Slime</A> | "
-				body += "<A href='?_src_=holder;[HrefToken()];makeblob=\ref[M]'>Make Blob</A> | "
+				body += "<A href='?_src_=holder;[HrefToken()];makeai=[REF(M)]'>Make AI</A> | "
+				body += "<A href='?_src_=holder;[HrefToken()];makerobot=[REF(M)]'>Make Robot</A> | "
+				body += "<A href='?_src_=holder;[HrefToken()];makealien=[REF(M)]'>Make Alien</A> | "
+				body += "<A href='?_src_=holder;[HrefToken()];makeslime=[REF(M)]'>Make Slime</A> | "
+				body += "<A href='?_src_=holder;[HrefToken()];makeblob=[REF(M)]'>Make Blob</A> | "
 
 			//Simple Animals
 			if(isanimal(M))
-				body += "<A href='?_src_=holder;[HrefToken()];makeanimal=\ref[M]'>Re-Animalize</A> | "
+				body += "<A href='?_src_=holder;[HrefToken()];makeanimal=[REF(M)]'>Re-Animalize</A> | "
 			else
-				body += "<A href='?_src_=holder;[HrefToken()];makeanimal=\ref[M]'>Animalize</A> | "
+				body += "<A href='?_src_=holder;[HrefToken()];makeanimal=[REF(M)]'>Animalize</A> | "
 
 			body += "<br><br>"
 			body += "<b>Rudimentary transformation:</b><font size=2><br>These transformations only create a new mob type and copy stuff over. They do not take into account MMIs and similar mob-specific things. The buttons in 'Transformations' are preferred, when possible.</font><br>"
-			body += "<A href='?_src_=holder;[HrefToken()];simplemake=observer;mob=\ref[M]'>Observer</A> | "
-			body += "\[ Alien: <A href='?_src_=holder;[HrefToken()];simplemake=drone;mob=\ref[M]'>Drone</A>, "
-			body += "<A href='?_src_=holder;[HrefToken()];simplemake=hunter;mob=\ref[M]'>Hunter</A>, "
-			body += "<A href='?_src_=holder;[HrefToken()];simplemake=sentinel;mob=\ref[M]'>Sentinel</A>, "
-			body += "<A href='?_src_=holder;[HrefToken()];simplemake=praetorian;mob=\ref[M]'>Praetorian</A>, "
-			body += "<A href='?_src_=holder;[HrefToken()];simplemake=queen;mob=\ref[M]'>Queen</A>, "
-			body += "<A href='?_src_=holder;[HrefToken()];simplemake=larva;mob=\ref[M]'>Larva</A> \] "
-			body += "<A href='?_src_=holder;[HrefToken()];simplemake=human;mob=\ref[M]'>Human</A> "
-			body += "\[ slime: <A href='?_src_=holder;[HrefToken()];simplemake=slime;mob=\ref[M]'>Baby</A>, "
-			body += "<A href='?_src_=holder;[HrefToken()];simplemake=adultslime;mob=\ref[M]'>Adult</A> \] "
-			body += "<A href='?_src_=holder;[HrefToken()];simplemake=monkey;mob=\ref[M]'>Monkey</A> | "
-			body += "<A href='?_src_=holder;[HrefToken()];simplemake=robot;mob=\ref[M]'>Cyborg</A> | "
-			body += "<A href='?_src_=holder;[HrefToken()];simplemake=cat;mob=\ref[M]'>Cat</A> | "
-			body += "<A href='?_src_=holder;[HrefToken()];simplemake=runtime;mob=\ref[M]'>Runtime</A> | "
-			body += "<A href='?_src_=holder;[HrefToken()];simplemake=corgi;mob=\ref[M]'>Corgi</A> | "
-			body += "<A href='?_src_=holder;[HrefToken()];simplemake=ian;mob=\ref[M]'>Ian</A> | "
-			body += "<A href='?_src_=holder;[HrefToken()];simplemake=crab;mob=\ref[M]'>Crab</A> | "
-			body += "<A href='?_src_=holder;[HrefToken()];simplemake=coffee;mob=\ref[M]'>Coffee</A> | "
-			body += "\[ Construct: <A href='?_src_=holder;[HrefToken()];simplemake=constructarmored;mob=\ref[M]'>Juggernaut</A> , "
-			body += "<A href='?_src_=holder;[HrefToken()];simplemake=constructbuilder;mob=\ref[M]'>Artificer</A> , "
-			body += "<A href='?_src_=holder;[HrefToken()];simplemake=constructwraith;mob=\ref[M]'>Wraith</A> \] "
-			body += "<A href='?_src_=holder;[HrefToken()];simplemake=shade;mob=\ref[M]'>Shade</A>"
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=observer;mob=[REF(M)]'>Observer</A> | "
+			body += "\[ Alien: <A href='?_src_=holder;[HrefToken()];simplemake=drone;mob=[REF(M)]'>Drone</A>, "
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=hunter;mob=[REF(M)]'>Hunter</A>, "
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=sentinel;mob=[REF(M)]'>Sentinel</A>, "
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=praetorian;mob=[REF(M)]'>Praetorian</A>, "
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=queen;mob=[REF(M)]'>Queen</A>, "
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=larva;mob=[REF(M)]'>Larva</A> \] "
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=human;mob=[REF(M)]'>Human</A> "
+			body += "\[ slime: <A href='?_src_=holder;[HrefToken()];simplemake=slime;mob=[REF(M)]'>Baby</A>, "
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=adultslime;mob=[REF(M)]'>Adult</A> \] "
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=monkey;mob=[REF(M)]'>Monkey</A> | "
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=robot;mob=[REF(M)]'>Cyborg</A> | "
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=cat;mob=[REF(M)]'>Cat</A> | "
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=runtime;mob=[REF(M)]'>Runtime</A> | "
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=corgi;mob=[REF(M)]'>Corgi</A> | "
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=ian;mob=[REF(M)]'>Ian</A> | "
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=crab;mob=[REF(M)]'>Crab</A> | "
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=coffee;mob=[REF(M)]'>Coffee</A> | "
+			body += "\[ Construct: <A href='?_src_=holder;[HrefToken()];simplemake=constructarmored;mob=[REF(M)]'>Juggernaut</A> , "
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=constructbuilder;mob=[REF(M)]'>Artificer</A> , "
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=constructwraith;mob=[REF(M)]'>Wraith</A> \] "
+			body += "<A href='?_src_=holder;[HrefToken()];simplemake=shade;mob=[REF(M)]'>Shade</A>"
 			body += "<br>"
 
 	if (M.client)
 		body += "<br><br>"
 		body += "<b>Other actions:</b>"
 		body += "<br>"
-		body += "<A href='?_src_=holder;[HrefToken()];forcespeech=\ref[M]'>Forcesay</A> | "
-		body += "<A href='?_src_=holder;[HrefToken()];tdome1=\ref[M]'>Thunderdome 1</A> | "
-		body += "<A href='?_src_=holder;[HrefToken()];tdome2=\ref[M]'>Thunderdome 2</A> | "
-		body += "<A href='?_src_=holder;[HrefToken()];tdomeadmin=\ref[M]'>Thunderdome Admin</A> | "
-		body += "<A href='?_src_=holder;[HrefToken()];tdomeobserve=\ref[M]'>Thunderdome Observer</A> | "
+		body += "<A href='?_src_=holder;[HrefToken()];forcespeech=[REF(M)]'>Forcesay</A> | "
+		body += "<A href='?_src_=holder;[HrefToken()];tdome1=[REF(M)]'>Thunderdome 1</A> | "
+		body += "<A href='?_src_=holder;[HrefToken()];tdome2=[REF(M)]'>Thunderdome 2</A> | "
+		body += "<A href='?_src_=holder;[HrefToken()];tdomeadmin=[REF(M)]'>Thunderdome Admin</A> | "
+		body += "<A href='?_src_=holder;[HrefToken()];tdomeobserve=[REF(M)]'>Thunderdome Observer</A> | "
 
 	body += "<br>"
 	body += "</body></html>"
 
-	usr << browse(body, "window=adminplayeropts-\ref[M];size=550x515")
+	usr << browse(body, "window=adminplayeropts-[REF(M)];size=550x515")
 	SSblackbox.add_details("admin_verb","Player Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -201,19 +201,19 @@
 			dat += "<BR>Feed channels and stories entered through here will be uneditable and handled as official news by the rest of the units."
 			dat += "<BR>Note that this panel allows full freedom over the news network, there are no constrictions except the few basic ones. Don't break things!</FONT>"
 			if(GLOB.news_network.wanted_issue.active)
-				dat+= "<HR><A href='?src=\ref[src];[HrefToken()];ac_view_wanted=1'>Read Wanted Issue</A>"
-			dat+= "<HR><BR><A href='?src=\ref[src];[HrefToken()];ac_create_channel=1'>Create Feed Channel</A>"
-			dat+= "<BR><A href='?src=\ref[src];[HrefToken()];ac_view=1'>View Feed Channels</A>"
-			dat+= "<BR><A href='?src=\ref[src];[HrefToken()];ac_create_feed_story=1'>Submit new Feed story</A>"
-			dat+= "<BR><BR><A href='?src=\ref[usr];[HrefToken()];mach_close=newscaster_main'>Exit</A>"
+				dat+= "<HR><A href='?src=[REF(src)];[HrefToken()];ac_view_wanted=1'>Read Wanted Issue</A>"
+			dat+= "<HR><BR><A href='?src=[REF(src)];[HrefToken()];ac_create_channel=1'>Create Feed Channel</A>"
+			dat+= "<BR><A href='?src=[REF(src)];[HrefToken()];ac_view=1'>View Feed Channels</A>"
+			dat+= "<BR><A href='?src=[REF(src)];[HrefToken()];ac_create_feed_story=1'>Submit new Feed story</A>"
+			dat+= "<BR><BR><A href='?src=[REF(usr)];[HrefToken()];mach_close=newscaster_main'>Exit</A>"
 			var/wanted_already = 0
 			if(GLOB.news_network.wanted_issue.active)
 				wanted_already = 1
 			dat+="<HR><B>Feed Security functions:</B><BR>"
-			dat+="<BR><A href='?src=\ref[src];[HrefToken()];ac_menu_wanted=1'>[(wanted_already) ? ("Manage") : ("Publish")] \"Wanted\" Issue</A>"
-			dat+="<BR><A href='?src=\ref[src];[HrefToken()];ac_menu_censor_story=1'>Censor Feed Stories</A>"
-			dat+="<BR><A href='?src=\ref[src];[HrefToken()];ac_menu_censor_channel=1'>Mark Feed Channel with Nanotrasen D-Notice (disables and locks the channel).</A>"
-			dat+="<BR><HR><A href='?src=\ref[src];[HrefToken()];ac_set_signature=1'>The newscaster recognises you as:<BR> <FONT COLOR='green'>[src.admin_signature]</FONT></A>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_menu_wanted=1'>[(wanted_already) ? ("Manage") : ("Publish")] \"Wanted\" Issue</A>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_menu_censor_story=1'>Censor Feed Stories</A>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_menu_censor_channel=1'>Mark Feed Channel with Nanotrasen D-Notice (disables and locks the channel).</A>"
+			dat+="<BR><HR><A href='?src=[REF(src)];[HrefToken()];ac_set_signature=1'>The newscaster recognises you as:<BR> <FONT COLOR='green'>[src.admin_signature]</FONT></A>"
 		if(1)
 			dat+= "Station Feed Channels<HR>"
 			if( isemptylist(GLOB.news_network.network_channels) )
@@ -221,36 +221,36 @@
 			else
 				for(var/datum/newscaster/feed_channel/CHANNEL in GLOB.news_network.network_channels)
 					if(CHANNEL.is_admin_channel)
-						dat+="<B><FONT style='BACKGROUND-COLOR: LightGreen'><A href='?src=\ref[src];ac_show_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A></FONT></B><BR>"
+						dat+="<B><FONT style='BACKGROUND-COLOR: LightGreen'><A href='?src=[REF(src)];ac_show_channel=[REF(CHANNEL)]'>[CHANNEL.channel_name]</A></FONT></B><BR>"
 					else
-						dat+="<B><A href='?src=\ref[src];[HrefToken()];ac_show_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR></B>"
-			dat+="<BR><HR><A href='?src=\ref[src];[HrefToken()];ac_refresh=1'>Refresh</A>"
-			dat+="<BR><A href='?src=\ref[src];[HrefToken()];ac_setScreen=[0]'>Back</A>"
+						dat+="<B><A href='?src=[REF(src)];[HrefToken()];ac_show_channel=[REF(CHANNEL)]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR></B>"
+			dat+="<BR><HR><A href='?src=[REF(src)];[HrefToken()];ac_refresh=1'>Refresh</A>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[0]'>Back</A>"
 		if(2)
 			dat+="Creating new Feed Channel..."
-			dat+="<HR><B><A href='?src=\ref[src];[HrefToken()];ac_set_channel_name=1'>Channel Name</A>:</B> [src.admincaster_feed_channel.channel_name]<BR>"
-			dat+="<B><A href='?src=\ref[src];[HrefToken()];ac_set_signature=1'>Channel Author</A>:</B> <FONT COLOR='green'>[src.admin_signature]</FONT><BR>"
-			dat+="<B><A href='?src=\ref[src];[HrefToken()];ac_set_channel_lock=1'>Will Accept Public Feeds</A>:</B> [(src.admincaster_feed_channel.locked) ? ("NO") : ("YES")]<BR><BR>"
-			dat+="<BR><A href='?src=\ref[src];[HrefToken()];ac_submit_new_channel=1'>Submit</A><BR><BR><A href='?src=\ref[src];ac_setScreen=[0]'>Cancel</A><BR>"
+			dat+="<HR><B><A href='?src=[REF(src)];[HrefToken()];ac_set_channel_name=1'>Channel Name</A>:</B> [src.admincaster_feed_channel.channel_name]<BR>"
+			dat+="<B><A href='?src=[REF(src)];[HrefToken()];ac_set_signature=1'>Channel Author</A>:</B> <FONT COLOR='green'>[src.admin_signature]</FONT><BR>"
+			dat+="<B><A href='?src=[REF(src)];[HrefToken()];ac_set_channel_lock=1'>Will Accept Public Feeds</A>:</B> [(src.admincaster_feed_channel.locked) ? ("NO") : ("YES")]<BR><BR>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_submit_new_channel=1'>Submit</A><BR><BR><A href='?src=[REF(src)];ac_setScreen=[0]'>Cancel</A><BR>"
 		if(3)
 			dat+="Creating new Feed Message..."
-			dat+="<HR><B><A href='?src=\ref[src];[HrefToken()];ac_set_channel_receiving=1'>Receiving Channel</A>:</B> [src.admincaster_feed_channel.channel_name]<BR>" //MARK
+			dat+="<HR><B><A href='?src=[REF(src)];[HrefToken()];ac_set_channel_receiving=1'>Receiving Channel</A>:</B> [src.admincaster_feed_channel.channel_name]<BR>" //MARK
 			dat+="<B>Message Author:</B> <FONT COLOR='green'>[src.admin_signature]</FONT><BR>"
-			dat+="<B><A href='?src=\ref[src];[HrefToken()];ac_set_new_message=1'>Message Body</A>:</B> [src.admincaster_feed_message.returnBody(-1)] <BR>"
-			dat+="<BR><A href='?src=\ref[src];[HrefToken()];ac_submit_new_message=1'>Submit</A><BR><BR><A href='?src=\ref[src];ac_setScreen=[0]'>Cancel</A><BR>"
+			dat+="<B><A href='?src=[REF(src)];[HrefToken()];ac_set_new_message=1'>Message Body</A>:</B> [src.admincaster_feed_message.returnBody(-1)] <BR>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_submit_new_message=1'>Submit</A><BR><BR><A href='?src=[REF(src)];ac_setScreen=[0]'>Cancel</A><BR>"
 		if(4)
 			dat+="Feed story successfully submitted to [src.admincaster_feed_channel.channel_name].<BR><BR>"
-			dat+="<BR><A href='?src=\ref[src];[HrefToken()];ac_setScreen=[0]'>Return</A><BR>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[0]'>Return</A><BR>"
 		if(5)
 			dat+="Feed Channel [src.admincaster_feed_channel.channel_name] created successfully.<BR><BR>"
-			dat+="<BR><A href='?src=\ref[src];[HrefToken()];ac_setScreen=[0]'>Return</A><BR>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[0]'>Return</A><BR>"
 		if(6)
 			dat+="<B><FONT COLOR='maroon'>ERROR: Could not submit Feed story to Network.</B></FONT><HR><BR>"
 			if(src.admincaster_feed_channel.channel_name=="")
 				dat+="<FONT COLOR='maroon'>Invalid receiving channel name.</FONT><BR>"
 			if(src.admincaster_feed_message.returnBody(-1) == "" || src.admincaster_feed_message.returnBody(-1) == "\[REDACTED\]")
 				dat+="<FONT COLOR='maroon'>Invalid message body.</FONT><BR>"
-			dat+="<BR><A href='?src=\ref[src];[HrefToken()];ac_setScreen=[3]'>Return</A><BR>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[3]'>Return</A><BR>"
 		if(7)
 			dat+="<B><FONT COLOR='maroon'>ERROR: Could not submit Feed Channel to Network.</B></FONT><HR><BR>"
 			if(src.admincaster_feed_channel.channel_name =="" || src.admincaster_feed_channel.channel_name == "\[REDACTED\]")
@@ -262,7 +262,7 @@
 					break
 			if(check)
 				dat+="<FONT COLOR='maroon'>Channel name already in use.</FONT><BR>"
-			dat+="<BR><A href='?src=\ref[src];[HrefToken()];ac_setScreen=[2]'>Return</A><BR>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[2]'>Return</A><BR>"
 		if(9)
 			dat+="<B>[admincaster_feed_channel.channel_name]: </B><FONT SIZE=1>\[created by: <FONT COLOR='maroon'>[admincaster_feed_channel.returnAuthor(-1)]</FONT>\]</FONT><HR>"
 			if(src.admincaster_feed_channel.censored)
@@ -284,8 +284,8 @@
 						for(var/datum/newscaster/feed_comment/comment in MESSAGE.comments)
 							dat+="[comment.body]<br><font size=1>[comment.author] [comment.time_stamp]</font><br>"
 						dat+="<br>"
-			dat+="<BR><HR><A href='?src=\ref[src];[HrefToken()];ac_refresh=1'>Refresh</A>"
-			dat+="<BR><A href='?src=\ref[src];[HrefToken()];ac_setScreen=[1]'>Back</A>"
+			dat+="<BR><HR><A href='?src=[REF(src)];[HrefToken()];ac_refresh=1'>Refresh</A>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[1]'>Back</A>"
 		if(10)
 			dat+="<B>Nanotrasen Feed Censorship Tool</B><BR>"
 			dat+="<FONT SIZE=1>NOTE: Due to the nature of news Feeds, total deletion of a Feed Story is not possible.<BR>"
@@ -295,8 +295,8 @@
 				dat+="<I>No feed channels found active...</I><BR>"
 			else
 				for(var/datum/newscaster/feed_channel/CHANNEL in GLOB.news_network.network_channels)
-					dat+="<A href='?src=\ref[src];[HrefToken()];ac_pick_censor_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR>"
-			dat+="<BR><A href='?src=\ref[src];[HrefToken()];ac_setScreen=[0]'>Cancel</A>"
+					dat+="<A href='?src=[REF(src)];[HrefToken()];ac_pick_censor_channel=[REF(CHANNEL)]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[0]'>Cancel</A>"
 		if(11)
 			dat+="<B>Nanotrasen D-Notice Handler</B><HR>"
 			dat+="<FONT SIZE=1>A D-Notice is to be bestowed upon the channel if the handling Authority deems it as harmful for the station's"
@@ -306,26 +306,26 @@
 				dat+="<I>No feed channels found active...</I><BR>"
 			else
 				for(var/datum/newscaster/feed_channel/CHANNEL in GLOB.news_network.network_channels)
-					dat+="<A href='?src=\ref[src];[HrefToken()];ac_pick_d_notice=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR>"
+					dat+="<A href='?src=[REF(src)];[HrefToken()];ac_pick_d_notice=[REF(CHANNEL)]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR>"
 
-			dat+="<BR><A href='?src=\ref[src];[HrefToken()];ac_setScreen=[0]'>Back</A>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[0]'>Back</A>"
 		if(12)
 			dat+="<B>[src.admincaster_feed_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[src.admincaster_feed_channel.returnAuthor(-1)]</FONT> \]</FONT><BR>"
-			dat+="<FONT SIZE=2><A href='?src=\ref[src];[HrefToken()];ac_censor_channel_author=\ref[src.admincaster_feed_channel]'>[(src.admincaster_feed_channel.authorCensor) ? ("Undo Author censorship") : ("Censor channel Author")]</A></FONT><HR>"
+			dat+="<FONT SIZE=2><A href='?src=[REF(src)];[HrefToken()];ac_censor_channel_author=[REF(src.admincaster_feed_channel)]'>[(src.admincaster_feed_channel.authorCensor) ? ("Undo Author censorship") : ("Censor channel Author")]</A></FONT><HR>"
 
 			if( isemptylist(src.admincaster_feed_channel.messages) )
 				dat+="<I>No feed messages found in channel...</I><BR>"
 			else
 				for(var/datum/newscaster/feed_message/MESSAGE in src.admincaster_feed_channel.messages)
 					dat+="-[MESSAGE.returnBody(-1)] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.returnAuthor(-1)]</FONT>\]</FONT><BR>"
-					dat+="<FONT SIZE=2><A href='?src=\ref[src];[HrefToken()];ac_censor_channel_story_body=\ref[MESSAGE]'>[(MESSAGE.bodyCensor) ? ("Undo story censorship") : ("Censor story")]</A>  -  <A href='?src=\ref[src];ac_censor_channel_story_author=\ref[MESSAGE]'>[(MESSAGE.authorCensor) ? ("Undo Author Censorship") : ("Censor message Author")]</A></FONT><BR>"
-					dat+="[MESSAGE.comments.len] comment[MESSAGE.comments.len > 1 ? "s" : ""]: <a href='?src=\ref[src];[HrefToken()];ac_lock_comment=\ref[MESSAGE]'>[MESSAGE.locked ? "Unlock" : "Lock"]</a><br>"
+					dat+="<FONT SIZE=2><A href='?src=[REF(src)];[HrefToken()];ac_censor_channel_story_body=[REF(MESSAGE)]'>[(MESSAGE.bodyCensor) ? ("Undo story censorship") : ("Censor story")]</A>  -  <A href='?src=[REF(src)];ac_censor_channel_story_author=[REF(MESSAGE)]'>[(MESSAGE.authorCensor) ? ("Undo Author Censorship") : ("Censor message Author")]</A></FONT><BR>"
+					dat+="[MESSAGE.comments.len] comment[MESSAGE.comments.len > 1 ? "s" : ""]: <a href='?src=[REF(src)];[HrefToken()];ac_lock_comment=[REF(MESSAGE)]'>[MESSAGE.locked ? "Unlock" : "Lock"]</a><br>"
 					for(var/datum/newscaster/feed_comment/comment in MESSAGE.comments)
-						dat+="[comment.body] <a href='?src=\ref[src];[HrefToken()];ac_del_comment=\ref[comment];ac_del_comment_msg=\ref[MESSAGE]'>X</a><br><font size=1>[comment.author] [comment.time_stamp]</font><br>"
-			dat+="<BR><A href='?src=\ref[src];[HrefToken()];ac_setScreen=[10]'>Back</A>"
+						dat+="[comment.body] <a href='?src=[REF(src)];[HrefToken()];ac_del_comment=[REF(comment)];ac_del_comment_msg=[REF(MESSAGE)]'>X</a><br><font size=1>[comment.author] [comment.time_stamp]</font><br>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[10]'>Back</A>"
 		if(13)
 			dat+="<B>[src.admincaster_feed_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[src.admincaster_feed_channel.returnAuthor(-1)]</FONT> \]</FONT><BR>"
-			dat+="Channel messages listed below. If you deem them dangerous to the station, you can <A href='?src=\ref[src];[HrefToken()];ac_toggle_d_notice=\ref[src.admincaster_feed_channel]'>Bestow a D-Notice upon the channel</A>.<HR>"
+			dat+="Channel messages listed below. If you deem them dangerous to the station, you can <A href='?src=[REF(src)];[HrefToken()];ac_toggle_d_notice=[REF(src.admincaster_feed_channel)]'>Bestow a D-Notice upon the channel</A>.<HR>"
 			if(src.admincaster_feed_channel.censored)
 				dat+="<FONT COLOR='red'><B>ATTENTION: </B></FONT>This channel has been deemed as threatening to the welfare of the station, and marked with a Nanotrasen D-Notice.<BR>"
 				dat+="No further feed story additions are allowed while the D-Notice is in effect.</FONT><BR><BR>"
@@ -335,7 +335,7 @@
 				else
 					for(var/datum/newscaster/feed_message/MESSAGE in src.admincaster_feed_channel.messages)
 						dat+="-[MESSAGE.returnBody(-1)] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.returnAuthor(-1)]</FONT>\]</FONT><BR>"
-			dat+="<BR><A href='?src=\ref[src];[HrefToken()];ac_setScreen=[11]'>Back</A>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[11]'>Back</A>"
 		if(14)
 			dat+="<B>Wanted Issue Handler:</B>"
 			var/wanted_already = 0
@@ -346,29 +346,29 @@
 			if(wanted_already)
 				dat+="<FONT SIZE=2><BR><I>A wanted issue is already in Feed Circulation. You can edit or cancel it below.</FONT></I>"
 			dat+="<HR>"
-			dat+="<A href='?src=\ref[src];[HrefToken()];ac_set_wanted_name=1'>Criminal Name</A>: [src.admincaster_wanted_message.criminal] <BR>"
-			dat+="<A href='?src=\ref[src];[HrefToken()];ac_set_wanted_desc=1'>Description</A>: [src.admincaster_wanted_message.body] <BR>"
+			dat+="<A href='?src=[REF(src)];[HrefToken()];ac_set_wanted_name=1'>Criminal Name</A>: [src.admincaster_wanted_message.criminal] <BR>"
+			dat+="<A href='?src=[REF(src)];[HrefToken()];ac_set_wanted_desc=1'>Description</A>: [src.admincaster_wanted_message.body] <BR>"
 			if(wanted_already)
 				dat+="<B>Wanted Issue created by:</B><FONT COLOR='green'>[GLOB.news_network.wanted_issue.scannedUser]</FONT><BR>"
 			else
 				dat+="<B>Wanted Issue will be created under prosecutor:</B><FONT COLOR='green'>[src.admin_signature]</FONT><BR>"
-			dat+="<BR><A href='?src=\ref[src];[HrefToken()];ac_submit_wanted=[end_param]'>[(wanted_already) ? ("Edit Issue") : ("Submit")]</A>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_submit_wanted=[end_param]'>[(wanted_already) ? ("Edit Issue") : ("Submit")]</A>"
 			if(wanted_already)
-				dat+="<BR><A href='?src=\ref[src];[HrefToken()];ac_cancel_wanted=1'>Take down Issue</A>"
-			dat+="<BR><A href='?src=\ref[src];[HrefToken()];ac_setScreen=[0]'>Cancel</A>"
+				dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_cancel_wanted=1'>Take down Issue</A>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[0]'>Cancel</A>"
 		if(15)
 			dat+="<FONT COLOR='green'>Wanted issue for [src.admincaster_wanted_message.criminal] is now in Network Circulation.</FONT><BR><BR>"
-			dat+="<BR><A href='?src=\ref[src];[HrefToken()];ac_setScreen=[0]'>Return</A><BR>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[0]'>Return</A><BR>"
 		if(16)
 			dat+="<B><FONT COLOR='maroon'>ERROR: Wanted Issue rejected by Network.</B></FONT><HR><BR>"
 			if(src.admincaster_wanted_message.criminal =="" || src.admincaster_wanted_message.criminal == "\[REDACTED\]")
 				dat+="<FONT COLOR='maroon'>Invalid name for person wanted.</FONT><BR>"
 			if(src.admincaster_wanted_message.body == "" || src.admincaster_wanted_message.body == "\[REDACTED\]")
 				dat+="<FONT COLOR='maroon'>Invalid description.</FONT><BR>"
-			dat+="<BR><A href='?src=\ref[src];[HrefToken()];ac_setScreen=[0]'>Return</A><BR>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[0]'>Return</A><BR>"
 		if(17)
 			dat+="<B>Wanted Issue successfully deleted from Circulation</B><BR>"
-			dat+="<BR><A href='?src=\ref[src];[HrefToken()];ac_setScreen=[0]'>Return</A><BR>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[0]'>Return</A><BR>"
 		if(18)
 			dat+="<B><FONT COLOR ='maroon'>-- STATIONWIDE WANTED ISSUE --</B></FONT><BR><FONT SIZE=2>\[Submitted by: <FONT COLOR='green'>[GLOB.news_network.wanted_issue.scannedUser]</FONT>\]</FONT><HR>"
 			dat+="<B>Criminal</B>: [GLOB.news_network.wanted_issue.criminal]<BR>"
@@ -379,10 +379,10 @@
 				dat+="<BR><img src='tmp_photow.png' width = '180'>"
 			else
 				dat+="None"
-			dat+="<BR><A href='?src=\ref[src];[HrefToken()];ac_setScreen=[0]'>Back</A><BR>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[0]'>Back</A><BR>"
 		if(19)
 			dat+="<FONT COLOR='green'>Wanted issue for [src.admincaster_wanted_message.criminal] successfully edited.</FONT><BR><BR>"
-			dat+="<BR><A href='?src=\ref[src];[HrefToken()];ac_setScreen=[0]'>Return</A><BR>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[0]'>Return</A><BR>"
 		else
 			dat+="I'm sorry to break your immersion. This shit's bugged. Report this bug to Agouri, polyxenitopalidou@gmail.com"
 
@@ -396,21 +396,21 @@
 
 	var/dat = {"
 		<center><B>Game Panel</B></center><hr>\n
-		<A href='?src=\ref[src];[HrefToken()];c_mode=1'>Change Game Mode</A><br>
+		<A href='?src=[REF(src)];[HrefToken()];c_mode=1'>Change Game Mode</A><br>
 		"}
 	if(GLOB.master_mode == "secret")
-		dat += "<A href='?src=\ref[src];[HrefToken()];f_secret=1'>(Force Secret Mode)</A><br>"
+		dat += "<A href='?src=[REF(src)];[HrefToken()];f_secret=1'>(Force Secret Mode)</A><br>"
 
 	dat += {"
 		<BR>
-		<A href='?src=\ref[src];[HrefToken()];create_object=1'>Create Object</A><br>
-		<A href='?src=\ref[src];[HrefToken()];quick_create_object=1'>Quick Create Object</A><br>
-		<A href='?src=\ref[src];[HrefToken()];create_turf=1'>Create Turf</A><br>
-		<A href='?src=\ref[src];[HrefToken()];create_mob=1'>Create Mob</A><br>
+		<A href='?src=[REF(src)];[HrefToken()];create_object=1'>Create Object</A><br>
+		<A href='?src=[REF(src)];[HrefToken()];quick_create_object=1'>Quick Create Object</A><br>
+		<A href='?src=[REF(src)];[HrefToken()];create_turf=1'>Create Turf</A><br>
+		<A href='?src=[REF(src)];[HrefToken()];create_mob=1'>Create Mob</A><br>
 		"}
 
 	if(marked_datum && istype(marked_datum, /atom))
-		dat += "<A href='?src=\ref[src];[HrefToken()];dupe_marked_datum=1'>Duplicate Marked Datum</A><br>"
+		dat += "<A href='?src=[REF(src)];[HrefToken()];dupe_marked_datum=1'>Duplicate Marked Datum</A><br>"
 
 	usr << browse(dat, "window=admin2;size=210x200")
 	return
@@ -763,14 +763,14 @@
 			dat += "   (Cannot Late Join)<br>"
 			continue
 		if(job.total_positions >= 0)
-			dat += "   <A href='?src=\ref[src];[HrefToken()];addjobslot=[job.title]'>Add</A>  |  "
+			dat += "   <A href='?src=[REF(src)];[HrefToken()];addjobslot=[job.title]'>Add</A>  |  "
 			if(job.total_positions > job.current_positions)
-				dat += "<A href='?src=\ref[src];[HrefToken()];removejobslot=[job.title]'>Remove</A>  |  "
+				dat += "<A href='?src=[REF(src)];[HrefToken()];removejobslot=[job.title]'>Remove</A>  |  "
 			else
 				dat += "Remove  |  "
-			dat += "<A href='?src=\ref[src];[HrefToken()];unlimitjobslot=[job.title]'>Unlimit</A>"
+			dat += "<A href='?src=[REF(src)];[HrefToken()];unlimitjobslot=[job.title]'>Unlimit</A>"
 		else
-			dat += "   <A href='?src=\ref[src];[HrefToken()];limitjobslot=[job.title]'>Limit</A>"
+			dat += "   <A href='?src=[REF(src)];[HrefToken()];limitjobslot=[job.title]'>Limit</A>"
 		dat += "<br>"
 
 	dat += "</body>"

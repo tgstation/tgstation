@@ -210,7 +210,7 @@
 	return 1
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/get_equip_info()
-	return "[..()] \[[src.projectiles]\][(src.projectiles < initial(src.projectiles))?" - <a href='?src=\ref[src];rearm=1'>Rearm</a>":null]"
+	return "[..()] \[[src.projectiles]\][(src.projectiles < initial(src.projectiles))?" - <a href='?src=[REF(src)];rearm=1'>Rearm</a>":null]"
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/rearm()
@@ -220,7 +220,7 @@
 			projectiles++
 			projectiles_to_add--
 			chassis.use_power(projectile_energy_cost)
-	send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
+	send_byjax(chassis.occupant,"exosuit.browser","[REF(src)]",src.get_equip_info())
 	log_message("Rearmed [src.name].")
 	return 1
 
@@ -239,7 +239,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/action(atom/target)
 	if(..())
 		projectiles -= get_shot_amount()
-		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
+		send_byjax(chassis.occupant,"exosuit.browser","[REF(src)]",src.get_equip_info())
 		return 1
 
 

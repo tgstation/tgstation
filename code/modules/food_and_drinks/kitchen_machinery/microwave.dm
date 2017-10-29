@@ -197,8 +197,8 @@
 			dat += "The microwave is empty.</div>"
 		else
 			dat = "<h3>Ingredients:</h3>[dat]</div>"
-		dat += "<A href='?src=\ref[src];action=cook'>Turn on</A>"
-		dat += "<A href='?src=\ref[src];action=dispose'>Eject ingredients</A><BR>"
+		dat += "<A href='?src=[REF(src)];action=cook'>Turn on</A>"
+		dat += "<A href='?src=[REF(src)];action=dispose'>Eject ingredients</A><BR>"
 
 	var/datum/browser/popup = new(user, "microwave", name, 300, 300)
 	popup.set_content(dat)

@@ -77,26 +77,26 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 		hsbinfo = "<center><b>Sandbox Panel</b></center><hr>"
 		if(admin)
 			hsbinfo += "<b>Administration</b><br>"
-			hsbinfo += "- <a href='?src=\ref[src];hsb=hsbtobj'>Toggle Object Spawning</a><br>"
-			hsbinfo += "- <a href='?src=\ref[src];hsb=hsbtac'>Toggle Item Spawn Panel Auto-close</a><br>"
+			hsbinfo += "- <a href='?src=[REF(src)];hsb=hsbtobj'>Toggle Object Spawning</a><br>"
+			hsbinfo += "- <a href='?src=[REF(src)];hsb=hsbtac'>Toggle Item Spawn Panel Auto-close</a><br>"
 			hsbinfo += "<b>Canister Spawning</b><br>"
-			hsbinfo += "- <a href='?src=\ref[src];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/toxins]'>Spawn Plasma Canister</a><br>"
-			hsbinfo += "- <a href='?src=\ref[src];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/carbon_dioxide]'>Spawn CO2 Canister</a><br>"
-			hsbinfo += "- <a href='?src=\ref[src];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/nitrogen]'>Spawn Nitrogen Canister</a><br>"
-			hsbinfo += "- <a href='?src=\ref[src];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/nitrous_oxide]'>Spawn N2O Canister</a><hr>"
+			hsbinfo += "- <a href='?src=[REF(src)];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/toxins]'>Spawn Plasma Canister</a><br>"
+			hsbinfo += "- <a href='?src=[REF(src)];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/carbon_dioxide]'>Spawn CO2 Canister</a><br>"
+			hsbinfo += "- <a href='?src=[REF(src)];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/nitrogen]'>Spawn Nitrogen Canister</a><br>"
+			hsbinfo += "- <a href='?src=[REF(src)];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/nitrous_oxide]'>Spawn N2O Canister</a><hr>"
 		else
 			hsbinfo += "<i>Some item spawning may be disabled by the administrators.</i><br>"
 			hsbinfo += "<i>Only administrators may spawn dangerous canisters.</i><br>"
 		for(var/T in hrefs)
 			var/href = hrefs[T]
 			if(href)
-				hsbinfo += "- <a href='?\ref[src];hsb=[hrefs[T]]'>[T]</a><br>"
+				hsbinfo += "- <a href='?[REF(src)];hsb=[hrefs[T]]'>[T]</a><br>"
 			else
 				hsbinfo += "<br><b>[T]</b><br>"
 		hsbinfo += "<hr>"
-		hsbinfo += "- <a href='?\ref[src];hsb=hsbcloth'>Spawn Clothing...</a><br>"
-		hsbinfo += "- <a href='?\ref[src];hsb=hsbreag'>Spawn Reagent Container...</a><br>"
-		hsbinfo += "- <a href='?\ref[src];hsb=hsbobj'>Spawn Other Item...</a><br><br>"
+		hsbinfo += "- <a href='?[REF(src)];hsb=hsbcloth'>Spawn Clothing...</a><br>"
+		hsbinfo += "- <a href='?[REF(src)];hsb=hsbreag'>Spawn Reagent Container...</a><br>"
+		hsbinfo += "- <a href='?[REF(src)];hsb=hsbobj'>Spawn Other Item...</a><br><br>"
 
 	usr << browse(hsbinfo, "window=hsbpanel")
 
@@ -235,12 +235,12 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 				if(!GLOB.hsboxspawn) return
 
 				if(!clothinfo)
-					clothinfo = "<b>Clothing</b> <a href='?\ref[src];hsb=hsbreag'>(Reagent Containers)</a> <a href='?\ref[src];hsb=hsbobj'>(Other Items)</a><hr><br>"
+					clothinfo = "<b>Clothing</b> <a href='?[REF(src)];hsb=hsbreag'>(Reagent Containers)</a> <a href='?[REF(src)];hsb=hsbobj'>(Other Items)</a><hr><br>"
 					var/list/all_items = subtypesof(/obj/item/clothing)
 					for(var/typekey in spawn_forbidden)
 						all_items -= typesof(typekey)
 					for(var/O in reverseRange(all_items))
-						clothinfo += "<a href='?src=\ref[src];hsb=hsb_safespawn&path=[O]'>[O]</a><br>"
+						clothinfo += "<a href='?src=[REF(src)];hsb=hsb_safespawn&path=[O]'>[O]</a><br>"
 
 				usr << browse(clothinfo,"window=sandbox")
 
@@ -249,12 +249,12 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 				if(!GLOB.hsboxspawn) return
 
 				if(!reaginfo)
-					reaginfo = "<b>Reagent Containers</b> <a href='?\ref[src];hsb=hsbcloth'>(Clothing)</a> <a href='?\ref[src];hsb=hsbobj'>(Other Items)</a><hr><br>"
+					reaginfo = "<b>Reagent Containers</b> <a href='?[REF(src)];hsb=hsbcloth'>(Clothing)</a> <a href='?[REF(src)];hsb=hsbobj'>(Other Items)</a><hr><br>"
 					var/list/all_items = subtypesof(/obj/item/reagent_containers)
 					for(var/typekey in spawn_forbidden)
 						all_items -= typesof(typekey)
 					for(var/O in reverseRange(all_items))
-						reaginfo += "<a href='?src=\ref[src];hsb=hsb_safespawn&path=[O]'>[O]</a><br>"
+						reaginfo += "<a href='?src=[REF(src)];hsb=hsb_safespawn&path=[O]'>[O]</a><br>"
 
 				usr << browse(reaginfo,"window=sandbox")
 
@@ -263,13 +263,13 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 				if(!GLOB.hsboxspawn) return
 
 				if(!objinfo)
-					objinfo = "<b>Other Items</b> <a href='?\ref[src];hsb=hsbcloth'>(Clothing)</a> <a href='?\ref[src];hsb=hsbreag'>(Reagent Containers)</a><hr><br>"
+					objinfo = "<b>Other Items</b> <a href='?[REF(src)];hsb=hsbcloth'>(Clothing)</a> <a href='?[REF(src)];hsb=hsbreag'>(Reagent Containers)</a><hr><br>"
 					var/list/all_items = subtypesof(/obj/item/) - typesof(/obj/item/clothing) - typesof(/obj/item/reagent_containers)
 					for(var/typekey in spawn_forbidden)
 						all_items -= typesof(typekey)
 
 					for(var/O in reverseRange(all_items))
-						objinfo += "<a href='?src=\ref[src];hsb=hsb_safespawn&path=[O]'>[O]</a><br>"
+						objinfo += "<a href='?src=[REF(src)];hsb=hsb_safespawn&path=[O]'>[O]</a><br>"
 
 				usr << browse(objinfo,"window=sandbox")
 
