@@ -220,8 +220,7 @@
 					else
 						P = new/obj/item/reagent_containers/pill(drop_location())
 					P.name = trim("[name] pill")
-					P.pixel_x = rand(-7, 7) //random position
-					P.pixel_y = rand(-7, 7)
+					adjust_item_drop_location(P)
 					reagents.trans_to(P,vol_each)
 			else
 				var/name = stripped_input(usr, "Name:", "Name your pack!", reagents.get_master_reagent_name(), MAX_NAME_LEN)
@@ -337,7 +336,10 @@
 		AM.pixel_y = 8
 		return null
 	else if (AM == bottle)
-		AM.pixel_x = -8
+		if (length(bottle.contents))
+			AM.pixel_x = -13
+		else
+			AM.pixel_x = -7
 		AM.pixel_y = -8
 		return null
 	else
@@ -345,7 +347,7 @@
 		for (var/i in 1 to 32)
 			. += hex2num(copytext(md5,i,i+1))
 		. = . % 9
-		AM.pixel_x = ((.%3)*4)
+		AM.pixel_x = ((.%3)*6)
 		AM.pixel_y = -8 + (round( . / 3)*8)
 
 /obj/machinery/chem_master/condimaster
