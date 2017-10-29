@@ -1,0 +1,4 @@
+author: "naltronix"
+delete-after: True
+changes: 
+  - bugfix: "fixes that table that wasnt accessible in Metastation"
