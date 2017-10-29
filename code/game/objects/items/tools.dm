@@ -459,6 +459,15 @@
 		flamethrower_screwdriver(I, user)
 	else if(istype(I, /obj/item/stack/rods))
 		flamethrower_rods(I, user)
+	else if(istype(I, /obj/item/reagent_containers) && is_open_container())
+		var/amountNeeded = max_fuel - get_fuel()
+		var/obj/item/reagent_containers/container = I
+		if(length(container.reagents.reagent_list) > 1)
+			to_chat(user, "<span class='warning'>[container] has too many chemicals mixed into it. You wouldn't want to put the wrong chemicals into [src].</span>")
+			return ..()
+		if(amountNeeded > 0 && container.reagents.has_reagent("welding_fuel"))
+			container.reagents.trans_id_to(src, "welding_fuel", amountNeeded)
+			to_chat(user, "<span class='notice'>You transfer some fuel from [container] to [src].</span>")
 	else
 		return ..()
 
