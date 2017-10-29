@@ -151,7 +151,7 @@ Jesus icons by rumpelgeist and FurryMcFlurry
 	pixel_x = -32
 	pixel_y = 0
 	var/holystate = "beamin"
-	var/holysound = 'sound/effects/pray.ogg'
+	var/holysound = 'hippiestation/sound/misc/adminspawn.ogg'
 
 /obj/effect/holy/proc/start(atom/location)
 	loc = get_turf(location)
