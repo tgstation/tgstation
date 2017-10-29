@@ -15,8 +15,9 @@
 		if (elapsed > alarm_delay)
 			triggerAlarm()
 	else if (detectTime == -1)
-		for (var/mob/target in getTargetList())
-			if (target.stat == DEAD || (!area_motion && !in_range(src, target)))
+		for (var/targetref in getTargetList())
+			var/mob/target = locate(targetref) in GLOB.mob_list
+			if (QDELETED(target) || target.stat == DEAD || (!area_motion && !in_range(src, target)))
 				//If not part of a monitored area and the camera is not in range or the target is dead
 				lostTarget(target)
 
@@ -31,8 +32,7 @@
 	if (detectTime == 0)
 		detectTime = world.time // start the clock
 	var/list/targets = getTargetList()
-	if (!(target in targets))
-		targets += target
+	targets |= "\ref[target]"
 	return 1
 
 /obj/machinery/camera/Destroy()
@@ -43,8 +43,7 @@
 
 /obj/machinery/camera/proc/lostTarget(mob/target)
 	var/list/targets = getTargetList()
-	if (target in targets)
-		targets -= target
+	targets -= "\ref[target]"
 	if (targets.len == 0)
 		cancelAlarm()
 

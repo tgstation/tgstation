@@ -246,14 +246,16 @@
 		note = null
 		update_icon()
 
+/obj/machinery/door/airlock/proc/unzap() //for addtimer
+	justzap = FALSE
+
 /obj/machinery/door/airlock/bumpopen(mob/living/user) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
 	if(!issilicon(usr))
-		if(src.isElectrified())
-			if(!src.justzap)
-				if(src.shock(user, 100))
-					src.justzap = TRUE
-					spawn (10)
-						justzap = FALSE
+		if(isElectrified())
+			if(!justzap)
+				if(shock(user, 100))
+					justzap = TRUE
+					addtimer(CALLBACK(src, .proc/unzap), 10)
 					return
 			else /*if(src.justzap)*/
 				return
@@ -325,33 +327,34 @@
 	if(src.secondsMainPowerLost > 0)
 		src.secondsMainPowerLost = 0
 
-/obj/machinery/door/airlock/proc/loseMainPower()
-	if(src.secondsMainPowerLost <= 0)
-		src.secondsMainPowerLost = 60
-		if(src.secondsBackupPowerLost < 10)
-			src.secondsBackupPowerLost = 10
-	if(!src.spawnPowerRestoreRunning)
-		spawnPowerRestoreRunning = TRUE
-		spawn(0)
-			var/cont = 1
-			while (cont)
-				sleep(10)
-				if(QDELETED(src))
-					return
-				cont = 0
-				if(secondsMainPowerLost>0)
-					if(!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
-						secondsMainPowerLost -= 1
-						updateDialog()
-					cont = 1
+/obj/machinery/door/airlock/proc/handlePowerRestore()
+	var/cont = TRUE
+	while (cont)
+		sleep(10)
+		if(QDELETED(src))
+			return
+		cont = FALSE
+		if(secondsMainPowerLost>0)
+			if(!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
+				secondsMainPowerLost -= 1
+				updateDialog()
+			cont = TRUE
+		if(secondsBackupPowerLost>0)
+			if(!wires.is_cut(WIRE_BACKUP1) && !wires.is_cut(WIRE_BACKUP2))
+				secondsBackupPowerLost -= 1
+				updateDialog()
+			cont = TRUE
+	spawnPowerRestoreRunning = FALSE
+	updateDialog()
 
-				if(secondsBackupPowerLost>0)
-					if(!wires.is_cut(WIRE_BACKUP1) && !wires.is_cut(WIRE_BACKUP2))
-						secondsBackupPowerLost -= 1
-						updateDialog()
-					cont = 1
-			spawnPowerRestoreRunning = FALSE
-			updateDialog()
+/obj/machinery/door/airlock/proc/loseMainPower()
+	if(secondsMainPowerLost <= 0)
+		secondsMainPowerLost = 60
+		if(secondsBackupPowerLost < 10)
+			secondsBackupPowerLost = 10
+	if(!spawnPowerRestoreRunning)
+		spawnPowerRestoreRunning = TRUE
+	INVOKE_ASYNC(src, .proc/handlePowerRestore)
 
 /obj/machinery/door/airlock/proc/loseBackupPower()
 	if(src.secondsBackupPowerLost < 60)
@@ -792,6 +795,13 @@
 		..()
 	return
 
+/obj/machinery/door/airlock/proc/electrified_loop()
+	while (secondsElectrified > 0)
+		secondsElectrified--
+		if(secondsElectrified <= 0)
+			set_electrified(NOT_ELECTRIFIED)
+			updateUsrDialog()
+			sleep(10)
 
 /obj/machinery/door/airlock/Topic(href, href_list, var/nowindow = 0)
 	// If you add an if(..()) check you must first remove the var/nowindow parameter.
@@ -936,13 +946,7 @@
 						shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
 						add_logs(usr, src, "electrified")
 						set_electrified(30)
-						spawn(10)
-							while (secondsElectrified > 0)
-								secondsElectrified--
-								if(secondsElectrified <= 0)
-									set_electrified(NOT_ELECTRIFIED)
-								updateUsrDialog()
-								sleep(10)
+						addtimer(CALLBACK(src, .proc/electrified_loop), 10)
 				if(6)
 					//electrify door indefinitely
 					if(wires.is_cut(WIRE_SHOCK))
@@ -1266,19 +1270,11 @@
 		if(!beingcrowbarred) //being fireaxe'd
 			var/obj/item/twohanded/fireaxe/F = I
 			if(F.wielded)
-				spawn(0)
-					if(density)
-						open(2)
-					else
-						close(2)
+				INVOKE_ASYNC(src, (density ? .proc/open : .proc/close), 2)
 			else
 				to_chat(user, "<span class='warning'>You need to be wielding the fire axe to do that!</span>")
 		else
-			spawn(0)
-				if(density)
-					open(2)
-				else
-					close(2)
+			INVOKE_ASYNC(src, (density ? .proc/open : .proc/close), 2)
 
 	if(istype(I, /obj/item/crowbar/power))
 		if(isElectrified())

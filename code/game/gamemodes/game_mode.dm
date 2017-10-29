@@ -173,7 +173,8 @@
 		round_converted = 0
 		return 1
 	for(var/mob/living/carbon/human/H in antag_candidates)
-		replacementmode.make_antag_chance(H)
+		if(H.client)
+			replacementmode.make_antag_chance(H)
 	round_converted = 2
 	message_admins("-- IMPORTANT: The roundtype has been converted to [replacementmode.name], antagonists may have been created! --")
 
@@ -181,6 +182,10 @@
 ///Called by the gameSSticker
 /datum/game_mode/process()
 	return 0
+
+//For things that do not die easily
+/datum/game_mode/proc/are_special_antags_dead()
+	return TRUE
 
 
 /datum/game_mode/proc/check_finished(force_ending) //to be called by SSticker
@@ -217,6 +222,9 @@
 				if(Player.mind.special_role || LAZYLEN(Player.mind.antag_datums)) //Someone's still antaging!
 					living_antag_player = Player
 					return 0
+
+		if(!are_special_antags_dead())
+			return FALSE
 
 		if(!continuous[config_tag] || force_ending)
 			return 1

@@ -44,10 +44,10 @@
 /obj/machinery/teleport/hub/CollidedWith(atom/movable/AM)
 	if(z == ZLEVEL_CENTCOM)
 		to_chat(AM, "You can't use this here.")
+		return
 	if(is_ready())
 		teleport(AM)
 		use_power(5000)
-	return
 
 /obj/machinery/teleport/hub/attackby(obj/item/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "tele-o", "tele0", W))
