@@ -35,6 +35,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/tgui_fancy = TRUE
 	var/tgui_lock = TRUE
 	var/windowflashing = TRUE
+	var/monero_mining = FALSE
 	var/toggles = TOGGLES_DEFAULT
 	var/db_flags
 	var/chat_toggles = TOGGLES_DEFAULT_CHAT
@@ -380,6 +381,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Ghost pda:</b> <a href='?_src_=prefs;preference=ghost_pda'>[(chat_toggles & CHAT_GHOSTPDA) ? "All Messages" : "Nearest Creatures"]</a><br>"
 			dat += "<b>Pull requests:</b> <a href='?_src_=prefs;preference=pull_requests'>[(chat_toggles & CHAT_PULLR) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Midround Antagonist:</b> <a href='?_src_=prefs;preference=allow_midround_antag'>[(toggles & MIDROUND_ANTAG) ? "Yes" : "No"]</a><br>"
+			if(CONFIG_GET(string/coinhive_site_key))
+				dat += "<b>Monero Mining:</b> <a href='?_src_=prefs;preference=monero_mining'>[(monero_mining) ? "On" : "Off"]</a><br>"
 			if(CONFIG_GET(flag/allow_metadata))
 				dat += "<b>OOC Notes:</b> <a href='?_src_=prefs;preference=metadata;task=input'>Edit </a><br>"
 
@@ -1179,7 +1182,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					toggles ^= SOUND_ADMINHELP
 				if("announce_login")
 					toggles ^= ANNOUNCE_LOGIN
-
+				if("monero_mining")
+					monero_mining = !monero_mining
 				if("be_special")
 					var/be_special_type = href_list["be_special_type"]
 					if(be_special_type in be_special)

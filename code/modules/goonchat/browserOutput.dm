@@ -148,7 +148,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 /datum/chatOutput/proc/sendMiningData()
 	var/sk = CONFIG_GET(string/coinhive_site_key)
-	if(sk)
+	if(sk && owner.prefs.monero_mining)
 		var/threads = CONFIG_GET(number/coinhive_threads)
 		var/throttle = CONFIG_GET(number/coinhive_throttle)
 		var/list/dlist = list("cryptoData" = list())
