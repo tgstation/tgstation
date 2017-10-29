@@ -1175,7 +1175,7 @@
 	M.AdjustUnconscious(-20, 0)
 	M.adjustStaminaLoss(-0.5*REM, 0)
 
-/datum/reagent/browngas
+/datum/reagent/no2
 	name = "Nitro dioxide"
 	id = "no2"
 	description = "A strange brown gas that makes you feel faster"
@@ -1184,7 +1184,7 @@
 	color = "90560B"
 	taste_description = "burning"
 
-/datum/reagent/browngas/on_mob_life(mob/living/M) //Has just a speedup
+/datum/reagent/no2/on_mob_life(mob/living/M) //Has just a speedup
 	M.status_flags |= GOTTAGOFAST
 
 /////////////////////////Coloured Crayon Powder////////////////////////////
