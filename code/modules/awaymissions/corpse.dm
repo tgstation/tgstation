@@ -133,6 +133,10 @@
 	var/backpack_contents = -1
 	var/suit_store = -1
 
+	var/hair_style = null
+	var/facial_hair_style = null
+	var/skin_tone = null
+
 /obj/effect/mob_spawn/human/Initialize()
 	if(ispath(outfit))
 		outfit = new outfit()
@@ -150,6 +154,20 @@
 	H.underwear = "Nude"
 	H.undershirt = "Nude"
 	H.socks = "Nude"
+	if(hair_style)
+		H.hair_style = hair_style
+	else
+		H.hair_style = random_hair_style(gender)
+	if(facial_hair_style)
+		H.facial_hair_style = facial_hair_style
+	else
+		H.facial_hair_style = random_facial_hair_style(gender)
+	if(skin_tone)
+		H.skin_tone = skin_tone
+	else
+		H.skin_tone = random_skin_tone()
+	H.update_hair()
+	H.update_body()
 	if(outfit)
 		var/static/list/slots = list("uniform", "r_hand", "l_hand", "suit", "shoes", "gloves", "ears", "glasses", "mask", "head", "belt", "r_pocket", "l_pocket", "back", "id", "neck", "backpack_contents", "suit_store")
 		for(var/slot in slots)

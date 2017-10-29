@@ -1154,6 +1154,7 @@
 #include "code\modules\awaymissions\bluespaceartillery.dm"
 #include "code\modules\awaymissions\capture_the_flag.dm"
 #include "code\modules\awaymissions\corpse.dm"
+#include "code\modules\awaymissions\corpse_contents.dm"
 #include "code\modules\awaymissions\exile.dm"
 #include "code\modules\awaymissions\gateway.dm"
 #include "code\modules\awaymissions\pamphlet.dm"

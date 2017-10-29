@@ -8,7 +8,11 @@
 
 //List of different corpse types
 
-/obj/effect/mob_spawn/human/corpse/syndicatesoldier
+/obj/effect/mob_spawn/human/corpse/bald //Bald corpses for simple animal humans so they don't magically grow crazy hair
+	hair_style = "Bald"
+	facial_hair_style = "Shaved"
+
+/obj/effect/mob_spawn/human/corpse/bald/syndicatesoldier
 	name = "Syndicate Operative"
 	id_job = "Operative"
 	id_access_list = list(ACCESS_SYNDICATE)
@@ -27,7 +31,7 @@
 	id = /obj/item/card/id
 
 
-/obj/effect/mob_spawn/human/corpse/syndicatecommando
+/obj/effect/mob_spawn/human/corpse/bald/syndicatecommando
 	name = "Syndicate Commando"
 	id_job = "Operative"
 	id_access_list = list(ACCESS_SYNDICATE)
@@ -46,7 +50,7 @@
 	id = /obj/item/card/id
 
 
-/obj/effect/mob_spawn/human/corpse/syndicatestormtrooper
+/obj/effect/mob_spawn/human/corpse/bald/syndicatestormtrooper
 	name = "Syndicate Stormtrooper"
 	id_job = "Operative"
 	id_access_list = list(ACCESS_SYNDICATE)
@@ -64,13 +68,15 @@
 	id = /obj/item/card/id
 
 
-/obj/effect/mob_spawn/human/clown/corpse
+/obj/effect/mob_spawn/human/clown/corpse/bald
 	roundstart = FALSE
 	instant = TRUE
+	skin_tone = "caucasian1"
 
 
-/obj/effect/mob_spawn/human/corpse/pirate
+/obj/effect/mob_spawn/human/corpse/bald/pirate
 	name = "Pirate"
+	skin_tone = "Caucasian1" //all pirates are white because it's easier that way
 	outfit = /datum/outfit/piratecorpse
 
 /datum/outfit/piratecorpse
@@ -81,7 +87,7 @@
 	head = /obj/item/clothing/head/bandana
 
 
-/obj/effect/mob_spawn/human/corpse/pirate/ranged
+/obj/effect/mob_spawn/human/corpse/bald/pirate/ranged
 	name = "Pirate Gunner"
 	outfit = /datum/outfit/piratecorpse/ranged
 
@@ -91,7 +97,7 @@
 	head = /obj/item/clothing/head/pirate
 
 
-/obj/effect/mob_spawn/human/corpse/russian
+/obj/effect/mob_spawn/human/corpse/bald/russian
 	name = "Russian"
 	outfit = /datum/outfit/russiancorpse
 
@@ -100,16 +106,19 @@
 	uniform = /obj/item/clothing/under/soviet
 	shoes = /obj/item/clothing/shoes/jackboots
 	head = /obj/item/clothing/head/bearpelt
+	gloves = /obj/item/clothing/gloves/color/black
+	mask = /obj/item/clothing/mask/gas
 
 
-/obj/effect/mob_spawn/human/corpse/russian/ranged
+
+/obj/effect/mob_spawn/human/corpse/bald/russian/ranged
 	outfit = /datum/outfit/russiancorpse/ranged
 
-/datum/outfit/russiancorpse/ranged
+/datum/outfit/russiancorpse/bald/ranged
 	name = "Ranged Russian Corpse"
 	head = /obj/item/clothing/head/ushanka
 
-/obj/effect/mob_spawn/human/corpse/russian/ranged/trooper
+/obj/effect/mob_spawn/human/corpse/bald/russian/ranged/trooper
 	outfit = /datum/outfit/russiancorpse/ranged/trooper
 
 /datum/outfit/russiancorpse/ranged/trooper
@@ -119,11 +128,11 @@
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
 	ears = /obj/item/device/radio/headset
-	mask = /obj/item/clothing/mask/balaclava
 	head = /obj/item/clothing/head/helmet/alt
+	mask = /obj/item/clothing/mask/balaclava
 
 
-/obj/effect/mob_spawn/human/corpse/russian/ranged/officer
+/obj/effect/mob_spawn/human/corpse/bald/russian/ranged/officer
 	name = "Russian Officer"
 	outfit = /datum/outfit/russiancorpse/officer
 
@@ -131,7 +140,7 @@
 	name = "Russian Officer Corpse"
 	uniform = /obj/item/clothing/under/rank/security/navyblue/russian
 	suit = /obj/item/clothing/suit/security/officer/russian
-	shoes = /obj/item/clothing/shoes/laceup
+	shoes = /obj/item/clothing/shoes/combat
 	ears = /obj/item/device/radio/headset
 	head = /obj/item/clothing/head/ushanka
 
@@ -139,6 +148,9 @@
 /obj/effect/mob_spawn/human/corpse/wizard
 	name = "Space Wizard Corpse"
 	outfit = /datum/outfit/wizardcorpse
+	hair_style = "Bald"
+	facial_hair_style = "Long Beard"
+	skin_tone = "Caucasian1"
 
 /datum/outfit/wizardcorpse
 	name = "Space Wizard Corpse"
@@ -148,7 +160,7 @@
 	head = /obj/item/clothing/head/wizard
 
 
-/obj/effect/mob_spawn/human/corpse/nanotrasensoldier
+/obj/effect/mob_spawn/human/corpse/bald/nanotrasensoldier
 	name = "Nanotrasen Private Security Officer"
 	id_job = "Private Security Force"
 	id_access = "Security Officer"
