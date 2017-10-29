@@ -120,8 +120,8 @@ Possible to do for anyone motivated enough:
 	if(temp)
 		dat = temp
 	else
-		dat = "<a href='?src=\ref[src];AIrequest=1'>Request an AI's presence.</a><br>"
-		dat += "<a href='?src=\ref[src];Holocall=1'>Call another holopad.</a><br>"
+		dat = "<a href='?src=[REF(src)];AIrequest=1'>Request an AI's presence.</a><br>"
+		dat += "<a href='?src=[REF(src)];Holocall=1'>Call another holopad.</a><br>"
 
 		if(LAZYLEN(holo_calls))
 			dat += "=====================================================<br>"
@@ -131,7 +131,7 @@ Possible to do for anyone motivated enough:
 		for(var/I in holo_calls)
 			var/datum/holocall/HC = I
 			if(HC.connected_holopad != src)
-				dat += "<a href='?src=\ref[src];connectcall=\ref[HC]'>Answer call from [get_area(HC.calling_holopad)].</a><br>"
+				dat += "<a href='?src=[REF(src)];connectcall=[REF(HC)]'>Answer call from [get_area(HC.calling_holopad)].</a><br>"
 				one_unanswered_call = TRUE
 			else
 				one_answered_call = TRUE
@@ -142,7 +142,7 @@ Possible to do for anyone motivated enough:
 		for(var/I in holo_calls)
 			var/datum/holocall/HC = I
 			if(HC.connected_holopad == src)
-				dat += "<a href='?src=\ref[src];disconnectcall=\ref[HC]'>Disconnect call from [HC.user].</a><br>"
+				dat += "<a href='?src=[REF(src)];disconnectcall=[REF(HC)]'>Disconnect call from [HC.user].</a><br>"
 
 
 	var/datum/browser/popup = new(user, "holopad", name, 300, 130)
@@ -166,22 +166,22 @@ Possible to do for anyone motivated enough:
 		if(last_request + 200 < world.time)
 			last_request = world.time
 			temp = "You requested an AI's presence.<BR>"
-			temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
+			temp += "<A href='?src=[REF(src)];mainmenu=1'>Main Menu</A>"
 			var/area/area = get_area(src)
 			for(var/mob/living/silicon/ai/AI in GLOB.silicon_mobs)
 				if(!AI.client)
 					continue
-				to_chat(AI, "<span class='info'>Your presence is requested at <a href='?src=\ref[AI];jumptoholopad=\ref[src]'>\the [area]</a>.</span>")
+				to_chat(AI, "<span class='info'>Your presence is requested at <a href='?src=[REF(AI)];jumptoholopad=[REF(src)]'>\the [area]</a>.</span>")
 		else
 			temp = "A request for AI presence was already sent recently.<BR>"
-			temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
+			temp += "<A href='?src=[REF(src)];mainmenu=1'>Main Menu</A>"
 
 	else if(href_list["Holocall"])
 		if(outgoing_call)
 			return
 
 		temp = "You must stand on the holopad to make a call!<br>"
-		temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
+		temp += "<A href='?src=[REF(src)];mainmenu=1'>Main Menu</A>"
 		if(usr.loc == loc)
 			var/list/callnames = list()
 			for(var/I in holopads)
@@ -196,7 +196,7 @@ Possible to do for anyone motivated enough:
 
 			if(usr.loc == loc)
 				temp = "Dialing...<br>"
-				temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
+				temp += "<A href='?src=[REF(src)];mainmenu=1'>Main Menu</A>"
 				new /datum/holocall(usr, src, callnames[result])
 
 	else if(href_list["connectcall"])

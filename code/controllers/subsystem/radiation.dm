@@ -10,11 +10,11 @@ PROCESSING_SUBSYSTEM_DEF(radiation)
 /datum/controller/subsystem/processing/radiation/proc/warn(datum/component/radioactive)
 	if(!radioactive || QDELETED(radioactive))
 		return
-	if(warned_atoms["\ref[radioactive.parent]"])
+	if(warned_atoms["[REF(radioactive.parent)]"])
 		return
 	var/atom/master = radioactive.parent
 	SSblackbox.add_details("contaminated", "[master.type]")
-	next_warn["\ref[master]"] = "\ref[radioactive]"
+	next_warn["[REF(master)]"] = "[REF(radioactive)]"
 	var/wait_time = max(0, 500-(world.time-last_warn))+20 // wait at least 20 ticks, longer if we just messaged
 	addtimer(CALLBACK(src, .proc/send_warn), wait_time, TIMER_UNIQUE | TIMER_OVERRIDE)
 

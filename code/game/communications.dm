@@ -277,10 +277,10 @@ GLOBAL_VAR_INIT(RADIO_MAGNETS, "9")
 
 /datum/signal/New()
 	..()
-	pointers += "\ref[src]"
+	pointers += "[REF(src)]"
 
 /datum/signal/Destroy()
-	pointers -= "\ref[src]"
+	pointers -= "[REF(src)]"
 	return ..()
 
 /datum/signal/proc/copy_from(datum/signal/model)
