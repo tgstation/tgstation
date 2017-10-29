@@ -69,7 +69,8 @@
 	map_file = json["map_file"]
 
 	minetype = json["minetype"] || minetype
-	allow_custom_shuttles = json["allow_custom_shuttles"] == TRUE
+	var/shuttles = json["allow_custom_shuttles"]
+	allow_custom_shuttles = (shuttles == null || shuttles == TRUE || shuttles == "yes")
 
 	var/jtcl = json["transition_config"]
 	if(jtcl && jtcl != "default")
