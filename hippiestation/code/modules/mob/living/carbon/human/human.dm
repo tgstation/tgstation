@@ -8,3 +8,17 @@
 		return FALSE
 	else
 		return ..()
+
+/mob/living/carbon/human/canSuccumb()
+	var/datum/mutation/human/HM = GLOB.mutations_list[CLUWNEMUT]
+	if(dna.species.id == "tarajan" || dna.species.id == "meeseeks" || HM in dna.mutations)
+		return FALSE
+	else
+		return ..()
+
+/mob/living/carbon/human/canGhost()
+	var/datum/mutation/human/HM = GLOB.mutations_list[CLUWNEMUT]
+	if(dna.species.id == "tarajan" || dna.species.id == "meeseeks" || HM in dna.mutations)
+		return FALSE
+	else
+		return ..()
