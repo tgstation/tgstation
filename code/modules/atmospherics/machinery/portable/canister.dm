@@ -120,7 +120,7 @@
 
 /obj/machinery/portable_atmospherics/canister/stimulum
 	name = "stimulum canister"
-	desc = "Stimulum. Side effects may include cannibalism."
+	desc = "Stimulum. High energy gas, high energy people."
 	icon_state = "darkpurple"
 	gas_type = /datum/gas/stimulum
 

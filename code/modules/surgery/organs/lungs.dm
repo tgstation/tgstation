@@ -262,7 +262,7 @@
 		else
 			H.radiation += trit_pp/10
 
-	// NO2
+	//Brown gas
 
 		var/brown_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/brown_gas][MOLES])
 		if (prob(brown_pp))
@@ -285,7 +285,7 @@
 	//Stimulum
 		gas_breathed = breath_gases[/datum/gas/stimulum][MOLES]
 		if (gas_breathed > GAS_STIM_MINIMUM)
-			H.reagents.add_reagent("stim", 1)
+			H.reagents.add_reagent("stimulum", 1)
 		breath_gases[/datum/gas/stimulum][MOLES] -= gas_breathed
 		handle_breath_temperature(breath, H)
 		breath.garbage_collect()

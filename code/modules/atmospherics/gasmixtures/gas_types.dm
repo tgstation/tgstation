@@ -84,7 +84,7 @@ GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /
 	moles_visible = 1
 	dangerous = TRUE
 
-/datum/gas/brown_gas
+/datum/gas/brown_gas //This is nitrogen dioxide, but given generic name to avoid confusion with nitrous oxide(N20 vs. NO2)
 	id = "browns"
 	specific_heat = 20
 	name = "Brown Gas"
