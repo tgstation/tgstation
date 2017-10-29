@@ -58,7 +58,7 @@ GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /
 	specific_heat = 200
 	name = "Plasma"
 	gas_overlay = "plasma"
-	moles_visible = MOLES_PLASMA_VISIBLE
+	moles_visible = MOLES_GAS_VISIBLE
 	dangerous = TRUE
 
 /datum/gas/water_vapor
@@ -66,14 +66,14 @@ GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /
 	specific_heat = 40
 	name = "Water Vapor"
 	gas_overlay = "water_vapor"
-	moles_visible = MOLES_PLASMA_VISIBLE
+	moles_visible = MOLES_GAS_VISIBLE
 
-/datum/gas/freon
-	id = "freon"
+/datum/gas/hypernoblium
+	id = "nob"
 	specific_heat = 2000
-	name = "Freon"
+	name = "Hyper-noblium"
 	gas_overlay = "freon"
-	moles_visible = MOLES_PLASMA_VISIBLE
+	moles_visible = MOLES_GAS_VISIBLE
 	dangerous = TRUE
 
 /datum/gas/nitrous_oxide
@@ -84,21 +84,37 @@ GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /
 	moles_visible = 1
 	dangerous = TRUE
 
-/datum/gas/oxygen_agent_b
-	id = "agent_b"
-	specific_heat = 300
-	name = "Oxygen Agent B"
+/datum/gas/brown_gas //This is nitric oxide, but given generic name to avoid confusion with nitrous oxide(N20 vs. NO2)
+	id = "browns"
+	specific_heat = 20
+	name = "Brown Gas"
+	gas_overlay = "browns"
+	moles_visible = MOLES_GAS_VISIBLE
+	dangerous = TRUE
 
-/datum/gas/volatile_fuel
-	id = "v_fuel"
-	specific_heat = 30
-	name = "Volatile Fuel"
+/datum/gas/tritium
+	id = "tritium"
+	specific_heat = 10
+	name = "Tritium"
+	gas_overlay = "tritium"
+	moles_visible = MOLES_GAS_VISIBLE
+	dangerous = TRUE
 
 /datum/gas/bz
 	id = "bz"
 	specific_heat = 20
 	name = "BZ"
 	dangerous = TRUE
+
+/datum/gas/stimulum
+	id = "stim"
+	specific_heat = 5
+	name = "Stimulum"
+
+/datum/gas/pluoxium
+	id = "pluox"
+	specific_heat = 80
+	name = "Pluoxium"
 
 /obj/effect/overlay/gas
 	icon = 'icons/effects/tile_effects.dmi'

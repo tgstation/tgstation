@@ -177,11 +177,6 @@
 	for(var/obj/effect/O in src)
 		if(is_cleanable(O))
 			qdel(O)
-
-	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in src)
-	if(hotspot && !isspaceturf(src))
-		air.temperature = max(min(air.temperature-2000,air.temperature/2),0)
-		qdel(hotspot)
 	return 1
 
 /turf/open/handle_slip(mob/living/carbon/C, knockdown_amount, obj/O, lube)

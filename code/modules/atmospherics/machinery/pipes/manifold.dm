@@ -13,6 +13,9 @@
 
 	device_type = TRINARY
 
+	construction_type = /obj/item/pipe/trinary
+	pipe_state = "manifold"
+
 /obj/machinery/atmospherics/pipe/manifold/SetInitDirections()
 	switch(dir)
 		if(NORTH)

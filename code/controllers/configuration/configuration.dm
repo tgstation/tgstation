@@ -147,7 +147,7 @@ GLOBAL_PROTECT(config_dir)
 	E = entries_by_type[entry_type]
 	if(!E)
 		CRASH("Missing config entry for [entry_type]!")
-	return E.ValidateAndSet(new_val)
+	return E.ValidateAndSet("[new_val]")
 
 /datum/controller/configuration/proc/LoadModes()
 	gamemode_cache = typecacheof(/datum/game_mode, TRUE)

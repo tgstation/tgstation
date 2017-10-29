@@ -20,6 +20,7 @@
 /datum/antagonist/brother/on_gain()
 	SSticker.mode.brothers += owner
 	owner.objectives += team.objectives
+	owner.special_role = special_role
 	finalize_brother()
 	return ..()
 

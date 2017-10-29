@@ -31,6 +31,8 @@
 	var/radio_filter_out
 	var/radio_filter_in
 
+	pipe_state = "uvent"
+
 /obj/machinery/atmospherics/components/unary/vent_pump/on
 	on = TRUE
 	icon_state = "vent_map_on"

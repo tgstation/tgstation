@@ -173,7 +173,8 @@
 		round_converted = 0
 		return 1
 	for(var/mob/living/carbon/human/H in antag_candidates)
-		replacementmode.make_antag_chance(H)
+		if(H.client)
+			replacementmode.make_antag_chance(H)
 	round_converted = 2
 	message_admins("-- IMPORTANT: The roundtype has been converted to [replacementmode.name], antagonists may have been created! --")
 

@@ -504,21 +504,19 @@ Turf and target are separate in case you want to teleport some distance from a t
 	return y
 
 /*
-Recursively gets all contents of contents and returns them all in a list.
-
-recursive_depth is useful if you only want a turf and everything on it (recursive_depth=1)
-Do not set recursive depth higher than MAX_PROC_DEPTH as byond breaks when that limit is reached.
+	Gets all contents of contents and returns them all in a list.
 */
-/atom/proc/GetAllContents(list/output=list(), recursive_depth=MAX_PROC_DEPTH, _current_depth=0)
-	. = output
-	output += src 
-	if(_current_depth == recursive_depth)
-		if(_current_depth == MAX_PROC_DEPTH)
-			WARNING("Get all contents reached the max recursive depth of [MAX_PROC_DEPTH]. More and we would break shit. Offending atom: [src]")
-		return
-	for(var/i in 1 to contents.len) 
-		var/atom/thing = contents[i] 
-		thing.GetAllContents(output, recursive_depth, ++_current_depth) 
+/atom/proc/GetAllContents()
+	var/list/processing_list = list(src)
+	var/list/assembled = list()
+	while(processing_list.len)
+		var/atom/A = processing_list[1]
+		processing_list.Cut(1, 2)
+		//Byond does not allow things to be in multiple contents, or double parent-child hierarchies, so only += is needed
+		//This is also why we don't need to check against assembled as we go along
+		processing_list += A.contents 
+		assembled += A
+	return assembled
 
 //Step-towards method of determining whether one atom can see another. Similar to viewers()
 /proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
@@ -739,7 +737,7 @@ Do not set recursive depth higher than MAX_PROC_DEPTH as byond breaks when that 
 
 */
 
-/proc/get_turf_pixel(atom/movable/AM)
+/proc/get_turf_pixel(atom/AM)
 	if(!istype(AM))
 		return
 
@@ -1413,3 +1411,21 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 //checks if a turf is in the planet z list.
 /proc/turf_z_is_planet(turf/T)
 	return GLOB.z_is_planet["[T.z]"]
+
+//returns a GUID like identifier (using a mostly made up record format)
+//guids are not on their own suitable for access or security tokens, as most of their bits are predictable.
+//	(But may make a nice salt to one)
+/proc/GUID()
+	var/const/GUID_VERSION = "b"
+	var/const/GUID_VARIANT = "d"
+	var/node_id = copytext(md5("[rand()*rand(1,9999999)][world.name][world.hub][world.hub_password][world.internet_address][world.address][world.contents.len][world.status][world.port][rand()*rand(1,9999999)]"), 1, 13)
+
+	var/time_high = "[num2hex(text2num(time2text(world.realtime,"YYYY")), 2)][num2hex(world.realtime, 6)]"
+
+	var/time_mid = num2hex(world.timeofday, 4)
+
+	var/time_low = num2hex(world.time, 3)
+
+	var/time_clock = num2hex(TICK_DELTA_TO_MS(world.tick_usage), 3)
+
+	return "{[time_high]-[time_mid]-[GUID_VERSION][time_low]-[GUID_VARIANT][time_clock]-[node_id]}"
