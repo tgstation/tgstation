@@ -1,0 +1,5 @@
+author: "Chnkr"
+delete-after: True
+changes: 
+  - rscadd: "Shutters will now make sounds when opened and closed!"
+  - rscadd: "Some old ambiance files were put back, nostalgia!"
