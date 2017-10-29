@@ -16,15 +16,17 @@
 
 /datum/surgery_step/add_limb
 	name = "replace limb"
-	implements = list(/obj/item/bodypart = 100)
+	implements = list(/obj/item/bodypart = 100, /obj/item/organ_storage = 100)
 	time = 32
 	var/obj/item/bodypart/L = null // L because "limb"
 
 
 /datum/surgery_step/add_limb/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	if(istype(tool, /obj/item/organ_storage) && istype(tool.contents[1], /obj/item/bodypart))
+		tool = tool.contents[1]
 	var/obj/item/bodypart/aug = tool
 	if(aug.status != BODYPART_ROBOTIC)
-		to_chat(user, "<span class='warning'>that's not an augment silly!</span>")
+		to_chat(user, "<span class='warning'>That's not an augment, silly!</span>")
 		return -1
 	if(aug.body_zone != target_zone)
 		to_chat(user, "<span class='warning'>[tool] isn't the right type for [parse_zone(target_zone)].</span>")
@@ -50,6 +52,11 @@
 /datum/surgery_step/add_limb/success(mob/user, mob/living/carbon/target, target_zone, obj/item/bodypart/tool, datum/surgery/surgery)
 	if(L)
 		user.visible_message("[user] successfully augments [target]'s [parse_zone(target_zone)]!", "<span class='notice'>You successfully augment [target]'s [parse_zone(target_zone)].</span>")
+		if(istype(tool, /obj/item/organ_storage))
+			tool.icon_state = "evidenceobj"
+			tool.desc = "A container for holding body parts."
+			tool.cut_overlays()
+			tool = tool.contents[1]
 		L.change_bodypart_status(BODYPART_ROBOTIC, TRUE)
 		L.icon = tool.icon
 		L.max_damage = tool.max_damage
