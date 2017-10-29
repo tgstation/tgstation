@@ -259,9 +259,17 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 	set category = "OOC"
 	set desc ="Ignore a player's messages on the OOC channel"
 
-	var/selection = input("Please, select a player!", "Ignore", null, null) as null|anything in sortKey(GLOB.clients)
+	var/list/ghosts = list()
+	for(var/mob/dead/observer/O in GLOB.dead_mob_list)
+		ghosts += O
+	var/choices = sortKey(GLOB.clients + ghosts)
+
+	var/selection = input("Please, select a player!", "Ignore", null, null) as null|anything in choices
 	if(!selection)
 		return
+	if(ismob(selection))
+		var/mob/dead/observer/O = selection
+		selection = O.client
 	if(selection == src)
 		to_chat(src, "You can't ignore yourself.")
 		return
