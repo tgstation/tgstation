@@ -43,7 +43,7 @@
 
 /datum/species/pod/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "plantbgone")
-		H.adjustToxLoss(3)
+		H.adjustToxLoss(30)
 		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
 		return 1
 
