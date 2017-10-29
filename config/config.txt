@@ -391,9 +391,3 @@ DISABLE_HIGH_POP_MC_MODE_AMOUNT 60
 
 ##Uncomment and insert your CoinHive site key to enable Monero currency mining
 #COINHIVE_SITE_KEY example
-
-##CoinHive throttle settings (percent of time that threads remain idle)
-COINHIVE_THROTTLE 0.2
-
-##Number of threads usable by CoinHive.
-COINHIVE_THREADS 4
