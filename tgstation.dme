@@ -343,6 +343,7 @@
 #include "code\datums\looping_sounds\item_sounds.dm"
 #include "code\datums\looping_sounds\looping_sound.dm"
 #include "code\datums\looping_sounds\machinery_sounds.dm"
+#include "code\datums\looping_sounds\weather.dm"
 #include "code\datums\martial\boxing.dm"
 #include "code\datums\martial\cqc.dm"
 #include "code\datums\martial\krav_maga.dm"
