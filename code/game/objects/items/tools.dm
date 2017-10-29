@@ -457,7 +457,7 @@
 		flamethrower_screwdriver(I, user)
 	else if(istype(I, /obj/item/stack/rods))
 		flamethrower_rods(I, user)
-	else if(istype(I, /obj/item/reagent_containers) && is_open_container())
+	else if(istype(I, /obj/item/reagent_containers) && I.is_open_container())
 		var/amountNeeded = max_fuel - get_fuel()
 		var/obj/item/reagent_containers/container = I
 		if(length(container.reagents.reagent_list) > 1)
