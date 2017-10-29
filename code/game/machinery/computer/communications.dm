@@ -469,7 +469,7 @@
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=announce'>Make a Captain's Announcement</A> \]"
 					if(CONFIG_GET(string/cross_server_address))
 						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=crossserver'>Send a message to an allied station</A> \]"
-					if(SSmapping.config.allow_custom_shuttles == "yes")
+					if(SSmapping.config.allow_custom_shuttles)
 						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=purchase_menu'>Purchase Shuttle</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=changeseclevel'>Change Alert Level</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=emergencyaccess'>Emergency Maintenance Access</A> \]"
