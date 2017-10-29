@@ -14,7 +14,7 @@
 			if(U.getStaminaLoss() > 95)
 				to_chat(U, "<font color ='red', size ='4'><B>Your ears weren't meant for this spectral sound.</B></font>")
 				spectral_change(U)
-			return ..()
+			return
 
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
