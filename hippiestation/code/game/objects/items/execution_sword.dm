@@ -59,7 +59,7 @@ obj/item/melee/execution_sword/attack_self(mob/living/user)
 			earrape_time = world.time + 250 //25 seconds between each
 			var/sound/nasheed = new()
 			nasheed.file = nasheed_chosen
-			nasheed.channel = CHANNEL_ADMIN
+			nasheed.channel = CHANNEL_NASHEED
 			nasheed.frequency = 1
 			nasheed.wait = 1
 			nasheed.repeat = 0
@@ -91,6 +91,8 @@ obj/item/melee/execution_sword/attack_self(mob/living/user)
 
 
 /obj/item/melee/execution_sword/proc/nasheed_end()
+	for(var/mob/M in GLOB.player_list)
+		M.stop_sound_channel(CHANNEL_NASHEED)
 	if(GLOB.nasheed_playing)
 		GLOB.nasheed_playing = FALSE
 
