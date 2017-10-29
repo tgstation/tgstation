@@ -1439,6 +1439,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		if(thing.use_tag)
 			if(!thing.tag)
 				WARNING("A ref was requested of an object with use_tag set but no tag: [thing]")
+				thing.use_tag = FALSE
 			else
-				return thing.tag
+				return "\[[url_encode(thing.tag)]\]"
 	return "\ref[input]"

@@ -4,7 +4,6 @@
 	icon_state = "x2"
 	anchored = TRUE
 	invisibility = INVISIBILITY_ABSTRACT
-	use_tag = TRUE
 
 /obj/effect/landmark/New()
 	..()

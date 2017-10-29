@@ -164,7 +164,7 @@ SUBSYSTEM_DEF(garbage)
 				#endif
 				var/type = D.type
 				var/datum/qdel_item/I = items[type]
-				testing("GC: -- [REF(D)] | [type] was unable to be GC'd --")
+				testing("GC: -- \ref[src] | [type] was unable to be GC'd --")
 				I.failures++
 			if (GC_QUEUE_HARDDELETE)
 				HardDelete(D)
@@ -194,7 +194,7 @@ SUBSYSTEM_DEF(garbage)
 		HardDelete(D)
 		return
 	var/gctime = world.time
-	var/refid = "[REF(D)]"
+	var/refid = "\ref[D]"
 
 	D.gc_destroyed = gctime
 	var/list/queue = queues[level]
@@ -211,7 +211,7 @@ SUBSYSTEM_DEF(garbage)
 	++delslasttick
 	++totaldels
 	var/type = D.type
-	var/refID = "[REF(D)]"
+	var/refID = "\ref[D]"
 
 	del(D)
 
@@ -412,7 +412,7 @@ SUBSYSTEM_DEF(garbage)
 			var/variable = L[varname]
 
 			if(variable == src)
-				testing("Found [src.type] [REF(src)] in [D.type]'s [varname] var. [Xname]")
+				testing("Found [src.type] \ref[src] in [D.type]'s [varname] var. [Xname]")
 
 			else if(islist(variable))
 				DoSearchVar(variable, "[Xname] -> list", recursive_limit-1)
@@ -421,10 +421,10 @@ SUBSYSTEM_DEF(garbage)
 		var/normal = IS_NORMAL_LIST(X)
 		for(var/I in X)
 			if (I == src)
-				testing("Found [src.type] [REF(src)] in list [Xname].")
+				testing("Found [src.type] \ref[src] in list [Xname].")
 
 			else if (I && !isnum(I) && normal && X[I] == src)
-				testing("Found [src.type] [REF(src)] in list [Xname]\[[I]\]")
+				testing("Found [src.type] \ref[src] in list [Xname]\[[I]\]")
 
 			else if (islist(I))
 				DoSearchVar(I, "[Xname] -> list", recursive_limit-1)
