@@ -41,14 +41,9 @@
 		"co2" = /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 		"plasma" = /obj/machinery/portable_atmospherics/canister/toxins,
 		"n2o" = /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
-		"no2" = /obj/machinery/portable_atmospherics/canister/nitrogen_dioxide,
 		"bz" = /obj/machinery/portable_atmospherics/canister/bz,
 		"air" = /obj/machinery/portable_atmospherics/canister/air,
 		"water vapor" = /obj/machinery/portable_atmospherics/canister/water_vapor,
-		"tritium" = /obj/machinery/portable_atmospherics/canister/tritium,
-		"hyper-noblium" = /obj/machinery/portable_atmospherics/canister/nob,
-		"nikolayev" = /obj/machinery/portable_atmospherics/canister/stim,
-		"pluoxium" = /obj/machinery/portable_atmospherics/canister/pluoxium,
 		"caution" = /obj/machinery/portable_atmospherics/canister,
 	)
 
@@ -103,31 +98,26 @@
 /obj/machinery/portable_atmospherics/canister/tritium
 	name = "tritium canister"
 	desc = "Tritium. Inhalation might cause irradiation."
-	icon_state = "green"
 	gas_type = /datum/gas/tritium
 
 /obj/machinery/portable_atmospherics/canister/nob
 	name = "hyper-noblium canister"
 	desc = "Hyper-Noblium. More noble than all other gases."
-	icon_state = "freon"
 	gas_type = /datum/gas/hypernoblium
 
 /obj/machinery/portable_atmospherics/canister/nitrogen_dioxide
 	name = "nitro dioxide canister"
 	desc = "Nitrogen dioxide. Feels great 'til the acid eats your lungs."
-	icon_state = "brown"
 	gas_type = /datum/gas/nitrogen_dioxide
 
 /obj/machinery/portable_atmospherics/canister/stim
 	name = "nikolayev canister"
 	desc = "Nikolayev gas. Side effects may include cannibalism."
-	icon_state = "darkpurple"
 	gas_type = /datum/gas/stim
 
 /obj/machinery/portable_atmospherics/canister/pluoxium
 	name = "pluoxium canister"
 	desc = "Pluoxium. Like oxygen, but more bang for your buck."
-	icon_state = "darkblue"
 	gas_type = /datum/gas/pluoxium
 
 /obj/machinery/portable_atmospherics/canister/water_vapor
