@@ -1051,7 +1051,7 @@
 				remove_wizard()
 				log_admin("[key_name(usr)] has de-wizard'ed [current].")
 			if("wizard")
-				if(has_antag_datum(/datum/antagonist/wizard))
+				if(!has_antag_datum(/datum/antagonist/wizard))
 					special_role = "Wizard"
 					add_antag_datum(/datum/antagonist/wizard)
 					message_admins("[key_name_admin(usr)] has wizard'ed [current].")
