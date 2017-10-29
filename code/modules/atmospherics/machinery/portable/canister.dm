@@ -41,13 +41,13 @@
 		"co2" = /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 		"plasma" = /obj/machinery/portable_atmospherics/canister/toxins,
 		"n2o" = /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
-		"no2" = /obj/machinery/portable_atmospherics/canister/nitrogen_dioxide,
+		"brown" = /obj/machinery/portable_atmospherics/canister/browns,
 		"bz" = /obj/machinery/portable_atmospherics/canister/bz,
 		"air" = /obj/machinery/portable_atmospherics/canister/air,
 		"water vapor" = /obj/machinery/portable_atmospherics/canister/water_vapor,
 		"tritium" = /obj/machinery/portable_atmospherics/canister/tritium,
 		"hyper-noblium" = /obj/machinery/portable_atmospherics/canister/nob,
-		"nikolayev" = /obj/machinery/portable_atmospherics/canister/stim,
+		"stimulum" = /obj/machinery/portable_atmospherics/canister/stimulum,
 		"pluoxium" = /obj/machinery/portable_atmospherics/canister/pluoxium,
 		"caution" = /obj/machinery/portable_atmospherics/canister,
 	)
@@ -90,7 +90,7 @@
 	gas_type = /datum/gas/bz
 
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide
-	name = "nitrous canister"
+	name = "n2o canister"
 	desc = "Nitrous oxide gas. Known to cause drowsiness."
 	icon_state = "redws"
 	gas_type = /datum/gas/nitrous_oxide
@@ -112,17 +112,17 @@
 	icon_state = "freon"
 	gas_type = /datum/gas/hypernoblium
 
-/obj/machinery/portable_atmospherics/canister/nitrogen_dioxide
-	name = "nitro dioxide canister"
-	desc = "Nitrogen dioxide. Feels great 'til the acid eats your lungs."
+/obj/machinery/portable_atmospherics/canister/browns
+	name = "brown gas canister"
+	desc = "Brown gas. Feels great 'til the acid eats your lungs."
 	icon_state = "brown"
-	gas_type = /datum/gas/nitrogen_dioxide
+	gas_type = /datum/gas/brown_gas
 
-/obj/machinery/portable_atmospherics/canister/stim
-	name = "nikolayev canister"
-	desc = "Nikolayev gas. Side effects may include cannibalism."
+/obj/machinery/portable_atmospherics/canister/stimulum
+	name = "stimulum canister"
+	desc = "Stimulum. Side effects may include cannibalism."
 	icon_state = "darkpurple"
-	gas_type = /datum/gas/stim
+	gas_type = /datum/gas/stimulum
 
 /obj/machinery/portable_atmospherics/canister/pluoxium
 	name = "pluoxium canister"

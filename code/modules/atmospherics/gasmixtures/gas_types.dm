@@ -84,11 +84,11 @@ GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /
 	moles_visible = 1
 	dangerous = TRUE
 
-/datum/gas/nitrogen_dioxide
-	id = "no2"
+/datum/gas/brown_gas
+	id = "browns"
 	specific_heat = 20
-	name = "Nitro Dioxide"
-	gas_overlay = "nitrogen_dioxide"
+	name = "Brown Gas"
+	gas_overlay = "browns"
 	moles_visible = MOLES_GAS_VISIBLE
 	dangerous = TRUE
 
@@ -106,10 +106,10 @@ GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /
 	name = "BZ"
 	dangerous = TRUE
 
-/datum/gas/stim
+/datum/gas/stimulum
 	id = "stim"
 	specific_heat = 5
-	name = "Nikolayev"
+	name = "Stimulum"
 
 /datum/gas/pluoxium
 	id = "pluox"
