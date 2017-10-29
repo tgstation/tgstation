@@ -318,7 +318,7 @@
 	var/stim_energy_change
 	stim_energy_change =heat_scale + (STIMULUM_FIRST_RISE(heat_scale**2)) - (STIMULUM_FIRST_DROP(heat_scale**3)) + (STIMULUM_SECOND_RISE(heat_scale**4)) - (STIMULUM_ABSOLUTE_DROP(heat_scale**5))
 
-	ASSERT_GAS(/datum/gas/stimulum, air)
+	ASSERT_GAS(/datum/gas/stimulum,air)
 	cached_gases[/datum/gas/stimulum][MOLES]+= heat_scale/10
 	cached_gases[/datum/gas/tritium][MOLES] = max(cached_gases[/datum/gas/tritium][MOLES]- heat_scale,0)
 	cached_gases[/datum/gas/plasma][MOLES] = max(cached_gases[/datum/gas/plasma][MOLES]- heat_scale,0)
