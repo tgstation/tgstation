@@ -10,6 +10,15 @@
 			return TRUE
 	return (!mover.density || !density || lying)
 
+//Does mob allows other mob M to pass over it
+//If it's hostile to M and moves not worse than M AND it's non-restrained and not on help intent, it doesn't
+/mob/proc/allows_pass(mob/M)
+	return movement_type < M.movement_type || faction_check(M) && (a_intent == INTENT_HELP || restrained())
+
+//Will mob try to move trough other mob
+//so if it's non-restrained and not on help intent, it won't
+/mob/proc/wants_pass()
+	return a_intent == INTENT_HELP || restrained()
 
 //The byond version of these verbs wait for the next tick before acting.
 //	instant verbs however can run mid tick or even during the time between ticks.

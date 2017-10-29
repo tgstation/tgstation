@@ -103,6 +103,10 @@
 	..()
 	last_bumped = world.time
 
+//Additional check for size of mob, so large immobile or grounded (spawners, goliaths) mobs disallow passage to nonflying mobs
+/mob/living/allows_pass(mob/M)
+	return (mob_size < MOB_SIZE_LARGE || M.movement_type >= FLYING) && ..()
+
 //Called when we bump onto a mob
 /mob/living/proc/MobCollide(mob/M)
 
@@ -121,17 +125,15 @@
 		return TRUE
 
 	//TODO FOR LATER PRS: Make passing tables an automatic thing for flying and passable objects be determined better to prevent huge amounts of flags being set when mobs fly.
-	if((movement_type) ^ (M.movement_type))	//Fly past each other.
+	if(((movement_type) ^ (M.movement_type)) && M.allows_pass(src) && src.wants_pass())	//Fly past each other.
 		now_pushing = TRUE
 		var/old = pass_flags & PASSMOB
 		var/old_p = pulling? (pulling.pass_flags & PASSMOB) : NONE
 		var/atom/movable/cached = pulling
 		pass_flags |= PASSMOB
 		var/obj/item/I = cached
-		if(cached && (isliving(cached) || (istype(I) && (I.w_class < WEIGHT_CLASS_BULKY))))
-			var/mob/living/l = cached
-			if(l.mob_size <= mob_size)
-				cached.pass_flags |= PASSMOB
+		if(cached && (isliving(cached) && cached:mob_size <= mob_size || (istype(I) && (I.w_class < WEIGHT_CLASS_BULKY))))
+			cached.pass_flags |= PASSMOB
 		Move(get_turf(M))
 		if(!old)
 			pass_flags &= ~PASSMOB
