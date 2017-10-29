@@ -5,18 +5,15 @@
 
 	telegraph_message = "<span class='boldwarning'>An eerie moan rises on the wind. Sheets of burning ash blacken the horizon. Seek shelter.</span>"
 	telegraph_duration = 300
-	//telegraph_sound = 'sound/lavaland/ash_storm_windup.ogg'
 	telegraph_overlay = "light_ash"
 
 	weather_message = "<span class='userdanger'><i>Smoldering clouds of scorching ash billow down around you! Get inside!</i></span>"
 	weather_duration_lower = 600
 	weather_duration_upper = 1200
-	//weather_sound = 'sound/lavaland/ash_storm_start.ogg'
 	weather_overlay = "ash_storm"
 
 	end_message = "<span class='boldannounce'>The shrieking wind whips away the last of the ash and falls to its usual murmur. It should be safe to go outside now.</span>"
 	end_duration = 300
-	//end_sound = 'sound/lavaland/ash_storm_end.ogg'
 	end_overlay = "light_ash"
 
 	area_type = /area/lavaland/surface/outdoors
@@ -60,10 +57,18 @@
 	sound_ao.start()
 	sound_ai.start()
 
-/datum/weather/ash_storm/end()
+/datum/weather/ash_storm/wind_down()
 	. = ..()
 	sound_ao.stop()
 	sound_ai.stop()
+
+	sound_wo.start()
+	sound_wi.start()
+
+/datum/weather/ash_storm/end()
+	. = ..()
+	sound_wo.stop()
+	sound_wi.stop()
 
 /datum/weather/ash_storm/proc/is_ash_immune(mob/living/L)
 	if(ismecha(L.loc)) //Mechs are immune
@@ -89,7 +94,6 @@
 	desc = "A passing ash storm blankets the area in harmless embers."
 
 	weather_message = "<span class='notice'>Gentle embers waft down around you like grotesque snow. The storm seems to have passed you by...</span>"
-	weather_sound = 'sound/lavaland/ash_storm_windup.ogg'
 	weather_overlay = "light_ash"
 
 	end_message = "<span class='notice'>The emberfall slows, stops. Another layer of hardened soot to the basalt beneath your feet.</span>"
