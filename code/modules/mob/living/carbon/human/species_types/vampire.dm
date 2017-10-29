@@ -122,8 +122,4 @@
 	invocation = "Squeak!"
 	charge_max = 50
 	cooldown_min = 50
-
 	shapeshift_type = /mob/living/simple_animal/hostile/retaliate/bat
-	current_shapes = list(/mob/living/simple_animal/hostile/retaliate/bat)
-	current_casters = list()
-	possible_shapes = list(/mob/living/simple_animal/hostile/retaliate/bat)
