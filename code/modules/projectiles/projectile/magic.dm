@@ -92,7 +92,7 @@
 	D.open()
 
 /obj/item/projectile/magic/change
-	name = "bolt of change"
+	name = "bolt of safety"
 	icon_state = "ice_1"
 	damage = 0
 	damage_type = BURN
@@ -127,24 +127,12 @@
 
 	var/mob/living/new_mob
 
-	var/randomize = pick("monkey","robot","slime","xeno","humanoid","animal")
+	var/randomize = "robot"
 	switch(randomize)
 		if("monkey")
 			new_mob = new /mob/living/carbon/monkey(M.loc)
 		if("robot")
-			var/robot = pick("cyborg","syndiborg","drone")
-			switch(robot)
-				if("cyborg")
-					new_mob = new /mob/living/silicon/robot(M.loc)
-				if("syndiborg")
-					var/path
-					if(prob(50))
-						path = /mob/living/silicon/robot/modules/syndicate
-					else
-						path = /mob/living/silicon/robot/modules/syndicate/medical
-					new_mob = new path(M.loc)
-				if("drone")
-					new_mob = new /mob/living/simple_animal/drone/polymorphed(M.loc)
+			new_mob = /mob/living/silicon/robot/modules/security
 			if(issilicon(new_mob))
 				new_mob.gender = M.gender
 				new_mob.invisibility = 0
