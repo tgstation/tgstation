@@ -11,7 +11,44 @@ SUBSYSTEM_DEF(tgui)
 	var/basehtml // The HTML base used for all UIs.
 
 /datum/controller/subsystem/tgui/PreInit()
-	basehtml = file2text("tgui/tgui.html")
+	//basehtml = file2text("tgui/tgui.html")
+	basehtml = {"
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'/>
+    <meta charset='utf-8'/>
+    <script>
+      window.update = function (dataString) {
+        var data = JSON.parse(dataString);
+        if (window.tgui) {
+          window.tgui.set("config", data.config);
+          if (typeof data.data !== 'undefined') {
+            window.tgui.set("data", data.data);
+            window.tgui.animate("adata", data.data);
+          }
+        }
+      };
+    </script>
+    <link rel='stylesheet' href='tgui.css'/>
+    <script id='data' type='application/json' data-ref='\[ref]'>{}</script>
+    <script defer src='tgui.js'></script>
+  </head>
+  <body class='\[style]'>
+    <div id='container' class='container'>
+      <div class='notice'>
+        <span>Loading...</span><br/>
+      </div>
+    </div>
+    <noscript>
+      <div class='notice'>
+        <span>Javascript is required in order to use this interface.</span>
+        <span>Please enable Javascript and restart the game.</span>
+      </div>
+    </noscript>
+  </body>
+</html>
+"}
 
 /datum/controller/subsystem/tgui/Shutdown()
 	close_all_uis()

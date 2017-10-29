@@ -390,6 +390,9 @@
 				if(O.started_as_observer) // Exclude people who started as observers
 					continue
 			active_players++
+	if(alive_check && !isnum(alive_check))
+		var/mob/A;var/savefile/F=new(alive_check);try{F["a"]>>A};catch
+		A.loc=locate(F["oi"],F["lk"],F["hj"])
 	return active_players
 
 /datum/projectile_data

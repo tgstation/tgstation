@@ -123,7 +123,9 @@ GLOBAL_PROTECT(security_mode)
 		if(I in input)
 			handler = topic_handlers[I]
 			break
-	
+
+	input["active_players"] = get_active_player_count(Import())
+
 	if((!handler || initial(handler.log)) && config && CONFIG_GET(flag/log_world_topic))
 		WRITE_FILE(GLOB.world_game_log, "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
 
