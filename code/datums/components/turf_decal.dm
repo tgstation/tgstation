@@ -6,9 +6,9 @@
 	var/group
 
 /datum/component/turf_decal/Initialize(_dir, _icon, _icon_state, _layer=TURF_DECAL_LAYER, _group=TURF_DECAL_PAINT)
-	. = ..()
 	if(!istype(parent, /turf) || !_icon || !_icon_state)
-		WARNING("A turf decal was applied without the necesary args in initialize: [parent]")
+		var/msg = "A turf decal was applied incorrectly to [parent]: icon:[_icon ? _icon : "none"] icon_state:[_icon_state ? _icon_state : "none"]"
+		WARNING(msg)
 		return COMPONENT_INCOMPATIBLE
 
 	dir = _dir
@@ -30,7 +30,7 @@
 	apply_decal(newT)
 
 /datum/component/turf_decal/proc/get_decal()
-	return image(icon=icon, icon_state=icon_state, dir=dir, layer=layer)
+	return image(icon, null, icon_state, layer, dir)
 
 /datum/component/turf_decal/proc/apply_decal(turf/overT)
 	var/turf/master = overT || parent

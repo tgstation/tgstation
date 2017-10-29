@@ -606,9 +606,8 @@
 		var/turf/newT = new_turfs[i]
 		var/move_mode = old_turfs[oldT]
 		if(move_mode & MOVE_CONTENTS)
-			var/list/old_contents = oldT.contents.Copy()
-			for(var/k in 1 to old_contents.len)
-				var/atom/movable/moving_atom = old_contents[k]
+			for(var/k in oldT)
+				var/atom/movable/moving_atom = k
 				if(moving_atom.loc != oldT) //fix for multi-tile objects
 					continue
 				moving_atom.onShuttleMove(newT, oldT, movement_force, movement_direction, old_dock, src)	//atoms

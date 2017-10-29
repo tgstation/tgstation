@@ -23,11 +23,14 @@
 
 /obj/effect/turf_decal/Initialize()
 	..()
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/turf_decal/ComponentInitialize()
+	. = ..()
 	var/turf/T = loc
 	if(!istype(T)) //you know this will happen somehow
 		CRASH("Turf decal initialized in an object/nullspace")
 	T.AddComponent(/datum/component/turf_decal, dir, icon, icon_state)
-	return INITIALIZE_HINT_QDEL
 
 /obj/effect/turf_decal/stripes/line
 	icon_state = "warningline"
