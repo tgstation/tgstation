@@ -883,15 +883,15 @@
 
 		//Catban
 		if(jobban_isbanned(M, CATBAN) || isbanned_dept)
-			dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=catban;jobban4=\ref[M]'><font color=red>Catbanned</font></a></td>"
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=catban;jobban4=[REF(M)]'><font color=red>Catbanned</font></a></td>"
 		else
-			dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=catban;jobban4=\ref[M]'>Catban</a></td>"
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=catban;jobban4=[REF(M)]'>Catban</a></td>"
 
 		//Cluwneban
 		if(jobban_isbanned(M, CLUWNEBAN) || isbanned_dept)
-			dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=cluwneban;jobban4=\ref[M]'><font color=red>Cluwnebanned</font></a></td>"
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=cluwneban;jobban4=[REF(M)]'><font color=red>Cluwnebanned</font></a></td>"
 		else
-			dat += "<td width='20%'><a href='?src=\ref[src];[HrefToken()];jobban3=cluwneban;jobban4=\ref[M]'>Cluwneban</a></td>"
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=cluwneban;jobban4=[REF(M)]'>Cluwneban</a></td>"
 
 		dat += "</tr></table>"
 		usr << browse(dat, "window=jobban2;size=800x450")

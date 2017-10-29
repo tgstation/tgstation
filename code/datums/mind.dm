@@ -595,11 +595,11 @@
 			text = uppertext(text)
 		text = "<i><b>[text]</b></i>: "
 		if(src in SSticker.mode.shadows)
-			text += "<b>SHADOWLING</b> | thrall | <a href='?src=\ref[src];shadowling=clear'>human</a>"
+			text += "<b>SHADOWLING</b> | thrall | <a href='?src=[REF(src)];shadowling=clear'>human</a>"
 		else if(src in SSticker.mode.thralls)
-			text += "shadowling | <b>THRALL</b> | <a href='?src=\ref[src];shadowling=clear'>human</a>"
+			text += "shadowling | <b>THRALL</b> | <a href='?src=[REF(src)];shadowling=clear'>human</a>"
 		else
-			text += "<a href='?src=\ref[src];shadowling=shadowling'>shadowling</a> | <a href='?src=\ref[src];shadowling=thrall'>thrall</a> | <b>HUMAN</b>"
+			text += "<a href='?src=[REF(src)];shadowling=shadowling'>shadowling</a> | <a href='?src=[REF(src)];shadowling=thrall'>thrall</a> | <b>HUMAN</b>"
 
 		if(current && current.client && (ROLE_SHADOWLING in current.client.prefs.be_special))
 			text += " | Enabled in Prefs"
@@ -967,7 +967,7 @@
 					log_admin("[key_name(usr)] has rev'ed [current].")
 				else
 					return
-				
+
 			if("headrev")
 				if(has_antag_datum(/datum/antagonist/rev))
 					var/datum/antagonist/rev/rev = has_antag_datum(/datum/antagonist/rev)

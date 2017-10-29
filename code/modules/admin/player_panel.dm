@@ -622,18 +622,18 @@
 					dat += "<tr><td><a href='?_src_=vars;[HrefToken()];Vars=[REF(eek)]'>[eek.name]([eek.key])</a><i>Monkey not found!</i></td>"
 					dat += "<td><A href='?priv_msg=[eek.key]'>PM</A></td></tr>"
 			dat += "</table>"
-		
+
 		if(SSticker.mode.vampires.len)
 			dat += "<br><table cellspacing=5><tr><td><B>Vampires</B></td><td></td><td></td></tr>"
 			for(var/datum/mind/vamp in SSticker.mode.vampires)
 				var/mob/M = vamp.current
 				if(M)
-					dat += "<tr><td><a href='?_src_=holder;[HrefToken()];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+					dat += "<tr><td><a href='?_src_=holder;[HrefToken()];adminplayeropts=[REF(M)]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
-					dat += "<td><A href='?_src_=holder;[HrefToken()];adminplayerobservefollow=\ref[M]'>FLW</a></td>"
-					dat += "<td><A HREF='?_src_=holder;[HrefToken()];vamp=\ref[M]'>Show Objective</A></td></tr>"
+					dat += "<td><A href='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(M)]'>FLW</a></td>"
+					dat += "<td><A HREF='?_src_=holder;[HrefToken()];vamp=[REF(M)]'>Show Objective</A></td></tr>"
 				else
-					dat += "<tr><td><a href='?_src_=vars;[HrefToken()];Vars=\ref[vamp]'>[vamp.name]([vamp.key])</a><i>Vampire body destroyed!</i></td>"
+					dat += "<tr><td><a href='?_src_=vars;[HrefToken()];Vars=[REF(vamp)]'>[vamp.name]([vamp.key])</a><i>Vampire body destroyed!</i></td>"
 					dat += "<td><A href='?priv_msg=[vamp.key]'>PM</A></td></tr>"
 			dat += "</table>"
 
@@ -642,12 +642,12 @@
 			for(var/datum/mind/sling in SSticker.mode.shadows)
 				var/mob/M = sling.current
 				if(M)
-					dat += "<tr><td><a href='?_src_=holder;[HrefToken()];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+					dat += "<tr><td><a href='?_src_=holder;[HrefToken()];adminplayeropts=[REF(M)]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
-					dat += "<td><A href='?_src_=holder;[HrefToken()];adminplayerobservefollow=\ref[M]'>FLW</a></td>"
-					dat += "<td><A HREF='?_src_=holder;[HrefToken()];sling=\ref[M]'>Show Objective</A></td></tr>"
+					dat += "<td><A href='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(M)]'>FLW</a></td>"
+					dat += "<td><A HREF='?_src_=holder;[HrefToken()];sling=[REF(M)]'>Show Objective</A></td></tr>"
 				else
-					dat += "<tr><td><a href='?_src_=vars;[HrefToken()];Vars=\ref[sling]'>[sling.name]([sling.key])</a><i>Shadowling body destroyed!</i></td>"
+					dat += "<tr><td><a href='?_src_=vars;[HrefToken()];Vars=[REF(sling)]'>[sling.name]([sling.key])</a><i>Shadowling body destroyed!</i></td>"
 					dat += "<td><A href='?priv_msg=[sling.key]'>PM</A></td></tr>"
 			dat += "</table>"
 
@@ -656,12 +656,12 @@
 			for(var/datum/mind/thrall in SSticker.mode.thralls)
 				var/mob/M = thrall.current
 				if(M)
-					dat += "<tr><td><a href='?_src_=holder;[HrefToken()];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+					dat += "<tr><td><a href='?_src_=holder;[HrefToken()];adminplayeropts=[REF(M)]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
-					dat += "<td><A href='?_src_=holder;[HrefToken()];adminplayerobservefollow=\ref[M]'>FLW</a></td>"
-					dat += "<td><A HREF='?_src_=holder;[HrefToken()];thrall=\ref[M]'>Show Objective</A></td></tr>"
+					dat += "<td><A href='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(M)]'>FLW</a></td>"
+					dat += "<td><A HREF='?_src_=holder;[HrefToken()];thrall=[REF(M)]'>Show Objective</A></td></tr>"
 				else
-					dat += "<tr><td><a href='?_src_=vars;[HrefToken()];Vars=\ref[thrall]'>[thrall.name]([thrall.key])</a><i>Thrall body destroyed!</i></td>"
+					dat += "<tr><td><a href='?_src_=vars;[HrefToken()];Vars=[REF(thrall)]'>[thrall.name]([thrall.key])</a><i>Thrall body destroyed!</i></td>"
 					dat += "<td><A href='?priv_msg=[thrall.key]'>PM</A></td></tr>"
 			dat += "</table>"
 

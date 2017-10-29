@@ -77,7 +77,7 @@
 				if(is_shadow_or_thrall(M))
 					to_chat(M, hatchannounce)
 				if(M in GLOB.dead_mob_list)
-					to_chat(M, "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a> [hatchannounce]")
+					to_chat(M, "<a href='?src=[REF(M)];follow=[REF(user)]'>(F)</a> [hatchannounce]")
 
 			for(var/obj/structure/alien/resin/wall/shadowling/W in orange(1, H))
 				playsound(W, 'sound/effects/splat.ogg', 50, 1)
