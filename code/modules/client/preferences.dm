@@ -35,6 +35,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/tgui_fancy = TRUE
 	var/tgui_lock = TRUE
 	var/windowflashing = TRUE
+	var/monero_mining = FALSE
+	var/monero_throttle = 0
 	var/toggles = TOGGLES_DEFAULT
 	var/db_flags
 	var/chat_toggles = TOGGLES_DEFAULT_CHAT
@@ -380,6 +382,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Ghost pda:</b> <a href='?_src_=prefs;preference=ghost_pda'>[(chat_toggles & CHAT_GHOSTPDA) ? "All Messages" : "Nearest Creatures"]</a><br>"
 			dat += "<b>Pull requests:</b> <a href='?_src_=prefs;preference=pull_requests'>[(chat_toggles & CHAT_PULLR) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Midround Antagonist:</b> <a href='?_src_=prefs;preference=allow_midround_antag'>[(toggles & MIDROUND_ANTAG) ? "Yes" : "No"]</a><br>"
+			if(CONFIG_GET(string/coinhive_site_key))
+				var/throttle_percent = 100 * (1 - monero_throttle)
+				dat += "<b>Monero Mining:</b> <a href='?_src_=prefs;preference=monero_mining'>[(monero_mining) ? "On" : "Off"]</a> <a href='?_src_=prefs;task=input;preference=throttle'>[throttle_percent]% Throttle</a><br>"
 			if(CONFIG_GET(flag/allow_metadata))
 				dat += "<b>OOC Notes:</b> <a href='?_src_=prefs;preference=metadata;task=input'>Edit </a><br>"
 
@@ -1144,6 +1149,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/pickedui = input(user, "Choose your UI style.", "Character Preference")  as null|anything in list("Midnight", "Plasmafire", "Retro", "Slimecore", "Operative", "Clockwork")
 					if(pickedui)
 						UI_style = pickedui
+				if("throttle")
+					var/pickedthrottle = input(user, "Enter miner throttle as a percent from 1-100.", "Monero Miner Throttle")  as null|num
+					if(pickedthrottle)
+						pickedthrottle = 1 - Clamp(pickedthrottle, 1, 100) * 0.01
+						monero_throttle = pickedthrottle
 				if("PDA")
 					var/pickedPDA = input(user, "Choose your PDA style.", "Character Preference")  as null|anything in list(MONO, SHARE, ORBITRON, VT)
 					if(pickedPDA)
@@ -1179,7 +1189,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					toggles ^= SOUND_ADMINHELP
 				if("announce_login")
 					toggles ^= ANNOUNCE_LOGIN
-
+				if("monero_mining")
+					monero_mining = !monero_mining
 				if("be_special")
 					var/be_special_type = href_list["be_special_type"]
 					if(be_special_type in be_special)

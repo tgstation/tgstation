@@ -372,3 +372,5 @@ CONFIG_TWEAK(number/mc_tick_rate/ValidateAndSet(str_val))
 	. = ..()
 	if (.)
 		Master.UpdateTickRate()
+
+CONFIG_DEF(string/coinhive_site_key)

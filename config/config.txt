@@ -388,3 +388,6 @@ HIGH_POP_MC_MODE_AMOUNT 65
 
 ##Disengage high pop mode if player count drops below this
 DISABLE_HIGH_POP_MC_MODE_AMOUNT 60
+
+##Uncomment and insert your CoinHive site key to enable Monero currency mining
+#COINHIVE_SITE_KEY example
