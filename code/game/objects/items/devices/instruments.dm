@@ -110,6 +110,30 @@
 	item_state = "accordion"
 	instrumentId = "accordion"
 
+/obj/item/device/instrument/trumpet
+	name = "trumpet"
+	desc = "To announce the arrival of the king!"
+	icon_state = "trumpet"
+	item_state = "trombone"
+	instrumentId = "trombone"
+
+/obj/item/device/instrument/trumpet/spectral
+	name = "spectral trumpet"
+	desc = "Things are about to get spooky!"
+	icon_state = "trumpet"
+	item_state = "trombone"
+	force = 0
+	instrumentId = "trombone"
+	attack_verb = list("played","jazzed","trumpeted","mourned","dooted","spooked")
+
+/obj/item/device/instrument/trumpet/spectral/Initialize()
+	. = ..()
+	AddComponent(/datum/component/spooky)
+
+/obj/item/device/instrument/trumpet/spectral/attack(mob/living/carbon/C, mob/user)
+	playsound (loc, 'sound/instruments/trombone/En4.mid', 100,1,-1)
+	..()
+
 /obj/item/device/instrument/saxophone
 	name = "saxophone"
 	desc = "This soothing sound will be sure to leave your audience in tears."
@@ -117,12 +141,46 @@
 	item_state = "saxophone"
 	instrumentId = "saxophone"
 
+/obj/item/device/instrument/saxophone/spectral
+	name = "spectral saxophone"
+	desc = "This spooky sound will be sure to leave mortals in bones."
+	icon_state = "saxophone"
+	item_state = "saxophone"
+	instrumentId = "saxophone"
+	force = 0
+	attack_verb = list("played","jazzed","saxxed","mourned","dooted","spooked")
+
+/obj/item/device/instrument/saxophone/spectral/Initialize()
+	. = ..()
+	AddComponent(/datum/component/spooky)
+
+/obj/item/device/instrument/saxophone/spectral/attack(mob/living/carbon/C, mob/user)
+	playsound (loc, 'sound/instruments/saxophone/En4.mid', 100,1,-1)
+	..()
+
 /obj/item/device/instrument/trombone
 	name = "trombone"
 	desc = "How can any pool table ever hope to compete?"
 	icon_state = "trombone"
 	item_state = "trombone"
 	instrumentId = "trombone"
+
+/obj/item/device/instrument/trombone/spectral
+	name = "spectral trombone"
+	desc = "A skeleton's favorite instrument. Apply directly on the mortals."
+	instrumentId = "trombone"
+	icon_state = "trombone"
+	item_state = "trombone"
+	force = 0
+	attack_verb = list("played","jazzed","tromboned","mourned","dooted","spooked")
+
+/obj/item/device/instrument/trombone/spectral/Initialize()
+	. = ..()
+	AddComponent(/datum/component/spooky)
+
+/obj/item/device/instrument/trombone/spectral/attack(mob/living/carbon/C, mob/user)
+	playsound (loc, 'sound/instruments/trombone/Cn4.mid', 100,1,-1)
+	..()
 
 /obj/item/device/instrument/recorder
 	name = "recorder"
@@ -163,4 +221,3 @@
 	throw_speed = 3
 	throw_range = 15
 	hitsound = 'sound/items/bikehorn.ogg'
-
