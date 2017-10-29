@@ -22,6 +22,7 @@
 	limbs_id = "golem"
 	fixed_mut_color = "aaa"
 	var/info_text = "As an <span class='danger'>Iron Golem</span>, you don't have any special traits."
+	var/random_eligible = TRUE //If false, the golem subtype can't be made through golem mutation toxin
 
 	var/prefix = "Iron"
 	var/list/special_names
@@ -44,11 +45,20 @@
 	name = "Random Golem"
 	blacklisted = FALSE
 	dangerous_existence = FALSE
+	var/static/list/random_golem_types
 
 /datum/species/golem/random/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
-	var/list/golem_types = typesof(/datum/species/golem) - src.type
-	var/datum/species/golem/golem_type = pick(golem_types)
+	if(!random_golem_types)
+		random_golem_types = subtypesof(/datum/species/golem) - type
+		for(var/V in random_golem_types)
+			var/datum/species/golem/G = V
+			if(!initial(G.random_eligible))
+				random_golem_types -= G
+				to_chat(world, "Excluding golem type [initial(G.id)]")
+			else
+				to_chat(world, "Allowing golem type [initial(G.id)]")
+	var/datum/species/golem/golem_type = pick(random_golem_types)
 	var/mob/living/carbon/human/H = C
 	H.set_species(golem_type)
 	to_chat(H, "[initial(golem_type.info_text)]")
@@ -597,7 +607,7 @@
 	info_text = "<span class='bold alloy'>As a </span><span class='bold brass'>clockwork golem</span><span class='bold alloy'>, you are faster than \
 	other types of golem (being a machine), and are immune to electric shocks.</span>"
 	species_traits = list(NO_UNDERWEAR, NOTRANSSTING, NOBREATH, NOZOMBIE, VIRUSIMMUNE, RADIMMUNE, NOBLOOD, RESISTCOLD, RESISTPRESSURE, PIERCEIMMUNE)
-	armor = 40 //Reinforced, but also slim to allow for fast movement
+	armor = 20 //Reinforced, but much less so to allow for fast movement
 	attack_verb = "smash"
 	attack_sound = 'sound/magic/clockwork/anima_fragment_attack.ogg'
 	sexes = FALSE
@@ -639,6 +649,7 @@
 	has_corpse = TRUE
 	blacklisted = TRUE
 	dangerous_existence = TRUE
+	random_eligible = FALSE
 
 
 /datum/species/golem/cloth
