@@ -80,7 +80,7 @@
 	desc = "This is used by your elite security force. Protects ears from flashbangs.\nTo access the security channel, use :s."
 	icon_state = "sec_headset_alt"
 	item_state = "sec_headset_alt"
-	flags_2 = BANG_PROTECT_2 | NO_EMP_WIRES 2
+	flags_2 = BANG_PROTECT_2 | NO_EMP_WIRES_2
 
 /obj/item/device/radio/headset/headset_eng
 	name = "engineering radio headset"
