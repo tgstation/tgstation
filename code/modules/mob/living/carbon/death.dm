@@ -35,7 +35,10 @@
 				var/org_zone = check_zone(O.zone) //both groin and chest organs.
 				if(org_zone == "chest")
 					O.Remove(src)
-					O.forceMove(get_turf(src))
+					if(get_turf(src))
+						O.forceMove(get_turf(src))
+					else
+						O.moveToNullspace()
 					O.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
 	else
 		for(var/X in internal_organs)

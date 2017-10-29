@@ -269,7 +269,8 @@
 		. = TRUE
 		var/atom/oldloc = loc
 		var/area/old_area = get_area(oldloc)
-		oldloc.Exited(src, null)
+		if(oldloc)
+			oldloc.Exited(src, null)
 		if(old_area)
 			old_area.Exited(src, null)
 		loc = null
