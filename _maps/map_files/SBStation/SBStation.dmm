@@ -21051,7 +21051,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aUy" = (
-/obj/machinery/portable_atmospherics/canister/freon,
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aUz" = (

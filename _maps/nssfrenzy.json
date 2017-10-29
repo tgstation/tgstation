@@ -2,7 +2,5 @@
     "map_name": "NSS Frenzy",
     "map_path": "map_files/FrenzyStation",
     "map_file": "FrenzyStation.dmm",
-    "minetype": "lavaland",
-    "transition_config": "default",
-    "allow_custom_shuttles": "no"
+    "allow_custom_shuttles": false
 }

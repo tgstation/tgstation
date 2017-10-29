@@ -7055,7 +7055,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "qr" = (
-/obj/machinery/portable_atmospherics/canister/freon,
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},

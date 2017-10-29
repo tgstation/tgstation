@@ -1,8 +1,5 @@
 {
     "map_name": "SB Station",
     "map_path": "map_files/SBStation",
-    "map_file": "SBStation.dmm",
-    "minetype": "lavaland",
-    "transition_config": "default",
-    "allow_custom_shuttles": "yes"
+    "map_file": "SBStation.dmm"
 }
