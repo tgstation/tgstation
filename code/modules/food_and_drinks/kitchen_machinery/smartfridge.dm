@@ -194,10 +194,19 @@
 					break
 				if(O.name == params["name"])
 					O.forceMove(drop_location())
+					adjust_item_drop_location(O)
 					desired--
 			return TRUE
 	return FALSE
 
+
+/obj/machinery/smartfridge/proc/adjust_item_drop_location(obj/item/item)	// Adjust item drop location to a 3x3 grid inside the tile, returns slot id from 0 to 8
+	var/md5 = md5(item.name)												// Oh, and it's deterministic too. A specific item will always drop from the same slot.
+	for (var/i in 1 to 32)
+		. += hex2num(copytext(md5,i,i+1))
+	. = . % 9
+	item.pixel_x = -8 + ((.%3)*8)
+	item.pixel_y = -8 + (round( . / 3)*8)
 
 // ----------------------------
 //  Drying Rack 'smartfridge'
