@@ -172,7 +172,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		else
 			to_chat(src, "<span class='holoparasite'>You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]!</span>")
 			visible_message("<span class='danger'>\The [src] jumps back to its user.</span>")
-			if(istype(summoner.loc, /obj/effect))
+			if(istype(summoner.loc, /obj/effect) || (GODMODE & summoner.status_flags))
 				Recall(TRUE)
 			else
 				new /obj/effect/temp_visual/guardian/phase/out(loc)
@@ -315,6 +315,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 /mob/living/simple_animal/hostile/guardian/proc/Manifest(forced)
 	if(istype(summoner.loc, /obj/effect) || (cooldown > world.time && !forced))
+		return FALSE
+	if(GODMODE & summoner.status_flags)
 		return FALSE
 	if(loc == summoner)
 		forceMove(summoner.loc)
