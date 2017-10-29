@@ -45,15 +45,20 @@
 	name = "Random Golem"
 	blacklisted = FALSE
 	dangerous_existence = FALSE
+	var/static/list/random_golem_types
 
 /datum/species/golem/random/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
-	var/list/golem_types = subtypesof(/datum/species/golem)
-	for(var/V in golem_types)
-		var/datum/species/golem/G = V
-		if(!initial(G.random_eligible))
-			golem_types -= G
-	var/datum/species/golem/golem_type = pick(golem_types)
+	if(!random_golem_types)
+		random_golem_types = subtypesof(/datum/species/golem) - type
+		for(var/V in random_golem_types)
+			var/datum/species/golem/G = V
+			if(!initial(G.random_eligible))
+				random_golem_types -= G
+				to_chat(world, "Excluding golem type [initial(G.id)]")
+			else
+				to_chat(world, "Allowing golem type [initial(G.id)]")
+	var/datum/species/golem/golem_type = pick(random_golem_types)
 	var/mob/living/carbon/human/H = C
 	H.set_species(golem_type)
 	to_chat(H, "[initial(golem_type.info_text)]")
