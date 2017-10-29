@@ -31,7 +31,7 @@
 				if(ishostile(target))
 					var/mob/living/simple_animal/hostile/H = M
 					if(malfunctioning)
-						H.faction |= list("lazarus", "\ref[user]")
+						H.faction |= list("lazarus", "[REF(user)]")
 						H.robust_searching = 1
 						H.friends += user
 						H.attack_same = 1

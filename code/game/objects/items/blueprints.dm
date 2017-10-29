@@ -28,7 +28,7 @@
 	switch(get_area_type())
 		if(AREA_SPACE)
 			text += "<p>According to the [src.name], you are now in an unclaimed territory.</p> \
-			<p><a href='?src=\ref[src];create_area=1'>Mark this place as new area.</a></p>"
+			<p><a href='?src=[REF(src)];create_area=1'>Mark this place as new area.</a></p>"
 		if(AREA_SPECIAL)
 			text += "<p>This place is not noted on the [src.name].</p>"
 	return text
@@ -69,20 +69,20 @@
 		var/area/A = get_area()
 		if(get_area_type() == AREA_STATION)
 			. += "<p>According to \the [src], you are now in <b>\"[html_encode(A.name)]\"</b>.</p>"
-			. += "<p>You may <a href='?src=\ref[src];edit_area=1'>make an amendment</a> to the drawing.</p>"
-		. += "<p><a href='?src=\ref[src];view_legend=1'>View wire colour legend</a></p>"
+			. += "<p>You may <a href='?src=[REF(src)];edit_area=1'>make an amendment</a> to the drawing.</p>"
+		. += "<p><a href='?src=[REF(src)];view_legend=1'>View wire colour legend</a></p>"
 		if(!viewing)
-			. += "<p><a href='?src=\ref[src];view_blueprints=1'>View structural data</a></p>"
+			. += "<p><a href='?src=[REF(src)];view_blueprints=1'>View structural data</a></p>"
 		else
-			. += "<p><a href='?src=\ref[src];refresh=1'>Refresh structural data</a></p>"
-			. += "<p><a href='?src=\ref[src];hide_blueprints=1'>Hide structural data</a></p>"
+			. += "<p><a href='?src=[REF(src)];refresh=1'>Refresh structural data</a></p>"
+			. += "<p><a href='?src=[REF(src)];hide_blueprints=1'>Hide structural data</a></p>"
 	else
 		if(legend == TRUE)
-			. += "<a href='?src=\ref[src];exit_legend=1'><< Back</a>"
+			. += "<a href='?src=[REF(src)];exit_legend=1'><< Back</a>"
 			. += view_wire_devices(user);
 		else
 			//legend is a wireset
-			. += "<a href='?src=\ref[src];view_legend=1'><< Back</a>"
+			. += "<a href='?src=[REF(src)];view_legend=1'><< Back</a>"
 			. += view_wire_set(user, legend)
 	var/datum/browser/popup = new(user, "blueprints", "[src]", 700, 500)
 	popup.set_content(.)
@@ -169,7 +169,7 @@
 /obj/item/areaeditor/blueprints/proc/view_wire_devices(mob/user)
 	var/message = "<br>You examine the wire legend.<br>"
 	for(var/wireset in GLOB.wire_color_directory)
-		message += "<br><a href='?src=\ref[src];view_wireset=[wireset]'>[GLOB.wire_name_directory[wireset]]</a>"
+		message += "<br><a href='?src=[REF(src)];view_wireset=[wireset]'>[GLOB.wire_name_directory[wireset]]</a>"
 	message += "</p>"
 	return message
 

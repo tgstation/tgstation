@@ -19,7 +19,7 @@ GLOBAL_LIST_INIT(message_servers, list())
 
 /datum/data_pda_msg/proc/get_photo_ref()
 	if(photo)
-		return "<a href='byond://?src=\ref[src];photo=1'>(Photo)</a>"
+		return "<a href='byond://?src=[REF(src)];photo=1'>(Photo)</a>"
 	return ""
 
 /datum/data_pda_msg/Topic(href,href_list)
