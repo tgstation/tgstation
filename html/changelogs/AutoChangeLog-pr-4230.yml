@@ -1,0 +1,5 @@
+author: "Arzion5"
+delete-after: True
+changes: 
+  - rscadd: "Added a banhammer to the traitor uplink, which can be found in the \"Badass\" section of your uplink. You can now give heart attacks to players!"
+  - rscadd: "Added a syndicate banhammer to the traitor uplink, which is a special variant of the banhammer that deals damage on hit without being obvious."
