@@ -62,7 +62,7 @@
 			C.throw_mode_on()
 		if(msg)
 			to_chat(user, "<span class='warning'>You prime \the [src]! [det_time/10] seconds!</span>")
-	playsound(loc, 'sound/weapons/armbomb.ogg', volume, 1)
+	playsound(src, 'sound/weapons/armbomb.ogg', volume, 1)
 	active = TRUE
 	icon_state = initial(icon_state) + "_active"
 	addtimer(CALLBACK(src, .proc/prime), isnull(delayoverride)? det_time : delayoverride)
