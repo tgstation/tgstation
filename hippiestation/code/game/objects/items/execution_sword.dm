@@ -50,6 +50,7 @@ obj/item/melee/execution_sword/attack_self(mob/living/user)
 		to_chat(user, "Little late to the execution there brother...")
 	else
 		executing = TRUE
+		can_execute = FALSE
 		var/area/A = get_area(src)
 		priority_announce("[user] is preparing to execute [target] at [A.map_name] in the name of [execution_faction]!","Message from [execution_faction]!", 'sound/misc/notice1.ogg')
 		log_admin("[key_name(user)] attempted to execute [key_name(target)] with [src]")
@@ -80,12 +81,10 @@ obj/item/melee/execution_sword/attack_self(mob/living/user)
 			infidel_head.dismember()
 			priority_announce("[user] has executed [target] in the name of [execution_faction]!","Message from [execution_faction]!", 'sound/misc/notice1.ogg')
 			executing = FALSE
-			can_execute = FALSE
 			addtimer(CALLBACK(src, .proc/recharge_execute), EXECUTE_COOLDOWN)
 		else
 			priority_announce("[user] has failed to execute [target] and has brought shame to [execution_faction]!","Message from [execution_faction]!", 'sound/misc/compiler-failure.ogg')
 			executing = FALSE
-			can_execute = FALSE
 			nasheed_end()
 			addtimer(CALLBACK(src, .proc/recharge_execute), EXECUTE_COOLDOWN)
 
