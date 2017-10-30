@@ -167,6 +167,7 @@ CREATE TABLE `feedback` (
   `datetime` datetime NOT NULL,
   `round_id` int(11) unsigned NOT NULL,
   `key_name` varchar(32) NOT NULL,
+  `version` tinyint(3) unsigned NOT NULL,
   `json` json NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;

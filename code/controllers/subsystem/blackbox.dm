@@ -9,6 +9,7 @@ SUBSYSTEM_DEF(blackbox)
 	var/triggertime = 0
 	var/sealed = FALSE	//time to stop tracking stats?
 	var/list/research_levels = list() //list of highest tech levels attained that isn't lost lost by destruction of RD computers
+	var/list/versions = list() //associative list of any feedback variables that have had their format changed since creation and their current version, remember to update this
 
 
 /datum/controller/subsystem/blackbox/Initialize()
@@ -62,7 +63,10 @@ SUBSYSTEM_DEF(blackbox)
 	var/list/sqlrowlist = list()
 
 	for (var/datum/feedback_variable/FV in feedback)
-		sqlrowlist += list(list("datetime" = "Now()", "round_id" = GLOB.round_id, "key_name" =  "'[sanitizeSQL(FV.key)]'", "json" = "'[sanitizeSQL(json_encode(FV.json))]'"))
+		var/sqlversion = 1
+		if(FV.key in versions)
+			sqlversion = versions[FV.key]
+		sqlrowlist += list(list("datetime" = "Now()", "round_id" = GLOB.round_id, "key_name" =  "'[sanitizeSQL(FV.key)]'", "version" = "[sqlverion]", "json" = "'[sanitizeSQL(json_encode(FV.json))]'"))
 
 	if (!length(sqlrowlist))
 		return
@@ -168,6 +172,14 @@ feedback data can be recorded in 5 formats:
 	calls:	SSblackbox.record_feedback("associative", "example", 1, list("text" = "example", "path" = /obj/item, "number" = 4))
 			SSblackbox.record_feedback("associative", "example", 1, list("number" = 7, "text" = "example", "other text" = "sample"))
 	json: {"data":{"1":{"text":"example","path":"/obj/item","number":"4"},"2":{"number":"7","text":"example","other text":"sample"}}}
+
+Versioning
+	If the format of a feedback variable is ever changed, i.e. how many levels of nesting are used or a new type of data is added to it, add it to the versions list
+	When feedback is being saved if a key is in the versions list the value specified there will be used, otherwise all keys are assumed to be version = 1
+	versions is an associative list, remember to use the same string in it as defined on a feedback variable, example:
+	list/versions = list("round_end_stats" = 4,
+						"admin_toggle" = 2,
+						"gun_fired" = 2)
 */
 /datum/controller/subsystem/blackbox/proc/record_feedback(type, key, increment, data, overwrite)
 	if(sealed || !type || !istext(key) || !isnum(increment || !data))
