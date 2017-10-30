@@ -266,7 +266,7 @@
 
 //Methamphetamine
 /datum/reagent/drug/amphetamine/methamphetamine
-	name = "Methmphetamine"
+	name = "Methamphetamine"
 	id = "methamphetamine"
 	description = "Amphetamine with an extra methyl group attached to the N isonomer. While more potent, it is also much more toxic and introduces muscular atrophy due to cortisol release."
 	reagent_state = LIQUID
