@@ -158,7 +158,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 				var/list/row = src.connectionHistory[i]
 				if (!row || row.len < 3 || (!row["ckey"] || !row["compid"] || !row["ip"])) //Passed malformed history object
 					return
-				if (world.IsBanned(row["ckey"], row["compid"], row["ip"]))
+				if (world.IsBanned(row["ckey"], row["compid"], row["ip"], real_bans_only=TRUE))
 					found = row
 					break
 
