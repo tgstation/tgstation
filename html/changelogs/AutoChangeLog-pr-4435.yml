@@ -1,0 +1,4 @@
+author: "Kor"
+delete-after: True
+changes: 
+  - tweak: "Protect human authority will no longer block non human players from attempting to join as command staff, but will instead change their species and assign them a human name if they are chosen"
