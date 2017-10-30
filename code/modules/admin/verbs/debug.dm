@@ -117,7 +117,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 		to_chat(usr, "<span class='adminnotice'>Running your proc</span>")
 	GLOB.LastAdminCalledProc = procname
 	if(target != GLOBAL_PROC)
-		GLOB.LastAdminCalledTargetRef = "\ref[target]"
+		GLOB.LastAdminCalledTargetRef = "[REF(target)]"
 	GLOB.AdminProcCaller = ckey	//if this runtimes, too bad for you
 	++GLOB.AdminProcCallCount
 	. = world.WrapAdminProcCall(target, procname, arguments)
@@ -128,8 +128,10 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 /world/proc/WrapAdminProcCall(target, procname, list/arguments)
 	if(target == GLOBAL_PROC)
 		return call(procname)(arglist(arguments))
-	else
+	else if(target != world)
 		return call(target, procname)(arglist(arguments))
+	else
+		log_admin_private("[key_name(usr)] attempted to call world/proc/[procname] with arguments: [english_list(arguments)]")
 
 /proc/IsAdminAdvancedProcCall()
 #ifdef TESTING
@@ -778,7 +780,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 
 /client/proc/cmd_display_init_log()
 	set category = "Debug"
-	set name = "Display Initialzie() Log"
+	set name = "Display Initialize() Log"
 	set desc = "Displays a list of things that didn't handle Initialize() properly"
 
 	usr << browse(replacetext(SSatoms.InitLog(), "\n", "<br>"), "window=initlog")

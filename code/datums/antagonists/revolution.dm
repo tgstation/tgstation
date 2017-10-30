@@ -84,7 +84,7 @@
 	hud_type = "rev_head"
 	var/remove_clumsy = FALSE
 	var/give_flash = FALSE
-	var/give_hud = FALSE
+	var/give_hud = TRUE
 
 /datum/antagonist/rev/proc/update_rev_icons_added(mob/living/M)
 	var/datum/atom_hud/antag/revhud = GLOB.huds[ANTAG_HUD_REV]
