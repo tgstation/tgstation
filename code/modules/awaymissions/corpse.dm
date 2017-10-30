@@ -133,9 +133,9 @@
 	var/backpack_contents = -1
 	var/suit_store = -1
 
-	var/hair_style = null
-	var/facial_hair_style = null
-	var/skin_tone = null
+	var/hair_style
+	var/facial_hair_style
+	var/skin_tone
 
 /obj/effect/mob_spawn/human/Initialize()
 	if(ispath(outfit))
