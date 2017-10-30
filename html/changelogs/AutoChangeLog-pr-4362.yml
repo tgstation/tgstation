@@ -1,0 +1,6 @@
+author: "GuyonBroadway"
+delete-after: True
+changes: 
+  - tweak: "The executioners sword will not play a song if another sword caused music to start playing. Also the sword has a short cooldown between execution attempts."
+  - tweak: "The executioners sword will now stop playing music if the execution is interrupted."
+  - bugfix: "Also fixed that annoying click in nasheed2.ogg"
