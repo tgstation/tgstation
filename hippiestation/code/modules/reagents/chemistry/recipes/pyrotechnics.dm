@@ -34,7 +34,7 @@
 	id = "superboom_explosion"
 	required_reagents = list("superboom" = 1)
 	required_temp = 315
-	strengthdiv = 1
+	strengthdiv = 0.5
 
 /datum/chemical_reaction/reagent_explosion/sazide//explodes on creation
 	name = "Sodium Azide"
@@ -65,8 +65,14 @@
 
 /datum/chemical_reaction/proto_fireball/on_reaction(datum/reagents/holder, created_volume)
 	var/turf/open/T = get_turf(holder.my_atom)
-	if(istype(T))
-		T.atmos_spawn_air("plasma=[created_volume];TEMP=[created_volume * 100]")//very fucking hot
+	if(istype(T) && T.air)
+		if(created_volume < 15)
+			T.atmos_spawn_air("plasma=[created_volume];TEMP=[created_volume * 250]")//very fucking hot
+		else
+			T.atmos_spawn_air("plasma=[100];co2=[800];TEMP=[created_volume * 1000]")
+			var/datum/gas_reaction/hippie_fusion/F = new
+			F.react(T.air, T)
+
 	return
 
 /datum/chemical_reaction/reagent_explosion/dizinc_explosion
@@ -174,14 +180,14 @@
 	name = "Electrostatic substance"
 	id = "sparky"
 	results = list("sparky" = 6, "radgoop" = 4)
-	required_reagents = list("uranium" = 5, "carbon" = 2)
+	required_reagents = list("uranium" = 4, "carbon" = 2)
 	radioactivity_required = 10
 
 /datum/chemical_reaction/over_reactible/impvolt
 	name = "Translucent mixture"
 	id = "impvolt"
-	results = list("impvolt" = 5, "emit_on" = 2)
-	required_reagents = list("sparky" = 5, "teslium" = 2)
+	results = list("impvolt" = 4, "emit_on" = 2)
+	required_reagents = list("sparky" = 4, "teslium" = 2)
 	required_temp = 290
 	is_cold_recipe = TRUE
 	bluespace_recipe = TRUE
@@ -193,7 +199,7 @@
 	name = "Sparking mixture"
 	id = "volt"
 	results = list("volt" = 2, "dizinc" = 1)
-	required_reagents = list("impvolt" = 1, "methphos" = 2)
+	required_reagents = list("impvolt" = 1, "methphos" = 1)
 	required_temp = 250
 	is_cold_recipe = TRUE
 	can_overheat = TRUE
@@ -203,8 +209,8 @@
 /datum/chemical_reaction/emit
 	name = "Emittrium"
 	id = "emit"
-	results = list("emit" = 6, "radium" = 2)
-	required_reagents = list("uranium" = 1 , "sparky" = 4 , "volt" = 2)
+	results = list("emit" = 8, "radium" = 2)
+	required_reagents = list("uranium" = 2 , "sparky" = 4 , "volt" = 2)
 	bluespace_recipe = TRUE
 
 /datum/chemical_reaction/emit_on
