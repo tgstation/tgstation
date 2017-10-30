@@ -498,7 +498,7 @@
 				flick("baton_active", src)
 				var/stunforce = B.stunforce
 				user.Knockdown(stunforce)
-				user.stuttering = stunforce
+				user.stuttering = stunforce/20
 				B.deductcharge(B.hitcost)
 				user.visible_message("<span class='warning'>[user] shocks themself while attempting to wash the active [B.name]!</span>", \
 									"<span class='userdanger'>You unwisely attempt to wash [B] while it's still on.</span>")
