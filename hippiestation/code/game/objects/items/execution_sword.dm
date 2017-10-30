@@ -1,4 +1,5 @@
 #define EXECUTE_INFIDEL 300
+#define EXECUTE_COOLDOWN 50
 
 /obj/item/melee/execution_sword
 	name = "Executioners sword"
@@ -13,7 +14,7 @@
 	var/execution_faction = "The Syndicate"
 	var/faction_chosen = FALSE
 	var/executing = FALSE
-	var/static/playing_nasheed = FALSE
+	var/can_execute = TRUE
 	var/static/earrape_time = 0
 	var/nasheed_list = list('hippiestation/sound/misc/nasheed.ogg', 'hippiestation/sound/misc/nasheed2.ogg')
 
@@ -36,6 +37,9 @@ obj/item/melee/execution_sword/attack_self(mob/living/user)
 
 
 /obj/item/melee/execution_sword/attack(mob/living/target, mob/living/user)
+	if(!can_execute)
+		to_chat(user, "<span class='notice'>The internal transmitters need time to recharge.</span>")
+		return
 	if(executing)
 		to_chat(user, "<span class='notice'>You are already executing someone.</span>")
 		return
@@ -46,16 +50,17 @@ obj/item/melee/execution_sword/attack_self(mob/living/user)
 		to_chat(user, "Little late to the execution there brother...")
 	else
 		executing = TRUE
+		can_execute = FALSE
 		var/area/A = get_area(src)
 		priority_announce("[user] is preparing to execute [target] at [A.map_name] in the name of [execution_faction]!","Message from [execution_faction]!", 'sound/misc/notice1.ogg')
 		log_admin("[key_name(user)] attempted to execute [key_name(target)] with [src]")
 		message_admins("[key_name(user)] is attempting to execute [key_name(target)] with [src]")
-		if(!playing_nasheed && world.time > earrape_time)
+		if(!GLOB.nasheed_playing && world.time > earrape_time)
 			var/nasheed_chosen = pick(nasheed_list)
 			earrape_time = world.time + 250 //25 seconds between each
 			var/sound/nasheed = new()
 			nasheed.file = nasheed_chosen
-			nasheed.channel = CHANNEL_ADMIN
+			nasheed.channel = CHANNEL_NASHEED
 			nasheed.frequency = 1
 			nasheed.wait = 1
 			nasheed.repeat = 0
@@ -68,7 +73,7 @@ obj/item/melee/execution_sword/attack_self(mob/living/user)
 						nasheed.volume = 100 * (user_vol / 100)
 					SEND_SOUND(M, nasheed)
 					nasheed.volume = 100
-			playing_nasheed = TRUE
+			GLOB.nasheed_playing = TRUE
 			addtimer(CALLBACK(src, .proc/nasheed_end), EXECUTE_INFIDEL)
 		if(do_after(user,EXECUTE_INFIDEL, target = target))
 			log_admin("[key_name(user)] executed [key_name(target)] with [src]")
@@ -76,13 +81,23 @@ obj/item/melee/execution_sword/attack_self(mob/living/user)
 			infidel_head.dismember()
 			priority_announce("[user] has executed [target] in the name of [execution_faction]!","Message from [execution_faction]!", 'sound/misc/notice1.ogg')
 			executing = FALSE
+			addtimer(CALLBACK(src, .proc/recharge_execute), EXECUTE_COOLDOWN)
 		else
 			priority_announce("[user] has failed to execute [target] and has brought shame to [execution_faction]!","Message from [execution_faction]!", 'sound/misc/compiler-failure.ogg')
 			executing = FALSE
 			nasheed_end()
+			addtimer(CALLBACK(src, .proc/recharge_execute), EXECUTE_COOLDOWN)
 
 
 /obj/item/melee/execution_sword/proc/nasheed_end()
-	playing_nasheed = FALSE
+	for(var/mob/M in GLOB.player_list)
+		M.stop_sound_channel(CHANNEL_NASHEED)
+	if(GLOB.nasheed_playing)
+		GLOB.nasheed_playing = FALSE
+
+/obj/item/melee/execution_sword/proc/recharge_execute()
+	if(!can_execute)
+		can_execute = TRUE
 
 #undef EXECUTE_INFIDEL
+#undef EXECUTE_COOLDOWN
