@@ -92,7 +92,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		if(!Ablob.blob_allowed)
 			continue
 		
-		if(!istype(L, /mob/living/simple_animal/hostile/blob))
+		if(!("blob" in L.faction) || !istype(L, /mob/living/simple_animal/hostile/blob))
 			playsound(L, 'sound/effects/splat.ogg', 50, 1)
 			L.death()
 			new/mob/living/simple_animal/hostile/blob/blobspore(T)
