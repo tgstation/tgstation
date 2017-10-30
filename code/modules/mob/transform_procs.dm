@@ -462,7 +462,8 @@
 
 /mob/proc/become_overmind(starting_points = 60)
 	var/turf/T = get_turf(loc) //just to avoid messing up in lockers
-	if(!(T.z in GLOB.station_z_levels) && LAZYLEN(GLOB.blobstart))
+	var/area/A = get_area(T)
+	if(((A && !A.blob_allowed) || !(T.z in GLOB.station_z_levels)) && LAZYLEN(GLOB.blobstart))
 		T = get_turf(pick(GLOB.blobstart))
 	var/mob/camera/blob/B = new /mob/camera/blob(T, starting_points)
 	B.key = key
