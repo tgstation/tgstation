@@ -11,8 +11,8 @@
 	layer = ABOVE_WINDOW_LAYER
 	pipe_flags = PIPING_ONE_PER_TURF
 
-/obj/machinery/atmospherics/components/unary/tank/New()
-	..()
+/obj/machinery/atmospherics/components/unary/tank/Initialize()
+	. = ..()
 	var/datum/gas_mixture/air_contents = AIR1
 	air_contents.volume = volume
 	air_contents.temperature = T20C

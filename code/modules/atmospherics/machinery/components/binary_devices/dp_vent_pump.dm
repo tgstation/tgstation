@@ -47,8 +47,8 @@ Acts like a normal vent, but has an input AND output.
 	on = TRUE
 	icon_state = "dpvent_map_on"
 
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/New()
-	..()
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/Initialize()
+	. = ..()
 	var/datum/gas_mixture/air1 = AIR1
 	var/datum/gas_mixture/air2 = AIR2
 	air1.volume = 1000

@@ -11,8 +11,8 @@
 	pipe_flags = PIPING_ONE_PER_TURF
 	pipe_state = "connector"
 
-/obj/machinery/atmospherics/components/unary/portables_connector/New()
-	..()
+/obj/machinery/atmospherics/components/unary/portables_connector/Initialize()
+	. = ..()
 	var/datum/gas_mixture/air_contents = AIR1
 
 	air_contents.volume = 0

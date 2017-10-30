@@ -10,10 +10,10 @@ On top of that, now people can add component-speciic procs/vars if they want!
 	var/list/datum/pipeline/parents
 	var/list/datum/gas_mixture/airs
 
-/obj/machinery/atmospherics/components/New()
+/obj/machinery/atmospherics/components/Initialize()
+	. = ..()
 	parents = new(device_type)
 	airs = new(device_type)
-	..()
 
 	for(DEVICE_TYPE_LOOP)
 		var/datum/gas_mixture/A = new

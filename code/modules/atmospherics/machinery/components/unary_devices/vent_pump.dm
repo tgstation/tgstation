@@ -47,8 +47,8 @@
 	on = TRUE
 	icon_state = "vent_map_siphon_on"
 
-/obj/machinery/atmospherics/components/unary/vent_pump/New()
-	..()
+/obj/machinery/atmospherics/components/unary/vent_pump/Initialize()
+	. = ..()
 	if(!id_tag)
 		assign_uid()
 		id_tag = num2text(uid)
@@ -80,8 +80,8 @@
 	on = TRUE
 	icon_state = "vent_map_siphon_on"
 
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/New()
-	..()
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/Initialize()
+	. = ..()
 	var/datum/gas_mixture/air_contents = AIR1
 	air_contents.volume = 1000
 

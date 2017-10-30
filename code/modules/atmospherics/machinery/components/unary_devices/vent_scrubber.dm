@@ -12,6 +12,7 @@
 	welded = FALSE
 	level = 1
 	layer = GAS_SCRUBBER_LAYER
+	pipe_state = "scrubber"
 
 	var/id_tag = null
 	var/on = FALSE
@@ -33,10 +34,8 @@
 	var/radio_filter_out
 	var/radio_filter_in
 
-	pipe_state = "scrubber"
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/New()
-	..()
+/obj/machinery/atmospherics/components/unary/vent_scrubber/Initialize()
+	. = ..()
 	if(!id_tag)
 		assign_uid()
 		id_tag = num2text(uid)
