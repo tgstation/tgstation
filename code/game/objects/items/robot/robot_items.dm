@@ -561,12 +561,28 @@
 	if(istype(dampening_field))
 		QDEL_NULL(dampening_field)
 	dampening_field = make_field(/datum/proximity_monitor/advanced/peaceborg_dampener, list("current_range" = field_radius, "host" = src, "projector" = src))
+	
+	var/mob/living/silicon/robot/owner = get_host()
+	if(owner)
+		owner.module.allow_riding = FALSE
 
 /obj/item/borg/projectile_dampen/proc/deactivate_field()
 	QDEL_NULL(dampening_field)
 	visible_message("<span class='warning'>\The [src] shuts off!</span>")
 	for(var/P in tracked)
 		restore_projectile(P)
+
+	var/mob/living/silicon/robot/owner = get_host()
+	if(owner)
+		owner.module.allow_riding = TRUE
+
+/obj/item/borg/projectile_dampen/proc/get_host()
+	if(istype(host))
+		return host
+	else
+		if(iscyborg(host.loc))
+			return host.loc
+	return
 
 /obj/item/borg/projectile_dampen/dropped()
 	. = ..()
