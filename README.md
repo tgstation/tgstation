@@ -7,7 +7,6 @@ work in progress don't download unless you have my cat's permission ok
 **Code:** https://github.com/cyclowns/tikistation <BR>
 **Wiki:** we don't have one use the TG one <BR>
 **Discord:** https://discord.gg/h6S3N5w <BR>
->>>>>>> d6cf350cfc095d419eb9dc9efbf16d60c2d5b019
 
 
 ## DOWNLOADING
