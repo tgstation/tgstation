@@ -16,7 +16,7 @@
 
 /obj/item/toy/plush/Destroy()
 	QDEL_NULL(grenade)
-	. = ..()
+	return ..()
 
 /obj/item/toy/plush/handle_atom_del(atom/A)
 	if(A == grenade)
@@ -66,7 +66,7 @@
 		var/turf/T = get_turf(user)
 		log_game("[key_name(user)] added a grenade ([I.name]) to [src] at [COORD(T)].")
 		return
-	. = ..()
+	return ..()
 
 /obj/item/toy/plush/carpplushie
 	name = "space carp plushie"
