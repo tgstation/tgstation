@@ -142,6 +142,15 @@
 	if(iswallturf(loc))
 		loc.blob_act(src) //don't ask how a wall got on top of the core, just eat it
 
+/obj/structure/blob/attack_hand(mob/M)		
+	. = ..()		
+	M.changeNext_move(CLICK_CD_MELEE)		
+	var/a = pick("gently stroke", "nuzzle", "affectionatly pet", "cuddle")		
+	M.visible_message("<span class='notice'>[M] [a]s [src]!</span>", "<span class='notice'>You [a] [src]!</span>")		
+	if(overmind.cuddles)
+		to_chat(overmind, "<span class='notice'>[M] [a]s you!</span>")		
+	playsound(src, 'sound/effects/blobattack.ogg', 50, 1) //SQUISH SQUISH
+
 /obj/structure/blob/proc/blob_attack_animation(atom/A = null, controller) //visually attacks an atom
 	var/obj/effect/temp_visual/blob/O = new /obj/effect/temp_visual/blob(src.loc)
 	O.setDir(dir)
