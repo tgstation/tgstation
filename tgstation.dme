@@ -79,6 +79,7 @@
 #include "code\__DEFINES\time.dm"
 #include "code\__DEFINES\typeids.dm"
 #include "code\__DEFINES\vv.dm"
+#include "code\__DEFINES\wall_dents.dm"
 #include "code\__DEFINES\wires.dm"
 #include "code\__HELPERS\_lists.dm"
 #include "code\__HELPERS\_logging.dm"

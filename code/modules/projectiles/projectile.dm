@@ -101,21 +101,32 @@
 
 /obj/item/projectile/proc/on_hit(atom/target, blocked = FALSE)
 	var/turf/target_loca = get_turf(target)
+
+	var/hitx
+	var/hity
+	if(target == original)
+		hitx = target.pixel_x + p_x - 16
+		hity = target.pixel_y + p_y - 16
+	else
+		hitx = target.pixel_x + rand(-8, 8)
+		hity = target.pixel_y + rand(-8, 8)
+
 	if(!nodamage && (damage_type == BRUTE || damage_type == BURN) && iswallturf(target_loca) && prob(75))
 		var/turf/closed/wall/W = target_loca
-		var/mutable_appearance/decal = mutable_appearance('icons/effects/effects.dmi', "bullet_hole", TURF_DECAL_LAYER)
-		if(target == original)
-			decal.pixel_x = target.pixel_x + p_x - 16
-			decal.pixel_y = target.pixel_y + p_y - 16
-		else
-			decal.pixel_x = target.pixel_x + rand(2, -2)
-			decal.pixel_y = target.pixel_y + rand(2, -2)
-		W.add_damage_decal(decal)
+		if(impact_effect_type)
+			new impact_effect_type(target_loca, hitx, hity)
+
+		W.add_dent(WALL_DENT_SHOT, hitx, hity)
+
+		return 0
+
 	if(!isliving(target))
 		if(impact_effect_type)
-			new impact_effect_type(target_loca, target, src)
+			new impact_effect_type(target_loca, hitx, hity)
 		return 0
+
 	var/mob/living/L = target
+
 	if(blocked != 100) // not completely blocked
 		if(damage && L.blood_volume && damage_type == BRUTE)
 			var/splatter_dir = dir
@@ -128,7 +139,7 @@
 			if(prob(33))
 				L.add_splatter_floor(target_loca)
 		else if(impact_effect_type)
-			new impact_effect_type(target_loca, target, src)
+			new impact_effect_type(target_loca, hitx, hity)
 
 		var/organ_hit_text = ""
 		var/limb_hit = L.check_limb_hit(def_zone)//to get the correct message info.
