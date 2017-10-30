@@ -68,7 +68,6 @@ All ShuttleMove procs go here
 /turf/proc/afterShuttleMove(turf/oldT, turf_type, baseturf_type, rotation)
 	//Dealing with the turf we left behind
 	oldT.TransferComponents(src)
-
 	oldT.ChangeTurf(turf_type, baseturf_type, FALSE, TRUE)
 
 	// Rotate and let the air move again

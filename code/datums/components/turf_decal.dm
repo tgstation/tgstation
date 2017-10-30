@@ -6,9 +6,8 @@
 	var/group
 
 /datum/component/turf_decal/Initialize(_dir, _icon, _icon_state, _layer=TURF_DECAL_LAYER, _group=TURF_DECAL_PAINT)
-	if(!istype(parent, /turf) || !_icon || !_icon_state)
-		var/msg = "A turf decal was applied incorrectly to [parent]: icon:[_icon ? _icon : "none"] icon_state:[_icon_state ? _icon_state : "none"]"
-		WARNING(msg)
+	if(!isturf(parent) || !_icon || !_icon_state)
+		WARNING("A turf decal was applied incorrectly to [parent]: icon:[_icon ? _icon : "none"] icon_state:[_icon_state ? _icon_state : "none"]")
 		return COMPONENT_INCOMPATIBLE
 
 	dir = _dir
@@ -27,6 +26,7 @@
 
 /datum/component/turf_decal/OnTransfer(turf/newT)
 	remove_decal()
+	remove_decal(newT)
 	apply_decal(newT)
 
 /datum/component/turf_decal/proc/get_decal()
