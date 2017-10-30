@@ -28,11 +28,11 @@
 		if(islist(all_components))
 			for(var/I in all_components)
 				var/datum/component/C = I
-				C._RemoveNoSignal()
+				C._RemoveFromParent()
 				qdel(C)
 		else
 			var/datum/component/C = all_components
-			C._RemoveNoSignal()
+			C._RemoveFromParent()
 			qdel(C)
 		dc.Cut()
 	return QDEL_HINT_QUEUE
