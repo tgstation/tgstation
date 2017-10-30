@@ -295,6 +295,5 @@
 	icon_state = "ssaw"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	force = 15
 	origin_tech = "biotech=3;combat=3;syndicate=3"
 	toolspeed = 0.3
