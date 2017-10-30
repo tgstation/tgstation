@@ -120,7 +120,7 @@
 		return
 	emagged = TRUE
 	to_chat(user, "<span class='notice'>You emag the barsign. Takeover in progress...</span>")
-	sleep(100) //10 seconds
+	sleep(10 SECONDS)
 	set_sign(new /datum/barsign/hiddensigns/syndibarsign)
 	req_access = list(ACCESS_SYNDICATE)
 

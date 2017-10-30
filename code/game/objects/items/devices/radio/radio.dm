@@ -29,6 +29,7 @@
 	var/emped = 0	//Highjacked to track the number of consecutive EMPs on the radio, allowing consecutive EMP's to stack properly.
 //			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
 	flags_1 = CONDUCT_1 | HEAR_1
+	flags_2 = NO_EMP_WIRES_2
 	slot_flags = SLOT_BELT
 	throw_speed = 3
 	throw_range = 7
@@ -514,9 +515,9 @@
 /obj/item/device/radio/examine(mob/user)
 	..()
 	if (b_stat)
-		to_chat(user, "<span class='notice'>[name] can be attached and modified.</span>")
+		to_chat(user, "<span class='notice'>It can be attached and modified.</span>")
 	else
-		to_chat(user, "<span class='notice'>[name] can not be modified or attached.</span>")
+		to_chat(user, "<span class='notice'>It cannot be modified or attached.</span>")
 
 /obj/item/device/radio/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)

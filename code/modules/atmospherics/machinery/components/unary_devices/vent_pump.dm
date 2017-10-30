@@ -22,14 +22,16 @@
 	var/pressure_checks = EXT_BOUND
 	var/external_pressure_bound = ONE_ATMOSPHERE
 	var/internal_pressure_bound = 0
-	//EXT_BOUND: Do not pass external_pressure_bound
-	//INT_BOUND: Do not pass internal_pressure_bound
-	//NO_BOUND: Do not pass either
+	// EXT_BOUND: Do not pass external_pressure_bound
+	// INT_BOUND: Do not pass internal_pressure_bound
+	// NO_BOUND: Do not pass either
 
 	var/frequency = 1439
 	var/datum/radio_frequency/radio_connection
 	var/radio_filter_out
 	var/radio_filter_in
+
+	pipe_state = "uvent"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/on
 	on = TRUE
@@ -98,7 +100,7 @@
 
 	if(pump_direction & RELEASING)
 		icon_state = "vent_out"
-	else //pump_direction == SIPHONING
+	else // pump_direction == SIPHONING
 		icon_state = "vent_in"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/process_atmos()
@@ -114,7 +116,7 @@
 	var/datum/gas_mixture/environment = loc.return_air()
 	var/environment_pressure = environment.return_pressure()
 
-	if(pump_direction & RELEASING) //internal -> external
+	if(pump_direction & RELEASING) // internal -> external
 		var/pressure_delta = 10000
 
 		if(pressure_checks&EXT_BOUND)
@@ -131,23 +133,22 @@
 				loc.assume_air(removed)
 				air_update_turf()
 
-	else //external -> internal
+	else // external -> internal
 		var/pressure_delta = 10000
 		if(pressure_checks&EXT_BOUND)
 			pressure_delta = min(pressure_delta, (environment_pressure - external_pressure_bound))
 		if(pressure_checks&INT_BOUND)
 			pressure_delta = min(pressure_delta, (internal_pressure_bound - air_contents.return_pressure()))
 
-		if(pressure_delta > 0)
-			if(environment.temperature > 0)
-				var/transfer_moles = pressure_delta*air_contents.volume/(environment.temperature * R_IDEAL_GAS_EQUATION)
+		if(pressure_delta > 0 && environment.temperature > 0)
+			var/transfer_moles = pressure_delta * air_contents.volume / (environment.temperature * R_IDEAL_GAS_EQUATION)
 
-				var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
-				if (isnull(removed)) //in space
-					return
+			var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
+			if (isnull(removed)) // in space
+				return
 
-				air_contents.merge(removed)
-				air_update_turf()
+			air_contents.merge(removed)
+			air_update_turf()
 	update_parents()
 
 //Radio remote control
@@ -163,7 +164,7 @@
 		return
 
 	var/datum/signal/signal = new
-	signal.transmission_method = 1 //radio signal
+	signal.transmission_method = 1 // radio signal
 	signal.source = src
 
 	signal.data = list(
@@ -200,7 +201,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/receive_signal(datum/signal/signal)
 	if(!is_operational())
 		return
-	//log_admin("DEBUG \[[world.timeofday]\]: /obj/machinery/atmospherics/components/unary/vent_pump/receive_signal([signal.debug_print()])")
+	// log_admin("DEBUG \[[world.timeofday]\]: /obj/machinery/atmospherics/components/unary/vent_pump/receive_signal([signal.debug_print()])")
 	if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
 		return
 
@@ -236,6 +237,9 @@
 	if("reset_external_pressure" in signal.data)
 		external_pressure_bound = ONE_ATMOSPHERE
 
+	if("reset_internal_pressure" in signal.data)
+		internal_pressure_bound = 0
+
 	if("adjust_internal_pressure" in signal.data)
 		internal_pressure_bound = Clamp(internal_pressure_bound + text2num(signal.data["adjust_internal_pressure"]),0,ONE_ATMOSPHERE*50)
 
@@ -248,20 +252,20 @@
 
 	if("status" in signal.data)
 		broadcast_status()
-		return //do not update_icon
+		return // do not update_icon
 
-		//log_admin("DEBUG \[[world.timeofday]\]: vent_pump/receive_signal: unknown command \"[signal.data["command"]]\"\n[signal.debug_print()]")
+		// log_admin("DEBUG \[[world.timeofday]\]: vent_pump/receive_signal: unknown command \"[signal.data["command"]]\"\n[signal.debug_print()]")
 	broadcast_status()
 	update_icon()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weldingtool))
 		var/obj/item/weldingtool/WT = W
-		if (WT.remove_fuel(0,user))
+		if (WT.remove_fuel(0, user))
 			playsound(loc, WT.usesound, 40, 1)
 			to_chat(user, "<span class='notice'>You begin welding the vent...</span>")
-			if(do_after(user, 20*W.toolspeed, target = src))
-				if(!src || !WT.isOn()) 
+			if(do_after(user, W.toolspeed * 20, target = src))
+				if(!src || !WT.isOn())
 					return
 				playsound(src.loc, 'sound/items/welder2.ogg', 50, 1)
 				if(!welded)

@@ -8,7 +8,7 @@ RCD
 ARCD
 */
 
-obj/item/construction
+/obj/item/construction
 	opacity = 0
 	density = FALSE
 	anchored = FALSE
@@ -32,7 +32,7 @@ obj/item/construction
 
 /obj/item/construction/Initialize()
 	. = ..()
-	desc = "A [src]. It currently holds [matter]/[max_matter] matter-units."
+	desc = "\A [src]. It currently holds [matter]/[max_matter] matter-units."
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
@@ -49,7 +49,7 @@ obj/item/construction
 	if(istype(W, /obj/item/rcd_ammo))
 		var/obj/item/rcd_ammo/R = W
 		if((matter + R.ammoamt) > max_matter)
-			to_chat(user, "<span class='warning'>The [src] can't hold any more matter-units!</span>")
+			to_chat(user, "<span class='warning'>[src] can't hold any more matter-units!</span>")
 			return
 		qdel(W)
 		matter += R.ammoamt
@@ -60,7 +60,7 @@ obj/item/construction
 	else if(istype(W, /obj/item/stack/sheet/plasteel))
 		loaded = loadwithsheets(W, plasteelmultiplier*sheetmultiplier, user) //Plasteel is worth 3 times more than glass or metal
 	if(loaded)
-		to_chat(user, "<span class='notice'>The [src] now holds [matter]/[max_matter] matter-units.</span>")
+		to_chat(user, "<span class='notice'>[src] now holds [matter]/[max_matter] matter-units.</span>")
 		desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
 	else
 		return ..()
@@ -72,9 +72,9 @@ obj/item/construction
 		S.use(amount_to_use)
 		matter += value*amount_to_use
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-		to_chat(user, "<span class='notice'>You insert [amount_to_use] [S.name] sheets into the [src]. </span>")
+		to_chat(user, "<span class='notice'>You insert [amount_to_use] [S.name] sheets into [src]. </span>")
 		return 1
-	to_chat(user, "<span class='warning'>You can't insert any more [S.name] sheets into the [src]!</span>")
+	to_chat(user, "<span class='warning'>You can't insert any more [S.name] sheets into [src]!</span>")
 	return 0
 
 /obj/item/construction/proc/activate()
@@ -91,7 +91,7 @@ obj/item/construction
 			to_chat(user, no_ammo_message)
 		return 0
 	matter -= amount
-	desc = "A [src]. It currently holds [matter]/[max_matter] matter-units."
+	desc = "\A [src]. It currently holds [matter]/[max_matter] matter-units."
 	update_icon()
 	return 1
 
@@ -103,7 +103,7 @@ obj/item/construction
 
 /obj/item/construction/proc/range_check(atom/A, mob/user)
 	if(!(A in view(7, get_turf(user))))
-		to_chat(user, "<span class='warning'>The \'Out of Range\' light on the [src] blinks red.</span>")
+		to_chat(user, "<span class='warning'>The \'Out of Range\' light on [src] blinks red.</span>")
 		return FALSE
 	else
 		return TRUE
@@ -172,11 +172,11 @@ obj/item/construction
 
 
 	if(use_one_access)
-		t1 += "Restriction Type: <a href='?src=\ref[src];access=one'>At least one access required</a><br>"
+		t1 += "Restriction Type: <a href='?src=[REF(src)];access=one'>At least one access required</a><br>"
 	else
-		t1 += "Restriction Type: <a href='?src=\ref[src];access=one'>All accesses required</a><br>"
+		t1 += "Restriction Type: <a href='?src=[REF(src)];access=one'>All accesses required</a><br>"
 
-	t1 += "<a href='?src=\ref[src];access=all'>Remove All</a><br>"
+	t1 += "<a href='?src=[REF(src)];access=all'>Remove All</a><br>"
 
 	var/accesses = ""
 	accesses += "<div align='center'><b>Access</b></div>"
@@ -189,15 +189,15 @@ obj/item/construction
 		accesses += "<td style='width:14%' valign='top'>"
 		for(var/A in get_region_accesses(i))
 			if(A in conf_access)
-				accesses += "<a href='?src=\ref[src];access=[A]'><font color=\"red\">[replacetext(get_access_desc(A), " ", "&nbsp")]</font></a> "
+				accesses += "<a href='?src=[REF(src)];access=[A]'><font color=\"red\">[replacetext(get_access_desc(A), " ", "&nbsp")]</font></a> "
 			else
-				accesses += "<a href='?src=\ref[src];access=[A]'>[replacetext(get_access_desc(A), " ", "&nbsp")]</a> "
+				accesses += "<a href='?src=[REF(src)];access=[A]'>[replacetext(get_access_desc(A), " ", "&nbsp")]</a> "
 			accesses += "<br>"
 		accesses += "</td>"
 	accesses += "</tr></table>"
 	t1 += "<tt>[accesses]</tt>"
 
-	t1 += text("<p><a href='?src=\ref[];close=1'>Close</a></p>\n", src)
+	t1 += "<p><a href='?src=[REF(src)];close=1'>Close</a></p>\n"
 
 	var/datum/browser/popup = new(usr, "airlock_electronics", "Access Control", 900, 500)
 	popup.set_content(t1)

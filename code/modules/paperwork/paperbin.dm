@@ -25,10 +25,6 @@
 		P.loc = src
 		bin_pen = P
 		update_icon()
-		var/static/warned = FALSE
-		if(P.type == /obj/item/pen && !warned)
-			warning("one or more paperbins ate a pen duing initialize()")
-			warned = TRUE
 
 /obj/item/paper_bin/fire_act(exposed_temperature, exposed_volume)
 	if(!total_paper)

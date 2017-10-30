@@ -105,7 +105,7 @@
 	desc = "A collapsed roller bed that can be carried around."
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "folded"
-	w_class = WEIGHT_CLASS_BULKY // Can't be put in backpacks.
+	w_class = WEIGHT_CLASS_NORMAL // No more excuses, stop getting blood everywhere
 
 /obj/item/roller/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/roller/robo))
@@ -145,7 +145,7 @@
 
 /obj/item/roller/robo/examine(mob/user)
 	..()
-	to_chat(user, "The dock is [loaded ? "loaded" : "empty"]")
+	to_chat(user, "The dock is [loaded ? "loaded" : "empty"].")
 
 /obj/item/roller/robo/deploy_roller(mob/user, atom/location)
 	if(loaded)

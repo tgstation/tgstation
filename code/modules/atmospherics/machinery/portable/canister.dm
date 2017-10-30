@@ -12,7 +12,7 @@
 
 	volume = 1000
 	var/filled = 0.5
-	var/gas_type = ""
+	var/gas_type
 	var/release_pressure = ONE_ATMOSPHERE
 	var/can_max_release_pressure = (ONE_ATMOSPHERE * 10)
 	var/can_min_release_pressure = (ONE_ATMOSPHERE / 10)
@@ -43,7 +43,6 @@
 		"n2o" = /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 		"bz" = /obj/machinery/portable_atmospherics/canister/bz,
 		"air" = /obj/machinery/portable_atmospherics/canister/air,
-		"freon" = /obj/machinery/portable_atmospherics/canister/freon,
 		"water vapor" = /obj/machinery/portable_atmospherics/canister/water_vapor,
 		"caution" = /obj/machinery/portable_atmospherics/canister,
 	)
@@ -59,61 +58,75 @@
 	name = "n2 canister"
 	desc = "Nitrogen gas. Reportedly useful for something."
 	icon_state = "red"
-	gas_type = "n2"
+	gas_type = /datum/gas/nitrogen
 
 /obj/machinery/portable_atmospherics/canister/oxygen
 	name = "o2 canister"
 	desc = "Oxygen. Necessary for human life."
 	icon_state = "blue"
-	gas_type = "o2"
+	gas_type = /datum/gas/oxygen
 
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide
 	name = "co2 canister"
 	desc = "Carbon dioxide. What the fuck is carbon dioxide?"
 	icon_state = "black"
-	gas_type = "co2"
+	gas_type = /datum/gas/carbon_dioxide
 
 /obj/machinery/portable_atmospherics/canister/toxins
 	name = "plasma canister"
 	desc = "Plasma gas. The reason YOU are here. Highly toxic."
 	icon_state = "orange"
-	gas_type = "plasma"
-
-/obj/machinery/portable_atmospherics/canister/agent_b
-	name = "agent b canister"
-	desc = "Oxygen Agent B. You're not quite sure what it does."
-	gas_type = "agent_b"
+	gas_type = /datum/gas/plasma
 
 /obj/machinery/portable_atmospherics/canister/bz
 	name = "BZ canister"
 	desc = "BZ, a powerful hallucinogenic nerve agent."
 	icon_state = "purple"
-	gas_type = "bz"
+	gas_type = /datum/gas/bz
 
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide
 	name = "n2o canister"
 	desc = "Nitrous oxide gas. Known to cause drowsiness."
 	icon_state = "redws"
-	gas_type = "n2o"
+	gas_type = /datum/gas/nitrous_oxide
 
 /obj/machinery/portable_atmospherics/canister/air
 	name = "air canister"
 	desc = "Pre-mixed air."
 	icon_state = "grey"
 
-/obj/machinery/portable_atmospherics/canister/freon
-	name = "freon canister"
-	desc = "Freon. Great for the atmosphere!"
-	icon_state = "freon"
-	gas_type = "freon"
-	starter_temp = 120
+/obj/machinery/portable_atmospherics/canister/tritium
+	name = "tritium canister"
+	desc = "Tritium. Inhalation might cause irradiation."
+	gas_type = /datum/gas/tritium
+
+/obj/machinery/portable_atmospherics/canister/nob
+	name = "hyper-noblium canister"
+	desc = "Hyper-Noblium. More noble than all other gases."
+	gas_type = /datum/gas/hypernoblium
+
+/obj/machinery/portable_atmospherics/canister/browns
+	name = "brown gas canister"
+	desc = "Browns gas. Feels great 'til the acid eats your lungs."
+	gas_type = /datum/gas/brown_gas
+
+/obj/machinery/portable_atmospherics/canister/stimulum
+	name = "stimulum canister"
+	desc = "Stimulum. High energy gas, high energy people."
+	gas_type = /datum/gas/stimulum
+
+/obj/machinery/portable_atmospherics/canister/pluoxium
+	name = "pluoxium canister"
+	desc = "Pluoxium. Like oxygen, but more bang for your buck."
+	gas_type = /datum/gas/pluoxium
 
 /obj/machinery/portable_atmospherics/canister/water_vapor
 	name = "water vapor canister"
 	desc = "Water Vapor. We get it, you vape."
 	icon_state = "water_vapor"
-	gas_type = "water_vapor"
+	gas_type = /datum/gas/water_vapor
 	filled = 1
+
 
 /obj/machinery/portable_atmospherics/canister/proc/get_time_left()
 	if(timing)
@@ -148,7 +161,7 @@
 	name = "prototype canister"
 	desc = "A prototype canister for a prototype bike, what could go wrong?"
 	icon_state = "proto"
-	gas_type = "o2"
+	gas_type = /datum/gas/oxygen
 	filled = 1
 	release_pressure = ONE_ATMOSPHERE*2
 
@@ -181,9 +194,9 @@
 		if(starter_temp)
 			air_contents.temperature = starter_temp
 /obj/machinery/portable_atmospherics/canister/air/create_gas()
-	air_contents.add_gases("o2","n2")
-	air_contents.gases["o2"][MOLES] = (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
-	air_contents.gases["n2"][MOLES] = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
+	air_contents.add_gases(/datum/gas/oxygen, /datum/gas/nitrogen)
+	air_contents.gases[/datum/gas/oxygen][MOLES] = (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
+	air_contents.gases[/datum/gas/nitrogen][MOLES] = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 
 #define HOLDING 1
 #define CONNECTED 2
@@ -273,7 +286,7 @@
 		return ..()
 
 /obj/machinery/portable_atmospherics/canister/obj_break(damage_flag)
-	if((flags_1 & BROKEN) || (flags_1 & NODECONSTRUCT_1))
+	if((stat & BROKEN) || (flags_1 & NODECONSTRUCT_1))
 		return
 	canister_break()
 
@@ -402,7 +415,7 @@
 						var/gas = air_contents.gases[id]
 						if(!gas[GAS_META][META_GAS_DANGER])
 							continue
-						if(gas[MOLES] > (gas[GAS_META][META_GAS_MOLES_VISIBLE] || MOLES_PLASMA_VISIBLE)) //if moles_visible is undefined, default to plasma visibility
+						if(gas[MOLES] > (gas[GAS_META][META_GAS_MOLES_VISIBLE] || MOLES_GAS_VISIBLE)) //if moles_visible is undefined, default to default visibility
 							danger[gas[GAS_META][META_GAS_NAME]] = gas[MOLES] //ex. "plasma" = 20
 
 					if(danger.len)

@@ -76,7 +76,7 @@
 	var/i
 	for(i=contents.len, i>=1, i--)
 		var/obj/item/P = contents[i]
-		dat += "<tr><td><a href='?src=\ref[src];retrieve=\ref[P]'>[P.name]</a></td></tr>"
+		dat += "<tr><td><a href='?src=[REF(src)];retrieve=[REF(P)]'>[P.name]</a></td></tr>"
 	dat += "</table></center>"
 	user << browse("<html><head><title>[name]</title></head><body>[dat]</body></html>", "window=filingcabinet;size=350x300")
 
@@ -217,4 +217,4 @@ GLOBAL_LIST_EMPTY(employmentCabinets)
 		sleep(100) // prevents the devil from just instantly emptying the cabinet, ensuring an easy win.
 		cooldown = 0
 	else
-		to_chat(user, "<span class='warning'>The [src] is jammed, give it a few seconds.</span>")
+		to_chat(user, "<span class='warning'>[src] is jammed, give it a few seconds.</span>")

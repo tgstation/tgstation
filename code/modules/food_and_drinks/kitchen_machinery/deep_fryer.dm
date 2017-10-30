@@ -40,7 +40,7 @@ insert ascii eagle on american flag background here
 /obj/machinery/deepfryer/examine()
 	..()
 	if(frying)
-		to_chat(usr, "You can make out [frying] in the oil.")
+		to_chat(usr, "You can make out \a [frying] in the oil.")
 
 /obj/machinery/deepfryer/attackby(obj/item/I, mob/user)
 	if(!reagents.total_volume)

@@ -6,7 +6,7 @@
 	throw_range = 5
 	layer = ABOVE_MOB_LAYER
 	zone = "head"
-	slot = "brain"
+	slot = ORGAN_SLOT_BRAIN
 	vital = TRUE
 	origin_tech = "biotech=5"
 	attack_verb = list("attacked", "slapped", "whacked")
@@ -70,7 +70,7 @@
 		C.dna.copy_dna(brainmob.stored_dna)
 		if(L.disabilities & NOCLONE)
 			brainmob.disabilities |= NOCLONE	//This is so you can't just decapitate a husked guy and clone them without needing to get a new body
-		var/obj/item/organ/zombie_infection/ZI = L.getorganslot("zombie_infection")
+		var/obj/item/organ/zombie_infection/ZI = L.getorganslot(ORGAN_SLOT_ZOMBIE)
 		if(ZI)
 			brainmob.set_species(ZI.old_species)	//For if the brain is cloned
 	if(L.mind && L.mind.current)

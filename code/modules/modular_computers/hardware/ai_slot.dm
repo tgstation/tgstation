@@ -14,7 +14,7 @@
 /obj/item/computer_hardware/ai_slot/examine(mob/user)
 	..()
 	if(stored_card)
-		to_chat(user, "There appears to be an intelliCard loaded. There appears to be a pinhole protecting a manual eject button. A screwdriver could probably press it")
+		to_chat(user, "There appears to be an intelliCard loaded. There appears to be a pinhole protecting a manual eject button. A screwdriver could probably press it.")
 
 /obj/item/computer_hardware/ai_slot/on_install(obj/item/device/modular_computer/M, mob/living/user = null)
 	M.add_verb(device_type)

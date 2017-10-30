@@ -90,32 +90,32 @@
 	var/html
 	switch(track_mode)
 		if(BUGMODE_LIST)
-			html = "<h3>Select a camera:</h3> <a href='?src=\ref[src];view'>\[Cancel camera view\]</a><hr><table>"
+			html = "<h3>Select a camera:</h3> <a href='?src=[REF(src)];view'>\[Cancel camera view\]</a><hr><table>"
 			for(var/entry in cameras)
 				var/obj/machinery/camera/C = cameras[entry]
 				var/functions = ""
 				if(C.bug == src)
-					functions = " - <a href='?src=\ref[src];monitor=\ref[C]'>\[Monitor\]</a> <a href='?src=\ref[src];emp=\ref[C]'>\[Disable\]</a>"
+					functions = " - <a href='?src=[REF(src)];monitor=[REF(C)]'>\[Monitor\]</a> <a href='?src=[REF(src)];emp=[REF(C)]'>\[Disable\]</a>"
 				else
-					functions = " - <a href='?src=\ref[src];monitor=\ref[C]'>\[Monitor\]</a>"
-				html += "<tr><td><a href='?src=\ref[src];view=\ref[C]'>[entry]</a></td><td>[functions]</td></tr>"
+					functions = " - <a href='?src=[REF(src)];monitor=[REF(C)]'>\[Monitor\]</a>"
+				html += "<tr><td><a href='?src=[REF(src)];view=[REF(C)]'>[entry]</a></td><td>[functions]</td></tr>"
 
 		if(BUGMODE_MONITOR)
 			if(current)
-				html = "Analyzing Camera '[current.c_tag]' <a href='?\ref[src];mode=0'>\[Select Camera\]</a><br>"
+				html = "Analyzing Camera '[current.c_tag]' <a href='?[REF(src)];mode=0'>\[Select Camera\]</a><br>"
 				html += camera_report()
 			else
 				track_mode = BUGMODE_LIST
 				return .(cameras)
 		if(BUGMODE_TRACK)
 			if(tracking)
-				html = "Tracking '[tracked_name]'  <a href='?\ref[src];mode=0'>\[Cancel Tracking\]</a>  <a href='?src=\ref[src];view'>\[Cancel camera view\]</a><br>"
+				html = "Tracking '[tracked_name]'  <a href='?[REF(src)];mode=0'>\[Cancel Tracking\]</a>  <a href='?src=[REF(src)];view'>\[Cancel camera view\]</a><br>"
 				if(last_found)
 					var/time_diff = round((world.time - last_seen) / 150)
 					var/obj/machinery/camera/C = bugged_cameras[last_found]
 					var/outstring
 					if(C)
-						outstring = "<a href='?\ref[src];view=\ref[C]'>[last_found]</a>"
+						outstring = "<a href='?[REF(src)];view=[REF(C)]'>[last_found]</a>"
 					else
 						outstring = last_found
 					if(!time_diff)
@@ -128,7 +128,7 @@
 							s = "00"
 						html += "Last seen near [outstring] ([m]:[s] minute\s ago)<br>"
 					if( C && (C.bug == src)) //Checks to see if the camera has a bug
-						html += "<a href='?src=\ref[src];emp=\ref[C]'>\[Disable\]</a>"
+						html += "<a href='?src=[REF(src)];emp=[REF(C)]'>\[Disable\]</a>"
 
 				else
 					html += "Not yet seen."
@@ -157,7 +157,7 @@
 				dat += "[S.name]"
 			var/stage = round(S.current_size / 2)+1
 			dat += " (Stage [stage])"
-			dat += " <a href='?\ref[src];track=\ref[S]'>\[Track\]</a><br>"
+			dat += " <a href='?[REF(src)];track=[REF(S)]'>\[Track\]</a><br>"
 
 		for(var/obj/mecha/M in seen)
 			if(M.name in names)
@@ -166,7 +166,7 @@
 			else
 				names[M.name] = 1
 				dat += "[M.name]"
-			dat += " <a href='?\ref[src];track=\ref[M]'>\[Track\]</a><br>"
+			dat += " <a href='?[REF(src)];track=[REF(M)]'>\[Track\]</a><br>"
 
 
 		for(var/mob/living/M in seen)
@@ -180,7 +180,7 @@
 				dat += " (Sitting)"
 			if(M.lying)
 				dat += " (Laying down)"
-			dat += " <a href='?\ref[src];track=\ref[M]'>\[Track\]</a><br>"
+			dat += " <a href='?[REF(src)];track=[REF(M)]'>\[Track\]</a><br>"
 		if(length(dat) == 0)
 			dat += "No motion detected."
 		return dat

@@ -1040,7 +1040,15 @@
 	icon_state = "shirt_alien"
 	gender = NEUTER
 
+/datum/sprite_accessory/undershirt/sports_bra
+	name = "Sports Bra"
+	icon_state = "sports_bra"
+	gender = NEUTER
 
+/datum/sprite_accessory/undershirt/sports_bra2
+	name = "Alt Sports Bra"
+	icon_state = "sports_bra_alt"
+	gender = NEUTER
 
 ///////////////////////
 // Socks Definitions //

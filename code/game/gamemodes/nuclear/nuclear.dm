@@ -82,9 +82,7 @@
 
 /datum/game_mode/proc/prepare_syndicate_leader(datum/mind/synd_mind, nuke_code)
 	var/leader_title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")
-	spawn(1)
-		nukeops_lastname = nukelastname(synd_mind.current)
-		NukeNameAssign(nukeops_lastname,syndicates) //allows time for the rest of the syndies to be chosen
+	addtimer(CALLBACK(src, .proc/nuketeam_name_assign, synd_mind), 1)
 	synd_mind.current.real_name = "[syndicate_name()] [leader_title]"
 	to_chat(synd_mind.current, "<B>You are the Syndicate [leader_title] for this mission. You are responsible for the distribution of telecrystals and your ID is the only one who can open the launch bay doors.</B>")
 	to_chat(synd_mind.current, "<B>If you feel you are not up to this task, give your ID to another operative.</B>")
@@ -116,6 +114,9 @@
 		nuke_code = "code will be provided later"
 	return
 
+/datum/game_mode/proc/nuketeam_name_assign(datum/mind/synd_mind)
+	nukeops_lastname = nukelastname(synd_mind.current)
+	NukeNameAssign(nukeops_lastname, syndicates)
 
 
 /datum/game_mode/proc/forge_syndicate_objectives(datum/mind/syndicate)
@@ -136,7 +137,7 @@
 		synd_mob.equipOutfit(/datum/outfit/syndicate)
 	else
 		synd_mob.equipOutfit(/datum/outfit/syndicate/no_crystals)
-	return 1
+	return TRUE
 
 /datum/game_mode/nuclear/OnNukeExplosion(off_station)
 	..()
@@ -147,25 +148,25 @@
 
 /datum/game_mode/nuclear/check_win()
 	if (nukes_left == 0)
-		return 1
+		return TRUE
 	return ..()
 
 /datum/game_mode/proc/are_operatives_dead()
 	for(var/datum/mind/operative_mind in syndicates)
 		if(ishuman(operative_mind.current) && (operative_mind.current.stat!=2))
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /datum/game_mode/nuclear/check_finished() //to be called by SSticker
 	if(replacementmode && round_converted == 2)
 		return replacementmode.check_finished()
 	if((SSshuttle.emergency.mode == SHUTTLE_ENDGAME) || station_was_nuked)
-		return 1
+		return TRUE
 	if(are_operatives_dead())
 		var/obj/machinery/nuclearbomb/N
 		pass(N)	//suppress unused warning
 		if(N.bomb_set) //snaaaaaaaaaake! It's not over yet!
-			return 0	//its a static var btw
+			return FALSE	//its a static var btw
 	..()
 
 /datum/game_mode/nuclear/declare_completion()
@@ -278,7 +279,7 @@
 		if(TC_uses == 0 && station_was_nuked && !are_operatives_dead())
 			text += "<BIG>[icon2html('icons/badass.dmi', world, "badass")]</BIG>"
 		to_chat(world, text)
-	return 1
+	return TRUE
 
 
 /proc/nukelastname(mob/M) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea. Also praise Urist for copypasta ho.

@@ -23,6 +23,7 @@
 	name = "NT Recovery White-Ship";
 	port_direction = 8;
 	preferred_direction = 1;
+	timid = 1;
 	roundstart_move = "whiteship_away";
 	width = 16
 	},

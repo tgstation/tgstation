@@ -34,6 +34,7 @@
 	dwidth = 5;
 	height = 14;
 	name = "Meta emergency shuttle";
+	timid = 1;
 	width = 25
 	},
 /turf/open/floor/mineral/titanium/blue,

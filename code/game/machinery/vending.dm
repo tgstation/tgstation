@@ -259,7 +259,7 @@
 			cut_overlays()
 			if(panel_open)
 				add_overlay("[initial(icon_state)]-panel")
-			playsound(src.loc, W.usesound, 50, 1)
+			playsound(src, W.usesound, 50, 1)
 			updateUsrDialog()
 		else
 			to_chat(user, "<span class='warning'>You must first secure [src].</span>")
@@ -373,7 +373,7 @@
 			for (var/datum/data/vending_product/R in display_records)
 				dat += "<li>"
 				if(R.amount > 0)
-					dat += "<a href='byond://?src=\ref[src];vend=\ref[R]'>Vend</a> "
+					dat += "<a href='byond://?src=[REF(src)];vend=[REF(R)]'>Vend</a> "
 				else
 					dat += "<span class='linkOff'>Sold out</span> "
 				dat += "<font color = '[R.display_color]'><b>[sanitize(R.product_name)]</b>:</font>"
@@ -384,7 +384,7 @@
 		if(premium.len > 0)
 			dat += "<b>Change Return:</b> "
 			if (coin || bill)
-				dat += "[(coin ? coin : "")][(bill ? bill : "")]&nbsp;&nbsp;<a href='byond://?src=\ref[src];remove_coin=1'>Remove</a>"
+				dat += "[(coin ? coin : "")][(bill ? bill : "")]&nbsp;&nbsp;<a href='byond://?src=[REF(src)];remove_coin=1'>Remove</a>"
 			else
 				dat += "<i>No money</i>&nbsp;&nbsp;<span class='linkOff'>Remove</span>"
 		if(istype(src, /obj/machinery/vending/snack))
@@ -393,7 +393,7 @@
 			for (var/O in dish_quants)
 				if(dish_quants[O] > 0)
 					var/N = dish_quants[O]
-					dat += "<a href='byond://?src=\ref[src];dispense=[sanitize(O)]'>Dispense</A> "
+					dat += "<a href='byond://?src=[REF(src)];dispense=[sanitize(O)]'>Dispense</A> "
 					dat += "<B>[capitalize(O)]: [N]</B><br>"
 			dat += "</div>"
 	user.set_machine(src)
@@ -403,23 +403,13 @@
 
 	var/datum/browser/popup = new(user, "vending", (name))
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
 
 /obj/machinery/vending/Topic(href, href_list)
 	if(..())
 		return
-
-	if(issilicon(usr))
-		if(iscyborg(usr))
-			var/mob/living/silicon/robot/R = usr
-			if(!(R.module && istype(R.module, /obj/item/robot_module/butler) ))
-				to_chat(usr, "<span class='notice'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>")
-				return
-		else
-			to_chat(usr, "<span class='notice'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>")
-			return
 
 	if(href_list["remove_coin"])
 		if(!(coin || bill))
@@ -453,7 +443,7 @@
 		dish_quants[N] = max(dish_quants[N] - 1, 0)
 		for(var/obj/O in contents)
 			if(O.name == N)
-				O.loc = src.loc
+				O.forceMove(drop_location())
 				break
 		vend_ready = 1
 		updateUsrDialog()
@@ -520,7 +510,7 @@
 		if(icon_vend) //Show the vending animation if needed
 			flick(icon_vend,src)
 		new R.product_path(get_turf(src))
-		SSblackbox.add_details("vending_machine_usage","[src.type]|[R.product_path]")
+		SSblackbox.add_details("vending_machine_usage","[type]|[R.product_path]")
 		vend_ready = 1
 		return
 

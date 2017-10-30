@@ -1,3 +1,9 @@
+#define WIRE_RECEIVE	1
+#define WIRE_PULSE	2
+#define WIRE_PULSE_SPECIAL	4
+#define WIRE_RADIO_RECEIVE	8
+#define WIRE_RADIO_PULSE	16
+
 /obj/item/device/assembly
 	name = "assembly"
 	desc = "A small electronic device that should never exist."
@@ -11,18 +17,12 @@
 	throw_range = 7
 	origin_tech = "magnets=1;engineering=1"
 
-	var/secured = 1
+	var/secured = TRUE
 	var/list/attached_overlays = null
 	var/obj/item/device/assembly_holder/holder = null
 	var/wire_type = WIRE_RECEIVE | WIRE_PULSE
-	var/attachable = 0 // can this be attached to wires
+	var/attachable = FALSE // can this be attached to wires
 	var/datum/wires/connected = null
-
-	var/const/WIRE_RECEIVE = 1			//Allows Pulsed(0) to call Activate()
-	var/const/WIRE_PULSE = 2				//Allows Pulse(0) to act on the holder
-	var/const/WIRE_PULSE_SPECIAL = 4		//Allows Pulse(0) to act on the holders special assembly
-	var/const/WIRE_RADIO_RECEIVE = 8		//Allows Pulsed(1) to call Activate()
-	var/const/WIRE_RADIO_PULSE = 16		//Allows Pulse(1) to send a radio message
 
 	var/next_activate = 0 //When we're next allowed to activate - for spam control
 
@@ -40,31 +40,29 @@
 /obj/item/device/assembly/proc/is_secured(mob/user)
 	if(!secured)
 		to_chat(user, "<span class='warning'>The [name] is unsecured!</span>")
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 
 //Called when another assembly acts on this one, var/radio will determine where it came from for wire calcs
 /obj/item/device/assembly/proc/pulsed(radio = 0)
 	if(wire_type & WIRE_RECEIVE)
-		spawn(0)
-			activate()
+		INVOKE_ASYNC(src, .proc/activate)
 	if(radio && (wire_type & WIRE_RADIO_RECEIVE))
-		spawn(0)
-			activate()
-	return 1
+		INVOKE_ASYNC(src, .proc/activate)
+	return TRUE
 
 
 //Called when this device attempts to act on another device, var/radio determines if it was sent via radio or direct
 /obj/item/device/assembly/proc/pulse(radio = 0)
 	if(connected && wire_type)
 		connected.pulse_assembly(src)
-		return 1
+		return TRUE
 	if(holder && (wire_type & WIRE_PULSE))
 		holder.process_activation(src, 1, 0)
 	if(holder && (wire_type & WIRE_PULSE_SPECIAL))
 		holder.process_activation(src, 0, 1)
-	return 1
+	return TRUE
 
 
 // What the device does when turned on
@@ -110,10 +108,10 @@
 
 /obj/item/device/assembly/attack_self(mob/user)
 	if(!user)
-		return 0
+		return FALSE
 	user.set_machine(src)
 	interact(user)
-	return 1
+	return TRUE
 
 /obj/item/device/assembly/interact(mob/user)
 	return //HTML MENU FOR WIRES GOES HERE

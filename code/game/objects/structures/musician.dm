@@ -144,31 +144,31 @@
 	if(lines.len > 0)
 		dat += "<H3>Playback</H3>"
 		if(!playing)
-			dat += "<A href='?src=\ref[src];play=1'>Play</A> <SPAN CLASS='linkOn'>Stop</SPAN><BR><BR>"
+			dat += "<A href='?src=[REF(src)];play=1'>Play</A> <SPAN CLASS='linkOn'>Stop</SPAN><BR><BR>"
 			dat += "Repeat Song: "
-			dat += repeat > 0 ? "<A href='?src=\ref[src];repeat=-10'>-</A><A href='?src=\ref[src];repeat=-1'>-</A>" : "<SPAN CLASS='linkOff'>-</SPAN><SPAN CLASS='linkOff'>-</SPAN>"
+			dat += repeat > 0 ? "<A href='?src=[REF(src)];repeat=-10'>-</A><A href='?src=[REF(src)];repeat=-1'>-</A>" : "<SPAN CLASS='linkOff'>-</SPAN><SPAN CLASS='linkOff'>-</SPAN>"
 			dat += " [repeat] times "
-			dat += repeat < max_repeats ? "<A href='?src=\ref[src];repeat=1'>+</A><A href='?src=\ref[src];repeat=10'>+</A>" : "<SPAN CLASS='linkOff'>+</SPAN><SPAN CLASS='linkOff'>+</SPAN>"
+			dat += repeat < max_repeats ? "<A href='?src=[REF(src)];repeat=1'>+</A><A href='?src=[REF(src)];repeat=10'>+</A>" : "<SPAN CLASS='linkOff'>+</SPAN><SPAN CLASS='linkOff'>+</SPAN>"
 			dat += "<BR>"
 		else
-			dat += "<SPAN CLASS='linkOn'>Play</SPAN> <A href='?src=\ref[src];stop=1'>Stop</A><BR>"
+			dat += "<SPAN CLASS='linkOn'>Play</SPAN> <A href='?src=[REF(src)];stop=1'>Stop</A><BR>"
 			dat += "Repeats left: <B>[repeat]</B><BR>"
 	if(!edit)
-		dat += "<BR><B><A href='?src=\ref[src];edit=2'>Show Editor</A></B><BR>"
+		dat += "<BR><B><A href='?src=[REF(src)];edit=2'>Show Editor</A></B><BR>"
 	else
 		dat += "<H3>Editing</H3>"
-		dat += "<B><A href='?src=\ref[src];edit=1'>Hide Editor</A></B>"
-		dat += " <A href='?src=\ref[src];newsong=1'>Start a New Song</A>"
-		dat += " <A href='?src=\ref[src];import=1'>Import a Song</A><BR><BR>"
+		dat += "<B><A href='?src=[REF(src)];edit=1'>Hide Editor</A></B>"
+		dat += " <A href='?src=[REF(src)];newsong=1'>Start a New Song</A>"
+		dat += " <A href='?src=[REF(src)];import=1'>Import a Song</A><BR><BR>"
 		var/bpm = round(600 / tempo)
-		dat += "Tempo: <A href='?src=\ref[src];tempo=[world.tick_lag]'>-</A> [bpm] BPM <A href='?src=\ref[src];tempo=-[world.tick_lag]'>+</A><BR><BR>"
+		dat += "Tempo: <A href='?src=[REF(src)];tempo=[world.tick_lag]'>-</A> [bpm] BPM <A href='?src=[REF(src)];tempo=-[world.tick_lag]'>+</A><BR><BR>"
 		var/linecount = 0
 		for(var/line in lines)
 			linecount += 1
-			dat += "Line [linecount]: <A href='?src=\ref[src];modifyline=[linecount]'>Edit</A> <A href='?src=\ref[src];deleteline=[linecount]'>X</A> [line]<BR>"
-		dat += "<A href='?src=\ref[src];newline=1'>Add Line</A><BR><BR>"
+			dat += "Line [linecount]: <A href='?src=[REF(src)];modifyline=[linecount]'>Edit</A> <A href='?src=[REF(src)];deleteline=[linecount]'>X</A> [line]<BR>"
+		dat += "<A href='?src=[REF(src)];newline=1'>Add Line</A><BR><BR>"
 		if(help)
-			dat += "<B><A href='?src=\ref[src];help=1'>Hide Help</A></B><BR>"
+			dat += "<B><A href='?src=[REF(src)];help=1'>Hide Help</A></B><BR>"
 			dat += {"
 					Lines are a series of chords, separated by commas (,), each with notes separated by hyphens (-).<br>
 					Every note in a chord will play together, with chord timed by the tempo.<br>
@@ -187,7 +187,7 @@
 					A song may only contain up to [MUSIC_MAXLINES] lines.<br>
 					"}
 		else
-			dat += "<B><A href='?src=\ref[src];help=2'>Show Help</A></B><BR>"
+			dat += "<B><A href='?src=[REF(src)];help=2'>Show Help</A></B><BR>"
 
 	var/datum/browser/popup = new(user, "instrument", instrumentObj.name, 700, 500)
 	popup.set_content(dat)

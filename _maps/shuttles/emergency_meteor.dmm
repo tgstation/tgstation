@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "a" = (
 /turf/open/space,
 /area/space)
@@ -53,18 +53,6 @@
 /area/shuttle/escape{
 	luminosity = 0
 	})
-"j" = (
-/obj/docking_port/mobile/emergency{
-	dwidth = 20;
-	height = 40;
-	name = "a meteor with engines strapped to it";
-	timid = 1;
-	width = 40
-	},
-/turf/open/floor/plating/asteroid,
-/area/shuttle/escape{
-	luminosity = 0
-	})
 "k" = (
 /obj/structure/closet/crate,
 /turf/open/floor/plating/asteroid,
@@ -92,6 +80,19 @@
 /area/shuttle/escape{
 	luminosity = 0
 	})
+"L" = (
+/obj/docking_port/mobile/emergency{
+	dwidth = 20;
+	height = 40;
+	movement_force = list("KNOCKDOWN" = 3, "THROW" = 6);
+	name = "a meteor with engines strapped to it";
+	timid = 1;
+	width = 40
+	},
+/turf/open/floor/plating/asteroid,
+/area/shuttle/escape{
+	luminosity = 0
+	})
 
 (1,1,1) = {"
 a
@@ -114,7 +115,7 @@ b
 d
 d
 d
-j
+L
 d
 d
 b

@@ -2,18 +2,18 @@
 
 [![forthebadge](http://forthebadge.com/images/badges/mom-made-pizza-rolls.svg)](http://forthebadge.com)
 
-**Website:** http://www.tgstation13.org <BR>
+**Website:** https://www.tgstation13.org <BR>
 **Code:** https://github.com/tgstation/tgstation <BR>
-**Wiki** http://tgstation13.org/wiki/Main_Page <BR>
+**Wiki** https://tgstation13.org/wiki/Main_Page <BR>
 **IRC:** irc://irc.rizon.net/coderbus or if you dont have an IRC client, you can click  [here](https://kiwiirc.com/client/irc.rizon.net:6667/?&theme=cli#coderbus).<BR>
 
 
 ## DOWNLOADING
 
-There are a number of ways to download the source code. Some are described here, an alternative all-inclusive guide is also located at http://www.tgstation13.org/wiki/Downloading_the_source_code
+There are a number of ways to download the source code. Some are described here, an alternative all-inclusive guide is also located at https://www.tgstation13.org/wiki/Downloading_the_source_code
 
 Option 1:
-Follow this: http://www.tgstation13.org/wiki/Setting_up_git
+Follow this: https://www.tgstation13.org/wiki/Setting_up_git
 
 Option 2: Download the source code as a zip by clicking the ZIP button in the
 code tab of https://github.com/tgstation/tgstation

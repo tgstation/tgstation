@@ -362,7 +362,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(message_mode == MODE_VOCALCORDS)
 		if(iscarbon(src))
 			var/mob/living/carbon/C = src
-			var/obj/item/organ/vocal_cords/V = C.getorganslot("vocal_cords")
+			var/obj/item/organ/vocal_cords/V = C.getorganslot(ORGAN_SLOT_VOICE)
 			if(V && V.can_speak_with())
 				V.handle_speech(message) //message
 				V.speak_with(message) //action

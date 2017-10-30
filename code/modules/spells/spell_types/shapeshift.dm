@@ -18,9 +18,15 @@
 		/mob/living/simple_animal/pet/dog/corgi,\
 		/mob/living/simple_animal/hostile/carp/ranged/chaos,\
 		/mob/living/simple_animal/bot/ed209,\
+		/mob/living/simple_animal/hostile/poison/giant_spider/hunter/viper,\
 		/mob/living/simple_animal/hostile/construct/armored)
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/cast(list/targets,mob/user = usr)
+	if(src in user.mob_spell_list)
+		user.mob_spell_list.Remove(src)
+		user.mind.AddSpell(src)
+	if(user.buckled)
+		user.buckled.unbuckle_mob(src,force=TRUE)
 	for(var/mob/living/M in targets)
 		if(!shapeshift_type)
 			var/list/animal_list = list()
@@ -46,7 +52,7 @@
 			return
 
 	var/mob/living/shape = new shapeshift_type(caster.loc)
-	caster.loc = shape
+	caster.forceMove(shape)
 	caster.status_flags |= GODMODE
 
 	current_shapes |= shape
@@ -64,7 +70,7 @@
 			break
 	if(!caster)
 		return
-	caster.loc = shape.loc
+	caster.forceMove(shape.loc)
 	caster.status_flags &= ~GODMODE
 
 	clothes_req = initial(clothes_req)

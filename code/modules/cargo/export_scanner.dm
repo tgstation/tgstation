@@ -13,7 +13,7 @@
 /obj/item/device/export_scanner/examine(user)
 	..()
 	if(!cargo_console)
-		to_chat(user, "<span class='notice'>The [src] is currently not linked to a cargo console.</span>")
+		to_chat(user, "<span class='notice'>[src] is not currently linked to a cargo console.</span>")
 
 /obj/item/device/export_scanner/afterattack(obj/O, mob/user, proximity)
 	if(!istype(O) || !proximity)

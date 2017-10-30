@@ -9,7 +9,6 @@
 
 #define OXYGEN_TRANSMIT_MODIFIER 1.5   //Higher == Bigger bonus to power generation.
 #define PLASMA_TRANSMIT_MODIFIER 4
-#define FREON_TRANSMIT_PENALTY 0.75    // Scales how much freon reduces total power transmission. 1 equals 1% per 1% of freon in the mix.
 
 #define N2O_HEAT_RESISTANCE 6          //Higher == Gas makes the crystal more resistant against heat damage.
 
@@ -30,7 +29,7 @@
 #define THERMAL_RELEASE_MODIFIER 5         //Higher == less heat released during reaction, not to be confused with the above values
 #define PLASMA_RELEASE_MODIFIER 750        //Higher == less plasma released by reaction
 #define OXYGEN_RELEASE_MODIFIER 325        //Higher == less oxygen released at high temperature/power
-#define FREON_BREEDING_MODIFIER 100        //Higher == less freon created
+
 #define REACTION_POWER_MODIFIER 0.55       //Higher == more overall power
 
 #define MATTER_POWER_CONVERSION 10         //Crystal converts 1/this value of stored matter into energy.
@@ -92,7 +91,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	var/power = 0
 
 	var/n2comp = 0					// raw composition of each gas in the chamber, ranges from 0 to 1
-	var/freoncomp = 0
 
 	var/plasmacomp = 0
 	var/o2comp = 0
@@ -107,7 +105,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	var/powerloss_dynamic_scaling= 0
 	var/power_transmission_bonus = 0
 	var/mole_heat_penalty = 0
-	var/freon_transmit_modifier = 1
+
 
 	var/matter_power = 0
 
@@ -135,6 +133,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 
 	var/is_main_engine = FALSE
 
+	var/datum/looping_sound/supermatter/soundloop
+
 /obj/machinery/power/supermatter_shard/Initialize()
 	. = ..()
 	SSair.atmos_machinery += src
@@ -149,6 +149,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	if(is_main_engine)
 		GLOB.main_supermatter_engine = src
 
+	soundloop = new(list(src), TRUE)
+
 /obj/machinery/power/supermatter_shard/Destroy()
 	investigate_log("has been destroyed.", INVESTIGATE_SUPERMATTER)
 	SSair.atmos_machinery -= src
@@ -157,7 +159,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	QDEL_NULL(countdown)
 	if(is_main_engine && GLOB.main_supermatter_engine == src)
 		GLOB.main_supermatter_engine = null
-	. = ..()
+	QDEL_NULL(soundloop)
+	return ..()
 
 /obj/machinery/power/supermatter_shard/examine(mob/user)
 	..()
@@ -251,6 +254,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	if(!istype(T)) 	//We are in a crate or somewhere that isn't turf, if we return to turf resume processing but for now.
 		return  //Yeah just stop.
 
+	if(power)
+		soundloop.volume = min(50, (round(power, 50)/50)+1) // 5 +1 volume per 20 power. 2500 power is max
+
 	//Ok, get the air from the turf
 	var/datum/gas_mixture/env = T.return_air()
 
@@ -284,26 +290,25 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 		if(damage > damage_archived && prob(10))
 			playsound(get_turf(src), 'sound/effects/empulse.ogg', 50, 1)
 
-	removed.assert_gases("o2", "plasma", "co2", "n2o", "n2", "freon")
+	removed.assert_gases(/datum/gas/oxygen, /datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/nitrogen)
 	//calculating gas related values
 	combined_gas = max(removed.total_moles(), 0)
 
-	plasmacomp = max(removed.gases["plasma"][MOLES]/combined_gas, 0)
-	o2comp = max(removed.gases["o2"][MOLES]/combined_gas, 0)
-	co2comp = max(removed.gases["co2"][MOLES]/combined_gas, 0)
+	plasmacomp = max(removed.gases[/datum/gas/plasma][MOLES]/combined_gas, 0)
+	o2comp = max(removed.gases[/datum/gas/oxygen][MOLES]/combined_gas, 0)
+	co2comp = max(removed.gases[/datum/gas/carbon_dioxide][MOLES]/combined_gas, 0)
 
-	n2ocomp = max(removed.gases["n2o"][MOLES]/combined_gas, 0)
-	n2comp = max(removed.gases["n2"][MOLES]/combined_gas, 0)
-	freoncomp = max(removed.gases["freon"][MOLES]/combined_gas, 0)
+	n2ocomp = max(removed.gases[/datum/gas/nitrous_oxide][MOLES]/combined_gas, 0)
+	n2comp = max(removed.gases[/datum/gas/nitrogen][MOLES]/combined_gas, 0)
 
-	gasmix_power_ratio = min(max(plasmacomp + o2comp + co2comp - n2comp - freoncomp, 0), 1)
+	gasmix_power_ratio = min(max(plasmacomp + o2comp + co2comp - n2comp, 0), 1)
 
 	dynamic_heat_modifier = max((plasmacomp * PLASMA_HEAT_PENALTY)+(o2comp * OXYGEN_HEAT_PENALTY)+(co2comp * CO2_HEAT_PENALTY)+(n2comp * NITROGEN_HEAT_MODIFIER), 0.5)
 	dynamic_heat_resistance = max(n2ocomp * N2O_HEAT_RESISTANCE, 1)
 
 	power_transmission_bonus = max((plasmacomp * PLASMA_TRANSMIT_MODIFIER) + (o2comp * OXYGEN_TRANSMIT_MODIFIER), 0)
 
-	freon_transmit_modifier = max(1-(freoncomp * FREON_TRANSMIT_PENALTY), 0)
+
 
 	//more moles of gases are harder to heat than fewer, so let's scale heat damage around them
 	mole_heat_penalty = max(combined_gas / MOLE_HEAT_PENALTY, 0.25)
@@ -331,8 +336,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 
 	power = max( (removed.temperature * temp_factor / T0C) * gasmix_power_ratio + power, 0) //Total laser power plus an overload
 
-	//We've generated power, now let's transfer it to the collectors for storing/usage
-	transfer_energy()
+	if(prob(50))
+		radiation_pulse(src, power * (1 + power_transmission_bonus/10))
 
 	var/device_energy = power * REACTION_POWER_MODIFIER
 
@@ -348,12 +353,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	removed.temperature = max(0, min(removed.temperature, 2500 * dynamic_heat_modifier))
 
 	//Calculate how much gas to release
-	removed.gases["plasma"][MOLES] += max((device_energy * dynamic_heat_modifier) / PLASMA_RELEASE_MODIFIER, 0)
+	removed.gases[/datum/gas/plasma][MOLES] += max((device_energy * dynamic_heat_modifier) / PLASMA_RELEASE_MODIFIER, 0)
 
-	removed.gases["o2"][MOLES] += max(((device_energy + removed.temperature * dynamic_heat_modifier) - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
-
-	if(combined_gas < 50)
-		removed.gases["freon"][MOLES] = max((removed.gases["freon"][MOLES] + device_energy) * freoncomp / FREON_BREEDING_MODIFIER, 0)
+	removed.gases[/datum/gas/oxygen][MOLES] += max(((device_energy + removed.temperature * dynamic_heat_modifier) - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
 
 	if(produces_gas)
 		env.merge(removed)
@@ -527,11 +529,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
 	Consume(nom)
 
-/obj/machinery/power/supermatter_shard/proc/transfer_energy()
-	for(var/obj/machinery/power/rad_collector/R in GLOB.rad_collectors)
-		if(R.z == z && get_dist(R, src) <= 15) //Better than using orange() every process
-			R.receive_pulse(power * (1 + power_transmission_bonus)/10 * freon_transmit_modifier)
-
 /obj/machinery/power/supermatter_shard/attackby(obj/item/W, mob/living/user, params)
 	if(!istype(W) || (W.flags_1 & ABSTRACT_1) || !istype(user))
 		return
@@ -550,7 +547,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 		Consume(W)
 		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
 
-		radiation_pulse(get_turf(src), 1, 1, 150, 1)
+		radiation_pulse(src, 150, 4)
 
 
 /obj/machinery/power/supermatter_shard/CollidedWith(atom/movable/AM)
@@ -584,7 +581,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	matter_power += 200
 
 	//Some poor sod got eaten, go ahead and irradiate people nearby.
-	radiation_pulse(get_turf(src), 4, 10, 500, 1)
+	radiation_pulse(src, 3000, 2, TRUE)
 	for(var/mob/living/L in range(10))
 		investigate_log("has irradiated [L] after consuming [AM].", INVESTIGATE_SUPERMATTER)
 		if(L in view())

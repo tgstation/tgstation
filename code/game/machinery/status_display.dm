@@ -123,10 +123,37 @@
 /obj/machinery/status_display/examine(mob/user)
 	. = ..()
 	switch(mode)
-		if(1,2,4,5)
-			to_chat(user, "The display says:<br>\t<xmp>[message1]</xmp><br>\t<xmp>[message2]</xmp>")
-	if(mode == 1 && SSshuttle.emergency)
-		to_chat(user, "Current Shuttle: [SSshuttle.emergency.name]")
+		if(1,5)  // Emergency or generic shuttle
+			var/obj/docking_port/mobile/shuttle
+			if(mode == 1)
+				shuttle = SSshuttle.emergency
+			else
+				shuttle = SSshuttle.getShuttle(shuttle_id)
+
+			if (!shuttle)
+				to_chat(user, "The display says:<br>\t<xmp>Shuttle?</xmp>")
+			else if (shuttle.timer)
+				to_chat(user, "The display says:<br>\t<xmp>[shuttle.getModeStr()]: [shuttle.getTimerStr()]</xmp>")
+			if (mode == 1 && shuttle)
+				to_chat(user, "Current shuttle: [shuttle.name].")
+		if(4)  // Supply shuttle
+			var/obj/docking_port/mobile/shuttle = SSshuttle.supply
+			var/shuttleMsg = null
+			if (shuttle.mode == SHUTTLE_IDLE)
+				if (shuttle.z in GLOB.station_z_levels)
+					shuttleMsg = "Docked"
+			else
+				shuttleMsg = "[shuttle.getModeStr()]: [shuttle.getTimerStr()]"
+			if (shuttleMsg)
+				to_chat(user, "The display says:<br>\t<xmp>[shuttleMsg]</xmp>")
+		if(2)  // Custom message
+			if (message1 || message2)
+				var/msg = "The display says:"
+				if (message1)
+					msg += "<br>\t<xmp>[message1]</xmp>"
+				if (message2)
+					msg += "<br>\t<xmp>[message2]</xmp>"
+				to_chat(user, msg)
 
 
 /obj/machinery/status_display/proc/set_message(m1, m2)

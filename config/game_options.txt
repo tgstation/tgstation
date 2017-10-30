@@ -85,7 +85,6 @@ PROBABILITY REVOLUTION 2
 PROBABILITY CULT 2
 PROBABILITY CHANGELING 2
 PROBABILITY WIZARD 4
-PROBABILITY BLOB 2
 PROBABILITY MONKEY 0
 PROBABILITY METEOR 0
 PROBABILITY EXTENDED 0
@@ -383,10 +382,6 @@ LAW_WEIGHT buildawall,0
 ## The maximum number of laws a silicon can have
 ## Attempting to upload laws past this point will fail unless the AI is reset
 SILICON_MAX_LAW_AMOUNT 12
-
-## Uncomment to give players the choice of their species before they join the game
-JOIN_WITH_MUTANT_RACE
-
 
 ## Roundstart Races
 ##-------------------------------------------------------------------------------------------

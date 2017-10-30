@@ -11,7 +11,7 @@
 /obj/item/cartridge/virus/message_special(obj/item/device/pda/target)
 	if (!istype(loc, /obj/item/device/pda))
 		return ""  //Sanity check, this shouldn't be possible.
-	return " (<a href='byond://?src=\ref[loc];choice=cart;special=virus;target=\ref[target]'>*Send Virus*</a>)"
+	return " (<a href='byond://?src=[REF(loc)];choice=cart;special=virus;target=[REF(target)]'>*Send Virus*</a>)"
 
 /obj/item/cartridge/virus/special(mob/living/user, list/params)
 	var/obj/item/device/pda/P = locate(params["target"])//Leaving it alone in case it may do something useful, I guess.

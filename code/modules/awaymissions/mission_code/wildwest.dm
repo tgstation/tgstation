@@ -4,6 +4,33 @@
  *		Meat Grinder
  */
 
+//Areas
+
+/area/awaymission/wildwest/mines
+	name = "Wild West Mines"
+	icon_state = "away1"
+	requires_power = FALSE
+
+/area/awaymission/wildwest/gov
+	name = "Wild West Mansion"
+	icon_state = "away2"
+	requires_power = FALSE
+
+/area/awaymission/wildwest/refine
+	name = "Wild West Refinery"
+	icon_state = "away3"
+	requires_power = FALSE
+
+/area/awaymission/wildwest/vault
+	name = "Wild West Vault"
+	icon_state = "away3"
+
+/area/awaymission/wildwest/vaultdoors
+	name = "Wild West Vault Doors"  // this is to keep the vault area being entirely lit because of requires_power
+	icon_state = "away2"
+	requires_power = FALSE
+
+
  ////////// wildwest papers
  
 /obj/item/paper/fluff/awaymissions/wildwest/grinder
@@ -126,7 +153,7 @@
 	var/mob/living/carbon/human/M = AM
 
 	if(M.stat != DEAD && M.ckey)
-		visible_message("<span class='warning'>[M] triggered the [src]!</span>")
+		visible_message("<span class='warning'>[M] triggered [src]!</span>")
 		triggered = 1
 
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread

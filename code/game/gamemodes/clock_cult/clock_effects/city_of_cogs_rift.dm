@@ -38,7 +38,7 @@
 		beckon(AM)
 
 /obj/effect/clockwork/city_of_cogs_rift/proc/beckon(atom/movable/AM)
-	AM.visible_message("<span class='danger'>[AM] passes through [src]!</span>", ignore_mob = AM)
+	AM.visible_message("<span class='danger'>[AM] passes through [src]!</span>", ignored_mob = AM)
 	AM.forceMove(pick(!is_servant_of_ratvar(AM) ? GLOB.city_of_cogs_spawns : GLOB.servant_spawns))
 	AM.visible_message("<span class='danger'>[AM] materializes from the air!</span>", \
 	"<span class='boldannounce'>You pass through [src] and appear [is_servant_of_ratvar(AM) ? "back at the City of Cogs" : "somewhere unfamiliar. Looks like it was a one-way trip.."].</span>")
@@ -48,3 +48,6 @@
 		var/mob/living/L = AM
 		L.overlay_fullscreen("flash", /obj/screen/fullscreen/flash/static)
 		L.clear_fullscreen("flash", 5)
+		var/obj/item/device/transfer_valve/TTV = locate() in L.GetAllContents()
+		if(TTV)
+			to_chat(L, "<span class='userdanger'>The air resonates with the Ark's presence; your explosives will be significantly dampened here!</span>")

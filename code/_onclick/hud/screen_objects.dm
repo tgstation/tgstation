@@ -251,7 +251,7 @@
 		to_chat(C, "<span class='notice'>You are no longer running on internals.</span>")
 		icon_state = "internal0"
 	else
-		if(!C.getorganslot("breathing_tube"))
+		if(!C.getorganslot(ORGAN_SLOT_BREATHING_TUBE))
 			if(!istype(C.wear_mask, /obj/item/clothing/mask))
 				to_chat(C, "<span class='warning'>You are not wearing an internals mask!</span>")
 				return 1

@@ -140,7 +140,7 @@
 		if(open_panel && wires.is_all_cut())
 			if(payload)
 				to_chat(user, "<span class='notice'>You carefully pry out [payload].</span>")
-				payload.loc = user.loc
+				payload.forceMove(drop_location())
 				payload = null
 			else
 				to_chat(user, "<span class='warning'>There isn't anything in here to remove!</span>")
@@ -167,11 +167,11 @@
 			return
 
 		playsound(loc, WT.usesound, 50, 1)
-		to_chat(user, "<span class='notice'>You start to cut the [src] apart...</span>")
+		to_chat(user, "<span class='notice'>You start to cut [src] apart...</span>")
 		if(do_after(user, 20*I.toolspeed, target = src))
 			if(!WT.isOn() || !WT.remove_fuel(5, user))
 				return
-			to_chat(user, "<span class='notice'>You cut the [src] apart.</span>")
+			to_chat(user, "<span class='notice'>You cut [src] apart.</span>")
 			new /obj/item/stack/sheet/plasteel( loc, 5)
 			qdel(src)
 	else
@@ -206,14 +206,14 @@
 	var/new_timer = input(user, "Please set the timer.", "Timer", "[timer_set]") as num
 	if(in_range(src, user) && isliving(user)) //No running off and setting bombs from across the station
 		timer_set = Clamp(new_timer, minimum_timer, maximum_timer)
-		src.loc.visible_message("<span class='notice'>[icon2html(src, viewers(src))] timer set for [timer_set] seconds.</span>")
+		loc.visible_message("<span class='notice'>[icon2html(src, viewers(src))] timer set for [timer_set] seconds.</span>")
 	if(alert(user,"Would you like to start the countdown now?",,"Yes","No") == "Yes" && in_range(src, user) && isliving(user))
 		if(defused || active)
 			if(defused)
-				src.loc.visible_message("<span class='warning'>[icon2html(src, viewers(src))] Device error: User intervention required.</span>")
+				visible_message("<span class='warning'>[icon2html(src, viewers(src))] Device error: User intervention required.</span>")
 			return
 		else
-			src.loc.visible_message("<span class='danger'>[icon2html(src, viewers(loc))] [timer_set] seconds until detonation, please clear the area.</span>")
+			visible_message("<span class='danger'>[icon2html(src, viewers(loc))] [timer_set] seconds until detonation, please clear the area.</span>")
 			activate()
 			update_icon()
 			add_fingerprint(user)
@@ -223,7 +223,7 @@
 			if(payload && !istype(payload, /obj/item/bombcore/training))
 				message_admins("[ADMIN_LOOKUPFLW(user)] has primed a [name] ([payload]) for detonation at [A.name] [ADMIN_JMP(bombturf)]</a>.")
 				log_game("[key_name(user)] has primed a [name] ([payload]) for detonation at [A.name][COORD(bombturf)]")
-				payload.adminlog = "The [src.name] that [key_name(user)] had primed detonated!"
+				payload.adminlog = "The [name] that [key_name(user)] had primed detonated!"
 
 ///Bomb Subtypes///
 
@@ -307,7 +307,7 @@
 
 /obj/item/bombcore/training
 	name = "dummy payload"
-	desc = "A nanotrasen replica of a syndicate payload. Its not intended to explode but to announce that it WOULD have exploded, then rewire itself to allow for more training."
+	desc = "A Nanotrasen replica of a syndicate payload. Its not intended to explode but to announce that it WOULD have exploded, then rewire itself to allow for more training."
 	origin_tech = null
 	var/defusals = 0
 	var/attempts = 0
@@ -359,7 +359,7 @@
 	var/amt_summon = 1
 
 /obj/item/bombcore/badmin/summon/detonate()
-	var/obj/machinery/syndicatebomb/B = src.loc
+	var/obj/machinery/syndicatebomb/B = loc
 	spawn_and_random_walk(summon_path, src, amt_summon, walk_chance=50, admin_spawn=TRUE)
 	qdel(B)
 	qdel(src)
@@ -369,7 +369,7 @@
 	amt_summon 	= 100
 
 /obj/item/bombcore/badmin/summon/clown/defuse()
-	playsound(src.loc, 'sound/misc/sadtrombone.ogg', 50)
+	playsound(src, 'sound/misc/sadtrombone.ogg', 50)
 	..()
 
 /obj/item/bombcore/large
@@ -378,9 +378,6 @@
 	range_medium = 10
 	range_light = 20
 	range_flame = 20
-
-/obj/item/bombcore/large/underwall
-	layer = ABOVE_OPEN_TURF_LAYER
 
 /obj/item/bombcore/miniature
 	name = "small bomb core"
@@ -457,7 +454,7 @@
 	if(istype(I, /obj/item/crowbar) && beakers.len > 0)
 		playsound(loc, I.usesound, 50, 1)
 		for (var/obj/item/B in beakers)
-			B.loc = get_turf(src)
+			B.forceMove(drop_location())
 			beakers -= B
 		return
 	else if(istype(I, /obj/item/reagent_containers/glass/beaker) || istype(I, /obj/item/reagent_containers/glass/bottle))
@@ -467,7 +464,7 @@
 			beakers += I
 			to_chat(user, "<span class='notice'>You load [src] with [I].</span>")
 		else
-			to_chat(user, "<span class='warning'>The [I] wont fit! The [src] can only hold up to [max_beakers] containers.</span>")
+			to_chat(user, "<span class='warning'>[I] won't fit! \The [src] can only hold up to [max_beakers] containers.</span>")
 			return
 	..()
 
@@ -488,9 +485,9 @@
 			for(var/obj/item/slime_extract/S in LG.beakers) // And slime cores.
 				if(beakers.len < max_beakers)
 					beakers += S
-					S.loc = src
+					S.forceMove(src)
 				else
-					S.loc = get_turf(src)
+					S.forceMove(drop_location())
 
 		if(istype(G, /obj/item/grenade/chem_grenade/cryo))
 			spread_range -= 1 // Reduced range, but increased density.
@@ -505,9 +502,9 @@
 		for(var/obj/item/reagent_containers/glass/B in G)
 			if(beakers.len < max_beakers)
 				beakers += B
-				B.loc = src
+				B.forceMove(src)
 			else
-				B.loc = get_turf(src)
+				B.forceMove(drop_location())
 
 		qdel(G)
 

@@ -3,7 +3,7 @@
 	icon_state = "eyeballs"
 	desc = "I see you!"
 	zone = "eyes"
-	slot = "eye_sight"
+	slot = ORGAN_SLOT_EYES
 	gender = PLURAL
 
 	var/sight_flags = 0
@@ -68,7 +68,7 @@
 
 /obj/item/organ/eyes/night_vision/zombie
 	name = "undead eyes"
-	desc = "Somewhat counterintuitively, these half rotten eyes actually have superior vision to those of a living human."
+	desc = "Somewhat counterintuitively, these half-rotten eyes actually have superior vision to those of a living human."
 
 /obj/item/organ/eyes/night_vision/nightmare
 	name = "burning red eyes"
@@ -100,8 +100,8 @@
 	sight_flags = SEE_MOBS | SEE_OBJS | SEE_TURFS
 
 /obj/item/organ/eyes/robotic/thermals
-	name = "Thermals eyes"
-	desc = "These cybernetic eye implants will give you Thermal vision. Vertical slit pupil included."
+	name = "thermal eyes"
+	desc = "These cybernetic eye implants will give you thermal vision. Vertical slit pupil included."
 	eye_color = "FC0"
 	origin_tech = "materials=5;programming=4;biotech=4;magnets=4;syndicate=1"
 	sight_flags = SEE_MOBS
@@ -111,7 +111,7 @@
 
 /obj/item/organ/eyes/robotic/flashlight
 	name = "flashlight eyes"
-	desc = "It's two flashlights rigged together with some wire. Why would you put these in someones head?"
+	desc = "It's two flashlights rigged together with some wire. Why would you put these in someone's head?"
 	eye_color ="fee5a3"
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flashlight_eyes"

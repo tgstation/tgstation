@@ -16,6 +16,8 @@ SUBSYSTEM_DEF(server_maint)
 
 /datum/controller/subsystem/server_maint/fire(resumed = FALSE)
 	if(!resumed)
+		if(listclearnulls(GLOB.clients))
+			log_world("Found a null in clients list!")
 		src.currentrun = GLOB.clients.Copy()
 
 	var/list/currentrun = src.currentrun

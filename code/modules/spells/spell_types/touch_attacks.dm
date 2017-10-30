@@ -11,17 +11,17 @@
 		charge_counter = charge_max
 		attached_hand = null
 		to_chat(user, "<span class='notice'>You draw the power out of your hand.</span>")
-		return 0
+		return FALSE
 	..()
 
 /obj/effect/proc_holder/spell/targeted/touch/cast(list/targets,mob/user = usr)
 	for(var/mob/living/carbon/C in targets)
 		if(!attached_hand)
 			if(!ChargeHand(C))
-				return 0
-	while(attached_hand) //hibernate untill the spell is actually used
+				return FALSE
+	while(attached_hand)
 		charge_counter = 0
-		sleep(1)
+		stoplag(1)
 
 /obj/effect/proc_holder/spell/targeted/touch/proc/ChargeHand(mob/living/carbon/user)
 	attached_hand = new hand_path(src)
@@ -30,9 +30,9 @@
 		charge_counter = charge_max
 		attached_hand = null
 		to_chat(user, "<span class='warning'>Your hands are full!</span>")
-		return 0
+		return FALSE
 	to_chat(user, "<span class='notice'>You channel the power of the spell to your hand.</span>")
-	return 1
+	return TRUE
 
 
 /obj/effect/proc_holder/spell/targeted/touch/disintegrate
