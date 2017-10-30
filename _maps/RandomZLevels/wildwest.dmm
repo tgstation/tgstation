@@ -183,7 +183,7 @@
 /turf/closed/mineral,
 /area/awaymission/wildwest/mines)
 "aO" = (
-/obj/effect/mob_spawn/human/corpse/bald/syndicatecommando,
+/obj/effect/mob_spawn/human/corpse/syndicatecommando,
 /turf/open/floor/plasteel/cult{
 	name = "engraved floor"
 	},
@@ -915,7 +915,7 @@
 	},
 /area/awaymission/wildwest/gov)
 "dh" = (
-/obj/effect/mob_spawn/human/corpse/bald/syndicatecommando{
+/obj/effect/mob_spawn/human/corpse/syndicatecommando{
 	mob_name = "Syndicate Commando"
 	},
 /turf/open/floor/carpet,
@@ -1999,7 +1999,7 @@
 	},
 /area/awaymission/wildwest/mines)
 "gy" = (
-/obj/effect/mob_spawn/human/corpse/bald/syndicatecommando{
+/obj/effect/mob_spawn/human/corpse/syndicatecommando{
 	mob_name = "Syndicate Commando"
 	},
 /turf/open/floor/grass,

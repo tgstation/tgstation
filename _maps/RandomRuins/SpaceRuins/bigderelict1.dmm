@@ -446,7 +446,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "bq" = (
-/obj/effect/mob_spawn/human/corpse/bald/nanotrasensoldier{
+/obj/effect/mob_spawn/human/corpse/nanotrasensoldier{
 	head = null;
 	id_job = "Tradepost Officer";
 	name = "Tradeport Officer";
