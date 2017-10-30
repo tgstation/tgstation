@@ -362,9 +362,17 @@ SUBSYSTEM_DEF(garbage)
 
 	testing("Beginning search for references to a [type].")
 	last_find_references = world.time
-	DoSearchVar(GLOB)
-	for(var/datum/thing in world)
-		DoSearchVar(thing, "WorldRef: [thing]")
+
+	DoSearchVar(GLOB) //globals
+	for(var/datum/thing in world) //atoms (don't beleive it's lies)
+		DoSearchVar(thing, "World -> [thing]")
+
+	for (var/datum/thing) //datums
+		DoSearchVar(thing, "World -> [thing]")
+
+	for (var/client/thing) //clients
+		DoSearchVar(thing, "World -> [thing]")
+
 	testing("Completed search for references to a [type].")
 	if(usr && usr.client)
 		usr.client.running_find_references = null
@@ -384,35 +392,44 @@ SUBSYSTEM_DEF(garbage)
 	if(!running_find_references)
 		find_references(TRUE)
 
-/datum/proc/DoSearchVar(X, Xname)
+/datum/proc/DoSearchVar(X, Xname, recursive_limit = 64)
 	if(usr && usr.client && !usr.client.running_find_references)
 		return
+	if (!recursive_limit)
+		return
+
 	if(istype(X, /datum))
 		var/datum/D = X
 		if(D.last_find_references == last_find_references)
 			return
+
 		D.last_find_references = last_find_references
-		for(var/V in D.vars)
-			for(var/varname in D.vars)
-				var/variable = D.vars[varname]
-				if(variable == src)
-					testing("Found [src.type] \ref[src] in [D.type]'s [varname] var. [Xname]")
-				else if(islist(variable))
-					if(src in variable)
-						testing("Found [src.type] \ref[src] in [D.type]'s [varname] list var. Global: [Xname]")
-#ifdef GC_FAILURE_HARD_LOOKUP
-					for(var/I in variable)
-						DoSearchVar(I, TRUE)
-				else
-					DoSearchVar(variable, "[Xname]: [varname]")
-#endif
+		var/list/L = D.vars
+
+		for(var/varname in L)
+			if (varname == "vars")
+				continue
+			var/variable = L[varname]
+
+			if(variable == src)
+				testing("Found [src.type] \ref[src] in [D.type]'s [varname] var. [Xname]")
+
+			else if(islist(variable))
+				DoSearchVar(variable, "[Xname] -> list", recursive_limit-1)
+
 	else if(islist(X))
-		if(src in X)
-			testing("Found [src.type] \ref[src] in list [Xname].")
-#ifdef GC_FAILURE_HARD_LOOKUP
+		var/normal = IS_NORMAL_LIST(X)
 		for(var/I in X)
-			DoSearchVar(I, Xname + ": list")
-#else
+			if (I == src)
+				testing("Found [src.type] \ref[src] in list [Xname].")
+
+			else if (I && !isnum(I) && normal && X[I] == src)
+				testing("Found [src.type] \ref[src] in list [Xname]\[[I]\]")
+
+			else if (islist(I))
+				DoSearchVar(I, "[Xname] -> list", recursive_limit-1)
+
+#ifndef FIND_REF_NO_CHECK_TICK
 	CHECK_TICK
 #endif
 

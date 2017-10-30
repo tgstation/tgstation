@@ -99,6 +99,10 @@
 
 	return E
 
+//Special admins setup
+/datum/round_event_control/proc/admin_setup()
+	return
+
 /datum/round_event	//NOTE: Times are measured in master controller ticks!
 	var/processing = TRUE
 	var/datum/round_event_control/control

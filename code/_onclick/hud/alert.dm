@@ -243,7 +243,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /obj/screen/alert/fire/Click()
 	var/mob/living/L = usr
-	if(!L.can_resist())
+	if(!istype(L) || !L.can_resist())
 		return
 	L.changeNext_move(CLICK_CD_RESIST)
 	if(L.canmove)
@@ -565,7 +565,7 @@ so as to remain in compliance with the most up-to-date laws."
 
 /obj/screen/alert/restrained/Click()
 	var/mob/living/L = usr
-	if(!L.can_resist())
+	if(!istype(L) || !L.can_resist())
 		return
 	L.changeNext_move(CLICK_CD_RESIST)
 	if((L.canmove) && (L.last_special <= world.time))
@@ -573,7 +573,7 @@ so as to remain in compliance with the most up-to-date laws."
 
 /obj/screen/alert/restrained/buckled/Click()
 	var/mob/living/L = usr
-	if(!L.can_resist())
+	if(!istype(L) || !L.can_resist())
 		return
 	L.changeNext_move(CLICK_CD_RESIST)
 	if(L.last_special <= world.time)

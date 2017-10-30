@@ -24,6 +24,10 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
 
 ## API
 
+### Defines
+
+1. `COMPONENT_INCOMPATIBLE` Return this from `/datum/component/Initialize` to have the component be deleted if it's applied to an incorrect type. `parent` must not be modified if this is to be returned.
+
 ### Vars
 
 1. `/datum/var/list/datum_components` (private)
@@ -60,6 +64,7 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
     * Sends the `COMSIG_COMPONENT_ADDED` signal to the datum
     * All components a datum owns are deleted with the datum
     * Returns the component that was created. Or the old component in a dupe situation where `COMPONENT_DUPE_UNIQUE` was set
+    * If this tries to add an component to an incompatible type, the component will be deleted and the result will be `null`. This is very unperformant, try not to do it
 1. `/datum/proc/LoadComponent(component_type(type), ...) -> datum/component` (public, final)
     * Equivalent to calling `GetComponent(component_type)` where, if the result would be `null`, returns `AddComponent(component_type, ...)` instead
 1. `/datum/proc/ComponentActivated(datum/component/C)` (abstract, async)
@@ -80,6 +85,7 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
     * Component does not exist in `parent`'s `datum_components` list yet, although `parent` is set and may be used
     * Signals will not be recieved while this function is running
     * Component may be deleted after this function completes without being attached
+    * Do not call `qdel(src)` from this function
 1. `/datum/component/Destroy()` (virtual, no-sleep)
     * Sends the `COMSIG_COMPONENT_REMOVING` signal to the parent datum if the `parent` isn't being qdeleted
     * Properly removes the component from `parent` and cleans up references

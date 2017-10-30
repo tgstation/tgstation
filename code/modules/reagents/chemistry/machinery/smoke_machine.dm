@@ -1,6 +1,6 @@
 /obj/machinery/smoke_machine
-	name = "Smoke Machine"
-	desc = "Seriously man?"
+	name = "smoke machine"
+	desc = "A machine with a centrifuge installed into it. It produces smoke with any reagents you put into the machine."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "smoke0"
 	density = TRUE
@@ -11,9 +11,9 @@
 	var/cooldown = 0
 	var/screen = "home"
 	var/useramount = 30 // Last used amount
-	var/volume = 1000
+	var/volume = 300
 	var/setting = 3
-	var/list/possible_settings = list(3,6,9,12,15)
+	var/list/possible_settings = list(3,6,9)
 
 /datum/effect_system/smoke_spread/chem/smoke_machine/set_up(datum/reagents/carry, setting = 3, efficiency = 10, loc)
 	amount = setting
@@ -117,7 +117,7 @@
 			on = !on
 			if(on)
 				message_admins("[key_name_admin(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [ADMIN_COORDJMP(src)].")
-				log_admin("[key_name(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [COORD(src)].")
+				log_game("[key_name(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [COORD(src)].")
 				add_logs(usr, src, "has activated [src] which contains [english_list(reagents.reagent_list)].")
 		if("goScreen")
 			screen = params["screen"]

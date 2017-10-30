@@ -44,6 +44,11 @@
 		if(spent)
 			to_chat(user, "<span class='cult'>This shard is spent; it is now just a creepy rock.</span>")
 
+/obj/item/device/soulstone/Destroy() //Stops the shade from being qdel'd immediately and their ghost being sent back to the arrival shuttle.
+	for(var/mob/living/simple_animal/shade/A in src)
+		A.death()
+	return ..()
+
 //////////////////////////////Capturing////////////////////////////////////////////////////////
 
 /obj/item/device/soulstone/attack(mob/living/carbon/human/M, mob/living/user)
@@ -227,6 +232,7 @@
 
 /obj/item/device/soulstone/proc/init_shade(mob/living/carbon/human/T, mob/U, vic = 0)
 	new /obj/effect/decal/remains/human(T.loc) //Spawns a skeleton
+	T.stop_sound_channel(CHANNEL_HEARTBEAT)
 	T.invisibility = INVISIBILITY_ABSTRACT
 	T.dust_animation()
 	var/mob/living/simple_animal/shade/S = new /mob/living/simple_animal/shade(src)

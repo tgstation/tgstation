@@ -7,13 +7,15 @@
 	update_body_parts() //to update the carbon's new bodyparts appearance
 
 /mob/living/carbon/Destroy()
+	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
+	. =  ..()
+
 	QDEL_LIST(internal_organs)
 	QDEL_LIST(stomach_contents)
 	QDEL_LIST(bodyparts)
 	QDEL_LIST(implants)
 	remove_from_all_data_huds()
 	QDEL_NULL(dna)
-	return ..()
 
 /mob/living/carbon/relaymove(mob/user, direction)
 	if(user in src.stomach_contents)

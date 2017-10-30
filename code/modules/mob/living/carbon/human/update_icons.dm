@@ -63,7 +63,7 @@ There are several things that need to be remembered:
 	..()
 
 /mob/living/carbon/human/update_fire()
-	..("Standing")
+	..((fire_stacks > 3) ? "Standing" : "Generic_mob_burning")
 
 
 /* --------------------------------------- */

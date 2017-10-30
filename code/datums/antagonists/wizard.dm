@@ -5,6 +5,7 @@
 
 /datum/antagonist/wizard
 	name = "Space Wizard"
+	job_rank = ROLE_WIZARD
 	var/give_objectives = TRUE
 	var/strip = TRUE //strip before equipping
 	var/allow_rename = TRUE
@@ -31,6 +32,16 @@
 
 /datum/antagonist/wizard/proc/unregister()
 	SSticker.mode.wizards -= src
+
+/datum/antagonist/wizard/create_team(datum/objective_team/wizard/new_team)
+	if(!new_team)
+		return
+	if(!istype(new_team))
+		stack_trace("Wrong team type passed to [type] initialization.")
+	wiz_team = new_team
+
+/datum/antagonist/wizard/get_team()
+	return wiz_team
 
 /datum/objective_team/wizard
 	name = "wizard team"
@@ -99,6 +110,8 @@
 
 /datum/antagonist/wizard/on_removal()
 	unregister()
+	for(var/objective in objectives)
+		owner.objectives -= objective
 	owner.RemoveAllSpells() // TODO keep track which spells are wizard spells which innate stuff
 	return ..()
 
@@ -144,8 +157,7 @@
 
 /datum/antagonist/wizard/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
-	if(wiz_team) //Don't bother with the icon if you're solo wizard
-		update_wiz_icons_added(M)
+	update_wiz_icons_added(M, wiz_team ? TRUE : FALSE) //Don't bother showing the icon if you're solo wizard
 	M.faction |= "wizard"
 
 /datum/antagonist/wizard/remove_innate_effects(mob/living/mob_override)
@@ -237,7 +249,7 @@
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/turf_teleport/blink(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(null))
 
-/datum/antagonist/wizard/proc/update_wiz_icons_added(mob/living/wiz)
+/datum/antagonist/wizard/proc/update_wiz_icons_added(mob/living/wiz,join = TRUE)
 	var/datum/atom_hud/antag/wizhud = GLOB.huds[ANTAG_HUD_WIZ]
 	wizhud.join_hud(wiz)
 	set_antag_hud(wiz, hud_version)

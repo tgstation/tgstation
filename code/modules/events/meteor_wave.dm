@@ -20,6 +20,8 @@
 		determine_wave_type()
 
 /datum/round_event/meteor_wave/proc/determine_wave_type()
+	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
+		wave_name = "halloween"
 	if(!wave_name)
 		wave_name = pickweight(list(
 			"normal" = 50,
@@ -36,6 +38,8 @@
 			wave_type = GLOB.meteorsB
 		if("space dust")
 			wave_type = GLOB.meteorsC
+		if("halloween")
+			wave_type = GLOB.meteorsSPOOKY
 		else
 			WARNING("Wave name of [wave_name] not recognised.")
 			kill()

@@ -196,7 +196,7 @@
 				M.pass_flags &= ~PASSMOB
 
 			now_pushing = 0
-			
+
 			if(!move_failed)
 				return 1
 
@@ -586,7 +586,7 @@
 	if(!force_moving)
 		..(pressure_difference, direction, pressure_resistance_prob_delta)
 
-/mob/living/proc/can_resist()
+/mob/living/can_resist()
 	return !((next_move > world.time) || incapacitated(ignore_restraints = TRUE))
 
 /mob/living/verb/resist()
@@ -768,16 +768,6 @@
 /mob/living/proc/get_standard_pixel_y_offset(lying = 0)
 	return initial(pixel_y)
 
-/mob/living/Stat()
-	..()
-
-	if(statpanel("Status"))
-		if(SSticker && SSticker.mode)
-			if(istype(SSticker.mode, /datum/game_mode/blob))
-				var/datum/game_mode/blob/B = SSticker.mode
-				if(B.message_sent)
-					stat(null, "Blobs to Blob Win: [GLOB.blobs_legit.len]/[B.blobwincount]")
-
 /mob/living/cancel_camera()
 	..()
 	cameraFollow = null
@@ -896,14 +886,17 @@
 		to_chat(G, "<span class='holoparasite'>Your summoner has changed form!</span>")
 
 /mob/living/rad_act(amount)
-	amount = max(amount-RAD_BACKGROUND_RADIATION, 0)
+	if(!amount || amount < RAD_MOB_SKIN_PROTECTION)
+		return
 
-	if(amount)
-		var/blocked = getarmor(null, "rad")
+	amount -= RAD_BACKGROUND_RADIATION // This will always be at least 1 because of how skin protection is calculated
 
-		apply_effect(amount * RAD_MOB_COEFFICIENT, IRRADIATE, blocked)
-		if(amount > RAD_AMOUNT_EXTREME)
-			apply_damage((amount-RAD_AMOUNT_EXTREME)/RAD_AMOUNT_EXTREME, BURN, null, blocked)
+	var/blocked = getarmor(null, "rad")
+
+	if(amount > RAD_BURN_THRESHOLD)
+		apply_damage((amount-RAD_BURN_THRESHOLD)/RAD_BURN_THRESHOLD, BURN, null, blocked)
+
+	apply_effect((amount*RAD_MOB_COEFFICIENT)/max(1, (radiation**2)*RAD_OVERDOSE_REDUCTION), IRRADIATE, blocked)
 
 /mob/living/proc/fakefireextinguish()
 	return

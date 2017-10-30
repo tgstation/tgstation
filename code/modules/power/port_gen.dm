@@ -15,6 +15,15 @@
 	var/power_output = 1
 	var/consumption = 0
 	var/base_icon = "portgen0"
+	var/datum/looping_sound/generator/soundloop
+
+/obj/machinery/power/port_gen/Initialize()
+	. = ..()
+	soundloop = new(list(src), active)
+
+/obj/machinery/power/port_gen/Destroy()
+	QDEL_NULL(soundloop)
+	return ..()
 
 /obj/machinery/power/port_gen/proc/HasFuel() //Placeholder for fuel check.
 	return 1
@@ -36,11 +45,13 @@
 		add_avail(power_gen * power_output)
 		UseFuel()
 		src.updateDialog()
+		soundloop.start()
 
 	else
 		active = 0
 		handleInactive()
 		update_icon()
+		soundloop.stop()
 
 /obj/machinery/power/port_gen/attack_hand(mob/user)
 	if(..())

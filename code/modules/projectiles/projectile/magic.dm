@@ -76,7 +76,7 @@
 		OpenDoor(target)
 	else
 		var/turf/T = get_turf(target)
-		if(isclosedturf(T) && !istype(T, /turf/closed/indestructible))
+		if(isclosedturf(T) && !isindestructiblewall(T))
 			CreateDoor(T)
 
 /obj/item/projectile/magic/door/proc/CreateDoor(turf/T)
@@ -132,16 +132,14 @@
 		if("monkey")
 			new_mob = new /mob/living/carbon/monkey(M.loc)
 		if("robot")
-			var/robot = pick("cyborg","syndiborg","drone")
+			var/robot = pick("random_cyborg","syndiborg","drone")
+			var/path
 			switch(robot)
-				if("cyborg")
-					new_mob = new /mob/living/silicon/robot(M.loc)
+				if("random_cyborg")
+					path = pick(typesof(/mob/living/silicon/robot/modules) - typesof(/mob/living/silicon/robot/modules/syndicate))
+					new_mob = new path(M.loc)
 				if("syndiborg")
-					var/path
-					if(prob(50))
-						path = /mob/living/silicon/robot/modules/syndicate
-					else
-						path = /mob/living/silicon/robot/modules/syndicate/medical
+					path = pick(typesof(/mob/living/silicon/robot/modules/syndicate))
 					new_mob = new path(M.loc)
 				if("drone")
 					new_mob = new /mob/living/simple_animal/drone/polymorphed(M.loc)
@@ -158,9 +156,15 @@
 			new_mob = new /mob/living/simple_animal/slime/random(M.loc)
 		if("xeno")
 			if(prob(50))
-				new_mob = new /mob/living/carbon/alien/humanoid/hunter(M.loc)
+				if(!M.ckey) //spawn an AI alien if it isn't a player controlled mob.
+					new_mob = new /mob/living/simple_animal/hostile/alien(M.loc)
+				else
+					new_mob = new /mob/living/carbon/alien/humanoid/hunter(M.loc)
 			else
-				new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
+				if(!M.ckey)
+					new_mob = new /mob/living/simple_animal/hostile/alien/sentinel(M.loc)
+				else
+					new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
 
 		if("animal")
 			var/path

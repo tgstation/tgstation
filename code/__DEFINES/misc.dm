@@ -199,6 +199,7 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 #define BLOODY_FOOTPRINT_BASE_ALPHA	150
 #define BLOOD_GAIN_PER_STEP			100
 #define BLOOD_LOSS_PER_STEP			5
+#define BLOOD_LOSS_IN_SPREAD		20
 #define BLOOD_FADEOUT_TIME			2
 
 //Bloody shoe blood states
@@ -463,3 +464,5 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 #define PR_ANNOUNCEMENTS_PER_ROUND 5 //The number of unique PR announcements allowed per round
 									//This makes sure that a single person can only spam 3 reopens and 3 closes before being ignored
+
+#define MAX_PROC_DEPTH 195 // 200 proc calls deep and shit breaks, this is a bit lower to give some safety room

@@ -470,7 +470,7 @@
 		// species datums
 		R.fields["mrace"] = dna.species
 	else
-		var/datum/species/rando_race = pick(CONFIG_GET(keyed_flag_list/roundstart_races))
+		var/datum/species/rando_race = pick(GLOB.roundstart_races)
 		R.fields["mrace"] = rando_race.type
 
 	R.fields["ckey"] = mob_occupant.ckey

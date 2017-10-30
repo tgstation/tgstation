@@ -167,8 +167,6 @@ function check_tag_and_replace($payload, $title_tag, $label, &$array_to_add_labe
 	$title = $payload['pull_request']['title'];
 	if(stripos($title, $title_tag) !== FALSE){
 		$array_to_add_label_to[] = $label;
-		$title = trim(str_ireplace($title_tag, '', $title));
-		apisend($payload['pull_request']['url'], 'PATCH', array('title' => $title));
 		return true;
 	}
 	return false;
@@ -241,7 +239,7 @@ function tag_pr($payload, $opened) {
 function remove_ready_for_review($payload, $labels = null){
 	if($labels == null)
 		$labels = get_labels($payload);
-	$index = array_search('Ready for Review', $labels);
+	$index = array_search('Review Again', $labels);
 	if($index !== FALSE)
 		unset($labels[$index]);
 	$url = $payload['pull_request']['issue_url'] . '/labels';
@@ -258,7 +256,7 @@ function get_reviews($payload){
 }
 
 function check_ready_for_review($payload, $labels = null){
-	$r4rlabel = 'Ready for Review';
+	$r4rlabel = 'Review Again';
 	$labels_which_should_not_be_ready = array('Do Not Merge', 'Work In Progress', 'Merge Conflict');
 	$has_label_already = false;
 	$should_not_have_label = false;

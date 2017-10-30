@@ -47,6 +47,10 @@
 	diag_hud_set_status()
 	diag_hud_set_health()
 
+/mob/living/silicon/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION, TRUE, TRUE)
+
 /mob/living/silicon/med_hud_set_health()
 	return //we use a different hud
 
