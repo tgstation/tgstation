@@ -91,6 +91,7 @@
 	icon_state = "cuff"
 	item_state = "coil"
 	item_color = "red"
+	color = "#ff0000"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	materials = list(MAT_METAL=150, MAT_GLASS=75)
@@ -109,6 +110,7 @@
 	update_icon()
 
 /obj/item/restraints/handcuffs/cable/update_icon()
+	color = null
 	add_atom_colour(item_color, FIXED_COLOUR_PRIORITY)
 
 /obj/item/restraints/handcuffs/cable/attack(mob/living/carbon/C, mob/living/carbon/human/user)
@@ -130,24 +132,31 @@
 
 /obj/item/restraints/handcuffs/cable/red
 	item_color = "red"
+	color = "#ff0000"
 
 /obj/item/restraints/handcuffs/cable/yellow
 	item_color = "yellow"
+	color = "#ffff00"
 
 /obj/item/restraints/handcuffs/cable/blue
 	item_color = "blue"
+	color = "#1919c8"
 
 /obj/item/restraints/handcuffs/cable/green
 	item_color = "green"
+	color = "#00aa00"
 
 /obj/item/restraints/handcuffs/cable/pink
 	item_color = "pink"
+	color = "#ff3ccd"
 
 /obj/item/restraints/handcuffs/cable/orange
 	item_color = "orange"
+	color = "#ff8000"
 
 /obj/item/restraints/handcuffs/cable/cyan
 	item_color = "cyan"
+	color = "#00ffff"
 
 /obj/item/restraints/handcuffs/cable/white
 	item_color = "white"

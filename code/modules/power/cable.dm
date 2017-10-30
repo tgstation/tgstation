@@ -48,24 +48,31 @@ By design, d1 is the smallest direction and d2 is the highest
 	var/obj/item/stack/cable_coil/stored
 
 	var/cable_color = "red"
+	color = "#ff0000"
 
 /obj/structure/cable/yellow
 	cable_color = "yellow"
+	color = "#ffff00"
 
 /obj/structure/cable/green
 	cable_color = "green"
+	color = "#00aa00"
 
 /obj/structure/cable/blue
 	cable_color = "blue"
+	color = "#1919c8"
 
 /obj/structure/cable/pink
 	cable_color = "pink"
+	color = "#ff3cc8"
 
 /obj/structure/cable/orange
 	cable_color = "orange"
+	color = "#ff8000"
 
 /obj/structure/cable/cyan
 	cable_color = "cyan"
+	color = "#00ffff"
 
 /obj/structure/cable/white
 	cable_color = "white"
@@ -123,6 +130,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		icon_state = "[d1]-[d2]-f"
 	else
 		icon_state = "[d1]-[d2]"
+	color = null
 	add_atom_colour(cable_color, FIXED_COLOUR_PRIORITY)
 
 /obj/structure/cable/proc/handlecable(obj/item/W, mob/user, params)
@@ -523,6 +531,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 /obj/item/stack/cable_coil/update_icon()
 	icon_state = "[initial(item_state)][amount < 3 ? amount : ""]"
 	name = "cable [amount < 3 ? "piece" : "coil"]"
+	color = null
 	add_atom_colour(item_color, FIXED_COLOUR_PRIORITY)
 
 /obj/item/stack/cable_coil/attack_hand(mob/user)
@@ -743,30 +752,38 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 
 /obj/item/stack/cable_coil/red
 	item_color = "red"
+	color = "#ff0000"
 
 /obj/item/stack/cable_coil/yellow
 	item_color = "yellow"
+	color = "#ffff00"
 
 /obj/item/stack/cable_coil/blue
 	item_color = "blue"
+	color = "#1919c8"
 
 /obj/item/stack/cable_coil/green
 	item_color = "green"
+	color = "#00aa00"
 
 /obj/item/stack/cable_coil/pink
 	item_color = "pink"
+	color = "#ff3ccd"
 
 /obj/item/stack/cable_coil/orange
 	item_color = "orange"
+	color = "#ff8000"
 
 /obj/item/stack/cable_coil/cyan
 	item_color = "cyan"
+	color = "#00ffff"
 
 /obj/item/stack/cable_coil/white
 	item_color = "white"
 
 /obj/item/stack/cable_coil/random
 	item_color = null
+	color = "#ffffff"
 
 /obj/item/stack/cable_coil/random/five
 	amount = 5
