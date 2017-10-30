@@ -2551,6 +2551,7 @@
 #include "hippiestation\code\modules\surgery\gender_reassignment.dm"
 #include "hippiestation\code\modules\surgery\organ_internal.dm"
 #include "hippiestation\code\modules\surgery\tools.dm"
+#include "hippiestation\code\modules\surgery\organs\autosurgeon.dm"
 #include "hippiestation\code\modules\surgery\organs\butts.dm"
 #include "hippiestation\code\modules\surgery\organs\ears.dm"
 #include "hippiestation\code\modules\surgery\organs\eyes.dm"
