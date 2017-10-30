@@ -8,6 +8,8 @@
 
 /world/IsBanned(key,address,computer_id,real_bans_only=FALSE)
 	if (!key || !address || !computer_id)
+		if(real_bans_only)
+			return FALSE
 		log_access("Failed Login (invalid data): [key] [address]-[computer_id]")
 		return list("reason"="invalid login data", "desc"="Error: Could not check ban status, Please try again. Error message: Your computer provided invalid or blank information to the server on connection (byond username, IP, and Computer ID.) Provided information for reference: Username:'[key]' IP:'[address]' Computer ID:'[computer_id]'. (If you continue to get this error, please restart byond or contact byond support.)")
 
