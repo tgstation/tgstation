@@ -57848,10 +57848,9 @@
 	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/components/binary/valve/open{
+/obj/machinery/atmospherics/components/binary/valve{
 	dir = 4;
-	name = "Output to Waste";
-	open = 0
+	name = "Output to Waste"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -57874,9 +57873,7 @@
 /area/engine/engineering)
 "QoD" = (
 /obj/structure/table,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
 "QoE" = (
@@ -57898,10 +57895,7 @@
 	pixel_x = -3;
 	pixel_y = 5
 	},
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
 "QoI" = (
@@ -57914,10 +57908,7 @@
 /area/engine/engineering)
 "QoK" = (
 /obj/item/crowbar/large,
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/item/device/flashlight,
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
