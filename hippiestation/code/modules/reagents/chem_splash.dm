@@ -1,10 +1,3 @@
-// Replaces chemgrenade stuff, allowing reagent explosions to be called from anywhere.
-// It should be called using a location, the range, and a list of reagents involved.
-
-// Threatscale is a multiplier for the 'threat' of the grenade. If you're increasing the affected range drastically, you might want to improve this.
-// Extra heat affects the temperature of the mixture, and may cause it to react in different ways.
-
-/*mirrored in hippie folder to fix snowflake splash code bullshit duplication fuck
 /proc/chem_splash(turf/epicenter, affected_range = 3, list/datum/reagents/reactants = list(), extra_heat = 0, threatscale = 1, adminlog = 1)
 	if(!isturf(epicenter) || !reactants.len || threatscale <= 0)
 		return
@@ -18,17 +11,18 @@
 	if(!has_reagents)
 		return
 
-	var/datum/reagents/splash_holder = new/datum/reagents(total_reagents*threatscale)
-	splash_holder.my_atom = epicenter // For some reason this is setting my_atom to null, and causing runtime errors.
+	var/atom/epicentre = new /obj/effect/particle_effect/steam
+	epicentre.create_reagents(total_reagents)
+
 	var/total_temp = 0
 
 	for(var/datum/reagents/R in reactants)
-		R.trans_to(splash_holder, R.total_volume, threatscale, 1, 1)
+		R.trans_to(epicentre.reagents, R.total_volume, threatscale, 1, 1)
 		total_temp += R.chem_temp
-	splash_holder.chem_temp = (total_temp/reactants.len) + extra_heat // Average temperature of reagents + extra heat.
-	splash_holder.handle_reactions() // React them now.
+	epicentre.reagents.chem_temp = (total_temp/reactants.len) + extra_heat // Average temperature of reagents + extra heat.
+	epicentre.reagents.handle_reactions() // React them now.
 
-	if(splash_holder.total_volume && affected_range >= 0)	//The possible reactions didnt use up all reagents, so we spread it around.
+	if(epicentre.reagents.total_volume && affected_range >= 0)	//The possible reactions didnt use up all reagents, so we spread it around.
 		var/datum/effect_system/steam_spread/steam = new /datum/effect_system/steam_spread()
 		steam.set_up(10, 0, epicenter)
 		steam.attach(epicenter)
@@ -70,9 +64,7 @@
 			var/atom/A = thing
 			var/distance = max(1,get_dist(A, epicenter))
 			var/fraction = 0.5/(2 ** distance) //50/25/12/6... for a 200u splash, 25/12/6/3... for a 100u, 12/6/3/1 for a 50u
-			splash_holder.reaction(A, TOUCH, fraction)
+			epicentre.reagents.reaction(A, TOUCH, fraction)
 
-	qdel(splash_holder)
-	return 1
-*/
-
+	qdel(epicentre)
+	return TRUE

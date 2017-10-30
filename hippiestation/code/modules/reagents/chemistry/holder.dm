@@ -186,6 +186,7 @@
 			if("TURF")
 				R.reaction_turf(A, R.volume * volume_modifier, show_message)
 				R.handle_state_change(A, R.volume, cached_my_atom)
+				to_chat(world, "[A]. [cached_my_atom], [R.volume]")
 			if("OBJ")
 				R.reaction_obj(A, R.volume * volume_modifier, show_message)
 				R.handle_state_change(get_turf(A), R.volume, cached_my_atom)
