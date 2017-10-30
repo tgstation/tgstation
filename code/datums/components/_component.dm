@@ -13,28 +13,37 @@
 		parent = null
 		qdel(src)
 		return
+	
+	_CheckDupesAndJoinParent(P)
 
+/datum/component/proc/_CheckDupesAndJoinParent()
+	var/datum/P = parent
 	var/dm = dupe_mode
+
+	var/datum/component/old
 	if(dm != COMPONENT_DUPE_ALLOWED)
 		var/dt = dupe_type
-		var/datum/component/old 
 		if(!dt)
 			old = P.GetExactComponent(type)
 		else
 			old = P.GetComponent(dt)
 		if(old)
+			//One or the other has to die
 			switch(dm)
 				if(COMPONENT_DUPE_UNIQUE)
 					old.InheritComponent(src, TRUE)
-					parent = null	//prevent COMPONENT_REMOVING signal
+					parent = null	//prevent COMPONENT_REMOVING signal, no _RemoveFromParent because we aren't in their list yet
 					qdel(src)
 					return
 				if(COMPONENT_DUPE_HIGHLANDER)
 					InheritComponent(old, FALSE)
+					old._RemoveFromParent()
 					qdel(old)
-	
-	//let the others know
-	P.SendSignal(COMSIG_COMPONENT_ADDED, src)
+
+	//provided we didn't eat someone
+	if(!old)
+		//let the others know
+		P.SendSignal(COMSIG_COMPONENT_ADDED, src)
 	
 	//lazy init the parent's dc list
 	var/list/dc = P.datum_components
@@ -74,29 +83,28 @@
 	enabled = FALSE
 	var/datum/P = parent
 	if(P)
-		_RemoveNoSignal()
+		_RemoveFromParent()
 		P.SendSignal(COMSIG_COMPONENT_REMOVING, src)
 	LAZYCLEARLIST(signal_procs)
 	return ..()
 
-/datum/component/proc/_RemoveNoSignal()
+/datum/component/proc/_RemoveFromParent()
 	var/datum/P = parent
-	if(P)
-		var/list/dc = P.datum_components
-		var/our_type = type
-		for(var/I in _GetInverseTypeList(our_type))
-			var/list/components_of_type = dc[I]
-			if(islist(components_of_type))	//
-				var/list/subtracted = components_of_type - src
-				if(subtracted.len == 1)	//only 1 guy left
-					dc[I] = subtracted[1]	//make him special
-				else
-					dc[I] = subtracted
-			else	//just us
-				dc -= I
-		if(!dc.len)
-			P.datum_components = null
-		parent = null
+	var/list/dc = P.datum_components
+	var/our_type = type
+	for(var/I in _GetInverseTypeList(our_type))
+		var/list/components_of_type = dc[I]
+		if(islist(components_of_type))	//
+			var/list/subtracted = components_of_type - src
+			if(subtracted.len == 1)	//only 1 guy left
+				dc[I] = subtracted[1]	//make him special
+			else
+				dc[I] = subtracted
+		else	//just us
+			dc -= I
+	if(!dc.len)
+		P.datum_components = null
+	parent = null
 
 /datum/component/proc/RegisterSignal(sig_type_or_types, proc_on_self, override = FALSE)
 	if(QDELETED(src))
@@ -201,7 +209,7 @@
 	var/nt = new_type
 	args[1] = src
 	var/datum/component/C = new nt(arglist(args))
-	return QDELING(C) ? GetComponent(new_type) : C
+	return QDELING(C) ? GetExactComponent(new_type) : C
 
 /datum/proc/LoadComponent(component_type, ...)
 	. = GetComponent(component_type)
@@ -213,13 +221,15 @@
 		return
 	var/datum/helicopter = C.parent
 	if(helicopter == src)
-		//wat
+		//if we're taking to the same thing no need for anything
 		return
-	C._RemoveNoSignal()
+	if(C.OnTransfer(src) == COMPONENT_INCOMPATIBLE)
+		qdel(C)
+		return
+	C._RemoveFromParent()
 	helicopter.SendSignal(COMSIG_COMPONENT_REMOVING, C)
-	C.OnTransfer(src)
 	C.parent = src
-	SendSignal(COMSIG_COMPONENT_ADDED, C)
+	C._CheckDupesAndJoinParent()
 
 /datum/proc/TransferComponents(datum/target)
 	var/list/dc = datum_components
