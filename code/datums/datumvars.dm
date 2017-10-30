@@ -464,7 +464,7 @@
 			item = "<a href='?_src_=vars;[HrefToken()];Vars=\ref[value]'>[VV_rhtml_encode(name)] = /list ([L.len])</a>"
 
 	else
-		item = "[VV_rhtml_encode(name)] = <span class='value'>[VV_rhtml_encode(value)]</span>"
+		item = "[VV_rhtml_encode(name)] = <span class='value'>[VV_rhtml_encode("[value]")]</span>"
 
 	return "[header][item]</li>"
 
