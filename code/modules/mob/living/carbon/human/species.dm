@@ -66,6 +66,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/breathid = "o2"
 
 	var/obj/item/organ/brain/mutant_brain = /obj/item/organ/brain
+	var/obj/item/organ/heart/mutant_heart = /obj/item/organ/heart
 	var/obj/item/organ/eyes/mutanteyes = /obj/item/organ/eyes
 	var/obj/item/organ/ears/mutantears = /obj/item/organ/ears
 	var/obj/item/mutanthands
@@ -162,7 +163,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		heart.Remove(C,1)
 		QDEL_NULL(heart)
 	if(should_have_heart && !heart)
-		heart = new()
+		heart = new mutant_heart()
 		heart.Insert(C)
 
 	if(lungs && (replace_current || !should_have_lungs))

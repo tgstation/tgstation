@@ -1,10 +1,11 @@
 /datum
-	var/gc_destroyed //Time when this object was destroyed.
-	var/list/active_timers  //for SStimer
-	var/list/datum_components //for /datum/components
-	var/ui_screen = "home"  //for tgui
-	var/var_edited = FALSE //Warrenty void if seal is broken
-	var/fingerprintslast
+    var/gc_destroyed //Time when this object was destroyed.
+    var/list/active_timers  //for SStimer
+    var/list/datum_components //for /datum/components
+    var/ui_screen = "home"  //for tgui
+    var/use_tag = FALSE
+    var/var_edited = FALSE //Warranty void if seal is broken
+    var/fingerprintslast
 
 #ifdef TESTING
 	var/running_find_references
@@ -29,11 +30,11 @@
 		if(islist(all_components))
 			for(var/I in all_components)
 				var/datum/component/C = I
-				C._RemoveNoSignal()
+				C._RemoveFromParent()
 				qdel(C)
 		else
 			var/datum/component/C = all_components
-			C._RemoveNoSignal()
+			C._RemoveFromParent()
 			qdel(C)
 		dc.Cut()
 	return QDEL_HINT_QUEUE
