@@ -549,7 +549,7 @@ function auto_update($payload){
 			$content_diff = "``" . "`DIFF\n" . $script_diff ."\n``" . "`";
 		}
 	}
-	create_comment($payload, "Edit detected. Self updating... Here are my changes:\n" . $content_diff . "\n<details><summary>Here is my new code:</summary>\n\n``" . "`HTML+PHP\n" . $content . "\n``" . '`\n</details>');
+	create_comment($payload, "Edit detected. Self updating... \n<details><summary>Here are my changes:</summary>\n\n" . $content_diff . "\n</details>\n<details><summary>Here is my new code:</summary>\n\n``" . "`HTML+PHP\n" . $content . "\n``" . '`\n</details>');
 
 	$code_file = fopen(basename($path_to_script), 'w');
 	fwrite($code_file, $content);
