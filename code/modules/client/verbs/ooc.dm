@@ -266,7 +266,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 		if(isobserver(C.mob) && see_ghost_names)
 			choices["[C.mob]([C])"] = C
 		else
-			choices["[C]"] = C
+			choices[C] = C
 	choices = sortList(choices)
 	var/selection = input("Please, select a player!", "Ignore", null, null) as null|anything in choices
 	if(!selection || !(selection in choices))
