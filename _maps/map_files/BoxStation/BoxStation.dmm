@@ -49818,6 +49818,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
 /turf/open/floor/engine,
 /area/engine/engineering)
 "csT" = (
@@ -52890,6 +52893,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cAu" = (
@@ -54708,6 +54714,9 @@
 /area/engine/engineering)
 "cGu" = (
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 6
+	},
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cGv" = (
@@ -54715,32 +54724,36 @@
 	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cGx" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	dir = 5
-	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/visible,
+/obj/machinery/meter,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cGC" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	dir = 4
+/obj/machinery/atmospherics/components/binary/valve/digital{
+	dir = 4;
+	icon_state = "dvalve_map";
+	name = "Output Release";
+	open = 1;
+	tag = "icon-dvalve_map (EAST)"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cGD" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/closed/wall/r_wall,
 /area/engine/engineering)
 "cGE" = (
 /obj/effect/spawner/structure/window/plasma/reinforced,
@@ -54751,8 +54764,8 @@
 /area/engine/engineering)
 "cGH" = (
 /obj/effect/spawner/structure/window/plasma/reinforced,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 10
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -54775,11 +54788,10 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cGL" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
-/turf/open/floor/plating,
+/turf/closed/wall/r_wall,
 /area/engine/engineering)
 "cGM" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
@@ -54892,26 +54904,24 @@
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/light,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cHo" = (
 /obj/structure/reflector/single/anchored{
 	dir = 9
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/black,
 /area/engine/engineering)
 "cHp" = (
 /obj/structure/reflector/single/anchored{
 	dir = 5
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/black,
 /area/engine/engineering)
 "cHr" = (
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/light,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cHs" = (
@@ -57805,6 +57815,112 @@
 /obj/structure/grille,
 /turf/open/space/basic,
 /area/space)
+"Qov" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/engine/engineering)
+"Qow" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/engine/engineering)
+"Qox" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/engine/engineering)
+"Qoy" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/engine/engineering)
+"Qoz" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/components/binary/valve/open{
+	dir = 4;
+	name = "Output to Waste";
+	open = 0
+	},
+/turf/open/floor/engine,
+/area/engine/engineering)
+"QoA" = (
+/obj/structure/table,
+/obj/item/stack/cable_coil{
+	pixel_x = 3;
+	pixel_y = -7
+	},
+/obj/item/stack/cable_coil,
+/turf/open/floor/plasteel/black,
+/area/engine/engineering)
+"QoB" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/black,
+/area/engine/engineering)
+"QoC" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/black,
+/area/engine/engineering)
+"QoD" = (
+/obj/structure/table,
+/obj/item/stack/sheet/metal{
+	amount = 50
+	},
+/turf/open/floor/plasteel/black,
+/area/engine/engineering)
+"QoE" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/black,
+/area/engine/engineering)
+"QoF" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/black,
+/area/engine/engineering)
+"QoG" = (
+/obj/structure/girder,
+/turf/open/floor/plasteel/black,
+/area/engine/engineering)
+"QoH" = (
+/obj/item/wrench,
+/obj/item/weldingtool,
+/obj/item/clothing/head/welding{
+	pixel_x = -3;
+	pixel_y = 5
+	},
+/obj/structure/rack{
+	dir = 8;
+	layer = 2.9
+	},
+/turf/open/floor/plasteel/black,
+/area/engine/engineering)
+"QoI" = (
+/obj/machinery/light,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"QoJ" = (
+/obj/machinery/light,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"QoK" = (
+/obj/item/crowbar/large,
+/obj/structure/rack{
+	dir = 8;
+	layer = 2.9
+	},
+/obj/item/device/flashlight,
+/turf/open/floor/plasteel/black,
+/area/engine/engineering)
 
 (1,1,1) = {"
 aaa
@@ -84224,8 +84340,8 @@ aaT
 ctv
 aaT
 aaa
-aaf
 aaa
+aaf
 aaa
 aaa
 aaa
@@ -84480,10 +84596,10 @@ aaf
 aaT
 aaT
 aaT
+Qoi
 aaf
 aaf
 aaf
-aaa
 aaa
 aaa
 aaa
@@ -84738,8 +84854,8 @@ aaf
 aaa
 aaa
 aaa
-aaf
 aaa
+aaf
 aaa
 aaa
 aaa
@@ -84988,16 +85104,16 @@ cFI
 cGd
 cGs
 cGr
+ccw
+ccw
+ccw
+ccw
+ccw
+ccw
 aaa
-aaf
-aaa
-aaf
-aaa
-aaa
-aaa
-aaf
-aaa
-aaa
+Qod
+aaT
+Qod
 aaa
 aaa
 aaa
@@ -85245,16 +85361,16 @@ cqb
 cAo
 cGt
 cgx
-ccw
-ccw
-ccw
-ccw
+QoA
+csd
+cHa
+csd
+QoH
 ccw
 aaa
-Qod
 aaT
-Qod
-aaa
+ctv
+aaT
 aaa
 aaa
 aaa
@@ -85502,16 +85618,16 @@ cFJ
 cSH
 cGu
 cGH
+QoB
+QoE
 cGR
-cHa
 csd
-ciZ
+csd
 ccw
 aaa
 aaT
 ctv
 aaT
-aaa
 aaa
 aaa
 aaa
@@ -85763,13 +85879,13 @@ cGS
 cHb
 cHg
 cHn
+QoI
 ccw
 aaf
 aaT
 ctv
 aaT
 aaf
-aaa
 aaa
 aaa
 aaa
@@ -86014,18 +86130,18 @@ cEz
 cMD
 cFL
 cGf
-cGu
+Qov
 cMm
 ciZ
 cHc
 cAu
 cAu
+ciZ
 ccw
 aaa
 aaT
 ctv
 aaT
-aaa
 aaa
 aaa
 aaa
@@ -86271,18 +86387,18 @@ cFe
 cMD
 cFM
 czE
-cGu
+Qow
 ccw
 cGT
 csd
 csd
-ciZ
+csd
+csd
 ccw
 aaf
 aaT
 ctv
 aaT
-aaa
 aaa
 aaa
 aaa
@@ -86534,6 +86650,7 @@ cGU
 csd
 csd
 cHo
+csd
 ccw
 aaa
 aaT
@@ -86542,7 +86659,6 @@ aaT
 aaa
 aaa
 aae
-aaa
 aaa
 aaa
 aaa
@@ -86785,18 +86901,18 @@ cMH
 cMN
 cFO
 cSI
-csC
+cSI
 cMm
 cGV
 csd
 cGV
-ccw
+QoG
+csd
 ccw
 aaa
 aaT
 ctv
 aaT
-aaa
 aaa
 aaa
 aaa
@@ -87048,12 +87164,12 @@ csd
 csd
 csd
 cHp
+csd
 ccw
 aaf
 aaT
 ctv
 aaT
-aaa
 aaa
 aaa
 aaa
@@ -87299,18 +87415,18 @@ cFh
 cMD
 cFM
 czE
-cGu
+Qox
 ccw
 cGT
 csd
 csd
-ciZ
+csd
+csd
 ccw
 aaf
 aaT
 ctv
 aaT
-aaa
 aaa
 aaa
 aaa
@@ -87556,18 +87672,18 @@ cEz
 cMD
 cFR
 cSJ
-cGu
+Qoy
 cMm
 ciZ
 cHd
 cHj
 cHd
+ciZ
 ccw
 aaa
 aaT
 ctv
 aaT
-aaa
 aaa
 aaa
 aaa
@@ -87813,19 +87929,19 @@ cFj
 cEf
 cFS
 cGg
-cGv
+Qoz
 cGI
 cGS
 cHe
 cHe
 cHr
+QoJ
 ccw
 aaf
 aaT
 ctv
 aaT
 aaf
-aaa
 aaa
 aaa
 aaa
@@ -88072,16 +88188,16 @@ cFT
 cSK
 cGx
 cGK
+QoC
+QoF
 cGY
-cEk
 csd
-cHs
+csd
 ccw
 aaf
 aaT
 ctv
 aaT
-aaa
 aaa
 aaa
 aaa
@@ -88329,16 +88445,16 @@ cqb
 cGh
 cGC
 cey
-ccw
-ccw
-cHl
-ccw
+QoD
+csd
+cEk
+csd
+QoK
 ccw
 aaf
 aaT
+ctv
 aaT
-aaT
-aaa
 aaa
 aaa
 aaa
@@ -88586,16 +88702,16 @@ cBR
 cGi
 cGD
 cGL
-aag
-aag
-aaf
-aaf
-aaf
-aaf
+ccw
+ccw
+ccw
+ccw
+ccw
+ccw
 aaa
-aaf
-aaa
-aaa
+aaT
+aaT
+aaT
 aaa
 aaa
 aaa
@@ -88850,8 +88966,8 @@ aaf
 aaa
 aaa
 aaa
-aaf
 aaa
+aaf
 aaa
 aaa
 aaa
@@ -89106,11 +89222,11 @@ aaf
 aaf
 aaf
 aaf
+Qoi
 aaf
 aaf
 aaf
 aaf
-aaa
 aaa
 aaa
 aaa
@@ -89364,8 +89480,8 @@ aaf
 ctv
 aaT
 aaa
-aaf
 aaa
+aaf
 aaa
 aaa
 aaa
@@ -89621,8 +89737,8 @@ aaf
 ctv
 aaT
 aaa
-aaf
 aaa
+aaf
 aaa
 aaa
 aaa
@@ -90136,8 +90252,8 @@ aaT
 aaT
 aaa
 aaa
-aae
 aaa
+aae
 aaa
 aaa
 aaa
