@@ -1,4 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - code_imp: "Cameras no longer keep hard references to mobs in their motion tracking list."

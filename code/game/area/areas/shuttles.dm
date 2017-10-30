@@ -72,6 +72,10 @@
 /area/shuttle/escape
 	name = "Emergency Shuttle"
 
+/area/shuttle/escape/luxury
+	name = "Luxurious Emergency Shuttle"
+	noteleport = TRUE
+
 /area/shuttle/transport
 	name = "Transport Shuttle"
 	blob_allowed = FALSE

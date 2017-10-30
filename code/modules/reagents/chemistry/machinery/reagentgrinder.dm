@@ -30,6 +30,7 @@
 			/obj/item/stack/sheet/mineral/silver = list("silver" = 20),
 			/obj/item/stack/sheet/mineral/gold = list("gold" = 20),
 			/obj/item/stack/sheet/bluespace_crystal = list("bluespace" = 20),
+			/obj/item/stack/cable_coil = list ("copper" = 5),
 			/obj/item/ore/bluespace_crystal = list("bluespace" = 20),
 			/obj/item/grown/nettle/basic = list("sacid" = 0),
 			/obj/item/grown/nettle/death = list("facid" = 0, "sacid" = 0),
@@ -45,17 +46,39 @@
 			/obj/item/reagent_containers/food/snacks/grown/cherries = list("cherryjelly" = 0),
 			/obj/item/reagent_containers/food/snacks/grown/bluecherries = list("bluecherryjelly" = 0),
 			/obj/item/reagent_containers/food/snacks/egg = list("eggyolk" = -5),
+			/obj/item/reagent_containers/food/snacks/deadmouse = list ("blood" = 20, "gibs" = 5), // You monster
 			//Grinder stuff, but only if dry
 			/obj/item/reagent_containers/food/snacks/grown/coffee/robusta = list("coffeepowder" = 0, "morphine" = 0),
 			/obj/item/reagent_containers/food/snacks/grown/coffee = list("coffeepowder" = 0),
 			/obj/item/reagent_containers/food/snacks/grown/tea/astra = list("teapowder" = 0, "salglu_solution" = 0),
 			/obj/item/reagent_containers/food/snacks/grown/tea = list("teapowder" = 0),
+			//Stuff that doesn't quite fit in the other categories
+			/obj/item/electronics = list ("iron" = 10, "silicon" = 10),
+			/obj/item/circuitboard = list ("silicon" = 20, "sacid" = 0.5), // Retrieving acid this way is extremely inefficient
+			/obj/item/match = list ("phosphorus" = 2),
+			/obj/item/device/toner = list ("iodine" = 40, "iron" = 10),
+			/obj/item/photo = list ("iodine" = 4),
+			/obj/item/pen = list ("iodine" = 2, "iron" = 1),
+			/obj/item/reagent_containers/food/drinks/soda_cans = list ("aluminium" = 10),
+			/obj/item/trash/can = list ("aluminium" = 10),
+			/obj/item/device/flashlight/flare = list ("sulfur" = 15),
+			/obj/item/device/flashlight/glowstick = list ("phenol" = 15, "hydrodgen" = 10, "oxygen" = 5),
+			/obj/item/stock_parts/cell = list ("lithium" = 15, "iron" = 5, "silicon" = 5),
+			/obj/item/soap = list ("lye" = 10),
+			/obj/item/device/analyzer = list ("mercury" = 5, "iron" = 5, "silicon" = 5),
+			/obj/item/lighter = list ("iron" = 1, "weldingfuel" = 5, "oil" = 5),
+			/obj/item/light = list ("silicon" = 5, "nitrogen" = 10), //Nitrogen is used as a cheaper alternative to argon in incandescent lighbulbs
+			/obj/item/cigbutt/ = list ("carbon" = 2),
+			/obj/item/trash/coal = list ("carbon" = 20),
+			/obj/item/stack/medical/bruise_pack = list ("styptic_powder" = 5),
+			/obj/item/stack/medical/ointment = list ("silver_sulfadiazine" = 5),
 			//All types that you can put into the grinder to transfer the reagents to the beaker. !Put all recipes above this.!
 			/obj/item/slime_extract = list(),
 			/obj/item/reagent_containers/pill = list(),
 			/obj/item/reagent_containers/food = list(),
 			/obj/item/reagent_containers/honeycomb = list(),
-			/obj/item/toy/crayon = list())
+			/obj/item/toy/crayon = list(),
+			/obj/item/clothing/mask/cigarette = list())
 
 	var/static/list/juice_items = list(
 			//Juicer Stuff
@@ -225,14 +248,14 @@
 	"}
 		if (is_beaker_ready)
 			if(!is_chamber_empty && !(stat & (NOPOWER|BROKEN)))
-				dat += "<A href='?src=\ref[src];action=grind'>Grind the reagents</a><BR>"
-				dat += "<A href='?src=\ref[src];action=juice'>Juice the reagents</a><BR><BR>"
+				dat += "<A href='?src=[REF(src)];action=grind'>Grind the reagents</a><BR>"
+				dat += "<A href='?src=[REF(src)];action=juice'>Juice the reagents</a><BR><BR>"
 			else if (beaker.reagents.total_volume)
-				dat += "<A href='?src=\ref[src];action=mix'>Mix the reagents</a><BR><BR>"
+				dat += "<A href='?src=[REF(src)];action=mix'>Mix the reagents</a><BR><BR>"
 		if(length(holdingitems))
-			dat += "<A href='?src=\ref[src];action=eject'>Eject the reagents</a><BR>"
+			dat += "<A href='?src=[REF(src)];action=eject'>Eject the reagents</a><BR>"
 		if(beaker)
-			dat += "<A href='?src=\ref[src];action=detach'>Detach the beaker</a><BR>"
+			dat += "<A href='?src=[REF(src)];action=detach'>Detach the beaker</a><BR>"
 	else
 		dat += "Please wait..."
 

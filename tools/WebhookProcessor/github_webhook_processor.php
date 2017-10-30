@@ -167,8 +167,6 @@ function check_tag_and_replace($payload, $title_tag, $label, &$array_to_add_labe
 	$title = $payload['pull_request']['title'];
 	if(stripos($title, $title_tag) !== FALSE){
 		$array_to_add_label_to[] = $label;
-		$title = trim(str_ireplace($title_tag, '', $title));
-		apisend($payload['pull_request']['url'], 'PATCH', array('title' => $title));
 		return true;
 	}
 	return false;
@@ -549,7 +547,7 @@ function has_tree_been_edited($payload, $tree){
 	}
 	//find things in the _maps/map_files tree
 	//e.g. diff --git a/_maps/map_files/Cerestation/cerestation.dmm b/_maps/map_files/Cerestation/cerestation.dmm
-	return $github_diff !== FALSE && strpos($github_diff, 'diff --git a/' . $tree) !== FALSE;
+	return $github_diff !== FALSE && preg_match('/^diff --git a\/' . preg_quote($tree, '/') . '/m') !== FALSE;
 }
 
 $no_changelog = false;

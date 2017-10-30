@@ -69,7 +69,7 @@
 	if(LAZYLEN(contents))
 		for(var/i in 1 to contents.len)
 			var/obj/item/I = contents[i]
-			dat += "<tr><A href='?src=\ref[src];retrieve=\ref[I]'>[I.name]</A><br>"
+			dat += "<tr><A href='?src=[REF(src)];retrieve=[REF(I)]'>[I.name]</A><br>"
 	dat += "</table></div>"
 
 	var/datum/browser/popup = new(user, "gunlocker", "<div align='center'>[name]</div>", 350, 300)

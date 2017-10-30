@@ -57445,7 +57445,6 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cqt" = (
@@ -81886,7 +81885,7 @@
 	},
 /area/science/mixing)
 "dqG" = (
-/obj/machinery/atmospherics/components/unary/vent_pump,
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/neutral,
 /area/science/mixing)
 "dqH" = (

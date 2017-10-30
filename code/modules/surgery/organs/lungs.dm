@@ -95,10 +95,10 @@
 
 	var/list/breath_gases = breath.gases
 
-	breath.assert_gases(/datum/gas/oxygen, /datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/bz, /datum/gas/nitrogen)
+	breath.assert_gases(/datum/gas/oxygen, /datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/bz, /datum/gas/nitrogen, /datum/gas/tritium, /datum/gas/brown_gas, /datum/gas/pluoxium, /datum/gas/stimulum)
 
 	//Partial pressures in our breath
-	var/O2_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/oxygen][MOLES])
+	var/O2_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/oxygen][MOLES])+(8*breath.get_breath_partial_pressure(breath_gases[/datum/gas/pluoxium][MOLES]))
 	var/N2_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitrogen][MOLES])
 	var/Toxins_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/plasma][MOLES])
 	var/CO2_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/carbon_dioxide][MOLES])
@@ -252,9 +252,40 @@
 				H.adjustBrainLoss(3)
 		else if(bz_pp > 0.01)
 			H.hallucination += 5//Removed at 2 per tick so this will slowly build up
+
+
+	// Tritium
+		var/trit_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/tritium][MOLES])
+		if (trit_pp > 50)
+			H.radiation += trit_pp/2 //If you're breathing in half an atmosphere of radioactive gas, you fucked up.
+		else
+			H.radiation += trit_pp/10
+
+	//Brown Gas
+		var/brown_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/brown_gas][MOLES])
+		if (prob(brown_pp))
+			to_chat(H, "<span class='alert'>Your mouth feels like it's burning!</span>")
+		if (brown_pp >40)
+			H.emote("gasp")
+			H.adjustFireLoss(10)
+			if (prob(brown_pp/2))
+				to_chat(H, "<span class='alert'>Your throat closes up!</span>")
+				H.silent = max(H.silent, 3)
+		else
+			H.adjustFireLoss(brown_pp/4)
+		gas_breathed = breath_gases[/datum/gas/brown_gas][MOLES]
+		if (gas_breathed > GAS_STIM_MINIMUM)
+			H.reagents.add_reagent("brown_gas",1)
+
+		breath_gases[/datum/gas/brown_gas][MOLES]-=gas_breathed
+		gas_breathed = 0
+	//Stimulum
+		gas_breathed = breath_gases[/datum/gas/stimulum][MOLES]
+		if (gas_breathed > GAS_STIM_MINIMUM)
+			H.reagents.add_reagent("stimulum",1)
+		breath_gases[/datum/gas/stimulum][MOLES]-=gas_breathed
 		handle_breath_temperature(breath, H)
 		breath.garbage_collect()
-
 	return TRUE
 
 

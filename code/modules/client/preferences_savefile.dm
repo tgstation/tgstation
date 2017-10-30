@@ -252,13 +252,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Species
 	var/species_id
 	S["species"]			>> species_id
-	if(species_id && (species_id in GLOB.roundstart_races) && CONFIG_GET(flag/join_with_mutant_race))
+	if(species_id)
 		var/newtype = GLOB.species_list[species_id]
 		pref_species = new newtype()
-	else if (GLOB.roundstart_races.len)
-		var/rando_race = pick(GLOB.roundstart_races)
-		if (rando_race)
-			pref_species = new rando_race()
 
 	if(!S["features["mcolor"]"] || S["features["mcolor"]"] == "#000")
 		WRITE_FILE(S["features["mcolor"]"]	, "#FFF")
@@ -295,6 +291,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else
 		S["feature_human_tail"]				>> features["tail_human"]
 		S["feature_human_ears"]				>> features["ears"]
+	S["human_name"]         >> custom_names["human"]
 	S["clown_name"]			>> custom_names["clown"]
 	S["mime_name"]			>> custom_names["mime"]
 	S["ai_name"]			>> custom_names["ai"]
@@ -410,6 +407,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["feature_lizard_spines"]			, features["spines"])
 	WRITE_FILE(S["feature_lizard_body_markings"]	, features["body_markings"])
 	WRITE_FILE(S["feature_lizard_legs"]			, features["legs"])
+	WRITE_FILE(S["human_name"]			, custom_names["human"])
 	WRITE_FILE(S["clown_name"]			, custom_names["clown"])
 	WRITE_FILE(S["mime_name"]			, custom_names["mime"])
 	WRITE_FILE(S["ai_name"]			, custom_names["ai"])

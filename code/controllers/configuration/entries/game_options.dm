@@ -110,8 +110,6 @@ CONFIG_DEF(number/shuttle_refuel_delay)
 
 CONFIG_DEF(flag/show_game_type_odds)	//if set this allows players to see the odds of each roundtype on the get revision screen
 
-CONFIG_DEF(flag/join_with_mutant_race)	//players can choose their mutant race before joining the game
-
 CONFIG_DEF(keyed_flag_list/roundstart_races)	//races you can play as from the get go.
 
 CONFIG_DEF(flag/join_with_mutant_humans)	//players can pick mutant bodyparts for humans before joining the game
