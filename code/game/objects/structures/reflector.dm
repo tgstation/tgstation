@@ -1,13 +1,16 @@
 /obj/structure/reflector
-	name = "reflector frame"
-	icon = 'icons/obj/stock_parts.dmi'
-	icon_state = "box_0"
-	desc = "An angled mirror for reflecting lasers."
+	name = "reflector base"
+	icon = 'icons/obj/structures.dmi'
+	icon_state = "reflector_base"
+	desc = "A base for reflector assemblies."
 	anchored = FALSE
-	density = TRUE
+	density = FALSE
 	layer = BELOW_OBJ_LAYER
+	var/deflector_icon_state = null
+	var/image/deflector_overlay = null
 	var/finished = FALSE
 	var/admin = FALSE //Can't be rotated or deconstructed
+	var/can_rotate = TRUE
 	var/framebuildstacktype = /obj/item/stack/sheet/metal
 	var/framebuildstackamount = 5
 	var/buildstacktype = /obj/item/stack/sheet/metal
@@ -18,18 +21,40 @@
 /obj/structure/reflector/Initialize()
 	. = ..()
 	allowed_projectile_typecache = typecacheof(allowed_projectile_typecache)
+	if(deflector_icon_state)
+		deflector_overlay = image(icon, deflector_icon_state)
+		add_overlay(deflector_overlay)
+
 	if(rotation_angle == -1)
 		setAngle(dir2angle(dir))
 	else
 		setAngle(rotation_angle)
 
+	if(admin)
+		can_rotate = FALSE
+
 /obj/structure/reflector/examine(mob/user)
 	..()
-	to_chat(user, "<span class='notice'>Alt-click to adjust its direction.</span>")
+	if(finished)
+		to_chat(user, "It is set to [rotation_angle] degrees, and the rotation is [can_rotate ? "unlocked" : "locked"].")
+		if(!admin)
+			if(can_rotate)
+				to_chat(user, "<span class='notice'>Alt-click to adjust its direction.</span>")
+			else
+				to_chat(user, "<span class='notice'>Use screwdriver to unlock the rotation.</span>")
 
-/obj/structure/reflector/Moved()
-	setAngle(dir_map_to_angle(dir))
-	return ..()
+/obj/structure/reflector/proc/setAngle(new_angle)
+	if(can_rotate)
+		rotation_angle = new_angle
+		if(deflector_overlay)
+			cut_overlay(deflector_overlay)
+			deflector_overlay.transform = turn(matrix(), new_angle)
+			add_overlay(deflector_overlay)
+
+
+/obj/structure/reflector/setDir(new_dir)
+	setAngle(dir_map_to_angle(new_dir))
+	return ..(NORTH)
 
 /obj/structure/reflector/proc/dir_map_to_angle(dir)
 	return 0
@@ -51,22 +76,45 @@
 /obj/structure/reflector/attackby(obj/item/W, mob/user, params)
 	if(admin)
 		return
+
+	if(istype(W, /obj/item/screwdriver))
+		can_rotate = !can_rotate
+		to_chat(user, "<span class='notice'>You [can_rotate ? "unlock" : "lock"] [src]'s rotation.</span>")
+		playsound(loc, W.usesound, 50, 1)
+		return
+
 	if(istype(W, /obj/item/wrench))
 		if(anchored)
-			to_chat(user, "Unweld [src] first!")
+			to_chat(user, "<span class='warning'>Unweld [src] from the floor first!</span>")
+			return
+		user.visible_message("[user] starts to dismantle [src].", "<span class='notice'>You start to dismantle [src]...</span>")
 		if(do_after(user, 80*W.toolspeed, target = src))
-			playsound(src.loc, W.usesound, 50, 1)
-			to_chat(user, "You dismantle [src].")
+			playsound(loc, W.usesound, 50, 1)
+			to_chat(user, "<span class='notice'>You dismantle [src].</span>")
 			new framebuildstacktype(loc, framebuildstackamount)
 			if(buildstackamount)
 				new buildstacktype(loc, buildstackamount)
 			qdel(src)
 	else if(istype(W, /obj/item/weldingtool))
 		var/obj/item/weldingtool/WT = W
-		if(!anchored)
+
+		if(obj_integrity < max_integrity)
+			if(WT.remove_fuel(0,user))
+				user.visible_message("[user] starts to repair [src].",
+									"<span class='notice'>You begin repairing [src]...</span>",
+									"<span class='italics'>You hear welding.</span>")
+				playsound(loc, W.usesound, 40, 1)
+				if(do_after(user,40*WT.toolspeed, target = src))
+					obj_integrity = max_integrity
+					user.visible_message("[user.name] has repaired [src].", \
+										"<span class='notice'>You finish repairing [src].</span>")
+
+		else if(!anchored)
 			if (WT.remove_fuel(0,user))
-				playsound(src, 'sound/items/welder2.ogg', 50, 1)
-				user.visible_message("[user] starts to weld [src] to the floor.", "<span class='notice'>You start to weld [src] to the floor...</span>", "<span class='italics'>You hear welding.</span>")
+				playsound(src, W.usesound, 50, 1)
+				user.visible_message("[user] starts to weld [src] to the floor.",
+									"<span class='notice'>You start to weld [src] to the floor...</span>",
+									"<span class='italics'>You hear welding.</span>")
 				if (do_after(user,20*W.toolspeed, target = src))
 					if(!WT.isOn())
 						return
@@ -74,7 +122,7 @@
 					to_chat(user, "<span class='notice'>You weld [src] to the floor.</span>")
 		else
 			if (WT.remove_fuel(0,user))
-				playsound(src, 'sound/items/welder2.ogg', 50, 1)
+				playsound(src, W.usesound, 50, 1)
 				user.visible_message("[user] starts to cut [src] free from the floor.", "<span class='notice'>You start to cut [src] free from the floor...</span>", "<span class='italics'>You hear welding.</span>")
 				if (do_after(user,20*W.toolspeed, target = src))
 					if(!WT.isOn())
@@ -86,50 +134,44 @@
 		if(finished)
 			return
 		var/obj/item/stack/sheet/S = W
-		if(istype(W, /obj/item/stack/sheet/glass))
+		if(istype(S, /obj/item/stack/sheet/glass))
 			if(S.use(5))
-				new /obj/structure/reflector/single (loc)
-				qdel (src)
+				new /obj/structure/reflector/single(loc)
+				qdel(src)
 			else
 				to_chat(user, "<span class='warning'>You need five sheets of glass to create a reflector!</span>")
 				return
-		if(istype(W, /obj/item/stack/sheet/rglass))
+		if(istype(S, /obj/item/stack/sheet/rglass))
 			if(S.use(10))
-				new /obj/structure/reflector/double (loc)
+				new /obj/structure/reflector/double(loc)
 				qdel(src)
 			else
 				to_chat(user, "<span class='warning'>You need ten sheets of reinforced glass to create a double reflector!</span>")
 				return
-		if(istype(W, /obj/item/stack/sheet/mineral/diamond))
+		if(istype(S, /obj/item/stack/sheet/mineral/diamond))
 			if(S.use(1))
-				new /obj/structure/reflector/box (loc)
+				new /obj/structure/reflector/box(loc)
 				qdel(src)
 	else
 		return ..()
 
 /obj/structure/reflector/proc/rotate(mob/user)
-	if (anchored)
-		to_chat(user, "<span class='warning'>It is fastened to the floor!</span>")
+	if (!can_rotate || admin)
+		to_chat(user, "<span class='warning'>The rotation is locked!</span>")
 		return FALSE
-	var/new_angle = input(user, "Input a new angle for primary reflection face.", "Reflector Angle") as null|num
+	var/new_angle = input(user, "Input a new angle for primary reflection face.", "Reflector Angle", rotation_angle) as null|num
 	if(!user.canUseTopic(src, be_close=TRUE))
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
-	setAngle(NORM_ROT(new_angle))
+	if(!isnull(new_angle))
+		setAngle(NORM_ROT(new_angle))
 	return TRUE
-
-/obj/structure/reflector/proc/setAngle(new_angle)
-	rotation_angle = new_angle
-	setDir(NORTH)
-	var/matrix/M = new
-	M.Turn(new_angle)
-	transform = M
 
 /obj/structure/reflector/AltClick(mob/user)
 	if(!user.canUseTopic(src, be_close=TRUE))
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
-	else
+	else if(finished)
 		rotate(user)
 
 
@@ -139,9 +181,9 @@
 
 /obj/structure/reflector/single
 	name = "reflector"
-	icon = 'icons/obj/structures.dmi'
-	icon_state = "reflector"
-	desc = "A double sided angled mirror for reflecting lasers. This one does so at a 90 degree angle."
+	deflector_icon_state = "reflector"
+	desc = "An angled mirror for reflecting laser beams."
+	density = TRUE
 	finished = TRUE
 	buildstacktype = /obj/item/stack/sheet/glass
 	buildstackamount = 5
@@ -170,9 +212,9 @@
 
 /obj/structure/reflector/double
 	name = "double sided reflector"
-	icon = 'icons/obj/structures.dmi'
-	icon_state = "reflector_double"
-	desc = "A double sided angled mirror for reflecting lasers. This one does so at a 90 degree angle."
+	deflector_icon_state = "reflector_double"
+	desc = "A double sided angled mirror for reflecting laser beams."
+	density = TRUE
 	finished = TRUE
 	buildstacktype = /obj/item/stack/sheet/rglass
 	buildstackamount = 10
@@ -202,9 +244,9 @@
 
 /obj/structure/reflector/box
 	name = "reflector box"
-	icon = 'icons/obj/structures.dmi'
-	icon_state = "reflector_box"
-	desc = "A box with an internal set of mirrors that reflects all laser fire in a single direction."
+	deflector_icon_state = "reflector_box"
+	desc = "A box with an internal set of mirrors that reflects all laser beams in a single direction."
+	density = TRUE
 	finished = TRUE
 	buildstacktype = /obj/item/stack/sheet/mineral/diamond
 	buildstackamount = 1
