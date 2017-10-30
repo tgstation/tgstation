@@ -22,10 +22,13 @@
 	var/closeSound = 'sound/effects/stonedoor_openclose.ogg'
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
-/obj/structure/mineral_door/New(location)
-	..()
+/obj/structure/mineral_door/Initialize()
+	. = ..()
 	initial_state = icon_state
-	air_update_turf(1)
+	air_update_turf(TRUE)
+
+/obj/structure/mineral_door/ComponentInitialize()
+	AddComponent(/datum/component/rad_insulation, RAD_MEDIUM_INSULATION)
 
 /obj/structure/mineral_door/Destroy()
 	density = FALSE
@@ -151,10 +154,16 @@
 	sheetType = /obj/item/stack/sheet/mineral/silver
 	max_integrity = 300
 
+/obj/structure/mineral_door/silver/ComponentInitialize()
+	AddComponent(/datum/component/rad_insulation, RAD_HEAVY_INSULATION)
+
 /obj/structure/mineral_door/gold
 	name = "gold door"
 	icon_state = "gold"
 	sheetType = /obj/item/stack/sheet/mineral/gold
+
+/obj/structure/mineral_door/gold/ComponentInitialize()
+	AddComponent(/datum/component/rad_insulation, RAD_HEAVY_INSULATION)
 
 /obj/structure/mineral_door/uranium
 	name = "uranium door"
@@ -162,6 +171,9 @@
 	sheetType = /obj/item/stack/sheet/mineral/uranium
 	max_integrity = 300
 	light_range = 2
+
+/obj/structure/mineral_door/uranium/ComponentInitialize()
+	return
 
 /obj/structure/mineral_door/sandstone
 	name = "sandstone door"
@@ -172,6 +184,9 @@
 /obj/structure/mineral_door/transparent
 	opacity = FALSE
 
+/obj/structure/mineral_door/transparent/ComponentInitialize()
+	AddComponent(/datum/component/rad_insulation, RAD_VERY_LIGHT_INSULATION)
+
 /obj/structure/mineral_door/transparent/Close()
 	..()
 	set_opacity(FALSE)
@@ -180,6 +195,9 @@
 	name = "plasma door"
 	icon_state = "plasma"
 	sheetType = /obj/item/stack/sheet/mineral/plasma
+
+/obj/structure/mineral_door/transparent/plasma/ComponentInitialize()
+	return
 
 /obj/structure/mineral_door/transparent/plasma/attackby(obj/item/W, mob/user, params)
 	if(W.is_hot())
@@ -204,6 +222,9 @@
 	sheetType = /obj/item/stack/sheet/mineral/diamond
 	max_integrity = 1000
 
+/obj/structure/mineral_door/transparent/diamond/ComponentInitialize()
+	AddComponent(/datum/component/rad_insulation, RAD_EXTREME_INSULATION)
+
 /obj/structure/mineral_door/wood
 	name = "wood door"
 	icon_state = "wood"
@@ -212,6 +233,9 @@
 	sheetType = /obj/item/stack/sheet/mineral/wood
 	resistance_flags = FLAMMABLE
 	max_integrity = 200
+
+/obj/structure/mineral_door/wood/ComponentInitialize()
+	AddComponent(/datum/component/rad_insulation, RAD_VERY_LIGHT_INSULATION)
 
 /obj/structure/mineral_door/paperframe
 	name = "paper frame door"
@@ -226,6 +250,9 @@
 /obj/structure/mineral_door/paperframe/Initialize()
 	. = ..()
 	queue_smooth_neighbors(src)
+
+/obj/structure/mineral_door/paperframe/ComponentInitialize()
+	return
 
 /obj/structure/mineral_door/paperframe/Destroy()
 	queue_smooth_neighbors(src)

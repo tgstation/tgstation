@@ -44,7 +44,7 @@ Bonus
 	if(!..())
 		return
 	var/mob/living/carbon/M = A.affected_mob
-	var/obj/item/organ/eyes/eyes = M.getorganslot("eye_sight")
+	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 	if(istype(eyes))
 		switch(A.stage)
 			if(1, 2)
@@ -106,7 +106,7 @@ Bonus
 	if(!..())
 		return
 	var/mob/living/M = A.affected_mob
-	var/obj/item/organ/eyes/eyes = M.getorganslot("eye_sight")
+	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 	if (!eyes)
 		return
 	switch(A.stage)

@@ -166,7 +166,7 @@ MASS SPECTROMETER
 	if(advanced)
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
-			var/obj/item/organ/ears/ears = C.getorganslot("ears")
+			var/obj/item/organ/ears/ears = C.getorganslot(ORGAN_SLOT_EARS)
 			to_chat(user, "\t<span class='info'><b>==EAR STATUS==</b></span>")
 			if(istype(ears))
 				var/healthy = TRUE
@@ -184,7 +184,7 @@ MASS SPECTROMETER
 					to_chat(user, "\t<span class='info'>Healthy.</span>")
 			else
 				to_chat(user, "\t<span class='alert'>Subject does not have ears.</span>")
-			var/obj/item/organ/eyes/eyes = C.getorganslot("eye_sight")
+			var/obj/item/organ/eyes/eyes = C.getorganslot(ORGAN_SLOT_EYES)
 			to_chat(user, "\t<span class='info'><b>==EYE STATUS==</b></span>")
 			if(istype(eyes))
 				var/healthy = TRUE

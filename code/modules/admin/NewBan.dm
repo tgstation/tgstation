@@ -25,7 +25,7 @@ GLOBAL_PROTECT(Banlist)
 				.["desc"] = "\nReason: [GLOB.Banlist["reason"]]\nExpires: [GetExp(GLOB.Banlist["minutes"])]\nBy: [GLOB.Banlist["bannedby"]][appeal]"
 		else
 			GLOB.Banlist.cd	= "/base/[ckey][id]"
-			.["desc"]	= "\nReason: [GLOB.Banlist["reason"]]\nExpires: <B>PERMENANT</B>\nBy: [GLOB.Banlist["bannedby"]][appeal]"
+			.["desc"]	= "\nReason: [GLOB.Banlist["reason"]]\nExpires: <B>PERMANENT</B>\nBy: [GLOB.Banlist["bannedby"]][appeal]"
 		.["reason"]	= "ckey/id"
 		return .
 	else
@@ -180,7 +180,7 @@ GLOBAL_PROTECT(Banlist)
 	for (var/A in GLOB.Banlist.dir)
 		count++
 		GLOB.Banlist.cd = "/base/[A]"
-		var/ref		= "\ref[src]"
+		var/ref		= "[REF(src)]"
 		var/key		= GLOB.Banlist["key"]
 		var/id		= GLOB.Banlist["id"]
 		var/ip		= GLOB.Banlist["ip"]

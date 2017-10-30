@@ -166,7 +166,7 @@
 	else
 		t += "<span class='bad'>Unable to locate all parts!</span>"
 	if(include_link)
-		t += "<BR><A href='?src=\ref[src];close=1'>Close</A>"
+		t += "<BR><A href='?src=[REF(src)];close=1'>Close</A>"
 
 	return t
 

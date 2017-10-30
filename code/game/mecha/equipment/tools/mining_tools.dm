@@ -81,6 +81,7 @@
 						"<span class='userdanger'>[chassis] drills [target] with [src].</span>")
 	add_logs(user, target, "attacked", "[name]", "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 	if(target.stat == DEAD)
+		add_logs(user, target, "gibbed", name)
 		if(target.butcher_results)
 			target.harvest(chassis)//Butcher the mob with our drill.
 		else

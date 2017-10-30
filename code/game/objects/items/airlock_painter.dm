@@ -43,7 +43,7 @@
 		return 1
 
 /obj/item/airlock_painter/suicide_act(mob/user)
-	var/obj/item/organ/lungs/L = user.getorganslot("lungs")
+	var/obj/item/organ/lungs/L = user.getorganslot(ORGAN_SLOT_LUNGS)
 
 	if(can_use(user) && L)
 		user.visible_message("<span class='suicide'>[user] is inhaling toner from [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")

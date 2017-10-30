@@ -352,6 +352,7 @@
 	max_integrity = 150
 	buildstacktype = /obj/item/stack/tile/brass
 	buildstackamount = 1
+	item_chair = null
 
 /obj/structure/chair/brass/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)

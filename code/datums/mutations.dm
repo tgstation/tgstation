@@ -642,9 +642,9 @@ GLOBAL_LIST_EMPTY(mutations_list)
 /datum/mutation/human/laser_eyes/get_visual_indicator(mob/living/carbon/human/owner)
 	return visual_indicators[1]
 
-/datum/mutation/human/laser_eyes/on_ranged_attack(mob/living/carbon/human/owner, atom/target)
+/datum/mutation/human/laser_eyes/on_ranged_attack(mob/living/carbon/human/owner, atom/target, mouseparams)
 	if(owner.a_intent == INTENT_HARM)
-		owner.LaserEyes(target)
+		owner.LaserEyes(target, mouseparams)
 
 
 /mob/living/carbon/proc/update_mutations_overlay()

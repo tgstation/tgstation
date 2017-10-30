@@ -590,6 +590,9 @@
 	item_state = "c_tube"
 	brightness = 8
 
+/obj/item/light/tube/broken
+	status = LIGHT_BROKEN
+
 /obj/item/light/bulb
 	name = "light bulb"
 	desc = "A replacement light bulb."
@@ -599,6 +602,9 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	brightness = 4
+
+/obj/item/light/bulb/broken
+	status = LIGHT_BROKEN
 
 /obj/item/light/throw_impact(atom/hit_atom)
 	if(!..()) //not caught by a mob

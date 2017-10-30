@@ -309,7 +309,7 @@
 /obj/item/storage/backpack/satchel/flat/secret/Initialize()
 	. = ..()
 
-	if(isfloorturf(loc) && !istype(loc, /turf/open/floor/plating/))
+	if(isfloorturf(loc) && !isplatingturf(loc))
 		hide(1)
 
 /obj/item/storage/backpack/satchel/flat/secret/hide(intact)
@@ -542,7 +542,7 @@
 
 /obj/item/storage/backpack/duffelbag/syndie/firestarter/PopulateContents()
 	new /obj/item/clothing/under/syndicate/soviet(src)
-	new /obj/item/watertank/operator(src)
+	new /obj/item/watertank/op(src)
 	new /obj/item/clothing/suit/space/hardsuit/syndi/elite(src)
 	new /obj/item/gun/ballistic/automatic/pistol/APS(src)
 	new /obj/item/ammo_box/magazine/pistolm9mm(src)

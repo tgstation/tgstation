@@ -13,7 +13,7 @@
 	shuttlePortId = "whiteship_custom"
 	shuttlePortName = "Custom Location"
 	jumpto_ports = list("whiteship_away" = 1, "whiteship_home" = 1, "whiteship_z4" = 1)
-	view_range = 20
+	view_range = 18
 	x_offset = -6
 	y_offset = -10
 

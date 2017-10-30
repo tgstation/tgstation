@@ -129,3 +129,8 @@
 		return "[A.loc] [COORD(T)] ([A.loc.type])"
 	else if(A.loc)
 		return "[A.loc] (0, 0, 0) ([A.loc.type])"
+
+
+/proc/log_manifest(key,datum/mind/mind,mob/body,latejoin = FALSE)
+	if (CONFIG_GET(flag/log_manifest))
+		WRITE_FILE(GLOB.manifest_log, "[key] \\ [body.real_name] \\ [mind.assigned_role] \\ [mind.special_role ? mind.special_role : "NONE"] \\ [latejoin ? "LATEJOIN":"ROUNDSTART"]")

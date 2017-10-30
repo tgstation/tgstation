@@ -1,4 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - bugfix: "Mobs that didn't move during shuttle launch would not have their parallax updated. This is fixed now."

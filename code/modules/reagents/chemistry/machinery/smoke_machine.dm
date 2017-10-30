@@ -1,5 +1,6 @@
 /obj/machinery/smoke_machine
 	name = "Smoke Machine"
+	desc = "Seriously man?"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "smoke0"
 	density = TRUE
@@ -19,6 +20,14 @@
 	carry.copy_to(chemholder, 20)
 	carry.remove_any(setting * 16 / efficiency)
 	location = loc
+
+/datum/effect_system/smoke_spread/chem/smoke_machine
+	effect_type = /obj/effect/particle_effect/smoke/chem/smoke_machine
+
+/obj/effect/particle_effect/smoke/chem/smoke_machine
+	opaque = FALSE
+	alpha = 100
+
 
 /obj/machinery/smoke_machine/Initialize()
 	. = ..()
@@ -57,14 +66,15 @@
 
 /obj/machinery/smoke_machine/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
-	if(istype(I, /obj/item/reagent_containers))
+	if(istype(I, /obj/item/reagent_containers) && I.is_open_container())
 		var/obj/item/reagent_containers/RC = I
 		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this)
 		if(units)
 			to_chat(user, "<span class='notice'>You transfer [units] units of the solution to [src].</span>")
 			add_logs(usr, src, "has added [english_list(RC.reagents.reagent_list)] to [src]")
 			return
-	if(default_unfasten_wrench(user, I))
+	if(default_unfasten_wrench(user, I, 40))
+		on = FALSE
 		return
 	return ..()
 
@@ -107,7 +117,7 @@
 			on = !on
 			if(on)
 				message_admins("[key_name_admin(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [ADMIN_COORDJMP(src)].")
-				log_admin("[key_name(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [COORD(src)].")
+				log_game("[key_name(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [COORD(src)].")
 				add_logs(usr, src, "has activated [src] which contains [english_list(reagents.reagent_list)].")
 		if("goScreen")
 			screen = params["screen"]

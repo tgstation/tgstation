@@ -376,7 +376,9 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "bu" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship,
+/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
+	view_range = 18
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 

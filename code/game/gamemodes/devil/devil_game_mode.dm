@@ -52,7 +52,6 @@
 /datum/game_mode/devil/post_setup()
 	for(var/datum/mind/devil in devils)
 		post_setup_finalize(devil)
-	modePlayer += devils
 	..()
 	return 1
 

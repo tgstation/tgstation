@@ -398,15 +398,15 @@
 
 	switch(selected_scripture) //display info based on selected scripture tier
 		if(SCRIPTURE_DRIVER)
-			data["tier_info"] = "<font color=#B18B25><b>These scriptures are permenantly unlocked.</b></font>"
+			data["tier_info"] = "<font color=#B18B25><b>These scriptures are permanently unlocked.</b></font>"
 		if(SCRIPTURE_SCRIPT)
 			if(SSticker.scripture_states[SCRIPTURE_SCRIPT])
-				data["tier_info"] = "<font color=#B18B25><b>These scriptures are permenantly unlocked.</b></font>"
+				data["tier_info"] = "<font color=#B18B25><b>These scriptures are permanently unlocked.</b></font>"
 			else
 				data["tier_info"] = "<font color=#B18B25><i>These scriptures will automatically unlock when the Ark is halfway ready or if [DisplayPower(SCRIPT_UNLOCK_THRESHOLD)] of power is reached.</i></font>"
 		if(SCRIPTURE_APPLICATION)
 			if(SSticker.scripture_states[SCRIPTURE_APPLICATION])
-				data["tier_info"] = "<font color=#B18B25><b>These scriptures are permenantly unlocked.</b></font>"
+				data["tier_info"] = "<font color=#B18B25><b>These scriptures are permanently unlocked.</b></font>"
 			else
 				data["tier_info"] = "<font color=#B18B25><i>Unlock these optional scriptures by converting another servant or if [DisplayPower(APPLICATION_UNLOCK_THRESHOLD)] of power is reached..</i></font>"
 

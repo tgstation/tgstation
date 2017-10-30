@@ -71,7 +71,7 @@
 			triggered = TRUE
 
 	if(triggered)
-		usr.visible_message("<span class='warning'>The [src] overloads and activates!</span>")
+		usr.visible_message("<span class='warning'>[src] overloads and activates!</span>")
 		SSblackbox.add_details("jaunter","EMP") // EMP accidental activation
 		activate(usr)
 
@@ -81,7 +81,7 @@
 		SSblackbox.add_details("jaunter","Chasm") // chasm automatic activation
 		activate(user, FALSE)
 	else
-		to_chat(user, "The [src] is not attached to your belt, preventing it from saving you from the chasm. RIP.</span>")
+		to_chat(user, "[src] is not attached to your belt, preventing it from saving you from the chasm. RIP.</span>")
 
 //jaunter tunnel
 /obj/effect/portal/wormhole/jaunt_tunnel

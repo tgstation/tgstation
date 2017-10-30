@@ -300,7 +300,7 @@
 
 /obj/item/device/multitool/field_debug/attack_self(mob/user)
 	operating = !operating
-	to_chat(user, "You turn the [src] [operating? "on":"off"].")
+	to_chat(user, "You turn [src] [operating? "on":"off"].")
 	if(!istype(current) && operating)
 		setup_debug_field()
 	else if(!operating)

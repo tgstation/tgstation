@@ -5,6 +5,9 @@
 	if(digitalinvis)
 		handle_diginvis() //AI becomes unable to see mob
 
+	if((movement_type & FLYING) && !floating)	//TODO: Better floating
+		float(on = TRUE)
+
 	if (notransform)
 		return
 	if(!loc)

@@ -31,6 +31,8 @@
 
 #define islava(A) (istype(A, /turf/open/lava))
 
+#define ischasm(A) (istype(A, /turf/open/chasm))
+
 #define isplatingturf(A) (istype(A, /turf/open/floor/plating))
 
 //Mobs

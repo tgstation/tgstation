@@ -56,6 +56,9 @@
 
 	if (opacity)
 		has_opaque_atom = TRUE
+
+	ComponentInitialize()
+
 	return INITIALIZE_HINT_NORMAL
 
 /turf/proc/Initalize_Atmos(times_fired)
@@ -277,12 +280,12 @@
 
 //////Assimilate Air//////
 /turf/open/proc/Assimilate_Air()
-	if(blocks_air)
+	var/turf_count = LAZYLEN(atmos_adjacent_turfs)
+	if(blocks_air || !turf_count) //if there weren't any open turfs, no need to update.
 		return
 
 	var/datum/gas_mixture/total = new//Holders to assimilate air from nearby turfs
 	var/list/total_gases = total.gases
-	var/turf_count = LAZYLEN(atmos_adjacent_turfs)
 
 	for(var/T in atmos_adjacent_turfs)
 		var/turf/open/S = T
@@ -295,9 +298,6 @@
 		total.temperature += S.air.temperature
 
 	air.copy_from(total)
-
-	if(!turf_count) //if there weren't any open turfs, no need to update.
-		return
 
 	var/list/air_gases = air.gases
 	for(var/id in air_gases)

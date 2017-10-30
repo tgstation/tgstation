@@ -145,7 +145,6 @@
 				// redirect the projectile
 				P.original = locate(new_x, new_y, P.z)
 				P.starting = curloc
-				P.current = curloc
 				P.firer = src
 				P.yo = new_y - curloc.y
 				P.xo = new_x - curloc.x

@@ -194,6 +194,7 @@
 					break
 				if(O.name == params["name"])
 					O.forceMove(drop_location())
+					adjust_item_drop_location(O)
 					desired--
 			return TRUE
 	return FALSE

@@ -167,11 +167,11 @@
 			return
 
 		playsound(loc, WT.usesound, 50, 1)
-		to_chat(user, "<span class='notice'>You start to cut the [src] apart...</span>")
+		to_chat(user, "<span class='notice'>You start to cut [src] apart...</span>")
 		if(do_after(user, 20*I.toolspeed, target = src))
 			if(!WT.isOn() || !WT.remove_fuel(5, user))
 				return
-			to_chat(user, "<span class='notice'>You cut the [src] apart.</span>")
+			to_chat(user, "<span class='notice'>You cut [src] apart.</span>")
 			new /obj/item/stack/sheet/plasteel( loc, 5)
 			qdel(src)
 	else
@@ -307,7 +307,7 @@
 
 /obj/item/bombcore/training
 	name = "dummy payload"
-	desc = "A nanotrasen replica of a syndicate payload. Its not intended to explode but to announce that it WOULD have exploded, then rewire itself to allow for more training."
+	desc = "A Nanotrasen replica of a syndicate payload. Its not intended to explode but to announce that it WOULD have exploded, then rewire itself to allow for more training."
 	origin_tech = null
 	var/defusals = 0
 	var/attempts = 0
@@ -378,9 +378,6 @@
 	range_medium = 10
 	range_light = 20
 	range_flame = 20
-
-/obj/item/bombcore/large/underwall
-	layer = ABOVE_OPEN_TURF_LAYER
 
 /obj/item/bombcore/miniature
 	name = "small bomb core"
@@ -467,7 +464,7 @@
 			beakers += I
 			to_chat(user, "<span class='notice'>You load [src] with [I].</span>")
 		else
-			to_chat(user, "<span class='warning'>The [I] wont fit! The [src] can only hold up to [max_beakers] containers.</span>")
+			to_chat(user, "<span class='warning'>[I] won't fit! \The [src] can only hold up to [max_beakers] containers.</span>")
 			return
 	..()
 

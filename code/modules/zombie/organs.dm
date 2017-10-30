@@ -2,7 +2,7 @@
 	name = "festering ooze"
 	desc = "A black web of pus and viscera."
 	zone = "head"
-	slot = "zombie_infection"
+	slot = ORGAN_SLOT_ZOMBIE
 	icon_state = "blacktumor"
 	origin_tech = "biotech=5"
 	var/datum/species/old_species = /datum/species/human
@@ -37,7 +37,7 @@
 
 /obj/item/organ/zombie_infection/on_find(mob/living/finder)
 	to_chat(finder, "<span class='warning'>Inside the head is a disgusting black \
-		web of pus and vicera, bound tightly around the brain like some \
+		web of pus and viscera, bound tightly around the brain like some \
 		biological harness.</span>")
 
 /obj/item/organ/zombie_infection/process()

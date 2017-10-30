@@ -163,7 +163,7 @@
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
 
 	if(clonemind.changeling)
-		var/obj/item/organ/brain/B = H.getorganslot("brain")
+		var/obj/item/organ/brain/B = H.getorganslot(ORGAN_SLOT_BRAIN)
 		B.vital = FALSE
 		B.decoy_override = TRUE
 
@@ -304,7 +304,7 @@
 			comp.AttachCloner(src)
 		else
 			P.buffer = src
-			to_chat(user, "<font color = #666633>-% Successfully stored \ref[P.buffer] [P.buffer.name] in buffer %-</font color>")
+			to_chat(user, "<font color = #666633>-% Successfully stored [REF(P.buffer)] [P.buffer.name] in buffer %-</font color>")
 		return
 
 	var/mob/living/mob_occupant = occupant
