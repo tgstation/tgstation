@@ -460,8 +460,8 @@
 	. = new_slime
 	qdel(src)
 
-/mob/proc/become_overmind(starting_points = 60)
-	var/mob/camera/blob/B = new /mob/camera/blob(loc, starting_points)
+/mob/proc/become_overmind(var/turf/T = loc, starting_points = 60)
+	var/mob/camera/blob/B = new /mob/camera/blob(T, starting_points)
 	B.key = key
 	. = B
 	qdel(src)
