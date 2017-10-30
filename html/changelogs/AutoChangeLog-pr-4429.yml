@@ -1,0 +1,4 @@
+author: "HonkBot"
+delete-after: True
+changes: 
+  - tweak: "Rollerbeds are now normal-sized"
