@@ -1,0 +1,6 @@
+author: "MrStonedOne"
+delete-after: True
+changes: 
+  - tweak: "Meteor events will not happen before 25 minutes, the worst versions before 35 and 45 minutes."
+  - tweak: "Meteor events are now player gated to 15, 20, and 25 players respectively"
+  - balance: "The more destructive versions of meteor events now have a slightly higher chance of triggering, to offset the decrease in how often it is that they will even qualify."
