@@ -509,6 +509,9 @@ Class Procs:
 
 /obj/machinery/proc/adjust_item_drop_location(atom/movable/AM)	// Adjust item drop location to a 3x3 grid inside the tile, returns slot id from 0 to 8
 	var/md5 = md5(AM.name)										// Oh, and it's deterministic too. A specific item will always drop from the same slot.
+#if DM_VERSION > 511
+#warn Refactor the loop in /obj/machinery/proc/adjust_item_drop_location() to make use of 512's list-like access to characters in a string
+#endif
 	for (var/i in 1 to 32)
 		. += hex2num(copytext(md5,i,i+1))
 	. = . % 9

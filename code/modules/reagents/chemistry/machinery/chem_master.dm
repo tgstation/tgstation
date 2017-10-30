@@ -344,6 +344,9 @@
 		return null
 	else
 		var/md5 = md5(AM.name)
+#if DM_VERSION > 511
+#warn Refactor the loop in /obj/machinery/chem_master/adjust_item_drop_location() to make use of 512's list-like access to characters in a string
+#endif
 		for (var/i in 1 to 32)
 			. += hex2num(copytext(md5,i,i+1))
 		. = . % 9
