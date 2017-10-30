@@ -85,7 +85,7 @@
 	gas_type = /datum/gas/bz
 
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide
-	name = "n2o canister"
+	name = "nitrous canister"
 	desc = "Nitrous oxide gas. Known to cause drowsiness."
 	icon_state = "redws"
 	gas_type = /datum/gas/nitrous_oxide
@@ -105,15 +105,15 @@
 	desc = "Hyper-Noblium. More noble than all other gases."
 	gas_type = /datum/gas/hypernoblium
 
-/obj/machinery/portable_atmospherics/canister/browns
-	name = "brown gas canister"
-	desc = "Browns gas. Feels great 'til the acid eats your lungs."
-	gas_type = /datum/gas/brown_gas
+/obj/machinery/portable_atmospherics/canister/nitrogen_dioxide
+	name = "nitro dioxide canister"
+	desc = "Nitrogen dioxide. Feels great 'til the acid eats your lungs."
+	gas_type = /datum/gas/nitrogen_dioxide
 
-/obj/machinery/portable_atmospherics/canister/stimulum
-	name = "stimulum canister"
-	desc = "Stimulum. High energy gas, high energy people."
-	gas_type = /datum/gas/stimulum
+/obj/machinery/portable_atmospherics/canister/stim
+	name = "nikolayev canister"
+	desc = "Nikolayev gas. Side effects may include cannibalism."
+	gas_type = /datum/gas/stim
 
 /obj/machinery/portable_atmospherics/canister/pluoxium
 	name = "pluoxium canister"

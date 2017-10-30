@@ -11,15 +11,15 @@
 #define FIRE_PLASMA_ENERGY_RELEASED			3000000	//Amount of heat released per mole of burnt plasma into the tile
 //General assmos defines.
 #define WATER_VAPOR_FREEZE					200
-#define BROWNS_FORMATION_ENERGY				100000
+#define NO2_FORMATION_ENERGY				100000
 #define TRITIUM_BURN_OXY_FACTOR				100
 #define TRITIUM_BURN_TRIT_FACTOR			10
 #define SUPER_SATURATION_THRESHOLD			96
-#define STIMULUM_HEAT_SCALE					100000
-#define STIMULUM_FIRST_RISE					0.65
-#define STIMULUM_FIRST_DROP					0.065
-#define STIMULUM_SECOND_RISE				0.0009
-#define STIMULUM_ABSOLUTE_DROP				0.00000335
+#define STIMGAS_HEAT_SCALE					100000
+#define STIMGAS_FIRST_RISE					0.65
+#define STIMGAS_FIRST_DROP					0.065
+#define STIMGAS_SECOND_RISE					0.0009
+#define STIMGAS_ABSOLUTE_DROP				0.00000335
 #define REACTION_OPPRESSION_THRESHOLD		5
 	//Plasma fusion properties
 #define PLASMA_BINDING_ENERGY				3000000
@@ -216,7 +216,7 @@
 	var/waste_added = (plasma_fused-oxygen_added)-((air.total_moles()*air.heat_capacity())/PLASMA_BINDING_ENERGY)
 	reaction_energy = max(reaction_energy+((catalyst_efficency*cached_gases[/datum/gas/plasma][MOLES])/((moles_impurities/catalyst_efficency)+2)*10)+((plasma_fused/((moles_impurities/catalyst_efficency)))*PLASMA_BINDING_ENERGY),0)
 
-	air.assert_gases(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/water_vapor, /datum/gas/nitrous_oxide, /datum/gas/brown_gas)
+	air.assert_gases(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/water_vapor, /datum/gas/nitrous_oxide, /datum/gas/nitrogen_dioxide)
 	//Fusion produces an absurd amount of waste products now, requiring active filtration.
 	cached_gases[/datum/gas/plasma][MOLES] = max(cached_gases[/datum/gas/plasma][MOLES] - plasma_fused,0)
 	cached_gases[/datum/gas/tritium][MOLES] = max(cached_gases[/datum/gas/tritium][MOLES] - tritium_catalyzed,0)
@@ -224,7 +224,7 @@
 	cached_gases[/datum/gas/nitrogen][MOLES] += waste_added
 	cached_gases[/datum/gas/water_vapor][MOLES] += waste_added
 	cached_gases[/datum/gas/nitrous_oxide][MOLES] += waste_added
-	cached_gases[/datum/gas/brown_gas][MOLES] += waste_added
+	cached_gases[/datum/gas/nitrogen_dioxide][MOLES] += waste_added
 
 	if(reaction_energy > 0)
 		var/new_heat_capacity = air.heat_capacity()
@@ -233,12 +233,12 @@
 			//Prevents whatever mechanism is causing it to hit negative temperatures.
 		return REACTING
 
-/datum/gas_reaction/brownsformation //The formation of brown gas. Endothermic. Requires N2O as a catalyst.
+/datum/gas_reaction/no2formation //The formation of nitrogen dioxide. Endothermic. Requires N2O as a catalyst.
 	priority = 3
-	name = "Brown Gas formation"
-	id = "brownsformation"
+	name = "Nitro Dioxide formation"
+	id = "no2formation"
 
-/datum/gas_reaction/brownsformation/init_reqs()
+/datum/gas_reaction/no2formation/init_reqs()
 	min_requirements = list(
 		/datum/gas/oxygen = 20,
 		/datum/gas/nitrogen = 20,
@@ -246,18 +246,18 @@
 		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST*400
 	)
 
-/datum/gas_reaction/brownsformation/react(datum/gas_mixture/air)
+/datum/gas_reaction/no2formation/react(datum/gas_mixture/air)
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
 
 	var/old_heat_capacity = air.heat_capacity()
 	var/heat_efficency = temperature/(FIRE_MINIMUM_TEMPERATURE_TO_EXIST*100)
-	var/energy_used = heat_efficency*BROWNS_FORMATION_ENERGY
-	ASSERT_GAS(/datum/gas/brown_gas,air)
+	var/energy_used = heat_efficency*NO2_FORMATION_ENERGY
+	ASSERT_GAS(/datum/gas/nitrogen_dioxide,air)
 
 	cached_gases[/datum/gas/oxygen][MOLES] -= heat_efficency
 	cached_gases[/datum/gas/nitrogen][MOLES] -= heat_efficency
-	cached_gases[/datum/gas/brown_gas][MOLES] += heat_efficency*2
+	cached_gases[/datum/gas/nitrogen_dioxide][MOLES] += heat_efficency*2
 
 	if(energy_used > 0)
 		var/new_heat_capacity = air.heat_capacity()
@@ -298,31 +298,31 @@
 			air.temperature = max(((temperature*old_heat_capacity + energy_released)/new_heat_capacity),TCMB)
 		return REACTING
 
-/datum/gas_reaction/stimformation //Stimulum formation follows a strange pattern of how effective it will be at a given temperature, having some multiple peaks and some large dropoffs. Exo and endo thermic.
+/datum/gas_reaction/stimformation //Nikolayev formation follows a strange pattern of how effective it will be at a given temperature, having some multiple peaks and some large dropoffs. Exo and endo thermic.
 	priority = 5
-	name = "Stimulum formation"
+	name = "Nikolayev formation"
 	id = "stimformation"
 /datum/gas_reaction/stimformation/init_reqs()
 	min_requirements = list(
 		/datum/gas/tritium = 30,
 		/datum/gas/plasma = 10,
 		/datum/gas/bz = 20,
-		/datum/gas/brown_gas = 30,
-		"TEMP" = STIMULUM_HEAT_SCALE/2)
+		/datum/gas/nitrogen_dioxide = 30,
+		"TEMP" = STIMGAS_HEAT_SCALE/2)
 
 /datum/gas_reaction/stimformation/react(datum/gas_mixture/air)
 	var/list/cached_gases = air.gases
 
 	var/old_heat_capacity = air.heat_capacity()
-	var/heat_scale = air.temperature/STIMULUM_HEAT_SCALE
+	var/heat_scale = air.temperature/STIMGAS_HEAT_SCALE
 	var/stim_energy_change
-	stim_energy_change =heat_scale + (STIMULUM_FIRST_RISE(heat_scale**2)) - (STIMULUM_FIRST_DROP(heat_scale**3)) + (STIMULUM_SECOND_RISE(heat_scale**4)) - (STIMULUM_ABSOLUTE_DROP(heat_scale**5))
+	stim_energy_change =heat_scale + (STIMGAS_FIRST_RISE(heat_scale**2)) - (STIMGAS_FIRST_DROP(heat_scale**3)) + (STIMGAS_SECOND_RISE(heat_scale**4)) - (STIMGAS_ABSOLUTE_DROP(heat_scale**5))
 
-	ASSERT_GAS(/datum/gas/stimulum,air)
-	cached_gases[/datum/gas/stimulum][MOLES]+= heat_scale/10
+	ASSERT_GAS(/datum/gas/stim,air)
+	cached_gases[/datum/gas/stim][MOLES]+= heat_scale/10
 	cached_gases[/datum/gas/tritium][MOLES] = max(cached_gases[/datum/gas/tritium][MOLES]- heat_scale,0)
 	cached_gases[/datum/gas/plasma][MOLES] = max(cached_gases[/datum/gas/plasma][MOLES]- heat_scale,0)
-	cached_gases[/datum/gas/brown_gas][MOLES] = max(cached_gases[/datum/gas/brown_gas][MOLES]- heat_scale,0)
+	cached_gases[/datum/gas/nitrogen_dioxide][MOLES] = max(cached_gases[/datum/gas/nitrogen_dioxide][MOLES]- heat_scale,0)
 
 	if(stim_energy_change)
 		var/new_heat_capacity = air.heat_capacity()
@@ -367,14 +367,14 @@
 #undef FIRE_CARBON_ENERGY_RELEASED
 #undef FIRE_PLASMA_ENERGY_RELEASED
 #undef WATER_VAPOR_FREEZE
-#undef BROWNS_FORMATION_ENERGY
+#undef NO2_FORMATION_ENERGY
 #undef TRITIUM_BURN_OXY_FACTOR
 #undef SUPER_SATURATION_THRESHOLD
-#undef STIMULUM_HEAT_SCALE
-#undef STIMULUM_FIRST_RISE
-#undef STIMULUM_FIRST_DROP
-#undef STIMULUM_SECOND_RISE
-#undef STIMULUM_ABSOLUTE_DROP
+#undef STIMGAS_HEAT_SCALE
+#undef STIMGAS_FIRST_RISE
+#undef STIMGAS_FIRST_DROP
+#undef STIMGAS_SECOND_RISE
+#undef STIMGAS_ABSOLUTE_DROP
 #undef REACTION_OPPRESSION_THRESHOLD
 #undef PLASMA_BINDING_ENERGY
 #undef MAX_CATALYST_EFFICENCY
