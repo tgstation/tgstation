@@ -105,10 +105,10 @@
 	desc = "Hyper-Noblium. More noble than all other gases."
 	gas_type = /datum/gas/hypernoblium
 
-/obj/machinery/portable_atmospherics/canister/browns
-	name = "brown gas canister"
-	desc = "Browns gas. Feels great 'til the acid eats your lungs."
-	gas_type = /datum/gas/brown_gas
+/obj/machinery/portable_atmospherics/canister/nitryl
+	name = "nitryl canister"
+	desc = "Nitryl gas. Feels great 'til the acid eats your lungs."
+	gas_type = /datum/gas/nitryl
 
 /obj/machinery/portable_atmospherics/canister/stimulum
 	name = "stimulum canister"
