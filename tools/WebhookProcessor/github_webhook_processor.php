@@ -547,7 +547,7 @@ function has_tree_been_edited($payload, $tree){
 	}
 	//find things in the _maps/map_files tree
 	//e.g. diff --git a/_maps/map_files/Cerestation/cerestation.dmm b/_maps/map_files/Cerestation/cerestation.dmm
-	return $github_diff !== FALSE && strpos($github_diff, 'diff --git a/' . $tree) !== FALSE;
+	return $github_diff !== FALSE && preg_match('/^diff --git a\/' . preg_quote($tree, '/') . '/m') !== FALSE;
 }
 
 $no_changelog = false;
