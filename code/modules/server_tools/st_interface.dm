@@ -30,7 +30,7 @@ SERVER_TOOLS_DEFINE_AND_SET_GLOBAL(server_tools_api_compatible, FALSE)
 		return
 	if(skip_compat_check && !fexists(SERVICE_INTERFACE_DLL))
 		CRASH("Service parameter present but no interface DLL detected. This is symptomatic of running a service less than version 3.1! Please upgrade.")
-	call(SERVICE_INTERFACE_DLL, SERVICE_INTERFACE_FUNCTION)(command)	//trust no retval
+	call(SERVICE_INTERFACE_DLL, SERVICE_INTERFACE_FUNCTION)("[params[SERVICE_INSTANCE_PARAM]] [command]")	//trust no retval
 	return TRUE
 
 /world/proc/ChatBroadcast(message)
@@ -72,7 +72,7 @@ SERVER_TOOLS_DEFINE_AND_SET_GLOBAL(server_tools_api_compatible, FALSE)
 	switch(command)
 		if(SERVICE_CMD_API_COMPATIBLE)
 			SERVER_TOOLS_WRITE_GLOBAL(server_tools_api_compatible, TRUE)
-			return "SUCCESS"
+			return SERVICE_RETURN_SUCCESS
 		if(SERVICE_CMD_HARD_REBOOT)
 			if(SERVER_TOOLS_READ_GLOBAL(reboot_mode) != REBOOT_MODE_HARD)
 				SERVER_TOOLS_WRITE_GLOBAL(reboot_mode, REBOOT_MODE_HARD)
@@ -88,7 +88,7 @@ SERVER_TOOLS_DEFINE_AND_SET_GLOBAL(server_tools_api_compatible, FALSE)
 			if(!istext(msg) || !msg)
 				return "No message set!"
 			SERVER_TOOLS_WORLD_ANNOUNCE(msg)
-			return "SUCCESS"
+			return SERVICE_RETURN_SUCCESS
 		if(SERVICE_CMD_PLAYER_COUNT)
 			return "[SERVER_TOOLS_CLIENT_COUNT]"
 		if(SERVICE_CMD_LIST_CUSTOM)
@@ -96,7 +96,7 @@ SERVER_TOOLS_DEFINE_AND_SET_GLOBAL(server_tools_api_compatible, FALSE)
 		else
 			var/custom_command_result = HandleServiceCustomCommand(lowertext(command), params[SERVICE_CMD_PARAM_SENDER], params[SERVICE_CMD_PARAM_CUSTOM])
 			if(custom_command_result)
-				return istext(custom_command_result) ? custom_command_result : "SUCCESS"
+				return istext(custom_command_result) ? custom_command_result : SERVICE_RETURN_SUCCESS
 			return "Unknown command: [command]"
 
 /*
