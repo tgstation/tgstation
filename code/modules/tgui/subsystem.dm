@@ -43,7 +43,7 @@
   * return datum/tgui The found UI.
  **/
 /datum/controller/subsystem/tgui/proc/get_open_ui(mob/user, datum/src_object, ui_key)
-	var/src_object_key = "\ref[src_object]"
+	var/src_object_key = "[REF(src_object)]"
 	if(isnull(open_uis[src_object_key]) || !istype(open_uis[src_object_key], /list))
 		return null // No UIs open.
 	else if(isnull(open_uis[src_object_key][ui_key]) || !istype(open_uis[src_object_key][ui_key], /list))
@@ -65,7 +65,7 @@
   * return int The number of UIs updated.
  **/
 /datum/controller/subsystem/tgui/proc/update_uis(datum/src_object)
-	var/src_object_key = "\ref[src_object]"
+	var/src_object_key = "[REF(src_object)]"
 	if(isnull(open_uis[src_object_key]) || !istype(open_uis[src_object_key], /list))
 		return 0 // Couldn't find any UIs for this object.
 
@@ -87,7 +87,7 @@
   * return int The number of UIs closed.
  **/
 /datum/controller/subsystem/tgui/proc/close_uis(datum/src_object)
-	var/src_object_key = "\ref[src_object]"
+	var/src_object_key = "[REF(src_object)]"
 	if(isnull(open_uis[src_object_key]) || !istype(open_uis[src_object_key], /list))
 		return 0 // Couldn't find any UIs for this object.
 
@@ -168,7 +168,7 @@
   * required ui datum/tgui The UI to be added.
  **/
 /datum/controller/subsystem/tgui/proc/on_open(datum/tgui/ui)
-	var/src_object_key = "\ref[ui.src_object]"
+	var/src_object_key = "[REF(ui.src_object)]"
 	if(isnull(open_uis[src_object_key]) || !istype(open_uis[src_object_key], /list))
 		open_uis[src_object_key] = list(ui.ui_key = list()) // Make a list for the ui_key and src_object.
 	else if(isnull(open_uis[src_object_key][ui.ui_key]) || !istype(open_uis[src_object_key][ui.ui_key], /list))
@@ -190,7 +190,7 @@
   * return bool If the UI was removed or not.
  **/
 /datum/controller/subsystem/tgui/proc/on_close(datum/tgui/ui)
-	var/src_object_key = "\ref[ui.src_object]"
+	var/src_object_key = "[REF(ui.src_object)]"
 	if(isnull(open_uis[src_object_key]) || !istype(open_uis[src_object_key], /list))
 		return 0 // It wasn't open.
 	else if(isnull(open_uis[src_object_key][ui.ui_key]) || !istype(open_uis[src_object_key][ui.ui_key], /list))

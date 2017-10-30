@@ -299,7 +299,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 		if (!lentext(shorttype))
 			shorttype = "/"
 
-		.["[D]([shorttype])\ref[D]#[i]"] = D
+		.["[D]([shorttype])[REF(D)]#[i]"] = D
 
 /client/proc/mod_list_add_ass(atom/O) //hehe
 

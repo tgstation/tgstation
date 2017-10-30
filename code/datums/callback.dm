@@ -56,7 +56,7 @@
 	if (length(args) > 2)
 		arguments = args.Copy(3)
 
-/proc/ImmediateInvokeAsync(thingtocall, proctocall, ...)
+/world/proc/ImmediateInvokeAsync(thingtocall, proctocall, ...)
 	set waitfor = FALSE
 
 	if (!thingtocall)

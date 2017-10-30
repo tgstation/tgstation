@@ -162,12 +162,6 @@
 
 	add_fingerprint(user)
 
-	//THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
-	if( thermite )
-		if(W.is_hot())
-			thermitemelt(user)
-			return
-
 	var/turf/T = user.loc	//get user's location for delay checks
 
 	//the istype cascade has been spread among various procs for easy overriding
@@ -239,31 +233,6 @@
 			visible_message("<span class='warning'>[user] smashes through the [name] with the [W.name]!</span>", "<span class='italics'>You hear the grinding of metal.</span>")
 			return TRUE
 	return FALSE
-
-
-/turf/closed/wall/proc/thermitemelt(mob/user)
-	cut_overlays()
-	var/obj/effect/overlay/O = new/obj/effect/overlay( src )
-	O.name = "thermite"
-	O.desc = "Looks hot."
-	O.icon = 'icons/effects/fire.dmi'
-	O.icon_state = "2"
-	O.anchored = TRUE
-	O.opacity = 1
-	O.density = TRUE
-	O.layer = FLY_LAYER
-
-	playsound(src, 'sound/items/welder.ogg', 100, 1)
-
-	if(thermite >= 50)
-		var/burning_time = max(100,300 - thermite)
-		var/turf/open/floor/F = ChangeTurf(/turf/open/floor/plating)
-		F.burn_tile()
-		F.add_hiddenprint(user)
-		QDEL_IN(O, burning_time)
-	else
-		thermite = 0
-		QDEL_IN(O, 50)
 
 /turf/closed/wall/singularity_pull(S, current_size)
 	..()

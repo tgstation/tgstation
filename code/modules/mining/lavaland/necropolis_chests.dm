@@ -784,7 +784,7 @@
 	to_chat(user, "You call out for aid, attempting to summon spirits to your side.")
 
 	notify_ghosts("[user] is raising [user.p_their()] [src], calling for your help!",
-		enter_link="<a href=?src=\ref[src];orbit=1>(Click to help)</a>",
+		enter_link="<a href=?src=[REF(src)];orbit=1>(Click to help)</a>",
 		source = user, action=NOTIFY_ORBIT)
 
 	summon_cooldown = world.time + 600

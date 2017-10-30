@@ -62,11 +62,11 @@
 	var/dat = "[world.name] secure vault. Authorized personnel only.<br>"
 	dat += "Current Balance: [SSshuttle.points] credits.<br>"
 	if(!siphoning)
-		dat += "<A href='?src=\ref[src];siphon=1'>Siphon Credits</A><br>"
+		dat += "<A href='?src=[REF(src)];siphon=1'>Siphon Credits</A><br>"
 	else
-		dat += "<A href='?src=\ref[src];halt=1'>Halt Credit Siphon</A><br>"
+		dat += "<A href='?src=[REF(src)];halt=1'>Halt Credit Siphon</A><br>"
 
-	dat += "<a href='?src=\ref[user];mach_close=computer'>Close</a>"
+	dat += "<a href='?src=[REF(user)];mach_close=computer'>Close</a>"
 
 	var/datum/browser/popup = new(user, "computer", "Bank Vault", 300, 200)
 	popup.set_content("<center>[dat]</center>")

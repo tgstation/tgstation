@@ -86,7 +86,7 @@
 
 /obj/item/clockwork/construct_chassis/cogscarab/Initialize()
 	. = ..()
-	if(istype(SSticker.mode, /datum/game_mode/clockwork_cult))
+	if(GLOB.servants_active)
 		infinite_resources = FALSE //For any that are somehow spawned in late
 
 /obj/item/clockwork/construct_chassis/cogscarab/pre_spawn()

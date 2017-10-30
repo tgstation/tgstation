@@ -220,3 +220,14 @@
 	C.OnTransfer(src)
 	C.parent = src
 	SendSignal(COMSIG_COMPONENT_ADDED, C)
+
+/datum/proc/TransferComponents(datum/target)
+	var/list/dc = datum_components
+	if(!dc)
+		return
+	var/comps = dc[/datum/component]
+	if(islist(comps))
+		for(var/I in comps)
+			target.TakeComponent(I)
+	else
+		target.TakeComponent(comps)
