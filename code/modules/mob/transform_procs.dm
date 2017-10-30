@@ -461,7 +461,10 @@
 	qdel(src)
 
 /mob/proc/become_overmind(starting_points = 60)
-	var/mob/camera/blob/B = new /mob/camera/blob(loc, starting_points)
+	var/turf/T = get_turf(loc) //just to avoid messing up in lockers
+	if(!(T.z in GLOB.station_z_levels) && LAZYLEN(GLOB.blobstart))
+		T = get_turf(pick(GLOB.blobstart))
+	var/mob/camera/blob/B = new /mob/camera/blob(T, starting_points)
 	B.key = key
 	. = B
 	qdel(src)
