@@ -34,6 +34,16 @@
 		GLOB.ark_of_the_clockwork_justiciar = src
 	START_PROCESSING(SSprocessing, src)
 
+/obj/structure/destructible/clockwork/massive/celestial_gateway/proc/final_countdown(ark_time)
+	if(!ark_time)
+		ark_time = 30 //minutes
+	initial_activation_delay = ark_time * 60
+	seconds_until_activation = ark_time * 60 //60 seconds in a minute * number of minutes
+	for(var/obj/item/clockwork/construct_chassis/cogscarab/C in GLOB.all_clockwork_objects)
+		C.infinite_resources = FALSE
+	GLOB.servants_active = TRUE
+	SSshuttle.registerHostileEnvironment(src)
+
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/cry_havoc()
 	visible_message("<span class='boldwarning'>[src] shudders and roars to life, its parts beginning to whirr and screech!</span>")
 	hierophant_message("<span class='bold large_brass'>The Ark is activating! Get back to the base!</span>")
@@ -254,6 +264,20 @@
 						dist = FALSE
 					T.ratvar_act(dist)
 					CHECK_TICK
+
+/obj/structure/destructible/clockwork/massive/celestial_gateway/attack_ghost(mob/user)
+	if(!user.client || !user.client.holder)
+		return
+	if(GLOB.servants_active)
+		to_chat(user, "<span class='danger'>The Ark is already counting down.</span>")
+		return
+	if(alert(user, "Activate the Ark's countdown?", name, "Yes", "No") == "Yes")
+		if(alert(user, "REALLY activate the Ark's countdown?", name, "Yes", "No") == "Yes")
+			if(alert(user, "You're REALLY SURE? This cannot be undone.", name, "Yes - Activate the Ark", "No") == "Yes - Activate the Ark")
+				message_admins("<span class='danger'>Admin [key_name_admin(user)] started the Ark's countdown!</span>")
+				to_chat(user, "<span class='userdanger'>The gamemode is now being treated as clockwork cult, and the Ark is counting down from 30 \
+				minutes. You will need to create servant players yourself.</span>")
+				final_countdown(35)
 
 
 
