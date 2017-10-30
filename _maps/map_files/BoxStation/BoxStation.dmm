@@ -54625,10 +54625,8 @@
 	},
 /obj/machinery/atmospherics/components/binary/valve/digital{
 	dir = 4;
-	icon_state = "dvalve_map";
 	name = "Output Release";
 	open = 1;
-	tag = "icon-dvalve_map (EAST)"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
