@@ -145,13 +145,13 @@ GLOBAL_LIST_EMPTY(allConsoles)
 					if (dpt != department)
 						dat += "<tr>"
 						dat += "<td width='55%'>[dpt]</td>"
-						dat += "<td width='45%'><A href='?src=\ref[src];write=[ckey(dpt)]'>Normal</A> <A href='?src=\ref[src];write=[ckey(dpt)];priority=2'>High</A>"
+						dat += "<td width='45%'><A href='?src=[REF(src)];write=[ckey(dpt)]'>Normal</A> <A href='?src=[REF(src)];write=[ckey(dpt)];priority=2'>High</A>"
 						if(hackState)
-							dat += "<A href='?src=\ref[src];write=[ckey(dpt)];priority=3'>EXTREME</A>"
+							dat += "<A href='?src=[REF(src)];write=[ckey(dpt)];priority=3'>EXTREME</A>"
 						dat += "</td>"
 						dat += "</tr>"
 				dat += "</table>"
-				dat += "<BR><A href='?src=\ref[src];setScreen=0'><< Back</A><BR>"
+				dat += "<BR><A href='?src=[REF(src)];setScreen=0'><< Back</A><BR>"
 
 			if(2)	//req. supplies
 				dat += "Which department do you need supplies from?<BR><BR>"
@@ -160,13 +160,13 @@ GLOBAL_LIST_EMPTY(allConsoles)
 					if (dpt != department)
 						dat += "<tr>"
 						dat += "<td width='55%'>[dpt]</td>"
-						dat += "<td width='45%'><A href='?src=\ref[src];write=[ckey(dpt)]'>Normal</A> <A href='?src=\ref[src];write=[ckey(dpt)];priority=2'>High</A>"
+						dat += "<td width='45%'><A href='?src=[REF(src)];write=[ckey(dpt)]'>Normal</A> <A href='?src=[REF(src)];write=[ckey(dpt)];priority=2'>High</A>"
 						if(hackState)
-							dat += "<A href='?src=\ref[src];write=[ckey(dpt)];priority=3'>EXTREME</A>"
+							dat += "<A href='?src=[REF(src)];write=[ckey(dpt)];priority=3'>EXTREME</A>"
 						dat += "</td>"
 						dat += "</tr>"
 				dat += "</table>"
-				dat += "<BR><A href='?src=\ref[src];setScreen=0'><< Back</A><BR>"
+				dat += "<BR><A href='?src=[REF(src)];setScreen=0'><< Back</A><BR>"
 
 			if(3)	//relay information
 				dat += "Which department would you like to send information to?<BR><BR>"
@@ -175,21 +175,21 @@ GLOBAL_LIST_EMPTY(allConsoles)
 					if (dpt != department)
 						dat += "<tr>"
 						dat += "<td width='55%'>[dpt]</td>"
-						dat += "<td width='45%'><A href='?src=\ref[src];write=[ckey(dpt)]'>Normal</A> <A href='?src=\ref[src];write=[ckey(dpt)];priority=2'>High</A>"
+						dat += "<td width='45%'><A href='?src=[REF(src)];write=[ckey(dpt)]'>Normal</A> <A href='?src=[REF(src)];write=[ckey(dpt)];priority=2'>High</A>"
 						if(hackState)
-							dat += "<A href='?src=\ref[src];write=[ckey(dpt)];priority=3'>EXTREME</A>"
+							dat += "<A href='?src=[REF(src)];write=[ckey(dpt)];priority=3'>EXTREME</A>"
 						dat += "</td>"
 						dat += "</tr>"
 				dat += "</table>"
-				dat += "<BR><A href='?src=\ref[src];setScreen=0'><< Back</A><BR>"
+				dat += "<BR><A href='?src=[REF(src)];setScreen=0'><< Back</A><BR>"
 
 			if(6)	//sent successfully
 				dat += "<span class='good'>Message sent.</span><BR><BR>"
-				dat += "<A href='?src=\ref[src];setScreen=0'>Continue</A><BR>"
+				dat += "<A href='?src=[REF(src)];setScreen=0'>Continue</A><BR>"
 
 			if(7)	//unsuccessful; not sent
 				dat += "<span class='bad'>An error occurred.</span><BR><BR>"
-				dat += "<A href='?src=\ref[src];setScreen=0'>Continue</A><BR>"
+				dat += "<A href='?src=[REF(src)];setScreen=0'>Continue</A><BR>"
 
 			if(8)	//view messages
 				for (var/obj/machinery/requests_console/Console in GLOB.allConsoles)
@@ -203,7 +203,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 				for(var/msg in messages) // This puts more recent messages at the *top*, where they belong.
 					messageComposite = "<div class='block'>[msg]</div>" + messageComposite
 				dat += messageComposite
-				dat += "<BR><A href='?src=\ref[src];setScreen=0'><< Back to Main Menu</A><BR>"
+				dat += "<BR><A href='?src=[REF(src)];setScreen=0'><< Back to Main Menu</A><BR>"
 
 			if(9)	//authentication before sending
 				dat += "<B>Message Authentication</B><BR><BR>"
@@ -211,8 +211,8 @@ GLOBAL_LIST_EMPTY(allConsoles)
 				dat += "<div class='notice'>You may authenticate your message now by scanning your ID or your stamp</div><BR>"
 				dat += "<b>Validated by:</b> [msgVerified ? msgVerified : "<i>Not Validated</i>"]<br>"
 				dat += "<b>Stamped by:</b> [msgStamped ? msgStamped : "<i>Not Stamped</i>"]<br><br>"
-				dat += "<A href='?src=\ref[src];department=[dpt]'>Send Message</A><BR>"
-				dat += "<BR><A href='?src=\ref[src];setScreen=0'><< Discard Message</A><BR>"
+				dat += "<A href='?src=[REF(src)];department=[dpt]'>Send Message</A><BR>"
+				dat += "<BR><A href='?src=[REF(src)];setScreen=0'><< Discard Message</A><BR>"
 
 			if(10)	//send announcement
 				dat += "<h3>Station-wide Announcement</h3>"
@@ -221,12 +221,12 @@ GLOBAL_LIST_EMPTY(allConsoles)
 				else
 					dat += "<div class='notice'>Swipe your card to authenticate yourself</div><BR>"
 				dat += "<b>Message: </b>[message ? message : "<i>No Message</i>"]<BR>"
-				dat += "<A href='?src=\ref[src];writeAnnouncement=1'>[message ? "Edit" : "Write"] Message</A><BR><BR>"
+				dat += "<A href='?src=[REF(src)];writeAnnouncement=1'>[message ? "Edit" : "Write"] Message</A><BR><BR>"
 				if ((announceAuth || IsAdminGhost(user)) && message)
-					dat += "<A href='?src=\ref[src];sendAnnouncement=1'>Announce Message</A><BR>"
+					dat += "<A href='?src=[REF(src)];sendAnnouncement=1'>Announce Message</A><BR>"
 				else
 					dat += "<span class='linkOff'>Announce Message</span><BR>"
-				dat += "<BR><A href='?src=\ref[src];setScreen=0'><< Back</A><BR>"
+				dat += "<BR><A href='?src=[REF(src)];setScreen=0'><< Back</A><BR>"
 
 			else	//main menu
 				screen = 0
@@ -237,25 +237,25 @@ GLOBAL_LIST_EMPTY(allConsoles)
 					dat += "<div class='notice'>There are new <b>PRIORITY</b> messages</div><BR>"
 				if (newmessagepriority == 3)
 					dat += "<div class='notice'>There are new <b>EXTREME PRIORITY</b> messages</div><BR>"
-				dat += "<A href='?src=\ref[src];setScreen=8'>View Messages</A><BR><BR>"
+				dat += "<A href='?src=[REF(src)];setScreen=8'>View Messages</A><BR><BR>"
 
-				dat += "<A href='?src=\ref[src];setScreen=1'>Request Assistance</A><BR>"
-				dat += "<A href='?src=\ref[src];setScreen=2'>Request Supplies</A><BR>"
-				dat += "<A href='?src=\ref[src];setScreen=3'>Relay Anonymous Information</A><BR><BR>"
+				dat += "<A href='?src=[REF(src)];setScreen=1'>Request Assistance</A><BR>"
+				dat += "<A href='?src=[REF(src)];setScreen=2'>Request Supplies</A><BR>"
+				dat += "<A href='?src=[REF(src)];setScreen=3'>Relay Anonymous Information</A><BR><BR>"
 
 				if(!emergency)
-					dat += "<A href='?src=\ref[src];emergency=1'>Emergency: Security</A><BR>"
-					dat += "<A href='?src=\ref[src];emergency=2'>Emergency: Engineering</A><BR>"
-					dat += "<A href='?src=\ref[src];emergency=3'>Emergency: Medical</A><BR><BR>"
+					dat += "<A href='?src=[REF(src)];emergency=1'>Emergency: Security</A><BR>"
+					dat += "<A href='?src=[REF(src)];emergency=2'>Emergency: Engineering</A><BR>"
+					dat += "<A href='?src=[REF(src)];emergency=3'>Emergency: Medical</A><BR><BR>"
 				else
 					dat += "<B><font color='red'>[emergency] has been dispatched to this location.</font></B><BR><BR>"
 
 				if(announcementConsole)
-					dat += "<A href='?src=\ref[src];setScreen=10'>Send Station-wide Announcement</A><BR><BR>"
+					dat += "<A href='?src=[REF(src)];setScreen=10'>Send Station-wide Announcement</A><BR><BR>"
 				if (silent)
-					dat += "Speaker <A href='?src=\ref[src];setSilent=0'>OFF</A>"
+					dat += "Speaker <A href='?src=[REF(src)];setSilent=0'>OFF</A>"
 				else
-					dat += "Speaker <A href='?src=\ref[src];setSilent=1'>ON</A>"
+					dat += "Speaker <A href='?src=[REF(src)];setSilent=1'>ON</A>"
 		var/datum/browser/popup = new(user, "req_console", "[department] Requests Console", 450, 440)
 		popup.set_content(dat)
 		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
@@ -454,7 +454,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 	var/linkedsender
 	if(istype(source, /obj/machinery/requests_console))
 		var/obj/machinery/requests_console/sender = source
-		linkedsender = "<a href='?src=\ref[src];write=[ckey(sender.department)]'>[sender.department]</a>"
+		linkedsender = "<a href='?src=[REF(src)];write=[ckey(sender.department)]'>[sender.department]</a>"
 	else
 		capitalize(source)
 		linkedsender = source

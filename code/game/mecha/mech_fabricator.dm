@@ -98,8 +98,8 @@
 				continue
 			output += "<div class='part'>[output_part_info(D)]<br>\["
 			if(check_resources(D))
-				output += "<a href='?src=\ref[src];part=[D.id]'>Build</a> | "
-			output += "<a href='?src=\ref[src];add_to_queue=[D.id]'>Add to queue</a>\]\[<a href='?src=\ref[src];part_desc=[D.id]'>?</a>\]</div>"
+				output += "<a href='?src=[REF(src)];part=[D.id]'>Build</a> | "
+			output += "<a href='?src=[REF(src)];add_to_queue=[D.id]'>Add to queue</a>\]\[<a href='?src=[REF(src)];part_desc=[D.id]'>?</a>\]</div>"
 	return output
 
 /obj/machinery/mecha_part_fabricator/proc/output_part_info(datum/design/D)
@@ -121,10 +121,10 @@
 		var/datum/material/M = materials.materials[mat_id]
 		output += "<span class=\"res_name\">[M.name]: </span>[M.amount] cm&sup3;"
 		if(M.amount >= MINERAL_MATERIAL_AMOUNT)
-			output += "<span style='font-size:80%;'>- Remove \[<a href='?src=\ref[src];remove_mat=1;material=[mat_id]'>1</a>\]"
+			output += "<span style='font-size:80%;'>- Remove \[<a href='?src=[REF(src)];remove_mat=1;material=[mat_id]'>1</a>\]"
 			if(M.amount >= (MINERAL_MATERIAL_AMOUNT * 10))
-				output += " | \[<a href='?src=\ref[src];remove_mat=10;material=[mat_id]'>10</a>\]"
-			output += " | \[<a href='?src=\ref[src];remove_mat=50;material=[mat_id]'>All</a>\]</span>"
+				output += " | \[<a href='?src=[REF(src)];remove_mat=10;material=[mat_id]'>10</a>\]"
+			output += " | \[<a href='?src=[REF(src)];remove_mat=50;material=[mat_id]'>All</a>\]</span>"
 		output += "<br/>"
 	return output
 
@@ -206,7 +206,7 @@
 		if(!check_resources(D))
 			say("Not enough resources. Queue processing stopped.")
 			temp = {"<span class='alert'>Not enough resources to build next part.</span><br>
-						<a href='?src=\ref[src];process_queue=1'>Try again</a> | <a href='?src=\ref[src];clear_temp=1'>Return</a><a>"}
+						<a href='?src=[REF(src)];process_queue=1'>Try again</a> | <a href='?src=[REF(src)];clear_temp=1'>Return</a><a>"}
 			return 0
 		remove_from_queue(1)
 		build_part(D)
@@ -225,12 +225,12 @@
 			var/obj/part = D.build_path
 			output += "<li[!check_resources(D)?" style='color: #f00;'":null]>"
 			output += initial(part.name) + " - "
-			output += "[i>1?"<a href='?src=\ref[src];queue_move=-1;index=[i]' class='arrow'>&uarr;</a>":null] "
-			output += "[i<queue.len?"<a href='?src=\ref[src];queue_move=+1;index=[i]' class='arrow'>&darr;</a>":null] "
-			output += "<a href='?src=\ref[src];remove_from_queue=[i]'>Remove</a></li>"
+			output += "[i>1?"<a href='?src=[REF(src)];queue_move=-1;index=[i]' class='arrow'>&uarr;</a>":null] "
+			output += "[i<queue.len?"<a href='?src=[REF(src)];queue_move=+1;index=[i]' class='arrow'>&darr;</a>":null] "
+			output += "<a href='?src=[REF(src)];remove_from_queue=[i]'>Remove</a></li>"
 
 		output += "</ol>"
-		output += "\[<a href='?src=\ref[src];process_queue=1'>Process queue</a> | <a href='?src=\ref[src];clear_queue=1'>Clear queue</a>\]"
+		output += "\[<a href='?src=[REF(src)];process_queue=1'>Process queue</a> | <a href='?src=[REF(src)];clear_queue=1'>Clear queue</a>\]"
 	return output
 
 /obj/machinery/mecha_part_fabricator/proc/sync()
@@ -250,13 +250,13 @@
 		files.RefreshResearch()
 		temp = "Processed equipment designs.<br>"
 		//check if the tech coefficients have changed
-		temp += "<a href='?src=\ref[src];clear_temp=1'>Return</a>"
+		temp += "<a href='?src=[REF(src)];clear_temp=1'>Return</a>"
 
 		updateUsrDialog()
 		say("Successfully synchronized with R&D server.")
 		return
 
-	temp = "Unable to connect to local R&D Database.<br>Please check your connections and try again.<br><a href='?src=\ref[src];clear_temp=1'>Return</a>"
+	temp = "Unable to connect to local R&D Database.<br>Please check your connections and try again.<br><a href='?src=[REF(src)];clear_temp=1'>Return</a>"
 	updateUsrDialog()
 	return
 
@@ -289,12 +289,12 @@
 		switch(screen)
 			if("main")
 				left_part = output_available_resources()+"<hr>"
-				left_part += "<a href='?src=\ref[src];sync=1'>Sync with R&D servers</a><hr>"
+				left_part += "<a href='?src=[REF(src)];sync=1'>Sync with R&D servers</a><hr>"
 				for(var/part_set in part_sets)
-					left_part += "<a href='?src=\ref[src];part_set=[part_set]'>[part_set]</a> - \[<a href='?src=\ref[src];partset_to_queue=[part_set]'>Add all parts to queue</a>\]<br>"
+					left_part += "<a href='?src=[REF(src)];part_set=[part_set]'>[part_set]</a> - \[<a href='?src=[REF(src)];partset_to_queue=[part_set]'>Add all parts to queue</a>\]<br>"
 			if("parts")
 				left_part += output_parts_list(part_set)
-				left_part += "<hr><a href='?src=\ref[src];screen=main'>Return</a>"
+				left_part += "<hr><a href='?src=[REF(src)];screen=main'>Return</a>"
 	dat = {"<html>
 			  <head>
 			  <title>[name]</title>
@@ -332,9 +332,9 @@
 /obj/machinery/mecha_part_fabricator/Topic(href, href_list)
 	if(..())
 		return
-	var/datum/topic_input/filter = new /datum/topic_input(href,href_list)
+	var/datum/topic_input/afilter = new /datum/topic_input(href,href_list)
 	if(href_list["part_set"])
-		var/tpart_set = filter.getStr("part_set")
+		var/tpart_set = afilter.getStr("part_set")
 		if(tpart_set)
 			if(tpart_set=="clear")
 				part_set = null
@@ -342,7 +342,7 @@
 				part_set = tpart_set
 				screen = "parts"
 	if(href_list["part"])
-		var/T = filter.getStr("part")
+		var/T = afilter.getStr("part")
 		for(var/v in files.known_designs)
 			var/datum/design/D = files.known_designs[v]
 			if(D.build_type & MECHFAB)
@@ -353,7 +353,7 @@
 						add_to_queue(D)
 					break
 	if(href_list["add_to_queue"])
-		var/T = filter.getStr("add_to_queue")
+		var/T = afilter.getStr("add_to_queue")
 		for(var/v in files.known_designs)
 			var/datum/design/D = files.known_designs[v]
 			if(D.build_type & MECHFAB)
@@ -362,10 +362,10 @@
 					break
 		return update_queue_on_page()
 	if(href_list["remove_from_queue"])
-		remove_from_queue(filter.getNum("remove_from_queue"))
+		remove_from_queue(afilter.getNum("remove_from_queue"))
 		return update_queue_on_page()
 	if(href_list["partset_to_queue"])
-		add_part_set_to_queue(filter.get("partset_to_queue"))
+		add_part_set_to_queue(afilter.get("partset_to_queue"))
 		return update_queue_on_page()
 	if(href_list["process_queue"])
 		spawn(0)
@@ -379,8 +379,8 @@
 	if(href_list["screen"])
 		screen = href_list["screen"]
 	if(href_list["queue_move"] && href_list["index"])
-		var/index = filter.getNum("index")
-		var/new_index = index + filter.getNum("queue_move")
+		var/index = afilter.getNum("index")
+		var/new_index = index + afilter.getNum("queue_move")
 		if(isnum(index) && isnum(new_index) && IsInteger(index) && IsInteger(new_index))
 			if(IsInRange(new_index,1,queue.len))
 				queue.Swap(index,new_index)
@@ -391,7 +391,7 @@
 	if(href_list["sync"])
 		sync()
 	if(href_list["part_desc"])
-		var/T = filter.getStr("part_desc")
+		var/T = afilter.getStr("part_desc")
 		for(var/v in files.known_designs)
 			var/datum/design/D = files.known_designs[v]
 			if(D.build_type & MECHFAB)
@@ -399,7 +399,7 @@
 					var/obj/part = D.build_path
 					temp = {"<h1>[initial(part.name)] description:</h1>
 								[initial(part.desc)]<br>
-								<a href='?src=\ref[src];clear_temp=1'>Return</a>
+								<a href='?src=[REF(src)];clear_temp=1'>Return</a>
 								"}
 					break
 

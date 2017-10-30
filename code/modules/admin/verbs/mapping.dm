@@ -42,7 +42,10 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/print_pointers,
 	/client/proc/cmd_show_at_list,
 	/client/proc/cmd_show_at_markers,
-	/client/proc/manipulate_organs
+	/client/proc/manipulate_organs,
+	/client/proc/start_line_profiling,
+	/client/proc/stop_line_profiling,
+	/client/proc/show_line_profiling
 ))
 
 /obj/effect/debugging/mapfix_marker
