@@ -203,21 +203,21 @@
 	name = "medbot sound circuit"
 	desc = "A miniature speaker is attached to this component, used to annoy patients while they get pricked by a medbot."
 	sounds = list(
-		"surgeon"		= 'sound/voice/medbot/msurgeon.ogg',
-		"radar"			= 'sound/voice/medbot/mradar.ogg',
-		"feel better"	= 'sound/voice/medbot/mfeelbetter.ogg',
-		"patched up"	= 'sound/voice/medbot/mpatchedup.ogg',
-		"injured"		= 'sound/voice/medbot/minjured.ogg',
-		"insult"		= 'sound/voice/medbot/minsult.ogg',
-		"coming"		= 'sound/voice/medbot/mcoming.ogg',
-		"help"			= 'sound/voice/medbot/mhelp.ogg',
-		"live"			= 'sound/voice/medbot/mlive.ogg',
-		"lost"			= 'sound/voice/medbot/mlost.ogg',
-		"flies"			= 'sound/voice/medbot/mflies.ogg',
-		"catch"			= 'sound/voice/medbot/mcatch.ogg',
-		"delicious"		= 'sound/voice/medbot/mdelicious.ogg',
-		"apple"			= 'sound/voice/medbot/mapple.ogg',
-		"no"			= 'sound/voice/medbot/mno.ogg',
+		"surgeon"		= 'sound/voice/msurgeon.ogg',
+		"radar"			= 'sound/voice/mradar.ogg',
+		"feel better"	= 'sound/voice/mfeelbetter.ogg',
+		"patched up"	= 'sound/voice/mpatchedup.ogg',
+		"injured"		= 'sound/voice/minjured.ogg',
+		"insult"		= 'sound/voice/minsult.ogg',
+		"coming"		= 'sound/voice/mcoming.ogg',
+		"help"			= 'sound/voice/mhelp.ogg',
+		"live"			= 'sound/voice/mlive.ogg',
+		"lost"			= 'sound/voice/mlost.ogg',
+		"flies"			= 'sound/voice/mflies.ogg',
+		"catch"			= 'sound/voice/mcatch.ogg',
+		"delicious"		= 'sound/voice/mdelicious.ogg',
+		"apple"			= 'sound/voice/mapple.ogg',
+		"no"			= 'sound/voice/mno.ogg',
 		)
 	spawn_flags = IC_SPAWN_RESEARCH
 	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_BIO = 1)
@@ -237,8 +237,8 @@
 	outputs = list()
 	activators = list()
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
-	power_draw_idle = 5 // Raises to 80 when on.
-	var/obj/machinery/camera/network/research/camera
+	power_draw_idle = 0 // Raises to 20 when on.
+	var/obj/machinery/camera/camera
 
 /obj/item/integrated_circuit/output/video_camera/New()
 	..()
@@ -246,13 +246,13 @@
 	on_data_written()
 
 /obj/item/integrated_circuit/output/video_camera/Destroy()
-	qdel_null(camera)
+	QDEL_NULL(camera)
 	return ..()
 
 /obj/item/integrated_circuit/output/video_camera/proc/set_camera_status(var/status)
 	if(camera)
 		camera.set_status(status)
-		power_draw_idle = camera.status ? 80 : 5
+		power_draw_idle = camera.status ? 20 : 0
 		if(camera.status) // Ensure that there's actually power.
 			if(!draw_idle_power())
 				power_fail()
@@ -304,36 +304,36 @@
 
 /obj/item/integrated_circuit/output/led/red
 	name = "red LED"
-	led_color = COLOR_RED
+	led_color = "#FF0000"
 
 /obj/item/integrated_circuit/output/led/orange
 	name = "orange LED"
-	led_color = COLOR_ORANGE
+	led_color = "#FF9900"
 
 /obj/item/integrated_circuit/output/led/yellow
 	name = "yellow LED"
-	led_color = COLOR_YELLOW
+	led_color = "#FFFF00"
 
 /obj/item/integrated_circuit/output/led/green
 	name = "green LED"
-	led_color = COLOR_GREEN
+	led_color = "#008000"
 
 /obj/item/integrated_circuit/output/led/blue
 	name = "blue LED"
-	led_color = COLOR_BLUE
+	led_color = "#0000FF"
 
 /obj/item/integrated_circuit/output/led/purple
 	name = "purple LED"
-	led_color = COLOR_PURPLE
+	led_color = "#800080"
 
 /obj/item/integrated_circuit/output/led/cyan
 	name = "cyan LED"
-	led_color = COLOR_CYAN
+	led_color = "#00FFFF"
 
 /obj/item/integrated_circuit/output/led/white
 	name = "white LED"
-	led_color = COLOR_WHITE
+	led_color = "#FFFFFF"
 
 /obj/item/integrated_circuit/output/led/pink
 	name = "pink LED"
-	led_color = COLOR_PINK
+	led_color = "#FF00FF"

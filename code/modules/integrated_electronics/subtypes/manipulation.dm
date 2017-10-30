@@ -19,7 +19,7 @@
 	activators = list(
 		"fire" = IC_PINTYPE_PULSE_IN
 	)
-	var/obj/item/weapon/gun/installed_gun = null
+	var/obj/item/gun/installed_gun = null
 	spawn_flags = IC_SPAWN_RESEARCH
 	origin_tech = list(TECH_ENGINEERING = 3, TECH_DATA = 3, TECH_COMBAT = 4)
 	power_draw_per_use = 50 // The targeting mechanism uses this.  The actual gun uses its own cell for firing if it's an energy weapon.
@@ -29,15 +29,13 @@
 	..()
 
 /obj/item/integrated_circuit/manipulation/weapon_firing/attackby(var/obj/O, var/mob/user)
-	if(istype(O, /obj/item/weapon/gun))
-		var/obj/item/weapon/gun/gun = O
+	if(istype(O, /obj/item/gun))
+		var/obj/item/gun/gun = O
 		if(installed_gun)
 			user << "<span class='warning'>There's already a weapon installed.</span>"
 			return
-		user.drop_from_inventory(gun)
+		user.transferItemToLoc(gun,src)
 		installed_gun = gun
-		size += gun.w_class
-		gun.forceMove(src)
 		user << "<span class='notice'>You slide \the [gun] into the firing mechanism.</span>"
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 	else
@@ -98,7 +96,8 @@
 
 		if(!T)
 			return
-		installed_gun.Fire_userless(T)
+		if(installed_gun.can_shoot())
+			installed_gun.process_fire(T)
 
 /obj/item/integrated_circuit/manipulation/locomotion
 	name = "locomotion circuit"
@@ -141,7 +140,7 @@
 	activators = list("prime grenade" = IC_PINTYPE_PULSE_IN)
 	spawn_flags = IC_SPAWN_RESEARCH
 	origin_tech = list(TECH_ENGINEERING = 3, TECH_DATA = 3, TECH_COMBAT = 4)
-	var/obj/item/weapon/grenade/attached_grenade
+	var/obj/item/grenade/attached_grenade
 	var/pre_attached_grenade_type
 
 /obj/item/integrated_circuit/manipulation/grenade/New()
@@ -152,15 +151,15 @@
 
 /obj/item/integrated_circuit/manipulation/grenade/Destroy()
 	if(attached_grenade && !attached_grenade.active)
-		attached_grenade.dropInto(loc)
+		attached_grenade.forceMove(loc)
 	detach_grenade()
 	. =..()
 
-/obj/item/integrated_circuit/manipulation/grenade/attackby(var/obj/item/weapon/grenade/G, var/mob/user)
+/obj/item/integrated_circuit/manipulation/grenade/attackby(var/obj/item/grenade/G, var/mob/user)
 	if(istype(G))
 		if(attached_grenade)
 			to_chat(user, "<span class='warning'>There is already a grenade attached!</span>")
-		else if(user.unEquip(G, force=1))
+		else if(user.transferItemToLoc(G,src))
 			user.visible_message("<span class='warning'>\The [user] attaches \a [G] to \the [src]!</span>", "<span class='notice'>You attach \the [G] to \the [src].</span>")
 			attach_grenade(G)
 			G.forceMove(src)
@@ -170,7 +169,7 @@
 /obj/item/integrated_circuit/manipulation/grenade/attack_self(var/mob/user)
 	if(attached_grenade)
 		user.visible_message("<span class='warning'>\The [user] removes \an [attached_grenade] from \the [src]!</span>", "<span class='notice'>You remove \the [attached_grenade] from \the [src].</span>")
-		user.put_in_any_hand_if_possible(attached_grenade) || attached_grenade.dropInto(loc)
+		user.put_in_hands(attached_grenade)
 		detach_grenade()
 	else
 		..()
@@ -178,32 +177,33 @@
 /obj/item/integrated_circuit/manipulation/grenade/do_work()
 	if(attached_grenade && !attached_grenade.active)
 		var/datum/integrated_io/detonation_time = inputs[1]
+		var/dt
 		if(isnum(detonation_time.data) && detonation_time.data > 0)
-			attached_grenade.det_time = between(1, detonation_time.data, 12) SECONDS
-		attached_grenade.activate()
+			dt = between(1, detonation_time.data, 12)*10
+		else
+			dt = 15
+		addtimer(CALLBACK(attached_grenade, /obj/item/grenade.proc/prime), dt)
 		var/atom/holder = loc
-		log_and_message_admins("activated a grenade assembly. Last touches: Assembly: [holder.fingerprintslast] Circuit: [fingerprintslast] Grenade: [attached_grenade.fingerprintslast]")
+		message_admins("activated a grenade assembly. Last touches: Assembly: [holder.fingerprintslast] Circuit: [fingerprintslast] Grenade: [attached_grenade.fingerprintslast]")
 
 // These procs do not relocate the grenade, that's the callers responsibility
-/obj/item/integrated_circuit/manipulation/grenade/proc/attach_grenade(var/obj/item/weapon/grenade/G)
+/obj/item/integrated_circuit/manipulation/grenade/proc/attach_grenade(var/obj/item/grenade/G)
 	attached_grenade = G
-	destroyed_event.register(attached_grenade, src, /obj/item/integrated_circuit/manipulation/grenade/proc/detach_grenade)
-	size += G.w_class
+	G.forceMove(src)
 	desc += " \An [attached_grenade] is attached to it!"
 
 /obj/item/integrated_circuit/manipulation/grenade/proc/detach_grenade()
 	if(!attached_grenade)
 		return
-	destroyed_event.unregister(attached_grenade, src, /obj/item/integrated_circuit/manipulation/grenade/proc/detach_grenade)
+	attached_grenade.forceMove(get_turf(src))
 	attached_grenade = null
-	size = initial(size)
 	desc = initial(desc)
-
+/*
 /obj/item/integrated_circuit/manipulation/grenade/frag
 	pre_attached_grenade_type = /obj/item/weapon/grenade/explosive
 	origin_tech = list(TECH_ENGINEERING = 3, TECH_DATA = 3, TECH_COMBAT = 10)
 	spawn_flags = null			// Used for world initializing, see the #defines above.
-
+*/
 /obj/item/integrated_circuit/manipulation/shocker
 	name = "shocker circuit"
 	desc = "Used to shock adjastent creatures with electricity."
@@ -232,10 +232,12 @@
 	if(!M.Adjacent(T))
 		return //Can't reach
 	to_chat(M, "<span class='danger'>You feel a sharp shock!</span>")
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-	s.set_up(3, 1, M)
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+	s.set_up(12, 1, src)
 	s.start()
-	M.stun_effect_act(0, Clamp(get_pin_data(IC_INPUT, 2),0,60), null)
+	var/stf=Clamp(get_pin_data(IC_INPUT, 2),0,60)
+	M.Knockdown(stf)
+	M.apply_effect(STUTTER, stf)
 
 
 /obj/item/integrated_circuit/manipulation/grabber
@@ -276,10 +278,7 @@
 					var obj/item/A = AM
 					if(A.w_class < WEIGHT_CLASS_SMALL)
 						AM.loc = src
-				else if(istype(AM,/mob))
-					var mob/A = AM
-					if(istiny(A))
-						AM.loc = src
+
 	if(mode == 0)
 		if(contents.len)
 			var/obj/item/U = contents[1]
