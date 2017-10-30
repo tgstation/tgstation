@@ -14,7 +14,7 @@
 		if(program != "blank")
 			assemble(program)
 
-/obj/item/device/integrated_electronics/prefab/initialize()
+/obj/item/device/integrated_electronics/prefab/Initialize()
 	var/list/assembly_list = list(
 			new /obj/item/device/electronic_assembly(null),
 			new /obj/item/device/electronic_assembly/medium(null),

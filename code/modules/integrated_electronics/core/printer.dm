@@ -22,7 +22,7 @@
 	upgraded = TRUE
 	can_clone = TRUE
 
-/obj/item/device/integrated_circuit_printer/initialize()
+/obj/item/device/integrated_circuit_printer/Initialize()
 	..()
 	if(!recipe_list.len)
 		// Unfortunately this needed a lot of loops, but it should only be run once at init.

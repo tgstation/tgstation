@@ -251,7 +251,11 @@
 
 /obj/item/integrated_circuit/output/video_camera/proc/set_camera_status(var/status)
 	if(camera)
-		camera.set_status(status)
+		if(camera.can_use())
+			GLOB.cameranet.addCamera(src)
+		else
+			GLOB.cameranet.removeCamera(src)
+		GLOB.cameranet.updateChunk(x, y, z)
 		power_draw_idle = camera.status ? 20 : 0
 		if(camera.status) // Ensure that there's actually power.
 			if(!draw_idle_power())
