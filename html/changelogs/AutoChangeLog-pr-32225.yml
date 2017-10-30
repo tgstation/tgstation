@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - tweak: "Smartfridges and chem/condimasters now output items in a deterministic 3x3 grid rather than in a huge pile in the middle of the tile."
