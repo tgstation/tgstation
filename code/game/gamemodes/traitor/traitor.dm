@@ -83,7 +83,7 @@
 /datum/game_mode/traitor/proc/add_latejoin_traitor(datum/mind/character)
 	var/datum/antagonist/traitor/new_antag = new antag_datum(character)
 	new_antag.should_specialise = TRUE
-	character.add_antag_datum(antag_datum)
+	character.add_antag_datum(new_antag)
 
 
 
