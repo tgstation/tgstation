@@ -267,21 +267,21 @@ GLOBAL_LIST_EMPTY(allCasters)
 				dat += "Welcome to Newscasting Unit #[unit_no].<BR> Interface & News networks Operational."
 				dat += "<BR><FONT SIZE=1>Property of Nanotrasen Inc</FONT>"
 				if(GLOB.news_network.wanted_issue.active)
-					dat+= "<HR><A href='?src=\ref[src];view_wanted=1'>Read Wanted Issue</A>"
-				dat+= "<HR><BR><A href='?src=\ref[src];create_channel=1'>Create Feed Channel</A>"
-				dat+= "<BR><A href='?src=\ref[src];view=1'>View Feed Channels</A>"
-				dat+= "<BR><A href='?src=\ref[src];create_feed_story=1'>Submit new Feed story</A>"
-				dat+= "<BR><A href='?src=\ref[src];menu_paper=1'>Print newspaper</A>"
-				dat+= "<BR><A href='?src=\ref[src];refresh=1'>Re-scan User</A>"
-				dat+= "<BR><BR><A href='?src=\ref[human_or_robot_user];mach_close=newscaster_main'>Exit</A>"
+					dat+= "<HR><A href='?src=[REF(src)];view_wanted=1'>Read Wanted Issue</A>"
+				dat+= "<HR><BR><A href='?src=[REF(src)];create_channel=1'>Create Feed Channel</A>"
+				dat+= "<BR><A href='?src=[REF(src)];view=1'>View Feed Channels</A>"
+				dat+= "<BR><A href='?src=[REF(src)];create_feed_story=1'>Submit new Feed story</A>"
+				dat+= "<BR><A href='?src=[REF(src)];menu_paper=1'>Print newspaper</A>"
+				dat+= "<BR><A href='?src=[REF(src)];refresh=1'>Re-scan User</A>"
+				dat+= "<BR><BR><A href='?src=[REF(human_or_robot_user)];mach_close=newscaster_main'>Exit</A>"
 				if(securityCaster)
 					var/wanted_already = 0
 					if(GLOB.news_network.wanted_issue.active)
 						wanted_already = 1
 					dat+="<HR><B>Feed Security functions:</B><BR>"
-					dat+="<BR><A href='?src=\ref[src];menu_wanted=1'>[(wanted_already) ? ("Manage") : ("Publish")] \"Wanted\" Issue</A>"
-					dat+="<BR><A href='?src=\ref[src];menu_censor_story=1'>Censor Feed Stories</A>"
-					dat+="<BR><A href='?src=\ref[src];menu_censor_channel=1'>Mark Feed Channel with Nanotrasen D-Notice</A>"
+					dat+="<BR><A href='?src=[REF(src)];menu_wanted=1'>[(wanted_already) ? ("Manage") : ("Publish")] \"Wanted\" Issue</A>"
+					dat+="<BR><A href='?src=[REF(src)];menu_censor_story=1'>Censor Feed Stories</A>"
+					dat+="<BR><A href='?src=[REF(src)];menu_censor_channel=1'>Mark Feed Channel with Nanotrasen D-Notice</A>"
 				dat+="<BR><HR>The newscaster recognises you as: <FONT COLOR='green'>[scanned_user]</FONT>"
 			if(1)
 				dat+= "Station Feed Channels<HR>"
@@ -290,31 +290,31 @@ GLOBAL_LIST_EMPTY(allCasters)
 				else
 					for(var/datum/newscaster/feed_channel/CHANNEL in GLOB.news_network.network_channels)
 						if(CHANNEL.is_admin_channel)
-							dat+="<B><FONT style='BACKGROUND-COLOR: LightGreen '><A href='?src=\ref[src];show_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A></FONT></B><BR>"
+							dat+="<B><FONT style='BACKGROUND-COLOR: LightGreen '><A href='?src=[REF(src)];show_channel=[REF(CHANNEL)]'>[CHANNEL.channel_name]</A></FONT></B><BR>"
 						else
-							dat+="<B><A href='?src=\ref[src];show_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR></B>"
-				dat+="<BR><HR><A href='?src=\ref[src];refresh=1'>Refresh</A>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Back</A>"
+							dat+="<B><A href='?src=[REF(src)];show_channel=[REF(CHANNEL)]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR></B>"
+				dat+="<BR><HR><A href='?src=[REF(src)];refresh=1'>Refresh</A>"
+				dat+="<BR><A href='?src=[REF(src)];setScreen=[0]'>Back</A>"
 			if(2)
 				dat+="Creating new Feed Channel..."
-				dat+="<HR><B><A href='?src=\ref[src];set_channel_name=1'>Channel Name</A>:</B> [channel_name]<BR>"
+				dat+="<HR><B><A href='?src=[REF(src)];set_channel_name=1'>Channel Name</A>:</B> [channel_name]<BR>"
 				dat+="<B>Channel Author:</B> <FONT COLOR='green'>[scanned_user]</FONT><BR>"
-				dat+="<B><A href='?src=\ref[src];set_channel_lock=1'>Will Accept Public Feeds</A>:</B> [(c_locked) ? ("NO") : ("YES")]<BR><BR>"
-				dat+="<BR><A href='?src=\ref[src];submit_new_channel=1'>Submit</A><BR><BR><A href='?src=\ref[src];setScreen=[0]'>Cancel</A><BR>"
+				dat+="<B><A href='?src=[REF(src)];set_channel_lock=1'>Will Accept Public Feeds</A>:</B> [(c_locked) ? ("NO") : ("YES")]<BR><BR>"
+				dat+="<BR><A href='?src=[REF(src)];submit_new_channel=1'>Submit</A><BR><BR><A href='?src=[REF(src)];setScreen=[0]'>Cancel</A><BR>"
 			if(3)
 				dat+="Creating new Feed Message..."
-				dat+="<HR><B><A href='?src=\ref[src];set_channel_receiving=1'>Receiving Channel</A>:</B> [channel_name]<BR>"
+				dat+="<HR><B><A href='?src=[REF(src)];set_channel_receiving=1'>Receiving Channel</A>:</B> [channel_name]<BR>"
 				dat+="<B>Message Author:</B> <FONT COLOR='green'>[scanned_user]</FONT><BR>"
-				dat+="<B><A href='?src=\ref[src];set_new_message=1'>Message Body</A>:</B> <BR><font face=\"[PEN_FONT]\">[parsemarkdown(msg, user)]</font><BR>"
-				dat+="<B><A href='?src=\ref[src];set_attachment=1'>Attach Photo</A>:</B>  [(photo ? "Photo Attached" : "No Photo")]</BR>"
-				dat+="<B><A href='?src=\ref[src];set_comment=1'>Comments [allow_comments ? "Enabled" : "Disabled"]</A></B><BR>"
-				dat+="<BR><A href='?src=\ref[src];submit_new_message=1'>Submit</A><BR><BR><A href='?src=\ref[src];setScreen=[0]'>Cancel</A><BR>"
+				dat+="<B><A href='?src=[REF(src)];set_new_message=1'>Message Body</A>:</B> <BR><font face=\"[PEN_FONT]\">[parsemarkdown(msg, user)]</font><BR>"
+				dat+="<B><A href='?src=[REF(src)];set_attachment=1'>Attach Photo</A>:</B>  [(photo ? "Photo Attached" : "No Photo")]</BR>"
+				dat+="<B><A href='?src=[REF(src)];set_comment=1'>Comments [allow_comments ? "Enabled" : "Disabled"]</A></B><BR>"
+				dat+="<BR><A href='?src=[REF(src)];submit_new_message=1'>Submit</A><BR><BR><A href='?src=[REF(src)];setScreen=[0]'>Cancel</A><BR>"
 			if(4)
 				dat+="Feed story successfully submitted to [channel_name].<BR><BR>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Return</A><BR>"
+				dat+="<BR><A href='?src=[REF(src)];setScreen=[0]'>Return</A><BR>"
 			if(5)
 				dat+="Feed Channel [channel_name] created successfully.<BR><BR>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Return</A><BR>"
+				dat+="<BR><A href='?src=[REF(src)];setScreen=[0]'>Return</A><BR>"
 			if(6)
 				dat+="<B><FONT COLOR='maroon'>ERROR: Could not submit Feed story to Network.</B></FONT><HR><BR>"
 				if(channel_name=="")
@@ -323,7 +323,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 					dat+="<FONT COLOR='maroon'>Channel author unverified.</FONT><BR>"
 				if(msg == "" || msg == "\[REDACTED\]")
 					dat+="<FONT COLOR='maroon'>Invalid message body.</FONT><BR>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[3]'>Return</A><BR>"
+				dat+="<BR><A href='?src=[REF(src)];setScreen=[3]'>Return</A><BR>"
 			if(7)
 				dat+="<B><FONT COLOR='maroon'>ERROR: Could not submit Feed Channel to Network.</B></FONT><HR><BR>"
 				var/list/existing_authors = list()
@@ -345,7 +345,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 					dat+="<FONT COLOR='maroon'>Channel name already in use.</FONT><BR>"
 				if(scanned_user=="Unknown")
 					dat+="<FONT COLOR='maroon'>Channel author unverified.</FONT><BR>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[2]'>Return</A><BR>"
+				dat+="<BR><A href='?src=[REF(src)];setScreen=[2]'>Return</A><BR>"
 			if(8)
 				var/total_num=length(GLOB.news_network.network_channels)
 				var/active_num=total_num
@@ -357,8 +357,8 @@ GLOBAL_LIST_EMPTY(allCasters)
 						active_num--
 				dat+="Network currently serves a total of [total_num] Feed channels, [active_num] of which are active, and a total of [message_num] Feed Stories."
 				dat+="<BR><BR><B>Liquid Paper remaining:</B> [(paper_remaining) *100 ] cm^3"
-				dat+="<BR><BR><A href='?src=\ref[src];print_paper=[0]'>Print Paper</A>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Cancel</A>"
+				dat+="<BR><BR><A href='?src=[REF(src)];print_paper=[0]'>Print Paper</A>"
+				dat+="<BR><A href='?src=[REF(src)];setScreen=[0]'>Cancel</A>"
 			if(9)
 				dat+="<B>[viewing_channel.channel_name]: </B><FONT SIZE=1>\[created by: <FONT COLOR='maroon'>[viewing_channel.returnAuthor(-1)]</FONT>\]</FONT><HR>"
 				if(viewing_channel.censored)
@@ -385,9 +385,9 @@ GLOBAL_LIST_EMPTY(allCasters)
 							if(MESSAGE.locked)
 								dat+="<b>Comments locked</b><br>"
 							else
-								dat+="<a href='?src=\ref[src];new_comment=\ref[MESSAGE]'>Comment</a><br>"
-				dat+="<BR><HR><A href='?src=\ref[src];refresh=1'>Refresh</A>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[1]'>Back</A>"
+								dat+="<a href='?src=[REF(src)];new_comment=[REF(MESSAGE)]'>Comment</a><br>"
+				dat+="<BR><HR><A href='?src=[REF(src)];refresh=1'>Refresh</A>"
+				dat+="<BR><A href='?src=[REF(src)];setScreen=[1]'>Back</A>"
 			if(10)
 				dat+="<B>Nanotrasen Feed Censorship Tool</B><BR>"
 				dat+="<FONT SIZE=1>NOTE: Due to the nature of news Feeds, total deletion of a Feed Story is not possible.<BR>"
@@ -397,8 +397,8 @@ GLOBAL_LIST_EMPTY(allCasters)
 					dat+="<I>No feed channels found active...</I><BR>"
 				else
 					for(var/datum/newscaster/feed_channel/CHANNEL in GLOB.news_network.network_channels)
-						dat+="<A href='?src=\ref[src];pick_censor_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Cancel</A>"
+						dat+="<A href='?src=[REF(src)];pick_censor_channel=[REF(CHANNEL)]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR>"
+				dat+="<BR><A href='?src=[REF(src)];setScreen=[0]'>Cancel</A>"
 			if(11)
 				dat+="<B>Nanotrasen D-Notice Handler</B><HR>"
 				dat+="<FONT SIZE=1>A D-Notice is to be bestowed upon the channel if the handling Authority deems it as harmful for the station's"
@@ -408,24 +408,24 @@ GLOBAL_LIST_EMPTY(allCasters)
 					dat+="<I>No feed channels found active...</I><BR>"
 				else
 					for(var/datum/newscaster/feed_channel/CHANNEL in GLOB.news_network.network_channels)
-						dat+="<A href='?src=\ref[src];pick_d_notice=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Back</A>"
+						dat+="<A href='?src=[REF(src)];pick_d_notice=[REF(CHANNEL)]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR>"
+				dat+="<BR><A href='?src=[REF(src)];setScreen=[0]'>Back</A>"
 			if(12)
 				dat+="<B>[viewing_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[viewing_channel.returnAuthor(-1)]</FONT> \]</FONT><BR>"
-				dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_channel_author=\ref[viewing_channel]'>[(viewing_channel.authorCensor) ? ("Undo Author censorship") : ("Censor channel Author")]</A></FONT><HR>"
+				dat+="<FONT SIZE=2><A href='?src=[REF(src)];censor_channel_author=[REF(viewing_channel)]'>[(viewing_channel.authorCensor) ? ("Undo Author censorship") : ("Censor channel Author")]</A></FONT><HR>"
 				if(isemptylist(viewing_channel.messages))
 					dat+="<I>No feed messages found in channel...</I><BR>"
 				else
 					for(var/datum/newscaster/feed_message/MESSAGE in viewing_channel.messages)
 						dat+="-[MESSAGE.returnBody(-1)] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.returnAuthor(-1)]</FONT>\]</FONT><BR>"
-						dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_channel_story_body=\ref[MESSAGE]'>[(MESSAGE.bodyCensor) ? ("Undo story censorship") : ("Censor story")]</A>  -  <A href='?src=\ref[src];censor_channel_story_author=\ref[MESSAGE]'>[(MESSAGE.authorCensor) ? ("Undo Author Censorship") : ("Censor message Author")]</A></FONT><BR>"
-						dat+="[MESSAGE.comments.len] comment[MESSAGE.comments.len > 1 ? "s" : ""]: <a href='?src=\ref[src];lock_comment=\ref[MESSAGE]'>[MESSAGE.locked ? "Unlock" : "Lock"]</a><br>"
+						dat+="<FONT SIZE=2><A href='?src=[REF(src)];censor_channel_story_body=[REF(MESSAGE)]'>[(MESSAGE.bodyCensor) ? ("Undo story censorship") : ("Censor story")]</A>  -  <A href='?src=[REF(src)];censor_channel_story_author=[REF(MESSAGE)]'>[(MESSAGE.authorCensor) ? ("Undo Author Censorship") : ("Censor message Author")]</A></FONT><BR>"
+						dat+="[MESSAGE.comments.len] comment[MESSAGE.comments.len > 1 ? "s" : ""]: <a href='?src=[REF(src)];lock_comment=[REF(MESSAGE)]'>[MESSAGE.locked ? "Unlock" : "Lock"]</a><br>"
 						for(var/datum/newscaster/feed_comment/comment in MESSAGE.comments)
-							dat+="[comment.body] <a href='?src=\ref[src];del_comment=\ref[comment];del_comment_msg=\ref[MESSAGE]'>X</a><br><font size=1>[comment.author] [comment.time_stamp]</font><br>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[10]'>Back</A>"
+							dat+="[comment.body] <a href='?src=[REF(src)];del_comment=[REF(comment)];del_comment_msg=[REF(MESSAGE)]'>X</a><br><font size=1>[comment.author] [comment.time_stamp]</font><br>"
+				dat+="<BR><A href='?src=[REF(src)];setScreen=[10]'>Back</A>"
 			if(13)
 				dat+="<B>[viewing_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[viewing_channel.returnAuthor(-1)]</FONT> \]</FONT><BR>"
-				dat+="Channel messages listed below. If you deem them dangerous to the station, you can <A href='?src=\ref[src];toggle_d_notice=\ref[viewing_channel]'>Bestow a D-Notice upon the channel</A>.<HR>"
+				dat+="Channel messages listed below. If you deem them dangerous to the station, you can <A href='?src=[REF(src)];toggle_d_notice=[REF(viewing_channel)]'>Bestow a D-Notice upon the channel</A>.<HR>"
 				if(viewing_channel.censored)
 					dat+="<FONT COLOR='red'><B>ATTENTION: </B></FONT>This channel has been deemed as threatening to the welfare of the station, and marked with a Nanotrasen D-Notice.<BR>"
 					dat+="No further feed story additions are allowed while the D-Notice is in effect.</FONT><BR><BR>"
@@ -435,7 +435,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 					else
 						for(var/datum/newscaster/feed_message/MESSAGE in viewing_channel.messages)
 							dat+="-[MESSAGE.returnBody(-1)] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.returnAuthor(-1)]</FONT>\]</FONT><BR>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[11]'>Back</A>"
+				dat+="<BR><A href='?src=[REF(src)];setScreen=[11]'>Back</A>"
 			if(14)
 				dat+="<B>Wanted Issue Handler:</B>"
 				var/wanted_already = 0
@@ -446,20 +446,20 @@ GLOBAL_LIST_EMPTY(allCasters)
 				if(wanted_already)
 					dat+="<FONT SIZE=2><BR><I>A wanted issue is already in Feed Circulation. You can edit or cancel it below.</FONT></I>"
 				dat+="<HR>"
-				dat+="<A href='?src=\ref[src];set_wanted_name=1'>Criminal Name</A>: [channel_name] <BR>"
-				dat+="<A href='?src=\ref[src];set_wanted_desc=1'>Description</A>: [msg] <BR>"
-				dat+="<A href='?src=\ref[src];set_attachment=1'>Attach Photo</A>: [(photo ? "Photo Attached" : "No Photo")]</BR>"
+				dat+="<A href='?src=[REF(src)];set_wanted_name=1'>Criminal Name</A>: [channel_name] <BR>"
+				dat+="<A href='?src=[REF(src)];set_wanted_desc=1'>Description</A>: [msg] <BR>"
+				dat+="<A href='?src=[REF(src)];set_attachment=1'>Attach Photo</A>: [(photo ? "Photo Attached" : "No Photo")]</BR>"
 				if(wanted_already)
 					dat+="<B>Wanted Issue created by:</B><FONT COLOR='green'>[GLOB.news_network.wanted_issue.scannedUser]</FONT><BR>"
 				else
 					dat+="<B>Wanted Issue will be created under prosecutor:</B><FONT COLOR='green'>[scanned_user]</FONT><BR>"
-				dat+="<BR><A href='?src=\ref[src];submit_wanted=[end_param]'>[(wanted_already) ? ("Edit Issue") : ("Submit")]</A>"
+				dat+="<BR><A href='?src=[REF(src)];submit_wanted=[end_param]'>[(wanted_already) ? ("Edit Issue") : ("Submit")]</A>"
 				if(wanted_already)
-					dat+="<BR><A href='?src=\ref[src];cancel_wanted=1'>Take down Issue</A>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Cancel</A>"
+					dat+="<BR><A href='?src=[REF(src)];cancel_wanted=1'>Take down Issue</A>"
+				dat+="<BR><A href='?src=[REF(src)];setScreen=[0]'>Cancel</A>"
 			if(15)
 				dat+="<FONT COLOR='green'>Wanted issue for [channel_name] is now in Network Circulation.</FONT><BR><BR>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Return</A><BR>"
+				dat+="<BR><A href='?src=[REF(src)];setScreen=[0]'>Return</A><BR>"
 			if(16)
 				dat+="<B><FONT COLOR='maroon'>ERROR: Wanted Issue rejected by Network.</B></FONT><HR><BR>"
 				if(channel_name=="" || channel_name == "\[REDACTED\]")
@@ -468,10 +468,10 @@ GLOBAL_LIST_EMPTY(allCasters)
 					dat+="<FONT COLOR='maroon'>Issue author unverified.</FONT><BR>"
 				if(msg == "" || msg == "\[REDACTED\]")
 					dat+="<FONT COLOR='maroon'>Invalid description.</FONT><BR>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Return</A><BR>"
+				dat+="<BR><A href='?src=[REF(src)];setScreen=[0]'>Return</A><BR>"
 			if(17)
 				dat+="<B>Wanted Issue successfully deleted from Circulation</B><BR>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Return</A><BR>"
+				dat+="<BR><A href='?src=[REF(src)];setScreen=[0]'>Return</A><BR>"
 			if(18)
 				if(GLOB.news_network.wanted_issue.active)
 					dat+="<B><FONT COLOR ='maroon'>-- STATIONWIDE WANTED ISSUE --</B></FONT><BR><FONT SIZE=2>\[Submitted by: <FONT COLOR='green'>[GLOB.news_network.wanted_issue.scannedUser]</FONT>\]</FONT><HR>"
@@ -485,16 +485,16 @@ GLOBAL_LIST_EMPTY(allCasters)
 						dat+="None"
 				else
 					dat+="No current wanted issue found.<BR><BR>"
-				dat+="<BR><BR><A href='?src=\ref[src];setScreen=[0]'>Back</A><BR>"
+				dat+="<BR><BR><A href='?src=[REF(src)];setScreen=[0]'>Back</A><BR>"
 			if(19)
 				dat+="<FONT COLOR='green'>Wanted issue for [channel_name] successfully edited.</FONT><BR><BR>"
-				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Return</A><BR>"
+				dat+="<BR><A href='?src=[REF(src)];setScreen=[0]'>Return</A><BR>"
 			if(20)
 				dat+="<FONT COLOR='green'>Printing successful. Please receive your newspaper from the bottom of the machine.</FONT><BR><BR>"
-				dat+="<A href='?src=\ref[src];setScreen=[0]'>Return</A>"
+				dat+="<A href='?src=[REF(src)];setScreen=[0]'>Return</A>"
 			if(21)
 				dat+="<FONT COLOR='maroon'>Unable to print newspaper. Insufficient paper. Please notify maintenance personnel to refill machine storage.</FONT><BR><BR>"
-				dat+="<A href='?src=\ref[src];setScreen=[0]'>Return</A>"
+				dat+="<A href='?src=[REF(src)];setScreen=[0]'>Return</A>"
 		var/datum/browser/popup = new(human_or_robot_user, "newscaster_main", "Newscaster Unit #[unit_no]", 400, 600)
 		popup.set_content(dat)
 		popup.set_title_image(human_or_robot_user.browse_rsc_icon(icon, icon_state))
@@ -933,7 +933,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 					dat+="</ul>"
 				if(scribble_page==curr_page)
 					dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[scribble]\"</I>"
-				dat+= "<HR><DIV STYLE='float:right;'><A href='?src=\ref[src];next_page=1'>Next Page</A></DIV> <div style='float:left;'><A href='?src=\ref[human_user];mach_close=newspaper_main'>Done reading</A></DIV>"
+				dat+= "<HR><DIV STYLE='float:right;'><A href='?src=[REF(src)];next_page=1'>Next Page</A></DIV> <div style='float:left;'><A href='?src=[REF(human_user)];mach_close=newspaper_main'>Done reading</A></DIV>"
 			if(1) // X channel pages inbetween.
 				for(var/datum/newscaster/feed_channel/NP in news_content)
 					pages++
@@ -962,7 +962,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 						dat+="</ul>"
 				if(scribble_page==curr_page)
 					dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[scribble]\"</I>"
-				dat+= "<BR><HR><DIV STYLE='float:left;'><A href='?src=\ref[src];prev_page=1'>Previous Page</A></DIV> <DIV STYLE='float:right;'><A href='?src=\ref[src];next_page=1'>Next Page</A></DIV>"
+				dat+= "<BR><HR><DIV STYLE='float:left;'><A href='?src=[REF(src)];prev_page=1'>Previous Page</A></DIV> <DIV STYLE='float:right;'><A href='?src=[REF(src)];next_page=1'>Next Page</A></DIV>"
 			if(2) //Last page
 				for(var/datum/newscaster/feed_channel/NP in news_content)
 					pages++
@@ -980,7 +980,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 					dat+="<I>Apart from some uninteresting classified ads, there's nothing on this page...</I>"
 				if(scribble_page==curr_page)
 					dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[scribble]\"</I>"
-				dat+= "<HR><DIV STYLE='float:left;'><A href='?src=\ref[src];prev_page=1'>Previous Page</A></DIV>"
+				dat+= "<HR><DIV STYLE='float:left;'><A href='?src=[REF(src)];prev_page=1'>Previous Page</A></DIV>"
 		dat+="<BR><HR><div align='center'>[curr_page+1]</div>"
 		human_user << browse(dat, "window=newspaper_main;size=300x400")
 		onclose(human_user, "newspaper_main")

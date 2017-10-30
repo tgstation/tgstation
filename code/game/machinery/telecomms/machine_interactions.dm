@@ -52,13 +52,13 @@
 	var/dat
 	dat = "<font face = \"Courier\"><HEAD><TITLE>[name]</TITLE></HEAD><center><H3>[name] Access</H3></center>"
 	dat += "<br>[temp]<br>"
-	dat += "<br>Power Status: <a href='?src=\ref[src];input=toggle'>[toggled ? "On" : "Off"]</a>"
+	dat += "<br>Power Status: <a href='?src=[REF(src)];input=toggle'>[toggled ? "On" : "Off"]</a>"
 	if(on && toggled)
 		if(id != "" && id)
-			dat += "<br>Identification String: <a href='?src=\ref[src];input=id'>[id]</a>"
+			dat += "<br>Identification String: <a href='?src=[REF(src)];input=id'>[id]</a>"
 		else
-			dat += "<br>Identification String: <a href='?src=\ref[src];input=id'>NULL</a>"
-		dat += "<br>Network: <a href='?src=\ref[src];input=network'>[network]</a>"
+			dat += "<br>Identification String: <a href='?src=[REF(src)];input=id'>NULL</a>"
+		dat += "<br>Network: <a href='?src=[REF(src)];input=network'>[network]</a>"
 		dat += "<br>Prefabrication: [autolinkers.len ? "TRUE" : "FALSE"]"
 		if(hide)
 			dat += "<br>Shadow Link: ACTIVE</a>"
@@ -73,7 +73,7 @@
 			i++
 			if(T.hide && !hide)
 				continue
-			dat += "<li>\ref[T] [T.name] ([T.id])  <a href='?src=\ref[src];unlink=[i]'>\[X\]</a></li>"
+			dat += "<li>[REF(T)] [T.name] ([T.id])  <a href='?src=[REF(src)];unlink=[i]'>\[X\]</a></li>"
 		dat += "</ol>"
 
 		dat += "<br>Filtering Frequencies: "
@@ -83,21 +83,21 @@
 			for(var/x in freq_listening)
 				i++
 				if(i < length(freq_listening))
-					dat += "[format_frequency(x)] GHz<a href='?src=\ref[src];delete=[x]'>\[X\]</a>; "
+					dat += "[format_frequency(x)] GHz<a href='?src=[REF(src)];delete=[x]'>\[X\]</a>; "
 				else
-					dat += "[format_frequency(x)] GHz<a href='?src=\ref[src];delete=[x]'>\[X\]</a>"
+					dat += "[format_frequency(x)] GHz<a href='?src=[REF(src)];delete=[x]'>\[X\]</a>"
 		else
 			dat += "NONE"
 
-		dat += "<br>  <a href='?src=\ref[src];input=freq'>\[Add Filter\]</a>"
+		dat += "<br>  <a href='?src=[REF(src)];input=freq'>\[Add Filter\]</a>"
 		dat += "<hr>"
 
 		if(P)
 			var/obj/machinery/telecomms/T = P.buffer
 			if(istype(T))
-				dat += "<br><br>MULTITOOL BUFFER: [T] ([T.id]) <a href='?src=\ref[src];link=1'>\[Link\]</a> <a href='?src=\ref[src];flush=1'>\[Flush\]"
+				dat += "<br><br>MULTITOOL BUFFER: [T] ([T.id]) <a href='?src=[REF(src)];link=1'>\[Link\]</a> <a href='?src=[REF(src)];flush=1'>\[Flush\]"
 			else
-				dat += "<br><br>MULTITOOL BUFFER: <a href='?src=\ref[src];buffer=1'>\[Add Machine\]</a>"
+				dat += "<br><br>MULTITOOL BUFFER: <a href='?src=[REF(src)];buffer=1'>\[Add Machine\]</a>"
 
 	dat += "</font>"
 	temp = ""
@@ -151,8 +151,8 @@
 
 /obj/machinery/telecomms/relay/Options_Menu()
 	var/dat = ""
-	dat += "<br>Broadcasting: <A href='?src=\ref[src];broadcast=1'>[broadcasting ? "YES" : "NO"]</a>"
-	dat += "<br>Receiving:    <A href='?src=\ref[src];receive=1'>[receiving ? "YES" : "NO"]</a>"
+	dat += "<br>Broadcasting: <A href='?src=[REF(src)];broadcast=1'>[broadcasting ? "YES" : "NO"]</a>"
+	dat += "<br>Receiving:    <A href='?src=[REF(src)];receive=1'>[receiving ? "YES" : "NO"]</a>"
 	return dat
 
 /obj/machinery/telecomms/relay/Options_Topic(href, href_list)
@@ -167,7 +167,7 @@
 // BUS
 
 /obj/machinery/telecomms/bus/Options_Menu()
-	var/dat = "<br>Change Signal Frequency: <A href='?src=\ref[src];change_freq=1'>[change_frequency ? "YES ([change_frequency])" : "NO"]</a>"
+	var/dat = "<br>Change Signal Frequency: <A href='?src=[REF(src)];change_freq=1'>[change_frequency ? "YES ([change_frequency])" : "NO"]</a>"
 	return dat
 
 /obj/machinery/telecomms/bus/Options_Topic(href, href_list)
@@ -254,7 +254,7 @@
 		if(text2num(href_list["unlink"]) <= length(links))
 			var/obj/machinery/telecomms/T = links[text2num(href_list["unlink"])]
 			if(T)
-				temp = "<font color = #666633>-% Removed \ref[T] [T.name] from linked entities. %-</font color>"
+				temp = "<font color = #666633>-% Removed [REF(T)] [T.name] from linked entities. %-</font color>"
 
 				// Remove link entries from both T and src.
 
@@ -276,7 +276,7 @@
 				if(!(T in links))
 					links += T
 
-				temp = "<font color = #666633>-% Successfully linked with \ref[T] [T.name] %-</font color>"
+				temp = "<font color = #666633>-% Successfully linked with [REF(T)] [T.name] %-</font color>"
 
 			else
 				temp = "<font color = #666633>-% Unable to acquire buffer %-</font color>"
@@ -284,7 +284,7 @@
 	if(href_list["buffer"])
 
 		P.buffer = src
-		temp = "<font color = #666633>-% Successfully stored \ref[P.buffer] [P.buffer.name] in buffer %-</font color>"
+		temp = "<font color = #666633>-% Successfully stored [REF(P.buffer)] [P.buffer.name] in buffer %-</font color>"
 
 
 	if(href_list["flush"])

@@ -307,7 +307,7 @@
 				var/mob/living/simple_animal/hostile/statue/S = new(P.loc, owner)
 				S.name = "statue of [L.name]"
 				if(owner)
-					S.faction = list("\ref[owner]")
+					S.faction = list("[REF(owner)]")
 				S.icon = P.icon
 				S.icon_state = P.icon_state
 				S.copy_overlays(P, TRUE)

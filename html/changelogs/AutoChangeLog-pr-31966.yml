@@ -1,6 +1,0 @@
-author: "Mercenaryblue"
-delete-after: True
-changes: 
-  - rscadd: "Skeletons can now have their own spectral instruments"
-  - rscadd: "\\[Dooting Intensifies\\]"
-  - admin: "the variable \"too_spooky\" defines if it will spawn new instruments, by default TRUE."

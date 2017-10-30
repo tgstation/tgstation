@@ -92,7 +92,7 @@
 		return
 
 	var/tc = json["transition_config"]
-	if(tc != "default")
+	if(tc != null && tc != "default")
 		if(!islist(tc))
 			log_world("transition_config is not a list!")
 			return
