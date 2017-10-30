@@ -38831,7 +38831,7 @@
 	},
 /area/engine/atmos)
 "bQA" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating/airless,
 /area/engine/atmos)
 "bQB" = (

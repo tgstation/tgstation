@@ -37954,7 +37954,7 @@
 	},
 /area/engine/atmos)
 "bMi" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating/airless,
 /area/engine/atmos)
 "bMj" = (
@@ -51354,6 +51354,10 @@
 	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
+"cBT" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating/airless,
+/area/maintenance/disposal/incinerator)
 
 (1,1,1) = {"
 aaa
@@ -89301,7 +89305,7 @@ bYs
 bYw
 bYw
 bYw
-cbz
+cBT
 bYw
 bYw
 bYw

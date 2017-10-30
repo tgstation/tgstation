@@ -9050,10 +9050,10 @@
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
 "aqE" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/atmos)
 "aqF" = (
@@ -10695,8 +10695,8 @@
 /turf/open/floor/engine/n2,
 /area/engine/atmos)
 "aty" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/atmos)
 "atz" = (
