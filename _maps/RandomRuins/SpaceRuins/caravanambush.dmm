@@ -605,7 +605,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/obj/effect/mob_spawn/human/corpse/nanotrasensoldier,
+/obj/effect/mob_spawn/human/corpse/bald/nanotrasensoldier,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/unpowered)
@@ -880,7 +880,7 @@
 /area/ruin/unpowered)
 "cP" = (
 /obj/item/chair,
-/obj/effect/mob_spawn/human/corpse/nanotrasensoldier,
+/obj/effect/mob_spawn/human/corpse/bald/nanotrasensoldier,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/unpowered)
@@ -1033,7 +1033,7 @@
 /turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/unpowered)
 "dj" = (
-/obj/effect/mob_spawn/human/corpse/nanotrasensoldier,
+/obj/effect/mob_spawn/human/corpse/bald/nanotrasensoldier,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/unpowered)
