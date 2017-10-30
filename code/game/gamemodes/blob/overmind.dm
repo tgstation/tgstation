@@ -35,6 +35,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	var/list/blobs_legit = list()
 	var/blobwincount = 400
 	var/victory_in_progress = FALSE
+	var/cuddles = TRUE
 
 /mob/camera/blob/Initialize(mapload, starting_points = 60)
 	blob_points = starting_points
