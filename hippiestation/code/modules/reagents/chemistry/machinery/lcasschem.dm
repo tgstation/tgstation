@@ -145,7 +145,6 @@
 		icon_state = "radio"
 
 /obj/machinery/chem/radioactive/attackby(obj/item/I, mob/user, params)
-	..()
 	if(istype(I, /obj/item/stack/sheet/mineral/uranium))
 		. = 1 //no afterattack
 		if(material_amt >= 50000)
@@ -157,6 +156,7 @@
 		user.dropItemToGround(I)
 		qdel(I)//it's a var now
 		return
+	..()
 
 /obj/machinery/chem/radioactive/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -250,7 +250,6 @@
 		icon_state = "blue"
 
 /obj/machinery/chem/bluespace/attackby(obj/item/I, mob/user, params)
-	..()
 	if(istype(I, /obj/item/ore/bluespace_crystal/refined))
 		. = 1 //no afterattack
 		if(crystal_amt >= 10)
@@ -261,7 +260,7 @@
 		user.dropItemToGround(I)
 		qdel(I)//it's a var now
 		return
-
+	..()
 /obj/machinery/chem/bluespace/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -317,7 +316,7 @@
 	name = "Centrifuge"
 	desc = "Spins chemicals at high speeds to seperate them"
 	icon_state = "cent_off"
-	var/time_required = 30
+	var/time_required = 10
 	var/time = 0
 
 /obj/machinery/chem/centrifuge/Initialize()

@@ -14,7 +14,7 @@
 	while(query_poll_get.NextRow())
 		var/pollid = query_poll_get.item[1]
 		var/pollquestion = query_poll_get.item[2]
-		output += "<tr bgcolor='#[ (i % 2 == 1) ? "e2e2e2" : "e2e2e2" ]'><td><a href=\"byond://?src=\ref[src];pollid=[pollid]\"><b>[pollquestion]</b></a></td></tr>"
+		output += "<tr bgcolor='#[ (i % 2 == 1) ? "e2e2e2" : "e2e2e2" ]'><td><a href=\"byond://?src=[REF(src)];pollid=[pollid]\"><b>[pollquestion]</b></a></td></tr>"
 		i++
 	output += "</table>"
 	src << browse(output,"window=playerpolllist;size=500x300")
@@ -60,8 +60,8 @@
 			output += "<b>Question: [pollquestion]</b><br>"
 			output += "<font size='2'>Poll runs from <b>[pollstarttime]</b> until <b>[pollendtime]</b></font><p>"
 			if(!votedoptionid)
-				output += "<form name='cardcomp' action='?src=\ref[src]' method='get'>"
-				output += "<input type='hidden' name='src' value='\ref[src]'>"
+				output += "<form name='cardcomp' action='?src=[REF(src)]' method='get'>"
+				output += "<input type='hidden' name='src' value='[REF(src)]'>"
 				output += "<input type='hidden' name='votepollid' value='[pollid]'>"
 				output += "<input type='hidden' name='votetype' value=[POLLTYPE_OPTION]>"
 			output += "<table><tr><td>"
@@ -92,15 +92,15 @@
 			output += "<b>Question: [pollquestion]</b><br>"
 			output += "<font size='2'>Feedback gathering runs from <b>[pollstarttime]</b> until <b>[pollendtime]</b></font><p>"
 			if(!vote_text)
-				output += "<form name='cardcomp' action='?src=\ref[src]' method='get'>"
-				output += "<input type='hidden' name='src' value='\ref[src]'>"
+				output += "<form name='cardcomp' action='?src=[REF(src)]' method='get'>"
+				output += "<input type='hidden' name='src' value='[REF(src)]'>"
 				output += "<input type='hidden' name='votepollid' value='[pollid]'>"
 				output += "<input type='hidden' name='votetype' value=[POLLTYPE_TEXT]>"
 				output += "<font size='2'>Please provide feedback below. You can use any letters of the English alphabet, numbers and the symbols: . , ! ? : ; -</font><br>"
 				output += "<textarea name='replytext' cols='50' rows='14'></textarea>"
 				output += "<p><input type='submit' value='Submit'></form>"
-				output += "<form name='cardcomp' action='?src=\ref[src]' method='get'>"
-				output += "<input type='hidden' name='src' value='\ref[src]'>"
+				output += "<form name='cardcomp' action='?src=[REF(src)]' method='get'>"
+				output += "<input type='hidden' name='src' value='[REF(src)]'>"
 				output += "<input type='hidden' name='votepollid' value='[pollid]'>"
 				output += "<input type='hidden' name='votetype' value=[POLLTYPE_TEXT]>"
 				output += "<input type='hidden' name='replytext' value='ABSTAIN'>"
@@ -123,8 +123,8 @@
 				rating = query_rating_get_votes.item[2]
 				output += "<br><b>[optiontext] - [rating]</b>"
 			if(!rating)
-				output += "<form name='cardcomp' action='?src=\ref[src]' method='get'>"
-				output += "<input type='hidden' name='src' value='\ref[src]'>"
+				output += "<form name='cardcomp' action='?src=[REF(src)]' method='get'>"
+				output += "<input type='hidden' name='src' value='[REF(src)]'>"
 				output += "<input type='hidden' name='votepollid' value='[pollid]'>"
 				output += "<input type='hidden' name='votetype' value=[POLLTYPE_RATING]>"
 				var/minid = 999999
@@ -188,8 +188,8 @@
 			output += "<b>Question: [pollquestion]</b><br>You can select up to [multiplechoiceoptions] options. If you select more, the first [multiplechoiceoptions] will be saved.<br>"
 			output += "<font size='2'>Poll runs from <b>[pollstarttime]</b> until <b>[pollendtime]</b></font><p>"
 			if(!votedfor.len)
-				output += "<form name='cardcomp' action='?src=\ref[src]' method='get'>"
-				output += "<input type='hidden' name='src' value='\ref[src]'>"
+				output += "<form name='cardcomp' action='?src=[REF(src)]' method='get'>"
+				output += "<input type='hidden' name='src' value='[REF(src)]'>"
 				output += "<input type='hidden' name='votepollid' value='[pollid]'>"
 				output += "<input type='hidden' name='votetype' value=[POLLTYPE_MULTI]>"
 				output += "<input type='hidden' name='maxoptionid' value='[maxoptionid]'>"
@@ -300,8 +300,8 @@
 				<font size='2'>Revoting has been enabled on this poll, if you think you made a mistake, simply revote<br></font>
 				<font size='2'>Poll runs from <b>[pollstarttime]</b> until <b>[pollendtime]</b></font><p>
 				</div>
-				<form name='cardcomp' action='?src=\ref[src]' method='POST'>
-				<input type='hidden' name='src' value='\ref[src]'>
+				<form name='cardcomp' action='?src=[REF(src)]' method='POST'>
+				<input type='hidden' name='src' value='[REF(src)]'>
 				<input type='hidden' name='votepollid' value='[pollid]'>
 				<input type='hidden' name='votetype' value=[POLLTYPE_IRV]>
 				<input type='hidden' name='IRVdata' id='IRVdata'>

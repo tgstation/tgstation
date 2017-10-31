@@ -17,5 +17,6 @@ GLOBAL_LIST_INIT(no_reagent_message_typecache, typecacheof(list(
 GLOBAL_LIST_INIT(no_reagent_statechange_typecache, typecacheof(list(
   /obj/effect/particle_effect/water,
   /obj/effect/decal/cleanable,
+  /obj/effect/particle_effect/smoke/chem/smoke_machine,
   /mob/living)
 ))

@@ -671,7 +671,7 @@
 				to_chat(src, "\t <span class='[status == "OK" ? "notice" : "warning"]'>Your [LB.name] is [status].</span>")
 
 				for(var/obj/item/I in LB.embedded_objects)
-					to_chat(src, "\t <a href='?src=\ref[src];embedded_object=\ref[I];embedded_limb=\ref[LB]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
+					to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
 
 			for(var/t in missing)
 				to_chat(src, "<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>")

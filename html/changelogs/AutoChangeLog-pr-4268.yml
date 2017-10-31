@@ -1,0 +1,9 @@
+author: "banthebantz"
+delete-after: True
+changes: 
+  - balance: "Numerous casschem recipes have had their ratios improved to be less annoying"
+  - balance: "Kelotane recipe now results in 3 parts and Impedrezene has been buffed"
+  - balance: "Several hard to make chems have been tweaked and buffed"
+  - balance: "Plasmic Fusion is now 3x easier to initiate"
+  - balance: "The smoke machine can no longer create turfchems"
+  - bugfix: "Fusion now works again and Emittrium has been fixed"

@@ -16,9 +16,9 @@
 		text = uppertext(text)
 	text = "<i><b>[text]</b></i>: "
 	if(is_vampire(current))
-		text += "<b>VAMPIRE</b> | <a href='?src=\ref[src];vampire=clear'>human</a> | <a href='?src=\ref[src];vampire=full'>full-power</a>"
+		text += "<b>VAMPIRE</b> | <a href='?src=[REF(src)];vampire=clear'>human</a> | <a href='?src=[REF(src)];vampire=full'>full-power</a>"
 	else
-		text += "<a href='?src=\ref[src];vampire=vampire'>vampire</a> | <b>HUMAN</b> | <a href='?src=\ref[src];vampire=full'>full-power</a>"
+		text += "<a href='?src=[REF(src)];vampire=vampire'>vampire</a> | <b>HUMAN</b> | <a href='?src=[REF(src)];vampire=full'>full-power</a>"
 	if(current && current.client && (ROLE_VAMPIRE in current.client.prefs.be_special))
 		text += " | Enabled in Prefs"
 	else

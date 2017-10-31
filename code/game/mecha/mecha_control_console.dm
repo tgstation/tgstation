@@ -23,15 +23,15 @@
 			var/answer = TR.get_mecha_info()
 			if(answer)
 				dat += {"<hr>[answer]<br/>
-						  <a href='?src=\ref[src];send_message=\ref[TR]'>Send message</a><br/>
-						  <a href='?src=\ref[src];get_log=\ref[TR]'>Show exosuit log</a> | <a style='color: #f00;' href='?src=\ref[src];shock=\ref[TR]'>(EMP pulse)</a><br>"}
+						  <a href='?src=[REF(src)];send_message=[REF(TR)]'>Send message</a><br/>
+						  <a href='?src=[REF(src)];get_log=[REF(TR)]'>Show exosuit log</a> | <a style='color: #f00;' href='?src=[REF(src)];shock=[REF(TR)]'>(EMP pulse)</a><br>"}
 
 	if(screen==1)
 		dat += "<h3>Log contents</h3>"
-		dat += "<a href='?src=\ref[src];return=1'>Return</a><hr>"
+		dat += "<a href='?src=[REF(src)];return=1'>Return</a><hr>"
 		dat += "[stored_data]"
 
-	dat += "<A href='?src=\ref[src];refresh=1'>(Refresh)</A><BR>"
+	dat += "<A href='?src=[REF(src)];refresh=1'>(Refresh)</A><BR>"
 	dat += "</body></html>"
 
 	user << browse(dat, "window=computer;size=400x500")
@@ -41,19 +41,19 @@
 /obj/machinery/computer/mecha/Topic(href, href_list)
 	if(..())
 		return
-	var/datum/topic_input/filter = new /datum/topic_input(href,href_list)
+	var/datum/topic_input/afilter = new /datum/topic_input(href,href_list)
 	if(href_list["send_message"])
-		var/obj/item/mecha_parts/mecha_tracking/MT = filter.getObj("send_message")
+		var/obj/item/mecha_parts/mecha_tracking/MT = afilter.getObj("send_message")
 		var/message = stripped_input(usr,"Input message","Transmit message")
 		var/obj/mecha/M = MT.in_mecha()
 		if(trim(message) && M)
 			M.occupant_message(message)
 		return
 	if(href_list["shock"])
-		var/obj/item/mecha_parts/mecha_tracking/MT = filter.getObj("shock")
+		var/obj/item/mecha_parts/mecha_tracking/MT = afilter.getObj("shock")
 		MT.shock()
 	if(href_list["get_log"])
-		var/obj/item/mecha_parts/mecha_tracking/MT = filter.getObj("get_log")
+		var/obj/item/mecha_parts/mecha_tracking/MT = afilter.getObj("get_log")
 		stored_data = MT.get_mecha_log()
 		screen = 1
 	if(href_list["return"])

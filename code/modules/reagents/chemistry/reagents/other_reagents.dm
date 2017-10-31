@@ -1159,6 +1159,34 @@
 		M.confused = min(M.confused + 2, 5)
 	..()
 
+/datum/reagent/stimulum
+	name = "Stimulum"
+	id = "stimulum"
+	description = "An unstable experimental gas that greatly increases the energy of those that inhale it"
+	reagent_state = GAS
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	color = "E1A116"
+	taste_description = "sourness"
+
+/datum/reagent/stimulum/on_mob_life(mob/living/M) // Has a speedup, and the anti-stun effects of nicotine.
+	M.status_flags |= GOTTAGOFAST
+	M.AdjustStun(-20, 0)
+	M.AdjustKnockdown(-20, 0)
+	M.AdjustUnconscious(-20, 0)
+	M.adjustStaminaLoss(-0.5*REM, 0)
+
+/datum/reagent/browngas
+	name = "Brown gas"
+	id = "brown_gas"
+	description = "A strange brown gas that makes you feel faster"
+	reagent_state = GAS
+	metabolization_rate = REAGENTS_METABOLISM
+	color = "90560B"
+	taste_description = "burning"
+
+/datum/reagent/browngas/on_mob_life(mob/living/M) //Has just a speedup
+	M.status_flags |= GOTTAGOFAST
+
 /////////////////////////Coloured Crayon Powder////////////////////////////
 //For colouring in /proc/mix_color_from_reagents
 

@@ -300,6 +300,13 @@ F
 /obj/item/spellbook/oneuse/smoke/lesser //Chaplain smoke book
 	spell = /obj/effect/proc_holder/spell/targeted/smoke/lesser
 
+/datum/spellbook_entry/item/voice
+	name = "Voice Of God"
+	desc = "Carefully harvested from Lavaland Colossi, these cords allow you to issue commands to those near you. Will not work on deaf people. Will drop upon resurrecting as a lich."
+	item_path = /obj/item/device/autosurgeon/colossus
+	category = "Assistance"
+	cost = 1 //They have to stay and write during combat, the cords were designed for non-antag miner use.
+
 /datum/spellbook_entry/item/bookofdarkness
 	name = "Book of Darkness"
 	desc = "A forbidden tome, previously outlawed from the Wizard Federation for containing necromancy that is now being redistributed. Contains a powerful artifact that gets stronger with every soul it claims, a stunning spell that deals heavy damage to a single target, an incorporeal move spell and a spell that lets you explode corpses. Comes with a cool set of powerful robes as well that can carry the Staff of Revenant."
@@ -695,7 +702,7 @@ F
 	var/list/cat_dat = list()
 	for(var/category in categories)
 		cat_dat[category] = "<hr>"
-		dat += "<li><a [tab==category?"class=selected":""] href='byond://?src=\ref[src];page=[category]'>[category]</a></li>"
+		dat += "<li><a [tab==category?"class=selected":""] href='byond://?src=[REF(src)];page=[category]'>[category]</a></li>"
 
 	dat += "<li><a><b>Points remaining : [uses]</b></a></li>"
 	dat += "</ul>"
@@ -706,11 +713,11 @@ F
 		E = entries[i]
 		spell_info += E.GetInfo()
 		if(E.CanBuy(user,src))
-			spell_info+= "<a href='byond://?src=\ref[src];buy=[i]'>[E.buy_word]</A><br>"
+			spell_info+= "<a href='byond://?src=[REF(src)];buy=[i]'>[E.buy_word]</A><br>"
 		else
 			spell_info+= "<span>Can't [E.buy_word]</span><br>"
 		if(E.CanRefund(user,src))
-			spell_info+= "<a href='byond://?src=\ref[src];refund=[i]'>Refund</A><br>"
+			spell_info+= "<a href='byond://?src=[REF(src)];refund=[i]'>Refund</A><br>"
 		spell_info += "<hr>"
 		if(cat_dat[E.category])
 			cat_dat[E.category] += spell_info

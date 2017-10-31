@@ -9,8 +9,10 @@
 /obj/item/book/manual/engineering_particle_accelerator
 	name = "Particle Accelerator User's Guide"
 	icon_state ="bookParticleAccelerator"
-	author = "Engineering Encyclopedia"		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
+	author = "Engineering Encyclopedia"		  // Whoever wrote the paper or book, can be changed by pen or PC. It is not automatically assigned.
 	title = "Particle Accelerator User's Guide"
+//book contents below
+
 	dat = {"<html>
 				<head>
 				<style>
@@ -50,10 +52,8 @@
 /obj/item/book/manual/engineering_singularity_safety
 	name = "Singularity Safety in Special Circumstances"
 	icon_state ="bookEngineeringSingularitySafety"
-	author = "Engineering Encyclopedia"		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
+	author = "Engineering Encyclopedia"
 	title = "Singularity Safety in Special Circumstances"
-//big pile of shit below.
-
 	dat = {"<html>
 				<head>
 				<style>
@@ -133,10 +133,8 @@
 /obj/item/book/manual/medical_cloning
 	name = "Cloning techniques of the 26th century"
 	icon_state ="bookCloning"
-	author = "Medical Journal, volume 3"		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
+	author = "Medical Journal, volume 3"
 	title = "Cloning techniques of the 26th century"
-//big pile of shit below.
-
 	dat = {"<html>
 				<head>
 				<style>
@@ -150,56 +148,56 @@
 				<body>
 
 				<H3>How to Clone People</H3>
-				So there’s 50 dead people lying on the floor, chairs are spinning like no tomorrow and you haven’t the foggiest idea of what to do? Not to worry! This guide is intended to teach you how to clone people and how to do it right, in a simple step-by-step process! If at any point of the guide you have a mental meltdown, genetics probably isn’t for you and you should get a job-change as soon as possible before you’re sued for malpractice.
+				So there's fifty dead people lying on the floor, chairs are spinning like no tomorrow and you haven't the foggiest idea of what to do? Not to worry! This guide is intended to teach you how to clone people and how to do it right, in a simple step-by-step process! If at any point of the guide you have a mental meltdown, genetics probably isn't for you and you should get a job-change as soon as possible before you're sued for malpractice.
 
 				<ol>
-					<li><a href='#1'>Acquire body</a></li>
-					<li><a href='#2'>Strip body</a></li>
-					<li><a href='#3'>Put body in cloning machine</a></li>
-					<li><a href='#4'>Scan body</a></li>
-					<li><a href='#5'>Clone body</a></li>
-					<li><a href='#6'>Get clean Structurel Enzymes for the body</a></li>
-					<li><a href='#7'>Put body in morgue</a></li>
-					<li><a href='#8'>Await cloned body</a></li>
-					<li><a href='#9'>Use the clean SW injector</a></li>
-					<li><a href='#10'>Give person clothes back</a></li>
+					<li><a href='#1'>Acquire body/head/brain</a></li>
+					<li><a href='#2'>Put body/head/brain in cloning machine</a></li>
+					<li><a href='#3'>Scan body/head/brain</a></li>
+					<li><a href='#4'>Clone body/head/brain</a></li>
+					<li><a href='#5'>Get Mannitol, Mutadone, or a clean SE for the clone</a></li>
+					<li><a href='#6'>Put remains in morgue</a></li>
+					<li><a href='#7'>Await cloned body</a></li>
+					<li><a href='#8'>Give the clone Mannitol and Mutadone, or a clean SE</a></li>
+					<li><a href='#9'>Give person clothes back</a></li>
+					<li><a href='#10'>Place clone in cryo</a></li>
 					<li><a href='#11'>Send person on their way</a></li>
 				</ol>
 
-				<a name='1'><H4>Step 1: Acquire body</H4>
-				This is pretty much vital for the process because without a body, you cannot clone it. Usually, bodies will be brought to you, so you do not need to worry so much about this step. If you already have a body, great! Move on to the next step.
+				<a name='1'><H4>Step 1: Acquire a body, head, or brain</H4>
+				This is pretty much vital for the process because without a body, you cannot clone it. Usually, bodies will be brought to you, so you do not need to worry so much about this step. If you already have a body, head, or even a brain, great! Move on to the next step.
 
-				<a name='2'><H4>Step 2: Strip body</H4>
-				The cloning machine does not like abiotic items. What this means is you can’t clone anyone if they’re wearing clothes, so take all of it off. If it’s just one person, it’s courteous to put their possessions in the closet. If you have about seven people awaiting cloning, just leave the piles where they are, but don’t mix them around and for God’s sake don’t let the Clown in to steal them.
+				<a name='2'><H4>Step 2: Put the body/head/brain in cloning machine</H4>
+				Grab the body, head, or brain and then put it inside the DNA modifier.
 
-				<a name='3'><H4>Step 3: Put body in cloning machine</H4>
-				Grab the body and then put it inside the DNA modifier. If you cannot do this, then you messed up at Step 2. Go back and check you took EVERYTHING off - a commonly missed item is their headset.
+				<a name='3'><H4>Step 3: Scan the body/head/brain</H4>
+				Go onto the computer and scan the body by pressing 'Scan - <Subject Name Here>'. If you're successful, they will be added to the records (note that this can be done at any time, even with living people, so that they can be cloned without a body in the event that they are lying dead on port solars and didn't turn on their suit sensors As an added bonus, they have a health monitoring implant, which'll allow you to check their vitals from their record in the cloning console)! If not, and it says 'Error: Mental interface failure.', then they have left their bodily confines and are one with the spirits. If this happens, just shout at them to get back in their body, click 'Refresh' and try scanning them again. If there's no success, threaten them with gibbing. Still no success? Skip over to Step 7 and don't continue after it, as you have an unresponsive body and it cannot be cloned. If you got 'Error: Unable to locate valid genetic data', you are trying to clone a monkey - start over.
 
-				<a name='4'><H4>Step 4: Scan body</H4>
-				Go onto the computer and scan the body by pressing ‘Scan - <Subject Name Here>’. If you’re successful, they will be added to the records (note that this can be done at any time, even with living people, so that they can be cloned without a body in the event that they are lying dead on port solars and didn‘t turn on their suit sensors)! If not, and it says “Error: Mental interface failure.”, then they have left their bodily confines and are one with the spirits. If this happens, just shout at them to get back in their body, click ‘Refresh‘ and try scanning them again. If there’s no success, threaten them with gibbing. Still no success? Skip over to Step 7 and don‘t continue after it, as you have an unresponsive body and it cannot be cloned. If you got “Error: Unable to locate valid genetic data.“, you are trying to clone a monkey - start over.
+				<a name='4'><H4>Step 4: Clone the body/head/brain</H4>
+				Now that the body has a record, click 'View Records', click the subject's name, and then click 'Clone' to start the cloning process. Congratulations! You're halfway there. Remember not to 'Eject' the cloning pod as this will kill the developing clone and you'll have to start the process again.
 
-				<a name='5'><H4>Step 5: Clone body</H4>
-				Now that the body has a record, click ’View Records’, click the subject’s name, and then click ‘Clone’ to start the cloning process. Congratulations! You’re halfway there. Remember not to ‘Eject’ the cloning pod as this will kill the developing clone and you’ll have to start the process again.
+				<a name='5'><H4>Step 5: Get Mannitol, Mutadone, or a clean SE for the clone</H4>
+				Cloning is a finicky and unreliable process. Whilst it will most certainly bring someone back from the dead, they can have any number of nasty disabilities given to them during the cloning process! For this reason, you need Mutadone, or a clean, defect-free Structural Enzyme (SE) injection for when they're done. If you're a competent Geneticist, you will already have one ready on your working computer. If, for any reason, you do not, then eject the body from the DNA modifier (NOT THE CLONING POD) and take it next door to the Genetics research room. Put the body in one of those DNA modifiers and then go onto the console. Go into View/Edit/Transfer Buffer, find an open slot and click 'SE' to save it. Then click 'Injector' to get the SEs in syringe form. Put this in your pocket or something for when the body is done. Do note, most Genetic labs have Mannitol and Mutadone pills readily available, provided no-one has stolen them or ate them all. Don't forget most clones will also have severe brain damage as well, to fix this, give them a Mannitol pill or injection.
 
-				<a name='6'><H4>Step 6: Get clean SEs for body</H4>
-				Cloning is a finicky and unreliable process. Whilst it will most certainly bring someone back from the dead, they can have any number of nasty disabilities given to them during the cloning process! For this reason, you need to prepare a clean, defect-free Structural Enzyme (SE) injection for when they’re done. If you’re a competent Geneticist, you will already have one ready on your working computer. If, for any reason, you do not, then eject the body from the DNA modifier (NOT THE CLONING POD) and take it next door to the Genetics research room. Put the body in one of those DNA modifiers and then go onto the console. Go into View/Edit/Transfer Buffer, find an open slot and click “SE“ to save it. Then click ‘Injector’ to get the SEs in syringe form. Put this in your pocket or something for when the body is done.
+				<a name='6'><H4>Step 6: Put remains in morgue</H4>
+				Now that the cloning process has been initiated and you hopefully have some Mannitol, Mutadone, and a clean Structural Enzymes, you no longer need the body! Drag it to the morgue and tell the Chef over the radio that they have some fresh meat waiting for them in there, or call the Chaplain so they can prepare an impromptu funeral. To put a body in a morgue bed, simply open the tray, grab the body, put it on the open tray, then close the tray again. Use a pen to label the morgue tray 'CHEF MEAT' or 'CLONED' in order to avoid confusion.
 
-				<a name='7'><H4>Step 7: Put body in morgue</H4>
-				Now that the cloning process has been initiated and you have some clean Structural Enzymes, you no longer need the body! Drag it to the morgue and tell the Chef over the radio that they have some fresh meat waiting for them in there. To put a body in a morgue bed, simply open the tray, grab the body, put it on the open tray, then close the tray again. Use one of the nearby pens to label the bed “CHEF MEAT” in order to avoid confusion.
+				<a name='7'><H4>Step 7: Await cloned body</H4>
+				Now go back to the lab and wait for your patient to be cloned. This can take atleast three minutes at the least.
 
-				<a name='8'><H4>Step 8: Await cloned body</H4>
-				Now go back to the lab and wait for your patient to be cloned. It won’t be long now, I promise.
+				<a name='8'><H4>Step 8: Give the clone Mannitol and Mutadone, or a clean SE</H4>
+				Has your patient been cloned yet? Great! As soon as the clone pops out, administer Mannitol and Mutadone. Then move onto the next step. In the event you have no Mutadone, a clean SE will suffice, but keep in mind this may irradiate the patient, causing more problems!
 
-				<a name='9'><H4>Step 9: Use the clean SE injector on person</H4>
-				Has your body been cloned yet? Great! As soon as the guy pops out, grab your injector and jab it in them. Once you’ve injected them, they now have clean Structural Enzymes and their defects, if any, will disappear in a short while.
+				<a name='9'><H4>Step 9: Give person their clothes back</H4>
+				Obviously the person will be naked after they have been cloned. Provided you weren't an irresponsible little shit, you should have protected their possessions from thieves and should be able to give them back to the patient. No matter how cruel you are, it's simply against protocol to force your patients to walk outside naked.
 
-				<a name='10'><H4>Step 10: Give person clothes back</H4>
-				Obviously the person will be naked after they have been cloned. Provided you weren’t an irresponsible little shit, you should have protected their possessions from thieves and should be able to give them back to the patient. No matter how cruel you are, it’s simply against protocol to force your patients to walk outside naked.
+				<a name='10'><H4>Step 10: Place clone in cryo</H4>
+				An unfortunate problem with speedcloning technology is that the clone will suffer from severe genetic degradation upon exiting the pod. To rectify this, ensure the nearby cryogenic cells are 1.) at freezing temperatures (normally around 73.15 K), and 2.) filled with cryoxadone, or clonexadone. Once you've assured both conditions are met, place the clone in the cryogenic tube, and turn it on. Remember to set the door to 'Auto' ejection, else the clone will be stuck in cryo until someone releases them. You can also kill two birds with one stone and add Mannitol and Mutadone to the beaker, which'll heal the brain damage, along with removing any genetic defects.
 
 				<a name='11'><H4>Step 11: Send person on their way</H4>
-				Give the patient one last check-over - make sure they don’t still have any defects and that they have all their possessions. Ask them how they died, if they know, so that you can report any foul play over the radio. Once you’re done, your patient is ready to go back to work! Chances are they do not have Medbay access, so you should let them out of Genetics and the Medbay main entrance.
+				Give the patient one last check-over - make sure they don't still have any defects and that they have all their possessions. Ask them how they died, if they know, so that you can report any foul play over the radio. Once you're done, your patient is ready to go back to work! Chances are they do not have Medbay access, so you should let them out of Genetics and the Medbay main entrance.
 
-				<p>If you’ve gotten this far, congratulations! You have mastered the art of cloning. Now, the real problem is how to resurrect yourself after that traitor had his way with you for cloning his target.
+				<p>If you've gotten this far, congratulations! You have mastered the art of cloning. Now, the real problem is how to resurrect yourself after that traitor had his way with you for cloning his target.
 
 
 
@@ -211,10 +209,8 @@
 /obj/item/book/manual/ripley_build_and_repair
 	name = "APLU \"Ripley\" Construction and Operation Manual"
 	icon_state ="book"
-	author = "Weyland-Yutani Corp"		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
+	author = "Weyland-Yutani Corp"
 	title = "APLU \"Ripley\" Construction and Operation Manual"
-//big pile of shit below.
-
 	dat = {"<html>
 				<head>
 				<style>

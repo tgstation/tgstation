@@ -1,3 +1,9 @@
+/datum/species/skeleton/check_roundstart_eligible()
+	return FALSE
+
+/datum/species/skeleton/playable/check_roundstart_eligible()
+	return TRUE
+
 /datum/species/skeleton/playable
 	name = "Spooky Scary Skeleton"
 	id = "spookyskeleton"

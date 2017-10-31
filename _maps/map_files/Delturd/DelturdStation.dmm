@@ -64479,7 +64479,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/portable_atmospherics/canister/freon,
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ctr" = (

@@ -1,5 +1,5 @@
 /datum/admins/proc/create_panel_helper(template)
-	var/final_html = replacetext(template, "/* ref src */", "\ref[src];[HrefToken()]")
+	var/final_html = replacetext(template, "/* ref src */", "[REF(src)];[HrefToken()]")
 	final_html = replacetext(final_html,"/* hreftokenfield */","[HrefTokenFormField()]")
 	return final_html
 

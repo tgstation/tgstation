@@ -312,7 +312,7 @@
 		if(is_shadow_or_thrall(M))
 			to_chat(M, my_message)
 		if(M in GLOB.dead_mob_list)
-			to_chat(M, "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a> [my_message]")
+			to_chat(M, "<a href='?src=[REF(M)];follow=[REF(user)]'>(F)</a> [my_message]")
 	log_say("[user.real_name]/[user.key] : [text]")
 
 
@@ -726,7 +726,7 @@
 		if(is_shadow_or_thrall(M))
 			to_chat(M, text)
 		if(isobserver(M))
-			to_chat(M, "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a> [text]")
+			to_chat(M, "<a href='?src=[REF(M)];follow=[REF(user)]'>(F)</a> [text]")
 	log_say("[user.real_name]/[user.key] : [text]")
 
 
@@ -879,5 +879,5 @@
 		if(is_shadow_or_thrall(M))
 			to_chat(M, text)
 		if(isobserver(M))
-			to_chat(M, "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a> [text]")
+			to_chat(M, "<a href='?src=[REF(M)];follow=[REF(user)]'>(F)</a> [text]")
 	log_say("[user.real_name]/[user.key] : [text]")
