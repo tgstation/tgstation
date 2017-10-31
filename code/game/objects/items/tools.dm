@@ -487,7 +487,7 @@
 	var/heavy_impact_range = (plasmaAmount/8)//a fully plasma'd standard 20 fuel welder will have 2.5 heavy impact
 	var/light_impact_range = (plasmaAmount/4)//above, but 5 light impact
 	explosion(T, -1, heavy_impact_range, light_impact_range, light_impact_range)//drop a no-devastation bomb. flash range is same as light impact
-	qdel()
+	qdel(src)
 
 /obj/item/weldingtool/attack(mob/living/carbon/human/H, mob/user)
 	if(!istype(H))
