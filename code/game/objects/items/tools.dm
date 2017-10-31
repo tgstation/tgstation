@@ -476,7 +476,6 @@
 			if(welding)
 				to_chat(user, "<span class='danger'>You probably should have turned [src] off first.</span>")
 				explode()
-			return ..()
 	else
 		return ..()
 
