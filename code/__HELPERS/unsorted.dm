@@ -200,6 +200,8 @@ Turf and target are separate in case you want to teleport some distance from a t
 			newname = C.prefs.custom_names[role]
 		else
 			switch(role)
+				if("human")
+					newname = random_unique_name(gender)
 				if("clown")
 					newname = pick(GLOB.clown_names)
 				if("mime")
@@ -514,8 +516,21 @@ Turf and target are separate in case you want to teleport some distance from a t
 		processing_list.Cut(1, 2)
 		//Byond does not allow things to be in multiple contents, or double parent-child hierarchies, so only += is needed
 		//This is also why we don't need to check against assembled as we go along
-		processing_list += A.contents 
+		processing_list += A.contents
 		assembled += A
+	return assembled
+
+/atom/proc/GetAllContentsIgnoring(list/ignore_typecache)
+	if(!ignore_typecache)
+		return GetAllContents()
+	var/list/processing = list(src)
+	var/list/assembled = list()
+	while(processing.len)
+		var/atom/A = processing[1]
+		processing.Cut(1,2)
+		if(!ignore_typecache[A.type])
+			processing += A.contents
+			assembled += A
 	return assembled
 
 //Step-towards method of determining whether one atom can see another. Similar to viewers()
@@ -1429,3 +1444,17 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	var/time_clock = num2hex(TICK_DELTA_TO_MS(world.tick_usage), 3)
 
 	return "{[time_high]-[time_mid]-[GUID_VERSION][time_low]-[GUID_VARIANT][time_clock]-[node_id]}"
+
+// \ref behaviour got changed in 512 so this is necesary to replicate old behaviour.
+// If it ever becomes necesary to get a more performant REF(), this lies here in wait
+// #define REF(thing) (thing && istype(thing, /datum) && thing:use_tag && thing:tag ? "[thing:tag]" : "\ref[thing]")
+/proc/REF(input)
+	if(istype(input, /datum))
+		var/datum/thing = input
+		if(thing.use_tag)
+			if(!thing.tag)
+				WARNING("A ref was requested of an object with use_tag set but no tag: [thing]")
+				thing.use_tag = FALSE
+			else
+				return "\[[url_encode(thing.tag)]\]"
+	return "\ref[input]"

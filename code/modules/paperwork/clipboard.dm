@@ -46,19 +46,19 @@
 /obj/item/clipboard/attack_self(mob/user)
 	var/dat = "<title>Clipboard</title>"
 	if(haspen)
-		dat += "<A href='?src=\ref[src];pen=1'>Remove Pen</A><BR><HR>"
+		dat += "<A href='?src=[REF(src)];pen=1'>Remove Pen</A><BR><HR>"
 	else
-		dat += "<A href='?src=\ref[src];addpen=1'>Add Pen</A><BR><HR>"
+		dat += "<A href='?src=[REF(src)];addpen=1'>Add Pen</A><BR><HR>"
 
 	//The topmost paper. You can't organise contents directly in byond, so this is what we're stuck with.	-Pete
 	if(toppaper)
 		var/obj/item/paper/P = toppaper
-		dat += "<A href='?src=\ref[src];write=\ref[P]'>Write</A> <A href='?src=\ref[src];remove=\ref[P]'>Remove</A> - <A href='?src=\ref[src];read=\ref[P]'>[P.name]</A><BR><HR>"
+		dat += "<A href='?src=[REF(src)];write=[REF(P)]'>Write</A> <A href='?src=[REF(src)];remove=[REF(P)]'>Remove</A> - <A href='?src=[REF(src)];read=[REF(P)]'>[P.name]</A><BR><HR>"
 
 		for(P in src)
 			if(P == toppaper)
 				continue
-			dat += "<A href='?src=\ref[src];write=\ref[P]'>Write</A> <A href='?src=\ref[src];remove=\ref[P]'>Remove</A> <A href='?src=\ref[src];top=\ref[P]'>Move to top</A> - <A href='?src=\ref[src];read=\ref[P]'>[P.name]</A><BR>"
+			dat += "<A href='?src=[REF(src)];write=[REF(P)]'>Write</A> <A href='?src=[REF(src)];remove=[REF(P)]'>Remove</A> <A href='?src=[REF(src)];top=[REF(P)]'>Move to top</A> - <A href='?src=[REF(src)];read=[REF(P)]'>[P.name]</A><BR>"
 	user << browse(dat, "window=clipboard")
 	onclose(user, "clipboard")
 	add_fingerprint(usr)

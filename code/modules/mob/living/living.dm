@@ -15,7 +15,7 @@
 		real_name = name
 	var/datum/atom_hud/data/human/medical/advanced/medhud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	medhud.add_to_hud(src)
-	faction += "\ref[src]"
+	faction += "[REF(src)]"
 
 
 /mob/living/prepare_huds()
