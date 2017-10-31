@@ -6665,9 +6665,11 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 1;
 	frequency = 1441;
-	id = "waste_out"
+	id = "waste_out";
+	volume_rate = 200
 	},
-/turf/open/floor/plating/airless,
+/obj/structure/lattice,
+/turf/open/space/basic,
 /area/engine/atmos)
 "apJ" = (
 /turf/closed/wall,
@@ -48037,7 +48039,7 @@
 /area/maintenance/aft)
 "cnF" = (
 /obj/machinery/atmospherics/components/binary/pump{
-	dir = 2;
+	dir = 4;
 	name = "Waste Out";
 	on = 1
 	},
