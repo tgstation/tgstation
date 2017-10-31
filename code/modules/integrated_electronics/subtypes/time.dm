@@ -75,8 +75,10 @@
 	desc = "This circuit sends an automatic pulse every four seconds."
 	icon_state = "tick-m"
 	complexity = 8
-	var/ticks_to_pulse = 4
-	var/ticks_completed = 0
+	var/delay = 4 SECONDS
+	var/progress = 0
+	var/prev_time = 0
+	var/just_started = FALSE
 	var/is_running = FALSE
 	inputs = list("enable ticking" = IC_PINTYPE_BOOLEAN)
 	activators = list("outgoing pulse" = IC_PINTYPE_PULSE_OUT)
@@ -92,28 +94,34 @@
 	var/do_tick = get_pin_data(IC_INPUT, 1)
 	if(do_tick && !is_running)
 		is_running = TRUE
+		just_started = TRUE
 		GLOB.machines |= src
 	else if(is_running)
 		is_running = FALSE
 		GLOB.machines -= src
-		ticks_completed = 0
 
 /obj/item/integrated_circuit/time/ticker/process()
-	var/process_ticks = process_schedule_interval("obj")
-	ticks_completed += process_ticks
-	if(ticks_completed >= ticks_to_pulse)
-		if(ticks_to_pulse >= process_ticks)
-			ticks_completed -= ticks_to_pulse
-		else
-			ticks_completed = 0
+	var/wtime = world.time
+	if(just_started)
+		just_started = FALSE
 		activate_pin(1)
+	else
+		var/passed = wtime - prev_time
+		progress += passed
+		if(progress >= delay)
+			if(delay >= passed)
+				progress -= delay
+			else
+				progress = 0
+			activate_pin(1)
+	prev_time = wtime
 
 /obj/item/integrated_circuit/time/ticker/fast
 	name = "fast ticker"
 	desc = "This advanced circuit sends an automatic pulse every two seconds."
 	icon_state = "tick-f"
 	complexity = 12
-	ticks_to_pulse = 2
+	delay = 2 SECONDS
 	spawn_flags = IC_SPAWN_RESEARCH
 	power_draw_per_use = 8
 
@@ -122,7 +130,7 @@
 	desc = "This simple circuit sends an automatic pulse every six seconds."
 	icon_state = "tick-s"
 	complexity = 4
-	ticks_to_pulse = 6
+	delay = 6 SECONDS
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 2
 
@@ -142,10 +150,10 @@
 	power_draw_per_use = 4
 
 /obj/item/integrated_circuit/time/clock/do_work()
-	set_pin_data(IC_OUTPUT, 1, time2text(station_time_in_ticks, "hh:mm:ss") )
-	set_pin_data(IC_OUTPUT, 2, text2num(time2text(station_time_in_ticks, "hh") ) )
-	set_pin_data(IC_OUTPUT, 3, text2num(time2text(station_time_in_ticks, "mm") ) )
-	set_pin_data(IC_OUTPUT, 4, text2num(time2text(station_time_in_ticks, "ss") ) )
-
+	var/wtime = world.time
+	set_pin_data(IC_OUTPUT, 1, time2text(wtime, "hh:mm:ss") )
+	set_pin_data(IC_OUTPUT, 2, text2num(time2text(wtime, "hh") ) )
+	set_pin_data(IC_OUTPUT, 3, text2num(time2text(wtime, "mm") ) )
+	set_pin_data(IC_OUTPUT, 4, text2num(time2text(wtime, "ss") ) )
 	push_data()
 	activate_pin(2)
