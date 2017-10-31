@@ -1387,13 +1387,6 @@
 					/obj/item/clothing/head/helmet/bluetaghelm)
 	crate_name = "laser tag crate"
 
-/datum/supply_pack/misc/lasertag/pins
-	name = "Laser Tag Firing Pins Crate"
-	cost = 3000
-	contraband = TRUE
-	contains = list(/obj/item/storage/box/lasertagpins)
-	crate_name = "laser tag crate"
-
 /datum/supply_pack/misc/clownpin
 	name = "Hilarious Firing Pin Crate"
 	cost = 5000
