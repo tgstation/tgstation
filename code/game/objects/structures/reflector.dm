@@ -58,7 +58,8 @@
 			playsound(src.loc, W.usesound, 50, 1)
 			to_chat(user, "You dismantle [src].")
 			new framebuildstacktype(loc, framebuildstackamount)
-			new buildstacktype(loc, buildstackamount)
+			if(buildstackamount)
+				new buildstacktype(loc, buildstackamount)
 			qdel(src)
 	else if(istype(W, /obj/item/weldingtool))
 		var/obj/item/weldingtool/WT = W

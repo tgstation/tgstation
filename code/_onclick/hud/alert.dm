@@ -15,7 +15,7 @@
  Override makes it so the alert is not replaced until cleared by a clear_alert with clear_override, and it's used for hallucinations.
  */
 
-	if(!category)
+	if(!category || QDELETED(src))
 		return
 
 	var/obj/screen/alert/thealert
@@ -629,4 +629,5 @@ so as to remain in compliance with the most up-to-date laws."
 	. = ..()
 	severity = 0
 	master = null
+	mob_viewer = null
 	screen_loc = ""

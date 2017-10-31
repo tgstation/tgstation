@@ -276,9 +276,9 @@
 
 	t += "Turbine: [round(compressor.rpm)] RPM<BR>"
 
-	t += "Starter: [ compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]"
+	t += "Starter: [ compressor.starter ? "<A href='?src=[REF(src)];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=[REF(src)];str=1'>On</A>"]"
 
-	t += "</PRE><HR><A href='?src=\ref[src];close=1'>Close</A>"
+	t += "</PRE><HR><A href='?src=[REF(src)];close=1'>Close</A>"
 
 	t += "</TT>"
 	var/datum/browser/popup = new(user, "turbine", name)
@@ -334,18 +334,18 @@
 		if(compressor.stat || compressor.turbine.stat)
 			dat += "[compressor.stat ? "<B>Compressor is inoperable</B><BR>" : "<B>Turbine is inoperable</B>"]"
 		else
-			dat += {"Turbine status: [ src.compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]
+			dat += {"Turbine status: [ src.compressor.starter ? "<A href='?src=[REF(src)];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=[REF(src)];str=1'>On</A>"]
 			\n<BR>
 			\nTurbine speed: [src.compressor.rpm]rpm<BR>
 			\nPower currently being generated: [DisplayPower(src.compressor.turbine.lastgen)]<BR>
 			\nInternal gas temperature: [src.compressor.gas_contained.temperature]K<BR>
-			\n</PRE><HR><A href='?src=\ref[src];close=1'>Close</A>
+			\n</PRE><HR><A href='?src=[REF(src)];close=1'>Close</A>
 			\n<BR>
 			\n"}
 	else
 		dat += "<B>There is [!compressor ? "no compressor" : " compressor[!compressor.turbine ? " but no turbine" : ""]"].</B><BR>"
 		if(!compressor)
-			dat += "<A href='?src=\ref[src];search=1'>Search for compressor</A>"
+			dat += "<A href='?src=[REF(src)];search=1'>Search for compressor</A>"
 
 	var/datum/browser/popup = new(user, "turbinecomputer", name)
 	popup.set_content(dat)

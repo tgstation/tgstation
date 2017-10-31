@@ -12,6 +12,9 @@
 
 	device_type = QUATERNARY
 
+	construction_type = /obj/item/pipe/quaternary
+	pipe_state = "manifold4w"
+
 /obj/machinery/atmospherics/pipe/manifold4w/SetInitDirections()
 	initialize_directions = initial(initialize_directions)
 

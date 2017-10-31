@@ -54633,6 +54633,9 @@
 /area/security/range)
 "ckl" = (
 /obj/structure/table/reinforced,
+/obj/machinery/magnetic_controller{
+	autolink = 1
+	},
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
@@ -57442,7 +57445,6 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cqt" = (
@@ -77509,6 +77511,9 @@
 /area/science/research)
 "dhv" = (
 /obj/structure/table/reinforced,
+/obj/machinery/magnetic_controller{
+	autolink = 1
+	},
 /obj/item/gun/energy/laser/practice{
 	pixel_x = 3;
 	pixel_y = -3
@@ -81880,7 +81885,7 @@
 	},
 /area/science/mixing)
 "dqG" = (
-/obj/machinery/atmospherics/components/unary/vent_pump,
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/neutral,
 /area/science/mixing)
 "dqH" = (

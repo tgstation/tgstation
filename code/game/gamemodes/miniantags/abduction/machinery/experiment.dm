@@ -62,7 +62,7 @@
 /obj/machinery/abductor/experiment/proc/dissection_icon(mob/living/carbon/human/H)
 	var/icon/photo = null
 	var/g = (H.gender == FEMALE) ? "f" : "m"
-	if(!CONFIG_GET(flag/join_with_mutant_race) || H.dna.species.use_skintones)
+	if(H.dna.species.use_skintones)
 		photo = icon("icon" = 'icons/mob/human.dmi', "icon_state" = "[H.skin_tone]_[g]")
 	else
 		photo = icon("icon" = 'icons/mob/human.dmi', "icon_state" = "[H.dna.species.id]_[g]")
@@ -104,9 +104,9 @@
 		dat += "<table><tr><td>"
 		dat += "<img src=dissection_img height=80 width=80>" //Avert your eyes
 		dat += "</td><td>"
-		dat += "<a href='?src=\ref[src];experiment=1'>Probe</a><br>"
-		dat += "<a href='?src=\ref[src];experiment=2'>Dissect</a><br>"
-		dat += "<a href='?src=\ref[src];experiment=3'>Analyze</a><br>"
+		dat += "<a href='?src=[REF(src)];experiment=1'>Probe</a><br>"
+		dat += "<a href='?src=[REF(src)];experiment=2'>Dissect</a><br>"
+		dat += "<a href='?src=[REF(src)];experiment=3'>Analyze</a><br>"
 		dat += "</td></tr></table>"
 	else
 		dat += "<span class='linkOff'>Experiment </span>"
@@ -127,8 +127,8 @@
 	dat += "<br>"
 	dat += "[flash]"
 	dat += "<br>"
-	dat += "<a href='?src=\ref[src];refresh=1'>Scan</a>"
-	dat += "<a href='?src=\ref[src];[state_open ? "close=1'>Close</a>" : "open=1'>Open</a>"]"
+	dat += "<a href='?src=[REF(src)];refresh=1'>Scan</a>"
+	dat += "<a href='?src=[REF(src)];[state_open ? "close=1'>Close</a>" : "open=1'>Open</a>"]"
 	var/datum/browser/popup = new(user, "experiment", "Probing Console", 300, 300)
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.set_content(dat)
