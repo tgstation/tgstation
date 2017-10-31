@@ -147,14 +147,16 @@ Buildable meters
 /obj/item/pipe/attack_self(mob/user)
 	return rotate()
 
-/obj/item/pipe/proc/get_pipe_cache(type, direction)
-	var/static/list/obj/machinery/atmospherics/check_cache
+/proc/get_pipe_construction_cache(type, direction)
+	var/list/obj/machinery/atmospherics/check_cache = SSair.pipe_construction_generation_cache
 	if(!islist(check_cache))
 		check_cache = list()
 	if(!check_cache[type])
 		check_cache[type] = list()
 	if(!check_cache[type]["[direction]"])
-		check_cache[type]["[direction]"] = new type(null, null, direction)
+		var/obj/machinery/atmospherics/A = new type(null, FALSE, direction)
+		A.name = "\[CACHE\] [A.name]"
+		check_cache[type]["[direction]"] = A
 
 	return check_cache[type]["[direction]"]
 
@@ -167,7 +169,7 @@ Buildable meters
 
 	fixdir()
 
-	var/obj/machinery/atmospherics/fakeA = get_pipe_cache(pipe_type, dir)
+	var/obj/machinery/atmospherics/fakeA = get_pipe_constructtion_cache(pipe_type, dir)
 
 	for(var/obj/machinery/atmospherics/M in loc)
 		if((M.pipe_flags & fakeA.pipe_flags & PIPING_ONE_PER_TURF))	//Only one dense/requires density object per tile, eg connectors/cryo/heater/coolers.
