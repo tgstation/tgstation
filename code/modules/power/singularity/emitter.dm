@@ -108,7 +108,9 @@
 	return ..()
 
 /obj/machinery/power/emitter/update_icon()
-	if (active && powernet && avail(active_power_usage))
+	if (panel_open)
+		icon_state = "emitter_open"
+	else if (active && powernet && avail(active_power_usage))
 		icon_state = icon_state_on
 	else
 		icon_state = initial(icon_state)
