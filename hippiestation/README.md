@@ -26,6 +26,8 @@ bunch of shitcode here
 // hippie stop
 ```
 
+Once you mirror a file, please follow the above for marking your changes, this way we know what needs to be updated when a file has been mirrored.
+
 
 ### tgstation.dme versus hippiestation.dme
 
