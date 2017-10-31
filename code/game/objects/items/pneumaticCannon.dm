@@ -98,9 +98,9 @@
 		load_item(IW, user)
 
 /obj/item/pneumatic_cannon/proc/can_load_item(obj/item/I, mob/user)
-	if(!isnull(allowed_typecache) && !allowed_typecache[I.type])
+	if(is_type_in_typecache(I, allowed_typecache))
 		if(user)
-			to_chat(user, "<span class='warning'>\The [src] won't fit [I]!</span>")
+			to_chat(user, "<span class='warning'>[I] won't fit into [src]!</span>")
 		return
 	if((loadedWeightClass + I.w_class) > maxWeightClass)	//Only make messages if there's a user
 		if(user)
