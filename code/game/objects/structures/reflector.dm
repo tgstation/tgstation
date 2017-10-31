@@ -1,7 +1,7 @@
 /obj/structure/reflector
 	name = "reflector base"
 	icon = 'icons/obj/structures.dmi'
-	icon_state = "reflector_base"
+	icon_state = "reflector_map"
 	desc = "A base for reflector assemblies."
 	anchored = FALSE
 	density = FALSE
@@ -20,6 +20,7 @@
 
 /obj/structure/reflector/Initialize()
 	. = ..()
+	icon_state = "reflector_base"
 	allowed_projectile_typecache = typecacheof(allowed_projectile_typecache)
 	if(deflector_icon_state)
 		deflector_overlay = image(icon, deflector_icon_state)
