@@ -6907,30 +6907,22 @@
 	pixel_y = -24
 	},
 /obj/structure/cable/white{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/structure/cable/white{
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/maintenance/port)
+/area/crew_quarters/kitchen)
 "aqi" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "1-4"
 	},
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "aqj" = (
@@ -7142,10 +7134,10 @@
 "aqD" = (
 /obj/structure/table/glass,
 /obj/item/reagent_containers/glass/beaker/large{
-	pixel_x = -3
+	pixel_x = -5
 	},
 /obj/item/storage/box/beakers{
-	pixel_x = 3;
+	pixel_x = 5;
 	pixel_y = 3
 	},
 /obj/item/reagent_containers/dropper,
@@ -7333,9 +7325,7 @@
 	req_access_txt = "28"
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "arb" = (
@@ -8311,6 +8301,13 @@
 /obj/item/reagent_containers/food/condiment/peppermill{
 	pixel_x = 3
 	},
+/obj/item/reagent_containers/food/snacks/hotdog{
+	desc = "Old nasty footlong, please don't eat this";
+	name = "Nasty month old hotdog";
+	pixel_w = 0;
+	pixel_x = -6;
+	pixel_y = 8
+	},
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/kitchen)
 "atu" = (
@@ -8776,11 +8773,19 @@
 /area/hydroponics)
 "auE" = (
 /obj/structure/table/glass,
-/obj/item/watertank,
-/obj/item/reagent_containers/spray/pestspray,
-/obj/item/grenade/chem_grenade/antiweed,
+/obj/item/watertank{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/spray/pestspray{
+	pixel_y = 4
+	},
+/obj/item/grenade/chem_grenade/antiweed{
+	pixel_x = -6;
+	pixel_y = -2
+	},
 /obj/item/reagent_containers/spray/plantbgone{
-	pixel_x = 12;
+	pixel_x = 15;
 	pixel_y = 3
 	},
 /turf/open/floor/plasteel/black,
@@ -9115,26 +9120,31 @@
 /area/hydroponics)
 "avq" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/dropper,
-/obj/item/reagent_containers/glass/bottle/nutrient/rh,
+/obj/item/reagent_containers/dropper{
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/glass/bottle/nutrient/rh{
+	pixel_x = 6
+	},
 /obj/item/reagent_containers/glass/bottle/nutrient/ez{
-	pixel_x = 3
+	pixel_x = -6
 	},
 /turf/open/floor/plasteel/black,
 /area/hydroponics)
 "avr" = (
+/obj/structure/closet/crate/hydroponics,
+/obj/item/twohanded/required/chainsaw,
+/obj/item/reagent_containers/glass/bucket,
 /obj/effect/turf_decal/delivery,
-/obj/structure/reagent_dispensers/watertank/high,
 /turf/open/floor/plasteel/black,
 /area/hydroponics)
 "avs" = (
-/obj/machinery/chem_master/condimaster{
-	name = "BrewMaster 3000"
-	},
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = 27
 	},
+/obj/structure/closet/crate/bin,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/black,
 /area/hydroponics)
 "avt" = (
@@ -9640,14 +9650,10 @@
 /turf/open/floor/plasteel/black,
 /area/chapel/main)
 "awu" = (
+/obj/structure/closet/coffin,
 /obj/structure/window/reinforced{
-	dir = 4;
-	layer = 2.9
-	},
-/obj/machinery/door/window/eastleft{
 	dir = 1;
-	name = "Coffin Storage";
-	req_access_txt = "22"
+	pixel_y = 1
 	},
 /obj/structure/closet/coffin,
 /turf/open/floor/plasteel/black,
@@ -9691,6 +9697,10 @@
 	pixel_x = 24;
 	pixel_y = -26
 	},
+/obj/structure/table,
+/obj/item/reagent_containers/glass/beaker/large{
+	pixel_x = -3
+	},
 /turf/open/floor/plasteel/green/side,
 /area/hydroponics)
 "awC" = (
@@ -9698,6 +9708,8 @@
 	dir = 8;
 	pixel_x = 27
 	},
+/obj/structure/table,
+/obj/machinery/reagentgrinder,
 /turf/open/floor/plasteel/green/side,
 /area/hydroponics)
 "awD" = (
@@ -26649,7 +26661,18 @@
 /obj/structure/table,
 /obj/item/paper,
 /obj/item/pen,
-/obj/item/storage/pill_bottle/dice,
+/obj/item/storage/pill_bottle/dice{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/lighter{
+	pixel_x = -8;
+	pixel_y = -2
+	},
+/obj/item/storage/fancy/cigarettes{
+	pixel_x = -6;
+	pixel_y = 10
+	},
 /turf/open/floor/plasteel/floorgrime,
 /area/security/brig)
 "bgF" = (
@@ -27399,6 +27422,180 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
+"biu" = (
+/turf/open/space/basic,
+/area/maintenance/port)
+"biv" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/machinery/camera{
+	c_tag = "Chapel - Office";
+	dir = 4;
+	network = list("SS13")
+	},
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
+"biw" = (
+/obj/item/device/radio/intercom{
+	dir = 0;
+	name = "Station Intercom (General)";
+	pixel_x = -30;
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
+"bix" = (
+/obj/item/device/radio/intercom{
+	freerange = 0;
+	frequency = 1459;
+	name = "Station Intercom (General)";
+	pixel_x = 0;
+	pixel_y = -30
+	},
+/turf/open/floor/carpet,
+/area/chapel/main)
+"biy" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/reagent_dispensers/watertank/high,
+/turf/open/floor/plating,
+/area/maintenance/port)
+"biz" = (
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/crew_quarters/kitchen)
+"biA" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/crew_quarters/kitchen)
+"biB" = (
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/white{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port)
+"biC" = (
+/obj/structure/chair/wood/normal{
+	dir = 1;
+	icon_state = "wooden_chair";
+	tag = ""
+	},
+/turf/open/floor/plasteel/chapel{
+	dir = 1
+	},
+/area/chapel/main)
+"biD" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/hydroponics/constructable,
+/turf/open/floor/plasteel/black,
+/area/hydroponics)
+"biE" = (
+/obj/structure/table/glass,
+/obj/item/crowbar/red,
+/obj/item/hatchet{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/hydroponics)
+"biF" = (
+/obj/structure/table/wood,
+/obj/item/storage/crayons,
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
+"biG" = (
+/obj/structure/table/glass,
+/obj/item/storage/bag/plants/portaseeder,
+/obj/item/cultivator{
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/obj/item/shovel/spade{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/hydroponics)
+"biH" = (
+/obj/effect/turf_decal/delivery,
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12;
+	pixel_y = 2
+	},
+/obj/item/device/radio/intercom{
+	freerange = 0;
+	frequency = 1459;
+	name = "Station Intercom (General)";
+	pixel_x = -30
+	},
+/obj/machinery/camera{
+	c_tag = "Hydroponics";
+	dir = 4;
+	network = list("SS13")
+	},
+/turf/open/floor/plasteel/black,
+/area/hydroponics)
+"biI" = (
+/obj/effect/landmark/start/botanist,
+/turf/open/floor/plasteel/green/side{
+	dir = 8
+	},
+/area/hydroponics)
+"biJ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/table/wood,
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
+"biK" = (
+/obj/machinery/chem_master/condimaster{
+	name = "BrewMaster 3000"
+	},
+/turf/open/floor/plasteel/black,
+/area/hydroponics)
+"biL" = (
+/obj/machinery/door/window/eastleft{
+	dir = 1;
+	name = "Coffin Storage";
+	req_access_txt = "22"
+	},
+/obj/structure/window/reinforced{
+	dir = 4;
+	layer = 2.9
+	},
+/obj/structure/closet/coffin,
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
 
 (1,1,1) = {"
 aaa
@@ -49357,8 +49554,8 @@ aaa
 aaa
 abp
 abp
-abp
-aaa
+bhF
+bhF
 aaa
 azn
 azn
@@ -50640,8 +50837,8 @@ aaa
 amk
 auy
 aqN
-anG
-anG
+amT
+awt
 amj
 axF
 atZ
@@ -50897,8 +51094,8 @@ aaa
 amk
 auz
 aqO
-anG
-anG
+amT
+biL
 amj
 axG
 atZ
@@ -51155,7 +51352,7 @@ amk
 auA
 aqN
 anG
-awv
+bix
 amj
 atZ
 ayD
@@ -51651,8 +51848,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 abI
 abp
 abp
@@ -51660,6 +51855,8 @@ abp
 abp
 amj
 amj
+amk
+amk
 amk
 amk
 amk
@@ -51908,18 +52105,18 @@ aaa
 aaa
 aaa
 abp
-abp
-abp
 abI
 abp
 aaa
 aaa
 amj
 amj
-amT
+biw
 apV
 aqN
 apV
+asr
+biC
 asr
 atf
 asr
@@ -52165,8 +52362,6 @@ aaa
 aaa
 aaa
 abc
-abc
-abp
 abI
 abp
 aaa
@@ -52177,6 +52372,8 @@ amT
 apW
 aqO
 apW
+ass
+atg
 ass
 atg
 ass
@@ -52422,8 +52619,6 @@ aaa
 aaa
 aaa
 aaa
-abp
-abp
 abI
 abp
 aaa
@@ -52433,6 +52628,8 @@ amT
 amT
 apX
 aqP
+anG
+anG
 anG
 anG
 anG
@@ -52679,8 +52876,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-abp
 abI
 abp
 aaa
@@ -52690,6 +52885,8 @@ amT
 amT
 apY
 aqQ
+anG
+anG
 anG
 anG
 anG
@@ -52936,8 +53133,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-abp
 abI
 abp
 aaa
@@ -52948,6 +53143,8 @@ apj
 apV
 aqR
 apV
+asr
+biC
 asr
 ath
 asr
@@ -53195,8 +53392,6 @@ aaa
 aaa
 abp
 abp
-abp
-abp
 amj
 amj
 amj
@@ -53205,6 +53400,8 @@ apk
 apW
 aqS
 arH
+ass
+atg
 ass
 atg
 ass
@@ -53451,8 +53648,6 @@ aaa
 aaa
 aaa
 abp
-abI
-abp
 abp
 amj
 amS
@@ -53463,7 +53658,9 @@ amj
 aqb
 amj
 amj
-ati
+amT
+amT
+amT
 amT
 apk
 aqQ
@@ -53707,14 +53904,12 @@ aaa
 aaa
 aaa
 aaa
-abp
-abI
 aaa
 aaa
 amk
 amT
 amT
-aow
+biv
 apm
 apZ
 aqT
@@ -53722,7 +53917,9 @@ arI
 ast
 amT
 amT
-apk
+biF
+biF
+biJ
 avn
 avS
 awx
@@ -53964,18 +54161,18 @@ ahj
 aaa
 aaa
 abp
-abp
-abI
 aaa
 aaa
 amk
 amT
 anG
 aox
-anG
+bix
 aqa
 aqU
 arJ
+asu
+asu
 asu
 asu
 asu
@@ -54221,8 +54418,6 @@ ahL
 ahj
 aaa
 abp
-abp
-abI
 aaa
 aaa
 amk
@@ -54233,6 +54428,8 @@ apn
 aqb
 alx
 arK
+amm
+amm
 amm
 amm
 amm
@@ -54478,8 +54675,6 @@ ahn
 ain
 aaa
 aaa
-abp
-abI
 aaa
 aaa
 amk
@@ -54489,6 +54684,8 @@ aoz
 apo
 aqc
 aly
+arL
+arL
 arL
 arL
 arL
@@ -54736,8 +54933,6 @@ agP
 aaa
 aaa
 abp
-abI
-abp
 abp
 amj
 amV
@@ -54747,10 +54942,12 @@ app
 aqb
 aly
 arM
-asv
+avv
+biD
+biD
 atj
+biH
 atN
-auD
 avp
 avV
 asz
@@ -54994,8 +55191,6 @@ agP
 aaa
 abp
 abp
-abp
-abp
 amj
 amW
 amj
@@ -55007,6 +55202,8 @@ arN
 asw
 atk
 atk
+atk
+biI
 atk
 atk
 avW
@@ -55249,8 +55446,6 @@ ahn
 aio
 agQ
 aaa
-abp
-bhO
 akS
 akS
 akS
@@ -55263,7 +55458,9 @@ aqW
 arO
 asx
 atl
-atO
+biE
+biG
+atm
 auE
 avq
 avX
@@ -55506,8 +55703,6 @@ ahn
 aio
 agP
 aaa
-abc
-abc
 akT
 alv
 akT
@@ -55519,6 +55714,8 @@ aqe
 aly
 arL
 asy
+atm
+atm
 atm
 atm
 auF
@@ -55763,8 +55960,6 @@ ahn
 ahn
 agP
 aaa
-aaa
-aaa
 akS
 akS
 aml
@@ -55772,13 +55967,15 @@ amY
 anL
 aoC
 aoC
-aqf
-aqX
+aqe
+biy
 arL
 bhi
+biD
+biD
 atn
-atP
 auG
+asv
 avr
 avZ
 awA
@@ -56022,15 +56219,15 @@ aiK
 aaa
 aaa
 aaa
-aaa
-aaa
 akS
 amZ
 amX
 aoD
 aoD
-aqg
-aqY
+aqe
+biz
+arb
+arb
 arb
 arb
 arb
@@ -56277,17 +56474,17 @@ ahn
 aip
 agP
 aaa
-aaa
-aaa
+biu
+biu
 akU
-alw
-alw
+ana
+ana
 ana
 anM
-ana
-ana
+aqU
+biA
 aqh
-aqZ
+auL
 arP
 asA
 ato
@@ -56542,7 +56739,7 @@ amm
 amm
 anN
 bhT
-amm
+biB
 aqi
 ara
 arQ
@@ -56807,7 +57004,7 @@ asC
 atq
 arR
 arL
-avv
+biK
 atm
 awC
 arL
