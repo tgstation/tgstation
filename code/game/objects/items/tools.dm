@@ -473,6 +473,8 @@
 		if(container.reagents.has_reagent("plasma"))
 			container.reagents.trans_id_to(src, "plasma", amountNeeded)
 			to_chat(user, "<span class='notice'>You slip some plasma from [container] to [src].</span>")
+			if(!reagents.has_reagent("plasma"))
+				message_admins("[key_name_admin(user)] rigged a welder with plasma.")
 			if(welding)
 				to_chat(user, "<span class='danger'>You probably should have turned [src] off first.</span>")
 				explode()
@@ -525,6 +527,7 @@
 
 /obj/item/weldingtool/attack_self(mob/user)
 	if(src.reagents.has_reagent("plasma"))
+		message_admins("[key_name_admin(user)] activated a rigged welder.")
 		explode()
 	switched_on(user)
 	if(welding)
