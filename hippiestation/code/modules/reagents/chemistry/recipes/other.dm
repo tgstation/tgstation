@@ -38,16 +38,9 @@
 		new /obj/item/stack/sheet/glass(location)
 
 /datum/chemical_reaction/goldsolidification
-	name = "Solid Gold"
-	id = "solidgold"
 	required_reagents = list("pyrosium" = 5, "cryostylane" = 5, "gold" = 20)
-	mob_react = FALSE
 
 
-/datum/chemical_reaction/goldsolidification/on_reaction(datum/reagents/holder, created_volume)
-	var/location = get_turf(holder.my_atom)
-	for(var/i = 1, i <= created_volume, i++)
-		new /obj/item/stack/sheet/mineral/gold(location)
 
 /datum/chemical_reaction/uraniumsolidification
 	name = "Solid Uranium"
