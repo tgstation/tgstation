@@ -463,12 +463,30 @@
 		if(length(container.reagents.reagent_list) > 1)
 			to_chat(user, "<span class='warning'>[container] has too many chemicals mixed into it. You wouldn't want to put the wrong chemicals into [src].</span>")
 			return ..()
-		if(amountNeeded > 0 && container.reagents.has_reagent("welding_fuel"))
+		if(amountNeeded <= 0)
+			to_chat(user, "<span class='warning'>[src] is already full.</span>")
+			return ..()
+		if(container.reagents.has_reagent("welding_fuel"))
 			container.reagents.trans_id_to(src, "welding_fuel", amountNeeded)
 			to_chat(user, "<span class='notice'>You transfer some fuel from [container] to [src].</span>")
+			return ..()
+		if(container.reagents.has_reagent("plasma"))
+			container.reagents.trans_id_to(src, "plasma", amountNeeded)
+			to_chat(user, "<span class='notice'>You slip some plasma from [container] to [src].</span>")
+			if(welding)
+				to_chat(user, "<span class='danger'>You probably should have turned [src] off first.</span>")
+				explode()
+			return ..()
 	else
 		return ..()
 
+/obj/item/weldingtool/proc/explode()
+	var/turf/T = get_turf(src.loc)
+	var/plasmaAmount = reagents.get_reagent_amount("plasma")
+	var/heavy_impact_range = (plasmaAmount/8)//a fully plasma'd standard 20 fuel welder will have 2.5 heavy impact
+	var/light_impact_range = (plasmaAmount/4)//above, but 5 light impact
+	explosion(T, -1, heavy_impact_range, light_impact_range, light_impact_range)//drop a no-devastation bomb. flash range is same as light impact
+	qdel()
 
 /obj/item/weldingtool/attack(mob/living/carbon/human/H, mob/user)
 	if(!istype(H))
@@ -507,6 +525,8 @@
 
 
 /obj/item/weldingtool/attack_self(mob/user)
+	if(container.reagents.has_reagent("plasma"))
+		explode()
 	switched_on(user)
 	if(welding)
 		set_light(light_intensity)
