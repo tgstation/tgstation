@@ -60,7 +60,7 @@
 		var/test = dc[I]
 		if(test)	//already another component of this type here
 			var/list/components_of_type
-			if(!islist(test))
+			if(!length(test))
 				components_of_type = list(test)
 				dc[I] = components_of_type
 			else
@@ -97,7 +97,7 @@
 	var/list/dc = P.datum_components
 	for(var/I in _GetInverseTypeList())
 		var/list/components_of_type = dc[I]
-		if(islist(components_of_type))	//
+		if(length(components_of_type))	//
 			var/list/subtracted = components_of_type - src
 			if(subtracted.len == 1)	//only 1 guy left
 				dc[I] = subtracted[1]	//make him special
@@ -152,7 +152,7 @@
 	var/list/arguments = args.Copy()
 	arguments.Cut(1, 2)
 	var/target = comps[/datum/component]
-	if(!islist(target))
+	if(!length(target))
 		var/datum/component/C = target
 		if(!C.enabled)
 			return FALSE
@@ -188,7 +188,7 @@
 	if(!dc)
 		return null
 	. = dc[c_type]
-	if(islist(.))
+	if(length(.))
 		return .[1]
 
 /datum/proc/GetExactComponent(c_type)
@@ -197,7 +197,7 @@
 		return null
 	var/datum/component/C = dc[c_type]
 	if(C)
-		if(islist(C))
+		if(length(C))
 			C = C[1]
 		if(C.type == c_type)
 			return C
@@ -208,7 +208,7 @@
 	if(!dc)
 		return null
 	. = dc[c_type]
-	if(!islist(.))
+	if(!length(.))
 		return list(.)
 
 /datum/proc/AddComponent(new_type, ...)
