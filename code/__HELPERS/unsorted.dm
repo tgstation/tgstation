@@ -520,20 +520,18 @@ Do not set recursive depth higher than MAX_PROC_DEPTH as byond breaks when that 
 		var/atom/thing = contents[i] 
 		thing.GetAllContents(output, recursive_depth, ++_current_depth) 
 
-/atom/proc/GetAllContentsIgnoring(list/output = list(), recursive_depth = INFINITY, _current_depth = 0, list/ignore_typecache)
-	if(!islist(ignore_typecache))	//why use this proc??
-		return GetAllContents(output, recursive_depth)
-	. = output
-	output += src			//If the atom itself is in the ignore typecache guess we're just rolling with it, coder fault.
-	if(_current_depth == recursive_depth)
-		if(_current_depth == MAX_PROC_DEPTH)
-			WARNING("Get all contents reached the max recursive depth of [MAX_PROC_DEPTH]. More and we would break shit. Offending atom: [src]")
-		return
-	for(var/i in 1 to contents.len)
-		var/atom/thing = contents[i]
-		if(ignore_typecache[thing.type])
-			continue
-		thing.GetAllContentsIgnoring(output, recursive_depth-1, ignore_typecache)
+/atom/proc/GetAllContentsIgnoring(list/ignore_typecache)
+	if(!ignore_typecache)
+		return GetAllContents()
+	var/list/processing = list(src)
+	var/list/assembled = list()
+	while(processing.len)
+		var/atom/A = processing[1]
+		processing.Cut(1,2)
+		if(!ignore_typecache[A.type])
+			processing += A.contents
+			assembled += A
+	return assembled
 
 //Step-towards method of determining whether one atom can see another. Similar to viewers()
 /proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
