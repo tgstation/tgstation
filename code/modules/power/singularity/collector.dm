@@ -24,9 +24,11 @@
 	var/active = FALSE
 	var/locked = FALSE
 	var/drainratio = 1
+
 	var/pressure_ratio = 1
 	var/plasma_ratio = 1
 	var/temperature_ratio = 1
+	var/total_ratio = 1
 
 /obj/machinery/power/rad_collector/anchored
 	anchored = TRUE
@@ -49,21 +51,19 @@
 			var/total_moles = air_contents.total_moles()
 			var/temperature = air_contents.temperature
 
-			if(temperature < TCMB) // Is this even possible?
-				temperature = TCMB
-
 			pressure_ratio = 1 + ((pressure / RAD_COLLECTOR_BASE_PRESSURE - 1) * RAD_COLLECTOR_PRESSURE_COEFFICIENT)
 			plasma_ratio = air_contents.gases[/datum/gas/plasma][MOLES]/total_moles
-			temperature_ratio = 1 + (temperature / T20C - 1) * RAD_COLLECTOR_TEMP_COEFFICIENT
+			temperature_ratio = 1 + (T20C / temperature - 1) * RAD_COLLECTOR_TEMP_COEFFICIENT
+			// Temperature < TCMB should not be possible. If you see a "division by zero" runtime here, blame gas mixture code.
 
-			var/ratio = pressure_ratio * plasma_ratio * temperature_ratio
+			total_ratio = pressure_ratio * plasma_ratio * temperature_ratio
 
 
 			air_contents.gases[/datum/gas/plasma][MOLES] -= 0.001*drainratio
 			air_contents.garbage_collect()
 
 			var/power_produced = min(last_power, (last_power*RAD_COLLECTOR_STORED_OUT)+1000) //Produces at least 1000 watts if it has more than that stored
-			add_avail(power_produced * ratio)
+			add_avail(power_produced * total_ratio)
 			last_power-=power_produced
 
 /obj/machinery/power/rad_collector/attack_hand(mob/user)
