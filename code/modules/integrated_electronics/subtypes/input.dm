@@ -432,8 +432,7 @@
 	set_pin_data(IC_INPUT, 2, code)
 
 /obj/item/integrated_circuit/input/signaler/Destroy()
-	if(radio_controller)
-		SSradio.remove_object(src,frequency)
+	SSradio.remove_object(src,frequency)
 
 	frequency = 0
 	return ..()
@@ -462,9 +461,9 @@
 /obj/item/integrated_circuit/input/signaler/proc/set_frequency(new_frequency)
 	if(!frequency)
 		return
-	if(!radio_controller)
+	if(!radio_connection)
 		sleep(20)
-	if(!radio_controller)
+	if(!radio_connection)
 		return
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
@@ -584,26 +583,17 @@
 	)
 	activators = list("on message received" = IC_PINTYPE_PULSE_IN, "on translation" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
-	power_draw_per_use = 15
+	power_draw_per_use = 5
 
-/obj/item/integrated_circuit/input/microphone/New()
-	..()
-	listening_objects |= src
 
-/obj/item/integrated_circuit/input/microphone/Destroy()
-	listening_objects -= src
-	return ..()
-
-/obj/item/integrated_circuit/input/microphone/hear_talk(mob/living/M, msg, var/verb="says", datum/language/speaking=null)
+/obj/item/integrated_circuit/input/microphone/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode)
 	var/translated = FALSE
-	if(M && msg)
-		if(speaking)
-			if(!speaking.machine_understands)
-				msg = speaking.scramble(msg)
-			if(!istype(speaking, /datum/language/common))
+	if(speaker && message)
+		if(raw_message)
+			if(message_langs != get_default_language())
 				translated = TRUE
-		set_pin_data(IC_OUTPUT, 1, M.GetVoice())
-		set_pin_data(IC_OUTPUT, 2, msg)
+		set_pin_data(IC_OUTPUT, 1, speaker.GetVoice())
+		set_pin_data(IC_OUTPUT, 2, raw_message)
 
 	push_data()
 	activate_pin(1)

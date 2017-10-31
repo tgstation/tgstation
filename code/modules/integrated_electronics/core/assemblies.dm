@@ -212,7 +212,7 @@
 		icon_state = initial(icon_state) + "-open"
 	else
 		icon_state = initial(icon_state)
-
+/*
 /obj/item/device/electronic_assembly/GetAccess()
 	. = list()
 	for(var/obj/item/integrated_circuit/part in contents)
@@ -224,7 +224,7 @@
 		var/id_card = part.GetIdCard()
 		if(id_card)
 			return id_card
-
+*/
 /obj/item/device/electronic_assembly/examine(mob/user)
 	. = ..(user, 1)
 	if(.)

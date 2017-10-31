@@ -34,3 +34,4 @@
 #undef IC_PINTYPE_PULSE_OUT
 
 #undef IC_MAX_LIST_LENGTH
+
