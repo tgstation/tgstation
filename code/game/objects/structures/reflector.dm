@@ -6,8 +6,8 @@
 	anchored = FALSE
 	density = FALSE
 	layer = BELOW_OBJ_LAYER
-	var/deflector_icon_state = null
-	var/image/deflector_overlay = null
+	var/deflector_icon_state
+	var/image/deflector_overlay
 	var/finished = FALSE
 	var/admin = FALSE //Can't be rotated or deconstructed
 	var/can_rotate = TRUE
@@ -81,7 +81,7 @@
 	if(istype(W, /obj/item/screwdriver))
 		can_rotate = !can_rotate
 		to_chat(user, "<span class='notice'>You [can_rotate ? "unlock" : "lock"] [src]'s rotation.</span>")
-		playsound(loc, W.usesound, 50, 1)
+		playsound(src, W.usesound, 50, 1)
 		return
 
 	if(istype(W, /obj/item/wrench))
@@ -90,7 +90,7 @@
 			return
 		user.visible_message("[user] starts to dismantle [src].", "<span class='notice'>You start to dismantle [src]...</span>")
 		if(do_after(user, 80*W.toolspeed, target = src))
-			playsound(loc, W.usesound, 50, 1)
+			playsound(src, W.usesound, 50, 1)
 			to_chat(user, "<span class='notice'>You dismantle [src].</span>")
 			new framebuildstacktype(loc, framebuildstackamount)
 			if(buildstackamount)
@@ -104,10 +104,10 @@
 				user.visible_message("[user] starts to repair [src].",
 									"<span class='notice'>You begin repairing [src]...</span>",
 									"<span class='italics'>You hear welding.</span>")
-				playsound(loc, W.usesound, 40, 1)
+				playsound(src, W.usesound, 40, 1)
 				if(do_after(user,40*WT.toolspeed, target = src))
 					obj_integrity = max_integrity
-					user.visible_message("[user.name] has repaired [src].", \
+					user.visible_message("[user] has repaired [src].", \
 										"<span class='notice'>You finish repairing [src].</span>")
 
 		else if(!anchored)
