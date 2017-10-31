@@ -328,6 +328,13 @@
 		if(free_chem_rerolls)
 			free_chem_rerolls--
 
+/mob/camera/blob/verb/toggle_cuddle()
+	set category = "Blob"
+	set name = "Toggle Electrostatic Sensing"
+	set desc = "Toggles whether your blob tiles can sense touch or not."
+	cuddles = !cuddles
+	to_chat(src, "<span class='notice'>Toggled touch sensing [cuddles ? "on" : "off"].")
+
 /mob/camera/blob/proc/set_chemical()
 	var/datum/reagent/blob/BC = pick((subtypesof(/datum/reagent/blob) - blob_reagent_datum.type))
 	blob_reagent_datum = new BC
