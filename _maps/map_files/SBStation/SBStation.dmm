@@ -6912,7 +6912,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/crew_quarters/kitchen)
+/area/maintenance/port)
 "aqi" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
@@ -15515,13 +15515,13 @@
 /obj/structure/table,
 /obj/item/paper_bin,
 /obj/item/pen/red,
-/obj/item/stamp,
+/obj/item/clipboard,
+/obj/item/folder/yellow,
 /obj/item/stamp/denied{
 	pixel_x = 6;
 	pixel_y = 6
 	},
-/obj/item/folder/yellow,
-/obj/item/clipboard,
+/obj/item/stamp,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aIE" = (
@@ -21154,6 +21154,10 @@
 	id_tag = "distro_meter";
 	name = "Distribution Loop"
 	},
+/obj/machinery/light_switch{
+	pixel_x = 26;
+	pixel_y = 26
+	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 1
 	},
@@ -21173,10 +21177,6 @@
 /obj/machinery/light{
 	dir = 1;
 	light_color = "#c1caff"
-	},
-/obj/machinery/light_switch{
-	pixel_x = -26;
-	pixel_y = 26
 	},
 /obj/machinery/requests_console{
 	department = "Atmospherics";
@@ -27487,7 +27487,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/kitchen)
+/area/maintenance/port)
 "biB" = (
 /obj/structure/cable/white{
 	icon_state = "1-2"
@@ -49554,8 +49554,8 @@ aaa
 aaa
 abp
 abp
-bhF
-bhF
+aaa
+aaa
 aaa
 azn
 azn
@@ -51591,8 +51591,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+abp
+abp
 abp
 abp
 abp
@@ -52102,8 +52102,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+abp
+abp
 abp
 abI
 abp
@@ -52359,9 +52359,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 abc
+abc
+abp
 abI
 abp
 aaa
@@ -52617,8 +52617,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+abp
+abp
 abI
 abp
 aaa
@@ -52875,7 +52875,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+abp
 abI
 abp
 aaa
@@ -53132,7 +53132,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+abp
 abI
 abp
 aaa
@@ -53389,7 +53389,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+abp
 abp
 abp
 amj
@@ -53648,7 +53648,7 @@ aaa
 aaa
 aaa
 abp
-abp
+aaa
 amj
 amS
 anF
@@ -53904,7 +53904,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+abI
 aaa
 amk
 amT
@@ -54160,8 +54160,8 @@ aaa
 ahj
 aaa
 aaa
-abp
 aaa
+abI
 aaa
 amk
 amT
@@ -54417,8 +54417,8 @@ ahj
 ahL
 ahj
 aaa
-abp
 aaa
+abI
 aaa
 amk
 amT
@@ -54675,7 +54675,7 @@ ahn
 ain
 aaa
 aaa
-aaa
+abI
 aaa
 amk
 amU
@@ -54933,7 +54933,7 @@ agP
 aaa
 aaa
 abp
-abp
+aaa
 amj
 amV
 anJ
@@ -56225,7 +56225,7 @@ amX
 aoD
 aoD
 aqe
-biz
+aly
 arb
 arb
 arb
@@ -56474,8 +56474,8 @@ ahn
 aip
 agP
 aaa
-biu
-biu
+aaa
+aaa
 akU
 ana
 ana
