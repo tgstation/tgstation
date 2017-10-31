@@ -53788,7 +53788,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cCW" = (
-/obj/machinery/portable_atmospherics/canister/freon,
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cCY" = (
@@ -83682,7 +83682,7 @@ bVI
 cay
 ccw
 chY
-cCW
+ciZ
 ciW
 ckB
 ckB

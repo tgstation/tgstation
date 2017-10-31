@@ -320,7 +320,7 @@
 /obj/item/borg/upgrade/hypospray/action(mob/living/silicon/robot/R)
 	if(..())
 		return
-	for(var/obj/item/reagent_containers/borghypo/H in R.module)
+	for(var/obj/item/reagent_containers/borghypo/H in R.module.modules)
 		if(H.accepts_reagent_upgrades)
 			for(var/re in additional_reagents)
 				H.add_reagent(re)
@@ -355,7 +355,7 @@
 		return
 
 	var/found_hypo = FALSE
-	for(var/obj/item/reagent_containers/borghypo/H in R.module)
+	for(var/obj/item/reagent_containers/borghypo/H in R.module.modules)
 		H.bypass_protection = TRUE
 		found_hypo = TRUE
 
