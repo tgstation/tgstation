@@ -30,7 +30,7 @@ SERVER_TOOLS_DEFINE_AND_SET_GLOBAL(server_tools_api_compatible, FALSE)
 		return
 	if(skip_compat_check && !fexists(SERVICE_INTERFACE_DLL))
 		CRASH("Service parameter present but no interface DLL detected. This is symptomatic of running a service less than version 3.1! Please upgrade.")
-	call(SERVICE_INTERFACE_DLL, SERVICE_INTERFACE_FUNCTION)(params[SERVICE_INSTANCE_PARAM]], command)	//trust no retval
+	call(SERVICE_INTERFACE_DLL, SERVICE_INTERFACE_FUNCTION)(params[SERVICE_INSTANCE_PARAM], command)	//trust no retval
 	return TRUE
 
 /world/proc/ChatBroadcast(message)
