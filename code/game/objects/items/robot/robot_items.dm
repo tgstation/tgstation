@@ -582,7 +582,7 @@
 	else
 		if(iscyborg(host.loc))
 			return host.loc
-	return
+	return null
 
 /obj/item/borg/projectile_dampen/dropped()
 	. = ..()
