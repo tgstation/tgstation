@@ -42,7 +42,7 @@ set_error_handler(function($severity, $message, $file, $line) {
 set_exception_handler(function($e) {
 	header('HTTP/1.1 500 Internal Server Error');
 	echo "Error on line {$e->getLine()}: " . htmlSpecialChars($e->getMessage());
-	file_put_contents('htwebhookerror.log', "Error on line {$e->getLine()}: " . $e->getMessage(), FILE_APPEND);
+	file_put_contents('htwebhookerror.log', '['.date(DATE_ATOM).'] '."Error on line {$e->getLine()}: " . $e->getMessage().PHP_EOL, FILE_APPEND);
 	die();
 });
 $rawPost = NULL;
@@ -561,7 +561,7 @@ function has_tree_been_edited($payload, $tree){
 	get_diff($payload);
 	//find things in the _maps/map_files tree
 	//e.g. diff --git a/_maps/map_files/Cerestation/cerestation.dmm b/_maps/map_files/Cerestation/cerestation.dmm
-	return $github_diff !== FALSE && preg_match('/^diff --git a\/' . preg_quote($tree, '/') . '/m') !== FALSE;
+	return ($github_diff !== FALSE) && (preg_match('/^diff --git a\/' . preg_quote($tree, '/') . '/m', $github_diff) !== 0);
 }
 
 $no_changelog = false;
