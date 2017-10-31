@@ -363,7 +363,8 @@ function handle_pr($payload) {
 	$validated = validate_user($payload);
 	switch ($payload["action"]) {
 		case 'opened':
-			tag_pr($payload, true);
+			list($labels, $remove) = tag_pr($payload, true);
+			set_labels($payload, $labels, $remove);
 			if($no_changelog)
 				check_dismiss_changelog_review($payload);
 			if(get_pr_code_friendliness($payload) < 0){
