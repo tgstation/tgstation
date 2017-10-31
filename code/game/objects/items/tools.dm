@@ -525,7 +525,7 @@
 
 
 /obj/item/weldingtool/attack_self(mob/user)
-	if(container.reagents.has_reagent("plasma"))
+	if(src.reagents.has_reagent("plasma"))
 		explode()
 	switched_on(user)
 	if(welding)
