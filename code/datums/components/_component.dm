@@ -6,6 +6,10 @@
 	var/datum/parent
 
 /datum/component/New(datum/P, ...)
+	if(type == /datum/component)
+		qdel(src)
+		CRASH("[type] instantiated!")
+
 	parent = P
 	var/list/arguments = args.Copy()
 	arguments.Cut(1, 2)
@@ -91,8 +95,7 @@
 /datum/component/proc/_RemoveFromParent()
 	var/datum/P = parent
 	var/list/dc = P.datum_components
-	var/our_type = type
-	for(var/I in _GetInverseTypeList(our_type))
+	for(var/I in _GetInverseTypeList())
 		var/list/components_of_type = dc[I]
 		if(islist(components_of_type))	//
 			var/list/subtracted = components_of_type - src
@@ -133,8 +136,11 @@
 	set waitfor = FALSE
 	return
 
-/datum/component/proc/_GetInverseTypeList(current_type)
-	. = list(current_type)
+/datum/component/proc/_GetInverseTypeList(our_type = type)
+	//we can do this one simple trick
+	var/current_type = parent_type
+	. = list(our_type, current_type)
+	//and since most components are root level + 1, this won't even have to run
 	while (current_type != /datum/component)
 		current_type = type2parent(current_type)
 		. += current_type
