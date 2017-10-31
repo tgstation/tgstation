@@ -42,13 +42,13 @@
 		to_chat(user, "<b>Alt-click it to quickly activate it!</b>")
 
 /obj/effect/sound_emitter/attack_ghost(mob/user)
-	if(!user.client.holder)
+	if(!check_rights_for(user.client, R_SOUNDS))
 		examine(user)
 		return
 	edit_emitter(user)
 
 /obj/effect/sound_emitter/AltClick(mob/user)
-	if(user.client.holder)
+	if(check_rights_for(user.client, R_SOUNDS))
 		activate(user)
 		to_chat(user, "<span class='notice'>Sound emitter activated.</span>")
 
@@ -70,7 +70,7 @@
 
 /obj/effect/sound_emitter/Topic(href, href_list)
 	..()
-	if(!ismob(usr) || !usr.client || !usr.client.holder)
+	if(!ismob(usr) || !usr.client || !check_rights_for(usr.client, R_SOUNDS))
 		return
 	var/mob/user = usr
 	if(href_list["edit_label"])
