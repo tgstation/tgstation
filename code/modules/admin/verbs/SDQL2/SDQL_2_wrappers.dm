@@ -179,7 +179,7 @@
 /proc/_text2path(text)
 	return text2path(text)
 
-/proc/_path2text(path)
+/proc/_path2string(path)
 	return "[path]"
 
 /proc/_walk(ref, dir, lag)
