@@ -144,6 +144,11 @@
 			icon_state = "pod-off"
 			add_overlay("cover-on")
 
+/obj/machinery/latejoin_cryo/Destroy()
+	if (computer)
+		computer.cells -= src
+	..()
+
 // control computer for the above
 /obj/machinery/latejoin_cryo_computer
 	name = "cryostasis console"

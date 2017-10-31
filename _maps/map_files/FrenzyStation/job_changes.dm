@@ -11,10 +11,7 @@
 	MAP_JOB_CHECK
 	supervisors = "Nanotrasen and Central Command"
 
-/datum/job/hop/New()
-	..()
-	MAP_JOB_CHECK
-	supervisors = "the captain and Central Command"
+MAP_REMOVE_JOB(hop)
 
 // Service
 MAP_REMOVE_JOB(bartender)
