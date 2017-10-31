@@ -1,0 +1,4 @@
+author: "HonkBot"
+delete-after: True
+changes: 
+  - rscadd: "You can now tablecraft Honkbots."
