@@ -35,6 +35,25 @@
 	attack_verb = list("robusted")
 	hitsound = 'sound/weapons/smash.ogg'
 
+/obj/item/weapon/storage/toolbox/attackby(obj/item/P, mob/user, params)
+	if(istype(P, /obj/item/weldingtool))
+		var/obj/item/weldingtool/WT = P
+		if(!WT.isOn())
+			return ..()
+		playsound(loc, WT.usesound, 50, 1)
+		to_chat(user, "<span class='notice'>You start to weld a hole through the bottom of the [src]...</span>")
+		if(do_after(user, 20 * P.toolspeed, target = src) && src && WT && WT.remove_fuel(0, user))
+			var/obj/item/storage/toolbox/welded/TB = new(get_turf(src))
+			TB.add_fingerprint(user)
+			TB.icon_state = src.icon_state
+			to_chat(user, "<span class='notice'>You weld a hole through the bottom of the [src].</span>")
+			for(var/object in src.contents)
+				new object(get_turf(TB))
+				to_chat(user, "<span class='notice'>The [object] falls out of the [TB]!</span>")
+			qdel(src)
+	else
+		return ..()
+
 /obj/item/storage/toolbox/Initialize()
 	. = ..()
 	if(has_latches)
