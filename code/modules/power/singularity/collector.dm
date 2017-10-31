@@ -1,7 +1,12 @@
-// last_power += (pulse_strength-RAD_COLLECTOR_EFFICIENCY)*RAD_COLLECTOR_COEFFICIENT
-#define RAD_COLLECTOR_EFFICIENCY 80 	// radiation needs to be over this amount to get power
-#define RAD_COLLECTOR_COEFFICIENT 100
-#define RAD_COLLECTOR_STORED_OUT 0.04	// (this*100)% of stored power outputted per tick. Doesn't actualy change output total, lower numbers just means collectors output for longer in absence of a source
+#define RAD_COLLECTOR_THRESHOLD				80		// radiation needs to be over this amount to get power
+#define RAD_COLLECTOR_COEFFICIENT			100		// internal power is increased by (pulse_strength-RAD_COLLECTOR_THRESHOLD)*RAD_COLLECTOR_COEFFICIENT
+#define RAD_COLLECTOR_BASE_PRESSURE			300
+#define RAD_COLLECTOR_PRESSURE_COEFFICIENT	0.15	// power output is * by 1 + ((pressure / BASE_PRESSURE - 1) * PRESSURE_COEFFICIENT)
+#define RAD_COLLECTOR_TEMP_COEFFICIENT		0.3		// power output is * by 1 + (temperature / T20C - 1) * TEMP_COEFFICIENT
+
+#define RAD_COLLECTOR_STORED_OUT			0.04	// (this*100)% of stored power outputted per tick.
+													// Doesn't actualy change output total,
+													// lower numbers just means collectors output for longer in absence of a source
 
 /obj/machinery/power/rad_collector
 	name = "Radiation Collector Array"
@@ -16,9 +21,12 @@
 	integrity_failure = 80
 	var/obj/item/tank/internals/plasma/loaded_tank = null
 	var/last_power = 0
-	var/active = 0
+	var/active = FALSE
 	var/locked = FALSE
 	var/drainratio = 1
+	var/pressure_ratio = 1
+	var/plasma_ratio = 1
+	var/temperature_ratio = 1
 
 /obj/machinery/power/rad_collector/anchored
 	anchored = TRUE
@@ -32,15 +40,30 @@
 
 /obj/machinery/power/rad_collector/process()
 	if(loaded_tank)
-		if(!loaded_tank.air_contents.gases[/datum/gas/plasma])
+		var/datum/gas_mixture/air_contents = loaded_tank.air_contents
+		if(!air_contents.gases[/datum/gas/plasma])
 			investigate_log("<font color='red'>out of fuel</font>.", INVESTIGATE_SINGULO)
 			eject()
 		else
-			loaded_tank.air_contents.gases[/datum/gas/plasma][MOLES] -= 0.001*drainratio
-			loaded_tank.air_contents.garbage_collect()
+			var/pressure = air_contents.return_pressure()
+			var/total_moles = air_contents.total_moles()
+			var/temperature = air_contents.temperature
+
+			if(temperature < TCMB) // Is this even possible?
+				temperature = TCMB
+
+			pressure_ratio = 1 + ((pressure / RAD_COLLECTOR_BASE_PRESSURE - 1) * RAD_COLLECTOR_PRESSURE_COEFFICIENT)
+			plasma_ratio = air_contents.gases[/datum/gas/plasma][MOLES]/total_moles
+			temperature_ratio = 1 + (temperature / T20C - 1) * RAD_COLLECTOR_TEMP_COEFFICIENT
+
+			var/ratio = pressure_ratio * plasma_ratio * temperature_ratio
+
+
+			air_contents.gases[/datum/gas/plasma][MOLES] -= 0.001*drainratio
+			air_contents.garbage_collect()
 
 			var/power_produced = min(last_power, (last_power*RAD_COLLECTOR_STORED_OUT)+1000) //Produces at least 1000 watts if it has more than that stored
-			add_avail(power_produced)
+			add_avail(power_produced * ratio)
 			last_power-=power_produced
 
 /obj/machinery/power/rad_collector/attack_hand(mob/user)
@@ -78,7 +101,7 @@
 
 /obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/device/multitool))
-		to_chat(user, "<span class='notice'>[W] detects that [last_power]W is being processed.</span>")
+		to_chat(user, "<span class='notice'>[W] detects that [DisplayPower(last_power)] is being processed.</span>")
 		return TRUE
 	else if(istype(W, /obj/item/device/analyzer) && loaded_tank)
 		atmosanalyzer_scan(loaded_tank.air_contents, user)
@@ -140,8 +163,8 @@
 		update_icons()
 
 /obj/machinery/power/rad_collector/rad_act(pulse_strength)
-	if(loaded_tank && active && pulse_strength > RAD_COLLECTOR_EFFICIENCY)
-		last_power += (pulse_strength-RAD_COLLECTOR_EFFICIENCY)*RAD_COLLECTOR_COEFFICIENT
+	if(loaded_tank && active && pulse_strength > RAD_COLLECTOR_THRESHOLD)
+		last_power += (pulse_strength-RAD_COLLECTOR_THRESHOLD)*RAD_COLLECTOR_COEFFICIENT
 
 /obj/machinery/power/rad_collector/proc/update_icons()
 	cut_overlays()
@@ -164,6 +187,9 @@
 	update_icons()
 	return
 
-#undef RAD_COLLECTOR_EFFICIENCY
+#undef RAD_COLLECTOR_THRESHOLD
 #undef RAD_COLLECTOR_COEFFICIENT
+#undef RAD_COLLECTOR_BASE_PRESSURE
+#undef RAD_COLLECTOR_PRESSURE_COEFFICIENT
+#undef RAD_COLLECTOR_TEMP_COEFFICIENT
 #undef RAD_COLLECTOR_STORED_OUT
