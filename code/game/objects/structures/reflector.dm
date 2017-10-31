@@ -92,9 +92,9 @@
 		if(do_after(user, 80*W.toolspeed, target = src))
 			playsound(src, W.usesound, 50, 1)
 			to_chat(user, "<span class='notice'>You dismantle [src].</span>")
-			new framebuildstacktype(loc, framebuildstackamount)
+			new framebuildstacktype(drop_location(), framebuildstackamount)
 			if(buildstackamount)
-				new buildstacktype(loc, buildstackamount)
+				new buildstacktype(drop_location(), buildstackamount)
 			qdel(src)
 	else if(istype(W, /obj/item/weldingtool))
 		var/obj/item/weldingtool/WT = W
@@ -137,21 +137,21 @@
 		var/obj/item/stack/sheet/S = W
 		if(istype(S, /obj/item/stack/sheet/glass))
 			if(S.use(5))
-				new /obj/structure/reflector/single(loc)
+				new /obj/structure/reflector/single(drop_location())
 				qdel(src)
 			else
 				to_chat(user, "<span class='warning'>You need five sheets of glass to create a reflector!</span>")
 				return
 		if(istype(S, /obj/item/stack/sheet/rglass))
 			if(S.use(10))
-				new /obj/structure/reflector/double(loc)
+				new /obj/structure/reflector/double(drop_location())
 				qdel(src)
 			else
 				to_chat(user, "<span class='warning'>You need ten sheets of reinforced glass to create a double reflector!</span>")
 				return
 		if(istype(S, /obj/item/stack/sheet/mineral/diamond))
 			if(S.use(1))
-				new /obj/structure/reflector/box(loc)
+				new /obj/structure/reflector/box(drop_location())
 				qdel(src)
 	else
 		return ..()
