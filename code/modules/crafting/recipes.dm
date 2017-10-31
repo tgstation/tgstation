@@ -21,6 +21,15 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
+/datum/crafting_recipe/toolboxhammer
+	name = "Toolbox Hammer"
+	result = /obj/item/twohanded/toolboxhammer
+	reqs = list(/obj/item/stack/cable_coil = 1,
+				/obj/item/stack/rods = 1,
+				/obj/item/storage/toolbox/welded = 1)
+	time = 50
+	category = CAT_WEAPON
+
 /datum/crafting_recipe/IED
 	name = "IED"
 	result = /obj/item/grenade/iedcasing

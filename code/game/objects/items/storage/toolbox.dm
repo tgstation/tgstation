@@ -18,6 +18,23 @@
 	var/latches = "single_latch"
 	var/has_latches = TRUE
 
+/obj/item/storage/toolbox/welded
+	name = "welded toolbox"
+	desc = "Toolbox with a hole welded through it. You could make a religion out of this."
+	icon_state = "blue"
+	item_state = "toolbox_welded"
+	flags_1 = CONDUCT_1
+	force = 10
+	throwforce = 10
+	throw_speed = 2
+	throw_range = 7
+	storage_slots = 4
+	w_class = WEIGHT_CLASS_NORMAL
+	materials = list(MAT_METAL = 350)
+	origin_tech = "combat=1;engineering=1"
+	attack_verb = list("robusted")
+	hitsound = 'sound/weapons/smash.ogg'
+
 /obj/item/storage/toolbox/Initialize()
 	. = ..()
 	if(has_latches)

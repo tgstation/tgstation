@@ -2,6 +2,7 @@
  * Contains:
  * 		Twohanded
  *		Fireaxe
+ *      TOOLBOX HAMMAR
  *		Double-Bladed Energy Swords
  *		Spears
  *		CHAINSAWS
@@ -233,6 +234,53 @@
 		else if(istype(A, /obj/structure/grille))
 			var/obj/structure/grille/G = A
 			G.take_damage(40, BRUTE, "melee", 0)
+
+/*
+ * Toolbox Hammer
+ */
+
+/obj/item/twohanded/toolboxhammer  // bart simpson was here
+	icon_state = "toolboxhammer0"
+	name = "Toolbox Hammer"
+	desc = "When blacksmiths and greytiders collide."
+	force = 5
+	throwforce = 15
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = SLOT_BACK
+	force_unwielded = 8
+	force_wielded = 20
+	origin_tech = "combat=10"
+	attack_verb = list("robusted", "clocked", "smashed", "smacked", "greytided")
+	hitsound = 'sound/weapons/smash.ogg'
+	obj_integrity = 200
+	max_integrity = 200
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 30)
+	resistance_flags = FIRE_PROOF
+
+/obj/item/twohanded/toolboxhammer/update_icon()  //Currently only here to fuck with the on-mob icons.
+	icon_state = "toolboxhammer[wielded]"
+	return
+
+/obj/item/twohanded/toolboxhammer/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] prays to Egg to take them in death! It looks like [user.p_theyre()] trying to commit sudoku!</span>")
+	return (BRUTELOSS)
+
+/obj/item/twohanded/toolboxhammer/attack(mob/target, mob/living/carbon/human/user)
+	..()
+	if((wielded) && prob(25))
+		INVOKE_ASYNC(src, .proc/robusto_spin, user)
+	if(iscarbon(target))
+		var/mob/living/carbon/C = target
+		if(!istype(C.head, /obj/item/clothing/head/helmet) && prob(20))
+			C.adjustBrainLoss(10)
+			to_chat(C, "<span class='danger'>You feel a bit dumber.</span>")
+
+/obj/item/twohanded/toolboxhammer/proc/robusto_spin(mob/living/user)
+	for(var/i in list(NORTH,SOUTH,EAST,WEST,EAST,SOUTH,NORTH,SOUTH,EAST,WEST,EAST,SOUTH))
+		user.setDir(i)
+		if(i == WEST)
+			user.emote("flip")
+		sleep(1)
 
 
 /*

@@ -133,3 +133,25 @@
 	var/real_type = pick(subtypesof(/obj/item/grenade/clusterbuster))
 	new real_type(loc)
 	qdel(src)
+
+
+//Custombuster//
+
+///obj/item/weapon/grenade/custombuster
+//	desc = "Now this is a story all about how my life got flip-turned upside down."
+//	name = "clusterbang"
+//	icon = 'icons/obj/grenade.dmi'
+//	icon_state = "cluster_base"
+//	var/num_grenades = 0
+//	var/payload1 = /obj/item/weapon/grenade
+//	var/payload2 = /obj/item/weapon/grenade
+//	var/payload3 = /obj/item/weapon/grenade
+//	var/payload4 = /obj/item/weapon/grenade
+//	var/payload5
+//	var/payload6
+//	var/payload7
+//	var/payload8
+
+///obj/item/weapon/grenade/custombuster/prime()
+//	if(num_grenades == 0)
+//		to_chat
