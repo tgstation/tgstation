@@ -362,7 +362,7 @@ function handle_pr($payload) {
 			tag_pr($payload, true);
 			if($no_changelog)
 				check_dismiss_changelog_review($payload);
-			if(get_pr_code_friendliness($payload) < 0){
+			if(get_pr_code_friendliness($payload) <= 0){
 				$balances = pr_balances();
 				$author = $payload['pull_request']['user']['login'];
 				if(isset($balances[$author]) && $balances[$author] < 0 && !is_maintainer($payload, $author))
