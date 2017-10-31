@@ -1,8 +1,7 @@
 /obj/item/integrated_circuit/reagent
 	category_text = "Reagent"
 	var/volume = 0
-	unacidable = 1
-	phoronproof = 1
+	resistance_flags = UNACIDABLE | FIRE_PROOF
 	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_BIO = 2)
 
 /obj/item/integrated_circuit/reagent/New()
@@ -26,6 +25,7 @@
 	origin_tech = list(TECH_ENGINEERING = 3, TECH_DATA = 3, TECH_BIO = 3)
 	volume = 100
 	power_draw_per_use = 20
+	var/smoke_radius = 5
 
 /obj/item/integrated_circuit/reagent/smoke/on_reagent_change()
 	set_pin_data(IC_OUTPUT, 1, reagents.total_volume)
@@ -38,12 +38,14 @@
 	..()
 
 /obj/item/integrated_circuit/reagent/smoke/do_work()
-	playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
-	var/datum/effect/effect/system/smoke_spread/chem/smoke_system = new()
-	smoke_system.set_up(reagents, 10, 0, get_turf(src))
-	spawn(0)
-		for(var/i = 1 to 8)
-			smoke_system.start()
+	var/location = get_turf(src)
+	var/datum/effect_system/smoke_spread/chem/S = new
+	S.attach(location)
+	playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
+	if(S)
+		S.set_up(reagents, smoke_radius, location, 0)
+		S.start()
+	if(reagents)
 		reagents.clear_reagents()
 	activate_pin(2)
 
@@ -65,6 +67,7 @@
 	power_draw_per_use = 15
 	var/direc = 1
 	var/transfer_amount = 10
+	var/busy = FALSE
 
 /obj/item/integrated_circuit/reagent/injector/interact(mob/user)
 	set_pin_data(IC_OUTPUT, 2, weakref(src))
@@ -91,91 +94,70 @@
 /obj/item/integrated_circuit/reagent/injector/do_work()
 	set waitfor = 0 // Don't sleep in a proc that is called by a processor without this set, otherwise it'll delay the entire thing
 	var/atom/movable/AM = get_pin_data_as_type(IC_INPUT, 1, /atom/movable)
-	if(!istype(AM)) //Invalid input
+	if(!istype(AM)||!Adjacent(AM)||busy||!AM.reagents)
 		activate_pin(3)
 		return
-
 	if(direc == 1)
-
-		if(!istype(AM)) //Invalid input
-			activate_pin(3)
-			return
 		if(!reagents.total_volume) // Empty
 			activate_pin(3)
 			return
-		if(AM.can_be_injected_by(src))
+		if(AM.is_injectable())
+			if(AM.reagents.total_volume>=AM.reagents.maximum_volume)
+				activate_pin(3)
+				return
 			if(isliving(AM))
 				var/mob/living/L = AM
-				var/turf/T = get_turf(AM)
-				T.visible_message("<span class='warning'>[src] is trying to inject [L]!</span>")
-				sleep(3 SECONDS)
-				if(!L.can_be_injected_by(src))
+				if(!L.can_inject(null, 0))
 					activate_pin(3)
 					return
-				var/contained = reagents.get_reagents()
-				var/trans = reagents.trans_to_mob(L, transfer_amount, CHEM_BLOOD)
-				message_admins("[src] injected \the [L] with [trans]u of [contained].")
-				to_chat(AM, "<span class='notice'>You feel a tiny prick!</span>")
-				visible_message("<span class='warning'>[src] injects [L]!</span>")
+				//Always log attemped injections for admins
+				var/list/rinject = list()
+				for(var/datum/reagent/R in reagents.reagent_list)
+					rinject += R.name
+				var/contained = english_list(rinject)
+				add_logs(src, L, "attemped to inject", addition="which had [contained]") //TODO: proper logging (maybe last touched and assembled)
+				L.visible_message("<span class='danger'>[src] is trying to inject [L]!</span>", \
+										"<span class='userdanger'>[src] is trying to inject you!</span>")
+				busy = TRUE
+				if(do_atom(src, L, extra_checks=CALLBACK(L, /mob/living/proc/can_inject,null,0)))
+					var/fraction = min(transfer_amount/reagents.total_volume, 1)
+					reagents.reaction(L, INJECT, fraction)
+					reagents.trans_to(L, transfer_amount)
+					L.visible_message("<span class='danger'>[src] injects [L] with it's needle!</span>", \
+											"<span class='userdanger'>[src] injects you with it's needle!</span>")
+				else
+					busy = FALSE					
+					activate_pin(3)
+					return
+				busy = FALSE
 			else
 				reagents.trans_to(AM, transfer_amount)
+		else
+			activate_pin(3)
+			return
 	else
-
-		if(reagents.total_volume >= volume) // Full
-			activate_pin(3)
-			return
-		var/obj/target = AM
-		if(!target.reagents)
-			activate_pin(3)
-			return
-		var/turf/TS = get_turf(src)
-		var/turf/TT = get_turf(AM)
-		if(!TS.Adjacent(TT))
+		if(reagents.total_volume >= reagents.maximum_volume) // Full
 			activate_pin(3)
 			return
 		var/tramount = Clamp(min(transfer_amount, reagents.maximum_volume - reagents.total_volume), 0, reagents.maximum_volume)
-		if(ismob(target))//Blood!
-			if(istype(target, /mob/living/carbon))
-				var/mob/living/carbon/T = target
-				if(!T.dna)
-					if(T.reagents.trans_to_obj(src, tramount))
-						activate_pin(2)
-					else
-						activate_pin(3)
-					return
-				if(NOCLONE in T.mutations) //target done been et, no more blood in him
-					if(T.reagents.trans_to_obj(src, tramount))
-						activate_pin(2)
-					else
-						activate_pin(3)
-					return
-					return
-				var/datum/reagent/B
-				if(istype(T, /mob/living/carbon/human))
-					var/mob/living/carbon/human/H = T
-					if(H.species && !H.should_have_organ(O_HEART))
-						H.reagents.trans_to_obj(src, tramount)
-					else
-						B = T.take_blood(src, tramount)
+		if(isliving(AM))
+			var/mob/living/L = AM
+			L.visible_message("<span class='danger'>[src] is trying to take a blood sample from [L]!</span>", \
+									"<span class='userdanger'>[src] is trying to take a blood sample from you!</span>")
+			busy = TRUE
+			if(do_atom(src, L, extra_checks=CALLBACK(L, /mob/living/proc/can_inject,null,0)))
+				if(L.transfer_blood_to(src, tramount))
+					L.visible_message("[src] takes a blood sample from [L].")
 				else
-					B = T.take_blood(src,tramount)
-				if (B)
-					reagents.reagent_list |= B
-					reagents.update_total()
-					on_reagent_change()
-					reagents.handle_reactions()
-					B = null
-				visible_message( "<span class='notice'>Machine takes a blood sample from [target].</span>")
-			else
+					busy = FALSE					
+					activate_pin(3)
+					return
+			busy = FALSE
+		else
+			if(!AM.reagents.total_volume || !AM.is_drawable())
 				activate_pin(3)
 				return
-
-		else //if not mob
-			if(!target.reagents.total_volume)
-				visible_message( "<span class='notice'>[target] is empty.</span>")
-				activate_pin(3)
-				return
-			target.reagents.trans_to_obj(src, tramount)
+			AM.reagents.trans_to(src, tramount)
 	activate_pin(2)
 
 
@@ -217,10 +199,7 @@
 
 	if(!istype(source) || !istype(target)) //Invalid input
 		return
-	var/turf/T = get_turf(src)
-	var/turf/TS = get_turf(source)
-	var/turf/TT = get_turf(target)
-	if(TS.Adjacent(T) && TT.Adjacent(T))
+	if(Adjacent(source) && Adjacent(target))
 		if(!source.reagents || !target.reagents)
 			return
 		if(ismob(source) || ismob(target))
@@ -228,11 +207,11 @@
 		if(!source.is_open_container() || !target.is_open_container())
 			return
 		if(direc)
-			if(!target.reagents.get_free_space())
+			if(target.reagents.maximum_volume - target.reagents.total_volume <= 0) //full
 				return
 			source.reagents.trans_to(target, transfer_amount)
 		else
-			if(!source.reagents.get_free_space())
+			if(source.reagents.maximum_volume - source.reagents.total_volume <= 0)
 				return
 			target.reagents.trans_to(source, transfer_amount)
 		activate_pin(2)
@@ -266,10 +245,13 @@
 	desc = "Stores liquid inside, and away from electrical components.  Can store up to 60u.  This will also suppress reactions."
 	icon_state = "reagent_storage_cryo"
 	extended_desc = "This is effectively an internal cryo beaker."
-	container_type = OPENCONTAINER_1 | NOREACT
+	container_type = OPENCONTAINER_1
 	complexity = 8
 	spawn_flags = IC_SPAWN_RESEARCH
 	origin_tech = list(TECH_MATERIALS = 4, TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_BIO = 2)
+/obj/item/integrated_circuit/reagent/storage/cryo/Initialize()
+	. = ..()
+	reagents.set_reacting(FALSE)
 
 /obj/item/integrated_circuit/reagent/storage/big
 	name = "big reagent storage"
@@ -347,7 +329,7 @@
 			return
 		if(!source.is_open_container() || !target.is_open_container())
 			return
-		if(!target.reagents.get_free_space())
+		if(target.reagents.maximum_volume - target.reagents.total_volume <= 0)
 			return
 		for(var/datum/reagent/G in source.reagents.reagent_list)
 			if (!direc)

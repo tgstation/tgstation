@@ -1410,3 +1410,42 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 //checks if a turf is in the planet z list.
 /proc/turf_z_is_planet(turf/T)
 	return GLOB.z_is_planet["[T.z]"]
+
+//same as do_mob except for movables and it allows both to drift and doesn't draw progressbar
+/proc/do_atom(atom/movable/user , atom/movable/target, time = 30, uninterruptible = 0,datum/callback/extra_checks = null)
+	if(!user || !target)
+		return 0
+	var/user_loc = user.loc
+
+	var/drifting = 0
+	if(!user.Process_Spacemove(0) && user.inertia_dir)
+		drifting = 1
+
+	var/target_drifting = 0
+	if(!target.Process_Spacemove(0) && target.inertia_dir)
+		target_drifting = 1
+
+	var/target_loc = target.loc
+
+	var/endtime = world.time+time
+	var/starttime = world.time
+	. = 1
+	while (world.time < endtime)
+		stoplag(1)
+		if(QDELETED(user) || QDELETED(target))
+			. = 0
+			break
+		if(uninterruptible)
+			continue
+
+		if(drifting && !user.inertia_dir)
+			drifting = 0
+			user_loc = user.loc
+			
+		if(target_drifting && !target.inertia_dir)
+			target_drifting = 0
+			target_loc = target.loc
+
+		if((!drifting && user.loc != user_loc) || (!target_drifting && target.loc != target_loc) || (extra_checks && !extra_checks.Invoke()))
+			. = 0
+			break
