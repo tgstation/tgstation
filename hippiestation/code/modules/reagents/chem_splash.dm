@@ -1,3 +1,9 @@
+//This is a MIRRORED /TG/ PROC
+/*
+Booleans have been brought up to code standard
+Direct holder reference "splash_holder" changed to a particle_effect object named "epicentre" with it's own holder thanks to the create_reagents proc
+This allows for the "handle_state_change" proc to type check the source of the reaction as a particle effect and apply the same code it does for smoke and foam regarding dupe reduction (currently define multipliers)
+*/
 /proc/chem_splash(turf/epicenter, affected_range = 3, list/datum/reagents/reactants = list(), extra_heat = 0, threatscale = 1, adminlog = 1)
 	if(!isturf(epicenter) || !reactants.len || threatscale <= 0)
 		return
