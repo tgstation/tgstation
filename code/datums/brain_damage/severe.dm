@@ -89,7 +89,7 @@ GLOBAL_LIST_EMPTY(agnosiac_mobs)
 /datum/brain_trauma/severe/agnosia
 	name = "Agnosia"
 	desc = "Patient cannot tell people apart."
-	scan_desc = "chronic agnosia"
+	scan_desc = "agnosia"
 	gain_text = "<span class='warning'>You can't remember anyone's face...</span>"
 	lose_text = "<span class='notice'>You suddenly remember who everyone is.</span>"
 
@@ -106,3 +106,88 @@ GLOBAL_LIST_EMPTY(agnosiac_mobs)
 	for(var/datum/atom_hud/alternate_appearance/basic/agnosia/AA in GLOB.active_agnosia_appearances)
 		AA.remove_hud_from(owner)
 	owner.disabilities &= ~AGNOSIA
+
+/datum/brain_trauma/severe/monophobia
+	name = "Monophobia"
+	desc = "Patient feels sick and distressed when not around other people, leading to potentially lethal levels of stress."
+	scan_desc = "severe monophobia"
+	gain_text = ""
+	lose_text = "<span class='notice'>You feel like you could be safe on your own.</span>"
+	var/stress = 0
+
+/datum/brain_trauma/severe/monophobia/on_gain()
+	..()
+	if(check_alone())
+		to_chat(owner, "<span class='warning'>You feel really lonely...</span>")
+	else
+		to_chat(owner, "<span class='notice'>You feel safe, as long as you have people around you.</span>")
+
+/datum/brain_trauma/severe/monophobia/on_life()
+	..()
+	if(check_alone())
+		stress = min(stress + 1, 100)
+		if(prob(stress / 8) + 1)
+			stress_reaction()
+	else
+		stress -= 4
+
+/datum/brain_trauma/severe/monophobia/proc/check_alone()
+	if(owner.disabilities & BLIND)
+		return TRUE
+	for(var/mob/M in oview(owner, 7))
+		if(!isliving(M)) //ghosts ain't people
+			continue
+		if((istype(M, /mob/living/simple_animal/pet)) || M.ckey)
+			return FALSE
+	return TRUE
+
+/datum/brain_trauma/severe/monophobia/proc/stress_reaction()
+	if(owner.stat != CONSCIOUS)
+		return
+
+	var/high_stress = (stress > 60) //things get psychosomatic from here on
+	switch(rand(1,6))
+		if(1)
+			if(!high_stress)
+				to_chat(owner, "<span class='warning'>You feel sick...</span>")
+			else
+				to_chat(owner, "<span class='warning'>You feel really sick at the thought of being alone!</span>")
+			addtimer(CALLBACK(owner, /mob/living/carbon.proc/vomit, high_stress ? FALSE : TRUE), 50) //blood vomit if high stress
+		if(2)
+			if(!high_stress)
+				to_chat(owner, "<span class='warning'>You can't stop shaking...</span>")
+				owner.dizziness += 20
+				owner.confused += 20
+				owner.Jitter(20)
+			else
+				to_chat(owner, "<span class='warning'>You feel weak and scared! If only you weren't alone...</span>")
+				owner.dizziness += 20
+				owner.confused += 20
+				owner.Jitter(20)
+				owner.adjustStaminaLoss(50)
+
+		if(3, 4)
+			if(!high_stress)
+				to_chat(owner, "<span class='warning'>You feel really lonely...</span>")
+			else
+				to_chat(owner, "<span class='warning'>You're going mad with loneliness!</span>")
+				owner.hallucination += 35
+
+		if(5)
+			if(!high_stress)
+				to_chat(owner, "<span class='warning'>You feel really lonely...</span>")
+			else
+				to_chat(owner, "<span class='warning'>You're going mad with loneliness!</span>")
+				owner.hallucination += 35
+		if(5)
+			if(!high_stress)
+				to_chat(owner, "<span class='warning'>Your heart skips a beat.</span>")
+				owner.adjustOxyLoss(8)
+				owner.adjustBruteLoss(2)
+			else
+				if(prob(15) && ishuman(owner))
+					var/mob/living/carbon/human/H = owner
+					H.set_heartattack(TRUE)
+					to_chat(H, "<span class='userdanger'>You feel a stabbing pain in your heart!</span>")
+				else
+					to_chat(owner, "<span class='warning'>You feel your heart lurching in your chest...</span>")

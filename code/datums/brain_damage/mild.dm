@@ -111,7 +111,7 @@
 
 /datum/brain_trauma/mild/phobia
 	name = "Phobia"
-	desc = "Patient is unreasonaly afraid of something."
+	desc = "Patient is unreasonably afraid of something."
 	scan_desc = "phobia"
 	gain_text = ""
 	lose_text = ""
@@ -225,7 +225,7 @@
 	if(reason)
 		to_chat(owner, "<span class='userdanger'>Seeing [reason] [message]!</span>")
 	else if(trigger_word)
-		to_chat(owner, "<span class='userdanger'>The word [trigger_word] [message]!</span>")
+		to_chat(owner, "<span class='userdanger'>Hearing \"[trigger_word]\" [message]!</span>")
 	else
 		to_chat(owner, "<span class='userdanger'>Something [message]!</span>")
 	var/reaction = rand(1,4)
@@ -241,7 +241,7 @@
 			if(reason)
 				owner.pointed(reason)
 		if(3)
-			to_chat(owner, "<span class='warning'>You shut your eyes in fear!</span>")
+			to_chat(owner, "<span class='warning'>You shut your eyes in terror!</span>")
 			owner.blind_eyes(10)
 		if(4)
 			owner.dizziness += 10
