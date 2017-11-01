@@ -424,7 +424,7 @@
 	var/code = 30
 	var/datum/radio_frequency/radio_connection
 
-/obj/item/integrated_circuit/input/signaler/initialize()
+/obj/item/integrated_circuit/input/signaler/Initialize()
 	..()
 	set_frequency(frequency)
 	// Set the pins so when someone sees them, they won't show as null
@@ -617,7 +617,7 @@
 /obj/item/integrated_circuit/input/sensor/proc/scan(var/atom/A)
 	var/ignore_bags = get_pin_data(IC_INPUT, 1)
 	if(ignore_bags)
-		if(istype(A, /obj/item/weapon/storage))
+		if(istype(A, /obj/item/storage))
 			return FALSE
 
 	set_pin_data(IC_OUTPUT, 1, weakref(A))

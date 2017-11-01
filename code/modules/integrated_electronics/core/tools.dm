@@ -334,7 +334,7 @@
 
 
 
-
+/*
 /obj/item/weapon/storage/bag/circuits
 	name = "circuit kit"
 	desc = "This kit's essential for any circuitry projects."
@@ -635,4 +635,4 @@
 				new IC.type(src)
 	make_exact_fit()
 
-
+*/

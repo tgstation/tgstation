@@ -68,11 +68,11 @@
 /obj/item/device/electronic_assembly/New()
 	..()
 	battery = new(src)
-	GLOB.machines |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/device/electronic_assembly/Destroy()
 	battery = null
-	GLOB.machines -= src
+	STOP_PROCESSING(SSobj, src)
 	for(var/atom/movable/AM in contents)
 		qdel(AM)
 	..()
