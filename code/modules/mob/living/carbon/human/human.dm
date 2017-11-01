@@ -32,6 +32,7 @@
 	var/image/I = image(icon = 'icons/mob/simple_human.dmi', icon_state = "faceless", loc = src)
 	I.override = 1
 	I.name = "Unknown"
+	I.appearance_flags = KEEP_APART|RESET_COLOR|PIXEL_SCALE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/agnosia, "agnosia", I, FALSE)
 
 /mob/living/carbon/human/OpenCraftingMenu()

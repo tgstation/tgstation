@@ -230,6 +230,6 @@
 	var/brainloss = get_brain_damage()
 	for(var/X in traumas)
 		if(ignore_thresholds || (istype(X, BRAIN_TRAUMA_MILD) && brainloss < BRAIN_DAMAGE_MILD))
-			cure_trauma(X)
+			cure_trauma(X, cure_permanent)
 		else if(ignore_thresholds || ((istype(X, BRAIN_TRAUMA_SEVERE) || istype(X, BRAIN_TRAUMA_SPECIAL)) && brainloss < BRAIN_DAMAGE_SEVERE))
-			cure_trauma(X)
+			cure_trauma(X, cure_permanent)
