@@ -2575,9 +2575,7 @@
 /area/engine/atmos)
 "agf" = (
 /obj/structure/table,
-/obj/item/stack/sheet/metal{
-	amount = 1
-	},
+/obj/item/stack/sheet/metal,
 /obj/item/storage/box/bodybags,
 /obj/item/pen,
 /obj/machinery/firealarm{

@@ -1763,9 +1763,7 @@
 /area/construction/mining/aux_base)
 "aep" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/plasteel{
-	amount = 20
-	},
+/obj/item/stack/sheet/plasteel/twenty,
 /obj/item/stack/rods/fifty,
 /obj/item/storage/box/lights/mixed,
 /turf/open/floor/plasteel/yellow/side{
@@ -16639,9 +16637,7 @@
 	pixel_y = 1
 	},
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/plasteel{
-	amount = 20
-	},
+/obj/item/stack/sheet/plasteel/twenty,
 /obj/item/stack/sheet/rglass{
 	amount = 20;
 	pixel_x = 2;
@@ -33753,9 +33749,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/item/stack/sheet/plasteel{
-	amount = 50
-	},
+/obj/item/stack/sheet/plasteel/fifty,
 /obj/item/crowbar/power,
 /obj/structure/sign/nanotrasen{
 	pixel_x = 32
@@ -38503,9 +38497,7 @@
 	pixel_y = -26
 	},
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/plasteel{
-	amount = 20
-	},
+/obj/item/stack/sheet/plasteel/twenty,
 /obj/item/wrench,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -62596,9 +62588,7 @@
 /area/engine/storage)
 "cBj" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/plasteel{
-	amount = 50
-	},
+/obj/item/stack/sheet/plasteel/fifty,
 /obj/item/stack/sheet/rglass{
 	amount = 50;
 	pixel_x = 2;

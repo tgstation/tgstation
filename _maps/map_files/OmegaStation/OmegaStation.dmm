@@ -19896,9 +19896,7 @@
 /area/engine/gravity_generator)
 "aLF" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/plasteel{
-	amount = 20
-	},
+/obj/item/stack/sheet/plasteel/twenty,
 /obj/item/wrench,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -20633,9 +20631,7 @@
 /area/engine/engineering)
 "aNd" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/plasteel{
-	amount = 50
-	},
+/obj/item/stack/sheet/plasteel/fifty,
 /obj/item/stack/sheet/rglass{
 	amount = 50;
 	pixel_x = 2;

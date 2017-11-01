@@ -42212,8 +42212,7 @@
 /area/storage/tech)
 "bWv" = (
 /obj/structure/table,
-/obj/item/stack/sheet/plasteel{
-	amount = 20;
+/obj/item/stack/sheet/plasteel/twenty
 	pixel_x = -3;
 	pixel_y = 3
 	},
