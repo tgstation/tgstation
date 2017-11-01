@@ -19,6 +19,7 @@
 /mob/living/carbon/human/death(gibbed)
 	if(stat == DEAD)
 		return
+	playsound(src, 'sound/voice/human/death.ogg', 50, 1)
 	stop_sound_channel(CHANNEL_HEARTBEAT)
 	var/obj/item/organ/heart/H = getorganslot(ORGAN_SLOT_HEART)
 	if(H)
