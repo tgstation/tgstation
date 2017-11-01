@@ -23,14 +23,14 @@
 	switch(slot)
 		if(slot_head)
 			if(head)
-				return 0
+				return EQUIP_UNABLE
 			if(!((I.slot_flags & SLOT_HEAD) || (I.slot_flags & SLOT_MASK)))
-				return 0
-			return 1
+				return EQUIP_UNABLE
+			return EQUIP_ABLE
 		if(slot_generic_dextrous_storage)
 			if(internal_storage)
-				return 0
-			return 1
+				return EQUIP_UNABLE
+			return EQUIP_ABLE
 	..()
 
 

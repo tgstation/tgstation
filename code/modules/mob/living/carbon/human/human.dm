@@ -231,10 +231,11 @@
 
 			var/delay_denominator = 1
 			if(pocket_item && !(pocket_item.flags_1&ABSTRACT_1))
-				if(pocket_item.flags_1 & NODROP_1)
+				if(!canUnEquip(pocket_item))
 					to_chat(usr, "<span class='warning'>You try to empty [src]'s [pocket_side] pocket, it seems to be stuck!</span>")
+					return
 				to_chat(usr, "<span class='notice'>You try to empty [src]'s [pocket_side] pocket.</span>")
-			else if(place_item && place_item.mob_can_equip(src, usr, pocket_id, 1) && !(place_item.flags_1&ABSTRACT_1))
+			else if(place_item && place_item.mob_can_equip(src, usr, pocket_id, 1) == EQUIP_ABLE && !(place_item.flags_1&ABSTRACT_1))
 				to_chat(usr, "<span class='notice'>You try to place [place_item] into [src]'s [pocket_side] pocket.</span>")
 				delay_denominator = 4
 			else
@@ -242,11 +243,14 @@
 
 			if(do_mob(usr, src, POCKET_STRIP_DELAY/delay_denominator)) //placing an item into the pocket is 4 times faster
 				if(pocket_item)
+					if(!canUnEquip(pocket_item))
+						to_chat(usr, "<span class='warning'>You try to empty [src]'s [pocket_side] pocket, it seems to be stuck!</span>")
+						return
 					if(pocket_item == (pocket_id == slot_r_store ? r_store : l_store)) //item still in the pocket we search
 						dropItemToGround(pocket_item)
 				else
 					if(place_item)
-						if(place_item.mob_can_equip(src, usr, pocket_id, FALSE, TRUE))
+						if(place_item.mob_can_equip(src, usr, pocket_id, FALSE, TRUE) == EQUIP_ABLE && !(place_item.flags_1&ABSTRACT_1))
 							usr.temporarilyRemoveItemFromInventory(place_item, TRUE)
 							equip_to_slot(place_item, pocket_id, TRUE)
 						//do nothing otherwise

@@ -437,7 +437,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 //Set disable_warning to 1 if you wish it to not give you outputs.
 /obj/item/proc/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
 	if(!M)
-		return 0
+		return EQUIP_UNABLE
 
 	return M.can_equip(src, slot, disable_warning, bypass_equip_delay_self)
 
