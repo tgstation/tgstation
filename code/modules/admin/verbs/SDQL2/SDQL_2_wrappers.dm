@@ -178,6 +178,12 @@
 /proc/_list_swap(list/L, Index1, Index2)
 	L.Swap(Index1, Index2)
 
+/proc/_text2path(text)
+	return text2path(text)
+
+/proc/_path2string(path)
+	return "[path]"
+
 /proc/_walk(ref, dir, lag)
 	walk(ref, dir, lag)
 
