@@ -275,6 +275,7 @@
 		if(alert(user, "REALLY activate the Ark's countdown?", name, "Yes", "No") == "Yes")
 			if(alert(user, "You're REALLY SURE? This cannot be undone.", name, "Yes - Activate the Ark", "No") == "Yes - Activate the Ark")
 				message_admins("<span class='danger'>Admin [key_name_admin(user)] started the Ark's countdown!</span>")
+				log_admin("Admin [key_name(user)] started the Ark's countdown on a non-clockcult mode!")
 				to_chat(user, "<span class='userdanger'>The gamemode is now being treated as clockwork cult, and the Ark is counting down from 30 \
 				minutes. You will need to create servant players yourself.</span>")
 				final_countdown(35)
