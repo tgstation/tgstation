@@ -151,12 +151,12 @@
 	icon_state = initial(icon_state)
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		if(!active)
-			to_chat(user, "<span class='big'><b>Seconds until the Ark's activation:</b> [get_arrival_text(TRUE)]</span>")
+			to_chat(user, "<span class='big'><b>Time until the Ark's activation:</b> [DisplayTimeText(get_arrival_text(FALSE))]</span>")
 		else
 			if(grace_period)
-				to_chat(user, "<span class='big'><b>Crew grace period time remaining:</b> [get_arrival_text(TRUE)]</span>")
+				to_chat(user, "<span class='big'><b>Crew grace period time remaining:</b> [DisplayTimeText(get_arrival_text(FALSE))]</span>")
 			else
-				to_chat(user, "<span class='big'><b>Seconds until Ratvar's arrival:</b> [get_arrival_text(TRUE)]</span>")
+				to_chat(user, "<span class='big'><b>Time until Ratvar's arrival:</b> [DisplayTimeText(get_arrival_text(FALSE))]</span>")
 				switch(progress_in_seconds)
 					if(-INFINITY to GATEWAY_REEBE_FOUND)
 						to_chat(user, "<span class='heavy_brass'>The Ark is feeding power into the bluespace field.</span>")
