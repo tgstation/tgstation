@@ -129,9 +129,18 @@
 	C.update_body()
 	C.update_hair()
 	C.update_canmove()
+
+	if(!T)	// T = null happens when a "dummy human" used for rendering icons on prefs screen gets its limbs replaced.
+		qdel(src)
+		return
+
 	if(is_pseudopart)
 		drop_organs(C)	//Psuedoparts shouldn't have organs, but just in case
 		qdel(src)
+		return
+
+	forceMove(T)
+
 
 
 //when a limb is dropped, the internal organs are removed from the mob and put into the limb
