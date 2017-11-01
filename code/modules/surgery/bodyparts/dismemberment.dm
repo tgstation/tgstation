@@ -124,6 +124,7 @@
 	if(T)
 		forceMove(T)
 	else
+		moveToNullspace()
 	C.update_health_hud() //update the healthdoll
 	C.update_body()
 	C.update_hair()
