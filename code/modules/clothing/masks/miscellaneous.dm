@@ -88,27 +88,11 @@ obj/item/clothing/mask/frog
 	w_class = WEIGHT_CLASS_SMALL
 	var/voicechange = TRUE
 
-obj/item/clothing/mask/frog/cursed
-	name = "frog mask"
-	desc = "An ancient mask carved in the shape of a frog.<br> Sanity is like gravity, all it needs is a push."
-	icon_state = "frog"
-	item_state = "frog"
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
-	w_class = WEIGHT_CLASS_SMALL
-	var/voicechange = TRUE
-	flags_1 = NODROP_1 //reee!!
-
 /obj/item/clothing/mask/frog/equipped(mob/user, slot) //when you put it on
 	var/mob/living/carbon/C = user
 	if(C.wear_mask == src)
 		playsound (src, 'sound/effects/reee.ogg', 30, 1)
 	..()
-
-/obj/item/clothing/mask/frog/cursed/equipped(mob/user, slot)
-	var/mob/living/carbon/C = user
-	if(C.wear_mask == src)
-		to_chat(user, "<span class='warning'><B>[src] was cursed! Ree!!</B></span>")
-	return ..()
 
 /obj/item/clothing/mask/frog/speechModification(message) //whenever you speak
 	if(voicechange)
@@ -120,6 +104,15 @@ obj/item/clothing/mask/frog/cursed
 			playsound (src, 'sound/effects/reee.ogg', 30, 1)
 	return message
 
+obj/item/clothing/mask/frog/cursed
+	..()
+	flags_1 = NODROP_1 //reee!!
+
+/obj/item/clothing/mask/frog/cursed/equipped(mob/user, slot)
+	var/mob/living/carbon/C = user
+	if(C.wear_mask == src)
+		to_chat(user, "<span class='warning'><B>[src] was cursed! Ree!!</B></span>")
+	..()
 /////
 
 /obj/item/clothing/mask/cowmask
