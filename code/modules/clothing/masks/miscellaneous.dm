@@ -92,7 +92,7 @@ obj/item/clothing/mask/frog
 	var/mob/living/carbon/C = user
 	if(C.wear_mask == src)
 		playsound (src, 'sound/effects/reee.ogg', 30, 1)
-	..()
+	return ..()
 
 /obj/item/clothing/mask/frog/speechModification(message) //whenever you speak
 	if(voicechange)
