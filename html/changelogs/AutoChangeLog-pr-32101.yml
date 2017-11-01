@@ -1,0 +1,4 @@
+author: "ACCount"
+delete-after: True
+changes: 
+  - tweak: "\"Tail removal\" and \"tail attachment\" surgeries are merged with \"organ manipulation\"."
