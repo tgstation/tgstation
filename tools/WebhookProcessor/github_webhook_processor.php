@@ -42,7 +42,7 @@ set_error_handler(function($severity, $message, $file, $line) {
 set_exception_handler(function($e) {
 	header('HTTP/1.1 500 Internal Server Error');
 	echo "Error on line {$e->getLine()}: " . htmlSpecialChars($e->getMessage());
-	file_put_contents('htwebhookerror.log', "Error on line {$e->getLine()}: " . $e->getMessage(), FILE_APPEND);
+	file_put_contents('htwebhookerror.log', '['.date(DATE_ATOM).'] '."Error on line {$e->getLine()}: " . $e->getMessage().PHP_EOL, FILE_APPEND);
 	die();
 });
 $rawPost = NULL;
@@ -167,8 +167,6 @@ function check_tag_and_replace($payload, $title_tag, $label, &$array_to_add_labe
 	$title = $payload['pull_request']['title'];
 	if(stripos($title, $title_tag) !== FALSE){
 		$array_to_add_label_to[] = $label;
-		$title = trim(str_ireplace($title_tag, '', $title));
-		apisend($payload['pull_request']['url'], 'PATCH', array('title' => $title));
 		return true;
 	}
 	return false;
@@ -241,7 +239,7 @@ function tag_pr($payload, $opened) {
 function remove_ready_for_review($payload, $labels = null){
 	if($labels == null)
 		$labels = get_labels($payload);
-	$index = array_search('Ready for Review', $labels);
+	$index = array_search('Review Again', $labels);
 	if($index !== FALSE)
 		unset($labels[$index]);
 	$url = $payload['pull_request']['issue_url'] . '/labels';
@@ -258,7 +256,7 @@ function get_reviews($payload){
 }
 
 function check_ready_for_review($payload, $labels = null){
-	$r4rlabel = 'Ready for Review';
+	$r4rlabel = 'Review Again';
 	$labels_which_should_not_be_ready = array('Do Not Merge', 'Work In Progress', 'Merge Conflict');
 	$has_label_already = false;
 	$should_not_have_label = false;
@@ -521,35 +519,49 @@ function update_pr_balance($payload) {
 	fclose($balances_file);
 }
 
-function auto_update($payload){
-	global $enable_live_tracking;
-	global $path_to_script;
-	global $repoOwnerAndName;
-	global $tracked_branch;
-	if(!$enable_live_tracking || !has_tree_been_edited($payload, $path_to_script) || $payload['pull_request']['base']['ref'] != $tracked_branch)
-		return;
-	
-	$content = file_get_contents('https://raw.githubusercontent.com/' . $repoOwnerAndName . '/' . $tracked_branch . '/'. $path_to_script);
-
-	create_comment($payload, "Edit detected. Self updating... Here is my new code:\n``" . "`HTML+PHP\n" . $content . "\n``" . '`');
-
-	$code_file = fopen(basename($path_to_script), 'w');
-	fwrite($code_file, $content);
-	fclose($code_file);
-}
-
 $github_diff = null;
 
-function has_tree_been_edited($payload, $tree){
+function get_diff($payload) {
 	global $github_diff;
 	if ($github_diff === null) {
 		//go to the diff url
 		$url = $payload['pull_request']['diff_url'];
 		$github_diff = file_get_contents($url);
 	}
+	return $github_diff;
+}
+
+function auto_update($payload){
+	global $enable_live_tracking;
+	global $path_to_script;
+	global $repoOwnerAndName;
+	global $tracked_branch;
+	global $github_diff;
+	if(!$enable_live_tracking || !has_tree_been_edited($payload, $path_to_script) || $payload['pull_request']['base']['ref'] != $tracked_branch)
+		return;
+
+	get_diff($payload);
+	$content = file_get_contents('https://raw.githubusercontent.com/' . $repoOwnerAndName . '/' . $tracked_branch . '/'. $path_to_script);
+	$content_diff = "### Diff not available. :slightly_frowning_face:";
+	if($github_diff && preg_match('/(diff --git a\/' . preg_quote($path_to_script, '/') . '.+?)(?:^diff)?/sm', $github_diff, $matches)) {
+		$script_diff = matches[1];
+		if($script_diff) {
+			$content_diff = "``" . "`DIFF\n" . $script_diff ."\n``" . "`";
+		}
+	}
+	create_comment($payload, "Edit detected. Self updating... \n<details><summary>Here are my changes:</summary>\n\n" . $content_diff . "\n</details>\n<details><summary>Here is my new code:</summary>\n\n``" . "`HTML+PHP\n" . $content . "\n``" . '`\n</details>');
+
+	$code_file = fopen(basename($path_to_script), 'w');
+	fwrite($code_file, $content);
+	fclose($code_file);
+}
+
+function has_tree_been_edited($payload, $tree){
+	global $github_diff;
+	get_diff($payload);
 	//find things in the _maps/map_files tree
 	//e.g. diff --git a/_maps/map_files/Cerestation/cerestation.dmm b/_maps/map_files/Cerestation/cerestation.dmm
-	return $github_diff !== FALSE && strpos($github_diff, 'diff --git a/' . $tree) !== FALSE;
+	return ($github_diff !== FALSE) && (preg_match('/^diff --git a\/' . preg_quote($tree, '/') . '/m', $github_diff) !== 0);
 }
 
 $no_changelog = false;

@@ -281,7 +281,7 @@
 /datum/action/innate/servant_warp/Activate()
 	if(QDELETED(target) || !(ishuman(owner) || iscyborg(owner)) || !owner.canUseTopic(target) || warping)
 		return
-	if(!istype(SSticker.mode, /datum/game_mode/clockwork_cult)) //No leaving unless there's servants from the get-go
+	if(!GLOB.servants_active) //No leaving unless there's servants from the get-go
 		return
 	var/mob/living/carbon/human/user = owner
 	var/mob/camera/aiEye/remote/remote_eye = user.remote_control
@@ -296,8 +296,8 @@
 		to_chat(user, "<span class='sevtug_small'>[prob(1) ? "Servant cannot into space." : "You can't teleport into space."]</span>")
 		return
 	var/area/AR = get_area(T)
-	if(istype(AR, /area/ai_monitored))
-		to_chat(user, "<span class='sevtug_small'>The structure there is too dense for [src] to pierce. (This is normal in high-security areas.)</span>")
+	if(!AR.clockwork_warp_allowed)
+		to_chat(user, "<span class='sevtug_small'>[AR.clockwork_warp_fail]</span>")
 		return
 	if(alert(user, "Are you sure you want to warp to [AR]?", target.name, "Warp", "Cancel") == "Cancel" || QDELETED(R) || !user.canUseTopic(R))
 		return

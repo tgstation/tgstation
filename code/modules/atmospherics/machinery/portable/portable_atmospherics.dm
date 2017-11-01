@@ -49,7 +49,7 @@
 
 	//Make sure are close enough for a valid connection
 	if(new_port.loc != get_turf(src))
-		return TRUE
+		return FALSE
 
 	//Perform the connection
 	connected_port = new_port

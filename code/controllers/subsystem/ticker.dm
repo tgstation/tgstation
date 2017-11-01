@@ -12,7 +12,7 @@ SUBSYSTEM_DEF(ticker)
 	var/force_ending = 0					//Round was ended by admin intervention
 	// If true, there is no lobby phase, the game starts immediately.
 	var/start_immediately = FALSE
-	var/setup_done = FALSE //All game setup done including mode post setup and 
+	var/setup_done = FALSE //All game setup done including mode post setup and
 
 	var/hide_mode = 0
 	var/datum/game_mode/mode = null
@@ -86,7 +86,7 @@ SUBSYSTEM_DEF(ticker)
 	var/list/provisional_title_music = flist("config/title_music/sounds/")
 	var/list/music = list()
 	var/use_rare_music = prob(1)
-	
+
 	for(var/S in provisional_title_music)
 		var/lower = lowertext(S)
 		var/list/L = splittext(lower,"+")
@@ -114,18 +114,19 @@ SUBSYSTEM_DEF(ticker)
 			if(byond_sound_formats[ext])
 				continue
 		music -= S
-				
+
 	if(isemptylist(music))
 		music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
 		login_music = pick(music)
 	else
 		login_music = "config/title_music/sounds/[pick(music)]"
-	
+
 
 	if(!GLOB.syndicate_code_phrase)
 		GLOB.syndicate_code_phrase	= generate_code_phrase()
 	if(!GLOB.syndicate_code_response)
 		GLOB.syndicate_code_response = generate_code_phrase()
+
 	..()
 	start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
 
@@ -555,7 +556,7 @@ SUBSYSTEM_DEF(ticker)
 		if(5) //every 5 ticks check if there is a slot available
 			if(living_player_count() < hpc)
 				if(next_in_line && next_in_line.client)
-					to_chat(next_in_line, "<span class='userdanger'>A slot has opened! You have approximately 20 seconds to join. <a href='?src=\ref[next_in_line];late_join=override'>\>\>Join Game\<\<</a></span>")
+					to_chat(next_in_line, "<span class='userdanger'>A slot has opened! You have approximately 20 seconds to join. <a href='?src=[REF(next_in_line)];late_join=override'>\>\>Join Game\<\<</a></span>")
 					SEND_SOUND(next_in_line, sound('sound/misc/notice1.ogg'))
 					next_in_line.LateChoices()
 					return

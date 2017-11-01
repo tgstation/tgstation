@@ -55,17 +55,13 @@ GLOBAL_LIST_EMPTY(antagonists)
 		if(!silent)
 			greet()
 		apply_innate_effects()
-		if(is_banned(owner) && replace_banned)
+		if(is_banned(owner.current) && replace_banned)
 			replace_banned_player()
 
-/datum/antagonist/proc/is_banned(datum/mind/M)
+/datum/antagonist/proc/is_banned(mob/M)
 	if(!M)
 		return FALSE
-	if(jobban_isbanned(M,"Syndicate"))
-		return TRUE
-	if(job_rank && jobban_isbanned(M,job_rank))
-		return TRUE
-	return FALSE
+	. = (jobban_isbanned(M,"Syndicate") || (job_rank && jobban_isbanned(M,job_rank)))
 
 /datum/antagonist/proc/replace_banned_player()
 	set waitfor = FALSE

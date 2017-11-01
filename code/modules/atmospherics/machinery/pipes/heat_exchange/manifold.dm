@@ -10,6 +10,9 @@
 
 	device_type = TRINARY
 
+	construction_type = /obj/item/pipe/trinary
+	pipe_state = "he_manifold"
+
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold/SetInitDirections()
 	switch(dir)
 		if(NORTH)
@@ -43,6 +46,9 @@
 	initialize_directions_he = NORTH|SOUTH|EAST|WEST
 
 	device_type = QUATERNARY
+
+	construction_type = /obj/item/pipe/quaternary
+	pipe_state = "he_manifold4w"
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w/SetInitDirections()
 	initialize_directions_he = initial(initialize_directions_he)

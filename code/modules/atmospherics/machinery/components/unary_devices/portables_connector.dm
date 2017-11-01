@@ -9,6 +9,7 @@
 	level = 0
 	layer = GAS_FILTER_LAYER
 	pipe_flags = PIPING_ONE_PER_TURF
+	pipe_state = "connector"
 
 /obj/machinery/atmospherics/components/unary/portables_connector/New()
 	..()

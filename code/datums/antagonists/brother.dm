@@ -1,5 +1,6 @@
 /datum/antagonist/brother
 	name = "Brother"
+	job_rank = ROLE_BROTHER
 	var/special_role = "blood brother"
 	var/datum/objective_team/brother_team/team
 
@@ -19,6 +20,7 @@
 /datum/antagonist/brother/on_gain()
 	SSticker.mode.brothers += owner
 	owner.objectives += team.objectives
+	owner.special_role = special_role
 	finalize_brother()
 	return ..()
 

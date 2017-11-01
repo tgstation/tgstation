@@ -1,4 +1,5 @@
 #define EXPLOSION_THROW_SPEED 4
+#define REEBE_HUGBOX_COEFFICIENT 0.5
 
 GLOBAL_LIST_EMPTY(explosions)
 //Against my better judgement, I will return the explosion datum
@@ -60,6 +61,13 @@ GLOBAL_LIST_EMPTY(explosions)
 		light_impact_range = min(GLOB.MAX_EX_LIGHT_RANGE, light_impact_range)
 		flash_range = min(GLOB.MAX_EX_FLASH_RANGE, flash_range)
 		flame_range = min(GLOB.MAX_EX_FLAME_RANGE, flame_range)
+		
+	if(!ignorecap && epicenter.z == ZLEVEL_CITYOFCOGS)
+		devastation_range = min(GLOB.MAX_EX_DEVESTATION_RANGE * REEBE_HUGBOX_COEFFICIENT, devastation_range)
+		heavy_impact_range = min(GLOB.MAX_EX_HEAVY_RANGE * REEBE_HUGBOX_COEFFICIENT, heavy_impact_range)
+		light_impact_range = min(GLOB.MAX_EX_LIGHT_RANGE * REEBE_HUGBOX_COEFFICIENT, light_impact_range)
+		flash_range = min(GLOB.MAX_EX_FLASH_RANGE * REEBE_HUGBOX_COEFFICIENT, flash_range)
+		flame_range = min(GLOB.MAX_EX_FLAME_RANGE * REEBE_HUGBOX_COEFFICIENT, flame_range)
 
 	//DO NOT REMOVE THIS STOPLAG, IT BREAKS THINGS
 	//not sleeping causes us to ex_act() the thing that triggered the explosion
@@ -397,3 +405,5 @@ GLOBAL_LIST_EMPTY(explosions)
 // 10 explosion power is a (1, 3, 6) explosion.
 // 5 explosion power is a (0, 1, 3) explosion.
 // 1 explosion power is a (0, 0, 1) explosion.
+
+#undef REEBE_HUGBOX_COEFFICIENT

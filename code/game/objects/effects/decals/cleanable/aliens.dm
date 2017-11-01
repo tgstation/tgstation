@@ -20,7 +20,7 @@
 	icon_state = "xgib1"
 	layer = LOW_OBJ_LAYER
 	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6")
-	mergeable_decal = 0
+	mergeable_decal = FALSE
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/proc/streak(list/directions)
 	set waitfor = 0

@@ -10,14 +10,13 @@
 	var/mob/living/carbon/attached = null
 	var/mode = IV_INJECTING
 	var/obj/item/reagent_containers/beaker = null
-	var/list/drip_containers = list(/obj/item/reagent_containers/blood,
+	var/static/list/drip_containers = typecacheof(list(/obj/item/reagent_containers/blood,
 									/obj/item/reagent_containers/food,
-									/obj/item/reagent_containers/glass)
+									/obj/item/reagent_containers/glass))
 
 /obj/machinery/iv_drip/Initialize()
 	. = ..()
 	update_icon()
-	drip_containers = typecacheof(drip_containers)
 
 /obj/machinery/iv_drip/Destroy()
 	attached = null
