@@ -194,7 +194,7 @@
 	environment_type = "dirt"
 	turf_type = /turf/open/floor/plating/asteroid/dirty
 	floor_variance = 0
-	initial_gas_mix = "o2=22;n2=82;TEMP=275.15"
+	initial_gas_mix = "o2=22;n2=82;TEMP=225.15"
 	archdrops = list(/obj/item/ore/glass = 5)
 	slowdown = 3
 
@@ -577,6 +577,8 @@
 	icon_state = "fence"
 	pass_flags = LETPASSTHROW
 	var/proj_pass_rate = 80
+	max_integrity = 1000
+	damage_deflection = 10
 	layer = 5
 	anchored = 1
 	density = 1
@@ -743,6 +745,32 @@
 	access = get_all_syndicate_access()
 	..()
 
+/*********************Sovietlathe************************/
+
+/obj/machinery/autolathe/soviet
+	name = "sovietlathe"
+	circuit = /obj/item/circuitboard/machine/autolathe/soviet
+	categories = list(
+							"Tools",
+							"Electronics",
+							"T-Comm",
+							"Security",
+							"Machinery",
+							"Medical",
+							"Misc",
+							"Dinnerware",
+							"Imported"
+							)
+
+/obj/item/circuitboard/machine/autolathe/soviet
+	name = "Sovietlathe (Machine Board)"
+	build_path = /obj/machinery/autolathe/soviet
+	origin_tech = "engineering=2;programming=2"
+	req_components = list(
+		/obj/item/stock_parts/matter_bin = 3,
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/console_screen = 1)
+
 /*********************Radio Shit*************************/
 
 /obj/item/device/radio/headset/radioprison
@@ -773,31 +801,31 @@
 
 /obj/effect/mob_spawn/human/prison/doctor
 	name = "doctor spawner"
-	flavour_text = "Вы вечный патологоанатом тюрьмы Ромашка. Постарайтесь следить за телами, живые они или нет, и не забывайте готовить мясо для котлет.<b> И да, смерти в этой тюрьме не приветствуются, Вы верующий человек и бог с Вами.</b>"
+	flavour_text = "Вы вечный патологоанатом тюрьмы Ромашка. Постарайтесь следить за телами, живые они или нет, и не забывайте готовить мясо для котлет.<b> Убивать и сбегать без особой причины запрещено, иначе Вас забанят. Правила тут работают в полную силу.</b>"
 	outfit = /datum/outfit/prison/doctor
 	assignedrole = "Doctor USSR"
 
 /obj/effect/mob_spawn/human/prison/chaplain
 	name = "prorok spawner"
-	flavour_text = "Вы бывший заключенный тюрьмы Ромашка подавшийся в священнослужение. Помогайте чем можете всем нуждающимся.<b> И да, смерти в этой тюрьме не приветствуются, Вы верующий человек и бог с Вами.</b>"
+	flavour_text = "Вы бывший заключенный тюрьмы Ромашка подавшийся в священнослужение. Помогайте чем можете всем нуждающимся.<b> Убивать и сбегать без особой причины запрещено, иначе Вас забанят. Правила тут работают в полную силу.</b>"
 	outfit = /datum/outfit/prison/chaplain
 	assignedrole = "Prorok USSR"
 
 /obj/effect/mob_spawn/human/prison/vertuhai
 	name = "vertuhai spawner"
-	flavour_text = "Вы вечный смотритель тюрьмы Ромашка. Постарайтесь не убивать зеков без приказа свыше и не забывайте кушать котлеты.<b> И да, смерти в этой тюрьме не приветствуются, Вы верующий человек и бог с Вами.</b>"
+	flavour_text = "Вы вечный смотритель тюрьмы Ромашка. Постарайтесь не убивать зеков без приказа свыше и не забывайте кушать котлеты.<b> Убивать и сбегать без особой причины запрещено, иначе Вас забанят. Правила тут работают в полную силу.</b>"
 	outfit = /datum/outfit/prison/vertuhai
 	assignedrole = "Vertuhai USSR"
 
 /obj/effect/mob_spawn/human/prison/mehanik
 	name = "mehanik spawner"
-	flavour_text = "Вы вечный механик тюрьмы Ромашка. Постарайтесь не взорвать двигатель, починить, что не сломано и не забывайте спрашивать у зеков, когда котлеты будут там.<b> И да, смерти в этой тюрьме не приветствуются, Вы верующий человек и бог с Вами.</b>"
+	flavour_text = "Вы вечный механик тюрьмы Ромашка. Постарайтесь не взорвать двигатель, починить, что не сломано и не забывайте спрашивать у зеков, когда котлеты будут там.<b> Убивать и сбегать без особой причины запрещено, иначе Вас забанят. Правила тут работают в полную силу.</b>"
 	outfit = /datum/outfit/prison/mehanik
 	assignedrole = "Mehanik USSR"
 
 /obj/effect/mob_spawn/human/prison/nachalnik
 	name = "nachalnik spawner"
-	flavour_text = "Вы вечный надзиратель тюрьмы Ромашка. Постарайтесь привести её в порядок и не забывайте напоминать зекам о том, что котлеты только завтра.<b> И да, смерти в этой тюрьме не приветствуются, Вы верующий человек и бог с Вами.</b>"
+	flavour_text = "Вы вечный надзиратель тюрьмы Ромашка. Постарайтесь привести её в порядок и не забывайте напоминать зекам о том, что котлеты только завтра.<b> Убивать и сбегать без особой причины запрещено, иначе Вас забанят. Правила тут работают в полную силу.</b>"
 	icon_state = "spwn"
 	outfit = /datum/outfit/prison/nachalnik
 	assignedrole = "Nachalnik USSR"
@@ -805,7 +833,7 @@
 /obj/effect/mob_spawn/human/prison/prisoner
 	name = "shkonka spawner"
 	desc = "Кажется тут кто-то затаился под шконкой..."
-	flavour_text = "Вы вечный заключенный тюрьмы Ромашка. Отсиживайте свой тюремный срок как следует, слушайтесь начальника и не забывайте о том, что котлеты только завтра. Кстати, сидишь ты тут за "
+	flavour_text = "Вы вечный заключенный тюрьмы Ромашка. Отсиживайте свой тюремный срок как следует, слушайтесь начальника и не забывайте о том, что котлеты только завтра.<b> Убивать и сбегать без особой причины запрещено, иначе Вас забанят. Правила тут работают в полную силу.</b> Кстати, сидишь ты тут за "
 	outfit = /datum/outfit/prison/prisoner
 	assignedrole = "Prisoner USSR"
 
@@ -824,7 +852,7 @@
 	belt = /obj/item/storage/belt/military
 	back = /obj/item/storage/backpack/satchel/leather
 	backpack_contents = list(/obj/item/device/flashlight/lantern = 1, /obj/item/crowbar/red = 1, /obj/item/melee/classic_baton = 1)
-	implants = list(/obj/item/implant/weapons_auth)
+	implants = list(/obj/item/implant/weapons_auth, /obj/item/implant/exile)
 
 /datum/outfit/prison/vertuhai
 	name = "Vertuhai USSR"
@@ -839,7 +867,7 @@
 	belt = /obj/item/storage/belt/military
 	back = /obj/item/storage/backpack/satchel/leather
 	backpack_contents = list(/obj/item/device/flashlight/lantern = 1, /obj/item/crowbar/red = 1, /obj/item/melee/classic_baton = 1)
-	implants = list(/obj/item/implant/weapons_auth)
+	implants = list(/obj/item/implant/weapons_auth, /obj/item/implant/exile)
 
 /datum/outfit/prison/mehanik
 	name = "Mehanik USSR"
@@ -853,7 +881,7 @@
 	belt = /obj/item/storage/belt/utility/full/engi
 	back = /obj/item/storage/backpack/satchel/leather
 	backpack_contents = list(/obj/item/device/flashlight/lantern = 1, /obj/item/crowbar/red = 1, /obj/item/melee/classic_baton = 1)
-	implants = list(/obj/item/implant/weapons_auth)
+	implants = list(/obj/item/implant/weapons_auth, /obj/item/implant/exile)
 
 /datum/outfit/prison/nachalnik
 	name = "Nachalnik USSR"
@@ -868,7 +896,7 @@
 	belt = /obj/item/storage/belt/military
 	back = /obj/item/storage/backpack/satchel/leather
 	backpack_contents = list(/obj/item/device/flashlight/lantern = 1, /obj/item/crowbar/red = 1, /obj/item/paper/fluff/awaymissions/prisonv2/nachruk = 1)
-	implants = list(/obj/item/implant/weapons_auth)
+	implants = list(/obj/item/implant/weapons_auth, /obj/item/implant/exile)
 
 /datum/outfit/prison/chaplain
 	name = "Prorok USSR"
