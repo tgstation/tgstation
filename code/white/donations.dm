@@ -233,13 +233,13 @@ proc/build_prizes_list()
 				cur_cat = item_info[1]
 
 
-/client/verb/cmd_donations_panel(mob/user)
+/client/verb/cmd_donations_panel()
 	set name = "Donations panel"
 	set category = "OOC"
 
 
 	if(!SSticker || SSticker.current_state < GAME_STATE_PLAYING)
-		to_chat(user,"<span class='warning'>Please wait until game is set up!</span>")
+		to_chat(src,"<span class='warning'>Please wait until game is set up!</span>")
 		return
 
 	if (!donators[ckey]) //It doesn't exist yet
@@ -249,7 +249,7 @@ proc/build_prizes_list()
 	if(D)
 		D.show()
 	else
-		to_chat(user,"<span class='warning'>You have not donated or donations database is inaccessible.</span>")
+		to_chat(src,"<span class='warning'>You have not donated or donations database is inaccessible.</span>")
 
 
 //SPECIAL ITEMS
