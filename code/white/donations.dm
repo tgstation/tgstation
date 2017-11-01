@@ -95,6 +95,9 @@ Rainbow crayon:/obj/item/toy/crayon/rainbow:250
 Special Stuff
 Santa Bag:/obj/item/storage/backpack/santabag:600
 Bible:/obj/item/storage/book/bible:100
+Inovations
+Memories Writer:/obj/machinery/party/musicwriter:2000
+Lazer Machine:/obj/machinery/party/lasermachine:500
 "}
 
 
@@ -109,7 +112,7 @@ var/list/datum/donator/donators = list()
 	var/ownerkey
 	var/money = 0
 	var/maxmoney = 0
-	var/allowed_num_items = 10 //rel lox //sam lox
+	var/allowed_num_items = 15
 
 /datum/donator/New(ckey, money)
 	..()
@@ -144,23 +147,23 @@ var/list/datum/donator/donators = list()
 	var/mob/living/carbon/human/user = usr
 
 	if(!SSticker || SSticker.current_state < 3)
-		usr << "<span class='warning'>Please wait until game setting up!</span>"
+		to_chat(user,"<span class='warning'>Please wait until game setting up!</span>")
 		return 0
 
 	if((world.time-SSticker.round_start_time)>DONATIONS_SPAWN_WINDOW && !istype(get_area(user), /area/shuttle/arrival))
-		usr << "<span class='warning'>You must be on arrival shuttle to spawn items.</span>"
+		to_chat(user,"<span class='warning'>You must be on arrival shuttle to spawn items.</span>")
 		return 0
 
 	if(prize.cost > money)
-		usr << "<span class='warning'>You don't have enough funds.</span>"
+		to_chat(user,"<span class='warning'>You don't have enough funds.</span>")
 		return 0
 
 	if(!allowed_num_items)
-		usr << "<span class='warning'>You have reached maximum amount of spawned items.</span>"
+		to_chat(user,"<span class='warning'>You have reached maximum amount of spawned items.</span>")
 		return 0
 
 	if(!user)
-		user << "<span class='warning'>You must be a human to use this.</span>"
+		to_chat(user,"<span class='warning'>You must be a human to use this.</span>")
 		return 0
 
 	if(!ispath(prize.path_to))
@@ -181,9 +184,9 @@ var/list/datum/donator/donators = list()
 	var/where = user.equip_in_one_of_slots(spawned, slots, qdel_on_fail=0)
 
 	if (!where)
-		usr << "<span class='info'>Your [prize.item_name] has been spawned!</span>"
+		to_chat(user,"<span class='info'>Your [prize.item_name] has been spawned!</span>")
 	else
-		usr << "<span class='info'>Your [prize.item_name] has been spawned in your [where]!</span>"
+		to_chat(user,"<span class='info'>Your [prize.item_name] has been spawned in your [where]!</span>")
 
 	money -= prize.cost
 	allowed_num_items--
@@ -230,13 +233,13 @@ proc/build_prizes_list()
 				cur_cat = item_info[1]
 
 
-/client/verb/cmd_donations_panel()
+/client/verb/cmd_donations_panel(mob/user)
 	set name = "Donations panel"
 	set category = "OOC"
 
 
 	if(!SSticker || SSticker.current_state < GAME_STATE_PLAYING)
-		usr << "<span class='warning'>Please wait until game is set up!</span>"
+		to_chat(user,"<span class='warning'>Please wait until game is set up!</span>")
 		return
 
 	if (!donators[ckey]) //It doesn't exist yet
@@ -246,7 +249,7 @@ proc/build_prizes_list()
 	if(D)
 		D.show()
 	else
-		usr << "<span class='warning'>You have not donated or donations database is inaccessible.</span>"
+		to_chat(user,"<span class='warning'>You have not donated or donations database is inaccessible.</span>")
 
 
 //SPECIAL ITEMS
