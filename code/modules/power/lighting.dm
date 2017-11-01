@@ -75,7 +75,7 @@
 				if (!do_after(usr, 30*W.toolspeed, target = src))
 					return
 				new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
-				user.visible_message("[user.name] deconstructs [src].", \
+				user.visible_message("[user] deconstructs [src].", \
 					"<span class='notice'>You deconstruct [src].</span>", "<span class='italics'>You hear a ratchet.</span>")
 				playsound(src.loc, 'sound/items/deconstruct.ogg', 75, 1)
 				qdel(src)
@@ -90,7 +90,7 @@
 						if("bulb")
 							icon_state = "bulb-construct-stage2"
 					stage = 2
-					user.visible_message("[user.name] adds wires to [src].", \
+					user.visible_message("[user] adds wires to [src].", \
 						"<span class='notice'>You add wires to [src].</span>")
 				else
 					to_chat(user, "<span class='warning'>You need one length of cable to wire [src]!</span>")
@@ -108,13 +108,13 @@
 					if("bulb")
 						icon_state = "bulb-construct-stage1"
 				new /obj/item/stack/cable_coil(get_turf(loc), 1, "red")
-				user.visible_message("[user.name] removes the wiring from [src].", \
+				user.visible_message("[user] removes the wiring from [src].", \
 					"<span class='notice'>You remove the wiring from [src].</span>", "<span class='italics'>You hear clicking.</span>")
 				playsound(loc, W.usesound, 100, 1)
 				return
 
 			if(istype(W, /obj/item/screwdriver))
-				user.visible_message("[user.name] closes [src]'s casing.", \
+				user.visible_message("[user] closes [src]'s casing.", \
 					"<span class='notice'>You close [src]'s casing.</span>", "<span class='italics'>You hear screwing.</span>")
 				playsound(loc, W.usesound, 75, 1)
 				switch(fixture_type)
@@ -348,7 +348,7 @@
 	else if(status == LIGHT_EMPTY)
 		if(istype(W, /obj/item/screwdriver)) //If it's a screwdriver open it.
 			playsound(src.loc, W.usesound, 75, 1)
-			user.visible_message("[user.name] opens [src]'s casing.", \
+			user.visible_message("[user] opens [src]'s casing.", \
 				"<span class='notice'>You open [src]'s casing.</span>", "<span class='italics'>You hear a noise.</span>")
 			deconstruct()
 		else

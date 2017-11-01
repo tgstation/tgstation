@@ -675,7 +675,7 @@
 				return
 			AI = occupant
 			if(!AI || !isAI(occupant)) //Mech does not have an AI for a pilot
-				to_chat(user, "<span class='warning'>No AI detected in the [name] onboard computer.</span>")
+				to_chat(user, "<span class='warning'>No AI detected in [src] onboard computer.</span>")
 				return
 			AI.ai_restore_power()//So the AI initially has power.
 			AI.control_disabled = 1
@@ -800,7 +800,7 @@
 		return
 	log_message("[user] tries to move in.")
 	if (occupant)
-		to_chat(usr, "<span class='warning'>The [name] is already occupied!</span>")
+		to_chat(usr, "<span class='warning'>[src] is already occupied!</span>")
 		log_append_to_last("Permission denied.")
 		return
 	var/passed
@@ -827,7 +827,7 @@
 
 	if(do_after(user, 40, target = src))
 		if(obj_integrity <= 0)
-			to_chat(user, "<span class='warning'>You cannot get in the [name], it has been destroyed!</span>")
+			to_chat(user, "<span class='warning'>You cannot get in [src], it has been destroyed!</span>")
 		else if(occupant)
 			to_chat(user, "<span class='danger'>[occupant] was faster! Try better next time, loser.</span>")
 		else if(user.buckled)

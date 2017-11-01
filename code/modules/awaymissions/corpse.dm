@@ -517,7 +517,7 @@
 	var/despawn = alert("Return to cryosleep? (Warning, Your mob will be deleted!)",,"Yes","No")
 	if(despawn == "No" || !loc || !Adjacent(user))
 		return
-	user.visible_message("<span class='notice'>[user.name] climbs back into cryosleep...</span>")
+	user.visible_message("<span class='notice'>[user] climbs back into cryosleep...</span>")
 	qdel(user)
 
 /datum/outfit/cryobartender

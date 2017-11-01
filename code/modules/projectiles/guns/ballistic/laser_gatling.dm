@@ -84,9 +84,9 @@
 	gun.forceMove(src)
 	armed = 0
 	if(user)
-		to_chat(user, "<span class='notice'>You attach the [gun.name] to the [name].</span>")
+		to_chat(user, "<span class='notice'>You attach [gun] to the [name].</span>")
 	else
-		src.visible_message("<span class='warning'>The [gun.name] snaps back onto the [name]!</span>")
+		src.visible_message("<span class='warning'>[gun] snaps back onto the [name]!</span>")
 	update_icon()
 	user.update_inv_back()
 

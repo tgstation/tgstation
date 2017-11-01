@@ -577,7 +577,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		if (ismob(loc))
 			var/mob/M = loc
 			M.put_in_hands(id)
-			to_chat(usr, "<span class='notice'>You remove the ID from the [name].</span>")
+			to_chat(usr, "<span class='notice'>You remove the ID from [src].</span>")
 		else
 			id.loc = get_turf(src)
 		id = null

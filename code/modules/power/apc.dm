@@ -388,7 +388,7 @@
 						has_electronics = 0
 						if (stat & BROKEN)
 							user.visible_message(\
-								"[user.name] has broken the power control board inside [src.name]!",\
+								"[user] has broken the power control board inside [src]!",\
 								"<span class='notice'>You break the charred power control board and remove the remains.</span>",
 								"<span class='italics'>You hear a crack.</span>")
 							return
@@ -396,19 +396,19 @@
 						else if (emagged) // We emag board, not APC's frame
 							emagged = FALSE
 							user.visible_message(\
-								"[user.name] has discarded emaged power control board from [src.name]!",\
+								"[user] has discarded emaged power control board from [src]!",\
 								"<span class='notice'>You discarded shorten board.</span>")
 							return
 						else if (malfhack) // AI hacks board, not APC's frame
 							user.visible_message(\
-								"[user.name] has discarded strangely programmed power control board from [src.name]!",\
+								"[user] has discarded strangely programmed power control board from [src]!",\
 								"<span class='notice'>You discarded strangely programmed board.</span>")
 							malfai = null
 							malfhack = 0
 							return
 						else
 							user.visible_message(\
-								"[user.name] has removed the power control board from [src.name]!",\
+								"[user] has removed the power control board from [src]!",\
 								"<span class='notice'>You remove the power control board.</span>")
 							new /obj/item/electronics/apc(loc)
 							return
@@ -452,7 +452,7 @@
 				return
 			cell = W
 			user.visible_message(\
-				"[user.name] has inserted the power cell to [src.name]!",\
+				"[user] has inserted the power cell into [src]!",\
 				"<span class='notice'>You insert the power cell.</span>")
 			chargecount = 0
 			update_icon()
@@ -522,7 +522,7 @@
 		if(C.get_amount() < 10)
 			to_chat(user, "<span class='warning'>You need ten lengths of cable for APC!</span>")
 			return
-		user.visible_message("[user.name] adds cables to the APC frame.", \
+		user.visible_message("[user] adds cables to the APC frame.", \
 							"<span class='notice'>You start adding cables to the APC frame...</span>")
 		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 		if(do_after(user, 20, target = src))
@@ -550,7 +550,7 @@
 			to_chat(user, "<span class='warning'>You cannot put the board inside, the frame is damaged!</span>")
 			return
 
-		user.visible_message("[user.name] inserts the power control board into [src].", \
+		user.visible_message("[user] inserts the power control board into [src].", \
 							"<span class='notice'>You start to insert the power control board into the frame...</span>")
 		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 		if(do_after(user, 10, target = src))
@@ -594,7 +594,7 @@
 		if (WT.get_fuel() < 3)
 			to_chat(user, "<span class='warning'>You need more welding fuel to complete this task!</span>")
 			return
-		user.visible_message("[user.name] welds [src].", \
+		user.visible_message("[user] welds [src].", \
 							"<span class='notice'>You start welding the APC frame...</span>", \
 							"<span class='italics'>You hear welding.</span>")
 		playsound(src.loc, WT.usesound, 50, 1)
@@ -604,12 +604,12 @@
 			if ((stat & BROKEN) || opened==2)
 				new /obj/item/stack/sheet/metal(loc)
 				user.visible_message(\
-					"[user.name] has cut [src] apart with [W].",\
+					"[user] has cut [src] apart with [W].",\
 					"<span class='notice'>You disassembled the broken APC frame.</span>")
 			else
 				new /obj/item/wallframe/apc(loc)
 				user.visible_message(\
-					"[user.name] has cut [src] from the wall with [W].",\
+					"[user] has cut [src] from the wall with [W].",\
 					"<span class='notice'>You cut the APC frame from the wall.</span>")
 			qdel(src)
 			return
@@ -619,7 +619,7 @@
 			to_chat(user, "<span class='warning'>You found no reason for repairing this APC</span>")
 			return
 		if (!(stat & BROKEN) && opened==2) // Cover is the only thing broken, we do not need to remove elctronicks to replace cover
-			user.visible_message("[user.name] replaces missing APC's cover.",\
+			user.visible_message("[user] replaces missing APC's cover.",\
 							"<span class='notice'>You begin to replace APC's cover...</span>")
 			if(do_after(user, 20, target = src)) // replacing cover is quicker than replacing whole frame
 				to_chat(user, "<span class='notice'>You replace missing APC's cover.</span>")
@@ -630,7 +630,7 @@
 		if (has_electronics)
 			to_chat(user, "<span class='warning'>You cannot repair this APC until you remove the electronics still inside!</span>")
 			return
-		user.visible_message("[user.name] replaces the damaged APC frame with a new one.",\
+		user.visible_message("[user] replaces the damaged APC frame with a new one.",\
 							"<span class='notice'>You begin to replace the damaged APC frame...</span>")
 		if(do_after(user, 50, target = src))
 			to_chat(user, "<span class='notice'>You replace the damaged APC frame with a new one.</span>")

@@ -19,7 +19,7 @@
 		cell.use(.) //Better than a power sink!
 		if(!cell.charge && !shorted)
 			shorted = 1
-			visible_message("<span class='warning'>The [name]'s screen blurs with static.</span>")
+			visible_message("<span class='warning'>[src]'s screen blurs with static.</span>")
 		update()
 		update_icon()
 

@@ -221,7 +221,7 @@
 		if(usr.incapacitated())
 			to_chat(usr, "<span class='warning'>You can't do that right now!</span>")
 			return
-		usr.visible_message("<span class='notice'>[usr] grabs \the [src.name].</span>", "<span class='notice'>You grab \the [src.name].</span>")
+		usr.visible_message("<span class='notice'>[usr] grabs \the [src].</span>", "<span class='notice'>You grab \the [src].</span>")
 		var/C = new item_chair(loc)
 		usr.put_in_hands(C)
 		qdel(src)
@@ -267,7 +267,7 @@
 			to_chat(user, "<span class='danger'>There is already something here.</span>")
 			return
 
-	user.visible_message("<span class='notice'>[user] rights \the [src.name].</span>", "<span class='notice'>You right \the [name].</span>")
+	user.visible_message("<span class='notice'>[user] rights \the [src].</span>", "<span class='notice'>You right \the [src].</span>")
 	var/obj/structure/chair/C = new origin_type(get_turf(loc))
 	C.setDir(dir)
 	qdel(src)

@@ -160,7 +160,7 @@
 			return
 		else
 			M.adjustFireLoss(shockdamage)
-			M.visible_message("<span class='danger'>[M] was shocked by \the [name]!</span>", \
+			M.visible_message("<span class='danger'>[M] was shocked by [src]!</span>", \
 		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
 		"<span class='italics'>You hear a heavy electrical crack.</span>")
 

@@ -253,12 +253,12 @@
 				to_chat(user, "<span class='warning'>The welder must be on for this task!</span>")
 				return 1
 		else
-			to_chat(user, "<span class='warning'>The [name] is at full integrity!</span>")
+			to_chat(user, "<span class='warning'>[src] is at full integrity!</span>")
 		return 1
 
 	else if(istype(W, /obj/item/mecha_parts/mecha_tracking))
 		if(!user.transferItemToLoc(W, src))
-			to_chat(user, "<span class='warning'>\the [W] is stuck to your hand, you cannot put it in \the [src]!</span>")
+			to_chat(user, "<span class='warning'>[W] is stuck to your hand, you cannot put it in [src]!</span>")
 			return
 		trackers += W
 		user.visible_message("[user] attaches [W] to [src].", "<span class='notice'>You attach [W] to [src].</span>")

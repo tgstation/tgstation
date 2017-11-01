@@ -160,31 +160,31 @@
 	if(istype(W, /obj/item/wrench))
 		if(!anchored)
 			playsound(src.loc, W.usesound, 75, 1)
-			user.visible_message("[user.name] secures the [src.name] to the floor.", \
+			user.visible_message("[user] secures \the [src] to the floor.", \
 				"<span class='notice'>You secure the anchor bolts to the floor.</span>", \
 				"<span class='italics'>You hear a ratchet.</span>")
 			src.anchored = TRUE
 			connect_to_network()
 		else if(!linked_shielding.len > 0)
 			playsound(src.loc, W.usesound, 75, 1)
-			user.visible_message("[user.name] unsecures the [src.name].", \
+			user.visible_message("[user] unsecures \the [src].", \
 				"<span class='notice'>You remove the anchor bolts.</span>", \
 				"<span class='italics'>You hear a ratchet.</span>")
 			src.anchored = FALSE
 			disconnect_from_network()
 		else
-			to_chat(user, "<span class='warning'>Once bolted and linked to a shielding unit it the [src.name] is unable to be moved!</span>")
+			to_chat(user, "<span class='warning'>Once bolted and linked to a shielding unit \the [src] is unable to be moved!</span>")
 
 	else if(istype(W, /obj/item/am_containment))
 		if(fueljar)
-			to_chat(user, "<span class='warning'>There is already a [fueljar] inside!</span>")
+			to_chat(user, "<span class='warning'>There is already \a [fueljar] inside!</span>")
 			return
 
 		if(!user.transferItemToLoc(W, src))
 			return
 		fueljar = W
-		user.visible_message("[user.name] loads an [W.name] into the [src.name].", \
-				"<span class='notice'>You load an [W.name].</span>", \
+		user.visible_message("[user] loads \a [W] into \the [src].", \
+				"<span class='notice'>You load \a [W].</span>", \
 				"<span class='italics'>You hear a thunk.</span>")
 	else
 		return ..()
@@ -243,10 +243,10 @@
 	active = !active
 	if(active)
 		use_power = ACTIVE_POWER_USE
-		visible_message("The [src.name] starts up.")
+		visible_message("\The [src] starts up.")
 	else
 		use_power = !powerfail
-		visible_message("The [src.name] shuts down.")
+		visible_message("\The [src] shuts down.")
 	update_icon()
 	return
 

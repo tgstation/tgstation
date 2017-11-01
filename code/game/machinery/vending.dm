@@ -311,9 +311,9 @@
 				transfered += refill_inventory(canister,coin_records,COIN_CHARGE)
 				transfered += refill_inventory(canister,hidden_records,CONTRABAND_CHARGE)
 				if(transfered)
-					to_chat(user, "<span class='notice'>You loaded [transfered] items in \the [name].</span>")
+					to_chat(user, "<span class='notice'>You loaded [transfered] items in [src].</span>")
 				else
-					to_chat(user, "<span class='notice'>The [name] is fully stocked.</span>")
+					to_chat(user, "<span class='notice'>[src] is fully stocked.</span>")
 			return
 		else
 			to_chat(user, "<span class='notice'>You should probably unscrew the service panel first.</span>")

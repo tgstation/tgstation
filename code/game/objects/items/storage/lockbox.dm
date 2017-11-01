@@ -27,12 +27,12 @@
 			locked = !locked
 			if(locked)
 				icon_state = icon_locked
-				to_chat(user, "<span class='danger'>You lock the [src.name]!</span>")
+				to_chat(user, "<span class='danger'>You lock [src]!</span>")
 				close_all()
 				return
 			else
 				icon_state = icon_closed
-				to_chat(user, "<span class='danger'>You unlock the [src.name]!</span>")
+				to_chat(user, "<span class='danger'>You unlock [src]!</span>")
 				return
 		else
 			to_chat(user, "<span class='danger'>Access Denied.</span>")

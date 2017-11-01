@@ -199,7 +199,7 @@
 
 				else if(istype(W, /obj/item/crowbar))
 					playsound(src.loc, W.usesound, 50, 1)
-					user.visible_message("[user.name] removes the electronics from [src.name].", \
+					user.visible_message("[user] removes the electronics from [src].", \
 										"<span class='notice'>You start prying out the circuit...</span>")
 					if(do_after(user, 20*W.toolspeed, target = src))
 						if(buildstage == 1)

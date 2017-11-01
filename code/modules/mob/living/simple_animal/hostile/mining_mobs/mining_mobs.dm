@@ -51,7 +51,7 @@
 		if(!stat)
 			Aggro()
 		if(T.throwforce <= 20)
-			visible_message("<span class='notice'>The [T.name] [throw_message] [src.name]!</span>")
+			visible_message("<span class='notice'>The [T.name] [throw_message] [src]!</span>")
 			return
 	..()
 

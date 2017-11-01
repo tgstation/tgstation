@@ -229,7 +229,7 @@
 		if( user.loc == T && user.get_active_held_item() == W )
 			D.playDigSound()
 			dismantle_wall()
-			visible_message("<span class='warning'>[user] smashes through the [name] with the [W.name]!</span>", "<span class='italics'>You hear the grinding of metal.</span>")
+			visible_message("<span class='warning'>[user] smashes through [src] with [W]!</span>", "<span class='italics'>You hear the grinding of metal.</span>")
 			return TRUE
 	return FALSE
 

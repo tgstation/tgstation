@@ -44,11 +44,11 @@ Note: Must be placed within 3 tiles of the R&D Console
 			to_chat(user, "<span class='warning'>You cannot deconstruct this item!</span>")
 			return
 		if(!user.transferItemToLoc(O, src))
-			to_chat(user, "<span class='warning'>\The [O] is stuck to your hand, you cannot put it in the [src.name]!</span>")
+			to_chat(user, "<span class='warning'>\The [O] is stuck to your hand, you cannot put it in [src]!</span>")
 			return
 		busy = TRUE
 		loaded_item = O
-		to_chat(user, "<span class='notice'>You add the [O.name] to the [src.name]!</span>")
+		to_chat(user, "<span class='notice'>You add [O] to [src]!</span>")
 		flick("d_analyzer_la", src)
 		addtimer(CALLBACK(src, .proc/finish_loading), 10)
 
