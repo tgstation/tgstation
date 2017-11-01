@@ -320,6 +320,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		forceMove(summoner.loc)
 		new /obj/effect/temp_visual/guardian/phase(loc)
 		cooldown = world.time + 10
+		reset_perspective()
 		return TRUE
 	return FALSE
 

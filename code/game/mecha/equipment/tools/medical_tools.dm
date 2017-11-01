@@ -104,21 +104,21 @@
 	if(output)
 		var/temp = ""
 		if(patient)
-			temp = "<br />\[Occupant: [patient] ([patient.stat > 1 ? "*DECEASED*" : "Health: [patient.health]%"])\]<br /><a href='?src=\ref[src];view_stats=1'>View stats</a>|<a href='?src=\ref[src];eject=1'>Eject</a>"
+			temp = "<br />\[Occupant: [patient] ([patient.stat > 1 ? "*DECEASED*" : "Health: [patient.health]%"])\]<br /><a href='?src=[REF(src)];view_stats=1'>View stats</a>|<a href='?src=[REF(src)];eject=1'>Eject</a>"
 		return "[output] [temp]"
 	return
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/Topic(href,href_list)
 	..()
-	var/datum/topic_input/filter = new /datum/topic_input(href,href_list)
-	if(filter.get("eject"))
+	var/datum/topic_input/afilter = new /datum/topic_input(href,href_list)
+	if(afilter.get("eject"))
 		go_out()
-	if(filter.get("view_stats"))
+	if(afilter.get("view_stats"))
 		chassis.occupant << browse(get_patient_stats(),"window=msleeper")
 		onclose(chassis.occupant, "msleeper")
 		return
-	if(filter.get("inject"))
-		inject_reagent(filter.getType("inject", /datum/reagent),filter.getObj("source"))
+	if(afilter.get("inject"))
+		inject_reagent(afilter.getType("inject", /datum/reagent),afilter.getObj("source"))
 	return
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/get_patient_stats()
@@ -184,7 +184,7 @@
 	if(SG && SG.reagents && islist(SG.reagents.reagent_list))
 		for(var/datum/reagent/R in SG.reagents.reagent_list)
 			if(R.volume > 0)
-				output += "<a href=\"?src=\ref[src];inject=\ref[R];source=\ref[SG]\">Inject [R.name]</a><br />"
+				output += "<a href=\"?src=[REF(src)];inject=[REF(R)];source=[REF(SG)]\">Inject [R.name]</a><br />"
 	return output
 
 
@@ -287,7 +287,7 @@
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/get_equip_info()
 	var/output = ..()
 	if(output)
-		return "[output] \[<a href=\"?src=\ref[src];toggle_mode=1\">[mode? "Analyze" : "Launch"]</a>\]<br />\[Syringes: [syringes.len]/[max_syringes] | Reagents: [reagents.total_volume]/[reagents.maximum_volume]\]<br /><a href='?src=\ref[src];show_reagents=1'>Reagents list</a>"
+		return "[output] \[<a href=\"?src=[REF(src)];toggle_mode=1\">[mode? "Analyze" : "Launch"]</a>\]<br />\[Syringes: [syringes.len]/[max_syringes] | Reagents: [reagents.total_volume]/[reagents.maximum_volume]\]<br /><a href='?src=[REF(src)];show_reagents=1'>Reagents list</a>"
 	return
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/action(atom/movable/target)
@@ -358,19 +358,19 @@
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/Topic(href,href_list)
 	..()
-	var/datum/topic_input/filter = new (href,href_list)
-	if(filter.get("toggle_mode"))
+	var/datum/topic_input/afilter = new (href,href_list)
+	if(afilter.get("toggle_mode"))
 		mode = !mode
 		update_equip_info()
 		return
-	if(filter.get("select_reagents"))
+	if(afilter.get("select_reagents"))
 		processed_reagents.len = 0
 		var/m = 0
 		var/message
 		for(var/i=1 to known_reagents.len)
 			if(m>=synth_speed)
 				break
-			var/reagent = filter.get("reagent_[i]")
+			var/reagent = afilter.get("reagent_[i]")
 			if(reagent && (reagent in known_reagents))
 				message = "[m ? ", " : null][known_reagents[reagent]]"
 				processed_reagents += reagent
@@ -382,14 +382,14 @@
 			occupant_message("Reagent processing started.")
 			log_message("Reagent processing started.")
 		return
-	if(filter.get("show_reagents"))
+	if(afilter.get("show_reagents"))
 		chassis.occupant << browse(get_reagents_page(),"window=msyringegun")
-	if(filter.get("purge_reagent"))
-		var/reagent = filter.get("purge_reagent")
+	if(afilter.get("purge_reagent"))
+		var/reagent = afilter.get("purge_reagent")
 		if(reagent)
 			reagents.del_reagent(reagent)
 		return
-	if(filter.get("purge_all"))
+	if(afilter.get("purge_all"))
 		reagents.clear_reagents()
 		return
 	return
@@ -426,7 +426,7 @@
 	var/r_list = get_reagents_list()
 	var/inputs
 	if(r_list)
-		inputs += "<input type=\"hidden\" name=\"src\" value=\"\ref[src]\">"
+		inputs += "<input type=\"hidden\" name=\"src\" value=\"[REF(src)]\">"
 		inputs += "<input type=\"hidden\" name=\"select_reagents\" value=\"1\">"
 		inputs += "<input id=\"submit\" type=\"submit\" value=\"Apply settings\">"
 	var/output = {"<form action="byond://" method="get">
@@ -448,9 +448,9 @@
 	var/output
 	for(var/datum/reagent/R in reagents.reagent_list)
 		if(R.volume > 0)
-			output += "[R]: [round(R.volume,0.001)] - <a href=\"?src=\ref[src];purge_reagent=[R.id]\">Purge Reagent</a><br />"
+			output += "[R]: [round(R.volume,0.001)] - <a href=\"?src=[REF(src)];purge_reagent=[R.id]\">Purge Reagent</a><br />"
 	if(output)
-		output += "Total: [round(reagents.total_volume,0.001)]/[reagents.maximum_volume] - <a href=\"?src=\ref[src];purge_all=1\">Purge All</a>"
+		output += "Total: [round(reagents.total_volume,0.001)]/[reagents.maximum_volume] - <a href=\"?src=[REF(src)];purge_all=1\">Purge All</a>"
 	return output || "None"
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/load_syringe(obj/item/reagent_containers/syringe/S)

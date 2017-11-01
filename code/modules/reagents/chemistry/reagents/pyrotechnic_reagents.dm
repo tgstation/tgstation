@@ -8,14 +8,8 @@
 	taste_description = "sweet tasting metal"
 
 /datum/reagent/thermite/reaction_turf(turf/T, reac_volume)
-	if(reac_volume >= 1 && iswallturf(T))
-		var/turf/closed/wall/Wall = T
-		if(istype(Wall, /turf/closed/wall/r_wall))
-			Wall.thermite = Wall.thermite+(reac_volume*2.5)
-		else
-			Wall.thermite = Wall.thermite+(reac_volume*10)
-		Wall.overlays = list()
-		Wall.add_overlay(mutable_appearance('icons/effects/effects.dmi', "thermite"))
+	if(reac_volume >= 1)
+		T.AddComponent(/datum/component/thermite, reac_volume)
 
 /datum/reagent/thermite/on_mob_life(mob/living/M)
 	M.adjustFireLoss(1, 0)
