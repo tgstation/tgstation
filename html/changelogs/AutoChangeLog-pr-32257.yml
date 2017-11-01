@@ -1,0 +1,4 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - tweak: "Abscond and Reebe rifts now place servants directly at the Ark instead of below the \"base\" area."
