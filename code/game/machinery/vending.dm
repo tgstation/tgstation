@@ -189,7 +189,7 @@
 		var/obj/item/reagent_containers/food/snacks/S = W
 		if(!S.junkiness)
 			if(!iscompartmentfull(user))
-				if(!user.transferItemsToLoc(W, src))
+				if(!user.transferItemToLoc(W, src))
 					return
 				food_load(W)
 				to_chat(user, "<span class='notice'>You insert [W] into [src]'s chef compartment.</span>")
@@ -259,7 +259,7 @@
 			cut_overlays()
 			if(panel_open)
 				add_overlay("[initial(icon_state)]-panel")
-			playsound(src.loc, W.usesound, 50, 1)
+			playsound(src, W.usesound, 50, 1)
 			updateUsrDialog()
 		else
 			to_chat(user, "<span class='warning'>You must first secure [src].</span>")
@@ -997,7 +997,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/clothing/mask/joy = 1,
 					/obj/item/clothing/head/cueball = 1,
 					/obj/item/clothing/under/scratch = 1,
-        			/obj/item/clothing/under/sailor = 1,
+					/obj/item/clothing/under/sailor = 1,
         			/obj/item/clothing/ears/headphones = 2,
         			/obj/item/clothing/head/wig/random = 3)
 	contraband = list(/obj/item/clothing/suit/judgerobe = 1, /obj/item/clothing/head/powdered_wig = 1, /obj/item/gun/magic/wand = 2, /obj/item/clothing/glasses/sunglasses/garb = 2, /obj/item/clothing/glasses/sunglasses/blindfold = 1, /obj/item/clothing/mask/muzzle = 2)
