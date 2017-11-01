@@ -86,12 +86,12 @@ obj/item/clothing/mask/frog
 	item_state = "frog"
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	w_class = WEIGHT_CLASS_SMALL
-	var/voicechange = 1
+	var/voicechange = TRUE
 
 /obj/item/clothing/mask/frog/equipped(mob/user, slot) //when you put it on
 	var/mob/living/carbon/C = user
-	if(src == C.wear_mask)
-		playsound (usr, 'sound/effects/reee.ogg', 30, 1)
+	if(C.wear_mask == src)
+		playsound (src, 'sound/effects/reee.ogg', 30, 1)
 	..()
 
 /obj/item/clothing/mask/frog/speechModification(message) //whenever you speak
@@ -110,7 +110,7 @@ obj/item/clothing/mask/frog/cursed
 
 /obj/item/clothing/mask/frog/cursed/equipped(mob/user, slot)
 	var/mob/living/carbon/C = user
-	if(src == C.wear_mask)
+	if(C.wear_mask == src)
 		to_chat(user, "<span class='warning'><B>[src] was cursed! Ree!!</B></span>")
 	..()
 /////
