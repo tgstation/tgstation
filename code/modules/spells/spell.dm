@@ -143,7 +143,6 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	action_icon = 'icons/mob/actions/actions_spells.dmi'
 	action_icon_state = "spell_default"
 	action_background_icon_state = "bg_spell"
-	datum/action/spell_action/spell/action
 
 /obj/effect/proc_holder/spell/proc/cast_check(skipcharge = 0,mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 
