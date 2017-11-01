@@ -36,8 +36,9 @@
 	to_chat(owner, gain_text)
 
 //Called when removed from a mob
-/datum/brain_trauma/proc/on_lose()
-	to_chat(owner, lose_text)
+/datum/brain_trauma/proc/on_lose(silent)
+	if(!silent)
+		to_chat(owner, lose_text)
 
 //Called when hearing a spoken message
 /datum/brain_trauma/proc/on_hear(message, speaker, message_language, raw_message, radio_freq)
