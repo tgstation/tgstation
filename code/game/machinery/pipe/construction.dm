@@ -69,7 +69,7 @@ Buildable meters
 	return ..()
 
 /obj/item/pipe/proc/setPipingLayer(new_layer = PIPING_LAYER_DEFAULT)
-	var/obj/machinery/atmospherics/fakeA = get_pipe_cache(pipe_type)
+	var/obj/machinery/atmospherics/fakeA = get_pipe_construction_cache(pipe_type)
 
 	if(fakeA.pipe_flags & PIPING_ALL_LAYER)
 		new_layer = PIPING_LAYER_DEFAULT
@@ -80,7 +80,7 @@ Buildable meters
 	layer = initial(layer) + ((piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE)
 
 /obj/item/pipe/proc/update()
-	var/obj/machinery/atmospherics/A = get_pipe_cache(pipe_type)
+	var/obj/machinery/atmospherics/A = get_pipe_construction_cache(pipe_type)
 	name = "[A.name] fitting"
 	icon_state = A.pipe_state
 
@@ -169,7 +169,7 @@ Buildable meters
 
 	fixdir()
 
-	var/obj/machinery/atmospherics/fakeA = get_pipe_constructtion_cache(pipe_type, dir)
+	var/obj/machinery/atmospherics/fakeA = get_pipe_construction_cache(pipe_type, dir)
 
 	for(var/obj/machinery/atmospherics/M in loc)
 		if((M.pipe_flags & fakeA.pipe_flags & PIPING_ONE_PER_TURF))	//Only one dense/requires density object per tile, eg connectors/cryo/heater/coolers.
