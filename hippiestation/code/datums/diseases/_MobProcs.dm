@@ -1,21 +1,21 @@
 
 /mob/CanContractDisease(datum/disease/D)
 	if(stat == DEAD)
-		return 0
+		return FALSE
 
 	if(D.GetDiseaseID() in resistances)
-		return 0
+		return FALSE
 
 	if(HasDisease(D))
-		return 0
+		return FALSE
 
 	if(!(type in D.viable_mobtypes))
-		return 0
+		return FALSE
 
 	if(count_by_type(viruses, /datum/disease/advance) >= 3)
-		return 0
+		return FALSE
 
-	return 1
+	return TRUE
 
 /mob/AddDisease(datum/disease/D)
 	var/datum/disease/DD = new D.type(1, D, 0)
