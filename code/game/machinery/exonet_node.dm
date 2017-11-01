@@ -23,20 +23,19 @@
 	..()
 
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/telecomms/exonet_node(src)
-	component_parts += new /obj/item/weapon/stock_parts/subspace/ansible(src)
-	component_parts += new /obj/item/weapon/stock_parts/subspace/filter(src)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
-	component_parts += new /obj/item/weapon/stock_parts/subspace/crystal(src)
-	component_parts += new /obj/item/weapon/stock_parts/subspace/treatment(src)
-	component_parts += new /obj/item/weapon/stock_parts/subspace/treatment(src)
+	component_parts += new /obj/item/circuitboard/machine/telecomms/exonet_node(src)
+	component_parts += new /obj/item/stock_parts/subspace/ansible(src)
+	component_parts += new /obj/item/stock_parts/subspace/filter(src)
+	component_parts += new /obj/item/stock_parts/manipulator(src)
+	component_parts += new /obj/item/stock_parts/manipulator(src)
+	component_parts += new /obj/item/stock_parts/micro_laser(src)
+	component_parts += new /obj/item/stock_parts/subspace/crystal(src)
+	component_parts += new /obj/item/stock_parts/subspace/treatment(src)
+	component_parts += new /obj/item/stock_parts/subspace/treatment(src)
 	component_parts += new /obj/item/stack/cable_coil(src, 2)
 	RefreshParts()
 
-	desc = "This machine is one of many, many nodes inside [using_map.starsys_name]'s section of the Exonet, connecting the [using_map.station_short] to the rest of the system, at least \
-	electronically."
+	desc = "This machine is exonet node."
 
 // Proc: update_icon()
 // Parameters: None
@@ -88,9 +87,9 @@
 // Parameters: 2 (I - the item being whacked against the machine, user - the person doing the whacking)
 // Description: Handles deconstruction.
 /obj/machinery/exonet_node/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(istype(I, /obj/item/screwdriver))
 		default_deconstruction_screwdriver(user, I)
-	else if(istype(I, /obj/item/weapon/crowbar))
+	else if(istype(I, /obj/item/crowbar))
 		default_deconstruction_crowbar(user, I)
 	else
 		..()
@@ -110,7 +109,7 @@
 // Proc: ui_interact()
 // Parameters: 4 (standard NanoUI arguments)
 // Description: Allows the user to turn the machine on or off, or open or close certain 'ports' for things like external PDA messages, newscasters, etc.
-/obj/machinery/exonet_node/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
+/obj/machinery/exonet_node/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, var/force_open = 1,datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	// this is the data which will be sent to the ui
 	var/data[0]
 
@@ -123,7 +122,7 @@
 
 
 	// update the ui if it exists, returns null if no ui is passed/found
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if(!ui)
 		// the ui does not exist, so we'll create a new() one
         // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
@@ -133,7 +132,7 @@
 		// open the new ui window
 		ui.open()
 		// auto update every Master Controller tick
-		ui.set_auto_update(1)
+		ui.set_autoupdate(TRUE)
 
 // Proc: Topic()
 // Parameters: 2 (standard Topic arguments)
@@ -167,7 +166,7 @@
 			log_game(msg)
 
 	update_icon()
-	nanomanager.update_uis(src)
+	SStgui.update_uis(src)
 	add_fingerprint(usr)
 
 // Proc: get_exonet_node()
@@ -178,13 +177,8 @@
 		if(E.on)
 			return E
 
-// Proc: write_log()
-// Parameters: 4 (origin_address - Where the message is from, target_address - Where the message is going, data_type - Instructions on how to interpet content,
-// 		content - The actual message.
-// Description: This writes to the logs list, so that people can see what people are doing on the Exonet ingame.  Note that this is not an admin logging function.
-// 		Communicators are already logged seperately.
+
 /obj/machinery/exonet_node/proc/write_log(var/origin_address, var/target_address, var/data_type, var/content)
-	//var/timestamp = time2text(station_time_in_ticks, "hh:mm:ss")
-	var/timestamp = "[stationdate2text()] [stationtime2text()]"
-	var/msg = "[timestamp] | FROM [origin_address] TO [target_address] | TYPE: [data_type] | CONTENT: [content]"
+	//var/timestamp = time2text(station_time_in_ticks, "hh:mm:ss")"
+	var/msg = "[time2text(world.time, "hh:mm:ss")] | FROM [origin_address] TO [target_address] | TYPE: [data_type] | CONTENT: [content]"
 	logs.Add(msg)
