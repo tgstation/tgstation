@@ -10373,15 +10373,15 @@
 /area/hallway/primary/port)
 "avI" = (
 /obj/structure/closet/crate,
-/obj/item/stack/sheet/glass/fifty{
+/obj/item/stack/sheet/metal/fifty{
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/item/stack/sheet/glass/fifty{
+/obj/item/stack/sheet/metal/fifty{
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/item/stack/sheet/glass/fifty{
+/obj/item/stack/sheet/metal/fifty{
 	pixel_x = 2;
 	pixel_y = 2
 	},

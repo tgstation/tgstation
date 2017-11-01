@@ -39569,7 +39569,7 @@
 "bSG" = (
 /obj/structure/table,
 /obj/item/stack/sheet/metal/fifty,
-/obj/item/stack/sheet/glass/fifty{
+/obj/item/stack/sheet/metal/fifty{
 	pixel_x = 2;
 	pixel_y = 2
 	},

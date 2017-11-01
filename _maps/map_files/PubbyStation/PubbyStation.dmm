@@ -38989,17 +38989,12 @@
 "bOX" = (
 /obj/structure/table,
 /obj/item/stack/sheet/metal/fifty,
-/obj/item/stack/sheet/glass/fifty{
+/obj/item/stack/sheet/metal/fifty{
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/item/stack/sheet/glass{
-	layer = 3.1
-	},
-/obj/item/stack/rods{
-	amount = 50;
-	layer = 3.2
-	},
+/obj/item/stack/sheet/glass,
+/obj/item/stack/rods/fifty,
 /turf/open/floor/plasteel/yellow/side,
 /area/engine/atmos)
 "bOY" = (
@@ -42550,9 +42545,7 @@
 	pixel_x = -26
 	},
 /obj/structure/cable,
-/obj/item/stack/sheet/glass/fifty{
-	layer = 2.9
-	},
+/obj/item/stack/sheet/metal/fifty,
 /obj/item/stack/cable_coil,
 /turf/open/floor/plasteel/darkyellow/side{
 	tag = "icon-darkyellow (WEST)";
