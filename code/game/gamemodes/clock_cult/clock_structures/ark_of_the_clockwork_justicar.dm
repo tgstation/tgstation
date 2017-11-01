@@ -266,7 +266,7 @@
 					CHECK_TICK
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/attack_ghost(mob/user)
-	if(!user.client || !user.client.holder)
+	if(!IsAdminGhost(user))
 		return
 	if(GLOB.servants_active)
 		to_chat(user, "<span class='danger'>The Ark is already counting down.</span>")

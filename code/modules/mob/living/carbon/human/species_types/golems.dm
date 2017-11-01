@@ -55,9 +55,6 @@
 			var/datum/species/golem/G = V
 			if(!initial(G.random_eligible))
 				random_golem_types -= G
-				to_chat(world, "Excluding golem type [initial(G.id)]")
-			else
-				to_chat(world, "Allowing golem type [initial(G.id)]")
 	var/datum/species/golem/golem_type = pick(random_golem_types)
 	var/mob/living/carbon/human/H = C
 	H.set_species(golem_type)
