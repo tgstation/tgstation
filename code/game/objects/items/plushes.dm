@@ -105,7 +105,11 @@
 	var/obj/item/toy/plush/a_winnar_is
 	var/victory_chance = 10
 	for(var/i in 1 to 10) //We only fight ten times max
-		if(!src || !P)
+		if(QDELETED(src))
+			P.clashing = FALSE
+			return
+		if(QDELETED(P))
+			clash_target = null
 			return
 		if(!Adjacent(P))
 			visible_message("<span class='warning'>The two plushies angrily flail at each other before giving up.</span>")
@@ -114,13 +118,31 @@
 			return
 		playsound(src, 'sound/magic/clockwork/ratvar_attack.ogg', 50, TRUE, frequency = 2)
 		sleep(2.4)
+		if(QDELETED(src))
+			P.clashing = FALSE
+			return
+		if(QDELETED(P))
+			clash_target = null
+			return
 		if(prob(victory_chance))
 			a_winnar_is = src
 			break
 		P.SpinAnimation(5, 0)
 		sleep(5)
+		if(QDELETED(src))
+			P.clashing = FALSE
+			return
+		if(QDELETED(P))
+			clash_target = null
+			return
 		playsound(P, 'sound/magic/clockwork/narsie_attack.ogg', 50, TRUE, frequency = 2)
 		sleep(3.3)
+		if(QDELETED(src))
+			P.clashing = FALSE
+			return
+		if(QDELETED(P))
+			clash_target = null
+			return
 		if(prob(victory_chance))
 			a_winnar_is = P
 			break
