@@ -319,7 +319,7 @@
 	name = "hotel security sleeper"
 	mob_name = "hotel security memeber"
 	outfit = /datum/outfit/hotelstaff/security
-	flavour_text = "You are a peacekeeper assigned to this hotel to protect the intrests of the company while keeping the peace between \
+	flavour_text = "You are a peacekeeper assigned to this hotel to protect the interests of the company while keeping the peace between \
 		guests and the staff.Do <font size=6><b>NOT</b></font> leave the hotel, as that is grounds for contract termination."
 	objectives = "Do not leave your assigned hotel. Try and keep the peace between staff and guests, non-lethal force heavily advised if possible."
 
