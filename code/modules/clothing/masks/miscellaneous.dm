@@ -78,6 +78,43 @@
 		message = pick("Oink!","Squeeeeeeee!","Oink Oink!")
 	return message
 
+///frog mask - reeee!!
+obj/item/clothing/mask/frog
+	name = "frog mask"
+	desc = "An ancient mask carved in the shape of a frog.<br> Sanity is like gravity, all it needs is a push."
+	icon_state = "frog"
+	item_state = "frog"
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	w_class = WEIGHT_CLASS_SMALL
+	var/voicechange = 1
+
+/obj/item/clothing/mask/frog/equipped(mob/user, slot) //when you put it on
+	var/mob/living/carbon/C = user
+	if(src == C.wear_mask)
+		playsound (usr, 'sound/effects/reee.ogg', 30, 1)
+	..()
+
+/obj/item/clothing/mask/frog/speechModification(message) //whenever you speak
+	if(voicechange)
+		if(prob(5)) //sometimes, the angry spirit finds others words to speak.
+			message = pick("HUUUUU!!","SMOOOOOKIN'!!","HELLO MY BABY, HELLO MY HONEY, HELLO MY RAG-TIME GAL!!", "FEELS BAD, MAN!" ,"SOMEBODY STOP ME!!", "NORMIES, GIT OUT!!")
+			playsound (src, 'sound/effects/huuu.ogg', 30, 1)
+		else
+			message = pick("Ree!!", "Reee!!","REEE!!","REEEEE!!") //but its usually just angry gibberish,
+			playsound (src, 'sound/effects/reee.ogg', 30, 1)
+	return message
+
+obj/item/clothing/mask/frog/cursed
+	..()
+	flags_1 = NODROP_1 //reee!!
+
+/obj/item/clothing/mask/frog/cursed/equipped(mob/user, slot)
+	var/mob/living/carbon/C = user
+	if(src == C.wear_mask)
+		to_chat(user, "<span class='warning'><B>[src] was cursed! Ree!!</B></span>")
+	..()
+/////
+
 /obj/item/clothing/mask/cowmask
 	name = "Cowface"
 	desc = "It looks like a mask, but closer inspection reveals it's melded onto this persons face!"
