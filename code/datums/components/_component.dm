@@ -137,6 +137,10 @@
 	return
 
 /datum/component/proc/_GetInverseTypeList(our_type = type)
+#if DM_VERSION > 511
+#warning Remove this hack for http://www.byond.com/forum/?post=73469
+#endif
+	set invisibility = 101
 	//we can do this one simple trick
 	var/current_type = parent_type
 	. = list(our_type, current_type)
