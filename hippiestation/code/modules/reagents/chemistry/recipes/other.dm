@@ -51,16 +51,14 @@
 /datum/chemical_reaction/bananasolidification
 	name = "Solid Bananium"
 	id = "solidbanana"
-	required_reagents = list("pyrosium" = 5, "cryostylane" = 5, "banana" = 20)
+	required_reagents = list("pyrosium" = 5, "cryostylane" = 5, "banana" = 80)//There is 1000u of banana juice on station at roundstart, an enterpirsing robitisict could have a honk up every round if I kept it the same.
 	mob_react = FALSE
 
 /datum/chemical_reaction/bananasolidification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
-		if(prob(75)) // Bananaium is kinda strong when sold to cargo and the clown starts with a shittone of banana juice so this little bit of fun also serves as a limiter.
-			new /obj/item/stack/sheet/mineral/bananium(location)
-		else
-			new /obj/item/reagent_containers/food/snacks/grown/banana(location)
+		new /obj/item/stack/sheet/mineral/bananium(location)
+
 
 /datum/chemical_reaction/plastic_polymers/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
