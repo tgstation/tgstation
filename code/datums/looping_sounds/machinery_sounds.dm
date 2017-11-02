@@ -22,3 +22,16 @@
 	mid_length = 4
 	end_sound = 'sound/machines/generator/generator_end.ogg'
 	volume = 40
+
+/datum/looping_sound/server
+	mid_sounds = list('sound/machines/tcomms/server_mid1.ogg'=1,'sound/machines/tcomms/server_mid2.ogg'=1,'sound/machines/tcomms/server_mid3.ogg'=1,)
+	mid_length = 5
+	volume = 50
+
+/datum/looping_sound/computer
+	start_sound = 'sound/machines/computer/computer_start.ogg'
+	start_length = 9
+	mid_sounds = list('sound/machines/computer/computer_mid1.ogg'=1, 'sound/machines/computer/computer_mid2.ogg'=1)
+	mid_length = 2
+	end_sound = 'sound/machines/computer/computer_end.ogg'
+	volume = 15

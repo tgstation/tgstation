@@ -15,9 +15,11 @@
 	var/icon_keyboard = "generic_key"
 	var/icon_screen = "generic"
 	var/clockwork = FALSE
+	var/datum/looping_sound/computer/soundloop
 
 /obj/machinery/computer/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
+	soundloop = new(list(src))
 	power_change()
 	if(!QDELETED(C))
 		qdel(circuit)
@@ -26,6 +28,7 @@
 
 /obj/machinery/computer/Destroy()
 	QDEL_NULL(circuit)
+	QDEL_NULL(soundloop)
 	return ..()
 
 /obj/machinery/computer/process()
@@ -64,8 +67,10 @@
 	..()
 	if(stat & NOPOWER)
 		set_light(0)
+		soundloop.stop()
 	else
 		set_light(brightness_on)
+		soundloop.start()
 	update_icon()
 	return
 
