@@ -38,7 +38,7 @@
 	if(..())
 		return
 
-	var/list/L = GLOB.mob_spawners[[params["name"]]]
+	var/list/L = GLOB.mob_spawners[[params["name"]]
 	if(!L || !L.len)
 		return
 	var/spawner_ref = pick(L)
