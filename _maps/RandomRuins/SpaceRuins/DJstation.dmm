@@ -311,9 +311,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/rack{
-	dir = 4
-	},
+/obj/structure/rack,
 /obj/item/clothing/under/soviet,
 /obj/item/clothing/head/ushanka,
 /turf/open/floor/plasteel/cafeteria,
