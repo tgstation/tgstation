@@ -88,6 +88,7 @@ obj/item/clothing/mask/frog
 	w_class = WEIGHT_CLASS_SMALL
 	var/voicechange = TRUE
 	var/spam_flag = FALSE
+	var/delay = 15
 
 /obj/item/clothing/mask/frog/proc/reset_spam()
 	spam_flag = FALSE
@@ -103,7 +104,7 @@ obj/item/clothing/mask/frog
 			if(voicechange)
 				playsound (src, 'sound/effects/reee.ogg', 30, 1)
 				spam_flag = TRUE
-				addtimer(CALLBACK(src, .proc/reset_spam), 16)
+				addtimer(CALLBACK(src, .proc/reset_spam), delay)
 	return ..()
 
 /obj/item/clothing/mask/frog/speechModification(message) //whenever you speak
@@ -113,13 +114,13 @@ obj/item/clothing/mask/frog
 			if(!spam_flag)
 				playsound (src, 'sound/effects/huuu.ogg', 30, 1)
 				spam_flag = TRUE
-				addtimer(CALLBACK(src, .proc/reset_spam), 16)
+				addtimer(CALLBACK(src, .proc/reset_spam), delay)
 		else
 			message = pick("Ree!!", "Reee!!","REEE!!","REEEEE!!") //but its usually just angry gibberish,
 			if(!spam_flag)
 				playsound (src, 'sound/effects/reee.ogg', 30, 1)
 				spam_flag = TRUE
-				addtimer(CALLBACK(src, .proc/reset_spam), 16)
+				addtimer(CALLBACK(src, .proc/reset_spam), delay)
 	return message
 
 obj/item/clothing/mask/frog/cursed
