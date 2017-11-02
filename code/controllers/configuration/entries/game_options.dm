@@ -247,3 +247,5 @@ CONFIG_DEF(number/emergency_shuttle_autocall_threshold)
 	min_val = 0
 	max_val = 1
 	integer = FALSE
+
+CONFIG_DEF(flag/emergency_shuttle_has_voice)
