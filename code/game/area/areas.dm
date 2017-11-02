@@ -120,12 +120,12 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 				ambientsounds = list('sound/ambience/ambidanger.ogg', 'sound/ambience/ambidanger2.ogg')
 			if("ruins")
 				ambientsounds = list('sound/ambience/ambimine.ogg', 'sound/ambience/ambicave.ogg', 'sound/ambience/ambiruin.ogg',\
-	 												'sound/ambience/ambiruin2.ogg',  'soun.ambience/ambiruin3.ogg',  'sound/ambience/ambiruin4.ogg',\
+	 												'sound/ambience/ambiruin2.ogg',  'sound/ambience/ambiruin3.ogg',  'sound/ambience/ambiruin4.ogg',\
 													'sound/ambience/ambiruin5.ogg',  'sound/ambience/ambiruin6.ogg',  'sound/ambience/ambiruin7.ogg',\
 													'sound/ambience/ambidanger.ogg', 'sound/ambience/ambidanger2.ogg', 'sound/ambience/ambitech3.ogg',\
 													'sound/ambience/ambimystery.ogg', 'sound/ambience/ambimaint1.ogg')
 			if("engineering")
-				ambientsounds = list('sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg','sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg', 'sound/ambience/ambieng1.ogg'\
+				ambientsounds = list('sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg','sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg', 'sound/ambience/ambieng1.ogg',\
 														'sound/ambience/ambiatmos.ogg', 'sound/ambience/ambiatmos2.ogg', 'sound/ambience/ambitech.ogg', 'sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg')
 			if("mining")
 				ambientsounds = list('sound/ambience/ambimine.ogg', 'sound/ambience/ambicave.ogg', 'sound/ambience/ambiruin.ogg',\
