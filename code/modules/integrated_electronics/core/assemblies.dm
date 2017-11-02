@@ -226,13 +226,12 @@
 			return id_card
 */
 /obj/item/device/electronic_assembly/examine(mob/user)
-	. = ..(user, 1)
-	if(.)
-		for(var/obj/item/integrated_circuit/IC in contents)
-			IC.external_examine(user)
-	//	for(var/obj/item/integrated_circuit/output/screen/S in contents)
-	//		if(S.stuff_to_display)
-	//			to_chat(user, "There's a little screen labeled '[S.name]', which displays '[S.stuff_to_display]'.")
+
+	for(var/obj/item/integrated_circuit/IC in contents)
+		IC.external_examine(user)
+	for(var/obj/item/integrated_circuit/output/screen/S in contents)
+		if(S.stuff_to_display)
+			to_chat(user, "There's a little screen labeled '[S.name]', which displays '[S.stuff_to_display]'.")
 		if(opened)
 			interact(user)
 

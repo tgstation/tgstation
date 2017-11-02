@@ -193,7 +193,7 @@
 		/obj/item/stack/cable_coil = 1,
 		/obj/item/stock_parts/subspace/filter = 1)
 
-/obj/item/circuitboard/machine/telecomms/exonet_node
+/obj/item/circuitboard/machine/exonet_node
 	name = "Exonet Node(machine board"
 	build_path = /obj/machinery/exonet_node
 	origin_tech = "programming=3;engineering=4;bluespace=3;materials=3"

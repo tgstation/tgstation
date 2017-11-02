@@ -3,15 +3,18 @@
 	desc = null // Gets written in New()
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "exonet_node"
-	idle_power_usage = 2500
-	density = 1
+	idle_power_usage = 25
 	var/on = 1
 	var/toggle = 1
-
+	density = TRUE
+	anchored = TRUE
 	var/allow_external_PDAs = 1
 	var/allow_external_communicators = 1
 	var/allow_external_newscasters = 1
-
+	circuit = /obj/item/circuitboard/machine/exonet_node
+	max_integrity = 300
+	integrity_failure = 100
+	armor = list(melee = 20, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
 	var/opened = 0
 
 	var/list/logs = list() // Gets written to by exonet's send_message() function.
@@ -23,7 +26,7 @@
 	..()
 
 	component_parts = list()
-	component_parts += new /obj/item/circuitboard/machine/telecomms/exonet_node(src)
+	component_parts += new /obj/item/circuitboard/machine/exonet_node(src)
 	component_parts += new /obj/item/stock_parts/subspace/ansible(src)
 	component_parts += new /obj/item/stock_parts/subspace/filter(src)
 	component_parts += new /obj/item/stock_parts/manipulator(src)
@@ -125,8 +128,8 @@
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if(!ui)
 		// the ui does not exist, so we'll create a new() one
-        // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
-		ui = new(user, src, ui_key, "exonet_node.tmpl", "Exonet Node #157", 400, 400)
+
+		ui = new(user, src, ui_key, "exonet_node.ract", "Exonet Node #157", 400, 400)
 		// when the ui is first opened this is the data it will use
 		ui.set_initial_data(data)
 		// open the new ui window

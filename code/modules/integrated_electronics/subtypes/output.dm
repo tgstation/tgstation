@@ -221,7 +221,7 @@
 		)
 	spawn_flags = IC_SPAWN_RESEARCH
 	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_BIO = 1)
-
+/*
 /obj/item/integrated_circuit/output/video_camera
 	name = "video camera circuit"
 	desc = "This small camera allows a remote viewer to see what it sees."
@@ -273,7 +273,7 @@
 	if(camera)
 		set_camera_status(0)
 		set_pin_data(IC_INPUT, 2, FALSE)
-
+*/
 /obj/item/integrated_circuit/output/led
 	name = "light-emitting diode"
 	desc = "This a LED that is lit whenever there is TRUE-equivalent data on its input."

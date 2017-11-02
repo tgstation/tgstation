@@ -120,7 +120,7 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_BIO = 2)
 	var/volume = 60
-	var/list/fuel = list("phoron" = 50000, "slimejelly" = 25000, "fuel" = 15000, "carbon" = 10000, "ethanol"= 10000, "nutriment" =8000, "blood" = 5000)
+	var/list/fuel = list("plasma" = 50000, "welding_fuel" = 15000, "carbon" = 10000, "ethanol"= 10000, "nutriment" =8000, "blood" = 5000)
 
 /obj/item/integrated_circuit/passive/power/chemical_cell/New()
 	..()
@@ -137,10 +137,11 @@
 
 /obj/item/integrated_circuit/passive/power/chemical_cell/make_energy()
 	if(assembly)
-		for(var/I in fuel)
-			if((assembly.battery.maxcharge-assembly.battery.charge) / GLOB.CELLRATE > fuel[I])
-				if(reagents.remove_reagent(I, 1))
-					assembly.give_power(fuel[I])
+		if(assembly.battery)
+			for(var/I in fuel)
+				if((assembly.battery.maxcharge-assembly.battery.charge) / GLOB.CELLRATE > fuel[I])
+					if(reagents.remove_reagent(I, 1))
+						assembly.give_power(fuel[I])
 
 
 // For really fat machines.

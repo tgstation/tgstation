@@ -1,4 +1,5 @@
 /obj/item/device/integrated_electronics/prefab
+	var/debug = 1
 	name = "prefab"
 	desc = "new machine in package"
 	icon = 'icons/obj/electronic_assemblies.dmi'
@@ -30,7 +31,7 @@
 			cir_names[IC.name] = IC.type
 
 /obj/item/device/integrated_electronics/prefab/proc/assemble(var/program)
-	var/debug = 0
+
 	var/list/chap = splittext( program ,"{{*}}")
 	var/list/elements = list()
 	var/list/elements_input = list()

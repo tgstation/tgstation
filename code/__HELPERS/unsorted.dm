@@ -510,12 +510,12 @@ recursive_depth is useful if you only want a turf and everything on it (recursiv
 */
 /atom/proc/GetAllContents(list/output=list(), recursive_depth=INFINITY)
 	. = output
-	output += src 
+	output += src
 	if(!recursive_depth)
 		return
-	for(var/i in 1 to contents.len) 
-		var/atom/thing = contents[i] 
-		thing.GetAllContents(output, recursive_depth-1) 
+	for(var/i in 1 to contents.len)
+		var/atom/thing = contents[i]
+		thing.GetAllContents(output, recursive_depth-1)
 
 //Step-towards method of determining whether one atom can see another. Similar to viewers()
 /proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
@@ -1428,7 +1428,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	var/target_loc = target.loc
 
 	var/endtime = world.time+time
-	var/starttime = world.time
+//	var/starttime = world.time
 	. = 1
 	while (world.time < endtime)
 		stoplag(1)
@@ -1441,7 +1441,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		if(drifting && !user.inertia_dir)
 			drifting = 0
 			user_loc = user.loc
-			
+
 		if(target_drifting && !target.inertia_dir)
 			target_drifting = 0
 			target_loc = target.loc

@@ -263,7 +263,7 @@
 	origin_tech = list(TECH_ENGINEERING = 4, TECH_DATA = 5)
 
 /obj/item/device/integrated_circuit_printer/proc/sanity_check(var/program)
-	var/debug = 0
+	var/debug = 1
 	var/list/chap = splittext( program ,"{{*}}")
 	var/list/elements = list()
 	var/list/elements_input = list()
