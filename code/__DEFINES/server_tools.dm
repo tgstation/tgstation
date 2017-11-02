@@ -11,19 +11,19 @@
 
 //create a global variable named `Name` and set it to `Value`
 //These globals must not be modifiable from anywhere outside of the server tools
-#define SERVER_TOOLS_DEFINE_AND_SET_GLOBAL(Name, Value)
+#define SERVER_TOOLS_DEFINE_AND_SET_GLOBAL(Name, Value) GLOBAL_VAR_INIT(##Name, ##Value); GLOBAL_PROTECT(##Name)
 //Read the value in the global variable `Name`
-#define SERVER_TOOLS_READ_GLOBAL(Name)
+#define SERVER_TOOLS_READ_GLOBAL(Name) GLOB.##Name
 //Set the value in the global variable `Name` to `Value`
-#define SERVER_TOOLS_WRITE_GLOBAL(Name, Value)
+#define SERVER_TOOLS_WRITE_GLOBAL(Name, Value) GLOB.##Name = ##Value
 //display an announcement `message` from the server to all players
-#define SERVER_TOOLS_WORLD_ANNOUNCE(message)
+#define SERVER_TOOLS_WORLD_ANNOUNCE(message) to_chat(world, "<span class='boldannounce'>[html_encode(##message)]</span>")
 //Write a string `message` to a server log
-#define SERVER_TOOLS_LOG(message)
+#define SERVER_TOOLS_LOG(message) log_world("SERVICE: [##message]")
 //Notify current in-game administrators of a string `event`
-#define SERVER_TOOLS_NOTIFY_ADMINS(event)
+#define SERVER_TOOLS_NOTIFY_ADMINS(event) message_admins(##event)
 //The current amount of connected clients
-#define SERVER_TOOLS_CLIENT_COUNT
+#define SERVER_TOOLS_CLIENT_COUNT GLOB.clients.len
 #endif
 
 //Required hooks:
