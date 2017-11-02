@@ -30,9 +30,9 @@
 
 /datum/looping_sound/computer
 	start_sound = 'sound/machines/computer/computer_start.ogg'
-	start_length = 9
+	start_length = 40
 	mid_sounds = list('sound/machines/computer/computer_mid1.ogg'=1, 'sound/machines/computer/computer_mid2.ogg'=1)
-	mid_length = 2
+	mid_length = 10
 	end_sound = 'sound/machines/computer/computer_end.ogg'
 	volume = 15
 	range_modifier = -5.5
