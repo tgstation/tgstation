@@ -489,9 +489,9 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		return
 	if(handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
-	
+
 	msg = trim(msg)
-	
+
 	if(!msg)
 		return
 
@@ -591,6 +591,8 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 /proc/send2irc(msg,msg2)
 	if(SERVER_TOOLS_PRESENT)
+		msg = replacetext(replacetext(msg, "\proper", ""), "\improper", "")
+		msg2 = replacetext(replacetext(msg2, "\proper", ""), "\improper", "")
 		SERVER_TOOLS_RELAY_BROADCAST("[msg] | [msg2]")
 
 /proc/send2otherserver(source,msg,type = "Ahelp")
