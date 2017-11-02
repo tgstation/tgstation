@@ -116,7 +116,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 				ambientsounds = list('sound/ambience/ambicha1.ogg','sound/ambience/ambicha2.ogg','sound/ambience/ambicha3.ogg',\
 														'sound/ambience/ambicha4.ogg', 'sound/ambience/ambiholy.ogg', 'sound/ambience/ambiholy2.ogg',\
 														'sound/ambience/ambiholy3.ogg')
-			if(HIGH-SEC) //Heavy security areas like security and syndicate locations
+			if(HIGHSEC) //Heavy security areas like security and syndicate locations
 				ambientsounds = list('sound/ambience/ambidanger.ogg', 'sound/ambience/ambidanger2.ogg')
 			if(RUINS)
 				ambientsounds = list('sound/ambience/ambimine.ogg', 'sound/ambience/ambicave.ogg', 'sound/ambience/ambiruin.ogg',\

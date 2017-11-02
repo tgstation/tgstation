@@ -23,12 +23,12 @@
 
 #define GENERIC 1
 #define HOLY 2
-#define HIGH-SEC 3
+#define HIGHSEC 3
 #define RUINS 4
 #define ENGINEERING 5
 #define MINING 6
 #define MEDICAL 7
 #define SPOOKY 8
 #define SPACE 9
-#define MAINTENACE 10
+#define MAINTENANCE 10
 #define AWAY_MISSION 11

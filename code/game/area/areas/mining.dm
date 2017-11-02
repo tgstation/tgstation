@@ -77,7 +77,7 @@
 /area/mine/laborcamp/security
 	name = "Labor Camp Security"
 	icon_state = "security"
-	ambience_type = HIGH-SEC
+	ambience_type = HIGHSEC
 
 
 

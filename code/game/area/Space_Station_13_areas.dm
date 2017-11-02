@@ -987,7 +987,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security
 	name = "Security"
 	icon_state = "security"
-	ambience_type = HIGH-SEC
+	ambience_type = HIGHSEC
 
 /area/security/main
 	name = "Security Office"
@@ -1361,27 +1361,27 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/ai_monitored/security/armory
 	name = "Armory"
 	icon_state = "armory"
-	ambience_type = HIGH-SEC
+	ambience_type = HIGHSEC
 
 /area/ai_monitored/storage/eva
 	name = "EVA Storage"
 	icon_state = "eva"
-	ambience_type = HIGH-SEC
+	ambience_type = HIGHSEC
 
 /area/ai_monitored/storage/secure
 	name = "AI Satellite Storage"
 	icon_state = "storage"
-	ambience_type = HIGH-SEC
+	ambience_type = HIGHSEC
 
 /area/ai_monitored/storage/emergency
 	name = "Emergency Storage"
 	icon_state = "storage"
-	ambience_type = HIGH-SEC
+	ambience_type = HIGHSEC
 
 /area/ai_monitored/storage/satellite
 	name = "AI Satellite Maint"
 	icon_state = "storage"
-	ambience_type = HIGH-SEC
+	ambience_type = HIGHSEC
 
 	//Turret_protected
 

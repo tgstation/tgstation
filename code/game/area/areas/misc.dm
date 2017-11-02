@@ -33,7 +33,7 @@
 /area/prison
 	name = "Prison Station"
 	icon_state = "brig"
-	ambience_type = HIGH-SEC
+	ambience_type = HIGHSEC
 
 /area/prison/arrival_airlock
 	name = "Prison Station Airlock"
