@@ -32,11 +32,13 @@
 		myhead = new /obj/item/dullahan_relay (head, H)
 
 /datum/species/dullahan/on_species_loss(mob/living/carbon/human/H)
+	H.reset_perspective(H)
 	if(myhead)
 		var/obj/item/dullahan_relay/DR = myhead
 		myhead = null
 		DR.owner = null
 		qdel(DR)
+	H.regenerate_limb("head",FALSE)
 	..()
 
 /datum/species/dullahan/spec_life(mob/living/carbon/human/H)
