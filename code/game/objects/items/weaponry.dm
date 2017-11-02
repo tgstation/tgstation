@@ -5,6 +5,7 @@
 	icon_state = "toyhammer"
 	slot_flags = SLOT_BELT
 	throwforce = 0
+	force = 1
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
