@@ -97,7 +97,7 @@
 		/datum/gas/water_vapor		= new/datum/tlv/dangerous,
 		/datum/gas/tritium			= new/datum/tlv/dangerous,
 		/datum/gas/stimulum			= new/datum/tlv/dangerous,
-		/datum/gas/nitryl			 = new/datum/tlv/dangerous,
+		/datum/gas/nitryl			= new/datum/tlv/dangerous,
 		/datum/gas/pluoxium			= new/datum/tlv/dangerous
 	)
 
