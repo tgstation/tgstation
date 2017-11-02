@@ -7,4 +7,4 @@
 		/datum/reagent/consumable/blackpepper = 5
 	)
 	tools = list(/obj/item/kitchen/rollingpin)
-	result = /obj/item/reagent_containers/food/snacks/pilgrim
+	result = /obj/item/reagent_containers/food/snacks/sandwich/pilgrim
