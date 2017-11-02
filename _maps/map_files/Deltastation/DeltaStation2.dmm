@@ -15897,16 +15897,23 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	dir = 10
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
+	dir = 1
 	},
 /turf/open/floor/plasteel/vault,
 /area/engine/atmos)
 "aKD" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
+/obj/machinery/meter,
 /turf/open/floor/plasteel/vault,
 /area/engine/atmos)
 "aKE" = (
 /obj/item/twohanded/required/kirbyplants/random,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
 /turf/open/floor/plasteel/vault,
 /area/engine/atmos)
 "aKF" = (
@@ -102579,6 +102586,16 @@
 	},
 /turf/open/floor/circuit/green,
 /area/engine/supermatter)
+"YGM" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 8;
+	frequency = 1441;
+	id = "n2_in";
+	volume_rate = 200
+	},
+/turf/open/space,
+/area/engine/atmos)
 
 (1,1,1) = {"
 aaa
@@ -129142,7 +129159,7 @@ aiW
 aiW
 aiW
 aIZ
-aKD
+aKy
 aMj
 aNL
 aPm
@@ -129399,7 +129416,7 @@ aFh
 aGC
 aHT
 aIZ
-aKD
+aKy
 aMk
 aNL
 aPt
@@ -130170,7 +130187,7 @@ aiW
 aiW
 aiW
 aJe
-aIZ
+bmf
 aIZ
 aIZ
 aPw
@@ -130427,7 +130444,7 @@ aaf
 aaf
 aaf
 aaf
-aaf
+YGM
 aaf
 aNU
 aPx
