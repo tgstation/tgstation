@@ -22,6 +22,7 @@
 	var/start_sound
 	var/start_length
 	var/end_sound
+	var/range_modifier
 	var/chance
 	var/volume = 100
 	var/muted = TRUE
@@ -78,7 +79,7 @@
 		if(direct)
 			SEND_SOUND(thing, S)
 		else
-			playsound(thing, S, volume)
+			playsound(thing, S, volume, null, range_modifier)
 
 /datum/looping_sound/proc/get_sound(looped, _mid_sounds)
 	if(!_mid_sounds)

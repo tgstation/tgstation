@@ -35,3 +35,4 @@
 	mid_length = 2
 	end_sound = 'sound/machines/computer/computer_end.ogg'
 	volume = 15
+	range_modifier = -4
