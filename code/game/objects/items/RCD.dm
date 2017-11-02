@@ -134,6 +134,7 @@ ARCD
 	var/list/conf_access = null
 	var/use_one_access = 0 //If the airlock should require ALL or only ONE of the listed accesses.
 	var/delay_mod = 1
+	var/canRturf = FALSE //Variable for R walls to deconstruct them
 
 
 /obj/item/construction/rcd/suicide_act(mob/user)
@@ -365,6 +366,7 @@ ARCD
 /obj/item/construction/rcd/borg
 	no_ammo_message = "<span class='warning'>Insufficient charge.</span>"
 	desc = "A device used to rapidly build walls and floors."
+	canRturf = TRUE
 
 
 /obj/item/construction/rcd/borg/useResource(amount, mob/user)
@@ -400,6 +402,7 @@ ARCD
 	name = "industrial RCD"
 	max_matter = 500
 	matter = 500
+	canRturf = TRUE
 
 /obj/item/rcd_ammo
 	name = "compressed matter cartridge"

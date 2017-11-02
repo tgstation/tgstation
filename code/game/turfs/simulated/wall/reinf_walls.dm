@@ -256,10 +256,10 @@
 			dismantle_wall()
 
 /turf/closed/wall/r_wall/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	if(istype(the_rcd, /obj/item/construction/rcd/borg) || istype(the_rcd, /obj/item/construction/rcd/combat))
+	if(the_rcd.canRturf)
 		return ..()
 
 
 /turf/closed/wall/r_wall/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
-	if(istype(the_rcd, /obj/item/construction/rcd/borg) || istype(the_rcd, /obj/item/construction/rcd/combat))
+	if(the_rcd.canRturf)
 		return ..()
