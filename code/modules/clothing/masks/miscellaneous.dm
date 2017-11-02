@@ -87,38 +87,53 @@ obj/item/clothing/mask/frog
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	w_class = WEIGHT_CLASS_SMALL
 	var/voicechange = TRUE
+	var/spam_flag = FALSE
+
+/obj/item/clothing/mask/frog/proc/reset_spam()
+	spam_flag = FALSE
+
+/obj/item/clothing/mask/frog/attack_self(mob/user)
+	voicechange = !voicechange
+	to_chat(user, "<span class='notice'>You turn the voice box [voicechange ? "on" : "off"]!</span>")
 
 /obj/item/clothing/mask/frog/equipped(mob/user, slot) //when you put it on
 	var/mob/living/carbon/C = user
 	if(C.wear_mask == src)
-		playsound (src, 'sound/effects/reee.ogg', 30, 1)
+		if(!spam_flag)
+			if(voicechange)
+				playsound (src, 'sound/effects/reee.ogg', 30, 1)
+				spam_flag = TRUE
+				addtimer(CALLBACK(src, .proc/reset_spam), 16)
 	return ..()
 
 /obj/item/clothing/mask/frog/speechModification(message) //whenever you speak
 	if(voicechange)
 		if(prob(5)) //sometimes, the angry spirit finds others words to speak.
 			message = pick("HUUUUU!!","SMOOOOOKIN'!!","HELLO MY BABY, HELLO MY HONEY, HELLO MY RAG-TIME GAL!!", "FEELS BAD, MAN!" ,"SOMEBODY STOP ME!!", "NORMIES, GIT OUT!!")
-			playsound (src, 'sound/effects/huuu.ogg', 30, 1)
+			if(!spam_flag)
+				playsound (src, 'sound/effects/huuu.ogg', 30, 1)
+				spam_flag = TRUE
+				addtimer(CALLBACK(src, .proc/reset_spam), 16)
 		else
 			message = pick("Ree!!", "Reee!!","REEE!!","REEEEE!!") //but its usually just angry gibberish,
-			playsound (src, 'sound/effects/reee.ogg', 30, 1)
+			if(!spam_flag)
+				playsound (src, 'sound/effects/reee.ogg', 30, 1)
+				spam_flag = TRUE
+				addtimer(CALLBACK(src, .proc/reset_spam), 16)
 	return message
 
 obj/item/clothing/mask/frog/cursed
-	name = "frog mask"
-	desc = "An ancient mask carved in the shape of a frog.<br> Sanity is like gravity, all it needs is a push."
-	icon_state = "frog"
-	item_state = "frog"
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
-	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = NODROP_1 //reee!!
+
+/obj/item/clothing/mask/frog/cursed/attack_self(mob/user)
+	return //no voicebox to alter.
 
 /obj/item/clothing/mask/frog/cursed/equipped(mob/user, slot)
 	var/mob/living/carbon/C = user
 	if(C.wear_mask == src)
 		to_chat(user, "<span class='warning'><B>[src] was cursed! Ree!!</B></span>")
 	return ..()
-/////
+
 
 /obj/item/clothing/mask/cowmask
 	name = "Cowface"
