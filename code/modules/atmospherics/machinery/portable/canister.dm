@@ -137,7 +137,6 @@
 	gas_type = /datum/gas/water_vapor
 	filled = 1
 
-
 /obj/machinery/portable_atmospherics/canister/proc/get_time_left()
 	if(timing)
 		. = round(max(0, valve_timer - world.time) / 10, 1)
