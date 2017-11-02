@@ -5,7 +5,7 @@
 //use this define if you want to do configuration outside of this file
 #ifndef SERVER_TOOLS_EXTERNAL_CONFIGURATION
 //Comment this out once you've filled in the below
-#error /tg/station server tools interface unconfigured
+//#error /tg/station server tools interface unconfigured
 
 //Required interfaces (fill in with your codebase equivalent):
 
