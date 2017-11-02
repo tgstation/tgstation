@@ -246,7 +246,7 @@
 		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST*400
 	)
 
-/datum/gas_reaction/nitrylormation/react(datum/gas_mixture/air)
+/datum/gas_reaction/nitrylformation/react(datum/gas_mixture/air)
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
 
