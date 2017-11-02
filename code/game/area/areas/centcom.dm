@@ -96,7 +96,7 @@
 	noteleport = TRUE
 	blob_allowed = FALSE //Not... entirely sure this will ever come up... but if the bus makes blobs AND ops, it shouldn't aim for the ops to win.
 	flags_1 = NONE
-	ambience_type = "syndicate"
+	ambientsounds = HIGHSEC
 
 /area/syndicate_mothership/control
 	name = "Syndicate Control Room"

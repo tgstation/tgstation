@@ -22,7 +22,7 @@
 	power_environ = FALSE
 	valid_territory = FALSE
 	outdoors = TRUE
-	ambience_type = SPACE
+	ambientsounds = SPACE
 	blob_allowed = FALSE
 
 /////////////

@@ -41,7 +41,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	power_environ = FALSE
 	valid_territory = FALSE
 	outdoors = TRUE
-	ambience_type = SPACE
+	ambientsounds = SPACE
 	blob_allowed = FALSE //Eating up space doesn't count for victory as a blob.
 
 /area/space/nearstation
@@ -65,7 +65,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	has_gravity = TRUE
 	blob_allowed = FALSE //Nope, no winning on the asteroid as a blob. Gotta eat the station.
 	valid_territory = FALSE
-	ambience_type = MINING
+	ambientsounds = MINING
 
 /area/asteroid/cave
 	name = "Asteroid - Underground"
@@ -76,7 +76,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/asteroid/artifactroom
 	name = "Asteroid - Artifact"
 	icon_state = "cave"
-	ambience_type = RUINS
+	ambientsounds = RUINS
 
 /area/asteroid/artifactroom/Initialize()
 	. = ..()
@@ -98,7 +98,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 //Maintenance
 
 /area/maintenance
-	ambience_type = MAINTENANCE
+	ambientsounds = MAINTENANCE
 	valid_territory = FALSE
 
 
@@ -642,7 +642,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/chapel
 	icon_state = "chapel"
-	ambience_type = HOLY
+	ambientsounds = HOLY
 	flags_1 = NONE
 	clockwork_warp_allowed = FALSE
 	clockwork_warp_fail = "The consecration here prevents you from warping in."
@@ -673,7 +673,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 //Engineering
 
 /area/engine
-	ambience_type = ENGINEERING
+	ambientsounds = ENGINEERING
 
 /area/engine/engine_smes
 	name = "Engineering SMES"
@@ -727,7 +727,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	valid_territory = FALSE
 	blob_allowed = FALSE
 	flags_1 = NONE
-	ambience_type = ENGINEERING
+	ambientsounds = ENGINEERING
 
 /area/solar/asteroid/aft
 	name = "Aft Asteroid Solar"
@@ -854,40 +854,36 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Teleporter Room"
 	icon_state = "teleporter"
 	music = "signal"
-	ambience_type = ENGINEERING
+	ambientsounds = ENGINEERING
 
 /area/teleporter/quantum/cargo
 	name = "Cargo Quantum Pad"
 	icon_state = "teleporter"
-	music = "signal"
 
 /area/teleporter/quantum/docking
 	name = "Docking Quantum Pad"
 	icon_state = "teleporter"
-	music = "signal"
 
 /area/teleporter/quantum/research
 	name = "Research Quantum Pad"
 	icon_state = "teleporter"
-	music = "signal"
 
 /area/teleporter/quantum/security
 	name = "Security Quantum Pad"
 	icon_state = "teleporter"
-	music = "signal"
 
 /area/gateway
 	name = "Gateway"
 	icon_state = "teleporter"
 	music = "signal"
-	ambience_type = ENGINEERING
+	ambientsounds = ENGINEERING
 
 //MedBay
 
 /area/medical
 	name = "Medical"
 	icon_state = "medbay3"
-	ambience_type = MEDICAL
+	ambientsounds = MEDICAL
 
 /area/medical/abandoned
 	name = "Abandoned Medbay"
@@ -951,7 +947,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/medical/morgue
 	name = "Morgue"
 	icon_state = "morgue"
-	ambience_type = SPOOKY
+	ambientsounds = SPOOKY
 
 /area/medical/chemistry
 	name = "Chemistry"
@@ -987,7 +983,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security
 	name = "Security"
 	icon_state = "security"
-	ambience_type = HIGHSEC
+	ambientsounds = HIGHSEC
 
 /area/security/main
 	name = "Security Office"
@@ -1309,7 +1305,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/construction
 	name = "Construction Area"
 	icon_state = "yellow"
-	ambience_type = ENGINEERING
+	ambientsounds = ENGINEERING
 
 /area/construction/minisat_exterior
 	name = "Minisat Exterior"
@@ -1361,27 +1357,27 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/ai_monitored/security/armory
 	name = "Armory"
 	icon_state = "armory"
-	ambience_type = HIGHSEC
+	ambientsounds = HIGHSEC
 
 /area/ai_monitored/storage/eva
 	name = "EVA Storage"
 	icon_state = "eva"
-	ambience_type = HIGHSEC
+	ambientsounds = HIGHSEC
 
 /area/ai_monitored/storage/secure
 	name = "AI Satellite Storage"
 	icon_state = "storage"
-	ambience_type = HIGHSEC
+	ambientsounds = HIGHSEC
 
 /area/ai_monitored/storage/emergency
 	name = "Emergency Storage"
 	icon_state = "storage"
-	ambience_type = HIGHSEC
+	ambientsounds = HIGHSEC
 
 /area/ai_monitored/storage/satellite
 	name = "AI Satellite Maint"
 	icon_state = "storage"
-	ambience_type = HIGHSEC
+	ambientsounds = HIGHSEC
 
 	//Turret_protected
 
