@@ -13,7 +13,6 @@
 // END_PREFERENCES
 
 // BEGIN_INCLUDE
-#include "diskwriter.dm"
 #include "_maps\basemap.dm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
@@ -2253,6 +2252,7 @@
 #include "code\modules\VR\vr_sleeper.dm"
 #include "code\modules\zombie\items.dm"
 #include "code\modules\zombie\organs.dm"
+#include "code\white\jukebox\diskwriter.dm"
 #include "code\white\jukebox\jukebox_huli.dm"
 #include "code\white\jukebox\jukebox_huli_tracks.dm"
 #include "code\white\other\donations.dm"
