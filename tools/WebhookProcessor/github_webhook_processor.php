@@ -221,7 +221,7 @@ function tag_pr($payload, $opened) {
 		$tags[] = 'Merge Conflict';
 
 	$treetags = array('_maps' => 'Map Edit', 'tools' => 'Tools', 'SQL' => 'SQL');
-	$addonlytags = array('icons' => 'Sprites', 'sounds' => 'Sound', 'config' => 'Config Update', 'code/controllers/configuration/entries' => 'Config Update', 'tgui' => 'UI');
+	$addonlytags = array('icons' => 'Sprites', 'sound' => 'Sound', 'config' => 'Config Update', 'code/controllers/configuration/entries' => 'Config Update', 'tgui' => 'UI');
 	foreach($treetags as $tree => $tag)
 		if(has_tree_been_edited($payload, $tree))
 			$tags[] = $tag;
