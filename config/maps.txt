@@ -35,5 +35,4 @@ map deltastation
 endmap
 
 map runtimestation
-	disabled
 endmap

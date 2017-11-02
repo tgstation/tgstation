@@ -4798,10 +4798,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "akp" = (
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/item/clothing/gloves/color/yellow,
 /obj/item/mop,
 /obj/item/bikehorn/rubberducky,
@@ -4823,10 +4820,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aks" = (
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/item/clothing/neck/tie/red{
 	pixel_x = -5;
 	pixel_y = 3
@@ -5195,9 +5189,7 @@
 /turf/open/floor/plasteel,
 /area/security/range)
 "akZ" = (
-/obj/structure/rack{
-	pixel_y = 2
-	},
+/obj/structure/rack,
 /obj/item/gun/energy/laser/practice{
 	pixel_x = 2;
 	pixel_y = -2
@@ -5515,10 +5507,7 @@
 /obj/structure/light_construct/small{
 	dir = 4
 	},
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/item/storage/secure/briefcase,
 /obj/item/disk/data,
 /obj/item/grenade/flashbang,
@@ -6180,9 +6169,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "ana" = (
-/obj/structure/rack{
-	dir = 1
-	},
+/obj/structure/rack,
 /obj/item/clothing/under/rank/mailman,
 /obj/item/clothing/under/rank/vice{
 	pixel_x = 4;
@@ -7176,10 +7163,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "ape" = (
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/item/storage/belt{
 	desc = "Can hold quite a lot of stuff.";
 	name = "multi-belt"
@@ -7355,10 +7339,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "apx" = (
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/item/circuitboard/computer/secure_data{
 	pixel_x = -2;
 	pixel_y = 2
@@ -7725,10 +7706,7 @@
 /obj/item/device/mmi{
 	name = "man-machine interface"
 	},
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
@@ -10395,18 +10373,15 @@
 /area/hallway/primary/port)
 "avI" = (
 /obj/structure/closet/crate,
-/obj/item/stack/sheet/metal{
-	amount = 50;
+/obj/item/stack/sheet/metal/fifty{
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/item/stack/sheet/metal{
-	amount = 50;
+/obj/item/stack/sheet/metal/fifty{
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/item/stack/sheet/metal{
-	amount = 50;
+/obj/item/stack/sheet/metal/fifty{
 	pixel_x = 2;
 	pixel_y = 2
 	},
@@ -12129,9 +12104,7 @@
 	},
 /area/quartermaster/miningoffice)
 "azp" = (
-/obj/structure/rack{
-	dir = 1
-	},
+/obj/structure/rack,
 /obj/item/storage/toolbox/emergency{
 	pixel_x = 2;
 	pixel_y = -3
@@ -13518,10 +13491,7 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/quartermaster/warehouse)
 "aCc" = (
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/item/electronics/apc,
 /obj/item/stock_parts/cell{
 	maxcharge = 2000
@@ -14390,10 +14360,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "aDN" = (
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/item/storage/briefcase{
 	pixel_x = -3;
 	pixel_y = 2
@@ -15350,9 +15317,7 @@
 	},
 /area/quartermaster/miningoffice)
 "aFH" = (
-/obj/structure/rack{
-	dir = 1
-	},
+/obj/structure/rack,
 /obj/item/pickaxe{
 	pixel_x = 5
 	},
@@ -15962,9 +15927,7 @@
 /area/crew_quarters/dorms)
 "aGQ" = (
 /obj/structure/table,
-/obj/item/stack/rods{
-	amount = 50
-	},
+/obj/item/stack/rods/fifty,
 /obj/item/wrench,
 /obj/item/storage/box/lights/mixed,
 /obj/effect/turf_decal/bot{
@@ -15976,24 +15939,12 @@
 /area/engine/engineering)
 "aGR" = (
 /obj/structure/table,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/glass/fifty,
 /obj/item/crowbar,
 /obj/item/grenade/chem_grenade/smart_metal_foam,
 /obj/item/grenade/chem_grenade/smart_metal_foam,
@@ -17090,10 +17041,7 @@
 /turf/open/floor/wood,
 /area/lawoffice)
 "aIW" = (
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/item/storage/briefcase{
 	pixel_x = -3;
 	pixel_y = 2
@@ -18851,15 +18799,9 @@
 /area/engine/engineering)
 "aNo" = (
 /obj/structure/closet/crate,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/rods{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/rods/fifty,
+/obj/item/stack/sheet/glass/fifty,
 /obj/item/electronics/airlock,
 /obj/item/electronics/airlock,
 /obj/item/stock_parts/cell/high{
@@ -20908,15 +20850,9 @@
 /area/construction/mining/aux_base)
 "aRF" = (
 /obj/structure/table,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/glass/fifty,
 /obj/item/pipe_dispenser,
 /obj/machinery/light{
 	dir = 4
@@ -21440,9 +21376,7 @@
 /obj/item/stack/sheet/plasteel{
 	amount = 10
 	},
-/obj/item/stack/rods{
-	amount = 50
-	},
+/obj/item/stack/rods/fifty,
 /obj/item/storage/box/lights/mixed,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 6
@@ -24003,10 +23937,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aYi" = (
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/item/storage/toolbox/electrical{
 	pixel_x = 1;
 	pixel_y = -1
@@ -24017,10 +23948,7 @@
 /turf/open/floor/plasteel/black,
 /area/storage/tech)
 "aYj" = (
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/item/circuitboard/computer/pandemic{
 	pixel_x = -3;
 	pixel_y = 3
@@ -24039,10 +23967,7 @@
 /turf/open/floor/plasteel/black,
 /area/storage/tech)
 "aYk" = (
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/item/circuitboard/computer/mining,
 /obj/item/circuitboard/machine/autolathe{
 	pixel_x = 3;
@@ -25645,10 +25570,7 @@
 	},
 /area/maintenance/starboard/fore)
 "bbk" = (
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/item/circuitboard/computer/borgupload{
 	pixel_x = -1;
 	pixel_y = 1
@@ -25686,10 +25608,7 @@
 	},
 /area/storage/tech)
 "bbn" = (
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/item/circuitboard/computer/cloning,
 /obj/item/circuitboard/computer/med_data{
 	pixel_x = 3;
@@ -25705,10 +25624,7 @@
 /turf/closed/wall,
 /area/maintenance/solars/port/fore)
 "bbp" = (
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/item/circuitboard/computer/powermonitor{
 	pixel_x = -2;
 	pixel_y = 2
@@ -26165,10 +26081,7 @@
 	},
 /area/hallway/primary/central)
 "bcn" = (
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -26
@@ -26225,10 +26138,7 @@
 /turf/open/floor/plating,
 /area/storage/tech)
 "bcv" = (
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/item/circuitboard/computer/crew{
 	pixel_x = -1;
 	pixel_y = 1
@@ -26913,12 +26823,8 @@
 /area/storage/tools)
 "bdS" = (
 /obj/structure/table,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
 /obj/item/storage/box/lights/mixed,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/yellow/side{
@@ -26942,12 +26848,8 @@
 /area/storage/tools)
 "bdV" = (
 /obj/structure/table,
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/stack/rods{
-	amount = 50
-	},
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/rods/fifty,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 6
 	},
@@ -26961,10 +26863,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "bdX" = (
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/item/circuitboard/computer/robotics{
 	pixel_x = -2;
 	pixel_y = 2
@@ -27006,10 +26905,7 @@
 /turf/open/floor/plasteel/black,
 /area/storage/tech)
 "bec" = (
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/item/storage/toolbox/electrical{
 	pixel_x = 1;
 	pixel_y = -1
@@ -27069,10 +26965,7 @@
 	},
 /area/crew_quarters/heads/chief)
 "beh" = (
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/item/storage/secure/briefcase,
 /obj/item/clothing/mask/cigarette/cigar,
 /obj/machinery/computer/security/telescreen{
@@ -27086,10 +26979,7 @@
 	},
 /area/crew_quarters/heads/chief)
 "bei" = (
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/item/lighter,
 /obj/item/clothing/glasses/meson,
 /obj/machinery/button/door{
@@ -30244,10 +30134,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-8"
 	},
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/item/storage/box,
 /obj/item/storage/box,
 /obj/item/storage/box,
@@ -37379,12 +37266,8 @@
 /area/crew_quarters/theatre)
 "byO" = (
 /obj/structure/table,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/glass/fifty,
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "MiniSat Maint APC";
@@ -37439,18 +37322,12 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/structure/table,
-/obj/item/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/pen,
+/obj/machinery/computer/atmos_alert,
 /turf/open/floor/plasteel/caution{
 	dir = 1
 	},
 /area/engine/atmos)
 "byT" = (
-/obj/machinery/computer/atmos_alert,
 /obj/structure/sign/map/left{
 	desc = "A framed picture of the station. Clockwise from security at the top (red), you see engineering (yellow), science (purple), escape (red and white), medbay (green), arrivals (blue and white), and finally cargo (brown).";
 	icon_state = "map-left-MS";
@@ -37460,6 +37337,7 @@
 	c_tag = "Atmospherics - Control Room";
 	network = list("SS13")
 	},
+/obj/machinery/computer/station_alert,
 /turf/open/floor/plasteel/caution{
 	dir = 1
 	},
@@ -37470,7 +37348,6 @@
 	icon_state = "map-right-MS";
 	pixel_y = 32
 	},
-/obj/machinery/computer/station_alert,
 /turf/open/floor/plasteel/caution{
 	dir = 1
 	},
@@ -38251,13 +38128,12 @@
 /turf/open/floor/plating,
 /area/engine/atmos)
 "bAB" = (
-/obj/item/clothing/mask/breath{
-	pixel_x = 4
-	},
-/obj/item/tank/internals/emergency_oxygen{
-	pixel_x = -8
-	},
 /obj/structure/table,
+/obj/item/paper_bin{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/pen,
 /turf/open/floor/plasteel/caution{
 	dir = 8
 	},
@@ -38298,12 +38174,8 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
 /obj/item/grenade/chem_grenade/smart_metal_foam,
 /obj/item/grenade/chem_grenade/smart_metal_foam,
 /turf/open/floor/plasteel/caution{
@@ -41895,12 +41767,8 @@
 /obj/item/stack/sheet/rglass{
 	amount = 50
 	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/rods{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/rods/fifty,
 /obj/item/storage/toolbox/emergency,
 /obj/item/device/flashlight,
 /obj/machinery/power/apc/highcap/five_k{
@@ -42095,18 +41963,10 @@
 /area/engine/atmos)
 "bIN" = (
 /obj/structure/table,
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/stack/rods{
-	amount = 50
-	},
-/obj/item/stack/rods{
-	amount = 50
-	},
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/rods/fifty,
+/obj/item/stack/rods/fifty,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
@@ -42521,9 +42381,7 @@
 /obj/item/stack/sheet/rglass{
 	amount = 50
 	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
 /obj/item/storage/toolbox/emergency,
 /obj/item/device/flashlight,
 /obj/structure/window/reinforced,
@@ -43152,20 +43010,14 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bLf" = (
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/effect/spawner/lootdrop/costume,
 /obj/effect/spawner/lootdrop/costume,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bLg" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/effect/spawner/lootdrop/costume,
 /obj/effect/spawner/lootdrop/costume,
 /turf/open/floor/plating,
@@ -43203,12 +43055,8 @@
 /obj/item/stack/sheet/rglass{
 	amount = 50
 	},
-/obj/item/stack/rods{
-	amount = 50
-	},
-/obj/item/stack/rods{
-	amount = 50
-	},
+/obj/item/stack/rods/fifty,
+/obj/item/stack/rods/fifty,
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical{
 	pixel_x = -2;
@@ -43267,10 +43115,7 @@
 	dir = 1;
 	pixel_y = 1
 	},
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/item/clothing/shoes/magboots{
 	pixel_x = -4;
 	pixel_y = 3
@@ -43652,10 +43497,7 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bMf" = (
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/suit/hazardvest,
@@ -44695,12 +44537,8 @@
 	},
 /area/hallway/primary/central)
 "bOo" = (
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
 /obj/structure/table,
 /obj/item/stack/sheet/plasteel{
 	amount = 10
@@ -44709,12 +44547,8 @@
 	dir = 4;
 	pixel_x = -22
 	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/glass/fifty,
 /obj/item/crowbar,
 /obj/item/wrench,
 /obj/item/storage/toolbox/electrical{
@@ -44758,10 +44592,7 @@
 	req_access_txt = "19"
 	},
 /obj/structure/window/reinforced,
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/item/tank/jetpack/carbondioxide{
 	pixel_x = 4;
 	pixel_y = -1
@@ -44881,10 +44712,7 @@
 /turf/open/floor/wood,
 /area/bridge/showroom/corporate)
 "bOG" = (
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/item/stack/medical/ointment,
 /obj/item/stack/medical/bruise_pack,
 /obj/item/reagent_containers/syringe/charcoal,
@@ -45333,10 +45161,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bPJ" = (
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/item/clothing/mask/horsehead,
 /turf/open/floor/plating,
 /area/maintenance/port)
@@ -45582,10 +45407,7 @@
 /turf/open/floor/wood,
 /area/bridge/showroom/corporate)
 "bQp" = (
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/head/hardhat/orange{
@@ -46255,10 +46077,7 @@
 /obj/item/device/radio/off,
 /obj/item/device/radio/off,
 /obj/item/device/radio/off,
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/machinery/button/door{
 	id = "gateshutter";
 	name = "Gateway Shutter Control";
@@ -55891,14 +55710,11 @@
 	},
 /area/hallway/primary/aft)
 "clz" = (
-/obj/item/stack/sheet/glass{
-	amount = 50;
+/obj/item/stack/sheet/glass/fifty{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
 /obj/item/clothing/glasses/welding,
 /obj/structure/table,
 /obj/effect/turf_decal/stripes/line{
@@ -63026,15 +62842,9 @@
 	},
 /area/science/mixing)
 "czG" = (
-/obj/item/stack/rods{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
+/obj/item/stack/rods/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/metal/fifty,
 /obj/item/target,
 /obj/item/target/syndicate,
 /obj/item/target/alien,
@@ -67681,10 +67491,7 @@
 /area/maintenance/aft)
 "cIC" = (
 /obj/item/clothing/gloves/color/latex/nitrile,
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/item/clothing/suit/toggle/labcoat,
 /obj/item/clothing/suit/apron/surgical,
 /obj/item/clothing/mask/surgical,
@@ -68073,10 +67880,7 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cJt" = (
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/item/screwdriver{
 	pixel_y = 6
 	},
@@ -69977,10 +69781,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cNg" = (
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/item/device/flashlight,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/light/small,
@@ -70012,9 +69813,7 @@
 /obj/item/reagent_containers/food/snacks/grown/citrus/orange,
 /obj/item/reagent_containers/food/snacks/grown/grapes,
 /obj/item/reagent_containers/food/snacks/grown/cocoapod,
-/obj/structure/rack{
-	layer = 2.8
-	},
+/obj/structure/rack,
 /obj/item/seeds/wheat,
 /obj/item/seeds/watermelon,
 /obj/item/seeds/watermelon,
@@ -70029,9 +69828,7 @@
 /obj/item/device/plant_analyzer,
 /obj/item/cultivator,
 /obj/item/reagent_containers/glass/bucket,
-/obj/structure/rack{
-	layer = 2.8
-	},
+/obj/structure/rack,
 /obj/item/seeds/corn,
 /obj/item/seeds/cabbage,
 /obj/item/seeds/ambrosia,
@@ -71547,24 +71344,12 @@
 	pixel_x = 3;
 	pixel_y = -4
 	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
 	},
@@ -73433,9 +73218,7 @@
 /area/shuttle/abandoned)
 "cVU" = (
 /obj/structure/table,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
 /obj/item/stock_parts/cell/high{
 	charge = 100;
 	maxcharge = 15000;
@@ -73812,14 +73595,11 @@
 /area/shuttle/abandoned)
 "cWy" = (
 /obj/structure/table,
-/obj/item/stack/sheet/glass{
-	amount = 50;
+/obj/item/stack/sheet/glass/fifty{
 	pixel_x = -2;
 	pixel_y = 2
 	},
-/obj/item/stack/rods{
-	amount = 50
-	},
+/obj/item/stack/rods/fifty,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -73828,11 +73608,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cWz" = (
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9;
-	pixel_y = 2
-	},
+/obj/structure/rack,
 /obj/item/storage/toolbox/electrical{
 	pixel_x = 1;
 	pixel_y = 6
@@ -75757,9 +75533,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "dav" = (
-/obj/structure/rack{
-	dir = 1
-	},
+/obj/structure/rack,
 /obj/item/tank/internals/oxygen/red,
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/clothing/mask/gas,
@@ -78484,14 +78258,9 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/item/stack/sheet/cardboard,
-/obj/item/stack/rods{
-	amount = 50
-	},
+/obj/item/stack/rods/fifty,
 /obj/item/paper,
 /obj/item/storage/box/lights/mixed,
 /obj/structure/sign/poster/official/random{
@@ -80881,9 +80650,7 @@
 	},
 /area/construction/mining/aux_base)
 "dDK" = (
-/obj/structure/rack{
-	dir = 4
-	},
+/obj/structure/rack,
 /obj/item/electronics/airlock,
 /obj/item/electronics/airlock,
 /obj/item/electronics/airlock,
@@ -81053,6 +80820,34 @@
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
+"EDo" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
+/area/engine/atmos)
+"EDp" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
+/area/engine/atmos)
+"EDq" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
+/area/engine/atmos)
+"EDr" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
+/area/engine/atmos)
+"EDs" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
+/area/engine/atmos)
+"EDt" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
+/area/engine/atmos)
+"EDu" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
+/area/engine/atmos)
 
 (1,1,1) = {"
 aaa
@@ -97162,7 +96957,7 @@ cBR
 cBR
 cBR
 cBR
-dBR
+cDE
 cBR
 cBR
 cBR
@@ -109159,7 +108954,7 @@ atS
 auW
 awi
 axj
-dBD
+aiq
 azJ
 aBd
 aCo
@@ -109930,7 +109725,7 @@ ahB
 ave
 awl
 axm
-dBD
+aiq
 azL
 aBf
 ajm
@@ -122580,7 +122375,7 @@ cbe
 ccO
 bza
 aaf
-bza
+EDs
 chO
 cjd
 ckG
@@ -123608,7 +123403,7 @@ cbi
 ccS
 bza
 aaf
-bza
+EDt
 chR
 cjg
 ckH
@@ -124636,7 +124431,7 @@ cVJ
 ccQ
 bza
 aaf
-bza
+EDu
 chU
 cjj
 ckJ
@@ -126158,19 +125953,19 @@ aaa
 aaf
 bAR
 dBC
-bza
+EDo
 bFZ
 bAR
 bCA
-bza
+EDp
 bFZ
 bAR
 bCA
-bza
+EDq
 bFZ
 bAR
 bCA
-bza
+EDr
 bFZ
 bAR
 aaf
