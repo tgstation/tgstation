@@ -1,4 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - admin: "Admins can now create sound emitters (/obj/effect/sound_emitter) that can be customized to play sounds to different people, at different volumes, and at different locations such as by z-level. They're much more versatile for events than the Play Sound commands!"

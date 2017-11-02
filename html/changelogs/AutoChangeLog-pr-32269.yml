@@ -1,4 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - bugfix: "Fixes the cargo shuttle occasionally breaking if a mob got on at exactly the right time."
