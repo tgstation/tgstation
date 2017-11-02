@@ -207,7 +207,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 //DEFINITIONS FOR ASSET DATUMS START HERE.
 
 /datum/asset/simple/tgui
-	assets = list(
+	assets = list()/*
 		"tgui.css"	= 'tgui/assets/tgui.css',
 		"tgui.js"	= 'tgui/assets/tgui.js',
 		"font-awesome.min.css" = 'tgui/assets/font-awesome.min.css',
@@ -216,7 +216,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"fontawesome-webfont.woff" = 'tgui/assets/fonts/fontawesome-webfont.woff',
 		"fontawesome-webfont.ttf" = 'tgui/assets/fonts/fontawesome-webfont.ttf',
 		"fontawesome-webfont.svg" = 'tgui/assets/fonts/fontawesome-webfont.svg'
-	)
+	)*/
 
 /datum/asset/simple/headers
 	assets = list(
