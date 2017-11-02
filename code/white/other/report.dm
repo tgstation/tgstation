@@ -11,12 +11,13 @@
 
 /client/verb/readsuggest()
 	set category = "Debug"
-	set name = "Read Bugs, Suggestions"
+	set name = ".readbuggs"
+	set hidden = 1
 	var/datum/DBQuery/query_suggestions_select = SSdbcore.NewQuery("SELECT id, ckey, sugg FROM suggestion")
 	query_suggestions_select.Execute()
 	var/dat
 	if(!check_rights())
-		usr << "Fuck you, leatherman."
+		to_chat(usr,"Fuck you, leatherman.")
 		return
 	dat += {"
 		<!DOCTYPE html>
@@ -34,7 +35,7 @@
 
 proc/suggestDBDelete(var/id)
 	if(!usr.ckey == "joctopus")
-		usr << "Fuck you, leatherman."
+		to_chat(usr,"Fuck you, leatherman.")
 		return
 	var/datum/DBQuery/query_suggestions_delete = SSdbcore.NewQuery("DELETE FROM suggestion WHERE id = [text2num(id)]")
 	query_suggestions_delete.Execute()
