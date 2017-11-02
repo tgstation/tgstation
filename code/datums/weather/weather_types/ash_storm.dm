@@ -80,6 +80,8 @@
 			return TRUE
 	if(istype(L.loc, /mob/living) && L.loc != L) //Matryoshka check
 		return is_ash_immune(L.loc)
+	if(!isturf(L.loc))
+		return FALSE
 	return FALSE //RIP you
 
 /datum/weather/ash_storm/weather_act(mob/living/L)
