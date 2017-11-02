@@ -5,10 +5,19 @@
 	icon_state = "spirit_board"
 	density = TRUE
 	anchored = FALSE
+	hud_possible = list(GHOST_HUD)
 	var/virgin = 1
 	var/next_use = 0
 	var/planchette = "A"
 	var/lastuser = null
+
+/obj/structure/spirit_board/Initialize()
+	. = ..()
+	prepare_huds()
+	var/datum/atom_hud/ghost/interactable/ghost_hud = GLOB.huds[GHOST_HUD_INTERACTABLE]
+	ghost_hud.add_to_hud(src)
+	var/image/holder = hud_list[GHOST_HUD]
+	holder.icon_state = "possessable"
 
 /obj/structure/spirit_board/examine()
 	desc = "[initial(desc)] The planchette is sitting at \"[planchette]\"."

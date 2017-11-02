@@ -71,8 +71,8 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	ghostimage_simple.override = TRUE
 	GLOB.ghost_images_simple |= ghostimage_simple
 
-	var/datum/atom_hud/ghost/possessable/possessable_hud = GLOB.huds[GHOST_HUD_POSSESSABLE]
-	possessable_hud.add_hud_to(src)
+	var/datum/atom_hud/ghost/interactable/interactable_hud = GLOB.huds[GHOST_HUD_INTERACTABLE]
+	interactable_hud.add_hud_to(src)
 
 	updateallghostimages()
 

@@ -55,6 +55,11 @@
 	. = ..()
 	lay_web = new
 	lay_web.Grant(src)
+	var/image/holder = hud_list[GHOST_HUD]
+	holder.icon_state = "possessable"
+	if(playable_spider)
+		var/datum/atom_hud/ghost/interactable/ghost_hud = GLOB.huds[GHOST_HUD_INTERACTABLE]
+		ghost_hud.add_to_hud(src)
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Destroy()
 	QDEL_NULL(lay_web)
@@ -74,6 +79,9 @@
 
 /mob/living/simple_animal/hostile/poison/giant_spider/attack_ghost(mob/user)
 	if(!humanize_spider(user))
+		if(!playable_spider)
+			var/datum/atom_hud/ghost/interactable/ghost_hud = GLOB.huds[GHOST_HUD_INTERACTABLE]
+			ghost_hud.remove_from_hud(src)
 		return ..()
 
 /mob/living/simple_animal/hostile/poison/giant_spider/proc/humanize_spider(mob/user)
@@ -86,6 +94,8 @@
 		to_chat(user, "<span class='notice'>Someone else already took this spider.</span>")
 		return 1
 	key = user.key
+	var/datum/atom_hud/ghost/interactable/ghost_hud = GLOB.huds[GHOST_HUD_INTERACTABLE]
+	ghost_hud.remove_from_hud(src)
 	return 1
 
 //nursemaids - these create webs and eggs

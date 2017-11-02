@@ -1,2 +1,2 @@
-/datum/atom_hud/ghost/possessable
-	hud_icons = list(POSSESSABLE_HUD)
+/datum/atom_hud/ghost/interactable
+	hud_icons = list(GHOST_HUD)

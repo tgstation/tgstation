@@ -18,7 +18,7 @@
 #define DIAG_AIRLOCK_HUD "14"//Airlock shock overlay
 //for antag huds. these are used at the /mob level
 #define ANTAG_HUD		"15"
-#define POSSESSABLE_HUD		"16" //ghost possessable notification
+#define GHOST_HUD		"16" //ghost possessable notification
 
 //data HUD (medhud, sechud) defines
 //Don't forget to update human/New() if you change these!
@@ -42,8 +42,8 @@
 #define ANTAG_HUD_SOULLESS		17
 #define ANTAG_HUD_CLOCKWORK		18
 #define ANTAG_HUD_BROTHER		19
-// Ghost possessable visibility
-#define GHOST_HUD_POSSESSABLE	20
+// Ghost interactable visibility
+#define GHOST_HUD_INTERACTABLE	20
 
 // Notification action types
 #define NOTIFY_JUMP "jump"
