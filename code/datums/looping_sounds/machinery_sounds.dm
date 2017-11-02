@@ -25,14 +25,22 @@
 
 /datum/looping_sound/server
 	mid_sounds = list('sound/machines/tcomms/server_mid1.ogg'=1,'sound/machines/tcomms/server_mid2.ogg'=1,'sound/machines/tcomms/server_mid3.ogg'=1,)
-	mid_length = 5
+	mid_length = 47
+	range_modifier = -4.5
 	volume = 50
 
 /datum/looping_sound/computer
 	start_sound = 'sound/machines/computer/computer_start.ogg'
-	start_length = 40
+	start_length = 72
 	mid_sounds = list('sound/machines/computer/computer_mid1.ogg'=1, 'sound/machines/computer/computer_mid2.ogg'=1)
-	mid_length = 10
+	mid_length = 6.1
 	end_sound = 'sound/machines/computer/computer_end.ogg'
-	volume = 15
+	volume = 10
+	range_modifier = -5.5
+
+/datum/looping_sound/borg
+	mid_sounds = list('sound/machines/borg/borg_mid1.ogg'=1, 'sound/machines/borg/borg_mid2.ogg'=1, 'sound/machines/borg/borg_mid3.ogg'=1)
+	mid_length = 19.5
+	end_sound = 'sound/machines/computer/computer_end.ogg'
+	volume = 80
 	range_modifier = -5.5
