@@ -147,7 +147,7 @@ Buildable meters
 /obj/item/pipe/attack_self(mob/user)
 	return rotate()
 
-/proc/get_pipe_cache(type, direction)
+/obj/item/pipe/proc/get_pipe_cache(type, direction)
 	var/list/obj/machinery/atmospherics/check_cache = SSair.pipe_construction_generation_cache
 	if(!islist(check_cache))
 		check_cache = list()
