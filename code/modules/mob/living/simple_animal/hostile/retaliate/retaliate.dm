@@ -1,5 +1,6 @@
 /mob/living/simple_animal/hostile/retaliate
 	var/list/enemies = list()
+	var/docile = FALSE
 
 /mob/living/simple_animal/hostile/retaliate/Found(atom/A)
 	if(isliving(A))
@@ -22,7 +23,8 @@
 
 /mob/living/simple_animal/hostile/retaliate/proc/Retaliate()
 	var/list/around = view(src, vision_range)
-
+	if(docile)
+		return
 	for(var/atom/movable/A in around)
 		if(A == src)
 			continue
@@ -43,5 +45,5 @@
 
 /mob/living/simple_animal/hostile/retaliate/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
-	if(. > 0 && stat == CONSCIOUS)
+	if(. > 0 && stat == CONSCIOUS && !docile)
 		Retaliate()
