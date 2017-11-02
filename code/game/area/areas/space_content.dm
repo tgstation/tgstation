@@ -2,6 +2,7 @@
 
 /area/spacecontent
 	name = "space"
+	ambience_type = "away_mission"
 
 /area/spacecontent/a1
 	icon_state = "spacecontent1"

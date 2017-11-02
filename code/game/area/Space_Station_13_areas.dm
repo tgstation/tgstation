@@ -41,7 +41,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	power_environ = FALSE
 	valid_territory = FALSE
 	outdoors = TRUE
-	ambientsounds = list('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg')
+	ambience_type = "space"
 	blob_allowed = FALSE //Eating up space doesn't count for victory as a blob.
 
 /area/space/nearstation
@@ -65,6 +65,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	has_gravity = TRUE
 	blob_allowed = FALSE //Nope, no winning on the asteroid as a blob. Gotta eat the station.
 	valid_territory = FALSE
+	ambience_type = "mining"
 
 /area/asteroid/cave
 	name = "Asteroid - Underground"
@@ -75,6 +76,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/asteroid/artifactroom
 	name = "Asteroid - Artifact"
 	icon_state = "cave"
+	ambience_type = "ruins"
 
 /area/asteroid/artifactroom/Initialize()
 	. = ..()
@@ -96,14 +98,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 //Maintenance
 
 /area/maintenance
-	ambientsounds = list('sound/ambience/ambimaint1.ogg',
-						 'sound/ambience/ambimaint2.ogg',
-						 'sound/ambience/ambimaint3.ogg',
-						 'sound/ambience/ambimaint4.ogg',
-						 'sound/ambience/ambimaint5.ogg',
-						 'sound/voice/lowHiss2.ogg', //Xeno Breathing Hisses, Hahahaha I'm not even sorry.
-						 'sound/voice/lowHiss3.ogg',
-						 'sound/voice/lowHiss4.ogg')
+	ambience_type = "maintenance"
 	valid_territory = FALSE
 
 
@@ -647,7 +642,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/chapel
 	icon_state = "chapel"
-	ambientsounds = list('sound/ambience/ambicha1.ogg','sound/ambience/ambicha2.ogg','sound/ambience/ambicha3.ogg','sound/ambience/ambicha4.ogg')
+	ambience_type = "holy"
 	flags_1 = NONE
 	clockwork_warp_allowed = FALSE
 	clockwork_warp_fail = "The consecration here prevents you from warping in."
@@ -678,7 +673,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 //Engineering
 
 /area/engine
-	ambientsounds = list('sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg','sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg')
+	ambience_type = "engineering"
 
 /area/engine/engine_smes
 	name = "Engineering SMES"
@@ -732,6 +727,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	valid_territory = FALSE
 	blob_allowed = FALSE
 	flags_1 = NONE
+	ambience_type = "engineering"
 
 /area/solar/asteroid/aft
 	name = "Aft Asteroid Solar"
@@ -858,6 +854,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Teleporter Room"
 	icon_state = "teleporter"
 	music = "signal"
+	ambience_type = "engineering"
 
 /area/teleporter/quantum/cargo
 	name = "Cargo Quantum Pad"
@@ -883,12 +880,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Gateway"
 	icon_state = "teleporter"
 	music = "signal"
+	ambience_type = "engineering"
 
 //MedBay
 
 /area/medical
 	name = "Medical"
 	icon_state = "medbay3"
+	ambience_type = "medical"
 
 /area/medical/abandoned
 	name = "Abandoned Medbay"
@@ -952,7 +951,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/medical/morgue
 	name = "Morgue"
 	icon_state = "morgue"
-	ambientsounds = list('sound/ambience/ambimo1.ogg','sound/ambience/ambimo2.ogg')
+	ambience_type = "spooky"
 
 /area/medical/chemistry
 	name = "Chemistry"
@@ -988,6 +987,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security
 	name = "Security"
 	icon_state = "security"
+	ambience_type = "high-sec"
 
 /area/security/main
 	name = "Security Office"
@@ -1029,7 +1029,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security/detectives_office/private_investigators_office
 	name = "Private Investigator's Office"
 	icon_state = "detective"
-	ambientsounds = list('sound/ambience/ambidet1.ogg','sound/ambience/ambidet2.ogg')
 
 /area/security/range
 	name = "Firing Range"
@@ -1310,6 +1309,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/construction
 	name = "Construction Area"
 	icon_state = "yellow"
+	ambience_type = "engineering"
 
 /area/construction/minisat_exterior
 	name = "Minisat Exterior"
@@ -1361,27 +1361,32 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/ai_monitored/security/armory
 	name = "Armory"
 	icon_state = "armory"
+	ambience_type = "high-sec"
 
 /area/ai_monitored/storage/eva
 	name = "EVA Storage"
 	icon_state = "eva"
+	ambience_type = "high-sec"
 
 /area/ai_monitored/storage/secure
 	name = "AI Satellite Storage"
 	icon_state = "storage"
+	ambience_type = "high-sec"
 
 /area/ai_monitored/storage/emergency
 	name = "Emergency Storage"
 	icon_state = "storage"
+	ambience_type = "high-sec"
 
 /area/ai_monitored/storage/satellite
 	name = "AI Satellite Maint"
 	icon_state = "storage"
+	ambience_type = "high-sec"
 
 	//Turret_protected
 
 /area/ai_monitored/turret_protected
-	ambientsounds = list('sound/ambience/ambimalf.ogg')
+	ambientsounds = list('sound/ambience/ambimalf.ogg', 'sound/ambience/ambitech.ogg', 'sound/ambience/ambitech2.ogg', 'sound/ambience/ambiatmos.ogg', 'sound/ambience/ambiatmos2.ogg')
 
 /area/ai_monitored/turret_protected/ai_upload
 	name = "AI Upload Chamber"
@@ -1450,7 +1455,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/tcommsat
 	clockwork_warp_allowed = FALSE
 	clockwork_warp_fail = "For safety reasons, warping here is disallowed; the radio and bluespace noise could cause catastrophic results."
-	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
+	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg', 'sound/ambience/ambitech.ogg',\
+	 										'sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg', 'sound/ambience/ambimystery.ogg')
 
 /area/tcommsat/entrance
 	name = "Telecomms Teleporter"
@@ -1463,22 +1469,18 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/ai_monitored/turret_protected/tcomsat
 	name = "Telecomms Satellite"
 	icon_state = "tcomsatlob"
-	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
 
 /area/ai_monitored/turret_protected/tcomfoyer
 	name = "Telecomms Foyer"
 	icon_state = "tcomsatentrance"
-	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
 
 /area/ai_monitored/turret_protected/tcomwest
 	name = "Telecommunications Satellite West Wing"
 	icon_state = "tcomsatwest"
-	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
 
 /area/ai_monitored/turret_protected/tcomeast
 	name = "Telecommunications Satellite East Wing"
 	icon_state = "tcomsateast"
-	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
 
 /area/tcommsat/computer
 	name = "Telecomms Control Room"
