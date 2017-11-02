@@ -150,12 +150,12 @@ Frequency:
 	. = ..()
 	active_portal_pairs = list()
 
-/obj/item/hand_tele/afterattack(atom/target, mob/user, proximity, params)
+/obj/item/hand_tele/pre_attackby(atom/target, mob/user, params)
 	if(is_parent_of_portal(target))
 		qdel(target)
-		to_chat(user, "<span class='notice'>You dispel [target] remotely with \the [src]!</span>")
+		to_chat(user, "<span class='notice'>You dispel [target] with \the [src]!</span>")
+		return FALSE
 	return ..()
-
 
 /obj/item/hand_tele/attack_self(mob/user)
 	var/turf/current_location = get_turf(user)//What turf is the user on?

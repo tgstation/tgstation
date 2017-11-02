@@ -2165,9 +2165,7 @@
 /area/awaymission/centcomAway/hangar)
 "hP" = (
 /obj/structure/table,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/hangar)
 "hQ" = (
@@ -2615,12 +2613,8 @@
 /area/awaymission/centcomAway/hangar)
 "jt" = (
 /obj/structure/table,
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/metal/fifty,
 /turf/open/floor/plasteel/vault,
 /area/awaymission/centcomAway/hangar)
 "ju" = (

@@ -6351,12 +6351,8 @@
 /area/centcom/ferry)
 "rs" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
 /obj/item/stack/sheet/plasteel{
 	amount = 15
 	},
@@ -6365,9 +6361,7 @@
 	pixel_x = 2;
 	pixel_y = -2
 	},
-/obj/item/stack/rods{
-	amount = 50
-	},
+/obj/item/stack/rods/fifty,
 /obj/item/stack/cable_coil/white,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line,
@@ -6442,12 +6436,8 @@
 	pixel_x = 26
 	},
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
 /obj/item/stack/sheet/plasteel{
 	amount = 15
 	},
@@ -6456,9 +6446,7 @@
 	pixel_x = 2;
 	pixel_y = -2
 	},
-/obj/item/stack/rods{
-	amount = 50
-	},
+/obj/item/stack/rods/fifty,
 /obj/item/stack/cable_coil/white,
 /obj/item/screwdriver/power,
 /obj/effect/decal/cleanable/dirt,
