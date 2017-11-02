@@ -3,6 +3,8 @@
 	var/docile = FALSE
 
 /mob/living/simple_animal/hostile/retaliate/Found(atom/A)
+	if(docile)
+		return
 	if(isliving(A))
 		var/mob/living/L = A
 		if(!L.stat)
