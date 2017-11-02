@@ -64,6 +64,9 @@
 	desc = "A die with four sides. The nerd's caltrop."
 	icon_state = "d4"
 	sides = 4
+	force = 3
+	embed_chance = 40
+	throwforce = 3
 
 /obj/item/dice/d6
 	name = "d6"
