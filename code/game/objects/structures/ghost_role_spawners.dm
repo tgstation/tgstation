@@ -123,10 +123,10 @@
 	golems, so that no golem may ever be forced to serve again.</b>"
 
 /obj/effect/mob_spawn/human/golem/Initialize(mapload, datum/species/golem/species = null, mob/creator = null)
-	. = ..()
-	if(species)
+	if(species) //spawners list uses object name to register so this goes before ..()
 		name += " ([initial(species.prefix)])"
 		mob_species = species
+	. = ..()
 	var/area/A = get_area(src)
 	if(!mapload && A)
 		notify_ghosts("\A [initial(species.prefix)] golem shell has been completed in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
