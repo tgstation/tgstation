@@ -133,7 +133,6 @@
 	extended_desc = "This unit is more advanced than the plain speaker circuit, able to transpose any valid text to speech."
 	icon_state = "speaker"
 	complexity = 12
-	cooldown_per_use = 4 SECONDS
 	inputs = list("text" = IC_PINTYPE_STRING)
 	outputs = list()
 	activators = list("to speech" = IC_PINTYPE_PULSE_IN)
@@ -221,7 +220,7 @@
 		)
 	spawn_flags = IC_SPAWN_RESEARCH
 	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_BIO = 1)
-/*
+
 /obj/item/integrated_circuit/output/video_camera
 	name = "video camera circuit"
 	desc = "This small camera allows a remote viewer to see what it sees."
@@ -252,9 +251,9 @@
 /obj/item/integrated_circuit/output/video_camera/proc/set_camera_status(var/status)
 	if(camera)
 		if(camera.can_use())
-			GLOB.cameranet.addCamera(src)
+			GLOB.cameranet.addCamera(camera)
 		else
-			GLOB.cameranet.removeCamera(src)
+			GLOB.cameranet.removeCamera(camera)
 		GLOB.cameranet.updateChunk(x, y, z)
 		power_draw_idle = camera.status ? 20 : 0
 		if(camera.status) // Ensure that there's actually power.
@@ -273,7 +272,7 @@
 	if(camera)
 		set_camera_status(0)
 		set_pin_data(IC_INPUT, 2, FALSE)
-*/
+
 /obj/item/integrated_circuit/output/led
 	name = "light-emitting diode"
 	desc = "This a LED that is lit whenever there is TRUE-equivalent data on its input."
@@ -293,7 +292,7 @@
 /obj/item/integrated_circuit/output/led/power_fail()
 	set_pin_data(IC_INPUT, 1, FALSE)
 
-/obj/item/integrated_circuit/output/led/any_examine(mob/user)
+/obj/item/integrated_circuit/output/led/external_examine(mob/user)
 	var/text_output = list()
 	var/initial_name = initial(name)
 
@@ -303,7 +302,7 @@
 		text_output += "\an [name]"
 	else
 		text_output += "\an ["\improper[initial_name]"] labeled '[name]'"
-	text_output += " which is currently [get_pin_data(IC_INPUT, 1) ? "lit <font color=[led_color]>¤</font>" : "unlit."]"
+	text_output += " which is currently [(get_pin_data(IC_INPUT, 1)==1) ? "lit <font color=[led_color]>¤</font>" : "unlit."]"
 	to_chat(user,jointext(text_output,null))
 
 /obj/item/integrated_circuit/output/led/red

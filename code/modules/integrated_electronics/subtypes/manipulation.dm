@@ -288,8 +288,12 @@
 			var/obj/item/U
 			for(U in contents)
 				U.loc = T
-	set_pin_data(IC_OUTPUT, 1, weakref(contents[1]))
-	set_pin_data(IC_OUTPUT, 2, weakref(contents[contents.len]))
+	if(contents.len>0)
+		set_pin_data(IC_OUTPUT, 1, weakref(contents[1]))
+		set_pin_data(IC_OUTPUT, 2, weakref(contents[contents.len]))
+	else
+		set_pin_data(IC_OUTPUT, 1, null)
+		set_pin_data(IC_OUTPUT, 2, null)
 	set_pin_data(IC_OUTPUT, 3, src.contents.len)
 	push_data()
 	activate_pin(2)

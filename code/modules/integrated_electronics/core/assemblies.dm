@@ -7,6 +7,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/electronic_assemblies.dmi'
 	icon_state = "setup_small"
+	flags_1 = NOBLUDGEON_1
 	var/max_components = IC_COMPONENTS_BASE
 	var/max_complexity = IC_COMPLEXITY_BASE
 	var/opened = 0
@@ -265,7 +266,7 @@
 		to_chat(user, "<span class='warning'>You can't seem to add the '[IC.name]', since this setup's too complicated for the case.</span>")
 		return FALSE
 
-	if(!IC.forceMove(src))
+	if(!user.transferItemToLoc(IC, src))
 		return FALSE
 
 	IC.assembly = src
@@ -276,8 +277,8 @@
 	if(proximity)
 		var/scanned = FALSE
 		for(var/obj/item/integrated_circuit/input/sensor/S in contents)
-//			S.set_pin_data(IC_OUTPUT, 1, weakref(target))
-//			S.check_then_do_work()
+			S.set_pin_data(IC_OUTPUT, 1, weakref(target))
+			S.check_then_do_work()
 			if(S.scan(target))
 				scanned = TRUE
 		if(scanned)
@@ -285,7 +286,7 @@
 
 /obj/item/device/electronic_assembly/attackby(var/obj/item/I, var/mob/user)
 	if(istype(I, /obj/item/integrated_circuit))
-		if(!user.transferItemToLoc(I, src))
+		if(!user.canUnEquip(I))
 			return FALSE
 		if(add_circuit(I, user))
 			to_chat(user, "<span class='notice'>You slide \the [I] inside \the [src].</span>")

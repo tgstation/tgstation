@@ -87,7 +87,7 @@
 
 /obj/item/integrated_circuit/time/ticker/Destroy()
 	if(is_running)
-		GLOB.machines -= src
+		STOP_PROCESSING(SSobj, src)
 	. = ..()
 
 /obj/item/integrated_circuit/time/ticker/on_data_written()
@@ -95,10 +95,10 @@
 	if(do_tick && !is_running)
 		is_running = TRUE
 		just_started = TRUE
-		GLOB.machines |= src
+		START_PROCESSING(SSobj, src)
 	else if(is_running)
 		is_running = FALSE
-		GLOB.machines -= src
+		START_PROCESSING(SSobj, src)
 
 /obj/item/integrated_circuit/time/ticker/process()
 	var/wtime = world.time
