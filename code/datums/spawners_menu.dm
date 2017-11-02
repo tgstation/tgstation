@@ -38,10 +38,7 @@
 	if(..())
 		return
 
-	var/list/L = GLOB.mob_spawners[[params["name"]]
-	if(!L || !L.len)
-		return
-	var/spawner_ref = pick(L)
+	var/spawner_ref = pick(GLOB.mob_spawners[[params["name"]])
 	var/obj/effect/mob_spawn/MS = locate(spawner_ref) in GLOB.poi_list
 	if(!MS)
 		return
