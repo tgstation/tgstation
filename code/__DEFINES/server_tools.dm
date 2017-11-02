@@ -1,4 +1,4 @@
-// /tg/station 13 server tools API v3.1.0.2
+// /tg/station 13 server tools API v3.2.0.0
 
 //CONFIGURATION
 //use this define if you want to do configuration outside of this file
@@ -73,7 +73,7 @@
 #define SERVICE_WORLD_PARAM "server_service"
 #define SERVICE_VERSION_PARAM "server_service_version"
 #define SERVICE_PR_TEST_JSON "prtestjob.json"
-#define SERVICE_INTERFACE_DLL "TGServiceInterface.dll"
+#define SERVICE_INTERFACE_DLL "TGDreamDaemonBridge.dll"
 #define SERVICE_INTERFACE_FUNCTION "DDEntryPoint"
 
 #define SERVICE_CMD_HARD_REBOOT "hard_reboot"
