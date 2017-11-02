@@ -19,6 +19,7 @@
 
 /obj/machinery/computer/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
+
 	soundloop = new(list(src))
 	power_change()
 	if(!QDELETED(C))
@@ -66,11 +67,13 @@
 /obj/machinery/computer/power_change()
 	..()
 	if(stat & NOPOWER)
-		soundloop.stop()
-		set_light(0)	
+		if(soundloop)
+			soundloop.stop()
+		set_light(0)
 	else
 		set_light(brightness_on)
-		soundloop.start()
+		if(soundloop)
+			soundloop.start()
 	update_icon()
 	return
 
