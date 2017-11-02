@@ -8,7 +8,7 @@ Unused icons for new areas are "awaycontent1" ~ "awaycontent30"
 	name = "Strange Location"
 	icon_state = "away"
 	has_gravity = TRUE
-	ambience_type = "away_mission"
+	ambience_type = AWAY_MISSION
 
 /area/awaymission/beach
 	name = "Beach"

@@ -17,3 +17,18 @@
 
 #define SOUND_MINIMUM_PRESSURE 10
 #define FALLOFF_SOUNDS 0.5
+
+
+//Ambience types
+
+#define GENERIC 1
+#define HOLY 2
+#define HIGH-SEC 3
+#define RUINS 4
+#define ENGINEERING 5
+#define MINING 6
+#define MEDICAL 7
+#define SPOOKY 8
+#define SPACE 9
+#define MAINTENACE 10
+#define AWAY_MISSION 11

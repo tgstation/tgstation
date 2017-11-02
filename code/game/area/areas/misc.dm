@@ -5,7 +5,7 @@
 	//icon = "ICON FILENAME"
 	//icon_state = "NAME OF ICON"
 	requires_power = FALSE
-	ambience_type = "spooky"
+	ambience_type = SPOOKY
 
 /area/hell/trial1
 	name = "Hell Trial1"
@@ -33,7 +33,7 @@
 /area/prison
 	name = "Prison Station"
 	icon_state = "brig"
-	ambience_type = "high-sec"
+	ambience_type = HIGH-SEC
 
 /area/prison/arrival_airlock
 	name = "Prison Station Airlock"
@@ -75,7 +75,7 @@
 /area/prison/morgue
 	name = "Prison Morgue"
 	icon_state = "morgue"
-	ambience_type = "spooky"
+	ambience_type = SPOOKY
 
 /area/prison/medical_research
 	name = "Prison Genetic Research"

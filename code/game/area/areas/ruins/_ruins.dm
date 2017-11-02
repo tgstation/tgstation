@@ -6,7 +6,7 @@
 	has_gravity = TRUE
 	hidden = TRUE
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
-	ambience_type = "ruins"
+	ambience_type = RUINS
 
 
 /area/ruin/unpowered

@@ -55,7 +55,7 @@
 	var/global/global_uid = 0
 	var/uid
 	var/list/ambientsounds = list()
-	var/ambience_type = "generic"
+	var/ambience_type = GENERIC
 	flags_1 = CAN_BE_DIRTY_1
 
 	var/list/firedoors
@@ -105,44 +105,44 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	map_name = name // Save the initial (the name set in the map) name of the area.
 	if(!ambientsounds)
 		switch(ambience_type)
-			if("generic") //Generic ambience
+			if(GENERIC) //Generic ambience
 				ambientsounds = list('sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg',\
 												'sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg',\
 												'sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg',\
 												'sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg',\
 												'sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg',\
 								 				'sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg','sound/ambience/ambigen15.ogg')
-			if("holy") //Places like the chapel, or tranquil places.
+			if(HOLY) //Places like the chapel, or tranquil places.
 				ambientsounds = list('sound/ambience/ambicha1.ogg','sound/ambience/ambicha2.ogg','sound/ambience/ambicha3.ogg',\
 														'sound/ambience/ambicha4.ogg', 'sound/ambience/ambiholy.ogg', 'sound/ambience/ambiholy2.ogg',\
 														'sound/ambience/ambiholy3.ogg')
-			if("high-sec") //Heavy security areas like security and syndicate locations
+			if(HIGH-SEC) //Heavy security areas like security and syndicate locations
 				ambientsounds = list('sound/ambience/ambidanger.ogg', 'sound/ambience/ambidanger2.ogg')
-			if("ruins")
+			if(RUINS)
 				ambientsounds = list('sound/ambience/ambimine.ogg', 'sound/ambience/ambicave.ogg', 'sound/ambience/ambiruin.ogg',\
 	 												'sound/ambience/ambiruin2.ogg',  'sound/ambience/ambiruin3.ogg',  'sound/ambience/ambiruin4.ogg',\
 													'sound/ambience/ambiruin5.ogg',  'sound/ambience/ambiruin6.ogg',  'sound/ambience/ambiruin7.ogg',\
 													'sound/ambience/ambidanger.ogg', 'sound/ambience/ambidanger2.ogg', 'sound/ambience/ambitech3.ogg',\
 													'sound/ambience/ambimystery.ogg', 'sound/ambience/ambimaint1.ogg')
-			if("engineering")
+			if(ENGINEERING)
 				ambientsounds = list('sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg','sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg', 'sound/ambience/ambieng1.ogg',\
 														'sound/ambience/ambiatmos.ogg', 'sound/ambience/ambiatmos2.ogg', 'sound/ambience/ambitech.ogg', 'sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg')
-			if("mining")
+			if(MINING)
 				ambientsounds = list('sound/ambience/ambimine.ogg', 'sound/ambience/ambicave.ogg', 'sound/ambience/ambiruin.ogg',\
 	 														'sound/ambience/ambiruin2.ogg',  'sound/ambience/ambiruin3.ogg',  'sound/ambience/ambiruin4.ogg',\
 															'sound/ambience/ambiruin5.ogg',  'sound/ambience/ambiruin6.ogg',  'sound/ambience/ambiruin7.ogg',\
 															'sound/ambience/ambidanger.ogg', 'sound/ambience/ambidanger2.ogg', 'sound/ambience/ambimaint1.ogg', 'sound/ambience/ambilava.ogg')
-			if("medical")
+			if(MEDICAL)
 				ambientsounds = list('sound/ambience/ambinice.ogg')
-			if("spooky")
+			if(SPOOKY)
 				ambientsounds = list('sound/ambience/ambimo1.ogg','sound/ambience/ambimo2.ogg','sound/ambience/ambiruin7.ogg','sound/ambience/ambiruin6.ogg',\
 														'sound/ambience/ambiodd.ogg', 'sound/ambience/ambimystery.ogg')
-			if("space")
+			if(SPACE)
 				ambientsounds = list('sound/ambience/ambispace.ogg', 'sound/ambience/ambispace2.ogg', 'sound/ambience/title2.ogg', 'sound/ambience/ambiatmos.ogg')
-			if("maintenance")
+			if(MAINTENANCE)
 				ambientsounds = list('sound/ambience/ambimaint1.ogg', 'sound/ambience/ambimaint2.ogg', 'sound/ambience/ambimaint3.ogg', 'sound/ambience/ambimaint4.ogg',\
 					 										'sound/ambience/ambimaint5.ogg', 'sound/voice/lowHiss2.ogg', 'sound/voice/lowHiss3.ogg', 'sound/voice/lowHiss4.ogg', 'sound/ambience/ambitech2.ogg' )
-			if("away_mission")
+			if(AWAY_MISSION)
 				ambientsounds = list('sound/ambience/ambitech.ogg', 'sound/ambience/ambitech2.ogg', 'sound/ambience/ambiruin.ogg',\
 	 												'sound/ambience/ambiruin2.ogg',  'sound/ambience/ambiruin3.ogg',  'sound/ambience/ambiruin4.ogg',\
 													'sound/ambience/ambiruin5.ogg',  'sound/ambience/ambiruin6.ogg',  'sound/ambience/ambiruin7.ogg',\
