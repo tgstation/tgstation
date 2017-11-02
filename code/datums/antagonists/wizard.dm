@@ -157,8 +157,7 @@
 
 /datum/antagonist/wizard/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
-	if(wiz_team) //Don't bother with the icon if you're solo wizard
-		update_wiz_icons_added(M)
+	update_wiz_icons_added(M, wiz_team ? TRUE : FALSE) //Don't bother showing the icon if you're solo wizard
 	M.faction |= "wizard"
 
 /datum/antagonist/wizard/remove_innate_effects(mob/living/mob_override)
@@ -250,7 +249,7 @@
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/turf_teleport/blink(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(null))
 
-/datum/antagonist/wizard/proc/update_wiz_icons_added(mob/living/wiz)
+/datum/antagonist/wizard/proc/update_wiz_icons_added(mob/living/wiz,join = TRUE)
 	var/datum/atom_hud/antag/wizhud = GLOB.huds[ANTAG_HUD_WIZ]
 	wizhud.join_hud(wiz)
 	set_antag_hud(wiz, hud_version)

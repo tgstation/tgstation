@@ -299,55 +299,35 @@
 /area/ruin/space/has_grav/deepstorage/storage)
 "aK" = (
 /obj/structure/closet/cardboard,
-/obj/item/stack/sheet/metal{
-	amount = 50;
+/obj/item/stack/sheet/metal/fifty{
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/item/stack/sheet/metal{
-	amount = 50;
+/obj/item/stack/sheet/metal/fifty{
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/item/stack/sheet/metal{
-	amount = 50;
+/obj/item/stack/sheet/metal/fifty{
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/item/stack/sheet/metal{
-	amount = 50;
+/obj/item/stack/sheet/metal/fifty{
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/item/stack/rods{
-	amount = 50
-	},
-/obj/item/stack/rods{
-	amount = 50
-	},
-/obj/item/stack/rods{
-	amount = 50
-	},
-/obj/item/stack/rods{
-	amount = 50
-	},
+/obj/item/stack/rods/fifty,
+/obj/item/stack/rods/fifty,
+/obj/item/stack/rods/fifty,
+/obj/item/stack/rods/fifty,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/storage)
 "aL" = (
 /obj/structure/closet/cardboard,
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/plasteel{
 	amount = 10
 	},
@@ -1791,14 +1771,11 @@
 /area/ruin/space/has_grav/deepstorage/armory)
 "dv" = (
 /obj/structure/table,
-/obj/item/stack/sheet/metal{
-	amount = 50;
+/obj/item/stack/sheet/metal/fifty{
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/item/stack/rods{
-	amount = 50
-	},
+/obj/item/stack/rods/fifty,
 /obj/item/stack/cable_coil,
 /obj/item/stack/cable_coil,
 /obj/machinery/firealarm{

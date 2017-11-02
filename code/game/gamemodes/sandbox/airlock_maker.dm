@@ -36,8 +36,8 @@
 		var/static/list/defaults = list("No","Yes")
 		desc = defaults[active+1]
 	if(active)
-		return "<a href='?src=\ref[src];[href]'><b>[desc]</b></a>"
-	return "<a href='?src=\ref[src];[href]'><i>[desc]</i></a>"
+		return "<a href='?src=[REF(src)];[href]'><b>[desc]</b></a>"
+	return "<a href='?src=[REF(src)];[href]'><i>[desc]</i></a>"
 
 /datum/airlock_maker/proc/interact()
 	var/list/leftcolumn = list()
@@ -54,7 +54,7 @@
 	var/length = max(leftcolumn.len,rightcolumn.len)
 
 	var/dat = "You may move the model airlock around.  A new airlock will be built in its space when you click done, below.<hr><br>"
-	dat += "<a href='?src=\ref[src];rename'>Door name</a>: \"[doorname]\""
+	dat += "<a href='?src=[REF(src)];rename'>Door name</a>: \"[doorname]\""
 	dat += "<table>"
 	for(var/i=1; i<=length; i++)
 		dat += "<tr><td>"
@@ -65,7 +65,7 @@
 			dat += rightcolumn[i]
 		dat += "</td></tr>"
 
-	dat += "</table><hr><a href='?src=\ref[src];done'>Finalize Airlock Construction</a> | <a href='?src=\ref[src];cancel'>Cancel and Destroy Airlock</a>"
+	dat += "</table><hr><a href='?src=[REF(src)];done'>Finalize Airlock Construction</a> | <a href='?src=[REF(src)];cancel'>Cancel and Destroy Airlock</a>"
 	usr << browse(dat,"window=airlockmaker")
 
 /datum/airlock_maker/Topic(var/href,var/list/href_list)

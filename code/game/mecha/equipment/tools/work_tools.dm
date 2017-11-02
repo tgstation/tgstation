@@ -288,7 +288,7 @@
 	return
 
 /obj/item/mecha_parts/mecha_equipment/rcd/get_equip_info()
-	return "[..()] \[<a href='?src=\ref[src];mode=0'>D</a>|<a href='?src=\ref[src];mode=1'>C</a>|<a href='?src=\ref[src];mode=2'>A</a>\]"
+	return "[..()] \[<a href='?src=[REF(src)];mode=0'>D</a>|<a href='?src=[REF(src)];mode=1'>C</a>|<a href='?src=[REF(src)];mode=2'>A</a>\]"
 
 
 
@@ -342,7 +342,7 @@
 			cable.amount += to_load
 			target.use(to_load)
 			occupant_message("<span class='notice'>[to_load] meters of cable successfully loaded.</span>")
-			send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
+			send_byjax(chassis.occupant,"exosuit.browser","[REF(src)]",src.get_equip_info())
 		else
 			occupant_message("<span class='warning'>Reel is full.</span>")
 	else
@@ -371,7 +371,7 @@
 /obj/item/mecha_parts/mecha_equipment/cable_layer/get_equip_info()
 	var/output = ..()
 	if(output)
-		return "[output] \[Cable: [cable ? cable.amount : 0] m\][(cable && cable.amount) ? "- <a href='?src=\ref[src];toggle=1'>[!equip_ready?"Dea":"A"]ctivate</a>|<a href='?src=\ref[src];cut=1'>Cut</a>" : null]"
+		return "[output] \[Cable: [cable ? cable.amount : 0] m\][(cable && cable.amount) ? "- <a href='?src=[REF(src)];toggle=1'>[!equip_ready?"Dea":"A"]ctivate</a>|<a href='?src=[REF(src)];cut=1'>Cut</a>" : null]"
 	return
 
 /obj/item/mecha_parts/mecha_equipment/cable_layer/proc/use_cable(amount)
@@ -408,8 +408,7 @@
 			return reset()
 	if(!use_cable(1))
 		return reset()
-	var/obj/structure/cable/NC = new(new_turf)
-	NC.cableColor("red")
+	var/obj/structure/cable/NC = new(new_turf, "red")
 	NC.d1 = 0
 	NC.d2 = fdirn
 	NC.update_icon()

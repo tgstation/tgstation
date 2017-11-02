@@ -417,8 +417,9 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	toggle(user)
 
 /obj/item/abductor_baton/proc/StunAttack(mob/living/L,mob/living/user)
-	user.lastattacked = L
-	L.lastattacker = user
+
+	L.lastattacker = user.real_name
+	L.lastattackerckey = user.ckey
 
 	L.Knockdown(140)
 	L.apply_effect(STUTTER, 7)
@@ -490,7 +491,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/item/restraints/handcuffs/energy
 	name = "hard-light energy field"
 	desc = "A hard-light field restraining the hands."
-	icon_state = "cuff_white" // Needs sprite
+	icon_state = "cuff" // Needs sprite
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	breakouttime = 450

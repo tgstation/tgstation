@@ -143,27 +143,27 @@
 	status += "<div class='line'><div class='statusLabel'>Pulse Duration:</div><div class='statusValue'>[radduration]</div></div>"
 	status += "<div class='line'><div class='statusLabel'>&nbsp;&nbsp;\> Accuracy:</div><div class='statusValue'>[chance_to_hit]</div></div>"
 	status += "<br></div>" // Close statusDisplay div
-	var/buttons = "<a href='?src=\ref[src];'>Scan</a> "
+	var/buttons = "<a href='?src=[REF(src)];'>Scan</a> "
 	if(connected)
-		buttons += " <a href='?src=\ref[src];task=toggleopen;'>[connected.state_open ? "Close" : "Open"] Scanner</a> "
+		buttons += " <a href='?src=[REF(src)];task=toggleopen;'>[connected.state_open ? "Close" : "Open"] Scanner</a> "
 		if (connected.state_open)
 			buttons += "<span class='linkOff'>[connected.locked ? "Unlock" : "Lock"] Scanner</span> "
 		else
-			buttons += "<a href='?src=\ref[src];task=togglelock;'>[connected.locked ? "Unlock" : "Lock"] Scanner</a> "
+			buttons += "<a href='?src=[REF(src)];task=togglelock;'>[connected.locked ? "Unlock" : "Lock"] Scanner</a> "
 	else
 		buttons += "<span class='linkOff'>Open Scanner</span> <span class='linkOff'>Lock Scanner</span> "
 	if(viable_occupant)
-		buttons += "<a href='?src=\ref[src];task=rejuv'>Inject Rejuvenators</a> "
+		buttons += "<a href='?src=[REF(src)];task=rejuv'>Inject Rejuvenators</a> "
 	else
 		buttons += "<span class='linkOff'>Inject Rejuvenators</span> "
 	if(diskette)
-		buttons += "<a href='?src=\ref[src];task=ejectdisk'>Eject Disk</a> "
+		buttons += "<a href='?src=[REF(src)];task=ejectdisk'>Eject Disk</a> "
 	else
 		buttons += "<span class='linkOff'>Eject Disk</span> "
 	if(current_screen == "buffer")
-		buttons += "<a href='?src=\ref[src];task=screen;text=mainmenu;'>Radiation Emitter Menu</a> "
+		buttons += "<a href='?src=[REF(src)];task=screen;text=mainmenu;'>Radiation Emitter Menu</a> "
 	else
-		buttons += "<a href='?src=\ref[src];task=screen;text=buffer;'>Buffer Menu</a> "
+		buttons += "<a href='?src=[REF(src)];task=screen;text=buffer;'>Buffer Menu</a> "
 
 	switch(current_screen)
 		if("working")
@@ -182,12 +182,12 @@
 					if( !buffer_slot || !buffer_slot.len || !buffer_slot["name"] || !((buffer_slot["UI"] && buffer_slot["UE"]) || buffer_slot["SE"]) )
 						temp_html += "<br>\tNo Data"
 						if(viable_occupant)
-							temp_html += "<br><a href='?src=\ref[src];task=setbuffer;num=[i];'>Save to Buffer</a> "
+							temp_html += "<br><a href='?src=[REF(src)];task=setbuffer;num=[i];'>Save to Buffer</a> "
 						else
 							temp_html += "<br><span class='linkOff'>Save to Buffer</span> "
 						temp_html += "<span class='linkOff'>Clear Buffer</span> "
 						if(diskette)
-							temp_html += "<a href='?src=\ref[src];task=loaddisk;num=[i];'>Load from Disk</a> "
+							temp_html += "<a href='?src=[REF(src)];task=loaddisk;num=[i];'>Load from Disk</a> "
 						else
 							temp_html += "<span class='linkOff'>Load from Disk</span> "
 						temp_html += "<span class='linkOff'>Save to Disk</span> "
@@ -198,18 +198,18 @@
 						var/name = buffer_slot["name"]
 						var/label = buffer_slot["label"]
 						var/blood_type = buffer_slot["blood_type"]
-						temp_html += "<br>\t<a href='?src=\ref[src];task=setbufferlabel;num=[i];'>Label</a>: [label ? label : name]"
+						temp_html += "<br>\t<a href='?src=[REF(src)];task=setbufferlabel;num=[i];'>Label</a>: [label ? label : name]"
 						temp_html += "<br>\tSubject: [name]"
 						if(ue && name && blood_type)
 							temp_html += "<br>\tBlood Type: [blood_type]"
 							temp_html += "<br>\tUE: [ue] "
 							if(viable_occupant)
-								temp_html += "<a href='?src=\ref[src];task=transferbuffer;num=[i];text=ue'>Occupant</a> "
+								temp_html += "<a href='?src=[REF(src)];task=transferbuffer;num=[i];text=ue'>Occupant</a> "
 							else
 								temp_html += "<span class='linkOff'>Occupant</span>"
-							temp_html += "<a href='?src=\ref[src];task=setdelayed;num=[i];delayaction=[SCANNER_ACTION_UE]'>Occupant:Delayed</a> "
+							temp_html += "<a href='?src=[REF(src)];task=setdelayed;num=[i];delayaction=[SCANNER_ACTION_UE]'>Occupant:Delayed</a> "
 							if(injectorready < world.time)
-								temp_html += "<a href='?src=\ref[src];task=injector;num=[i];text=ue'>Injector</a>"
+								temp_html += "<a href='?src=[REF(src)];task=injector;num=[i];text=ue'>Injector</a>"
 							else
 								temp_html += "<span class='linkOff'>Injector</span>"
 						else
@@ -218,12 +218,12 @@
 						if(ui)
 							temp_html += "<br>\tUI: [ui] "
 							if(viable_occupant)
-								temp_html += "<a href='?src=\ref[src];task=transferbuffer;num=[i];text=ui'>Occupant</a> "
+								temp_html += "<a href='?src=[REF(src)];task=transferbuffer;num=[i];text=ui'>Occupant</a> "
 							else
 								temp_html += "<span class='linkOff'>Occupant</span>"
-							temp_html += "<a href='?src=\ref[src];task=setdelayed;num=[i];delayaction=[SCANNER_ACTION_UI]'>Occupant:Delayed</a> "
+							temp_html += "<a href='?src=[REF(src)];task=setdelayed;num=[i];delayaction=[SCANNER_ACTION_UI]'>Occupant:Delayed</a> "
 							if(injectorready < world.time)
-								temp_html += "<a href='?src=\ref[src];task=injector;num=[i];text=ui'>Injector</a>"
+								temp_html += "<a href='?src=[REF(src)];task=injector;num=[i];text=ui'>Injector</a>"
 							else
 								temp_html += "<span class='linkOff'>Injector</span>"
 						else
@@ -231,38 +231,38 @@
 						if(ue && name && blood_type && ui)
 							temp_html += "<br>\tUI+UE: [ui]/[ue] "
 							if(viable_occupant)
-								temp_html += "<a href='?src=\ref[src];task=transferbuffer;num=[i];text=mixed'>Occupant</a> "
+								temp_html += "<a href='?src=[REF(src)];task=transferbuffer;num=[i];text=mixed'>Occupant</a> "
 							else
 								temp_html += "<span class='linkOff'>Occupant</span>"
-							temp_html += "<a href='?src=\ref[src];task=setdelayed;num=[i];delayaction=[SCANNER_ACTION_MIXED]'>Occupant:Delayed</a> "
+							temp_html += "<a href='?src=[REF(src)];task=setdelayed;num=[i];delayaction=[SCANNER_ACTION_MIXED]'>Occupant:Delayed</a> "
 							if(injectorready < world.time)
-								temp_html += "<a href='?src=\ref[src];task=injector;num=[i];text=mixed'>UI+UE Injector</a>"
+								temp_html += "<a href='?src=[REF(src)];task=injector;num=[i];text=mixed'>UI+UE Injector</a>"
 							else
 								temp_html += "<span class='linkOff'>UI+UE Injector</span>"
 						if(se)
 							temp_html += "<br>\tSE: [se] "
 							if(viable_occupant)
-								temp_html += "<a href='?src=\ref[src];task=transferbuffer;num=[i];text=se'>Occupant</a> "
+								temp_html += "<a href='?src=[REF(src)];task=transferbuffer;num=[i];text=se'>Occupant</a> "
 							else
 								temp_html += "<span class='linkOff'>Occupant</span> "
-							temp_html += "<a href='?src=\ref[src];task=setdelayed;num=[i];delayaction=[SCANNER_ACTION_SE]'>Occupant:Delayed</a> "
+							temp_html += "<a href='?src=[REF(src)];task=setdelayed;num=[i];delayaction=[SCANNER_ACTION_SE]'>Occupant:Delayed</a> "
 							if(injectorready < world.time )
-								temp_html += "<a href='?src=\ref[src];task=injector;num=[i];text=se'>Injector</a>"
+								temp_html += "<a href='?src=[REF(src)];task=injector;num=[i];text=se'>Injector</a>"
 							else
 								temp_html += "<span class='linkOff'>Injector</span>"
 						else
 							temp_html += "<br>\tSE: No Data"
 						if(viable_occupant)
-							temp_html += "<br><a href='?src=\ref[src];task=setbuffer;num=[i];'>Save to Buffer</a> "
+							temp_html += "<br><a href='?src=[REF(src)];task=setbuffer;num=[i];'>Save to Buffer</a> "
 						else
 							temp_html += "<br><span class='linkOff'>Save to Buffer</span> "
-						temp_html += "<a href='?src=\ref[src];task=clearbuffer;num=[i];'>Clear Buffer</a> "
+						temp_html += "<a href='?src=[REF(src)];task=clearbuffer;num=[i];'>Clear Buffer</a> "
 						if(diskette)
-							temp_html += "<a href='?src=\ref[src];task=loaddisk;num=[i];'>Load from Disk</a> "
+							temp_html += "<a href='?src=[REF(src)];task=loaddisk;num=[i];'>Load from Disk</a> "
 						else
 							temp_html += "<span class='linkOff'>Load from Disk</span> "
 						if(diskette && !diskette.read_only)
-							temp_html += "<a href='?src=\ref[src];task=savedisk;num=[i];'>Save to Disk</a> "
+							temp_html += "<a href='?src=[REF(src)];task=savedisk;num=[i];'>Save to Disk</a> "
 						else
 							temp_html += "<span class='linkOff'>Save to Disk</span> "
 		else
@@ -270,8 +270,8 @@
 			temp_html += buttons
 			temp_html += "<h1>Radiation Emitter Menu</h1>"
 
-			temp_html += "<a href='?src=\ref[src];task=setstrength;num=[radstrength-1];'>--</a> <a href='?src=\ref[src];task=setstrength;'>Output Level</a> <a href='?src=\ref[src];task=setstrength;num=[radstrength+1];'>++</a>"
-			temp_html += "<br><a href='?src=\ref[src];task=setduration;num=[radduration-1];'>--</a> <a href='?src=\ref[src];task=setduration;'>Pulse Duration</a> <a href='?src=\ref[src];task=setduration;num=[radduration+1];'>++</a>"
+			temp_html += "<a href='?src=[REF(src)];task=setstrength;num=[radstrength-1];'>--</a> <a href='?src=[REF(src)];task=setstrength;'>Output Level</a> <a href='?src=[REF(src)];task=setstrength;num=[radstrength+1];'>++</a>"
+			temp_html += "<br><a href='?src=[REF(src)];task=setduration;num=[radduration-1];'>--</a> <a href='?src=[REF(src)];task=setduration;'>Pulse Duration</a> <a href='?src=[REF(src)];task=setduration;num=[radduration+1];'>++</a>"
 
 			temp_html += "<h3>Irradiate Subject</h3>"
 			temp_html += "<div class='line'><div class='statusLabel'>Unique Identifier:</div><div class='statusValue'><div class='clearBoth'>"
@@ -281,7 +281,7 @@
 				temp_html += "<div class='dnaBlockNumber'>1</div>"
 				var/len = length(viable_occupant.dna.uni_identity)
 				for(var/i=1, i<=len, i++)
-					temp_html += "<a class='dnaBlock' href='?src=\ref[src];task=pulseui;num=[i];'>[copytext(viable_occupant.dna.uni_identity,i,i+1)]</a>"
+					temp_html += "<a class='dnaBlock' href='?src=[REF(src)];task=pulseui;num=[i];'>[copytext(viable_occupant.dna.uni_identity,i,i+1)]</a>"
 					if ((i % max_line_len) == 0)
 						temp_html += "</div><div class='clearBoth'>"
 					if((i % DNA_BLOCK_SIZE) == 0 && i < len)
@@ -295,7 +295,7 @@
 				temp_html += "<div class='dnaBlockNumber'>1</div>"
 				var/len = length(viable_occupant.dna.struc_enzymes)
 				for(var/i=1, i<=len, i++)
-					temp_html += "<a class='dnaBlock' href='?src=\ref[src];task=pulsese;num=[i];'>[copytext(viable_occupant.dna.struc_enzymes,i,i+1)]</a>"
+					temp_html += "<a class='dnaBlock' href='?src=[REF(src)];task=pulsese;num=[i];'>[copytext(viable_occupant.dna.struc_enzymes,i,i+1)]</a>"
 					if ((i % max_line_len) == 0)
 						temp_html += "</div><div class='clearBoth'>"
 					if((i % DNA_BLOCK_SIZE) == 0 && i < len)

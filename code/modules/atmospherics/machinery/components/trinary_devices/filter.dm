@@ -10,6 +10,9 @@
 	var/frequency = 0
 	var/datum/radio_frequency/radio_connection
 
+	construction_type = /obj/item/pipe/trinary/flippable
+	pipe_state = "filter"
+
 /obj/machinery/atmospherics/components/trinary/filter/flipped
 	icon_state = "filter_off_f"
 	flipped = TRUE
