@@ -32,6 +32,7 @@ $validation = "org";
 $validation_count = 1;
 $tracked_branch = 'master';
 $require_changelogs = false;
+$auto_dismiss = false;
 
 require_once 'secret.php';
 
@@ -289,7 +290,7 @@ function check_ready_for_review($payload, $labels = null, $remove = array()){
 			$lower_state = strtolower($R['state']);
 			if($lower_state == 'changes_requested')
 				$reviews_ids_with_changes_requested[] = $R['id'];
-			else if ($lower_state == 'approved'){
+			else if ($lower_state == 'approved' && $auto_dismiss){
 				dismiss_review($payload, $R['id'], 'Out of date review');
 				$dismissed_an_approved_review = true;
 			}
