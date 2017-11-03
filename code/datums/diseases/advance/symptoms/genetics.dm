@@ -76,3 +76,44 @@ Bonus
 				return
 			M.dna.struc_enzymes = archived_dna
 			M.domutcheck()
+
+/*
+//////////////////////////////////////
+
+	DNA Restoration
+
+	Not well hidden.
+	Lowers resistance minorly.
+	Does not affect stage speed.
+	Decreases transmittablity greatly.
+	Very high level.
+
+Bonus
+	Heals brain damage, treats radiation, cleans SE of non-power mutations.
+
+//////////////////////////////////////
+*/
+
+/datum/symptom/heal/dna
+
+	name = "Deoxyribonucleic Acid Restoration"
+	desc = "The virus repairs the host's genome, purging negative mutations."
+	stealth = -1
+	resistance = -1
+	stage_speed = 0
+	transmittable = -3
+	level = 5
+	symptom_delay_min = 3
+	symptom_delay_max = 8
+	threshold_desc = "<b>Stage Speed 6:</b> Additionally heals brain damage.<br>\
+					  <b>Stage Speed 11:</b> Increases brain damage healing."
+
+/datum/symptom/heal/dna/Heal(mob/living/carbon/M, datum/disease/advance/A)
+	var/amt_healed = 2 * (power - 1)
+	M.adjustBrainLoss(-amt_healed)
+	//Non-power mutations, excluding race, so the virus does not force monkey -> human transformations.
+	var/list/unclean_mutations = (GLOB.not_good_mutations|GLOB.bad_mutations) - GLOB.mutations_list[RACEMUT]
+	M.dna.remove_mutation_group(unclean_mutations)
+	M.radiation = max(M.radiation - (2 * amt_healed), 0)
+	return 1
+
