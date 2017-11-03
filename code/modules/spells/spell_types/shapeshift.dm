@@ -93,8 +93,7 @@
 	src.source = source
 	shape = loc
 	if(!istype(shape))
-		stack_trace("shapeshift holder created outside mob/living")
-		return
+		CRASH("shapeshift holder created outside mob/living")
 	stored = caster
 	if(stored.mind)
 		stored.mind.transfer_to(shape)
