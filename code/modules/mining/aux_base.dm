@@ -319,6 +319,11 @@ obj/docking_port/stationary/public_mining_dock
 		return
 
 	for(var/L in landing_turfs) //You land NEAR the base, not IN it.
+		if(!L) //This happens at map edges
+			to_chat(user, "<span class='warning'>Unable to secure a valid docking zone. Please try again in an open area near, but not within the aux. mining base.</span>")
+			SSshuttle.stationary.Remove(Mport)
+			qdel(Mport)
+			return
 		if(istype(get_area(L), /area/shuttle/auxillary_base))
 			to_chat(user, "<span class='warning'>The mining shuttle must not land within the mining base itself.</span>")
 			SSshuttle.stationary.Remove(Mport)
