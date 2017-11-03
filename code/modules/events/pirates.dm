@@ -22,7 +22,7 @@
 
 /datum/round_event/pirates/announce()
 	priority_announce("Incoming subspace communication. Secure channel opened at all communication consoles.", "Incoming Message", 'sound/ai/commandreport.ogg')
-	
+
 	if(!control) //Means this is false alarm, todo : explicit checks instead of using announceWhen
 		return
 	threat = new
@@ -45,7 +45,7 @@
 	if(!shuttle_spawned)
 		spawn_shuttle()
 
-	
+
 
 /datum/round_event/pirates/start()
 	if(!paid_off && !shuttle_spawned)
@@ -64,7 +64,7 @@
 	var/turf/T = locate(x,y,z)
 	if(!T)
 		CRASH("Pirate event found no turf to load in")
-	
+
 	if(!ship.load(T))
 		CRASH("Loading pirate ship failed!")
 	for(var/turf/A in ship.get_affected_turfs(T))
@@ -75,7 +75,7 @@
 				candidates -= M
 			else
 				notify_ghosts("Space pirates are waking up!", source = spawner, action=NOTIFY_ATTACK, flashwindow = FALSE)
-	
+
 	priority_announce("Unidentified armed ship detected near the station.")
 
 //Shuttle equipment
@@ -157,7 +157,7 @@
 		new /obj/item/stack/spacecash/c200(drop_location())
 		credits_stored -= 200
 	to_chat(user,"<span class='notice'>You retrieve the siphoned credits!</span>")
-		
+
 
 /obj/machinery/shuttle_scrambler/proc/send_notification()
 	priority_announce("Data theft signal detected, source registered on local gps units.")

@@ -4,7 +4,6 @@
 	name = "Computer Design (Battle Arcade Machine)"
 	desc = "Allows for the construction of circuit boards used to build a new arcade machine."
 	id = "arcade_battle"
-	req_tech = list("programming" = 1)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000)
 	reagents_list = list("sacid" = 20)
@@ -15,7 +14,6 @@
 	name = "Computer Design (Orion Trail Arcade Machine)"
 	desc = "Allows for the construction of circuit boards used to build a new Orion Trail machine."
 	id = "arcade_orion"
-	req_tech = list("programming" = 1)
 	build_path = /obj/item/circuitboard/computer/arcade/orion_trail
 	category = list("Computer Boards")
 
@@ -96,7 +94,6 @@
 	name = "Computer Design (ID Console)"
 	desc = "Allows for the construction of circuit boards used to build an ID computer."
 	id = "idcardconsole"
-	req_tech = list("programming" = 3)
 	build_path = /obj/item/circuitboard/computer/card
 	category = list("Computer Boards")
 
@@ -120,7 +117,6 @@
 	name = "Computer Design (Atmosphere Alert)"
 	desc = "Allows for the construction of circuit boards used to build an atmosphere alert console."
 	id = "atmosalerts"
-	req_tech = list("programming" = 2)
 	build_path = /obj/item/circuitboard/computer/atmos_alert
 	category = list("Computer Boards")
 
@@ -128,7 +124,6 @@
 	name = "Computer Design (Atmospheric Monitor)"
 	desc = "Allows for the construction of circuit boards used to build an Atmospheric Monitor."
 	id = "atmos_control"
-	req_tech = list("programming" = 2)
 	build_path = /obj/item/circuitboard/computer/atmos_control
 	category = list("Computer Boards")
 
@@ -136,7 +131,6 @@
 	name = "Computer Design (Robotics Control Console)"
 	desc = "Allows for the construction of circuit boards used to build a Robotics Control console."
 	id = "robocontrol"
-	req_tech = list("programming" = 4)
 	build_path = /obj/item/circuitboard/computer/robotics
 	category = list("Computer Boards")
 
@@ -144,7 +138,6 @@
 	name = "Computer Design (Slot Machine)"
 	desc = "Allows for the construction of circuit boards used to build a new slot machine."
 	id = "slotmachine"
-	req_tech = list("programming" = 1)
 	build_path = /obj/item/circuitboard/computer/slot_machine
 	category = list("Computer Boards")
 
@@ -168,7 +161,6 @@
 	name = "Computer Design (Prisoner Management Console)"
 	desc = "Allows for the construction of circuit boards used to build a prisoner management console."
 	id = "prisonmanage"
-	req_tech = list("programming" = 2)
 	build_path = /obj/item/circuitboard/computer/prisoner
 	category = list("Computer Boards")
 
@@ -176,7 +168,6 @@
 	name = "Computer Design (Exosuit Control Console)"
 	desc = "Allows for the construction of circuit boards used to build an exosuit control console."
 	id = "mechacontrol"
-	req_tech = list("programming" = 3)
 	build_path = /obj/item/circuitboard/computer/mecha_control
 	category = list("Computer Boards")
 
@@ -192,7 +183,6 @@
 	name = "Computer Design (R&D Console)"
 	desc = "Allows for the construction of circuit boards used to build a new R&D console."
 	id = "rdconsole"
-	req_tech = list("programming" = 4)
 	build_path = /obj/item/circuitboard/computer/rdconsole
 	category = list("Computer Boards")
 
@@ -200,7 +190,6 @@
 	name = "Computer Design (Supply Console)"
 	desc = "Allows for the construction of circuit boards used to build a Supply Console."
 	id = "cargo"
-	req_tech = list("programming" = 3)
 	build_path = /obj/item/circuitboard/computer/cargo
 	category = list("Computer Boards")
 
@@ -208,7 +197,6 @@
 	name = "Computer Design (Supply Request Console)"
 	desc = "Allows for the construction of circuit boards used to build a Supply Request Console."
 	id = "cargorequest"
-	req_tech = list("programming" = 2)
 	build_path = /obj/item/circuitboard/computer/cargo/request
 	category = list("Computer Boards")
 
@@ -216,7 +204,6 @@
 	name = "Computer Design (Stock Exchange Console)"
 	desc = "Allows for the construction of circuit boards used to build a Stock Exchange Console."
 	id = "stockexchange"
-	req_tech = list("programming" = 3)
 	build_path = /obj/item/circuitboard/computer/stockexchange
 	category = list("Computer Boards")
 
@@ -224,7 +211,6 @@
 	name = "Computer Design (Outpost Status Display)"
 	desc = "Allows for the construction of circuit boards used to build an outpost status display console."
 	id = "mining"
-	req_tech = list("programming" = 2)
 	build_path = /obj/item/circuitboard/computer/mining
 	category = list("Computer Boards")
 
@@ -248,7 +234,6 @@
 	name = "Computer Design (Messaging Monitor Console)"
 	desc = "Allows for the construction of circuit boards used to build a messaging monitor console."
 	id = "message_monitor"
-	req_tech = list("programming" = 5)
 	build_path = /obj/item/circuitboard/computer/message_monitor
 	category = list("Computer Boards")
 
@@ -264,7 +249,6 @@
 	name = "Computer Design (Library Console)"
 	desc = "Allows for the construction of circuit boards used to build a new library console."
 	id = "libraryconsole"
-	req_tech = list("programming" = 1)
 	build_path = /obj/item/circuitboard/computer/libraryconsole
 	category = list("Computer Boards")
 
