@@ -47448,8 +47448,10 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bTZ" = (
-/obj/structure/bookcase{
-	name = "bookcase"
+/obj/structure/table/wood,
+/obj/item/storage/toolbox/mechanical/old{
+	desc = "A memento from the past.";
+	name = "antique toolbox"
 	},
 /turf/open/floor/wood,
 /area/bridge/showroom/corporate)
@@ -81046,6 +81048,14 @@
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
+"EDo" = (
+/obj/structure/table/wood,
+/obj/item/clothing/head/helmet/space{
+	desc = "An outdated but familiar space helmet. It reminds you of old, greater times.";
+	name = "antique space helmet"
+	},
+/turf/open/floor/wood,
+/area/bridge/showroom/corporate)
 
 (1,1,1) = {"
 aaa
@@ -108938,7 +108948,7 @@ bGH
 bGH
 bJP
 bLw
-bTZ
+EDo
 dDg
 bQg
 bRD
