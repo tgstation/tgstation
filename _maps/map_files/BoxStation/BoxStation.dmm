@@ -2193,6 +2193,7 @@
 /area/security/main)
 "aff" = (
 /obj/effect/landmark/start/security_officer,
+/obj/machinery/rnd/protolathe/department/security,
 /turf/open/floor/plasteel/red/side{
 	dir = 9
 	},
@@ -23530,7 +23531,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/r_n_d/circuit_imprinter,
+/obj/machinery/rnd/circuit_imprinter,
 /turf/open/floor/plasteel/white,
 /area/science/robotics/lab)
 "bhy" = (
@@ -25331,17 +25332,17 @@
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "blI" = (
-/obj/machinery/r_n_d/destructive_analyzer,
+/obj/machinery/rnd/destructive_analyzer,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/science/lab)
 "blJ" = (
-/obj/machinery/r_n_d/protolathe,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/rnd/protolathe/department/science,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "blK" = (
@@ -25548,11 +25549,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
 "bml" = (
-/obj/machinery/mineral/ore_redemption{
-	input_dir = 8;
-	output_dir = 4
-	},
-/obj/machinery/door/firedoor,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plasteel/floorgrime,
 /area/quartermaster/office)
 "bmm" = (
@@ -25981,8 +25978,8 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "bno" = (
-/obj/machinery/r_n_d/circuit_imprinter,
 /obj/item/reagent_containers/glass/beaker/sulphuric,
+/obj/machinery/rnd/circuit_imprinter/department/science,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "bnp" = (
@@ -31217,7 +31214,7 @@
 /turf/open/floor/circuit/telecomms/server,
 /area/science/server)
 "bzu" = (
-/obj/machinery/r_n_d/server/robotics,
+/obj/machinery/rnd/server,
 /turf/open/floor/circuit/telecomms/server,
 /area/science/server)
 "bzv" = (
@@ -31844,7 +31841,7 @@
 /turf/open/floor/engine,
 /area/science/explab)
 "bAR" = (
-/obj/machinery/r_n_d/experimentor,
+/obj/machinery/rnd/experimentor,
 /turf/open/floor/engine,
 /area/science/explab)
 "bAS" = (
@@ -32293,7 +32290,7 @@
 /turf/open/floor/circuit/telecomms/server,
 /area/science/server)
 "bBT" = (
-/obj/machinery/r_n_d/server/core,
+/obj/machinery/rnd/server,
 /turf/open/floor/circuit/telecomms/server,
 /area/science/server)
 "bBU" = (
@@ -34191,7 +34188,6 @@
 	pixel_y = -3
 	},
 /obj/item/circuitboard/machine/destructive_analyzer,
-/obj/item/circuitboard/machine/protolathe,
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -53685,6 +53681,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/station_engineer,
+/obj/machinery/rnd/circuit_imprinter,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cDC" = (
@@ -57603,6 +57600,49 @@
 /obj/structure/reagent_dispensers/cooking_oil,
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
+"QoM" = (
+/obj/machinery/rnd/protolathe/department/service,
+/turf/closed/wall,
+/area/crew_quarters/kitchen)
+"QoN" = (
+/obj/machinery/rnd/protolathe/department/cargo,
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
+"QoO" = (
+/obj/machinery/mineral/ore_redemption{
+	input_dir = 2;
+	output_dir = 1
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
+"QoP" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/light_switch{
+	pixel_y = 28
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
+"QoQ" = (
+/obj/machinery/rnd/protolathe/department/medical,
+/turf/open/floor/plasteel/white,
+/area/medical/sleeper)
+"QoR" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/rnd/protolathe/department/engineering,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
+"QoS" = (
+/obj/machinery/computer/rdconsole/production,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 
 (1,1,1) = {"
 aaa
@@ -78039,7 +78079,7 @@ aZF
 aZF
 bgy
 aZE
-bjr
+QoN
 bjr
 ama
 bmh
@@ -79849,7 +79889,7 @@ bjv
 btv
 buc
 bxz
-bBa
+QoP
 bwV
 byy
 bBa
@@ -80362,8 +80402,8 @@ bbR
 bkM
 bqs
 bud
-bxy
-bvG
+QoO
+byE
 bAZ
 bGm
 bzF
@@ -82717,7 +82757,7 @@ cfe
 cfD
 cgv
 chE
-ciN
+QoR
 ciN
 cji
 cDZ
@@ -83231,7 +83271,7 @@ ckB
 ccw
 cnY
 coH
-cgR
+QoS
 cgR
 cqx
 cqR
@@ -95018,7 +95058,7 @@ bvj
 bCO
 bDR
 bDR
-bDR
+QoQ
 bIn
 bJC
 bKL
@@ -97303,7 +97343,7 @@ aJI
 aJI
 aSP
 aUh
-aJI
+QoM
 aJI
 aJI
 aJI
@@ -100154,7 +100194,7 @@ buU
 byf
 bzu
 bAz
-bBT
+bzu
 bDb
 bEm
 bEm

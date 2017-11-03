@@ -10,6 +10,7 @@
 	circuit = /obj/item/circuitboard/machine/recharger
 	var/obj/item/charging = null
 	var/recharge_coeff = 1
+
 	var/static/list/allowed_devices = typecacheof(list(
 		/obj/item/gun/energy,
 		/obj/item/melee/baton,
