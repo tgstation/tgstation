@@ -20,7 +20,7 @@ SUBSYSTEM_DEF(overlays)
 
 /datum/controller/subsystem/overlays/Initialize()
 	initialized = TRUE
-	Flush()
+	fire(mc_check = FALSE)
 	..()
 
 
@@ -37,24 +37,6 @@ SUBSYSTEM_DEF(overlays)
 	overlay_icon_cache = SSoverlays.overlay_icon_cache
 	queue = SSoverlays.queue
 
-#define COMPILE_OVERLAYS(A)\
-	var/list/oo = A.our_overlays;\
-	var/list/po = A.priority_overlays;\
-	if(LAZYLEN(po)){\
-		if(LAZYLEN(oo)){\
-			A.overlays = oo + po;\
-		}\
-		else{\
-			A.overlays = po;\
-		}\
-	}\
-	else if(LAZYLEN(oo)){\
-		A.overlays = oo;\
-	}\
-	else{\
-		A.overlays.Cut();\
-	}\
-	A.flags_1 &= ~OVERLAY_QUEUED_1
 
 /datum/controller/subsystem/overlays/fire(resumed = FALSE, mc_check = TRUE)
 	var/list/queue = src.queue
@@ -77,15 +59,10 @@ SUBSYSTEM_DEF(overlays)
 				break
 		else
 			CHECK_TICK
+
 	if (count)
 		queue.Cut(1,count+1)
 		count = 0
-
-
-/datum/controller/subsystem/overlays/proc/Flush()
-	if(queue.len)
-		testing("Flushing [processing.len] overlays")
-		fire(mc_check = FALSE)	//pair this thread up with the MC to get extra compile time
 
 /proc/iconstate2appearance(icon, iconstate)
 	var/static/image/stringbro = new()
