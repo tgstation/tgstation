@@ -74,3 +74,10 @@ GLOBAL_LIST(round_end_notifiees)
 	LAZYINITLIST(GLOB.round_end_notifiees)
 	GLOB.round_end_notifiees[sender] = TRUE
 	return "I will notify [sender] when the round ends."
+
+/datum/server_tools_command/round
+	name = "round"
+	help_text = "Displays the current round ID"
+
+/datum/server_tools_command/round/Run(sender, params)
+	return GLOB.round_id ? "[GLOB.round_id]" : "No round ID set!"
