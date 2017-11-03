@@ -130,7 +130,7 @@
 		for(var/A in GLOB.ntnet_global.available_station_software)
 			var/datum/computer_file/program/P = A
 			// Only those programs our user can run will show in the list
-			if(!P.can_run(user,transfer = 1))
+			if(!P.can_run(user,transfer = 1) || hard_drive.find_file_by_name(P.filename))
 				continue
 			all_entries.Add(list(list(
 			"filename" = P.filename,
