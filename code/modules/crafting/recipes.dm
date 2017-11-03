@@ -97,7 +97,7 @@
 /datum/crafting_recipe/tailclub
 	name = "Tail Club"
 	result = /obj/item/tailclub
-	reqs = list(/obj/item/severedtail = 1,
+	reqs = list(/obj/item/organ/tail/lizard = 1,
 	            /obj/item/stack/sheet/metal = 1)
 	time = 40
 	category = CAT_WEAPONRY
@@ -106,7 +106,7 @@
 /datum/crafting_recipe/tailwhip
 	name = "Liz O' Nine Tails"
 	result = /obj/item/melee/chainofcommand/tailwhip
-	reqs = list(/obj/item/severedtail = 1,
+	reqs = list(/obj/item/organ/tail/lizard = 1,
 	            /obj/item/stack/cable_coil = 1)
 	time = 40
 	category = CAT_WEAPONRY
@@ -176,6 +176,16 @@
 				/obj/item/storage/firstaid = 1,
 				/obj/item/device/assembly/prox_sensor = 1,
 				/obj/item/bodypart/r_arm/robot = 1)
+	time = 40
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/honkbot
+	name = "Honkbot"
+	result = /mob/living/simple_animal/bot/honkbot
+	reqs = list(/obj/item/storage/box/clown = 1,
+				/obj/item/bodypart/r_arm/robot = 1,
+				/obj/item/device/assembly/prox_sensor = 1,
+				/obj/item/bikehorn/ = 1)
 	time = 40
 	category = CAT_ROBOT
 
@@ -327,7 +337,7 @@
 	name = "Lizard Cloche Hat"
 	result = /obj/item/clothing/head/lizard
 	time = 10
-	reqs = list(/obj/item/severedtail = 1)
+	reqs = list(/obj/item/organ/tail/lizard = 1)
 	category = CAT_MISC
 
 /datum/crafting_recipe/lizardhat_alternate

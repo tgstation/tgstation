@@ -213,7 +213,6 @@
 
 
 /datum/admins/proc/makeNukeTeam()
-
 	var/datum/game_mode/nuclear/temp = new
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered for a nuke team being sent in?", "operative", temp)
 	var/list/mob/dead/observer/chosen = list()
@@ -246,24 +245,18 @@
 			nuke.r_code = nuke_code
 
 		//Let's find the spawn locations
-		var/list/turf/synd_spawn = list()
-		for(var/obj/effect/landmark/A in GLOB.landmarks_list)
-			if(A.name == "Syndicate-Spawn")
-				synd_spawn += get_turf(A)
-				continue
-
-		var/leader_chosen
+		var/leader_chosen = FALSE
 		var/spawnpos = 1 //Decides where they'll spawn. 1=leader.
 
 		for(var/mob/c in chosen)
-			if(spawnpos > synd_spawn.len)
-				spawnpos = 2 //Ran out of spawns. Let's loop back to the first non-leader position
+			if(spawnpos > GLOB.nukeop_start.len)
+				spawnpos = 1 //Ran out of spawns. Let's loop back to the first non-leader position
 			var/mob/living/carbon/human/new_character=makeBody(c)
 			if(!leader_chosen)
-				leader_chosen = 1
-				new_character.mind.make_Nuke(synd_spawn[spawnpos],nuke_code,1)
+				leader_chosen = TRUE
+				new_character.mind.make_Nuke(pick(GLOB.nukeop_leader_start), nuke_code, TRUE)
 			else
-				new_character.mind.make_Nuke(synd_spawn[spawnpos],nuke_code)
+				new_character.mind.make_Nuke(GLOB.nukeop_start[spawnpos], nuke_code)
 			spawnpos++
 		return 1
 	else
