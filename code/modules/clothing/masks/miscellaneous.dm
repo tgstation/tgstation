@@ -93,34 +93,36 @@ obj/item/clothing/mask/frog
 /obj/item/clothing/mask/frog/proc/reset_spam()
 	spam_flag = FALSE
 
+/obj/item/clothing/mask/frog/proc/play_ree()
+	playsound (src, 'sound/effects/reee.ogg', 30, 1)
+	spam_flag = TRUE
+	addtimer(CALLBACK(src, .proc/reset_spam), delay)
+
+/obj/item/clothing/mask/frog/proc/play_huu()
+	playsound (src, 'sound/effects/huuu.ogg', 30, 1)
+	spam_flag = TRUE
+	addtimer(CALLBACK(src, .proc/reset_spam), delay)
+
 /obj/item/clothing/mask/frog/attack_self(mob/user)
 	voicechange = !voicechange
 	to_chat(user, "<span class='notice'>You turn the voice box [voicechange ? "on" : "off"]!</span>")
 
 /obj/item/clothing/mask/frog/equipped(mob/user, slot) //when you put it on
 	var/mob/living/carbon/C = user
-	if(C.wear_mask == src)
-		if(!spam_flag)
-			if(voicechange)
-				playsound (src, 'sound/effects/reee.ogg', 30, 1)
-				spam_flag = TRUE
-				addtimer(CALLBACK(src, .proc/reset_spam), delay)
+	if((C.wear_mask == src) && (!spam_flag) && (voicechange))
+		play_ree()
 	return ..()
 
-/obj/item/clothing/mask/frog/speechModification(message) //whenever you speak
+/obj/item/clothing/mask/frog/speechModification(message, mob/user) //whenever you speak
 	if(voicechange)
 		if(prob(5)) //sometimes, the angry spirit finds others words to speak.
-			message = pick("HUUUUU!!","SMOOOOOKIN'!!","HELLO MY BABY, HELLO MY HONEY, HELLO MY RAG-TIME GAL!!", "FEELS BAD, MAN!" ,"SOMEBODY STOP ME!!", "NORMIES, GIT OUT!!")
+			message = pick("HUUUUU!!","SMOOOOOKIN'!!","Hello my baby, hello my honey, hello my rag-time gal.", "[user.real_name], GET BACK HERE!!", "Feels bad, man.", "GIT DIS GUY OFF ME!!" ,"SOMEBODY STOP ME!!", "NORMIES, GET OUT!!")
 			if(!spam_flag)
-				playsound (src, 'sound/effects/huuu.ogg', 30, 1)
-				spam_flag = TRUE
-				addtimer(CALLBACK(src, .proc/reset_spam), delay)
+				play_huu()
 		else
 			message = pick("Ree!!", "Reee!!","REEE!!","REEEEE!!") //but its usually just angry gibberish,
 			if(!spam_flag)
-				playsound (src, 'sound/effects/reee.ogg', 30, 1)
-				spam_flag = TRUE
-				addtimer(CALLBACK(src, .proc/reset_spam), delay)
+				play_ree()
 	return message
 
 obj/item/clothing/mask/frog/cursed
