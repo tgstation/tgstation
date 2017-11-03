@@ -6554,23 +6554,14 @@
 /turf/open/floor/plasteel/black,
 /area/chapel/main)
 "apl" = (
-/obj/machinery/door/airlock/glass{
-	name = "Chapel Office";
-	req_access_txt = "22"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/black,
-/area/chapel/main)
-"apm" = (
 /obj/machinery/light_switch{
 	pixel_x = -24;
 	pixel_y = -24
 	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 4
-	},
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
+"apm" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/black,
 /area/chapel/main)
 "apn" = (
@@ -6871,6 +6862,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
 	},
+/obj/structure/reagent_dispensers/watertank/high,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "aqe" = (
@@ -7241,22 +7233,20 @@
 	},
 /area/chapel/main)
 "aqS" = (
-/obj/machinery/light{
-	dir = 4;
-	light_color = "#c1caff"
+/obj/machinery/camera{
+	c_tag = "Chapel - North";
+	dir = 2;
+	network = list("SS13")
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/chapel,
+/turf/open/floor/plasteel/black,
 /area/chapel/main)
 "aqT" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
+/obj/structure/table/wood,
+/obj/item/storage/crayons,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/black,
 /area/maintenance/port)
 "aqU" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -7412,10 +7402,10 @@
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "arp" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "arq" = (
@@ -7575,20 +7565,19 @@
 /turf/open/floor/plasteel,
 /area/medical/genetics)
 "arH" = (
-/obj/machinery/camera{
-	c_tag = "Chapel - North";
-	dir = 8;
-	network = list("SS13")
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
 /turf/open/floor/plasteel/chapel{
-	dir = 4
+	dir = 1
 	},
 /area/chapel/main)
 "arI" = (
+/obj/structure/table/wood,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
+	dir = 9
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/black,
 /area/maintenance/port)
 "arJ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -7682,6 +7671,9 @@
 	icon_state = "warningline";
 	dir = 1
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
 "arW" = (
@@ -7690,6 +7682,9 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
 "arX" = (
@@ -7874,12 +7869,13 @@
 /turf/open/floor/plasteel/chapel,
 /area/chapel/main)
 "ast" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Chapel Maintenance";
-	req_access_txt = "12"
+/obj/item/device/radio/intercom{
+	dir = 4;
+	name = "Station Intercom (General)";
+	pixel_x = 28;
+	pixel_y = 5
 	},
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/black,
 /area/maintenance/port)
 "asu" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -9345,9 +9341,6 @@
 /obj/item/storage/fancy/candle_box{
 	pixel_x = 3;
 	pixel_y = 3
-	},
-/obj/machinery/light{
-	dir = 4
 	},
 /obj/structure/extinguisher_cabinet{
 	dir = 4;
@@ -27462,7 +27455,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/reagent_dispensers/watertank/high,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "biz" = (
@@ -27527,8 +27519,10 @@
 /turf/open/floor/plasteel/black,
 /area/hydroponics)
 "biF" = (
-/obj/structure/table/wood,
-/obj/item/storage/crayons,
+/obj/structure/bookcase,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plasteel/black,
 /area/chapel/main)
 "biG" = (
@@ -27596,6 +27590,105 @@
 /obj/structure/closet/coffin,
 /turf/open/floor/plasteel/black,
 /area/chapel/main)
+"biM" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/chapel/main)
+"biN" = (
+/turf/open/space/basic,
+/area/chapel/main)
+"biO" = (
+/obj/machinery/door/airlock/glass{
+	name = "Chapel Office";
+	req_access_txt = "22"
+	},
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
+"biP" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/maintenance/port)
+"biQ" = (
+/obj/structure/cable/white{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/port)
+"biR" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/chapel{
+	dir = 1
+	},
+/area/chapel/main)
+"biS" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/chapel{
+	dir = 4
+	},
+/area/chapel/main)
+"biT" = (
+/obj/structure/table/wood,
+/turf/open/floor/carpet,
+/area/chapel/main)
+"biU" = (
+/obj/structure/table/wood,
+/obj/item/storage/book/bible,
+/turf/open/floor/carpet,
+/area/chapel/main)
+"biV" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/chapel/main)
+"biW" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/chapel{
+	dir = 1
+	},
+/area/chapel/main)
+"biX" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/chapel{
+	dir = 4
+	},
+/area/chapel/main)
+"biY" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Chapel Maintenance";
+	req_access_txt = "12"
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/chapel/main)
+"biZ" = (
+/obj/machinery/holopad,
+/turf/open/floor/carpet,
+/area/chapel/main)
+"bja" = (
+/obj/machinery/newscaster{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 
 (1,1,1) = {"
 aaa
@@ -51591,9 +51684,9 @@ aaa
 aaa
 aaa
 aaa
-abp
-abp
-abp
+aaa
+aaa
+aaa
 abp
 abp
 abp
@@ -51610,8 +51703,8 @@ auz
 aqO
 anG
 anG
-amk
-atZ
+amj
+bja
 atZ
 azq
 aAn
@@ -51848,16 +51941,16 @@ aaa
 aaa
 aaa
 aaa
+aaa
+aaa
+aaa
 abI
 abp
-abp
-abp
-abp
+biM
+biM
 amj
 amj
-amk
-amk
-amk
+amj
 amk
 amk
 amk
@@ -51867,7 +51960,7 @@ auB
 aqP
 anG
 anG
-axc
+amk
 atZ
 atZ
 azq
@@ -52102,26 +52195,26 @@ aaa
 aaa
 aaa
 aaa
+aaa
+aaa
+aaa
 abp
 abp
 abp
 abI
-abp
-aaa
-aaa
+biM
+biN
+biN
 amj
-amj
-biw
-apV
+amT
+biR
 aqN
 apV
-asr
-biC
 asr
 atf
 asr
 amT
-avl
+aqQ
 anG
 anG
 axc
@@ -52359,15 +52452,17 @@ aaa
 aaa
 aaa
 aaa
+aaa
+aaa
+aaa
 abc
 abc
 abp
 abI
-abp
-aaa
-aaa
-amk
-amT
+biM
+biN
+biN
+amj
 amT
 apW
 aqO
@@ -52375,13 +52470,11 @@ apW
 ass
 atg
 ass
-atg
-ass
 amT
 aqQ
 avR
 anG
-amk
+axc
 atZ
 atZ
 ayW
@@ -52617,20 +52710,20 @@ aaa
 aaa
 aaa
 aaa
-abp
+aaa
+aaa
+aaa
+aaa
 abp
 abI
-abp
-aaa
-aaa
+biM
+biN
+biN
 amk
 amT
 amT
-apX
-aqP
-anG
-anG
-anG
+biT
+biV
 anG
 anG
 anG
@@ -52638,7 +52731,7 @@ anG
 avm
 anG
 anG
-axd
+amk
 atZ
 atZ
 azs
@@ -52875,22 +52968,22 @@ aaa
 aaa
 aaa
 aaa
+aaa
+aaa
+aaa
 abp
 abI
-abp
-aaa
-aaa
+biM
+biN
+biN
 amk
 amT
 amT
-apY
-aqQ
+biU
+avm
 anG
 anG
-anG
-anG
-anG
-anG
+biZ
 anG
 avm
 anG
@@ -53132,24 +53225,24 @@ aaa
 aaa
 aaa
 aaa
+aaa
+aaa
+aaa
 abp
 abI
-abp
-aaa
-aaa
+biM
+biN
+biN
 amk
 amT
 apj
-apV
-aqR
-apV
-asr
-biC
-asr
-ath
-asr
-amT
-aqQ
+biT
+avm
+anG
+anG
+anG
+anG
+avm
 anG
 anG
 amk
@@ -53396,15 +53489,15 @@ amj
 amj
 amj
 amj
-apk
-apW
+amj
+amj
 aqS
 arH
-ass
-atg
-ass
-atg
-ass
+aqN
+biW
+asr
+ath
+asr
 apj
 aqQ
 anG
@@ -53652,16 +53745,16 @@ aaa
 amj
 amS
 anF
-amj
+amT
 apl
-amj
-aqb
-amj
-amj
+biO
 amT
-amT
-amT
-amT
+biS
+aqO
+biX
+ass
+atg
+ass
 apk
 aqQ
 anG
@@ -53915,14 +54008,14 @@ apZ
 aqT
 arI
 ast
-amT
+aqQ
 amT
 biF
-biF
+awx
 biJ
 avn
 avS
-awx
+amT
 amk
 atZ
 atZ
@@ -54169,10 +54262,10 @@ anG
 aox
 bix
 aqa
-aqU
-arJ
+biP
+alw
 asu
-asu
+biY
 asu
 asu
 asu
@@ -54426,8 +54519,8 @@ anH
 aoy
 apn
 aqb
-alx
-arK
+biQ
+amm
 amm
 amm
 amm
@@ -56217,7 +56310,7 @@ ahO
 ahn
 aiK
 aaa
-aaa
+abp
 aaa
 akS
 amZ
@@ -56474,7 +56567,7 @@ ahn
 aip
 agP
 aaa
-aaa
+abp
 aaa
 akU
 ana
@@ -56731,7 +56824,7 @@ ahn
 aio
 agP
 aaa
-aaa
+abp
 aaa
 akV
 alx
@@ -56988,7 +57081,7 @@ ahn
 aio
 agQ
 aaa
-aaa
+abp
 aaa
 akV
 aly
@@ -57245,7 +57338,7 @@ ahP
 agQ
 agP
 aaa
-aaa
+abp
 aaa
 akV
 aly
@@ -64964,8 +65057,8 @@ amE
 aog
 aoT
 apz
-aqB
-aro
+apB
+apB
 arV
 asL
 aoi
@@ -66508,7 +66601,7 @@ aoY
 apE
 aqF
 ama
-ama
+asa
 ama
 atD
 auk
@@ -66765,7 +66858,7 @@ aoZ
 apE
 aqF
 ama
-asa
+ama
 ama
 atD
 auk
