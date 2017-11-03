@@ -25,10 +25,12 @@
 			uneq_all()
 		var/amt = Clamp((lamp_intensity - 2) * 2,1,cell.charge) //Always try to use at least one charge per tick, but allow it to completely drain the cell.
 		cell.use(amt) //Usage table: 1/tick if off/lowest setting, 4 = 4/tick, 6 = 8/tick, 8 = 12/tick, 10 = 16/tick
-		soundloop.start()
+		if(soundloop)
+			soundloop.start()
 	else
 		uneq_all()
-		soundloop.stop()
+		if(soundloop)
+			soundloop.stop()
 		low_power_mode = 1
 		update_headlamp()
 	diag_hud_set_borgcell()
