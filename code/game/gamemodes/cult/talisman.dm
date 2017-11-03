@@ -235,9 +235,6 @@
 				target.confused = max(0, target.confused + 3)
 				target.flash_act()
 			qdel(src)
-		else
-			to_chat(user, "<span class='cultitalic'>You can't use \the [src] on that!</span>")
-
 
 //Talisman of Fabrication: Creates a construct shell out of 25 metal sheets, or converts plasteel into runed metal up to 25 times
 /obj/item/paper/talisman/construction
