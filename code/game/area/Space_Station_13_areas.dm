@@ -41,11 +41,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	power_environ = FALSE
 	valid_territory = FALSE
 	outdoors = TRUE
-<<<<<<< HEAD
-	ambientsounds = list('sound/ambience/ambispace.ogg')
-=======
 	ambientsounds = SPACE
->>>>>>> e1d82dd5b5... Adds around 30 new ambience sounds, and changes ambience code a little bit (#32334)
 	blob_allowed = FALSE //Eating up space doesn't count for victory as a blob.
 
 /area/space/nearstation
