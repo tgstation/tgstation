@@ -112,7 +112,13 @@
 		qdel(src)
 		return
 
-	if(!(location.air) || !(location.air.gases[/datum/gas/plasma] || location.air.gases[/datum/gas/tritium]) || !location.air.gases[/datum/gas/oxygen] || (location.air.gases[/datum/gas/plasma][MOLES] < 0.5 && location.air.gases[/datum/gas/tritium][MOLES] < 0.5) || location.air.gases[/datum/gas/oxygen][MOLES] < 0.5)
+	//Nothing to burn
+	if(!(location.air) || !(location.air.gases[/datum/gas/plasma] || location.air.gases[/datum/gas/tritium]) || !location.air.gases[/datum/gas/oxygen])
+		qdel(src)
+		return
+
+	//Not enough to burn
+	if(((!location.air.gases[/datum/gas/plasma] || location.air.gases[/datum/gas/plasma][MOLES] < 0.5) && (!location.air.gases[/datum/gas/tritium] || location.air.gases[/datum/gas/tritium][MOLES] < 0.5)) || location.air.gases[/datum/gas/oxygen][MOLES] < 0.5)
 		qdel(src)
 		return
 
