@@ -53,8 +53,8 @@
 	if(L)
 		user.visible_message("[user] successfully augments [target]'s [parse_zone(target_zone)]!", "<span class='notice'>You successfully augment [target]'s [parse_zone(target_zone)].</span>")
 		if(istype(tool, /obj/item/organ_storage))
-			tool.icon_state = "evidenceobj"
-			tool.desc = "A container for holding body parts."
+			tool.icon_state = initial(tool.icon_state)
+			tool.desc = initial(tool.desc)
 			tool.cut_overlays()
 			tool = tool.contents[1]
 		L.change_bodypart_status(BODYPART_ROBOTIC, TRUE)
