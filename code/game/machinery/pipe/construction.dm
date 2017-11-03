@@ -148,13 +148,15 @@ Buildable meters
 	return rotate()
 
 /obj/item/pipe/proc/get_pipe_cache(type, direction)
-	var/static/list/obj/machinery/atmospherics/check_cache
+	var/list/obj/machinery/atmospherics/check_cache = SSair.pipe_construction_generation_cache
 	if(!islist(check_cache))
 		check_cache = list()
 	if(!check_cache[type])
 		check_cache[type] = list()
 	if(!check_cache[type]["[direction]"])
-		check_cache[type]["[direction]"] = new type(null, null, direction)
+		var/obj/machinery/atmospherics/A = new type(null, FALSE, direction)
+		A.name = "\[CACHE\] [A.name]"
+		check_cache[type]["[direction]"] = A
 
 	return check_cache[type]["[direction]"]
 
