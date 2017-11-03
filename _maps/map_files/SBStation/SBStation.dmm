@@ -26652,7 +26652,7 @@
 /area/security/brig)
 "bgD" = (
 /obj/item/storage/backpack/satchel/flat/prison{
-	name = "?????"
+	name = "Boznar's Secret Satchel"
 	},
 /obj/machinery/computer/arcade,
 /turf/open/floor/plasteel/floorgrime,
