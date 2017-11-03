@@ -62,6 +62,8 @@
 	// Subspace checking
 	var/turf/position = get_turf(mob)
 	var/subspace_on = (position.z in SSvoice.subspace_zlevels)
+	if (CONFIG_GET(flag/emergency_shuttle_has_voice))
+		subspace_on = subspace_on || istype(get_area(mob), /area/shuttle/escape)
 
 	// Check ears for a headset (";" prefix)
 	if (istype(mob, /mob/living/carbon))
