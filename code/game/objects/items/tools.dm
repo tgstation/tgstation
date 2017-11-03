@@ -457,34 +457,15 @@
 		flamethrower_screwdriver(I, user)
 	else if(istype(I, /obj/item/stack/rods))
 		flamethrower_rods(I, user)
-	else if(istype(I, /obj/item/reagent_containers) && I.is_open_container())
-		var/amountNeeded = max_fuel - get_fuel()
-		var/obj/item/reagent_containers/container = I
-		if(length(container.reagents.reagent_list) > 1)
-			to_chat(user, "<span class='warning'>[container] has too many chemicals mixed into it. You wouldn't want to put the wrong chemicals into [src].</span>")
-			return ..()
-		if(amountNeeded <= 0)
-			to_chat(user, "<span class='warning'>[src] is already full.</span>")
-			return ..()
-		if(container.reagents.has_reagent("welding_fuel"))
-			container.reagents.trans_id_to(src, "welding_fuel", amountNeeded)
-			to_chat(user, "<span class='notice'>You transfer some fuel from [I] to [src].</span>")
-			return ..()
-		if(container.reagents.has_reagent("plasma"))
-			container.reagents.trans_id_to(src, "plasma", amountNeeded)
-			to_chat(user, "<span class='notice'>You slip some plasma from [I] to [src].</span>")
-			log_game("[key_name(user)] rigged a welder with plasma.")
-			if(welding)
-				to_chat(user, "<span class='danger'>You probably should have turned [src] off first.</span>")
-				explode()
 	else
-		return ..()
+		..()
+	update_icon()
 
 /obj/item/weldingtool/proc/explode()
 	var/turf/T = get_turf(src.loc)
 	var/plasmaAmount = reagents.get_reagent_amount("plasma")
-	var/heavy_impact_range = (plasmaAmount/8)//a fully plasma'd standard 20 fuel welder will have 2.5 heavy impact
-	var/light_impact_range = (plasmaAmount/4)//above, but 5 light impact
+	var/heavy_impact_range = (plasmaAmount/10)//a fully plasma'd standard 20 fuel welder will have 2.5 heavy impact
+	var/light_impact_range = (plasmaAmount/5)//above, but 4 light impact
 	explosion(T, -1, heavy_impact_range, light_impact_range, light_impact_range)//drop a no-devastation bomb. flash range is same as light impact
 	qdel(src)
 
@@ -509,7 +490,10 @@
 /obj/item/weldingtool/afterattack(atom/O, mob/user, proximity)
 	if(!proximity)
 		return
-
+	if(!status && istype(O, /obj/item/reagent_containers) && O.is_open_container())
+		reagents.trans_to(O, reagents.total_volume)
+		to_chat(user, "<span class='notice'>You empty [src]'s fuel tank into [O].</span>")
+		update_icon()
 	if(welding)
 		remove_fuel(1)
 		var/turf/location = get_turf(user)
@@ -623,9 +607,11 @@
 		return
 	status = !status
 	if(status)
-		to_chat(user, "<span class='notice'>You resecure [src].</span>")
+		to_chat(user, "<span class='notice'>You resecure [src] and close the fuel tank.</span>")
+		container_type = NONE
 	else
-		to_chat(user, "<span class='notice'>[src] can now be attached and modified.</span>")
+		to_chat(user, "<span class='notice'>[src] can now be attached, modified, and refuelled.</span>")
+		container_type = OPENCONTAINER_1
 	add_fingerprint(user)
 
 /obj/item/weldingtool/proc/flamethrower_rods(obj/item/I, mob/user)
