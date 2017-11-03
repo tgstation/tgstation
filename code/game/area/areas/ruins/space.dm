@@ -22,11 +22,7 @@
 	power_environ = FALSE
 	valid_territory = FALSE
 	outdoors = TRUE
-<<<<<<< HEAD
-	ambientsounds = list('sound/ambience/ambispace.ogg')
-=======
 	ambientsounds = SPACE
->>>>>>> e1d82dd5b5... Adds around 30 new ambience sounds, and changes ambience code a little bit (#32334)
 	blob_allowed = FALSE
 
 /////////////
