@@ -7247,7 +7247,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/black,
-/area/maintenance/port)
+/area/chapel/main)
 "aqU" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
@@ -7578,7 +7578,7 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/black,
-/area/maintenance/port)
+/area/chapel/main)
 "arJ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -7876,7 +7876,7 @@
 	pixel_y = 5
 	},
 /turf/open/floor/plasteel/black,
-/area/maintenance/port)
+/area/chapel/main)
 "asu" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
@@ -27678,7 +27678,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/chapel/main)
+/area/maintenance/port)
 "biZ" = (
 /obj/machinery/holopad,
 /turf/open/floor/carpet,
@@ -51946,8 +51946,8 @@ aaa
 aaa
 abI
 abp
-biM
-biM
+abp
+abp
 amj
 amj
 amj
@@ -52202,9 +52202,9 @@ abp
 abp
 abp
 abI
-biM
-biN
-biN
+abp
+aaa
+aaa
 amj
 amT
 biR
@@ -52459,9 +52459,9 @@ abc
 abc
 abp
 abI
-biM
-biN
-biN
+abp
+aaa
+aaa
 amj
 amT
 apW
@@ -52716,9 +52716,9 @@ aaa
 aaa
 abp
 abI
-biM
-biN
-biN
+abp
+aaa
+aaa
 amk
 amT
 amT
@@ -52973,9 +52973,9 @@ aaa
 aaa
 abp
 abI
-biM
-biN
-biN
+abp
+aaa
+aaa
 amk
 amT
 amT
@@ -53230,9 +53230,9 @@ aaa
 aaa
 abp
 abI
-biM
-biN
-biN
+abp
+aaa
+aaa
 amk
 amT
 apj
@@ -54262,8 +54262,8 @@ anG
 aox
 bix
 aqa
-biP
-alw
+auC
+asu
 asu
 biY
 asu
