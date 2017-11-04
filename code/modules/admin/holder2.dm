@@ -45,12 +45,13 @@ GLOBAL_PROTECT(admin_datums)
 		. += "[rand(10)]"
 
 /proc/RawHrefToken(forceGlobal = FALSE)
-	var/tok = global_href_token
+	var/datum/admins/holder
+	var/tok = holder.global_href_token
 	if(!forceGlobal && usr)
 		var/client/C = usr.client
 		if(!C)
 			CRASH("No client for HrefToken()!")
-		var/datum/admins/holder = C.holder
+		holder = C.holder
 		if(holder)
 			tok = holder.href_token
 			if(!tok)
