@@ -50,21 +50,30 @@
 #define SPACE_HEAT_TRANSFER_COEFFICIENT		0.2		//a hack to partly simulate radiative heat
 #define OPEN_HEAT_TRANSFER_COEFFICIENT		0.4
 #define WINDOW_HEAT_TRANSFER_COEFFICIENT	0.1		//a hack for now
-#define HEAT_CAPACITY_VACUUM				7000	//a hack to help make vacuums "cold", sacrificing realism for gameplay
 	//Must be between 0 and 1. Values closer to 1 equalize temperature faster
 	//Should not exceed 0.4 else strange heat flow occur
+#define HEAT_CAPACITY_VACUUM				7000	//a hack to help make vacuums "cold", sacrificing realism for gameplay
 #define FIRE_MINIMUM_TEMPERATURE_TO_SPREAD	150+T0C
 #define FIRE_MINIMUM_TEMPERATURE_TO_EXIST	100+T0C
 #define FIRE_SPREAD_RADIOSITY_SCALE			0.85
 #define FIRE_GROWTH_RATE					40000	//For small fires
 #define CARBON_LIFEFORM_FIRE_RESISTANCE 	200+T0C	//Resistance to fire damage
 #define CARBON_LIFEFORM_FIRE_DAMAGE			4		//Fire damage
+#define GAS_STIM_MINIMUM					0.002
 #define MIN_TOXIC_GAS_DAMAGE				1
 #define MAX_TOXIC_GAS_DAMAGE				10
 #define MOLES_GAS_VISIBLE					0.5		//Moles in a standard cell after which gases are visible
 #define STOP_REACTIONS 						2
+	//Fire properties. Do not remove.
+#define OXYGEN_BURN_RATE_BASE				1.4
+#define PLASMA_BURN_RATE_DELTA				9
+#define PLASMA_UPPER_TEMPERATURE			1370+T0C
+#define PLASMA_MINIMUM_OXYGEN_NEEDED		2
+#define PLASMA_MINIMUM_OXYGEN_PLASMA_RATIO	30
+#define PLASMA_OXYGEN_FULLBURN				10
 #define PLASMA_MINIMUM_BURN_TEMPERATURE		100+T0C
-#define GAS_STIM_MINIMUM					0.002
+#define FIRE_CARBON_ENERGY_RELEASED			500000
+#define FIRE_PLASMA_ENERGY_RELEASED			3000000
 
 // Pressure limits.
 #define HAZARD_HIGH_PRESSURE				550		//This determins at what pressure the ultra-high pressure red icon is displayed. (This one is set as a constant)
