@@ -267,9 +267,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set category = "OOC"
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
-
+	
+	//hippie start
 	if(!canGhost())
 		return
+	//hippie end
 	if(stat != DEAD)
 		succumb()
 	if(stat == DEAD)
