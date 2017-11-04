@@ -8240,8 +8240,8 @@
 /area/security/brig)
 "avu" = (
 /obj/structure/closet/secure_closet/brig{
-	id = "Cell 2";
-	name = "Cell 2 Locker"
+	id = "Cell 1";
+	name = "Cell 1 Locker"
 	},
 /turf/open/floor/plasteel/blue/side,
 /area/security/brig)
@@ -8259,8 +8259,8 @@
 /area/security/brig)
 "avx" = (
 /obj/structure/closet/secure_closet/brig{
-	id = "Cell 3";
-	name = "Cell 3 Locker"
+	id = "Cell 2";
+	name = "Cell 2 Locker"
 	},
 /turf/open/floor/plasteel/green/side,
 /area/security/brig)
