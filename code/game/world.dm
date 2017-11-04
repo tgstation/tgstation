@@ -29,8 +29,8 @@ GLOBAL_PROTECT(security_mode)
 	LoadBans()
 
 	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
-	initialize_integrated_circuits_list()
 	Master.Initialize(10, FALSE)
+	initialize_integrated_circuits_list()
 
 /world/proc/SetupExternalRSC()
 #if (PRELOAD_RSC == 0)
