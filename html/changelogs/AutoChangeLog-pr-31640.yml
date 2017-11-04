@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Ghosts now have a Toggle Health Scan verb, which allows them to health scan mobs they click on."

@@ -6,6 +6,10 @@
 	var/datum/parent
 
 /datum/component/New(datum/P, ...)
+	if(type == /datum/component)
+		qdel(src)
+		CRASH("[type] instantiated!")
+
 	parent = P
 	var/list/arguments = args.Copy()
 	arguments.Cut(1, 2)
@@ -56,7 +60,7 @@
 		var/test = dc[I]
 		if(test)	//already another component of this type here
 			var/list/components_of_type
-			if(!islist(test))
+			if(!length(test))
 				components_of_type = list(test)
 				dc[I] = components_of_type
 			else
@@ -91,10 +95,9 @@
 /datum/component/proc/_RemoveFromParent()
 	var/datum/P = parent
 	var/list/dc = P.datum_components
-	var/our_type = type
-	for(var/I in _GetInverseTypeList(our_type))
+	for(var/I in _GetInverseTypeList())
 		var/list/components_of_type = dc[I]
-		if(islist(components_of_type))	//
+		if(length(components_of_type))	//
 			var/list/subtracted = components_of_type - src
 			if(subtracted.len == 1)	//only 1 guy left
 				dc[I] = subtracted[1]	//make him special
@@ -106,7 +109,7 @@
 		P.datum_components = null
 	parent = null
 
-/datum/component/proc/RegisterSignal(sig_type_or_types, proc_on_self, override = FALSE)
+/datum/component/proc/RegisterSignal(sig_type_or_types, proc_or_callback, override = FALSE)
 	if(QDELETED(src))
 		return
 	var/list/procs = signal_procs
@@ -120,8 +123,10 @@
 			. = procs[sig_type]
 			if(.)
 				stack_trace("[sig_type] overridden. Use override = TRUE to suppress this warning")
-		
-		procs[sig_type] = CALLBACK(src, proc_on_self)    
+
+		if(!istype(proc_or_callback, /datum/callback)) //if it wasnt a callback before, it is now
+			proc_or_callback = CALLBACK(src, proc_or_callback)
+		procs[sig_type] = proc_or_callback
 
 /datum/component/proc/InheritComponent(datum/component/C, i_am_original)
 	return
@@ -133,8 +138,15 @@
 	set waitfor = FALSE
 	return
 
-/datum/component/proc/_GetInverseTypeList(current_type)
-	. = list(current_type)
+/datum/component/proc/_GetInverseTypeList(our_type = type)
+#if DM_VERSION > 511
+#warning Remove this hack for http://www.byond.com/forum/?post=73469
+#endif
+	set invisibility = 101
+	//we can do this one simple trick
+	var/current_type = parent_type
+	. = list(our_type, current_type)
+	//and since most components are root level + 1, this won't even have to run
 	while (current_type != /datum/component)
 		current_type = type2parent(current_type)
 		. += current_type
@@ -146,7 +158,7 @@
 	var/list/arguments = args.Copy()
 	arguments.Cut(1, 2)
 	var/target = comps[/datum/component]
-	if(!islist(target))
+	if(!length(target))
 		var/datum/component/C = target
 		if(!C.enabled)
 			return FALSE
@@ -182,7 +194,7 @@
 	if(!dc)
 		return null
 	. = dc[c_type]
-	if(islist(.))
+	if(length(.))
 		return .[1]
 
 /datum/proc/GetExactComponent(c_type)
@@ -191,7 +203,7 @@
 		return null
 	var/datum/component/C = dc[c_type]
 	if(C)
-		if(islist(C))
+		if(length(C))
 			C = C[1]
 		if(C.type == c_type)
 			return C
@@ -202,7 +214,7 @@
 	if(!dc)
 		return null
 	. = dc[c_type]
-	if(!islist(.))
+	if(!length(.))
 		return list(.)
 
 /datum/proc/AddComponent(new_type, ...)

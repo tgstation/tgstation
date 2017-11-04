@@ -6261,15 +6261,9 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "mz" = (
 /obj/structure/closet/crate,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/stack/rods{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/rods/fifty,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -6305,10 +6299,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -28
 	},
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/item/tank/jetpack/carbondioxide,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -6328,10 +6319,7 @@
 	start_charge = 100
 	},
 /obj/machinery/light/small,
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/item/clothing/shoes/magboots,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -6345,10 +6333,7 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/item/clothing/shoes/magboots,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1

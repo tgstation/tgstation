@@ -15,8 +15,7 @@
 "ae" = (
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/plasteel/twenty,
-/obj/item/stack/sheet/glass{
-	amount = 50;
+/obj/item/stack/sheet/glass/fifty{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -1624,11 +1623,8 @@
 "eE" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50;
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/glass/fifty{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -2754,14 +2750,11 @@
 /area/ruin/space/has_grav/ancientstation/rnd)
 "gM" = (
 /obj/structure/table,
-/obj/item/stack/sheet/glass{
-	amount = 50;
+/obj/item/stack/sheet/glass/fifty{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/rnd)
