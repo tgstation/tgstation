@@ -370,3 +370,6 @@
 		return TRUE
 	return FALSE
 
+/obj/item/device/electronic_assembly/Moved(oldLoc, dir)
+	for(var/obj/item/integrated_circuit/IC in contents)
+		IC.ext_moved(oldLoc, dir)

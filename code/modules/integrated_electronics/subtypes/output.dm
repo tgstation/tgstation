@@ -238,10 +238,12 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_idle = 0 // Raises to 20 when on.
 	var/obj/machinery/camera/camera
+	var/updating = FALSE
 
 /obj/item/integrated_circuit/output/video_camera/New()
 	..()
 	camera = new(src)
+	camera.network = list("RD")
 	on_data_written()
 
 /obj/item/integrated_circuit/output/video_camera/Destroy()
@@ -250,11 +252,8 @@
 
 /obj/item/integrated_circuit/output/video_camera/proc/set_camera_status(var/status)
 	if(camera)
-		if(camera.can_use())
-			GLOB.cameranet.addCamera(camera)
-		else
-			GLOB.cameranet.removeCamera(camera)
-		GLOB.cameranet.updateChunk(x, y, z)
+		camera.status = status
+		GLOB.cameranet.updatePortableCamera(camera)
 		power_draw_idle = camera.status ? 20 : 0
 		if(camera.status) // Ensure that there's actually power.
 			if(!draw_idle_power())
@@ -272,6 +271,23 @@
 	if(camera)
 		set_camera_status(0)
 		set_pin_data(IC_INPUT, 2, FALSE)
+
+/obj/item/integrated_circuit/output/video_camera/ext_moved(oldLoc, dir)
+	. = ..()
+	update_camera_location(oldLoc)
+
+#define VIDEO_CAMERA_BUFFER 10
+/obj/item/integrated_circuit/output/video_camera/proc/update_camera_location(oldLoc)
+	oldLoc = get_turf(oldLoc)
+	if(!QDELETED(camera) && !updating && oldLoc != get_turf(src))
+		updating = TRUE
+		addtimer(CALLBACK(src, .proc/do_camera_update, oldLoc), VIDEO_CAMERA_BUFFER)
+#undef VIDEO_CAMERA_BUFFER
+
+/obj/item/integrated_circuit/output/video_camera/proc/do_camera_update(oldLoc)
+	if(!QDELETED(camera) && oldLoc != get_turf(src))
+		GLOB.cameranet.updatePortableCamera(camera)
+	updating = FALSE
 
 /obj/item/integrated_circuit/output/led
 	name = "light-emitting diode"
@@ -302,7 +318,7 @@
 		text_output += "\an [name]"
 	else
 		text_output += "\an ["\improper[initial_name]"] labeled '[name]'"
-	text_output += " which is currently [(get_pin_data(IC_INPUT, 1)==1) ? "lit <font color=[led_color]>¤</font>" : "unlit."]"
+	text_output += " which is currently [(get_pin_data(IC_INPUT, 1)==1) ? "lit <font color=[led_color]>*</font>" : "unlit."]"
 	to_chat(user,jointext(text_output,null))
 
 /obj/item/integrated_circuit/output/led/red
