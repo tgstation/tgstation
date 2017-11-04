@@ -39,7 +39,7 @@ GLOBAL_PROTECT(admin_datums)
 	// md5 of ckey + cid + current_date
 	return md5("[ckey][C.computer_id][time_stamp("YYYYMMDD")]")
 
-/proc/GenerateGlobalToken()
+/datum/admins/proc/GenerateGlobalToken()
 	. = ""
 	for(var/I in 1 to 32)
 		. += "[rand(10)]"
