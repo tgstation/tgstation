@@ -165,7 +165,7 @@
 			if(grace_period)
 				to_chat(user, "<span class='big'><b>Crew grace period time remaining:</b> [DisplayTimeText(get_arrival_time())]</span>")
 			else
-				to_chat(user, "<span class='big'><b>Time until Ratvar's arrival:</b> [DisplayTimeText(get_arrival_time()))]</span>")
+				to_chat(user, "<span class='big'><b>Time until Ratvar's arrival:</b> [DisplayTimeText(get_arrival_time())]</span>")
 				switch(progress_in_seconds)
 					if(-INFINITY to GATEWAY_REEBE_FOUND)
 						to_chat(user, "<span class='heavy_brass'>The Ark is feeding power into the bluespace field.</span>")
