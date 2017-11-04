@@ -1,5 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-//Model dictionary trimmed on: 18-10-2017 23:32 (UTC)
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
@@ -57011,9 +57010,6 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/tesla_coil,
-/obj/structure/window/plasma/reinforced{
-	dir = 4
-	},
 /turf/open/floor/plating/airless,
 /area/space)
 "ctT" = (
@@ -57035,9 +57031,6 @@
 	d2 = 4
 	},
 /obj/machinery/power/tesla_coil,
-/obj/structure/window/plasma/reinforced{
-	dir = 8
-	},
 /turf/open/floor/plating/airless,
 /area/space)
 "ctV" = (
@@ -62366,9 +62359,6 @@
 /turf/open/space/basic,
 /area/space)
 "cGL" = (
-/obj/structure/window/plasma/reinforced{
-	dir = 4
-	},
 /obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow{
 	d2 = 8;
@@ -62377,9 +62367,6 @@
 /turf/open/floor/plating/airless,
 /area/space)
 "cGM" = (
-/obj/structure/window/plasma/reinforced{
-	dir = 8
-	},
 /obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow{
 	icon_state = "0-4";
@@ -62424,9 +62411,6 @@
 /turf/open/floor/plating/airless,
 /area/space)
 "cGR" = (
-/obj/structure/window/plasma/reinforced{
-	dir = 4
-	},
 /turf/open/floor/plating/airless,
 /area/space)
 "cGS" = (
@@ -90173,9 +90157,9 @@ aaF
 ctS
 cGL
 ctS
-cGN
+cGL
 cGR
-cGU
+cGL
 ctS
 aaF
 aaF
@@ -92486,7 +92470,7 @@ cmT
 cvU
 aaa
 aaa
-cGP
+cGO
 aaa
 cvU
 cvU
@@ -92743,9 +92727,9 @@ aaF
 ctU
 cGM
 ctU
-cGQ
-cGS
-cGV
+cGM
+cGR
+cGM
 ctU
 aaF
 aaF
