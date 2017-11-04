@@ -1,0 +1,4 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - bugfix: "Directional character icon previews now function properly. Other things relying on getflaticon probably work with directional icons again, as well."

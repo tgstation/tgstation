@@ -1,5 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - bugfix: "Singularity objects no longer become contaminated by radiation."
-  - admin: "Removed the radiation message admin spam and moved it to an investigation log."

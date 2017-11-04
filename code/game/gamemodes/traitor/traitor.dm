@@ -143,6 +143,7 @@
 			else
 				text += "<br><font color='red'><B>The [special_role_text] has failed!</B></font>"
 				SSblackbox.add_details("traitor_success","FAIL")
+				SEND_SOUND(traitor.current, 'sound/ambience/ambifailure.ogg')
 
 			text += "<br>"
 

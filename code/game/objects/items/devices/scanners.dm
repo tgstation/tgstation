@@ -106,8 +106,8 @@ MASS SPECTROMETER
 
 
 // Used by the PDA medical scanner too
-/proc/healthscan(mob/living/user, mob/living/M, mode = 1, advanced = FALSE)
-	if(user.incapacitated() || user.eye_blind)
+/proc/healthscan(mob/user, mob/living/M, mode = 1, advanced = FALSE)
+	if(isliving(user) && (user.incapacitated() || user.eye_blind))
 		return
 	//Damage specifics
 	var/oxy_loss = M.getOxyLoss()

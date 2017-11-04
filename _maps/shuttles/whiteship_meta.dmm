@@ -117,9 +117,7 @@
 /area/shuttle/abandoned)
 "al" = (
 /obj/structure/table,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
 /obj/item/stock_parts/cell/high{
 	charge = 100;
 	maxcharge = 15000;
@@ -478,14 +476,11 @@
 /area/shuttle/abandoned)
 "aM" = (
 /obj/structure/table,
-/obj/item/stack/sheet/glass{
-	amount = 50;
+/obj/item/stack/sheet/glass/fifty{
 	pixel_x = -2;
 	pixel_y = 2
 	},
-/obj/item/stack/rods{
-	amount = 50
-	},
+/obj/item/stack/rods/fifty,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -494,11 +489,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aN" = (
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9;
-	pixel_y = 2
-	},
+/obj/structure/rack,
 /obj/item/storage/toolbox/electrical{
 	pixel_x = 1;
 	pixel_y = 6

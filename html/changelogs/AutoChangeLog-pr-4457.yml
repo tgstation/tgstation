@@ -1,4 +1,0 @@
-author: "HonkBot"
-delete-after: True
-changes: 
-  - bugfix: "Ranged holoparasites in the scout mode have had their camera fixed."

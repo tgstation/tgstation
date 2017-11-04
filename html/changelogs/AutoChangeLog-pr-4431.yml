@@ -1,5 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - soundadd: "Ashstorms have different sounds for both their early and active phases."
-  - soundadd: "Ashstorms have sound throughout their effect and sound different inside and outside."

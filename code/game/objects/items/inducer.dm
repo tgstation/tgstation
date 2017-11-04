@@ -96,6 +96,8 @@
 	return ..()
 
 /obj/item/inducer/proc/recharge(atom/movable/A, mob/user)
+	if(!isturf(A) && user.loc == A)
+		return FALSE
 	if(recharging)
 		return TRUE
 	else

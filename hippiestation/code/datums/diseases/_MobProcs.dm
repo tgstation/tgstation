@@ -1,22 +1,22 @@
 
 /mob/CanContractDisease(datum/disease/D)
 	if(stat == DEAD)
-		return 0
+		return FALSE
 
 	if(D.GetDiseaseID() in resistances)
-		return 0
+		return FALSE
 
 	if(HasDisease(D))
-		return 0
+		return FALSE
 
 	if(!(type in D.viable_mobtypes))
-		return 0
-
+		return FALSE
+//The next would normally be missing in the base proc but its needed to allow for and cap the number of viruses on your system.
 	if(count_by_type(viruses, /datum/disease/advance) >= 3)
-		return 0
+		return FALSE
 
-	return 1
-
+	return TRUE
+//Normally the below proc would have a set of stuff to cause a new infecting virus to kill an existing one based on its stats, this was removed.
 /mob/AddDisease(datum/disease/D)
 	var/datum/disease/DD = new D.type(1, D, 0)
 	viruses += DD

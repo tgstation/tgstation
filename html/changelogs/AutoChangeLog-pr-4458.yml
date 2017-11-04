@@ -1,0 +1,4 @@
+author: "Spacedong"
+delete-after: True
+changes: 
+  - rscdel: "Removed one-directional plasma windows in the engine area."
