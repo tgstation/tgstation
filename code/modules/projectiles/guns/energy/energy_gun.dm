@@ -104,7 +104,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/disabler)
 	selfcharge = 1
 	var/fail_tick = 0
-	var/fail_chance = 0
+	var/fail_chance = 35
 
 /obj/item/gun/energy/e_gun/nuclear/process()
 	if(fail_tick > 0)
