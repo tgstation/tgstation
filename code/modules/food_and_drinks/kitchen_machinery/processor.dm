@@ -47,22 +47,26 @@
 	if (recipe.output && loc && !QDELETED(src))
 		for(var/i = 0, i < rating_amount, i++)
 			new recipe.output(drop_location())
-	if (what)
+	if (ismob(what))
+		var/mob/themob = what
+		themob.gib(TRUE,TRUE,TRUE)
+	else
 		qdel(what)
 
 
 /obj/machinery/processor/slime/process_food(datum/food_processor_process/recipe, atom/movable/what)
 	var/mob/living/simple_animal/slime/S = what
-	var/C = S.cores
-	if(S.stat != DEAD)
-		S.forceMove(drop_location())
-		S.visible_message("<span class='notice'>[C] crawls free of the processor!</span>")
-		return
-	for(var/i in 1 to (C+rating_amount-1))
-		var/atom/movable/item = new S.coretype(drop_location())
-		adjust_item_drop_location(item)
-		SSblackbox.add_details("slime_core_harvested","[replacetext(S.colour," ","_")]")
-	S.gib(TRUE,TRUE,TRUE)
+	if (istype(S))
+		var/C = S.cores
+		if(S.stat != DEAD)
+			S.forceMove(drop_location())
+			S.visible_message("<span class='notice'>[C] crawls free of the processor!</span>")
+			return
+		for(var/i in 1 to (C+rating_amount-1))
+			var/atom/movable/item = new S.coretype(drop_location())
+			adjust_item_drop_location(item)
+			SSblackbox.add_details("slime_core_harvested","[replacetext(S.colour," ","_")]")
+	..()
 
 
 /obj/machinery/processor/proc/select_recipe(X)
