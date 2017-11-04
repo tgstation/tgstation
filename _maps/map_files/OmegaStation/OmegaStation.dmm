@@ -22068,9 +22068,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
-	dir = 1;
-	filter_type = "freon";
-	name = "gas filter (freon)"
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
