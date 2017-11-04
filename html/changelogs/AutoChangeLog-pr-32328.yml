@@ -1,0 +1,5 @@
+author: "Jalleo"
+delete-after: True
+changes: 
+  - tweak: "Removed a variable to state which RCD's can deconstruct reinforced walls"
+  - balance: "Made combat (ERT ones) and admin RCDs able to deconstruct r walls alongside borg ones"

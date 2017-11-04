@@ -24,6 +24,7 @@
 
 /datum/species/dullahan/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	. = ..()
+	H.flags_1 &= ~HEAR_1
 	var/obj/item/bodypart/head/head = H.get_bodypart("head")
 	if(head)
 		head.drop_limb()
@@ -33,24 +34,18 @@
 		H.put_in_hands(head)
 
 /datum/species/dullahan/on_species_loss(mob/living/carbon/human/H)
+	H.flags_1 |= ~HEAR_1
+	H.reset_perspective(H)
 	if(myhead)
 		var/obj/item/dullahan_relay/DR = myhead
 		myhead = null
 		DR.owner = null
 		qdel(DR)
+	H.regenerate_limb("head",FALSE)
 	..()
 
 /datum/species/dullahan/spec_life(mob/living/carbon/human/H)
-	if(!QDELETED(myhead))
-		update_vision_perspective(H)
-
-		var/turf/Me = get_turf(H)
-		var/turf/Head = get_turf(myhead)
-		if(Me == Head || (Head in oview(7, Me)))
-			H.disabilities &= ~DEAF
-		else
-			H.disabilities |= DEAF
-	else
+	if(QDELETED(myhead))
 		myhead = null
 		H.gib()
 	var/obj/item/bodypart/head/head2 = H.get_bodypart("head")
@@ -128,10 +123,6 @@
 
 /obj/item/dullahan_relay/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
 	if(!QDELETED(owner))
-		var/turf/T = get_turf(speaker)
-		var/turf/owner_turf = get_turf(owner)
-		if(T == owner_turf || (T in oview(7, owner_turf))) //Do not relay things we can already hear
-			return
 		message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode)
 		to_chat(owner,message)
 	else

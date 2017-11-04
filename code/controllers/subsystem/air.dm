@@ -27,6 +27,7 @@ SUBSYSTEM_DEF(air)
 	var/list/hotspots = list()
 	var/list/networks = list()
 	var/list/obj/machinery/atmos_machinery = list()
+	var/list/pipe_construction_generation_cache = list()
 
 
 
