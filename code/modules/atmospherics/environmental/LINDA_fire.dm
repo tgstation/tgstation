@@ -1,3 +1,5 @@
+
+#define INSUFFICIENT(path) (!location.air.gases[path] || location.air.gases[path][MOLES] < 0.5)
 /atom/proc/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return null
 
@@ -112,7 +114,7 @@
 		qdel(src)
 		return
 
-	if(!(location.air) || !(location.air.gases[/datum/gas/plasma] || location.air.gases[/datum/gas/tritium]) || !location.air.gases[/datum/gas/oxygen] || (location.air.gases[/datum/gas/plasma][MOLES] < 0.5 && location.air.gases[/datum/gas/tritium][MOLES] < 0.5) || location.air.gases[/datum/gas/oxygen][MOLES] < 0.5)
+	if(!location.air || (INSUFFICIENT(/datum/gas/plasma) && INSUFFICIENT(/datum/gas/tritium)) || INSUFFICIENT(/datum/gas/oxygen))
 		qdel(src)
 		return
 
@@ -187,3 +189,4 @@
 	. = ..()
 	if(!isliving(loc))
 		qdel(src)
+#undef INSUFFICIENT
