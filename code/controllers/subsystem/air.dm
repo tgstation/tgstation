@@ -377,6 +377,16 @@ SUBSYSTEM_DEF(air)
 		AM.build_network()
 		CHECK_TICK
 
+/datum/controller/subsystem/air/proc/get_pipe_cache(type, direction=NORTH)
+	if(!pipe_construction_generation_cache[type])
+		pipe_construction_generation_cache[type] = list()
+
+	if(!pipe_construction_generation_cache[type]["[direction]"])
+		var/obj/machinery/atmospherics/A = new type(null, FALSE, direction)
+		pipe_construction_generation_cache[type]["[direction]"] = A
+
+	return pipe_construction_generation_cache[type]["[direction]"]
+
 
 #undef SSAIR_PIPENETS
 #undef SSAIR_ATMOSMACHINERY
