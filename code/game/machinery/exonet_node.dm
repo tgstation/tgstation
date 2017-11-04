@@ -110,20 +110,23 @@
 /obj/machinery/exonet_node/attack_hand(mob/user)
 	ui_interact(user)
 
-// Proc: ui_interact()
-// Parameters: 4 (standard NanoUI arguments)
-// Description: Allows the user to turn the machine on or off, or open or close certain 'ports' for things like external PDA messages, newscasters, etc.
 /obj/machinery/exonet_node/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, var/force_open = 1,datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	// this is the data which will be sent to the ui
-	var/data[0]
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "exonet_node", name, 300, 300, master_ui, state)
+		ui.open()
 
-
+/obj/machinery/exonet_node/ui_data(mob/user)
+	var/list/data = list()
 	data["on"] = toggle ? 1 : 0
 	data["allowPDAs"] = allow_external_PDAs
 	data["allowCommunicators"] = allow_external_communicators
 	data["allowNewscasters"] = allow_external_newscasters
 	data["logs"] = logs
+  return data
 
+
+/obj/machinery/exonet_node/ui_act(action, params)
 
 	// update the ui if it exists, returns null if no ui is passed/found
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, data, force_open)
@@ -142,36 +145,35 @@
 // Parameters: 2 (standard Topic arguments)
 // Description: Responds to button presses on the NanoUI interface.
 /obj/machinery/exonet_node/Topic(href, href_list)
+
 	if(..())
-		return 1
-	if(href_list["toggle_power"])
-		toggle = !toggle
-		update_power()
-		if(!toggle)
-			var/msg = "[usr.client.key] ([usr]) has turned [src] off, at [x],[y],[z]."
-			message_admins(msg)
-			log_game(msg)
-
-	if(href_list["toggle_PDA_port"])
-		allow_external_PDAs = !allow_external_PDAs
-
-	if(href_list["toggle_communicator_port"])
-		allow_external_communicators = !allow_external_communicators
-		if(!allow_external_communicators)
-			var/msg = "[usr.client.key] ([usr]) has turned [src]'s communicator port off, at [x],[y],[z]."
-			message_admins(msg)
-			log_game(msg)
-
-	if(href_list["toggle_newscaster_port"])
-		allow_external_newscasters = !allow_external_newscasters
-		if(!allow_external_newscasters)
-			var/msg = "[usr.client.key] ([usr]) has turned [src]'s newscaster port off, at [x],[y],[z]."
-			message_admins(msg)
-			log_game(msg)
-
+		return
+	switch(action)
+		if("toggle_power")
+			toggle = !toggle
+			update_power()
+			if(!toggle)
+				var/msg = "[usr.client.key] ([usr]) has turned [src] off, at [x],[y],[z]."
+				message_admins(msg)
+				log_game(msg)
+		if("toggle_PDA_port")
+			allow_external_PDAs = !allow_external_PDAs
+		if("toggle_communicator_port")
+			allow_external_communicators = !allow_external_communicators
+			if(!allow_external_communicators)
+				var/msg = "[usr.client.key] ([usr]) has turned [src]'s communicator port off, at [x],[y],[z]."
+				message_admins(msg)
+				log_game(msg)
+		if("toggle_newscaster_port")
+			allow_external_newscasters = !allow_external_newscasters
+			if(!allow_external_newscasters)
+				var/msg = "[usr.client.key] ([usr]) has turned [src]'s newscaster port off, at [x],[y],[z]."
+				message_admins(msg)
+				log_game(msg)
+	. = TRUE
 	update_icon()
-	SStgui.update_uis(src)
 	add_fingerprint(usr)
+
 
 // Proc: get_exonet_node()
 // Parameters: None

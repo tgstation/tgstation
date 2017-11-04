@@ -394,3 +394,6 @@ a creative player the means to solve many problems.  Circuits are held inside an
 		O.disconnect()
 	for(var/datum/integrated_io/activate/A in activators)
 		A.disconnect()
+
+/obj/item/integrated_circuit/proc/ext_moved(oldLoc, dir)
+	return
