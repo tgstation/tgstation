@@ -164,7 +164,7 @@
 		if(prob(33))
 			pulse(wire)
 			remaining_pulses--
-			if(remaining_pulses <= 0)
+			if(!remaining_pulses)
 				break
 
 // Overridable Procs
