@@ -189,7 +189,7 @@
 	B.apply_default_parts(src)
 
 /obj/machinery/processor/slime/adjust_item_drop_location(atom/movable/AM)
-	var/list/slimecores = subtypesof(/obj/item/slime_extract)
+	var/static/list/slimecores = subtypesof(/obj/item/slime_extract)
 	var/i = 0
 	if(!(i = slimecores.Find(AM.type))) // If the item is not found
 		return
