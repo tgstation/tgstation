@@ -6,7 +6,7 @@
 #define STICKYBAN_MAX_EXISTING_USER_MATCHES 5 //ie, users who were connected before the ban triggered
 #define STICKYBAN_MAX_ADMIN_MATCHES 2
 
-/world/IsBanned(key,address,computer_id,real_bans_only=FALSE)
+/world/IsBanned(key,address,computer_id,type,real_bans_only=FALSE)
 	if (!key || !address || !computer_id)
 		if(real_bans_only)
 			return FALSE
