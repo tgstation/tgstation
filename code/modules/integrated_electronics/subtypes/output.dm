@@ -236,7 +236,7 @@
 	outputs = list()
 	activators = list()
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
-	power_draw_idle = 0 // Raises to 10 when on.
+	power_draw_idle = 0 // Raises to 20 when on.
 	var/obj/machinery/camera/camera
 	var/updating = FALSE
 
@@ -252,28 +252,9 @@
 
 /obj/item/integrated_circuit/output/video_camera/proc/set_camera_status(var/status)
 	if(camera)
-
-		if(camera.can_use() && status)
-			if(!(camera in GLOB.cameranet))
-				GLOB.cameranet.addCamera(camera)
-		else
-			if(camera in GLOB.cameranet)
-				GLOB.cameranet.removeCamera(camera)
-		if(status)
-			camera.status = TRUE
-			power_draw_idle = 10
-		else
-			camera.status = FALSE
-			power_draw_idle = 0
-
-		GLOB.cameranet.updateChunk(x, y, z)
-
+		camera.status = status
+		GLOB.cameranet.updatePortableCamera(camera)
 		power_draw_idle = camera.status ? 20 : 0
-		for(var/mob/O in GLOB.player_list)
-			if (O.client && O.client.eye == src)
-				O.unset_machine()
-				O.reset_perspective(null)
-				to_chat(O, "The screen bursts into static.")
 		if(camera.status) // Ensure that there's actually power.
 			if(!draw_idle_power())
 				power_fail()
@@ -337,10 +318,8 @@
 		text_output += "\an [name]"
 	else
 		text_output += "\an ["\improper[initial_name]"] labeled '[name]'"
-
 	text_output += " which is currently [(get_pin_data(IC_INPUT, 1)==1) ? "lit <font color=[led_color]>*</font>" : "unlit."]"
 	to_chat(user,jointext(text_output,null))
-
 
 /obj/item/integrated_circuit/output/led/red
 	name = "red LED"
@@ -377,40 +356,3 @@
 /obj/item/integrated_circuit/output/led/pink
 	name = "pink LED"
 	led_color = "#FF00FF"
-/*
-/obj/item/integrated_circuit/output/led/red
-	name = "red LED"
-	led_color = COLOR_RED
-
-/obj/item/integrated_circuit/output/led/orange
-	name = "orange LED"
-	led_color = COLOR_ORANGE
-
-/obj/item/integrated_circuit/output/led/yellow
-	name = "yellow LED"
-	led_color = COLOR_YELLOW
-
-/obj/item/integrated_circuit/output/led/green
-	name = "green LED"
-	led_color = COLOR_GREEN
-
-/obj/item/integrated_circuit/output/led/blue
-	name = "blue LED"
-	led_color = COLOR_BLUE
-
-/obj/item/integrated_circuit/output/led/purple
-	name = "purple LED"
-	led_color = COLOR_PURPLE
-
-/obj/item/integrated_circuit/output/led/cyan
-	name = "cyan LED"
-	led_color = COLOR_CYAN
-
-/obj/item/integrated_circuit/output/led/white
-	name = "white LED"
-	led_color = COLOR_WHITE
-
-/obj/item/integrated_circuit/output/led/pink
-	name = "pink LED"
-	led_color = COLOR_PINK
-*/
