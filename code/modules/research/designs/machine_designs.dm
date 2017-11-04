@@ -315,7 +315,7 @@
 	category = list ("Misc. Machinery")
 
 /datum/design/board/processor
-	name = "Machine Design (Food processor Board)"
+	name = "Machine Design (Food Processor Board)"
 	desc = "The circuit board for a food processor."
 	id = "processor"
 	req_tech = list("programming" = 1)
