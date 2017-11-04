@@ -139,13 +139,15 @@
 		return world.time + (seconds_until_activation * 10)
 	if(grace_period)
 		return world.time + (grace_period * 10)
+	else if(GATEWAY_RATVAR_ARRIVAL - progress_in_seconds > 0)
+		return round(max((GATEWAY_RATVAR_ARRIVAL - progress_in_seconds) / (GATEWAY_SUMMON_RATE), 0), 1)
 	return world.time
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/get_arrival_text(s_on_time)
 	if(seconds_until_activation)
-		return "[seconds_until_activation][s_on_time ? "S" : ""]"
+		return "[get_arrival_time()][s_on_time ? "S" : ""]"
 	if(grace_period)
-		return "[grace_period][s_on_time ? "S" : ""]"
+		return "[get_arrival_time()][s_on_time ? "S" : ""]"
 	. = "IMMINENT"
 	if(!obj_integrity)
 		. = "DETONATING"
