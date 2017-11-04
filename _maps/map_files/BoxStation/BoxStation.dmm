@@ -6661,9 +6661,11 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 1;
 	frequency = 1441;
-	id = "waste_out"
+	id = "waste_out";
+	volume_rate = 200
 	},
-/turf/open/floor/plating/airless,
+/obj/structure/lattice/catwalk,
+/turf/open/space,
 /area/engine/atmos)
 "apJ" = (
 /turf/closed/wall,
@@ -54540,7 +54542,7 @@
 /obj/machinery/atmospherics/components/binary/valve/digital{
 	dir = 4;
 	name = "Output Release";
-	open = 1;
+	open = 1
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -80472,7 +80474,7 @@ aaH
 bCq
 bHE
 bRh
-bSr
+bLu
 bCq
 bHE
 bLv
@@ -85394,7 +85396,7 @@ cSH
 cGu
 cGH
 QoB
-QoE
+QoB
 cGR
 csd
 csd
@@ -85615,7 +85617,7 @@ cjL
 cCb
 bNI
 bEP
-bVL
+bLu
 bVJ
 bVJ
 bVJ
@@ -86162,7 +86164,7 @@ cFe
 cMD
 cFM
 czE
-Qow
+Qov
 ccw
 cGT
 csd
@@ -87190,7 +87192,7 @@ cFh
 cMD
 cFM
 czE
-Qox
+Qov
 ccw
 cGT
 csd
@@ -87447,7 +87449,7 @@ cEz
 cMD
 cFR
 cSJ
-Qoy
+Qov
 cMm
 ciZ
 cHd
@@ -87710,7 +87712,7 @@ cGS
 cHe
 cHe
 cHr
-QoJ
+QoI
 ccw
 aaf
 aaT
@@ -87964,7 +87966,7 @@ cSK
 cGx
 cGK
 QoC
-QoF
+QoC
 cGY
 csd
 csd
@@ -104396,7 +104398,7 @@ cls
 cmr
 cNW
 cOe
-cmo
+cPa
 cNW
 aaf
 aaf
@@ -106440,7 +106442,7 @@ bPN
 bWr
 cbZ
 bQZ
-cmo
+cPa
 cNW
 cOx
 cNW
