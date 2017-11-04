@@ -55504,9 +55504,7 @@
 /area/engine/engineering)
 "cSJ" = (
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
-	dir = 8;
-	filter_type = "freon";
-	name = "gas filter (freon)"
+	dir = 8
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
