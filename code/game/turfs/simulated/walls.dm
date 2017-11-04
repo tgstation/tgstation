@@ -167,6 +167,8 @@
 	if(try_clean(W, user, T) || try_wallmount(W, user, T) || try_decon(W, user, T) || try_destroy(W, user, T))
 		return
 
+	return ..()
+
 /turf/closed/wall/proc/try_clean(obj/item/W, mob/user, turf/T)
 	if((user.a_intent != INTENT_HELP) || !LAZYLEN(damage_decals) || !istype(W, /obj/item/weldingtool))
 		return FALSE
