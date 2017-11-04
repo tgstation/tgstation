@@ -71830,10 +71830,7 @@
 /turf/open/floor/plating,
 /area/chapel/main)
 "cRM" = (
-/obj/machinery/processor{
-	desc = "A machine used to process slimes and retrieve their extract.";
-	name = "Slime Processor"
-	},
+/obj/machinery/processor/slime,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 2
 	},
