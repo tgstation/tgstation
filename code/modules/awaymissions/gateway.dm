@@ -234,6 +234,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 
 
 /obj/machinery/gateway/centeraway/admin
+	desc = "A mysterious gateway built by unknown hands, this one seems more compact."
 
 /obj/machinery/gateway/centeraway/admin/Initialize()
 	. = ..()
