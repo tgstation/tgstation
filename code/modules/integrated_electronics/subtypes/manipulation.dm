@@ -4,40 +4,62 @@
 /obj/item/integrated_circuit/manipulation/weapon_firing
 	name = "weapon firing mechanism"
 	desc = "This somewhat complicated system allows one to slot in a gun, direct it towards a position, and remotely fire it."
-	extended_desc = "The firing mechanism can slot in most ranged weapons, ballistic and energy.  \
+	extended_desc = "The firing mechanism can slot in any energy weapon.  \
 	The first and second inputs need to be numbers.  They are coordinates for the gun to fire at, relative to the machine itself.  \
-	The 'fire' activator will cause the mechanism to attempt to fire the weapon at the coordinates, if possible.  Note that the \
-	normal limitations to firearms, such as ammunition requirements and firing delays, still hold true if fired by the mechanism."
+	The 'fire' activator will cause the mechanism to attempt to fire the weapon at the coordinates, if possible.  Mode is switch between\
+	letal(TRUE) or stun(FALSE) modes.It uses internal battery of weapon."
 	complexity = 20
 	w_class = WEIGHT_CLASS_SMALL
 	size = 3
 	inputs = list(
 		"target X rel" = IC_PINTYPE_NUMBER,
-		"target Y rel" = IC_PINTYPE_NUMBER
+		"target Y rel" = IC_PINTYPE_NUMBER,
+		"mode"         = IC_PINTYPE_BOOLEAN
 		)
-	outputs = list()
+	outputs = list("reference to gun" = IC_PINTYPE_REF)
 	activators = list(
 		"fire" = IC_PINTYPE_PULSE_IN
+
 	)
-	var/obj/item/gun/installed_gun = null
+	var/obj/item/gun/energy/installed_gun = null
 	spawn_flags = IC_SPAWN_RESEARCH
 	origin_tech = list(TECH_ENGINEERING = 3, TECH_DATA = 3, TECH_COMBAT = 4)
-	power_draw_per_use = 50 // The targeting mechanism uses this.  The actual gun uses its own cell for firing if it's an energy weapon.
+	power_draw_per_use = 0
+	var/mode = FALSE
+
+	var/stun_projectile = null		//stun mode projectile type
+	var/stun_projectile_sound
+	var/lethal_projectile = null	//lethal mode projectile type
+	var/lethal_projectile_sound
+
+
 
 /obj/item/integrated_circuit/manipulation/weapon_firing/Destroy()
 	qdel(installed_gun)
 	..()
 
 /obj/item/integrated_circuit/manipulation/weapon_firing/attackby(var/obj/O, var/mob/user)
-	if(istype(O, /obj/item/gun))
+	if(istype(O, /obj/item/gun/energy))
 		var/obj/item/gun/gun = O
 		if(installed_gun)
 			user << "<span class='warning'>There's already a weapon installed.</span>"
 			return
+
 		user.transferItemToLoc(gun,src)
 		installed_gun = gun
+		var/list/gun_properties = gun.get_turret_properties()
 		user << "<span class='notice'>You slide \the [gun] into the firing mechanism.</span>"
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+		stun_projectile = gun_properties["stun_projectile"]
+		stun_projectile_sound = gun_properties["stun_projectile_sound"]
+		lethal_projectile = gun_properties["lethal_projectile"]
+		lethal_projectile_sound = gun_properties["lethal_projectile_sound"]
+		if(gun_properties["shot_delay"])
+			cooldown_per_use = gun_properties["shot_delay"]
+		if(gun_properties["reqpower"])
+			power_draw_per_use = gun_properties["reqpower"]
+		set_pin_data(IC_OUTPUT, 1, weakref(installed_gun))
+		push_data()
 	else
 		..()
 
@@ -48,16 +70,21 @@
 		size = initial(size)
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 		installed_gun = null
+		set_pin_data(IC_OUTPUT, 1, weakref(null))
+		push_data()
 	else
 		user << "<span class='notice'>There's no weapon to remove from the mechanism.</span>"
 
 /obj/item/integrated_circuit/manipulation/weapon_firing/do_work()
 	if(!installed_gun)
 		return
-
+	set_pin_data(IC_OUTPUT, 1, weakref(installed_gun))
+	push_data()
 	var/datum/integrated_io/target_x = inputs[1]
 	var/datum/integrated_io/target_y = inputs[2]
+	var/datum/integrated_io/mode1 = inputs[3]
 
+	mode = mode1.data
 	if(src.assembly)
 		if(isnum(target_x.data))
 			target_x.data = round(target_x.data)
@@ -96,8 +123,39 @@
 
 		if(!T)
 			return
-		if(installed_gun.can_shoot())
-			installed_gun.process_fire(T)
+
+		shootAt(T)
+
+/obj/item/integrated_circuit/manipulation/weapon_firing/proc/shootAt(turf/target)
+
+	var/turf/T = get_turf(src)
+	var/turf/U = target
+	if(!istype(T) || !istype(U))
+		return
+	if(!installed_gun.cell)
+		return
+	if(!installed_gun.cell.charge)
+		return
+	var/obj/item/ammo_casing/energy/shot = installed_gun.ammo_type[mode?2:1]
+	if(installed_gun.cell.charge < shot.e_cost)
+		return
+	if(!shot)
+		return
+	update_icon()
+	var/obj/item/projectile/A
+	if(!mode)
+		A = new stun_projectile(T)
+		playsound(loc, stun_projectile_sound, 75, 1)
+	else
+		A = new lethal_projectile(T)
+		playsound(loc, lethal_projectile_sound, 75, 1)
+
+
+	installed_gun.cell.use(shot.e_cost)
+	//Shooting Code:
+	A.preparePixelProjectile(target, src)
+	A.fire()
+	return A
 
 /obj/item/integrated_circuit/manipulation/locomotion
 	name = "locomotion circuit"
@@ -269,26 +327,26 @@
 */
 /obj/item/integrated_circuit/manipulation/grabber/do_work()
 	var/turf/T = get_turf(src)
-	var/atom/movable/AM = get_pin_data_as_type(IC_INPUT, 1, /obj/item)
+	var/obj/item/AM = get_pin_data_as_type(IC_INPUT, 1, /obj/item)
+	var/turf/P = get_turf(AM)
 	var/mode = get_pin_data(IC_INPUT, 2)
 	if(mode == 1)
-		if(AM.Adjacent(T))
+		if(P.Adjacent(T))
 			if(contents.len < 10)
-				if(istype(AM,/obj/item))
-					var obj/item/A = AM
-					if(A.w_class < WEIGHT_CLASS_SMALL)
-						AM.loc = src
+				if(AM)
+					if(AM.w_class <= WEIGHT_CLASS_SMALL)
+						AM.forceMove(src)
 
 	if(mode == 0)
 		if(contents.len)
 			var/obj/item/U = contents[1]
-			U.loc = T
+			U.forceMove(T)
 	if(mode == -1)
 		if(contents.len)
 			var/obj/item/U
 			for(U in contents)
-				U.loc = T
-	if(contents.len>0)
+				U.forceMove(T)
+	if(contents.len)
 		set_pin_data(IC_OUTPUT, 1, weakref(contents[1]))
 		set_pin_data(IC_OUTPUT, 2, weakref(contents[contents.len]))
 	else
