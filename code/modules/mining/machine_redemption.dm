@@ -11,7 +11,7 @@
 	input_dir = NORTH
 	output_dir = SOUTH
 	req_access = list(ACCESS_MINERAL_STOREROOM)
-	speed_process = 1
+	speed_process = TRUE
 	circuit = /obj/item/circuitboard/machine/ore_redemption
 	var/req_access_reclaim = ACCESS_MINING_STATION
 	var/obj/item/card/id/inserted_id
