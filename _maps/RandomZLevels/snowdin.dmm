@@ -219,9 +219,7 @@
 /area/awaymission/snowdin/base)
 "aE" = (
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1;
-	d2 = 2
+	icon_state = "0-2"
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
@@ -256,8 +254,6 @@
 /area/awaymission/snowdin/base)
 "aJ" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel{
@@ -497,9 +493,7 @@
 "bp" = (
 /obj/machinery/gateway,
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1;
-	d2 = 2
+	icon_state = "0-2"
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel{
@@ -556,9 +550,7 @@
 	dir = 8
 	},
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1;
-	d2 = 2
+	icon_state = "0-2"
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
@@ -585,8 +577,6 @@
 "bx" = (
 /obj/effect/landmark/awaystart,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel{
@@ -596,8 +586,6 @@
 /area/awaymission/snowdin/base)
 "by" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/effect/landmark/awaystart,
@@ -676,12 +664,9 @@
 	dir = 8
 	},
 /obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
+	icon_state = "0-4"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel{
@@ -691,8 +676,6 @@
 /area/awaymission/snowdin/base)
 "bI" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/effect/landmark/awaystart,
@@ -703,14 +686,10 @@
 /area/awaymission/snowdin/base)
 "bJ" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/effect/landmark/awaystart,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel{
@@ -728,8 +707,6 @@
 /area/awaymission/snowdin/base)
 "bL" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/effect/landmark/awaystart,
