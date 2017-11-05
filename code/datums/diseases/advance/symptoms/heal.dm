@@ -380,9 +380,9 @@ Bonus
 	switch(M.radiation)
 		if(0)
 			return FALSE
-		if(1 to 350)
+		if(1 to RAD_MOB_SAFE)
 			return 0.25
-		if(351 to 750)
+		if(RAD_MOB_SAFE + 1 to 750)
 			return 0.5
 		if(751 to 1250)
 			return 0.75

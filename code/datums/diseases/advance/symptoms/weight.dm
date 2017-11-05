@@ -1,55 +1,6 @@
 /*
 //////////////////////////////////////
 
-Weight Gain
-
-	Very Very Noticable.
-	Decreases resistance.
-	Decreases stage speed.
-	Reduced transmittable.
-	Intense Level.
-
-Bonus
-	Increases the weight gain of the mob,
-	forcing it to eventually turn fat.
-//////////////////////////////////////
-*/
-
-/datum/symptom/weight_gain
-	name = "Weight Gain"
-	desc = "The virus mutates the host's metabolism, making it gain weight much faster than normal."
-	stealth = -1
-	resistance = -3
-	stage_speed = 1
-	transmittable = -1
-	level = 4
-	severity = 3
-	base_message_chance = 100
-	symptom_delay_min = 15
-	symptom_delay_max = 45
-	threshold_desc = "<b>Stealth 4:</b> The symptom is less noticeable."
-
-/datum/symptom/weight_gain/Start(datum/disease/advance/A)
-	if(!..())
-		return
-	if(A.properties["stealth"] >= 4) //warn less often
-		base_message_chance = 25
-
-/datum/symptom/weight_gain/Activate(datum/disease/advance/A)
-	if(!..())
-		return
-	var/mob/living/M = A.affected_mob
-	switch(A.stage)
-		if(1, 2, 3, 4)
-			if(prob(base_message_chance))
-				to_chat(M, "<span class='warning'>[pick("You feel blubbery.", "Your stomach hurts.")]</span>")
-		else
-			M.overeatduration = min(M.overeatduration + 100, 600)
-			M.nutrition = min(M.nutrition + 100, NUTRITION_LEVEL_FULL)
-
-/*
-//////////////////////////////////////
-
 Weight Loss
 
 	Very Very Noticable.
