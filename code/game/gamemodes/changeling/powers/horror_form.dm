@@ -11,6 +11,7 @@
 		return 0
 	user.visible_message("<span class='warning'>[user] writhes and contorts, their body expanding to inhuman proportions!</span>", \
 						"<span class='danger'>We begin our transformation to our true form!</span>")
+	playsound(src, 'sound/creatures/horror_form.ogg', 100, 1, 1, 1)
 	if(!do_after(user, 30, target = user))
 		user.visible_message("<span class='warning'>[user]'s transformation abruptly reverts itself!</span>", \
 							"<span class='warning'>Our transformation has been interrupted!</span>")
