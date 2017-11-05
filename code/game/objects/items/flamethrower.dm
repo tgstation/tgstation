@@ -140,6 +140,7 @@
 		user.put_in_hands(ptank)
 		ptank = null
 		to_chat(user, "<span class='notice'>You remove the plasma tank from [src]!</span>")
+		update_icon()
 
 /obj/item/flamethrower/examine(mob/user)
 	..()
