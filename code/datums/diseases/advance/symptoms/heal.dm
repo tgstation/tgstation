@@ -239,7 +239,7 @@ Bonus
 	if(prob(base_message_chance) && !hide_healing)
 		new /obj/effect/temp_visual/heal(M.loc, "#CC1100")
 
-	if(M.getBruteLoss() + M.getFireLoss() == 0)
+	if(active_coma && M.getBruteLoss() + M.getFireLoss() == 0)
 		uncoma(M)
 
 	return 1
