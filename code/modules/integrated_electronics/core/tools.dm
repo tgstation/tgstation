@@ -109,7 +109,7 @@
 	settings to specific circuits, or for debugging purposes.  It can also pulse activation pins."
 	icon = 'icons/obj/electronic_assemblies.dmi'
 	icon_state = "debugger"
-	flags_1 = CONDUCT_1
+	flags_1 = CONDUCT_1 | NOBLUDGEON_1
 	w_class = 2
 	var/data_to_write = null
 	var/accepting_refs = 0
