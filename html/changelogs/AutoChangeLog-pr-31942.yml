@@ -1,6 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - bugfix: "Fixes decals not rotating correctly with the turf."
-  - bugfix: "Fixes a runtime causing some turfs to be left behind by removed shuttles."
-  - code_imp: "Shuttles should be roughly 40-50% smoother."

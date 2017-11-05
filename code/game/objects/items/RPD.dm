@@ -548,7 +548,7 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 	//make sure what we're clicking is valid for the current mode
 	var/is_paintable = (p_class == PAINT_MODE && istype(A, /obj/machinery/atmospherics/pipe))
 	var/is_consumable = (p_class == EATING_MODE && (istype(A, /obj/item/pipe) || istype(A, /obj/item/pipe_meter) || istype(A, /obj/structure/disposalconstruct)))
-	var/can_make_pipe = ((atmos_piping_mode || p_class == DISPOSALS_MODE) && (isturf(A)) || istype(A, /obj/structure/lattice/catwalk) || istype(A, /obj/structure/girder))
+	var/can_make_pipe = ((atmos_piping_mode || p_class == DISPOSALS_MODE) && (isturf(A)) || istype(A, /obj/structure/lattice) || istype(A, /obj/structure/girder))
 
 	if(!is_paintable && !is_consumable && !can_make_pipe)
 		return ..()
@@ -579,7 +579,7 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 2, target = A))
 				activate()
-				var/obj/item/pipe/P = new(A, queued_p_type, queued_p_dir)
+				var/obj/item/pipe/P = new(get_turf(A), queued_p_type, queued_p_dir)
 				if(queued_p_flipped)
 					var/obj/item/pipe/trinary/flippable/F = P
 					F.flipped = queued_p_flipped
@@ -595,7 +595,7 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 2, target = A))
 				activate()
-				var/obj/item/pipe_meter/PM = new /obj/item/pipe_meter(A)
+				var/obj/item/pipe_meter/PM = new /obj/item/pipe_meter(get_turf(A))
 				if(!isnull(temp_piping_layer))
 					PM.setAttachLayer(temp_piping_layer)
 				else
