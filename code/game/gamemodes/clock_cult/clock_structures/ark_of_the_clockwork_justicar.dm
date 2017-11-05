@@ -134,11 +134,20 @@
 	var/damage = max((obj_integrity * 0.7) / severity, 100) //requires multiple bombs to take down
 	take_damage(damage, BRUTE, "bomb", 0)
 
+/obj/structure/destructible/clockwork/massive/celestial_gateway/proc/get_arrival_time()
+	if(seconds_until_activation)
+		return (seconds_until_activation*10)
+	if(grace_period)
+		return (grace_period*10)
+	else if(GATEWAY_RATVAR_ARRIVAL - progress_in_seconds > 0)
+		return (round(max((GATEWAY_RATVAR_ARRIVAL - progress_in_seconds) / (GATEWAY_SUMMON_RATE), 0), 1)*10)
+	return -10
+
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/get_arrival_text(s_on_time)
 	if(seconds_until_activation)
-		return "[seconds_until_activation][s_on_time ? "S" : ""]"
+		return "[get_arrival_time()][s_on_time ? "S" : ""]"
 	if(grace_period)
-		return "[grace_period][s_on_time ? "S" : ""]"
+		return "[get_arrival_time()][s_on_time ? "S" : ""]"
 	. = "IMMINENT"
 	if(!obj_integrity)
 		. = "DETONATING"
@@ -151,12 +160,12 @@
 	icon_state = initial(icon_state)
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		if(!active)
-			to_chat(user, "<span class='big'><b>Time until the Ark's activation:</b> [DisplayTimeText(get_arrival_text(FALSE))]</span>")
+			to_chat(user, "<span class='big'><b>Time until the Ark's activation:</b> [DisplayTimeText(get_arrival_time())]</span>")
 		else
 			if(grace_period)
-				to_chat(user, "<span class='big'><b>Crew grace period time remaining:</b> [DisplayTimeText(get_arrival_text(FALSE))]</span>")
+				to_chat(user, "<span class='big'><b>Crew grace period time remaining:</b> [DisplayTimeText(get_arrival_time())]</span>")
 			else
-				to_chat(user, "<span class='big'><b>Time until Ratvar's arrival:</b> [DisplayTimeText(get_arrival_text(FALSE))]</span>")
+				to_chat(user, "<span class='big'><b>Time until Ratvar's arrival:</b> [DisplayTimeText(get_arrival_time())]</span>")
 				switch(progress_in_seconds)
 					if(-INFINITY to GATEWAY_REEBE_FOUND)
 						to_chat(user, "<span class='heavy_brass'>The Ark is feeding power into the bluespace field.</span>")
