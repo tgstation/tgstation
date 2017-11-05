@@ -267,6 +267,10 @@
 
 /mob/living/verb/succumb(whispered as null)
 	set hidden = 1
+	//hippie start
+	if(!canSuccumb())
+		return
+	//hippie end
 	if (InCritical())
 		log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] while in [InFullCritical() ? "hard":"soft"] critical with [round(health, 0.1)] points of health!", INDIVIDUAL_ATTACK_LOG)
 		adjustOxyLoss(health - HEALTH_THRESHOLD_DEAD)
