@@ -314,10 +314,10 @@
 
 	// Doing all this work just to have a color-blind friendly output.
 	text_output += "There is "
-	if(name == initial_name)
+	if(name == displayed_name )
 		text_output += "\an [name]"
 	else
-		text_output += "\an ["\improper[initial_name]"] labeled '[name]'"
+		text_output += "\an ["\improper[name]"] labeled '[displayed_name ]'"
 	text_output += " which is currently [(get_pin_data(IC_INPUT, 1)==1) ? "lit <font color=[led_color]>*</font>" : "unlit."]"
 	to_chat(user,jointext(text_output,null))
 

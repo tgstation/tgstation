@@ -97,6 +97,14 @@
 	if(!istype(AM)||!Adjacent(AM)||busy||!AM.reagents)
 		activate_pin(3)
 		return
+	if(istype(AM,/obj/machinery/hydroponics/)&&(direc==1)&&(reagents.total_volume))//injection into tray.
+		var/obj/machinery/hydroponics/H = AM
+		var/datum/reagents/S = new /datum/reagents() //This is a strange way, but I don't know of a better one so I can't fix it at the moment...
+		S.my_atom = H
+		reagents.trans_to(S,transfer_amount)
+		H.applyChemicals(S)
+		S.clear_reagents()
+		qdel(S)
 	if(direc == 1)
 		if(!reagents.total_volume) // Empty
 			activate_pin(3)
@@ -126,7 +134,7 @@
 					L.visible_message("<span class='danger'>[src] injects [L] with it's needle!</span>", \
 											"<span class='userdanger'>[src] injects you with it's needle!</span>")
 				else
-					busy = FALSE					
+					busy = FALSE
 					activate_pin(3)
 					return
 				busy = FALSE
@@ -149,7 +157,7 @@
 				if(L.transfer_blood_to(src, tramount))
 					L.visible_message("[src] takes a blood sample from [L].")
 				else
-					busy = FALSE					
+					busy = FALSE
 					activate_pin(3)
 					return
 			busy = FALSE

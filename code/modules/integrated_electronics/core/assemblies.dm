@@ -116,6 +116,10 @@
 	return implant
 */
 /obj/item/device/electronic_assembly/proc/check_interactivity(mob/user)
+	var/turf/T = get_turf(src)
+	var/turf/P = get_turf(user)
+	if(!(P.Adjacent(T)))
+		return 0
 	if(!user.IsAdvancedToolUser())
 		return 0
 	return 1
