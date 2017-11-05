@@ -15,6 +15,7 @@
 	icon_state = "horror1"
 	icon_living = "horror1"
 	icon_dead = "horror_dead"
+	speed = 1.5
 	gender = NEUTER
 	a_intent = "harm"
 	stop_automated_movement = 1
@@ -184,7 +185,7 @@
 							"<span class='danger'>We begin using our spines for movement.</span>")
 		speed = 3 //Veeery slow
 	else
-		visible_message("<span class='warning'>[src] begins moving normally!</span>", \
+		visible_message("<span class='warning'>[src] recedes their spines back into their body!</span>", \
 							"<span class='danger'>We return moving normally.</span>")
 		speed = initial(speed)
 
