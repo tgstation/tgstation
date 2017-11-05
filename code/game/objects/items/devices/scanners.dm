@@ -36,6 +36,8 @@ MASS SPECTROMETER
 		var/mutable_appearance/MA = new(pipe)
 		MA.alpha = 128
 		I.appearance = MA
+		I.dir = pipe.dir
+		// Workaround for a weird bug with icon direction on T-Ray scan not matching the actual one.
 		if(M.client)
 			flick_overlay(I, list(M.client), 8)
 
