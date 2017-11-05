@@ -1386,6 +1386,7 @@
 #include "code\modules\food_and_drinks\kitchen_machinery\smartfridge.dm"
 #include "code\modules\food_and_drinks\recipes\drinks_recipes.dm"
 #include "code\modules\food_and_drinks\recipes\food_mixtures.dm"
+#include "code\modules\food_and_drinks\recipes\processor_recipes.dm"
 #include "code\modules\food_and_drinks\recipes\tablecraft\recipes_bread.dm"
 #include "code\modules\food_and_drinks\recipes\tablecraft\recipes_burger.dm"
 #include "code\modules\food_and_drinks\recipes\tablecraft\recipes_cake.dm"
