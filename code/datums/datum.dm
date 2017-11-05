@@ -4,10 +4,12 @@
     var/list/datum_components //for /datum/components
     var/ui_screen = "home"  //for tgui
     var/use_tag = FALSE
+    var/var_edited = FALSE //Warranty void if seal is broken
+    var/fingerprintslast
 
 #ifdef TESTING
-    var/running_find_references
-    var/last_find_references = 0
+	var/running_find_references
+	var/last_find_references = 0
 #endif
 
 // Default implementation of clean-up code.
