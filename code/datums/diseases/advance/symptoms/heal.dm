@@ -197,21 +197,35 @@ Bonus
 	stage_speed = -2
 	transmittable = -2
 	level = 8
+	var/active_coma = FALSE //to prevent multiple coma procs
 
 /datum/symptom/heal/coma/CanHeal(datum/disease/advance/A)
 	var/mob/living/M = A.affected_mob
-	if(M.IsUnconscious() || M.stat == UNCONSCIOUS)
+	if(M.status_flags & FAKEDEATH)
 		return power
+	else if(M.IsUnconscious() || M.stat == UNCONSCIOUS)
+		return power * 0.9
 	else if(M.stat == SOFT_CRIT)
 		return power * 0.5
 	else if(M.IsSleeping())
 		return power * 0.25
-	else if(M.getBruteLoss() + M.getFireLoss() >= 70)
+	else if(M.getBruteLoss() + M.getFireLoss() >= 70 && !active_coma)
 		to_chat(M, "<span class='warning'>You feel yourself slip into a regenerative coma...</span>")
-		M.Unconscious(450)
+		active_coma = TRUE
+		addtimer(CALLBACK(src, .proc/coma, M), 60)
+
+/datum/symptom/heal/coma/proc/coma(mob/living/M)
+	M.status_flags |= FAKEDEATH
+	addtimer(CALLBACK(src, .proc/uncoma, M), 300)
+
+/datum/symptom/heal/coma/proc/uncoma(mob/living/M)
+	if(!active_coma)
+		return
+	active_coma = FALSE
+	M.status_flags &= ~FAKEDEATH
 
 /datum/symptom/heal/coma/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
-	var/heal_amt = 3 * actual_power
+	var/heal_amt = 6 * actual_power
 
 	var/list/parts = M.get_damaged_bodyparts(1,1)
 
@@ -224,6 +238,9 @@ Bonus
 
 	if(prob(base_message_chance) && !hide_healing)
 		new /obj/effect/temp_visual/heal(M.loc, "#CC1100")
+
+	if(M.getBruteLoss() + M.getFireLoss() == 0)
+		uncoma(M)
 
 	return 1
 
