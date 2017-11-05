@@ -7404,7 +7404,7 @@
 "arp" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 6
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
@@ -7672,7 +7672,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
@@ -7682,9 +7682,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9
-	},
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
 "arX" = (
@@ -27421,11 +27418,6 @@
 /area/maintenance/port)
 "biv" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/machinery/camera{
-	c_tag = "Chapel - Office";
-	dir = 4;
-	network = list("SS13")
-	},
 /turf/open/floor/plasteel/black,
 /area/chapel/main)
 "biw" = (
@@ -27690,6 +27682,27 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"bjb" = (
+/obj/machinery/camera{
+	c_tag = "Chapel - Office";
+	dir = 4;
+	network = list("SS13")
+	},
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
+"bjc" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/chemistry)
+"bjd" = (
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 23
+	},
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
 
 (1,1,1) = {"
 aaa
@@ -53746,7 +53759,7 @@ aaa
 amj
 amS
 anF
-amT
+bjb
 apl
 biO
 amT
@@ -54010,7 +54023,7 @@ aqT
 arI
 ast
 aqQ
-amT
+bjd
 biF
 awx
 biJ
@@ -65059,7 +65072,7 @@ aog
 aoT
 apz
 apB
-apB
+bjc
 arV
 asL
 aoi
