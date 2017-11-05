@@ -1,5 +1,0 @@
-author: "Floyd / Qustinnus (And all the sounds by Kayozz11 from Yogstation)"
-delete-after: True
-changes: 
-  - soundadd: "Adds about 30 new ambience sounds"
-  - refactor: "added new defines for ambience lists."
