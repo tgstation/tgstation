@@ -112,6 +112,24 @@ Bonus
 		M.reagents.remove_reagent(R.id, actual_power)
 	return 1
 
+/datum/symptom/heal/metabolism
+	name = "Metabolic Boost"
+	stealth = -1
+	resistance = -2
+	stage_speed = 2
+	transmittable = 1
+	level = 8
+	desc = "The virus causes the host's metabolism to accelerate rapidly, making them process chemicals twice as fast,\
+	 but also causing increased hunger."
+
+/datum/symptom/heal/metabolism/Heal(mob/living/carbon/C, datum/disease/advance/A, actual_power)
+	if(!istype(C))
+		return
+	C.reagents.metabolize(C, can_overdose=TRUE) //this works even without a liver; it's intentional since the virus is metabolizing by itself
+	C.overeatduration = max(C.overeatduration - 2, 0)
+	C.nutrition = max(C.nutrition - (9 * HUNGER_FACTOR), 0) //Hunger depletes at 10x the normal speed
+	return 1
+
 /*
 //////////////////////////////////////
 
