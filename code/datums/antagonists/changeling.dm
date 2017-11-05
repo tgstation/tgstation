@@ -48,10 +48,8 @@
 	create_actions()
 
 /datum/antagonist/changeling/Destroy()
-	qdel(cellular_emporium)
-	cellular_emporium = null
-	qdel(emporium_action)
-	emporium_action = null
+	QDEL_NULL(cellular_emporium)
+	QDEL_NULL(emporium_action)
 	. = ..()
 
 /datum/antagonist/changeling/proc/generate_name()
