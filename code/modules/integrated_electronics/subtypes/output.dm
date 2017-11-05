@@ -310,7 +310,6 @@
 
 /obj/item/integrated_circuit/output/led/external_examine(mob/user)
 	var/text_output = list()
-	var/initial_name = initial(name)
 
 	// Doing all this work just to have a color-blind friendly output.
 	text_output += "There is "

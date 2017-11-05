@@ -653,7 +653,7 @@
 		adjustPests(rand(2,4))
 
 	// FEED ME SEYMOUR
-	if(S.has_reagent("strangereagent", 1))
+	if(S.has_reagent("strange_reagent", 1))
 		spawnplant()
 
 	// The best stuff there is. For testing/debugging.
@@ -737,6 +737,7 @@
 
 			S.clear_reagents()
 			qdel(S)
+
 			H.update_icon()
 		if(reagent_source) // If the source wasn't composted and destroyed
 			reagent_source.update_icon()

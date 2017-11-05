@@ -297,6 +297,54 @@
 	M.Knockdown(stf)
 	M.apply_effect(STUTTER, stf)
 
+/obj/item/integrated_circuit/manipulation/plant_module
+	name = "plant manipulation module"
+	desc = "Used to uproot weeds or harvest plants in trays."
+	icon_state = "plant_m"
+	extended_desc = "The circuit accepts a reference to hydroponic tray. It work from adjacent tiles. \
+	Mode(0- harvest, 1-uproot weeds, 2-uproot plant) determinies action."
+	w_class = WEIGHT_CLASS_TINY
+	complexity = 10
+	inputs = list("target" = IC_PINTYPE_REF,"mode" = IC_PINTYPE_NUMBER)
+	outputs = list()
+	activators = list("pulse in" = IC_PINTYPE_PULSE_IN,"pulse out"=IC_PINTYPE_PULSE_OUT)
+	spawn_flags = IC_SPAWN_RESEARCH
+	power_draw_per_use = 50
+
+/obj/item/integrated_circuit/manipulation/plant_module/do_work()
+	..()
+	var/turf/T = get_turf(src)
+	var/obj/machinery/hydroponics/AM = get_pin_data_as_type(IC_INPUT, 1, /obj/machinery/hydroponics)
+	if(!istype(AM)) //Invalid input
+		return
+	var/mob/living/M = get_turf(AM)
+	if(!M.Adjacent(T))
+		return //Can't reach
+	switch(get_pin_data(IC_INPUT, 2))
+		if(0)
+			if(AM.myseed)
+				if(AM.harvest)
+					AM.myseed.harvest()
+					AM.harvest = 0
+					AM.lastproduce = AM.age
+					if(!AM.myseed.get_gene(/datum/plant_gene/trait/repeated_harvest))
+						qdel(AM.myseed)
+						AM.myseed = null
+						AM.dead = 0
+					AM.update_icon()
+		if(1)
+			AM.weedlevel = 0
+		if(2)
+			if(AM.myseed) //Could be that they're just using it as a de-weeder
+				AM.age = 0
+				AM.plant_health = 0
+				if(AM.harvest)
+					AM.harvest = FALSE //To make sure they can't just put in another seed and insta-harvest it
+				qdel(AM.myseed)
+				AM.myseed = null
+			AM.weedlevel = 0 //Has a side effect of cleaning up those nasty weeds
+			AM.update_icon()
+	activate_pin(2)
 
 /obj/item/integrated_circuit/manipulation/grabber
 	name = "grabber"
@@ -336,7 +384,6 @@
 				if(AM)
 					if(AM.w_class <= WEIGHT_CLASS_SMALL)
 						AM.forceMove(src)
-
 	if(mode == 0)
 		if(contents.len)
 			var/obj/item/U = contents[1]

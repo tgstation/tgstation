@@ -90,21 +90,27 @@
 		new_amount = Clamp(new_amount, 0, volume)
 		transfer_amount = new_amount
 
+/obj/item/integrated_circuit/reagent/proc/inject_tray(var/obj/machinery/hydroponics/H,var/atom/movable/SO,var/A)
+		var/datum/reagents/S = new /datum/reagents() //This is a strange way, but I don't know of a better one so I can't fix it at the moment...
+		S.my_atom = H
+		SO.reagents.trans_to(S,A)
+		H.applyChemicals(S)
+		S.clear_reagents()
+		qdel(S)
 
 /obj/item/integrated_circuit/reagent/injector/do_work()
 	set waitfor = 0 // Don't sleep in a proc that is called by a processor without this set, otherwise it'll delay the entire thing
 	var/atom/movable/AM = get_pin_data_as_type(IC_INPUT, 1, /atom/movable)
-	if(!istype(AM)||!Adjacent(AM)||busy||!AM.reagents)
+	if(!istype(AM)||!Adjacent(AM)||busy)
 		activate_pin(3)
 		return
-	if(istype(AM,/obj/machinery/hydroponics/)&&(direc==1)&&(reagents.total_volume))//injection into tray.
-		var/obj/machinery/hydroponics/H = AM
-		var/datum/reagents/S = new /datum/reagents() //This is a strange way, but I don't know of a better one so I can't fix it at the moment...
-		S.my_atom = H
-		reagents.trans_to(S,transfer_amount)
-		H.applyChemicals(S)
-		S.clear_reagents()
-		qdel(S)
+	if(istype(AM,/obj/machinery/hydroponics)&&(direc==1)&&(reagents.total_volume))//injection into tray.
+		inject_tray(AM,src,transfer_amount)
+		activate_pin(2)
+		return
+	if(!AM.reagents)
+		activate_pin(3)
+		return
 	if(direc == 1)
 		if(!reagents.total_volume) // Empty
 			activate_pin(3)
@@ -208,6 +214,17 @@
 	if(!istype(source) || !istype(target)) //Invalid input
 		return
 	if(Adjacent(source) && Adjacent(target))
+		if(direc)
+			if(istype(target,/obj/machinery/hydroponics)&&(direc==1)&&(source.reagents.total_volume))//injection into tray.
+				inject_tray(target,source,transfer_amount)
+				activate_pin(2)
+				return
+		else
+			if(istype(source,/obj/machinery/hydroponics)&&(direc==1)&&(target.reagents.total_volume))//injection into tray.
+				inject_tray(source,target,transfer_amount)
+				activate_pin(2)
+				return
+
 		if(!source.reagents || !target.reagents)
 			return
 		if(ismob(source) || ismob(target))

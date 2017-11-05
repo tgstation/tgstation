@@ -191,6 +191,68 @@
 	push_data()
 	activate_pin(2)
 
+/obj/item/integrated_circuit/input/plant_scanner
+	name = "integrated plant analyzer"
+	desc = "A very small version of the plant analyser.  This allows the machine to know all valuable params of plants in trays.  \
+			it can't scan seeds and fruits.only plants."
+	icon_state = "medscan_adv"
+	complexity = 12
+	inputs = list("\<REF\> target")
+	outputs = list(
+		"plant type"		= IC_PINTYPE_STRING,
+		"age"		= IC_PINTYPE_NUMBER,
+		"potency"	= IC_PINTYPE_NUMBER,
+		"yield"			= IC_PINTYPE_NUMBER,
+		"Maturation speed"			= IC_PINTYPE_NUMBER,
+		"Production speed"			= IC_PINTYPE_NUMBER,
+		"Endurance"			= IC_PINTYPE_NUMBER,
+		"Lifespan"			= IC_PINTYPE_NUMBER,
+		"Weed Growth Rate"		= IC_PINTYPE_NUMBER,
+		"Weed Vulnerability"	= IC_PINTYPE_NUMBER,
+		"Weed level"			= IC_PINTYPE_NUMBER,
+		"Pest level"			= IC_PINTYPE_NUMBER,
+		"Toxicity level"			= IC_PINTYPE_NUMBER,
+		"Water level"			= IC_PINTYPE_NUMBER,
+		"Nutrition level"			= IC_PINTYPE_NUMBER,
+		"harvest"			= IC_PINTYPE_NUMBER,
+		"dead"			= IC_PINTYPE_NUMBER    ,
+		"plant health"			= IC_PINTYPE_NUMBER
+	)
+	activators = list("scan" = IC_PINTYPE_PULSE_IN, "on scanned" = IC_PINTYPE_PULSE_OUT)
+	spawn_flags = IC_SPAWN_RESEARCH
+	origin_tech = list(TECH_ENGINEERING = 3, TECH_DATA = 3, TECH_BIO = 4)
+	power_draw_per_use = 10
+
+/obj/item/integrated_circuit/input/plant_scanner/do_work()
+	var/obj/machinery/hydroponics/H = get_pin_data_as_type(IC_INPUT, 1, /obj/machinery/hydroponics)
+	if(!istype(H)) //Invalid input
+		return
+	for(var/i=1, i<=outputs.len, i++)
+		set_pin_data(IC_OUTPUT, i, null)
+	if(H in view(get_turf(H))) // Like medbot's analyzer it can be used in range..
+		if(H.myseed)
+			set_pin_data(IC_OUTPUT, 1, H.myseed.plantname)
+			set_pin_data(IC_OUTPUT, 2, H.age)
+			set_pin_data(IC_OUTPUT, 3, H.myseed.potency)
+			set_pin_data(IC_OUTPUT, 4, H.myseed.yield)
+			set_pin_data(IC_OUTPUT, 5, H.myseed.maturation)
+			set_pin_data(IC_OUTPUT, 6, H.myseed.production)
+			set_pin_data(IC_OUTPUT, 7, H.myseed.endurance)
+			set_pin_data(IC_OUTPUT, 8, H.myseed.lifespan)
+			set_pin_data(IC_OUTPUT, 9, H.myseed.weed_rate)
+			set_pin_data(IC_OUTPUT, 10, H.myseed.weed_chance)
+		set_pin_data(IC_OUTPUT, 11, H.weedlevel)
+		set_pin_data(IC_OUTPUT, 12, H.pestlevel)
+		set_pin_data(IC_OUTPUT, 13, H.toxic)
+		set_pin_data(IC_OUTPUT, 14, H.waterlevel)
+		set_pin_data(IC_OUTPUT, 15, H.nutrilevel)
+		set_pin_data(IC_OUTPUT, 16, H.harvest)
+		set_pin_data(IC_OUTPUT, 17, H.dead)
+		set_pin_data(IC_OUTPUT, 18, H.plant_health)
+
+	push_data()
+	activate_pin(2)
+
 /obj/item/integrated_circuit/input/examiner
 	name = "examiner"
 	desc = "It' s a little machine vision system. It can return the name, description, distance, \
@@ -295,17 +357,17 @@
 	else
 		activate_pin(3)
 	O.push_data()
-/*
+
 /obj/item/integrated_circuit/input/advanced_locator_list
 	complexity = 6
 	name = "list advanced locator"
-	desc = "This is needed for certain devices that demand a reference for a target to act upon.  This type locates something \
+	desc = "This is needed for certain devices that demand list of names for a targets to act upon.  This type locates something \
 	that is standing in given radius up to 8 meters"
 	extended_desc = "The first pin requires list a kinds of object that you want the locator to acquire. If  This means that it will \
-	give refs to nearby objects that are similar. It will locate objects by given names,refs and description,given in list. If more than one valid object is found nearby,\
-	 it will choose one of them at 	random.The second pin is a radius"
+	give refs to nearby objects that are similar. It will locate objects by given names and description,given in list. It will give list of all found objects.\
+	.The second pin is a radius"
 	inputs = list("desired type ref" = IC_PINTYPE_LIST, "radius" = IC_PINTYPE_NUMBER)
-	outputs = list("located ref")
+	outputs = list("located ref" = IC_PINTYPE_LIST)
 	activators = list("locate" = IC_PINTYPE_PULSE_IN,"found" = IC_PINTYPE_PULSE_OUT,"not found" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 30
@@ -319,35 +381,36 @@
 		radius = rad
 
 /obj/item/integrated_circuit/input/advanced_locator_list/do_work()
-    var/datum/integrated_io/I = inputs[1]
-    var/datum/integrated_io/O = outputs[1]
-    O.data = null
-    var/turf/T = get_turf(src)
-    var/list/nearby_things = range(radius, T) & view(T)
-    var/list/valid_things = list()
-    var/list/GI = list()
-    GI = I
-    for(var/datum/integrated_io/G in GI)
-        if(isweakref(G.data))
-            var/atom/A = G.data.resolve()
-            var/desired_type = A.type
-            for(var/atom/thing in nearby_things)
-                if(thing.type != desired_type)
-                    continue
-                valid_things.Add(thing)
-        else if(istext(G.data))
-            var/DT = G.data
-            for(var/atom/thing in nearby_things)
-                if(findtext(addtext(thing.name," ",thing.desc), DT, 1, 0) )
-                    valid_things.Add(thing)
-    if(valid_things.len)
-        O.data = weakref(pick(valid_things))
-        O.push_data()
-        activate_pin(2)
-    else
-        O.push_data()
-        activate_pin(3)
-*/
+	var/datum/integrated_io/I = inputs[1]
+	var/datum/integrated_io/O = outputs[1]
+	O.data = null
+	var/turf/T = get_turf(src)
+	var/list/nearby_things = range(radius, T) & view(T)
+	var/list/valid_things = list()
+	var/list/GI = list()
+	GI = I.data
+	for(var/G in GI)
+		if(isweakref(G))									//It should search by refs. But don't want.will fix it later.
+			var/datum/integrated_io/G1
+			G1.data = G
+			var/atom/A = G1.data.resolve()
+			var/desired_type = A.type
+			for(var/atom/thing in nearby_things)
+				if(thing.type != desired_type)
+					continue
+				valid_things.Add(weakref(thing))
+		else if(istext(G))
+			for(var/atom/thing in nearby_things)
+				if(findtext(addtext(thing.name," ",thing.desc), G, 1, 0) )
+					valid_things.Add(weakref(thing))
+	if(valid_things.len)
+		O.data = valid_things
+		O.push_data()
+		activate_pin(2)
+	else
+		O.push_data()
+		activate_pin(3)
+
 /obj/item/integrated_circuit/input/advanced_locator
 	complexity = 6
 	name = "advanced locator"
