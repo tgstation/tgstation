@@ -71830,10 +71830,7 @@
 /turf/open/floor/plating,
 /area/chapel/main)
 "cRM" = (
-/obj/machinery/processor{
-	desc = "A machine used to process slimes and retrieve their extract.";
-	name = "Slime Processor"
-	},
+/obj/machinery/processor/slime,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 2
 	},
@@ -73064,9 +73061,11 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 1;
 	frequency = 1441;
-	id = "n2_in"
+	id = "n2_in";
+	volume_rate = 200
 	},
-/turf/open/floor/plating/airless,
+/obj/structure/lattice/catwalk,
+/turf/open/space,
 /area/engine/atmos)
 "cVB" = (
 /obj/structure/chair{
@@ -122372,7 +122371,7 @@ cbe
 ccO
 bza
 aaf
-EDs
+EDo
 chO
 cjd
 ckG
@@ -123400,7 +123399,7 @@ cbi
 ccS
 bza
 aaf
-EDt
+EDo
 chR
 cjg
 ckH
@@ -124428,7 +124427,7 @@ cVJ
 ccQ
 bza
 aaf
-EDu
+EDo
 chU
 cjj
 ckJ
@@ -125954,15 +125953,15 @@ EDo
 bFZ
 bAR
 bCA
-EDp
+EDo
 bFZ
 bAR
 bCA
-EDq
+EDo
 bFZ
 bAR
 bCA
-EDr
+EDo
 bFZ
 bAR
 aaf

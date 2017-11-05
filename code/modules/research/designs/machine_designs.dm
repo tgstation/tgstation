@@ -315,11 +315,19 @@
 	category = list ("Misc. Machinery")
 
 /datum/design/board/processor
-	name = "Machine Design (Processor Board)"
-	desc = "The circuit board for a processor."
+	name = "Machine Design (Food Processor Board)"
+	desc = "The circuit board for a food processor."
 	id = "processor"
 	req_tech = list("programming" = 1)
 	build_path = /obj/item/circuitboard/machine/processor
+	category = list ("Misc. Machinery")
+
+/datum/design/board/slimeprocessor
+	name = "Machine Design (Slime Processor Board)"
+	desc = "The circuit board for a slime processor."
+	id = "slimeprocessor"
+	req_tech = list("programming" = 1, "plasmatech" = 1)
+	build_path = /obj/item/circuitboard/machine/processor/slime
 	category = list ("Misc. Machinery")
 
 /datum/design/board/recycler
