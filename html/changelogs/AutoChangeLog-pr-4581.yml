@@ -1,4 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - bugfix: "You can no longer set up the auxiliary base's shuttle beacon overlapping with the edge of the map"

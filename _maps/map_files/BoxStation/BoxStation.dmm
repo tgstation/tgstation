@@ -36907,10 +36907,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "bMl" = (
-/obj/machinery/processor{
-	desc = "A machine used to process slimes and retrieve their extract.";
-	name = "Slime Processor"
-	},
+/obj/machinery/processor/slime,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)

@@ -1,4 +1,0 @@
-author: "ACCount"
-delete-after: True
-changes: 
-  - bugfix: "The atmos exhaust line will no longer shatter the adjacent window and flood atmos with hot gas."
