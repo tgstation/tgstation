@@ -91,9 +91,11 @@
 	var/obj/item/device/nuclear_challenge/challenge = new /obj/item/device/nuclear_challenge
 	synd_mind.current.put_in_hands(challenge, TRUE)
 
-	var/list/foundIDs = synd_mind.current.search_contents_for(/obj/item/card/id)
+	var/static/id_cache = typecacheof(/obj/item/card/id)
+	var/list/foundIDs = typecache_filter_list(synd_mind.current.GetAllContents(), id_cache)
 	if(foundIDs.len)
-		for(var/obj/item/card/id/ID in foundIDs)
+		for(var/i in 1 to foundIDs.len)
+			var/obj/item/card/id/ID = foundIDs[i]
 			ID.name = "lead agent card"
 			ID.access += ACCESS_SYNDICATE_LEADER
 	else
