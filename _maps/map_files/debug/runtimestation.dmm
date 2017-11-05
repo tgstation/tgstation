@@ -926,12 +926,8 @@
 /area/hallway/secondary/entry)
 "cK" = (
 /obj/structure/table,
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/stack/rods{
-	amount = 50
-	},
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/rods/fifty,
 /obj/machinery/light,
 /turf/open/floor/plasteel/arrival,
 /area/hallway/secondary/entry)

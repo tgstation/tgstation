@@ -53,8 +53,14 @@
 	if(user.client)
 		if(IsAdminGhost(user))
 			attack_ai(user)
-		if(user.client.prefs.inquisitive_ghost)
+		else if(user.client.prefs.inquisitive_ghost)
 			user.examinate(src)
+
+/mob/living/attack_ghost(mob/dead/observer/user)
+	if(user.client && user.health_scan)
+		healthscan(user, src, 1, TRUE)
+		return
+	..()
 
 // ---------------------------------------
 // And here are some good things for free:

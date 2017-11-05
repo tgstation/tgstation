@@ -669,9 +669,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "bM" = (
-/obj/structure/rack{
-	dir = 1
-	},
+/obj/structure/rack,
 /obj/item/tank/internals/oxygen/red,
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/clothing/mask/gas,

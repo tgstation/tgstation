@@ -21,7 +21,7 @@
 		this["desc"] = ""
 		this["refs"] = list()
 		for(var/spawner_obj in GLOB.mob_spawners[spawner])
-			this["refs"] += "\ref[spawner_obj]"
+			this["refs"] += "[REF(spawner_obj)]"
 			if(!this["desc"])
 				if(istype(spawner_obj, /obj/effect/mob_spawn))
 					var/obj/effect/mob_spawn/MS = spawner_obj
@@ -40,6 +40,8 @@
 
 	var/spawner_ref = pick(GLOB.mob_spawners[params["name"]])
 	var/obj/effect/mob_spawn/MS = locate(spawner_ref) in GLOB.poi_list
+	if(!MS)
+		return
 
 	switch(action)
 		if("jump")

@@ -144,6 +144,8 @@
 			var/list/hacked_programs[0]
 			for(var/S in GLOB.ntnet_global.available_antag_software)
 				var/datum/computer_file/program/P = S
+				if(hard_drive.find_file_by_name(P.filename))
+					continue
 				data["hackedavailable"] = 1
 				hacked_programs.Add(list(list(
 				"filename" = P.filename,

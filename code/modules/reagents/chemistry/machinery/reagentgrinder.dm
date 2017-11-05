@@ -248,14 +248,14 @@
 	"}
 		if (is_beaker_ready)
 			if(!is_chamber_empty && !(stat & (NOPOWER|BROKEN)))
-				dat += "<A href='?src=\ref[src];action=grind'>Grind the reagents</a><BR>"
-				dat += "<A href='?src=\ref[src];action=juice'>Juice the reagents</a><BR><BR>"
+				dat += "<A href='?src=[REF(src)];action=grind'>Grind the reagents</a><BR>"
+				dat += "<A href='?src=[REF(src)];action=juice'>Juice the reagents</a><BR><BR>"
 			else if (beaker.reagents.total_volume)
-				dat += "<A href='?src=\ref[src];action=mix'>Mix the reagents</a><BR><BR>"
+				dat += "<A href='?src=[REF(src)];action=mix'>Mix the reagents</a><BR><BR>"
 		if(length(holdingitems))
-			dat += "<A href='?src=\ref[src];action=eject'>Eject the reagents</a><BR>"
+			dat += "<A href='?src=[REF(src)];action=eject'>Eject the reagents</a><BR>"
 		if(beaker)
-			dat += "<A href='?src=\ref[src];action=detach'>Detach the beaker</a><BR>"
+			dat += "<A href='?src=[REF(src)];action=detach'>Detach the beaker</a><BR>"
 	else
 		dat += "Please wait..."
 

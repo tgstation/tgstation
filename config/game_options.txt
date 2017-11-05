@@ -383,10 +383,6 @@ LAW_WEIGHT buildawall,0
 ## Attempting to upload laws past this point will fail unless the AI is reset
 SILICON_MAX_LAW_AMOUNT 12
 
-## Uncomment to give players the choice of their species before they join the game
-JOIN_WITH_MUTANT_RACE
-
-
 ## Roundstart Races
 ##-------------------------------------------------------------------------------------------
 ## Uncommenting races will allow them to be choosen at roundstart while join_with_muntant_race is on. You'll need at least one.

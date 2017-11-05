@@ -304,7 +304,7 @@
 			comp.AttachCloner(src)
 		else
 			P.buffer = src
-			to_chat(user, "<font color = #666633>-% Successfully stored \ref[P.buffer] [P.buffer.name] in buffer %-</font color>")
+			to_chat(user, "<font color = #666633>-% Successfully stored [REF(P.buffer)] [P.buffer.name] in buffer %-</font color>")
 		return
 
 	var/mob/living/mob_occupant = occupant
