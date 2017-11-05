@@ -33,7 +33,7 @@
 	if(!end_month)
 		end_month = begin_month
 	if(begin_week && begin_weekday)
-		if(begin_week == ww && begin_weekday == ddd)
+		if(begin_week == ww && begin_weekday == ddd && begin_month == mm)
 			return TRUE
 	if(end_month > begin_month) //holiday spans multiple months in one year
 		if(mm == end_month) //in final month
