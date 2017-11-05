@@ -91,10 +91,13 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 		if(!Ablob.blob_allowed)
 			continue
-
-		playsound(L, 'sound/effects/splat.ogg', 50, 1)
-		L.death()
-		new/mob/living/simple_animal/hostile/blob/blobspore(T)
+		
+		if(!("blob" in L.faction))
+			playsound(L, 'sound/effects/splat.ogg', 50, 1)
+			L.death()
+			new/mob/living/simple_animal/hostile/blob/blobspore(T)
+		else
+			L.fully_heal()
 
 		for(var/V in GLOB.sortedAreas)
 			var/area/A = V

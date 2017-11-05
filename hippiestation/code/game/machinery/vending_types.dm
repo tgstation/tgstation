@@ -336,6 +336,7 @@ AUTODROBE
 		/obj/item/clothing/mask/rat/raven = 1,
 		/obj/item/clothing/mask/rat/jackal = 1,
 		/obj/item/clothing/mask/rat/fox = 1,
+		/obj/item/clothing/mask/frog = 2,
 		/obj/item/clothing/mask/rat/tribal = 1,
 		/obj/item/clothing/mask/rat = 1,
 		/obj/item/clothing/suit/apron/overalls = 1,

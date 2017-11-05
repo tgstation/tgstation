@@ -25,8 +25,8 @@
       action='filter' params='{"mode": "/datum/gas/bz"}'>BZ</ui-button>
 	<ui-button state='{{data.filter_type == "nob" ? "selected" : null}}'
       action='filter' params='{"mode": "/datum/gas/hypernoblium"}'>Hyper-Noblium</ui-button>
-	<ui-button state='{{data.filter_type == "browns" ? "selected" : null}}'
-      action='filter' params='{"mode": "/datum/gas/brown_gas"}'>Brown Gas</ui-button> 
+	<ui-button state='{{data.filter_type == "nitryl" ? "selected" : null}}'
+      action='filter' params='{"mode": "/datum/gas/nitryl"}'>Nitryl</ui-button> 
 	<ui-button state='{{data.filter_type == "tritium" ? "selected" : null}}'
       action='filter' params='{"mode": "/datum/gas/tritium"}'>Tritium</ui-button>
 	<ui-button state='{{data.filter_type == "stimulum" ? "selected" : null}}'
