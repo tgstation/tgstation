@@ -5,8 +5,9 @@
 	icon_state = "rune1"
 	gender = NEUTER
 	var/do_icon_rotate = TRUE
+	var/rotation = 0
 
-/obj/effect/decal/cleanable/crayon/Initialize(mapload, main = "#FFFFFF", var/type = "rune1", var/e_name = "rune", var/rotation = 0, var/alt_icon = null)
+/obj/effect/decal/cleanable/crayon/Initialize(mapload, main = "#FFFFFF", var/type = "rune1", var/e_name = "rune", rotation, var/alt_icon = null)
 	. = ..()
 
 	name = e_name
