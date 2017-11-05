@@ -399,7 +399,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		else//They may also be a cyborg or AI.
 			switch(new_character.mind.assigned_role)
 				if("Cyborg")//More rigging to make em' work and check if they're traitor.
-					new_character = new_character.Robotize()
+					new_character = new_character.Robotize(TRUE)
 				if("AI")
 					new_character = new_character.AIize()
 				else
