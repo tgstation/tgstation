@@ -215,6 +215,7 @@
 		qdel(frying)
 	else
 		frying.forceMove(src)
+	reagents.add_reagent("grease", 1)
 
 /obj/item/reagent_containers/food/snacks/butteredtoast
 	name = "buttered toast"

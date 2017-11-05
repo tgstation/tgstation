@@ -75,6 +75,22 @@
 		if(prob(10) && owner.health > HEALTH_THRESHOLD_CRIT)
 			owner.emote("snore")
 
+/datum/status_effect/incapacitating/sleeping/on_remove()
+	..()
+	if(ishuman(owner))
+		if(owner.vitamins >= VITAMIN_LEVEL_HEALTHY)
+			var/list/wake_me_up_inside = list("Waking up comes easy to you, and the little aches of a few hours ago have vanished.", \
+			"You wake up with no fatigue, ready to get moving. You could get used to this!", \
+			"Your body stretches easily as sleep falls away.", \
+			"You feel great! It seems healthy living has its rewards.")
+			to_chat(owner, "<span class='notice'>[pick(wake_me_up_inside)]</span>")
+		else if(owner.vitamins <= VITAMIN_LEVEL_MALNOURISHED)
+			var/list/cant_wake_up = list("You hear a gurgling in your gut. Maybe it's just a hunch, but you could do with something healthy...", \
+			"Wakefulness is an uphill battle, and it feels like your body is fighting for the enemy.", \
+			"Do you <i>have</i> to wake up? Uuugh... you don't feel ready at all.", \
+			"You're achey and fatigued as you're dragged out of sleep.")
+			to_chat(owner, "<span class='danger'>[pick(cant_wake_up)]</span>")
+
 /obj/screen/alert/status_effect/asleep
 	name = "Asleep"
 	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."

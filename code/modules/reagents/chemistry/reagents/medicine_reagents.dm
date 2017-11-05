@@ -1121,3 +1121,24 @@
 	id = "corazone"
 	description = "A medication used to treat pain, fever, and inflammation, along with heart attacks."
 	color = "#F5F5F5"
+
+/datum/reagent/medicine/vitamin_supplement
+	name = "Vitamin supplement"
+	id = "vitamin_supplement"
+	description = "Concentrated vitamins used if a healthy diet isn't possible."
+	var/vitamin_power = 1 //One dose of supplements will add vitamins equal to this value times reaction volume
+	var/max_vitamins = 5 //Taking this supplement can only bring vitamins to a maximum of this number
+
+/datum/reagent/medicine/vitamin_supplement/reaction_mob(mob/living/M, method = TOUCH, reac_volume, show_message = 1)
+	if(iscarbon(M) && M.stat != DEAD && M.vitamins <= (max_vitamins - 1)) //The -1 is to show people that they can't gain more just through spam
+		M.vitamins = min(max_vitamins, M.vitamins + (vitamin_power * reac_volume))
+		if(show_message)
+			to_chat(M, "<span class='notice'>You feel tough.</span>")
+	..()
+
+/datum/reagent/medicine/vitamin_supplement/gamma_globulins
+	name = "Gamma globulins"
+	id = "gamma_globulins"
+	description = "A slurry of proteins used as a heavy-duty vitamin supplement to treat malnutrition."
+	vitamin_power = 5
+	max_vitamins = INFINITY

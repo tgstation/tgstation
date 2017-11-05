@@ -74,6 +74,7 @@
 	name = "Vitamin"
 	id = "vitamin"
 	description = "All the best vitamins, minerals, and carbohydrates the body needs in pure form."
+	healthiness = 0.2
 
 	brute_heal = 1
 	burn_heal = 1
@@ -94,6 +95,7 @@
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	overdose_threshold = 200 // Hyperglycaemic shock
 	taste_description = "sweetness"
+	healthiness = -0.1
 
 /datum/reagent/consumable/sugar/overdose_start(mob/living/M)
 	to_chat(M, "<span class='userdanger'>You go into hyperglycaemic shock! Lay off the twinkies!</span>")
@@ -112,6 +114,7 @@
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#899613" // rgb: 137, 150, 19
 	taste_description = "watery milk"
+	healthiness = 0.05 //Watered-down!
 
 /datum/reagent/consumable/soysauce
 	name = "Soysauce"
@@ -120,6 +123,7 @@
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#792300" // rgb: 121, 35, 0
 	taste_description = "umami"
+	healthiness = 0.01
 
 /datum/reagent/consumable/ketchup
 	name = "Ketchup"
@@ -128,6 +132,7 @@
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#731008" // rgb: 115, 16, 8
 	taste_description = "ketchup"
+	healthiness = 0.01
 
 
 /datum/reagent/consumable/capsaicin
@@ -283,6 +288,7 @@
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 255,255,255
 	taste_description = "salt"
+	healthiness = -0.01
 
 /datum/reagent/consumable/sodiumchloride/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(!istype(M))
@@ -313,6 +319,7 @@
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "bitterness"
+	healthiness = -0.02
 
 /datum/reagent/consumable/hot_coco
 	name = "Hot Chocolate"
@@ -324,6 +331,7 @@
 	glass_icon_state  = "chocolateglass"
 	glass_name = "glass of chocolate"
 	glass_desc = "Tasty."
+	healthiness = -0.03
 
 /datum/reagent/consumable/hot_coco/on_mob_life(mob/living/M)
 	if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
@@ -367,6 +375,7 @@
 	description = "Multi-colored little bits of sugar, commonly found on donuts. Loved by cops."
 	color = "#FF00FF" // rgb: 255, 0, 255
 	taste_description = "childhood whimsy"
+	healthiness = -0.02
 
 /datum/reagent/consumable/sprinkles/on_mob_life(mob/living/M)
 	if(ishuman(M) && M.job in list("Security Officer", "Head of Security", "Detective", "Warden"))
@@ -408,6 +417,7 @@
 	reagent_state = SOLID
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "dry and cheap noodles"
+	healthiness = 0.01
 
 /datum/reagent/consumable/hot_ramen
 	name = "Hot Ramen"
@@ -416,6 +426,7 @@
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "wet and cheap noodles"
+	healthiness = 0.015
 
 /datum/reagent/consumable/hot_ramen/on_mob_life(mob/living/M)
 	if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
@@ -453,6 +464,7 @@
 	description = "Totally the best. Only to be spread on foods with excellent lateral symmetry."
 	color = "#801E28" // rgb: 128, 30, 40
 	taste_description = "cherry"
+	healthiness = 0.01
 
 /datum/reagent/consumable/bluecherryjelly
 	name = "Blue Cherry Jelly"
@@ -469,6 +481,7 @@
 	nutriment_factor = 3 * REAGENTS_METABOLISM
 	color = "#FFFFFF" // rgb: 0, 0, 0
 	taste_description = "rice"
+	healthiness = 0.02
 
 /datum/reagent/consumable/vanilla
 	name = "Vanilla Powder"
@@ -485,6 +498,7 @@
 	description = "It's full of protein."
 	color = "#FFB500"
 	taste_description = "egg"
+	healthiness = 0.02
 
 /datum/reagent/consumable/corn_starch
 	name = "Corn Starch"
@@ -513,6 +527,7 @@
 	nutriment_factor = 15 * REAGENTS_METABOLISM
 	metabolization_rate = 1 * REAGENTS_METABOLISM
 	taste_description = "sweetness"
+	healthiness = 0.01
 
 /datum/reagent/consumable/honey/on_mob_life(mob/living/M)
 	M.reagents.add_reagent("sugar",3)
@@ -611,6 +626,7 @@
 	color = "#d3a308"
 	nutriment_factor = 3 * REAGENTS_METABOLISM
 	taste_description = "fruity mushroom"
+	healthiness = 0.1
 
 /datum/reagent/consumable/vitfro/on_mob_life(mob/living/M)
 	if(prob(80))
@@ -618,3 +634,11 @@
 		M.adjustFireLoss(-1*REM, 0)
 		. = TRUE
 	..()
+
+/datum/reagent/consumable/grease
+	name = "Grease"
+	id = "grease"
+	description = "Pure brown grease found in fried foods."
+	color = "#6E5035"
+	taste_description = "grease"
+	healthiness = -0.15
