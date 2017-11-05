@@ -156,7 +156,7 @@
 				/obj/item/clothing/mask/gas)
 		if("lizards")
 			trigger_words = list("lizard", "ligger", "hiss", " wag ")
-			trigger_objs = list(/obj/item/toy/plush/lizardplushie, /obj/item/reagent_containers/food/snacks/kebab/tail, /obj/item/severedtail,\
+			trigger_objs = list(/obj/item/toy/plush/lizardplushie, /obj/item/reagent_containers/food/snacks/kebab/tail, /obj/item/organ/tail/lizard,\
 				/obj/item/reagent_containers/food/drinks/bottle/lizardwine)
 			trigger_mobs = list(/mob/living/simple_animal/hostile/lizard) //they're hostile! of course they're scary!
 			trigger_species = list(/datum/species/lizard)
