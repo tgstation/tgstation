@@ -74,7 +74,7 @@
 	"white",
 	"yellow"
 	)
-	
+
 	var/list/my_possible_colors = possible_colors.Copy()
 
 	for(var/wire in shuffle(wires))
@@ -163,9 +163,9 @@
 	for(var/wire in possible_wires)
 		if(prob(33))
 			pulse(wire)
-		remaining_pulses--
-		if(remaining_pulses >= 0)
-			break
+			remaining_pulses--
+			if(!remaining_pulses)
+				break
 
 // Overridable Procs
 /datum/wires/proc/interactable(mob/user)
