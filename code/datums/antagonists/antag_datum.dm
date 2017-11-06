@@ -84,7 +84,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	else
 		message_admins("Unable to find a ghost to take control of ([key_name_admin(owner.current)]), so they were made possessable.")
 		marked_possessable = owner.current.ckey
-		owner.current.adjust_ondemand_possessable(1)
+		var/datum/component/ondemand_possessable/owner_possessable = owner.current.LoadComponent(/datum/component/ondemand_possessable)
+		owner_possessable.adjust(1)
 
 /datum/antagonist/proc/on_removal()
 	remove_innate_effects()
@@ -96,7 +97,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(team)
 		team.remove_member(owner)
 	if(owner.current.ckey == marked_possessable)
-		owner.current.adjust_ondemand_possessable(-1)
+		var/datum/component/ondemand_possessable/owner_possessable = owner.current.GetComponent(/datum/component/ondemand_possessable)
+		if(owner_possessable)
+			owner_possessable.adjust(-1)
 		marked_possessable = null
 	qdel(src)
 
