@@ -200,7 +200,7 @@
 
 /obj/machinery/disposal/proc/newHolderDestination(obj/structure/disposalholder/H)
 	for(var/obj/item/smallDelivery/O in src)
-		H.tomail = 1
+		H.tomail = TRUE
 		return
 
 /obj/machinery/disposal/proc/flushAnimation()
@@ -217,7 +217,9 @@
 	var/turf/target
 	playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 
-	for(var/atom/movable/AM in H)
+	for(var/A in H)
+		var/atom/movable/AM = A
+
 		target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
 
 		AM.forceMove(T)

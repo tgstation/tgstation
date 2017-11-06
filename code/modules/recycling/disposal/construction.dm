@@ -5,7 +5,7 @@
 	name = "disposal pipe segment"
 	desc = "A huge pipe segment used for constructing disposal systems."
 	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
-	icon_state = "conpipe-s"
+	icon_state = "conpipe"
 	anchored = FALSE
 	density = FALSE
 	pressure_resistance = 5*ONE_ATMOSPHERE
@@ -17,10 +17,9 @@
 
 /obj/structure/disposalconstruct/examine(mob/user)
 	..()
-	if(is_pipe())
-		to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
+	to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
 
-/obj/structure/disposalconstruct/New(loc, new_pipe_type = null, direction = 1, obj/make_from = null)
+/obj/structure/disposalconstruct/New(loc, new_pipe_type, direction = 1, flip = 0, obj/make_from)
 	..()
 	if(make_from)
 		pipe_type = make_from.type
@@ -38,10 +37,16 @@
 		setDir(direction)
 
 	pipename = initial(pipe_type.name)
-	if(is_pipe())
-		verbs += /obj/structure/disposalconstruct/proc/flip
+
+	if(flip)
+		flip()
 
 	update_icon()
+
+/obj/structure/disposalconstruct/Move()
+	var/old_dir = dir
+	..()
+	setDir(old_dir) //pipes changing direction when moved is just annoying and buggy
 
 // update iconstate and dpdir due to dir and type
 /obj/structure/disposalconstruct/update_icon()
@@ -71,14 +76,18 @@
 
 /obj/structure/disposalconstruct/proc/get_disposal_dir()
 	if(!is_pipe())
-		return 0
+		return NONE
 
 	var/obj/structure/disposalpipe/temp = pipe_type
 	var/initialize_dirs = initial(temp.initialize_dirs)
-	var/dpdir = 0
+	var/dpdir = NONE
+
+	if(dir in GLOB.diagonals) // Bent pipes
+		return dir
 
 	if(initialize_dirs != DISP_DIR_NONE)
 		dpdir = dir
+
 		if(initialize_dirs & DISP_DIR_LEFT)
 			dpdir |= turn(dir, 90)
 		if(initialize_dirs & DISP_DIR_RIGHT)
@@ -110,7 +119,7 @@
 	else
 		rotate()
 
-/obj/structure/disposalconstruct/proc/flip()
+/obj/structure/disposalconstruct/verb/flip()
 	set name = "Flip Pipe"
 	set category = "Object"
 	set src in view(1)
@@ -126,6 +135,8 @@
 
 	var/obj/structure/disposalpipe/temp = pipe_type
 	if(initial(temp.flip_type))
+		if(dir in GLOB.diagonals)	// Fix RPD-induced diagonal turning
+			setDir(turn(dir, 45))
 		pipe_type = initial(temp.flip_type)
 
 	update_icon()
@@ -180,7 +191,7 @@
 			anchored = TRUE
 			density = initial(pipe_type.density)
 			to_chat(user, "<span class='notice'>You attach the [pipename] to the underfloor.</span>")
-		playsound(loc, I.usesound, 100, 1)
+		playsound(src, I.usesound, 100, 1)
 		update_icon()
 
 	else if(istype(I, /obj/item/weldingtool))

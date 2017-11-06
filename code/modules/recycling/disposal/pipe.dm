@@ -8,12 +8,12 @@
 	density = FALSE
 	on_blueprints = TRUE
 	level = 1			// underfloor only
-	dir = 0				// dir will contain dominant direction for junction pipes
+	dir = NONE			// dir will contain dominant direction for junction pipes
 	max_integrity = 200
-	armor = list(melee = 25, bullet = 10, laser = 10, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 30)
+	armor = list("melee" = 25, "bullet" = 10, "laser" = 10, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 30)
 	layer = DISPOSAL_PIPE_LAYER			// slightly lower than wires and other pipes
-	var/dpdir = 0						// bitmask of pipe directions
-	var/initialize_dirs = 0				// bitflags of pipe directions added on init, see \_DEFINES\pipe_construction.dm
+	var/dpdir = NONE					// bitmask of pipe directions
+	var/initialize_dirs = NONE			// bitflags of pipe directions added on init, see \code\_DEFINES\pipe_construction.dm
 	var/construct_type					// If set, used as type for pipe constructs. If not set, src.type is used.
 	var/flip_type						// If set, the pipe is flippable and becomes this type when flipped
 	var/obj/structure/disposalconstruct/stored
@@ -22,7 +22,7 @@
 /obj/structure/disposalpipe/Initialize(mapload, obj/structure/disposalconstruct/make_from)
 	. = ..()
 
-	if(make_from && !QDELETED(make_from))
+	if(!QDELETED(make_from))
 		setDir(make_from.dir)
 		make_from.forceMove(src)
 		stored = make_from
@@ -36,8 +36,13 @@
 				initialize_dirs = initial(flip.initialize_dirs)
 				construct_type = flip_type
 
+
+	if(dir in GLOB.diagonals) // Bent pipes already have all the dirs set
+		initialize_dirs = NONE
+
 	if(initialize_dirs != DISP_DIR_NONE)
 		dpdir = dir
+
 		if(initialize_dirs & DISP_DIR_LEFT)
 			dpdir |= turn(dir, 90)
 		if(initialize_dirs & DISP_DIR_RIGHT)
@@ -50,14 +55,14 @@
 	. = ..()
 	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION)
 
-	// pipe is deleted
-	// ensure if holder is present, it is expelled
+// pipe is deleted
+// ensure if holder is present, it is expelled
 /obj/structure/disposalpipe/Destroy()
 	var/obj/structure/disposalholder/H = locate() in src
 	if(H)
-		H.active = 0
-		var/turf/T = src.loc
-		expel(H, T, 0)
+		H.active = FALSE
+		expel(H, get_turf(src), 0)
+	QDEL_NULL(stored)
 	return ..()
 
 // returns the direction of the next pipe object, given the entrance dir
@@ -81,15 +86,15 @@
 		if(H2 && !H2.active)
 			H.merge(H2)
 
-		H.loc = P
+		H.forceMove(P)
 		return P
 	else			// if wasn't a pipe, then they're now in our turf
-		H.loc = get_turf(src)
+		H.forceMove(get_turf(src))
 		return null
 
 // update the icon_state to reflect hidden status
 /obj/structure/disposalpipe/proc/update()
-	var/turf/T = src.loc
+	var/turf/T = get_turf(src)
 	hide(T.intact && !isspaceturf(T))	// space never hides pipes
 
 // hide called by levelupdate if turf intact status changes
@@ -122,8 +127,9 @@
 		target = get_offset_target_turf(T, rand(5)-rand(5), rand(5)-rand(5))
 
 	playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
-	for(var/atom/movable/AM in H)
-		AM.forceMove(src.loc)
+	for(var/A in H)
+		var/atom/movable/AM = A
+		AM.forceMove(get_turf(src))
 		AM.pipe_eject(direction)
 		if(target)
 			AM.throw_at(target, eject_range, 1)
@@ -141,15 +147,12 @@
 /obj/structure/disposalpipe/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == "melee" && damage_amount < 10)
 		return 0
-	. = ..()
+	return ..()
 
 
 //attack by item
 //weldingtool: unfasten and convert to obj/disposalconstruct
 /obj/structure/disposalpipe/attackby(obj/item/I, mob/user, params)
-	var/turf/T = src.loc
-	if(T.intact)
-		return		// prevent interaction with T-scanner revealed pipes
 	add_fingerprint(user)
 	if(istype(I, /obj/item/weldingtool))
 		if(!can_be_deconstructed(user))
@@ -170,24 +173,22 @@
 
 //checks if something is blocking the deconstruction (e.g. trunk with a bin still linked to it)
 /obj/structure/disposalpipe/proc/can_be_deconstructed()
-	. = 1
+	return TRUE
 
 // called when pipe is cut with welder
 /obj/structure/disposalpipe/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(disassembled)
 			if(stored)
-				var/turf/T = loc
-				stored.loc = T
+				stored.forceMove(loc)
 				transfer_fingerprints_to(stored)
 				stored.setDir(dir)
-				stored.density = FALSE
-				stored.anchored = TRUE
-				stored.update_icon()
+				stored = null
 		else
+			var/turf/T = get_turf(src)
 			for(var/D in GLOB.cardinals)
 				if(D & dpdir)
-					var/obj/structure/disposalpipe/broken/P = new(src.loc)
+					var/obj/structure/disposalpipe/broken/P = new(T)
 					P.setDir(D)
 	qdel(src)
 
@@ -200,19 +201,25 @@
 
 // Straight pipe segment
 /obj/structure/disposalpipe/segment
-	icon_state = "pipe-s"
+	icon_state = "pipe"
 	initialize_dirs = DISP_DIR_FLIP
 
 /obj/structure/disposalpipe/segment/Initialize()
-	if(icon_state == "pipe-c")	// Hack for old map pipes to work, remove after all maps are updated
-		initialize_dirs = DISP_DIR_RIGHT
-		construct_type = /obj/structure/disposalpipe/segment/bent
-	. = ..()
+	// Hacks for old map pipes to work, remove after all maps are updated
+	if(icon_state == "pipe-c")
+		switch(dir)
+			if(NORTH)
+				dir = NORTHEAST
+			if(SOUTH)
+				dir = SOUTHWEST
+			if(EAST)
+				dir = SOUTHEAST
+			if(WEST)
+				dir = NORTHWEST
 
-// Bent pipe segment
-/obj/structure/disposalpipe/segment/bent
-	icon_state = "pipe-c"
-	initialize_dirs = DISP_DIR_RIGHT
+	if(icon_state != "pipe")
+		icon_state = "pipe"
+	. = ..()
 
 
 // A three-way junction with dir being the dominant direction
@@ -241,7 +248,7 @@
 		var/mask = dpdir & (~dir)	// get a mask of secondary dirs
 
 		// find one secondary dir in mask
-		var/secdir = 0
+		var/secdir = NONE
 		for(var/D in GLOB.cardinals)
 			if(D & mask)
 				secdir = D
@@ -284,13 +291,14 @@
 
 /obj/structure/disposalpipe/trunk/proc/getlinked()
 	linked = null
-	var/obj/machinery/disposal/D = locate() in src.loc
+	var/turf/T = get_turf(src)
+	var/obj/machinery/disposal/D = locate() in T
 	if(D)
 		linked = D
 		if (!D.trunk)
 			D.trunk = src
 
-	var/obj/structure/disposaloutlet/O = locate() in src.loc
+	var/obj/structure/disposaloutlet/O = locate() in T
 	if(O)
 		linked = O
 
@@ -298,8 +306,8 @@
 /obj/structure/disposalpipe/trunk/can_be_deconstructed(mob/user)
 	if(linked)
 		to_chat(user, "<span class='warning'>You need to deconstruct disposal machinery above this pipe!</span>")
-	else
-		. = 1
+		return FALSE
+	return TRUE
 
 // would transfer to next pipe segment, but we are in a trunk
 // if not entering from disposal bin,
@@ -316,14 +324,14 @@
 			var/obj/machinery/disposal/D = linked
 			D.expel(H)	// expel at disposal
 	else
-		src.expel(H, get_turf(src), 0)	// expel at turf
+		expel(H, get_turf(src), 0)	// expel at turf
 	return null
 
 /obj/structure/disposalpipe/trunk/nextdir(obj/structure/disposalholder/H)
 	if(H.dir == DOWN)
 		return dir
 	else
-		return 0
+		return NONE
 
 // a broken pipe
 /obj/structure/disposalpipe/broken
@@ -335,30 +343,3 @@
 
 /obj/structure/disposalpipe/broken/deconstruct()
 	qdel(src)
-
-
-
-
-// called when movable is expelled from a disposal pipe or outlet
-// by default does nothing, override for special behaviour
-
-/atom/movable/proc/pipe_eject(direction)
-	return
-
-/obj/effect/decal/cleanable/blood/gibs/pipe_eject(direction)
-	var/list/dirs
-	if(direction)
-		dirs = list( direction, turn(direction, -45), turn(direction, 45))
-	else
-		dirs = GLOB.alldirs.Copy()
-
-	src.streak(dirs)
-
-/obj/effect/decal/cleanable/robot_debris/gib/pipe_eject(direction)
-	var/list/dirs
-	if(direction)
-		dirs = list( direction, turn(direction, -45), turn(direction, 45))
-	else
-		dirs = GLOB.alldirs.Copy()
-
-	src.streak(dirs)

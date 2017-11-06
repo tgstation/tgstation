@@ -6,11 +6,11 @@
 /obj/structure/disposalholder
 	invisibility = INVISIBILITY_MAXIMUM
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	dir = NONE
 	var/datum/gas_mixture/gas	// gas used to flush, will appear at exit point
 	var/active = FALSE			// true if the holder is moving, otherwise inactive
-	dir = 0
 	var/count = 1000			// can travel 1000 steps before going inactive (in case of loops)
-	var/destinationTag = 0		// changes if contains a delivery container
+	var/destinationTag = NONE	// changes if contains a delivery container
 	var/tomail = FALSE			// contains wrapped package
 	var/hasmob = FALSE			// contains a mob
 
@@ -19,7 +19,7 @@
 	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION)
 
 /obj/structure/disposalholder/Destroy()
-	qdel(gas)
+	QDEL_NULL(gas)
 	active = FALSE
 	return ..()
 
@@ -37,14 +37,14 @@
 	//Checks 1 contents level deep. This means that players can be sent through disposals mail...
 	//...but it should require a second person to open the package. (i.e. person inside a wrapped locker)
 	for(var/obj/O in D)
-		if(O.contents)
-			for(var/mob/living/M in O.contents)
-				hasmob = TRUE
+		for(var/mob/living/M in O.contents)
+			hasmob = TRUE
 
 	// now everything inside the disposal gets put into the holder
 	// note AM since can contain mobs or objs
-	for(var/atom/movable/AM in D)
-		AM.loc = src
+	for(var/A in D)
+		var/atom/movable/AM = A
+		AM.forceMove(src)
 		if(istype(AM, /obj/structure/bigDelivery) && !hasmob)
 			var/obj/structure/bigDelivery/T = AM
 			src.destinationTag = T.sortTag
@@ -59,16 +59,14 @@
 	if(!D.trunk)
 		D.expel(src)	// no trunk connected, so expel immediately
 		return
-	loc = D.trunk
+	forceMove(D.trunk)
 	active = TRUE
 	setDir(DOWN)
 	move()
 
-	return
-
 // movement process, persists while holder is moving through pipes
 /obj/structure/disposalholder/proc/move()
-	set waitfor = 0
+	set waitfor = FALSE
 	var/obj/structure/disposalpipe/last
 	while(active)
 		var/obj/structure/disposalpipe/curr = loc
@@ -80,11 +78,10 @@
 		stoplag()
 		if(!(count--))
 			active = FALSE
-	return
 
 // find the turf which should contain the next pipe
 /obj/structure/disposalholder/proc/nextloc()
-	return get_step(loc,dir)
+	return get_step(loc, dir)
 
 // find a matching pipe on a turf
 /obj/structure/disposalholder/proc/findpipe(turf/T)
@@ -111,11 +108,10 @@
 
 // called when player tries to move while in a pipe
 /obj/structure/disposalholder/relaymove(mob/user)
-	if (user.stat)
+	if(user.incapacitated())
 		return
-	if (src.loc)
-		for (var/mob/M in get_hearers_in_view(src.loc.loc))
-			M.show_message("<FONT size=[max(0, 5 - get_dist(src, M))]>CLONG, clong!</FONT>", 2)
+	for(var/mob/M in range(5, get_turf(src)))
+		M.show_message("<FONT size=[max(0, 5 - get_dist(src, M))]>CLONG, clong!</FONT>", 2)
 	playsound(src.loc, 'sound/effects/clang.ogg', 50, 0, 0)
 
 // called to vent all gas in holder to a location

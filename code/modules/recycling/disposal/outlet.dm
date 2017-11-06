@@ -8,9 +8,8 @@
 	anchored = TRUE
 	var/active = FALSE
 	var/turf/target	// this will be where the output objects are 'thrown' to.
-	var/obj/structure/disposalpipe/trunk/trunk = null // the attached pipe trunk
+	var/obj/structure/disposalpipe/trunk/trunk // the attached pipe trunk
 	var/obj/structure/disposalconstruct/stored
-	var/mode = 0
 	var/start_eject = 0
 	var/eject_range = 2
 
@@ -36,6 +35,8 @@
 /obj/structure/disposaloutlet/Destroy()
 	if(trunk)
 		trunk.linked = null
+	trunk = null
+	QDEL_NULL(stored)
 	return ..()
 
 // expel the contents of the holder object, then delete it
@@ -51,41 +52,29 @@
 	else
 		sleep(20)
 	if(H)
-		for(var/atom/movable/AM in H)
+		for(var/A in H)
+			var/atom/movable/AM = A
 			AM.forceMove(T)
 			AM.pipe_eject(dir)
 			AM.throw_at(target, eject_range, 1)
 
 		H.vent_gas(T)
 		qdel(H)
-	return
 
 /obj/structure/disposaloutlet/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
-	if(istype(I, /obj/item/screwdriver))
-		if(mode==0)
-			mode=1
-			playsound(src.loc, I.usesound, 50, 1)
-			to_chat(user, "<span class='notice'>You remove the screws around the power connection.</span>")
-		else if(mode==1)
-			mode=0
-			playsound(src.loc, I.usesound, 50, 1)
-			to_chat(user, "<span class='notice'>You attach the screws around the power connection.</span>")
-
-	else if(istype(I, /obj/item/weldingtool) && mode==1)
+	if(istype(I, /obj/item/weldingtool))
 		var/obj/item/weldingtool/W = I
 		if(W.remove_fuel(0,user))
-			playsound(src.loc, 'sound/items/welder2.ogg', 100, 1)
-			to_chat(user, "<span class='notice'>You start slicing the floorweld off \the [src]...</span>")
-			if(do_after(user,20*I.toolspeed, target = src))
-				if(!src || !W.isOn())
+			playsound(src, 'sound/items/welder2.ogg', 100, 1)
+			to_chat(user, "<span class='notice'>You start slicing the floorweld off [src]...</span>")
+			if(do_after(user, 20*I.toolspeed, target = src))
+				if(!W.isOn())
 					return
-				to_chat(user, "<span class='notice'>You slice the floorweld off \the [src].</span>")
-				stored.loc = loc
-				src.transfer_fingerprints_to(stored)
-				stored.update_icon()
-				stored.anchored = FALSE
-				stored.density = TRUE
+				to_chat(user, "<span class='notice'>You slice the floorweld off [src].</span>")
+				stored.forceMove(loc)
+				transfer_fingerprints_to(stored)
+				stored = null
 				qdel(src)
 	else
 		return ..()
