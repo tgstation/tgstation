@@ -23,7 +23,7 @@
 	active = FALSE
 	return ..()
 
-	// initialize a holder from the contents of a disposal unit
+// initialize a holder from the contents of a disposal unit
 /obj/structure/disposalholder/proc/init(obj/machinery/disposal/D)
 	gas = D.air_contents// transfer gas resv. into holder object
 
@@ -98,8 +98,9 @@
 // merge two holder objects
 // used when a holder meets a stuck holder
 /obj/structure/disposalholder/proc/merge(obj/structure/disposalholder/other)
-	for(var/atom/movable/AM in other)
-		AM.loc = src		// move everything in other holder to this one
+	for(var/A in other)
+		var/atom/movable/AM = A
+		AM.forceMove(src)		// move everything in other holder to this one
 		if(ismob(AM))
 			var/mob/M = AM
 			M.reset_perspective(src)	// if a client mob, update eye to follow this holder

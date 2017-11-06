@@ -19,7 +19,7 @@
 	..()
 	to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
 
-/obj/structure/disposalconstruct/New(loc, new_pipe_type, direction = 1, flip = 0, obj/make_from)
+/obj/structure/disposalconstruct/New(loc, _pipe_type, _dir = SOUTH, flip = FALSE, obj/make_from)
 	..()
 	if(make_from)
 		pipe_type = make_from.type
@@ -32,9 +32,9 @@
 				pipe_type = D.construct_type
 
 	else
-		if(new_pipe_type)
-			pipe_type = new_pipe_type
-		setDir(direction)
+		if(_pipe_type)
+			pipe_type = _pipe_type
+		setDir(_dir)
 
 	pipename = initial(pipe_type.name)
 

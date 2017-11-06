@@ -164,7 +164,7 @@
 			to_chat(user, "<span class='notice'>You start slicing [src]...</span>")
 			// check if anything changed over 2 seconds
 			if(do_after(user, 30*I.toolspeed, target = src))
-				if(!src || !W.isOn())
+				if(!W.isOn())
 					return
 				deconstruct()
 				to_chat(user, "<span class='notice'>You slice [src].</span>")

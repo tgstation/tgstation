@@ -11,7 +11,7 @@
 	var/obj/structure/disposalpipe/trunk/trunk // the attached pipe trunk
 	var/obj/structure/disposalconstruct/stored
 	var/start_eject = 0
-	var/eject_range = 2
+	var/eject_range = 3
 
 /obj/structure/disposaloutlet/Initialize(mapload, obj/structure/disposalconstruct/make_from)
 	. = ..()
@@ -42,24 +42,32 @@
 // expel the contents of the holder object, then delete it
 // called when the holder exits the outlet
 /obj/structure/disposaloutlet/proc/expel(obj/structure/disposalholder/H)
-	var/turf/T = get_turf(src)
 	flick("outlet-open", src)
 	if((start_eject + 30) < world.time)
 		start_eject = world.time
 		playsound(src, 'sound/machines/warning-buzzer.ogg', 50, 0, 0)
-		sleep(20)
-		playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
+		addtimer(CALLBACK(src, .proc/expel_holder, H, TRUE), 20)
 	else
-		sleep(20)
-	if(H)
-		for(var/A in H)
-			var/atom/movable/AM = A
-			AM.forceMove(T)
-			AM.pipe_eject(dir)
-			AM.throw_at(target, eject_range, 1)
+		addtimer(CALLBACK(src, .proc/expel_holder, H), 20)
 
-		H.vent_gas(T)
-		qdel(H)
+/obj/structure/disposaloutlet/proc/expel_holder(obj/structure/disposalholder/H, playsound=FALSE)
+	if(playsound)
+		playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
+
+	if(!H)
+		return
+
+	var/turf/T = get_turf(src)
+
+	for(var/A in H)
+		var/atom/movable/AM = A
+		AM.forceMove(T)
+		AM.pipe_eject(dir)
+		AM.throw_at(target, eject_range, 1)
+
+	H.vent_gas(T)
+	qdel(H)
+
 
 /obj/structure/disposaloutlet/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
