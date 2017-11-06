@@ -160,8 +160,8 @@
 
 				world.SetConfig("ban", bannedckey, null)
 
-				log_game("Stickyban on [bannedckey] detected as rogue, reverting to it's roundstart state")
-				message_admins("Stickyban on [bannedckey] detected as rogue, reverting to it's roundstart state")
+				log_game("Stickyban on [bannedckey] detected as rogue, reverting to its roundstart state")
+				message_admins("Stickyban on [bannedckey] detected as rogue, reverting to its roundstart state")
 				//do not convert to timer.
 				spawn (5)
 					world.SetConfig("ban", bannedckey, null)

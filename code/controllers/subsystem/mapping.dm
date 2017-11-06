@@ -124,7 +124,7 @@ SUBSYSTEM_DEF(mapping)
 		query_round_map_name.Execute()
 
 	if(config.minetype != "lavaland")
-		INIT_ANNOUNCE("WARNING: A map without lavaland set as it's minetype was loaded! This is being ignored! Update the maploader code!")
+		INIT_ANNOUNCE("WARNING: A map without lavaland set as its minetype was loaded! This is being ignored! Update the maploader code!")
 
 	CreateSpace(ZLEVEL_SPACEMAX)
 
