@@ -492,7 +492,7 @@
 	name = "\improper EPv2 circuit"
 	desc = "Enables the sending and receiving of messages on the Exonet with the EPv2 protocol."
 	extended_desc = "An EPv2 address is a string with the format of XXXX:XXXX:XXXX:XXXX.  Data can be send or received using the \
-	second pin on each side, with additonal data reserved for the third pin.  When a message is received, the second activaiton pin \
+	second pin on each side, with additonal data reserved for the third pin.  When a message is received, the second activation pin \
 	will pulse whatever's connected to it.  Pulsing the first activation pin will send a message."
 	icon_state = "signal"
 	complexity = 4

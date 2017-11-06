@@ -139,13 +139,13 @@
 	if(can_clone)
 		HTML += "Here you can load script for your assembly.<br>"
 		if(as_printing)
-			HTML += " {Load Programm} "
+			HTML += " {Load Program} "
 		else
-			HTML += " <A href='?src=\ref[src];print=load'>{Load Programm}</a> "
+			HTML += " <A href='?src=\ref[src];print=load'>{Load Program}</a> "
 		if(program == "blank")
-			HTML += " {Check Programm} "
+			HTML += " {Check Program} "
 		else
-			HTML += " <A href='?src=\ref[src];print=check'>{Check Programm}</a> "
+			HTML += " <A href='?src=\ref[src];print=check'>{Check Program}</a> "
 		if((program == "blank")|as_printing)
 			HTML += " {Print assembly} "
 		else
