@@ -1,4 +1,4 @@
-	/obj/machinery/exonet_node
+/obj/machinery/exonet_node
 	name = "exonet node"
 	desc = null // Gets written in New()
 	icon = 'icons/obj/stationobjs.dmi'
@@ -8,9 +8,6 @@
 	var/toggle = 1
 	density = TRUE
 	anchored = TRUE
-	var/allow_external_PDAs = 1
-	var/allow_external_communicators = 1
-	var/allow_external_newscasters = 1
 	circuit = /obj/item/circuitboard/machine/exonet_node
 	max_integrity = 300
 	integrity_failure = 100
@@ -45,10 +42,7 @@
 // Description: Self explanatory.
 /obj/machinery/exonet_node/update_icon()
 	if(on)
-		if(!allow_external_PDAs && !allow_external_communicators && !allow_external_newscasters)
-			icon_state = "[initial(icon_state)]_idle"
-		else
-			icon_state = initial(icon_state)
+		icon_state = initial(icon_state)
 	else
 		icon_state = "[initial(icon_state)]_off"
 
@@ -119,9 +113,6 @@
 /obj/machinery/exonet_node/ui_data(mob/user)
 	var/list/data = list()
 	data["toggle"] = toggle
-	data["allowPDAs"] = allow_external_PDAs
-	data["allowCommunicators"] = allow_external_communicators
-	data["allowNewscasters"] = allow_external_newscasters
 	data["logs"] = logs
 	return data
 
