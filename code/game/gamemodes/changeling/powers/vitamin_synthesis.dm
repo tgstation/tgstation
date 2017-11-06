@@ -4,7 +4,7 @@
 	desc = "Allows us to shift our blood nutrient levels at will. Higher vitamin concentrations supplement the body's natural healing ability and allow faster recuperation of conventional wounds."
 	helptext = "Malnutrition occurs at -10% vitamin concentration, and hypervitaminitosis at 100% or above."
 	chemical_cost = 10
-	dna_cost = 1
+	dna_cost = 0
 	req_stat = UNCONSCIOUS
 	req_human = TRUE
 

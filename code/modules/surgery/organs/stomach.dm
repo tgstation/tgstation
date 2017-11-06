@@ -56,9 +56,10 @@
 	H.vitamins -= vitamin_decay_rate //Yes, this works for negatives, don't ask me how
 	H.vitamins = Clamp(H.vitamins, -VITAMIN_CLAMP, VITAMIN_CLAMP) //So we don't have 1000% vitamin level
 
-	//Then, our body heals depending on nutrition!
-	H.adjustBruteLoss(-max(0, 0.01 + (H.vitamins * 0.0005))) //Natural healing remains very slow, but is faster for people who are well-nourished
-	H.adjustFireLoss(-max(0, 0.01 + (H.vitamins * 0.0003))) //Burn wounds heal slightly more slowly
+	if(H.vitamins < VITAMIN_LEVEL_HYPERVITAMINITOSIS)
+		//Then, our body heals depending on nutrition!
+		H.adjustBruteLoss(-max(0, 0.01 + (H.vitamins * 0.0005))) //Natural healing remains very slow, but is faster for people who are well-nourished
+		H.adjustFireLoss(-max(0, 0.01 + (H.vitamins * 0.0003))) //Burn wounds heal slightly more slowly
 
 /obj/item/organ/stomach/Remove(mob/living/carbon/M, special = 0)
 	var/mob/living/carbon/human/H = owner

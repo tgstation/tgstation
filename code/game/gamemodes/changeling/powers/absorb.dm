@@ -56,6 +56,7 @@
 
 	if(user.nutrition < NUTRITION_LEVEL_WELL_FED)
 		user.nutrition = min((user.nutrition + target.nutrition), NUTRITION_LEVEL_WELL_FED)
+	user.vitamins += max(0, target.vitamins)
 
 	if(target.mind)//if the victim has got a mind
 

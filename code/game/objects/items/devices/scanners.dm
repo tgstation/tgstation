@@ -232,7 +232,7 @@ MASS SPECTROMETER
 
 	// Nutrition
 	if(ishuman(M))
-		to_chat(user, "<span class='info'>Vitamin levels:</span> <span class='[M.vitamins ? "info" : "danger"] bold'>~[round(M.vitamins)]%</span>")
+		to_chat(user, "<span class='info'>Vitamin levels:</span> <span class='[M.vitamins >= 0 ? "info" : "danger"] bold'>~[round(M.vitamins)]%</span>")
 		if(M.disabilities & FAT)
 			to_chat(user, "<span class='alert'>Subject is obese.</span>")
 		else if(M.nutrition <= NUTRITION_LEVEL_STARVING)

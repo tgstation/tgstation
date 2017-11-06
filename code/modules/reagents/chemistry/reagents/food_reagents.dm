@@ -74,7 +74,7 @@
 	name = "Vitamin"
 	id = "vitamin"
 	description = "All the best vitamins, minerals, and carbohydrates the body needs in pure form."
-	healthiness = 0.2
+	healthiness = 0.33
 
 	brute_heal = 1
 	burn_heal = 1
@@ -122,7 +122,7 @@
 	description = "A salty sauce made from the soy plant."
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#792300" // rgb: 121, 35, 0
-	taste_description = "umami"
+	taste_description = "umami" //Glad you could bake it, Uther
 	healthiness = 0.01
 
 /datum/reagent/consumable/ketchup
