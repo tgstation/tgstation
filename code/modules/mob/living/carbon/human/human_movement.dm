@@ -58,6 +58,21 @@
 				//End bloody footprints
 
 				S.step_action()
+		
+	if(bleed_rate && !buckled && has_gravity(loc) && lying)
+		if(prob(2) && istype(loc, /obj/structure/closet))
+			visible_message("<span class='warning'>[src] bumps their head against \the [src]!</span>")
+			apply_damage(rand(1, 2.5), BRUTE, "head")
+		else
+			if(prob(getBruteLoss() / 5) && health > HEALTH_THRESHOLD_CRIT)
+				bleed(rand(bleed_rate*0.75, bleed_rate))
+				add_splatter_floor(get_turf(src))
+				visible_message("<span class='warning'>\The [src]'s wounds are torn wider from being dragged!</span>")
+			else
+				if(prob(15))
+					bleed(rand(bleed_rate, bleed_rate*1.75))
+					add_splatter_floor(get_turf(src))
+					visible_message("<span class='warning'>\The [src] wounds are torn even wider from being dragged!</span>")
 /mob/living/carbon/human/Moved()
 	. = ..()
 	if(buckled_mobs && buckled_mobs.len && riding_datum)
