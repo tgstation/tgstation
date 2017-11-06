@@ -230,9 +230,7 @@
 	var/list/cached_reagents = reagent_list
 	var/list/cached_addictions = addiction_list
 	if(C)
-		var/avg_temp = (chem_temp * total_volume + C.bodytemperature * (maximum_volume - total_volume)) / maximum_volume
-		chem_temp = avg_temp
-		C.bodytemperature = avg_temp
+		expose_temperature(C.bodytemperature, 0.25)
 		handle_reactions()
 	var/need_mob_update = 0
 	for(var/reagent in cached_reagents)
@@ -737,8 +735,8 @@
 
 	return english_list(out, "something indescribable")
 	
-/datum/reagents/proc/expose_temperature(var/temperature)
-	var/temp_delta = (temperature - chem_temp) / 50
+/datum/reagents/proc/expose_temperature(var/temperature, var/coeff=0.02)
+	var/temp_delta = (temperature - chem_temp) * coeff
 	if(temp_delta > 0)
 		chem_temp = min(chem_temp + max(temp_delta, 1), temperature)
 	else
