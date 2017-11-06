@@ -8,9 +8,6 @@
 	var/toggle = 1
 	density = TRUE
 	anchored = TRUE
-	var/allow_external_PDAs = 1
-	var/allow_external_communicators = 1
-	var/allow_external_newscasters = 1
 	circuit = /obj/item/circuitboard/machine/exonet_node
 	max_integrity = 300
 	integrity_failure = 100
@@ -45,10 +42,7 @@
 // Description: Self explanatory.
 /obj/machinery/exonet_node/update_icon()
 	if(on)
-		if(!allow_external_PDAs && !allow_external_communicators && !allow_external_newscasters)
-			icon_state = "[initial(icon_state)]_idle"
-		else
-			icon_state = initial(icon_state)
+		icon_state = initial(icon_state)
 	else
 		icon_state = "[initial(icon_state)]_off"
 
@@ -112,17 +106,14 @@
 /obj/machinery/exonet_node/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, var/force_open = 1,datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "exonet_node", name, 300, 300, master_ui, state)
+		ui = new(user, src, ui_key, "exonet_node", name, 600, 300, master_ui, state)
 		ui.open()
 
 /obj/machinery/exonet_node/ui_data(mob/user)
 	var/list/data = list()
-	data["on"] = toggle ? 1 : 0
-	data["allowPDAs"] = allow_external_PDAs
-	data["allowCommunicators"] = allow_external_communicators
-	data["allowNewscasters"] = allow_external_newscasters
+	data["toggle"] = toggle
 	data["logs"] = logs
-  return data
+	return data
 
 /obj/machinery/exonet_node/ui_act(action, params)
 	if(..())
@@ -133,20 +124,6 @@
 			update_power()
 			if(!toggle)
 				var/msg = "[usr.client.key] ([usr]) has turned [src] off, at [x],[y],[z]."
-				message_admins(msg)
-				log_game(msg)
-		if("toggle_PDA_port")
-			allow_external_PDAs = !allow_external_PDAs
-		if("toggle_communicator_port")
-			allow_external_communicators = !allow_external_communicators
-			if(!allow_external_communicators)
-				var/msg = "[usr.client.key] ([usr]) has turned [src]'s communicator port off, at [x],[y],[z]."
-				message_admins(msg)
-				log_game(msg)
-		if("toggle_newscaster_port")
-			allow_external_newscasters = !allow_external_newscasters
-			if(!allow_external_newscasters)
-				var/msg = "[usr.client.key] ([usr]) has turned [src]'s newscaster port off, at [x],[y],[z]."
 				message_admins(msg)
 				log_game(msg)
 	. = TRUE
