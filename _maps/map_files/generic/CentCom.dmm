@@ -14429,6 +14429,262 @@
 /obj/structure/lattice,
 /turf/open/space,
 /area/space)
+"Md" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"Me" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"Mf" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/mining)
+"Mg" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Mining Shuttle Airlock";
+	req_access_txt = "0"
+	},
+/obj/docking_port/mobile{
+	dir = 2;
+	dwidth = 3;
+	height = 5;
+	id = "mining";
+	name = "mining shuttle";
+	port_direction = 4;
+	roundstart_move = "mining_home";
+	width = 7
+	},
+/turf/open/floor/plating,
+/area/shuttle/mining)
+"Mh" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/mining)
+"Mi" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"Mj" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"Mk" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"Ml" = (
+/obj/structure/table,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"Mm" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"Mn" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"Mo" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"Mp" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/ore_box,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"Mq" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"Mr" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/mining)
+"Ms" = (
+/obj/machinery/computer/shuttle/mining,
+/obj/machinery/camera{
+	c_tag = "Mining Shuttle";
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"Mt" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"Mu" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"Mv" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/tank/internals/emergency_oxygen/double{
+	pixel_x = 3
+	},
+/obj/item/tank/internals/emergency_oxygen/double{
+	pixel_x = 3
+	},
+/obj/item/tank/internals/emergency_oxygen/double{
+	pixel_x = 3
+	},
+/obj/item/tank/internals/emergency_oxygen/double{
+	pixel_x = 3
+	},
+/obj/item/tank/internals/emergency_oxygen/double{
+	pixel_x = 3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/head/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/item/clothing/head/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/item/clothing/head/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/item/clothing/head/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/item/clothing/head/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/structure/closet/crate/internals,
+/obj/item/pickaxe/emergency,
+/obj/item/pickaxe/emergency,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"Mw" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"Mx" = (
+/obj/structure/shuttle/engine/propulsion/burst{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/mining)
+"My" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"Mz" = (
+/obj/structure/table,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"MA" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"MB" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"MC" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"MD" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/reagent_dispensers/fueltank,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"ME" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"MF" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"MG" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"MH" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/mining)
+"MI" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Mining Shuttle Airlock";
+	req_access_txt = "0"
+	},
+/turf/open/floor/plating,
+/area/shuttle/mining)
+"MJ" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/mining)
+"MK" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"ML" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
 
 (1,1,1) = {"
 aa
@@ -66860,11 +67116,11 @@ aa
 "}
 (205,1,1) = {"
 aa
-aa
-aa
-aa
-aa
-aa
+Md
+Mk
+Mr
+My
+MF
 aa
 aa
 aa
@@ -67117,11 +67373,11 @@ aa
 "}
 (206,1,1) = {"
 aa
-aa
-aa
-aa
-aa
-aa
+Me
+Ml
+Ms
+Mz
+MG
 aa
 aa
 aa
@@ -67374,11 +67630,11 @@ aa
 "}
 (207,1,1) = {"
 aa
-aa
-aa
-aa
-aa
-aa
+Mf
+Mm
+Mt
+MA
+MH
 aa
 aa
 aa
@@ -67631,11 +67887,11 @@ aa
 "}
 (208,1,1) = {"
 aa
-aa
-aa
-aa
-aa
-aa
+Mg
+Mn
+Mu
+MB
+MI
 aa
 aa
 aa
@@ -67888,11 +68144,11 @@ aa
 "}
 (209,1,1) = {"
 aa
-aa
-aa
-aa
-aa
-aa
+Mh
+Mo
+Mv
+MC
+MJ
 aa
 aa
 aa
@@ -68145,11 +68401,11 @@ aa
 "}
 (210,1,1) = {"
 aa
-aa
-aa
-aa
-aa
-aa
+Mi
+Mp
+Mw
+MD
+MK
 aa
 aa
 aa
@@ -68402,11 +68658,11 @@ aa
 "}
 (211,1,1) = {"
 aa
-aa
-aa
-aa
-aa
-aa
+Mj
+Mq
+Mx
+ME
+ML
 aa
 aa
 aa

@@ -32909,8 +32909,9 @@
 	name = "KEEP CLEAR: DOCKING AREA";
 	pixel_y = 32
 	},
-/turf/open/space,
-/area/space)
+/obj/structure/closet/emcloset,
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
 "bDj" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -34135,9 +34136,8 @@
 /turf/open/floor/plating/airless,
 /area/science/test_area)
 "bGg" = (
-/obj/structure/table,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/mining)
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
 "bGh" = (
 /obj/machinery/computer/shuttle/mining,
 /turf/open/floor/mineral/titanium/blue,
@@ -34735,19 +34735,13 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/mining)
 "bHy" = (
-/obj/structure/closet/crate,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/item/device/radio/intercom{
-	dir = 4;
-	name = "Station Intercom (General)";
-	pixel_x = 27
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plating,
 /area/quartermaster/miningdock)
 "bHz" = (
 /obj/item/ore/iron,
@@ -36009,13 +36003,10 @@
 /turf/open/floor/plating/airless,
 /area/science/test_area)
 "bKj" = (
-/obj/machinery/camera{
-	c_tag = "Mining Dock External";
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/structure/reagent_dispensers/fueltank,
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plasteel,
+/turf/open/floor/plating,
 /area/quartermaster/miningdock)
 "bKk" = (
 /obj/item/ore/silver,
@@ -37072,13 +37063,11 @@
 /turf/open/floor/plating/airless,
 /area/science/test_area)
 "bMF" = (
-/obj/structure/shuttle/engine/propulsion/burst,
-/obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
-/turf/open/floor/plating/airless,
-/area/shuttle/mining)
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
 "bMG" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -55718,8 +55707,11 @@
 	},
 /area/engine/engineering)
 "cTg" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/mining)
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
 "cTi" = (
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
@@ -57693,6 +57685,193 @@
 /obj/item/device/flashlight,
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
+"QoL" = (
+/turf/open/space/basic,
+/area/space/nearstation)
+"QoM" = (
+/turf/open/space/basic,
+/area/space/nearstation)
+"QoN" = (
+/turf/open/space/basic,
+/area/space/nearstation)
+"QoO" = (
+/turf/open/space/basic,
+/area/space/nearstation)
+"QoP" = (
+/turf/open/space/basic,
+/area/space/nearstation)
+"QoQ" = (
+/turf/open/space/basic,
+/area/space/nearstation)
+"QoR" = (
+/turf/open/space/basic,
+/area/space/nearstation)
+"QoS" = (
+/turf/open/space/basic,
+/area/space/nearstation)
+"QoT" = (
+/turf/open/space/basic,
+/area/space/nearstation)
+"QoU" = (
+/turf/open/space/basic,
+/area/space/nearstation)
+"QoV" = (
+/turf/open/space/basic,
+/area/space/nearstation)
+"QoW" = (
+/turf/open/space/basic,
+/area/space/nearstation)
+"QoX" = (
+/turf/open/space/basic,
+/area/space/nearstation)
+"QoY" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"QoZ" = (
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"Qpa" = (
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"Qpb" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"Qpc" = (
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"Qpd" = (
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"Qpe" = (
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"Qpf" = (
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"Qpg" = (
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"Qph" = (
+/obj/effect/turf_decal/delivery,
+/obj/structure/ore_box,
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"Qpi" = (
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"Qpj" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 2
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"Qpk" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"Qpl" = (
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"Qpm" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"Qpn" = (
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"Qpo" = (
+/obj/docking_port/stationary{
+	area_type = /area/quartermaster/miningdock;
+	baseturf_type = /turf/open/space;
+	dir = 2;
+	dwidth = 3;
+	height = 5;
+	id = "mining_home";
+	name = "mining shuttle bay";
+	turf_type = /turf/open/floor/plating;
+	width = 7
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"Qpp" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"Qpq" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"Qpr" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"Qps" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"Qpt" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"Qpu" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"Qpv" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"Qpw" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"Qpx" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"Qpy" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"Qpz" = (
+/obj/machinery/light/small,
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"QpA" = (
+/obj/machinery/camera{
+	c_tag = "Mining Docking Bay";
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
 
 (1,1,1) = {"
 aaa
@@ -76341,20 +76520,20 @@ bjr
 buB
 bvU
 aZE
-aaf
-aaf
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaf
-aaf
-aaf
+apQ
+apQ
+QoT
+bxy
+bxy
+bGi
+bGi
+bGi
+bGi
+bGi
+bGi
+bGi
+bxy
+bCq
 aaa
 aaa
 aag
@@ -76598,19 +76777,19 @@ bjt
 biq
 bvV
 blW
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+QoL
+QoP
+QoU
+bxy
+QoY
+Qpi
+Qpl
+bGg
+bGg
+bGg
+bGg
+bGg
+bGg
 bCq
 bCq
 bCq
@@ -76855,19 +77034,19 @@ bjr
 buC
 bvV
 blW
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+QoM
+QoQ
+QoV
+bxy
+QoZ
+Qpj
+Qpm
+Qpq
+Qpr
+Qpt
+Qpu
+Qpv
+bGg
 bCq
 bJP
 bCq
@@ -77112,19 +77291,19 @@ bjr
 bkt
 bvV
 blW
-aaa
-aaa
-aaa
-aaa
-aaa
+QoN
+QoR
+QoW
+bxy
+Qpa
 cTg
-cTg
-cTi
-cTg
-cTi
-cTg
-cTg
-aaa
+Qpn
+bGg
+bGg
+bGg
+bGg
+Qpw
+Qpz
 bCq
 bPS
 bRd
@@ -77369,19 +77548,19 @@ bjr
 bjr
 bvV
 bxu
-aaa
-aaa
-aaa
-aaa
-aaa
+QoO
+QoS
+QoX
+bxy
+Qpb
 cTg
 bGg
-cTo
-cMl
-bHx
-cTx
-cTg
-aaa
+bGg
+bGg
+bGg
+bGg
+Qpx
+bGg
 bLv
 bPR
 bRc
@@ -77631,14 +77810,14 @@ bxx
 bxu
 bxu
 bDi
-cTi
-bGh
-bHx
-cTo
-bHx
-bLt
+cTg
+bGg
+bGg
+bGg
+bGg
+bGg
 bMF
-aaa
+QpA
 bCq
 bPS
 bRf
@@ -77887,15 +78066,15 @@ bvF
 bzP
 bAS
 bxu
-aaa
+Qpc
 cTg
+Qpo
 bGg
-cTo
-cTo
-bHx
-bLs
-cTg
-aaa
+bGg
+bGg
+bGg
+bMF
+bGg
 bLv
 bPT
 bRe
@@ -78144,15 +78323,15 @@ byA
 bzR
 byd
 bxx
-aaa
+Qpd
 cTg
-cTg
-cTi
-bJc
-cTi
-cTg
-cTg
-aaa
+bGg
+bGg
+bGg
+bGg
+bGg
+bMF
+bGg
 bCq
 bPV
 bCq
@@ -78401,15 +78580,15 @@ byz
 bzQ
 byc
 bxx
-aaa
-aaa
-bGi
-bGi
-bJb
-bGi
-bGi
-aoV
-aoV
+Qpe
+cTg
+bGg
+bGg
+bGg
+bGg
+bGg
+bMF
+bGg
 bCq
 bPU
 bHE
@@ -78658,15 +78837,15 @@ byC
 bzT
 byl
 bxx
-aaf
-aaf
-bGi
-bHz
-byE
-bKk
-bGi
-aoV
-aoV
+Qpf
+cTg
+bGg
+bGg
+bGg
+bGg
+bGg
+bMF
+bGg
 bCq
 bPW
 bCq
@@ -78915,15 +79094,15 @@ byB
 bwS
 byg
 bxx
-aaa
-aaa
-bGi
+Qpg
+Qpk
+Qpp
 bHy
-byE
+Qps
 bKj
-bGi
-aoV
-aoV
+bKj
+Qpy
+bGg
 bCq
 bHE
 bHE
@@ -79172,15 +79351,15 @@ byD
 bwU
 byn
 bxu
-aaa
+Qph
 bxy
 bxy
 bxy
 bJd
-bKm
 bxy
-apQ
-apQ
+bxy
+bxy
+bxy
 bCq
 bPY
 cOw

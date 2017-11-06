@@ -8332,15 +8332,19 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "app" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "Mining Shuttle Airlock";
-	req_access_txt = "0"
+/obj/docking_port/stationary{
+	area_type = /area/space;
+	baseturf_type = /turf/open/space;
+	dir = 4;
+	dwidth = 3;
+	height = 5;
+	id = "mining_home";
+	name = "mining shuttle bay";
+	turf_type = /turf/open/space;
+	width = 7
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
-/area/shuttle/mining)
+/turf/open/space/basic,
+/area/space)
 "apq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -83852,13 +83856,13 @@ abQ
 abQ
 akS
 aaa
-amE
-amE
-amF
+aaa
+aaa
+aaa
 app
-amF
-amE
-amE
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -84109,13 +84113,13 @@ abQ
 abQ
 aaa
 aaa
-amE
-anu
-aon
-apq
-aqw
-arn
-amE
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -84366,13 +84370,13 @@ aaa
 aaa
 aaa
 aaa
-amF
-anv
-aoo
-apr
-aqx
-aro
-asu
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -84623,13 +84627,13 @@ aaa
 aaa
 aaa
 aaa
-amE
-anw
-aop
-aps
-aqy
-arp
-amE
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -84880,13 +84884,13 @@ aaa
 aaa
 aaa
 aaa
-amE
-amE
-amF
-apt
-amF
-amE
-amE
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa

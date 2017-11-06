@@ -10935,12 +10935,22 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "awN" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/mining)
-"awO" = (
-/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
-/area/shuttle/mining)
+/area/quartermaster/miningdock)
+"awO" = (
+/obj/docking_port/stationary{
+	area_type = /area/quartermaster/miningdock;
+	baseturf_type = /turf/open/space;
+	dir = 4;
+	dwidth = 3;
+	height = 5;
+	id = "mining_home";
+	name = "mining shuttle bay";
+	turf_type = /turf/open/floor/plating;
+	width = 7
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
 "awP" = (
 /obj/item/clothing/gloves/color/rainbow,
 /obj/item/clothing/shoes/sneakers/rainbow,
@@ -12028,20 +12038,11 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
 "azk" = (
-/obj/structure/closet/crate,
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/item/device/radio/intercom{
-	dir = 4;
-	name = "Station Intercom (General)";
-	pixel_x = 27
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/quartermaster/miningoffice)
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
 "azl" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/status_display{
@@ -12759,13 +12760,11 @@
 /turf/open/floor/plating,
 /area/shuttle/mining)
 "aAB" = (
-/obj/machinery/door/airlock/external{
-	name = "Mining Dock Airlock";
-	req_access = null;
-	req_access_txt = "0"
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
 	},
 /turf/open/floor/plating,
-/area/quartermaster/miningoffice)
+/area/quartermaster/miningdock)
 "aAC" = (
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
@@ -14681,13 +14680,11 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/quartermaster/warehouse)
 "aEu" = (
-/obj/structure/shuttle/engine/propulsion/burst,
-/obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
-/turf/open/floor/plating/airless,
-/area/shuttle/mining)
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
 "aEv" = (
 /obj/machinery/computer/security/mining{
 	network = list("MINE","AuxBase")
@@ -80844,6 +80841,227 @@
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/atmos)
+"EDv" = (
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EDw" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 2
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EDx" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EDy" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EDz" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EDA" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EDB" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EDC" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EDD" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EDE" = (
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EDF" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EDG" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EDH" = (
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EDI" = (
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EDJ" = (
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EDK" = (
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EDL" = (
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EDM" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EDN" = (
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EDO" = (
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EDP" = (
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EDQ" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EDR" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EDS" = (
+/obj/effect/turf_decal/delivery,
+/obj/structure/ore_box,
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EDT" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EDU" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EDV" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EDW" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EDX" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EDY" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EDZ" = (
+/obj/machinery/camera{
+	c_tag = "Mining Docking Bay";
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EEa" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EEb" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EEc" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EEd" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EEe" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EEf" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EEg" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EEh" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EEi" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EEj" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EEk" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"EEl" = (
+/turf/closed/wall,
+/area/quartermaster/miningdock)
+"EEm" = (
+/turf/closed/wall,
+/area/quartermaster/miningdock)
 
 (1,1,1) = {"
 aaa
@@ -94812,13 +95030,13 @@ dne
 dne
 arY
 dne
-aaf
+EDv
 dne
 dne
 aip
 dne
 dne
-aaa
+awN
 dne
 dne
 dne
@@ -95069,8 +95287,16 @@ aaf
 aqE
 arZ
 atp
-aaf
-aaf
+EDw
+EDG
+EDQ
+EDT
+EDV
+EDX
+EDY
+EDZ
+EEa
+EEe
 aaa
 aaa
 aaa
@@ -95082,14 +95308,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaf
-aaf
-aaa
-aaa
-aaa
-aaf
-aaf
 aaa
 aaa
 dne
@@ -95326,16 +95544,16 @@ aaa
 aqF
 doJ
 atq
-aaf
-aaa
+EDx
+EDH
 awN
 awN
 awO
 awN
-awO
 awN
 awN
-aaa
+EEb
+EEf
 cUS
 cUS
 cUS
@@ -95583,16 +95801,16 @@ aaf
 aqF
 doJ
 atq
-aaf
-aaa
+EDy
+EDI
 awN
-ayg
-azh
-dlB
-azi
-aDe
 awN
-aaa
+awN
+awN
+awN
+awN
+EEc
+EEg
 cUS
 cUV
 cUV
@@ -95605,7 +95823,7 @@ cUV
 cVc
 cUS
 cVk
-aaf
+aaa
 dne
 bag
 bbK
@@ -95840,16 +96058,16 @@ aaf
 aqF
 doJ
 atq
-aaf
-aaa
-awO
-ayh
-azi
-azh
-azi
-aDf
+EDz
+EDJ
+awN
+awN
+awN
+awN
+awN
+awN
 aEu
-aaa
+EEh
 cUS
 cUV
 cUV
@@ -95862,7 +96080,7 @@ cUV
 cUV
 cVg
 cVj
-aaf
+aaa
 aip
 doJ
 bbK
@@ -96097,16 +96315,16 @@ aaf
 aqF
 doJ
 atq
-aaf
-aaa
+EDA
+EDK
 awN
-ayg
-azh
-azh
-azi
-aDg
 awN
-aaa
+awN
+awN
+awN
+awN
+aEu
+EEi
 cUS
 dlC
 cUV
@@ -96354,16 +96572,16 @@ aaf
 aqF
 doJ
 atq
-aaf
-aaa
+EDB
+EDL
 awN
 awN
-awO
-aAA
-awO
 awN
 awN
-aaa
+awN
+awN
+aEu
+EEj
 cUS
 cUV
 cUV
@@ -96611,16 +96829,16 @@ aaf
 aqG
 asb
 atr
-aaf
-aaa
-aaf
-ayi
-ayi
+EDC
+EDM
+EDR
+EDU
+EDW
 aAB
-ayi
-ayi
-aaf
-aaa
+aAB
+aAB
+EEd
+EEk
 cUS
 cUV
 cUV
@@ -96633,7 +96851,7 @@ cUV
 cVc
 cUS
 cVl
-aaf
+aaa
 dne
 daX
 bbK
@@ -96868,16 +97086,16 @@ dne
 dne
 asc
 dne
-aaf
-aaa
-aaf
-ayi
-azj
-aAC
-aBS
-ayi
-aaf
-aaa
+EDD
+EDN
+awN
+awN
+awN
+awN
+awN
+awN
+awN
+EEl
 cUS
 cUS
 cUS
@@ -96890,7 +97108,7 @@ cUS
 cUS
 cUS
 aaa
-aaf
+aaa
 dne
 baj
 dhO
@@ -97125,18 +97343,18 @@ aip
 dnO
 asd
 dne
-aaf
-aaa
-aaf
-ayi
+EDE
+EDO
+awN
+awN
 azk
-aAC
-aBT
-ayi
-aaf
-aaf
-aaf
-aaf
+awN
+awN
+awN
+awN
+EEm
+aaa
+aaa
 aJB
 aKN
 aMs
@@ -97144,10 +97362,10 @@ aJB
 aMs
 aQg
 aJB
-aaf
-aaf
-aaf
-aaf
+aaa
+aaa
+aaa
+aaa
 dne
 asb
 bbM
@@ -97382,18 +97600,18 @@ ahp
 aqH
 ase
 dne
-aaf
-aaf
-aaf
+EDF
+EDP
+EDS
 ayj
 ayj
 aAD
-aBU
+ayj
 ayj
 ayi
-ayi
 ayj
-aaf
+ayj
+aaa
 aIg
 aKO
 aMt
@@ -97401,8 +97619,8 @@ aIg
 aPd
 aQh
 aIg
-aaf
-aaf
+aaa
+aaa
 aUe
 aUe
 aUe
