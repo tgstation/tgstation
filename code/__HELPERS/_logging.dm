@@ -108,6 +108,7 @@
 
 //This replaces world.log so it displays both in DD and the file
 /proc/log_world(text)
+	text = "\[[time_stamp()]] [text]"
 	WRITE_FILE(GLOB.world_runtime_log, text)
 	SEND_TEXT(world.log, text)
 
