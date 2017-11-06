@@ -101,8 +101,7 @@
 	user.visible_message("<span class='danger'><B>The ground splits beneath [user] as [user.p_their()] hand leaves the mirror!</B></span>", \
 	"<span class='notice'>Perfect. Much better! Now <i>nobody</i> will be able to resist yo-</span>")
 	var/turf/T = get_turf(user)
-	T.ChangeTurf(/turf/open/chasm)
-	var/turf/open/chasm/C = T
+	var/turf/open/chasm/C = T.ChangeTurf(/turf/open/chasm)
 	C.drop(user)
 
 //can't be bothered to do sloth right now, will make later
