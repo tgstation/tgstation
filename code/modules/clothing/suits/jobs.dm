@@ -152,6 +152,7 @@
 	icon_state = "officerbluejacket"
 	item_state = "officerbluejacket"
 	body_parts_covered = CHEST|ARMS
+	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/reagent_containers/spray/pepper, /obj/item/device/flashlight, /obj/item/gun, /obj/item/melee/baton, /obj/item/restraints/handcuffs)
 
 /obj/item/clothing/suit/security/warden
 	name = "warden's jacket"
@@ -159,6 +160,7 @@
 	icon_state = "wardenbluejacket"
 	item_state = "wardenbluejacket"
 	body_parts_covered = CHEST|ARMS
+	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/reagent_containers/spray/pepper, /obj/item/device/flashlight, /obj/item/gun, /obj/item/melee/baton, /obj/item/restraints/handcuffs)
 
 /obj/item/clothing/suit/security/hos
 	name = "head of security's jacket"
@@ -166,6 +168,7 @@
 	icon_state = "hosbluejacket"
 	item_state = "hosbluejacket"
 	body_parts_covered = CHEST|ARMS
+	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/reagent_containers/spray/pepper, /obj/item/device/flashlight, /obj/item/gun, /obj/item/melee/baton, /obj/item/restraints/handcuffs)
 
 //Surgeon
 /obj/item/clothing/suit/apron/surgical
