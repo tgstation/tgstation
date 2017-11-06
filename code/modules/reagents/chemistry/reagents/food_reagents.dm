@@ -114,7 +114,7 @@
 			M.emote("scream")
 			playsound(M, 'sound/machines/fryer/deep_fryer_emerge.ogg', 25, TRUE)
 			var/oil_damage = (holder.chem_temp / fry_temperature) * 2 //Damage taken per unit
-			M.adjustFireLoss(min(60, oil_damage * reac_volume)) //Damage caps at 60
+			M.adjustFireLoss(min(35, oil_damage * reac_volume)) //Damage caps at 35
 	else
 		..()
 	return 1
