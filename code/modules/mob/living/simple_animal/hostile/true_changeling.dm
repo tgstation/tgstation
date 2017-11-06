@@ -101,16 +101,16 @@
 
 	if(stat)
 		to_chat(usr, "<span class='warning'>We must be conscious to debase ourselves!</span>")
-		return 0
+		return FALSE
 	if(!stored_changeling)
 		to_chat(usr, "<span class='warning'>We do not have a form other than this!</span>")
-		return 0
+		return FALSE
 	if(stored_changeling.stat == DEAD)
 		to_chat(usr, "<span class='warning'>Our human form is dead!</span>")
-		return 0
+		return FALSE
 	if(time_spent_as_true < TRUE_CHANGELING_REFORM_THRESHOLD)
 		to_chat(usr, "<span class='warning'>We are not able to change back at will!</span>")
-		return 0
+		return FALSE
 	visible_message("<span class='warning'>[src] suddenly crunches and twists into a smaller form!</span>", \
 					"<span class='danger'>We return to our lesser form.</span>")
 	stored_changeling.loc = get_turf(src)
@@ -127,10 +127,10 @@
 
 	if(stat)
 		to_chat(usr, "<span class='warning'>We must be conscious to feast!</span>")
-		return 0
+		return FALSE
 	if(devouring)
 		to_chat(usr, "<span class='warning'>We are already feasting on a human!</span>")
-		return 0
+		return FALSE
 	var/list/potential_targets = list()
 	for(var/mob/living/carbon/human/H in range(1, src))
 		if(H == stored_changeling || (H.mind && H.mind.changeling)) //You can't eat changelings in human form
@@ -138,23 +138,23 @@
 		potential_targets.Add(H)
 	if(!potential_targets.len)
 		to_chat(usr, "<span class='warning'>There are no humans nearby!</span>")
-		return 0
+		return FALSE
 	var/mob/living/carbon/human/lunch
 	if(potential_targets.len == 1)
 		lunch = potential_targets[1]
 	else
 		lunch = input(src, "Choose a human to devour.", "Lunch") as null|anything in potential_targets
 	if(!lunch)
-		return 0
+		return FALSE
 	if(lunch.getBruteLoss() >= 200)
 		to_chat(usr, "<span class='warning'>This human's flesh is too mangled to devour!</span>")
-		return 0
+		return FALSE
 	devouring = TRUE
 	visible_message("<span class='warning'>[src] begins ripping apart and feasting on [lunch]!</span>", \
 						"<span class='danger'>We begin to feast upon [lunch]...</span>")
 	if(!do_mob(src, 50, target = lunch))
 		devouring = FALSE
-		return 0
+		return FALSE
 	devouring = FALSE
 	visible_message("<span class='warning'>[src] tears a chunk from [lunch]'s flesh!</span>", \
 						"<span class='danger'>We tear a chunk of flesh from [lunch] and devour it!</span>")
@@ -177,7 +177,7 @@
 
 	if(stat)
 		to_chat(usr, "<span class='warning'>We must be conscious to switch our method of movement!</span>")
-		return 0
+		return FALSE
 	wallcrawl = !wallcrawl
 	if(wallcrawl)
 		visible_message("<span class='warning'>[src] begins gouging its spines into the terrain!</span>", \
