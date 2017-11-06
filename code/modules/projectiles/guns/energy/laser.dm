@@ -55,7 +55,7 @@
 	desc = "An energy-based laser gun that draws power from the cyborg's internal energy cell directly. So this is what freedom looks like?"
 	origin_tech = null
 	use_cyborg_cell = 1
-	fire_delay = 10
+	fire_delay = 50 ///Should be around the same as a swarmer
 
 /obj/item/gun/energy/laser/cyborg/emp_act()
 	return
