@@ -128,11 +128,12 @@
 	if(!locked)
 		to_chat(user, "<span class='notice'>Alt-click to [open ? "close":"open"] it.</span>")
 
-/obj/item/storage/lockbox/medal/AltClick()
-	if(!locked)
-		open = (open ? FALSE : TRUE)
-		update_icon()
-	..()
+/obj/item/storage/lockbox/medal/AltClick(mob/user)
+	if(user.canUseTopic(src, be_close=TRUE))
+		if(!locked)
+			open = (open ? FALSE : TRUE)
+			update_icon()
+		..()
 
 /obj/item/storage/lockbox/medal/PopulateContents()
 	new /obj/item/clothing/accessory/medal/gold/captain(src)
