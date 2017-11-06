@@ -382,8 +382,11 @@ SUBSYSTEM_DEF(air)
 		pipe_construction_generation_cache[type] = list()
 
 	if(!pipe_construction_generation_cache[type]["[direction]"])
-		var/obj/machinery/atmospherics/A = new type(null, FALSE, direction)
-		pipe_construction_generation_cache[type]["[direction]"] = A
+		var/obj/machinery/atmospherics/cached = new type(null, FALSE, direction)
+		pipe_construction_generation_cache[type]["[direction]"] = cached
+		STOP_PROCESSING(SSmachines, cached)
+		STOP_PROCESSING(SSfastprocess, cached)
+		GLOB.machines -= cached
 
 	return pipe_construction_generation_cache[type]["[direction]"]
 
