@@ -105,9 +105,6 @@
 	if(!stored_changeling)
 		to_chat(usr, "<span class='warning'>We do not have a form other than this!</span>")
 		return FALSE
-	if(stored_changeling.stat == DEAD)
-		to_chat(usr, "<span class='warning'>Our human form is dead!</span>")
-		return FALSE
 	if(time_spent_as_true < TRUE_CHANGELING_REFORM_THRESHOLD)
 		to_chat(usr, "<span class='warning'>We are not able to change back at will!</span>")
 		return FALSE
@@ -159,7 +156,7 @@
 	visible_message("<span class='warning'>[src] tears a chunk from [lunch]'s flesh!</span>", \
 						"<span class='danger'>We tear a chunk of flesh from [lunch] and devour it!</span>")
 	lunch.adjustBruteLoss(60)
-	lunch << "<span class='userdager'>[src] tears into you!</span>"
+	to_chat(lunch, "<span class='userdager'>[src] tears into you!</span>")
 	var/obj/effect/decal/cleanable/blood/gibs/G = new(get_turf(lunch))
 	step(G, pick(GLOB.alldirs)) //Make some gibs spray out for dramatic effect
 	playsound(lunch, 'sound/creatures/hit6.ogg', 50, 1)
