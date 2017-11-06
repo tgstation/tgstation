@@ -1,4 +1,4 @@
-/obj/machinery/exonet_node
+	/obj/machinery/exonet_node
 	name = "exonet node"
 	desc = null // Gets written in New()
 	icon = 'icons/obj/stationobjs.dmi'
@@ -127,25 +127,6 @@
 
 
 /obj/machinery/exonet_node/ui_act(action, params)
-
-	// update the ui if it exists, returns null if no ui is passed/found
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, data, force_open)
-	if(!ui)
-		// the ui does not exist, so we'll create a new() one
-
-		ui = new(user, src, ui_key, "exonet_node.ract", "Exonet Node #157", 400, 400, master_ui, state)
-		// when the ui is first opened this is the data it will use
-		ui.set_initial_data(data)
-		// open the new ui window
-		ui.open()
-		// auto update every Master Controller tick
-		ui.set_autoupdate(TRUE)
-
-// Proc: Topic()
-// Parameters: 2 (standard Topic arguments)
-// Description: Responds to button presses on the NanoUI interface.
-/obj/machinery/exonet_node/Topic(href, href_list)
-
 	if(..())
 		return
 	switch(action)
@@ -154,20 +135,6 @@
 			update_power()
 			if(!toggle)
 				var/msg = "[usr.client.key] ([usr]) has turned [src] off, at [x],[y],[z]."
-				message_admins(msg)
-				log_game(msg)
-		if("toggle_PDA_port")
-			allow_external_PDAs = !allow_external_PDAs
-		if("toggle_communicator_port")
-			allow_external_communicators = !allow_external_communicators
-			if(!allow_external_communicators)
-				var/msg = "[usr.client.key] ([usr]) has turned [src]'s communicator port off, at [x],[y],[z]."
-				message_admins(msg)
-				log_game(msg)
-		if("toggle_newscaster_port")
-			allow_external_newscasters = !allow_external_newscasters
-			if(!allow_external_newscasters)
-				var/msg = "[usr.client.key] ([usr]) has turned [src]'s newscaster port off, at [x],[y],[z]."
 				message_admins(msg)
 				log_game(msg)
 	. = TRUE
