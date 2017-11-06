@@ -34,6 +34,8 @@ God bless America.
 	var/cook_time = 0
 	var/oil_use = 0.05 //How much cooking oil is used per tick
 	var/fry_speed = 1 //How quickly we fry food
+	var/frying_fried //If the object has been fried; used for messages
+	var/frying_burnt //If the object has been burnt
 	var/static/list/deepfry_blacklisted_items = typecacheof(list(
 		/obj/item/screwdriver,
 		/obj/item/crowbar,
@@ -100,11 +102,13 @@ God bless America.
 	if(frying)
 		reagents.remove_reagent("cooking_oil", oil_use)
 		cook_time += fry_speed
-		if(cook_time == 30)
+		if(cook_time >= 30 && !frying_fried)
+			frying_fried = TRUE //frying... frying... fried
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
-			visible_message("[src] dings!")
-		else if (cook_time == 60)
-			visible_message("[src] emits an acrid smell!")
+			audible_message("<span class='notice'>[src] dings!</span>")
+		else if (cook_time == 60 && !frying_burnt)
+			frying_burnt = TRUE
+			visible_message("<span class='warning'>[src] emits an acrid smell!</span>")
 
 
 /obj/machinery/deepfryer/attack_hand(mob/user)
@@ -117,6 +121,8 @@ God bless America.
 			user.put_in_hands(S)
 			frying = null
 			cook_time = 0
+			frying_fried = FALSE
+			frying_burnt = FALSE
 			fry_loop.stop()
 			return
 	else if(user.pulling && user.a_intent == "grab" && iscarbon(user.pulling) && reagents.total_volume)
@@ -126,7 +132,6 @@ God bless America.
 		var/mob/living/carbon/C = user.pulling
 		user.visible_message("<span class = 'danger'>[user] dunks [C]'s face in [src]!</span>")
 		reagents.reaction(C, TOUCH)
-		C.adjustFireLoss(reagents.total_volume)
 		reagents.remove_any((reagents.total_volume/2))
 		C.Knockdown(60)
 		user.changeNext_move(CLICK_CD_MELEE)
