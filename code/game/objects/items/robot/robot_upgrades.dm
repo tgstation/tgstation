@@ -108,7 +108,7 @@
 		return
 
 	T.charge_delay = max(2 , T.charge_delay - 4)
-	T.semicd = 0
+	T.fire_delay = 0
 
 	return 1
 
