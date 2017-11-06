@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/changeling/horror_form //Horror Form: turns the changeling into a terrifying abomination
 	name = "Horror Form"
 	desc = "We tear apart our human disguise, revealing our true form."
-	helptext = "We will become an unstoppable force of destruction. We will be able to turn back into a human after some time."
+	helptext = "We will become an unstoppable force of destruction. We will turn back into a human after some time."
 	chemical_cost = 75
 	dna_cost = 3
 	req_human = 1

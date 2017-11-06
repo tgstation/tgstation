@@ -27,14 +27,13 @@
 	force_threshold = 10
 	healable = 0
 	environment_smash = 1 //Tables, closets, etc.
-	melee_damage_lower = 30
-	melee_damage_upper = 30
+	melee_damage_lower = 35
+	melee_damage_upper = 35
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	wander = 0
 	attacktext = "tears into"
-	attack_sound = 'sound/effects/blobattack.ogg'
-	next_move_modifier = 0.5 //Faster attacks
+	attack_sound = 'sound/creatures/hit3.ogg'
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 15) //It's a pretty big dude. Actually killing one is a feat.
 	gold_core_spawnable = 1 //To be fair, they won't be able to become changelings, like headslugs can
 	var/time_spent_as_true = 0
@@ -116,7 +115,7 @@
 					"<span class='danger'>We return to our lesser form.</span>")
 	stored_changeling.loc = get_turf(src)
 	mind.transfer_to(stored_changeling)
-	stored_changeling.Knockdown(10)
+	stored_changeling.Unconscious(80)
 	stored_changeling.status_flags &= ~GODMODE
 	qdel(usr)
 	return 1
