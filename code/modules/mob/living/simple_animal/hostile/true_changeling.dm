@@ -46,10 +46,16 @@
 
 /mob/living/simple_animal/hostile/true_changeling/New()
 	..()
-	if(prob(33))
-		icon_state = "horror2"
-	else if(prob(33))
-		icon_state = "horror3"
+	var/horrorskin = pick(1, 2, 3, 4)
+	switch(horrorskin)
+		if(1)
+			icon_state = "horror1"
+		if(2)
+			icon_state = "horror2"
+		if(3)
+			icon_state = "horror3"
+		if(4)
+			icon_state = "horror4"
 	spawn(0)
 		to_chat(usr, playstyle_string)
 
