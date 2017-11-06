@@ -586,7 +586,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 				n_p ++
 	else if (SSticker.IsRoundInProgress())
 		for(var/mob/living/carbon/human/P in GLOB.player_list)
-			if(P.client && !(P.mind in SSticker.mode.changelings) && !(P.mind in owners))
+			if(P.client && !(P.mind.has_antag_datum(/datum/antagonist/changeling)) && !(P.mind in owners))
 				n_p ++
 	target_amount = min(target_amount, n_p)
 
@@ -597,9 +597,12 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	var/list/datum/mind/owners = get_owners()
 	var/absorbedcount = 0
 	for(var/datum/mind/M in owners)
-		if(!owner || !owner.changeling || !owner.changeling.stored_profiles)
+		if(!M)
 			continue
-		absorbedcount += M.changeling.absorbedcount
+		var/datum/antagonist/changeling/changeling = M.has_antag_datum(/datum/antagonist/changeling)
+		if(!changeling || !changeling.stored_profiles)
+			continue
+		absorbedcount += changeling.absorbedcount
 	return absorbedcount >= target_amount
 
 
@@ -696,10 +699,11 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		if("Chief Medical Officer")
 			department_string = "medical"
 
-	var/ling_count = SSticker.mode.changelings
+	var/list/lings = get_antagonists(/datum/antagonist/changeling,TRUE)
+	var/ling_count = lings.len
 
 	for(var/datum/mind/M in SSticker.minds)
-		if(M in SSticker.mode.changelings)
+		if(M in lings)
 			continue
 		if(department_head in get_department_heads(M.assigned_role))
 			if(ling_count)
@@ -723,13 +727,13 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	//Needed heads is between min_lings and the maximum possible amount of command roles
 	//So at the time of writing, rand(3,6), it's also capped by the amount of lings there are
 	//Because you can't fill 6 head roles with 3 lings
-
+	var/list/lings = get_antagonists(/datum/antagonist/changeling,TRUE)
 	var/needed_heads = rand(min_lings,GLOB.command_positions.len)
-	needed_heads = min(SSticker.mode.changelings.len,needed_heads)
+	needed_heads = min(lings.len,needed_heads)
 
 	var/list/heads = SSjob.get_living_heads()
 	for(var/datum/mind/head in heads)
-		if(head in SSticker.mode.changelings) //Looking at you HoP.
+		if(head in lings) //Looking at you HoP.
 			continue
 		if(needed_heads)
 			department_minds += head
@@ -789,7 +793,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 	//Check each department member's mind to see if any of them made it to centcom alive, if they did it's an automatic fail
 	for(var/datum/mind/M in department_minds)
-		if(M in SSticker.mode.changelings) //Lings aren't picked for this, but let's be safe
+		if(M.has_antag_datum(/datum/antagonist/changeling)) //Lings aren't picked for this, but let's be safe
 			continue
 
 		if(M.current)
@@ -800,7 +804,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	//Check each staff member has been replaced, by cross referencing changeling minds, changeling current dna, the staff minds and their original DNA names
 	var/success = 0
 	changelings:
-		for(var/datum/mind/changeling in SSticker.mode.changelings)
+		for(var/datum/mind/changeling in get_antagonists(/datum/antagonist/changeling,TRUE))
 			if(success >= department_minds.len) //We did it, stop here!
 				return 1
 			if(ishuman(changeling.current))

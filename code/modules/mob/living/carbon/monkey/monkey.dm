@@ -74,9 +74,10 @@
 		stat(null, "Intent: [a_intent]")
 		stat(null, "Move Mode: [m_intent]")
 		if(client && mind)
-			if(mind.changeling)
-				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
-				stat("Absorbed DNA", mind.changeling.absorbedcount)
+			var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
+			if(changeling)
+				stat("Chemical Storage", "[changeling.chem_charges]/[changeling.chem_storage]")
+				stat("Absorbed DNA", changeling.absorbedcount)
 	return
 
 
