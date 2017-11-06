@@ -128,7 +128,7 @@
 
 			if(uplink_true)
 				text += " (used [TC_uses] TC) [purchases]"
-				if(TC_uses==0 && traitorwin && traitor.current.client.prefs.receive_solo_objectives)
+				if(TC_uses==0 && traitorwin && traitor.objectives.len)
 					var/static/icon/badass = icon('icons/badass.dmi', "badass")
 					text += "<BIG>[icon2html(badass, world)]</BIG>"
 
