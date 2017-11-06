@@ -108,6 +108,7 @@
 		return
 
 	T.charge_delay = max(2 , T.charge_delay - 4)
+	ranged_cooldown_time = 0
 
 	return 1
 
