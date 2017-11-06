@@ -244,32 +244,6 @@
 	else if(src in container)
 		return 1
 
-/*
- *	atom/proc/search_contents_for(path,list/filter_path=null)
- * Recursevly searches all atom contens (including contents contents and so on).
- *
- * ARGS: path - search atom contents for atoms of this type
- *       list/filter_path - if set, contents of atoms not of types in this list are excluded from search.
- *
- * RETURNS: list of found atoms
- */
-
-/atom/proc/search_contents_for(path,list/filter_path=null)
-	var/list/found = list()
-	for(var/atom/A in src)
-		if(istype(A, path))
-			found += A
-		if(filter_path)
-			var/pass = 0
-			for(var/type in filter_path)
-				pass |= istype(A, type)
-			if(!pass)
-				continue
-		if(A.contents.len)
-			found += A.search_contents_for(path,filter_path)
-	return found
-
-
 /atom/proc/examine(mob/user)
 	//This reformat names to get a/an properly working on item descriptions when they are bloody
 	var/f_name = "\a [src]."
@@ -335,7 +309,7 @@
 GLOBAL_LIST_EMPTY(blood_splatter_icons)
 
 /atom/proc/blood_splatter_index()
-	return "\ref[initial(icon)]-[initial(icon_state)]"
+	return "[REF(initial(icon))]-[initial(icon_state)]"
 
 //returns the mob's dna info as a list, to be inserted in an object's blood_DNA list
 /mob/living/proc/get_blood_dna_list()
@@ -631,9 +605,9 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 	var/turf/curturf = get_turf(src)
 	if (curturf)
 		.["Jump to"] = "?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[curturf.x];Y=[curturf.y];Z=[curturf.z]"
-	.["Add reagent"] = "?_src_=vars;[HrefToken()];addreagent=\ref[src]"
-	.["Trigger EM pulse"] = "?_src_=vars;[HrefToken()];emp=\ref[src]"
-	.["Trigger explosion"] = "?_src_=vars;[HrefToken()];explode=\ref[src]"
+	.["Add reagent"] = "?_src_=vars;[HrefToken()];addreagent=[REF(src)]"
+	.["Trigger EM pulse"] = "?_src_=vars;[HrefToken()];emp=[REF(src)]"
+	.["Trigger explosion"] = "?_src_=vars;[HrefToken()];explode=[REF(src)]"
 
 /atom/proc/drop_location()
 	var/atom/L = loc

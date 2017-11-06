@@ -23,7 +23,7 @@
 
 	name = "brain"
 
-	if(C.mind && C.mind.changeling && !no_id_transfer)	//congrats, you're trapped in a body you don't control
+	if(C.mind && C.mind.has_antag_datum(/datum/antagonist/changeling) && !no_id_transfer)	//congrats, you're trapped in a body you don't control
 		if(brainmob && !(C.stat == DEAD || (C.status_flags & FAKEDEATH)))
 			to_chat(brainmob, "<span class = danger>You can't feel your body! You're still just a brain!</span>")
 		loc = C

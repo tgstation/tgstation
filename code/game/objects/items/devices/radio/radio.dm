@@ -29,6 +29,7 @@
 	var/emped = 0	//Highjacked to track the number of consecutive EMPs on the radio, allowing consecutive EMP's to stack properly.
 //			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
 	flags_1 = CONDUCT_1 | HEAR_1
+	flags_2 = NO_EMP_WIRES_2
 	slot_flags = SLOT_BELT
 	throw_speed = 3
 	throw_range = 7

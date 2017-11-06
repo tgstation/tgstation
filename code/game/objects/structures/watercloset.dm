@@ -226,6 +226,7 @@
 		soundloop.start()
 		wash_turf()
 		for(var/atom/movable/G in loc)
+			G.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 			if(isliving(G))
 				var/mob/living/L = G
 				wash_mob(L)
@@ -295,6 +296,7 @@
 
 
 /obj/machinery/shower/proc/wash_obj(obj/O)
+	O.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 	. = O.clean_blood()
 	O.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 	if(isitem(O))
@@ -306,6 +308,7 @@
 /obj/machinery/shower/proc/wash_turf()
 	if(isturf(loc))
 		var/turf/tile = loc
+		tile.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 		tile.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 		tile.clean_blood()
 		for(var/obj/effect/E in tile)
@@ -314,6 +317,7 @@
 
 
 /obj/machinery/shower/proc/wash_mob(mob/living/L)
+	L.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 	L.wash_cream()
 	L.ExtinguishMob()
 	L.adjust_fire_stacks(-20) //Douse ourselves with water to avoid fire more easily
@@ -494,7 +498,7 @@
 				flick("baton_active", src)
 				var/stunforce = B.stunforce
 				user.Knockdown(stunforce)
-				user.stuttering = stunforce
+				user.stuttering = stunforce/20
 				B.deductcharge(B.hitcost)
 				user.visible_message("<span class='warning'>[user] shocks themself while attempting to wash the active [B.name]!</span>", \
 									"<span class='userdanger'>You unwisely attempt to wash [B] while it's still on.</span>")

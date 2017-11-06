@@ -9,7 +9,7 @@
 	gamemode_blacklist = list("blob") //Just in case a blob survives that long
 
 /datum/round_event/ghost_role/blob
-	announceWhen	= 12
+	announceWhen	= -1
 	role_name = "blob overmind"
 
 /datum/round_event/ghost_role/blob/announce()

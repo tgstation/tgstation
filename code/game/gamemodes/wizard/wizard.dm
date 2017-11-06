@@ -42,7 +42,8 @@
 		man is a dangerous mutant with the ability to alter himself and the world around him by what he and his leaders believe to be magic. If this man attempts an attack on your station, \
 		his execution is highly encouraged, as is the preservation of his body for later study."
 
-/datum/game_mode/wizard/check_finished()
+
+/datum/game_mode/wizard/are_special_antags_dead()
 	for(var/datum/mind/wizard in wizards)
 		if(isliving(wizard.current) && wizard.current.stat!=DEAD)
 			return FALSE
@@ -54,8 +55,8 @@
 	if(SSevents.wizardmode) //If summon events was active, turn it off
 		SSevents.toggleWizardmode()
 		SSevents.resetFrequency()
-
-	return ..()
+	
+	return TRUE
 
 /datum/game_mode/wizard/declare_completion()
 	if(finished)

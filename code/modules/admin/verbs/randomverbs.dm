@@ -399,7 +399,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		else//They may also be a cyborg or AI.
 			switch(new_character.mind.assigned_role)
 				if("Cyborg")//More rigging to make em' work and check if they're traitor.
-					new_character = new_character.Robotize()
+					new_character = new_character.Robotize(TRUE)
 				if("AI")
 					new_character = new_character.AIize()
 				else
@@ -848,8 +848,8 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 
 	var/dat = {"
 	<html><head><title>Create Outfit</title></head><body>
-	<form name="outfit" action="byond://?src=\ref[src];[HrefToken()]" method="get">
-	<input type="hidden" name="src" value="\ref[src]">
+	<form name="outfit" action="byond://?src=[REF(src)];[HrefToken()]" method="get">
+	<input type="hidden" name="src" value="[REF(src)]">
 	[HrefTokenFormField()]
 	<input type="hidden" name="create_outfit" value="1">
 	<table>
@@ -1091,7 +1091,8 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	log_admin("[key_name(usr)] sent \"[input]\" as the Tip of the Round.")
 	SSblackbox.add_details("admin_verb","Show Tip")
 
-#define ON_PURRBATION(H) (!(H.dna.features["tail_human"] == "None" && H.dna.features["ears"] == "None"))
+#define ON_PURRBATION(H) (\H.getorgan(/obj/item/organ/tail/cat) || H.getorgan(/obj/item/organ/ears/cat) || \
+							H.dna.features["ears"] == "Cat" || H.dna.features["human_tail"] == "Cat")
 
 /proc/mass_purrbation()
 	for(var/M in GLOB.mob_list)
@@ -1105,36 +1106,72 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 			purrbation_remove(M)
 		CHECK_TICK
 
-/proc/purrbation_toggle(mob/living/carbon/human/H)
+/proc/purrbation_toggle(mob/living/carbon/human/H, silent = FALSE)
 	if(!ishumanbasic(H))
 		return
 	if(!ON_PURRBATION(H))
-		purrbation_apply(H)
+		purrbation_apply(H, silent)
 		. = TRUE
 	else
-		purrbation_remove(H)
+		purrbation_remove(H, silent)
 		. = FALSE
 
-/proc/purrbation_apply(mob/living/carbon/human/H)
+/proc/purrbation_apply(mob/living/carbon/human/H, silent = FALSE)
 	if(!ishuman(H))
 		return
 	if(ON_PURRBATION(H))
 		return
-	to_chat(H, "Something is nya~t right.")
-	H.dna.features["tail_human"] = "Cat"
-	H.dna.features["ears"] = "Cat"
-	H.regenerate_icons()
-	playsound(get_turf(H), 'sound/effects/meow1.ogg', 50, 1, -1)
 
-/proc/purrbation_remove(mob/living/carbon/human/H)
+	var/obj/item/organ/ears/cat/ears = new
+	var/obj/item/organ/tail/cat/tail = new
+	ears.Insert(H, drop_if_replaced=FALSE)
+	tail.Insert(H, drop_if_replaced=FALSE)
+
+	if(!silent)
+		to_chat(H, "Something is nya~t right.")
+		playsound(get_turf(H), 'sound/effects/meow1.ogg', 50, 1, -1)
+
+/proc/purrbation_remove(mob/living/carbon/human/H, silent = FALSE)
 	if(!ishuman(H))
 		return
 	if(!ON_PURRBATION(H))
 		return
-	to_chat(H, "You are no longer a cat.")
-	H.dna.features["tail_human"] = "None"
+
+	var/obj/item/organ/ears/cat/ears = H.getorgan(/obj/item/organ/ears/cat)
+	var/obj/item/organ/tail/cat/tail = H.getorgan(/obj/item/organ/tail/cat)
+
+	if(ears)
+		var/obj/item/organ/ears/NE
+		if(H.dna.species && H.dna.species.mutantears)
+			// Roundstart cat ears override H.dna.species.mutantears, reset it here.
+			H.dna.species.mutantears = initial(H.dna.species.mutantears)
+			if(H.dna.species.mutantears)
+				NE = new H.dna.species.mutantears()
+
+		if(!NE)
+			// Go with default ears
+			NE = new /obj/item/organ/ears()
+
+		NE.Insert(H, drop_if_replaced = FALSE)
+
+	if(tail)
+		var/obj/item/organ/tail/NT
+		if(H.dna.species && H.dna.species.mutanttail)
+			// Roundstart cat tail overrides H.dna.species.mutanttail, reset it here.
+			H.dna.species.mutanttail = initial(H.dna.species.mutanttail)
+			if(H.dna.species.mutanttail)
+				NT = new H.dna.species.mutanttail()
+
+		if(NT)
+			NT.Insert(H, drop_if_replaced = FALSE)
+		else
+			tail.Remove(H)
+
 	H.dna.features["ears"] = "None"
-	H.regenerate_icons()
+	H.dna.features["tail_human"] = "None"
+
+	if(!silent)
+		to_chat(H, "You are no longer a cat.")
 
 #undef ON_PURRBATION
 
@@ -1150,8 +1187,8 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 /datum/admins/proc/modify_goals()
 	var/dat = ""
 	for(var/datum/station_goal/S in SSticker.mode.station_goals)
-		dat += "[S.name] - <a href='?src=\ref[S];[HrefToken()];announce=1'>Announce</a> | <a href='?src=\ref[S];[HrefToken()];remove=1'>Remove</a><br>"
-	dat += "<br><a href='?src=\ref[src];[HrefToken()];add_station_goal=1'>Add New Goal</a>"
+		dat += "[S.name] - <a href='?src=[REF(S)];[HrefToken()];announce=1'>Announce</a> | <a href='?src=[REF(S)];[HrefToken()];remove=1'>Remove</a><br>"
+	dat += "<br><a href='?src=[REF(src)];[HrefToken()];add_station_goal=1'>Add New Goal</a>"
 	usr << browse(dat, "window=goals;size=400x400")
 
 
@@ -1225,7 +1262,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	var/list/msg = list()
 	msg += "<html><head><title>Playtime Report</title></head><body>Playtime:<BR><UL>"
 	for(var/client/C in GLOB.clients)
-		msg += "<LI> - [key_name_admin(C)]: <A href='?_src_=holder;[HrefToken()];getplaytimewindow=\ref[C.mob]'>" + C.get_exp_living() + "</a></LI>"
+		msg += "<LI> - [key_name_admin(C)]: <A href='?_src_=holder;[HrefToken()];getplaytimewindow=[REF(C.mob)]'>" + C.get_exp_living() + "</a></LI>"
 	msg += "</UL></BODY></HTML>"
 	src << browse(msg.Join(), "window=Player_playtime_check")
 
@@ -1239,7 +1276,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	var/list/body = list()
 	body += "<html><head><title>Playtime for [C.key]</title></head><BODY><BR>Playtime:"
 	body += C.get_exp_report()
-	body += "<A href='?_src_=holder;[HrefToken()];toggleexempt=\ref[C]'>Toggle Exempt status</a>"
+	body += "<A href='?_src_=holder;[HrefToken()];toggleexempt=[REF(C)]'>Toggle Exempt status</a>"
 	body += "</BODY></HTML>"
 	usr << browse(body.Join(), "window=playerplaytime[C.ckey];size=550x615")
 

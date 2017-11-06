@@ -579,7 +579,7 @@ Difficulty: Very Hard
 	if(..() && !ready_to_deploy)
 		GLOB.poi_list |= src
 		ready_to_deploy = TRUE
-		notify_ghosts("An anomalous crystal has been activated in [get_area(src)]! This crystal can always be used by ghosts hereafter.", enter_link = "<a href=?src=\ref[src];ghostjoin=1>(Click to enter)</a>", ghost_sound = 'sound/effects/ghost2.ogg', source = src, action = NOTIFY_ATTACK)
+		notify_ghosts("An anomalous crystal has been activated in [get_area(src)]! This crystal can always be used by ghosts hereafter.", enter_link = "<a href=?src=[REF(src)];ghostjoin=1>(Click to enter)</a>", ghost_sound = 'sound/effects/ghost2.ogg', source = src, action = NOTIFY_ATTACK)
 
 /obj/machinery/anomalous_crystal/helpers/attack_ghost(mob/dead/observer/user)
 	..()
@@ -616,7 +616,7 @@ Difficulty: Very Hard
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	ventcrawler = VENTCRAWLER_ALWAYS
 	mob_size = MOB_SIZE_TINY
-	gold_core_spawnable = 0
+	gold_core_spawnable = TRUE
 	verb_say = "warps"
 	verb_ask = "floats inquisitively"
 	verb_exclaim = "zaps"
@@ -634,7 +634,6 @@ Difficulty: Very Hard
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	AIStatus = AI_OFF
 	stop_automated_movement = 1
-	gold_core_spawnable = TRUE
 	var/heal_power = 5
 
 /mob/living/simple_animal/hostile/lightgeist/Initialize()
@@ -663,12 +662,7 @@ Difficulty: Very Hard
 	activation_method = ACTIVATE_TOUCH
 	cooldown_add = 50
 	activation_sound = 'sound/magic/timeparadox2.ogg'
-	var/list/banned_items_typecache = list(/obj/item/storage, /obj/item/implant, /obj/item/implanter, /obj/item/disk/nuclear, /obj/item/projectile, /obj/item/spellbook)
-
-/obj/machinery/anomalous_crystal/refresher/Initialize()
-	. = ..()
-	banned_items_typecache = typecacheof(banned_items_typecache)
-
+	var/static/list/banned_items_typecache = typecacheof(list(/obj/item/storage, /obj/item/implant, /obj/item/implanter, /obj/item/disk/nuclear, /obj/item/projectile, /obj/item/spellbook))
 
 /obj/machinery/anomalous_crystal/refresher/ActivationReaction(mob/user, method)
 	if(..())

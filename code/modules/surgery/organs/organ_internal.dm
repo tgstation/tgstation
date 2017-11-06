@@ -22,7 +22,7 @@
 	if(replaced)
 		replaced.Remove(M, special = 1)
 		if(drop_if_replaced)
-			replaced.forceMove(get_turf(src))
+			replaced.forceMove(get_turf(M))
 		else
 			qdel(replaced)
 
@@ -173,3 +173,9 @@
 			ears = new
 
 		ears.Insert(src)
+
+	if(!getorganslot(ORGAN_SLOT_TAIL))
+		var/obj/item/organ/tail/tail
+		if(dna && dna.species && dna.species.mutanttail)
+			tail = new dna.species.mutanttail
+			tail.Insert(src)

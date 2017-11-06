@@ -198,6 +198,16 @@
 			hallucination += 20
 		else if(bz_partialpressure > 0.01)
 			hallucination += 5//Removed at 2 per tick so this will slowly build up
+	//TRITIUM
+	if(breath_gases[/datum/gas/tritium])
+		var/tritium_partialpressure = (breath_gases[/datum/gas/tritium][MOLES]/breath.total_moles())*breath_pressure
+		radiation += tritium_partialpressure/10
+	//NITRYL
+	if (breath_gases[/datum/gas/nitryl])
+		var/nitryl_partialpressure = (breath_gases[/datum/gas/nitryl][MOLES]/breath.total_moles())*breath_pressure
+		adjustFireLoss(nitryl_partialpressure/4)
+
+
 
 	breath.garbage_collect()
 
@@ -241,12 +251,14 @@
 		if(stat != DEAD)
 			D.stage_act()
 
+//todo generalize this and move hud out
 /mob/living/carbon/proc/handle_changeling()
 	if(mind && hud_used && hud_used.lingchemdisplay)
-		if(mind.changeling)
-			mind.changeling.regenerate(src)
+		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
+		if(changeling)
+			changeling.regenerate()
 			hud_used.lingchemdisplay.invisibility = 0
-			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(mind.changeling.chem_charges)]</font></div>"
+			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(changeling.chem_charges)]</font></div>"
 		else
 			hud_used.lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
 

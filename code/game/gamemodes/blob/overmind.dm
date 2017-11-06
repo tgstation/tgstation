@@ -72,11 +72,13 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		set_security_level("delta")
 		max_blob_points = INFINITY
 		blob_points = INFINITY
-		addtimer(CALLBACK(src, .proc/victory), 660)
+		addtimer(CALLBACK(src, .proc/victory), 450)
 	..()
 
 
 /mob/camera/blob/proc/victory()
+	sound_to_playing_players('sound/machines/alarm.ogg')
+	sleep(100)
 	for(var/mob/living/L in GLOB.mob_list)
 		var/turf/T = get_turf(L)
 		if(!T || !(T.z in GLOB.station_z_levels))
@@ -89,10 +91,13 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 		if(!Ablob.blob_allowed)
 			continue
-
-		playsound(L, 'sound/effects/splat.ogg', 50, 1)
-		L.death()
-		new/mob/living/simple_animal/hostile/blob/blobspore(T)
+		
+		if(!("blob" in L.faction))
+			playsound(L, 'sound/effects/splat.ogg', 50, 1)
+			L.death()
+			new/mob/living/simple_animal/hostile/blob/blobspore(T)
+		else
+			L.fully_heal()
 
 		for(var/V in GLOB.sortedAreas)
 			var/area/A = V
