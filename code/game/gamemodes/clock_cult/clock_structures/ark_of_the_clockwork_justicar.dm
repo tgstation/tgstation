@@ -285,10 +285,10 @@
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/attack_ghost(mob/user)
 	if(!IsAdminGhost(user))
-		return
+		return ..()
 	if(GLOB.servants_active)
 		to_chat(user, "<span class='danger'>The Ark is already counting down.</span>")
-		return
+		return ..()
 	if(alert(user, "Activate the Ark's countdown?", name, "Yes", "No") == "Yes")
 		if(alert(user, "REALLY activate the Ark's countdown?", name, "Yes", "No") == "Yes")
 			if(alert(user, "You're REALLY SURE? This cannot be undone.", name, "Yes - Activate the Ark", "No") == "Yes - Activate the Ark")
