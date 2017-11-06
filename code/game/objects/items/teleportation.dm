@@ -152,7 +152,9 @@ Frequency:
 	active_portal_pairs = list()
 
 /obj/item/hand_tele/pre_attackby(atom/target, mob/user, params)
-	return try_dispel_portal(target, user)? FALSE : ..()
+	if(try_dispel_portal(target, user))
+		return FALSE
+	return ..()
 
 /obj/item/hand_tele/proc/try_dispel_portal(atom/target, mob/user)
 	if(is_parent_of_portal(target))
