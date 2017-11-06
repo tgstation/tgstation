@@ -15,7 +15,7 @@
 	icon_state = "horror1"
 	icon_living = "horror1"
 	icon_dead = "horror_dead"
-	speed = 1.5
+	speed = 1
 	gender = NEUTER
 	a_intent = "harm"
 	stop_automated_movement = 1
@@ -51,7 +51,7 @@
 	else if(prob(33))
 		icon_state = "horror3"
 	spawn(0)
-		src << playstyle_string
+		to_chat(usr, playstyle_string)
 
 /mob/living/simple_animal/hostile/true_changeling/Life()
 	..()
@@ -100,16 +100,16 @@
 	set category = "True Changeling"
 
 	if(stat)
-		src << "<span class='warning'>We must be conscious to debase ourselves!</span>"
+		to_chat(usr, "<span class='warning'>We must be conscious to debase ourselves!</span>")
 		return 0
 	if(!stored_changeling)
-		src << "<span class='warning'>We do not have a form other than this!</span>"
+		to_chat(usr, "<span class='warning'>We do not have a form other than this!</span>")
 		return 0
 	if(stored_changeling.stat == DEAD)
-		src << "<span class='warning'>Our human form is dead!</span>"
+		to_chat(usr, "<span class='warning'>Our human form is dead!</span>")
 		return 0
 	if(time_spent_as_true < TRUE_CHANGELING_REFORM_THRESHOLD)
-		src << "<span class='warning'>We are still unable to change back at will!</span>"
+		to_chat(usr, "<span class='warning'>We are not able to change back at will!</span>")
 		return 0
 	visible_message("<span class='warning'>[src] suddenly crunches and twists into a smaller form!</span>", \
 					"<span class='danger'>We return to our lesser form.</span>")
@@ -126,10 +126,10 @@
 	set category = "True Changeling"
 
 	if(stat)
-		src << "<span class='warning'>We must be conscious to feast!</span>"
+		to_chat(usr, "<span class='warning'>We must be conscious to feast!</span>")
 		return 0
 	if(devouring)
-		src << "<span class='warning'>We are already feasting on a human!</span>"
+		to_chat(usr, "<span class='warning'>We are already feasting on a human!</span>")
 		return 0
 	var/list/potential_targets = list()
 	for(var/mob/living/carbon/human/H in range(1, src))
@@ -137,7 +137,7 @@
 			continue
 		potential_targets.Add(H)
 	if(!potential_targets.len)
-		src << "<span class='warning'>There are no humans nearby!</span>"
+		to_chat(usr, "<span class='warning'>There are no humans nearby!</span>")
 		return 0
 	var/mob/living/carbon/human/lunch
 	if(potential_targets.len == 1)
@@ -147,7 +147,7 @@
 	if(!lunch)
 		return 0
 	if(lunch.getBruteLoss() >= 200)
-		src << "<span class='warning'>This human's flesh is too mangled to devour!</span>"
+		to_chat(usr, "<span class='warning'>This human's flesh is too mangled to devour!</span>")
 		return 0
 	devouring = TRUE
 	visible_message("<span class='warning'>[src] begins ripping apart and feasting on [lunch]!</span>", \
@@ -162,7 +162,7 @@
 	lunch << "<span class='userdager'>[src] tears into you!</span>"
 	var/obj/effect/decal/cleanable/blood/gibs/G = new(get_turf(lunch))
 	step(G, pick(GLOB.alldirs)) //Make some gibs spray out for dramatic effect
-	playsound(lunch, 'sound/effects/splat.ogg', 50, 1)
+	playsound(lunch, 'sound/creatures/hit6.ogg', 50, 1)
 	if(!lunch.stat)
 		lunch.emote("scream")
 	if(lunch.disabilities & FAT)
@@ -176,7 +176,7 @@
 	set category = "True Changeling"
 
 	if(stat)
-		src << "<span class='warning'>We must be conscious to switch our method of movement!</span>"
+		to_chat(usr, "<span class='warning'>We must be conscious to switch our method of movement!</span>")
 		return 0
 	wallcrawl = !wallcrawl
 	if(wallcrawl)
