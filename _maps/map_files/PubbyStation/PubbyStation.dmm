@@ -23516,29 +23516,19 @@
 /turf/open/floor/plating,
 /area/shuttle/labor)
 "bfL" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Mining Shuttle Airlock";
-	req_access_txt = "48"
-	},
-/obj/docking_port/mobile{
-	dir = 8;
-	dwidth = 3;
-	height = 5;
-	id = "mining";
-	name = "mining shuttle";
-	port_direction = 4;
-	width = 7
-	},
 /obj/docking_port/stationary{
+	area_type = /area/space;
+	baseturf_type = /turf/open/space;
 	dir = 8;
 	dwidth = 3;
 	height = 5;
 	id = "mining_home";
 	name = "mining shuttle bay";
+	turf_type = /turf/open/space;
 	width = 7
 	},
-/turf/open/floor/plating,
-/area/shuttle/labor)
+/turf/open/space/basic,
+/area/space)
 "bfM" = (
 /obj/structure/chair{
 	dir = 4
@@ -93499,13 +93489,13 @@ aQh
 aQh
 aQh
 aaa
-apC
-apC
-apD
-bfK
-apD
-apC
-apC
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aEj
 aTx
 bkE
@@ -93756,13 +93746,13 @@ aRr
 aRr
 aQh
 aaa
-apC
-bdN
-atr
-atr
-beQ
-bhw
-apC
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aEj
 aTx
 bkE
@@ -94013,13 +94003,13 @@ aRr
 aRr
 aQh
 aaa
-apD
-bdO
-beQ
-atr
-beQ
-bhx
-bhW
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aEj
 bjz
 bkE
@@ -94270,13 +94260,13 @@ aRr
 aZu
 aQh
 aaa
-apC
-bdP
-atr
-atr
-beQ
-bhy
-apC
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aEj
 aTx
 bkF
@@ -94527,13 +94517,13 @@ aRr
 aRr
 aQh
 aaa
-apC
-apC
-apD
+aaa
+aaa
+aaa
 bfL
-apD
-apC
-apC
+aaa
+aaa
+aaa
 aEj
 aTx
 bkF

@@ -22943,8 +22943,11 @@
 /turf/open/floor/plating,
 /area/quartermaster/miningoffice)
 "aYS" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/mining)
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
 "aYT" = (
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
@@ -23639,26 +23642,14 @@
 /turf/open/floor/plating,
 /area/quartermaster/miningoffice)
 "bav" = (
-/obj/structure/cable/white{
-	icon_state = "0-4"
-	},
-/obj/structure/cable/white{
-	icon_state = "0-8"
-	},
-/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/quartermaster/miningoffice)
+/area/quartermaster/miningdock)
 "baw" = (
-/obj/structure/cable/white{
-	icon_state = "0-4"
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
-/obj/structure/cable/white{
-	icon_state = "0-8"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/vacuum,
 /turf/open/floor/plating,
-/area/quartermaster/miningoffice)
+/area/quartermaster/miningdock)
 "bax" = (
 /obj/structure/cable/white{
 	icon_state = "0-8"
@@ -26463,19 +26454,19 @@
 /turf/open/floor/plasteel,
 /area/shuttle/mining)
 "bgr" = (
-/obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
-	dir = 4
+/obj/docking_port/stationary{
+	area_type = /area/quartermaster/miningdock;
+	baseturf_type = /turf/open/space;
+	dir = 1;
+	dwidth = 3;
+	height = 5;
+	id = "mining_home";
+	name = "mining shuttle bay";
+	turf_type = /turf/open/floor/plating;
+	width = 7
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating/airless,
-/area/shuttle/mining)
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
 "bgs" = (
 /obj/structure/ore_box,
 /obj/effect/decal/cleanable/dirt,
@@ -27314,14 +27305,15 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
 "bil" = (
-/obj/structure/shuttle/engine/propulsion/burst,
-/obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating/airless,
-/area/shuttle/mining)
+/obj/machinery/camera{
+	c_tag = "Mining Docking Bay";
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
 "bim" = (
 /obj/structure/cable/white,
 /obj/effect/spawner/structure/window/reinforced,
@@ -28723,9 +28715,6 @@
 /area/security/execution/transfer)
 "blm" = (
 /obj/structure/filingcabinet/chestdrawer,
-/obj/structure/cable/white{
-	icon_state = "1-2"
-	},
 /turf/open/floor/plasteel/red/side{
 	dir = 9
 	},
@@ -29719,9 +29708,6 @@
 /turf/open/floor/plasteel,
 /area/security/execution/transfer)
 "bnh" = (
-/obj/structure/cable/white{
-	icon_state = "1-2"
-	},
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
@@ -30716,9 +30702,6 @@
 /turf/open/floor/plasteel,
 /area/security/execution/transfer)
 "bph" = (
-/obj/structure/cable/white{
-	icon_state = "1-2"
-	},
 /obj/structure/cable/white{
 	icon_state = "2-8"
 	},
@@ -102605,6 +102588,206 @@
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/atmos)
+"YGT" = (
+/turf/closed/wall,
+/area/quartermaster/miningdock)
+"YGU" = (
+/turf/closed/wall,
+/area/quartermaster/miningdock)
+"YGV" = (
+/turf/closed/wall,
+/area/quartermaster/miningdock)
+"YGW" = (
+/turf/closed/wall,
+/area/quartermaster/miningdock)
+"YGX" = (
+/turf/closed/wall,
+/area/quartermaster/miningdock)
+"YGY" = (
+/turf/closed/wall,
+/area/quartermaster/miningdock)
+"YGZ" = (
+/turf/closed/wall,
+/area/quartermaster/miningdock)
+"YHa" = (
+/turf/closed/wall,
+/area/quartermaster/miningdock)
+"YHb" = (
+/turf/closed/wall,
+/area/quartermaster/miningdock)
+"YHc" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"YHd" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 2
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"YHe" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"YHf" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"YHg" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"YHh" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"YHi" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"YHj" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"YHk" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"YHl" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"YHm" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"YHn" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"YHo" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"YHp" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"YHq" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"YHr" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"YHs" = (
+/obj/structure/ore_box,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"YHt" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/machinery/light/small,
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"YHu" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"YHv" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"YHw" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"YHx" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"YHy" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"YHz" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"YHA" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"YHB" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"YHC" = (
+/turf/closed/wall,
+/area/quartermaster/miningdock)
+"YHD" = (
+/turf/closed/wall,
+/area/quartermaster/miningdock)
+"YHE" = (
+/turf/closed/wall,
+/area/quartermaster/miningdock)
+"YHF" = (
+/turf/closed/wall,
+/area/quartermaster/miningdock)
+"YHG" = (
+/turf/closed/wall,
+/area/quartermaster/miningdock)
+"YHH" = (
+/turf/closed/wall,
+/area/quartermaster/miningdock)
+"YHI" = (
+/turf/closed/wall,
+/area/quartermaster/miningdock)
+"YHJ" = (
+/turf/closed/wall,
+/area/quartermaster/miningdock)
+"YHK" = (
+/turf/closed/wall,
+/area/quartermaster/miningdock)
 
 (1,1,1) = {"
 aaa
@@ -124291,19 +124474,19 @@ aNF
 aPi
 aNV
 aSK
-YGN
+YGM
 aWc
 aNV
 aSK
-YGP
+YGM
 aWc
 aNV
 aSK
-YGR
+YGM
 aWc
 aNV
 aWc
-YGS
+YGM
 aSK
 aNV
 aaH
@@ -130718,11 +130901,11 @@ YGM
 aTf
 aNV
 aWv
-YGO
+YGM
 aZy
 aNV
 aWv
-YGQ
+YGM
 aZy
 aNV
 aJg
@@ -148973,7 +149156,7 @@ aXf
 bgo
 aYR
 bgp
-aaf
+aaa
 aaa
 aaa
 aaa
@@ -149222,15 +149405,15 @@ aSl
 aTP
 aVt
 aNj
-aaf
+YHc
 bav
-bbR
-bda
-bez
 bav
-aaf
-aaf
-aaf
+bav
+bav
+bav
+YHs
+YHC
+aaa
 aaf
 aaf
 aaf
@@ -149479,14 +149662,14 @@ aSm
 aTQ
 aNg
 aNg
-aaa
+YHd
 baw
-bbS
-bdb
-beA
 baw
-aaa
-aaa
+baw
+baw
+baw
+YHt
+YHD
 aaa
 aaa
 aaH
@@ -149735,15 +149918,15 @@ aQE
 aSf
 aTR
 aNh
-aaf
-aaa
-bax
-bbT
-bdc
-beB
-bgp
-aaa
-aaa
+YGT
+YHe
+bav
+bav
+bav
+bav
+bav
+YHu
+YHE
 aaa
 bne
 bne
@@ -149992,15 +150175,15 @@ aQF
 aSn
 aTS
 aVu
-aaf
+YGU
 aYS
-aYS
-aYT
-bdd
-aYT
-aYS
-aYS
-aaa
+bav
+bav
+bav
+bav
+bav
+YHv
+YHF
 aaa
 bnf
 bpa
@@ -150249,15 +150432,15 @@ aQG
 aSo
 aTT
 aNi
-aaf
-aYS
-bay
-bbU
-bde
-beC
-bgq
-aYS
-aaa
+YGV
+YHf
+bav
+bav
+bav
+bav
+bav
+YHw
+YHG
 aaa
 bnf
 bpb
@@ -150506,15 +150689,15 @@ aNg
 aNg
 aTU
 aVv
-aaf
-aYT
-baz
-bbV
-bdf
-beD
+YGW
+aYS
+bav
+bav
+bav
+bav
 bgr
 bil
-aaa
+YHH
 aaa
 bnf
 bpc
@@ -150762,16 +150945,16 @@ aaf
 aaa
 aaa
 aaf
-aaf
-aaf
-aYS
-baA
-bbW
-bdg
-beE
-bgs
-aYS
 aaa
+YGX
+aYS
+bav
+bav
+bav
+bav
+bav
+YHx
+YHI
 aaa
 bne
 bne
@@ -151020,15 +151203,15 @@ aaf
 aaf
 aaf
 aaa
-aaa
+YGY
 aYS
-aYS
-aYT
-bdh
-aYT
-aYS
-aYS
-aaa
+bav
+bav
+bav
+bav
+bav
+YHy
+YHJ
 aaa
 aaa
 bpd
@@ -151277,16 +151460,16 @@ aaa
 aaa
 aaf
 aaa
+YGZ
+aYS
+bav
+bav
+bav
+bav
+bav
+YHz
+YHK
 aaa
-aaa
-aaH
-aaH
-aaH
-aaH
-aaH
-aaa
-aaf
-aaf
 aaf
 bpe
 bqD
@@ -151534,16 +151717,16 @@ aaa
 aaa
 aaf
 aaa
-aaa
-aaf
-aaa
-aaa
-aaf
-aaa
-aaa
-aaf
-bjN
-blk
+YHa
+YHg
+YHi
+YHk
+YHm
+YHo
+YHq
+YHA
+bjQ
+bjQ
 bjQ
 bpf
 bqE
@@ -151790,16 +151973,16 @@ aaf
 aaf
 aaf
 aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-bjO
+aaa
+YHb
+YHh
+YHj
+YHl
+YHn
+YHp
+YHr
+YHB
+bjQ
 bll
 bng
 bpg
@@ -152050,13 +152233,13 @@ aaf
 aaa
 aaa
 aaa
-aaf
 aaa
 aaa
 aaa
 aaa
-aaf
-bjP
+aaa
+aaa
+bjQ
 blm
 bnh
 bph
