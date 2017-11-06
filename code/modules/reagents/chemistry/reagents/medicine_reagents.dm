@@ -1123,9 +1123,11 @@
 	color = "#F5F5F5"
 
 /datum/reagent/medicine/vitamin_supplement
-	name = "Vitamin supplement"
+	name = "Multivitamin"
 	id = "vitamin_supplement"
 	description = "Concentrated vitamins used if a healthy diet isn't possible."
+	reagent_state = SOLID
+	color = "#D2D2D2" //rgb: (210, 210, 210)
 	var/vitamin_power = 1 //One dose of supplements will add vitamins equal to this value times reaction volume
 	var/max_vitamins = 5 //Taking this supplement can only bring vitamins to a maximum of this number
 
@@ -1142,3 +1144,4 @@
 	description = "A slurry of proteins used as a heavy-duty vitamin supplement to treat malnutrition."
 	vitamin_power = 5
 	max_vitamins = INFINITY
+	color = "#D2C628" //rgb: (210, 198, 40)

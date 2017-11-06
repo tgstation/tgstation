@@ -368,7 +368,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 12
 	surplus = 35
 	include_modes = list(/datum/game_mode/nuclear)
-	
+
 /datum/uplink_item/dangerous/guardian
 	name = "Holoparasites"
 	desc = "Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, they require an \
@@ -802,6 +802,15 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	item = /obj/item/reagent_containers/syringe/stimulants
 	cost = 5
 	surplus = 90
+
+/datum/uplink_item/stealthy_tools/gamma_globulin_shot
+	name = "Gamma Globulin Shot"
+	desc = "A standard gamma globulin shot found in medical bays across the galaxy. Used to combat immunodeficiency and malnutrition, it provides a huge boost to the body's vitamin \
+	levels and will greatly boost your natural healing capabilities and immune system for a long time - but don't expect it to help you recover from a bullet wound."
+	item = /obj/item/reagent_containers/syringe/gamma_globulins
+	cost = 1
+	surplus = 50
+	limited_stock = 2 //Mass-producing globulin shots is rather silly
 
 /datum/uplink_item/stealthy_tools/mulligan
 	name = "Mulligan"
