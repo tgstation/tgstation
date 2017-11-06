@@ -28,71 +28,72 @@
 	owner.store_memory("Officially, [helping_station?"Nanotrasen":"The Syndicate"] are my employer.")
 
 /datum/antagonist/ninja/proc/addObjectives(quantity = 6)
-	var/list/possible_targets = list()
-	for(var/datum/mind/M in SSticker.minds)
-		if(M.current && M.current.stat != DEAD)
-			if(ishuman(M.current))
-				if(M.special_role)
-					possible_targets[M] = 0						//bad-guy
-				else if(M.assigned_role in GLOB.command_positions)
-					possible_targets[M] = 1						//good-guy
+	if(owner.current.client.prefs.receive_solo_objectives)
+		var/list/possible_targets = list()
+		for(var/datum/mind/M in SSticker.minds)
+			if(M.current && M.current.stat != DEAD)
+				if(ishuman(M.current))
+					if(M.special_role)
+						possible_targets[M] = 0						//bad-guy
+					else if(M.assigned_role in GLOB.command_positions)
+						possible_targets[M] = 1						//good-guy
 
-	var/list/objectives = list(1,2,3,4)
-	while(owner.objectives.len < quantity)
-		switch(pick_n_take(objectives))
-			if(1)	//research
-				var/datum/objective/download/O = new /datum/objective/download()
-				O.owner = owner
-				O.gen_amount_goal()
-				owner.objectives += O
-
-			if(2)	//steal
-				var/datum/objective/steal/special/O = new /datum/objective/steal/special()
-				O.owner = owner
-				owner.objectives += O
-
-			if(3)	//protect/kill
-				if(!possible_targets.len)	continue
-				var/index = rand(1,possible_targets.len)
-				var/datum/mind/M = possible_targets[index]
-				var/is_bad_guy = possible_targets[M]
-				possible_targets.Cut(index,index+1)
-
-				if(is_bad_guy ^ helping_station)			//kill (good-ninja + bad-guy or bad-ninja + good-guy)
-					var/datum/objective/assassinate/O = new /datum/objective/assassinate()
-					O.owner = owner
-					O.target = M
-					O.explanation_text = "Slay \the [M.current.real_name], the [M.assigned_role]."
-					owner.objectives += O
-				else										//protect
-					var/datum/objective/protect/O = new /datum/objective/protect()
-					O.owner = owner
-					O.target = M
-					O.explanation_text = "Protect \the [M.current.real_name], the [M.assigned_role], from harm."
-					owner.objectives += O
-			if(4)	//debrain/capture
-				if(!possible_targets.len)	continue
-				var/selected = rand(1,possible_targets.len)
-				var/datum/mind/M = possible_targets[selected]
-				var/is_bad_guy = possible_targets[M]
-				possible_targets.Cut(selected,selected+1)
-
-				if(is_bad_guy ^ helping_station)			//debrain (good-ninja + bad-guy or bad-ninja + good-guy)
-					var/datum/objective/debrain/O = new /datum/objective/debrain()
-					O.owner = owner
-					O.target = M
-					O.explanation_text = "Steal the brain of [M.current.real_name]."
-					owner.objectives += O
-				else										//capture
-					var/datum/objective/capture/O = new /datum/objective/capture()
+		var/list/objectives = list(1,2,3,4)
+		while(owner.objectives.len < quantity)
+			switch(pick_n_take(objectives))
+				if(1)	//research
+					var/datum/objective/download/O = new /datum/objective/download()
 					O.owner = owner
 					O.gen_amount_goal()
 					owner.objectives += O
-			else
-				break
-	var/datum/objective/O = new /datum/objective/survive()
-	O.owner = owner
-	owner.objectives += O
+
+				if(2)	//steal
+					var/datum/objective/steal/special/O = new /datum/objective/steal/special()
+					O.owner = owner
+					owner.objectives += O
+
+				if(3)	//protect/kill
+					if(!possible_targets.len)	continue
+					var/index = rand(1,possible_targets.len)
+					var/datum/mind/M = possible_targets[index]
+					var/is_bad_guy = possible_targets[M]
+					possible_targets.Cut(index,index+1)
+
+					if(is_bad_guy ^ helping_station)			//kill (good-ninja + bad-guy or bad-ninja + good-guy)
+						var/datum/objective/assassinate/O = new /datum/objective/assassinate()
+						O.owner = owner
+						O.target = M
+						O.explanation_text = "Slay \the [M.current.real_name], the [M.assigned_role]."
+						owner.objectives += O
+					else										//protect
+						var/datum/objective/protect/O = new /datum/objective/protect()
+						O.owner = owner
+						O.target = M
+						O.explanation_text = "Protect \the [M.current.real_name], the [M.assigned_role], from harm."
+						owner.objectives += O
+				if(4)	//debrain/capture
+					if(!possible_targets.len)	continue
+					var/selected = rand(1,possible_targets.len)
+					var/datum/mind/M = possible_targets[selected]
+					var/is_bad_guy = possible_targets[M]
+					possible_targets.Cut(selected,selected+1)
+
+					if(is_bad_guy ^ helping_station)			//debrain (good-ninja + bad-guy or bad-ninja + good-guy)
+						var/datum/objective/debrain/O = new /datum/objective/debrain()
+						O.owner = owner
+						O.target = M
+						O.explanation_text = "Steal the brain of [M.current.real_name]."
+						owner.objectives += O
+					else										//capture
+						var/datum/objective/capture/O = new /datum/objective/capture()
+						O.owner = owner
+						O.gen_amount_goal()
+						owner.objectives += O
+				else
+					break
+		var/datum/objective/O = new /datum/objective/survive()
+		O.owner = owner
+		owner.objectives += O
 
 
 /proc/remove_ninja(mob/living/L)

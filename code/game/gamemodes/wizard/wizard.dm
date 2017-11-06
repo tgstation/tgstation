@@ -97,13 +97,15 @@
 					SSblackbox.add_details("wizard_objective","[objective.type]|FAIL")
 					wizardwin = 0
 				count++
-
-			if(wizard.current && wizard.current.stat!=2 && wizardwin)
-				text += "<br><font color='green'><B>The wizard was successful!</B></font>"
-				SSblackbox.add_details("wizard_success","SUCCESS")
+			if(wizard.objectives.len)
+				if(wizard.current && wizard.current.stat!=2 && wizardwin)
+					text += "<br><font color='green'><B>The wizard was successful!</B></font>"
+					SSblackbox.add_details("wizard_success","SUCCESS")
+				else
+					text += "<br><font color='red'><B>The wizard has failed!</B></font>"
+					SSblackbox.add_details("wizard_success","FAIL")
 			else
-				text += "<br><font color='red'><B>The wizard has failed!</B></font>"
-				SSblackbox.add_details("wizard_success","FAIL")
+				SSblackbox.add_details("wizard_success","NO_OBJECTIVES")
 			if(wizard.spell_list.len>0)
 				text += "<br><B>[wizard.name] used the following spells: </B>"
 				var/i = 1

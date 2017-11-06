@@ -60,7 +60,11 @@
 
 /datum/game_mode/traitor/post_setup()
 	for(var/datum/mind/traitor in pre_traitors)
-		var/datum/antagonist/traitor/new_antag = new antag_datum(traitor)
+		var/datum/antagonist/traitor/new_antag
+		if(traitor.current.client.prefs.receive_solo_objectives) //The IAA antag datum is too much of a clusterfuck for me to manage with the pref, so non-objective-receiving antags will be regular traitors during double_agents - Y0SH1_M4S73R
+			new_antag = new antag_datum(traitor)
+		else
+			new_antag = new ANTAG_DATUM_TRAITOR(traitor)
 		new_antag.should_specialise = TRUE
 		addtimer(CALLBACK(traitor, /datum/mind.proc/add_antag_datum, new_antag), rand(10,100))
 	if(!exchange_blue)
@@ -124,7 +128,7 @@
 
 			if(uplink_true)
 				text += " (used [TC_uses] TC) [purchases]"
-				if(TC_uses==0 && traitorwin)
+				if(TC_uses==0 && traitorwin && traitor.objectives.len)
 					var/static/icon/badass = icon('icons/badass.dmi', "badass")
 					text += "<BIG>[icon2html(badass, world)]</BIG>"
 
@@ -136,14 +140,16 @@
 			else
 				special_role_text = "antagonist"
 
-
-			if(traitorwin)
-				text += "<br><font color='green'><B>The [special_role_text] was successful!</B></font>"
-				SSblackbox.add_details("traitor_success","SUCCESS")
+			if(traitor.objectives.len)
+				if(traitorwin)
+					text += "<br><font color='green'><B>The [special_role_text] was successful!</B></font>"
+					SSblackbox.add_details("traitor_success","SUCCESS")
+				else
+					text += "<br><font color='red'><B>The [special_role_text] has failed!</B></font>"
+					SSblackbox.add_details("traitor_success","FAIL")
+					SEND_SOUND(traitor.current, 'sound/ambience/ambifailure.ogg')
 			else
-				text += "<br><font color='red'><B>The [special_role_text] has failed!</B></font>"
-				SSblackbox.add_details("traitor_success","FAIL")
-				SEND_SOUND(traitor.current, 'sound/ambience/ambifailure.ogg')
+				SSblackbox.add_details("traitor_success","NO_OBJECTIVES")
 
 			text += "<br>"
 
