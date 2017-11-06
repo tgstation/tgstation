@@ -83,6 +83,23 @@
 		M.satiety += 30
 	. = ..()
 
+/datum/reagent/consumable/cooking_oil
+	name = "Cooking Oil"
+	id = "cooking_oil"
+	description = "A variety of cooking oil derived from fat or plants. Used in food preparation and frying."
+	color = "#EADD6B" //RGB: 234, 221, 107 (based off of canola oil)
+	taste_mult = 0.8
+	taste_description = "oil"
+	nutriment_factor = 3 * REAGENTS_METABOLISM //Not very healthy on its own
+	var/fry_temperature = 450 //Around ~350 F (117 C) which deep fryers operate around in the real world
+
+/datum/reagent/consumable/cooking_oil/reaction_obj(obj/O, reac_volume)
+	if(holder && holder.chem_temp >= fry_temperature)
+		if(isitem(O))
+			O.loc.visible_message("<span class='warning'>[O] rapidly fries as it's splashed with hot oil! Somehow.</span>")
+			var/obj/item/reagent_containers/food/snacks/deepfryholder/F = new(get_turf(O))
+			F.fry(O, volume)
+
 /datum/reagent/consumable/sugar
 	name = "Sugar"
 	id = "sugar"

@@ -185,7 +185,7 @@
 	icon_state = ""
 	bitesize = 2
 
-/obj/item/reagent_containers/food/snacks/deepfryholder/proc/fry(obj/item/frying, datum/reagents/reagents, cook_time = 30)
+/obj/item/reagent_containers/food/snacks/deepfryholder/proc/fry(obj/item/frying, cook_time = 30)
 	if(istype(frying, /obj/item/reagent_containers/))
 		var/obj/item/reagent_containers/food = frying
 		food.reagents.trans_to(src, food.reagents.total_volume)
@@ -194,21 +194,24 @@
 	icon_state = frying.icon_state
 	desc = frying.desc
 	w_class = frying.w_class
-	reagents.trans_to(src, 2*(cook_time/15))
+	reagents.add_reagent("cooking_oil", cook_time * 0.1)
 	switch(cook_time)
 		if(0 to 15)
 			add_atom_colour(rgb(166,103,54), FIXED_COLOUR_PRIORITY)
 			name = "lightly-fried [frying.name]"
+			desc = "[frying.desc] It's been lightly fried in a deep fryer."
 		if(16 to 49)
 			add_atom_colour(rgb(103,63,24), FIXED_COLOUR_PRIORITY)
 			name = "fried [frying.name]"
+			desc = "[frying.desc] It's been fried, increasing its tastiness value by 35%."
 		if(50 to 59)
 			add_atom_colour(rgb(63,23,4), FIXED_COLOUR_PRIORITY)
 			name = "deep-fried [frying.name]"
+			desc = "[frying.desc] Deep-fried to perfection."
 		if(60 to INFINITY)
 			add_atom_colour(rgb(33,19,9), FIXED_COLOUR_PRIORITY)
 			name = "the physical manifestation of the very concept of fried foods"
-			desc = "A heavily fried...something.  Who can tell anymore?"
+			desc = "A heavily-fried...something.  Who can tell anymore?"
 	filling_color = color
 	foodtype |= FRIED
 	if(istype(frying, /obj/item/reagent_containers/food/snacks/))

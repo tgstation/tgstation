@@ -1,11 +1,25 @@
 /*
 April 3rd, 2014 marks the day this machine changed the face of the kitchen on NTStation13
 God bless America.
-insert ascii eagle on american flag background here
+          ___----------___
+        _--                ----__
+       -                         ---_
+      -___    ____---_              --_
+  __---_ .-_--   _ O _-                -
+ -      -_-       ---                   -
+-   __---------___                       -
+- _----                                  -
+ -     -_                                 _
+ `      _-                                 _
+       _                           _-_  _-_ _
+      _-                   ____    -_  -   --
+      -   _-__   _    __---    -------       -
+     _- _-   -_-- -_--                        _
+     -_-                                       _
+    _-                                          _
+    -
 */
 
-// April 3rd, 2014 marks the day this machine changed the face of the kitchen on NTStation13
-// God bless America.
 /obj/machinery/deepfryer
 	name = "deep fryer"
 	desc = "Deep fried <i>everything</i>."
@@ -18,6 +32,8 @@ insert ascii eagle on american flag background here
 	container_type = OPENCONTAINER_1
 	var/obj/item/frying = null	//What's being fried RIGHT NOW?
 	var/cook_time = 0
+	var/oil_use = 0.05 //How much cooking oil is used per tick
+	var/fry_speed = 1 //How quickly we fry food
 	var/static/list/deepfry_blacklisted_items = typecacheof(list(
 		/obj/item/screwdriver,
 		/obj/item/crowbar,
@@ -27,15 +43,24 @@ insert ascii eagle on american flag background here
 		/obj/item/weldingtool,
 		/obj/item/reagent_containers/glass,
 		/obj/item/storage/part_replacer))
+	var/datum/looping_sound/deep_fryer/fry_loop
 
 /obj/machinery/deepfryer/Initialize()
 	. = ..()
 	create_reagents(50)
-	reagents.add_reagent("nutriment", 25)
+	reagents.add_reagent("cooking_oil", 25)
 	component_parts = list()
 	component_parts += new /obj/item/circuitboard/machine/deep_fryer(null)
 	component_parts += new /obj/item/stock_parts/micro_laser(null)
 	RefreshParts()
+	fry_loop = new(list(src), FALSE)
+
+/obj/machinery/deepfryer/RefreshParts()
+	var/oil_efficiency
+	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
+		oil_efficiency += M.rating
+	oil_use = initial(oil_use) - (oil_efficiency * 0.0095)
+	fry_speed = oil_efficiency
 
 /obj/machinery/deepfryer/examine()
 	..()
@@ -43,8 +68,10 @@ insert ascii eagle on american flag background here
 		to_chat(usr, "You can make out \a [frying] in the oil.")
 
 /obj/machinery/deepfryer/attackby(obj/item/I, mob/user)
-	if(!reagents.total_volume)
-		to_chat(user, "There's nothing to fry with in [src]!")
+	if(I.reagents && I.reagents.has_reagent("cooking_oil")) //So we can fill the fryer even if there's no oil
+		return ..()
+	if(!reagents.has_reagent("cooking_oil"))
+		to_chat(user, "<span class='warning'>[src] has no cooking oil to fry with!</span>")
 		return
 	if(istype(I, /obj/item/reagent_containers/food/snacks/deepfryholder))
 		to_chat(user, "<span class='userdanger'>Your cooking skills are not up to the legendary Doublefry technique.</span>")
@@ -62,13 +89,17 @@ insert ascii eagle on american flag background here
 			to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
 			frying = I
 			icon_state = "fryer_on"
+			fry_loop.start()
 
 /obj/machinery/deepfryer/process()
 	..()
-	if(!reagents.total_volume)
+	var/datum/reagent/consumable/cooking_oil/C = reagents.has_reagent("cooking_oil")
+	if(!C)
 		return
+	reagents.chem_temp = C.fry_temperature
 	if(frying)
-		cook_time++
+		reagents.remove_reagent("cooking_oil", oil_use)
+		cook_time += fry_speed
 		if(cook_time == 30)
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 			visible_message("[src] dings!")
@@ -81,11 +112,12 @@ insert ascii eagle on american flag background here
 		if(frying.loc == src)
 			to_chat(user, "<span class='notice'>You eject [frying] from [src].</span>")
 			var/obj/item/reagent_containers/food/snacks/deepfryholder/S = new(get_turf(src))
-			S.fry(frying, reagents, cook_time)
+			S.fry(frying, cook_time)
 			icon_state = "fryer_off"
 			user.put_in_hands(S)
 			frying = null
 			cook_time = 0
+			fry_loop.stop()
 			return
 	else if(user.pulling && user.a_intent == "grab" && iscarbon(user.pulling) && reagents.total_volume)
 		if(user.grab_state < GRAB_AGGRESSIVE)
