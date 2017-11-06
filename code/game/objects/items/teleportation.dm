@@ -152,11 +152,20 @@ Frequency:
 	active_portal_pairs = list()
 
 /obj/item/hand_tele/pre_attackby(atom/target, mob/user, params)
+	if(try_dispel_portal(target, user))
+		return FALSE
+	return ..()
+
+/obj/item/hand_tele/proc/try_dispel_portal(atom/target, mob/user)
 	if(is_parent_of_portal(target))
 		qdel(target)
 		to_chat(user, "<span class='notice'>You dispel [target] with \the [src]!</span>")
-		return FALSE
-	return ..()
+		return TRUE
+	return FALSE
+
+/obj/item/hand_tele/afterattack(atom/target, mob/user)
+	try_dispel_portal(target, user)
+	. = ..()
 
 /obj/item/hand_tele/attack_self(mob/user)
 	var/turf/current_location = get_turf(user)//What turf is the user on?
