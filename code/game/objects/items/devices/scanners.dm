@@ -275,7 +275,7 @@ MASS SPECTROMETER
 			to_chat(user, "<span class='notice'>[cyberimp_detect]</span>")
 
 /proc/chemscan(mob/living/user, mob/living/M)
-	if(ishuman(M))
+	if(ismob(M))
 		var/mob/living/carbon/human/H = M
 		if(H.reagents)
 			if(H.reagents.reagent_list.len)
