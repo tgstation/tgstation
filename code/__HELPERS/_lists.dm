@@ -474,7 +474,7 @@
 #error Remie said that lummox was adding a way to get a lists
 #error contents via list.values, if that is true remove this
 #error otherwise, update the version and bug lummox
-#elseif
+#endif
 //Flattens a keyed list into a list of it's contents
 /proc/flatten_list(list/key_list)
 	if(!islist(key_list))
@@ -485,6 +485,7 @@
 
 //Picks from the list, with some safeties, and returns the "default" arg if it fails
 #define DEFAULTPICK(L, default) ((islist(L) && length(L)) ? pick(L) : default)
+
 #define LAZYINITLIST(L) if (!L) L = list()
 #define UNSETEMPTY(L) if (L && !L.len) L = null
 #define LAZYREMOVE(L, I) if(L) { L -= I; if(!L.len) { L = null; } }

@@ -29,9 +29,13 @@
 	can_be_unanchored = FALSE
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
-/obj/structure/falsewall/New(loc)
-	..()
-	air_update_turf(1)
+/obj/structure/falsewall/Initialize()
+	. = ..()
+	air_update_turf(TRUE)
+
+/obj/structure/falsewall/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_MEDIUM_INSULATION)
 
 /obj/structure/falsewall/Destroy()
 	density = FALSE
@@ -123,9 +127,12 @@
 	else
 		return ..()
 
-/obj/structure/falsewall/proc/dismantle(mob/user, disassembled = TRUE)
-	user.visible_message("<span class='notice'>[user] dismantles the false wall.</span>", "<span class='notice'>You dismantle the false wall.</span>")
-	playsound(src, 'sound/items/welder.ogg', 100, 1)
+/obj/structure/falsewall/proc/dismantle(mob/user, disassembled=TRUE, obj/item/tool = null)
+	user.visible_message("[user] dismantles the false wall.", "<span class='notice'>You dismantle the false wall.</span>")
+	if(tool)
+		playsound(src, tool.usesound, 100, 1)
+	else
+		playsound(src, 'sound/items/welder.ogg', 100, 1)
 	deconstruct(disassembled)
 
 /obj/structure/falsewall/deconstruct(disassembled = TRUE)
@@ -141,6 +148,7 @@
 	return null
 
 /obj/structure/falsewall/examine_status(mob/user) //So you can't detect falsewalls by examine.
+	to_chat(user, "<span class='notice'>The outer plating is <b>welded</b> firmly in place.</span>")
 	return null
 
 /*
@@ -154,6 +162,15 @@
 	icon_state = "r_wall"
 	walltype = /turf/closed/wall/r_wall
 	mineral = /obj/item/stack/sheet/plasteel
+
+/obj/structure/falsewall/reinforced/examine_status(mob/user)
+	to_chat(user, "<span class='notice'>The outer <b>grille</b> is fully intact.</span>")
+	return null
+
+/obj/structure/falsewall/reinforced/attackby(obj/item/tool, mob/user)
+	..()
+	if(istype(tool, /obj/item/wirecutters))
+		dismantle(user, TRUE, tool)
 
 /*
  * Uranium Falsewalls
@@ -182,7 +199,7 @@
 	if(!active)
 		if(world.time > last_event+15)
 			active = 1
-			radiation_pulse(get_turf(src), 0, 3, 15, 1)
+			radiation_pulse(src, 150)
 			for(var/turf/closed/wall/mineral/uranium/T in orange(1,src))
 				T.radiate()
 			last_event = world.time
@@ -308,11 +325,12 @@
 /obj/structure/falsewall/plastitanium
 	name = "wall"
 	desc = "An evil wall of plasma and titanium."
-	icon = 'icons/turf/shuttle.dmi'
-	icon_state = "wall3"
+	icon = 'icons/turf/walls/plastitanium_wall.dmi'
+	icon_state = "shuttle"
 	mineral = /obj/item/stack/sheet/mineral/plastitanium
 	walltype = /turf/closed/wall/mineral/plastitanium
-	smooth = SMOOTH_FALSE
+	smooth = SMOOTH_MORE
+	canSmoothWith = list(/turf/closed/wall/mineral/plastitanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/shuttle, /obj/structure/shuttle/engine/heater)
 
 /obj/structure/falsewall/brass
 	name = "clockwork wall"

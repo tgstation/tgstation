@@ -14,7 +14,7 @@
 	..()
 	if(statpanel("Status"))
 		if(bomb_cooldown >= world.time)
-			stat(null, "Bomb Cooldown Remaining: [max(round((bomb_cooldown - world.time)*0.1, 0.1), 0)] seconds")
+			stat(null, "Bomb Cooldown Remaining: [DisplayTimeText(bomb_cooldown - world.time)]")
 
 /mob/living/simple_animal/hostile/guardian/bomb/AttackingTarget()
 	. = ..()
@@ -70,7 +70,7 @@
 /obj/guardian_bomb/proc/detonate(mob/living/user)
 	if(isliving(user))
 		if(user != spawner && user != spawner.summoner && !spawner.hasmatchingsummoner(user))
-			to_chat(user, "<span class='danger'><B>The [src] was boobytrapped!</span></B>")
+			to_chat(user, "<span class='danger'><B>[src] was boobytrapped!</span></B>")
 			to_chat(spawner, "<span class='danger'><B>Success! Your trap caught [user]</span></B>")
 			var/turf/T = get_turf(src)
 			stored_obj.forceMove(T)

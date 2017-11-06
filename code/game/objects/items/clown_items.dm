@@ -3,6 +3,7 @@
  *		Soap
  *		Bike Horns
  *		Air Horns
+ *		Canned Laughter
  */
 
 /*
@@ -57,7 +58,8 @@
 		return
 	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
 	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
-	if(user.client && (target in user.client.screen))
+	target.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
+	if(user.client && ((target in user.client.screen) && !user.is_holding(target)))
 		to_chat(user, "<span class='warning'>You need to take that [target.name] off before cleaning it!</span>")
 	else if(istype(target, /obj/effect/decal/cleanable))
 		user.visible_message("[user] begins to scrub \the [target.name] out with [src].", "<span class='warning'>You begin to scrub \the [target.name] out with [src]...</span>")
@@ -92,7 +94,6 @@
  * Bike Horns
  */
 
-
 /obj/item/bikehorn
 	name = "bike horn"
 	desc = "A horn off of a bicycle."
@@ -117,6 +118,7 @@
 	playsound(src, 'sound/items/bikehorn.ogg', 50, 1)
 	return (BRUTELOSS)
 
+//air horn
 /obj/item/bikehorn/airhorn
 	name = "air horn"
 	desc = "Damn son, where'd you find this?"
@@ -127,18 +129,22 @@
 	. = ..()
 	AddComponent(/datum/component/squeak, list('sound/items/airhorn2.ogg'=1), 50)
 
+//golden bikehorn
 /obj/item/bikehorn/golden
 	name = "golden bike horn"
 	desc = "Golden? Clearly, it's made with bananium! Honk!"
 	icon_state = "gold_horn"
 	item_state = "gold_horn"
+	var/flip_cooldown = 0
 
 /obj/item/bikehorn/golden/attack()
-	flip_mobs()
+	if(flip_cooldown < world.time)
+		flip_mobs()
 	return ..()
 
 /obj/item/bikehorn/golden/attack_self(mob/user)
-	flip_mobs()
+	if(flip_cooldown < world.time)
+		flip_mobs()
 	..()
 
 /obj/item/bikehorn/golden/proc/flip_mobs(mob/living/carbon/M, mob/user)
@@ -149,7 +155,9 @@
 			if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
 				continue
 		M.emote("flip")
+	flip_cooldown = world.time + 7
 
+//canned laughter
 /obj/item/reagent_containers/food/drinks/soda_cans/canned_laughter
 	name = "Canned Laughter"
 	desc = "Just looking at this makes you want to giggle."

@@ -37,8 +37,9 @@
 		return 1
 
 /obj/effect/proc_holder/changeling/weapon/sting_action(mob/living/user)
-	if(!user.drop_item())
-		to_chat(user, "<span class='warning'>The [user.get_active_held_item()] is stuck to your hand, you cannot grow a [weapon_name_simple] over it!</span>")
+	var/obj/item/held = user.get_active_held_item()
+	if(held && !user.dropItemToGround(held))
+		to_chat(user, "<span class='warning'>[held] is stuck to your hand, you cannot grow a [weapon_name_simple] over it!</span>")
 		return
 	var/limb_regen = 0
 	if(user.active_hand_index % 2 == 0) //we regen the arm before changing it into the weapon
@@ -256,7 +257,7 @@
 
 /obj/item/ammo_casing/magic/tentacle
 	name = "tentacle"
-	desc = "a tentacle."
+	desc = "A tentacle."
 	projectile_type = /obj/item/projectile/tentacle
 	caliber = "tentacle"
 	icon_state = "tentacle_end"
@@ -338,7 +339,7 @@
 					if(INTENT_DISARM)
 						var/obj/item/I = C.get_active_held_item()
 						if(I)
-							if(C.drop_item())
+							if(C.dropItemToGround(I))
 								C.visible_message("<span class='danger'>[I] is yanked off [C]'s hand by [src]!</span>","<span class='userdanger'>A tentacle pulls [I] away from you!</span>")
 								on_hit(I) //grab the item as if you had hit it directly with the tentacle
 								return 1

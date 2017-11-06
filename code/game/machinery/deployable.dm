@@ -110,12 +110,16 @@
 
 /obj/item/grenade/barrier
 	name = "barrier grenade"
-	desc = "Instant cover. Alt+click to toggle modes."
+	desc = "Instant cover."
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "flashbang"
 	item_state = "flashbang"
 	actions_types = list(/datum/action/item_action/toggle_barrier_spread)
 	var/mode = SINGLE
+
+/obj/item/grenade/barrier/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Alt-click to toggle modes.</span>")
 
 /obj/item/grenade/barrier/AltClick(mob/living/user)
 	if(!istype(user) || user.incapacitated())

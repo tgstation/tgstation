@@ -1,6 +1,6 @@
 /obj/structure/sign/barsign // All Signs are 64 by 32 pixels, they take two tiles
 	name = "Bar Sign"
-	desc = "A bar sign with no writing on it"
+	desc = "A bar sign with no writing on it."
 	icon = 'icons/obj/barsigns.dmi'
 	icon_state = "empty"
 	req_access = list(ACCESS_BAR)
@@ -120,7 +120,7 @@
 		return
 	emagged = TRUE
 	to_chat(user, "<span class='notice'>You emag the barsign. Takeover in progress...</span>")
-	sleep(100) //10 seconds
+	sleep(10 SECONDS)
 	set_sign(new /datum/barsign/hiddensigns/syndibarsign)
 	req_access = list(ACCESS_SYNDICATE)
 

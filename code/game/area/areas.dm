@@ -14,6 +14,8 @@
 
 	var/valid_territory = TRUE // If it's a valid territory for gangs to claim
 	var/blob_allowed = TRUE // Does it count for blobs score? By default, all areas count.
+	var/clockwork_warp_allowed = TRUE // Can servants warp into this area from Reebe?
+	var/clockwork_warp_fail = "The structure there is too dense for warping to pierce. (This is normal in high-security areas.)"
 
 	var/eject = null
 
@@ -89,7 +91,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 // want to find machines, mobs, etc, in the same logical area, you will need to check all the
 // related areas.  This returns a master contents list to assist in that.
 /proc/area_contents(area/A)
-	if(!istype(A)) return null
+	if(!istype(A))
+		return null
 	var/list/contents = list()
 	for(var/area/LSA in A.related)
 		contents += LSA.contents
@@ -118,7 +121,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		else if(dynamic_lighting != DYNAMIC_LIGHTING_IFSTARLIGHT)
 			dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	if(dynamic_lighting == DYNAMIC_LIGHTING_IFSTARLIGHT)
-		dynamic_lighting = config.starlight ? DYNAMIC_LIGHTING_ENABLED : DYNAMIC_LIGHTING_DISABLED
+		dynamic_lighting = CONFIG_GET(flag/starlight) ? DYNAMIC_LIGHTING_ENABLED : DYNAMIC_LIGHTING_DISABLED
 
 	. = ..()
 
@@ -128,6 +131,22 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 	if(!IS_DYNAMIC_LIGHTING(src))
 		add_overlay(/obj/effect/fullbright)
+
+	if(contents.len)
+		var/list/areas_in_z = SSmapping.areas_in_z
+		var/z
+		for(var/i in 1 to contents.len)
+			var/atom/thing = contents[i]
+			if(!thing)
+				continue
+			z = thing.z
+			break
+		if(!z)
+			WARNING("No z found for [src]")
+			return
+		if(!areas_in_z["[z]"])
+			areas_in_z["[z]"] = list()
+		areas_in_z["[z]"] += src
 
 /area/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -449,24 +468,25 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 		if(!L.client.played)
 			SEND_SOUND(L, sound(sound, repeat = 0, wait = 0, volume = 25, channel = CHANNEL_AMBIENCE))
-			L.client.played = 1
-			sleep(600)			//ewww - this is very very bad
-			if(L.&& L.client)
-				L.client.played = 0
+			L.client.played = TRUE
+			addtimer(CALLBACK(L.client, /client/proc/ResetAmbiencePlayed), 600)
+
+/client/proc/ResetAmbiencePlayed()
+	played = FALSE
 
 /atom/proc/has_gravity(turf/T)
 	if(!T || !isturf(T))
 		T = get_turf(src)
 	var/area/A = get_area(T)
 	if(isspaceturf(T)) // Turf never has gravity
-		return 0
+		return FALSE
 	else if(A && A.has_gravity) // Areas which always has gravity
-		return 1
+		return TRUE
 	else
 		// There's a gravity generator on our z level
 		if(T && GLOB.gravity_generators["[T.z]"] && length(GLOB.gravity_generators["[T.z]"]))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /area/proc/setup(a_name)
 	name = a_name

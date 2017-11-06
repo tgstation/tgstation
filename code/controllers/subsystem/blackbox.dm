@@ -38,7 +38,7 @@ SUBSYSTEM_DEF(blackbox)
 	var/datum/DBQuery/query_record_playercount = SSdbcore.NewQuery("INSERT INTO [format_table_name("legacy_population")] (playercount, admincount, time, server_ip, server_port, round_id) VALUES ([playercount], [admincount], '[SQLtime()]', INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]', '[GLOB.round_id]')")
 	query_record_playercount.Execute()
 
-	if(config.use_exp_tracking)
+	if(CONFIG_GET(flag/use_exp_tracking))
 		if((triggertime < 0) || (world.time > (triggertime +3000)))	//subsystem fires once at roundstart then once every 10 minutes. a 5 min check skips the first fire. The <0 is midnight rollover check
 			update_exp(10,FALSE)
 
@@ -191,12 +191,8 @@ SUBSYSTEM_DEF(blackbox)
 	var/sqljob = sanitizeSQL(L.mind.assigned_role)
 	var/sqlspecial = sanitizeSQL(L.mind.special_role)
 	var/sqlpod = sanitizeSQL(placeofdeath.name)
-	var/laname
-	var/lakey
-	if(L.lastattacker && ismob(L.lastattacker))
-		var/mob/LA = L.lastattacker
-		laname = sanitizeSQL(LA.real_name)
-		lakey = sanitizeSQL(LA.key)
+	var/laname = sanitizeSQL(L.lastattacker)
+	var/lakey = sanitizeSQL(L.lastattackerckey)
 	var/sqlbrute = sanitizeSQL(L.getBruteLoss())
 	var/sqlfire = sanitizeSQL(L.getFireLoss())
 	var/sqlbrain = sanitizeSQL(L.getBrainLoss())

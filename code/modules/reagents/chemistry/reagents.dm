@@ -80,10 +80,6 @@
 /datum/reagent/proc/on_update(atom/A)
 	return
 
-// Called every time reagent containers process.
-/datum/reagent/proc/on_tick(data)
-	return
-
 // Called when the reagent container is hit by an explosion
 /datum/reagent/proc/on_ex_act(severity)
 	return

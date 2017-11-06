@@ -20,15 +20,16 @@
 		+	<span class='notice'>Crew</span>: Resist the lure of sin and remain pure!"
 
 /datum/game_mode/devil/pre_setup()
-	if(config.protect_roles_from_antagonist)
+	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		restricted_jobs += protected_jobs
-	if(config.protect_assistant_from_antagonist)
+	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		restricted_jobs += "Assistant"
 
 	var/num_devils = 1
 
-	if(config.traitor_scaling_coeff)
-		num_devils = max(minimum_devils, min( round(num_players()/(config.traitor_scaling_coeff*3))+ 2 + num_modifier, round(num_players()/(config.traitor_scaling_coeff*1.5)) + num_modifier ))
+	var/tsc = CONFIG_GET(number/traitor_scaling_coeff)
+	if(tsc)
+		num_devils = max(minimum_devils, min( round(num_players() / (tsc * 3))+ 2 + num_modifier, round(num_players() / (tsc * 1.5)) + num_modifier))
 	else
 		num_devils = max(minimum_devils, min(num_players(), traitors_possible))
 
@@ -51,7 +52,6 @@
 /datum/game_mode/devil/post_setup()
 	for(var/datum/mind/devil in devils)
 		post_setup_finalize(devil)
-	modePlayer += devils
 	..()
 	return 1
 

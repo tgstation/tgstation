@@ -1,9 +1,16 @@
 /turf/closed
-	var/thermite = 0
 	layer = CLOSED_TURF_LAYER
 	opacity = 1
 	density = TRUE
 	blocks_air = 1
+
+/turf/closed/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_MEDIUM_INSULATION)
+
+/turf/closed/ChangeTurf()
+	. = ..()
+	SSair.high_pressure_delta -= src
 
 /turf/closed/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	return FALSE

@@ -2,11 +2,15 @@
 	name = "plastic explosive"
 	desc = "Used to put holes in specific areas without too much extra hole."
 	icon_state = "plastic-explosive0"
-	item_state = "plasticx"
+	item_state = "plastic-explosive"
+	lefthand_file = 'icons/mob/inhands/weapons/bombs_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/bombs_righthand.dmi'
 	flags_1 = NOBLUDGEON_1
 	flags_2 = NO_EMP_WIRES_2
 	det_time = 10
 	display_timer = 0
+	w_class = WEIGHT_CLASS_SMALL
+	origin_tech = "syndicate=1"
 	var/atom/target = null
 	var/mutable_appearance/plastic_overlay
 	var/obj/item/device/assembly_holder/nadeassembly = null
@@ -16,7 +20,7 @@
 	var/boom_sizes = list(0, 0, 3)
 
 /obj/item/grenade/plastic/New()
-	plastic_overlay = mutable_appearance(icon, "[item_state]2")
+	plastic_overlay = mutable_appearance(icon, "[item_state]2", HIGH_OBJ_LAYER)
 	..()
 
 /obj/item/grenade/plastic/Destroy()
@@ -95,13 +99,13 @@
 	if(ismob(AM))
 		return
 
-	to_chat(user, "<span class='notice'>You start planting the [src]. The timer is set to [det_time]...</span>")
+	to_chat(user, "<span class='notice'>You start planting [src]. The timer is set to [det_time]...</span>")
 
 	if(do_after(user, 30, target = AM))
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			return
-		src.target = AM
-		forceMove(null)	//Yep
+		target = AM
+		moveToNullspace()	//Yep
 
 		if(istype(AM, /obj/item)) //your crappy throwing star can't fly so good with a giant brick of c4 on it.
 			var/obj/item/I = AM
@@ -112,7 +116,7 @@
 		message_admins("[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name] at [ADMIN_COORDJMP(target)] with [det_time] second fuse",0,1)
 		log_game("[key_name(user)] planted [name] on [target.name] at [COORD(src)] with [det_time] second fuse")
 
-		target.add_overlay(plastic_overlay, 1)
+		target.add_overlay(plastic_overlay, TRUE)
 		if(!nadeassembly)
 			to_chat(user, "<span class='notice'>You plant the bomb. Timer counting down from [det_time].</span>")
 			addtimer(CALLBACK(src, .proc/prime), det_time*10)
@@ -122,7 +126,7 @@
 /obj/item/grenade/plastic/suicide_act(mob/user)
 	message_admins("[ADMIN_LOOKUPFLW(user)] suicided with [src] at [ADMIN_COORDJMP(user)]",0,1)
 	log_game("[key_name(user)] suicided with [src] at [COORD(user)]")
-	user.visible_message("<span class='suicide'>[user] activates the [src] and holds it above [user.p_their()] head! It looks like [user.p_theyre()] going out with a bang!</span>")
+	user.visible_message("<span class='suicide'>[user] activates [src] and holds it above [user.p_their()] head! It looks like [user.p_theyre()] going out with a bang!</span>")
 	var/message_say = "FOR NO RAISIN!"
 	if(user.mind)
 		if(user.mind.special_role)
@@ -133,7 +137,7 @@
 				message_say = "FOR THE HIVE!"
 			else if(role == "cultist")
 				message_say = "FOR NAR-SIE!"
-			else if(role == "revolutionary" || role == "head revolutionary")
+			else if(is_revolutionary(user))
 				message_say = "VIVA LA REVOLUTION!"
 	user.say(message_say)
 	explosion(user,0,2,0) //Cheap explosion imitation because putting prime() here causes runtimes
@@ -154,21 +158,12 @@
 	name = "C4"
 	desc = "Used to put holes in specific areas without too much extra hole. A saboteur's favorite."
 	gender = PLURAL
-	icon = 'icons/obj/grenade.dmi'
-	icon_state = "plastic-explosive0"
-	item_state = "plasticx"
-	lefthand_file = 'icons/mob/inhands/weapons/bombs_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/bombs_righthand.dmi'
-	flags_1 = NOBLUDGEON_1
-	w_class = WEIGHT_CLASS_SMALL
-	origin_tech = "syndicate=1"
 	var/timer = 10
 	var/open_panel = 0
 
 /obj/item/grenade/plastic/c4/New()
 	wires = new /datum/wires/explosive/c4(src)
 	..()
-	plastic_overlay = mutable_appearance(icon, "plastic-explosive2")
 
 /obj/item/grenade/plastic/c4/Destroy()
 	qdel(wires)
@@ -188,7 +183,7 @@
 				message_say = "FOR THE HIVE!"
 			else if(role == "cultist")
 				message_say = "FOR NAR-SIE!"
-			else if(role == "revolutionary" || role == "head revolutionary")
+			else if(is_revolutionary(user))
 				message_say = "VIVA LA REVOLUTION!"
 	user.say(message_say)
 	target = user
@@ -234,14 +229,14 @@
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			return
 		src.target = AM
-		forceMove(null)
+		moveToNullspace()
 
 		var/message = "[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name] at [ADMIN_COORDJMP(target)] with [timer] second fuse"
 		GLOB.bombers += message
 		message_admins(message,0,1)
 		log_game("[key_name(user)] planted [name] on [target.name] at [COORD(target)] with [timer] second fuse")
 
-		target.add_overlay(plastic_overlay, 1)
+		target.add_overlay(plastic_overlay, TRUE)
 		to_chat(user, "<span class='notice'>You plant the bomb. Timer counting down from [timer].</span>")
 		addtimer(CALLBACK(src, .proc/explode), timer * 10)
 
@@ -272,5 +267,6 @@
 	desc = "A shaped high-explosive breaching charge. Designed to ensure user safety and wall nonsafety."
 	icon_state = "plasticx40"
 	item_state = "plasticx4"
+	gender = PLURAL
 	directional = TRUE
 	boom_sizes = list(0, 2, 5)

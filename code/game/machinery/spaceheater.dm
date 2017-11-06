@@ -140,18 +140,13 @@
 			if(cell)
 				to_chat(user, "<span class='warning'>There is already a power cell inside!</span>")
 				return
-			else
-				// insert cell
-				var/obj/item/stock_parts/cell/C = usr.get_active_held_item()
-				if(istype(C))
-					if(!user.drop_item())
-						return
-					cell = C
-					C.loc = src
-					C.add_fingerprint(usr)
+			else if(!user.transferItemToLoc(I, src))
+				return
+			cell = I
+			I.add_fingerprint(usr)
 
-					user.visible_message("\The [user] inserts a power cell into \the [src].", "<span class='notice'>You insert the power cell into \the [src].</span>")
-					SStgui.update_uis(src)
+			user.visible_message("\The [user] inserts a power cell into \the [src].", "<span class='notice'>You insert the power cell into \the [src].</span>")
+			SStgui.update_uis(src)
 		else
 			to_chat(user, "<span class='warning'>The hatch must be open to insert a power cell!</span>")
 			return

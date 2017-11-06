@@ -142,11 +142,10 @@
 			to_chat(user, "<span class='warning'>[src] is full, you can't put anything in!</span>")
 			return 1
 		else
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(O, src))
 				to_chat(user, "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>")
 				return 0
 
-			O.loc = src
 			user.visible_message( \
 				"[user] has added \the [O] to \the [src].", \
 				"<span class='notice'>You add \the [O] to \the [src].</span>")
@@ -198,8 +197,8 @@
 			dat += "The microwave is empty.</div>"
 		else
 			dat = "<h3>Ingredients:</h3>[dat]</div>"
-		dat += "<A href='?src=\ref[src];action=cook'>Turn on</A>"
-		dat += "<A href='?src=\ref[src];action=dispose'>Eject ingredients</A><BR>"
+		dat += "<A href='?src=[REF(src)];action=cook'>Turn on</A>"
+		dat += "<A href='?src=[REF(src)];action=dispose'>Eject ingredients</A><BR>"
 
 	var/datum/browser/popup = new(user, "microwave", name, 300, 300)
 	popup.set_content(dat)

@@ -328,7 +328,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	return
 
 /obj/item/paper/guides/antag/abductor/AltClick()
-	return
+	return //otherwise it would fold into a paperplane.
 
 #define BATON_STUN 0
 #define BATON_SLEEP 1
@@ -417,8 +417,9 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	toggle(user)
 
 /obj/item/abductor_baton/proc/StunAttack(mob/living/L,mob/living/user)
-	user.lastattacked = L
-	L.lastattacker = user
+
+	L.lastattacker = user.real_name
+	L.lastattackerckey = user.ckey
 
 	L.Knockdown(140)
 	L.apply_effect(STUTTER, 7)
@@ -490,7 +491,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/item/restraints/handcuffs/energy
 	name = "hard-light energy field"
 	desc = "A hard-light field restraining the hands."
-	icon_state = "cuff_white" // Needs sprite
+	icon_state = "cuff" // Needs sprite
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	breakouttime = 450
@@ -498,7 +499,6 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	origin_tech = "materials=4;magnets=5;abductor=2"
 
 /obj/item/restraints/handcuffs/energy/used
-	desc = "energy discharge"
 	flags_1 = DROPDEL_1
 
 /obj/item/restraints/handcuffs/energy/used/dropped(mob/user)
@@ -532,7 +532,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	flags_2 = BANG_PROTECT_2
 
 /obj/item/device/radio/headset/abductor/Initialize(mapload)
-	..()
+	. = ..()
 	make_syndie()
 
 /obj/item/device/radio/headset/abductor/attackby(obj/item/W, mob/user, params)
@@ -597,7 +597,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 /obj/structure/bed/abductor
 	name = "resting contraption"
-	desc = "This looks similar to contraptions from earth. Could aliens be stealing our technology?"
+	desc = "This looks similar to contraptions from Earth. Could aliens be stealing our technology?"
 	icon = 'icons/obj/abductor.dmi'
 	buildstacktype = /obj/item/stack/sheet/mineral/abductor
 	icon_state = "bed"

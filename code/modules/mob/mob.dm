@@ -1,16 +1,19 @@
+/mob
+	use_tag = TRUE
+
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
 	GLOB.mob_list -= src
 	GLOB.dead_mob_list -= src
 	GLOB.living_mob_list -= src
 	GLOB.all_clockwork_mobs -= src
 	GLOB.mob_directory -= tag
+	for (var/alert in alerts)
+		clear_alert(alert, TRUE)
 	if(observers && observers.len)
 		for(var/M in observers)
 			var/mob/dead/observe = M
 			observe.reset_perspective(null)
 	qdel(hud_used)
-	if(mind && mind.current == src)
-		spellremove(src)
 	QDEL_LIST(viruses)
 	for(var/cc in client_colours)
 		qdel(cc)
@@ -28,7 +31,6 @@
 	else
 		GLOB.living_mob_list += src
 	prepare_huds()
-	can_ride_typecache = typecacheof(can_ride_typecache)
 	for(var/v in GLOB.active_alternate_appearances)
 		if(!v)
 			continue
@@ -47,7 +49,8 @@
 	set category = "Admin"
 	set hidden = 1
 
-	if(!loc) return 0
+	if(!loc)
+		return 0
 
 	var/datum/gas_mixture/environment = loc.return_air()
 
@@ -161,7 +164,7 @@
 	for(var/mob/M in get_hearers_in_view(range, src))
 		M.show_message( message, 2, deaf_message, 1)
 
-/mob/proc/movement_delay()
+/mob/proc/movement_delay()	//update /living/movement_delay() if you change this
 	return 0
 
 /mob/proc/Life()
@@ -198,7 +201,8 @@
 //set disable_warning to disable the 'you are unable to equip that' warning.
 //unset redraw_mob to prevent the mob from being redrawn at the end.
 /mob/proc/equip_to_slot_if_possible(obj/item/W, slot, qdel_on_fail = FALSE, disable_warning = FALSE, redraw_mob = TRUE, bypass_equip_delay_self = FALSE)
-	if(!istype(W)) return 0
+	if(!istype(W))
+		return 0
 	if(!W.mob_can_equip(src, null, slot, disable_warning, bypass_equip_delay_self))
 		if(qdel_on_fail)
 			qdel(W)
@@ -222,7 +226,8 @@
 //puts the item "W" into an appropriate slot in a human's inventory
 //returns 0 if it cannot, 1 if successful
 /mob/proc/equip_to_appropriate_slot(obj/item/W)
-	if(!istype(W)) return 0
+	if(!istype(W))
+		return 0
 	var/slot_priority = W.slot_equipment_priority
 
 	if(!slot_priority)
@@ -337,6 +342,18 @@
 
 	if(ismob(AM))
 		var/mob/M = AM
+
+		//Share diseases that are spread by touch
+		for(var/thing in viruses)
+			var/datum/disease/D = thing
+			if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
+				M.ContactContractDisease(D)
+
+		for(var/thing in M.viruses)
+			var/datum/disease/D = thing
+			if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
+				ContactContractDisease(D)
+
 		add_logs(src, M, "grabbed", addition="passive grab")
 		if(!supress_message)
 			visible_message("<span class='warning'>[src] has grabbed [M] passively!</span>")
@@ -344,6 +361,9 @@
 			M.LAssailant = null
 		else
 			M.LAssailant = usr
+
+/mob/proc/can_resist()
+	return FALSE		//overridden in living.dm
 
 /mob/proc/spin(spintime, speed)
 	set waitfor = 0
@@ -370,12 +390,14 @@
 
 	if(pulling)
 		pulling.pulledby = null
-		if(isliving(pulling))
-			var/mob/living/L = pulling
-			L.update_canmove()// mob gets up if it was lyng down in a chokehold
+		var/mob/living/ex_pulled = pulling
 		pulling = null
 		grab_state = 0
 		update_pull_hud_icon()
+		
+		if(isliving(ex_pulled))
+			var/mob/living/L = ex_pulled
+			L.update_canmove()// mob gets up if it was lyng down in a chokehold
 
 /mob/proc/update_pull_hud_icon()
 	if(hud_used)
@@ -387,7 +409,7 @@
 	set category = "Object"
 	set src = usr
 
-	if(istype(loc, /obj/mecha))
+	if(ismecha(loc))
 		return
 
 	if(incapacitated())
@@ -435,7 +457,7 @@
 	set name = "Respawn"
 	set category = "OOC"
 
-	if (!( GLOB.abandon_allowed ))
+	if (CONFIG_GET(flag/norespawn))
 		return
 	if ((stat != DEAD || !( SSticker )))
 		to_chat(usr, "<span class='boldnotice'>You must be dead to use this!</span>")
@@ -515,7 +537,7 @@
 		if(Adjacent(usr))
 			show_inv(usr)
 		else
-			usr << browse(null,"window=mob\ref[src]")
+			usr << browse(null,"window=mob[REF(src)]")
 
 // The src mob is trying to strip an item from someone
 // Defined in living.dm
@@ -737,10 +759,6 @@
 			mob_spell_list -= S
 			qdel(S)
 
-//override to avoid rotating pixel_xy on mobs
-/mob/shuttleRotate(rotation)
-	setDir(angle2dir(rotation+dir2angle(dir)))
-
 //You can buckle on mobs if you're next to them since most are dense
 /mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(M.buckled)
@@ -810,10 +828,10 @@
 	if(exact_match) //if we need an exact match, we need to do some bullfuckery.
 		var/list/faction_src = faction.Copy()
 		var/list/faction_target = target.faction.Copy()
-		if(!("\ref[src]" in faction_target)) //if they don't have our ref faction, remove it from our factions list.
-			faction_src -= "\ref[src]" //if we don't do this, we'll never have an exact match.
-		if(!("\ref[target]" in faction_src))
-			faction_target -= "\ref[target]" //same thing here.
+		if(!("[REF(src)]" in faction_target)) //if they don't have our ref faction, remove it from our factions list.
+			faction_src -= "[REF(src)]" //if we don't do this, we'll never have an exact match.
+		if(!("[REF(target)]" in faction_src))
+			faction_target -= "[REF(target)]" //same thing here.
 		return faction_check(faction_src, faction_target, TRUE)
 	return faction_check(faction, target.faction, FALSE)
 
@@ -939,21 +957,31 @@
 /mob/proc/get_idcard()
 	return
 
+/mob/proc/get_static_viruses() //used when creating blood and other infective objects
+	if(!LAZYLEN(viruses))
+		return
+	var/list/datum/disease/diseases = list()
+	for(var/datum/disease/D in viruses)
+		var/static_virus = D.Copy()
+		diseases += static_virus
+	return diseases
+
+
 /mob/vv_get_dropdown()
 	. = ..()
 	. += "---"
-	.["Gib"] = "?_src_=vars;[HrefToken()];gib=\ref[src]"
-	.["Give Spell"] = "?_src_=vars;[HrefToken()];give_spell=\ref[src]"
-	.["Remove Spell"] = "?_src_=vars;[HrefToken()];remove_spell=\ref[src]"
-	.["Give Disease"] = "?_src_=vars;[HrefToken()];give_disease=\ref[src]"
-	.["Toggle Godmode"] = "?_src_=vars;[HrefToken()];godmode=\ref[src]"
-	.["Drop Everything"] = "?_src_=vars;[HrefToken()];drop_everything=\ref[src]"
-	.["Regenerate Icons"] = "?_src_=vars;[HrefToken()];regenerateicons=\ref[src]"
-	.["Make Space Ninja"] = "?_src_=vars;[HrefToken()];ninja=\ref[src]"
-	.["Show player panel"] = "?_src_=vars;[HrefToken()];mob_player_panel=\ref[src]"
-	.["Toggle Build Mode"] = "?_src_=vars;[HrefToken()];build_mode=\ref[src]"
-	.["Assume Direct Control"] = "?_src_=vars;[HrefToken()];direct_control=\ref[src]"
-	.["Offer Control to Ghosts"] = "?_src_=vars;[HrefToken()];offer_control=\ref[src]"
+	.["Gib"] = "?_src_=vars;[HrefToken()];gib=[REF(src)]"
+	.["Give Spell"] = "?_src_=vars;[HrefToken()];give_spell=[REF(src)]"
+	.["Remove Spell"] = "?_src_=vars;[HrefToken()];remove_spell=[REF(src)]"
+	.["Give Disease"] = "?_src_=vars;[HrefToken()];give_disease=[REF(src)]"
+	.["Toggle Godmode"] = "?_src_=vars;[HrefToken()];godmode=[REF(src)]"
+	.["Drop Everything"] = "?_src_=vars;[HrefToken()];drop_everything=[REF(src)]"
+	.["Regenerate Icons"] = "?_src_=vars;[HrefToken()];regenerateicons=[REF(src)]"
+	.["Make Space Ninja"] = "?_src_=vars;[HrefToken()];ninja=[REF(src)]"
+	.["Show player panel"] = "?_src_=vars;[HrefToken()];mob_player_panel=[REF(src)]"
+	.["Toggle Build Mode"] = "?_src_=vars;[HrefToken()];build_mode=[REF(src)]"
+	.["Assume Direct Control"] = "?_src_=vars;[HrefToken()];direct_control=[REF(src)]"
+	.["Offer Control to Ghosts"] = "?_src_=vars;[HrefToken()];offer_control=[REF(src)]"
 
 /mob/vv_get_var(var_name)
 	switch(var_name)

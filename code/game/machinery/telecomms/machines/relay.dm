@@ -68,3 +68,10 @@
 	hide = 1
 	toggled = FALSE
 	autolinkers = list("r_relay")
+
+/obj/machinery/telecomms/relay/preset/reebe
+	name = "hierophant relay"
+	desc = "A stolen telecommunications relay that ingeniously combines bluespace technology with the Hierophant network to send and receive messages to and from Reebe."
+	id = "Hierophant Relay"
+	hide = TRUE
+	autolinkers = list("h_relay")

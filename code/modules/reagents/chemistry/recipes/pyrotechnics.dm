@@ -342,6 +342,23 @@
 	holder.chem_temp = 20 // cools the fuck down
 	return
 
+/datum/chemical_reaction/cryostylane_oxygen
+	name = "ephemeral cryostylane reaction"
+	id = "cryostylane_oxygen"
+	results = list("cryostylane" = 1)
+	required_reagents = list("cryostylane" = 1, "oxygen" = 1)
+
+/datum/chemical_reaction/cryostylane_oxygen/on_reaction(datum/reagents/holder, created_volume)
+	holder.chem_temp -= 10*created_volume
+
+/datum/chemical_reaction/pyrosium_oxygen
+	name = "ephemeral pyrosium reaction"
+	id = "pyrosium_oxygen"
+	results = list("pyrosium" = 1)
+	required_reagents = list("pyrosium" = 1, "oxygen" = 1)
+
+/datum/chemical_reaction/pyrosium_oxygen/on_reaction(datum/reagents/holder, created_volume)
+	holder.chem_temp += 10*created_volume
 
 /datum/chemical_reaction/pyrosium
 	name = "pyrosium"

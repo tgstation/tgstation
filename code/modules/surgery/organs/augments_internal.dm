@@ -2,10 +2,11 @@
 
 /obj/item/organ/cyberimp
 	name = "cybernetic implant"
-	desc = "a state-of-the-art implant that improves a baseline's functionality"
+	desc = "A state-of-the-art implant that improves a baseline's functionality."
 	status = ORGAN_ROBOTIC
 	var/implant_color = "#FFFFFF"
 	var/implant_overlay
+	var/syndicate_implant = FALSE //Makes the implant invisible to health analyzers and medical HUDs.
 
 /obj/item/organ/cyberimp/New(var/mob/M = null)
 	if(iscarbon(M))
@@ -22,7 +23,7 @@
 
 /obj/item/organ/cyberimp/brain
 	name = "cybernetic brain implant"
-	desc = "injectors of extra sub-routines for the brain"
+	desc = "Injectors of extra sub-routines for the brain."
 	icon_state = "brain_implant"
 	implant_overlay = "brain_implant_overlay"
 	zone = "head"
@@ -43,7 +44,7 @@
 	var/active = 0
 	var/list/stored_items = list()
 	implant_color = "#DE7E00"
-	slot = "brain_antidrop"
+	slot = ORGAN_SLOT_BRAIN_ANTIDROP
 	origin_tech = "materials=4;programming=5;biotech=4"
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
 
@@ -100,7 +101,7 @@
 	name = "CNS Rebooter implant"
 	desc = "This implant will automatically give you back control over your central nervous system, reducing downtime when stunned."
 	implant_color = "#FFFF00"
-	slot = "brain_antistun"
+	slot = ORGAN_SLOT_BRAIN_ANTISTUN
 	origin_tech = "materials=5;programming=4;biotech=5"
 
 /obj/item/organ/cyberimp/brain/anti_stun/on_life()
@@ -132,7 +133,7 @@
 	name = "breathing tube implant"
 	desc = "This simple implant adds an internals connector to your back, allowing you to use internals without a mask and protecting you from being choked."
 	icon_state = "implant_mask"
-	slot = "breathing_tube"
+	slot = ORGAN_SLOT_BREATHING_TUBE
 	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "materials=2;biotech=3"
 

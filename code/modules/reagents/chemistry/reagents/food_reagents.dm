@@ -256,7 +256,6 @@
 			victim.confused = max(M.confused, 3)
 			victim.damageoverlaytemp = 60
 			victim.Knockdown(60)
-			victim.drop_item()
 			return
 		else if ( eyes_covered ) // Eye cover is better than mouth cover
 			victim.blur_eyes(3)
@@ -270,7 +269,6 @@
 			victim.confused = max(M.confused, 6)
 			victim.damageoverlaytemp = 75
 			victim.Knockdown(100)
-			victim.drop_item()
 		victim.update_damage_hud()
 
 /datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/M)
@@ -552,7 +550,7 @@
 			if(!M.is_mouth_covered() && !M.is_eyes_covered())
 				unprotected = TRUE
 	if(unprotected)
-		if(!M.getorganslot("eye_sight"))	//can't blind somebody with no eyes
+		if(!M.getorganslot(ORGAN_SLOT_EYES))	//can't blind somebody with no eyes
 			to_chat(M, "<span class = 'notice'>Your eye sockets feel wet.</span>")
 		else
 			if(!M.eye_blurry)

@@ -151,7 +151,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/maintenance/department/medical
 	name = "Medbay Maintenance"
-	icon_state = "asmaint"
+	icon_state = "medbay_maint"
+
+/area/maintenance/department/medical/morgue
+	name = "Morgue Maintenance"
+	icon_state = "morgue_maint"
 
 /area/maintenance/department/science
 	name = "Science Maintenance"
@@ -645,6 +649,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "chapel"
 	ambientsounds = list('sound/ambience/ambicha1.ogg','sound/ambience/ambicha2.ogg','sound/ambience/ambicha3.ogg','sound/ambience/ambicha4.ogg')
 	flags_1 = NONE
+	clockwork_warp_allowed = FALSE
+	clockwork_warp_fail = "The consecration here prevents you from warping in."
 
 /area/chapel/main
 	name = "Chapel"
@@ -702,6 +708,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/engine/gravity_generator
 	name = "Gravity Generator Room"
 	icon_state = "grav_gen"
+	clockwork_warp_allowed = FALSE
+	clockwork_warp_fail = "The gravitons generated here could throw off your warp's destination and possibly throw you into deep space."
 
 /area/engine/secure_construction
 	name = "Secure Construction Area"
@@ -1272,10 +1280,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/storage/eva
 	name = "EVA Storage"
 	icon_state = "eva"
+	clockwork_warp_allowed = FALSE
 
 /area/storage/secure
 	name = "Secure Storage"
 	icon_state = "storage"
+	clockwork_warp_allowed = FALSE
 
 /area/storage/emergency/starboard
 	name = "Starboard Emergency Storage"
@@ -1438,6 +1448,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 // Telecommunications Satellite
 
 /area/tcommsat
+	clockwork_warp_allowed = FALSE
+	clockwork_warp_fail = "For safety reasons, warping here is disallowed; the radio and bluespace noise could cause catastrophic results."
 	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
 
 /area/tcommsat/entrance

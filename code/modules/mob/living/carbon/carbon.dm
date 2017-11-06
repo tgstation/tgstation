@@ -7,13 +7,15 @@
 	update_body_parts() //to update the carbon's new bodyparts appearance
 
 /mob/living/carbon/Destroy()
+	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
+	. =  ..()
+
 	QDEL_LIST(internal_organs)
 	QDEL_LIST(stomach_contents)
 	QDEL_LIST(bodyparts)
 	QDEL_LIST(implants)
 	remove_from_all_data_huds()
 	QDEL_NULL(dna)
-	return ..()
 
 /mob/living/carbon/relaymove(mob/user, direction)
 	if(user in src.stomach_contents)
@@ -182,30 +184,30 @@
 	<HR>
 	<B><FONT size=3>[name]</FONT></B>
 	<HR>
-	<BR><B>Head:</B> <A href='?src=\ref[src];item=[slot_head]'>				[(head && !(head.flags_1&ABSTRACT_1)) 			? head 		: "Nothing"]</A>
-	<BR><B>Mask:</B> <A href='?src=\ref[src];item=[slot_wear_mask]'>		[(wear_mask && !(wear_mask.flags_1&ABSTRACT_1))	? wear_mask	: "Nothing"]</A>
-	<BR><B>Neck:</B> <A href='?src=\ref[src];item=[slot_neck]'>		[(wear_neck && !(wear_neck.flags_1&ABSTRACT_1))	? wear_neck	: "Nothing"]</A>"}
+	<BR><B>Head:</B> <A href='?src=[REF(src)];item=[slot_head]'>				[(head && !(head.flags_1&ABSTRACT_1)) 			? head 		: "Nothing"]</A>
+	<BR><B>Mask:</B> <A href='?src=[REF(src)];item=[slot_wear_mask]'>		[(wear_mask && !(wear_mask.flags_1&ABSTRACT_1))	? wear_mask	: "Nothing"]</A>
+	<BR><B>Neck:</B> <A href='?src=[REF(src)];item=[slot_neck]'>		[(wear_neck && !(wear_neck.flags_1&ABSTRACT_1))	? wear_neck	: "Nothing"]</A>"}
 
 	for(var/i in 1 to held_items.len)
 		var/obj/item/I = get_item_for_held_index(i)
-		dat += "<BR><B>[get_held_index_name(i)]:</B></td><td><A href='?src=\ref[src];item=[slot_hands];hand_index=[i]'>[(I && !(I.flags_1 & ABSTRACT_1)) ? I : "Nothing"]</a>"
+		dat += "<BR><B>[get_held_index_name(i)]:</B></td><td><A href='?src=[REF(src)];item=[slot_hands];hand_index=[i]'>[(I && !(I.flags_1 & ABSTRACT_1)) ? I : "Nothing"]</a>"
 
-	dat += "<BR><B>Back:</B> <A href='?src=\ref[src];item=[slot_back]'>[back ? back : "Nothing"]</A>"
+	dat += "<BR><B>Back:</B> <A href='?src=[REF(src)];item=[slot_back]'>[back ? back : "Nothing"]</A>"
 
 	if(istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/tank))
-		dat += "<BR><A href='?src=\ref[src];internal=1'>[internal ? "Disable Internals" : "Set Internals"]</A>"
+		dat += "<BR><A href='?src=[REF(src)];internal=1'>[internal ? "Disable Internals" : "Set Internals"]</A>"
 
 	if(handcuffed)
-		dat += "<BR><A href='?src=\ref[src];item=[slot_handcuffed]'>Handcuffed</A>"
+		dat += "<BR><A href='?src=[REF(src)];item=[slot_handcuffed]'>Handcuffed</A>"
 	if(legcuffed)
-		dat += "<BR><A href='?src=\ref[src];item=[slot_legcuffed]'>Legcuffed</A>"
+		dat += "<BR><A href='?src=[REF(src)];item=[slot_legcuffed]'>Legcuffed</A>"
 
 	dat += {"
 	<BR>
-	<BR><A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
+	<BR><A href='?src=[REF(user)];mach_close=mob[REF(src)]'>Close</A>
 	"}
-	user << browse(dat, "window=mob\ref[src];size=325x500")
-	onclose(user, "mob\ref[src]")
+	user << browse(dat, "window=mob[REF(src)];size=325x500")
+	onclose(user, "mob[REF(src)]")
 
 /mob/living/carbon/Topic(href, href_list)
 	..()
@@ -222,7 +224,7 @@
 						internal = null
 						update_internals_hud_icon(0)
 					else if(ITEM && istype(ITEM, /obj/item/tank))
-						if((wear_mask && (wear_mask.flags_1 & MASKINTERNALS_1)) || getorganslot("breathing_tube"))
+						if((wear_mask && (wear_mask.flags_1 & MASKINTERNALS_1)) || getorganslot(ORGAN_SLOT_BREATHING_TUBE))
 							internal = ITEM
 							update_internals_hud_icon(1)
 
@@ -231,7 +233,8 @@
 
 
 /mob/living/carbon/fall(forced)
-    loc.handle_fall(src, forced)//it's loc so it doesn't call the mob's handle_fall which does nothing
+	if(loc) //yep this is possible
+		loc.handle_fall(src, forced)//it's loc so it doesn't call the mob's handle_fall which does nothing
 
 /mob/living/carbon/is_muzzled()
 	return(istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
@@ -291,11 +294,14 @@
 
 
 /mob/living/carbon/proc/cuff_resist(obj/item/I, breakouttime = 600, cuff_break = 0)
+	if(I.being_removed)
+		to_chat(src, "<span class='warning'>You're already attempting to remove [I]!</span>")
+		return
+	I.being_removed = TRUE
 	breakouttime = I.breakouttime
-	var/displaytime = breakouttime / 600
 	if(!cuff_break)
 		visible_message("<span class='warning'>[src] attempts to remove [I]!</span>")
-		to_chat(src, "<span class='notice'>You attempt to remove [I]... (This will take around [displaytime] minutes and you need to stand still.)</span>")
+		to_chat(src, "<span class='notice'>You attempt to remove [I]... (This will take around [DisplayTimeText(breakouttime)] and you need to stand still.)</span>")
 		if(do_after(src, breakouttime, 0, target = src))
 			clear_cuffs(I, cuff_break)
 		else
@@ -312,6 +318,7 @@
 
 	else if(cuff_break == INSTANT_CUFFBREAK)
 		clear_cuffs(I, cuff_break)
+	I.being_removed = FALSE
 
 /mob/living/carbon/proc/uncuff()
 	if (handcuffed)
@@ -415,23 +422,6 @@
 			var/turf/target = get_turf(loc)
 			I.throw_at(target,I.throw_range,I.throw_speed,src)
 
-/mob/living/carbon/proc/AddAbility(obj/effect/proc_holder/alien/A)
-	abilities.Add(A)
-	A.on_gain(src)
-	if(A.has_action)
-		A.action.Grant(src)
-	sortInsert(abilities, /proc/cmp_abilities_cost, 0)
-
-/mob/living/carbon/proc/RemoveAbility(obj/effect/proc_holder/alien/A)
-	abilities.Remove(A)
-	A.on_lose(src)
-	if(A.action)
-		A.action.Remove(src)
-
-/mob/living/carbon/proc/add_abilities_to_panel()
-	for(var/obj/effect/proc_holder/alien/A in abilities)
-		statpanel("[A.panel]",A.plasma_cost > 0?"([A.plasma_cost])":"",A)
-
 /mob/living/carbon/Stat()
 	..()
 	if(statpanel("Status"))
@@ -534,7 +524,7 @@
 
 	sight = initial(sight)
 	lighting_alpha = initial(lighting_alpha)
-	var/obj/item/organ/eyes/E = getorganslot("eye_sight")
+	var/obj/item/organ/eyes/E = getorganslot(ORGAN_SLOT_EYES)
 	if(!E)
 		update_tint()
 	else
@@ -591,7 +581,7 @@
 	if(wear_mask)
 		. += wear_mask.tint
 
-	var/obj/item/organ/eyes/E = getorganslot("eye_sight")
+	var/obj/item/organ/eyes/E = getorganslot(ORGAN_SLOT_EYES)
 	if(E)
 		. += E.tint
 
@@ -763,7 +753,7 @@
 		B.damaged_brain = 0
 	for(var/thing in viruses)
 		var/datum/disease/D = thing
-		if(D.severity != NONTHREAT)
+		if(D.severity != VIRUS_SEVERITY_POSITIVE)
 			D.cure(0)
 	if(admin_revive)
 		regenerate_limbs()
@@ -854,7 +844,7 @@
 /mob/living/carbon/vv_get_dropdown()
 	. = ..()
 	. += "---"
-	.["Make AI"] = "?_src_=vars;[HrefToken()];makeai=\ref[src]"
-	.["Modify bodypart"] = "?_src_=vars;[HrefToken()];editbodypart=\ref[src]"
-	.["Modify organs"] = "?_src_=vars;[HrefToken()];editorgans=\ref[src]"
-	.["Hallucinate"] = "?_src_=vars;[HrefToken()];hallucinate=\ref[src]"
+	.["Make AI"] = "?_src_=vars;[HrefToken()];makeai=[REF(src)]"
+	.["Modify bodypart"] = "?_src_=vars;[HrefToken()];editbodypart=[REF(src)]"
+	.["Modify organs"] = "?_src_=vars;[HrefToken()];editorgans=[REF(src)]"
+	.["Hallucinate"] = "?_src_=vars;[HrefToken()];hallucinate=[REF(src)]"

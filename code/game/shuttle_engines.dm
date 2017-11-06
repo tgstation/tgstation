@@ -12,6 +12,7 @@
 
 /obj/structure/shuttle/engine
 	name = "engine"
+	desc = "A bluespace engine used to make shuttles move."
 	density = TRUE
 	anchored = TRUE
 	var/engine_power = 1
@@ -81,18 +82,21 @@
 			M.alter_engines(mod)
 
 /obj/structure/shuttle/engine/heater
-	name = "heater"
+	name = "engine heater"
 	icon_state = "heater"
+	desc = "Directs energy into compressed particles in order to power engines."
 	engine_power = 0 // todo make these into 2x1 parts
 
 /obj/structure/shuttle/engine/platform
-	name = "platform"
+	name = "engine platform"
 	icon_state = "platform"
+	desc = "A platform for engine components."
 	engine_power = 0
 
 /obj/structure/shuttle/engine/propulsion
 	name = "propulsion engine"
 	icon_state = "propulsion"
+	desc = "A standard reliable bluespace engine used by many forms of shuttles."
 	opacity = 1
 
 /obj/structure/shuttle/engine/propulsion/left
@@ -105,6 +109,7 @@
 
 /obj/structure/shuttle/engine/propulsion/burst
 	name = "burst engine"
+	desc = "An engine that releases a large bluespace burst to propel it."
 
 /obj/structure/shuttle/engine/propulsion/burst/cargo
 	state = ENGINE_UNWRENCHED
@@ -119,14 +124,16 @@
 	icon_state = "burst_r"
 
 /obj/structure/shuttle/engine/router
-	name = "router"
+	name = "engine router"
 	icon_state = "router"
+	desc = "Redirects around energized particles in engine structures."
 
 /obj/structure/shuttle/engine/large
 	name = "engine"
 	opacity = 1
 	icon = 'icons/obj/2x2.dmi'
 	icon_state = "large_engine"
+	desc = "A very large bluespace engine used to propel very large ships."
 	bound_width = 64
 	bound_height = 64
 	appearance_flags = 0
@@ -136,6 +143,7 @@
 	opacity = 1
 	icon = 'icons/obj/3x3.dmi'
 	icon_state = "huge_engine"
+	desc = "An extremely large bluespace engine used to propel extremely large ships."
 	bound_width = 96
 	bound_height = 96
 	appearance_flags = 0

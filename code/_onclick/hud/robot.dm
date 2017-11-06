@@ -180,7 +180,8 @@
 
 
 /datum/hud/proc/toggle_show_robot_modules()
-	if(!iscyborg(mymob)) return
+	if(!iscyborg(mymob))
+		return
 
 	var/mob/living/silicon/robot/R = mymob
 
@@ -188,7 +189,8 @@
 	update_robot_modules_display()
 
 /datum/hud/proc/update_robot_modules_display(mob/viewer)
-	if(!iscyborg(mymob)) return
+	if(!iscyborg(mymob))
+		return
 
 	var/mob/living/silicon/robot/R = mymob
 

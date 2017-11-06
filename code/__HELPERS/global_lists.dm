@@ -34,9 +34,7 @@
 	//Species
 	for(var/spath in subtypesof(/datum/species))
 		var/datum/species/S = new spath()
-		if(S.roundstart)
-			GLOB.roundstart_species[S.id] = S.type
-		GLOB.species_list[S.id] = S.type
+		GLOB.species_list[S.id] = spath
 
 	//Surgeries
 	for(var/path in subtypesof(/datum/surgery))

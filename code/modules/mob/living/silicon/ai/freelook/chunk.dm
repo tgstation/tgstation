@@ -14,7 +14,6 @@
 	var/list/seenby = list()
 	var/visible = FALSE
 	var/changed = 0
-	var/updating = 0
 	var/x = 0
 	var/y = 0
 	var/z = 0
@@ -28,7 +27,7 @@
 	eye.visibleCameraChunks += src
 	visible++
 	seenby += eye
-	if(changed && !updating)
+	if(changed)
 		update()
 
 // Remove an AI eye from the chunk, then update if changed.
@@ -54,11 +53,7 @@
 
 /datum/camerachunk/proc/hasChanged(update_now = 0)
 	if(visible || update_now)
-		if(!updating)
-			updating = 1
-			spawn(UPDATE_BUFFER) // Batch large changes, such as many doors opening or closing at once
-				update()
-				updating = 0
+		addtimer(CALLBACK(src, .proc/update), UPDATE_BUFFER, TIMER_UNIQUE)
 	else
 		changed = 1
 
@@ -115,6 +110,8 @@
 		if(obscuredTurfs[t])
 			if(!t.obscured)
 				t.obscured = image('icons/effects/cameravis.dmi', t, null, LIGHTING_LAYER+1)
+				t.obscured.pixel_x = -t.pixel_x
+				t.obscured.pixel_y = -t.pixel_y
 				t.obscured.plane = LIGHTING_PLANE+1
 			obscured += t.obscured
 			for(var/eye in seenby)
@@ -170,6 +167,8 @@
 		var/turf/t = turf
 		if(!t.obscured)
 			t.obscured = image('icons/effects/cameravis.dmi', t, null, LIGHTING_LAYER+1)
+			t.obscured.pixel_x = -t.pixel_x
+			t.obscured.pixel_y = -t.pixel_y
 			t.obscured.plane = LIGHTING_PLANE+1
 		obscured += t.obscured
 

@@ -26,18 +26,17 @@
 /obj/item/mop/proc/clean(turf/A)
 	if(reagents.has_reagent("water", 1) || reagents.has_reagent("holywater", 1) || reagents.has_reagent("vodka", 1) || reagents.has_reagent("cleaner", 1))
 		A.clean_blood()
+		A.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
 		for(var/obj/effect/O in A)
 			if(is_cleanable(O))
 				qdel(O)
-		if(isclosedturf(A))
-			var/turf/closed/C = A
-			C.thermite = 0
 	reagents.reaction(A, TOUCH, 10)	//Needed for proper floor wetting.
 	reagents.remove_any(1)			//reaction() doesn't use up the reagents
 
 
 /obj/item/mop/afterattack(atom/A, mob/user, proximity)
-	if(!proximity) return
+	if(!proximity)
+		return
 
 	if(reagents.total_volume < 1)
 		to_chat(user, "<span class='warning'>Your mop is dry!</span>")

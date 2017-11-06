@@ -12,8 +12,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "ae" = (
-/obj/item/bombcore/large/underwall,
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/wall/mineral/plastitanium/explosive,
 /area/ruin/powered/syndicate_lava_base)
 "af" = (
 /obj/structure/closet/secure_closet/bar{

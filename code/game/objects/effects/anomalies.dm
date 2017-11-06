@@ -221,8 +221,10 @@
 			var/y_distance = TO.y - FROM.y
 			var/x_distance = TO.x - FROM.x
 			for (var/atom/movable/A in urange(12, FROM )) // iterate thru list of mobs in the area
-				if(istype(A, /obj/item/device/radio/beacon)) continue // don't teleport beacons because that's just insanely stupid
-				if(A.anchored) continue
+				if(istype(A, /obj/item/device/radio/beacon))
+					continue // don't teleport beacons because that's just insanely stupid
+				if(A.anchored)
+					continue
 
 				var/turf/newloc = locate(A.x + x_distance, A.y + y_distance, TO.z) // calculate the new place
 				if(!A.Move(newloc) && newloc) // if the atom, for some reason, can't move, FORCE them to move! :) We try Move() first to invoke any movement-related checks the atom needs to perform after moving

@@ -55,14 +55,6 @@ Borg Hypospray
 	//update_icon()
 	return 1
 
-// Purely for testing purposes I swear~ //don't lie to me
-/*
-/obj/item/reagent_containers/borghypo/verb/add_cyanide()
-	set src in world
-	add_reagent("cyanide")
-*/
-
-
 // Use this to add more chemicals for the borghypo to produce.
 /obj/item/reagent_containers/borghypo/proc/add_reagent(reagent)
 	reagent_ids |= reagent
@@ -178,7 +170,8 @@ Borg Shaker
 					RG.add_reagent(reagent_ids[valueofi], 5)
 
 /obj/item/reagent_containers/borghypo/borgshaker/afterattack(obj/target, mob/user, proximity)
-	if(!proximity) return
+	if(!proximity)
+		return
 
 	else if(target.is_open_container() && target.reagents)
 		var/datum/reagents/R = reagent_list[mode]

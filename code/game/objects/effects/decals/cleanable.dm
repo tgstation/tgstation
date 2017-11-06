@@ -4,9 +4,9 @@
 	var/list/random_icon_states = list()
 	var/blood_state = "" //I'm sorry but cleanable/blood code is ass, and so is blood_DNA
 	var/bloodiness = 0 //0-100, amount of blood in this decal, used for making footprints and affecting the alpha of bloody footprints
-	var/mergeable_decal = 1 //when two of these are on a same tile or do we need to merge them into just one?
+	var/mergeable_decal = TRUE //when two of these are on a same tile or do we need to merge them into just one?
 
-/obj/effect/decal/cleanable/Initialize(mapload)
+/obj/effect/decal/cleanable/Initialize(mapload, list/datum/disease/diseases)
 	if (random_icon_states && length(src.random_icon_states) > 0)
 		src.icon_state = pick(src.random_icon_states)
 	create_reagents(300)
@@ -14,9 +14,14 @@
 		for(var/obj/effect/decal/cleanable/C in src.loc)
 			if(C != src && C.type == src.type)
 				replace_decal(C)
+	if(LAZYLEN(diseases))
+		var/list/datum/disease/diseases_to_add = list()
+		for(var/datum/disease/D in diseases)
+			if(D.spread_flags & VIRUS_SPREAD_CONTACT_FLUIDS)
+				diseases_to_add += D
+		if(LAZYLEN(diseases_to_add))
+			AddComponent(/datum/component/infective, diseases_to_add)
 	. = ..()
-
-
 
 /obj/effect/decal/cleanable/proc/replace_decal(obj/effect/decal/cleanable/C)
 	if(mergeable_decal)
@@ -65,6 +70,7 @@
 //Add "bloodiness" of this blood's type, to the human's shoes
 //This is on /cleanable because fuck this ancient mess
 /obj/effect/decal/cleanable/Crossed(atom/movable/O)
+	..()
 	if(ishuman(O))
 		var/mob/living/carbon/human/H = O
 		if(H.shoes && blood_state && bloodiness)

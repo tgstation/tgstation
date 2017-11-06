@@ -19,7 +19,7 @@ GLOBAL_LIST_INIT(message_servers, list())
 
 /datum/data_pda_msg/proc/get_photo_ref()
 	if(photo)
-		return "<a href='byond://?src=\ref[src];photo=1'>(Photo)</a>"
+		return "<a href='byond://?src=[REF(src)];photo=1'>(Photo)</a>"
 	return ""
 
 /datum/data_pda_msg/Topic(href,href_list)
@@ -67,6 +67,7 @@ GLOBAL_LIST_INIT(message_servers, list())
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "server"
 	name = "Messaging Server"
+	desc = "A machine that attempts to gather the secret knowledge of the universe."
 	density = TRUE
 	anchored = TRUE
 	use_power = IDLE_POWER_USE

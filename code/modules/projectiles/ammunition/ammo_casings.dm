@@ -101,7 +101,7 @@
 	desc = "A 4.6x30mm incendiary bullet casing."
 	projectile_type = /obj/item/projectile/bullet/incendiary/c46x30mm
 
-// .45 (M1911)
+// .45 (M1911 + C20r)
 
 /obj/item/ammo_casing/c45
 	name = ".45 bullet casing"
@@ -170,7 +170,7 @@
 
 /obj/item/ammo_casing/mm195x129/incen
 	name = "1.95x129mm incendiary bullet casing"
-	desc = "A 1.95x129mm bullet casing designed with a chemical-filled capsule on the tip that when bursted, reacts with the atmosphere to produce a fireball, engulfing the target in flames. "
+	desc = "A 1.95x129mm bullet casing designed with a chemical-filled capsule on the tip that when bursted, reacts with the atmosphere to produce a fireball, engulfing the target in flames."
 	projectile_type = /obj/item/projectile/bullet/incendiary/mm195x129
 
 // Shotgun
@@ -288,7 +288,7 @@
 	..()
 	container_type |= OPENCONTAINER_1
 	create_reagents(30)
-	reagents.set_reacting(FALSE)
+	reagents.set_reacting(TRUE)
 
 /obj/item/ammo_casing/shotgun/dart/attackby()
 	return

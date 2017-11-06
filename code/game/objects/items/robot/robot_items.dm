@@ -274,17 +274,17 @@
 		to_chat(user, "<span class='notice'>You stop charging [target].</span>")
 
 /obj/item/device/harmalarm
-	name = "Sonic Harm Prevention Tool"
-	desc = "Releases a harmless blast that confuses most organics. For when the harm is JUST TOO MUCH"
+	name = "\improper Sonic Harm Prevention Tool"
+	desc = "Releases a harmless blast that confuses most organics. For when the harm is JUST TOO MUCH."
 	icon_state = "megaphone"
 	var/cooldown = 0
 
 /obj/item/device/harmalarm/emag_act(mob/user)
 	emagged = !emagged
 	if(emagged)
-		to_chat(user, "<font color='red'>You short out the safeties on the [src]!</font>")
+		to_chat(user, "<font color='red'>You short out the safeties on [src]!</font>")
 	else
-		to_chat(user, "<font color='red'>You reset the safeties on the [src]!</font>")
+		to_chat(user, "<font color='red'>You reset the safeties on [src]!</font>")
 
 /obj/item/device/harmalarm/attack_self(mob/user)
 	var/safety = !emagged
@@ -503,9 +503,8 @@
 
 //Peacekeeper Cyborg Projectile Dampenening Field
 /obj/item/borg/projectile_dampen
-	name = "Hyperkinetic Dampening projector"
-	desc = "A device that projects a dampening field that weakenss kinetic energy above a certain threshold. <span class='boldnotice'>Projects a field that drains power per second \
-		while active, that will weaken and slow damaging projectiles inside its field.</span> Still being a prototype, it tends to induce a charge on ungrounded metallic surfaces."
+	name = "\improper Hyperkinetic Dampening projector"
+	desc = "A device that projects a dampening field that weakens kinetic energy above a certain threshold. <span class='boldnotice'>Projects a field that drains power per second while active, that will weaken and slow damaging projectiles inside its field.</span> Still being a prototype, it tends to induce a charge on ungrounded metallic surfaces."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "shield"
 	var/maxenergy = 1500
@@ -544,7 +543,7 @@
 
 /obj/item/borg/projectile_dampen/attack_self(mob/user)
 	if(cycle_delay > world.time)
-		to_chat(user, "<span class='boldwarning'>\the [src] is still recycling its projectors!</span>")
+		to_chat(user, "<span class='boldwarning'>[src] is still recycling its projectors!</span>")
 		return
 	cycle_delay = world.time + PKBORG_DAMPEN_CYCLE_DELAY
 	active = !active
@@ -553,7 +552,7 @@
 	else
 		deactivate_field()
 	update_icon()
-	to_chat(user, "<span class='boldnotice'>You [active? "activate":"deactivate"] the [src].</span>")
+	to_chat(user, "<span class='boldnotice'>You [active? "activate":"deactivate"] [src].</span>")
 
 /obj/item/borg/projectile_dampen/update_icon()
 	icon_state = "[initial(icon_state)][active]"
@@ -562,12 +561,28 @@
 	if(istype(dampening_field))
 		QDEL_NULL(dampening_field)
 	dampening_field = make_field(/datum/proximity_monitor/advanced/peaceborg_dampener, list("current_range" = field_radius, "host" = src, "projector" = src))
+	
+	var/mob/living/silicon/robot/owner = get_host()
+	if(owner)
+		owner.module.allow_riding = FALSE
 
 /obj/item/borg/projectile_dampen/proc/deactivate_field()
 	QDEL_NULL(dampening_field)
 	visible_message("<span class='warning'>\The [src] shuts off!</span>")
 	for(var/P in tracked)
 		restore_projectile(P)
+
+	var/mob/living/silicon/robot/owner = get_host()
+	if(owner)
+		owner.module.allow_riding = TRUE
+
+/obj/item/borg/projectile_dampen/proc/get_host()
+	if(istype(host))
+		return host
+	else
+		if(iscyborg(host.loc))
+			return host.loc
+	return null
 
 /obj/item/borg/projectile_dampen/dropped()
 	. = ..()
@@ -601,7 +616,7 @@
 	energy = Clamp(energy - usage, 0, maxenergy)
 	if(energy <= 0)
 		deactivate_field()
-		visible_message("<span class='warning'>The [src] blinks \"ENERGY DEPLETED\"</span>")
+		visible_message("<span class='warning'>[src] blinks \"ENERGY DEPLETED\".</span>")
 
 /obj/item/borg/projectile_dampen/proc/process_recharge()
 	if(!istype(host))

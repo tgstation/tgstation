@@ -7,6 +7,7 @@
 	name = "conveyor belt"
 	desc = "A conveyor belt."
 	anchored = TRUE
+	layer = BELOW_OPEN_DOOR_LAYER
 	var/operating = FALSE	// 1 if running forward, -1 if backwards, 0 if off
 	var/operable = 1	// true if can operate (no broken segments in this belt run)
 	var/forwards		// this is the default (forward) direction, set by the map dir
@@ -141,8 +142,7 @@
 			to_chat(user, "<span class='notice'>You reverse [src]'s direction.</span>")
 
 	else if(user.a_intent != INTENT_HARM)
-		if(user.drop_item())
-			I.loc = src.loc
+		user.transferItemToLoc(I, drop_location())
 	else
 		return ..()
 

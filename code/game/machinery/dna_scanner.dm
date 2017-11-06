@@ -15,7 +15,7 @@
 	var/scan_level
 	var/precision_coeff
 	var/message_cooldown
-	var/breakout_time = 2
+	var/breakout_time = 1200
 
 /obj/machinery/dna_scannernew/RefreshParts()
 	scan_level = 0
@@ -73,9 +73,9 @@
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
-		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [(breakout_time<1) ? "[breakout_time*60] seconds" : "[breakout_time] minute\s"].)</span>", \
+		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
 		"<span class='italics'>You hear a metallic creaking from [src].</span>")
-	if(do_after(user,(breakout_time*60*10), target = src)) //minutes * 60seconds * 10deciseconds
+	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open || !locked)
 			return
 		locked = FALSE
@@ -90,11 +90,11 @@
 			return C
 	return null
 
-/obj/machinery/dna_scannernew/close_machine()
+/obj/machinery/dna_scannernew/close_machine(mob/living/carbon/user)
 	if(!state_open)
-		return 0
+		return FALSE
 
-	..()
+	..(user)
 
 	// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
 	var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)
@@ -113,11 +113,11 @@
 
 /obj/machinery/dna_scannernew/open_machine()
 	if(state_open)
-		return 0
+		return FALSE
 
 	..()
 
-	return 1
+	return TRUE
 
 /obj/machinery/dna_scannernew/relaymove(mob/user as mob)
 	if(user.stat || locked)
@@ -149,3 +149,8 @@
 		return
 
 	toggle_open(user)
+
+/obj/machinery/dna_scannernew/MouseDrop_T(mob/target, mob/user)
+	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
+		return
+	close_machine(target)

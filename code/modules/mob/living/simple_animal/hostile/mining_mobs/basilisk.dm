@@ -30,6 +30,7 @@
 	aggro_vision_range = 9
 	idle_vision_range = 2
 	turns_per_move = 5
+	gold_core_spawnable = TRUE
 	loot = list(/obj/item/ore/diamond{layer = ABOVE_MOB_LAYER},
 				/obj/item/ore/diamond{layer = ABOVE_MOB_LAYER})
 

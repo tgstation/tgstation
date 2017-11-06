@@ -112,40 +112,40 @@
 	id = "onehalf_drone1ext";
 	name = "mining drone bay blast door"
 	},
-/turf/open/floor/plating/airless{
-	dir = 1;
-	icon_state = "warnplate"
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "at" = (
 /obj/machinery/door/poddoor{
 	id = "onehalf_drone2ext";
 	name = "mining drone bay blast door"
 	},
-/turf/open/floor/plating/airless{
-	dir = 1;
-	icon_state = "warnplate"
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "au" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "onehalf_drone3ext";
 	name = "mining drone bay blast door"
 	},
-/turf/open/floor/plating/airless{
-	dir = 1;
-	icon_state = "warnplate"
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "av" = (
 /obj/machinery/door/poddoor{
 	id = "onehalf_drone4ext";
 	name = "mining drone bay blast door"
 	},
-/turf/open/floor/plating/airless{
-	dir = 1;
-	icon_state = "warnplate"
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "aw" = (
 /obj/structure/lattice,
@@ -208,10 +208,10 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "aG" = (
-/turf/open/floor/plating/airless{
-	dir = 1;
-	icon_state = "warnplate"
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "aH" = (
 /obj/item/stack/rods,

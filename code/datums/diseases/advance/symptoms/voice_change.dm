@@ -36,7 +36,8 @@ Bonus
 					  <b>Stealth 3:</b> The symptom remains hidden until active."
 
 /datum/symptom/voice_change/Start(datum/disease/advance/A)
-	..()
+	if(!..())
+		return
 	if(A.properties["stealth"] >= 3)
 		suppress_warning = TRUE
 	if(A.properties["stage_rate"] >= 7) //faster change of voice

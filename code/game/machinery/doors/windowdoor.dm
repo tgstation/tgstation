@@ -62,7 +62,7 @@
 	if( operating || !src.density )
 		return
 	if (!( ismob(AM) ))
-		if(istype(AM, /obj/mecha))
+		if(ismecha(AM))
 			var/obj/mecha/mecha = AM
 			if(mecha.occupant && src.allowed(mecha.occupant))
 				open_and_close()

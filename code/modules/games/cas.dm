@@ -104,12 +104,14 @@
 	var/buffertext = "A funny bit of text."
 
 /obj/item/toy/cards/singlecard/cas/examine(mob/user)
+	..()
 	if (flipped)
 		to_chat(user, "<span class='notice'>The card is face down.</span>")
 	else if (blank)
 		to_chat(user, "<span class='notice'>The card is blank. Write on it with a pen.</span>")
 	else
 		to_chat(user, "<span class='notice'>The card reads: [name]</span>")
+	to_chat(user, "<span class='notice'>Alt-click to flip it.</span>")
 
 /obj/item/toy/cards/singlecard/cas/Flip()
 	set name = "Flip Card"

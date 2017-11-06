@@ -21,6 +21,10 @@
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 2
 
+/obj/structure/bed/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>")
+
 /obj/structure/bed/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(buildstacktype)
@@ -101,7 +105,7 @@
 	desc = "A collapsed roller bed that can be carried around."
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "folded"
-	w_class = WEIGHT_CLASS_BULKY // Can't be put in backpacks.
+	w_class = WEIGHT_CLASS_NORMAL // No more excuses, stop getting blood everywhere
 
 /obj/item/roller/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/roller/robo))
@@ -113,7 +117,8 @@
 		R.loaded = new/obj/structure/bed/roller(R)
 		qdel(src) //"Load"
 		return
-	else return ..()
+	else
+		return ..()
 
 /obj/item/roller/attack_self(mob/user)
 	deploy_roller(user, user.loc)
@@ -140,7 +145,7 @@
 
 /obj/item/roller/robo/examine(mob/user)
 	..()
-	to_chat(user, "The dock is [loaded ? "loaded" : "empty"]")
+	to_chat(user, "The dock is [loaded ? "loaded" : "empty"].")
 
 /obj/item/roller/robo/deploy_roller(mob/user, atom/location)
 	if(loaded)
@@ -193,5 +198,5 @@
 
 /obj/structure/bed/alien
 	name = "resting contraption"
-	desc = "This looks similar to contraptions from earth. Could aliens be stealing our technology?"
+	desc = "This looks similar to contraptions from Earth. Could aliens be stealing our technology?"
 	icon_state = "abed"

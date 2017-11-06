@@ -213,7 +213,7 @@
 /obj/effect/temp_visual/fire
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "3"
-	light_range = 3
+	light_range = LIGHT_RANGE_FIRE
 	light_color = LIGHT_COLOR_FIRE
 	duration = 10
 
@@ -313,12 +313,12 @@
 	duration = 5
 
 /obj/effect/temp_visual/impact_effect/Initialize(mapload, atom/target, obj/item/projectile/P)
-	if(target == P.original) //the projectile hit the target originally clicked
-		pixel_x = P.p_x + target.pixel_x - 16 + rand(-4,4)
-		pixel_y = P.p_y + target.pixel_y - 16 + rand(-4,4)
+	if(target == P.original)
+		pixel_x = target.pixel_x + P.p_x - 16
+		pixel_y = target.pixel_y + P.p_y - 16
 	else
-		pixel_x = target.pixel_x + rand(-4,4)
-		pixel_y = target.pixel_y + rand(-4,4)
+		pixel_x = target.pixel_x + rand(2, -2)
+		pixel_y = target.pixel_y + rand(2, -2)
 	. = ..()
 
 /obj/effect/temp_visual/impact_effect/red_laser

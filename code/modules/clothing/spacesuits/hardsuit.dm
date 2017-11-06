@@ -13,6 +13,20 @@
 	item_color = "engineering" //Determines used sprites: hardsuit[on]-[color] and hardsuit[on]-[color]2 (lying down sprite)
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 
+	var/rad_count = 0
+	var/rad_record = 0
+	var/grace_count = 0
+	var/datum/looping_sound/geiger/soundloop
+
+/obj/item/clothing/head/helmet/space/hardsuit/Initialize()
+	. = ..()
+	soundloop = new(list(), FALSE, TRUE)
+	soundloop.volume = 5
+	START_PROCESSING(SSobj, src)
+
+/obj/item/clothing/head/helmet/space/hardsuit/Destroy()
+	. = ..()
+	STOP_PROCESSING(SSobj, src)
 
 /obj/item/clothing/head/helmet/space/hardsuit/attack_self(mob/user)
 	on = !on
@@ -31,6 +45,7 @@
 	..()
 	if(suit)
 		suit.RemoveHelmet()
+		soundloop.stop(user)
 
 /obj/item/clothing/head/helmet/space/hardsuit/item_action_slot_check(slot)
 	if(slot == slot_head)
@@ -41,8 +56,11 @@
 	if(slot != slot_head)
 		if(suit)
 			suit.RemoveHelmet()
+			soundloop.stop(user)
 		else
 			qdel(src)
+	else
+		soundloop.start(user)
 
 /obj/item/clothing/head/helmet/space/hardsuit/proc/display_visor_message(var/msg)
 	var/mob/wearer = loc
@@ -50,8 +68,22 @@
 		wearer.show_message("[icon2html(src, wearer)]<b><span class='robot'>[msg]</span></b>", 1)
 
 /obj/item/clothing/head/helmet/space/hardsuit/rad_act(severity)
-	..()
-	display_visor_message("Radiation pulse detected! Magnitude: <span class='green'>[severity]</span> RADs.")
+	. = ..()
+	rad_count += severity
+
+/obj/item/clothing/head/helmet/space/hardsuit/process()
+	if(!rad_count)
+		grace_count++
+		if(grace_count == 2)
+			soundloop.last_radiation = 0
+		return
+
+	grace_count = 0
+	rad_record -= rad_record/5
+	rad_record += rad_count/5
+	rad_count = 0
+
+	soundloop.last_radiation = rad_record
 
 /obj/item/clothing/head/helmet/space/hardsuit/emp_act(severity)
 	..()
@@ -393,7 +425,7 @@
 	item_state = "medical_helm"
 	item_color = "medical"
 	flash_protect = 0
-	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 50, fire = 75, acid = 75)
+	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 75, fire = 75, acid = 75)
 	scan_reagents = 1
 
 /obj/item/clothing/suit/space/hardsuit/medical
@@ -402,7 +434,7 @@
 	desc = "A special suit that protects against hazardous, low pressure environments. Built with lightweight materials for easier movement."
 	item_state = "medical_hardsuit"
 	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals, /obj/item/storage/firstaid, /obj/item/device/healthanalyzer, /obj/item/stack/medical)
-	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 50, fire = 75, acid = 75)
+	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 75, fire = 75, acid = 75)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/medical
 
 	//Research Director hardsuit
@@ -474,7 +506,7 @@
 	//Head of Security hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/security/hos
 	name = "head of security's hardsuit helmet"
-	desc = "a special bulky helmet designed for work in a hazardous, low pressure environment. Has an additional layer of armor."
+	desc = "A special bulky helmet designed for work in a hazardous, low pressure environment. Has an additional layer of armor."
 	icon_state = "hardsuit0-hos"
 	item_color = "hos"
 	armor = list(melee = 45, bullet = 25, laser = 30,energy = 10, bomb = 25, bio = 100, rad = 50, fire = 95, acid = 95)
@@ -719,7 +751,7 @@
 ///SWAT version
 /obj/item/clothing/suit/space/hardsuit/shielded/swat
 	name = "death commando spacesuit"
-	desc = "an advanced hardsuit favored by commandos for use in special operations."
+	desc = "An advanced hardsuit favored by commandos for use in special operations."
 	icon_state = "deathsquad"
 	item_state = "swat_suit"
 	item_color = "syndi"

@@ -2,7 +2,7 @@
 
 //is this shit even used at all
 /proc/NewStutter(phrase,stun)
-	phrase = html_decode(phrase)
+	phrase = rhtml_decode(phrase)
 
 	var/list/split_phrase = splittext(phrase," ") //Split it up into words.
 
@@ -41,8 +41,10 @@
 	step(M, pick(d,turn(d,90),turn(d,-90)))
 
 /proc/Ellipsis(original_msg, chance = 50, keep_words)
-	if(chance <= 0) return "..."
-	if(chance >= 100) return original_msg
+	if(chance <= 0)
+		return "..."
+	if(chance >= 100)
+		return original_msg
 
 	var/list
 		words = splittext(original_msg," ")

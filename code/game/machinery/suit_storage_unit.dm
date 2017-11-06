@@ -27,7 +27,7 @@
 	var/uv_super = FALSE
 	var/uv_cycles = 6
 	var/message_cooldown
-	var/breakout_time = 0.5
+	var/breakout_time = 300
 
 /obj/machinery/suit_storage_unit/standard_unit
 	suit_type = /obj/item/clothing/suit/space/eva
@@ -210,7 +210,7 @@
 				mob_occupant.adjustFireLoss(rand(20, 36))
 			else
 				mob_occupant.adjustFireLoss(rand(10, 16))
-			mob_occupant.emote("scream")
+			mob_occupant.emote("scream") 
 		addtimer(CALLBACK(src, .proc/cook), 50)
 	else
 		uv_cycles = initial(uv_cycles)
@@ -238,6 +238,9 @@
 			for(var/obj/item/I in src) //Scorches away blood and forensic evidence, although the SSU itself is unaffected
 				I.clean_blood()
 				I.fingerprints = list()
+				var/datum/component/radioactive/contamination = I.GetComponent(/datum/component/radioactive)
+				if(contamination)
+					qdel(contamination)
 		open_machine(FALSE)
 		if(occupant)
 			dump_contents()
@@ -267,9 +270,9 @@
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='notice'>You see [user] kicking against the doors of [src]!</span>", \
-		"<span class='notice'>You start kicking against the doors... (this will take about [(breakout_time<1) ? "[breakout_time*60] seconds" : "[breakout_time] minute\s"].)</span>", \
+		"<span class='notice'>You start kicking against the doors... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
 		"<span class='italics'>You hear a thump from [src].</span>")
-	if(do_after(user,(breakout_time*60*10), target = src)) //minutes * 60seconds * 10deciseconds
+	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src )
 			return
 		user.visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>", \
@@ -298,32 +301,31 @@
 			if(suit)
 				to_chat(user, "<span class='warning'>The unit already contains a suit!.</span>")
 				return
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(I, src))
 				return
 			suit = I
 		else if(istype(I, /obj/item/clothing/head/helmet))
 			if(helmet)
 				to_chat(user, "<span class='warning'>The unit already contains a helmet!</span>")
 				return
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(I, src))
 				return
 			helmet = I
 		else if(istype(I, /obj/item/clothing/mask))
 			if(mask)
 				to_chat(user, "<span class='warning'>The unit already contains a mask!</span>")
 				return
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(I, src))
 				return
 			mask = I
 		else
 			if(storage)
 				to_chat(user, "<span class='warning'>The auxiliary storage compartment is full!</span>")
 				return
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(I, src))
 				return
 			storage = I
 
-		I.loc = src
 		visible_message("<span class='notice'>[user] inserts [I] into [src]</span>", "<span class='notice'>You load [I] into [src].</span>")
 		update_icon()
 		return

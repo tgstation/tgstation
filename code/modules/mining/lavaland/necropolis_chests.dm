@@ -9,6 +9,10 @@
 
 /obj/structure/closet/crate/necropolis/tendril
 	desc = "It's watching you suspiciously."
+	var/cursed_prob = 20
+
+/obj/structure/closet/crate/necropolis/tendril/cursed
+	cursed_prob = 100
 
 /obj/structure/closet/crate/necropolis/tendril/PopulateContents()
 	var/loot = rand(1,27)
@@ -75,7 +79,38 @@
 		if(27)
 			new /obj/item/borg/upgrade/modkit/lifesteal(src)
 			new /obj/item/bedsheet/cult(src)
+	if(prob(cursed_prob))
+		for(var/obj/item/I in contents)
+			new /obj/item/cursed_necro(src,I)
 
+/obj/item/cursed_necro
+	name = "cursed item"
+	desc = "You shouldn't see it. Report it to devs."
+	var/obj/item/original
+
+/obj/item/cursed_necro/New(Loc,obj/item/I)
+	. = ..()
+	original = I
+	if(!original)
+		return
+	name = I.name
+	icon = I.icon
+	desc = I.desc
+	icon_state = I.icon_state
+	item_state = I.item_state
+	I.forceMove(src)
+
+/obj/item/cursed_necro/pickup(mob/living/user)
+	..()
+	if(user.mind && user.mind.isholy)
+		user.visible_message("<span class='boldannounce'>[usr] flashes in bright warm light, consecrating [src] and purging it of malevolent curses</span>","<span class='boldannounce'>The power of your faith purges curses of the [src]!</span>")
+	else
+		user.visible_message("<span class='boldannounce'>As [usr] touches [src], some dark mist erupts from it's surface and spreads in air around [user.p_them()]</span>","<span class='userdanger'>You feel like you unleashed something horrible on yourself</span>")
+		user.apply_necropolis_curse()
+	if(original)
+		original.forceMove(drop_location())
+		qdel(src)
+		user.put_in_active_hand(original)
 
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
@@ -132,7 +167,7 @@
 
 /datum/design/unique_modkit/bounty
 	name = "Kinetic Accelerator Death Syphon Mod"
-	desc = "A device which causes kinetic accelerators to permenantly gain damage against creature types killed with it."
+	desc = "A device which causes kinetic accelerators to permanently gain damage against creature types killed with it."
 	id = "bountymod"
 	materials = list(MAT_METAL = 4000, MAT_SILVER = 4000, MAT_GOLD = 4000, MAT_BLUESPACE = 4000)
 	reagents_list = list("blood" = 40)
@@ -194,7 +229,7 @@
 	desc = "Happy to light your way."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "orb"
-	luminosity = 7
+	light_range = 7
 	layer = ABOVE_ALL_MOB_LAYER
 
 //Red/Blue Cubes
@@ -275,7 +310,7 @@
 
 /obj/item/ammo_casing/magic/hook
 	name = "hook"
-	desc = "a hook."
+	desc = "A hook."
 	projectile_type = /obj/item/projectile/hook
 	caliber = "hook"
 	icon_state = "hook"
@@ -435,7 +470,7 @@
 		if(!over_object)
 			return
 
-		if (istype(usr.loc, /obj/mecha))
+		if(ismecha(usr.loc))
 			return
 
 		if(!M.incapacitated())
@@ -749,7 +784,7 @@
 	to_chat(user, "You call out for aid, attempting to summon spirits to your side.")
 
 	notify_ghosts("[user] is raising [user.p_their()] [src], calling for your help!",
-		enter_link="<a href=?src=\ref[src];orbit=1>(Click to help)</a>",
+		enter_link="<a href=?src=[REF(src)];orbit=1>(Click to help)</a>",
 		source = user, action=NOTIFY_ORBIT)
 
 	summon_cooldown = world.time + 600
@@ -846,7 +881,7 @@
 	agent = "dragon's blood"
 	desc = "What do dragons have to do with Space Station 13?"
 	stage_prob = 20
-	severity = BIOHAZARD
+	severity = VIRUS_SEVERITY_BIOHAZARD
 	visibility_flags = 0
 	stage1	= list("Your bones ache.")
 	stage2	= list("Your skin feels scaly.")
@@ -880,11 +915,7 @@
 	var/create_delay = 30
 	var/reset_cooldown = 50
 	var/timer = 0
-	var/banned_turfs
-
-/obj/item/lava_staff/Initialize()
-	. = ..()
-	banned_turfs = typecacheof(list(/turf/open/space/transit, /turf/closed))
+	var/static/list/banned_turfs = typecacheof(list(/turf/open/space/transit, /turf/closed))
 
 /obj/item/lava_staff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	..()
@@ -932,6 +963,8 @@
 	name = "bubblegum chest"
 
 /obj/structure/closet/crate/necropolis/bubblegum/PopulateContents()
+	new /obj/item/clothing/suit/space/hostile_environment(src)
+	new /obj/item/clothing/head/helmet/space/hostile_environment(src)
 	var/loot = rand(1,3)
 	switch(loot)
 		if(1)
@@ -967,7 +1000,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll2"
 	color = "#FF0000"
-	desc = "Mark your target for death. "
+	desc = "Mark your target for death."
 	var/used = FALSE
 
 /obj/item/blood_contract/attack_self(mob/user)
@@ -1003,7 +1036,7 @@
 			if(H == L)
 				continue
 			to_chat(H, "<span class='userdanger'>You have an overwhelming desire to kill [L]. [L.p_they(TRUE)] [L.p_have()] been marked red! Go kill [L.p_them()]!</span>")
-			H.put_in_hands_or_del(new /obj/item/kitchen/knife/butcher(H))
+			H.put_in_hands(new /obj/item/kitchen/knife/butcher(H), TRUE)
 
 	qdel(src)
 

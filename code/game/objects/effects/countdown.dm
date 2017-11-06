@@ -3,7 +3,7 @@
 	desc = "We're leaving together\n\
 		But still it's farewell\n\
 		And maybe we'll come back\n\
-		To earth, who can tell?"
+		To Earth, who can tell?"
 
 	var/displayed_text
 	var/atom/attached_to
@@ -20,7 +20,7 @@
 
 /obj/effect/countdown/examine(mob/user)
 	. = ..()
-	to_chat(user, "This countdown is displaying: [displayed_text]")
+	to_chat(user, "This countdown is displaying: [displayed_text].")
 
 /obj/effect/countdown/proc/attach(atom/A)
 	attached_to = A

@@ -104,10 +104,6 @@
 	direction = expected_dir
 	..()
 
-/obj/machinery/door/airlock/survival_pod/shuttleRotate(rotation)
-	expected_dir = angle2dir(rotation+dir2angle(dir))
-	..()
-
 /obj/machinery/door/airlock/survival_pod/vertical
 	dir = EAST
 	expected_dir = EAST
@@ -125,10 +121,6 @@
 
 /obj/structure/door_assembly/door_assembly_pod/setDir(direction)
 	direction = expected_dir
-	..()
-
-/obj/structure/door_assembly/door_assembly_pod/shuttleRotate(rotation)
-	expected_dir = angle2dir(rotation+dir2angle(dir))
 	..()
 
 /obj/structure/door_assembly/door_assembly_pod/vertical
@@ -307,7 +299,7 @@
 						/obj/item/melee/supermatter_sword,
 						/obj/item/shield/changeling,
 						/obj/item/lava_staff,
-						/obj/item/dash/energy_katana,
+						/obj/item/energy_katana,
 						/obj/item/hierophant_club,
 						/obj/item/his_grace,
 						/obj/item/gun/ballistic/minigun,

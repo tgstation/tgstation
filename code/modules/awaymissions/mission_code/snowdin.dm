@@ -1,9 +1,46 @@
+//Snow Valley Areas//--
+
+/area/awaymission/snowdin
+	name = "Snowdin Tundra Plains"
+	icon_state = "awaycontent1"
+	requires_power = FALSE
+	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+
+/area/awaymission/snowdin/post
+	name = "Snowdin Outpost"
+	requires_power = TRUE
+	icon_state = "awaycontent2"
+
+/area/awaymission/snowdin/igloo
+	name = "Snowdin Igloos"
+	icon_state = "awaycontent3"
+
+/area/awaymission/snowdin/cave
+	name = "Snowdin Caves"
+	icon_state = "awaycontent4"
+
+/area/awaymission/snowdin/base
+	name = "Snowdin Main Base"
+	icon_state = "awaycontent5"
+	requires_power = TRUE
+
+/area/awaymission/snowdin/dungeon1
+	name = "Snowdin Depths"
+	icon_state = "awaycontent6"
+
+/area/awaymission/snowdin/sekret
+	name = "Snowdin Operations"
+	icon_state = "awaycontent7"
+	requires_power = TRUE
+
+
+
 ///////////	papers
 
 /obj/item/paper/crumpled/ruins/snowdin/snowdingatewaynotice
 	name = "scribbled note"
 	info = {"The gateway has been inactive for months, engineers think it's due to the recent drop in tempature fucking with the
-	circuitry or something. Without a constant supply of resources from central command, our stock is getting awfully low. Some of the security members have taken to
+	circuitry or something. Without a constant supply of resources from Central Command, our stock is getting awfully low. Some of the security members have taken to
 	using the sparse rifle ammo left to hunting some of the wildlife to try and keep our food supply from emptying. God forbid if the heating goes out, I don't want to
 	die as a fucking popsicle down here."}
 
@@ -28,9 +65,9 @@
 	The colder months are finally hitting, some of the machinery seems to be having trouble starting up sometimes. Central sent some portable heaters to help keep the airlocks from
 	freezing shut along with a couple storage crates with supplies. Nothing on the radio so far, what the hell do they even expect to hear down here, anyway?<br><br><b>September 15th</b>
 	<br>Another supply shipment through the gateway, they've sent some heavier sets of clothes for the coming winter months. Central said they might encounter issues with shipments
-	during December to Feburary, so we should try to be frugal with the next shipment.<br><br><b>November 20th</b><br>Final shipment from central for the next few months. Going outside
+	during December to Feburary, so we should try to be frugal with the next shipment.<br><br><b>November 20th</b><br>Final shipment from Central for the next few months. Going outside
 	for more than 10-15 minutes without losing feeling in your fingers is difficult. We've finally gotten a signal on the radio, it's mostly some weird static though. One of the researchers is trying to decypher it.
-	<br><br><b>December 10th</b><br>Signal has gotten much stronger, it almost seems like it's coming from under us according to what the researcher managed to decypher. We're waiting from the go from central before investigating.<br><br>
+	<br><br><b>December 10th</b><br>Signal has gotten much stronger, it almost seems like it's coming from under us according to what the researcher managed to decypher. We're waiting from the go from Central before investigating.<br><br>
 	<i>The rest of the paper seems to be a mixture of scribbles and smudged ink.</i>"}
 
 /obj/item/paper/fluff/awaymissions/snowdin/log2
@@ -48,7 +85,7 @@
 	info = {"You have been assigned a position on a listening outpost. Here you'll be watching over several crewmembers assigned to watching signals of the general area.
 	As not much is expected in terms of issues, we've only assigned one guard per outpost. Crewmembers are expected to keep to their regulated work schedules and may be
 	disciplined properly if found slacking. Food hoarding is heavily discouraged as all outposts will be sharing from the same shipment every 2-3 months. Hoarding of supplies
-	should be punished severely as to prevent future incidients. Mutiny and/or rioting should be reported to central and dealt with swiftly. You're here to secure and protect
+	should be punished severely as to prevent future incidients. Mutiny and/or rioting should be reported to Central and dealt with swiftly. You're here to secure and protect
 	Nanotrasen assets, not be a police officer. Do what you must, but make sure it's not messy."}
 
 /obj/item/paper/fluff/awaymissions/snowdin/syndienotice
@@ -162,7 +199,7 @@
 
 /obj/item/clothing/under/syndicate/coldres
 	name = "insulated tactical turtleneck"
-	desc = "A non-descript and slightly suspicious looking turtleneck with digital camouflage cargo pants. The interior has been padded with special insulation for both warmth and protection"
+	desc = "A non-descript and slightly suspicious-looking turtleneck with digital camouflage cargo pants. The interior has been padded with special insulation for both warmth and protection."
 	armor = list(melee = 20, bullet = 10, laser = 0,energy = 5, bomb = 0, bio = 0, rad = 0, fire = 25, acid = 25)
 	cold_protection = CHEST|GROIN|ARMS|LEGS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT

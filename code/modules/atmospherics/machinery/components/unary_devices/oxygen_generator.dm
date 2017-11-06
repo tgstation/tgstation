@@ -3,7 +3,7 @@
 	icon_state = "o2gen_map"
 
 	name = "oxygen generator"
-	desc = "Generates oxygen"
+	desc = "Generates oxygen."
 
 	dir = SOUTH
 	initialize_directions = SOUTH
@@ -33,7 +33,9 @@
 	AIR1 = air_contents
 
 /obj/machinery/atmospherics/components/unary/oxygen_generator/process_atmos()
+
 	..()
+
 	if(!on)
 		return 0
 
@@ -47,8 +49,8 @@
 		var/added_oxygen = oxygen_content - total_moles
 
 		air_contents.temperature = (current_heat_capacity*air_contents.temperature + 20*added_oxygen*T0C)/(current_heat_capacity+20*added_oxygen)
-		air_contents.assert_gas("o2")
-		air_contents.gases["o2"][MOLES] += added_oxygen
+		ASSERT_GAS(/datum/gas/oxygen, air_contents)
+		air_contents.gases[/datum/gas/oxygen][MOLES] += added_oxygen
 
 		update_parents()
 

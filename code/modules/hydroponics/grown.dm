@@ -17,9 +17,9 @@
 	resistance_flags = FLAMMABLE
 	origin_tech = "biotech=1"
 
-/obj/item/reagent_containers/food/snacks/grown/New(newloc, var/obj/item/seeds/new_seed = null)
-	tastes = list(name = 1) // apples taste of apple, silly.
-	..()
+/obj/item/reagent_containers/food/snacks/grown/Initialize(mapload, obj/item/seeds/new_seed)
+	. = ..()
+	tastes = list("[name]" = 1) // apples taste of apple, silly.
 	if(new_seed)
 		seed = new_seed.Copy()
 	else if(ispath(seed))
@@ -35,7 +35,7 @@
 
 	if(seed)
 		for(var/datum/plant_gene/trait/T in seed.genes)
-			T.on_new(src, newloc)
+			T.on_new(src, loc)
 		seed.prepare_result(src)
 		transform *= TransformUsingVariable(seed.potency, 100, 0.5) //Makes the resulting produce's sprite larger or smaller based on potency!
 		add_juice()

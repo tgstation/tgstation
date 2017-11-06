@@ -12,6 +12,7 @@
 	layer = OBJ_LAYER
 	invisibility = INVISIBILITY_OBSERVER	//the turret is invisible if it's inside its cover
 	density = TRUE
+	desc = "A covered turret that shoots at its enemies."
 	use_power = IDLE_POWER_USE				//this turret uses and requires power
 	idle_power_usage = 50		//when inactive, this turret takes up constant 50 Equipment power
 	active_power_usage = 300	//when active, this turret takes up constant 300 Equipment power
@@ -165,15 +166,15 @@
 
 /obj/machinery/porta_turret/interact(mob/user)
 	var/dat
-	dat += "Status: <a href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</a><br>"
+	dat += "Status: <a href='?src=[REF(src)];power=1'>[on ? "On" : "Off"]</a><br>"
 	dat += "Behaviour controls are [locked ? "locked" : "unlocked"]<br>"
 
 	if(!locked)
-		dat += "Check for Weapon Authorization: <A href='?src=\ref[src];operation=authweapon'>[auth_weapons ? "Yes" : "No"]</A><BR>"
-		dat += "Check Security Records: <A href='?src=\ref[src];operation=checkrecords'>[check_records ? "Yes" : "No"]</A><BR>"
-		dat += "Neutralize Identified Criminals: <A href='?src=\ref[src];operation=shootcrooks'>[criminals ? "Yes" : "No"]</A><BR>"
-		dat += "Neutralize All Non-Security and Non-Command Personnel: <A href='?src=\ref[src];operation=shootall'>[stun_all ? "Yes" : "No"]</A><BR>"
-		dat += "Neutralize All Unidentified Life Signs: <A href='?src=\ref[src];operation=checkxenos'>[check_anomalies ? "Yes" : "No"]</A><BR>"
+		dat += "Check for Weapon Authorization: <A href='?src=[REF(src)];operation=authweapon'>[auth_weapons ? "Yes" : "No"]</A><BR>"
+		dat += "Check Security Records: <A href='?src=[REF(src)];operation=checkrecords'>[check_records ? "Yes" : "No"]</A><BR>"
+		dat += "Neutralize Identified Criminals: <A href='?src=[REF(src)];operation=shootcrooks'>[criminals ? "Yes" : "No"]</A><BR>"
+		dat += "Neutralize All Non-Security and Non-Command Personnel: <A href='?src=[REF(src)];operation=shootall'>[stun_all ? "Yes" : "No"]</A><BR>"
+		dat += "Neutralize All Unidentified Life Signs: <A href='?src=[REF(src)];operation=checkxenos'>[check_anomalies ? "Yes" : "No"]</A><BR>"
 
 	var/datum/browser/popup = new(user, "autosec", "Automatic Portable Turret Installation", 300, 300)
 	popup.set_content(dat)
@@ -389,7 +390,7 @@
 				if(!in_faction(C))
 					targets += C
 
-		if(istype(A, /obj/mecha))
+		if(ismecha(A))
 			var/obj/mecha/M = A
 			//If there is a user and they're not in our faction
 			if(M.occupant && !in_faction(M.occupant))
@@ -516,11 +517,7 @@
 
 
 	//Shooting Code:
-	A.original = target
-	A.starting = T
-	A.current = T
-	A.yo = U.y - T.y
-	A.xo = U.x - T.x
+	A.preparePixelProjectile(target, src)
 	A.fire()
 	return A
 
@@ -552,6 +549,7 @@
 	base_icon_state = "syndie"
 	faction = "syndicate"
 	emp_vunerable = 0
+	desc = "A ballistic machine gun auto-turret."
 
 /obj/machinery/porta_turret/syndicate/energy
 	icon_state = "standard_stun"
@@ -560,6 +558,7 @@
 	stun_projectile_sound = 'sound/weapons/taser.ogg'
 	lethal_projectile = /obj/item/projectile/beam/laser/heavylaser
 	lethal_projectile_sound = 'sound/weapons/lasercannonfire.ogg'
+	desc = "An energy blaster auto-turret."
 
 /obj/machinery/porta_turret/syndicate/setup()
 	return
@@ -624,6 +623,15 @@
 
 /obj/machinery/porta_turret/centcom_shuttle/setup()
 	return
+
+/obj/machinery/porta_turret/centcom_shuttle/weak
+	max_integrity = 120
+	integrity_failure = 60
+	name = "Old Laser Turret"
+	desc = "A turret built with substandard parts and run down further with age. Still capable of delivering lethal lasers to the odd space carp, but not much else."
+	stun_projectile = /obj/item/projectile/beam/weak
+	lethal_projectile = /obj/item/projectile/beam/weak
+	faction = "neutral"
 
 ////////////////////////
 //Turret Control Panel//
@@ -739,8 +747,8 @@
 	else
 		if(!issilicon(user) && !IsAdminGhost(user))
 			t += "<div class='notice icon'>Swipe ID card to lock interface</div>"
-		t += "Turrets [enabled?"activated":"deactivated"] - <A href='?src=\ref[src];toggleOn=1'>[enabled?"Disable":"Enable"]?</a><br>"
-		t += "Currently set for [lethal?"lethal":"stun repeatedly"] - <A href='?src=\ref[src];toggleLethal=1'>Change to [lethal?"Stun repeatedly":"Lethal"]?</a><br>"
+		t += "Turrets [enabled?"activated":"deactivated"] - <A href='?src=[REF(src)];toggleOn=1'>[enabled?"Disable":"Enable"]?</a><br>"
+		t += "Currently set for [lethal?"lethal":"stun repeatedly"] - <A href='?src=[REF(src)];toggleLethal=1'>Change to [lethal?"Stun repeatedly":"Lethal"]?</a><br>"
 
 	var/datum/browser/popup = new(user, "turretid", "Turret Control Panel ([area.name])")
 	popup.set_content(t)
@@ -791,7 +799,7 @@
 
 /obj/item/wallframe/turret_control
 	name = "turret control frame"
-	desc = "Used for building turret control panels"
+	desc = "Used for building turret control panels."
 	icon_state = "apc"
 	result_path = /obj/machinery/turretid
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
@@ -893,7 +901,7 @@
 		if(team_color == "red" && istype(H.wear_suit, /obj/item/clothing/suit/bluetag))
 			return
 
-	var/dat = "Status: <a href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</a>"
+	var/dat = "Status: <a href='?src=[REF(src)];power=1'>[on ? "On" : "Off"]</a>"
 
 	var/datum/browser/popup = new(user, "autosec", "Automatic Portable Turret Installation", 300, 300)
 	popup.set_content(dat)

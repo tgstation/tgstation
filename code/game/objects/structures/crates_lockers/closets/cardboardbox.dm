@@ -23,7 +23,7 @@
 		return
 	move_delay = 1
 	if(step(src, direction))
-		spawn(config.walk_speed*move_speed_multiplier)
+		spawn(CONFIG_GET(number/walk_delay) * move_speed_multiplier)
 			move_delay = 0
 	else
 		move_delay = 0

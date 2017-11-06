@@ -427,6 +427,11 @@
 	var/obj/item/grenade/explosive = null
 	var/war_cry = "AAAAARGH!!!"
 
+/obj/item/twohanded/spear/examine(mob/user)
+	..()
+	if(explosive)
+		to_chat(user, "<span class='notice'>Alt-click to set your war cry.</span>")
+
 /obj/item/twohanded/spear/update_icon()
 	if(explosive)
 		icon_state = "spearbomb[wielded]"
@@ -475,7 +480,7 @@
 	if(G)
 		explosive = G
 		name = "explosive lance"
-		desc = "A makeshift spear with [G] attached to it. Alt+click on the spear to set your war cry!"
+		desc = "A makeshift spear with [G] attached to it."
 	update_icon()
 
 // CHAINSAW
@@ -562,7 +567,7 @@
 	..()
 	if(!proximity)
 		return
-	user.faction |= "greytide(\ref[user])"
+	user.faction |= "greytide([REF(user)])"
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(istype (L, /mob/living/simple_animal/hostile/illusion))

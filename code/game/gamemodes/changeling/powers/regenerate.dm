@@ -27,7 +27,7 @@
 			C.emote("scream")
 			C.regenerate_limbs(1)
 		C.regenerate_organs()
-		if(!user.getorganslot("brain"))
+		if(!user.getorganslot(ORGAN_SLOT_BRAIN))
 			var/obj/item/organ/brain/changeling_brain/B = new()
 			B.Insert(C)
 	if(ishuman(user))

@@ -65,9 +65,8 @@
 /obj/effect/proc_holder/spell/aimed/proc/fire_projectile(mob/living/user, atom/target)
 	current_amount--
 	var/obj/item/projectile/P = new projectile_type(user.loc)
-	P.current = get_turf(user)
 	P.firer = user
-	P.preparePixelProjectile(target, get_turf(target), user)
+	P.preparePixelProjectile(target, user)
 	for(var/V in projectile_var_overrides)
 		if(P.vars[V])
 			P.vars[V] = projectile_var_overrides[V]

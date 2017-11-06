@@ -57,11 +57,9 @@
 	close_all()
 
 	to_chat(user, "<span class='notice'>You fold [src] flat.</span>")
-	var/obj/item/I = new foldable(get_turf(src))
-	user.drop_item()
-	user.put_in_hands(I)
-	user.update_inv_hands()
+	var/obj/item/I = new foldable
 	qdel(src)
+	user.put_in_hands(I)
 
 /obj/item/storage/box/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/packageWrap))
@@ -609,6 +607,29 @@
 	playsound(loc, "rustle", 50, 1, -5)
 	user.visible_message("<span class='notice'>[user] hugs \the [src].</span>","<span class='notice'>You hug \the [src].</span>")
 
+/////clown box & honkbot assembly
+obj/item/storage/box/clown
+	name = "clown box"
+	desc = "A colorful cardboard box for the clown"
+	icon_state = "clownbox"
+	illustration = null
+
+/obj/item/storage/box/clown/attackby(obj/item/I, mob/user, params)
+	if((istype(I, /obj/item/bodypart/l_arm/robot)) || (istype(I, /obj/item/bodypart/r_arm/robot)))
+		if(contents.len) //prevent accidently deleting contents
+			to_chat(user, "<span class='warning'>You need to empty [src] out first!</span>")
+			return
+		if(!user.temporarilyRemoveItemFromInventory(I))
+			return
+		qdel(I)
+		to_chat(user, "<span class='notice'>You add some wheels to the [src]! You've got an honkbot assembly now! Honk!</span>")
+		var/obj/item/honkbot_assembly/A = new
+		qdel(src)
+		user.put_in_hands(A)
+	else
+		return ..()
+
+//////
 /obj/item/storage/box/hug/medical/PopulateContents()
 	new /obj/item/stack/medical/bruise_pack(src)
 	new /obj/item/stack/medical/ointment(src)
@@ -683,7 +704,7 @@
 	if(istype(W, /obj/item/pen))
 		//if a pen is used on the sack, dialogue to change its design appears
 		if(contents.len)
-			to_chat(user, "<span class='warning'>You can't modify this [src] with items still inside!</span>")
+			to_chat(user, "<span class='warning'>You can't modify [src] with items still inside!</span>")
 			return
 		var/list/designs = list(NODESIGN, NANOTRASEN, SYNDI, HEART, SMILE, "Cancel")
 		var/switchDesign = input("Select a Design:", "Paper Sack Design", designs[1]) in designs
@@ -693,7 +714,7 @@
 		var/choice = designs.Find(switchDesign)
 		if(design == designs[choice] || designs[choice] == "Cancel")
 			return 0
-		to_chat(usr, "<span class='notice'>You make some modifications to the [src] using your pen.</span>")
+		to_chat(usr, "<span class='notice'>You make some modifications to [src] using your pen.</span>")
 		design = designs[choice]
 		icon_state = "paperbag_[design]"
 		item_state = "paperbag_[design]"
@@ -712,12 +733,12 @@
 	else if(W.is_sharp())
 		if(!contents.len)
 			if(item_state == "paperbag_None")
-				user.show_message("<span class='notice'>You cut eyeholes into the [src].</span>", 1)
+				user.show_message("<span class='notice'>You cut eyeholes into [src].</span>", 1)
 				new /obj/item/clothing/head/papersack(user.loc)
 				qdel(src)
 				return 0
 			else if(item_state == "paperbag_SmileyFace")
-				user.show_message("<span class='notice'>You cut eyeholes into the [src] and modify the design.</span>", 1)
+				user.show_message("<span class='notice'>You cut eyeholes into [src] and modify the design.</span>", 1)
 				new /obj/item/clothing/head/papersack/smiley(user.loc)
 				qdel(src)
 				return 0
@@ -732,7 +753,7 @@
 /obj/item/storage/box/ingredients //This box is for the randomely chosen version the chef spawns with, it shouldn't actually exist.
 	name = "ingredients box"
 	illustration = "fruit"
-	var/theme_name 
+	var/theme_name
 
 /obj/item/storage/box/ingredients/Initialize()
 	. = ..()

@@ -80,7 +80,7 @@
 		if(seed)
 			to_chat(user, "<span class='warning'>A sample is already loaded into the machine!</span>")
 		else
-			if(!user.drop_item())
+			if(!user.temporarilyRemoveItemFromInventory(I))
 				return
 			insert_seed(I)
 			to_chat(user, "<span class='notice'>You add [I] to the machine.</span>")
@@ -90,10 +90,9 @@
 		if(disk)
 			to_chat(user, "<span class='warning'>A data disk is already loaded into the machine!</span>")
 		else
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(I, src))
 				return
 			disk = I
-			disk.loc = src
 			to_chat(user, "<span class='notice'>You add [I] to the machine.</span>")
 			interact(user)
 	else
@@ -172,19 +171,19 @@
 				dat += "<span class='highlight'>[target.get_name()]</span> gene with <span class='highlight'>[disk.gene.get_name()]</span>?<br>"
 			if("insert")
 				dat += "<span class='highlight'>[disk.gene.get_name()]</span> gene into \the <span class='highlight'>[seed]</span>?<br>"
-		dat += "</div><div class='line'><a href='?src=\ref[src];gene=\ref[target];op=[operation]'>Confirm</a> "
-		dat += "<a href='?src=\ref[src];abort=1'>Abort</a></div>"
+		dat += "</div><div class='line'><a href='?src=[REF(src)];gene=[REF(target)];op=[operation]'>Confirm</a> "
+		dat += "<a href='?src=[REF(src)];abort=1'>Abort</a></div>"
 		popup.set_content(dat)
 		popup.open()
 		return
 
 	dat+= "<div class='statusDisplay'>"
 
-	dat += "<div class='line'><div class='statusLabel'>Plant Sample:</div><div class='statusValue'><a href='?src=\ref[src];eject_seed=1'>"
+	dat += "<div class='line'><div class='statusLabel'>Plant Sample:</div><div class='statusValue'><a href='?src=[REF(src)];eject_seed=1'>"
 	dat += seed ? seed.name : "None"
 	dat += "</a></div></div>"
 
-	dat += "<div class='line'><div class='statusLabel'>Data Disk:</div><div class='statusValue'><a href='?src=\ref[src];eject_disk=1'>"
+	dat += "<div class='line'><div class='statusLabel'>Data Disk:</div><div class='statusValue'><a href='?src=[REF(src)];eject_disk=1'>"
 	if(!disk)
 		dat += "None"
 	else if(!disk.gene)
@@ -208,9 +207,9 @@
 				continue
 			dat += "<tr><td width='260px'>[G.get_name()]</td><td>"
 			if(can_extract)
-				dat += "<a href='?src=\ref[src];gene=\ref[G];op=extract'>Extract</a>"
+				dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=extract'>Extract</a>"
 			if(can_insert && istype(disk.gene, G.type))
-				dat += "<a href='?src=\ref[src];gene=\ref[G];op=replace'>Replace</a>"
+				dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=replace'>Replace</a>"
 			dat += "</td></tr>"
 		dat += "</table></div>"
 
@@ -222,15 +221,15 @@
 					var/datum/plant_gene/G = a
 					dat += "<tr><td width='260px'>[G.get_name()]</td><td>"
 					if(can_extract)
-						dat += "<a href='?src=\ref[src];gene=\ref[G];op=extract'>Extract</a>"
-					dat += "<a href='?src=\ref[src];gene=\ref[G];op=remove'>Remove</a>"
+						dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=extract'>Extract</a>"
+					dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=remove'>Remove</a>"
 					dat += "</td></tr>"
 				dat += "</table>"
 			else
 				dat += "No content-related genes detected in sample.<br>"
 			dat += "</div>"
 			if(can_insert && istype(disk.gene, /datum/plant_gene/reagent))
-				dat += "<a href='?src=\ref[src];op=insert'>Insert: [disk.gene.get_name()]</a>"
+				dat += "<a href='?src=[REF(src)];op=insert'>Insert: [disk.gene.get_name()]</a>"
 
 			dat += "<div class='line'><h3>Trait Genes</h3></div><div class='statusDisplay'>"
 			if(trait_genes.len)
@@ -239,14 +238,14 @@
 					var/datum/plant_gene/G = a
 					dat += "<tr><td width='260px'>[G.get_name()]</td><td>"
 					if(can_extract)
-						dat += "<a href='?src=\ref[src];gene=\ref[G];op=extract'>Extract</a>"
-					dat += "<a href='?src=\ref[src];gene=\ref[G];op=remove'>Remove</a>"
+						dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=extract'>Extract</a>"
+					dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=remove'>Remove</a>"
 					dat += "</td></tr>"
 				dat += "</table>"
 			else
 				dat += "No trait-related genes detected in sample.<br>"
 			if(can_insert && istype(disk.gene, /datum/plant_gene/trait))
-				dat += "<a href='?src=\ref[src];op=insert'>Insert: [disk.gene.get_name()]</a>"
+				dat += "<a href='?src=[REF(src)];op=insert'>Insert: [disk.gene.get_name()]</a>"
 			dat += "</div>"
 	else
 		dat += "<br>No sample found.<br><span class='highlight'>Please, insert a plant sample to use this device.</span>"
@@ -269,7 +268,7 @@
 		else
 			var/obj/item/I = usr.get_active_held_item()
 			if (istype(I, /obj/item/seeds))
-				if(!usr.drop_item())
+				if(!usr.temporarilyRemoveItemFromInventory(I))
 					return
 				insert_seed(I)
 				to_chat(usr, "<span class='notice'>You add [I] to the machine.</span>")
@@ -283,10 +282,9 @@
 		else
 			var/obj/item/I = usr.get_active_held_item()
 			if(istype(I, /obj/item/disk/plantgene))
-				if(!usr.drop_item())
+				if(!usr.transferItemToLoc(I, src))
 					return
 				disk = I
-				disk.loc = src
 				to_chat(usr, "<span class='notice'>You add [I] to the machine.</span>")
 	else if(href_list["op"] == "insert" && disk && disk.gene && seed)
 		if(!operation) // Wait for confirmation

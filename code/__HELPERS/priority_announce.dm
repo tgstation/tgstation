@@ -43,8 +43,10 @@
 			var/obj/item/paper/P = new /obj/item/paper(C.loc)
 			P.name = "paper - '[title]'"
 			P.info = text
-			C.messagetitle.Add("[title]")
-			C.messagetext.Add(text)
+			var/datum/comm_message/message = new
+			message.title = title
+			message.content = text
+			C.add_message(message)
 			P.update_icon()
 
 /proc/minor_announce(message, title = "Attention:", alert)

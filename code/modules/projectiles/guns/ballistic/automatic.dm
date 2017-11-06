@@ -3,7 +3,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	var/alarmed = 0
 	var/select = 1
-	can_suppress = 1
+	can_suppress = TRUE
 	burst_size = 3
 	fire_delay = 2
 	actions_types = list(/datum/action/item_action/toggle_firemode)
@@ -119,7 +119,7 @@
 	item_state = "arg"
 	mag_type = /obj/item/ammo_box/magazine/wt550m9
 	fire_delay = 2
-	can_suppress = 0
+	can_suppress = FALSE
 	burst_size = 0
 	actions_types = list()
 
@@ -143,7 +143,7 @@
 	origin_tech = "combat=5;materials=2;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m556
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
-	can_suppress = 0
+	can_suppress = FALSE
 	var/obj/item/gun/ballistic/revolver/grenadelauncher/underbarrel
 	burst_size = 3
 	fire_delay = 2
@@ -217,7 +217,7 @@
 	origin_tech = "combat=5;materials=1;syndicate=3"
 	mag_type = /obj/item/ammo_box/magazine/tommygunm45
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
-	can_suppress = 0
+	can_suppress = FALSE
 	burst_size = 4
 	fire_delay = 1
 
@@ -230,7 +230,7 @@
 	origin_tech = "combat=6;engineering=4"
 	mag_type = /obj/item/ammo_box/magazine/m556
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
-	can_suppress = 0
+	can_suppress = FALSE
 	burst_size = 3
 	fire_delay = 1
 
@@ -246,7 +246,7 @@
 	origin_tech = "combat=6;materials=4;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m12g
 	fire_sound = 'sound/weapons/gunshot.ogg'
-	can_suppress = 0
+	can_suppress = FALSE
 	burst_size = 1
 	fire_delay = 0
 	pin = /obj/item/device/firing_pin/implant/pindicate
@@ -286,7 +286,7 @@
 	weapon_weight = WEAPON_HEAVY
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	var/cover_open = FALSE
-	can_suppress = 0
+	can_suppress = FALSE
 	burst_size = 3
 	fire_delay = 1
 	pin = /obj/item/device/firing_pin/implant/pindicate
@@ -362,11 +362,12 @@
 	fire_delay = 40
 	burst_size = 1
 	origin_tech = "combat=7"
-	can_unsuppress = 1
-	can_suppress = 1
+	can_unsuppress = TRUE
+	can_suppress = TRUE
 	w_class = WEIGHT_CLASS_NORMAL
 	zoomable = TRUE
-	zoom_amt = 7 //Long range, enough to see in front of you, but no tiles behind you.
+	zoom_amt = 10 //Long range, enough to see in front of you, but no tiles behind you.
+	zoom_out_amt = 13
 	slot_flags = SLOT_BACK
 	actions_types = list()
 
@@ -396,8 +397,8 @@
 	mag_type = /obj/item/ammo_box/magazine/m10mm/rifle
 	fire_delay = 30
 	burst_size = 1
-	can_unsuppress = 1
-	can_suppress = 1
+	can_unsuppress = TRUE
+	can_suppress = TRUE
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = SLOT_BACK
 	actions_types = list()
@@ -418,11 +419,11 @@
 	item_state = "arg"
 	mag_type = /obj/item/ammo_box/magazine/recharge
 	fire_delay = 2
-	can_suppress = 0
+	can_suppress = FALSE
 	burst_size = 0
 	actions_types = list()
 	fire_sound = 'sound/weapons/laser.ogg'
-	casing_ejector = 0
+	casing_ejector = FALSE
 
 /obj/item/gun/ballistic/automatic/laser/update_icon()
 	..()

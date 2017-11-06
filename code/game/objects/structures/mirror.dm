@@ -101,7 +101,7 @@
 	..()
 
 /obj/structure/mirror/magic/lesser/New()
-	choosable_races = GLOB.roundstart_species
+	choosable_races = GLOB.roundstart_races.Copy()
 	..()
 
 /obj/structure/mirror/magic/badmin/New()

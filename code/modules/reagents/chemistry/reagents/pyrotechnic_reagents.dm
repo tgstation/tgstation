@@ -8,14 +8,8 @@
 	taste_description = "sweet tasting metal"
 
 /datum/reagent/thermite/reaction_turf(turf/T, reac_volume)
-	if(reac_volume >= 1 && iswallturf(T))
-		var/turf/closed/wall/Wall = T
-		if(istype(Wall, /turf/closed/wall/r_wall))
-			Wall.thermite = Wall.thermite+(reac_volume*2.5)
-		else
-			Wall.thermite = Wall.thermite+(reac_volume*10)
-		Wall.overlays = list()
-		Wall.add_overlay(mutable_appearance('icons/effects/effects.dmi', "thermite"))
+	if(reac_volume >= 1)
+		T.AddComponent(/datum/component/thermite, reac_volume)
 
 /datum/reagent/thermite/on_mob_life(mob/living/M)
 	M.adjustFireLoss(1, 0)
@@ -54,7 +48,7 @@
 	. = 1
 
 /datum/reagent/clf3/reaction_turf(turf/T, reac_volume)
-	if(istype(T, /turf/open/floor/plating))
+	if(isplatingturf(T))
 		var/turf/open/floor/plating/F = T
 		if(prob(10 + F.burnt + 5*F.broken)) //broken or burnt plating is more susceptible to being destroyed
 			F.ChangeTurf(F.baseturf)
@@ -196,13 +190,6 @@
 		M.bodytemperature -= 15
 	..()
 
-/datum/reagent/cryostylane/on_tick()
-	if(holder.has_reagent("oxygen"))
-		holder.remove_reagent("oxygen", 1)
-		holder.chem_temp -= 10
-		holder.handle_reactions()
-	..()
-
 /datum/reagent/cryostylane/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 5)
 		for(var/mob/living/simple_animal/slime/M in T)
@@ -220,13 +207,6 @@
 	if(M.reagents.has_reagent("oxygen"))
 		M.reagents.remove_reagent("oxygen", 0.5)
 		M.bodytemperature += 15
-	..()
-
-/datum/reagent/pyrosium/on_tick()
-	if(holder.has_reagent("oxygen"))
-		holder.remove_reagent("oxygen", 1)
-		holder.chem_temp += 10
-		holder.handle_reactions()
 	..()
 
 /datum/reagent/teslium //Teslium. Causes periodic shocks, and makes shocks against the target much more effective.

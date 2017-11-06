@@ -130,7 +130,7 @@
 	return FALSE
 
 /obj/docking_port/mobile/arrivals/proc/SendToStation()
-	var/dockTime = config.arrivals_shuttle_dock_window
+	var/dockTime = CONFIG_GET(number/arrivals_shuttle_dock_window)
 	if(mode == SHUTTLE_CALL && timeLeft(1) > dockTime)
 		if(console)
 			console.say(damaged ? "Initiating emergency docking for repairs!" : "Now approaching: [station_name()].")

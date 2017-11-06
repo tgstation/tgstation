@@ -135,7 +135,7 @@
 
 	for(var/thing in O.viruses)
 		var/datum/disease/D = thing
-		if(!(D.spread_flags & SPECIAL))
+		if(!(D.spread_flags & VIRUS_SPREAD_SPECIAL))
 			B.data["viruses"] += D.Copy()
 	if(O.has_dna())
 		B.data["blood_DNA"] = O.dna.unique_enzymes
@@ -195,8 +195,7 @@
 	if(P)
 		user.visible_message("[user] put [O] into [src].", \
 			"You put [O] into [src].")
-		user.drop_item()
-		O.loc = src
+		user.transferItemToLoc(O, src, TRUE)
 		return 1
 	else
 		if(user.a_intent != INTENT_HARM)

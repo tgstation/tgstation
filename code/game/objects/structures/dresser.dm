@@ -13,6 +13,8 @@
 		if(do_after(user, 20, target = src))
 			to_chat(user, "<span class='notice'>You successfully [anchored ? "unwrench" : "wrench"] [src].</span>")
 			anchored = !anchored
+	else
+		return ..()
 
 /obj/structure/dresser/deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/mineral/wood (get_turf(src), 10)

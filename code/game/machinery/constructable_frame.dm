@@ -128,12 +128,11 @@
 					to_chat(user, "<span class='warning'>The frame needs to be secured first!</span>")
 					return
 				var/obj/item/circuitboard/machine/B = P
-				if(!user.drop_item())
+				if(!user.transferItemToLoc(B, src))
 					return
 				playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 				to_chat(user, "<span class='notice'>You add the circuit board to the frame.</span>")
 				circuit = B
-				B.loc = src
 				icon_state = "box_2"
 				state = 3
 				components = list()
@@ -239,10 +238,9 @@
 								req_components[I] -= used_amt
 								to_chat(user, "<span class='notice'>You add [P] to [src].</span>")
 							return
-						if(!user.drop_item())
+						if(!user.transferItemToLoc(P, src))
 							break
 						to_chat(user, "<span class='notice'>You add [P] to [src].</span>")
-						P.forceMove(src)
 						components += P
 						req_components[I]--
 						return 1

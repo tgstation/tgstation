@@ -89,16 +89,3 @@
 /obj/machinery/teleport/hub/attack_ghost(mob/user)
 	if(power_station && power_station.engaged && power_station.teleporter_console && power_station.teleporter_console.target)
 		user.forceMove(get_turf(power_station.teleporter_console.target))
-
-// -------------------------------------------
-// This was supposed to be used by adminghosts
-// I think it is a *terrible* idea
-// but I'm leaving it here anyway
-// commented out, of course.
-/*
-/atom/proc/attack_admin(mob/user as mob)
-	if(!user || !user.client || !user.client.holder)
-		return
-	attack_hand(user)
-
-*/

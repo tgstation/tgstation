@@ -76,7 +76,8 @@
 
 // This is necessary for storage items not on your person.
 /obj/item/Adjacent(var/atom/neighbor, var/recurse = 1)
-	if(neighbor == loc) return 1
+	if(neighbor == loc)
+		return 1
 	if(isitem(loc))
 		if(recurse > 0)
 			return loc.Adjacent(neighbor,recurse - 1)

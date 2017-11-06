@@ -195,10 +195,6 @@
 	else
 		. = ..()
 
-/obj/structure/table/wood/bar/shuttleRotate(rotation)
-	. = ..()
-	boot_dir = angle2dir(rotation + dir2angle(boot_dir))
-
 /obj/structure/table/wood/bar/proc/is_barstaff(mob/living/user)
 	. = FALSE
 	if(ishuman(user))

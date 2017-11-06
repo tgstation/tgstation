@@ -40,11 +40,11 @@
 
 	switch(construction_state)
 		if(PA_CONSTRUCTION_UNSECURED)
-			to_chat(user, "Looks like it's not attached to the flooring")
+			to_chat(user, "Looks like it's not attached to the flooring.")
 		if(PA_CONSTRUCTION_UNWIRED)
-			to_chat(user, "It is missing some cables")
+			to_chat(user, "It is missing some cables.")
 		if(PA_CONSTRUCTION_PANEL_OPEN)
-			to_chat(user, "The panel is open")
+			to_chat(user, "The panel is open.")
 
 	to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
 
@@ -187,13 +187,13 @@
 
 /obj/structure/particle_accelerator/end_cap
 	name = "Alpha Particle Generation Array"
-	desc = "This is where Alpha particles are generated from \[REDACTED\]"
+	desc = "This is where Alpha particles are generated from \[REDACTED\]."
 	icon_state = "end_cap"
 	reference = "end_cap"
 
 /obj/structure/particle_accelerator/power_box
 	name = "Particle Focusing EM Lens"
-	desc = "This uses electromagnetic waves to focus the Alpha-Particles."
+	desc = "This uses electromagnetic waves to focus the Alpha particles."
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	icon_state = "power_box"
 	reference = "power_box"

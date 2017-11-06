@@ -11,11 +11,13 @@
 
 	var/minetype = "lavaland"
 
+	//Order matters here.
 	var/list/transition_config = list(CENTCOM = SELFLOOPING,
 									MAIN_STATION = CROSSLINKED,
 									EMPTY_AREA_1 = CROSSLINKED,
 									EMPTY_AREA_2 = CROSSLINKED,
 									MINING = SELFLOOPING,
+									CITY_OF_COGS = SELFLOOPING,
 									EMPTY_AREA_3 = CROSSLINKED,
 									EMPTY_AREA_4 = CROSSLINKED,
 									EMPTY_AREA_5 = CROSSLINKED,
@@ -27,7 +29,8 @@
 	var/config_max_users = 0
 	var/config_min_users = 0
 	var/voteweight = 1
-	var/allow_custom_shuttles = "yes"
+	var/allow_custom_shuttles = TRUE
+
 /datum/map_config/New(filename = "data/next_map.json", default_to_box, delete_after)
 	if(default_to_box)
 		return
@@ -65,12 +68,11 @@
 	map_path = json["map_path"]
 	map_file = json["map_file"]
 
-	minetype = json["minetype"]
-	allow_custom_shuttles = json["allow_custom_shuttles"]
+	minetype = json["minetype"] || minetype
+	allow_custom_shuttles = json["allow_custom_shuttles"] != FALSE
 
-	var/list/jtcl = json["transition_config"]
-
-	if(jtcl != "default")
+	var/jtcl = json["transition_config"]
+	if(jtcl && jtcl != "default")
 		transition_config.Cut()
 
 		for(var/I in jtcl)
@@ -83,25 +85,22 @@
 	CHECK_EXISTS("map_name")
 	CHECK_EXISTS("map_path")
 	CHECK_EXISTS("map_file")
-	CHECK_EXISTS("minetype")
-	CHECK_EXISTS("transition_config")
-	CHECK_EXISTS("allow_custom_shuttles")
 
 	var/path = GetFullMapPath(json["map_path"], json["map_file"])
 	if(!fexists(path))
 		log_world("Map file ([path]) does not exist!")
 		return
 
-	if(json["transition_config"] != "default")
-		if(!islist(json["transition_config"]))
+	var/tc = json["transition_config"]
+	if(tc != null && tc != "default")
+		if(!islist(tc))
 			log_world("transition_config is not a list!")
 			return
 
-		var/list/jtcl = json["transition_config"]
-		for(var/I in jtcl)
+		for(var/I in tc)
 			if(isnull(TransitionStringToEnum(I)))
 				log_world("Invalid transition_config option: [I]!")
-			if(isnull(TransitionStringToEnum(jtcl[I])))
+			if(isnull(TransitionStringToEnum(tc[I])))
 				log_world("Invalid transition_config option: [I]!")
 
 	return TRUE
@@ -119,6 +118,8 @@
 			return MAIN_STATION
 		if("CENTCOM")
 			return CENTCOM
+		if("CITY_OF_COGS")
+			return CITY_OF_COGS
 		if("MINING")
 			return MINING
 		if("EMPTY_AREA_1")

@@ -4238,7 +4238,6 @@
 "kk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
 	dir = 4
 	},
 /obj/machinery/light{
@@ -4338,7 +4337,6 @@
 "kx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
@@ -4418,11 +4416,9 @@
 "kI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/corner{
-	icon_state = "warninglinecorner";
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/corner{
-	icon_state = "warninglinecorner";
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
@@ -4431,7 +4427,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/stripes/corner{
-	icon_state = "warninglinecorner";
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,

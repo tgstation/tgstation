@@ -81,8 +81,7 @@
 	if(istype(A, /obj/item/ammo_casing))
 		var/obj/item/ammo_casing/AC = A
 		if(give_round(AC, replace_spent))
-			user.drop_item()
-			AC.forceMove(src)
+			user.transferItemToLoc(AC, src, TRUE)
 			num_loaded++
 
 	if(num_loaded)

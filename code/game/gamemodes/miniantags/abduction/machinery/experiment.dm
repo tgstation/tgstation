@@ -13,7 +13,7 @@
 	var/flash = " - || - "
 	var/obj/machinery/abductor/console/console
 	var/message_cooldown = 0
-	var/breakout_time = 0.75
+	var/breakout_time = 450
 
 /obj/machinery/abductor/experiment/MouseDrop_T(mob/target, mob/user)
 	if(user.stat || user.lying || !Adjacent(user) || !target.Adjacent(user) || !ishuman(target))
@@ -50,9 +50,9 @@
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
-		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [(breakout_time<1) ? "[breakout_time*60] seconds" : "[breakout_time] minute\s"].)</span>", \
+		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
 		"<span class='italics'>You hear a metallic creaking from [src].</span>")
-	if(do_after(user,(breakout_time*60*10), target = src)) //minutes * 60seconds * 10deciseconds
+	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
 			return
 		user.visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>", \
@@ -62,7 +62,7 @@
 /obj/machinery/abductor/experiment/proc/dissection_icon(mob/living/carbon/human/H)
 	var/icon/photo = null
 	var/g = (H.gender == FEMALE) ? "f" : "m"
-	if(!config.mutant_races || H.dna.species.use_skintones)
+	if(H.dna.species.use_skintones)
 		photo = icon("icon" = 'icons/mob/human.dmi', "icon_state" = "[H.skin_tone]_[g]")
 	else
 		photo = icon("icon" = 'icons/mob/human.dmi', "icon_state" = "[H.dna.species.id]_[g]")
@@ -104,9 +104,9 @@
 		dat += "<table><tr><td>"
 		dat += "<img src=dissection_img height=80 width=80>" //Avert your eyes
 		dat += "</td><td>"
-		dat += "<a href='?src=\ref[src];experiment=1'>Probe</a><br>"
-		dat += "<a href='?src=\ref[src];experiment=2'>Dissect</a><br>"
-		dat += "<a href='?src=\ref[src];experiment=3'>Analyze</a><br>"
+		dat += "<a href='?src=[REF(src)];experiment=1'>Probe</a><br>"
+		dat += "<a href='?src=[REF(src)];experiment=2'>Dissect</a><br>"
+		dat += "<a href='?src=[REF(src)];experiment=3'>Analyze</a><br>"
 		dat += "</td></tr></table>"
 	else
 		dat += "<span class='linkOff'>Experiment </span>"
@@ -127,8 +127,8 @@
 	dat += "<br>"
 	dat += "[flash]"
 	dat += "<br>"
-	dat += "<a href='?src=\ref[src];refresh=1'>Scan</a>"
-	dat += "<a href='?src=\ref[src];[state_open ? "close=1'>Close</a>" : "open=1'>Open</a>"]"
+	dat += "<a href='?src=[REF(src)];refresh=1'>Scan</a>"
+	dat += "<a href='?src=[REF(src)];[state_open ? "close=1'>Close</a>" : "open=1'>Open</a>"]"
 	var/datum/browser/popup = new(user, "experiment", "Probing Console", 300, 300)
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.set_content(dat)

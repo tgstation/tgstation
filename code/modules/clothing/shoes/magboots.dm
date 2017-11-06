@@ -5,6 +5,7 @@
 	var/magboot_state = "magboots"
 	var/magpulse = 0
 	var/slowdown_active = 2
+	permeability_coefficient = 0.05
 	actions_types = list(/datum/action/item_action/toggle)
 	strip_delay = 70
 	equip_delay_other = 70

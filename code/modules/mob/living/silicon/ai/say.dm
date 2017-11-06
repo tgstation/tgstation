@@ -7,7 +7,7 @@
 /mob/living/silicon/ai/compose_track_href(atom/movable/speaker, namepart)
 	var/mob/M = speaker.GetSource()
 	if(M)
-		return "<a href='?src=\ref[src];track=[rhtml_encode(namepart)]'>"
+		return "<a href='?src=[REF(src)];track=[rhtml_encode(namepart)]'>"
 	return ""
 
 /mob/living/silicon/ai/compose_job(atom/movable/speaker, message_langs, raw_message, radio_freq)
@@ -15,7 +15,7 @@
 	return "[radio_freq ? " (" + speaker.GetJob() + ")" : ""]" + "[speaker.GetSource() ? "</a>" : ""]"
 
 /mob/living/silicon/ai/IsVocal()
-	return !config.silent_ai
+	return !CONFIG_GET(flag/silent_ai)
 
 /mob/living/silicon/ai/radio(message, message_mode, list/spans, language)
 	if(incapacitated())
@@ -85,7 +85,7 @@
 	var/index = 0
 	for(var/word in GLOB.vox_sounds)
 		index++
-		dat += "<A href='?src=\ref[src];say_word=[word]'>[capitalize(word)]</A>"
+		dat += "<A href='?src=[REF(src)];say_word=[word]'>[capitalize(word)]</A>"
 		if(index != GLOB.vox_sounds.len)
 			dat += " / "
 
@@ -97,7 +97,7 @@
 /mob/living/silicon/ai/proc/announcement()
 	var/static/announcing_vox = 0 // Stores the time of the last announcement
 	if(announcing_vox > world.time)
-		to_chat(src, "<span class='notice'>Please wait [round((announcing_vox - world.time) / 10)] seconds.</span>")
+		to_chat(src, "<span class='notice'>Please wait [DisplayTimeText(announcing_vox - world.time)].</span>")
 		return
 
 	var/message = input(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement) as text

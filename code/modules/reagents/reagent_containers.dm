@@ -54,7 +54,8 @@
 		for (var/datum/reagent/R in snack.reagents.reagent_list) //no reagents will be left behind
 			data += "[R.id]([R.volume] units); " //Using IDs because SOME chemicals(I'm looking at you, chlorhydrate-beer) have the same names as other chemicals.
 		return data
-	else return "No reagents"
+	else
+		return "No reagents"
 
 /obj/item/reagent_containers/proc/canconsume(mob/eater, mob/user)
 	if(!iscarbon(eater))

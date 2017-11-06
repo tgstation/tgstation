@@ -16,8 +16,9 @@ SUBSYSTEM_DEF(job)
 /datum/controller/subsystem/job/Initialize(timeofday)
 	if(!occupations.len)
 		SetupOccupations()
-	if(config.load_jobs_from_txt)
+	if(CONFIG_GET(flag/load_jobs_from_txt))
 		LoadJobs()
+	generate_selectable_species()
 	..()
 
 
@@ -106,9 +107,6 @@ SUBSYSTEM_DEF(job)
 		if(player.mind && job.title in player.mind.restricted_roles)
 			Debug("FOC incompatible with antagonist role, Player: [player]")
 			continue
-		if(config.enforce_human_authority && !player.client.prefs.pref_species.qualifies_for_rank(job.title, player.client.prefs.features))
-			Debug("FOC non-human failed, Player: [player]")
-			continue
 		if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
 			Debug("FOC pass, Player: [player], Level:[level]")
 			candidates += player
@@ -142,11 +140,6 @@ SUBSYSTEM_DEF(job)
 		if(player.mind && job.title in player.mind.restricted_roles)
 			Debug("GRJ incompatible with antagonist role, Player: [player], Job: [job.title]")
 			continue
-
-		if(config.enforce_human_authority && !player.client.prefs.pref_species.qualifies_for_rank(job.title, player.client.prefs.features))
-			Debug("GRJ non-human failed, Player: [player]")
-			continue
-
 
 		if((job.current_positions < job.spawn_positions) || job.spawn_positions == -1)
 			Debug("GRJ Random job given, Player: [player], Job: [job]")
@@ -245,11 +238,12 @@ SUBSYSTEM_DEF(job)
 	setup_officer_positions()
 
 	//Jobs will have fewer access permissions if the number of players exceeds the threshold defined in game_options.txt
-	if(config.minimal_access_threshold)
-		if(config.minimal_access_threshold > unassigned.len)
-			config.jobs_have_minimal_access = 0
+	var/mat = CONFIG_GET(number/minimal_access_threshold)
+	if(mat)
+		if(mat > unassigned.len)
+			CONFIG_SET(flag/jobs_have_minimal_access, FALSE)
 		else
-			config.jobs_have_minimal_access = 1
+			CONFIG_SET(flag/jobs_have_minimal_access, TRUE)
 
 	//Shuffle players and jobs
 	unassigned = shuffle(unassigned)
@@ -315,10 +309,6 @@ SUBSYSTEM_DEF(job)
 
 				if(player.mind && job.title in player.mind.restricted_roles)
 					Debug("DO incompatible with antagonist role, Player: [player], Job:[job.title]")
-					continue
-
-				if(config.enforce_human_authority && !player.client.prefs.pref_species.qualifies_for_rank(job.title, player.client.prefs.features))
-					Debug("DO non-human failed, Player: [player], Job:[job.title]")
 					continue
 
 				// If the player wants that job on this level, then try give it to him.
@@ -415,8 +405,8 @@ SUBSYSTEM_DEF(job)
 	to_chat(M, "<b>To speak on your departments radio, use the :h button. To see others, look closely at your headset.</b>")
 	if(job.req_admin_notify)
 		to_chat(M, "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>")
-	if(config.minimal_access_threshold)
-		to_chat(M, "<FONT color='blue'><B>As this station was initially staffed with a [config.jobs_have_minimal_access ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></font>")
+	if(CONFIG_GET(number/minimal_access_threshold))
+		to_chat(M, "<FONT color='blue'><B>As this station was initially staffed with a [CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></font>")
 
 	if(job && H)
 		job.after_spawn(H, M)
@@ -429,9 +419,10 @@ SUBSYSTEM_DEF(job)
 	if(!J)
 		throw EXCEPTION("setup_officer_positions(): Security officer job is missing")
 
-	if(config.security_scaling_coeff > 0)
+	var/ssc = CONFIG_GET(number/security_scaling_coeff)
+	if(ssc > 0)
 		if(J.spawn_positions > 0)
-			var/officer_positions = min(12, max(J.spawn_positions, round(unassigned.len/config.security_scaling_coeff))) //Scale between configured minimum and 12 officers
+			var/officer_positions = min(12, max(J.spawn_positions, round(unassigned.len / ssc))) //Scale between configured minimum and 12 officers
 			Debug("Setting open security officer positions to [officer_positions]")
 			J.total_positions = officer_positions
 			J.spawn_positions = officer_positions
@@ -491,8 +482,10 @@ SUBSYSTEM_DEF(job)
 		SSblackbox.add_details("job_preferences",tmp_str)
 
 /datum/controller/subsystem/job/proc/PopcapReached()
-	if(config.hard_popcap || config.extreme_popcap)
-		var/relevent_cap = max(config.hard_popcap, config.extreme_popcap)
+	var/hpc = CONFIG_GET(number/hard_popcap)
+	var/epc = CONFIG_GET(number/extreme_popcap)
+	if(hpc || epc)
+		var/relevent_cap = max(hpc, epc)
 		if((initial_players_to_assign - unassigned.len) >= relevent_cap)
 			return 1
 	return 0
@@ -563,3 +556,41 @@ SUBSYSTEM_DEF(job)
 			var/msg = "Unable to send mob [M] to late join!"
 			message_admins(msg)
 			CRASH(msg)
+
+
+///////////////////////////////////
+//Keeps track of all living heads//
+///////////////////////////////////
+/datum/controller/subsystem/job/proc/get_living_heads()
+	. = list()
+	for(var/mob/living/carbon/human/player in GLOB.mob_list)
+		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in GLOB.command_positions))
+			. |= player.mind
+
+
+////////////////////////////
+//Keeps track of all heads//
+////////////////////////////
+/datum/controller/subsystem/job/proc/get_all_heads()
+	. = list()
+	for(var/mob/player in GLOB.mob_list)
+		if(player.mind && (player.mind.assigned_role in GLOB.command_positions))
+			. |= player.mind
+
+//////////////////////////////////////////////
+//Keeps track of all living security members//
+//////////////////////////////////////////////
+/datum/controller/subsystem/job/proc/get_living_sec()
+	. = list()
+	for(var/mob/living/carbon/human/player in GLOB.mob_list)
+		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in GLOB.security_positions))
+			. |= player.mind
+
+////////////////////////////////////////
+//Keeps track of all  security members//
+////////////////////////////////////////
+/datum/controller/subsystem/job/proc/get_all_sec()
+	. = list()
+	for(var/mob/living/carbon/human/player in GLOB.mob_list)
+		if(player.mind && (player.mind.assigned_role in GLOB.security_positions))
+			. |= player.mind

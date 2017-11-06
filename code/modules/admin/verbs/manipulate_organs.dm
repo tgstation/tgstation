@@ -36,7 +36,8 @@
 
 			var/obj/item/organ = input("Select organ/implant:", "Organ Manipulation", null) in organs
 			organ = organs[organ]
-			if(!organ) return
+			if(!organ)
+				return
 			var/obj/item/organ/O
 			var/obj/item/implant/I
 

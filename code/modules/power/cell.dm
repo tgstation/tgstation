@@ -339,7 +339,7 @@
 
 /obj/item/stock_parts/cell/beam_rifle
 	name = "beam rifle capacitor"
-	desc = "A high powered capacitor that can provide huge amounts of energy in an instant"
+	desc = "A high powered capacitor that can provide huge amounts of energy in an instant."
 	maxcharge = 50000
 	chargerate = 5000	//Extremely energy intensive
 	rating = 4

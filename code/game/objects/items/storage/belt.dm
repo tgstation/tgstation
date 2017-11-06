@@ -88,6 +88,16 @@
 	new /obj/item/device/t_scanner(src)
 	new /obj/item/extinguisher/mini(src)
 
+/obj/item/storage/belt/utility/servant/PopulateContents()
+	new /obj/item/screwdriver/brass(src)
+	new /obj/item/wirecutters/brass(src)
+	new /obj/item/wrench/brass(src)
+	new /obj/item/crowbar/brass(src)
+	new /obj/item/weldingtool/experimental/brass(src)
+	new /obj/item/device/multitool(src)
+	new /obj/item/stack/cable_coil(src, 30, "yellow")
+
+
 
 
 /obj/item/storage/belt/medical
@@ -240,7 +250,7 @@
 
 /obj/item/storage/belt/soulstone
 	name = "soul stone belt"
-	desc = "Designed for ease of access to the shards during a fight, as to not let a single enemy spirit slip away"
+	desc = "Designed for ease of access to the shards during a fight, as to not let a single enemy spirit slip away."
 	icon_state = "soulstonebelt"
 	item_state = "soulstonebelt"
 	storage_slots = 6

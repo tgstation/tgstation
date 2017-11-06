@@ -151,6 +151,12 @@
 	for(var/i in 1 to 4 + rand(1,2))
 		var/chosen = pick(borks)
 		var/obj/B = new chosen(T)
+		if(prob(5))//Fry it!
+			var/obj/item/reagent_containers/food/snacks/deepfryholder/D = new(T)
+			var/datum/reagents/reagents = new(25)
+			reagents.add_reagent("nutriment", 25)
+			D.fry(B, reagents)
+			B = D
 		if(prob(50))
 			for(var/j in 1 to rand(1, 3))
 				step(B, pick(NORTH,SOUTH,EAST,WEST))
@@ -173,6 +179,7 @@
 		/obj/item/reagent_containers/food/snacks/soup,
 		/obj/item/reagent_containers/food/snacks/grown,
 		/obj/item/reagent_containers/food/snacks/grown/mushroom,
+		/obj/item/reagent_containers/food/snacks/deepfryholder
 		)
 	blocked |= typesof(/obj/item/reagent_containers/food/snacks/customizable)
 
@@ -236,7 +243,7 @@
 	if(holder && holder.my_atom)
 		var/turf/open/T = get_turf(holder.my_atom)
 		if(istype(T))
-			T.atmos_spawn_air("freon=50;TEMP=120")
+			T.atmos_spawn_air("nitrogen=50;TEMP=2.7")
 
 /datum/chemical_reaction/slime/slimefireproof
 	name = "Slime Fireproof"

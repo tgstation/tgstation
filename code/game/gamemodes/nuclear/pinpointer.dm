@@ -16,7 +16,7 @@
 	to_chat(user, msg)
 	for(var/obj/machinery/nuclearbomb/bomb in GLOB.machines)
 		if(bomb.timing)
-			to_chat(user, "Extreme danger. Arming signal detected. Time remaining: [bomb.get_time_left()]")
+			to_chat(user, "Extreme danger. Arming signal detected. Time remaining: [bomb.get_time_left()].")
 
 /obj/item/pinpointer/nuke/process()
 	..()

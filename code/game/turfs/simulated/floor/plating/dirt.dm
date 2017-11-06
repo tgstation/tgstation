@@ -6,6 +6,7 @@
 	baseturf = /turf/open/chasm/straight_down/jungle
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
+	attachment_holes = FALSE
 
 /turf/open/floor/plating/dirt/dark
 	icon_state = "greenerdirt"

@@ -52,6 +52,7 @@
 	flags_1 = CONDUCT_1
 	slot_flags = SLOT_BELT
 	origin_tech = "magnets=3;engineering=4"
+	force = 8
 
 	var/max_uses = 20
 	var/uses = 0
@@ -192,7 +193,8 @@
 
 	if(target.status != LIGHT_OK)
 		if(CanUse(U))
-			if(!Use(U)) return
+			if(!Use(U))
+				return
 			to_chat(U, "<span class='notice'>You replace the [target.fitting] with \the [src].</span>")
 
 			if(target.status != LIGHT_EMPTY)

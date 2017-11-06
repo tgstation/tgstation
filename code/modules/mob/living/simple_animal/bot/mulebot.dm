@@ -84,11 +84,9 @@
 		if(open)
 			on = FALSE
 	else if(istype(I, /obj/item/stock_parts/cell) && open && !cell)
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(I, src))
 			return
-		var/obj/item/stock_parts/cell/C = I
-		C.loc = src
-		cell = C
+		cell = I
 		visible_message("[user] inserts a cell into [src].",
 						"<span class='notice'>You insert the new cell into [src].</span>")
 	else if(istype(I, /obj/item/crowbar) && open && cell)
@@ -117,7 +115,7 @@
 		emagged = TRUE
 	if(!open)
 		locked = !locked
-		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the [src]'s controls!</span>")
+		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] [src]'s controls!</span>")
 	flick("mulebot-emagged", src)
 	playsound(src, "sparks", 100, 0)
 
@@ -284,22 +282,22 @@
 	dat += "<b>Power level:</b> [cell ? cell.percent() : 0]%"
 
 	if(locked && !ai && !IsAdminGhost(user))
-		dat += "&nbsp;<br /><div class='notice'>Controls are locked</div><A href='byond://?src=\ref[src];op=unlock'>Unlock Controls</A>"
+		dat += "&nbsp;<br /><div class='notice'>Controls are locked</div><A href='byond://?src=[REF(src)];op=unlock'>Unlock Controls</A>"
 	else
-		dat += "&nbsp;<br /><div class='notice'>Controls are unlocked</div><A href='byond://?src=\ref[src];op=lock'>Lock Controls</A><BR><BR>"
+		dat += "&nbsp;<br /><div class='notice'>Controls are unlocked</div><A href='byond://?src=[REF(src)];op=lock'>Lock Controls</A><BR><BR>"
 
-		dat += "<A href='byond://?src=\ref[src];op=power'>Toggle Power</A><BR>"
-		dat += "<A href='byond://?src=\ref[src];op=stop'>Stop</A><BR>"
-		dat += "<A href='byond://?src=\ref[src];op=go'>Proceed</A><BR>"
-		dat += "<A href='byond://?src=\ref[src];op=home'>Return to Home</A><BR>"
-		dat += "<A href='byond://?src=\ref[src];op=destination'>Set Destination</A><BR>"
-		dat += "<A href='byond://?src=\ref[src];op=setid'>Set Bot ID</A><BR>"
-		dat += "<A href='byond://?src=\ref[src];op=sethome'>Set Home</A><BR>"
-		dat += "<A href='byond://?src=\ref[src];op=autoret'>Toggle Auto Return Home</A> ([auto_return ? "On":"Off"])<BR>"
-		dat += "<A href='byond://?src=\ref[src];op=autopick'>Toggle Auto Pickup Crate</A> ([auto_pickup ? "On":"Off"])<BR>"
-		dat += "<A href='byond://?src=\ref[src];op=report'>Toggle Delivery Reporting</A> ([report_delivery ? "On" : "Off"])<BR>"
+		dat += "<A href='byond://?src=[REF(src)];op=power'>Toggle Power</A><BR>"
+		dat += "<A href='byond://?src=[REF(src)];op=stop'>Stop</A><BR>"
+		dat += "<A href='byond://?src=[REF(src)];op=go'>Proceed</A><BR>"
+		dat += "<A href='byond://?src=[REF(src)];op=home'>Return to Home</A><BR>"
+		dat += "<A href='byond://?src=[REF(src)];op=destination'>Set Destination</A><BR>"
+		dat += "<A href='byond://?src=[REF(src)];op=setid'>Set Bot ID</A><BR>"
+		dat += "<A href='byond://?src=[REF(src)];op=sethome'>Set Home</A><BR>"
+		dat += "<A href='byond://?src=[REF(src)];op=autoret'>Toggle Auto Return Home</A> ([auto_return ? "On":"Off"])<BR>"
+		dat += "<A href='byond://?src=[REF(src)];op=autopick'>Toggle Auto Pickup Crate</A> ([auto_pickup ? "On":"Off"])<BR>"
+		dat += "<A href='byond://?src=[REF(src)];op=report'>Toggle Delivery Reporting</A> ([report_delivery ? "On" : "Off"])<BR>"
 		if(load)
-			dat += "<A href='byond://?src=\ref[src];op=unload'>Unload Now</A><BR>"
+			dat += "<A href='byond://?src=[REF(src)];op=unload'>Unload Now</A><BR>"
 		dat += "<div class='notice'>The maintenance hatch is closed.</div>"
 
 	return dat
@@ -432,7 +430,6 @@
 		return
 	if(on)
 		var/speed = (wires.is_cut(WIRE_MOTOR1) ? 0 : 1) + (wires.is_cut(WIRE_MOTOR2) ? 0 : 2)
-		//to_chat(world, "speed: [speed]")
 		var/num_steps = 0
 		switch(speed)
 			if(0)
@@ -474,8 +471,6 @@
 					path -= next
 					return
 				if(isturf(next))
-					//to_chat(world, "at ([x],[y]) moving to ([next.x],[next.y])")
-
 					if(bloodiness)
 						var/obj/effect/decal/cleanable/blood/tracks/B = new(loc)
 						if(blood_DNA && blood_DNA.len)
@@ -495,9 +490,9 @@
 
 					var/oldloc = loc
 					var/moved = step_towards(src, next)	// attempt to move
-					if(cell) cell.use(1)
+					if(cell)
+						cell.use(1)
 					if(moved && oldloc!=loc)	// successful move
-						//to_chat(world, "Successful move.")
 						blockcount = 0
 						path -= loc
 
@@ -508,7 +503,6 @@
 
 					else		// failed to move
 
-						//to_chat(world, "Unable to move.")
 						blockcount++
 						mode = BOT_BLOCKED
 						if(blockcount == 3)
@@ -528,16 +522,13 @@
 						return
 				else
 					buzz(ANNOYED)
-					//to_chat(world, "Bad turf.")
 					mode = BOT_NAV
 					return
 			else
-				//to_chat(world, "No path.")
 				mode = BOT_NAV
 				return
 
 		if(BOT_NAV)	// calculate new path
-			//to_chat(world, "Calc new path.")
 			mode = BOT_WAIT_FOR_NAV
 			spawn(0)
 				calc_path()

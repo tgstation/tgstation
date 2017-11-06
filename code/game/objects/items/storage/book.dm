@@ -43,7 +43,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 			var/icon/bibleicon = icon('icons/obj/storage.dmi', GLOB.biblestates[i])
 			var/nicename = GLOB.biblenames[i]
 			H << browse_rsc(bibleicon, nicename)
-			dat += {"<tr><td><img src="[nicename]"></td><td><a href="?src=\ref[src];seticon=[i]">[nicename]</a></td></tr>"}
+			dat += {"<tr><td><img src="[nicename]"></td><td><a href="?src=[REF(src)];seticon=[i]">[nicename]</a></td></tr>"}
 		dat += "</table></body></html>"
 		H << browse(dat, "window=editicon;can_close=0;can_minimize=0;size=250x650")
 
@@ -156,6 +156,24 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 			var/unholy2clean = A.reagents.get_reagent_amount("unholywater")
 			A.reagents.del_reagent("unholywater")
 			A.reagents.add_reagent("holywater",unholy2clean)
+	if(istype(A, /obj/item/twohanded/required/cult_bastard))
+		var/obj/item/twohanded/required/cult_bastard/sword = A
+		to_chat(user, "<span class='notice'>You begin to exorcise [sword].</span>")
+		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,1)
+		if(do_after(user, 40, target = sword))
+			playsound(src,'sound/effects/pray_chaplain.ogg',60,1)
+			for(var/obj/item/device/soulstone/SS in sword.contents)
+				SS.usability = TRUE
+				for(var/mob/living/simple_animal/shade/EX in SS)
+					SSticker.mode.remove_cultist(EX.mind, 1, 0)
+					EX.icon_state = "ghost1"
+					EX.name = "Purified [EX.name]"
+				SS.release_shades(user)
+				qdel(SS)
+			new /obj/item/nullrod/claymore(get_turf(sword))
+			user.visible_message("<span class='notice'>[user] has purified the [sword]!!</span>")
+			qdel(sword)
+
 
 /obj/item/storage/book/bible/booze
 	desc = "To be applied to the head repeatedly."

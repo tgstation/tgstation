@@ -501,10 +501,7 @@
 /area/awaymission/BMPship/Aft)
 "bI" = (
 /obj/machinery/door/unpowered/shuttle,
-/turf/open/floor/plasteel{
-	icon_state = "carpetside";
-	dir = 1
-	},
+/turf/open/floor/carpet,
 /area/awaymission/BMPship/Fore)
 "bJ" = (
 /obj/machinery/door/airlock/silver,
@@ -808,7 +805,6 @@
 /turf/closed/wall/mineral/titanium/overspace,
 /area/template_noop)
 "cG" = (
-/turf/open/floor/carpet,
 /turf/closed/wall/mineral/titanium/interior,
 /area/awaymission/BMPship/Fore)
 "cH" = (
@@ -2497,7 +2493,6 @@
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Aft)
 "ht" = (
-/turf/open/floor/plating,
 /turf/closed/wall/mineral/titanium/interior,
 /area/awaymission/BMPship/Aft)
 "hu" = (

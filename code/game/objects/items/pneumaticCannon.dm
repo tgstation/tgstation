@@ -26,7 +26,30 @@
 	var/fire_mode = PCANNON_FIREALL
 	var/automatic = FALSE
 	var/clumsyCheck = TRUE
+	var/list/allowed_typecache		//Leave as null to allow all.
+	var/charge_amount = 1
+	var/charge_ticks = 1
+	var/charge_tick = 0
+	var/charge_type
+	var/selfcharge = FALSE
 	trigger_guard = TRIGGER_GUARD_NORMAL
+
+
+/obj/item/pneumatic_cannon/Initialize()
+	. = ..()
+	if(selfcharge)
+		init_charge()
+
+/obj/item/pneumatic_cannon/proc/init_charge()	//wrapper so it can be vv'd easier
+	START_PROCESSING(SSobj, src)
+
+/obj/item/pneumatic_cannon/process()
+	if(++charge_tick >= charge_ticks && charge_type)
+		fill_with_type(charge_type, charge_amount)
+
+/obj/item/pneumatic_cannon/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
 
 /obj/item/pneumatic_cannon/CanItemAutoclick()
 	return automatic
@@ -38,10 +61,10 @@
 		out += "<span class='notice'>You'll need to get closer to see any more.</span>"
 		return
 	for(var/obj/item/I in loadedItems)
-		out += "<span class='info'>[icon2html(I, user)] It has \the [I] loaded.</span>"
+		out += "<span class='info'>[icon2html(I, user)] It has \a [I] loaded.</span>"
 		CHECK_TICK
 	if(tank)
-		out += "<span class='notice'>[icon2html(tank, user)] It has \the [tank] mounted onto it.</span>"
+		out += "<span class='notice'>[icon2html(tank, user)] It has \a [tank] mounted onto it.</span>"
 	to_chat(user, out.Join("<br>"))
 
 /obj/item/pneumatic_cannon/attackby(obj/item/W, mob/user, params)
@@ -75,6 +98,10 @@
 		load_item(IW, user)
 
 /obj/item/pneumatic_cannon/proc/can_load_item(obj/item/I, mob/user)
+	if(allowed_typecache && is_type_in_typecache(I, allowed_typecache))
+		if(user)
+			to_chat(user, "<span class='warning'>[I] won't fit into [src]!</span>")
+		return
 	if((loadedWeightClass + I.w_class) > maxWeightClass)	//Only make messages if there's a user
 		if(user)
 			to_chat(user, "<span class='warning'>\The [I] won't fit into \the [src]!</span>")
@@ -122,7 +149,7 @@
 		return
 	if(user.disabilities & CLUMSY && prob(75) && clumsyCheck)
 		user.visible_message("<span class='warning'>[user] loses their grip on [src], causing it to go off!</span>", "<span class='userdanger'>[src] slips out of your hands and goes off!</span>")
-		user.drop_item()
+		user.dropItemToGround(src, TRUE)
 		if(prob(10))
 			target = get_turf(user)
 		else
@@ -223,7 +250,7 @@
 
 /obj/item/pneumatic_cannon/pie
 	name = "pie cannon"
-	desc = "Load cream pie for optimal results"
+	desc = "Load cream pie for optimal results."
 	force = 10
 	icon_state = "piecannon"
 	gasPerThrow = 0
@@ -233,28 +260,14 @@
 	throw_amount = 1
 	maxWeightClass = 150	//50 pies. :^)
 	clumsyCheck = FALSE
+	var/static/list/pie_typecache = typecacheof(/obj/item/reagent_containers/food/snacks/pie)
 
-/obj/item/pneumatic_cannon/pie/can_load_item(obj/item/I, mob/user)
-	if(istype(I, /obj/item/reagent_containers/food/snacks/pie))
-		return ..()
-	to_chat(user, "<span class='warning'>[src] only accepts pies!</span>")
-	return FALSE
-
+/obj/item/pneumatic_cannon/pie/Initialize()
+	. = ..()
+	allowed_typecache = pie_typecache
+	
 /obj/item/pneumatic_cannon/pie/selfcharge
 	automatic = TRUE
-	var/charge_amount = 1
-	var/charge_ticks = 1
-	var/charge_tick = 0
+	selfcharge = TRUE
+	charge_type = /obj/item/reagent_containers/food/snacks/pie/cream
 	maxWeightClass = 60	//20 pies.
-
-/obj/item/pneumatic_cannon/pie/selfcharge/Initialize()
-	. = ..()
-	START_PROCESSING(SSobj, src)
-
-/obj/item/pneumatic_cannon/pie/selfcharge/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
-/obj/item/pneumatic_cannon/pie/selfcharge/process()
-	if(++charge_tick >= charge_ticks)
-		fill_with_type(/obj/item/reagent_containers/food/snacks/pie/cream, charge_amount)

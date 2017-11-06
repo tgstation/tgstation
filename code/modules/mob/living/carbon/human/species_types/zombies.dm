@@ -1,3 +1,5 @@
+#define REGENERATION_DELAY 60  // After taking damage, how long it takes for automatic regeneration to begin
+
 /datum/species/zombie
 	// 1spooky
 	name = "High Functioning Zombie"
@@ -7,10 +9,15 @@
 	blacklisted = 1
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
 	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOBLOOD,RADIMMUNE,NOZOMBIE,EASYDISMEMBER,EASYLIMBATTACHMENT,NOTRANSSTING)
-	mutant_organs = list(/obj/item/organ/tongue/zombie)
+	mutanttongue = /obj/item/organ/tongue/zombie
 	var/static/list/spooks = list('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')
 	disliked_food = NONE
 	liked_food = GROSS | MEAT | RAW
+
+/datum/species/zombie/check_roundstart_eligible()
+	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
+		return TRUE
+	return ..()
 
 /datum/species/zombie/infectious
 	name = "Infectious Zombie"
@@ -20,14 +27,26 @@
 	armor = 20 // 120 damage to KO a zombie, which kills it
 	speedmod = 2
 	mutanteyes = /obj/item/organ/eyes/night_vision/zombie
+	var/regen_cooldown = 0
+
+/datum/species/zombie/infectious/check_roundstart_eligible()
+	return FALSE
+
 
 /datum/species/zombie/infectious/spec_stun(mob/living/carbon/human/H,amount)
 	. = min(2, amount)
 
+/datum/species/zombie/infectious/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H)
+	. = ..()
+	if(.)
+		regen_cooldown = world.time + REGENERATION_DELAY
+
 /datum/species/zombie/infectious/spec_life(mob/living/carbon/C)
 	. = ..()
 	C.a_intent = INTENT_HARM // THE SUFFERING MUST FLOW
-	C.heal_overall_damage(4,4)
+	if(regen_cooldown < world.time)
+		C.heal_overall_damage(4,4)
+		C.adjustToxLoss(-4)
 	if(prob(4))
 		playsound(C, pick(spooks), 50, TRUE, 10)
 	if(C.InCritical())
@@ -42,7 +61,7 @@
 	//  Infection organ needs to be handled separately from mutant_organs
 	//  because it persists through species transitions
 	var/obj/item/organ/zombie_infection/infection
-	infection = C.getorganslot("zombie_infection")
+	infection = C.getorganslot(ORGAN_SLOT_ZOMBIE)
 	if(!infection)
 		infection = new()
 		infection.Insert(C)
@@ -55,4 +74,6 @@
 	limbs_id = "zombie" //They look like zombies
 	sexes = 0
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
-	mutant_organs = list(/obj/item/organ/tongue/zombie)
+	mutanttongue = /obj/item/organ/tongue/zombie
+
+#undef REGENERATION_DELAY

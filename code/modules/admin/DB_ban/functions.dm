@@ -51,9 +51,12 @@
 			announceinirc = 1
 			blockselfban = 1
 			kickbannedckey = 1
-	if( !bantype_pass ) return
-	if( !istext(reason) ) return
-	if( !isnum(duration) ) return
+	if( !bantype_pass )
+		return
+	if( !istext(reason) )
+		return
+	if( !isnum(duration) )
+		return
 
 	var/ckey
 	var/computerid
@@ -178,7 +181,8 @@
 			if(BANTYPE_ANY_JOB)
 				bantype_str = "ANYJOB"
 				bantype_pass = 1
-		if( !bantype_pass ) return
+		if( !bantype_pass )
+			return
 
 	var/bantype_sql
 	if(bantype_str == "ANY")
@@ -356,8 +360,9 @@
 
 	output += "<td width='65%' align='center' bgcolor='#f9f9f9'>"
 
-	output += "<form method='GET' action='?src=\ref[src]'><b>Add custom ban:</b> (ONLY use this if you can't ban through any other method)"
-	output += "<input type='hidden' name='src' value='\ref[src]'>"
+	output += "<form method='GET' action='?src=[REF(src)]'><b>Add custom ban:</b> (ONLY use this if you can't ban through any other method)"
+	output += "<input type='hidden' name='src' value='[REF(src)]'>"
+	output += HrefTokenFormField()
 	output += "<table width='100%'><tr>"
 	output += "<td><b>Ban type:</b><select name='dbbanaddtype'>"
 	output += "<option value=''>--</option>"
@@ -380,6 +385,8 @@
 		output += "<option value='[j]'>[j]</option>"
 	for(var/j in list("traitor","changeling","operative","revolutionary", "gangster","cultist","wizard"))
 		output += "<option value='[j]'>[j]</option>"
+	for(var/j in list("drone"))
+		output += "<option value='[j]'>[j]</option>"
 	output += "</select></td></tr></table>"
 	output += "<b>Reason:<br></b><textarea name='dbbanreason' cols='50'></textarea><br>"
 	output += "<input type='submit' value='Add ban'>"
@@ -389,8 +396,9 @@
 	output += "</tr>"
 	output += "</table>"
 
-	output += "<form method='GET' action='?src=\ref[src]'><b>Search:</b> "
-	output += "<input type='hidden' name='src' value='\ref[src]'>"
+	output += "<form method='GET' action='?src=[REF(src)]'><b>Search:</b> "
+	output += "<input type='hidden' name='src' value='[REF(src)]'>"
+	output += HrefTokenFormField()
 	output += "<b>Ckey:</b> <input type='text' name='dbsearchckey' value='[playerckey]'>"
 	output += "<b>Admin ckey:</b> <input type='text' name='dbsearchadmin' value='[adminckey]'>"
 	output += "<input type='submit' value='search'>"
@@ -436,7 +444,7 @@
 		output += "<th width='15%'><b>OPTIONS</b></th>"
 		output += "</tr>"
 		var/limit = " LIMIT [bansperpage * page], [bansperpage]"
-		var/datum/DBQuery/query_search_bans = SSdbcore.NewQuery("SELECT id, bantime, bantype, reason, job, duration, expiration_time, ckey, a_ckey, unbanned, unbanned_ckey, unbanned_datetime, edits FROM [format_table_name("ban")] WHERE 1 [playersearch] [adminsearch] ORDER BY bantime DESC[limit]")
+		var/datum/DBQuery/query_search_bans = SSdbcore.NewQuery("SELECT id, bantime, bantype, reason, job, duration, expiration_time, ckey, a_ckey, unbanned, unbanned_ckey, unbanned_datetime, edits, round_id FROM [format_table_name("ban")] WHERE 1 [playersearch] [adminsearch] ORDER BY bantime DESC[limit]")
 		if(!query_search_bans.warn_execute())
 			return
 
@@ -454,6 +462,7 @@
 			var/unbanckey = query_search_bans.item[11]
 			var/unbantime = query_search_bans.item[12]
 			var/edits = query_search_bans.item[13]
+			var/round_id = query_search_bans.item[14]
 
 			var/lcolor = blcolor
 			var/dcolor = bdcolor
@@ -466,25 +475,25 @@
 				if("PERMABAN")
 					typedesc = "<font color='red'><b>PERMABAN</b></font>"
 				if("TEMPBAN")
-					typedesc = "<b>TEMPBAN</b><br><font size='2'>([duration] minutes [(unbanned) ? "" : "(<a href=\"byond://?src=\ref[src];[HrefToken()];dbbanedit=duration;dbbanid=[banid]\">Edit</a>))"]<br>Expires [expiration]</font>"
+					typedesc = "<b>TEMPBAN</b><br><font size='2'>([duration] minutes [(unbanned) ? "" : "(<a href=\"byond://?src=[REF(src)];[HrefToken()];dbbanedit=duration;dbbanid=[banid]\">Edit</a>))"]<br>Expires [expiration]</font>"
 				if("JOB_PERMABAN")
 					typedesc = "<b>JOBBAN</b><br><font size='2'>([job])"
 				if("JOB_TEMPBAN")
-					typedesc = "<b>TEMP JOBBAN</b><br><font size='2'>([job])<br>([duration] minutes [(unbanned) ? "" : "(<a href=\"byond://?src=\ref[src];[HrefToken()];dbbanedit=duration;dbbanid=[banid]\">Edit</a>))"]<br>Expires [expiration]"
+					typedesc = "<b>TEMP JOBBAN</b><br><font size='2'>([job])<br>([duration] minutes [(unbanned) ? "" : "(<a href=\"byond://?src=[REF(src)];[HrefToken()];dbbanedit=duration;dbbanid=[banid]\">Edit</a>))"]<br>Expires [expiration]"
 				if("ADMIN_PERMABAN")
 					typedesc = "<b>ADMIN PERMABAN</b>"
 				if("ADMIN_TEMPBAN")
-					typedesc = "<b>ADMIN TEMPBAN</b><br><font size='2'>([duration] minutes [(unbanned) ? "" : "(<a href=\"byond://?src=\ref[src];[HrefToken()];dbbanedit=duration;dbbanid=[banid]\">Edit</a>))"]<br>Expires [expiration]</font>"
+					typedesc = "<b>ADMIN TEMPBAN</b><br><font size='2'>([duration] minutes [(unbanned) ? "" : "(<a href=\"byond://?src=[REF(src)];[HrefToken()];dbbanedit=duration;dbbanid=[banid]\">Edit</a>))"]<br>Expires [expiration]</font>"
 
 			output += "<tr bgcolor='[dcolor]'>"
 			output += "<td align='center'>[typedesc]</td>"
 			output += "<td align='center'><b>[ckey]</b></td>"
-			output += "<td align='center'>[bantime]</td>"
+			output += "<td align='center'>[bantime] (Round ID: [round_id])</td>"
 			output += "<td align='center'><b>[ackey]</b></td>"
-			output += "<td align='center'>[(unbanned) ? "" : "<b><a href=\"byond://?src=\ref[src];[HrefToken()];dbbanedit=unban;dbbanid=[banid]\">Unban</a></b>"]</td>"
+			output += "<td align='center'>[(unbanned) ? "" : "<b><a href=\"byond://?src=[REF(src)];[HrefToken()];dbbanedit=unban;dbbanid=[banid]\">Unban</a></b>"]</td>"
 			output += "</tr>"
 			output += "<tr bgcolor='[lcolor]'>"
-			output += "<td align='center' colspan='5'><b>Reason: [(unbanned) ? "" : "(<a href=\"byond://?src=\ref[src];[HrefToken()];dbbanedit=reason;dbbanid=[banid]\">Edit</a>)"]</b> <cite>\"[reason]\"</cite></td>"
+			output += "<td align='center' colspan='5'><b>Reason: [(unbanned) ? "" : "(<a href=\"byond://?src=[REF(src)];[HrefToken()];dbbanedit=reason;dbbanid=[banid]\">Edit</a>)"]</b> <cite>\"[reason]\"</cite></td>"
 			output += "</tr>"
 			if(edits)
 				output += "<tr bgcolor='[dcolor]'>"

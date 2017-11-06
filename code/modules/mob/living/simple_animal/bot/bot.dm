@@ -5,7 +5,7 @@
 	icon = 'icons/mob/aibots.dmi'
 	layer = MOB_LAYER
 	gender = NEUTER
-	luminosity = 3
+	light_range = 3
 	stop_automated_movement = 1
 	wander = 0
 	healable = 0
@@ -104,6 +104,7 @@
 	if(stat)
 		return 0
 	on = TRUE
+	canmove = TRUE
 	set_light(initial(light_range))
 	update_icon()
 	diag_hud_set_botstat()
@@ -111,6 +112,7 @@
 
 /mob/living/simple_animal/bot/proc/turn_off()
 	on = FALSE
+	canmove = FALSE
 	set_light(0)
 	bot_reset() //Resets an AI's call, should it exist.
 	update_icon()
@@ -817,9 +819,9 @@ Pass a positive integer as an argument to override a bot's default speed.
 	var/hack
 	if(issilicon(user) || IsAdminGhost(user)) //Allows silicons or admins to toggle the emag status of a bot.
 		hack += "[emagged == 2 ? "Software compromised! Unit may exhibit dangerous or erratic behavior." : "Unit operating normally. Release safety lock?"]<BR>"
-		hack += "Harm Prevention Safety System: <A href='?src=\ref[src];operation=hack'>[emagged ? "<span class='bad'>DANGER</span>" : "Engaged"]</A><BR>"
+		hack += "Harm Prevention Safety System: <A href='?src=[REF(src)];operation=hack'>[emagged ? "<span class='bad'>DANGER</span>" : "Engaged"]</A><BR>"
 	else if(!locked) //Humans with access can use this option to hide a bot from the AI's remote control panel and PDA control.
-		hack += "Remote network control radio: <A href='?src=\ref[src];operation=remote'>[remote_disabled ? "Disconnected" : "Connected"]</A><BR>"
+		hack += "Remote network control radio: <A href='?src=[REF(src)];operation=remote'>[remote_disabled ? "Disconnected" : "Connected"]</A><BR>"
 	return hack
 
 /mob/living/simple_animal/bot/proc/showpai(mob/user)
@@ -829,9 +831,9 @@ Pass a positive integer as an argument to override a bot's default speed.
 			eject += "Personality card status: "
 			if(paicard)
 				if(client)
-					eject += "<A href='?src=\ref[src];operation=ejectpai'>Active</A>"
+					eject += "<A href='?src=[REF(src)];operation=ejectpai'>Active</A>"
 				else
-					eject += "<A href='?src=\ref[src];operation=ejectpai'>Inactive</A>"
+					eject += "<A href='?src=[REF(src)];operation=ejectpai'>Inactive</A>"
 			else if(!allow_pai || key)
 				eject += "Unavailable"
 			else
@@ -846,9 +848,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 	else if(allow_pai && !key)
 		if(!locked && !open)
 			if(card.pai && card.pai.mind)
-				if(!user.drop_item())
+				if(!user.transferItemToLoc(card, src))
 					return
-				card.forceMove(src)
 				paicard = card
 				user.visible_message("[user] inserts [card] into [src]!","<span class='notice'>You insert [card] into [src].</span>")
 				paicard.pai.mind.transfer_to(src)
@@ -856,6 +857,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 				bot_name = name
 				name = paicard.pai.name
 				faction = user.faction.Copy()
+				language_holder = paicard.pai.language_holder.copy(src)
 				add_logs(user, paicard.pai, "uploaded to [bot_name],")
 				return 1
 			else

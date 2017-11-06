@@ -1,7 +1,24 @@
 
+/*Cabin areas*/
+/area/awaymission/snowforest
+	name = "Snow Forest"
+	icon_state = "away"
+	requires_power = FALSE
+	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+
+/area/awaymission/cabin
+	name = "Cabin"
+	icon_state = "away2"
+	requires_power = TRUE
+	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+
+/area/awaymission/snowforest/lumbermill
+	name = "Lumbermill"
+	icon_state = "away3"
+
 /obj/structure/firepit
 	name = "firepit"
-	desc = "warm and toasty"
+	desc = "Warm and toasty."
 	icon = 'icons/obj/fireplace.dmi'
 	icon_state = "firepit-active"
 	density = FALSE

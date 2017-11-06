@@ -8,6 +8,7 @@
  * Stacks
  */
 /obj/item/stack
+	icon = 'icons/obj/stack_objects.dmi'
 	origin_tech = "materials=1"
 	gender = PLURAL
 	var/list/datum/stack_recipe/recipes
@@ -76,6 +77,7 @@
 		to_chat(user, "There are [get_amount()] in the stack.")
 	else
 		to_chat(user, "There is [get_amount()] in the stack.")
+	to_chat(user, "<span class='notice'>Alt-click to take a custom amount.</span>")
 
 /obj/item/stack/proc/get_amount()
 	if(is_cyborg)
@@ -111,7 +113,7 @@
 			title+= "[R.title]"
 		title+= " ([R.req_amount] [singular_name]\s)"
 		if (can_build)
-			t1 += text("<A href='?src=\ref[];make=[];multiplier=1'>[]</A>  ", src, i, title)
+			t1 += text("<A href='?src=[REF(src)];make=[];multiplier=1'>[]</A>  ", i, title)
 		else
 			t1 += text("[]", title)
 			continue
@@ -121,9 +123,9 @@
 			var/list/multipliers = list(5,10,25)
 			for (var/n in multipliers)
 				if (max_multiplier>=n)
-					t1 += " <A href='?src=\ref[src];make=[i];multiplier=[n]'>[n*R.res_amount]x</A>"
+					t1 += " <A href='?src=[REF(src)];make=[i];multiplier=[n]'>[n*R.res_amount]x</A>"
 			if (!(max_multiplier in multipliers))
-				t1 += " <A href='?src=\ref[src];make=[i];multiplier=[max_multiplier]'>[max_multiplier*R.res_amount]x</A>"
+				t1 += " <A href='?src=[REF(src)];make=[i];multiplier=[max_multiplier]'>[max_multiplier*R.res_amount]x</A>"
 
 	t1 += "</TT></body></HTML>"
 	user << browse(t1, "window=stack")
@@ -134,7 +136,8 @@
 	if (usr.restrained() || usr.stat || usr.get_active_held_item() != src)
 		return
 	if (href_list["make"])
-		if (get_amount() < 1) qdel(src) //Never should happen
+		if (get_amount() < 1)
+			qdel(src) //Never should happen
 
 		var/datum/stack_recipe/R = recipes[text2num(href_list["make"])]
 		var/multiplier = text2num(href_list["multiplier"])
@@ -149,7 +152,11 @@
 			if(!building_checks(R, multiplier))
 				return
 
-		var/obj/O = new R.result_type()
+		var/obj/O
+		if(R.max_res_amount > 1) //Is it a stack?
+			O = new R.result_type(usr.drop_location(), R.res_amount * multiplier)
+		else
+			O = new R.result_type(usr.drop_location())
 		O.setDir(usr.dir)
 		use(R.req_amount * multiplier)
 
@@ -162,16 +169,16 @@
 			W.ini_dir = W.dir
 		//END: oh fuck i'm so sorry
 
-		//is it a stack ?
-		if (R.max_res_amount > 1)
-			var/obj/item/stack/new_item = O
-			new_item.amount = R.res_amount*multiplier
-			new_item.update_icon()
+		else if(istype(O, /obj/item/restraints/handcuffs/cable))
+			var/obj/item/cuffs = O
+			cuffs.item_color = item_color
+			cuffs.update_icon()
+
+		if (QDELETED(O))
+			return //It's a stack and has already been merged
 
 		if (isitem(O))
 			usr.put_in_hands(O)
-		else
-			O.forceMove(usr.drop_location())
 		O.add_fingerprint(usr)
 
 		//BubbleWrap - so newly formed boxes are empty
@@ -243,6 +250,7 @@
 	S.copy_evidences(src)
 	use(transfer, TRUE)
 	S.add(transfer)
+	return transfer
 
 /obj/item/stack/Crossed(obj/o)
 	if(istype(o, merge_type) && !o.throwing)
@@ -258,7 +266,7 @@
 	if (user.get_inactive_held_item() == src)
 		if(zero_amount())
 			return
-		change_stack(user,1)
+		return change_stack(user,1)
 	else
 		..()
 
@@ -297,8 +305,8 @@
 /obj/item/stack/attackby(obj/item/W, mob/user, params)
 	if(istype(W, merge_type))
 		var/obj/item/stack/S = W
-		merge(S)
-		to_chat(user, "<span class='notice'>Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s.</span>")
+		if(merge(S))
+			to_chat(user, "<span class='notice'>Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s.</span>")
 	else
 		. = ..()
 

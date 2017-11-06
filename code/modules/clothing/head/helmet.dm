@@ -17,12 +17,24 @@
 
 	dog_fashion = /datum/dog_fashion/head/helmet
 
-
-/obj/item/clothing/head/helmet/Initialize()
-	. = ..()
-
 /obj/item/clothing/head/helmet/sec
 	can_flashlight = 1
+
+/obj/item/clothing/head/helmet/sec/attackby(obj/item/I, mob/user, params)
+	if(issignaler(I))
+		var/obj/item/device/assembly/signaler/S = I
+		if(F) //Has a flashlight. Player must remove it, else it will be lost forever.
+			to_chat(user, "<span class='warning'>The mounted flashlight is in the way, remove it first!</span>")
+			return
+
+		if(S.secured)
+			qdel(S)
+			var/obj/item/secbot_assembly/A = new /obj/item/secbot_assembly
+			user.put_in_hands(A)
+			to_chat(user, "<span class='notice'>You add the signaler to the helmet.</span>")
+			qdel(src)
+			return
+	return ..()
 
 /obj/item/clothing/head/helmet/alt
 	name = "bulletproof helmet"
@@ -281,7 +293,7 @@
 				qdel(THL)
 			return
 
-	..()
+	return ..()
 
 /obj/item/clothing/head/helmet/proc/toggle_helmlight()
 	set name = "Toggle Helmetlight"

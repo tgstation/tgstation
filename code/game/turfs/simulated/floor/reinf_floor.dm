@@ -1,10 +1,15 @@
 
 /turf/open/floor/engine
 	name = "reinforced floor"
+	desc = "Extremely sturdy."
 	icon_state = "engine"
 	thermal_conductivity = 0.025
 	heat_capacity = INFINITY
 	floor_tile = /obj/item/stack/rods
+
+/turf/open/floor/engine/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>The reinforcement rods are <b>wrenched</b> firmly in place.</span>")
 
 /turf/open/floor/engine/airless
 	initial_gas_mix = "TEMP=2.7"

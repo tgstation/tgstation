@@ -34,7 +34,8 @@ Bonus
 					  <b>Stealth 4:</b> The symptom remains hidden until active."
 
 /datum/symptom/confusion/Start(datum/disease/advance/A)
-	..()
+	if(!..())
+		return
 	if(A.properties["resistance"] >= 6)
 		brain_damage = TRUE
 	if(A.properties["transmittable"] >= 6)

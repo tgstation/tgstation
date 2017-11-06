@@ -23,12 +23,11 @@
 /obj/structure/target_stake/attackby(obj/item/target/T, mob/user)
 	if(pinned_target)
 		return
-	if(istype(T) && user.drop_item())
+	if(istype(T) && user.transferItemToLoc(T, drop_location()))
 		pinned_target = T
 		T.pinnedLoc = src
 		T.density = TRUE
 		T.layer = OBJ_LAYER + 0.01
-		T.loc = loc
 		to_chat(user, "<span class='notice'>You slide the target into the stake.</span>")
 
 /obj/structure/target_stake/attack_hand(mob/user)

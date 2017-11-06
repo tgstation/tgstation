@@ -159,14 +159,17 @@
 		return
 	switch(action)
 		if("eject_beaker")
-			eject_beaker()
+			if(beaker)
+				eject_beaker()
 			. = TRUE
 		if("empty_beaker")
-			beaker.reagents.clear_reagents()
+			if(beaker)
+				beaker.reagents.clear_reagents()
 			. = TRUE
 		if("empty_eject_beaker")
-			beaker.reagents.clear_reagents()
-			eject_beaker()
+			if(beaker)
+				beaker.reagents.clear_reagents()
+				eject_beaker()
 			. = TRUE
 		if("rename_disease")
 			var/id = get_virus_id_by_index(text2num(params["index"]))

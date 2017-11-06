@@ -24,7 +24,7 @@
 	var/locked = FALSE
 	var/opendir = SOUTH
 	var/message_cooldown
-	var/breakout_time = 1
+	var/breakout_time = 600
 
 /obj/structure/bodycontainer/Destroy()
 	open()
@@ -97,9 +97,9 @@
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message(null, \
-		"<span class='notice'>You lean on the back of [src] and start pushing the tray open... (this will take about [(breakout_time<1) ? "[breakout_time*60] seconds" : "[breakout_time] minute\s"].)</span>", \
+		"<span class='notice'>You lean on the back of [src] and start pushing the tray open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
 		"<span class='italics'>You hear a metallic creaking from [src].</span>")
-	if(do_after(user,(breakout_time*60*10), target = src)) //minutes * 60seconds * 10deciseconds
+	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src )
 			return
 		user.visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>", \

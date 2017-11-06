@@ -25,7 +25,7 @@
 
 /obj/item/clothing/head/canada
 	name = "striped red tophat"
-	desc = "it smells like fresh donut holes / <i>il sent comme des trous de beignets frais</i>"
+	desc = "It smells like fresh donut holes. / <i>Il sent comme des trous de beignets frais.</i>"
 	icon_state = "canada"
 	item_state = "canada"
 
@@ -285,7 +285,7 @@
 
 /obj/item/clothing/head/crown/fancy
 	name = "magnificent crown"
-	desc = "A crown worn by only the highest emperors of the land."
+	desc = "A crown worn by only the highest emperors of the <s>land</s> space."
 	icon_state = "fancycrown"
 
 /obj/item/clothing/head/scarecrow_hat

@@ -57,7 +57,8 @@
 			update_overlays(S)
 			to_chat(user, "<span class='notice'>You add the [I.name] to the [name].</span>")
 			update_name(S)
-	else . = ..()
+	else
+		. = ..()
 
 
 /obj/item/reagent_containers/food/snacks/customizable/proc/update_name(obj/item/reagent_containers/food/snacks/S)
@@ -308,7 +309,8 @@
 			else
 				var/obj/item/reagent_containers/food/snacks/customizable/A = new/obj/item/reagent_containers/food/snacks/customizable/salad(get_turf(src))
 				A.initialize_custom_food(src, S, user)
-	else . = ..()
+	else
+		. = ..()
 	return
 
 /obj/item/reagent_containers/glass/bowl/on_reagent_change()

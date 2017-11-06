@@ -27,7 +27,10 @@
 
 /mob/living/carbon/alien/humanoid/movement_delay()
 	. = ..()
-	. += move_delay_add + config.alien_delay + sneaking //move_delay_add is used to slow aliens with stun
+	var/static/config_alien_delay
+	if(isnull(config_alien_delay))
+		config_alien_delay = CONFIG_GET(number/alien_delay)
+	. += move_delay_add + config_alien_delay + sneaking //move_delay_add is used to slow aliens with stun
 
 /mob/living/carbon/alien/humanoid/restrained(ignore_grab)
 	. = handcuffed
@@ -42,20 +45,20 @@
 	<HR>"}
 	for(var/i in 1 to held_items.len)
 		var/obj/item/I = get_item_for_held_index(i)
-		dat += "<BR><B>[get_held_index_name(i)]:</B><A href='?src=\ref[src];item=[slot_hands];hand_index=[i]'>[(I && !(I.flags_1 & ABSTRACT_1)) ? I : "<font color=grey>Empty</font>"]</a>"
-	dat += "<BR><A href='?src=\ref[src];pouches=1'>Empty Pouches</A>"
+		dat += "<BR><B>[get_held_index_name(i)]:</B><A href='?src=[REF(src)];item=[slot_hands];hand_index=[i]'>[(I && !(I.flags_1 & ABSTRACT_1)) ? I : "<font color=grey>Empty</font>"]</a>"
+	dat += "<BR><A href='?src=[REF(src)];pouches=1'>Empty Pouches</A>"
 
 	if(handcuffed)
-		dat += "<BR><A href='?src=\ref[src];item=[slot_handcuffed]'>Handcuffed</A>"
+		dat += "<BR><A href='?src=[REF(src)];item=[slot_handcuffed]'>Handcuffed</A>"
 	if(legcuffed)
-		dat += "<BR><A href='?src=\ref[src];item=[slot_legcuffed]'>Legcuffed</A>"
+		dat += "<BR><A href='?src=[REF(src)];item=[slot_legcuffed]'>Legcuffed</A>"
 
 	dat += {"
 	<BR>
-	<BR><A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
+	<BR><A href='?src=[REF(user)];mach_close=mob[REF(src)]'>Close</A>
 	"}
-	user << browse(dat.Join(), "window=mob\ref[src];size=325x500")
-	onclose(user, "mob\ref[src]")
+	user << browse(dat.Join(), "window=mob[REF(src)];size=325x500")
+	onclose(user, "mob[REF(src)]")
 
 
 /mob/living/carbon/alien/humanoid/Topic(href, href_list)

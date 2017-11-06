@@ -32,7 +32,7 @@
 
 /obj/structure/destructible/clockwork/powered/mania_motor/attack_hand(mob/living/user)
 	if(user.canUseTopic(src, !issilicon(user), NO_DEXTERY) && is_servant_of_ratvar(user))
-		if(!total_accessable_power() >= mania_cost)
+		if(!can_access_clockwork_power(src, mania_cost))
 			to_chat(user, "<span class='warning'>[src] needs more power to function!</span>")
 			return 0
 		toggle(0, user)

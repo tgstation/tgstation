@@ -33,7 +33,7 @@
 	// The following 3 vars are mostly for the prototype
 	var/manual = FALSE
 	var/charge = 0
-	var/atom/target
+	var/last_projectile_params
 
 /obj/machinery/power/emitter/anchored
 	anchored = TRUE
@@ -137,7 +137,7 @@
 		else
 			to_chat(user, "<span class='warning'>The controls are locked!</span>")
 	else
-		to_chat(user, "<span class='warning'>The [src] needs to be firmly secured to the floor first!</span>")
+		to_chat(user, "<span class='warning'>[src] needs to be firmly secured to the floor first!</span>")
 		return 1
 
 /obj/machinery/power/emitter/attack_animal(mob/living/simple_animal/M)
@@ -185,7 +185,7 @@
 			charge+=5
 		if(!check_delay() || manual == TRUE)
 			return FALSE
-		fire_beam(target)
+		fire_beam()
 
 /obj/machinery/power/emitter/proc/check_delay()
 	if((src.last_shot + src.fire_delay) <= world.time)
@@ -201,46 +201,18 @@
 		add_load(active_power_usage)
 		fire_beam()
 
-/obj/machinery/power/emitter/proc/fire_beam(atom/targeted_atom, mob/user)
-	var/turf/targets_from = get_turf(src)
-	if(targeted_atom && (targeted_atom == user || targeted_atom == targets_from || targeted_atom == src))
-		return
-	var/obj/item/projectile/P = new projectile_type(targets_from)
-	playsound(src.loc, projectile_sound, 50, 1)
+/obj/machinery/power/emitter/proc/fire_beam(mob/user)
+	var/obj/item/projectile/P = new projectile_type(get_turf(src))
+	playsound(get_turf(src), projectile_sound, 50, 1)
 	if(prob(35))
 		sparks.start()
-	switch(dir)
-		if(NORTH)
-			P.yo = 20
-			P.xo = 0
-		if(NORTHEAST)
-			P.yo = 20
-			P.xo = 20
-		if(EAST)
-			P.yo = 0
-			P.xo = 20
-		if(SOUTHEAST)
-			P.yo = -20
-			P.xo = 20
-		if(WEST)
-			P.yo = 0
-			P.xo = -20
-		if(SOUTHWEST)
-			P.yo = -20
-			P.xo = -20
-		if(NORTHWEST)
-			P.yo = 20
-			P.xo = -20
-		else // Any other
-			P.yo = -20
-			P.xo = 0
-	if(target)
-		P.yo = targeted_atom.y - targets_from.y
-		P.xo = targeted_atom.x - targets_from.x
-		P.current = targets_from
-		P.starting = targets_from
-		P.firer = src
-		P.original = targeted_atom
+	P.firer = user? user : src
+	if(last_projectile_params)
+		P.p_x = last_projectile_params[2]
+		P.p_y = last_projectile_params[3]
+		P.fire(last_projectile_params[1])
+	else
+		P.fire(dir2angle(dir))
 	if(!manual)
 		last_shot = world.time
 		if(shot_number < 3)
@@ -249,12 +221,6 @@
 		else
 			fire_delay = rand(minimum_fire_delay,maximum_fire_delay)
 			shot_number = 0
-		if(!target)
-			P.setDir(src.dir)
-			P.starting = loc
-		else
-			if(QDELETED(target))
-				target = null
 	P.fire()
 	return P
 
@@ -349,7 +315,7 @@
 	locked = FALSE
 	emagged = TRUE
 	if(user)
-		user.visible_message("[user.name] emags the [src].","<span class='notice'>You short out the lock.</span>")
+		user.visible_message("[user.name] emags [src].","<span class='notice'>You short out the lock.</span>")
 
 
 /obj/machinery/power/emitter/prototype
@@ -449,7 +415,7 @@
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF | NOBLUDGEON_1
 	var/delay = 0
 
-/obj/item/turret_control/afterattack(atom/targeted_atom, mob/user)
+/obj/item/turret_control/afterattack(atom/targeted_atom, mob/user, proxflag, clickparams)
 	..()
 	var/obj/machinery/power/emitter/E = user.buckled
 	E.setDir(get_dir(E,targeted_atom))
@@ -488,10 +454,11 @@
 			user.pixel_x = 8
 			user.pixel_y = -12
 
+	E.last_projectile_params = calculate_projectile_angle_and_pixel_offsets(user, clickparams)
+
 	if(E.charge >= 10 && world.time > delay)
 		E.charge -= 10
-		E.target = targeted_atom
-		E.fire_beam(targeted_atom, user)
+		E.fire_beam(user)
 		delay = world.time + 10
 	else if (E.charge < 10)
 		playsound(get_turf(user),'sound/machines/buzz-sigh.ogg', 50, 1)

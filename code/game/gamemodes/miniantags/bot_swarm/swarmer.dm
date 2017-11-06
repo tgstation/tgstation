@@ -468,11 +468,8 @@
 		return
 
 	var/turf/open/floor/F
-	switch(z) //Only the station/lavaland
-		if(ZLEVEL_STATION_PRIMARY)
-			F =find_safe_turf(zlevels = ZLEVEL_STATION_PRIMARY, extended_safety_checks = TRUE)
-		if(ZLEVEL_LAVALAND)
-			F = find_safe_turf(zlevels = ZLEVEL_LAVALAND, extended_safety_checks = TRUE)
+	F = find_safe_turf(zlevels = z, extended_safety_checks = TRUE)
+
 	if(!F)
 		return
 	// If we're getting rid of a human, slap some energy cuffs on
@@ -502,7 +499,7 @@
 		var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/metal(target.loc)
 		M.amount = 5
 		for(var/obj/item/I in target.component_parts)
-			I.loc = M.loc
+			I.forceMove(M.drop_location())
 		var/obj/effect/temp_visual/swarmer/disintegration/N = new /obj/effect/temp_visual/swarmer/disintegration(get_turf(target))
 		N.pixel_x = target.pixel_x
 		N.pixel_y = target.pixel_y
@@ -511,7 +508,7 @@
 		if(istype(target, /obj/machinery/computer))
 			var/obj/machinery/computer/C = target
 			if(C.circuit)
-				C.circuit.loc = M.loc
+				C.circuit.forceMove(M.drop_location())
 		qdel(target)
 
 

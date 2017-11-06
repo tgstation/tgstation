@@ -53,7 +53,6 @@
 		L.change_bodypart_status(BODYPART_ROBOTIC, TRUE)
 		L.icon = tool.icon
 		L.max_damage = tool.max_damage
-		user.drop_item()
 		qdel(tool)
 		target.update_body_parts()
 		target.updatehealth()

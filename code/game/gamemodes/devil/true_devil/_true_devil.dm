@@ -184,7 +184,7 @@
 							"<span class='userdanger'>[M] has pushed down [src]!</span>")
 					else
 						if (prob(25))
-							drop_item()
+							dropItemToGround(get_active_held_item())
 							playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 							visible_message("<span class='danger'>[M] has disarmed [src]!</span>", \
 							"<span class='userdanger'>[M] has disarmed [src]!</span>")

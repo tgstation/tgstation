@@ -26,6 +26,7 @@
 /datum/action/innate/hierophant
 	name = "Hierophant Network"
 	desc = "Allows you to communicate with other Servants."
+	icon_icon = 'icons/mob/actions/actions_clockcult.dmi'
 	button_icon_state = "hierophant"
 	background_icon_state = "bg_clock"
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
@@ -43,6 +44,7 @@
 	var/input = stripped_input(usr, "Please enter a message to send to other servants.", "Hierophant Network", "")
 	if(!input || !IsAvailable())
 		return
-
+	if(ishuman(owner))
+		clockwork_say(owner, "[text2ratvar("Servants, hear my words: [input]")]", TRUE)
 	log_talk(owner,"CLOCK:[key_name(owner)] : [input]",LOGSAY)
 	titled_hierophant_message(owner, input, span_for_name, span_for_message, title)

@@ -6,7 +6,6 @@ What are the archived variables for?
 #define MINIMUM_HEAT_CAPACITY	0.0003
 #define QUANTIZE(variable)		(round(variable,0.0000001))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
 															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude */
-
 GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
@@ -20,10 +19,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		cached_gas[MOLES] = 0
 		cached_gas[ARCHIVE] = 0
 		cached_gas[GAS_META] = GLOB.meta_gas_info[id]
-
-#define GASLIST(id, out_list)\
-	var/list/tmp_gaslist = GLOB.gaslist_cache[id];\
-	out_list = tmp_gaslist.Copy();
 
 /datum/gas_mixture
 	var/list/gases
@@ -43,30 +38,18 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 //listmos procs
 
-	//assert_gas(gas_id) - used to guarantee that the gas list for this id exists.
-	//Must be used before adding to a gas. May be used before reading from a gas.
-/datum/gas_mixture/proc/assert_gas(gas_id)
-	var/cached_gases = gases
-	if(cached_gases[gas_id])
-		return
-	GASLIST(gas_id, cached_gases[gas_id])
+// The following procs used to live here: thermal_energy(), assert_gas() and add_gas(). They have been moved into defines in code/__DEFINES/atmospherics.dm
 
-	//assert_gases(args) - shorthand for calling assert_gas() once for each gas type.
+	//assert_gases(args) - shorthand for calling ASSERT_GAS() once for each gas type.
 /datum/gas_mixture/proc/assert_gases()
 	for(var/id in args)
-		assert_gas(id)
-
-	//add_gas(gas_id) - similar to assert_gas(), but does not check for an existing
-		//gas list for this id. This can clobber existing gases.
-	//Used instead of assert_gas() when you know the gas does not exist. Faster than assert_gas().
-/datum/gas_mixture/proc/add_gas(gas_id)
-	GASLIST(gas_id, gases[gas_id])
+		ASSERT_GAS(id, src)
 
 	//add_gases(args) - shorthand for calling add_gas() once for each gas_type.
 /datum/gas_mixture/proc/add_gases()
 	var/cached_gases = gases
 	for(var/id in args)
-		GASLIST(id, cached_gases[id])
+		ADD_GAS(id, cached_gases)
 
 	//garbage_collect() - removes any gas list which is empty.
 	//If called with a list as an argument, only removes gas lists with IDs from that list.
@@ -80,19 +63,18 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 			cached_gases -= id
 
 	//PV = nRT
-/datum/gas_mixture/proc/heat_capacity() //joules per kelvin
-	var/list/cached_gases = gases
-	. = 0
-	for(var/id in cached_gases)
-		var/gas_data = cached_gases[id]
-		. += gas_data[MOLES] * gas_data[GAS_META][META_GAS_SPECIFIC_HEAT]
 
-/datum/gas_mixture/proc/heat_capacity_archived() //joules per kelvin
+/datum/gas_mixture/proc/heat_capacity(data = MOLES) //joules per kelvin
 	var/list/cached_gases = gases
 	. = 0
 	for(var/id in cached_gases)
 		var/gas_data = cached_gases[id]
-		. += gas_data[ARCHIVE] * gas_data[GAS_META][META_GAS_SPECIFIC_HEAT]
+		. += gas_data[data] * gas_data[GAS_META][META_GAS_SPECIFIC_HEAT]
+
+/datum/gas_mixture/turf/heat_capacity()
+	. = ..()
+	if(!.)
+		. += HEAT_CAPACITY_VACUUM //we want vacuums in turfs to have the same heat capacity as space
 
 //prefer this in performance critical areas
 #define TOTAL_MOLES(cached_gases, out_var)\
@@ -118,9 +100,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 /datum/gas_mixture/proc/return_volume() //liters
 	return max(0, volume)
-
-/datum/gas_mixture/proc/thermal_energy() //joules
-	return temperature * heat_capacity()
 
 /datum/gas_mixture/proc/archive()
 	//Update archived versions of variables
@@ -198,7 +177,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/list/giver_gases = giver.gases
 	//gas transfer
 	for(var/giver_id in giver_gases)
-		assert_gas(giver_id)
+		ASSERT_GAS(giver_id, src)
 		cached_gases[giver_id][MOLES] += giver_gases[giver_id][MOLES]
 
 	return 1
@@ -210,12 +189,12 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	amount = min(amount, sum) //Can not take more air than tile has!
 	if(amount <= 0)
 		return null
-	var/datum/gas_mixture/removed = new
+	var/datum/gas_mixture/removed = new type
 	var/list/removed_gases = removed.gases //accessing datum vars is slower than proc vars
 
 	removed.temperature = temperature
 	for(var/id in cached_gases)
-		removed.add_gas(id)
+		ADD_GAS(id, removed.gases)
 		removed_gases[id][MOLES] = QUANTIZE((cached_gases[id][MOLES] / sum) * amount)
 		cached_gases[id][MOLES] -= removed_gases[id][MOLES]
 	garbage_collect()
@@ -228,12 +207,12 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	ratio = min(ratio, 1)
 
 	var/list/cached_gases = gases
-	var/datum/gas_mixture/removed = new
+	var/datum/gas_mixture/removed = new type
 	var/list/removed_gases = removed.gases //accessing datum vars is slower than proc vars
 
 	removed.temperature = temperature
 	for(var/id in cached_gases)
-		removed.add_gas(id)
+		ADD_GAS(id, removed.gases)
 		removed_gases[id][MOLES] = QUANTIZE(cached_gases[id][MOLES] * ratio)
 		cached_gases[id][MOLES] -= removed_gases[id][MOLES]
 
@@ -243,15 +222,16 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 /datum/gas_mixture/copy()
 	var/list/cached_gases = gases
-	var/datum/gas_mixture/copy = new
+	var/datum/gas_mixture/copy = new type
 	var/list/copy_gases = copy.gases
 
 	copy.temperature = temperature
 	for(var/id in cached_gases)
-		copy.add_gas(id)
+		ADD_GAS(id, copy.gases)
 		copy_gases[id][MOLES] = cached_gases[id][MOLES]
 
 	return copy
+
 
 /datum/gas_mixture/copy_from(datum/gas_mixture/sample)
 	var/list/cached_gases = gases //accessing datum vars is slower than proc vars
@@ -259,7 +239,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	temperature = sample.temperature
 	for(var/id in sample_gases)
-		assert_gas(id)
+		ASSERT_GAS(id,src)
 		cached_gases[id][MOLES] = sample_gases[id][MOLES]
 
 	//remove all gases not in the sample
@@ -285,8 +265,11 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		gas -= "TEMP"
 	gases.Cut()
 	for(var/id in gas)
-		add_gas(id)
-		gases[id][MOLES] = text2num(gas[id])
+		var/path = id
+		if(!ispath(path))
+			path = gas_id2path(path) //a lot of these strings can't have embedded expressions (especially for mappers), so support for IDs needs to stick around
+		ADD_GAS(path, gases)
+		gases[path][MOLES] = text2num(gas[id])
 	return 1
 
 /datum/gas_mixture/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
@@ -313,10 +296,9 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	//GAS TRANSFER
 	for(var/id in sharer_gases - cached_gases) // create gases not in our cache
-		add_gas(id)
+		ADD_GAS(id, gases)
 	for(var/id in cached_gases) // transfer gases
-		if(!sharer_gases[id]) //checking here prevents an uneeded proc call if the check fails.
-			sharer.add_gas(id)
+		ASSERT_GAS(id, sharer)
 
 		var/gas = cached_gases[id]
 		var/sharergas = sharer_gases[id]
@@ -376,8 +358,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		sharer_temperature = sharer.temperature_archived
 	var/temperature_delta = temperature_archived - sharer_temperature
 	if(abs(temperature_delta) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-		var/self_heat_capacity = heat_capacity_archived()
-		sharer_heat_capacity = sharer_heat_capacity || sharer.heat_capacity_archived()
+		var/self_heat_capacity = heat_capacity(ARCHIVE)
+		sharer_heat_capacity = sharer_heat_capacity || sharer.heat_capacity(ARCHIVE)
 
 		if((sharer_heat_capacity > MINIMUM_HEAT_CAPACITY) && (self_heat_capacity > MINIMUM_HEAT_CAPACITY))
 			var/heat = conduction_coefficient*temperature_delta* \
@@ -418,13 +400,12 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 /datum/gas_mixture/react(turf/open/dump_location)
 	. = 0
-	if(temperature < TCMB) //just for safety
-		temperature = TCMB
+
 	reaction_results = new
 
 	var/list/cached_gases = gases
 	var/temp = temperature
-	var/ener = thermal_energy()
+	var/ener = THERMAL_ENERGY(src)
 
 	reaction_loop:
 		for(var/r in SSair.gas_reactions)
@@ -457,8 +438,13 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 			*/
 
 			. |= reaction.react(src, dump_location)
+			//to_chat(world,reaction.name)
+			if (. & STOP_REACTIONS)
+				break
 	if(.)
 		garbage_collect()
+		if(temperature < TCMB) //just for safety
+			temperature = TCMB
 
 //Takes the amount of the gas you want to PP as an argument
 //So I don't have to do some hacky switches/defines/magic strings

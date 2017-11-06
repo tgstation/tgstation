@@ -62,7 +62,6 @@
 					// redirect the projectile
 					P.original = locate(new_x, new_y, P.z)
 					P.starting = curloc
-					P.current = curloc
 					P.firer = src
 					P.yo = new_y - curloc.y
 					P.xo = new_x - curloc.x
@@ -204,7 +203,8 @@
 		return 0
 
 	if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stunned instead.
-		if(get_active_held_item() && drop_item())
+		var/obj/item/I = get_active_held_item()
+		if(I && dropItemToGround(I))
 			playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 			visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
 					"<span class='userdanger'>[M] disarmed [src]!</span>")
@@ -256,7 +256,8 @@
 			apply_damage(damage, BRUTE, affecting, armor_block)
 
 		if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stun instead.
-			if(get_active_held_item() && drop_item())
+			var/obj/item/I = get_active_held_item()
+			if(I && dropItemToGround(I))
 				playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 				visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
 						"<span class='userdanger'>[M] disarmed [src]!</span>")
@@ -370,6 +371,9 @@
 				throw_at(throw_target, 200, 4)
 				damage_clothes(400 - bomb_armor, BRUTE, "bomb")
 			else
+				for(var/I in contents)
+					var/atom/A = I
+					A.ex_act(severity)
 				gib()
 				return
 
@@ -444,7 +448,7 @@
 		siemens_coeff = gloves_siemens_coeff
 	if(undergoing_cardiac_arrest() && !illusion)
 		if(shock_damage * siemens_coeff >= 1 && prob(25))
-			var/obj/item/organ/heart/heart = getorganslot("heart")
+			var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
 			heart.beating = TRUE
 			if(stat == CONSCIOUS)
 				to_chat(src, "<span class='notice'>You feel your heart beating again!</span>")
@@ -663,7 +667,7 @@
 				to_chat(src, "\t <span class='[status == "OK" ? "notice" : "warning"]'>Your [LB.name] is [status].</span>")
 
 				for(var/obj/item/I in LB.embedded_objects)
-					to_chat(src, "\t <a href='?src=\ref[src];embedded_object=\ref[I];embedded_limb=\ref[LB]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
+					to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
 
 			for(var/t in missing)
 				to_chat(src, "<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>")

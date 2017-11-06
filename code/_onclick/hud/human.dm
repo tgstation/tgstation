@@ -28,7 +28,7 @@
 	icon_state = "act_equip"
 
 /obj/screen/human/equip/Click()
-	if(istype(usr.loc, /obj/mecha)) // stops inventory actions in a mech
+	if(ismecha(usr.loc)) // stops inventory actions in a mech
 		return 1
 	var/mob/living/carbon/human/H = usr
 	H.quick_equip()
@@ -308,11 +308,15 @@
 			inv.hud = src
 			inv_slots[inv.slot_id] = inv
 			inv.update_icon()
+	
+	update_locked_slots()
 
 /datum/hud/human/update_locked_slots()
 	if(!mymob)
 		return
 	var/mob/living/carbon/human/H = mymob
+	if(!istype(H) || !H.dna.species)
+		return
 	var/datum/species/S = H.dna.species
 	for(var/obj/screen/inventory/inv in (static_inventory + toggleable_inventory))
 		if(inv.slot_id)

@@ -1,6 +1,6 @@
-/proc/emoji_parse(text)
+/proc/emoji_parse(text, mob/user)
 	. = text
-	if(!config.emojis)
+	if(!CONFIG_GET(flag/emojis))
 		return
 	var/static/list/emojis = icon_states(icon('icons/emoji.dmi'))
 	var/parsed = ""
@@ -27,4 +27,3 @@
 				parsed += copytext(text, pos, search)
 		break
 	return parsed
-

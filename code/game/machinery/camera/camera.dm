@@ -39,6 +39,8 @@
 	// Upgrades bitflag
 	var/upgrades = 0
 
+	var/internal_light = TRUE //Whether it can light up when an AI views it
+
 /obj/machinery/camera/Initialize(mapload)
 	. = ..()
 	assembly = new(src)
@@ -147,10 +149,10 @@
 
 		else if(istype(W, /obj/item/device/analyzer))
 			if(!isXRay())
-				if(!user.drop_item(W))
+				if(!user.temporarilyRemoveItemFromInventory(W))
 					return
-				upgradeXRay()
 				qdel(W)
+				upgradeXRay()
 				to_chat(user, "[msg]")
 			else
 				to_chat(user, "[msg2]")
@@ -201,8 +203,8 @@
 				if(U.name == "Unknown")
 					to_chat(AI, "<b>[U]</b> holds <a href='?_src_=usr;show_paper=1;'>\a [itemname]</a> up to one of your cameras ...")
 				else
-					to_chat(AI, "<b><a href='?src=\ref[AI];track=[rhtml_encode(U.name)]'>[U]</a></b> holds <a href='?_src_=usr;show_paper=1;'>\a [itemname]</a> up to one of your cameras ...")
-				AI.last_paper_seen = "<HTML><HEAD><TITLE>[itemname]</TITLE></HEAD><BODY><TT>[info]</TT></BODY></HTML>"
+					to_chat(AI, "<b><a href='?src=[REF(AI)];track=[rhtml_encode(U.name)]'>[U]</a></b> holds <a href='?_src_=usr;show_paper=1;'>\a [itemname]</a> up to one of your cameras ...")
+					AI.last_paper_seen = "<HTML><HEAD><TITLE>[itemname]</TITLE></HEAD><BODY><TT>[info]</TT></BODY></HTML>"
 			else if (O.client && O.client.eye == src)
 				to_chat(O, "[U] holds \a [itemname] up to one of the cameras ...")
 				O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
@@ -244,7 +246,7 @@
 		if(disassembled)
 			if(!assembly)
 				assembly = new()
-			assembly.loc = src.loc
+			assembly.forceMove(drop_location())
 			assembly.state = 1
 			assembly.setDir(dir)
 			assembly = null

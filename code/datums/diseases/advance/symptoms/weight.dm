@@ -24,14 +24,15 @@ Bonus
 	stage_speed = -2
 	transmittable = -2
 	level = 4
-	severity = 1
+	severity = 3
 	base_message_chance = 100
 	symptom_delay_min = 15
 	symptom_delay_max = 45
 	threshold_desc = "<b>Stealth 4:</b> The symptom is less noticeable."
 
 /datum/symptom/weight_gain/Start(datum/disease/advance/A)
-	..()
+	if(!..())
+		return
 	if(A.properties["stealth"] >= 4) //warn less often
 		base_message_chance = 25
 
@@ -74,14 +75,15 @@ Bonus
 	stage_speed = -2
 	transmittable = -2
 	level = 3
-	severity = 1
+	severity = 3
 	base_message_chance = 100
 	symptom_delay_min = 15
 	symptom_delay_max = 45
 	threshold_desc = "<b>Stealth 4:</b> The symptom is less noticeable."
 
 /datum/symptom/weight_loss/Start(datum/disease/advance/A)
-	..()
+	if(!..())
+		return
 	if(A.properties["stealth"] >= 4) //warn less often
 		base_message_chance = 25
 

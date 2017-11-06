@@ -74,28 +74,28 @@
 	dat += hack(user)
 	dat += showpai(user)
 	dat += "<TT><B>Floor Repairer Controls v1.1</B></TT><BR><BR>"
-	dat += "Status: <A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A><BR>"
+	dat += "Status: <A href='?src=[REF(src)];power=1'>[on ? "On" : "Off"]</A><BR>"
 	dat += "Maintenance panel panel is [open ? "opened" : "closed"]<BR>"
 	dat += "Special tiles: "
 	if(specialtiles)
-		dat += "<A href='?src=\ref[src];operation=eject'>Loaded \[[specialtiles]/[maxtiles]\]</a><BR>"
+		dat += "<A href='?src=[REF(src)];operation=eject'>Loaded \[[specialtiles]/[maxtiles]\]</a><BR>"
 	else
 		dat += "None Loaded<BR>"
 
 	dat += "Behaviour controls are [locked ? "locked" : "unlocked"]<BR>"
 	if(!locked || issilicon(user) || IsAdminGhost(user))
-		dat += "Add tiles to new hull plating: <A href='?src=\ref[src];operation=autotile'>[autotile ? "Yes" : "No"]</A><BR>"
-		dat += "Place floor tiles: <A href='?src=\ref[src];operation=place'>[placetiles ? "Yes" : "No"]</A><BR>"
-		dat += "Replace existing floor tiles with custom tiles: <A href='?src=\ref[src];operation=replace'>[replacetiles ? "Yes" : "No"]</A><BR>"
-		dat += "Repair damaged tiles and platings: <A href='?src=\ref[src];operation=fix'>[fixfloors ? "Yes" : "No"]</A><BR>"
-		dat += "Traction Magnets: <A href='?src=\ref[src];operation=anchor'>[anchored ? "Engaged" : "Disengaged"]</A><BR>"
-		dat += "Patrol Station: <A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "Yes" : "No"]</A><BR>"
+		dat += "Add tiles to new hull plating: <A href='?src=[REF(src)];operation=autotile'>[autotile ? "Yes" : "No"]</A><BR>"
+		dat += "Place floor tiles: <A href='?src=[REF(src)];operation=place'>[placetiles ? "Yes" : "No"]</A><BR>"
+		dat += "Replace existing floor tiles with custom tiles: <A href='?src=[REF(src)];operation=replace'>[replacetiles ? "Yes" : "No"]</A><BR>"
+		dat += "Repair damaged tiles and platings: <A href='?src=[REF(src)];operation=fix'>[fixfloors ? "Yes" : "No"]</A><BR>"
+		dat += "Traction Magnets: <A href='?src=[REF(src)];operation=anchor'>[anchored ? "Engaged" : "Disengaged"]</A><BR>"
+		dat += "Patrol Station: <A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "Yes" : "No"]</A><BR>"
 		var/bmode
 		if(targetdirection)
 			bmode = dir2text(targetdirection)
 		else
 			bmode = "disabled"
-		dat += "Line Mode : <A href='?src=\ref[src];operation=linemode'>[bmode]</A><BR>"
+		dat += "Line Mode : <A href='?src=[REF(src)];operation=linemode'>[bmode]</A><BR>"
 
 	return dat
 
@@ -287,11 +287,11 @@
 				anchored = TRUE
 		if(PLACE_TILE)
 			F = scan_target
-			if(istype(F, /turf/open/floor/plating)) //The floor must not already have a tile.
+			if(isplatingturf(F)) //The floor must not already have a tile.
 				result = F
 		if(REPLACE_TILE)
 			F = scan_target
-			if(isfloorturf(F) && !istype(F, /turf/open/floor/plating)) //The floor must already have a tile.
+			if(isfloorturf(F) && !isplatingturf(F)) //The floor must already have a tile.
 				result = F
 		if(FIX_TILE)	//Selects only damaged floors.
 			F = scan_target
@@ -299,7 +299,7 @@
 				result = F
 		if(TILE_EMAG) //Emag mode! Rip up the floor and cause breaches to space!
 			F = scan_target
-			if(!istype(F, /turf/open/floor/plating))
+			if(!isplatingturf(F))
 				result = F
 		else //If no special processing is needed, simply return the result.
 			result = scan_target
@@ -329,7 +329,7 @@
 	else
 		var/turf/open/floor/F = target_turf
 
-		if(F.type != initial(tiletype.turf_type) && (F.broken || F.burnt || istype(F, /turf/open/floor/plating)) || F.type == (initial(tiletype.turf_type) && (F.broken || F.burnt)))
+		if(F.type != initial(tiletype.turf_type) && (F.broken || F.burnt || isplatingturf(F)) || F.type == (initial(tiletype.turf_type) && (F.broken || F.burnt)))
 			anchored = TRUE
 			icon_state = "floorbot-c"
 			mode = BOT_REPAIRING
@@ -340,7 +340,7 @@
 				F.burnt = 0
 				F.ChangeTurf(/turf/open/floor/plasteel)
 
-		if(replacetiles && F.type != initial(tiletype.turf_type) && specialtiles && !istype(F, /turf/open/floor/plating))
+		if(replacetiles && F.type != initial(tiletype.turf_type) && specialtiles && !isplatingturf(F))
 			anchored = TRUE
 			icon_state = "floorbot-c"
 			mode = BOT_REPAIRING

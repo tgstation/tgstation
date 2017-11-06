@@ -133,9 +133,9 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	dat += "<B>Install Module:</B><BR>"
 	dat += "<I>The number afterwards is the amount of processing time it consumes.</I><BR>"
 	for(var/datum/AI_Module/large/module in possible_modules)
-		dat += "<A href='byond://?src=\ref[src];[module.mod_pick_name]=1'>[module.module_name]</A><A href='byond://?src=\ref[src];showdesc=[module.mod_pick_name]'>\[?\]</A> ([module.cost])<BR>"
+		dat += "<A href='byond://?src=[REF(src)];[module.mod_pick_name]=1'>[module.module_name]</A><A href='byond://?src=[REF(src)];showdesc=[module.mod_pick_name]'>\[?\]</A> ([module.cost])<BR>"
 	for(var/datum/AI_Module/small/module in possible_modules)
-		dat += "<A href='byond://?src=\ref[src];[module.mod_pick_name]=1'>[module.module_name]</A><A href='byond://?src=\ref[src];showdesc=[module.mod_pick_name]'>\[?\]</A> ([module.cost])<BR>"
+		dat += "<A href='byond://?src=[REF(src)];[module.mod_pick_name]=1'>[module.module_name]</A><A href='byond://?src=[REF(src)];showdesc=[module.mod_pick_name]'>\[?\]</A> ([module.cost])<BR>"
 	dat += "<HR>"
 	if(temp)
 		dat += "[temp]"
@@ -367,17 +367,17 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	var/sec_left = seconds_remaining()
 	if(!sec_left)
 		timing = FALSE
-		detonate(T.z)
+		detonate()
 	else if(world.time >= next_announce)
 		minor_announce("[sec_left] SECONDS UNTIL DOOMSDAY DEVICE ACTIVATION!", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", TRUE)
 		next_announce += DOOMSDAY_ANNOUNCE_INTERVAL
 
-/obj/machinery/doomsday_device/proc/detonate(z_level = ZLEVEL_STATION_PRIMARY)
+/obj/machinery/doomsday_device/proc/detonate()
 	sound_to_playing_players('sound/machines/alarm.ogg')
 	sleep(100)
 	for(var/mob/living/L in GLOB.mob_list)
 		var/turf/T = get_turf(L)
-		if(!T || T.z != z_level)
+		if(!T || !(T.z in GLOB.station_z_levels))
 			continue
 		if(issilicon(L))
 			continue
@@ -426,7 +426,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	for(var/obj/machinery/door/D in GLOB.airlocks)
 		if(!(D.z in GLOB.station_z_levels))
 			continue
-		INVOKE_ASYNC(D, /obj/machinery/door.proc/hostile_lockdown, src)
+		INVOKE_ASYNC(D, /obj/machinery/door.proc/hostile_lockdown, owner)
 		addtimer(CALLBACK(D, /obj/machinery/door.proc/disable_lockdown), 900)
 
 	var/obj/machinery/computer/communications/C = locate() in GLOB.machines

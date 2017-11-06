@@ -139,8 +139,10 @@
 							log_game("<b>[key_name(M)]</b> was given the following commendation by <b>[key_name(user)]</b>: [input]")
 							message_admins("<b>[key_name(M)]</b> was given the following commendation by <b>[key_name(user)]</b>: [input]")
 
-		else to_chat(user, "<span class='warning'>Medals can only be pinned on jumpsuits!</span>")
-	else ..()
+		else
+			to_chat(user, "<span class='warning'>Medals can only be pinned on jumpsuits!</span>")
+	else
+		..()
 
 /obj/item/clothing/accessory/medal/conduct
 	name = "distinguished conduct medal"
@@ -150,6 +152,16 @@
 	name = "bronze heart medal"
 	desc = "A bronze heart-shaped medal awarded for sacrifice. It is often awarded posthumously or for severe injury in the line of duty."
 	icon_state = "bronze_heart"
+
+/obj/item/clothing/accessory/medal/ribbon
+	name = "ribbon"
+	desc = "A ribbon"
+	icon_state = "cargo"
+	item_color = "cargo"
+
+/obj/item/clothing/accessory/medal/ribbon/cargo
+	name = "\"cargo tech of the shift\" award"
+	desc = "An award bestowed only upon those cargotechs who have exhibited devotion to their duty in keeping with the highest traditions of Cargonia."
 
 /obj/item/clothing/accessory/medal/silver
 	name = "silver medal"

@@ -30,7 +30,7 @@
 	..()
 	if(statpanel("Status"))
 		if(stealthcooldown >= world.time)
-			stat(null, "Stealth Cooldown Remaining: [max(round((stealthcooldown - world.time)*0.1, 0.1), 0)] seconds")
+			stat(null, "Stealth Cooldown Remaining: [DisplayTimeText(stealthcooldown - world.time)]")
 
 /mob/living/simple_animal/hostile/guardian/assassin/AttackingTarget()
 	. = ..()
@@ -79,7 +79,7 @@
 		updatestealthalert()
 		toggle = TRUE
 	else if(!forced)
-		to_chat(src, "<span class='danger'><B>You cannot yet enter stealth, wait another [max(round((stealthcooldown - world.time)*0.1, 0.1), 0)] seconds!</span></B>")
+		to_chat(src, "<span class='danger'><B>You cannot yet enter stealth, wait another [DisplayTimeText(stealthcooldown - world.time)]!</span></B>")
 
 /mob/living/simple_animal/hostile/guardian/assassin/proc/updatestealthalert()
 	if(stealthcooldown <= world.time)

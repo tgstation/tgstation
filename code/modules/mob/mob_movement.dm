@@ -10,6 +10,15 @@
 			return TRUE
 	return (!mover.density || !density || lying)
 
+//Does mob allows other mob M to pass over it
+//If it's hostile to M and moves not worse than M AND it's non-restrained and not on help intent, it doesn't
+/mob/proc/allows_pass(mob/M)
+	return movement_type < M.movement_type || faction_check(M) && (a_intent == INTENT_HELP || restrained())
+
+//Will mob try to move trough other mob
+//so if it's non-restrained and not on help intent, it won't
+/mob/proc/wants_pass()
+	return a_intent == INTENT_HELP || restrained()
 
 //The byond version of these verbs wait for the next tick before acting.
 //	instant verbs however can run mid tick or even during the time between ticks.
@@ -53,15 +62,18 @@
 
 
 /client/Northwest()
-	if(!usr.get_active_held_item())
+	var/obj/item/I = usr.get_active_held_item()
+	if(!I)
 		to_chat(usr, "<span class='warning'>You have nothing to drop in your hand!</span>")
 		return
-	usr.drop_item()
+	usr.dropItemToGround(I)
 
 //This gets called when you press the delete button.
 /client/verb/delete_key_pressed()
 	set hidden = 1
 
+	if(!isliving(usr))
+		return
 	if(!usr.pulling)
 		to_chat(usr, "<span class='notice'>You are not pulling anything.</span>")
 		return
@@ -83,8 +95,8 @@
 
 /client/verb/drop_item()
 	set hidden = 1
-	if(!iscyborg(mob))
-		mob.drop_item_v()
+	if(!iscyborg(mob) && mob.stat == CONSCIOUS)
+		mob.dropItemToGround(mob.get_active_held_item())
 	return
 
 
@@ -189,10 +201,10 @@
 
 	return .
 
-/mob/Moved(oldLoc, dir)
+/mob/Moved(oldLoc, dir, Forced = FALSE)
 	. = ..()
 	for(var/obj/O in contents)
-		O.on_mob_move(dir, src, oldLoc)
+		O.on_mob_move(dir, src, oldLoc, Forced)
 
 /mob/setDir(newDir)
 	. = ..()

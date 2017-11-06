@@ -71,15 +71,11 @@
 		if(storedpda)
 			to_chat(user, "<span class='warning'>There is already a PDA inside!</span>")
 			return
-		else
-			var/obj/item/device/pda/P = user.get_active_held_item()
-			if(istype(P))
-				if(!user.drop_item())
-					return
-				storedpda = P
-				P.loc = src
-				P.add_fingerprint(user)
-				update_icon()
+		else if(!user.transferItemToLoc(O, src))
+			return
+		storedpda = O
+		O.add_fingerprint(user)
+		update_icon()
 
 	else if(istype(O, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
 		var/obj/item/weldingtool/WT = O
@@ -126,7 +122,7 @@
 			ejectpda()
 
 		else
-			to_chat(user, "<span class='notice'>\The [src] is empty.</span>")
+			to_chat(user, "<span class='notice'>[src] is empty.</span>")
 
 
 /obj/machinery/pdapainter/verb/ejectpda()
@@ -142,7 +138,7 @@
 		storedpda = null
 		update_icon()
 	else
-		to_chat(usr, "<span class='notice'>The [src] is empty.</span>")
+		to_chat(usr, "<span class='notice'>[src] is empty.</span>")
 
 
 /obj/machinery/pdapainter/power_change()

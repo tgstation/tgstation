@@ -40,6 +40,7 @@
 	baseturf = /turf/open/floor/plating/ashplanet/wateryrock //I assume this will be a chasm eventually, once this becomes an actual surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
+	attachment_holes = FALSE
 
 /turf/open/floor/plating/ashplanet/Initialize()
 	if(smooth)
@@ -81,6 +82,7 @@
 	name = "beach"
 	icon = 'icons/misc/beach.dmi'
 	flags_1 = NONE
+	attachment_holes = FALSE
 
 /turf/open/floor/plating/beach/ex_act(severity, target)
 	contents_explosion(severity, target)
@@ -130,6 +132,7 @@
 	baseturf = /turf/open/floor/plating/ice
 	slowdown = 1
 	wet = TURF_WET_PERMAFROST
+	attachment_holes = FALSE
 
 /turf/open/floor/plating/ice/colder
 	temperature = 140
@@ -150,6 +153,7 @@
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snowplating"
 	temperature = 180
+	attachment_holes = FALSE
 
 /turf/open/floor/plating/snowed/colder
 	temperature = 140

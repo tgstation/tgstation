@@ -164,7 +164,8 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	feedback_details += "Vent Coords: [center.x],[center.y],[center.z]"
 	flood_images += image(image_icon,center,image_state,MOB_LAYER)
 	flood_turfs += center
-	if(target.client) target.client.images |= flood_images
+	if(target.client)
+		target.client.images |= flood_images
 	next_expand = world.time + FAKE_FLOOD_EXPAND_TIME
 	START_PROCESSING(SSobj, src)
 
@@ -960,13 +961,18 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 		var/l = ui_hand_position(target.get_held_index_of_item(l_hand))
 		var/r = ui_hand_position(target.get_held_index_of_item(r_hand))
 		var/list/slots_free = list(l,r)
-		if(l_hand) slots_free -= l
-		if(r_hand) slots_free -= r
+		if(l_hand)
+			slots_free -= l
+		if(r_hand)
+			slots_free -= r
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
-			if(!H.belt) slots_free += ui_belt
-			if(!H.l_store) slots_free += ui_storage1
-			if(!H.r_store) slots_free += ui_storage2
+			if(!H.belt)
+				slots_free += ui_belt
+			if(!H.l_store)
+				slots_free += ui_storage1
+			if(!H.r_store)
+				slots_free += ui_storage2
 		if(slots_free.len)
 			target.halitem.screen_loc = pick(slots_free)
 			target.halitem.layer = ABOVE_HUD_LAYER
@@ -999,7 +1005,8 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 					target.halitem.icon_state = "flashbang1"
 					target.halitem.name = "Flashbang"
 			feedback_details += "Type: [target.halitem.name]"
-			if(target.client) target.client.screen += target.halitem
+			if(target.client)
+				target.client.screen += target.halitem
 			QDEL_IN(target.halitem, rand(150, 350))
 	qdel(src)
 
@@ -1141,11 +1148,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	var/obj/item/projectile/hallucination/H = new proj_type(start)
 	target.playsound_local(start, H.hal_fire_sound, 60, 1)
 	H.hal_target = target
-	H.current = start
-	H.starting = start
-	H.yo = target.y - start.y
-	H.xo = target.x - start.x
-	H.original = target
+	H.preparePixelProjectile(target, start)
 	H.fire()
 	qdel(src)
 

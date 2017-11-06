@@ -185,7 +185,7 @@
 				SEND_SOUND(recipient, sound('sound/effects/adminhelp.ogg'))
 
 				//AdminPM popup for ApocStation and anybody else who wants to use it. Set it with POPUP_ADMIN_PM in config.txt ~Carn
-				if(config.popup_admin_pm)
+				if(CONFIG_GET(flag/popup_admin_pm))
 					spawn()	//so we don't hold the caller proc up
 						var/sender = src
 						var/sendername = key
@@ -277,7 +277,7 @@
 		return "Error: Ticket could not be found"
 
 	var/static/stealthkey
-	var/adminname = config.showircname ? irc_tagged : "Administrator"
+	var/adminname = CONFIG_GET(flag/show_irc_name) ? irc_tagged : "Administrator"
 
 	if(!C)
 		return "Error: No client"

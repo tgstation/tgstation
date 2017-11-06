@@ -1,20 +1,72 @@
 /obj/item/toy/plush
 	name = "plush"
-	desc = "this is the special coder plush, do not steal"
+	desc = "This is the special coder plush, do not steal."
 	icon = 'icons/obj/plushes.dmi'
 	icon_state = "debug"
 	attack_verb = list("thumped", "whomped", "bumped")
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
 	var/list/squeak_override //Weighted list; If you want your plush to have different squeak sounds use this
+	var/stuffed = TRUE //If the plushie has stuffing in it
+	var/obj/item/grenade/grenade //You can remove the stuffing from a plushie and add a grenade to it for *nefarious uses*
 
 /obj/item/toy/plush/Initialize()
 	. = ..()
 	AddComponent(/datum/component/squeak, squeak_override)
 
+/obj/item/toy/plush/Destroy()
+	QDEL_NULL(grenade)
+	return ..()
+
+/obj/item/toy/plush/handle_atom_del(atom/A)
+	if(A == grenade)
+		grenade = null
+	..()
+
 /obj/item/toy/plush/attack_self(mob/user)
 	. = ..()
-	to_chat(user, "<span class='notice'>You pet [src]. D'awww.</span>")
+	if(stuffed || grenade)
+		to_chat(user, "<span class='notice'>You pet [src]. D'awww.</span>")
+		if(grenade && !grenade.active)
+			if(istype(grenade, /obj/item/grenade/chem_grenade))
+				var/obj/item/grenade/chem_grenade/G = grenade
+				if(G.nadeassembly) //We're activated through different methods
+					return
+			log_game("[key_name(user)] activated a hidden grenade in [src].")
+			grenade.preprime(user, msg = FALSE, volume = 10)
+	else
+		to_chat(user, "<span class='notice'>You try to pet [src], but it has no stuffing. Aww...</span>")
+
+/obj/item/toy/plush/attackby(obj/item/I, mob/living/user, params)
+	if(I.is_sharp())
+		if(!grenade)
+			if(!stuffed)
+				to_chat(user, "<span class='warning'>You already murdered it!</span>")
+				return
+			user.visible_message("<span class='notice'>[user] tears out the stuffing from [src]!</span>", "<span class='notice'>You rip a bunch of the stuffing from [src]. Murderer.</span>")
+			playsound(I, I.usesound, 50, TRUE)
+			stuffed = FALSE
+		else
+			to_chat(user, "<span class='notice'>You remove the grenade from [src].</span>")
+			user.put_in_hands(grenade)
+			grenade = null
+		return
+	if(istype(I, /obj/item/grenade))
+		if(stuffed)
+			to_chat(user, "<span class='warning'>You need to remove some stuffing first!</span>")
+			return
+		if(grenade)
+			to_chat(user, "<span class='warning'>[src] already has a grenade!</span>")
+			return
+		if(!user.transferItemToLoc(I, src))
+			return
+		user.visible_message("<span class='warning'>[user] slides [grenade] into [src].</span>", \
+		"<span class='danger'>You slide [I] into [src].</span>")
+		grenade = I
+		var/turf/T = get_turf(user)
+		log_game("[key_name(user)] added a grenade ([I.name]) to [src] at [COORD(T)].")
+		return
+	return ..()
 
 /obj/item/toy/plush/carpplushie
 	name = "space carp plushie"

@@ -48,7 +48,7 @@
 /area/ruin/unpowered)
 "j" = (
 /obj/machinery/abductor/experiment{
-	team = 100
+	team_number = 100
 	},
 /turf/open/floor/plating/abductor{
 	initial_gas_mix = "o2=16;n2=23;TEMP=300"
@@ -61,7 +61,7 @@
 /area/ruin/unpowered)
 "l" = (
 /obj/machinery/abductor/pad{
-	team = 100
+	team_number = 100
 	},
 /turf/open/floor/plating/abductor{
 	initial_gas_mix = "o2=16;n2=23;TEMP=300"

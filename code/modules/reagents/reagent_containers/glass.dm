@@ -49,12 +49,12 @@
 				to_chat(user, "<span class='notice'>You swallow a gulp of [src].</span>")
 			var/fraction = min(5/reagents.total_volume, 1)
 			reagents.reaction(M, INGEST, fraction)
-			spawn(5)
-				reagents.trans_to(M, 5)
+			addtimer(CALLBACK(reagents, /datum/reagents.proc/trans_to, M, 5), 5)
 			playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 
 /obj/item/reagent_containers/glass/afterattack(obj/target, mob/user, proximity)
-	if((!proximity) || !check_allowed_items(target,target_self=1)) return
+	if((!proximity) || !check_allowed_items(target,target_self=1))
+		return
 
 	else if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
@@ -290,7 +290,7 @@
 
 /obj/item/reagent_containers/glass/beaker/waterbottle
 	name = "bottle of water"
-	desc = "A bottle of water filled at an old Earth bottling facility,"
+	desc = "A bottle of water filled at an old Earth bottling facility."
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "smallbottle"
 	item_state = "bottle"

@@ -31,7 +31,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list("tag","area","type","loc","locs",
 			I.damtype = STAMINA // thou shalt not
 
 		N.update_icon()
-		if(istype(O, /obj/machinery))
+		if(ismachinery(O))
 			var/obj/machinery/M = O
 			M.power_change()
 
@@ -47,7 +47,8 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list("tag","area","type","loc","locs",
 	//       Movement based on lower left corner. Tiles that do not fit
 	//		 into the new area will not be moved.
 
-	if(!A || !src) return 0
+	if(!A || !src)
+		return 0
 
 	var/list/turfs_src = get_area_turfs(src.type)
 	var/list/turfs_trg = get_area_turfs(A.type)
@@ -103,7 +104,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list("tag","area","type","loc","locs",
 			copiedobjs += O2.GetAllContents()
 
 		for(var/mob/M in T)
-			if(istype(M, /mob/camera))
+			if(iscameramob(M))
 				continue // If we need to check for more mobs, I'll add a variable
 			var/mob/SM = DuplicateObject(M , perfectcopy=TRUE, newloc = B, holoitem=TRUE)
 			copiedobjs += SM.GetAllContents()
