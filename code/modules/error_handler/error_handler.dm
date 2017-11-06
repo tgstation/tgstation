@@ -4,7 +4,7 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 #ifdef DEBUG
 /world/Error(exception/E, datum/e_src)
 	if(!istype(E)) //Something threw an unusual exception
-		log_world("\[[time_stamp()]] Uncaught exception: [E]")
+		log_world("Uncaught exception: [E]")
 		return ..()
 	
 	//this is snowflake because of a byond bug (ID:2306577), do not attempt to call non-builtin procs in this if
@@ -12,10 +12,10 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 		var/list/split = splittext(E.desc, "\n")
 		for (var/i in 1 to split.len)
 			if (split[i] != "")
-				split[i] = "\[[time2text(world.timeofday,"hh:mm:ss")]\][split[i]]"
+				split[i] = "[split[i]]"
 		E.desc = jointext(split, "\n")
 		//log to world while intentionally triggering the byond bug.
-		log_world("\[[time2text(world.timeofday,"hh:mm:ss")]\]runtime error: [E.name]\n[E.desc]")
+		log_world("runtime error: [E.name]\n[E.desc]")
 		//if we got to here without silently ending, the byond bug has been fixed.
 		log_world("The bug with recursion runtimes has been fixed. Please remove the snowflake check from world/Error in [__FILE__]:[__LINE__]")
 		return //this will never happen.
@@ -111,24 +111,24 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 	if(GLOB.error_cache)
 		GLOB.error_cache.log_error(E, desclines)
 
-	SEND_TEXT(world.log, "\[[time_stamp()]] Runtime in [E.file],[E.line]: [E]")
+	log_world("Runtime in [E.file],[E.line]: [E]"))
 	for(var/line in desclines)
-		SEND_TEXT(world.log, line)
+		log_world(line)
 
 /* This logs the runtime in the old format */
 
-	E.name = "\n\[[time2text(world.timeofday,"hh:mm:ss")]\][E.name]"
+	E.name = "\n\[[time_stamp()]][E.name]"
 
 	//Original
 	//
 	var/list/split = splittext(E.desc, "\n")
 	for (var/i in 1 to split.len)
 		if (split[i] != "")
-			split[i] = "\[[time2text(world.timeofday,"hh:mm:ss")]\][split[i]]"
+			split[i] = "\[[time_stamp()]][split[i]]"
 	E.desc = jointext(split, "\n")
-	world.log = GLOB.world_runtime_log
+	world.log = null
 	..(E)
 
-	world.log = null
+	world.log = GLOB.world_runtime_log
 
 #endif
