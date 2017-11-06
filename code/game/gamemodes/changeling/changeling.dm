@@ -122,12 +122,14 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 						changelingwin = 0
 					count++
 
-			if(changelingwin)
-				text += "<br><font color='green'><b>The changeling was successful!</b></font>"
-				SSblackbox.add_details("changeling_success","SUCCESS")
+				if(changelingwin)
+					text += "<br><font color='green'><b>The changeling was successful!</b></font>"
+					SSblackbox.add_details("changeling_success","SUCCESS")
+				else
+					text += "<br><span class='boldannounce'>The changeling has failed.</span>"
+					SSblackbox.add_details("changeling_success","FAIL")
 			else
-				text += "<br><span class='boldannounce'>The changeling has failed.</span>"
-				SSblackbox.add_details("changeling_success","FAIL")
+				SSblackbox.add_details("changeling_success", "NO_OBJECTIVES")
 			text += "<br>"
 
 		to_chat(world, text)

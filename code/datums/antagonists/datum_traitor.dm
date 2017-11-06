@@ -80,63 +80,65 @@
 /datum/antagonist/traitor/proc/forge_traitor_objectives()
 	return
 /datum/antagonist/traitor/human/forge_traitor_objectives()
-	var/is_hijacker = prob(10)
-	var/martyr_chance = prob(20)
-	var/objective_count = is_hijacker 			//Hijacking counts towards number of objectives
-	if(!SSticker.mode.exchange_blue && SSticker.mode.traitors.len >= 8) 	//Set up an exchange if there are enough traitors
-		if(!SSticker.mode.exchange_red)
-			SSticker.mode.exchange_red = owner
+	if(owner.current.client.prefs.receive_solo_objectives)
+		var/is_hijacker = prob(10)
+		var/martyr_chance = prob(20)
+		var/objective_count = is_hijacker 			//Hijacking counts towards number of objectives
+		if(!SSticker.mode.exchange_blue && SSticker.mode.traitors.len >= 8) 	//Set up an exchange if there are enough traitors
+			if(!SSticker.mode.exchange_red)
+				SSticker.mode.exchange_red = owner
+			else
+				SSticker.mode.exchange_blue = owner
+				assign_exchange_role(SSticker.mode.exchange_red)
+				assign_exchange_role(SSticker.mode.exchange_blue)
+			objective_count += 1					//Exchange counts towards number of objectives
+		var/toa = CONFIG_GET(number/traitor_objectives_amount)
+		for(var/i = objective_count, i < toa, i++)
+			forge_single_objective()
+
+		if(is_hijacker && objective_count <= toa) //Don't assign hijack if it would exceed the number of objectives set in config.traitor_objectives_amount
+			if (!(locate(/datum/objective/hijack) in owner.objectives))
+				var/datum/objective/hijack/hijack_objective = new
+				hijack_objective.owner = owner
+				add_objective(hijack_objective)
+				return
+
+
+		var/martyr_compatibility = 1 //You can't succeed in stealing if you're dead.
+		for(var/datum/objective/O in owner.objectives)
+			if(!O.martyr_compatible)
+				martyr_compatibility = 0
+				break
+
+		if(martyr_compatibility && martyr_chance)
+			var/datum/objective/martyr/martyr_objective = new
+			martyr_objective.owner = owner
+			add_objective(martyr_objective)
+			return
+
 		else
-			SSticker.mode.exchange_blue = owner
-			assign_exchange_role(SSticker.mode.exchange_red)
-			assign_exchange_role(SSticker.mode.exchange_blue)
-		objective_count += 1					//Exchange counts towards number of objectives
-	var/toa = CONFIG_GET(number/traitor_objectives_amount)
-	for(var/i = objective_count, i < toa, i++)
-		forge_single_objective()
-
-	if(is_hijacker && objective_count <= toa) //Don't assign hijack if it would exceed the number of objectives set in config.traitor_objectives_amount
-		if (!(locate(/datum/objective/hijack) in owner.objectives))
-			var/datum/objective/hijack/hijack_objective = new
-			hijack_objective.owner = owner
-			add_objective(hijack_objective)
-			return
-
-
-	var/martyr_compatibility = 1 //You can't succeed in stealing if you're dead.
-	for(var/datum/objective/O in owner.objectives)
-		if(!O.martyr_compatible)
-			martyr_compatibility = 0
-			break
-
-	if(martyr_compatibility && martyr_chance)
-		var/datum/objective/martyr/martyr_objective = new
-		martyr_objective.owner = owner
-		add_objective(martyr_objective)
-		return
-
-	else
-		if(!(locate(/datum/objective/escape) in owner.objectives))
-			var/datum/objective/escape/escape_objective = new
-			escape_objective.owner = owner
-			add_objective(escape_objective)
-			return
+			if(!(locate(/datum/objective/escape) in owner.objectives))
+				var/datum/objective/escape/escape_objective = new
+				escape_objective.owner = owner
+				add_objective(escape_objective)
+				return
 
 /datum/antagonist/traitor/AI/forge_traitor_objectives()
-	var/objective_count = 0
+	if(owner.current.client.prefs.receive_solo_objectives)
+		var/objective_count = 0
 
-	if(prob(30))
-		objective_count += forge_single_objective()
+		if(prob(30))
+			objective_count += forge_single_objective()
 
-	for(var/i = objective_count, i < CONFIG_GET(number/traitor_objectives_amount), i++)
-		var/datum/objective/assassinate/kill_objective = new
-		kill_objective.owner = owner
-		kill_objective.find_target()
-		add_objective(kill_objective)
+		for(var/i = objective_count, i < CONFIG_GET(number/traitor_objectives_amount), i++)
+			var/datum/objective/assassinate/kill_objective = new
+			kill_objective.owner = owner
+			kill_objective.find_target()
+			add_objective(kill_objective)
 
-	var/datum/objective/survive/exist/exist_objective = new
-	exist_objective.owner = owner
-	add_objective(exist_objective)
+		var/datum/objective/survive/exist/exist_objective = new
+		exist_objective.owner = owner
+		add_objective(exist_objective)
 /datum/antagonist/traitor/proc/forge_single_objective()
 	return 0
 /datum/antagonist/traitor/human/forge_single_objective() //Returns how many objectives are added
@@ -240,6 +242,9 @@
 		return
 	var/law = "Accomplish your objectives at all costs."
 	var/law_borg = "Accomplish your AI's objectives at all costs."
+	if(!owner.current.client.prefs.receive_solo_objectives)
+		law = "Sabotage the station in whatever way you see fit."
+		law_borg = "Sabotage the station in whatever way your AI sees fit."
 	killer.set_zeroth_law(law, law_borg)
 	killer.set_syndie_radio()
 	to_chat(killer, "Your radio has been upgraded! Use :t to speak on an encrypted channel with Syndicate Agents!")

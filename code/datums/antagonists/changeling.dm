@@ -361,70 +361,70 @@
 		if(!CTO.escape_objective_compatible)
 			escape_objective_possible = FALSE
 			break
+	if(owner.current.client.prefs.receive_solo_objectives)
+		var/datum/objective/absorb/absorb_objective = new
+		absorb_objective.owner = owner
+		absorb_objective.gen_amount_goal(6, 8)
+		objectives += absorb_objective
 
-	var/datum/objective/absorb/absorb_objective = new
-	absorb_objective.owner = owner
-	absorb_objective.gen_amount_goal(6, 8)
-	objectives += absorb_objective
-
-	if(prob(60))
-		if(prob(85))
-			var/datum/objective/steal/steal_objective = new
-			steal_objective.owner = owner
-			steal_objective.find_target()
-			objectives += steal_objective
-		else
-			var/datum/objective/download/download_objective = new
-			download_objective.owner = owner
-			download_objective.gen_amount_goal()
-			objectives += download_objective
-
-	var/list/active_ais = active_ais()
-	if(active_ais.len && prob(100/GLOB.joined_player_list.len))
-		var/datum/objective/destroy/destroy_objective = new
-		destroy_objective.owner = owner
-		destroy_objective.find_target()
-		objectives += destroy_objective
-	else
-		if(prob(70))
-			var/datum/objective/assassinate/kill_objective = new
-			kill_objective.owner = owner
-			if(team_mode) //No backstabbing while in a team
-				kill_objective.find_target_by_role(role = "Changeling", role_type = 1, invert = 1)
+		if(prob(60))
+			if(prob(85))
+				var/datum/objective/steal/steal_objective = new
+				steal_objective.owner = owner
+				steal_objective.find_target()
+				objectives += steal_objective
 			else
-				kill_objective.find_target()
-			objectives += kill_objective
-		else
-			var/datum/objective/maroon/maroon_objective = new
-			maroon_objective.owner = owner
-			if(team_mode)
-				maroon_objective.find_target_by_role(role = "Changeling", role_type = 1, invert = 1)
-			else
-				maroon_objective.find_target()
-			objectives += maroon_objective
+				var/datum/objective/download/download_objective = new
+				download_objective.owner = owner
+				download_objective.gen_amount_goal()
+				objectives += download_objective
 
-			if (!(locate(/datum/objective/escape) in objectives) && escape_objective_possible)
+		var/list/active_ais = active_ais()
+		if(active_ais.len && prob(100/GLOB.joined_player_list.len))
+			var/datum/objective/destroy/destroy_objective = new
+			destroy_objective.owner = owner
+			destroy_objective.find_target()
+			objectives += destroy_objective
+		else
+			if(prob(70))
+				var/datum/objective/assassinate/kill_objective = new
+				kill_objective.owner = owner
+				if(team_mode) //No backstabbing while in a team
+					kill_objective.find_target_by_role(role = "Changeling", role_type = 1, invert = 1)
+				else
+					kill_objective.find_target()
+				objectives += kill_objective
+			else
+				var/datum/objective/maroon/maroon_objective = new
+				maroon_objective.owner = owner
+				if(team_mode)
+					maroon_objective.find_target_by_role(role = "Changeling", role_type = 1, invert = 1)
+				else
+					maroon_objective.find_target()
+				objectives += maroon_objective
+
+				if (!(locate(/datum/objective/escape) in objectives) && escape_objective_possible)
+					var/datum/objective/escape/escape_with_identity/identity_theft = new
+					identity_theft.owner = owner
+					identity_theft.target = maroon_objective.target
+					identity_theft.update_explanation_text()
+					objectives += identity_theft
+					escape_objective_possible = FALSE
+
+		if (!(locate(/datum/objective/escape) in objectives) && escape_objective_possible)
+			if(prob(50))
+				var/datum/objective/escape/escape_objective = new
+				escape_objective.owner = owner
+				objectives += escape_objective
+			else
 				var/datum/objective/escape/escape_with_identity/identity_theft = new
 				identity_theft.owner = owner
-				identity_theft.target = maroon_objective.target
-				identity_theft.update_explanation_text()
+				if(team_mode)
+					identity_theft.find_target_by_role(role = "Changeling", role_type = 1, invert = 1)
+				else
+					identity_theft.find_target()
 				objectives += identity_theft
-				escape_objective_possible = FALSE
-
-	if (!(locate(/datum/objective/escape) in objectives) && escape_objective_possible)
-		if(prob(50))
-			var/datum/objective/escape/escape_objective = new
-			escape_objective.owner = owner
-			objectives += escape_objective
-		else
-			var/datum/objective/escape/escape_with_identity/identity_theft = new
-			identity_theft.owner = owner
-			if(team_mode)
-				identity_theft.find_target_by_role(role = "Changeling", role_type = 1, invert = 1)
-			else
-				identity_theft.find_target()
-			objectives += identity_theft
-		escape_objective_possible = FALSE
+			escape_objective_possible = FALSE
 
 	owner.objectives |= objectives
 

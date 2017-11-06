@@ -27,7 +27,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/tmp/old_be_special = 0			//Bitflag version of be_special, used to update old savefiles and nothing more
 										//If it's 0, that's good, if it's anything but 0, the owner of this prefs file's antag choices were,
 										//autocorrected this round, not that you'd need to check that.
-
+	var/receive_solo_objectives = TRUE	//Whether or not a player will receive objectives as a solo antagonist
 
 	var/UI_style = "Midnight"
 	var/buttons_locked = FALSE
@@ -476,6 +476,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						dat += "<b>Be [capitalize(i)]:</b> <font color=red> \[IN [days_remaining] DAYS]</font><br>"
 					else
 						dat += "<b>Be [capitalize(i)]:</b> <a href='?_src_=prefs;preference=be_special;be_special_type=[i]'>[(i in be_special) ? "Yes" : "No"]</a><br>"
+			dat += "<b>Get Solo Objectives:</b> <a href='?_src_=prefs;preference=receive_solo_objectives'>[receive_solo_objectives ? "Yes" : "No"]</a><br>"
 
 			dat += "</td></tr></table>"
 
@@ -1189,6 +1190,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						be_special -= be_special_type
 					else
 						be_special += be_special_type
+
+				if("receive_solo_objectives")
+					receive_solo_objectives = !receive_solo_objectives
 
 				if("name")
 					be_random_name = !be_random_name

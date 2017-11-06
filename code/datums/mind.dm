@@ -1317,11 +1317,14 @@
 
 /datum/mind/proc/announce_objectives()
 	var/obj_count = 1
-	to_chat(current, "<span class='notice'>Your current objectives:</span>")
-	for(var/objective in objectives)
-		var/datum/objective/O = objective
-		to_chat(current, "<B>Objective #[obj_count]</B>: [O.explanation_text]")
-		obj_count++
+	if(objectives.len)
+		to_chat(current, "<span class='notice'>Your current objectives:</span>")
+		for(var/objective in objectives)
+			var/datum/objective/O = objective
+			to_chat(current, "<B>Objective #[obj_count]</B>: [O.explanation_text]")
+			obj_count++
+	else
+		to_chat(current, "<span class='notice'>You have not been assigned any objectives. Do as you wish.</span>")
 
 /datum/mind/proc/find_syndicate_uplink()
 	var/list/L = current.GetAllContents()

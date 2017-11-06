@@ -140,6 +140,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["tgui_lock"]			>> tgui_lock
 	S["windowflash"]		>> windowflashing
 	S["be_special"] 		>> be_special
+	S["receive_solo_objectives"]	>>receive_solo_objectives
 
 
 	S["default_slot"]		>> default_slot
@@ -207,6 +208,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["tgui_lock"], tgui_lock)
 	WRITE_FILE(S["windowflash"], windowflashing)
 	WRITE_FILE(S["be_special"], be_special)
+	WRITE_FILE(S["receive_solo_objectives"], receive_solo_objectives)
 	WRITE_FILE(S["default_slot"], default_slot)
 	WRITE_FILE(S["toggles"], toggles)
 	WRITE_FILE(S["chat_toggles"], chat_toggles)
