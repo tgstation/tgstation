@@ -16,7 +16,7 @@
 	integrity_failure = 100
 	armor = list(melee = 20, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
 	var/opened = 0
-
+	var/list/deb = list()
 	var/list/logs = list() // Gets written to by exonet's send_message() function.
 
 // Proc: New()
@@ -85,6 +85,7 @@
 // Description: Calls the procs below every tick.
 /obj/machinery/exonet_node/process()
 	update_power()
+	deb = all_exonet_connections
 
 // Proc: attackby()
 // Parameters: 2 (I - the item being whacked against the machine, user - the person doing the whacking)
@@ -124,7 +125,27 @@
 	data["logs"] = logs
 	return data
 
+
 /obj/machinery/exonet_node/ui_act(action, params)
+
+	// update the ui if it exists, returns null if no ui is passed/found
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, data, force_open)
+	if(!ui)
+		// the ui does not exist, so we'll create a new() one
+
+		ui = new(user, src, ui_key, "exonet_node.ract", "Exonet Node #157", 400, 400, master_ui, state)
+		// when the ui is first opened this is the data it will use
+		ui.set_initial_data(data)
+		// open the new ui window
+		ui.open()
+		// auto update every Master Controller tick
+		ui.set_autoupdate(TRUE)
+
+// Proc: Topic()
+// Parameters: 2 (standard Topic arguments)
+// Description: Responds to button presses on the NanoUI interface.
+/obj/machinery/exonet_node/Topic(href, href_list)
+
 	if(..())
 		return
 	switch(action)
