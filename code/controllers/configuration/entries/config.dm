@@ -372,3 +372,10 @@ CONFIG_TWEAK(number/mc_tick_rate/ValidateAndSet(str_val))
 	. = ..()
 	if (.)
 		Master.UpdateTickRate()
+
+CONFIG_DEF(flag/resume_after_initializations)
+
+CONFIG_TWEAK(flag/ValidateAndSet(str_val))
+	. = ..()
+	if(. && Master.current_run_level)
+		world.sleep_offline = !value
