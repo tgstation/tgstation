@@ -46,7 +46,7 @@
 
 /mob/living/simple_animal/hostile/true_changeling/New()
 	..()
-	var/horrorskin = pick(1, 2, 3, 4)
+	var/horrorskin = pick(1, 2, 3, 4, 5)
 	switch(horrorskin)
 		if(1)
 			icon_state = "horror1"
@@ -56,6 +56,8 @@
 			icon_state = "horror3"
 		if(4)
 			icon_state = "horror4"
+		if(5)
+			icon_state = "horror5"
 	spawn(0)
 		to_chat(usr, playstyle_string)
 
