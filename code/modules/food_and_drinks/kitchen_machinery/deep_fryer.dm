@@ -107,7 +107,6 @@ God bless America.
 		return
 	reagents.chem_temp = C.fry_temperature
 	if(frying)
-		visible_message("Frying with multi [fry_speed * 2]")
 		reagents.trans_to(frying, oil_use, multiplier = fry_speed * 3) //Fried foods gain more of the reagent thanks to space magic
 		cook_time += fry_speed
 		if(cook_time >= 30 && !frying_fried)
