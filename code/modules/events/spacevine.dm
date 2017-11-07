@@ -390,7 +390,7 @@
 /datum/spacevine_controller/vv_get_dropdown()
 	. = ..()
 	. += "---"
-	.["Delete Vines"] = "?_src_=\ref[src];[HrefToken()];purge_vines=1"
+	.["Delete Vines"] = "?_src_=[REF(src)];[HrefToken()];purge_vines=1"
 
 /datum/spacevine_controller/Topic(href, href_list)
 	if(..() || !check_rights(R_ADMIN, FALSE) || !usr.client.holder.CheckAdminHref(href, href_list))

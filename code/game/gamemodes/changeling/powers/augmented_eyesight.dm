@@ -10,7 +10,7 @@
 	active = FALSE
 
 /obj/effect/proc_holder/changeling/augmented_eyesight/on_purchase(mob/user) //The ability starts inactive, so we should be protected from flashes.
-	var/obj/item/organ/eyes/E = user.getorganslot("eye_sight")
+	var/obj/item/organ/eyes/E = user.getorganslot(ORGAN_SLOT_EYES)
 	if (E)
 		E.flash_protect = 2 //Adjust the user's eyes' flash protection
 		to_chat(user, "We adjust our eyes to protect them from bright lights.")
@@ -20,7 +20,7 @@
 /obj/effect/proc_holder/changeling/augmented_eyesight/sting_action(mob/living/carbon/human/user)
 	if(!istype(user))
 		return
-	var/obj/item/organ/eyes/E = user.getorganslot("eye_sight")
+	var/obj/item/organ/eyes/E = user.getorganslot(ORGAN_SLOT_EYES)
 	if(E)
 		if(!active)
 			E.sight_flags |= SEE_MOBS | SEE_OBJS | SEE_TURFS //Add sight flags to the user's eyes
@@ -42,7 +42,7 @@
 
 
 /obj/effect/proc_holder/changeling/augmented_eyesight/on_refund(mob/user) //Get rid of x-ray vision and flash protection when the user refunds this ability
-	var/obj/item/organ/eyes/E = user.getorganslot("eye_sight")
+	var/obj/item/organ/eyes/E = user.getorganslot(ORGAN_SLOT_EYES)
 	if(E)
 		if (active)
 			E.sight_flags ^= SEE_MOBS | SEE_OBJS | SEE_TURFS

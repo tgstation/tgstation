@@ -42,7 +42,7 @@
 		else
 			return
 		update_icon()
-		to_chat(user, "<span class='notice'>You add the cables to the [src]. It now contains [loaded.amount].</span>")
+		to_chat(user, "<span class='notice'>You add the cables to [src]. It now contains [loaded.amount].</span>")
 	else if(istype(W, /obj/item/screwdriver))
 		if(!loaded)
 			return

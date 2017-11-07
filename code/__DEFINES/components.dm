@@ -2,6 +2,8 @@
 #define GET_COMPONENT_FROM(varname, path, target) var##path/##varname = ##target.GetComponent(##path)
 #define GET_COMPONENT(varname, path) GET_COMPONENT_FROM(varname, path, src)
 
+#define COMPONENT_INCOMPATIBLE 1
+
 // How multiple components of the exact same type are handled in the same datum
 
 #define COMPONENT_DUPE_HIGHLANDER 0 //old component is deleted (default)
@@ -16,6 +18,8 @@
 #define COMSIG_COMPONENT_REMOVING "component_removing"			//before a component is removed from a datum because of RemoveComponent: (/datum/component)
 #define COMSIG_PARENT_QDELETED "parent_qdeleted"				//before a datum's Destroy() is called: ()
 
+#define COMSIG_COMPONENT_CLEAN_ACT "clean_act"					//called on an object to clean it of cleanables. Usualy with soap: (num/strength)
+
 // /atom signals
 #define COMSIG_PARENT_ATTACKBY "atom_attackby"			        //from base of atom/attackby(): (/obj/item, /mob/living, params)
 #define COMSIG_ATOM_HULK_ATTACK "hulk_attack"					//from base of atom/attack_hulk(): (/mob/living/carbon/human)
@@ -28,10 +32,13 @@
 #define COMSIG_ATOM_BLOB_ACT "atom_blob_act"					//from base of atom/blob_act(): (/obj/structure/blob)
 #define COMSIG_ATOM_ACID_ACT "atom_acid_act"					//from base of atom/acid_act(): (acidpwr, acid_volume)
 #define COMSIG_ATOM_EMAG_ACT "atom_emag_act"					//from base of atom/emag_act(): ()
+#define COMSIG_ATOM_RAD_ACT "atom_rad_act"						//from base of atom/rad_act(intensity)
 #define COMSIG_ATOM_NARSIE_ACT "atom_narsie_act"				//from base of atom/narsie_act(): ()
 #define COMSIG_ATOM_RATVAR_ACT "atom_ratvar_act"				//from base of atom/ratvar_act(): ()
 #define COMSIG_ATOM_RCD_ACT "atom_rcd_act"						//from base of atom/rcd_act(): (/mob, /obj/item/construction/rcd, passed_mode)
 #define COMSIG_ATOM_SING_PULL "atom_sing_pull"					//from base of atom/singularity_pull(): (S, current_size)
+#define COMSIG_ATOM_SET_LIGHT "atom_set_light"					//from base of atom/set_light(): (l_range, l_power, l_color)
+#define COMSIG_ATOM_ROTATE "atom_rotate"						//from base of atom/shuttleRotate(): (rotation, params)
 
 #define COMSIG_CLICK "atom_click"								//from base of atom/Click(): (location, control, params)
 #define COMSIG_CLICK_SHIFT "shift_click"						//from base of atom/ShiftClick(): (/mob)

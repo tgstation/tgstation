@@ -282,11 +282,13 @@
 	return
 
 /mob/living/carbon/MiddleClickOn(atom/A)
-	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (iscarbon(A)) && (A != src))
-		next_click = world.time + 5
-		mind.changeling.chosen_sting.try_to_sting(src, A)
-	else
-		swap_hand()
+	if(!stat && mind && iscarbon(A) && A != src)
+		var/datum/antagonist/changeling/C = mind.has_antag_datum(/datum/antagonist/changeling)
+		if(C && C.chosen_sting)
+			C.chosen_sting.try_to_sting(src,A)	
+			next_click = world.time + 5
+			return
+	swap_hand()
 
 /mob/living/simple_animal/drone/MiddleClickOn(atom/A)
 	swap_hand()
@@ -344,11 +346,13 @@
 	return
 
 /mob/living/carbon/AltClickOn(atom/A)
-	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (iscarbon(A)) && (A != src))
-		next_click = world.time + 5
-		mind.changeling.chosen_sting.try_to_sting(src, A)
-	else
-		..()
+	if(!stat && mind && iscarbon(A) && A != src)
+		var/datum/antagonist/changeling/C = mind.has_antag_datum(/datum/antagonist/changeling)
+		if(C && C.chosen_sting)
+			C.chosen_sting.try_to_sting(src,A)	
+			next_click = world.time + 5
+			return
+	..()
 
 /atom/proc/AltClick(mob/user)
 	SendSignal(COMSIG_CLICK_ALT, user)
@@ -385,13 +389,11 @@
 	Laser Eyes: as the name implies, handles this since nothing else does currently
 	face_atom: turns the mob towards what you clicked on
 */
-/mob/proc/LaserEyes(atom/A)
+/mob/proc/LaserEyes(atom/A, params)
 	return
 
-/mob/living/LaserEyes(atom/A)
+/mob/living/LaserEyes(atom/A, params)
 	changeNext_move(CLICK_CD_RANGE)
-	var/turf/T = get_turf(src)
-	var/turf/U = get_turf(A)
 
 	var/obj/item/projectile/beam/LE = new /obj/item/projectile/beam( loc )
 	LE.icon = 'icons/effects/genetics.dmi'
@@ -400,10 +402,7 @@
 
 	LE.firer = src
 	LE.def_zone = get_organ_target()
-	LE.original = A
-	LE.current = T
-	LE.yo = U.y - T.y
-	LE.xo = U.x - T.x
+	LE.preparePixelProjectile(A, src, params)
 	LE.fire()
 
 // Simple helper to face what you clicked on, in case it should be needed in more than one place

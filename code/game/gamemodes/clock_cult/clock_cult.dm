@@ -1,3 +1,5 @@
+GLOBAL_VAR_INIT(servants_active, FALSE) //This var controls whether or not a lot of the cult's structures work or not
+
 /*
 
 CLOCKWORK CULT: Based off of the failed pull requests from /vg/
@@ -124,7 +126,6 @@ Credit where due:
 		var/datum/mind/servant = pick(antag_candidates)
 		servants_to_serve += servant
 		antag_candidates -= servant
-		modePlayer += servant
 		servant.assigned_role = "Servant of Ratvar"
 		servant.special_role = "Servant of Ratvar"
 		starter_servants--
@@ -144,9 +145,7 @@ Credit where due:
 		equip_servant(L)
 		add_servant_of_ratvar(L, TRUE)
 	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar //that's a mouthful
-	G.initial_activation_delay = ark_time * 60
-	G.seconds_until_activation = ark_time * 60 //60 seconds in a minute * number of minutes
-	SSshuttle.registerHostileEnvironment(GLOB.ark_of_the_clockwork_justiciar)
+	G.final_countdown(ark_time)
 	..()
 	return 1
 
@@ -273,6 +272,7 @@ Credit where due:
 	if(plasmaman && !visualsOnly) //If we need to breathe from the plasma tank, we should probably start doing that
 		H.internal = H.get_item_for_held_index(2)
 		H.update_internals_hud_icon(1)
+	H.sec_hud_set_ID()
 
 /obj/item/paper/servant_primer
 	name = "The Ark And You: A Primer On Servitude"

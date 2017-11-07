@@ -18,6 +18,7 @@ SUBSYSTEM_DEF(job)
 		SetupOccupations()
 	if(CONFIG_GET(flag/load_jobs_from_txt))
 		LoadJobs()
+	generate_selectable_species()
 	..()
 
 
@@ -106,9 +107,6 @@ SUBSYSTEM_DEF(job)
 		if(player.mind && job.title in player.mind.restricted_roles)
 			Debug("FOC incompatible with antagonist role, Player: [player]")
 			continue
-		if(CONFIG_GET(flag/enforce_human_authority) && !player.client.prefs.pref_species.qualifies_for_rank(job.title, player.client.prefs.features))
-			Debug("FOC non-human failed, Player: [player]")
-			continue
 		if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
 			Debug("FOC pass, Player: [player], Level:[level]")
 			candidates += player
@@ -142,11 +140,6 @@ SUBSYSTEM_DEF(job)
 		if(player.mind && job.title in player.mind.restricted_roles)
 			Debug("GRJ incompatible with antagonist role, Player: [player], Job: [job.title]")
 			continue
-
-		if(CONFIG_GET(flag/enforce_human_authority) && !player.client.prefs.pref_species.qualifies_for_rank(job.title, player.client.prefs.features))
-			Debug("GRJ non-human failed, Player: [player]")
-			continue
-
 
 		if((job.current_positions < job.spawn_positions) || job.spawn_positions == -1)
 			Debug("GRJ Random job given, Player: [player], Job: [job]")
@@ -316,10 +309,6 @@ SUBSYSTEM_DEF(job)
 
 				if(player.mind && job.title in player.mind.restricted_roles)
 					Debug("DO incompatible with antagonist role, Player: [player], Job:[job.title]")
-					continue
-
-				if(CONFIG_GET(flag/enforce_human_authority) && !player.client.prefs.pref_species.qualifies_for_rank(job.title, player.client.prefs.features))
-					Debug("DO non-human failed, Player: [player], Job:[job.title]")
 					continue
 
 				// If the player wants that job on this level, then try give it to him.
@@ -567,3 +556,41 @@ SUBSYSTEM_DEF(job)
 			var/msg = "Unable to send mob [M] to late join!"
 			message_admins(msg)
 			CRASH(msg)
+
+
+///////////////////////////////////
+//Keeps track of all living heads//
+///////////////////////////////////
+/datum/controller/subsystem/job/proc/get_living_heads()
+	. = list()
+	for(var/mob/living/carbon/human/player in GLOB.mob_list)
+		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in GLOB.command_positions))
+			. |= player.mind
+
+
+////////////////////////////
+//Keeps track of all heads//
+////////////////////////////
+/datum/controller/subsystem/job/proc/get_all_heads()
+	. = list()
+	for(var/mob/player in GLOB.mob_list)
+		if(player.mind && (player.mind.assigned_role in GLOB.command_positions))
+			. |= player.mind
+
+//////////////////////////////////////////////
+//Keeps track of all living security members//
+//////////////////////////////////////////////
+/datum/controller/subsystem/job/proc/get_living_sec()
+	. = list()
+	for(var/mob/living/carbon/human/player in GLOB.mob_list)
+		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in GLOB.security_positions))
+			. |= player.mind
+
+////////////////////////////////////////
+//Keeps track of all  security members//
+////////////////////////////////////////
+/datum/controller/subsystem/job/proc/get_all_sec()
+	. = list()
+	for(var/mob/living/carbon/human/player in GLOB.mob_list)
+		if(player.mind && (player.mind.assigned_role in GLOB.security_positions))
+			. |= player.mind

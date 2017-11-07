@@ -137,7 +137,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	for(var/M in invokers)
 		var/mob/living/L = M
 		if(invocation)
-			L.say(invocation, language = /datum/language/common)
+			L.say(invocation, language = /datum/language/common, ignore_spam = TRUE)
 		if(invoke_damage)
 			L.apply_damage(invoke_damage, BRUTE)
 			to_chat(L, "<span class='cultitalic'>[src] saps your strength!</span>")
@@ -486,7 +486,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/narsie/attackby(obj/I, mob/user, params)	//Since the narsie rune takes a long time to make, add logging to removal.
 	if((istype(I, /obj/item/tome) && iscultist(user)))
-		user.visible_message("<span class='warning'>[user.name] begins erasing the [src]...</span>", "<span class='notice'>You begin erasing the [src]...</span>")
+		user.visible_message("<span class='warning'>[user.name] begins erasing [src]...</span>", "<span class='notice'>You begin erasing [src]...</span>")
 		if(do_after(user, 50, target = src))	//Prevents accidental erasures.
 			log_game("Summon Narsie rune erased by [user.mind.key] (ckey) with a tome")
 			message_admins("[key_name_admin(user)] erased a Narsie rune with a tome")

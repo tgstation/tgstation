@@ -6351,12 +6351,8 @@
 /area/centcom/ferry)
 "rs" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
 /obj/item/stack/sheet/plasteel{
 	amount = 15
 	},
@@ -6365,9 +6361,7 @@
 	pixel_x = 2;
 	pixel_y = -2
 	},
-/obj/item/stack/rods{
-	amount = 50
-	},
+/obj/item/stack/rods/fifty,
 /obj/item/stack/cable_coil/white,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line,
@@ -6430,7 +6424,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -6443,12 +6436,8 @@
 	pixel_x = 26
 	},
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
 /obj/item/stack/sheet/plasteel{
 	amount = 15
 	},
@@ -6457,18 +6446,14 @@
 	pixel_x = 2;
 	pixel_y = -2
 	},
-/obj/item/stack/rods{
-	amount = 50
-	},
+/obj/item/stack/rods/fifty,
 /obj/item/stack/cable_coil/white,
 /obj/item/screwdriver/power,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/structure/cable/white{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -6862,8 +6847,6 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/open/floor/wood,
@@ -6876,8 +6859,6 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/vault{
@@ -6890,8 +6871,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
 /obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/grimy,
@@ -6901,8 +6880,6 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/grimy,
@@ -6916,8 +6893,6 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -6931,13 +6906,9 @@
 	},
 /obj/machinery/meter,
 /obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/structure/cable/white{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/vault{
@@ -6952,15 +6923,12 @@
 	dir = 1
 	},
 /obj/structure/cable/white{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/structure/cable/white{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/structure/cable/white{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /turf/open/floor/plasteel/vault{
@@ -6973,18 +6941,12 @@
 	},
 /obj/machinery/meter,
 /obj/structure/cable/white{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/structure/cable/white{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/vault{
@@ -7310,8 +7272,6 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/wood,
@@ -7359,8 +7319,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/structure/cable/white{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -7375,13 +7333,9 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/structure/cable/white{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -7399,8 +7353,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -7707,8 +7659,6 @@
 /area/centcom/ferry)
 "ur" = (
 /obj/structure/cable/white{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/wood,

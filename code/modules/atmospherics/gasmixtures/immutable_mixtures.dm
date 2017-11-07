@@ -19,9 +19,6 @@
 /datum/gas_mixture/immutable/merge()
 	return 0 //we're immutable.
 
-/datum/gas_mixture/immutable/heat_capacity_archived()
-	return heat_capacity()
-
 /datum/gas_mixture/immutable/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
 	. = ..(sharer, 0)
 	garbage_collect()
@@ -54,7 +51,7 @@
 	initial_temperature = TCMB
 
 /datum/gas_mixture/immutable/space/heat_capacity()
-	return 7000
+	return HEAT_CAPACITY_VACUUM
 
 /datum/gas_mixture/immutable/space/remove()
 	return copy() //we're always empty, so we can just return a copy.

@@ -31,8 +31,5 @@
 		if(cell && (cell.charge / cell.maxcharge > COG_MAX_SIPHON_THRESHOLD))
 			cell.use(1)
 			adjust_clockwork_power(1) //Power is shared, so only do it once; this runs very quickly so it's about 1W/second
-		if(prob(1))
-			playsound(apc, 'sound/machines/clockcult/steam_whoosh.ogg', 10, TRUE)
-			new/obj/effect/temp_visual/steam(get_turf(apc), pick(GLOB.cardinals))
 
 #undef COG_MAX_SIPHON_THRESHOLD

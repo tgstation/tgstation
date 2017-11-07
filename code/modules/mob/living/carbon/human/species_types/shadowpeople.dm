@@ -1,4 +1,5 @@
 #define HEART_RESPAWN_THRESHHOLD 40
+#define HEART_SPECIAL_SHADOWIFY 2
 
 /datum/species/shadow
 	// Humans cursed to stay in the darkness, lest their life forces drain. They regain health in shadow and die in light.
@@ -24,6 +25,10 @@
 		else if (light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD) //heal in the dark
 			H.heal_overall_damage(1,1)
 
+/datum/species/shadow/check_roundstart_eligible()
+	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
+		return TRUE
+	return ..()
 
 /datum/species/shadow/nightmare
 	name = "Nightmare"
@@ -60,7 +65,8 @@
 			return -1
 	return 0
 
-
+/datum/species/shadow/nightmare/check_roundstart_eligible()
+	return FALSE
 
 //Organs
 
@@ -111,14 +117,15 @@
 
 /obj/item/organ/heart/nightmare/Insert(mob/living/carbon/M, special = 0)
 	..()
-	blade = new/obj/item/light_eater
-	M.put_in_hands(blade)
+	if(special != HEART_SPECIAL_SHADOWIFY)
+		blade = new/obj/item/light_eater
+		M.put_in_hands(blade)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/organ/heart/nightmare/Remove(mob/living/carbon/M, special = 0)
 	STOP_PROCESSING(SSobj, src)
 	respawn_progress = 0
-	if(blade)
+	if(blade && special != HEART_SPECIAL_SHADOWIFY)
 		QDEL_NULL(blade)
 		M.visible_message("<span class='warning'>\The [blade] disintegrates!</span>")
 	..()
@@ -141,6 +148,13 @@
 			playsound(owner,'sound/effects/singlebeat.ogg',40,1)
 	if(respawn_progress >= HEART_RESPAWN_THRESHHOLD)
 		owner.revive(full_heal = TRUE)
+		if(!(owner.dna.species.id == "shadow" || owner.dna.species.id == "nightmare"))
+			var/mob/living/carbon/old_owner = owner
+			Remove(owner, HEART_SPECIAL_SHADOWIFY)
+			old_owner.set_species(/datum/species/shadow)
+			Insert(old_owner, HEART_SPECIAL_SHADOWIFY)
+			to_chat(owner, "<span class='userdanger'>You feel the shadows invade your skin, leaping into the center of your chest! You're alive!</span>")
+			SEND_SOUND(owner, sound('sound/effects/ghost.ogg'))
 		owner.visible_message("<span class='warning'>[owner] staggers to their feet!</span>")
 		playsound(owner, 'sound/hallucinations/far_noise.ogg', 50, 1)
 		respawn_progress = 0
@@ -195,4 +209,5 @@
 		O.burn()
 	playsound(src, 'sound/items/welder.ogg', 50, 1)
 
+#undef HEART_SPECIAL_SHADOWIFY
 #undef HEART_RESPAWN_THRESHHOLD

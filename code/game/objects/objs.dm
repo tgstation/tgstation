@@ -189,7 +189,7 @@
 /obj/proc/check_uplink_validity()
 	return 1
 
-/obj/proc/on_mob_move(dir, mob, oldLoc)
+/obj/proc/on_mob_move(dir, mob, oldLoc, forced)
 	return
 
 /obj/proc/on_mob_turn(dir, mob)
@@ -200,7 +200,7 @@
 
 /obj/vv_get_dropdown()
 	. = ..()
-	.["Delete all of type"] = "?_src_=vars;[HrefToken()];delall=\ref[src]"
+	.["Delete all of type"] = "?_src_=vars;[HrefToken()];delall=[REF(src)]"
 
 /obj/examine(mob/user)
 	..()

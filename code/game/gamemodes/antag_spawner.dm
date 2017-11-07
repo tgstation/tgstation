@@ -29,13 +29,13 @@
 		dat += "<I>Using this contract, you may summon an apprentice to aid you on your mission.</I><BR>"
 		dat += "<I>If you are unable to establish contact with your apprentice, you can feed the contract back to the spellbook to refund your points.</I><BR>"
 		dat += "<B>Which school of magic is your apprentice studying?:</B><BR>"
-		dat += "<A href='byond://?src=\ref[src];school=[APPRENTICE_DESTRUCTION]'>Destruction</A><BR>"
+		dat += "<A href='byond://?src=[REF(src)];school=[APPRENTICE_DESTRUCTION]'>Destruction</A><BR>"
 		dat += "<I>Your apprentice is skilled in offensive magic. They know Magic Missile and Fireball.</I><BR>"
-		dat += "<A href='byond://?src=\ref[src];school=[APPRENTICE_BLUESPACE]'>Bluespace Manipulation</A><BR>"
+		dat += "<A href='byond://?src=[REF(src)];school=[APPRENTICE_BLUESPACE]'>Bluespace Manipulation</A><BR>"
 		dat += "<I>Your apprentice is able to defy physics, melting through solid objects and travelling great distances in the blink of an eye. They know Teleport and Ethereal Jaunt.</I><BR>"
-		dat += "<A href='byond://?src=\ref[src];school=[APPRENTICE_HEALING]'>Healing</A><BR>"
+		dat += "<A href='byond://?src=[REF(src)];school=[APPRENTICE_HEALING]'>Healing</A><BR>"
 		dat += "<I>Your apprentice is training to cast spells that will aid your survival. They know Forcewall and Charge and come with a Staff of Healing.</I><BR>"
-		dat += "<A href='byond://?src=\ref[src];school=[APPRENTICE_ROBELESS]'>Robeless</A><BR>"
+		dat += "<A href='byond://?src=[REF(src)];school=[APPRENTICE_ROBELESS]'>Robeless</A><BR>"
 		dat += "<I>Your apprentice is training to cast spells without their robes. They know Knock and Mindswap.</I><BR>"
 	user << browse(dat, "window=radio")
 	onclose(user, "radio")
@@ -67,20 +67,25 @@
 			else
 				to_chat(H, "Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later.")
 
-/obj/item/antag_spawner/contract/spawn_antag(client/C, turf/T, school,datum/mind/wizard)
+/obj/item/antag_spawner/contract/spawn_antag(client/C, turf/T, school,datum/mind/user)
 	new /obj/effect/particle_effect/smoke(T)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.copy_to(M)
 	M.key = C.key
 	var/datum/mind/app_mind = M.mind
-	var/datum/antagonist/wizard/master_antag = wizard.has_antag_datum(/datum/antagonist/wizard)
-	if(!master_antag.wiz_team)
-		master_antag.create_wiz_team()
+	
+	
+	
 	var/datum/antagonist/wizard/apprentice/app = new(app_mind)
-	app.wiz_team = master_antag.wiz_team
-	app.master = wizard
+	app.master = user
 	app.school = school
-	master_antag.wiz_team.members += app_mind
+
+	var/datum/antagonist/wizard/master_wizard = user.has_antag_datum(/datum/antagonist/wizard)
+	if(master_wizard)
+		if(!master_wizard.wiz_team)
+			master_wizard.create_wiz_team()
+		app.wiz_team = master_wizard.wiz_team
+		master_wizard.wiz_team.add_member(app_mind)
 	app_mind.add_antag_datum(app)
 	//TODO Kill these if possible
 	app_mind.assigned_role = "Apprentice"

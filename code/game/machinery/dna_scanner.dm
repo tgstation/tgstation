@@ -90,11 +90,11 @@
 			return C
 	return null
 
-/obj/machinery/dna_scannernew/close_machine()
+/obj/machinery/dna_scannernew/close_machine(mob/living/carbon/user)
 	if(!state_open)
-		return 0
+		return FALSE
 
-	..()
+	..(user)
 
 	// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
 	var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)
@@ -113,11 +113,11 @@
 
 /obj/machinery/dna_scannernew/open_machine()
 	if(state_open)
-		return 0
+		return FALSE
 
 	..()
 
-	return 1
+	return TRUE
 
 /obj/machinery/dna_scannernew/relaymove(mob/user as mob)
 	if(user.stat || locked)
@@ -149,3 +149,8 @@
 		return
 
 	toggle_open(user)
+
+/obj/machinery/dna_scannernew/MouseDrop_T(mob/target, mob/user)
+	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
+		return
+	close_machine(target)

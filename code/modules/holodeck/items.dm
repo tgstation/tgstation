@@ -154,7 +154,7 @@
 	power_channel = ENVIRON
 
 /obj/machinery/readybutton/attack_ai(mob/user as mob)
-	to_chat(user, "The station AI is not to interact with these devices")
+	to_chat(user, "The station AI is not to interact with these devices.")
 	return
 
 /obj/machinery/readybutton/attack_paw(mob/user as mob)
@@ -220,4 +220,4 @@
 
 /obj/item/paper/fluff/holodeck/disclaimer
 	name = "Holodeck Disclaimer"
-	info = "Brusies sustained in the holodeck can be healed simply by sleeping."
+	info = "Bruises sustained in the holodeck can be healed simply by sleeping."

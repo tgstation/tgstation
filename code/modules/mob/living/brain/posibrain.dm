@@ -37,7 +37,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 
 /obj/item/device/mmi/posibrain/proc/ping_ghosts(msg, newlymade)
 	if(newlymade || GLOB.posibrain_notify_cooldown <= world.time)
-		notify_ghosts("[name] [msg] in [get_area(src)]!", ghost_sound = !newlymade ? 'sound/effects/ghost2.ogg':null, enter_link = "<a href=?src=\ref[src];activate=1>(Click to enter)</a>", source = src, action = NOTIFY_ATTACK, flashwindow = FALSE)
+		notify_ghosts("[name] [msg] in [get_area(src)]!", ghost_sound = !newlymade ? 'sound/effects/ghost2.ogg':null, enter_link = "<a href=?src=[REF(src)];activate=1>(Click to enter)</a>", source = src, action = NOTIFY_ATTACK, flashwindow = FALSE)
 		if(!newlymade)
 			GLOB.posibrain_notify_cooldown = world.time + askDelay
 

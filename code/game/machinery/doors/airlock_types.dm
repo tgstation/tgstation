@@ -180,7 +180,7 @@
 	..()
 
 /obj/machinery/door/airlock/uranium/proc/radiate()
-	radiation_pulse(get_turf(src), 3, 3, 15, 0)
+	radiation_pulse(get_turf(src), 150)
 	return
 
 /obj/machinery/door/airlock/plasma
@@ -287,7 +287,6 @@
 /obj/machinery/door/airlock/centcom
 	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi'
-	note_overlay_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi'
 	opacity = 1
 	assemblytype = /obj/structure/door_assembly/door_assembly_centcom
 	normal_integrity = 1000
@@ -306,7 +305,6 @@
 	name = "vault door"
 	icon = 'icons/obj/doors/airlocks/vault/vault.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/vault/overlays.dmi'
-	note_overlay_file = 'icons/obj/doors/airlocks/vault/overlays.dmi'
 	opacity = 1
 	assemblytype = /obj/structure/door_assembly/door_assembly_vault
 	explosion_block = 2
@@ -368,8 +366,8 @@
 	desc = "With humanity's current technological level, it could take years to hack this advanced airlock... or maybe we should give a screwdriver a try?"
 	icon = 'icons/obj/doors/airlocks/abductor/abductor_airlock.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/abductor/overlays.dmi'
-	note_overlay_file = 'icons/obj/doors/airlocks/abductor/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_abductor
+	note_overlay_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
 	damage_deflection = 30
 	opacity = 1
 	explosion_block = 3
@@ -577,7 +575,6 @@
 	name = "large glass airlock"
 	icon = 'icons/obj/doors/airlocks/glass_large/glass_large.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/glass_large/overlays.dmi'
-	note_overlay_file = 'icons/obj/doors/airlocks/glass_large/overlays.dmi'
 	opacity = 0
 	assemblytype = null
 	glass = TRUE
