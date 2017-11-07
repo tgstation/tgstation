@@ -4,7 +4,7 @@
 	var/cleanable
 	var/mutable_appearance/pic
 
-/datum/component/decal/Initialize(_icon, _icon_state, _dir, _cleanable=CLEAN_GOD, _color, _layer=TURF_DECAL_LAYER)
+/datum/component/decal/Initialize(_icon, _icon_state, _dir, _cleanable=CLEAN_GOD, _color, _layer=TURF_LAYER)
 	if(!isatom(parent) || !_icon || !_icon_state)
 		. = COMPONENT_INCOMPATIBLE
 		CRASH("A turf decal was applied incorrectly to [parent.type]: icon:[_icon ? _icon : "none"] icon_state:[_icon_state ? _icon_state : "none"]")
