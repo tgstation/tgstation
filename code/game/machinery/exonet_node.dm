@@ -53,13 +53,12 @@
 	if(toggle)
 		if(stat & (BROKEN|NOPOWER|EMPED))
 			on = 0
-			idle_power_usage = 0
 		else
 			on = 1
-			idle_power_usage = 2500
 	else
 		on = 0
 		idle_power_usage = 0
+	use_power = on
 	update_icon()
 
 // Proc: emp_act()
@@ -74,11 +73,6 @@
 	update_icon()
 	..()
 
-// Proc: process()
-// Parameters: None
-// Description: Calls the procs below every tick.
-/obj/machinery/exonet_node/process()
-	update_power()
 
 // Proc: attackby()
 // Parameters: 2 (I - the item being whacked against the machine, user - the person doing the whacking)

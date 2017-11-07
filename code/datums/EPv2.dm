@@ -121,6 +121,8 @@ GLOBAL_LIST_EMPTY(all_exonet_connections)
 	var/obj/machinery/exonet_node/node = get_exonet_node()
 	if(!node) // Telecomms went boom, ion storm, etc.
 		return FALSE
+	if(!node.on||node.stat)
+		return FALSE
 	for(var/datum/exonet_protocol/exonet in GLOB.all_exonet_connections)
 		if(exonet.address == target_address)
 			node.write_log(src.address, target_address, data_type, content)
