@@ -43,7 +43,8 @@
 	if (!orbiter.orbiting) //admin wants to stop the orbit.
 		orbiter.orbiting = src //set it back to us first
 		orbiter.stop_orbit()
-	if(orbiting.orbiting.orbiting == orbiter)
+	var/atom/movable/AM = orbiting
+	if(istype(AM) && AM.orbiting.orbiting == orbiter)
 		orbiter.stop_orbit()
 		return
 	lastprocess = world.time
