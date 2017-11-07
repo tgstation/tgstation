@@ -2,6 +2,8 @@
 
 #define isdatum(D) (istype(D, /datum))
 
+#define isweakref(A) istype(A, /datum/weakref)
+
 #define islist(L) (istype(L, /list))
 
 #define in_range(source, user) (get_dist(source, user) <= 1)

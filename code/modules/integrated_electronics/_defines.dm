@@ -1,4 +1,3 @@
-#define isweakref(A) istype(A, /weakref)
 #define IC_INPUT "input"
 #define IC_OUTPUT "output"
 #define IC_ACTIVATOR "activator"
