@@ -8,7 +8,7 @@
 	anchored = FALSE
 	health = 25
 	maxHealth = 25
-	spacewalk = 1
+	spacewalk = TRUE
 
 	radio_key = /obj/item/device/encryptionkey/headset_eng
 	radio_channel = "Engineering"
