@@ -174,7 +174,7 @@
 				M.pass_flags &= ~PASSMOB
 
 			now_pushing = 0
-			
+
 			if(!move_failed)
 				return 1
 
@@ -976,7 +976,7 @@
 			fall()
 		else if(ko || move_and_fall || (!has_legs && !ignore_legs) || chokehold)
 			fall(forced = 1)
-	canmove = !(ko || resting || IsStun() || IsFrozen() || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms))
+	canmove = !(ko || resting || IsStun() || IsFrozen() || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms) || IsFrenzied()) // FULPSTATION: Frenzied Bloodsuckers cannot be controlled.
 	density = !lying
 	if(lying)
 		if(layer == initial(layer)) //to avoid special cases like hiding larvas.

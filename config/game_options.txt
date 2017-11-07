@@ -92,7 +92,7 @@ PROBABILITY EXTENDED 0
 PROBABILITY SECRET_EXTENDED 0
 PROBABILITY DEVIL 0
 PROBABILITY DEVIL_AGENTS 0
-#PROBABILITY BLOODSUCKER 8
+PROBABILITY BLOODSUCKER 8
 
 ## You probably want to keep sandbox off by default for secret and random.
 PROBABILITY SANDBOX 0
@@ -119,7 +119,7 @@ CONTINUOUS ABDUCTION
 #CONTINUOUS MONKEY
 CONTINUOUS DEVIL
 CONTINUOUS DEVIL_AGENTS
-#CONTINUOUS BLOODSUCKER
+CONTINUOUS BLOODSUCKER
 
 ##Note: do not toggle continuous off for these modes, as they have no antagonists and would thus end immediately!
 
@@ -146,7 +146,7 @@ MIDROUND_ANTAG ABDUCTION
 #MIDROUND_ANTAG  MONKEY
 MIDROUND_ANTAG DEVIL
 MIDROUND_ANTAG DEVIL_AGENTS
-#MIDROUND_ANTAG BLOODSUCKER
+MIDROUND_ANTAG BLOODSUCKER
 
 ## Uncomment these for overrides of the minimum / maximum number of players in a round type. 
 ## If you set any of these occasionally check to see if you still need them as the modes
@@ -199,7 +199,7 @@ MIDROUND_ANTAG DEVIL_AGENTS
 #MIN_POP DEVIL_AGENTS 25
 #MAX_POP DEVIL_AGENTS -1
 
-MIN_POP DEVIL 12
+#MIN_POP DEVIL 12
 #MAX_POP DEVIL -1
 
 #MIN_POP BLOODSUCKER 12
@@ -257,7 +257,7 @@ EVENTS_MIN_TIME_MUL 1
 
 ## Multiplier for minimal player count (players = alive non-AFK humans) for dangerous events to start.
 ## Set to 0 to make dangerous events avaliable for all populations.
-EVENTS_MIN_PLAYERS_MUL 0
+EVENTS_MIN_PLAYERS_MUL 2
 
 
 ## AI ###
@@ -303,7 +303,7 @@ SECURITY_HAS_MAINT_ACCESS
 #EVERYONE_HAS_MAINT_ACCESS
 
 ## Comment this out this to make security officers spawn in departmental security posts
-SEC_START_BRIG
+#SEC_START_BRIG
 
 
 ## GHOST INTERACTION ###
