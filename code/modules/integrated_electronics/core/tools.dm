@@ -355,7 +355,7 @@
 /obj/item/weapon/storage/bag/circuits/basic/New()
 	..()
 	spawn(2 SECONDS) // So the list has time to initialize.
-//		for(var/obj/item/integrated_circuit/IC in all_integrated_circuits)
+//		for(var/obj/item/integrated_circuit/IC in GLOB.all_integrated_circuits)
 //			if(IC.spawn_flags & IC_SPAWN_DEFAULT)
 //				for(var/i = 1 to 4)
 //					new IC.type(src)
@@ -423,7 +423,7 @@
 
 /obj/item/weapon/storage/bag/circuits/mini/arithmetic/New()
 	..()
-	for(var/obj/item/integrated_circuit/arithmetic/IC in all_integrated_circuits)
+	for(var/obj/item/integrated_circuit/arithmetic/IC in GLOB.all_integrated_circuits)
 		if(IC.spawn_flags & spawn_flags_to_use)
 			for(var/i = 1 to 4)
 				new IC.type(src)
@@ -440,7 +440,7 @@
 
 /obj/item/weapon/storage/bag/circuits/mini/trig/New()
 	..()
-	for(var/obj/item/integrated_circuit/trig/IC in all_integrated_circuits)
+	for(var/obj/item/integrated_circuit/trig/IC in GLOB.all_integrated_circuits)
 		if(IC.spawn_flags & spawn_flags_to_use)
 			for(var/i = 1 to 4)
 				new IC.type(src)
@@ -457,7 +457,7 @@
 
 /obj/item/weapon/storage/bag/circuits/mini/input/New()
 	..()
-	for(var/obj/item/integrated_circuit/input/IC in all_integrated_circuits)
+	for(var/obj/item/integrated_circuit/input/IC in GLOB.all_integrated_circuits)
 		if(IC.spawn_flags & spawn_flags_to_use)
 			for(var/i = 1 to 4)
 				new IC.type(src)
@@ -474,7 +474,7 @@
 
 /obj/item/weapon/storage/bag/circuits/mini/output/New()
 	..()
-	for(var/obj/item/integrated_circuit/output/IC in all_integrated_circuits)
+	for(var/obj/item/integrated_circuit/output/IC in GLOB.all_integrated_circuits)
 		if(IC.spawn_flags & spawn_flags_to_use)
 			for(var/i = 1 to 4)
 				new IC.type(src)
@@ -491,7 +491,7 @@
 
 /obj/item/weapon/storage/bag/circuits/mini/memory/New()
 	..()
-	for(var/obj/item/integrated_circuit/memory/IC in all_integrated_circuits)
+	for(var/obj/item/integrated_circuit/memory/IC in GLOB.all_integrated_circuits)
 		if(IC.spawn_flags & spawn_flags_to_use)
 			for(var/i = 1 to 4)
 				new IC.type(src)
@@ -508,7 +508,7 @@
 
 /obj/item/weapon/storage/bag/circuits/mini/logic/New()
 	..()
-	for(var/obj/item/integrated_circuit/logic/IC in all_integrated_circuits)
+	for(var/obj/item/integrated_circuit/logic/IC in GLOB.all_integrated_circuits)
 		if(IC.spawn_flags & spawn_flags_to_use)
 			for(var/i = 1 to 4)
 				new IC.type(src)
@@ -525,7 +525,7 @@
 
 /obj/item/weapon/storage/bag/circuits/mini/time/New()
 	..()
-	for(var/obj/item/integrated_circuit/time/IC in all_integrated_circuits)
+	for(var/obj/item/integrated_circuit/time/IC in GLOB.all_integrated_circuits)
 		if(IC.spawn_flags & spawn_flags_to_use)
 			for(var/i = 1 to 4)
 				new IC.type(src)
@@ -542,7 +542,7 @@
 
 /obj/item/weapon/storage/bag/circuits/mini/reagents/New()
 	..()
-	for(var/obj/item/integrated_circuit/reagent/IC in all_integrated_circuits)
+	for(var/obj/item/integrated_circuit/reagent/IC in GLOB.all_integrated_circuits)
 		if(IC.spawn_flags & spawn_flags_to_use)
 			for(var/i = 1 to 4)
 				new IC.type(src)
@@ -559,7 +559,7 @@
 
 /obj/item/weapon/storage/bag/circuits/mini/transfer/New()
 	..()
-	for(var/obj/item/integrated_circuit/transfer/IC in all_integrated_circuits)
+	for(var/obj/item/integrated_circuit/transfer/IC in GLOB.all_integrated_circuits)
 		if(IC.spawn_flags & spawn_flags_to_use)
 			for(var/i = 1 to 4)
 				new IC.type(src)
@@ -576,7 +576,7 @@
 
 /obj/item/weapon/storage/bag/circuits/mini/converter/New()
 	..()
-	for(var/obj/item/integrated_circuit/converter/IC in all_integrated_circuits)
+	for(var/obj/item/integrated_circuit/converter/IC in GLOB.all_integrated_circuits)
 		if(IC.spawn_flags & spawn_flags_to_use)
 			for(var/i = 1 to 4)
 				new IC.type(src)
@@ -592,7 +592,7 @@
 
 /obj/item/weapon/storage/bag/circuits/mini/smart/New()
 	..()
-	for(var/obj/item/integrated_circuit/smart/IC in all_integrated_circuits)
+	for(var/obj/item/integrated_circuit/smart/IC in GLOB.all_integrated_circuits)
 		if(IC.spawn_flags & spawn_flags_to_use)
 			for(var/i = 1 to 4)
 				new IC.type(src)
@@ -608,7 +608,7 @@
 
 /obj/item/weapon/storage/bag/circuits/mini/manipulation/New()
 	..()
-	for(var/obj/item/integrated_circuit/manipulation/IC in all_integrated_circuits)
+	for(var/obj/item/integrated_circuit/manipulation/IC in GLOB.all_integrated_circuits)
 		if(IC.spawn_flags & spawn_flags_to_use)
 			for(var/i = 1 to 4)
 				new IC.type(src)
@@ -625,11 +625,11 @@
 
 /obj/item/weapon/storage/bag/circuits/mini/power/New()
 	..()
-	for(var/obj/item/integrated_circuit/passive/power/IC in all_integrated_circuits)
+	for(var/obj/item/integrated_circuit/passive/power/IC in GLOB.all_integrated_circuits)
 		if(IC.spawn_flags & spawn_flags_to_use)
 			for(var/i = 1 to 4)
 				new IC.type(src)
-	for(var/obj/item/integrated_circuit/power/IC in all_integrated_circuits)
+	for(var/obj/item/integrated_circuit/power/IC in GLOB.all_integrated_circuits)
 		if(IC.spawn_flags & spawn_flags_to_use)
 			for(var/i = 1 to 4)
 				new IC.type(src)

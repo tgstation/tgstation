@@ -73,17 +73,18 @@
 #define COLOR_PURPLE_GRAY 		"#A2819E"
 #define COLOR_RED_LIGHT         "#FF3333"
 #define COLOR_DEEP_SKY_BLUE     "#00e1ff"
+GLOBAL_LIST_EMPTY(all_integrated_circuits)
 
 /proc/iscrowbar(O)
 	if(istype(O, /obj/item/crowbar))
 		return 1
 	return 0
 
-var/list/all_integrated_circuits = list()
+
 
 /proc/initialize_integrated_circuits_list()
 	for(var/thing in typesof(/obj/item/integrated_circuit))
-		all_integrated_circuits += new thing()
+		GLOB.all_integrated_circuits += new thing()
 
 /proc/between(var/low, var/middle, var/high)
 	return max(min(middle, high), low)
