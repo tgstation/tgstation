@@ -13,7 +13,8 @@
 						"<span class='userdanger'>We cast off our petty shell and enter our true form!</span>")
 	playsound(src, 'sound/creatures/horror_form.ogg', 100, 1, 1, 1)
 	var/mob/living/simple_animal/hostile/true_changeling/new_mob = new(get_turf(user))
-	new_mob.real_name = user.mind.changeling.changelingID
+	var/datum/antagonist/changeling/ling_datum = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	new_mob.real_name = ling_datum.changelingID
 	new_mob.name = new_mob.real_name
 	new_mob.stored_changeling = user
 	user.loc = new_mob

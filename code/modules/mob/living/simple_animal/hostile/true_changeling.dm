@@ -138,8 +138,6 @@
 		return FALSE
 	var/list/potential_targets = list()
 	for(var/mob/living/carbon/human/H in range(1, src))
-		if(H == stored_changeling || (H.mind && H.mind.changeling)) //You can't eat changelings in human form
-			continue
 		potential_targets.Add(H)
 	if(!potential_targets.len)
 		to_chat(usr, "<span class='warning'>There are no humans nearby!</span>")
