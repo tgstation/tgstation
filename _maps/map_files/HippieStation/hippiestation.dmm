@@ -40021,10 +40021,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "bJC" = (
-/obj/machinery/processor{
-	desc = "A machine used to process slimes and retrieve their extract.";
-	name = "Slime Processor"
-	},
+/obj/machinery/processor/slime,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "bJD" = (
