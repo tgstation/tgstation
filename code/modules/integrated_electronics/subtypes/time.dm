@@ -65,7 +65,7 @@
 /obj/item/integrated_circuit/time/delay/custom/do_work()
 	var/delay_input = get_pin_data(IC_INPUT, 1)
 	if(delay_input && isnum(delay_input) )
-		var/new_delay = between(1, delay_input, 36000) //An hour.
+		var/new_delay = Clamp(delay_input ,1 ,36000) //An hour.
 		delay = new_delay
 
 	..()

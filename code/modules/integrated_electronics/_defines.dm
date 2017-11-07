@@ -42,19 +42,10 @@
 
 GLOBAL_LIST_EMPTY(all_integrated_circuits)
 
-/proc/iscrowbar(O)
-	if(istype(O, /obj/item/crowbar))
-		return 1
-	return 0
-
-
-
 /proc/initialize_integrated_circuits_list()
 	for(var/thing in typesof(/obj/item/integrated_circuit))
 		GLOB.all_integrated_circuits += new thing()
 
-/proc/between(var/low, var/middle, var/high)
-	return max(min(middle, high), low)
 
 /obj/item/integrated_circuit
 	name = "integrated circuit"

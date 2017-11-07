@@ -61,12 +61,6 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	for(var/datum/integrated_io/io in inputs + outputs + activators)
 		io.scramble()
 
-/obj/item/integrated_circuit/check_interactivity(mob/user)
-	if(assembly)
-		return assembly.check_interactivity(user)
-	else
-		return check_interactivity(user)
-
 
 /obj/item/integrated_circuit/verb/rename_component()
 	set name = "Rename Circuit"

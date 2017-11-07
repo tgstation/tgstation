@@ -237,7 +237,7 @@
 		var/datum/integrated_io/detonation_time = inputs[1]
 		var/dt
 		if(isnum(detonation_time.data) && detonation_time.data > 0)
-			dt = between(1, detonation_time.data, 12)*10
+			dt = Clamp(detonation_time.data, 1, 12)*10
 		else
 			dt = 15
 		addtimer(CALLBACK(attached_grenade, /obj/item/grenade.proc/prime), dt)

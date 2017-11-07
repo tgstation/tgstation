@@ -162,7 +162,7 @@
 		var/selected_sound = sounds[ID]
 		if(!selected_sound)
 			return
-		vol = between(0, vol, 100)
+		vol = Clamp(vol ,0 , 100)
 		playsound(get_turf(src), selected_sound, vol, freq, -1)
 
 /obj/item/integrated_circuit/output/sound/beeper
