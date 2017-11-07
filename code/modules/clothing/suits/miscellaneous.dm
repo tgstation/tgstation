@@ -134,8 +134,11 @@
 	item_state = "owl_wings"
 	togglename = "wings"
 	body_parts_covered = ARMS|CHEST
-	allowed = list(/obj/item/gun/energy, /obj/item/reagent_containers/spray/pepper, /obj/item/gun/ballistic, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/device/flashlight/seclite, /obj/item/melee/classic_baton/telescopic)
 	actions_types = list(/datum/action/item_action/toggle_wings)
+
+/obj/item/clothing/suit/toggle/owlwings/Initialize()
+	. = ..()
+	allowed = GLOB.security_vest_allowed
 
 /obj/item/clothing/suit/toggle/owlwings/griffinwings
 	name = "griffon cloak"
@@ -477,8 +480,11 @@
 	icon_state = "coatcaptain"
 	item_state = "coatcaptain"
 	armor = list(melee = 25, bullet = 30, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 0, acid = 50)
-	allowed = list(/obj/item/gun/energy, /obj/item/reagent_containers/spray/pepper, /obj/item/gun/ballistic, /obj/item/ammo_box,/obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/melee/classic_baton/telescopic)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/captain
+
+/obj/item/clothing/suit/hooded/wintercoat/captain/Initialize()
+	. = ..()
+	allowed = GLOB.security_vest_allowed
 
 /obj/item/clothing/head/hooded/winterhood/captain
 	icon_state = "winterhood_captain"
@@ -488,8 +494,11 @@
 	icon_state = "coatsecurity"
 	item_state = "coatsecurity"
 	armor = list(melee = 25, bullet = 15, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 0, acid = 45)
-	allowed = list(/obj/item/gun/energy, /obj/item/reagent_containers/spray/pepper, /obj/item/gun/ballistic, /obj/item/ammo_box,/obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/device/flashlight, /obj/item/melee/classic_baton/telescopic)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/security
+
+/obj/item/clothing/suit/hooded/wintercoat/security/Initialize()
+	. = ..()
+	allowed = GLOB.security_vest_allowed
 
 /obj/item/clothing/head/hooded/winterhood/security
 	icon_state = "winterhood_security"
