@@ -9,11 +9,12 @@
 
 	end_sound		(soundfile)				The sound played after the main loop has concluded
 
+	range_modifier (num)			Modifier in max range of sounds played by the sound loop.
 	chance			(num)					Chance per loop to play a mid_sound
 	volume			(num)					Sound output volume
 	muted			(bool)					Private. Used to stop the sound loop.
 	max_loops		(num)					The max amount of loops to run for.
-	direct			(bool)					If true plays directly to provided atoms instead of from them
+	direct			(bool)				If true plays directly to provided atoms instead of from them
 */
 /datum/looping_sound
 	var/list/atom/output_atoms

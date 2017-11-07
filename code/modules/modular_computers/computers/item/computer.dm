@@ -236,8 +236,7 @@
 		else
 			to_chat(user, "<span class='notice'>You press the power button and start up \the [src].</span>")
 		enabled = 1
-		if(soundloop)
-			soundloop.start()
+		soundloop.start()
 		update_icon()
 		ui_interact(user)
 	else // Unpowered

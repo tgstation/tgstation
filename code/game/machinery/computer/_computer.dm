@@ -67,8 +67,7 @@
 /obj/machinery/computer/power_change()
 	..()
 	if(stat & NOPOWER)
-		if(soundloop)
-			soundloop.stop()
+		soundloop.stop()
 		set_light(0)
 	else
 		set_light(brightness_on)

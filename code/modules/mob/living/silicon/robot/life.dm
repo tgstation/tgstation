@@ -25,8 +25,7 @@
 			uneq_all()
 		var/amt = Clamp((lamp_intensity - 2) * 2,1,cell.charge) //Always try to use at least one charge per tick, but allow it to completely drain the cell.
 		cell.use(amt) //Usage table: 1/tick if off/lowest setting, 4 = 4/tick, 6 = 8/tick, 8 = 12/tick, 10 = 16/tick
-		if(soundloop)
-			soundloop.start()
+		soundloop.start()
 	else
 		uneq_all()
 		if(soundloop)

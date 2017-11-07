@@ -24,8 +24,9 @@
 	volume = 40
 
 /datum/looping_sound/server
-	mid_sounds = list('sound/machines/tcomms/server_mid1.ogg'=1,'sound/machines/tcomms/server_mid2.ogg'=1,'sound/machines/tcomms/server_mid3.ogg'=1,)
-	mid_length = 47
+	mid_sounds = list('sound/machines/tcomms/tcomms_mid1.ogg'=1,'sound/machines/tcomms/tcomms_mid2.ogg'=1,'sound/machines/tcomms/tcomms_mid3.ogg'=1,'sound/machines/tcomms/tcomms_mid4.ogg'=1,\
+										'sound/machines/tcomms/tcomms_mid5.ogg'=1,'sound/machines/tcomms/tcomms_mid6.ogg'=1,'sound/machines/tcomms/tcomms_mid7.ogg'=1)
+	mid_length = 17
 	range_modifier = -4.5
 	volume = 50
 
@@ -44,3 +45,9 @@
 	end_sound = 'sound/machines/computer/computer_end.ogg'
 	volume = 80
 	range_modifier = -5.5
+
+/datum/looping_sound/gravgen
+	mid_sounds = list('sound/machines/gravgen/gravgen_mid1.ogg'=1,'sound/machines/gravgen/gravgen_mid2.ogg'=1,'sound/machines/gravgen/gravgen_mid3.ogg'=1,'sound/machines/gravgen/gravgen_mid4.ogg'=1,)
+	mid_length = 17
+	range_modifier = -4.5
+	volume = 70
