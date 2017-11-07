@@ -4,6 +4,8 @@
     var/list/datum_components //for /datum/components
     var/ui_screen = "home"  //for tgui
     var/use_tag = FALSE
+	var/datum/weakref/weakref
+
 
 #ifdef TESTING
     var/running_find_references
@@ -14,6 +16,7 @@
 // This should be overridden to remove all references pointing to the object being destroyed.
 // Return the appropriate QDEL_HINT; in most cases this is QDEL_HINT_QUEUE.
 /datum/proc/Destroy(force=FALSE)
+	weakref = null
 	tag = null
 	var/list/timers = active_timers
 	active_timers = null

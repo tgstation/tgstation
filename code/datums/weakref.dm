@@ -1,9 +1,3 @@
-/datum
-	var/datum/weakref/weakref
-
-/datum/Destroy()
-	weakref = null // Clear this reference to ensure it's kept for as brief duration as possible.
-	. = ..()
 
 //obtain a weak reference to a datum
 /proc/weakref(datum/D)
