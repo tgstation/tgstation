@@ -22,26 +22,6 @@
 	build_path = /obj/item/device/firing_pin/implant/mindshield
 	category = list("Firing Pins")
 
-/datum/design/stunrevolver
-	name = "Tesla Revolver"
-	desc = "A high-tech revolver that fires internal, reusable shock cartridges in a revolving cylinder. The cartridges can be recharged using conventional rechargers."
-	id = "stunrevolver"
-	req_tech = list("combat" = 4, "materials" = 4, "powerstorage" = 5)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 10000, MAT_GLASS = 10000, MAT_SILVER = 10000)
-	build_path = /obj/item/gun/energy/tesla_revolver
-	category = list("Weapons")
-
-/datum/design/nuclear_gun
-	name = "Advanced Energy Gun"
-	desc = "An energy gun with an experimental miniaturized reactor."
-	id = "nuclear_gun"
-	req_tech = list("combat" = 5, "magnets" = 5, "powerstorage" = 5)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 10000, MAT_GLASS = 2000, MAT_URANIUM = 3000, MAT_TITANIUM = 1000)
-	build_path = /obj/item/gun/energy/e_gun/nuclear
-	category = list("Weapons")
-
 /datum/design/tele_shield
 	name = "Telescopic Riot Shield"
 	desc = "An advanced riot shield made of lightweight materials that collapses for easy storage."
@@ -50,27 +30,6 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 4000, MAT_SILVER = 300, MAT_TITANIUM = 200)
 	build_path = /obj/item/shield/riot/tele
-	category = list("Weapons")
-
-/datum/design/beamrifle
-	name = "Beam Marksman Rifle"
-	desc = "A powerful long ranged anti-material rifle that fires charged particle beams to obliterate targets."
-	id = "beamrifle"
-	req_tech = list("combat" = 7, "magnets" = 5, "powerstorage" = 5, "materials" = 7, "programming" = 5)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 10000, MAT_GLASS = 5000, MAT_DIAMOND = 5000, MAT_URANIUM = 8000, MAT_SILVER = 4500, MAT_GOLD = 5000)
-	build_path = /obj/item/gun/energy/beam_rifle
-	category = list("Weapons")
-
-/datum/design/decloner
-	name = "Decloner"
-	desc = "Your opponent will bubble into a messy pile of goop."
-	id = "decloner"
-	req_tech = list("combat" = 5, "materials" = 5, "biotech" = 6, "plasmatech" = 7)
-	build_type = PROTOLATHE
-	materials = list(MAT_GOLD = 5000,MAT_URANIUM = 10000)
-	reagents_list = list("mutagen" = 40)
-	build_path = /obj/item/gun/energy/decloner
 	category = list("Weapons")
 
 /datum/design/rapidsyringe
@@ -134,26 +93,6 @@
 	build_path = /obj/item/grenade/chem_grenade/adv_release
 	category = list("Weapons")
 
-/datum/design/xray
-	name = "Xray Laser Gun"
-	desc = "Not quite as menacing as it sounds"
-	id = "xray"
-	req_tech = list("combat" = 7, "magnets" = 5, "biotech" = 5, "powerstorage" = 4)
-	build_type = PROTOLATHE
-	materials = list(MAT_GOLD = 5000, MAT_URANIUM = 4000, MAT_METAL = 5000, MAT_TITANIUM = 2000, MAT_BLUESPACE = 2000)
-	build_path = /obj/item/gun/energy/xray
-	category = list("Weapons")
-
-/datum/design/ioncarbine
-	name = "Ion Carbine"
-	desc = "How to dismantle a cyborg : The gun."
-	id = "ioncarbine"
-	req_tech = list("combat" = 5, "magnets" = 4)
-	build_type = PROTOLATHE
-	materials = list(MAT_SILVER = 6000, MAT_METAL = 8000, MAT_URANIUM = 2000)
-	build_path = /obj/item/gun/energy/ionrifle/carbine
-	category = list("Weapons")
-
 /datum/design/wormhole_projector
 	name = "Bluespace Wormhole Projector"
 	desc = "A projector that emits high density quantum-coupled bluespace beams."
@@ -165,40 +104,6 @@
 	category = list("Weapons")
 
 //WT550 Mags
-
-/datum/design/mag_oldsmg
-	name = "WT-550 Auto Gun Magazine (4.6x30mm)"
-	desc = "A 20 round magazine for the out of date security WT-550 Auto Rifle"
-	id = "mag_oldsmg"
-	req_tech = list("combat" = 1, "materials" = 1)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 4000)
-	build_path = /obj/item/ammo_box/magazine/wt550m9
-	category = list("Ammo")
-
-/datum/design/mag_oldsmg/ap_mag
-	name = "WT-550 Auto Gun Armour Piercing Magazine (4.6x30mm AP)"
-	desc = "A 20 round armour piercing magazine for the out of date security WT-550 Auto Rifle"
-	id = "mag_oldsmg_ap"
-	materials = list(MAT_METAL = 6000, MAT_SILVER = 600)
-	build_path = /obj/item/ammo_box/magazine/wt550m9/wtap
-
-/datum/design/mag_oldsmg/ic_mag
-	name = "WT-550 Auto Gun Incendiary Magazine (4.6x30mm IC)"
-	desc = "A 20 round armour piercing magazine for the out of date security WT-550 Auto Rifle"
-	id = "mag_oldsmg_ic"
-	materials = list(MAT_METAL = 6000, MAT_SILVER = 600, MAT_GLASS = 1000)
-	build_path = /obj/item/ammo_box/magazine/wt550m9/wtic
-
-/datum/design/stunshell
-	name = "Stun Shell"
-	desc = "A stunning shell for a shotgun."
-	id = "stunshell"
-	req_tech = list("combat" = 3, "materials" = 3)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 200)
-	build_path = /obj/item/ammo_casing/shotgun/stunslug
-	category = list("Ammo")
 
 /datum/design/techshell
 	name = "Unloaded Technological Shotshell"
@@ -228,14 +133,4 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_SILVER = 8000, MAT_URANIUM = 8000, MAT_GLASS = 12000, MAT_METAL = 12000, MAT_DIAMOND = 3000, MAT_BLUESPACE = 3000)
 	build_path = /obj/item/gun/energy/gravity_gun
-	category = list("Weapons")
-
-/datum/design/largecrossbow
-	name = "Energy Crossbow"
-	desc = "A reverse-engineered energy crossbow favored by syndicate infiltration teams and carp hunters."
-	id = "largecrossbow"
-	req_tech = list("combat" = 5, "engineering" = 3, "magnets" = 5, "syndicate" = 3)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_GLASS = 1500, MAT_URANIUM = 1500, MAT_SILVER = 1500)
-	build_path = /obj/item/gun/energy/kinetic_accelerator/crossbow/large
 	category = list("Weapons")
