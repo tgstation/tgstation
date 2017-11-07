@@ -523,6 +523,7 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 
 //Hook for running code when a dir change occurs
 /atom/proc/setDir(newdir)
+	SendSignal(COMSIG_ATOM_DIR_CHANGE, dir, newdir)
 	dir = newdir
 
 /atom/proc/mech_melee_attack(obj/mecha/M)
