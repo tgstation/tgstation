@@ -87,9 +87,11 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
     * Signals will not be recieved while this function is running
     * Component may be deleted after this function completes without being attached
     * Do not call `qdel(src)` from this function
-1. `/datum/component/Destroy()` (virtual, no-sleep)
+1. `/datum/component/Destroy(force(bool), silent(bool))` (virtual, no-sleep)
     * Sends the `COMSIG_COMPONENT_REMOVING` signal to the parent datum if the `parent` isn't being qdeleted
     * Properly removes the component from `parent` and cleans up references
+    * Setting `force` makes it not check for and remove the component from the parent
+    * Setting `silent` deletes the component without sending a `COMSIG_COMPONENT_REMOVING` signal
 1. `/datum/component/proc/InheritComponent(datum/component/C, i_am_original(boolean))` (abstract, no-sleep)
     * Called on a component when a component of the same type was added to the same parent
     * See `/datum/component/var/dupe_mode`
