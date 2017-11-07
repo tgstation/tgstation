@@ -477,7 +477,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		species = "<span class='notice'>[H.dna.species.name]</span>"
-		if(L.mind && L.mind.changeling)
+		if(L.mind && L.mind.has_antag_datum(/datum/antagonist/changeling))
 			species = "<span class='warning'>Changeling lifeform</span>"
 		var/obj/item/organ/heart/gland/temp = locate() in H.internal_organs
 		if(temp)

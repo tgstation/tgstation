@@ -274,6 +274,9 @@ GLOBAL_LIST_INIT(titanium_recipes, list ( \
 	recipes = GLOB.titanium_recipes
 	. = ..()
 
+/obj/item/stack/sheet/mineral/titanium/fifty
+	amount = 50
+
 
 /*
  * Plastitanium

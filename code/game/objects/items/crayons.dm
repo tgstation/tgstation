@@ -144,10 +144,11 @@
 		ui.open()
 
 /obj/item/toy/crayon/spraycan/AltClick(mob/user)
-	if(has_cap)
-		is_capped = !is_capped
-		to_chat(user, "<span class='notice'>The cap on [src] is now [is_capped ? "on" : "off"].</span>")
-		update_icon()
+	if(user.canUseTopic(src, be_close=TRUE))
+		if(has_cap)
+			is_capped = !is_capped
+			to_chat(user, "<span class='notice'>The cap on [src] is now [is_capped ? "on" : "off"].</span>")
+			update_icon()
 
 /obj/item/toy/crayon/ui_data()
 	var/list/data = list()

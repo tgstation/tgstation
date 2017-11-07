@@ -10,6 +10,7 @@
 	reroll_friendly = 1
 
 	var/list/possible_changelings = list()
+	var/list/changelings = list()
 	var/const/changeling_amount = 1 //hard limit on changelings if scaling is turned off
 
 /datum/game_mode/traitor/changeling/announce()
@@ -57,25 +58,22 @@
 
 /datum/game_mode/traitor/changeling/post_setup()
 	for(var/datum/mind/changeling in changelings)
-		changeling.current.make_changeling()
-		forge_changeling_objectives(changeling)
-		greet_changeling(changeling)
-		SSticker.mode.update_changeling_icons_added(changeling)
-	..()
-	return
+		changeling.add_antag_datum(/datum/antagonist/changeling)
+	return ..()
 
 /datum/game_mode/traitor/changeling/make_antag_chance(mob/living/carbon/human/character) //Assigns changeling to latejoiners
 	var/csc = CONFIG_GET(number/changeling_scaling_coeff)
 	var/changelingcap = min( round(GLOB.joined_player_list.len / (csc * 4)) + 2, round(GLOB.joined_player_list.len / (csc * 2)))
-	if(SSticker.mode.changelings.len >= changelingcap) //Caps number of latejoin antagonists
+	if(changelings.len >= changelingcap) //Caps number of latejoin antagonists
 		..()
 		return
-	if(SSticker.mode.changelings.len <= (changelingcap - 2) || prob(100 / (csc * 4)))
+	if(changelings.len <= (changelingcap - 2) || prob(100 / (csc * 4)))
 		if(ROLE_CHANGELING in character.client.prefs.be_special)
 			if(!jobban_isbanned(character, ROLE_CHANGELING) && !jobban_isbanned(character, "Syndicate"))
 				if(age_check(character.client))
 					if(!(character.job in restricted_jobs))
 						character.mind.make_Changling()
+						changelings += character.mind
 	..()
 
 /datum/game_mode/traitor/changeling/generate_report()

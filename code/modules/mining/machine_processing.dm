@@ -10,7 +10,7 @@
 	anchored = TRUE
 	var/obj/machinery/mineral/processing_unit/machine = null
 	var/machinedir = EAST
-	speed_process = 1
+	speed_process = TRUE
 
 /obj/machinery/mineral/processing_unit_console/Initialize()
 	. = ..()
