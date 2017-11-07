@@ -22,3 +22,13 @@
 	mid_length = 4
 	end_sound = 'sound/machines/generator/generator_end.ogg'
 	volume = 40
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/datum/looping_sound/microwave
+	start_sound = 'sound/machines/microwave/microwave_on.ogg'
+	start_length = 8
+	mid_sounds = list('sound/machines/microwave/microwave_hum.ogg' = 1)
+	mid_length = 2
+	end_sound = 'sound/machines/microwave/microwave_BEEEP.ogg'
+	volume = 65
