@@ -1,0 +1,6 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - balance: "Clockwork marauders are now on harm intent."
+  - balance: "The Clockwork Marauder scripture now takes five seconds longer to invoke per marauder summoned in the last 20 seconds, capping at 30 extra seconds."
+  - balance: "Clockwork marauders no longer gain a health bonus when war is declared."
