@@ -141,22 +141,22 @@
 		if(as_printing)
 			HTML += " {Load Program} "
 		else
-			HTML += " <A href='?src=\ref[src];print=load'>{Load Program}</a> "
+			HTML += " <A href='?src=[REF(src)];print=load'>{Load Program}</a> "
 		if(program == "blank")
 			HTML += " {Check Program} "
 		else
-			HTML += " <A href='?src=\ref[src];print=check'>{Check Program}</a> "
+			HTML += " <A href='?src=[REF(src)];print=check'>{Check Program}</a> "
 		if((program == "blank")|as_printing)
 			HTML += " {Print assembly} "
 		else
-			HTML += " <A href='?src=\ref[src];print=print'>{Print assembly}</a> "
+			HTML += " <A href='?src=[REF(src)];print=print'>{Print assembly}</a> "
 		if(as_printing)
 			HTML += "<br> printing in process. Please insert more metal. "
 		HTML += "<br><hr>"
 	HTML += "Categories:"
 	for(var/category in recipe_list)
 		if(category != current_category)
-			HTML += " <a href='?src=\ref[src];category=[category]'>\[[category]\]</a> "
+			HTML += " <a href='?src=[REF(src)];category=[category]'>\[[category]\]</a> "
 		else // Bold the button if it's already selected.
 			HTML += " <b>\[[category]\]</b> "
 	HTML += "<hr>"
@@ -170,9 +170,9 @@
 			if((IC.spawn_flags & IC_SPAWN_RESEARCH) && (!(IC.spawn_flags & IC_SPAWN_DEFAULT)) && !upgraded)
 				can_build = FALSE
 		if(can_build)
-			HTML += "<A href='?src=\ref[src];build=[O.type]'>\[[O.name]\]</A>: [O.desc]<br>"
+			HTML += "<A href='?src=[REF(src)];build=[O.type]'>\[[O]\]</A>: [O.desc]<br>"
 		else
-			HTML += "<s>\[[O.name]\]: [O.desc]</s><br>"
+			HTML += "<s>\[[O]\]: [O.desc]</s><br>"
 
 	user << browse(jointext(HTML, null), "window=integrated_printer;size=[window_width]x[window_height];border=1;can_resize=1;can_close=1;can_minimize=1")
 

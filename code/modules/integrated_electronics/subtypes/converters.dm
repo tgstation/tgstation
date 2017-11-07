@@ -80,7 +80,7 @@
 	pull_data()
 	var/atom/A = get_pin_data(IC_INPUT, 1)
 	if(A && istype(A))
-		result = "\ref[A]"
+		result = "[REF(A)]"
 
 	set_pin_data(IC_OUTPUT, 1, result)
 	push_data()

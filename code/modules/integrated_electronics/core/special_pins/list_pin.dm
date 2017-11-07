@@ -11,18 +11,18 @@
 	var/list/my_list = data
 	var/t = "<h2>[src]</h2><br>"
 	t += "List length: [my_list.len]<br>"
-	t += "<a href='?src=\ref[src]'>\[Refresh\]</a>  |  "
-	t += "<a href='?src=\ref[src];add=1'>\[Add\]</a>  |  "
-	t += "<a href='?src=\ref[src];swap=1'>\[Swap\]</a>  |  "
-	t += "<a href='?src=\ref[src];clear=1'>\[Clear\]</a><br>"
+	t += "<a href='?src=[REF(src)]'>\[Refresh\]</a>  |  "
+	t += "<a href='?src=[REF(src)];add=1'>\[Add\]</a>  |  "
+	t += "<a href='?src=[REF(src)];swap=1'>\[Swap\]</a>  |  "
+	t += "<a href='?src=[REF(src)];clear=1'>\[Clear\]</a><br>"
 	t += "<hr>"
 	var/i = 0
 	for(var/line in my_list)
 		i++
 		t += "#[i] | [display_data(line)]  |  "
-		t += "<a href='?src=\ref[src];edit=1;pos=[i]'>\[Edit\]</a>  |  "
-		t += "<a href='?src=\ref[src];remove=1;pos=[i]'>\[Remove\]</a><br>"
-	user << browse(t, "window=list_pin_\ref[src];size=500x400")
+		t += "<a href='?src=[REF(src)];edit=1;pos=[i]'>\[Edit\]</a>  |  "
+		t += "<a href='?src=[REF(src)];remove=1;pos=[i]'>\[Remove\]</a><br>"
+	user << browse(t, "window=list_pin_[REF(src)];size=500x400")
 
 /datum/integrated_io/list/proc/add_to_list(mob/user, var/new_entry)
 	if(!new_entry && user)

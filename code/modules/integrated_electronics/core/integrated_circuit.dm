@@ -95,13 +95,13 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	HTML += "<div align='center'>"
 	HTML += "<table border='1' style='undefined;table-layout: fixed; width: 80%'>"
 
-	HTML += "<br><a href='?src=\ref[src];return=1'>\[Return to Assembly\]</a>"
+	HTML += "<br><a href='?src=[REF(src)];return=1'>\[Return to Assembly\]</a>"
 
-	HTML += "<br><a href='?src=\ref[src];'>\[Refresh\]</a>  |  "
-	HTML += "<a href='?src=\ref[src];rename=1'>\[Rename\]</a>  |  "
-	HTML += "<a href='?src=\ref[src];scan=1'>\[Scan with Device\]</a>  |  "
+	HTML += "<br><a href='?src=[REF(src)];'>\[Refresh\]</a>  |  "
+	HTML += "<a href='?src=[REF(src)];rename=1'>\[Rename\]</a>  |  "
+	HTML += "<a href='?src=[REF(src)];scan=1'>\[Scan with Device\]</a>  |  "
 	if(src.removable)
-		HTML += "<a href='?src=\ref[src];remove=1'>\[Remove\]</a><br>"
+		HTML += "<a href='?src=[REF(src)];remove=1'>\[Remove\]</a><br>"
 
 	HTML += "<colgroup>"
 	HTML += "<col style='width: [table_edge_width]'>"
@@ -122,12 +122,12 @@ a creative player the means to solve many problems.  Circuits are held inside an
 				if(1)
 					io = get_pin_ref(IC_INPUT, i)
 					if(io)
-						words += "<b><a href=?src=\ref[src];pin_name=1;pin=\ref[io]>[io.display_pin_type()] [io.name]</a> <a href=?src=\ref[src];pin_data=1;pin=\ref[io]>[io.display_data(io.data)]</a></b><br>"
+						words += "<b><a href=?src=[REF(src)];pin_name=1;pin=[REF(io)]>[io.display_pin_type()] [io.name]</a> <a href=?src=[REF(src)];pin_data=1;pin=[REF(io)]>[io.display_data(io.data)]</a></b><br>"
 						if(io.linked.len)
 							for(var/datum/integrated_io/linked in io.linked)
-//								words += "<a href=?src=\ref[linked.holder];pin_name=1;pin=\ref[linked];link=\ref[io]>\[[linked.name]\]</a>
-								words += "<a href=?src=\ref[src];pin_unwire=1;pin=\ref[io];link=\ref[linked]>[linked.name]</a> \
-								@ <a href=?src=\ref[linked.holder];examine=1;>[linked.holder.displayed_name]</a><br>"
+//								words += "<a href=?src=[REF(linked.holder)];pin_name=1;pin=[REF(linked)];link=[REF(io)]>\[[linked]\]</a>
+								words += "<a href=?src=[REF(src)];pin_unwire=1;pin=[REF(io)];link=[REF(linked)]>[linked]</a> \
+								@ <a href=?src=[REF(linked.holder)];examine=1;>[linked.holder.displayed_name]</a><br>"
 
 						if(outputs.len > inputs.len)
 							height = 1
@@ -140,12 +140,12 @@ a creative player the means to solve many problems.  Circuits are held inside an
 				if(3)
 					io = get_pin_ref(IC_OUTPUT, i)
 					if(io)
-						words += "<b><a href=?src=\ref[src];pin_name=1;pin=\ref[io]>[io.display_pin_type()] [io.name]</a> <a href=?src=\ref[src];pin_data=1;pin=\ref[io]>[io.display_data(io.data)]</a></b><br>"
+						words += "<b><a href=?src=[REF(src)];pin_name=1;pin=[REF(io)]>[io.display_pin_type()] [io.name]</a> <a href=?src=[REF(src)];pin_data=1;pin=[REF(io)]>[io.display_data(io.data)]</a></b><br>"
 						if(io.linked.len)
 							for(var/datum/integrated_io/linked in io.linked)
-//								words += "<a href=?src=\ref[linked.holder];pin_name=1;pin=\ref[linked];link=\ref[io]>\[[linked.name]\]</a>
-								words += "<a href=?src=\ref[src];pin_unwire=1;pin=\ref[io];link=\ref[linked]>[linked.name]</a> \
-								@ <a href=?src=\ref[linked.holder];examine=1;>[linked.holder.displayed_name]</a><br>"
+//								words += "<a href=?src=[REF(linked.holder)];pin_name=1;pin=[REF(linked)];link=[REF(io)]>\[[linked]\]</a>
+								words += "<a href=?src=[REF(src)];pin_unwire=1;pin=[REF(io)];link=[REF(linked)]>[linked]</a> \
+								@ <a href=?src=[REF(linked.holder)];examine=1;>[linked.holder.displayed_name]</a><br>"
 
 						if(inputs.len > outputs.len)
 							height = 1
@@ -156,12 +156,12 @@ a creative player the means to solve many problems.  Circuits are held inside an
 		var/datum/integrated_io/io = activator
 		var/words = list()
 
-		words += "<b><a href=?src=\ref[src];pin_name=1;pin=\ref[io]><font color='FF0000'>[io.name]</font></a> <a href=?src=\ref[src];pin_data=1;pin=\ref[io]><font color='FF0000'>[io.data?"\<PULSE OUT\>":"\<PULSE IN\>"]</font></a></b><br>"
+		words += "<b><a href=?src=[REF(src)];pin_name=1;pin=[REF(io)]><font color='FF0000'>[io]</font></a> <a href=?src=[REF(src)];pin_data=1;pin=[REF(io)]><font color='FF0000'>[io.data?"\<PULSE OUT\>":"\<PULSE IN\>"]</font></a></b><br>"
 		if(io.linked.len)
 			for(var/datum/integrated_io/linked in io.linked)
-//				words += "<a href=?src=\ref[linked.holder];pin_name=1;pin=\ref[linked];link=\ref[io]>\[[linked.name]\]</a>
-				words += "<a href=?src=\ref[src];pin_unwire=1;pin=\ref[io];link=\ref[linked]><font color='FF0000'>[linked.name]</font></a> \
-				@ <a href=?src=\ref[linked.holder];examine=1;><font color='FF0000'>[linked.holder.displayed_name]</font></a><br>"
+//				words += "<a href=?src=[REF(linked.holder)];pin_name=1;pin=[REF(linked)];link=[REF(io)]>\[[linked]\]</a>
+				words += "<a href=?src=[REF(src)];pin_unwire=1;pin=[REF(io)];link=[REF(linked)]><font color='FF0000'>[linked]</font></a> \
+				@ <a href=?src=[REF(linked.holder)];examine=1;><font color='FF0000'>[linked.holder.displayed_name]</font></a><br>"
 
 		HTML += "<tr>"
 		HTML += "<td colspan='3' align='center'>[jointext(words, null)]</td>"
@@ -182,11 +182,11 @@ a creative player the means to solve many problems.  Circuits are held inside an
 
 	HTML += "</body></html>"
 	if(src.assembly)
-		user << browse(jointext(HTML, null), "window=assembly-\ref[src.assembly];size=[window_width]x[window_height];border=1;can_resize=1;can_close=1;can_minimize=1")
+		user << browse(jointext(HTML, null), "window=assembly-[REF(src.assembly)];size=[window_width]x[window_height];border=1;can_resize=1;can_close=1;can_minimize=1")
 	else
-		user << browse(jointext(HTML, null), "window=circuit-\ref[src];size=[window_width]x[window_height];border=1;can_resize=1;can_close=1;can_minimize=1")
+		user << browse(jointext(HTML, null), "window=circuit-[REF(src)];size=[window_width]x[window_height];border=1;can_resize=1;can_close=1;can_minimize=1")
 
-	onclose(user, "assembly-\ref[src.assembly]")
+	onclose(user, "assembly-[REF(src.assembly)]")
 
 /obj/item/integrated_circuit/Topic(href, href_list)
 	if(!check_interactivity(usr))
@@ -311,7 +311,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	if(href_list["return"])
 		if(A)
 			update_to_assembly = 1
-			usr << browse(null, "window=circuit-\ref[src];border=1;can_resize=1;can_close=1;can_minimize=1")
+			usr << browse(null, "window=circuit-[REF(src)];border=1;can_resize=1;can_close=1;can_minimize=1")
 		else
 			to_chat(usr, "<span class='warning'>This circuit is not in an assembly!</span>")
 

@@ -85,7 +85,7 @@ list[](
 		var/datum/weakref/w = input
 		var/atom/A = w.resolve()
 		//return A ? "([A.name] \[Ref\])" : "(null)" // For refs, we want just the name displayed.
-		return A ? "(\ref[A] \[Ref\])" : "(null)"
+		return A ? "([REF(A)] \[Ref\])" : "(null)"
 
 	return "([input])" // Nothing special needed for numbers or other stuff.
 

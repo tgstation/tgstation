@@ -41,7 +41,7 @@
 		if(!isturf(loc))
 			return
 		src.anchored = !anchored
-		to_chat(user,"You [src.anchored ? "wrench" : "unwrench"] \the [src].")
+		to_chat(user,"You [anchored ? "wrench" : "unwrench"] \the [src].")
 		return
 	..()
 
@@ -129,12 +129,12 @@
 	var/HTML = list()
 
 	HTML += "<html><head><title>[src.name]</title></head><body>"
-	HTML += "<br><a href='?src=\ref[src]'>\[Refresh\]</a>  |  "
-	HTML += "<a href='?src=\ref[src];rename=1'>\[Rename\]</a><br>"
+	HTML += "<br><a href='?src=[REF(src)]'>\[Refresh\]</a>  |  "
+	HTML += "<a href='?src=[REF(src)];rename=1'>\[Rename\]</a><br>"
 	HTML += "[total_parts]/[max_components] ([round((total_parts / max_components) * 100, 0.1)]%) space taken up in the assembly.<br>"
 	HTML += "[total_complexity]/[max_complexity] ([round((total_complexity / max_complexity) * 100, 0.1)]%) maximum complexity.<br>"
 	if(battery)
-		HTML += "[round(battery.charge, 0.1)]/[battery.maxcharge] ([round(battery.percent(), 0.1)]%) cell charge. <a href='?src=\ref[src];remove_cell=1'>\[Remove\]</a>"
+		HTML += "[round(battery.charge, 0.1)]/[battery.maxcharge] ([round(battery.percent(), 0.1)]%) cell charge. <a href='?src=[REF(src)];remove_cell=1'>\[Remove\]</a>"
 	else
 		HTML += "<span class='danger'>No powercell detected!</span>"
 	HTML += "<br><br>"
@@ -145,10 +145,10 @@
 //Put removable circuits in separate categories from non-removable
 	for(var/obj/item/integrated_circuit/circuit in contents)
 		if(!circuit.removable)
-			HTML += "<a href=?src=\ref[circuit];examine=1;from_assembly=1>[circuit.displayed_name]</a> | "
-			HTML += "<a href=?src=\ref[circuit];rename=1;from_assembly=1>\[Rename\]</a> | "
-			HTML += "<a href=?src=\ref[circuit];scan=1;from_assembly=1>\[Scan with Debugger\]</a> | "
-			HTML += "<a href=?src=\ref[circuit];bottom=\ref[circuit];from_assembly=1>\[Move to Bottom\]</a>"
+			HTML += "<a href=?src=[REF(circuit)];examine=1;from_assembly=1>[circuit.displayed_name]</a> | "
+			HTML += "<a href=?src=[REF(circuit)];rename=1;from_assembly=1>\[Rename\]</a> | "
+			HTML += "<a href=?src=[REF(circuit)];scan=1;from_assembly=1>\[Scan with Debugger\]</a> | "
+			HTML += "<a href=?src=[REF(circuit)];bottom=[REF(circuit)];from_assembly=1>\[Move to Bottom\]</a>"
 			HTML += "<br>"
 
 	HTML += "<hr>"
@@ -156,15 +156,15 @@
 
 	for(var/obj/item/integrated_circuit/circuit in contents)
 		if(circuit.removable)
-			HTML += "<a href=?src=\ref[circuit];examine=1;from_assembly=1>[circuit.displayed_name]</a> | "
-			HTML += "<a href=?src=\ref[circuit];rename=1;from_assembly=1>\[Rename\]</a> | "
-			HTML += "<a href=?src=\ref[circuit];scan=1;from_assembly=1>\[Scan with Debugger\]</a> | "
-			HTML += "<a href=?src=\ref[circuit];remove=1;from_assembly=1>\[Remove\]</a> | "
-			HTML += "<a href=?src=\ref[circuit];bottom=\ref[circuit];from_assembly=1>\[Move to Bottom\]</a>"
+			HTML += "<a href=?src=[REF(circuit)];examine=1;from_assembly=1>[circuit.displayed_name]</a> | "
+			HTML += "<a href=?src=[REF(circuit)];rename=1;from_assembly=1>\[Rename\]</a> | "
+			HTML += "<a href=?src=[REF(circuit)];scan=1;from_assembly=1>\[Scan with Debugger\]</a> | "
+			HTML += "<a href=?src=[REF(circuit)];remove=1;from_assembly=1>\[Remove\]</a> | "
+			HTML += "<a href=?src=[REF(circuit)];bottom=[REF(circuit)];from_assembly=1>\[Move to Bottom\]</a>"
 			HTML += "<br>"
 
 	HTML += "</body></html>"
-	user << browse(jointext(HTML,null), "window=assembly-\ref[src];size=600x350;border=1;can_resize=1;can_close=1;can_minimize=1")
+	user << browse(jointext(HTML,null), "window=assembly-\[REF(src)];size=600x350;border=1;can_resize=1;can_close=1;can_minimize=1")
 
 /obj/item/device/electronic_assembly/Topic(href, href_list[])
 	if(..())
@@ -257,10 +257,10 @@
 	var/total_complexity = get_part_complexity()
 
 	if((total_part_size + IC.size) > max_components)
-		to_chat(user, "<span class='warning'>You can't seem to add the '[IC.name]', as there's insufficient space.</span>")
+		to_chat(user, "<span class='warning'>You can't seem to add the '[IC]', as there's insufficient space.</span>")
 		return FALSE
 	if((total_complexity + IC.complexity) > max_complexity)
-		to_chat(user, "<span class='warning'>You can't seem to add the '[IC.name]', since this setup's too complicated for the case.</span>")
+		to_chat(user, "<span class='warning'>You can't seem to add the '[IC]', since this setup's too complicated for the case.</span>")
 		return FALSE
 
 	if(!user.transferItemToLoc(IC, src))
@@ -335,7 +335,7 @@
 			for(var/obj/item/integrated_circuit/s in available_inputs)
 				if(s.name == input.name && s.displayed_name == input.displayed_name && s != input)
 					i++
-			var/disp_name= "[input.displayed_name] \[[input.name]\]"
+			var/disp_name= "[input.displayed_name] \[[input]\]"
 			if(i)
 				disp_name += " ([i+1])"
 			input_selection.Add(disp_name)

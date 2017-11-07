@@ -20,7 +20,7 @@
 
 
 /obj/item/integrated_circuit/input/button/ask_for_input(mob/user) //Bit misleading name for this specific use.
-	to_chat(user, "<span class='notice'>You press the button labeled '[src.name]'.</span>")
+	to_chat(user, "<span class='notice'>You press the button labeled '[src]'.</span>")
 	activate_pin(1)
 
 /obj/item/integrated_circuit/input/toggle_button
@@ -38,7 +38,7 @@
 	set_pin_data(IC_OUTPUT, 1, !get_pin_data(IC_OUTPUT, 1))
 	push_data()
 	activate_pin(1)
-	to_chat(user, "<span class='notice'>You toggle the button labeled '[src.name]' [get_pin_data(IC_OUTPUT, 1) ? "on" : "off"].</span>")
+	to_chat(user, "<span class='notice'>You toggle the button labeled '[src]' [get_pin_data(IC_OUTPUT, 1) ? "on" : "off"].</span>")
 
 /obj/item/integrated_circuit/input/numberpad
 	name = "number pad"
@@ -578,7 +578,7 @@
 /obj/item/integrated_circuit/input/EPv2/New()
 	..()
 	exonet = new(src)
-	exonet.make_address("EPv2_circuit-\ref[src]")
+	exonet.make_address("EPv2_circuit-[REF(src)]")
 	desc += "<br>This circuit's EPv2 address is: [exonet.address]"
 
 /obj/item/integrated_circuit/input/EPv2/Destroy()
