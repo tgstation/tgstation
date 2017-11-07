@@ -2,18 +2,19 @@
 	desc = "Autonomous Power Loader Unit. This newer model is refitted with powerful armour against the dangers of planetary mining."
 	name = "\improper APLU \"Ripley\""
 	icon_state = "ripley"
-	step_in = 4 //Move speed, lower is faster.
+	step_in = 2 //Move speed, lower is faster.
 	var/fast_pressure_step_in = 2 //step_in while in normal pressure conditions
 	var/slow_pressure_step_in = 4 //step_in while in better pressure conditions
 	max_temperature = 20000
 	max_integrity = 200
-	lights_power = 7
+	lights_power = 14
 	deflect_chance = 15
-	armor = list(melee = 40, bullet = 20, laser = 10, energy = 20, bomb = 40, bio = 0, rad = 0, fire = 100, acid = 100)
+	armor = list(melee = 80, bullet = 0, laser = 0, energy = 0, bomb = 40, bio = 0, rad = 0, fire = 100, acid = 100)
+	resistance_flags = LAVA_PROOF
 	max_equip = 6
 	wreckage = /obj/structure/mecha_wreckage/ripley
 	var/list/cargo = new
-	var/cargo_capacity = 15
+	var/cargo_capacity = 30
 	var/hides = 0
 
 /obj/mecha/working/ripley/Move()
@@ -31,7 +32,7 @@
 					ore.forceMove(ore_box)
 
 /obj/mecha/working/ripley/Destroy()
-	for(var/i=1, i <= hides, i++)
+	for(var/i in 1 to hides)
 		new /obj/item/stack/sheet/animalhide/goliath_hide(loc) //If a goliath-plated ripley gets killed, all the plates drop
 	for(var/atom/movable/A in cargo)
 		A.forceMove(loc)
@@ -64,7 +65,7 @@
 	max_temperature = 65000
 	max_integrity = 250
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	lights_power = 7
+	lights_power = 14
 	armor = list(melee = 40, bullet = 30, laser = 30, energy = 30, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
 	max_equip = 5 // More armor, less tools
 	wreckage = /obj/structure/mecha_wreckage/ripley/firefighter
