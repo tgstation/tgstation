@@ -28,11 +28,9 @@
 		if(length(all_components))
 			for(var/I in all_components)
 				var/datum/component/C = I
-				C._RemoveFromParent()
-				qdel(C)
+				qdel(C, FALSE, TRUE)
 		else
 			var/datum/component/C = all_components
-			C._RemoveFromParent()
-			qdel(C)
+			qdel(C, FALSE, TRUE)
 		dc.Cut()
 	return QDEL_HINT_QUEUE
