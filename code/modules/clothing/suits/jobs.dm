@@ -152,7 +152,17 @@
 	icon_state = "officerbluejacket"
 	item_state = "officerbluejacket"
 	body_parts_covered = CHEST|ARMS
-	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/reagent_containers/spray/pepper, /obj/item/device/flashlight, /obj/item/gun, /obj/item/melee/baton, /obj/item/restraints/handcuffs)
+	allowed = list(/obj/item/gun/energy,
+		/obj/item/reagent_containers/spray/pepper,
+		/obj/item/gun/ballistic,
+		/obj/item/ammo_box,
+		/obj/item/ammo_casing,
+		/obj/item/melee/baton,
+		/obj/item/restraints/handcuffs,
+		/obj/item/device/flashlight/seclite,
+		/obj/item/melee/classic_baton/telescopic,
+		/obj/item/kitchen/knife/combat,
+		/obj/item/tank/internals/emergency_oxygen)
 
 /obj/item/clothing/suit/security/warden
 	name = "warden's jacket"
@@ -160,7 +170,17 @@
 	icon_state = "wardenbluejacket"
 	item_state = "wardenbluejacket"
 	body_parts_covered = CHEST|ARMS
-	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/reagent_containers/spray/pepper, /obj/item/device/flashlight, /obj/item/gun, /obj/item/melee/baton, /obj/item/restraints/handcuffs)
+	allowed = list(/obj/item/gun/energy,
+		/obj/item/reagent_containers/spray/pepper,
+		/obj/item/gun/ballistic,
+		/obj/item/ammo_box,
+		/obj/item/ammo_casing,
+		/obj/item/melee/baton,
+		/obj/item/restraints/handcuffs,
+		/obj/item/device/flashlight/seclite,
+		/obj/item/melee/classic_baton/telescopic,
+		/obj/item/kitchen/knife/combat,
+		/obj/item/tank/internals/emergency_oxygen)
 
 /obj/item/clothing/suit/security/hos
 	name = "head of security's jacket"
@@ -168,7 +188,17 @@
 	icon_state = "hosbluejacket"
 	item_state = "hosbluejacket"
 	body_parts_covered = CHEST|ARMS
-	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/reagent_containers/spray/pepper, /obj/item/device/flashlight, /obj/item/gun, /obj/item/melee/baton, /obj/item/restraints/handcuffs)
+	allowed = list(/obj/item/gun/energy,
+		/obj/item/reagent_containers/spray/pepper,
+		/obj/item/gun/ballistic,
+		/obj/item/ammo_box,
+		/obj/item/ammo_casing,
+		/obj/item/melee/baton,
+		/obj/item/restraints/handcuffs,
+		/obj/item/device/flashlight/seclite,
+		/obj/item/melee/classic_baton/telescopic,
+		/obj/item/kitchen/knife/combat,
+		/obj/item/tank/internals/emergency_oxygen)
 
 //Surgeon
 /obj/item/clothing/suit/apron/surgical
