@@ -136,21 +136,13 @@
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/get_arrival_time(var/deciseconds = TRUE)
 	if(seconds_until_activation)
-		if(deciseconds)
-			return (seconds_until_activation * 10)
-		else
-			return seconds_until_activation
-	if(grace_period)
-		if(deciseconds)
-			return (grace_period * 10)
-		else
-			return grace_period
+		. = seconds_until_activation
+	else if(grace_period)
+		. = grace_period
 	else if(GATEWAY_RATVAR_ARRIVAL - progress_in_seconds > 0)
-		if(deciseconds)
-			return (round(max((GATEWAY_RATVAR_ARRIVAL - progress_in_seconds) / (GATEWAY_SUMMON_RATE), 0), 1) * 10)
-		else
-			return round(max((GATEWAY_RATVAR_ARRIVAL - progress_in_seconds) / (GATEWAY_SUMMON_RATE), 0), 1)
-	return -10
+		. = round(max((GATEWAY_RATVAR_ARRIVAL - progress_in_seconds) / (GATEWAY_SUMMON_RATE), 0), 1)
+	if(deciseconds)
+		. *= 10
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/get_arrival_text(s_on_time)
 	if(seconds_until_activation)
