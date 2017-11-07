@@ -1,0 +1,4 @@
+author: "Spacedong"
+delete-after: True
+changes: 
+  - bugfix: "Garrotes are no longer invisible."
