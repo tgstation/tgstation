@@ -484,7 +484,7 @@
 
 /obj/item/clothing/suit/hooded/wintercoat/captain/Initialize()
 	. = ..()
-	allowed = GLOB.security_vest_allowed
+	allowed = GLOB.security_wintercoat_allowed
 
 /obj/item/clothing/head/hooded/winterhood/captain
 	icon_state = "winterhood_captain"
@@ -498,7 +498,7 @@
 
 /obj/item/clothing/suit/hooded/wintercoat/security/Initialize()
 	. = ..()
-	allowed = GLOB.security_vest_allowed
+	allowed = GLOB.security_wintercoat_allowed
 
 /obj/item/clothing/head/hooded/winterhood/security
 	icon_state = "winterhood_security"
@@ -507,7 +507,7 @@
 	name = "medical winter coat"
 	icon_state = "coatmedical"
 	item_state = "coatmedical"
-	allowed = list(/obj/item/device/analyzer, /obj/item/stack/medical, /obj/item/dnainjector, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/device/healthanalyzer, /obj/item/device/flashlight/pen, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/pill, /obj/item/storage/pill_bottle, /obj/item/paper, /obj/item/melee/classic_baton/telescopic)
+	allowed = list(/obj/item/device/analyzer, /obj/item/stack/medical, /obj/item/dnainjector, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/device/healthanalyzer, /obj/item/device/flashlight/pen, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/pill, /obj/item/storage/pill_bottle, /obj/item/paper, /obj/item/melee/classic_baton/telescopic, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/tank/internals/emergency_oxygen)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 50, rad = 0, fire = 0, acid = 45)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical
 
@@ -518,7 +518,7 @@
 	name = "science winter coat"
 	icon_state = "coatscience"
 	item_state = "coatscience"
-	allowed = list(/obj/item/device/analyzer, /obj/item/stack/medical, /obj/item/dnainjector, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/device/healthanalyzer, /obj/item/device/flashlight/pen, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/pill, /obj/item/storage/pill_bottle, /obj/item/paper, /obj/item/melee/classic_baton/telescopic)
+	allowed = list(/obj/item/device/analyzer, /obj/item/stack/medical, /obj/item/dnainjector, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/device/healthanalyzer, /obj/item/device/flashlight/pen, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/pill, /obj/item/storage/pill_bottle, /obj/item/paper, /obj/item/melee/classic_baton/telescopic, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/tank/internals/emergency_oxygen)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 10, bio = 0, rad = 0, fire = 0, acid = 0)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/science
 
@@ -530,7 +530,7 @@
 	icon_state = "coatengineer"
 	item_state = "coatengineer"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 20, fire = 30, acid = 45)
-	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/device/t_scanner, /obj/item/construction/rcd, /obj/item/pipe_dispenser)
+	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/device/t_scanner, /obj/item/construction/rcd, /obj/item/pipe_dispenser, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/engineering
 
 /obj/item/clothing/head/hooded/winterhood/engineering
@@ -549,7 +549,7 @@
 	name = "hydroponics winter coat"
 	icon_state = "coathydro"
 	item_state = "coathydro"
-	allowed = list(/obj/item/reagent_containers/spray/plantbgone, /obj/item/device/plant_analyzer, /obj/item/seeds, /obj/item/reagent_containers/glass/bottle, /obj/item/cultivator, /obj/item/reagent_containers/spray/pestspray, /obj/item/hatchet, /obj/item/storage/bag/plants)
+	allowed = list(/obj/item/reagent_containers/spray/plantbgone, /obj/item/device/plant_analyzer, /obj/item/seeds, /obj/item/reagent_containers/glass/bottle, /obj/item/cultivator, /obj/item/reagent_containers/spray/pestspray, /obj/item/hatchet, /obj/item/storage/bag/plants, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/hydro
 
 /obj/item/clothing/head/hooded/winterhood/hydro
