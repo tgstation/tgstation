@@ -15,7 +15,7 @@
 	icon_state = "horror1"
 	icon_living = "horror1"
 	icon_dead = "horror_dead"
-	speed = 1
+	speed = -0.5
 	gender = NEUTER
 	a_intent = "harm"
 	stop_automated_movement = 1
@@ -39,7 +39,7 @@
 	var/time_spent_as_true = 0
 	var/playstyle_string = "<b><font size=3 color='red'>We have entered our true form!</font> We are unbelievably powerful, and regenerate life at a steady rate. However, most of \
 	our abilities are useless in this form, and we must utilise the abilities that we have gained as a result of our transformation. Taking too much damage will also turn us back into a \
-	human in addition to knocking us out for a long time. Finally, we will uncontrollably revert into a human after some time due to our inability to maintain this form.</b>"
+	human in addition to knocking us out. Finally, we will uncontrollably revert into a human after some time due to our inability to maintain this form.</b>"
 	var/mob/living/carbon/human/stored_changeling = null //The changeling that transformed
 	var/devouring = FALSE //If the true changeling is currently devouring a human
 	var/wallcrawl = FALSE //If the true changeling is crawling around the place, allowing it to counteract gravity loss
@@ -58,6 +58,7 @@
 			icon_state = "horror4"
 		if(5)
 			icon_state = "horror5"
+	playsound(usr, 'sound/creatures/ling_scream.ogg', 50, 1)
 	spawn(0)
 		to_chat(usr, playstyle_string)
 
@@ -92,7 +93,7 @@
 						"<span class='userdanger'>We have fallen! We begin the revival process... (this will take around 45 seconds.)</span>")
 		spawn(450)
 			if(src)
-				visible_message("<span class='warning'>[src] suddenly rises from the dead!</span>")
+				visible_message("<span class='warning'>[src] reforms into a monster!</span>")
 				revive() //Changelings can self-revive, and true changelings are no exception
 
 /mob/living/simple_animal/hostile/true_changeling/mob_negates_gravity()
@@ -155,7 +156,7 @@
 	devouring = TRUE
 	visible_message("<span class='warning'>[src] begins ripping apart and feasting on [lunch]!</span>", \
 						"<span class='danger'>We begin to feast upon [lunch]...</span>")
-	if(!do_mob(src, 50, target = lunch))
+	if(!do_mob(src, 10, target = lunch))
 		devouring = FALSE
 		return FALSE
 	devouring = FALSE
@@ -185,7 +186,7 @@
 	if(wallcrawl)
 		visible_message("<span class='warning'>[src] begins gouging its spines into the terrain!</span>", \
 							"<span class='danger'>We begin using our spines for movement.</span>")
-		speed = 3 //Veeery slow
+		speed = 1 //Veeery slow
 	else
 		visible_message("<span class='warning'>[src] recedes their spines back into their body!</span>", \
 							"<span class='danger'>We return moving normally.</span>")
