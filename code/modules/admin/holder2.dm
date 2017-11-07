@@ -1,6 +1,9 @@
 GLOBAL_LIST_EMPTY(admin_datums)
 GLOBAL_PROTECT(admin_datums)
 
+GLOBAL_VAR_INIT(href_token, GenerateGlobalToken())
+GLOBAL_PROTECT(href_token)
+
 /datum/admins
 	var/datum/admin_rank/rank
 
@@ -17,7 +20,6 @@ GLOBAL_PROTECT(admin_datums)
 	var/datum/newscaster/feed_channel/admincaster_feed_channel = new /datum/newscaster/feed_channel
 	var/admin_signature
 	var/href_token
-	var/static/global_href_token = GenerateGlobalToken()
 
 /datum/admins/New(datum/admin_rank/R, ckey)
 	if(!ckey)
@@ -35,18 +37,17 @@ GLOBAL_PROTECT(admin_datums)
 		world.SetConfig("APP/admin", ckey, "role=admin")
 
 /datum/admins/proc/GenerateToken()
-	var/client/C = GLOB.directory[ckey]
+	var/client/C = owner
 	// md5 of ckey + cid + current_date
-	return md5("[ckey][C.computer_id][time_stamp("YYYYMMDD")]")
+	return md5("[C.ckey][C.computer_id][time_stamp("YYYYMMDD")]")
 
-/datum/admins/proc/GenerateGlobalToken()
+/proc/GenerateGlobalToken()
 	. = ""
 	for(var/I in 1 to 32)
 		. += "[rand(10)]"
 
 /proc/RawHrefToken(forceGlobal = FALSE)
-	var/datum/admins/holder
-	var/tok = holder.global_href_token
+	var/tok = GLOB.href_token
 	if(!forceGlobal && usr)
 		var/client/C = usr.client
 		if(!C)
@@ -55,7 +56,7 @@ GLOBAL_PROTECT(admin_datums)
 		if(holder)
 			tok = holder.href_token
 			if(!tok)
-				tok = GenerateToken()
+				tok = holder.href_token = holder.GenerateToken()
 	return tok
 
 /proc/HrefToken(forceGlobal = FALSE)
