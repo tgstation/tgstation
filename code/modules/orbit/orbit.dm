@@ -54,7 +54,7 @@
 	lastloc = orbiter.loc
 	for(var/other_orbit in orbiter.orbiters)
 		var/datum/orbit/OO = other_orbit
-		if(OO == src)
+		if(OO == src || OO.orbiter == orbiting)
 			continue
 		OO.Check(targetloc)
 
