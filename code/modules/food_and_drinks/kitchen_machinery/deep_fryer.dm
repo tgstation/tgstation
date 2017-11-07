@@ -30,7 +30,7 @@ God bless America.
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	container_type = OPENCONTAINER_1
-	var/obj/item/frying = null	//What's being fried RIGHT NOW?
+	var/obj/item/reagent_containers/food/snacks/deepfryholder/frying = null	//What's being fried RIGHT NOW?
 	var/cook_time = 0
 	var/oil_use = 0.05 //How much cooking oil is used per tick
 	var/fry_speed = 1 //How quickly we fry food
@@ -44,6 +44,7 @@ God bless America.
 		/obj/item/device/multitool,
 		/obj/item/weldingtool,
 		/obj/item/reagent_containers/glass,
+		/obj/item/reagent_containers/syringe,
 		/obj/item/storage/part_replacer))
 	var/datum/looping_sound/deep_fryer/fry_loop
 
@@ -70,8 +71,14 @@ God bless America.
 		to_chat(usr, "You can make out \a [frying] in the oil.")
 
 /obj/machinery/deepfryer/attackby(obj/item/I, mob/user)
-	if(I.reagents && I.reagents.has_reagent("cooking_oil")) //So we can fill the fryer even if there's no oil
-		return ..()
+	if(istype(I, /obj/item/reagent_containers/pill))
+		if(!reagents.total_volume)
+			to_chat(user, "<span class='warning'>There's nothing to dissolve [I] in!</span>")
+			return
+		user.visible_message("<span class='notice'>[user] drops [I] into [src].</span>", "<span class='notice'>You dissolve [I] in [src].</span>")
+		I.reagents.trans_to(src, I.reagents.total_volume)
+		qdel(I)
+		return
 	if(!reagents.has_reagent("cooking_oil"))
 		to_chat(user, "<span class='warning'>[src] has no cooking oil to fry with!</span>")
 		return
@@ -89,7 +96,7 @@ God bless America.
 			. = ..()
 		else if(!frying && user.transferItemToLoc(I, src))
 			to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
-			frying = I
+			frying = new/obj/item/reagent_containers/food/snacks/deepfryholder(src, I)
 			icon_state = "fryer_on"
 			fry_loop.start()
 
@@ -100,7 +107,8 @@ God bless America.
 		return
 	reagents.chem_temp = C.fry_temperature
 	if(frying)
-		reagents.remove_reagent("cooking_oil", oil_use)
+		visible_message("Frying with multi [fry_speed * 2]")
+		reagents.trans_to(frying, oil_use, multiplier = fry_speed * 3) //Fried foods gain more of the reagent thanks to space magic
 		cook_time += fry_speed
 		if(cook_time >= 30 && !frying_fried)
 			frying_fried = TRUE //frying... frying... fried
@@ -115,10 +123,9 @@ God bless America.
 	if(frying)
 		if(frying.loc == src)
 			to_chat(user, "<span class='notice'>You eject [frying] from [src].</span>")
-			var/obj/item/reagent_containers/food/snacks/deepfryholder/S = new(get_turf(src))
-			S.fry(frying, cook_time)
+			frying.fry(cook_time)
 			icon_state = "fryer_off"
-			user.put_in_hands(S)
+			user.put_in_hands(frying)
 			frying = null
 			cook_time = 0
 			frying_fried = FALSE
