@@ -207,7 +207,7 @@
 		if(16 to 49)
 			add_atom_colour(rgb(103,63,24), FIXED_COLOUR_PRIORITY)
 			name = "fried [name]"
-			desc = "[desc] It's been fried, increasing its tastiness value by 35%."
+			desc = "[desc] It's been fried, increasing its tastiness value by [rand(1, 75)]%."
 		if(50 to 59)
 			add_atom_colour(rgb(63,23,4), FIXED_COLOUR_PRIORITY)
 			name = "deep-fried [name]"

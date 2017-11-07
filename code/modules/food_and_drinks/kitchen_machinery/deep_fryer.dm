@@ -45,6 +45,7 @@ God bless America.
 		/obj/item/weldingtool,
 		/obj/item/reagent_containers/glass,
 		/obj/item/reagent_containers/syringe,
+		/obj/item/reagent_containers/food/condiment,
 		/obj/item/storage/part_replacer))
 	var/datum/looping_sound/deep_fryer/fry_loop
 
@@ -138,6 +139,7 @@ God bless America.
 		var/mob/living/carbon/C = user.pulling
 		user.visible_message("<span class = 'danger'>[user] dunks [C]'s face in [src]!</span>")
 		reagents.reaction(C, TOUCH)
+		C.apply_damage(min(30, reagents.total_volume), BURN, "head")
 		reagents.remove_any((reagents.total_volume/2))
 		C.Knockdown(60)
 		user.changeNext_move(CLICK_CD_MELEE)
