@@ -37,8 +37,8 @@
 
 /obj/effect/particle_effect/vapour/master/proc/Merge_Master()
 	for(var/obj/effect/particle_effect/vapour/master/M in orange(5, src))//a little costly but it only does it once and is much better than calling it on process
-		if(M.reagent_type == reagent_type)
-			volume += M.volume * 0.05
+		if(M.reagent_type.id == reagent_type.id)
+			volume += M.volume
 			M.kill_vapour()
 
 	spread_delay = Clamp(100 / (volume * 0.001), 2, 60) //spread delay is inversely proportional to volume
@@ -138,7 +138,7 @@ GLOBAL_LIST_EMPTY(vapour)
 		for(var/I in T)
 			if(istype(I, /obj/effect/particle_effect/vapour))//checks the tile for any vapour, prevents stacking of the same type
 				var/obj/effect/particle_effect/vapour/foundvape = I
-				if(foundvape && foundvape.reagent_type != reagent_type)
+				if(foundvape && foundvape.reagent_type.id != reagent_type.id)
 					clear = TRUE
 					if(prob(3) && reac_count < 1)//BIG safety check
 						create_reagents(50)//used just for in air reactions
@@ -147,7 +147,7 @@ GLOBAL_LIST_EMPTY(vapour)
 						qdel(reagents)
 						reac_count++
 
-				if(foundvape && foundvape.reagent_type == reagent_type)
+				if(foundvape && foundvape.reagent_type.id == reagent_type.id)
 					clear = FALSE
 					supply++
 					break
@@ -162,7 +162,7 @@ GLOBAL_LIST_EMPTY(vapour)
 				var/obj/effect/particle_effect/vapour/V = new(T)
 				V.reagent_type = reagent_type
 				V.VM = VM
-				V.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
+				V.add_atom_colour(reagent_type.color, FIXED_COLOUR_PRIORITY)
 				VM.volume -= 40
 				LAZYADD(VM.newvapes, V)
 

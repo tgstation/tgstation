@@ -145,8 +145,8 @@
 	if(current_type == "insert")
 		if(istype(tool, /obj/item/organ_storage))
 			I = tool.contents[1]
-			tool.icon_state = "evidenceobj"
-			tool.desc = "A container for holding body parts."
+			tool.icon_state = initial(tool.icon_state)
+			tool.desc = initial(tool.desc)
 			tool.cut_overlays()
 			tool = I
 		else

@@ -95,7 +95,7 @@
 
 	var/list/breath_gases = breath.gases
 
-	breath.assert_gases(/datum/gas/oxygen, /datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/bz, /datum/gas/nitrogen, /datum/gas/tritium, /datum/gas/brown_gas, /datum/gas/pluoxium, /datum/gas/stimulum)
+	breath.assert_gases(/datum/gas/oxygen, /datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/bz, /datum/gas/nitrogen, /datum/gas/tritium, /datum/gas/nitryl, /datum/gas/pluoxium, /datum/gas/stimulum)
 
 	//Partial pressures in our breath
 	var/O2_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/oxygen][MOLES])+(8*breath.get_breath_partial_pressure(breath_gases[/datum/gas/pluoxium][MOLES]))
@@ -261,25 +261,25 @@
 		else
 			H.radiation += trit_pp/10
 
-	//Brown Gas
-		var/brown_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/brown_gas][MOLES])
-		if (prob(brown_pp))
+	// Nitryl
+		var/nitryl_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitryl][MOLES])
+		if (prob(nitryl_pp))
 			to_chat(H, "<span class='alert'>Your mouth feels like it's burning!</span>")
-		if (brown_pp >40)
+		if (nitryl_pp >40)
 			H.emote("gasp")
 			H.adjustFireLoss(10)
-			if (prob(brown_pp/2))
+			if (prob(nitryl_pp/2))
 				to_chat(H, "<span class='alert'>Your throat closes up!</span>")
 				H.silent = max(H.silent, 3)
 		else
-			H.adjustFireLoss(brown_pp/4)
-		gas_breathed = breath_gases[/datum/gas/brown_gas][MOLES]
+			H.adjustFireLoss(nitryl_pp/4)
+		gas_breathed = breath_gases[/datum/gas/nitryl][MOLES]
 		if (gas_breathed > GAS_STIM_MINIMUM)
-			H.reagents.add_reagent("brown_gas",1)
+			H.reagents.add_reagent("nitryl_gas",1)
 
-		breath_gases[/datum/gas/brown_gas][MOLES]-=gas_breathed
+		breath_gases[/datum/gas/nitryl][MOLES]-=gas_breathed
 		gas_breathed = 0
-	//Stimulum
+	// Stimulum
 		gas_breathed = breath_gases[/datum/gas/stimulum][MOLES]
 		if (gas_breathed > GAS_STIM_MINIMUM)
 			H.reagents.add_reagent("stimulum",1)

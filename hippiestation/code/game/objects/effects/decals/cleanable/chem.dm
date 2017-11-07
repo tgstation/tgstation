@@ -61,7 +61,7 @@ GLOBAL_LIST_EMPTY(chempiles)
 				to_chat(user, "<span class='notice'>[I] is full!</span>")
 				return
 			to_chat(user, "<span class='notice'>You attempt to scoop up what you can from the [src] into [I]!</span>")
-			reagents.trans_to(I, reagents.total_volume* 0.5)//nerfed to half and deletes after a single scoop
+			reagents.trans_to(I, max(0.1, reagents.total_volume * 0.05))//fuck you
 			qdel(src)
 			return
 

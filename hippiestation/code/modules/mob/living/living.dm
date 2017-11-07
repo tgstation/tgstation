@@ -13,3 +13,9 @@
 			client.move_delay = world.time + 20
 	else
 		pulledby.stop_pulling()
+
+/mob/living/proc/canGhost()
+	return TRUE
+
+/mob/living/proc/canSuccumb()
+	return TRUE

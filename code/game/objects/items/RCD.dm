@@ -9,6 +9,8 @@ ARCD
 */
 
 /obj/item/construction
+	name = "not for ingame use"
+	desc = "A device used to rapidly build and deconstruct. Reload with metal, plasteel, glass or compressed matter cartridges."
 	opacity = 0
 	density = FALSE
 	anchored = FALSE
@@ -32,11 +34,13 @@ ARCD
 
 /obj/item/construction/Initialize()
 	. = ..()
-	desc = "\A [src]. It currently holds [matter]/[max_matter] matter-units."
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
+/obj/item/construction/examine(mob/user)
+	..()
+	to_chat(user, "\A [src]. It currently holds [matter]/[max_matter] matter-units." )
 
 /obj/item/construction/Destroy()
 	QDEL_NULL(spark_system)
@@ -61,7 +65,6 @@ ARCD
 		loaded = loadwithsheets(W, plasteelmultiplier*sheetmultiplier, user) //Plasteel is worth 3 times more than glass or metal
 	if(loaded)
 		to_chat(user, "<span class='notice'>[src] now holds [matter]/[max_matter] matter-units.</span>")
-		desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
 	else
 		return ..()
 
@@ -91,7 +94,6 @@ ARCD
 			to_chat(user, no_ammo_message)
 		return 0
 	matter -= amount
-	desc = "\A [src]. It currently holds [matter]/[max_matter] matter-units."
 	update_icon()
 	return 1
 
@@ -117,7 +119,6 @@ ARCD
 
 /obj/item/construction/rcd
 	name = "rapid-construction-device (RCD)"
-	desc = "A device used to rapidly build and deconstruct walls and floors."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcd"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
@@ -125,7 +126,6 @@ ARCD
 	max_matter = 160
 	flags_2 = NO_MAT_REDEMPTION_2
 	var/mode = 1
-	var/canRturf = 0
 	var/ranged = FALSE
 	var/airlock_type = /obj/machinery/door/airlock
 	var/airlock_glass = FALSE // So the floor's rcd_act knows how much ammo to use
@@ -134,6 +134,7 @@ ARCD
 	var/list/conf_access = null
 	var/use_one_access = 0 //If the airlock should require ALL or only ONE of the listed accesses.
 	var/delay_mod = 1
+	var/canRturf = FALSE //Variable for R walls to deconstruct them
 
 
 /obj/item/construction/rcd/suicide_act(mob/user)
@@ -362,11 +363,11 @@ ARCD
 	qdel(src)
 
 
-/obj/item/construction/rcd/borg/New()
-	..()
+/obj/item/construction/rcd/borg
 	no_ammo_message = "<span class='warning'>Insufficient charge.</span>"
 	desc = "A device used to rapidly build walls and floors."
-	canRturf = 1
+	canRturf = TRUE
+
 
 /obj/item/construction/rcd/borg/useResource(amount, mob/user)
 	if(!iscyborg(user))
@@ -401,6 +402,7 @@ ARCD
 	name = "industrial RCD"
 	max_matter = 500
 	matter = 500
+	canRturf = TRUE
 
 /obj/item/rcd_ammo
 	name = "compressed matter cartridge"
@@ -420,7 +422,7 @@ ARCD
 	ammoamt = 160
 
 
-/obj/item/construction/rcd/admin
+/obj/item/construction/rcd/combat/admin
 	name = "admin RCD"
 	max_matter = INFINITY
 	matter = INFINITY
@@ -431,7 +433,7 @@ ARCD
 
 /obj/item/construction/rcd/arcd
 	name = "advanced rapid-construction-device (ARCD)"
-	desc = "A prototype RCD with ranged capability and extended capacity."
+	desc = "A prototype RCD with ranged capability and extended capacity. Reload with metal, plasteel, glass or compressed matter cartridges."
 	max_matter = 300
 	matter = 300
 	delay_mod = 0.6
@@ -454,7 +456,7 @@ ARCD
 
 /obj/item/construction/rld
 	name = "rapid-light-device (RLD)"
-	desc = "A device used to rapidly provide lighting sources to an area."
+	desc = "A device used to rapidly provide lighting sources to an area. Reload with metal, plasteel, glass or compressed matter cartridges."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rld-5"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'

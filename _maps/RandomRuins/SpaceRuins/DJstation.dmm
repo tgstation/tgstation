@@ -55,8 +55,7 @@
 /area/ruin/space/djstation)
 "an" = (
 /obj/structure/cable{
-	icon_state = "0-2";
-	d2 = 2
+	icon_state = "0-2"
 	},
 /obj/machinery/power/smes/magical{
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit.";
@@ -66,16 +65,13 @@
 /area/ruin/space/djstation)
 "ao" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "ap" = (
 /obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
+	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
 	dir = 0;
@@ -86,8 +82,6 @@
 /area/ruin/space/djstation)
 "aq" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/item/storage/box/lights/mixed,
@@ -101,8 +95,6 @@
 /area/ruin/space/djstation)
 "ar" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/open/floor/plating,
@@ -311,9 +303,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/rack{
-	dir = 4
-	},
+/obj/structure/rack,
 /obj/item/clothing/under/soviet,
 /obj/item/clothing/head/ushanka,
 /turf/open/floor/plasteel/cafeteria,

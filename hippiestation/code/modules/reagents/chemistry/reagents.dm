@@ -47,6 +47,9 @@
 		if(src.id in gas_reagent_blacklist)
 			return
 
+		if(atom && istype(atom, /obj/effect/particle_effect))
+			volume = volume * GAS_PARTICLE_EFFECT_EFFICIENCY//big nerf to smoke and foam duping
+
 		var/turf/open/O = T
 		if(istype(O))
 			var/obj/effect/particle_effect/vapour/foundvape = locate() in T//if there's an existing vapour of the same type it just adds volume otherwise it creates a new instance
@@ -55,7 +58,14 @@
 			else
 				var/obj/effect/particle_effect/vapour/master/V = new(O)
 				V.volume = volume*50
-				V.reagent_type = src
+				var/paths = subtypesof(/datum/reagent)
+				for(var/path in paths)
+					var/datum/reagent/RR = new path
+					if(RR.id == id)
+						V.reagent_type = RR
+						break
+					else
+						qdel(RR)
 			log_game("Reagent vapour of type [src.name] was released at [COORD(T)] Last Fingerprint: [touch_msg] ")
 //liquid
 	var/list/chempile_reagent_blacklist = list("water", "lube", "bleach", "cleaner", "colorful_reagent", "condensedcapsaicin", "radium", "thermite", "smoke_powder", "sugar")//add stuff that doesn't make sense/is too op for turfchems
@@ -64,11 +74,11 @@
 			return
 
 		if(atom && istype(atom, /obj/effect/particle_effect))
-			volume = volume * 0.1//big nerf to smoke and foam duping
+			volume = volume * LIQUID_PARTICLE_EFFECT_EFFICIENCY//big nerf to smoke and foam duping
 
 		for(var/obj/effect/decal/cleanable/chempile/c in T.contents)//handles merging existing chempiles
 			if(c.reagents)
-				c.reagents.add_reagent("[src.id]", volume * 0.25)
+				c.reagents.add_reagent("[src.id]", volume)
 				var/mixcolor = mix_color_from_reagents(c.reagents.reagent_list)
 				c.add_atom_colour(mixcolor, FIXED_COLOUR_PRIORITY)
 				if(c.reagents && c.reagents.total_volume < 5 & REAGENT_NOREACT)
@@ -76,7 +86,7 @@
 				return TRUE
 
 		var/obj/effect/decal/cleanable/chempile/C = new /obj/effect/decal/cleanable/chempile(T)//otherwise makes a new one
-		C.reagents.add_reagent("[src.id]", volume * 0.25)
+		C.reagents.add_reagent("[src.id]", volume)
 		var/mixcolor = mix_color_from_reagents(C.reagents.reagent_list)
 		C.add_atom_colour(mixcolor, FIXED_COLOUR_PRIORITY)
 //solid
@@ -86,7 +96,7 @@
 			return
 
 		if(atom && istype(atom, /obj/effect/particle_effect))
-			volume = volume * 0.1//big nerf to smoke and foam duping
+			volume = volume * SOLID_PARTICLE_EFFECT_EFFICIENCY//big nerf to smoke and foam duping
 
 		for(var/obj/item/reagent_containers/food/snacks/solid_reagent/SR in T.contents)
 			if(SR.reagents && SR.reagent_type == src.id && SR.reagents.total_volume < 200)

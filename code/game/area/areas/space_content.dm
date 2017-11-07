@@ -2,6 +2,7 @@
 
 /area/spacecontent
 	name = "space"
+	ambientsounds = AWAY_MISSION
 
 /area/spacecontent/a1
 	icon_state = "spacecontent1"

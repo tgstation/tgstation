@@ -644,8 +644,9 @@
 
 	if(mind)
 		add_spells_to_statpanel(mind.spell_list)
-		if(mind.changeling)
-			add_stings_to_statpanel(mind.changeling.purchasedpowers)
+		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
+		if(changeling)
+			add_stings_to_statpanel(changeling.purchasedpowers)
 	add_spells_to_statpanel(mob_spell_list)
 
 /mob/proc/add_spells_to_statpanel(list/spells)
