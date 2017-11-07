@@ -31,7 +31,12 @@
 /datum/integrated_io/color/scramble()
 	if(!is_valid())
 		return
-	var/new_data = get_random_colour(simple = FALSE, lower = 0, upper = 255)
+	var/new_data
+	for(var/i=1;i<=3;i++)
+		var/temp_col = "[num2hex(rand(0,255))]"
+		if(length(temp_col )<2)
+			temp_col  = "0[temp_col]"
+		new_data += temp_col
 	data = new_data
 	push_data()
 

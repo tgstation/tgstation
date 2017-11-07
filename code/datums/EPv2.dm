@@ -34,10 +34,10 @@ It's suggested to start with an if or switch statement for the message, to deter
 GLOBAL_LIST_EMPTY(all_exonet_connections)
 /datum/exonet_protocol
 	var/address = "" //Resembles IPv6, but with only five 'groups', e.g. XXXX:XXXX:XXXX:XXXX:XXXX
-	var/atom/movable/holder = null
+	var/atom/movable/holder
 
-/datum/exonet_protocol/New(var/atom/holder)
-	src.holder = holder
+/datum/exonet_protocol/New(var/atom/H)
+	holder = H
 	..()
 
 
@@ -47,7 +47,7 @@ GLOBAL_LIST_EMPTY(all_exonet_connections)
 /datum/exonet_protocol/proc/make_address(var/string)
 	if(!string)
 		return
-	var/new_address = null
+	var/new_address
 	while(new_address == find_address(new_address)) //Collision test.
 		var/hash = md5(string)
 		var/raw_address = copytext(hash,1,25)
@@ -55,7 +55,6 @@ GLOBAL_LIST_EMPTY(all_exonet_connections)
 		var/addr_1 = hexadecimal_to_EPv2(raw_address)
 		new_address = "[addr_0]:[addr_1]"
 		string = "[string]0" //If we did get a collision, this should make the next attempt not have one.
-		sleep(1)
 	address = new_address
 	GLOB.all_exonet_connections |= src
 
@@ -66,10 +65,10 @@ GLOBAL_LIST_EMPTY(all_exonet_connections)
 /datum/exonet_protocol/proc/make_arbitrary_address(var/new_address)
 	if(new_address)
 		if(new_address == find_address(new_address) )	//Collision test.
-			return 0
+			return FALSE
 		address = new_address
-		GLOB.all_exonet_connections |= src
-		return 1
+		GLOB.all_exonet_connections += src
+		return TRUE
 
 // Proc: hexadecimal_to_EPv2()
 // Parameters: 1 (hex - a string of hexadecimals to convert)
@@ -90,7 +89,7 @@ GLOBAL_LIST_EMPTY(all_exonet_connections)
 // Description: Deallocates the address, freeing it for use.
 /datum/exonet_protocol/proc/remove_address()
 	address = ""
-	GLOB.all_exonet_connections.Remove(src)
+	GLOB.all_exonet_connections -= src
 
 
 // Proc: find_address()

@@ -908,6 +908,7 @@
 		if(dead)
 			age = 1
 			plant_health = myseed.endurance
+			dead = 0
 		else
 			if(prob(10))
 				var/list/livingplants = list(/mob/living/simple_animal/hostile/tree, /mob/living/simple_animal/hostile/killertomato, /mob/living/simple_animal/hostile/mushroom, /mob/living/simple_animal/hostile/venus_human_trap)
@@ -916,7 +917,7 @@
 				C.faction = list("plants")
 				qdel(myseed)
 				myseed = null
-				dead = 0
+
 			else if(prob(20))
 				mutatespecie()
 			else if(prob(30))

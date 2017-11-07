@@ -10,14 +10,14 @@
 	flags_1 = NOBLUDGEON_1
 	var/max_components = IC_COMPONENTS_BASE
 	var/max_complexity = IC_COMPLEXITY_BASE
-	var/opened = 0
-	var/obj/item/stock_parts/cell/battery = null // Internal cell which most circuits need to work.
+	var/opened = FALSE
+	var/obj/item/stock_parts/cell/battery // Internal cell which most circuits need to work.
 	var/cell_type = /obj/item/stock_parts/cell
-	var/can_charge = 1 //Can it be charged in a recharger?
+	var/can_charge = TRUE //Can it be charged in a recharger?
 	var/charge_sections = 4
-	var/charge_tick = 0
+	var/charge_tick = FALSE
 	var/charge_delay = 4
-	var/use_cyborg_cell = 1
+	var/use_cyborg_cell = TRUE
 
 /obj/item/device/electronic_assembly/medium
 	name = "electronic mechanism"

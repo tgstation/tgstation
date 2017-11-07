@@ -71,6 +71,20 @@
 			return 1
 	return 0
 
+proc/get_random_colour(var/simple, var/lower=0, var/upper=255)
+	var/colour
+	if(simple)
+		var/static/list/simple_colors = list("FF0000","FF7F00","FFFF00","00FF00","0000FF","4B0082","8F00FF")
+		colour = pick(simple_colors)
+	else
+		for(var/i=1;i<=3;i++)
+			var/temp_col = "[num2hex(rand(lower,upper))]"
+			if(length(temp_col )<2)
+				temp_col  = "0[temp_col]"
+			colour += temp_col
+	return colour
+
+
 /obj/item/integrated_circuit/proc/asc2b64(var/S)
     var/list/b64 = list(
     					"A"=0,"B"=1,"C"=2,"D"=3,

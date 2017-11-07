@@ -20,16 +20,15 @@ D [1]/  ||
 */
 /datum/integrated_io
 	var/name = "input/output"
-	var/obj/item/integrated_circuit/holder = null
-	var/datum/weakref/data = null // This is a weakref, to reduce typecasts.  Note that oftentimes numbers and text may also occupy this.
+	var/obj/item/integrated_circuit/holder
+	var/datum/weakref/data  // This is a weakref, to reduce typecasts.  Note that oftentimes numbers and text may also occupy this.
 	var/list/linked = list()
 	var/io_type = DATA_CHANNEL
 
-/datum/integrated_io/New(var/newloc, var/name, var/new_data)
-	..()
-	src.name = name
+/datum/integrated_io/New(newloc, name1, new_data)
+	name = name1
 	if(new_data)
-		src.data = new_data
+		data = new_data
 	holder = newloc
 	if(!istype(holder))
 		message_admins("ERROR: An integrated_io ([src.name]) spawned without a valid holder!  This is a bug.")
@@ -38,7 +37,7 @@ D [1]/  ||
 	disconnect()
 	data = null
 	holder = null
-	. = ..()
+	return ..()
 /*
 /datum/integrated_io/nano_host()
 	return holder.nano_host()

@@ -4,17 +4,17 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "exonet_node"
 	idle_power_usage = 25
-	var/on = 1
+	var/on = TRUE
 	var/toggle = 1
 	density = TRUE
 	anchored = TRUE
 	circuit = /obj/item/circuitboard/machine/exonet_node
 	max_integrity = 300
 	integrity_failure = 100
-	armor = list(melee = 20, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
-	var/opened = 0
-
+	armor = list("melee" = 20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 70)
+	desc = "This machine is exonet node."
 	var/list/logs = list() // Gets written to by exonet's send_message() function.
+	var/opened = FALSE
 
 // Proc: New()
 // Parameters: None
@@ -35,7 +35,7 @@
 	component_parts += new /obj/item/stack/cable_coil(src, 2)
 	RefreshParts()
 */
-	desc = "This machine is exonet node."
+
 
 // Proc: update_icon()
 // Parameters: None
@@ -51,13 +51,12 @@
 // Description: Sets the device on/off and adjusts power draw based on stat and toggle variables.
 /obj/machinery/exonet_node/proc/update_power()
 	if(toggle)
-		if(stat & (BROKEN|NOPOWER|EMPED))
-			on = 0
+		if(!is_operational())
+			on = FALSE
 		else
-			on = 1
+			on = TRUE
 	else
-		on = 0
-		idle_power_usage = 0
+		on = FALSE
 	use_power = on
 	update_icon()
 
@@ -68,11 +67,14 @@
 	if(!(stat & EMPED))
 		stat |= EMPED
 		var/duration = (300 * 10)/severity
-		spawn(rand(duration - 20, duration + 20))
+		addtimer(CALLBACK(src, /obj/machinery/exonet_node/proc/unemp_act), rand(duration - 20, duration + 20))
+		spawn()
 			stat &= ~EMPED
 	update_icon()
 	..()
 
+/obj/machinery/exonet_node/proc/unemp_act(severity)
+	stat &= ~EMPED
 
 // Proc: attackby()
 // Parameters: 2 (I - the item being whacked against the machine, user - the person doing the whacking)
@@ -83,7 +85,7 @@
 	else if(istype(I, /obj/item/crowbar))
 		default_deconstruction_crowbar(user, I)
 	else
-		..()
+		return ..()
 
 // Proc: attack_ai()
 // Parameters: 1 (user - the AI clicking on the machine)
@@ -121,7 +123,7 @@
 				var/msg = "[usr.client.key] ([usr]) has turned [src] off, at [x],[y],[z]."
 				message_admins(msg)
 				log_game(msg)
-	. = TRUE
+			. = TRUE
 	update_icon()
 	add_fingerprint(usr)
 
