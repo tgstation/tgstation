@@ -103,6 +103,10 @@ SUBSYSTEM_DEF(overlays)
 		else if(isicon(overlay))
 			new_overlays += icon2appearance(overlay)
 		else
+			if(isloc(overlay))
+				var/atom/A = overlay
+				if (A.flags_1 & OVERLAY_QUEUED_1)
+					COMPILE_OVERLAYS(A)
 			appearance_bro.appearance = overlay //this works for images and atoms too!
 			if(!ispath(overlay))
 				var/image/I = overlay
