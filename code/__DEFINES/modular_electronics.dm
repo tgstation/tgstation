@@ -75,7 +75,8 @@ GLOBAL_LIST_EMPTY(all_integrated_circuits)
 proc/get_random_colour(var/simple, var/lower=0, var/upper=255)
 	var/colour
 	if(simple)
-		colour = pick(list("FF0000","FF7F00","FFFF00","00FF00","0000FF","4B0082","8F00FF"))
+		var/static/list/simple_colors = list("FF0000","FF7F00","FFFF00","00FF00","0000FF","4B0082","8F00FF")
+		colour = pick(simple_colors)
 	else
 		for(var/i=1;i<=3;i++)
 			var/temp_col = "[num2hex(rand(lower,upper))]"

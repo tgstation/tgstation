@@ -253,6 +253,44 @@
 	push_data()
 	activate_pin(2)
 
+/obj/item/integrated_circuit/input/gene_scanner
+	name = "gene scanner"
+	desc = "This circuit will scan plant for traits and reagent genes."
+	extended_desc = "This allows the machine to scan plants in trays for reagent and trait genes.  \
+			it can't scan seeds and fruits.only plants."
+	inputs = list(
+		"\<REF\> target" = IC_PINTYPE_REF
+	)
+	outputs = list(
+		"traits" = IC_PINTYPE_LIST,
+		"reagents" = IC_PINTYPE_LIST
+	)
+	activators = list("scan" = IC_PINTYPE_PULSE_IN, "on scanned" = IC_PINTYPE_PULSE_OUT)
+	icon_state = "medscan_adv"
+	spawn_flags = IC_SPAWN_RESEARCH
+
+/obj/item/integrated_circuit/input/gene_scanner/do_work()
+	var/list/gtraits = list()
+	var/list/greagents = list()
+	var/obj/machinery/hydroponics/H = get_pin_data_as_type(IC_INPUT, 1, /obj/machinery/hydroponics)
+	if(!istype(H)) //Invalid input
+		return
+	for(var/i=1, i<=outputs.len, i++)
+		set_pin_data(IC_OUTPUT, i, null)
+	if(H in view(get_turf(H))) // Like medbot's analyzer it can be used in range..
+		if(H.myseed)
+			for(var/datum/plant_gene/reagent/G in H.myseed.genes)
+				greagents.Add(G.get_name())
+
+			for(var/datum/plant_gene/trait/G in H.myseed.genes)
+				gtraits.Add(G.get_name())
+
+	set_pin_data(IC_OUTPUT, 1, gtraits)
+	set_pin_data(IC_OUTPUT, 2, greagents)
+	push_data()
+	activate_pin(2)
+
+
 /obj/item/integrated_circuit/input/examiner
 	name = "examiner"
 	desc = "It' s a little machine vision system. It can return the name, description, distance, \
@@ -552,7 +590,7 @@
 		O.show_message(text("\icon[] *beep* *beep*", src), 3, "*beep* *beep*", 2)
 
 /obj/item/integrated_circuit/input/EPv2
-	name = "\improper EPv2 circuit"
+	name = "EPv2 circuit"
 	desc = "Enables the sending and receiving of messages on the Exonet with the EPv2 protocol."
 	extended_desc = "An EPv2 address is a string with the format of XXXX:XXXX:XXXX:XXXX.  Data can be send or received using the \
 	second pin on each side, with additonal data reserved for the third pin.  When a message is received, the second activation pin \

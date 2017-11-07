@@ -904,10 +904,44 @@
 	weedlevel = Clamp(weedlevel + adjustamt, 0, 10)
 
 /obj/machinery/hydroponics/proc/spawnplant() // why would you put strange reagent in a hydro tray you monster I bet you also feed them blood
-	var/list/livingplants = list(/mob/living/simple_animal/hostile/tree, /mob/living/simple_animal/hostile/killertomato)
-	var/chosen = pick(livingplants)
-	var/mob/living/simple_animal/hostile/C = new chosen (get_turf(src))
-	C.faction = list("plants")
+	if(myseed)
+		if(dead)
+			age = 1
+			plant_health = myseed.endurance
+		else
+			if(prob(10))
+				var/list/livingplants = list(/mob/living/simple_animal/hostile/tree, /mob/living/simple_animal/hostile/killertomato, /mob/living/simple_animal/hostile/mushroom, /mob/living/simple_animal/hostile/venus_human_trap)
+				var/chosen = pick(livingplants)
+				var/mob/living/simple_animal/hostile/C = new chosen (get_turf(src))
+				C.faction = list("plants")
+				qdel(myseed)
+				myseed = null
+				dead = 0
+			else if(prob(20))
+				mutatespecie()
+			else if(prob(30))
+				qdel(myseed)
+				var/newseed = pick(typesof(/obj/item/seeds))
+				myseed = new newseed(src)
+				age = 1
+				plant_health = myseed.endurance
+				lastcycle = world.time
+				update_icon()
+			else if(prob(50))
+				myseed.add_random_reagents(0, 2)
+			else
+				myseed.add_random_traits(0, 2)
+		dead = 0
+
+	else
+		dead = 0
+		myseed = new/obj/item/seeds/random(src)
+		age = 1
+		plant_health = myseed.endurance
+		lastcycle = world.time
+		update_icon()
+
+
 
 /obj/machinery/hydroponics/proc/become_self_sufficient() // Ambrosia Gaia effect
 	visible_message("<span class='boldnotice'>[src] begins to glow with a beautiful light!</span>")
