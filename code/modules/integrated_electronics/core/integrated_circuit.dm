@@ -61,12 +61,12 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	for(var/datum/integrated_io/io in inputs + outputs + activators)
 		io.scramble()
 
-/obj/item/integrated_circuit/proc/check_interactivity(mob/user)
+/obj/item/integrated_circuit/check_interactivity(mob/user)
 	if(assembly)
 		return assembly.check_interactivity(user)
-	else if(!user.IsAdvancedToolUser())
-		return 0
-	return 1
+	else
+		return check_interactivity(user)
+
 
 /obj/item/integrated_circuit/verb/rename_component()
 	set name = "Rename Circuit"
@@ -78,7 +78,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 		return
 
 	var/input = reject_bad_name(input("What do you want to name this?", "Rename", src.name) as null|text,1)
-	if(src && input && assembly.check_interactivity(M))
+	if(src && input && check_interactivity(M))
 		to_chat(M, "<span class='notice'>The circuit '[src.name]' is now labeled '[input]'.</span>")
 		displayed_name = input
 

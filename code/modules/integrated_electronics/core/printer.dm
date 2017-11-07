@@ -177,9 +177,7 @@
 	user << browse(jointext(HTML, null), "window=integrated_printer;size=[window_width]x[window_height];border=1;can_resize=1;can_close=1;can_minimize=1")
 
 /obj/item/device/integrated_circuit_printer/Topic(href, href_list)
-	var/turf/T1=get_turf(usr)
-	var/turf/T2=get_turf(src)
-	if(!T1.Adjacent(T2))
+	if(!check_interactivity(usr))
 		return
 	if(..())
 		return 1

@@ -36,23 +36,23 @@
 	max_complexity = IC_COMPLEXITY_BASE * 4
 	anchored = 0
 
-/obj/item/device/electronic_assembly/large/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/item/device/electronic_assembly/large/attackby(var/obj/item/O, var/mob/user)
 	if(istype(O, /obj/item/wrench))
-		if(!istype(src.loc,/turf))
+		if(!isturf(loc))
 			return
 		src.anchored = !anchored
 		to_chat(user,"You [src.anchored ? "wrench" : "unwrench"] \the [src].")
 		return
 	..()
 
-/obj/item/device/electronic_assembly/large/attack_tk(mob/user as mob)
+/obj/item/device/electronic_assembly/large/attack_tk(mob/user)
 	if(anchored)
 		return
 	..()
 
-/obj/item/device/electronic_assembly/large/attack_hand(mob/user as mob)
+/obj/item/device/electronic_assembly/large/attack_hand(mob/user)
 	if(anchored)
-		src.attack_self(user)
+		attack_self(user)
 		return
 	..()
 
@@ -115,14 +115,7 @@
 /obj/item/device/electronic_assembly/implant/resolve_nano_host()
 	return implant
 */
-/obj/item/device/electronic_assembly/proc/check_interactivity(mob/user)
-	var/turf/T = get_turf(src)
-	var/turf/P = get_turf(user)
-	if(!(P.Adjacent(T)))
-		return 0
-	if(!user.IsAdvancedToolUser())
-		return 0
-	return 1
+
 
 /obj/item/device/electronic_assembly/interact(mob/user)
 	if(!check_interactivity(user))
@@ -236,7 +229,7 @@
 		IC.external_examine(user)
 	for(var/obj/item/integrated_circuit/output/screen/S in contents)
 		if(S.stuff_to_display)
-			to_chat(user, "There's a little screen labeled '[S.name]', which displays '[S.stuff_to_display]'.")
+			to_chat(user, "There's a little screen labeled '[S]', which displays '[S.stuff_to_display]'.")
 		if(opened)
 			interact(user)
 

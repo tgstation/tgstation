@@ -45,19 +45,19 @@ GLOBAL_LIST_EMPTY(all_exonet_connections)
 // Parameters: 1 (string - used to make into a hash that will be part of the new address)
 // Description: Allocates a new address based on the string supplied.  It results in consistant addresses for each round assuming it is not already taken..
 /datum/exonet_protocol/proc/make_address(var/string)
-	if(string)
-		var/new_address = null
-		while(new_address == find_address(new_address)) //Collision test.
-			var/hash = md5(string)
-			var/raw_address = copytext(hash,1,25)
-			var/addr_0 = "fc00" //Used for unique local address in real-life IPv6.
-			var/addr_1 = hexadecimal_to_EPv2(raw_address)
-
-			new_address = "[addr_0]:[addr_1]"
-			string = "[string]0" //If we did get a collision, this should make the next attempt not have one.
-			sleep(1)
-		address = new_address
-		GLOB.all_exonet_connections |= src
+	if(!string)
+		return
+	var/new_address = null
+	while(new_address == find_address(new_address)) //Collision test.
+		var/hash = md5(string)
+		var/raw_address = copytext(hash,1,25)
+		var/addr_0 = "fc00" //Used for unique local address in real-life IPv6.
+		var/addr_1 = hexadecimal_to_EPv2(raw_address)
+		new_address = "[addr_0]:[addr_1]"
+		string = "[string]0" //If we did get a collision, this should make the next attempt not have one.
+		sleep(1)
+	address = new_address
+	GLOB.all_exonet_connections |= src
 
 
 // Proc: make_arbitrary_address()

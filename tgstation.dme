@@ -1494,7 +1494,6 @@
 #include "code\modules\integrated_electronics\subtypes\smart.dm"
 #include "code\modules\integrated_electronics\subtypes\time.dm"
 #include "code\modules\integrated_electronics\subtypes\trig.dm"
-#include "code\modules\integrated_electronics\~defines\~defines.dm"
 #include "code\modules\jobs\access.dm"
 #include "code\modules\jobs\job_exp.dm"
 #include "code\modules\jobs\jobs.dm"

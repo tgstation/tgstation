@@ -21,7 +21,7 @@
 // Description: Adds components to the machine for deconstruction.
 /obj/machinery/exonet_node/map/New()
 	..()
-
+/*
 	component_parts = list()
 	component_parts += new /obj/item/circuitboard/machine/exonet_node(src)
 	component_parts += new /obj/item/stock_parts/subspace/ansible(src)
@@ -34,7 +34,7 @@
 	component_parts += new /obj/item/stock_parts/subspace/treatment(src)
 	component_parts += new /obj/item/stack/cable_coil(src, 2)
 	RefreshParts()
-
+*/
 	desc = "This machine is exonet node."
 
 // Proc: update_icon()
@@ -95,7 +95,8 @@
 // Parameters: 1 (user - the AI clicking on the machine)
 // Description: Redirects to attack_hand()
 /obj/machinery/exonet_node/attack_ai(mob/user)
-	attack_hand(user)
+	ui_interact(user)
+
 
 // Proc: attack_hand()
 // Parameters: 1 (user - the person clicking on the machine)
@@ -141,6 +142,5 @@
 
 
 /obj/machinery/exonet_node/proc/write_log(var/origin_address, var/target_address, var/data_type, var/content)
-	//var/timestamp = time2text(station_time_in_ticks, "hh:mm:ss")"
 	var/msg = "[time2text(world.time, "hh:mm:ss")] | FROM [origin_address] TO [target_address] | TYPE: [data_type] | CONTENT: [content]"
 	logs.Add(msg)
