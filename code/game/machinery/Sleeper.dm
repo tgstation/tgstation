@@ -47,7 +47,7 @@
 /obj/machinery/sleeper/process()
 	if(occupant && isliving(occupant))
 		var/mob/living/L = occupant
-			L.adjustOxyLoss(-2) // prevent crit
+		L.adjustOxyLoss(-2)
 
 /obj/machinery/sleeper/relaymove(mob/user)
 	container_resist(user)
