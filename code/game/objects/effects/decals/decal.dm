@@ -20,6 +20,7 @@
 /obj/effect/turf_decal
 	icon = 'icons/turf/decals.dmi'
 	icon_state = "warningline"
+	layer = TURF_DECAL_LAYER
 
 /obj/effect/turf_decal/Initialize()
 	..()
