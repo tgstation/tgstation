@@ -95,7 +95,8 @@ GLOBAL_LIST_EMPTY(all_exonet_connections)
 // Parameters: 1 (target_address - the desired address to find)
 // Description: Searches the global list GLOB.all_exonet_connections for a specific address, and returns it if found, otherwise returns null.
 /datum/exonet_protocol/proc/find_address(var/target_address)
-	for(var/datum/exonet_protocol/exonet in GLOB.all_exonet_connections)
+	for(var/T in GLOB.all_exonet_connections)
+		var/datum/exonet_protocol/exonet = T
 		if(exonet.address == target_address)
 			return exonet
 	return
@@ -104,7 +105,8 @@ GLOBAL_LIST_EMPTY(all_exonet_connections)
 // Parameters: 1 (target_address - the desired address to find)
 // Description: Searches an address for the atom it is attached for, otherwise returns null.
 /datum/exonet_protocol/proc/get_atom_from_address(var/target_address)
-	for(var/datum/exonet_protocol/exonet in GLOB.all_exonet_connections)
+	for(var/T in GLOB.all_exonet_connections)
+		var/datum/exonet_protocol/exonet = T
 		if(exonet.address == target_address)
 			return exonet.holder
 	return
@@ -121,7 +123,8 @@ GLOBAL_LIST_EMPTY(all_exonet_connections)
 		return FALSE
 	if(!node.on||node.stat)
 		return FALSE
-	for(var/datum/exonet_protocol/exonet in GLOB.all_exonet_connections)
+	for(var/T in GLOB.all_exonet_connections)
+		var/datum/exonet_protocol/exonet = T
 		if(exonet.address == target_address)
 			node.write_log(address, target_address, data_type, content)
 			return exonet.receive_message(holder, address, data_type, content)

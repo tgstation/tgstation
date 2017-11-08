@@ -3,6 +3,7 @@
 	io_list.Cut()
 	var/i = 0
 	for(var/io_entry in io_list_copy)
+		i += 1
 		var/default_data = null
 		var/io_type_override = null
 		// Override the default data.

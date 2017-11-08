@@ -249,7 +249,7 @@
 		to_chat(user, "<span class='warning'>\The [src] isn't opened, so you can't put anything inside.  Try using a crowbar.</span>")
 		return FALSE
 
-	if(IC.w_class > src.w_class)
+	if(IC.w_class > w_class)
 		to_chat(user, "<span class='warning'>\The [IC] is way too big to fit into \the [src].</span>")
 		return FALSE
 
@@ -343,6 +343,8 @@
 	var/obj/item/integrated_circuit/input/choice
 	if(available_inputs)
 		var/selection = input(user, "What do you want to interact with?", "Interaction") as null|anything in input_selection
+		if(!check_interactivity(user))
+			return
 		if(selection)
 			var/index = input_selection.Find(selection)
 			choice = available_inputs[index]
