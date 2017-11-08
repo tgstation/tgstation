@@ -47,4 +47,5 @@
 	desc = "An integrated disabler that draws from a cyborg's power cell. This weapon contains a limiter to prevent the cyborg's power cell from overheating."
 	can_charge = 0
 	use_cyborg_cell = 1
+	fire_delay = 50 //Should be around the same as a swarmer
 
