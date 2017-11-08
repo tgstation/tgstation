@@ -46,8 +46,7 @@ GLOBAL_LIST_EMPTY(chempiles)
 
 /obj/effect/decal/cleanable/chempile/fire_act(exposed_temperature, exposed_volume)
 	if(reagents && reagents.chem_temp)
-		reagents.chem_temp += 30
-		reagents.handle_reactions()
+		reagents.expose_temperature(exposed_temperature)
 		CHECK_TICK
 
 /obj/effect/decal/cleanable/chempile/attackby(obj/item/I, mob/user, params)
@@ -66,12 +65,6 @@ GLOBAL_LIST_EMPTY(chempiles)
 			return
 
 	var/hotness = I.is_hot()
-	if(hotness)
-		var/added_heat = (hotness / 100) //ishot returns a temperature
-		if(reagents)
-			if(reagents.chem_temp < hotness) //can't be heated to be hotter than the source
-				reagents.chem_temp += added_heat
-				to_chat(user, "<span class='notice'>You heat [src] with [I].</span>")
-				reagents.handle_reactions()
-			else
-				to_chat(user, "<span class='warning'>[src] is already hotter than [I]!</span>")
+	if(hotness && reagents)
+		reagents.expose_temperature(hotness)
+		to_chat(user, "<span class='notice'>You heat [src] with [I].</span>")
