@@ -429,6 +429,11 @@ GLOBAL_LIST(external_rsc_urls)
 	if(!query_client_in_db.Execute())
 		return
 	if(!query_client_in_db.NextRow())
+		if(IsGuestKey(ckey))
+			log_access("Failed Login: [ckey] - Guests not allowed")
+			to_chat(src, "No guests allowed.")
+			qdel(src)
+			return
 		if (CONFIG_GET(flag/panic_bunker) && !holder && !(ckey in GLOB.deadmins))
 			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
 			message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
