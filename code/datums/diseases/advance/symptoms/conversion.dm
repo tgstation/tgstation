@@ -178,7 +178,7 @@ Brute -> burn
 
 Bonus
 	Heals brute damage slowly over time.
-	Deals brute damage slowly over time.
+	Deals burn damage slowly over time.
 
 //////////////////////////////////////
 */

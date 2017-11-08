@@ -62,8 +62,8 @@ Bonus
 			if(!parts.len)
 				return
 
-			for(var/obj/item/bodypart/L in parts)
-				if(L.heal_damage(0, heal_amt/parts.len))
+			for(var/obj/item/bodypart/P in parts)
+				if(P.heal_damage(0, heal_amt/parts.len))
 					M.update_damage_overlays()
 
 			if(prob(base_message_chance) && !hide_healing)
