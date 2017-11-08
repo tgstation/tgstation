@@ -60,6 +60,7 @@
 	var/list/data = get_header_data()
 
 	if(istype(active))
+		to_chat(world,"testing_works")
 		var/turf/T = get_turf(active)
 		if(!T)
 			active = null
@@ -102,6 +103,7 @@
 				"integrity" = S.get_integrity(),
 				"uid" = S.uid
 				)))
+				to_chat(world,"testing")
 
 		data["active"] = FALSE
 		data["supermatters"] = SMS
