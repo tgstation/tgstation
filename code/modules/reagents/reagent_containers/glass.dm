@@ -194,7 +194,7 @@
 	origin_tech = "bluespace=5;materials=4;plasmatech=4"
 
 /obj/item/reagent_containers/glass/beaker/cryoxadone
-	list_reagents = list("cryoxadone" = 30)
+	list_reagents = list("charcoal" = 15, "bicaridine" = 15)
 
 /obj/item/reagent_containers/glass/beaker/sulphuric
 	list_reagents = list("sacid" = 50)
