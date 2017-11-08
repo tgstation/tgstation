@@ -358,32 +358,6 @@
 		else
 			T.charge_tick = 0
 
-/obj/item/robot_module/peacekeeper
-	name = "Peacekeeper"
-	basic_modules = list(
-		/obj/item/device/assembly/flash/cyborg,
-		/obj/item/cookiesynth,
-		/obj/item/device/harmalarm,
-		/obj/item/reagent_containers/borghypo/peace,
-		/obj/item/holosign_creator/cyborg,
-		/obj/item/borg/cyborghug/peacekeeper,
-		/obj/item/extinguisher,
-		/obj/item/borg/projectile_dampen)
-	emag_modules = list(/obj/item/reagent_containers/borghypo/peace/hacked)
-	ratvar_modules = list(
-		/obj/item/clockwork/slab/cyborg/peacekeeper,
-		/obj/item/clockwork/weapon/ratvarian_spear)
-	cyborg_base_icon = "peace"
-	moduleselect_icon = "standard"
-	feedback_key = "cyborg_peacekeeper"
-	can_be_pushed = FALSE
-	hat_offset = -2
-
-/obj/item/robot_module/peacekeeper/do_transform_animation()
-	..()
-	to_chat(loc, "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. \
-	You are not a security module and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>")
-
 /obj/item/robot_module/janitor
 	name = "Janitor"
 	basic_modules = list(
