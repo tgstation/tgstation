@@ -140,7 +140,7 @@ Bonus
 /datum/symptom/conversion/burn
 
 	name = "Regenerative Compensation"
-	desc = "The virus produces toxins and hormones which stimulates the body to regenerate burnt tissues."
+	desc = "The virus produces toxins and hormones which stimulate the body to regenerate burnt tissues."
 	stealth = 1
 	resistance = -4
 	stage_speed = -4
