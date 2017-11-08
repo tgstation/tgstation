@@ -119,9 +119,3 @@
 		if("PRG_refresh")
 			refresh()
 			return TRUE
-		if("PRG_set")
-			var/newuid = text2num(params["set"])
-			for(var/obj/machinery/power/supermatter_shard/S in supermatters)
-				if(S.uid == newuid)
-					active = S
-			return TRUE
