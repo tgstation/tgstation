@@ -4,7 +4,7 @@
     var/list/datum_components //for /datum/components
     var/ui_screen = "home"  //for tgui
     var/use_tag = FALSE
-	var/datum/weakref/weakref
+    var/datum/weakref/weakref
 
 
 #ifdef TESTING
