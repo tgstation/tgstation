@@ -464,9 +464,7 @@
 /obj/item/weldingtool/proc/explode()
 	var/turf/T = get_turf(src.loc)
 	var/plasmaAmount = reagents.get_reagent_amount("plasma")
-	var/heavy_impact_range = (plasmaAmount/10)//a fully plasma'd standard 20 fuel welder will have 2.5 heavy impact
-	var/light_impact_range = (plasmaAmount/5)//above, but 4 light impact
-	explosion(T, -1, heavy_impact_range, light_impact_range, light_impact_range)//drop a no-devastation bomb. flash range is same as light impact
+	dyn_explosion(T, plasmaAmount/5)//20 plasma in a standard welder has a 4 power explosion. no breaches, but enough to kill/dismember holder
 	qdel(src)
 
 /obj/item/weldingtool/attack(mob/living/carbon/human/H, mob/user)
