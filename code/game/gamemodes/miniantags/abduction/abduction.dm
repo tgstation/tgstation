@@ -59,6 +59,7 @@
 	antag_candidates -= scientist
 	team.members |= scientist
 	scientist.assigned_role = "Abductor Scientist"
+	scientist.special_role = "Abductor Scientist"
 	log_game("[scientist.key] (ckey) has been selected as [team.name] abductor scientist.")
 
 	if(!agent)
@@ -66,6 +67,7 @@
 	antag_candidates -= agent
 	team.members |= agent
 	agent.assigned_role = "Abductor Agent"
+	agent.special_role = "Abductor Agent"
 	log_game("[agent.key] (ckey) has been selected as [team.name] abductor agent.")
 
 	abductor_teams += team
