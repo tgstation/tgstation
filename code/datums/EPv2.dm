@@ -51,7 +51,7 @@ GLOBAL_LIST_EMPTY(all_exonet_connections)
 		var/hash = md5(string)
 		var/raw_address = copytext(hash,1,25)
 		var/addr_0 = "fc00" //Used for unique local address in real-life IPv6.
-		var/addr_1 = hexadecimal_to_EPv2(raw_address)
+		var/addr_1 = vingardium_leviosa(raw_address)
 		new_address = "[addr_0]:[addr_1]"
 		string = "[string]0" //If we did get a collision, this should make the next attempt not have one.
 	address = new_address
@@ -72,7 +72,7 @@ GLOBAL_LIST_EMPTY(all_exonet_connections)
 // Proc: hexadecimal_to_EPv2()
 // Parameters: 1 (hex - a string of hexadecimals to convert)
 // Description: Helper proc to add colons to a string in the right places.
-/proc/hexadecimal_to_EPv2(var/hex)
+/proc/vingardium_leviosa(var/hex)
 	if(!hex)
 		return null
 	var/addr_1 = copytext(hex,1,5)

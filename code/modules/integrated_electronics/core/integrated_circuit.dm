@@ -9,14 +9,14 @@ GLOBAL_LIST_EMPTY(all_integrated_circuits)
 	var/obj/item/device/electronic_assembly/assembly // Reference to the assembly holding this circuit, if any.
 	var/extended_desc
 	var/list/inputs = list()
-	var/list/inputs_default = list()			// Assoc list which will fill a pin with data upon creation.  e.g. "2" = 0 will set input pin 2 to equal 0 instead of null.
+	var/list/inputs_default = list()// Assoc list which will fill a pin with data upon creation.  e.g. "2" = 0 will set input pin 2 to equal 0 instead of null.
 	var/list/outputs = list()
-	var/list/outputs_default = list()		// Ditto, for output.
+	var/list/outputs_default =list()// Ditto, for output.
 	var/list/activators = list()
-	var/next_use = 0 				//Uses world.time
-	var/complexity = 1 				//This acts as a limitation on building machines, more resource-intensive components cost more 'space'.
-	var/size						//This acts as a limitation on building machines, bigger components cost more 'space'. -1 for size 0
-	var/cooldown_per_use = 9 // Circuits are limited in how many times they can be work()'d by this variable.
+	var/next_use = 0 				// Uses world.time
+	var/complexity = 1 				// This acts as a limitation on building machines, more resource-intensive components cost more 'space'.
+	var/size						// This acts as a limitation on building machines, bigger components cost more 'space'. -1 for size 0
+	var/cooldown_per_use = 9		// Circuits are limited in how many times they can be work()'d by this variable.
 	var/power_draw_per_use = 0 		// How much power is drawn when work()'d.
 	var/power_draw_idle = 0			// How much power is drawn when doing nothing.
 	var/spawn_flags					// Used for world initializing, see the #defines above.
@@ -25,9 +25,6 @@ GLOBAL_LIST_EMPTY(all_integrated_circuits)
 	var/displayed_name = ""
 	var/allow_multitool = 1			// Allows additional multitool functionality
 									// Used as a global var, (Do not set manually in children).
-/proc/initialize_integrated_circuits_list()
-	for(var/thing in typesof(/obj/item/integrated_circuit))
-		GLOB.all_integrated_circuits += new thing()
 
 /*
 	Integrated circuits are essentially modular machines.  Each circuit has a specific function, and combining them inside Electronic Assemblies allows
@@ -61,10 +58,8 @@ a creative player the means to solve many problems.  Circuits are held inside an
 /obj/item/integrated_circuit/proc/any_examine(mob/user)
 	return
 
-/obj/item/integrated_circuit/New()
+/obj/item/integrated_circuit/Initialize()
 	displayed_name = name
-	if(!size) size = w_class
-	if(size == -1) size = 0
 	setup_io(inputs, /datum/integrated_io, inputs_default)
 	setup_io(outputs, /datum/integrated_io, outputs_default)
 	setup_io(activators, /datum/integrated_io/activate)
@@ -74,12 +69,9 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	return
 
 /obj/item/integrated_circuit/Destroy()
-	for(var/datum/integrated_io/I in inputs)
-		qdel(I)
-	for(var/datum/integrated_io/O in outputs)
-		qdel(O)
-	for(var/datum/integrated_io/A in activators)
-		qdel(A)
+	QDEL_LIST(inputs)
+	QDEL_LIST(outputs)
+	QDEL_LIST(activators)
 	. = ..()
 /*
 /obj/item/integrated_circuit/nano_host()

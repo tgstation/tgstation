@@ -185,7 +185,7 @@
 
 	interact(usr) // To refresh the UI.
 
-/obj/item/device/electronic_assembly/verb/rename()
+/obj/item/device/electronic_assembly/proc/rename()
 	set name = "Rename Circuit"
 	set category = "Object"
 	set desc = "Rename your circuit, useful to stay organized."
@@ -195,6 +195,8 @@
 		return
 
 	var/input = reject_bad_name(input("What do you want to name this?", "Rename", src.name) as null|text,1)
+	if(!check_interactivity(M))
+		return
 	if(src && input)
 		to_chat(M, "<span class='notice'>The machine now has a label reading '[input]'.</span>")
 		name = input

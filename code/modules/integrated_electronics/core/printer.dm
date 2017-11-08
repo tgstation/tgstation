@@ -88,7 +88,7 @@
 					as_needs = 0
 					max_metal = init_max_metal
 				else
-					to_chat(user, "<span class='notice'>Please insert [as_needs-metal] more metal!</span>")
+					to_chat(user, "<span class='notice'>Please insert [(as_needs-metal)/10] more metal!</span>")
 			interact(user)
 			return TRUE
 
@@ -243,7 +243,7 @@
 					else
 						max_metal = sc + metal_per_sheet
 						as_needs = sc
-						visible_message( "<span class='notice'>Please insert [as_needs-metal] more metal!</span>")
+						visible_message( "<span class='notice'>Please insert [(as_needs-metal)/10] more metal!</span>")
 	interact(usr)
 
 // FUKKEN UPGRADE DISKS
