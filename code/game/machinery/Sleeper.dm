@@ -22,7 +22,6 @@
 /obj/machinery/sleeper/Initialize()
 	. = ..()
 	update_icon()
-	reset_chem_buttons()
 
 /obj/machinery/sleeper/RefreshParts()
 	var/E
@@ -135,7 +134,6 @@
 /obj/machinery/sleeper/ui_act(action, params)
 	if(..())
 		return
-	var/mob/living/mob_occupant = occupant
 
 	switch(action)
 		if("door")
