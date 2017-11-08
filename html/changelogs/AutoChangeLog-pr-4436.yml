@@ -1,5 +1,0 @@
-author: "banthebantz"
-delete-after: True
-changes: 
-  - balance: "Solid chem and chempile grenade duping toned down significantly, vapour duping slightly buffed"
-  - refactor: "Vapour runtime caused by reagent ref being GC'd fixed. General refactor to state change multipliers."

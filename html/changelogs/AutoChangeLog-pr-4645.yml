@@ -1,4 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - bugfix: "Nonhumans such as monkeys can now be scanned for chemicals with the health analyzer."
