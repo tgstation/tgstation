@@ -158,9 +158,9 @@
 		I.plane = FLOAT_PLANE //^ what that guy said
 		current_button.cut_overlays()
 		current_button.add_overlay(I)
-		current_button.appearance_cache = I.appearance
 		I.layer = old_layer
 		I.plane = old_plane
+		current_button.appearance_cache = I.appearance
 
 /datum/action/item_action/toggle_light
 	name = "Toggle Light"
