@@ -51230,6 +51230,10 @@
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating/airless,
 /area/maintenance/disposal/incinerator)
+"cBU" = (
+/obj/structure/reagent_dispensers/cooking_oil,
+/turf/open/floor/plasteel/showroomfloor,
+/area/crew_quarters/kitchen)
 
 (1,1,1) = {"
 aaa
@@ -79612,7 +79616,7 @@ aRN
 aRN
 aTZ
 aSK
-aSK
+cBU
 aRN
 aRN
 aRN

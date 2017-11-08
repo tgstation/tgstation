@@ -53425,6 +53425,7 @@
 	dir = 4;
 	pixel_x = 28
 	},
+/obj/structure/reagent_dispensers/cooking_oil,
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
 "cgG" = (

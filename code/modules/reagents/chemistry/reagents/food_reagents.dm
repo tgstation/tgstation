@@ -119,6 +119,14 @@
 		..()
 	return 1
 
+/datum/reagent/consumable/cooking_oil/reaction_turf(turf/open/T, reac_volume)
+	if(!istype(T))
+		return
+	if(reac_volume >= 5)
+		T.MakeSlippery(min_wet_time = 10, wet_time_to_add = reac_volume * 1.5)
+		T.name = "deep-fried [initial(T.name)]"
+		T.add_atom_colour(color, TEMPORARY_COLOUR_PRIORITY)
+
 /datum/reagent/consumable/sugar
 	name = "Sugar"
 	id = "sugar"
