@@ -231,7 +231,6 @@
 	var/list/cached_addictions = addiction_list
 	if(C)
 		expose_temperature(C.bodytemperature, 0.25)
-		handle_reactions()
 	var/need_mob_update = 0
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent

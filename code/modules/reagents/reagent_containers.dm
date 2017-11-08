@@ -125,7 +125,6 @@
 /obj/item/reagent_containers/microwave_act(obj/machinery/microwave/M)
 	if(is_open_container())
 		reagents.expose_temperature(1000)
-		reagents.handle_reactions()
 	..()
 
 /obj/item/reagent_containers/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
