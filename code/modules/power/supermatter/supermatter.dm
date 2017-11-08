@@ -63,7 +63,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	icon_state = "darkmatter_shard"
 	density = TRUE
 	anchored = FALSE
-	var/uid = null
+	var/uid = 1
 	var/global/gl_uid = 1
 	light_range = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
@@ -139,9 +139,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 
 /obj/machinery/power/supermatter_shard/Initialize()
 	. = ..()
-	if(!uid)
-		uid = gl_uid
-		gl_uid++
+	uid = gl_uid
+	gl_uid++
 	SSair.atmos_machinery += src
 	countdown = new(src)
 	countdown.start()
