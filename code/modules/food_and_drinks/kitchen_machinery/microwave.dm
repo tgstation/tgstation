@@ -15,7 +15,7 @@
 	var/broken = 0 // ={0,1,2} How broken is it???
 	var/max_n_of_items = 10 // whatever fat fuck made this a global var needs to look at themselves in the mirror sometime
 	var/efficiency = 0
-	var/datum/looping_sound/microwave/beep_beep_beep
+	var/datum/looping_sound/microwave/soundloop
 
 //Microwaving doesn't use recipes, instead it calls the microwave_act of the objects. For food, this creates something based on the food's cooked_type
 
@@ -26,7 +26,7 @@
 /obj/machinery/microwave/Initialize()
 	. = ..()
 	create_reagents(100)
-	beep_beep_beep = new(list(src), FALSE)
+	soundloop = new(list(src), FALSE)
 
 /obj/machinery/microwave/RefreshParts()
 	var/E
@@ -268,7 +268,7 @@
 
 /obj/machinery/microwave/proc/start()
 	visible_message("The microwave turns on.", "<span class='italics'>You hear a microwave humming.</span>")
-	beep_beep_beep.start()
+	soundloop.start()
 	operating = TRUE
 	icon_state = "mw1"
 	updateUsrDialog()
@@ -279,7 +279,7 @@
 	updateUsrDialog()
 
 /obj/machinery/microwave/proc/stop()
-	beep_beep_beep.stop()
+	soundloop.stop()
 	abort()
 
 /obj/machinery/microwave/proc/dispose()
