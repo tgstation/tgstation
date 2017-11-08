@@ -17,12 +17,10 @@
 /datum/integrated_io/string/scramble()
 	if(!is_valid())
 		return
-	var/string_length = length(data)
 	var/list/options = list("!","@","#","$","%","^","&","*","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z")
 	var/new_data = ""
-	while(string_length)
+	for(var/i in 1 to length(data))
 		new_data += pick(options)
-		string_length--
 	push_data()
 
 /datum/integrated_io/string/display_pin_type()

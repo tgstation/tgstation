@@ -32,7 +32,7 @@
 #define IC_PINTYPE_DIR				/datum/integrated_io/dir
 #define IC_PINTYPE_BOOLEAN			/datum/integrated_io/boolean
 #define IC_PINTYPE_REF				/datum/integrated_io/ref
-#define IC_PINTYPE_LIST				/datum/integrated_io/list
+#define IC_PINTYPE_LIST				/datum/integrated_io/lists
 
 #define IC_PINTYPE_PULSE_IN			/datum/integrated_io/activate
 #define IC_PINTYPE_PULSE_OUT		/datum/integrated_io/activate/out

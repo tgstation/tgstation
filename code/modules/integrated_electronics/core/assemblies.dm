@@ -40,7 +40,7 @@
 	if(istype(O, /obj/item/wrench))
 		if(!isturf(loc))
 			return
-		src.anchored = !anchored
+		anchored = !anchored
 		to_chat(user,"You [anchored ? "wrench" : "unwrench"] \the [src].")
 		return
 	..()
@@ -279,35 +279,35 @@
 			if(S.scan(target))
 				scanned = TRUE
 		if(scanned)
-			visible_message("<span class='notice'>\The [user] waves \the [src] around [target].</span>")
+			visible_message("<span class='notice'> [user] waves [src] around [target].</span>")
 
 /obj/item/device/electronic_assembly/attackby(var/obj/item/I, var/mob/user)
 	if(istype(I, /obj/item/integrated_circuit))
 		if(!user.canUnEquip(I))
 			return FALSE
 		if(add_circuit(I, user))
-			to_chat(user, "<span class='notice'>You slide \the [I] inside \the [src].</span>")
+			to_chat(user, "<span class='notice'>You slide [I] inside [src].</span>")
 			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 			interact(user)
 			return TRUE
 	else if(istype(I, /obj/item/crowbar))
 		playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 		opened = !opened
-		to_chat(user, "<span class='notice'>You [opened ? "opened" : "closed"] \the [src].</span>")
+		to_chat(user, "<span class='notice'>You [opened ? "opened" : "closed"] [src].</span>")
 		update_icon()
 		return TRUE
 	else if(istype(I, /obj/item/device/integrated_electronics/wirer) || istype(I, /obj/item/device/integrated_electronics/debugger) || istype(I, /obj/item/screwdriver))
 		if(opened)
 			interact(user)
 		else
-			to_chat(user, "<span class='warning'>\The [src] isn't opened, so you can't fiddle with the internal components.  \
+			to_chat(user, "<span class='warning'> [src] isn't opened, so you can't fiddle with the internal components.  \
 			Try using a crowbar.</span>")
 	else if(istype(I, /obj/item/stock_parts/cell))
 		if(!opened)
-			to_chat(user, "<span class='warning'>\The [src] isn't opened, so you can't put anything inside.  Try using a crowbar.</span>")
+			to_chat(user, "<span class='warning'> [src] isn't opened, so you can't put anything inside.  Try using a crowbar.</span>")
 			return FALSE
 		if(battery)
-			to_chat(user, "<span class='warning'>\The [src] already has \a [battery] inside.  Remove it first if you want to replace it.</span>")
+			to_chat(user, "<span class='warning'> [src] already has \a [battery] inside.  Remove it first if you want to replace it.</span>")
 			return FALSE
 		var/obj/item/stock_parts/cell = I
 		user.transferItemToLoc(I, loc)

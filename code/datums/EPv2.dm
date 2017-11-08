@@ -34,11 +34,10 @@ It's suggested to start with an if or switch statement for the message, to deter
 GLOBAL_LIST_EMPTY(all_exonet_connections)
 /datum/exonet_protocol
 	var/address = "" //Resembles IPv6, but with only five 'groups', e.g. XXXX:XXXX:XXXX:XXXX:XXXX
-	var/atom/movable/holder
+	var/atom/holder
 
 /datum/exonet_protocol/New(var/atom/H)
 	holder = H
-	..()
 
 
 // Proc: make_address()
@@ -98,8 +97,8 @@ GLOBAL_LIST_EMPTY(all_exonet_connections)
 /datum/exonet_protocol/proc/find_address(var/target_address)
 	for(var/datum/exonet_protocol/exonet in GLOB.all_exonet_connections)
 		if(exonet.address == target_address)
-			return exonet.address
-	return null
+			return exonet
+	return
 
 // Proc: get_atom_from_address()
 // Parameters: 1 (target_address - the desired address to find)
@@ -108,7 +107,7 @@ GLOBAL_LIST_EMPTY(all_exonet_connections)
 	for(var/datum/exonet_protocol/exonet in GLOB.all_exonet_connections)
 		if(exonet.address == target_address)
 			return exonet.holder
-	return null
+	return
 
 // Proc: send_message()
 // Parameters: 3 (target_address - the desired address to send the message to, data_type - text stating what the content is meant to be used for,
@@ -124,7 +123,7 @@ GLOBAL_LIST_EMPTY(all_exonet_connections)
 		return FALSE
 	for(var/datum/exonet_protocol/exonet in GLOB.all_exonet_connections)
 		if(exonet.address == target_address)
-			node.write_log(src.address, target_address, data_type, content)
+			node.write_log(address, target_address, data_type, content)
 			return exonet.receive_message(holder, address, data_type, content)
 
 // Proc: receive_message()

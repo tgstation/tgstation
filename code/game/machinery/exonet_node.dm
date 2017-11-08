@@ -1,6 +1,5 @@
 /obj/machinery/exonet_node
 	name = "exonet node"
-	desc = null // Gets written in New()
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "exonet_node"
 	idle_power_usage = 25
@@ -68,8 +67,6 @@
 		stat |= EMPED
 		var/duration = (300 * 10)/severity
 		addtimer(CALLBACK(src, /obj/machinery/exonet_node/proc/unemp_act), rand(duration - 20, duration + 20))
-		spawn()
-			stat &= ~EMPED
 	update_icon()
 	..()
 

@@ -1,13 +1,13 @@
 // These pins contain a list.  Null is not allowed.
-/datum/integrated_io/list
+/datum/integrated_io/lists
 	name = "list pin"
 	data = list()
 
 
-/datum/integrated_io/list/ask_for_pin_data(mob/user)
+/datum/integrated_io/lists/ask_for_pin_data(mob/user)
 	interact(user)
 
-/datum/integrated_io/list/proc/interact(mob/user)
+/datum/integrated_io/lists/proc/interact(mob/user)
 	var/list/my_list = data
 	var/t = "<h2>[src]</h2><br>"
 	t += "List length: [my_list.len]<br>"
@@ -24,19 +24,19 @@
 		t += "<a href='?src=[REF(src)];remove=1;pos=[i]'>\[Remove\]</a><br>"
 	user << browse(t, "window=list_pin_[REF(src)];size=500x400")
 
-/datum/integrated_io/list/proc/add_to_list(mob/user, var/new_entry)
+/datum/integrated_io/lists/proc/add_to_list(mob/user, var/new_entry)
 	if(!new_entry && user)
 		new_entry = ask_for_data_type(user)
 	if(is_valid(new_entry))
 		Add(new_entry)
 
-/datum/integrated_io/list/proc/Add(var/new_entry)
+/datum/integrated_io/lists/proc/Add(var/new_entry)
 	var/list/my_list = data
 	if(my_list.len > IC_MAX_LIST_LENGTH)
 		my_list.Cut(Start=1,End=2)
 	my_list.Add(new_entry)
 
-/datum/integrated_io/list/proc/remove_from_list_by_position(mob/user, var/position)
+/datum/integrated_io/lists/proc/remove_from_list_by_position(mob/user, var/position)
 	var/list/my_list = data
 	if(!my_list.len)
 		to_chat(user, "<span class='warning'>The list is empty, there's nothing to remove.</span>")
@@ -47,7 +47,7 @@
 	if(target_entry)
 		my_list.Remove(target_entry)
 
-/datum/integrated_io/list/proc/remove_from_list(mob/user, var/target_entry)
+/datum/integrated_io/lists/proc/remove_from_list(mob/user, var/target_entry)
 	var/list/my_list = data
 	if(!my_list.len)
 		to_chat(user, "<span class='warning'>The list is empty, there's nothing to remove.</span>")
@@ -57,7 +57,7 @@
 	if(target_entry)
 		my_list.Remove(target_entry)
 
-/datum/integrated_io/list/proc/edit_in_list(mob/user, var/target_entry)
+/datum/integrated_io/lists/proc/edit_in_list(mob/user, var/target_entry)
 	var/list/my_list = data
 	if(!my_list.len)
 		to_chat(user, "<span class='warning'>The list is empty, there's nothing to modify.</span>")
@@ -69,7 +69,7 @@
 		if(edited_entry)
 			target_entry = edited_entry
 
-/datum/integrated_io/list/proc/edit_in_list_by_position(mob/user, var/position)
+/datum/integrated_io/lists/proc/edit_in_list_by_position(mob/user, var/position)
 	var/list/my_list = data
 	if(!my_list.len)
 		to_chat(user, "<span class='warning'>The list is empty, there's nothing to modify.</span>")
@@ -82,7 +82,7 @@
 		if(edited_entry)
 			target_entry = edited_entry
 
-/datum/integrated_io/list/proc/swap_inside_list(mob/user, var/first_target, var/second_target)
+/datum/integrated_io/lists/proc/swap_inside_list(mob/user, var/first_target, var/second_target)
 	var/list/my_list = data
 	if(my_list.len <= 1)
 		to_chat(user, "<span class='warning'>The list is empty, or too small to do any meaningful swapping.</span>")
@@ -99,25 +99,25 @@
 			var/second_pos = my_list.Find(second_target)
 			my_list.Swap(first_pos, second_pos)
 
-/datum/integrated_io/list/proc/clear_list(mob/user)
+/datum/integrated_io/lists/proc/clear_list(mob/user)
 	var/list/my_list = data
 	my_list.Cut()
 
-/datum/integrated_io/list/scramble()
+/datum/integrated_io/lists/scramble()
 	var/list/my_list = data
 	my_list = shuffle(my_list)
 	push_data()
 
-/datum/integrated_io/list/write_data_to_pin(var/new_data)
+/datum/integrated_io/lists/write_data_to_pin(var/new_data)
 	if(islist(new_data))
 		var/list/new_list = new_data
 		data = new_list.Copy()
 		holder.on_data_written()
 
-/datum/integrated_io/list/display_pin_type()
+/datum/integrated_io/lists/display_pin_type()
 	return IC_FORMAT_LIST
 
-/datum/integrated_io/list/Topic(href, href_list)
+/datum/integrated_io/lists/Topic(href, href_list)
 	if(!holder.check_interactivity(usr))
 		return
 	if(..())
