@@ -92,7 +92,7 @@ Bonus
 /datum/symptom/conversion/brute
 
 	name = "Mending Compensation"
-	desc = "The virus heals bruises, secretating large amounts of toxins in the proccess."
+	desc = "The virus heals bruises, secreting large amounts of toxins in the proccess."
 	stealth = 1
 	resistance = -4
 	stage_speed = -4
@@ -140,7 +140,7 @@ Bonus
 /datum/symptom/conversion/burn
 
 	name = "Regenerative Compensation"
-	desc = "The virus produces toxins and hormones which estimulates the body to regenerate burnt tissues."
+	desc = "The virus produces toxins and hormones which stimulates the body to regenerate burnt tissues."
 	stealth = 1
 	resistance = -4
 	stage_speed = -4
