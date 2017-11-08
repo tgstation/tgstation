@@ -192,3 +192,4 @@ Temporary Items
 
 #Visual studio stuff
 *.vscode/*
+/config/admins.txt

@@ -274,7 +274,8 @@
 	complexity = 8
 	spawn_flags = IC_SPAWN_RESEARCH
 	origin_tech = list(TECH_MATERIALS = 4, TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_BIO = 2)
-/obj/item/integrated_circuit/reagent/storage/cryo/Initialize()
+
+/obj/item/integrated_circuit/reagent/storage/cryo/New()
 	. = ..()
 	reagents.set_reacting(FALSE)
 

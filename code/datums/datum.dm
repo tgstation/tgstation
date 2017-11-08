@@ -1,4 +1,5 @@
 /datum
+
 	var/gc_destroyed //Time when this object was destroyed.
 	var/list/active_timers  //for SStimer
 	var/list/datum_components //for /datum/components
