@@ -68,7 +68,7 @@ Bonus
 	if(M.toxloss > 0 && prob(base_message_chance) && !hide_healing)
 		new /obj/effect/temp_visual/heal(get_turf(M), "#66FF99")
 	M.adjustToxLoss(-power)
-	M.adjustOxyLoss(2 * power, 0)
+	M.adjustOxyLoss(5 * power, 0)
 	return 1
 
 /*
