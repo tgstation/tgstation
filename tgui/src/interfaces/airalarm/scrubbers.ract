@@ -1,4 +1,5 @@
 <link rel='ractive' href='./back.ract'>
+<link rel='ractive' href='../scrubbing_types.ract' name='filters'>
 
 <ui-display title='Scrubber Controls' button>
   {{#partial button}}
@@ -19,10 +20,7 @@
           action='widenet' params='{"id_tag": "{{id_tag}}", "val": {{+!widenet}}}'>{{widenet ? "Expanded" : "Normal"}}</ui-button>
       </ui-section>
       <ui-section label='Filters'>
-        {{#each filter_types}}
-          <ui-button icon='{{enabled ? "check-square-o" : "square-o"}}' style='{{enabled ? "selected" : null}}'
-            action='toggle_filter' params='{"id_tag": "{{id_tag}}", "val": {{gas_id}}}'>{{gas_name}}</ui-button>
-        {{/each}}
+        <filters/>
       </ui-section>
     </ui-subdisplay>
   {{else}}
