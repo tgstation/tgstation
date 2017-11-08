@@ -25,15 +25,6 @@
 	..(process, D, copy)
 
 
-// Toxin Filter
-
-/datum/disease/advance/heal/New(var/process = TRUE, var/datum/disease/advance/D, var/copy = FALSE)
-	if(!D)
-		name = "Liver Enhancer"
-		symptoms = list(new/datum/symptom/heal)
-	..(process, D, copy)
-
-
 // Hallucigen
 
 /datum/disease/advance/hallucigen/New(var/process = TRUE, var/datum/disease/advance/D, var/copy = FALSE)

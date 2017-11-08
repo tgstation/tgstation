@@ -22,7 +22,6 @@
 #define CMO_JF				(1<<3)
 #define DOCTOR			(1<<4)
 #define GENETICIST		(1<<5)
-#define VIROLOGIST		(1<<6)
 
 
 #define CIVILIAN			(1<<2)

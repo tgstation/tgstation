@@ -307,7 +307,7 @@
 			restrictedJob = 1
 		if("Station Engineer","Chief Engineer","Atmospheric Technician")
 			favoured_types = list(/obj/item/stack, /obj/item, /obj/item/clothing)
-		if("Chief Medical Officer","Medical Doctor","Chemist","Virologist","Geneticist")
+		if("Chief Medical Officer","Medical Doctor","Chemist","Geneticist")
 			favoured_types = list(/obj/item/reagent_containers/glass/beaker, /obj/item/storage/firstaid, /obj/item/stack/medical, /obj/item/reagent_containers/syringe)
 			functions += "healpeople"
 		if("Research Director","Scientist","Roboticist")
@@ -816,7 +816,7 @@
 		return /area/crew_quarters/kitchen
 	if(T.title == "Station Engineer" || T.title == "Chief Engineer" || T.title == "Atmospheric Technician")
 		return /area/engine
-	if(T.title == "Chief Medical Officer" || T.title == "Medical Doctor" || T.title == "Chemist" || T.title == "Virologist" || T.title == "Geneticist")
+	if(T.title == "Chief Medical Officer" || T.title == "Medical Doctor" || T.title == "Chemist" || T.title == "Geneticist")
 		return /area/medical
 	if(T.title == "Research Director" || T.title == "Scientist" || T.title == "Roboticist")
 		return /area/science
