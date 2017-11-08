@@ -34,9 +34,4 @@
 	<ui-section label='Door'>
     <ui-button icon='{{data.open ? "unlock" : "lock"}}' action='door'>{{data.open ? "Open" : "Closed"}}</ui-button>
 	</ui-section>
-  <ui-section label='Inject'>
-    {{#each data.chems}}
-      <ui-button icon='flask' state='{{data.occupied && allowed ? null : "disabled"}}' action='inject' params='{"chem": "{{id}}"}'>{{name}}</ui-button><br/>
-    {{/each}}
-  </ui-section>
 </ui-display>
