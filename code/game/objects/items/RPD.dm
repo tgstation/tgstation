@@ -579,10 +579,18 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 2, target = A))
 				activate()
-				var/obj/item/pipe/P = new(get_turf(A), queued_p_type, queued_p_dir)
+
+				var/pipe_item_type = /obj/item/pipe
+				var/obj/machinery/atmospherics/cached_pipe = SSair.get_pipe_cache(queued_p_type)
+				if(istype(cached_pipe) && cached_pipe.construction_type)
+					pipe_item_type = cached_pipe.construction_type
+
+				var/obj/item/pipe/P = new pipe_item_type(A, queued_p_type, queued_p_dir)
+
 				if(queued_p_flipped)
 					var/obj/item/pipe/trinary/flippable/F = P
 					F.flipped = queued_p_flipped
+
 				P.update()
 				P.add_fingerprint(usr)
 				if(!isnull(temp_piping_layer))
