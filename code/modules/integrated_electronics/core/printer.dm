@@ -170,7 +170,7 @@
 			if((IC.spawn_flags & IC_SPAWN_RESEARCH) && (!(IC.spawn_flags & IC_SPAWN_DEFAULT)) && !upgraded)
 				can_build = FALSE
 		if(can_build)
-			HTML += "<A href='?src=[REF(src)];build=[O.type]'>\[[O]\]</A>: [O.desc]<br>"
+			HTML += "<A href='?src=[REF(src)];build=[REF(O)]'>\[[O]\]</A>: [O.desc]<br>"
 		else
 			HTML += "<s>\[[O]\]: [O.desc]</s><br>"
 
@@ -188,7 +188,10 @@
 		current_category = href_list["category"]
 
 	if(href_list["build"])
-		var/build_type = text2path(href_list["build"])
+		var/obj/item/integrated_circuit/ICbuild = locate(href_list["build"])
+		if(!ICbuild)
+			return 1
+		var/build_type = ICbuild.type
 		if(!build_type || !ispath(build_type))
 			return 1
 
