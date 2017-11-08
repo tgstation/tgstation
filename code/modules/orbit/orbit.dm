@@ -44,7 +44,7 @@
 		orbiter.orbiting = src //set it back to us first
 		orbiter.stop_orbit()
 	var/atom/movable/AM = orbiting
-	if(istype(AM) && AM.orbiting.orbiting == orbiter)
+	if(istype(AM) && AM.orbiting && AM.orbiting.orbiting == orbiter)
 		orbiter.stop_orbit()
 		return
 	lastprocess = world.time
