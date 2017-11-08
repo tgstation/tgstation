@@ -17,8 +17,8 @@
 
 /obj/item/reagent_containers/food/snacks/solid_reagent/microwave_act(obj/machinery/microwave/M)
 	if(reagents)
-		reagents.chem_temp = max(reagents.chem_temp, 1000)
-		reagents.handle_reactions()
+		reagents.expose_temperature(1000)
+
 
 /obj/item/reagent_containers/food/snacks/solid_reagent/ex_act()
 	if(reagents)
@@ -28,24 +28,17 @@
 		..()
 
 /obj/item/reagent_containers/food/snacks/solid_reagent/fire_act(exposed_temperature, exposed_volume)
-	reagents.chem_temp += 30
-	reagents.handle_reactions()//no ..() so it doesn't burn to ash
+	reagents.expose_temperature(exposed_temperature)
 	if(volume <= 0)
 		qdel(src)
 
 /obj/item/reagent_containers/food/snacks/solid_reagent/attackby(obj/item/I, mob/user, params)
 	var/hotness = I.is_hot()
-	if(hotness)
-		var/added_heat = (hotness / 100) //ishot returns a temperature
-		if(reagents)
-			if(reagents.chem_temp < hotness) //can't be heated to be hotter than the source
-				reagents.chem_temp += added_heat
-				to_chat(user, "<span class='notice'>You heat [src] with [I].</span>")
-				reagents.handle_reactions()
-				if(volume <= 0)
-					qdel(src)
-			else
-				to_chat(user, "<span class='warning'>[src] is already hotter than [I]!</span>")
+	if(hotness && reagents)
+		reagents.expose_temperature(hotness)
+		to_chat(user, "<span class='notice'>You heat [src] with [I].</span>")
+		if(volume <= 0)
+			qdel(src)
 
 
 /obj/item/reagent_containers/food/snacks/solid_reagent/afterattack(obj/target, mob/user , proximity)
