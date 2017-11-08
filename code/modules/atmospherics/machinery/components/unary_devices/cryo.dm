@@ -176,13 +176,13 @@
 	var/datum/gas_mixture/air1 = AIR1
 
 	if(air1.gases.len)
-		if(mob_occupant.bodytemperature < T0C) // Sleepytime. Why? More cryo magic.
+		if(mob_occupant.bodytemperature < T0C)
 			mob_occupant.Sleeping((mob_occupant.bodytemperature / sleep_factor) * 2000)
 			mob_occupant.Unconscious((mob_occupant.bodytemperature / unconscious_factor) * 2000)
 		if(beaker)
-			beaker.reagents.trans_to(occupant, 1) // Transfer reagents
+			beaker.reagents.trans_to(occupant, 1)
 			beaker.reagents.reaction(occupant, VAPOR)
-			air1.gases[/datum/gas/oxygen][MOLES] -= 2 / efficiency //Let's use gas for this
+			air1.gases[/datum/gas/oxygen][MOLES] -= 2
 
 	return 1
 
