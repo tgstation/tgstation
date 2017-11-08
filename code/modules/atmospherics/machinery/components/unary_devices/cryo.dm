@@ -180,7 +180,7 @@
 			mob_occupant.Sleeping((mob_occupant.bodytemperature / sleep_factor) * 2000)
 			mob_occupant.Unconscious((mob_occupant.bodytemperature / unconscious_factor) * 2000)
 		if(beaker)
-			beaker.reagents.trans_to(occupant, 1)
+			beaker.reagents.trans_to(occupant, 1, 2)
 			beaker.reagents.reaction(occupant, VAPOR)
 			air1.gases[/datum/gas/oxygen][MOLES] -= 2
 
