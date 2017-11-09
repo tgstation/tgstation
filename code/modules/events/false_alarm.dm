@@ -46,7 +46,7 @@
 		var/datum/round_event/Event = new event_control.typepath()
 		message_admins("False Alarm: [Event]")
 		Event.kill() 		//do not process this event - no starts, no ticks, no ends
-		Event.announce() 	//just announce it like it's happening
+		Event.announce(TRUE) 	//just announce it like it's happening
 
 /proc/gather_false_events(players_amt, gamemode)
 	. = list()
