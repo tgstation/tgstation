@@ -95,7 +95,7 @@
 	return ..()
 
 /obj/structure/projected_forcefield/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && mover.checkpass(PASSGLASS))
+	if(istype(mover) && CHECKPASS(mover, PASSGLASS))
 		return 1
 	return !density
 

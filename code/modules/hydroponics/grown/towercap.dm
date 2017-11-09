@@ -118,7 +118,7 @@
 	density = TRUE
 
 /obj/structure/bonfire/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && mover.checkpass(PASSTABLE))
+	if(istype(mover) && CHECKPASS(mover, PASSTABLE))
 		return TRUE
 	if(mover.throwing)
 		return TRUE

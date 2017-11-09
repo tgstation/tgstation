@@ -325,9 +325,6 @@
 	SSspacedrift.processing[src] = src
 	return 1
 
-/atom/movable/proc/checkpass(passflag)
-	return pass_flags&passflag
-
 /atom/movable/proc/throw_impact(atom/hit_atom, throwingdatum)
 	set waitfor = 0
 	SendSignal(COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum)
