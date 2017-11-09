@@ -6,8 +6,8 @@
 //Massive health and damage, but move slowly.
 
 /mob/living/simple_animal/hostile/true_changeling
-	name = "true changeling"
-	real_name = "true changeling"
+	name = "ancient horror"
+	real_name = "ancient horror"
 	desc = "Holy shit, what the fuck is that thing?!"
 	speak_emote = list("says with one of its faces")
 	emote_hear = list("says with one of its faces")
@@ -57,8 +57,9 @@
 		if(4)
 			icon_state = "horror4"
 	playsound(usr, 'sound/creatures/ling_scream.ogg', 50, 1)
-	spawn(0)
-		to_chat(usr, playstyle_string)
+
+/mob/living/simple_animal/hostile/true_changeling/Login()
+	to_chat(usr, playstyle_string)
 
 /mob/living/simple_animal/hostile/true_changeling/Life()
 	..()
