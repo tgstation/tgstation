@@ -100,7 +100,7 @@
 
 
 /obj/structure/grille/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && mover.checkpass(PASSGRILLE))
+	if(istype(mover) && CHECKPASS(mover, PASSGRILLE))
 		return TRUE
 	else
 		if(istype(mover, /obj/item/projectile) && density)
@@ -112,7 +112,7 @@
 	. = !density
 	if(ismovableatom(caller))
 		var/atom/movable/mover = caller
-		. = . || mover.checkpass(PASSGRILLE)
+		. = . || CHECKPASS(mover, PASSGRILLE)
 
 /obj/structure/grille/attackby(obj/item/W, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)

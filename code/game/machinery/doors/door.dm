@@ -103,7 +103,7 @@
 	move_update_air(T)
 
 /obj/machinery/door/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && mover.checkpass(PASSGLASS))
+	if(istype(mover) && CHECKPASS(mover, PASSGLASS))
 		return !opacity
 	return !density
 

@@ -1,25 +1,8 @@
 /mob/CanPass(atom/movable/mover, turf/target)
-	if (prob(50))
-		return NewCanPass(mover, target)
-	return OldCanPass(mover, target)
-
-/mob/proc/NewCanPass(atom/movable/mover, turf/target)
-	if(mover.pass_flags & PASSMOB)
+	if(CHECKPASS(mover, PASSMOB))
 		return TRUE
 	if(istype(mover, /obj/item/projectile) || mover.throwing)
 		return (!density || lying)
-	if(buckled == mover)
-		return TRUE
-	if(ismob(mover))
-		if (mover in buckled_mobs)
-			return TRUE
-	return (!mover.density || !density || lying)
-
-/mob/proc/OldCanPass(atom/movable/mover, turf/target)
-	if(istype(mover, /obj/item/projectile) || mover.throwing)
-		return (!density || lying)
-	if(mover.checkpass(PASSMOB))
-		return TRUE
 	if(buckled == mover)
 		return TRUE
 	if(ismob(mover))
