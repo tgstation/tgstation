@@ -30,8 +30,6 @@ The receiving atom will receive the origin atom (the atom that sent the message)
 It's suggested to start with an if or switch statement for the message, to determine what to do.
 */
 
-
-GLOBAL_LIST_EMPTY(all_exonet_connections)
 /datum/exonet_protocol
 	var/address = "" //Resembles IPv6, but with only five 'groups', e.g. XXXX:XXXX:XXXX:XXXX:XXXX
 	var/atom/holder
@@ -46,8 +44,8 @@ GLOBAL_LIST_EMPTY(all_exonet_connections)
 /datum/exonet_protocol/proc/make_address(var/string)
 	if(!string)
 		return
-	address = "fc00:[vingardium_leviosa(copytext(md5(string),1,25))]"
-	GLOB.all_exonet_connections |= src
+	address = "fc00:[hexadecimal_to_EPv2(copytext(md5(string),1,25))]"
+	SScircuit.all_exonet_connections |= src
 
 
 // Proc: make_arbitrary_address()
@@ -58,13 +56,13 @@ GLOBAL_LIST_EMPTY(all_exonet_connections)
 		if(new_address == find_address(new_address) )	//Collision test.
 			return FALSE
 		address = new_address
-		GLOB.all_exonet_connections += src
+		SScircuit.all_exonet_connections += src
 		return TRUE
 
 // Proc: hexadecimal_to_EPv2()
 // Parameters: 1 (hex - a string of hexadecimals to convert)
 // Description: Helper proc to add colons to a string in the right places.
-/proc/vingardium_leviosa(var/hex)
+/proc/hexadecimal_to_EPv2(var/hex)
 	if(!hex)
 		return null
 	var/addr_1 = copytext(hex,1,5)
@@ -80,14 +78,14 @@ GLOBAL_LIST_EMPTY(all_exonet_connections)
 // Description: Deallocates the address, freeing it for use.
 /datum/exonet_protocol/proc/remove_address()
 	address = ""
-	GLOB.all_exonet_connections -= src
+	SScircuit.all_exonet_connections -= src
 
 
 // Proc: find_address()
 // Parameters: 1 (target_address - the desired address to find)
 // Description: Searches the global list GLOB.all_exonet_connections for a specific address, and returns it if found, otherwise returns null.
 /datum/exonet_protocol/proc/find_address(var/target_address)
-	for(var/T in GLOB.all_exonet_connections)
+	for(var/T in SScircuit.all_exonet_connections)
 		var/datum/exonet_protocol/exonet = T
 		if(exonet.address == target_address)
 			return exonet
@@ -97,7 +95,7 @@ GLOBAL_LIST_EMPTY(all_exonet_connections)
 // Parameters: 1 (target_address - the desired address to find)
 // Description: Searches an address for the atom it is attached for, otherwise returns null.
 /datum/exonet_protocol/proc/get_atom_from_address(var/target_address)
-	for(var/T in GLOB.all_exonet_connections)
+	for(var/T in SScircuit.all_exonet_connections)
 		var/datum/exonet_protocol/exonet = T
 		if(exonet.address == target_address)
 			return exonet.holder
@@ -115,7 +113,7 @@ GLOBAL_LIST_EMPTY(all_exonet_connections)
 		return FALSE
 	if(!node.on||node.stat)
 		return FALSE
-	for(var/T in GLOB.all_exonet_connections)
+	for(var/T in SScircuit.all_exonet_connections)
 		var/datum/exonet_protocol/exonet = T
 		if(exonet.address == target_address)
 			node.write_log(address, target_address, data_type, content)

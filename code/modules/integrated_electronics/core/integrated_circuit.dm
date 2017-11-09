@@ -1,5 +1,3 @@
-GLOBAL_LIST_EMPTY(all_integrated_circuits)
-
 /obj/item/integrated_circuit
 	name = "integrated circuit"
 	desc = "It's a tiny chip!  This one doesn't seem to do much, however."
