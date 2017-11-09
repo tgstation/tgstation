@@ -646,6 +646,43 @@ GLOBAL_LIST_EMPTY(mutations_list)
 	if(owner.a_intent == INTENT_HARM)
 		owner.LaserEyes(target, mouseparams)
 
+/datum/mutation/human/healing_hands
+	name = "Healing Hands"
+	quality = POSITIVE
+	get_chance = 27.5
+	lowest_value = 256 * 12
+	text_gain_indication = "<span class='notice'>You feel a comforting buzzing in your hands.</span>"
+	time_coeff = 5
+	var/list/next_heal_time = list()
+
+/datum/mutation/human/healing_hands/on_attack_hand(mob/living/carbon/human/owner, atom/target, proximity)
+	if(!next_heal_time[owner])
+		next_heal_time[owner] = 0
+	if(owner == target || owner.a_intent != INTENT_HELP || world.time < next_heal_time[owner])
+		return ..()
+	if(isliving(target))
+		var/mob/living/L = target
+		if(L.stat == DEAD)
+			to_chat(owner, "<span class='warning'>Well, sorry, but you can't heal death.</span>")
+			return ..()
+	if(iscarbon(target))
+		var/mob/living/carbon/human/H = target
+		if(H.dna && H.dna.species && (istype(H.dna.species, /datum/species/android) || istype(H.dna.species, /datum/species/synth)))
+			to_chat(owner, "<span class='warning'>You try to heal [H], but nothing happens...</span>")
+			return
+		H.heal_overall_damage(5,5)
+		next_heal_time[owner] = world.time + HEALING_HANDS_COOLDOWN
+		H.visible_message("<span class='notice'>[owner] envelops [H] in a warm glow!</span>", "<span class='notice'>[owner] envelops you in a warm, comforting glow!</span>")
+		return
+	else if(!issilicon(target) && isliving(target))
+		var/mob/living/L = target
+		L.heal_bodypart_damage(5, 5)
+		L.visible_message("<span class='notice'>[owner] envelops [L] in a warm glow!</span>", "<span class='notice'>[owner] envelops you in a warm, comforting glow!</span>")
+		next_heal_time[owner] = world.time + HEALING_HANDS_COOLDOWN
+		return
+	else if(issilicon(target))
+		to_chat(owner, "<span class='warning'>You try to heal [target], but nothing happens...</span>")
+	return ..()
 
 /mob/living/carbon/proc/update_mutations_overlay()
 	return
