@@ -83,7 +83,7 @@
 
 
 /obj/machinery/satellite
-	name = "Defunct Satellite"
+	name = "\improper Defunct Satellite"
 	desc = ""
 	icon = 'icons/obj/machines/satellite.dmi'
 	icon_state = "sat_inactive"
@@ -104,10 +104,10 @@
 /obj/machinery/satellite/proc/toggle(mob/user)
 	if(!active && !isinspace())
 		if(user)
-			to_chat(user, "<span class='warning'>You can only active the [src] in space.</span>")
+			to_chat(user, "<span class='warning'>You can only activate [src] in space.</span>")
 		return FALSE
 	if(user)
-		to_chat(user, "<span class='notice'>You [active ? "deactivate": "activate"] the [src]</span>")
+		to_chat(user, "<span class='notice'>You [active ? "deactivate": "activate"] [src].</span>")
 	active = !active
 	if(active)
 		animate(src, pixel_y = 2, time = 10, loop = -1)

@@ -59,14 +59,14 @@ SUBSYSTEM_DEF(persistence)
 		path = text2path(old_secret_satchels[pos]["saved_obj"])
 
 	if(F)
-		if(isfloorturf(F.loc) && !istype(F.loc, /turf/open/floor/plating/))
+		if(isfloorturf(F.loc) && !isplatingturf(F.loc))
 			F.hide(1)
 		if(ispath(path))
 			new path(F)
 		placed_satchel++
 	var/free_satchels = 0
 	for(var/turf/T in shuffle(block(locate(TRANSITIONEDGE,TRANSITIONEDGE,ZLEVEL_STATION_PRIMARY), locate(world.maxx-TRANSITIONEDGE,world.maxy-TRANSITIONEDGE,ZLEVEL_STATION_PRIMARY)))) //Nontrivially expensive but it's roundstart only
-		if(isfloorturf(T) && !istype(T, /turf/open/floor/plating/))
+		if(isfloorturf(T) && !isplatingturf(T))
 			new /obj/item/storage/backpack/satchel/flat/secret(T)
 			free_satchels++
 			if((free_satchels + placed_satchel) == 10) //ten tiles, more than enough to kill anything that moves

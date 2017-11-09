@@ -39,8 +39,10 @@
 				return real_name
 		else
 			return real_name
-	if(mind && mind.changeling && mind.changeling.mimicing)
-		return mind.changeling.mimicing
+	if(mind)
+		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
+		if(changeling && changeling.mimicing )
+			return changeling.mimicing
 	if(GetSpecialVoice())
 		return GetSpecialVoice()
 	return real_name
@@ -49,7 +51,7 @@
 	CHECK_DNA_AND_SPECIES(src)
 
 	// how do species that don't breathe talk? magic, that's what.
-	if(!(NOBREATH in dna.species.species_traits) && !getorganslot("lungs"))
+	if(!(NOBREATH in dna.species.species_traits) && !getorganslot(ORGAN_SLOT_LUNGS))
 		return 0
 	if(mind)
 		return !mind.miming

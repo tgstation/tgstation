@@ -35,14 +35,14 @@
 		. = ..()
 
 
-/obj/vehicle/user_buckle_mob(mob/living/M, mob/user)
-	if(user.incapacitated())
+/obj/vehicle/user_buckle_mob(mob/living/M, mob/living/user)
+	if(!istype(user) || user.incapacitated())
 		return
 	for(var/atom/movable/A in get_turf(src))
 		if(A.density)
 			if(A != src && A != M)
 				return
-	M.loc = get_turf(src)
+	M.forceMove(get_turf(src))
 	..()
 	if(user.client)
 		user.client.change_view(view_range)

@@ -442,7 +442,8 @@
 	name = "Delta emergency shuttle";
 	width = 30;
 	preferred_direction = 2;
-	port_direction = 4
+	port_direction = 4;
+	timid = 1
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)

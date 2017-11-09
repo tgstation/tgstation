@@ -66,13 +66,10 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 
 #define ARK_SUMMON_COST 5 //how many of each component an Ark costs to summon
 
-#define ARK_CONSUME_COST 15 //how many of each component an Ark needs to consume to activate
-
 //Objective text define
 #define CLOCKCULT_OBJECTIVE "Construct the Ark of the Clockwork Justicar and free Ratvar."
 
 //misc clockcult stuff
-#define MARAUDER_EMERGE_THRESHOLD 65 //marauders cannot emerge unless host is at this% or less health
 
 #define SIGIL_ACCESS_RANGE 2 //range at which transmission sigils can access power
 
@@ -83,3 +80,9 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 #define CLOCKWORK_ARMOR_COOLDOWN 1800 //The cooldown period between summoning suits of clockwork armor
 
 #define RATVARIAN_SPEAR_COOLDOWN 300 //The cooldown period between summoning another Ratvarian spear
+
+#define MARAUDER_SCRIPTURE_SCALING_THRESHOLD 200 //The amount of deciseconds that must pass before marauder scripture will not gain a recital penalty
+
+#define MARAUDER_SCRIPTURE_SCALING_TIME 50 //The amount of extra deciseconds tacked on to the marauder scripture recital time per recent marauder
+
+#define MARAUDER_SCRIPTURE_SCALING_MAX 300 //The maximum extra time applied to the marauder scripture

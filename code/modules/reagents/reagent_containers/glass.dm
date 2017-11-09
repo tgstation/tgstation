@@ -49,8 +49,7 @@
 				to_chat(user, "<span class='notice'>You swallow a gulp of [src].</span>")
 			var/fraction = min(5/reagents.total_volume, 1)
 			reagents.reaction(M, INGEST, fraction)
-			spawn(5)
-				reagents.trans_to(M, 5)
+			addtimer(CALLBACK(reagents, /datum/reagents.proc/trans_to, M, 5), 5)
 			playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 
 /obj/item/reagent_containers/glass/afterattack(obj/target, mob/user, proximity)
@@ -92,15 +91,9 @@
 
 /obj/item/reagent_containers/glass/attackby(obj/item/I, mob/user, params)
 	var/hotness = I.is_hot()
-	if(hotness)
-		var/added_heat = (hotness / 100) //ishot returns a temperature
-		if(reagents)
-			if(reagents.chem_temp < hotness) //can't be heated to be hotter than the source
-				reagents.chem_temp += added_heat
-				to_chat(user, "<span class='notice'>You heat [src] with [I].</span>")
-				reagents.handle_reactions()
-			else
-				to_chat(user, "<span class='warning'>[src] is already hotter than [I]!</span>")
+	if(hotness && reagents)
+		reagents.expose_temperature(hotness)
+		to_chat(user, "<span class='notice'>You heat [name] with [I]!</span>")
 
 	if(istype(I, /obj/item/reagent_containers/food/snacks/egg)) //breaking eggs
 		var/obj/item/reagent_containers/food/snacks/egg/E = I

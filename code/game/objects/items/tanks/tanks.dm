@@ -31,7 +31,7 @@
 		H.internal = null
 		H.update_internals_hud_icon(0)
 	else
-		if(!H.getorganslot("breathing_tube"))
+		if(!H.getorganslot(ORGAN_SLOT_BREATHING_TUBE))
 			if(!H.wear_mask)
 				to_chat(H, "<span class='warning'>You need a mask!</span>")
 				return

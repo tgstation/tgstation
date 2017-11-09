@@ -34,7 +34,7 @@
 			case = locate(/obj/item/implantcase) in get_turf(target)
 		if(case && !case.imp)
 			case.imp = I
-			I.loc = case
+			I.forceMove(case)
 			case.update_icon()
 			user.visible_message("[user] places [I] into [case]!", "<span class='notice'>You place [I] into [case].</span>")
 		else

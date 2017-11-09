@@ -158,7 +158,6 @@
 /obj/item/reagent_containers/glass/bottle/nutrient
 	name = "bottle of nutrient"
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle16"
 	volume = 50
 	w_class = WEIGHT_CLASS_TINY
 	amount_per_transfer_from_this = 10
@@ -174,7 +173,6 @@
 	name = "bottle of E-Z-Nutrient"
 	desc = "Contains a fertilizer that causes mild mutations with each harvest."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle16"
 
 /obj/item/reagent_containers/glass/bottle/nutrient/ez/Initialize()
 	. = ..()
@@ -184,7 +182,6 @@
 	name = "bottle of Left 4 Zed"
 	desc = "Contains a fertilizer that limits plant yields to no more than one and causes significant mutations in plants."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle18"
 
 /obj/item/reagent_containers/glass/bottle/nutrient/l4z/Initialize()
 	. = ..()
@@ -194,7 +191,6 @@
 	name = "bottle of Robust Harvest"
 	desc = "Contains a fertilizer that increases the yield of a plant by 30% while causing no mutations."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle15"
 
 /obj/item/reagent_containers/glass/bottle/nutrient/rh/Initialize()
 	. = ..()
@@ -203,12 +199,10 @@
 /obj/item/reagent_containers/glass/bottle/nutrient/empty
 	name = "bottle"
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle16"
 
 /obj/item/reagent_containers/glass/bottle/killer
 	name = "bottle"
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle16"
 	volume = 50
 	w_class = WEIGHT_CLASS_TINY
 	amount_per_transfer_from_this = 10
@@ -218,7 +212,6 @@
 	name = "bottle of weed killer"
 	desc = "Contains a herbicide."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle19"
 
 /obj/item/reagent_containers/glass/bottle/killer/weedkiller/Initialize()
 	. = ..()
@@ -228,7 +221,6 @@
 	name = "bottle of pest spray"
 	desc = "Contains a pesticide."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle20"
 
 /obj/item/reagent_containers/glass/bottle/killer/pestkiller/Initialize()
 	. = ..()

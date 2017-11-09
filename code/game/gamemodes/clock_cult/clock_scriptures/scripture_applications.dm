@@ -7,12 +7,12 @@
 /datum/clockwork_scripture/create_object/construct/clockwork_marauder
 	descname = "Well-Rounded Combat Construct"
 	name = "Clockwork Marauder"
-	desc = "Creates a shell for a clockwork marauder, a balanced frontline construct."
+	desc = "Creates a shell for a clockwork marauder, a balanced frontline construct that can deflect projectiles with its shield."
 	invocations = list("Arise, avatar of Arbiter!", "Defend the Ark with vengeful zeal.")
 	channel_time = 50
 	power_cost = 1000
 	creator_message = "<span class='brass'>Your slab disgorges several chunks of replicant alloy that form into a suit of thrumming armor.</span>"
-	usage_tip = "The marauder's shield can effectively deflect energy-based projectiles."
+	usage_tip = "Reciting this scripture multiple times in a short period will cause it to take longer!"
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
 	primary_component = BELLIGERENT_EYE
@@ -22,6 +22,9 @@
 	object_path = /obj/item/clockwork/construct_chassis/clockwork_marauder
 	construct_type = /mob/living/simple_animal/hostile/clockwork/marauder
 	combat_construct = TRUE
+	var/static/recent_marauders = 0
+	var/static/time_since_last_marauder = 0
+	var/static/scaled_recital_time = 0
 
 /datum/clockwork_scripture/create_object/construct/clockwork_marauder/update_construct_limit()
 	var/human_servants = 0
@@ -32,15 +35,30 @@
 	construct_limit = human_servants / 4 //1 per 4 human servants, and a maximum of 3 marauders
 	construct_limit = Clamp(construct_limit, 1, 3)
 
-/datum/clockwork_scripture/create_object/prolonging_prism/check_special_requirements()
-	if(SSshuttle.emergency.mode == SHUTTLE_DOCKED || SSshuttle.emergency.mode == SHUTTLE_IGNITING || SSshuttle.emergency.mode == SHUTTLE_STRANDED || SSshuttle.emergency.mode == SHUTTLE_ESCAPE)
-		to_chat(invoker, "<span class='inathneq'>\"It is too late to construct one of these, champion.\"</span>")
-		return FALSE
-	var/turf/T = get_turf(invoker)
-	if(!T || !(T.z in GLOB.station_z_levels))
-		to_chat(invoker, "<span class='inathneq'>\"You must be on the station to construct one of these, champion.\"</span>")
-		return FALSE
-	return ..()
+/datum/clockwork_scripture/create_object/construct/clockwork_marauder/pre_recital()
+	channel_time = initial(channel_time)
+	calculate_scaling()
+	if(scaled_recital_time)
+		to_chat(invoker, "<span class='warning'>The Hierophant Network is under strain from repeated summoning, making this scripture [scaled_recital_time / 10] seconds slower!</span>")
+		channel_time += scaled_recital_time
+	return TRUE
+
+/datum/clockwork_scripture/create_object/construct/clockwork_marauder/scripture_effects()
+	. = ..()
+	time_since_last_marauder = world.time
+	recent_marauders++
+	calculate_scaling()
+
+/datum/clockwork_scripture/create_object/construct/clockwork_marauder/proc/calculate_scaling()
+	var/WT = world.time
+	var/MT = time_since_last_marauder //Cast it for quicker reference
+	var/marauders_to_exclude = 0
+	if(world.time >= time_since_last_marauder + MARAUDER_SCRIPTURE_SCALING_THRESHOLD)
+		marauders_to_exclude = round(WT - MT) / MARAUDER_SCRIPTURE_SCALING_THRESHOLD //If at least 20 seconds have passed, lose one marauder for each 20 seconds
+		//i.e. world.time = 10000, last marauder = 9000, so we lose 5 marauders from the recent count since 10k - 9k = 1k, 1k / 200 = 5
+		time_since_last_marauder = world.time //So that it can't be spammed to make the marauder exclusion plummet; this emulates "ticking"
+	recent_marauders = max(0, recent_marauders - marauders_to_exclude)
+	scaled_recital_time = min(recent_marauders * MARAUDER_SCRIPTURE_SCALING_TIME, MARAUDER_SCRIPTURE_SCALING_MAX)
 
 
 //Mania Motor: Creates a malevolent transmitter that will broadcast the whispers of Sevtug into the minds of nearby nonservants, causing a variety of mental effects at a power cost.

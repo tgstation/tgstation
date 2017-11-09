@@ -103,7 +103,7 @@ Status: []<BR>
 Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
 Maintenance panel panel is [open ? "opened" : "closed"]<BR>"},
 
-"<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>" )
+"<A href='?src=[REF(src)];power=1'>[on ? "On" : "Off"]</A>" )
 
 	if(!locked || issilicon(user)|| IsAdminGhost(user))
 		if(!lasercolor)
@@ -116,12 +116,12 @@ Operating Mode: []<BR>
 Report Arrests[]<BR>
 Auto Patrol[]"},
 
-"<A href='?src=\ref[src];operation=idcheck'>[idcheck ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];operation=weaponscheck'>[weaponscheck ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];operation=ignorerec'>[check_records ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];operation=switchmode'>[arrest_type ? "Detain" : "Arrest"]</A>",
-"<A href='?src=\ref[src];operation=declarearrests'>[declare_arrests ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
+"<A href='?src=[REF(src)];operation=idcheck'>[idcheck ? "Yes" : "No"]</A>",
+"<A href='?src=[REF(src)];operation=weaponscheck'>[weaponscheck ? "Yes" : "No"]</A>",
+"<A href='?src=[REF(src)];operation=ignorerec'>[check_records ? "Yes" : "No"]</A>",
+"<A href='?src=[REF(src)];operation=switchmode'>[arrest_type ? "Detain" : "Arrest"]</A>",
+"<A href='?src=[REF(src)];operation=declarearrests'>[declare_arrests ? "Yes" : "No"]</A>",
+"<A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
 
 	return dat
 
@@ -444,9 +444,7 @@ Auto Patrol[]"},
 
 	var/obj/item/projectile/A = new projectile (loc)
 	playsound(loc, shoot_sound, 50, 1)
-	A.current = U
-	A.yo = U.y - T.y
-	A.xo = U.x - T.x
+	A.preparePixelProjectile(target, src)
 	A.fire()
 
 /mob/living/simple_animal/bot/ed209/attack_alien(mob/living/carbon/alien/user)

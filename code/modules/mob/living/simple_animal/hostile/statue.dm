@@ -2,7 +2,7 @@
 
 /mob/living/simple_animal/hostile/statue
 	name = "statue" // matches the name of the statue with the flesh-to-stone spell
-	desc = "An incredibly lifelike marble carving. Its eyes seems to follow you.." // same as an ordinary statue with the added "eye following you" description
+	desc = "An incredibly lifelike marble carving. Its eyes seem to follow you.." // same as an ordinary statue with the added "eye following you" description
 	icon = 'icons/obj/statue.dmi'
 	icon_state = "human_male"
 	icon_living = "human_male"
@@ -44,8 +44,6 @@
 
 	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS
 	anchored = TRUE
-
-	gold_core_spawnable = 1
 
 	var/cannot_be_seen = 1
 	var/mob/living/creator = null

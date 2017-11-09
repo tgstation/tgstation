@@ -338,18 +338,11 @@
 /mob/living/ratvar_act()
 	if(status_flags & GODMODE)
 		return
-
 	if(stat != DEAD && !is_servant_of_ratvar(src))
-		for(var/obj/item/implant/mindshield/M in implants)
-			qdel(M)
-		if(!add_servant_of_ratvar(src))
-			to_chat(src, "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>")
-			adjustFireLoss(35)
-			if(src)
-				adjust_fire_stacks(1)
-				IgniteMob()
-			return FALSE
-	return TRUE
+		to_chat(src, "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>")
+		adjust_fire_stacks(20)
+		IgniteMob()
+		return FALSE
 
 
 //called when the mob receives a bright flash

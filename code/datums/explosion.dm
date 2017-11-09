@@ -1,4 +1,6 @@
 #define EXPLOSION_THROW_SPEED 4
+#define CITYOFCOGS_CAP_MULTIPLIER 0.5
+#define MINING_CAP_MULTIPLIER 3
 
 GLOBAL_LIST_EMPTY(explosions)
 //Against my better judgement, I will return the explosion datum
@@ -52,14 +54,21 @@ GLOBAL_LIST_EMPTY(explosions)
 	var/orig_dev_range = devastation_range
 	var/orig_heavy_range = heavy_impact_range
 	var/orig_light_range = light_impact_range
-
-	if(!ignorecap && epicenter.z != ZLEVEL_MINING)
-		//Clamp all values to MAX_EXPLOSION_RANGE
-		devastation_range = min(GLOB.MAX_EX_DEVESTATION_RANGE, devastation_range)
-		heavy_impact_range = min(GLOB.MAX_EX_HEAVY_RANGE, heavy_impact_range)
-		light_impact_range = min(GLOB.MAX_EX_LIGHT_RANGE, light_impact_range)
-		flash_range = min(GLOB.MAX_EX_FLASH_RANGE, flash_range)
-		flame_range = min(GLOB.MAX_EX_FLAME_RANGE, flame_range)
+	
+	//Zlevel specific bomb cap multiplier
+	var/cap_multiplier = 1
+	switch(epicenter.z)
+		if(ZLEVEL_CITYOFCOGS)
+			cap_multiplier = CITYOFCOGS_CAP_MULTIPLIER
+		if(ZLEVEL_MINING)
+			cap_multiplier = MINING_CAP_MULTIPLIER
+	
+	if(!ignorecap)
+		devastation_range = min(GLOB.MAX_EX_DEVESTATION_RANGE * cap_multiplier, devastation_range)
+		heavy_impact_range = min(GLOB.MAX_EX_HEAVY_RANGE * cap_multiplier, heavy_impact_range)
+		light_impact_range = min(GLOB.MAX_EX_LIGHT_RANGE * cap_multiplier, light_impact_range)
+		flash_range = min(GLOB.MAX_EX_FLASH_RANGE * cap_multiplier, flash_range)
+		flame_range = min(GLOB.MAX_EX_FLAME_RANGE * cap_multiplier, flame_range)
 
 	//DO NOT REMOVE THIS STOPLAG, IT BREAKS THINGS
 	//not sleeping causes us to ex_act() the thing that triggered the explosion
@@ -176,6 +185,15 @@ GLOBAL_LIST_EMPTY(explosions)
 			dist = EXPLODE_NONE
 
 		//------- EX_ACT AND TURF FIRES -------
+
+		if(T == epicenter) // Ensures explosives detonating from bags trigger other explosives in that bag
+			var/list/items = list() 
+			for(var/I in T)
+				var/atom/A = I
+				items += A.GetAllContents()
+			for(var/O in items)
+				var/atom/A = O
+				A.ex_act(dist)
 
 		if(flame_dist && prob(40) && !isspaceturf(T) && !T.density)
 			new /obj/effect/hotspot(T) //Mostly for ambience!
@@ -365,10 +383,13 @@ GLOBAL_LIST_EMPTY(explosions)
 		else
 			continue
 
-	sleep(100)
-	for(var/turf/T in wipe_colours)
-		T.color = null
-		T.maptext = ""
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/wipe_color_and_text, wipe_colours), 100)
+
+/proc/wipe_color_and_text(list/atom/wiping)
+	for(var/i in wiping)
+		var/atom/A = i
+		A.color = null
+		A.maptext = ""
 
 /proc/dyn_explosion(turf/epicenter, power, flash_range, adminlog = 1, ignorecap = 1, flame_range = 0 ,silent = 0, smoke = 1)
 	if(!power)
@@ -385,3 +406,6 @@ GLOBAL_LIST_EMPTY(explosions)
 // 10 explosion power is a (1, 3, 6) explosion.
 // 5 explosion power is a (0, 1, 3) explosion.
 // 1 explosion power is a (0, 0, 1) explosion.
+
+#undef CITYOFCOGS_CAP_MULTIPLIER
+#undef MINING_CAP_MULTIPLIER

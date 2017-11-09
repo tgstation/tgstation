@@ -433,11 +433,7 @@
 	playsound(spawn_turf, 'sound/effects/curse2.ogg', 80, 1, -1)
 	var/turf/ownerloc = get_turf(owner)
 	var/obj/item/projectile/curse_hand/C = new (spawn_turf)
-	C.current = spawn_turf
-	C.starting = spawn_turf
-	C.yo = ownerloc.y - spawn_turf.y
-	C.xo = ownerloc.x - spawn_turf.x
-	C.original = owner
+	C.preparePixelProjectile(ownerloc, spawn_turf)
 	C.fire()
 
 /obj/effect/temp_visual/curse

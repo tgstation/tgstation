@@ -115,7 +115,7 @@
 		return (total_amount - total_amount_saved)
 	return FALSE
 
-/datum/component/material_container/proc/insert_stack(obj/item/stack/S, amt = 0)
+/datum/component/material_container/proc/insert_stack(obj/item/stack/S, amt)
 	if(isnull(amt))
 		amt = S.amount
 

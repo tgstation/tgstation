@@ -192,10 +192,10 @@
 
 	return .
 
-/mob/Moved(oldLoc, dir)
+/mob/Moved(oldLoc, dir, Forced = FALSE)
 	. = ..()
 	for(var/obj/O in contents)
-		O.on_mob_move(dir, src, oldLoc)
+		O.on_mob_move(dir, src, oldLoc, Forced)
 
 /mob/setDir(newDir)
 	. = ..()
@@ -297,7 +297,7 @@
 ///For moving in space
 ///return TRUE for movement 0 for none
 /mob/Process_Spacemove(movement_dir = 0)
-	if(..())
+	if(spacewalk || ..())
 		return TRUE
 	var/atom/movable/backup = get_spacemove_backup()
 	if(backup)

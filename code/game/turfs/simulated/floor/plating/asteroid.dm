@@ -14,6 +14,7 @@
 	var/turf_type = /turf/open/floor/plating/asteroid //Because caves do whacky shit to revert to normal
 	var/floor_variance = 20 //probability floor has a different icon state
 	archdrops = list(/obj/item/ore/glass = 5)
+	attachment_holes = FALSE
 
 /turf/open/floor/plating/asteroid/Initialize()
 	var/proper_name = name
@@ -55,8 +56,6 @@
 			F.state = L.state
 		playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
 		return
-
-	return ..()
 
 
 /turf/open/floor/plating/asteroid/singularity_act()
@@ -193,7 +192,7 @@
 
 		var/list/L = list(45)
 		if(IsOdd(dir2angle(dir))) // We're going at an angle and we want thick angled tunnels.
-			L -= 45
+			L += -45
 
 		// Expand the edges of our tunnel
 		for(var/edge_angle in L)

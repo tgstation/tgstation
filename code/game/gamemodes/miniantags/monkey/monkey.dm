@@ -51,6 +51,7 @@
 	to_chat(carrier.current, "<b>Soon the disease will transform you into an ape. Afterwards, you will be able spread the infection to others with a bite.</b>")
 	to_chat(carrier.current, "<b>While your infection strain is undetectable by scanners, any other infectees will show up on medical equipment.</b>")
 	to_chat(carrier.current, "<b>Your mission will be deemed a success if any of the live infected monkeys reach CentCom.</b>")
+	carrier.current.playsound_local(get_turf(carrier.current), 'sound/ambience/antag/monkey.ogg', 100, FALSE, pressure_affected = FALSE)
 	return
 
 /datum/game_mode/monkey/post_setup()

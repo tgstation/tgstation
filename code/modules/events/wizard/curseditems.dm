@@ -40,7 +40,7 @@
 	for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
 		if(ruins_spaceworthiness && !(H.z in GLOB.station_z_levels) || isspaceturf(H.loc) || isplasmaman(H))
 			continue	//#savetheminers
-		if(ruins_wizard_loadout && H.mind && ((H.mind in SSticker.mode.wizards) || (H.mind in SSticker.mode.apprentices)))
+		if(ruins_wizard_loadout && iswizard(H))
 			continue
 		if(item_set == "catgirls2015") //Wizard code means never having to say you're sorry
 			H.gender = FEMALE

@@ -31,7 +31,7 @@
 		user.changeNext_move(CLICK_CD_MELEE)
 		user.do_attack_animation(src)
 		structureclimber.Knockdown(40)
-		structureclimber.visible_message("<span class='warning'>[structureclimber.name] has been knocked off the [src]", "You're knocked off the [src]!", "You see [structureclimber.name] get knocked off the [src]</span>")
+		structureclimber.visible_message("<span class='warning'>[structureclimber] has been knocked off [src].", "You're knocked off [src]!", "You see [structureclimber] get knocked off [src].</span>")
 	interact(user)
 
 /obj/structure/interact(mob/user)

@@ -122,7 +122,7 @@
 			ejectpda()
 
 		else
-			to_chat(user, "<span class='notice'>\The [src] is empty.</span>")
+			to_chat(user, "<span class='notice'>[src] is empty.</span>")
 
 
 /obj/machinery/pdapainter/verb/ejectpda()
@@ -138,7 +138,7 @@
 		storedpda = null
 		update_icon()
 	else
-		to_chat(usr, "<span class='notice'>The [src] is empty.</span>")
+		to_chat(usr, "<span class='notice'>[src] is empty.</span>")
 
 
 /obj/machinery/pdapainter/power_change()

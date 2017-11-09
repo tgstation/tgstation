@@ -49,8 +49,8 @@
 	admin_only = TRUE
 
 /datum/server_tools_command/namecheck/Run(sender, params)
-	log_admin("IRC Name Check: [sender] on [params]")
-	message_admins("IRC name checking on [params] from [sender]")
+	log_admin("Chat Name Check: [sender] on [params]")
+	message_admins("Name checking [params] from [sender]")
 	return keywords_lookup(params, 1)
 
 /datum/server_tools_command/adminwho
