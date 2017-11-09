@@ -2,7 +2,7 @@
 
 /mob/living/simple_animal/hostile/headcrab
 	name = "headslug"
-	desc = "Absolutely not de-beaked or harmless. Keep away from corpses."
+	desc = "An amalgamation of human and, well, something not human. it gazes intensely into the distance chittering it's teeth."
 	icon_state = "headcrab"
 	icon_living = "headcrab"
 	icon_dead = "headcrab_dead"
@@ -18,7 +18,7 @@
 	stat_attack = DEAD
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
-	speak_emote = list("squeaks")
+	speak_emote = list("utters")
 	ventcrawler = VENTCRAWLER_ALWAYS
 	var/datum/mind/origin
 	var/egg_lain = 0

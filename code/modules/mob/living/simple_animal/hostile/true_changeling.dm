@@ -11,7 +11,7 @@
 	desc = "Holy shit, what the fuck is that thing?!"
 	speak_emote = list("says with one of its faces")
 	emote_hear = list("says with one of its faces")
-	icon = 'icons/mob/animal.dmi'
+	icon = 'icons/mob/changeling.dmi'
 	icon_state = "horror1"
 	icon_living = "horror1"
 	icon_dead = "horror_dead"
