@@ -76,6 +76,12 @@ insert ascii eagle on american flag background here
 			visible_message("[src] emits an acrid smell!")
 
 
+/obj/machinery/deepfryer/attack_tk(mob/user)
+	return
+
+/obj/machinery/deepfryer/attack_ai(mob/user)
+	return
+
 /obj/machinery/deepfryer/attack_hand(mob/user)
 	if(frying)
 		if(frying.loc == src)
