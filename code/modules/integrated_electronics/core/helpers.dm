@@ -1,9 +1,8 @@
 /obj/item/integrated_circuit/proc/setup_io(var/list/io_list, var/io_type, var/list/io_default_list)
 	var/list/io_list_copy = io_list.Copy()
 	io_list.Cut()
-	var/i = 0
-	for(var/io_entry in io_list_copy)
-		i += 1
+	for(var/i in 1 to io_list_copy.len)
+		var/io_entry = io_list_copy[i]
 		var/default_data = null
 		var/io_type_override = null
 		// Override the default data.

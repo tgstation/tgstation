@@ -728,6 +728,18 @@
 	activate_pin(1)
 	return TRUE
 
+/obj/item/integrated_circuit/input/sensor/ranged
+	name = "sensor"
+	desc = "Scans and obtains a reference for any objects or persons in range.  All you need to do is point the machine towards target."
+	extended_desc = "If 'ignore storage' pin is set to true, the sensor will disregard scanning various storage containers such as backpacks."
+	icon_state = "recorder"
+	complexity = 36
+	inputs = list("ignore storage" = IC_PINTYPE_BOOLEAN)
+	outputs = list("scanned" = IC_PINTYPE_REF)
+	activators = list("on scanned" = IC_PINTYPE_PULSE_OUT)
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	power_draw_per_use = 120
+
 /obj/item/integrated_circuit/input/internalbm
 	name = "internal battery monitor"
 	desc = "This monitors the charge level of an internal battery."

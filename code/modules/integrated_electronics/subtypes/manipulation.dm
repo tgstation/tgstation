@@ -55,7 +55,9 @@
 		lethal_projectile = gun_properties["lethal_projectile"]
 		lethal_projectile_sound = gun_properties["lethal_projectile_sound"]
 		if(gun_properties["shot_delay"])
-			cooldown_per_use = gun_properties["shot_delay"]
+			cooldown_per_use = gun_properties["shot_delay"]*10
+		if(cooldown_per_use<30)
+			cooldown_per_use = 40
 		if(gun_properties["reqpower"])
 			power_draw_per_use = gun_properties["reqpower"]
 		set_pin_data(IC_OUTPUT, 1, WEAKREF(installed_gun))

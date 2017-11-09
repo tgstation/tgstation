@@ -44,7 +44,7 @@ It's suggested to start with an if or switch statement for the message, to deter
 /datum/exonet_protocol/proc/make_address(var/string)
 	if(!string)
 		return
-	address = "fc00:[hexadecimal_to_EPv2(copytext(md5(string),1,25))]"
+	address = "fc00:[strtoepv2(copytext(md5(string),1,25))]"
 	SScircuit.all_exonet_connections |= src
 
 
@@ -62,9 +62,9 @@ It's suggested to start with an if or switch statement for the message, to deter
 // Proc: hexadecimal_to_EPv2()
 // Parameters: 1 (hex - a string of hexadecimals to convert)
 // Description: Helper proc to add colons to a string in the right places.
-/proc/hexadecimal_to_EPv2(var/hex)
+/proc/strtoepv2(var/hex)
 	if(!hex)
-		return null
+		return
 	var/addr_1 = copytext(hex,1,5)
 	var/addr_2 = copytext(hex,5,9)
 	var/addr_3 = copytext(hex,9,13)
@@ -108,7 +108,7 @@ It's suggested to start with an if or switch statement for the message, to deter
 /datum/exonet_protocol/proc/send_message(var/target_address, var/data_type, var/content)
 	if(!address)
 		return FALSE
-	var/obj/machinery/exonet_node/node = get_exonet_node()
+	var/obj/machinery/exonet_node/node = SScircuit.get_exonet_node()
 	if(!node) // Telecomms went boom, ion storm, etc.
 		return FALSE
 	if(!node.on||node.stat)

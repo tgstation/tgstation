@@ -1,4 +1,3 @@
-
 /proc/WEAKREF(datum/input)
 	if(istype(input) && !QDELETED(input))
 		if(!input.weak_reference)

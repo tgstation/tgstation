@@ -18,7 +18,7 @@
 	complexity = 8
 	origin_tech = list(TECH_POWER = 3, TECH_ENGINEERING = 3, TECH_DATA = 2)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
-	var/max_power = 1
+	var/max_power = 30
 
 /obj/item/integrated_circuit/passive/power/solar_cell/make_energy()
 	var/turf/T = get_turf(src)
@@ -103,7 +103,7 @@
 	complexity = 7
 	origin_tech = list(TECH_POWER = 3, TECH_ENGINEERING = 3, TECH_DATA = 2)
 	spawn_flags = IC_SPAWN_RESEARCH
-	var/power_amount = 250
+	var/power_amount = 150
 //fuel cell
 
 /obj/item/integrated_circuit/passive/power/chemical_cell
@@ -120,7 +120,7 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_BIO = 2)
 	var/volume = 60
-	var/list/fuel = list("plasma" = 50000, "welding_fuel" = 15000, "carbon" = 10000, "ethanol"= 10000, "nutriment" =8000, "blood" = 5000)
+	var/list/fuel = list("plasma" = 10000, "welding_fuel" = 3000, "carbon" = 2000, "ethanol"= 2000, "nutriment" =1600, "blood" = 1000)
 
 /obj/item/integrated_circuit/passive/power/chemical_cell/New()
 	..()
@@ -155,7 +155,7 @@
 	complexity = 15
 	origin_tech = list(TECH_POWER = 6, TECH_ENGINEERING = 5, TECH_DATA = 4)
 	spawn_flags = IC_SPAWN_RESEARCH
-	power_amount = 2000
+	power_amount = 1000
 
 /obj/item/integrated_circuit/passive/power/relay/make_energy()
 	if(!assembly)

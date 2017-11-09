@@ -122,10 +122,7 @@
 // Proc: get_exonet_node()
 // Parameters: None
 // Description: Helper proc to get a reference to an Exonet node.
-/proc/get_exonet_node()
-	for(var/obj/machinery/exonet_node/E in GLOB.machines)
-		if(E.on)
-			return E
+
 
 
 /obj/machinery/exonet_node/proc/write_log(var/origin_address, var/target_address, var/data_type, var/content)

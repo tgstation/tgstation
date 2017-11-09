@@ -67,12 +67,12 @@
 
 
 /obj/item/device/electronic_assembly/Initialize()
-	..()
+	.=..()
 	START_PROCESSING(SScircuit, src)
 
 /obj/item/device/electronic_assembly/Destroy()
 	STOP_PROCESSING(SScircuit, src)
-	..()
+	return ..()
 
 /obj/item/device/electronic_assembly/process()
 	handle_idle_power()
@@ -182,9 +182,6 @@
 	interact(usr) // To refresh the UI.
 
 /obj/item/device/electronic_assembly/proc/rename()
-	set name = "Rename Circuit"
-	set category = "Object"
-	set desc = "Rename your circuit, useful to stay organized."
 
 	var/mob/M = usr
 	if(!check_interactivity(M))
@@ -268,15 +265,13 @@
 	return TRUE
 
 /obj/item/device/electronic_assembly/afterattack(atom/target, mob/user, proximity)
-	if(proximity)
-		var/scanned = FALSE
-		for(var/obj/item/integrated_circuit/input/sensor/S in contents)
-			S.set_pin_data(IC_OUTPUT, 1, WEAKREF(target))
-			S.check_then_do_work()
-			if(S.scan(target))
-				scanned = TRUE
-		if(scanned)
-			visible_message("<span class='notice'> [user] waves [src] around [target].</span>")
+	for(var/obj/item/integrated_circuit/input/sensor/S in contents)
+		if(!proximity)
+			if(!istype(S,/obj/item/integrated_circuit/input/sensor/ranged))
+				continue
+		S.set_pin_data(IC_OUTPUT, 1, WEAKREF(target))
+		S.check_then_do_work()
+	visible_message("<span class='notice'> [user] waves [src] around [target].</span>")
 
 /obj/item/device/electronic_assembly/attackby(var/obj/item/I, var/mob/user)
 	if(istype(I, /obj/item/integrated_circuit))

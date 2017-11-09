@@ -80,7 +80,7 @@
 	pull_data()
 	var/atom/A = get_pin_data(IC_INPUT, 1)
 	if(A && istype(A))
-		result = "[REF(A)]"
+		result = strtohex(XorEncrypt(REF(A),SScircuit.cipherkey))
 
 	set_pin_data(IC_OUTPUT, 1, result)
 	push_data()
@@ -97,7 +97,7 @@
 
 /obj/item/integrated_circuit/converter/refdecode/do_work()
 	pull_data()
-	set_pin_data(IC_OUTPUT, 1, WEAKREF(locate(get_pin_data(IC_INPUT, 1))))
+	set_pin_data(IC_OUTPUT, 1, WEAKREF(locate( hextostr(XorEncrypt(get_pin_data(IC_INPUT, 1),SScircuit.cipherkey)) )))
 	push_data()
 	activate_pin(2)
 
