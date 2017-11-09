@@ -68,7 +68,6 @@
 
 /obj/item/device/electronic_assembly/Initialize()
 	..()
-	battery = new(src)
 	START_PROCESSING(SScircuit, src)
 
 /obj/item/device/electronic_assembly/Destroy()
@@ -223,7 +222,6 @@
 			return id_card
 */
 /obj/item/device/electronic_assembly/examine(mob/user)
-	..()
 	for(var/obj/item/integrated_circuit/IC in contents)
 		IC.external_examine(user)
 	for(var/obj/item/integrated_circuit/output/screen/S in contents)
