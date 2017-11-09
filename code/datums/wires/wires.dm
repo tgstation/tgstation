@@ -1,9 +1,9 @@
 #define MAXIMUM_EMP_WIRES 3
 
 /proc/is_wire_tool(obj/item/I)
-	if(istype(I, /obj/item/device/multitool))
+	if(ismultitool(I))
 		return TRUE
-	if(istype(I, /obj/item/wirecutters))
+	if(iswirecutter(I))
 		return TRUE
 	if(istype(I, /obj/item/device/assembly))
 		var/obj/item/device/assembly/A = I
@@ -227,14 +227,14 @@
 	var/obj/item/I = L.get_active_held_item()
 	switch(action)
 		if("cut")
-			if(istype(I, /obj/item/wirecutters) || IsAdminGhost(usr))
+			if(iswirecutter(I) || IsAdminGhost(usr))
 				playsound(holder, I.usesound, 20, 1)
 				cut_color(target_wire)
 				. = TRUE
 			else
 				to_chat(L, "<span class='warning'>You need wirecutters!</span>")
 		if("pulse")
-			if(istype(I, /obj/item/device/multitool) || IsAdminGhost(usr))
+			if(ismultitool(I) || IsAdminGhost(usr))
 				playsound(holder, 'sound/weapons/empty.ogg', 20, 1)
 				pulse_color(target_wire, L)
 				. = TRUE

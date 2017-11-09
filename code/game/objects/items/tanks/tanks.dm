@@ -137,7 +137,7 @@
 
 /obj/item/tank/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
-	if((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
+	if((isanalyzer(W)) && get_dist(user, src) <= 1)
 		atmosanalyzer_scan(air_contents, user)
 
 	else if(istype(W, /obj/item/device/assembly_holder))

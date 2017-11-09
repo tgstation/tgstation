@@ -41,7 +41,7 @@
 		playsound(src, 'sound/weapons/tap.ogg', 20, 1)
 		update_icon()
 		return
-	if(nadeassembly && istype(I, /obj/item/wirecutters))
+	if(nadeassembly && iswirecutter(I))
 		playsound(src, I.usesound, 20, 1)
 		nadeassembly.forceMove(get_turf(src))
 		nadeassembly.master = null
@@ -194,7 +194,7 @@
 	user.gib(1, 1)
 
 /obj/item/grenade/plastic/c4/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver))
+	if(isscrewdriver(I))
 		open_panel = !open_panel
 		to_chat(user, "<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>")
 	else if(is_wire_tool(I))

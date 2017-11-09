@@ -95,7 +95,7 @@
 		return
 
 	if(panel_open)
-		if(istype(O, /obj/item/crowbar))
+		if(iscrowbar(O))
 			default_deconstruction_crowbar(O)
 			return 1
 		else if(is_wire_tool(O))

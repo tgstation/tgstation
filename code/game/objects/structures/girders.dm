@@ -31,7 +31,7 @@
 
 /obj/structure/girder/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
-	if(istype(W, /obj/item/screwdriver))
+	if(isscrewdriver(W))
 		if(state == GIRDER_DISPLACED)
 			playsound(src.loc, W.usesound, 100, 1)
 			user.visible_message("<span class='warning'>[user] disassembles the girder.</span>", \
@@ -61,7 +61,7 @@
 				to_chat(user, "<span class='notice'>You secure the support struts.</span>")
 				state = GIRDER_REINF
 
-	else if(istype(W, /obj/item/wrench))
+	else if(iswrench(W))
 		if(state == GIRDER_DISPLACED)
 			if(!isfloorturf(loc))
 				to_chat(user, "<span class='warning'>A floor must be present to secure the girder!</span>")
@@ -98,7 +98,7 @@
 		D.playDigSound()
 		qdel(src)
 
-	else if(istype(W, /obj/item/wirecutters) && state == GIRDER_REINF_STRUTS)
+	else if(iswirecutter(W) && state == GIRDER_REINF_STRUTS)
 		playsound(src.loc, W.usesound, 100, 1)
 		to_chat(user, "<span class='notice'>You start removing the inner grille...</span>")
 		if(do_after(user, 40*W.toolspeed, target = src))
@@ -335,7 +335,7 @@
 		R.amount = 1
 		qdel(src)
 
-	else if(istype(W, /obj/item/weldingtool))
+	else if(iswelder(W))
 		var/obj/item/weldingtool/WT = W
 		if(WT.remove_fuel(0,user))
 			playsound(src.loc, W.usesound, 50, 1)

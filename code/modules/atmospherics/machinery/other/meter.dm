@@ -104,7 +104,7 @@
 
 
 /obj/machinery/meter/attackby(obj/item/W, mob/user, params)
-	if (istype(W, /obj/item/wrench))
+	if (iswrench(W))
 		playsound(src, W.usesound, 50, 1)
 		to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 		if (do_after(user, 40*W.toolspeed, target = src))

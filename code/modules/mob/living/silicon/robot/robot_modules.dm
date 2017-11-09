@@ -102,7 +102,7 @@
 			S.cost = 250
 			S.source = get_or_create_estorage(/datum/robot_energy_storage/medical)
 
-		else if(istype(S, /obj/item/stack/cable_coil))
+		else if(iscable(S))
 			S.cost = 1
 			S.source = get_or_create_estorage(/datum/robot_energy_storage/wire)
 

@@ -182,3 +182,13 @@ GLOBAL_LIST_INIT(glass_sheet_types, typecacheof(list(
 	/obj/item/stack/sheet/plasmarglass)))
 
 #define is_glass_sheet(O) (is_type_in_typecache(O, GLOB.glass_sheet_types))
+
+//Tools
+#define isanalyzer(O) (istype(O, /obj/item/device/analyzer))
+#define iscable(O) (istype(O, /obj/item/stack/cable_coil))
+#define iscrowbar(O) (istype(O, /obj/item/crowbar))
+#define ismultitool(O) (istype(O, /obj/item/device/multitool))
+#define isscrewdriver(O) (istype(O, /obj/item/screwdriver))
+#define iswelder(O) (istype(O, /obj/item/weldingtool))
+#define iswirecutter(O) (istype(O, /obj/item/wirecutters))
+#define iswrench(O) (istype(O, /obj/item/wrench))

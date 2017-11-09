@@ -369,7 +369,7 @@
 	song.interact(user)
 
 /obj/structure/piano/attackby(obj/item/O, mob/user, params)
-	if (istype(O, /obj/item/wrench))
+	if (iswrench(O))
 		if (!anchored && !isinspace())
 			playsound(src, O.usesound, 50, 1)
 			to_chat(user, "<span class='notice'> You begin to tighten \the [src] to the floor...</span>")

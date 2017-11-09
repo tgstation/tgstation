@@ -50,7 +50,7 @@
 
 
 /obj/item/grenade/chem_grenade/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver))
+	if(isscrewdriver(I))
 		if(stage == WIRED)
 			if(beakers.len)
 				stage_change(READY)
@@ -93,7 +93,7 @@
 		stage_change(WIRED)
 		to_chat(user, "<span class='notice'>You add [A] to the [initial(name)] assembly.</span>")
 
-	else if(stage == EMPTY && istype(I, /obj/item/stack/cable_coil))
+	else if(stage == EMPTY && iscable(I))
 		var/obj/item/stack/cable_coil/C = I
 		if (C.use(1))
 			det_time = 50 // In case the cable_coil was removed and readded.
@@ -103,11 +103,11 @@
 			to_chat(user, "<span class='warning'>You need one length of coil to wire the assembly!</span>")
 			return
 
-	else if(stage == READY && istype(I, /obj/item/wirecutters) && !active)
+	else if(stage == READY && iswirecutter(I) && !active)
 		stage_change(WIRED)
 		to_chat(user, "<span class='notice'>You unlock the [initial(name)] assembly.</span>")
 
-	else if(stage == WIRED && istype(I, /obj/item/wrench))
+	else if(stage == WIRED && iswrench(I))
 		if(beakers.len)
 			for(var/obj/O in beakers)
 				O.loc = get_turf(src)
@@ -257,7 +257,7 @@
 	var/unit_spread = 10 // Amount of units per repeat. Can be altered with a multitool.
 
 /obj/item/grenade/chem_grenade/adv_release/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/multitool))
+	if(ismultitool(I))
 		switch(unit_spread)
 			if(0 to 24)
 				unit_spread += 5

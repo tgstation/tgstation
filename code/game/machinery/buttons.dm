@@ -57,7 +57,7 @@
 			icon_state = skin
 
 /obj/machinery/button/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/screwdriver))
+	if(isscrewdriver(W))
 		if(panel_open || allowed(user))
 			default_deconstruction_screwdriver(user, "button-open", "[skin]",W)
 			update_icon()
@@ -85,7 +85,7 @@
 				req_access = board.accesses
 			to_chat(user, "<span class='notice'>You add [W] to the button.</span>")
 
-		if(!device && !board && istype(W, /obj/item/wrench))
+		if(!device && !board && iswrench(W))
 			to_chat(user, "<span class='notice'>You start unsecuring the button frame...</span>")
 			playsound(loc, W.usesound, 50, 1)
 			if(do_after(user, 40*W.toolspeed, target = src))

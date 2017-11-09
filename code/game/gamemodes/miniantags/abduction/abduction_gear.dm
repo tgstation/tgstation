@@ -536,7 +536,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	make_syndie()
 
 /obj/item/device/radio/headset/abductor/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/screwdriver))
+	if(isscrewdriver(W))
 		return // Stops humans from disassembling abductor headsets.
 	return ..()
 
@@ -611,7 +611,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	density = TRUE
 
 /obj/structure/table_frame/abductor/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/wrench))
+	if(iswrench(I))
 		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
 		playsound(src.loc, I.usesound, 50, 1)
 		if(do_after(user, 30*I.toolspeed, target = src))
@@ -706,7 +706,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	state = 1
 
 /obj/structure/door_assembly/door_assembly_abductor/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weldingtool) && !anchored )
+	if(iswelder(W) && !anchored )
 		var/obj/item/weldingtool/WT = W
 		if(WT.remove_fuel(0,user))
 			user.visible_message("<span class='warning'>[user] disassembles the airlock assembly.</span>", \

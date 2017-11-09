@@ -124,30 +124,30 @@
 	var/msg2 = "<span class='notice'>[src] already has that upgrade!</span>"
 
 	// DECONSTRUCTION
-	if(istype(W, /obj/item/screwdriver))
+	if(isscrewdriver(W))
 		panel_open = !panel_open
 		to_chat(user, "<span class='notice'>You screw the camera's panel [panel_open ? "open" : "closed"].</span>")
 		playsound(src.loc, W.usesound, 50, 1)
 		return
 
 	if(panel_open)
-		if(istype(W, /obj/item/wirecutters)) //enable/disable the camera
+		if(iswirecutter(W)) //enable/disable the camera
 			toggle_cam(user, 1)
 			obj_integrity = max_integrity //this is a pretty simplistic way to heal the camera, but there's no reason for this to be complex.
 			return
 
-		else if(istype(W, /obj/item/device/multitool)) //change focus
+		else if(ismultitool(W)) //change focus
 			setViewRange((view_range == initial(view_range)) ? short_range : initial(view_range))
 			to_chat(user, "<span class='notice'>You [(view_range == initial(view_range)) ? "restore" : "mess up"] the camera's focus.</span>")
 			return
 
-		else if(istype(W, /obj/item/weldingtool))
+		else if(iswelder(W))
 			if(weld(W, user))
 				visible_message("<span class='warning'>[user] unwelds [src], leaving it as just a frame bolted to the wall.</span>", "<span class='warning'>You unweld [src], leaving it as just a frame bolted to the wall</span>")
 				deconstruct(TRUE)
 			return
 
-		else if(istype(W, /obj/item/device/analyzer))
+		else if(isanalyzer(W))
 			if(!isXRay())
 				if(!user.temporarilyRemoveItemFromInventory(W))
 					return

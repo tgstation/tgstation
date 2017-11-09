@@ -186,7 +186,7 @@
 	return ..()
 
 /turf/closed/wall/proc/try_clean(obj/item/W, mob/user, turf/T)
-	if((user.a_intent != INTENT_HELP) || !LAZYLEN(dent_decals) || !istype(W, /obj/item/weldingtool))
+	if((user.a_intent != INTENT_HELP) || !LAZYLEN(dent_decals) || !iswelder(W))
 		return FALSE
 	var/obj/item/weldingtool/WT = W
 	if(WT.remove_fuel(0, user))
@@ -215,7 +215,7 @@
 	return FALSE
 
 /turf/closed/wall/proc/try_decon(obj/item/W, mob/user, turf/T)
-	if(istype(W, /obj/item/weldingtool))
+	if(iswelder(W))
 		var/obj/item/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
 			to_chat(user, "<span class='notice'>You begin slicing through the outer plating...</span>")

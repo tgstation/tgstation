@@ -76,7 +76,7 @@
 	implements = implements + implements_extract
 
 /datum/surgery_step/manipulate_organs/tool_check(mob/user, obj/item/tool)
-	if(istype(tool, /obj/item/weldingtool))
+	if(iswelder(tool))
 		var/obj/item/weldingtool/WT = tool
 		if(!WT.isOn())
 			return 0

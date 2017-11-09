@@ -180,7 +180,7 @@
 		if(exchange_parts(user, O))
 			return
 
-		if(istype(O, /obj/item/wrench))
+		if(iswrench(O))
 
 			if(!anchored && !isinspace())
 				connect_to_network()
@@ -193,7 +193,7 @@
 
 			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 			return
-		else if(istype(O, /obj/item/screwdriver))
+		else if(isscrewdriver(O))
 			panel_open = !panel_open
 			playsound(src.loc, O.usesound, 50, 1)
 			if(panel_open)

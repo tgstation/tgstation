@@ -70,7 +70,7 @@
 	return
 
 /obj/machinery/computer/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver) && circuit && !(flags_1&NODECONSTRUCT_1))
+	if(isscrewdriver(I) && circuit && !(flags_1&NODECONSTRUCT_1))
 		playsound(src.loc, I.usesound, 50, 1)
 		to_chat(user, "<span class='notice'> You start to disconnect the monitor...</span>")
 		if(do_after(user, 20*I.toolspeed, target = src))

@@ -259,7 +259,7 @@
 	update_icon()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weldingtool))
+	if(iswelder(W))
 		var/obj/item/weldingtool/WT = W
 		if (WT.remove_fuel(0, user))
 			playsound(loc, WT.usesound, 40, 1)

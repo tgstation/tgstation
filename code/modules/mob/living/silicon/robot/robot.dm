@@ -366,7 +366,7 @@
 	return !cleared
 
 /mob/living/silicon/robot/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weldingtool) && (user.a_intent != INTENT_HARM || user == src))
+	if(iswelder(W) && (user.a_intent != INTENT_HARM || user == src))
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/weldingtool/WT = W
 		if (!getBruteLoss())
@@ -387,7 +387,7 @@
 			to_chat(user, "<span class='warning'>The welder must be on for this task!</span>")
 			return
 
-	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
+	else if(iscable(W) && wiresexposed)
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/stack/cable_coil/coil = W
 		if (getFireLoss() > 0 || getToxLoss() > 0)
@@ -405,7 +405,7 @@
 		else
 			to_chat(user, "The wires seem fine, there's no need to fix them.")
 
-	else if(istype(W, /obj/item/crowbar))	// crowbar means open or close the cover
+	else if(iscrowbar(W))	// crowbar means open or close the cover
 		if(opened)
 			to_chat(user, "<span class='notice'>You close the cover.</span>")
 			opened = 0
@@ -437,12 +437,12 @@
 		else
 			to_chat(user, "<span class='warning'>You can't reach the wiring!</span>")
 
-	else if(istype(W, /obj/item/screwdriver) && opened && !cell)	// haxing
+	else if(isscrewdriver(W) && opened && !cell)	// haxing
 		wiresexposed = !wiresexposed
 		to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
 		update_icons()
 
-	else if(istype(W, /obj/item/screwdriver) && opened && cell)	// radio
+	else if(isscrewdriver(W) && opened && cell)	// radio
 		if(shell)
 			to_chat(user, "You cannot seem to open the radio compartment")	//Prevent AI radio key theft
 		else if(radio)
@@ -451,7 +451,7 @@
 			to_chat(user, "<span class='warning'>Unable to locate a radio!</span>")
 		update_icons()
 
-	else if(istype(W, /obj/item/wrench) && opened && !cell) //Deconstruction. The flashes break from the fall, to prevent this from being a ghetto reset module.
+	else if(iswrench(W) && opened && !cell) //Deconstruction. The flashes break from the fall, to prevent this from being a ghetto reset module.
 		if(!lockcharge)
 			to_chat(user, "<span class='boldannounce'>[src]'s bolts spark! Maybe you should lock them down first!</span>")
 			spark_system.start()

@@ -77,7 +77,7 @@
 		O.add_fingerprint(user)
 		update_icon()
 
-	else if(istype(O, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
+	else if(iswelder(O) && user.a_intent != INTENT_HARM)
 		var/obj/item/weldingtool/WT = O
 		if(stat & BROKEN)
 			if(WT.remove_fuel(0,user))

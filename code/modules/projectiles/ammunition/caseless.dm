@@ -78,7 +78,7 @@
 
 /obj/item/ammo_casing/caseless/foam_dart/attackby(obj/item/A, mob/user, params)
 	var/obj/item/projectile/bullet/reusable/foam_dart/FD = BB
-	if (istype(A, /obj/item/screwdriver) && !modified)
+	if (isscrewdriver(A) && !modified)
 		modified = 1
 		FD.modified = 1
 		FD.damage_type = BRUTE

@@ -999,7 +999,7 @@
 	else if(locked)
 		usermessage("You can not perform any service while the suit is locked!", "boldwarning")
 		return FALSE
-	else if(istype(I, /obj/item/screwdriver))
+	else if(isscrewdriver(I))
 		if(!maint_panel)
 			maint_panel = TRUE
 		else
@@ -1009,7 +1009,7 @@
 	else if(!maint_panel)
 		usermessage("The maintenance panel is closed!", "boldwarning")
 		return FALSE
-	else if(istype(I, /obj/item/crowbar))
+	else if(iscrowbar(I))
 		var/list/inputlist = list()
 		if(pack)
 			inputlist += "Pack"

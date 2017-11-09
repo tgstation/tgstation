@@ -141,14 +141,14 @@
 	return
 
 /obj/machinery/shieldgen/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/screwdriver))
+	if(isscrewdriver(W))
 		playsound(src.loc, W.usesound, 100, 1)
 		panel_open = !panel_open
 		if(panel_open)
 			to_chat(user, "<span class='notice'>You open the panel and expose the wiring.</span>")
 		else
 			to_chat(user, "<span class='notice'>You close the panel.</span>")
-	else if(istype(W, /obj/item/stack/cable_coil) && (stat & BROKEN) && panel_open)
+	else if(iscable(W) && (stat & BROKEN) && panel_open)
 		var/obj/item/stack/cable_coil/coil = W
 		if (coil.get_amount() < 1)
 			to_chat(user, "<span class='warning'>You need one length of cable to repair [src]!</span>")
@@ -163,7 +163,7 @@
 			to_chat(user, "<span class='notice'>You repair \the [src].</span>")
 			update_icon()
 
-	else if(istype(W, /obj/item/wrench))
+	else if(iswrench(W))
 		if(locked)
 			to_chat(user, "<span class='warning'>The bolts are covered! Unlocking this would retract the covers.</span>")
 			return
@@ -339,7 +339,7 @@
 	return ..()
 
 /obj/machinery/shieldwallgen/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/wrench))
+	if(iswrench(W))
 		default_unfasten_wrench(user, W, 0)
 
 	else if(W.GetID())

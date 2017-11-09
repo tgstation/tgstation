@@ -103,7 +103,7 @@
 		return
 
 	//building and linking a terminal
-	if(istype(I, /obj/item/stack/cable_coil))
+	if(iscable(I))
 		var/dir = get_dir(user,src)
 		if(dir & (dir-1))//we don't want diagonal click
 			return
@@ -149,7 +149,7 @@
 		return
 
 	//disassembling the terminal
-	if(istype(I, /obj/item/wirecutters) && terminal && panel_open)
+	if(iswirecutter(I) && terminal && panel_open)
 		terminal.dismantle(user, I)
 		return
 
@@ -160,7 +160,7 @@
 		log_game("[src] has been deconstructed by [key_name(user)]")
 		investigate_log("SMES deconstructed by [key_name(user)]", INVESTIGATE_SINGULO)
 		return
-	else if(panel_open && istype(I, /obj/item/crowbar))
+	else if(panel_open && iscrowbar(I))
 		return
 
 	return ..()

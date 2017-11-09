@@ -529,7 +529,7 @@
 /obj/machinery/door/airlock/clockwork/proc/attempt_construction(obj/item/I, mob/living/user)
 	if(!I || !user || !user.canUseTopic(src))
 		return 0
-	else if(istype(I, /obj/item/wrench))
+	else if(iswrench(I))
 		if(construction_state == GEAR_SECURE)
 			user.visible_message("<span class='notice'>[user] begins loosening [src]'s cogwheel...</span>", "<span class='notice'>You begin loosening [src]'s cogwheel...</span>")
 			playsound(src, I.usesound, 50, 1)
@@ -547,7 +547,7 @@
 			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 			construction_state = GEAR_SECURE
 		return 1
-	else if(istype(I, /obj/item/crowbar))
+	else if(iscrowbar(I))
 		if(construction_state == GEAR_SECURE)
 			to_chat(user, "<span class='warning'>[src]'s cogwheel is too tightly secured! Your [I.name] can't reach under it!</span>")
 			return 1

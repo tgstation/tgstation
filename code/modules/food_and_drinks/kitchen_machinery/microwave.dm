@@ -57,7 +57,7 @@
 		return
 
 	if(src.broken > 0)
-		if(src.broken == 2 && istype(O, /obj/item/wirecutters)) // If it's broken and they're using a screwdriver
+		if(src.broken == 2 && iswirecutter(O)) // If it's broken and they're using a screwdriver
 			user.visible_message( \
 				"[user] starts to fix part of the microwave.", \
 				"<span class='notice'>You start to fix part of the microwave...</span>" \
@@ -68,7 +68,7 @@
 					"<span class='notice'>You fix part of the microwave.</span>" \
 				)
 				src.broken = 1 // Fix it a bit
-		else if(src.broken == 1 && istype(O, /obj/item/weldingtool)) // If it's broken and they're doing the wrench
+		else if(src.broken == 1 && iswelder(O)) // If it's broken and they're doing the wrench
 			user.visible_message( \
 				"[user] starts to fix part of the microwave.", \
 				"<span class='notice'>You start to fix part of the microwave...</span>" \

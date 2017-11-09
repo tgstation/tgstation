@@ -100,7 +100,7 @@
 		to_chat(user, "<span class='warning'>You must wait until the door has stopped moving!</span>")
 		return
 
-	if(istype(W, /obj/item/screwdriver))
+	if(isscrewdriver(W))
 		if(density)
 			var/turf/T = get_turf(src)
 			if(T.density)
@@ -114,7 +114,7 @@
 		else
 			to_chat(user, "<span class='warning'>You can't reach, close it first!</span>")
 
-	else if(istype(W, /obj/item/weldingtool))
+	else if(iswelder(W))
 		var/obj/item/weldingtool/WT = W
 		if(WT.remove_fuel(0,user))
 			dismantle(user, TRUE)
@@ -169,7 +169,7 @@
 
 /obj/structure/falsewall/reinforced/attackby(obj/item/tool, mob/user)
 	..()
-	if(istype(tool, /obj/item/wirecutters))
+	if(iswirecutter(tool))
 		dismantle(user, TRUE, tool)
 
 /*

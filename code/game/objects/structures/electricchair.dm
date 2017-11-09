@@ -11,7 +11,7 @@
 	add_overlay(mutable_appearance('icons/obj/chairs.dmi', "echair_over", MOB_LAYER + 1))
 
 /obj/structure/chair/e_chair/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/wrench))
+	if(iswrench(W))
 		var/obj/structure/chair/C = new /obj/structure/chair(loc)
 		playsound(loc, W.usesound, 50, 1)
 		C.setDir(dir)

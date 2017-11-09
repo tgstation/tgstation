@@ -67,7 +67,7 @@
 	//DECONSTRUCTION
 	switch(d_state)
 		if(INTACT)
-			if(istype(W, /obj/item/wirecutters))
+			if(iswirecutter(W))
 				playsound(src, W.usesound, 100, 1)
 				d_state = SUPPORT_LINES
 				update_icon()
@@ -75,7 +75,7 @@
 				return 1
 
 		if(SUPPORT_LINES)
-			if(istype(W, /obj/item/screwdriver))
+			if(isscrewdriver(W))
 				to_chat(user, "<span class='notice'>You begin unsecuring the support lines...</span>")
 				playsound(src, W.usesound, 100, 1)
 				if(do_after(user, 40*W.toolspeed, target = src))
@@ -86,7 +86,7 @@
 					to_chat(user, "<span class='notice'>You unsecure the support lines.</span>")
 				return 1
 
-			else if(istype(W, /obj/item/wirecutters))
+			else if(iswirecutter(W))
 				playsound(src, W.usesound, 100, 1)
 				d_state = INTACT
 				update_icon()
@@ -94,7 +94,7 @@
 				return 1
 
 		if(COVER)
-			if(istype(W, /obj/item/weldingtool))
+			if(iswelder(W))
 				var/obj/item/weldingtool/WT = W
 				if(WT.remove_fuel(0,user))
 					to_chat(user, "<span class='notice'>You begin slicing through the metal cover...</span>")
@@ -118,7 +118,7 @@
 					to_chat(user, "<span class='notice'>You press firmly on the cover, dislodging it.</span>")
 				return 1
 
-			if(istype(W, /obj/item/screwdriver))
+			if(isscrewdriver(W))
 				to_chat(user, "<span class='notice'>You begin securing the support lines...</span>")
 				playsound(src, W.usesound, 100, 1)
 				if(do_after(user, 40*W.toolspeed, target = src))
@@ -130,7 +130,7 @@
 				return 1
 
 		if(CUT_COVER)
-			if(istype(W, /obj/item/crowbar))
+			if(iscrowbar(W))
 				to_chat(user, "<span class='notice'>You struggle to pry off the cover...</span>")
 				playsound(src, W.usesound, 100, 1)
 				if(do_after(user, 100*W.toolspeed, target = src))
@@ -141,7 +141,7 @@
 					to_chat(user, "<span class='notice'>You pry off the cover.</span>")
 				return 1
 
-			if(istype(W, /obj/item/weldingtool))
+			if(iswelder(W))
 				var/obj/item/weldingtool/WT = W
 				if(WT.remove_fuel(0,user))
 					to_chat(user, "<span class='notice'>You begin welding the metal cover back to the frame...</span>")
@@ -155,7 +155,7 @@
 				return 1
 
 		if(BOLTS)
-			if(istype(W, /obj/item/wrench))
+			if(iswrench(W))
 				to_chat(user, "<span class='notice'>You start loosening the anchoring bolts which secure the support rods to their frame...</span>")
 				playsound(src, W.usesound, 100, 1)
 				if(do_after(user, 40*W.toolspeed, target = src))
@@ -166,7 +166,7 @@
 					to_chat(user, "<span class='notice'>You remove the bolts anchoring the support rods.</span>")
 				return 1
 
-			if(istype(W, /obj/item/crowbar))
+			if(iscrowbar(W))
 				to_chat(user, "<span class='notice'>You start to pry the cover back into place...</span>")
 				playsound(src, W.usesound, 100, 1)
 				if(do_after(user, 20*W.toolspeed, target = src))
@@ -178,7 +178,7 @@
 				return 1
 
 		if(SUPPORT_RODS)
-			if(istype(W, /obj/item/weldingtool))
+			if(iswelder(W))
 				var/obj/item/weldingtool/WT = W
 				if(WT.remove_fuel(0,user))
 					to_chat(user, "<span class='notice'>You begin slicing through the support rods...</span>")
@@ -202,7 +202,7 @@
 					to_chat(user, "<span class='notice'>You slice through the support rods.</span>")
 				return 1
 
-			if(istype(W, /obj/item/wrench))
+			if(iswrench(W))
 				to_chat(user, "<span class='notice'>You start tightening the bolts which secure the support rods to their frame...</span>")
 				playsound(src, W.usesound, 100, 1)
 				if(do_after(user, 40*W.toolspeed, target = src))
@@ -214,7 +214,7 @@
 				return 1
 
 		if(SHEATH)
-			if(istype(W, /obj/item/crowbar))
+			if(iscrowbar(W))
 				to_chat(user, "<span class='notice'>You struggle to pry off the outer sheath...</span>")
 				playsound(src, W.usesound, 100, 1)
 				if(do_after(user, 100*W.toolspeed, target = src))
@@ -224,7 +224,7 @@
 					dismantle_wall()
 				return 1
 
-			if(istype(W, /obj/item/weldingtool))
+			if(iswelder(W))
 				var/obj/item/weldingtool/WT = W
 				if(WT.remove_fuel(0,user))
 					to_chat(user, "<span class='notice'>You begin welding the support rods back together...</span>")

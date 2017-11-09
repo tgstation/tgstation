@@ -31,7 +31,7 @@
 			return
 
 		if(panel_open)
-			if(istype(I, /obj/item/device/multitool))
+			if(ismultitool(I))
 				var/obj/item/device/multitool/M = I
 				M.buffer = src
 				to_chat(user, "<span class='notice'>You save the data in the [I.name]'s buffer.</span>")

@@ -157,7 +157,7 @@
 
 
 /obj/machinery/power/am_control_unit/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/wrench))
+	if(iswrench(W))
 		if(!anchored)
 			playsound(src.loc, W.usesound, 75, 1)
 			user.visible_message("[user.name] secures the [src.name] to the floor.", \

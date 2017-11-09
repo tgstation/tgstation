@@ -21,7 +21,7 @@
 
 /obj/item/stack/tile/attackby(obj/item/W, mob/user, params)
 
-	if (istype(W, /obj/item/weldingtool))
+	if (iswelder(W))
 		var/obj/item/weldingtool/WT = W
 
 		if(get_amount() < 4)

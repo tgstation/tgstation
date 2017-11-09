@@ -17,7 +17,7 @@
 		for(var/obj/item/ore/O in S.contents)
 			S.remove_from_storage(O, src) //This will move the item to this item's contents
 		to_chat(user, "<span class='notice'>You empty the ore in [S] into \the [src].</span>")
-	else if(istype(W, /obj/item/crowbar))
+	else if(iscrowbar(W))
 		playsound(src, W.usesound, 50, 1)
 		var/obj/item/crowbar/C = W
 		if(do_after(user, 50*C.toolspeed, target = src))

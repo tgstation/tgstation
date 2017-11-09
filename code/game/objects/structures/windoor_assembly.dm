@@ -91,7 +91,7 @@
 	add_fingerprint(user)
 	switch(state)
 		if("01")
-			if(istype(W, /obj/item/weldingtool) && !anchored )
+			if(iswelder(W) && !anchored )
 				var/obj/item/weldingtool/WT = W
 				if (WT.remove_fuel(0,user))
 					user.visible_message("[user] disassembles the windoor assembly.", "<span class='notice'>You start to disassemble the windoor assembly...</span>")
@@ -111,7 +111,7 @@
 					return
 
 			//Wrenching an unsecure assembly anchors it in place. Step 4 complete
-			if(istype(W, /obj/item/wrench) && !anchored)
+			if(iswrench(W) && !anchored)
 				for(var/obj/machinery/door/window/WD in loc)
 					if(WD.dir == dir)
 						to_chat(user, "<span class='warning'>There is already a windoor in that location!</span>")
@@ -134,7 +134,7 @@
 						name = "anchored windoor assembly"
 
 			//Unwrenching an unsecure assembly un-anchors it. Step 4 undone
-			else if(istype(W, /obj/item/wrench) && anchored)
+			else if(iswrench(W) && anchored)
 				playsound(loc, W.usesound, 100, 1)
 				user.visible_message("[user] unsecures the windoor assembly to the floor.", "<span class='notice'>You start to unsecure the windoor assembly to the floor...</span>")
 
@@ -169,7 +169,7 @@
 						name = "secure windoor assembly"
 
 			//Adding cable to the assembly. Step 5 complete.
-			else if(istype(W, /obj/item/stack/cable_coil) && anchored)
+			else if(iscable(W) && anchored)
 				user.visible_message("[user] wires the windoor assembly.", "<span class='notice'>You start to wire the windoor assembly...</span>")
 
 				if(do_after(user, 40, target = src))
@@ -191,7 +191,7 @@
 		if("02")
 
 			//Removing wire from the assembly. Step 5 undone.
-			if(istype(W, /obj/item/wirecutters))
+			if(iswirecutter(W))
 				playsound(loc, W.usesound, 100, 1)
 				user.visible_message("[user] cuts the wires from the airlock assembly.", "<span class='notice'>You start to cut the wires from airlock assembly...</span>")
 
@@ -225,7 +225,7 @@
 					W.loc = loc
 
 			//Screwdriver to remove airlock electronics. Step 6 undone.
-			else if(istype(W, /obj/item/screwdriver))
+			else if(isscrewdriver(W))
 				if(!electronics)
 					return
 
@@ -254,7 +254,7 @@
 
 
 			//Crowbar to complete the assembly, Step 7 complete.
-			else if(istype(W, /obj/item/crowbar))
+			else if(iscrowbar(W))
 				if(!electronics)
 					to_chat(usr, "<span class='warning'>The assembly is missing electronics!</span>")
 					return

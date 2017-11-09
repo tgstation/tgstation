@@ -28,7 +28,7 @@
 			. += accessory_overlay
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
-	if((has_sensor == BROKEN_SENSORS) && istype(I, /obj/item/stack/cable_coil))
+	if((has_sensor == BROKEN_SENSORS) && iscable(I))
 		var/obj/item/stack/cable_coil/C = I
 		C.use(1)
 		has_sensor = HAS_SENSORS

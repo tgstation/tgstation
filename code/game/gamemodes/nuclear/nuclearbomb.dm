@@ -123,7 +123,7 @@
 					update_icon()
 				return
 		if(NUKESTATE_UNSCREWED)
-			if(istype(I, /obj/item/crowbar))
+			if(iscrowbar(I))
 				to_chat(user, "<span class='notice'>You start removing [src]'s front panel...</span>")
 				playsound(loc, I.usesound, 100, 1)
 				if(do_after(user,30*I.toolspeed,target=src))
@@ -132,7 +132,7 @@
 					update_icon()
 				return
 		if(NUKESTATE_PANEL_REMOVED)
-			if(istype(I, /obj/item/weldingtool))
+			if(iswelder(I))
 				var/obj/item/weldingtool/welder = I
 				playsound(loc, I.usesound, 100, 1)
 				to_chat(user, "<span class='notice'>You start cutting [src]'s inner plate...</span>")
@@ -143,7 +143,7 @@
 						update_icon()
 				return
 		if(NUKESTATE_WELDED)
-			if(istype(I, /obj/item/crowbar))
+			if(iscrowbar(I))
 				to_chat(user, "<span class='notice'>You start prying off [src]'s inner plate...</span>")
 				playsound(loc, I.usesound, 100, 1)
 				if(do_after(user,50*I.toolspeed,target=src))

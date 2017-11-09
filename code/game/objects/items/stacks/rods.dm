@@ -36,7 +36,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 		icon_state = "rods"
 
 /obj/item/stack/rods/attackby(obj/item/W, mob/user, params)
-	if (istype(W, /obj/item/weldingtool))
+	if (iswelder(W))
 		var/obj/item/weldingtool/WT = W
 
 		if(get_amount() < 2)

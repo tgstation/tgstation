@@ -14,7 +14,7 @@
 		to_chat(user, "<span class='warning'>You need a crowbar to pry this open!</span>")
 
 /obj/structure/closet/crate/large/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/crowbar))
+	if(iscrowbar(W))
 		var/turf/T = get_turf(src)
 		if(manifest)
 			tear_manifest(user)

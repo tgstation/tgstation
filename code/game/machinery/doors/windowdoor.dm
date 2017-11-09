@@ -223,7 +223,7 @@
 
 	add_fingerprint(user)
 	if(!(flags_1&NODECONSTRUCT_1))
-		if(istype(I, /obj/item/screwdriver))
+		if(isscrewdriver(I))
 			if(density || operating)
 				to_chat(user, "<span class='warning'>You need to open the door to access the maintenance panel!</span>")
 				return
@@ -232,7 +232,7 @@
 			to_chat(user, "<span class='notice'>You [panel_open ? "open":"close"] the maintenance panel of the [src.name].</span>")
 			return
 
-		if(istype(I, /obj/item/crowbar))
+		if(iscrowbar(I))
 			if(panel_open && !density && !operating)
 				playsound(src.loc, I.usesound, 100, 1)
 				user.visible_message("[user] removes the electronics from the [src.name].", \

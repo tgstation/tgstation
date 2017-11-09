@@ -54,7 +54,7 @@
 	qdel(src)
 
 /obj/structure/chair/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/wrench) && !(flags_1&NODECONSTRUCT_1))
+	if(iswrench(W) && !(flags_1&NODECONSTRUCT_1))
 		playsound(src.loc, W.usesound, 50, 1)
 		deconstruct()
 	else if(istype(W, /obj/item/assembly/shock_kit))

@@ -10,7 +10,7 @@
 	light_color = LIGHT_COLOR_PINK
 
 /obj/machinery/computer/aifixer/attackby(obj/I, mob/user, params)
-	if(occupier && istype(I, /obj/item/screwdriver))
+	if(occupier && isscrewdriver(I))
 		if(stat & (NOPOWER|BROKEN))
 			to_chat(user, "<span class='warning'>The screws on [name]'s screen won't budge.</span>")
 		else

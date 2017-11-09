@@ -95,10 +95,10 @@ field_generator power level display
 	if(active)
 		to_chat(user, "<span class='warning'>[src] needs to be off!</span>")
 		return
-	else if(istype(W, /obj/item/wrench))
+	else if(iswrench(W))
 		default_unfasten_wrench(user, W, 0)
 
-	else if(istype(W, /obj/item/weldingtool))
+	else if(iswelder(W))
 		var/obj/item/weldingtool/WT = W
 		switch(state)
 			if(FG_UNSECURED)

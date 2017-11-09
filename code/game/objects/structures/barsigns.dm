@@ -71,7 +71,7 @@
 
 
 /obj/structure/sign/barsign/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/screwdriver))
+	if(isscrewdriver(I))
 		if(!allowed(user))
 			to_chat(user, "<span class='info'>Access denied.</span>")
 			return
@@ -89,7 +89,7 @@
 				set_sign(new /datum/barsign/hiddensigns/empbarsign)
 			panel_open = FALSE
 
-	else if(istype(I, /obj/item/stack/cable_coil) && panel_open)
+	else if(iscable(I) && panel_open)
 		var/obj/item/stack/cable_coil/C = I
 		if(emagged) //Emagged, not broken by EMP
 			to_chat(user, "<span class='warning'>Sign has been damaged beyond repair!</span>")

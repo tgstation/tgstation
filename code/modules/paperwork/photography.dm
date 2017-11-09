@@ -576,7 +576,7 @@
 		..()
 
 /obj/structure/sign/picture_frame/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver) || istype(I, /obj/item/wrench))
+	if(isscrewdriver(I) || iswrench(I))
 		to_chat(user, "<span class='notice'>You start unsecuring [name]...</span>")
 		playsound(loc, I.usesound, 50, 1)
 		if(do_after(user, 30*I.toolspeed, target = src))

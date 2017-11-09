@@ -54,7 +54,7 @@
 		sleep(5)
 		icon_state = initial(icon_state)
 		updateUsrDialog()
-	else if(istype(P, /obj/item/wrench))
+	else if(iswrench(P))
 		to_chat(user, "<span class='notice'>You begin to [anchored ? "unwrench" : "wrench"] [src].</span>")
 		playsound(loc, P.usesound, 50, 1)
 		if(do_after(user, 20, target = src))

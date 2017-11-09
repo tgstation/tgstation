@@ -37,7 +37,7 @@
 				to_chat(user, "<span class='warning'>\The [IT] is too small for \the [src].</span>")
 				return
 			updateTank(W, 0, user)
-	else if(istype(W, /obj/item/wrench))
+	else if(iswrench(W))
 		switch(fisto_setting)
 			if(1)
 				fisto_setting = 2
@@ -47,7 +47,7 @@
 				fisto_setting = 1
 		playsound(loc, W.usesound, 50, 1)
 		to_chat(user, "<span class='notice'>You tweak \the [src]'s piston valve to [fisto_setting].</span>")
-	else if(istype(W, /obj/item/screwdriver))
+	else if(isscrewdriver(W))
 		if(tank)
 			updateTank(tank, 1, user)
 

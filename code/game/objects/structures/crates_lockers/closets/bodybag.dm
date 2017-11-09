@@ -29,7 +29,7 @@
 		else
 			name = "body bag"
 		return
-	else if(istype(I, /obj/item/wirecutters))
+	else if(iswirecutter(I))
 		to_chat(user, "<span class='notice'>You cut the tag off [src].</span>")
 		name = "body bag"
 		tagged = 0

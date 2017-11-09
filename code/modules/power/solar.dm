@@ -57,7 +57,7 @@
 	update_icon()
 
 /obj/machinery/power/solar/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/crowbar))
+	if(iscrowbar(W))
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		user.visible_message("[user] begins to take the glass off the solar panel.", "<span class='notice'>You begin to take the glass off the solar panel...</span>")
 		if(do_after(user, 50*W.toolspeed, target = src))
@@ -207,7 +207,7 @@
 
 
 /obj/item/solar_assembly/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/wrench) && isturf(loc))
+	if(iswrench(W) && isturf(loc))
 		if(isinspace())
 			to_chat(user, "<span class='warning'>You can't secure [src] here.</span>")
 			return
@@ -247,7 +247,7 @@
 			user.visible_message("[user] inserts the electronics into the solar assembly.", "<span class='notice'>You insert the electronics into the solar assembly.</span>")
 			return 1
 	else
-		if(istype(W, /obj/item/crowbar))
+		if(iscrowbar(W))
 			new /obj/item/electronics/tracker(src.loc)
 			tracker = 0
 			user.visible_message("[user] takes out the electronics from the solar assembly.", "<span class='notice'>You take out the electronics from the solar assembly.</span>")
@@ -410,7 +410,7 @@
 			. = TRUE
 
 /obj/machinery/power/solar_control/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver))
+	if(isscrewdriver(I))
 		playsound(src.loc, I.usesound, 50, 1)
 		if(do_after(user, 20*I.toolspeed, target = src))
 			if (src.stat & BROKEN)

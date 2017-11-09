@@ -297,7 +297,7 @@
 		else
 			to_chat(user, "<span class='warning'>This cartridge is not yet ready for replacement! Use up the rest of the toner.</span>")
 
-	else if(istype(O, /obj/item/wrench))
+	else if(iswrench(O))
 		if(isinspace())
 			to_chat(user, "<span class='warning'>There's nothing to fasten [src] to!</span>")
 			return

@@ -252,7 +252,7 @@
 		if(default_deconstruction_crowbar(W))
 			return
 
-	if(istype(W, /obj/item/screwdriver))
+	if(isscrewdriver(W))
 		if(anchored)
 			panel_open = !panel_open
 			to_chat(user, "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance panel.</span>")
@@ -264,7 +264,7 @@
 		else
 			to_chat(user, "<span class='warning'>You must first secure [src].</span>")
 		return
-	else if(istype(W, /obj/item/device/multitool)||istype(W, /obj/item/wirecutters))
+	else if(ismultitool(W)||iswirecutter(W))
 		if(panel_open)
 			attack_hand(user)
 		return

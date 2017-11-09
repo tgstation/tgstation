@@ -80,7 +80,7 @@
 			flame_turf(turflist)
 
 /obj/item/flamethrower/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/wrench) && !status)//Taking this apart
+	if(iswrench(W) && !status)//Taking this apart
 		var/turf/T = get_turf(src)
 		if(weldtool)
 			weldtool.forceMove(T)
@@ -95,7 +95,7 @@
 		qdel(src)
 		return
 
-	else if(istype(W, /obj/item/screwdriver) && igniter && !lit)
+	else if(isscrewdriver(W) && igniter && !lit)
 		status = !status
 		to_chat(user, "<span class='notice'>[igniter] is now [status ? "secured" : "unsecured"]!</span>")
 		update_icon()
@@ -126,7 +126,7 @@
 		update_icon()
 		return
 
-	else if(istype(W, /obj/item/device/analyzer) && ptank)
+	else if(isanalyzer(W) && ptank)
 		atmosanalyzer_scan(ptank.air_contents, user)
 	else
 		return ..()

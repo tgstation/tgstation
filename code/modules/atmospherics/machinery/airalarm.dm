@@ -664,14 +664,14 @@
 /obj/machinery/airalarm/attackby(obj/item/W, mob/user, params)
 	switch(buildstage)
 		if(2)
-			if(istype(W, /obj/item/wirecutters) && panel_open && wires.is_all_cut())
+			if(iswirecutter(W) && panel_open && wires.is_all_cut())
 				playsound(src.loc, W.usesound, 50, 1)
 				to_chat(user, "<span class='notice'>You cut the final wires.</span>")
 				new /obj/item/stack/cable_coil(loc, 5)
 				buildstage = 1
 				update_icon()
 				return
-			else if(istype(W, /obj/item/screwdriver))  // Opening that Air Alarm up.
+			else if(isscrewdriver(W))  // Opening that Air Alarm up.
 				playsound(src.loc, W.usesound, 50, 1)
 				panel_open = !panel_open
 				to_chat(user, "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>")
@@ -691,7 +691,7 @@
 				wires.interact(user)
 				return
 		if(1)
-			if(istype(W, /obj/item/crowbar))
+			if(iscrowbar(W))
 				user.visible_message("[user.name] removes the electronics from [src.name].",\
 									"<span class='notice'>You start prying out the circuit...</span>")
 				playsound(src.loc, W.usesound, 50, 1)
@@ -704,7 +704,7 @@
 						update_icon()
 				return
 
-			if(istype(W, /obj/item/stack/cable_coil))
+			if(iscable(W))
 				var/obj/item/stack/cable_coil/cable = W
 				if(cable.get_amount() < 5)
 					to_chat(user, "<span class='warning'>You need five lengths of cable to wire the fire alarm!</span>")
@@ -743,7 +743,7 @@
 				update_icon()
 				return
 
-			if(istype(W, /obj/item/wrench))
+			if(iswrench(W))
 				to_chat(user, "<span class='notice'>You detach \the [src] from the wall.</span>")
 				playsound(src.loc, W.usesound, 50, 1)
 				new /obj/item/wallframe/airalarm( user.loc )

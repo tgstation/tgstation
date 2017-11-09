@@ -79,7 +79,7 @@
 	reached_target = 0
 
 /mob/living/simple_animal/bot/mulebot/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver))
+	if(isscrewdriver(I))
 		..()
 		if(open)
 			on = FALSE
@@ -89,7 +89,7 @@
 		cell = I
 		visible_message("[user] inserts a cell into [src].",
 						"<span class='notice'>You insert the new cell into [src].</span>")
-	else if(istype(I, /obj/item/crowbar) && open && cell)
+	else if(iscrowbar(I) && open && cell)
 		cell.add_fingerprint(usr)
 		cell.loc = loc
 		cell = null

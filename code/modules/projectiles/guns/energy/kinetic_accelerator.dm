@@ -35,7 +35,7 @@
 			to_chat(user, "<span class='notice'>There is \a [M] installed, using <b>[M.cost]%</b> capacity.</span>")
 
 /obj/item/gun/energy/kinetic_accelerator/attackby(obj/item/A, mob/user)
-	if(istype(A, /obj/item/crowbar))
+	if(iscrowbar(A))
 		if(modkits.len)
 			to_chat(user, "<span class='notice'>You pry the modifications out.</span>")
 			playsound(loc, A.usesound, 100, 1)

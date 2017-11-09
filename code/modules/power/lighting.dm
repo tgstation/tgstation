@@ -69,7 +69,7 @@
 	add_fingerprint(user)
 	switch(stage)
 		if(1)
-			if(istype(W, /obj/item/wrench))
+			if(iswrench(W))
 				playsound(src.loc, W.usesound, 75, 1)
 				to_chat(usr, "<span class='notice'>You begin deconstructing [src]...</span>")
 				if (!do_after(usr, 30*W.toolspeed, target = src))
@@ -81,7 +81,7 @@
 				qdel(src)
 				return
 
-			if(istype(W, /obj/item/stack/cable_coil))
+			if(iscable(W))
 				var/obj/item/stack/cable_coil/coil = W
 				if(coil.use(1))
 					switch(fixture_type)
@@ -96,11 +96,11 @@
 					to_chat(user, "<span class='warning'>You need one length of cable to wire [src]!</span>")
 				return
 		if(2)
-			if(istype(W, /obj/item/wrench))
+			if(iswrench(W))
 				to_chat(usr, "<span class='warning'>You have to remove the wires first!</span>")
 				return
 
-			if(istype(W, /obj/item/wirecutters))
+			if(iswirecutter(W))
 				stage = 1
 				switch(fixture_type)
 					if ("tube")
@@ -113,7 +113,7 @@
 				playsound(loc, W.usesound, 100, 1)
 				return
 
-			if(istype(W, /obj/item/screwdriver))
+			if(isscrewdriver(W))
 				user.visible_message("[user.name] closes [src]'s casing.", \
 					"<span class='notice'>You close [src]'s casing.</span>", "<span class='italics'>You hear screwing.</span>")
 				playsound(loc, W.usesound, 75, 1)
@@ -346,7 +346,7 @@
 
 	// attempt to stick weapon into light socket
 	else if(status == LIGHT_EMPTY)
-		if(istype(W, /obj/item/screwdriver)) //If it's a screwdriver open it.
+		if(isscrewdriver(W)) //If it's a screwdriver open it.
 			playsound(src.loc, W.usesound, 75, 1)
 			user.visible_message("[user.name] opens [src]'s casing.", \
 				"<span class='notice'>You open [src]'s casing.</span>", "<span class='italics'>You hear a noise.</span>")

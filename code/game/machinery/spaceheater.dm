@@ -150,7 +150,7 @@
 		else
 			to_chat(user, "<span class='warning'>The hatch must be open to insert a power cell!</span>")
 			return
-	else if(istype(I, /obj/item/screwdriver))
+	else if(isscrewdriver(I))
 		panel_open = !panel_open
 		user.visible_message("\The [user] [panel_open ? "opens" : "closes"] the hatch on \the [src].", "<span class='notice'>You [panel_open ? "open" : "close"] the hatch on \the [src].</span>")
 		update_icon()

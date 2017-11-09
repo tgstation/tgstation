@@ -119,7 +119,7 @@
 			toggle_lock(user)
 		else
 			to_chat(user,  "<span class='warning'>Access denied.</span>")
-	else if(istype(W, /obj/item/weldingtool) && user.a_intent == INTENT_HELP && !broken)
+	else if(iswelder(W) && user.a_intent == INTENT_HELP && !broken)
 		var/obj/item/weldingtool/WT = W
 		if(obj_integrity < max_integrity && WT.remove_fuel(5, user))
 			to_chat(user, "<span class='notice'>You begin repairing [src].</span>")
@@ -132,7 +132,7 @@
 		else
 			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
 		return
-	else if(!alert && istype(W, /obj/item/crowbar) && openable) //Only applies to the lab cage and player made display cases
+	else if(!alert && iscrowbar(W) && openable) //Only applies to the lab cage and player made display cases
 		if(broken)
 			if(showpiece)
 				to_chat(user, "<span class='notice'>Remove the displayed object first.</span>")
@@ -199,7 +199,7 @@
 
 
 /obj/structure/displaycase_chassis/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/wrench)) //The player can only deconstruct the wooden frame
+	if(iswrench(I)) //The player can only deconstruct the wooden frame
 		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
 		playsound(src.loc, I.usesound, 50, 1)
 		if(do_after(user, 30*I.toolspeed, target = src))

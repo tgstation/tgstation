@@ -36,11 +36,11 @@
 	icon_state = "power_box"
 
 /obj/machinery/bsa/back/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/device/multitool))
+	if(ismultitool(W))
 		var/obj/item/device/multitool/M = W
 		M.buffer = src
 		to_chat(user, "<span class='notice'>You store linkage information in [W]'s buffer.</span>")
-	else if(istype(W, /obj/item/wrench))
+	else if(iswrench(W))
 		default_unfasten_wrench(user, W, 10)
 		return TRUE
 	else
@@ -52,11 +52,11 @@
 	icon_state = "emitter_center"
 
 /obj/machinery/bsa/front/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/device/multitool))
+	if(ismultitool(W))
 		var/obj/item/device/multitool/M = W
 		M.buffer = src
 		to_chat(user, "<span class='notice'>You store linkage information in [W]'s buffer.</span>")
-	else if(istype(W, /obj/item/wrench))
+	else if(iswrench(W))
 		default_unfasten_wrench(user, W, 10)
 		return TRUE
 	else
@@ -70,7 +70,7 @@
 	var/obj/machinery/bsa/front/front
 
 /obj/machinery/bsa/middle/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/device/multitool))
+	if(ismultitool(W))
 		var/obj/item/device/multitool/M = W
 		if(M.buffer)
 			if(istype(M.buffer, /obj/machinery/bsa/back))
@@ -81,7 +81,7 @@
 				front = M.buffer
 				M.buffer = null
 				to_chat(user, "<span class='notice'>You link [src] with [front].</span>")
-	else if(istype(W, /obj/item/wrench))
+	else if(iswrench(W))
 		default_unfasten_wrench(user, W, 10)
 		return TRUE
 	else

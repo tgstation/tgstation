@@ -96,7 +96,7 @@
 		return
 
 	if(welded)
-		if(istype(C, /obj/item/wrench))
+		if(iswrench(C))
 			if(boltslocked)
 				to_chat(user, "<span class='notice'>There are screws locking the bolts in place!</span>")
 				return
@@ -110,7 +110,7 @@
 								 "<span class='notice'>You undo [src]'s floor bolts.</span>")
 			deconstruct(TRUE)
 			return
-		if(istype(C, /obj/item/screwdriver))
+		if(isscrewdriver(C))
 			user.visible_message("<span class='notice'>[user] [boltslocked ? "unlocks" : "locks"] [src]'s bolts.</span>", \
 								 "<span class='notice'>You [boltslocked ? "unlock" : "lock"] [src]'s floor bolts.</span>")
 			playsound(get_turf(src), C.usesound, 50, 1)
@@ -278,7 +278,7 @@
 /obj/structure/firelock_frame/attackby(obj/item/C, mob/user)
 	switch(constructionStep)
 		if(CONSTRUCTION_PANEL_OPEN)
-			if(istype(C, /obj/item/crowbar))
+			if(iscrowbar(C))
 				playsound(get_turf(src), C.usesound, 50, 1)
 				user.visible_message("<span class='notice'>[user] starts prying something out from [src]...</span>", \
 									 "<span class='notice'>You begin prying out the wire cover...</span>")
@@ -292,7 +292,7 @@
 				constructionStep = CONSTRUCTION_WIRES_EXPOSED
 				update_icon()
 				return
-			if(istype(C, /obj/item/wrench))
+			if(iswrench(C))
 				if(locate(/obj/machinery/door/firedoor) in get_turf(src))
 					to_chat(user, "<span class='warning'>There's already a firelock there.</span>")
 					return
@@ -334,7 +334,7 @@
 				return
 
 		if(CONSTRUCTION_WIRES_EXPOSED)
-			if(istype(C, /obj/item/wirecutters))
+			if(iswirecutter(C))
 				playsound(get_turf(src), C.usesound, 50, 1)
 				user.visible_message("<span class='notice'>[user] starts cutting the wires from [src]...</span>", \
 									 "<span class='notice'>You begin removing [src]'s wires...</span>")
@@ -349,7 +349,7 @@
 				constructionStep = CONSTRUCTION_GUTTED
 				update_icon()
 				return
-			if(istype(C, /obj/item/crowbar))
+			if(iscrowbar(C))
 				playsound(get_turf(src), C.usesound, 50, 1)
 				user.visible_message("<span class='notice'>[user] starts prying a metal plate into [src]...</span>", \
 									 "<span class='notice'>You begin prying the cover plate back onto [src]...</span>")
@@ -364,7 +364,7 @@
 				update_icon()
 				return
 		if(CONSTRUCTION_GUTTED)
-			if(istype(C, /obj/item/crowbar))
+			if(iscrowbar(C))
 				user.visible_message("<span class='notice'>[user] begins removing the circuit board from [src]...</span>", \
 									 "<span class='notice'>You begin prying out the circuit board from [src]...</span>")
 				playsound(get_turf(src), C.usesound, 50, 1)
@@ -379,7 +379,7 @@
 				constructionStep = CONSTRUCTION_NOCIRCUIT
 				update_icon()
 				return
-			if(istype(C, /obj/item/stack/cable_coil))
+			if(iscable(C))
 				var/obj/item/stack/cable_coil/B = C
 				if(B.get_amount() < 5)
 					to_chat(user, "<span class='warning'>You need more wires to add wiring to [src].</span>")
@@ -398,7 +398,7 @@
 					update_icon()
 				return
 		if(CONSTRUCTION_NOCIRCUIT)
-			if(istype(C, /obj/item/weldingtool))
+			if(iswelder(C))
 				var/obj/item/weldingtool/W = C
 				if(W.remove_fuel(1,user))
 					playsound(get_turf(src), W.usesound, 50, 1)

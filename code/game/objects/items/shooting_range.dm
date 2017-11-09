@@ -26,7 +26,7 @@
 		pinnedLoc.loc = loc
 
 /obj/item/target/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weldingtool))
+	if(iswelder(W))
 		var/obj/item/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
 			removeOverlays()

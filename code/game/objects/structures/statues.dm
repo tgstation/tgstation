@@ -16,7 +16,7 @@
 /obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if(istype(W, /obj/item/wrench))
+	if(iswrench(W))
 		if(anchored)
 			playsound(src.loc, W.usesound, 100, 1)
 			user.visible_message("[user] is loosening the [name]'s bolts.", \
@@ -61,7 +61,7 @@
 		D.playDigSound()
 		qdel(src)
 
-	else if(istype(W, /obj/item/weldingtool) && !anchored)
+	else if(iswelder(W) && !anchored)
 		playsound(loc, W.usesound, 40, 1)
 		user.visible_message("[user] is slicing apart the [name].", \
 							 "<span class='notice'>You are slicing apart the [name]...</span>")

@@ -48,7 +48,7 @@
 		else
 			to_chat(user, "<span class='notice'>[src] already has a diode installed.</span>")
 
-	else if(istype(W, /obj/item/screwdriver))
+	else if(isscrewdriver(W))
 		if(diode)
 			to_chat(user, "<span class='notice'>You remove the [diode.name] from \the [src].</span>")
 			diode.loc = get_turf(src.loc)

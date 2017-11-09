@@ -41,7 +41,7 @@
 		update_icon()
 
 /obj/structure/extinguisher_cabinet/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/wrench) && !stored_extinguisher)
+	if(iswrench(I) && !stored_extinguisher)
 		to_chat(user, "<span class='notice'>You start unsecuring [name]...</span>")
 		playsound(loc, I.usesound, 50, 1)
 		if(do_after(user, 60*I.toolspeed, target = src))

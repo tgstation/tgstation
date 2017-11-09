@@ -278,7 +278,7 @@
 /obj/item/device/tape/attackby(obj/item/I, mob/user, params)
 	if(ruined)
 		var/delay = -1
-		if (istype(I, /obj/item/screwdriver))
+		if (isscrewdriver(I))
 			delay = 120*I.toolspeed
 		else if(istype(I, /obj/item/pen))
 			delay = 120*1.5
