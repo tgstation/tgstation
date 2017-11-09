@@ -1,0 +1,4 @@
+author: "PopNotes"
+delete-after: True
+changes: 
+  - bugfix: "Farts were too quiet before. That's fixed."
