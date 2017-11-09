@@ -494,7 +494,7 @@
 /obj/item/device/flashlight/glowstick/random/Initialize()
 	. = ..()
 	var/T = pick(typesof(/obj/item/device/flashlight/glowstick) - /obj/item/device/flashlight/glowstick/random)
-	new T(get_turf(src))
+	new T(loc)
 	return INITIALIZE_HINT_QDEL
 
 /obj/item/device/flashlight/spotlight //invisible lighting source
