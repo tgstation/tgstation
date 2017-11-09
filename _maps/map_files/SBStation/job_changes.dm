@@ -9,3 +9,8 @@ MAP_REMOVE_JOB(warden)
 	..()
 	MAP_JOB_CHECK
 	backpack_contents[/obj/item/soapstone] = 1
+
+/datum/job/hydro/New()
+	..()
+	MAP_JOB_CHECK
+	spawn_positions = 1
