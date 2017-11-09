@@ -31,9 +31,11 @@
 		HM.on_move(src, NewLoc)
 
 	if(shoes)
+		GLOB.movement_popcon["humanMove_haveshoes"]++
 		if(!lying && !buckled)
 			if(loc == NewLoc)
 				if(!has_gravity(loc))
+					GLOB.movement_popcon["humanMove_nogravity"]++
 					return
 				var/obj/item/clothing/shoes/S = shoes
 
@@ -42,6 +44,7 @@
 				if(S.bloody_shoes && S.bloody_shoes[S.blood_state])
 					var/obj/effect/decal/cleanable/blood/footprints/oldFP = locate(/obj/effect/decal/cleanable/blood/footprints) in T
 					if(oldFP && oldFP.blood_state == S.blood_state)
+						GLOB.movement_popcon["humanMove_bloodstate"]++
 						return
 					else
 						//No oldFP or it's a different kind of blood
@@ -58,6 +61,8 @@
 				//End bloody footprints
 
 				S.step_action()
+	GLOB.movement_popcon["humanMove_final"]++
+
 /mob/living/carbon/human/Moved()
 	. = ..()
 	if(buckled_mobs && buckled_mobs.len && riding_datum)
