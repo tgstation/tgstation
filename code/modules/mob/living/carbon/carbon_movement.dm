@@ -47,8 +47,9 @@
 	if(istype(J) && (movement_dir || J.stabilizers) && J.allow_thrust(0.01, src))
 		return 1
 
-/mob/living/carbon/Move(NewLoc, direct, dot)
-	if(dot && mob_has_gravity()) //floating is easy
+/mob/living/carbon/Move(NewLoc, direct)
+	. = ..()
+	if(. && mob_has_gravity()) //floating is easy
 		if(dna && dna.species && (NOHUNGER in dna.species.species_traits))
 			nutrition = NUTRITION_LEVEL_FED - 1	//just less than feeling vigorous
 		else if(nutrition && stat != DEAD)
