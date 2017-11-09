@@ -152,14 +152,15 @@
 		..(current_button)
 	else if(target && current_button.appearance_cache != target.appearance) //replace with /ref comparison if this is not valid.
 		var/obj/item/I = target
-		current_button.appearance_cache = I.appearance
 		var/old_layer = I.layer
 		var/old_plane = I.plane
 		I.layer = FLOAT_LAYER //AAAH
 		I.plane = FLOAT_PLANE //^ what that guy said
-		current_button.overlays = list(I)
+		current_button.cut_overlays()
+		current_button.add_overlay(I)
 		I.layer = old_layer
 		I.plane = old_plane
+		current_button.appearance_cache = I.appearance
 
 /datum/action/item_action/toggle_light
 	name = "Toggle Light"

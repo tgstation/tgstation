@@ -20,6 +20,7 @@
 /datum/proc/Destroy(force=FALSE)
 	weakref = null
 	tag = null
+	weak_reference = null	//ensure prompt GCing of weakref.
 	var/list/timers = active_timers
 	active_timers = null
 	for(var/thing in timers)

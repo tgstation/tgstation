@@ -29,12 +29,12 @@
 
 	var/static/list/dent_decal_list = list(
 	WALL_DENT_HIT = list(
-	mutable_appearance('icons/effects/effects.dmi', "impact1", TURF_DECAL_LAYER),
-	mutable_appearance('icons/effects/effects.dmi', "impact2", TURF_DECAL_LAYER),
-	mutable_appearance('icons/effects/effects.dmi', "impact3", TURF_DECAL_LAYER)
+	mutable_appearance('icons/effects/effects.dmi', "impact1", BULLET_HOLE_LAYER),
+	mutable_appearance('icons/effects/effects.dmi', "impact2", BULLET_HOLE_LAYER),
+	mutable_appearance('icons/effects/effects.dmi', "impact3", BULLET_HOLE_LAYER)
 	),
 	WALL_DENT_SHOT = list(
-	mutable_appearance('icons/effects/effects.dmi', "bullet_hole", TURF_DECAL_LAYER)
+	mutable_appearance('icons/effects/effects.dmi', "bullet_hole", BULLET_HOLE_LAYER)
 	)
 	)
 

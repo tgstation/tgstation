@@ -8,6 +8,7 @@
 	anchored = FALSE
 	health = 25
 	maxHealth = 25
+	spacewalk = TRUE
 
 	radio_key = /obj/item/device/encryptionkey/headset_eng
 	radio_channel = "Engineering"
@@ -44,9 +45,6 @@
 	var/datum/job/engineer/J = new/datum/job/engineer
 	access_card.access += J.get_access()
 	prev_access = access_card.access
-
-/mob/living/simple_animal/bot/floorbot/Process_Spacemove(movement_dir = 0)
-	return 1
 
 /mob/living/simple_animal/bot/floorbot/turn_on()
 	. = ..()
