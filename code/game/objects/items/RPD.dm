@@ -565,7 +565,7 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 			return
 
 		if(EATING_MODE) //Eating pipes
-			if(!((istype(A, /obj/item/pipe) || istype(A, /obj/item/pipe_meter) || istype(A, /obj/structure/disposalconstruct))))
+			if(!(istype(A, /obj/item/pipe) || istype(A, /obj/item/pipe_meter) || istype(A, /obj/structure/disposalconstruct)))
 				return ..()
 			to_chat(user, "<span class='notice'>You start destroying a pipe...</span>")
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
