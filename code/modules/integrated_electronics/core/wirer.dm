@@ -11,7 +11,7 @@
 	icon = 'icons/obj/electronic_assemblies.dmi'
 	icon_state = "wirer-wire"
 	flags_1 = CONDUCT_1
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	var/datum/integrated_io/selected_io = null
 	var/mode = WIRE
 

@@ -7,7 +7,7 @@
 	icon = 'icons/obj/electronic_assemblies.dmi'
 	icon_state = "debugger"
 	flags_1 = CONDUCT_1 | NOBLUDGEON_1
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	var/data_to_write = null
 	var/accepting_refs = 0
 

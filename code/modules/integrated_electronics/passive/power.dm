@@ -37,18 +37,18 @@
 	activators = list("pulse out" = IC_PINTYPE_PULSE_OUT)
 	origin_tech = list(TECH_POWER = 3, TECH_ENGINEERING = 3, TECH_DATA = 2)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
-	var/is_charge=0
+	var/is_charge=FALSE
 
 /obj/item/integrated_circuit/passive/power/starter/make_energy()
 	if(assembly.battery)
 		if(assembly.battery.charge)
 			if(!is_charge)
 				activate_pin(1)
-			is_charge=1
+			is_charge=TRUE
 		else
-			is_charge=0
+			is_charge=FALSE
 	else
-		is_charge=0
+		is_charge=FALSE
 	return FALSE
 /*
 // For implants.

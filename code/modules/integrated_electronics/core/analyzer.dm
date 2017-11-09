@@ -6,7 +6,7 @@
 	icon = 'icons/obj/electronic_assemblies.dmi'
 	icon_state = "analyzer"
 	flags_1 = CONDUCT_1
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	var/list/circuit_list = list()
 	var/list/assembly_list = list(new /obj/item/device/electronic_assembly(null),
 			new /obj/item/device/electronic_assembly/medium(null),

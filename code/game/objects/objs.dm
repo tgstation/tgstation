@@ -227,13 +227,13 @@
 		current_skin = choice
 		icon_state = unique_reskin[choice]
 		to_chat(M, "[src] is now skinned as '[choice].'")
-
+/*
 /obj/proc/check_interactivity(mob/user)
-//	user.canUseTopic(src,be_close = TRUE)
+	return user.canUseTopic(src,be_close = TRUE)
 
 	var/turf/T = get_turf(src)
 	var/turf/P = get_turf(user)
 	if((P.Adjacent(T)) && user.IsAdvancedToolUser())
 		return TRUE
 	else
-		return FALSE
+		return FALSE*/

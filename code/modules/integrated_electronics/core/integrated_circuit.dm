@@ -15,7 +15,7 @@ GLOBAL_LIST_EMPTY(all_integrated_circuits)
 	var/list/activators = list()
 	var/next_use = 0 				// Uses world.time
 	var/complexity = 1 				// This acts as a limitation on building machines, more resource-intensive components cost more 'space'.
-	var/size						// This acts as a limitation on building machines, bigger components cost more 'space'. -1 for size 0
+	var/size = 1						// This acts as a limitation on building machines, bigger components cost more 'space'. -1 for size 0
 	var/cooldown_per_use = 9		// Circuits are limited in how many times they can be work()'d by this variable.
 	var/power_draw_per_use = 0 		// How much power is drawn when work()'d.
 	var/power_draw_idle = 0			// How much power is drawn when doing nothing.
@@ -57,6 +57,12 @@ a creative player the means to solve many problems.  Circuits are held inside an
 
 /obj/item/integrated_circuit/proc/any_examine(mob/user)
 	return
+
+/obj/item/integrated_circuit/proc/check_interactivity(mob/user)
+	if(assembly)
+		return assembly.check_interactivity(user)
+	else
+		return user.canUseTopic(src,be_close = TRUE)
 
 /obj/item/integrated_circuit/Initialize()
 	displayed_name = name

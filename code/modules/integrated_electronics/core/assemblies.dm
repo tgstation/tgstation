@@ -19,11 +19,15 @@
 	var/charge_delay = 4
 	var/use_cyborg_cell = TRUE
 
+/obj/item/device/electronic_assembly/proc/check_interactivity(mob/user)
+	return user.canUseTopic(src,be_close = TRUE)
+
+
 /obj/item/device/electronic_assembly/medium
 	name = "electronic mechanism"
 	icon_state = "setup_medium"
 	desc = "It's a case, for building medium-sized electronics with."
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_NORMAL
 	max_components = IC_COMPONENTS_BASE * 2
 	max_complexity = IC_COMPLEXITY_BASE * 2
 
@@ -34,14 +38,10 @@
 	w_class = WEIGHT_CLASS_BULKY
 	max_components = IC_COMPONENTS_BASE * 4
 	max_complexity = IC_COMPLEXITY_BASE * 4
-	anchored = 0
+	anchored = FALSE
 
 /obj/item/device/electronic_assembly/large/attackby(var/obj/item/O, var/mob/user)
-	if(istype(O, /obj/item/wrench))
-		if(!isturf(loc))
-			return
-		anchored = !anchored
-		to_chat(user,"You [anchored ? "wrench" : "unwrench"] \the [src].")
+	if(default_unfasten_wrench(user, O, 20))
 		return
 	..()
 
@@ -72,10 +72,7 @@
 	START_PROCESSING(SSobj, src)
 
 /obj/item/device/electronic_assembly/Destroy()
-	battery = null
 	STOP_PROCESSING(SSobj, src)
-	for(var/atom/movable/AM in contents)
-		qdel(AM)
 	..()
 
 /obj/item/device/electronic_assembly/process()

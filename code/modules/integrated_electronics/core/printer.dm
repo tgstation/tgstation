@@ -8,7 +8,7 @@
 	var/init_max_metal = 100
 	var/max_metal = 100
 	var/metal_per_sheet = 10 // One sheet equals this much metal.
-
+	var/debug = FALSE
 	var/upgraded = FALSE		// When hit with an upgrade disk, will turn true, allowing it to print the higher tier circuits.
 	var/can_clone = FALSE		// Same for above, but will allow the printer to duplicate a specific assembly.
 	var/static/list/recipe_list = list()
@@ -17,6 +17,10 @@
 	var/as_needs = 0
 	var/program ="blank"
 	var/obj/item/device/integrated_electronics/prefab/PR = null
+
+/obj/item/device/integrated_circuit_printer/proc/check_interactivity(mob/user)
+	return user.canUseTopic(src,be_close = TRUE)
+
 
 /obj/item/device/integrated_circuit_printer/upgraded
 	upgraded = TRUE
@@ -165,9 +169,9 @@
 			if((IC.spawn_flags & IC_SPAWN_RESEARCH) && (!(IC.spawn_flags & IC_SPAWN_DEFAULT)) && !upgraded)
 				can_build = FALSE
 		if(can_build)
-			HTML += "<A href='?src=[REF(src)];build=[REF(O)]'>\[[O]\]</A>: [O.desc]<br>"
+			HTML += "<A href='?src=[REF(src)];build=[REF(O)]'>\[[O.name]\]</A>: [O.desc]<br>"
 		else
-			HTML += "<s>\[[O]\]: [O.desc]</s><br>"
+			HTML += "<s>\[[O.name]\]: [O.desc]</s><br>"
 
 	user << browse(jointext(HTML, null), "window=integrated_printer;size=[window_width]x[window_height];border=1;can_resize=1;can_close=1;can_minimize=1")
 
@@ -263,7 +267,6 @@
 	origin_tech = list(TECH_ENGINEERING = 4, TECH_DATA = 5)
 
 /obj/item/device/integrated_circuit_printer/proc/sanity_check(var/program)
-	var/debug = 0
 	var/list/chap = splittext( program ,"{{*}}")
 	var/list/elements = list()
 	var/list/elements_input = list()
