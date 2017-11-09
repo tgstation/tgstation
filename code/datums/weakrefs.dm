@@ -1,27 +1,19 @@
 
-//obtain a weak reference to a datum
-/proc/weakref(datum/D)
-	if(!istype(D))
-		return
-	if(QDELETED(D))
-		return
-	if(!D.weakref)
-		D.weakref = new/datum/weakref(D)
-	return D.weakref
+/proc/WEAKREF(datum/input)
+	if(istype(input) && !QDELETED(input))
+		if(!input.weak_reference)
+			input.weak_reference = new /datum/weakref(input)
+		return input.weak_reference
 
 /datum/weakref
-	var/ref
+	var/reference
 
-/datum/weakref/New(datum/D)
-	ref = REF(D)
+/datum/weakref/New(datum/thing)
+	reference = REF(thing)
 
-/datum/weakref/Destroy(force)
-	// A weakref datum should not be manually destroyed as it is a shared resource,
-	//  rather it should be automatically collected by the BYOND GC when all references are gone.
-	return force ? QDEL_HINT_HARDDEL : QDEL_HINT_LETMELIVE
+/datum/weakref/Destroy()
+	return QDEL_HINT_LETMELIVE	//Let BYOND autoGC thiswhen nothing is using it anymore.
 
 /datum/weakref/proc/resolve()
-	var/datum/D = locate(ref)
-	if(D && D.weakref == src)
-		return D
-	return null
+	var/datum/D = locate(reference)
+	return D.weak_reference == src? D : null

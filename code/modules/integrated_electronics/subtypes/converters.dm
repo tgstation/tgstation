@@ -97,7 +97,7 @@
 
 /obj/item/integrated_circuit/converter/refdecode/do_work()
 	pull_data()
-	set_pin_data(IC_OUTPUT, 1, weakref(locate(get_pin_data(IC_INPUT, 1))))
+	set_pin_data(IC_OUTPUT, 1, WEAKREF(locate(get_pin_data(IC_INPUT, 1))))
 	push_data()
 	activate_pin(2)
 

@@ -24,7 +24,7 @@
 	for(i = 1, i <= outputs.len, i++)
 		var/datum/integrated_io/O = outputs[i]
 		var/data = "nothing"
-		if(isweakref(O.data))
+		if(isWEAKREF(O.data))
 			var/datum/d = O.data_as_type(/datum)
 			if(d)
 				data = "[d]"
@@ -118,8 +118,8 @@
 /obj/item/integrated_circuit/memory/constant/afterattack(atom/target, mob/living/user, proximity)
 	if(accepting_refs && proximity)
 		var/datum/integrated_io/O = outputs[1]
-		O.data = weakref(target)
+		O.data = WEAKREF(target)
 		visible_message("<span class='notice'>[user] slides \a [src]'s over \the [target].</span>")
 		to_chat(user, "<span class='notice'>You set \the [src]'s memory to a reference to [O.display_data(O.data)].  The ref scanner is \
 		now off.</span>")
-		accepting_refs = 0
+		accepting_refs = FALSE

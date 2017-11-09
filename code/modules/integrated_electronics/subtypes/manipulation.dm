@@ -58,7 +58,7 @@
 			cooldown_per_use = gun_properties["shot_delay"]
 		if(gun_properties["reqpower"])
 			power_draw_per_use = gun_properties["reqpower"]
-		set_pin_data(IC_OUTPUT, 1, weakref(installed_gun))
+		set_pin_data(IC_OUTPUT, 1, WEAKREF(installed_gun))
 		push_data()
 	else
 		..()
@@ -70,7 +70,7 @@
 		size = initial(size)
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 		installed_gun = null
-		set_pin_data(IC_OUTPUT, 1, weakref(null))
+		set_pin_data(IC_OUTPUT, 1, WEAKREF(null))
 		push_data()
 	else
 		user << "<span class='notice'>There's no weapon to remove from the mechanism.</span>"
@@ -78,7 +78,7 @@
 /obj/item/integrated_circuit/manipulation/weapon_firing/do_work()
 	if(!installed_gun)
 		return
-	set_pin_data(IC_OUTPUT, 1, weakref(installed_gun))
+	set_pin_data(IC_OUTPUT, 1, WEAKREF(installed_gun))
 	push_data()
 	var/datum/integrated_io/target_x = inputs[1]
 	var/datum/integrated_io/target_y = inputs[2]
@@ -368,8 +368,8 @@
 	processing_objects -= src
 
 /obj/item/integrated_circuit/manipulation/thrower/process()
-	set_pin_data(IC_OUTPUT, 1, weakref(contents[1]))
-	set_pin_data(IC_OUTPUT, 2, weakref(contents[contents.len]))
+	set_pin_data(IC_OUTPUT, 1, WEAKREF(contents[1]))
+	set_pin_data(IC_OUTPUT, 2, WEAKREF(contents[contents.len]))
 	set_pin_data(IC_OUTPUT, 3, src.contents.len)
 	push_data()
 */
@@ -394,8 +394,8 @@
 			for(U in contents)
 				U.forceMove(T)
 	if(contents.len)
-		set_pin_data(IC_OUTPUT, 1, weakref(contents[1]))
-		set_pin_data(IC_OUTPUT, 2, weakref(contents[contents.len]))
+		set_pin_data(IC_OUTPUT, 1, WEAKREF(contents[1]))
+		set_pin_data(IC_OUTPUT, 2, WEAKREF(contents[contents.len]))
 	else
 		set_pin_data(IC_OUTPUT, 1, null)
 		set_pin_data(IC_OUTPUT, 2, null)
@@ -434,7 +434,7 @@
 	var/datum/integrated_io/target_x = inputs[1]
 	var/datum/integrated_io/target_y = inputs[2]
 	var/datum/integrated_io/projectile = inputs[3]
-	if(!isweakref(projectile.data))
+	if(!isWEAKREF(projectile.data))
 		return
 	var/obj/item/A = projectile.data.resolve()
 	if(A.anchored)

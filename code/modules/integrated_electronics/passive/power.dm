@@ -127,7 +127,7 @@
 	create_reagents(volume)
 
 /obj/item/integrated_circuit/passive/power/chemical_cell/interact(mob/user)
-	set_pin_data(IC_OUTPUT, 2, weakref(src))
+	set_pin_data(IC_OUTPUT, 2, WEAKREF(src))
 	push_data()
 	..()
 

@@ -135,14 +135,14 @@
 	for(var/laid in U)
 		if(!(laid in cont))
 			var/datum/integrated_io/O = outputs[1]
-			O.data = weakref(laid)
+			O.data = WEAKREF(laid)
 			O.push_data()
 			activate_pin(1)
 			break
 	for(var/removed in U)
 		if(!(removed in newcont))
 			var/datum/integrated_io/O = outputs[2]
-			O.data = weakref(removed)
+			O.data = WEAKREF(removed)
 			O.push_data()
 			activate_pin(2)
 			break
@@ -353,7 +353,7 @@
 	O.data = null
 	if(assembly)
 		if(istype(assembly.loc, /mob/living)) // Now check if someone's holding us.
-			O.data = weakref(assembly.loc)
+			O.data = WEAKREF(assembly.loc)
 
 	O.push_data()
 
@@ -376,7 +376,7 @@
 	var/datum/integrated_io/O = outputs[1]
 	O.data = null
 
-	if(!isweakref(I.data))
+	if(!isWEAKREF(I.data))
 		return
 	var/atom/A = I.data.resolve()
 	if(!A)
@@ -390,7 +390,7 @@
 			continue
 		valid_things.Add(thing)
 	if(valid_things.len)
-		O.data = weakref(pick(valid_things))
+		O.data = WEAKREF(pick(valid_things))
 		activate_pin(2)
 	else
 		activate_pin(3)
@@ -428,7 +428,7 @@
 	var/list/GI = list()
 	GI = I.data
 	for(var/G in GI)
-		if(isweakref(G))									//It should search by refs. But don't want.will fix it later.
+		if(isWEAKREF(G))									//It should search by refs. But don't want.will fix it later.
 			var/datum/integrated_io/G1
 			G1.data = G
 			var/atom/A = G1.data.resolve()
@@ -436,11 +436,11 @@
 			for(var/atom/thing in nearby_things)
 				if(thing.type != desired_type)
 					continue
-				valid_things.Add(weakref(thing))
+				valid_things.Add(WEAKREF(thing))
 		else if(istext(G))
 			for(var/atom/thing in nearby_things)
 				if(findtext(addtext(thing.name," ",thing.desc), G, 1, 0) )
-					valid_things.Add(weakref(thing))
+					valid_things.Add(WEAKREF(thing))
 	if(valid_things.len)
 		O.data = valid_things
 		O.push_data()
@@ -478,7 +478,7 @@
 	var/turf/T = get_turf(src)
 	var/list/nearby_things = range(radius, T) & view(T)
 	var/list/valid_things = list()
-	if(isweakref(I.data))
+	if(isWEAKREF(I.data))
 		var/atom/A = I.data.resolve()
 		var/desired_type = A.type
 		if(desired_type)
@@ -491,7 +491,7 @@
 			if(findtext(addtext(thing.name," ",thing.desc), DT, 1, 0) )
 				valid_things.Add(thing)
 	if(valid_things.len)
-		O.data = weakref(pick(valid_things))
+		O.data = WEAKREF(pick(valid_things))
 		O.push_data()
 		activate_pin(2)
 	else
@@ -723,7 +723,7 @@
 		if(istype(A, /obj/item/storage))
 			return FALSE
 
-	set_pin_data(IC_OUTPUT, 1, weakref(A))
+	set_pin_data(IC_OUTPUT, 1, WEAKREF(A))
 	push_data()
 	activate_pin(1)
 	return TRUE
@@ -751,7 +751,7 @@
 	set_pin_data(IC_OUTPUT, 1, null)
 	set_pin_data(IC_OUTPUT, 2, null)
 	set_pin_data(IC_OUTPUT, 3, null)
-	set_pin_data(IC_OUTPUT, 4, weakref(assembly))
+	set_pin_data(IC_OUTPUT, 4, WEAKREF(assembly))
 	if(assembly)
 		if(assembly.battery)
 
