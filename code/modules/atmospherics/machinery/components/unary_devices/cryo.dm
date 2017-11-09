@@ -99,7 +99,7 @@
 			occupant_overlay.copy_overlays(occupant)
 
 		else if(isalienadult(occupant))
-			else if(isalienroyal(occupant)) // Queen and prae
+			if(isalienroyal(occupant)) // Queen and prae
 				occupant_overlay = image(CRYOMOBS, "alienq")
 			else if(isalienhunter(occupant)) // Hunter
 				occupant_overlay = image(CRYOMOBS, "alienh")
