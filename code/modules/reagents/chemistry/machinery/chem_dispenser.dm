@@ -9,11 +9,7 @@
 	idle_power_usage = 40
 	interact_offline = 1
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	var/cell_type = /obj/item/stock_parts/cell/high
-	var/obj/item/stock_parts/cell/cell
-	var/powerefficiency = 0.01
 	var/amount = 30
-	var/recharged = 0
 	var/recharge_delay = 5
 	var/mutable_appearance/beaker_overlay
 	var/obj/item/reagent_containers/beaker = null
@@ -55,24 +51,12 @@
 
 /obj/machinery/chem_dispenser/Initialize()
 	. = ..()
-	cell = new cell_type
-	recharge()
 	dispensable_reagents = sortList(dispensable_reagents)
 
-/obj/machinery/chem_dispenser/process()
-
-	if(recharged < 0)
-		recharge()
-		recharged = recharge_delay
-	else
-		recharged -= 1
 
 /obj/machinery/chem_dispenser/proc/recharge()
 	if(stat & (BROKEN|NOPOWER))
 		return
-	var/usedpower = cell.give( 1 / powerefficiency) //Should always be a gain of one on the UI.
-	if(usedpower)
-		use_power(2500)
 
 /obj/machinery/chem_dispenser/emag_act(mob/user)
 	if(emagged)
@@ -109,8 +93,6 @@
 /obj/machinery/chem_dispenser/ui_data(mob/user)
 	var/data = list()
 	data["amount"] = amount
-	data["energy"] = cell.charge ? cell.charge * powerefficiency : "0" //To prevent NaN in the UI.
-	data["maxEnergy"] = cell.maxcharge * powerefficiency
 	data["isBeakerLoaded"] = beaker ? 1 : 0
 
 	var/beakerContents[0]
@@ -157,11 +139,7 @@
 			var/reagent = params["reagent"]
 			if(beaker && dispensable_reagents.Find(reagent))
 				var/datum/reagents/R = beaker.reagents
-				var/free = R.maximum_volume - R.total_volume
-				var/actual = min(amount, (cell.charge * powerefficiency)*10, free)
-
-				R.add_reagent(reagent, actual)
-				cell.use((actual / 10) / powerefficiency)
+				R.add_reagent(reagent, amount)
 				. = TRUE
 		if("remove")
 			var/amount = text2num(params["amount"])
@@ -206,7 +184,7 @@
 
 /obj/machinery/chem_dispenser/emp_act(severity)
 	var/list/datum/reagents/R = list()
-	var/total = min(rand(7,15), Floor(cell.charge*powerefficiency))
+	var/total = rand(7,15)
 	var/datum/reagents/Q = new(total*10)
 	if(beaker && beaker.reagents)
 		R += beaker.reagents
@@ -216,8 +194,6 @@
 	chem_splash(get_turf(src), 3, R)
 	if(beaker && beaker.reagents)
 		beaker.reagents.remove_all()
-	cell.use(total/powerefficiency)
-	cell.emp_act()
 	visible_message("<span class='danger'>[src] malfunctions, spraying chemicals everywhere!</span>")
 	..()
 
@@ -225,9 +201,7 @@
 	name = "portable chem dispenser"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "minidispenser"
-	powerefficiency = 0.001
 	amount = 5
-	recharge_delay = 20
 	dispensable_reagents = list()
 	circuit = /obj/item/circuitboard/machine/chem_dispenser
 	var/static/list/dispensable_reagent_tiers = list(
@@ -276,13 +250,10 @@
 /obj/machinery/chem_dispenser/constructable/RefreshParts()
 	var/time = 0
 	var/i
-	for(var/obj/item/stock_parts/cell/P in component_parts)
-		cell = P
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		time += M.rating
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		time += C.rating
-	recharge_delay = 30/(time/2)         //delay between recharges, double the usual time on lowest 50% less than usual on highest
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		for(i=1, i<=M.rating, i++)
 			dispensable_reagents |= dispensable_reagent_tiers[i]
