@@ -17,6 +17,7 @@
 	var/ascended = FALSE
 	sight = (SEE_TURFS | SEE_OBJS)
 	status_flags = CANPUSH
+	spacewalk = TRUE
 	mob_size = MOB_SIZE_LARGE
 	var/mob/living/oldform
 	var/list/devil_overlays[DEVIL_TOTAL_LAYERS]
@@ -134,9 +135,6 @@
 		visible_message("<span class='danger'>[attack_message]</span>",
 		"<span class='userdanger'>[attack_message]</span>", null, COMBAT_MESSAGE_RANGE)
 	return TRUE
-
-/mob/living/carbon/true_devil/Process_Spacemove(movement_dir = 0)
-	return 1
 
 /mob/living/carbon/true_devil/singularity_act()
 	if(ascended)
