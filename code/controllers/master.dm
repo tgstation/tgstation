@@ -189,10 +189,12 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	// Sort subsystems by display setting for easy access.
 	sortTim(subsystems, /proc/cmp_subsystem_display)
 	// Set world options.
-	world.sleep_offline = 1
+	world.sleep_offline = TRUE
 	world.fps = CONFIG_GET(number/fps)
 	var/initialized_tod = REALTIMEOFDAY
 	sleep(1)
+	if(CONFIG_GET(flag/resume_after_initializations))
+		world.sleep_offline = FALSE
 	initializations_finished_with_no_players_logged_in = initialized_tod < REALTIMEOFDAY - 10
 	// Loop.
 	Master.StartProcessing(0)
