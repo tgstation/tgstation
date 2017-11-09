@@ -80,7 +80,7 @@
 	inputs = list()
 	outputs = list("output pin" = IC_PINTYPE_ANY)
 	activators = list("push data" = IC_PINTYPE_PULSE_IN)
-	var/accepting_refs = 0
+	var/accepting_refs = FALSE
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
 /obj/item/integrated_circuit/memory/constant/do_work()
@@ -96,19 +96,19 @@
 	var/new_data = null
 	switch(type_to_use)
 		if("string")
-			accepting_refs = 0
+			accepting_refs = FALSE
 			new_data = input("Now type in a string.","[src] string writing") as null|text
 			if(istext(new_data) && user.IsAdvancedToolUser())
 				O.data = new_data
 				to_chat(user, "<span class='notice'>You set \the [src]'s memory to [O.display_data(O.data)].</span>")
 		if("number")
-			accepting_refs = 0
+			accepting_refs = FALSE
 			new_data = input("Now type in a number.","[src] number writing") as null|num
 			if(isnum(new_data) && user.IsAdvancedToolUser())
 				O.data = new_data
 				to_chat(user, "<span class='notice'>You set \the [src]'s memory to [O.display_data(O.data)].</span>")
 		if("ref")
-			accepting_refs = 1
+			accepting_refs = TRUE
 			to_chat(user, "<span class='notice'>You turn \the [src]'s ref scanner on.  Slide it across \
 			an object for a ref of that object to save it in memory.</span>")
 		if("null")
