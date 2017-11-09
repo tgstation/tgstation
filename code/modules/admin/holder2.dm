@@ -1,7 +1,7 @@
 GLOBAL_LIST_EMPTY(admin_datums)
 GLOBAL_PROTECT(admin_datums)
 
-GLOBAL_VAR_INIT(href_token, GenerateToken())
+GLOBAL_VAR_INIT(href_token, GenerateGlobalToken())
 GLOBAL_PROTECT(href_token)
 
 /datum/admins
@@ -32,12 +32,16 @@ GLOBAL_PROTECT(href_token)
 		return
 	rank = R
 	admin_signature = "Nanotrasen Officer #[rand(0,9)][rand(0,9)][rand(0,9)]"
-	href_token = GenerateToken()
 	GLOB.admin_datums[ckey] = src
 	if(R.rights & R_DEBUG) //grant profile access
 		world.SetConfig("APP/admin", ckey, "role=admin")
 
-/proc/GenerateToken()
+/datum/admins/proc/GenerateToken()
+	var/client/C = owner
+	// md5 of ckey + cid + current_date
+	return md5("[C.ckey][C.computer_id][time_stamp("YYYYMMDD")]")
+
+/proc/GenerateGlobalToken()
 	. = ""
 	for(var/I in 1 to 32)
 		. += "[rand(10)]"
@@ -48,9 +52,11 @@ GLOBAL_PROTECT(href_token)
 		var/client/C = usr.client
 		if(!C)
 			CRASH("No client for HrefToken()!")
-		var/datum/admins/holder = C.holder
+		holder = C.holder
 		if(holder)
 			tok = holder.href_token
+			if(!tok)
+				tok = holder.href_token = holder.GenerateToken()
 	return tok
 
 /proc/HrefToken(forceGlobal = FALSE)
