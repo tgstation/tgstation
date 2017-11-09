@@ -37,8 +37,9 @@
 	//Checks 1 contents level deep. This means that players can be sent through disposals mail...
 	//...but it should require a second person to open the package. (i.e. person inside a wrapped locker)
 	for(var/obj/O in D)
-		for(var/mob/living/M in O.contents)
+		if(locate(/mob/living) in O)
 			hasmob = TRUE
+			break
 
 	// now everything inside the disposal gets put into the holder
 	// note AM since can contain mobs or objs
