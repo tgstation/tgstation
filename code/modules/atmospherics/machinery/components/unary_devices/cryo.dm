@@ -14,7 +14,6 @@
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 
 	var/on = FALSE
-	var/autoeject = FALSE
 	var/volume = 100
 
 	var/efficiency = 1
@@ -24,7 +23,6 @@
 	var/conduction_coefficient = 0.3
 
 	var/obj/item/reagent_containers/glass/beaker = null
-	var/reagent_transfer = 0
 
 	var/obj/item/device/radio/radio
 	var/radio_key = /obj/item/device/encryptionkey/headset_med
@@ -173,24 +171,18 @@
 		update_icon()
 		playsound(src, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.
 		radio.talk_into(src, "Patient fully restored", radio_channel, get_spans(), get_default_language())
-		if(autoeject) // Eject if configured.
-			radio.talk_into(src, "Auto ejecting patient now", radio_channel, get_spans(), get_default_language())
-			open_machine()
 		return
 
 	var/datum/gas_mixture/air1 = AIR1
 
 	if(air1.gases.len)
-		if(mob_occupant.bodytemperature < T0C) // Sleepytime. Why? More cryo magic.
+		if(mob_occupant.bodytemperature < T0C)
 			mob_occupant.Sleeping((mob_occupant.bodytemperature / sleep_factor) * 2000)
 			mob_occupant.Unconscious((mob_occupant.bodytemperature / unconscious_factor) * 2000)
 		if(beaker)
-			if(reagent_transfer == 0) // Magically transfer reagents. Because cryo magic.
-				beaker.reagents.trans_to(occupant, 1, 10 * efficiency) // Transfer reagents, multiplied because cryo magic.
-				beaker.reagents.reaction(occupant, VAPOR)
-				air1.gases[/datum/gas/oxygen][MOLES] -= 2 / efficiency //Let's use gas for this
-			if(++reagent_transfer >= 10 * efficiency) // Throttle reagent transfer (higher efficiency will transfer the same amount but consume less from the beaker).
-				reagent_transfer = 0
+			beaker.reagents.trans_to(occupant, 1, 2)
+			beaker.reagents.reaction(occupant, VAPOR)
+			air1.gases[/datum/gas/oxygen][MOLES] -= 2
 
 	return 1
 
@@ -318,7 +310,6 @@
 	data["isOperating"] = on
 	data["hasOccupant"] = occupant ? TRUE : FALSE
 	data["isOpen"] = state_open
-	data["autoEject"] = autoeject
 
 	data["occupant"] = list()
 	if(occupant)
@@ -378,9 +369,6 @@
 				close_machine()
 			else
 				open_machine()
-			. = TRUE
-		if("autoeject")
-			autoeject = !autoeject
 			. = TRUE
 		if("ejectbeaker")
 			if(beaker)

@@ -178,19 +178,6 @@
 	results = list("antihol" = 3)
 	required_reagents = list("ethanol" = 1, "charcoal" = 1, "copper" = 1)
 
-/datum/chemical_reaction/cryoxadone
-	name = "Cryoxadone"
-	id = "cryoxadone"
-	results = list("cryoxadone" = 3)
-	required_reagents = list("stable_plasma" = 1, "acetone" = 1, "mutagen" = 1)
-
-/datum/chemical_reaction/clonexadone
-	name = "Clonexadone"
-	id = "clonexadone"
-	results = list("clonexadone" = 2)
-	required_reagents = list("cryoxadone" = 1, "sodium" = 1)
-	required_catalysts = list("plasma" = 5)
-
 /datum/chemical_reaction/haloperidol
 	name = "Haloperidol"
 	id = "haloperidol"
