@@ -42,5 +42,3 @@ GLOBAL_PROTECT(adminlog)
 GLOBAL_LIST_EMPTY(individual_log_list) // Logs each mob individual logs, a global so it doesn't get lost on cloning/changing mobs
 
 GLOBAL_LIST_EMPTY(active_turfs_startlist)
-
-GLOBAL_LIST_EMPTY(movement_popcon) // Temporary global list for movement branch popularity data
