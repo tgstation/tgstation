@@ -40,15 +40,9 @@
 
 /obj/item/device/multitool/update_icon()
 	if(selected_io)
-		if(buffer)
-			icon_state = "multitool_tracking"
-		else
-			icon_state = "multitool_red"
+		icon_state = "multitool_red"
 	else
-		if(buffer)
-			icon_state = "multitool_tracking_fail"
-		else
-			icon_state = "multitool"
+		icon_state = "multitool"
 
 /obj/item/device/multitool/proc/wire(var/datum/integrated_io/io, mob/user)
 	if(!io.holder.assembly)

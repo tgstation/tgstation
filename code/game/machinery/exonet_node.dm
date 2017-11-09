@@ -91,12 +91,6 @@
 	ui_interact(user)
 
 
-// Proc: attack_hand()
-// Parameters: 1 (user - the person clicking on the machine)
-// Description: Opens the NanoUI interface with ui_interact()
-/obj/machinery/exonet_node/attack_hand(mob/user)
-	ui_interact(user)
-
 /obj/machinery/exonet_node/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, var/force_open = 1,datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)

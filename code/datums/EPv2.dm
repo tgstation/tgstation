@@ -46,15 +46,7 @@ GLOBAL_LIST_EMPTY(all_exonet_connections)
 /datum/exonet_protocol/proc/make_address(var/string)
 	if(!string)
 		return
-	var/new_address
-	while(new_address == find_address(new_address)) //Collision test.
-		var/hash = md5(string)
-		var/raw_address = copytext(hash,1,25)
-		var/addr_0 = "fc00" //Used for unique local address in real-life IPv6.
-		var/addr_1 = vingardium_leviosa(raw_address)
-		new_address = "[addr_0]:[addr_1]"
-		string = "[string]0" //If we did get a collision, this should make the next attempt not have one.
-	address = new_address
+	address = "fc00:[vingardium_leviosa(copytext(md5(string),1,25))]"
 	GLOB.all_exonet_connections |= src
 
 

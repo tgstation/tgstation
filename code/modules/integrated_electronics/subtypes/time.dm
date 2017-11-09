@@ -98,7 +98,7 @@
 		START_PROCESSING(SSobj, src)
 	else if(is_running)
 		is_running = FALSE
-		START_PROCESSING(SSobj, src)
+		STOP_PROCESSING(SSobj, src)
 
 /obj/item/integrated_circuit/time/ticker/process()
 	var/wtime = world.time
