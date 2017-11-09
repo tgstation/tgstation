@@ -1,19 +1,30 @@
 /mob/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover, /obj/item/projectile) || mover.throwing)
-		GLOB.movement_popcon["MobCanPass_istype"]++
-		return (!density || lying)
-	if(mover.checkpass(PASSMOB))
-		GLOB.movement_popcon["MobCanPass_checkpass"]++
+	if (prob(50))
+		return NewCanPass(mover, target)
+	return OldCanPass(mover, target)
+
+/mob/proc/NewCanPass(atom/movable/mover, turf/target)
+	if(mover.pass_flags & PASSMOB)
 		return TRUE
+	if(istype(mover, /obj/item/projectile) || mover.throwing)
+		return (!density || lying)
 	if(buckled == mover)
-		GLOB.movement_popcon["MobCanPass_buckled"]++
 		return TRUE
 	if(ismob(mover))
-		GLOB.movement_popcon["MobCanPass_ismob"]++ // really?
 		if (mover in buckled_mobs)
-			GLOB.movement_popcon["MobCanPass_buckledmobs"]++
 			return TRUE
-	GLOB.movement_popcon["MobCanPass_final"]++
+	return (!mover.density || !density || lying)
+
+/mob/proc/OldCanPass(atom/movable/mover, turf/target)
+	if(istype(mover, /obj/item/projectile) || mover.throwing)
+		return (!density || lying)
+	if(mover.checkpass(PASSMOB))
+		return TRUE
+	if(buckled == mover)
+		return TRUE
+	if(ismob(mover))
+		if (mover in buckled_mobs)
+			return TRUE
 	return (!mover.density || !density || lying)
 
 
@@ -118,70 +129,54 @@
 
 #define MOVEMENT_DELAY_BUFFER 0.75
 #define MOVEMENT_DELAY_BUFFER_DELTA 1.25
+
 /client/Move(n, direct)
 	if(world.time < move_delay)
-		GLOB.movement_popcon["clientMove_delay"]++
 		return FALSE
 	var/old_move_delay = move_delay
 	move_delay = world.time+world.tick_lag //this is here because Move() can now be called mutiple times per tick
 	if(!mob || !mob.loc)
-		GLOB.movement_popcon["clientMove_nomob"]++
 		return FALSE
 	var/oldloc = mob.loc
 	if(mob.notransform)
-		GLOB.movement_popcon["clientMove_notransform"]++
 		return FALSE	//This is sota the goto stop mobs from moving var
 	if(mob.control_object)
-		GLOB.movement_popcon["clientMove_controlobject"]++
 		return Move_object(direct)
 	if(!isliving(mob))
-		GLOB.movement_popcon["clientMove_notliving"]++
 		return mob.Move(n,direct)
 	if(mob.stat == DEAD)
-		GLOB.movement_popcon["clientMove_ghostize"]++
 		mob.ghostize()
 		return FALSE
 	if(moving)
-		GLOB.movement_popcon["clientMove_moving"]++
 		return FALSE
 	if(mob.force_moving)
-		GLOB.movement_popcon["clientMove_forcemoving"]++
 		return FALSE
-	if(isliving(mob))
-		GLOB.movement_popcon["clientMove_living"]++
-		var/mob/living/L = mob
-		if(L.incorporeal_move)	//Move though walls
-			GLOB.movement_popcon["clientMove_incorpmove"]++
-			Process_Incorpmove(direct)
-			return FALSE
+
+	var/mob/living/L = mob  //Already checked for isliving earlier
+	if(L.incorporeal_move)	//Move though walls
+		Process_Incorpmove(direct)
+		return FALSE
 
 	if(mob.remote_control)					//we're controlling something, our movement is relayed to it
-		GLOB.movement_popcon["clientMove_remotecontrol"]++
 		return mob.remote_control.relaymove(mob, direct)
 
 	if(isAI(mob))
-		GLOB.movement_popcon["clientMove_isAI"]++
 		return AIMove(n,direct,mob)
 
 	if(Process_Grab()) //are we restrained by someone's grip?
-		GLOB.movement_popcon["clientMove_grabbed"]++
 		return
 
 	if(mob.buckled)							//if we're buckled to something, tell it we moved.
-		GLOB.movement_popcon["clientMove_buckled"]++
 		return mob.buckled.relaymove(mob, direct)
 
 	if(!mob.canmove)
-		GLOB.movement_popcon["clientMove_cantmove"]++
 		return FALSE
 
 	if(isobj(mob.loc) || ismob(mob.loc))	//Inside an object, tell it we moved
-		GLOB.movement_popcon["clientMove_insideobject"]++
 		var/atom/O = mob.loc
 		return O.relaymove(mob, direct)
 
 	if(!mob.Process_Spacemove(direct))
-		GLOB.movement_popcon["clientMove_nospacemove"]++
 		return FALSE
 
 	//We are now going to move
@@ -205,16 +200,13 @@
 		. = ..()
 
 	moving = 0
-	if(mob && .)
+	if(.) // If mob is null here, we deserve the runtime
 		if(mob.throwing)
 			mob.throwing.finalize(FALSE)
 
 	if(LAZYLEN(mob.user_movement_hooks))
 		for(var/obj/O in mob.user_movement_hooks)
 			O.intercept_user_move(direct, mob, n, oldloc)
-
-	GLOB.movement_popcon["clientMove_final"]++
-	return .
 
 /mob/Moved(oldLoc, dir, Forced = FALSE)
 	. = ..()

@@ -62,80 +62,58 @@
 
 /atom/movable/Move(atom/newloc, direct = 0)
 	if(!loc || !newloc)
-		GLOB.movement_popcon["AMMove_noloc"]++
-		return 0
+		return FALSE
 	var/atom/oldloc = loc
 
 	if(loc != newloc)
-		GLOB.movement_popcon["AMMove_locnotnewloc"]++
 		if (!(direct & (direct - 1))) //Cardinal move
-			GLOB.movement_popcon["AMMove_cardinal"]++
 			. = ..()
 		else //Diagonal move, split it into cardinal moves
-			GLOB.movement_popcon["AMMove_diagonal"]++
 			moving_diagonally = FIRST_DIAG_STEP
 			if (direct & 1)
-				GLOB.movement_popcon["AMMove_directand1"]++
 				if (direct & 4)
-					GLOB.movement_popcon["AMMove_directand14"]++
 					if (step(src, NORTH))
-						GLOB.movement_popcon["AMMove_directand14north"]++
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, EAST)
 					else if (step(src, EAST))
-						GLOB.movement_popcon["AMMove_directand14east"]++
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, NORTH)
 				else if (direct & 8)
-					GLOB.movement_popcon["AMMove_directand18"]++
 					if (step(src, NORTH))
-						GLOB.movement_popcon["AMMove_directand18north"]++
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, WEST)
 					else if (step(src, WEST))
-						GLOB.movement_popcon["AMMove_directand14west"]++
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, NORTH)
 			else if (direct & 2)
-				GLOB.movement_popcon["AMMove_directand2"]++
 				if (direct & 4)
-					GLOB.movement_popcon["AMMove_directand24"]++
 					if (step(src, SOUTH))
-						GLOB.movement_popcon["AMMove_directand24south"]++
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, EAST)
 					else if (step(src, EAST))
-						GLOB.movement_popcon["AMMove_directand24east"]++
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, SOUTH)
 				else if (direct & 8)
-					GLOB.movement_popcon["AMMove_directand28"]++
 					if (step(src, SOUTH))
-						GLOB.movement_popcon["AMMove_directand28south"]++
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, WEST)
 					else if (step(src, WEST))
-						GLOB.movement_popcon["AMMove_directand28west"]++
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, SOUTH)
 			moving_diagonally = 0
 			return
 
 	if(!loc || (loc == oldloc && oldloc != newloc))
-		GLOB.movement_popcon["AMMove_afterstepnoloc"]++
 		last_move = 0
 		return
 
 	if(.)
-		GLOB.movement_popcon["AMMove_callMoved"]++
 		Moved(oldloc, direct)
 
 	last_move = direct
 	setDir(direct)
 	if(. && has_buckled_mobs() && !handle_buckled_mob_movement(loc,direct)) //movement failed due to buckled mob(s)
-		GLOB.movement_popcon["AMMove_buckledfail"]++
-		. = 0
-	GLOB.movement_popcon["MobCanPass_final"]++
+		return FALSE
 
 //Called after a successful Move(). By this point, we've already moved
 /atom/movable/proc/Moved(atom/OldLoc, Dir, Forced = FALSE)

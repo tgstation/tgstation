@@ -49,8 +49,13 @@
 
 /mob/living/carbon/Move(NewLoc, direct)
 	. = ..()
-	if(. && mob_has_gravity()) //floating is easy
-		GLOB.movement_popcon["carbonMove_mobhasgravity"]++
+	if (prob(50))
+		OldMove(NewLoc,direct, .)
+	else
+		NewMove(NewLoc,direct, .)
+
+/mob/living/carbon/proc/OldMove(NewLoc, direct, dot)
+	if(dot && mob_has_gravity()) //floating is easy
 		if(dna && dna.species && (NOHUNGER in dna.species.species_traits))
 			nutrition = NUTRITION_LEVEL_FED - 1	//just less than feeling vigorous
 		else if(nutrition && stat != DEAD)
@@ -58,8 +63,16 @@
 			if(m_intent == MOVE_INTENT_RUN)
 				nutrition -= HUNGER_FACTOR/10
 		if((disabilities & FAT) && m_intent == MOVE_INTENT_RUN && bodytemperature <= 360)
-			GLOB.movement_popcon["carbonMove_fat"]++
 			bodytemperature += 2
+
+/mob/living/carbon/proc/NewMove(NewLoc, direct, dot)
+	if(dot && mob_has_gravity()) //floating is easy
+		if(dna && dna.species && (NOHUNGER in dna.species.species_traits))
+			nutrition = NUTRITION_LEVEL_FED - 1	//just less than feeling vigorous
+		else if(nutrition && stat != DEAD)
+			nutrition -= HUNGER_FACTOR/10
+			if(m_intent == MOVE_INTENT_RUN)
+				nutrition -= HUNGER_FACTOR/10
 
 /mob/living/carbon/Moved(oldLoc, Dir)
 	. = ..()

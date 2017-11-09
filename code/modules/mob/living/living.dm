@@ -439,7 +439,6 @@
 
 /mob/living/Move(atom/newloc, direct)
 	if (buckled && buckled.loc != newloc) //not updating position
-		GLOB.movement_popcon["livingMove_buckled"]++
 		if (!buckled.anchored)
 			return buckled.Move(newloc, direct)
 		else
@@ -456,7 +455,6 @@
 	. = ..()
 	if(. && pulling && pulling == pullee) //we were pulling a thing and didn't lose it during our move.
 		if(pulling.anchored)
-			GLOB.movement_popcon["livingMove_pulling"]++
 			stop_pulling()
 			return
 
@@ -473,9 +471,7 @@
 		s_active.close(src)
 
 	if(lying && !buckled && prob(getBruteLoss()*200/maxHealth))
-
 		makeTrail(newloc, T, old_direction)
-	GLOB.movement_popcon["livingMove_final"]++
 
 /mob/living/movement_delay(ignorewalk = 0)
 	. = 0
