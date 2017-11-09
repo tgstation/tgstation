@@ -259,6 +259,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 
 /mob/living/carbon/human/Move()
 	if (src.w_uniform)
+		GLOB.movement_popcon["crewMove_haveuniform"]++
 		var/old_z = src.z
 
 		. = ..()
@@ -267,6 +268,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 			GLOB.crewmonitor.queueUpdate(old_z)
 		GLOB.crewmonitor.queueUpdate(src.z)
 	else
+		GLOB.movement_popcon["crewMove_parent"]++
 		return ..()
 
 /datum/crewmonitor/proc/queueUpdate(z)
