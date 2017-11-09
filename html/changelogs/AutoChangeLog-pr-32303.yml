@@ -1,0 +1,4 @@
+author: "Thefastfoodguy"
+delete-after: True
+changes: 
+  - bugfix: "Spamming runes / battlecries / etc will no longer trigger spam prevention"

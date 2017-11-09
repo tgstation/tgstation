@@ -3,23 +3,24 @@
 	var/list/screens = list()
 
 /mob/proc/overlay_fullscreen(category, type, severity)
-	var/obj/screen/fullscreen/screen
-	if(screens[category])
-		screen = screens[category]
-		if(screen.type != type)
-			clear_fullscreen(category, FALSE)
-			return .()
-		else if(!severity || severity == screen.severity)
-			return null
-	else
-		screen = new type()
+	var/obj/screen/fullscreen/screen = screens[category]
+	if (!screen || screen.type != type)
+		// needs to be recreated
+		clear_fullscreen(category, FALSE)
+		screens[category] = screen = new type()
+	else if ((!severity || severity == screen.severity) && (!client || screen.screen_loc != "CENTER-7,CENTER-7" || screen.view == client.view))
+		// doesn't need to be updated
+		return screen
 
 	screen.icon_state = "[initial(screen.icon_state)][severity]"
 	screen.severity = severity
-
-	screens[category] = screen
-	if(client && screen.should_show_to(src))
+	if (client && screen.should_show_to(src))
 		client.screen += screen
+		if (screen.screen_loc == "CENTER-7,CENTER-7" && screen.view != client.view)
+			var/scale = (1 + 2 * client.view) / 15
+			screen.view = client.view
+			screen.transform = matrix(scale, 0, 0, 0, scale, 0)
+
 	return screen
 
 /mob/proc/clear_fullscreen(category, animated = 10)
@@ -68,6 +69,7 @@
 	layer = FULLSCREEN_LAYER
 	plane = FULLSCREEN_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	var/view = 7
 	var/severity = 0
 	var/show_when_dead = FALSE
 

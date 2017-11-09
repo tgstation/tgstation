@@ -3,7 +3,7 @@
 
 /datum/cellular_emporium
 	var/name = "cellular emporium"
-	var/datum/changeling/changeling
+	var/datum/antagonist/changeling/changeling
 
 /datum/cellular_emporium/New(my_changeling)
 	. = ..()
@@ -32,7 +32,7 @@
 
 	var/list/abilities = list()
 
-	for(var/path in subtypesof(/obj/effect/proc_holder/changeling))
+	for(var/path in changeling.all_powers)
 		var/obj/effect/proc_holder/changeling/ability = path
 
 		var/dna_cost = initial(ability.dna_cost)
@@ -61,10 +61,10 @@
 	switch(action)
 		if("readapt")
 			if(changeling.canrespec)
-				changeling.lingRespec(usr)
+				changeling.readapt()
 		if("evolve")
 			var/sting_name = params["name"]
-			changeling.purchasePower(usr, sting_name)
+			changeling.purchase_power(sting_name)
 
 /datum/action/innate/cellular_emporium
 	name = "Cellular Emporium"
