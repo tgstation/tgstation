@@ -231,7 +231,7 @@
 			this will cause you to whisper your message aloud, so doing so in a public place is very suspicious and you should try to restrict it to private use.<br><br>"
 			dat += "If you aren't willing or don't have the time to read through every section, you can still help your teammates! Ask if they've set up a base. If they have, head there \
 			and ask however you can help; chances are there's always something. If not, it's your job as a Servant to get one up and running! Try to find a secluded, low-traffic area, \
-			like the auxilary base or somewhere deep in maintenance. You'll want to go into the Drivers section of the slab and look for <i>Tinkerer's Cache.</i> Find a nice spot and \
+			like the auxiliary base or somewhere deep in maintenance. You'll want to go into the Drivers section of the slab and look for <i>Tinkerer's Cache.</i> Find a nice spot and \
 			create one. This serves as a storage for <i>components,</i> the cult's primary resource. (Your slab's probably produced a few by now.) By attacking that cache with this \
 			slab, you'll offload all your components into it, and all Servants will be able to use those components from any distance - all Tinkerer's Caches are linked!<br><br>"
 			dat += "Once you have a base up and running, contact your fellows and let them know. You should come back here often to drop off the slab's components, and your fellows \
@@ -250,7 +250,7 @@
 			teamwork is an instrumental component of your success.<br><br>" //get it? component? ha!
 			dat += "As a Servant of Ratvar, the tools you are given focus around building and maintaining bases and outposts. A great deal of your power comes from stationary \
 			structures, and without constructing a base somewhere, it's essentially impossible to succeed. Finding a good spot to build a base can be difficult, and it's recommended \
-			that you choose an area in low-traffic part of the station (such as the auxilary base). Make sure to disconnect any cameras in the area beforehand.<br><br>"
+			that you choose an area in low-traffic part of the station (such as the auxiliary base). Make sure to disconnect any cameras in the area beforehand.<br><br>"
 			dat += "Because of how complex being a Servant is, it isn't possible to fit much information into this section. It's highly recommended that you read the <b>Components</b> \
 			and <b>Scripture</b> sections next. Not knowing how these two systems work will cripple both you and your fellows, and lead to a frustrating experience for everyone.<br><br>"
 			dat += "<font color=#BE8700 size=3>-=-=-=-=-=-</font>"

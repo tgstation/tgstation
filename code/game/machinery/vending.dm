@@ -688,6 +688,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 
 /obj/machinery/vending/snack/random
 	name = "\improper Random Snackies"
+	icon_state = "random_snack"
 	desc = "Uh oh!"
 
 /obj/machinery/vending/snack/random/Initialize()
@@ -740,6 +741,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 
 /obj/machinery/vending/cola/random
 	name = "\improper Random Drinkies"
+	icon_state = "random_cola"
 	desc = "Uh oh!"
 
 /obj/machinery/vending/cola/random/Initialize()

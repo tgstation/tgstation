@@ -1,0 +1,5 @@
+author: "Iamgoofball"
+delete-after: True
+changes: 
+  - tweak: "Cooldown on the Ripley's mining drills has been halved."
+  - tweak: "The frequency of the Ripley's ore pulse has been doubled."
