@@ -170,7 +170,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	density = TRUE
 	icon_state = "offcenter"
 	use_power = NO_POWER_USE
-	var/obj/machinery/gateway/centeraway/stationgate = null
+	var/obj/machinery/gateway/centerstation/stationgate = null
 	can_link = TRUE
 
 
@@ -231,6 +231,18 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 		var/mob/M = AM
 		if (M.client)
 			M.client.move_delay = max(world.time + 5, M.client.move_delay)
+
+
+/obj/machinery/gateway/centeraway/admin
+	desc = "A mysterious gateway built by unknown hands, this one seems more compact."
+
+/obj/machinery/gateway/centeraway/admin/Initialize()
+	. = ..()
+	if(stationgate && !stationgate.awaygate)
+		stationgate.awaygate = src
+
+/obj/machinery/gateway/centeraway/admin/detect()
+	return TRUE
 
 
 /obj/item/paper/fluff/gateway

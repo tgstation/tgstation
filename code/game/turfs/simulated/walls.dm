@@ -25,7 +25,18 @@
 	/turf/closed/wall/clockwork)
 	smooth = SMOOTH_TRUE
 
-	var/list/damage_decals
+	var/list/dent_decals
+
+	var/static/list/dent_decal_list = list(
+	WALL_DENT_HIT = list(
+	mutable_appearance('icons/effects/effects.dmi', "impact1", BULLET_HOLE_LAYER),
+	mutable_appearance('icons/effects/effects.dmi', "impact2", BULLET_HOLE_LAYER),
+	mutable_appearance('icons/effects/effects.dmi', "impact3", BULLET_HOLE_LAYER)
+	),
+	WALL_DENT_SHOT = list(
+	mutable_appearance('icons/effects/effects.dmi', "bullet_hole", BULLET_HOLE_LAYER)
+	)
+	)
 
 /turf/closed/wall/examine(mob/user)
 	..()
@@ -101,6 +112,8 @@
 /turf/closed/wall/blob_act(obj/structure/blob/B)
 	if(prob(50))
 		dismantle_wall()
+	else
+		add_dent(WALL_DENT_HIT)
 
 /turf/closed/wall/mech_melee_attack(obj/mecha/M)
 	M.do_attack_animation(src)
@@ -111,6 +124,8 @@
 			if(prob(hardness + M.force) && M.force > 20)
 				dismantle_wall(1)
 				playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
+			else
+				add_dent(WALL_DENT_HIT)
 		if(BURN)
 			playsound(src, 'sound/items/welder.ogg', 100, 1)
 		if(TOX)
@@ -138,6 +153,7 @@
 		dismantle_wall(1)
 	else
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
+		add_dent(WALL_DENT_HIT)
 		to_chat(user, text("<span class='notice'>You punch the wall.</span>"))
 	return TRUE
 
@@ -161,30 +177,26 @@
 
 	add_fingerprint(user)
 
-	//THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
-	if( thermite )
-		if(W.is_hot())
-			thermitemelt(user)
-			return
-
 	var/turf/T = user.loc	//get user's location for delay checks
 
 	//the istype cascade has been spread among various procs for easy overriding
 	if(try_clean(W, user, T) || try_wallmount(W, user, T) || try_decon(W, user, T) || try_destroy(W, user, T))
 		return
 
+	return ..()
+
 /turf/closed/wall/proc/try_clean(obj/item/W, mob/user, turf/T)
-	if((user.a_intent != INTENT_HELP) || !LAZYLEN(damage_decals) || !istype(W, /obj/item/weldingtool))
+	if((user.a_intent != INTENT_HELP) || !LAZYLEN(dent_decals) || !istype(W, /obj/item/weldingtool))
 		return FALSE
 	var/obj/item/weldingtool/WT = W
 	if(WT.remove_fuel(0, user))
 		to_chat(user, "<span class='notice'>You begin fixing dents on the wall...</span>")
 		playsound(src, W.usesound, 100, 1)
-		if(do_after(user, slicing_duration * W.toolspeed * 0.5, target = src))
-			if(iswallturf(src) && user && !QDELETED(WT) && WT.isOn() && !QDELETED(T) && (user.loc == T) && (user.get_active_held_item() == WT) && damage_decals.len)
+		if(do_after(user, slicing_duration * W.toolspeed * 0.1, target = src))
+			if(iswallturf(src) && user && !QDELETED(WT) && WT.isOn() && !QDELETED(T) && (user.loc == T) && (user.get_active_held_item() == WT) && LAZYLEN(dent_decals))
 				to_chat(user, "<span class='notice'>You fix some dents on the wall.</span>")
-				cut_overlay(damage_decals)
-				LAZYCLEARLIST(damage_decals)
+				cut_overlay(dent_decals)
+				LAZYCLEARLIST(dent_decals)
 			return TRUE
 	return FALSE
 
@@ -239,31 +251,6 @@
 			return TRUE
 	return FALSE
 
-
-/turf/closed/wall/proc/thermitemelt(mob/user)
-	cut_overlays()
-	var/obj/effect/overlay/O = new/obj/effect/overlay( src )
-	O.name = "thermite"
-	O.desc = "Looks hot."
-	O.icon = 'icons/effects/fire.dmi'
-	O.icon_state = "2"
-	O.anchored = TRUE
-	O.opacity = 1
-	O.density = TRUE
-	O.layer = FLY_LAYER
-
-	playsound(src, 'sound/items/welder.ogg', 100, 1)
-
-	if(thermite >= 50)
-		var/burning_time = max(100,300 - thermite)
-		var/turf/open/floor/F = ChangeTurf(/turf/open/floor/plating)
-		F.burn_tile()
-		F.add_hiddenprint(user)
-		QDEL_IN(O, burning_time)
-	else
-		thermite = 0
-		QDEL_IN(O, 50)
-
 /turf/closed/wall/singularity_pull(S, current_size)
 	..()
 	if(current_size >= STAGE_FIVE)
@@ -284,7 +271,7 @@
 	if(.)
 		ChangeTurf(/turf/closed/wall/clockwork)
 
-/turf/closed/wall/get_dumping_location(obj/item/storage/source,mob/user)
+/turf/closed/wall/get_dumping_location(obj/item/storage/source, mob/user)
 	return null
 
 /turf/closed/wall/acid_act(acidpwr, acid_volume)
@@ -309,7 +296,11 @@
 			return TRUE
 	return FALSE
 
-/turf/closed/wall/proc/add_damage_decal(var/mutable_appearance/decal)
-	cut_overlay(damage_decals)
-	LAZYADD(damage_decals, decal)
-	add_overlay(damage_decals)
+/turf/closed/wall/proc/add_dent(denttype, x=rand(-8, 8), y=rand(-8, 8))
+	var/mutable_appearance/decal = pick(dent_decal_list[denttype])
+	decal.pixel_x = x
+	decal.pixel_y = y
+
+	cut_overlay(dent_decals)
+	LAZYADD(dent_decals, decal)
+	add_overlay(dent_decals)

@@ -276,7 +276,7 @@
 		L["status"] = stat
 		L["exoticblood"] = body.blood_volume
 		L["name"] = body.name
-		L["ref"] = "\ref[body]"
+		L["ref"] = "[REF(body)]"
 		L["is_current"] = current
 		var/button
 		if(current)

@@ -1,5 +1,6 @@
 /datum/antagonist/ninja
 	name = "Ninja"
+	job_rank = ROLE_NINJA
 	var/helping_station = 0
 	var/give_objectives = TRUE
 

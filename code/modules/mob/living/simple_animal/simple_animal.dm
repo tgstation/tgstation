@@ -82,12 +82,16 @@
 	var/dextrous_hud_type = /datum/hud/dextrous
 	var/datum/personal_crafting/handcrafting
 
+	var/AIStatus = AI_ON //The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever)
+
+	var/shouldwakeup = FALSE //convenience var for forcibly waking up an idling AI on next check.
+
 	//domestication
 	var/tame = 0
 
 /mob/living/simple_animal/Initialize()
 	. = ..()
-	GLOB.simple_animals += src
+	GLOB.simple_animals[AIStatus] += src
 	handcrafting = new()
 	if(gender == PLURAL)
 		gender = pick(MALE,FEMALE)
@@ -97,7 +101,7 @@
 		stack_trace("Simple animal being instantiated in nullspace")
 
 /mob/living/simple_animal/Destroy()
-	GLOB.simple_animals -= src
+	GLOB.simple_animals[AIStatus] -= src
 	return ..()
 
 /mob/living/simple_animal/updatehealth()
@@ -276,6 +280,7 @@
 		return 1
 
 /mob/living/simple_animal/death(gibbed)
+	movement_type &= ~FLYING
 	if(nest)
 		nest.spawned_mobs -= src
 		nest = null
@@ -331,6 +336,7 @@
 		density = initial(density)
 		lying = 0
 		. = 1
+		movement_type = initial(movement_type)
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
 	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || !SSticker.IsRoundInProgress())
@@ -417,7 +423,7 @@
 
 
 /mob/living/simple_animal/proc/sentience_act() //Called when a simple animal gains sentience via gold slime potion
-	return
+	toggle_ai(AI_OFF) // To prevent any weirdness.
 
 /mob/living/simple_animal/update_sight()
 	if(!client)
@@ -540,3 +546,23 @@
 /mob/living/simple_animal/buckle_mob(mob/living/buckled_mob, force = 0, check_loc = 1)
 	. = ..()
 	riding_datum = new/datum/riding/animal
+
+
+/mob/living/simple_animal/proc/toggle_ai(togglestatus)
+	if (AIStatus != togglestatus)
+		if (togglestatus > 0 && togglestatus < 4)
+			GLOB.simple_animals[AIStatus] -= src
+			GLOB.simple_animals[togglestatus] += src
+			AIStatus = togglestatus
+		else
+			stack_trace("Something attempted to set simple animals AI to an invalid state: [togglestatus]")
+
+/mob/living/simple_animal/proc/consider_wakeup()
+	if (pulledby || shouldwakeup)
+		toggle_ai(AI_ON)
+
+/mob/living/simple_animal/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+	. = ..()
+	if(!ckey && !stat)//Not unconscious
+		if(AIStatus == AI_IDLE)
+			toggle_ai(AI_ON)

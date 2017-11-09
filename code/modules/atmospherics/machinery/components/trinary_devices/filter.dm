@@ -10,6 +10,9 @@
 	var/frequency = 0
 	var/datum/radio_frequency/radio_connection
 
+	construction_type = /obj/item/pipe/trinary/flippable
+	pipe_state = "filter"
+
 /obj/machinery/atmospherics/components/trinary/filter/flipped
 	icon_state = "filter_off_f"
 	flipped = TRUE
@@ -69,7 +72,7 @@
 
 	var/output_starting_pressure = air3.return_pressure()
 
-	if(output_starting_pressure >= target_pressure || air2.return_pressure() >= target_pressure)
+	if(output_starting_pressure >= target_pressure)
 		//No need to transfer if target is already full!
 		return
 
@@ -106,7 +109,8 @@
 			removed.gases[filter_type][MOLES] = 0
 			removed.garbage_collect()
 
-			air2.merge(filtered_out)
+			var/datum/gas_mixture/target = (air2.return_pressure() < target_pressure ? air2 : air1) //if there's no room for the filtered gas; just leave it in air1
+			target.merge(filtered_out)
 
 		air3.merge(removed)
 
@@ -120,7 +124,7 @@
 																	datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "atmos_filter", name, 475, 155, master_ui, state)
+		ui = new(user, src, ui_key, "atmos_filter", name, 475, 180, master_ui, state)
 		ui.open()
 
 /obj/machinery/atmospherics/components/trinary/filter/ui_data()

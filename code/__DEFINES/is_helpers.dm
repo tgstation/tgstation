@@ -8,7 +8,9 @@
 
 #define ismovableatom(A) (istype(A, /atom/movable))
 
-#define isatom(A) (istype(A, /atom))
+#define isatom(A) (isloc(A))
+
+#define isweakref(D) (istype(D, /datum/weakref))
 
 //Turfs
 //#define isturf(A) (istype(A, /turf)) This is actually a byond built-in. Added here for completeness sake.
@@ -30,6 +32,8 @@
 #define ismineralturf(A) (istype(A, /turf/closed/mineral))
 
 #define islava(A) (istype(A, /turf/open/lava))
+
+#define ischasm(A) (istype(A, /turf/open/chasm))
 
 #define isplatingturf(A) (istype(A, /turf/open/floor/plating))
 

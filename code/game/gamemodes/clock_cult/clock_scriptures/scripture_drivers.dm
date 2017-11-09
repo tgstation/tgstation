@@ -129,7 +129,11 @@
 
 /datum/clockwork_scripture/abscond/scripture_effects()
 	var/take_pulling = invoker.pulling && isliving(invoker.pulling) && get_clockwork_power(ABSCOND_ABDUCTION_COST)
-	var/turf/T = get_turf(pick(GLOB.servant_spawns))
+	var/turf/T
+	if(GLOB.ark_of_the_clockwork_justiciar)
+		T = get_step(GLOB.ark_of_the_clockwork_justiciar, SOUTH)
+	else
+		T = get_turf(pick(GLOB.servant_spawns))
 	invoker.visible_message("<span class='warning'>[invoker] flickers and phases out of existence!</span>", \
 	"<span class='bold sevtug_small'>You feel a dizzying sense of vertigo as you're yanked back to Reebe!</span>")
 	T.visible_message("<span class='warning'>[invoker] flickers and phases into existence!</span>")
@@ -236,7 +240,7 @@
 	if(A.outdoors || A.map_name == "Space" || !A.blob_allowed)
 		to_chat(invoker, "<span class='danger'>Stargazers can't be built off-station.</span>")
 		return
-	return TRUE
+	return ..()
 
 
 //Integration Cog: Creates an integration cog that can be inserted into APCs to passively siphon power.

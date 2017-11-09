@@ -27,7 +27,7 @@
 	var/damageoverlaytemp = 0
 	var/computer_id = null
 	var/lastattacker = null
-	var/lastattacked = null
+	var/lastattackerckey = null
 	var/list/logging = list(INDIVIDUAL_ATTACK_LOG, INDIVIDUAL_SAY_LOG, INDIVIDUAL_EMOTE_LOG, INDIVIDUAL_OOC_LOG)
 	var/obj/machinery/machine = null
 	var/other_mobs = null
@@ -45,6 +45,7 @@
 	var/slurring = 0		//Carbon
 	var/cultslurring = 0	//Carbon
 	var/real_name = null
+	var/spacewalk = FALSE
 	var/druggy = 0			//Carbon
 	var/confused = 0		//Carbon
 	var/resting = 0			//Carbon
@@ -140,7 +141,6 @@
 	var/list/observers = null	//The list of people observing this mob.
 
 	var/list/progressbars = null	//for stacking do_after bars
-	var/list/can_ride_typecache = list()
 
 	var/list/mousemove_intercept_objects
 

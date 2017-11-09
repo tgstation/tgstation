@@ -4,20 +4,20 @@
 /area/space)
 "ab" = (
 /turf/closed/indestructible/riveted/uranium,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "ac" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plating{
 	icon_state = "wood-broken2"
 	},
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "ad" = (
 /obj/machinery/door/airlock/gold,
 /obj/effect/forcefield/luxury_shuttle{
 	name = "Ticket Booth"
 	},
 /turf/open/floor/mineral/gold,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "ae" = (
 /obj/docking_port/mobile/emergency{
 	dir = 2;
@@ -32,75 +32,75 @@
 	name = "Ticket Booth"
 	},
 /turf/open/floor/mineral/gold,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "af" = (
 /turf/open/floor/plating{
 	icon_state = "wood-broken3"
 	},
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "ag" = (
 /turf/open/floor/plating{
 	icon_state = "wood"
 	},
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "ah" = (
 /turf/open/floor/plating{
 	icon_state = "wood-broken"
 	},
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "ai" = (
 /turf/open/floor/plating{
 	icon_state = "wood-broken5"
 	},
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "aj" = (
 /turf/open/floor/mineral/gold,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "ak" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-10"
 	},
 /turf/open/floor/mineral/gold,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "al" = (
 /obj/structure/mirror{
 	pixel_y = 32
 	},
 /turf/open/floor/mineral/gold,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "am" = (
 /turf/open/floor/plating{
 	icon_state = "wood-broken7"
 	},
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "an" = (
 /obj/machinery/light/small,
 /turf/open/floor/plating{
 	icon_state = "wood-broken2"
 	},
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "ao" = (
 /obj/machinery/light/small,
 /turf/open/floor/plating{
 	icon_state = "wood-broken6"
 	},
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "ap" = (
 /obj/structure/toilet{
 	dir = 4
 	},
 /turf/open/floor/mineral/gold,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "aq" = (
 /obj/machinery/door/airlock/gold,
 /turf/open/floor/mineral/gold,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "ar" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "as" = (
 /obj/structure/shuttle/engine/heater{
 	dir = 8
@@ -109,198 +109,198 @@
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "at" = (
 /turf/open/floor/carpet,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "au" = (
 /obj/structure/chair/comfy,
 /turf/open/floor/carpet,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "av" = (
 /obj/structure/chair/comfy{
 	dir = 4
 	},
 /turf/open/floor/mineral/gold,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "aw" = (
 /obj/machinery/computer/communications,
 /turf/open/floor/mineral/gold,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "ax" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/snacks/meatballspaghetti,
 /turf/open/floor/carpet,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "ay" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/snacks/notasandwich,
 /turf/open/floor/carpet,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "az" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/snacks/pastatomato,
 /turf/open/floor/carpet,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "aA" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/snacks/kebab/tofu,
 /turf/open/floor/carpet,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "aB" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/snacks/honkdae,
 /turf/open/floor/carpet,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "aC" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/snacks/enchiladas,
 /turf/open/floor/carpet,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "aD" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/snacks/candiedapple,
 /turf/open/floor/carpet,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "aE" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/snacks/burger/baconburger,
 /turf/open/floor/carpet,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "aF" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/snacks/benedict,
 /turf/open/floor/carpet,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "aG" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/snacks/cakeslice/chocolate,
 /turf/open/floor/carpet,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "aH" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/snacks/chowmein,
 /turf/open/floor/carpet,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "aI" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/snacks/dulcedebatataslice,
 /turf/open/floor/carpet,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "aJ" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/snacks/salad/validsalad,
 /turf/open/floor/carpet,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "aK" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/snacks/carneburrito,
 /turf/open/floor/carpet,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "aL" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/snacks/chawanmushi,
 /turf/open/floor/carpet,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "aM" = (
 /obj/machinery/computer/emergency_shuttle,
 /turf/open/floor/mineral/gold,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "aN" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/snacks/melonfruitbowl,
 /turf/open/floor/carpet,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "aO" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/snacks/khachapuri,
 /turf/open/floor/carpet,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "aP" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/snacks/grilledcheese,
 /turf/open/floor/carpet,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "aQ" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/snacks/jelliedtoast/cherry,
 /turf/open/floor/carpet,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "aR" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/snacks/honeybun,
 /turf/open/floor/carpet,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "aS" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/snacks/eggplantparm,
 /turf/open/floor/carpet,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "aT" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/snacks/copypasta,
 /turf/open/floor/carpet,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "aU" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/snacks/bearsteak,
 /turf/open/floor/carpet,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "aV" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/snacks/boiledspaghetti,
 /turf/open/floor/carpet,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "aW" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/snacks/cherrycupcake,
 /turf/open/floor/carpet,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "aX" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/snacks/customizable/pizza,
 /turf/open/floor/carpet,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "aY" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/snacks/hotdog,
 /turf/open/floor/carpet,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "aZ" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/snacks/pie/grapetart,
 /turf/open/floor/carpet,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "ba" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/snacks/burger/superbite,
 /turf/open/floor/carpet,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "bb" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/snacks/cakeslice/slimecake,
 /turf/open/floor/carpet,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "bc" = (
 /obj/machinery/computer/station_alert,
 /turf/open/floor/mineral/gold,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "bd" = (
 /obj/structure/chair/comfy{
 	dir = 1
 	},
 /turf/open/floor/carpet,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "be" = (
 /obj/machinery/computer/crew,
 /turf/open/floor/mineral/gold,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "bf" = (
 /obj/machinery/sleeper{
 	dir = 4
 	},
 /turf/open/floor/mineral/gold,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "bg" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
@@ -308,26 +308,26 @@
 	pixel_y = 3
 	},
 /turf/open/floor/mineral/gold,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "bh" = (
 /turf/open/floor/plating/beach/coastline_b,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "bi" = (
 /obj/machinery/light,
 /turf/open/floor/mineral/gold,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "bj" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/open/floor/mineral/gold,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "bk" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/mineral/gold,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "bl" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-10"
@@ -336,25 +336,25 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/gold,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "bm" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/mineral/gold,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "bn" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/open/floor/mineral/gold,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "bo" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/mineral/gold,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "bp" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
@@ -363,7 +363,7 @@
 	},
 /obj/machinery/light,
 /turf/open/floor/mineral/gold,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "bq" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
@@ -372,7 +372,7 @@
 	},
 /obj/machinery/light,
 /turf/open/floor/mineral/gold,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 
 (1,1,1) = {"
 aa

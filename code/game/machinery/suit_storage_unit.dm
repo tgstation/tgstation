@@ -210,7 +210,7 @@
 				mob_occupant.adjustFireLoss(rand(20, 36))
 			else
 				mob_occupant.adjustFireLoss(rand(10, 16))
-			mob_occupant.emote("scream")
+			mob_occupant.emote("scream") 
 		addtimer(CALLBACK(src, .proc/cook), 50)
 	else
 		uv_cycles = initial(uv_cycles)
@@ -238,6 +238,9 @@
 			for(var/obj/item/I in src) //Scorches away blood and forensic evidence, although the SSU itself is unaffected
 				I.clean_blood()
 				I.fingerprints = list()
+				var/datum/component/radioactive/contamination = I.GetComponent(/datum/component/radioactive)
+				if(contamination)
+					qdel(contamination)
 		open_machine(FALSE)
 		if(occupant)
 			dump_contents()

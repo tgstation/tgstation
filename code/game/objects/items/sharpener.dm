@@ -3,6 +3,7 @@
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "sharpener"
 	desc = "A block that makes things sharp."
+	force = 5
 	var/used = 0
 	var/increment = 4
 	var/max = 30
