@@ -6,7 +6,7 @@
 /obj/structure/shuttle/engine/propulsion{
 	dir = 1
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "ac" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -31,7 +31,7 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "ag" = (
 /obj/effect/decal/cleanable/dirt{
@@ -55,7 +55,7 @@
 /obj/structure/shuttle/engine/heater{
 	dir = 1
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "aj" = (
 /obj/structure/closet/firecloset/full,
