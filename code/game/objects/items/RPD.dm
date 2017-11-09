@@ -561,13 +561,18 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 	. = FALSE
 	switch(p_class) //if we've gotten this var, the target is valid
 		if(PAINT_MODE) //Paint pipes
+			if(!is_paintable)
+				return ..()
 			var/obj/machinery/atmospherics/pipe/P = A
-			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			P.paint(paint_colors[paint_color])
-			user.visible_message("<span class='notice'>[user] paints \the [P] [paint_color].</span>","<span class='notice'>You paint \the [P] [paint_color].</span>")
+			if(P)
+				playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
+				P.paint(paint_colors[paint_color])
+				user.visible_message("<span class='notice'>[user] paints \the [P] [paint_color].</span>","<span class='notice'>You paint \the [P] [paint_color].</span>")
 			return
 
 		if(EATING_MODE) //Eating pipes
+			if(!is_consumable)
+				return ..()
 			to_chat(user, "<span class='notice'>You start destroying a pipe...</span>")
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 2, target = A))
@@ -575,6 +580,8 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 				qdel(A)
 
 		if(ATMOS_MODE) //Making pipes
+			if(!can_make_pipe)
+				return ..()
 			to_chat(user, "<span class='notice'>You start building a pipe...</span>")
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 2, target = A))
@@ -597,6 +604,8 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 					P.setPipingLayer(piping_layer)
 
 		if(METER_MODE) //Making pipe meters
+			if(!can_make_pipe)
+				return ..()
 			to_chat(user, "<span class='notice'>You start building a meter...</span>")
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 2, target = A))
@@ -608,6 +617,8 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 					PM.setAttachLayer(piping_layer)
 
 		if(DISPOSALS_MODE) //Making disposals pipes
+			if(!can_make_pipe)
+				return ..()
 			if(isclosedturf(A))
 				to_chat(user, "<span class='warning'>\the [src]'s error light flickers; there's something in the way!</span>")
 				return
