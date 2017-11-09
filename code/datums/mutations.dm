@@ -658,7 +658,7 @@ GLOBAL_LIST_EMPTY(mutations_list)
 /datum/mutation/human/healing_hands/on_attack_hand(mob/living/carbon/human/owner, atom/target, proximity)
 	if(!next_heal_time[owner])
 		next_heal_time[owner] = 0
-	if(owner.a_intent != INTENT_HELP || world.time < next_heal_time[owner])
+	if(owner == target || owner.a_intent != INTENT_HELP || world.time < next_heal_time[owner])
 		return ..()
 	if(isliving(target))
 		var/mob/living/L = target
