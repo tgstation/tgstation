@@ -9,6 +9,7 @@
 /datum/round_event/ghost_role/abductor
 	minimum_required = 2
 	role_name = "abductor team"
+	fakeable = FALSE //Nothing to fake here
 
 /datum/round_event/ghost_role/abductor/spawn_role()
 	var/list/mob/dead/observer/candidates = get_candidates("abductor", null, ROLE_ABDUCTOR)
