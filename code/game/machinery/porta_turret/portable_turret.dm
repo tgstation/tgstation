@@ -16,7 +16,7 @@
 	use_power = IDLE_POWER_USE				//this turret uses and requires power
 	idle_power_usage = 50		//when inactive, this turret takes up constant 50 Equipment power
 	active_power_usage = 300	//when active, this turret takes up constant 300 Equipment power
-	req_access = list(ACCESS_SECURITY)
+	req_access = list(ACCESS_SEC_DOORS)
 	power_channel = EQUIP	//drains power from the EQUIPMENT channel
 
 	var/base_icon_state = "standard"
@@ -529,7 +529,7 @@
 	src.on = on
 	src.mode = mode
 	power_change()
-	
+
 /obj/machinery/porta_turret/proc/tellCPs()
 	for (var/obj/machinery/turretid/cp in cps)
 		cp.set_state(on, mode)
@@ -793,7 +793,7 @@
 /obj/machinery/turretid/power_change()
 	..()
 	update_icon()
-	
+
 /obj/machinery/turretid/proc/set_state(en, leth)
 	enabled = en
 	lethal = leth
