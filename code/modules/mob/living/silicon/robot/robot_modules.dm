@@ -324,7 +324,6 @@
 	feedback_key = "cyborg_engineering"
 	magpulsing = TRUE
 	hat_offset = INFINITY // No hats
-
 /obj/item/robot_module/security
 	name = "Security"
 	basic_modules = list(
@@ -356,8 +355,7 @@
 			T.cell.give(S.e_cost * coeff)
 			T.update_icon()
 		else
-			T.charge_tick = 0
-
+ 			T.charge_tick = 0
 /obj/item/robot_module/peacekeeper
 	name = "Peacekeeper"
 	basic_modules = list(
