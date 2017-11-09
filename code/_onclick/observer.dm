@@ -51,8 +51,7 @@
 /mob/dead/observer/CtrlClickOn(atom/A)
 	if(isliving(A))
 		var/mob/living/target = A
-		var/datum/component/ondemand_possessable/target_possessable = target.GetComponent(/datum/component/ondemand_possessable)
-		if(target_possessable)
+		if(target.ondemand_possessable)
 			ondemand_possess(target)
 			return
 	..()

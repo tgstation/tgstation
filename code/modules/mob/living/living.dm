@@ -1031,3 +1031,13 @@
 /mob/living/proc/add_abilities_to_panel()
 	for(var/obj/effect/proc_holder/A in abilities)
 		statpanel("[A.panel]",A.get_panel_text(),A)
+
+/mob/living/proc/adjust_ondemand_possessable(amount)
+	ondemand_possessable = max(ondemand_possessable + amount, 0)
+	var/datum/atom_hud/ghost/interactable/possessable_hud = GLOB.huds[GHOST_HUD_INTERACTABLE]
+	if(ondemand_possessable)
+		possessable_hud.add_to_hud(src)
+		var/image/holder = hud_list[GHOST_HUD]
+		holder.icon_state = "possessable"
+	else
+		possessable_hud.remove_from_hud(src)
