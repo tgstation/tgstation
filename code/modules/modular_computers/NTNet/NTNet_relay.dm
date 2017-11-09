@@ -100,8 +100,7 @@
 	ui_interact(user)
 
 /obj/machinery/ntnet_relay/Initialize()
-	uid = gl_uid
-	gl_uid++
+	uid = gl_uid++
 	component_parts = list()
 
 	if(GLOB.ntnet_global)

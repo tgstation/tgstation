@@ -20,6 +20,5 @@
 	..(intact)
 
 /obj/machinery/atmospherics/components/unary/proc/assign_uid_vents()
-	uid = num2text(gl_uid)
-	gl_uid++
+	uid = num2text(gl_uid++)
 	return uid

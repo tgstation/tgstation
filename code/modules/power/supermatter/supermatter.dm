@@ -139,8 +139,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 
 /obj/machinery/power/supermatter_shard/Initialize()
 	. = ..()
-	uid = gl_uid
-	gl_uid++
+	uid = gl_uid++
 	SSair.atmos_machinery += src
 	countdown = new(src)
 	countdown.start()
