@@ -580,10 +580,8 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 			if(do_after(user, 2, target = A))
 				activate()
 
-				var/pipe_item_type = /obj/item/pipe
-				var/obj/machinery/atmospherics/cached_pipe = SSair.get_pipe_cache(queued_p_type)
-				if(istype(cached_pipe) && cached_pipe.construction_type)
-					pipe_item_type = cached_pipe.construction_type
+				var/obj/machinery/atmospherics/path = queued_p_type
+				var/pipe_item_type = initial(path.construction_type) || /obj/item/pipe
 
 				var/obj/item/pipe/P = new pipe_item_type(A, queued_p_type, queued_p_dir)
 
