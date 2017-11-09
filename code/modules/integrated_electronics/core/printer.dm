@@ -32,7 +32,7 @@
 
 		// First loop is to seperate the actual circuits from base circuits.
 	var/list/circuits_to_use = list()
-	for(var/obj/item/integrated_circuit/IC in GLOB.all_integrated_circuits)
+	for(var/obj/item/integrated_circuit/IC in SScircuit.all_integrated_circuits)
 		if((IC.spawn_flags & IC_SPAWN_DEFAULT) || (IC.spawn_flags & IC_SPAWN_RESEARCH))
 			circuits_to_use.Add(IC)
 		// Second loop is to find all categories.
@@ -294,7 +294,7 @@
 	var/metalcost = 0
 	for(var/obj/item/I in assembly_list)
 		as_samp[I.name] = I
-	for(var/obj/item/integrated_circuit/IC in GLOB.all_integrated_circuits)
+	for(var/obj/item/integrated_circuit/IC in SScircuit.all_integrated_circuits)
 		if((IC.spawn_flags & IC_SPAWN_DEFAULT) || (IC.spawn_flags & IC_SPAWN_RESEARCH))
 			cir_samp[IC.name] = IC
 	if(debug)
