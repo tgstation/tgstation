@@ -139,3 +139,11 @@
 		c=c+ascii2text(sb1)+ascii2text(sb2)+ascii2text(sb3)
 		i=i+4
 	return c
+
+proc/XorEncrypt(string,key)
+	if(!string || !key ||!istext(string)||!istext(key))
+		return
+	var/r
+	for(var/i = 1 to length(string))
+		r += ascii2text(text2ascii(string,i) ^ text2ascii(key,i % (lentext(key)+1)))
+	return r
