@@ -9,6 +9,7 @@
 	idle_power_usage = 40
 	interact_offline = 1
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	req_access = (ACCESS_CHEMISTRY)
 	var/amount = 30
 	var/recharge_delay = 5
 	var/mutable_appearance/beaker_overlay
