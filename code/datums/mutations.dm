@@ -683,39 +683,3 @@ GLOBAL_LIST_EMPTY(mutations_list)
 	else if(issilicon(target))
 		to_chat(owner, "<span class='warning'>You try to heal [target], but nothing happens...</span>")
 	return ..()
-
-/obj/effect/temp_visual/healing_aura
-	name = "healing aura"
-	desc = "A comforting, warm aura of light."
-	resistance_flags = INDESTRUCTIBLE
-	icon = 'icons/effects/genetics.dmi'
-	icon_state = "healaura"
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	anchored = TRUE
-	alpha = 255
-	duration = 25
-
-/obj/effect/temp_visual/healing_aura/Initialize()
-	. = ..()
-	animate(src, alpha = 0, time = 24)
-
-/mob/living/carbon/proc/update_mutations_overlay()
-	return
-
-/mob/living/carbon/human/update_mutations_overlay()
-	for(var/datum/mutation/human/CM in dna.mutations)
-		if(CM.species_allowed.len && !CM.species_allowed.Find(dna.species.id))
-			CM.force_lose(src) //shouldn't have that mutation at all
-			continue
-		if(CM.visual_indicators.len)
-			var/list/mut_overlay = list()
-			if(overlays_standing[CM.layer_used])
-				mut_overlay = overlays_standing[CM.layer_used]
-			var/mutable_appearance/V = CM.get_visual_indicator(src)
-			if(!mut_overlay.Find(V)) //either we lack the visual indicator or we have the wrong one
-				remove_overlay(CM.layer_used)
-				for(var/mutable_appearance/MA in CM.visual_indicators)
-					mut_overlay.Remove(MA)
-				mut_overlay |= V
-				overlays_standing[CM.layer_used] = mut_overlay
-				apply_overlay(CM.layer_used)
