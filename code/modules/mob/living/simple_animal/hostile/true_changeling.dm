@@ -46,16 +46,7 @@
 
 /mob/living/simple_animal/hostile/true_changeling/New()
 	..()
-	var/horrorskin = pick(1, 2, 3, 4)
-	switch(horrorskin)
-		if(1)
-			icon_state = "horror1"
-		if(2)
-			icon_state = "horror2"
-		if(3)
-			icon_state = "horror3"
-		if(4)
-			icon_state = "horror4"
+	icon_state = "horror[rand(1, 4)]"
 	playsound(usr, 'sound/creatures/ling_scream.ogg', 50, 1)
 
 /mob/living/simple_animal/hostile/true_changeling/Login()
