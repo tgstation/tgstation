@@ -1,7 +1,7 @@
 //This is a MIRRORED /TG/ PROC
 /*
 Booleans have been brought up to code standard
-Direct holder reference "splash_holder" changed to a particle_effect object named "epicentre" with it's own holder thanks to the create_reagents proc
+Direct holder reference "splash_holder" name changed to "source" which creates a temporary particle effect with it's own holder to react with turfs while still allowing grenade shitcode to work with the turf referenced "source" holder
 This allows for the "handle_state_change" proc to type check the source of the reaction as a particle effect and apply the same code it does for smoke and foam regarding dupe reduction (currently define multipliers)
 */
 /proc/chem_splash(turf/epicenter, affected_range = 3, list/datum/reagents/reactants = list(), extra_heat = 0, threatscale = 1, adminlog = 1)
@@ -11,24 +11,30 @@ This allows for the "handle_state_change" proc to type check the source of the r
 	var/total_reagents
 	for(var/datum/reagents/R in reactants)
 		if(R.total_volume)
-			has_reagents = 1
+			has_reagents = TRUE
 			total_reagents += R.total_volume
 
 	if(!has_reagents)
 		return
 
-	var/atom/epicentre = new /obj/effect/particle_effect/steam
-	epicentre.create_reagents(total_reagents)
-
+	var/datum/reagents/source = new/datum/reagents(total_reagents*threatscale)
+	source.my_atom = epicenter
 	var/total_temp = 0
 
 	for(var/datum/reagents/R in reactants)
-		R.trans_to(epicentre.reagents, R.total_volume, threatscale, 1, 1)
+		R.trans_to(source, R.total_volume, threatscale, 1, 1)
 		total_temp += R.chem_temp
-	epicentre.reagents.chem_temp = (total_temp/reactants.len) + extra_heat // Average temperature of reagents + extra heat.
-	epicentre.reagents.handle_reactions() // React them now.
+	source.chem_temp = (total_temp/reactants.len) + extra_heat // Average temperature of reagents + extra heat.
+	source.handle_reactions() // React them now.
+	var/atom/react = new /obj/effect/particle_effect
+	react.create_reagents(total_reagents * threatscale)
+	if(source.total_volume <= 0)
+		return TRUE
+	source.copy_to(react.reagents, source.total_volume)
+	react.reagents.chem_temp = source.chem_temp
+	react.reagents.handle_reactions()
 
-	if(epicentre.reagents.total_volume && affected_range >= 0)	//The possible reactions didnt use up all reagents, so we spread it around.
+	if(source.total_volume && affected_range >= 0)	//The possible reactions didnt use up all reagents, so we spread it around.
 		var/datum/effect_system/steam_spread/steam = new /datum/effect_system/steam_spread()
 		steam.set_up(10, 0, epicenter)
 		steam.attach(epicenter)
@@ -70,7 +76,8 @@ This allows for the "handle_state_change" proc to type check the source of the r
 			var/atom/A = thing
 			var/distance = max(1,get_dist(A, epicenter))
 			var/fraction = 0.5/(2 ** distance) //50/25/12/6... for a 200u splash, 25/12/6/3... for a 100u, 12/6/3/1 for a 50u
-			epicentre.reagents.reaction(A, TOUCH, fraction)
+			react.reagents.reaction(A, TOUCH, fraction)
 
-	qdel(epicentre)
+	qdel(react)
+	qdel(source)
 	return TRUE
