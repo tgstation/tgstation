@@ -226,7 +226,6 @@
 			mob_occupant.Unconscious(80)
 			var/dmg_mult = CONFIG_GET(number/damage_multiplier)
 			 //Slowly get that clone healed and finished.
-			mob_occupant.adjustCloneLoss(-((speed_coeff / 2) * dmg_mult))
 			var/progress = CLONE_INITIAL_DAMAGE - mob_occupant.getCloneLoss()
 			// To avoid the default cloner making incomplete clones
 			progress += (100 - MINIMUM_HEAL_LEVEL)
@@ -242,6 +241,7 @@
 				else if(isbodypart(I))
 					var/obj/item/bodypart/BP = I
 					BP.attach_limb(mob_occupant)
+			mob_occupant.setCloneLoss(0)
 
 			//Premature clones may have brain damage.
 			mob_occupant.adjustBrainLoss(-((speed_coeff / 2) * dmg_mult))
@@ -253,7 +253,7 @@
 		else if((mob_occupant.cloneloss <= (100 - heal_level)))
 			connected_message("Cloning Process Complete.")
 			SPEAK("The cloning cycle of [mob_occupant.real_name] is complete.")
-
+			mob_occupant.setCloneLoss(0)
 			// If the cloner is upgraded to debugging high levels, sometimes
 			// organs and limbs can be missing.
 			for(var/i in unattached_flesh)
