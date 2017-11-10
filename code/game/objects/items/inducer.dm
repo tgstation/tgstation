@@ -62,7 +62,7 @@
 
 
 /obj/item/inducer/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/screwdriver))
+	if(isscrewdriver(W))
 		playsound(src, W.usesound, 50, 1)
 		if(!opened)
 			to_chat(user, "<span class='notice'>You unscrew the battery compartment.</span>")

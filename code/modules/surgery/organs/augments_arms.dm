@@ -43,7 +43,7 @@
 
 /obj/item/organ/cyberimp/arm/attackby(obj/item/W, mob/user, params)
 	..()
-	if(istype(W, /obj/item/screwdriver))
+	if(isscrewdriver(W))
 		if(zone == "r_arm")
 			zone = "l_arm"
 		else

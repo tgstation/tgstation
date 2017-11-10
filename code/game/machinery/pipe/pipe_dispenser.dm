@@ -80,7 +80,7 @@ PIPING LAYER: <A href='?src=[REF(src)];layer_down=1'>--</A><b>[piping_layer]</b>
 		to_chat(usr, "<span class='notice'>You put [W] back into [src].</span>")
 		qdel(W)
 		return
-	else if (istype(W, /obj/item/wrench))
+	else if (iswrench(W))
 		if (!anchored && !isinspace())
 			playsound(src, W.usesound, 50, 1)
 			to_chat(user, "<span class='notice'>You begin to fasten \the [src] to the floor...</span>")

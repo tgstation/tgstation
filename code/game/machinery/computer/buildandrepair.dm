@@ -7,7 +7,7 @@
 	add_fingerprint(user)
 	switch(state)
 		if(0)
-			if(istype(P, /obj/item/wrench))
+			if(iswrench(P))
 				playsound(src.loc, P.usesound, 50, 1)
 				to_chat(user, "<span class='notice'>You start wrenching the frame into place...</span>")
 				if(do_after(user, 20*P.toolspeed, target = src))
@@ -15,7 +15,7 @@
 					anchored = TRUE
 					state = 1
 				return
-			if(istype(P, /obj/item/weldingtool))
+			if(iswelder(P))
 				var/obj/item/weldingtool/WT = P
 				if(!WT.remove_fuel(0, user))
 					if(!WT.isOn())
@@ -32,7 +32,7 @@
 					qdel(src)
 				return
 		if(1)
-			if(istype(P, /obj/item/wrench))
+			if(iswrench(P))
 				playsound(src.loc, P.usesound, 50, 1)
 				to_chat(user, "<span class='notice'>You start to unfasten the frame...</span>")
 				if(do_after(user, 20*P.toolspeed, target = src))
@@ -53,13 +53,13 @@
 			else if(istype(P, /obj/item/circuitboard) && !circuit)
 				to_chat(user, "<span class='warning'>This frame does not accept circuit boards of this type!</span>")
 				return
-			if(istype(P, /obj/item/screwdriver) && circuit)
+			if(isscrewdriver(P) && circuit)
 				playsound(src.loc, P.usesound, 50, 1)
 				to_chat(user, "<span class='notice'>You screw [circuit] into place.</span>")
 				state = 2
 				icon_state = "2"
 				return
-			if(istype(P, /obj/item/crowbar) && circuit)
+			if(iscrowbar(P) && circuit)
 				playsound(src.loc, P.usesound, 50, 1)
 				to_chat(user, "<span class='notice'>You remove [circuit].</span>")
 				state = 1
@@ -69,13 +69,13 @@
 				circuit = null
 				return
 		if(2)
-			if(istype(P, /obj/item/screwdriver) && circuit)
+			if(isscrewdriver(P) && circuit)
 				playsound(src.loc, P.usesound, 50, 1)
 				to_chat(user, "<span class='notice'>You unfasten the circuit board.</span>")
 				state = 1
 				icon_state = "1"
 				return
-			if(istype(P, /obj/item/stack/cable_coil))
+			if(iscable(P))
 				var/obj/item/stack/cable_coil/C = P
 				if(C.get_amount() >= 5)
 					playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
@@ -90,7 +90,7 @@
 					to_chat(user, "<span class='warning'>You need five lengths of cable to wire the frame!</span>")
 				return
 		if(3)
-			if(istype(P, /obj/item/wirecutters))
+			if(iswirecutter(P))
 				playsound(src.loc, P.usesound, 50, 1)
 				to_chat(user, "<span class='notice'>You remove the cables.</span>")
 				state = 2
@@ -116,7 +116,7 @@
 							src.icon_state = "4"
 				return
 		if(4)
-			if(istype(P, /obj/item/crowbar))
+			if(iscrowbar(P))
 				playsound(src.loc, P.usesound, 50, 1)
 				to_chat(user, "<span class='notice'>You remove the glass panel.</span>")
 				state = 3
@@ -124,7 +124,7 @@
 				var/obj/item/stack/sheet/glass/G = new (loc, 2)
 				G.add_fingerprint(user)
 				return
-			if(istype(P, /obj/item/screwdriver))
+			if(isscrewdriver(P))
 				playsound(src.loc, P.usesound, 50, 1)
 				to_chat(user, "<span class='notice'>You connect the monitor.</span>")
 				var/obj/B = new src.circuit.build_path (src.loc, circuit)

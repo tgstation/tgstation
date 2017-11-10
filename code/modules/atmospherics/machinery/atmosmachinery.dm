@@ -184,7 +184,7 @@ Pipelines + Other Objects -> Pipe network
 		if(user.dropItemToGround(pipe))
 			pipe.setPipingLayer(piping_layer) //align it with us
 			return TRUE
-	if(istype(W, /obj/item/wrench))
+	if(iswrench(W))
 		if(can_unwrench(user))
 			var/turf/T = get_turf(src)
 			if (level==1 && isturf(T) && T.intact)

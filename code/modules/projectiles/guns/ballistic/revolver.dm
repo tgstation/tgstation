@@ -112,7 +112,7 @@
 
 /obj/item/gun/ballistic/revolver/detective/attackby(obj/item/A, mob/user, params)
 	..()
-	if(istype(A, /obj/item/screwdriver))
+	if(isscrewdriver(A))
 		if(magazine.caliber == "38")
 			to_chat(user, "<span class='notice'>You begin to reinforce the barrel of [src]...</span>")
 			if(magazine.ammo_count())
@@ -317,7 +317,7 @@
 
 /obj/item/gun/ballistic/revolver/doublebarrel/improvised/attackby(obj/item/A, mob/user, params)
 	..()
-	if(istype(A, /obj/item/stack/cable_coil) && !sawn_state)
+	if(iscable(A) && !sawn_state)
 		var/obj/item/stack/cable_coil/C = A
 		if(C.use(10))
 			slot_flags = SLOT_BACK

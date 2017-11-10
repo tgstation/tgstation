@@ -38,7 +38,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 
 /obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
-	if(istype(W, /obj/item/stack/cable_coil))
+	if(iscable(W))
 		var/obj/item/stack/cable_coil/CC = W
 		if (get_amount() < 1 || CC.get_amount() < 5)
 			to_chat(user, "<span class='warning>You need five lengths of coil and one sheet of glass to make wired glass!</span>")
@@ -239,7 +239,7 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 /obj/item/shard/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/lightreplacer))
 		I.attackby(src, user)
-	else if(istype(I, /obj/item/weldingtool))
+	else if(iswelder(I))
 		var/obj/item/weldingtool/WT = I
 		if(WT.remove_fuel(0, user))
 			var/obj/item/stack/sheet/glass/NG = new (user.loc)

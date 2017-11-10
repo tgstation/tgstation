@@ -14,7 +14,7 @@
 	return ..()
 
 /obj/item/assembly/shock_kit/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/wrench))
+	if(iswrench(W))
 		var/turf/T = loc
 		if(ismob(T))
 			T = T.loc

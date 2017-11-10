@@ -382,7 +382,7 @@
 		if(install_component(W, user))
 			return
 
-	if(istype(W, /obj/item/wrench))
+	if(iswrench(W))
 		if(all_components.len)
 			to_chat(user, "<span class='warning'>Remove all components from \the [src] before disassembling it.</span>")
 			return
@@ -392,7 +392,7 @@
 		qdel(src)
 		return
 
-	if(istype(W, /obj/item/weldingtool))
+	if(iswelder(W))
 		var/obj/item/weldingtool/WT = W
 		if(!WT.isOn())
 			to_chat(user, "<span class='warning'>\The [W] is off.</span>")
@@ -409,7 +409,7 @@
 			to_chat(user, "<span class='notice'>You repair \the [src].</span>")
 		return
 
-	if(istype(W, /obj/item/screwdriver))
+	if(isscrewdriver(W))
 		if(!all_components.len)
 			to_chat(user, "<span class='warning'>This device doesn't have any components installed.</span>")
 			return

@@ -213,7 +213,7 @@
 		return
 	if(opened)
 		if(istype(W, cutting_tool))
-			if(istype(W, /obj/item/weldingtool))
+			if(iswelder(W))
 				var/obj/item/weldingtool/WT = W
 				if(WT.remove_fuel(0, user))
 					to_chat(user, "<span class='notice'>You begin cutting \the [src] apart...</span>")
@@ -234,7 +234,7 @@
 				return 0
 		if(user.transferItemToLoc(W, drop_location())) // so we put in unlit welder too
 			return 1
-	else if(istype(W, /obj/item/weldingtool) && can_weld_shut)
+	else if(iswelder(W) && can_weld_shut)
 		var/obj/item/weldingtool/WT = W
 		if(!WT.remove_fuel(0, user))
 			return
@@ -249,7 +249,7 @@
 							"<span class='notice'>You [welded ? "weld" : "unwelded"] \the [src] with \the [WT].</span>",
 							"<span class='italics'>You hear welding.</span>")
 			update_icon()
-	else if(istype(W, /obj/item/wrench) && anchorable)
+	else if(iswrench(W) && anchorable)
 		if(isinspace() && !anchored)
 			return
 		anchored = !anchored

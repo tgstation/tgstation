@@ -39,14 +39,14 @@
 	switch(state)
 		if(1)
 			// State 1
-			if(istype(W, /obj/item/weldingtool))
+			if(iswelder(W))
 				if(weld(W, user))
 					to_chat(user, "<span class='notice'>You weld the assembly securely into place.</span>")
 					anchored = TRUE
 					state = 2
 				return
 
-			else if(istype(W, /obj/item/wrench))
+			else if(iswrench(W))
 				playsound(src.loc, W.usesound, 50, 1)
 				to_chat(user, "<span class='notice'>You unattach the assembly from its place.</span>")
 				new /obj/item/wallframe/camera(get_turf(src))
@@ -55,7 +55,7 @@
 
 		if(2)
 			// State 2
-			if(istype(W, /obj/item/stack/cable_coil))
+			if(iscable(W))
 				var/obj/item/stack/cable_coil/C = W
 				if(C.use(2))
 					to_chat(user, "<span class='notice'>You add wires to the assembly.</span>")
@@ -65,7 +65,7 @@
 					return
 				return
 
-			else if(istype(W, /obj/item/weldingtool))
+			else if(iswelder(W))
 
 				if(weld(W, user))
 					to_chat(user, "<span class='notice'>You unweld the assembly from its place.</span>")
@@ -76,7 +76,7 @@
 
 		if(3)
 			// State 3
-			if(istype(W, /obj/item/screwdriver))
+			if(isscrewdriver(W))
 				playsound(src.loc, W.usesound, 50, 1)
 
 				var/input = stripped_input(user, "Which networks would you like to connect this camera to? Separate networks with a comma. No Spaces!\nFor example: SS13,Security,Secret ", "Set Network", "SS13")
@@ -100,7 +100,7 @@
 				C.c_tag = "[A.name] ([rand(1, 999)])"
 
 
-			else if(istype(W, /obj/item/wirecutters))
+			else if(iswirecutter(W))
 				new/obj/item/stack/cable_coil(get_turf(src), 2)
 				playsound(src.loc, W.usesound, 50, 1)
 				to_chat(user, "<span class='notice'>You cut the wires from the circuits.</span>")
@@ -116,7 +116,7 @@
 		return
 
 	// Taking out upgrades
-	else if(istype(W, /obj/item/crowbar) && upgrades.len)
+	else if(iscrowbar(W) && upgrades.len)
 		var/obj/U = locate(/obj) in upgrades
 		if(U)
 			to_chat(user, "<span class='notice'>You unattach an upgrade from the assembly.</span>")

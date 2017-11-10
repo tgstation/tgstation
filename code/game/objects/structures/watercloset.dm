@@ -72,7 +72,7 @@
 
 
 /obj/structure/toilet/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/crowbar))
+	if(iscrowbar(I))
 		to_chat(user, "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]...</span>")
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
 		if(do_after(user, 30*I.toolspeed, target = src))
@@ -159,7 +159,7 @@
 		..()
 
 /obj/structure/urinal/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/screwdriver))
+	if(isscrewdriver(I))
 		to_chat(user, "<span class='notice'>You start to [exposed ? "screw the cap back into place" : "unscrew the cap to the drain protector"]...</span>")
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
 		if(do_after(user, 20*I.toolspeed, target = src))
@@ -242,7 +242,7 @@
 /obj/machinery/shower/attackby(obj/item/I, mob/user, params)
 	if(I.type == /obj/item/device/analyzer)
 		to_chat(user, "<span class='notice'>The water temperature seems to be [watertemp].</span>")
-	if(istype(I, /obj/item/wrench))
+	if(iswrench(I))
 		to_chat(user, "<span class='notice'>You begin to adjust the temperature valve with \the [I]...</span>")
 		if(do_after(user, 50*I.toolspeed, target = src))
 			switch(watertemp)
@@ -609,7 +609,7 @@
 /obj/structure/curtain/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/toy/crayon))
 		color = input(user,"Choose Color") as color
-	else if(istype(W, /obj/item/screwdriver))
+	else if(isscrewdriver(W))
 		if(anchored)
 			playsound(src.loc, W.usesound, 100, 1)
 			user.visible_message("<span class='warning'>[user] unscrews [src] from the floor.</span>", "<span class='notice'>You start to unscrew [src] from the floor...</span>", "You hear rustling noises.")
@@ -626,7 +626,7 @@
 					return
 				anchored = TRUE
 				to_chat(user, "<span class='notice'>You screw [src] to the floor.</span>")
-	else if(istype(W, /obj/item/wirecutters))
+	else if(iswirecutter(W))
 		if(!anchored)
 			playsound(src.loc, W.usesound, 100, 1)
 			user.visible_message("<span class='warning'>[user] cuts apart [src].</span>", "<span class='notice'>You start to cut apart [src].</span>", "You hear cutting.")

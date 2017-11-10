@@ -151,7 +151,7 @@
 	return ..()
 
 /obj/machinery/teleport/station/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/device/multitool))
+	if(ismultitool(W))
 		var/obj/item/device/multitool/M = W
 		if(panel_open)
 			M.buffer = src
@@ -175,7 +175,7 @@
 	else if(default_deconstruction_crowbar(W))
 		return
 
-	else if(istype(W, /obj/item/wirecutters))
+	else if(iswirecutter(W))
 		if(panel_open)
 			link_console_and_hub()
 			to_chat(user, "<span class='caution'>You reconnect the station to nearby machinery.</span>")

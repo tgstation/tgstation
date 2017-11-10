@@ -375,7 +375,7 @@
 
 	if(issilicon(user) && get_dist(src,user)>1)
 		return src.attack_hand(user)
-	if (istype(W, /obj/item/crowbar)) //Using crowbar
+	if (iscrowbar(W)) //Using crowbar
 		if (opened) // a) on open apc
 			if (has_electronics==1)
 				if (terminal)
@@ -457,7 +457,7 @@
 			chargecount = 0
 			update_icon()
 
-	else if	(istype(W, /obj/item/screwdriver))	// haxing
+	else if	(isscrewdriver(W))	// haxing
 		if(opened)
 			if (cell)
 				to_chat(user, "<span class='warning'>Close the APC first!</span>") //Less hints more mystery!
@@ -503,7 +503,7 @@
 			else
 				to_chat(user, "<span class='warning'>Access denied.</span>")
 
-	else if (istype(W, /obj/item/stack/cable_coil) && opened)
+	else if (iscable(W) && opened)
 		var/turf/host_turf = get_turf(src)
 		if(!host_turf)
 			throw EXCEPTION("attackby on APC when it's not on a turf")
@@ -539,7 +539,7 @@
 				make_terminal()
 				terminal.connect_to_network()
 
-	else if (istype(W, /obj/item/wirecutters) && terminal && opened)
+	else if (iswirecutter(W) && terminal && opened)
 		terminal.dismantle(user, W)
 
 	else if (istype(W, /obj/item/electronics/apc) && opened)
@@ -589,7 +589,7 @@
 			to_chat(user, "<span class='warning'>[src] has both electronics and a cell.</span>")
 			return
 
-	else if (istype(W, /obj/item/weldingtool) && opened && has_electronics==0 && !terminal)
+	else if (iswelder(W) && opened && has_electronics==0 && !terminal)
 		var/obj/item/weldingtool/WT = W
 		if (WT.get_fuel() < 3)
 			to_chat(user, "<span class='warning'>You need more welding fuel to complete this task!</span>")

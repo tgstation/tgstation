@@ -114,7 +114,7 @@
 // attach a wire to a power machine - leads from the turf you are standing on
 //almost never called, overwritten by all power machines but terminal and generator
 /obj/machinery/power/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/stack/cable_coil))
+	if(iscable(W))
 		var/obj/item/stack/cable_coil/coil = W
 		var/turf/T = user.loc
 		if(T.intact || !isfloorturf(T))

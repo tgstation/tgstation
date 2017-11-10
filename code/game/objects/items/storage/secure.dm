@@ -33,14 +33,14 @@
 
 /obj/item/storage/secure/attackby(obj/item/W, mob/user, params)
 	if(locked)
-		if (istype(W, /obj/item/screwdriver))
+		if (isscrewdriver(W))
 			if (do_after(user, 20*W.toolspeed, target = user))
 				open =! open
 				to_chat(user, "<span class='notice'>You [open ? "open" : "close"] the service panel.</span>")
 			return
-		if (istype(W, /obj/item/wirecutters) || istype(W, /obj/item/card/emag))
+		if (iswirecutter(W) || istype(W, /obj/item/card/emag))
 			to_chat(user, "<span class='danger'>[src] is protected from this sort of tampering, yet it appears the internal memory wires can still be <b>pulsed</b>.</span>")
-		if ((istype(W, /obj/item/device/multitool)) && (!l_hacking))
+		if ((ismultitool(W)) && (!l_hacking))
 			if(src.open == 1)
 				to_chat(user, "<span class='danger'>Now attempting to reset internal memory, please hold.</span>")
 				src.l_hacking = 1

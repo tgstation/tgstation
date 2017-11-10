@@ -521,7 +521,7 @@
 
 /obj/item/device/radio/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
-	if(istype(W, /obj/item/screwdriver))
+	if(isscrewdriver(W))
 		b_stat = !b_stat
 		if(b_stat)
 			to_chat(user, "<span class='notice'>The radio can now be attached and modified!</span>")
@@ -571,7 +571,7 @@
 
 /obj/item/device/radio/borg/attackby(obj/item/W, mob/user, params)
 
-	if(istype(W, /obj/item/screwdriver))
+	if(isscrewdriver(W))
 		if(keyslot)
 			for(var/ch_name in channels)
 				SSradio.remove_object(src, GLOB.radiochannels[ch_name])

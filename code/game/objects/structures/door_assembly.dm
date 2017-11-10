@@ -524,7 +524,7 @@
 				mineral = null //I know this is stupid, but until we change glass to a boolean it's how this code works.
 			to_chat(user, "<span class='notice'>You change the paintjob on the airlock assembly.</span>")
 
-	else if(istype(W, /obj/item/weldingtool) && !anchored )
+	else if(iswelder(W) && !anchored )
 		var/obj/item/weldingtool/WT = W
 		if(WT.remove_fuel(0,user))
 			user.visible_message("<span class='warning'>[user] disassembles the airlock assembly.</span>", \
@@ -537,7 +537,7 @@
 				to_chat(user, "<span class='notice'>You disassemble the airlock assembly.</span>")
 				deconstruct(TRUE)
 
-	else if(istype(W, /obj/item/wrench))
+	else if(iswrench(W))
 		if(!anchored )
 			var/door_check = 1
 			for(var/obj/machinery/door/D in loc)
@@ -572,7 +572,7 @@
 				name = "airlock assembly"
 				anchored = FALSE
 
-	else if(istype(W, /obj/item/stack/cable_coil) && state == 0 && anchored )
+	else if(iscable(W) && state == 0 && anchored )
 		var/obj/item/stack/cable_coil/C = W
 		if (C.get_amount() < 1)
 			to_chat(user, "<span class='warning'>You need one length of cable to wire the airlock assembly!</span>")
@@ -587,7 +587,7 @@
 			to_chat(user, "<span class='notice'>You wire the airlock assembly.</span>")
 			name = "wired airlock assembly"
 
-	else if(istype(W, /obj/item/wirecutters) && state == 1 )
+	else if(iswirecutter(W) && state == 1 )
 		playsound(src, W.usesound, 100, 1)
 		user.visible_message("[user] cuts the wires from the airlock assembly.", \
 							"<span class='notice'>You start to cut the wires from the airlock assembly...</span>")
@@ -616,7 +616,7 @@
 			electronics = W
 
 
-	else if(istype(W, /obj/item/crowbar) && state == 2 )
+	else if(iscrowbar(W) && state == 2 )
 		playsound(src, W.usesound, 100, 1)
 		user.visible_message("[user] removes the electronics from the airlock assembly.", \
 								"<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
@@ -681,7 +681,7 @@
 							airlock_type = text2path ("/obj/machinery/door/airlock/[M]")
 							glass_type = /obj/machinery/door/airlock/glass
 
-	else if(istype(W, /obj/item/screwdriver) && state == 2 )
+	else if(isscrewdriver(W) && state == 2 )
 		playsound(src, W.usesound, 100, 1)
 		user.visible_message("[user] finishes the airlock.", \
 							 "<span class='notice'>You start finishing the airlock...</span>")

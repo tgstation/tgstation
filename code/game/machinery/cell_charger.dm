@@ -54,7 +54,7 @@
 			user.visible_message("[user] inserts a cell into [src].", "<span class='notice'>You insert a cell into [src].</span>")
 			chargelevel = -1
 			updateicon()
-	else if(istype(W, /obj/item/wrench))
+	else if(iswrench(W))
 		if(charging)
 			to_chat(user, "<span class='warning'>Remove the cell first!</span>")
 			return

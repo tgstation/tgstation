@@ -148,7 +148,7 @@ Buildable meters
 	return rotate()
 
 /obj/item/pipe/attackby(obj/item/W, mob/user, params)
-	if (!istype(W, /obj/item/wrench))
+	if (!iswrench(W))
 		return ..()
 	if (!isturf(loc))
 		return TRUE
@@ -216,7 +216,7 @@ Buildable meters
 /obj/item/pipe_meter/attackby(obj/item/I, mob/user, params)
 	..()
 
-	if (!istype(I, /obj/item/wrench))
+	if (!iswrench(I))
 		return ..()
 	var/obj/machinery/atmospherics/pipe/pipe
 	for(var/obj/machinery/atmospherics/pipe/P in loc)

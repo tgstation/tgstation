@@ -117,11 +117,11 @@
 /obj/structure/grille/attackby(obj/item/W, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	add_fingerprint(user)
-	if(istype(W, /obj/item/wirecutters))
+	if(iswirecutter(W))
 		if(!shock(user, 100))
 			playsound(src, W.usesound, 100, 1)
 			deconstruct()
-	else if((istype(W, /obj/item/screwdriver)) && (isturf(loc) || anchored))
+	else if((isscrewdriver(W)) && (isturf(loc) || anchored))
 		if(!shock(user, 90))
 			playsound(src, W.usesound, 100, 1)
 			anchored = !anchored

@@ -66,7 +66,7 @@
 				. = 1
 
 /obj/item/device/assembly/voice/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/device/multitool))
+	if(ismultitool(W))
 		mode %= modes.len
 		mode++
 		to_chat(user, "You set [src] into a [modes[mode]] mode.")

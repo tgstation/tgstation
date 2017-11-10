@@ -86,7 +86,7 @@
 				return
 			holding = T
 			update_icon()
-	else if(istype(W, /obj/item/wrench))
+	else if(iswrench(W))
 		if(!(stat & BROKEN))
 			if(connected_port)
 				disconnect()
@@ -111,7 +111,7 @@
 					"<span class='notice'>You fasten [src] to the port.</span>", \
 					"<span class='italics'>You hear a ratchet.</span>")
 				update_icon()
-	else if(istype(W, /obj/item/device/analyzer) && Adjacent(user))
+	else if(isanalyzer(W) && Adjacent(user))
 		atmosanalyzer_scan(air_contents, user)
 	else
 		return ..()

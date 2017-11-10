@@ -279,7 +279,7 @@
 	qdel(src)
 
 /obj/machinery/portable_atmospherics/canister/attackby(obj/item/W, mob/user, params)
-	if(user.a_intent != INTENT_HARM && istype(W, /obj/item/weldingtool))
+	if(user.a_intent != INTENT_HARM && iswelder(W))
 		var/obj/item/weldingtool/WT = W
 		if(stat & BROKEN)
 			if(!WT.remove_fuel(0, user))

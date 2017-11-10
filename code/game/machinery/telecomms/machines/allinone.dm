@@ -56,5 +56,5 @@
 
 /obj/machinery/telecomms/allinone/attackby(obj/item/P, mob/user, params)
 
-	if(istype(P, /obj/item/device/multitool))
+	if(ismultitool(P))
 		attack_hand(user)

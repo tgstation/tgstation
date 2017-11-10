@@ -22,9 +22,9 @@
 	return ..()
 
 /obj/structure/fireaxecabinet/attackby(obj/item/I, mob/user, params)
-	if(iscyborg(user) || istype(I, /obj/item/device/multitool))
+	if(iscyborg(user) || ismultitool(I))
 		toggle_lock(user)
-	else if(istype(I, /obj/item/weldingtool) && user.a_intent == INTENT_HELP && !broken)
+	else if(iswelder(I) && user.a_intent == INTENT_HELP && !broken)
 		var/obj/item/weldingtool/WT = I
 		if(obj_integrity < max_integrity && WT.remove_fuel(2, user))
 			to_chat(user, "<span class='notice'>You begin repairing [src].</span>")

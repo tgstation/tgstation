@@ -218,7 +218,7 @@
 /obj/item/device/radio/headset/attackby(obj/item/W, mob/user, params)
 	user.set_machine(src)
 
-	if(istype(W, /obj/item/screwdriver))
+	if(isscrewdriver(W))
 		if(keyslot || keyslot2)
 
 

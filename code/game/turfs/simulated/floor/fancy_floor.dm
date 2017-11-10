@@ -20,7 +20,7 @@
 /turf/open/floor/wood/attackby(obj/item/C, mob/user, params)
 	if(..())
 		return
-	if(istype(C, /obj/item/screwdriver))
+	if(isscrewdriver(C))
 		pry_tile(C, user)
 		return
 
@@ -38,7 +38,7 @@
 	P.attackby(T, user, params)
 
 /turf/open/floor/wood/pry_tile(obj/item/C, mob/user, silent = FALSE)
-	var/is_screwdriver = istype(C, /obj/item/screwdriver)
+	var/is_screwdriver = isscrewdriver(C)
 	playsound(src, C.usesound, 80, 1)
 	return remove_tile(user, silent, make_tile = is_screwdriver)
 
@@ -101,7 +101,7 @@
 	slowdown = 2
 
 /turf/open/floor/grass/snow/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/crowbar))//You need to dig this turf out instead of crowbarring it
+	if(iscrowbar(W))//You need to dig this turf out instead of crowbarring it
 		return
 	..()
 

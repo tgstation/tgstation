@@ -35,7 +35,7 @@
 	return attack_hand(user)
 
 /obj/structure/bed/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/wrench) && !(flags_1&NODECONSTRUCT_1))
+	if(iswrench(W) && !(flags_1&NODECONSTRUCT_1))
 		playsound(src.loc, W.usesound, 50, 1)
 		deconstruct(TRUE)
 	else

@@ -99,14 +99,14 @@
 
 /obj/structure/table/attackby(obj/item/I, mob/user, params)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		if(istype(I, /obj/item/screwdriver) && deconstruction_ready)
+		if(isscrewdriver(I) && deconstruction_ready)
 			to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
 			playsound(src.loc, I.usesound, 50, 1)
 			if(do_after(user, 20*I.toolspeed, target = src))
 				deconstruct(TRUE)
 			return
 
-		if(istype(I, /obj/item/wrench) && deconstruction_ready)
+		if(iswrench(I) && deconstruction_ready)
 			to_chat(user, "<span class='notice'>You start deconstructing [src]...</span>")
 			playsound(src.loc, I.usesound, 50, 1)
 			if(do_after(user, 40*I.toolspeed, target = src))
@@ -305,7 +305,7 @@
 		to_chat(user, "<span class='notice'>The top cover is firmly <b>welded</b> on.</span>")
 
 /obj/structure/table/reinforced/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weldingtool))
+	if(iswelder(W))
 		var/obj/item/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
 			playsound(src.loc, W.usesound, 50, 1)
@@ -444,7 +444,7 @@
 
 
 /obj/structure/rack/attackby(obj/item/W, mob/user, params)
-	if (istype(W, /obj/item/wrench) && !(flags_1&NODECONSTRUCT_1))
+	if (iswrench(W) && !(flags_1&NODECONSTRUCT_1))
 		playsound(src.loc, W.usesound, 50, 1)
 		deconstruct(TRUE)
 		return
@@ -501,7 +501,7 @@
 	var/building = FALSE
 
 /obj/item/rack_parts/attackby(obj/item/W, mob/user, params)
-	if (istype(W, /obj/item/wrench))
+	if (iswrench(W))
 		new /obj/item/stack/sheet/metal(user.loc)
 		qdel(src)
 	else

@@ -38,7 +38,7 @@
 	add_fingerprint(user)
 	if(default_unfasten_wrench(user, I))
 		return
-	else if(istype(I, /obj/item/weldingtool))
+	else if(iswelder(I))
 		var/obj/item/weldingtool/WT = I
 		switch(state)
 			if(ENGINE_UNWRENCHED)

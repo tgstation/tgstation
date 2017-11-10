@@ -89,7 +89,7 @@
 		else
 			to_chat(user, "<span class='warning'>Both devices must be in attachable mode to be attached together.</span>")
 		return
-	if(istype(W, /obj/item/screwdriver))
+	if(isscrewdriver(W))
 		if(toggle_secure())
 			to_chat(user, "<span class='notice'>\The [src] is ready!</span>")
 		else

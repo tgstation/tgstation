@@ -33,7 +33,7 @@
 		to_chat(user, "<span class='notice'>The AI recovery beacon is active.</span>")
 
 /obj/structure/mecha_wreckage/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weldingtool))
+	if(iswelder(I))
 		if(salvage_num <= 0)
 			to_chat(user, "<span class='warning'>You don't see anything that can be cut with [I]!</span>")
 			return
@@ -51,7 +51,7 @@
 		else
 			return
 
-	else if(istype(I, /obj/item/wirecutters))
+	else if(iswirecutter(I))
 		if(salvage_num <= 0)
 			to_chat(user, "<span class='warning'>You don't see anything that can be cut with [I]!</span>")
 			return
@@ -64,7 +64,7 @@
 			else
 				to_chat(user, "<span class='warning'>You fail to salvage anything valuable from [src]!</span>")
 
-	else if(istype(I, /obj/item/crowbar))
+	else if(iscrowbar(I))
 		if(crowbar_salvage && crowbar_salvage.len)
 			var/obj/S = pick(crowbar_salvage)
 			if(S)

@@ -59,7 +59,7 @@
 		storedcutter = P
 		update_icon()
 		return
-	if(istype(P, /obj/item/screwdriver) && storedcutter)
+	if(isscrewdriver(P) && storedcutter)
 		playsound(src, P.usesound, 50, 1)
 		to_chat(user, "<span class='notice'>[storedcutter] has been [cuttersecured ? "unsecured" : "secured"].</span>")
 		cuttersecured = !cuttersecured

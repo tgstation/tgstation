@@ -60,7 +60,7 @@
 	if(istype(tool, /obj/item/cautery))
 		return 1
 
-	if(istype(tool, /obj/item/weldingtool))
+	if(iswelder(tool))
 		var/obj/item/weldingtool/WT = tool
 		if(WT.isOn())
 			return 1

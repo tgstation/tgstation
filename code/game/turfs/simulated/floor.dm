@@ -137,7 +137,7 @@
 		return 1
 	if(..())
 		return 1
-	if(intact && istype(C, /obj/item/crowbar))
+	if(intact && iscrowbar(C))
 		return pry_tile(C, user)
 	if(intact && istype(C, /obj/item/stack/tile))
 		try_replace_tile(C, user, params)

@@ -33,14 +33,14 @@
 
 /obj/item/computer_hardware/attackby(obj/item/I, mob/living/user)
 	// Multitool. Runs diagnostics
-	if(istype(I, /obj/item/device/multitool))
+	if(ismultitool(I))
 		to_chat(user, "***** DIAGNOSTICS REPORT *****")
 		diagnostics(user)
 		to_chat(user, "******************************")
 		return 1
 
 	// Cable coil. Works as repair method, but will probably require multiple applications and more cable.
-	if(istype(I, /obj/item/stack/cable_coil))
+	if(iscable(I))
 		var/obj/item/stack/S = I
 		if(obj_integrity == max_integrity)
 			to_chat(user, "<span class='warning'>\The [src] doesn't seem to require repairs.</span>")

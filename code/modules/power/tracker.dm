@@ -62,7 +62,7 @@
 
 /obj/machinery/power/tracker/attackby(obj/item/W, mob/user, params)
 
-	if(istype(W, /obj/item/crowbar))
+	if(iscrowbar(W))
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		user.visible_message("[user] begins to take the glass off the solar tracker.", "<span class='notice'>You begin to take the glass off the solar tracker...</span>")
 		if(do_after(user, 50*W.toolspeed, target = src))

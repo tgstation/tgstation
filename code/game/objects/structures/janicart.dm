@@ -80,7 +80,7 @@
 			to_chat(user, "<span class='warning'>[src] can't hold any more signs!</span>")
 	else if(mybag)
 		mybag.attackby(I, user)
-	else if(istype(I, /obj/item/crowbar))
+	else if(iscrowbar(I))
 		user.visible_message("[user] begins to empty the contents of [src].", "<span class='notice'>You begin to empty the contents of [src]...</span>")
 		if(do_after(user, 30*I.toolspeed, target = src))
 			to_chat(usr, "<span class='notice'>You empty the contents of [src]'s bucket onto the floor.</span>")

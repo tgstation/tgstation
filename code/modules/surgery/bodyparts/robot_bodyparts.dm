@@ -65,7 +65,7 @@
 				return
 			src.cell = W
 			to_chat(user, "<span class='notice'>You insert the cell.</span>")
-	else if(istype(W, /obj/item/stack/cable_coil))
+	else if(iscable(W))
 		if(src.wired)
 			to_chat(user, "<span class='warning'>You have already inserted wire!</span>")
 			return
@@ -124,7 +124,7 @@
 			else
 				src.flash1 = F
 			to_chat(user, "<span class='notice'>You insert the flash into the eye socket.</span>")
-	else if(istype(W, /obj/item/crowbar))
+	else if(iscrowbar(W))
 		if(flash1 || flash2)
 			playsound(src.loc, W.usesound, 50, 1)
 			to_chat(user, "<span class='notice'>You remove the flash from [src].</span>")

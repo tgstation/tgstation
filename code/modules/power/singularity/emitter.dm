@@ -240,14 +240,14 @@
 			state = EM_UNSECURED
 
 /obj/machinery/power/emitter/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/wrench))
+	if(iswrench(W))
 		if(active)
 			to_chat(user, "<span class='warning'>Turn \the [src] off first!</span>")
 			return
 		default_unfasten_wrench(user, W, 0)
 		return
 
-	if(istype(W, /obj/item/weldingtool))
+	if(iswelder(W))
 		var/obj/item/weldingtool/WT = W
 		if(active)
 			to_chat(user, "Turn \the [src] off first.")

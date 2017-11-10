@@ -68,7 +68,7 @@
 	if(default_unfasten_wrench(user, I))
 		return
 
-	if(istype(I, /obj/item/crowbar))
+	if(iscrowbar(I))
 		if(using_irrigation)
 			to_chat(user, "<span class='warning'>Disconnect the hoses first!</span>")
 		else if(default_deconstruction_crowbar(I, 1))
@@ -793,7 +793,7 @@
 				return
 			S.handle_item_insertion(G, 1)
 
-	else if(istype(O, /obj/item/wrench) && unwrenchable)
+	else if(iswrench(O) && unwrenchable)
 		if(using_irrigation)
 			to_chat(user, "<span class='warning'>Disconnect the hoses first!</span>")
 			return
@@ -819,7 +819,7 @@
 				user.visible_message("[user] unwrenches [src].", \
 									"<span class='notice'>You unwrench [src].</span>")
 
-	else if(istype(O, /obj/item/wirecutters) && unwrenchable)
+	else if(iswirecutter(O) && unwrenchable)
 		using_irrigation = !using_irrigation
 		playsound(src, O.usesound, 50, 1)
 		user.visible_message("<span class='notice'>[user] [using_irrigation ? "" : "dis"]connects [src]'s irrigation hoses.</span>", \

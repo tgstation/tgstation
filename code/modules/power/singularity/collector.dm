@@ -79,10 +79,10 @@
 			disconnect_from_network()
 
 /obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/device/multitool))
+	if(ismultitool(W))
 		to_chat(user, "<span class='notice'>[W] detects that [last_power]W is being processed.</span>")
 		return TRUE
-	else if(istype(W, /obj/item/device/analyzer) && loaded_tank)
+	else if(isanalyzer(W) && loaded_tank)
 		atmosanalyzer_scan(loaded_tank.air_contents, user)
 	else if(istype(W, /obj/item/tank/internals/plasma))
 		if(!anchored)
@@ -95,7 +95,7 @@
 			return
 		loaded_tank = W
 		update_icons()
-	else if(istype(W, /obj/item/crowbar))
+	else if(iscrowbar(W))
 		if(loaded_tank)
 			if(locked)
 				to_chat(user, "<span class='warning'>The controls are locked!</span>")
@@ -105,7 +105,7 @@
 		else
 			to_chat(user, "<span class='warning'>There isn't a tank loaded!</span>")
 			return TRUE
-	else if(istype(W, /obj/item/wrench))
+	else if(iswrench(W))
 		default_unfasten_wrench(user, W, 0)
 		return TRUE
 	else if(W.GetID())

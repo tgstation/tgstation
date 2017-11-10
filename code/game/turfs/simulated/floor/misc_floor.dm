@@ -198,7 +198,7 @@
 /turf/open/floor/clockwork/attackby(obj/item/I, mob/living/user, params)
 	if(baseturf == type)
 		return
-	if(istype(I, /obj/item/crowbar))
+	if(iscrowbar(I))
 		user.visible_message("<span class='notice'>[user] begins slowly prying up [src]...</span>", "<span class='notice'>You begin painstakingly prying up [src]...</span>")
 		playsound(src, I.usesound, 20, 1)
 		if(!do_after(user, 70*I.toolspeed, target = src))

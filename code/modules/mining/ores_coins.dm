@@ -13,7 +13,7 @@
 	var/refined_type = null //What this ore defaults to being refined into
 
 /obj/item/ore/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weldingtool))
+	if(iswelder(I))
 		var/obj/item/weldingtool/W = I
 		if(W.remove_fuel(15) && refined_type)
 			new refined_type(get_turf(src.loc))
@@ -141,7 +141,7 @@
 	refined_type = /obj/item/stack/sheet/mineral/plasma
 
 /obj/item/ore/plasma/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weldingtool))
+	if(iswelder(I))
 		var/obj/item/weldingtool/W = I
 		if(W.welding)
 			to_chat(user, "<span class='warning'>You can't hit a high enough temperature to smelt [src] properly!</span>")
@@ -231,7 +231,7 @@
 		GibtoniteReaction(user)
 		return
 	if(primed)
-		if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner) || istype(I, /obj/item/device/multitool))
+		if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner) || ismultitool(I))
 			primed = FALSE
 			if(det_timer)
 				deltimer(det_timer)
@@ -409,7 +409,7 @@
 	value = 0
 
 /obj/item/coin/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/stack/cable_coil))
+	if(iscable(W))
 		var/obj/item/stack/cable_coil/CC = W
 		if(string_attached)
 			to_chat(user, "<span class='warning'>There already is a string attached to this coin!</span>")
@@ -423,7 +423,7 @@
 			to_chat(user, "<span class='warning'>You need one length of cable to attach a string to the coin!</span>")
 			return
 
-	else if(istype(W, /obj/item/wirecutters))
+	else if(iswirecutter(W))
 		if(!string_attached)
 			..()
 			return

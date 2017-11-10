@@ -80,7 +80,7 @@
 			else if(istype(P, /obj/item/circuitboard))
 				to_chat(user, "<span class='warning'>This frame does not accept circuit boards of this type!</span>")
 				return
-			if(istype(P, /obj/item/stack/cable_coil))
+			if(iscable(P))
 				var/obj/item/stack/cable_coil/C = P
 				if(C.get_amount() >= 5)
 					playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
@@ -94,7 +94,7 @@
 				else
 					to_chat(user, "<span class='warning'>You need five length of cable to wire the frame!</span>")
 				return
-			if(istype(P, /obj/item/screwdriver) && !anchored)
+			if(isscrewdriver(P) && !anchored)
 				playsound(src.loc, P.usesound, 50, 1)
 				user.visible_message("<span class='warning'>[user] disassembles the frame.</span>", \
 									"<span class='notice'>You start to disassemble the frame...</span>", "You hear banging and clanking.")
@@ -105,7 +105,7 @@
 						M.add_fingerprint(user)
 						qdel(src)
 				return
-			if(istype(P, /obj/item/wrench))
+			if(iswrench(P))
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
 				playsound(src.loc, P.usesound, 75, 1)
 				if(do_after(user, 40*P.toolspeed, target = src))
@@ -115,7 +115,7 @@
 				return
 
 		if(2)
-			if(istype(P, /obj/item/wrench))
+			if(iswrench(P))
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
 				playsound(src.loc, P.usesound, 75, 1)
 				if(do_after(user, 40*P.toolspeed, target = src))
@@ -144,7 +144,7 @@
 				to_chat(user, "<span class='warning'>This frame does not accept circuit boards of this type!</span>")
 				return
 
-			if(istype(P, /obj/item/wirecutters))
+			if(iswirecutter(P))
 				playsound(src.loc, P.usesound, 50, 1)
 				to_chat(user, "<span class='notice'>You remove the cables.</span>")
 				state = 1
@@ -154,7 +154,7 @@
 				return
 
 		if(3)
-			if(istype(P, /obj/item/crowbar))
+			if(iscrowbar(P))
 				playsound(src.loc, P.usesound, 50, 1)
 				state = 2
 				circuit.loc = src.loc
@@ -172,7 +172,7 @@
 				icon_state = "box_1"
 				return
 
-			if(istype(P, /obj/item/screwdriver))
+			if(isscrewdriver(P))
 				var/component_check = 1
 				for(var/R in req_components)
 					if(req_components[R] > 0)

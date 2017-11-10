@@ -91,7 +91,7 @@
 				icon_state = "[lasercolor]ed209_shell"
 
 		if(3)
-			if(istype(W, /obj/item/weldingtool))
+			if(iswelder(W))
 				var/obj/item/weldingtool/WT = W
 				if(WT.remove_fuel(0,user))
 					build_step++
@@ -132,7 +132,7 @@
 				icon_state = "[lasercolor]ed209_prox"
 
 		if(6)
-			if(istype(W, /obj/item/stack/cable_coil))
+			if(iscable(W))
 				var/obj/item/stack/cable_coil/coil = W
 				if(coil.get_amount() < 1)
 					to_chat(user, "<span class='warning'>You need one length of cable to wire the ED-209!</span>")
@@ -172,7 +172,7 @@
 			qdel(W)
 
 		if(8)
-			if(istype(W, /obj/item/screwdriver))
+			if(isscrewdriver(W))
 				playsound(loc, W.usesound, 100, 1)
 				to_chat(user, "<span class='notice'>You start attaching the gun to the frame...</span>")
 				if(do_after(user, 40*W.toolspeed, 0, src, 1))
@@ -404,7 +404,7 @@
 
 /obj/item/secbot_assembly/attackby(obj/item/I, mob/user, params)
 	..()
-	if(istype(I, /obj/item/weldingtool))
+	if(iswelder(I))
 		if(!build_step)
 			var/obj/item/weldingtool/WT = I
 			if(WT.remove_fuel(0, user))
@@ -455,7 +455,7 @@
 			return
 		created_name = t
 
-	else if(istype(I, /obj/item/screwdriver))
+	else if(isscrewdriver(I))
 		if(!build_step)
 			new /obj/item/device/assembly/signaler(get_turf(src))
 			new /obj/item/clothing/head/helmet/sec(get_turf(src))

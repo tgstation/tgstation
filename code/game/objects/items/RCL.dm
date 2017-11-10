@@ -23,7 +23,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 
 /obj/item/twohanded/rcl/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/stack/cable_coil))
+	if(iscable(W))
 		var/obj/item/stack/cable_coil/C = W
 
 		if(!loaded)
@@ -43,7 +43,7 @@
 			return
 		update_icon()
 		to_chat(user, "<span class='notice'>You add the cables to [src]. It now contains [loaded.amount].</span>")
-	else if(istype(W, /obj/item/screwdriver))
+	else if(isscrewdriver(W))
 		if(!loaded)
 			return
 		if(ghetto && prob(10)) //Is it a ghetto RCL? If so, give it a 10% chance to fall apart

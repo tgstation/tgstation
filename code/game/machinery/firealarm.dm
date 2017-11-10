@@ -145,7 +145,7 @@
 /obj/machinery/firealarm/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
 
-	if(istype(W, /obj/item/screwdriver) && buildstage == 2)
+	if(isscrewdriver(W) && buildstage == 2)
 		playsound(src.loc, W.usesound, 50, 1)
 		panel_open = !panel_open
 		to_chat(user, "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>")
@@ -154,7 +154,7 @@
 
 	if(panel_open)
 
-		if(istype(W, /obj/item/weldingtool) && user.a_intent == INTENT_HELP)
+		if(iswelder(W) && user.a_intent == INTENT_HELP)
 			var/obj/item/weldingtool/WT = W
 			if(obj_integrity < max_integrity)
 				if(WT.remove_fuel(0,user))
@@ -170,7 +170,7 @@
 
 		switch(buildstage)
 			if(2)
-				if(istype(W, /obj/item/device/multitool))
+				if(ismultitool(W))
 					detecting = !detecting
 					if (src.detecting)
 						user.visible_message("[user] has reconnected [src]'s detecting unit!", "<span class='notice'>You reconnect [src]'s detecting unit.</span>")
@@ -178,7 +178,7 @@
 						user.visible_message("[user] has disconnected [src]'s detecting unit!", "<span class='notice'>You disconnect [src]'s detecting unit.</span>")
 					return
 
-				else if (istype(W, /obj/item/wirecutters))
+				else if (iswirecutter(W))
 					buildstage = 1
 					playsound(src.loc, W.usesound, 50, 1)
 					new /obj/item/stack/cable_coil(user.loc, 5)
@@ -186,7 +186,7 @@
 					update_icon()
 					return
 			if(1)
-				if(istype(W, /obj/item/stack/cable_coil))
+				if(iscable(W))
 					var/obj/item/stack/cable_coil/coil = W
 					if(coil.get_amount() < 5)
 						to_chat(user, "<span class='warning'>You need more cable for this!</span>")
@@ -197,7 +197,7 @@
 						update_icon()
 					return
 
-				else if(istype(W, /obj/item/crowbar))
+				else if(iscrowbar(W))
 					playsound(src.loc, W.usesound, 50, 1)
 					user.visible_message("[user.name] removes the electronics from [src.name].", \
 										"<span class='notice'>You start prying out the circuit...</span>")
@@ -230,7 +230,7 @@
 					update_icon()
 					return
 
-				else if(istype(W, /obj/item/wrench))
+				else if(iswrench(W))
 					user.visible_message("[user] removes the fire alarm assembly from the wall.", \
 										 "<span class='notice'>You remove the fire alarm assembly from the wall.</span>")
 					var/obj/item/wallframe/firealarm/frame = new /obj/item/wallframe/firealarm()
