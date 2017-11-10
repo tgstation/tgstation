@@ -1175,6 +1175,7 @@
 	M.AdjustUnconscious(-20, 0)
 	M.adjustStaminaLoss(-0.5*REM, 0)
 	..()
+	. = TRUE //Update status effects.
 
 /datum/reagent/nitryl
 	name = "Nitryl"
