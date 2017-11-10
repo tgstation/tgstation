@@ -414,8 +414,8 @@
 			target_x.data = round(target_x.data, 1)
 		if(isnum(target_y.data))
 			target_y.data = round(target_y.data, 1)
-		var/_x = Clamp(T.x + target_x, 0, world.maxx)
-		var/_y = Clamp(T.y + target_y, 0, world.maxy)
+		var/_x = Clamp(T.x + target_x.data, 0, world.maxx)
+		var/_y = Clamp(T.y + target_y.data, 0, world.maxy)
 
 		A.forceMove(drop_location())
 		A.throw_at(locate(_x, _y, T.z), round(Clamp(sqrt(target_x.data*target_x.data+target_y.data*target_y.data),0,8),1), 3, assembly)
