@@ -37,7 +37,7 @@
 /datum/integrated_io/proc/get_data()
 	if(isnull(data))
 		return
-	if(isWEAKREF(data))
+	if(isweakref(data))
 		return data.resolve()
 	return data
 

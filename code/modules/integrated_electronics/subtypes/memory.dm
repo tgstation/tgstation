@@ -24,7 +24,7 @@
 	for(i = 1, i <= outputs.len, i++)
 		var/datum/integrated_io/O = outputs[i]
 		var/data = "nothing"
-		if(isWEAKREF(O.data))
+		if(isweakref(O.data))
 			var/datum/d = O.data_as_type(/datum)
 			if(d)
 				data = "[d]"
