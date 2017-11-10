@@ -163,7 +163,7 @@ Difficulty: Hard
 		else
 			return ..()
 
-/mob/living/simple_animal/hostile/megafauna/hierophant/DestroySurroundings()
+/mob/living/simple_animal/hostile/megafauna/hierophant/DestroyPathToTarget()
 	if(!blinking)
 		..()
 

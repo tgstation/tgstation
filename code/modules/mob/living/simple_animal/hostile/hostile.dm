@@ -14,7 +14,7 @@
 	var/list/emote_taunt = list()
 	var/taunt_chance = 0
 
-//typecache of things this mob will attack in DestroySurroundings() if it has environment_smash
+//typecache of things this mob will attack in DestroyPathToTarget() if it has environment_smash
 	var/list/environment_target_typecache = list(
 	/obj/machinery/door/window,
 	/obj/structure/window,
@@ -81,7 +81,9 @@
 		EscapeConfinement()
 
 	if(AICanContinue(possible_targets))
-		DestroySurroundings()
+		if(target != null) // fix a runtime error, probably hacky
+			if(!targets_from.Adjacent(target)) // so the mob doesnt try to make a path when it can just hit the target
+				DestroyPathToTarget()
 		if(!MoveToTarget(possible_targets))     //if we lose our target
 			if(AIShouldSleep(possible_targets))	// we try to acquire a new one
 				toggle_ai(AI_IDLE)			// otherwise we go idle
@@ -362,20 +364,20 @@
 /mob/living/simple_animal/hostile/proc/CanSmashTurfs(turf/T)
 	return iswallturf(T) || ismineralturf(T)
 
-/mob/living/simple_animal/hostile/proc/DestroySurroundings()
+/mob/living/simple_animal/hostile/proc/DestroyPathToTarget()
 	if(environment_smash)
 		EscapeConfinement()
-		for(var/dir in GLOB.cardinals)
-			var/turf/T = get_step(targets_from, dir)
-			if(CanSmashTurfs(T))
-				if(T.Adjacent(targets_from))
-					T.attack_animal(src)
-			for(var/a in T)
-				var/atom/A = a
-				if(!A.Adjacent(targets_from))
-					continue
-				if(is_type_in_typecache(A, environment_target_typecache) && !A.IsObscured())
-					A.attack_animal(src)
+		var/turf/T = get_cardinal_step_towards(targets_from, target)
+		if(CanSmashTurfs(T))
+			if(T.Adjacent(targets_from))
+				T.attack_animal(src)
+		for(var/a in T)
+			var/atom/A = a
+			if(!A.Adjacent(targets_from))
+				continue
+			if(is_type_in_typecache(A, environment_target_typecache) && !A.IsObscured())
+				A.attack_animal(src)
+
 
 /mob/living/simple_animal/hostile/proc/EscapeConfinement()
 	if(buckled)

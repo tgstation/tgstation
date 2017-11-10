@@ -45,7 +45,7 @@
 		for(var/obj/item/I in loc)
 			I.loc = src
 
-/mob/living/simple_animal/hostile/mimic/crate/DestroySurroundings()
+/mob/living/simple_animal/hostile/mimic/crate/DestroyPathToTarget()
 	..()
 	if(prob(90))
 		icon_state = "[initial(icon_state)]open"
@@ -165,7 +165,7 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 			qdel(O)
 		return 1
 
-/mob/living/simple_animal/hostile/mimic/copy/DestroySurroundings()
+/mob/living/simple_animal/hostile/mimic/copy/DestroyPathToTarget()
 	if(destroy_objects)
 		..()
 
