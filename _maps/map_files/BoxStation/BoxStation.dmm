@@ -23934,7 +23934,9 @@
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
 "bin" = (
-/obj/machinery/door/window/brigdoor/westright,
+/obj/machinery/door/window/brigdoor/westright{
+	req_access_txt = "5; 68"
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "bio" = (
@@ -25874,7 +25876,7 @@
 	name = "RADIOACTIVE AREA";
 	pixel_x = 32
 	},
-/turf/closed/wall/r_wall,
+/turf/closed/wall/mineral/plastitanium/interior,
 /area/medical/chemistry)
 "bmY" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -25887,7 +25889,7 @@
 	desc = "A warning sign which reads 'BOMB RANGE";
 	name = "BOMB RANGE"
 	},
-/turf/closed/wall/r_wall,
+/turf/closed/wall/mineral/plastitanium/interior,
 /area/medical/chemistry)
 "bna" = (
 /obj/structure/disposalpipe/segment,
@@ -26470,7 +26472,6 @@
 /turf/closed/wall/r_wall,
 /area/medical/genetics)
 "boo" = (
-/obj/effect/landmark/start/chemist,
 /obj/structure/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
@@ -26484,6 +26485,7 @@
 /obj/structure/chair/office/light{
 	dir = 8
 	},
+/obj/effect/landmark/start/medical_doctor,
 /turf/open/floor/plasteel/black,
 /area/medical/chemistry)
 "boq" = (
@@ -28318,7 +28320,7 @@
 /area/medical/genetics)
 "bsv" = (
 /obj/structure/chair/office/light,
-/obj/effect/landmark/start/chemist,
+/obj/effect/landmark/start/medical_doctor,
 /turf/open/floor/plasteel/black,
 /area/medical/chemistry)
 "bsw" = (
@@ -28628,7 +28630,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plating,
 /area/medical/genetics)
 "btn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -28650,7 +28652,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plating,
 /area/medical/genetics)
 "btp" = (
 /turf/open/floor/plating,
@@ -28979,7 +28981,7 @@
 /area/medical/medbay/central)
 "bua" = (
 /obj/structure/sign/chemistry,
-/turf/closed/wall/r_wall,
+/turf/closed/wall,
 /area/medical/chemistry)
 "bub" = (
 /obj/machinery/light,
@@ -29176,7 +29178,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plating,
 /area/medical/genetics)
 "buz" = (
 /obj/structure/cable{
@@ -29242,7 +29244,7 @@
 /area/medical/genetics)
 "buH" = (
 /obj/machinery/door/airlock/research{
-	name = "Genetics Research Access";
+	name = "Science Maintenance Access";
 	req_access_txt = "47"
 	},
 /obj/structure/disposalpipe/segment{
@@ -29288,7 +29290,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plating,
 /area/medical/genetics)
 "buM" = (
 /obj/machinery/keycard_auth{
@@ -29626,11 +29628,11 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plating,
 /area/medical/genetics)
 "bvA" = (
 /obj/structure/sign/securearea,
-/turf/closed/wall/r_wall,
+/turf/closed/wall,
 /area/medical/chemistry)
 "bvB" = (
 /obj/machinery/camera{
@@ -29640,7 +29642,7 @@
 	pixel_y = -22
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plating,
 /area/medical/genetics)
 "bvC" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -31236,7 +31238,7 @@
 	dir = 1;
 	network = list("SS13","RD")
 	},
-/obj/machinery/chem_heater,
+/obj/structure/closet/wardrobe/chemistry_white,
 /turf/open/floor/plasteel/black,
 /area/medical/chemistry)
 "bzo" = (
@@ -57912,7 +57914,7 @@
 /obj/structure/chair/office/light{
 	dir = 8
 	},
-/obj/effect/landmark/start/chemist,
+/obj/effect/landmark/start/medical_doctor,
 /turf/open/floor/plasteel/black,
 /area/medical/chemistry)
 "Qpv" = (
@@ -58062,13 +58064,13 @@
 /turf/open/floor/plasteel/black,
 /area/medical/chemistry)
 "QpO" = (
-/obj/effect/landmark/start/chemist,
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
 /obj/structure/chair/office/light{
 	dir = 8
 	},
+/obj/effect/landmark/start/medical_doctor,
 /turf/open/floor/plasteel/black,
 /area/medical/chemistry)
 "QpP" = (
@@ -58082,7 +58084,7 @@
 /turf/open/floor/plasteel/black,
 /area/medical/chemistry)
 "QpR" = (
-/obj/structure/closet/wardrobe/genetics_white,
+/obj/structure/closet/wardrobe/chemistry_white,
 /turf/open/floor/plasteel/black,
 /area/medical/chemistry)
 "QpS" = (
@@ -58120,7 +58122,7 @@
 /obj/structure/sign/nosmoking_2{
 	pixel_y = 30
 	},
-/turf/closed/wall/r_wall,
+/turf/closed/wall,
 /area/medical/chemistry)
 "QpY" = (
 /obj/structure/table,
@@ -58690,6 +58692,68 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/space)
+"QrD" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/medical/chemistry)
+"QrE" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/medical/chemistry)
+"QrF" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/medical/chemistry)
+"QrG" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/medical/chemistry)
+"QrH" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/medical/chemistry)
+"QrI" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/medical/chemistry)
+"QrJ" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/medical/chemistry)
+"QrK" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/medical/chemistry)
+"QrL" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/medical/chemistry)
+"QrM" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/medical/chemistry)
+"QrN" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/medical/chemistry)
+"QrO" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/medical/chemistry)
+"QrP" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/medical/chemistry)
+"QrQ" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/medical/chemistry)
+"QrR" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/medical/chemistry)
+"QrS" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/medical/chemistry)
+"QrT" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/medical/chemistry)
+"QrU" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/medical/chemistry)
+"QrV" = (
+/turf/closed/wall/mineral/plastitanium/interior,
+/area/medical/chemistry)
+"QrW" = (
+/obj/structure/table/glass,
+/obj/item/storage/box/syringes,
+/turf/open/floor/plasteel/black,
+/area/medical/chemistry)
 
 (1,1,1) = {"
 aaa
@@ -91460,12 +91524,12 @@ aYG
 bdn
 bep
 QoX
-Qpd
-Qph
-Qpn
+QoX
+QoX
+QoX
 ble
 QpD
-QpG
+QpD
 bpn
 bqL
 bsp
@@ -92999,7 +93063,7 @@ aPY
 bac
 aJC
 aYV
-QoO
+QoN
 aYV
 bon
 bhc
@@ -93256,7 +93320,7 @@ aQc
 bab
 aJC
 aYV
-QoP
+QoN
 ber
 bon
 bsL
@@ -93513,7 +93577,7 @@ aQc
 aQc
 bbx
 aYV
-QoQ
+QoN
 aYV
 bon
 bpI
@@ -93770,7 +93834,7 @@ aQc
 aQc
 aQg
 aYV
-QoR
+QoN
 bes
 bon
 bon
@@ -94027,7 +94091,7 @@ aRw
 aQc
 bbx
 aYV
-QoS
+QoN
 bet
 bfH
 bhf
@@ -94284,16 +94348,16 @@ aQc
 bad
 bby
 aYV
-QoT
+QoN
 bet
 bfG
 bhe
 bit
 bjS
 Qpw
-QpE
+Qpw
 boe
-QpK
+Qpw
 bpN
 bqX
 bEe
@@ -94541,7 +94605,7 @@ aXO
 aZb
 aJC
 aYV
-QoU
+QoN
 bet
 bfG
 bhe
@@ -94815,7 +94879,7 @@ bvh
 QpV
 bDR
 bDR
-Qqa
+QpV
 bvj
 bCQ
 bDW
@@ -95059,7 +95123,7 @@ bdo
 beu
 bvk
 Qpe
-Qpi
+Qpe
 bjT
 blm
 bmL
@@ -96085,7 +96149,7 @@ aJI
 bcs
 aYV
 aYV
-QoZ
+QoY
 bhk
 bix
 bjX
@@ -96342,7 +96406,7 @@ bbz
 aYV
 aYV
 aYV
-Qpa
+QoY
 bhj
 biw
 bhs
@@ -96599,7 +96663,7 @@ bbz
 aYV
 aYV
 aYV
-Qpb
+QoY
 bhl
 biy
 bjY
@@ -96856,13 +96920,13 @@ bbz
 aYV
 aYV
 aYV
-Qpc
-Qpf
-Qpj
-Qpp
-Qpx
-QpF
-QpH
+QoY
+QoY
+QoY
+QoY
+QoY
+QoY
+QoY
 bnF
 bqQ
 bsx
@@ -97119,7 +97183,7 @@ biz
 Qpq
 Qpy
 bmR
-bfL
+bfF
 bol
 bqQ
 bsx
@@ -97376,16 +97440,16 @@ blr
 Qpr
 Qpz
 bkP
-bfL
+bfF
 boc
 bqW
 brh
 bua
 QpS
-QpW
-bfL
+QpS
+bfF
 QpX
-bfL
+bfF
 bhh
 bhh
 btV
@@ -97633,16 +97697,16 @@ blr
 Qps
 QpA
 blr
-QpI
+Qpk
 boo
 QpL
 QpO
-QpQ
+Qpk
 blr
 blr
 bxX
 QpY
-bfL
+bfF
 bBJ
 bhh
 bBn
@@ -97899,7 +97963,7 @@ blr
 blr
 blr
 bzl
-bfL
+bfF
 bzd
 bhh
 btT
@@ -98156,7 +98220,7 @@ blr
 blr
 blr
 bzn
-bfL
+bfF
 bBL
 bhh
 bBC
@@ -98399,21 +98463,21 @@ bcq
 bcq
 bcq
 bfL
-bfL
-bfL
-bfL
-bfL
-bfL
+QrD
+QrK
+QrM
+QrO
+QrQ
 bmX
 bpE
 QpM
 blr
 QpR
-bti
+QpR
 blr
 blr
-bzm
-bfL
+QpR
+bfF
 bBK
 bwz
 bBw
@@ -98656,21 +98720,21 @@ aYV
 aYV
 aYV
 bfL
-bfL
+QrE
 Qpk
 bkb
 cTM
 cTM
-bfL
+QrS
 bpH
 bra
 blr
 biE
-QpT
+Qpk
 blr
 blr
 bye
-bfL
+bfF
 bBN
 bEi
 bEi
@@ -98720,7 +98784,7 @@ QqG
 QqQ
 Qra
 Qrk
-Qru
+QqC
 aaa
 aaf
 cua
@@ -98913,9 +98977,9 @@ aYV
 aYV
 aYV
 bfL
-bfL
+QrF
 Qpl
-Qpv
+Qpu
 blr
 blr
 bkc
@@ -98926,7 +98990,7 @@ bsv
 bkb
 blr
 blr
-bzo
+QpU
 bfL
 aFa
 bCY
@@ -98974,8 +99038,8 @@ Qqd
 Qqn
 Qqx
 QqH
-QqR
-Qrb
+QqC
+QqC
 Qrl
 Qrv
 aaa
@@ -99170,7 +99234,7 @@ aYV
 aYV
 aYV
 bfL
-bfL
+QrG
 biC
 blr
 blr
@@ -99183,7 +99247,7 @@ bug
 QpU
 blr
 bsv
-bkb
+QrW
 bfL
 bBP
 bCZ
@@ -99228,9 +99292,9 @@ aaa
 aaa
 aaa
 Qqe
-Qqo
+Qqe
 Qqy
-QqI
+Qqf
 QqS
 Qrc
 Qrm
@@ -99427,13 +99491,13 @@ aYV
 aYV
 aYV
 bfL
-bfL
+QrH
 Qpm
 bkc
 bkc
-blo
-bfL
-bfL
+Qpm
+QrT
+bfF
 QpN
 blr
 blr
@@ -99485,12 +99549,12 @@ aaa
 aaa
 aaa
 Qqf
-Qqp
-Qqz
-QqJ
+Qqf
+Qqf
+Qqf
 QqT
 Qrd
-Qrn
+Qqm
 Qrx
 aaa
 aaa
@@ -99684,14 +99748,14 @@ aYV
 aYV
 beE
 bfL
-bfL
+QrI
 biE
 blr
 blr
 biE
-bfL
-bfL
-bfL
+QrU
+bfF
+bfF
 bsN
 bsN
 bvv
@@ -99744,8 +99808,8 @@ aaa
 Qqg
 Qqq
 QqA
-QqK
-QqU
+Qqf
+Qqf
 Qre
 Qro
 Qry
@@ -99941,15 +100005,15 @@ aYV
 aYV
 bez
 bfL
-bfL
-bfL
-bfL
-bfL
-bfL
-bfL
-bfL
-bfL
-bfL
+QrJ
+QrL
+QrN
+QrP
+QrR
+QrV
+bfF
+bfF
+bfF
 bpK
 bvu
 bux
@@ -100002,7 +100066,7 @@ Qqh
 Qqr
 QqB
 QqL
-QqV
+QqL
 Qrf
 Qrp
 Qrz
@@ -100204,12 +100268,12 @@ bfL
 bfL
 bfL
 bfL
+bfF
+bfF
+bfF
 bfL
-bfL
-bfL
-bfL
-bfL
-bfL
+bfF
+bfF
 bvA
 bfL
 bfL
@@ -100514,11 +100578,11 @@ aaa
 aaa
 Qqj
 Qqt
-QqD
+QqC
 QqN
 QqX
 Qrh
-Qrr
+Qqm
 QrB
 aaa
 aaa
@@ -100772,10 +100836,10 @@ aaa
 Qqk
 Qqu
 QqE
-QqO
+Qqu
 QqY
-Qri
-Qrs
+Qrh
+Qqm
 QrC
 aaa
 aaa
@@ -101028,8 +101092,8 @@ aaa
 aaa
 Qql
 Qqv
-QqF
-QqP
+Qql
+Qql
 QqZ
 Qrj
 Qrt

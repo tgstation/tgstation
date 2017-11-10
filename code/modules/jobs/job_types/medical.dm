@@ -55,14 +55,14 @@ Medical Doctor
 	department_head = list("Chief Medical Officer")
 	department_flag = MEDSCI
 	faction = "Station"
-	total_positions = 3
-	spawn_positions = 3
+	total_positions = 7
+	spawn_positions = 7
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
 
 	outfit = /datum/outfit/job/doctor
 
-	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_CHEMISTRY, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_MINERAL_STOREROOM)
+	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_CHEMISTRY, ACCESS_SURGERY, ACCESS_CHEMISTRY, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_MINERAL_STOREROOM)
 	minimal_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_CLONING)
 
 /datum/outfit/job/doctor
@@ -79,42 +79,6 @@ Medical Doctor
 
 	backpack = /obj/item/storage/backpack/medic
 	satchel = /obj/item/storage/backpack/satchel/med
-	duffelbag = /obj/item/storage/backpack/duffelbag/med
-
-/*
-Chemist
-*/
-/datum/job/chemist
-	title = "Chemist"
-	flag = CHEMIST
-	department_head = list("Chief Medical Officer")
-	department_flag = MEDSCI
-	faction = "Station"
-	total_positions = 4
-	spawn_positions = 4
-	supervisors = "the chief medical officer"
-	selection_color = "#ffeef0"
-	exp_type = EXP_TYPE_CREW
-	exp_requirements = 60
-
-	outfit = /datum/outfit/job/chemist
-
-	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_CHEMISTRY, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_MINERAL_STOREROOM)
-	minimal_access = list(ACCESS_MEDICAL, ACCESS_CHEMISTRY, ACCESS_MINERAL_STOREROOM)
-
-/datum/outfit/job/chemist
-	name = "Chemist"
-	jobtype = /datum/job/chemist
-
-	glasses = /obj/item/clothing/glasses/science
-	belt = /obj/item/device/pda/chemist
-	ears = /obj/item/device/radio/headset/headset_med
-	uniform = /obj/item/clothing/under/rank/chemist
-	shoes = /obj/item/clothing/shoes/sneakers/white
-	suit =  /obj/item/clothing/suit/toggle/labcoat/chemist
-	accessory = /obj/item/clothing/accessory/pocketprotector/full
-	backpack = /obj/item/storage/backpack/chemistry
-	satchel = /obj/item/storage/backpack/satchel/chem
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
 
 /*
