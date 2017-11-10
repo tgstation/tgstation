@@ -130,8 +130,6 @@
 	if(mob.stat == DEAD)
 		mob.ghostize()
 		return FALSE
-	if(moving)
-		return FALSE
 	if(mob.force_moving)
 		return FALSE
 
@@ -163,7 +161,6 @@
 		return FALSE
 
 	//We are now going to move
-	moving = 1
 	var/delay = mob.movement_delay()
 	if (old_move_delay + (delay*MOVEMENT_DELAY_BUFFER_DELTA) + MOVEMENT_DELAY_BUFFER > world.time)
 		move_delay = old_move_delay + delay
@@ -182,7 +179,6 @@
 	else
 		. = ..()
 
-	moving = 0
 	if(.) // If mob is null here, we deserve the runtime
 		if(mob.throwing)
 			mob.throwing.finalize(FALSE)
