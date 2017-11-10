@@ -87,8 +87,7 @@ obj/item/clothing/mask/frog
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	w_class = WEIGHT_CLASS_SMALL
 	var/voicechange = TRUE
-	var/last_sound = 0
-	var/delay = 15
+
 /obj/item/clothing/mask/frog/attack_self(mob/user)
 	voicechange = !voicechange
 	to_chat(user, "<span class='notice'>You turn the voice box [voicechange ? "on" : "off"]!</span>")
