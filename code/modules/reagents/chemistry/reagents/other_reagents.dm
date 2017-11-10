@@ -1187,6 +1187,7 @@
 
 /datum/reagent/browngas/on_mob_life(mob/living/M) //Has just a speedup
 	M.status_flags |= GOTTAGOFAST
+	..()
 
 /////////////////////////Coloured Crayon Powder////////////////////////////
 //For colouring in /proc/mix_color_from_reagents
