@@ -1185,7 +1185,7 @@
 	color = "90560B"
 	taste_description = "burning"
 
-/datum/reagent/browngas/on_mob_life(mob/living/M) //Has just a speedup
+/datum/reagent/nitryl/on_mob_life(mob/living/M) //Has just a speedup
 	M.status_flags |= GOTTAGOFAST
 	..()
 
