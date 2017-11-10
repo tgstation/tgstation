@@ -229,7 +229,7 @@ SUBSYSTEM_DEF(ticker)
 	CHECK_TICK
 	//Configure mode and assign player to special mode stuff
 	var/can_continue = 0
-	can_continue = src.mode.pre_setup()		//Choose antagonists
+	can_continue = mode.pre_setup()		//Choose antagonists
 	CHECK_TICK
 	SSjob.DivideOccupations() 				//Distribute jobs
 	CHECK_TICK

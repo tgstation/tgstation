@@ -181,7 +181,7 @@
 		if(attacher)
 			log_attacher = "[ADMIN_QUE(attacher)] [ADMIN_FLW(attacher)]"
 
-		var/mob/mob = get_mob_by_key(src.fingerprintslast)
+		var/mob/mob = get_mob_by_key(fingerprintslast)
 		var/last_touch_info = ""
 		if(mob)
 			last_touch_info = "[ADMIN_QUE(mob)] [ADMIN_FLW(mob)]"

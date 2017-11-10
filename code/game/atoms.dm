@@ -33,7 +33,7 @@
 
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
-	if(GLOB.use_preloader && (src.type == GLOB._preloader.target_path))//in case the instanciated atom is creating other atoms in New()
+	if(GLOB.use_preloader && (type == GLOB._preloader.target_path))//in case the instanciated atom is creating other atoms in New()
 		GLOB._preloader.load(src)
 
 	var/do_initialize = SSatoms.initialized
@@ -239,7 +239,7 @@
 
 /atom/proc/in_contents_of(container)//can take class or object instance as argument
 	if(ispath(container))
-		if(istype(src.loc, container))
+		if(istype(loc, container))
 			return 1
 	else if(src in container)
 		return 1
@@ -247,7 +247,7 @@
 /atom/proc/examine(mob/user)
 	//This reformat names to get a/an properly working on item descriptions when they are bloody
 	var/f_name = "\a [src]."
-	if(src.blood_DNA && !istype(src, /obj/effect/decal))
+	if(blood_DNA && !istype(src, /obj/effect/decal))
 		if(gender == PLURAL)
 			f_name = "some "
 		else

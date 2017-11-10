@@ -54,7 +54,7 @@
 		var/mob/living/silicon/ai/AI = usr
 		if(AI.eyeobj && AI.client.eye == AI.eyeobj)
 			AI.cameraFollow = null
-			if (isturf(src.loc) || isturf(src))
+			if (isturf(loc) || isturf(src))
 				AI.eyeobj.setLoc(src)
 
 // This will move the AIEye. It will also cause lights near the eye to light up, if toggled.
@@ -98,7 +98,7 @@
 		to_chat(src, "ERROR: Eyeobj not found. Creating new eye...")
 		eyeobj = new(loc)
 		eyeobj.ai = src
-		eyeobj.name = "[src.name] (AI Eye)" // Give it a name
+		eyeobj.name = "[name] (AI Eye)" // Give it a name
 
 	eyeobj.setLoc(loc)
 

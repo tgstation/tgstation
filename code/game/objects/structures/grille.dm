@@ -56,9 +56,9 @@
 
 /obj/structure/grille/ratvar_act()
 	if(broken)
-		new /obj/structure/grille/ratvar/broken(src.loc)
+		new /obj/structure/grille/ratvar/broken(loc)
 	else
-		new /obj/structure/grille/ratvar(src.loc)
+		new /obj/structure/grille/ratvar(loc)
 	qdel(src)
 
 /obj/structure/grille/CollidedWith(atom/movable/AM)
@@ -133,7 +133,7 @@
 		if(!shock(user, 90))
 			user.visible_message("<span class='notice'>[user] rebuilds the broken grille.</span>", \
 								 "<span class='notice'>You rebuild the broken grille.</span>")
-			new grille_type(src.loc)
+			new grille_type(loc)
 			R.use(1)
 			qdel(src)
 			return
@@ -154,7 +154,7 @@
 				return
 			to_chat(user, "<span class='notice'>You start placing the window...</span>")
 			if(do_after(user,20, target = src))
-				if(!src.loc || !anchored) //Grille broken or unanchored while waiting
+				if(!loc || !anchored) //Grille broken or unanchored while waiting
 					return
 				for(var/obj/structure/window/WINDOW in loc) //Another window already installed on grille
 					return
@@ -201,7 +201,7 @@
 
 /obj/structure/grille/obj_break()
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
-		new broken_type(src.loc)
+		new broken_type(loc)
 		var/obj/R = new rods_type(drop_location(), rods_broken)
 		transfer_fingerprints_to(R)
 		qdel(src)

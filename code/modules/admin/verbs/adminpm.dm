@@ -50,7 +50,7 @@
 		if(holder)
 			to_chat(src, "<font color='red'>Error: Admin-PM: Client not found.</font>")
 		return
-	
+
 	var/datum/admin_help/AH = C.current_ticket
 
 	if(AH)
@@ -84,7 +84,7 @@
 			recipient = GLOB.directory[whom]
 	else if(istype(whom, /client))
 		recipient = whom
-	
+
 
 	if(irc)
 		if(!ircreplyamount)	//to prevent people from spamming irc
@@ -126,7 +126,7 @@
 					current_ticket.MessageNoRecipient(msg)
 				return
 
-	if (src.handle_spam_prevention(msg,MUTE_ADMINHELP))
+	if (handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
 
 	//clean the message if it's not sent by a high-rank admin

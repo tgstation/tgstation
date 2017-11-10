@@ -83,14 +83,14 @@
 
 /datum/job/proc/get_access()
 	if(!config)	//Needed for robots.
-		return src.minimal_access.Copy()
+		return minimal_access.Copy()
 
 	. = list()
 
 	if(CONFIG_GET(flag/jobs_have_minimal_access))
-		. = src.minimal_access.Copy()
+		. = minimal_access.Copy()
 	else
-		. = src.access.Copy()
+		. = access.Copy()
 
 	if(CONFIG_GET(flag/everyone_has_maint_access)) //Config has global maint access set
 		. |= list(ACCESS_MAINT_TUNNELS)

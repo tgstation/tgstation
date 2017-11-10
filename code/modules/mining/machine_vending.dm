@@ -65,9 +65,9 @@
 	var/cost = 0
 
 /datum/data/mining_equipment/New(name, path, cost)
-	src.equipment_name = name
-	src.equipment_path = path
-	src.cost = cost
+	equipment_name = name
+	equipment_path = path
+	cost = cost
 
 /obj/machinery/mineral/equipment_vendor/power_change()
 	..()
@@ -120,7 +120,7 @@
 					return
 				inserted_id = I
 				to_chat(usr, "<span class='notice'>You insert the ID into [src]'s card slot.</span>")
-			else 
+			else
 				to_chat(usr, "<span class='warning'>Error: No valid ID!</span>")
 				flick(icon_deny, src)
 	if(href_list["purchase"])
@@ -136,10 +136,10 @@
 			else
 				inserted_id.mining_points -= prize.cost
 				to_chat(usr, "<span class='notice'>[src] clanks to life briefly before vending [prize.equipment_name]!</span>")
-				new prize.equipment_path(src.loc)
+				new prize.equipment_path(loc)
 				SSblackbox.add_details("mining_equipment_bought",
-					"[src.type]|[prize.equipment_path]")
-				// Add src.type to keep track of free golem purchases
+					"[type]|[prize.equipment_path]")
+				// Add type to keep track of free golem purchases
 				// separately.
 		else
 			to_chat(usr, "<span class='warning'>Error: Please insert a valid ID!</span>")
@@ -175,14 +175,14 @@
 		return
 	switch(selection)
 		if("Survival Capsule and Explorer's Webbing")
-			new /obj/item/storage/belt/mining/vendor(src.loc)
+			new /obj/item/storage/belt/mining/vendor(loc)
 		if("Resonator and Advanced Scanner")
-			new /obj/item/resonator(src.loc)
-			new /obj/item/device/t_scanner/adv_mining_scanner(src.loc)
+			new /obj/item/resonator(loc)
+			new /obj/item/device/t_scanner/adv_mining_scanner(loc)
 		if("Mining Drone")
-			new /mob/living/simple_animal/hostile/mining_drone(src.loc)
-			new /obj/item/weldingtool/hugetank(src.loc)
-			new /obj/item/clothing/glasses/welding(src.loc)
+			new /mob/living/simple_animal/hostile/mining_drone(loc)
+			new /obj/item/weldingtool/hugetank(loc)
+			new /obj/item/clothing/glasses/welding(loc)
 		if("Extraction and Rescue Kit")
 			new /obj/item/extraction_pack(loc)
 			new /obj/item/fulton_core(loc)

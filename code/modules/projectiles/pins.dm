@@ -124,13 +124,13 @@
 	force_replace = 1
 
 /obj/item/device/firing_pin/clown/pin_auth(mob/living/user)
-	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
+	playsound(loc, 'sound/items/bikehorn.ogg', 50, 1)
 	return 0
 
 // Ultra-honk pin, clown's deadly joke item.
 // A gun with ultra-honk pin is useful for clown and useless for everyone else.
 /obj/item/device/firing_pin/clown/ultra/pin_auth(mob/living/user)
-	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
+	playsound(loc, 'sound/items/bikehorn.ogg', 50, 1)
 	if(!(user.disabilities & CLUMSY) && !(user.mind && user.mind.assigned_role == "Clown"))
 		return 0
 	return 1

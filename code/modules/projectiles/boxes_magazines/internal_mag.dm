@@ -54,7 +54,7 @@
 			R.loc = src
 
 			if(bullet)
-				bullet.loc = get_turf(src.loc)
+				bullet.loc = get_turf(loc)
 			return 1
 
 	return 0

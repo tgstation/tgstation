@@ -15,7 +15,7 @@
 		var/txt = stripped_input(user, "What would you like to write on the sign?", "Sign Label", null , 30)
 		if(txt)
 			label = txt
-			src.name = "[label] sign"
+			name = "[label] sign"
 			desc =	"It reads: [label]"
 	else
 		return ..()

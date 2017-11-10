@@ -128,11 +128,11 @@
 	..()
 	if(href_list["drop_from_cargo"])
 		var/obj/O = locate(href_list["drop_from_cargo"])
-		if(O && O in src.cargo)
-			src.occupant_message("<span class='notice'>You unload [O].</span>")
+		if(O && O in cargo)
+			occupant_message("<span class='notice'>You unload [O].</span>")
 			O.forceMove(loc)
-			src.cargo -= O
-			src.log_message("Unloaded [O]. Cargo compartment capacity: [cargo_capacity - src.cargo.len]")
+			cargo -= O
+			log_message("Unloaded [O]. Cargo compartment capacity: [cargo_capacity - cargo.len]")
 	return
 
 

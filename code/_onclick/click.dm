@@ -285,7 +285,7 @@
 	if(!stat && mind && iscarbon(A) && A != src)
 		var/datum/antagonist/changeling/C = mind.has_antag_datum(/datum/antagonist/changeling)
 		if(C && C.chosen_sting)
-			C.chosen_sting.try_to_sting(src,A)	
+			C.chosen_sting.try_to_sting(src,A)
 			next_click = world.time + 5
 			return
 	swap_hand()
@@ -349,7 +349,7 @@
 	if(!stat && mind && iscarbon(A) && A != src)
 		var/datum/antagonist/changeling/C = mind.has_antag_datum(/datum/antagonist/changeling)
 		if(C && C.chosen_sting)
-			C.chosen_sting.try_to_sting(src,A)	
+			C.chosen_sting.try_to_sting(src,A)
 			next_click = world.time + 5
 			return
 	..()
@@ -376,7 +376,7 @@
 	return
 
 /mob/proc/ShiftMiddleClickOn(atom/A)
-	src.pointed(A)
+	pointed(A)
 	return
 
 /atom/proc/CtrlShiftClick(mob/user)

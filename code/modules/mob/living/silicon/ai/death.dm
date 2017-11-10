@@ -4,7 +4,7 @@
 
 	. = ..()
 
-	if("[icon_state]_dead" in icon_states(src.icon,1))
+	if("[icon_state]_dead" in icon_states(icon,1))
 		icon_state = "[icon_state]_dead"
 	else
 		icon_state = "ai_dead"
@@ -23,10 +23,10 @@
 
 	if(explosive)
 		spawn(10)
-			explosion(src.loc, 3, 6, 12, 15)
+			explosion(loc, 3, 6, 12, 15)
 
 	for(var/obj/machinery/ai_status_display/O in GLOB.ai_status_displays) //change status
-		if(src.key)
+		if(key)
 			O.mode = 2
 			if(istype(loc, /obj/item/device/aicard))
 				loc.icon_state = "aicard-404"

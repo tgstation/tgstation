@@ -40,7 +40,7 @@
 
 /obj/item/twohanded/ctf/process()
 	if(world.time > reset_cooldown)
-		forceMove(get_turf(src.reset))
+		forceMove(get_turf(reset))
 		for(var/mob/M in GLOB.player_list)
 			var/area/mob_area = get_area(M)
 			if(istype(mob_area, /area/ctf))
@@ -224,8 +224,8 @@
 		if(user.ckey in CTF.team_members)
 			to_chat(user, "No switching teams while the round is going!")
 			return
-		if(CTF.team_members.len < src.team_members.len)
-			to_chat(user, "[src.team] has more team members than [CTF.team]. Try joining [CTF.team] to even things up.")
+		if(CTF.team_members.len < team_members.len)
+			to_chat(user, "[team] has more team members than [CTF.team]. Try joining [CTF.team] to even things up.")
 			return
 	team_members |= user.ckey
 	var/client/new_team_member = user.client
@@ -262,7 +262,7 @@
 /obj/machinery/capture_the_flag/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/twohanded/ctf))
 		var/obj/item/twohanded/ctf/flag = I
-		if(flag.team != src.team)
+		if(flag.team != team)
 			user.transferItemToLoc(flag, get_turf(flag.reset), TRUE)
 			points++
 			for(var/mob/M in GLOB.player_list)
@@ -540,7 +540,7 @@
 /obj/structure/trap/ctf/trap_effect(mob/living/L)
 	if(!is_ctf_target(L))
 		return
-	if(!(src.team in L.faction))
+	if(!(team in L.faction))
 		to_chat(L, "<span class='danger'><B>Stay out of the enemy spawn!</B></span>")
 		L.death()
 

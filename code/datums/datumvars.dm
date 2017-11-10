@@ -471,7 +471,7 @@
 #undef VV_HTML_ENCODE
 
 /client/proc/view_var_Topic(href, href_list, hsrc)
-	if( (usr.client != src) || !src.holder || !holder.CheckAdminHref(href, href_list))
+	if( (usr.client != src) || !holder || !holder.CheckAdminHref(href, href_list))
 		return
 	if(href_list["Vars"])
 		debug_variables(locate(href_list["Vars"]))
@@ -480,7 +480,7 @@
 		var/datum/DAT = locate(href_list["datumrefresh"])
 		if(!DAT) //can't be an istype() because /client etc aren't datums
 			return
-		src.debug_variables(DAT)
+		debug_variables(DAT)
 
 	else if(href_list["mob_player_panel"])
 		if(!check_rights(0))
@@ -491,7 +491,7 @@
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
-		src.holder.show_player_panel(M)
+		holder.show_player_panel(M)
 		href_list["datumrefresh"] = href_list["mob_player_panel"]
 
 	else if(href_list["godmode"])
@@ -503,7 +503,7 @@
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
-		src.cmd_admin_godmode(M)
+		cmd_admin_godmode(M)
 		href_list["datumrefresh"] = href_list["godmode"]
 
 	else if(href_list["mark_object"])
@@ -515,7 +515,7 @@
 			to_chat(usr, "This can only be done to instances of type /datum")
 			return
 
-		src.holder.marked_datum = D
+		holder.marked_datum = D
 		href_list["datumrefresh"] = href_list["mark_object"]
 
 	else if(href_list["proc_call"])
@@ -731,7 +731,7 @@
 				to_chat(usr, "This can only be used on instances of type /mob")
 				return
 
-			src.give_spell(M)
+			give_spell(M)
 			href_list["datumrefresh"] = href_list["give_spell"]
 
 		else if(href_list["remove_spell"])
@@ -755,7 +755,7 @@
 				to_chat(usr, "This can only be used on instances of type /mob")
 				return
 
-			src.give_disease(M)
+			give_disease(M)
 			href_list["datumrefresh"] = href_list["give_spell"]
 
 		else if(href_list["gib"])
@@ -767,7 +767,7 @@
 				to_chat(usr, "This can only be used on instances of type /mob")
 				return
 
-			src.cmd_admin_gib(M)
+			cmd_admin_gib(M)
 
 		else if(href_list["build_mode"])
 			if(!check_rights(R_BUILDMODE))
@@ -907,7 +907,7 @@
 				to_chat(usr, "This can only be done to instances of type /obj, /mob and /turf")
 				return
 
-			src.cmd_admin_explosion(A)
+			cmd_admin_explosion(A)
 			href_list["datumrefresh"] = href_list["explode"]
 
 		else if(href_list["emp"])
@@ -919,7 +919,7 @@
 				to_chat(usr, "This can only be done to instances of type /obj, /mob and /turf")
 				return
 
-			src.cmd_admin_emp(A)
+			cmd_admin_emp(A)
 			href_list["datumrefresh"] = href_list["emp"]
 
 		else if(href_list["rotatedatum"])

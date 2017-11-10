@@ -209,7 +209,7 @@
 	notransform = FALSE
 	pass_flags &= ~PASSMOB
 	hopping = FALSE
-	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 100, 1)
+	playsound(loc, 'sound/effects/meteorimpact.ogg', 100, 1)
 	if(target && AIStatus == AI_ON && projectile_ready && !ckey)
 		face_atom(target)
 		addtimer(CALLBACK(src, .proc/OpenFire, target), 5)

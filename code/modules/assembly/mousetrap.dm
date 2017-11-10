@@ -46,7 +46,7 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(PIERCEIMMUNE in H.dna.species.species_traits)
-			playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
+			playsound(loc, 'sound/effects/snap.ogg', 50, 1)
 			armed = 0
 			update_icon()
 			pulse(0)
@@ -67,7 +67,7 @@
 		var/mob/living/simple_animal/mouse/M = target
 		visible_message("<span class='boldannounce'>SPLAT!</span>")
 		M.splat()
-	playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
+	playsound(loc, 'sound/effects/snap.ogg', 50, 1)
 	armed = 0
 	update_icon()
 	pulse(0)

@@ -75,13 +75,13 @@
 	return ..()
 
 /obj/item/watertank/attack_hand(mob/user)
-	if(src.loc == user)
+	if(loc == user)
 		ui_action_click()
 		return
 	..()
 
 /obj/item/watertank/MouseDrop(obj/over_object)
-	var/mob/M = src.loc
+	var/mob/M = loc
 	if(istype(M) && istype(over_object, /obj/screen/inventory/hand))
 		var/obj/screen/inventory/hand/H = over_object
 		M.putItemFromInventoryInHandIfPossible(src, H.held_index)

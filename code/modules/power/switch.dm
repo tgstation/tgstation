@@ -62,7 +62,7 @@
 					break
 
 		for(var/direction in connection_dirs)
-			var/obj/structure/cable/C = new/obj/structure/cable(src.loc)
+			var/obj/structure/cable/C = new/obj/structure/cable(loc)
 			C.d1 = 0
 			C.d2 = direction
 			C.icon_state = "[C.d1]-[C.d2]"
@@ -79,6 +79,6 @@
 
 	else
 		icon_state = icon_state_off
-		for(var/obj/structure/cable/C in src.loc)
+		for(var/obj/structure/cable/C in loc)
 			qdel(C)
 */

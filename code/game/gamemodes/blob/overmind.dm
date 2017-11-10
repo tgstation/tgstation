@@ -91,7 +91,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 		if(!Ablob.blob_allowed)
 			continue
-		
+
 		if(!("blob" in L.faction))
 			playsound(L, 'sound/effects/splat.ogg', 50, 1)
 			L.death()
@@ -159,11 +159,11 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	if (!message)
 		return
 
-	if (src.client)
+	if (client)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "You cannot send IC messages (muted).")
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if (client.handle_spam_prevention(message,MUTE_IC))
 			return
 
 	if (stat)

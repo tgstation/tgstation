@@ -543,7 +543,7 @@
 	for(var/t in bodyparts)
 		qdel(t)
 
-	var/mob/new_mob = new mobpath(src.loc)
+	var/mob/new_mob = new mobpath(loc)
 
 	new_mob.key = key
 	new_mob.a_intent = INTENT_HARM
@@ -562,7 +562,7 @@
 		to_chat(usr, "<span class='danger'>Sorry but this mob type is currently unavailable.</span>")
 		return
 
-	var/mob/new_mob = new mobpath(src.loc)
+	var/mob/new_mob = new mobpath(loc)
 
 	new_mob.key = key
 	new_mob.a_intent = INTENT_HARM

@@ -24,9 +24,9 @@
 /obj/structure/table_frame/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/wrench))
 		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
-		playsound(src.loc, I.usesound, 50, 1)
+		playsound(loc, I.usesound, 50, 1)
 		if(do_after(user, 30*I.toolspeed, target = src))
-			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+			playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 			deconstruct(TRUE)
 	else if(istype(I, /obj/item/stack/sheet/plasteel))
 		var/obj/item/stack/sheet/plasteel/P = I
@@ -91,11 +91,11 @@
 	qdel(src)
 
 /obj/structure/table_frame/narsie_act()
-	new /obj/structure/table_frame/wood(src.loc)
+	new /obj/structure/table_frame/wood(loc)
 	qdel(src)
 
 /obj/structure/table_frame/ratvar_act()
-	new /obj/structure/table_frame/brass(src.loc)
+	new /obj/structure/table_frame/brass(loc)
 	qdel(src)
 
 /*

@@ -55,7 +55,7 @@
 			name = "alien princess ([rand(1, 999)])"	//if this is too cutesy feel free to change it/remove it.
 			break
 
-	real_name = src.name
+	real_name = name
 
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno(src))
 	AddAbility(new/obj/effect/proc_holder/alien/royal/queen/promote())

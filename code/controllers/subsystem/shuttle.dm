@@ -163,7 +163,7 @@ SUBSYSTEM_DEF(shuttle)
 		var/mob/M = I
 		if(M.stat != DEAD)
 			++alive
-	
+
 	var/total = GLOB.joined_player_list.len
 
 	if(alive / total <= threshold)
@@ -272,7 +272,7 @@ SUBSYSTEM_DEF(shuttle)
 /datum/controller/subsystem/shuttle/proc/emergencyDeregister()
 	// When a new emergency shuttle is created, it will override the
 	// backup shuttle.
-	src.emergency = src.backup_shuttle
+	emergency = backup_shuttle
 
 /datum/controller/subsystem/shuttle/proc/cancelEvac(mob/user)
 	if(canRecall())

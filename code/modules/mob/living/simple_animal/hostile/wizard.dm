@@ -62,7 +62,7 @@
 	. = ..()
 	if(target && next_cast < world.time)
 		if((get_dir(src,target) in list(SOUTH,EAST,WEST,NORTH)) && fireball.cast_check(0,src)) //Lined up for fireball
-			src.setDir(get_dir(src,target))
+			setDir(get_dir(src,target))
 			fireball.perform(list(target), user = src)
 			next_cast = world.time + 10 //One spell per second
 			return .

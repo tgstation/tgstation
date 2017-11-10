@@ -118,7 +118,7 @@
 	job = "AI"
 
 	eyeobj.ai = src
-	eyeobj.loc = src.loc
+	eyeobj.loc = loc
 	rename_self("ai")
 
 	holo_icon = getHologramIcon(icon('icons/mob/ai.dmi',"default"))
@@ -405,14 +405,14 @@
 			to_chat(src, "<span class='danger'>Error: Your last call bot command is still processing, please wait for the bot to finish calculating a route.</span>")
 			return
 		Bot = locate(href_list["callbot"]) in GLOB.living_mob_list
-		if(!Bot || Bot.remote_disabled || src.control_disabled)
+		if(!Bot || Bot.remote_disabled || control_disabled)
 			return //True if there is no bot found, the bot is manually emagged, or the AI is carded with wireless off.
 		waypoint_mode = 1
 		to_chat(src, "<span class='notice'>Set your waypoint by clicking on a valid location free of obstructions.</span>")
 		return
 	if(href_list["interface"]) //Remotely connect to a bot!
 		Bot = locate(href_list["interface"]) in GLOB.living_mob_list
-		if(!Bot || Bot.remote_disabled || src.control_disabled)
+		if(!Bot || Bot.remote_disabled || control_disabled)
 			return
 		Bot.attack_ai(src)
 	if(href_list["botrefresh"]) //Refreshes the bot control panel.
@@ -442,7 +442,7 @@
 	if (!C)
 		return FALSE
 
-	if(!src.eyeobj)
+	if(!eyeobj)
 		view_core()
 		return
 	// ok, we're alive, camera is good and in our network...
@@ -710,7 +710,7 @@
 	set category = "Malfunction"
 	set name = "Return to Main Core"
 
-	var/obj/machinery/power/apc/apc = src.loc
+	var/obj/machinery/power/apc/apc = loc
 	if(!istype(apc))
 		to_chat(src, "<span class='notice'>You are already in your Main Core.</span>")
 		return

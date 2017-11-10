@@ -25,7 +25,7 @@
 /obj/effect/particle_effect/sparks/New()
 	..()
 	flick("sparks", src) // replay the animation
-	playsound(src.loc, "sparks", 100, 1)
+	playsound(loc, "sparks", 100, 1)
 	var/turf/T = loc
 	if(isturf(T))
 		T.hotspot_expose(1000,100)

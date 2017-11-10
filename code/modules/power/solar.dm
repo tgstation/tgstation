@@ -58,10 +58,10 @@
 
 /obj/machinery/power/solar/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/crowbar))
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		playsound(loc, 'sound/machines/click.ogg', 50, 1)
 		user.visible_message("[user] begins to take the glass off the solar panel.", "<span class='notice'>You begin to take the glass off the solar panel...</span>")
 		if(do_after(user, 50*W.toolspeed, target = src))
-			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+			playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 			user.visible_message("[user] takes the glass off the solar panel.", "<span class='notice'>You take the glass off the solar panel.</span>")
 			deconstruct(TRUE)
 	else
@@ -94,8 +94,8 @@
 				S.give_glass(stat & BROKEN)
 		else
 			playsound(src, "shatter", 70, 1)
-			new /obj/item/shard(src.loc)
-			new /obj/item/shard(src.loc)
+			new /obj/item/shard(loc)
+			new /obj/item/shard(loc)
 	qdel(src)
 
 
@@ -106,7 +106,7 @@
 		add_overlay(mutable_appearance(icon, "solar_panel-b", FLY_LAYER))
 	else
 		add_overlay(mutable_appearance(icon, "solar_panel", FLY_LAYER))
-		src.setDir(angle2dir(adir))
+		setDir(angle2dir(adir))
 
 //calculates the fraction of the sunlight that the panel recieves
 /obj/machinery/power/solar/proc/update_solar_exposure()
@@ -214,10 +214,10 @@
 		anchored = !anchored
 		if(anchored)
 			user.visible_message("[user] wrenches the solar assembly into place.", "<span class='notice'>You wrench the solar assembly into place.</span>")
-			playsound(src.loc, W.usesound, 75, 1)
+			playsound(loc, W.usesound, 75, 1)
 		else
 			user.visible_message("[user] unwrenches the solar assembly from its place.", "<span class='notice'>You unwrench the solar assembly from its place.</span>")
-			playsound(src.loc, W.usesound, 75, 1)
+			playsound(loc, W.usesound, 75, 1)
 		return 1
 
 	if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass))
@@ -227,7 +227,7 @@
 		var/obj/item/stack/sheet/S = W
 		if(S.use(2))
 			glass_type = W.type
-			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+			playsound(loc, 'sound/machines/click.ogg', 50, 1)
 			user.visible_message("[user] places the glass on the solar assembly.", "<span class='notice'>You place the glass on the solar assembly.</span>")
 			if(tracker)
 				new /obj/machinery/power/tracker(get_turf(src), src)
@@ -248,7 +248,7 @@
 			return 1
 	else
 		if(istype(W, /obj/item/crowbar))
-			new /obj/item/electronics/tracker(src.loc)
+			new /obj/item/electronics/tracker(loc)
 			tracker = 0
 			user.visible_message("[user] takes out the electronics from the solar assembly.", "<span class='notice'>You take out the electronics from the solar assembly.</span>")
 			return 1
@@ -411,15 +411,15 @@
 
 /obj/machinery/power/solar_control/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/screwdriver))
-		playsound(src.loc, I.usesound, 50, 1)
+		playsound(loc, I.usesound, 50, 1)
 		if(do_after(user, 20*I.toolspeed, target = src))
-			if (src.stat & BROKEN)
+			if (stat & BROKEN)
 				to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
-				var/obj/structure/frame/computer/A = new /obj/structure/frame/computer( src.loc )
-				new /obj/item/shard( src.loc )
+				var/obj/structure/frame/computer/A = new /obj/structure/frame/computer( loc )
+				new /obj/item/shard( loc )
 				var/obj/item/circuitboard/computer/solar_control/M = new /obj/item/circuitboard/computer/solar_control( A )
 				for (var/obj/C in src)
-					C.loc = src.loc
+					C.loc = loc
 				A.circuit = M
 				A.state = 3
 				A.icon_state = "3"
@@ -427,17 +427,17 @@
 				qdel(src)
 			else
 				to_chat(user, "<span class='notice'>You disconnect the monitor.</span>")
-				var/obj/structure/frame/computer/A = new /obj/structure/frame/computer( src.loc )
+				var/obj/structure/frame/computer/A = new /obj/structure/frame/computer( loc )
 				var/obj/item/circuitboard/computer/solar_control/M = new /obj/item/circuitboard/computer/solar_control( A )
 				for (var/obj/C in src)
-					C.loc = src.loc
+					C.loc = loc
 				A.circuit = M
 				A.state = 4
 				A.icon_state = "4"
 				A.anchored = TRUE
 				qdel(src)
 	else if(user.a_intent != INTENT_HARM && !(I.flags_1 & NOBLUDGEON_1))
-		src.attack_hand(user)
+		attack_hand(user)
 	else
 		return ..()
 
@@ -445,11 +445,11 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(stat & BROKEN)
-				playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 			else
-				playsound(src.loc, 'sound/effects/glasshit.ogg', 75, 1)
+				playsound(loc, 'sound/effects/glasshit.ogg', 75, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
+			playsound(loc, 'sound/items/welder.ogg', 100, 1)
 
 /obj/machinery/power/solar_control/obj_break(damage_flag)
 	if(!(stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))

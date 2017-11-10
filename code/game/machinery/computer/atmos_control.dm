@@ -159,8 +159,8 @@
 		to_chat(user, "<span class='alert'>No machinery detected.</span>")
 	var/S = input("Select the device set: ", "Selection", IO[1]) as anything in IO
 	if(src)
-		src.input_tag = "[S]_in"
-		src.output_tag = "[S]_out"
+		input_tag = "[S]_in"
+		output_tag = "[S]_out"
 		name = "[uppertext(S)] Supply Control"
 		var/list/new_devices = freq.devices["4"]
 		for(var/obj/machinery/air_sensor/U in new_devices)

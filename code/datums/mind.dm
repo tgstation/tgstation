@@ -67,7 +67,7 @@
 	var/late_joiner = FALSE
 
 /datum/mind/New(var/key)
-	src.key = key
+	key = key
 	soulOwner = src
 	martial_art = default_martial_art
 
@@ -934,7 +934,7 @@
 					log_admin("[key_name(usr)] has rev'ed [current].")
 				else
 					return
-				
+
 			if("headrev")
 				if(has_antag_datum(/datum/antagonist/rev))
 					var/datum/antagonist/rev/rev = has_antag_datum(/datum/antagonist/rev)

@@ -27,7 +27,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 	uplink_items = get_uplink_items(gamemode)
 
 /obj/item/device/uplink/proc/set_gamemode(gamemode)
-	src.gamemode = gamemode
+	gamemode = gamemode
 	uplink_items = get_uplink_items(gamemode)
 
 /obj/item/device/uplink/Destroy()

@@ -63,10 +63,10 @@
 /obj/machinery/power/tracker/attackby(obj/item/W, mob/user, params)
 
 	if(istype(W, /obj/item/crowbar))
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		playsound(loc, 'sound/machines/click.ogg', 50, 1)
 		user.visible_message("[user] begins to take the glass off the solar tracker.", "<span class='notice'>You begin to take the glass off the solar tracker...</span>")
 		if(do_after(user, 50*W.toolspeed, target = src))
-			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+			playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 			user.visible_message("[user] takes the glass off the tracker.", "<span class='notice'>You take the glass off the tracker.</span>")
 			deconstruct(TRUE)
 	else
@@ -87,8 +87,8 @@
 				S.give_glass(stat & BROKEN)
 		else
 			playsound(src, "shatter", 70, 1)
-			new /obj/item/shard(src.loc)
-			new /obj/item/shard(src.loc)
+			new /obj/item/shard(loc)
+			new /obj/item/shard(loc)
 	qdel(src)
 
 // Tracker Electronic

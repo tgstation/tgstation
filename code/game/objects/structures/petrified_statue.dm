@@ -43,8 +43,8 @@
 
 /obj/structure/statue/petrified/Destroy()
 
-	if(istype(src.loc, /mob/living/simple_animal/hostile/statue))
-		var/mob/living/simple_animal/hostile/statue/S = src.loc
+	if(istype(loc, /mob/living/simple_animal/hostile/statue))
+		var/mob/living/simple_animal/hostile/statue/S = loc
 		forceMove(S.loc)
 		if(S.mind)
 			if(petrified_mob)

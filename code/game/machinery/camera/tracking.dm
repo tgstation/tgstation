@@ -2,7 +2,7 @@
 
 	track.cameras.Cut()
 
-	if(src.stat == DEAD)
+	if(stat == DEAD)
 		return
 
 	var/list/L = list()
@@ -14,7 +14,7 @@
 	var/list/T = list()
 
 	for (var/obj/machinery/camera/C in L)
-		var/list/tempnetwork = C.network&src.network
+		var/list/tempnetwork = C.network&network
 		if (tempnetwork.len)
 			T[text("[][]", C.c_tag, (C.can_use() ? null : " (Deactivated)"))] = C
 
@@ -27,7 +27,7 @@
 		return 0
 
 	var/obj/machinery/camera/C = track.cameras[camera]
-	src.eyeobj.setLoc(C)
+	eyeobj.setLoc(C)
 
 	return
 
@@ -147,7 +147,7 @@
 /obj/machinery/camera/attack_ai(mob/living/silicon/ai/user)
 	if (!istype(user))
 		return
-	if (!src.can_use())
+	if (!can_use())
 		return
 	user.eyeobj.setLoc(get_turf(src))
 

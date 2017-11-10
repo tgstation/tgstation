@@ -98,7 +98,7 @@
 			return
 		if(!user.transferItemToLoc(src, F))
 			return
-		src.master = F
+		master = F
 		F.ptank = src
 		F.update_icon()
 	else

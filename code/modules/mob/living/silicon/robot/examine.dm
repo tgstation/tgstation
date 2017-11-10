@@ -7,8 +7,8 @@
 	if(act_module)
 		msg += "It is holding [icon2html(act_module, user)] \a [act_module].\n"
 	msg += "<span class='warning'>"
-	if (src.getBruteLoss())
-		if (src.getBruteLoss() < maxHealth*0.5)
+	if (getBruteLoss())
+		if (getBruteLoss() < maxHealth*0.5)
 			msg += "It looks slightly dented.\n"
 		else
 			msg += "<B>It looks severely dented!</B>\n"
@@ -18,11 +18,11 @@
 			msg += "It looks slightly charred.\n"
 		else
 			msg += "<B>It looks severely burnt and heat-warped!</B>\n"
-	if (src.health < -maxHealth*0.5)
+	if (health < -maxHealth*0.5)
 		msg += "It looks barely operational.\n"
-	if (src.fire_stacks < 0)
+	if (fire_stacks < 0)
 		msg += "It's covered in water.\n"
-	else if (src.fire_stacks > 0)
+	else if (fire_stacks > 0)
 		msg += "It's coated in something flammable.\n"
 	msg += "</span>"
 

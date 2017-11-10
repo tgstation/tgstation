@@ -23,7 +23,7 @@
 	if(rotation && do_icon_rotate)
 		var/matrix/M = matrix()
 		M.Turn(rotation)
-		src.transform = M
+		transform = M
 	if(main)
 		paint_colour = main
 	add_atom_colour(paint_colour, FIXED_COLOUR_PRIORITY)

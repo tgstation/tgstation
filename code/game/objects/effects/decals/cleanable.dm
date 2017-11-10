@@ -7,12 +7,12 @@
 	var/mergeable_decal = TRUE //when two of these are on a same tile or do we need to merge them into just one?
 
 /obj/effect/decal/cleanable/Initialize(mapload, list/datum/disease/diseases)
-	if (random_icon_states && length(src.random_icon_states) > 0)
-		src.icon_state = pick(src.random_icon_states)
+	if (random_icon_states && length(random_icon_states) > 0)
+		icon_state = pick(random_icon_states)
 	create_reagents(300)
-	if(src.loc && isturf(src.loc))
-		for(var/obj/effect/decal/cleanable/C in src.loc)
-			if(C != src && C.type == src.type)
+	if(loc && isturf(loc))
+		for(var/obj/effect/decal/cleanable/C in loc)
+			if(C != src && C.type == type)
 				replace_decal(C)
 	if(LAZYLEN(diseases))
 		var/list/datum/disease/diseases_to_add = list()
@@ -29,9 +29,9 @@
 
 /obj/effect/decal/cleanable/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/reagent_containers/glass) || istype(W, /obj/item/reagent_containers/food/drinks))
-		if(src.reagents && W.reagents)
+		if(reagents && W.reagents)
 			. = 1 //so the containers don't splash their content on the src while scooping.
-			if(!src.reagents.total_volume)
+			if(!reagents.total_volume)
 				to_chat(user, "<span class='notice'>[src] isn't thick enough to scoop up!</span>")
 				return
 			if(W.reagents.total_volume >= W.reagents.maximum_volume)

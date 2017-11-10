@@ -79,7 +79,7 @@
 		set_light(0)
 
 /turf/open/space/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /turf/open/space/proc/CanBuildHere()
 	return TRUE

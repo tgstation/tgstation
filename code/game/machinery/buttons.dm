@@ -30,7 +30,7 @@
 	if(!built && !device && device_type)
 		device = new device_type(src)
 
-	src.check_access(null)
+	check_access(null)
 
 	if(req_access.len || req_one_access.len)
 		board = new(src)
@@ -98,7 +98,7 @@
 		return
 
 	if(user.a_intent != INTENT_HARM && !(W.flags_1 & NOBLUDGEON_1))
-		return src.attack_hand(user)
+		return attack_hand(user)
 	else
 		return ..()
 
@@ -123,7 +123,7 @@
 /obj/machinery/button/attack_hand(mob/user)
 	if(!initialized_button)
 		setup_device()
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	if(panel_open)
 		if(device || board)
 			if(device)

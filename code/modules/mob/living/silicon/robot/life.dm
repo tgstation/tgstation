@@ -2,7 +2,7 @@
 	set invisibility = 0
 	set background = BACKGROUND_ENABLED
 
-	if (src.notransform)
+	if (notransform)
 		return
 
 	..()
@@ -42,7 +42,7 @@
 			for(var/datum/mind/tra in SSticker.mode.traitors)
 				if(tra.current)
 					var/I = image('icons/mob/mob.dmi', loc = tra.current, icon_state = "traitor") //no traitor sprite in that dmi!
-					src.client.images += I
+					client.images += I
 		if(connected_ai)
 			connected_ai.connected_robots -= src
 			connected_ai = null

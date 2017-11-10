@@ -290,7 +290,7 @@
 
 // Name the disease.
 /datum/disease/advance/proc/AssignName(name = "Unknown")
-	src.name = name
+	name = name
 	return
 
 // Return a unique ID of the disease.

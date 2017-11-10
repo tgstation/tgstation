@@ -406,7 +406,7 @@
 						   var/power_x, var/power_y, var/dest_x, var/dest_y)
 	src.src_x = src_x
 	src.src_y = src_y
-	src.time = time
+	time = time
 	src.distance = distance
 	src.power_x = power_x
 	src.power_y = power_y

@@ -103,7 +103,7 @@
 		loc = A.loc
 		return
 	A.ex_act(EXPLODE_HEAVY)
-	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
+	playsound(loc, 'sound/effects/meteorimpact.ogg', 40, 1)
 	for(var/mob/M in urange(10, src))
 		if(!M.stat)
 			shake_camera(M, 3, 1)
@@ -244,7 +244,7 @@
 	. = ..()
 	T = get_turf(src)
 	for(var/atom/movable/A in range(T, power))
-		if(A == src || (firer && A == src.firer) || A.anchored || thrown_items[A])
+		if(A == src || (firer && A == firer) || A.anchored || thrown_items[A])
 			continue
 		var/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(A, src)))
 		A.throw_at(throwtarget,power+1,1)
@@ -275,7 +275,7 @@
 	. = ..()
 	T = get_turf(src)
 	for(var/atom/movable/A in range(T, power))
-		if(A == src || (firer && A == src.firer) || A.anchored || thrown_items[A])
+		if(A == src || (firer && A == firer) || A.anchored || thrown_items[A])
 			continue
 		A.throw_at(T, power+1, 1)
 		thrown_items[A] = A
@@ -305,7 +305,7 @@
 	. = ..()
 	T = get_turf(src)
 	for(var/atom/movable/A in range(T, power))
-		if(A == src|| (firer && A == src.firer) || A.anchored || thrown_items[A])
+		if(A == src|| (firer && A == firer) || A.anchored || thrown_items[A])
 			continue
 		A.throw_at(get_edge_target_turf(A, pick(GLOB.cardinals)), power+1, 1)
 		thrown_items[A] = A

@@ -9,7 +9,7 @@
 	var/owner
 
 /datum/language_holder/New(owner)
-	src.owner = owner
+	owner = owner
 
 	languages = typecacheof(languages)
 	shadow_languages = typecacheof(shadow_languages)
@@ -23,12 +23,12 @@
 
 /datum/language_holder/proc/copy(newowner)
 	var/datum/language_holder/copy = new(newowner)
-	copy.languages = src.languages.Copy()
+	copy.languages = languages.Copy()
 	// shadow languages are not copied.
-	copy.only_speaks_language = src.only_speaks_language
-	copy.selected_default_language = src.selected_default_language
+	copy.only_speaks_language = only_speaks_language
+	copy.selected_default_language = selected_default_language
 	// language menu is not copied, that's tied to the holder.
-	copy.omnitongue = src.omnitongue
+	copy.omnitongue = omnitongue
 	return copy
 
 /datum/language_holder/proc/grant_language(datum/language/dt)
@@ -39,7 +39,7 @@
 		grant_language(la)
 
 	if(omnitongue)
-		src.omnitongue = TRUE
+		omnitongue = TRUE
 
 /datum/language_holder/proc/get_random_understood_language()
 	var/list/possible = list()
@@ -76,10 +76,10 @@
 		other = M.get_language_holder()
 
 	if(replace)
-		src.remove_all_languages()
+		remove_all_languages()
 
 	for(var/l in other.languages)
-		src.grant_language(l)
+		grant_language(l)
 
 
 /datum/language_holder/proc/open_language_menu(mob/user)
