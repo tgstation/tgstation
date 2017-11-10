@@ -1432,22 +1432,22 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 //same as do_mob except for movables and it allows both to drift and doesn't draw progressbar
 /proc/do_atom(atom/movable/user , atom/movable/target, time = 30, uninterruptible = 0,datum/callback/extra_checks = null)
 	if(!user || !target)
-		return 0
+		return TRUE
 	var/user_loc = user.loc
 
-	var/drifting = 0
+	var/drifting = FALSE
 	if(!user.Process_Spacemove(0) && user.inertia_dir)
-		drifting = 1
+		drifting = TRUE
 
-	var/target_drifting = 0
+	var/target_drifting = FALSE
 	if(!target.Process_Spacemove(0) && target.inertia_dir)
-		target_drifting = 1
+		target_drifting = TRUE
 
 	var/target_loc = target.loc
 
 	var/endtime = world.time+time
 //	var/starttime = world.time
-	. = 1
+	. = TRUE
 	while (world.time < endtime)
 		stoplag(1)
 		if(QDELETED(user) || QDELETED(target))
@@ -1457,15 +1457,15 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 			continue
 
 		if(drifting && !user.inertia_dir)
-			drifting = 0
+			drifting = FALSE
 			user_loc = user.loc
 
 		if(target_drifting && !target.inertia_dir)
-			target_drifting = 0
+			target_drifting = FALSE
 			target_loc = target.loc
 
 		if((!drifting && user.loc != user_loc) || (!target_drifting && target.loc != target_loc) || (extra_checks && !extra_checks.Invoke()))
-			. = 0
+			. = FALSE
 			break
 
 //returns a GUID like identifier (using a mostly made up record format)
