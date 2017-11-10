@@ -3,10 +3,17 @@
 	id = "flipout"
 	results = list("flipout" = 3)
 	required_reagents = list("cryptobiolin" = 1, "lube" = 1, "mindbreaker" = 1)
-	
+
 /datum/chemical_reaction/yespowder
 	name = "Yes Powder"
 	id = "yespowder"
 	results = list("yespowder" = 1)
 	required_reagents = list("itching_powder" = 1)
 	centrifuge_recipe = TRUE
+
+/datum/chemical_reaction/burpium
+	name = "Burpium"
+	id = "burpium"
+	results = list("burpium" = 2)
+	required_reagents = list("carbon" = 4, "water" = 1, "hydrogen" = 1)
+
