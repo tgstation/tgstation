@@ -236,7 +236,7 @@
 */
 /obj/item/integrated_circuit/manipulation/shocker
 	name = "shocker circuit"
-	desc = "Used to shock adjastent creatures with electricity."
+	desc = "Used to shock adjacent creatures with electricity."
 	icon_state = "shocker"
 	extended_desc = "The circuit accepts a reference to creature,who needs to be shocked. It can shock target on adjacent tiles. \
 	Severity determines  hardness of shock and it's power consumption. It's given between 0 and 60."

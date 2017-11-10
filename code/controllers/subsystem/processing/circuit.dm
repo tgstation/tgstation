@@ -7,7 +7,7 @@ PROCESSING_SUBSYSTEM_DEF(circuit)
 	var/cipherkey
 	var/list/circuit_fabricator_recipe_list = list()
 	init_order = INIT_ORDER_CIRCUIT
-	flags = SS_BACKGROUND|SS_POST_FIRE_TIMING
+	flags = NONE
 
 /datum/controller/subsystem/processing/circuit/Initialize(start_timeofday)
 	SScircuit.cipherkey = random_string(2000+rand(0,10), GLOB.alphabet)
