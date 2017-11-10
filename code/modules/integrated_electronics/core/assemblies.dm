@@ -317,7 +317,8 @@
 
 /obj/item/device/electronic_assembly/emp_act(severity)
 	..()
-	for(var/atom/movable/AM in contents)
+	for(var/i in 1 to contents.len)
+		var/atom/movable/AM = contents[i]
 		AM.emp_act(severity)
 
 // Returns true if power was successfully drawn.

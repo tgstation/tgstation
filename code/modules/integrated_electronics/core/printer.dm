@@ -230,7 +230,7 @@
 
 /obj/item/device/integrated_circuit_printer/proc/sanity_check(var/program)
 	var/list/chap = splittext( program ,"{{*}}")
-	if(chap.len != 5)
+	if(chap.len != 6)
 		return 0 //splitting incorrect
 	var/list/elements = list()
 	var/list/elements_input = list()
