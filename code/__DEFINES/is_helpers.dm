@@ -2,8 +2,6 @@
 
 #define isdatum(D) (istype(D, /datum))
 
-#define isWEAKREF(A) istype(A, /datum/weakref)
-
 #define islist(L) (istype(L, /list))
 
 #define in_range(source, user) (get_dist(source, user) <= 1)
@@ -12,7 +10,7 @@
 
 #define isatom(A) (isloc(A))
 
-#define isWEAKREF(D) (istype(D, /datum/weakref))
+#define isweakref(D) (istype(D, /datum/weakref))
 
 //Turfs
 //#define isturf(A) (istype(A, /turf)) This is actually a byond built-in. Added here for completeness sake.

@@ -22,7 +22,7 @@
 
 /obj/item/integrated_circuit/output/screen/do_work()
 	var/datum/integrated_io/I = inputs[1]
-	if(isWEAKREF(I.data))
+	if(isweakref(I.data))
 		var/datum/d = I.data_as_type(/datum)
 		if(d)
 			stuff_to_display = "[d]"
@@ -124,7 +124,7 @@
 	)
 	outputs = list()
 	activators = list("play sound" = IC_PINTYPE_PULSE_IN)
-	power_draw_per_use = 20
+	power_draw_per_use = 10
 	var/list/sounds = list()
 
 /obj/item/integrated_circuit/output/text_to_speech
@@ -164,6 +164,9 @@
 			return
 		vol = Clamp(vol ,0 , 100)
 		playsound(get_turf(src), selected_sound, vol, freq, -1)
+
+/obj/item/integrated_circuit/output/sound/on_data_written()
+	power_draw_per_use =  get_pin_data(IC_INPUT, 2) * 15
 
 /obj/item/integrated_circuit/output/sound/beeper
 	name = "beeper circuit"

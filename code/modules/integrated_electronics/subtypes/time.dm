@@ -113,7 +113,8 @@
 				progress -= delay
 			else
 				progress = 0
-			activate_pin(1)
+			if(is_running)
+				activate_pin(1)
 	prev_time = wtime
 
 /obj/item/integrated_circuit/time/ticker/fast

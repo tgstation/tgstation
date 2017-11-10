@@ -55,7 +55,9 @@
 		lethal_projectile = gun_properties["lethal_projectile"]
 		lethal_projectile_sound = gun_properties["lethal_projectile_sound"]
 		if(gun_properties["shot_delay"])
-			cooldown_per_use = gun_properties["shot_delay"]
+			cooldown_per_use = gun_properties["shot_delay"]*10
+		if(cooldown_per_use<30)
+			cooldown_per_use = 40
 		if(gun_properties["reqpower"])
 			power_draw_per_use = gun_properties["reqpower"]
 		set_pin_data(IC_OUTPUT, 1, WEAKREF(installed_gun))
@@ -434,7 +436,7 @@
 	var/datum/integrated_io/target_x = inputs[1]
 	var/datum/integrated_io/target_y = inputs[2]
 	var/datum/integrated_io/projectile = inputs[3]
-	if(!isWEAKREF(projectile.data))
+	if(!isweakref(projectile.data))
 		return
 	var/obj/item/A = projectile.data.resolve()
 	if(A.anchored)

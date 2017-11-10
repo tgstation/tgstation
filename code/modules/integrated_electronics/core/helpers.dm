@@ -1,9 +1,8 @@
 /obj/item/integrated_circuit/proc/setup_io(var/list/io_list, var/io_type, var/list/io_default_list)
 	var/list/io_list_copy = io_list.Copy()
 	io_list.Cut()
-	var/i = 0
-	for(var/io_entry in io_list_copy)
-		i += 1
+	for(var/i in 1 to io_list_copy.len)
+		var/io_entry = io_list_copy[i]
 		var/default_data = null
 		var/io_type_override = null
 		// Override the default data.
@@ -38,7 +37,7 @@
 /datum/integrated_io/proc/get_data()
 	if(isnull(data))
 		return
-	if(isWEAKREF(data))
+	if(isweakref(data))
 		return data.resolve()
 	return data
 
@@ -139,3 +138,11 @@
 		c=c+ascii2text(sb1)+ascii2text(sb2)+ascii2text(sb3)
 		i=i+4
 	return c
+
+proc/XorEncrypt(string,key)
+	if(!string || !key ||!istext(string)||!istext(key))
+		return
+	var/r
+	for(var/i = 1 to length(string))
+		r += ascii2text(text2ascii(string,i) ^ text2ascii(key,(i-1)%length(string)+1))
+	return r

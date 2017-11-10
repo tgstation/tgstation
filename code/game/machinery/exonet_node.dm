@@ -15,6 +15,17 @@
 	var/list/logs = list() // Gets written to by exonet's send_message() function.
 	var/opened = FALSE
 
+/obj/machinery/exonet_node/Initialize()
+	. = ..()
+	SScircuit.all_exonet_nodes += src
+
+/obj/machinery/exonet_node/Destroy()
+	SScircuit.all_exonet_nodes -= src
+	return ..()
+
+/obj/machinery/exonet_node/proc/is_operating()
+	return on && !stat
+
 // Proc: New()
 // Parameters: None
 // Description: Adds components to the machine for deconstruction.
@@ -122,10 +133,7 @@
 // Proc: get_exonet_node()
 // Parameters: None
 // Description: Helper proc to get a reference to an Exonet node.
-/proc/get_exonet_node()
-	for(var/obj/machinery/exonet_node/E in GLOB.machines)
-		if(E.on)
-			return E
+
 
 
 /obj/machinery/exonet_node/proc/write_log(var/origin_address, var/target_address, var/data_type, var/content)

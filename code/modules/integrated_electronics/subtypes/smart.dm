@@ -19,7 +19,7 @@
 	var/datum/integrated_io/I = inputs[1]
 	set_pin_data(IC_OUTPUT, 1, null)
 
-	if(!isWEAKREF(I.data))
+	if(!isweakref(I.data))
 		return
 	var/atom/A = I.data.resolve()
 	if(!A)

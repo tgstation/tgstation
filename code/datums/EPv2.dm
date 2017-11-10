@@ -15,6 +15,7 @@ Afterwards, before you want to do networking, call exonet = New(src), then exone
 The reason it needs a string is so you can have the addresses be persistant, assuming no-one already took it first.
 
 When you're no longer wanting to use the address and want to free it up, like when you want to Destroy() it, you need to call remove_address()
+Destroy() also automatically calls remove_address().
 
 *Sending messages*
 
@@ -37,6 +38,9 @@ It's suggested to start with an if or switch statement for the message, to deter
 /datum/exonet_protocol/New(var/atom/H)
 	holder = H
 
+/datum/exonet_protocol/Destroy()
+	remove_address()
+	return ..()
 
 // Proc: make_address()
 // Parameters: 1 (string - used to make into a hash that will be part of the new address)
@@ -44,8 +48,10 @@ It's suggested to start with an if or switch statement for the message, to deter
 /datum/exonet_protocol/proc/make_address(var/string)
 	if(!string)
 		return
-	address = "fc00:[hexadecimal_to_EPv2(copytext(md5(string),1,25))]"
-	SScircuit.all_exonet_connections |= src
+	address = "fc00:[strtoepv2(copytext(md5(string),1,25))]"
+	if(SScircuit.all_exonet_connections[address])
+		stack_trace("WARNING: Exonet address collision in make_address. Holder type if applicable is [holder? holder.type : "NO HOLDER"]!")
+	SScircuit.all_exonet_connections[address] = src
 
 
 // Proc: make_arbitrary_address()
@@ -53,18 +59,18 @@ It's suggested to start with an if or switch statement for the message, to deter
 // Description: Allocates that specific address, if it is available.
 /datum/exonet_protocol/proc/make_arbitrary_address(var/new_address)
 	if(new_address)
-		if(new_address == find_address(new_address) )	//Collision test.
+		if(new_address == SScircuit.get_exonet_address(new_address) )	//Collision test.
 			return FALSE
 		address = new_address
-		SScircuit.all_exonet_connections += src
+		SScircuit.all_exonet_connections[address] = src
 		return TRUE
 
 // Proc: hexadecimal_to_EPv2()
 // Parameters: 1 (hex - a string of hexadecimals to convert)
 // Description: Helper proc to add colons to a string in the right places.
-/proc/hexadecimal_to_EPv2(var/hex)
+/proc/strtoepv2(var/hex)
 	if(!hex)
-		return null
+		return
 	var/addr_1 = copytext(hex,1,5)
 	var/addr_2 = copytext(hex,5,9)
 	var/addr_3 = copytext(hex,9,13)
@@ -72,34 +78,26 @@ It's suggested to start with an if or switch statement for the message, to deter
 	var/new_address = "[addr_1]:[addr_2]:[addr_3]:[addr_4]"
 	return new_address
 
-
 // Proc: remove_address()
 // Parameters: None
 // Description: Deallocates the address, freeing it for use.
 /datum/exonet_protocol/proc/remove_address()
+	SScircuit.all_exonet_connections -= address
 	address = ""
-	SScircuit.all_exonet_connections -= src
-
 
 // Proc: find_address()
 // Parameters: 1 (target_address - the desired address to find)
-// Description: Searches the global list GLOB.all_exonet_connections for a specific address, and returns it if found, otherwise returns null.
+// Description: Searches the circuit subsystem exonet node list for a specific address, and returns it if found, otherwise returns null.
 /datum/exonet_protocol/proc/find_address(var/target_address)
-	for(var/T in SScircuit.all_exonet_connections)
-		var/datum/exonet_protocol/exonet = T
-		if(exonet.address == target_address)
-			return exonet
-	return
+	return SScircuit.get_exonet_address(target_address)
 
 // Proc: get_atom_from_address()
 // Parameters: 1 (target_address - the desired address to find)
 // Description: Searches an address for the atom it is attached for, otherwise returns null.
 /datum/exonet_protocol/proc/get_atom_from_address(var/target_address)
-	for(var/T in SScircuit.all_exonet_connections)
-		var/datum/exonet_protocol/exonet = T
-		if(exonet.address == target_address)
-			return exonet.holder
-	return
+	var/datum/exonet_protocol/exonet = SScircuit.get_exonet_address(target_address)
+	if(exonet)
+		return exonet.holder
 
 // Proc: send_message()
 // Parameters: 3 (target_address - the desired address to send the message to, data_type - text stating what the content is meant to be used for,
@@ -108,16 +106,13 @@ It's suggested to start with an if or switch statement for the message, to deter
 /datum/exonet_protocol/proc/send_message(var/target_address, var/data_type, var/content)
 	if(!address)
 		return FALSE
-	var/obj/machinery/exonet_node/node = get_exonet_node()
+	var/obj/machinery/exonet_node/node = SScircuit.get_exonet_node()
 	if(!node) // Telecomms went boom, ion storm, etc.
 		return FALSE
-	if(!node.on||node.stat)
-		return FALSE
-	for(var/T in SScircuit.all_exonet_connections)
-		var/datum/exonet_protocol/exonet = T
-		if(exonet.address == target_address)
-			node.write_log(address, target_address, data_type, content)
-			return exonet.receive_message(holder, address, data_type, content)
+	var/datum/exonet_protocol/exonet = SScircuit.get_exonet_address(target_address)
+	if(exonet)
+		node.write_log(address, target_address, data_type, content)
+		return exonet.receive_message(holder, address, data_type, content)
 
 // Proc: receive_message()
 // Parameters: 4 (origin_atom - the origin datum's holder, origin_address - the address the message originated from,

@@ -376,7 +376,7 @@
 	var/datum/integrated_io/O = outputs[1]
 	O.data = null
 
-	if(!isWEAKREF(I.data))
+	if(!isweakref(I.data))
 		return
 	var/atom/A = I.data.resolve()
 	if(!A)
@@ -428,7 +428,7 @@
 	var/list/GI = list()
 	GI = I.data
 	for(var/G in GI)
-		if(isWEAKREF(G))									//It should search by refs. But don't want.will fix it later.
+		if(isweakref(G))									//It should search by refs. But don't want.will fix it later.
 			var/datum/integrated_io/G1
 			G1.data = G
 			var/atom/A = G1.data.resolve()
@@ -478,7 +478,7 @@
 	var/turf/T = get_turf(src)
 	var/list/nearby_things = range(radius, T) & view(T)
 	var/list/valid_things = list()
-	if(isWEAKREF(I.data))
+	if(isweakref(I.data))
 		var/atom/A = I.data.resolve()
 		var/desired_type = A.type
 		if(desired_type)
@@ -727,6 +727,18 @@
 	push_data()
 	activate_pin(1)
 	return TRUE
+
+/obj/item/integrated_circuit/input/sensor/ranged
+	name = "Ranged sensor"
+	desc = "Scans and obtains a reference for any objects or persons in range.  All you need to do is point the machine towards target."
+	extended_desc = "If 'ignore storage' pin is set to true, the sensor will disregard scanning various storage containers such as backpacks."
+	icon_state = "recorder"
+	complexity = 36
+	inputs = list("ignore storage" = IC_PINTYPE_BOOLEAN)
+	outputs = list("scanned" = IC_PINTYPE_REF)
+	activators = list("on scanned" = IC_PINTYPE_PULSE_OUT)
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	power_draw_per_use = 120
 
 /obj/item/integrated_circuit/input/internalbm
 	name = "internal battery monitor"
