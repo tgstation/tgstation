@@ -1,8 +1,0 @@
-author: "Swindly"
-delete-after: True
-changes: 
-  - bugfix: "Fixed hot items and fire heating reagents to temperatures higher than their heat source."
-  - bugfix: "Sprays can now be heated with hot items."
-  - tweak: "The heating of reagents by hot items, fire, and microwaves now scales linearly with the difference between the reagent holder's temperature and the heat source's temperature instead of constantly."
-  - tweak: "The body temperature of a mob with reagents is affected by the temperature of the mob's reagents."
-  - tweak: "Reagent containers can now be heated by hot air."

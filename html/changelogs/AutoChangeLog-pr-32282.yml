@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - bugfix: "Ghosts can no longer create sparks from the hand teleporter's portals."
