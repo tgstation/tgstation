@@ -96,8 +96,8 @@
 
 		if(ismonkey(occupant)) // Monkey
 			occupant_overlay = image(CRYOMOBS, "monkey")
- 			occupant_overlay.copy_overlays(occupant)
- 		else if(isalienadult(occupant))
+			occupant_overlay.copy_overlays(occupant)
+		else if(isalienadult(occupant))
 			if(isalienroyal(occupant)) // Queen and prae
 				occupant_overlay = image(CRYOMOBS, "alienq")
 			else if(isalienhunter(occupant)) // Hunter
