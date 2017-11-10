@@ -11,9 +11,10 @@
 
 
 /obj/item/device/integrated_electronics/prefab/attack_self(var/mob/user)
-	if(program)
-		if(program != "blank")
-			assemble(program)
+	if(program && program != "blank")
+		assemble(program)
+	else
+		return ..()
 
 /obj/item/device/integrated_electronics/prefab/Initialize()
 	var/list/assembly_list = list(
@@ -29,7 +30,7 @@
 	for(var/obj/item/integrated_circuit/IC in SScircuit.all_integrated_circuits)
 		if((IC.spawn_flags & IC_SPAWN_DEFAULT) || (IC.spawn_flags & IC_SPAWN_RESEARCH))
 			cir_names[IC.name] = IC.type
-	attack_self()
+	addtimer(CALLBACK(src, /obj/item/device/integrated_electronics/prefab.proc/attack_self()), 2) //IDK, why it's need dely,but otherwise it doesn't work.
 
 /obj/item/device/integrated_electronics/prefab/proc/assemble(var/program)
 

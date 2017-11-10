@@ -268,7 +268,7 @@
 	for(var/obj/item/integrated_circuit/input/sensor/S in contents)
 		if(!proximity)
 			if(!istype(S,/obj/item/integrated_circuit/input/sensor/ranged)||(!user))
-				if(!user.client)
+				if(user.client)
 					if(!(target in view(user.client)))
 						continue
 				else
