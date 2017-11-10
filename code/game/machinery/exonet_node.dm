@@ -20,8 +20,8 @@
 	SScircuit.all_exonet_nodes += src
 
 /obj/machinery/exonet_node/Destroy()
-	. = ..()
 	SScircuit.all_exonet_nodes -= src
+	return ..()
 
 /obj/machinery/exonet_node/proc/is_operating()
 	return on && !stat
