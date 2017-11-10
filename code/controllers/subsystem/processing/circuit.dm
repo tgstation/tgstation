@@ -8,7 +8,7 @@ PROCESSING_SUBSYSTEM_DEF(circuit)
 	flags = SS_BACKGROUND|SS_POST_FIRE_TIMING
 
 /datum/controller/subsystem/processing/circuit/Initialize(start_timeofday)
-	SScircuit.cipherkey = random_string(20, GLOB.alphabet)
+	SScircuit.cipherkey = random_string(2000+rand(0,10), GLOB.alphabet)
 	initialize_integrated_circuits_list()
 	return ..()
 

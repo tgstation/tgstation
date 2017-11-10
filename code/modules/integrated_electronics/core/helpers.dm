@@ -144,5 +144,5 @@ proc/XorEncrypt(string,key)
 		return
 	var/r
 	for(var/i = 1 to length(string))
-		r += ascii2text(text2ascii(string,i) ^ text2ascii(key,i % (lentext(key)+1)))
+		r += ascii2text(text2ascii(string,i) ^ text2ascii(key,(i-1)%length(string)+1))
 	return r

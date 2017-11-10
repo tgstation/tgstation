@@ -267,7 +267,14 @@
 /obj/item/device/electronic_assembly/afterattack(atom/target, mob/user, proximity)
 	for(var/obj/item/integrated_circuit/input/sensor/S in contents)
 		if(!proximity)
-			if(!istype(S,/obj/item/integrated_circuit/input/sensor/ranged))
+			if(!istype(S,/obj/item/integrated_circuit/input/sensor/ranged)||(!user))
+				if(!user.client)
+					if(!(target in view(user.client)))
+						continue
+				else
+					if(!(target in view(user)))
+						continue
+			else
 				continue
 		S.set_pin_data(IC_OUTPUT, 1, WEAKREF(target))
 		S.check_then_do_work()

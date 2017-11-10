@@ -93,11 +93,13 @@
 	inputs = list("input" = IC_PINTYPE_STRING)
 	outputs = list("output" = IC_PINTYPE_REF)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	var/dec
 
 
 /obj/item/integrated_circuit/converter/refdecode/do_work()
 	pull_data()
-	set_pin_data(IC_OUTPUT, 1, WEAKREF(locate( hextostr(XorEncrypt(get_pin_data(IC_INPUT, 1),SScircuit.cipherkey)) )))
+	dec=XorEncrypt(hextostr(get_pin_data(IC_INPUT, 1)),SScircuit.cipherkey)
+	set_pin_data(IC_OUTPUT, 1, WEAKREF(locate( dec )))
 	push_data()
 	activate_pin(2)
 
