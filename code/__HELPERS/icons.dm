@@ -1006,23 +1006,26 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 		if(J)
 			J.equip(body, TRUE, FALSE)
 
-		SSoverlays.Flush()
 
 		var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
 
 		body.setDir(NORTH)
+		COMPILE_OVERLAYS(body)
 		var/icon/partial = getFlatIcon(body)
 		out_icon.Insert(partial,dir=NORTH)
 
 		body.setDir(SOUTH)
+		COMPILE_OVERLAYS(body)
 		partial = getFlatIcon(body)
 		out_icon.Insert(partial,dir=SOUTH)
 
 		body.setDir(WEST)
+		COMPILE_OVERLAYS(body)
 		partial = getFlatIcon(body)
 		out_icon.Insert(partial,dir=WEST)
 
 		body.setDir(EAST)
+		COMPILE_OVERLAYS(body)
 		partial = getFlatIcon(body)
 		out_icon.Insert(partial,dir=EAST)
 
