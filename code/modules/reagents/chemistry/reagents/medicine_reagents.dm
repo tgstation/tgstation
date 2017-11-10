@@ -975,15 +975,14 @@
 	description = "Has a high chance to heal all types of damage. Overdose instead causes it."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
-	overdose_threshold = 30
 	taste_description = "grossness"
 
 /datum/reagent/medicine/tricordrazine/on_mob_life(mob/living/M)
 	if(prob(80))
-		M.adjustBruteLoss(-1*REM, 0)
-		M.adjustFireLoss(-1*REM, 0)
-		M.adjustOxyLoss(-1*REM, 0)
-		M.adjustToxLoss(-1*REM, 0)
+		M.adjustBruteLoss(-4*REM, 0)
+		M.adjustFireLoss(-4*REM, 0)
+		M.adjustOxyLoss(-4*REM, 0)
+		M.adjustToxLoss(-4*REM, 0)
 		. = 1
 	..()
 
