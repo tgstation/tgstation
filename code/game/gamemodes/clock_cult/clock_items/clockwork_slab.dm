@@ -1,7 +1,7 @@
 /obj/item/clockwork/slab //Clockwork slab: The most important tool in Ratvar's arsenal. Allows scripture recital, tutorials, and generates components.
 	name = "clockwork slab"
 	desc = "A strange metal tablet. A clock in the center turns around and around."
-	clockwork_desc = "A link between you and the Celestial Derelict. It contains information, recites scripture, and is your most vital tool as a Servant"
+	clockwork_desc = "A link between you and the Celestial Derelict. It contains information, recites scripture, and is your most vital tool as a Servant."
 	icon_state = "dread_ipad"
 	lefthand_file = 'icons/mob/inhands/antag/clockwork_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/clockwork_righthand.dmi'
