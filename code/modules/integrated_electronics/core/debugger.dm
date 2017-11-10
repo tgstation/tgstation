@@ -50,7 +50,7 @@
 	if(io.io_type == DATA_CHANNEL)
 		io.write_data_to_pin(data_to_write)
 		var/data_to_show = data_to_write
-		if(isWEAKREF(data_to_write))
+		if(isweakref(data_to_write))
 			var/datum/weakref/w = data_to_write
 			var/atom/A = w.resolve()
 			data_to_show = A.name

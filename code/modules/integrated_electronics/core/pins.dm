@@ -44,7 +44,7 @@ D [1]/  ||
 */
 
 /datum/integrated_io/proc/data_as_type(var/as_type)
-	if(!isWEAKREF(data))
+	if(!isweakref(data))
 		return
 	var/datum/weakref/w = data
 	var/output = w.resolve()
@@ -80,7 +80,7 @@ list[](
 		result += ")"
 		return result
 
-	if(isWEAKREF(input))
+	if(isweakref(input))
 		var/datum/weakref/w = input
 		var/atom/A = w.resolve()
 		return A ? "([A.name] \[Ref\])" : "(null)" // For refs, we want just the name displayed.
@@ -110,7 +110,7 @@ list[](
 	push_data()
 
 /datum/integrated_io/proc/write_data_to_pin(var/new_data)
-	if(isnull(new_data) || isnum(new_data) || istext(new_data) || isWEAKREF(new_data)) // Anything else is a type we don't want.
+	if(isnull(new_data) || isnum(new_data) || istext(new_data) || isweakref(new_data)) // Anything else is a type we don't want.
 		data = new_data
 		holder.on_data_written()
 

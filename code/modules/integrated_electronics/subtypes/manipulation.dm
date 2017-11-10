@@ -436,7 +436,7 @@
 	var/datum/integrated_io/target_x = inputs[1]
 	var/datum/integrated_io/target_y = inputs[2]
 	var/datum/integrated_io/projectile = inputs[3]
-	if(!isWEAKREF(projectile.data))
+	if(!isweakref(projectile.data))
 		return
 	var/obj/item/A = projectile.data.resolve()
 	if(A.anchored)
