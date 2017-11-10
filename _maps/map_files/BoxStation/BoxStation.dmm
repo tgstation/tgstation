@@ -17312,7 +17312,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aRi" = (
-/obj/machinery/computer/atmos_alert,
+/obj/machinery/computer/rdconsole,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 10
 	},
@@ -17328,18 +17328,16 @@
 /turf/open/floor/plasteel,
 /area/bridge)
 "aRk" = (
-/obj/machinery/computer/monitor{
-	name = "bridge power monitoring console"
-	},
 /obj/structure/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/modular_computer/console/preset/engineering,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 6
 	},
 /area/bridge)
 "aRl" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/modular_computer/console/preset/engineering,
 /turf/open/floor/plasteel/yellow/side,
 /area/bridge)
 "aRm" = (
@@ -30246,7 +30244,6 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bxi" = (
-/obj/machinery/computer/aifixer,
 /obj/machinery/requests_console{
 	announcementConsole = 1;
 	department = "Research Director's Desk";
@@ -30259,6 +30256,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/machinery/modular_computer/console/preset/engineering,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
 "bxj" = (
