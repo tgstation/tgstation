@@ -220,7 +220,7 @@
 	for(var/A in H)
 		var/atom/movable/AM = A
 
-		target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
+		target = get_offset_target_turf(loc, rand(5)-rand(5), rand(5)-rand(5))
 
 		AM.forceMove(T)
 		AM.pipe_eject(0)

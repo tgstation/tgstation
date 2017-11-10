@@ -82,7 +82,7 @@
 
 // find the turf which should contain the next pipe
 /obj/structure/disposalholder/proc/nextloc()
-	return get_step(loc, dir)
+	return get_step(src, dir)
 
 // find a matching pipe on a turf
 /obj/structure/disposalholder/proc/findpipe(turf/T)

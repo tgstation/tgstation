@@ -17,7 +17,7 @@
 	. = ..()
 	if(make_from)
 		setDir(make_from.dir)
-		make_from.loc = src
+		make_from.forceMove(src)
 		stored = make_from
 	else
 		stored = new /obj/structure/disposalconstruct(src, make_from = src)
@@ -35,7 +35,7 @@
 /obj/structure/disposaloutlet/Destroy()
 	if(trunk)
 		trunk.linked = null
-	trunk = null
+		trunk = null
 	QDEL_NULL(stored)
 	return ..()
 
