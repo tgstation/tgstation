@@ -104,13 +104,13 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/closed/indestructible/rock,
+/turf/closed/mineral,
 /area/ruin/unpowered/no_grav)
 "t" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/closed/indestructible/rock,
+/turf/closed/mineral,
 /area/ruin/unpowered/no_grav)
 "u" = (
 /obj/structure/disposaloutlet{
@@ -137,7 +137,7 @@
 /area/ruin/space/has_grav/powered/listeningstation)
 "y" = (
 /obj/structure/disposalpipe/segment,
-/turf/closed/indestructible/rock,
+/turf/closed/mineral,
 /area/ruin/unpowered/no_grav)
 "z" = (
 /obj/machinery/vending/cola,
@@ -183,7 +183,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/turf/closed/indestructible/rock,
+/turf/closed/mineral,
 /area/ruin/unpowered/no_grav)
 "G" = (
 /obj/machinery/door/airlock{
@@ -231,12 +231,6 @@
 /area/ruin/unpowered/no_grav)
 "R" = (
 /turf/closed/wall,
-/area/ruin/unpowered/no_grav)
-"S" = (
-/turf/closed/indestructible/rock,
-/area/ruin/unpowered/no_grav)
-"T" = (
-/turf/closed/indestructible/rock,
 /area/ruin/unpowered/no_grav)
 
 (1,1,1) = {"
@@ -5751,9 +5745,9 @@ c
 b
 b
 b
-S
+b
 t
-T
+b
 b
 b
 b
