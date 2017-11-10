@@ -13,6 +13,9 @@
 	max_integrity = 250
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 100, fire = 80, acid = 10)
 	circuit = /obj/item/circuitboard/machine/space_heater
+	climbable = TRUE //grr i hate when space heaters block me in maint
+	climb_time = 10
+	climb_stun = 0
 	var/obj/item/stock_parts/cell/cell
 	var/on = FALSE
 	var/mode = HEATER_MODE_STANDBY
