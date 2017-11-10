@@ -21,7 +21,7 @@
 
 /obj/item/integrated_circuit/proc/set_pin_data(var/pin_type, var/pin_number, datum/new_data)
 	if (istype(new_data) && !isweakref(new_data))
-		new_data = weakref(new_data)
+		new_data = WEAKREF(new_data)
 	var/datum/integrated_io/pin = get_pin_ref(pin_type, pin_number)
 	return pin.write_data_to_pin(new_data)
 
