@@ -41,7 +41,7 @@
 	if(..())
 		return
 	usr.set_machine(src)
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	if(href_list["release"])
 		if(!(text2path(href_list["release"]) in machine.stack_list))
 			return //someone tried to spawn materials by spoofing hrefs
@@ -51,7 +51,7 @@
 		inp.amount = 0
 		machine.unload_mineral(out)
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 	return
 
 

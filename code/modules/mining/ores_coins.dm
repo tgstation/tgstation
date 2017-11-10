@@ -16,7 +16,7 @@
 	if(istype(I, /obj/item/weldingtool))
 		var/obj/item/weldingtool/W = I
 		if(W.remove_fuel(15) && refined_type)
-			new refined_type(get_turf(src.loc))
+			new refined_type(get_turf(loc))
 			qdel(src)
 		else if(W.isOn())
 			to_chat(user, "<span class='info'>Not enough fuel to smelt [src].</span>")

@@ -55,9 +55,9 @@
 		add_overlay("[head.icon_state]+o")
 
 /obj/item/robot_suit/proc/check_completion()
-	if(src.l_arm && src.r_arm)
-		if(src.l_leg && src.r_leg)
-			if(src.chest && src.head)
+	if(l_arm && r_arm)
+		if(l_leg && r_leg)
+			if(chest && head)
 				SSblackbox.inc("cyborg_frames_built",1)
 				return 1
 	return 0
@@ -79,56 +79,56 @@
 				to_chat(user, "<span class='warning'>You need one sheet of metal to start building ED-209!</span>")
 				return
 	else if(istype(W, /obj/item/bodypart/l_leg/robot))
-		if(src.l_leg)
+		if(l_leg)
 			return
 		if(!user.transferItemToLoc(W, src))
 			return
 		W.icon_state = initial(W.icon_state)
 		W.cut_overlays()
-		src.l_leg = W
-		src.updateicon()
+		l_leg = W
+		updateicon()
 
 	else if(istype(W, /obj/item/bodypart/r_leg/robot))
-		if(src.r_leg)
+		if(r_leg)
 			return
 		if(!user.transferItemToLoc(W, src))
 			return
 		W.icon_state = initial(W.icon_state)
 		W.cut_overlays()
-		src.r_leg = W
-		src.updateicon()
+		r_leg = W
+		updateicon()
 
 	else if(istype(W, /obj/item/bodypart/l_arm/robot))
-		if(src.l_arm)
+		if(l_arm)
 			return
 		if(!user.transferItemToLoc(W, src))
 			return
 		W.icon_state = initial(W.icon_state)
 		W.cut_overlays()
-		src.l_arm = W
-		src.updateicon()
+		l_arm = W
+		updateicon()
 
 	else if(istype(W, /obj/item/bodypart/r_arm/robot))
-		if(src.r_arm)
+		if(r_arm)
 			return
 		if(!user.transferItemToLoc(W, src))
 			return
 		W.icon_state = initial(W.icon_state)//in case it is a dismembered robotic limb
 		W.cut_overlays()
-		src.r_arm = W
-		src.updateicon()
+		r_arm = W
+		updateicon()
 
 	else if(istype(W, /obj/item/bodypart/chest/robot))
 		var/obj/item/bodypart/chest/robot/CH = W
-		if(src.chest)
+		if(chest)
 			return
 		if(CH.wired && CH.cell)
 			if(!user.transferItemToLoc(CH, src))
 				return
 			CH.icon_state = initial(CH.icon_state) //in case it is a dismembered robotic limb
 			CH.cut_overlays()
-			src.chest = CH
-			src.updateicon()
+			chest = CH
+			updateicon()
 		else if(!CH.wired)
 			to_chat(user, "<span class='warning'>You need to attach wires to it first!</span>")
 		else
@@ -140,15 +140,15 @@
 			if(istype(X, /obj/item/organ))
 				to_chat(user, "<span class='warning'>There are organs inside [HD]!</span>")
 				return
-		if(src.head)
+		if(head)
 			return
 		if(HD.flash2 && HD.flash1)
 			if(!user.transferItemToLoc(HD, src))
 				return
 			HD.icon_state = initial(HD.icon_state)//in case it is a dismembered robotic limb
 			HD.cut_overlays()
-			src.head = HD
-			src.updateicon()
+			head = HD
+			updateicon()
 		else
 			to_chat(user, "<span class='warning'>You need to attach a flash to it first!</span>")
 
@@ -311,8 +311,8 @@
 		return
 
 	if(href_list["Name"])
-		var/new_name = reject_bad_name(input(usr, "Enter new designation. Set to blank to reset to default.", "Cyborg Debug", src.created_name),1)
-		if(!in_range(src, usr) && src.loc != usr)
+		var/new_name = reject_bad_name(input(usr, "Enter new designation. Set to blank to reset to default.", "Cyborg Debug", created_name),1)
+		if(!in_range(src, usr) && loc != usr)
 			return
 		if(new_name)
 			created_name = new_name

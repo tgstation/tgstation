@@ -68,16 +68,16 @@
 /obj/item/tank/examine(mob/user)
 	var/obj/icon = src
 	..()
-	if (istype(src.loc, /obj/item/assembly))
-		icon = src.loc
+	if (istype(loc, /obj/item/assembly))
+		icon = loc
 	if(!in_range(src, user))
 		if (icon == src)
 			to_chat(user, "<span class='notice'>If you want any more information you'll need to get closer.</span>")
 		return
 
-	to_chat(user, "<span class='notice'>The pressure gauge reads [round(src.air_contents.return_pressure(),0.01)] kPa.</span>")
+	to_chat(user, "<span class='notice'>The pressure gauge reads [round(air_contents.return_pressure(),0.01)] kPa.</span>")
 
-	var/celsius_temperature = src.air_contents.temperature-T0C
+	var/celsius_temperature = air_contents.temperature-T0C
 	var/descriptive
 
 	if (celsius_temperature < 20)
@@ -112,7 +112,7 @@
 		if(T)
 			T.assume_air(air_contents)
 			air_update_turf()
-		playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
+		playsound(loc, 'sound/effects/spray.ogg', 10, 1, -3)
 	qdel(src)
 
 /obj/item/tank/suicide_act(mob/user)
@@ -234,9 +234,9 @@
 
 	var/pressure = air_contents.return_pressure()
 	if(pressure > TANK_FRAGMENT_PRESSURE)
-		if(!istype(src.loc, /obj/item/device/transfer_valve))
-			message_admins("Explosive tank rupture! Last key to touch the tank was [src.fingerprintslast].")
-			log_game("Explosive tank rupture! Last key to touch the tank was [src.fingerprintslast].")
+		if(!istype(loc, /obj/item/device/transfer_valve))
+			message_admins("Explosive tank rupture! Last key to touch the tank was [fingerprintslast].")
+			log_game("Explosive tank rupture! Last key to touch the tank was [fingerprintslast].")
 		//Give the gas a chance to build up more pressure through reacting
 		air_contents.react()
 		air_contents.react()
@@ -247,8 +247,8 @@
 
 
 		explosion(epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
-		if(istype(src.loc, /obj/item/device/transfer_valve))
-			qdel(src.loc)
+		if(istype(loc, /obj/item/device/transfer_valve))
+			qdel(loc)
 		else
 			qdel(src)
 
@@ -258,7 +258,7 @@
 			if(!T)
 				return
 			T.assume_air(air_contents)
-			playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
+			playsound(loc, 'sound/effects/spray.ogg', 10, 1, -3)
 			qdel(src)
 		else
 			integrity--

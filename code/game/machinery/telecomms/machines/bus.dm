@@ -36,7 +36,7 @@
 				return
 			// failed to send to a processor, relay information anyway
 			signal.data["slow"] += rand(1, 5) // slow the signal down only slightly
-			src.receive_information(signal, src)
+			receive_information(signal, src)
 
 		// Try sending it!
 		var/list/try_send = list("/obj/machinery/telecomms/server", "/obj/machinery/telecomms/hub", "/obj/machinery/telecomms/broadcaster", "/obj/machinery/telecomms/bus")

@@ -47,7 +47,7 @@
 /obj/item/paper/fluff/awaymissions/academy/grade/aplus
 	name = "Summoning Midterm Exam"
 	info = "Grade: A+ Educator's Notes: Excellent form."
-	
+
 /obj/item/paper/fluff/awaymissions/academy/grade/bminus
 	name = "Summoning Midterm Exam"
 	info = "Grade: B- Educator's Notes: Keep applying yourself, you're showing improvement."
@@ -55,7 +55,7 @@
 /obj/item/paper/fluff/awaymissions/academy/grade/dminus
 	name = "Summoning Midterm Exam"
 	info = "Grade: D- Educator's Notes: SEE ME AFTER CLASS."
-	
+
 /obj/item/paper/fluff/awaymissions/academy/grade/failure
 	name = "Pyromancy Evaluation"
 	info = "Current Grade: F. Educator's Notes: No improvement shown despite multiple private lessons.  Suggest additional tutilage."
@@ -137,7 +137,7 @@
 		current_wizard.key = chosen.key
 
 /obj/structure/academy_wizard_spawner/proc/summon_wizard()
-	var/turf/T = src.loc
+	var/turf/T = loc
 	var/mob/living/carbon/human/wizbody = new(T)
 	wizbody.fully_replace_character_name(wizbody.real_name, "Academy Teacher")
 	wizbody.mind_initialize()
@@ -230,7 +230,7 @@
 			user.throw_at(throw_target, 200, 4)
 		if(8)
 			//Fueltank Explosion
-			explosion(src.loc,-1,0,2, flame_range = 2)
+			explosion(loc,-1,0,2, flame_range = 2)
 		if(9)
 			//Cold
 			var/datum/disease/D = new /datum/disease/cold

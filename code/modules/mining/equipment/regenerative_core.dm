@@ -78,10 +78,10 @@
 				return
 			if(H != user)
 				H.visible_message("[user] forces [H] to apply [src]... [H.p_they()] quickly regenerate all injuries!")
-				SSblackbox.add_details("hivelord_core","[src.type]|used|other")
+				SSblackbox.add_details("hivelord_core","[type]|used|other")
 			else
 				to_chat(user, "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>")
-				SSblackbox.add_details("hivelord_core","[src.type]|used|self")
+				SSblackbox.add_details("hivelord_core","[type]|used|self")
 			H.revive(full_heal = 1)
 			qdel(src)
 	..()

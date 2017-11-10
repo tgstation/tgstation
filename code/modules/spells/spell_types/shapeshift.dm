@@ -41,7 +41,7 @@
 			if(!shapeshift_type) //If you aren't gonna decide I am!
 				shapeshift_type = pick(animal_list)
 			shapeshift_type = animal_list[shapeshift_type]
-		
+
 		var/obj/shapeshift_holder/S = locate() in M
 		if(S)
 			Restore(M)
@@ -65,7 +65,7 @@
 	var/obj/shapeshift_holder/H = locate() in shape
 	if(!H)
 		return
-	
+
 	H.restore()
 
 	clothes_req = initial(clothes_req)
@@ -90,7 +90,7 @@
 
 /obj/shapeshift_holder/Initialize(mapload,obj/effect/proc_holder/spell/targeted/shapeshift/source,mob/living/caster)
 	. = ..()
-	src.source = source
+	source = source
 	shape = loc
 	if(!istype(shape))
 		CRASH("shapeshift holder created outside mob/living")

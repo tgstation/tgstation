@@ -18,7 +18,7 @@
 	var/is_cyborg = 0 // It's 1 if module is used by a cyborg, and uses its storage
 	var/datum/robot_energy_storage/source
 	var/cost = 1 // How much energy from storage it costs
-	var/merge_type = null // This path and its children should merge with this stack, defaults to src.type
+	var/merge_type = null // This path and its children should merge with this stack, defaults to type
 	var/full_w_class = WEIGHT_CLASS_NORMAL //The weight class the stack should have at amount > 2/3rds max_amount
 	var/novariants = TRUE //Determines whether the item should update it's sprites based on amount.
 
@@ -233,7 +233,7 @@
 	if (is_cyborg)
 		source.add_charge(amount * cost)
 	else
-		src.amount += amount
+		amount += amount
 	update_icon()
 	update_weight()
 
@@ -336,12 +336,12 @@
 	var/window_checks = FALSE
 
 /datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = FALSE, on_floor = FALSE, window_checks = FALSE)
-	src.title = title
-	src.result_type = result_type
-	src.req_amount = req_amount
-	src.res_amount = res_amount
-	src.max_res_amount = max_res_amount
-	src.time = time
-	src.one_per_turf = one_per_turf
-	src.on_floor = on_floor
-	src.window_checks = window_checks
+	title = title
+	result_type = result_type
+	req_amount = req_amount
+	res_amount = res_amount
+	max_res_amount = max_res_amount
+	time = time
+	one_per_turf = one_per_turf
+	on_floor = on_floor
+	window_checks = window_checks

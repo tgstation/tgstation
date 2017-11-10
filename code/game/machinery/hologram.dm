@@ -147,7 +147,7 @@ Possible to do for anyone motivated enough:
 
 	var/datum/browser/popup = new(user, "holopad", name, 300, 130)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
 //Stop ringing the AI!!
@@ -225,7 +225,7 @@ Possible to do for anyone motivated enough:
 	/*There are pretty much only three ways to interact here.
 	I don't need to check for client since they're clicking on an object.
 	This may change in the future but for now will suffice.*/
-	if(user.eyeobj.loc != src.loc)//Set client eye on the object if it's not already.
+	if(user.eyeobj.loc != loc)//Set client eye on the object if it's not already.
 		user.eyeobj.setLoc(get_turf(src))
 	else if(!masters[user])//If there is no hologram, possibly make one.
 		activate_holo(user)

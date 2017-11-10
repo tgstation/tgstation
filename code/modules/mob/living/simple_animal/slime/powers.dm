@@ -171,10 +171,10 @@
 
 			var/mob/living/simple_animal/slime/new_slime = pick(babies)
 			new_slime.a_intent = INTENT_HARM
-			if(src.mind)
-				src.mind.transfer_to(new_slime)
+			if(mind)
+				mind.transfer_to(new_slime)
 			else
-				new_slime.key = src.key
+				new_slime.key = key
 			qdel(src)
 		else
 			to_chat(src, "<i>I am not ready to reproduce yet...</i>")

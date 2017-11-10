@@ -11,11 +11,11 @@
 	if (handcuffed)
 		msg += "<span class='warning'>[t_He] [t_is] [icon2html(handcuffed, user)] handcuffed!</span>\n"
 	if (head)
-		msg += "[t_He] [t_is] wearing [icon2html(head, user)] \a [src.head] on [t_his] head. \n"
+		msg += "[t_He] [t_is] wearing [icon2html(head, user)] \a [head] on [t_his] head. \n"
 	if (wear_mask)
-		msg += "[t_He] [t_is] wearing [icon2html(wear_mask, user)] \a [src.wear_mask] on [t_his] face.\n"
+		msg += "[t_He] [t_is] wearing [icon2html(wear_mask, user)] \a [wear_mask] on [t_his] face.\n"
 	if (wear_neck)
-		msg += "[t_He] [t_is] wearing [icon2html(wear_neck, user)] \a [src.wear_neck] around [t_his] neck.\n"
+		msg += "[t_He] [t_is] wearing [icon2html(wear_neck, user)] \a [wear_neck] around [t_his] neck.\n"
 
 	for(var/obj/item/I in held_items)
 		if(!(I.flags_1 & ABSTRACT_1))
@@ -25,7 +25,7 @@
 				msg += "[t_He] [t_is] holding [icon2html(I, user)] \a [I] in [t_his] [get_held_index_name(get_held_index_of_item(I))].\n"
 
 	if (back)
-		msg += "[t_He] [t_has] [icon2html(back, user)] \a [src.back] on [t_his] back.\n"
+		msg += "[t_He] [t_has] [icon2html(back, user)] \a [back] on [t_his] back.\n"
 	var/appears_dead = 0
 	if (stat == DEAD)
 		appears_dead = 1

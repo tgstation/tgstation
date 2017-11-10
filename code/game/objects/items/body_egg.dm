@@ -12,7 +12,7 @@
 
 /obj/item/organ/body_egg/New(loc)
 	if(iscarbon(loc))
-		src.Insert(loc)
+		Insert(loc)
 	return ..()
 
 /obj/item/organ/body_egg/Insert(var/mob/living/carbon/M, special = 0)

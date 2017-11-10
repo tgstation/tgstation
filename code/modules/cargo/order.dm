@@ -31,11 +31,11 @@
 
 /datum/supply_order/New(datum/supply_pack/pack, orderer, orderer_rank, orderer_ckey, reason)
 	id = SSshuttle.ordernum++
-	src.pack = pack
-	src.orderer = orderer
-	src.orderer_rank = orderer_rank
-	src.orderer_ckey = orderer_ckey
-	src.reason = reason
+	pack = pack
+	orderer = orderer
+	orderer_rank = orderer_rank
+	orderer_ckey = orderer_ckey
+	reason = reason
 
 /datum/supply_order/proc/generateRequisition(turf/T)
 	var/obj/item/paper/P = new(T)

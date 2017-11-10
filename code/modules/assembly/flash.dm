@@ -76,7 +76,7 @@
 	if(crit_fail)
 		return 0
 
-	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
+	playsound(loc, 'sound/weapons/flash.ogg', 100, 1)
 	update_icon(1)
 	times_used++
 
@@ -206,7 +206,7 @@
 		return FALSE
 	overheat = TRUE
 	addtimer(CALLBACK(src, .proc/cooldown), flashcd)
-	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
+	playsound(loc, 'sound/weapons/flash.ogg', 100, 1)
 	update_icon(1)
 	return TRUE
 
@@ -253,7 +253,7 @@
 					return
 				crit_fail = FALSE
 				times_used = 0
-				playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+				playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 				update_icon()
 				flash.crit_fail = TRUE
 				flash.update_icon()

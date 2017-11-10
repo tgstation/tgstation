@@ -256,7 +256,7 @@
 			if(T)
 				temp = "<font color = #666633>-% Removed [REF(T)] [T.name] from linked entities. %-</font color>"
 
-				// Remove link entries from both T and src.
+				// Remove link entries from both T and
 
 				if(T.links)
 					T.links.Remove(src)

@@ -261,7 +261,7 @@
 					justzap = TRUE
 					addtimer(CALLBACK(src, .proc/unzap), 10)
 					return
-			else /*if(src.justzap)*/
+			else /*if(justzap)*/
 				return
 		else if(user.hallucinating() && ishuman(user) && prob(4) && !operating)
 			var/mob/living/carbon/human/H = user
@@ -307,7 +307,7 @@
 	user.Knockdown(60)
 
 /obj/machinery/door/airlock/proc/isElectrified()
-	if(src.secondsElectrified != NOT_ELECTRIFIED)
+	if(secondsElectrified != NOT_ELECTRIFIED)
 		return TRUE
 	return FALSE
 
@@ -328,8 +328,8 @@
 		return TRUE
 
 /obj/machinery/door/airlock/proc/regainMainPower()
-	if(src.secondsMainPowerLost > 0)
-		src.secondsMainPowerLost = 0
+	if(secondsMainPowerLost > 0)
+		secondsMainPowerLost = 0
 
 /obj/machinery/door/airlock/proc/handlePowerRestore()
 	var/cont = TRUE
@@ -361,12 +361,12 @@
 	INVOKE_ASYNC(src, .proc/handlePowerRestore)
 
 /obj/machinery/door/airlock/proc/loseBackupPower()
-	if(src.secondsBackupPowerLost < 60)
-		src.secondsBackupPowerLost = 60
+	if(secondsBackupPowerLost < 60)
+		secondsBackupPowerLost = 60
 
 /obj/machinery/door/airlock/proc/regainBackupPower()
-	if(src.secondsBackupPowerLost > 0)
-		src.secondsBackupPowerLost = 0
+	if(secondsBackupPowerLost > 0)
+		secondsBackupPowerLost = 0
 
 // shock user with probability prb (if all connections & power are working)
 // returns TRUE if shocked, FALSE otherwise
@@ -598,9 +598,9 @@
 			to_chat(user, "It looks very robust.")
 
 /obj/machinery/door/airlock/attack_ai(mob/user)
-	if(!src.canAIControl(user))
-		if(src.canAIHack())
-			src.hack(user)
+	if(!canAIControl(user))
+		if(canAIHack())
+			hack(user)
 			return
 		else
 			to_chat(user, "<span class='warning'>Airlock AI control has been blocked with a firewall. Unable to hack.</span>")
@@ -614,20 +614,20 @@
 	//Separate interface for the AI.
 	user.set_machine(src)
 	var/t1 = text("<B>Airlock Control</B><br>\n")
-	if(src.secondsMainPowerLost > 0)
+	if(secondsMainPowerLost > 0)
 		if(!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
-			t1 += text("Main power is offline for [] seconds.<br>\n", src.secondsMainPowerLost)
+			t1 += text("Main power is offline for [] seconds.<br>\n", secondsMainPowerLost)
 		else
 			t1 += text("Main power is offline indefinitely.<br>\n")
 	else
 		t1 += text("Main power is online.")
 
-	if(src.secondsBackupPowerLost > 0)
+	if(secondsBackupPowerLost > 0)
 		if(!wires.is_cut(WIRE_BACKUP1) && !wires.is_cut(WIRE_BACKUP2))
-			t1 += text("Backup power is offline for [] seconds.<br>\n", src.secondsBackupPowerLost)
+			t1 += text("Backup power is offline for [] seconds.<br>\n", secondsBackupPowerLost)
 		else
 			t1 += text("Backup power is offline indefinitely.<br>\n")
-	else if(src.secondsMainPowerLost > 0)
+	else if(secondsMainPowerLost > 0)
 		t1 += text("Backup power is online.")
 	else
 		t1 += text("Backup power is offline, but will turn on if main power fails.")
@@ -635,12 +635,12 @@
 
 	if(wires.is_cut(WIRE_IDSCAN))
 		t1 += text("IdScan wire is cut.<br>\n")
-	else if(src.aiDisabledIdScanner)
+	else if(aiDisabledIdScanner)
 		t1 += "IdScan disabled. <A href='?src=[REF(src)];aiEnable=1'>Enable?</a><br>\n"
 	else
 		t1 += "IdScan enabled. <A href='?src=[REF(src)];aiDisable=1'>Disable?</a><br>\n"
 
-	if(src.emergency)
+	if(emergency)
 		t1 += "Emergency Access Override is enabled. <A href='?src=[REF(src)];aiDisable=11'>Disable?</a><br>\n"
 	else
 		t1 += "Emergency Access Override is disabled. <A href='?src=[REF(src)];aiEnable=11'>Enable?</a><br>\n"
@@ -661,18 +661,18 @@
 
 	if(wires.is_cut(WIRE_BOLTS))
 		t1 += text("Door bolt drop wire is cut.<br>\n")
-	else if(!src.locked)
+	else if(!locked)
 		t1 += "Door bolts are up. <A href='?src=[REF(src)];aiDisable=4'>Drop them?</a><br>\n"
 	else
 		t1 += text("Door bolts are down.")
-		if(src.hasPower())
+		if(hasPower())
 			t1 += " <A href='?src=[REF(src)];aiEnable=4'>Raise?</a><br>\n"
 		else
 			t1 += text(" Cannot raise door bolts due to power failure.<br>\n")
 
 	if(wires.is_cut(WIRE_LIGHT))
 		t1 += text("Door bolt lights wire is cut.<br>\n")
-	else if(!src.lights)
+	else if(!lights)
 		t1 += "Door bolt lights are off. <A href='?src=[REF(src)];aiEnable=10'>Enable?</a><br>\n"
 	else
 		t1 += "Door bolt lights are on. <A href='?src=[REF(src)];aiDisable=10'>Disable?</a><br>\n"
@@ -688,22 +688,22 @@
 
 	if(wires.is_cut(WIRE_SAFETY))
 		t1 += text("Door force sensors not responding.</a><br>\n")
-	else if(src.safe)
+	else if(safe)
 		t1 += "Door safeties operating normally.  <A href='?src=[REF(src)];aiDisable=8'>Override?</a><br>\n"
 	else
 		t1 += "Danger.  Door safeties disabled.  <A href='?src=[REF(src)];aiEnable=8'>Restore?</a><br>\n"
 
 	if(wires.is_cut(WIRE_TIMING))
 		t1 += text("Door timing circuitry not responding.</a><br>\n")
-	else if(src.normalspeed)
+	else if(normalspeed)
 		t1 += "Door timing circuitry operating normally.  <A href='?src=[REF(src)];aiDisable=9'>Override?</a><br>\n"
 	else
 		t1 += "Warning.  Door timing circuitry operating abnormally.  <A href='?src=[REF(src)];aiEnable=9'>Restore?</a><br>\n"
 
-	if(src.welded)
+	if(welded)
 		t1 += text("Door appears to have been welded shut.<br>\n")
-	else if(!src.locked)
-		if(src.density)
+	else if(!locked)
+		if(density)
 			t1 += "<A href='?src=[REF(src)];aiEnable=7'>Open door</a><br>\n"
 		else
 			t1 += "<A href='?src=[REF(src)];aiDisable=7'>Close door</a><br>\n"
@@ -722,11 +722,11 @@
 		aiHacking = TRUE
 		to_chat(user, "Airlock AI control has been blocked. Beginning fault-detection.")
 		sleep(50)
-		if(src.canAIControl(user))
+		if(canAIControl(user))
 			to_chat(user, "Alert cancelled. Airlock control has been restored without our assistance.")
 			aiHacking = FALSE
 			return
-		else if(!src.canAIHack())
+		else if(!canAIHack())
 			to_chat(user, "Connection lost! Unable to hack airlock.")
 			aiHacking = FALSE
 			return
@@ -734,34 +734,34 @@
 		sleep(20)
 		to_chat(user, "Attempting to hack into airlock. This may take some time.")
 		sleep(200)
-		if(src.canAIControl(user))
+		if(canAIControl(user))
 			to_chat(user, "Alert cancelled. Airlock control has been restored without our assistance.")
 			aiHacking = FALSE
 			return
-		else if(!src.canAIHack())
+		else if(!canAIHack())
 			to_chat(user, "Connection lost! Unable to hack airlock.")
 			aiHacking = FALSE
 			return
 		to_chat(user, "Upload access confirmed. Loading control program into airlock software.")
 		sleep(170)
-		if(src.canAIControl(user))
+		if(canAIControl(user))
 			to_chat(user, "Alert cancelled. Airlock control has been restored without our assistance.")
 			aiHacking = FALSE
 			return
-		else if(!src.canAIHack())
+		else if(!canAIHack())
 			to_chat(user, "Connection lost! Unable to hack airlock.")
 			aiHacking = FALSE
 			return
 		to_chat(user, "Transfer complete. Forcing airlock to execute program.")
 		sleep(50)
 		//disable blocked control
-		src.aiControlDisabled = 2
+		aiControlDisabled = 2
 		to_chat(user, "Receiving control information from airlock.")
 		sleep(10)
 		//bring up airlock dialog
 		aiHacking = FALSE
 		if(user)
-			src.attack_ai(user)
+			attack_ai(user)
 
 /obj/machinery/door/airlock/attack_animal(mob/user)
 	. = ..()
@@ -769,18 +769,18 @@
 		shock(user, 100)
 
 /obj/machinery/door/airlock/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/door/airlock/attack_hand(mob/user)
 	if(!(issilicon(user) || IsAdminGhost(user)))
-		if(src.isElectrified())
-			if(src.shock(user, 100))
+		if(isElectrified())
+			if(shock(user, 100))
 				return
 
-	if(ishuman(user) && prob(40) && src.density)
+	if(ishuman(user) && prob(40) && density)
 		var/mob/living/carbon/human/H = user
 		if(H.getBrainLoss() >= 60 && Adjacent(user))
-			playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
+			playsound(loc, 'sound/effects/bang.ogg', 25, 1)
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				H.visible_message("<span class='danger'>[user] headbutts the airlock.</span>", \
 									"<span class='userdanger'>You headbutt the airlock!</span>")
@@ -826,7 +826,7 @@
 
 
 
-	if((issilicon(usr) && src.canAIControl(usr)) || IsAdminGhost(usr))
+	if((issilicon(usr) && canAIControl(usr)) || IsAdminGhost(usr))
 		//AI
 		//aiDisable - 1 idscan, 2 disrupt main power, 3 disrupt backup power, 4 drop door bolts, 5 un-electrify door, 7 close door, 8 door safties, 9 door speed, 11 emergency access
 		//aiEnable - 1 idscan, 4 raise door bolts, 5 electrify door for 30 seconds, 6 electrify door indefinitely, 7 open door,  8 door safties, 9 door speed, 11 emergency access
@@ -837,21 +837,21 @@
 					//disable idscan
 					if(wires.is_cut(WIRE_IDSCAN))
 						to_chat(usr, "The IdScan wire has been cut - So, you can't disable it, but it is already disabled anyways.")
-					else if(src.aiDisabledIdScanner)
+					else if(aiDisabledIdScanner)
 						to_chat(usr, "You've already disabled the IdScan feature.")
 					else
 						aiDisabledIdScanner = TRUE
 				if(2)
 					//disrupt main power
 					if(!secondsMainPowerLost)
-						src.loseMainPower()
+						loseMainPower()
 						update_icon()
 					else
 						to_chat(usr, "Main power is already offline.")
 				if(3)
 					//disrupt backup power
 					if(!secondsBackupPowerLost)
-						src.loseBackupPower()
+						loseBackupPower()
 						update_icon()
 					else
 						to_chat(usr, "Backup power is already offline.")
@@ -872,7 +872,7 @@
 					// Safeties!  We don't need no stinking safeties!
 					if(wires.is_cut(WIRE_SAFETY))
 						to_chat(usr, text("Control to door sensors is disabled."))
-					else if (src.safe)
+					else if (safe)
 						safe = FALSE
 					else
 						to_chat(usr, text("Firmware reports safeties already overriden."))
@@ -881,17 +881,17 @@
 					// Door speed control
 					if(wires.is_cut(WIRE_TIMING))
 						to_chat(usr, text("Control to door timing circuitry has been severed."))
-					else if (src.normalspeed)
+					else if (normalspeed)
 						normalspeed = 0
 					else
 						to_chat(usr, text("Door timing circuitry already accelerated."))
 				if(7)
 					//close door
-					if(src.welded)
+					if(welded)
 						to_chat(usr, text("The airlock has been welded shut!"))
-					else if(src.locked)
+					else if(locked)
 						to_chat(usr, text("The door bolts are down!"))
-					else if(!src.density)
+					else if(!density)
 						close()
 					else
 						open()
@@ -900,7 +900,7 @@
 					// Bolt lights
 					if(wires.is_cut(WIRE_LIGHT))
 						to_chat(usr, text("Control to door bolt lights has been severed.</a>"))
-					else if (src.lights)
+					else if (lights)
 						lights = FALSE
 						update_icon()
 					else
@@ -908,7 +908,7 @@
 
 				if(11)
 					// Emergency access
-					if (src.emergency)
+					if (emergency)
 						emergency = FALSE
 						update_icon()
 					else
@@ -922,7 +922,7 @@
 					//enable idscan
 					if(wires.is_cut(WIRE_IDSCAN))
 						to_chat(usr, "You can't enable IdScan - The IdScan wire has been cut.")
-					else if(src.aiDisabledIdScanner)
+					else if(aiDisabledIdScanner)
 						aiDisabledIdScanner = FALSE
 					else
 						to_chat(usr, "The IdScan feature is not disabled.")
@@ -930,10 +930,10 @@
 					//raise door bolts
 					if(wires.is_cut(WIRE_BOLTS))
 						to_chat(usr, text("The door bolt drop wire is cut - you can't raise the door bolts.<br>\n"))
-					else if(!src.locked)
+					else if(!locked)
 						to_chat(usr, text("The door bolts are already up.<br>\n"))
 					else
-						if(src.hasPower())
+						if(hasPower())
 							unbolt()
 						else
 							to_chat(usr, text("Cannot raise door bolts due to power failure.<br>\n"))
@@ -968,9 +968,9 @@
 					// Safeties!  Maybe we do need some stinking safeties!
 					if(wires.is_cut(WIRE_SAFETY))
 						to_chat(usr, text("Control to door sensors is disabled."))
-					else if (!src.safe)
+					else if (!safe)
 						safe = TRUE
-						src.updateUsrDialog()
+						updateUsrDialog()
 					else
 						to_chat(usr, text("Firmware reports safeties already in place."))
 
@@ -978,19 +978,19 @@
 					// Door speed control
 					if(wires.is_cut(WIRE_TIMING))
 						to_chat(usr, text("Control to door timing circuitry has been severed."))
-					else if (!src.normalspeed)
+					else if (!normalspeed)
 						normalspeed = 1
-						src.updateUsrDialog()
+						updateUsrDialog()
 					else
 						to_chat(usr, text("Door timing circuitry currently operating normally."))
 
 				if(7)
 					//open door
-					if(src.welded)
+					if(welded)
 						to_chat(usr, text("The airlock has been welded shut!"))
-					else if(src.locked)
+					else if(locked)
 						to_chat(usr, text("The door bolts are down!"))
-					else if(src.density)
+					else if(density)
 						open()
 					else
 						close()
@@ -998,15 +998,15 @@
 					// Bolt lights
 					if(wires.is_cut(WIRE_LIGHT))
 						to_chat(usr, text("Control to door bolt lights has been severed.</a>"))
-					else if (!src.lights)
+					else if (!lights)
 						lights = TRUE
 						update_icon()
-						src.updateUsrDialog()
+						updateUsrDialog()
 					else
 						to_chat(usr, text("Door bolt lights are already enabled!"))
 				if(11)
 					// Emergency access
-					if (!src.emergency)
+					if (!emergency)
 						emergency = TRUE
 						update_icon()
 					else
@@ -1018,8 +1018,8 @@
 
 /obj/machinery/door/airlock/attackby(obj/item/C, mob/user, params)
 	if(!issilicon(user) && !IsAdminGhost(user))
-		if(src.isElectrified())
-			if(src.shock(user, 75))
+		if(isElectrified())
+			if(shock(user, 75))
 				return
 	add_fingerprint(user)
 
@@ -1142,7 +1142,7 @@
 			if(AIRLOCK_SECURITY_PLASTEEL)
 				if(istype(C, /obj/item/wirecutters))
 					var/obj/item/wirecutters/W = C
-					if(src.hasPower() && src.shock(user, 60)) // Protective grille of wiring is electrified
+					if(hasPower() && shock(user, 60)) // Protective grille of wiring is electrified
 						return
 					to_chat(user, "<span class='notice'>You start cutting through the outer grille.</span>")
 					playsound(src, W.usesound, 100, 1)
@@ -1159,8 +1159,8 @@
 			return
 		panel_open = !panel_open
 		to_chat(user, "<span class='notice'>You [panel_open ? "open":"close"] the maintenance panel of the airlock.</span>")
-		playsound(src.loc, C.usesound, 50, 1)
-		src.update_icon()
+		playsound(loc, C.usesound, 50, 1)
+		update_icon()
 	else if(istype(C, /obj/item/wirecutters) && note)
 		user.visible_message("<span class='notice'>[user] cuts down [note] from [src].</span>", "<span class='notice'>You remove [note] from [src].</span>")
 		playsound(src, 'sound/items/Wirecutter.ogg', 50, 1)
@@ -1258,12 +1258,12 @@
 		charge.forceMove(get_turf(user))
 		charge = null
 		return
-	if( beingcrowbarred && (density && welded && !operating && src.panel_open && (!hasPower()) && !src.locked) )
-		playsound(src.loc, I.usesound, 100, 1)
+	if( beingcrowbarred && (density && welded && !operating && panel_open && (!hasPower()) && !locked) )
+		playsound(loc, I.usesound, 100, 1)
 		user.visible_message("[user] removes the electronics from the airlock assembly.", \
 							 "<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
 		if(do_after(user,40*I.toolspeed, target = src))
-			if(src.loc)
+			if(loc)
 				deconstruct(TRUE, user)
 				return
 	else if(hasPower())
@@ -1340,11 +1340,11 @@
 		if(emagged)
 			return FALSE
 		use_power(50)
-		playsound(src.loc, doorOpen, 30, 1)
-		if(src.closeOther != null && istype(src.closeOther, /obj/machinery/door/airlock/) && !src.closeOther.density)
-			src.closeOther.close()
+		playsound(loc, doorOpen, 30, 1)
+		if(closeOther != null && istype(closeOther, /obj/machinery/door/airlock/) && !closeOther.density)
+			closeOther.close()
 	else
-		playsound(src.loc, 'sound/machines/airlockforced.ogg', 30, 1)
+		playsound(loc, 'sound/machines/airlockforced.ogg', 30, 1)
 
 	if(autoclose && normalspeed)
 		addtimer(CALLBACK(src, .proc/autoclose), 150)
@@ -1387,9 +1387,9 @@
 		if(emagged)
 			return
 		use_power(50)
-		playsound(src.loc, doorClose, 30, 1)
+		playsound(loc, doorClose, 30, 1)
 	else
-		playsound(src.loc, 'sound/machines/airlockforced.ogg', 30, 1)
+		playsound(loc, 'sound/machines/airlockforced.ogg', 30, 1)
 
 	var/obj/structure/window/killthis = (locate(/obj/structure/window) in get_turf(src))
 	if(killthis)
@@ -1425,7 +1425,7 @@
 	if(emagged)
 		return
 	locked = FALSE
-	src.open()
+	open()
 	locked = TRUE
 	return
 
@@ -1441,7 +1441,7 @@
 		optionlist = list("Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security")
 
 	var/paintjob = input(user, "Please select a paintjob for this airlock.") in optionlist
-	if((!in_range(src, usr) && src.loc != usr) || !W.use(user))
+	if((!in_range(src, usr) && loc != usr) || !W.use(user))
 		return
 	switch(paintjob)
 		if("Public")
@@ -1581,10 +1581,10 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		var/obj/structure/door_assembly/A
 		if(assemblytype)
-			A = new assemblytype(src.loc)
-			A.heat_proof_finished = src.heat_proof //tracks whether there's rglass in
+			A = new assemblytype(loc)
+			A.heat_proof_finished = heat_proof //tracks whether there's rglass in
 		else
-			A = new /obj/structure/door_assembly/door_assembly_0(src.loc)
+			A = new /obj/structure/door_assembly/door_assembly_0(loc)
 			//If you come across a null assemblytype, it will produce the default assembly instead of disintegrating.
 		A.created_name = name
 
@@ -1600,17 +1600,17 @@
 
 			var/obj/item/electronics/airlock/ae
 			if(!electronics)
-				ae = new/obj/item/electronics/airlock( src.loc )
+				ae = new/obj/item/electronics/airlock( loc )
 				gen_access()
 				if(req_one_access.len)
 					ae.one_access = 1
-					ae.accesses = src.req_one_access
+					ae.accesses = req_one_access
 				else
-					ae.accesses = src.req_access
+					ae.accesses = req_access
 			else
 				ae = electronics
 				electronics = null
-				ae.loc = src.loc
+				ae.loc = loc
 	qdel(src)
 
 /obj/machinery/door/airlock/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)

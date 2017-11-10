@@ -19,7 +19,7 @@
 		if(prefs.muted & MUTE_OOC)
 			to_chat(src, "<span class='danger'>You cannot use OOC (muted).</span>")
 			return
-		if(jobban_isbanned(src.mob, "OOC"))
+		if(jobban_isbanned(mob, "OOC"))
 			to_chat(src, "<span class='danger'>You have been banned from OOC.</span>")
 			return
 
@@ -259,7 +259,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 	set category = "OOC"
 	set desc ="Ignore a player's messages on the OOC channel"
 
-	
+
 	var/see_ghost_names = isobserver(mob)
 	var/list/choices = list()
 	for(var/client/C in GLOB.clients)

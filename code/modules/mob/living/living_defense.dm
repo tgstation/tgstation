@@ -141,7 +141,7 @@
 /mob/living/proc/grippedby(mob/living/carbon/user)
 	if(user.grab_state < GRAB_KILL)
 		user.changeNext_move(CLICK_CD_GRABBING)
-		playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 		if(user.grab_state) //only the first upgrade is instantaneous
 			var/old_grab_state = user.grab_state
@@ -291,7 +291,7 @@
 		return shock_damage
 
 /mob/living/emp_act(severity)
-	var/list/L = src.get_contents()
+	var/list/L = get_contents()
 	for(var/obj/O in L)
 		O.emp_act(severity)
 	..()

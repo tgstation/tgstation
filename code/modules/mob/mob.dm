@@ -295,7 +295,7 @@
 	set name = "Point To"
 	set category = "Object"
 
-	if(!src || !isturf(src.loc) || !(A in view(src.loc)))
+	if(!src || !isturf(loc) || !(A in view(loc)))
 		return 0
 	if(istype(A, /obj/effect/temp_visual/point))
 		return 0
@@ -337,7 +337,7 @@
 	pulling = AM
 	AM.pulledby = src
 	if(!supress_message)
-		playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 	update_pull_hud_icon()
 
 	if(ismob(AM))
@@ -394,7 +394,7 @@
 		pulling = null
 		grab_state = 0
 		update_pull_hud_icon()
-		
+
 		if(isliving(ex_pulled))
 			var/mob/living/L = ex_pulled
 			L.update_canmove()// mob gets up if it was lyng down in a chokehold

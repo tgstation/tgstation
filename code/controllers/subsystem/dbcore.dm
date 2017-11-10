@@ -219,7 +219,7 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 		for(var/C in columns)
 			results+=C
 			var/datum/DBColumn/cur_col = columns[C]
-			results[C] = src.item[(cur_col.position+1)]
+			results[C] = item[(cur_col.position+1)]
 	return results
 
 /datum/DBQuery/proc/Close()

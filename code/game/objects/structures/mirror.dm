@@ -56,7 +56,7 @@
 /obj/structure/mirror/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(!disassembled)
-			new /obj/item/shard( src.loc )
+			new /obj/item/shard( loc )
 	qdel(src)
 
 /obj/structure/mirror/attackby(obj/item/I, mob/living/user, params)
@@ -80,9 +80,9 @@
 /obj/structure/mirror/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+			playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+			playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 
 
 /obj/structure/mirror/magic

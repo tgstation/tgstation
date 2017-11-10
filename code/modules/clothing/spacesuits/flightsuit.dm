@@ -720,9 +720,9 @@
 	if(suit)
 		active = toggle
 		if(active)
-			src.flags_1 |= NOSLIP_1
+			flags_1 |= NOSLIP_1
 		if(!active)
-			src.flags_1 &= ~NOSLIP_1
+			flags_1 &= ~NOSLIP_1
 
 /obj/item/clothing/shoes/flightshoes/item_action_slot_check(slot)
 	return slot == slot_shoes
@@ -849,7 +849,7 @@
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/lock_suit(mob/wearer)
 	user = wearer
 	user.visible_message("<span class='notice'>[wearer]'s flight suit locks around them, powered buckles and straps automatically adjusting to their body!</span>")
-	playsound(src.loc, 'sound/items/rped.ogg', 65, 1)
+	playsound(loc, 'sound/items/rped.ogg', 65, 1)
 	resync()
 	strip_delay = locked_strip_delay
 	locked = TRUE
@@ -870,7 +870,7 @@
 		return FALSE
 	if(wearer)
 		user.visible_message("<span class='notice'>[wearer]'s flight suit detaches from their body, becoming nothing more then a bulky metal skeleton.</span>")
-	playsound(src.loc, 'sound/items/rped.ogg', 65, 1)
+	playsound(loc, 'sound/items/rped.ogg', 65, 1)
 	resync()
 	strip_delay = initial(strip_delay)
 	locked = FALSE
@@ -894,7 +894,7 @@
 		resync()
 		user.visible_message("<span class='notice'>A [pack.name] extends from [user]'s [name] and clamps to their back!</span>")
 		user.update_inv_wear_suit()
-	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
+	playsound(loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 	deployedpack = TRUE
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/retract_flightpack(forced = FALSE)
@@ -911,7 +911,7 @@
 			user.update_inv_wear_suit()
 			user.visible_message("<span class='notice'>[user]'s [pack.name] detaches from their back and retracts into their [src]!</span>")
 	pack.forceMove(src)
-	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
+	playsound(loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 	deployedpack = FALSE
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/extend_flightshoes(forced = FALSE)
@@ -931,12 +931,12 @@
 		shoes.flags_1 |= NODROP_1
 		user.visible_message("<span class='notice'>[user]'s [name] extends a pair of [shoes.name] over their feet!</span>")
 		user.update_inv_wear_suit()
-	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
+	playsound(loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 	deployedshoes = TRUE
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/retract_flightshoes(forced = FALSE)
 	shoes.flags_1 &= ~NODROP_1
-	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
+	playsound(loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 	if(user)
 		user.transferItemToLoc(shoes, src, TRUE)
 		user.update_inv_wear_suit()

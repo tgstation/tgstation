@@ -34,7 +34,7 @@
 		chassis.equipment -= src
 		if(chassis.selected == src)
 			chassis.selected = null
-		src.update_chassis_page()
+		update_chassis_page()
 		chassis.occupant_message("<span class='danger'>[src] is destroyed!</span>")
 		chassis.log_append_to_last("[src] is destroyed.",1)
 		SEND_SOUND(chassis.occupant, sound(istype(src, /obj/item/mecha_parts/mecha_equipment/weapon) ? 'sound/mecha/weapdestr.ogg' : 'sound/mecha/critdestr.ogg', volume=50))
@@ -50,11 +50,11 @@
 		return
 	var/txt = "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;"
 	if(chassis.selected == src)
-		txt += "<b>[src.name]</b>"
+		txt += "<b>[name]</b>"
 	else if(selectable)
-		txt += "<a href='?src=[REF(chassis)];select_equip=[REF(src)]'>[src.name]</a>"
+		txt += "<a href='?src=[REF(chassis)];select_equip=[REF(src)]'>[name]</a>"
 	else
-		txt += "[src.name]"
+		txt += "[name]"
 
 	return txt
 
@@ -105,16 +105,16 @@
 /obj/item/mecha_parts/mecha_equipment/proc/attach(obj/mecha/M)
 	M.equipment += src
 	chassis = M
-	src.loc = M
+	loc = M
 	M.log_message("[src] initialized.")
 	if(!M.selected && selectable)
 		M.selected = src
-	src.update_chassis_page()
+	update_chassis_page()
 	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/detach(atom/moveto=null)
 	moveto = moveto || get_turf(chassis)
-	if(src.Move(moveto))
+	if(Move(moveto))
 		chassis.equipment -= src
 		if(chassis.selected == src)
 			chassis.selected = null
@@ -132,7 +132,7 @@
 /obj/item/mecha_parts/mecha_equipment/proc/set_ready_state(state)
 	equip_ready = state
 	if(chassis)
-		send_byjax(chassis.occupant,"exosuit.browser","[REF(src)]",src.get_equip_info())
+		send_byjax(chassis.occupant,"exosuit.browser","[REF(src)]",get_equip_info())
 	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/occupant_message(message)

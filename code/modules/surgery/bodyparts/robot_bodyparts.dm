@@ -57,21 +57,21 @@
 
 /obj/item/bodypart/chest/robot/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stock_parts/cell))
-		if(src.cell)
+		if(cell)
 			to_chat(user, "<span class='warning'>You have already inserted a cell!</span>")
 			return
 		else
 			if(!user.transferItemToLoc(W, src))
 				return
-			src.cell = W
+			cell = W
 			to_chat(user, "<span class='notice'>You insert the cell.</span>")
 	else if(istype(W, /obj/item/stack/cable_coil))
-		if(src.wired)
+		if(wired)
 			to_chat(user, "<span class='warning'>You have already inserted wire!</span>")
 			return
 		var/obj/item/stack/cable_coil/coil = W
 		if (coil.use(1))
-			src.wired = 1
+			wired = 1
 			to_chat(user, "<span class='notice'>You insert the wire.</span>")
 		else
 			to_chat(user, "<span class='warning'>You need one length of coil to wire it!</span>")
@@ -110,7 +110,7 @@
 /obj/item/bodypart/head/robot/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/device/assembly/flash/handheld))
 		var/obj/item/device/assembly/flash/handheld/F = W
-		if(src.flash1 && src.flash2)
+		if(flash1 && flash2)
 			to_chat(user, "<span class='warning'>You have already inserted the eyes!</span>")
 			return
 		else if(F.crit_fail)
@@ -119,14 +119,14 @@
 		else
 			if(!user.transferItemToLoc(F, src))
 				return
-			if(src.flash1)
-				src.flash2 = F
+			if(flash1)
+				flash2 = F
 			else
-				src.flash1 = F
+				flash1 = F
 			to_chat(user, "<span class='notice'>You insert the flash into the eye socket.</span>")
 	else if(istype(W, /obj/item/crowbar))
 		if(flash1 || flash2)
-			playsound(src.loc, W.usesound, 50, 1)
+			playsound(loc, W.usesound, 50, 1)
 			to_chat(user, "<span class='notice'>You remove the flash from [src].</span>")
 			if(flash1)
 				flash1.forceMove(user.loc)

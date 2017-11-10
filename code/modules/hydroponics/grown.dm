@@ -31,7 +31,7 @@
 	pixel_y = rand(-5, 5)
 
 	if(dried_type == -1)
-		dried_type = src.type
+		dried_type = type
 
 	if(seed)
 		for(var/datum/plant_gene/trait/T in seed.genes)

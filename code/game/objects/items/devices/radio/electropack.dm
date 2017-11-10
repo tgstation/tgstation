@@ -52,7 +52,7 @@
 
 		user.put_in_hands(A)
 		A.add_fingerprint(user)
-		if(src.flags_1 & NODROP_1)
+		if(flags_1 & NODROP_1)
 			A.flags_1 |= NODROP_1
 	else
 		return ..()

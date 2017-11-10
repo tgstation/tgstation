@@ -216,7 +216,7 @@
 
 				if(do_after(user, 40, target = src))
 					if(!src || electronics)
-						W.loc = src.loc
+						W.loc = loc
 						return
 					to_chat(user, "<span class='notice'>You install the airlock electronics.</span>")
 					name = "near finished windoor assembly"

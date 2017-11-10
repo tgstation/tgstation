@@ -24,7 +24,7 @@
 				to_chat(src, "<b>Laws synced with AI, be sure to note any changes.</b>")
 				if(is_special_character(src))
 					to_chat(src, "<b>Remember, your AI does NOT share or know about your law 0.</b>")
-					if(src.connected_ai.laws.zeroth)
+					if(connected_ai.laws.zeroth)
 						to_chat(src, "<b>While you are free to disregard it, your AI has a law 0 of its own.</b>")
 		else
 			to_chat(src, "<b>No AI selected to sync laws with, disabling lawsync protocol.</b>")

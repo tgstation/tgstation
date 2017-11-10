@@ -273,7 +273,7 @@
 	throw_range = 4
 
 /obj/item/twohanded/required/kirbyplants/equipped(mob/living/user)
-	var/image/I = image(icon = 'icons/obj/flora/plants.dmi' , icon_state = src.icon_state, loc = user)
+	var/image/I = image(icon = 'icons/obj/flora/plants.dmi' , icon_state = icon_state, loc = user)
 	I.copy_overlays(src)
 	I.override = 1
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "sneaking_mission", I)

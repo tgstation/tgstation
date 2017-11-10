@@ -32,7 +32,7 @@
 		CRASH("Wire holder is not of the expected type!")
 		return
 
-	src.holder = holder
+	holder = holder
 	if(randomize)
 		randomize()
 	else

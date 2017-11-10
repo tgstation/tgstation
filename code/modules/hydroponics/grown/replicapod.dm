@@ -108,7 +108,7 @@
 			seed_count++
 		var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
 		for(var/i=0,i<seed_count,i++)
-			var/obj/item/seeds/replicapod/harvestseeds = src.Copy()
+			var/obj/item/seeds/replicapod/harvestseeds = Copy()
 			harvestseeds.forceMove(output_loc)
 
 	parent.update_tray()

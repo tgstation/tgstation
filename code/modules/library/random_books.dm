@@ -11,7 +11,7 @@
 
 /obj/item/book/random/Initialize()
 	..()
-	create_random_books(amount, src.loc, TRUE, category)
+	create_random_books(amount, loc, TRUE, category)
 	return INITIALIZE_HINT_QDEL
 
 /obj/item/book/random/triple

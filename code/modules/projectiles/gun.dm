@@ -276,7 +276,7 @@
 
 	if(user)
 		user.update_inv_hands()
-	SSblackbox.add_details("gun_fired","[src.type]")
+	SSblackbox.add_details("gun_fired","[type]")
 	return TRUE
 
 /obj/item/gun/proc/reset_semicd()

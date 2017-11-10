@@ -159,7 +159,7 @@ mob
 		Browse_Icon()
 			set name = "1. Browse Icon"
 			// Give it a name for the cache
-			var/iconName = "[ckey(src.name)]_flattened.dmi"
+			var/iconName = "[ckey(name)]_flattened.dmi"
 			// Send the icon to src's local cache
 			src<<browse_rsc(getFlatIcon(src), iconName)
 			// Display the icon in their browser
@@ -172,7 +172,7 @@ mob
 		Label_Icon()
 			set name = "3. Label Icon"
 			// Give it a name for the cache
-			var/iconName = "[ckey(src.name)]_flattened.dmi"
+			var/iconName = "[ckey(name)]_flattened.dmi"
 			// Copy the file to the rsc manually
 			var/icon/I = fcopy_rsc(getFlatIcon(src))
 			// Send the icon to src's local cache

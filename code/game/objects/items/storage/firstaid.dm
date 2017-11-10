@@ -165,7 +165,7 @@
 		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))
 			if(usr.s_active)
 				usr.s_active.close(usr)
-			src.show_to(usr)
+			show_to(usr)
 
 /obj/item/storage/pill_bottle/charcoal
 	name = "bottle of charcoal pills"

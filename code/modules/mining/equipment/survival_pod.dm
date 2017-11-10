@@ -48,11 +48,11 @@
 		var/status = template.check_deploy(deploy_location)
 		switch(status)
 			if(SHELTER_DEPLOY_BAD_AREA)
-				src.loc.visible_message("<span class='warning'>\The [src] will not function in this area.</span>")
+				loc.visible_message("<span class='warning'>\The [src] will not function in this area.</span>")
 			if(SHELTER_DEPLOY_BAD_TURFS, SHELTER_DEPLOY_ANCHORED_OBJECTS)
 				var/width = template.width
 				var/height = template.height
-				src.loc.visible_message("<span class='warning'>\The [src] doesn't have room to deploy! You need to clear a [width]x[height] area!</span>")
+				loc.visible_message("<span class='warning'>\The [src] doesn't have room to deploy! You need to clear a [width]x[height] area!</span>")
 
 		if(status != SHELTER_DEPLOY_ALLOWED)
 			used = FALSE
@@ -161,7 +161,7 @@
 
 /obj/item/device/gps/computer/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/wrench) && !(flags_1&NODECONSTRUCT_1))
-		playsound(src.loc, W.usesound, 50, 1)
+		playsound(loc, W.usesound, 50, 1)
 		user.visible_message("<span class='warning'>[user] disassembles the gps.</span>", \
 						"<span class='notice'>You start to disassemble the gps...</span>", "You hear clanking and banging noises.")
 		if(do_after(user, 20*W.toolspeed, target = src))
@@ -237,7 +237,7 @@
 
 /obj/structure/fans/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/wrench) && !(flags_1&NODECONSTRUCT_1))
-		playsound(src.loc, W.usesound, 50, 1)
+		playsound(loc, W.usesound, 50, 1)
 		user.visible_message("<span class='warning'>[user] disassembles the fan.</span>", \
 						"<span class='notice'>You start to disassemble the fan...</span>", "You hear clanking and banging noises.")
 		if(do_after(user, 20*W.toolspeed, target = src))

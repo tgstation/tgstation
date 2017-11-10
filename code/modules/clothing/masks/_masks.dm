@@ -30,7 +30,7 @@
 		return
 	mask_adjusted = !mask_adjusted
 	if(!mask_adjusted)
-		src.icon_state = initial(icon_state)
+		icon_state = initial(icon_state)
 		gas_transfer_coefficient = initial(gas_transfer_coefficient)
 		permeability_coefficient = initial(permeability_coefficient)
 		flags_1 |= visor_flags

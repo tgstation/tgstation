@@ -10,8 +10,8 @@
 	var/flipped = 0
 
 /obj/item/clothing/head/soft/dropped()
-	src.icon_state = "[item_color]soft"
-	src.flipped=0
+	icon_state = "[item_color]soft"
+	flipped=0
 	..()
 
 /obj/item/clothing/head/soft/verb/flipcap()
@@ -32,8 +32,8 @@
 
 /obj/item/clothing/head/soft/proc/flip(mob/user)
 	if(user.canmove && !user.stat && !user.restrained())
-		src.flipped = !src.flipped
-		if(src.flipped)
+		flipped = !flipped
+		if(flipped)
 			icon_state = "[item_color]soft_flipped"
 			to_chat(user, "<span class='notice'>You flip the hat backwards.</span>")
 		else

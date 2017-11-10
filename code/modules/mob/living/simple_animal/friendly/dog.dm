@@ -133,7 +133,7 @@
 		switch(remove_from)
 			if("head")
 				if(inventory_head)
-					inventory_head.loc = src.loc
+					inventory_head.loc = loc
 					inventory_head = null
 					update_corgi_fluff()
 					regenerate_icons()
@@ -142,7 +142,7 @@
 					return
 			if("back")
 				if(inventory_back)
-					inventory_back.loc = src.loc
+					inventory_back.loc = loc
 					inventory_back = null
 					update_corgi_fluff()
 					regenerate_icons()
@@ -198,7 +198,7 @@
 						return
 
 					item_to_add.forceMove(src)
-					src.inventory_back = item_to_add
+					inventory_back = item_to_add
 					update_corgi_fluff()
 					regenerate_icons()
 
@@ -243,7 +243,7 @@
 				"<span class='notice'>You put [item_to_add] on [real_name]'s head.  [src] gives you a peculiar look, then wags [p_their()] tail once and barks.</span>",
 				"<span class='italics'>You hear a friendly-sounding bark.</span>")
 		item_to_add.forceMove(src)
-		src.inventory_head = item_to_add
+		inventory_head = item_to_add
 		update_corgi_fluff()
 		regenerate_icons()
 	else

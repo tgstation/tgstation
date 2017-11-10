@@ -2,7 +2,7 @@
 	set name = "Jump to Area"
 	set desc = "Area to jump to"
 	set category = "Admin"
-	if(!src.holder)
+	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
 
@@ -28,7 +28,7 @@
 /client/proc/jumptoturf(turf/T in world)
 	set name = "Jump to Turf"
 	set category = "Admin"
-	if(!src.holder)
+	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
 
@@ -42,14 +42,14 @@
 	set category = "Admin"
 	set name = "Jump to Mob"
 
-	if(!src.holder)
+	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
 
 	log_admin("[key_name(usr)] jumped to [key_name(M)]")
 	message_admins("[key_name_admin(usr)] jumped to [key_name_admin(M)]")
-	if(src.mob)
-		var/mob/A = src.mob
+	if(mob)
+		var/mob/A = mob
 		var/turf/T = get_turf(M)
 		if(T && isturf(T))
 			SSblackbox.add_details("admin_verb","Jump To Mob") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -65,8 +65,8 @@
 		to_chat(src, "Only administrators may use this command.")
 		return
 
-	if(src.mob)
-		var/mob/A = src.mob
+	if(mob)
+		var/mob/A = mob
 		A.x = tx
 		A.y = ty
 		A.z = tz
@@ -77,7 +77,7 @@
 	set category = "Admin"
 	set name = "Jump to Key"
 
-	if(!src.holder)
+	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
 
@@ -100,7 +100,7 @@
 	set category = "Admin"
 	set name = "Get Mob"
 	set desc = "Mob to teleport"
-	if(!src.holder)
+	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
 
@@ -117,7 +117,7 @@
 	set name = "Get Key"
 	set desc = "Key to teleport"
 
-	if(!src.holder)
+	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
 
@@ -143,7 +143,7 @@
 /client/proc/sendmob(mob/M in sortmobs())
 	set category = "Admin"
 	set name = "Send Mob"
-	if(!src.holder)
+	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
 	var/area/A = input(usr, "Pick an area.", "Pick an area") in GLOB.sortedAreas|null

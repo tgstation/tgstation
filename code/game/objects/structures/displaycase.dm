@@ -45,15 +45,15 @@
 /obj/structure/displaycase/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(src.loc, 'sound/effects/glasshit.ogg', 75, 1)
+			playsound(loc, 'sound/effects/glasshit.ogg', 75, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
+			playsound(loc, 'sound/items/welder.ogg', 100, 1)
 
 /obj/structure/displaycase/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		dump()
 		if(!disassembled)
-			new /obj/item/shard( src.loc )
+			new /obj/item/shard( loc )
 			trigger_alarm()
 	qdel(src)
 
@@ -61,7 +61,7 @@
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		density = FALSE
 		broken = 1
-		new /obj/item/shard( src.loc )
+		new /obj/item/shard( loc )
 		playsound(src, "shatter", 70, 1)
 		update_icon()
 		trigger_alarm()
@@ -109,7 +109,7 @@
 		var/icon/S = get_flat_icon_directional(showpiece)
 		S.Scale(17,17)
 		I.Blend(S,ICON_UNDERLAY,8,8)
-	src.icon = I
+	icon = I
 	return
 
 /obj/structure/displaycase/attackby(obj/item/W, mob/user, params)
@@ -168,14 +168,14 @@
 	update_icon()
 
 /obj/structure/displaycase/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/displaycase/attack_hand(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (showpiece && (broken || open))
 		to_chat(user, "<span class='notice'>You deactivate the hover field built into the case.</span>")
 		dump()
-		src.add_fingerprint(user)
+		add_fingerprint(user)
 		update_icon()
 		return
 	else
@@ -201,15 +201,15 @@
 /obj/structure/displaycase_chassis/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/wrench)) //The player can only deconstruct the wooden frame
 		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
-		playsound(src.loc, I.usesound, 50, 1)
+		playsound(loc, I.usesound, 50, 1)
 		if(do_after(user, 30*I.toolspeed, target = src))
-			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+			playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 			new /obj/item/stack/sheet/mineral/wood(get_turf(src), 5)
 			qdel(src)
 
 	else if(istype(I, /obj/item/electronics/airlock))
 		to_chat(user, "<span class='notice'>You start installing the electronics into [src]...</span>")
-		playsound(src.loc, I.usesound, 50, 1)
+		playsound(loc, I.usesound, 50, 1)
 		if(do_after(user, 30, target = src) && user.transferItemToLoc(I,src))
 			electronics = I
 			to_chat(user, "<span class='notice'>You install the airlock electronics.</span>")
@@ -222,7 +222,7 @@
 		to_chat(user, "<span class='notice'>You start adding [G] to [src]...</span>")
 		if(do_after(user, 20, target = src))
 			G.use(10)
-			var/obj/structure/displaycase/display = new(src.loc)
+			var/obj/structure/displaycase/display = new(loc)
 			if(electronics)
 				electronics.loc = display
 				display.electronics = electronics
@@ -334,7 +334,7 @@
 		return TRUE
 
 	else
-		to_chat(user, "<span class='warning'>\The [W] is stuck to your hand, you can't put it in the [src.name]!</span>")
+		to_chat(user, "<span class='warning'>\The [W] is stuck to your hand, you can't put it in the [name]!</span>")
 
 	return
 

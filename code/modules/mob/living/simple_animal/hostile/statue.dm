@@ -61,7 +61,7 @@
 
 	// Set creator
 	if(creator)
-		src.creator = creator
+		creator = creator
 
 /mob/living/simple_animal/hostile/statue/med_hud_set_health()
 	return //we're a statue we're invincible

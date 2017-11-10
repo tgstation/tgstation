@@ -90,7 +90,7 @@
 		. = . || mover.checkpass(PASSTABLE)
 
 /obj/structure/table/proc/tablepush(mob/living/user, mob/living/pushed_mob)
-	pushed_mob.forceMove(src.loc)
+	pushed_mob.forceMove(loc)
 	pushed_mob.Knockdown(40)
 	pushed_mob.visible_message("<span class='danger'>[user] pushes [pushed_mob] onto [src].</span>", \
 								"<span class='userdanger'>[user] pushes [pushed_mob] onto [src].</span>")
@@ -101,16 +101,16 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(istype(I, /obj/item/screwdriver) && deconstruction_ready)
 			to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
-			playsound(src.loc, I.usesound, 50, 1)
+			playsound(loc, I.usesound, 50, 1)
 			if(do_after(user, 20*I.toolspeed, target = src))
 				deconstruct(TRUE)
 			return
 
 		if(istype(I, /obj/item/wrench) && deconstruction_ready)
 			to_chat(user, "<span class='notice'>You start deconstructing [src]...</span>")
-			playsound(src.loc, I.usesound, 50, 1)
+			playsound(loc, I.usesound, 50, 1)
 			if(do_after(user, 40*I.toolspeed, target = src))
-				playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+				playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 				deconstruct(TRUE, 1)
 			return
 
@@ -121,7 +121,7 @@
 			T.quick_empty()
 
 			for(var/obj/item/C in oldContents)
-				C.loc = src.loc
+				C.loc = loc
 
 			user.visible_message("[user] empties [I] on [src].")
 			return
@@ -259,7 +259,7 @@
 	buildstack = /obj/item/stack/tile/carpet
 
 /obj/structure/table/wood/poker/narsie_act()
-	new /obj/structure/table/wood(src.loc)
+	new /obj/structure/table/wood(loc)
 
 /obj/structure/table/wood/fancy
 	name = "fancy table"
@@ -308,7 +308,7 @@
 	if(istype(W, /obj/item/weldingtool))
 		var/obj/item/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
-			playsound(src.loc, W.usesound, 50, 1)
+			playsound(loc, W.usesound, 50, 1)
 			if(deconstruction_ready)
 				to_chat(user, "<span class='notice'>You start strengthening the reinforced table...</span>")
 				if (do_after(user, 50*W.toolspeed, target = src))
@@ -385,7 +385,7 @@
 			break
 
 /obj/structure/table/optable/tablepush(mob/living/user, mob/living/pushed_mob)
-	pushed_mob.forceMove(src.loc)
+	pushed_mob.forceMove(loc)
 	pushed_mob.resting = 1
 	pushed_mob.update_canmove()
 	visible_message("<span class='notice'>[user] has laid [pushed_mob] on [src].</span>")
@@ -421,7 +421,7 @@
 	to_chat(user, "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>")
 
 /obj/structure/rack/CanPass(atom/movable/mover, turf/target)
-	if(src.density == 0) //Because broken racks -Agouri |TODO: SPRITE!|
+	if(density == 0) //Because broken racks -Agouri |TODO: SPRITE!|
 		return 1
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
@@ -439,13 +439,13 @@
 		return
 	if(!user.dropItemToGround(O))
 		return
-	if(O.loc != src.loc)
+	if(O.loc != loc)
 		step(O, get_dir(O, src))
 
 
 /obj/structure/rack/attackby(obj/item/W, mob/user, params)
 	if (istype(W, /obj/item/wrench) && !(flags_1&NODECONSTRUCT_1))
-		playsound(src.loc, W.usesound, 50, 1)
+		playsound(loc, W.usesound, 50, 1)
 		deconstruct(TRUE)
 		return
 	if(user.a_intent == INTENT_HARM)
