@@ -796,6 +796,13 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 
 	usr << browse(dellog.Join(), "window=dellog")
 
+/client/proc/cmd_display_overlay_log()
+	set category = "Debug"
+	set name = "Display overlay Log"
+	set desc = "Display SSoverlays log of everything that's passed through it."
+
+	render_stats(SSoverlays.stats, src)
+
 /client/proc/cmd_display_init_log()
 	set category = "Debug"
 	set name = "Display Initialize() Log"
