@@ -225,7 +225,7 @@
 		else if(mob_occupant.cloneloss > (100 - heal_level))
 			mob_occupant.Unconscious(80)
 			var/dmg_mult = CONFIG_GET(number/damage_multiplier)
-			 //Slowly get that clone healed and finished.
+			//Slowly get that clone healed and finished.
 			mob_occupant.adjustCloneLoss(-((speed_coeff / 2) * dmg_mult))
 			var/progress = CLONE_INITIAL_DAMAGE - mob_occupant.getCloneLoss()
 			// To avoid the default cloner making incomplete clones
@@ -253,7 +253,7 @@
 		else if((mob_occupant.cloneloss <= (100 - heal_level)))
 			connected_message("Cloning Process Complete.")
 			SPEAK("The cloning cycle of [mob_occupant.real_name] is complete.")
-
+			mob_occupant.setCloneLoss(0)
 			// If the cloner is upgraded to debugging high levels, sometimes
 			// organs and limbs can be missing.
 			for(var/i in unattached_flesh)
@@ -358,14 +358,13 @@
 		mob_occupant.grab_ghost()
 		to_chat(occupant, "<span class='notice'><b>There is a bright flash!</b><br><i>You feel like a new being.</i></span>")
 		mob_occupant.flash_act()
-
 	occupant.forceMove(T)
 	icon_state = "pod_0"
 	mob_occupant.domutcheck(1) //Waiting until they're out before possible monkeyizing. The 1 argument forces powers to manifest.
 	for(var/fl in unattached_flesh)
 		qdel(fl)
 	unattached_flesh.Cut()
-
+	mob_occupant.setCloneLoss(0)
 	occupant = null
 
 /obj/machinery/clonepod/proc/malfunction()
