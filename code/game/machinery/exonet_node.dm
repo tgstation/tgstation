@@ -15,6 +15,17 @@
 	var/list/logs = list() // Gets written to by exonet's send_message() function.
 	var/opened = FALSE
 
+/obj/machinery/exonet_node/Initialize()
+	. = ..()
+	SScircuit.all_exonet_nodes += src
+
+/obj/machinery/exonet_node/Destroy()
+	SScircuit.all_exonet_nodes -= src
+	return ..()
+
+/obj/machinery/exonet_node/proc/is_operating()
+	return on && !stat
+
 // Proc: New()
 // Parameters: None
 // Description: Adds components to the machine for deconstruction.

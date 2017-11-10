@@ -1,8 +1,9 @@
 PROCESSING_SUBSYSTEM_DEF(circuit)
 	name = "Circuit"
 	stat_tag = "CIR"
-	var/list/all_exonet_connections = list()
+	var/list/all_exonet_connections = list()				//Address = connection datum.
 	var/list/all_integrated_circuits = list()
+	var/list/obj/machinery/exonet_node/all_exonet_nodes = list()
 	var/cipherkey
 	init_order = INIT_ORDER_CIRCUIT
 	flags = SS_BACKGROUND|SS_POST_FIRE_TIMING
@@ -18,6 +19,14 @@ PROCESSING_SUBSYSTEM_DEF(circuit)
 		all_integrated_circuits += new thing()
 
 /datum/controller/subsystem/processing/circuit/proc/get_exonet_node()
-	for(var/obj/machinery/exonet_node/E in GLOB.machines)
-		if(E.on)
+	for(var/obj/machinery/exonet_node/E in all_exonet_nodes)
+		if(E.is_operating())
 			return E
+
+/datum/controller/subsystem/processing/circuit/proc/get_exonet_address(addr)
+	return all_exonet_connections[addr]
+
+/datum/controller/subsystem/processing/circuit/proc/return_all_exonet_connections()
+	. = list()
+	for(var/i in all_exonet_connections)
+		. += all_exonet_connections[i]
