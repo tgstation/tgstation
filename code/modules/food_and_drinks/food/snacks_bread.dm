@@ -189,10 +189,10 @@
 	. = ..()
 	name = fried.name //We'll determine the other stuff when it's actually removed
 	icon = fried.icon
-	overlays = fried.overlays
+	overlays = fried.copy_overlays()
 	icon_state = fried.icon_state
 	desc = fried.desc
-	if(istype(fried, /obj/item/reagent_containers/food/snacks/))
+	if(istype(fried, /obj/item/reagent_containers/food/snacks))
 		fried.reagents.trans_to(src, fried.reagents.total_volume)
 		qdel(fried)
 	else

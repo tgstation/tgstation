@@ -99,7 +99,7 @@
 	if(holder && holder.chem_temp >= fry_temperature)
 		if(isitem(O))
 			O.loc.visible_message("<span class='warning'>[O] rapidly fries as it's splashed with hot oil! Somehow.</span>")
-			var/obj/item/reagent_containers/food/snacks/deepfryholder/F = new(get_turf(O))
+			var/obj/item/reagent_containers/food/snacks/deepfryholder/F = new(drop_location())
 			F.fry(O, volume)
 
 /datum/reagent/consumable/cooking_oil/reaction_mob(mob/living/M, method = TOUCH, reac_volume, show_message = 1, touch_protection = 0)
@@ -107,7 +107,7 @@
 		return
 	if(holder && holder.chem_temp >= fry_temperature)
 		boiling = TRUE
-	if(method in list(VAPOR, TOUCH)) //Directly coats the mob, and doesn't go into their bloodstream
+	if(method == VAPOR || method == TOUCH) //Directly coats the mob, and doesn't go into their bloodstream
 		if(boiling)
 			M.visible_message("<span class='warning'>The boiling oil sizzles as it covers [M]!</span>", \
 			"<span class='userdanger'>You're covered in boiling oil!</span>")
@@ -117,7 +117,7 @@
 			M.adjustFireLoss(min(35, oil_damage * reac_volume)) //Damage caps at 35
 	else
 		..()
-	return 1
+	return TRUE
 
 /datum/reagent/consumable/cooking_oil/reaction_turf(turf/open/T, reac_volume)
 	if(!istype(T))
