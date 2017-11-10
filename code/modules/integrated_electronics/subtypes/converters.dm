@@ -95,7 +95,6 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	var/dec
 
-
 /obj/item/integrated_circuit/converter/refdecode/do_work()
 	pull_data()
 	dec=XorEncrypt(hextostr(get_pin_data(IC_INPUT, 1)),SScircuit.cipherkey)
@@ -188,7 +187,6 @@
 	activators = list("separate" = IC_PINTYPE_PULSE_IN, "on separated" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
-
 /obj/item/integrated_circuit/converter/separator/do_work()
 	var/text = get_pin_data(IC_INPUT, 1)
 	var/index = get_pin_data(IC_INPUT, 2)
@@ -244,8 +242,6 @@
 		)
 	activators = list("separate" = IC_PINTYPE_PULSE_IN, "on separated" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
-
-
 
 /obj/item/integrated_circuit/converter/exploders/do_work()
 	var/strin = get_pin_data(IC_INPUT, 1)

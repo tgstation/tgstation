@@ -12,7 +12,6 @@
 	power_draw_per_use = 10
 	var/stuff_to_display = null
 
-
 /obj/item/integrated_circuit/output/screen/disconnect_all()
 	..()
 	stuff_to_display = null
@@ -145,8 +144,8 @@
 		var/obj/O = assembly ? loc : assembly
 		audible_message("\icon[O] \The [O.name] states, \"[text]\"")
 
-/obj/item/integrated_circuit/output/sound/New()
-	..()
+/obj/item/integrated_circuit/output/sound/Initialize()
+	.= ..()
 	extended_desc = list()
 	extended_desc += "The first input pin determines which sound is used. The choices are; "
 	extended_desc += jointext(sounds, ", ")

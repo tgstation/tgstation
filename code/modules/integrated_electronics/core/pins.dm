@@ -31,7 +31,7 @@ D [1]/  ||
 		data = new_data
 	holder = newloc
 	if(!istype(holder))
-		message_admins("ERROR: An integrated_io ([src.name]) spawned without a valid holder!  This is a bug.")
+		message_admins("ERROR: An integrated_io ([name]) spawned without a valid holder!  This is a bug.")
 
 /datum/integrated_io/Destroy()
 	disconnect()
@@ -141,7 +141,7 @@ list[](
 			else
 				continue
 		//Now that we're removed from them, we gotta remove them from us.
-		src.linked.Remove(their_io)
+		linked.Remove(their_io)
 
 /datum/integrated_io/proc/ask_for_data_type(mob/user, var/default, var/list/allowed_data_types = list("string","number","null"))
 	var/type_to_use = input("Please choose a type to use.","[src] type setting") as null|anything in allowed_data_types

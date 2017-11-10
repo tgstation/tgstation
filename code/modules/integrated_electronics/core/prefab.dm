@@ -9,7 +9,6 @@
 	var/list/as_names = list()
 	var/list/cir_names = list()
 
-
 /obj/item/device/integrated_electronics/prefab/attack_self(var/mob/user)
 	if(program && program != "blank")
 		assemble(program)
@@ -17,6 +16,7 @@
 		return ..()
 
 /obj/item/device/integrated_electronics/prefab/Initialize()
+	. = ..()
 	var/list/assembly_list = list(
 			new /obj/item/device/electronic_assembly(null),
 			new /obj/item/device/electronic_assembly/medium(null),
@@ -69,7 +69,7 @@
 				elements.Add(elem)            //I don't know,why Cut or copy don't works. If somebody can fix it, it should be fixed.
 		if(debug)
 			visible_message( "<span class='notice'>components[elements.len]</span>")
-		if(elements_input.len<1)
+		if(!length(elements_input))
 			return
 		if(debug)
 			visible_message( "<span class='notice'>inserting components[elements.len]</span>")
@@ -157,5 +157,5 @@
 				IO2 = ioa[element[2]]
 				IO.linked |= IO2
 
-	AS.loc = get_turf(src)
+	AS.forceMove(drop_location())
 	qdel(src)

@@ -49,7 +49,7 @@
 		installed_gun = gun
 		var/list/gun_properties = gun.get_turret_properties()
 		user << "<span class='notice'>You slide \the [gun] into the firing mechanism.</span>"
-		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+		playsound(src, 'sound/items/Crowbar.ogg', 50, 1)
 		stun_projectile = gun_properties["stun_projectile"]
 		stun_projectile_sound = gun_properties["stun_projectile_sound"]
 		lethal_projectile = gun_properties["lethal_projectile"]
@@ -67,66 +67,37 @@
 
 /obj/item/integrated_circuit/manipulation/weapon_firing/attack_self(var/mob/user)
 	if(installed_gun)
-		installed_gun.forceMove(get_turf(src))
-		user << "<span class='notice'>You slide \the [installed_gun] out of the firing mechanism.</span>"
+		installed_gun.forceMove(drop_location())
+		to_chat(user, "<span class='notice'>You slide \the [installed_gun] out of the firing mechanism.</span>")
 		size = initial(size)
-		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+		playsound(src, 'sound/items/Crowbar.ogg', 50, 1)
 		installed_gun = null
 		set_pin_data(IC_OUTPUT, 1, WEAKREF(null))
 		push_data()
 	else
-		user << "<span class='notice'>There's no weapon to remove from the mechanism.</span>"
+		to_chat(user, "<span class='notice'>There's no weapon to remove from the mechanism.</span>")
 
 /obj/item/integrated_circuit/manipulation/weapon_firing/do_work()
 	if(!installed_gun)
 		return
 	set_pin_data(IC_OUTPUT, 1, WEAKREF(installed_gun))
 	push_data()
-	var/datum/integrated_io/target_x = inputs[1]
-	var/datum/integrated_io/target_y = inputs[2]
+	var/datum/integrated_io/xo = inputs[1]
+	var/datum/integrated_io/yo = inputs[2]
 	var/datum/integrated_io/mode1 = inputs[3]
 
 	mode = mode1.data
-	if(src.assembly)
-		if(isnum(target_x.data))
-			target_x.data = round(target_x.data)
-		if(isnum(target_y.data))
-			target_y.data = round(target_y.data)
+	if(assembly)
+		if(isnum(xo.data))
+			xo.data = round(xo.data)
+		if(isnum(yo.data))
+			yo.data = round(yo.data)
 
-		var/turf/T = get_turf(src.assembly)
+		var/turf/T = get_turf(assembly)
+		var/target_x = Clamp(T.x + xo, 0, world.maxx)
+		var/target_y = Clamp(T.y + yo, 0, world.maxy)
 
-		if(target_x.data == 0 && target_y.data == 0) // Don't shoot ourselves.
-			return
-
-		// We need to do this in order to enable relative coordinates, as locate() only works for absolute coordinates.
-		var/i
-		if(target_x.data > 0)
-			i = abs(target_x.data)
-			while(i > 0)
-				T = get_step(T, EAST)
-				i--
-		else
-			i = abs(target_x.data)
-			while(i > 0)
-				T = get_step(T, WEST)
-				i--
-
-		i = 0
-		if(target_y.data > 0)
-			i = abs(target_y.data)
-			while(i > 0)
-				T = get_step(T, NORTH)
-				i--
-		else if(target_y.data < 0)
-			i = abs(target_y.data)
-			while(i > 0)
-				T = get_step(T, SOUTH)
-				i--
-
-		if(!T)
-			return
-
-		shootAt(T)
+		shootAt(locate(target_x, target_y, T.z))
 
 /obj/item/integrated_circuit/manipulation/weapon_firing/proc/shootAt(turf/target)
 
@@ -186,7 +157,6 @@
 			if(isnum(wanted_dir.data))
 				step(assembly, wanted_dir.data)
 
-
 /obj/item/integrated_circuit/manipulation/grenade
 	name = "grenade primer"
 	desc = "This circuit comes with the ability to attach most types of grenades at prime them at will."
@@ -203,8 +173,8 @@
 	var/obj/item/grenade/attached_grenade
 	var/pre_attached_grenade_type
 
-/obj/item/integrated_circuit/manipulation/grenade/New()
-	..()
+/obj/item/integrated_circuit/manipulation/grenade/Initialize()
+	. = ..()
 	if(pre_attached_grenade_type)
 		var/grenade = new pre_attached_grenade_type(src)
 		attach_grenade(grenade)
@@ -213,7 +183,7 @@
 	if(attached_grenade && !attached_grenade.active)
 		attached_grenade.forceMove(loc)
 	detach_grenade()
-	. =..()
+	return ..()
 
 /obj/item/integrated_circuit/manipulation/grenade/attackby(var/obj/item/grenade/G, var/mob/user)
 	if(istype(G))
@@ -224,7 +194,7 @@
 			attach_grenade(G)
 			G.forceMove(src)
 	else
-		..()
+		return ..()
 
 /obj/item/integrated_circuit/manipulation/grenade/attack_self(var/mob/user)
 	if(attached_grenade)
@@ -232,7 +202,7 @@
 		user.put_in_hands(attached_grenade)
 		detach_grenade()
 	else
-		..()
+		return ..()
 
 /obj/item/integrated_circuit/manipulation/grenade/do_work()
 	if(attached_grenade && !attached_grenade.active)
@@ -255,7 +225,7 @@
 /obj/item/integrated_circuit/manipulation/grenade/proc/detach_grenade()
 	if(!attached_grenade)
 		return
-	attached_grenade.forceMove(get_turf(src))
+	attached_grenade.forceMove(drop_location())
 	attached_grenade = null
 	desc = initial(desc)
 /*
@@ -362,6 +332,8 @@
 	activators = list("pulse in" = IC_PINTYPE_PULSE_IN,"pulse out" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_RESEARCH
 	power_draw_per_use = 50
+	var/max_w_class = WEIGHT_CLASS_NORMAL
+	var/max_items = 10
 /*
 /obj/item/integrated_circuit/manipulation/thrower/New()
 	processing_objects |= src
@@ -372,7 +344,7 @@
 /obj/item/integrated_circuit/manipulation/thrower/process()
 	set_pin_data(IC_OUTPUT, 1, WEAKREF(contents[1]))
 	set_pin_data(IC_OUTPUT, 2, WEAKREF(contents[contents.len]))
-	set_pin_data(IC_OUTPUT, 3, src.contents.len)
+	set_pin_data(IC_OUTPUT, 3, contents.len)
 	push_data()
 */
 /obj/item/integrated_circuit/manipulation/grabber/do_work()
@@ -382,10 +354,8 @@
 	var/mode = get_pin_data(IC_INPUT, 2)
 	if(mode == 1)
 		if(P.Adjacent(T))
-			if(contents.len < 10)
-				if(AM)
-					if(AM.w_class <= WEIGHT_CLASS_SMALL)
-						AM.forceMove(src)
+			if((contents.len < max_items) && AM && (AM.w_class <= max_w_class))
+				AM.forceMove(src)
 	if(mode == 0)
 		if(contents.len)
 			var/obj/item/U = contents[1]
@@ -401,11 +371,9 @@
 	else
 		set_pin_data(IC_OUTPUT, 1, null)
 		set_pin_data(IC_OUTPUT, 2, null)
-	set_pin_data(IC_OUTPUT, 3, src.contents.len)
+	set_pin_data(IC_OUTPUT, 3, contents.len)
 	push_data()
 	activate_pin(2)
-
-
 
 /obj/item/integrated_circuit/manipulation/thrower
 	name = "thrower"
@@ -429,62 +397,25 @@
 	origin_tech = list(TECH_ENGINEERING = 3, TECH_DATA = 3, TECH_COMBAT = 4)
 	power_draw_per_use = 50
 
-
-
 /obj/item/integrated_circuit/manipulation/thrower/do_work()
-
 	var/datum/integrated_io/target_x = inputs[1]
 	var/datum/integrated_io/target_y = inputs[2]
 	var/datum/integrated_io/projectile = inputs[3]
 	if(!isweakref(projectile.data))
 		return
 	var/obj/item/A = projectile.data.resolve()
-	if(A.anchored)
+	if(A.anchored || (A.w_class > WEIGHT_CLASS_NORMAL))
 		return
-	if(A.w_class>WEIGHT_CLASS_SMALL)
+	var/turf/T = get_turf(assembly)
+	if(!(A.Adjacent(T) || (A in assembly.GetAllContents())))
 		return
-	var/turf/T = get_turf(src.assembly)
-	var/turf/TP = get_turf(A)
-	if(!(TP.Adjacent(T)))
-		return
-	if(src.assembly)
+	if(assembly)
 		if(isnum(target_x.data))
-			target_x.data = round(target_x.data)
+			target_x.data = round(target_x.data, 1)
 		if(isnum(target_y.data))
-			target_y.data = round(target_y.data)
+			target_y.data = round(target_y.data, 1)
+		var/_x = Clamp(T.x + target_x, 0, world.maxx)
+		var/_y = Clamp(T.y + target_y, 0, world.maxy)
 
-
-
-		if(target_x.data == 0 && target_y.data == 0)
-			return
-
-		// We need to do this in order to enable relative coordinates, as locate() only works for absolute coordinates.
-		var/i
-		if(target_x.data > 0)
-			i = abs(target_x.data)
-			while(i > 0)
-				T = get_step(T, EAST)
-				i--
-		else
-			i = abs(target_x.data)
-			while(i > 0)
-				T = get_step(T, WEST)
-				i--
-
-		i = 0
-		if(target_y.data > 0)
-			i = abs(target_y.data)
-			while(i > 0)
-				T = get_step(T, NORTH)
-				i--
-		else if(target_y.data < 0)
-			i = abs(target_y.data)
-			while(i > 0)
-				T = get_step(T, SOUTH)
-				i--
-
-		if(!T)
-			return
-
-		A.loc = get_turf(src)
-		A.throw_at(T, round(Clamp(sqrt(target_x.data*target_x.data+target_y.data*target_y.data),0,8),1), 3, assembly)
+		A.forceMove(drop_location())
+		A.throw_at(locate(_x, _y, T.z), round(Clamp(sqrt(target_x.data*target_x.data+target_y.data*target_y.data),0,8),1), 3, assembly)

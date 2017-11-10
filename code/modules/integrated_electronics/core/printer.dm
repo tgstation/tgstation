@@ -21,51 +21,13 @@
 /obj/item/device/integrated_circuit_printer/proc/check_interactivity(mob/user)
 	return user.canUseTopic(src,be_close = TRUE)
 
-
 /obj/item/device/integrated_circuit_printer/upgraded
 	upgraded = TRUE
 	can_clone = TRUE
 
 /obj/item/device/integrated_circuit_printer/Initialize()
-	..()
-		// Unfortunately this needed a lot of loops, but it should only be run once at init.
-
-		// First loop is to seperate the actual circuits from base circuits.
-	var/list/circuits_to_use = list()
-	for(var/obj/item/integrated_circuit/IC in SScircuit.all_integrated_circuits)
-		if((IC.spawn_flags & IC_SPAWN_DEFAULT) || (IC.spawn_flags & IC_SPAWN_RESEARCH))
-			circuits_to_use.Add(IC)
-		// Second loop is to find all categories.
-	var/list/found_categories = list()
-	for(var/obj/item/integrated_circuit/IC in circuits_to_use)
-		if(!(IC.category_text in found_categories))
-			found_categories.Add(IC.category_text)
-		// Third loop is to initialize lists by category names, then put circuits matching the category inside.
-	for(var/category in found_categories)
-		recipe_list[category] = list()
-		var/list/current_list = recipe_list[category]
-		for(var/obj/item/integrated_circuit/IC in circuits_to_use)
-			if(IC.category_text == category)
-				current_list.Add(IC)
-		// Now for non-circuit things.
-	var/list/assembly_list = list()
-	assembly_list.Add(
-		new /obj/item/device/electronic_assembly(null),
-		new /obj/item/device/electronic_assembly/medium(null),
-		new /obj/item/device/electronic_assembly/large(null),
-		new /obj/item/device/electronic_assembly/drone(null),
-		//new /obj/item/weapon/implant/integrated_circuit(null),
-		//new /obj/item/device/assembly/electronic_assembly(null)
-	)
-	recipe_list["Assemblies"] = assembly_list
-	var/list/tools_list = list()
-	tools_list.Add(
-		new /obj/item/device/integrated_electronics/wirer(null),
-		new /obj/item/device/integrated_electronics/debugger(null),
-		new /obj/item/device/integrated_electronics/analyzer(null)
-		)
-	recipe_list["Tools"] = tools_list
-
+	. = ..()
+	recipe_list = SScircuit.circuit_fabricator_recipe_list
 
 /obj/item/device/integrated_circuit_printer/attackby(var/obj/item/O, var/mob/user)
 	if(istype(O,/obj/item/stack/sheet/metal))

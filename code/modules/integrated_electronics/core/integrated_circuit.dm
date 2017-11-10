@@ -21,7 +21,7 @@
 	var/category_text = "NO CATEGORY THIS IS A BUG"	// To show up on circuit printer, and perhaps other places.
 	var/removable = TRUE 			// Determines if a circuit is removable from the assembly.
 	var/displayed_name = ""
-	var/allow_multitool = 1			// Allows additional multitool functionality
+	var/allow_multitool = TRUE		// Allows additional multitool functionality
 									// Used as a global var, (Do not set manually in children).
 
 /*
@@ -219,11 +219,11 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	if(!check_interactivity(usr))
 		return
 	if(..())
-		return 1
+		return TRUE
 
-	var/update = 1
+	var/update = TRUE
 	var/obj/item/device/electronic_assembly/A = src.assembly
-	var/update_to_assembly = 0
+	var/update_to_assembly = FALSE
 	var/datum/integrated_io/pin = locate(href_list["pin"]) in inputs + outputs + activators
 	var/datum/integrated_io/linked = null
 	if(href_list["link"])
@@ -234,14 +234,14 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	if(href_list["rename"])
 		rename_component(usr)
 		if(href_list["from_assembly"])
-			update = 0
+			update = FALSE
 			var/obj/item/device/electronic_assembly/ea = loc
 			if(istype(ea))
 				ea.interact(usr)
 
 	if(href_list["pin_name"])
 		if (!istype(held_item, /obj/item/device/multitool) || !allow_multitool)
-			href_list["wire"] = 1
+			href_list["wire"] = TRUE
 		else
 			var/obj/item/device/multitool/M = held_item
 			M.wire(pin,usr)
@@ -250,7 +250,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 
 	if(href_list["pin_data"])
 		if (!istype(held_item, /obj/item/device/multitool) || !allow_multitool)
-			href_list["wire"] = 1
+			href_list["wire"] = TRUE
 
 		else
 			var/datum/integrated_io/io = pin
@@ -286,7 +286,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 
 	if(href_list["pin_unwire"])
 		if (!istype(held_item, /obj/item/device/multitool) || !allow_multitool)
-			href_list["wire"] = 1
+			href_list["wire"] = TRUE
 		else
 			var/obj/item/device/multitool/M = held_item
 			M.unwire(pin, linked, usr)
@@ -313,7 +313,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 		else
 			examined = src
 		examined.interact(usr)
-		update = 0
+		update = FALSE
 
 	if(href_list["bottom"])
 		var/obj/item/integrated_circuit/circuit = locate(href_list["bottom"]) in src.assembly.contents
@@ -322,8 +322,8 @@ a creative player the means to solve many problems.  Circuits are held inside an
 			return
 		circuit.loc = null
 		circuit.loc = assy
-		. = 1
-		update_to_assembly = 1
+		. = TRUE
+		update_to_assembly = TRUE
 
 	if(href_list["scan"])
 		if(istype(held_item, /obj/item/device/integrated_electronics/debugger))
@@ -337,7 +337,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 
 	if(href_list["return"])
 		if(A)
-			update_to_assembly = 1
+			update_to_assembly = TRUE
 			usr << browse(null, "window=circuit-[REF(src)];border=1;can_resize=1;can_close=1;can_minimize=1")
 		else
 			to_chat(usr, "<span class='warning'>This circuit is not in an assembly!</span>")
@@ -360,7 +360,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 
 		if(istype(ea))
 			ea.interact(usr)
-		update = 0
+		update = FALSE
 		return
 
 	if(update)
@@ -368,8 +368,6 @@ a creative player the means to solve many problems.  Circuits are held inside an
 			A.interact(usr)
 		else
 			interact(usr) // To refresh the UI.
-
-
 
 /obj/item/integrated_circuit/proc/push_data()
 	for(var/datum/integrated_io/O in outputs)

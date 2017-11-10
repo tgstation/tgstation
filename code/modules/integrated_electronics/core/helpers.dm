@@ -65,14 +65,14 @@
 		var/obj/item/device/integrated_electronics/wirer/wirer = tool
 		if(pin)
 			wirer.wire(pin, usr)
-			return 1
+			return TRUE
 
 	else if(istype(tool, /obj/item/device/integrated_electronics/debugger))
 		var/obj/item/device/integrated_electronics/debugger/debugger = tool
 		if(pin)
 			debugger.write_data(pin, usr)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 
 /obj/item/integrated_circuit/proc/asc2b64(var/S)
@@ -142,7 +142,7 @@
 		i=i+4
 	return c
 
-proc/XorEncrypt(string,key)
+/proc/XorEncrypt(string,key)
 	if(!string || !key ||!istext(string)||!istext(key))
 		return
 	var/r

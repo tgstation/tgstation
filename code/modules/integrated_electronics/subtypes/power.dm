@@ -47,10 +47,7 @@
 		if(istype(AM, /obj/item/stock_parts/cell)) // Is this already a cell?
 			cell = AM
 		else // If not, maybe there's a cell inside it?
-			for(var/obj/item/stock_parts/cell/C in AM.contents)
-				if(C) // Find one cell to charge.
-					cell = C
-					break
+			cell = AM.get_cell()
 		if(cell)
 			var/transfer_amount = amount_to_move
 			var/turf/A = get_turf(src)
@@ -81,7 +78,7 @@
 
 /obj/item/integrated_circuit/power/transmitter/large/do_work()
 	if(..()) // If the above code succeeds, do this below.
-		if(prob(2))
+		if(prob(20))
 			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 			s.set_up(12, 1, src)
 			s.start()

@@ -1,4 +1,4 @@
-#define IC_COMPONENTS_BASE		25
+#define IC_MAX_SIZE_BASE		25
 #define IC_COMPLEXITY_BASE		75
 
 /obj/item/device/electronic_assembly
@@ -8,7 +8,7 @@
 	icon = 'icons/obj/electronic_assemblies.dmi'
 	icon_state = "setup_small"
 	flags_1 = NOBLUDGEON_1
-	var/max_components = IC_COMPONENTS_BASE
+	var/max_components = IC_MAX_SIZE_BASE
 	var/max_complexity = IC_COMPLEXITY_BASE
 	var/opened = FALSE
 	var/obj/item/stock_parts/cell/battery // Internal cell which most circuits need to work.
@@ -28,7 +28,7 @@
 	icon_state = "setup_medium"
 	desc = "It's a case, for building medium-sized electronics with."
 	w_class = WEIGHT_CLASS_NORMAL
-	max_components = IC_COMPONENTS_BASE * 2
+	max_components = IC_MAX_SIZE_BASE * 2
 	max_complexity = IC_COMPLEXITY_BASE * 2
 
 /obj/item/device/electronic_assembly/large
@@ -36,7 +36,7 @@
 	icon_state = "setup_large"
 	desc = "It's a case, for building large electronics with."
 	w_class = WEIGHT_CLASS_BULKY
-	max_components = IC_COMPONENTS_BASE * 4
+	max_components = IC_MAX_SIZE_BASE * 4
 	max_complexity = IC_COMPLEXITY_BASE * 4
 	anchored = FALSE
 
@@ -61,7 +61,7 @@
 	icon_state = "setup_drone"
 	desc = "It's a case, for building mobile electronics with."
 	w_class = WEIGHT_CLASS_SMALL
-	max_components = IC_COMPONENTS_BASE * 3
+	max_components = IC_MAX_SIZE_BASE * 3
 	max_complexity = IC_COMPLEXITY_BASE * 3
 
 
@@ -93,7 +93,7 @@
 	icon_state = "setup_implant"
 	desc = "It's a case, for building very tiny electronics with."
 	w_class = WEIGHT_CLASS_SMALL
-	max_components = IC_COMPONENTS_BASE / 2
+	max_components = IC_MAX_SIZE_BASE / 2
 	max_complexity = IC_COMPLEXITY_BASE / 2
 	var/obj/item/weapon/implant/integrated_circuit/implant = null
 
@@ -117,17 +117,14 @@
 	if(!check_interactivity(user))
 		return
 
-	var/total_parts = 0
-	var/total_complexity = 0
-	for(var/obj/item/integrated_circuit/part in contents)
-		total_parts += part.size
-		total_complexity = total_complexity + part.complexity
+	var/total_part_size = return_total_size()
+	var/total_complexity = return_total_complexity()
 	var/HTML = list()
 
-	HTML += "<html><head><title>[src.name]</title></head><body>"
+	HTML += "<html><head><title>[name]</title></head><body>"
 	HTML += "<br><a href='?src=[REF(src)]'>\[Refresh\]</a>  |  "
 	HTML += "<a href='?src=[REF(src)];rename=1'>\[Rename\]</a><br>"
-	HTML += "[total_parts]/[max_components] ([round((total_parts / max_components) * 100, 0.1)]%) space taken up in the assembly.<br>"
+	HTML += "[total_part_size]/[max_components] ([round((total_part_size / max_components) * 100, 0.1)]%) space taken up in the assembly.<br>"
 	HTML += "[total_complexity]/[max_complexity] ([round((total_complexity / max_complexity) * 100, 0.1)]%) maximum complexity.<br>"
 	if(battery)
 		HTML += "[round(battery.charge, 0.1)]/[battery.maxcharge] ([round(battery.percent(), 0.1)]%) cell charge. <a href='?src=[REF(src)];remove_cell=1'>\[Remove\]</a>"
@@ -227,12 +224,12 @@
 		if(opened)
 			interact(user)
 
-/obj/item/device/electronic_assembly/proc/get_part_complexity()
+/obj/item/device/electronic_assembly/proc/return_total_complexity()
 	. = 0
 	for(var/obj/item/integrated_circuit/part in contents)
 		. += part.complexity
 
-/obj/item/device/electronic_assembly/proc/get_part_size()
+/obj/item/device/electronic_assembly/proc/return_total_size()
 	. = 0
 	for(var/obj/item/integrated_circuit/part in contents)
 		. += part.size
@@ -247,8 +244,8 @@
 		to_chat(user, "<span class='warning'>\The [IC] is way too big to fit into \the [src].</span>")
 		return FALSE
 
-	var/total_part_size = get_part_size()
-	var/total_complexity = get_part_complexity()
+	var/total_part_size = return_total_size()
+	var/total_complexity = return_total_complexity()
 
 	if((total_part_size + IC.size) > max_components)
 		to_chat(user, "<span class='warning'>You can't seem to add the '[IC]', as there's insufficient space.</span>")

@@ -3,7 +3,6 @@
 	name = "list pin"
 	data = list()
 
-
 /datum/integrated_io/lists/ask_for_pin_data(mob/user)
 	interact(user)
 
@@ -53,8 +52,8 @@
 		to_chat(user, "<span class='warning'>The list is empty, there's nothing to remove.</span>")
 		return
 	if(!target_entry)
-		target_entry = input("Which piece of data do you want to remove?", "Remove") as null|anything in my_list
-	if(target_entry)
+		target_entry = input(user, "Which piece of data do you want to remove?", "Remove") as null|anything in my_list
+	if(holder.check_interactivity(user) && target_entry)
 		my_list.Remove(target_entry)
 
 /datum/integrated_io/lists/proc/edit_in_list(mob/user, var/target_entry)
@@ -63,8 +62,8 @@
 		to_chat(user, "<span class='warning'>The list is empty, there's nothing to modify.</span>")
 		return
 	if(!target_entry)
-		target_entry = input("Which piece of data do you want to edit?", "Edit") as null|anything in my_list
-	if(target_entry)
+		target_entry = input(user, "Which piece of data do you want to edit?", "Edit") as null|anything in my_list
+	if(holder.check_interactivity(user) && target_entry)
 		var/edited_entry = ask_for_data_type(user, target_entry)
 		if(edited_entry)
 			target_entry = edited_entry
@@ -88,13 +87,13 @@
 		to_chat(user, "<span class='warning'>The list is empty, or too small to do any meaningful swapping.</span>")
 		return
 	if(!first_target)
-		first_target = input("Which piece of data do you want to swap? (1)", "Swap") as null|anything in my_list
+		first_target = input(user, "Which piece of data do you want to swap? (1)", "Swap") as null|anything in my_list
 
-	if(first_target)
+	if(holder.check_interactivity(user) && first_target)
 		if(!second_target)
-			second_target = input("Which piece of data do you want to swap? (2)", "Swap") as null|anything in my_list - first_target
+			second_target = input(user, "Which piece of data do you want to swap? (2)", "Swap") as null|anything in my_list - first_target
 
-		if(second_target)
+		if(holder.check_interactivity(user) && second_target)
 			var/first_pos = my_list.Find(first_target)
 			var/second_pos = my_list.Find(second_target)
 			my_list.Swap(first_pos, second_pos)
@@ -121,7 +120,7 @@
 	if(!holder.check_interactivity(usr))
 		return
 	if(..())
-		return 1
+		return TRUE
 
 	if(href_list["add"])
 		add_to_list(usr)
