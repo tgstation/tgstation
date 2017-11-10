@@ -1,5 +1,5 @@
 /mob/CanPass(atom/movable/mover, turf/target)
-	if(CHECKPASS(mover, PASSMOB))
+	if((mover.pass_flags & PASSMOB))
 		return TRUE
 	if(istype(mover, /obj/item/projectile) || mover.throwing)
 		return (!density || lying)

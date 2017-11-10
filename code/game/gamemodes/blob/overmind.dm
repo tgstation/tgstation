@@ -84,7 +84,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		if(!T || !(T.z in GLOB.station_z_levels))
 			continue
 
-		if(L in GLOB.overminds || CHECKPASS(L, PASSBLOB))
+		if(L in GLOB.overminds || (L.pass_flags & PASSBLOB))
 			continue
 
 		var/area/Ablob = get_area(T)
