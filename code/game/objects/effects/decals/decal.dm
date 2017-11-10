@@ -15,24 +15,23 @@
 	if(T == loc && (isspaceturf(T) || isclosedturf(T) || islava(T) || istype(T, /turf/open/water) || ischasm(T)))
 		qdel(src)
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /obj/effect/turf_decal
-	var/group = TURF_DECAL_PAINT
 	icon = 'icons/turf/decals.dmi'
 	icon_state = "warningline"
 	layer = TURF_DECAL_LAYER
-	anchored = TRUE
-
-//in case we need some special decals
-/obj/effect/turf_decal/proc/get_decal()
-	return image(icon='icons/turf/decals.dmi',icon_state=icon_state,dir=dir,layer=TURF_LAYER)
 
 /obj/effect/turf_decal/Initialize()
 	..()
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/turf_decal/ComponentInitialize()
+	. = ..()
 	var/turf/T = loc
 	if(!istype(T)) //you know this will happen somehow
 		CRASH("Turf decal initialized in an object/nullspace")
-	T.add_decal(get_decal(),group)
-	return INITIALIZE_HINT_QDEL
+	T.AddComponent(/datum/component/decal, icon, icon_state, dir)
 
 /obj/effect/turf_decal/stripes/line
 	icon_state = "warningline"

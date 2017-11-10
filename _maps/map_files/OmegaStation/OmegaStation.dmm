@@ -6702,15 +6702,9 @@
 /area/ai_monitored/storage/eva)
 "amo" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/stack/rods{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/rods/fifty,
 /obj/item/stock_parts/cell/high,
 /obj/item/stock_parts/cell/high,
 /obj/structure/cable/white{
@@ -9050,10 +9044,10 @@
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
 "aqE" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/atmos)
 "aqF" = (
@@ -10695,8 +10689,8 @@
 /turf/open/floor/engine/n2,
 /area/engine/atmos)
 "aty" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/atmos)
 "atz" = (
@@ -12772,12 +12766,8 @@
 /area/engine/atmos)
 "axz" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/stack/rods{
-	amount = 50
-	},
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/rods/fifty,
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
@@ -12790,12 +12780,8 @@
 /area/engine/atmos)
 "axA" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
 /obj/item/grenade/chem_grenade/smart_metal_foam,
 /obj/item/grenade/chem_grenade/smart_metal_foam,
 /obj/machinery/newscaster{
@@ -18280,9 +18266,7 @@
 /area/engine/engineering)
 "aIs" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/rods{
-	amount = 50
-	},
+/obj/item/stack/rods/fifty,
 /obj/item/wrench,
 /obj/item/storage/box/lights/mixed,
 /obj/machinery/newscaster{
@@ -18900,18 +18884,10 @@
 /area/engine/engineering)
 "aJB" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/glass/fifty,
 /obj/item/crowbar,
 /obj/item/grenade/chem_grenade/smart_metal_foam,
 /obj/item/grenade/chem_grenade/smart_metal_foam,
@@ -19920,9 +19896,7 @@
 /area/engine/gravity_generator)
 "aLF" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/plasteel{
-	amount = 20
-	},
+/obj/item/stack/sheet/plasteel/twenty,
 /obj/item/wrench,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -20657,9 +20631,7 @@
 /area/engine/engineering)
 "aNd" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/plasteel{
-	amount = 50
-	},
+/obj/item/stack/sheet/plasteel/fifty,
 /obj/item/stack/sheet/rglass{
 	amount = 50;
 	pixel_x = 2;
@@ -22096,9 +22068,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
-	dir = 1;
-	filter_type = "freon";
-	name = "gas filter (freon)"
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -25012,12 +24982,8 @@
 /area/medical/chemistry)
 "aWk" = (
 /obj/structure/table,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/glass/fifty,
 /obj/item/wrench,
 /obj/item/clothing/glasses/welding,
 /turf/open/floor/plasteel/whitepurple/corner{
@@ -26948,18 +26914,10 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "baf" = (
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/glass/fifty,
 /obj/structure/table/reinforced,
 /obj/item/stack/cable_coil/white,
 /obj/item/stack/cable_coil/white,
@@ -76233,7 +76191,7 @@ bdh
 byo
 byo
 byo
-bfM
+bfK
 avV
 bgV
 bhG

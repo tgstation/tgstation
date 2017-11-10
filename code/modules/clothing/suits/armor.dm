@@ -1,5 +1,5 @@
 /obj/item/clothing/suit/armor
-	allowed = list(/obj/item/gun/energy, /obj/item/reagent_containers/spray/pepper, /obj/item/gun/ballistic, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/device/flashlight/seclite, /obj/item/melee/classic_baton/telescopic, /obj/item/kitchen/knife/combat, /obj/item/tank/internals/emergency_oxygen)
+	allowed = null
 	body_parts_covered = CHEST
 	cold_protection = CHEST|GROIN
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
@@ -10,6 +10,11 @@
 	max_integrity = 250
 	resistance_flags = 0
 	armor = list(melee = 30, bullet = 30, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 50, acid = 50)
+
+/obj/item/clothing/suit/armor/Initialize()
+	. = ..()
+	if(!allowed)
+		allowed = GLOB.security_vest_allowed
 
 /obj/item/clothing/suit/armor/vest
 	name = "armor vest"
@@ -153,10 +158,12 @@
 	name = "detective's armor vest"
 	desc = "An armored vest with a detective's badge on it."
 	icon_state = "detective-armor"
-	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/reagent_containers/spray/pepper, /obj/item/device/flashlight, /obj/item/gun/energy, /obj/item/gun/ballistic, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/device/detective_scanner, /obj/item/device/taperecorder, /obj/item/melee/classic_baton)
 	resistance_flags = FLAMMABLE
 	dog_fashion = null
 
+/obj/item/clothing/suit/armor/vest/det_suit/Initialize()
+	. = ..()
+	allowed = GLOB.detective_vest_allowed
 
 //Reactive armor
 /obj/item/clothing/suit/armor/reactive

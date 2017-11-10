@@ -8,7 +8,7 @@
 /obj/effect/proc_holder/changeling/linglink/can_sting(mob/living/carbon/user)
 	if(!..())
 		return
-	var/datum/changeling/changeling = user.mind.changeling
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(changeling.islinking)
 		to_chat(user, "<span class='warning'>We have already formed a link with the victim!</span>")
 		return
@@ -19,22 +19,23 @@
 		to_chat(user, "<span class='warning'>We cannot link with this creature!</span>")
 		return
 	var/mob/living/carbon/target = user.pulling
+
 	if(!target.mind)
 		to_chat(user, "<span class='warning'>The victim has no mind to link to!</span>")
 		return
 	if(target.stat == DEAD)
 		to_chat(user, "<span class='warning'>The victim is dead, you cannot link to a dead mind!</span>")
 		return
-	if(target.mind.changeling)
+	if(target.mind.has_antag_datum(/datum/antagonist/changeling))
 		to_chat(user, "<span class='warning'>The victim is already a part of the hivemind!</span>")
 		return
 	if(user.grab_state <= GRAB_AGGRESSIVE)
 		to_chat(user, "<span class='warning'>We must have a tighter grip to link with this creature!</span>")
 		return
-	return changeling.can_absorb_dna(user,target)
+	return changeling.can_absorb_dna(target)
 
 /obj/effect/proc_holder/changeling/linglink/sting_action(mob/user)
-	var/datum/changeling/changeling = user.mind.changeling
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	var/mob/living/carbon/human/target = user.pulling
 	changeling.islinking = 1
 	for(var/i in 1 to 3)
