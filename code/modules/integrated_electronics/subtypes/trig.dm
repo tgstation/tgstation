@@ -97,7 +97,6 @@
 	push_data()
 	activate_pin(2)
 
-
 // Secant //
 
 /obj/item/integrated_circuit/trig/secant
@@ -117,7 +116,6 @@
 	set_pin_data(IC_OUTPUT, 1, result)
 	push_data()
 	activate_pin(2)
-
 
 // Cotangent //
 

@@ -4,7 +4,7 @@
 	icon_state = "exonet_node"
 	idle_power_usage = 25
 	var/on = TRUE
-	var/toggle = 1
+	var/toggle = TRUE
 	density = TRUE
 	anchored = TRUE
 	circuit = /obj/item/circuitboard/machine/exonet_node
@@ -51,22 +51,13 @@
 // Parameters: None
 // Description: Self explanatory.
 /obj/machinery/exonet_node/update_icon()
-	if(on)
-		icon_state = initial(icon_state)
-	else
-		icon_state = "[initial(icon_state)]_off"
+	icon_state = "[initial(icon_state)][on? "" : "_off"]"
 
 // Proc: update_power()
 // Parameters: None
 // Description: Sets the device on/off and adjusts power draw based on stat and toggle variables.
 /obj/machinery/exonet_node/proc/update_power()
-	if(toggle)
-		if(!is_operational())
-			on = FALSE
-		else
-			on = TRUE
-	else
-		on = FALSE
+	on = is_operational() && toggle
 	use_power = on
 	update_icon()
 
@@ -122,19 +113,14 @@
 			toggle = !toggle
 			update_power()
 			if(!toggle)
-				var/msg = "[usr.client.key] ([usr]) has turned [src] off, at [x],[y],[z]."
-				message_admins(msg)
-				log_game(msg)
+				investigate_log("has been turned off by [key_name(usr)].", INVESTIGATE_EXONET)
 			. = TRUE
 	update_icon()
 	add_fingerprint(usr)
 
-
 // Proc: get_exonet_node()
 // Parameters: None
 // Description: Helper proc to get a reference to an Exonet node.
-
-
 
 /obj/machinery/exonet_node/proc/write_log(var/origin_address, var/target_address, var/data_type, var/content)
 	var/msg = "[time2text(world.time, "hh:mm:ss")] | FROM [origin_address] TO [target_address] | TYPE: [data_type] | CONTENT: [content]"

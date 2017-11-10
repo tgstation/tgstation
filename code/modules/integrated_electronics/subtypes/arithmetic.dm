@@ -191,7 +191,6 @@
 	push_data()
 	activate_pin(2)
 
-
 // Absolute //
 
 /obj/item/integrated_circuit/arithmetic/absolute
@@ -311,4 +310,3 @@
 	set_pin_data(IC_OUTPUT, 1, result)
 	push_data()
 	activate_pin(2)
-

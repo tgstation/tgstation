@@ -17,10 +17,7 @@
 	power_draw_per_use = 2
 
 /obj/item/integrated_circuit/time/delay/do_work()
-	set waitfor = 0  // Don't sleep in a proc that is called by a processor. It'll delay the entire thing
-
-	sleep(delay)
-	activate_pin(2)
+	addtimer(CALLBACK(src, .proc/activate_pin, 2), delay)
 
 /obj/item/integrated_circuit/time/delay/five_sec
 	name = "five-sec delay circuit"
@@ -76,9 +73,7 @@
 	icon_state = "tick-m"
 	complexity = 8
 	var/delay = 4 SECONDS
-	var/progress = 0
-	var/prev_time = 0
-	var/just_started = FALSE
+	var/next_fire = 0
 	var/is_running = FALSE
 	inputs = list("enable ticking" = IC_PINTYPE_BOOLEAN)
 	activators = list("outgoing pulse" = IC_PINTYPE_PULSE_OUT)
@@ -87,35 +82,24 @@
 
 /obj/item/integrated_circuit/time/ticker/Destroy()
 	if(is_running)
-		STOP_PROCESSING(SSobj, src)
-	. = ..()
+		STOP_PROCESSING(SSfastprocess, src)
+	return ..()
 
 /obj/item/integrated_circuit/time/ticker/on_data_written()
 	var/do_tick = get_pin_data(IC_INPUT, 1)
 	if(do_tick && !is_running)
 		is_running = TRUE
-		just_started = TRUE
-		START_PROCESSING(SSobj, src)
+		START_PROCESSING(SSfastprocess, src)
 	else if(is_running)
 		is_running = FALSE
-		STOP_PROCESSING(SSobj, src)
+		STOP_PROCESSING(SSfastprocess, src)
 
 /obj/item/integrated_circuit/time/ticker/process()
-	var/wtime = world.time
-	if(just_started)
-		just_started = FALSE
+	if(!is_running)
+		return PROCESS_KILL
+	if(world.time > next_fire)
 		activate_pin(1)
-	else
-		var/passed = wtime - prev_time
-		progress += passed
-		if(progress >= delay)
-			if(delay >= passed)
-				progress -= delay
-			else
-				progress = 0
-			if(is_running)
-				activate_pin(1)
-	prev_time = wtime
+		next_fire = world.time + delay
 
 /obj/item/integrated_circuit/time/ticker/fast
 	name = "fast ticker"

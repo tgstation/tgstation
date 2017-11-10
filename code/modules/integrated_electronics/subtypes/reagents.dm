@@ -65,7 +65,7 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	volume = 30
 	power_draw_per_use = 15
-	var/direc = 1
+	var/direction_mode = SYRINGE_INJECT
 	var/transfer_amount = 10
 	var/busy = FALSE
 
@@ -83,9 +83,9 @@
 	var/new_amount = get_pin_data(IC_INPUT, 2)
 	if(new_amount < 0)
 		new_amount = -new_amount
-		direc = 0
+		direction_mode = SYRINGE_DRAW
 	else
-		direc = 1
+		direction_mode = SYRINGE_INJECT
 	if(isnum(new_amount))
 		new_amount = Clamp(new_amount, 0, volume)
 		transfer_amount = new_amount
@@ -99,19 +99,19 @@
 		qdel(S)
 
 /obj/item/integrated_circuit/reagent/injector/do_work()
-	set waitfor = 0 // Don't sleep in a proc that is called by a processor without this set, otherwise it'll delay the entire thing
+	set waitfor = FALSE // Don't sleep in a proc that is called by a processor without this set, otherwise it'll delay the entire thing
 	var/atom/movable/AM = get_pin_data_as_type(IC_INPUT, 1, /atom/movable)
 	if(!istype(AM)||!Adjacent(AM)||busy)
 		activate_pin(3)
 		return
-	if(istype(AM,/obj/machinery/hydroponics)&&(direc==1)&&(reagents.total_volume))//injection into tray.
+	if(istype(AM,/obj/machinery/hydroponics)&&(direction_mode==SYRINGE_INJECT)&&(reagents.total_volume))//injection into tray.
 		inject_tray(AM,src,transfer_amount)
 		activate_pin(2)
 		return
 	if(!AM.reagents)
 		activate_pin(3)
 		return
-	if(direc == 1)
+	if(direction_mode == SYRINGE_INJECT)
 		if(!reagents.total_volume) // Empty
 			activate_pin(3)
 			return
@@ -193,16 +193,16 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_BIO = 2)
 	var/transfer_amount = 10
-	var/direc = 1
+	var/direction_mode = SYRINGE_INJECT
 	power_draw_per_use = 10
 
 /obj/item/integrated_circuit/reagent/pump/on_data_written()
 	var/new_amount = get_pin_data(IC_INPUT, 3)
 	if(new_amount < 0)
 		new_amount = -new_amount
-		direc = 0
+		direction_mode = SYRINGE_DRAW
 	else
-		direc = 1
+		direction_mode = SYRINGE_INJECT
 	if(isnum(new_amount))
 		new_amount = Clamp(new_amount, 0, 50)
 		transfer_amount = new_amount
@@ -211,27 +211,21 @@
 	var/atom/movable/source = get_pin_data_as_type(IC_INPUT, 1, /atom/movable)
 	var/atom/movable/target = get_pin_data_as_type(IC_INPUT, 2, /atom/movable)
 
-	if(!istype(source) || !istype(target)) //Invalid input
+	if(!istype(source) || !istype(target) || !source.reagents) //Invalid input
 		return
 	if(Adjacent(source) && Adjacent(target))
-		if(direc)
-			if(istype(target,/obj/machinery/hydroponics)&&(direc==1)&&(source.reagents.total_volume))//injection into tray.
-				inject_tray(target,source,transfer_amount)
-				activate_pin(2)
-				return
-		else
-			if(istype(source,/obj/machinery/hydroponics)&&(direc==1)&&(target.reagents.total_volume))//injection into tray.
-				inject_tray(source,target,transfer_amount)
-				activate_pin(2)
-				return
+		if(istype(target,/obj/machinery/hydroponics)&&(source.reagents.total_volume))//injection into tray.
+			inject_tray(target,source,transfer_amount)
+			activate_pin(2)
+			return
 
-		if(!source.reagents || !target.reagents)
+		if(!target.reagents)
 			return
 		if(ismob(source) || ismob(target))
 			return
 		if(!source.is_open_container() || !target.is_open_container())
 			return
-		if(direc)
+		if(direction_mode)
 			if(target.reagents.maximum_volume - target.reagents.total_volume <= 0) //full
 				return
 			source.reagents.trans_to(target, transfer_amount)
@@ -327,16 +321,16 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_BIO = 2)
 	var/transfer_amount = 10
-	var/direc = 1
+	var/direction_mode = SYRINGE_INJECT
 	power_draw_per_use = 10
 
 /obj/item/integrated_circuit/reagent/filter/on_data_written()
 	var/new_amount = get_pin_data(IC_INPUT, 3)
 	if(new_amount < 0)
 		new_amount = -new_amount
-		direc = 0
+		direction_mode = SYRINGE_DRAW
 	else
-		direc = 1
+		direction_mode = SYRINGE_INJECT
 	if(isnum(new_amount))
 		new_amount = Clamp(new_amount, 0, 50)
 		transfer_amount = new_amount
@@ -358,7 +352,7 @@
 		if(target.reagents.maximum_volume - target.reagents.total_volume <= 0)
 			return
 		for(var/datum/reagent/G in source.reagents.reagent_list)
-			if (!direc)
+			if (!direction_mode)
 				if(G.id in demand)
 					source.reagents.trans_id_to(target, G.id, transfer_amount)
 			else

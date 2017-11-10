@@ -27,8 +27,7 @@
 	if(!(A in view(get_turf(src))))
 		push_data()
 		return // Can't see the target.
-	var/desired_dir = get_dir(get_turf(src), get_turf(A))
 
-	set_pin_data(IC_OUTPUT, 1, desired_dir)
+	set_pin_data(IC_OUTPUT, 1, get_dir(get_turf(src), get_turf(A)))
 	push_data()
 	activate_pin(2)

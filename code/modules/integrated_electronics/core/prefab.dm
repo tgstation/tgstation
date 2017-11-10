@@ -9,7 +9,6 @@
 	var/list/as_names = list()
 	var/list/cir_names = list()
 
-
 /obj/item/device/integrated_electronics/prefab/attack_self(var/mob/user)
 	if(program && program != "blank")
 		assemble(program)
@@ -30,7 +29,7 @@
 	for(var/obj/item/integrated_circuit/IC in SScircuit.all_integrated_circuits)
 		if((IC.spawn_flags & IC_SPAWN_DEFAULT) || (IC.spawn_flags & IC_SPAWN_RESEARCH))
 			cir_names[IC.name] = IC.type
-	addtimer(CALLBACK(src, /obj/item/device/integrated_electronics/prefab.proc/attack_self()), 2) //IDK, why it's need dely,but otherwise it doesn't work.
+	addtimer(CALLBACK(src, proc/attack_self), 2) //IDK, why it's need dely,but otherwise it doesn't work.
 
 /obj/item/device/integrated_electronics/prefab/proc/assemble(var/program)
 
@@ -69,7 +68,7 @@
 				elements.Add(elem)            //I don't know,why Cut or copy don't works. If somebody can fix it, it should be fixed.
 		if(debug)
 			visible_message( "<span class='notice'>components[elements.len]</span>")
-		if(elements_input.len<1)
+		if(!length(elements_input))
 			return
 		if(debug)
 			visible_message( "<span class='notice'>inserting components[elements.len]</span>")
@@ -157,5 +156,5 @@
 				IO2 = ioa[element[2]]
 				IO.linked |= IO2
 
-	AS.loc = get_turf(src)
+	AS.forceMove(drop_location())
 	qdel(src)
