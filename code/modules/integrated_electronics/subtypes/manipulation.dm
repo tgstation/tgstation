@@ -89,13 +89,13 @@
 	mode = mode1.data
 	if(assembly)
 		if(isnum(xo.data))
-			xo.data = round(xo.data)
+			xo.data = round(xo.data, 1)
 		if(isnum(yo.data))
-			yo.data = round(yo.data)
+			yo.data = round(yo.data, 1)
 
 		var/turf/T = get_turf(assembly)
-		var/target_x = Clamp(T.x + xo, 0, world.maxx)
-		var/target_y = Clamp(T.y + yo, 0, world.maxy)
+		var/target_x = Clamp(T.x + xo.data, 0, world.maxx)
+		var/target_y = Clamp(T.y + yo.data, 0, world.maxy)
 
 		shootAt(locate(target_x, target_y, T.z))
 
@@ -414,8 +414,8 @@
 			target_x.data = round(target_x.data, 1)
 		if(isnum(target_y.data))
 			target_y.data = round(target_y.data, 1)
-		var/_x = Clamp(T.x + target_x, 0, world.maxx)
-		var/_y = Clamp(T.y + target_y, 0, world.maxy)
+		var/_x = Clamp(T.x + target_x.data, 0, world.maxx)
+		var/_y = Clamp(T.y + target_y.data, 0, world.maxy)
 
 		A.forceMove(drop_location())
 		A.throw_at(locate(_x, _y, T.z), round(Clamp(sqrt(target_x.data*target_x.data+target_y.data*target_y.data),0,8),1), 3, assembly)
