@@ -98,10 +98,11 @@
 /turf/open/proc/update_visuals()
 	var/list/new_overlay_types = tile_graphic()
 
-	#if DM_VERSION >= 512
 	#if DM_VERSION >= 513
 	#warning 512 is stable now for sure, remove the old code
 	#endif
+	
+	#if DM_VERSION >= 512
 	vis_contents = new_overlay_types
 	#else
 	if (atmos_overlay_types)
