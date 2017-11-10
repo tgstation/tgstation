@@ -370,6 +370,8 @@ function handle_pr($payload) {
 				$author = $payload['pull_request']['user']['login'];
 				if(isset($balances[$author]) && $balances[$author] < 0 && !is_maintainer($payload, $author))
 					create_comment($payload, 'You currently have a negative Fix/Feature pull request delta of ' . $balances[$author] . '. Maintainers may close this PR at will. Fixing issues or improving the codebase will improve this score.');
+				else if($author == 'Iamgoofball')
+					create_comment($payload, 'Stop. Please. Just stop for the sake of everyones sanity');
 			}
 			break;
 		case 'edited':
