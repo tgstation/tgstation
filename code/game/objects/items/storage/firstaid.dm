@@ -167,6 +167,10 @@
 				usr.s_active.close(usr)
 			src.show_to(usr)
 
+/obj/item/storage/pill_bottle/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is trying to get the cap off [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return (TOXLOSS)
+
 /obj/item/storage/pill_bottle/charcoal
 	name = "bottle of charcoal pills"
 	desc = "Contains pills used to counter toxins."

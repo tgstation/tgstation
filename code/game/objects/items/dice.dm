@@ -30,6 +30,10 @@
 	if(special_die == "100")
 		new /obj/item/dice/d100(src)
 
+/obj/item/storage/pill_bottle/dice/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is gambling with death! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return (OXYLOSS)
+
 /obj/item/dice //depreciated d6, use /obj/item/dice/d6 if you actually want a d6
 	name = "die"
 	desc = "A die with six sides. Basic and servicable."
@@ -46,6 +50,10 @@
 	result = rand(1, sides)
 	update_icon()
 	..()
+
+/obj/item/dice/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is gambling with death! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return (OXYLOSS)
 
 /obj/item/dice/d1
 	name = "d1"

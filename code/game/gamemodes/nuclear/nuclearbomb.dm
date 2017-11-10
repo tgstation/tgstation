@@ -561,3 +561,14 @@ This is here to make the tiles around the station mininuke change when it's arme
 	name = "cheap plastic imitation of the nuclear authentication disk"
 	desc = "Broken dreams and a faint odor of cheese."
 	icon_state = "nucleardisk"
+
+/obj/item/disk/fakenucleardisk/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is pretending to go delta! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	playsound(user.loc, 'sound/machines/alarm.ogg', 50, -1, 1)
+	for(var/i in 1 to 100)
+		addtimer(CALLBACK(user, /atom/proc/add_atom_colour, (i % 2)? "#00FF00" : "#FF0000", ADMIN_COLOUR_PRIORITY), i)
+	addtimer(CALLBACK(user, /atom/proc/remove_atom_colour, ADMIN_COLOUR_PRIORITY), 101)
+	addtimer(CALLBACK(user, /atom/proc/visible_message, "<span class='suicide'>[user] was destroyed by the nuclear blast!</span>"), 101)
+	addtimer(CALLBACK(user, /mob/living/proc/adjustOxyLoss, 200), 101)
+	addtimer(CALLBACK(user, /mob/proc/death, 0), 101)
+	return MANUAL_SUICIDE
