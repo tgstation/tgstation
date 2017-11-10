@@ -166,7 +166,7 @@
 		playsound(get_turf(src), selected_sound, vol, freq, -1)
 
 /obj/item/integrated_circuit/output/sound/on_data_written()
-	power_draw_per_use =  get_pin_data(IC_INPUT, 2) * 2
+	power_draw_per_use =  get_pin_data(IC_INPUT, 2) * 15
 
 /obj/item/integrated_circuit/output/sound/beeper
 	name = "beeper circuit"

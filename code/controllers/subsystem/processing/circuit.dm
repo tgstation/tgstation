@@ -4,7 +4,8 @@ PROCESSING_SUBSYSTEM_DEF(circuit)
 	var/list/all_exonet_connections = list()
 	var/list/all_integrated_circuits = list()
 	var/cipherkey
-
+	init_order = INIT_ORDER_CIRCUIT
+	flags = SS_BACKGROUND|SS_POST_FIRE_TIMING
 
 /datum/controller/subsystem/processing/circuit/Initialize(start_timeofday)
 	SScircuit.cipherkey = random_string(20, GLOB.alphabet)

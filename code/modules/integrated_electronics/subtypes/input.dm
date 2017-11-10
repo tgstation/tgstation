@@ -729,7 +729,7 @@
 	return TRUE
 
 /obj/item/integrated_circuit/input/sensor/ranged
-	name = "sensor"
+	name = "Ranged sensor"
 	desc = "Scans and obtains a reference for any objects or persons in range.  All you need to do is point the machine towards target."
 	extended_desc = "If 'ignore storage' pin is set to true, the sensor will disregard scanning various storage containers such as backpacks."
 	icon_state = "recorder"

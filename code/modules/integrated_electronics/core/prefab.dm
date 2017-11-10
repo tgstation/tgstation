@@ -1,5 +1,5 @@
 /obj/item/device/integrated_electronics/prefab
-	var/debug = 0
+	var/debug = FALSE
 	name = "prefab"
 	desc = "new machine in package"
 	icon = 'icons/obj/electronic_assemblies.dmi'

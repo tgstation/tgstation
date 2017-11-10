@@ -271,6 +271,8 @@
 				continue
 		S.set_pin_data(IC_OUTPUT, 1, WEAKREF(target))
 		S.check_then_do_work()
+		S.scan(target)
+
 	visible_message("<span class='notice'> [user] waves [src] around [target].</span>")
 
 /obj/item/device/electronic_assembly/attackby(var/obj/item/I, var/mob/user)

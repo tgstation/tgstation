@@ -585,7 +585,7 @@ proc/strtohex(str)
 	var/c
 	for(var/i = 1 to length(str))
 		c= text2ascii(str,i)
-		r+= num2hex((c & 240) >> 4) + num2hex((c & 15))
+		r+= num2hex(c)
 	return r
 
 proc/hextostr(str)
