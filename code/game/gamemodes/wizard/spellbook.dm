@@ -897,6 +897,9 @@
 	to_chat(user,"<span class='warning'>[src] suddenly vanishes!</span>")
 	qdel(src)
 
+/obj/item/spellbook/oneuse/random
+	icon_state = "random_book"
+
 /obj/item/spellbook/oneuse/random/Initialize()
 	..()
 	var/static/banned_spells = list(/obj/item/spellbook/oneuse/mimery_blockade, /obj/item/spellbook/oneuse/mimery_guns)

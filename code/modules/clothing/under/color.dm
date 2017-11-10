@@ -1,6 +1,9 @@
 /obj/item/clothing/under/color
 	desc = "A standard issue colored jumpsuit. Variety is the spice of life!"
 
+/obj/item/clothing/under/color/random
+	icon_state = "random_jumpsuit"
+
 /obj/item/clothing/under/color/random/New()
 	..()
 	var/obj/item/clothing/under/color/C = pick(subtypesof(/obj/item/clothing/under/color) - /obj/item/clothing/under/color/random)
