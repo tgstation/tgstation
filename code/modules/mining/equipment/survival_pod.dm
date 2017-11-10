@@ -109,12 +109,10 @@
 /obj/structure/door_assembly/door_assembly_pod
 	name = "pod airlock assembly"
 	icon = 'icons/obj/doors/airlocks/survival/survival.dmi'
+	base_name = "pod airlock"
 	overlays_file = 'icons/obj/doors/airlocks/survival/survival_overlays.dmi'
 	airlock_type = /obj/machinery/door/airlock/survival_pod
-	anchored = TRUE
-	state = 1
-	mineral = "glass"
-	material = "glass"
+	noglass = TRUE
 	var/expected_dir = SOUTH
 
 /obj/structure/door_assembly/door_assembly_pod/setDir(direction)

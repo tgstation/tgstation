@@ -1,6 +1,7 @@
 /*
 	Station Airlocks Regular
 */
+
 /obj/machinery/door/airlock/abandoned
 	abandoned = TRUE
 
@@ -17,7 +18,7 @@
 /obj/machinery/door/airlock/engineering
 	icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_eng
-	
+
 /obj/machinery/door/airlock/engineering/abandoned
 	abandoned = TRUE
 
@@ -37,7 +38,7 @@
 /obj/machinery/door/airlock/maintenance/external
 	name = "external airlock access"
 	icon = 'icons/obj/doors/airlocks/station/maintenanceexternal.dmi'
-	assemblytype = /obj/structure/door_assembly/door_assembly_mai
+	assemblytype = /obj/structure/door_assembly/door_assembly_extmai
 	normal_integrity = 250
 
 /obj/machinery/door/airlock/mining
@@ -75,23 +76,27 @@
 	Station Airlocks Glass
 */
 
+/obj/machinery/door/airlock/glass_standard
+	opacity = 0
+	glass = TRUE
+
 /obj/machinery/door/airlock/glass_command
 	icon = 'icons/obj/doors/airlocks/station/command.dmi'
 	opacity = 0
-	assemblytype = /obj/structure/door_assembly/door_assembly_com/glass
+	assemblytype = /obj/structure/door_assembly/door_assembly_com
 	glass = TRUE
 	normal_integrity = 400
 
 /obj/machinery/door/airlock/glass_engineering
 	icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
 	opacity = 0
-	assemblytype = /obj/structure/door_assembly/door_assembly_eng/glass
+	assemblytype = /obj/structure/door_assembly/door_assembly_eng
 	glass = TRUE
 
 /obj/machinery/door/airlock/glass_security
 	icon = 'icons/obj/doors/airlocks/station/security.dmi'
 	opacity = 0
-	assemblytype = /obj/structure/door_assembly/door_assembly_sec/glass
+	assemblytype = /obj/structure/door_assembly/door_assembly_sec
 	glass = TRUE
 	normal_integrity = 400
 
@@ -101,44 +106,51 @@
 /obj/machinery/door/airlock/glass_medical
 	icon = 'icons/obj/doors/airlocks/station/medical.dmi'
 	opacity = 0
-	assemblytype = /obj/structure/door_assembly/door_assembly_med/glass
+	assemblytype = /obj/structure/door_assembly/door_assembly_med
 	glass = TRUE
 
 /obj/machinery/door/airlock/glass_research
 	icon = 'icons/obj/doors/airlocks/station/research.dmi'
 	opacity = 0
-	assemblytype = /obj/structure/door_assembly/door_assembly_research/glass
+	assemblytype = /obj/structure/door_assembly/door_assembly_research
 	glass = TRUE
 
 /obj/machinery/door/airlock/glass_mining
 	icon = 'icons/obj/doors/airlocks/station/mining.dmi'
 	opacity = 0
-	assemblytype = /obj/structure/door_assembly/door_assembly_min/glass
+	assemblytype = /obj/structure/door_assembly/door_assembly_min
 	glass = TRUE
 
 /obj/machinery/door/airlock/glass_atmos
 	icon = 'icons/obj/doors/airlocks/station/atmos.dmi'
 	opacity = 0
-	assemblytype = /obj/structure/door_assembly/door_assembly_atmo/glass
+	assemblytype = /obj/structure/door_assembly/door_assembly_atmo
 	glass = TRUE
 
 /obj/machinery/door/airlock/glass_science
 	icon = 'icons/obj/doors/airlocks/station/science.dmi'
 	opacity = 0
-	assemblytype = /obj/structure/door_assembly/door_assembly_science/glass
+	assemblytype = /obj/structure/door_assembly/door_assembly_science
 	glass = TRUE
 
 /obj/machinery/door/airlock/glass_virology
 	icon = 'icons/obj/doors/airlocks/station/virology.dmi'
 	opacity = 0
-	assemblytype = /obj/structure/door_assembly/door_assembly_viro/glass
+	assemblytype = /obj/structure/door_assembly/door_assembly_viro
 	glass = TRUE
 
 /obj/machinery/door/airlock/glass_maintenance
 	icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
 	opacity = 0
-	assemblytype = /obj/structure/door_assembly/door_assembly_mai/glass
+	assemblytype = /obj/structure/door_assembly/door_assembly_mai
 	glass = TRUE
+
+/obj/machinery/door/airlock/glass_extmai
+	icon = 'icons/obj/doors/airlocks/station/maintenanceexternal.dmi'
+	opacity = 0
+	assemblytype = /obj/structure/door_assembly/door_assembly_extmai
+	glass = TRUE
+	normal_integrity = 200
 
 //////////////////////////////////
 /*
@@ -148,27 +160,46 @@
 /obj/machinery/door/airlock/gold
 	name = "gold airlock"
 	icon = 'icons/obj/doors/airlocks/station/gold.dmi'
-	var/mineral = "gold"
 	assemblytype = /obj/structure/door_assembly/door_assembly_gold
+
+/obj/machinery/door/airlock/glass_gold
+	name = "gold airlock"
+	icon = 'icons/obj/doors/airlocks/station/gold.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_gold
+	opacity = 0
+	glass = TRUE
 
 /obj/machinery/door/airlock/silver
 	name = "silver airlock"
 	icon = 'icons/obj/doors/airlocks/station/silver.dmi'
-	var/mineral = "silver"
 	assemblytype = /obj/structure/door_assembly/door_assembly_silver
+
+/obj/machinery/door/airlock/glass_silver
+	name = "silver airlock"
+	icon = 'icons/obj/doors/airlocks/station/silver.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_silver
+	opacity = 0
+	glass = TRUE
 
 /obj/machinery/door/airlock/diamond
 	name = "diamond airlock"
 	icon = 'icons/obj/doors/airlocks/station/diamond.dmi'
-	var/mineral = "diamond"
 	assemblytype = /obj/structure/door_assembly/door_assembly_diamond
 	normal_integrity = 1000
 	explosion_block = 2
 
+/obj/machinery/door/airlock/glass_diamond
+	name = "diamond airlock"
+	icon = 'icons/obj/doors/airlocks/station/diamond.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_diamond
+	normal_integrity = 950
+	explosion_block = 2
+	opacity = 0
+	glass = TRUE
+
 /obj/machinery/door/airlock/uranium
 	name = "uranium airlock"
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi'
-	var/mineral = "uranium"
 	assemblytype = /obj/structure/door_assembly/door_assembly_uranium
 	var/last_event = 0
 
@@ -183,11 +214,29 @@
 	radiation_pulse(get_turf(src), 150)
 	return
 
+/obj/machinery/door/airlock/glass_uranium
+	name = "uranium airlock"
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_uranium
+	opacity = 0
+	glass = TRUE
+	var/last_event = 0
+
+/obj/machinery/door/airlock/glass_uranium/process()
+	if(world.time > last_event+20)
+		if(prob(50))
+			radiate()
+		last_event = world.time
+	..()
+
+/obj/machinery/door/airlock/glass_uranium/proc/radiate()
+	radiation_pulse(get_turf(src), 150)
+	return
+
 /obj/machinery/door/airlock/plasma
 	name = "plasma airlock"
 	desc = "No way this can end badly."
 	icon = 'icons/obj/doors/airlocks/station/plasma.dmi'
-	var/mineral = "plasma"
 	assemblytype = /obj/structure/door_assembly/door_assembly_plasma
 
 /obj/machinery/door/airlock/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -206,42 +255,87 @@
 /obj/machinery/door/airlock/plasma/BlockSuperconductivity() //we don't stop the heat~
 	return 0
 
+/obj/machinery/door/airlock/glass_plasma
+	name = "plasma airlock"
+	desc = "No way this can end badly."
+	icon = 'icons/obj/doors/airlocks/station/plasma.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_plasma
+	opacity = 0
+	glass = TRUE
+
+/obj/machinery/door/airlock/glass_plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	if(exposed_temperature > 300)
+		PlasmaBurn(exposed_temperature)
+
+/obj/machinery/door/airlock/glass_plasma/proc/ignite(exposed_temperature)
+	if(exposed_temperature > 300)
+		PlasmaBurn(exposed_temperature)
+
+/obj/machinery/door/airlock/glass_plasma/proc/PlasmaBurn(temperature)
+	atmos_spawn_air("plasma=500;TEMP=1000")
+	var/obj/structure/door_assembly/DA
+	DA = new /obj/structure/door_assembly/door_assembly_0(loc)
+	DA.glass = TRUE
+	if(heat_proof)
+		DA.heat_proof_finished = TRUE
+	qdel(src)
+
+/obj/machinery/door/airlock/glass_plasma/BlockSuperconductivity() //we don't stop the heat~
+	return 0
+
 /obj/machinery/door/airlock/clown
 	name = "bananium airlock"
 	desc = "Honkhonkhonk"
 	icon = 'icons/obj/doors/airlocks/station/bananium.dmi'
-	var/mineral = "bananium"
+	assemblytype = /obj/structure/door_assembly/door_assembly_bananium
 	doorOpen = 'sound/items/bikehorn.ogg'
-	assemblytype = /obj/structure/door_assembly/door_assembly_clown
+
+/obj/machinery/door/airlock/glass_clown
+	name = "bananium airlock"
+	desc = "Honkhonkhonk"
+	icon = 'icons/obj/doors/airlocks/station/bananium.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_bananium
+	doorOpen = 'sound/items/bikehorn.ogg'
+	opacity = 0
+	glass = TRUE
 
 /obj/machinery/door/airlock/sandstone
 	name = "sandstone airlock"
 	icon = 'icons/obj/doors/airlocks/station/sandstone.dmi'
-	var/mineral = "sandstone"
 	assemblytype = /obj/structure/door_assembly/door_assembly_sandstone
 
+/obj/machinery/door/airlock/glass_sandstone
+	name = "sandstone airlock"
+	icon = 'icons/obj/doors/airlocks/station/sandstone.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_sandstone
+	opacity = 0
+	glass = TRUE
 
 /obj/machinery/door/airlock/wood
 	name = "wooden airlock"
 	icon = 'icons/obj/doors/airlocks/station/wood.dmi'
-	var/mineral = "wood"
 	assemblytype = /obj/structure/door_assembly/door_assembly_wood
+
+/obj/machinery/door/airlock/glass_wood
+	name = "wooden airlock"
+	icon = 'icons/obj/doors/airlocks/station/wood.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_wood
+	opacity = 0
+	glass = TRUE
 
 /obj/machinery/door/airlock/titanium
 	name = "shuttle airlock"
-	var/mineral = "titanium"
+	assemblytype = /obj/structure/door_assembly/door_assembly_titanium
 	icon = 'icons/obj/doors/airlocks/shuttle/shuttle.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/shuttle/overlays.dmi'
-	assemblytype = /obj/structure/door_assembly/door_assembly_titanium
 	normal_integrity = 400
 
 /obj/machinery/door/airlock/glass_titanium
 	name = "shuttle airlock"
-	var/mineral = "titanium"
+	assemblytype = /obj/structure/door_assembly/door_assembly_titanium
 	icon = 'icons/obj/doors/airlocks/shuttle/shuttle.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/shuttle/overlays.dmi'
 	opacity = 0
-	assemblytype = /obj/structure/door_assembly/door_assembly_titanium/glass
 	glass = TRUE
 	normal_integrity = 350
 
@@ -250,13 +344,17 @@
 	Station2 Airlocks
 */
 
-/obj/machinery/door/airlock/glass
-	name = "glass airlock"
+/obj/machinery/door/airlock/public
+	icon = 'icons/obj/doors/airlocks/station2/glass.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/station2/overlays.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_public
+
+/obj/machinery/door/airlock/glass_public
 	icon = 'icons/obj/doors/airlocks/station2/glass.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/station2/overlays.dmi'
 	opacity = 0
-	assemblytype = /obj/structure/door_assembly/door_assembly_glass
-	glass = TRUE
+	glass = 1
+	assemblytype = /obj/structure/door_assembly/door_assembly_public
 
 //////////////////////////////////
 /*
@@ -275,7 +373,7 @@
 	name = "external airlock"
 	icon = 'icons/obj/doors/airlocks/external/external.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
-	assemblytype = /obj/structure/door_assembly/door_assembly_ext/glass
+	assemblytype = /obj/structure/door_assembly/door_assembly_ext
 	opacity = 0
 	glass = TRUE
 
@@ -422,7 +520,6 @@
 	friendly = TRUE
 
 /obj/machinery/door/airlock/cult/glass
-	assemblytype = /obj/structure/door_assembly/door_assembly_cult/glass
 	glass = TRUE
 	opacity = 0
 
@@ -439,7 +536,6 @@
 	friendly = TRUE
 
 /obj/machinery/door/airlock/cult/unruned/glass
-	assemblytype = /obj/structure/door_assembly/door_assembly_cult/unruned/glass
 	glass = TRUE
 	opacity = 0
 

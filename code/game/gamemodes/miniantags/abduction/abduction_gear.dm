@@ -684,31 +684,8 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/structure/door_assembly/door_assembly_abductor
 	name = "alien airlock assembly"
 	icon = 'icons/obj/doors/airlocks/abductor/abductor_airlock.dmi'
+	base_name = "alien airlock"
 	overlays_file = 'icons/obj/doors/airlocks/abductor/overlays.dmi'
-	typetext = "abductor"
-	icontext = "abductor"
 	airlock_type = /obj/machinery/door/airlock/abductor
-	anchored = TRUE
-	state = 1
-
-/obj/structure/door_assembly/door_assembly_abductor/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weldingtool) && !anchored )
-		var/obj/item/weldingtool/WT = W
-		if(WT.remove_fuel(0,user))
-			user.visible_message("<span class='warning'>[user] disassembles the airlock assembly.</span>", \
-								"You start to disassemble the airlock assembly...")
-			playsound(src.loc, 'sound/items/welder2.ogg', 50, 1)
-			if(do_after(user, 40*W.toolspeed, target = src))
-				if( !WT.isOn() )
-					return
-				to_chat(user, "<span class='notice'>You disassemble the airlock assembly.</span>")
-				new /obj/item/stack/sheet/mineral/abductor(get_turf(src), 4)
-				qdel(src)
-		else
-			return
-	else if(istype(W, /obj/item/airlock_painter))
-		return // no repainting
-	else if(istype(W, /obj/item/stack/sheet))
-		return // no material modding
-	else
-		..()
+	material_type = /obj/item/stack/sheet/mineral/abductor
+	noglass = TRUE

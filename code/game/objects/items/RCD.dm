@@ -245,10 +245,12 @@ ARCD
 	switch(airlockcat)
 		if("Solid")
 			if(advanced_airlock_setting == 1)
-				var/airlockpaint = input(usr, "Select the paintjob of the airlock.") in list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security")
+				var/airlockpaint = input(usr, "Select the type of the airlock.") in list("Standard", "Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Freezer", "Science", "Virology", "Mining", "Maintenance", "External", "External Maintenance", "High Security", "Airtight Hatch", "Maintenance Hatch")
 				switch(airlockpaint)
-					if("Default")
+					if("Standard")
 						airlock_type = /obj/machinery/door/airlock
+					if("Public")
+						airlock_type = /obj/machinery/door/airlock/public
 					if("Engineering")
 						airlock_type = /obj/machinery/door/airlock/engineering
 					if("Atmospherics")
@@ -261,14 +263,26 @@ ARCD
 						airlock_type = /obj/machinery/door/airlock/medical
 					if("Research")
 						airlock_type = /obj/machinery/door/airlock/research
+					if("Freezer")
+						airlock_type = /obj/machinery/door/airlock/freezer
+					if("Science")
+						airlock_type = /obj/machinery/door/airlock/science
+					if("Virology")
+						airlock_type = /obj/machinery/door/airlock/virology
 					if("Mining")
 						airlock_type = /obj/machinery/door/airlock/mining
 					if("Maintenance")
 						airlock_type = /obj/machinery/door/airlock/maintenance
 					if("External")
 						airlock_type = /obj/machinery/door/airlock/external
+					if("External Maintenance")
+						airlock_type = /obj/machinery/door/airlock/maintenance/external
 					if("High Security")
 						airlock_type = /obj/machinery/door/airlock/highsecurity
+					if("Airtight Hatch")
+						airlock_type = /obj/machinery/door/airlock/hatch
+					if("Maintenance Hatch")
+						airlock_type = /obj/machinery/door/airlock/maintenance_hatch
 				airlock_glass = FALSE
 			else
 				airlock_type = /obj/machinery/door/airlock
@@ -276,10 +290,12 @@ ARCD
 
 		if("Glass")
 			if(advanced_airlock_setting == 1)
-				var/airlockpaint = input(usr, "Select the paintjob of the airlock.") in list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining")
+				var/airlockpaint = input(usr, "Select the type of the airlock.") in list("Standard", "Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Science", "Virology", "Mining", "Maintenance", "External", "External Maintenance")
 				switch(airlockpaint)
-					if("Default")
-						airlock_type = /obj/machinery/door/airlock/glass
+					if("Standard")
+						airlock_type = /obj/machinery/door/airlock/glass_standard
+					if("Public")
+						airlock_type = /obj/machinery/door/airlock/glass_public
 					if("Engineering")
 						airlock_type = /obj/machinery/door/airlock/glass_engineering
 					if("Atmospherics")
@@ -292,11 +308,21 @@ ARCD
 						airlock_type = /obj/machinery/door/airlock/glass_medical
 					if("Research")
 						airlock_type = /obj/machinery/door/airlock/glass_research
+					if("Science")
+						airlock_type = /obj/machinery/door/airlock/glass_science
+					if("Virology")
+						airlock_type = /obj/machinery/door/airlock/glass_virology
 					if("Mining")
 						airlock_type = /obj/machinery/door/airlock/glass_mining
+					if("Maintenance")
+						airlock_type = /obj/machinery/door/airlock/glass_maintenance
+					if("External")
+						airlock_type = /obj/machinery/door/airlock/glass_external
+					if("External Maintenance")
+						airlock_type = /obj/machinery/door/airlock/glass_extmai
 				airlock_glass = TRUE
 			else
-				airlock_type = /obj/machinery/door/airlock/glass
+				airlock_type = /obj/machinery/door/airlock/glass_standard
 				airlock_glass = TRUE
 		else
 			airlock_type = /obj/machinery/door/airlock
