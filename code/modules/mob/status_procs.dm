@@ -1,7 +1,7 @@
 
 //Here are the procs used to modify status effects of a mob.
 //The effects include: stun, knockdown, unconscious, sleeping, resting, jitteriness, dizziness, ear damage,
-// eye damage, eye_blind, eye_blurry, druggy, BLIND disability, and NEARSIGHT disability.
+// eye damage, eye_blind, eye_blurry, druggy, BLIND disability, NEARSIGHT disability, and stasis.
 
 /////////////////////////////////// STUN ////////////////////////////////////
 
@@ -117,6 +117,15 @@
 /mob/living/AdjustResting(amount)
 	..()
 	update_canmove()
+
+/////////////////////////////////// STASIS ///////////////////////////////////
+
+/mob/proc/IsInStasis()
+/mob/living/IsInStasis()
+	. = has_status_effect(STATUS_EFFECT_STASIS)
+
+/mob/living/proc/SetStasis(apply, updating = TRUE)
+	. = apply ? apply_status_effect(STATUS_EFFECT_STASIS, null, updating) : remove_status_effect(STATUS_EFFECT_STASIS)
 
 /////////////////////////////////// JITTERINESS ////////////////////////////////////
 

@@ -44,11 +44,6 @@
 		"<span class='notice'>You climb out of [src]!</span>")
 	open_machine()
 
-/obj/machinery/sleeper/process()
-	if(occupant && isliving(occupant))
-		var/mob/living/L = occupant
-		L.adjustOxyLoss(-2)
-
 /obj/machinery/sleeper/relaymove(mob/user)
 	container_resist(user)
 
@@ -56,12 +51,21 @@
 	if(!state_open && !panel_open)
 		..()
 
-/obj/machinery/sleeper/close_machine(mob/user)
+/obj/machinery/sleeper/dropContents()
+	if(occupant && isliving(occupant))
+		var/mob/living/L = occupant
+		L.SetStasis(FALSE)
+	..()
+
+/obj/machinery/sleeper/close_machine(mob/living/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		..(user)
 		var/mob/living/mob_occupant = occupant
-		if(mob_occupant && mob_occupant.stat != DEAD)
-			to_chat(occupant, "[enter_message]")
+		if(mob_occupant)
+			mob_occupant.SetStasis(TRUE)
+			mob_occupant.ExtinguishMob()
+			if(mob_occupant.stat != DEAD)
+				to_chat(occupant, "[enter_message]")
 
 /obj/machinery/sleeper/emp_act(severity)
 	if(is_operational() && occupant)
