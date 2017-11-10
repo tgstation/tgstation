@@ -66,6 +66,9 @@
 		var/turf/T = get_turf(user)
 		log_game("[key_name(user)] added a grenade ([I.name]) to [src] at [COORD(T)].")
 		return
+	if(istype(I, /obj/item/toy/plush))
+		user.visible_message("<span class='notice'>[user] makes \the [src] kiss \the [I]!.</span>", \
+		"<span class='notice'>You make \the [src] kiss \the [I]!.</span>")
 	return ..()
 
 /obj/item/toy/plush/carpplushie
