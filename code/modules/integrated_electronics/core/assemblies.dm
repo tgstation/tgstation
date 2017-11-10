@@ -267,7 +267,7 @@
 /obj/item/device/electronic_assembly/afterattack(atom/target, mob/user, proximity)
 	for(var/obj/item/integrated_circuit/input/sensor/S in contents)
 		if(!proximity)
-			if(!istype(S,/obj/item/integrated_circuit/input/sensor/ranged)||(!user))
+			if(istype(S,/obj/item/integrated_circuit/input/sensor/ranged)||(!user))
 				if(user.client)
 					if(!(target in view(user.client)))
 						continue

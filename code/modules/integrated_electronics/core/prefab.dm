@@ -30,7 +30,7 @@
 	for(var/obj/item/integrated_circuit/IC in SScircuit.all_integrated_circuits)
 		if((IC.spawn_flags & IC_SPAWN_DEFAULT) || (IC.spawn_flags & IC_SPAWN_RESEARCH))
 			cir_names[IC.name] = IC.type
-	addtimer(CALLBACK(src, /obj/item/device/integrated_electronics/prefab.proc/attack_self()), 2) //IDK, why it's need dely,but otherwise it doesn't work.
+	addtimer(CALLBACK(src, .proc/attack_self), 2) //IDK, why it's need dely,but otherwise it doesn't work.
 
 /obj/item/device/integrated_electronics/prefab/proc/assemble(var/program)
 

@@ -153,7 +153,7 @@ list[](
 		if("string")
 			new_data = input("Now type in a string.","[src] string writing", istext(default) ? default : null) as null|text
 			if(istext(new_data) && holder.check_interactivity(user) )
-				to_chat(user, "<span class='notice'>You input [new_data] into the pin.</span>")
+				to_chat(user, "<span class='notice'>You input "+new_data+" into the pin.</span>")
 				return new_data
 		if("number")
 			new_data = input("Now type in a number.","[src] number writing", isnum(default) ? default : null) as null|num
