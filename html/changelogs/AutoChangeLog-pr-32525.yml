@@ -1,0 +1,9 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - rscadd: "Updated the Test Map debugging verb to report more issues regarding APCs.
+DELTASTATION"
+  - bugfix: "Reverted Okand37's morgue changes which broke power in the area."
+  - bugfix: "Corrected wrong area on the Southern airlock leading into electrical maintenance.
+ALL STATIONS"
+  - bugfix: "Corrected numerous duplicate APCs in areas which led to power issues."

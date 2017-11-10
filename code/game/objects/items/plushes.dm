@@ -87,11 +87,98 @@
 	name = "ratvar plushie"
 	desc = "An adorable plushie of the clockwork justiciar himself with new and improved spring arm action."
 	icon_state = "plushvar"
+	var/obj/item/toy/plush/narplush/clash_target
+
+/obj/item/toy/plush/plushvar/Moved()
+	. = ..()
+	if(clash_target)
+		return
+	var/obj/item/toy/plush/narplush/P = locate() in range(1, src)
+	if(P && istype(P.loc, /turf/open) && !P.clashing)
+		clash_of_the_plushies(P)
+
+/obj/item/toy/plush/plushvar/proc/clash_of_the_plushies(obj/item/toy/plush/narplush/P)
+	clash_target = P
+	P.clashing = TRUE
+	say("YOU.")
+	P.say("Ratvar?!")
+	var/obj/item/toy/plush/a_winnar_is
+	var/victory_chance = 10
+	for(var/i in 1 to 10) //We only fight ten times max
+		if(QDELETED(src))
+			P.clashing = FALSE
+			return
+		if(QDELETED(P))
+			clash_target = null
+			return
+		if(!Adjacent(P))
+			visible_message("<span class='warning'>The two plushies angrily flail at each other before giving up.</span>")
+			clash_target = null
+			P.clashing = FALSE
+			return
+		playsound(src, 'sound/magic/clockwork/ratvar_attack.ogg', 50, TRUE, frequency = 2)
+		sleep(2.4)
+		if(QDELETED(src))
+			P.clashing = FALSE
+			return
+		if(QDELETED(P))
+			clash_target = null
+			return
+		if(prob(victory_chance))
+			a_winnar_is = src
+			break
+		P.SpinAnimation(5, 0)
+		sleep(5)
+		if(QDELETED(src))
+			P.clashing = FALSE
+			return
+		if(QDELETED(P))
+			clash_target = null
+			return
+		playsound(P, 'sound/magic/clockwork/narsie_attack.ogg', 50, TRUE, frequency = 2)
+		sleep(3.3)
+		if(QDELETED(src))
+			P.clashing = FALSE
+			return
+		if(QDELETED(P))
+			clash_target = null
+			return
+		if(prob(victory_chance))
+			a_winnar_is = P
+			break
+		SpinAnimation(5, 0)
+		victory_chance += 10
+		sleep(5)
+	if(!a_winnar_is)
+		a_winnar_is = pick(src, P)
+	if(a_winnar_is == src)
+		say(pick("DIE.", "ROT."))
+		P.say(pick("Nooooo...", "Not die. To y-", "Die. Ratv-", "Sas tyen re-"))
+		playsound(src, 'sound/magic/clockwork/anima_fragment_attack.ogg', 50, TRUE, frequency = 2)
+		playsound(P, 'sound/magic/demon_dies.ogg', 50, TRUE, frequency = 2)
+		explosion(P, 0, 0, 1)
+		qdel(P)
+		clash_target = null
+	else
+		say("NO! I will not be banished again...")
+		P.say(pick("Ha.", "Ra'sha fonn dest.", "You fool. To come here."))
+		playsound(src, 'sound/magic/clockwork/anima_fragment_death.ogg', 50, TRUE, frequency = 2)
+		playsound(P, 'sound/magic/demon_attack1.ogg', 50, TRUE, frequency = 2)
+		explosion(src, 0, 0, 1)
+		qdel(src)
+		P.clashing = FALSE
 
 /obj/item/toy/plush/narplush
 	name = "nar'sie plushie"
 	desc = "A small stuffed doll of the elder god nar'sie. Who thought this was a good children's toy?"
 	icon_state = "narplush"
+	var/clashing
+
+/obj/item/toy/plush/narplush/Moved()
+	. = ..()
+	var/obj/item/toy/plush/plushvar/P = locate() in range(1, src)
+	if(P && istype(P.loc, /turf/open) && !P.clash_target && !clashing)
+		P.clash_of_the_plushies(src)
 
 /obj/item/toy/plush/lizardplushie
 	name = "lizard plushie"

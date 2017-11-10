@@ -9,7 +9,7 @@
 	anchored = TRUE
 	var/obj/machinery/mineral/stacking_machine/machine = null
 	var/machinedir = SOUTHEAST
-	speed_process = 1
+	speed_process = TRUE
 
 /obj/machinery/mineral/stacking_unit_console/Initialize()
 	. = ..()

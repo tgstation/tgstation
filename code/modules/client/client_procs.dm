@@ -660,6 +660,9 @@ GLOBAL_LIST(external_rsc_urls)
 
 	view = new_size
 	apply_clickcatcher()
+	if (isliving(mob))
+		var/mob/living/M = mob
+		M.update_damage_hud()
 
 /client/proc/generate_clickcatcher()
 	if(!void)

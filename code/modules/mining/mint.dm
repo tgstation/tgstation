@@ -11,7 +11,7 @@
 	var/processing = FALSE
 	var/chosen = MAT_METAL //which material will be used to make coins
 	var/coinsToProduce = 10
-	speed_process = 1
+	speed_process = TRUE
 
 
 /obj/machinery/mineral/mint/Initialize()
@@ -22,7 +22,7 @@
 	var/turf/T = get_step(src, input_dir)
 	if(!T)
 		return
-	
+
 	GET_COMPONENT(materials, /datum/component/material_container)
 	for(var/obj/item/stack/sheet/O in T)
 		materials.insert_stack(O, O.amount)
