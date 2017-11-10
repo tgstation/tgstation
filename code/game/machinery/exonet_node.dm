@@ -26,27 +26,6 @@
 /obj/machinery/exonet_node/proc/is_operating()
 	return on && !stat
 
-// Proc: New()
-// Parameters: None
-// Description: Adds components to the machine for deconstruction.
-/*
-/obj/machinery/exonet_node/map/New()
-	..()
-	component_parts = list()
-	component_parts += new /obj/item/circuitboard/machine/exonet_node(src)
-	component_parts += new /obj/item/stock_parts/subspace/ansible(src)
-	component_parts += new /obj/item/stock_parts/subspace/filter(src)
-	component_parts += new /obj/item/stock_parts/manipulator(src)
-	component_parts += new /obj/item/stock_parts/manipulator(src)
-	component_parts += new /obj/item/stock_parts/micro_laser(src)
-	component_parts += new /obj/item/stock_parts/subspace/crystal(src)
-	component_parts += new /obj/item/stock_parts/subspace/treatment(src)
-	component_parts += new /obj/item/stock_parts/subspace/treatment(src)
-	component_parts += new /obj/item/stack/cable_coil(src, 2)
-	RefreshParts()
-*/
-
-
 // Proc: update_icon()
 // Parameters: None
 // Description: Self explanatory.

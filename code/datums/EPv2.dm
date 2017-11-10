@@ -40,6 +40,7 @@ It's suggested to start with an if or switch statement for the message, to deter
 
 /datum/exonet_protocol/Destroy()
 	remove_address()
+	holder = null
 	return ..()
 
 // Proc: make_address()
@@ -48,7 +49,14 @@ It's suggested to start with an if or switch statement for the message, to deter
 /datum/exonet_protocol/proc/make_address(var/string)
 	if(!string)
 		return
-	address = "fc00:[strtoepv2(copytext(md5(string),1,25))]"
+	var/hex = copytext(md5(string),1,25)
+	if(!hex)
+		return
+	var/addr_1 = copytext(hex,1,5)
+	var/addr_2 = copytext(hex,5,9)
+	var/addr_3 = copytext(hex,9,13)
+	var/addr_4 = copytext(hex,13,17)
+	address = "fc00:[addr_1]:[addr_2]:[addr_3]:[addr_4]"
 	if(SScircuit.all_exonet_connections[address])
 		stack_trace("WARNING: Exonet address collision in make_address. Holder type if applicable is [holder? holder.type : "NO HOLDER"]!")
 	SScircuit.all_exonet_connections[address] = src
@@ -65,18 +73,6 @@ It's suggested to start with an if or switch statement for the message, to deter
 		SScircuit.all_exonet_connections[address] = src
 		return TRUE
 
-// Proc: hexadecimal_to_EPv2()
-// Parameters: 1 (hex - a string of hexadecimals to convert)
-// Description: Helper proc to add colons to a string in the right places.
-/proc/strtoepv2(var/hex)
-	if(!hex)
-		return
-	var/addr_1 = copytext(hex,1,5)
-	var/addr_2 = copytext(hex,5,9)
-	var/addr_3 = copytext(hex,9,13)
-	var/addr_4 = copytext(hex,13,17)
-	var/new_address = "[addr_1]:[addr_2]:[addr_3]:[addr_4]"
-	return new_address
 
 // Proc: remove_address()
 // Parameters: None
@@ -85,19 +81,7 @@ It's suggested to start with an if or switch statement for the message, to deter
 	SScircuit.all_exonet_connections -= address
 	address = ""
 
-// Proc: find_address()
-// Parameters: 1 (target_address - the desired address to find)
-// Description: Searches the circuit subsystem exonet node list for a specific address, and returns it if found, otherwise returns null.
-/datum/exonet_protocol/proc/find_address(var/target_address)
-	return SScircuit.get_exonet_address(target_address)
 
-// Proc: get_atom_from_address()
-// Parameters: 1 (target_address - the desired address to find)
-// Description: Searches an address for the atom it is attached for, otherwise returns null.
-/datum/exonet_protocol/proc/get_atom_from_address(var/target_address)
-	var/datum/exonet_protocol/exonet = SScircuit.get_exonet_address(target_address)
-	if(exonet)
-		return exonet.holder
 
 // Proc: send_message()
 // Parameters: 3 (target_address - the desired address to send the message to, data_type - text stating what the content is meant to be used for,

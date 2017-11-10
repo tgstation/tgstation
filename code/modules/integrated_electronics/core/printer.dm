@@ -141,7 +141,7 @@
 	if(!check_interactivity(usr))
 		return
 	if(..())
-		return 1
+		return TRUE
 	var/sc = 0
 	add_fingerprint(usr)
 
@@ -151,10 +151,10 @@
 	if(href_list["build"])
 		var/obj/item/integrated_circuit/ICbuild = locate(href_list["build"])
 		if(!ICbuild)
-			return 1
+			return TRUE
 		var/build_type = ICbuild.type
 		if(!build_type || !ispath(build_type))
-			return 1
+			return TRUE
 
 		var/cost = 1
 		if(ispath(build_type, /obj/item/device/electronic_assembly))
@@ -166,7 +166,7 @@
 
 		if(metal - cost < 0)
 			to_chat(usr, "<span class='warning'>You need [cost] metal to build that!.</span>")
-			return 1
+			return TRUE
 		metal -= cost
 		new build_type(get_turf(loc))
 

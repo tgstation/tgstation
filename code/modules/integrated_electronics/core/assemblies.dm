@@ -87,30 +87,6 @@
 		if(IC.power_draw_idle)
 			if(!draw_power(IC.power_draw_idle))
 				IC.power_fail()
-/*
-/obj/item/device/electronic_assembly/implant
-	name = "electronic implant"
-	icon_state = "setup_implant"
-	desc = "It's a case, for building very tiny electronics with."
-	w_class = WEIGHT_CLASS_SMALL
-	max_components = IC_MAX_SIZE_BASE / 2
-	max_complexity = IC_COMPLEXITY_BASE / 2
-	var/obj/item/weapon/implant/integrated_circuit/implant = null
-
-/obj/item/device/electronic_assembly/implant/update_icon()
-	..()
-	implant.icon_state = icon_state
-
-
-/obj/item/device/electronic_assembly/implant/nano_host()
-	return implant
-
-/obj/item/device/electronic_assembly/proc/resolve_nano_host()
-	return src
-
-/obj/item/device/electronic_assembly/implant/resolve_nano_host()
-	return implant
-*/
 
 
 /obj/item/device/electronic_assembly/interact(mob/user)
@@ -202,27 +178,16 @@
 		icon_state = initial(icon_state) + "-open"
 	else
 		icon_state = initial(icon_state)
-/*
-/obj/item/device/electronic_assembly/GetAccess()
-	. = list()
-	for(var/obj/item/integrated_circuit/part in contents)
-		. |= part.GetAccess()
 
-/obj/item/device/electronic_assembly/GetIdCard()
-	. = list()
-	for(var/obj/item/integrated_circuit/part in contents)
-		var/id_card = part.GetIdCard()
-		if(id_card)
-			return id_card
-*/
 /obj/item/device/electronic_assembly/examine(mob/user)
 	for(var/obj/item/integrated_circuit/IC in contents)
 		IC.external_examine(user)
-	for(var/obj/item/integrated_circuit/output/screen/S in contents)
-		if(S.stuff_to_display)
-			to_chat(user, "There's a little screen labeled '[S]', which displays '[S.stuff_to_display]'.")
-		if(opened)
-			interact(user)
+		if(istype(IC,/obj/item/integrated_circuit/output/screen))
+			var/obj/item/integrated_circuit/output/screen/S
+			if(S.stuff_to_display)
+				to_chat(user, "There's a little screen labeled '[S]', which displays '[S.stuff_to_display]'.")
+	if(opened)
+		interact(user)
 
 /obj/item/device/electronic_assembly/proc/return_total_complexity()
 	. = 0

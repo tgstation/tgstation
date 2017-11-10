@@ -58,9 +58,20 @@ PROCESSING_SUBSYSTEM_DEF(circuit)
 	circuit_fabricator_recipe_list["Tools"] = tools_list
 
 /datum/controller/subsystem/processing/circuit/proc/get_exonet_node()
-	for(var/obj/machinery/exonet_node/E in all_exonet_nodes)
+	for(var/i in 1 to all_exonet_nodes.len)
+		var/obj/machinery/exonet_node/E = all_exonet_nodes[i]
 		if(E.is_operating())
 			return E
 
 /datum/controller/subsystem/processing/circuit/proc/get_exonet_address(addr)
 	return all_exonet_connections[addr]
+
+
+// Proc: get_atom_from_address()
+// Parameters: 1 (target_address - the desired address to find)
+// Description: Searches an address for the atom it is attached for, otherwise returns null.
+
+/datum/controller/subsystem/processing/circuit/proc/get_atom_from_address(var/target_address)
+	var/datum/exonet_protocol/exonet = SScircuit.get_exonet_address(target_address)
+	if(exonet)
+		return exonet.holder
