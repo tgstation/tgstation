@@ -211,7 +211,7 @@
 	list_reagents = list("silver_sulfadiazine" = 50)
 
 /obj/item/reagent_containers/glass/beaker/large/charcoal
-	name = "antitoxin reserve tank"
+	name = "charcoal reserve tank"
 	list_reagents = list("charcoal" = 50)
 
 /obj/item/reagent_containers/glass/beaker/large/epinephrine
