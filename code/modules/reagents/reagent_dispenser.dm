@@ -174,7 +174,6 @@
 	if(!QDELETED(src))
 		qdel(src)
 
-
 /obj/structure/reagent_dispensers/virusfood
 	name = "virus food dispenser"
 	desc = "A dispenser of low-potency virus mutagenic."
