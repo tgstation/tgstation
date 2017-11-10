@@ -706,3 +706,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	deltimer(tip_timer)//delete any in-progress timer if the mouse is moved off the item before it finishes
 	closeToolTip(usr)
 
+/obj/item/vv_get_dropdown()
+	. = ..()
+	. += "---"
+	.["Curse"] = "?_src_=vars;[HrefToken()];curse=[REF(src)]"
