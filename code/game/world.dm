@@ -29,6 +29,7 @@ GLOBAL_PROTECT(security_mode)
 	LoadBans()
 
 	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
+
 	Master.Initialize(10, FALSE)
 
 /world/proc/SetupExternalRSC()
@@ -122,7 +123,7 @@ GLOBAL_PROTECT(security_mode)
 		if(I in input)
 			handler = topic_handlers[I]
 			break
-
+	
 	if((!handler || initial(handler.log)) && config && CONFIG_GET(flag/log_world_topic))
 		WRITE_FILE(GLOB.world_game_log, "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
 
