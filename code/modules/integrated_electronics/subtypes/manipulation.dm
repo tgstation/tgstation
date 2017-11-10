@@ -89,13 +89,13 @@
 	mode = mode1.data
 	if(assembly)
 		if(isnum(xo.data))
-			xo.data = round(xo.data)
+			xo.data = round(xo.data, 1)
 		if(isnum(yo.data))
-			yo.data = round(yo.data)
+			yo.data = round(yo.data, 1)
 
 		var/turf/T = get_turf(assembly)
-		var/target_x = Clamp(T.x + xo, 0, world.maxx)
-		var/target_y = Clamp(T.y + yo, 0, world.maxy)
+		var/target_x = Clamp(T.x + xo.data, 0, world.maxx)
+		var/target_y = Clamp(T.y + yo.data, 0, world.maxy)
 
 		shootAt(locate(target_x, target_y, T.z))
 
