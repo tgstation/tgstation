@@ -13,7 +13,7 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	attacktext = "chomps"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/creatures/hit4.ogg'
 	faction = list("creature")
 	robust_searching = 1
 	stat_attack = DEAD
