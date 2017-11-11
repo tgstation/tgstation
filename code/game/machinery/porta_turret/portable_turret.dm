@@ -503,6 +503,15 @@
 	if(!istype(T) || !istype(U))
 		return
 
+	//Wall turrets will try to find adjacent empty turf to shoot from to cover full arc
+	if(T.density)
+		var/target_dir = get_dir(T,target)
+		for(var/d in list(0,-45,45))
+			var/turf/closer = get_step(T,turn(target_dir,d))
+			if(istype(closer) && !is_blocked_turf(closer) && T.Adjacent(closer))
+				T = closer
+				break
+
 	update_icon()
 	var/obj/item/projectile/A
 	//any emagged turrets drains 2x power and uses a different projectile?
@@ -517,7 +526,7 @@
 
 
 	//Shooting Code:
-	A.preparePixelProjectile(target, src)
+	A.preparePixelProjectile(target, T)
 	A.fire()
 	return A
 
