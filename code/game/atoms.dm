@@ -99,7 +99,6 @@
 
 	LAZYCLEARLIST(overlays)
 	LAZYCLEARLIST(priority_overlays)
-	//SSoverlays.processing -= src	//we COULD do this, but it's better to just let it fall out of the processing queue
 
 	QDEL_NULL(light)
 

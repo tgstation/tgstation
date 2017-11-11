@@ -1,8 +1,0 @@
-author: "as334"
-delete-after: True
-changes: 
-  - rscadd: "Pluoxium can now be formed by irradiating tiles with CO2 in the air."
-  - rscadd: "Rad collectors now steadily form Tritium at a slow pace."
-  - balance: "Nerfs fusion by making it slower, and produce radioactivity."
-  - balance: "Noblium formation now requires significantly more energy input."
-  - balance: "Tanks now melt if their temperature is above 1 Million Kelvin."
