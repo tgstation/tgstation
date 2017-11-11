@@ -28,6 +28,7 @@
 	var/buildstage = 2 // 2 = complete, 1 = no wires, 0 = circuit gone
 	resistance_flags = FIRE_PROOF
 	var/last_alarm = 0
+	var/area/myarea = null
 
 /obj/machinery/firealarm/New(loc, dir, building)
 	..()
@@ -39,12 +40,11 @@
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 	update_icon()
-	var/area/A = get_area(src)
-	LAZYADD(A.firealarms, src)
+	myarea = get_area(src)
+	LAZYADD(myarea.firealarms, src)
 
 /obj/machinery/firealarm/Destroy()
-	var/area/A = get_area(src)
-	LAZYREMOVE(A.firealarms, src)
+	LAZYREMOVE(myarea.firealarms, src)
 	return ..()
 
 /obj/machinery/firealarm/power_change()
@@ -252,8 +252,14 @@
 			if(prob(33))
 				alarm()
 
+/obj/machinery/firealarm/singularity_pull(S, current_size)
+	if (current_size >= STAGE_FIVE) // If the singulo is strong enough to pull anchored objects, the fire alarm experiences integrity failure
+		deconstruct()
+	..()
+
 /obj/machinery/firealarm/obj_break(damage_flag)
 	if(!(stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1) && buildstage != 0) //can't break the electronics if there isn't any inside.
+		LAZYREMOVE(myarea.firealarms, src)
 		stat |= BROKEN
 		update_icon()
 

@@ -26,7 +26,7 @@
 	var/invuln = null
 	var/obj/item/device/camera_bug/bug = null
 	var/obj/structure/camera_assembly/assembly = null
-	var/area/area = null
+	var/area/myarea = null
 
 	//OTHER
 
@@ -49,8 +49,8 @@
 	GLOB.cameranet.cameras += src
 	GLOB.cameranet.addCamera(src)
 	if (isturf(loc))
-		area = get_area(src)
-		LAZYADD(area.cameras, src)
+		myarea = get_area(src)
+		LAZYADD(myarea.cameras, src)
 	proximity_monitor = new(src, 1)
 
 	if(mapload && (z in GLOB.station_z_levels) && prob(3) && !start_active)
@@ -58,8 +58,8 @@
 
 /obj/machinery/camera/Destroy()
 	toggle_cam(null, 0) //kick anyone viewing out
-	if(isarea(area))
-		LAZYREMOVE(area.cameras, src)
+	if(isarea(myarea))
+		LAZYREMOVE(myarea.cameras, src)
 	if(assembly)
 		qdel(assembly)
 		assembly = null
@@ -279,15 +279,15 @@
 	if(can_use())
 		GLOB.cameranet.addCamera(src)
 		if (isturf(loc))
-			area = get_area(src)
-			LAZYADD(area.cameras, src)
+			myarea = get_area(src)
+			LAZYADD(myarea.cameras, src)
 		else
-			area = null
+			myarea = null
 	else
 		set_light(0)
 		GLOB.cameranet.removeCamera(src)
-		if (isarea(area))
-			LAZYREMOVE(area.cameras, src)
+		if (isarea(myarea))
+			LAZYREMOVE(myarea.cameras, src)
 	GLOB.cameranet.updateChunk(x, y, z)
 	var/change_msg = "deactivates"
 	if(status)
