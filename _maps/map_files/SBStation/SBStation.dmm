@@ -876,16 +876,8 @@
 	pixel_x = 3;
 	pixel_y = 2
 	},
-/obj/item/clothing/accessory{
-	desc = "A patch worn on the shoulder of a security officer's uniform. This patch denotes the rank of Sergeant";
-	icon_state = "sergeant";
-	name = "Rank Patch - Sergeant"
-	},
-/obj/item/clothing/accessory{
-	desc = "A patch worn on the shoulder of a security officer's uniform. This patch denotes the rank of Sergeant";
-	icon_state = "sergeant";
-	name = "Rank Patch - Sergeant"
-	},
+/obj/item/clothing/accessory/rank/sergeant,
+/obj/item/clothing/accessory/rank/sergeant,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
 "acf" = (
@@ -898,17 +890,15 @@
 /area/crew_quarters/heads/hos)
 "ach" = (
 /obj/machinery/computer/card/minor/hos,
-/obj/item/clothing/accessory{
-	desc = "A medal granted to those who exhibit devotion to their duties and have gone above and beyond the expectations of nanotransen.";
-	icon_state = "star";
+/obj/item/clothing/accessory/medal/service_star{
 	name = "Service Star - Lt. Cordelia Knight";
+	commended = 1;
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/item/clothing/accessory{
-	desc = "Awarded to security forces who exhibit unparalleled leadership and unwavering dedication to the protection and security of nanotransen.";
-	icon_state = "cross";
+/obj/item/clothing/accessory/medal/guardians_cross{
 	name = "Guardian's Cross - Lt. Cordelia Knight";
+	commended = 1;
 	pixel_x = 0;
 	pixel_y = 5
 	},
@@ -1425,11 +1415,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/item/clothing/accessory{
-	desc = "A patch worn on the shoulder of a security officer's uniform. This patch denotes the rank of Lieutenant.";
-	icon_state = "lt";
-	name = "Rank Patch - Lieutenant"
-	},
+/obj/item/clothing/accessory/rank/lieutenant,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
 "ada" = (
@@ -1650,11 +1636,7 @@
 	pixel_y = 26
 	},
 /obj/structure/cable/white,
-/obj/item/clothing/accessory{
-	desc = "A patch worn on the shoulder of a security officer's uniform. This patch denotes the rank of Officer";
-	icon_state = "officer";
-	name = "Rank Patch - Officer"
-	},
+/obj/item/clothing/accessory/rank,
 /turf/open/floor/plasteel/red/side{
 	dir = 9
 	},
@@ -1814,11 +1796,7 @@
 /area/security/main)
 "adP" = (
 /obj/structure/closet/secure_closet/security/sec,
-/obj/item/clothing/accessory{
-	desc = "A patch worn on the shoulder of a security officer's uniform. This patch denotes the rank of Officer";
-	icon_state = "officer";
-	name = "Rank Patch - Officer"
-	},
+/obj/item/clothing/accessory/rank,
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
@@ -1997,21 +1975,9 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/clothing/accessory{
-	desc = "A patch worn on the shoulder of a security officer's uniform. This patch denotes the rank of Officer";
-	icon_state = "officer";
-	name = "Rank Patch - Officer"
-	},
-/obj/item/clothing/accessory{
-	desc = "A patch worn on the shoulder of a security officer's uniform. This patch denotes the rank of Officer";
-	icon_state = "officer";
-	name = "Rank Patch - Officer"
-	},
-/obj/item/clothing/accessory{
-	desc = "A patch worn on the shoulder of a security officer's uniform. This patch denotes the rank of Officer";
-	icon_state = "officer";
-	name = "Rank Patch - Officer"
-	},
+/obj/item/clothing/accessory/rank,
+/obj/item/clothing/accessory/rank,
+/obj/item/clothing/accessory/rank,
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
@@ -4538,10 +4504,9 @@
 /obj/item/stamp/cmo,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/folder/white,
-/obj/item/clothing/accessory{
-	desc = "Awarded for significant contributions towards the medical field and for the unwavering devotion to the treatment and care for patients.";
-	icon_state = "medical";
-	name = "Cross of Sacrifice - Bridget Jenner PhD"
+/obj/item/clothing/accessory/medal/cross_of_sacrifice{
+	name = "Cross of Sacrifice - Bridget Jenner PhD";
+	commended = 1
 	},
 /turf/open/floor/plasteel/barber,
 /area/crew_quarters/heads/cmo)
@@ -8353,8 +8318,8 @@
 	pixel_x = 3
 	},
 /obj/item/reagent_containers/food/snacks/hotdog{
-	desc = "Old nasty footlong, please don't eat this";
-	name = "Nasty month old hotdog";
+	desc = "Old nasty footlong, please don't eat this.";
+	name = "nasty month-old hotdog";
 	pixel_w = 0;
 	pixel_x = -6;
 	pixel_y = 8
@@ -10271,13 +10236,13 @@
 /obj/structure/table/reinforced,
 /obj/item/device/assembly/timer,
 /obj/item/device/aicard,
-/obj/item/clothing/accessory{
-	desc = "A medal granted to those who exhibit devotion to their duties and have gone above and beyond the expectations of nanotransen.";
-	icon_state = "star";
-	name = "Service Star - Vanca Lucanae"
+/obj/item/clothing/accessory/medal/service_star{
+	name = "Service Star - Vanca Lacunae";
+	commended = 1
 	},
 /obj/item/clothing/accessory/medal/silver/security{
-	name = "Robust Security Award - Vanca Lucanae"
+	name = "Robust Security Award - Vanca Lacunae";
+	commended = 1
 	},
 /turf/open/floor/plasteel,
 /area/bridge)
@@ -17550,15 +17515,15 @@
 	pixel_y = 0;
 	req_access_txt = "47"
 	},
-/obj/item/clothing/accessory{
-	desc = "A medal granted to those who exhibit devotion to their duties and have gone above and beyond the expectations of nanotransen.";
-	icon_state = "star";
+/obj/item/clothing/accessory/medal/service_star{
 	name = "Service Star - Quam Jublia PhD";
+	commended = 1;
 	pixel_x = 4;
 	pixel_y = 5
 	},
 /obj/item/clothing/accessory/medal/plasma/nobel_science{
-	name = "Nobel Sciences Award - Quam Jublia PhD"
+	name = "Nobel Sciences Award - Quam Jublia PhD";
+	commended = 1
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
@@ -19717,7 +19682,8 @@
 /obj/item/lighter,
 /obj/item/storage/fancy/cigarettes,
 /obj/item/clothing/accessory/medal/silver/security{
-	name = "Robust Security Award - Detective Marcus Capitani"
+	name = "Robust Security Award - Detective Marcus Capitani";
+	commended = 1
 	},
 /turf/open/floor/carpet,
 /area/security/detectives_office)
@@ -19954,11 +19920,7 @@
 	pixel_y = 0
 	},
 /obj/structure/closet/secure_closet/detective,
-/obj/item/clothing/accessory{
-	desc = "He's a loose cannon but he's the best we've got!";
-	icon_state = "detective";
-	name = "Rank Patch - Detective"
-	},
+/obj/item/clothing/accessory/rank/detective,
 /turf/open/floor/wood,
 /area/security/detectives_office)
 "aRY" = (
@@ -20247,7 +20209,7 @@
 /area/maintenance/starboard/aft)
 "aSC" = (
 /obj/structure/sink/kitchen{
-	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
+	desc = "A sink used for washing one's hands and face. It looks rusty and home-made.";
 	name = "old sink";
 	pixel_y = 28
 	},
@@ -26576,10 +26538,9 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/clothing/accessory{
-	desc = "A medal granted to those who exhibit devotion to their duties and have gone above and beyond the expectations of nanotransen.";
-	icon_state = "star";
-	name = "Service Star - Hal"
+/obj/item/clothing/accessory/medal/service_star{
+	name = "Service Star - Hal";
+	commended = 1
 	},
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
