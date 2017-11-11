@@ -25,9 +25,11 @@
 			//new /obj/item/weapon/implant/integrated_circuit(null),
 			//new /obj/item/device/assembly/electronic_assembly(null)
 		)
-	for(var/obj/item/I in assembly_list)
+	for(var/k in 1 to assembly_list.len)
+		var/obj/item/I = assembly_list[k]
 		as_names[I.name] = I.type
-	for(var/obj/item/integrated_circuit/IC in SScircuit.all_integrated_circuits)
+	for(var/k in 1 to SScircuit.all_integrated_circuits.len)
+		var/obj/item/integrated_circuit/IC
 		if((IC.spawn_flags & IC_SPAWN_DEFAULT) || (IC.spawn_flags & IC_SPAWN_RESEARCH))
 			cir_names[IC.name] = IC.type
 	addtimer(CALLBACK(src, .proc/attack_self), 2) //IDK, why it's need dely,but otherwise it doesn't work.
