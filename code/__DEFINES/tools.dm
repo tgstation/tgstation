@@ -1,0 +1,5 @@
+#define TOOL_NONE 0
+#define TOOL_CROWBAR 1
+#define TOOL_SCREWDRIVER 2
+#define TOOL_WIRECUTTER 3
+#define TOOL_WRENCH 4

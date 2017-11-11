@@ -91,15 +91,9 @@
 
 /obj/item/reagent_containers/glass/attackby(obj/item/I, mob/user, params)
 	var/hotness = I.is_hot()
-	if(hotness)
-		var/added_heat = (hotness / 100) //ishot returns a temperature
-		if(reagents)
-			if(reagents.chem_temp < hotness) //can't be heated to be hotter than the source
-				reagents.chem_temp += added_heat
-				to_chat(user, "<span class='notice'>You heat [src] with [I].</span>")
-				reagents.handle_reactions()
-			else
-				to_chat(user, "<span class='warning'>[src] is already hotter than [I]!</span>")
+	if(hotness && reagents)
+		reagents.expose_temperature(hotness)
+		to_chat(user, "<span class='notice'>You heat [name] with [I]!</span>")
 
 	if(istype(I, /obj/item/reagent_containers/food/snacks/egg)) //breaking eggs
 		var/obj/item/reagent_containers/food/snacks/egg/E = I
@@ -217,7 +211,7 @@
 	list_reagents = list("silver_sulfadiazine" = 50)
 
 /obj/item/reagent_containers/glass/beaker/large/charcoal
-	name = "antitoxin reserve tank"
+	name = "charcoal reserve tank"
 	list_reagents = list("charcoal" = 50)
 
 /obj/item/reagent_containers/glass/beaker/large/epinephrine

@@ -343,7 +343,7 @@
 	if(C.stat == DEAD || (C.status_flags & FAKEDEATH))
 		return FALSE	//welp too late for them!
 	
-	if(!(loc == C.loc) || !(isturf(C.loc) && isturf(loc)))
+	if(!(loc == C.loc) && !(isturf(C.loc) && isturf(loc)))
 		return FALSE
 
 	if(C.suiciding)

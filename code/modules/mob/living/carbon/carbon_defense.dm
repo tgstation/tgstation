@@ -129,10 +129,12 @@
 
 
 /mob/living/carbon/attack_paw(mob/living/carbon/monkey/M)
-	for(var/thing in viruses)
-		var/datum/disease/D = thing
-		if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
-			M.ContactContractDisease(D)
+
+	if(can_inject(M, TRUE))
+		for(var/thing in viruses)
+			var/datum/disease/D = thing
+			if((D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN) && prob(85))
+				M.ContactContractDisease(D)
 
 	for(var/thing in M.viruses)
 		var/datum/disease/D = thing
