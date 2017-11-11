@@ -3,6 +3,7 @@
 /mob/living/simple_animal/hostile/headcrab
 	name = "headcrab"
 	desc = "An amalgamation of human and, well, something not human. it gazes intensely into the distance chittering it's teeth."
+	icon = 'icons/mob/changeling.dmi'
 	icon_state = "headcrab"
 	icon_living = "headcrab"
 	icon_dead = "headcrab_dead"
