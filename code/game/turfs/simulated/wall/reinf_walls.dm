@@ -53,12 +53,12 @@
 /turf/closed/wall/r_wall/try_destroy(obj/item/W, mob/user, turf/T)
 	if(istype(W, /obj/item/pickaxe/drill/jackhammer))
 		var/obj/item/pickaxe/drill/jackhammer/D = W
-		to_chat(user, "<span class='notice'>You begin to smash though the [name]...</span>")
+		to_chat(user, "<span class='notice'>You begin to smash though [src]...</span>")
 		if(do_after(user, 50, target = src))
 			if(!istype(src, /turf/closed/wall/r_wall) || !W)
 				return 1
 			D.playDigSound()
-			visible_message("<span class='warning'>[user] smashes through the [name] with the [D.name]!</span>", "<span class='italics'>You hear the grinding of metal.</span>")
+			visible_message("<span class='warning'>[user] smashes through [src] with [D]!</span>", "<span class='italics'>You hear the grinding of metal.</span>")
 			dismantle_wall()
 			return 1
 	return 0

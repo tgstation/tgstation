@@ -250,15 +250,15 @@
 	if(istype(W, /obj/item/weldingtool))
 		var/obj/item/weldingtool/WT = W
 		if(active)
-			to_chat(user, "Turn \the [src] off first.")
+			to_chat(user, "<span class='warning'>Turn \the [src] off first.</span>")
 			return
 		switch(state)
 			if(EM_UNSECURED)
-				to_chat(user, "<span class='warning'>The [src.name] needs to be wrenched to the floor!</span>")
+				to_chat(user, "<span class='warning'>[src] needs to be wrenched to the floor!</span>")
 			if(EM_SECURED)
 				if(WT.remove_fuel(0,user))
 					playsound(loc, WT.usesound, 50, 1)
-					user.visible_message("[user.name] starts to weld the [name] to the floor.", \
+					user.visible_message("[user] starts to weld the \the [src] to the floor.", \
 						"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
 						"<span class='italics'>You hear welding.</span>")
 					if(do_after(user,20*W.toolspeed, target = src) && WT.isOn())
@@ -268,7 +268,7 @@
 			if(EM_WELDED)
 				if(WT.remove_fuel(0,user))
 					playsound(loc, WT.usesound, 50, 1)
-					user.visible_message("[user.name] starts to cut the [name] free from the floor.", \
+					user.visible_message("[user] starts to cut \the [src] free from the floor.", \
 						"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
 						"<span class='italics'>You hear welding.</span>")
 					if(do_after(user,20*W.toolspeed, target = src) && WT.isOn())
@@ -315,7 +315,7 @@
 	locked = FALSE
 	emagged = TRUE
 	if(user)
-		user.visible_message("[user.name] emags [src].","<span class='notice'>You short out the lock.</span>")
+		user.visible_message("[user] emags [src].","<span class='notice'>You short out the lock.</span>")
 
 
 /obj/machinery/power/emitter/prototype

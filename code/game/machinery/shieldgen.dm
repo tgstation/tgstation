@@ -276,7 +276,7 @@
 			if(fields)
 				active = ACTIVE_HASFIELDS
 		if(!power)
-			visible_message("<span class='danger'>The [src.name] shuts down due to lack of power!</span>", \
+			visible_message("<span class='danger'>[src] shuts down due to lack of power!</span>", \
 				"<span class='italics'>You hear heavy droning fade out.</span>")
 			icon_state = "Shield_Gen"
 			active = FALSE

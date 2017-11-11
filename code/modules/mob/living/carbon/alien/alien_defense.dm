@@ -26,7 +26,7 @@ In all, this is a lot like the monkey code. /N
 			AdjustKnockdown(-60)
 			AdjustUnconscious(-60)
 			AdjustSleeping(-100)
-			visible_message("<span class='notice'>[M.name] nuzzles [src] trying to wake [p_them()] up!</span>")
+			visible_message("<span class='notice'>[M] nuzzles [src] trying to wake [p_them()] up!</span>")
 
 		if ("grab")
 			grabbedby(M)
@@ -35,13 +35,13 @@ In all, this is a lot like the monkey code. /N
 			if(health > 0)
 				M.do_attack_animation(src, ATTACK_EFFECT_BITE)
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-				visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
-						"<span class='userdanger'>[M.name] bites [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+				visible_message("<span class='danger'>[M] bites [src]!</span>", \
+						"<span class='userdanger'>[M] bites [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 				adjustBruteLoss(1)
 				add_logs(M, src, "attacked")
 				updatehealth()
 			else
-				to_chat(M, "<span class='warning'>[name] is too injured for that.</span>")
+				to_chat(M, "<span class='warning'>[src] is too injured for that.</span>")
 
 
 /mob/living/carbon/alien/attack_larva(mob/living/carbon/alien/larva/L)

@@ -39,7 +39,7 @@
 
 /obj/item/device/assembly/proc/is_secured(mob/user)
 	if(!secured)
-		to_chat(user, "<span class='warning'>The [name] is unsecured!</span>")
+		to_chat(user, "<span class='warning'>[src] is unsecured!</span>")
 		return FALSE
 	return TRUE
 

@@ -70,7 +70,7 @@
 
 /obj/item/device/lightreplacer/New()
 	uses = max_uses / 2
-	failmsg = "The [name]'s refill light blinks red."
+	failmsg = "[src]'s refill light blinks red."
 	..()
 
 /obj/item/device/lightreplacer/examine(mob/user)
@@ -82,23 +82,23 @@
 	if(istype(W, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/G = W
 		if(uses >= max_uses)
-			to_chat(user, "<span class='warning'>[src.name] is full.</span>")
+			to_chat(user, "<span class='warning'>[src] is full.</span>")
 			return
 		else if(G.use(decrement))
 			AddUses(increment)
-			to_chat(user, "<span class='notice'>You insert a piece of glass into the [src.name]. You have [uses] light\s remaining.</span>")
+			to_chat(user, "<span class='notice'>You insert a piece of glass into [src]. You have [uses] light\s remaining.</span>")
 			return
 		else
 			to_chat(user, "<span class='warning'>You need one sheet of glass to replace lights!</span>")
 
 	if(istype(W, /obj/item/shard))
 		if(uses >= max_uses)
-			to_chat(user, "<span class='warning'>[src.name] is full.</span>")
+			to_chat(user, "<span class='warning'>[src] is full.</span>")
 			return
 		if(!user.temporarilyRemoveItemFromInventory(W))
 			return
 		AddUses(round(increment*0.75))
-		to_chat(user, "<span class='notice'>You insert a shard of glass into the [src.name]. You have [uses] light\s remaining.</span>")
+		to_chat(user, "<span class='notice'>You insert a shard of glass into [src]. You have [uses] light\s remaining.</span>")
 		qdel(W)
 		return
 
@@ -113,7 +113,7 @@
 		else
 			if(!user.temporarilyRemoveItemFromInventory(W))
 				return
-			to_chat(user, "<span class='notice'>You insert the [L.name] into the [src.name]</span>")
+			to_chat(user, "<span class='notice'>You insert [L] into [src]</span>")
 			AddShards(1, user)
 			qdel(L)
 		return

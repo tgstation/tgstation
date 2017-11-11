@@ -56,7 +56,7 @@
 			return
 
 		if(!master || master.can_terminal_dismantle())
-			user.visible_message("[user.name] dismantles the power terminal from [master].", \
+			user.visible_message("[user] dismantles the power terminal from [master].", \
 								"<span class='notice'>You begin to cut the cables...</span>")
 
 			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)

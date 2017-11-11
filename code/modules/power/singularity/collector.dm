@@ -51,8 +51,8 @@
 	if(anchored)
 		if(!src.locked)
 			toggle_power()
-			user.visible_message("[user.name] turns the [src.name] [active? "on":"off"].", \
-			"<span class='notice'>You turn the [src.name] [active? "on":"off"].</span>")
+			user.visible_message("[user] turns \the [src] [active? "on":"off"].", \
+			"<span class='notice'>You turn \the [src] [active? "on":"off"].</span>")
 			var/fuel
 			if(loaded_tank)
 				fuel = loaded_tank.air_contents.gases[/datum/gas/plasma]

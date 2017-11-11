@@ -51,12 +51,12 @@
 		if(istype(I, /obj/item/twohanded/fireaxe) && !fireaxe)
 			var/obj/item/twohanded/fireaxe/F = I
 			if(F.wielded)
-				to_chat(user, "<span class='warning'>Unwield the [F.name] first.</span>")
+				to_chat(user, "<span class='warning'>Unwield [F] first.</span>")
 				return
 			if(!user.transferItemToLoc(F, src))
 				return
 			fireaxe = F
-			to_chat(user, "<span class='caution'>You place the [F.name] back in the [name].</span>")
+			to_chat(user, "<span class='caution'>You place [F] back in [src].</span>")
 			update_icon()
 			return
 		else if(!broken)
@@ -108,12 +108,12 @@
 		if(fireaxe)
 			user.put_in_hands(fireaxe)
 			fireaxe = null
-			to_chat(user, "<span class='caution'>You take the fire axe from the [name].</span>")
+			to_chat(user, "<span class='caution'>You take the fire axe from [src].</span>")
 			src.add_fingerprint(user)
 			update_icon()
 			return
 	if(locked)
-		to_chat(user, "<span class='warning'>The [name] won't budge!</span>")
+		to_chat(user, "<span class='warning'>[src] won't budge!</span>")
 		return
 	else
 		open = !open
@@ -129,7 +129,7 @@
 
 /obj/structure/fireaxecabinet/attack_tk(mob/user)
 	if(locked)
-		to_chat(user, "<span class='warning'>The [name] won't budge!</span>")
+		to_chat(user, "<span class='warning'>[src] won't budge!</span>")
 		return
 	else
 		open = !open
@@ -175,7 +175,7 @@
 	set src in oview(1)
 
 	if(locked)
-		to_chat(usr, "<span class='warning'>The [name] won't budge!</span>")
+		to_chat(usr, "<span class='warning'>[src] won't budge!</span>")
 		return
 	else
 		open = !open

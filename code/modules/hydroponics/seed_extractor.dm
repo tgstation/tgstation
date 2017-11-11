@@ -81,9 +81,9 @@
 			++loaded
 			add_seed(G)
 		if (loaded)
-			to_chat(user, "<span class='notice'>You put the seeds from \the [O.name] into [src].</span>")
+			to_chat(user, "<span class='notice'>You put the seeds from [O] into [src].</span>")
 		else
-			to_chat(user, "<span class='notice'>There are no seeds in \the [O.name].</span>")
+			to_chat(user, "<span class='notice'>There are no seeds in [O].</span>")
 		return
 
 	else if(seedify(O,-1, src, user))
@@ -91,11 +91,11 @@
 		return
 	else if (istype(O, /obj/item/seeds))
 		if(add_seed(O))
-			to_chat(user, "<span class='notice'>You add [O] to [src.name].</span>")
+			to_chat(user, "<span class='notice'>You add [O] to [src].</span>")
 			updateUsrDialog()
 		return
 	else if(user.a_intent != INTENT_HARM)
-		to_chat(user, "<span class='warning'>You can't extract any seeds from \the [O.name]!</span>")
+		to_chat(user, "<span class='warning'>You can't extract any seeds from [O]!</span>")
 	else
 		return ..()
 

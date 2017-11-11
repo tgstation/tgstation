@@ -42,12 +42,12 @@
 		var/obj/item/weldingtool/WT = I
 		switch(state)
 			if(ENGINE_UNWRENCHED)
-				to_chat(user, "<span class='warning'>The [src.name] needs to be wrenched to the floor!</span>")
+				to_chat(user, "<span class='warning'>[src] needs to be wrenched to the floor!</span>")
 			if(EM_SECURED)
 				if(WT.remove_fuel(0,user))
 					playsound(loc, WT.usesound, 50, 1)
-					user.visible_message("[user.name] starts to weld the [name] to the floor.", \
-						"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
+					user.visible_message("[user] starts to weld [src] to the floor.", \
+						"<span class='notice'>You start to weld [src] to the floor...</span>", \
 						"<span class='italics'>You hear welding.</span>")
 					if(do_after(user,ENGINE_WELDTIME*WT.toolspeed, target = src) && WT.isOn())
 						state = ENGINE_WELDED
@@ -56,7 +56,7 @@
 			if(EM_WELDED)
 				if(WT.remove_fuel(0,user))
 					playsound(loc, WT.usesound, 50, 1)
-					user.visible_message("[user.name] starts to cut the [name] free from the floor.", \
+					user.visible_message("[user] starts to cut \the [src] free from the floor.", \
 						"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
 						"<span class='italics'>You hear welding.</span>")
 					if(do_after(user,ENGINE_WELDTIME*WT.toolspeed, target = src) && WT.isOn())

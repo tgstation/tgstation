@@ -27,10 +27,10 @@
 				<small>[fluffnotice]</small><hr>"
 	switch(get_area_type())
 		if(AREA_SPACE)
-			text += "<p>According to the [src.name], you are now in an unclaimed territory.</p> \
+			text += "<p>According to [src], you are now in an unclaimed territory.</p> \
 			<p><a href='?src=[REF(src)];create_area=1'>Mark this place as new area.</a></p>"
 		if(AREA_SPECIAL)
-			text += "<p>This place is not noted on the [src.name].</p>"
+			text += "<p>This place is not noted on [src].</p>"
 	return text
 
 

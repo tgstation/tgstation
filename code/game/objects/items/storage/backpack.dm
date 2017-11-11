@@ -66,7 +66,7 @@
 					playsound(src, pshoom, 40, 1)
 				user.Beam(dumping_location,icon_state="rped_upgrade",time=5)
 				return 1
-		to_chat(user, "The [src.name] buzzes.")
+		to_chat(user, "\The [src] buzzes.")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
 	return 0
 

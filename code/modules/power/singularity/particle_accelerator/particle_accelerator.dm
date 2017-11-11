@@ -87,7 +87,7 @@
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
 	if (anchored)
-		to_chat(usr, "It is fastened to the floor!")
+		to_chat(usr, "<span class='warning'>It is fastened to the floor!</span>")
 		return 0
 	setDir(turn(dir, 90))
 	return 1
@@ -100,40 +100,40 @@
 			if(istype(W, /obj/item/wrench) && !isinspace())
 				playsound(loc, W.usesound, 75, 1)
 				anchored = TRUE
-				user.visible_message("[user.name] secures the [name] to the floor.", \
-					"You secure the external bolts.")
+				user.visible_message("[user] secures \the [src] to the floor.", \
+					"<span class='notice'>You secure the external bolts.</span>")
 				construction_state = PA_CONSTRUCTION_UNWIRED
 				did_something = TRUE
 		if(PA_CONSTRUCTION_UNWIRED)
 			if(istype(W, /obj/item/wrench))
 				playsound(loc, W.usesound, 75, 1)
 				anchored = FALSE
-				user.visible_message("[user.name] detaches the [name] from the floor.", \
-					"You remove the external bolts.")
+				user.visible_message("[user] detaches \the [src] from the floor.", \
+					"<span class='notice'>You remove the external bolts.</span>")
 				construction_state = PA_CONSTRUCTION_UNSECURED
 				did_something = TRUE
 			else if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/CC = W
 				if(CC.use(1))
-					user.visible_message("[user.name] adds wires to the [name].", \
-						"You add some wires.")
+					user.visible_message("[user] adds wires to \the [src].", \
+						"<span class='notice'>You add some wires.</span>")
 					construction_state = PA_CONSTRUCTION_PANEL_OPEN
 					did_something = TRUE
 		if(PA_CONSTRUCTION_PANEL_OPEN)
 			if(istype(W, /obj/item/wirecutters))//TODO:Shock user if its on?
-				user.visible_message("[user.name] removes some wires from the [name].", \
-					"You remove some wires.")
+				user.visible_message("[user] removes some wires from \the [src].", \
+					"<span class='notice'>You remove some wires.</span>")
 				construction_state = PA_CONSTRUCTION_UNWIRED
 				did_something = TRUE
 			else if(istype(W, /obj/item/screwdriver))
-				user.visible_message("[user.name] closes the [name]'s access panel.", \
-					"You close the access panel.")
+				user.visible_message("[user] closes \the [src]'s access panel.", \
+					"<span class='notice'>You close the access panel.</span>")
 				construction_state = PA_CONSTRUCTION_COMPLETE
 				did_something = TRUE
 		if(PA_CONSTRUCTION_COMPLETE)
 			if(istype(W, /obj/item/screwdriver))
-				user.visible_message("[user.name] opens the [name]'s access panel.", \
-					"You open the access panel.")
+				user.visible_message("[user] opens \the [src]'s access panel.", \
+					"<span class='notice'>You open the access panel.</span>")
 				construction_state = PA_CONSTRUCTION_PANEL_OPEN
 				did_something = TRUE
 
