@@ -60,7 +60,7 @@ Bonus
 
 /datum/symptom/heal/toxin
 	name = "Starlight Condensation"
-	desc = "The virus reacts to direct starlight, producing regenerative chemicals."
+	desc = "The virus reacts to direct starlight, producing regenerative chemicals that can cure toxin damage."
 	stealth = 1
 	resistance = -3
 	stage_speed = -3
@@ -104,7 +104,7 @@ Bonus
 	resistance = -2
 	stage_speed = -2
 	transmittable = -2
-	level = 8
+	level = 7
 	desc = "The virus rapidly breaks down any foreign chemicals in the bloodstream."
 
 /datum/symptom/heal/chem/Heal(mob/living/M, datum/disease/advance/A, actual_power)
@@ -118,7 +118,7 @@ Bonus
 	resistance = -2
 	stage_speed = 2
 	transmittable = 1
-	level = 8
+	level = 7
 	desc = "The virus causes the host's metabolism to accelerate rapidly, making them process chemicals twice as fast,\
 	 but also causing increased hunger."
 
@@ -174,7 +174,7 @@ Bonus
 		. *= 2
 
 /datum/symptom/heal/brute/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
-	var/heal_amt = 1 * actual_power
+	var/heal_amt = 2 * actual_power
 
 	var/list/parts = M.get_damaged_bodyparts(1,0) //brute only
 
@@ -296,7 +296,7 @@ Bonus
 		return power
 	else if(M.reagents.has_reagent("holywater"))
 		M.reagents.remove_reagent("holywater", 0.5)
-		return power * 0.60
+		return power * 0.75
 	else if(M.reagents.has_reagent("water"))
 		M.reagents.remove_reagent("water", 0.5)
 		return power * 0.5
@@ -417,11 +417,11 @@ Bonus
 			return FALSE
 		if(1 to RAD_MOB_SAFE)
 			return 0.25
-		if(RAD_MOB_SAFE to 750)
+		if(RAD_MOB_SAFE to RAD_BURN_THRESHOLD)
 			return 0.5
-		if(751 to 1250)
+		if(RAD_BURN_THRESHOLD to RAD_MOB_MUTATE)
 			return 0.75
-		if(1251 to 2000)
+		if(RAD_MOB_MUTATE to RAD_MOB_KNOCKDOWN)
 			return 1
 		else
 			return 1.5
