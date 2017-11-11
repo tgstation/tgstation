@@ -124,7 +124,8 @@
 	HTML += "<center><h4>[current_category]</h4></center>"
 
 	var/list/current_list = recipe_list[current_category]
-	for(var/obj/O in current_list)
+	for(var/k in 1 to current_list.len)
+		var/obj/O = current_list[k]
 		var/can_build = TRUE
 		if(istype(O, /obj/item/integrated_circuit))
 			var/obj/item/integrated_circuit/IC = O
@@ -175,36 +176,36 @@
 			if("load")
 				program = input("Put your code there:", "loading", null, null)
 			if("check")
-				sc = sanity_check(program)
+				sc = sanity_check(program,usr)
 				if(sc == 0)
-					visible_message( "<span class='warning'>Invalid program.</span>")
+					to_chat(usr,  "<span class='warning'>Invalid program.</span>")
 				else if(sc == -1)
 
-					visible_message( "<span class='warning'>Unknown circuits found. Upgrades required to process this design.</span>")
+					to_chat(usr,  "<span class='warning'>Unknown circuits found. Upgrades required to process this design.</span>")
 				else if(sc == null)
-					visible_message( "<span class='warning'>Invalid program.</span>")
+					to_chat(usr,  "<span class='warning'>Invalid program.</span>")
 				else
-					visible_message( "<span class='notice'>Program is correct.You'll need [sc/10] sheets of metal</span>")
+					to_chat(usr,  "<span class='notice'>Program is correct.You'll need [sc/10] sheets of metal</span>")
 			if("print")
-				sc = sanity_check(program)
+				sc = sanity_check(program,usr)
 				if(sc == 0)
-					visible_message( "<span class='warning'>Invalid program.</span>")
+					to_chat(usr,  "<span class='warning'>Invalid program.</span>")
 				else if(sc == -1)
-					visible_message( "<span class='warning'>Unknown circuits found. Upgrades required to process this design.</span>")
+					to_chat(usr,  "<span class='warning'>Unknown circuits found. Upgrades required to process this design.</span>")
 				else
 					as_printing = TRUE
 					if(sc <= metal)
 						PR = new/obj/item/device/integrated_electronics/prefab(get_turf(loc))
 						PR.program = program
 						metal = metal - sc
-						visible_message( "<span class='notice'>Assembly has been printed.</span>")
+						to_chat(usr,  "<span class='notice'>Assembly has been printed.</span>")
 						as_printing = FALSE
 						as_needs = 0
 						max_metal=init_max_metal
 					else
 						max_metal = sc + metal_per_sheet
 						as_needs = sc
-						visible_message( "<span class='notice'>Please insert [(as_needs-metal)/10] more metal!</span>")
+						to_chat(usr,  "<span class='notice'>Please insert [(as_needs-metal)/10] more metal!</span>")
 	interact(usr)
 
 // FUKKEN UPGRADE DISKS
@@ -228,7 +229,7 @@
 	icon_state = "upgrade_disk_clone"
 	origin_tech = list(TECH_ENGINEERING = 4, TECH_DATA = 5)
 
-/obj/item/device/integrated_circuit_printer/proc/sanity_check(var/program)
+/obj/item/device/integrated_circuit_printer/proc/sanity_check(var/program,var/mob/user)
 	var/list/chap = splittext( program ,"{{*}}")
 	if(chap.len != 6)
 		return 0 //splitting incorrect
@@ -240,7 +241,6 @@
 	var/datum/integrated_io/IO
 	var/datum/integrated_io/IO2
 	var/i = 0
-	var/j = 0
 	var/obj/item/integrated_circuit/comp
 	var/list/ioa = list()
 	var/list/as_samp = list()
@@ -256,9 +256,11 @@
 	var/cap = 0
 	var/maxcap = 0
 	var/metalcost = 0
-	for(var/obj/item/I in assembly_list)
+	for(var/k in 1 to assembly_list.len)
+		var/obj/item/I = assembly_list[k]
 		as_samp[I.name] = I
-	for(var/obj/item/integrated_circuit/IC in SScircuit.all_integrated_circuits)
+	for(var/k in 1 to SScircuit.all_integrated_circuits.len)
+		var/obj/item/integrated_circuit/IC = SScircuit.all_integrated_circuits[k]
 		if((IC.spawn_flags & IC_SPAWN_DEFAULT) || (IC.spawn_flags & IC_SPAWN_RESEARCH))
 			cir_samp[IC.name] = IC
 	if(debug)
@@ -277,7 +279,7 @@
 				visible_message( "<span class='notice'>maxcap[maxcap]maxcomp[maxcomp]</span>")
 		else
 			return 0
-		visible_message( "<span class='notice'>This is program for [element[2]]</span>")
+		to_chat(usr, "<span class='notice'>This is program for [element[2]]</span>")
 		/*
 		else if(istype(PA,/obj/item/weapon/implant/integrated_circuit))
 			var/obj/item/weapon/implant/integrated_circuit/PI = PA
@@ -319,21 +321,21 @@
 			cap = cap + comp.size
 			metalcost =metalcost + initial(comp.w_class)
 
-			j = 0
-			for(var/datum/integrated_io/IN in comp.inputs)
-				j = j + 1
+
+			for(var/j in 1 to comp.inputs)
+				var/datum/integrated_io/IN = comp.inputs[j]
 				ioa["[i]i[j]"] = IN
 				if(debug)
 					visible_message( "<span class='notice'>[i]i[j]</span>")
-			j = 0
-			for(var/datum/integrated_io/OUT in comp.outputs)               //Also this block uses for setting all i/o id's
-				j=j+1
+
+			for(var/j in 1 to comp.outputs.len)               //Also this block uses for setting all i/o id's
+				var/datum/integrated_io/OUT = comp.outputs[j]
 				ioa["[i]o[j]"] = OUT
 				if(debug)
 					visible_message( "<span class='notice'>[i]o[j]</span>")
-			j = 0
-			for(var/datum/integrated_io/ACT in comp.activators)
-				j=j+1
+
+			for(var/j in 1 to comp.activators)
+				var/datum/integrated_io/ACT = comp.activators[i]
 				ioa["[i]a[j]"] = ACT
 				if(debug)
 					visible_message( "<span class='notice'>[i]a[j]</span>")
