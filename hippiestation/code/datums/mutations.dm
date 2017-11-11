@@ -55,3 +55,7 @@
 	visible_message("<span class='danger'>[src]'s body glows green, the glow dissipating only to leave behind a cluwne formerly known as [src]!</span>", \
 					"<span class='danger'>Your brain feels like it's being torn apart, and after a short while, you notice that you've become a cluwne!</span>")
 	flash_act()
+
+/datum/mutation/human/tourettes/on_life(mob/living/carbon/human/owner)
+	if(prob(10) && owner.stat == CONSCIOUS)
+		owner.Stun(50)
