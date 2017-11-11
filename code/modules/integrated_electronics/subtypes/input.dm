@@ -474,7 +474,7 @@
 	var/datum/integrated_io/O = outputs[1]
 	O.data = null
 	var/turf/T = get_turf(src)
-	var/list/nearby_things = range(radius, T) & view(T)
+	var/list/nearby_things =  view(radius,T)
 	var/list/valid_things = list()
 	if(isweakref(I.data))
 		var/atom/A = I.data.resolve()
