@@ -26,6 +26,7 @@
 	var/invuln = null
 	var/obj/item/device/camera_bug/bug = null
 	var/obj/structure/camera_assembly/assembly = null
+	var/area/area = null
 
 	//OTHER
 
@@ -48,8 +49,8 @@
 	GLOB.cameranet.cameras += src
 	GLOB.cameranet.addCamera(src)
 	if (isturf(loc))
-		var/area/A = get_area(src)
-		LAZYADD(A.cameras, src)
+		area = get_area(src)
+		LAZYADD(area.cameras, src)
 	proximity_monitor = new(src, 1)
 
 	if(mapload && (z in GLOB.station_z_levels) && prob(3) && !start_active)
@@ -57,8 +58,8 @@
 
 /obj/machinery/camera/Destroy()
 	toggle_cam(null, 0) //kick anyone viewing out
-	var/area/A = get_area(src)
-	LAZYREMOVE(A.cameras, src)
+	if(isarea(area))
+		LAZYREMOVE(area.cameras, src)
 	if(assembly)
 		qdel(assembly)
 		assembly = null
@@ -69,7 +70,6 @@
 		bug = null
 	GLOB.cameranet.removeCamera(src) //Will handle removal from the camera network and the chunks, so we don't need to worry about that
 	GLOB.cameranet.cameras -= src
-	GLOB.cameranet.removeCamera(src)
 	return ..()
 
 /obj/machinery/camera/emp_act(severity)
@@ -123,6 +123,11 @@
 	if(!istype(user))
 		return
 	user.electrocute_act(10, src)
+
+/obj/machinery/camera/singularity_pull(S, current_size)
+	if (status && current_size >= STAGE_FIVE) // If the singulo is strong enough to pull anchored objects and the camera is still active, turn off the camera as it gets ripped off the wall.
+		toggle_cam(null, 0)
+	..()
 
 /obj/machinery/camera/attackby(obj/item/W, mob/living/user, params)
 	var/msg = "<span class='notice'>You attach [W] into the assembly's inner circuits.</span>"
@@ -271,15 +276,18 @@
 
 /obj/machinery/camera/proc/toggle_cam(mob/user, displaymessage = 1)
 	status = !status
-	var/area/A = get_area(src)
 	if(can_use())
 		GLOB.cameranet.addCamera(src)
 		if (isturf(loc))
-			LAZYADD(A.cameras, src)
+			area = get_area(src)
+			LAZYADD(area.cameras, src)
+		else
+			area = null
 	else
 		set_light(0)
 		GLOB.cameranet.removeCamera(src)
-		LAZYREMOVE(A.cameras, src)
+		if (isarea(area))
+			LAZYREMOVE(area.cameras, src)
 	GLOB.cameranet.updateChunk(x, y, z)
 	var/change_msg = "deactivates"
 	if(status)

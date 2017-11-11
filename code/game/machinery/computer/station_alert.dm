@@ -9,8 +9,8 @@
 	light_color = LIGHT_COLOR_CYAN
 
 /obj/machinery/computer/station_alert/Initialize()
+	. = ..()
 	GLOB.alert_consoles += src
-	return ..()
 
 /obj/machinery/computer/station_alert/Destroy()
 	GLOB.alert_consoles -= src
