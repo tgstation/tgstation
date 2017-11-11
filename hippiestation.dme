@@ -2387,6 +2387,7 @@
 #include "hippiestation\code\game\objects\structures\false_walls.dm"
 #include "hippiestation\code\game\objects\structures\ghost_role_spawners.dm"
 #include "hippiestation\code\game\objects\structures\manned_turret.dm"
+#include "hippiestation\code\game\objects\structures\memiruak.dm"
 #include "hippiestation\code\game\objects\structures\tables_racks.dm"
 #include "hippiestation\code\game\objects\structures\tank_dispenser.dm"
 #include "hippiestation\code\game\objects\structures\watercloset.dm"
