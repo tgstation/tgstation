@@ -65,6 +65,8 @@
 		var/datum/mind/M = V
 		if(ishuman(M.current))
 			M.current.add_overlay(mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER))
+	var/area/A = get_area(src)
+	A.ambientsounds += 'sound/ambience/ambireebe3.ogg' //Adds the final ambience
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/open_portal(turf/T)
 	new/obj/effect/clockwork/city_of_cogs_rift(T)
