@@ -33,6 +33,7 @@
 /datum/brain_trauma/mild/stuttering/on_lose()
 	owner.stuttering = 0
 	..()
+
 #define BRAIN_DAMAGE_FILE "brain_damage_lines.json"
 /datum/brain_trauma/mild/dumbness
 	name = "Dumbness"
@@ -248,3 +249,30 @@
 			owner.confused += 10
 			owner.Jitter(10)
 			owner.stuttering += 10
+
+/datum/brain_trauma/mild/muscle_weakness
+	name = "Muscle Weakness"
+	desc = "Patient experiences occasional bouts of muscle weakness."
+	scan_desc = "weak motor nerve signal"
+	gain_text = "<span class='warning'>Your muscles feel oddly faint.</span>"
+	lose_text = "<span class='notice'>You feel in control of your muscles again.</span>"
+
+/datum/brain_trauma/mild/muscle_weakness/on_life()
+	var/fall_chance = 1
+	if(owner.m_intent == MOVE_INTENT_RUN)
+		fall_chance += 2
+	if(prob(fall_chance) && !owner.lying && !owner.buckled)
+		to_chat(owner, "<span class='warning'>Your leg gives out!</span>")
+		owner.Knockdown(35)
+
+	else if(owner.get_active_held_item())
+		var/drop_chance = 1
+		var/obj/item/I = owner.get_active_held_item()
+		drop_chance += I.w_class
+		if(prob(drop_chance) && owner.dropItemToGround(I))
+			to_chat(owner, "<span class='warning'>You drop [I]!</span>")
+
+	else if(prob(3))
+		to_chat(owner, "<span class='warning'>You feel a sudden weakness in your muscles!</span>")
+		owner.adjustStaminaLoss(50)
+	..()

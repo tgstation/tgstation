@@ -191,3 +191,18 @@ GLOBAL_LIST_EMPTY(agnosiac_mobs)
 					to_chat(H, "<span class='userdanger'>You feel a stabbing pain in your heart!</span>")
 				else
 					to_chat(owner, "<span class='warning'>You feel your heart lurching in your chest...</span>")
+
+/datum/brain_trauma/severe/discoordination
+	name = "Discoordination"
+	desc = "Patient is unable to use complex tools or machinery."
+	scan_desc = "extreme discoordination"
+	gain_text = "<span class='warning'>You can barely control your hands!</span>"
+	lose_text = "<span class='notice'>You feel in control of your hands again.</span>"
+
+/datum/brain_trauma/severe/discoordination/on_gain()
+	owner.disabilities |= MONKEYLIKE
+	..()
+
+/datum/brain_trauma/severe/discoordination/on_lose()
+	owner.disabilities &= ~MONKEYLIKE
+	..()

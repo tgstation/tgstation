@@ -20,6 +20,7 @@
 #define CLUMSY		256
 #define DUMB        512
 #define AGNOSIA     1024
+#define MONKEYLIKE  2048 //sets IsAdvancedToolUser to FALSE
 
 // bitflags for machine stat variable
 #define BROKEN		1
