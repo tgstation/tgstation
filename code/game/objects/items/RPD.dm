@@ -546,12 +546,7 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 			A = get_turf(user)
 
 	//make sure what we're clicking is valid for the current mode
-	var/is_paintable = (p_class == PAINT_MODE && istype(A, /obj/machinery/atmospherics/pipe))
-	var/is_consumable = (p_class == EATING_MODE && (istype(A, /obj/item/pipe) || istype(A, /obj/item/pipe_meter) || istype(A, /obj/structure/disposalconstruct)))
 	var/can_make_pipe = ((atmos_piping_mode || p_class == DISPOSALS_MODE) && (isturf(A)) || istype(A, /obj/structure/lattice) || istype(A, /obj/structure/girder))
-
-	if(!is_paintable && !is_consumable && !can_make_pipe)
-		return ..()
 
 	//So that changing the menu settings doesn't affect the pipes already being built.
 	var/queued_p_type = p_type
@@ -561,6 +556,8 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 	. = FALSE
 	switch(p_class) //if we've gotten this var, the target is valid
 		if(PAINT_MODE) //Paint pipes
+			if(!istype(A, /obj/machinery/atmospherics/pipe))
+				return ..()
 			var/obj/machinery/atmospherics/pipe/P = A
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			P.paint(paint_colors[paint_color])
@@ -568,6 +565,8 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 			return
 
 		if(EATING_MODE) //Eating pipes
+			if(!(istype(A, /obj/item/pipe) || istype(A, /obj/item/pipe_meter) || istype(A, /obj/structure/disposalconstruct)))
+				return ..()
 			to_chat(user, "<span class='notice'>You start destroying a pipe...</span>")
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 2, target = A))
@@ -575,6 +574,8 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 				qdel(A)
 
 		if(ATMOS_MODE) //Making pipes
+			if(!can_make_pipe)
+				return ..()
 			to_chat(user, "<span class='notice'>You start building a pipe...</span>")
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 2, target = A))
@@ -597,6 +598,8 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 					P.setPipingLayer(piping_layer)
 
 		if(METER_MODE) //Making pipe meters
+			if(!can_make_pipe)
+				return ..()
 			to_chat(user, "<span class='notice'>You start building a meter...</span>")
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 2, target = A))
@@ -608,6 +611,8 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 					PM.setAttachLayer(piping_layer)
 
 		if(DISPOSALS_MODE) //Making disposals pipes
+			if(!can_make_pipe)
+				return ..()
 			if(isclosedturf(A))
 				to_chat(user, "<span class='warning'>\the [src]'s error light flickers; there's something in the way!</span>")
 				return
