@@ -1,5 +1,5 @@
 
-//These are shuttle areas; all subtypes are only used as teleportation markers, they have no actual function beyond that. 
+//These are shuttle areas; all subtypes are only used as teleportation markers, they have no actual function beyond that.
 //Multi area shuttles are a thing now, use subtypes! ~ninjanomnom
 
 /area/shuttle
@@ -18,6 +18,7 @@
 /area/shuttle/syndicate
 	name = "Syndicate Infiltrator"
 	blob_allowed = FALSE
+	ambientsounds = HIGHSEC
 
 /area/shuttle/syndicate/bridge
 	name = "Syndicate Infiltrator Control"

@@ -54,12 +54,7 @@
 
 	var/global/global_uid = 0
 	var/uid
-	var/list/ambientsounds = list('sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg',\
-									'sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg',\
-									'sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg',\
-									'sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg',\
-									'sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg',\
-									'sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg')
+	var/list/ambientsounds = GENERIC
 	flags_1 = CAN_BE_DIRTY_1
 
 	var/list/firedoors
@@ -107,7 +102,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	uid = ++global_uid
 	related = list(src)
 	map_name = name // Save the initial (the name set in the map) name of the area.
-
+	
 	if(requires_power)
 		luminosity = 0
 	else
@@ -124,8 +119,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		dynamic_lighting = CONFIG_GET(flag/starlight) ? DYNAMIC_LIGHTING_ENABLED : DYNAMIC_LIGHTING_DISABLED
 
 	. = ..()
-
-	power_change()		// all machines set to current power level, also updates icon
 
 	blend_mode = BLEND_MULTIPLY // Putting this in the constructor so that it stops the icons being screwed up in the map editor.
 
@@ -147,6 +140,11 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		if(!areas_in_z["[z]"])
 			areas_in_z["[z]"] = list()
 		areas_in_z["[z]"] += src
+
+	return INITIALIZE_HINT_LATELOAD
+
+/area/LateInitialize()
+	power_change()		// all machines set to current power level, also updates icon
 
 /area/Destroy()
 	STOP_PROCESSING(SSobj, src)

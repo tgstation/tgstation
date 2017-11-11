@@ -27,6 +27,7 @@ SUBSYSTEM_DEF(air)
 	var/list/hotspots = list()
 	var/list/networks = list()
 	var/list/obj/machinery/atmos_machinery = list()
+	var/list/pipe_construction_generation_cache = list()
 
 
 
@@ -375,6 +376,19 @@ SUBSYSTEM_DEF(air)
 		var/obj/machinery/atmospherics/AM = A
 		AM.build_network()
 		CHECK_TICK
+
+/datum/controller/subsystem/air/proc/get_pipe_cache(type, direction=NORTH)
+	if(!pipe_construction_generation_cache[type])
+		pipe_construction_generation_cache[type] = list()
+
+	if(!pipe_construction_generation_cache[type]["[direction]"])
+		var/obj/machinery/atmospherics/cached = new type(null, FALSE, direction)
+		pipe_construction_generation_cache[type]["[direction]"] = cached
+		STOP_PROCESSING(SSmachines, cached)
+		STOP_PROCESSING(SSfastprocess, cached)
+		GLOB.machines -= cached
+
+	return pipe_construction_generation_cache[type]["[direction]"]
 
 
 #undef SSAIR_PIPENETS

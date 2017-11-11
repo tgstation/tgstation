@@ -270,8 +270,6 @@
 /area/space)
 "aY" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/light/small{
@@ -362,13 +360,10 @@
 /area/awaymission/research/interior/gateway)
 "bm" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/structure/cable{
-	icon_state = "0-2";
-	d2 = 2
+	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/highcap/ten_k{
 	auto_name = 1;
@@ -486,8 +481,6 @@
 /area/awaymission/research/interior/gateway)
 "bD" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
@@ -664,32 +657,24 @@
 	pixel_x = 24
 	},
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1;
-	d2 = 2
+	icon_state = "0-2"
 	},
 /turf/open/floor/plasteel/black,
 /area/awaymission/research/interior/gateway)
 "cc" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "cd" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "ce" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/open/floor/plating,
@@ -740,8 +725,6 @@
 	dir = 4
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/structure/window/reinforced,
@@ -749,16 +732,12 @@
 /area/awaymission/research/interior/gateway)
 "cm" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "cn" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/light/small,
@@ -766,8 +745,6 @@
 /area/awaymission/research/interior/maint)
 "co" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
@@ -813,16 +790,12 @@
 /area/awaymission/research/interior/gateway)
 "cu" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel/black,
 /area/awaymission/research/interior/gateway)
 "cv" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/structure/table,
@@ -830,8 +803,6 @@
 /area/awaymission/research/interior/gateway)
 "cw" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/open/floor/plating,
@@ -848,8 +819,6 @@
 /area/awaymission/research/interior/maint)
 "cz" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /mob/living/simple_animal/hostile/syndicate/ranged,
@@ -880,16 +849,12 @@
 /area/awaymission/research/interior/gateway)
 "cE" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/black,
 /area/awaymission/research/interior/gateway)
 "cF" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/structure/table,
@@ -931,8 +896,6 @@
 /area/awaymission/research/interior/genetics)
 "cL" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /mob/living/simple_animal/hostile/syndicate/ranged,
@@ -968,8 +931,6 @@
 /area/awaymission/research/interior/secure)
 "cR" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/highsecurity{
@@ -981,8 +942,6 @@
 /area/awaymission/research/interior/gateway)
 "cS" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/power/apc/highcap/five_k{
@@ -991,9 +950,7 @@
 	pixel_x = 24
 	},
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1;
-	d2 = 2
+	icon_state = "0-2"
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/genetics)
@@ -1021,8 +978,6 @@
 /area/awaymission/research/interior/genetics)
 "cY" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/item/ammo_casing/c9mm,
@@ -1087,8 +1042,6 @@
 /area/awaymission/research/interior/secure)
 "dg" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
@@ -1110,8 +1063,6 @@
 /area/awaymission/research/interior/genetics)
 "dk" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/blood/drip,
@@ -1182,8 +1133,6 @@
 /area/awaymission/research/interior/genetics)
 "dw" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/effect/decal/cleanable/blood/drip,
@@ -1191,8 +1140,6 @@
 /area/awaymission/research/interior/maint)
 "dx" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/item/ammo_casing/c9mm,
@@ -1200,8 +1147,6 @@
 /area/awaymission/research/interior/maint)
 "dy" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/machinery/light/small{
@@ -1337,8 +1282,6 @@
 /area/awaymission/research/interior/genetics)
 "dR" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/item/ammo_casing/c45,
@@ -1346,13 +1289,9 @@
 /area/awaymission/research/interior/maint)
 "dS" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/open/floor/plating,
@@ -1401,8 +1340,6 @@
 /area/awaymission/research/interior)
 "dZ" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/light/small{
@@ -1440,8 +1377,6 @@
 /area/awaymission/research/interior/maint)
 "eg" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/blood/drip,
@@ -1514,8 +1449,6 @@
 	req_access_txt = "12"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
@@ -1602,16 +1535,12 @@
 	req_access_txt = "12"
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "eI" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/whitepurple/side{
@@ -1663,8 +1592,7 @@
 "eR" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
-	icon_state = "0-2";
-	d2 = 2
+	icon_state = "0-2"
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/security)
@@ -1720,8 +1648,6 @@
 	},
 /obj/structure/cable,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/whitepurple,
@@ -1787,8 +1713,6 @@
 /area/awaymission/research/interior/cryo)
 "fj" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/whitepurple/side{
@@ -1825,24 +1749,18 @@
 /area/awaymission/research/interior/security)
 "fr" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/whitered/side,
 /area/awaymission/research/interior/security)
 "fs" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/whitered/side,
 /area/awaymission/research/interior/security)
 "ft" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/machinery/light{
@@ -1873,8 +1791,6 @@
 /area/awaymission/research/interior/secure)
 "fx" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/machinery/light/small{
@@ -1889,7 +1805,6 @@
 	pixel_x = 24
 	},
 /obj/structure/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/open/floor/plasteel/black,
@@ -1915,8 +1830,6 @@
 /area/awaymission/research/interior)
 "fC" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/whitepurple,
@@ -1975,8 +1888,6 @@
 /area/awaymission/research/interior)
 "fN" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/whitepurple/side{
@@ -2027,8 +1938,6 @@
 /area/awaymission/research/interior/security)
 "fX" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/whitered,
@@ -2039,8 +1948,6 @@
 /area/awaymission/research/interior/security)
 "fZ" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/structure/chair{
@@ -2072,20 +1979,15 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/open/floor/plasteel/black,
 /area/awaymission/research/interior/secure)
 "ge" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/black,
@@ -2093,12 +1995,9 @@
 "gf" = (
 /obj/machinery/power/terminal,
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/structure/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/open/floor/plasteel/black,
@@ -2110,32 +2009,24 @@
 	req_access_txt = "36"
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/black,
 /area/awaymission/research/interior/secure)
 "gh" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/black,
 /area/awaymission/research/interior/secure)
 "gi" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/black,
 /area/awaymission/research/interior/secure)
 "gj" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /mob/living/simple_animal/hostile/nanotrasen/ranged/smg,
@@ -2143,8 +2034,6 @@
 /area/awaymission/research/interior/secure)
 "gk" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/structure/barricade/security,
@@ -2152,8 +2041,6 @@
 /area/awaymission/research/interior/secure)
 "gl" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/highsecurity{
@@ -2166,8 +2053,6 @@
 "gm" = (
 /obj/structure/barricade/security,
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/black,
@@ -2178,30 +2063,22 @@
 	req_access_txt = "9,63"
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/secure)
 "go" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior)
 "gp" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/light/small,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/open/floor/plating,
@@ -2212,34 +2089,24 @@
 	req_access_txt = "9"
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior)
 "gr" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/whitepurple,
 /area/awaymission/research/interior)
 "gs" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel/whitepurple,
@@ -2300,8 +2167,6 @@
 	dir = 8
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/whitepurple,
@@ -2337,39 +2202,27 @@
 /area/awaymission/research/interior/security)
 "gJ" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel/whitered,
 /area/awaymission/research/interior/security)
 "gK" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/whitered,
 /area/awaymission/research/interior/security)
 "gL" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/structure/chair{
@@ -2379,8 +2232,6 @@
 /area/awaymission/research/interior/security)
 "gM" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/structure/table,
@@ -2388,8 +2239,6 @@
 /area/awaymission/research/interior/security)
 "gN" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/structure/table,
@@ -2399,8 +2248,6 @@
 /area/awaymission/research/interior/security)
 "gO" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/structure/chair{
@@ -2410,8 +2257,6 @@
 /area/awaymission/research/interior/security)
 "gP" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/whitered/side{
@@ -2453,8 +2298,6 @@
 /area/awaymission/research/interior)
 "gW" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/whitepurple,
@@ -2524,8 +2367,6 @@
 /area/awaymission/research/interior/security)
 "hi" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/whitered/side{
@@ -2557,8 +2398,6 @@
 /area/awaymission/research/interior/security)
 "ho" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel/whitered/side{
@@ -2567,8 +2406,6 @@
 /area/awaymission/research/interior/security)
 "hp" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel/whitered/side{
@@ -2583,8 +2420,6 @@
 /area/awaymission/research/interior/security)
 "hr" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/light{
@@ -2615,29 +2450,21 @@
 /area/awaymission/research/interior/cryo)
 "hw" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "hx" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "hy" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/effect/decal/cleanable/blood/drip,
@@ -2664,8 +2491,6 @@
 /area/awaymission/research/interior)
 "hD" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/light/small{
@@ -2693,8 +2518,6 @@
 /area/awaymission/research/interior/security)
 "hH" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/vending/security,
@@ -2773,8 +2596,6 @@
 /area/awaymission/research/interior)
 "hR" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/structure/table,
@@ -2873,8 +2694,6 @@
 /area/awaymission/research/interior/maint)
 "ie" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/machinery/light/small{
@@ -2888,8 +2707,6 @@
 /area/awaymission/research/interior)
 "ig" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/machinery/light/small{
@@ -2925,8 +2742,6 @@
 /area/awaymission/research/interior/security)
 "ik" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/light/small{
@@ -2984,21 +2799,15 @@
 /area/awaymission/research/interior/bathroom)
 "iq" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "ir" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/whitegreen/side{
@@ -3007,16 +2816,12 @@
 /area/awaymission/research/interior)
 "is" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/whitegreen,
 /area/awaymission/research/interior)
 "it" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/whitegreen/side{
@@ -3025,13 +2830,9 @@
 /area/awaymission/research/interior)
 "iu" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
@@ -3042,8 +2843,6 @@
 	req_access_txt = "63"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
@@ -3055,13 +2854,9 @@
 	pixel_x = 24
 	},
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1;
-	d2 = 2
+	icon_state = "0-2"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
@@ -3116,12 +2911,9 @@
 	pixel_y = 24
 	},
 /obj/structure/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
@@ -3205,8 +2997,6 @@
 /area/awaymission/research/interior/maint)
 "iT" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -3216,15 +3006,12 @@
 /area/awaymission/research/interior/maint)
 "iU" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/maint)
 "iV" = (
 /obj/structure/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/open/floor/plating,
@@ -3651,14 +3438,10 @@
 	pixel_x = 24
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1;
-	d2 = 2
+	icon_state = "0-2"
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/dorm)
@@ -3760,8 +3543,6 @@
 /area/awaymission/research/interior/dorm)
 "kG" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -3771,8 +3552,6 @@
 /area/awaymission/research/interior/maint)
 "kH" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/whitegreen/side{
@@ -3781,16 +3560,12 @@
 /area/awaymission/research/interior)
 "kI" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/whitegreen,
 /area/awaymission/research/interior)
 "kJ" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/whitegreen/side{
@@ -3799,8 +3574,6 @@
 /area/awaymission/research/interior)
 "kK" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
@@ -3824,8 +3597,6 @@
 /area/awaymission/research/interior/medbay)
 "kP" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/light/small{
@@ -4211,15 +3982,12 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "lW" = (
 /obj/structure/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
@@ -4242,8 +4010,6 @@
 /area/awaymission/research/interior/dorm)
 "lZ" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/power/apc{
@@ -4252,7 +4018,6 @@
 	pixel_y = -24
 	},
 /obj/structure/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/open/floor/plating,
