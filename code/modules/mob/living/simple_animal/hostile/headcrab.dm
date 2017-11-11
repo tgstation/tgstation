@@ -1,7 +1,7 @@
 #define EGG_INCUBATION_TIME 120
 
 /mob/living/simple_animal/hostile/headcrab
-	name = "headslug"
+	name = "headcrab"
 	desc = "An amalgamation of human and, well, something not human. it gazes intensely into the distance chittering it's teeth."
 	icon_state = "headcrab"
 	icon_living = "headcrab"
