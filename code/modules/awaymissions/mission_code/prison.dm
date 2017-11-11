@@ -23,7 +23,7 @@
 
 /turf/closed/wall/brick
 	name = "brick wall"
-	desc = "Изначально эти стены были белого цвета, но со временем люди стали их красить. Собой."
+	desc = "Г€Г§Г­Г Г·Г Г«ГјГ­Г® ГЅГІГЁ Г±ГІГҐГ­Г» ГЎГ»Г«ГЁ ГЎГҐГ«Г®ГЈГ® Г¶ГўГҐГІГ , Г­Г® Г±Г® ГўГ°ГҐГ¬ГҐГ­ГҐГ¬ Г«ГѕГ¤ГЁ Г±ГІГ Г«ГЁ ГЁГµ ГЄГ°Г Г±ГЁГІГј. Г‘Г®ГЎГ®Г©."
 	icon = 'icons/turf/walls/brick_wall.dmi'
 	icon_state = "brick"
 	hardness = 4500
@@ -97,7 +97,7 @@
 
 /turf/open/floor/plating/asteroid/dirty
 	name = "dirt"
-	desc = "Мягенькая."
+	desc = "ГЊГїГЈГҐГ­ГјГЄГ Гї."
 	icon = 'icons/misc/prison.dmi'
 	postdig_icon_change = TRUE
 	icon_state = "dirt"
@@ -105,13 +105,13 @@
 	environment_type = "dirt"
 	turf_type = /turf/open/floor/plating/asteroid/dirty
 	floor_variance = 0
-	initial_gas_mix = "o2=22;n2=82;TEMP=255.15"
+	initial_gas_mix = "o2=22;n2=82;TEMP=225.15"
 	archdrops = list(/obj/item/ore/glass = 5)
 	slowdown = 3
 
 /turf/open/floor/trot
 	name = "trotuar"
-	desc = "В самый раз для пробежек."
+	desc = "Г‚ Г±Г Г¬Г»Г© Г°Г Г§ Г¤Г«Гї ГЇГ°Г®ГЎГҐГ¦ГҐГЄ."
 	icon_state = "trot"
 	initial_gas_mix = "o2=22;n2=82;TEMP=248.15"
 	icon = 'icons/misc/beton.dmi'
@@ -121,7 +121,7 @@
 
 /turf/open/floor/beton
 	name = "beton"
-	desc = "Падать на него не самый лучший вариант."
+	desc = "ГЏГ Г¤Г ГІГј Г­Г  Г­ГҐГЈГ® Г­ГҐ Г±Г Г¬Г»Г© Г«ГіГ·ГёГЁГ© ГўГ Г°ГЁГ Г­ГІ."
 	icon_state = "beton"
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 	icon = 'icons/misc/beton.dmi'
@@ -150,7 +150,7 @@
 
 /obj/structure/falsewall/brick
 	name = "brick wall"
-	desc = "Изначально эти стены были белого цвета, но со временем люди стали их красить. Собой."
+	desc = "Г€Г§Г­Г Г·Г Г«ГјГ­Г® ГЅГІГЁ Г±ГІГҐГ­Г» ГЎГ»Г«ГЁ ГЎГҐГ«Г®ГЈГ® Г¶ГўГҐГІГ , Г­Г® Г±Г® ГўГ°ГҐГ¬ГҐГ­ГҐГ¬ Г«ГѕГ¤ГЁ Г±ГІГ Г«ГЁ ГЁГµ ГЄГ°Г Г±ГЁГІГј. Г‘Г®ГЎГ®Г©."
 	icon = 'icons/turf/walls/brick_wall.dmi'
 	icon_state = "brick"
 	walltype = /turf/closed/wall/brick
@@ -171,65 +171,181 @@
 		open = TRUE
 		opacity = 0
 
+/******************Uniforms****************************/
+
+/obj/item/clothing/under/prison/nach
+	name = "nachalnik suit"
+	desc = "Г‘ГІГЁГ«ГјГ­Г Гї Г°ГіГЎГ ГёГЄГ  ГЄ Г­ГҐ Г¬ГҐГ­ГҐГҐ Г¬Г®Г¤Г­Г»Г¬ ГёГІГ Г­Г Г¬."
+	icon = 'icons/valtos/prison/uniform.dmi'
+	icon_state = "nach"
+	item_state = "nach"
+	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
+	strip_delay = 60
+
+/obj/item/clothing/under/prison/vertuhai
+	name = "vertuhai suit"
+	desc = "Г‘ГІГ Г­Г¤Г Г°ГІГ­Г Гї ГіГ­ГЁГґГ®Г°Г¬Г  ГўГ®ГҐГ­Г­Г®Г±Г«ГіГ¦Г Г№ГҐГЈГ®."
+	icon = 'icons/valtos/prison/uniform.dmi'
+	icon_state = "vert"
+	item_state = "vert"
+	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
+	strip_delay = 60
+
+/obj/item/clothing/under/prison/prison
+	desc = "Г”Г®Г°Г¬Г  ГіГ«ГЁГ·Г­Г®ГЈГ® Г¬ГЁГ¬Г . ГЏГ®ГЈГ®Г¤ГЁГІГҐ-ГЄГ ... ГЌГҐГІ, ГўГ±ГҐ ГІГ ГЄГЁ ГІГѕГ°ГҐГ¬Г­Г Гї."
+	icon = 'icons/valtos/prison/uniform.dmi'
+	icon_state = "prisoner2"
+	item_state = "prisoner2"
+	has_sensor = LOCKED_SENSORS
+	sensor_mode = SENSOR_COORDS
+	random_sensor = 0
+
+/obj/item/clothing/under/prison/prison/Initialize()
+	..()
+	name = "prisoner #[rand(0,9)][rand(0,9)][rand(0,9)][rand(0,9)][rand(0,9)][rand(0,9)]"
+
+/******************Suits*******************************/
+
+/obj/item/clothing/suit/armor/ussr
+	name = "armored trenchcoat"
+	desc = "ГЉГ°ГҐГЇГЄГЁГ© ГЁ ГІГҐГЇГ«Г»Г©."
+	icon = 'icons/valtos/prison/uniform.dmi'
+	icon_state = "vertsuit"
+	item_state = "vertsuit"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+	armor = list(melee = 30, bullet = 30, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 70, acid = 90)
+	cold_protection = CHEST|GROIN|LEGS|ARMS
+	heat_protection = CHEST|GROIN|LEGS|ARMS
+	strip_delay = 80
+
+/******************Headgear****************************/
+
+/obj/item/clothing/head/helmet/ussr
+	name = "helmet"
+	desc = "ГЉГ°ГҐГЇГЄГ Гї ГЄГ Г±ГЄГ ."
+	icon = 'icons/valtos/prison/uniform.dmi'
+	icon_state = "helm"
+	item_state = "helm"
+	w_class = WEIGHT_CLASS_NORMAL
+	armor = list(melee = 50, bullet = 50, laser = 50, energy = 40, bomb = 60, bio = 0, rad = 0, fire = 60, acid = 60)
+
+/obj/item/clothing/head/tyubet
+	name = "tybeteika"
+	desc = "Г’ГѕГЎГҐГІГҐГ©ГЄГ ."
+	icon = 'icons/valtos/prison/uniform.dmi'
+	icon_state = "phat"
+	item_state = "phat"
+
+/******************Doors*******************************/
+
+/obj/machinery/door/airlock/prison
+	name = "door"
+	icon = 'icons/valtos/prison/doors.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_wood
+	desc = "ГЋГЎГ»Г·Г­Г Гї Г±ГІГ Г«ГјГ­Г Гї Г¤ГўГҐГ°Гј ГЇГ®ГЄГ°Г»ГІГ Гї ГЇГ«Г®ГІГ­Г»Г¬ Г±Г«Г®ГҐГ¬ Г¤ГҐГ°ГҐГўГ ."
+	glass = FALSE
+	autoclose = FALSE
+	lights = FALSE
+	normal_integrity = 1200
+	damage_deflection = 30
+	req_access_txt = "150"
+	doorOpen = 'sound/machines/door_open.ogg'
+	doorClose = 'sound/machines/door_close.ogg'
+	boltUp = 'sound/machines/door_locked.ogg'
+	boltDown = 'sound/machines/door_locked.ogg'
+	doorDeni = 'sound/machines/door_locked.ogg'
+
+/obj/machinery/door/airlock/prison/cell
+	glass = TRUE
+	locked = 1
+	opacity = 0
+	assemblytype = /obj/structure/door_assembly/door_assembly_wood
+
+/obj/machinery/door/poddoor/shutters/prison
+	name = "lattice door"
+	desc = "Г‘ГўГҐГ°ГµГЄГ°ГҐГЇГЄГ Гї."
+	icon = 'icons/valtos/prison/prison.dmi'
+	icon_state = "closed"
+	id = "cells"
+	max_integrity = 1200
+
+/obj/machinery/door/poddoor/shutters/prison/update_icon()
+	if(density)
+		playsound(src, 'sound/valtos/prison/close.ogg', 20, 1)
+		icon_state = "closed"
+	else
+		playsound(src, 'sound/valtos/prison/open.ogg', 20, 1)
+		icon_state = "open"
+
 /******************Structures Signs********************/
 
 /obj/structure/sign/prison
-	icon = 'icons/misc/prison.dmi'
+	icon = 'icons/valtos/prison/prison.dmi'
+
+/obj/structure/sign/prison/tablo
+	name = "\improper Tablo"
+	icon = 'icons/valtos/prison/prisonw.dmi'
+	desc = "Г’Г ГЎГ«ГЁГ·ГЄГ . ГЉГіГ±Гј."
+	icon_state = "t1"
+
+/obj/structure/sign/prison/tablo/Initialize()
+	..()
+	icon_state = "t[rand(1,18)]"
 
 /obj/structure/sign/prison/uprava
 	name = "\improper Uprava"
 	icon = 'icons/misc/prisonw.dmi'
-	desc = "Здесь решаются судьбы."
+	desc = "Г‡Г¤ГҐГ±Гј Г°ГҐГёГ ГѕГІГ±Гї Г±ГіГ¤ГјГЎГ»."
 	icon_state = "uprava"
 
 /obj/structure/sign/prison/blok1
 	name = "\improper Blok 1"
-	desc = "Родная хата."
+	desc = "ГђГ®Г¤Г­Г Гї ГµГ ГІГ ."
 	icon_state = "blok1"
 
 /obj/structure/sign/prison/tok
 	name = "\improper Ne prikasaisya!"
-	desc = "Не прикасайся!"
+	desc = "ГЌГҐ ГЇГ°ГЁГЄГ Г±Г Г©Г±Гї!"
 	icon_state = "tok"
 
 /obj/structure/sign/prison/hitler
 	name = "\improper Hitler"
-	desc = "Какой красивый мальчик."
+	desc = "ГЉГ ГЄГ®Г© ГЄГ°Г Г±ГЁГўГ»Г© Г¬Г Г«ГјГ·ГЁГЄ."
 	icon_state = "hitler"
 
 /obj/structure/sign/prison/net
 	name = "\improper Net!"
-	desc = "Нет!"
+	desc = "ГЌГҐГІ!"
 	icon_state = "net"
 
 /obj/structure/sign/prison/kolesa
 	name = "\improper Pomni o kolesah"
-	desc = "Помни о колесах."
+	desc = "ГЏГ®Г¬Г­ГЁ Г® ГЄГ®Г«ГҐГ±Г Гµ."
 	icon_state = "kolesa"
 
 /obj/structure/sign/prison/pobeda
 	name = "\improper K novym pobedam!"
-	desc = "К новым победам в труде и спорте!"
+	desc = "ГЉ Г­Г®ГўГ»Г¬ ГЇГ®ГЎГҐГ¤Г Г¬ Гў ГІГ°ГіГ¤ГҐ ГЁ Г±ГЇГ®Г°ГІГҐ!"
 	icon_state = "pobeda"
 
 /obj/structure/sign/prison/bolt
 	name = "\improper Ne boltay!"
-	desc = "Не болтай!"
+	desc = "ГЌГҐ ГЎГ®Г«ГІГ Г©!"
 	icon_state = "bolt"
 
 /obj/structure/sign/prison/pyan
 	name = "\improper Byl pyan"
-	desc = "Я на производстве был пьян."
+	desc = "Гџ Г­Г  ГЇГ°Г®ГЁГ§ГўГ®Г¤Г±ГІГўГҐ ГЎГ»Г« ГЇГјГїГ­."
 	icon_state = "pyan"
 
 /obj/structure/sign/prison/yannp
 	name = "\improper Ne ponyal!"
-	desc = "У меня возник когнитивный диссонанс!"
+	desc = "Г“ Г¬ГҐГ­Гї ГўГ®Г§Г­ГЁГЄ ГЄГ®ГЈГ­ГЁГІГЁГўГ­Г»Г© Г¤ГЁГ±Г±Г®Г­Г Г­Г±!"
 	icon_state = "yannp"
 
 /obj/structure/sign/prison/bolt
 	name = "\improper Ne boltay!"
-	desc = "Не болтай!."
+	desc = "ГЌГҐ ГЎГ®Г«ГІГ Г©!."
 	icon_state = "bolt"
 
 /********************Machinery***************************/
@@ -237,9 +353,9 @@
 /obj/machinery/vending/sovietvend
 	name = "\improper Soviet Vend"
 	icon = 'icons/misc/prison.dmi'
-	desc = "Каждому трудящемуся по инструменту!"
+	desc = "ГЉГ Г¦Г¤Г®Г¬Гі ГІГ°ГіГ¤ГїГ№ГҐГ¬ГіГ±Гї ГЇГ® ГЁГ­Г±ГІГ°ГіГ¬ГҐГ­ГІГі!"
 	icon_state = "sovietvend"
-	product_ads = "За Царя и Страну.;А ты выполнил норму сегодня?;Слава Советскому Союзу!"
+	product_ads = "Г‡Г  Г–Г Г°Гї ГЁ Г‘ГІГ°Г Г­Гі.;ГЂ ГІГ» ГўГ»ГЇГ®Г«Г­ГЁГ« Г­Г®Г°Г¬Гі Г±ГҐГЈГ®Г¤Г­Гї?;Г‘Г«Г ГўГ  Г‘Г®ГўГҐГІГ±ГЄГ®Г¬Гі Г‘Г®ГѕГ§Гі!"
 	products = list(/obj/item/clothing/under/soviet = 20, /obj/item/clothing/head/ushanka = 20, /obj/item/reagent_containers/food/snacks/candy = 40,
 					/obj/item/reagent_containers/food/drinks/bottle/vodka = 40, /obj/item/gun/ballistic/automatic/ak = 5, /obj/item/ammo_box/magazine/ak762 = 5)
 	contraband = list(/obj/item/clothing/under/syndicate/tacticool = 20)
@@ -255,7 +371,7 @@
 
 /obj/machinery/power/port_gen/pacman/coal
 	name = "\improper HellMachine"
-	desc = "Эта штука заставляет лампочки полыхать адским пламенем за счет сжигания угля. Сатанинская машина."
+	desc = "ГќГІГ  ГёГІГіГЄГ  Г§Г Г±ГІГ ГўГ«ГїГҐГІ Г«Г Г¬ГЇГ®Г·ГЄГЁ ГЇГ®Г«Г»ГµГ ГІГј Г Г¤Г±ГЄГЁГ¬ ГЇГ«Г Г¬ГҐГ­ГҐГ¬ Г§Г  Г±Г·ГҐГІ Г±Г¦ГЁГЈГ Г­ГЁГї ГіГЈГ«Гї. Г‘Г ГІГ Г­ГЁГ­Г±ГЄГ Гї Г¬Г ГёГЁГ­Г ."
 	icon = 'icons/misc/prisond.dmi'
 	icon_state = "portgen0_0"
 	base_icon = "portgen0"
@@ -275,7 +391,7 @@
 
 	for(var/obj/effect/bump_teleporter/BT in AllTeleporters)
 		if(BT.id == src.id_target)
-			AM.visible_message("<span class='boldwarning'>[AM] сорвался!</span>", "<span class='userdanger'>Кажется я упал...</span>")
+			AM.visible_message("<span class='boldwarning'>[AM] Г±Г®Г°ГўГ Г«Г±Гї!</span>", "<span class='userdanger'>ГЉГ Г¦ГҐГІГ±Гї Гї ГіГЇГ Г«...</span>")
 			AM.forceMove(BT.loc) //Teleport to location with correct id.
 			if(isliving(AM))
 				var/mob/living/L = AM
@@ -284,7 +400,7 @@
 
 /obj/effect/decal/tuman
 	name = "tuman"
-	desc = "Синий туман, похож на обман..."
+	desc = "Г‘ГЁГ­ГЁГ© ГІГіГ¬Г Г­, ГЇГ®ГµГ®Г¦ Г­Г  Г®ГЎГ¬Г Г­..."
 	icon = 'icons/misc/prison.dmi'
 	icon_state = "tuman"
 	layer = 6
@@ -294,7 +410,7 @@
 /obj/item/stack/tile/beton
 	name = "beton floor tile"
 	singular_name = "beton floor tile"
-	desc = "Кусок бетона. Ммм..."
+	desc = "ГЉГіГ±Г®ГЄ ГЎГҐГІГ®Г­Г . ГЊГ¬Г¬..."
 	icon = 'icons/misc/prison.dmi'
 	icon_state = "tile_beton"
 	turf_type = /turf/open/floor/beton
@@ -302,7 +418,7 @@
 /obj/item/stack/tile/trot
 	name = "trot floor tile"
 	singular_name = "trot floor tile"
-	desc = "Кусок тротуарной плитки. Зачем?"
+	desc = "ГЉГіГ±Г®ГЄ ГІГ°Г®ГІГіГ Г°Г­Г®Г© ГЇГ«ГЁГІГЄГЁ. Г‡Г Г·ГҐГ¬?"
 	icon = 'icons/misc/prison.dmi'
 	icon_state = "tile_trot"
 	turf_type = /turf/open/floor/trot
@@ -314,9 +430,107 @@
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-01"
 	layer = 5
+	anchored = 1
 
 /obj/machinery/prisonplant/Initialize()
+	..()
 	icon_state = "plant-[rand(0,2)][rand(0,5)]"
+
+/********************Misc-Deco****************************/
+
+/obj/structure/chair/prison/wood
+	name = "chair"
+	desc = "Г‘ГІГіГ«. ГЏГ°Г®Г±ГІГ®Г© Г±ГІГіГ« ГЁГ§ Г¤ГҐГ°ГҐГўГ ."
+	icon = 'icons/valtos/prison/decor.dmi'
+	icon_state = "chair"
+	item_chair = null
+
+/obj/structure/prison/fence
+	name = "fence"
+	desc = "Г‘Г«Г®Г¦Г­Г»Г© Г§Г ГЎГ®Г°. Г‘Г‹ГЋГ†ГЌГ›Г‰!"
+	icon = 'icons/valtos/prison/decor.dmi'
+	icon_state = "fence"
+	pass_flags = LETPASSTHROW
+	var/proj_pass_rate = 80
+	max_integrity = 1000
+	damage_deflection = 10
+	layer = 5
+	anchored = 1
+	density = 1
+	opacity = 0
+
+/obj/structure/prison/fence/CanPass(atom/movable/mover, turf/target)
+	if(locate(/obj/structure/prison/fence) in get_turf(mover))
+		return 1
+	else if(istype(mover, /obj/item/projectile))
+		if(!anchored)
+			return 1
+		var/obj/item/projectile/proj = mover
+		if(proj.firer && Adjacent(proj.firer))
+			return 1
+		if(prob(proj_pass_rate))
+			return 1
+		return 0
+	else
+		return !density
+
+/obj/structure/prison/pipe
+	name = "pipe"
+	desc = "Г€Г¤ГҐГ Г«ГјГ­Г»Г© ГЇГіГІГј Г­Г  Г±ГўГ®ГЎГ®Г¤Гі. ГЌГ® Г­ГҐ Г±ГҐГ©Г·Г Г±."
+	icon = 'icons/valtos/prison/decor.dmi'
+	icon_state = "trubas"
+	density = 0
+	opacity = 0
+	layer = 6
+	alpha = 205
+
+/obj/structure/table/prison
+	desc = "Г‘Г Г¬Г»Г© Г®ГЎГ»Г·Г­Г»Г© Г±ГІГ®Г« ГЁГ§ Г¤ГҐГ°ГҐГўГ , Г­ГЁГ·ГҐГЈГ® ГЁГ­ГІГҐГ°ГҐГ±Г­Г®ГЈГ®."
+	icon = 'icons/valtos/prison/decor.dmi'
+	icon_state = "table"
+	smooth = SMOOTH_FALSE
+	deconstruction_ready = 0
+	max_integrity = 1000
+
+/obj/structure/closet/pcloset
+	name = "old cabinet"
+	desc = "Г„Г®ГўГ®Г«ГјГ­Г® Г±ГІГ Г°Г»Г©."
+	icon_state = "cabinet"
+	resistance_flags = FLAMMABLE
+	max_integrity = 70
+
+/obj/effect/decal/prison/pipe
+	name = "pipe"
+	desc = "Г’ГҐГЇГ«ГҐГ­ГјГЄГ Гї."
+	icon = 'icons/valtos/prison/decor.dmi'
+	icon_state = "pipe1"
+	layer = 2.5
+	pixel_y = 12
+
+/obj/effect/decal/prison/pipe/pipea
+	icon_state = "pipe2"
+
+/obj/effect/decal/prison/pipe/pipeb
+	icon_state = "pipe3"
+
+/obj/effect/decal/prison/pipe/pipec
+	icon_state = "pipe4"
+
+/obj/effect/decal/prison/pipe/piped
+	icon_state = "pipe5"
+
+/obj/structure/prison/tv
+	name = "tv"
+	icon = 'icons/valtos/prison/prison.dmi'
+	desc = "ГЌГ Гё Г«ГѕГЎГЁГ¬Г»Г© Г±Г®ГўГҐГІГ±ГЄГЁГ© ГІГҐГ«ГҐГўГЁГ§Г®Г°."
+	icon_state = "TV"
+	density = 1
+
+/obj/structure/bed/prison/bed
+	name = "bed"
+	icon = 'icons/valtos/prison/decor.dmi'
+	desc = "Г’ГіГІ Г¬Г®Г¦Г­Г® Г®ГІГ¤Г®ГµГ­ГіГІГј, Г­Г® Г­ГҐ ГўГ±ГҐГЈГ¤Г ."
+	icon_state = "bed"
 
 /********************Lights***************************/
 
@@ -335,7 +549,7 @@
 
 /obj/item/gun/ballistic/automatic/ak
 	name = "\improper AK-47"
-	desc = "Легендарный автомат Калашникова. Использует патроны калибра 7.62"
+	desc = "Г‹ГҐГЈГҐГ­Г¤Г Г°Г­Г»Г© Г ГўГІГ®Г¬Г ГІ ГЉГ Г«Г ГёГ­ГЁГЄГ®ГўГ . Г€Г±ГЇГ®Г«ГјГ§ГіГҐГІ ГЇГ ГІГ°Г®Г­Г» ГЄГ Г«ГЁГЎГ°Г  7.62"
 	icon = 'icons/misc/prison.dmi'
 	icon_state = "kalash"
 	origin_tech = "combat=4;materials=2;syndicate=4"
@@ -355,7 +569,7 @@
 /obj/item/stack/sheet/mineral/coal
 	name = "coal"
 	icon = 'icons/misc/prison.dmi'
-	desc = "Черный как тот зек."
+	desc = "Г—ГҐГ°Г­Г»Г© ГЄГ ГЄ ГІГ®ГІ Г§ГҐГЄ."
 	singular_name = "coal"
 	icon_state = "coal"
 	throw_speed = 3
@@ -369,18 +583,44 @@
 	name = "keys"
 	icon = 'icons/misc/prison.dmi'
 	icon_state = "keys"
-	desc = "Ключи от всех дверей"
+	desc = "ГЉГ«ГѕГ·ГЁ Г®ГІ ГўГ±ГҐГµ Г¤ГўГҐГ°ГҐГ©"
 
 /obj/item/card/id/keys/Initialize()
 	access = get_all_syndicate_access()
 	..()
+
+/*********************Sovietlathe************************/
+
+/obj/machinery/autolathe/soviet
+	name = "sovietlathe"
+	circuit = /obj/item/circuitboard/machine/autolathe/soviet
+	categories = list(
+							"Tools",
+							"Electronics",
+							"T-Comm",
+							"Security",
+							"Machinery",
+							"Medical",
+							"Misc",
+							"Dinnerware",
+							"Imported"
+							)
+
+/obj/item/circuitboard/machine/autolathe/soviet
+	name = "Sovietlathe (Machine Board)"
+	build_path = /obj/machinery/autolathe/soviet
+	origin_tech = "engineering=2;programming=2"
+	req_components = list(
+		/obj/item/stock_parts/matter_bin = 3,
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/console_screen = 1)
 
 /*********************Radio Shit*************************/
 
 /obj/item/device/radio/headset/radioprison
 	name = "soviet radio"
 	icon = 'icons/misc/prison.dmi'
-	desc = "Новейшая разработка советских ученых - рация!"
+	desc = "ГЌГ®ГўГҐГ©ГёГ Гї Г°Г Г§Г°Г ГЎГ®ГІГЄГ  Г±Г®ГўГҐГІГ±ГЄГЁГµ ГіГ·ГҐГ­Г»Гµ - Г°Г Г¶ГЁГї!"
 	canhear_range = 3
 	frequency = 1469
 	slot_flags = SLOT_EARS
@@ -390,43 +630,49 @@
 /**********************Spawners**************************/
 
 /obj/effect/mob_spawn/human/prison
-	desc = "Кажется тут кто-то затаился под шконкой..."
+	desc = "ГЉГ Г¦ГҐГІГ±Гї ГІГіГІ ГЄГІГ®-ГІГ® Г§Г ГІГ ГЁГ«Г±Гї ГЇГ®Г¤ ГёГЄГ®Г­ГЄГ®Г©..."
 	icon = 'icons/misc/prison.dmi'
 	icon_state = "spwn"
 	roundstart = FALSE
 	death = FALSE
-	var/list/imena = list("Петренко", "Гаврилов", "Смирнов", "Гмызенко", "Юлия", "Сафронов", "Павлов", "Пердюк", "Золотарев", "Михалыч", "Попов", "Лштшфум Ащьф")
+	var/list/imena = list("ГЏГҐГІГ°ГҐГ­ГЄГ®", "ГѓГ ГўГ°ГЁГ«Г®Гў", "Г‘Г¬ГЁГ°Г­Г®Гў", "ГѓГ¬Г»Г§ГҐГ­ГЄГ®", "ГћГ«ГЁГї", "Г‘Г ГґГ°Г®Г­Г®Гў", "ГЏГ ГўГ«Г®Гў", "ГЏГҐГ°Г¤ГѕГЄ", "Г‡Г®Г«Г®ГІГ Г°ГҐГў", "ГЊГЁГµГ Г«Г»Г·", "ГЏГ®ГЇГ®Гў", "Г‹ГёГІГёГґГіГ¬ ГЂГ№ГјГґ")
 
 
 /obj/effect/mob_spawn/human/prison/doctor
 	name = "doctor spawner"
-	flavour_text = "Вы вечный патологоанатом тюрьмы Ромашка. Постарайтесь следить за телами, живые они или нет, и не забывайте готовить мясо для котлет.<b> И да, смерти в этой тюрьме не приветствуются, Вы верующий человек и бог с Вами.</b>"
+	flavour_text = "Г‚Г» ГўГҐГ·Г­Г»Г© ГЇГ ГІГ®Г«Г®ГЈГ®Г Г­Г ГІГ®Г¬ ГІГѕГ°ГјГ¬Г» ГђГ®Г¬Г ГёГЄГ . ГЏГ®Г±ГІГ Г°Г Г©ГІГҐГ±Гј Г±Г«ГҐГ¤ГЁГІГј Г§Г  ГІГҐГ«Г Г¬ГЁ, Г¦ГЁГўГ»ГҐ Г®Г­ГЁ ГЁГ«ГЁ Г­ГҐГІ, ГЁ Г­ГҐ Г§Г ГЎГ»ГўГ Г©ГІГҐ ГЈГ®ГІГ®ГўГЁГІГј Г¬ГїГ±Г® Г¤Г«Гї ГЄГ®ГІГ«ГҐГІ.<b> Г“ГЎГЁГўГ ГІГј ГЁ Г±ГЎГҐГЈГ ГІГј ГЎГҐГ§ Г®Г±Г®ГЎГ®Г© ГЇГ°ГЁГ·ГЁГ­Г» Г§Г ГЇГ°ГҐГ№ГҐГ­Г®, ГЁГ­Г Г·ГҐ Г‚Г Г± Г§Г ГЎГ Г­ГїГІ. ГЏГ°Г ГўГЁГ«Г  ГІГіГІ Г°Г ГЎГ®ГІГ ГѕГІ Гў ГЇГ®Г«Г­ГіГѕ Г±ГЁГ«Гі.</b>"
 	outfit = /datum/outfit/prison/doctor
 	assignedrole = "Doctor USSR"
 
+/obj/effect/mob_spawn/human/prison/chaplain
+	name = "prorok spawner"
+	flavour_text = "Г‚Г» ГЎГ»ГўГёГЁГ© Г§Г ГЄГ«ГѕГ·ГҐГ­Г­Г»Г© ГІГѕГ°ГјГ¬Г» ГђГ®Г¬Г ГёГЄГ  ГЇГ®Г¤Г ГўГёГЁГ©Г±Гї Гў Г±ГўГїГ№ГҐГ­Г­Г®Г±Г«ГіГ¦ГҐГ­ГЁГҐ. ГЏГ®Г¬Г®ГЈГ Г©ГІГҐ Г·ГҐГ¬ Г¬Г®Г¦ГҐГІГҐ ГўГ±ГҐГ¬ Г­ГіГ¦Г¤Г ГѕГ№ГЁГ¬Г±Гї.<b> Г“ГЎГЁГўГ ГІГј ГЁ Г±ГЎГҐГЈГ ГІГј ГЎГҐГ§ Г®Г±Г®ГЎГ®Г© ГЇГ°ГЁГ·ГЁГ­Г» Г§Г ГЇГ°ГҐГ№ГҐГ­Г®, ГЁГ­Г Г·ГҐ Г‚Г Г± Г§Г ГЎГ Г­ГїГІ. ГЏГ°Г ГўГЁГ«Г  ГІГіГІ Г°Г ГЎГ®ГІГ ГѕГІ Гў ГЇГ®Г«Г­ГіГѕ Г±ГЁГ«Гі.</b>"
+	outfit = /datum/outfit/prison/chaplain
+	assignedrole = "Prorok USSR"
+
 /obj/effect/mob_spawn/human/prison/vertuhai
 	name = "vertuhai spawner"
-	flavour_text = "Вы вечный смотритель тюрьмы Ромашка. Постарайтесь не убивать зеков без приказа свыше и не забывайте кушать котлеты.<b> И да, смерти в этой тюрьме не приветствуются, Вы верующий человек и бог с Вами.</b>"
+	flavour_text = "Г‚Г» ГўГҐГ·Г­Г»Г© Г±Г¬Г®ГІГ°ГЁГІГҐГ«Гј ГІГѕГ°ГјГ¬Г» ГђГ®Г¬Г ГёГЄГ . ГЏГ®Г±ГІГ Г°Г Г©ГІГҐГ±Гј Г­ГҐ ГіГЎГЁГўГ ГІГј Г§ГҐГЄГ®Гў ГЎГҐГ§ ГЇГ°ГЁГЄГ Г§Г  Г±ГўГ»ГёГҐ ГЁ Г­ГҐ Г§Г ГЎГ»ГўГ Г©ГІГҐ ГЄГіГёГ ГІГј ГЄГ®ГІГ«ГҐГІГ».<b> Г“ГЎГЁГўГ ГІГј ГЁ Г±ГЎГҐГЈГ ГІГј ГЎГҐГ§ Г®Г±Г®ГЎГ®Г© ГЇГ°ГЁГ·ГЁГ­Г» Г§Г ГЇГ°ГҐГ№ГҐГ­Г®, ГЁГ­Г Г·ГҐ Г‚Г Г± Г§Г ГЎГ Г­ГїГІ. ГЏГ°Г ГўГЁГ«Г  ГІГіГІ Г°Г ГЎГ®ГІГ ГѕГІ Гў ГЇГ®Г«Г­ГіГѕ Г±ГЁГ«Гі.</b>"
 	outfit = /datum/outfit/prison/vertuhai
 	assignedrole = "Vertuhai USSR"
 
 /obj/effect/mob_spawn/human/prison/mehanik
 	name = "mehanik spawner"
-	flavour_text = "Вы вечный механик тюрьмы Ромашка. Постарайтесь не взорвать двигатель, починить, что не сломано и не забывайте спрашивать у зеков, когда котлеты будут там.<b> И да, смерти в этой тюрьме не приветствуются, Вы верующий человек и бог с Вами.</b>"
+	flavour_text = "Г‚Г» ГўГҐГ·Г­Г»Г© Г¬ГҐГµГ Г­ГЁГЄ ГІГѕГ°ГјГ¬Г» ГђГ®Г¬Г ГёГЄГ . ГЏГ®Г±ГІГ Г°Г Г©ГІГҐГ±Гј Г­ГҐ ГўГ§Г®Г°ГўГ ГІГј Г¤ГўГЁГЈГ ГІГҐГ«Гј, ГЇГ®Г·ГЁГ­ГЁГІГј, Г·ГІГ® Г­ГҐ Г±Г«Г®Г¬Г Г­Г® ГЁ Г­ГҐ Г§Г ГЎГ»ГўГ Г©ГІГҐ Г±ГЇГ°Г ГёГЁГўГ ГІГј Гі Г§ГҐГЄГ®Гў, ГЄГ®ГЈГ¤Г  ГЄГ®ГІГ«ГҐГІГ» ГЎГіГ¤ГіГІ ГІГ Г¬.<b> Г“ГЎГЁГўГ ГІГј ГЁ Г±ГЎГҐГЈГ ГІГј ГЎГҐГ§ Г®Г±Г®ГЎГ®Г© ГЇГ°ГЁГ·ГЁГ­Г» Г§Г ГЇГ°ГҐГ№ГҐГ­Г®, ГЁГ­Г Г·ГҐ Г‚Г Г± Г§Г ГЎГ Г­ГїГІ. ГЏГ°Г ГўГЁГ«Г  ГІГіГІ Г°Г ГЎГ®ГІГ ГѕГІ Гў ГЇГ®Г«Г­ГіГѕ Г±ГЁГ«Гі.</b>"
 	outfit = /datum/outfit/prison/mehanik
 	assignedrole = "Mehanik USSR"
 
 /obj/effect/mob_spawn/human/prison/nachalnik
 	name = "nachalnik spawner"
-	flavour_text = "Вы вечный надзиратель тюрьмы Ромашка. Постарайтесь привести её в порядок и не забывайте напоминать зекам о том, что котлеты только завтра.<b> И да, смерти в этой тюрьме не приветствуются, Вы верующий человек и бог с Вами.</b>"
+	flavour_text = "Г‚Г» ГўГҐГ·Г­Г»Г© Г­Г Г¤Г§ГЁГ°Г ГІГҐГ«Гј ГІГѕГ°ГјГ¬Г» ГђГ®Г¬Г ГёГЄГ . ГЏГ®Г±ГІГ Г°Г Г©ГІГҐГ±Гј ГЇГ°ГЁГўГҐГ±ГІГЁ ГҐВё Гў ГЇГ®Г°ГїГ¤Г®ГЄ ГЁ Г­ГҐ Г§Г ГЎГ»ГўГ Г©ГІГҐ Г­Г ГЇГ®Г¬ГЁГ­Г ГІГј Г§ГҐГЄГ Г¬ Г® ГІГ®Г¬, Г·ГІГ® ГЄГ®ГІГ«ГҐГІГ» ГІГ®Г«ГјГЄГ® Г§Г ГўГІГ°Г .<b> Г“ГЎГЁГўГ ГІГј ГЁ Г±ГЎГҐГЈГ ГІГј ГЎГҐГ§ Г®Г±Г®ГЎГ®Г© ГЇГ°ГЁГ·ГЁГ­Г» Г§Г ГЇГ°ГҐГ№ГҐГ­Г®, ГЁГ­Г Г·ГҐ Г‚Г Г± Г§Г ГЎГ Г­ГїГІ. ГЏГ°Г ГўГЁГ«Г  ГІГіГІ Г°Г ГЎГ®ГІГ ГѕГІ Гў ГЇГ®Г«Г­ГіГѕ Г±ГЁГ«Гі.</b>"
 	icon_state = "spwn"
 	outfit = /datum/outfit/prison/nachalnik
 	assignedrole = "Nachalnik USSR"
 
 /obj/effect/mob_spawn/human/prison/prisoner
 	name = "shkonka spawner"
-	desc = "Кажется тут кто-то затаился под шконкой..."
-	flavour_text = "Вы вечный заключенный тюрьмы Ромашка. Отсиживайте свой тюремный срок как следует, слушайтесь начальника и не забывайте о том, что котлеты только завтра. Кстати, сидишь ты тут за "
+	desc = "ГЉГ Г¦ГҐГІГ±Гї ГІГіГІ ГЄГІГ®-ГІГ® Г§Г ГІГ ГЁГ«Г±Гї ГЇГ®Г¤ ГёГЄГ®Г­ГЄГ®Г©..."
+	flavour_text = "Г‚Г» ГўГҐГ·Г­Г»Г© Г§Г ГЄГ«ГѕГ·ГҐГ­Г­Г»Г© ГІГѕГ°ГјГ¬Г» ГђГ®Г¬Г ГёГЄГ . ГЋГІГ±ГЁГ¦ГЁГўГ Г©ГІГҐ Г±ГўГ®Г© ГІГѕГ°ГҐГ¬Г­Г»Г© Г±Г°Г®ГЄ ГЄГ ГЄ Г±Г«ГҐГ¤ГіГҐГІ, Г±Г«ГіГёГ Г©ГІГҐГ±Гј Г­Г Г·Г Г«ГјГ­ГЁГЄГ  ГЁ Г­ГҐ Г§Г ГЎГ»ГўГ Г©ГІГҐ Г® ГІГ®Г¬, Г·ГІГ® ГЄГ®ГІГ«ГҐГІГ» ГІГ®Г«ГјГЄГ® Г§Г ГўГІГ°Г .<b> Г“ГЎГЁГўГ ГІГј ГЁ Г±ГЎГҐГЈГ ГІГј ГЎГҐГ§ Г®Г±Г®ГЎГ®Г© ГЇГ°ГЁГ·ГЁГ­Г» Г§Г ГЇГ°ГҐГ№ГҐГ­Г®, ГЁГ­Г Г·ГҐ Г‚Г Г± Г§Г ГЎГ Г­ГїГІ. ГЏГ°Г ГўГЁГ«Г  ГІГіГІ Г°Г ГЎГ®ГІГ ГѕГІ Гў ГЇГ®Г«Г­ГіГѕ Г±ГЁГ«Гі.</b> ГЉГ±ГІГ ГІГЁ, Г±ГЁГ¤ГЁГёГј ГІГ» ГІГіГІ Г§Г  "
 	outfit = /datum/outfit/prison/prisoner
 	assignedrole = "Prisoner USSR"
 
@@ -443,8 +689,8 @@
 	r_pocket = /obj/item/gun/ballistic/automatic/pistol
 	l_pocket = /obj/item/card/id/keys
 	back = /obj/item/storage/backpack/satchel/leather
-	backpack_contents = list(/obj/item/device/flashlight/lantern = 1, /obj/item/crowbar/red = 1)
-	implants = list(/obj/item/implant/weapons_auth)
+	backpack_contents = list(/obj/item/device/flashlight/lantern = 1, /obj/item/crowbar/red = 1, /obj/item/melee/classic_baton = 1)
+	implants = list(/obj/item/implant/weapons_auth, /obj/item/implant/exile)
 
 /datum/outfit/prison/vertuhai
 	name = "Vertuhai USSR"
@@ -458,8 +704,8 @@
 	l_pocket = /obj/item/card/id/keys
 	belt = /obj/item/melee/classic_baton
 	back = /obj/item/storage/backpack/satchel/leather
-	backpack_contents = list(/obj/item/device/flashlight/lantern = 1, /obj/item/crowbar/red = 1)
-	implants = list(/obj/item/implant/weapons_auth)
+	backpack_contents = list(/obj/item/device/flashlight/lantern = 1, /obj/item/crowbar/red = 1, /obj/item/melee/classic_baton = 1)
+	implants = list(/obj/item/implant/weapons_auth, /obj/item/implant/exile)
 
 /datum/outfit/prison/mehanik
 	name = "Mehanik USSR"
@@ -472,8 +718,8 @@
 	l_pocket = /obj/item/card/id/keys
 	belt = /obj/item/storage/belt/utility/full/engi
 	back = /obj/item/storage/backpack/satchel/leather
-	backpack_contents = list(/obj/item/device/flashlight/lantern = 1, /obj/item/crowbar/red = 1)
-	implants = list(/obj/item/implant/weapons_auth)
+	backpack_contents = list(/obj/item/device/flashlight/lantern = 1, /obj/item/crowbar/red = 1, /obj/item/melee/classic_baton = 1)
+	implants = list(/obj/item/implant/weapons_auth, /obj/item/implant/exile)
 
 /datum/outfit/prison/nachalnik
 	name = "Nachalnik USSR"
@@ -487,8 +733,8 @@
 	l_pocket = /obj/item/card/id/keys
 	belt = /obj/item/storage/belt/military
 	back = /obj/item/storage/backpack/satchel/leather
-	backpack_contents = list(/obj/item/device/flashlight/lantern = 1, /obj/item/crowbar/red = 1)
-	implants = list(/obj/item/implant/weapons_auth)
+	backpack_contents = list(/obj/item/device/flashlight/lantern = 1, /obj/item/crowbar/red = 1, /obj/item/paper/fluff/awaymissions/prisonv2/nachruk = 1)
+	implants = list(/obj/item/implant/weapons_auth, /obj/item/implant/exile)
 
 /datum/outfit/prison/prisoner
 	name = "Prisoner USSR"
@@ -498,32 +744,32 @@
 /**********************Spawn-flavoures**************************/
 
 /obj/effect/mob_spawn/human/prison/doctor/special(mob/living/L)
-	L.real_name = "Доктор [pick(imena)]"
+	L.real_name = "Г„Г®ГЄГІГ®Г° [pick(imena)]"
 	L.name = L.real_name
 
 /obj/effect/mob_spawn/human/prison/vertuhai/special(mob/living/L)
-	L.real_name = "Смотритель [pick(imena)]"
+	L.real_name = "Г‘Г¬Г®ГІГ°ГЁГІГҐГ«Гј [pick(imena)]"
 	L.name = L.real_name
 
 /obj/effect/mob_spawn/human/prison/mehanik/special(mob/living/L)
-	L.real_name = "Механик [pick(imena)]"
+	L.real_name = "ГЊГҐГµГ Г­ГЁГЄ [pick(imena)]"
 	L.name = L.real_name
 
 /obj/effect/mob_spawn/human/prison/nachalnik/special(mob/living/L)
-	L.real_name = "Начальник [pick(imena)]"
+	L.real_name = "ГЌГ Г·Г Г«ГјГ­ГЁГЄ [pick(imena)]"
 	L.name = L.real_name
 
 /obj/effect/mob_spawn/human/prison/prisoner/special(mob/living/L)
-	var/list/klikuhi = list("Борзый", "Дохляк", "Академик", "Акула", "Базарило", "Бродяга", "Валет", "Воровайка", "Гнедой", \
-	"Гребень", "Дельфин", "Дырявый", "Игловой", "Карась", "Каторжанин", "Лабух", "Мазурик", "Мокрушник", "Понтовитый", \
-	"Ржавый", "Седой", "Сявка", "Темнила", "Чайка", "Чепушило", "Шакал", "Шерстяной", "Шмаровоз", "Шпилевой", "Олька", "Машка", \
-	"Щипач", "Якорник", "Сладкий", "Семьянин", "Порученец", "Блатной", "Арап", "Артист", "Апельсин", "Афер")
+	var/list/klikuhi = list("ГЃГ®Г°Г§Г»Г©", "Г„Г®ГµГ«ГїГЄ", "ГЂГЄГ Г¤ГҐГ¬ГЁГЄ", "ГЂГЄГіГ«Г ", "ГЃГ Г§Г Г°ГЁГ«Г®", "ГЃГ°Г®Г¤ГїГЈГ ", "Г‚Г Г«ГҐГІ", "Г‚Г®Г°Г®ГўГ Г©ГЄГ ", "ГѓГ­ГҐГ¤Г®Г©", \
+	"ГѓГ°ГҐГЎГҐГ­Гј", "Г„ГҐГ«ГјГґГЁГ­", "Г„Г»Г°ГїГўГ»Г©", "Г€ГЈГ«Г®ГўГ®Г©", "ГЉГ Г°Г Г±Гј", "ГЉГ ГІГ®Г°Г¦Г Г­ГЁГ­", "Г‹Г ГЎГіГµ", "ГЊГ Г§ГіГ°ГЁГЄ", "ГЊГ®ГЄГ°ГіГёГ­ГЁГЄ", "ГЏГ®Г­ГІГ®ГўГЁГІГ»Г©", \
+	"ГђГ¦Г ГўГ»Г©", "Г‘ГҐГ¤Г®Г©", "Г‘ГїГўГЄГ ", "Г’ГҐГ¬Г­ГЁГ«Г ", "Г—Г Г©ГЄГ ", "Г—ГҐГЇГіГёГЁГ«Г®", "ГГ ГЄГ Г«", "ГГҐГ°Г±ГІГїГ­Г®Г©", "ГГ¬Г Г°Г®ГўГ®Г§", "ГГЇГЁГ«ГҐГўГ®Г©", "ГЋГ«ГјГЄГ ", "ГЊГ ГёГЄГ ", \
+	"Г™ГЁГЇГ Г·", "ГџГЄГ®Г°Г­ГЁГЄ", "Г‘Г«Г Г¤ГЄГЁГ©", "Г‘ГҐГ¬ГјГїГ­ГЁГ­", "ГЏГ®Г°ГіГ·ГҐГ­ГҐГ¶", "ГЃГ«Г ГІГ­Г®Г©", "ГЂГ°Г ГЇ", "ГЂГ°ГІГЁГ±ГІ", "ГЂГЇГҐГ«ГјГ±ГЁГ­", "ГЂГґГҐГ°")
 	L.real_name = "[pick(klikuhi)]"
 	L.name = L.real_name
 
 /obj/effect/mob_spawn/human/prison/prisoner/Initialize(mapload)
 	. = ..()
-	var/list/zacho = list("убийство", "воровство", "коррупцию", "неисполнение обязанностей", "похищение людей", "грубую некомпетентность", \
-	"кражу", "поклонение запрещенному божеству", "межвидовые отношения", "мятеж")
+	var/list/zacho = list("ГіГЎГЁГ©Г±ГІГўГ®", "ГўГ®Г°Г®ГўГ±ГІГўГ®", "ГЄГ®Г°Г°ГіГЇГ¶ГЁГѕ", "Г­ГҐГЁГ±ГЇГ®Г«Г­ГҐГ­ГЁГҐ Г®ГЎГїГ§Г Г­Г­Г®Г±ГІГҐГ©", "ГЇГ®ГµГЁГ№ГҐГ­ГЁГҐ Г«ГѕГ¤ГҐГ©", "ГЈГ°ГіГЎГіГѕ Г­ГҐГЄГ®Г¬ГЇГҐГІГҐГ­ГІГ­Г®Г±ГІГј", \
+	"ГЄГ°Г Г¦Гі", "ГЇГ®ГЄГ«Г®Г­ГҐГ­ГЁГҐ Г§Г ГЇГ°ГҐГ№ГҐГ­Г­Г®Г¬Гі ГЎГ®Г¦ГҐГ±ГІГўГі", "Г¬ГҐГ¦ГўГЁГ¤Г®ГўГ»ГҐ Г®ГІГ­Г®ГёГҐГ­ГЁГї", "Г¬ГїГІГҐГ¦")
 	flavour_text += "[pick(zacho)].</b>."
 
