@@ -21,7 +21,7 @@
 	var/category_text = "NO CATEGORY THIS IS A BUG"	// To show up on circuit printer, and perhaps other places.
 	var/removable = TRUE 			// Determines if a circuit is removable from the assembly.
 	var/displayed_name = ""
-	var/allow_multitool = 1			// Allows additional multitool functionality
+	var/allow_multitool = TRUE		// Allows additional multitool functionality
 									// Used as a global var, (Do not set manually in children).
 
 /*
@@ -37,13 +37,16 @@ a creative player the means to solve many problems.  Circuits are held inside an
 // This should be used when someone is examining while the case is opened.
 /obj/item/integrated_circuit/proc/internal_examine(mob/user)
 	to_chat(user, "This board has [inputs.len] input pin\s, [outputs.len] output pin\s and [activators.len] activation pin\s.")
-	for(var/datum/integrated_io/I in inputs)
+	for(var/k in 1 to inputs.len)
+		var/datum/integrated_io/I = inputs[k]
 		if(I.linked.len)
 			to_chat(user, "The '[I]' is connected to [I.get_linked_to_desc()].")
-	for(var/datum/integrated_io/O in outputs)
+	for(var/k in 1 to outputs.len)
+		var/datum/integrated_io/O = outputs[k]
 		if(O.linked.len)
 			to_chat(user, "The '[O]' is connected to [O.get_linked_to_desc()].")
-	for(var/datum/integrated_io/activate/A in activators)
+	for(var/k in 1 to activators.len)
+		var/datum/integrated_io/activate/A = activators[k]
 		if(A.linked.len)
 			to_chat(user, "The '[A]' is connected to [A.get_linked_to_desc()].")
 	any_examine(user)
@@ -85,8 +88,15 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	return ..()
 */
 /obj/item/integrated_circuit/emp_act(severity)
-	for(var/datum/integrated_io/io in inputs + outputs + activators)
-		io.scramble()
+	for(var/k in 1 to inputs.len)
+		var/datum/integrated_io/I = inputs[k]
+		I.scramble()
+	for(var/k in 1 to outputs.len)
+		var/datum/integrated_io/O = outputs[k]
+		O.scramble()
+	for(var/k in 1 to activators.len)
+		var/datum/integrated_io/activate/A = activators[k]
+		A.scramble()
 
 
 /obj/item/integrated_circuit/verb/rename_component()
@@ -151,7 +161,8 @@ a creative player the means to solve many problems.  Circuits are held inside an
 					if(io)
 						words += "<b><a href=?src=[REF(src)];pin_name=1;pin=[REF(io)]>[io.display_pin_type()] [io.name]</a> <a href=?src=[REF(src)];pin_data=1;pin=[REF(io)]>[io.display_data(io.data)]</a></b><br>"
 						if(io.linked.len)
-							for(var/datum/integrated_io/linked in io.linked)
+							for(var/k in 1 to io.linked.len)
+								var/datum/integrated_io/linked = io.linked[k]
 //								words += "<a href=?src=[REF(linked.holder)];pin_name=1;pin=[REF(linked)];link=[REF(io)]>\[[linked]\]</a>
 								words += "<a href=?src=[REF(src)];pin_unwire=1;pin=[REF(io)];link=[REF(linked)]>[linked]</a> \
 								@ <a href=?src=[REF(linked.holder)];examine=1;>[linked.holder.displayed_name]</a><br>"
@@ -169,7 +180,8 @@ a creative player the means to solve many problems.  Circuits are held inside an
 					if(io)
 						words += "<b><a href=?src=[REF(src)];pin_name=1;pin=[REF(io)]>[io.display_pin_type()] [io.name]</a> <a href=?src=[REF(src)];pin_data=1;pin=[REF(io)]>[io.display_data(io.data)]</a></b><br>"
 						if(io.linked.len)
-							for(var/datum/integrated_io/linked in io.linked)
+							for(var/k in 1 to io.linked.len)
+								var/datum/integrated_io/linked = io.linked[k]
 //								words += "<a href=?src=[REF(linked.holder)];pin_name=1;pin=[REF(linked)];link=[REF(io)]>\[[linked]\]</a>
 								words += "<a href=?src=[REF(src)];pin_unwire=1;pin=[REF(io)];link=[REF(linked)]>[linked]</a> \
 								@ <a href=?src=[REF(linked.holder)];examine=1;>[linked.holder.displayed_name]</a><br>"
@@ -185,7 +197,8 @@ a creative player the means to solve many problems.  Circuits are held inside an
 
 		words += "<b><a href=?src=[REF(src)];pin_name=1;pin=[REF(io)]><font color='FF0000'>[io]</font></a> <a href=?src=[REF(src)];pin_data=1;pin=[REF(io)]><font color='FF0000'>[io.data?"\<PULSE OUT\>":"\<PULSE IN\>"]</font></a></b><br>"
 		if(io.linked.len)
-			for(var/datum/integrated_io/linked in io.linked)
+			for(var/k in 1 to io.linked.len)
+				var/datum/integrated_io/linked = io.linked[k]
 //				words += "<a href=?src=[REF(linked.holder)];pin_name=1;pin=[REF(linked)];link=[REF(io)]>\[[linked]\]</a>
 				words += "<a href=?src=[REF(src)];pin_unwire=1;pin=[REF(io)];link=[REF(linked)]><font color='FF0000'>[linked]</font></a> \
 				@ <a href=?src=[REF(linked.holder)];examine=1;><font color='FF0000'>[linked.holder.displayed_name]</font></a><br>"
@@ -219,11 +232,11 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	if(!check_interactivity(usr))
 		return
 	if(..())
-		return 1
+		return TRUE
 
-	var/update = 1
+	var/update = TRUE
 	var/obj/item/device/electronic_assembly/A = src.assembly
-	var/update_to_assembly = 0
+	var/update_to_assembly = FALSE
 	var/datum/integrated_io/pin = locate(href_list["pin"]) in inputs + outputs + activators
 	var/datum/integrated_io/linked = null
 	if(href_list["link"])
@@ -234,14 +247,14 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	if(href_list["rename"])
 		rename_component(usr)
 		if(href_list["from_assembly"])
-			update = 0
+			update = FALSE
 			var/obj/item/device/electronic_assembly/ea = loc
 			if(istype(ea))
 				ea.interact(usr)
 
 	if(href_list["pin_name"])
 		if (!istype(held_item, /obj/item/device/multitool) || !allow_multitool)
-			href_list["wire"] = 1
+			href_list["wire"] = TRUE
 		else
 			var/obj/item/device/multitool/M = held_item
 			M.wire(pin,usr)
@@ -250,7 +263,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 
 	if(href_list["pin_data"])
 		if (!istype(held_item, /obj/item/device/multitool) || !allow_multitool)
-			href_list["wire"] = 1
+			href_list["wire"] = TRUE
 
 		else
 			var/datum/integrated_io/io = pin
@@ -286,7 +299,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 
 	if(href_list["pin_unwire"])
 		if (!istype(held_item, /obj/item/device/multitool) || !allow_multitool)
-			href_list["wire"] = 1
+			href_list["wire"] = TRUE
 		else
 			var/obj/item/device/multitool/M = held_item
 			M.unwire(pin, linked, usr)
@@ -313,7 +326,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 		else
 			examined = src
 		examined.interact(usr)
-		update = 0
+		update = FALSE
 
 	if(href_list["bottom"])
 		var/obj/item/integrated_circuit/circuit = locate(href_list["bottom"]) in src.assembly.contents
@@ -322,8 +335,8 @@ a creative player the means to solve many problems.  Circuits are held inside an
 			return
 		circuit.loc = null
 		circuit.loc = assy
-		. = 1
-		update_to_assembly = 1
+		. = TRUE
+		update_to_assembly = TRUE
 
 	if(href_list["scan"])
 		if(istype(held_item, /obj/item/device/integrated_electronics/debugger))
@@ -337,7 +350,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 
 	if(href_list["return"])
 		if(A)
-			update_to_assembly = 1
+			update_to_assembly = TRUE
 			usr << browse(null, "window=circuit-[REF(src)];border=1;can_resize=1;can_close=1;can_minimize=1")
 		else
 			to_chat(usr, "<span class='warning'>This circuit is not in an assembly!</span>")
@@ -360,7 +373,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 
 		if(istype(ea))
 			ea.interact(usr)
-		update = 0
+		update = FALSE
 		return
 
 	if(update)
@@ -369,14 +382,14 @@ a creative player the means to solve many problems.  Circuits are held inside an
 		else
 			interact(usr) // To refresh the UI.
 
-
-
 /obj/item/integrated_circuit/proc/push_data()
-	for(var/datum/integrated_io/O in outputs)
+	for(var/k in 1 to outputs.len)
+		var/datum/integrated_io/O = outputs[k]
 		O.push_data()
 
 /obj/item/integrated_circuit/proc/pull_data()
-	for(var/datum/integrated_io/I in inputs)
+	for(var/k in 1 to inputs.len)
+		var/datum/integrated_io/I = inputs[k]
 		I.push_data()
 
 /obj/item/integrated_circuit/proc/draw_idle_power()
@@ -409,11 +422,15 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	return
 
 /obj/item/integrated_circuit/proc/disconnect_all()
-	for(var/datum/integrated_io/I in inputs)
+
+	for(var/k in 1 to inputs.len)
+		var/datum/integrated_io/I = inputs[k]
 		I.disconnect()
-	for(var/datum/integrated_io/O in outputs)
+	for(var/k in 1 to outputs.len)
+		var/datum/integrated_io/O = outputs[k]
 		O.disconnect()
-	for(var/datum/integrated_io/activate/A in activators)
+	for(var/k in 1 to activators.len)
+		var/datum/integrated_io/activate/A = activators[k]
 		A.disconnect()
 
 /obj/item/integrated_circuit/proc/ext_moved(oldLoc, dir)

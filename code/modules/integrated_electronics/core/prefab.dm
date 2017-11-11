@@ -9,7 +9,6 @@
 	var/list/as_names = list()
 	var/list/cir_names = list()
 
-
 /obj/item/device/integrated_electronics/prefab/attack_self(var/mob/user)
 	if(program && program != "blank")
 		assemble(program)
@@ -17,6 +16,7 @@
 		return ..()
 
 /obj/item/device/integrated_electronics/prefab/Initialize()
+	. = ..()
 	var/list/assembly_list = list(
 			new /obj/item/device/electronic_assembly(null),
 			new /obj/item/device/electronic_assembly/medium(null),
@@ -25,12 +25,14 @@
 			//new /obj/item/weapon/implant/integrated_circuit(null),
 			//new /obj/item/device/assembly/electronic_assembly(null)
 		)
-	for(var/obj/item/I in assembly_list)
+	for(var/k in 1 to assembly_list.len)
+		var/obj/item/I = assembly_list[k]
 		as_names[I.name] = I.type
-	for(var/obj/item/integrated_circuit/IC in SScircuit.all_integrated_circuits)
+	for(var/k in 1 to SScircuit.all_integrated_circuits.len)
+		var/obj/item/integrated_circuit/IC = SScircuit.all_integrated_circuits[k]
 		if((IC.spawn_flags & IC_SPAWN_DEFAULT) || (IC.spawn_flags & IC_SPAWN_RESEARCH))
 			cir_names[IC.name] = IC.type
-	addtimer(CALLBACK(src, .proc/attack_self), 2) // lemme tell you about timing
+	addtimer(CALLBACK(src, .proc/attack_self), 2) //IDK, why it's need dely,but otherwise it doesn't work.
 
 /obj/item/device/integrated_electronics/prefab/proc/assemble(var/program)
 
@@ -41,7 +43,7 @@
 	var/obj/item/AS
 	var/PA
 	var/i = 0
-	var/j = 0
+
 	var/list/ioa = list()
 	var/datum/integrated_io/IO
 	var/datum/integrated_io/IO2
@@ -69,7 +71,7 @@
 				elements.Add(elem)            //I don't know,why Cut or copy don't works. If somebody can fix it, it should be fixed.
 		if(debug)
 			visible_message( "<span class='notice'>components[elements.len]</span>")
-		if(elements_input.len<1)
+		if(!length(elements_input))
 			return
 		if(debug)
 			visible_message( "<span class='notice'>inserting components[elements.len]</span>")
@@ -85,24 +87,24 @@
 			comp.loc = AS
 			comp.displayed_name = element[2]
 			comp.assembly = AS
-			j = 0
-			for(var/datum/integrated_io/IN in comp.inputs)
-				j = j + 1
-				ioa["[i]i[j]"] = IN
-				if(debug)
-					visible_message( "<span class='notice'>[i]i[j]</span>")
-			j = 0
-			for(var/datum/integrated_io/OUT in comp.outputs)               //Also this block uses for setting all i/o id's
-				j=j+1
-				ioa["[i]o[j]"] = OUT
-				if(debug)
-					visible_message( "<span class='notice'>[i]o[j]</span>")
-			j = 0
-			for(var/datum/integrated_io/ACT in comp.activators)
-				j=j+1
-				ioa["[i]a[j]"] = ACT
-				if(debug)
-					visible_message( "<span class='notice'>[i]a[j]</span>")
+			if(comp.inputs && comp.inputs.len)
+				for(var/j in 1 to comp.inputs.len)
+					var/datum/integrated_io/IN = comp.inputs[j]
+					ioa["[i]i[j]"] = IN
+					if(debug)
+						visible_message( "<span class='notice'>[i]i[j]</span>")
+			if(comp.outputs && comp.outputs.len)
+				for(var/j in 1 to comp.outputs.len)               //Also this block uses for setting all i/o id's
+					var/datum/integrated_io/OUT = comp.outputs[j]
+					ioa["[i]o[j]"] = OUT
+					if(debug)
+						visible_message( "<span class='notice'>[i]o[j]</span>")
+			if(comp.activators && comp.activators.len)
+				for(var/j in 1 to comp.activators.len)
+					var/datum/integrated_io/ACT = comp.activators[j]
+					ioa["[i]a[j]"] = ACT
+					if(debug)
+						visible_message( "<span class='notice'>[i]a[j]</span>")
 
 	else
 		return
@@ -157,5 +159,5 @@
 				IO2 = ioa[element[2]]
 				IO.linked |= IO2
 
-	AS.loc = get_turf(src)
+	AS.forceMove(drop_location())
 	qdel(src)

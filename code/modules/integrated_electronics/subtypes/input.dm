@@ -17,8 +17,6 @@
 	activators = list("on pressed" = IC_PINTYPE_PULSE_IN)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
-
-
 /obj/item/integrated_circuit/input/button/ask_for_input(mob/user) //Bit misleading name for this specific use.
 	to_chat(user, "<span class='notice'>You press the button labeled '[src]'.</span>")
 	activate_pin(1)
@@ -423,7 +421,7 @@
 	var/datum/integrated_io/O = outputs[1]
 	O.data = null
 	var/turf/T = get_turf(src)
-	var/list/nearby_things = range(radius, T) & view(T)
+	var/list/nearby_things = view(radius,T)
 	var/list/valid_things = list()
 	var/list/GI = list()
 	GI = I.data
@@ -476,7 +474,7 @@
 	var/datum/integrated_io/O = outputs[1]
 	O.data = null
 	var/turf/T = get_turf(src)
-	var/list/nearby_things = range(radius, T) & view(T)
+	var/list/nearby_things =  view(radius,T)
 	var/list/valid_things = list()
 	if(isweakref(I.data))
 		var/atom/A = I.data.resolve()
@@ -587,7 +585,7 @@
 	activate_pin(3)
 
 	for(var/mob/O in hearers(1, get_turf(src)))
-		O.show_message(text("\icon[] *beep* *beep*", src), 3, "*beep* *beep*", 2)
+		audible_message("[icon2html(src, hearers(src))] *beep* *beep*", null, 1)
 
 /obj/item/integrated_circuit/input/EPv2
 	name = "EPv2 circuit"
@@ -650,7 +648,7 @@
 	icon_state = "gps"
 	complexity = 4
 	inputs = list()
-	outputs = list("X"= IC_PINTYPE_NUMBER, "Y" = IC_PINTYPE_NUMBER)
+	outputs = list("X"= IC_PINTYPE_NUMBER, "Y" = IC_PINTYPE_NUMBER, "Z" = IC_PINTYPE_NUMBER)
 	activators = list("get coordinates" = IC_PINTYPE_PULSE_IN, "on get coordinates" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 30
@@ -660,15 +658,16 @@
 
 	set_pin_data(IC_OUTPUT, 1, null)
 	set_pin_data(IC_OUTPUT, 2, null)
+	set_pin_data(IC_OUTPUT, 3, null)
 	if(!T)
 		return
 
 	set_pin_data(IC_OUTPUT, 1, T.x)
 	set_pin_data(IC_OUTPUT, 2, T.y)
+	set_pin_data(IC_OUTPUT, 3, T.z)
 
 	push_data()
 	activate_pin(2)
-
 
 /obj/item/integrated_circuit/input/microphone
 	name = "microphone"
@@ -684,10 +683,9 @@
 	"speaker" = IC_PINTYPE_STRING,
 	"message" = IC_PINTYPE_STRING
 	)
-	activators = list("on message received" = IC_PINTYPE_PULSE_IN, "on translation" = IC_PINTYPE_PULSE_OUT)
+	activators = list("on message received" = IC_PINTYPE_PULSE_OUT, "on translation" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 5
-
 
 /obj/item/integrated_circuit/input/microphone/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode)
 	var/translated = FALSE
@@ -702,8 +700,6 @@
 	activate_pin(1)
 	if(translated)
 		activate_pin(2)
-
-
 
 /obj/item/integrated_circuit/input/sensor
 	name = "sensor"
@@ -798,18 +794,8 @@
 	set_pin_data(IC_OUTPUT, 2, null)
 	set_pin_data(IC_OUTPUT, 3, null)
 	if(AM)
-
-
-		var/obj/item/stock_parts/cell/cell = null
-		if(istype(AM, /obj/item/stock_parts/cell)) // Is this already a cell?
-			cell = AM
-		else // If not, maybe there's a cell inside it?
-			for(var/obj/item/stock_parts/cell/C in AM.contents)
-				if(C) // Find one cell to charge.
-					cell = C
-					break
+		var/obj/item/stock_parts/cell/cell = get_cell(AM)
 		if(cell)
-
 			var/turf/A = get_turf(src)
 			if(AM in view(A))
 				push_data()
@@ -818,5 +804,3 @@
 				set_pin_data(IC_OUTPUT, 3, cell.percent())
 	push_data()
 	activate_pin(2)
-
-

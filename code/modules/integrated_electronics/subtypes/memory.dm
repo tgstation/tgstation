@@ -76,7 +76,6 @@
 	name = "constant chip"
 	desc = "This tiny chip can store one piece of data, which cannot be overwritten without disassembly."
 	icon_state = "memory"
-	complexity = 1
 	inputs = list()
 	outputs = list("output pin" = IC_PINTYPE_ANY)
 	activators = list("push data" = IC_PINTYPE_PULSE_IN)
@@ -89,9 +88,9 @@
 
 /obj/item/integrated_circuit/memory/constant/attack_self(mob/user)
 	var/datum/integrated_io/O = outputs[1]
-	var/type_to_use = input("Please choose a type to use.","[src] type setting") as null|anything in list("string","number","ref", "null")
 	if(!user.IsAdvancedToolUser())
 		return
+	var/type_to_use = input("Please choose a type to use.","[src] type setting") as null|anything in list("string","number","ref", "null")
 
 	var/new_data = null
 	switch(type_to_use)

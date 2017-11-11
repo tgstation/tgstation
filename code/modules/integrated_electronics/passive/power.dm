@@ -37,61 +37,20 @@
 	activators = list("pulse out" = IC_PINTYPE_PULSE_OUT)
 	origin_tech = list(TECH_POWER = 3, TECH_ENGINEERING = 3, TECH_DATA = 2)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
-	var/is_charge=FALSE
+	var/is_charge = FALSE
 
 /obj/item/integrated_circuit/passive/power/starter/make_energy()
 	if(assembly.battery)
 		if(assembly.battery.charge)
 			if(!is_charge)
 				activate_pin(1)
-			is_charge=TRUE
+			is_charge = TRUE
 		else
-			is_charge=FALSE
+			is_charge = FALSE
 	else
 		is_charge=FALSE
 	return FALSE
-/*
-// For implants.
-/obj/item/integrated_circuit/passive/power/metabolic_siphon
-	name = "metabolic siphon"
-	desc = "A complicated piece of technology which converts bodily nutriments of a host into electricity."
-	extended_desc = "The siphon generates 10W of energy, so long as the siphon exists inside a biological entity.  The entity will feel an increased \
-	appetite and will need to eat more often due to this.  This device will fail if used inside synthetic entities."
-	icon_state = "setup_implant"
-	complexity = 10
-	origin_tech = list(TECH_POWER = 4, TECH_ENGINEERING = 4, TECH_DATA = 4, TECH_BIO = 5)
-	spawn_flags = IC_SPAWN_RESEARCH
 
-/obj/item/integrated_circuit/passive/power/metabolic_siphon/proc/test_validity(var/mob/living/carbon/human/host)
-	if(!host || host.isSynthetic() || host.stat == DEAD || host.nutrition <= 10)
-		return FALSE // Robots and dead people don't have a metabolism.
-	return TRUE
-
-/obj/item/integrated_circuit/passive/power/metabolic_siphon/make_energy()
-	var/mob/living/carbon/human/host = null
-	if(assembly && istype(assembly, /obj/item/device/electronic_assembly/implant))
-		var/obj/item/device/electronic_assembly/implant/implant_assembly = assembly
-		if(implant_assembly.implant.imp_in)
-			host = implant_assembly.implant.imp_in
-	if(host && test_validity(host))
-		assembly.give_power(10)
-		host.nutrition = max(host.nutrition - DEFAULT_HUNGER_FACTOR, 0)
-
-/obj/item/integrated_circuit/passive/power/metabolic_siphon/synthetic
-	name = "internal energy siphon"
-	desc = "A small circuit designed to be connected to an internal power wire inside a synthetic entity."
-	extended_desc = "The siphon generates 10W of energy, so long as the siphon exists inside a synthetic entity.  The entity need to recharge \
-	more often due to this.  This device will fail if used inside organic entities."
-	icon_state = "setup_implant"
-	complexity = 10
-	origin_tech = list(TECH_POWER = 3, TECH_ENGINEERING = 4, TECH_DATA = 3)
-	spawn_flags = IC_SPAWN_RESEARCH
-
-/obj/item/integrated_circuit/passive/power/metabolic_siphon/synthetic/test_validity(var/mob/living/carbon/human/host)
-	if(!host || !host.isSynthetic() || host.stat == DEAD || host.nutrition <= 10)
-		return FALSE // This time we don't want a metabolism.
-	return TRUE
-*/
 // For fat machines that need fat power, like drones.
 /obj/item/integrated_circuit/passive/power/relay
 	name = "tesla power relay"

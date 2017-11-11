@@ -31,7 +31,7 @@ D [1]/  ||
 		data = new_data
 	holder = newloc
 	if(!istype(holder))
-		message_admins("ERROR: An integrated_io ([src.name]) spawned without a valid holder!  This is a bug.")
+		message_admins("ERROR: An integrated_io ([name]) spawned without a valid holder!  This is a bug.")
 
 /datum/integrated_io/Destroy()
 	disconnect()
@@ -115,15 +115,18 @@ list[](
 		holder.on_data_written()
 
 /datum/integrated_io/proc/push_data()
-	for(var/datum/integrated_io/io in linked)
+	for(var/k in 1 to linked.len)
+		var/datum/integrated_io/io = linked[k]
 		io.write_data_to_pin(data)
 
 /datum/integrated_io/activate/push_data()
-	for(var/datum/integrated_io/io in linked)
+	for(var/k in 1 to linked.len)
+		var/datum/integrated_io/io = linked[k]
 		io.holder.check_then_do_work()
 
 /datum/integrated_io/proc/pull_data()
-	for(var/datum/integrated_io/io in linked)
+	for(var/k in 1 to linked.len)
+		var/datum/integrated_io/io = linked[k]
 		write_data_to_pin(io.data)
 
 /datum/integrated_io/proc/get_linked_to_desc()
@@ -133,15 +136,19 @@ list[](
 
 /datum/integrated_io/proc/disconnect()
 	//First we iterate over everything we are linked to.
-	for(var/datum/integrated_io/their_io in linked)
-		//While doing that, we iterate them as well, and disconnect ourselves from them.
-		for(var/datum/integrated_io/their_linked_io in their_io.linked)
-			if(their_linked_io == src)
-				their_io.linked.Remove(src)
-			else
-				continue
-		//Now that we're removed from them, we gotta remove them from us.
-		src.linked.Remove(their_io)
+	if(linked && linked.len)
+		for(var/i in 1 to linked.len)
+			var/datum/integrated_io/their_io = linked[i]
+			//While doing that, we iterate them as well, and disconnect ourselves from them.
+			if(their_io.linked.len && their_io.linked)
+				for(var/j in 1 to their_io.linked.len)
+					var/datum/integrated_io/their_linked_io = their_io.linked[j]
+					if(their_linked_io == src)
+						their_io.linked.Remove(src)
+					else
+						continue
+			//Now that we're removed from them, we gotta remove them from us.
+			linked.Remove(their_io)
 
 /datum/integrated_io/proc/ask_for_data_type(mob/user, var/default, var/list/allowed_data_types = list("string","number","null"))
 	var/type_to_use = input("Please choose a type to use.","[src] type setting") as null|anything in allowed_data_types
@@ -153,7 +160,7 @@ list[](
 		if("string")
 			new_data = input("Now type in a string.","[src] string writing", istext(default) ? default : null) as null|text
 			if(istext(new_data) && holder.check_interactivity(user) )
-				to_chat(user, "<span class='notice'>You input [new_data] into the pin.</span>")
+				to_chat(user, "<span class='notice'>You input "+new_data+" into the pin.</span>")
 				return new_data
 		if("number")
 			new_data = input("Now type in a number.","[src] number writing", isnum(default) ? default : null) as null|num

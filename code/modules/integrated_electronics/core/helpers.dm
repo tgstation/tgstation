@@ -18,7 +18,10 @@
 		else
 			io_list.Add(new io_type(src, io_entry, default_data))
 
-/obj/item/integrated_circuit/proc/set_pin_data(var/pin_type, var/pin_number, var/new_data)
+
+/obj/item/integrated_circuit/proc/set_pin_data(var/pin_type, var/pin_number, datum/new_data)
+	if (istype(new_data) && !isweakref(new_data))
+		new_data = WEAKREF(new_data)
 	var/datum/integrated_io/pin = get_pin_ref(pin_type, pin_number)
 	return pin.write_data_to_pin(new_data)
 
@@ -35,8 +38,6 @@
 	A.push_data()
 
 /datum/integrated_io/proc/get_data()
-	if(isnull(data))
-		return
 	if(isweakref(data))
 		return data.resolve()
 	return data
@@ -45,31 +46,31 @@
 	switch(pin_type)
 		if(IC_INPUT)
 			if(pin_number > inputs.len)
-				return null
+				return
 			return inputs[pin_number]
 		if(IC_OUTPUT)
 			if(pin_number > outputs.len)
-				return null
+				return
 			return outputs[pin_number]
 		if(IC_ACTIVATOR)
 			if(pin_number > activators.len)
-				return null
+				return
 			return activators[pin_number]
-	return null
+	return
 
 /obj/item/integrated_circuit/proc/handle_wire(var/datum/integrated_io/pin, var/obj/item/device/integrated_electronics/tool)
 	if(istype(tool, /obj/item/device/integrated_electronics/wirer))
 		var/obj/item/device/integrated_electronics/wirer/wirer = tool
 		if(pin)
 			wirer.wire(pin, usr)
-			return 1
+			return TRUE
 
 	else if(istype(tool, /obj/item/device/integrated_electronics/debugger))
 		var/obj/item/device/integrated_electronics/debugger/debugger = tool
 		if(pin)
 			debugger.write_data(pin, usr)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 
 /obj/item/integrated_circuit/proc/asc2b64(var/S)
@@ -93,22 +94,15 @@
     					)
     var/ls = lentext(S)
     var/c
-    var/sb1
-    var/sb2
-    var/sb3
-    var/cb1
-    var/cb2
-    var/cb3
-    var/cb4
     var/i=1
     while(i <= ls)
-        sb1=text2ascii(S,i)
-        sb2=text2ascii(S,i+1)
-        sb3=text2ascii(S,i+2)
-        cb1 = (sb1 & 252)>>2
-        cb2 = ((sb1 & 3)<<6 | (sb2 & 240)>>2)>>2
-        cb3 = (sb2 & 15)<<2 | (sb3 & 192)>>6
-        cb4 = (sb3 & 63)
+        var/sb1=text2ascii(S,i)
+        var/sb2=text2ascii(S,i+1)
+        var/sb3=text2ascii(S,i+2)
+        var/cb1 = (sb1 & 252)>>2
+        var/cb2 = ((sb1 & 3)<<6 | (sb2 & 240)>>2)>>2
+        var/cb3 = (sb2 & 15)<<2 | (sb3 & 192)>>6
+        var/cb4 = (sb3 & 63)
         c=c+b64[cb1+1]+b64[cb2+1]+b64[cb3+1]+b64[cb4+1]
         i=i+3
     return c
@@ -118,28 +112,21 @@
 	"S"=19,"T"=20,"U"=21,"V"=22,"W"=23,"X"=24,"Y"=25,"Z"=26,"a"=27,"b"=28,"c"=29,"d"=30,"e"=31,"f"=32,"g"=33,"h"=34,"i"=35,"j"=36,"k"=37,"l"=38,"m"=39,"n"=40,"o"=41,
 	"p"=42,"q"=43,"r"=44,"s"=45,"t"=46,"u"=47,"v"=48,"w"=49,"x"=50,"y"=51,"z"=52,"0"=53,"1"=54,"2"=55,"3"=56,"4"=57,"5"=58,"6"=59,"7"=60,"8"=61,"9"=62,","=63,"."=64)
 	var/ls = lentext(S)
-	var/c=""
-	var/sb1=0
-	var/sb2=0
-	var/sb3=0
-	var/cb1=0
-	var/cb2=0
-	var/cb3=0
-	var/cb4=0
+	var/c
 	var/i=1
 	while(i<=ls)
-		cb1=b64[copytext(S,i,i+1)]-1
-		cb2=b64[copytext(S,i+1,i+2)]-1
-		cb3=b64[copytext(S,i+2,i+3)]-1
-		cb4=b64[copytext(S,i+3,i+4)]-1
-		sb1=cb1<<2 | (cb2 & 48)>>4
-		sb2=(cb2 & 15) <<4 | (cb3 & 60)>>2
-		sb3=(cb3 & 3)<<6 | cb4
+		var/cb1=b64[copytext(S,i,i+1)]-1
+		var/cb2=b64[copytext(S,i+1,i+2)]-1
+		var/cb3=b64[copytext(S,i+2,i+3)]-1
+		var/cb4=b64[copytext(S,i+3,i+4)]-1
+		var/sb1=cb1<<2 | (cb2 & 48)>>4
+		var/sb2=(cb2 & 15) <<4 | (cb3 & 60)>>2
+		var/sb3=(cb3 & 3)<<6 | cb4
 		c=c+ascii2text(sb1)+ascii2text(sb2)+ascii2text(sb3)
 		i=i+4
 	return c
 
-proc/XorEncrypt(string,key)
+/proc/XorEncrypt(string,key)
 	if(!string || !key ||!istext(string)||!istext(key))
 		return
 	var/r

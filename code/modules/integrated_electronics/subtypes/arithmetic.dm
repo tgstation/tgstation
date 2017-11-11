@@ -29,7 +29,8 @@
 
 /obj/item/integrated_circuit/arithmetic/addition/do_work()
 	var/result = 0
-	for(var/datum/integrated_io/I in inputs)
+	for(var/k in 1 to inputs.len)
+		var/datum/integrated_io/I = inputs[k]
 		I.pull_data()
 		if(isnum(I.data))
 			result = result + I.data
@@ -55,7 +56,8 @@
 		return
 	var/result = A.data
 
-	for(var/datum/integrated_io/I in inputs)
+	for(var/k in 1 to inputs.len)
+		var/datum/integrated_io/I = inputs[k]
 		if(I == A)
 			continue
 		I.pull_data()
@@ -83,7 +85,8 @@
 	if(!isnum(A.data))
 		return
 	var/result = A.data
-	for(var/datum/integrated_io/I in inputs)
+	for(var/k in 1 to inputs.len)
+		var/datum/integrated_io/I = inputs[k]
 		if(I == A)
 			continue
 		I.pull_data()
@@ -111,7 +114,8 @@
 		return
 	var/result = A.data
 
-	for(var/datum/integrated_io/I in inputs)
+	for(var/k in 1 to inputs.len)
+		var/datum/integrated_io/I = inputs[k]
 		if(I == A)
 			continue
 		I.pull_data()
@@ -191,7 +195,6 @@
 	push_data()
 	activate_pin(2)
 
-
 // Absolute //
 
 /obj/item/integrated_circuit/arithmetic/absolute
@@ -203,7 +206,8 @@
 
 /obj/item/integrated_circuit/arithmetic/absolute/do_work()
 	var/result = 0
-	for(var/datum/integrated_io/I in inputs)
+	for(var/k in 1 to inputs.len)
+		var/datum/integrated_io/I = inputs[k]
 		I.pull_data()
 		if(isnum(I.data))
 			result = abs(I.data)
@@ -224,7 +228,8 @@
 /obj/item/integrated_circuit/arithmetic/average/do_work()
 	var/result = 0
 	var/inputs_used = 0
-	for(var/datum/integrated_io/I in inputs)
+	for(var/k in 1 to inputs.len)
+		var/datum/integrated_io/I = inputs[k]
 		I.pull_data()
 		if(isnum(I.data))
 			inputs_used++
@@ -283,7 +288,8 @@
 
 /obj/item/integrated_circuit/arithmetic/square_root/do_work()
 	var/result = 0
-	for(var/datum/integrated_io/I in inputs)
+	for(var/k in 1 to inputs.len)
+		var/datum/integrated_io/I = inputs[k]
 		I.pull_data()
 		if(isnum(I.data))
 			result = sqrt(I.data)
@@ -311,4 +317,3 @@
 	set_pin_data(IC_OUTPUT, 1, result)
 	push_data()
 	activate_pin(2)
-

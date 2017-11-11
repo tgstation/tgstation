@@ -578,7 +578,7 @@
 		else //regex everything else (works for /proc too)
 			return lowertext(replacetext("[the_type]", "[type2parent(the_type)]/", ""))
 
-proc/strtohex(str)
+/proc/strtohex(str)
 	if(!istext(str)||!str)
 		return
 	var/r
@@ -588,7 +588,7 @@ proc/strtohex(str)
 		r+= num2hex(c)
 	return r
 
-proc/hextostr(str)
+/proc/hextostr(str)
 	if(!istext(str)||!str)
 		return
 	var/r
