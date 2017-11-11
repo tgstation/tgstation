@@ -9,25 +9,24 @@
 	internal_damage_threshold = 35
 	deflect_chance = 15
 	step_energy_drain = 6
-	var/builtin_hud_user = 0
+	var/builtin_hud_user = FALSE
 
 /obj/mecha/medical/odysseus/moved_inside(mob/living/carbon/human/H)
-	if(..())
+	. = ..()
+	if(.)
 		if(H.glasses && istype(H.glasses, /obj/item/clothing/glasses/hud))
-			occupant_message("<span class='warning'>Your [H.glasses] prevent you from using the built-in medical hud.</span>")
+			var/obj/item/clothing/glasses/hud/G = H.glasses
+			if (G.hud_type != DATA_HUD_MEDICAL_ADVANCED)
+				occupant_message("<span class='warning'>[H.glasses] prevent you from using the built-in medical HUD.</span>")
 		else
 			var/datum/atom_hud/data/human/medical/advanced/A = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 			A.add_hud_to(H)
-			builtin_hud_user = 1
-		return 1
-	else
-		return 0
+			builtin_hud_user = TRUE
 
 /obj/mecha/medical/odysseus/go_out()
 	if(ishuman(occupant) && builtin_hud_user)
 		var/mob/living/carbon/human/H = occupant
 		var/datum/atom_hud/data/human/medical/advanced/A = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 		A.remove_hud_from(H)
+		builtin_hud_user = FALSE
 	..()
-	return
-
