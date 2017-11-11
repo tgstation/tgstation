@@ -36,7 +36,7 @@
 	attack_sound = 'sound/creatures/hit3.ogg'
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 15) //It's a pretty big dude. Actually killing one is a feat.
 	var/time_spent_as_true = 0
-	var/playstyle_string = "<b><span class='big danger'>We have entered our true form!</font></span> We are unbelievably powerful, and regenerate life at a steady rate. However, most of \
+	var/playstyle_string = "<b><span class='big danger'>We have entered our true form!</span><br>We are unbelievably powerful, and regenerate life at a steady rate. However, most of \
 	our abilities are useless in this form, and we must utilise the abilities that we have gained as a result of our transformation. Taking too much damage will also turn us back into a \
 	human in addition to knocking us out. Finally, we will uncontrollably revert into a human after some time due to our inability to maintain this form.</b>"
 	var/mob/living/carbon/human/stored_changeling = null //The changeling that transformed
@@ -57,6 +57,13 @@
 	spine_crawl.Grant(src)
 	playsound(src, 'sound/creatures/ling_scream.ogg', 100, 1)
 	new /obj/effect/gibspawner/human(get_turf(src))
+
+/mob/living/simple_animal/hostile/true_changeling/Destroy()
+    QDEL_NULL(reform)
+    QDEL_NULL(devour)
+    QDEL_NULL(spine_crawl)
+    stored_changeling = null
+    return ..()
 
 /mob/living/simple_animal/hostile/true_changeling/Login()
 	to_chat(usr, playstyle_string)
@@ -79,9 +86,7 @@
 
 /mob/living/simple_animal/hostile/true_changeling/death()
 	..(1)
-	QDEL_NULL(reform)
-	QDEL_NULL(devour)
-	QDEL_NULL(spine_crawl)
+	new /obj/effect/gibspawner/human(get_turf(src))
 	if(stored_changeling && mind)
 		visible_message("<span class='warning'>[src] lets out a furious scream as it shrinks into its human form.</span>", \
 						"<span class='userdanger'>We lack the power to maintain this form! We helplessly turn back into a human...</span>")

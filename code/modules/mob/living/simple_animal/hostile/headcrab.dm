@@ -1,15 +1,15 @@
 #define EGG_INCUBATION_TIME 120
 
 /mob/living/simple_animal/hostile/headcrab
-	name = "headcrab"
+	name = "head-spider"
 	desc = "An amalgamation of human and, well, something not human. it gazes intensely into the distance chittering it's teeth."
 	icon = 'icons/mob/changeling.dmi'
 	icon_state = "headcrab"
 	icon_living = "headcrab"
 	icon_dead = "headcrab_dead"
 	gender = NEUTER
-	health = 50
-	maxHealth = 50
+	health = 55
+	maxHealth = 55
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	attacktext = "chomps"
