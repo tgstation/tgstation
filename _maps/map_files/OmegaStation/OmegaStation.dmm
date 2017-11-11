@@ -33901,6 +33901,19 @@
 	},
 /turf/open/space/basic,
 /area/space)
+"sws" = (
+/obj/docking_port/stationary{
+	dheight = 9;
+	dir = 2;
+	dwidth = 5;
+	height = 24;
+	id = "syndicate_sw";
+	name = "southwest of station";
+	turf_type = /turf/open/space;
+	width = 18
+	},
+/turf/open/space,
+/area/space)
 
 (1,1,1) = {"
 aaa
@@ -57577,7 +57590,7 @@ aaa
 aaa
 aaa
 aaa
-swr
+aaa
 aaa
 aaa
 aaa
@@ -62333,7 +62346,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+sws
 aaa
 aaa
 aaa
@@ -62842,7 +62855,7 @@ aaa
 aaa
 aaa
 aaa
-aab
+aaa
 aaa
 aaa
 aaa
@@ -64637,7 +64650,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aab
 aaa
 aaa
 aaa

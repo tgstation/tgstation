@@ -35,7 +35,7 @@
 	for(var/obj/machinery/computer/security/telescreen/entertainment/Monitor in GLOB.machines)
 		Monitor.icon_state = "entertainment_xmas"
 
-/datum/round_event/presents/announce()
+/datum/round_event/presents/announce(fake)
 	priority_announce("Ho Ho Ho, Merry Xmas!", "Unknown Transmission")
 
 
@@ -105,7 +105,7 @@
 /datum/round_event/santa
 	var/mob/living/carbon/human/santa //who is our santa?
 
-/datum/round_event/santa/announce()
+/datum/round_event/santa/announce(fake)
 	priority_announce("Santa is coming to town!", "Unknown Transmission")
 
 /datum/round_event/santa/start()
