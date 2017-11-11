@@ -2541,6 +2541,7 @@
 #include "hippiestation\code\modules\reagents\chemistry\reagents\toxin_reagents.dm"
 #include "hippiestation\code\modules\reagents\chemistry\recipes\drugs.dm"
 #include "hippiestation\code\modules\reagents\chemistry\recipes\medicine.dm"
+#include "hippiestation\code\modules\reagents\chemistry\recipes\other.dm"
 #include "hippiestation\code\modules\reagents\chemistry\recipes\pyrotechnics.dm"
 #include "hippiestation\code\modules\reagents\chemistry\recipes\toxins.dm"
 #include "hippiestation\code\modules\reagents\reagent_containers\bottle.dm"
