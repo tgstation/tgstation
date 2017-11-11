@@ -12,7 +12,7 @@
 		'hippiestation/sound/roundend/yamakemesick.ogg',
 		'hippiestation/sound/roundend/trapsaregay.ogg',
 		'hippiestation/sound/roundend/gayfrogs.ogg',
-		'hippiestation/sound/roundend/nitrogen.ogg',\
+		'hippiestation/sound/roundend/nitrogen.wab',\
 		)
 
 	world << sound(round_end_sound)
