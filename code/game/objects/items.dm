@@ -93,6 +93,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/flags_cover = 0 //for flags such as GLASSESCOVERSEYES
 	var/heat = 0
 	var/sharpness = IS_BLUNT
+
+	var/tool_behaviour = TOOL_NONE
 	var/toolspeed = 1
 
 	var/block_chance = 0
