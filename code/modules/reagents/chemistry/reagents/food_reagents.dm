@@ -99,7 +99,7 @@
 	if(holder && holder.chem_temp >= fry_temperature)
 		if(isitem(O))
 			O.loc.visible_message("<span class='warning'>[O] rapidly fries as it's splashed with hot oil! Somehow.</span>")
-			var/obj/item/reagent_containers/food/snacks/deepfryholder/F = new(drop_location())
+			var/obj/item/reagent_containers/food/snacks/deepfryholder/F = new(O.drop_location())
 			F.fry(O, volume)
 
 /datum/reagent/consumable/cooking_oil/reaction_mob(mob/living/M, method = TOUCH, reac_volume, show_message = 1, touch_protection = 0)
