@@ -47,6 +47,8 @@
 	assembly.state = 4
 	GLOB.cameranet.cameras += src
 	GLOB.cameranet.addCamera(src)
+	var/area/A = get_area(src)
+	LAZYADD(A.cameras, src)
 	proximity_monitor = new(src, 1)
 
 	if(mapload && (z in GLOB.station_z_levels) && prob(3) && !start_active)
@@ -54,6 +56,8 @@
 
 /obj/machinery/camera/Destroy()
 	toggle_cam(null, 0) //kick anyone viewing out
+	var/area/A = get_area(src)
+	LAZYREMOVE(A.cameras, src)
 	if(assembly)
 		qdel(assembly)
 		assembly = null
@@ -266,11 +270,14 @@
 
 /obj/machinery/camera/proc/toggle_cam(mob/user, displaymessage = 1)
 	status = !status
+	var/area/A = get_area(src)
 	if(can_use())
 		GLOB.cameranet.addCamera(src)
+		LAZYADD(A.cameras, src)
 	else
 		set_light(0)
 		GLOB.cameranet.removeCamera(src)
+		LAZYREMOVE(A.cameras, src)
 	GLOB.cameranet.updateChunk(x, y, z)
 	var/change_msg = "deactivates"
 	if(status)
@@ -298,12 +305,12 @@
 
 /obj/machinery/camera/proc/triggerCameraAlarm()
 	alarm_on = TRUE
-	for(var/mob/living/silicon/S in GLOB.mob_list)
+	for(var/mob/living/silicon/S in GLOB.silicon_mobs)
 		S.triggerAlarm("Camera", get_area(src), list(src), src)
 
 /obj/machinery/camera/proc/cancelCameraAlarm()
 	alarm_on = FALSE
-	for(var/mob/living/silicon/S in GLOB.mob_list)
+	for(var/mob/living/silicon/S in GLOB.silicon_mobs)
 		S.cancelAlarm("Camera", get_area(src), src)
 
 /obj/machinery/camera/proc/can_use()

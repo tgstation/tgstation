@@ -58,6 +58,8 @@
 	flags_1 = CAN_BE_DIRTY_1
 
 	var/list/firedoors
+	var/list/cameras
+	var/list/firealarms
 	var/firedoors_last_closed_on = 0
 
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
@@ -102,7 +104,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	uid = ++global_uid
 	related = list(src)
 	map_name = name // Save the initial (the name set in the map) name of the area.
-	
+
 	if(requires_power)
 		luminosity = 0
 	else
@@ -239,18 +241,24 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		if (!( RA.fire ))
 			RA.set_fire_alarm_effect()
 			RA.ModifyFiredoors(FALSE)
-			for(var/obj/machinery/firealarm/F in RA)
+			for(var/item in RA.firealarms)
+				var/obj/machinery/firealarm/F = item
 				F.update_icon()
-		for (var/obj/machinery/camera/C in RA)
+		for (var/item in RA.cameras)
+			var/obj/machinery/camera/C = item
 			cameras += C
 
-	for (var/obj/machinery/computer/station_alert/a in GLOB.machines)
+	for (var/item in GLOB.alert_consoles)
+		var/obj/machinery/computer/station_alert/a = item
 		a.triggerAlarm("Fire", src, cameras, source)
-	for (var/mob/living/silicon/aiPlayer in GLOB.player_list)
+	for (var/item in GLOB.silicon_mobs)
+		var/mob/living/silicon/aiPlayer = item
 		aiPlayer.triggerAlarm("Fire", src, cameras, source)
-	for (var/mob/living/simple_animal/drone/D in GLOB.mob_list)
+	for (var/item in GLOB.drones_list)
+		var/mob/living/simple_animal/drone/D = item
 		D.triggerAlarm("Fire", src, cameras, source)
-	for(var/datum/computer_file/program/alarm_monitor/p in GLOB.alarmdisplay)
+	for(var/item in GLOB.alarmdisplay)
+		var/datum/computer_file/program/alarm_monitor/p = item
 		p.triggerAlarm("Fire", src, cameras, source)
 
 	START_PROCESSING(SSobj, src)
