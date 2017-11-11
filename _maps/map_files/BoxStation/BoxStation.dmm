@@ -32267,6 +32267,8 @@
 "bBF" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/toolbox/electrical,
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bBG" = (
@@ -33472,6 +33474,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bEC" = (
@@ -36439,10 +36444,15 @@
 /area/science/research)
 "bLi" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/pill_bottle/dice,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bLj" = (
