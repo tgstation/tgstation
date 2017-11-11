@@ -139,7 +139,7 @@ list[](
 	for(var/i in 1 to linked.len)
 		var/datum/integrated_io/their_io = linked[i]
 		//While doing that, we iterate them as well, and disconnect ourselves from them.
-		for(var/j in their_io.linked.len)
+		for(var/j in 1 to their_io.linked.len)
 			var/datum/integrated_io/their_linked_io = their_io.linked[j]
 			if(their_linked_io == src)
 				their_io.linked.Remove(src)
