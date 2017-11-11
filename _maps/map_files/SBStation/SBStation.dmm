@@ -1116,7 +1116,6 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
 	},
-/obj/structure/closet/bombcloset/security,
 /turf/open/floor/plasteel,
 /area/security/main)
 "acB" = (
@@ -1753,7 +1752,8 @@
 	pixel_x = 0;
 	pixel_y = 22
 	},
-/obj/machinery/computer/prisoner,
+/obj/structure/table/reinforced,
+/obj/machinery/recharger,
 /turf/open/floor/plasteel/red/side{
 	dir = 1
 	},
@@ -1762,7 +1762,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/table/reinforced,
+/obj/machinery/computer/prisoner,
 /turf/open/floor/plasteel/red/side{
 	dir = 5
 	},
@@ -2225,10 +2225,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/rack{
-	dir = 1
+/obj/structure/closet/bombcloset/security{
+	anchored = 1
 	},
-/obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aeI" = (
@@ -26849,10 +26848,6 @@
 /turf/closed/wall/r_wall,
 /area/security/courtroom)
 "bgQ" = (
-/obj/machinery/recharger{
-	pixel_x = 30;
-	pixel_y = 32
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
@@ -26864,7 +26859,6 @@
 /area/security/courtroom)
 "bgU" = (
 /obj/structure/window/reinforced,
-/obj/machinery/computer/security,
 /obj/machinery/computer/secure_data,
 /turf/open/floor/plasteel/red/side,
 /area/security/brig)
