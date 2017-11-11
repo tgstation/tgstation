@@ -1,0 +1,5 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - bugfix: "You can no longer delete girders, lattices, or catwalks with the RPD"
+  - bugfix: "Fixes runtimes that occur when clicking girders, lattices, catwalks, or disposal pipes with the RPD in paint mode"
