@@ -60,3 +60,13 @@
 	if(prob(10) && owner.stat == CONSCIOUS)
 		owner.Stun(100)
 		switch(rand(1, 3))
+			if(1)
+				owner.emote("twitch")
+			if(2 to 3)
+				owner.say("[prob(50) ? ";" : ""][pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS")]")
+		var/x_offset_old = owner.pixel_x
+		var/y_offset_old = owner.pixel_y
+		var/x_offset = owner.pixel_x + rand(-2,2)
+		var/y_offset = owner.pixel_y + rand(-1,1)
+		animate(owner, pixel_x = x_offset, pixel_y = y_offset, time = 1)
+		animate(owner, pixel_x = x_offset_old, pixel_y = y_offset_old, time = 1)
