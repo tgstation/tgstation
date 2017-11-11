@@ -136,17 +136,19 @@ list[](
 
 /datum/integrated_io/proc/disconnect()
 	//First we iterate over everything we are linked to.
-	for(var/i in 1 to linked.len)
-		var/datum/integrated_io/their_io = linked[i]
-		//While doing that, we iterate them as well, and disconnect ourselves from them.
-		for(var/j in 1 to their_io.linked.len)
-			var/datum/integrated_io/their_linked_io = their_io.linked[j]
-			if(their_linked_io == src)
-				their_io.linked.Remove(src)
-			else
-				continue
-		//Now that we're removed from them, we gotta remove them from us.
-		linked.Remove(their_io)
+	if(linked && linked.len)
+		for(var/i in 1 to linked.len)
+			var/datum/integrated_io/their_io = linked[i]
+			//While doing that, we iterate them as well, and disconnect ourselves from them.
+			if(their_io.linked.len && their_io.linked)
+				for(var/j in 1 to their_io.linked.len)
+					var/datum/integrated_io/their_linked_io = their_io.linked[j]
+					if(their_linked_io == src)
+						their_io.linked.Remove(src)
+					else
+						continue
+			//Now that we're removed from them, we gotta remove them from us.
+			linked.Remove(their_io)
 
 /datum/integrated_io/proc/ask_for_data_type(mob/user, var/default, var/list/allowed_data_types = list("string","number","null"))
 	var/type_to_use = input("Please choose a type to use.","[src] type setting") as null|anything in allowed_data_types
