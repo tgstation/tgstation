@@ -876,6 +876,16 @@
 	pixel_x = 3;
 	pixel_y = 2
 	},
+/obj/item/clothing/accessory{
+	desc = "A patch worn on the shoulder of a security officer's uniform. This patch denotes the rank of Sergeant";
+	icon_state = "sergeant";
+	name = "Rank Patch - Sergeant"
+	},
+/obj/item/clothing/accessory{
+	desc = "A patch worn on the shoulder of a security officer's uniform. This patch denotes the rank of Sergeant";
+	icon_state = "sergeant";
+	name = "Rank Patch - Sergeant"
+	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
 "acf" = (
@@ -888,6 +898,20 @@
 /area/crew_quarters/heads/hos)
 "ach" = (
 /obj/machinery/computer/card/minor/hos,
+/obj/item/clothing/accessory{
+	desc = "A medal granted to those who exhibit devotion to their duties and have gone above and beyond the expectations of nanotransen.";
+	icon_state = "star";
+	name = "Service Star - Lt. Cordelia Knight";
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/clothing/accessory{
+	desc = "Awarded to security forces who exhibit unparalleled leadership and unwavering dedication to the protection and security of nanotransen.";
+	icon_state = "cross";
+	name = "Guardian's Cross - Lt. Cordelia Knight";
+	pixel_x = 0;
+	pixel_y = 5
+	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
 "aci" = (
@@ -1402,6 +1426,11 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/item/clothing/accessory{
+	desc = "A patch worn on the shoulder of a security officer's uniform. This patch denotes the rank of Lieutenant.";
+	icon_state = "lt";
+	name = "Rank Patch - Lieutenant"
+	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
 "ada" = (
@@ -1622,6 +1651,11 @@
 	pixel_y = 26
 	},
 /obj/structure/cable/white,
+/obj/item/clothing/accessory{
+	desc = "A patch worn on the shoulder of a security officer's uniform. This patch denotes the rank of Officer";
+	icon_state = "officer";
+	name = "Rank Patch - Officer"
+	},
 /turf/open/floor/plasteel/red/side{
 	dir = 9
 	},
@@ -1707,7 +1741,6 @@
 	},
 /area/security/brig)
 "adG" = (
-/obj/machinery/computer/security,
 /obj/machinery/camera{
 	c_tag = "Security - Control Center";
 	dir = 2;
@@ -1720,6 +1753,7 @@
 	pixel_x = 0;
 	pixel_y = 22
 	},
+/obj/machinery/computer/prisoner,
 /turf/open/floor/plasteel/red/side{
 	dir = 1
 	},
@@ -1780,6 +1814,11 @@
 /area/security/main)
 "adP" = (
 /obj/structure/closet/secure_closet/security/sec,
+/obj/item/clothing/accessory{
+	desc = "A patch worn on the shoulder of a security officer's uniform. This patch denotes the rank of Officer";
+	icon_state = "officer";
+	name = "Rank Patch - Officer"
+	},
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
@@ -1957,6 +1996,21 @@
 	},
 /obj/machinery/light{
 	dir = 8
+	},
+/obj/item/clothing/accessory{
+	desc = "A patch worn on the shoulder of a security officer's uniform. This patch denotes the rank of Officer";
+	icon_state = "officer";
+	name = "Rank Patch - Officer"
+	},
+/obj/item/clothing/accessory{
+	desc = "A patch worn on the shoulder of a security officer's uniform. This patch denotes the rank of Officer";
+	icon_state = "officer";
+	name = "Rank Patch - Officer"
+	},
+/obj/item/clothing/accessory{
+	desc = "A patch worn on the shoulder of a security officer's uniform. This patch denotes the rank of Officer";
+	icon_state = "officer";
+	name = "Rank Patch - Officer"
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 8
@@ -2305,7 +2359,7 @@
 /area/security/brig)
 "aeW" = (
 /obj/structure/window/reinforced,
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/security,
 /turf/open/floor/plasteel/red/side,
 /area/security/brig)
 "aeX" = (
@@ -4485,6 +4539,11 @@
 /obj/item/stamp/cmo,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/folder/white,
+/obj/item/clothing/accessory{
+	desc = "Awarded for significant contributions towards the medical field and for the unwavering devotion to the treatment and care for patients.";
+	icon_state = "medical";
+	name = "Cross of Sacrifice - Bridget Jenner PhD"
+	},
 /turf/open/floor/plasteel/barber,
 /area/crew_quarters/heads/cmo)
 "aki" = (
@@ -10213,6 +10272,14 @@
 /obj/structure/table/reinforced,
 /obj/item/device/assembly/timer,
 /obj/item/device/aicard,
+/obj/item/clothing/accessory{
+	desc = "A medal granted to those who exhibit devotion to their duties and have gone above and beyond the expectations of nanotransen.";
+	icon_state = "star";
+	name = "Service Star - Vanca Lucanae"
+	},
+/obj/item/clothing/accessory/medal/silver/security{
+	name = "Robust Security Award - Vanca Lucanae"
+	},
 /turf/open/floor/plasteel,
 /area/bridge)
 "axS" = (
@@ -17484,6 +17551,16 @@
 	pixel_y = 0;
 	req_access_txt = "47"
 	},
+/obj/item/clothing/accessory{
+	desc = "A medal granted to those who exhibit devotion to their duties and have gone above and beyond the expectations of nanotransen.";
+	icon_state = "star";
+	name = "Service Star - Quam Jublia PhD";
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/item/clothing/accessory/medal/plasma/nobel_science{
+	name = "Nobel Sciences Award - Quam Jublia PhD"
+	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
 "aMC" = (
@@ -19640,6 +19717,9 @@
 	},
 /obj/item/lighter,
 /obj/item/storage/fancy/cigarettes,
+/obj/item/clothing/accessory/medal/silver/security{
+	name = "Robust Security Award - Detective Marcus Capitani"
+	},
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "aRq" = (
@@ -19875,6 +19955,11 @@
 	pixel_y = 0
 	},
 /obj/structure/closet/secure_closet/detective,
+/obj/item/clothing/accessory{
+	desc = "He's a loose cannon but he's the best we've got!";
+	icon_state = "detective";
+	name = "Rank Patch - Detective"
+	},
 /turf/open/floor/wood,
 /area/security/detectives_office)
 "aRY" = (
@@ -26492,6 +26577,11 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/item/clothing/accessory{
+	desc = "A medal granted to those who exhibit devotion to their duties and have gone above and beyond the expectations of nanotransen.";
+	icon_state = "star";
+	name = "Service Star - Hal"
+	},
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "bgm" = (
@@ -26774,7 +26864,8 @@
 /area/security/courtroom)
 "bgU" = (
 /obj/structure/window/reinforced,
-/obj/machinery/computer/prisoner,
+/obj/machinery/computer/security,
+/obj/machinery/computer/secure_data,
 /turf/open/floor/plasteel/red/side,
 /area/security/brig)
 "bgW" = (
