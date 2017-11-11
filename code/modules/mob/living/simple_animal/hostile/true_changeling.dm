@@ -3,7 +3,7 @@
 #define TRUE_CHANGELING_FORCED_REFORM 180 //3 minutes
 
 //Changelings in their true form.
-//Massive health and damage, but move slowly.
+//Massive health and damage, but all of their chems and it's really obvious it's >them
 
 /mob/living/simple_animal/hostile/true_changeling
 	name = "ancient horror"
@@ -15,7 +15,7 @@
 	icon_state = "horror1"
 	icon_living = "horror1"
 	icon_dead = "horror_dead"
-	speed = -0.5
+	speed = 0
 	gender = NEUTER
 	a_intent = "harm"
 	stop_automated_movement = 1
@@ -35,19 +35,28 @@
 	attacktext = "tears into"
 	attack_sound = 'sound/creatures/hit3.ogg'
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 15) //It's a pretty big dude. Actually killing one is a feat.
-	gold_core_spawnable = 1 //To be fair, they won't be able to become changelings, like headslugs can
 	var/time_spent_as_true = 0
-	var/playstyle_string = "<b><font size=3 color='red'>We have entered our true form!</font> We are unbelievably powerful, and regenerate life at a steady rate. However, most of \
+	var/playstyle_string = "<b><span class='big danger'>We have entered our true form!</font></span> We are unbelievably powerful, and regenerate life at a steady rate. However, most of \
 	our abilities are useless in this form, and we must utilise the abilities that we have gained as a result of our transformation. Taking too much damage will also turn us back into a \
 	human in addition to knocking us out. Finally, we will uncontrollably revert into a human after some time due to our inability to maintain this form.</b>"
 	var/mob/living/carbon/human/stored_changeling = null //The changeling that transformed
 	var/devouring = FALSE //If the true changeling is currently devouring a human
 	var/wallcrawl = FALSE //If the true changeling is crawling around the place, allowing it to counteract gravity loss
+	var/datum/action/innate/changeling/reform/reform
+	var/datum/action/innate/changeling/devour/devour
+	var/datum/action/innate/changeling/spine_crawl/spine_crawl
 
-/mob/living/simple_animal/hostile/true_changeling/New()
-	..()
+/mob/living/simple_animal/hostile/true_changeling/Initialize()
+	. = ..()
 	icon_state = "horror[rand(1, 4)]"
-	playsound(usr, 'sound/creatures/ling_scream.ogg', 50, 1)
+	reform = new
+	reform.Grant(src)
+	devour = new
+	devour.Grant(src)
+	spine_crawl = new
+	spine_crawl.Grant(src)
+	playsound(src, 'sound/creatures/ling_scream.ogg', 100, 1)
+	new /obj/effect/gibspawner/human(get_turf(src))
 
 /mob/living/simple_animal/hostile/true_changeling/Login()
 	to_chat(usr, playstyle_string)
@@ -70,12 +79,15 @@
 
 /mob/living/simple_animal/hostile/true_changeling/death()
 	..(1)
+	QDEL_NULL(reform)
+	QDEL_NULL(devour)
+	QDEL_NULL(spine_crawl)
 	if(stored_changeling && mind)
 		visible_message("<span class='warning'>[src] lets out a furious scream as it shrinks into its human form.</span>", \
 						"<span class='userdanger'>We lack the power to maintain this form! We helplessly turn back into a human...</span>")
 		stored_changeling.loc = get_turf(src)
 		mind.transfer_to(stored_changeling)
-		stored_changeling.Unconscious(30) //Make them helpless for 30 seconds
+		stored_changeling.Unconscious(300) //Make them helpless for some time
 		stored_changeling.status_flags &= ~GODMODE
 		qdel(src)
 	else
@@ -93,45 +105,53 @@
 	amount *= 2 //True changelings take 2 times the burn damage!
 	..()
 
-/mob/living/simple_animal/hostile/true_changeling/verb/reform()
-	set name = "Re-Form Human Shell"
-	set desc = "We turn back into a human. This takes considerable effort and will stun us for some time afterwards."
-	set category = "True Changeling"
+/datum/action/innate/changeling
+	icon_icon = 'icons/mob/actions/actions_animal.dmi'
+	background_icon_state = "bg_ling"
 
-	if(stat)
-		to_chat(usr, "<span class='warning'>We must be conscious to debase ourselves!</span>")
+/datum/action/innate/changeling/reform
+	name = "Re-Form Human Shell"
+	desc = "We turn back into a human. This takes considerable effort and will stun us for some time afterwards."
+	check_flags = AB_CHECK_CONSCIOUS
+	button_icon_state = "reform"
+
+/datum/action/innate/changeling/reform/Activate()
+	var/mob/living/simple_animal/hostile/true_changeling/M = owner
+	if(!istype(M))
+		return
+	if(!M.stored_changeling)
+		to_chat(M, "<span class='warning'>We do not have a form other than this!</span>")
 		return FALSE
-	if(!stored_changeling)
-		to_chat(usr, "<span class='warning'>We do not have a form other than this!</span>")
+	if(M.time_spent_as_true < TRUE_CHANGELING_REFORM_THRESHOLD)
+		to_chat(M, "<span class='warning'>We are not able to change back at will!</span>")
 		return FALSE
-	if(time_spent_as_true < TRUE_CHANGELING_REFORM_THRESHOLD)
-		to_chat(usr, "<span class='warning'>We are not able to change back at will!</span>")
-		return FALSE
-	visible_message("<span class='warning'>[src] suddenly crunches and twists into a smaller form!</span>", \
-					"<span class='danger'>We return to our lesser form.</span>")
-	stored_changeling.loc = get_turf(src)
-	mind.transfer_to(stored_changeling)
-	stored_changeling.Unconscious(80)
-	stored_changeling.status_flags &= ~GODMODE
-	qdel(usr)
+	M.visible_message("<span class='warning'>[M] suddenly crunches and twists into a smaller form!</span>", \
+					"<span class='danger'>We return to our human form.</span>")
+	M.stored_changeling.forceMove(get_turf(src))
+	M.mind.transfer_to(M.stored_changeling)
+	M.stored_changeling.Unconscious(200)
+	M.stored_changeling.status_flags &= ~GODMODE
+	qdel(M)
 	return 1
 
-/mob/living/simple_animal/hostile/true_changeling/verb/devour()
-	set name = "Devour"
-	set desc = "We tear into the innards of a human. After some time, they will be significantly damaged and our health partially restored."
-	set category = "True Changeling"
+/datum/action/innate/changeling/devour
+	name = "Devour"
+	desc = "We tear into the innards of a human. After some time, they will be significantly damaged and our health partially restored."
+	check_flags = AB_CHECK_CONSCIOUS
+	button_icon_state = "reform"
 
-	if(stat)
-		to_chat(usr, "<span class='warning'>We must be conscious to feast!</span>")
-		return FALSE
-	if(devouring)
-		to_chat(usr, "<span class='warning'>We are already feasting on a human!</span>")
+/datum/action/innate/changeling/devour/Activate()
+	var/mob/living/simple_animal/hostile/true_changeling/M = owner
+	if(!istype(M))
+		return
+	if(M.devouring)
+		to_chat(M, "<span class='warning'>We are already feasting on a human!</span>")
 		return FALSE
 	var/list/potential_targets = list()
 	for(var/mob/living/carbon/human/H in range(1, src))
 		potential_targets.Add(H)
 	if(!potential_targets.len)
-		to_chat(usr, "<span class='warning'>There are no humans nearby!</span>")
+		to_chat(M, "<span class='warning'>There are no humans nearby!</span>")
 		return FALSE
 	var/mob/living/carbon/human/lunch
 	if(potential_targets.len == 1)
@@ -141,46 +161,49 @@
 	if(!lunch)
 		return FALSE
 	if(lunch.getBruteLoss() >= 200)
-		to_chat(usr, "<span class='warning'>This human's flesh is too mangled to devour!</span>")
+		to_chat(M, "<span class='warning'>This human's flesh is too mangled to devour!</span>")
 		return FALSE
-	devouring = TRUE
-	visible_message("<span class='warning'>[src] begins ripping apart and feasting on [lunch]!</span>", \
+	M.devouring = TRUE
+	M.visible_message("<span class='warning'>[M] begins ripping apart and feasting on [lunch]!</span>", \
 						"<span class='danger'>We begin to feast upon [lunch]...</span>")
-	if(!do_mob(src, 10, target = lunch))
-		devouring = FALSE
+	if(!do_mob(M, 50, target = lunch))
+		M.devouring = FALSE
 		return FALSE
-	devouring = FALSE
-	visible_message("<span class='warning'>[src] tears a chunk from [lunch]'s flesh!</span>", \
+	M.devouring = FALSE
+	M.visible_message("<span class='warning'>[M] tears a chunk from [lunch]'s flesh!</span>", \
 						"<span class='danger'>We tear a chunk of flesh from [lunch] and devour it!</span>")
 	lunch.adjustBruteLoss(60)
-	to_chat(lunch, "<span class='userdager'>[src] tears into you!</span>")
+	to_chat(lunch, "<span class='userdager'>[M] tears into you!</span>")
 	var/obj/effect/decal/cleanable/blood/gibs/G = new(get_turf(lunch))
 	step(G, pick(GLOB.alldirs)) //Make some gibs spray out for dramatic effect
 	playsound(lunch, 'sound/creatures/hit6.ogg', 50, 1)
 	if(!lunch.stat)
 		lunch.emote("scream")
 	if(lunch.disabilities & FAT)
-		adjustBruteLoss(-100) //Tasty leetle peegy
+		M.adjustBruteLoss(-100) //Tasty leetle peegy
 	else
-		adjustBruteLoss(-50)
+		M.adjustBruteLoss(-50)
 
-/mob/living/simple_animal/hostile/true_changeling/verb/crawl()
-	set name = "Spine Crawl"
-	set desc = "We use our spines to gouge into terrain and crawl along it, negating gravity loss. This makes us very slow."
-	set category = "True Changeling"
+/datum/action/innate/changeling/spine_crawl
+	name = "Spine Crawl"
+	desc = "We use our spines to gouge into terrain and crawl along it, negating gravity loss. This makes us very slow."
 
-	if(stat)
-		to_chat(usr, "<span class='warning'>We must be conscious to switch our method of movement!</span>")
+/datum/action/innate/changeling/spine_crawl/Activate()
+	var/mob/living/simple_animal/hostile/true_changeling/M = owner
+	if(!istype(M))
+		return
+	if(M.stat)
+		to_chat(M, "<span class='warning'>We must be conscious to switch our method of movement!</span>")
 		return FALSE
-	wallcrawl = !wallcrawl
-	if(wallcrawl)
-		visible_message("<span class='warning'>[src] begins gouging its spines into the terrain!</span>", \
+	M.wallcrawl = !M.wallcrawl
+	if(M.wallcrawl)
+		M.visible_message("<span class='warning'>[M] begins gouging its spines into the terrain!</span>", \
 							"<span class='danger'>We begin using our spines for movement.</span>")
-		speed = 1 //Veeery slow
+		M.speed = 1 //Veeery slow
 	else
-		visible_message("<span class='warning'>[src] recedes their spines back into their body!</span>", \
+		M.visible_message("<span class='warning'>[M] recedes their spines back into their body!</span>", \
 							"<span class='danger'>We return moving normally.</span>")
-		speed = initial(speed)
+		M.speed = initial(M.speed)
 
 #undef TRUE_CHANGELING_REFORM_THRESHOLD
 #undef TRUE_CHANGELING_PASSIVE_HEAL
