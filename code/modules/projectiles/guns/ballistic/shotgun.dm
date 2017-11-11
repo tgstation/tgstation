@@ -106,6 +106,7 @@
 	slot_flags = 0 //no SLOT_BACK sprite, alas
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction
 	var/bolt_open = FALSE
+	can_bayonet = TRUE
 
 /obj/item/gun/ballistic/shotgun/boltaction/pump(mob/M)
 	playsound(M, 'sound/weapons/shotgunpump.ogg', 60, 1)
@@ -142,6 +143,7 @@
 	pin = /obj/item/device/firing_pin/magic
 	icon_state = "arcane_barrage"
 	item_state = "arcane_barrage"
+	can_bayonet = FALSE
 
 	flags_1 = DROPDEL_1
 
