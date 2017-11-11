@@ -421,7 +421,7 @@
 	var/datum/integrated_io/O = outputs[1]
 	O.data = null
 	var/turf/T = get_turf(src)
-	var/list/nearby_things = range(radius, T) & view(T)
+	var/list/nearby_things = view(radius,T)
 	var/list/valid_things = list()
 	var/list/GI = list()
 	GI = I.data
@@ -585,7 +585,7 @@
 	activate_pin(3)
 
 	for(var/mob/O in hearers(1, get_turf(src)))
-		O.show_message(text("\icon[] *beep* *beep*", src), 3, "*beep* *beep*", 2)
+		audible_message("[icon2html(src, hearers(src))] *beep* *beep*", null, 1)
 
 /obj/item/integrated_circuit/input/EPv2
 	name = "EPv2 circuit"
@@ -794,11 +794,7 @@
 	set_pin_data(IC_OUTPUT, 2, null)
 	set_pin_data(IC_OUTPUT, 3, null)
 	if(AM)
-		var/obj/item/stock_parts/cell/cell = null
-		if(istype(AM, /obj/item/stock_parts/cell)) // Is this already a cell?
-			cell = AM
-		else // If not, maybe there's a cell inside it?
-			cell = get_cell(AM)
+		var/obj/item/stock_parts/cell/cell = get_cell(AM)
 		if(cell)
 			var/turf/A = get_turf(src)
 			if(AM in view(A))
