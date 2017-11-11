@@ -29,7 +29,7 @@
 		var/obj/item/I = assembly_list[k]
 		as_names[I.name] = I.type
 	for(var/k in 1 to SScircuit.all_integrated_circuits.len)
-		var/obj/item/integrated_circuit/IC
+		var/obj/item/integrated_circuit/IC = SScircuit.all_integrated_circuits[k]
 		if((IC.spawn_flags & IC_SPAWN_DEFAULT) || (IC.spawn_flags & IC_SPAWN_RESEARCH))
 			cir_names[IC.name] = IC.type
 	addtimer(CALLBACK(src, .proc/attack_self), 2) //IDK, why it's need dely,but otherwise it doesn't work.
