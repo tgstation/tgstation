@@ -52,33 +52,25 @@
 
 	opening = 1
 	if(density)
-		do_the_flick()
-		sleep(5)
-		if(!QDELETED(src))
-			density = FALSE
-			set_opacity(0)
-			update_icon()
+		smooth = SMOOTH_FALSE
+		clear_smooth_overlays()
+		icon_state = "fwall_opening"
+		addtimer(CALLBACK(src, /obj/structure/falsewall/proc/set_fwall_open, TRUE), 5)
 	else
 		var/srcturf = get_turf(src)
 		for(var/mob/living/obstacle in srcturf) //Stop people from using this as a shield
 			opening = 0
 			return
-		do_the_flick()
-		density = TRUE
-		sleep(5)
-		if(!QDELETED(src))
-			set_opacity(1)
-			update_icon()
+		icon_state = "fwall_closing"
+		addtimer(CALLBACK(src, /obj/structure/falsewall/proc/set_fwall_open, FALSE), 5)
 	air_update_turf(1)
 	opening = 0
 
-/obj/structure/falsewall/proc/do_the_flick()
-	if(density)
-		smooth = SMOOTH_FALSE
-		clear_smooth_overlays()
-		icon_state = "fwall_opening"
-	else
-		icon_state = "fwall_closing"
+/obj/structure/falsewall/proc/set_fwall_open(open)
+	if(!QDELETED(src))
+		density = !open
+		set_opacity(!open)
+		update_icon()
 
 /obj/structure/falsewall/update_icon()//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
 	if(density)
