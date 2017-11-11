@@ -1,11 +1,11 @@
 
 /obj/item/banner/engineering/atmos
 	name = "Kazakhstan banner"
-	desc = "Áàííåğ ïğîñëàâëÿşùèé âåëèêóş ìîùü Åëáàñû."
+	desc = "ÃÃ Ã­Ã­Ã¥Ã° Ã¯Ã°Ã®Ã±Ã«Ã Ã¢Ã«Ã¿Ã¾Ã¹Ã¨Ã© Ã¢Ã¥Ã«Ã¨ÃªÃ³Ã¾ Ã¬Ã®Ã¹Ã¼ Ã…Ã«Ã¡Ã Ã±Ã»."
 	icon = 'code/white/pieceofcrap.dmi'
 	icon_state = "banner_atmos"
 	job_loyalties = list("Scientist", "Atmospheric Technician")
-	warcry = "<b>ÊÀÇÀÕÑÒÀÍ ÓÃĞÎÆÀÅÒ ÂÀÌ ÁÎÌÁÀĞÄÈĞÎÂÊÎÉ!!</b>"
+	warcry = "<b>ÃŠÃ€Ã‡Ã€Ã•Ã‘Ã’Ã€Ã Ã“ÃƒÃÃÃ†Ã€Ã…Ã’ Ã‚Ã€ÃŒ ÃÃÃŒÃÃ€ÃÃ„ÃˆÃÃÃ‚ÃŠÃÃ‰!!</b>"
 
 
 obj/item/banner/engineering/atmos/mundane
@@ -147,17 +147,6 @@ obj/item/banner/engineering/atmos/mundane
 	name = "dach meat"
 	desc = "Tastes like... well you know..."
 	foodtype = RAW | MEAT | GROSS
-
-/mob/living/simple_animal/pet/dog/dhund
-	name = "\improper Dachshund"
-	real_name = "Dachshund"
-	desc = "It's a dachshund."
-	icon = 'code/white/pieceofcrap.dmi'
-	icon_state = "dachshund"
-	icon_living = "dachshund"
-	icon_dead = "dachshund_dead"
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/dach = 3)
-	gold_core_spawnable = 2
 
 /datum/supply_pack/organic/critter/dhund
 	name = "Dachshund Crate"
