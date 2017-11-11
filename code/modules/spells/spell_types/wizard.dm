@@ -164,6 +164,7 @@
 	action_icon_state = "time"
 
 	summon_type = list(/obj/effect/timestop/wizard)
+	cast_sound = 'sound/magic/theworld.ogg'
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/carp
 	name = "Summon Carp"
