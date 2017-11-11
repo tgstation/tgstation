@@ -43,11 +43,7 @@
 		if(!assembly)
 			return FALSE // Pointless to do everything else if there's no battery to draw from.
 
-		var/obj/item/stock_parts/cell/cell = null
-		if(istype(AM, /obj/item/stock_parts/cell)) // Is this already a cell?
-			cell = AM
-		else // If not, maybe there's a cell inside it?
-			cell = AM.get_cell()
+		var/obj/item/stock_parts/cell/cell = AM.get_cell()
 		if(cell)
 			var/transfer_amount = amount_to_move
 			var/turf/A = get_turf(src)

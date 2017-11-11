@@ -88,9 +88,9 @@
 
 /obj/item/integrated_circuit/memory/constant/attack_self(mob/user)
 	var/datum/integrated_io/O = outputs[1]
-	var/type_to_use = input("Please choose a type to use.","[src] type setting") as null|anything in list("string","number","ref", "null")
 	if(!user.IsAdvancedToolUser())
 		return
+	var/type_to_use = input("Please choose a type to use.","[src] type setting") as null|anything in list("string","number","ref", "null")
 
 	var/new_data = null
 	switch(type_to_use)

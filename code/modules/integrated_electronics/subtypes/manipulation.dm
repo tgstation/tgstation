@@ -42,13 +42,13 @@
 	if(istype(O, /obj/item/gun/energy))
 		var/obj/item/gun/gun = O
 		if(installed_gun)
-			user << "<span class='warning'>There's already a weapon installed.</span>"
+			to_chat(user, "<span class='warning'>There's already a weapon installed.</span>")
 			return
 
 		user.transferItemToLoc(gun,src)
 		installed_gun = gun
 		var/list/gun_properties = gun.get_turret_properties()
-		user << "<span class='notice'>You slide \the [gun] into the firing mechanism.</span>"
+		to_chat(user, "<span class='notice'>You slide \the [gun] into the firing mechanism.</span>")
 		playsound(src, 'sound/items/Crowbar.ogg', 50, 1)
 		stun_projectile = gun_properties["stun_projectile"]
 		stun_projectile_sound = gun_properties["stun_projectile_sound"]
@@ -350,21 +350,23 @@
 /obj/item/integrated_circuit/manipulation/grabber/do_work()
 	var/turf/T = get_turf(src)
 	var/obj/item/AM = get_pin_data_as_type(IC_INPUT, 1, /obj/item)
-	var/turf/P = get_turf(AM)
-	var/mode = get_pin_data(IC_INPUT, 2)
-	if(mode == 1)
-		if(P.Adjacent(T))
-			if((contents.len < max_items) && AM && (AM.w_class <= max_w_class))
-				AM.forceMove(src)
-	if(mode == 0)
-		if(contents.len)
-			var/obj/item/U = contents[1]
-			U.forceMove(T)
-	if(mode == -1)
-		if(contents.len)
-			var/obj/item/U
-			for(U in contents)
+	if(AM)
+		var/turf/P = get_turf(AM)
+		var/mode = get_pin_data(IC_INPUT, 2)
+
+		if(mode == 1)
+			if(P.Adjacent(T))
+				if((contents.len < max_items) && AM && (AM.w_class <= max_w_class))
+					AM.forceMove(src)
+		if(mode == 0)
+			if(contents.len)
+				var/obj/item/U = contents[1]
 				U.forceMove(T)
+		if(mode == -1)
+			if(contents.len)
+				var/obj/item/U
+				for(U in contents)
+					U.forceMove(T)
 	if(contents.len)
 		set_pin_data(IC_OUTPUT, 1, WEAKREF(contents[1]))
 		set_pin_data(IC_OUTPUT, 2, WEAKREF(contents[contents.len]))
@@ -374,6 +376,18 @@
 	set_pin_data(IC_OUTPUT, 3, contents.len)
 	push_data()
 	activate_pin(2)
+
+/obj/item/integrated_circuit/manipulation/grabber/attack_self(var/mob/user)
+	if(contents.len)
+		var/turf/T = get_turf(src)
+		var/obj/item/U
+		for(U in contents)
+			U.forceMove(T)
+	set_pin_data(IC_OUTPUT, 1, null)
+	set_pin_data(IC_OUTPUT, 2, null)
+	set_pin_data(IC_OUTPUT, 3, contents.len)
+	push_data()
+
 
 /obj/item/integrated_circuit/manipulation/thrower
 	name = "thrower"

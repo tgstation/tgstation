@@ -89,17 +89,18 @@
 	var/do_tick = get_pin_data(IC_INPUT, 1)
 	if(do_tick && !is_running)
 		is_running = TRUE
-		START_PROCESSING(SSfastprocess, src)
+		tick()
 	else if(is_running)
 		is_running = FALSE
-		STOP_PROCESSING(SSfastprocess, src)
 
-/obj/item/integrated_circuit/time/ticker/process()
-	if(!is_running)
-		return PROCESS_KILL
-	if(world.time > next_fire)
-		activate_pin(1)
-		next_fire = world.time + delay
+
+/obj/item/integrated_circuit/time/ticker/proc/tick()
+	if(is_running)
+		addtimer(CALLBACK(src, .proc/tick), delay)
+		if(world.time > next_fire)
+			next_fire = world.time + delay
+			activate_pin(1)
+
 
 /obj/item/integrated_circuit/time/ticker/fast
 	name = "fast ticker"
