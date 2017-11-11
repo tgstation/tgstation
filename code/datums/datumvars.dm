@@ -1202,3 +1202,12 @@
 				admin_ticket_log(L, msg)
 				href_list["datumrefresh"] = href_list["mobToDamage"]
 
+		else if(href_list["curse"])
+			if(!check_rights(R_SPAWN))
+				return
+			var/obj/item/C = locate(href_list["curse"])
+			if(istype(C.loc, /mob))
+				to_chat(usr,"Can't curse items on or inside mobs")
+				return
+			new /obj/item/cursed_necro(C.drop_location(),C)
+			log_admin("[key_name(usr)] cursed [C] with the necropolis curse")
