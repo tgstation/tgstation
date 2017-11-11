@@ -21,6 +21,7 @@
 	maxHealth = INFINITY
 	layer = GHOST_LAYER
 	healable = FALSE
+	spacewalk = TRUE
 	sight = SEE_SELF
 
 	see_in_dark = 8
@@ -153,8 +154,6 @@
 
 
 //Immunities
-/mob/living/simple_animal/revenant/Process_Spacemove(movement_dir = 0)
-	return 1
 
 /mob/living/simple_animal/revenant/ex_act(severity, target)
 	return 1 //Immune to the effects of explosions.

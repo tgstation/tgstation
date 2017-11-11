@@ -226,6 +226,8 @@
 	. = ..()
 	if(!independent) //no pulling people deep into the blob
 		verbs -= /mob/living/verb/pulled
+	else
+		pass_flags &= ~PASSBLOB
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/Life()
 	if(..())

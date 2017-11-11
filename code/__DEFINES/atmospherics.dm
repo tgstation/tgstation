@@ -28,6 +28,7 @@
 #define NORMPIPERATE						30		//pipe-insulation rate divisor
 #define HEATPIPERATE						8		//heat-exch pipe insulation
 #define FLOWFRAC							0.99	//fraction of gas transfered per process
+#define TANK_MELT_TEMPERATURE				1000000
 #define TANK_LEAK_PRESSURE					(30.*ONE_ATMOSPHERE)	//Tank starts leaking
 #define TANK_RUPTURE_PRESSURE				(35.*ONE_ATMOSPHERE)	//Tank spills all contents into atmosphere
 #define TANK_FRAGMENT_PRESSURE				(40.*ONE_ATMOSPHERE)	//Boom 3x3 base explosion

@@ -137,7 +137,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	for(var/M in invokers)
 		var/mob/living/L = M
 		if(invocation)
-			L.say(invocation, language = /datum/language/common)
+			L.say(invocation, language = /datum/language/common, ignore_spam = TRUE)
 		if(invoke_damage)
 			L.apply_damage(invoke_damage, BRUTE)
 			to_chat(L, "<span class='cultitalic'>[src] saps your strength!</span>")

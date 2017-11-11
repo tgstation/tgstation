@@ -1175,10 +1175,10 @@
 	M.AdjustUnconscious(-20, 0)
 	M.adjustStaminaLoss(-0.5*REM, 0)
 
-/datum/reagent/browngas
-	name = "Brown gas"
-	id = "brown_gas"
-	description = "A strange brown gas that makes you feel faster"
+/datum/reagent/nitryl
+	name = "Nitryl"
+	id = "no2"
+	description = "A highly reactive gas that makes you feel faster"
 	reagent_state = GAS
 	metabolization_rate = REAGENTS_METABOLISM
 	color = "90560B"
