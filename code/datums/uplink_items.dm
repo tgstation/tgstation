@@ -89,42 +89,9 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/proc/get_discount()
 	return pick(4;0.75,2;0.5,1;0.25)
 
-/datum/uplink_item/proc/spawn_item(turf/loc, obj/item/device/uplink/U)
+/datum/uplink_item/proc/spawn_item(turf/loc, datum/component/uplink/U, mob/user)
 	if(item)
-		SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(name)]", "[cost]"))
 		return new item(loc)
-
-/datum/uplink_item/proc/buy(mob/user, obj/item/device/uplink/U)
-	if(!istype(U))
-		return
-	if (!user || user.incapacitated())
-		return
-
-	if(U.telecrystals < cost || limited_stock == 0)
-		return
-	else
-		U.telecrystals -= cost
-		U.spent_telecrystals += cost
-
-	var/atom/A = spawn_item(get_turf(user), U)
-	var/obj/item/storage/box/B = A
-	if(istype(B) && B.contents.len > 0)
-		for(var/obj/item/I in B)
-			U.purchase_log += "<big>[icon2base64html(I)]</big>"
-	else
-		if(purchase_log_vis)
-			U.purchase_log += "<big>[icon2base64html(A)]</big>"
-
-	if(limited_stock > 0)
-		limited_stock -= 1
-
-	if(ishuman(user) && istype(A, /obj/item))
-		var/mob/living/carbon/human/H = user
-		if(H.put_in_hands(A))
-			to_chat(H, "[A] materializes into your hands!")
-		else
-			to_chat(H, "\The [A] materializes onto the floor.")
-	return 1
 
 /datum/uplink_item/Destroy()
 	if(src in GLOB.uplink_items)
@@ -368,7 +335,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 12
 	surplus = 35
 	include_modes = list(/datum/game_mode/nuclear)
-	
+
 /datum/uplink_item/dangerous/guardian
 	name = "Holoparasites"
 	desc = "Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, they require an \
@@ -976,8 +943,8 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	item = /obj/item/briefcase_launchpad
 	cost = 6
 
-/datum/uplink_item/device_tools/briefcase_launchpad/buy(mob/user, obj/item/device/uplink/U)
-	var/obj/item/device/launchpad_remote/L = new(get_turf(user)) //free remote
+/datum/uplink_item/device_tools/briefcase_launchpad/spawn_item(turf/loc, datum/component/uplink/U, mob/user)
+	var/obj/item/device/launchpad_remote/L = new(loc) //free remote
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.put_in_hands(L))
@@ -1380,7 +1347,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	exclude_modes = list(/datum/game_mode/nuclear)
 	cant_discount = TRUE
 
-/datum/uplink_item/badass/surplus/spawn_item(turf/loc, obj/item/device/uplink/U)
+/datum/uplink_item/badass/surplus/spawn_item(turf/loc, datum/component/uplink/U)
 	var/list/uplink_items = get_uplink_items(SSticker.mode)
 
 	var/crate_value = 50
@@ -1396,7 +1363,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			continue
 		crate_value -= I.cost
 		var/obj/goods = new I.item(C)
-		U.purchase_log += "<big>[icon2base64html(goods)]</big>"
+		U.purchase_log.LogPurchase(goods, I.cost)
 
 	SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(name)]", "[cost]"))
 	return C
@@ -1408,7 +1375,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 0
 	cant_discount = TRUE
 
-/datum/uplink_item/badass/random/spawn_item(turf/loc, obj/item/device/uplink/U)
+/datum/uplink_item/badass/random/spawn_item(turf/loc, datum/component/uplink/U)
 	var/list/uplink_items = get_uplink_items(SSticker.mode)
 	var/list/possible_items = list()
 	for(var/category in uplink_items)
