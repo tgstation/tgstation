@@ -1,0 +1,4 @@
+author: "DaxDupont"
+delete-after: True
+changes: 
+  - bugfix: "Medbots can inject from one tile away again."
