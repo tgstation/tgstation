@@ -39,28 +39,7 @@
 
 #define NOT_ELECTRIFIED 0
 #define ELECTRIFIED_PERMANENT -1
-
-#define AI_DISABLE_IDSCAN 1
-#define AI_DISABLE_DISRUPT_MAIN_POWER 2
-#define AI_DISABLE_DISRUPT_BACKUP_POWER 3
-#define AI_DISABLE_DOOR_BOLT 4
-#define AI_DISABLE_ELECTRIFY 5
-#define AI_DISABLE_SAFETIES 8
-#define AI_DISABLE_DOOR_SPEED 9
-#define AI_DISABLE_CLOSE 7
-#define AI_DISABLE_BOLT_LIGHTS 10
-#define AI_DISABLE_EMERGENCY_ACCESS 11
-#define AI_ENABLE_IDSCAN 1
-#define AI_ENABLE_DOOR_BOLT 4
-#define AI_ENABLE_ELECTRIFY_TIMED 5
-#define AI_ENABLE_ELECTRIFY_PERM 6
-#define AI_ENABLE_SAFETIES 8
-#define AI_ENABLE_DOOR_SPEED 9
-#define AI_ENABLE_OPEN 7
-#define AI_ENABLE_BOLT_LIGHTS 10
-#define AI_ENABLE_EMERGENCY_ACCESS 11
 #define AI_ELECTRIFY_DOOR_TIME 30
-#define AI_UI_DOOR_BUTTON(src_ref,check,yes_topic,yes_text,no_topic,no_text) check?"<a href='?src=[src_ref];[yes_topic]'>[yes_text]</a> <span class='linkOff'>[no_text]</span><br>\n":"<span class='linkOff'>[yes_text]</span> <a href='?src=[src_ref];[no_topic]'>[no_text]</a><br>\n"
 
 /obj/machinery/door/airlock
 	name = "airlock"
@@ -634,77 +613,7 @@
 		to_chat(user, "<span class='warning'>Unable to interface. Airlock control panel damaged.</span>")
 		return
 
-	// New separate interface for AI on door.
-	user.set_machine(src)
-
-	var/list/dat = list()
-	dat += "<h1>Power</h1>"
-	if(src.secondsMainPowerLost > 0)
-		dat += "Main power is offline [!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2) ? "for [src.secondsMainPowerLost] seconds" : "indefinitely" ].<br>\n"
-	else
-		dat += "Main power is online.<br>\n"
-
-	if(src.secondsBackupPowerLost > 0)
-		dat += "Backup power is offline [!wires.is_cut(WIRE_BACKUP1) && !wires.is_cut(WIRE_BACKUP2) ? "for [src.secondsBackupPowerLost] seconds" : "indefinitely" ].<br>\n"
-	else if(src.secondsMainPowerLost > 0)
-		dat += "Backup power is online.<br>\n"
-	else
-		dat += "Backup power is offline, but will turn on if main power fails.<br>\n"
-
-	if(wires.is_cut(WIRE_POWER1))
-		dat += "Main Power Input wire is cut.<br>\n"
-	if(wires.is_cut(WIRE_POWER2))
-		dat += "Main Power Output wire is cut.<br>\n"
-	if(wires.is_cut(WIRE_BACKUP1))
-		dat += "Backup Power Input wire is cut.<br>\n"
-	if(wires.is_cut(WIRE_BACKUP2))
-		dat += "Backup Power Output wire is cut.<br>\n"
-
-	dat += "[!secondsMainPowerLost ? "<a href='?src=[REF(src)];aiDisable=[AI_DISABLE_DISRUPT_MAIN_POWER]'>Disrupt main power</a>" : "<span class='linkOff'>Disrupt main power</span>"] "
-	dat += "[!secondsBackupPowerLost ? "<a href='?src=[REF(src)];aiDisable=[AI_DISABLE_DISRUPT_BACKUP_POWER]'>Disrupt backup power</a>" : "<span class='linkOff'>Disrupt backup power</span>"] <br>\n"
-	dat += "<br>\n"
-
-	if(wires.is_cut(WIRE_SHOCK))
-		dat += "Electrification wire is cut.<br>\n"
-	if(secondsElectrified==0)
-		dat += "Door is not electrified.<br>\n"
-	else
-		dat += "Door is electrified [secondsElectrified==ELECTRIFIED_PERMANENT ? "indefinitely" : "temporarily ([secondsElectrified] seconds)"].<br>\n"
-	dat += secondsElectrified==0 ? "<span class='linkOff'>Restore</span>" : "<a href='?src=[REF(src)];aiDisable=[AI_DISABLE_ELECTRIFY]'>Restore</a>"
-	dat += " <a href='?src=[REF(src)];aiEnable=[AI_ENABLE_ELECTRIFY_TIMED]'>[AI_ELECTRIFY_DOOR_TIME] seconds</a> <a href='?src=[REF(src)];aiEnable=[AI_ENABLE_ELECTRIFY_PERM]'>Indefinitely</a><br>\n"
-
-	dat += "<h1>Access & Door Controls</h1>"
-	dat += "IdScan [wires.is_cut(WIRE_IDSCAN) ? "wires are cut" : "" ] "
-	dat += AI_UI_DOOR_BUTTON(REF(src), src.aiDisabledIdScanner, "aiEnable=[AI_ENABLE_IDSCAN]", "Enable", "aiDisable=[AI_DISABLE_IDSCAN]", "Disable")
-
-	dat += "Emergency Access Override "
-	dat += AI_UI_DOOR_BUTTON(REF(src), !src.emergency, "aiEnable=[AI_ENABLE_EMERGENCY_ACCESS]", "Enable", "aiDisable=[AI_DISABLE_EMERGENCY_ACCESS]", "Disable")
-
-	dat += "<br>\n"
-
-	dat += "Door bolts [wires.is_cut(WIRE_BOLTS) ? "wires are cut" : "" ] "
-	dat += AI_UI_DOOR_BUTTON(REF(src), !src.locked, "aiDisable=[AI_DISABLE_DOOR_BOLT]", "Drop", "aiEnable=[AI_ENABLE_DOOR_BOLT]", "Raise")
-
-	dat += "Door bolt lights [wires.is_cut(WIRE_BOLTS) ? "wires are cut" : "" ] "
-	dat += AI_UI_DOOR_BUTTON(REF(src), !src.lights, "aiEnable=[AI_ENABLE_BOLT_LIGHTS]", "Enable", "aiDisable=[AI_DISABLE_BOLT_LIGHTS]", "Disable")
-
-	dat += "Door force sensors [wires.is_cut(WIRE_SAFETY) ? "are not responding" : "" ] "
-	dat += AI_UI_DOOR_BUTTON(REF(src), !src.safe, "aiEnable=[AI_ENABLE_SAFETIES]", "Enable", "aiDisable=[AI_DISABLE_SAFETIES]", "Disable")
-
-	dat += "Door safe timing [wires.is_cut(WIRE_TIMING) ? "circuitry not responding" : "" ] "
-	dat += AI_UI_DOOR_BUTTON(REF(src), !src.normalspeed, "aiEnable=[AI_ENABLE_DOOR_SPEED]", "Enable", "aiDisable=[AI_DISABLE_DOOR_SPEED]", "Disable")
-
-	dat += "<br>\n"
-
-	if(welded)
-		dat += "Door appears to have been welded shut.<br>\n"
-	else if(locked)
-		dat += "Door has its bolts down.<br>\n"
-	dat += (welded || locked) ? "<span class='linkOff'>Open door</span> <span class='linkOff'>Close door</span>" : AI_UI_DOOR_BUTTON(REF(src), src.density, "aiEnable=[AI_ENABLE_OPEN]", "Open door", "aiDisable=[AI_DISABLE_CLOSE]", "Close door")
-
-	var/datum/browser/popup = new(user, "aiairlockcontrol", "AI Airlock Control", 410, 475)
-	popup.set_content(dat.Join())
-	popup.open()
+	ui_interact(user)
 
 /obj/machinery/door/airlock/proc/hack(mob/user)
 	set waitfor = 0
@@ -815,180 +724,6 @@
 
 	if((in_range(src, usr) && isturf(loc)) && panel_open)
 		usr.set_machine(src)
-
-	if((issilicon(usr) && src.canAIControl(usr)) || IsAdminGhost(usr))
-		//AI
-		if(href_list["aiDisable"])
-			var/code = text2num(href_list["aiDisable"])
-			switch (code)
-				if(AI_DISABLE_IDSCAN)
-					//disable idscan
-					if(wires.is_cut(WIRE_IDSCAN))
-						to_chat(usr, "The IdScan wire has been cut - So, you can't disable it, but it is already disabled anyways.")
-					else if(src.aiDisabledIdScanner)
-						to_chat(usr, "You've already disabled the IdScan feature.")
-					else
-						aiDisabledIdScanner = TRUE
-				if(AI_DISABLE_DISRUPT_MAIN_POWER)
-					//disrupt main power
-					if(!secondsMainPowerLost)
-						src.loseMainPower()
-						update_icon()
-					else
-						to_chat(usr, "Main power is already offline.")
-				if(AI_DISABLE_DISRUPT_BACKUP_POWER)
-					//disrupt backup power
-					if(!secondsBackupPowerLost)
-						src.loseBackupPower()
-						update_icon()
-					else
-						to_chat(usr, "Backup power is already offline.")
-				if(AI_DISABLE_DOOR_BOLT)
-					//drop door bolts
-					if(wires.is_cut(WIRE_BOLTS))
-						to_chat(usr, "You can't drop the door bolts - The door bolt dropping wire has been cut.")
-					else
-						bolt()
-				if(AI_DISABLE_ELECTRIFY)
-					//un-electrify door
-					if(wires.is_cut(WIRE_SHOCK))
-						to_chat(usr, text("Can't un-electrify the airlock - The electrification wire is cut."))
-					else if(isElectrified())
-						set_electrified(0)
-
-				if(AI_DISABLE_SAFETIES)
-					// Safeties!  We don't need no stinking safeties!
-					if(wires.is_cut(WIRE_SAFETY))
-						to_chat(usr, text("Control to door sensors is disabled."))
-					else if (src.safe)
-						safe = FALSE
-					else
-						to_chat(usr, text("Firmware reports safeties already overriden."))
-
-				if(AI_DISABLE_DOOR_SPEED)
-					// Door speed control
-					if(wires.is_cut(WIRE_TIMING))
-						to_chat(usr, text("Control to door timing circuitry has been severed."))
-					else if (src.normalspeed)
-						normalspeed = 0
-					else
-						to_chat(usr, text("Door timing circuitry already accelerated."))
-
-				if(AI_DISABLE_CLOSE)
-					//close door
-					if(src.welded)
-						to_chat(usr, text("The airlock has been welded shut!"))
-					else if(src.locked)
-						to_chat(usr, text("The door bolts are down!"))
-					else if(!src.density)
-						close()
-					else
-						open()
-
-				if(AI_DISABLE_BOLT_LIGHTS)
-					// Bolt lights
-					if(wires.is_cut(WIRE_LIGHT))
-						to_chat(usr, text("Control to door bolt lights has been severed.</a>"))
-					else if (src.lights)
-						lights = FALSE
-						update_icon()
-					else
-						to_chat(usr, text("Door bolt lights are already disabled!"))
-
-				if(AI_DISABLE_EMERGENCY_ACCESS)
-					// Emergency access
-					if (src.emergency)
-						emergency = FALSE
-						update_icon()
-					else
-						to_chat(usr, text("Emergency access is already disabled!"))
-
-
-		else if(href_list["aiEnable"])
-			var/code = text2num(href_list["aiEnable"])
-			switch (code)
-				if(AI_ENABLE_IDSCAN)
-					//enable idscan
-					if(wires.is_cut(WIRE_IDSCAN))
-						to_chat(usr, "You can't enable IdScan - The IdScan wire has been cut.")
-					else if(src.aiDisabledIdScanner)
-						aiDisabledIdScanner = FALSE
-					else
-						to_chat(usr, "The IdScan feature is not disabled.")
-				if(AI_ENABLE_DOOR_BOLT)
-					//raise door bolts
-					if(wires.is_cut(WIRE_BOLTS))
-						to_chat(usr, text("The door bolt drop wire is cut - you can't raise the door bolts.<br>\n"))
-					else if(!src.locked)
-						to_chat(usr, text("The door bolts are already up.<br>\n"))
-					else
-						if(src.hasPower())
-							unbolt()
-						else
-							to_chat(usr, text("Cannot raise door bolts due to power failure.<br>\n"))
-
-				if(AI_ENABLE_ELECTRIFY_TIMED)
-					//electrify door for 30 seconds
-					if(wires.is_cut(WIRE_SHOCK))
-						to_chat(usr, text("The electrification wire has been cut.<br>\n"))
-					else
-						shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
-						add_logs(usr, src, "electrified")
-						set_electrified(AI_ELECTRIFY_DOOR_TIME)
-
-				if(AI_ENABLE_ELECTRIFY_PERM)
-					//electrify door indefinitely
-					if(wires.is_cut(WIRE_SHOCK))
-						to_chat(usr, text("The electrification wire has been cut.<br>\n"))
-					else
-						shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
-						add_logs(usr, src, "electrified")
-						set_electrified(ELECTRIFIED_PERMANENT)
-
-				if (AI_ENABLE_SAFETIES) // Not in order >.>
-					// Safeties!  Maybe we do need some stinking safeties!
-					if(wires.is_cut(WIRE_SAFETY))
-						to_chat(usr, text("Control to door sensors is disabled."))
-					else if (!src.safe)
-						safe = TRUE
-					else
-						to_chat(usr, text("Firmware reports safeties already in place."))
-
-				if(AI_ENABLE_DOOR_SPEED)
-					// Door speed control
-					if(wires.is_cut(WIRE_TIMING))
-						to_chat(usr, text("Control to door timing circuitry has been severed."))
-					else if (!src.normalspeed)
-						normalspeed = 1
-					else
-						to_chat(usr, text("Door timing circuitry currently operating normally."))
-
-				if(AI_ENABLE_OPEN)
-					//open door
-					if(src.welded)
-						to_chat(usr, text("The airlock has been welded shut!"))
-					else if(src.locked)
-						to_chat(usr, text("The door bolts are down!"))
-					else if(src.density)
-						open()
-					else
-						close()
-				if(AI_ENABLE_BOLT_LIGHTS)
-					// Bolt lights
-					if(wires.is_cut(WIRE_LIGHT))
-						to_chat(usr, text("Control to door bolt lights has been severed.</a>"))
-					else if (!src.lights)
-						lights = TRUE
-						update_icon()
-					else
-						to_chat(usr, text("Door bolt lights are already enabled!"))
-				if(AI_ENABLE_EMERGENCY_ACCESS)
-					// Emergency access
-					if (!src.emergency)
-						emergency = TRUE
-						update_icon()
-					else
-						to_chat(usr, text("Emergency access is already enabled!"))
 
 	add_fingerprint(usr)
 	if(!nowindow)
@@ -1618,6 +1353,200 @@
 	else if(istype(note, /obj/item/photo))
 		return "photo"
 
+/obj/machinery/door/airlock/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+													datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "ai_airlock", name, 550, 430, master_ui, state)
+		ui.open()
+
+/obj/machinery/door/airlock/ui_data()
+	var/list/data = list()
+
+	var/list/power = list()
+	power["main"] = src.secondsMainPowerLost ? 0 : 2 // boolean
+	power["main_timeleft"] = src.secondsMainPowerLost
+	power["backup"] = src.secondsBackupPowerLost ? 0 : 2 // boolean
+	power["backup_timeleft"] = src.secondsBackupPowerLost
+	data["power"] = power
+
+	data["shock"] = secondsElectrified == 0 ? 2 : 0
+	data["shock_timeleft"] = secondsElectrified
+	data["id_scanner"] = !aiDisabledIdScanner
+	data["emergency"] = emergency // access
+	data["locked"] = locked // bolted
+	data["lights"] = lights // bolt lights
+	data["safe"] = safe // safeties
+	data["speed"] = normalspeed // safe speed
+
+	var/list/wire = list()
+	wire["main_1"] = !wires.is_cut(WIRE_POWER1)
+	wire["main_2"] = !wires.is_cut(WIRE_POWER2)
+	wire["backup_1"] = !wires.is_cut(WIRE_BACKUP1)
+	wire["backup_2"] = !wires.is_cut(WIRE_BACKUP2)
+	wire["shock"] = !wires.is_cut(WIRE_SHOCK)
+	wire["id_scanner"] = !wires.is_cut(WIRE_IDSCAN)
+	wire["bolts"] = !wires.is_cut(WIRE_BOLTS)
+	wire["lights"] = !wires.is_cut(WIRE_LIGHT)
+	wire["safe"] = !wires.is_cut(WIRE_SAFETY)
+	wire["timing"] = !wires.is_cut(WIRE_TIMING)
+
+	data["wires"] = wire
+	return data
+
+/obj/machinery/door/airlock/ui_act(action, params)
+	if(..())
+		return
+	if(!(issilicon(usr) && src.canAIControl(usr)) || IsAdminGhost(usr))
+		return
+	switch(action)
+		if("disrupt-main")
+			if(!secondsMainPowerLost)
+				loseMainPower()
+				update_icon()
+			else
+				to_chat(usr, "Main power is already offline.")
+			. = TRUE
+		if("disrupt-backup")
+			if(!secondsBackupPowerLost)
+				loseBackupPower()
+				update_icon()
+			else
+				to_chat(usr, "Backup power is already offline.")
+			. = TRUE
+		if("shock-restore")
+			if(wires.is_cut(WIRE_SHOCK))
+				to_chat(usr, text("Can't un-electrify the airlock - The electrification wire is cut."))
+			else if(isElectrified())
+				set_electrified(0)
+			. = TRUE
+		if("shock-temp")
+			if(wires.is_cut(WIRE_SHOCK))
+				to_chat(usr, text("The electrification wire has been cut"))
+			else
+				shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
+				add_logs(usr, src, "electrified")
+				set_electrified(AI_ELECTRIFY_DOOR_TIME)
+			. = TRUE
+		if("shock-perm")
+			if(wires.is_cut(WIRE_SHOCK))
+				to_chat(usr, text("The electrification wire has been cut"))
+			else
+				shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
+				add_logs(usr, src, "electrified")
+				set_electrified(ELECTRIFIED_PERMANENT)
+			. = TRUE
+		if("idscan-on")
+			if(wires.is_cut(WIRE_IDSCAN))
+				to_chat(usr, "You can't enable IdScan - The IdScan wire has been cut.")
+			else if(src.aiDisabledIdScanner)
+				aiDisabledIdScanner = FALSE
+			else
+				to_chat(usr, "The IdScan feature is not disabled.")
+			. = TRUE
+		if("idscan-off")
+			if(wires.is_cut(WIRE_IDSCAN))
+				to_chat(usr, "The IdScan wire has been cut - So, you can't disable it, but it is already disabled anyways.")
+			else if(aiDisabledIdScanner)
+				to_chat(usr, "You've already disabled the IdScan feature.")
+			else
+				aiDisabledIdScanner = TRUE
+			. = TRUE
+		if("emergency-on")
+			if (!src.emergency)
+				emergency = TRUE
+				update_icon()
+			else
+				to_chat(usr, text("Emergency access is already enabled!"))
+			. = TRUE
+		if("emergency-off")
+			if (emergency)
+				emergency = FALSE
+				update_icon()
+			else
+				to_chat(usr, text("Emergency access is already disabled!"))
+			. = TRUE
+		if("bolt-raise")
+			if(wires.is_cut(WIRE_BOLTS))
+				to_chat(usr, text("The door bolt drop wire is cut - you can't raise the door bolts"))
+			else if(!src.locked)
+				to_chat(usr, text("The door bolts are already up"))
+			else
+				if(src.hasPower())
+					unbolt()
+				else
+					to_chat(usr, text("Cannot raise door bolts due to power failure"))
+			. = TRUE
+		if("bolt-drop")
+			if(wires.is_cut(WIRE_BOLTS))
+				to_chat(usr, "You can't drop the door bolts - The door bolt dropping wire has been cut.")
+			else
+				bolt()
+			. = TRUE
+		if("light-on")
+			if(wires.is_cut(WIRE_LIGHT))
+				to_chat(usr, text("Control to door bolt lights has been severed.</a>"))
+			else if (!src.lights)
+				lights = TRUE
+				update_icon()
+			else
+				to_chat(usr, text("Door bolt lights are already enabled!"))
+			. = TRUE
+		if("light-off")
+			if(wires.is_cut(WIRE_LIGHT))
+				to_chat(usr, text("Control to door bolt lights has been severed.</a>"))
+			else if (lights)
+				lights = FALSE
+				update_icon()
+			else
+				to_chat(usr, text("Door bolt lights are already disabled!"))
+			. = TRUE
+		if("safe-on")
+			if(wires.is_cut(WIRE_SAFETY))
+				to_chat(usr, text("Control to door sensors is disabled."))
+			else if (!src.safe)
+				safe = TRUE
+			else
+				to_chat(usr, text("Firmware reports safeties already in place."))
+			. = TRUE
+		if("safe-off")
+			if(wires.is_cut(WIRE_SAFETY))
+				to_chat(usr, text("Control to door sensors is disabled."))
+			else if (safe)
+				safe = FALSE
+			else
+				to_chat(usr, text("Firmware reports safeties already overriden."))
+			. = TRUE
+		if("speed-on")
+			if(wires.is_cut(WIRE_TIMING))
+				to_chat(usr, text("Control to door timing circuitry has been severed."))
+			else if (!src.normalspeed)
+				normalspeed = 1
+			else
+				to_chat(usr, text("Door timing circuitry currently operating normally."))
+			. = TRUE
+		if("speed-off")
+			if(wires.is_cut(WIRE_TIMING))
+				to_chat(usr, text("Control to door timing circuitry has been severed."))
+			else if (normalspeed)
+				normalspeed = 0
+			else
+				to_chat(usr, text("Door timing circuitry already accelerated."))
+
+			. = TRUE
+		if("open-close")
+			if(welded)
+				to_chat(usr, text("The airlock has been welded shut!"))
+			else if(locked)
+				to_chat(usr, text("The door bolts are down!"))
+			else if(!density)
+				close()
+			else
+				open()
+			. = TRUE
+
+
+
 #undef AIRLOCK_CLOSED
 #undef AIRLOCK_CLOSING
 #undef AIRLOCK_OPEN
@@ -1640,25 +1569,4 @@
 
 #undef NOT_ELECTRIFIED
 #undef ELECTRIFIED_PERMANENT
-
-#undef AI_DISABLE_IDSCAN
-#undef AI_DISABLE_DISRUPT_MAIN_POWER
-#undef AI_DISABLE_DISRUPT_BACKUP_POWER
-#undef AI_DISABLE_DOOR_BOLT
-#undef AI_DISABLE_ELECTRIFY
-#undef AI_DISABLE_SAFETIES
-#undef AI_DISABLE_DOOR_SPEED
-#undef AI_DISABLE_CLOSE
-#undef AI_DISABLE_BOLT_LIGHTS
-#undef AI_DISABLE_EMERGENCY_ACCESS
-#undef AI_ENABLE_IDSCAN
-#undef AI_ENABLE_DOOR_BOLT
-#undef AI_ENABLE_ELECTRIFY_TIMED
-#undef AI_ENABLE_ELECTRIFY_PERM
-#undef AI_ENABLE_SAFETIES
-#undef AI_ENABLE_DOOR_SPEED
-#undef AI_ENABLE_OPEN
-#undef AI_ENABLE_BOLT_LIGHTS
-#undef AI_ENABLE_EMERGENCY_ACCESS
 #undef AI_ELECTRIFY_DOOR_TIME
-#undef AI_UI_DOOR_BUTTON
