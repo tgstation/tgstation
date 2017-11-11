@@ -47,8 +47,9 @@
 	assembly.state = 4
 	GLOB.cameranet.cameras += src
 	GLOB.cameranet.addCamera(src)
-	var/area/A = get_area(src)
-	LAZYADD(A.cameras, src)
+	if (isturf(loc))
+		var/area/A = get_area(src)
+		LAZYADD(A.cameras, src)
 	proximity_monitor = new(src, 1)
 
 	if(mapload && (z in GLOB.station_z_levels) && prob(3) && !start_active)
@@ -273,7 +274,8 @@
 	var/area/A = get_area(src)
 	if(can_use())
 		GLOB.cameranet.addCamera(src)
-		LAZYADD(A.cameras, src)
+		if (isturf(loc))
+			LAZYADD(A.cameras, src)
 	else
 		set_light(0)
 		GLOB.cameranet.removeCamera(src)
