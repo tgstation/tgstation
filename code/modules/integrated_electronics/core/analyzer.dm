@@ -66,7 +66,7 @@
 					var/datum/integrated_io/OUT = IC.outputs[j]
 					out[OUT] = "[i]o[j]"
 			if(IC.activators && IC.activators.len)
-				for(j in 1 to IC.activators)
+				for(j in 1 to IC.activators.len)
 					var/datum/integrated_io/ACT = IC.activators[j]
 					act[ACT] = "[i]a[j]"
 		ioa.Add(inp)

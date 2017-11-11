@@ -180,7 +180,6 @@
 				if(sc == 0)
 					to_chat(usr,  "<span class='warning'>Invalid program.</span>")
 				else if(sc == -1)
-
 					to_chat(usr,  "<span class='warning'>Unknown circuits found. Upgrades required to process this design.</span>")
 				else if(sc == null)
 					to_chat(usr,  "<span class='warning'>Invalid program.</span>")
@@ -188,7 +187,7 @@
 					to_chat(usr,  "<span class='notice'>Program is correct.You'll need [sc/10] sheets of metal</span>")
 			if("print")
 				sc = sanity_check(program,usr)
-				if(sc == 0)
+				if(sc == 0 || sc == null)
 					to_chat(usr,  "<span class='warning'>Invalid program.</span>")
 				else if(sc == -1)
 					to_chat(usr,  "<span class='warning'>Unknown circuits found. Upgrades required to process this design.</span>")
@@ -321,24 +320,24 @@
 			cap = cap + comp.size
 			metalcost =metalcost + initial(comp.w_class)
 
-
-			for(var/j in 1 to comp.inputs)
-				var/datum/integrated_io/IN = comp.inputs[j]
-				ioa["[i]i[j]"] = IN
-				if(debug)
-					visible_message( "<span class='notice'>[i]i[j]</span>")
-
-			for(var/j in 1 to comp.outputs.len)               //Also this block uses for setting all i/o id's
-				var/datum/integrated_io/OUT = comp.outputs[j]
-				ioa["[i]o[j]"] = OUT
-				if(debug)
-					visible_message( "<span class='notice'>[i]o[j]</span>")
-
-			for(var/j in 1 to comp.activators)
-				var/datum/integrated_io/ACT = comp.activators[i]
-				ioa["[i]a[j]"] = ACT
-				if(debug)
-					visible_message( "<span class='notice'>[i]a[j]</span>")
+			if(comp.inputs && comp.inputs.len)
+				for(var/j in 1 to comp.inputs.len)
+					var/datum/integrated_io/IN = comp.inputs[j]
+					ioa["[i]i[j]"] = IN
+					if(debug)
+						visible_message( "<span class='notice'>[i]i[j]</span>")
+			if(comp.outputs && comp.outputs.len)
+				for(var/j in 1 to comp.outputs.len)               //Also this block uses for setting all i/o id's
+					var/datum/integrated_io/OUT = comp.outputs[j]
+					ioa["[i]o[j]"] = OUT
+					if(debug)
+						visible_message( "<span class='notice'>[i]o[j]</span>")
+			if(comp.activators && comp.activators.len)
+				for(var/j in 1 to comp.activators.len)
+					var/datum/integrated_io/ACT = comp.activators[j]
+					ioa["[i]a[j]"] = ACT
+					if(debug)
+						visible_message( "<span class='notice'>[i]a[j]</span>")
 		if(i<elements.len)
 			return 0
 	else

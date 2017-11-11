@@ -43,7 +43,7 @@
 	var/obj/item/AS
 	var/PA
 	var/i = 0
-	var/j = 0
+
 	var/list/ioa = list()
 	var/datum/integrated_io/IO
 	var/datum/integrated_io/IO2
@@ -87,24 +87,24 @@
 			comp.loc = AS
 			comp.displayed_name = element[2]
 			comp.assembly = AS
-			j = 0
-			for(var/datum/integrated_io/IN in comp.inputs)
-				j = j + 1
-				ioa["[i]i[j]"] = IN
-				if(debug)
-					visible_message( "<span class='notice'>[i]i[j]</span>")
-			j = 0
-			for(var/datum/integrated_io/OUT in comp.outputs)               //Also this block uses for setting all i/o id's
-				j=j+1
-				ioa["[i]o[j]"] = OUT
-				if(debug)
-					visible_message( "<span class='notice'>[i]o[j]</span>")
-			j = 0
-			for(var/datum/integrated_io/ACT in comp.activators)
-				j=j+1
-				ioa["[i]a[j]"] = ACT
-				if(debug)
-					visible_message( "<span class='notice'>[i]a[j]</span>")
+			if(comp.inputs && comp.inputs.len)
+				for(var/j in 1 to comp.inputs.len)
+					var/datum/integrated_io/IN = comp.inputs[j]
+					ioa["[i]i[j]"] = IN
+					if(debug)
+						visible_message( "<span class='notice'>[i]i[j]</span>")
+			if(comp.outputs && comp.outputs.len)
+				for(var/j in 1 to comp.outputs.len)               //Also this block uses for setting all i/o id's
+					var/datum/integrated_io/OUT = comp.outputs[j]
+					ioa["[i]o[j]"] = OUT
+					if(debug)
+						visible_message( "<span class='notice'>[i]o[j]</span>")
+			if(comp.activators && comp.activators.len)
+				for(var/j in 1 to comp.activators.len)
+					var/datum/integrated_io/ACT = comp.activators[j]
+					ioa["[i]a[j]"] = ACT
+					if(debug)
+						visible_message( "<span class='notice'>[i]a[j]</span>")
 
 	else
 		return
