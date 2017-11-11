@@ -1146,7 +1146,7 @@
 #include "code\modules\atmospherics\machinery\pipes\layermanifold.dm"
 #include "code\modules\atmospherics\machinery\pipes\manifold.dm"
 #include "code\modules\atmospherics\machinery\pipes\manifold4w.dm"
-#include "code\modules\atmospherics\machinery\pipes\pipes.dwaymissions\exile.dm"
+#include "code\modules\atmospherics\machinery\pipes\pipes.dm"
 #include "code\modules\awaymissions\gateway.dm"
 #include "code\modules\awaymissions\pamphlet.dm"
 #include "code\modules\awaymissions\signpost.dm"
@@ -1170,7 +1170,7 @@
 #include "code\modules\awaymissions\bluespaceartillery.dm"
 #include "code\modules\awaymissions\capture_the_flag.dm"
 #include "code\modules\awaymissions\corpse.dm"
-#include "code\modules\a
+#include "code\modules\awaymissions\exile.dm"
 #include "code\modules\awaymissions\mission_code\research.dm"
 #include "code\modules\awaymissions\mission_code\snowdin.dm"
 #include "code\modules\awaymissions\mission_code\spacebattle.dm"
