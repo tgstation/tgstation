@@ -33425,6 +33425,9 @@
 /area/science/mixing)
 "bEv" = (
 /obj/item/twohanded/required/kirbyplants/random,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bEw" = (
@@ -33437,6 +33440,9 @@
 /obj/item/storage/toolbox/electrical,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/machinery/light{
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
@@ -33477,15 +33483,18 @@
 /obj/item/stock_parts/cell/high,
 /obj/item/stock_parts/cell/high,
 /obj/item/stock_parts/cell/high,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bEC" = (
 /turf/closed/wall/r_wall,
 /area/science/mixing)
 "bED" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
+/obj/structure/closet/wardrobe/engineering_yellow,
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
@@ -35901,6 +35910,9 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/vending/engivend,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bKb" = (
@@ -37318,7 +37330,8 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bNt" = (
-/turf/open/floor/engine/vacuum,
+/obj/machinery/light,
+/turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bNu" = (
 /obj/machinery/door/airlock/glass_research{
@@ -37369,19 +37382,10 @@
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bNz" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 27
-	},
-/obj/machinery/camera{
-	c_tag = "Toxins Lab East";
-	dir = 8;
-	network = list("SS13","RD");
-	pixel_y = -22
-	},
-/obj/effect/turf_decal/stripes/line{
+/obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bNA" = (
 /obj/structure/reagent_dispensers/watertank,
@@ -37831,6 +37835,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/light,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bOI" = (
@@ -57685,12 +57690,19 @@
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "QoT" = (
+/obj/machinery/vending/plasmaresearch,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/science/mixing)
+"QoU" = (
 /obj/structure/chair/office/light{
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
-"QoU" = (
+"QoV" = (
 /obj/structure/table/reinforced,
 /obj/item/pizzabox,
 /obj/effect/turf_decal/stripes/line{
@@ -57698,19 +57710,19 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
-"QoV" = (
+"QoW" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/food/snacks/pizza/donkpocket,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
-"QoW" = (
+"QoX" = (
 /obj/structure/table/reinforced,
 /obj/machinery/microwave,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
-"QoX" = (
+"QoY" = (
 /obj/machinery/power/apc{
 	areastring = "/area/science/mixing";
 	dir = 4;
@@ -57720,7 +57732,7 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
-"QoY" = (
+"QoZ" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/toolbox/mechanical/old,
 /obj/effect/turf_decal/stripes/end{
@@ -57732,24 +57744,12 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
-/area/space)
-"QoZ" = (
-/obj/structure/table/reinforced,
-/obj/item/stack/sheet/metal/fifty,
-/obj/item/stack/sheet/metal/fifty,
-/obj/item/stack/sheet/metal/fifty,
-/obj/effect/turf_decal/stripes/end{
-	tag = "icon-warn_end (EAST)";
-	icon_state = "warn_end";
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
-/area/space)
+/area/science/mixing)
 "Qpa" = (
 /obj/structure/table/reinforced,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
 /obj/effect/turf_decal/stripes/end{
 	tag = "icon-warn_end (EAST)";
 	icon_state = "warn_end";
@@ -57759,8 +57759,20 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
-/area/space)
+/area/science/mixing)
 "Qpb" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/stripes/end{
+	tag = "icon-warn_end (EAST)";
+	icon_state = "warn_end";
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/science/mixing)
+"Qpc" = (
 /obj/item/twohanded/required/kirbyplants/random,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
@@ -104696,9 +104708,9 @@ bHm
 bGc
 bEs
 bEs
-QoY
 QoZ
 Qpa
+Qpb
 bPN
 bQR
 bSe
@@ -104952,7 +104964,7 @@ QoL
 bNx
 QoQ
 bJV
-bJV
+QoT
 bFU
 bFU
 bFU
@@ -105212,7 +105224,7 @@ bFU
 bFU
 bFU
 bFU
-bFU
+bNt
 bEC
 bQT
 bSg
@@ -105466,7 +105478,7 @@ QoM
 bFU
 bFU
 bFU
-QoT
+QoU
 bFU
 bFU
 bFU
@@ -105723,7 +105735,7 @@ QoN
 bFU
 bFU
 bJW
-QoU
+QoV
 bFU
 bFU
 bMv
@@ -105980,7 +105992,7 @@ QoO
 bFU
 bFU
 bJZ
-QoV
+QoW
 bFU
 bFU
 bOF
@@ -106237,10 +106249,10 @@ QoP
 bFU
 QoR
 bJZ
-QoW
+QoX
 bFU
 bFU
-Qpb
+Qpc
 bEC
 bPN
 bPK
@@ -107003,14 +107015,14 @@ bzO
 bAR
 bzO
 bqe
-bEu
+bED
 bFX
 bEL
 bGF
 bKa
-QoX
+QoY
 bFU
-bFU
+bNz
 bOI
 bEs
 bRa
