@@ -15,7 +15,7 @@
 	var/dos_failure = 0			// Set to 1 if the relay failed due to (D)DoS attack
 	var/list/dos_sources = list()	// Backwards reference for qdel() stuff
 	var/uid
-	var/global/gl_uid = 1
+	var/static/gl_uid = 1
 
 
 	// Denial of Service attack variables
