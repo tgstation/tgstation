@@ -36,6 +36,8 @@
 	msg = "<span class='adminnotice'>[icon2html(cross, GLOB.admins)]<b><font color=[font_color]>[prayer_type][deity ? " (to [deity])" : ""]: </font>[ADMIN_FULLMONTY(src)] [ADMIN_SC(src)]:</b> [msg]</span>"
 
 	for(var/client/C in GLOB.admins)
+		if(!check_rights_for(C, R_ADMIN))
+			continue
 		if(C.prefs.chat_toggles & CHAT_PRAYER)
 			to_chat(C, msg)
 			if(C.prefs.toggles & SOUND_PRAYERS)
@@ -49,20 +51,20 @@
 /proc/CentCom_announce(text , mob/Sender)
 	var/msg = copytext(sanitize(text), 1, MAX_MESSAGE_LEN)
 	msg = "<span class='adminnotice'><b><font color=orange>CENTCOM:</font>[ADMIN_FULLMONTY(Sender)] [ADMIN_CENTCOM_REPLY(Sender)]:</b> [msg]</span>"
-	to_chat(GLOB.admins, msg)
+	message_admins(msg)
 	for(var/obj/machinery/computer/communications/C in GLOB.machines)
 		C.overrideCooldown()
 
 /proc/Syndicate_announce(text , mob/Sender)
 	var/msg = copytext(sanitize(text), 1, MAX_MESSAGE_LEN)
 	msg = "<span class='adminnotice'><b><font color=crimson>SYNDICATE:</font>[ADMIN_FULLMONTY(Sender)] [ADMIN_SYNDICATE_REPLY(Sender)]:</b> [msg]</span>"
-	to_chat(GLOB.admins, msg)
+	message_admins(msg)
 	for(var/obj/machinery/computer/communications/C in GLOB.machines)
 		C.overrideCooldown()
 
 /proc/Nuke_request(text , mob/Sender)
 	var/msg = copytext(sanitize(text), 1, MAX_MESSAGE_LEN)
 	msg = "<span class='adminnotice'><b><font color=orange>NUKE CODE REQUEST:</font>[ADMIN_FULLMONTY(Sender)] [ADMIN_CENTCOM_REPLY(Sender)] [ADMIN_SET_SD_CODE]:</b> [msg]</span>"
-	to_chat(GLOB.admins, msg)
+	message_admins(msg)
 	for(var/obj/machinery/computer/communications/C in GLOB.machines)
 		C.overrideCooldown()

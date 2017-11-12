@@ -28,6 +28,7 @@
 	response_harm   = "squashes"
 	maxHealth = 10
 	health = 10
+	spacewalk = TRUE
 	faction = list("hostile")
 	move_to_delay = 0
 	obj_damage = 0
@@ -51,11 +52,6 @@
 	var/icon_base = "bee"
 	var/static/beehometypecache = typecacheof(/obj/structure/beebox)
 	var/static/hydroponicstypecache = typecacheof(/obj/machinery/hydroponics)
-
-
-/mob/living/simple_animal/hostile/poison/bees/Process_Spacemove(movement_dir = 0)
-	return 1
-
 
 /mob/living/simple_animal/hostile/poison/bees/Initialize()
 	. = ..()

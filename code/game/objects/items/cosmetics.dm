@@ -25,9 +25,11 @@
 
 /obj/item/lipstick/random
 	name = "lipstick"
+	icon_state = "random_lipstick"
 
 /obj/item/lipstick/random/New()
 	..()
+	icon_state = "lipstick"
 	colour = pick("red","purple","lime","black","green","blue","white")
 	name = "[colour] lipstick"
 

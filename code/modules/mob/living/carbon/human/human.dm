@@ -26,6 +26,8 @@
 
 	handcrafting = new()
 
+	grant_language(/datum/language/common) // ME TARZAN, YOU JANEBOT
+	update_teeth()
 	. = ..()
 
 /mob/living/carbon/human/OpenCraftingMenu()
@@ -176,6 +178,13 @@
 	if(legcuffed)
 		dat += "<tr><td><A href='?src=[REF(src)];item=[slot_legcuffed]'>Legcuffed</A></td></tr>"
 
+	for(var/I in bodyparts)
+		if(istype(I, /obj/item/bodypart))
+			var/obj/item/bodypart/L = I
+
+			for(var/obj/item/J in L.embedded_objects)
+				dat += "<tr><td><a href='byond://?src=\ref[src];embedded_object=\ref[J];embedded_limb=\ref[L]'>Embedded in [L]: [J]</a><br></td></tr>"
+
 	dat += {"</table>
 	<A href='?src=[REF(user)];mach_close=mob[REF(src)]'>Close</A>
 	"}
@@ -212,8 +221,10 @@
 				L.receive_damage(I.embedded_unsafe_removal_pain_multiplier*I.w_class)//It hurts to rip it out, get surgery you dingus.
 				I.forceMove(get_turf(src))
 				usr.put_in_hands(I)
-				usr.emote("scream")
-				usr.visible_message("[usr] successfully rips [I] out of their [L.name]!","<span class='notice'>You successfully remove [I] from your [L.name].</span>")
+				emote("scream")
+
+				visible_message("[usr] successfully rips \the [I] out of [usr == src ? "their" : name + "'s"] [L.name]!",\
+								"<span class='notice'>You successfully remove \the [I] from [usr == src ? "your" : name + "'s"] [L.name].</span>")
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
 			return
@@ -753,7 +764,7 @@
 		return
 	else
 		if(hud_used.healths)
-			var/health_amount = health - staminaloss
+			var/health_amount = health
 			if(..(health_amount)) //not dead
 				switch(hal_screwyhud)
 					if(SCREWYHUD_CRIT)
@@ -871,6 +882,7 @@
 	.["Make alien"] = "?_src_=vars;[HrefToken()];makealien=[REF(src)]"
 	.["Make slime"] = "?_src_=vars;[HrefToken()];makeslime=[REF(src)]"
 	.["Toggle Purrbation"] = "?_src_=vars;[HrefToken()];purrbation=[REF(src)]"
+	.["Make Cluwne"] = "?_src_=vars;[HrefToken()];cluwneing=[REF(src)]"
 
 /mob/living/carbon/human/MouseDrop_T(mob/living/target, mob/living/user)
 	if((target != pulling) || (grab_state < GRAB_AGGRESSIVE) || (user != target) || !isliving(user) || stat || user.stat)//Get consent first :^)
@@ -1030,3 +1042,15 @@
 
 /mob/living/carbon/human/species/zombie/krokodil_addict
 	race = /datum/species/krokodil_addict
+
+/mob/living/carbon/human/species/tarajan
+	race = /datum/species/tarajan
+
+/mob/living/carbon/human/species/moth
+	race = /datum/species/moth
+
+/mob/living/carbon/human/species/ipc
+	race = /datum/species/ipc
+
+/mob/living/carbon/human/species/bird
+	race = /datum/species/bird

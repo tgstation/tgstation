@@ -197,7 +197,10 @@
 			to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
 			C.log_message("<font color='orange'>Slipped[O ? " on the [O.name]" : ""][(lube&SLIDE)? " (LUBE)" : ""]!</font>", INDIVIDUAL_ATTACK_LOG)
 		if(!(lube&SLIDE_ICE))
-			playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+			if(prob(95))
+				playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+			else
+				playsound(C.loc, 'hippiestation/sound/misc/oof.ogg', 50, 1, -3)
 
 		for(var/obj/item/I in C.held_items)
 			C.accident(I)
@@ -355,3 +358,11 @@
 	if(wet_overlay)
 		cut_overlay(wet_overlay)
 
+
+/turf/open/rad_act(pulse_strength)
+	if (air.gases[/datum/gas/carbon_dioxide] && air.gases[/datum/gas/oxygen])
+		air.gases[/datum/gas/carbon_dioxide][MOLES]=max(air.gases[/datum/gas/carbon_dioxide][MOLES]-(pulse_strength/1000),0)
+		air.gases[/datum/gas/oxygen][MOLES]=max(air.gases[/datum/gas/oxygen][MOLES]-(pulse_strength/2000),0)
+		ASSERT_GAS(/datum/gas/pluoxium,air)
+		air.gases[/datum/gas/pluoxium][MOLES]+=(pulse_strength/4000)
+		air.garbage_collect()

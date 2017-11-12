@@ -8,7 +8,9 @@
 	var/t_is = p_are()
 
 	var/msg = "<span class='info'>*---------*\nThis is <EM>[src.name]</EM>!\n"
-
+	
+	var/is_ghost = isobserver(user)
+	
 	var/list/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 
@@ -292,6 +294,9 @@
 
 		if(digitalcamo)
 			msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.\n"
+
+	if((!skipface || is_ghost) && is_thrall(src) && (in_range(user,src) || is_ghost))
+		msg += "Their features seem unnaturally tight and drawn.\n"		
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user

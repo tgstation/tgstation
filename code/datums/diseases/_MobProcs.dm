@@ -6,7 +6,7 @@
 			return 1
 	return 0
 
-
+// Hippie Start - mirrored this proc in the hippie _mobProcs.dm to allow for and cap at a maximum of three viruses.
 /mob/proc/CanContractDisease(datum/disease/D)
 	if(stat == DEAD)
 		return 0
@@ -21,14 +21,14 @@
 		return 0
 
 	return 1
-
+//Hippie end
 
 /mob/proc/ContactContractDisease(datum/disease/D)
 	if(!CanContractDisease(D))
 		return 0
 	AddDisease(D)
 
-
+//Hippie Start - mirrored this proc in the hippie _mobProcs.dm to removed the "a new disease kills any old disease infecting the host based on stats
 /mob/proc/AddDisease(datum/disease/D)
 	for(var/datum/disease/advance/P in viruses)
 		if(istype(D, /datum/disease/advance))
@@ -54,7 +54,7 @@
 				DD.vars[V] = D.vars[V]
 
 		DD.affected_mob.med_hud_set_status()
-
+//Hippie end
 
 /mob/living/carbon/ContactContractDisease(datum/disease/D, target_zone)
 	if(!CanContractDisease(D))

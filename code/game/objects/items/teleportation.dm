@@ -1,4 +1,3 @@
-
 #define SOURCE_PORTAL 1
 #define DESTINATION_PORTAL 2
 

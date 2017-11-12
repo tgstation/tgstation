@@ -1,4 +1,0 @@
-author: "More Robust Than You"
-delete-after: True
-changes: 
-  - bugfix: "Blobbernauts and spores are no longer killed by blob victory"

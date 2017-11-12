@@ -11,7 +11,9 @@
 					D.staticOverlays |= staticOverlays["static"]
 					D.client.images |= staticOverlays["static"]
 	if(unique_name)
-		name = "[name] ([rand(1, 1000)])"
+		var/rand_int = rand(1, 1000)
+		name = "[name] ([rand_int])"
+		hippie_equip_mob_with_items(rand_int) /* This equips shit for the mob based on the random int they are given */
 		real_name = name
 	var/datum/atom_hud/data/human/medical/advanced/medhud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	medhud.add_to_hud(src)
@@ -243,6 +245,10 @@
 
 /mob/living/verb/succumb(whispered as null)
 	set hidden = 1
+	//hippie start
+	if(!canSuccumb())
+		return
+	//hippie end
 	if (InCritical())
 		log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] while in [InFullCritical() ? "hard":"soft"] critical with [round(health, 0.1)] points of health!", INDIVIDUAL_ATTACK_LOG)
 		adjustOxyLoss(health - HEALTH_THRESHOLD_DEAD)
@@ -479,21 +485,21 @@
 	if(isopenturf(loc) && !is_flying())
 		var/turf/open/T = loc
 		. += T.slowdown
-	var/static/config_run_delay
-	var/static/config_walk_delay
+	var/static/datum/config_entry/number/run_delay/config_run_delay
+	var/static/datum/config_entry/number/walk_delay/config_walk_delay
 	if(isnull(config_run_delay))
 		config_run_delay = CONFIG_GET(number/run_delay)
 		config_walk_delay = CONFIG_GET(number/walk_delay)
 	if(ignorewalk)
-		. += config_run_delay
+		. += config_run_delay.value_cache
 	else
 		switch(m_intent)
 			if(MOVE_INTENT_RUN)
 				if(drowsyness > 0)
 					. += 6
-				. += config_run_delay
+				. += config_run_delay.value_cache
 			if(MOVE_INTENT_WALK)
-				. += config_walk_delay
+				. += config_walk_delay.value_cache
 
 /mob/living/proc/makeTrail(turf/target_turf, turf/start, direction)
 	if(!has_gravity())
@@ -960,7 +966,7 @@
 /mob/living/proc/update_canmove()
 	var/ko = IsKnockdown() || IsUnconscious() || (stat && (stat != SOFT_CRIT || pulledby)) || (status_flags & FAKEDEATH)
 	var/move_and_fall = stat == SOFT_CRIT && !pulledby
-	var/chokehold = pulledby && pulledby.grab_state >= GRAB_NECK
+	var/chokehold = pulledby && pulledby.grab_state >= GRAB_KILL
 	var/buckle_lying = !(buckled && !buckled.buckle_lying)
 	var/has_legs = get_num_legs()
 	var/has_arms = get_num_arms()

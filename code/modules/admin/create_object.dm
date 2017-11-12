@@ -18,7 +18,7 @@
 	/obj, /obj/structure, /obj/machinery, /obj/effect,
 	/obj/item, /obj/item/clothing, /obj/item/stack, /obj/item/device,
 	/obj/item/reagent_containers, /obj/item/gun)
-	
+
 	var/path = input("Select the path of the object you wish to create.", "Path", /obj) in create_object_forms
 	var/html_form = create_object_forms[path]
 

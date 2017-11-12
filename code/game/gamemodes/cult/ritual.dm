@@ -256,11 +256,8 @@ This file contains the arcane tome files.
 	if(locate(/obj/effect/rune) in T)
 		to_chat(user, "<span class='cult'>There is already a rune here.</span>")
 		return FALSE
-
-
 	if(!(T.z in GLOB.station_z_levels) && T.z != ZLEVEL_MINING)
 		to_chat(user, "<span class='warning'>The veil is not weak enough here.</span>")
-
 		return FALSE
 
 	return TRUE

@@ -57,17 +57,20 @@
 	set name = "report-issue"
 	set desc = "Report an issue"
 	set hidden = 1
+	
+	var/message = "This will open the issue reporter. Are you sure?"
 	var/githuburl = CONFIG_GET(string/githuburl)
 	if(githuburl)
-		var/message = "This will open the Github issue reporter in your browser. Are you sure?"
 		if(GLOB.revdata.testmerge.len)
 			message += "<br>The following experimental changes are active and are probably the cause of any new or sudden issues you may experience. If possible, please try to find a specific thread for your issue instead of posting to the general issue tracker:<br>"
 			message += GLOB.revdata.GetTestMergeInfo(FALSE)
 		if(tgalert(src, message, "Report Issue","Yes","No")=="No")
 			return
-		var/static/issue_template = file2text(".github/ISSUE_TEMPLATE.md")
 		var/servername = CONFIG_GET(string/servername)
-		src << link("[githuburl]/issues/new[GLOB.round_id ? "?body=[url_encode("Issue reported from Round ID: [GLOB.round_id][servername ? " ([servername])" : ""]\n\n[issue_template]")]" : ""]")
+		var/compileinfo = "[GLOB.round_id][servername ? " ([servername])" : ""]"
+		var/dat = {"	<title>Hippie Station 13 Github Ingame Reporting</title>
+ 			<iframe src='https://tools.hippiestation.com/githubreport/?ckey=[ckey(key)]&sinfo=[compileinfo]' style='border:none' width='850' height='660' scroll=no></iframe>"}
+		src << browse(dat, "window=github;size=900x700")
 	else
 		to_chat(src, "<span class='danger'>The Github URL is not set in the server configuration.</span>")
 	return

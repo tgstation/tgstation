@@ -94,7 +94,8 @@
 	if(!isturf(loc) && command)
 		return
 	var/turf/T = get_turf(loc)
-	T.air_update_turf(command)
+	if(T) //because we need this for some shitty reason
+		T.air_update_turf(command)
 
 /turf/air_update_turf(command = 0)
 	if(command)

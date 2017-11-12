@@ -53,7 +53,7 @@
 		return
 
 	var/title = ""
-	var/refid = "[REF(D)]"
+	var/refid = REF(D)
 	var/icon/sprite
 	var/hash
 
@@ -453,7 +453,7 @@
 				var/val
 				if (IS_NORMAL_LIST(L) && !isnum(key))
 					val = L[key]
-				if (!val)
+				if (isnull(val))	// we still want to display non-null false values, such as 0 or ""
 					val = key
 					key = i
 
@@ -1163,6 +1163,16 @@
 				message_admins(msg)
 				admin_ticket_log(H, msg)
 
+		else if(href_list["cluwneing"])
+			if(!check_rights(R_SPAWN))	return
+			var/mob/living/carbon/human/H = locate(href_list["cluwneing"])
+			if(!H)
+				to_chat(usr, "Mob doesn't exist anymore")
+				return
+			H.cluwneify()
+			message_admins("<span class='notice'>[key_name(usr)] has made [key_name(H)] into a Cluwne.</span>")
+			return
+			
 		else if(href_list["adjustDamage"] && href_list["mobToDamage"])
 			if(!check_rights(0))
 				return

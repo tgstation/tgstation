@@ -1,4 +1,0 @@
-author: "Kor"
-delete-after: True
-changes: 
-  - bugfix: "Cult mode will once again print out names at round end."

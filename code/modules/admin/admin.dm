@@ -2,11 +2,17 @@
 ////////////////////////////////
 /proc/message_admins(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
-	to_chat(GLOB.admins, msg)
+	for(var/X in GLOB.admins)
+		var/client/C = X
+		if(check_rights_for(C, R_ADMIN))
+			to_chat(C, msg)
 
 /proc/relay_msg_admins(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">RELAY:</span> <span class=\"message\">[msg]</span></span>"
-	to_chat(GLOB.admins, msg)
+	for(var/X in GLOB.admins)
+		var/client/C = X
+		if(check_rights_for(C, R_ADMIN))
+			to_chat(C, msg)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
@@ -834,10 +840,10 @@
 /client/proc/adminGreet(logout)
 	if(SSticker.HasRoundStarted())
 		var/string
-		if(logout && CONFIG_GET(flag/announce_admin_logout))
+		if(logout && CONFIG_GET(flag/announce_admin_logout)  && check_rights_for(src, R_ADMIN))
 			string = pick(
 				"Admin logout: [key_name(src)]")
-		else if(!logout && CONFIG_GET(flag/announce_admin_login) && (prefs.toggles & ANNOUNCE_LOGIN))
+		else if(!logout && CONFIG_GET(flag/announce_admin_login) && (prefs.toggles & ANNOUNCE_LOGIN) && check_rights_for(src, R_ADMIN))
 			string = pick(
 				"Admin login: [key_name(src)]")
 		if(string)

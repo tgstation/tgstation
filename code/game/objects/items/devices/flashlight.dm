@@ -198,7 +198,7 @@
 	item_state = "seclite"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
-	force = 9 // Not as good as a stun baton.
+	force = 15 // robust
 	brightness_on = 5 // A little better than the standard flashlight.
 	hitsound = 'sound/weapons/genhit1.ogg'
 
@@ -488,16 +488,14 @@
 
 /obj/item/device/flashlight/glowstick/random
 	name = "random colored glowstick"
+	icon_state = "random_glowstick"
+	color = null
 
 /obj/item/device/flashlight/glowstick/random/Initialize()
-	var/list/glowtypes = typesof(/obj/item/device/flashlight/glowstick)
-	glowtypes -= /obj/item/device/flashlight/glowstick/random
-
-	var/obj/item/device/flashlight/glowstick/glowtype = pick(glowtypes)
-
-	name = initial(glowtype.name)
-	color = initial(glowtype.color)
 	. = ..()
+	var/T = pick(typesof(/obj/item/device/flashlight/glowstick) - /obj/item/device/flashlight/glowstick/random)
+	new T(loc)
+	return INITIALIZE_HINT_QDEL
 
 /obj/item/device/flashlight/spotlight //invisible lighting source
 	name = "disco light"

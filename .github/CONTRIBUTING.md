@@ -1,62 +1,41 @@
 # CONTRIBUTING
 
-## Reporting Issues
-
-See [this page](http://tgstation13.org/wiki/Reporting_Issues) for a guide and format to issue reports.
-
 ## Introduction
 
-Hello and welcome to /tg/station's contributing page. You are here because you are curious or interested in contributing - thank you! Everyone is free to contribute to this project as long as they follow the simple guidelines and specifications below; at /tg/station, we strive to maintain code stability and maintainability, and to do that, we need all pull requests to hold up to those specifications. It's in everyone's best interests - including yours! - if the same bug doesn't have to be fixed twice because of duplicated code.
-
-First things first, we want to make it clear how you can contribute (if you've never contributed before), as well as the kinds of powers the team has over your additions, to avoid any unpleasant surprises if your pull request is closed for a reason you didn't foresee.
+This is the HippieStation contributions page. Everyone is free to contribute, but there must be some minimum standards in mind when doing so.
 
 ## Getting Started
+We do not have a list of goals and features to add. Instead, there is freedom for contributors to suggest and create their ideas for the game. That does not mean we aren't determined to squash bugs, which unfortunately pop up a lot due to the deep complexity of the game. Here are some useful getting started guides, if you want to contribute or if you want to know what challenges you can tackle with zero knowledge about the game's code structure.
 
-/tg/station doesn't have a list of goals and features to add; we instead allow freedom for contributors to suggest and create their ideas for the game. That doesn't mean we aren't determined to squash bugs, which unfortunately pop up a lot due to the deep complexity of the game. Here are some useful starting guides, if you want to contribute or if you want to know what challenges you can tackle with zero knowledge about the game's code structure.
+If you want to contribute the first thing you'll need to do is [set up Git](https://wiki.hippiestation.com/index.php?title=Setting_up_git) so you can download the source code.
 
-If you want to contribute the first thing you'll need to do is [set up Git](http://tgstation13.org/wiki/Setting_up_git) so you can download the source code.
 
-We have a [list of guides on the wiki](http://www.tgstation13.org/wiki/index.php/Guides#Development_and_Contribution_Guides) that will help you get started contributing to /tg/station with Git and Dream Maker. For beginners, it is recommended you work on small projects like bugfixes at first. If you need help learning to program in BYOND, check out this [repository of resources](http://www.byond.com/developer/articles/resources).
+We have a [list of guides on the wiki](https://wiki.hippiestation.com/index.php/Guides#Development_and_Contribution_Guides) that will help you get started contributing to /tg/station with Git and Dream Maker. For beginners, it is recommended you work on small projects like bugfixes at first. If you need help learning to program in BYOND, check out this [repository of resources](http://www.byond.com/developer/articles/resources).
 
-There is an open list of approachable issues for [your inspiration here](https://github.com/tgstation/-tg-station/issues?q=is%3Aopen+is%3Aissue+label%3A%22Good+First+Issue%22).
+There is an open list of approachable issues for [your inspiration here](https://github.com/HippieStation/HippieStation/issues?q=is%3Aopen+is%3Aissue+label%3A%22Good+First+Issue%22).
 
 You can of course, as always, ask for help at [#coderbus](irc://irc.rizon.net/coderbus) on irc.rizon.net. We're just here to have fun and help out, so please don't expect professional support.
 
-## Meet the Team
 
-**Design Lead**
+We have a [list of guides on the wiki](https://wiki.hippiestation.com/index.php?title=Guides#Development_and_Contribution_Guides) to get started. We recommend beginners start with small projects. For information on BYOND programming, take a look at BYOND's [repository of resources](http://www.byond.com/developer/articles/resources).
 
-The Design Lead has the final say on what gameplay changes get into and out of the game. He or she has full veto power on any feature or balance additions, changes, or removals, and establishes a general, personally-preferred direction for the game.
+There is an open list of approachable issues for [your inspiration here](https://www.github.com/HippieStation/HippieStation/issues?&q=is%3Aissue%20is%3Aopen%20label%3A"Easy%20Fix"%20).
 
-**Headcoder**
+You can of course, as always, ask for help on the discord. We are just here to have fun and help so do not expect professional support please.
 
-The Headcoder is responsible for controlling, adding, and removing maintainers from the project. In addition to filling the role of a normal maintainer, they have sole authority on who becomes a maintainer, as well as who remains a maintainer and who does not.
+## Specification
 
-**Art Director**
+As mentioned before, you are expected to follow these specifications in order to make everyone's lives easier, it will also save you and us time, with having to make the changes and us having to tell you what to change. Thank you for reading this section.
 
-The Art Director controls sprites and aesthetic that get into the game. While sprites for brand-new additions are generally accepted regardless of quality, modified current art assets fall to the Art Director, who can decide whether or not a sprite tweak is both merited and a suitable replacement.
+### Object Oriented code
+As BYOND's Dream Maker is an object oriented language, code must be object oriented when possible in order to be more flexible when adding content to it. If you are unfamiliar with this concept, it is highly recommended you look it up.
 
-They also control the general "perspective" of the game - how sprites should generally look, especially the angle from which they're viewed. An example of this is the [3/4 perspective](http://static.tvtropes.org/pmwiki/pub/images/kakarikovillage.gif), which is a bird's eye view from above the object being viewed.
+### All Byond paths must contain the full path.
+(ie: absolute pathing)
 
-**Maintainers**
+Byond will allow you nest almost any type keyword into a block, such as:
 
-Maintainers are quality control. If a proposed pull request doesn't meet the following specifications, they can request you to change it, or simply just close the pull request. Maintainers are required to give a reason for closing the pull request.
-
-Maintainers can revert your changes if they feel they are not worth maintaining or if they did not live up to the quality specifications.
-
-## Specifications
-
-As mentioned before, you are expected to follow these specifications in order to make everyone's lives easier. It'll save both your time and ours, by making sure you don't have to make any changes and we don't have to ask you to. Thank you for reading this section!
-
-### Object Oriented Code
-As BYOND's Dream Maker (henceforth "DM") is an object-oriented language, code must be object-oriented when possible in order to be more flexible when adding content to it. If you don't know what "object-oriented" means, we highly recommend you do some light research to grasp the basics.
-
-### All BYOND paths must contain the full path.
-(i.e. absolute pathing)
-
-DM will allow you nest almost any type keyword into a block, such as:
-
-```DM
+```c++
 datum
 	datum1
 		var
@@ -85,12 +64,12 @@ The use of this is not allowed in this project as it makes finding definitions v
 
 The previous code made compliant:
 
-```DM
+```c++
 /datum/datum1
-	var/varname1
-	var/varname2
-	var/static/varname3
-	var/static/varname4
+		var/varname1
+		var/varname2
+		var/static/varname3
+		var/static/varname4
 
 /datum/datum1/proc/proc1()
 	code
@@ -105,19 +84,23 @@ The previous code made compliant:
 	code
 ```
 
+### Use the "hippiestation" folder.
+
+See [the README.md](/hippiestation/README.md) in the folder for further details.
+
 ### No overriding type safety checks.
 The use of the : operator to override type safety checks is not allowed. You must cast the variable to the proper type.
 
-### Type paths must begin with a /
-eg: `/datum/thing`, not `datum/thing`
+### Type paths must began with a /
+eg: `/datum/thing` not `datum/thing`
 
 ### Datum type paths must began with "datum"
-In DM, this is optional, but omitting it makes finding definitions harder.
+In byond this is optional, but omitting it makes finding definitions harder.
 
 ### Do not use text/string based type paths
 It is rarely allowed to put type paths in a text format, as there are no compile errors if the type path no longer exists. Here is an example:
 
-```DM
+```C++
 //Good
 var/path_type = /obj/item/baseball_bat
 
@@ -133,64 +116,43 @@ You must use tabs to indent your code, NOT SPACES.
 
 (You may use spaces to align something, but you should tab to the block level first, then add the remaining spaces)
 
-### No hacky code
-Hacky code, such as adding specific checks, is highly discouraged and only allowed when there is ***no*** other option. (Protip: 'I couldn't immediately think of a proper way so thus there must be no other option' is not gonna cut it here! If you can't think of anything else, say that outright and admit that you need help with it. Maintainers exist for exactly that reason.)
+### No Hacky code
+Hacky code, such as adding specific checks, is highly discouraged and only allowed when there is ***no*** other option. (Protip: 'I couldn't immediately think of a proper way so thus there must be no other option' is not gonna cut it here )
 
-You can avoid hacky code by using object-oriented methodologies, such as overriding a function (called "procs" in DM) or sectioning code into functions and then overriding them as required.
+You can avoid hacky code by using object oriented methodologies, such as overriding a function (called procs in DM) or sectioning code into functions and then overriding them as required.
 
-### No duplicated code
-Copying code from one place to another may be suitable for small, short-time projects, but /tg/station is a long-term project and highly discourages this.
+### No duplicated code.
+Copying code from one place to another maybe suitable for small short time projects, but there is a focus on the long term and thus discourages this.
 
 Instead you can use object orientation, or simply placing repeated code in a function, to obey this specification easily.
 
 ### Startup/Runtime tradeoffs with lists and the "hidden" init proc
-First, read the comments in [this BYOND thread](http://www.byond.com/forum/?post=2086980&page=2#comment19776775), starting where the link takes you.
+First, read the comments in this byond thread, starting here:http://www.byond.com/forum/?post=2086980&page=2#comment19776775
 
 There are two key points here:
 
-1) Defining a list in the variable's definition calls a hidden proc - init. If you have to define a list at startup, do so in New() (or preferably Initialize()) and avoid the overhead of a second call (Init() and then New())
+1) Defining a list in the type definition incurs a hidden proc call - init, if you must define a list at startup, do so in New()/Initialize and avoid the overhead of a second call (init() and then new())
 
-2) It also consumes more memory to the point where the list is actually required, even if the object in question may never use it!
+2)Offsets list creation overhead to the point where the list is actually required (which for many objects, may be never at all). 
 
-Remember: although this tradeoff makes sense in many cases, it doesn't cover them all. Think carefully about your addition before deciding if you need to use it.
+Remember, this tradeoff makes sense in many cases but not all, you should think carefully about your implementation before deciding if this is an appropriate thing to do
 
-### Prefer `Initialize()` over `New()` for atoms
-Our game controller is pretty good at handling long operations and lag, but it can't control what happens when the map is loaded, which calls `New` for all atoms on the map. If you're creating a new atom, use the `Initialize` proc to do what you would normally do in `New`. This cuts down on the number of proc calls needed when the world is loaded. See here for details on `Initialize`: https://github.com/tgstation/tgstation/blob/master/code/game/atoms.dm#L49
-While we normally encourage (and in some cases, even require) bringing out of date code up to date when you make unrelated changes near the out of date code, that is not the case for `New` -> `Initialize` conversions. These systems are generally more dependant on parent and children procs so unrelated random conversions of existing things can cause bugs that take months to figure out.
+### Prefer `Initialize` over `New` for atoms
+Our game controller is pretty good at handling long operations and lag. But, it can't control what happens when the map is loaded, which calls `New` for all atoms on the map. If you're creating a new atom, use the `Initialize` proc to do what you would normally do in `New`. This cuts down on the number of proc calls needed when the world is loaded. See here for details on `Initialize`: https://github.com/HippieStation/HippieStation/blob/master/code/game/atoms.dm#L45
 
 ### No magic numbers or strings
-This means stuff like having a "mode" variable for an object set to "1" or "2" with no clear indicator of what that means. Make these #defines with a name that more clearly states what it's for. For instance:
-````DM
-/datum/proc/do_the_thing(thing_to_do)
-	switch(thing_to_do)
-		if(1)
-			(...)
-		if(2)
-			(...)
-````
-There's no indication of what "1" and "2" mean! Instead, you'd do something like this:
-````DM
-#define DO_THE_THING_REALLY_HARD 1
-#define DO_THE_THING_EFFICIENTLY 2
-/datum/proc/do_the_thing(thing_to_do)
-	switch(thing_to_do)
-		if(DO_THE_THING_REALLY_HARD)
-			(...)
-		if(DO_THE_THING_EFFICIENTLY)
-			(...)
-````
-This is clearer and enhances readability of your code! Get used to doing it!
+Make these #defines with a name that more clearly states what it's for.
 
-### Control statements
-(if, while, for, etc)
+### Control statements:
+(if,while,for,etc)
 
 * All control statements must not contain code on the same line as the statement (`if (blah) return`)
 * All control statements comparing a variable to a number should use the formula of `thing` `operator` `number`, not the reverse (eg: `if (count <= 10)` not `if (10 >= count)`)
 
-### Use early return
-Do not enclose a proc in an if-block when returning on a condition is more feasible
+### Use early return.
+Do not enclose a proc in an if block when returning on a condition is more feasible
 This is bad:
-````DM
+````
 /datum/datum1/proc/proc1()
 	if (thing1)
 		if (!thing2)
@@ -198,7 +160,7 @@ This is bad:
 				do stuff
 ````
 This is good:
-````DM
+````
 /datum/datum1/proc/proc1()
 	if (!thing1)
 		return
@@ -216,13 +178,13 @@ This prevents nesting levels from getting deeper then they need to be.
 
 * Calls to the database must be escaped properly - use sanitizeSQL to escape text based database entries from players or admins, and isnum() for number based database entries from players or admins.
 
-* All calls to topics must be checked for correctness. Topic href calls can be easily faked by clients, so you should ensure that the call is valid for the state the item is in. Do not rely on the UI code to provide only valid topic calls, because it won't.
+* All calls to topics must be checked for correctness, topic href calls can be easily faked by clients, so you should ensure that the call is valid for the state the item is in. Do not rely on the UI code to provide only valid topic calls
 
-* Information that players could use to metagame (that is, to identify round information and/or antagonist type via information that would not be available to them in character) should be kept as administrator only.
+* Information that players could use to metagame (that is to identify the round type and or the antags via information that would not be available to them in character) should be kept as administrator only
 
-* It is recommended as well you do not expose information about the players - even something as simple as the number of people who have readied up at the start of the round can and has been used to try to identify the round type.
+* It is recommended as well you do not expose information about the players - even something as simple as the number of people who have readied up at the start of the round can and has been used to try to identify the round type
 
-* Where you have code that can cause large-scale modification and *FUN*, make sure you start it out locked behind one of the default admin roles - use common sense to determine which role fits the level of damage a function could do.
+* Where you have code that can cause large scale modification and *FUN* make sure you start it out locked behind one of the default admin roles - use common sense to determine which role fits the level of damage a function could do
 
 ### Files
 * Because runtime errors do not give the full path, try to avoid having files with the same name across folders.
@@ -254,35 +216,33 @@ This prevents nesting levels from getting deeper then they need to be.
 
 
 ### Other Notes
-* Code should be modular where possible; if you are working on a new addition, then strongly consider putting it in its own file unless it makes sense to put it with similar ones (i.e. a new tool would go in the "tools.dm" file)
+* Code should be modular where possible, if you are working on a new class then it is best if you put it in a new file.
 
 * Bloated code may be necessary to add a certain feature, which means there has to be a judgement over whether the feature is worth having or not. You can help make this decision easier by making sure your code is modular.
 
-* You are expected to help maintain the code that you add, meaning that if there is a problem then you are likely to be approached in order to fix any issues, runtimes, or bugs.
+* You are expected to help maintain the code that you add, meaning if there is a problem then you are likely to be approached in order to fix any issues, runtimes or bugs.
 
-* Do not divide when you can easily convert it to multiplication. (ie `4/2` should be done as `4*0.5`)
+* Do not divide when you can easily convert it to a multiplication. (ie `4/2` should be done as `4*0.5`)
 
 * If you used regex to replace code during development of your code, post the regex in your PR for the benefit of future developers and downstream users.
 
 #### Enforced not enforced
-The following coding styles are not only not enforced at all, but are generally frowned upon to change for little to no reason:
+The following different coding styles are not only not enforced, but it is generally frowned upon to change them over from one to the other for little reason:
 
 * English/British spelling on var/proc names
-	* Color/Colour - both are fine, but keep in mind that BYOND uses `color` as a base variable
+	* Color/Colour nobody cares,
 * Spaces after control statements
-	* `if()` and `if ()` - nobody cares!
+	* if() if () nobody cares.
 
-### Operators
-#### Spacing
+#### Operators and spaces:
 (this is not strictly enforced, but more a guideline for readability's sake)
 
 * Operators that should be separated by spaces
 	* Boolean and logic operators like &&, || <, >, ==, etc (but not !)
-	* Bitwise AND &
 	* Argument separator operators like , (and ; when used in a forloop)
 	* Assignment operators like = or += or the like
 * Operators that should not be separated by spaces
-	* Bitwise OR |
+	* Bitwise operators like & or |
 	* Access operators like . and :
 	* Parentheses ()
 	* logical not !
@@ -295,38 +255,37 @@ Math operators like +, -, /, *, etc are up in the air, just choose which version
 * Associated lists declarations must have their key value quoted if it's a string
 	* WRONG: list(a = "b")
 	* RIGHT: list("a" = "b")
+* Do not define new variables as `null`. Instead, leave it blank because the default value is null. Variables already defined on a parent object must have `= null`, though.
+	* WRONG: `var/variable = null`
+	* RIGHT: `var/variable`
+	
 
 ### Dream Maker Quirks/Tricks
 Like all languages, Dream Maker has its quirks, some of them are beneficial to us, like these
 
-#### In-To for-loops
-```for(var/i = 1, i <= some_value, i++)``` is a fairly standard way to write an incremental for loop in most languages (especially those in the C family), but DM's ```for(var/i in 1 to some_value)``` syntax is oddly faster than its implementation of the former syntax; where possible, it's advised to use DM's syntax. (Note, the ```to``` keyword is inclusive, so it automatically defaults to replacing ```<=```; if you want ```<``` then you should write it as ```1 to some_value-1```).
-
-HOWEVER, if either ```some_value``` or ```i``` changes within the body of the for (underneath the ```for(...)``` header) or if you are looping over a list AND changing the length of the list then you can NOT use this type of for-loop!
+* In-To for loops: ```for(var/i = 1, i <= some_value, i++)``` is a fairly standard way to write an incremental for loop in most languages (especially those in the C family) however DM's ```for(var/i in 1 to some_value)``` syntax is oddly faster than its implementation of the former syntax; where possible it's advised to use DM's syntax. (Note, the ```to``` keyword is inclusive, so it automatically defaults to replacing ```<=```, if you want ```<``` then you should write it as ```1 to some_value-1```).
+HOWEVER, if either ```some_value``` or ```i``` changes within the body of the for (underneath the ```for(...)``` header) or if you are looping over a list AND changing the length of the list then you can NOT use this type of for loop!
 
 
-#### Istypeless for loops
-A name for a differing syntax for writing for-each style loops in DM. It's NOT DM's standard syntax, hence why this is considered a quirk. Take a look at this:
-```DM
+* Istypeless for loops: a name for a differing syntax for writing for-each style loops in DM, however it is NOT DM's standard syntax hence why this is considered a quirk. Take a look at this:
+```
 var/list/bag_of_items = list(sword, apple, coinpouch, sword, sword)
 var/obj/item/sword/best_sword
 for(var/obj/item/sword/S in bag_of_items)
 	if(!best_sword || S.damage > best_sword.damage)
 		best_sword = S
 ```
-The above is a simple proc for checking all swords in a container and returning the one with the highest damage, and it uses DM's standard syntax for a for-loop by specifying a type in the variable of the for's header that DM interprets as a type to filter by. It performs this filter using ```istype()``` (or some internal-magic similar to ```istype()``` - this is BYOND, after all). This is fine in its current state for ```bag_of_items```, but if ```bag_of_items``` contained ONLY swords, or only SUBTYPES of swords, then the above is inefficient. For example:
-```DM
+The above is a simple proc for checking all swords in a container and returning the one with the highest damage, it uses DM's standard syntax for a for loop, it does this by specifying a type in the variable of the for header which byond interprets as a type to filter by, it performs this filter using ```istype()``` (or some internal-magic similar to ```istype()```, I wouldn't put it past byond), the above example is fine with the data currently contained in ```bag_of_items```, however if ```bag_of_items``` contained ONLY swords, or only SUBTYPES of swords, then the above is inefficient, for example:
+```
 var/list/bag_of_swords = list(sword, sword, sword, sword)
 var/obj/item/sword/best_sword
 for(var/obj/item/sword/S in bag_of_swords)
 	if(!best_sword || S.damage > best_sword.damage)
 		best_sword = S
 ```
-specifies a type for DM to filter by. 
-
-With the previous example that's perfectly fine, we only want swords, but here the bag only contains swords? Is DM still going to try to filter because we gave it a type to filter by? YES, and here comes the inefficiency. Wherever a list (or other container, such as an atom (in which case you're technically accessing their special contents list, but that's irrelevant)) contains datums of the same datatype or subtypes of the datatype you require for your loop's body,
+specifies a type for DM to filter by, with the previous example that's perfectly fine, we only want swords, but here the bag only contains swords? is DM still going to try to filter because we gave it a type to filter by? YES, and here comes the inefficiency. Whereever a list (or other container, such as an atom (in which case you're technically accessing their special contents list but I digress)) contains datums of the same datatype or subtypes of the datatype you require for your for body
 you can circumvent DM's filtering and automatic ```istype()``` checks by writing the loop as such:
-```DM
+```
 var/list/bag_of_swords = list(sword, sword, sword, sword)
 var/obj/item/sword/best_sword
 for(var/s in bag_of_swords)
@@ -334,12 +293,11 @@ for(var/s in bag_of_swords)
 	if(!best_sword || S.damage > best_sword.damage)
 		best_sword = S
 ```
-Of course, if the list contains data of a mixed type then the above optimisation is DANGEROUS, as it will blindly typecast all data in the list as the specified type, even if it isn't really that type, causing runtime errors.
+Of course, if the list contains data of a mixed type then the above optimisation is DANGEROUS, as it will blindly typecast all data in the list as the specified type, even if it isn't really that type! which will cause runtime errors.
 
-#### Dot variable
-Like other languages in the C family, DM has a ```.``` or "Dot" operator, used for accessing variables/members/functions of an object instance.
+* Dot variable: like other languages in the C family, Dream maker has a ```.``` or "Dot" operator, used for accessing variables/members/functions of an object instance.
 eg:
-```DM
+```
 var/mob/living/carbon/human/H = YOU_THE_READER
 H.gib()
 ```
@@ -367,28 +325,21 @@ There is also an undocumented keyword called `static` that has the same behaviou
 
 ## Pull Request Process
 
-There is no strict process when it comes to merging pull requests. Pull requests will sometimes take a while before they are looked at by a maintainer; the bigger the change, the more time it will take before they are accepted into the code. Every team member is a volunteer who is giving up their own time to help maintain and contribute, so please be courteous and respectful. Here are some helpful ways to make it easier for you and for the maintainers when making a pull request.
+There is no strict process when it comes to merging pull requests, pull requests will sometimes take a while before they are looked at by a maintainer, the bigger the change the more time it will take before they are accepted into the code. Every team member is a volunteer who is giving up their own time to help maintain and contribute, so please be nice. Here are some helpful ways to make it easier for you and for the maintainer when making a pull request.
 
-* Make sure your pull request complies to the requirements outlined in [this guide](http://tgstation13.org/wiki/Getting_Your_Pull_Accepted)
+* Make sure your pull request complies to the requirements outlined in [this guide](https://wiki.hippiestation.com/index.php?title=Getting_Your_Pull_Accepted)
 
-* You are going to be expected to document all your changes in the pull request. Failing to do so will mean delaying it as we will have to question why you made the change. On the other hand, you can speed up the process by making the pull request readable and easy to understand, with diagrams or before/after data.
+* You are going to be expected to document all your changes in the pull request, failing to do so will mean delaying it as we will have to question why you made the change. On the other hand you can speed up the process by making the pull request readable and easy to understand, with diagrams or before/after data.
 
-* We ask that you use the changelog system to document your change, which prevents our players from being caught unaware by changes - you can find more information about this [on this wiki page](http://tgstation13.org/wiki/Guide_to_Changelogs).
+* We ask that you use the changelog system to document your change, this prevents our players from being caught unaware by changes. You can find more information about this here: https://wiki.hippiestation.com/index.php?title=Guide_to_Changelogs.
 
 * If you are proposing multiple changes, which change many different aspects of the code, you are expected to section them off into different pull requests in order to make it easier to review them and to deny/accept the changes that are deemed acceptable.
 
-* If your pull request is accepted, the code you add no longer belongs exclusively to you but to everyone; everyone is free to work on it, but you are also free to support or object to any changes being made, which will likely hold more weight, as you're the one who added the feature. It is a shame this has to be explicitly said, but there have been cases where this would've saved some trouble.
+* If your pull request is accepted, the code you add no longer belongs exclusively to you but to everyone; everyone is free to work on it, but you are also free to object to any changes being made, which will be noted by a Project Lead or Project Manager. It is a shame this has to be explicitly said, but there have been cases where this would've saved some trouble.
 
 * Please explain why you are submitting the pull request, and how you think your change will be beneficial to the game. Failure to do so will be grounds for rejecting the PR.
 
-## Banned content
-Do not add any of the following in a Pull Request or risk getting the PR closed:
-* National Socialist Party of Germany content, National Socialist Party of Germany related content, or National Socialist Party of Germany references
-* Code where one line of code is split across mutiple lines (except for multiple, separate strings and comments; in those cases, existing longer lines must not be split up)
+## A word on git
+Yes we know that the files have a tonne of mixed windows and linux line endings, attempts to fix this have been met with less than stellar success and as such we have decided to give up caring until such a time as it matters.
 
-Just becuase something isn't on this list doesn't mean that it's acceptable. Use common sense above all else.
-
-## A word on Git
-Yes, we know that the files have a tonne of mixed Windows and Linux line endings. Attempts to fix this have been met with less than stellar success, and as such we have decided to give up caring until there comes a time when it matters.
-
-Therefore, EOF settings of main repo are forbidden territory one must avoid wandering into, at risk of losing body and/or mind to the Git gods.
+Therefore EOF settings of main repo are forbidden territory one must avoid wandering into

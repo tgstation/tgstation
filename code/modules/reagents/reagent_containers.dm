@@ -60,16 +60,6 @@
 /obj/item/reagent_containers/proc/canconsume(mob/eater, mob/user)
 	if(!iscarbon(eater))
 		return 0
-	var/mob/living/carbon/C = eater
-	var/covered = ""
-	if(C.is_mouth_covered(head_only = 1))
-		covered = "headgear"
-	else if(C.is_mouth_covered(mask_only = 1))
-		covered = "mask"
-	if(covered)
-		var/who = (isnull(user) || eater == user) ? "your" : "[eater.p_their()]"
-		to_chat(user, "<span class='warning'>You have to remove [who] [covered] first!</span>")
-		return 0
 	return 1
 
 /obj/item/reagent_containers/ex_act()
@@ -80,8 +70,7 @@
 		..()
 
 /obj/item/reagent_containers/fire_act(exposed_temperature, exposed_volume)
-	reagents.chem_temp += 30
-	reagents.handle_reactions()
+	reagents.expose_temperature(exposed_temperature)
 	..()
 
 /obj/item/reagent_containers/throw_impact(atom/target)
@@ -125,6 +114,8 @@
 
 /obj/item/reagent_containers/microwave_act(obj/machinery/microwave/M)
 	if(is_open_container())
-		reagents.chem_temp = max(reagents.chem_temp, 1000)
-		reagents.handle_reactions()
+		reagents.expose_temperature(1000)
 	..()
+
+/obj/item/reagent_containers/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	reagents.expose_temperature(exposed_temperature)

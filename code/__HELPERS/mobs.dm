@@ -68,9 +68,11 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, GLOB.body_markings_list)
 	if(!GLOB.wings_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, GLOB.wings_list)
+	if(!GLOB.moth_wings_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_wings, GLOB.moth_wings_list)
 
 	//For now we will always return none for tail_human and ears.
-	return(list("mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"), "tail_lizard" = pick(GLOB.tails_list_lizard), "tail_human" = "None", "wings" = "None", "snout" = pick(GLOB.snouts_list), "horns" = pick(GLOB.horns_list), "ears" = "None", "frills" = pick(GLOB.frills_list), "spines" = pick(GLOB.spines_list), "body_markings" = pick(GLOB.body_markings_list), "legs" = "Normal Legs"))
+	return(list("mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"), "tail_lizard" = pick(GLOB.tails_list_lizard), "tail_human" = "None", "wings" = "None", "snout" = pick(GLOB.snouts_list), "horns" = pick(GLOB.horns_list), "ears" = "None", "frills" = pick(GLOB.frills_list), "spines" = pick(GLOB.spines_list), "body_markings" = pick(GLOB.body_markings_list), "legs" = "Normal Legs", "moth_wings" = pick(GLOB.moth_wings_list)))
 
 /proc/random_hair_style(gender)
 	switch(gender)
@@ -418,7 +420,7 @@ Proc for attack log creation, because really why not
 			prefs = new
 
 		var/adminoverride = 0
-		if(M.client && M.client.holder && (prefs.chat_toggles & CHAT_DEAD))
+		if(M.client && check_rights_for(M.client, R_ADMIN) && (prefs.chat_toggles & CHAT_DEAD))
 			adminoverride = 1
 		if(isnewplayer(M) && !adminoverride)
 			continue
