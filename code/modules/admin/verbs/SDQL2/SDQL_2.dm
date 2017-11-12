@@ -27,7 +27,7 @@
 	if(findtext(query_text, "http"))
 		message_admins("<span class='danger'>ERROR: [key_name(usr, usr.client)] attempted to execute a SDQL query involving an arbitrary URL. Query is as follows:</span>")
 		message_admins("<span class='danger'>[query_text]</span>")
-		log_admin("[key_name(usr, usr.client)]) attempted to execute a SDQL query involving arbitrary URLs, query: [query_text]")
+		log_admin("[key_name(usr, usr.client)] attempted to execute a SDQL query involving arbitrary URLs, query: [query_text]")
 		return FALSE
 	var/query_log = "executed SDQL query: \"[query_text]\"."
 	message_admins("[key_name_admin(usr)] [query_log]")
