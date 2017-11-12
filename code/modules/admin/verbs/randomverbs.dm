@@ -59,6 +59,11 @@
 
 	if (!msg)
 		return
+	if(findtext(msg, "http"))
+		message_admins("<span class='danger'>ERROR: [key_name_admin(usr)] attempted to global narrate involving an arbitrary URL. Narrate is as follows:</span>")
+		message_admins("<span class='danger'>[msg]</span>")
+		log_admin("[usr.ckey]([usr]) attempted to global narrate a message involving arbitrary URLs, message: [msg]")
+		return FALSE
 	to_chat(world, "[msg]")
 	log_admin("GlobalNarrate: [key_name(usr)] : [msg]")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] Sent a global narrate</span>")
@@ -82,7 +87,11 @@
 
 	if( !msg )
 		return
-
+	if(findtext(msg, "http"))
+		message_admins("<span class='danger'>ERROR: [key_name_admin(usr)] attempted to direct narrate with an arbitrary URL. Narrate is as follows:</span>")
+		message_admins("<span class='danger'>[msg]</span>")
+		log_admin("[usr.ckey]([usr]) attempted to direct narrate a message involving arbitrary URLs, message: [msg]")
+		return FALSE
 	to_chat(M, msg)
 	log_admin("DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]): [msg]")
 	msg = "<span class='adminnotice'><b> DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]):</b> [msg]<BR></span>"
