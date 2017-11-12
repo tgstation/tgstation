@@ -1,7 +1,8 @@
 /* Stack type objects!
  * Contains:
  * 		Stacks
- *		Recipe datum
+ * 		Recipe datum
+ * 		Recipe list datum
  */
 
 /*
@@ -56,7 +57,7 @@
 
 
 /obj/item/stack/Destroy()
-	if (usr && usr.machine==src)
+	if(src && usr && usr.machine == src)
 		usr << browse(null, "window=stack")
 	. = ..()
 
@@ -86,46 +87,57 @@
 		. = (amount)
 
 /obj/item/stack/attack_self(mob/user)
-	interact(user)
+	list_recipes(user)
 
-/obj/item/stack/interact(mob/user)
+/obj/item/stack/proc/list_recipes(mob/user, recipes_sublist)
 	if (!recipes)
 		return
 	if (!src || get_amount() <= 0)
 		user << browse(null, "window=stack")
-		return
 	user.set_machine(src) //for correct work of onclose
-	var/t1 = text("<HTML><HEAD><title>Constructions from []</title></HEAD><body><TT>Amount Left: []<br>", src, get_amount())
-	for(var/i=1;i<=recipes.len,i++)
-		var/datum/stack_recipe/R = recipes[i]
-		if (isnull(R))
+	var/list/recipe_list = recipes
+	if (recipes_sublist && recipe_list[recipes_sublist] && istype(recipe_list[recipes_sublist], /datum/stack_recipe_list))
+		var/datum/stack_recipe_list/srl = recipe_list[recipes_sublist]
+		recipe_list = srl.recipes
+	var/t1 = text("<HTML><HEAD><title>Constructions from []</title></HEAD><body><TT>Amount Left: []<br>", src, src.get_amount())
+	for(var/i in 1 to length(recipe_list))
+		var/E = recipe_list[i]
+		if (isnull(E))
 			t1 += "<hr>"
 			continue
-		if (i>1 && !isnull(recipes[i-1]))
+		if (i>1 && !isnull(recipe_list[i-1]))
 			t1+="<br>"
-		var/max_multiplier = round(get_amount() / R.req_amount)
-		var/title as text
-		var/can_build = 1
-		can_build = can_build && (max_multiplier>0)
-		if (R.res_amount>1)
-			title+= "[R.res_amount]x [R.title]\s"
-		else
-			title+= "[R.title]"
-		title+= " ([R.req_amount] [singular_name]\s)"
-		if (can_build)
-			t1 += text("<A href='?src=[REF(src)];make=[];multiplier=1'>[]</A>  ", i, title)
-		else
-			t1 += text("[]", title)
-			continue
-		if (R.max_res_amount>1 && max_multiplier>1)
-			max_multiplier = min(max_multiplier, round(R.max_res_amount/R.res_amount))
-			t1 += " |"
-			var/list/multipliers = list(5,10,25)
-			for (var/n in multipliers)
-				if (max_multiplier>=n)
-					t1 += " <A href='?src=[REF(src)];make=[i];multiplier=[n]'>[n*R.res_amount]x</A>"
-			if (!(max_multiplier in multipliers))
-				t1 += " <A href='?src=[REF(src)];make=[i];multiplier=[max_multiplier]'>[max_multiplier*R.res_amount]x</A>"
+
+		if (istype(E, /datum/stack_recipe_list))
+			var/datum/stack_recipe_list/srl = E
+			t1 += "<a href='?src=\ref[src];sublist=[i]'>[srl.title]</a>"
+
+		if (istype(E, /datum/stack_recipe))
+			var/datum/stack_recipe/R = E
+			var/max_multiplier = round(src.get_amount() / R.req_amount)
+			var/title as text
+			var/can_build = 1
+			can_build = can_build && (max_multiplier>0)
+
+			if (R.res_amount>1)
+				title+= "[R.res_amount]x [R.title]\s"
+			else
+				title+= "[R.title]"
+			title+= " ([R.req_amount] [src.singular_name]\s)"
+			if (can_build)
+				t1 += text("<A href='?src=\ref[src];sublist=[recipes_sublist];make=[i];multiplier=1'>[title]</A>  ")
+			else
+				t1 += text("[]", title)
+				continue
+			if (R.max_res_amount>1 && max_multiplier>1)
+				max_multiplier = min(max_multiplier, round(R.max_res_amount/R.res_amount))
+				t1 += " |"
+				var/list/multipliers = list(5,10,25)
+				for (var/n in multipliers)
+					if (max_multiplier>=n)
+						t1 += " <A href='?src=\ref[src];make=[i];multiplier=[n]'>[n*R.res_amount]x</A>"
+				if (!(max_multiplier in multipliers))
+					t1 += " <A href='?src=\ref[src];make=[i];multiplier=[max_multiplier]'>[max_multiplier*R.res_amount]x</A>"
 
 	t1 += "</TT></body></HTML>"
 	user << browse(t1, "window=stack")
@@ -135,11 +147,17 @@
 	..()
 	if (usr.restrained() || usr.stat || usr.get_active_held_item() != src)
 		return
+	if (href_list["sublist"] && !href_list["make"])
+		list_recipes(usr, text2num(href_list["sublist"]))
 	if (href_list["make"])
 		if (get_amount() < 1)
 			qdel(src) //Never should happen
 
-		var/datum/stack_recipe/R = recipes[text2num(href_list["make"])]
+		var/list/recipes_list = recipes
+		if (href_list["sublist"])
+			var/datum/stack_recipe_list/srl = recipes_list[text2num(href_list["sublist"])]
+			recipes_list = srl.recipes
+		var/datum/stack_recipe/R = recipes_list[text2num(href_list["make"])]
 		var/multiplier = text2num(href_list["multiplier"])
 		if (!multiplier ||(multiplier <= 0)) //href protection
 			return
@@ -345,3 +363,14 @@
 	src.one_per_turf = one_per_turf
 	src.on_floor = on_floor
 	src.window_checks = window_checks
+
+/*
+ * Recipe list datum
+ */
+/datum/stack_recipe_list
+	var/title = "ERROR"
+	var/list/recipes
+
+/datum/stack_recipe_list/New(title, recipes)
+	src.title = title
+	src.recipes = recipes
