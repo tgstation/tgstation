@@ -34016,6 +34016,10 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
 /turf/open/floor/plasteel,
 /area/maintenance/port/fore)
 "bvF" = (
