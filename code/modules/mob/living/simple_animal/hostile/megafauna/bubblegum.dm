@@ -135,12 +135,12 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Move()
 	if(charging)
 		new /obj/effect/temp_visual/decoy/fading(loc,src)
-		DestroySurroundings()
+		DestroyPathToTarget()
 	. = ..()
 	if(!stat && .)
 		playsound(src, 'sound/effects/meteorimpact.ogg', 200, 1, 2, 1)
 	if(charging)
-		DestroySurroundings()
+		DestroyPathToTarget()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/warp_charge()
 	blood_warp()
@@ -152,7 +152,7 @@ Difficulty: Hard
 		return
 	new /obj/effect/temp_visual/dragon_swoop/bubblegum(T)
 	charging = TRUE
-	DestroySurroundings()
+	DestroyPathToTarget()
 	walk(src, 0)
 	setDir(get_dir(src, T))
 	var/obj/effect/temp_visual/decoy/D = new /obj/effect/temp_visual/decoy(loc,src)
@@ -176,7 +176,7 @@ Difficulty: Hard
 	if(charging)
 		if(isturf(A) || isobj(A) && A.density)
 			A.ex_act(EXPLODE_HEAVY)
-		DestroySurroundings()
+		DestroyPathToTarget()
 	..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/throw_impact(atom/A)
