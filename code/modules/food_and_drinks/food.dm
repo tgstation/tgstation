@@ -27,5 +27,8 @@
 				H.adjust_disgust(11 + 15 * fraction)
 			else if(foodtype & H.dna.species.liked_food)
 				to_chat(H,"<span class='notice'>I love this taste!</span>")
+				GET_COMPONENT_FROM(mood, /datum/component/mood, H)
+				if(mood)
+					mood.add_event("fav_food", /datum/mood_event/favorite_food)
 				H.adjust_disgust(-5 + -2.5 * fraction)
 			last_check_time = world.time

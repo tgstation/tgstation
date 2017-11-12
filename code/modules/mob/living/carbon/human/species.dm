@@ -986,14 +986,31 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			to_chat(H, "<span class='notice'>You no longer feel vigorous.</span>")
 		H.metabolism_efficiency = 1
 
+	GET_COMPONENT_FROM(mood, /datum/component/mood, src)
 	switch(H.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)
+			if(mood)
+				mood.add_event("nutrition", /datum/mood_event/nutrition/fat)
 			H.throw_alert("nutrition", /obj/screen/alert/fat)
-		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FULL)
+		if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
+			if(mood)
+				mood.add_event("nutrition", /datum/mood_event/nutrition/wellfed)
+			H.clear_alert("nutrition")
+		if( NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
+			if(mood)
+				mood.add_event("nutrition", /datum/mood_event/nutrition/fed)
+			H.clear_alert("nutrition")
+		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
+			if(mood)
+				mood.clear_event("nutrition")
 			H.clear_alert("nutrition")
 		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
+			if(mood)
+				mood.add_event("nutrition", /datum/mood_event/nutrition/hungry)
 			H.throw_alert("nutrition", /obj/screen/alert/hungry)
-		else
+		if(0 to NUTRITION_LEVEL_STARVING)
+			if(mood)
+				mood.add_event("nutrition", /datum/mood_event/nutrition/starving)
 			H.throw_alert("nutrition", /obj/screen/alert/starving)
 
 /datum/species/proc/update_health_hud(mob/living/carbon/human/H)
@@ -1093,14 +1110,23 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(I.flags_2 & SLOWS_WHILE_IN_HAND_2)
 				. += I.slowdown
 		var/health_deficiency = (100 - H.health + H.staminaloss)
-		var/hungry = (500 - H.nutrition) / 5 // So overeat would be 100 and default level would be 80
+		//var/hungry = (500 - H.nutrition) / 5 // So overeat would be 100 and default level would be 80 //Commented out for moodlets, temporary.
 		if(health_deficiency >= 40)
 			if(flight)
 				. += (health_deficiency / 75)
 			else
 				. += (health_deficiency / 25)
-		if((hungry >= 70) && !flight)		//Being hungry won't stop you from using flightpack controls/flapping your wings although it probably will in the wing case but who cares.
-			. += hungry / 50
+		/*if((hungry >= 70) && !flight)		//Being hungry won't stop you from using flightpack controls/flapping your wings although it probably will in the wing case but who cares.
+			. += hungry / 50*/ //Commented out for moodlets, temporary.
+		GET_COMPONENT_FROM(mood, /datum/component/mood, H)
+		if(mood && (mood.mood <= MOOD_LEVEL_SAD3) && !flight) //How can depression slow you down if you can just fly away from your problems?
+			switch(mood.mood)
+				if(-INFINITY to MOOD_LEVEL_SAD4)
+					. += 2
+				if(MOOD_LEVEL_SAD4 to MOOD_LEVEL_SAD3)
+					. += 1.5
+				if(MOOD_LEVEL_SAD3 to MOOD_LEVEL_SAD2)
+					. += 0.5
 		if(H.disabilities & FAT)
 			. += (1.5 - flight)
 		if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
@@ -1454,9 +1480,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				H.bodytemperature += min((1-thermal_protection) * ((loc_temp - H.bodytemperature) / BODYTEMP_HEAT_DIVISOR), BODYTEMP_HEATING_MAX)
 
 	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
+	GET_COMPONENT_FROM(mood, /datum/component/mood, H)
 	if(H.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !(RESISTHOT in species_traits))
 		//Body temperature is too hot.
 		var/burn_damage
+		if(mood)
+			mood.clear_event("cold")
+			mood.add_event("hot", /datum/mood_event/hot)
 		switch(H.bodytemperature)
 			if(BODYTEMP_HEAT_DAMAGE_LIMIT to 400)
 				H.throw_alert("temp", /obj/screen/alert/hot, 1)
@@ -1475,6 +1505,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			H.emote("scream")
 		H.apply_damage(burn_damage, BURN)
 	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !(GLOB.mutations_list[COLDRES] in H.dna.mutations))
+		if(mood)
+			mood.clear_event("hot", /datum/mood_event/embedded)
+			mood.add_event("cold", /datum/mood_event/cold)
 		switch(H.bodytemperature)
 			if(200 to BODYTEMP_COLD_DAMAGE_LIMIT)
 				H.throw_alert("temp", /obj/screen/alert/cold, 1)
@@ -1488,6 +1521,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	else
 		H.clear_alert("temp")
+		if(mood)
+			mood.clear_event("cold")
+			mood.clear_event("hot")
 
 	var/pressure = environment.return_pressure()
 	var/adjusted_pressure = H.calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.

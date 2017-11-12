@@ -129,6 +129,9 @@ GLOBAL_LIST_EMPTY(mutations_list)
 	var/status = CANSTUN | CANKNOCKDOWN | CANUNCONSCIOUS | CANPUSH
 	owner.status_flags &= ~status
 	owner.update_body_parts()
+	GET_COMPONENT_FROM(mood, /datum/component/mood, owner)
+	if(mood)
+		mood.add_event("hulk", /datum/mood_event/hulk)
 
 /datum/mutation/human/hulk/on_attack_hand(mob/living/carbon/human/owner, atom/target, proximity)
 	if(proximity) //no telekinetic hulk attack
@@ -144,6 +147,9 @@ GLOBAL_LIST_EMPTY(mutations_list)
 		return
 	owner.status_flags |= CANSTUN | CANKNOCKDOWN | CANUNCONSCIOUS | CANPUSH
 	owner.update_body_parts()
+	GET_COMPONENT_FROM(mood, /datum/component/mood, owner)
+	if(mood)
+		mood.clear_event("hulk")
 
 /datum/mutation/human/hulk/say_mod(message)
 	if(message)
@@ -237,6 +243,9 @@ GLOBAL_LIST_EMPTY(mutations_list)
 		owner.visible_message("<span class='danger'>[owner] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
 		owner.Unconscious(200)
 		owner.Jitter(1000)
+		GET_COMPONENT_FROM(mood, /datum/component/mood, owner)
+		if(mood)
+			mood.add_event("epilepsy", /datum/mood_event/epilepsy)
 		addtimer(CALLBACK(src, .proc/jitter_less, owner), 90)
 
 /datum/mutation/human/epilepsy/proc/jitter_less(mob/living/carbon/human/owner)

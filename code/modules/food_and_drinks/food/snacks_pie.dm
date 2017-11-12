@@ -53,6 +53,9 @@
 		if (!H.creamed) // one layer at a time
 			H.add_overlay(creamoverlay)
 			H.creamed = TRUE
+			GET_COMPONENT_FROM(mood, /datum/component/mood, H)
+			if(mood)
+				mood.add_event("creampie", /datum/mood_event/creampie)
 	qdel(src)
 
 

@@ -50,6 +50,8 @@ CONFIG_DEF(flag/force_random_names)
 
 CONFIG_DEF(flag/humans_need_surnames)
 
+CONFIG_DEF(flag/disable_human_mood)
+
 CONFIG_DEF(flag/allow_ai)	// allow ai job
 
 CONFIG_DEF(flag/disable_secborg)	// disallow secborg module to be chosen.
