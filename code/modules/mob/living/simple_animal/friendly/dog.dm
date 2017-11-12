@@ -231,6 +231,9 @@
 		return
 	if(!item_to_add)
 		user.visible_message("[user] pets [src].","<span class='notice'>You rest your hand on [src]'s head for a moment.</span>")
+		GET_COMPONENT_FROM(mood, /datum/component/mood, user)
+		if(mood)
+			mood.add_event("pet_corgi", /datum/mood_event/pet_corgi)
 		return
 
 	if(user && !user.temporarilyRemoveItemFromInventory(item_to_add))

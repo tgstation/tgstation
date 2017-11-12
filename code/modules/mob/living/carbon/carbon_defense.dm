@@ -261,6 +261,9 @@
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
 						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
+			GET_COMPONENT_FROM(mood, /datum/component/mood, src)
+			if(mood)
+				mood.add_event("hug", /datum/mood_event/hug)
 		AdjustStun(-60)
 		AdjustKnockdown(-60)
 		AdjustUnconscious(-60)

@@ -20,6 +20,9 @@
 				if(damagetype & SHAME)
 					adjustStaminaLoss(200)
 					suiciding = FALSE
+					GET_COMPONENT_FROM(mood, /datum/component/mood, src)
+					if(mood)
+						mood.add_event("shameful_suicide", /datum/mood_event/shameful_suicide)
 					return
 				var/damage_mod = 0
 				for(var/T in list(BRUTELOSS, FIRELOSS, TOXLOSS, OXYLOSS))

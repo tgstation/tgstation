@@ -64,6 +64,19 @@
 	if(has_trait(TRAIT_PACIFISM) && a_intent == INTENT_HARM)
 		to_chat(src, "<span class='notice'>You don't feel like harming anybody.</span>")
 		a_intent_change(INTENT_HELP)
+		
+	GET_COMPONENT_FROM(mood, /datum/component/mood, src)
+	if (getBrainLoss() >= 60 && stat == CONSCIOUS)
+		if(mood)
+			mood.add_event("brain_damage", /datum/mood_event/brain_damage)
+		if(prob(3))
+			if(prob(25))
+				emote("drool")
+			else
+				say(pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage"))
+	else
+		if(mood)
+			mood.clear_event("brain_damage")
 
 /mob/living/carbon/human/handle_mutations_and_radiation()
 	if(!dna || !dna.species.handle_mutations_and_radiation(src))
@@ -299,6 +312,9 @@
 				visible_message("<span class='danger'>[I] falls out of [name]'s [BP.name]!</span>","<span class='userdanger'>[I] falls out of your [BP.name]!</span>")
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
+					GET_COMPONENT_FROM(mood, /datum/component/mood, src)
+					if(mood)
+						mood.clear_event("embedded")
 
 /mob/living/carbon/human/proc/handle_active_genes()
 	for(var/datum/mutation/human/HM in dna.mutations)

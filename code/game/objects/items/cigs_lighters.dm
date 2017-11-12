@@ -549,6 +549,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 					var/hitzone = user.held_index_to_dir(user.active_hand_index) == "r" ? "r_hand" : "l_hand"
 					user.apply_damage(5, BURN, hitzone)
 					user.visible_message("<span class='warning'>After a few attempts, [user] manages to light [src] - however, [user.p_they()] burn their finger in the process.</span>", "<span class='warning'>You burn yourself while lighting the lighter!</span>")
+					GET_COMPONENT_FROM(mood, /datum/component/mood, user)
+					if(mood)
+						mood.add_event("burnt_thumb", /datum/mood_event/burnt_thumb)
 
 		else
 			set_lit(FALSE)

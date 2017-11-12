@@ -121,6 +121,9 @@
 			I.forceMove(T)
 
 	clear_alert("embeddedobject")
+	GET_COMPONENT_FROM(mood, /datum/component/mood, src)
+	if(mood)
+		mood.clear_event("embedded")
 
 /mob/living/carbon/proc/has_embedded_objects()
 	. = 0
