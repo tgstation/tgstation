@@ -12671,15 +12671,8 @@
 	},
 /area/crew_quarters/heads/hop)
 "aDA" = (
-/obj/structure/bed/dogbed/ian{
-	desc = "Howl's bed! Looks comfy.";
-	name = "Howl's bed"
-	},
-/mob/living/simple_animal/pet/dog/corgi/Ian{
-	emote_see = list("shakes its head.", "chases its tail.", "shivers.", "howls at the moon.");
-	name = "Howl";
-	real_name = "Howl"
-	},
+/obj/structure/bed/dogbed/howl,
+/mob/living/simple_animal/pet/dog/corgi/Ian/Howl,
 /turf/open/floor/plasteel/blue/side{
 	dir = 0
 	},
