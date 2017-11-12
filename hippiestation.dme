@@ -814,7 +814,6 @@
 #include "code\game\objects\items\teleportation.dm"
 #include "code\game\objects\items\teleprod.dm"
 #include "code\game\objects\items\theft_tools.dm"
-#include "code\game\objects\items\tools.dm"
 #include "code\game\objects\items\toys.dm"
 #include "code\game\objects\items\trash.dm"
 #include "code\game\objects\items\twohanded.dm"
