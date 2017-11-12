@@ -340,8 +340,8 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define MAP_MAXZ 6
 
 // Defib stats
-#define DEFIB_TIME_LIMIT 120
-#define DEFIB_TIME_LOSS 60
+#define DEFIB_TIME_LIMIT 300
+#define DEFIB_TIME_LOSS 150
 
 // Diagonal movement
 #define FIRST_DIAG_STEP 1
