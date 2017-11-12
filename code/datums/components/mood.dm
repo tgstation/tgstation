@@ -9,7 +9,7 @@
 		. = COMPONENT_INCOMPATIBLE
 		CRASH("Some good for nothing loser put a mood component on something that isn't even a mob.")
 	START_PROCESSING(SSmood, src)
-	M = parent
+	owner = parent
 
 /datum/component/mood/Destroy()
 	STOP_PROCESSING(SSmood, src)
@@ -20,7 +20,7 @@
 	for(var/i in mood_events)
 		var/datum/mood_event/event = mood_events[i]
 		msg += event.description
-	to_chat(parent, msg)
+	to_chat(owner, msg)
 
 /datum/component/mood/proc/update_mood() //Called whenever a mood event is added or removed
 	mood = 0
@@ -48,10 +48,10 @@
 		if(MOOD_LEVEL_HAPPY4 to INFINITY)
 			mood_level = 9
 
-	if(parent.client && parent.hud_used)
-		parent.hud_used.mood.icon_state = "mood[mood_level]"
+	if(owner.client && owner.hud_used)
+		owner.hud_used.mood.icon_state = "mood[mood_level]"
 
-/datum/component/mood/process() //Called on parent's life()
+/datum/component/mood/process() //Called on SSmood process
 	switch(mood)
 		if(-INFINITY to MOOD_LEVEL_SAD4)
 			owner.overlay_fullscreen("depression", /obj/screen/fullscreen/depression, 3)
