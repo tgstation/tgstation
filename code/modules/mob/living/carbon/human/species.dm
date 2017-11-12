@@ -994,7 +994,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			to_chat(H, "<span class='notice'>You no longer feel vigorous.</span>")
 		H.metabolism_efficiency = 1
 
-	GET_COMPONENT_FROM(mood, /datum/component/mood, src)
+	GET_COMPONENT_FROM(mood, /datum/component/mood, H)
 	switch(H.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)
 			if(mood)

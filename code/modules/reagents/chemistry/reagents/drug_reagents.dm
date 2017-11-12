@@ -23,7 +23,9 @@
 
 /datum/reagent/drug/space_drugs/overdose_start(mob/living/M)
 	to_chat(M, "<span class='userdanger'>You start tripping hard!</span>")
-
+	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
+	if(mood)
+		mood.add_event("[id]_overdose", /datum/mood_event/drugs/overdose)
 
 /datum/reagent/drug/space_drugs/overdose_process(mob/living/M)
 	if(M.hallucination < volume && prob(20))
