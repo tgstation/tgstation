@@ -365,10 +365,17 @@ SUBSYSTEM_DEF(ticker)
 			livings += living
 	if(livings.len)
 		addtimer(CALLBACK(src, .proc/release_characters, livings), 30, TIMER_CLIENT_TIME)
+	else
+		message_admins("empty livings after mob list iteration in transfer_characters.")
 
 /datum/controller/subsystem/ticker/proc/release_characters(list/livings)
+	if(!livings.len)
+		message_admins("release_characters recieved empty list.")
 	for(var/I in livings)
 		var/mob/living/L = I
+		if(!istype(L))
+			message_admins("Non-living [I] on livings list in release_characters.")
+			continue
 		L.notransform = FALSE
 
 /datum/controller/subsystem/ticker/proc/declare_completion()
