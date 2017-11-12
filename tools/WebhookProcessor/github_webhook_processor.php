@@ -217,7 +217,7 @@ function tag_pr($payload, $opened) {
 	$mergeable = $payload['pull_request']['mergeable'];
 	if($mergeable === TRUE)	//only look for the false value
 		$remove[] = 'Merge Conflict';
-	else if ($mergable === FALSE)
+	else if ($mergeable === FALSE)
 		$tags[] = 'Merge Conflict';
 
 	$treetags = array('_maps' => 'Map Edit', 'tools' => 'Tools', 'SQL' => 'SQL');
@@ -285,7 +285,7 @@ function check_ready_for_review($payload, $labels = null, $remove = array()){
 	$dismissed_an_approved_review = false;
 
 	foreach($reviews as $R)
-		if(is_maintainer($R['user']['login'])){
+		if(is_maintainer($payload, $R['user']['login'])){
 			$lower_state = strtolower($R['state']);
 			if($lower_state == 'changes_requested')
 				$reviews_ids_with_changes_requested[] = $R['id'];

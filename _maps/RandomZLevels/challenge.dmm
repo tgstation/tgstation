@@ -968,9 +968,7 @@
 "cZ" = (
 /obj/machinery/gateway,
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1;
-	d2 = 2
+	icon_state = "0-2"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -990,8 +988,6 @@
 /area/awaymission/challenge/end)
 "dc" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/black,
@@ -1061,13 +1057,9 @@
 /area/awaymission/challenge/end)
 "dm" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /mob/living/simple_animal/hostile/syndicate{
@@ -1077,8 +1069,6 @@
 /area/awaymission/challenge/end)
 "dn" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/black,
