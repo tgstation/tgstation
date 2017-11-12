@@ -77,7 +77,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	var/mob/thrownby = null
 
-	/obj/item/mouse_drag_pointer = MOUSE_ACTIVE_POINTER //the icon to indicate this object is being dragged
+	mouse_drag_pointer = MOUSE_ACTIVE_POINTER //the icon to indicate this object is being dragged
 
 	//So items can have custom embedd values
 	//Because customisation is king
@@ -93,6 +93,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/flags_cover = 0 //for flags such as GLASSESCOVERSEYES
 	var/heat = 0
 	var/sharpness = IS_BLUNT
+
+	var/tool_behaviour = TOOL_NONE
 	var/toolspeed = 1
 
 	var/block_chance = 0

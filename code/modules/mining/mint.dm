@@ -11,7 +11,7 @@
 	var/processing = FALSE
 	var/chosen = MAT_METAL //which material will be used to make coins
 	var/coinsToProduce = 10
-	speed_process = 1
+	speed_process = TRUE
 
 
 /obj/machinery/mineral/mint/Initialize()
@@ -22,7 +22,7 @@
 	var/turf/T = get_step(src, input_dir)
 	if(!T)
 		return
-	
+
 	GET_COMPONENT(materials, /datum/component/material_container)
 	for(var/obj/item/stack/sheet/O in T)
 		materials.insert_stack(O, O.amount)
@@ -39,20 +39,20 @@
 		if (chosen == mat_id)
 			dat += "<b>Chosen</b>"
 		else
-			dat += "<A href='?src=\ref[src];choose=[mat_id]'>Choose</A>"
+			dat += "<A href='?src=[REF(src)];choose=[mat_id]'>Choose</A>"
 
 	var/datum/material/M = materials.materials[chosen]
 
 	dat += "<br><br>Will produce [coinsToProduce] [lowertext(M.name)] coins if enough materials are available.<br>"
-	dat += "<A href='?src=\ref[src];chooseAmt=-10'>-10</A> "
-	dat += "<A href='?src=\ref[src];chooseAmt=-5'>-5</A> "
-	dat += "<A href='?src=\ref[src];chooseAmt=-1'>-1</A> "
-	dat += "<A href='?src=\ref[src];chooseAmt=1'>+1</A> "
-	dat += "<A href='?src=\ref[src];chooseAmt=5'>+5</A> "
-	dat += "<A href='?src=\ref[src];chooseAmt=10'>+10</A> "
+	dat += "<A href='?src=[REF(src)];chooseAmt=-10'>-10</A> "
+	dat += "<A href='?src=[REF(src)];chooseAmt=-5'>-5</A> "
+	dat += "<A href='?src=[REF(src)];chooseAmt=-1'>-1</A> "
+	dat += "<A href='?src=[REF(src)];chooseAmt=1'>+1</A> "
+	dat += "<A href='?src=[REF(src)];chooseAmt=5'>+5</A> "
+	dat += "<A href='?src=[REF(src)];chooseAmt=10'>+10</A> "
 
 	dat += "<br><br>In total this machine produced <font color='green'><b>[newCoins]</b></font> coins."
-	dat += "<br><A href='?src=\ref[src];makeCoins=[1]'>Make coins</A>"
+	dat += "<br><A href='?src=[REF(src)];makeCoins=[1]'>Make coins</A>"
 	user << browse(dat, "window=mint")
 
 /obj/machinery/mineral/mint/Topic(href, href_list)

@@ -29,7 +29,7 @@
 	var/config_max_users = 0
 	var/config_min_users = 0
 	var/voteweight = 1
-	var/allow_custom_shuttles = "yes"
+	var/allow_custom_shuttles = TRUE
 
 /datum/map_config/New(filename = "data/next_map.json", default_to_box, delete_after)
 	if(default_to_box)
@@ -69,7 +69,7 @@
 	map_file = json["map_file"]
 
 	minetype = json["minetype"] || minetype
-	allow_custom_shuttles = json["allow_custom_shuttles"] == TRUE
+	allow_custom_shuttles = json["allow_custom_shuttles"] != FALSE
 
 	var/jtcl = json["transition_config"]
 	if(jtcl && jtcl != "default")
@@ -92,7 +92,7 @@
 		return
 
 	var/tc = json["transition_config"]
-	if(tc != "default")
+	if(tc != null && tc != "default")
 		if(!islist(tc))
 			log_world("transition_config is not a list!")
 			return

@@ -285,10 +285,13 @@
 	user.remove_alt_appearance("sneaking_mission")
 
 /obj/item/twohanded/required/kirbyplants/random
+	icon = 'icons/obj/flora/_flora.dmi'
+	icon_state = "random_plant"
 	var/list/static/states
 
 /obj/item/twohanded/required/kirbyplants/random/Initialize()
 	. = ..()
+	icon = 'icons/obj/flora/plants.dmi'
 	if(!states)
 		generate_states()
 	icon_state = pick(states)

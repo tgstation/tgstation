@@ -30,8 +30,7 @@ SUBSYSTEM_DEF(ticker)
 	var/list/availablefactions = list()		//list of factions with openings
 	var/list/scripture_states = list(SCRIPTURE_DRIVER = TRUE, \
 	SCRIPTURE_SCRIPT = FALSE, \
-	SCRIPTURE_APPLICATION = FALSE, \
-	SCRIPTURE_JUDGEMENT = FALSE) //list of clockcult scripture states for announcements
+	SCRIPTURE_APPLICATION = FALSE) //list of clockcult scripture states for announcements
 
 	var/delay_end = 0						//if set true, the round will not restart on it's own
 
@@ -263,8 +262,6 @@ SUBSYSTEM_DEF(ticker)
 	create_characters() //Create player characters
 	collect_minds()
 	equip_characters()
-
-	SSoverlays.Flush()	//Flush the majority of the shit
 
 	GLOB.data_core.manifest()
 
@@ -556,7 +553,7 @@ SUBSYSTEM_DEF(ticker)
 		if(5) //every 5 ticks check if there is a slot available
 			if(living_player_count() < hpc)
 				if(next_in_line && next_in_line.client)
-					to_chat(next_in_line, "<span class='userdanger'>A slot has opened! You have approximately 20 seconds to join. <a href='?src=\ref[next_in_line];late_join=override'>\>\>Join Game\<\<</a></span>")
+					to_chat(next_in_line, "<span class='userdanger'>A slot has opened! You have approximately 20 seconds to join. <a href='?src=[REF(next_in_line)];late_join=override'>\>\>Join Game\<\<</a></span>")
 					SEND_SOUND(next_in_line, sound('sound/misc/notice1.ogg'))
 					next_in_line.LateChoices()
 					return

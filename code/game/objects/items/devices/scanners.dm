@@ -35,7 +35,10 @@ MASS SPECTROMETER
 		var/image/I = new(loc = get_turf(pipe))
 		var/mutable_appearance/MA = new(pipe)
 		MA.alpha = 128
+		MA.dir = pipe.dir
 		I.appearance = MA
+		I.dir = pipe.dir
+		// Workaround for a weird bug with icon direction on T-Ray scan not matching the actual disposal pipe dir.
 		if(M.client)
 			flick_overlay(I, list(M.client), 8)
 
@@ -106,8 +109,8 @@ MASS SPECTROMETER
 
 
 // Used by the PDA medical scanner too
-/proc/healthscan(mob/living/user, mob/living/M, mode = 1, advanced = FALSE)
-	if(user.incapacitated() || user.eye_blind)
+/proc/healthscan(mob/user, mob/living/M, mode = 1, advanced = FALSE)
+	if(isliving(user) && (user.incapacitated() || user.eye_blind))
 		return
 	//Damage specifics
 	var/oxy_loss = M.getOxyLoss()
@@ -275,18 +278,17 @@ MASS SPECTROMETER
 			to_chat(user, "<span class='notice'>[cyberimp_detect]</span>")
 
 /proc/chemscan(mob/living/user, mob/living/M)
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.reagents)
-			if(H.reagents.reagent_list.len)
+	if(istype(M))
+		if(M.reagents)
+			if(M.reagents.reagent_list.len)
 				to_chat(user, "<span class='notice'>Subject contains the following reagents:</span>")
-				for(var/datum/reagent/R in H.reagents.reagent_list)
+				for(var/datum/reagent/R in M.reagents.reagent_list)
 					to_chat(user, "<span class='notice'>[R.volume] units of [R.name][R.overdosed == 1 ? "</span> - <span class='boldannounce'>OVERDOSING</span>" : ".</span>"]")
 			else
 				to_chat(user, "<span class='notice'>Subject contains no reagents.</span>")
-			if(H.reagents.addiction_list.len)
+			if(M.reagents.addiction_list.len)
 				to_chat(user, "<span class='boldannounce'>Subject is addicted to the following reagents:</span>")
-				for(var/datum/reagent/R in H.reagents.addiction_list)
+				for(var/datum/reagent/R in M.reagents.addiction_list)
 					to_chat(user, "<span class='danger'>[R.name]</span>")
 			else
 				to_chat(user, "<span class='notice'>Subject is not addicted to any reagents.</span>")

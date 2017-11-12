@@ -178,7 +178,7 @@ mob
 			// Send the icon to src's local cache
 			src<<browse_rsc(I, iconName)
 			// Update the label to show it
-			winset(src,"imageLabel","image='\ref[I]'");
+			winset(src,"imageLabel","image='[REF(I)]'");
 
 		Add_Overlay()
 			set name = "4. Add Overlay"
@@ -849,7 +849,7 @@ The _flatIcons list is a cache for generated icon files.
 	if(A.alpha < 255)
 		flat.Blend(rgb(255, 255, 255, A.alpha), ICON_MULTIPLY)
 
-	return icon(flat, "", SOUTH)
+	return icon(flat, "", curdir)
 
 /proc/getIconMask(atom/A)//By yours truly. Creates a dynamic mask for a mob/whatever. /N
 	var/icon/alpha_mask = new(A.icon,A.icon_state)//So we want the default icon and icon state of A.
@@ -1006,23 +1006,26 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 		if(J)
 			J.equip(body, TRUE, FALSE)
 
-		SSoverlays.Flush()
 
 		var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
 
 		body.setDir(NORTH)
+		COMPILE_OVERLAYS(body)
 		var/icon/partial = getFlatIcon(body)
 		out_icon.Insert(partial,dir=NORTH)
 
 		body.setDir(SOUTH)
+		COMPILE_OVERLAYS(body)
 		partial = getFlatIcon(body)
 		out_icon.Insert(partial,dir=SOUTH)
 
 		body.setDir(WEST)
+		COMPILE_OVERLAYS(body)
 		partial = getFlatIcon(body)
 		out_icon.Insert(partial,dir=WEST)
 
 		body.setDir(EAST)
+		COMPILE_OVERLAYS(body)
 		partial = getFlatIcon(body)
 		out_icon.Insert(partial,dir=EAST)
 
@@ -1140,7 +1143,7 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 
 	// Either an atom or somebody fucked up and is gonna get a runtime, which I'm fine with.
 	var/atom/A = thing
-	var/key = "[istype(A.icon, /icon) ? "\ref[A.icon]" : A.icon]:[A.icon_state]"
+	var/key = "[istype(A.icon, /icon) ? "[REF(A.icon)]" : A.icon]:[A.icon_state]"
 
 
 	if (!bicon_cache[key]) // Doesn't exist, make it.

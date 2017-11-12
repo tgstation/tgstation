@@ -64,10 +64,11 @@
 /obj/item/clothing/accessory/proc/on_uniform_dropped(obj/item/clothing/under/U, user)
 	return
 
-/obj/item/clothing/accessory/AltClick()
-	if(initial(above_suit))
-		above_suit = !above_suit
-		to_chat(usr, "\The [src] will be worn [above_suit ? "above" : "below"] your suit.")
+/obj/item/clothing/accessory/AltClick(mob/user)
+	if(user.canUseTopic(src, be_close=TRUE))
+		if(initial(above_suit))
+			above_suit = !above_suit
+			to_chat(user, "[src] will be worn [above_suit ? "above" : "below"] your suit.")
 
 /obj/item/clothing/accessory/examine(mob/user)
 	..()

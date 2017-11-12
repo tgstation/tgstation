@@ -10,7 +10,7 @@
 #define GLOBAL_PROTECT(X)\
 /datum/controller/global_vars/InitGlobal##X(){\
     ..();\
-    gvars_datum_protected_varlist += #X;\
+    gvars_datum_protected_varlist[#X] = TRUE;\
 }
 #else
 #define GLOBAL_PROTECT(X)

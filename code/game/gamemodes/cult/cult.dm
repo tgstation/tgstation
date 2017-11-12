@@ -256,6 +256,10 @@
 						SSticker.news_report = CULT_FAILURE
 
 			text += "<br><B>Objective #[obj_count]</B>: [explanation]"
+	if(cult.len)
+		text += "<br><b>The cultists were:</b>"
+		for(var/datum/mind/M in cult)
+			text += printplayer(M)
 	to_chat(world, text)
 	..()
 	return 1
