@@ -87,6 +87,7 @@
 
 		// Try to find a scanner in that direction
 		scannerf = locate(/obj/machinery/dna_scannernew, get_step(src, dir))
+		dir = initial(dir)
 
 		// If found and operational, return the scanner
 		if (!isnull(scannerf) && scannerf.is_operational())
@@ -101,7 +102,7 @@
 	for(dir in list(NORTH,EAST,SOUTH,WEST))
 
 		podf = locate(/obj/machinery/clonepod, get_step(src, dir))
-
+		dir = initial(dir)
 		if (!isnull(podf) && podf.is_operational())
 			AttachCloner(podf)
 

@@ -56,6 +56,7 @@
 	. = ..()
 	for(dir in list(NORTH,EAST,SOUTH,WEST))
 		connected = locate(/obj/machinery/dna_scannernew, get_step(src, dir))
+		dir = initial(dir)
 		if(!isnull(connected))
 			break
 	injectorready = world.time + INJECTOR_TIMEOUT

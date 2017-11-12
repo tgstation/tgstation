@@ -85,7 +85,8 @@
 
 /obj/machinery/dna_scannernew/proc/locate_computer(type_)
 	for(dir in list(NORTH,EAST,SOUTH,WEST))
-		var/C = locate(type_, get_step(src, dir))
+		var/obj/machinery/C = locate(type_, get_step(src, dir))
+		dir = initial(dir)
 		if(C)
 			return C
 	return null
