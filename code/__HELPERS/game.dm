@@ -214,17 +214,21 @@
 /proc/get_hearers_in_view(R, atom/source)
 	// Returns a list of hearers in view(R) from source (ignoring luminosity). Used in saycode.
 	var/turf/T = get_turf(source)
-	var/list/hear = list()
+	. = list()
 
 	if(!T)
-		return hear
+		return
 
-	var/list/range = get_hear(R, T)
-	for(var/atom/movable/A in range)
-		hear |= recursive_hear_check(A)
-
-	return hear
-
+	if (R == 0) // if the range is zero, we know exactly where to look for, we can skip view
+		. = recursive_hear_check(T)
+	else  // A variation of get_hear inlined here to take advantage of the compiler's fastpath for obj/mob in view
+		var/lum = T.luminosity
+		T.luminosity = 6
+		for(var/obj/O in view(R, T))
+			. += recursive_hear_check(O)
+		for(var/mob/M in view(R, T))
+			. += recursive_hear_check(M)
+		T.luminosity = lum
 
 /proc/get_mobs_in_radio_ranges(list/obj/item/device/radio/radios)
 
