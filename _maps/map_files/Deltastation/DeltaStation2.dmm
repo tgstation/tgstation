@@ -9813,7 +9813,6 @@
 /area/engine/atmospherics_engine)
 "axY" = (
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
-	tag = "icon-intact (EAST)";
 	icon_state = "intact";
 	dir = 4
 	},
@@ -101510,8 +101509,7 @@
 	dir = 10
 	},
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1
+	icon_state = "0-2"
 	},
 /obj/machinery/power/emitter/anchored{
 	dir = 1;
@@ -105667,15 +105665,13 @@
 	dir = 4
 	},
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1
+	icon_state = "0-2"
 	},
 /turf/open/floor/circuit/green,
 /area/engine/atmospherics_engine)
 "YOI" = (
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1
+	icon_state = "0-2"
 	},
 /obj/machinery/power/emitter/anchored{
 	dir = 1;
@@ -105825,7 +105821,6 @@
 /area/space)
 "YPb" = (
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
-	tag = "icon-intact (SOUTHWEST)";
 	icon_state = "intact";
 	dir = 10
 	},
