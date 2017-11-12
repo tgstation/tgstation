@@ -41212,7 +41212,8 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/science{
-	name = "Firing Range"
+	name = "Firing Range";
+	req_access_txt = "47"
 	},
 /turf/open/floor/plasteel/vault,
 /area/science/misc_lab)
@@ -43976,7 +43977,7 @@
 /obj/machinery/firealarm{
 	pixel_x = -24
 	},
-/obj/machinery/chem_heater,
+/obj/structure/closet/wardrobe/science_white,
 /turf/open/floor/plasteel/vault,
 /area/science/misc_lab)
 "bSo" = (
@@ -44412,7 +44413,7 @@
 	pixel_x = -25
 	},
 /obj/effect/decal/cleanable/oil,
-/obj/structure/closet/wardrobe/science_white,
+/obj/machinery/chem_heater,
 /turf/open/floor/plasteel/vault,
 /area/science/misc_lab)
 "bTp" = (
@@ -46047,7 +46048,8 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/science{
-	name = "High-risk Machinery"
+	name = "High-risk Machinery";
+	req_access_txt = "47"
 	},
 /turf/open/floor/engine,
 /area/science/misc_lab)
@@ -46594,6 +46596,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 5;
+	pixel_y = -32
 	},
 /turf/open/floor/plasteel/vault,
 /area/science/misc_lab)
@@ -60813,7 +60819,8 @@
 "cDq" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/science{
-	name = "Chemical Lab"
+	name = "Chemical Lab";
+	req_access_txt = "47"
 	},
 /turf/open/floor/plasteel/vault,
 /area/science/misc_lab)
@@ -60922,7 +60929,8 @@
 "cDG" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/science{
-	name = "Lab Storage"
+	name = "Lab Storage";
+	req_access_txt = "47"
 	},
 /turf/open/floor/plasteel/vault,
 /area/science/misc_lab)
@@ -60998,7 +61006,8 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/science{
-	name = "High-risk Machinery"
+	name = "High-risk Machinery";
+	req_access_txt = "47"
 	},
 /turf/open/floor/engine,
 /area/science/misc_lab)
