@@ -295,7 +295,7 @@ SUBSYSTEM_DEF(ticker)
 	set waitfor = FALSE
 	mode.post_setup()
 	GLOB.start_state = new /datum/station_state()
-	GLOB.start_state.count(1)
+	GLOB.start_state.count()
 	//Cleanup some stuff
 	for(var/obj/effect/landmark/start/S in GLOB.landmarks_list)
 		//Deleting Startpoints but we need the ai point to AI-ize people later
