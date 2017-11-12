@@ -167,6 +167,7 @@ CREATE TABLE `feedback` (
   `datetime` datetime NOT NULL,
   `round_id` int(11) unsigned NOT NULL,
   `key_name` varchar(32) NOT NULL,
+  `key_type` enum('text', 'amount', 'tally', 'nested tally', 'associative') NOT NULL,
   `version` tinyint(3) unsigned NOT NULL,
   `json` json NOT NULL,
   PRIMARY KEY (`id`)
