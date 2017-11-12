@@ -79,7 +79,6 @@
 /area/space)
 "r" = (
 /obj/machinery/sleeper/crashland{
-	tag = "icon-sleeper (NORTH)";
 	icon_state = "sleeper";
 	dir = 1
 	},
