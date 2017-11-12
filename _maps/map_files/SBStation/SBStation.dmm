@@ -11994,14 +11994,15 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/aiModule/core/freeformcore{
-	pixel_x = 3;
-	pixel_y = 3
-	},
 /obj/machinery/door/window/brigdoor{
 	dir = 8;
 	name = "Core Modules";
 	req_access_txt = "20"
+	},
+/obj/item/aiModule/core/full/tyrant,
+/obj/item/aiModule/core/full/paladin{
+	pixel_x = 3;
+	pixel_y = 3
 	},
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
@@ -12646,10 +12647,6 @@
 /area/ai_monitored/turret_protected/ai_upload)
 "aDy" = (
 /obj/structure/rack,
-/obj/item/aiModule/core/full/paladin{
-	pixel_x = 3;
-	pixel_y = 3
-	},
 /obj/item/aiModule/core/full/corp,
 /obj/item/aiModule/core/full/antimov{
 	pixel_x = 3;
