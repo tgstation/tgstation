@@ -7942,7 +7942,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Genetics";
 	dir = 4;
-	network = list("SS13", "RD")
+	network = list("SS13","RD")
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
@@ -10299,7 +10299,7 @@
 /obj/machinery/camera{
 	c_tag = "Xenobiology Test Chamber 1";
 	dir = 2;
-	network = list("Xeno", "RD")
+	network = list("Xeno","RD")
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
@@ -10907,7 +10907,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Entrance";
 	dir = 1;
-	network = list("SS13", "RD")
+	network = list("SS13","RD")
 	},
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 1
@@ -11565,7 +11565,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Xenobiology - North";
 	dir = 8;
-	network = list("SS13", "RD")
+	network = list("SS13","RD")
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
@@ -12181,7 +12181,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Research & Development";
 	dir = 2;
-	network = list("SS13", "RD")
+	network = list("SS13","RD")
 	},
 /obj/item/clothing/glasses/science,
 /turf/open/floor/plasteel/white,
@@ -12336,7 +12336,7 @@
 /obj/machinery/camera{
 	c_tag = "Xenobiology Test Chamber 2";
 	dir = 2;
-	network = list("Xeno", "RD")
+	network = list("Xeno","RD")
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
@@ -14634,7 +14634,7 @@
 /obj/machinery/camera{
 	c_tag = "Xenobiology Test Chamber 3";
 	dir = 2;
-	network = list("Xeno", "RD")
+	network = list("Xeno","RD")
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
@@ -15704,7 +15704,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/power/smes{
-	charge = 5000000
+	charge = 5e+006
 	},
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
@@ -15949,7 +15949,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Xenobiology - South";
 	dir = 8;
-	network = list("SS13", "RD")
+	network = list("SS13","RD")
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
@@ -16489,7 +16489,7 @@
 /obj/machinery/camera{
 	c_tag = "Xenobiology Test Chamber 4";
 	dir = 2;
-	network = list("Xeno", "RD")
+	network = list("Xeno","RD")
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
@@ -16919,7 +16919,7 @@
 	desc = "Used for watching the RD's goons from the safety of your own office.";
 	dir = 4;
 	name = "Research Monitor";
-	network = list("RD", "Satellite");
+	network = list("RD","Satellite");
 	pixel_x = -24
 	},
 /turf/open/floor/plasteel/cafeteria,
@@ -17811,7 +17811,7 @@
 /obj/machinery/camera{
 	c_tag = "Science - Robotics";
 	dir = 8;
-	network = list("SS13", "RD")
+	network = list("SS13","RD")
 	},
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
@@ -23519,7 +23519,7 @@
 /obj/machinery/camera{
 	c_tag = "Satellite - Telecomms Server Room";
 	dir = 2;
-	network = list("SS13", "Satellite")
+	network = list("SS13","Satellite")
 	},
 /obj/machinery/telecomms/bus/preset_three,
 /turf/open/floor/plasteel/black/telecomms/mainframe,
@@ -24646,7 +24646,7 @@
 /area/tcommsat/server)
 "bef" = (
 /obj/machinery/power/smes{
-	charge = 5000000
+	charge = 5e+006
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable/yellow{
@@ -24908,7 +24908,7 @@
 	c_tag = "Satellite - Airlock";
 	dir = 8;
 	name = "motion-sensitive security camera";
-	network = list("SS13", "Satellite")
+	network = list("SS13","Satellite")
 	},
 /turf/open/space/basic,
 /area/space)
@@ -24949,7 +24949,7 @@
 /obj/machinery/camera{
 	c_tag = "Satellite - Control Center";
 	dir = 1;
-	network = list("SS13", "Satellite")
+	network = list("SS13","Satellite")
 	},
 /turf/open/floor/plasteel/black,
 /area/tcommsat/server)
@@ -25001,7 +25001,7 @@
 /obj/machinery/camera{
 	c_tag = "Satellite - Entrance";
 	dir = 4;
-	network = list("SS13", "Satellite")
+	network = list("SS13","Satellite")
 	},
 /turf/open/floor/plating,
 /area/tcommsat/server)
@@ -25267,7 +25267,7 @@
 /obj/machinery/camera{
 	c_tag = "Satellite - AI Access";
 	dir = 4;
-	network = list("SS13", "Satellite")
+	network = list("SS13","Satellite")
 	},
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
@@ -25510,7 +25510,7 @@
 	c_tag = "Satellite - AI Chamber";
 	dir = 2;
 	name = "motion-sensitive security camera";
-	network = list("SS13", "Satellite")
+	network = list("SS13","Satellite")
 	},
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
@@ -26516,6 +26516,7 @@
 	pixel_x = -2;
 	pixel_y = 4
 	},
+/obj/item/wirecutters,
 /turf/open/floor/plasteel/black,
 /area/hydroponics)
 "biF" = (
