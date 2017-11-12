@@ -7,7 +7,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	var/program="blank"
 	var/list/as_names = list()
-	var/list/cir_names = list()
+	var/list/cir_names = list()		//assoc name = path
 
 /obj/item/device/integrated_electronics/prefab/attack_self(var/mob/user)
 	if(program && program != "blank")
@@ -28,10 +28,10 @@
 	for(var/k in 1 to assembly_list.len)
 		var/obj/item/I = assembly_list[k]
 		as_names[I.name] = I.type
-	for(var/k in 1 to SScircuit.all_integrated_circuits.len)
-		var/obj/item/integrated_circuit/IC = SScircuit.all_integrated_circuits[k]
-		if((IC.spawn_flags & IC_SPAWN_DEFAULT) || (IC.spawn_flags & IC_SPAWN_RESEARCH))
-			cir_names[IC.name] = IC.type
+	for(var/k in 1 to SScircuit.all_integrated_circuit_paths.len)
+		var/obj/item/integrated_circuit/IC = SScircuit.all_integrated_circuit_paths[k]
+		if((initial(IC.spawn_flags) & IC_SPAWN_DEFAULT) || (initial(IC.spawn_flags) & IC_SPAWN_RESEARCH))
+			cir_names[initial(IC.name)] = SScircuit.all_integrated_circuit_paths[k]
 	addtimer(CALLBACK(src, .proc/attack_self), 2) //IDK, why it's need dely,but otherwise it doesn't work.
 
 /obj/item/device/integrated_electronics/prefab/proc/assemble(var/program)
@@ -82,8 +82,8 @@
 			element = splittext( E ,"=-=")
 			if(debug)
 				visible_message( "<span class='notice'>[E]</span>")
-			PA = cir_names[element[1]]
-			comp = new PA(null)
+			var/path_to_use = cir_names[element[1]]
+			comp = new path_to_use(null)
 			comp.loc = AS
 			comp.displayed_name = element[2]
 			comp.assembly = AS

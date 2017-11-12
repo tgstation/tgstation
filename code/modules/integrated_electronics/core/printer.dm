@@ -11,7 +11,7 @@
 	var/debug = FALSE
 	var/upgraded = FALSE		// When hit with an upgrade disk, will turn true, allowing it to print the higher tier circuits.
 	var/can_clone = FALSE		// Same for above, but will allow the printer to duplicate a specific assembly.
-	var/static/list/recipe_list = list()
+	var/list/recipe_list		//category = list(paths in category)
 	var/current_category = null
 	var/as_printing = FALSE
 	var/as_needs = 0
@@ -128,13 +128,13 @@
 		var/obj/O = current_list[k]
 		var/can_build = TRUE
 		if(istype(O, /obj/item/integrated_circuit))
-			var/obj/item/integrated_circuit/IC = O
-			if((IC.spawn_flags & IC_SPAWN_RESEARCH) && (!(IC.spawn_flags & IC_SPAWN_DEFAULT)) && !upgraded)
+			var/obj/item/integrated_circuit/IC = current_list[k]
+			if((initial(IC.spawn_flags) & IC_SPAWN_RESEARCH) && (!(initial(IC.spawn_flags) & IC_SPAWN_DEFAULT)) && !upgraded)
 				can_build = FALSE
 		if(can_build)
-			HTML += "<A href='?src=[REF(src)];build=[REF(O)]'>\[[O.name]\]</A>: [O.desc]<br>"
+			HTML += "<A href='?src=[REF(src)];build=[current_list[k]]'>\[[initial(O.name)]\]</A>: [initial(O.desc)]<br>"
 		else
-			HTML += "<s>\[[O.name]\]: [O.desc]</s><br>"
+			HTML += "<s>\[[initial(O.name)]\]: [initial(O.desc)]</s><br>"
 
 	user << browse(jointext(HTML, null), "window=integrated_printer;size=[window_width]x[window_height];border=1;can_resize=1;can_close=1;can_minimize=1")
 
@@ -150,10 +150,7 @@
 		current_category = href_list["category"]
 
 	if(href_list["build"])
-		var/obj/item/integrated_circuit/ICbuild = locate(href_list["build"])
-		if(!ICbuild)
-			return TRUE
-		var/build_type = ICbuild.type
+		var/build_type = href_list["build"]
 		if(!build_type || !ispath(build_type))
 			return TRUE
 
@@ -258,10 +255,10 @@
 	for(var/k in 1 to assembly_list.len)
 		var/obj/item/I = assembly_list[k]
 		as_samp[I.name] = I
-	for(var/k in 1 to SScircuit.all_integrated_circuits.len)
-		var/obj/item/integrated_circuit/IC = SScircuit.all_integrated_circuits[k]
-		if((IC.spawn_flags & IC_SPAWN_DEFAULT) || (IC.spawn_flags & IC_SPAWN_RESEARCH))
-			cir_samp[IC.name] = IC
+	for(var/k in 1 to SScircuit.all_integrated_circuit_paths.len)
+		var/obj/item/integrated_circuit/IC = SScircuit.all_integrated_circuit_paths[k]
+		if((initial(IC.spawn_flags) & IC_SPAWN_DEFAULT) || (initial(IC.spawn_flags) & IC_SPAWN_RESEARCH))
+			cir_samp[initial(IC.name)] = SScircuit.all_integrated_circuit_paths[k]
 	if(debug)
 		visible_message( "<span class='notice'>started successful</span>")
 	if(chap[2] != "")
@@ -314,7 +311,8 @@
 			if(!comp)
 				break
 			if(!upgraded)
-				if(!(comp.spawn_flags & IC_SPAWN_DEFAULT))
+				var/obj/item/integrated_circuit/IC = comp
+				if(!(initial(IC.spawn_flags) & IC_SPAWN_DEFAULT))
 					return -1
 			compl =compl + comp.complexity
 			cap = cap + comp.size
