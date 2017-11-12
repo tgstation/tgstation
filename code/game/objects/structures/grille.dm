@@ -37,7 +37,7 @@
 
 	if(ratio > 50)
 		return
-	icon_state = "grille50"
+	icon_state = "grille50_[rand(0,3)]"
 
 /obj/structure/grille/examine(mob/user)
 	..()
