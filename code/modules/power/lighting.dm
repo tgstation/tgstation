@@ -194,17 +194,18 @@
 	icon_state = "tube-empty"
 
 /obj/machinery/light/built/Initialize()
+	. = ..()	
 	status = LIGHT_EMPTY
 	update(0)
-	. = ..()
 
 /obj/machinery/light/small/built
 	icon_state = "bulb-empty"
 
 /obj/machinery/light/small/built/Initialize()
+	. = ..()
 	status = LIGHT_EMPTY
 	update(0)
-	. = ..()
+
 
 
 // create a new lighting fixture

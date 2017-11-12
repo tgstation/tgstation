@@ -341,8 +341,8 @@
 	icon_state = "banana"
 	range = 200
 
-/obj/item/projectile/bullet/honker/New()
-	..()
+/obj/item/projectile/bullet/honker/Initialize()
+	. = ..()
 	SpinAnimation()
 
 // Mime
@@ -364,8 +364,8 @@
 	damage = 6
 	var/piercing = FALSE
 
-/obj/item/projectile/bullet/dart/New()
-	..()
+/obj/item/projectile/bullet/dart/Initialize()
+	. = ..()
 	create_reagents(50)
 	reagents.set_reacting(FALSE)
 
@@ -388,8 +388,8 @@
 	reagents.handle_reactions()
 	return TRUE
 
-/obj/item/projectile/bullet/dart/metalfoam/New()
-	..()
+/obj/item/projectile/bullet/dart/metalfoam/Initialize()
+	. = ..()
 	reagents.add_reagent("aluminium", 15)
 	reagents.add_reagent("foaming_agent", 5)
 	reagents.add_reagent("facid", 5)

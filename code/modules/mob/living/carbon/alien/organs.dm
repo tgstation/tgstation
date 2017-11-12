@@ -4,11 +4,11 @@
 	var/list/alien_powers = list()
 
 /obj/item/organ/alien/Initialize()
+	. = ..()
 	for(var/A in alien_powers)
 		if(ispath(A))
 			alien_powers -= A
 			alien_powers += new A(src)
-	. = ..()
 
 /obj/item/organ/alien/Insert(mob/living/carbon/M, special = 0)
 	..()

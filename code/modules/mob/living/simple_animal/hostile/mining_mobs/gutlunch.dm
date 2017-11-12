@@ -124,6 +124,7 @@
 	name = "nutrient sac"
 
 /obj/item/udder/gutlunch/Initialize()
+	. = ..()
 	reagents = new(50)
 	reagents.my_atom = src
 

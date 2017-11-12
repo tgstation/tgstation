@@ -43,8 +43,8 @@
 	..()
 
 /obj/item/holo/esword/Initialize()
-	item_color = pick("red","blue","green","purple")
 	. = ..()
+	item_color = pick("red","blue","green","purple")
 
 /obj/item/holo/esword/attack_self(mob/living/user as mob)
 	active = !active

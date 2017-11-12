@@ -31,8 +31,9 @@
 	var/const/BOMB_TIMER_MAX = 10
 
 /obj/item/pizzabox/Initialize()
-	update_icon()
 	. = ..()
+	update_icon()
+	
 
 /obj/item/pizzabox/Destroy()
 	unprocess()
@@ -260,28 +261,30 @@
 	update_icon()
 
 /obj/item/pizzabox/bomb/Initialize()
+	. = ..()
 	var/randompizza = pick(subtypesof(/obj/item/reagent_containers/food/snacks/pizza))
 	pizza = new randompizza(src)
 	bomb = new(src)
 	wires = new /datum/wires/explosive/pizza(src)
-	. = ..()
 
 /obj/item/pizzabox/margherita/Initialize()
+	. = ..()
 	pizza = new /obj/item/reagent_containers/food/snacks/pizza/margherita(src)
 	boxtag = "Margherita Deluxe"
-	. = ..()
+
 
 /obj/item/pizzabox/vegetable/Initialize()
+	. = ..()
 	pizza = new /obj/item/reagent_containers/food/snacks/pizza/vegetable(src)
 	boxtag = "Gourmet Vegatable"
-	. = ..()
+
 
 /obj/item/pizzabox/mushroom/Initialize()
+	. = ..()
 	pizza = new /obj/item/reagent_containers/food/snacks/pizza/mushroom(src)
 	boxtag = "Mushroom Special"
-	. = ..()
 
 /obj/item/pizzabox/meat/Initialize()
+	. = ..()
 	pizza = new /obj/item/reagent_containers/food/snacks/pizza/meat(src)
 	boxtag = "Meatlover's Supreme"
-	. = ..()
