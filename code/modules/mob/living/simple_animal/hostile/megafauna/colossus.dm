@@ -164,12 +164,8 @@ Difficulty: Very Hard
 		return
 	var/turf/startloc = get_turf(src)
 	var/obj/item/projectile/P = new /obj/item/projectile/colossus(startloc)
-	P.starting = startloc
+	P.preparePixelProjectile(marker, startloc)
 	P.firer = src
-	if(marker)
-		P.yo = marker.y - startloc.y
-		P.xo = marker.x - startloc.x
-		P.original = marker
 	if(target)
 		P.original = target
 	P.fire(set_angle)
