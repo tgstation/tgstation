@@ -98,6 +98,15 @@
 
 	var/static/list/airlock_overlays = list()
 
+	var/has_hatch = TRUE //If TRUE, this door has hatches, and certain small creatures can move through them without opening the door
+	var/hatchstate = 0 //0: closed, 1: open
+	var/hatch_offset_x = 0
+	var/hatch_offset_y = 0
+	var/hatch_colour = "#7d7d7d"
+	var/hatch_open_sound = 'sound/machines/hatch_open.ogg'
+	var/hatch_close_sound = 'sound/machines/hatch_close.ogg'
+	var/image/hatch_image
+
 /obj/machinery/door/airlock/Initialize()
 	. = ..()
 	wires = new /datum/wires/airlock(src)
@@ -122,6 +131,9 @@
 	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 	diag_hud_set_electrified()
+
+	if(has_hatch)
+		setup_hatch()
 
 	return INITIALIZE_HINT_LATELOAD
 
@@ -151,6 +163,29 @@
 /obj/machinery/door/airlock/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/rad_insulation, RAD_MEDIUM_INSULATION)
+
+/obj/machinery/door/airlock/proc/setup_hatch()
+	hatch_image = image('icons/obj/doors/hatches.dmi', src, "hatch_closed", layer+0.01)
+	hatch_image.color = hatch_colour
+	hatch_image.pixel_x = hatch_offset_x
+	hatch_image.pixel_y = hatch_offset_y
+	update_icon()
+
+/obj/machinery/door/airlock/proc/open_hatch(var/atom/mover = null)
+	if(!hatchstate)
+		hatchstate = 1
+		update_icon()
+		playsound(src.loc, hatch_open_sound, 40, 1, -1)
+		addtimer(CALLBACK(src, .proc/close_hatch), 20, TIMER_OVERRIDE) //hatch stays open for 2 seconds
+
+	if(istype(mover, /mob/living/simple_animal/drone))
+		var/mob/living/simple_animal/drone/D = mover
+		D.under_door()
+
+/obj/machinery/door/airlock/proc/close_hatch()
+	hatchstate = 0
+	update_icon()
+	playsound(src.loc, hatch_close_sound, 30, 1, -1)
 
 /obj/machinery/door/airlock/proc/update_other_id()
 	for(var/obj/machinery/door/airlock/A in GLOB.airlocks)
@@ -416,6 +451,7 @@
 	var/mutable_appearance/damag_overlay
 	var/mutable_appearance/sparks_overlay
 	var/mutable_appearance/note_overlay
+	var/mutable_appearance/hatch_overlay
 	var/notetype = note_type()
 
 	switch(state)
@@ -443,6 +479,12 @@
 					lights_overlay = get_airlock_overlay("lights_emergency", overlays_file)
 			if(note)
 				note_overlay = get_airlock_overlay(notetype, note_overlay_file)
+			if(has_hatch)
+				if(hatchstate)
+					hatch_image.icon_state = "hatch_open"
+				else
+					hatch_image.icon_state = "hatch_closed"
+				hatch_overlay = hatch_image
 
 		if(AIRLOCK_DENY)
 			if(!hasPower())
@@ -545,6 +587,8 @@
 	add_overlay(sparks_overlay)
 	add_overlay(damag_overlay)
 	add_overlay(note_overlay)
+	if(has_hatch && AIRLOCK_CLOSED)
+		add_overlay(hatch_overlay)
 
 /proc/get_airlock_overlay(icon_state, icon_file)
 	var/obj/machinery/door/airlock/A
@@ -1639,6 +1683,12 @@
 		return "note"
 	else if(istype(note, /obj/item/photo))
 		return "photo"
+
+/obj/machinery/door/airlock/CanPass(atom/movable/mover, turf/target)
+	..()
+	if(density && has_hatch && mover.checkpass(PASSDOORHATCH))
+		open_hatch(mover)
+		return TRUE //If this airlock is closed, has hatches, and this creature can go through hatches, then we let it through without opening the airlock
 
 #undef AIRLOCK_CLOSED
 #undef AIRLOCK_CLOSING

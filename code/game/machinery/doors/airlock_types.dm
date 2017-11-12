@@ -8,28 +8,33 @@
 	icon = 'icons/obj/doors/airlocks/station/command.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_com
 	normal_integrity = 450
+	hatch_colour = "#446892"
 
 /obj/machinery/door/airlock/security
 	icon = 'icons/obj/doors/airlocks/station/security.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_sec
 	normal_integrity = 450
+	hatch_colour = "#c82b2b"
 
 /obj/machinery/door/airlock/engineering
 	icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_eng
-	
+	hatch_colour = "#caa638"
+
 /obj/machinery/door/airlock/engineering/abandoned
 	abandoned = TRUE
 
 /obj/machinery/door/airlock/medical
 	icon = 'icons/obj/doors/airlocks/station/medical.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_med
+	hatch_colour = "#d2d2d2"
 
 /obj/machinery/door/airlock/maintenance
 	name = "maintenance access"
 	icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_mai
 	normal_integrity = 250
+	hatch_colour = "#7d7d7d"
 
 /obj/machinery/door/airlock/maintenance/abandoned
 	abandoned = TRUE
@@ -39,16 +44,19 @@
 	icon = 'icons/obj/doors/airlocks/station/maintenanceexternal.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_mai
 	normal_integrity = 250
+	has_hatch = FALSE
 
 /obj/machinery/door/airlock/mining
 	name = "mining airlock"
 	icon = 'icons/obj/doors/airlocks/station/mining.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_min
+	hatch_colour = "#c29142"
 
 /obj/machinery/door/airlock/atmos
 	name = "atmospherics airlock"
 	icon = 'icons/obj/doors/airlocks/station/atmos.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_atmo
+	hatch_colour = "#caa638"
 
 /obj/machinery/door/airlock/atmos/abandoned
 	abandoned = TRUE
@@ -56,19 +64,23 @@
 /obj/machinery/door/airlock/research
 	icon = 'icons/obj/doors/airlocks/station/research.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_research
+	hatch_colour = "#d2d2d2"
 
 /obj/machinery/door/airlock/freezer
 	name = "freezer airlock"
 	icon = 'icons/obj/doors/airlocks/station/freezer.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_fre
+	hatch_colour = "#ffffff"
 
 /obj/machinery/door/airlock/science
 	icon = 'icons/obj/doors/airlocks/station/science.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_science
+	hatch_colour = "#d2d2d2"
 
 /obj/machinery/door/airlock/virology
 	icon = 'icons/obj/doors/airlocks/station/virology.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_viro
+	hatch_colour = "#d2d2d2"
 
 //////////////////////////////////
 /*
@@ -81,12 +93,14 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_com/glass
 	glass = TRUE
 	normal_integrity = 400
+	hatch_colour = "#345882"
 
 /obj/machinery/door/airlock/glass_engineering
 	icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
 	opacity = 0
 	assemblytype = /obj/structure/door_assembly/door_assembly_eng/glass
 	glass = TRUE
+	hatch_colour = "#caa638"
 
 /obj/machinery/door/airlock/glass_security
 	icon = 'icons/obj/doors/airlocks/station/security.dmi'
@@ -94,6 +108,7 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_sec/glass
 	glass = TRUE
 	normal_integrity = 400
+	hatch_colour = "#b81b1b"
 
 /obj/machinery/door/airlock/glass_security/abandoned
 	abandoned = TRUE
@@ -103,42 +118,49 @@
 	opacity = 0
 	assemblytype = /obj/structure/door_assembly/door_assembly_med/glass
 	glass = TRUE
+	hatch_colour = "#d2d2d2"
 
 /obj/machinery/door/airlock/glass_research
 	icon = 'icons/obj/doors/airlocks/station/research.dmi'
 	opacity = 0
 	assemblytype = /obj/structure/door_assembly/door_assembly_research/glass
 	glass = TRUE
+	hatch_colour = "#d2d2d2"
 
 /obj/machinery/door/airlock/glass_mining
 	icon = 'icons/obj/doors/airlocks/station/mining.dmi'
 	opacity = 0
 	assemblytype = /obj/structure/door_assembly/door_assembly_min/glass
 	glass = TRUE
+	hatch_colour = "#c29142"
 
 /obj/machinery/door/airlock/glass_atmos
 	icon = 'icons/obj/doors/airlocks/station/atmos.dmi'
 	opacity = 0
 	assemblytype = /obj/structure/door_assembly/door_assembly_atmo/glass
 	glass = TRUE
+	hatch_colour = "#caa638"
 
 /obj/machinery/door/airlock/glass_science
 	icon = 'icons/obj/doors/airlocks/station/science.dmi'
 	opacity = 0
 	assemblytype = /obj/structure/door_assembly/door_assembly_science/glass
 	glass = TRUE
+	hatch_colour = "#d2d2d2"
 
 /obj/machinery/door/airlock/glass_virology
 	icon = 'icons/obj/doors/airlocks/station/virology.dmi'
 	opacity = 0
 	assemblytype = /obj/structure/door_assembly/door_assembly_viro/glass
 	glass = TRUE
+	hatch_colour = "#d2d2d2"
 
 /obj/machinery/door/airlock/glass_maintenance
 	icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
 	opacity = 0
 	assemblytype = /obj/structure/door_assembly/door_assembly_mai/glass
 	glass = TRUE
+	hatch_colour = "#7d7d7d"
 
 //////////////////////////////////
 /*
@@ -150,12 +172,14 @@
 	icon = 'icons/obj/doors/airlocks/station/gold.dmi'
 	var/mineral = "gold"
 	assemblytype = /obj/structure/door_assembly/door_assembly_gold
+	has_hatch = FALSE
 
 /obj/machinery/door/airlock/silver
 	name = "silver airlock"
 	icon = 'icons/obj/doors/airlocks/station/silver.dmi'
 	var/mineral = "silver"
 	assemblytype = /obj/structure/door_assembly/door_assembly_silver
+	has_hatch = FALSE
 
 /obj/machinery/door/airlock/diamond
 	name = "diamond airlock"
@@ -164,6 +188,7 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_diamond
 	normal_integrity = 1000
 	explosion_block = 2
+	has_hatch = FALSE
 
 /obj/machinery/door/airlock/uranium
 	name = "uranium airlock"
@@ -171,6 +196,7 @@
 	var/mineral = "uranium"
 	assemblytype = /obj/structure/door_assembly/door_assembly_uranium
 	var/last_event = 0
+	has_hatch = FALSE
 
 /obj/machinery/door/airlock/uranium/process()
 	if(world.time > last_event+20)
@@ -189,6 +215,7 @@
 	icon = 'icons/obj/doors/airlocks/station/plasma.dmi'
 	var/mineral = "plasma"
 	assemblytype = /obj/structure/door_assembly/door_assembly_plasma
+	has_hatch = FALSE
 
 /obj/machinery/door/airlock/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
@@ -213,12 +240,14 @@
 	var/mineral = "bananium"
 	doorOpen = 'sound/items/bikehorn.ogg'
 	assemblytype = /obj/structure/door_assembly/door_assembly_clown
+	has_hatch = FALSE
 
 /obj/machinery/door/airlock/sandstone
 	name = "sandstone airlock"
 	icon = 'icons/obj/doors/airlocks/station/sandstone.dmi'
 	var/mineral = "sandstone"
 	assemblytype = /obj/structure/door_assembly/door_assembly_sandstone
+	has_hatch = FALSE
 
 
 /obj/machinery/door/airlock/wood
@@ -226,6 +255,7 @@
 	icon = 'icons/obj/doors/airlocks/station/wood.dmi'
 	var/mineral = "wood"
 	assemblytype = /obj/structure/door_assembly/door_assembly_wood
+	has_hatch = FALSE
 
 /obj/machinery/door/airlock/titanium
 	name = "shuttle airlock"
@@ -234,6 +264,7 @@
 	overlays_file = 'icons/obj/doors/airlocks/shuttle/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_titanium
 	normal_integrity = 400
+	has_hatch = FALSE
 
 /obj/machinery/door/airlock/glass_titanium
 	name = "shuttle airlock"
@@ -244,6 +275,7 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_titanium/glass
 	glass = TRUE
 	normal_integrity = 350
+	has_hatch = FALSE
 
 //////////////////////////////////
 /*
@@ -257,6 +289,7 @@
 	opacity = 0
 	assemblytype = /obj/structure/door_assembly/door_assembly_glass
 	glass = TRUE
+	hatch_colour = "#eaeaea"
 
 //////////////////////////////////
 /*
@@ -270,6 +303,7 @@
 	note_overlay_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_ext
 	explosion_block = 1
+	has_hatch = FALSE
 
 /obj/machinery/door/airlock/glass_external
 	name = "external airlock"
@@ -278,6 +312,7 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_ext/glass
 	opacity = 0
 	glass = TRUE
+	has_hatch = FALSE
 
 //////////////////////////////////
 /*
@@ -292,6 +327,7 @@
 	normal_integrity = 1000
 	security_level = 6
 	explosion_block = 2
+	has_hatch = FALSE
 
 /obj/machinery/door/airlock/centcom/abandoned
 	abandoned = TRUE
@@ -310,6 +346,7 @@
 	explosion_block = 2
 	normal_integrity = 400 // reverse engieneerd: 400 * 1.5 (sec lvl 6) = 600 = original
 	security_level = 6
+	has_hatch = FALSE
 
 //////////////////////////////////
 /*
@@ -323,6 +360,7 @@
 	note_overlay_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
 	opacity = 1
 	assemblytype = /obj/structure/door_assembly/door_assembly_hatch
+	has_hatch = FALSE
 
 /obj/machinery/door/airlock/maintenance_hatch
 	name = "maintenance hatch"
@@ -331,6 +369,7 @@
 	note_overlay_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
 	opacity = 1
 	assemblytype = /obj/structure/door_assembly/door_assembly_mhatch
+	has_hatch = FALSE
 
 /obj/machinery/door/airlock/maintenance_hatch/abandoned
 	abandoned = TRUE
@@ -349,6 +388,7 @@
 	normal_integrity = 500
 	security_level = 1
 	damage_deflection = 30
+	hatch_colour = "#5a5a66"
 
 //////////////////////////////////
 /*
@@ -360,6 +400,7 @@
 	icon = 'icons/obj/doors/airlocks/shuttle/shuttle.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/shuttle/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_shuttle
+	has_hatch = FALSE
 
 /obj/machinery/door/airlock/abductor
 	name = "alien airlock"
@@ -375,6 +416,7 @@
 	aiControlDisabled = 1
 	normal_integrity = 700
 	security_level = 1
+	has_hatch = FALSE
 
 //////////////////////////////////
 /*
@@ -391,6 +433,7 @@
 	req_access = list(ACCESS_BLOODCULT)
 	var/openingoverlaytype = /obj/effect/temp_visual/cult/door
 	var/friendly = FALSE
+	has_hatch = FALSE
 
 /obj/machinery/door/airlock/cult/Initialize()
 	. = ..()
@@ -461,6 +504,7 @@
 	damage_deflection = 30
 	normal_integrity = 240
 	var/construction_state = GEAR_SECURE //Pinion airlocks have custom deconstruction
+	has_hatch = FALSE
 
 /obj/machinery/door/airlock/clockwork/Initialize()
 	. = ..()
@@ -579,6 +623,7 @@
 	assemblytype = null
 	glass = TRUE
 	bound_width = 64 // 2x1
+	has_hatch = FALSE
 
 /obj/machinery/door/airlock/glass_large/narsie_act()
 	return
