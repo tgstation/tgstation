@@ -23,19 +23,22 @@ PROCESSING_SUBSYSTEM_DEF(circuit)
 /datum/controller/subsystem/processing/circuit/proc/initialize_circuit_fabricator_recipes()
 		// First loop is to seperate the actual circuits from base circuits.
 	var/list/circuits_to_use = list()
-	for(var/obj/item/integrated_circuit/IC in SScircuit.all_integrated_circuits)
+	for(var/obj/item/integrated_circuit/v in SScircuit.all_integrated_circuits)
+		var/obj/item/integrated_circuit/IC = v
 		if((IC.spawn_flags & IC_SPAWN_DEFAULT) || (IC.spawn_flags & IC_SPAWN_RESEARCH))
 			circuits_to_use.Add(IC)
 		// Second loop is to find all categories.
 	var/list/found_categories = list()
-	for(var/obj/item/integrated_circuit/IC in circuits_to_use)
+	for(var/obj/item/integrated_circuit/v in circuits_to_use)
+		var/obj/item/integrated_circuit/IC = v
 		if(!(IC.category_text in found_categories))
 			found_categories.Add(IC.category_text)
 		// Third loop is to initialize lists by category names, then put circuits matching the category inside.
 	for(var/category in found_categories)
 		circuit_fabricator_recipe_list[category] = list()
 		var/list/current_list = circuit_fabricator_recipe_list[category]
-		for(var/obj/item/integrated_circuit/IC in circuits_to_use)
+		for(var/obj/item/integrated_circuit/v in circuits_to_use)
+			var/obj/item/integrated_circuit/IC = v
 			if(IC.category_text == category)
 				current_list.Add(IC)
 		// Now for non-circuit things.
