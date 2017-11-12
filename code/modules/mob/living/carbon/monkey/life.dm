@@ -122,7 +122,7 @@
 		if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
 			throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
 		else
-			adjustBruteLoss( LOW_PRESSURE_DAMAGE_HIPPIE ) // Hippie
+			adjustBruteLoss( LOW_PRESSURE_DAMAGE )
 			throw_alert("pressure", /obj/screen/alert/lowpressure, 2)
 
 	return

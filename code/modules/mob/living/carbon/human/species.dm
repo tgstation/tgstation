@@ -1514,7 +1514,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(H.dna.check_mutation(COLDRES) || (RESISTPRESSURE in species_traits))
 				H.clear_alert("pressure")
 			else
-				H.adjustBruteLoss( LOW_PRESSURE_DAMAGE_HIPPIE ) // Hippie
+				H.adjustBruteLoss( LOW_PRESSURE_DAMAGE )
 				H.throw_alert("pressure", /obj/screen/alert/lowpressure, 2)
 
 //////////
