@@ -4174,7 +4174,7 @@
 /area/hallway/secondary/entry)
 "ajk" = (
 /turf/closed/wall,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "ajl" = (
 /obj/structure/cable/white{
 	d2 = 2;
@@ -4182,11 +4182,11 @@
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "ajm" = (
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "ajn" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -4451,7 +4451,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 9
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "ajV" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -4464,7 +4464,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 1
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "ajW" = (
 /obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/security_space_law,
@@ -4475,7 +4475,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 5
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "ajX" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
@@ -4859,7 +4859,7 @@
 	},
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "akQ" = (
 /obj/machinery/light_switch{
 	pixel_x = -26;
@@ -4871,7 +4871,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "akR" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -4889,7 +4889,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "akS" = (
 /obj/structure/cable/white{
 	d2 = 8;
@@ -4898,7 +4898,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Security Checkpoint APC";
-	areastring = "/area/security/checkpoint/checkpoint2";
+	areastring = "/area/security/checkpoint/auxiliary";
 	pixel_x = 26
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -4907,7 +4907,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "akT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -5258,7 +5258,7 @@
 	icon_state = "0-2"
 	},
 /turf/open/floor/plating,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "alQ" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin,
@@ -5266,7 +5266,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "alR" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -5274,7 +5274,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "alS" = (
 /obj/machinery/computer/prisoner,
 /obj/machinery/status_display{
@@ -5288,7 +5288,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "alT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -5646,7 +5646,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "amH" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -5665,7 +5665,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "amI" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -5681,7 +5681,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "amJ" = (
 /obj/machinery/computer/security,
 /obj/machinery/light{
@@ -5692,7 +5692,7 @@
 	pixel_x = 26
 	},
 /turf/open/floor/plasteel/red,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "amK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/side{
@@ -6010,14 +6010,14 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/white,
 /turf/open/floor/plating,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "anD" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "anE" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -6026,7 +6026,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/neutral,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "anF" = (
 /obj/machinery/computer/secure_data,
 /obj/machinery/ai_status_display{
@@ -6035,7 +6035,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 5
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "anG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -6533,7 +6533,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 10
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "aoH" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -6542,7 +6542,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/red/side,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "aoI" = (
 /obj/structure/closet/secure_closet/security,
 /obj/machinery/airalarm{
@@ -6552,7 +6552,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "aoJ" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -108521,7 +108521,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "ebT" = (
 /obj/structure/cable/white{
 	d2 = 4;
@@ -108529,7 +108529,7 @@
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "ebU" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable/white{
@@ -108549,7 +108549,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "ebV" = (
 /obj/structure/cable/white{
 	d2 = 8;
@@ -108558,11 +108558,11 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "ebW" = (
 /obj/machinery/status_display,
 /turf/closed/wall,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "ebX" = (
 /obj/structure/cable/white{
 	d2 = 4;
@@ -108575,7 +108575,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "ebY" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable/white{
@@ -108599,7 +108599,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "ebZ" = (
 /obj/structure/cable/white{
 	d2 = 4;
@@ -108612,7 +108612,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "eca" = (
 /obj/structure/cable/white{
 	d2 = 4;
@@ -108624,7 +108624,7 @@
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "ecb" = (
 /obj/structure/cable/white{
 	d2 = 8;
@@ -108633,11 +108633,11 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/vacuum,
 /turf/open/floor/plating,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "ecc" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "ecd" = (
 /obj/machinery/door/airlock/glass_security{
 	name = "Holding Area";
@@ -108883,7 +108883,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 9
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "ecA" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -108894,7 +108894,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 1
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "ecB" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin,
@@ -108902,7 +108902,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 5
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "ecC" = (
 /obj/structure/table/reinforced,
 /obj/structure/cable/white{
@@ -108919,7 +108919,7 @@
 	req_access_txt = "63"
 	},
 /turf/open/floor/plasteel/red,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "ecD" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/fancy/donut_box,
@@ -108927,26 +108927,26 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 9
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "ecE" = (
 /obj/structure/closet/wardrobe/red,
 /turf/open/floor/plasteel/red/side{
 	dir = 5
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "ecF" = (
 /obj/structure/chair,
 /turf/open/floor/plasteel/red/side{
 	dir = 9
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "ecG" = (
 /obj/structure/chair,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/red/side{
 	dir = 1
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "ecH" = (
 /obj/structure/cable/white{
 	d1 = 1;
@@ -108956,18 +108956,18 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 1
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "ecI" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/red/side{
 	dir = 1
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "ecJ" = (
 /turf/open/floor/plasteel/red/side{
 	dir = 5
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "ecK" = (
 /obj/machinery/door/airlock/external{
 	cyclelinkeddir = 4;
@@ -108981,11 +108981,11 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "ecL" = (
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "ecM" = (
 /obj/machinery/door/airlock/external{
 	cyclelinkeddir = 8;
@@ -108999,7 +108999,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "ecN" = (
 /obj/machinery/door/airlock/shuttle{
 	name = "Emergency Shuttle Airlock";
@@ -109222,7 +109222,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Departures Checkpoint APC";
-	areastring = "/area/security/checkpoint/checkpoint2";
+	areastring = "/area/security/checkpoint/auxiliary";
 	pixel_x = -26;
 	pixel_y = 3
 	},
@@ -109232,7 +109232,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "edn" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -109248,7 +109248,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/neutral,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "edo" = (
 /obj/machinery/holopad,
 /obj/structure/cable/white{
@@ -109263,7 +109263,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "edp" = (
 /obj/structure/chair/office/dark{
 	dir = 1
@@ -109279,7 +109279,7 @@
 	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel/neutral,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "edq" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -109290,7 +109290,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/neutral,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "edr" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -109300,7 +109300,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "eds" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable/white{
@@ -109319,7 +109319,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "edt" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -109332,7 +109332,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "edu" = (
 /obj/structure/cable/white{
 	d1 = 4;
@@ -109343,7 +109343,7 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/neutral,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "edv" = (
 /obj/structure/cable/white{
 	d1 = 2;
@@ -109361,13 +109361,13 @@
 	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel/neutral,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "edw" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
 /turf/open/floor/plasteel/neutral,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "edx" = (
 /obj/structure/chair{
 	dir = 8
@@ -109375,7 +109375,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "edy" = (
 /obj/structure/chair{
 	dir = 4
@@ -109629,11 +109629,11 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 10
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "edZ" = (
 /obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/red/side,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "eea" = (
 /obj/machinery/computer/prisoner,
 /obj/structure/cable/white{
@@ -109644,11 +109644,11 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "eeb" = (
 /obj/machinery/computer/secure_data,
 /turf/open/floor/plasteel/red,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "eec" = (
 /obj/machinery/computer/security,
 /obj/machinery/status_display{
@@ -109657,7 +109657,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 10
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "eed" = (
 /obj/structure/closet/secure_closet/security,
 /obj/machinery/airalarm{
@@ -109668,7 +109668,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "eee" = (
 /obj/structure/chair{
 	dir = 1
@@ -109681,13 +109681,13 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 10
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "eef" = (
 /obj/structure/chair{
 	dir = 1
 	},
 /turf/open/floor/plasteel/red/side,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "eeg" = (
 /obj/structure/table,
 /obj/structure/cable/white{
@@ -109704,7 +109704,7 @@
 /obj/item/restraints/handcuffs,
 /obj/item/device/assembly/flash/handheld,
 /turf/open/floor/plasteel/red/side,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "eeh" = (
 /obj/structure/chair{
 	dir = 1
@@ -109715,7 +109715,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/red/side,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "eei" = (
 /obj/structure/chair{
 	dir = 1
@@ -109738,7 +109738,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "eej" = (
 /obj/structure/cable/white{
 	d2 = 8;
@@ -109751,7 +109751,7 @@
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "eek" = (
 /obj/structure/chair{
 	dir = 4
@@ -109835,7 +109835,7 @@
 /area/hallway/secondary/exit/departure_lounge)
 "eev" = (
 /turf/closed/wall/r_wall,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "eew" = (
 /obj/structure/cable/white,
 /obj/structure/cable/white{
@@ -109848,7 +109848,7 @@
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "eex" = (
 /obj/structure/cable/white{
 	d2 = 8;
@@ -109856,12 +109856,12 @@
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "eey" = (
 /obj/structure/cable/white,
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "eez" = (
 /obj/structure/chair{
 	dir = 1

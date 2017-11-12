@@ -118,6 +118,15 @@
 		max_integrity = normal_integrity
 	if(damage_deflection == AIRLOCK_DAMAGE_DEFLECTION_N && security_level > AIRLOCK_SECURITY_METAL)
 		damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_R
+	prepare_huds()
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_to_hud(src)
+	diag_hud_set_electrified()
+
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/door/airlock/LateInitialize()
+	. = ..()
 	if(abandoned)
 		var/outcome = rand(1,100)
 		switch(outcome)
@@ -136,10 +145,6 @@
 				welded = TRUE
 			if(24 to 30)
 				panel_open = TRUE
-	prepare_huds()
-	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
-	diag_hud.add_to_hud(src)
-	diag_hud_set_electrified()
 
 	update_icon()
 

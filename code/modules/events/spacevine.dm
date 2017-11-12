@@ -5,6 +5,9 @@
 	max_occurrences = 3
 	min_players = 10
 
+/datum/round_event/spacevine
+	fakeable = FALSE
+
 /datum/round_event/spacevine/start()
 	var/list/turfs = list() //list of all the empty floor turfs in the hallway areas
 

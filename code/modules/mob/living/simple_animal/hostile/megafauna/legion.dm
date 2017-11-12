@@ -21,6 +21,7 @@ Difficulty: Medium
 	name = "Legion"
 	health = 800
 	maxHealth = 800
+	spacewalk = TRUE
 	icon_state = "legion"
 	icon_living = "legion"
 	desc = "One of many."
@@ -138,9 +139,6 @@ Difficulty: Medium
 		else if(prob(5))
 			loot = list(/obj/structure/closet/crate/necropolis/tendril)
 		..()
-
-/mob/living/simple_animal/hostile/megafauna/legion/Process_Spacemove(movement_dir = 0)
-	return 1
 
 /obj/item/device/gps/internal/legion
 	icon_state = null

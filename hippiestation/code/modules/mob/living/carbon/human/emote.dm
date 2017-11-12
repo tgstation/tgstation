@@ -90,25 +90,25 @@
 				var/obj/item/lighter/G = O
 				if(G.lit && user.loc)
 					new/obj/effect/hotspot(user.loc)
-					playsound(user, fartsound, 50, 1, 5)
+					playsound(user, fartsound, 100, 1, 5)
 			else if(istype(O, /obj/item/weldingtool))
 				var/obj/item/weldingtool/J = O
 				if(J.welding && user.loc)
 					new/obj/effect/hotspot(user.loc)
-					playsound(user, fartsound, 50, 1, 5)
+					playsound(user, fartsound, 100, 1, 5)
 			else if(istype(O, /obj/item/bikehorn))
 				for(var/obj/item/bikehorn/Q in theinv.contents)
-					playsound(Q, 'sound/items/bikehorn.ogg', 50, 1, 5)
+					playsound(Q, 'sound/items/bikehorn.ogg', 100, 1, 5)
 				message = "<span class='clown'>farts.</span>"
 			else if(istype(O, /obj/item/device/megaphone))
 				message = "<span class='reallybig'>farts.</span>"
-				playsound(user, 'hippiestation/sound/effects/fartmassive.ogg', 75, 1, 5)
+				playsound(user, 'hippiestation/sound/effects/fartmassive.ogg', 100, 1, 5)
 			else
-				playsound(user, fartsound, 50, 1, 5)
+				playsound(user, fartsound, 100, 1, 5)
 			if(prob(33))
 				theinv.remove_from_storage(O, user.loc)
 		else
-			playsound(user, fartsound, 50, 1, 5)
+			playsound(user, fartsound, 100, 1, 5)
 		sleep(1)
 		if(lose_butt)
 			B.Remove(user)
@@ -158,7 +158,7 @@
 		addtimer(CALLBACK(user, /mob/proc/gib), 10)
 	else
 		for(var/i in 1 to 10)
-			playsound(user, 'hippiestation/sound/effects/fart.ogg', 50, 1, 5)
+			playsound(user, 'hippiestation/sound/effects/fart.ogg', 100, 1, 5)
 			sleep(1)
 		playsound(user, 'hippiestation/sound/effects/fartmassive.ogg', 75, 1, 5)
 		var/obj/item/storage/internal/pocket/butt/theinv = B.inv
@@ -202,6 +202,7 @@
 
 			if(2)
 				user.visible_message("<span class='warning'><b>[user]</b> rips their ass apart in a massive explosion!</span>", "<span class='warning'>Holy shit, your butt goes supernova!</span>")
+				playsound(user, 'hippiestation/sound/effects/superfart.ogg', 75, extrarange = 255, pressure_affected = FALSE)
 				explosion(user.loc, 0, 1, 3, adminlog = FALSE, flame_range = 3)
 				user.gib()
 
@@ -225,6 +226,7 @@
 
 				//ASS BLAST USA
 				user.visible_message("<span class='warning'><b>[user]</b> blows their ass off with such force, they explode!</span>", "<span class='warning'>Holy shit, your butt flies off into the galaxy!</span>")
+				playsound(user, 'hippiestation/sound/effects/superfart.ogg', 75, extrarange = 255, pressure_affected = FALSE)
 				user.gib() //can you belive I forgot to put this here?? yeah you need to see the message BEFORE you gib
 				new /obj/effect/immovablerod/butt(B.loc, locate(endx, endy, 1))
 				priority_announce("What the fuck was that?!", "General Alert")

@@ -11624,7 +11624,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "azw" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -12076,7 +12076,7 @@
 	req_access_txt = "1"
 	},
 /turf/open/floor/plating,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "aAu" = (
 /obj/effect/landmark/start/assistant,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -12246,15 +12246,15 @@
 /area/hallway/secondary/entry)
 "aAQ" = (
 /turf/closed/wall,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "aAR" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "aAS" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "aAT" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Tool Storage Maintenance";
@@ -12533,7 +12533,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 1
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "aBy" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -12680,7 +12680,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 9
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "aBQ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -12795,12 +12795,12 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 1
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "aCd" = (
 /turf/open/floor/plasteel/red/side{
 	dir = 5
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "aCe" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
@@ -12836,7 +12836,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 1
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "aCh" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -12861,7 +12861,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 1
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "aCk" = (
 /obj/machinery/biogenerator,
 /turf/open/floor/plasteel,
@@ -13534,7 +13534,7 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "aDG" = (
 /obj/structure/table/glass,
 /obj/item/reagent_containers/food/snacks/grown/wheat,
@@ -13553,13 +13553,13 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "aDI" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "aDJ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -13568,12 +13568,12 @@
 	on = 1
 	},
 /turf/open/floor/plasteel,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "aDK" = (
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "aDL" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
@@ -13582,7 +13582,7 @@
 	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "aDM" = (
 /obj/machinery/door/airlock{
 	name = "Garden";
@@ -13971,7 +13971,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/red/side,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "aEG" = (
 /obj/machinery/camera{
 	c_tag = "Security Checkpoint";
@@ -13992,7 +13992,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 10
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "aEH" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
 	icon_state = "intact";
@@ -14012,7 +14012,7 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/red/side,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "aEJ" = (
 /obj/item/device/radio/off,
 /obj/item/crowbar,
@@ -14021,14 +14021,14 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "aEK" = (
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
 /obj/structure/table,
 /turf/open/floor/plasteel/red/side,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "aEL" = (
 /obj/structure/table/glass,
 /obj/item/cultivator,
@@ -14674,7 +14674,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "aFW" = (
 /obj/machinery/door/firedoor,
 /obj/structure/table/reinforced,
@@ -14849,7 +14849,7 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "aGr" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plasteel/green/side{
@@ -33062,7 +33062,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/red/side,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "bvl" = (
 /obj/structure/sink{
 	icon_state = "sink";
@@ -41212,7 +41212,8 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/science{
-	name = "Firing Range"
+	name = "Firing Range";
+	req_access_txt = "47"
 	},
 /turf/open/floor/plasteel/vault,
 /area/science/misc_lab)
@@ -43976,7 +43977,7 @@
 /obj/machinery/firealarm{
 	pixel_x = -24
 	},
-/obj/machinery/chem_heater,
+/obj/structure/closet/wardrobe/science_white,
 /turf/open/floor/plasteel/vault,
 /area/science/misc_lab)
 "bSo" = (
@@ -44412,7 +44413,7 @@
 	pixel_x = -25
 	},
 /obj/effect/decal/cleanable/oil,
-/obj/structure/closet/wardrobe/science_white,
+/obj/machinery/chem_heater,
 /turf/open/floor/plasteel/vault,
 /area/science/misc_lab)
 "bTp" = (
@@ -46047,7 +46048,8 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/science{
-	name = "High-risk Machinery"
+	name = "High-risk Machinery";
+	req_access_txt = "47"
 	},
 /turf/open/floor/engine,
 /area/science/misc_lab)
@@ -46594,6 +46596,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 5;
+	pixel_y = -32
 	},
 /turf/open/floor/plasteel/vault,
 /area/science/misc_lab)
@@ -60813,7 +60819,8 @@
 "cDq" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/science{
-	name = "Chemical Lab"
+	name = "Chemical Lab";
+	req_access_txt = "47"
 	},
 /turf/open/floor/plasteel/vault,
 /area/science/misc_lab)
@@ -60922,7 +60929,8 @@
 "cDG" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/science{
-	name = "Lab Storage"
+	name = "Lab Storage";
+	req_access_txt = "47"
 	},
 /turf/open/floor/plasteel/vault,
 /area/science/misc_lab)
@@ -60998,7 +61006,8 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/science{
-	name = "High-risk Machinery"
+	name = "High-risk Machinery";
+	req_access_txt = "47"
 	},
 /turf/open/floor/engine,
 /area/science/misc_lab)
@@ -76289,7 +76298,7 @@ aaa
 aaa
 aaa
 aaa
-cvi
+aaa
 aaa
 aaa
 aaa
@@ -77140,7 +77149,7 @@ aaa
 aaa
 aaa
 aaa
-cEd
+aaa
 aaa
 aaa
 aaa
@@ -114672,7 +114681,7 @@ aaa
 aaa
 aaa
 aaa
-avu
+aaa
 aaa
 aaa
 aaa
@@ -119220,7 +119229,7 @@ aaa
 aaa
 aaa
 aaa
-cvj
+aaa
 aaa
 aaa
 aaa
