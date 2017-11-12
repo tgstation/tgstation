@@ -25,7 +25,7 @@ Buildable meters
 /obj/item/pipe/directional
 	RPD_type = PIPE_UNARY
 /obj/item/pipe/binary
-	RPD_type = PIPE_STRAIGHT
+	RPD_type = PIPE_BINARY
 /obj/item/pipe/binary/bendable
 	RPD_type = PIPE_BENDABLE
 /obj/item/pipe/trinary
@@ -34,7 +34,7 @@ Buildable meters
 	RPD_type = PIPE_TRIN_M
 	var/flipped = FALSE
 /obj/item/pipe/quaternary
-	RPD_type = PIPE_ONEDIR
+	RPD_type = PIPE_QUAD
 
 /obj/item/pipe/examine(mob/user)
 	..()

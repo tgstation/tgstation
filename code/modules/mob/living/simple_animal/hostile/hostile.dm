@@ -14,7 +14,7 @@
 	var/list/emote_taunt = list()
 	var/taunt_chance = 0
 
-//typecache of things this mob will attack in DestroyPathToTarget() if it has environment_smash
+//typecache of things this mob will attack in DestroySurroundings() if it has environment_smash
 	var/list/environment_target_typecache = list(
 	/obj/machinery/door/window,
 	/obj/structure/window,
@@ -81,9 +81,7 @@
 		EscapeConfinement()
 
 	if(AICanContinue(possible_targets))
-		if(!QDELETED(target)) // fix a runtime error, probably hacky
-			if(!targets_from.Adjacent(target)) // so the mob doesnt try to make a path when it can just hit the target
-				DestroyPathToTarget()
+		DestroySurroundings()
 		if(!MoveToTarget(possible_targets))     //if we lose our target
 			if(AIShouldSleep(possible_targets))	// we try to acquire a new one
 				toggle_ai(AI_IDLE)			// otherwise we go idle
@@ -361,47 +359,23 @@
 		P.fire()
 		return P
 
+/mob/living/simple_animal/hostile/proc/CanSmashTurfs(turf/T)
+	return iswallturf(T) || ismineralturf(T)
 
-/mob/living/simple_animal/hostile/proc/DestroyPathToTarget()
-	if(environment_smash)
-		EscapeConfinement()
-		var/turf/T = get_cardinal_step_towards(targets_from, target)
-		if(T.Adjacent(targets_from))
-			if(environment_smash == ENVIRONMENT_SMASH_RWALLS)
-				T.attack_animal(src)
-			else if(environment_smash == ENVIRONMENT_SMASH_WALLS)
-				if (!isreinforcedwallturf(T))
-					T.attack_animal(src)
-			else
-				var/dir_to_target = get_dir(targets_from, get_cardinal_step_towards(targets_from, target))
-				var/dir_from_target = get_dir(targets_from, get_cardinal_step_away(targets_from, target))
-
-				var/list/dir_list = list(dir_from_target, get_next_cardinal_dir_cw(dir_from_target), get_next_cardinal_dir_cw(dir_to_target), dir_to_target)
-
-				for(dir_list.len, dir_list.len > 0, dir_list.len--)
-					T = get_step(targets_from, dir_list[dir_list.len])
-					for(var/a in T)
-						var/atom/A = a
-						if(is_type_in_typecache(A, environment_target_typecache) && !A.IsObscured())
-							A.attack_animal(src)
-							dir_list.len = 0
-				del(dir_list)
-
-
-mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with megafauna destroying everything around them
+/mob/living/simple_animal/hostile/proc/DestroySurroundings()
 	if(environment_smash)
 		EscapeConfinement()
 		for(var/dir in GLOB.cardinals)
 			var/turf/T = get_step(targets_from, dir)
-			if(T.Adjacent(targets_from))
-				T.attack_animal(src)
+			if(CanSmashTurfs(T))
+				if(T.Adjacent(targets_from))
+					T.attack_animal(src)
 			for(var/a in T)
 				var/atom/A = a
 				if(!A.Adjacent(targets_from))
 					continue
 				if(is_type_in_typecache(A, environment_target_typecache) && !A.IsObscured())
 					A.attack_animal(src)
-
 
 /mob/living/simple_animal/hostile/proc/EscapeConfinement()
 	if(buckled)

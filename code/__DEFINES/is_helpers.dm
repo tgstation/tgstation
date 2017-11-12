@@ -29,8 +29,6 @@
 
 #define iswallturf(A) (istype(A, /turf/closed/wall))
 
-#define isreinforcedwallturf(A) (istype(A, /turf/closed/wall/r_wall))
-
 #define ismineralturf(A) (istype(A, /turf/closed/mineral))
 
 #define islava(A) (istype(A, /turf/open/lava))
