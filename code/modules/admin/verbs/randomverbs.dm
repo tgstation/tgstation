@@ -89,7 +89,7 @@
 		return
 	if(findtext(msg, "http"))
 		message_admins("ERROR: [key_name_admin(usr)] attempted to direct narrate with an arbitrary URL. Narrate is as follows:")
-		message_admins("<[msg]")
+		message_admins("[msg]")
 		log_admin("[key_name(usr)] attempted to direct narrate a message involving arbitrary URLs, message: [msg]")
 		return FALSE
 	to_chat(M, msg)
