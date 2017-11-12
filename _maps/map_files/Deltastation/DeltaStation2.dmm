@@ -33933,6 +33933,9 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
 /turf/open/floor/plasteel,
 /area/maintenance/port/fore)
 "bvF" = (
@@ -69879,14 +69882,12 @@
 "cQW" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment{
-	icon_state = "pipe-s";
 	dir = 4
 	},
 /turf/open/floor/plating,
 /area/medical/medbay/central)
 "cQX" = (
 /obj/structure/disposalpipe/segment{
-	icon_state = "pipe-s";
 	dir = 4
 	},
 /obj/item/twohanded/required/kirbyplants{
@@ -69898,7 +69899,6 @@
 /area/medical/medbay/central)
 "cQY" = (
 /obj/structure/disposalpipe/segment{
-	icon_state = "pipe-s";
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral,
@@ -71038,7 +71038,6 @@
 	name = "Secure Pen Shutters"
 	},
 /obj/structure/disposalpipe/segment{
-	icon_state = "pipe-s";
 	dir = 4
 	},
 /turf/open/floor/plating,

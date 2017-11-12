@@ -31601,7 +31601,6 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment{
-	icon_state = "pipe-s";
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
@@ -33027,7 +33026,6 @@
 /area/crew_quarters/heads/hor)
 "bBs" = (
 /obj/structure/disposalpipe/segment{
-	icon_state = "pipe-s";
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkpurple/side{
@@ -33037,7 +33035,6 @@
 "bBt" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment{
-	icon_state = "pipe-s";
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkpurple/side{
@@ -48807,7 +48804,6 @@
 	req_access_txt = "13"
 	},
 /obj/structure/disposalpipe/segment{
-	icon_state = "pipe-s";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -48821,7 +48817,6 @@
 	pixel_y = 32
 	},
 /obj/structure/disposalpipe/segment{
-	icon_state = "pipe-s";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -48832,7 +48827,6 @@
 	req_access_txt = "13"
 	},
 /obj/structure/disposalpipe/segment{
-	icon_state = "pipe-s";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -48842,7 +48836,6 @@
 	dir = 1
 	},
 /obj/structure/disposalpipe/segment{
-	icon_state = "pipe-s";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -49085,7 +49078,6 @@
 /area/maintenance/department/engine)
 "csz" = (
 /obj/structure/disposalpipe/segment{
-	icon_state = "pipe-s";
 	dir = 4
 	},
 /turf/open/floor/plating,
