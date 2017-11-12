@@ -1,0 +1,4 @@
+author: "Pyko"
+delete-after: True
+changes: 
+  - rscadd: "More character slots."
