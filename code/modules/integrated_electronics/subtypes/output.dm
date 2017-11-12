@@ -142,7 +142,7 @@
 	text = get_pin_data(IC_INPUT, 1)
 	if(!isnull(text))
 		var/obj/O = assembly ? loc : assembly
-		audible_message("[icon2html(O.icon, world, O.icon_state)]  \The [O.name] states, \"[text]\"")
+		O.say(text)
 
 /obj/item/integrated_circuit/output/sound/Initialize()
 	.= ..()
