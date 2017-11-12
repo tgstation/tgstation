@@ -4,6 +4,16 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "bitterness"
 
+/datum/reagent/drug/on_mob_life(mob/living/M)
+	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
+	if(mood)
+		mood.add_event("[id]_high", /datum/mood_event/drugs/high, name)
+
+/datum/reagent/drug/on_mob_delete(mob/living/M)
+	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
+	if(mood)
+		mood.clear_event("[id]_high")
+
 /datum/reagent/drug/space_drugs
 	name = "Space drugs"
 	id = "space_drugs"
@@ -25,7 +35,7 @@
 	to_chat(M, "<span class='userdanger'>You start tripping hard!</span>")
 	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
 	if(mood)
-		mood.add_event("[id]_overdose", /datum/mood_event/drugs/overdose)
+		mood.add_event("[id]_overdose", /datum/mood_event/drugs/overdose, name)
 
 /datum/reagent/drug/space_drugs/overdose_process(mob/living/M)
 	if(M.hallucination < volume && prob(20))
