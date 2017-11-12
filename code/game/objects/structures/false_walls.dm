@@ -57,13 +57,13 @@
 		for(var/mob/living/obstacle in srcturf) //Stop people from using this as a shield
 			opening = FALSE
 			return
-	addtimer(CALLBACK(src, /obj/structure/falsewall/proc/set_fwall_open, density), 5)
+	addtimer(CALLBACK(src, /obj/structure/falsewall/proc/toggle_open), 5)
 	air_update_turf(1)
 
-/obj/structure/falsewall/proc/set_fwall_open(open)
+/obj/structure/falsewall/proc/toggle_open()
 	if(!QDELETED(src))
-		density = !open
-		set_opacity(!open)
+		density = !density
+		set_opacity(density)
 		opening = FALSE
 		update_icon()
 
