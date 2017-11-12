@@ -54,7 +54,7 @@
 
 /obj/machinery/computer/scan_consolenew/Initialize()
 	. = ..()
-	for(var/direction in list(NORTH,EAST,SOUTH,WEST))
+	for(var/direction in GLOB.cardinals)
 		connected = locate(/obj/machinery/dna_scannernew, get_step(src, direction))
 		if(!isnull(connected))
 			break
