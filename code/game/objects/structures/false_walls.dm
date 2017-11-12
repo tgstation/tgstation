@@ -11,7 +11,7 @@
 	var/mineral_amount = 2
 	var/walltype = /turf/closed/wall
 	var/girder_type = /obj/structure/girder/displaced
-	var/opening = 0
+	var/opening = FALSE
 	density = TRUE
 	opacity = 1
 	max_integrity = 100
@@ -50,35 +50,38 @@
 	if(opening)
 		return
 
-	opening = 1
-	if(density)
-		smooth = SMOOTH_FALSE
-		clear_smooth_overlays()
-		icon_state = "fwall_opening"
-		addtimer(CALLBACK(src, /obj/structure/falsewall/proc/set_fwall_open, TRUE), 5)
-	else
+	opening = TRUE
+	update_icon()
+	if(!density)
 		var/srcturf = get_turf(src)
 		for(var/mob/living/obstacle in srcturf) //Stop people from using this as a shield
-			opening = 0
+			opening = FALSE
 			return
-		icon_state = "fwall_closing"
-		addtimer(CALLBACK(src, /obj/structure/falsewall/proc/set_fwall_open, FALSE), 5)
+	addtimer(CALLBACK(src, /obj/structure/falsewall/proc/set_fwall_open, density), 5)
 	air_update_turf(1)
-	opening = 0
 
 /obj/structure/falsewall/proc/set_fwall_open(open)
 	if(!QDELETED(src))
 		density = !open
 		set_opacity(!open)
+		opening = FALSE
 		update_icon()
 
 /obj/structure/falsewall/update_icon()//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
-	if(density)
-		smooth = SMOOTH_TRUE
-		queue_smooth(src)
-		icon_state = initial(icon_state)
+	if(opening)
+		if(density)
+			icon_state = "fwall_opening"
+			smooth = SMOOTH_FALSE
+			clear_smooth_overlays()
+		else
+			icon_state = "fwall_closing"
 	else
-		icon_state = "fwall_open"
+		if(density)
+			icon_state = initial(icon_state)
+			smooth = SMOOTH_TRUE
+			queue_smooth(src)
+		else
+			icon_state = "fwall_open"
 
 /obj/structure/falsewall/proc/ChangeToWall(delete = 1)
 	var/turf/T = get_turf(src)
