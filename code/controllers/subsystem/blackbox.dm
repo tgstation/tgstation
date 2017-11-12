@@ -66,7 +66,7 @@ SUBSYSTEM_DEF(blackbox)
 		var/sqlversion = 1
 		if(FV.key in versions)
 			sqlversion = versions[FV.key]
-		sqlrowlist += list(list("datetime" = "Now()", "round_id" = GLOB.round_id, "key_name" =  "'[sanitizeSQL(FV.key)]'", "key_type" = '[FV.type]' "version" = "[sqlverion]", "json" = "'[sanitizeSQL(json_encode(FV.json))]'"))
+		sqlrowlist += list(list("datetime" = "Now()", "round_id" = GLOB.round_id, "key_name" =  "'[sanitizeSQL(FV.key)]'", "key_type" = "'[FV.key_type]'", "version" = "[sqlversion]", "json" = "'[sanitizeSQL(json_encode(FV.json))]'"))
 
 	if (!length(sqlrowlist))
 		return
@@ -118,12 +118,12 @@ SUBSYSTEM_DEF(blackbox)
 		else
 			record_feedback("tally", "radio_usage", 1, "other")
 
-/datum/controller/subsystem/blackbox/proc/find_feedback_datum(key, type)
+/datum/controller/subsystem/blackbox/proc/find_feedback_datum(key, key_type)
 	for(var/datum/feedback_variable/FV in feedback)
 		if(FV.key == key)
 			return FV
 
-	var/datum/feedback_variable/FV = new(key, type)
+	var/datum/feedback_variable/FV = new(key, key_type)
 	feedback += FV
 	return FV
 /*
@@ -181,11 +181,11 @@ Versioning
 						"admin_toggle" = 2,
 						"gun_fired" = 2)
 */
-/datum/controller/subsystem/blackbox/proc/record_feedback(type, key, increment, data, overwrite)
-	if(sealed || !type || !istext(key) || !isnum(increment || !data))
+/datum/controller/subsystem/blackbox/proc/record_feedback(key_type, key, increment, data, overwrite)
+	if(sealed || !key_type || !istext(key) || !isnum(increment || !data))
 		return
-	var/datum/feedback_variable/FV = find_feedback_datum(key, type)
-	switch(type)
+	var/datum/feedback_variable/FV = find_feedback_datum(key, key_type)
+	switch(key_type)
 		if("text")
 			if(!istext(data))
 				return
@@ -233,12 +233,12 @@ Versioning
 
 /datum/feedback_variable
 	var/key
-	var/type
+	var/key_type
 	var/list/json = list()
 
-/datum/feedback_variable/New(new_key, new_type)
+/datum/feedback_variable/New(new_key, new_key_type)
 	key = new_key
-	type = new_type
+	key_type = new_key_type
 
 /datum/controller/subsystem/blackbox/proc/ReportDeath(mob/living/L)
 	if(sealed)
