@@ -1,0 +1,4 @@
+author: "nicn"
+delete-after: True
+changes: 
+  - balance: "Damage from low pressure has been doubled."
