@@ -1,5 +1,5 @@
 // /tg/station 13 server tools API
-#define SERVICE_API_VERSION_STRING "3.2.0.0"
+#define SERVICE_API_VERSION_STRING "3.2.0.1"
 
 //CONFIGURATION
 //use this define if you want to do configuration outside of this file
