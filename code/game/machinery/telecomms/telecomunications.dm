@@ -32,6 +32,7 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	var/long_range_link = 0	// Can you link it across Z levels or on the otherside of the map? (Relay & Hub)
 	var/hide = 0				// Is it a hidden machine?
 	var/listening_level = 0	// 0 = auto set in New() - this is the z level that the machine is listening to.
+	var/datum/looping_sound/server/soundloop
 
 
 /obj/machinery/telecomms/proc/relay_information(datum/signal/signal, filter, copysig, amount = 20)
@@ -145,6 +146,7 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 
 /obj/machinery/telecomms/Initialize(mapload)
 	. = ..()
+	soundloop = new(list(src), on)
 	if(mapload && autolinkers.len)
 		// Links nearby machines
 		if(!long_range_link)
@@ -160,6 +162,7 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	for(var/obj/machinery/telecomms/comm in GLOB.telecomms_list)
 		comm.links -= src
 	links = list()
+	QDEL_NULL(soundloop)
 	return ..()
 
 // Used in auto linking
@@ -189,10 +192,13 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	if(toggled)
 		if(stat & (BROKEN|NOPOWER|EMPED)) // if powered, on. if not powered, off. if too damaged, off
 			on = FALSE
+			soundloop.stop()
 		else
 			on = TRUE
+			soundloop.start()
 	else
 		on = FALSE
+		soundloop.stop()
 
 /obj/machinery/telecomms/process()
 	update_power()
