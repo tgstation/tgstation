@@ -65,8 +65,6 @@ var opts = {
 	'volumeUpdateDelay': 5000, //Time from when the volume updates to data being sent to the server
 	'volumeUpdating': false, //True if volume update function set to fire
 	'updatedVolume': 0, //The volume level that is sent to the server
-	
-	'defaultMusicVolume': 25,
 
 };
 
@@ -606,8 +604,6 @@ $(function() {
 		opts.updatedVolume = newVolume;
 		sendVolumeUpdate();
 		internalOutput('<span class="internal boldnshit">Loaded music volume of: '+savedConfig.smusicVolume+'</span>', 'internal');
-	} else {
-		$('#adminMusic').prop('volume', opts.defaultMusicVolume);
 	}
 
 	(function() {
