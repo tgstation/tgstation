@@ -34,8 +34,8 @@
 	var/ride_allow_incapacitated = FALSE
 	var/allow_riding = TRUE
 
-/obj/item/robot_module/New()
-	..()
+/obj/item/robot_module/Initialize()
+	. = ..()
 	for(var/i in basic_modules)
 		var/obj/item/I = new i(src)
 		basic_modules += I
