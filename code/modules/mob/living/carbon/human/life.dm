@@ -116,7 +116,8 @@
 #undef HUMAN_CRIT_MAX_OXYLOSS
 
 /mob/living/carbon/human/handle_environment(datum/gas_mixture/environment)
-	dna.species.handle_environment(environment, src)
+	if(dna && dna.species) //prevents a runtime while a human is being monkeyfied
+		dna.species.handle_environment(environment, src)
 
 ///FIRE CODE
 /mob/living/carbon/human/handle_fire()
