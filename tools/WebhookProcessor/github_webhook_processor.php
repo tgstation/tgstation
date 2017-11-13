@@ -103,6 +103,9 @@ switch (strtolower($_SERVER['HTTP_X_GITHUB_EVENT'])) {
 				remove_ready_for_review($payload);
 		}
 		break;
+	case 'issue_comment':
+		handle_comment($payload);
+		break;
 	default:
 		header('HTTP/1.0 404 Not Found');
 		echo "Event:$_SERVER[HTTP_X_GITHUB_EVENT] Payload:\n";
@@ -417,6 +420,51 @@ function create_comment($payload, $comment){
 	apisend($payload['pull_request']['comments_url'], 'POST', json_encode(array('body' => $comment)));
 }
 
+function edit_comment($payload, $new_body) {
+	apisend($payload['comment']['url'], 'PATCH', json_encode(array('body' => $new_body)));
+}
+
+function handle_comment($payload) {
+	if($payload['issue']['state'] == 'closed') // check if it's a pr should probably go here
+		return;
+	$balances = pr_balances();
+	$commenter = $payload['comment']['user']['login'];
+	$author = $payload['issue']['user']['login'];
+	switch ($payload['action']) {
+		case 'created':
+			if(stripos($payload['comment']['body'], '[💵]') !== false) {
+				if(!isset($balances[$commenter]) || $balances[$commenter] < 1) {
+					edit_comment($payload, str_replace('[💵]', '', $payload['comment']['body'])); // You can't use :+1: in your comments if your gbp is below 1
+					return;
+				}
+				modify_pr_balance($commenter, -1);
+				modify_pr_balance($author, 1);
+			}
+
+		case 'edited':
+			if(stripos($payload['comment']['body'], '[💵]') !== false) {
+				if(stripos($payload['changes']['body']['from'], '[💵]') !== false) {
+					return; // It had a +1 both before and after, don't worry about it
+				}
+				if(!isset($balances[$commenter]) || $balances[$commenter] < 1) {
+					edit_comment($payload, str_replace('[💵]', '', $payload['comment']['body'])); // You can't edit it in if your gbp is below 1 either
+					return;
+				}
+				modify_pr_balance($commenter, -1);
+				modify_pr_balance($author, 1);
+			} else if(stripos($payload['changes']['body']['from'], '[💵]') !== false) { // They edited it out
+				modify_pr_balance($commenter, 1);
+				modify_pr_balance($author, -1);
+			}
+
+		case 'deleted':
+			if(stripos($payload['comment']['body'], '[💵]') !== false) { // They deleted their comment with a +1
+				modify_pr_balance($commenter, 1);
+				modify_pr_balance($author, -1);
+			}
+	}
+}
+
 //returns the payload issue's labels as a flat array
 function get_pr_labels_array($payload){
 	$url = $payload['pull_request']['issue_url'] . '/labels';
@@ -506,16 +554,23 @@ function update_pr_balance($payload) {
 		return;
 	$author = $payload['pull_request']['user']['login'];
 	$balances = pr_balances();
-	if(!isset($balances[$author]))
-		$balances[$author] = $startingPRBalance;
 	$friendliness = get_pr_code_friendliness($payload, $balances[$author]);
-	$balances[$author] += $friendliness;
+	modify_pr_balance($author, $friendliness);
 	if(!is_maintainer($payload, $author)){	//immune
 		if($balances[$author] < 0 && $friendliness < 0)
 			create_comment($payload, 'Your Fix/Feature pull request delta is currently below zero (' . $balances[$author] . '). Maintainers may close future Feature/Tweak/Balance PRs. Fixing issues or helping to improve the codebase will raise this score.');
 		else if($balances[$author] >= 0 && ($balances[$author] - $friendliness) < 0)
 			create_comment($payload, 'Your Fix/Feature pull request delta is now above zero (' . $balances[$author] . '). Feel free to make Feature/Tweak/Balance PRs.');
 	}
+}
+
+// Adds amount to the author's pr balance
+function modify_pr_balance($author, $amount) {
+	$balances = pr_balances();
+	if(!isset($balances[$author])) {
+		$balances[$author] = $startingPRBalance;
+	}
+	$balances[$author] += $amount;
 	$balances_file = fopen(pr_balance_json_path(), 'w');
 	fwrite($balances_file, json_encode($balances));
 	fclose($balances_file);
