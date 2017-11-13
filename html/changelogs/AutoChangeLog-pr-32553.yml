@@ -1,0 +1,4 @@
+author: "Cobby"
+delete-after: True
+changes: 
+  - rscadd: "The Xray now only hits the first mob it comes into contact with instead of being outright removed from the game."
