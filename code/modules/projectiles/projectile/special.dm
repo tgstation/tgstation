@@ -79,11 +79,11 @@
 
 
 /obj/item/projectile/temp/on_hit(atom/target, blocked = FALSE)//These two could likely check temp protection on the mob
-	..()
-	if(isliving(target))
+	. = ..()
+	if(isliving(target) && blocked < 100)
 		var/mob/M = target
 		M.bodytemperature = temperature
-	return 1
+		return TRUE
 
 /obj/item/projectile/temp/hot
 	name = "heat beam"
