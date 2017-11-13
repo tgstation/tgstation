@@ -113,6 +113,10 @@ list[](
 	if(isnull(new_data) || isnum(new_data) || istext(new_data) || isweakref(new_data)) // Anything else is a type we don't want.
 		data = new_data
 		holder.on_data_written()
+	else if(islist(new_data))
+		var/list/new_list = new_data
+		data = new_list.Copy()
+		holder.on_data_written()
 
 /datum/integrated_io/proc/push_data()
 	for(var/k in 1 to linked.len)

@@ -129,12 +129,12 @@
 		var/can_build = TRUE
 		if(istype(O, /obj/item/integrated_circuit))
 			var/obj/item/integrated_circuit/IC = O
-			if((IC.spawn_flags & IC_SPAWN_RESEARCH) && (!(IC.spawn_flags & IC_SPAWN_DEFAULT)) && !upgraded)
+			if((initial(IC.spawn_flags) & IC_SPAWN_RESEARCH) && (!(initial(IC.spawn_flags) & IC_SPAWN_DEFAULT)) && !upgraded)
 				can_build = FALSE
 		if(can_build)
-			HTML += "<A href='?src=[REF(src)];build=[REF(O)]'>\[[O.name]\]</A>: [O.desc]<br>"
+			HTML += "<A href='?src=[REF(src)];build=[initial(O.name)]'>\[[initial(O.name)]\]</A>: [initial(O.desc)]<br>"
 		else
-			HTML += "<s>\[[O.name]\]: [O.desc]</s><br>"
+			HTML += "<s>\[[initial(O.name)]\]: [initial(O.desc)]</s><br>"
 
 	user << browse(jointext(HTML, null), "window=integrated_printer;size=[window_width]x[window_height];border=1;can_resize=1;can_close=1;can_minimize=1")
 

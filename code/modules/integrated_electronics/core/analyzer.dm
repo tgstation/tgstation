@@ -8,10 +8,10 @@
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_SMALL
 	var/list/circuit_list = list()
-	var/list/assembly_list = list(new /obj/item/device/electronic_assembly(null),
-			new /obj/item/device/electronic_assembly/medium(null),
-			new /obj/item/device/electronic_assembly/large(null),
-			new /obj/item/device/electronic_assembly/drone(null))
+	var/list/assembly_list = list(/obj/item/device/electronic_assembly,
+			/obj/item/device/electronic_assembly/medium,
+			/obj/item/device/electronic_assembly/large,
+			/obj/item/device/electronic_assembly/drone)
 
 /obj/item/device/integrated_electronics/analyzer/afterattack(var/atom/A, var/mob/living/user)
 	visible_message( "<span class='notice'>attempt to scan</span>")
@@ -22,8 +22,8 @@
 		visible_message( "<span class='notice'>start of scan</span>")
 		for(var/ix in 1 to assembly_list.len)
 			var/obj/item/I = assembly_list[ix]
-			if( A.type == I.type )
-				HTML += I.name+"=-="+A.name         //2-nd block.assembly type and name. Maybe in future there will also be color and accesories.
+			if( A.type == I )
+				HTML += initial(I.name) +"=-="+A.name         //2-nd block.assembly type and name. Maybe in future there will also be color and accesories.
 				break
 		/*
 		If(I.name == "electronic implant")

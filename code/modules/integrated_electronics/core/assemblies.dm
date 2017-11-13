@@ -180,6 +180,7 @@
 		icon_state = initial(icon_state)
 
 /obj/item/device/electronic_assembly/examine(mob/user)
+	..()
 	for(var/obj/item/integrated_circuit/IC in contents)
 		IC.external_examine(user)
 		if(istype(IC,/obj/item/integrated_circuit/output/screen))
@@ -305,12 +306,15 @@
 
 	var/obj/item/integrated_circuit/input/choice
 	if(available_inputs)
-		var/selection = input(user, "What do you want to interact with?", "Interaction") as null|anything in input_selection
-		if(!check_interactivity(user))
-			return
-		if(selection)
-			var/index = input_selection.Find(selection)
-			choice = available_inputs[index]
+		if(available_inputs.len ==1)
+			choice = available_inputs[1]
+		else
+			var/selection = input(user, "What do you want to interact with?", "Interaction") as null|anything in input_selection
+			if(!check_interactivity(user))
+				return
+			if(selection)
+				var/index = input_selection.Find(selection)
+				choice = available_inputs[index]
 
 	if(choice)
 		choice.ask_for_input(user)

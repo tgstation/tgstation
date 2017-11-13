@@ -142,7 +142,7 @@
 //	size = 5
 	inputs = list("direction" = IC_PINTYPE_DIR)
 	outputs = list()
-	activators = list("step towards dir" = IC_PINTYPE_PULSE_IN)
+	activators = list("step towards dir" = IC_PINTYPE_PULSE_IN,"on step"=IC_PINTYPE_PULSE_OUT,"blocked"=IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_RESEARCH
 	power_draw_per_use = 100
 
@@ -155,7 +155,11 @@
 		if(assembly.loc == T) // Check if we're held by someone.  If the loc is the floor, we're not held.
 			var/datum/integrated_io/wanted_dir = inputs[1]
 			if(isnum(wanted_dir.data))
-				step(assembly, wanted_dir.data)
+				if(step(assembly, wanted_dir.data))
+					activate_pin(2)
+				else
+					activate_pin(3)
+					return FALSE
 
 /obj/item/integrated_circuit/manipulation/grenade
 	name = "grenade primer"
@@ -316,6 +320,9 @@
 				AM.myseed = null
 			AM.weedlevel = 0 //Has a side effect of cleaning up those nasty weeds
 			AM.update_icon()
+		else
+			activate_pin(2)
+			return FALSE
 	activate_pin(2)
 
 /obj/item/integrated_circuit/manipulation/grabber
