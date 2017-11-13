@@ -300,6 +300,44 @@
 		else
 			return get_step(start, EAST)
 
+
+/proc/get_cardinal_step_towards(atom/start, atom/finish) //returns the position of a step from start towards finish, in one of the cardinal directions
+	//returns only NORTH, SOUTH, EAST, or WEST
+	var/dx = start.x - finish.x
+	var/dy = start.y - finish.y
+	if(abs(dy) > abs (dx)) //slope is above 1:1 (move horizontally in a tie)
+		if(dy > 0)
+			return get_step(start, SOUTH)
+		else
+			return get_step(start, NORTH)
+	else
+		if(dx > 0)
+			return get_step(start, WEST)
+		else
+			return get_step(start, EAST)
+
+
+/proc/get_next_cardinal_dir(original_direction, clockwise) // get the next cardinal direction clockwise from the current cardinal direction
+//clockwise = 1 is clockwise, clockwise = 0 is counterclockwise
+	if (clockwise == 1)
+		if (original_direction == NORTH)
+			return EAST
+		if (original_direction == EAST)
+			return SOUTH
+		if (original_direction == SOUTH)
+			return WEST
+		if (original_direction == WEST)
+			return NORTH
+	else
+		if (original_direction == NORTH)
+			return WEST
+		if (original_direction == WEST)
+			return SOUTH
+		if (original_direction == SOUTH)
+			return EAST
+		if (original_direction == EAST)
+			return NORTH
+
 /proc/try_move_adjacent(atom/movable/AM)
 	var/turf/T = get_turf(AM)
 	for(var/direction in GLOB.cardinals)
