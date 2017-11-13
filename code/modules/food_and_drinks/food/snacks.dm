@@ -197,7 +197,7 @@
 
 	var/slices_lost = 0
 	if (accuracy >= IS_SHARP_ACCURATE)
-		if(istype(src, obj/item/weapon/reagent_containers/food/snacks/meatbread))
+		if(istype(src, /obj/item/reagent_containers/food/snacks/meatbread))
 			to_chat(world, " <B>[usr] slices the meatbread! </B>")
 		else
 			user.visible_message( \
