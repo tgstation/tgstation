@@ -134,7 +134,7 @@
 		add_overlay("cover-on")
 	else
 		icon_state = "pod-off"
-    add_overlay("cover-off")
+    	add_overlay("cover-off")
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/proc/run_anim(anim_up, image/occupant_overlay)
 	if(!on || !occupant || !is_operational())
