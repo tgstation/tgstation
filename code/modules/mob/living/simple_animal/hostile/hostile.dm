@@ -361,32 +361,34 @@
 		return P
 
 
-/mob/living/simple_animal/hostile/proc/DestroyStructuresCycle(turf/T)
-	var/dir_to_target = get_dir(targets_from, get_cardinal_step_towards(targets_from, target))
-	var/list/dir_list = list(dir_to_target, turn(dir_to_target, 90), turn(dir_to_target, 270), turn(dir_to_target, 180))
-	for(var/dir in dir_list)
-		T = get_step(targets_from, dir)
-		for(var/a in T)
-			var/atom/A = a
-			if(is_type_in_typecache(A, environment_target_typecache) && !A.IsObscured())
-				A.attack_animal(src)
-				return
+/mob/living/simple_animal/hostile/proc/CanSmashTurfs(turf/T)
+	return iswallturf(T) || ismineralturf(T)
 
 
 /mob/living/simple_animal/hostile/proc/DestroyPathToTarget()
-	var/turf/T = get_cardinal_step_towards(targets_from, target)
-		if(environment_smash == ENVIRONMENT_SMASH_RWALLS)
-			if (iswallturf(T) || ismineralturf(T) || isreinforcedwallturf(T))
+	if(environment_smash)
+		EscapeConfinement()
+
+		var/dir_to_target_cardinal = get_dir(targets_from, get_cardinal_step_towards(targets_from, target))
+		var/dir_to_target = get_dir(targets_from, target)
+		var/dir_list = list()
+		if(dir_to_target in GLOB.diagonals) //it's diagonal, so we need two directions to hit
+			for(var/direction in GLOB.cardinals)
+				if(direction & dir_to_target)
+					dir_list += direction
+		else
+			dir_list += dir_to_target_cardinal
+		var/turf/T
+		for(var/direction in dir_list) //now we hit all of the directions we got in this fashion, since it's the only directions we should actually need
+			T = get_step(targets_from, direction)
+			if(!T.Adjacent(targets_from))
+				continue //we can't hit it, so continue to the next
+			if(CanSmashTurfs(T))
 				T.attack_animal(src)
-			else
-				DestroyStructuresCycle(T)
-		else if(environment_smash == ENVIRONMENT_SMASH_WALLS)
-			if (iswallturf(T) || ismineralturf(T) && !isreinforcedwallturf(T))
-					T.attack_animal(src)
-			else
-				DestroyStructuresCycle(T)
-		else if (environment_smash == ENVIRONMENT_SMASH_STRUCTURES)
-			DestroyStructuresCycle(T)
+			for(var/a in T)
+				var/atom/A = a
+				if(is_type_in_typecache(A, environment_target_typecache) && !A.IsObscured())
+					A.attack_animal(src) //we neither break nor return here, so that it hits both directions at once instead of possibly being inefficient. this is still better than hitting every possible turf at once, since it'll be aimed at the target.
 
 
 mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with megafauna destroying everything around them
