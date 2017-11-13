@@ -20,7 +20,7 @@
 /datum/surgery/brain_surgery/can_start(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/brain/B = target.getorganslot(ORGAN_SLOT_BRAIN)
 	if(!B)
-		to_chat(user, "It's hard to do surgery on someone's brain when they don't have one.")
+		to_chat(user, "<span class='warning'>It's hard to do surgery on someone's brain when they don't have one.</span>")
 		return FALSE
 
 /datum/surgery_step/fix_brain/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

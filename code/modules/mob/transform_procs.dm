@@ -79,7 +79,8 @@
 		O.setBrainLoss(getBrainLoss(), 0)
 		O.updatehealth()
 		O.radiation = radiation
-		for(var/datum/brain_trauma/BT in get_traumas())
+		for(var/T in get_traumas())
+			var/datum/brain_trauma/BT = T
 			O.gain_trauma(BT.type, BT.permanent)
 
 	//re-add implants to new mob
@@ -238,7 +239,8 @@
 		O.setBrainLoss(getBrainLoss(), 0)
 		O.updatehealth()
 		O.radiation = radiation
-		for(var/datum/brain_trauma/BT in get_traumas())
+		for(var/T in get_traumas())
+			var/datum/brain_trauma/BT = T
 			O.gain_trauma(BT.type, BT.permanent)
 
 	//re-add implants to new mob

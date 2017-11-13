@@ -447,7 +447,8 @@
 ////////////////
 
 /mob/living/carbon/proc/handle_brain_damage()
-	for(var/datum/brain_trauma/BT in get_traumas())
+	for(var/T in get_traumas())
+		var/datum/brain_trauma/BT = T
 		BT.on_life()
 
 	if(getBrainLoss() >= BRAIN_DAMAGE_DEATH) //rip

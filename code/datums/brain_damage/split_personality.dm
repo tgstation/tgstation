@@ -22,7 +22,7 @@
 	owner_backseat = new(owner, src)
 
 /datum/brain_trauma/severe/split_personality/proc/get_ghost()
-	set waitfor = 0
+	set waitfor = FALSE
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner]'s split personality?", null, null, null, 75, stranger_backseat)
 	if(LAZYLEN(candidates))
 		var/client/C = pick(candidates)
