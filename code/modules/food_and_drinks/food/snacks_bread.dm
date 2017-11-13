@@ -218,11 +218,6 @@
 			desc = "A heavily-fried...something.  Who can tell anymore?"
 	filling_color = color
 	foodtype |= FRIED
-	if(istype(frying, /obj/item/reagent_containers/food/snacks/))
-		qdel(frying)
-	else
-		frying.forceMove(src)
-	reagents.add_reagent("grease", 1)
 
 /obj/item/reagent_containers/food/snacks/butteredtoast
 	name = "buttered toast"
