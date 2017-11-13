@@ -79,8 +79,6 @@
 
 	var/list/upgrades = list()
 
-	var/datum/looping_sound/borg/soundloop
-
 	var/obj/item/hat
 	var/hat_offset = -3
 	var/list/equippable_hats = list(/obj/item/clothing/head/caphat,
@@ -108,7 +106,6 @@
 	spark_system.attach(src)
 
 	wires = new /datum/wires/robot(src)
-	soundloop = new(list(src))
 
 	robot_modules_background = new()
 	robot_modules_background.icon_state = "block"
