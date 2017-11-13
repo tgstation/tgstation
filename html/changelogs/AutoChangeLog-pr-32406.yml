@@ -1,4 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - tweak: "Added deterministic output slots to the slime processor"

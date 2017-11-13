@@ -18585,17 +18585,13 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "aIW" = (
-/obj/structure/sink/kitchen{
-	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	name = "sink";
-	pixel_y = 28
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/structure/reagent_dispensers/cooking_oil,
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "aIX" = (
@@ -33900,6 +33896,19 @@
 	width = 18
 	},
 /turf/open/space/basic,
+/area/space)
+"sws" = (
+/obj/docking_port/stationary{
+	dheight = 9;
+	dir = 2;
+	dwidth = 5;
+	height = 24;
+	id = "syndicate_sw";
+	name = "southwest of station";
+	turf_type = /turf/open/space;
+	width = 18
+	},
+/turf/open/space,
 /area/space)
 
 (1,1,1) = {"
@@ -57577,7 +57586,7 @@ aaa
 aaa
 aaa
 aaa
-swr
+aaa
 aaa
 aaa
 aaa
@@ -62333,7 +62342,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+sws
 aaa
 aaa
 aaa
@@ -62842,7 +62851,7 @@ aaa
 aaa
 aaa
 aaa
-aab
+aaa
 aaa
 aaa
 aaa
@@ -64637,7 +64646,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aab
 aaa
 aaa
 aaa
@@ -76191,7 +76200,7 @@ bdh
 byo
 byo
 byo
-bfM
+bfK
 avV
 bgV
 bhG

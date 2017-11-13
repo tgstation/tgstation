@@ -15,7 +15,7 @@
 	announceWhen = rand(announceWhen, announceWhen + 50)
 	spawncount = rand(5, 8)
 
-/datum/round_event/spider_infestation/announce()
+/datum/round_event/spider_infestation/announce(fake)
 	priority_announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", 'sound/ai/aliens.ogg')
 
 

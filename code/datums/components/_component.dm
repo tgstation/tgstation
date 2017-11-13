@@ -14,8 +14,7 @@
 	var/list/arguments = args.Copy()
 	arguments.Cut(1, 2)
 	if(Initialize(arglist(arguments)) == COMPONENT_INCOMPATIBLE)
-		parent = null
-		qdel(src)
+		qdel(src, TRUE, TRUE)
 		return
 	
 	_CheckDupesAndJoinParent(P)
@@ -36,13 +35,11 @@
 			switch(dm)
 				if(COMPONENT_DUPE_UNIQUE)
 					old.InheritComponent(src, TRUE)
-					parent = null	//prevent COMPONENT_REMOVING signal, no _RemoveFromParent because we aren't in their list yet
-					qdel(src)
+					qdel(src, TRUE, TRUE)
 					return
 				if(COMPONENT_DUPE_HIGHLANDER)
 					InheritComponent(old, FALSE)
-					old._RemoveFromParent()
-					qdel(old)
+					qdel(old, FALSE, TRUE)
 
 	//provided we didn't eat someone
 	if(!old)
@@ -83,12 +80,14 @@
 /datum/component/proc/Initialize(...)
 	return
 
-/datum/component/Destroy()
+/datum/component/Destroy(force=FALSE, silent=FALSE)
 	enabled = FALSE
 	var/datum/P = parent
-	if(P)
+	if(!force)
 		_RemoveFromParent()
+	if(!silent)
 		P.SendSignal(COMSIG_COMPONENT_REMOVING, src)
+	parent = null
 	LAZYCLEARLIST(signal_procs)
 	return ..()
 
@@ -107,7 +106,6 @@
 			dc -= I
 	if(!dc.len)
 		P.datum_components = null
-	parent = null
 
 /datum/component/proc/RegisterSignal(sig_type_or_types, proc_or_callback, override = FALSE)
 	if(QDELETED(src))
@@ -139,10 +137,14 @@
 	return
 
 /datum/component/proc/_GetInverseTypeList(our_type = type)
-#if DM_VERSION > 511
-#warning Remove this hack for http://www.byond.com/forum/?post=73469
-#endif
+	#if DM_VERSION >= 513
+	#warning 512 is definitely stable now, remove the old code
+	#endif
+
+	#if DM_VERSION < 512
+	//remove this when we use 512 full time
 	set invisibility = 101
+	#endif
 	//we can do this one simple trick
 	var/current_type = parent_type
 	. = list(our_type, current_type)

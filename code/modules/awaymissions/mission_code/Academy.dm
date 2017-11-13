@@ -139,7 +139,7 @@
 /obj/structure/academy_wizard_spawner/proc/summon_wizard()
 	var/turf/T = src.loc
 	var/mob/living/carbon/human/wizbody = new(T)
-	wizbody.fully_replace_character_name("Academy Teacher")
+	wizbody.fully_replace_character_name(wizbody.real_name, "Academy Teacher")
 	wizbody.mind_initialize()
 	var/datum/mind/wizmind = wizbody.mind
 	wizmind.special_role = "Academy Defender"

@@ -15,18 +15,20 @@
 	delivery_icon = "deliverybox"
 	anchorable = FALSE
 	var/move_speed_multiplier = 1
-	var/move_delay = 0
+	var/move_delay = FALSE
 	var/egged = 0
 
 /obj/structure/closet/cardboard/relaymove(mob/user, direction)
 	if(opened || move_delay || user.stat || user.IsStun() || user.IsKnockdown() || user.IsUnconscious() || !isturf(loc) || !has_gravity(loc))
 		return
-	move_delay = 1
+	move_delay = TRUE
 	if(step(src, direction))
-		spawn(CONFIG_GET(number/walk_delay) * move_speed_multiplier)
-			move_delay = 0
+		addtimer(CALLBACK(src, .proc/ResetMoveDelay), CONFIG_GET(number/walk_delay) * move_speed_multiplier)
 	else
-		move_delay = 0
+		ResetMoveDelay()
+
+/obj/structure/closet/cardboard/proc/ResetMoveDelay()
+	move_delay = FALSE
 
 /obj/structure/closet/cardboard/open()
 	if(opened || !can_open())

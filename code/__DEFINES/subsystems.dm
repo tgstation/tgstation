@@ -76,3 +76,27 @@
 #define RUNLEVEL_POSTGAME 8
 
 #define RUNLEVELS_DEFAULT (RUNLEVEL_SETUP | RUNLEVEL_GAME | RUNLEVEL_POSTGAME)
+
+
+
+
+#define COMPILE_OVERLAYS(A)\
+	if (TRUE) {\
+		var/list/oo = A.our_overlays;\
+		var/list/po = A.priority_overlays;\
+		if(LAZYLEN(po)){\
+			if(LAZYLEN(oo)){\
+				A.overlays = oo + po;\
+			}\
+			else{\
+				A.overlays = po;\
+			}\
+		}\
+		else if(LAZYLEN(oo)){\
+			A.overlays = oo;\
+		}\
+		else{\
+			A.overlays.Cut();\
+		}\
+		A.flags_1 &= ~OVERLAY_QUEUED_1;\
+	}

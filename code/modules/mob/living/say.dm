@@ -336,8 +336,9 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 								if(prob(40))
 									to_chat(M, "<i><font color=#800080>We can faintly sense an outsider trying to communicate through the hivemind...</font></i>")
 			if(2)
-				var/msg = "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
-				log_talk(src,"[mind.changeling.changelingID]/[key] : [message]",LOGSAY)
+				var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
+				var/msg = "<i><font color=#800080><b>[changeling.changelingID]:</b> [message]</font></i>"
+				log_talk(src,"[changeling.changelingID]/[key] : [message]",LOGSAY)
 				for(var/_M in GLOB.mob_list)
 					var/mob/M = _M
 					if(M in GLOB.dead_mob_list)
@@ -413,10 +414,12 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return 0
 
 /mob/living/lingcheck() //1 is ling w/ no hivemind. 2 is ling w/hivemind. 3 is ling victim being linked into hivemind.
-	if(mind && mind.changeling)
-		if(mind.changeling.changeling_speak)
-			return 2
-		return 1
+	if(mind)
+		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
+		if(changeling)
+			if(changeling.changeling_speak)
+				return 2
+			return 1
 	if(mind && mind.linglink)
 		return 3
 	return 0

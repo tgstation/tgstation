@@ -507,6 +507,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 
 	var/list/areas_all = list()
 	var/list/areas_with_APC = list()
+	var/list/areas_with_multiple_APCs = list()
 	var/list/areas_with_air_alarm = list()
 	var/list/areas_with_RC = list()
 	var/list/areas_with_light = list()
@@ -528,6 +529,8 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 		var/area/A = APC.area
 		if(!(A.type in areas_with_APC))
 			areas_with_APC.Add(A.type)
+		else if(A.type in areas_all)
+			areas_with_multiple_APCs.Add(A.type)
 
 	for(var/obj/machinery/airalarm/AA in GLOB.machines)
 		var/area/A = get_area(AA)
@@ -567,33 +570,48 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	var/list/areas_without_intercom = areas_all - areas_with_intercom
 	var/list/areas_without_camera = areas_all - areas_with_camera
 
-	to_chat(world, "<b>AREAS WITHOUT AN APC:</b>")
-	for(var/areatype in areas_without_APC)
-		to_chat(world, "* [areatype]")
+	if(areas_without_APC.len)
+		to_chat(world, "<b>AREAS WITHOUT AN APC:</b>")
+		for(var/areatype in areas_without_APC)
+			to_chat(world, "* [areatype]")
 
-	to_chat(world, "<b>AREAS WITHOUT AN AIR ALARM:</b>")
-	for(var/areatype in areas_without_air_alarm)
-		to_chat(world, "* [areatype]")
+	if(areas_with_multiple_APCs.len)
+		to_chat(world, "<b>AREAS WITH MULTIPLE APCS:</b>")
+		for(var/areatype in areas_with_multiple_APCs)
+			to_chat(world,"* [areatype]")
 
-	to_chat(world, "<b>AREAS WITHOUT A REQUEST CONSOLE:</b>")
-	for(var/areatype in areas_without_RC)
-		to_chat(world, "* [areatype]")
+	if(areas_without_air_alarm.len)
+		to_chat(world, "<b>AREAS WITHOUT AN AIR ALARM:</b>")
+		for(var/areatype in areas_without_air_alarm)
+			to_chat(world, "* [areatype]")
 
-	to_chat(world, "<b>AREAS WITHOUT ANY LIGHTS:</b>")
-	for(var/areatype in areas_without_light)
-		to_chat(world, "* [areatype]")
+	if(areas_without_RC.len)
+		to_chat(world, "<b>AREAS WITHOUT A REQUEST CONSOLE:</b>")
+		for(var/areatype in areas_without_RC)
+			to_chat(world, "* [areatype]")
 
-	to_chat(world, "<b>AREAS WITHOUT A LIGHT SWITCH:</b>")
-	for(var/areatype in areas_without_LS)
-		to_chat(world, "* [areatype]")
+	if(areas_without_light.len)
+		to_chat(world, "<b>AREAS WITHOUT ANY LIGHTS:</b>")
+		for(var/areatype in areas_without_light)
+			to_chat(world, "* [areatype]")
 
-	to_chat(world, "<b>AREAS WITHOUT ANY INTERCOMS:</b>")
-	for(var/areatype in areas_without_intercom)
-		to_chat(world, "* [areatype]")
+	if(areas_without_LS.len)
+		to_chat(world, "<b>AREAS WITHOUT A LIGHT SWITCH:</b>")
+		for(var/areatype in areas_without_LS)
+			to_chat(world, "* [areatype]")
 
-	to_chat(world, "<b>AREAS WITHOUT ANY CAMERAS:</b>")
-	for(var/areatype in areas_without_camera)
-		to_chat(world, "* [areatype]")
+	if(areas_without_intercom.len)
+		to_chat(world, "<b>AREAS WITHOUT ANY INTERCOMS:</b>")
+		for(var/areatype in areas_without_intercom)
+			to_chat(world, "* [areatype]")
+
+	if(areas_without_camera.len)
+		to_chat(world, "<b>AREAS WITHOUT ANY CAMERAS:</b>")
+		for(var/areatype in areas_without_camera)
+			to_chat(world, "* [areatype]")
+
+	if(!(areas_with_APC.len || areas_with_multiple_APCs.len || areas_with_air_alarm.len || areas_with_RC.len || areas_with_light.len || areas_with_LS.len || areas_with_intercom.len || areas_with_camera.len))
+		to_chat(world, "<b>No problem areas!</b>")
 
 /client/proc/cmd_admin_areatest_station()
 	set category = "Mapping"
@@ -777,6 +795,13 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	dellog += "</ol>"
 
 	usr << browse(dellog.Join(), "window=dellog")
+
+/client/proc/cmd_display_overlay_log()
+	set category = "Debug"
+	set name = "Display overlay Log"
+	set desc = "Display SSoverlays log of everything that's passed through it."
+
+	render_stats(SSoverlays.stats, src)
 
 /client/proc/cmd_display_init_log()
 	set category = "Debug"

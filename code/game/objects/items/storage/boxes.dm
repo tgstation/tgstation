@@ -611,8 +611,7 @@
 obj/item/storage/box/clown
 	name = "clown box"
 	desc = "A colorful cardboard box for the clown"
-	icon_state = "clownbox"
-	illustration = null
+	illustration = "clown"
 
 /obj/item/storage/box/clown/attackby(obj/item/I, mob/user, params)
 	if((istype(I, /obj/item/bodypart/l_arm/robot)) || (istype(I, /obj/item/bodypart/r_arm/robot)))
