@@ -15,4 +15,5 @@
 
 /datum/weakref/proc/resolve()
 	var/datum/D = locate(reference)
-	return D.weak_reference == src? D : null
+	return (!QDELETED(D) && D.weak_reference == src) ? D : null
+

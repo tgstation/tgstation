@@ -106,43 +106,43 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/maintenance/department/chapel
 	name = "Chapel Maintenance"
-	icon_state = "fpmaint"
+	icon_state = "maint_chapel"
 
 /area/maintenance/department/chapel/monastery
 	name = "Monastery Maintenance"
-	icon_state = "fpmaint"
+	icon_state = "maint_monastery"
 
 /area/maintenance/department/crew_quarters/bar
 	name = "Bar Maintenance"
-	icon_state = "fsmaint"
+	icon_state = "maint_bar"
 
 /area/maintenance/department/crew_quarters/dorms
 	name = "Dormitory Maintenance"
-	icon_state = "fsmaint"
+	icon_state = "maint_dorms"
 
 /area/maintenance/department/crew_quarters/locker
 	name = "Locker Room Maintenance"
-	icon_state = "pmaint"
+	icon_state = "maint_locker"
 
 /area/maintenance/department/eva
 	name = "EVA Maintenance"
-	icon_state = "fpmaint"
+	icon_state = "maint_eva"
 
 /area/maintenance/department/electrical
 	name = "Electrical Maintenance"
-	icon_state = "yellow"
+	icon_state = "maint_electrical"
 
 /area/maintenance/department/engine/atmos
 	name = "Atmospherics Maintenance"
-	icon_state = "fpmaint"
+	icon_state = "maint_atmos"
 
 /area/maintenance/department/security
 	name = "Security Maintenance"
-	icon_state = "fpmaint"
+	icon_state = "maint_sec"
 
 /area/maintenance/department/security/brig
 	name = "Brig Maintenance"
-	icon_state = "fpmaint"
+	icon_state = "maint_brig"
 
 /area/maintenance/department/medical
 	name = "Medbay Maintenance"
@@ -154,19 +154,19 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/maintenance/department/science
 	name = "Science Maintenance"
-	icon_state = "asmaint"
+	icon_state = "maint_sci"
 
 /area/maintenance/department/cargo
 	name = "Cargo Maintenance"
-	icon_state = "apmaint"
+	icon_state = "maint_cargo"
 
 /area/maintenance/department/bridge
 	name = "Bridge Maintenance"
-	icon_state = "maintcentral"
+	icon_state = "maint_bridge"
 
 /area/maintenance/department/engine
 	name = "Engineering Maintenance"
-	icon_state = "amaint"
+	icon_state = "maint_engi"
 
 /area/maintenance/department/science/xenobiology
 	name = "Xenobiology Maintenance"
@@ -616,7 +616,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/crew_quarters/abandoned_gambling_den
 	name = "Abandoned Gambling Den"
-	icon_state = "bar"
+	icon_state = "abandoned_g_den"
+
+/area/crew_quarters/abandoned_gambling_den/secondary
+	icon_state = "abandoned_g_den_2"
 
 /area/crew_quarters/theatre
 	name = "Theatre"
@@ -874,7 +877,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/gateway
 	name = "Gateway"
-	icon_state = "teleporter"
+	icon_state = "gateway"
 	music = "signal"
 	ambientsounds = ENGINEERING
 
@@ -1051,33 +1054,41 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Security Checkpoint"
 	icon_state = "checkpoint1"
 
-/area/security/checkpoint/checkpoint2
-	name = "Security Checkpoint"
-	icon_state = "security"
+/area/security/checkpoint/auxiliary
+	icon_state = "checkpoint_aux"
+
+/area/security/checkpoint/tertiary
+	icon_state = "checkpoint_tert"
+
+/area/security/checkpoint/escape
+	icon_state = "checkpoint_esc"
 
 /area/security/checkpoint/supply
 	name = "Security Post - Cargo Bay"
-	icon_state = "checkpoint1"
+	icon_state = "checkpoint_supp"
 
 /area/security/checkpoint/engineering
 	name = "Security Post - Engineering"
-	icon_state = "checkpoint1"
+	icon_state = "checkpoint_engi"
 
 /area/security/checkpoint/medical
 	name = "Security Post - Medbay"
-	icon_state = "checkpoint1"
+	icon_state = "checkpoint_med"
 
 /area/security/checkpoint/science
 	name = "Security Post - Science"
-	icon_state = "checkpoint1"
+	icon_state = "checkpoint_sci"
 
 /area/security/checkpoint/science/research
 	name = "Security Post - Research Division"
-	icon_state = "checkpoint1"
+	icon_state = "checkpoint_res"
 
 /area/security/checkpoint/customs
 	name = "Customs"
-	icon_state = "bridge"
+	icon_state = "customs_point"
+
+/area/security/checkpoint/customs/auxiliary
+	icon_state = "customs_point_aux"
 
 /area/security/vacantoffice
 	name = "Vacant Office"

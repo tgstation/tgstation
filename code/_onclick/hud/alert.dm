@@ -407,16 +407,13 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 					textlist += "[i] Scripture: <b>[SSticker.scripture_states[i] ? "UNLOCKED":"LOCKED"]</b><br>"
 		var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
 		if(G)
-			var/time_info
+			var/time_info = G.get_arrival_time(FALSE)
 			var/time_name
 			if(G.seconds_until_activation)
-				time_info = G.seconds_until_activation
 				time_name = "until the Ark activates"
 			else if(G.grace_period)
-				time_info = G.grace_period
 				time_name = "of grace period remaining"
 			else if(G.progress_in_seconds)
-				time_info = GATEWAY_RATVAR_ARRIVAL - G.progress_in_seconds
 				time_name = "until the Ark finishes summoning"
 			if(time_info)
 				textlist += "<b>[time_info / 60] minutes</b> [time_name].<br>"

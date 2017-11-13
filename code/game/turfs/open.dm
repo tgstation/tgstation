@@ -355,3 +355,11 @@
 	if(wet_overlay)
 		cut_overlay(wet_overlay)
 
+
+/turf/open/rad_act(pulse_strength)
+	if (air.gases[/datum/gas/carbon_dioxide] && air.gases[/datum/gas/oxygen])
+		air.gases[/datum/gas/carbon_dioxide][MOLES]=max(air.gases[/datum/gas/carbon_dioxide][MOLES]-(pulse_strength/1000),0)
+		air.gases[/datum/gas/oxygen][MOLES]=max(air.gases[/datum/gas/oxygen][MOLES]-(pulse_strength/2000),0)
+		ASSERT_GAS(/datum/gas/pluoxium,air)
+		air.gases[/datum/gas/pluoxium][MOLES]+=(pulse_strength/4000)
+		air.garbage_collect()
