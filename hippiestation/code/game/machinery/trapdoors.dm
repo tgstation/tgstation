@@ -43,7 +43,6 @@
 
 /obj/machinery/disposal/trapdoor/Initialize(loc,var/obj/structure/disposalconstruct/make_from)
 	. = ..()
-	stored.ptype = DISP_END_CHUTE
 	trunk = locate() in loc
 	if(trunk)
 		trunk.linked = src

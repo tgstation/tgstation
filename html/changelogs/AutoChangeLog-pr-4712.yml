@@ -1,5 +1,0 @@
-author: "neetdev"
-delete-after: True
-changes: 
-  - rscadd: "Burpinate, a chem that makes you burp more and more the longer it's in your body."
-  - code_imp: "The recipe requires dr.gibbs which should prevent it conflicting with other recipes. The metabolism rate could be made faster but it requires a fair bit of chems to make it (kind of like chloral hydrate) so it's unlikely it could be abused as to lead to an obscene amount being pumped into the crew rapidly."

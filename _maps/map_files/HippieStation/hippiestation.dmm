@@ -61063,7 +61063,6 @@
 /area/crew_quarters/bar)
 "cDZ" = (
 /obj/structure/disposalpipe/segment{
-	base_icon_state = null;
 	dir = 1;
 	dpdir = 0;
 	icon_state = "pipe-c"
