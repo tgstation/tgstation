@@ -31,7 +31,7 @@
 	var/slowdown_air = 0
 	var/slowdown_brake = TRUE
 	var/flight = FALSE
-	var/flight_passflags = PASSTABLE
+	var/flight_passflags = PASSTABLE|PASSMOB
 	var/powersetting = 1
 	var/powersetting_high = 3
 	var/powersetting_low = 1
