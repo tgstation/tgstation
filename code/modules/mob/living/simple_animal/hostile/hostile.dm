@@ -81,9 +81,8 @@
 		EscapeConfinement()
 
 	if(AICanContinue(possible_targets))
-		if(!QDELETED(target)) // fix a runtime error, probably hacky
-			if(!targets_from.Adjacent(target)) // so the mob doesnt try to make a path when it can just hit the target
-				DestroyPathToTarget()
+		if(!QDELETED(target) && !targets_from.Adjacent(target))
+			DestroyPathToTarget()
 		if(!MoveToTarget(possible_targets))     //if we lose our target
 			if(AIShouldSleep(possible_targets))	// we try to acquire a new one
 				toggle_ai(AI_IDLE)			// otherwise we go idle
@@ -365,35 +364,29 @@
 /mob/living/simple_animal/hostile/proc/DestroyStructuresCycle(turf/T)
 	var/dir_to_target = get_dir(targets_from, get_cardinal_step_towards(targets_from, target))
 	var/list/dir_list = list(dir_to_target, turn(dir_to_target, 90), turn(dir_to_target, 270), turn(dir_to_target, 180))
-	cycle_loop:
-		for(var/dir in dir_list)
-			T = get_step(targets_from, dir)
-			for(var/a in T)
-				var/atom/A = a
-				if(is_type_in_typecache(A, environment_target_typecache) && !A.IsObscured())
-					A.attack_animal(src)
-					break cycle_loop
+	for(var/dir in dir_list)
+		T = get_step(targets_from, dir)
+		for(var/a in T)
+			var/atom/A = a
+			if(is_type_in_typecache(A, environment_target_typecache) && !A.IsObscured())
+				A.attack_animal(src)
+				return
+
 
 /mob/living/simple_animal/hostile/proc/DestroyPathToTarget()
-	if(environment_smash)
-		EscapeConfinement()
-		var/turf/T = get_cardinal_step_towards(targets_from, target)
-		if(T.Adjacent(targets_from))
-			if(environment_smash == ENVIRONMENT_SMASH_RWALLS)
-				if (iswallturf(T) || ismineralturf(T) || isreinforcedwallturf(T))
-					T.attack_animal(src)
-				else
-					DestroyStructuresCycle(T)
-			else if(environment_smash == ENVIRONMENT_SMASH_WALLS)
-				if (iswallturf(T) || ismineralturf(T))
-					if (!isreinforcedwallturf(T))
-						T.attack_animal(src)
-					else
-						DestroyStructuresCycle(T)
-				else
-					DestroyStructuresCycle(T)
+	var/turf/T = get_cardinal_step_towards(targets_from, target)
+		if(environment_smash == ENVIRONMENT_SMASH_RWALLS)
+			if (iswallturf(T) || ismineralturf(T) || isreinforcedwallturf(T))
+				T.attack_animal(src)
 			else
 				DestroyStructuresCycle(T)
+		else if(environment_smash == ENVIRONMENT_SMASH_WALLS)
+			if (iswallturf(T) || ismineralturf(T) && !isreinforcedwallturf(T))
+					T.attack_animal(src)
+			else
+				DestroyStructuresCycle(T)
+		else if (environment_smash == ENVIRONMENT_SMASH_STRUCTURES)
+			DestroyStructuresCycle(T)
 
 
 mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with megafauna destroying everything around them
