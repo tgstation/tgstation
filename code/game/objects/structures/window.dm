@@ -120,7 +120,7 @@
 		..(FULLTILE_WINDOW_DIR)
 
 /obj/structure/window/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && mover.checkpass(PASSGLASS))
+	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return 1
 	if(dir == FULLTILE_WINDOW_DIR)
 		return 0	//full tile window, you can't move into it!
@@ -139,7 +139,7 @@
 	return 1
 
 /obj/structure/window/CheckExit(atom/movable/O as mob|obj, target)
-	if(istype(O) && O.checkpass(PASSGLASS))
+	if(istype(O) && (O.pass_flags & PASSGLASS))
 		return 1
 	if(get_dir(O.loc, target) == dir)
 		return 0
