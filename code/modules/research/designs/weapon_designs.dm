@@ -134,16 +134,6 @@
 	build_path = /obj/item/grenade/chem_grenade/adv_release
 	category = list("Weapons")
 
-/datum/design/xray
-	name = "Xray Laser Gun"
-	desc = "Not quite as menacing as it sounds"
-	id = "xray"
-	req_tech = list("combat" = 7, "magnets" = 5, "biotech" = 5, "powerstorage" = 4)
-	build_type = PROTOLATHE
-	materials = list(MAT_GOLD = 5000, MAT_URANIUM = 4000, MAT_METAL = 5000, MAT_TITANIUM = 2000, MAT_BLUESPACE = 2000)
-	build_path = /obj/item/gun/energy/xray
-	category = list("Weapons")
-
 /datum/design/ioncarbine
 	name = "Ion Carbine"
 	desc = "How to dismantle a cyborg : The gun."
