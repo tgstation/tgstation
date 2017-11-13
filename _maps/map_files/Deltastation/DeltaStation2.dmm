@@ -21955,14 +21955,10 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "aWJ" = (
-/obj/structure/sink/kitchen{
-	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	name = "sink";
-	pixel_y = 28
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/structure/reagent_dispensers/cooking_oil,
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "aWK" = (
