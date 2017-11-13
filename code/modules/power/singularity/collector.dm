@@ -37,6 +37,8 @@
 			eject()
 		else
 			loaded_tank.air_contents.gases[/datum/gas/plasma][MOLES] -= 0.001*drainratio
+			ASSERT_GAS(/datum/gas/tritium,loaded_tank.air_contents)
+			loaded_tank.air_contents.gases[/datum/gas/tritium][MOLES] += 0.001*drainratio
 			loaded_tank.air_contents.garbage_collect()
 
 			var/power_produced = min(last_power, (last_power*RAD_COLLECTOR_STORED_OUT)+1000) //Produces at least 1000 watts if it has more than that stored
@@ -60,7 +62,6 @@
 		else
 			to_chat(user, "<span class='warning'>The controls are locked!</span>")
 			return
-..()
 
 /obj/machinery/power/rad_collector/can_be_unfasten_wrench(mob/user, silent)
 	if(loaded_tank)

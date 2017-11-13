@@ -14,6 +14,8 @@
 
 	var/valid_territory = TRUE // If it's a valid territory for gangs to claim
 	var/blob_allowed = TRUE // Does it count for blobs score? By default, all areas count.
+	var/clockwork_warp_allowed = TRUE // Can servants warp into this area from Reebe?
+	var/clockwork_warp_fail = "The structure there is too dense for warping to pierce. (This is normal in high-security areas.)"
 
 	var/eject = null
 
@@ -52,12 +54,7 @@
 
 	var/global/global_uid = 0
 	var/uid
-	var/list/ambientsounds = list('sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg',\
-									'sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg',\
-									'sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg',\
-									'sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg',\
-									'sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg',\
-									'sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg')
+	var/list/ambientsounds = GENERIC
 	flags_1 = CAN_BE_DIRTY_1
 
 	var/list/firedoors
@@ -105,7 +102,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	uid = ++global_uid
 	related = list(src)
 	map_name = name // Save the initial (the name set in the map) name of the area.
-
+	
 	if(requires_power)
 		luminosity = 0
 	else
@@ -123,12 +120,31 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 	. = ..()
 
-	power_change()		// all machines set to current power level, also updates icon
-
 	blend_mode = BLEND_MULTIPLY // Putting this in the constructor so that it stops the icons being screwed up in the map editor.
 
 	if(!IS_DYNAMIC_LIGHTING(src))
 		add_overlay(/obj/effect/fullbright)
+
+	if(contents.len)
+		var/list/areas_in_z = SSmapping.areas_in_z
+		var/z
+		for(var/i in 1 to contents.len)
+			var/atom/thing = contents[i]
+			if(!thing)
+				continue
+			z = thing.z
+			break
+		if(!z)
+			WARNING("No z found for [src]")
+			return
+		if(!areas_in_z["[z]"])
+			areas_in_z["[z]"] = list()
+		areas_in_z["[z]"] += src
+
+	return INITIALIZE_HINT_LATELOAD
+
+/area/LateInitialize()
+	power_change()		// all machines set to current power level, also updates icon
 
 /area/Destroy()
 	STOP_PROCESSING(SSobj, src)

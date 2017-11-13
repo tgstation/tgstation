@@ -299,7 +299,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 		if (!lentext(shorttype))
 			shorttype = "/"
 
-		.["[D]([shorttype])\ref[D]#[i]"] = D
+		.["[D]([shorttype])[REF(D)]#[i]"] = D
 
 /client/proc/mod_list_add_ass(atom/O) //hehe
 
@@ -416,7 +416,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 	if (index == null)
 		return
 	var/assoc = 0
-	var/prompt = alert(src, "Do you want to edit the key or it's assigned value?", "Associated List", "Key", "Assigned Value", "Cancel")
+	var/prompt = alert(src, "Do you want to edit the key or its assigned value?", "Associated List", "Key", "Assigned Value", "Cancel")
 	if (prompt == "Cancel")
 		return
 	if (prompt == "Assigned Value")
@@ -610,8 +610,8 @@ GLOBAL_PROTECT(VVpixelmovement)
 	if (O.vv_edit_var(variable, var_new) == FALSE)
 		to_chat(src, "Your edit was rejected by the object.")
 		return
-	log_world("### VarEdit by [src]: [O.type] [variable]=[html_encode("[var_new]")]")
-	log_admin("[key_name(src)] modified [original_name]'s [variable] to [var_new]")
-	var/msg = "[key_name_admin(src)] modified [original_name]'s [variable] to [var_new]"
+	log_world("### VarEdit by [key_name(src)]: [O.type] [variable]=[var_value] => [var_new]")
+	log_admin("[key_name(src)] modified [original_name]'s [variable] to from [html_encode("[var_value]")] to [html_encode("[var_new]")]")
+	var/msg = "[key_name_admin(src)] modified [original_name]'s [variable] from [var_value] to [var_new]"
 	message_admins(msg)
 	admin_ticket_log(O, msg)

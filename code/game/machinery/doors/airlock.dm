@@ -118,6 +118,15 @@
 		max_integrity = normal_integrity
 	if(damage_deflection == AIRLOCK_DAMAGE_DEFLECTION_N && security_level > AIRLOCK_SECURITY_METAL)
 		damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_R
+	prepare_huds()
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_to_hud(src)
+	diag_hud_set_electrified()
+
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/door/airlock/LateInitialize()
+	. = ..()
 	if(abandoned)
 		var/outcome = rand(1,100)
 		switch(outcome)
@@ -136,10 +145,6 @@
 				welded = TRUE
 			if(24 to 30)
 				panel_open = TRUE
-	prepare_huds()
-	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
-	diag_hud.add_to_hud(src)
-	diag_hud_set_electrified()
 
 	update_icon()
 
@@ -204,23 +209,27 @@
 /obj/machinery/door/airlock/narsie_act()
 	var/turf/T = get_turf(src)
 	var/runed = prob(20)
+	var/obj/machinery/door/airlock/cult/A
 	if(glass)
 		if(runed)
-			new/obj/machinery/door/airlock/cult/glass(T)
+			A = new/obj/machinery/door/airlock/cult/glass(T)
 		else
-			new/obj/machinery/door/airlock/cult/unruned/glass(T)
+			A = new/obj/machinery/door/airlock/cult/unruned/glass(T)
 	else
 		if(runed)
-			new/obj/machinery/door/airlock/cult(T)
+			A = new/obj/machinery/door/airlock/cult(T)
 		else
-			new/obj/machinery/door/airlock/cult/unruned(T)
+			A = new/obj/machinery/door/airlock/cult/unruned(T)
+	A.name = name
 	qdel(src)
 
 /obj/machinery/door/airlock/ratvar_act() //Airlocks become pinion airlocks that only allow servants
+	var/obj/machinery/door/airlock/clockwork/A
 	if(glass)
-		new/obj/machinery/door/airlock/clockwork/brass(get_turf(src))
+		A = new/obj/machinery/door/airlock/clockwork/brass(get_turf(src))
 	else
-		new/obj/machinery/door/airlock/clockwork(get_turf(src))
+		A = new/obj/machinery/door/airlock/clockwork(get_turf(src))
+	A.name = name
 	qdel(src)
 
 /obj/machinery/door/airlock/Destroy()
@@ -632,23 +641,23 @@
 	if(wires.is_cut(WIRE_IDSCAN))
 		t1 += text("IdScan wire is cut.<br>\n")
 	else if(src.aiDisabledIdScanner)
-		t1 += text("IdScan disabled. <A href='?src=\ref[];aiEnable=1'>Enable?</a><br>\n", src)
+		t1 += "IdScan disabled. <A href='?src=[REF(src)];aiEnable=1'>Enable?</a><br>\n"
 	else
-		t1 += text("IdScan enabled. <A href='?src=\ref[];aiDisable=1'>Disable?</a><br>\n", src)
+		t1 += "IdScan enabled. <A href='?src=[REF(src)];aiDisable=1'>Disable?</a><br>\n"
 
 	if(src.emergency)
-		t1 += text("Emergency Access Override is enabled. <A href='?src=\ref[];aiDisable=11'>Disable?</a><br>\n", src)
+		t1 += "Emergency Access Override is enabled. <A href='?src=[REF(src)];aiDisable=11'>Disable?</a><br>\n"
 	else
-		t1 += text("Emergency Access Override is disabled. <A href='?src=\ref[];aiEnable=11'>Enable?</a><br>\n", src)
+		t1 += "Emergency Access Override is disabled. <A href='?src=[REF(src)];aiEnable=11'>Enable?</a><br>\n"
 
 	if(wires.is_cut(WIRE_POWER1))
 		t1 += text("Main Power Input wire is cut.<br>\n")
 	if(wires.is_cut(WIRE_POWER2))
 		t1 += text("Main Power Output wire is cut.<br>\n")
 	if(!secondsMainPowerLost)
-		t1 += text("<A href='?src=\ref[];aiDisable=2'>Temporarily disrupt main power?</a>.<br>\n", src)
+		t1 += "<A href='?src=[REF(src)];aiDisable=2'>Temporarily disrupt main power?</a>.<br>\n"
 	if(!secondsBackupPowerLost)
-		t1 += text("<A href='?src=\ref[];aiDisable=3'>Temporarily disrupt backup power?</a>.<br>\n", src)
+		t1 += "<A href='?src=[REF(src)];aiDisable=3'>Temporarily disrupt backup power?</a>.<br>\n"
 
 	if(wires.is_cut(WIRE_BACKUP1))
 		t1 += text("Backup Power Input wire is cut.<br>\n")
@@ -658,53 +667,53 @@
 	if(wires.is_cut(WIRE_BOLTS))
 		t1 += text("Door bolt drop wire is cut.<br>\n")
 	else if(!src.locked)
-		t1 += text("Door bolts are up. <A href='?src=\ref[];aiDisable=4'>Drop them?</a><br>\n", src)
+		t1 += "Door bolts are up. <A href='?src=[REF(src)];aiDisable=4'>Drop them?</a><br>\n"
 	else
 		t1 += text("Door bolts are down.")
 		if(src.hasPower())
-			t1 += text(" <A href='?src=\ref[];aiEnable=4'>Raise?</a><br>\n", src)
+			t1 += " <A href='?src=[REF(src)];aiEnable=4'>Raise?</a><br>\n"
 		else
 			t1 += text(" Cannot raise door bolts due to power failure.<br>\n")
 
 	if(wires.is_cut(WIRE_LIGHT))
 		t1 += text("Door bolt lights wire is cut.<br>\n")
 	else if(!src.lights)
-		t1 += text("Door bolt lights are off. <A href='?src=\ref[];aiEnable=10'>Enable?</a><br>\n", src)
+		t1 += "Door bolt lights are off. <A href='?src=[REF(src)];aiEnable=10'>Enable?</a><br>\n"
 	else
-		t1 += text("Door bolt lights are on. <A href='?src=\ref[];aiDisable=10'>Disable?</a><br>\n", src)
+		t1 += "Door bolt lights are on. <A href='?src=[REF(src)];aiDisable=10'>Disable?</a><br>\n"
 
 	if(wires.is_cut(WIRE_SHOCK))
 		t1 += text("Electrification wire is cut.<br>\n")
 	if(secondsElectrified==ELECTRIFIED_PERMANENT)
-		t1 += text("Door is electrified indefinitely. <A href='?src=\ref[];aiDisable=5'>Un-electrify it?</a><br>\n", src)
+		t1 += "Door is electrified indefinitely. <A href='?src=[REF(src)];aiDisable=5'>Un-electrify it?</a><br>\n"
 	else if(secondsElectrified>NOT_ELECTRIFIED)
-		t1 += text("Door is electrified temporarily ([] seconds). <A href='?src=\ref[];aiDisable=5'>Un-electrify it?</a><br>\n", secondsElectrified, src)
+		t1 += text("Door is electrified temporarily ([] seconds). <A href='?src=[REF(src)];aiDisable=5'>Un-electrify it?</a><br>\n", secondsElectrified)
 	else
-		t1 += text("Door is not electrified. <A href='?src=\ref[];aiEnable=5'>Electrify it for 30 seconds?</a> Or, <A href='?src=\ref[];aiEnable=6'>Electrify it indefinitely until someone cancels the electrification?</a><br>\n", src, src)
+		t1 += "Door is not electrified. <A href='?src=[REF(src)];aiEnable=5'>Electrify it for 30 seconds?</a> Or, <A href='?src=[REF(src)];aiEnable=6'>Electrify it indefinitely until someone cancels the electrification?</a><br>\n"
 
 	if(wires.is_cut(WIRE_SAFETY))
 		t1 += text("Door force sensors not responding.</a><br>\n")
 	else if(src.safe)
-		t1 += text("Door safeties operating normally.  <A href='?src=\ref[];aiDisable=8'>Override?</a><br>\n",src)
+		t1 += "Door safeties operating normally.  <A href='?src=[REF(src)];aiDisable=8'>Override?</a><br>\n"
 	else
-		t1 += text("Danger.  Door safeties disabled.  <A href='?src=\ref[];aiEnable=8'>Restore?</a><br>\n",src)
+		t1 += "Danger.  Door safeties disabled.  <A href='?src=[REF(src)];aiEnable=8'>Restore?</a><br>\n"
 
 	if(wires.is_cut(WIRE_TIMING))
 		t1 += text("Door timing circuitry not responding.</a><br>\n")
 	else if(src.normalspeed)
-		t1 += text("Door timing circuitry operating normally.  <A href='?src=\ref[];aiDisable=9'>Override?</a><br>\n",src)
+		t1 += "Door timing circuitry operating normally.  <A href='?src=[REF(src)];aiDisable=9'>Override?</a><br>\n"
 	else
-		t1 += text("Warning.  Door timing circuitry operating abnormally.  <A href='?src=\ref[];aiEnable=9'>Restore?</a><br>\n",src)
+		t1 += "Warning.  Door timing circuitry operating abnormally.  <A href='?src=[REF(src)];aiEnable=9'>Restore?</a><br>\n"
 
 	if(src.welded)
 		t1 += text("Door appears to have been welded shut.<br>\n")
 	else if(!src.locked)
 		if(src.density)
-			t1 += text("<A href='?src=\ref[];aiEnable=7'>Open door</a><br>\n", src)
+			t1 += "<A href='?src=[REF(src)];aiEnable=7'>Open door</a><br>\n"
 		else
-			t1 += text("<A href='?src=\ref[];aiDisable=7'>Close door</a><br>\n", src)
+			t1 += "<A href='?src=[REF(src)];aiDisable=7'>Close door</a><br>\n"
 
-	t1 += text("<p><a href='?src=\ref[];close=1'>Close</a></p>\n", src)
+	t1 += "<p><a href='?src=[REF(src)];close=1'>Close</a></p>\n"
 	user << browse(t1, "window=airlock")
 	onclose(user, "airlock")
 

@@ -320,6 +320,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		forceMove(summoner.loc)
 		new /obj/effect/temp_visual/guardian/phase(loc)
 		cooldown = world.time + 10
+		reset_perspective()
 		return TRUE
 	return FALSE
 
@@ -484,7 +485,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	if(guardians.len && !allowmultiple)
 		to_chat(user, "<span class='holoparasite'>You already have a [mob_name]!</span>")
 		return
-	if(user.mind && user.mind.changeling && !allowling)
+	if(user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling) && !allowling)
 		to_chat(user, "[ling_failure]")
 		return
 	if(used == TRUE)

@@ -117,9 +117,7 @@
 /area/shuttle/abandoned)
 "al" = (
 /obj/structure/table,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
 /obj/item/stock_parts/cell/high{
 	charge = 100;
 	maxcharge = 15000;
@@ -299,7 +297,7 @@
 	name = "dust"
 	},
 /obj/effect/decal/remains/human{
-	desc = "They look like human remains, and have clearly been gnawed at.";
+	desc = "They look like human remains, and have clearly been gnawed at."
 	},
 /obj/item/gun/energy/laser/retro,
 /turf/open/floor/mineral/titanium/blue,
@@ -368,7 +366,7 @@
 	name = "dust"
 	},
 /obj/effect/decal/remains/human{
-	desc = "They look like human remains, and have clearly been gnawed at.";
+	desc = "They look like human remains, and have clearly been gnawed at."
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -435,7 +433,7 @@
 	},
 /obj/item/soap/nanotrasen,
 /obj/effect/decal/remains/human{
-	desc = "They look like human remains, and have clearly been gnawed at.";
+	desc = "They look like human remains, and have clearly been gnawed at."
 	},
 /obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/floor/mineral/titanium,
@@ -478,14 +476,11 @@
 /area/shuttle/abandoned)
 "aM" = (
 /obj/structure/table,
-/obj/item/stack/sheet/glass{
-	amount = 50;
+/obj/item/stack/sheet/glass/fifty{
 	pixel_x = -2;
 	pixel_y = 2
 	},
-/obj/item/stack/rods{
-	amount = 50
-	},
+/obj/item/stack/rods/fifty,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -494,11 +489,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aN" = (
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9;
-	pixel_y = 2
-	},
+/obj/structure/rack,
 /obj/item/storage/toolbox/electrical{
 	pixel_x = 1;
 	pixel_y = 6
@@ -938,7 +929,7 @@
 	name = "dust"
 	},
 /obj/effect/decal/remains/human{
-	desc = "They look like human remains, and have clearly been gnawed at.";
+	desc = "They look like human remains, and have clearly been gnawed at."
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -1057,7 +1048,7 @@
 	name = "\improper damaged CentCom hat"
 	},
 /obj/effect/decal/remains/human{
-	desc = "They look like human remains, and have clearly been gnawed at.";
+	desc = "They look like human remains, and have clearly been gnawed at."
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -1460,7 +1451,7 @@
 	name = "dust"
 	},
 /obj/effect/decal/remains/xeno{
-	desc = "A pile of remains that look vaguely humanoid. The skull is abnormally elongated, and there are burns through some of the other bones.";
+	desc = "A pile of remains that look vaguely humanoid. The skull is abnormally elongated, and there are burns through some of the other bones."
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)

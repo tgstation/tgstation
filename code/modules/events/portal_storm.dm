@@ -66,7 +66,7 @@
 
 	next_boss_spawn = startWhen + Ceiling(2 * number_of_hostiles / number_of_bosses)
 
-/datum/round_event/portal_storm/announce()
+/datum/round_event/portal_storm/announce(fake)
 	set waitfor = 0
 	sound_to_playing_players('sound/magic/lightning_chargeup.ogg')
 	sleep(80)

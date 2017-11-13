@@ -1,0 +1,8 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - rscadd: "Deep fryers now have sound."
+  - tweak: "Deep fryers now use cooking oil, a specialized reagent that becomes highly damaging at high temperatures. You can get it from grinding soybeans and meat."
+  - tweak: "Deep fryers now become more efficient with higher-level micro lasers, using less oil and frying faster."
+  - tweak: "Deep fryers now slowly use oil as it fries objects, instead of all at once."
+  - bugfix: "You can now correctly refill deep fryers with syringes and pills."

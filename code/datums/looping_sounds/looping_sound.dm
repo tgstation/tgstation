@@ -9,11 +9,12 @@
 
 	end_sound		(soundfile)				The sound played after the main loop has concluded
 
+	range_modifier (num)			Modifier in max range of sounds played by the sound loop.
 	chance			(num)					Chance per loop to play a mid_sound
 	volume			(num)					Sound output volume
 	muted			(bool)					Private. Used to stop the sound loop.
 	max_loops		(num)					The max amount of loops to run for.
-	direct			(bool)					If true plays directly to provided atoms instead of from them
+	direct			(bool)				If true plays directly to provided atoms instead of from them
 */
 /datum/looping_sound
 	var/list/atom/output_atoms
@@ -22,6 +23,7 @@
 	var/start_sound
 	var/start_length
 	var/end_sound
+	var/range_modifier
 	var/chance
 	var/volume = 100
 	var/muted = TRUE
@@ -78,7 +80,7 @@
 		if(direct)
 			SEND_SOUND(thing, S)
 		else
-			playsound(thing, S, volume)
+			playsound(thing, S, volume, null, range_modifier)
 
 /datum/looping_sound/proc/get_sound(looped, _mid_sounds)
 	if(!_mid_sounds)

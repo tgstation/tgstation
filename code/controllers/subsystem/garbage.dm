@@ -164,7 +164,7 @@ SUBSYSTEM_DEF(garbage)
 				#endif
 				var/type = D.type
 				var/datum/qdel_item/I = items[type]
-				testing("GC: -- \ref[D] | [type] was unable to be GC'd --")
+				testing("GC: -- \ref[src] | [type] was unable to be GC'd --")
 				I.failures++
 			if (GC_QUEUE_HARDDELETE)
 				HardDelete(D)
@@ -263,7 +263,7 @@ SUBSYSTEM_DEF(garbage)
 
 // Should be treated as a replacement for the 'del' keyword.
 // Datums passed to this will be given a chance to clean up references to allow the GC to collect them.
-/proc/qdel(datum/D, force=FALSE)
+/proc/qdel(datum/D, force=FALSE, ...)
 	if(!istype(D))
 		del(D)
 		return
@@ -278,7 +278,7 @@ SUBSYSTEM_DEF(garbage)
 		D.gc_destroyed = GC_CURRENTLY_BEING_QDELETED
 		var/start_time = world.time
 		var/start_tick = world.tick_usage
-		var/hint = D.Destroy(force) // Let our friend know they're about to get fucked up.
+		var/hint = D.Destroy(arglist(args.Copy(2))) // Let our friend know they're about to get fucked up.
 		if(world.time != start_time)
 			I.slept_destroy++
 		else

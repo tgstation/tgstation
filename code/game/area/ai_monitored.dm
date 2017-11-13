@@ -1,7 +1,8 @@
 /area/ai_monitored
 	name = "AI Monitored Area"
+	clockwork_warp_allowed = FALSE
 	var/list/obj/machinery/camera/motioncameras = list()
-	var/list/motionTargets = list()
+	var/list/datum/weakref/motionTargets = list()
 
 /area/ai_monitored/Initialize(mapload)
 	. = ..()
@@ -26,5 +27,5 @@
 	if (ismob(O) && motioncameras.len)
 		for(var/X in motioncameras)
 			var/obj/machinery/camera/cam = X
-			cam.lostTarget(O)
+			cam.lostTargetRef(WEAKREF(O))
 			return

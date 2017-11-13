@@ -97,7 +97,6 @@
 		if(ismonkey(occupant)) // Monkey
 			occupant_overlay = image(CRYOMOBS, "monkey")
 			occupant_overlay.copy_overlays(occupant)
-
 		else if(isalienadult(occupant))
 			if(isalienroyal(occupant)) // Queen and prae
 				occupant_overlay = image(CRYOMOBS, "alienq")
@@ -109,6 +108,9 @@
 				occupant_overlay = image(CRYOMOBS, "aliend")
 
 		else if(ishuman(occupant) || islarva(occupant) || (isanimal(occupant) && !ismegafauna(occupant))) // Mobs that are smaller than cryotube
+			occupant_overlay = image(occupant.icon, occupant.icon_state)
+
+		if(ishuman(occupant) || islarva(occupant) || (isanimal(occupant) && !ismegafauna(occupant))) // Mobs that are smaller than cryotube
 			occupant_overlay = image(occupant.icon, occupant.icon_state)
 			occupant_overlay.copy_overlays(occupant)
 
@@ -132,7 +134,7 @@
 		add_overlay("cover-on")
 	else
 		icon_state = "pod-off"
-		add_overlay("cover-off")
+    add_overlay("cover-off")
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/proc/run_anim(anim_up, image/occupant_overlay)
 	if(!on || !occupant || !is_operational())

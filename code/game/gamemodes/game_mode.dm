@@ -160,7 +160,7 @@
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		replacementmode.restricted_jobs += "Assistant"
 
-	message_admins("The roundtype will be converted. If you have other plans for the station or feel the station is too messed up to inhabit <A HREF='?_src_=holder;[HrefToken()];toggle_midround_antag=\ref[usr]'>stop the creation of antags</A> or <A HREF='?_src_=holder;[HrefToken()];end_round=\ref[usr]'>end the round now</A>.")
+	message_admins("The roundtype will be converted. If you have other plans for the station or feel the station is too messed up to inhabit <A HREF='?_src_=holder;[HrefToken()];toggle_midround_antag=[REF(usr)]'>stop the creation of antags</A> or <A HREF='?_src_=holder;[HrefToken()];end_round=[REF(usr)]'>end the round now</A>.")
 
 	. = 1
 	sleep(rand(600,1800))
@@ -173,7 +173,8 @@
 		round_converted = 0
 		return 1
 	for(var/mob/living/carbon/human/H in antag_candidates)
-		replacementmode.make_antag_chance(H)
+		if(H.client)
+			replacementmode.make_antag_chance(H)
 	round_converted = 2
 	message_admins("-- IMPORTANT: The roundtype has been converted to [replacementmode.name], antagonists may have been created! --")
 
@@ -463,8 +464,10 @@
 			text += " <span class='boldannounce'>died</span>"
 		else
 			text += " <span class='greenannounce'>survived</span>"
-		if(fleecheck && (!(ply.current.z in GLOB.station_z_levels)))
-			text += " while <span class='boldannounce'>fleeing the station</span>"
+		if(fleecheck)
+			var/turf/T = get_turf(ply.current)
+			if(!T || !(T.z in GLOB.station_z_levels))
+				text += " while <span class='boldannounce'>fleeing the station</span>"
 		if(ply.current.real_name != ply.name)
 			text += " as <b>[ply.current.real_name]</b>"
 	else

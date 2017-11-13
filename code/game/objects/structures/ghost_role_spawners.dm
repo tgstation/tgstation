@@ -123,10 +123,10 @@
 	golems, so that no golem may ever be forced to serve again.</b>"
 
 /obj/effect/mob_spawn/human/golem/Initialize(mapload, datum/species/golem/species = null, mob/creator = null)
-	. = ..()
-	if(species)
+	if(species) //spawners list uses object name to register so this goes before ..()
 		name += " ([initial(species.prefix)])"
 		mob_species = species
+	. = ..()
 	var/area/A = get_area(src)
 	if(!mapload && A)
 		notify_ghosts("\A [initial(species.prefix)] golem shell has been completed in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
@@ -169,7 +169,8 @@
 			return
 		log_game("[user.ckey] golem-swapped into [src]")
 		user.visible_message("<span class='notice'>A faint light leaves [user], moving to [src] and animating it!</span>","<span class='notice'>You leave your old body behind, and transfer into [src]!</span>")
-		create(ckey = user.ckey, flavour = FALSE, name = user.real_name)
+		show_flavour = FALSE
+		create(ckey = user.ckey,name = user.real_name)
 		user.death()
 		return
 	..()
@@ -317,10 +318,10 @@
 
 /obj/effect/mob_spawn/human/hotel_staff/security
 	name = "hotel security sleeper"
-	mob_name = "hotel security memeber"
+	mob_name = "hotel security member"
 	outfit = /datum/outfit/hotelstaff/security
-	flavour_text = "You are a peacekeeper assigned to this hotel to protect the intrests of the company while keeping the peace between \
-		guests and the staff.Do <font size=6><b>NOT</b></font> leave the hotel, as that is grounds for contract termination."
+	flavour_text = "You are a peacekeeper assigned to this hotel to protect the interests of the company while keeping the peace between \
+		guests and the staff. Do <font size=6><b>NOT</b></font> leave the hotel, as that is grounds for contract termination."
 	objectives = "Do not leave your assigned hotel. Try and keep the peace between staff and guests, non-lethal force heavily advised if possible."
 
 /datum/outfit/hotelstaff/security
@@ -527,3 +528,44 @@
 /obj/effect/mob_spawn/human/oldsci/Destroy()
 	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
 	return ..()
+
+
+#define PIRATE_NAMES_FILE "pirates.json"
+
+/obj/effect/mob_spawn/human/pirate
+	name = "space pirate sleeper"
+	desc = "A cryo sleeper smelling faintly of rum."
+	random = TRUE
+	icon = 'icons/obj/cryogenic2.dmi'
+	icon_state = "sleeper"
+	mob_name = "a space pirate"
+	mob_species = /datum/species/human
+	outfit = /datum/outfit/pirate/space
+	roundstart = FALSE
+	death = FALSE
+	anchored = TRUE
+	density = FALSE
+	show_flavour = FALSE //Flavour only exists for spawners menu
+	flavour_text = "<font size=3><b>Y</b></font><b>ou are a space pirate. The station refused to pay for your protection, protect the ship, siphon the credits from the station and raid it for even more loot.</b>"
+	assignedrole = "Space Pirate"
+	var/rank = "Mate"
+
+/obj/effect/mob_spawn/human/pirate/special(mob/living/new_spawn)
+	new_spawn.fully_replace_character_name(new_spawn.real_name,generate_pirate_name())
+	new_spawn.mind.add_antag_datum(/datum/antagonist/pirate)
+
+/obj/effect/mob_spawn/human/pirate/proc/generate_pirate_name()
+	var/beggings = strings(PIRATE_NAMES_FILE, "beginnings")
+	var/endings = strings(PIRATE_NAMES_FILE, "endings")
+	return "[rank] [pick(beggings)][pick(endings)]"
+
+/obj/effect/mob_spawn/human/pirate/Destroy()
+	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
+	return ..()
+	
+/obj/effect/mob_spawn/human/pirate/captain
+	rank = "Captain"
+	outfit = /datum/outfit/pirate/space/captain
+
+/obj/effect/mob_spawn/human/pirate/gunner
+	rank = "Gunner"

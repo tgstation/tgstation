@@ -19,7 +19,7 @@
 		new /mob/living/simple_animal/parrot/Poly/ghost(Poly.loc)
 		qdel(Poly)
 
-/datum/round_event/spooky/announce()
+/datum/round_event/spooky/announce(fake)
 	priority_announce(pick("RATTLE ME BONES!","THE RIDE NEVER ENDS!", "A SKELETON POPS OUT!", "SPOOKY SCARY SKELETONS!", "CREWMEMBERS BEWARE, YOU'RE IN FOR A SCARE!") , "THE CALL IS COMING FROM INSIDE THE HOUSE")
 
 //spooky foods (you can't actually make these when it's not halloween)

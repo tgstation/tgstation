@@ -14,12 +14,13 @@
 	var/obj/item/tank/bombtank = null //the second part of the bomb is a plasma tank
 	origin_tech = "materials=1;engineering=1"
 
+
 /obj/item/device/onetankbomb/examine(mob/user)
-	..()
-	user.examinate(bombtank)
+	bombtank.examine(user)
 
 /obj/item/device/onetankbomb/update_icon()
 	if(bombtank)
+		icon = bombtank.icon
 		icon_state = bombtank.icon_state
 	if(bombassembly)
 		add_overlay(bombassembly.icon_state)
@@ -34,11 +35,11 @@
 
 		to_chat(user, "<span class='notice'>You disassemble [src].</span>")
 
-		bombassembly.forceMove(user.drop_location())
+		bombassembly.forceMove(drop_location())
 		bombassembly.master = null
 		bombassembly = null
 
-		bombtank.forceMove(user.drop_location())
+		bombtank.forceMove(drop_location())
 		bombtank.master = null
 		bombtank = null
 
@@ -80,26 +81,35 @@
 
 // ---------- Procs below are for tanks that are used exclusively in 1-tank bombs ----------
 
-/obj/item/tank/proc/bomb_assemble(W,user)	//Bomb assembly proc. This turns assembly+tank into a bomb
-	var/obj/item/device/assembly_holder/S = W
-	var/mob/M = user
-	if(isigniter(S.a_left) == isigniter(S.a_right))		//Check if either part of the assembly has an igniter, but if both parts are igniters, then fuck it
-		return
-	if(!M.temporarilyRemoveItemFromInventory(src))			//Remove the assembly from your hands
+//Bomb assembly proc. This turns assembly+tank into a bomb
+/obj/item/tank/proc/bomb_assemble(obj/item/device/assembly_holder/assembly, mob/living/user)
+	//Check if either part of the assembly has an igniter, but if both parts are igniters, then fuck it
+	if(isigniter(assembly.a_left) == isigniter(assembly.a_right))
 		return
 
-	var/obj/item/device/onetankbomb/R = new
+	if((src in user.get_equipped_items()) && !user.canUnEquip(src))
+		to_chat(user, "<span class='warning'>[src] is stuck to you!</span>")
+		return
 
-	M.put_in_hands(R)		//Equips the bomb if possible, or puts it on the floor.
+	if(!user.canUnEquip(assembly))
+		to_chat(user, "<span class='warning'>[assembly] is stuck to your hand!</span>")
+		return
 
-	R.bombassembly = S	//Tell the bomb about its assembly part
-	S.master = R		//Tell the assembly about its new owner
-	S.forceMove(R)			//Move the assembly out of the fucking way
+	var/obj/item/device/onetankbomb/bomb = new
+	user.transferItemToLoc(src, bomb)
+	user.transferItemToLoc(assembly, bomb)
 
-	R.bombtank = src	//Same for tank
-	master = R
-	forceMove(R)
-	R.update_icon()
+	bomb.bombassembly = assembly	//Tell the bomb about its assembly part
+	assembly.master = bomb			//Tell the assembly about its new owner
+
+	bomb.bombtank = src	//Same for tank
+	master = bomb
+
+	forceMove(bomb)
+	bomb.update_icon()
+
+	user.put_in_hands(bomb)		//Equips the bomb if possible, or puts it on the floor.
+	to_chat(user, "<span class='notice'>You attach [assembly] to [src].</span>")
 	return
 
 /obj/item/tank/proc/ignite()	//This happens when a bomb is told to explode
