@@ -93,6 +93,7 @@
 	taste_description = "oil"
 	nutriment_factor = 7 * REAGENTS_METABOLISM //Not very healthy on its own
 	metabolization_rate = 10 * REAGENTS_METABOLISM
+	healthiness = -0.2 //Deep fried food is pretty unhealthy
 	var/fry_temperature = 450 //Around ~350 F (117 C) which deep fryers operate around in the real world
 	var/boiling //Used in mob life to determine if the oil kills, and only on touch application
 
@@ -678,11 +679,3 @@
 		M.adjustFireLoss(-1*REM, 0)
 		. = TRUE
 	..()
-
-/datum/reagent/consumable/grease
-	name = "Grease"
-	id = "grease"
-	description = "Pure brown grease found in fried foods."
-	color = "#6E5035"
-	taste_description = "grease"
-	healthiness = -0.15
