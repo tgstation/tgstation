@@ -469,13 +469,17 @@
 				found = TRUE
 				break
 
-			if(found)
-				text += "<a href='?src=[REF(src)];monkey=healthy'>healthy</a> | <b>INFECTED</b> | <a href='?src=[REF(src)];monkey=human'>human</a> | other"
+			var/isLeader = (src in SSticker.mode.ape_leaders)
+
+			if(isLeader)
+				text += "<b>HEALTHY</b> | <a href='?src=[REF(src)];monkey=infected'>infected</a> <b>LEADER</b> | <a href='?src=[REF(src)];monkey=human'>human</a> | other"
+			else if(found)
+				text += "<a href='?src=[REF(src)];monkey=healthy'>healthy</a> | <b>INFECTED</b> | <a href='?src=[REF(src)];monkey=leader'>leader</a> | <a href='?src=[REF(src)];monkey=human'>human</a> | other"
 			else
-				text += "<b>HEALTHY</b> | <a href='?src=[REF(src)];monkey=infected'>infected</a> | <a href='?src=[REF(src)];monkey=human'>human</a> | other"
+				text += "<b>HEALTHY</b> | <a href='?src=[REF(src)];monkey=infected'>infected</a> | <a href='?src=[REF(src)];monkey=leader'>leader</a> | <a href='?src=[REF(src)];monkey=human'>human</a> | other"
 
 		else
-			text += "healthy | infected | human | <b>OTHER</b>"
+			text += "healthy | infected | leader | human | <b>OTHER</b>"
 
 		if(current && current.client && (ROLE_MONKEY in current.client.prefs.be_special))
 			text += " | Enabled in Prefs"
@@ -1234,11 +1238,16 @@
 						for(var/thing in M.viruses)
 							var/datum/disease/D = thing
 							D.cure(0)
+			if("leader")
+				if(check_rights(R_ADMIN, 0))
+					add_monkey_leader(src)
+					log_admin("[key_name(usr)] made [key_name(current)] a monkey leader!")
+					message_admins("[key_name(usr)] made [key_name(current)] a monkey leader!")
 			if("infected")
 				if (check_rights(R_ADMIN, 0))
 					var/mob/living/carbon/human/H = current
 					var/mob/living/carbon/monkey/M = current
-					SSticker.mode.add_monkey(src)
+					add_monkey(src)
 					if (istype(H))
 						log_admin("[key_name(usr)] attempting to monkeyize and infect [key_name(current)]")
 						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to monkeyize and infect [key_name_admin(current)]</span>")
