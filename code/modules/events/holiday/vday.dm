@@ -61,7 +61,7 @@
 	to_chat(lover, "<span class='warning'><B>You're on a date with [date]! Protect them at all costs. This takes priority over all other loyalties.</B></span>")
 
 
-/datum/round_event/valentines/announce()
+/datum/round_event/valentines/announce(fake)
 	priority_announce("It's Valentine's Day! Give a valentine to that special someone!")
 
 /obj/item/valentine

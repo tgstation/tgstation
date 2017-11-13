@@ -40,6 +40,9 @@
 		if(51 to INFINITY)
 			icon_state = "full"
 
+/obj/item/reagent_containers/blood/random
+	icon_state = "random_bloodpack"
+
 /obj/item/reagent_containers/blood/random/Initialize()
 	blood_type = pick("A+", "A-", "B+", "B-", "O+", "O-", "L")
 	. = ..()

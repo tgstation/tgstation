@@ -5,6 +5,7 @@
 	icon_state = "toyhammer"
 	slot_flags = SLOT_BELT
 	throwforce = 0
+	force = 1
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
@@ -20,10 +21,11 @@
 /obj/item/banhammer/attack(mob/M, mob/user)
 	if(user.zone_selected == "head")
 		M.visible_message("<span class='danger'>[user] are stroking the head of [M] with a bangammer</span>", "<span class='userdanger'>[user] are stroking the head with a bangammer</span>", "you hear a bangammer stroking a head");
-
 	else
 		M.visible_message("<span class='danger'>[M] has been banned FOR NO REISIN by [user]</span>", "<span class='userdanger'>You have been banned FOR NO REISIN by [user]</span>", "you hear a banhammer banning someone")
 	playsound(loc, 'sound/effects/adminhelp.ogg', 15) //keep it at 15% volume so people don't jump out of their skin too much
+	if(user.a_intent != INTENT_HELP)
+		return ..(M, user)
 
 /obj/item/sord
 	name = "\improper SORD"

@@ -109,9 +109,7 @@
 /obj/item/stack/sheet/mineral/plastitanium{
 	amount = 30
 	},
-/obj/item/stack/rods{
-	amount = 50
-	},
+/obj/item/stack/rods/fifty,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/podhatch{
 	dir = 9
@@ -195,12 +193,8 @@
 	},
 /area/ruin/powered/syndicate_lava_base)
 "aB" = (
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/glass/fifty,
 /obj/structure/table/reinforced,
 /obj/item/wrench,
 /turf/open/floor/plasteel/podhatch{
@@ -1304,9 +1298,7 @@
 /obj/item/stack/sheet/mineral/plastitanium{
 	amount = 30
 	},
-/obj/item/stack/rods{
-	amount = 50
-	},
+/obj/item/stack/rods/fifty,
 /obj/structure/table/reinforced,
 /obj/machinery/light{
 	dir = 4
@@ -1338,9 +1330,7 @@
 	},
 /area/ruin/powered/syndicate_lava_base)
 "dk" = (
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
 /obj/item/grenade/chem_grenade,
 /obj/item/grenade/chem_grenade,
 /obj/item/grenade/chem_grenade,

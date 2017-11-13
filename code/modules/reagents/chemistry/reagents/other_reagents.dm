@@ -1174,18 +1174,21 @@
 	M.AdjustKnockdown(-20, 0)
 	M.AdjustUnconscious(-20, 0)
 	M.adjustStaminaLoss(-0.5*REM, 0)
+	..()
+	. = TRUE //Update status effects.
 
-/datum/reagent/browngas
-	name = "Brown gas"
-	id = "brown_gas"
-	description = "A strange brown gas that makes you feel faster"
+/datum/reagent/nitryl
+	name = "Nitryl"
+	id = "no2"
+	description = "A highly reactive gas that makes you feel faster"
 	reagent_state = GAS
 	metabolization_rate = REAGENTS_METABOLISM
 	color = "90560B"
 	taste_description = "burning"
 
-/datum/reagent/browngas/on_mob_life(mob/living/M) //Has just a speedup
+/datum/reagent/nitryl/on_mob_life(mob/living/M) //Has just a speedup
 	M.status_flags |= GOTTAGOFAST
+	..()
 
 /////////////////////////Coloured Crayon Powder////////////////////////////
 //For colouring in /proc/mix_color_from_reagents

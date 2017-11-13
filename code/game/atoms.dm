@@ -99,7 +99,6 @@
 
 	LAZYCLEARLIST(overlays)
 	LAZYCLEARLIST(priority_overlays)
-	//SSoverlays.processing -= src	//we COULD do this, but it's better to just let it fall out of the processing queue
 
 	QDEL_NULL(light)
 
@@ -243,32 +242,6 @@
 			return 1
 	else if(src in container)
 		return 1
-
-/*
- *	atom/proc/search_contents_for(path,list/filter_path=null)
- * Recursevly searches all atom contens (including contents contents and so on).
- *
- * ARGS: path - search atom contents for atoms of this type
- *       list/filter_path - if set, contents of atoms not of types in this list are excluded from search.
- *
- * RETURNS: list of found atoms
- */
-
-/atom/proc/search_contents_for(path,list/filter_path=null)
-	var/list/found = list()
-	for(var/atom/A in src)
-		if(istype(A, path))
-			found += A
-		if(filter_path)
-			var/pass = 0
-			for(var/type in filter_path)
-				pass |= istype(A, type)
-			if(!pass)
-				continue
-		if(A.contents.len)
-			found += A.search_contents_for(path,filter_path)
-	return found
-
 
 /atom/proc/examine(mob/user)
 	//This reformat names to get a/an properly working on item descriptions when they are bloody
@@ -549,6 +522,7 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 
 //Hook for running code when a dir change occurs
 /atom/proc/setDir(newdir)
+	SendSignal(COMSIG_ATOM_DIR_CHANGE, dir, newdir)
 	dir = newdir
 
 /atom/proc/mech_melee_attack(obj/mecha/M)
@@ -645,4 +619,21 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 	SendSignal(COMSIG_ATOM_ENTERED, AM, oldLoc)
 
 /atom/proc/return_temperature()
+	return
+
+// Default tool behaviors proc
+
+/atom/proc/crowbar_act(mob/user, obj/item/tool)
+	return
+
+/atom/proc/multitool_act(mob/user, obj/item/tool)
+	return
+
+/atom/proc/screwdriver_act(mob/user, obj/item/tool)
+	return
+
+/atom/proc/wrench_act(mob/user, obj/item/tool)
+	return
+
+/atom/proc/wirecutter_act(mob/user, obj/item/tool)
 	return

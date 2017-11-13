@@ -188,7 +188,7 @@
 /obj/item/clothing/gloves/color/random
 	name = "random gloves"
 	desc = "These gloves are supposed to be a random color..."
-	icon_state = "white"
+	icon_state = "random_gloves"
 	item_state = "wgloves"
 	item_color = "mime"
 

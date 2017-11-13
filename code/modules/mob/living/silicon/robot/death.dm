@@ -26,6 +26,8 @@
 		builtInCamera.toggle_cam(src,0)
 	update_headlamp(1) //So borg lights are disabled when killed.
 
+	soundloop.stop()
+
 	uneq_all() // particularly to ensure sight modes are cleared
 
 	update_icons()
