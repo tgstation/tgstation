@@ -65,9 +65,10 @@
 
 /obj/item/restraints/handcuffs/clockwork
 	name = "replicant manacles"
-	desc = "Cold, heavy manacles made out of some strange black metal."
+	desc = "Cold, heavy manacles made of brass."
 	origin_tech = "materials=2;magnets=5"
 	flags_1 = DROPDEL_1
+	icon_state = "manacles_clock"
 
 /obj/item/restraints/handcuffs/clockwork/dropped(mob/user)
 	user.visible_message("<span class='danger'>[user]'s [name] come apart at the seams!</span>", \
