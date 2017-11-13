@@ -43,6 +43,9 @@
 	name = "Hyperspace"
 	desc = "Weeeeee"
 
+/area/shuttle/custom
+	name = "Custom player shuttle"
+
 /area/shuttle/arrival
 	name = "Arrival Shuttle"
 
