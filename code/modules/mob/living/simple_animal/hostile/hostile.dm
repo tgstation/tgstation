@@ -364,19 +364,15 @@
 
 /mob/living/simple_animal/hostile/proc/DestroyStructuresCycle(turf/T)
 	var/dir_to_target = get_dir(targets_from, get_cardinal_step_towards(targets_from, target))
-	var/dir_from_target = get_dir(targets_from, get_cardinal_step_away(targets_from, target))
-
-	var/list/dir_list = list(dir_from_target, get_next_cardinal_dir(dir_from_target, 1), get_next_cardinal_dir(dir_to_target, 1), dir_to_target)
-
-	for(dir_list.len, dir_list.len > 0, dir_list.len--)
-		T = get_step(targets_from, dir_list[dir_list.len])
-		for(var/a in T)
-			var/atom/A = a
-			if(is_type_in_typecache(A, environment_target_typecache) && !A.IsObscured())
-				A.attack_animal(src)
-				dir_list.len = 0
-	del(dir_list)
-
+	var/list/dir_list = list(dir_to_target, turn(dir_to_target, 90), turn(dir_to_target, 270), turn(dir_to_target, 180))
+	cycle_loop:
+		for(var/dir in dir_list)
+			T = get_step(targets_from, dir)
+			for(var/a in T)
+				var/atom/A = a
+				if(is_type_in_typecache(A, environment_target_typecache) && !A.IsObscured())
+					A.attack_animal(src)
+					break cycle_loop
 
 /mob/living/simple_animal/hostile/proc/DestroyPathToTarget()
 	if(environment_smash)

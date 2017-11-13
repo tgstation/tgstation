@@ -317,27 +317,6 @@
 			return get_step(start, EAST)
 
 
-/proc/get_next_cardinal_dir(original_direction, clockwise) // get the next cardinal direction clockwise from the current cardinal direction
-//clockwise = 1 is clockwise, clockwise = 0 is counterclockwise
-	if (clockwise == 1)
-		if (original_direction == NORTH)
-			return EAST
-		if (original_direction == EAST)
-			return SOUTH
-		if (original_direction == SOUTH)
-			return WEST
-		if (original_direction == WEST)
-			return NORTH
-	else
-		if (original_direction == NORTH)
-			return WEST
-		if (original_direction == WEST)
-			return SOUTH
-		if (original_direction == SOUTH)
-			return EAST
-		if (original_direction == EAST)
-			return NORTH
-
 /proc/try_move_adjacent(atom/movable/AM)
 	var/turf/T = get_turf(AM)
 	for(var/direction in GLOB.cardinals)
