@@ -31,6 +31,8 @@
 #In the event of an error the new feedback table is automatically truncated
 #The source table is never modified so you don't have to worry about losing any data due to errors
 #Note that some feedback keys are renamed or coalesced into one, additionnaly some have been entirely removed
+#
+#While this script can be run with your game server(s) active, it may interfere with other database operations and any feedback created after the script has started won't be converted
 
 import MySQLdb
 import argparse

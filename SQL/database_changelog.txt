@@ -10,7 +10,7 @@ In any query remember to add a prefix to the table names if you use one.
 
 ----------------------------------------------------
 
-12 October 2017, by Jordie0608
+12 November 2017, by Jordie0608
 Modified feedback table to use json, a python script is used to migrate data to this new format.
 
 See the file 'feedback_conversion_2017-11-12.py' for instructions on how to use the script.
