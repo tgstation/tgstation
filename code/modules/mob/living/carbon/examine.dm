@@ -46,7 +46,7 @@
 	if(temp)
 		if (temp < 25)
 			msg += "[t_He] [t_has] minor bruising.\n"
-		else if (temp >= 25 && temp < 50)
+		else if (temp < 50)
 			msg += "[t_He] [t_has] <b>moderate</b> bruising!\n"
 		else
 			msg += "<B>[t_He] [t_has] severe bruising!</B>\n"
@@ -55,7 +55,7 @@
 	if(temp)
 		if (temp < 25)
 			msg += "[t_He] [t_has] minor burns.\n"
-		else if (temp >= 25 && temp < 50)
+		else if (temp < 50)
 			msg += "[t_He] [t_has] <b>moderate</b> burns!\n"
 		else
 			msg += "<B>[t_He] [t_has] severe burns!</B>\n"
@@ -64,7 +64,7 @@
 	if(temp)
 		if(temp < 25)
 			msg += "[t_He] [t_is] slightly deformed.\n"
-		else if (temp >= 25 && temp < 50)
+		else if (temp < 50)
 			msg += "[t_He] [t_is] <b>moderately</b> deformed!\n"
 		else
 			msg += "<b>[t_He] [t_is] severely deformed!</b>\n"
