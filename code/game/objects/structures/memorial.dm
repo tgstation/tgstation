@@ -19,3 +19,7 @@ This memorial has been designed for him and any future coders to perish.
 	icon_state = "memorial"
 	density = TRUE
 	anchored = TRUE
+
+/obj/structure/fluff/arc/examine(mob/user)
+	..()
+	user << browse(file("icons/memorial.png"), "window=memorial;size=800x1045")
