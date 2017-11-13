@@ -150,7 +150,7 @@
 		current_category = href_list["category"]
 
 	if(href_list["build"])
-		var/build_type = href_list["build"]
+		var/build_type = text2path(href_list["build"])
 		if(!build_type || !ispath(build_type))
 			return TRUE
 
