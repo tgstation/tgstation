@@ -197,10 +197,13 @@
 
 	var/slices_lost = 0
 	if (accuracy >= IS_SHARP_ACCURATE)
-		user.visible_message( \
-			"[user] slices [src].", \
-			"<span class='notice'>You slice [src].</span>" \
-		)
+		if(istype(src, obj/item/weapon/reagent_containers/food/snacks/meatbread)
+			to_chat(world, " <B>[usr] slices the meatbread! </B>")
+		else
+			user.visible_message( \
+				"[user] slices [src].", \
+				"<span class='notice'>You slice [src].</span>" \
+			)
 	else
 		user.visible_message( \
 			"[user] inaccurately slices [src] with [W]!", \
