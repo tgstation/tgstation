@@ -13,7 +13,7 @@
 	var/max_severity = 3
 
 
-/datum/round_event/disease_outbreak/announce()
+/datum/round_event/disease_outbreak/announce(fake)
 	priority_announce("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/ai/outbreak7.ogg')
 
 /datum/round_event/disease_outbreak/setup()

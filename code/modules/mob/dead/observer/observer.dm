@@ -457,11 +457,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/max_view = client.prefs.unlock_content ? GHOST_MAX_VIEW_RANGE_MEMBER : GHOST_MAX_VIEW_RANGE_DEFAULT
 	if(client.view == world.view)
 		var/list/views = list()
-		for(var/i in 1 to max_view)
+		for(var/i in 7 to max_view)
 			views |= i
 		var/new_view = input("Choose your new view", "Modify view range", 7) as null|anything in views
 		if(new_view)
-			client.change_view(Clamp(new_view, 1, max_view))
+			client.change_view(Clamp(new_view, 7, max_view))
 	else
 		client.change_view(world.view)
 
@@ -470,7 +470,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set hidden = TRUE
 	var/max_view = client.prefs.unlock_content ? GHOST_MAX_VIEW_RANGE_MEMBER : GHOST_MAX_VIEW_RANGE_DEFAULT
 	if(input)
-		client.change_view(Clamp(client.view + input, 1, max_view))
+		client.change_view(Clamp(client.view + input, 7, max_view))
 
 /mob/dead/observer/verb/boo()
 	set category = "Ghost"

@@ -575,7 +575,7 @@
 					if(4)
 						R.fields["blood_type"] = random_blood_type()
 					if(5)
-						R.fields["p_stat"] = pick("*Unconcious*", "Active", "Physically Unfit")
+						R.fields["p_stat"] = pick("*Unconscious*", "Active", "Physically Unfit")
 					if(6)
 						R.fields["m_stat"] = pick("*Insane*", "*Unstable*", "*Watch*", "Stable")
 				continue

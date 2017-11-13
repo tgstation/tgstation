@@ -6,6 +6,9 @@
 	earliest_start = 6000
 	min_players = 5 // To make your chance of getting help a bit higher.
 
+/datum/round_event/spontaneous_appendicitis
+	fakeable = FALSE
+
 /datum/round_event/spontaneous_appendicitis/start()
 	for(var/mob/living/carbon/human/H in shuffle(GLOB.living_mob_list))
 		if(!H.client)

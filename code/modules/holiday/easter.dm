@@ -10,7 +10,7 @@
 	max_occurrences = 1
 	earliest_start = 0
 
-/datum/round_event/easter/announce()
+/datum/round_event/easter/announce(fake)
 	priority_announce(pick("Hip-hop into Easter!","Find some Bunny's stash!","Today is National 'Hunt a Wabbit' Day.","Be kind, give Chocolate Eggs!"))
 
 
@@ -21,7 +21,7 @@
 	weight = 5
 	max_occurrences = 10
 
-/datum/round_event/rabbitrelease/announce()
+/datum/round_event/rabbitrelease/announce(fake)
 	priority_announce("Unidentified furry objects detected coming aboard [station_name()]. Beware of Adorable-ness.", "Fluffy Alert", 'sound/ai/aliens.ogg')
 
 
