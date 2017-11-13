@@ -150,7 +150,7 @@
 
 /datum/reagent/medicine/clonexadone/on_mob_life(mob/living/M)
 	if(M.bodytemperature < T0C)
-		M.adjustCloneLoss(0,00006 * (M.bodytemperature ** 2) - 6, 0)
+		M.adjustCloneLoss(0.00006 * (M.bodytemperature ** 2) - 6, 0)
 		M.status_flags &= ~DISFIGURED
 		. = 1
 	metabolization_rate = REAGENTS_METABOLISM * (0.000015 * (M.bodytemperature ** 2) + 0.75)
