@@ -18,16 +18,14 @@
 /obj/item/device/integrated_electronics/prefab/Initialize()
 	. = ..()
 	var/list/assembly_list = list(
-			new /obj/item/device/electronic_assembly(null),
-			new /obj/item/device/electronic_assembly/medium(null),
-			new /obj/item/device/electronic_assembly/large(null),
-			new /obj/item/device/electronic_assembly/drone(null),
-			//new /obj/item/weapon/implant/integrated_circuit(null),
-			//new /obj/item/device/assembly/electronic_assembly(null)
+			/obj/item/device/electronic_assembly,
+			/obj/item/device/electronic_assembly/medium,
+			/obj/item/device/electronic_assembly/large,
+			/obj/item/device/electronic_assembly/drone,
 		)
 	for(var/k in 1 to assembly_list.len)
 		var/obj/item/I = assembly_list[k]
-		as_names[I.name] = I.type
+		as_names[initial(I.name)] = I
 	for(var/k in 1 to SScircuit.all_integrated_circuit_paths.len)
 		var/obj/item/integrated_circuit/IC = SScircuit.all_integrated_circuit_paths[k]
 		if((initial(IC.spawn_flags) & IC_SPAWN_DEFAULT) || (initial(IC.spawn_flags) & IC_SPAWN_RESEARCH))
@@ -159,5 +157,5 @@
 				IO2 = ioa[element[2]]
 				IO.linked |= IO2
 
-	AS.forceMove(drop_location())
+	AS.forceMove(loc)
 	qdel(src)

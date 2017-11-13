@@ -242,10 +242,10 @@
 	var/list/as_samp = list()
 	var/list/cir_samp =list()
 	var/list/assembly_list = list(
-			new /obj/item/device/electronic_assembly(null),
-			new /obj/item/device/electronic_assembly/medium(null),
-			new /obj/item/device/electronic_assembly/large(null),
-			new /obj/item/device/electronic_assembly/drone(null),
+			/obj/item/device/electronic_assembly,
+			/obj/item/device/electronic_assembly/medium,
+			/obj/item/device/electronic_assembly/large,
+			/obj/item/device/electronic_assembly/drone,
 		)
 	var/compl = 0
 	var/maxcomp = 0
@@ -254,7 +254,7 @@
 	var/metalcost = 0
 	for(var/k in 1 to assembly_list.len)
 		var/obj/item/I = assembly_list[k]
-		as_samp[I.name] = I
+		as_samp[initial(I.name)] = I
 	for(var/k in 1 to SScircuit.all_integrated_circuit_paths.len)
 		var/obj/item/integrated_circuit/IC = SScircuit.all_integrated_circuit_paths[k]
 		if((initial(IC.spawn_flags) & IC_SPAWN_DEFAULT) || (initial(IC.spawn_flags) & IC_SPAWN_RESEARCH))
@@ -266,10 +266,10 @@
 			visible_message( "<span class='notice'>assembly</span>")
 		element = splittext( chap[2] ,"=-=")
 		PA = as_samp[element[1]]
-		if(ispath(PA.type,/obj/item/device/electronic_assembly))
+		if(ispath(PA,/obj/item/device/electronic_assembly))
 			PF = PA
-			maxcap = PF.max_components
-			maxcomp = PF.max_complexity
+			maxcap = initial(PF.max_components)
+			maxcomp = initial(PF.max_complexity)
 			metalcost = metalcost + round( (initial(PF.max_complexity) + initial(PF.max_components) ) / 4)
 			if(debug)
 				visible_message( "<span class='notice'>maxcap[maxcap]maxcomp[maxcomp]</span>")
@@ -314,25 +314,29 @@
 				var/obj/item/integrated_circuit/IC = comp
 				if(!(initial(IC.spawn_flags) & IC_SPAWN_DEFAULT))
 					return -1
-			compl =compl + comp.complexity
-			cap = cap + comp.size
-			metalcost =metalcost + initial(comp.w_class)
-
-			if(comp.inputs && comp.inputs.len)
-				for(var/j in 1 to comp.inputs.len)
-					var/datum/integrated_io/IN = comp.inputs[j]
+			compl =compl + initial(comp.complexity)
+			cap = cap + initial(comp.size)
+			metalcost =metalcost + initial(initial(comp.w_class))
+			var/list/ini = initial(comp.inputs)
+			if(ini && ini.len)
+				for(var/j in 1 to ini.len)
+					var/datum/integrated_io/IN = ini[j]
 					ioa["[i]i[j]"] = IN
 					if(debug)
 						visible_message( "<span class='notice'>[i]i[j]</span>")
-			if(comp.outputs && comp.outputs.len)
+			ini = null
+			ini = initial(comp.outputs)
+			if(ini && ini.len)
 				for(var/j in 1 to comp.outputs.len)               //Also this block uses for setting all i/o id's
-					var/datum/integrated_io/OUT = comp.outputs[j]
+					var/datum/integrated_io/OUT = ini[j]
 					ioa["[i]o[j]"] = OUT
 					if(debug)
 						visible_message( "<span class='notice'>[i]o[j]</span>")
-			if(comp.activators && comp.activators.len)
-				for(var/j in 1 to comp.activators.len)
-					var/datum/integrated_io/ACT = comp.activators[j]
+			ini = null
+			ini = initial(comp.activators)
+			if(ini && ini.len)
+				for(var/j in 1 to ini.len)
+					var/datum/integrated_io/ACT = ini.[j]
 					ioa["[i]a[j]"] = ACT
 					if(debug)
 						visible_message( "<span class='notice'>[i]a[j]</span>")
@@ -405,6 +409,6 @@
 					return 0
 				if(!IO2)
 					return 0
-				if(IO.io_type != IO2.io_type)
+				if(initial(IO.io_type) != initial(IO2.io_type))
 					return 0
 	return metalcost
