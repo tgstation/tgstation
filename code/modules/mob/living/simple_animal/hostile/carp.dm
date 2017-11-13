@@ -18,6 +18,7 @@
 	speed = 0
 	maxHealth = 25
 	health = 25
+	spacewalk = TRUE
 
 	harm_intent_damage = 8
 	obj_damage = 50
@@ -35,9 +36,6 @@
 	movement_type = FLYING
 	pressure_resistance = 200
 	gold_core_spawnable = 1
-
-/mob/living/simple_animal/hostile/carp/Process_Spacemove(movement_dir = 0)
-	return 1	//No drifting in space for space carp!	//original comments do not steal
 
 /mob/living/simple_animal/hostile/carp/AttackingTarget()
 	. = ..()

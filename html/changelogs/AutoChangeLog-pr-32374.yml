@@ -1,4 +1,0 @@
-author: "Swindly"
-delete-after: True
-changes: 
-  - bugfix: "You can now cancel a cavity implant during the implanting/removing step by using drapes while holding the appropriate tool in your inactive hand. Cyborgs can cancel the surgery by using drapes alone."

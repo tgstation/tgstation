@@ -13,6 +13,7 @@
 	speed = 0
 	maxHealth = 100
 	health = 100
+	spacewalk = TRUE
 
 	harm_intent_damage = 5
 	obj_damage = 60
@@ -64,5 +65,3 @@
 	loot = list(/obj/effect/mob_spawn/human/corpse/pirate/ranged,
 			/obj/item/gun/energy/laser)
 
-/mob/living/simple_animal/hostile/pirate/space/Process_Spacemove(movement_dir = 0)
-	return 1

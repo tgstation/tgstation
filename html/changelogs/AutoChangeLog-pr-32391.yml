@@ -1,4 +1,0 @@
-author: "WJohnston"
-delete-after: True
-changes: 
-  - bugfix: "Ancient station lighting fixed on beta side (medical and atmos remains)"
