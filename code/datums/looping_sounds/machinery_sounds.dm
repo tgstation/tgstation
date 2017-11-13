@@ -37,14 +37,14 @@
 	mid_sounds = list('sound/machines/computer/computer_mid1.ogg'=1, 'sound/machines/computer/computer_mid2.ogg'=1)
 	mid_length = 6.1
 	end_sound = 'sound/machines/computer/computer_end.ogg'
-	volume = 10
+	volume = 5
 	range_modifier = -5.5
 
 /datum/looping_sound/borg
 	mid_sounds = list('sound/machines/borg/borg_mid1.ogg'=1, 'sound/machines/borg/borg_mid2.ogg'=1, 'sound/machines/borg/borg_mid3.ogg'=1)
 	mid_length = 19.5
 	end_sound = 'sound/machines/computer/computer_end.ogg'
-	volume = 80
+	volume = 50
 	range_modifier = -5.5
 
 
