@@ -163,10 +163,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	usr.set_machine(src)
 	if(href_list["disk_slot"])
 		disk_slot_selected = text2num(href_list["disk_slot"])
+		playsound(src, "terminal_type", 50, 0)
 
 	if(href_list["menu"]) //Switches menu screens. Converts a sent text string into a number. Saves a LOT of code.
 		var/temp_screen = text2num(href_list["menu"])
 		screen = temp_screen
+		playsound(src, "terminal_type", 50, 0)
 
 
 	var/datum/component/material_container/linked_materials
@@ -179,8 +181,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	if(href_list["category"])
 		selected_category = href_list["category"]
+		playsound(src, "terminal_type", 50, 0)
 
 	else if(href_list["updt_tech"]) //Update the research holder with information from the technology disk.
+		playsound(src, "terminal_type", 50, 0)
 		var/n = text2num(href_list["updt_tech"])
 		screen = 0.0
 		var/wait = 50
@@ -189,7 +193,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			for(var/D in t_disk.tech_stored)
 				if(D)
 					wait += 50
-		spawn(wait)
+		spawn(wait) // I CANT WAIT FOR THIS TO GET REMOVED WITH TECHWEBS
+			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 			screen = 1.2
 			if(t_disk)
 				if(!n)
@@ -201,6 +206,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				griefProtection() //Update centcom too
 
 	else if(href_list["clear_tech"]) //Erase data on the technology disk.
+		playsound(src, "terminal_type", 50, 0)
 		if(t_disk)
 			var/n = text2num(href_list["clear_tech"])
 			if(!n)
@@ -210,12 +216,14 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				t_disk.tech_stored[n] = null
 
 	else if(href_list["eject_tech"]) //Eject the technology disk.
+		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 		if(t_disk)
 			t_disk.loc = src.loc
 			t_disk = null
 		screen = 1.0
 
 	else if(href_list["copy_tech"]) //Copy some technology data from the research holder to the disk.
+		playsound(src, "terminal_type", 50, 0)
 		var/slot = text2num(href_list["copy_tech"])
 		var/datum/tech/T = files.known_tech[href_list["copy_tech_ID"]]
 		if(T)
@@ -223,6 +231,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		screen = 1.2
 
 	else if(href_list["updt_design"]) //Updates the research holder with design data from the design disk.
+		playsound(src, "terminal_type", 50, 0)
 		var/n = text2num(href_list["updt_design"])
 		screen = 0.0
 		var/wait = 50
@@ -232,6 +241,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				if(D)
 					wait += 50
 		spawn(wait)
+			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 			screen = 1.4
 			if(d_disk)
 				if(!n)
@@ -244,6 +254,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				griefProtection() //Update centcom too
 
 	else if(href_list["clear_design"]) //Erases data on the design disk.
+		playsound(src, "terminal_type", 50, 0)
 		if(d_disk)
 			var/n = text2num(href_list["clear_design"])
 			if(!n)
@@ -253,12 +264,14 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				d_disk.blueprints[n] = null
 
 	else if(href_list["eject_design"]) //Eject the design disk.
+		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 		if(d_disk)
 			d_disk.loc = src.loc
 			d_disk = null
 		screen = 1.0
 
 	else if(href_list["copy_design"]) //Copy design data from the research holder to the design disk.
+		playsound(src, "terminal_type", 50, 0)
 		var/slot = text2num(href_list["copy_design"])
 		var/datum/design/D = files.known_designs[href_list["copy_design_ID"]]
 		if(D)
@@ -279,6 +292,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		screen = 1.4
 
 	else if(href_list["eject_item"]) //Eject the item inside the destructive analyzer.
+		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 		if(linked_destroy)
 			if(linked_destroy.busy)
 				to_chat(usr, "<span class='danger'>The destructive analyzer is busy at the moment.</span>")
