@@ -8,6 +8,7 @@
 	icon_state = "anime_fragment"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	w_class = WEIGHT_CLASS_HUGE
+	hud_possible = list(GHOST_HUD)
 	var/creation_message = "<span class='brass'>The chassis shudders and hums to life!</span>"
 	var/construct_type //The construct this shell will create
 
@@ -18,6 +19,12 @@
 		notify_ghosts("A [construct_name] chassis has been created in [A.name]!", 'sound/magic/clockwork/fellowship_armory.ogg', source = src, action = NOTIFY_ATTACK, flashwindow = FALSE)
 	GLOB.poi_list += src
 	LAZYADD(GLOB.mob_spawners[name], src)
+
+	prepare_huds()
+	var/datum/atom_hud/ghost/interactable/ghost_hud = GLOB.huds[GHOST_HUD_INTERACTABLE]
+	ghost_hud.add_to_hud(src)
+	var/image/holder = hud_list[GHOST_HUD]
+	holder.icon_state = "possessable"
 
 /obj/item/clockwork/construct_chassis/Destroy()
 	GLOB.poi_list -= src

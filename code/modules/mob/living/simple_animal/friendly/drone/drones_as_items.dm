@@ -14,6 +14,7 @@
 	icon = 'icons/mob/drone.dmi'
 	icon_state = "drone_maint_hat"//yes reuse the _hat state.
 	origin_tech = "programming=2;biotech=4"
+	hud_possible = list(GHOST_HUD)
 	var/drone_type = /mob/living/simple_animal/drone //Type of drone that will be spawned
 
 /obj/item/drone_shell/New()
@@ -22,6 +23,14 @@
 	if(A)
 		notify_ghosts("A drone shell has been created in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
 	GLOB.poi_list |= src
+
+/obj/item/drone_shell/Initialize()
+	. = ..()
+	prepare_huds()
+	var/datum/atom_hud/ghost/interactable/ghost_hud = GLOB.huds[GHOST_HUD_INTERACTABLE]
+	ghost_hud.add_to_hud(src)
+	var/image/holder = hud_list[GHOST_HUD]
+	holder.icon_state = "possessable"
 
 /obj/item/drone_shell/Destroy()
 	GLOB.poi_list -= src

@@ -4,6 +4,9 @@
 
 /obj/effect/mob_spawn
 	name = "Unknown"
+	density = TRUE
+	anchored = TRUE
+	hud_possible = list(GHOST_HUD)
 	var/mob_type = null
 	var/mob_name = ""
 	var/mob_gender = null
@@ -22,8 +25,6 @@
 	var/datum/disease/disease = null //Do they start with a pre-spawned disease?
 	var/mob_color //Change the mob's color
 	var/assignedrole
-	density = TRUE
-	anchored = TRUE
 	var/banType = "lavaland"
 
 /obj/effect/mob_spawn/attack_ghost(mob/user)
@@ -48,6 +49,13 @@
 	else
 		GLOB.poi_list |= src
 		LAZYADD(GLOB.mob_spawners[name], src)
+
+	prepare_huds()
+	var/image/holder = hud_list[GHOST_HUD]
+	holder.icon_state = "possessable"
+	if(uses)
+		var/datum/atom_hud/ghost/interactable/ghost_hud = GLOB.huds[GHOST_HUD_INTERACTABLE]
+		ghost_hud.add_to_hud(src)
 
 /obj/effect/mob_spawn/Destroy()
 	GLOB.poi_list -= src
@@ -97,6 +105,9 @@
 		uses--
 	if(!permanent && !uses)
 		qdel(src)
+	else
+		var/datum/atom_hud/ghost/interactable/ghost_hud = GLOB.huds[GHOST_HUD_INTERACTABLE]
+		ghost_hud.remove_from_hud(src)
 
 // Base version - place these on maps/templates.
 /obj/effect/mob_spawn/human

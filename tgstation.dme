@@ -1574,6 +1574,7 @@
 #include "code\modules\mob\dead\observer\login.dm"
 #include "code\modules\mob\dead\observer\logout.dm"
 #include "code\modules\mob\dead\observer\observer.dm"
+#include "code\modules\mob\dead\observer\possessable_hud.dm"
 #include "code\modules\mob\dead\observer\say.dm"
 #include "code\modules\mob\living\blood.dm"
 #include "code\modules\mob\living\bloodcrawl.dm"

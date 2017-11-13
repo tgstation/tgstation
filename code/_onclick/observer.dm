@@ -48,6 +48,14 @@
 	// Not all of them require checking, see below
 	A.attack_ghost(src)
 
+/mob/dead/observer/CtrlClickOn(atom/A)
+	if(isliving(A))
+		var/mob/living/target = A
+		if(target.ondemand_possessable)
+			ondemand_possess(target)
+			return
+	..()
+
 // Oh by the way this didn't work with old click code which is why clicking shit didn't spam you
 /atom/proc/attack_ghost(mob/dead/observer/user)
 	if(user.client)

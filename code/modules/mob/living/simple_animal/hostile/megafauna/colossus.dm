@@ -565,7 +565,17 @@ Difficulty: Very Hard
 	observer_desc = "This crystal allows ghosts to turn into a fragile creature that can heal people."
 	activation_method = ACTIVATE_TOUCH
 	activation_sound = 'sound/effects/ghost2.ogg'
+	hud_possible = list(GHOST_HUD)
 	var/ready_to_deploy = FALSE
+
+/obj/machinery/anomalous_crystal/helpers/Initialize()
+	. = ..()
+	prepare_huds()
+	var/image/holder = hud_list[GHOST_HUD]
+	holder.icon_state = "possessable"
+	if(ready_to_deploy)
+		var/datum/atom_hud/ghost/interactable/ghost_hud = GLOB.huds[GHOST_HUD_INTERACTABLE]
+		ghost_hud.add_to_hud(src)
 
 /obj/machinery/anomalous_crystal/helpers/Destroy()
 	GLOB.poi_list -= src
@@ -575,6 +585,8 @@ Difficulty: Very Hard
 	if(..() && !ready_to_deploy)
 		GLOB.poi_list |= src
 		ready_to_deploy = TRUE
+		var/datum/atom_hud/ghost/interactable/ghost_hud = GLOB.huds[GHOST_HUD_INTERACTABLE]
+		ghost_hud.add_to_hud(src)
 		notify_ghosts("An anomalous crystal has been activated in [get_area(src)]! This crystal can always be used by ghosts hereafter.", enter_link = "<a href=?src=[REF(src)];ghostjoin=1>(Click to enter)</a>", ghost_sound = 'sound/effects/ghost2.ogg', source = src, action = NOTIFY_ATTACK)
 
 /obj/machinery/anomalous_crystal/helpers/attack_ghost(mob/dead/observer/user)

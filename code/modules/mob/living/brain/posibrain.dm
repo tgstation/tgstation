@@ -12,6 +12,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	var/searching = FALSE
 	brainmob = null
 	req_access = list(ACCESS_ROBOTICS)
+	hud_possible = list(GHOST_HUD)
 	mecha = null//This does not appear to be used outside of reference in mecha.dm.
 	braintype = "Android"
 	var/autoping = TRUE //if it pings on creation immediately
@@ -56,6 +57,8 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	next_ask = world.time + askDelay
 	searching = TRUE
 	update_icon()
+	var/datum/atom_hud/ghost/interactable/ghost_hud = GLOB.huds[GHOST_HUD_INTERACTABLE]
+	ghost_hud.add_to_hud(src)
 	addtimer(CALLBACK(src, .proc/check_success), askDelay)
 
 /obj/item/device/mmi/posibrain/proc/check_success()
@@ -128,6 +131,9 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	GLOB.dead_mob_list -= brainmob
 	GLOB.living_mob_list += brainmob
 
+	var/datum/atom_hud/ghost/interactable/ghost_hud = GLOB.huds[GHOST_HUD_INTERACTABLE]
+	ghost_hud.remove_from_hud(src)
+
 	visible_message(new_mob_message)
 	check_success()
 	return TRUE
@@ -162,6 +168,12 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	brainmob.container = src
 	if(autoping)
 		ping_ghosts("created", TRUE)
+	prepare_huds()
+	var/image/holder = hud_list[GHOST_HUD]
+	holder.icon_state = "possessable"
+	if(!is_occupied())
+		var/datum/atom_hud/ghost/interactable/ghost_hud = GLOB.huds[GHOST_HUD_INTERACTABLE]
+		ghost_hud.add_to_hud(src)
 
 /obj/item/device/mmi/posibrain/attackby(obj/item/O, mob/user)
 	return

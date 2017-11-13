@@ -2,7 +2,7 @@
 	see_invisible = SEE_INVISIBLE_LIVING
 	sight = 0
 	see_in_dark = 2
-	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD)
+	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD,GHOST_HUD)
 	pressure_resistance = 10
 
 	//Health and life related vars
@@ -79,3 +79,5 @@
 	var/last_words	//used for database logging
 
 	var/list/obj/effect/proc_holder/abilities = list()
+
+	var/ondemand_possessable = 0 //a number, if more than 0, a ghost can ctrl-click a living mob to possess it.

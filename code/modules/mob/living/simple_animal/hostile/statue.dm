@@ -32,7 +32,7 @@
 	move_to_delay = 0 // Very fast
 
 	animate_movement = NO_STEPS // Do not animate movement, you jump around as you're a scary statue.
-	hud_possible = list(ANTAG_HUD)
+	hud_possible = list(ANTAG_HUD, GHOST_HUD)
 
 	see_in_dark = 13
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
