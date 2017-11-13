@@ -91,6 +91,7 @@
 	if(!ismonkey(affected_mob))
 		SSticker.mode.add_monkey(affected_mob.mind)
 		affected_mob.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
+		to_chat(affected_mob, "<b>You can use :k to talk to fellow monkeys!</b>")
 
 /datum/disease/transformation/jungle_fever/stage_act()
 	..()

@@ -1,5 +1,6 @@
 /datum/game_mode
 	var/list/ape_infectees = list()
+	var/list/ape_leaders = list()
 
 /datum/game_mode/monkey
 	name = "monkey"
@@ -36,8 +37,8 @@
 		antag_candidates -= carrier
 
 	if(!carriers.len)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 
 /datum/game_mode/monkey/announce()
@@ -51,6 +52,8 @@
 	to_chat(carrier.current, "<b>Soon the disease will transform you into an ape. Afterwards, you will be able spread the infection to others with a bite.</b>")
 	to_chat(carrier.current, "<b>While your infection strain is undetectable by scanners, any other infectees will show up on medical equipment.</b>")
 	to_chat(carrier.current, "<b>Your mission will be deemed a success if any of the live infected monkeys reach CentCom.</b>")
+	to_chat(carrier.current, "<b>As an initial infectee, you will be considered a 'leader' by your fellow monkeys.</b>")
+	to_chat(carrier.current, "<b>You can use :k to talk to fellow monkeys!</b>")
 	carrier.current.playsound_local(get_turf(carrier.current), 'sound/ambience/antag/monkey.ogg', 100, FALSE, pressure_affected = FALSE)
 	return
 
@@ -58,6 +61,9 @@
 	for(var/datum/mind/carriermind in carriers)
 		greet_carrier(carriermind)
 		ape_infectees += carriermind
+		var/obj/item/organ/heart/freedom/F = new /obj/item/organ/heart/freedom()
+		F.Insert(carriermind.current, drop_if_replaced = FALSE)
+		ape_leaders += carriermind
 
 		var/datum/disease/D = new /datum/disease/transformation/jungle_fever
 		D.visibility_flags = HIDDEN_SCANNER|HIDDEN_PANDEMIC
@@ -71,15 +77,17 @@
 
 	if(!round_converted)
 		for(var/datum/mind/monkey_mind in ape_infectees)
-			continuous_sanity_checked = 1
+			continuous_sanity_checked = TRUE
 			if(monkey_mind.current && monkey_mind.current.stat != DEAD)
-				return 0
+				return FALSE
 
 		var/datum/disease/D = new /datum/disease/transformation/jungle_fever() //ugly but unfortunately needed
 		for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
-			if(H.mind && H.stat != DEAD)
+			if(!(H.z in GLOB.station_z_levels))
+				continue
+			if(H.mind && H.client && H.stat != DEAD)
 				if(H.HasDisease(D))
-					return 0
+					return FALSE
 
 	..()
 
