@@ -161,12 +161,8 @@
 	var/list/areaindex = list()
 	if(regime_set == "Teleporter")
 		for(var/obj/item/device/radio/beacon/R in GLOB.teleportbeacons)
-			var/turf/T = get_turf(R)
-			if(!T)
-				continue
-			if(T.z == ZLEVEL_CENTCOM || T.z > ZLEVEL_SPACEMAX)
-				continue
-			L[avoid_assoc_duplicate_keys(T.loc.name, areaindex)] = R
+			if(is_eligible(R))
+				L[avoid_assoc_duplicate_keys(R.loc.loc.name, areaindex)] = R
 
 		for(var/obj/item/implant/tracking/I in GLOB.tracked_implants)
 			if(!I.imp_in || !ismob(I.loc))
@@ -176,12 +172,8 @@
 				if(M.stat == DEAD)
 					if(M.timeofdeath + 6000 < world.time)
 						continue
-				var/turf/T = get_turf(M)
-				if(!T)
-					continue
-				if(T.z == ZLEVEL_CENTCOM)
-					continue
-				L[avoid_assoc_duplicate_keys(M.real_name, areaindex)] = I
+				if(is_eligible(I))
+					L[avoid_assoc_duplicate_keys(M.real_name, areaindex)] = I
 
 		var/desc = input("Please select a location to lock in.", "Locking Computer") as null|anything in L
 		target = L[desc]
@@ -192,12 +184,8 @@
 			to_chat(user, "<span class='alert'>No connected stations located.</span>")
 			return
 		for(var/obj/machinery/teleport/station/R in S)
-			var/turf/T = get_turf(R)
-			if(!T || !R.teleporter_hub || !R.teleporter_console)
-				continue
-			if(T.z == ZLEVEL_CENTCOM || T.z > ZLEVEL_SPACEMAX)
-				continue
-			L[avoid_assoc_duplicate_keys(T.loc.name, areaindex)] = R
+			if(is_eligible(R))
+				L[avoid_assoc_duplicate_keys(R.loc.loc.name, areaindex)] = R
 		var/desc = input("Please select a station to lock in.", "Locking Computer") as null|anything in L
 		target = L[desc]
 		if(target)
@@ -210,3 +198,14 @@
 			if(trg.teleporter_console)
 				trg.teleporter_console.stat &= ~NOPOWER
 				trg.teleporter_console.update_icon()
+
+/obj/machinery/computer/teleporter/proc/is_eligible(atom/movable/AM)
+	var/turf/T = get_turf(AM)
+	if(!T)
+		return FALSE
+	if(T.z == ZLEVEL_CENTCOM || T.z > ZLEVEL_SPACEMAX)
+		return FALSE
+	var/area/A = get_area(T)
+	if(!A || A.noteleport)
+		return FALSE
+	return TRUE
