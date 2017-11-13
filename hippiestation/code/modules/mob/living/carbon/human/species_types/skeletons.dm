@@ -1,3 +1,6 @@
+/datum/species/skeleton
+	attack_sound = 'hippiestation/sound/effects/skeletonhit.ogg'
+
 /datum/species/skeleton/check_roundstart_eligible()
 	return FALSE
 
