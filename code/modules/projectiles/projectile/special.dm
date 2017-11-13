@@ -75,6 +75,7 @@
 	damage_type = BURN
 	nodamage = 1
 	flag = "energy"
+	is_reflectable = TRUE
 	var/temperature = 100
 
 
@@ -116,6 +117,7 @@
 	damage_type = TOX
 	nodamage = 1
 	flag = "energy"
+	is_reflectable = TRUE
 
 /obj/item/projectile/energy/floramut/on_hit(atom/target, blocked = FALSE)
 	. = ..()
@@ -180,6 +182,7 @@
 	damage = 20
 	range = 4
 	dismemberment = 20
+	is_reflectable = TRUE
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
 	var/pressure_decrease_active = FALSE
 	var/pressure_decrease = 0.25
