@@ -114,7 +114,7 @@ God bless America.
 			frying_fried = TRUE //frying... frying... fried
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 			audible_message("<span class='notice'>[src] dings!</span>")
-		else if (cook_time == 60 && !frying_burnt)
+		else if (cook_time >= 60 && !frying_burnt)
 			frying_burnt = TRUE
 			visible_message("<span class='warning'>[src] emits an acrid smell!</span>")
 
