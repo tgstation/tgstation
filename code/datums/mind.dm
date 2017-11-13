@@ -1031,7 +1031,7 @@
 			if("clear")
 				remove_antag_datum(/datum/antagonist/changeling)
 				special_role = null
-				to_chat(current, "<span class='userdanger'>We grow weak and lose our powers! You are no longer a changeling and are stuck in your current form!</span>")
+				to_chat(current, "<span class='userdanger'>You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!</span>")
 				message_admins("[key_name_admin(usr)] has de-changeling'ed [current].")
 				log_admin("[key_name(usr)] has de-changeling'ed [current].")
 			if("changeling")
