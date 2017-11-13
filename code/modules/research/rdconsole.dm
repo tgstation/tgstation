@@ -28,7 +28,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 
 */
-
 /obj/machinery/computer/rdconsole
 	name = "R&D Console"
 	icon_screen = "rdcomp"
@@ -660,7 +659,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(0.1)
 			dat += "<div class='statusDisplay'>Processing and Updating Database...</div>"
 
-		if(0.2)
+		if(RD_CONSOLE_LOCKED_SCREEN)
 			dat += "<div class='statusDisplay'>SYSTEM LOCKED</div>"
 			dat += "<A href='?src=[REF(src)];lock=1.6'>Unlock</A>"
 
