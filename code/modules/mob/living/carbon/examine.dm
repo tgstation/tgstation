@@ -44,30 +44,30 @@
 	msg += "<span class='warning'>"
 	var/temp = getBruteLoss()
 	if(temp)
-		if (temp < 20)
+		if (temp < 25)
 			msg += "[t_He] [t_has] minor bruising.\n"
-		else if (temp >= 20 && temp < 40)
-			msg += "[t_He] [t_has] <b>moderate</b> bruising.\n"
+		else if (temp >= 25 && temp < 50)
+			msg += "[t_He] [t_has] <b>moderate</b> bruising!\n"
 		else
 			msg += "<B>[t_He] [t_has] severe bruising!</B>\n"
 
 	temp = getFireLoss()
 	if(temp)
-		if (temp < 20)
+		if (temp < 25)
 			msg += "[t_He] [t_has] minor burns.\n"
-		else if (temp >= 20 && temp < 40)
-			msg += "[t_He] [t_has] <b>moderate</b> burns.\n"
+		else if (temp >= 25 && temp < 50)
+			msg += "[t_He] [t_has] <b>moderate</b> burns!\n"
 		else
 			msg += "<B>[t_He] [t_has] severe burns!</B>\n"
 
 	temp = getCloneLoss()
 	if(temp)
-		if(temp < 20)
+		if(temp < 25)
 			msg += "[t_He] [t_is] slightly deformed.\n"
-		else if (temp >= 20 && temp < 40)
-			msg += "[t_He] [t_is] <b>moderately</b> deformed.\n"
+		else if (temp >= 25 && temp < 50)
+			msg += "[t_He] [t_is] <b>moderately</b> deformed!\n"
 		else
-			msg += "<b>[t_He] [t_is] severely deformed.</b>\n"
+			msg += "<b>[t_He] [t_is] severely deformed!</b>\n"
 
 	if(getBrainLoss() > 60)
 		msg += "[t_He] seems to be clumsy and unable to think.\n"
