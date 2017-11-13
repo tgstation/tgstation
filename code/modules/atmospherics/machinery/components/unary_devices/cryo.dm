@@ -55,8 +55,8 @@
 		C += M.rating
 
 	efficiency = initial(efficiency) * C
-	sleep_factor = initial(sleep_factor) / C
-	unconscious_factor = initial(unconscious_factor) / C
+	sleep_factor = initial(sleep_factor) * C
+	unconscious_factor = initial(unconscious_factor) * C
 	heat_capacity = initial(heat_capacity) / C
 	conduction_coefficient = initial(conduction_coefficient) * C
 
