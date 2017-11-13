@@ -3336,8 +3336,7 @@
 "gv" = (
 /obj/structure/disposalpipe/segment{
 	desc = "An underfloor disposal pipe. This one has been applied with an acid-proof coating.";
-	dir = 2;
-	icon_state = "pipe-c";
+	dir = 10;
 	name = "Acid-Proof disposal pipe"
 	},
 /obj/structure/alien/weeds,
