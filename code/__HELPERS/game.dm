@@ -219,16 +219,15 @@
 	if(!T)
 		return
 
-	var/list/processing_list = list()  
+	var/list/processing_list = list()
 	if (R == 0) // if the range is zero, we know exactly where to look for, we can skip view
 		processing_list += T.contents // We can shave off one iteration by assuming turfs cannot hear
 	else  // A variation of get_hear inlined here to take advantage of the compiler's fastpath for obj/mob in view
 		var/lum = T.luminosity
 		T.luminosity = 6 // This is the maximum luminosity
+		processing_list = viewers(R, T)
 		for(var/obj/O in view(R, T))
 			processing_list += O
-		for(var/mob/M in view(R, T))
-			processing_list += M
 		T.luminosity = lum
 
 	while(processing_list.len) // recursive_hear_check inlined here
