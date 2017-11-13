@@ -1675,6 +1675,7 @@
 	d2 = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
 "adM" = (
@@ -2829,6 +2830,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel,
 /area/security/main)
 "afY" = (
@@ -3866,6 +3868,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/red/side{
 	dir = 10
 	},
@@ -4541,6 +4544,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/red/side{
 	dir = 9
 	},
@@ -8335,6 +8339,7 @@
 	pixel_y = 23
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 5
 	},
@@ -9603,6 +9608,7 @@
 /area/crew_quarters/dorms)
 "auY" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 5
 	},
@@ -15419,6 +15425,7 @@
 /obj/structure/sign/map/right{
 	pixel_y = 32
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "aHF" = (
@@ -18596,6 +18603,7 @@
 	dir = 2;
 	pixel_y = 24
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aPz" = (
@@ -19034,6 +19042,7 @@
 	network = list("SS13")
 	},
 /obj/machinery/light,
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "aQF" = (
@@ -20017,6 +20026,7 @@
 	pixel_y = 32
 	},
 /obj/machinery/door/firedoor,
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/blue/side{
 	dir = 5
 	},
@@ -20262,6 +20272,7 @@
 	pixel_y = 32
 	},
 /obj/machinery/door/firedoor,
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/blue/side{
 	dir = 9
 	},
@@ -20465,6 +20476,7 @@
 /obj/item/device/radio/intercom{
 	pixel_x = -25
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/escape{
 	dir = 8
 	},
@@ -21577,6 +21589,7 @@
 /area/hallway/primary/central)
 "aWu" = (
 /obj/machinery/door/firedoor,
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/blue/side{
 	dir = 6
 	},
@@ -21732,6 +21745,7 @@
 /area/bridge)
 "aWM" = (
 /obj/machinery/door/firedoor,
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/blue/side{
 	dir = 10
 	},
@@ -21918,6 +21932,7 @@
 	dir = 1;
 	pixel_y = -24
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/wood,
 /area/library)
 "aXm" = (
@@ -22477,6 +22492,7 @@
 	on = 1;
 	pressure_checks = 1
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/black,
 /area/chapel/main)
 "aYH" = (
@@ -22491,6 +22507,7 @@
 	scrub_N2O = 0;
 	scrub_Toxins = 0
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/black,
 /area/chapel/main)
 "aYJ" = (
@@ -23267,6 +23284,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/grass,
 /area/hallway/secondary/exit)
 "baG" = (
@@ -24018,6 +24036,7 @@
 	icon_state = "tube1";
 	dir = 8
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
 "bco" = (
@@ -24721,6 +24740,7 @@
 /turf/closed/wall/r_wall,
 /area/science/robotics/lab)
 "beb" = (
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/purple/side{
 	dir = 10
 	},
@@ -24755,6 +24775,7 @@
 	},
 /area/hallway/primary/starboard)
 "beg" = (
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/purple/side{
 	dir = 6
 	},
@@ -24769,6 +24790,7 @@
 	pixel_y = -22
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/escape{
 	dir = 2
 	},
@@ -25047,6 +25069,7 @@
 	pixel_x = 0;
 	pixel_y = -32
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/wood,
 /area/bridge/meeting_room)
 "beQ" = (
@@ -28259,6 +28282,7 @@
 /obj/machinery/firealarm{
 	pixel_y = 27
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "blD" = (
@@ -28659,6 +28683,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel,
 /area/science/research)
 "bmq" = (
@@ -29133,6 +29158,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bnq" = (
@@ -30856,6 +30882,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "bqT" = (
@@ -31008,6 +31035,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel,
 /area/science/research)
 "bri" = (
@@ -32064,6 +32092,7 @@
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "btm" = (
@@ -32318,6 +32347,7 @@
 	dir = 4;
 	on = 1
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/hop)
 "btP" = (
@@ -34898,6 +34928,7 @@
 	dir = 2;
 	pixel_y = 24
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bzg" = (
@@ -35476,6 +35507,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	on = 1
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/barber,
 /area/crew_quarters/heads/cmo)
 "bAs" = (
@@ -38277,6 +38309,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bGd" = (
@@ -38576,6 +38609,7 @@
 /turf/open/floor/plating,
 /area/storage/tech)
 "bGH" = (
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/white/side{
 	dir = 1
 	},
@@ -40928,6 +40962,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/white/side{
 	dir = 1
 	},
@@ -43683,6 +43718,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/caution{
 	dir = 8
 	},
@@ -43922,6 +43958,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 5
 	},
@@ -45427,6 +45464,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 6
 	},
@@ -47185,6 +47223,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/neutral{
 	dir = 2
 	},
@@ -51628,6 +51667,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 9
 	},
@@ -53046,6 +53086,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cln" = (
@@ -60607,6 +60648,7 @@
 /turf/open/floor/plasteel/red/side,
 /area/hallway/secondary/exit)
 "cCL" = (
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
@@ -60652,6 +60694,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/grass,
 /area/hallway/secondary/exit)
 "cCS" = (
@@ -60677,6 +60720,7 @@
 	dir = 1;
 	layer = 2.9
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/grass,
 /area/hallway/secondary/exit)
 "cCV" = (
@@ -60745,6 +60789,7 @@
 	pixel_x = 0
 	},
 /obj/structure/window/reinforced,
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/grass,
 /area/hallway/secondary/exit)
 "cDg" = (
@@ -60759,6 +60804,7 @@
 	dir = 4
 	},
 /obj/machinery/light,
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
 "cDi" = (
@@ -62317,6 +62363,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/aisat/atmos)
 "cGG" = (
@@ -62333,6 +62380,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/aisat/atmos)
 "cGJ" = (
@@ -62497,6 +62545,151 @@
 /obj/structure/reagent_dispensers/cooking_oil,
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
+"cHb" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/plasteel/black,
+/area/security/prison)
+"cHc" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/plasteel/red/side{
+	dir = 5
+	},
+/area/security/brig)
+"cHd" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/plasteel,
+/area/security/courtroom)
+"cHe" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/plasteel/red/corner{
+	dir = 4
+	},
+/area/hallway/primary/fore)
+"cHf" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/plasteel/red/corner{
+	dir = 8
+	},
+/area/hallway/primary/fore)
+"cHg" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/plasteel/arrival{
+	dir = 1
+	},
+/area/hallway/secondary/entry)
+"cHh" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
+"cHi" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/plasteel/grimy,
+/area/chapel/office)
+"cHj" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
+"cHk" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"cHl" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/wood,
+/area/library)
+"cHm" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/wood,
+/area/library)
+"cHn" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/plasteel,
+/area/hallway/primary/port)
+"cHo" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/plasteel,
+/area/hallway/primary/port)
+"cHp" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/plasteel,
+/area/crew_quarters/locker)
+"cHq" = (
+/obj/machinery/light,
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/plasteel/arrival{
+	dir = 2
+	},
+/area/hallway/secondary/entry)
+"cHr" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/wood,
+/area/library)
+"cHs" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/wood,
+/area/crew_quarters/heads/captain)
+"cHt" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/plasteel/white/corner{
+	dir = 1
+	},
+/area/hallway/primary/starboard)
+"cHu" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/plasteel/white/corner{
+	dir = 1
+	},
+/area/hallway/primary/starboard)
+"cHv" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/plasteel,
+/area/hallway/primary/starboard)
+"cHw" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/plasteel,
+/area/hallway/primary/starboard)
+"cHx" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/plasteel/arrival{
+	dir = 1
+	},
+/area/hallway/secondary/entry)
+"cHy" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/wood,
+/area/bridge/meeting_room)
+"cHz" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
+"cHA" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
+"cHB" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
+"cHC" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
+"cHD" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/carpet/black,
+/area/maintenance/port/aft)
 
 (1,1,1) = {"
 aaa
@@ -71853,7 +72046,7 @@ arp
 arp
 aur
 apz
-awy
+cHg
 axD
 aww
 azL
@@ -71869,7 +72062,7 @@ aww
 aww
 aww
 aPh
-aQx
+cHq
 arn
 crl
 crl
@@ -71877,7 +72070,7 @@ cvE
 crl
 crl
 arn
-awy
+cHx
 axD
 aww
 azL
@@ -74449,7 +74642,7 @@ aww
 arn
 awz
 axF
-ayN
+cHz
 aww
 aad
 aaa
@@ -79578,7 +79771,7 @@ aKp
 aLW
 aMQ
 aOd
-aPo
+cHp
 aPo
 aPo
 aSH
@@ -81933,7 +82126,7 @@ bzL
 czv
 czy
 czC
-czB
+cHD
 bzL
 bYe
 bIN
@@ -84203,7 +84396,7 @@ aJf
 aKy
 aLC
 aMN
-aKp
+cHn
 aOn
 aQK
 aSb
@@ -86259,7 +86452,7 @@ aJm
 aKy
 aLC
 aNe
-aKp
+cHo
 aOt
 aQA
 aQQ
@@ -87778,7 +87971,7 @@ aex
 ahP
 aiS
 anq
-aom
+cHf
 cvs
 aim
 aqL
@@ -88536,7 +88729,7 @@ aek
 aeL
 afD
 acb
-agF
+cHb
 agF
 aig
 aiz
@@ -89868,7 +90061,7 @@ aXW
 aZn
 bai
 bbj
-bad
+cHy
 bdw
 beQ
 bgh
@@ -93937,14 +94130,14 @@ agU
 ahD
 aih
 adP
-aiB
+cHc
 ajG
 ako
 akT
 aly
 amk
 aiS
-anr
+cHe
 anq
 aov
 anU
@@ -94748,7 +94941,7 @@ aTJ
 aVr
 aWN
 aYc
-aZC
+cHs
 bat
 aZC
 bcs
@@ -95765,7 +95958,7 @@ aFl
 aGM
 aAG
 azt
-aIc
+cHk
 aIc
 aIc
 aIc
@@ -96254,7 +96447,7 @@ ajk
 ajP
 aji
 aji
-aji
+cHd
 aml
 ajk
 ajk
@@ -99379,7 +99572,7 @@ aXd
 aXd
 bcy
 bdM
-bfl
+cHA
 bfl
 bfk
 bjj
@@ -100145,7 +100338,7 @@ aTN
 aTN
 aWR
 aIu
-aZF
+cHt
 aXd
 aXd
 aXd
@@ -101158,7 +101351,7 @@ aAL
 aBB
 aCX
 alJ
-cGY
+cGX
 aGO
 aOM
 cHa
@@ -101415,7 +101608,7 @@ azy
 aBC
 aBK
 alJ
-cGZ
+cGX
 avj
 aIw
 aJH
@@ -101715,7 +101908,7 @@ bAm
 boG
 bEr
 bAm
-boG
+cHC
 bOX
 bGd
 bME
@@ -101944,7 +102137,7 @@ aTU
 aVy
 aWV
 aIu
-aZF
+cHu
 aXd
 aXd
 bcD
@@ -101955,7 +102148,7 @@ bgB
 bgB
 biW
 bkT
-bfl
+cHB
 bmi
 czV
 czY
@@ -103486,7 +103679,7 @@ aQj
 aQj
 aWY
 aYt
-aXd
+cHv
 aXd
 aXd
 aXd
@@ -104257,7 +104450,7 @@ aTZ
 aNC
 aXb
 aYt
-aXd
+cHw
 aYX
 bah
 bbr
@@ -105274,7 +105467,7 @@ aZK
 aHf
 aYC
 aJR
-aHh
+cHl
 aMC
 aNG
 aOS
@@ -106559,7 +106752,7 @@ aFZ
 aHl
 aIr
 aJT
-aHh
+cHm
 aMF
 aNI
 aHh
@@ -106826,7 +107019,7 @@ aHh
 aHh
 aUq
 aWd
-aHh
+cHr
 aZJ
 aXd
 aVB
@@ -108871,7 +109064,7 @@ cBR
 aLH
 aLH
 aIH
-aLH
+cHi
 aEv
 aEv
 aNP
@@ -110407,7 +110600,7 @@ asl
 asl
 asl
 asl
-aEy
+cHh
 bdg
 aEy
 aQs
@@ -112469,7 +112662,7 @@ aGk
 aGi
 aOX
 aEy
-aEy
+cHj
 cCy
 aLJ
 cCF
