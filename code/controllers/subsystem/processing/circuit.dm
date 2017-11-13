@@ -34,7 +34,8 @@ PROCESSING_SUBSYSTEM_DEF(circuit)
 		if(!(initial(IC.category_text) in found_categories))
 			found_categories.Add(initial(IC.category_text))
 		// Third loop is to initialize lists by category names, then put circuits matching the category inside.
-	for(var/category in found_categories)
+	for(var/k in 1 to found_categories.len)
+		var/category = found_categories[k]
 		circuit_fabricator_recipe_list[category] = list()
 		var/list/current_list = circuit_fabricator_recipe_list[category]
 		for(var/path in circuit_paths_to_use)
@@ -52,6 +53,7 @@ PROCESSING_SUBSYSTEM_DEF(circuit)
 	)
 	circuit_fabricator_recipe_list["Assemblies"] = assembly_list
 	var/list/tools_list = list(
+
 		/obj/item/device/integrated_electronics/wirer,
 		/obj/item/device/integrated_electronics/debugger,
 		/obj/item/device/integrated_electronics/analyzer
