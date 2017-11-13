@@ -125,16 +125,9 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	var/charge_count = 100
 	var/current_overlay = null
 	var/broken_state = 0
-	var/datum/looping_sound/gravgen/soundloop
-
-/obj/machinery/gravity_generator/main/Initialize()
-	. = ..()
-	soundloop = new(list(src))
-	soundloop.start()
 
 /obj/machinery/gravity_generator/main/Destroy() // If we somehow get deleted, remove all of our other parts.
 	investigate_log("was destroyed!", INVESTIGATE_GRAVITY)
-	QDEL_NULL(soundloop)
 	on = FALSE
 	update_list()
 	for(var/obj/machinery/gravity_generator/part/O in parts)
@@ -311,13 +304,11 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 		if(on) // If we turned on and the game is live.
 			if(gravity_in_level() == 0)
 				alert = 1
-				soundloop.start()
 				investigate_log("was brought online and is now producing gravity for this level.", INVESTIGATE_GRAVITY)
 				message_admins("The gravity generator was brought online [A][ADMIN_COORDJMP(src)]")
 		else
 			if(gravity_in_level() == 1)
 				alert = 1
-				soundloop.stop()
 				investigate_log("was brought offline and there is now no gravity for this level.", INVESTIGATE_GRAVITY)
 				message_admins("The gravity generator was brought offline with no backup generator. [A][ADMIN_COORDJMP(src)]")
 
