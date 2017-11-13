@@ -297,23 +297,28 @@ What a mess.*/
 				// New sorting order!
 					sortBy = href_list["sort"]
 					order = initial(order)
+				playsound(src, "terminal_type", 50, 0)
 //BASIC FUNCTIONS
 			if("Clear Screen")
 				temp = null
+				playsound(src, "terminal_type", 50, 0)
 
 			if("Return")
 				screen = 1
 				active1 = null
 				active2 = null
+				playsound(src, "terminal_type", 50, 0)
 
 			if("Confirm Identity")
 				eject_id(usr)
+				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 
 			if("Log Out")
 				authenticated = null
 				screen = null
 				active1 = null
 				active2 = null
+				playsound(src, "terminal_type", 50, 0)
 
 			if("Log In")
 				if(issilicon(usr))
@@ -323,12 +328,14 @@ What a mess.*/
 					authenticated = borg.name
 					rank = "AI"
 					screen = 1
+					playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
 				else if(IsAdminGhost(usr))
 					active1 = null
 					active2 = null
 					authenticated = usr.client.holder.admin_signature
 					rank = "Central Command"
 					screen = 1
+					playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
 				else if(istype(scan, /obj/item/card/id))
 					active1 = null
 					active2 = null
@@ -336,6 +343,12 @@ What a mess.*/
 						authenticated = scan.registered_name
 						rank = scan.assignment
 						screen = 1
+						playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
+					else
+						playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+				else
+					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+
 //RECORD FUNCTIONS
 			if("Record Maintenance")
 				screen = 2
@@ -347,6 +360,7 @@ What a mess.*/
 				var/S = locate(href_list["d_rec"])
 				if(!( GLOB.data_core.general.Find(R) ))
 					temp = "Record Not Found!"
+					playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
 				else
 					for(var/datum/data/record/E in GLOB.data_core.security)
 						if((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
@@ -354,6 +368,7 @@ What a mess.*/
 					active1 = R
 					active2 = S
 					screen = 3
+					playsound(src, "terminal_type", 50, 0)
 
 
 			if("Print Record")
@@ -362,6 +377,7 @@ What a mess.*/
 					GLOB.data_core.securityPrintCount++
 					playsound(loc, 'sound/items/poster_being_created.ogg', 100, 1)
 					sleep(30)
+					playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 					var/obj/item/paper/P = new /obj/item/paper( loc )
 					P.info = "<CENTER><B>Security Record - (SR-[GLOB.data_core.securityPrintCount])</B></CENTER><BR>"
 					if((istype(active1, /datum/data/record) && GLOB.data_core.general.Find(active1)))
@@ -419,6 +435,7 @@ What a mess.*/
 					printing = null
 			if("Print Poster")
 				if(!( printing ))
+					playsound(src, "terminal_type", 50, 0)
 					var/wanted_name = stripped_input(usr, "Please enter an alias for the criminal:", "Print Wanted Poster", active1.fields["name"])
 					if(wanted_name)
 						var/default_description = "A poster declaring [wanted_name] to be a dangerous individual, wanted by Nanotrasen. Report any sightings to security immediately."
@@ -446,6 +463,7 @@ What a mess.*/
 								var/obj/item/photo/photo = active1.fields["photo_front"]
 								new /obj/item/poster/wanted(src.loc, photo.img, wanted_name, info)
 							printing = 0
+							playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 
 //RECORD DELETE
 			if("Delete All Records")
@@ -453,6 +471,7 @@ What a mess.*/
 				temp += "Are you sure you wish to delete all Security records?<br>"
 				temp += "<a href='?src=[REF(src)];choice=Purge All Records'>Yes</a><br>"
 				temp += "<a href='?src=[REF(src)];choice=Clear Screen'>No</a>"
+				playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
 
 			if("Purge All Records")
 				investigate_log("[usr.name] ([usr.key]) has purged all the security records.", INVESTIGATE_RECORDS)
@@ -460,6 +479,7 @@ What a mess.*/
 					qdel(R)
 				GLOB.data_core.security.Cut()
 				temp = "All Security records deleted."
+				playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
 
 			if("Add Entry")
 				if(!( istype(active2, /datum/data/record) ))
@@ -472,22 +492,26 @@ What a mess.*/
 				while(active2.fields[text("com_[]", counter)])
 					counter++
 				active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [] [], []<BR>[]", src.authenticated, src.rank, worldtime2text(), time2text(world.realtime, "MMM DD"), GLOB.year_integer+540, t1)
-
+				playsound(src, "terminal_type", 50, 0)
+				
 			if("Delete Record (ALL)")
 				if(active1)
 					temp = "<h5>Are you sure you wish to delete the record (ALL)?</h5>"
 					temp += "<a href='?src=[REF(src)];choice=Delete Record (ALL) Execute'>Yes</a><br>"
 					temp += "<a href='?src=[REF(src)];choice=Clear Screen'>No</a>"
+					playsound(src, "terminal_type", 50, 0)
 
 			if("Delete Record (Security)")
 				if(active2)
 					temp = "<h5>Are you sure you wish to delete the record (Security Portion Only)?</h5>"
 					temp += "<a href='?src=[REF(src)];choice=Delete Record (Security) Execute'>Yes</a><br>"
 					temp += "<a href='?src=[REF(src)];choice=Clear Screen'>No</a>"
+					playsound(src, "terminal_type", 50, 0)
 
 			if("Delete Entry")
 				if((istype(active2, /datum/data/record) && active2.fields[text("com_[]", href_list["del_c"])]))
 					active2.fields[text("com_[]", href_list["del_c"])] = "<B>Deleted</B>"
+					playsound(src, "terminal_type", 50, 0)
 //RECORD CREATE
 			if("New Record (Security)")
 				if((istype(active1, /datum/data/record) && !( istype(active2, /datum/data/record) )))
@@ -502,6 +526,7 @@ What a mess.*/
 					GLOB.data_core.security += R
 					active2 = R
 					screen = 3
+					playsound(src, "terminal_type", 50, 0)
 
 			if("New Record (General)")
 				//General Record
@@ -548,6 +573,7 @@ What a mess.*/
 				M.fields["cdi_d"]		= "No diseases have been diagnosed at the moment."
 				M.fields["notes"]		= "No notes."
 				GLOB.data_core.medical += M
+				playsound(src, "terminal_type", 50, 0)
 
 
 
@@ -566,6 +592,7 @@ What a mess.*/
 								active1.fields["name"] = t1
 							if(istype(active2, /datum/data/record))
 								active2.fields["name"] = t1
+							playsound(src, "terminal_type", 50, 0)
 					if("id")
 						if(istype(active2, /datum/data/record) || istype(active1, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please input id:", "Secure. records", active1.fields["id"], null)
@@ -575,50 +602,59 @@ What a mess.*/
 								active1.fields["id"] = t1
 							if(istype(active2, /datum/data/record))
 								active2.fields["id"] = t1
+							playsound(src, "terminal_type", 50, 0)
 					if("fingerprint")
 						if(istype(active1, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please input fingerprint hash:", "Secure. records", active1.fields["fingerprint"], null)
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
 							active1.fields["fingerprint"] = t1
+							playsound(src, "terminal_type", 50, 0)
 					if("sex")
 						if(istype(active1, /datum/data/record))
 							if(active1.fields["sex"] == "Male")
 								active1.fields["sex"] = "Female"
 							else
 								active1.fields["sex"] = "Male"
+							playsound(src, "terminal_type", 50, 0)
 					if("age")
 						if(istype(active1, /datum/data/record))
 							var/t1 = input("Please input age:", "Secure. records", active1.fields["age"], null) as num
 							if(!canUseSecurityRecordsConsole(usr, "age", a1))
 								return
 							active1.fields["age"] = t1
+							playsound(src, "terminal_type", 50, 0)
 					if("species")
 						if(istype(active1, /datum/data/record))
 							var/t1 = input("Select a species", "Species Selection") as null|anything in GLOB.roundstart_races
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
 							active1.fields["species"] = t1
+							playsound(src, "terminal_type", 50, 0)
 					if("show_photo_front")
 						if(active1.fields["photo_front"])
 							if(istype(active1.fields["photo_front"], /obj/item/photo))
 								var/obj/item/photo/P = active1.fields["photo_front"]
 								P.show(usr)
+								playsound(src, "terminal_type", 50, 0)
 					if("upd_photo_front")
 						var/icon/photo = get_photo(usr)
 						if(photo)
 							qdel(active1.fields["photo_front"])
 							active1.fields["photo_front"] = photo
+							playsound(src, "terminal_type", 50, 0)
 					if("show_photo_side")
 						if(active1.fields["photo_side"])
 							if(istype(active1.fields["photo_side"], /obj/item/photo))
 								var/obj/item/photo/P = active1.fields["photo_side"]
 								P.show(usr)
+								playsound(src, "terminal_type", 50, 0)
 					if("upd_photo_side")
 						var/icon/photo = get_photo(usr)
 						if(photo)
 							qdel(active1.fields["photo_side"])
 							active1.fields["photo_side"] = photo
+							playsound(src, "terminal_type", 50, 0)
 					if("mi_crim_add")
 						if(istype(active1, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please input minor crime names:", "Secure. records", "", null)
@@ -627,12 +663,14 @@ What a mess.*/
 								return
 							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, worldtime2text())
 							GLOB.data_core.addMinorCrime(active1.fields["id"], crime)
+							playsound(src, "terminal_type", 50, 0)
 					if("mi_crim_delete")
 						if(istype(active1, /datum/data/record))
 							if(href_list["cdataid"])
 								if(!canUseSecurityRecordsConsole(usr, "delete", null, a2))
 									return
 								GLOB.data_core.removeMinorCrime(active1.fields["id"], href_list["cdataid"])
+								playsound(src, "terminal_type", 50, 0)
 					if("ma_crim_add")
 						if(istype(active1, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please input major crime names:", "Secure. records", "", null)
@@ -641,18 +679,21 @@ What a mess.*/
 								return
 							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, worldtime2text())
 							GLOB.data_core.addMajorCrime(active1.fields["id"], crime)
+							playsound(src, "terminal_type", 50, 0)
 					if("ma_crim_delete")
 						if(istype(active1, /datum/data/record))
 							if(href_list["cdataid"])
 								if(!canUseSecurityRecordsConsole(usr, "delete", null, a2))
 									return
 								GLOB.data_core.removeMajorCrime(active1.fields["id"], href_list["cdataid"])
+								playsound(src, "terminal_type", 50, 0)
 					if("notes")
 						if(istype(active2, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please summarize notes:", "Secure. records", active2.fields["notes"], null)
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
 							active2.fields["notes"] = t1
+							playsound(src, "terminal_type", 50, 0)
 					if("criminal")
 						if(istype(active2, /datum/data/record))
 							temp = "<h5>Criminal Status:</h5>"
@@ -663,6 +704,7 @@ What a mess.*/
 							temp += "<li><a href='?src=[REF(src)];choice=Change Criminal Status;criminal2=parolled'>Parolled</a></li>"
 							temp += "<li><a href='?src=[REF(src)];choice=Change Criminal Status;criminal2=released'>Discharged</a></li>"
 							temp += "</ul>"
+							playsound(src, "terminal_type", 50, 0)
 					if("rank")
 						var/list/L = list( "Head of Personnel", "Captain", "AI", "Central Command" )
 						//This was so silly before the change. Now it actually works without beating your head against the keyboard. /N
@@ -672,8 +714,10 @@ What a mess.*/
 							for(var/rank in get_all_jobs())
 								temp += "<li><a href='?src=[REF(src)];choice=Change Rank;rank=[rank]'>[rank]</a></li>"
 							temp += "</ul>"
+							playsound(src, "terminal_type", 50, 0)
 						else
 							alert(usr, "You do not have the required rank to do this!")
+							playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
 //TEMPORARY MENU FUNCTIONS
 			else//To properly clear as per clear screen.
 				temp=null
@@ -683,6 +727,7 @@ What a mess.*/
 							active1.fields["rank"] = href_list["rank"]
 							if(href_list["rank"] in get_all_jobs())
 								active1.fields["real_rank"] = href_list["real_rank"]
+						playsound(src, "terminal_type", 50, 0)
 
 					if("Change Criminal Status")
 						if(active2)
@@ -701,11 +746,13 @@ What a mess.*/
 							investigate_log("[active1.fields["name"]] has been set from [old_field] to [active2.fields["criminal"]] by [usr.name] ([usr.key]).", INVESTIGATE_RECORDS)
 							for(var/mob/living/carbon/human/H in GLOB.mob_list) //thanks for forcing me to do this, whoever wrote this shitty records system
 								H.sec_hud_set_security_status()
+							playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 					if("Delete Record (Security) Execute")
 						investigate_log("[usr.name] ([usr.key]) has deleted the security records for [active1.fields["name"]].", INVESTIGATE_RECORDS)
 						if(active2)
 							qdel(active2)
 							active2 = null
+						playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 
 					if("Delete Record (ALL) Execute")
 						if(active1)
@@ -716,10 +763,12 @@ What a mess.*/
 									break
 							qdel(active1)
 							active1 = null
+							playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 
 						if(active2)
 							qdel(active2)
 							active2 = null
+							playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 					else
 						temp = "This function does not appear to be working at the moment. Our apologies."
 
