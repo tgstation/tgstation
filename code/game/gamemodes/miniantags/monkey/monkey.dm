@@ -121,7 +121,7 @@
 	to_chat(monkey_mind.current, "<b>Your mission will be deemed a success if any of the live infected monkeys reach CentCom.</b>")
 	to_chat(monkey_mind.current, "<b>As an initial infectee, you will be considered a 'leader' by your fellow monkeys.</b>")
 	to_chat(monkey_mind.current, "<b>You can use :k to talk to fellow monkeys!</b>")
-	carrier.current.playsound_local(get_turf(monkey_mind.current), 'sound/ambience/antag/monkey.ogg', 100, FALSE, pressure_affected = FALSE)
+	monkey_mind.current.playsound_local(get_turf(monkey_mind.current), 'sound/ambience/antag/monkey.ogg', 100, FALSE, pressure_affected = FALSE)
 
 /proc/remove_monkey(datum/mind/monkey_mind)
 	SSticker.mode.ape_infectees.Remove(monkey_mind)
