@@ -19097,6 +19097,7 @@
 	dir = 8;
 	pixel_x = 23
 	},
+/obj/structure/reagent_dispensers/cooking_oil,
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
 "aVc" = (

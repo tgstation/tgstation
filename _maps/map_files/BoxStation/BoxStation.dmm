@@ -15138,6 +15138,9 @@
 	req_access_txt = "28"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "aKW" = (
@@ -15621,9 +15624,6 @@
 "aMk" = (
 /obj/machinery/chem_master/condimaster{
 	name = "CondiMaster Neo"
-	},
-/obj/machinery/camera{
-	c_tag = "Kitchen Cold Room"
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
@@ -57693,6 +57693,14 @@
 /obj/item/device/flashlight,
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
+"QoL" = (
+/obj/machinery/camera{
+	c_tag = "Kitchen Cold Room"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/reagent_dispensers/cooking_oil,
+/turf/open/floor/plasteel/showroomfloor,
+/area/crew_quarters/kitchen)
 
 (1,1,1) = {"
 aaa
@@ -96357,7 +96365,7 @@ alP
 aGL
 aHY
 aQj
-aQj
+QoL
 aMk
 aNK
 aOM
