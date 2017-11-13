@@ -10,8 +10,8 @@
 	var/animals = 1
 	var/one = "one"
 
-/datum/round_event/ghost_role/sentience/start()
-	var/sentience_report = "<font size=3><b>[command_name()] Medium-Priority Update</b></font>"
+/datum/round_event/ghost_role/sentience/announce(fake)
+	var/sentience_report = ""
 
 	var/data = pick("scans from our long-range sensors", "our sophisticated probabilistic models", "our omnipotence", "the communications traffic on your station", "energy emissions we detected", "\[REDACTED\]")
 	var/pets = pick("animals/bots", "bots/animals", "pets", "simple animals", "lesser lifeforms", "\[REDACTED\]")
@@ -19,8 +19,7 @@
 
 	sentience_report += "<br><br>Based on [data], we believe that [one] of the station's [pets] has developed [strength] level intelligence, and the ability to communicate."
 
-	print_command_report(text=sentience_report)
-	..()
+	priority_announce(sentience_report,"[command_name()] Medium-Priority Update")
 
 /datum/round_event/ghost_role/sentience/spawn_role()
 	var/list/mob/dead/observer/candidates
