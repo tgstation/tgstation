@@ -1,0 +1,9 @@
+<link rel='ractive' href='./pipe_dispensers/colorsel.ract'>
+<link rel='ractive' href='./pipe_dispensers/layersel.ract'>
+<link rel='ractive' href='./pipe_dispensers/recipelist.ract'>
+
+{{#if data.atmos}}
+	<colorsel/>
+	<layersel/>
+{{/if}}
+<recipelist/>

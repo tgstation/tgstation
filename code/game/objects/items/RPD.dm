@@ -120,6 +120,15 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 	dirtype = dt
 
 
+GLOBAL_LIST_INIT(pipe_paint_colors, list(
+	"Grey"		= rgb(255,255,255),
+	"Red"		= rgb(255,0,0),
+	"Blue"		= rgb(0,0,255),
+	"Cyan"		= rgb(0,256,249),
+	"Green"		= rgb(30,255,0),
+	"Yellow"	= rgb(255,198,0),
+	"Purple"	= rgb(130,43,255)
+))
 
 /obj/item/pipe_dispenser
 	name = "Rapid Piping Device (RPD)"
@@ -141,15 +150,6 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 	var/mode = ATMOS_MODE
 	var/p_dir = NORTH
 	var/p_flipped = FALSE
-	var/list/paint_colors = list(
-		"Grey"		= rgb(255,255,255),
-		"Red"		= rgb(255,0,0),
-		"Blue"		= rgb(0,0,255),
-		"Cyan"		= rgb(0,256,249),
-		"Green"		= rgb(30,255,0),
-		"Yellow"	= rgb(255,198,0),
-		"Purple"	= rgb(130,43,255)
-	)
 	var/paint_color="Grey"
 	var/screen = CATEGORY_ATMOS //Starts on the atmos tab.
 	var/piping_layer = PIPING_LAYER_DEFAULT
@@ -215,9 +215,8 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 			r += list(list("pipe_name" = info.name, "pipe_index" = i, "selected" = (info == recipe)))
 		data["categories"] += list(list("cat_name" = c, "recipes" = r))
 
-	data["paint_colors"] = list()
-	for(var/c in paint_colors)
-		data["paint_colors"] += list(list("color_name" = c, "color_hex" = paint_colors[c], "selected" = (c == paint_color)))
+	for(var/c in GLOB.pipe_paint_colors)
+		data["paint_colors"] += list(list("color_name" = c, "color_hex" = GLOB.pipe_paint_colors[c], "selected" = (c == paint_color)))
 
 	return data
 
@@ -273,7 +272,7 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 		make_pipe_whitelist = list(/obj/structure/lattice, /obj/structure/girder, /obj/item/pipe)
 
 	//make sure what we're clicking is valid for the current mode
-	var/can_make_pipe = ((atmos_piping_mode || mode == DISPOSALS_MODE) && (isturf(A) || is_type_in_list(A, make_pipe_whitelist))
+	var/can_make_pipe = (atmos_piping_mode || mode == DISPOSALS_MODE) && (isturf(A) || is_type_in_list(A, make_pipe_whitelist))
 
 	//So that changing the menu settings doesn't affect the pipes already being built.
 	var/queued_p_type = recipe.id
@@ -287,7 +286,7 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 				return ..()
 			var/obj/machinery/atmospherics/pipe/P = A
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			P.paint(paint_colors[paint_color])
+			P.paint(GLOB.pipe_paint_colors[paint_color])
 			user.visible_message("<span class='notice'>[user] paints \the [P] [paint_color].</span>","<span class='notice'>You paint \the [P] [paint_color].</span>")
 			return
 
@@ -323,7 +322,7 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 					P.setPipingLayer(temp_piping_layer)
 				else
 					P.setPipingLayer(piping_layer)
-				P.paint(paint_colors[paint_color])
+				P.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
 
 		if(METER_MODE) //Making pipe meters
 			if(!can_make_pipe)

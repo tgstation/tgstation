@@ -1,0 +1,10 @@
+{{#each data.categories}}
+	<ui-display title='{{cat_name}}'>
+		{{#each recipes}}
+			<ui-section>
+				<ui-button state='{{selected ? "selected" : null}}' action='pipe_type'
+					params='{"pipe_type": {{pipe_index}}, "category": {{cat_name}}}'>{{pipe_name}}</ui-button>
+			</ui-section>
+		{{/each}}
+	</ui-display>
+{{/each}}

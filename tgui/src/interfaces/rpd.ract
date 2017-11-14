@@ -1,5 +1,6 @@
-<link rel='ractive' href='./rpd/dirsel.ract'>
-<link rel='ractive' href='./rpd/colorsel.ract'>
+<link rel='ractive' href='./pipe_dispensers/colorsel.ract'>
+<link rel='ractive' href='./pipe_dispensers/layersel.ract'>
+<link rel='ractive' href='./pipe_dispensers/recipelist.ract'>
 
 {{#if data.mode >= 0}}
 	<dirsel/>
@@ -29,23 +30,7 @@
 			action='screen' params='{"screen": 2}'>Disposals</ui-button>
 	</ui-section>
 	{{#if data.screen == 0}}
-		<ui-section label='Piping Layer'>
-			<ui-button state='{{data.piping_layer == 1 ? "selected" : null}}' action='piping_layer'
-				params='{"piping_layer": 1}'>1</ui-button>
-			<ui-button state='{{data.piping_layer == 2 ? "selected" : null}}' action='piping_layer'
-				params='{"piping_layer": 2}'>2</ui-button>
-			<ui-button state='{{data.piping_layer == 3 ? "selected" : null}}' action='piping_layer'
-				params='{"piping_layer": 3}'>3</ui-button>
-		</ui-section>
+		<layersel/>
 	{{/if}}
 </ui-display>
-{{#each data.categories}}
-	<ui-display title='{{cat_name}}'>
-		{{#each recipes}}
-			<ui-section>
-				<ui-button state='{{selected ? "selected" : null}}' action='pipe_type'
-					params='{"pipe_type": {{pipe_index}}, "category": {{cat_name}}}'>{{pipe_name}}</ui-button>
-			</ui-section>
-		{{/each}}
-	</ui-display>
-{{/each}}
+<recipelist/>
