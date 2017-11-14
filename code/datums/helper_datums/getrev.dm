@@ -54,6 +54,9 @@
 		to_chat(src, "[prefix]<a href=\"[CONFIG_GET(string/githuburl)]/commit/[pc]\">[copytext(pc, 1, min(length(pc), 7))]</a>")
 	else
 		to_chat(src, "Revision unknown")
+	if(SERVER_TOOLS_PRESENT)
+		to_chat(src, "Server tools version: [SERVER_TOOLS_VERSION]")
+		to_chat(src, "Server tools API version: [SERVER_TOOLS_API_VERSION]")
 	to_chat(src, "<b>Current Informational Settings:</b>")
 	to_chat(src, "Protect Authority Roles From Traitor: [CONFIG_GET(flag/protect_roles_from_antagonist)]")
 	to_chat(src, "Protect Assistant Role From Traitor: [CONFIG_GET(flag/protect_assistant_from_antagonist)]")
