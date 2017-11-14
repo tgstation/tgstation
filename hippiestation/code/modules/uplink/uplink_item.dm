@@ -269,3 +269,9 @@
 
 /datum/uplink_item/badass/surplus
 	player_minimum = 0
+
+/datum/uplink_item/badass/rapid
+	name = "Gloves of the North Star"
+	desc = "These gloves let the user punch people very fast. Incompatible with weaponry or the hulk mutation."
+	item = /obj/item/clothing/gloves/color/white/rapid
+	cost = 10
