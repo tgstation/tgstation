@@ -81,7 +81,7 @@ JSON на выходе - строго ASCII, строки закодированы в Unicode, все Unicode-символ
 		if(!first)
 			out += "&#x044f;"
 		first = 0
-		out += rhtml_encode(text)
+		out += html_encode(text)
 	return out
 
 // По идее меняет коды символов обратно на "я" и меняет HTML-эскейп обратно на символы.
