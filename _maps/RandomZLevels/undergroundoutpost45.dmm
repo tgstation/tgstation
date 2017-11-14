@@ -1547,8 +1547,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "dC" = (
 /obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
+	dir = 6
 	},
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/decal/cleanable/dirt,
@@ -1608,9 +1607,8 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "dH" = (
-/obj/structure/disposalpipe/junction{
-	dir = 4;
-	icon_state = "pipe-j2"
+/obj/structure/disposalpipe/junction/flip{
+	dir = 4
 	},
 /turf/open/floor/plasteel/green/side{
 	dir = 1;
@@ -1646,8 +1644,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "dK" = (
 /obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
+	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/sink{
@@ -1767,8 +1764,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "dW" = (
 /obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
+	dir = 6
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -1806,8 +1802,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "ea" = (
 /obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
+	dir = 9
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -2471,8 +2466,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "fv" = (
 /obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
+	dir = 5
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8;
@@ -2521,8 +2515,7 @@
 	icon_state = "2-8"
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
+	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
@@ -2603,8 +2596,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "fH" = (
 /obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
+	dir = 5
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -2612,8 +2604,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "fI" = (
 /obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
+	dir = 10
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/contraband/eat{
@@ -2897,8 +2888,7 @@
 	icon_state = "1-4"
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
+	dir = 5
 	},
 /turf/open/floor/plating{
 	broken = 1;
@@ -2911,8 +2901,7 @@
 	icon_state = "2-8"
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
+	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating{
@@ -3539,8 +3528,7 @@
 "hN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
+	dir = 5
 	},
 /turf/open/floor/plasteel/bar{
 	heat_capacity = 1e+006
@@ -3569,8 +3557,7 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "hQ" = (
 /obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
+	dir = 10
 	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5;
@@ -3898,8 +3885,7 @@
 /area/awaymission/undergroundoutpost45/research)
 "iz" = (
 /obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
+	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -3995,8 +3981,7 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "iJ" = (
 /obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
+	dir = 5
 	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5;
@@ -4006,8 +3991,7 @@
 "iK" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
+	dir = 10
 	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5;
@@ -4647,8 +4631,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/structure/disposalpipe/junction{
-	icon_state = "pipe-j2";
+/obj/structure/disposalpipe/junction/flip{
 	dir = 2
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -4727,8 +4710,7 @@
 	icon_state = "1-8"
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
+	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -5327,8 +5309,7 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "lj" = (
 /obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
+	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -5628,8 +5609,7 @@
 	icon_state = "2-8"
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
+	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -5646,8 +5626,7 @@
 	},
 /obj/machinery/light,
 /obj/structure/disposalpipe/junction{
-	dir = 8;
-	icon_state = "pipe-j1"
+	dir = 8
 	},
 /obj/machinery/firealarm{
 	dir = 1;
@@ -5697,8 +5676,7 @@
 /area/awaymission/undergroundoutpost45/research)
 "lJ" = (
 /obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
+	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -6286,8 +6264,7 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "mM" = (
 /obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
+	dir = 6
 	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5;
@@ -6296,8 +6273,7 @@
 /area/awaymission/undergroundoutpost45/research)
 "mN" = (
 /obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
+	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/cafeteria{
@@ -6589,8 +6565,7 @@
 	icon_state = "2-4"
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
+	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
@@ -6667,8 +6642,7 @@
 	icon_state = "2-8"
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
+	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/decal/cleanable/dirt,
@@ -6985,8 +6959,7 @@
 	icon_state = "1-4"
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
+	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
@@ -7211,9 +7184,8 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/structure/disposalpipe/junction{
-	dir = 2;
-	icon_state = "pipe-y"
+/obj/structure/disposalpipe/junction/yjunction{
+	dir = 2
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
@@ -7262,8 +7234,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/structure/disposalpipe/junction{
-	icon_state = "pipe-y";
+/obj/structure/disposalpipe/junction/yjunction{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -7663,8 +7634,7 @@
 	icon_state = "2-4"
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
+	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating{
@@ -7676,8 +7646,7 @@
 	icon_state = "1-8"
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
+	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
@@ -7704,8 +7673,7 @@
 /area/awaymission/undergroundoutpost45/research)
 "pe" = (
 /obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
+	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/cafeteria{
@@ -9084,8 +9052,7 @@
 /area/awaymission/undergroundoutpost45/research)
 "rE" = (
 /obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
+	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
@@ -9112,8 +9079,7 @@
 /area/awaymission/undergroundoutpost45/research)
 "rG" = (
 /obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
+	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -9198,8 +9164,7 @@
 	icon_state = "2-4"
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
+	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -9389,8 +9354,7 @@
 	icon_state = "2-8"
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
+	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -10021,8 +9985,7 @@
 	icon_state = "1-4"
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
+	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating{
@@ -10064,8 +10027,7 @@
 	icon_state = "2-8"
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
+	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -10373,8 +10335,7 @@
 	icon_state = "1-4"
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
+	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -10402,9 +10363,8 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/structure/disposalpipe/junction{
-	dir = 4;
-	icon_state = "pipe-j2"
+/obj/structure/disposalpipe/junction/flip{
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -10482,8 +10442,7 @@
 	icon_state = "1-8"
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
+	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
@@ -11208,8 +11167,7 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "vp" = (
 /obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
+	dir = 9
 	},
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -11245,8 +11203,7 @@
 	icon_state = "1-4"
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
+	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel{
@@ -11275,8 +11232,7 @@
 	icon_state = "2-4"
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
+	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -11844,8 +11800,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
+	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral{

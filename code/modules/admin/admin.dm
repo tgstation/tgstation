@@ -772,6 +772,11 @@
 	winheight = min(winheight, 690)
 	usr << browse(dat, "window=players;size=375x[winheight]")
 
+/datum/admins/proc/create_or_modify_area()
+	set category = "Debug"
+	set name = "Create or modify area"
+	create_area(usr)
+
 //
 //
 //ALL DONE
