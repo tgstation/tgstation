@@ -7,6 +7,4 @@
 
 	if(M.a_intent == INTENT_HARM)
 		M.changeNext_move(CLICK_CD_RAPID)
-		.= FALSE
-	else
-		.= FALSE
+	.= FALSE
