@@ -170,6 +170,9 @@
 		new build_type(get_turf(loc))
 
 	if(href_list["print"])
+		if(!CONFIG_GET(flag/ic_printing))
+			to_chat(usr, "<span class='warning'>CentCom has disabled printing of custom circuitry due to recent allegations of copyright infringement.</span>")
+			return
 		switch(href_list["print"])
 			if("load")
 				program = input("Put your code there:", "loading", null, null)
