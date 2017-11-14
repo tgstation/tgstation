@@ -7,13 +7,6 @@
 	anchored = TRUE
 	var/wait = 0
 	var/piping_layer = PIPING_LAYER_DEFAULT
-	var/recipes
-	var/paint_color = "Grey"
-	var/atmos = TRUE
-
-/obj/machinery/pipedispenser/Initialize()
-	. = ..()
-	recipes = GLOB.atmos_pipe_recipes
 
 /obj/machinery/pipedispenser/attack_paw(mob/user)
 	return attack_hand(user)
@@ -21,61 +14,49 @@
 /obj/machinery/pipedispenser/attack_hand(mob/user)
 	if(..())
 		return 1
-	ui_interact(user)
+	var/dat = "PIPING LAYER: <A href='?src=[REF(src)];layer_down=1'>--</A><b>[piping_layer]</b><A href='?src=[REF(src)];layer_up=1'>++</A><BR>"
 
-/obj/machinery/pipedispenser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if(!ui)
-		ui = new(user, src, ui_key, "pipe_dispenser", name, 300, 550, master_ui, state)
-		ui.open()
+	var/recipes = GLOB.atmos_pipe_recipes
 
-/obj/machinery/pipedispenser/ui_data(mob/user)
-	var/list/data = list(
-		"piping_layer" = piping_layer,
-		"categories" = list(),
-		"paint_colors" = list(),
-		"atmos" = atmos
-	)
+	for(var/category in recipes)
+		var/list/cat_recipes = recipes[category]
+		dat += "<b>[category]:</b><ul>"
 
-	for(var/c in recipes)
-		var/list/cat = recipes[c]
-		var/list/r = list()
-		for(var/i in 1 to cat.len)
-			var/datum/pipe_info/info = cat[i]
-			r += list(list("pipe_name" = info.name, "pipe_index" = i, "selected" = FALSE))
-		data["categories"] += list(list("cat_name" = c, "recipes" = r))
+		for(var/i in cat_recipes)
+			var/datum/pipe_info/I = i
+			//dat += I.Render(src)
 
-	data["paint_colors"] = list()
-	for(var/c in GLOB.pipe_paint_colors)
-		data["paint_colors"] += list(list("color_name" = c, "color_hex" = GLOB.pipe_paint_colors[c], "selected" = (c == paint_color)))
+		dat += "</ul>"
 
-/obj/machinery/pipedispenser/ui_act(action, params)
+	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
+	onclose(user, "pipedispenser")
+	return
+
+/obj/machinery/pipedispenser/Topic(href, href_list)
 	if(..())
-		return
-	if(!usr.canUseTopic(src))
-		return
-	switch(action)
-		if("color")
-			paint_color = params["paint_color"]
-		if("piping_layer")
-			piping_layer = text2num(params["piping_layer"])
-		if("pipe_type")
-			var/datum/pipe_info/recipe = recipes[params["category"]][text2num(params["pipe_type"])]
-			make_pipe(recipe)
-
-/obj/machinery/pipedispenser/proc/make_pipe(datum/pipe_info/recipe)
-	if(istype(recipe, /datum/pipe_info/meter))
-		var/obj/item/pipe_meter/PM = new(loc)
-		PM.setAttachLayer(piping_layer)
-		return
-
-	var/obj/machinery/atmospherics/A = recipe.id
-	var/p_type = initial(A.construction_type)
-	var/obj/item/pipe/P = new p_type(loc, A, SOUTH)
-	P.setPipingLayer(piping_layer)
-	P.add_fingerprint(usr)
-	P.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
+		return 1
+	if(!anchored|| !usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+		usr << browse(null, "window=pipedispenser")
+		return 1
+	usr.set_machine(src)
+	add_fingerprint(usr)
+	if(href_list["makepipe"])
+		if(wait < world.time)
+			var/p_type = text2path(href_list["makepipe"])
+			var/p_dir = text2num(href_list["dir"])
+			var/obj/item/pipe/P = new (loc, p_type, p_dir)
+			P.setPipingLayer(piping_layer)
+			P.add_fingerprint(usr)
+			wait = world.time + 10
+	if(href_list["makemeter"])
+		if(wait < world.time )
+			new /obj/item/pipe_meter(loc)
+			wait = world.time + 15
+	if(href_list["layer_up"])
+		piping_layer = Clamp(++piping_layer, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
+	if(href_list["layer_down"])
+		piping_layer = Clamp(--piping_layer, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
+	return
 
 /obj/machinery/pipedispenser/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
@@ -120,11 +101,7 @@
 	desc = "Dispenses pipes that will ultimately be used to move trash around."
 	density = TRUE
 	anchored = TRUE
-	atmos = FALSE
 
-/obj/machinery/pipedispenser/disposal/Initialize()
-	. = ..()
-	recipes = GLOB.disposal_pipe_recipes
 
 //Allow you to drag-drop disposal pipes and transit tubes into it
 /obj/machinery/pipedispenser/disposal/MouseDrop_T(obj/structure/pipe, mob/usr)
@@ -142,16 +119,46 @@
 
 	qdel(pipe)
 
-/obj/machinery/pipedispenser/disposal/make_pipe(datum/pipe_info/recipe)
-	var/obj/structure/disposalconstruct/C = new (loc, recipe.id)
+/obj/machinery/pipedispenser/disposal/attack_hand(mob/user)
+	if(..())
+		return 1
 
-	if(!C.can_place())
-		to_chat(usr, "<span class='warning'>There's not enough room to build that here!</span>")
-		qdel(C)
-		return
+	var/dat = ""
+	var/recipes = GLOB.disposal_pipe_recipes
 
-	C.add_fingerprint(usr)
-	C.update_icon()
+	for(var/category in recipes)
+		var/list/cat_recipes = recipes[category]
+		dat += "<b>[category]:</b><ul>"
+
+		for(var/i in cat_recipes)
+			var/datum/pipe_info/I = i
+			//dat += I.Render(src)
+
+		dat += "</ul>"
+
+	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
+	return
+
+
+/obj/machinery/pipedispenser/disposal/Topic(href, href_list)
+	if(..())
+		return 1
+	usr.set_machine(src)
+	add_fingerprint(usr)
+	if(href_list["dmake"])
+		if(wait < world.time)
+			var/p_type = text2path(href_list["dmake"])
+			var/obj/structure/disposalconstruct/C = new (loc, p_type)
+
+			if(!C.can_place())
+				to_chat(usr, "<span class='warning'>There's not enough room to build that here!</span>")
+				qdel(C)
+				return
+
+			C.add_fingerprint(usr)
+			C.update_icon()
+			wait = world.time + 15
+	return
 
 //transit tube dispenser
 //inherit disposal for the dragging proc
@@ -162,9 +169,6 @@
 	density = TRUE
 	desc = "Dispenses pipes that will move beings around."
 	anchored = TRUE
-
-/obj/machinery/pipedispenser/disposal/transit_tube/ui_interact()
-	return
 
 /obj/machinery/pipedispenser/disposal/transit_tube/attack_hand(mob/user)
 	if(..())

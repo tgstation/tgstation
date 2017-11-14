@@ -1,8 +1,0 @@
-<ui-section label='Piping Layer'>
-	<ui-button state='{{data.piping_layer == 1 ? "selected" : null}}' action='piping_layer'
-		params='{"piping_layer": 1}'>1</ui-button>
-	<ui-button state='{{data.piping_layer == 2 ? "selected" : null}}' action='piping_layer'
-		params='{"piping_layer": 2}'>2</ui-button>
-	<ui-button state='{{data.piping_layer == 3 ? "selected" : null}}' action='piping_layer'
-		params='{"piping_layer": 3}'>3</ui-button>
-</ui-section>
