@@ -63,6 +63,12 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 	var/id = -1
 	var/dirtype = PIPE_BENDABLE
 
+/datum/pipe_info/proc/Render(dispenser)
+	return "<li><a href='?src=[REF(dispenser)]&[Params()]'>[name]</a></li>"
+
+/datum/pipe_info/proc/Params()
+	return ""
+
 /datum/pipe_info/proc/get_preview(selected_dir)
 	var/list/dirs
 	switch(dirtype)
@@ -102,12 +108,18 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 	var/obj/item/pipe/c = initial(path.construction_type)
 	dirtype = initial(c.RPD_type)
 
+/datum/pipe_info/pipe/Params()
+	return "makepipe=[id]&type=[dirtype]"
+
 /datum/pipe_info/meter
 	icon_state = "meterX"
 	dirtype = PIPE_ONEDIR
 
 /datum/pipe_info/meter/New(label)
 	name = label
+
+/datum/pipe_info/meter/Params()
+	return "makemeter=1&type=[dirtype]"
 
 /datum/pipe_info/disposal/New(label, obj/path, dt=PIPE_UNARY)
 	name = label
@@ -119,6 +131,8 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 
 	dirtype = dt
 
+/datum/pipe_info/disposal/Params()
+	return "dmake=[id]&type=[dirtype]"
 
 
 /obj/item/pipe_dispenser
@@ -273,7 +287,7 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 		make_pipe_whitelist = list(/obj/structure/lattice, /obj/structure/girder, /obj/item/pipe)
 
 	//make sure what we're clicking is valid for the current mode
-	var/can_make_pipe = ((atmos_piping_mode || mode == DISPOSALS_MODE) && (isturf(A) || is_type_in_list(A, make_pipe_whitelist))
+	var/can_make_pipe = (atmos_piping_mode || mode == DISPOSALS_MODE) && (isturf(A) || is_type_in_list(A, make_pipe_whitelist))
 
 	//So that changing the menu settings doesn't affect the pipes already being built.
 	var/queued_p_type = recipe.id
@@ -323,7 +337,7 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 					P.setPipingLayer(temp_piping_layer)
 				else
 					P.setPipingLayer(piping_layer)
-				P.paint(paint_colors[paint_color])
+				P.add_atom_colour(paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
 
 		if(METER_MODE) //Making pipe meters
 			if(!can_make_pipe)
