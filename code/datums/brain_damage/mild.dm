@@ -162,7 +162,7 @@
 			trigger_mobs = list(/mob/living/simple_animal/hostile/lizard) //they're hostile! of course they're scary!
 			trigger_species = list(/datum/species/lizard)
 		if("spooky skeletons")
-			trigger_words = list("skeleton", "rattle me bones", "milk", "xylophone", "bone", "calcium", "mr bones wild ride", "the ride never ends")
+			trigger_words = list("skeleton", "milk", "xylophone", "bone", "calcium", "the ride never ends")
 			trigger_objs = list() // todo: find paths for all above
 			trigger_mobs = list() // i forget if we have
 			trigger_species = list(/datum/species/skeleton)
