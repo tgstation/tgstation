@@ -74,7 +74,7 @@ JSON на выходе - строго ASCII, строки закодированы в Unicode, все Unicode-символ
 	t = strip_macros(t)
 	var/list/c = splittext(t, "я")
 	if(c.len == 1)
-		return t
+		return html_encode(t)
 	var/out = ""
 	var/first = 1
 	for(var/text in c)
