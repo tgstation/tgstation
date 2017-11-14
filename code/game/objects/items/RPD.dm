@@ -98,7 +98,7 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 /datum/pipe_info/meter
 	categoryId = CATEGORY_ATMOS
 	dirtype = PIPE_ONEDIR
-	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
+	icon = 'icons/obj/meter.dmi'
 	icon_state = "meterX"
 
 /datum/pipe_info/meter/New(label)
