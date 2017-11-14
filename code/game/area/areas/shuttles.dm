@@ -43,6 +43,9 @@
 	name = "Hyperspace"
 	desc = "Weeeeee"
 
+/area/shuttle/custom
+	name = "Custom player shuttle"
+
 /area/shuttle/arrival
 	name = "Arrival Shuttle"
 
@@ -108,3 +111,12 @@
 /area/shuttle/syndicate_scout
 	name = "Syndicate Scout"
 	blob_allowed = FALSE
+
+/area/shuttle/pirate
+	name = "Pirate Shuttle"
+	blob_allowed = FALSE
+	requires_power = TRUE
+
+/area/shuttle/pirate/vault
+	name = "Pirate Shuttle Vault"
+	requires_power = FALSE

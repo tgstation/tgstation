@@ -240,6 +240,10 @@
 	name = "Devil Lock"
 	icon_state = "hair_devilock"
 
+/datum/sprite_accessory/hair/drillhairextended
+	name = "Extended Drill Hair"
+	icon_state = "hair_drillhairextended"
+
 /datum/sprite_accessory/hair/dreadlocks
 	name = "Dreadlocks"
 	icon_state = "hair_dreads"

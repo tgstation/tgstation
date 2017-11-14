@@ -1,0 +1,4 @@
+author: "ike709"
+delete-after: True
+changes: 
+  - imageadd: "Added directional computer sprites. Maps haven't been changed yet."

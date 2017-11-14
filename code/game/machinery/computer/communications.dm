@@ -230,6 +230,10 @@
 			if(!currmsg || !answer || currmsg.possible_answers.len < answer)
 				state = STATE_MESSAGELIST
 			currmsg.answered = answer
+			log_game("[key_name(usr)] answered [currmsg.title] comm message. Answer : [currmsg.answered]")
+			if(currmsg)
+				currmsg.answer_callback.Invoke()
+			
 			state = STATE_VIEWMESSAGE
 		if("status")
 			state = STATE_STATUSDISPLAY
@@ -359,6 +363,9 @@
 			if(!aicurrmsg || !answer || aicurrmsg.possible_answers.len < answer)
 				aistate = STATE_MESSAGELIST
 			aicurrmsg.answered = answer
+			log_game("[key_name(usr)] answered [currmsg.title] comm message. Answer : [currmsg.answered]")
+			if(aicurrmsg.answer_callback)
+				aicurrmsg.answer_callback.Invoke()
 			aistate = STATE_VIEWMESSAGE
 		if("ai-status")
 			aistate = STATE_STATUSDISPLAY
@@ -733,3 +740,13 @@
 	var/content
 	var/list/possible_answers = list()
 	var/answered
+	var/datum/callback/answer_callback
+
+/datum/comm_message/New(new_title,new_content,new_possible_answers)
+	..()
+	if(title)
+		title = new_title
+	if(content)
+		content = new_content
+	if(new_possible_answers)
+		possible_answers = new_possible_answers

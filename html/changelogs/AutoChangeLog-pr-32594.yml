@@ -1,0 +1,5 @@
+author: "psykzz"
+delete-after: True
+changes: 
+  - refactor: "AI Airlock UI to use TGUI"
+  - tweak: "Allow AI to swap between electrified door states without having to un-electrify first."

@@ -626,8 +626,7 @@
 /area/awaymission/centcomAway/cafe)
 "cq" = (
 /obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
+	dir = 5
 	},
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/centcomAway/cafe)
@@ -751,8 +750,7 @@
 /area/awaymission/centcomAway/hangar)
 "cS" = (
 /obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
+	dir = 6
 	},
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/centcomAway/cafe)
@@ -3534,8 +3532,7 @@
 /area/awaymission/centcomAway/thunderdome)
 "ml" = (
 /obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
+	dir = 9
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -3633,8 +3630,7 @@
 /area/awaymission/centcomAway/maint)
 "my" = (
 /obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
+	dir = 10
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
