@@ -9,7 +9,7 @@
 /obj/effect/proc_holder/changeling/horror_form/sting_action(mob/living/carbon/human/user)
 	if(!user || user.notransform)
 		return 0
-	user.visible_message("<span class='warning'>[user] writhes and contorts, their body expanding to inhuman proportions!</span>", \
+	user.visible_message("<span class='userdanger'>[user] writhes and contorts, their body expanding to inhuman proportions!</span>", \
 						"<span class='userdanger'>We cast off our petty shell and enter our true form!</span>")
 	var/mob/living/simple_animal/hostile/true_changeling/new_mob = new(get_turf(user))
 	var/datum/antagonist/changeling/ling_datum = user.mind.has_antag_datum(/datum/antagonist/changeling)
