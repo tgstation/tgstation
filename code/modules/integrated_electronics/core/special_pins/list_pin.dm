@@ -31,7 +31,7 @@
 
 /datum/integrated_io/lists/proc/Add(var/new_entry)
 	var/list/my_list = data
-	if(my_list.len > But)
+	if(my_list.len > IC_MAX_LIST_LENGTH)
 		my_list.Cut(Start=1,End=2)
 	my_list.Add(new_entry)
 
