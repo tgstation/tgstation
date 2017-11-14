@@ -1,0 +1,5 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - bugfix: "Removed fire-related free lag.
+change: fire alarms and cameras no longer work after being ripped off a wall by a singulo"
