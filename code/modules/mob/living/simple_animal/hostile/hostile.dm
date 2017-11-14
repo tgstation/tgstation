@@ -368,8 +368,6 @@
 /mob/living/simple_animal/hostile/proc/DestroyPathToTarget()
 	if(environment_smash)
 		EscapeConfinement()
-
-		var/dir_to_target_cardinal = get_dir(targets_from, get_cardinal_step_towards(targets_from, target))
 		var/dir_to_target = get_dir(targets_from, target)
 		var/dir_list = list()
 		if(dir_to_target in GLOB.diagonals) //it's diagonal, so we need two directions to hit
@@ -377,7 +375,7 @@
 				if(direction & dir_to_target)
 					dir_list += direction
 		else
-			dir_list += dir_to_target_cardinal
+			dir_list += dir_to_target
 		var/turf/T
 		for(var/direction in dir_list) //now we hit all of the directions we got in this fashion, since it's the only directions we should actually need
 			T = get_step(targets_from, direction)
