@@ -311,27 +311,26 @@
 				var/obj/item/integrated_circuit/IC = comp
 				if(!(initial(IC.spawn_flags) & IC_SPAWN_DEFAULT))
 					return -1
-			compl =compl + initial(comp.complexity)
+			compl = compl + initial(comp.complexity)
 			cap = cap + initial(comp.size)
-			metalcost =metalcost + initial(initial(comp.w_class))
-			var/list/ini = initial(comp.inputs)
-			if(ini && ini.len)
+			metalcost = metalcost + initial(initial(comp.w_class))
+			var/obj/item/integrated_circuit/circuit = new comp
+			var/list/ini = circuit.inputs
+			if(length(ini))
 				for(var/j in 1 to ini.len)
 					var/datum/integrated_io/IN = ini[j]
 					ioa["[i]i[j]"] = IN
 					if(debug)
 						visible_message( "<span class='notice'>[i]i[j]</span>")
-			ini = null
-			ini = initial(comp.outputs)
-			if(ini && ini.len)
-				for(var/j in 1 to comp.outputs.len)               //Also this block uses for setting all i/o id's
+			ini = circuit.outputs
+			if(length(ini))
+				for(var/j in 1 to ini.len)               //Also this block uses for setting all i/o id's
 					var/datum/integrated_io/OUT = ini[j]
 					ioa["[i]o[j]"] = OUT
 					if(debug)
 						visible_message( "<span class='notice'>[i]o[j]</span>")
-			ini = null
-			ini = initial(comp.activators)
-			if(ini && ini.len)
+			ini = circuit.activators
+			if(length(ini))
 				for(var/j in 1 to ini.len)
 					var/datum/integrated_io/ACT = ini.[j]
 					ioa["[i]a[j]"] = ACT
