@@ -51,7 +51,7 @@
 			H.update_sight()
 
 	update_icon()
-	user.regenerate_icons()
+	user.update_inv_hands()
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
