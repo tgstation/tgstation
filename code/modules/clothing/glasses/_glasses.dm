@@ -75,6 +75,7 @@
 	icon_state = "garm"
 	item_state = "garm"
 	desc = "Do the impossible, see the invisible!"
+	gender = PLURAL
 	force = 10
 	throwforce = 10
 	throw_speed = 4
@@ -85,6 +86,7 @@
 /obj/item/clothing/glasses/science
 	name = "science goggles"
 	desc = "A pair of snazzy goggles used to protect against chemical spills. Fitted with an analyzer for scanning items and reagents."
+	gender = PLURAL
 	icon_state = "purple"
 	item_state = "glasses"
 	origin_tech = "magnets=2;engineering=1"
@@ -101,6 +103,7 @@
 /obj/item/clothing/glasses/night
 	name = "night vision goggles"
 	desc = "You can totally see in the dark now!"
+	gender = PLURAL
 	icon_state = "night"
 	item_state = "glasses"
 	origin_tech = "materials=4;magnets=4;plasmatech=4;engineering=4"
@@ -154,6 +157,7 @@
 /obj/item/clothing/glasses/regular
 	name = "prescription glasses"
 	desc = "Made by Nerd. Co."
+	gender = PLURAL
 	icon_state = "glasses"
 	item_state = "glasses"
 	vision_correction = 1 //corrects nearsightedness
@@ -161,12 +165,14 @@
 /obj/item/clothing/glasses/regular/jamjar
 	name = "jamjar glasses"
 	desc = "Also known as Virginity Protectors."
+	gender = PLURAL
 	icon_state = "jamjar_glasses"
 	item_state = "jamjar_glasses"
 
 /obj/item/clothing/glasses/regular/hipster
 	name = "prescription glasses"
 	desc = "Made by Uncool. Co."
+	gender = PLURAL
 	icon_state = "hipster_glasses"
 	item_state = "hipster_glasses"
 
@@ -175,6 +181,7 @@
 /obj/item/clothing/glasses/sunglasses
 	name = "sunglasses"
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks many flashes."
+	gender = PLURAL
 	icon_state = "sun"
 	item_state = "sunglasses"
 	darkness_view = 1
@@ -252,6 +259,7 @@
 /obj/item/clothing/glasses/sunglasses/blindfold
 	name = "blindfold"
 	desc = "Covers the eyes, preventing sight."
+	gender = NEUTER
 	icon_state = "blindfold"
 	item_state = "blindfold"
 	flash_protect = 2
@@ -280,6 +288,7 @@
 /obj/item/clothing/glasses/thermal/syndi	//These are now a traitor item, concealed as mesons.	-Pete
 	name = "chameleon thermals"
 	desc = "A pair of thermal optic goggles with an onboard chameleon generator."
+	gender = PLURAL
 	origin_tech = "magnets=3;syndicate=4"
 	flash_protect = -1
 
@@ -321,18 +330,21 @@
 /obj/item/clothing/glasses/cold
 	name = "cold goggles"
 	desc = "A pair of goggles meant for low temperatures."
+	gender = PLURAL
 	icon_state = "cold"
 	item_state = "cold"
 
 /obj/item/clothing/glasses/heat
 	name = "heat goggles"
 	desc = "A pair of goggles meant for high temperatures."
+	gender = PLURAL
 	icon_state = "heat"
 	item_state = "heat"
 
 /obj/item/clothing/glasses/orange
 	name = "orange glasses"
 	desc = "A sweet pair of orange shades."
+	gender = PLURAL
 	icon_state = "orangeglasses"
 	item_state = "orangeglasses"
 	glass_colour_type = /datum/client_colour/glass_colour/lightorange
