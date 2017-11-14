@@ -1,4 +1,3 @@
-
 /proc/WEAKREF(datum/input)
 	if(istype(input) && !QDELETED(input))
 		if(!input.weak_reference)
@@ -17,3 +16,4 @@
 /datum/weakref/proc/resolve()
 	var/datum/D = locate(reference)
 	return (!QDELETED(D) && D.weak_reference == src) ? D : null
+
