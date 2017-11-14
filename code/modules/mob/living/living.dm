@@ -471,7 +471,6 @@
 		s_active.close(src)
 
 	if(lying && !buckled && prob(getBruteLoss()*200/maxHealth))
-
 		makeTrail(newloc, T, old_direction)
 
 /mob/living/movement_delay(ignorewalk = 0)
