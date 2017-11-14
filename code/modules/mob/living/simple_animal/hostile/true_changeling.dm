@@ -36,9 +36,9 @@
 	attack_sound = 'sound/creatures/hit3.ogg'
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 15) //It's a pretty big dude. Actually killing one is a feat.
 	var/time_spent_as_true = 0
-	var/playstyle_string = "<b><span class='big danger'>We have entered our true form!</span><br>We are unbelievably powerful, and regenerate life at a steady rate. However, most of \
+	var/playstyle_string = "<b><span class='big danger'>We have entered our true form!</span><br>We are unbelievably deadly, and regenerate life at a steady rate. However, most of \
 	our abilities are useless in this form, and we must utilise the abilities that we have gained as a result of our transformation. Taking too much damage will also turn us back into a \
-	human in addition to knocking us out. Finally, we will uncontrollably revert into a human after some time due to our inability to maintain this form.</b>"
+	human in addition to knocking us out. We are not as strong health-wise as we are damage, and we must avoid fire at all costs. Finally, we will uncontrollably revert into a human after some time due to our inability to maintain this form.</b>"
 	var/mob/living/carbon/human/stored_changeling = null //The changeling that transformed
 	var/devouring = FALSE //If the true changeling is currently devouring a human
 	var/wallcrawl = FALSE //If the true changeling is crawling around the place, allowing it to counteract gravity loss
@@ -46,7 +46,7 @@
 	var/datum/action/innate/changeling/devour/devour
 	var/datum/action/innate/changeling/spine_crawl/spine_crawl
 
-/mob/living/simple_animal/hostile/true_changeling/Initialize()
+/mob/living/simple_animal/hostile/true_changeling/New()
 	. = ..()
 	icon_state = "horror[rand(1, 4)]"
 	reform = new
