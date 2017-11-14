@@ -86,8 +86,4 @@
 	reagent_id = "banana"
 
 /obj/structure/reagent_dispensers/cooking_oil
-	name = "vat of cooking oil"
-	desc = "A huge metal vat with a tap on the front. Filled with cooking oil for use in frying food."
-	icon_state = "vat"
-	anchored = TRUE
-	reagent_id = "cooking_oil"
+	icon = 'icons/obj/objects.dmi'
