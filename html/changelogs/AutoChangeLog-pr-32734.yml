@@ -1,6 +1,0 @@
-author: "selea/arsserpentarium"
-delete-after: True
-changes: 
-  - rscadd: "Integrated circuits have been added to Research!"
-  - rscadd: "You can use these to create devices with very complex behaviors."
-  - rscadd: "Research the Integrated circuits printer to get started."
