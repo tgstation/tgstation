@@ -268,8 +268,12 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 			temp_piping_layer = AM.piping_layer
 			A = get_turf(user)
 
+	var/static/list/make_pipe_whitelist
+	if(!make_pipe_whitelist)
+		make_pipe_whitelist = list(/obj/structure/lattice, /obj/structure/girder, /obj/item/pipe)
+
 	//make sure what we're clicking is valid for the current mode
-	var/can_make_pipe = ((atmos_piping_mode || mode == DISPOSALS_MODE) && (isturf(A)) || istype(A, /obj/structure/lattice) || istype(A, /obj/structure/girder))
+	var/can_make_pipe = ((atmos_piping_mode || mode == DISPOSALS_MODE) && (isturf(A) || is_type_in_list(A, make_pipe_whitelist))
 
 	//So that changing the menu settings doesn't affect the pipes already being built.
 	var/queued_p_type = recipe.id
@@ -319,6 +323,7 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 					P.setPipingLayer(temp_piping_layer)
 				else
 					P.setPipingLayer(piping_layer)
+				P.paint(paint_colors[paint_color])
 
 		if(METER_MODE) //Making pipe meters
 			if(!can_make_pipe)
