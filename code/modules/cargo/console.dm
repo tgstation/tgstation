@@ -8,6 +8,7 @@
 	var/safety_warning = "For safety reasons the automated supply shuttle \
 		cannot transport live organisms, classified nuclear weaponry or \
 		homing beacons."
+	var/blockade_warning = "Bluespace instability detected. Shuttle movement impossible."
 
 	light_color = "#E2853D"//orange
 
@@ -54,8 +55,12 @@
 	data["docked"] = SSshuttle.supply.mode == SHUTTLE_IDLE
 	data["loan"] = !!SSshuttle.shuttle_loan
 	data["loan_dispatched"] = SSshuttle.shuttle_loan && SSshuttle.shuttle_loan.dispatched
-	data["message"] = SSshuttle.centcom_message || "Remember to stamp and send back the supply manifests."
-
+	var/message = "Remember to stamp and send back the supply manifests."
+	if(SSshuttle.centcom_message)
+		message = SSshuttle.centcom_message
+	if(SSshuttle.supplyBlocked)
+		message = blockade_warning
+	data["message"] = message
 	data["supplies"] = list()
 	for(var/pack in SSshuttle.supply_packs)
 		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
@@ -102,6 +107,9 @@
 			if(!SSshuttle.supply.canMove())
 				say(safety_warning)
 				return
+			if(SSshuttle.supplyBlocked)
+				say(blockade_warning)
+				return
 			if(SSshuttle.supply.getDockedId() == "supply_home")
 				SSshuttle.supply.emagged = emagged
 				SSshuttle.supply.contraband = contraband
@@ -115,6 +123,9 @@
 			. = TRUE
 		if("loan")
 			if(!SSshuttle.shuttle_loan)
+				return
+			if(SSshuttle.supplyBlocked)
+				say(blockade_warning)
 				return
 			else if(SSshuttle.supply.mode != SHUTTLE_IDLE)
 				return

@@ -91,6 +91,35 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/device/paicard
 	category = list("Electronics")
 
+/datum/design/integrated_printer
+	name = "Integrated circuits printer"
+	desc = "This machine provides all neccesary things for circuitry."
+	id = "icprinter"
+	req_tech = list("programming" = 2,"materials" = 2, "engineering" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 5000, MAT_METAL = 5000)
+	build_path = /obj/item/device/integrated_circuit_printer
+	category = list("Electronics")
+
+/datum/design/advupdisk
+	name = "Upgrade disk-advanced circuits"
+	desc = "Upgrade disk for integrated circuits printer.Allows advanced designs."
+	id = "udiskadv"
+	req_tech = list("programming" = 3, "engineering" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 500, MAT_METAL = 500)
+	build_path = /obj/item/disk/integrated_circuit/upgrade/advanced
+	category = list("Electronics")
+
+/datum/design/cloneupisk
+	name = "Upgrade disk-assembly cloning"
+	desc = "Upgrade disk for integrated circuits printer.Allows assembly cloning."
+	id = "udiskclone"
+	req_tech = list("programming" = 4, "engineering" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 500, MAT_METAL = 500)
+	build_path = /obj/item/disk/integrated_circuit/upgrade/clone
+	category = list("Electronics")
 
 ////////////////////////////////////////
 //////////Disk Construction Disks///////

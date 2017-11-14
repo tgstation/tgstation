@@ -1,6 +1,0 @@
-author: "Esumlogos"
-delete-after: True
-changes: 
-  - bugfix: "Science chem doors have their access fixed."
-  - tweak: "Chemical heater moved down one tile."
-  - rscadd: "Adds a fire extinguisher to Science chem."

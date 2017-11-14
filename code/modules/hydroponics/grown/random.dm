@@ -12,9 +12,9 @@
 	icon_harvest = "xpod-harvest"
 	growthstages = 4
 
-/obj/item/seeds/random/New()
+/obj/item/seeds/random/Initialize()
+	. = ..()
 	randomize_stats()
-	..()
 	if(prob(60))
 		add_random_reagents()
 	if(prob(50))

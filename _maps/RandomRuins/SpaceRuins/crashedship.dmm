@@ -1192,8 +1192,7 @@
 /area/awaymission/BMPship/Midship)
 "dU" = (
 /obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
+	dir = 10
 	},
 /turf/open/floor/plasteel/bar,
 /area/awaymission/BMPship/Midship)
@@ -1317,8 +1316,7 @@
 /area/awaymission/BMPship/Midship)
 "em" = (
 /obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
+	dir = 5
 	},
 /turf/open/floor/plasteel/bar,
 /area/awaymission/BMPship/Midship)
@@ -1570,8 +1568,7 @@
 /area/awaymission/BMPship/Midship)
 "eW" = (
 /obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
+	dir = 6
 	},
 /turf/open/floor/plasteel/bar,
 /area/awaymission/BMPship/Midship)
@@ -1660,8 +1657,7 @@
 /area/awaymission/BMPship/Midship)
 "fl" = (
 /obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
+	dir = 9
 	},
 /turf/open/floor/plasteel/bar,
 /area/awaymission/BMPship/Midship)

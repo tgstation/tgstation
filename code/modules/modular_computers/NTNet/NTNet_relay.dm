@@ -14,6 +14,9 @@
 	var/enabled = 1				// Set to 0 if the relay was turned off
 	var/dos_failure = 0			// Set to 1 if the relay failed due to (D)DoS attack
 	var/list/dos_sources = list()	// Backwards reference for qdel() stuff
+	var/uid
+	var/static/gl_uid = 1
+
 
 	// Denial of Service attack variables
 	var/dos_overload = 0		// Amount of DoS "packets" in this relay's buffer
@@ -97,8 +100,7 @@
 	ui_interact(user)
 
 /obj/machinery/ntnet_relay/Initialize()
-	uid = gl_uid
-	gl_uid++
+	uid = gl_uid++
 	component_parts = list()
 
 	if(GLOB.ntnet_global)

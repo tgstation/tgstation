@@ -1,3 +1,25 @@
+/datum/reagent/drug/burpinate
+    name = "Burpinate"
+    id = "burpinate"
+    description = "They call me gaseous clay."
+    reagent_state = LIQUID
+    color = "#bfe8a7" // rgb: 191, 232, 167
+    metabolization_rate = 0.9 * REAGENTS_METABOLISM
+    taste_description = "wet hot dogs"
+
+/datum/reagent/drug/burpinate/on_mob_life(mob/living/M)
+    if(ishuman(M))
+        var/mob/living/carbon/human/H = M
+        if(prob(5+(current_cycle*0.6))) //burping intensifies
+            H.emote("burp")
+            if(prob(5))
+                to_chat(H, "<span class='danger'>You feel your bloated stomach rumble with gas.</span>")
+
+        if(current_cycle>90) //chance to burp = 55% (you can't stop burping)
+            if(prob(5))
+                to_chat(H, "<span class='danger'>Your throat is sore from all the gas coming out!</span>")
+    return ..()
+
 /datum/reagent/drug/fartium
 	name = "Fartium"
 	id = "fartium"

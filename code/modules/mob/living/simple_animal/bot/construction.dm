@@ -282,8 +282,8 @@
 	var/skin = null //Same as medbot, set to tox or ointment for the respective kits.
 	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/firstaid_arm_assembly/New()
-	..()
+/obj/item/firstaid_arm_assembly/Initialize()
+	. = ..()
 	spawn(5)
 		if(skin)
 			add_overlay("kit_skin_[skin]")
