@@ -24,7 +24,7 @@
 
 		for(var/i in cat_recipes)
 			var/datum/pipe_info/I = i
-			dat += I.Render(src)
+			//dat += I.Render(src)
 
 		dat += "</ul>"
 
@@ -132,7 +132,7 @@
 
 		for(var/i in cat_recipes)
 			var/datum/pipe_info/I = i
-			dat += I.Render(src)
+			//dat += I.Render(src)
 
 		dat += "</ul>"
 
