@@ -934,7 +934,7 @@
 					log_admin("[key_name(usr)] has rev'ed [current].")
 				else
 					return
-				
+
 			if("headrev")
 				if(has_antag_datum(/datum/antagonist/rev))
 					var/datum/antagonist/rev/rev = has_antag_datum(/datum/antagonist/rev)
@@ -1036,7 +1036,7 @@
 				log_admin("[key_name(usr)] has de-changeling'ed [current].")
 			if("changeling")
 				var/datum/antagonist/changeling/C = make_Changling()
-				to_chat(current, "<span class='boldannounce'>Your powers are awoken. A flash of memory returns to us...we are [C.changelingID], a changeling!</span>")
+				to_chat(current, "<span class='boldannounce'>Our powers have awoken. A flash of memory returns to us...we are [C.changelingID], a changeling!</span>")
 				message_admins("[key_name_admin(usr)] has changeling'ed [current].")
 				log_admin("[key_name(usr)] has changeling'ed [current].")
 			if("autoobjectives")
