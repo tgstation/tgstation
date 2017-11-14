@@ -1,6 +1,3 @@
-#define SYRINGE_DRAW 0
-#define SYRINGE_INJECT 1
-
 /obj/item/reagent_containers/syringe
 	name = "syringe"
 	desc = "A syringe that can hold up to 15 units."
