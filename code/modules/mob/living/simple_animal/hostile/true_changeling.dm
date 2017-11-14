@@ -15,15 +15,15 @@
 	icon_state = "horror1"
 	icon_living = "horror1"
 	icon_dead = "horror_dead"
-	speed = 0
+	speed = -0.5
 	gender = NEUTER
 	a_intent = "harm"
 	stop_automated_movement = 1
 	status_flags = CANPUSH
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
-	health = 250
-	maxHealth = 250 //pretty durable
+	health = 100
+	maxHealth = 100 //pretty durable
 	force_threshold = 10
 	healable = 0
 	environment_smash = 1 //Tables, closets, etc.
