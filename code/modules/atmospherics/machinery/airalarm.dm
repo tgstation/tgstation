@@ -678,15 +678,7 @@
 				update_icon()
 				return
 			else if(istype(W, /obj/item/card/id) || istype(W, /obj/item/device/pda))// trying to unlock the interface with an ID card
-				if(stat & (NOPOWER|BROKEN))
-					to_chat(user, "<span class='warning'>It does nothing!</span>")
-				else
-					if(src.allowed(usr) && !wires.is_cut(WIRE_IDSCAN))
-						locked = !locked
-						to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the air alarm interface.</span>")
-					else
-						to_chat(user, "<span class='danger'>Access denied.</span>")
-				return
+				togglelock(user)
 			else if(panel_open && is_wire_tool(W))
 				wires.interact(user)
 				return
@@ -751,6 +743,25 @@
 				return
 
 	return ..()
+	
+/obj/machinery/airalarm/AltClick(mob/user)
+	..()
+	if(!issilicon(user) && (!user.canUseTopic(src, be_close=TRUE) || !isturf(loc)))
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+		return
+	else
+		togglelock(user)
+		
+/obj/machinery/airalarm/proc/togglelock(mob/living/user)
+	if(stat & (NOPOWER|BROKEN))
+		to_chat(user, "<span class='warning'>It does nothing!</span>")
+	else
+		if(src.allowed(usr) && !wires.is_cut(WIRE_IDSCAN))
+			locked = !locked
+			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the air alarm interface.</span>")
+		else
+			to_chat(user, "<span class='danger'>Access denied.</span>")
+	return
 
 /obj/machinery/airalarm/power_change()
 	..()
