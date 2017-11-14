@@ -1,0 +1,6 @@
+author: "HonkBot"
+delete-after: True
+changes: 
+  - rscadd: "Welders must now be screwdrivered open to reveal their fuel tank."
+  - rscadd: "You can empty welders into open containers (like beakers or glasses) when they're screwdrivered open."
+  - rscadd: "You can now insert any chemical into a welder, but all most will do is clog the fuel. Welding fuel will refuel it as usual. Plasma in welders tends to explode."
