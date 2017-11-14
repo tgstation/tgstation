@@ -38,5 +38,7 @@
 	{{/if}}
 </ui-display>
 <ui-display title='Filters'>
-  <filters/>
+  {{#with data}}
+    <filters/>
+  {{/with}}
 </ui-display>
