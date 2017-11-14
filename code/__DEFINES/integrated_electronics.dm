@@ -38,4 +38,4 @@
 #define IC_PINTYPE_PULSE_OUT		/datum/integrated_io/activate/out
 
 // Data limits.
-#define IC_MAX_LIST_LENGTH			200
+#define IC_MAX_LIST_LENGTH			500

@@ -114,6 +114,7 @@ list[](
 		data = new_data
 		holder.on_data_written()
 	else if(islist(new_data))
+		if(new_data)
 		var/list/new_list = new_data
 		data = new_list.Copy()
 		holder.on_data_written()

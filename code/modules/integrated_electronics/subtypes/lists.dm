@@ -111,9 +111,8 @@
 	var/list/input_list = get_pin_data(IC_INPUT, 1)
 	var/list/red_list = list()
 	var/index = get_pin_data(IC_INPUT, 2)
-	var/j = 0
-	for(var/I in input_list)
-		j = j + 1
+	for(var/j in 1 to input_list.len)
+		var/I = input_list[j]
 		if(j != index)
 			red_list.Add(I)
 	set_pin_data(IC_OUTPUT, 1, red_list)
@@ -139,10 +138,11 @@
 	var/list/input_list = get_pin_data(IC_INPUT, 1)
 	var/index = get_pin_data(IC_INPUT, 2)
 	var/item = get_pin_data(IC_INPUT, 3)
-	input_list[index] = item
-	set_pin_data(IC_OUTPUT, 1, input_list)
-	push_data()
-	activate_pin(2)
+	if(!islst(item))				//crh proof
+		input_list[index] = item
+		set_pin_data(IC_OUTPUT, 1, input_list)
+		push_data()
+		activate_pin(2)
 
 obj/item/integrated_circuit/lists/len
 	name = "len circuit"

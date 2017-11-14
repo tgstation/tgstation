@@ -31,7 +31,7 @@
 
 /datum/integrated_io/lists/proc/Add(var/new_entry)
 	var/list/my_list = data
-	if(my_list.len > IC_MAX_LIST_LENGTH)
+	if(my_list.len > But)
 		my_list.Cut(Start=1,End=2)
 	my_list.Add(new_entry)
 
@@ -110,7 +110,7 @@
 /datum/integrated_io/lists/write_data_to_pin(var/new_data)
 	if(islist(new_data))
 		var/list/new_list = new_data
-		data = new_list.Copy()
+		data = new_list.Copy(1,min( IC_MAX_LIST_LENGTH+1, new_list.len ))
 		holder.on_data_written()
 
 /datum/integrated_io/lists/display_pin_type()
