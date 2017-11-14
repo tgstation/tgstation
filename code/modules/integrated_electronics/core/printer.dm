@@ -11,7 +11,7 @@
 	var/debug = FALSE
 	var/upgraded = FALSE		// When hit with an upgrade disk, will turn true, allowing it to print the higher tier circuits.
 	var/can_clone = FALSE		// Same for above, but will allow the printer to duplicate a specific assembly.
-	var/list/recipe_list		//category = list(paths in category)
+	var/static/list/recipe_list	//category = list(paths in category)
 	var/current_category = null
 	var/as_printing = FALSE
 	var/as_needs = 0
@@ -27,7 +27,8 @@
 
 /obj/item/device/integrated_circuit_printer/Initialize()
 	. = ..()
-	recipe_list = SScircuit.circuit_fabricator_recipe_list
+	if(!recipe_list)
+		recipe_list = SScircuit.circuit_fabricator_recipe_list
 
 /obj/item/device/integrated_circuit_printer/attackby(var/obj/item/O, var/mob/user)
 	if(istype(O,/obj/item/stack/sheet/metal))
@@ -240,7 +241,7 @@
 	var/obj/item/integrated_circuit/comp
 	var/list/ioa = list()
 	var/list/as_samp = list()
-	var/list/cir_samp =list()
+	var/list/all_circuits = SScircuit.all_circuits // It's free. Performance. We're giving you cpu time. It's free. We're giving you time. It's performance, free. It's free cpu time for you jim!
 	var/list/assembly_list = list(
 			/obj/item/device/electronic_assembly,
 			/obj/item/device/electronic_assembly/medium,
@@ -255,10 +256,6 @@
 	for(var/k in 1 to assembly_list.len)
 		var/obj/item/I = assembly_list[k]
 		as_samp[initial(I.name)] = I
-	for(var/k in 1 to SScircuit.all_integrated_circuit_paths.len)
-		var/obj/item/integrated_circuit/IC = SScircuit.all_integrated_circuit_paths[k]
-		if((initial(IC.spawn_flags) & IC_SPAWN_DEFAULT) || (initial(IC.spawn_flags) & IC_SPAWN_RESEARCH))
-			cir_samp[initial(IC.name)] = SScircuit.all_integrated_circuit_paths[k]
 	if(debug)
 		visible_message( "<span class='notice'>started successful</span>")
 	if(chap[2] != "")
@@ -307,7 +304,7 @@
 			element = splittext( E ,"=-=")
 			if(debug)
 				visible_message( "<span class='notice'>[E]</span>")
-			comp = cir_samp[element[1]]
+			comp = all_circuits[element[1]]
 			if(!comp)
 				break
 			if(!upgraded)
