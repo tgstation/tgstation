@@ -18,9 +18,10 @@
 
 /obj/machinery/rnd/server/Initialize()
 	. = ..()
+	SSresearch.servers |= src
+	stored_research = SSresearch.science_tech
 	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/rdserver(null)
 	B.apply_default_parts(src)
-	SSresearch.servers += src
 
 /obj/machinery/rnd/server/Destroy()
 	SSresearch.servers -= src
@@ -32,12 +33,21 @@
 		tot_rating += SP.rating
 	heat_gen /= max(1, tot_rating)
 
-/obj/machinery/rnd/server/Initialize(mapload)
-	SSresearch.servers |= src
-	stored_research = SSresearch.science_tech
-	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/rdserver(null)
-	B.apply_default_parts(src)
-	. = ..()
+/obj/machinery/rnd/server/proc/refresh_working()
+	if(stat & EMPED)
+		working = FALSE
+	else
+		working = TRUE
+
+/obj/machinery/rnd/server/emp_act()
+	stat |= EMPED
+	addtimer(CALLBACK(src, .proc/unemp), 600)
+	refresh_working()
+	return ..()
+
+/obj/machinery/rnd/server/proc/unemp()
+	stat &= ~EMPED
+	refresh_working()
 
 /obj/machinery/rnd/server/proc/mine()
 	. = base_mining_income

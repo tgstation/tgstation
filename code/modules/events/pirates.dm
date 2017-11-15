@@ -104,7 +104,7 @@
 			var/siphoned = min(SSshuttle.points,siphon_per_tick)
 			SSshuttle.points -= siphoned
 			credits_stored += siphoned
-			steal_tech()
+			interrupt_research()
 		else
 			return
 	else
@@ -130,23 +130,12 @@
 	else
 		dump_loot(user)
 
-//20% to sap tech levels on unlocked consoles
-/obj/machinery/shuttle_scrambler/proc/steal_tech()
-	if(!prob(20))
-		return
-	var/datum/tech/target_tech = pick(subtypesof(/datum/tech))
-	var/target_id = initial(target_tech.id)
-	for(var/obj/machinery/computer/rdconsole/C in GLOB.machines)
-		if(C.screen == RD_CONSOLE_LOCKED_SCREEN || C.stat & (NOPOWER|BROKEN))
-			continue
-		var/datum/research/files = C.files
-		files.LowerTech(target_id,1)
-		new /obj/effect/temp_visual/emp(get_turf(C))
-	for(var/obj/machinery/r_n_d/server/S in GLOB.machines)
+//interrupt_research
+/obj/machinery/shuttle_scrambler/proc/interrupt_research()
+	for(var/obj/machinery/rnd/server/S in GLOB.machines)
 		if(S.stat & (NOPOWER|BROKEN))
 			continue
-		var/datum/research/files = S.files
-		files.LowerTech(target_id,1)
+		S.emp_act(1)
 		new /obj/effect/temp_visual/emp(get_turf(S))
 
 /obj/machinery/shuttle_scrambler/proc/dump_loot(mob/user)
