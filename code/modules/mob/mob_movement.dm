@@ -167,13 +167,11 @@
 
 	if(Can_ShadowWalk(mob))
 		if(Process_ShadowWalk(direct))
-			moving = FALSE
 			return TRUE
 		else
-			delay = delay*SW_LIGHT_FACTOR
+			delay = delay * SW_LIGHT_FACTOR
 
 	//We are now going to move
-	var/delay = mob.movement_delay()
 	if (old_move_delay + (delay*MOVEMENT_DELAY_BUFFER_DELTA) + MOVEMENT_DELAY_BUFFER > world.time)
 		move_delay = old_move_delay + delay
 	else
