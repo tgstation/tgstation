@@ -46,7 +46,7 @@
 	var/datum/action/innate/changeling/devour/devour
 	var/datum/action/innate/changeling/spine_crawl/spine_crawl
 
-/mob/living/simple_animal/hostile/true_changeling/New()
+/mob/living/simple_animal/hostile/true_changeling/Initialize()
 	. = ..()
 	icon_state = "horror[rand(1, 4)]"
 	reform = new
@@ -66,6 +66,7 @@
     return ..()
 
 /mob/living/simple_animal/hostile/true_changeling/Login()
+	. = ..()
 	to_chat(usr, playstyle_string)
 
 /mob/living/simple_animal/hostile/true_changeling/Life()
