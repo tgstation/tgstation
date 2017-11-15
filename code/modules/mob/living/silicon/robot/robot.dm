@@ -1158,3 +1158,6 @@
 		lawupdate = 1
 		return TRUE
 	return FALSE
+
+/mob/living/silicon/robot/pull_resist()
+	return TRUE

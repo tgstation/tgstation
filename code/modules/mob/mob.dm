@@ -177,6 +177,17 @@
 /mob/proc/restrained(ignore_grab)
 	return
 
+//called when something that we have restrained attempts to break free
+/mob/proc/pull_resist()
+	return FALSE
+
+//called when we try to move while restrained.
+/mob/proc/resist_pull()
+	if (!pulledby)
+		return TRUE
+
+	. = pulledby.pull_resist()
+
 /mob/proc/incapacitated(ignore_restraints, ignore_grab)
 	return
 
