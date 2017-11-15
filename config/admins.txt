@@ -38,5 +38,4 @@ Qustinnus		=	Administrator
 Idontcareacount		=	Administrator
 
 #TRIAL ADMINS
-blank		=	Trial Admin
 Ss4gogeta0	=	Trial Admin

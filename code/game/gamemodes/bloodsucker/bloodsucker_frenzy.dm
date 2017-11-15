@@ -45,6 +45,7 @@ datum/antagonist/bloodsucker/proc/handle_hunger_and_frenzy()
 			else
 				to_chat(owner, "<span class='notice'>The fugue of furious hunger subsides as your stomach fills. You are no longer in Frenzy!</span>")
 		frenzy_state = 0
+		owner.current.jitteriness = 0
 
 
 	// Slowly Tick Down Frenzy Buffer (so you don't fly right back into it)
@@ -80,11 +81,15 @@ datum/antagonist/bloodsucker/proc/start_frenzy(mob/living/target)
 	set waitfor = FALSE // Don't make on_gain() wait for this function to finish. This lets this code run on the side.
 
 	frenzy_state = 2//BLOODSUCKER_FRENZY_TIME  // This will tick down in bloodsucker_procs
+	owner.current.Jitter(20)
 
 	sleep(40)
 	to_chat(owner, "<span class='warning'>Your inner monster churns. Control of your body begins to slip away...</span>")
+	owner.current.Jitter(250)
+
 	sleep(40)
 	to_chat(owner, "<span class='userdanger'>You enter a savage, bloodthirsty Frenzy! Your actions are no longer your own!</span>")
+	owner.current.jitteriness = 0
 
 	// Effects
 	//user.blur_eyes(3) // Can't SEE!
@@ -108,9 +113,10 @@ datum/antagonist/bloodsucker/proc/start_frenzy(mob/living/target)
 	spawn()
 		while(src && frenzy_state > 2 && owner.current.stat < DEAD)
 			sleep(10)
-			owner.current.adjustStaminaLoss(-5, 0)
-			owner.current.AdjustStun(-5, 0)
-			owner.current.AdjustUnconscious(-5, 0)
+			if (owner.current)
+				owner.current.adjustStaminaLoss(-5, 0)
+				owner.current.AdjustStun(-5, 0)
+				owner.current.AdjustUnconscious(-5, 0)
 
 
 	// To Look Up:    /mob/living/carbon/proc/update_tint()   This affects the color of the world. Maybe a tint overlay?
@@ -123,6 +129,7 @@ datum/antagonist/bloodsucker/proc/start_frenzy(mob/living/target)
 	var/startIntent = owner.current.a_intent// What kind of attack intent did I USED TO be in?
 	var/pathfind_lock = FALSE			// Am I currently in a loop to try and go somewhere?
 	var/turf/T							// Turf I am targeting for scan for DOORS, and OBSTACLES
+	var/mob/living/carbon/C = owner.current	// Carbon ref
 	var/list/environment_target_typecache = list( 	// Brazenly stolen from hostile.dm.
 		/obj/machinery/door/window,					// This is the list of things a vamp will target for destruction.
 		/obj/structure/window,
@@ -134,7 +141,7 @@ datum/antagonist/bloodsucker/proc/start_frenzy(mob/living/target)
 		/obj/structure/barricade)
 	environment_target_typecache = typecacheof(environment_target_typecache)// Also taken from Initizlize in hostile.dm
 
-	while(src && frenzy_state > 2 && owner.current.stat < DEAD)
+	while(src && frenzy_state > 2 && owner && owner.current && owner.current.stat < DEAD)
 
 		// Rest a moment
 		sleep(world.tick_lag * 5)
@@ -155,13 +162,13 @@ datum/antagonist/bloodsucker/proc/start_frenzy(mob/living/target)
 				pathfind_lock = TRUE
 				// MOVE: PATHFIND
 				if (myPath.len > 0)
-					message_admins("[owner.current] DEBUG PATH: A1) Pathfind: [myPath.len] .")
+					//message_admins("[owner.current] DEBUG PATH: A1) Pathfind: [myPath.len] .")
 					for(var/i = 0; i < 6; ++i)//for(var/i = 0; i < maxStepsTick; ++i)
 						if(!IsDeadOrIncap(FALSE))
 							if(myPath.len >= 1)
 								walk_to(owner.current, myPath[1],1,2) // NOTE: this runs in the background! to cancel it, you need to use walk(owner.current,0), or give them a new path.
 								myPath -= myPath[1]
-								message_admins("[owner.current] DEBUG PATH: A2) Pathfind: [myPath.len] .")
+								//message_admins("[owner.current] DEBUG PATH: A2) Pathfind: [myPath.len] .")
 							else
 								myPath = frenzy_pursue_target(target) // Start a new path, for later.
 								break
@@ -169,19 +176,20 @@ datum/antagonist/bloodsucker/proc/start_frenzy(mob/living/target)
 				else
 					if (target)
 						walk_to(owner.current, target,1,2) //Trying to just pursue my target.
-						message_admins("[owner.current] DEBUG PATH: B) Target Go To: [target] .")
+						//message_admins("[owner.current] DEBUG PATH: B) Target Go To: [target] .")
 					else if (prob(50)) // Only SOMETIMES change your random direction.
 						var/d = pick(GLOB.cardinals)
 						walk(owner.current, d, 2)
-						message_admins("[owner.current] DEBUG PATH: C) Random Wander: [d] .")
+						//message_admins("[owner.current] DEBUG PATH: C) Random Wander: [d] .")
 						//walk_rand(owner.current,0.95)
 				pathfind_lock = FALSE
 
 		// Jittery / Hallucinate / Eye Blur
 		//owner.current.blur_eyes(2) // Can't SEE!
 		owner.current.overlay_fullscreen("blurry", /obj/screen/fullscreen/frenzy) // Big red FRENZY overlay!
-		if(prob(0.5))
-			owner.current.emote("twitch")
+		C.silent = 20
+		//if(prob(0.5))
+		//	owner.current.emote("twitch")
 
 		// Already Acted? Feeding? Skip.
 		if (inactivity_period > 0)
@@ -194,21 +202,24 @@ datum/antagonist/bloodsucker/proc/start_frenzy(mob/living/target)
 			// DEAL BITING DAMAGE TO TARGET!
 			owner.current.grab_state = GRAB_AGGRESSIVE
 			for (var/obj/effect/proc_holder/spell/bloodsucker/feed/feedpower in powers)
+				//to_chat(owner, "<span class='warning'>DEBUG: Frenzy about to attempt Feed:  [feedpower] by [owner.current] </span>")
 				if (!feedpower.active && feedpower.attempt_cast(owner.current))
 					inactivity_period = 5
 					continue
 
 		// LOSE TARGET
-		// if (DEAD or BLOODLESS or FAR)
-		//	target = null
+		if (target)
+			// Dead guy without blood, OR am
+			if (target.blood_volume <= 0 && owner.current.stat)
+				target = null
 
 		// FIND TARGET
 		if (!target || seek_period <= 0)
 			var/mob/living/newtarget = locate(/mob/living) in oview(20, owner.current)// MAX_RANGE_FIND is 32 and MIN_RANGE_FIND is 16   for(var/mob/living/carbon in view(5, get_turf(owner.current))
 			// Disqualify New Target if...
-			if (newtarget == owner.current || issilicon(newtarget) && !iscyborg(newtarget)) // Can't be self. Can't be a non-robot Silicon.
+			if (newtarget == owner.current || issilicon(newtarget) && !iscyborg(newtarget) || istype(newtarget, /mob/living/simple_animal/bot)) // Can't be self. Can't be a non-robot Silicon, or Beepsky.
 				newtarget = null
-			else if (newtarget && newtarget.stat == DEAD && !iscarbon(newtarget))	// Can't be dead AND un-suckable
+			else if (newtarget && newtarget.stat == DEAD && (!iscarbon(newtarget) || target.blood_volume <= 0))	// Can't be dead AND un-suckable
 				newtarget = null
 			// Only replace target if I find a new one
 			if (newtarget)
@@ -218,7 +229,7 @@ datum/antagonist/bloodsucker/proc/start_frenzy(mob/living/target)
 			if (target)
 				seek_period = 5 // Check again for a new target in 5 cycles.
 
-			message_admins("[owner.current] DEBUG TARGET: [target] after finding [newtarget].")
+			//message_admins("[owner.current] DEBUG TARGET: [target] after finding [newtarget].")
 
 		// PURSUE
 		if (myPath.len < 4)
@@ -252,7 +263,7 @@ datum/antagonist/bloodsucker/proc/start_frenzy(mob/living/target)
 				// Obstacles
 				for(var/obj/O in T)
 					if(O.Adjacent(owner.current) && O.density) //is_type_in_typecache(O, environment_target_typecache))
-						message_admins("[T] DEBUG DESTROY: Breaking stuff in way: [O].")
+						//message_admins("[T] DEBUG DESTROY: Breaking stuff in way: [O].")
 						O.attack_generic(owner.current, 15) // source, damage
 						break;
 				// Doors
@@ -261,15 +272,14 @@ datum/antagonist/bloodsucker/proc/start_frenzy(mob/living/target)
 					//if (istype(D,/obj/machinery/door/airlock))
 					if (D.Adjacent(owner.current))
 						if (!D.open(0))
-							message_admins("[T] DEBUG DOOR: Couldn't Open Door...trying again: [D].")
-							if (!D.open(2)) // open(2) is like a crowbar or jaws of life.
-								message_admins("[T] DEBUG DOOR: STILL couldn't open door.: [D].")
+							//message_admins("[T] DEBUG DOOR: Couldn't Open Door...trying again: [D].")
+							D.open(2) // open(2) is like a crowbar or jaws of life.
+								//message_admins("[T] DEBUG DOOR: STILL couldn't open door.: [D].")
 				// LOCKERS (?)
 
 		// DEFENSE
-		if(owner.current.pulledby)
-			if (!target)
-				target = owner.current.pulledby
+		if (!target && owner.current.pulledby)
+			target = owner.current.pulledby
 			if(owner.current.Adjacent(owner.current.pulledby))
 				inactivity_period = 5
 				owner.current.a_intent = INTENT_DISARM
@@ -280,7 +290,7 @@ datum/antagonist/bloodsucker/proc/start_frenzy(mob/living/target)
 			owner.current.resist()
 
 	// FRENZY OVER!
-	message_admins("[T] DEBUG: FRENZY OVER! Stat: [owner.current.stat], BS: [frenzy_state].")
+	//message_admins("[T] DEBUG: FRENZY OVER! Stat: [owner.current.stat], BS: [frenzy_state].")
 	if (!owner.current.stat)
 		if (!poweron_feed)
 			owner.current.spin(10, 1) // Spin around like a loon.
@@ -290,10 +300,12 @@ datum/antagonist/bloodsucker/proc/start_frenzy(mob/living/target)
 	owner.current.stop_pulling()
 	if (frenzy_state > 1)
 		to_chat(owner, "<span class='notice'>You can feel your lust for carnage ebb as your Frenzy subsides. You are once more the master of your own flesh.</span>")
+		owner.current.Jitter(50)
 		frenzy_state = 1
+	C.silent = 1
 	owner.current.SetFrenzied(FALSE)
-	walk(owner.current,0)	// Stop moving (I was probably pathfinding)
-	owner.current.update_canmove() // Updates if you can move or not. Frenzy has been added.
+	walk(owner.current,0)			// Stop moving (I was probably pathfinding)
+	owner.current.update_canmove() 	// Updates if you can move or not. Frenzy has been removed.
 
 
 datum/antagonist/bloodsucker/proc/frenzy_pursue_target(mob/living/carbon/target)  // Copied over from interactive.dm/walk2derpless()
@@ -376,6 +388,8 @@ datum/antagonist/bloodsucker/proc/IsDeadOrIncap(checkHealth = 1)
 	if(owner.current.IsStun())
 		return 1
 	if(owner.current.stat)
+		return 1
+	if(owner.current.lying > 0)
 		return 1
 	return 0
 

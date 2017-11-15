@@ -61,7 +61,7 @@
 		// specified time.
 		// If you don't want to use spawn, sleep() stops the entire code. Probably want to avoid that.
 		make_bloodsucker(bloodsucker)
-	modePlayer += bloodsuckers
+	//modePlayer += bloodsuckers // REMOVED 11/6/17, apparently obsolete?
 	return ..()
 
 
@@ -87,7 +87,8 @@
 	var/datum/antagonist/bloodsucker/A
 	// [FLEDGLING]
 	if (creator)
-		A = new ANTAG_DATUM_BLOODSUCKER() //bloodsucker.add_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+		A = new ANTAG_DATUM_BLOODSUCKER(bloodsucker) //bloodsucker.add_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+		A.creator = creator
 		bloodsucker.add_antag_datum(A)
 	// [MASTER]
 	else
@@ -119,4 +120,4 @@
 	var/datum/antagonist/bloodsucker/antagdatum = ply.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	// Return title!
 	var/list/endphrase = pick("...but Eternity will remember them as", "...but the Light cowers before the one known as", "...yet Darkness bows before", "...but Mortals forever cower before", "...and know no Evil like")
-	return "</br>[endphrase] <span class='boldannounce'>[antagdatum.ReturnFullName(ply.current,1)]</span>"//</br>"
+	return "</br>[endphrase] <span class='notice'><EM>[antagdatum.ReturnFullName(ply.current,1)]</EM></span>"//</br>"

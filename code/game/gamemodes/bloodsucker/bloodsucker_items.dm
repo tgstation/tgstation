@@ -2,6 +2,8 @@
 // Do I have a stake in my heart?
 /mob/living/proc/AmStaked()
 	var/obj/item/bodypart/BP = get_bodypart("chest")
+	if (!BP)
+		return 0
 	for(var/obj/item/I in BP.embedded_objects)
 		if (istype(I,/obj/item/stake/))
 			return 1
@@ -99,8 +101,15 @@
 	loc = C // Put INSIDE the character
 	B.receive_damage(w_class * embedded_impact_pain_multiplier)
 
-	if (C.mind && C.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
-		to_chat(target, "<span class='userdanger'>You have been staked! Your powers are useless, your death forever, while it remains in place.</span>")
+	if (C.mind)
+		var/datum/antagonist/bloodsucker/bloodsucker = C.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+		if (bloodsucker)
+			// If DEAD or TORPID...kill vamp!
+			if (C.stat == DEAD || C.status_flags & FAKEDEATH) // NOTE: This is the ONLY time a staked Torpid vamp dies.
+				bloodsucker.FinalDeath()
+				return
+			else
+				to_chat(target, "<span class='userdanger'>You have been staked! Your powers are useless, your death forever, while it remains in place.</span>")
 
 
 // Can this target be staked? If someone stands up before this is complete, it fails. Best used on someone stationary.

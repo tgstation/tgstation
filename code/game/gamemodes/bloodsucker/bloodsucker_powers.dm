@@ -9,6 +9,7 @@
 // NOTE : proc_holder lives in modules/spell.dm
 
 // Am I able to use my powers?
+
 /mob/living/proc/BloodsuckerCanUsePowers(var/displaymessage="",) // displaymessage can be something such as "rising from death" for Torpid Sleep.
 	if (!getorganslot("heart"))
 		if (displaymessage != "")
@@ -83,7 +84,7 @@
 
 // CLICK ICON //	// USE THIS WHEN CLICKING ON THE ICON //
 /obj/effect/proc_holder/spell/bloodsucker/Click()
-	to_chat(usr, "<span class='warning'>DEBUG: Click() [name]</span>")
+	//to_chat(usr, "<span class='warning'>DEBUG: Click() [name]</span>")
 
 	// Power Already On? Cancel.
 	if (active)
@@ -98,13 +99,14 @@
 
 // ATTEMPT ENTIRE CASTING OF SPELL //
 /obj/effect/proc_holder/spell/bloodsucker/proc/attempt_cast(mob/living/user = usr) // This is done so that Frenzy can try to Feed (usr is EMPTY if called automatically)
+	//to_chat(user, "<span class='warning'>DEBUG: AttemptCast() [name] by [user]</span>")
 	if(cast_check(0, user))	// 1) Can we cast?
 		SetActive(TRUE)		// 2) Set spell ACTIVE
 		choose_targets(user)// 3) Pick targets (which will then have affects applied)
 
 // SET TOGGLE ACTIVE //	// SETS POWER ON AND OFF, ADDS/REMOVES CLICK INTERCEPTION, AND CAN APPLY EFFECTS/CHECKS TO SEE IF YOU CAN TURN IT OFF
 /obj/effect/proc_holder/spell/bloodsucker/proc/SetActive(setActive = 0)//, displayMessage = 1)
-	to_chat(usr, "<span class='warning'>DEBUG: SetActive() [name]</span>")
+	//to_chat(user, "<span class='warning'>DEBUG: SetActive() [name]</span>")
 
 	// Set Toggleables Active
 	if (amToggleable)
@@ -126,7 +128,7 @@
 
 // CAST CHECK //	// USE THIS TO SEE IF WE CAN EVEN ACTIVATE THIS POWER //  Called from Click()
 /obj/effect/proc_holder/spell/bloodsucker/cast_check(skipcharge = 0,mob/living/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
-	to_chat(usr, "<span class='warning'>DEBUG: cast_check() [name] / [charge_max] </span>")
+	//to_chat(user, "<span class='warning'>DEBUG: cast_check() [name] / [charge_max] </span>")
 	// Not Bloodsucker
 	if (!user.mind || !user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
 		to_chat(user, "<span class='warning'>You are not a Bloodsucker.</span>")
@@ -136,12 +138,12 @@
 		return 0
 	// Am in Frenzy!
 	var/datum/antagonist/bloodsucker/bloodsucker = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
-	if (bloodsucker.frenzy_state > 1 && usr) // This means, if I am in FRENZY and this power was called by someone CLICKING on me...(otherwise usr would be NULL if called from code)
+	if (bloodsucker.frenzy_state > 1 && usr == user) // This means, if I am in FRENZY and this power was called by someone CLICKING on me...(otherwise usr would be NULL if called from code)
 		to_chat(user, "<span class='warning'>You're lost to Frenzy...you cannot activate powers!</span>")
 		return 0
 	// Have enough blood?
 	if (user.blood_volume < bloodcost)
-		to_chat(user, "You need at least [bloodcost] blood to use [name]!</span>")
+		to_chat(user, "You need at least [bloodcost] blood to activate [name]!</span>")
 		return 0
 	// DEFAULT VALID!
 	return 1
@@ -157,7 +159,7 @@
 
 // DECIDE TARGET //	// USE THIS TO SELECT TURF, PERSON, OR CONTAINER //  Called from Click()
 /obj/effect/proc_holder/spell/bloodsucker/choose_targets(mob/living/user = usr)
-	to_chat(usr, "<span class='warning'>DEBUG: choose_targets() [name]</span>")
+	//to_chat(user, "<span class='warning'>DEBUG: choose_targets() [name] by [user]</span>")
 	// Targetted Spell? Cancel out. InterceptClickOn() will do the targetting work
 	if (amTargetted)
 		return
@@ -166,11 +168,11 @@
 	// if (!can_target(ADD_TARGET_HERE)) // Do a LOOP through targets to see if they're valid
 	//	return
 	// CAST SPELL
-	perform(targets, user) // Runs: before_cast(), invocation() [say a line], playMagSound() [aka play the spell's sound], critfail(), cast() [seen BELOW], after_cast(), and updates the button icon.
+	perform(targets, TRUE, user) // Runs: before_cast(), invocation() [say a line], playMagSound() [aka play the spell's sound], critfail(), cast() [seen BELOW], after_cast(), and updates the button icon.
 
 // CLICK ON TARGET //	// USE THIS WHEN CLICKING ON A TARGET //  Called from action, when add_ranged_ability is on.
 /obj/effect/proc_holder/spell/bloodsucker/InterceptClickOn(mob/living/caller, params, atom/A)
-	to_chat(usr, "<span class='warning'>DEBUG: InterceptClickOn() [name]</span>")
+	//to_chat(user, "<span class='warning'>DEBUG: InterceptClickOn() [name]</span>")
 	if (..())			// For SOME REASON, we return FALSE if ..() returns TRUE. Go figure.
 		return 0
 	if (!cast_check(1)) // One more Cast Check (this time with Charged disabled...countdown timer has already been affected to get here)
@@ -178,34 +180,34 @@
 		revert_cast()
 		return 1
 	if (!can_target(A)) // Now let's see if we picked a valid target. If not, we need to tell the calling function we're not done with InterceptClickOn, and can keep trying targets.
-		return 0
+		return 1
 	var/list/targets = list()
 	targets += A
 	// CAST SPELL
-	perform(targets, usr) // Runs: before_cast(), invocation() [say a line], playMagSound() [aka play the spell's sound], critfail(), cast() [seen BELOW], after_cast(), and updates the button icon.
+	perform(targets, TRUE, caller) // Runs: before_cast(), invocation() [say a line], playMagSound() [aka play the spell's sound], critfail(), cast() [seen BELOW], after_cast(), and updates the button icon.
 	return 1
 
 // TARGET VALID? //	// USE THIS TO DETERMINE IF TARGET IS VALID //
 /obj/effect/proc_holder/spell/bloodsucker/can_target(atom/A)//mob/living/target)
-	to_chat(usr, "<span class='warning'>DEBUG: can_target() [name]</span>")
+	//to_chat(user, "<span class='warning'>DEBUG: can_target() [name]</span>")
 	return TRUE
 
 // APPLY EFFECT //	// USE THIS FOR THE SPELL EFFECT //
-/obj/effect/proc_holder/spell/bloodsucker/cast(list/targets, mob/living/user = usr)
-	to_chat(usr, "<span class='warning'>DEBUG: cast() [name]</span>")
+/obj/effect/proc_holder/spell/bloodsucker/cast(list/targets, mob/living/user = usr) 		// NOTE: Called from perform() in /proc_holder/spell
+	//to_chat(user, "<span class='warning'>DEBUG1: cast() [name] by [user]</span>")
 	// Default: Spend Blood
 	user.blood_volume -= bloodcost
 
 
 // ABORT SPELL //	// USE THIS WHEN FAILING MID-SPELL. NOT THE SAME AS DISABLING BY CLICKING BUTTON //
-/obj/effect/proc_holder/spell/bloodsucker/proc/cancel_spell()
-	to_chat(usr, "<span class='warning'>DEBUG: cancel_spell() [name]</span>")
+/obj/effect/proc_holder/spell/bloodsucker/proc/cancel_spell(mob/living/user = usr)
+	//to_chat(user, "<span class='warning'>DEBUG: cancel_spell() [name]</span>")
 	// Disable Icon
 	SetActive(FALSE)
 
 // CONTINUE CHECK //	// USE THIS WITH do_mob() TO KEEP SPELL ACTIVE
-/obj/effect/proc_holder/spell/bloodsucker/proc/continue_invalid()
-	to_chat(usr, "<span class='warning'>DEBUG: continue_invalid() [name]</span>")
+/obj/effect/proc_holder/spell/bloodsucker/proc/continue_valid(mob/living/user = usr)
+	//to_chat(user, "<span class='warning'>DEBUG: continue_valid() [name]</span>")
 	charge_counter = 0 // Reset timer.
 	return 1
 
@@ -239,29 +241,32 @@
 	if(!..())// DEFAULT CHECKS
 		return 0
 	// No Target
-	if (!user.pulling)
+	if (!user.pulling || !ismob(user.pulling))
 		to_chat(user, "<span class='warning'>You must be grabbing a victim to feed from them.</span>")
 		return 0
 	// Not even living!
 	if (!isliving(user.pulling) || issilicon(user.pulling))
-		to_chat(user, "<span class='warning'>You must be grabbing a victim to feed from them.</span>")
+		to_chat(user, "<span class='warning'>You may only feed from living beings.</span>")
 		return 0
 	// No Blood / Incorrect Target Type
-	var/mob/living/carbon/target = user.pulling
-	if (!iscarbon(user.pulling) || target.blood_volume <= 0)
+	//var/mob/living/carbon/target = user.pulling
+	//if (!iscarbon(user.pulling) || target.blood_volume <= 0)
+	var/mob/living/target = user.pulling
+	if (target.blood_volume <= 0)
 		to_chat(user, "<span class='warning'>Your victim has no blood to take!</span>")
 		return 0
-	var/mob/living/carbon/human/H = user.pulling
-	if (ishuman(user.pulling) && NOBLOOD in H.dna.species.species_traits)// || user.get_blood_id() != target.get_blood_id())
-		to_chat(user, "<span class='warning'>Your victim's blood is not suitable for you to take!</span>")
-		return 0
-	// No Target / Not in correct state
-	if (user.grab_state < GRAB_AGGRESSIVE)
-		to_chat(user, "<span class='warning'>You don't have a tight enough grip on your victim!</span>")
-		return 0
+	if (ishuman(user.pulling))
+		var/mob/living/carbon/human/H = user.pulling
+		if(NOBLOOD in H.dna.species.species_traits)// || user.get_blood_id() != target.get_blood_id())
+			to_chat(user, "<span class='warning'>Your victim's blood is not suitable for you to take!</span>")
+			return 0
 	// Wearing mask
 	if (user.is_mouth_covered())
 		to_chat(user, "<span class='warning'>You cannot feed with your mouth covered! Remove your mask.</span>")
+		return 0
+	// Not in correct state
+	if (user.grab_state < GRAB_AGGRESSIVE)//GRAB_PASSIVE)
+		to_chat(user, "<span class='warning'>You don't have a tight enough grip on your victim!</span>")
 		return 0
 	// DONE!
 	return 1
@@ -272,21 +277,22 @@
 	var/list/targets = list()
 	targets += user.pulling
 	// CAST SPELL
-	perform(targets, user) // Runs: before_cast(), invocation() [say a line], playMagSound() [aka play the spell's sound], critfail(), cast() [seen BELOW], after_cast(), and updates the button icon.
+	perform(targets, TRUE, user) // Runs: before_cast(), invocation() [say a line], playMagSound() [aka play the spell's sound], critfail(), cast() [seen BELOW], after_cast(), and updates the button icon.
 
 
 // APPLY EFFECT //	// USE THIS FOR THE SPELL EFFECT //
 /obj/effect/proc_holder/spell/bloodsucker/feed/cast(list/targets, mob/living/user = usr)
+	//user = action.owner // WE DO THIS because during Frenzy, attempt_cast() cues choose_targets() which calls perform(), but perform() never sends the reference to user back to cast(). So let's just do this here.
 	..() // DEFAULT
 
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
-	var/mob/living/carbon/target = targets[1]
+	var/mob/living/target = targets[1] 	//var/mob/living/carbon/target = targets[1]
 
 	// Initial Wait
 	to_chat(user, "<span class='warning'>You pull [target] close to you and draw out your fangs...</span>")
-	sleep(10)
+	do_mob(user, target, 10)//sleep(10)
 	if (!user.pulling || !target) // Cancel. They're gone.
-		cancel_spell()
+		cancel_spell(user)
 		return
 
 	// Put target to Sleep (if valid)
@@ -296,6 +302,10 @@
 	target.Move(user.loc)
 	sleep(5)
 
+	if (!user.pulling || !target) // Cancel. They're gone.
+		cancel_spell(user)
+		return
+
 	// Broadcast Message
 	user.visible_message("<span class='warning'>[user] closes their mouth around [target]'s neck!</span>", \
 						 "<span class='warning'>You sink your fangs into [target]'s neck.</span>")
@@ -303,17 +313,25 @@
 	var/warning_target_inhuman = 0
 	var/warning_target_dead = 0
 	var/warning_full = 0
+	bloodsuckerdatum.poweron_feed = TRUE
 	while (bloodsuckerdatum && target && active)
 		user.canmove = 0 // Prevents spilling blood accidentally.
 
 		// Abort? A bloody mistake.
-		if (!do_mob(user, target, 20, 0, 0) && active) // We check "active" becuase you may have turned off your power during this do_mob. //, extra_checks=CALLBACK(src, /obj/effect/proc_holder/spell/bloodsucker/proc/continue_invalid))) // user / target / time / uninterruptable / show progress bar / extra checks
-		// Note: For future do_mob, everything in CALLBACK after the proc is its input. just keep adding things after the comma.
+		if (!do_mob(user, target, 20, 0, 0, extra_checks=CALLBACK(src, .proc/continue_valid, user))) // We check "active" becuase you may have turned off your power during this do_mob.  // user / target / time / uninterruptable / show progress bar / extra checks
+			// Note: For future do_mob, everything in CALLBACK after the proc is its input. just keep adding things after the comma.
+
+			// May have disabled Feed during do_mob
+			if (!active || !continue_valid(user))
+				break
+
 			to_chat(user, "<span class='warning'>Your feeding has been interrupted!</span>")
 			user.visible_message("<span class='danger'>[user] is ripped from [target]'s throat. Blood sprays everywhere!</span>", \
 					 			 "<span class='userdanger'>Your teeth are ripped from [target]'s throat, creating a bloody mess!</span>")
 			// Deal Damage to Target (should have been more careful!)
-			target.bleed(30)
+			if (iscarbon(target))
+				var/mob/living/carbon/C = target
+				C.bleed(30)
 			playsound(get_turf(target), 'sound/effects/splat.ogg', 40, 1)
 			if (ishuman(target))
 				var/mob/living/carbon/human/H = target
@@ -325,7 +343,7 @@
 			target.emote("scream")
 
 			// Lost Target & End
-			cancel_spell()
+			cancel_spell(user)
 			return
 		///////////////////////////////////////////////////////////
 		// 		Handle Feeding! User & Victim Effects (per tick)
@@ -349,22 +367,33 @@
 			warning_full = 1
 
 		// END WHILE
-	sleep(20) // If we ended via normal means, end here.
-	cancel_spell()
+	//sleep(20) // If we ended via normal means, end here.
+	cancel_spell(user)
 	user.visible_message("<span class='warning'>[user] unclenches their teeth from [target]'s neck.</span>", \
 						 "<span class='warning'>You retract your fangs and release [target] from your bite.</span>")
 
 
 // ABORT SPELL //	// USE THIS WHEN CANCELLING A SPELL //
-/obj/effect/proc_holder/spell/bloodsucker/feed/cancel_spell()
-	var/mob/living/L = usr
+/obj/effect/proc_holder/spell/bloodsucker/feed/cancel_spell(mob/living/user = usr)
+	var/mob/living/L = user
 	L.update_canmove()
+
+	var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+	if (bloodsuckerdatum)
+		bloodsuckerdatum.poweron_feed = FALSE
+
 	..() // Set Active FALSE
 
 
-// CONTINUE CHECK //	// USE THIS WITH do_mob() TO KEEP SPELL ACTIVE
-/obj/effect/proc_holder/spell/bloodsucker/feed/continue_invalid()
-	return !usr.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+// CONTINUE CHECK //	// USE THIS WITH do_mob()
+/obj/effect/proc_holder/spell/bloodsucker/feed/continue_valid(mob/living/user = usr)
+	//to_chat(user, "<span class='warning'>DEBUG: continue_valid() [user] / [active] / [user.mind]</span>")
+	// Are we Active? Have a Mind? Still Bloodsucker? Continue!
+	return active && user.mind && user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+
+
+
+
 
 
 
@@ -385,8 +414,6 @@
 /obj/effect/proc_holder/spell/bloodsucker/expelblood
 	name = "Expel Blood"
 	desc = "Secrete some of your blood as an addictive, healing goo. Feeding it to blood-drained corpses turns mortals to Bloodsuckers."
-	invocation = ""
-	school = "vampiric"
 	bloodcost = 10
 	amToggleable = TRUE
 	amTargetted = TRUE
@@ -429,8 +456,10 @@
 			return 0
 		// Success Message
 		to_chat(usr, "<span class='notice'>[M] consumes some blood from your veins.</span>")
-		to_chat(M, "<span class='notice'>You consume some blood from the veins of [usr].</span>")
+		if (!M.stat)
+			to_chat(M, "<span class='notice'>You consume some blood from the veins of [usr].</span>")
 		playsound(M.loc,'sound/items/drink.ogg', rand(30,40), 1)
+		return 1
 
 	// Target Type: Living
 	else if (isliving(target))
@@ -456,7 +485,7 @@
 		bloodsuckerdatum.set_blood_volume(-10)
 		playsound(b.loc,'sound/effects/splat.ogg', rand(30,40), 1)	//return 0
 		to_chat(usr, "<span class='notice'>You desecrate the [get_area(target)].</span>")
-		cancel_spell()
+		cancel_spell(usr)
 		return 0
 	//Target Type: Item, etc. (FAIL)
 	else
@@ -471,8 +500,8 @@
 
 		// BLOOD TRANSFER //
 	var/maxTransfer = min(10, user.blood_volume)
-	to_chat(user, "<span class='notice'>DEBUG: Expel Blood - [target]</span>")
-	to_chat(user, "<span class='notice'>DEBUG: Expel Blood - [target.reagents]</span>")
+	//to_chat(user, "<span class='notice'>DEBUG: Expel Blood - [target]</span>")
+	//to_chat(user, "<span class='notice'>DEBUG: Expel Blood - [target.reagents]</span>")
 	maxTransfer = min(10, target.reagents.maximum_volume - target.reagents.total_volume)
 	if (maxTransfer == 0)
 		to_chat(user, "<span class='notice'>That container is full.</span>")
@@ -490,7 +519,17 @@
 	// Kill Temporary Reagent Container
 	qdel(tempreagents)
 
-	//cancel_spell()  // NOTE: We don't want to turn off Expel Blood, do we?
+	// Create a Vassal or Bloodsucker?
+	if (iscarbon(target))
+		var/mob/living/carbon/C = target
+
+		// Create Bloodsucker?
+		bloodsuckerdatum.attempt_turn_bloodsucker(C)
+		// Create Vassal?
+		//bloodsuckerdatum.attempt_make_vassal(C)
+
+	//cancel_spell(user)  // NOTE: We don't want to turn off Expel Blood, do we?
+
 	return 1
 
 
@@ -515,7 +554,7 @@
 
 /obj/effect/proc_holder/spell/bloodsucker/torpidsleep
 	name = "Torpid Sleep"
-	desc = "Enter a deathlike sleep. You will heal even terrible wounds with your blood...but you will not rise again until your physical wounds are healed."
+	desc = "Enter a corpselike sleep and heal terrible injuries...even in death! You will not rise again until your physical wounds are healed. This costs blood outside of a Coffin."
 	invocation = ""
 	school = "vampiric"
 	amToggleable = TRUE
@@ -529,6 +568,8 @@
 
 // CAST CHECK //	// USE THIS WHEN CLICKING ON THE ICON //
 /obj/effect/proc_holder/spell/bloodsucker/torpidsleep/cast_check(skipcharge = 0,mob/living/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
+	//if (NOT STANDING ON AN OPEN COFFIN?)
+	//	return 0
 	if (user.AmStaked()) // Located in bloodsucker_items
 		to_chat(user, "<span class='danger'>With a stake in your heart, you cannot regenerate!</span>")
 		return 0
@@ -567,6 +608,8 @@
 /obj/effect/proc_holder/spell/bloodsucker/torpidsleep/cast(list/targets, mob/living/user = usr)
 	..() // DEFAULT
 
+	var/insideCoffin = FALSE
+
 	// Already Alive? "Kill" me.
 	if(user.stat != DEAD)
 		to_chat(user, "<span class='notice'>You give in to the call of an ancient sleep. The light of this world fades...</span>")
@@ -576,6 +619,17 @@
 		user.update_stat()
 		user.update_canmove()
 
+		// Find Coffin Test
+		insideCoffin = istype(user.loc, /obj/structure/closet/coffin)
+		if (!insideCoffin)
+			var/obj/structure/closet/coffin/floorCoffin = locate(/obj/structure/closet/coffin) in get_turf(user)
+			if (floorCoffin)
+				user.fall() // user.Resting(10)
+				//floorCoffin.open()
+				floorCoffin.close()
+				insideCoffin = istype(user.loc, /obj/structure/closet/coffin)
+
+
 	sleep(50) // 5 seconds...
 	to_chat(user, "<span class='notice'>The lividity of your corpse drains away. Your parched veins pulse...</span>")
 	sleep(50) // 5 second wait until healing starts.
@@ -584,11 +638,18 @@
 	if (user.blood_volume > 0)
 		to_chat(user, "<span class='warning'>Your vampiric blood sets itself to work repairing your body!</span>")
 	// Values
-	var/healingnotice = 0	//
+	var/coffinnotice = 0	// Display Message: Not in Coffin!
+	var/healingnotice = 0	// Display Message: Healing Stopped/Started
 	var/healingcomplete = 0	// Did I complete my healing? Or was I brought out of death by outside means?
 	var/tickerupdate = 20	// Every now and then, let the player know he's still playing the game.
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = usr.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	while (!healingcomplete && bloodsuckerdatum)// Just keep going while we're a vampire.
+
+		// Destroyed?
+		if (!user)
+			//to_chat(user, "<span class='userdanger'>You have been destroyed!</span>")
+			break
+
 		// Staking Cancels
 		if (user.AmStaked())
 			to_chat(user, "<span class='userdanger'>The stake in your heart abruptly ends your sleep! You will remain dead until it is removed.</span>")
@@ -598,11 +659,12 @@
 			break
 
 		// Update Message
-		if (user.blood_volume > 0)
+		if (user.blood_volume > 0 || insideCoffin)
 			tickerupdate --
 			if (tickerupdate <= 0)
-				tickerupdate = 20
-				var/torpormessage = pick("Dreams of the abyss...","Blackness clouds your dreams...","Bats, and death...","Your black soul, exposed...","Eyes, watching, always watching...","Cruel hunger and despair...","Cobwebs...")
+				tickerupdate = 30
+				var/torpormessage = pick("Dreams of the abyss...","Blackness clouds your dreams...","Bats, and death...","Your black soul, exposed...","Eyes, watching, always watching...","Cruel hunger and despair...",\
+				"Cobwebs...","What's that...!","Siren calls from the other side...","Soulless, hollow...","Thousands of miles of barren nothing...")
 				to_chat(user, "<i>[torpormessage]</i>")
 
 		// Healed Enough to SLEEP instead of DIE?
@@ -623,20 +685,34 @@
 			//end_power(null, null, 0) // This ends the power, but without altering anything but the ICON and the ACTIVE status.
 			return;
 
+		// WARNING Not in Coffin!
+		insideCoffin = istype(user.loc, /obj/structure/closet/coffin)
+		if (insideCoffin && !coffinnotice)//notice //warning
+			to_chat(user, "<span class='notice'>You are sleeping within a Coffin. You will heal at an accelerated rate, and this will cost you no blood.</span>")
+			coffinnotice = 1
+		else if (!insideCoffin && coffinnotice)
+			to_chat(user, "<span class='warning'>You are no longer sleeping within a Coffin.</span>")
+			coffinnotice = 0
+
 		// WARNING: Stopped Healing
 		if (user.blood_volume <= 0 && !healingnotice)
 			healingnotice = 1
 			to_chat(user, "<span class='warning'>You've run out of blood before your body was repaired. You'll remain dead until blood is somehow fed to you...</span>")
 			continue
-		else if (user.blood_volume > 0)
+		else if (user.blood_volume > 0 && healingnotice)
+			to_chat(user, "<span class='notice'>Fresh blood enters your system. You begin healing again.</span>")
 			healingnotice = 0
 
 		// Heal: Basic
-		if (bloodsuckerdatum.handle_healing_natural(3)) // Did we heal? Then continue to next tick until we're done healing.
+		if (bloodsuckerdatum.handle_healing_active(insideCoffin ? 2 : 1, insideCoffin ? 0 : 1, TRUE)) // Did we heal? Then continue to next tick until we're done healing.
 			continue
 
 		// Heal: Advanced
 		if (bloodsuckerdatum.handle_healing_torpid()) // Did we heal a limb or organ?
+			continue
+
+		// Wait til owner comes back...
+		if (!bloodsuckerdatum.owner || !bloodsuckerdatum.owner.key)
 			continue
 
 		// No damage. Break!
@@ -667,12 +743,12 @@
 		break
 
 	// DONE! Wipe fake death.
-	cancel_spell()
+	cancel_spell(user)
 
 
 // ABORT SPELL //	// USE THIS WHEN CANCELLING A SPELL //
-/obj/effect/proc_holder/spell/bloodsucker/torpidsleep/cancel_spell()
-	usr.status_flags &= ~(FAKEDEATH) // Remove it
+/obj/effect/proc_holder/spell/bloodsucker/torpidsleep/cancel_spell(mob/living/user = usr)
+	user.status_flags &= ~(FAKEDEATH) // Remove it
 	..() // Set Active FALSE
 
 
@@ -714,3 +790,86 @@
 
 	// Display Message Line
 	to_chat(usr, "<span class='notice'>[active ? targetmessage_ON : targetmessage_OFF]</span>")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/obj/effect/proc_holder/spell/bloodsucker/haste
+	name = "Immortal Haste"
+	desc = "Select a target to sprint toward them rapidly. While active, your running speed will also increase."
+	bloodcost = 10
+	amToggleable = TRUE
+	amTargetted = TRUE
+	//targetmessage_ON =  "<span class='notice'>You open your wrist. Choose what, or whom, will receive your blood.</span>"
+	//targetmessage_OFF = "<span class='notice'>The wound on your wrist heals instantly.</span>"
+
+	// NOTE: STAY ON UNTIL DISABLED?? Don't disable like ExpelBlood
+ 	// Affect species:  S.speedmod = -1
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/obj/effect/proc_holder/spell/bloodsucker/brawn
+	name = "Terrible Brawn"
+	desc = "Target a door or container to wrench it open, or target a person to throw them violently away."
+	bloodcost = 10
+	amToggleable = TRUE
+	amTargetted = TRUE
+	//targetmessage_ON =  "<span class='notice'>You open your wrist. Choose what, or whom, will receive your blood.</span>"
+	//targetmessage_OFF = "<span class='notice'>The wound on your wrist heals instantly.</span>"
+
+	// NOTE: STAY ON UNTIL DISABLED?? Don't disable like ExpelBlood
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/obj/effect/proc_holder/spell/bloodsucker/veil
+	name = "Veil of Predation"
+	desc = "Further hide your identity, that you may hunt in secrecy without revealing your mortal disguise."
+	bloodcost = 20
+	amToggleable = TRUE
+
+	// LOOK UP: get_visible_name() in human_helpers.dm
+	// NAME: name_override (in mob/living/carbon/human) as your Vamp name, then back to "" when done.
+	// VOICE: use SetSpecialVoice() and UnsetSpecialVoice() in say.dm (human folder)
+	// TODO: Hide outfit, create some cloak to cover you?
+
+
+
+// POWER IDEAS:
+
+// Vampiric Form: 	Appear as a sprite with your vamp name, not your own. Either hide all gear and create new, temporary stuff, or create a vamp sprite and replace player icon.
+//
+// Strength:		Toggle on and click person to shove them, or click a door to pry it open.
+//
+// Speed:			Increase projectile dodge (while on?), click to dash to an area at incredible speed.
+//
+// Strength + Speed: Dash turns into a grab if you click a person.
+
+
+
+
+

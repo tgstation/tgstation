@@ -47,7 +47,7 @@
 //Proc called when the datum is given to a mind.
 /datum/antagonist/bloodsucker/on_gain()
 
-	SSticker.mode.bloodsuckers |= owner
+	SSticker.mode.bloodsuckers |= owner // Add if not already in here (and you might be, if you were picked at round start)
 
 	SelectFirstName(owner.current.gender)
 	SelectTitle(owner.current.gender, creator ? 1 : 0) // If I have a creator, then set as Fledgling.
@@ -89,7 +89,8 @@
 	var/fullname = ReturnFullName(owner.current, 1)
 	to_chat(owner, "<span class='userdanger'>You are [fullname], a bloodsucking vampire!</span>")
 	owner.announce_objectives()
-	to_chat(owner, "<span class='boldannounce'>You regenerate slowly, you're weak to fire, and you depend on blood to survive.<span>")
+	to_chat(owner, "<span class='boldannounce'>You regenerate your health slowly, you're weak to fire, and you depend on blood to survive. Allow your stolen blood to run too low, and you may find yourself at\
+	risk of Frenzy!<span>")
 	to_chat(owner, "<span class='boldannounce'>Other Bloodsuckers are not necessarily your friends, but your survival may depend on cooperation.<span>")
 
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/BloodsuckerAlert.ogg', 100, FALSE, pressure_affected = FALSE)
@@ -167,10 +168,16 @@
 
 	return fullname
 
+/mob/living/carbon/proc/ReturnVampExamine(var/mob/viewer, var/include_rep=0)
+	// So we can call from examine.dm in /human folder.
 
+	// Only Vamps see Vamps
+	if (!mind || !mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER) || !viewer.mind || !viewer.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
+		return ""
 
-
-
+	var/datum/antagonist/bloodsucker/bloodsuckerdatum = mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+	//return "...but you recognize <span class='warning'>[bloodsuckerdatum.ReturnFullName(src,1)]</span> through their mortal disguise.\n"
+	return "\[<span class='warning'><EM>[bloodsuckerdatum.ReturnFullName(src,1)]</EM></span>\]\n"
 
 
 
@@ -179,6 +186,7 @@
 // Create Objectives
 /datum/antagonist/bloodsucker/proc/forge_bloodsucker_objectives() // Fledgling vampires can have different objectives.
 
+			// ROUND ONE: CREWMATE OBJECTIVES //
 
 	// Embrace Target Objective:		Turn [Specific Person]into a vampire
 	var/datum/objective/bloodsucker/embracetarget/embracetarget_objective = new
@@ -187,32 +195,32 @@
 	// Keep or Remove Objective?
 	if (embracetarget_objective.explanation_text == "Free Objective")
 		qdel(embracetarget_objective)
+		embracetarget_objective = null
 	else
 		add_objective(embracetarget_objective)
-	// DELETE OBJECTIVE! Not active right now.
-	qdel(embracetarget_objective)
 
-
-	//if (bloodsucker.objectives.len == 0)
 	// Embrace Quantity Objective:		Turn [X People] into vampires
-	var/datum/objective/bloodsucker/embrace/embrace_objective = new
-	embrace_objective.owner = owner
-	embrace_objective.generate_objective()
-	add_objective(embrace_objective)
+	if (!embracetarget_objective || embracetarget_objective == null)
+		var/datum/objective/bloodsucker/embrace/embrace_objective = new
+		embrace_objective.owner = owner
+		embrace_objective.generate_objective()
+		add_objective(embrace_objective)
 
+			// ROUND ONE: STEALTH OBJECTIVES //
 
 	// Desecrate Objective:		Spill your blood in a location.
-	var/datum/objective/bloodsucker/desecrate/desecrate_objective = new
-	desecrate_objective.owner = owner
-	desecrate_objective.generate_objective()
-	add_objective(desecrate_objective)
-
-	// Heart Thief Objective:		Steal a quantity of hearts.
-	var/datum/objective/bloodsucker/heartthief/heartthief_objective = new
-	heartthief_objective.owner = owner
-	heartthief_objective.generate_objective()
-	add_objective(heartthief_objective)
-
+	var/datum/objective/bloodsucker/desecrate/desecrate_objective
+	if (rand(0,1))
+		desecrate_objective = new
+		desecrate_objective.owner = owner
+		desecrate_objective.generate_objective()
+		add_objective(desecrate_objective)
+	else
+		// Heart Thief Objective:		Steal a quantity of hearts.
+		var/datum/objective/bloodsucker/heartthief/heartthief_objective = new
+		heartthief_objective.owner = owner
+		heartthief_objective.generate_objective()
+		add_objective(heartthief_objective)
 
 	// Knowledge:				Learn from Dire Tomes hidden in the station.
 
@@ -258,9 +266,8 @@ datum/antagonist/bloodsucker/proc/AssignStarterPowersAndStats()
 	// Powers
 	BuyPower(new /obj/effect/proc_holder/spell/bloodsucker/feed)
 	BuyPower(new /obj/effect/proc_holder/spell/bloodsucker/expelblood)
-	BuyPower(new /obj/effect/proc_holder/spell/bloodsucker/humandisguise)
+	//BuyPower(new /obj/effect/proc_holder/spell/bloodsucker/humandisguise)
 	BuyPower(new /obj/effect/proc_holder/spell/bloodsucker/torpidsleep)
-	owner.AddSpell(new /obj/effect/proc_holder/spell/aimed/fireball/hellish)
 
 	// Give Clown a crazy-person power
 
@@ -282,7 +289,15 @@ datum/antagonist/bloodsucker/proc/AssignStarterPowersAndStats()
 		// Traits
 		S.species_traits |= NOZOMBIE
 		S.species_traits |= RADIMMUNE
-		//S.species_traits += XRAY
+		S.species_traits |= NOHUNGER
+		S.species_traits |= NOBREATH
+		S.species_traits |= DRINKSBLOOD
+		S.species_traits |= VIRUSIMMUNE
+		S.species_traits |= RESISTCOLD
+		S.species_traits |= NOCRITDAMAGE // No damage from being in critical condition.
+
+	// Disabilities
+	//owner.current.disabilities |= NOCLONE
 
 	// Update Health
 	owner.current.setMaxHealth(150)
@@ -292,8 +307,6 @@ datum/antagonist/bloodsucker/proc/AssignStarterPowersAndStats()
 	E.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	E.see_in_dark = 8
 	owner.current.update_sight()
-
-
 
 
 datum/antagonist/bloodsucker/proc/ClearAllPowersAndStats()
@@ -310,6 +323,8 @@ datum/antagonist/bloodsucker/proc/ClearAllPowersAndStats()
 	// Stats
 	if (ishuman(owner.current))
 		var/mob/living/carbon/human/H = owner.current
+		H.set_species(H.dna.species.type)
+		/*
 		var/datum/species/S = H.dna.species
 		// Restore Originals
 		S.brutemod = initial(S.brutemod)
@@ -321,8 +336,10 @@ datum/antagonist/bloodsucker/proc/ClearAllPowersAndStats()
 		S.punchdamagehigh = initial(S.punchdamagehigh)
 		S.punchstunthreshold = initial(S.punchstunthreshold)
 		S.siemens_coeff = initial(S.siemens_coeff)
+		*/
 
-		S.species_traits = initial(S.species_traits)
+	// Disabilities
+	//owner.current.disabilities = initial(owner.current.disabilities) // Using FULL HEAL gets rid of this anyway, so don't bother. Vamps can be cloned. Who cares.
 
 	// Update Health
 	owner.current.setMaxHealth(100)
@@ -374,7 +391,11 @@ datum/antagonist/bloodsucker/proc/ClearAllPowersAndStats()
 	to_chat(owner, "<span class='warning'>DEBUG: add_hud() CREATED HUD: [owner.current.hud_used.blood_display]   </span>")
 	*/
 /datum/antagonist/bloodsucker/proc/remove_hud()
-	return /*
+	// No Hud? Get out.
+	if (!owner.current.hud_used)
+		return
+	owner.current.hud_used.blood_display.invisibility = INVISIBILITY_ABSTRACT
+	/*
 		// No Hud? Or have no blood display? Get out.
 	if (!owner.current.hud_used || !owner.current.hud_used.blood_display)
 		return

@@ -16,7 +16,8 @@
 		// Check One: Default Valid User
 		if(possible_target != owner && ishuman(possible_target.current) && possible_target.current.stat != DEAD && is_unique_objective(possible_target))
 			// Check Two: Am Bloodsucker? OR in Bloodsucker list?
-			if (possible_target.has_antag_datum(ANTAG_DATUM_BLOODSUCKER) || possible_target in SSticker.mode.bloodsuckers)
+
+			if (possible_target.has_antag_datum(ANTAG_DATUM_BLOODSUCKER) || (possible_target in SSticker.mode.bloodsuckers))
 				continue
 			else
 				possible_targets += possible_target
@@ -97,7 +98,8 @@
 
 //						WIN CONDITIONS?
 /datum/objective/bloodsucker/embracetarget/check_completion()
-	if (target.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)) // && target.bloodsuckerinfo.creator == owner)  // NOTE: Probably don't want to make creation exclusive to one person.
+	//if (target.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)) // && target.bloodsuckerinfo.creator == owner)  // NOTE: Probably don't want to make creation exclusive to one person.
+	if (target in SSticker.mode.bloodsuckers)
 		return 1
 	return 0
 
@@ -150,11 +152,6 @@
 
 //						 GENERATE!
 /datum/objective/bloodsucker/survive/proc/generate_objective()
-	var/list/possible_targets = return_possible_targets()
-
-	if(possible_targets.len > 0)
-		target = pick(possible_targets)
-
 	update_explanation_text()
 
 //						EXPLANATION

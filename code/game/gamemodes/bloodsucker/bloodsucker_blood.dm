@@ -39,7 +39,7 @@
 // On Metabolize:
 /datum/reagent/blood/vampblood/on_mob_life(mob/living/M)
 	// Bloodsuckers absorb this stuff instantly.
-	if (M.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
+	if (M.mind && M.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
 		volume = 0
 		addiction_stage = 0
 		return
