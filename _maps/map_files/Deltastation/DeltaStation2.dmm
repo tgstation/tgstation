@@ -46421,7 +46421,9 @@
 	},
 /area/bridge/meeting_room/council)
 "bQH" = (
-/obj/machinery/computer/message_monitor,
+/obj/machinery/computer/message_monitor{
+	dir = 4
+	},
 /obj/machinery/newscaster{
 	pixel_x = -32
 	},
