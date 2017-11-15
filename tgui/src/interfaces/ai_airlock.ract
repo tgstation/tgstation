@@ -66,6 +66,14 @@ component.exports = {
 	</ui-section>
 </ui-display>
 <ui-display title='Access & Door Control'>
+	<ui-section label='Open'>
+		{{#if data.welded}}
+			[ <span class="bad">Door has been welded</span> ]
+		{{/if}}
+		<div style='float:right'>
+			<ui-button icon='sign-out' action='open-close' style='{{data.density ? "selected" : ""}}'>Toggle</ui-button>
+		</div>
+	</ui-section>
 	<ui-section label='ID Scan'>
 		{{#if !data.wires.id_scanner}}
 			[ <span class="bad">Wires have been cut</span> ]

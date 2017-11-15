@@ -1,5 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - tweak: "Minor speedups to movement processing.
-change: Fat mobs no longer gain temperature by running."

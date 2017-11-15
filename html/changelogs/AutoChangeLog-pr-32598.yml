@@ -1,5 +1,0 @@
-author: "Robustin"
-delete-after: True
-changes: 
-  - refactor: "Cult population scaling no longer operates on arbitrary breakpoints. Each additional player between the between the breakpoints will add to the \"chance\" that an additional cultist will spawn."
-  - tweak: "On average you will see less roundstart cultists in lowpop and more roundstart cultists in highpop."
