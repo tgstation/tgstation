@@ -633,6 +633,10 @@
 		/obj/item/stock_parts/manipulator = 2,
 		/obj/item/reagent_containers/glass/beaker = 2)
 
+/obj/item/circuitboard/machine/protolathe/department
+	name = "Departmental Protolathe (Machine Board)"
+	build_path = /obj/machinery/rnd/protolathe/department
+
 /obj/item/circuitboard/machine/rdserver
 	name = "R&D Server (Machine Board)"
 	build_path = /obj/machinery/rnd/server
