@@ -23509,7 +23509,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/r_n_d/circuit_imprinter,
+/obj/machinery/rnd/circuit_imprinter,
 /turf/open/floor/plasteel/white,
 /area/science/robotics/lab)
 "bhy" = (
@@ -25302,14 +25302,14 @@
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "blI" = (
-/obj/machinery/r_n_d/destructive_analyzer,
+/obj/machinery/rnd/destructive_analyzer,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/science/lab)
 "blJ" = (
-/obj/machinery/r_n_d/protolathe,
+/obj/machinery/rnd/protolathe,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -25950,7 +25950,7 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "bno" = (
-/obj/machinery/r_n_d/circuit_imprinter,
+/obj/machinery/rnd/circuit_imprinter,
 /obj/item/reagent_containers/glass/beaker/sulphuric,
 /turf/open/floor/plasteel,
 /area/science/lab)
@@ -31158,7 +31158,7 @@
 /turf/open/floor/circuit/telecomms/server,
 /area/science/server)
 "bzu" = (
-/obj/machinery/r_n_d/server/robotics,
+/obj/machinery/rnd/server,
 /turf/open/floor/circuit/telecomms/server,
 /area/science/server)
 "bzv" = (
@@ -31779,7 +31779,7 @@
 /turf/open/floor/engine,
 /area/science/explab)
 "bAR" = (
-/obj/machinery/r_n_d/experimentor,
+/obj/machinery/rnd/experimentor,
 /turf/open/floor/engine,
 /area/science/explab)
 "bAS" = (
@@ -32227,7 +32227,7 @@
 /turf/open/floor/circuit/telecomms/server,
 /area/science/server)
 "bBT" = (
-/obj/machinery/r_n_d/server/core,
+/obj/machinery/rnd/server,
 /turf/open/floor/circuit/telecomms/server,
 /area/science/server)
 "bBU" = (

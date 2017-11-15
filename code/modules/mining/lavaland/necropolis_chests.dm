@@ -105,8 +105,7 @@
 	modkit_design = /datum/design/unique_modkit/bounty
 
 /datum/design/unique_modkit
-	category = list("Mining Designs", "Cyborg Upgrade Modules")
-	req_tech = list("materials" = 12) //can't be normally obtained
+	category = list("Mining Designs", "Cyborg Upgrade Modules") //can't be normally obtained
 	build_type = PROTOLATHE | MECHFAB
 
 /datum/design/unique_modkit/offensive_turf_aoe
