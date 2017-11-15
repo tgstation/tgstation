@@ -37,7 +37,7 @@
 	user.set_machine(src)
 	var/dat
 	var/robots = 0
-	for(var/mob/living/silicon/robot/R in GLOB.mob_list)
+	for(var/mob/living/silicon/robot/R in GLOB.silicon_mobs)
 		if(!can_control(user, R))
 			continue
 		robots++

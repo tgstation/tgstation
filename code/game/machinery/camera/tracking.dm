@@ -48,7 +48,8 @@
 	if(usr.stat == DEAD)
 		return list()
 
-	for(var/mob/living/M in GLOB.mob_list)
+	for(var/i in GLOB.living_mob_list)
+		var/mob/living/M = i
 		if(!M.can_track(usr))
 			continue
 

@@ -1006,7 +1006,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	if(confirm != "Yes")
 		return
 
-	for(var/mob/living/carbon/human/H in GLOB.mob_list)
+	for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
 		new /obj/item/organ/zombie_infection(H)
 
 	message_admins("[key_name_admin(usr)] added a latent zombie infection to all humans.")

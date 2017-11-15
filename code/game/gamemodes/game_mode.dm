@@ -407,7 +407,8 @@
 //////////////////////////
 /proc/display_roundstart_logout_report()
 	var/msg = "<span class='boldnotice'>Roundstart logout report\n\n</span>"
-	for(var/mob/living/L in GLOB.mob_list)
+	for(var/i in GLOB.living_mob_list)
+		var/mob/living/L = i
 
 		if(L.ckey)
 			var/found = 0

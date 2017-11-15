@@ -307,7 +307,8 @@
 			break
 
 /proc/get_mob_by_key(key)
-	for(var/mob/M in GLOB.mob_list)
+	for(var/i in GLOB.player_list)
+		var/mob/M = GLOB.player_list[i]
 		if(M.ckey == lowertext(key))
 			return M
 	return null
