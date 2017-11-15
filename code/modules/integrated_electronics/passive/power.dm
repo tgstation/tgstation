@@ -62,7 +62,7 @@
 	complexity = 7
 	origin_tech = list(TECH_POWER = 3, TECH_ENGINEERING = 3, TECH_DATA = 2)
 	spawn_flags = IC_SPAWN_RESEARCH
-	var/power_amount = 150
+	var/power_amount = 50
 //fuel cell
 
 /obj/item/integrated_circuit/passive/power/chemical_cell
@@ -114,7 +114,7 @@
 	complexity = 15
 	origin_tech = list(TECH_POWER = 6, TECH_ENGINEERING = 5, TECH_DATA = 4)
 	spawn_flags = IC_SPAWN_RESEARCH
-	power_amount = 1000
+	power_amount = 300
 
 /obj/item/integrated_circuit/passive/power/relay/make_energy()
 	if(!assembly)
