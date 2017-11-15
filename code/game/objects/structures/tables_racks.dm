@@ -74,7 +74,7 @@
 		..()
 
 /obj/structure/table/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && mover.checkpass(PASSTABLE))
+	if(istype(mover) && (mover.pass_flags & PASSTABLE))
 		return 1
 	if(mover.throwing)
 		return 1
@@ -87,7 +87,7 @@
 	. = !density
 	if(ismovableatom(caller))
 		var/atom/movable/mover = caller
-		. = . || mover.checkpass(PASSTABLE)
+		. = . || (mover.pass_flags & PASSTABLE)
 
 /obj/structure/table/proc/tablepush(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.forceMove(src.loc)
@@ -423,7 +423,7 @@
 /obj/structure/rack/CanPass(atom/movable/mover, turf/target)
 	if(src.density == 0) //Because broken racks -Agouri |TODO: SPRITE!|
 		return 1
-	if(istype(mover) && mover.checkpass(PASSTABLE))
+	if(istype(mover) && (mover.pass_flags & PASSTABLE))
 		return 1
 	else
 		return 0
@@ -432,7 +432,7 @@
 	. = !density
 	if(ismovableatom(caller))
 		var/atom/movable/mover = caller
-		. = . || mover.checkpass(PASSTABLE)
+		. = . || (mover.pass_flags & PASSTABLE)
 
 /obj/structure/rack/MouseDrop_T(obj/O, mob/user)
 	if ((!( istype(O, /obj/item) ) || user.get_active_held_item() != O))

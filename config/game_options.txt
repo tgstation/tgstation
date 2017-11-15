@@ -251,10 +251,6 @@ EVENTS_MIN_PLAYERS_MUL 1
 ## Allow the AI job to be picked.
 ALLOW_AI
 
-## Secborg ###
-## Uncomment to prevent the security cyborg module from being chosen
-#DISABLE_SECBORG
-
 ## Peacekeeper Borg ###
 ## Uncomment to prevent the peacekeeper cyborg module from being chosen
 #DISABLE_PEACEBORG
@@ -490,3 +486,6 @@ MICE_ROUNDSTART 10
 
 ## If the percentage of players alive (doesn't count conversions) drops below this threshold the emergency shuttle will be forcefully called (provided it can be)
 #EMERGENCY_SHUTTLE_AUTOCALL_THRESHOLD 0.2
+
+## Determines if players are allowed to print integrated circuits, uncomment to allow.
+#IC_PRINTING

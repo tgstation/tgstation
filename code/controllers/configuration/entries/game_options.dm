@@ -52,8 +52,6 @@ CONFIG_DEF(flag/humans_need_surnames)
 
 CONFIG_DEF(flag/allow_ai)	// allow ai job
 
-CONFIG_DEF(flag/disable_secborg)	// disallow secborg module to be chosen.
-
 CONFIG_DEF(flag/disable_peaceborg)
 
 CONFIG_DEF(number/traitor_scaling_coeff)	//how much does the amount of players get divided by to determine traitors
@@ -258,3 +256,5 @@ CONFIG_DEF(number/emergency_shuttle_autocall_threshold)
 	min_val = 0
 	max_val = 1
 	integer = FALSE
+
+CONFIG_DEF(flag/ic_printing)
