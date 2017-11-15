@@ -28406,7 +28406,7 @@
 	},
 /area/bridge)
 "bhl" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/modular_computer/console/preset/engineering,
 /turf/open/floor/plasteel/darkbrown/side{
 	dir = 1
 	},
@@ -28423,7 +28423,7 @@
 	},
 /area/bridge)
 "bhn" = (
-/obj/machinery/computer/atmos_alert,
+/obj/machinery/computer/rdconsole,
 /turf/open/floor/plasteel/darkbrown/side{
 	dir = 1
 	},
@@ -61272,6 +61272,7 @@
 	pixel_x = -23
 	},
 /obj/item/twohanded/required/kirbyplants/dead,
+/obj/machinery/computer/rdconsole,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},

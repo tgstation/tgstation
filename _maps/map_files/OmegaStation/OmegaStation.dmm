@@ -319,16 +319,15 @@
 	},
 /area/bridge)
 "aaJ" = (
-/obj/machinery/computer/station_alert,
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
+/obj/machinery/computer/rdconsole,
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 1
 	},
 /area/bridge)
 "aaK" = (
-/obj/machinery/computer/atmos_alert,
 /obj/machinery/requests_console{
 	announcementConsole = 1;
 	department = "Bridge";
@@ -336,6 +335,7 @@
 	name = "Bridge RC";
 	pixel_y = 32
 	},
+/obj/machinery/modular_computer/console/preset/engineering,
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 1
 	},

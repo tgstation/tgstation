@@ -35108,6 +35108,7 @@
 	pixel_x = 26;
 	pixel_y = 26
 	},
+/obj/machinery/computer/rdconsole,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -77370,6 +77371,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/computer/rdconsole,
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/hor)
 "dhA" = (

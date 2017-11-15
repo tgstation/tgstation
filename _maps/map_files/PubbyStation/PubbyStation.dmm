@@ -8994,6 +8994,7 @@
 	dir = 4;
 	pixel_x = 28
 	},
+/obj/machinery/computer/rdconsole,
 /turf/open/floor/plasteel/darkblue/side{
 	dir = 4
 	},
@@ -33950,12 +33951,12 @@
 	},
 /area/hallway/primary/aft)
 "bDB" = (
-/obj/machinery/computer/aifixer,
 /obj/machinery/airalarm{
 	dir = 4;
 	locked = 0;
 	pixel_x = -23
 	},
+/obj/machinery/computer/rdconsole,
 /turf/open/floor/plasteel/darkpurple/side{
 	dir = 8
 	},
