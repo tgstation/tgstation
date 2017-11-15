@@ -365,6 +365,18 @@
 	return iswallturf(T) || ismineralturf(T)
 
 
+/mob/living/simple_animal/hostile/proc/DestroyObjectsInDirection(direction)
+	var/turf/T = get_step(targets_from, direction)
+	if(T.Adjacent(targets_from))
+		if(CanSmashTurfs(T))
+			T.attack_animal(src)
+		for(var/a in T)
+			var/atom/A = a
+			if(is_type_in_typecache(A, environment_target_typecache) && !A.IsObscured())
+				A.attack_animal(src)
+				return
+
+
 /mob/living/simple_animal/hostile/proc/DestroyPathToTarget()
 	if(environment_smash)
 		EscapeConfinement()
@@ -376,32 +388,15 @@
 					dir_list += direction
 		else
 			dir_list += dir_to_target
-		var/turf/T
 		for(var/direction in dir_list) //now we hit all of the directions we got in this fashion, since it's the only directions we should actually need
-			T = get_step(targets_from, direction)
-			if(!T.Adjacent(targets_from))
-				continue //we can't hit it, so continue to the next
-			if(CanSmashTurfs(T))
-				T.attack_animal(src)
-			for(var/a in T)
-				var/atom/A = a
-				if(is_type_in_typecache(A, environment_target_typecache) && !A.IsObscured())
-					A.attack_animal(src) //we neither break nor return here, so that it hits both directions at once instead of possibly being inefficient. this is still better than hitting every possible turf at once, since it'll be aimed at the target.
+			DestroyObjectsInDirection(direction)
 
 
 mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with megafauna destroying everything around them
 	if(environment_smash)
 		EscapeConfinement()
 		for(var/dir in GLOB.cardinals)
-			var/turf/T = get_step(targets_from, dir)
-			if(T.Adjacent(targets_from))
-				T.attack_animal(src)
-			for(var/a in T)
-				var/atom/A = a
-				if(!A.Adjacent(targets_from))
-					continue
-				if(is_type_in_typecache(A, environment_target_typecache) && !A.IsObscured())
-					A.attack_animal(src)
+			DestroyObjectsInDirection(dir)
 
 
 /mob/living/simple_animal/hostile/proc/EscapeConfinement()
