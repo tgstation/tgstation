@@ -134,6 +134,12 @@ research holder datum.
 /datum/research/proc/FindDesignByID(id)
 	return known_designs[id]
 
+/datum/research/proc/LowerTech(tech_id,value)
+	var/datum/tech/T = known_tech[tech_id]
+	T.level = max(initial(T.level),T.level - value)
+	known_designs.Cut()
+	RefreshResearch()
+
 
 //Autolathe files
 /datum/research/autolathe/New()

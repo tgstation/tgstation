@@ -7,6 +7,7 @@
 /datum/round_event/ghost_role/nightmare
 	minimum_required = 1
 	role_name = "nightmare"
+	fakeable = FALSE
 
 /datum/round_event/ghost_role/nightmare/spawn_role()
 	var/list/candidates = get_candidates("alien", null, ROLE_ALIEN)

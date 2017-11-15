@@ -53425,6 +53425,7 @@
 	dir = 4;
 	pixel_x = 28
 	},
+/obj/structure/reagent_dispensers/cooking_oil,
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
 "cgG" = (
@@ -90666,7 +90667,7 @@ aaa
 aaa
 aaa
 aaa
-EDa
+aaa
 aaa
 aaa
 aaa
@@ -91698,7 +91699,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+EDa
 aaa
 aaa
 aaa
@@ -94931,7 +94932,7 @@ aaa
 aaa
 aaa
 aaa
-dbC
+aaa
 aaa
 aaa
 aaa
@@ -108892,7 +108893,7 @@ aaa
 aaa
 aaa
 aaa
-aab
+aaa
 aaa
 aaa
 aaa
@@ -111668,7 +111669,7 @@ aaa
 aaa
 aaa
 aaa
-dbD
+aaa
 aaa
 aaa
 aaa
@@ -129469,7 +129470,7 @@ aaa
 aaa
 aaa
 aaa
-cTX
+aaa
 aaa
 aaa
 aaa
@@ -129884,7 +129885,7 @@ aaa
 aaa
 aaa
 aaa
-dbB
+aaa
 aaa
 aaa
 aaa

@@ -8,7 +8,7 @@
 	icon_state = "meat"
 	dried_type = /obj/item/reagent_containers/food/snacks/sosjerky/healthy
 	bitesize = 3
-	list_reagents = list("nutriment" = 3)
+	list_reagents = list("nutriment" = 3, "cooking_oil" = 2) //Meat has fats that a food processor can process into cooking oil
 	cooked_type = /obj/item/reagent_containers/food/snacks/meat/steak/plain
 	slice_path = /obj/item/reagent_containers/food/snacks/meat/rawcutlet/plain
 	slices_num = 3
@@ -170,7 +170,7 @@
 	name = "bear meat"
 	desc = "A very manly slab of meat."
 	icon_state = "bearmeat"
-	list_reagents = list("nutriment" = 12, "morphine" = 5, "vitamin" = 2)
+	list_reagents = list("nutriment" = 12, "morphine" = 5, "vitamin" = 2, "cooking_oil" = 6)
 	filling_color = "#FFB6C1"
 	cooked_type = /obj/item/reagent_containers/food/snacks/meat/steak/bear
 	slice_path = /obj/item/reagent_containers/food/snacks/meat/rawcutlet/bear
@@ -205,7 +205,7 @@
 /obj/item/reagent_containers/food/snacks/meat/slab/goliath
 	name = "goliath meat"
 	desc = "A slab of goliath meat. It's not very edible now, but it cooks great in lava."
-	list_reagents = list("nutriment" = 3, "toxin" = 5)
+	list_reagents = list("nutriment" = 3, "toxin" = 5, "cooking_oil" = 3)
 	icon_state = "goliathmeat"
 	tastes = list("meat" = 1)
 	foodtype = RAW | MEAT | TOXIC
@@ -218,7 +218,7 @@
 /obj/item/reagent_containers/food/snacks/meat/slab/meatwheat
 	name = "meatwheat clump"
 	desc = "This doesn't look like meat, but your standards aren't <i>that</i> high to begin with."
-	list_reagents = list("nutriment" = 3, "vitamin" = 2, "blood" = 5)
+	list_reagents = list("nutriment" = 3, "vitamin" = 2, "blood" = 5, "cooking_oil" = 1)
 	filling_color = rgb(150, 0, 0)
 	icon_state = "meatwheat_clump"
 	bitesize = 4
@@ -228,7 +228,7 @@
 /obj/item/reagent_containers/food/snacks/meat/slab/gorilla
 	name = "gorilla meat"
 	desc = "Much meatier than monkey meat."
-	list_reagents = list("nutriment" = 5, "vitamin" = 1)
+	list_reagents = list("nutriment" = 5, "vitamin" = 1, "cooking_oil" = 5) //Plenty of fat!
 
 /obj/item/reagent_containers/food/snacks/meat/rawbacon
 	name = "raw piece of bacon"
@@ -236,7 +236,7 @@
 	icon_state = "bacon"
 	cooked_type = /obj/item/reagent_containers/food/snacks/meat/bacon
 	bitesize = 2
-	list_reagents = list("nutriment" = 1)
+	list_reagents = list("nutriment" = 1, "cooking_oil" = 3)
 	filling_color = "#B22222"
 	tastes = list("bacon" = 1)
 	foodtype = RAW | MEAT
@@ -246,7 +246,7 @@
 	desc = "A delicious piece of bacon."
 	icon_state = "baconcooked"
 	list_reagents = list("nutriment" = 2)
-	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 1, "cooking_oil" = 2)
 	filling_color = "#854817"
 	tastes = list("bacon" = 1)
 	foodtype = MEAT

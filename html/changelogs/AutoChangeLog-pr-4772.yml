@@ -1,0 +1,7 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - rscadd: "You can now select a nearby area to expand when using a blueprint instead of making a new area."
+  - rscadd: "New shuttle areas can be created using blueprints. This is currently not useful but will be used later for shuttle construction."
+  - tweak: "Blueprints can modify existing areas on station."
+  - admin: "Blueprint functionality has been added to the debug tab as a verb."

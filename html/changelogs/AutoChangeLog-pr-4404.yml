@@ -1,6 +1,0 @@
-author: "Guyonbroadway"
-delete-after: True
-changes: 
-  - rscadd: "Iron, Silicon, Uranium, Plasma, Gold, and Silver can all be solidified with 5u pyrosium, 5u cryostylane and 20u of the pertinent chem."
-  - balance: "Banana Juice can be made into bananium but it takes 80u as opposed to 20u."
-  - bugfix: "The plastic sheets recipe now makes sheets based on how much of the chems you used in the reaction as opposed to just making a flat 10 sheets."

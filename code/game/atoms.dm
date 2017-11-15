@@ -620,3 +620,20 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 
 /atom/proc/return_temperature()
 	return
+
+// Default tool behaviors proc
+
+/atom/proc/crowbar_act(mob/user, obj/item/tool)
+	return
+
+/atom/proc/multitool_act(mob/user, obj/item/tool)
+	return
+
+/atom/proc/screwdriver_act(mob/user, obj/item/tool)
+	return
+
+/atom/proc/wrench_act(mob/user, obj/item/tool)
+	return
+
+/atom/proc/wirecutter_act(mob/user, obj/item/tool)
+	return

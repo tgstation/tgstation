@@ -37,14 +37,14 @@ obj/item/melee/execution_sword/attack_self(mob/living/user)
 
 
 /obj/item/melee/execution_sword/attack(mob/living/target, mob/living/user)
+	if(user.a_intent != INTENT_HARM || user.zone_selected != "head" || !ishuman(target))
+		return ..()
 	if(!can_execute)
 		to_chat(user, "<span class='notice'>The internal transmitters need time to recharge.</span>")
 		return
 	if(executing)
 		to_chat(user, "<span class='notice'>You are already executing someone.</span>")
 		return
-	if(user.a_intent != INTENT_HARM || user.zone_selected != "head" || !ishuman(target))
-		return ..()
 	var/obj/item/bodypart/head/infidel_head = target.get_bodypart("head")
 	if(!infidel_head || target.stat == DEAD)
 		to_chat(user, "Little late to the execution there brother...")
@@ -98,6 +98,18 @@ obj/item/melee/execution_sword/attack_self(mob/living/user)
 /obj/item/melee/execution_sword/proc/recharge_execute()
 	if(!can_execute)
 		can_execute = TRUE
+
+/obj/item/melee/execution_sword/suicide_act(mob/living/user)
+	var/obj/item/bodypart/head/the_head = user.get_bodypart("head")
+	user.visible_message("<span class='suicide'>[user] is holding the [src] to [user.p_their()] neck! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	if(the_head)
+		user.say("FOR [execution_faction]!!")
+		priority_announce("[user] has taken their own life in the name of [execution_faction]!","Message from [execution_faction]!", 'sound/misc/notice1.ogg')
+		the_head.dismember()
+		return(BRUTELOSS)
+	else
+		return(BRUTELOSS)
+
 
 #undef EXECUTE_INFIDEL
 #undef EXECUTE_COOLDOWN
