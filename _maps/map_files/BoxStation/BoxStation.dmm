@@ -30256,7 +30256,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/modular_computer/console/preset/engineering,
+/obj/machinery/modular_computer/console/preset/research,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
 "bxj" = (
