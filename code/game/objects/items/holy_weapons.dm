@@ -22,7 +22,7 @@
 		reskin_holy_weapon(user)
 
 /obj/item/nullrod/proc/reskin_holy_weapon(mob/M)
-	if(SSreligion.holy_weapon_type)
+	if(GLOB.holy_weapon_type)
 		return
 	var/obj/item/nullrod/holy_weapon
 	var/list/holy_weapons_list = typesof(/obj/item/nullrod)
@@ -40,7 +40,7 @@
 
 	holy_weapon = new A
 
-	SSreligion.holy_weapon_type = holy_weapon.type
+	GLOB.holy_weapon_type = holy_weapon.type
 
 	SSblackbox.set_details("chaplain_weapon","[choice]")
 
