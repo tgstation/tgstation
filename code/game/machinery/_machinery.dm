@@ -28,12 +28,6 @@ Class Variables:
    component_parts (list)
       A list of component parts of machine used by frame based machines.
 
-   uid (num)
-      Unique id of machine across all machines.
-
-   gl_uid (global num)
-      Next uid value in sequence
-
    stat (bitflag)
       Machine status bit flags.
       Possible bit flags:
@@ -76,9 +70,6 @@ Class Procs:
       the autolathe)
 
       Default definition does nothing.
-
-   assign_uid()               'game/machinery/machine.dm'
-      Called by machine to assign a value to the uid variable.
 
    process()                  'game/machinery/machine.dm'
       Called by the 'machinery subsystem' once per machinery tick for each machine that is listed in its 'machines' list.
@@ -506,7 +497,7 @@ Class Procs:
 		#if DM_VERSION >= 513
 		#warning 512 is definitely stable now, remove the old code
 		#endif
-		
+
 		#if DM_VERSION >= 512
 		. += hex2num(md5[i])
 		#else

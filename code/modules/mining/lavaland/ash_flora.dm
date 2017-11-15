@@ -20,8 +20,8 @@
 	var/regrowth_time_low = 4800
 	var/regrowth_time_high = 8400
 
-/obj/structure/flora/ash/New()
-	..()
+/obj/structure/flora/ash/Initialize()
+	. = ..()
 	base_icon = "[icon_state][rand(1, 4)]"
 	icon_state = base_icon
 	if(prob(15))
@@ -161,8 +161,8 @@
 	max_integrity = 100
 	seed = /obj/item/seeds/lavaland/polypore
 
-/obj/item/reagent_containers/food/snacks/grown/ash_flora/New()
-	..()
+/obj/item/reagent_containers/food/snacks/grown/ash_flora/Initialize()
+	. = ..()
 	pixel_x = rand(-4, 4)
 	pixel_y = rand(-4, 4)
 

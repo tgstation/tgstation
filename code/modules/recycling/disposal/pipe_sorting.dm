@@ -92,11 +92,3 @@
 	icon_state = "pipe-j2s"
 	flip_type = /obj/structure/disposalpipe/sorting/wrap
 	initialize_dirs = DISP_DIR_LEFT | DISP_DIR_FLIP
-
-
-// Hacks for old map pipes to work, remove after all maps are updated
-/obj/structure/disposalpipe/wrapsortjunction
-	parent_type = /obj/structure/disposalpipe/sorting/wrap
-
-/obj/structure/disposalpipe/sortjunction
-	parent_type = /obj/structure/disposalpipe/sorting/mail

@@ -14,7 +14,6 @@
 	layer = DISPOSAL_PIPE_LAYER			// slightly lower than wires and other pipes
 	var/dpdir = NONE					// bitmask of pipe directions
 	var/initialize_dirs = NONE			// bitflags of pipe directions added on init, see \code\_DEFINES\pipe_construction.dm
-	var/construct_type					// If set, used as type for pipe constructs. If not set, src.type is used.
 	var/flip_type						// If set, the pipe is flippable and becomes this type when flipped
 	var/obj/structure/disposalconstruct/stored
 
@@ -28,14 +27,6 @@
 		stored = make_from
 	else
 		stored = new /obj/structure/disposalconstruct(src, make_from=src)
-
-		// Hack for old map pipes to work, remove after all maps are updated
-		if(flip_type)
-			var/obj/structure/disposalpipe/flip = flip_type
-			if(icon_state == initial(flip.icon_state))
-				initialize_dirs = initial(flip.initialize_dirs)
-				construct_type = flip_type
-
 
 	if(dir in GLOB.diagonals) // Bent pipes already have all the dirs set
 		initialize_dirs = NONE
@@ -199,27 +190,10 @@
 		deconstruct()
 
 
-// Straight pipe segment
+// Straight/bent pipe segment
 /obj/structure/disposalpipe/segment
 	icon_state = "pipe"
 	initialize_dirs = DISP_DIR_FLIP
-
-/obj/structure/disposalpipe/segment/Initialize()
-	// Hacks for old map pipes to work, remove after all maps are updated
-	if(icon_state == "pipe-c")
-		switch(dir)
-			if(NORTH)
-				dir = NORTHEAST
-			if(SOUTH)
-				dir = SOUTHWEST
-			if(EAST)
-				dir = SOUTHEAST
-			if(WEST)
-				dir = NORTHWEST
-
-	if(icon_state != "pipe")
-		icon_state = "pipe"
-	. = ..()
 
 
 // A three-way junction with dir being the dominant direction
@@ -227,14 +201,6 @@
 	icon_state = "pipe-j1"
 	initialize_dirs = DISP_DIR_RIGHT | DISP_DIR_FLIP
 	flip_type = /obj/structure/disposalpipe/junction/flip
-
-/obj/structure/disposalpipe/junction/Initialize()
-	if(icon_state == "pipe-y")	// Hack for old map pipes to work, remove after all maps are updated
-		initialize_dirs = DISP_DIR_LEFT | DISP_DIR_RIGHT
-		flip_type = null
-		construct_type = /obj/structure/disposalpipe/junction/yjunction
-	. = ..()
-
 
 // next direction to move
 // if coming in from secondary dirs, then next is primary dir

@@ -18585,17 +18585,13 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "aIW" = (
-/obj/structure/sink/kitchen{
-	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	name = "sink";
-	pixel_y = 28
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/structure/reagent_dispensers/cooking_oil,
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "aIX" = (

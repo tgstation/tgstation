@@ -1,0 +1,4 @@
+author: "psykzz"
+delete-after: True
+changes: 
+  - imageadd: "Grilles have new damaged and default sprites"

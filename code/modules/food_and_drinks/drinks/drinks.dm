@@ -391,8 +391,8 @@
 	list_reagents = list("lemon_lime" = 30)
 	foodtype = FRUIT
 
-/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime/New()
-	..()
+/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime/Initialize()
+	. = ..()
 	name = "Lemon-Lime Soda"
 
 /obj/item/reagent_containers/food/drinks/soda_cans/space_up
