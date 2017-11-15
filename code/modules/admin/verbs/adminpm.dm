@@ -114,7 +114,7 @@
 
 			if(!msg)
 				return
-
+			msg = sanitize_russian(msg) //optional html sanitize is slightly below
 			if(prefs.muted & MUTE_ADMINHELP)
 				to_chat(src, "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>")
 				return
@@ -135,7 +135,7 @@
 		if(!msg)
 			return
 
-	var/rawmsg = msg
+	var/rawmsg = russian_html2text(msg) //seems it's for these cases
 
 	if(holder)
 		msg = emoji_parse(msg)
