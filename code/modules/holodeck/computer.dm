@@ -176,7 +176,7 @@
 /obj/machinery/computer/holodeck/proc/generate_program_list()
 	for(var/typekey in subtypesof(program_type))
 		var/area/holodeck/A = locate(typekey) in GLOB.sortedAreas
-		if(!A || A == offline_program || !A.contents.len)
+		if(!A || !A.contents.len)
 			continue
 		var/list/info_this = list()
 		info_this["name"] = A.name

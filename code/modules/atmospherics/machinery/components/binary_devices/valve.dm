@@ -15,6 +15,9 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	var/open = FALSE
 	var/valve_type = "m" //lets us have a nice, clean, OOP update_icon_nopipes()
 
+	construction_type = /obj/item/pipe/binary
+	pipe_state = "mvalve"
+
 /obj/machinery/atmospherics/components/binary/valve/open
 	open = TRUE
 
@@ -60,6 +63,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	desc = "A digitally controlled valve."
 	icon_state = "dvalve_map"
 	valve_type = "d"
+	pipe_state = "dvalve"
 
 /obj/machinery/atmospherics/components/binary/valve/digital/attack_ai(mob/user)
 	return src.attack_hand(user)

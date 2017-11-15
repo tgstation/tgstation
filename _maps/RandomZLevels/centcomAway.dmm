@@ -626,8 +626,7 @@
 /area/awaymission/centcomAway/cafe)
 "cq" = (
 /obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
+	dir = 5
 	},
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/centcomAway/cafe)
@@ -751,8 +750,7 @@
 /area/awaymission/centcomAway/hangar)
 "cS" = (
 /obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
+	dir = 6
 	},
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/centcomAway/cafe)
@@ -1554,15 +1552,12 @@
 /obj/machinery/power/smes,
 /obj/structure/cable,
 /obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
+	icon_state = "0-4"
 	},
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/general)
 "fN" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
@@ -1571,7 +1566,6 @@
 /obj/machinery/power/smes,
 /obj/structure/cable,
 /obj/structure/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/open/floor/plating,
@@ -2165,9 +2159,7 @@
 /area/awaymission/centcomAway/hangar)
 "hP" = (
 /obj/structure/table,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/hangar)
 "hQ" = (
@@ -2249,8 +2241,7 @@
 "ih" = (
 /obj/machinery/mech_bay_recharge_port,
 /obj/structure/cable{
-	icon_state = "0-2";
-	d2 = 2
+	icon_state = "0-2"
 	},
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/hangar)
@@ -2615,12 +2606,8 @@
 /area/awaymission/centcomAway/hangar)
 "jt" = (
 /obj/structure/table,
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/metal/fifty,
 /turf/open/floor/plasteel/vault,
 /area/awaymission/centcomAway/hangar)
 "ju" = (
@@ -3545,8 +3532,7 @@
 /area/awaymission/centcomAway/thunderdome)
 "ml" = (
 /obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
+	dir = 9
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -3644,8 +3630,7 @@
 /area/awaymission/centcomAway/maint)
 "my" = (
 /obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
+	dir = 10
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8

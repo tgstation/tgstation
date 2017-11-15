@@ -2,7 +2,5 @@
     "map_name": "Delta Station",
     "map_path": "map_files/Deltastation",
     "map_file": "DeltaStation2.dmm",
-    "minetype": "lavaland",
-    "traits": "default",
-    "allow_custom_shuttles": "yes"
+    "traits": "default"
 }

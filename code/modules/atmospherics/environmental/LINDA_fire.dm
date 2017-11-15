@@ -1,3 +1,5 @@
+
+
 /atom/proc/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return null
 
@@ -14,10 +16,10 @@
 
 	var/oxy = air_contents.gases[/datum/gas/oxygen] ? air_contents.gases[/datum/gas/oxygen][MOLES] : 0
 	var/tox = air_contents.gases[/datum/gas/plasma] ? air_contents.gases[/datum/gas/plasma][MOLES] : 0
-
+	var/trit = air_contents.gases[/datum/gas/tritium] ? air_contents.gases[/datum/gas/tritium][MOLES] : 0
 	if(active_hotspot)
 		if(soh)
-			if(tox > 0.5 && oxy > 0.5)
+			if((tox > 0.5 || trit > 0.5) && oxy > 0.5)
 				if(active_hotspot.temperature < exposed_temperature)
 					active_hotspot.temperature = exposed_temperature
 				if(active_hotspot.volume < exposed_volume)
@@ -26,11 +28,11 @@
 
 	var/igniting = 0
 
-	if((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && tox > 0.5)
+	if((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && (tox > 0.5 || trit > 0.5))
 		igniting = 1
 
 	if(igniting)
-		if(oxy < 0.5 || tox < 0.5)
+		if(oxy < 0.5)
 			return 0
 
 		active_hotspot = new /obj/effect/hotspot(src)
@@ -54,11 +56,11 @@
 
 	var/volume = 125
 	var/temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
-	var/just_spawned = 1
-	var/bypassing = 0
+	var/just_spawned = TRUE
+	var/bypassing = FALSE
 
-/obj/effect/hotspot/New()
-	..()
+/obj/effect/hotspot/Initialize()
+	. = ..()
 	SSair.hotspots += src
 	perform_exposure()
 	setDir(pick(GLOB.cardinals))
@@ -67,14 +69,14 @@
 /obj/effect/hotspot/proc/perform_exposure()
 	var/turf/open/location = loc
 	if(!istype(location) || !(location.air))
-		return 0
+		return
 
 	location.active_hotspot = src
 
 	if(volume > CELL_VOLUME*0.95)
-		bypassing = 1
+		bypassing = TRUE
 	else
-		bypassing = 0
+		bypassing = FALSE
 
 	if(bypassing)
 		if(!just_spawned)
@@ -88,17 +90,17 @@
 		volume = affected.reaction_results["fire"]*FIRE_GROWTH_RATE
 		location.assume_air(affected)
 
-	for(var/A in loc)
+	for(var/A in location)
 		var/atom/AT = A
 		if(AT && AT != src) // It's possible that the item is deleted in temperature_expose
 			AT.fire_act(temperature, volume)
-	return 0
+	return
 
-
+#define INSUFFICIENT(path) (!location.air.gases[path] || location.air.gases[path][MOLES] < 0.5)
 /obj/effect/hotspot/process()
 	if(just_spawned)
-		just_spawned = 0
-		return 0
+		just_spawned = FALSE
+		return
 
 	var/turf/open/location = loc
 	if(!istype(location))
@@ -111,8 +113,12 @@
 	if((temperature < FIRE_MINIMUM_TEMPERATURE_TO_EXIST) || (volume <= 1))
 		qdel(src)
 		return
+	if(!location.air || (INSUFFICIENT(/datum/gas/plasma) && INSUFFICIENT(/datum/gas/tritium)) || INSUFFICIENT(/datum/gas/oxygen))
+		qdel(src)
+		return
 
-	if(!(location.air) || !location.air.gases[/datum/gas/plasma] || !location.air.gases[/datum/gas/oxygen] || location.air.gases[/datum/gas/plasma][MOLES] < 0.5 || location.air.gases[/datum/gas/oxygen][MOLES] < 0.5)
+	//Not enough to burn
+	if(((!location.air.gases[/datum/gas/plasma] || location.air.gases[/datum/gas/plasma][MOLES] < 0.5) && (!location.air.gases[/datum/gas/tritium] || location.air.gases[/datum/gas/tritium][MOLES] < 0.5)) || location.air.gases[/datum/gas/oxygen][MOLES] < 0.5)
 		qdel(src)
 		return
 
@@ -140,11 +146,8 @@
 		location.max_fire_temperature_sustained = temperature
 
 	if(location.heat_capacity && temperature > location.heat_capacity)
-		location.to_be_destroyed = 1
-		/*if(prob(25))
-			location.ReplaceWithSpace()
-			return 0*/
-	return 1
+		location.to_be_destroyed = TRUE
+	return TRUE
 
 /obj/effect/hotspot/Destroy()
 	set_light(0)
@@ -153,8 +156,7 @@
 	if(istype(T) && T.active_hotspot == src)
 		T.active_hotspot = null
 	DestroyTurf()
-	loc = null
-	. = ..()
+	return ..()
 
 /obj/effect/hotspot/proc/DestroyTurf()
 	if(isturf(loc))
@@ -168,12 +170,13 @@
 			if(prob(chance_of_deletion))
 				T.ChangeTurf(T.baseturf)
 			else
-				T.to_be_destroyed = 0
+				T.to_be_destroyed = FALSE
 				T.max_fire_temperature_sustained = 0
 
-/obj/effect/hotspot/Crossed(mob/living/L)
+/obj/effect/hotspot/Crossed(atom/movable/AM, oldLoc)
 	..()
-	if(isliving(L))
+	if(isliving(AM))
+		var/mob/living/L = AM
 		L.fire_act(temperature, volume)
 
 /obj/effect/dummy/fire
@@ -186,4 +189,5 @@
 /obj/effect/dummy/fire/Initialize()
 	. = ..()
 	if(!isliving(loc))
-		qdel(src)
+		return INITIALIZE_HINT_QDEL
+#undef INSUFFICIENT

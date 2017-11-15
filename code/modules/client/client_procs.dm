@@ -255,11 +255,19 @@ GLOBAL_LIST(external_rsc_urls)
 			qdel(src)
 			return 0
 	else if (byond_version < cwv)	//We have words for this client.
-		to_chat(src, "<span class='danger'><b>Your version of byond may be getting out of date:</b></span>")
-		to_chat(src, CONFIG_GET(string/client_warn_message))
-		to_chat(src, "Your version: [byond_version]")
-		to_chat(src, "Required version to remove this message: [cwv] or later")
-		to_chat(src, "Visit http://www.byond.com/download/ to get the latest version of byond.")
+		if(CONFIG_GET(flag/client_warn_popup))
+			var/msg = "<b>Your version of byond may be getting out of date:</b><br>"
+			msg += CONFIG_GET(string/client_warn_message) + "<br><br>"
+			msg += "Your version: [byond_version]<br>"
+			msg += "Required version to remove this message: [cwv] or later<br>"
+			msg += "Visit http://www.byond.com/download/ to get the latest version of byond.<br>"
+			src << browse(msg, "window=warning_popup")
+		else
+			to_chat(src, "<span class='danger'><b>Your version of byond may be getting out of date:</b></span>")
+			to_chat(src, CONFIG_GET(string/client_warn_message))
+			to_chat(src, "Your version: [byond_version]")
+			to_chat(src, "Required version to remove this message: [cwv] or later")
+			to_chat(src, "Visit http://www.byond.com/download/ to get the latest version of byond.")
 
 	if (connection == "web" && !holder)
 		if (!CONFIG_GET(flag/allow_webclient))
@@ -660,6 +668,9 @@ GLOBAL_LIST(external_rsc_urls)
 
 	view = new_size
 	apply_clickcatcher()
+	if (isliving(mob))
+		var/mob/living/M = mob
+		M.update_damage_hud()
 
 /client/proc/generate_clickcatcher()
 	if(!void)

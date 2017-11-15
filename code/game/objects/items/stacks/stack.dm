@@ -113,7 +113,7 @@
 			title+= "[R.title]"
 		title+= " ([R.req_amount] [singular_name]\s)"
 		if (can_build)
-			t1 += text("<A href='?src=\ref[];make=[];multiplier=1'>[]</A>  ", src, i, title)
+			t1 += text("<A href='?src=[REF(src)];make=[];multiplier=1'>[]</A>  ", i, title)
 		else
 			t1 += text("[]", title)
 			continue
@@ -123,9 +123,9 @@
 			var/list/multipliers = list(5,10,25)
 			for (var/n in multipliers)
 				if (max_multiplier>=n)
-					t1 += " <A href='?src=\ref[src];make=[i];multiplier=[n]'>[n*R.res_amount]x</A>"
+					t1 += " <A href='?src=[REF(src)];make=[i];multiplier=[n]'>[n*R.res_amount]x</A>"
 			if (!(max_multiplier in multipliers))
-				t1 += " <A href='?src=\ref[src];make=[i];multiplier=[max_multiplier]'>[max_multiplier*R.res_amount]x</A>"
+				t1 += " <A href='?src=[REF(src)];make=[i];multiplier=[max_multiplier]'>[max_multiplier*R.res_amount]x</A>"
 
 	t1 += "</TT></body></HTML>"
 	user << browse(t1, "window=stack")
@@ -168,6 +168,11 @@
 			var/obj/structure/window/W = O
 			W.ini_dir = W.dir
 		//END: oh fuck i'm so sorry
+
+		else if(istype(O, /obj/item/restraints/handcuffs/cable))
+			var/obj/item/cuffs = O
+			cuffs.item_color = item_color
+			cuffs.update_icon()
 
 		if (QDELETED(O))
 			return //It's a stack and has already been merged
@@ -261,7 +266,7 @@
 	if (user.get_inactive_held_item() == src)
 		if(zero_amount())
 			return
-		change_stack(user,1)
+		return change_stack(user,1)
 	else
 		..()
 

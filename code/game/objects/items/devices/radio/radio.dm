@@ -11,7 +11,6 @@
 	var/frequency = 1459 //common chat
 	var/traitor_frequency = 0 //tune to frequency to unlock traitor supplies
 	var/canhear_range = 3 // the range which mobs can hear this radio from
-	var/obj/item/device/radio/patch_link = null
 	var/list/secure_radio_connections
 	var/prison_radio = 0
 	var/b_stat = 0
@@ -29,6 +28,7 @@
 	var/emped = 0	//Highjacked to track the number of consecutive EMPs on the radio, allowing consecutive EMP's to stack properly.
 //			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
 	flags_1 = CONDUCT_1 | HEAR_1
+	flags_2 = NO_EMP_WIRES_2
 	slot_flags = SLOT_BELT
 	throw_speed = 3
 	throw_range = 7
@@ -81,7 +81,6 @@
 	qdel(wires)
 	wires = null
 	remove_radio_all(src) //Just to be sure
-	patch_link = null
 	keyslot = null
 	return ..()
 

@@ -74,12 +74,13 @@
 
 	if(origin && origin.current && (origin.current.stat == DEAD))
 		origin.transfer_to(M)
-		if(!origin.changeling)
-			M.make_changeling()
-		if(origin.changeling.can_absorb_dna(M, owner))
-			origin.changeling.add_new_profile(owner, M)
+		var/datum/antagonist/changeling/C = origin.has_antag_datum(/datum/antagonist/changeling)
+		if(!C)
+			C = origin.add_antag_datum(/datum/antagonist/changeling/xenobio)
+		if(C.can_absorb_dna(owner))
+			C.add_new_profile(owner)
 
-		origin.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
+		C.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
 		M.key = origin.key
 	owner.gib()
 

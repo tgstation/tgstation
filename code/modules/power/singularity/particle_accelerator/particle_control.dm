@@ -232,11 +232,11 @@
 	user.set_machine(src)
 
 	var/dat = ""
-	dat += "<A href='?src=\ref[src];close=1'>Close</A><BR><BR>"
+	dat += "<A href='?src=[REF(src)];close=1'>Close</A><BR><BR>"
 	dat += "<h3>Status</h3>"
 	if(!assembled)
 		dat += "Unable to detect all parts!<BR>"
-		dat += "<A href='?src=\ref[src];scan=1'>Run Scan</A><BR><BR>"
+		dat += "<A href='?src=[REF(src)];scan=1'>Run Scan</A><BR><BR>"
 	else
 		dat += "All parts in place.<BR><BR>"
 		dat += "Power:"
@@ -244,9 +244,9 @@
 			dat += "On<BR>"
 		else
 			dat += "Off <BR>"
-		dat += "<A href='?src=\ref[src];togglep=1'>Toggle Power</A><BR><BR>"
+		dat += "<A href='?src=[REF(src)];togglep=1'>Toggle Power</A><BR><BR>"
 		dat += "Particle Strength: [strength] "
-		dat += "<A href='?src=\ref[src];strengthdown=1'>--</A>|<A href='?src=\ref[src];strengthup=1'>++</A><BR><BR>"
+		dat += "<A href='?src=[REF(src)];strengthdown=1'>--</A>|<A href='?src=[REF(src)];strengthup=1'>++</A><BR><BR>"
 
 	var/datum/browser/popup = new(user, "pacontrol", name, 420, 300)
 	popup.set_content(dat)

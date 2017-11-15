@@ -128,31 +128,16 @@
 	taste_description = "sludge"
 
 /datum/reagent/medicine/cryoxadone/on_mob_life(mob/living/M)
-	switch(M.bodytemperature) // Low temperatures are required to take effect.
-		if(0 to 100) // At extreme temperatures (upgraded cryo) the effect is greatly increased.
-			M.status_flags &= ~DISFIGURED
-			M.adjustCloneLoss(-1, 0)
-			M.adjustOxyLoss(-9, 0)
-			M.adjustBruteLoss(-5, 0)
-			M.adjustFireLoss(-5, 0)
-			M.adjustToxLoss(-5, 0)
-			. = 1
-		if(100 to 225) // At lower temperatures (cryo) the full effect is boosted
-			M.status_flags &= ~DISFIGURED
-			M.adjustCloneLoss(-1, 0)
-			M.adjustOxyLoss(-7, 0)
-			M.adjustBruteLoss(-3, 0)
-			M.adjustFireLoss(-3, 0)
-			M.adjustToxLoss(-3, 0)
-			. = 1
-		if(225 to T0C)
-			M.status_flags &= ~DISFIGURED
-			M.adjustCloneLoss(-1, 0)
-			M.adjustOxyLoss(-5, 0)
-			M.adjustBruteLoss(-1, 0)
-			M.adjustFireLoss(-1, 0)
-			M.adjustToxLoss(-1, 0)
-			. = 1
+	var/power = -0.00003 * (M.bodytemperature ** 2) + 3
+	if(M.bodytemperature < T0C)
+		M.adjustOxyLoss(-3 * power, 0)
+		M.adjustBruteLoss(-power, 0)
+		M.adjustFireLoss(-power, 0)
+		M.adjustToxLoss(-power, 0)
+		M.adjustCloneLoss(-power, 0)
+		M.status_flags &= ~DISFIGURED
+		. = 1
+	metabolization_rate = REAGENTS_METABOLISM * (0.00001 * (M.bodytemperature ** 2) + 0.5)
 	..()
 
 /datum/reagent/medicine/clonexadone
@@ -164,19 +149,11 @@
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/clonexadone/on_mob_life(mob/living/M)
-	switch(M.bodytemperature) // Low temperatures are required to take effect.
-		if(0 to 100) // At extreme temperatures (upgraded cryo) the effect is greatly increased.
-			M.status_flags &= ~DISFIGURED
-			M.adjustCloneLoss(-7, 0)
-			. = 1
-		if(100 to 225) // At lower temperatures (cryo) the full effect is boosted
-			M.status_flags &= ~DISFIGURED
-			M.adjustCloneLoss(-3, 0)
-			. = 1
-		if(225 to T0C)
-			M.status_flags &= ~DISFIGURED
-			M.adjustCloneLoss(-2, 0)
-			. = 1
+	if(M.bodytemperature < T0C)
+		M.adjustCloneLoss(0.00006 * (M.bodytemperature ** 2) - 6, 0)
+		M.status_flags &= ~DISFIGURED
+		. = 1
+	metabolization_rate = REAGENTS_METABOLISM * (0.000015 * (M.bodytemperature ** 2) + 0.75)
 	..()
 
 /datum/reagent/medicine/rezadone
@@ -454,7 +431,7 @@
 
 /datum/reagent/medicine/potass_iodide/on_mob_life(mob/living/M)
 	if(M.radiation > 0)
-		M.radiation -= min(M.radiation, 4)
+		M.radiation -= min(M.radiation, 8)
 	..()
 
 /datum/reagent/medicine/pen_acid
@@ -466,7 +443,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/pen_acid/on_mob_life(mob/living/M)
-	M.radiation -= min(M.radiation-RAD_MOB_SAFE, 0)/100
+	M.radiation -= max(M.radiation-RAD_MOB_SAFE, 0)/50
 	M.adjustToxLoss(-2*REM, 0)
 	for(var/datum/reagent/R in M.reagents.reagent_list)
 		if(R != src)

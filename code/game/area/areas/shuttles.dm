@@ -1,5 +1,5 @@
 
-//These are shuttle areas; all subtypes are only used as teleportation markers, they have no actual function beyond that. 
+//These are shuttle areas; all subtypes are only used as teleportation markers, they have no actual function beyond that.
 //Multi area shuttles are a thing now, use subtypes! ~ninjanomnom
 
 /area/shuttle
@@ -18,6 +18,7 @@
 /area/shuttle/syndicate
 	name = "Syndicate Infiltrator"
 	blob_allowed = FALSE
+	ambientsounds = HIGHSEC
 
 /area/shuttle/syndicate/bridge
 	name = "Syndicate Infiltrator Control"
@@ -41,6 +42,9 @@
 /area/shuttle/transit
 	name = "Hyperspace"
 	desc = "Weeeeee"
+
+/area/shuttle/custom
+	name = "Custom player shuttle"
 
 /area/shuttle/arrival
 	name = "Arrival Shuttle"
@@ -71,6 +75,10 @@
 
 /area/shuttle/escape
 	name = "Emergency Shuttle"
+
+/area/shuttle/escape/luxury
+	name = "Luxurious Emergency Shuttle"
+	noteleport = TRUE
 
 /area/shuttle/transport
 	name = "Transport Shuttle"
@@ -103,3 +111,12 @@
 /area/shuttle/syndicate_scout
 	name = "Syndicate Scout"
 	blob_allowed = FALSE
+
+/area/shuttle/pirate
+	name = "Pirate Shuttle"
+	blob_allowed = FALSE
+	requires_power = TRUE
+
+/area/shuttle/pirate/vault
+	name = "Pirate Shuttle Vault"
+	requires_power = FALSE

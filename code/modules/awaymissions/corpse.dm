@@ -4,6 +4,8 @@
 
 /obj/effect/mob_spawn
 	name = "Unknown"
+	density = TRUE
+	anchored = TRUE
 	var/mob_type = null
 	var/mob_name = ""
 	var/mob_gender = null
@@ -22,8 +24,7 @@
 	var/datum/disease/disease = null //Do they start with a pre-spawned disease?
 	var/mob_color //Change the mob's color
 	var/assignedrole
-	density = TRUE
-	anchored = TRUE
+	var/show_flavour = TRUE
 	var/banType = "lavaland"
 
 /obj/effect/mob_spawn/attack_ghost(mob/user)
@@ -61,7 +62,7 @@
 /obj/effect/mob_spawn/proc/equip(mob/M)
 	return
 
-/obj/effect/mob_spawn/proc/create(ckey, flavour = TRUE, name)
+/obj/effect/mob_spawn/proc/create(ckey, name)
 	var/mob/living/M = new mob_type(get_turf(src)) //living mobs only
 	if(!random)
 		M.real_name = mob_name ? mob_name : M.name
@@ -83,7 +84,7 @@
 
 	if(ckey)
 		M.ckey = ckey
-		if(flavour)
+		if(show_flavour)
 			to_chat(M, "[flavour_text]")
 		var/datum/mind/MM = M.mind
 		if(objectives)
@@ -133,6 +134,10 @@
 	var/backpack_contents = -1
 	var/suit_store = -1
 
+	var/hair_style
+	var/facial_hair_style
+	var/skin_tone
+
 /obj/effect/mob_spawn/human/Initialize()
 	if(ispath(outfit))
 		outfit = new outfit()
@@ -150,6 +155,20 @@
 	H.underwear = "Nude"
 	H.undershirt = "Nude"
 	H.socks = "Nude"
+	if(hair_style)
+		H.hair_style = hair_style
+	else
+		H.hair_style = random_hair_style(gender)
+	if(facial_hair_style)
+		H.facial_hair_style = facial_hair_style
+	else
+		H.facial_hair_style = random_facial_hair_style(gender)
+	if(skin_tone)
+		H.skin_tone = skin_tone
+	else
+		H.skin_tone = random_skin_tone()
+	H.update_hair()
+	H.update_body()
 	if(outfit)
 		var/static/list/slots = list("uniform", "r_hand", "l_hand", "suit", "shoes", "gloves", "ears", "glasses", "mask", "head", "belt", "r_pocket", "l_pocket", "back", "id", "neck", "backpack_contents", "suit_store")
 		for(var/slot in slots)

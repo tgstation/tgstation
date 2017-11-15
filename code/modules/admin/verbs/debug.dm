@@ -117,7 +117,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 		to_chat(usr, "<span class='adminnotice'>Running your proc</span>")
 	GLOB.LastAdminCalledProc = procname
 	if(target != GLOBAL_PROC)
-		GLOB.LastAdminCalledTargetRef = "\ref[target]"
+		GLOB.LastAdminCalledTargetRef = "[REF(target)]"
 	GLOB.AdminProcCaller = ckey	//if this runtimes, too bad for you
 	++GLOB.AdminProcCallCount
 	. = world.WrapAdminProcCall(target, procname, arguments)
@@ -128,8 +128,10 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 /world/proc/WrapAdminProcCall(target, procname, list/arguments)
 	if(target == GLOBAL_PROC)
 		return call(procname)(arglist(arguments))
-	else
+	else if(target != world)
 		return call(target, procname)(arglist(arguments))
+	else
+		log_admin_private("[key_name(usr)] attempted to call world/proc/[procname] with arguments: [english_list(arguments)]")
 
 /proc/IsAdminAdvancedProcCall()
 #ifdef TESTING
@@ -505,6 +507,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 
 	var/list/areas_all = list()
 	var/list/areas_with_APC = list()
+	var/list/areas_with_multiple_APCs = list()
 	var/list/areas_with_air_alarm = list()
 	var/list/areas_with_RC = list()
 	var/list/areas_with_light = list()
@@ -526,6 +529,8 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 		var/area/A = APC.area
 		if(!(A.type in areas_with_APC))
 			areas_with_APC.Add(A.type)
+		else if(A.type in areas_all)
+			areas_with_multiple_APCs.Add(A.type)
 
 	for(var/obj/machinery/airalarm/AA in GLOB.machines)
 		var/area/A = get_area(AA)
@@ -565,33 +570,48 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	var/list/areas_without_intercom = areas_all - areas_with_intercom
 	var/list/areas_without_camera = areas_all - areas_with_camera
 
-	to_chat(world, "<b>AREAS WITHOUT AN APC:</b>")
-	for(var/areatype in areas_without_APC)
-		to_chat(world, "* [areatype]")
+	if(areas_without_APC.len)
+		to_chat(world, "<b>AREAS WITHOUT AN APC:</b>")
+		for(var/areatype in areas_without_APC)
+			to_chat(world, "* [areatype]")
 
-	to_chat(world, "<b>AREAS WITHOUT AN AIR ALARM:</b>")
-	for(var/areatype in areas_without_air_alarm)
-		to_chat(world, "* [areatype]")
+	if(areas_with_multiple_APCs.len)
+		to_chat(world, "<b>AREAS WITH MULTIPLE APCS:</b>")
+		for(var/areatype in areas_with_multiple_APCs)
+			to_chat(world,"* [areatype]")
 
-	to_chat(world, "<b>AREAS WITHOUT A REQUEST CONSOLE:</b>")
-	for(var/areatype in areas_without_RC)
-		to_chat(world, "* [areatype]")
+	if(areas_without_air_alarm.len)
+		to_chat(world, "<b>AREAS WITHOUT AN AIR ALARM:</b>")
+		for(var/areatype in areas_without_air_alarm)
+			to_chat(world, "* [areatype]")
 
-	to_chat(world, "<b>AREAS WITHOUT ANY LIGHTS:</b>")
-	for(var/areatype in areas_without_light)
-		to_chat(world, "* [areatype]")
+	if(areas_without_RC.len)
+		to_chat(world, "<b>AREAS WITHOUT A REQUEST CONSOLE:</b>")
+		for(var/areatype in areas_without_RC)
+			to_chat(world, "* [areatype]")
 
-	to_chat(world, "<b>AREAS WITHOUT A LIGHT SWITCH:</b>")
-	for(var/areatype in areas_without_LS)
-		to_chat(world, "* [areatype]")
+	if(areas_without_light.len)
+		to_chat(world, "<b>AREAS WITHOUT ANY LIGHTS:</b>")
+		for(var/areatype in areas_without_light)
+			to_chat(world, "* [areatype]")
 
-	to_chat(world, "<b>AREAS WITHOUT ANY INTERCOMS:</b>")
-	for(var/areatype in areas_without_intercom)
-		to_chat(world, "* [areatype]")
+	if(areas_without_LS.len)
+		to_chat(world, "<b>AREAS WITHOUT A LIGHT SWITCH:</b>")
+		for(var/areatype in areas_without_LS)
+			to_chat(world, "* [areatype]")
 
-	to_chat(world, "<b>AREAS WITHOUT ANY CAMERAS:</b>")
-	for(var/areatype in areas_without_camera)
-		to_chat(world, "* [areatype]")
+	if(areas_without_intercom.len)
+		to_chat(world, "<b>AREAS WITHOUT ANY INTERCOMS:</b>")
+		for(var/areatype in areas_without_intercom)
+			to_chat(world, "* [areatype]")
+
+	if(areas_without_camera.len)
+		to_chat(world, "<b>AREAS WITHOUT ANY CAMERAS:</b>")
+		for(var/areatype in areas_without_camera)
+			to_chat(world, "* [areatype]")
+
+	if(!(areas_with_APC.len || areas_with_multiple_APCs.len || areas_with_air_alarm.len || areas_with_RC.len || areas_with_light.len || areas_with_LS.len || areas_with_intercom.len || areas_with_camera.len))
+		to_chat(world, "<b>No problem areas!</b>")
 
 /client/proc/cmd_admin_areatest_station()
 	set category = "Mapping"
@@ -776,9 +796,16 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 
 	usr << browse(dellog.Join(), "window=dellog")
 
+/client/proc/cmd_display_overlay_log()
+	set category = "Debug"
+	set name = "Display overlay Log"
+	set desc = "Display SSoverlays log of everything that's passed through it."
+
+	render_stats(SSoverlays.stats, src)
+
 /client/proc/cmd_display_init_log()
 	set category = "Debug"
-	set name = "Display Initialzie() Log"
+	set name = "Display Initialize() Log"
 	set desc = "Displays a list of things that didn't handle Initialize() properly"
 
 	usr << browse(replacetext(SSatoms.InitLog(), "\n", "<br>"), "window=initlog")
@@ -871,3 +898,42 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	message_admins("<span class='adminnotice'>[key_name_admin(src)] pumped a random event.</span>")
 	SSblackbox.add_details("admin_verb","Pump Random Event")
 	log_admin("[key_name(src)] pumped a random event.")
+
+/client/proc/start_line_profiling()
+	set category = "Profile"
+	set name = "Start Line Profiling"
+	set desc = "Starts tracking line by line profiling for code lines that support it"
+
+	PROFILE_START
+
+	message_admins("<span class='adminnotice'>[key_name_admin(src)] started line by line profiling.</span>")
+	SSblackbox.add_details("admin_verb","Start Line Profiling")
+	log_admin("[key_name(src)] started line by line profiling.")
+
+/client/proc/stop_line_profiling()
+	set category = "Profile"
+	set name = "Stops Line Profiling"
+	set desc = "Stops tracking line by line profiling for code lines that support it"
+
+	PROFILE_STOP
+
+	message_admins("<span class='adminnotice'>[key_name_admin(src)] stopped line by line profiling.</span>")
+	SSblackbox.add_details("admin_verb","stop Line Profiling")
+	log_admin("[key_name(src)] stopped line by line profiling.")
+
+/client/proc/show_line_profiling()
+	set category = "Profile"
+	set name = "Show Line Profiling"
+	set desc = "Shows tracked profiling info from code lines that support it"
+
+	var/sortlist = list(
+		"Avg time"		=	/proc/cmp_profile_avg_time_dsc,
+		"Total Time"	=	/proc/cmp_profile_time_dsc,
+		"Call Count"	=	/proc/cmp_profile_count_dsc
+	)
+	var/sort = input(src, "Sort type?", "Sort Type", "Avg time") as null|anything in sortlist
+	if (!sort)
+		return
+	sort = sortlist[sort]
+	profile_show(src, sort)
+

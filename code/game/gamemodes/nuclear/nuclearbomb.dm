@@ -77,6 +77,7 @@
 	icon = 'icons/obj/machines/nuke_terminal.dmi'
 	icon_state = "nuclearbomb_base"
 	anchored = TRUE //stops it being moved
+	use_tag = TRUE
 
 /obj/machinery/nuclearbomb/syndicate
 	//ui_style = "syndicate" // actually the nuke op bomb is a stole nt bomb
@@ -121,15 +122,7 @@
 					to_chat(user, "<span class='notice'>You remove the screws from [src]'s front panel.</span>")
 					update_icon()
 				return
-		if(NUKESTATE_UNSCREWED)
-			if(istype(I, /obj/item/crowbar))
-				to_chat(user, "<span class='notice'>You start removing [src]'s front panel...</span>")
-				playsound(loc, I.usesound, 100, 1)
-				if(do_after(user,30*I.toolspeed,target=src))
-					to_chat(user, "<span class='notice'>You remove [src]'s front panel.</span>")
-					deconstruction_state = NUKESTATE_PANEL_REMOVED
-					update_icon()
-				return
+
 		if(NUKESTATE_PANEL_REMOVED)
 			if(istype(I, /obj/item/weldingtool))
 				var/obj/item/weldingtool/welder = I
@@ -140,16 +133,6 @@
 						to_chat(user, "<span class='notice'>You cut [src]'s inner plate.</span>")
 						deconstruction_state = NUKESTATE_WELDED
 						update_icon()
-				return
-		if(NUKESTATE_WELDED)
-			if(istype(I, /obj/item/crowbar))
-				to_chat(user, "<span class='notice'>You start prying off [src]'s inner plate...</span>")
-				playsound(loc, I.usesound, 100, 1)
-				if(do_after(user,50*I.toolspeed,target=src))
-					to_chat(user, "<span class='notice'>You pry off [src]'s inner plate. You can see the core's green glow!</span>")
-					deconstruction_state = NUKESTATE_CORE_EXPOSED
-					update_icon()
-					START_PROCESSING(SSobj, core)
 				return
 		if(NUKESTATE_CORE_EXPOSED)
 			if(istype(I, /obj/item/nuke_core_container))
@@ -180,6 +163,27 @@
 					to_chat(user, "<span class='warning'>You need more metal to do that!</span>")
 				return
 	. = ..()
+
+/obj/machinery/nuclearbomb/crowbar_act(mob/user, obj/item/tool)
+	. = FALSE
+	switch(deconstruction_state)
+		if(NUKESTATE_UNSCREWED)
+			to_chat(user, "<span class='notice'>You start removing [src]'s front panel...</span>")
+			playsound(loc, tool.usesound, 100, 1)
+			if(do_after(user, 30 * tool.toolspeed, target = src))
+				to_chat(user, "<span class='notice'>You remove [src]'s front panel.</span>")
+				deconstruction_state = NUKESTATE_PANEL_REMOVED
+				update_icon()
+			return TRUE
+		if(NUKESTATE_WELDED)
+			to_chat(user, "<span class='notice'>You start prying off [src]'s inner plate...</span>")
+			playsound(loc, tool.usesound, 100, 1)
+			if(do_after(user, 50 * tool.toolspeed, target = src))
+				to_chat(user, "<span class='notice'>You pry off [src]'s inner plate. You can see the core's green glow!</span>")
+				deconstruction_state = NUKESTATE_CORE_EXPOSED
+				update_icon()
+				START_PROCESSING(SSobj, core)
+			return TRUE
 
 /obj/machinery/nuclearbomb/proc/get_nuke_state()
 	if(exploding)

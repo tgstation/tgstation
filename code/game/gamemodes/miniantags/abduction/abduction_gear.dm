@@ -477,7 +477,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		species = "<span class='notice'>[H.dna.species.name]</span>"
-		if(L.mind && L.mind.changeling)
+		if(L.mind && L.mind.has_antag_datum(/datum/antagonist/changeling))
 			species = "<span class='warning'>Changeling lifeform</span>"
 		var/obj/item/organ/heart/gland/temp = locate() in H.internal_organs
 		if(temp)
@@ -491,7 +491,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/item/restraints/handcuffs/energy
 	name = "hard-light energy field"
 	desc = "A hard-light field restraining the hands."
-	icon_state = "cuff_white" // Needs sprite
+	icon_state = "cuff" // Needs sprite
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	breakouttime = 450

@@ -76,8 +76,8 @@
 
 	//This is probably too much code just for EMP damage.
 	var/emp_damage = 0	//One hit should make it hard to control, continuous hits will cripple it and then simply shut it off/make it crash. Direct hits count more.
-	var/emp_strong_damage = 2
-	var/emp_weak_damage = 1.1
+	var/emp_strong_damage = 4
+	var/emp_weak_damage = 2.5
 	var/emp_heal_amount = 0.06		//How much emp damage to heal per process.
 	var/emp_disable_threshold = 3	//3 weak ion, 2 strong ion hits.
 	var/emp_disabled = FALSE
@@ -757,7 +757,6 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/flightsuit
 	jetpack = null
-	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals, /obj/item/gun, /obj/item/reagent_containers/spray/pepper, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs)
 	actions_types = list(/datum/action/item_action/flightsuit/toggle_helmet, /datum/action/item_action/flightsuit/toggle_boots, /datum/action/item_action/flightsuit/toggle_flightpack, /datum/action/item_action/flightsuit/lock_suit)
 	armor = list(melee = 20, bullet = 20, laser = 20, energy = 10, bomb = 30, bio = 100, rad = 75, fire = 100, acid = 100)
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
@@ -771,6 +770,10 @@
 	var/flightpack
 	var/flight = FALSE
 	var/maint_panel = FALSE
+
+/obj/item/clothing/suit/space/hardsuit/flightsuit/Initialize()
+	. = ..()
+	allowed = GLOB.advanced_hardsuit_allowed
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/full/Initialize()
 	makepack()
@@ -1077,7 +1080,7 @@
 	armor = list(melee = 20, bullet = 20, laser = 20, energy = 10, bomb = 30, bio = 100, rad = 75, fire = 100, acid = 100)
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
 	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC)
-	var/zoom_range = 14
+	var/zoom_range = 12
 	var/zoom = FALSE
 	actions_types = list(/datum/action/item_action/toggle_helmet_light, /datum/action/item_action/flightpack/zoom)
 

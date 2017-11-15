@@ -146,7 +146,6 @@
 			return NORTH
 
 //returns the north-zero clockwise angle in degrees, given a direction
-
 /proc/dir2angle(D)
 	switch(D)
 		if(NORTH)
@@ -578,3 +577,23 @@
 			return "turf"
 		else //regex everything else (works for /proc too)
 			return lowertext(replacetext("[the_type]", "[type2parent(the_type)]/", ""))
+
+/proc/strtohex(str)
+	if(!istext(str)||!str)
+		return
+	var/r
+	var/c
+	for(var/i = 1 to length(str))
+		c= text2ascii(str,i)
+		r+= num2hex(c)
+	return r
+
+/proc/hextostr(str)
+	if(!istext(str)||!str)
+		return
+	var/r
+	var/c
+	for(var/i = 1 to length(str)/2)
+		c= hex2num(copytext(str,i*2-1,i*2+1))
+		r+= ascii2text(c)
+	return r

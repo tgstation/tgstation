@@ -62,7 +62,7 @@
 
 /atom/movable/Move(atom/newloc, direct = 0)
 	if(!loc || !newloc)
-		return 0
+		return FALSE
 	var/atom/oldloc = loc
 
 	if(loc != newloc)
@@ -113,7 +113,7 @@
 	last_move = direct
 	setDir(direct)
 	if(. && has_buckled_mobs() && !handle_buckled_mob_movement(loc,direct)) //movement failed due to buckled mob(s)
-		. = 0
+		return FALSE
 
 //Called after a successful Move(). By this point, we've already moved
 /atom/movable/proc/Moved(atom/OldLoc, Dir, Forced = FALSE)
@@ -325,9 +325,6 @@
 	SSspacedrift.processing[src] = src
 	return 1
 
-/atom/movable/proc/checkpass(passflag)
-	return pass_flags&passflag
-
 /atom/movable/proc/throw_impact(atom/hit_atom, throwingdatum)
 	set waitfor = 0
 	SendSignal(COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum)
@@ -523,7 +520,7 @@
 /atom/movable/vv_get_dropdown()
 	. = ..()
 	. -= "Jump to"
-	.["Follow"] = "?_src_=holder;[HrefToken()];adminplayerobservefollow=\ref[src]"
+	.["Follow"] = "?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(src)]"
 
 /atom/movable/proc/ex_check(ex_id)
 	if(!ex_id)

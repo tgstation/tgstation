@@ -112,8 +112,9 @@
 	item_state = "bombsuit_white"
 
 /*
- * Radiation protection
- */
+* Radiation protection
+*/
+
 /obj/item/clothing/head/radiation
 	name = "radiation hood"
 	icon_state = "rad"

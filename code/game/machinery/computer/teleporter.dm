@@ -70,16 +70,16 @@
 			data += "Calibration: <font color='red'>Sub-Optimal</font>"
 		data += "</div><BR>"
 
-		data += "<A href='?src=\ref[src];regimeset=1'>Change regime</A><BR>"
-		data += "<A href='?src=\ref[src];settarget=1'>Set target</A><BR>"
+		data += "<A href='?src=[REF(src)];regimeset=1'>Change regime</A><BR>"
+		data += "<A href='?src=[REF(src)];settarget=1'>Set target</A><BR>"
 		if(locked)
-			data += "<BR><A href='?src=\ref[src];locked=1'>Get target from memory</A><BR>"
-			data += "<A href='?src=\ref[src];eject=1'>Eject GPS device</A><BR>"
+			data += "<BR><A href='?src=[REF(src)];locked=1'>Get target from memory</A><BR>"
+			data += "<A href='?src=[REF(src)];eject=1'>Eject GPS device</A><BR>"
 		else
 			data += "<BR><span class='linkOff'>Get target from memory</span><BR>"
 			data += "<span class='linkOff'>Eject GPS device</span><BR>"
 
-		data += "<BR><A href='?src=\ref[src];calibrate=1'>Calibrate Hub</A>"
+		data += "<BR><A href='?src=[REF(src)];calibrate=1'>Calibrate Hub</A>"
 
 	var/datum/browser/popup = new(user, "teleporter", name, 400, 400)
 	popup.set_content(data)
@@ -161,12 +161,17 @@
 	var/list/areaindex = list()
 	if(regime_set == "Teleporter")
 		for(var/obj/item/device/radio/beacon/R in GLOB.teleportbeacons)
+<<<<<<< HEAD
 			var/turf/T = get_turf(R)
 			if(!T)
 				continue
 			if(is_centcom(T.z) || is_away_mission(T.z))
 				continue
 			L[avoid_assoc_duplicate_keys(T.loc.name, areaindex)] = R
+=======
+			if(is_eligible(R))
+				L[avoid_assoc_duplicate_keys(R.loc.loc.name, areaindex)] = R
+>>>>>>> 5941e802ee8090684c0e1ff336b496859702c73f
 
 		for(var/obj/item/implant/tracking/I in GLOB.tracked_implants)
 			if(!I.imp_in || !ismob(I.loc))
@@ -176,12 +181,17 @@
 				if(M.stat == DEAD)
 					if(M.timeofdeath + 6000 < world.time)
 						continue
+<<<<<<< HEAD
 				var/turf/T = get_turf(M)
 				if(!T)
 					continue
 				if(is_centcom(T.z))
 					continue
 				L[avoid_assoc_duplicate_keys(M.real_name, areaindex)] = I
+=======
+				if(is_eligible(I))
+					L[avoid_assoc_duplicate_keys(M.real_name, areaindex)] = I
+>>>>>>> 5941e802ee8090684c0e1ff336b496859702c73f
 
 		var/desc = input("Please select a location to lock in.", "Locking Computer") as null|anything in L
 		target = L[desc]
@@ -192,12 +202,10 @@
 			to_chat(user, "<span class='alert'>No connected stations located.</span>")
 			return
 		for(var/obj/machinery/teleport/station/R in S)
-			var/turf/T = get_turf(R)
 			if(!T || !R.teleporter_hub || !R.teleporter_console)
 				continue
-			if(is_centcom(T.z) || is_away_mission(T.z))
-				continue
-			L[avoid_assoc_duplicate_keys(T.loc.name, areaindex)] = R
+			if(is_eligible(R))
+				L[avoid_assoc_duplicate_keys(R.loc.loc.name, areaindex)] = R
 		var/desc = input("Please select a station to lock in.", "Locking Computer") as null|anything in L
 		target = L[desc]
 		if(target)
@@ -210,3 +218,15 @@
 			if(trg.teleporter_console)
 				trg.teleporter_console.stat &= ~NOPOWER
 				trg.teleporter_console.update_icon()
+
+/obj/machinery/computer/teleporter/proc/is_eligible(atom/movable/AM)
+	var/turf/T = get_turf(AM)
+	if(!T)
+		return FALSE
+	var/Tz = T.z
+	if(is_centcom(Tz) || is_away_mission(Tz))
+		return FALSE
+	var/area/A = get_area(T)
+	if(!A || A.noteleport)
+		return FALSE
+	return TRUE

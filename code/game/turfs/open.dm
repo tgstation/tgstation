@@ -177,11 +177,6 @@
 	for(var/obj/effect/O in src)
 		if(is_cleanable(O))
 			qdel(O)
-
-	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in src)
-	if(hotspot && !isspaceturf(src))
-		air.temperature = max(min(air.temperature-2000,air.temperature/2),0)
-		qdel(hotspot)
 	return 1
 
 /turf/open/handle_slip(mob/living/carbon/C, knockdown_amount, obj/O, lube)
@@ -360,3 +355,11 @@
 	if(wet_overlay)
 		cut_overlay(wet_overlay)
 
+
+/turf/open/rad_act(pulse_strength)
+	if (air.gases[/datum/gas/carbon_dioxide] && air.gases[/datum/gas/oxygen])
+		air.gases[/datum/gas/carbon_dioxide][MOLES]=max(air.gases[/datum/gas/carbon_dioxide][MOLES]-(pulse_strength/1000),0)
+		air.gases[/datum/gas/oxygen][MOLES]=max(air.gases[/datum/gas/oxygen][MOLES]-(pulse_strength/2000),0)
+		ASSERT_GAS(/datum/gas/pluoxium,air)
+		air.gases[/datum/gas/pluoxium][MOLES]+=(pulse_strength/4000)
+		air.garbage_collect()

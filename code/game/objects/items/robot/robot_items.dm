@@ -546,9 +546,11 @@
 		to_chat(user, "<span class='boldwarning'>[src] is still recycling its projectors!</span>")
 		return
 	cycle_delay = world.time + PKBORG_DAMPEN_CYCLE_DELAY
-	active = !active
-	if(active)
-		activate_field(user)
+	if(!active)
+		if(!user.has_buckled_mobs())
+			activate_field()
+		else
+			to_chat(user, "<span class='warning'>[src]'s safety cutoff prevents you from activating it due to living beings being ontop of you!</span>")
 	else
 		deactivate_field()
 	update_icon()
@@ -561,12 +563,29 @@
 	if(istype(dampening_field))
 		QDEL_NULL(dampening_field)
 	dampening_field = make_field(/datum/proximity_monitor/advanced/peaceborg_dampener, list("current_range" = field_radius, "host" = src, "projector" = src))
+	var/mob/living/silicon/robot/owner = get_host()
+	if(owner)
+		owner.module.allow_riding = FALSE
+	active = TRUE
 
 /obj/item/borg/projectile_dampen/proc/deactivate_field()
 	QDEL_NULL(dampening_field)
 	visible_message("<span class='warning'>\The [src] shuts off!</span>")
 	for(var/P in tracked)
 		restore_projectile(P)
+	active = FALSE
+
+	var/mob/living/silicon/robot/owner = get_host()
+	if(owner)
+		owner.module.allow_riding = TRUE
+
+/obj/item/borg/projectile_dampen/proc/get_host()
+	if(istype(host))
+		return host
+	else
+		if(iscyborg(host.loc))
+			return host.loc
+	return null
 
 /obj/item/borg/projectile_dampen/dropped()
 	. = ..()

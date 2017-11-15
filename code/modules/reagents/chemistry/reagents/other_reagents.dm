@@ -24,9 +24,9 @@
 			else //ingest, patch or inject
 				M.ForceContractDisease(D)
 
-	if(method == INJECT && iscarbon(M))
+	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		if(C.get_blood_id() == "blood")
+		if(C.get_blood_id() == "blood" && (method == INJECT || (method == INGEST && C.dna && C.dna.species && (DRINKSBLOOD in C.dna.species.species_traits))))
 			if(!data || !(data["blood_type"] in get_safe_blood(C.dna.blood_type)))
 				C.reagents.add_reagent("toxin", reac_volume * 0.5)
 			else
@@ -1157,6 +1157,37 @@
 	if(prob(20))
 		M.losebreath += 2
 		M.confused = min(M.confused + 2, 5)
+	..()
+
+/datum/reagent/stimulum
+	name = "Stimulum"
+	id = "stimulum"
+	description = "An unstable experimental gas that greatly increases the energy of those that inhale it"
+	reagent_state = GAS
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	color = "E1A116"
+	taste_description = "sourness"
+
+/datum/reagent/stimulum/on_mob_life(mob/living/M) // Has a speedup, and the anti-stun effects of nicotine.
+	M.status_flags |= GOTTAGOFAST
+	M.AdjustStun(-20, 0)
+	M.AdjustKnockdown(-20, 0)
+	M.AdjustUnconscious(-20, 0)
+	M.adjustStaminaLoss(-0.5*REM, 0)
+	..()
+	. = TRUE //Update status effects.
+
+/datum/reagent/nitryl
+	name = "Nitryl"
+	id = "no2"
+	description = "A highly reactive gas that makes you feel faster"
+	reagent_state = GAS
+	metabolization_rate = REAGENTS_METABOLISM
+	color = "90560B"
+	taste_description = "burning"
+
+/datum/reagent/nitryl/on_mob_life(mob/living/M) //Has just a speedup
+	M.status_flags |= GOTTAGOFAST
 	..()
 
 /////////////////////////Coloured Crayon Powder////////////////////////////

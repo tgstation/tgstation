@@ -34,17 +34,17 @@
 	user.set_machine(src)
 	var/dat
 	if (src.temp)
-		dat = "[src.temp]<BR><BR><A href='byond://?src=\ref[src];temp=1'>Clear</A>"
+		dat = "[src.temp]<BR><BR><A href='byond://?src=[REF(src)];temp=1'>Clear</A>"
 	else
 		dat = {"
 <B>Persistent Signal Locator</B><HR>
 Frequency:
-<A href='byond://?src=\ref[src];freq=-10'>-</A>
-<A href='byond://?src=\ref[src];freq=-2'>-</A> [format_frequency(src.frequency)]
-<A href='byond://?src=\ref[src];freq=2'>+</A>
-<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
+<A href='byond://?src=[REF(src)];freq=-10'>-</A>
+<A href='byond://?src=[REF(src)];freq=-2'>-</A> [format_frequency(src.frequency)]
+<A href='byond://?src=[REF(src)];freq=2'>+</A>
+<A href='byond://?src=[REF(src)];freq=10'>+</A><BR>
 
-<A href='?src=\ref[src];refresh=1'>Refresh</A>"}
+<A href='?src=[REF(src)];refresh=1'>Refresh</A>"}
 	user << browse(dat, "window=radio")
 	onclose(user, "radio")
 	return
@@ -106,7 +106,7 @@ Frequency:
 									direct = "weak"
 							src.temp += "[W.imp_in.name]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
 
-				src.temp += "<B>You are at \[[sr.x],[sr.y],[sr.z]\]</B> in orbital coordinates.<BR><BR><A href='byond://?src=\ref[src];refresh=1'>Refresh</A><BR>"
+				src.temp += "<B>You are at \[[sr.x],[sr.y],[sr.z]\]</B> in orbital coordinates.<BR><BR><A href='byond://?src=[REF(src)];refresh=1'>Refresh</A><BR>"
 			else
 				src.temp += "<B><FONT color='red'>Processing Error:</FONT></B> Unable to locate orbital position.<BR>"
 		else
@@ -151,12 +151,21 @@ Frequency:
 	. = ..()
 	active_portal_pairs = list()
 
-/obj/item/hand_tele/afterattack(atom/target, mob/user, proximity, params)
-	if(is_parent_of_portal(target))
-		qdel(target)
-		to_chat(user, "<span class='notice'>You dispel [target] remotely with \the [src]!</span>")
+/obj/item/hand_tele/pre_attackby(atom/target, mob/user, params)
+	if(try_dispel_portal(target, user))
+		return FALSE
 	return ..()
 
+/obj/item/hand_tele/proc/try_dispel_portal(atom/target, mob/user)
+	if(is_parent_of_portal(target))
+		qdel(target)
+		to_chat(user, "<span class='notice'>You dispel [target] with \the [src]!</span>")
+		return TRUE
+	return FALSE
+
+/obj/item/hand_tele/afterattack(atom/target, mob/user)
+	try_dispel_portal(target, user)
+	. = ..()
 
 /obj/item/hand_tele/attack_self(mob/user)
 	var/turf/current_location = get_turf(user)//What turf is the user on?
@@ -197,6 +206,11 @@ Frequency:
 	if(A.noteleport)
 		to_chat(user, "<span class='notice'>\The [src] is malfunctioning.</span>")
 		return
+	current_location = get_turf(user)	//Recheck.
+	current_area = current_location.loc
+	if(!current_location || current_area.noteleport || current_location.z > ZLEVEL_SPACEMAX || !isturf(user.loc))//If turf was not found or they're on z level 2 or >7 which does not currently exist. or if user is not located on a turf
+		to_chat(user, "<span class='notice'>\The [src] is malfunctioning.</span>")
+		return	
 	user.show_message("<span class='notice'>Locked In.</span>", 2)
 	var/list/obj/effect/portal/created = create_portal_pair(current_location, get_teleport_turf(get_turf(T)), src, 300, 1)
 	if(!(LAZYLEN(created) == 2))

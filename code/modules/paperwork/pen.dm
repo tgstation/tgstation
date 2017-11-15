@@ -181,12 +181,12 @@
 				reagents.trans_to(M, reagents.total_volume)
 
 
-/obj/item/pen/sleepy/New()
+/obj/item/pen/sleepy/Initialize()
+	. = ..()	
 	create_reagents(45)
 	reagents.add_reagent("chloralhydrate2", 20)
 	reagents.add_reagent("mutetoxin", 15)
 	reagents.add_reagent("tirizene", 10)
-	..()
 
 /*
  * (Alan) Edaggers

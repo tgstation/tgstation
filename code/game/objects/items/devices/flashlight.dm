@@ -210,6 +210,7 @@
 	item_state = "lamp"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	force = 10
 	brightness_on = 5
 	w_class = WEIGHT_CLASS_BULKY
 	flags_1 = CONDUCT_1
@@ -487,16 +488,14 @@
 
 /obj/item/device/flashlight/glowstick/random
 	name = "random colored glowstick"
+	icon_state = "random_glowstick"
+	color = null
 
 /obj/item/device/flashlight/glowstick/random/Initialize()
-	var/list/glowtypes = typesof(/obj/item/device/flashlight/glowstick)
-	glowtypes -= /obj/item/device/flashlight/glowstick/random
-
-	var/obj/item/device/flashlight/glowstick/glowtype = pick(glowtypes)
-
-	name = initial(glowtype.name)
-	color = initial(glowtype.color)
 	. = ..()
+	var/T = pick(typesof(/obj/item/device/flashlight/glowstick) - /obj/item/device/flashlight/glowstick/random)
+	new T(loc)
+	return INITIALIZE_HINT_QDEL
 
 /obj/item/device/flashlight/spotlight //invisible lighting source
 	name = "disco light"

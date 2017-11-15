@@ -28,6 +28,7 @@
 #define NORMPIPERATE						30		//pipe-insulation rate divisor
 #define HEATPIPERATE						8		//heat-exch pipe insulation
 #define FLOWFRAC							0.99	//fraction of gas transfered per process
+#define TANK_MELT_TEMPERATURE				1000000
 #define TANK_LEAK_PRESSURE					(30.*ONE_ATMOSPHERE)	//Tank starts leaking
 #define TANK_RUPTURE_PRESSURE				(35.*ONE_ATMOSPHERE)	//Tank spills all contents into atmosphere
 #define TANK_FRAGMENT_PRESSURE				(40.*ONE_ATMOSPHERE)	//Boom 3x3 base explosion
@@ -56,28 +57,16 @@
 #define FIRE_MINIMUM_TEMPERATURE_TO_SPREAD	150+T0C
 #define FIRE_MINIMUM_TEMPERATURE_TO_EXIST	100+T0C
 #define FIRE_SPREAD_RADIOSITY_SCALE			0.85
-#define FIRE_CARBON_ENERGY_RELEASED			500000	//Amount of heat released per mole of burnt carbon into the tile
-#define FIRE_PLASMA_ENERGY_RELEASED			3000000	//Amount of heat released per mole of burnt plasma into the tile
 #define FIRE_GROWTH_RATE					40000	//For small fires
 #define CARBON_LIFEFORM_FIRE_RESISTANCE 	200+T0C	//Resistance to fire damage
 #define CARBON_LIFEFORM_FIRE_DAMAGE			4		//Fire damage
-	//Plasma fire properties
-#define OXYGEN_BURN_RATE_BASE				1.4
-#define PLASMA_BURN_RATE_DELTA				9
-#define PLASMA_MINIMUM_BURN_TEMPERATURE		100+T0C
-#define PLASMA_UPPER_TEMPERATURE			1370+T0C
-#define PLASMA_MINIMUM_OXYGEN_NEEDED		2
-#define PLASMA_MINIMUM_OXYGEN_PLASMA_RATIO	30
-#define PLASMA_OXYGEN_FULLBURN				10
 #define MIN_TOXIC_GAS_DAMAGE				1
 #define MAX_TOXIC_GAS_DAMAGE				10
-#define MOLES_PLASMA_VISIBLE				0.5		//Moles in a standard cell after which plasma is visible
-	//Plasma fusion properties
-#define PLASMA_BINDING_ENERGY				3000000
-#define MAX_CARBON_EFFICENCY				9
-#define PLASMA_FUSED_COEFFICENT				0.08
-#define CARBON_CATALYST_COEFFICENT			0.01
-#define FUSION_PURITY_THRESHOLD				0.9
+#define MOLES_GAS_VISIBLE					0.5		//Moles in a standard cell after which gases are visible
+#define STOP_REACTIONS 						2
+#define PLASMA_MINIMUM_BURN_TEMPERATURE		100+T0C
+#define GAS_STIM_MINIMUM					0.002
+
 // Pressure limits.
 #define HAZARD_HIGH_PRESSURE				550		//This determins at what pressure the ultra-high pressure red icon is displayed. (This one is set as a constant)
 #define WARNING_HIGH_PRESSURE				325		//This determins when the orange pressure icon is displayed (it is 0.7 * HAZARD_HIGH_PRESSURE)
@@ -121,7 +110,7 @@
 
 #define PRESSURE_DAMAGE_COEFFICIENT			4		//The amount of pressure damage someone takes is equal to (pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT, with the maximum of MAX_PRESSURE_DAMAGE
 #define MAX_HIGH_PRESSURE_DAMAGE			4
-#define LOW_PRESSURE_DAMAGE					2		//The amount of damage someone takes when in a low pressure area (The pressure threshold is so low that it doesn't make sense to do any calculations, so it just applies this flat value).
+#define LOW_PRESSURE_DAMAGE					4		//The amount of damage someone takes when in a low pressure area (The pressure threshold is so low that it doesn't make sense to do any calculations, so it just applies this flat value).
 
 #define COLD_SLOWDOWN_FACTOR				20		//Humans are slowed by the difference between bodytemp and BODYTEMP_COLD_DAMAGE_LIMIT divided by this
 
@@ -193,8 +182,7 @@
 #define THERMAL_ENERGY(gas) (gas.temperature * gas.heat_capacity())
 
 #define ADD_GAS(gas_id, out_list)\
-	var/list/tmp_gaslist = GLOB.gaslist_cache[gas_id];\
-	out_list[gas_id] = tmp_gaslist.Copy();
+	var/list/tmp_gaslist = GLOB.gaslist_cache[gas_id]; out_list[gas_id] = tmp_gaslist.Copy();
 
 //ASSERT_GAS(gas_id, gas_mixture) - used to guarantee that the gas list for this id exists in gas_mixture.gases.
 //Must be used before adding to a gas. May be used before reading from a gas.

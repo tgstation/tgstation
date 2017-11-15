@@ -243,7 +243,7 @@ SUBSYSTEM_DEF(timer)
 		while(SStimer.timer_id_dict["timerid" + num2text(id, 8)])
 		SStimer.timer_id_dict["timerid" + num2text(id, 8)] = src
 
-	name = "Timer: " + num2text(id, 8) + ", TTR: [timeToRun], Flags: [jointext(bitfield2list(flags, list("TIMER_UNIQUE", "TIMER_OVERRIDE", "TIMER_CLIENT_TIME", "TIMER_STOPPABLE", "TIMER_NO_HASH_WAIT")), ", ")], callBack: \ref[callBack], callBack.object: [callBack.object]\ref[callBack.object]([getcallingtype()]), callBack.delegate:[callBack.delegate]([callBack.arguments ? callBack.arguments.Join(", ") : ""])"
+	name = "Timer: " + num2text(id, 8) + ", TTR: [timeToRun], Flags: [jointext(bitfield2list(flags, list("TIMER_UNIQUE", "TIMER_OVERRIDE", "TIMER_CLIENT_TIME", "TIMER_STOPPABLE", "TIMER_NO_HASH_WAIT")), ", ")], callBack: [REF(callBack)], callBack.object: [callBack.object][REF(callBack.object)]([getcallingtype()]), callBack.delegate:[callBack.delegate]([callBack.arguments ? callBack.arguments.Join(", ") : ""])"
 
 	if (spent)
 		CRASH("HOLY JESUS. WHAT IS THAT? WHAT THE FUCK IS THAT?")
@@ -259,11 +259,11 @@ SUBSYSTEM_DEF(timer)
 			var/datum/timedevent/Last = ctts[cttl]
 			if(Last.timeToRun >= timeToRun)
 				ctts += src
-			else if(cttl > 1)
-				for(var/I in cttl to 1)
-					var/datum/timedevent/E = ctts[I]
+			else
+				for(var/i in cttl to 1 step -1)
+					var/datum/timedevent/E = ctts[i]
 					if(E.timeToRun <= timeToRun)
-						ctts.Insert(src, I)
+						ctts.Insert(i, src)
 						break
 		else
 			ctts += src
@@ -362,9 +362,9 @@ SUBSYSTEM_DEF(timer)
 	if (flags & TIMER_UNIQUE)
 		var/list/hashlist
 		if(flags & TIMER_NO_HASH_WAIT)
-			hashlist = list(callback.object, "(\ref[callback.object])", callback.delegate, flags & TIMER_CLIENT_TIME)
+			hashlist = list(callback.object, "([REF(callback.object)])", callback.delegate, flags & TIMER_CLIENT_TIME)
 		else
-			hashlist = list(callback.object, "(\ref[callback.object])", callback.delegate, wait, flags & TIMER_CLIENT_TIME)
+			hashlist = list(callback.object, "([REF(callback.object)])", callback.delegate, wait, flags & TIMER_CLIENT_TIME)
 		hashlist += callback.arguments
 		hash = hashlist.Join("|||||||")
 

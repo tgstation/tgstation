@@ -69,7 +69,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	"÷" = "cords"
 ))
 
-/mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null)
+/mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE)
 	var/static/list/crit_allowed_modes = list(MODE_WHISPER = TRUE, MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
 	var/static/list/unconscious_allowed_modes = list(MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
 
@@ -105,7 +105,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		say_dead(original_message)
 		return
 
-	if(check_emote(original_message) || !can_speak_basic(original_message))
+	if(check_emote(original_message) || !can_speak_basic(original_message, ignore_spam))
 		return
 
 	if(in_critical)
@@ -270,12 +270,12 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(can_speak_basic(message) && can_speak_vocal(message))
 		return 1
 
-/mob/living/proc/can_speak_basic(message) //Check BEFORE handling of xeno and ling channels
+/mob/living/proc/can_speak_basic(message, ignore_spam = FALSE) //Check BEFORE handling of xeno and ling channels
 	if(client)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "<span class='danger'>You cannot speak in IC (muted).</span>")
 			return 0
-		if(client.handle_spam_prevention(message,MUTE_IC))
+		if(!ignore_spam && client.handle_spam_prevention(message,MUTE_IC))
 			return 0
 
 	return 1
@@ -336,8 +336,9 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 								if(prob(40))
 									to_chat(M, "<i><font color=#800080>We can faintly sense an outsider trying to communicate through the hivemind...</font></i>")
 			if(2)
-				var/msg = "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
-				log_talk(src,"[mind.changeling.changelingID]/[key] : [message]",LOGSAY)
+				var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
+				var/msg = "<i><font color=#800080><b>[changeling.changelingID]:</b> [message]</font></i>"
+				log_talk(src,"[changeling.changelingID]/[key] : [message]",LOGSAY)
 				for(var/_M in GLOB.mob_list)
 					var/mob/M = _M
 					if(M in GLOB.dead_mob_list)
@@ -413,10 +414,12 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return 0
 
 /mob/living/lingcheck() //1 is ling w/ no hivemind. 2 is ling w/hivemind. 3 is ling victim being linked into hivemind.
-	if(mind && mind.changeling)
-		if(mind.changeling.changeling_speak)
-			return 2
-		return 1
+	if(mind)
+		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
+		if(changeling)
+			if(changeling.changeling_speak)
+				return 2
+			return 1
 	if(mind && mind.linglink)
 		return 3
 	return 0

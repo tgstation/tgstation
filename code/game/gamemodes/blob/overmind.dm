@@ -84,7 +84,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		if(!T || !(T.z in GLOB.station_z_levels))
 			continue
 
-		if(L in GLOB.overminds || L.checkpass(PASSBLOB))
+		if(L in GLOB.overminds || (L.pass_flags & PASSBLOB))
 			continue
 
 		var/area/Ablob = get_area(T)
@@ -92,9 +92,12 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		if(!Ablob.blob_allowed)
 			continue
 
-		playsound(L, 'sound/effects/splat.ogg', 50, 1)
-		L.death()
-		new/mob/living/simple_animal/hostile/blob/blobspore(T)
+		if(!("blob" in L.faction))
+			playsound(L, 'sound/effects/splat.ogg', 50, 1)
+			L.death()
+			new/mob/living/simple_animal/hostile/blob/blobspore(T)
+		else
+			L.fully_heal()
 
 		for(var/V in GLOB.sortedAreas)
 			var/area/A = V

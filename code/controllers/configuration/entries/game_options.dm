@@ -52,8 +52,6 @@ CONFIG_DEF(flag/humans_need_surnames)
 
 CONFIG_DEF(flag/allow_ai)	// allow ai job
 
-CONFIG_DEF(flag/disable_secborg)	// disallow secborg module to be chosen.
-
 CONFIG_DEF(flag/disable_peaceborg)
 
 CONFIG_DEF(number/traitor_scaling_coeff)	//how much does the amount of players get divided by to determine traitors
@@ -110,8 +108,6 @@ CONFIG_DEF(number/shuttle_refuel_delay)
 
 CONFIG_DEF(flag/show_game_type_odds)	//if set this allows players to see the odds of each roundtype on the get revision screen
 
-CONFIG_DEF(flag/join_with_mutant_race)	//players can choose their mutant race before joining the game
-
 CONFIG_DEF(keyed_flag_list/roundstart_races)	//races you can play as from the get go.
 
 CONFIG_DEF(flag/join_with_mutant_humans)	//players can pick mutant bodyparts for humans before joining the game
@@ -165,9 +161,20 @@ CONFIG_DEF(flag/ooc_during_round)
 CONFIG_DEF(flag/emojis)
 
 CONFIG_DEF(number/run_delay)	//Used for modifying movement speed for mobs.
+	var/static/value_cache = 0
+
+CONFIG_TWEAK(number/run_delay/ValidateAndSet())
+	. = ..()
+	if(.)
+		value_cache = value
 
 CONFIG_DEF(number/walk_delay)
+	var/static/value_cache = 0
 
+CONFIG_TWEAK(number/walk_delay/ValidateAndSet())
+	. = ..()
+	if(.)
+		value_cache = value
 
 CONFIG_DEF(number/human_delay)	//Mob specific modifiers. NOTE: These will affect different mob types in different ways
 CONFIG_DEF(number/robot_delay)
@@ -249,3 +256,5 @@ CONFIG_DEF(number/emergency_shuttle_autocall_threshold)
 	min_val = 0
 	max_val = 1
 	integer = FALSE
+
+CONFIG_DEF(flag/ic_printing)

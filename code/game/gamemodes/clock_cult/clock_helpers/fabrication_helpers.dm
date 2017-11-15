@@ -132,7 +132,7 @@
 	var/doortype = /obj/machinery/door/airlock/clockwork
 	if(glass)
 		doortype = /obj/machinery/door/airlock/clockwork/brass
-	return list("operation_time" = 60, "new_obj_type" = doortype, "power_cost" = POWER_WALL_TOTAL, "spawn_dir" = dir)
+	return list("operation_time" = 60, "new_obj_type" = doortype, "power_cost" = POWER_WALL_TOTAL, "spawn_dir" = dir, "transfer_name" = TRUE)
 
 /obj/machinery/door/airlock/clockwork/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
 	return FALSE
@@ -188,7 +188,7 @@
 
 //Windoor conversion
 /obj/machinery/door/window/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
-	return list("operation_time" = 30, "new_obj_type" = /obj/machinery/door/window/clockwork, "power_cost" = POWER_STANDARD, "spawn_dir" = dir, "dir_in_new" = TRUE)
+	return list("operation_time" = 30, "new_obj_type" = /obj/machinery/door/window/clockwork, "power_cost" = POWER_STANDARD, "spawn_dir" = dir, "dir_in_new" = TRUE, "transfer_name" = TRUE)
 
 /obj/machinery/door/window/clockwork/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
 	return FALSE

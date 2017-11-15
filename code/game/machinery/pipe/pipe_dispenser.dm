@@ -14,35 +14,19 @@
 /obj/machinery/pipedispenser/attack_hand(mob/user)
 	if(..())
 		return 1
-	var/dat = {"
-PIPING LAYER: <A href='?src=\ref[src];layer_down=1'>--</A><b>[piping_layer]</b><A href='?src=\ref[src];layer_up=1'>++</A><BR>
-<b>Pipes:</b><BR>
-<A href='?src=\ref[src];make=[PIPE_SIMPLE];dir=1'>Pipe</A><BR>
-<A href='?src=\ref[src];make=[PIPE_SIMPLE];dir=5'>Bent Pipe</A><BR>
-<A href='?src=\ref[src];make=[PIPE_MANIFOLD];dir=1'>Manifold</A><BR>
-<A href='?src=\ref[src];make=[PIPE_LAYER_MANIFOLD];dir=1'>Layer Manifold</A><BR>
-<A href='?src=\ref[src];make=[PIPE_4WAYMANIFOLD];dir=1'>4-Way Manifold</A><BR>
-<A href='?src=\ref[src];make=[PIPE_MVALVE];dir=1'>Manual Valve</A><BR>
-<A href='?src=\ref[src];make=[PIPE_DVALVE];dir=1'>Digital Valve</A><BR>
-<b>Devices:</b><BR>
-<A href='?src=\ref[src];make=[PIPE_CONNECTOR];dir=1'>Connector</A><BR>
-<A href='?src=\ref[src];make=[PIPE_UVENT];dir=1'>Vent</A><BR>
-<A href='?src=\ref[src];make=[PIPE_PUMP];dir=1'>Gas Pump</A><BR>
-<A href='?src=\ref[src];make=[PIPE_PASSIVE_GATE];dir=1'>Passive Gate</A><BR>
-<A href='?src=\ref[src];make=[PIPE_VOLUME_PUMP];dir=1'>Volume Pump</A><BR>
-<A href='?src=\ref[src];make=[PIPE_SCRUBBER];dir=1'>Scrubber</A><BR>
-<A href='?src=\ref[src];makemeter=1'>Meter</A><BR>
-<A href='?src=\ref[src];make=[PIPE_GAS_FILTER];dir=1'>Gas Filter</A><BR>
-<A href='?src=\ref[src];make=[PIPE_GAS_MIXER];dir=1'>Gas Mixer</A><BR>
-<b>Heat exchange:</b><BR>
-<A href='?src=\ref[src];make=[PIPE_HE];dir=1'>Pipe</A><BR>
-<A href='?src=\ref[src];make=[PIPE_HE];dir=5'>Bent Pipe</A><BR>
-<A href='?src=\ref[src];make=[PIPE_HE_MANIFOLD];dir=1'>Manifold</A><BR>
-<A href='?src=\ref[src];make=[PIPE_HE_4WAYMANIFOLD];dir=1'>4-Way Manifold</A><BR>
-<A href='?src=\ref[src];make=[PIPE_JUNCTION];dir=1'>Junction</A><BR>
-<A href='?src=\ref[src];make=[PIPE_HEAT_EXCHANGE];dir=1'>Heat Exchanger</A><BR>
-"}
+	var/dat = "PIPING LAYER: <A href='?src=[REF(src)];layer_down=1'>--</A><b>[piping_layer]</b><A href='?src=[REF(src)];layer_up=1'>++</A><BR>"
 
+	var/recipes = GLOB.atmos_pipe_recipes
+
+	for(var/category in recipes)
+		var/list/cat_recipes = recipes[category]
+		dat += "<b>[category]:</b><ul>"
+
+		for(var/i in cat_recipes)
+			var/datum/pipe_info/I = i
+			dat += I.Render(src)
+
+		dat += "</ul>"
 
 	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
 	onclose(user, "pipedispenser")
@@ -56,9 +40,9 @@ PIPING LAYER: <A href='?src=\ref[src];layer_down=1'>--</A><b>[piping_layer]</b><
 		return 1
 	usr.set_machine(src)
 	add_fingerprint(usr)
-	if(href_list["make"])
+	if(href_list["makepipe"])
 		if(wait < world.time)
-			var/p_type = text2path(href_list["make"])
+			var/p_type = text2path(href_list["makepipe"])
 			var/p_dir = text2num(href_list["dir"])
 			var/obj/item/pipe/P = new (loc, p_type, p_dir)
 			P.setPipingLayer(piping_layer)
@@ -118,14 +102,6 @@ PIPING LAYER: <A href='?src=\ref[src];layer_down=1'>--</A><b>[piping_layer]</b><
 	density = TRUE
 	anchored = TRUE
 
-/*
-//Allow you to push disposal pipes into it (for those with density 1)
-/obj/machinery/pipedispenser/disposal/Crossed(var/obj/structure/disposalconstruct/pipe as obj)
-	if(istype(pipe) && !pipe.anchored)
-		qdel(pipe)
-
-Nah
-*/
 
 //Allow you to drag-drop disposal pipes and transit tubes into it
 /obj/machinery/pipedispenser/disposal/MouseDrop_T(obj/structure/pipe, mob/usr)
@@ -147,17 +123,18 @@ Nah
 	if(..())
 		return 1
 
-	var/dat = {"<b>Disposal Pipes</b><br><br>
-<A href='?src=\ref[src];dmake=[DISP_PIPE_STRAIGHT]'>Pipe</A><BR>
-<A href='?src=\ref[src];dmake=[DISP_PIPE_BENT]'>Bent Pipe</A><BR>
-<A href='?src=\ref[src];dmake=[DISP_JUNCTION]'>Junction</A><BR>
-<A href='?src=\ref[src];dmake=[DISP_YJUNCTION]'>Y-Junction</A><BR>
-<A href='?src=\ref[src];dmake=[DISP_END_TRUNK]'>Trunk</A><BR>
-<A href='?src=\ref[src];dmake=[DISP_END_BIN]'>Bin</A><BR>
-<A href='?src=\ref[src];dmake=[DISP_END_OUTLET]'>Outlet</A><BR>
-<A href='?src=\ref[src];dmake=[DISP_END_CHUTE]'>Chute</A><BR>
-<A href='?src=\ref[src];dmake=[DISP_SORTJUNCTION]'>Sort Junction</A><BR>
-"}
+	var/dat = ""
+	var/recipes = GLOB.disposal_pipe_recipes
+
+	for(var/category in recipes)
+		var/list/cat_recipes = recipes[category]
+		dat += "<b>[category]:</b><ul>"
+
+		for(var/i in cat_recipes)
+			var/datum/pipe_info/I = i
+			dat += I.Render(src)
+
+		dat += "</ul>"
 
 	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
 	return
@@ -170,8 +147,8 @@ Nah
 	add_fingerprint(usr)
 	if(href_list["dmake"])
 		if(wait < world.time)
-			var/p_type = text2num(href_list["dmake"])
-			var/obj/structure/disposalconstruct/C = new (loc,p_type)
+			var/p_type = text2path(href_list["dmake"])
+			var/obj/structure/disposalconstruct/C = new (loc, p_type)
 
 			if(!C.can_place())
 				to_chat(usr, "<span class='warning'>There's not enough room to build that here!</span>")
@@ -198,16 +175,16 @@ Nah
 		return 1
 
 	var/dat = {"<B>Transit Tubes:</B><BR>
-<A href='?src=\ref[src];tube=[TRANSIT_TUBE_STRAIGHT]'>Straight Tube</A><BR>
-<A href='?src=\ref[src];tube=[TRANSIT_TUBE_STRAIGHT_CROSSING]'>Straight Tube with Crossing</A><BR>
-<A href='?src=\ref[src];tube=[TRANSIT_TUBE_CURVED]'>Curved Tube</A><BR>
-<A href='?src=\ref[src];tube=[TRANSIT_TUBE_DIAGONAL]'>Diagonal Tube</A><BR>
-<A href='?src=\ref[src];tube=[TRANSIT_TUBE_DIAGONAL_CROSSING]'>Diagonal Tube with Crossing</A><BR>
-<A href='?src=\ref[src];tube=[TRANSIT_TUBE_JUNCTION]'>Junction</A><BR>
+<A href='?src=[REF(src)];tube=[TRANSIT_TUBE_STRAIGHT]'>Straight Tube</A><BR>
+<A href='?src=[REF(src)];tube=[TRANSIT_TUBE_STRAIGHT_CROSSING]'>Straight Tube with Crossing</A><BR>
+<A href='?src=[REF(src)];tube=[TRANSIT_TUBE_CURVED]'>Curved Tube</A><BR>
+<A href='?src=[REF(src)];tube=[TRANSIT_TUBE_DIAGONAL]'>Diagonal Tube</A><BR>
+<A href='?src=[REF(src)];tube=[TRANSIT_TUBE_DIAGONAL_CROSSING]'>Diagonal Tube with Crossing</A><BR>
+<A href='?src=[REF(src)];tube=[TRANSIT_TUBE_JUNCTION]'>Junction</A><BR>
 <b>Station Equipment:</b><BR>
-<A href='?src=\ref[src];tube=[TRANSIT_TUBE_STATION]'>Through Tube Station</A><BR>
-<A href='?src=\ref[src];tube=[TRANSIT_TUBE_TERMINUS]'>Terminus Tube Station</A><BR>
-<A href='?src=\ref[src];tube=[TRANSIT_TUBE_POD]'>Transit Tube Pod</A><BR>
+<A href='?src=[REF(src)];tube=[TRANSIT_TUBE_STATION]'>Through Tube Station</A><BR>
+<A href='?src=[REF(src)];tube=[TRANSIT_TUBE_TERMINUS]'>Terminus Tube Station</A><BR>
+<A href='?src=[REF(src)];tube=[TRANSIT_TUBE_POD]'>Transit Tube Pod</A><BR>
 "}
 
 	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
