@@ -15,7 +15,6 @@
 	name = "Bluespace RPED"
 	desc = "Powered by bluespace technology, this RPED variant can upgrade buildings from a distance, without needing to remove the panel first."
 	id = "bs_rped"
-	req_tech = list("engineering" = 4, "bluespace" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 15000, MAT_GLASS = 5000, MAT_SILVER = 2500) //hardcore
 	build_path = /obj/item/storage/part_replacer/bluespace
@@ -46,7 +45,6 @@
 	name = "Super Capacitor"
 	desc = "A stock part used in the construction of various devices."
 	id = "super_capacitor"
-	req_tech = list("powerstorage" = 5, "engineering" = 5)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_GOLD = 100)
 	build_path = /obj/item/stock_parts/capacitor/super
@@ -57,7 +55,6 @@
 	name = "Quadratic Capacitor"
 	desc = "A stock part used in the construction of various devices."
 	id = "quadratic_capacitor"
-	req_tech = list("powerstorage" = 6, "engineering" = 5, "materials" = 5, "bluespace" = 5)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_GOLD = 100, MAT_DIAMOND = 100)
 	build_path = /obj/item/stock_parts/capacitor/quadratic
@@ -89,7 +86,6 @@
 	name = "Phasic Scanning Module"
 	desc = "A stock part used in the construction of various devices."
 	id = "phasic_scanning"
-	req_tech = list("magnets" = 5, "engineering" = 5)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 200, MAT_GLASS = 150, MAT_SILVER = 60)
 	build_path = /obj/item/stock_parts/scanning_module/phasic
@@ -100,7 +96,6 @@
 	name = "Triphasic Scanning Module"
 	desc = "A stock part used in the construction of various devices."
 	id = "triphasic_scanning"
-	req_tech = list("magnets" = 6, "materials" = 5, "engineering" = 5, "bluespace" = 5)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_DIAMOND = 30, MAT_BLUESPACE = 30)
 	build_path = /obj/item/stock_parts/scanning_module/triphasic
@@ -122,7 +117,6 @@
 	name = "Nano Manipulator"
 	desc = "A stock part used in the construction of various devices."
 	id = "nano_mani"
-	req_tech = list("materials" = 3, "programming" = 2)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 150)
 	build_path = /obj/item/stock_parts/manipulator/nano
@@ -133,7 +127,6 @@
 	name = "Pico Manipulator"
 	desc = "A stock part used in the construction of various devices."
 	id = "pico_mani"
-	req_tech = list("materials" = 5, "programming" = 4, "engineering" = 5)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 200)
 	build_path = /obj/item/stock_parts/manipulator/pico
@@ -144,7 +137,6 @@
 	name = "Femto Manipulator"
 	desc = "A stock part used in the construction of various devices."
 	id = "femto_mani"
-	req_tech = list("materials" = 7, "programming" = 5, "engineering" = 5, "bluespace" = 5)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 200, MAT_DIAMOND = 30, MAT_TITANIUM = 30)
 	build_path = /obj/item/stock_parts/manipulator/femto
@@ -176,7 +168,6 @@
 	name = "Ultra-High-Power Micro-Laser"
 	desc = "A stock part used in the construction of various devices."
 	id = "ultra_micro_laser"
-	req_tech = list("magnets" = 5, "engineering" = 5)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 200, MAT_GLASS = 150, MAT_URANIUM = 60)
 	build_path = /obj/item/stock_parts/micro_laser/ultra
@@ -187,7 +178,6 @@
 	name = "Quad-Ultra Micro-Laser"
 	desc = "A stock part used in the construction of various devices."
 	id = "quadultra_micro_laser"
-	req_tech = list("magnets" = 6, "materials" = 5, "engineering" = 5, "bluespace" = 5)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_URANIUM = 100, MAT_DIAMOND = 60)
 	build_path = /obj/item/stock_parts/micro_laser/quadultra
@@ -218,7 +208,6 @@
 	name = "Super Matter Bin"
 	desc = "A stock part used in the construction of various devices."
 	id = "super_matter_bin"
-	req_tech = list("materials" = 5, "engineering" = 5)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 200)
 	build_path = /obj/item/stock_parts/matter_bin/super
@@ -229,7 +218,6 @@
 	name = "Bluespace Matter Bin"
 	desc = "A stock part used in the construction of various devices."
 	id = "bluespace_matter_bin"
-	req_tech = list("materials" = 7, "engineering" = 5, "bluespace" = 5)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 250, MAT_DIAMOND = 100, MAT_BLUESPACE = 100)
 	build_path = /obj/item/stock_parts/matter_bin/bluespace
@@ -241,7 +229,6 @@
 	name = "Subspace Ansible"
 	desc = "A compact module capable of sensing extradimensional activity."
 	id = "s-ansible"
-	req_tech = list("programming" = 2, "magnets" = 2, "materials" = 2)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 100, MAT_SILVER = 100)
 	build_path = /obj/item/stock_parts/subspace/ansible
@@ -251,7 +238,6 @@
 	name = "Hyperwave Filter"
 	desc = "A tiny device capable of filtering and converting super-intense radiowaves."
 	id = "s-filter"
-	req_tech = list("programming" = 3, "magnets" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 100, MAT_SILVER = 100)
 	build_path = /obj/item/stock_parts/subspace/filter
@@ -261,7 +247,6 @@
 	name = "Subspace Amplifier"
 	desc = "A compact micro-machine capable of amplifying weak subspace transmissions."
 	id = "s-amplifier"
-	req_tech = list("programming" = 3, "magnets" = 4, "materials" = 3, "bluespace" = 2)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 100, MAT_GOLD = 100, MAT_URANIUM = 100)
 	build_path = /obj/item/stock_parts/subspace/amplifier
@@ -271,7 +256,6 @@
 	name = "Subspace Treatment Disk"
 	desc = "A compact micro-machine capable of stretching out hyper-compressed radio waves."
 	id = "s-treatment"
-	req_tech = list("programming" = 2, "magnets" = 3, "materials" = 2, "bluespace" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 100, MAT_SILVER = 200)
 	build_path = /obj/item/stock_parts/subspace/treatment
@@ -281,7 +265,6 @@
 	name = "Subspace Analyzer"
 	desc = "A sophisticated analyzer capable of analyzing cryptic subspace wavelengths."
 	id = "s-analyzer"
-	req_tech = list("programming" = 3, "magnets" = 4, "materials" = 2, "bluespace" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 100, MAT_GOLD = 100)
 	build_path = /obj/item/stock_parts/subspace/analyzer
@@ -291,7 +274,6 @@
 	name = "Ansible Crystal"
 	desc = "A sophisticated analyzer capable of analyzing cryptic subspace wavelengths."
 	id = "s-crystal"
-	req_tech = list("magnets" = 2, "materials" = 2, "bluespace" = 3, "plasmatech" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_GLASS = 800, MAT_SILVER = 100, MAT_GOLD = 100)
 	build_path = /obj/item/stock_parts/subspace/crystal
@@ -301,7 +283,6 @@
 	name = "Subspace Transmitter"
 	desc = "A large piece of equipment used to open a window into the subspace dimension."
 	id = "s-transmitter"
-	req_tech = list("magnets" = 3, "materials" = 4, "bluespace" = 4)
 	build_type = PROTOLATHE
 	materials = list(MAT_GLASS = 100, MAT_SILVER = 100, MAT_URANIUM = 100)
 	build_path = /obj/item/stock_parts/subspace/transmitter

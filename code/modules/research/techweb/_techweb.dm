@@ -1,7 +1,7 @@
 
 //Used \n[\s]*origin_tech[\s]*=[\s]*"[\S]+" to delete all origin techs.
 //Or \n[\s]*origin_tech[\s]*=[\s]list\([A-Z_\s=0-9,]*\)
-//Used \n[\s]*req_tech[\s]*=[\s]*list\(["\w\d\s=]*\)\n to delete all req_techs.
+//Used \n[\s]*req_tech[\s]*=[\s]*list\(["a-z\s=0-9,]*\) to delete all req_techs.
 
 //Techweb datums are meant to store unlocked research, being able to be stored on research consoles, servers, and disks. They are NOT global.
 /datum/techweb
