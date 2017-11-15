@@ -126,7 +126,7 @@
 	#endif
 
 	UNSETEMPTY(new_overlay_types)
-	atmos_overlay_types = new_overlay_types
+	src.atmos_overlay_types = new_overlay_types
 
 /turf/open/proc/tile_graphic()
 	. = new /list
