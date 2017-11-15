@@ -1375,6 +1375,8 @@
 	power["backup_timeleft"] = src.secondsBackupPowerLost
 	data["power"] = power
 
+	data["density"] = density
+	data["welded"] = welded
 	data["shock"] = secondsElectrified == 0 ? 2 : 0
 	data["shock_timeleft"] = secondsElectrified
 	data["id_scanner"] = !aiDisabledIdScanner
@@ -1402,7 +1404,7 @@
 /obj/machinery/door/airlock/ui_act(action, params)
 	if(..())
 		return
-	if(!(issilicon(usr) && src.canAIControl(usr)) || IsAdminGhost(usr))
+	if(!user_allowed(usr))
 		return
 	switch(action)
 		if("disrupt-main")
@@ -1420,26 +1422,13 @@
 				to_chat(usr, "Backup power is already offline.")
 			. = TRUE
 		if("shock-restore")
-			if(wires.is_cut(WIRE_SHOCK))
-				to_chat(usr, text("Can't un-electrify the airlock - The electrification wire is cut."))
-			else if(isElectrified())
-				set_electrified(0)
+			shock_restore(usr)
 			. = TRUE
 		if("shock-temp")
-			if(wires.is_cut(WIRE_SHOCK))
-				to_chat(usr, text("The electrification wire has been cut"))
-			else
-				shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
-				add_logs(usr, src, "electrified")
-				set_electrified(AI_ELECTRIFY_DOOR_TIME)
+			shock_temp(usr)
 			. = TRUE
 		if("shock-perm")
-			if(wires.is_cut(WIRE_SHOCK))
-				to_chat(usr, text("The electrification wire has been cut"))
-			else
-				shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
-				add_logs(usr, src, "electrified")
-				set_electrified(ELECTRIFIED_PERMANENT)
+			shock_perm(usr)
 			. = TRUE
 		if("idscan-on")
 			if(wires.is_cut(WIRE_IDSCAN))
@@ -1458,39 +1447,20 @@
 				aiDisabledIdScanner = TRUE
 			. = TRUE
 		if("emergency-on")
-			if (!src.emergency)
-				emergency = TRUE
-				update_icon()
-			else
-				to_chat(usr, text("Emergency access is already enabled!"))
+			emergency_on(usr)
 			. = TRUE
 		if("emergency-off")
-			if (emergency)
-				emergency = FALSE
-				update_icon()
-			else
-				to_chat(usr, text("Emergency access is already disabled!"))
+			emergency_off(usr)
 			. = TRUE
 		if("bolt-raise")
-			if(wires.is_cut(WIRE_BOLTS))
-				to_chat(usr, text("The door bolt drop wire is cut - you can't raise the door bolts"))
-			else if(!src.locked)
-				to_chat(usr, text("The door bolts are already up"))
-			else
-				if(src.hasPower())
-					unbolt()
-				else
-					to_chat(usr, text("Cannot raise door bolts due to power failure"))
+			bolt_raise(usr)
 			. = TRUE
 		if("bolt-drop")
-			if(wires.is_cut(WIRE_BOLTS))
-				to_chat(usr, "You can't drop the door bolts - The door bolt dropping wire has been cut.")
-			else
-				bolt()
+			bolt_drop(usr)
 			. = TRUE
 		if("light-on")
 			if(wires.is_cut(WIRE_LIGHT))
-				to_chat(usr, text("Control to door bolt lights has been severed.</a>"))
+				to_chat(usr, "Control to door bolt lights has been severed.")
 			else if (!src.lights)
 				lights = TRUE
 				update_icon()
@@ -1499,58 +1469,131 @@
 			. = TRUE
 		if("light-off")
 			if(wires.is_cut(WIRE_LIGHT))
-				to_chat(usr, text("Control to door bolt lights has been severed.</a>"))
+				to_chat(usr, "Control to door bolt lights has been severed.")
 			else if (lights)
 				lights = FALSE
 				update_icon()
 			else
-				to_chat(usr, text("Door bolt lights are already disabled!"))
+				to_chat(usr, "Door bolt lights are already disabled!")
 			. = TRUE
 		if("safe-on")
 			if(wires.is_cut(WIRE_SAFETY))
-				to_chat(usr, text("Control to door sensors is disabled."))
+				to_chat(usr, "Control to door sensors is disabled.")
 			else if (!src.safe)
 				safe = TRUE
 			else
-				to_chat(usr, text("Firmware reports safeties already in place."))
+				to_chat(usr, "Firmware reports safeties already in place.")
 			. = TRUE
 		if("safe-off")
 			if(wires.is_cut(WIRE_SAFETY))
-				to_chat(usr, text("Control to door sensors is disabled."))
+				to_chat(usr, "Control to door sensors is disabled.")
 			else if (safe)
 				safe = FALSE
 			else
-				to_chat(usr, text("Firmware reports safeties already overriden."))
+				to_chat(usr, "Firmware reports safeties already overriden.")
 			. = TRUE
 		if("speed-on")
 			if(wires.is_cut(WIRE_TIMING))
-				to_chat(usr, text("Control to door timing circuitry has been severed."))
+				to_chat(usr, "Control to door timing circuitry has been severed.")
 			else if (!src.normalspeed)
 				normalspeed = 1
 			else
-				to_chat(usr, text("Door timing circuitry currently operating normally."))
+				to_chat(usr,"Door timing circuitry currently operating normally.")
 			. = TRUE
 		if("speed-off")
 			if(wires.is_cut(WIRE_TIMING))
-				to_chat(usr, text("Control to door timing circuitry has been severed."))
+				to_chat(usr, "Control to door timing circuitry has been severed.")
 			else if (normalspeed)
 				normalspeed = 0
 			else
-				to_chat(usr, text("Door timing circuitry already accelerated."))
+				to_chat(usr, "Door timing circuitry already accelerated.")
 
 			. = TRUE
 		if("open-close")
-			if(welded)
-				to_chat(usr, text("The airlock has been welded shut!"))
-			else if(locked)
-				to_chat(usr, text("The door bolts are down!"))
-			else if(!density)
-				close()
-			else
-				open()
+			user_toggle_open(usr)
 			. = TRUE
 
+/obj/machinery/door/airlock/proc/user_allowed(mob/user)
+	return (issilicon(user) && canAIControl(user)) || IsAdminGhost(user)
 
+/obj/machinery/door/airlock/proc/shock_restore(mob/user)
+	if(!user_allowed(user))
+		return
+	if(wires.is_cut(WIRE_SHOCK))
+		to_chat(user, "Can't un-electrify the airlock - The electrification wire is cut.")
+	else if(isElectrified())
+		set_electrified(0)
+
+/obj/machinery/door/airlock/proc/shock_temp(mob/user)
+	if(!user_allowed(user))
+		return
+	if(wires.is_cut(WIRE_SHOCK))
+		to_chat(user, "The electrification wire has been cut")
+	else
+		shockedby += "\[[time_stamp()]\][user](ckey:[user.ckey])"
+		add_logs(user, src, "electrified")
+		set_electrified(AI_ELECTRIFY_DOOR_TIME)
+
+/obj/machinery/door/airlock/proc/shock_perm(mob/user)
+	if(!user_allowed(user))
+		return
+	if(wires.is_cut(WIRE_SHOCK))
+		to_chat(user, "The electrification wire has been cut")
+	else
+		shockedby += text("\[[time_stamp()]\][user](ckey:[user.ckey])")
+		add_logs(user, src, "electrified")
+		set_electrified(ELECTRIFIED_PERMANENT)
+
+/obj/machinery/door/airlock/proc/emergency_on(mob/user)
+	if(!user_allowed(user))
+		return
+	if (!emergency)
+		emergency = TRUE
+		update_icon()
+	else
+		to_chat(user, "Emergency access is already enabled!")
+
+/obj/machinery/door/airlock/proc/emergency_off(mob/user)
+	if(!user_allowed(user))
+		return
+	if (emergency)
+		emergency = FALSE
+		update_icon()
+	else
+		to_chat(user, "Emergency access is already disabled!")
+
+/obj/machinery/door/airlock/proc/bolt_raise(mob/user)
+	if(!user_allowed(user))
+		return
+	if(wires.is_cut(WIRE_BOLTS))
+		to_chat(user, "The door bolt drop wire is cut - you can't raise the door bolts")
+	else if(!src.locked)
+		to_chat(user, "The door bolts are already up")
+	else
+		if(src.hasPower())
+			unbolt()
+		else
+			to_chat(user, "Cannot raise door bolts due to power failure")
+
+/obj/machinery/door/airlock/proc/bolt_drop(mob/user)
+	if(!user_allowed(user))
+		return
+	if(wires.is_cut(WIRE_BOLTS))
+		to_chat(user, "You can't drop the door bolts - The door bolt dropping wire has been cut.")
+	else
+		bolt()
+
+/obj/machinery/door/airlock/proc/user_toggle_open(mob/user)
+	if(!user_allowed(user))
+		return
+	if(welded)
+		to_chat(user, text("The airlock has been welded shut!"))
+	else if(locked)
+		to_chat(user, text("The door bolts are down!"))
+	else if(!density)
+		close()
+	else
+		open()
 
 #undef AIRLOCK_CLOSED
 #undef AIRLOCK_CLOSING
