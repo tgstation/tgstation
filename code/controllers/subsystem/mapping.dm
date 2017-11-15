@@ -124,6 +124,10 @@ SUBSYSTEM_DEF(mapping)
 	INIT_ANNOUNCE("Loading CentCom")
 	TryLoadZ("_maps/map_files/generic/CentCom.dmm", FailedZs)
 
+	//splash turfs are ready, send em in
+	for(var/mob/dead/new_player/NP in GLOB.player_list)
+		NP.SendToStartLocIfRequired()
+
 	INIT_ANNOUNCE("Loading Lavaland")
 	TryLoadZ("_maps/map_files/Mining/Lavaland.dmm", FailedZs)
 
