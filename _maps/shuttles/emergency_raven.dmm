@@ -59,7 +59,9 @@
 /turf/open/floor/plasteel/vault,
 /area/shuttle/escape)
 "am" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/security{
+	dir = 4
+	},
 /turf/open/floor/plasteel/black,
 /area/shuttle/escape)
 "an" = (
@@ -81,7 +83,9 @@
 	},
 /area/shuttle/escape)
 "aq" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	dir = 8
+	},
 /turf/open/floor/plasteel/black,
 /area/shuttle/escape)
 "ar" = (
@@ -103,7 +107,9 @@
 	},
 /area/shuttle/escape)
 "au" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/secure_data{
+	dir = 4
+	},
 /turf/open/floor/plasteel/black,
 /area/shuttle/escape)
 "av" = (
@@ -135,7 +141,9 @@
 	},
 /area/shuttle/escape)
 "aA" = (
-/obj/machinery/computer/atmos_alert,
+/obj/machinery/computer/atmos_alert{
+	dir = 8
+	},
 /turf/open/floor/plasteel/black,
 /area/shuttle/escape)
 "aB" = (
@@ -602,7 +610,9 @@
 /turf/open/floor/plasteel/darkpurple/side,
 /area/shuttle/escape)
 "bC" = (
-/obj/machinery/computer/med_data,
+/obj/machinery/computer/med_data{
+	dir = 1
+	},
 /turf/open/floor/plasteel/darkpurple/side,
 /area/shuttle/escape)
 "bD" = (
