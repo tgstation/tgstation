@@ -51,7 +51,6 @@
 			H.update_sight()
 
 	update_icon()
-	user.update_inv_hands()
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
@@ -120,11 +119,16 @@
 
 /obj/item/clothing/glasses/meson/engine/update_icon()
 	icon_state = "trayson-[mode]"
+	update_mob()
+
+/obj/item/clothing/glasses/meson/engine/proc/update_mob()
 	item_state = icon_state
-	if(istype(loc, /mob/living/carbon/human/))
-		var/mob/living/carbon/human/user = loc
-		if(user.glasses == src)
+	if(isliving(loc))
+		var/mob/living/user = loc
+		if(user.get_item_by_slot(slot_glasses) == src)
 			user.update_inv_glasses()
+		else
+			user.update_inv_hands()
 
 /obj/item/clothing/glasses/meson/engine/tray //atmos techs have lived far too long without tray goggles while those damned engineers get their dual-purpose gogles all to themselves
 	name = "optical t-ray scanner"
