@@ -174,6 +174,11 @@
 /mob/living/carbon/restrained(ignore_grab)
 	. = (handcuffed || (!ignore_grab && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE))
 
+/mob/living/carbon/resist_restraints()
+	if (!handcuffed)
+		return TRUE
+	. = ..()
+
 /mob/living/carbon/proc/canBeHandcuffed()
 	return 0
 
