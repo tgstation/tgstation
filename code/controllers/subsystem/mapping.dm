@@ -127,14 +127,20 @@ SUBSYSTEM_DEF(mapping)
 	INIT_ANNOUNCE("Loading Lavaland")
 	TryLoadZ("_maps/map_files/Mining/Lavaland.dmm", FailedZs)
 
-	InitializeDefaultZLevels()
-
 	INIT_ANNOUNCE("Loading [config.map_name]...")
 	TryLoadZ(config.GetFullMapPath(), FailedZs)
+
+	InitializeDefaultZLevels()
 
 	if(SSdbcore.Connect())
 		var/datum/DBQuery/query_round_map_name = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET map_name = '[config.map_name]' WHERE id = [GLOB.round_id]")
 		query_round_map_name.Execute()
+
+	//we need 1 area of empty space
+	add_new_zlevel("Empty Space", CROSSLINKED, list())
+	//then load spacedock.dmm
+	add_new_zlevel("Empty Space With Dock", CROSSLINKED, list())
+	TryLoadZ("_maps/map_files/generic/SpaceDock.dmm", FailedZs, world.maxz, last = TRUE)
 
 	increase_max_zlevel_to(world.maxz + ZLEVEL_EMPTY_SPACE_COUNT)
 

@@ -26,8 +26,6 @@ Everything else = Handled by mapping subsystem
 #define ADMIN_LEVEL "Admin Level"
 // For away missions - used by some consoles
 #define AWAY_LEVEL "Away"
-// Enhances telecomms signals
-#define BOOSTS_SIGNAL "Boosts signals"
 // Currently used for determining mining score
 #define MINING_LEVEL "Mining"
 // Levels the AI can control bots on
