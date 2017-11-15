@@ -56,7 +56,6 @@
 	spine_crawl = new
 	spine_crawl.Grant(src)
 	playsound(src, 'sound/creatures/ling_scream.ogg', 100, 1)
-	new /obj/effect/gibspawner/human(get_turf(src))
 
 /mob/living/simple_animal/hostile/true_changeling/Destroy()
     QDEL_NULL(reform)
@@ -102,6 +101,7 @@
 		spawn(450)
 			if(src)
 				visible_message("<span class='warning'>[src] reforms into a monster!</span>")
+				new /obj/effect/gibspawner/human(get_turf(src))
 				revive() //Changelings can self-revive, and true changelings are no exception
 
 /mob/living/simple_animal/hostile/true_changeling/mob_negates_gravity()
@@ -112,7 +112,7 @@
 	..()
 
 /datum/action/innate/changeling
-	icon_icon = 'icons/mob/actions/actions_animal.dmi'
+	icon_icon = 'icons/mob/changeling.dmi'
 	background_icon_state = "bg_ling"
 
 /datum/action/innate/changeling/reform
@@ -144,7 +144,7 @@
 	name = "Devour"
 	desc = "We tear into the innards of a human. After some time, they will be significantly damaged and our health partially restored."
 	check_flags = AB_CHECK_CONSCIOUS
-	button_icon_state = "reform"
+	button_icon_state = "devour"
 
 /datum/action/innate/changeling/devour/Activate()
 	var/mob/living/simple_animal/hostile/true_changeling/M = owner
@@ -193,19 +193,18 @@
 /datum/action/innate/changeling/spine_crawl
 	name = "Spine Crawl"
 	desc = "We use our spines to gouge into terrain and crawl along it, negating gravity loss. This makes us very slow."
+	check_flags = AB_CHECK_CONSCIOUS
+	button_icon_state = "spine"
 
 /datum/action/innate/changeling/spine_crawl/Activate()
 	var/mob/living/simple_animal/hostile/true_changeling/M = owner
 	if(!istype(M))
-		return
-	if(M.stat)
-		to_chat(M, "<span class='warning'>We must be conscious to switch our method of movement!</span>")
 		return FALSE
 	M.wallcrawl = !M.wallcrawl
 	if(M.wallcrawl)
 		M.visible_message("<span class='warning'>[M] begins gouging its spines into the terrain!</span>", \
 							"<span class='danger'>We begin using our spines for movement.</span>")
-		M.speed = 1 //Veeery slow
+		M.speed = 1 //slow
 	else
 		M.visible_message("<span class='warning'>[M] recedes their spines back into their body!</span>", \
 							"<span class='danger'>We return moving normally.</span>")
