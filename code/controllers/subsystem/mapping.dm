@@ -40,8 +40,6 @@ SUBSYSTEM_DEF(mapping)
 	return ..()
 
 /datum/controller/subsystem/mapping/Initialize(timeofday)
-	InitializeZManager()
-
 	if(config.defaulted)
 		to_chat(world, "<span class='boldannounce'>Unable to load next map config, defaulting to Box Station</span>")
 	loadWorld()
@@ -117,29 +115,28 @@ SUBSYSTEM_DEF(mapping)
 	if(last)
 		QDEL_NULL(loader)
 
-/datum/controller/subsystem/mapping/proc/CreateSpace(MaxZLevel)
-	while(world.maxz < MaxZLevel)
-		++world.maxz
-		CHECK_TICK
-
 #define INIT_ANNOUNCE(X) to_chat(world, "<span class='boldannounce'>[X]</span>"); log_world(X)
 /datum/controller/subsystem/mapping/proc/loadWorld()
 	//if any of these fail, something has gone horribly, HORRIBLY, wrong
 	var/list/FailedZs = list()
 
 	var/start_time = REALTIMEOFDAY
+	INIT_ANNOUNCE("Loading CentCom")
+	TryLoadZ("_maps/map_files/generic/CentCom.dmm", FailedZs)
+
+	INIT_ANNOUNCE("Loading Lavaland")
+	TryLoadZ("_maps/map_files/Mining/Lavaland.dmm", FailedZs)
+
+	InitializeDefaultZLevels()
 
 	INIT_ANNOUNCE("Loading [config.map_name]...")
-	TryLoadZ(config.GetFullMapPath(), FailedZs, ZLEVEL_STATION_PRIMARY)
-	INIT_ANNOUNCE("Loaded station in [(REALTIMEOFDAY - start_time)/10]s!")
+	TryLoadZ(config.GetFullMapPath(), FailedZs)
+
 	if(SSdbcore.Connect())
 		var/datum/DBQuery/query_round_map_name = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET map_name = '[config.map_name]' WHERE id = [GLOB.round_id]")
 		query_round_map_name.Execute()
 
-	if(config.minetype != "lavaland")
-		INIT_ANNOUNCE("WARNING: A map without lavaland set as its minetype was loaded! This is being ignored! Update the maploader code!")
-
-	CreateSpace(ZLEVEL_SPACEMAX)
+	increase_max_zlevel_to(world.maxz + ZLEVEL_EMPTY_SPACE_COUNT)
 
 	if(LAZYLEN(FailedZs))	//but seriously, unless the server's filesystem is messed up this will never happen
 		var/msg = "RED ALERT! The following map files failed to load: [FailedZs[1]]"
@@ -148,6 +145,8 @@ SUBSYSTEM_DEF(mapping)
 				msg += ", [FailedZs[I]]"
 		msg += ". Yell at your server host!"
 		INIT_ANNOUNCE(msg)
+
+	INIT_ANNOUNCE("Loaded maps in [(REALTIMEOFDAY - start_time)/10]s!")
 #undef INIT_ANNOUNCE
 
 /datum/controller/subsystem/mapping/proc/maprotate()
