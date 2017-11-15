@@ -24,6 +24,7 @@
 	minbodytemp = 0
 	health = 100
 	maxHealth = 100 //pretty durable
+	//damage_coeff = list(BRUTE = 1, BURN = 2, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1) //feel the burn!!
 	force_threshold = 10
 	healable = 0
 	environment_smash = 1 //Tables, closets, etc.
