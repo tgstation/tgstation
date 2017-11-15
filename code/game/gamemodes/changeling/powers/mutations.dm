@@ -127,7 +127,8 @@
 
 
 //fancy headers yo
-//REMNANT ARMBLADE CODE (For synthetic armblades!)
+//REMNANT ARMBLADE CODE (For synthetic armblades, and perhaps some admin fuckery idk)
+/obj/item/melee/arm_blade
 	name = "arm blade"
 	desc = "A grotesque blade made out of bone and flesh that cleaves through people as a hot knife through butter."
 	icon = 'icons/obj/items_and_weapons.dmi'
