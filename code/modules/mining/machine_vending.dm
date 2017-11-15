@@ -279,8 +279,8 @@
 	name = "mining conscription kit"
 	desc = "A kit containing everything a crewmember needs to support a shaft miner in the field."
 
-/obj/item/storage/backpack/duffelbag/mining_conscript/New()
-	..()
+/obj/item/storage/backpack/duffelbag/mining_conscript/Initialize()
+	. = ..()
 	new /obj/item/pickaxe/mini(src)
 	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/device/t_scanner/adv_mining_scanner/lesser(src)

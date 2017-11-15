@@ -90,12 +90,10 @@
 			addtimer(CALLBACK(reagents, /datum/reagents.proc/add_reagent, refill, trans), 600)
 
 /obj/item/reagent_containers/food/drinks/attackby(obj/item/I, mob/user, params)
-	if(I.is_hot())
-		var/added_heat = (I.is_hot() / 100) //ishot returns a temperature
-		if(reagents)
-			reagents.chem_temp += added_heat
-			to_chat(user, "<span class='notice'>You heat [src] with [I].</span>")
-			reagents.handle_reactions()
+	var/hotness = I.is_hot()
+	if(hotness && reagents)
+		reagents.expose_temperature(hotness)
+		to_chat(user, "<span class='notice'>You heat [name] with [I]!</span>")
 	..()
 
 
@@ -393,8 +391,8 @@
 	list_reagents = list("lemon_lime" = 30)
 	foodtype = FRUIT
 
-/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime/New()
-	..()
+/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime/Initialize()
+	. = ..()
 	name = "Lemon-Lime Soda"
 
 /obj/item/reagent_containers/food/drinks/soda_cans/space_up

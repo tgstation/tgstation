@@ -99,7 +99,6 @@
 
 	LAZYCLEARLIST(overlays)
 	LAZYCLEARLIST(priority_overlays)
-	//SSoverlays.processing -= src	//we COULD do this, but it's better to just let it fall out of the processing queue
 
 	QDEL_NULL(light)
 
@@ -523,6 +522,7 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 
 //Hook for running code when a dir change occurs
 /atom/proc/setDir(newdir)
+	SendSignal(COMSIG_ATOM_DIR_CHANGE, dir, newdir)
 	dir = newdir
 
 /atom/proc/mech_melee_attack(obj/mecha/M)
@@ -619,4 +619,21 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 	SendSignal(COMSIG_ATOM_ENTERED, AM, oldLoc)
 
 /atom/proc/return_temperature()
+	return
+
+// Default tool behaviors proc
+
+/atom/proc/crowbar_act(mob/user, obj/item/tool)
+	return
+
+/atom/proc/multitool_act(mob/user, obj/item/tool)
+	return
+
+/atom/proc/screwdriver_act(mob/user, obj/item/tool)
+	return
+
+/atom/proc/wrench_act(mob/user, obj/item/tool)
+	return
+
+/atom/proc/wirecutter_act(mob/user, obj/item/tool)
 	return

@@ -38,8 +38,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/New()
 	..()
 	if(!id_tag)
-		assign_uid()
-		id_tag = num2text(uid)
+		id_tag = assign_uid_vents()
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on
 	on = TRUE

@@ -33,7 +33,7 @@ Chaplain
 		H.equip_to_slot_or_del(B, slot_in_backpack)
 		var/nrt = SSreligion.holy_weapon_type || /obj/item/nullrod
 		var/obj/item/nullrod/N = new nrt(H)
-		H.equip_to_slot_or_del(N, slot_in_backpack)
+		H.put_in_hands(N)
 		return
 
 	var/new_religion = "Christianity"

@@ -108,11 +108,12 @@
 	var/datum/round_event_control/control
 
 	var/startWhen		= 0	//When in the lifetime to call start().
-	var/announceWhen	= 0	//When in the lifetime to call announce(). Set an event's announceWhen to >0 if there is an announcement.
+	var/announceWhen	= 0	//When in the lifetime to call announce(). Set an event's announceWhen to -1 if announcement should not be shown.
 	var/endWhen			= 0	//When in the lifetime the event should end.
 
 	var/activeFor		= 0	//How long the event has existed. You don't need to change this.
 	var/current_players	= 0 //Amount of of alive, non-AFK human players on server at the time of event start
+	var/fakeable = TRUE		//Can be faked by fake news event.
 
 //Called first before processing.
 //Allows you to setup your event, such as randomly
@@ -133,7 +134,7 @@
 //Called when the tick is equal to the announceWhen variable.
 //Allows you to announce before starting or vice versa.
 //Only called once.
-/datum/round_event/proc/announce()
+/datum/round_event/proc/announce(fake)
 	return
 
 //Called on or after the tick counter is equal to startWhen.
@@ -167,7 +168,7 @@
 
 	if(activeFor == announceWhen)
 		processing = FALSE
-		announce()
+		announce(FALSE)
 		processing = TRUE
 
 	if(startWhen < activeFor && activeFor < endWhen)

@@ -149,7 +149,7 @@
 	suffix = "mini"
 	name = "Ministation emergency shuttle"
 	credit_cost = 1000
-	description = "Despite it's namesake, this shuttle is actually only slightly smaller than standard, and still complete with a brig and medbay."
+	description = "Despite its namesake, this shuttle is actually only slightly smaller than standard, and still complete with a brig and medbay."
 
 /datum/map_template/shuttle/emergency/scrapheap
 	suffix = "scrapheap"
