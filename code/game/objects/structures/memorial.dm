@@ -8,7 +8,7 @@ but we are all contributors together.
 
 Goodbye, man. We'll miss you.
 
-This memorial has been designed for him and any future coders to perish.
+This memorial has been designed for him and any future coders who perish.
 
 */
 
@@ -19,3 +19,7 @@ This memorial has been designed for him and any future coders to perish.
 	icon_state = "memorial"
 	density = TRUE
 	anchored = TRUE
+
+/obj/structure/fluff/arc/examine(mob/user)
+	..()
+	user << browse(file("icons/memorial.png"), "window=memorial;size=800x1045")
