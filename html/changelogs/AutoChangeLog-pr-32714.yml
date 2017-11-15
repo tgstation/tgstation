@@ -1,4 +1,0 @@
-author: "Robustin"
-delete-after: True
-changes: 
-  - tweak: "The tesla will now move toward power beacons at a significantly slower rate."
