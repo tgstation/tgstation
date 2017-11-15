@@ -258,16 +258,12 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		AI.switchCamera(C)
 
 /mob/living/carbon/human/Move()
+	var/old_z = src.z
+	. = ..()
 	if (src.w_uniform)
-		var/old_z = src.z
-
-		. = ..()
-
 		if (old_z != src.z)
 			GLOB.crewmonitor.queueUpdate(old_z)
 		GLOB.crewmonitor.queueUpdate(src.z)
-	else
-		return ..()
 
 /datum/crewmonitor/proc/queueUpdate(z)
 	addtimer(CALLBACK(src, .proc/update, z), 5, TIMER_UNIQUE)
