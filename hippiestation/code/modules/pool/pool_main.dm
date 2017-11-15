@@ -285,7 +285,7 @@
 	dir = 4
 
 /obj/structure/pool/Rboard/CheckExit(atom/movable/O as mob|obj, target as turf)
-	if(istype(O) && O.checkpass(PASSGLASS))
+	if(istype(O) && O.pass_flags & PASSGLASS))
 		return TRUE
 	if(get_dir(O.loc, target) == dir)
 		return FALSE
