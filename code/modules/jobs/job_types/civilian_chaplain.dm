@@ -24,14 +24,14 @@ Chaplain
 
 	var/obj/item/storage/book/bible/booze/B = new
 
-	if(SSreligion.religion)
-		B.deity_name = SSreligion.deity
-		B.name = SSreligion.bible_name
-		B.icon_state = SSreligion.bible_icon_state
-		B.item_state = SSreligion.bible_item_state
-		to_chat(H, "There is already an established religion onboard the station. You are an acolyte of [SSreligion.deity]. Defer to the Chaplain.")
+	if(GLOB.religion)
+		B.deity_name = GLOB.deity
+		B.name = GLOB.bible_name
+		B.icon_state = GLOB.bible_icon_state
+		B.item_state = GLOB.bible_item_state
+		to_chat(H, "There is already an established religion onboard the station. You are an acolyte of [GLOB.deity]. Defer to the Chaplain.")
 		H.equip_to_slot_or_del(B, slot_in_backpack)
-		var/nrt = SSreligion.holy_weapon_type || /obj/item/nullrod
+		var/nrt = GLOB.holy_weapon_type || /obj/item/nullrod
 		var/obj/item/nullrod/N = new nrt(H)
 		H.put_in_hands(N)
 		return
@@ -74,9 +74,9 @@ Chaplain
 		else
 			B.name = "The Holy Book of [new_religion]"
 
-	SSreligion.religion = new_religion
-	SSreligion.bible_name = B.name
-	SSreligion.deity = B.deity_name
+	GLOB.religion = new_religion
+	GLOB.bible_name = B.name
+	GLOB.deity = B.deity_name
 
 	H.equip_to_slot_or_del(B, slot_in_backpack)
 
