@@ -1,3 +1,10 @@
+GLOBAL_VAR(religion)
+GLOBAL_VAR(deity)
+GLOBAL_VAR(bible_name)
+GLOBAL_VAR(bible_icon_state)
+GLOBAL_VAR(bible_item_state)
+GLOBAL_VAR(holy_weapon_type)
+
 /obj/item/nullrod
 	name = "null rod"
 	desc = "A rod of pure obsidian, its very presence disrupts and dampens the powers of Nar-Sie's followers."
@@ -297,7 +304,7 @@
 	hitsound = 'sound/items/bikehorn.ogg'
 	sharpness = IS_SHARP
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	
+
 /obj/item/nullrod/pride_hammer
 	icon_state = "pride"
 	name = "Pride-struck Hammer"
@@ -308,7 +315,7 @@
 	slot_flags = SLOT_BACK
 	attack_verb = list("attacked", "smashed", "crushed", "splattered", "cracked")
 	hitsound = 'sound/weapons/blade1.ogg'
-	
+
 /obj/item/nullrod/pride_hammer/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
 	if(!proximity)
 		return

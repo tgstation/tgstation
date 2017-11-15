@@ -25,8 +25,8 @@
 		cross.icon_state = "kingyellow"
 		font_color = "blue"
 		prayer_type = "CHAPLAIN PRAYER"
-		if(SSreligion.deity)
-			deity = SSreligion.deity
+		if(GLOB.deity)
+			deity = GLOB.deity
 	else if(iscultist(usr))
 		cross.icon_state = "tome"
 		font_color = "red"

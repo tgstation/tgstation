@@ -62,10 +62,8 @@
 		strengthdiv = 8
 		for(var/mob/living/simple_animal/revenant/R in get_hearers_in_view(7,get_turf(holder.my_atom)))
 			var/deity
-			if(SSreligion.deity)
-				deity = SSreligion.deity
-			else
-				deity = "Christ"
+			if(GLOB.deity)
+				deity = GLOB.deity || "Christ"
 			to_chat(R, "<span class='userdanger'>The power of [deity] compels you!</span>")
 			R.stun(20)
 			R.reveal(100)
@@ -155,7 +153,7 @@
 
 /datum/chemical_reaction/reagent_explosion/methsplosion/methboom2
 	required_reagents = list("diethylamine" = 1, "iodine" = 1, "phosphorus" = 1, "hydrogen" = 1) //diethylamine is often left over from mixing the ephedrine.
-	required_temp = 300 //room temperature, chilling it even a little will prevent the explosion 
+	required_temp = 300 //room temperature, chilling it even a little will prevent the explosion
 	results = list("methboom1" = 4) // this is ugly. Sorry goof.
 
 /datum/chemical_reaction/sorium
