@@ -496,10 +496,6 @@
 		O.push_data()
 		activate_pin(3)
 
-
-
-
-
 /obj/item/integrated_circuit/input/signaler
 	name = "integrated signaler"
 	desc = "Signals from a signaler can be received with this, allowing for remote control.  Additionally, it can send signals as well."
@@ -544,7 +540,6 @@
 		set_frequency(new_freq)
 	if(isnum(new_code))
 		code = new_code
-
 
 /obj/item/integrated_circuit/input/signaler/do_work() // Sends a signal.
 	if(!radio_connection)

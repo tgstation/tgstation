@@ -43,14 +43,14 @@ D [1]/  ||
 	return holder.nano_host()
 */
 
-/datum/integrated_io/proc/data_as_type(var/as_type)
+/datum/integrated_io/proc/data_as_type(as_type)
 	if(!isweakref(data))
 		return
 	var/datum/weakref/w = data
 	var/output = w.resolve()
 	return istype(output, as_type) ? output : null
 
-/datum/integrated_io/proc/display_data(var/input)
+/datum/integrated_io/proc/display_data(input)
 	if(isnull(input))
 		return "(null)" // Empty data means nothing to show.
 
@@ -88,14 +88,9 @@ list[](
 
 	return "([input])" // Nothing special needed for numbers or other stuff.
 
-/datum/integrated_io/activate/display_data()
-	return "(\[pulse\])"
 
 /datum/integrated_io/proc/display_pin_type()
 	return IC_FORMAT_ANY
-
-/datum/integrated_io/activate/display_pin_type()
-	return IC_FORMAT_PULSE
 
 /datum/integrated_io/proc/scramble()
 	if(isnull(data))
@@ -106,10 +101,7 @@ list[](
 		write_data_to_pin("ERROR")
 	push_data()
 
-/datum/integrated_io/activate/scramble()
-	push_data()
-
-/datum/integrated_io/proc/write_data_to_pin(var/new_data)
+/datum/integrated_io/proc/write_data_to_pin(new_data)
 	if(isnull(new_data) || isnum(new_data) || istext(new_data) || isweakref(new_data))
 		data = new_data
 		holder.on_data_written()
@@ -122,11 +114,6 @@ list[](
 	for(var/k in 1 to linked.len)
 		var/datum/integrated_io/io = linked[k]
 		io.write_data_to_pin(data)
-
-/datum/integrated_io/activate/push_data()
-	for(var/k in 1 to linked.len)
-		var/datum/integrated_io/io = linked[k]
-		io.holder.check_then_do_work()
 
 /datum/integrated_io/proc/pull_data()
 	for(var/k in 1 to linked.len)
@@ -184,14 +171,3 @@ list[](
 /datum/integrated_io/proc/ask_for_pin_data(mob/user)
 	var/new_data = ask_for_data_type(user)
 	write_data_to_pin(new_data)
-
-/datum/integrated_io/activate/ask_for_pin_data(mob/user) // This just pulses the pin.
-	holder.check_then_do_work(ignore_power = TRUE)
-	to_chat(user, "<span class='notice'>You pulse \the [holder]'s [src] pin.</span>")
-
-/datum/integrated_io/activate
-	name = "activation pin"
-	io_type = PULSE_CHANNEL
-
-/datum/integrated_io/activate/out // All this does is just make the UI say 'out' instead of 'in'
-	data = 1
