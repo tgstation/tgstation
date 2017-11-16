@@ -26,8 +26,11 @@
 	volume = 100
 	power_draw_per_use = 20
 	var/smoke_radius = 5
+	var/notified = FALSE
 
 /obj/item/integrated_circuit/reagent/smoke/on_reagent_change()
+	//reset warning
+	notified = FALSE
 	set_pin_data(IC_OUTPUT, 1, reagents.total_volume)
 	push_data()
 
@@ -43,11 +46,16 @@
 	S.attach(location)
 	playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
 	if(S)
-		S.set_up(reagents, smoke_radius, location, 0)
+		S.set_up(reagents, smoke_radius, location, notified)
+		if(!notified)
+			//we have now notified
+			notified = TRUE
 		S.start()
+
 	if(reagents)
 		reagents.clear_reagents()
 	activate_pin(2)
+
 
 /obj/item/integrated_circuit/reagent/injector
 	name = "integrated hypo-injector"
