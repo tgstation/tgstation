@@ -67,7 +67,15 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 	var/dirtype = PIPE_BENDABLE
 
 /datum/pipe_info/proc/Render(dispenser)
-	return "<li><a href='?src=[REF(dispenser)]&[Params()]'>[name]</a></li>"
+	var/dat = "<li><a href='?src=[REF(dispenser)]&[Params()]'>[name]</a></li>"
+
+	// Stationary pipe dispensers don't allow you to pre-select pipe directions.
+	// This makes it impossble to spawn bent versions of bendable pipes.
+	// We add a "Bent" pipe type with a preset diagonal direction to work around it.
+	if(istype(dispenser, /obj/machinery/pipedispenser) && (dirtype == PIPE_BENDABLE || dirtype == /obj/item/pipe/binary/bendable))
+		dat += "<li><a href='?src=[REF(dispenser)]&[Params()]&dir=[NORTHEAST]'>Bent [name]</a></li>"
+
+	return dat
 
 /datum/pipe_info/proc/Params()
 	return ""
@@ -89,14 +97,15 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 
 /datum/pipe_info/meter
 	categoryId = CATEGORY_ATMOS
-	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
+	dirtype = PIPE_ONEDIR
+	icon = 'icons/obj/meter.dmi'
 	icon_state = "meterX"
 
 /datum/pipe_info/meter/New(label)
 	name = label
 
 /datum/pipe_info/meter/Params()
-	return "makemeter=1&type=[dirtype]"
+	return "makemeter=[id]&type=[dirtype]"
 
 
 /datum/pipe_info/disposal
@@ -415,12 +424,12 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 				user << browse_rsc(new /icon(preview), "pipe.png")
 
 				dirsel += "<p>"
-				dirsel += render_dir_img(SOUTH,"pipe.png","Pipe")
+				dirsel += render_dir_img(NORTH,"pipe.png","Pipe")
 				dirsel += "</p>"
 			else
 				dirsel+={"
 		<p>
-			<a href="?src=[REF(src)];setdir=[SOUTH]" title="Pipe">&#8597;</a>
+			<a href="?src=[REF(src)];setdir=[NORTH]" title="Pipe">&#8597;</a>
 		</p>
 				"}
 
@@ -499,8 +508,8 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 
 	if(href_list["eatpipes"])
 		p_class = EATING_MODE
-		p_conntype=-1
-		p_dir=1
+		p_conntype = -1
+		p_dir = 1
 		spark_system.start()
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 		show_menu(usr)
@@ -531,7 +540,8 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 
 	if(href_list["makemeter"])
 		p_class = METER_MODE
-		p_conntype = -1
+		p_type = text2num(href_list["makemeter"])
+		p_conntype = text2num(href_list["type"])
 		p_dir = NORTH
 		spark_system.start()
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
