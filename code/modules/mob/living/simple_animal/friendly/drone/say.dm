@@ -18,8 +18,7 @@
 
 //Base proc for anything to call
 /proc/_alert_drones(msg, dead_can_hear = 0, atom/source, mob/living/faction_checked_mob, exact_faction_match)
-	for(var/W in GLOB.mob_list)
-		var/mob/living/simple_animal/drone/M = W
+	for(var/M in GLOB.drones_list)
 		if(istype(M) && M.stat != DEAD)
 			if(faction_checked_mob)
 				if(M.faction_check_mob(faction_checked_mob, exact_faction_match))

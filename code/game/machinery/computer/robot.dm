@@ -75,7 +75,7 @@
 		dat += "<BR>"
 
 	var/drones = 0
-	for(var/mob/living/simple_animal/drone/D in GLOB.mob_list)
+	for(var/mob/living/simple_animal/drone/D in GLOB.drones_list)
 		if(D.hacked)
 			continue
 		drones++

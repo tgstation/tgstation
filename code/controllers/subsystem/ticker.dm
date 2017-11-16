@@ -388,7 +388,8 @@ SUBSYSTEM_DEF(ticker)
 		C.playtitlemusic(40)
 
 	//Player status report
-	for(var/mob/Player in GLOB.mob_list)
+	for(var/i in GLOB.mob_list)
+		var/mob/Player = i
 		if(Player.mind && !isnewplayer(Player))
 			if(Player.stat != DEAD && !isbrain(Player))
 				num_survivors++
