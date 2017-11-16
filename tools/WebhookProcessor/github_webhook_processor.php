@@ -450,17 +450,11 @@ function get_pr_code_friendliness($payload, $oldbalance = null){
 	$labels = get_pr_labels_array($payload);
 	//anything not in this list defaults to 0
 	$label_values = array(
-		'Fix' => 2,
-		'Refactor' => 2,
-		'Code Improvement' => 1,
-		'Grammar and Formatting' => 1,
 		'Priority: High' => 4,
 		'Priority: CRITICAL' => 5,
 		'Logging' => 1,
 		'Feedback' => 1,
 		'Performance' => 3,
-		'Feature' => -1,
-		'Balance/Rebalance' => -1,
 		'PRB: Reset' => $startingPRBalance - $oldbalance,
 	);
 
@@ -480,6 +474,174 @@ function get_pr_code_friendliness($payload, $oldbalance = null){
 		}
 	}
 	return $affecting;
+}
+
+function check_cl_for_fixes($payload) {
+	if (!isset($payload['pull_request']) || !isset($payload['pull_request']['body'])) {
+		return;
+	}
+	if (!isset($payload['pull_request']['user']) || !isset($payload['pull_request']['user']['login'])) {
+		return;
+	}
+	$body = $payload['pull_request']['body'];
+
+
+	$body = str_replace("\r\n", "\n", $body);
+	$body = explode("\n", $body);
+
+	$username = $payload['pull_request']['user']['login'];
+	$points_to_award = 0;
+	$changelogbody = array();
+	$currentchangelogblock = array();
+	$foundcltag = false;
+	foreach ($body as $line) {
+		$line = trim($line);
+		if (substr($line,0,4) == ':cl:' || substr($line,0,4) == '🆑') {
+			$incltag = true;
+			$foundcltag = true;
+			$pos = strpos($line, " ");
+			if ($pos) {
+				$tmp = substr($line, $pos+1);
+				if (trim($tmp) != 'optional name here')
+					$username = $tmp;
+			}
+			continue;
+		} else if (substr($line,0,5) == '/:cl:' || substr($line,0,6) == '/ :cl:' || substr($line,0,5) == ':/cl:' || substr($line,0,5) == '/🆑' || substr($line,0,6) == '/ 🆑' ) {
+			$incltag = false;
+			$changelogbody = array_merge($changelogbody, $currentchangelogblock);
+			continue;
+		}
+		if (!$incltag)
+			continue;
+		
+		$firstword = explode(' ', $line)[0];
+		$pos = strpos($line, " ");
+		$item = '';
+		if ($pos) {
+			$firstword = trim(substr($line, 0, $pos));
+			$item = trim(substr($line, $pos+1));
+		} else {
+			$firstword = $line;
+		}
+		
+		if (!strlen($firstword)) {
+			$currentchangelogblock[count($currentchangelogblock)-1]['body'] .= "\n";
+			continue;
+		}
+		if (!strlen($firstword) || $firstword[strlen($firstword)-1] != ':') {
+			if (count($currentchangelogblock) <= 0)
+				continue;
+			$currentchangelogblock[count($currentchangelogblock)-1]['body'] .= "\n".$line;
+			continue;
+		}
+		$cltype = strtolower(substr($firstword, 0, -1));
+		switch ($cltype) {
+			case 'fix':
+			case 'fixes':
+			case 'bugfix':
+				if($item != 'fixed a few things') {
+					$currentchangelogblock[] = array('type' => 'bugfix', 'body' => $item);
+					$points_to_award++;
+				}
+				break;
+			case 'rsctweak':
+			case 'tweaks':
+			case 'tweak':
+				if($item != 'tweaked a few things') {
+					$currentchangelogblock[] = array('type' => 'tweak', 'body' => $item);
+				}
+				break;
+			case 'soundadd':
+				if($item != 'added a new sound thingy') {
+					$currentchangelogblock[] = array('type' => 'soundadd', 'body' => $item);
+					$points_to_award++;
+				}
+				break;
+			case 'sounddel':
+				if($item != 'removed an old sound thingy') {
+					$currentchangelogblock[] = array('type' => 'sounddel', 'body' => $item);
+					$points_to_award--;
+				}
+				break;
+			case 'add':
+			case 'adds':
+			case 'rscadd':
+				if($item != 'Added new things' && $item != 'Added more things') {
+					$currentchangelogblock[] = array('type' => 'rscadd', 'body' => $item);
+					$points_to_award--;
+				}
+				break;
+			case 'del':
+			case 'dels':
+			case 'rscdel':
+				if($item != 'Removed old things') {
+					$currentchangelogblock[] = array('type' => 'rscdel', 'body' => $item);
+					$points_to_award--;
+				}
+				break;
+			case 'imageadd':
+				if($item != 'added some icons and images') {
+					$currentchangelogblock[] = array('type' => 'imageadd', 'body' => $item);
+					$points_to_award++;
+				}
+				break;
+			case 'imagedel':
+				if($item != 'deleted some icons and images') {
+					$currentchangelogblock[] = array('type' => 'imagedel', 'body' => $item);
+				}
+				break;
+			case 'typo':
+			case 'spellcheck':
+				if($item != 'fixed a few typos') {
+					$currentchangelogblock[] = array('type' => 'spellcheck', 'body' => $item);
+					$points_to_award++;
+				}
+				break;
+			case 'balance':
+			case 'rebalance':
+				if($item != 'rebalanced something'){
+					$currentchangelogblock[] = array('type' => 'balance', 'body' => $item);
+					$points_to_award--;
+				}
+				break;
+			case 'tgs':
+				$currentchangelogblock[] = array('type' => 'tgs', 'body' => $item);
+				break;
+			case 'code_imp':
+			case 'code':
+				if($item != 'changed some code'){
+					$currentchangelogblock[] = array('type' => 'code_imp', 'body' => $item);
+					$points_to_award += 2;
+				}
+				break;
+			case 'refactor':
+				if($item != 'refactored some code'){
+					$currentchangelogblock[] = array('type' => 'refactor', 'body' => $item);
+					$points_to_award += 2;
+				}
+				break;
+			case 'config':
+				if($item != 'changed some config setting'){
+					$currentchangelogblock[] = array('type' => 'config', 'body' => $item);
+				}
+				break;
+			case 'admin':
+				if($item != 'messed with admin stuff'){
+					$currentchangelogblock[] = array('type' => 'admin', 'body' => $item);
+				}
+				break;
+			case 'server':
+				if($item != 'something server ops should know')
+					$currentchangelogblock[] = array('type' => 'server', 'body' => $item);
+				break;			
+			default:
+				//we add it to the last changelog entry as a separate line
+				if (count($currentchangelogblock) > 0)
+					$currentchangelogblock[count($currentchangelogblock)-1]['body'] .= "\n".$line;
+				break;
+		}
+	}
+	return $points_to_award;
 }
 
 function is_maintainer($payload, $author){
@@ -509,7 +671,9 @@ function update_pr_balance($payload) {
 	if(!isset($balances[$author]))
 		$balances[$author] = $startingPRBalance;
 	$friendliness = get_pr_code_friendliness($payload, $balances[$author]);
+	$changelog_balance_impact = check_cl_for_fixes($payload);
 	$balances[$author] += $friendliness;
+	$balances[$author] += $changelog_balance_impact;
 	if(!is_maintainer($payload, $author)){	//immune
 		if($balances[$author] < 0 && $friendliness < 0)
 			create_comment($payload, 'Your Fix/Feature pull request delta is currently below zero (' . $balances[$author] . '). Maintainers may close future Feature/Tweak/Balance PRs. Fixing issues or helping to improve the codebase will raise this score.');
