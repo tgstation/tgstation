@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - tweak: "The computers on all maps have have been updated for the latest directional sprite changes. Please report any computers facing in strange directions to your nearest mapper."

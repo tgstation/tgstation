@@ -234,7 +234,10 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "aI" = (
 /obj/structure/table/reinforced,
-/obj/machinery/computer/med_data/laptop,
+/obj/machinery/computer/med_data/laptop{
+	dir = 8;
+	pixel_y = 1
+	},
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -495,7 +498,9 @@
 	},
 /area/ruin/space/has_grav/abandonedzoo)
 "bl" = (
-/obj/machinery/computer/operating,
+/obj/machinery/computer/operating{
+	dir = 8
+	},
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},

@@ -124,7 +124,9 @@
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape/luxury)
 "aw" = (
-/obj/machinery/computer/communications,
+/obj/machinery/computer/communications{
+	dir = 8
+	},
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape/luxury)
 "ax" = (
@@ -203,7 +205,9 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape/luxury)
 "aM" = (
-/obj/machinery/computer/emergency_shuttle,
+/obj/machinery/computer/emergency_shuttle{
+	dir = 8
+	},
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape/luxury)
 "aN" = (
@@ -282,7 +286,9 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape/luxury)
 "bc" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	dir = 8
+	},
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape/luxury)
 "bd" = (
@@ -292,7 +298,9 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape/luxury)
 "be" = (
-/obj/machinery/computer/crew,
+/obj/machinery/computer/crew{
+	dir = 8
+	},
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape/luxury)
 "bf" = (
@@ -432,7 +440,7 @@ aj
 aj
 aj
 aj
-bn
+bj
 aj
 aj
 ak
@@ -691,7 +699,7 @@ bd
 aj
 aj
 bg
-bq
+bp
 ab
 "}
 (21,1,1) = {"
@@ -747,12 +755,12 @@ ab
 al
 aj
 aq
-bm
+bk
 aw
 aM
 bc
 be
-bo
+bk
 aj
 aj
 ak

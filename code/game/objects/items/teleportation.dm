@@ -206,6 +206,11 @@ Frequency:
 	if(A.noteleport)
 		to_chat(user, "<span class='notice'>\The [src] is malfunctioning.</span>")
 		return
+	current_location = get_turf(user)	//Recheck.
+	current_area = current_location.loc
+	if(!current_location || current_area.noteleport || current_location.z > ZLEVEL_SPACEMAX || !isturf(user.loc))//If turf was not found or they're on z level 2 or >7 which does not currently exist. or if user is not located on a turf
+		to_chat(user, "<span class='notice'>\The [src] is malfunctioning.</span>")
+		return	
 	user.show_message("<span class='notice'>Locked In.</span>", 2)
 	var/list/obj/effect/portal/created = create_portal_pair(current_location, get_teleport_turf(get_turf(T)), src, 300, 1)
 	if(!(LAZYLEN(created) == 2))

@@ -40,7 +40,8 @@
 	else if(!ishuman(user))
 		title = "Construct"
 	my_message = "<span class='[span]'><b>[title] [findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]:</b> [message]</span>"
-	for(var/mob/M in GLOB.mob_list)
+	for(var/i in GLOB.player_list)
+		var/mob/M = i
 		if(iscultist(M))
 			to_chat(M, my_message)
 		else if(M in GLOB.dead_mob_list)
