@@ -49,7 +49,9 @@
 "ah" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/computer/monitor,
+/obj/machinery/computer/monitor{
+	dir = 8
+	},
 /turf/open/floor/plasteel/black,
 /area/shuttle/pirate)
 "ai" = (
@@ -92,7 +94,9 @@
 /area/shuttle/pirate)
 "ao" = (
 /obj/machinery/light/small,
-/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate,
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate{
+	dir = 8
+	},
 /turf/open/floor/plasteel/black,
 /area/shuttle/pirate)
 "ap" = (
@@ -1149,6 +1153,7 @@
 /area/shuttle/pirate)
 "cE" = (
 /obj/machinery/computer/turbine_computer{
+	dir = 4;
 	id = "pirateturbine"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -1207,7 +1212,9 @@
 	},
 /area/shuttle/pirate)
 "cI" = (
-/obj/machinery/computer/monitor,
+/obj/machinery/computer/monitor{
+	dir = 8
+	},
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
