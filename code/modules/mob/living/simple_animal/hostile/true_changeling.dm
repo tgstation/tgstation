@@ -42,7 +42,7 @@
 	var/mob/living/carbon/human/stored_changeling = null //The changeling that transformed
 	var/devouring = FALSE //If the true changeling is currently devouring a human
 	var/wallcrawl = FALSE //If the true changeling is crawling around the place, allowing it to counteract gravity loss
-	var/active = TRUE //radio jamming
+	var/active = FALSE //radio jamming
 	var/range = 7
 	var/datum/action/innate/changeling/reform/reform
 	var/datum/action/innate/changeling/jammer/jammer
@@ -201,18 +201,19 @@
 		M.adjustBruteLoss(-50)
 
 /datum/action/innate/changeling/jammer
+	name = "Electrostatic Lullaby"
 	desc = "We may emit a slow chant that garbles radio messages from escaping."
 	check_flags = AB_CHECK_CONSCIOUS
-	button_icon_state = "devour"
+	button_icon_state = "jammer"
 
 /datum/action/innate/changeling/jammer/Activate() //thank you anturk!!!
 	var/mob/living/simple_animal/hostile/true_changeling/C = owner
-	to_chat(C, "<span class='notice'>Our cacophony of noise is[active ? "silenced" : "humming once again"].<span>")
+	to_chat(C, "<span class='notice'>Our cacophony of noise is [active ? "silenced" : "humming once again"].<span>")
 	active = !active
 	if(active)
-		GLOB.active_jammers |= src
+		GLOB.active_jammers |= C
 	else
-		GLOB.active_jammers -= src
+		GLOB.active_jammers -= C
 
 /datum/action/innate/changeling/spine_crawl
 	name = "Spine Crawl"
@@ -226,12 +227,12 @@
 		return FALSE
 	M.wallcrawl = !M.wallcrawl
 	if(M.wallcrawl)
-		M.visible_message("<span class='warning'>[M] begins gouging its spines into the terrain!</span>", \
-							"<span class='danger'>We begin using our spines for movement.</span>")
+		M.visible_message("<span class='danger'>[M] begins gouging its spines into the terrain!</span>", \
+							"<span class='notice'>We begin using our spines for movement.</span>")
 		M.speed = 1 //slow
 	else
-		M.visible_message("<span class='warning'>[M] recedes their spines back into their body!</span>", \
-							"<span class='danger'>We return moving normally.</span>")
+		M.visible_message("<span class='danger'>[M] recedes their spines back into their body!</span>", \
+							"<span class='notice'>We return moving normally.</span>")
 		M.speed = initial(M.speed)
 
 #undef TRUE_CHANGELING_REFORM_THRESHOLD
