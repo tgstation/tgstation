@@ -194,7 +194,7 @@
 	if(headrevs.len)
 		var/num_revs = 0
 		var/num_survivors = 0
-		for(var/mob/living/carbon/survivor in GLOB.living_mob_list)
+		for(var/mob/living/carbon/survivor in GLOB.alive_mob_list)
 			if(survivor.ckey)
 				num_survivors++
 				if(survivor.mind)

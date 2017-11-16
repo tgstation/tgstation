@@ -134,8 +134,6 @@
 
 	var/turf/listed_turf = null	//the current turf being examined in the stat panel
 
-	var/list/permanent_huds = list()
-
 	var/resize = 1 //Badminnery resize
 
 	var/list/observers = null	//The list of people observing this mob.

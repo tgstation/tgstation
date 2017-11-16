@@ -16,7 +16,7 @@
 	return FALSE
 
 /turf/closed/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && mover.checkpass(PASSCLOSEDTURF))
+	if(istype(mover) && (mover.pass_flags & PASSCLOSEDTURF))
 		return TRUE
 	else
 		..()
