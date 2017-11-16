@@ -105,7 +105,7 @@ SERVER_TOOLS_DEFINE_AND_SET_GLOBAL(server_tools_api_compatible, FALSE)
 /*
 The MIT License
 
-Copyright (c) 2011 Dominic Tarr
+Copyright (c) 2017 Jordan Brown
 
 Permission is hereby granted, free of charge, 
 to any person obtaining a copy of this software and 
