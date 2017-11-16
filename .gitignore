@@ -1,5 +1,9 @@
 ###Files and folders specified here will never be tracked.
 
+# Fulpstation Ignores
+/config/dbconfig.txt
+/FulpWorkFiles/**/*
+
 #Ignore everything in datafolder and subdirectories
 /data/**/*
 

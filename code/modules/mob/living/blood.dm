@@ -28,7 +28,10 @@
 		bleed_rate = 0
 		return
 
-	if(bodytemperature >= 225 && !(disabilities & NOCLONE)) //cryosleep or husked people do not pump the blood.
+	if (AmBloodsucker(1)) // FULPSTATION: Bloodsuckers without Mortal Disguise don't need to be here.
+		return
+
+	if(bodytemperature >= 225 && !(disabilities & NOCLONE)) //cryosleep or husked people do not pump the blood..
 
 		//Blood regeneration if there is some space
 		if(blood_volume < BLOOD_VOLUME_NORMAL && !(NOHUNGER in dna.species.species_traits))
@@ -67,7 +70,10 @@
 					Unconscious(rand(20,60))
 					to_chat(src, "<span class='warning'>You feel extremely [word].</span>")
 			if(0 to BLOOD_VOLUME_SURVIVE)
-				death()
+				adjustOxyLoss(5)
+				Unconscious(60)
+				to_chat(src, "<span class='warning'>You struggle to remain conscious.</span>")
+				//death()	// FULPSTATION: Total blood loss doesn't kill immediately. It makes you helpless.
 
 		var/temp_bleed = 0
 		//Bleeding out

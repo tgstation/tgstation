@@ -112,6 +112,7 @@
 				bitecount++
 				On_Consume()
 				checkLiked(fraction, M)
+				M.CheckBloodsuckerEatFood(10) // FULPSTATION: Vampires can't eat real food. It gives them booboo tummies.
 				return 1
 
 	return 0

@@ -9,6 +9,8 @@
 
 	var/msg = "<span class='info'>*---------*\nThis is <EM>[src.name]</EM>!\n"
 
+	msg += ReturnVampExamine(user,1) // FULPSTATION: Vamps recognize the names of other vamps.
+
 	var/list/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 

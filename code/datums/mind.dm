@@ -618,6 +618,23 @@
 		sections["devil"] = text
 
 
+		/** BLOODSUCKER ***/
+		text = "bloodsucker"
+		if (SSticker.mode.config_tag=="bloodsucker")
+			text = uppertext(text)
+		text = "<i><b>[text]</b></i>: "
+		if (has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
+			text += "<b>BLOODSUCKER</b>|<a href='?src=\ref[src];bloodsucker=clear'>human</a>"
+		else
+			text += "<a href='?src=\ref[src];bloodsucker=bloodsucker'>bloodsucker</a>|<b>HUMAN</b>"
+
+		if(current && current.client && (ROLE_BLOODSUCKER in current.client.prefs.be_special))
+			text += " | Enabled in Prefs"
+		else
+			text += " | Disabled in Prefs"
+		sections["bloodsucker"] = text
+
+
 		/** NINJA ***/
 		text = "ninja"
 		if(SSticker.mode.config_tag == "ninja")
@@ -1130,6 +1147,23 @@
 					log_admin("[key_name(usr)] has forged objectives for [current] as part of autoobjectives.")
 					traitordatum.forge_traitor_objectives()
 					to_chat(usr, "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>")
+
+	else if(href_list["bloodsucker"])
+		switch(href_list["bloodsucker"])
+			if("clear")
+				if(src in SSticker.mode.bloodsuckers)
+					SSticker.mode.remove_bloodsucker(src)
+					message_admins("[key_name_admin(usr)] has revoked [current]'s vampiric gifts.")
+					log_admin("[key_name(usr)] has revoked [current]'s vampiric gifts.")
+			if ("bloodsucker")
+				if(!(src in SSticker.mode.bloodsuckers))
+					if (SSticker.mode.make_bloodsucker(src))
+						message_admins("[key_name_admin(usr)] has embraced [current] as a Bloodsucker.")
+						log_admin("[key_name(usr)] has embraced [current] as a Bloodsucker.")
+			if ("vassal")
+				special_role = "vassal"
+				message_admins("[key_name_admin(usr)] has revoked [current]'s vampiric gifts.")
+				log_admin("[key_name(usr)] has revoked [current]'s vampiric gifts.")
 
 	else if(href_list["devil"])
 		var/datum/antagonist/devil/devilinfo = has_antag_datum(ANTAG_DATUM_DEVIL)
