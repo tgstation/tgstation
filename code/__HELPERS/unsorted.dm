@@ -1358,11 +1358,9 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	see_in_dark = 1e6
 	anchored = TRUE
 	var/ready_to_die = FALSE
-	stat = DEAD // Prevents this mob from barging into the living mobs list
 
-/mob/dview/Initialize()
-	. = ..()
-	GLOB.dead_mob_list -= src // Let's clean it up from here, likely it's the only member of this list when this runs
+/mob/dview/Initialize() //Properly prevents this mob from gaining huds or joining any global lists
+	return
 
 /mob/dview/Destroy(force = FALSE)
 	if(!ready_to_die)
