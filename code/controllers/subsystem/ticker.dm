@@ -455,8 +455,7 @@ SUBSYSTEM_DEF(ticker)
 
 	CHECK_TICK
 
-	for (var/i in GLOB.silicon_mobs)
-		var/mob/living/silicon/robot/robo = i
+	for (var/mob/living/silicon/robot/robo in GLOB.silicon_mobs)
 		if (!robo.connected_ai && robo.mind)
 			if (robo.stat != DEAD)
 				to_chat(world, "<b>[robo.name] (Played by: [robo.mind.key]) survived as an AI-less borg! Its laws were:</b>")
