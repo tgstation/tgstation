@@ -84,42 +84,55 @@
 		return
 	if(!allowed(usr))
 		to_chat(usr, "<span class='warning'>Access denied.</span>")
+		playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
 		return
 	switch(action)
 		if("scan_teleporter")
 			teleporter = findteleporter()
+			playsound(src, "terminal_type", 50, 0)
 		if("scan_beacon")
 			beacon = findbeacon()
+			playsound(src, "terminal_type", 50, 0)
 		if("handle_id")
 			if(id)
 				usr.put_in_hands(id)
 				id = null
+				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			else
 				var/obj/item/I = usr.is_holding_item_of_type(/obj/item/card/id/prisoner)
 				if(I)
 					if(!usr.transferItemToLoc(I, src))
 						return
 					id = I
+					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 		if("set_goal")
+			playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 			var/new_goal = input("Set the amount of points:", "Points", id.goal) as num|null
 			if(!isnum(new_goal))
+				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 				return
 			if(!new_goal)
 				new_goal = default_goal
 			id.goal = Clamp(new_goal, 0, 1000) //maximum 1000 points
+			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 		if("toggle_open")
 			if(teleporter.locked)
 				to_chat(usr, "The teleporter is locked")
+				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 				return
 			teleporter.toggle_open()
+			playsound(src, "terminal_type", 50, 0)
 		if("teleporter_lock")
 			if(teleporter.state_open)
 				to_chat(usr, "Close the teleporter before locking!")
+				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 				return
 			teleporter.locked = !teleporter.locked
+			playsound(src, "terminal_type", 50, 0)
 		if("teleport")
 			if(!teleporter || !beacon)
 				return
+			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 			addtimer(CALLBACK(src, .proc/teleport, usr), 5)
 
 /obj/machinery/computer/gulag_teleporter_computer/proc/scan_machinery()

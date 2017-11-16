@@ -105,12 +105,14 @@
 				authenticated = TRUE
 				auth_id = "[ID.registered_name] ([ID.assignment])"
 				log_activity("logged in")
+				playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
 		if(!authenticated) //Check for emags
 			var/obj/item/card/emag/E = usr.get_active_held_item()
 			if(E && istype(E) && usr.Adjacent(src))
 				to_chat(usr, "<span class='warning'>You bypass [src]'s access requirements using your emag.</span>")
 				authenticated = TRUE
 				log_activity("logged in") //Auth ID doesn't change, hinting that it was illicit
+				playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
 	if(href_list["log_out"])
 		log_activity("logged out")
 		authenticated = FALSE
@@ -185,11 +187,14 @@
 	if(href_list["check_logs"])
 		checking_logs = TRUE
 		log_activity("checked logs")
+		playsound(src, "terminal_type", 50, 0)
 	if(href_list["check_apcs"])
 		checking_logs = FALSE
 		log_activity("checked APCs")
+		playsound(src, "terminal_type", 50, 0)
 	if(href_list["clear_logs"])
 		logs = list()
+		playsound(src, "terminal_type", 50, 0)
 	interact(usr) //Refresh the UI after a filter changes
 
 /obj/machinery/computer/apc_control/emag_act(mob/user)
