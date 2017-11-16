@@ -673,7 +673,7 @@ function update_pr_balance($payload) {
 	$friendliness = get_pr_code_friendliness($payload, $balances[$author]);
 	$changelog_balance_impact = check_cl_for_fixes($payload);
 	$balances[$author] += $friendliness;
-	$changelog_balance_impact[$author] += $friendliness;
+	$balances[$author] += $changelog_balance_impact;
 	if(!is_maintainer($payload, $author)){	//immune
 		if($balances[$author] < 0 && $friendliness < 0)
 			create_comment($payload, 'Your Fix/Feature pull request delta is currently below zero (' . $balances[$author] . '). Maintainers may close future Feature/Tweak/Balance PRs. Fixing issues or helping to improve the codebase will raise this score.');
