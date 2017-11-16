@@ -722,7 +722,7 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/Reboot(reason, end_string, delay)
 	set waitfor = FALSE
-	if(usr && !check_rights(R_SERVER, TRUE))
+	if(usr && !check_rights(R_ADMIN, TRUE))
 		return
 
 	if(!delay)
