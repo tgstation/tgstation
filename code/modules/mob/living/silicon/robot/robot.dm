@@ -210,8 +210,8 @@
 	"Service" = /obj/item/robot_module/butler)
 	if(!CONFIG_GET(flag/disable_peaceborg))
 		modulelist["Peacekeeper"] = /obj/item/robot_module/peacekeeper
-
-	modulelist["Security"] = /obj/item/robot_module/security // hippie - re-added the security cyborg
+	if(!CONFIG_GET(flag/disable_secborg))
+		modulelist["Security"] = /obj/item/robot_module/security
 
 	var/input_module = input("Please, select a module!", "Robot", null, null) as null|anything in modulelist
 	if(!input_module || module.type != /obj/item/robot_module)
