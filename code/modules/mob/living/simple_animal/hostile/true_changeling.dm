@@ -91,6 +91,7 @@
 			time_left = Clamp(time_left, 0, INFINITY)
 			stat(null, "Time Remaining: [time_left]")
 		stat(null, "Ignoring Gravity: [wallcrawl ? "YES" : "NO"]")
+		stat(null, "Silencing Radio: [active ? "YES" : "NO"]")
 
 /mob/living/simple_animal/hostile/true_changeling/death()
 	..(1)
