@@ -3,7 +3,7 @@
 
 /obj/item/integrated_circuit/output/screen
 	name = "small screen"
-	desc = "Takes any data type as an input, and displays it upon examining the circuit assembly."
+	desc = "Takes any data type as an input, and displays it to the user upon examining."
 	icon_state = "screen"
 	inputs = list("displayed data" = IC_PINTYPE_ANY)
 	outputs = list()
@@ -30,7 +30,7 @@
 
 /obj/item/integrated_circuit/output/screen/medium
 	name = "screen"
-	desc = "Takes any data type as an input, and displays it upon Examining, and to adjacent beings when pulsed."
+	desc = "Takes any data type as an input and displays it to the user upon examining, and to adjacent beings when pulsed."
 	icon_state = "screen_medium"
 	power_draw_per_use = 20
 
@@ -43,7 +43,7 @@
 
 /obj/item/integrated_circuit/output/screen/large
 	name = "large screen"
-	desc = "Takes any data type as an input, and displays it upon examining, and to all nearby beings when pulsed."
+	desc = "Takes any data type as an input and displays it to the user upon examining, and to all nearby beings when pulsed."
 	icon_state = "screen_large"
 	power_draw_per_use = 40
 
@@ -54,7 +54,7 @@
 
 /obj/item/integrated_circuit/output/light
 	name = "light"
-	desc = "A basic light, can be toggled on/off when pulsed."
+	desc = "A basic light which can be toggled on/off when pulsed."
 	icon_state = "light"
 	complexity = 4
 	inputs = list()
@@ -96,7 +96,7 @@
 
 /obj/item/integrated_circuit/output/light/advanced
 	name = "advanced light"
-	desc = "A light that takes a hexadecimal color value and a brightness value, and can be toggled on and off with a pulse."
+	desc = "A light that takes a hexadecimal color value and a brightness value, and can be toggled on/off with a pulse."
 	icon_state = "light_adv"
 	complexity = 8
 	inputs = list(
