@@ -202,7 +202,7 @@
 	button_icon_state = "devour"
 
 /datum/action/innate/changeling/jammer/Activate() //thank you anturk!!!
-	user << "<span class='notice'>Our cacophony of noise is[active ? "silenced" : "humming once again"].<span>"
+	to_chat(user, "<span class='notice'>Our cacophony of noise is[active ? "silenced" : "humming once again"].<span>")
 	active = !active
 	if(active)
 		active_jammers |= src
