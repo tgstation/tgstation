@@ -223,7 +223,7 @@
 
 /obj/item/integrated_circuit/output/video_camera
 	name = "video camera circuit"
-	desc = "Takes a string as a name and a boolean to determine whether it is on, and uses this to be a Camera, linked to the Research network."
+	desc = "Takes a string as a name and a boolean to determine whether it is on, and uses this to be a camera linked to the research network."
 	extended_desc = "The camera is linked to the Research camera network."
 	icon_state = "video_camera"
 	w_class = WEIGHT_CLASS_SMALL
