@@ -750,7 +750,6 @@ function checkchangelog($payload, $compile = true) {
 	$body = explode("\n", $body);
 
 	$username = $payload['pull_request']['user']['login'];
-	$found_fixes = 0;
 	$incltag = false;
 	$changelogbody = array();
 	$currentchangelogblock = array();
@@ -805,7 +804,6 @@ function checkchangelog($payload, $compile = true) {
 				if($item != 'fixed a few things') {
 					$tags[] = 'Fix';
 					$currentchangelogblock[] = array('type' => 'bugfix', 'body' => $item);
-					$found_fixes++;
 				}
 				break;
 			case 'rsctweak':
