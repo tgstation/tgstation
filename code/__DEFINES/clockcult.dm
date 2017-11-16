@@ -69,6 +69,9 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 //Objective text define
 #define CLOCKCULT_OBJECTIVE "Construct the Ark of the Clockwork Justicar and free Ratvar."
 
+//Eminence defines
+#define SUPERHEATED_CLOCKWORK_WALL_LIMIT 12 //How many walls can be superheated at once
+
 //misc clockcult stuff
 
 #define SIGIL_ACCESS_RANGE 2 //range at which transmission sigils can access power
@@ -86,3 +89,5 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 #define MARAUDER_SCRIPTURE_SCALING_TIME 50 //The amount of extra deciseconds tacked on to the marauder scripture recital time per recent marauder
 
 #define MARAUDER_SCRIPTURE_SCALING_MAX 300 //The maximum extra time applied to the marauder scripture
+
+#define ARK_SCREAM_COOLDOWN 600 //This much time has to pass between instances of the Ark taking damage before it will "scream" again

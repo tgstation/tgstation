@@ -56,6 +56,7 @@
 	sheet_amount = 1
 	girder_type = /obj/structure/destructible/clockwork/wall_gear
 	baseturf = /turf/open/floor/clockwork/reebe
+	var/heated
 	var/obj/effect/clockwork/overlay/wall/realappearence
 
 /turf/closed/wall/clockwork/Initialize()
@@ -109,6 +110,36 @@
 		new/obj/item/clockwork/alloy_shards/medium(src)
 	for(var/i in 1 to 3)
 		new/obj/item/clockwork/alloy_shards/small(src)
+
+/turf/closed/wall/clockwork/attack_hulk(mob/living/user, does_attack_animation = 0)
+	..()
+	if(heated)
+		to_chat(user, "<span class='userdanger'>The wall is searing hot to the touch!</span>")
+		user.adjustFireLoss(5)
+		playsound(src, 'sound/machines/fryer/deep_fryer_emerge.ogg', 50, TRUE)
+
+/turf/closed/wall/clockwork/mech_melee_attack(obj/mecha/M)
+	..()
+	if(heated)
+		to_chat(M.occupant, "<span class='userdanger'>The wall's intense heat completely reflects your [M.name]'s attack!</span>")
+		M.take_damage(20, BURN)
+
+/turf/closed/wall/clockwork/proc/turn_up_the_heat()
+	if(!heated)
+		name = "superheated [name]"
+		visible_message("<span class='warning'>[src] sizzles with heat!</span>")
+		playsound(src, 'sound/machines/fryer/deep_fryer_emerge.ogg', 50, TRUE)
+		heated = TRUE
+		hardness = -100 //Lower numbers are tougher, so this makes the wall essentially impervious to smashing
+		slicing_duration = 150
+		animate(realappearence, color = "#FFC3C3", time = 5)
+	else
+		name = initial(name)
+		visible_message("<span class='notice'>[src] cools down.</span>")
+		heated = FALSE
+		hardness = initial(hardness)
+		slicing_duration = initial(slicing_duration)
+		animate(realappearence, color = initial(realappearence.color), time = 25)
 
 
 /turf/closed/wall/vault

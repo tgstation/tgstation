@@ -44,10 +44,10 @@ Credit where due:
 // PROCS //
 ///////////
 
-/proc/is_servant_of_ratvar(mob/living/M)
+/proc/is_servant_of_ratvar(mob/M)
 	return istype(M) && M.mind && M.mind.has_antag_datum(ANTAG_DATUM_CLOCKCULT)
 
-/proc/is_eligible_servant(mob/living/M)
+/proc/is_eligible_servant(mob/M)
 	if(!istype(M))
 		return FALSE
 	if(M.mind)
@@ -61,11 +61,11 @@ Credit where due:
 		return FALSE
 	if(iscultist(M) || isconstruct(M) || M.isloyal() || ispAI(M))
 		return FALSE
-	if(ishuman(M) || isbrain(M) || isguardian(M) || issilicon(M) || isclockmob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab))
+	if(ishuman(M) || isbrain(M) || isguardian(M) || issilicon(M) || isclockmob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab) || istype(M, /mob/camera/eminence))
 		return TRUE
 	return FALSE
 
-/proc/add_servant_of_ratvar(mob/living/L, silent = FALSE)
+/proc/add_servant_of_ratvar(mob/L, silent = FALSE)
 	if(!L || !L.mind)
 		return
 	var/update_type = ANTAG_DATUM_CLOCKCULT
@@ -73,7 +73,7 @@ Credit where due:
 		update_type = ANTAG_DATUM_CLOCKCULT_SILENT
 	. = L.mind.add_antag_datum(update_type)
 
-/proc/remove_servant_of_ratvar(mob/living/L, silent = FALSE)
+/proc/remove_servant_of_ratvar(mob/L, silent = FALSE)
 	if(!L || !L.mind)
 		return
 	var/datum/antagonist/clockcult/clock_datum = L.mind.has_antag_datum(ANTAG_DATUM_CLOCKCULT)
@@ -88,6 +88,7 @@ Credit where due:
 ///////////////
 
 /datum/game_mode
+	var/datum/mind/eminence //The clockwork Eminence
 	var/list/servants_of_ratvar = list() //The Enlightened servants of Ratvar
 	var/clockwork_explanation = "Defend the Ark of the Clockwork Justiciar and free Ratvar." //The description of the current objective
 
@@ -223,9 +224,11 @@ Credit where due:
 		for(var/i in SSticker.scripture_states)
 			if(i != SCRIPTURE_DRIVER)
 				text += "<br><b>[i] scripture</b> was: <b>[SSticker.scripture_states[i] ? "UN":""]LOCKED</b>"
+	if(SSticker.mode.eminence)
+		text += "<br><b>The Eminence was:</b> [printplayer(SSticker.mode.eminence)]"
 	if(servants_of_ratvar.len)
 		text += "<br><b>Ratvar's servants were:</b>"
-		for(var/datum/mind/M in servants_of_ratvar)
+		for(var/datum/mind/M in servants_of_ratvar - SSticker.mode.eminence)
 			text += printplayer(M)
 	to_chat(world, text)
 
