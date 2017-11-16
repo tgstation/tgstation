@@ -67,7 +67,7 @@
 		T.ratvar_act(TRUE)
 	var/dir_to_step_in = pick(GLOB.cardinals)
 	var/list/meals = list()
-	for(var/mob/living/L in GLOB.living_mob_list) //we want to know who's alive so we don't lose and retarget a single person
+	for(var/mob/living/L in GLOB.alive_mob_list) //we want to know who's alive so we don't lose and retarget a single person
 		if(L.z == z && !is_servant_of_ratvar(L) && L.mind)
 			meals += L
 	if(GLOB.cult_narsie && GLOB.cult_narsie.z == z)
