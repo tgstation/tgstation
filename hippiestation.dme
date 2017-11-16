@@ -2634,7 +2634,6 @@
 #include "hippiestation\code\modules\tts\tts.dm"
 #include "hippiestation\code\modules\uplink\uplink_item.dm"
 #include "hippiestation\code\modules\vehicles\pimpin_ride.dm"
-#include "hippiestation\icons\obj\food\piecake.dm"
 #include "hippiestation\interface\skin.dmf"
 #include "interface\interface.dm"
 #include "interface\menu.dm"
