@@ -36,7 +36,7 @@
 /obj/item/integrated_circuit/proc/activate_pin(pin_number, datum/iopulse/forced_activation_pulse, loop_check_pulse = TRUE, pass_last_pulse = TRUE)
 	var/datum/integrated_io/activate/A = activators[pin_number]
 	if(loop_check_pulse)
-		A.push_data(forced_activation_pulse? forced_activation_pulse : (pass_last_pulse? (istype(last_pulse)? last_pulse : SScircuit_ticker.get_pulse()) : SScircuit_ticker.get_pulse()))
+		A.push_data(forced_activation_pulse? forced_activation_pulse : (pass_last_pulse? (istype(last_iopulse)? last_iopulse : SScircuit_ticker.get_iopulse()) : SScircuit_ticker.get_iopulse()))
 	else
 		A.push_data(forced_activation_pulse? forced_activation_pulse : null)
 
