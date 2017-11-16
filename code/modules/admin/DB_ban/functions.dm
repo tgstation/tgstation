@@ -341,7 +341,7 @@
 	holder.DB_ban_panel()
 
 
-/datum/admins/proc/DB_ban_panel(playerckey = null, adminckey = null, page = 0)
+/datum/admins/proc/DB_ban_panel(playerckey, adminckey, ip, cid, page = 0)
 	if(!usr.client)
 		return
 
@@ -398,25 +398,30 @@
 	output += "<input type='hidden' name='src' value='[REF(src)]'>"
 	output += HrefTokenFormField()
 	output += "<b>Ckey:</b> <input type='text' name='dbsearchckey' value='[playerckey]'>"
-	output += "<b>Admin ckey:</b> <input type='text' name='dbsearchadmin' value='[adminckey]'>"
+	output += "<b>Admin ckey:</b> <input type='text' name='dbsearchadmin' value='[adminckey]'><br>"
+	output += "<b>IP:</b> <input type='text' name='dbsearchip' value='[ip]'>"
+	output += "<b>CID:</b> <input type='text' name='dbsearchcid' value='[cid]'>"
 	output += "<input type='submit' value='search'>"
 	output += "</form>"
 	output += "Please note that all jobban bans or unbans are in-effect the following round."
 
-	if(adminckey || playerckey)
+	if(adminckey || playerckey || ip || cid)
 		playerckey = sanitizeSQL(ckey(playerckey))
 		adminckey = sanitizeSQL(ckey(adminckey))
-		var/playersearch = ""
-		var/adminsearch = ""
+		var/search = ""
 		if(playerckey)
-			playersearch = "AND ckey = '[playerckey]' "
+			search += "AND ckey = '[playerckey]' "
 		if(adminckey)
-			adminsearch = "AND a_ckey = '[adminckey]' "
+			search += "AND a_ckey = '[adminckey]' "
+		if(ip)
+			search += "AND ip = '[ip]' "
+		if(cid)
+			search += "AND computerid = '[cid]' "
 		var/bancount = 0
 		var/bansperpage = 15
 		var/pagecount = 0
 		page = text2num(page)
-		var/datum/DBQuery/query_count_bans = SSdbcore.NewQuery("SELECT COUNT(id) FROM [format_table_name("ban")] WHERE 1 [playersearch] [adminsearch]")
+		var/datum/DBQuery/query_count_bans = SSdbcore.NewQuery("SELECT COUNT(id) FROM [format_table_name("ban")] WHERE 1 [search]")
 		if(!query_count_bans.warn_execute())
 			return
 		if(query_count_bans.NextRow())
@@ -442,7 +447,7 @@
 		output += "<th width='15%'><b>OPTIONS</b></th>"
 		output += "</tr>"
 		var/limit = " LIMIT [bansperpage * page], [bansperpage]"
-		var/datum/DBQuery/query_search_bans = SSdbcore.NewQuery("SELECT id, bantime, bantype, reason, job, duration, expiration_time, ckey, a_ckey, unbanned, unbanned_ckey, unbanned_datetime, edits, round_id FROM [format_table_name("ban")] WHERE 1 [playersearch] [adminsearch] ORDER BY bantime DESC[limit]")
+		var/datum/DBQuery/query_search_bans = SSdbcore.NewQuery("SELECT id, bantime, bantype, reason, job, duration, expiration_time, ckey, a_ckey, unbanned, unbanned_ckey, unbanned_datetime, edits, round_id FROM [format_table_name("ban")] WHERE 1 [search] ORDER BY bantime DESC[limit]")
 		if(!query_search_bans.warn_execute())
 			return
 
