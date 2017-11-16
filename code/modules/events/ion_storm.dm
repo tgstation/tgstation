@@ -32,8 +32,7 @@
 
 /datum/round_event/ion_storm/start()
 	//AI laws
-	for(var/i in GLOB.ai_list)
-		var/mob/living/silicon/ai/M = i
+	for(var/mob/living/silicon/ai/M in GLOB.living_mob_list)
 		M.laws_sanity_check()
 		if(M.stat != DEAD && M.see_in_dark != 0)
 			if(prob(replaceLawsetChance))

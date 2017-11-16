@@ -13,8 +13,7 @@ SUBSYSTEM_DEF(weather)
 		var/datum/weather/W = V
 		if(W.aesthetic)
 			continue
-		for(var/i in GLOB.living_mob_list)
-			var/mob/living/L = i
+		for(var/mob/living/L in GLOB.mob_list)
 			if(W.can_weather_act(L))
 				W.weather_act(L)
 	for(var/Z in eligible_zlevels)
