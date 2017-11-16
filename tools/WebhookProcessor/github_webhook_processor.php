@@ -671,7 +671,7 @@ function update_pr_balance($payload) {
 	if(!isset($balances[$author]))
 		$balances[$author] = $startingPRBalance;
 	$friendliness = get_pr_code_friendliness($payload, $balances[$author]);
-	$changelog_balance_impact = check_cl_for_fixes($payload)
+	$changelog_balance_impact = check_cl_for_fixes($payload);
 	$balances[$author] += $friendliness;
 	$changelog_balance_impact[$author] += $friendliness;
 	if(!is_maintainer($payload, $author)){	//immune
