@@ -14,19 +14,15 @@ Format:
 endmap
 
 map hippiestation
-	default
+	disabled
 	#voteweight 1.5
 endmap
 
 map boxstation
+	default
 endmap
 
 map metastation
-	minplayers 25
-	#voteweight 0.5
-endmap
-
-map delturd
 	minplayers 25
 	#voteweight 0.5
 endmap

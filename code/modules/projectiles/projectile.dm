@@ -405,7 +405,7 @@
 
 /obj/item/projectile/Crossed(atom/movable/AM) //A mob moving on a tile with a projectile is hit by it.
 	..()
-	if(isliving(AM) && (AM.density || AM == original) && !checkpass(PASSMOB))
+	if(isliving(AM) && (AM.density || AM == original) && !(src.pass_flags & PASSMOB))
 		Collide(AM)
 
 /obj/item/projectile/Destroy()
