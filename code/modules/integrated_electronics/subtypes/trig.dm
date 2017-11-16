@@ -80,7 +80,7 @@
 // Cosecant //
 
 /obj/item/integrated_circuit/trig/cosecant
-	name = "cosecant(CSC) circuit"
+	name = "cosecant (CSC) circuit"
 	desc = "Takes a degree and outputs the cosecant of said degree."
 	icon_state = "cosecant"
 	inputs = list("A" = IC_PINTYPE_NUMBER)
@@ -100,7 +100,7 @@
 // Secant //
 
 /obj/item/integrated_circuit/trig/secant
-	name = "secant(SEC) circuit"
+	name = "secant (SEC) circuit"
 	desc = "Takes a degree and outputs the secant of said degree."
 	icon_state = "secant"
 	inputs = list("A" = IC_PINTYPE_NUMBER)
@@ -120,7 +120,7 @@
 // Cotangent //
 
 /obj/item/integrated_circuit/trig/cotangent
-	name = "cot circuit"
+	name = "cotangent (COT) circuit"
 	desc = "Takes a degree and outputs the cotangent of said degree."
 	icon_state = "cotangent"
 	inputs = list("A" = IC_PINTYPE_NUMBER)
