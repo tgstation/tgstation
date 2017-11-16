@@ -1801,6 +1801,7 @@
 	name = "dust"
 	},
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
+	dir = 1;
 	x_offset = -7;
 	y_offset = -8
 	},
@@ -1816,7 +1817,9 @@
 /turf/open/floor/plasteel/blue/side,
 /area/shuttle/abandoned)
 "dv" = (
-/obj/machinery/computer/shuttle/white_ship,
+/obj/machinery/computer/shuttle/white_ship{
+	dir = 1
+	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"

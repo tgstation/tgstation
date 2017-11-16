@@ -52,7 +52,9 @@
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
 "al" = (
-/obj/machinery/computer/atmos_alert,
+/obj/machinery/computer/atmos_alert{
+	dir = 4
+	},
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "am" = (
@@ -71,11 +73,15 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "ap" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/security{
+	dir = 8
+	},
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "aq" = (
-/obj/machinery/computer/crew,
+/obj/machinery/computer/crew{
+	dir = 4
+	},
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "ar" = (
@@ -107,7 +113,9 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "au" = (
-/obj/machinery/computer/communications,
+/obj/machinery/computer/communications{
+	dir = 8
+	},
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "av" = (
