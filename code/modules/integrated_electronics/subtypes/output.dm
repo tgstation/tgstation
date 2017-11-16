@@ -3,7 +3,7 @@
 
 /obj/item/integrated_circuit/output/screen
 	name = "small screen"
-	desc = "Takes any data type as an input, and displays it upon Examining."
+	desc = "Takes any data type as an input, and displays it upon examining the circuit assembly."
 	icon_state = "screen"
 	inputs = list("displayed data" = IC_PINTYPE_ANY)
 	outputs = list()
