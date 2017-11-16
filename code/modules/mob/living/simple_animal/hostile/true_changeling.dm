@@ -60,6 +60,8 @@
 	jammer.Grant(src)
 	spine_crawl = new
 	spine_crawl.Grant(src)
+	for(var/mob/M in view(7, new_owner.current))
+		flash_color(M, flash_color = list("#db0000", "#db0000", "#db0000", rgb(0,0,0)), flash_time = 5)
 	playsound(src, 'sound/creatures/ling_scream.ogg', 100, 1)
 
 /mob/living/simple_animal/hostile/true_changeling/Destroy()
@@ -107,6 +109,8 @@
 		spawn(450)
 			if(src)
 				visible_message("<span class='warning'>[src] reforms into a monster!</span>")
+				for(var/mob/M in view(7, new_owner.current))
+					flash_color(M, flash_color = list("#db0000", "#db0000", "#db0000", rgb(0,0,0)), flash_time = 5)
 				new /obj/effect/gibspawner/human(get_turf(src))
 				revive() //Changelings can self-revive, and true changelings are no exception
 
