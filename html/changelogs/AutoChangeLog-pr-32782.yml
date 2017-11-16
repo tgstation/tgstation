@@ -1,0 +1,4 @@
+author: "MMMiracles"
+delete-after: True
+changes: 
+  - balance: "Power regen on the regular tesla relay has been reduced to 50, from 150."

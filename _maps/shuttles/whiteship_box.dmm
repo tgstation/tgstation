@@ -90,6 +90,7 @@
 /area/shuttle/abandoned)
 "ar" = (
 /obj/machinery/computer/pod{
+	dir = 8;
 	id = "oldship_gun"
 	},
 /turf/open/floor/mineral/titanium,
@@ -168,7 +169,8 @@
 /area/shuttle/abandoned)
 "aH" = (
 /obj/structure/frame/computer{
-	anchored = 1
+	anchored = 1;
+	dir = 1
 	},
 /obj/structure/light_construct,
 /turf/open/floor/mineral/titanium,
@@ -230,7 +232,9 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aT" = (
-/obj/machinery/computer/shuttle/white_ship,
+/obj/machinery/computer/shuttle/white_ship{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aU" = (
@@ -272,7 +276,8 @@
 /area/shuttle/abandoned)
 "bb" = (
 /obj/structure/frame/computer{
-	anchored = 1
+	anchored = 1;
+	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
