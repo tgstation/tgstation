@@ -410,14 +410,8 @@
 	for(var/i in GLOB.mob_living_list)
 		var/mob/living/L = i
 
-		if(L.ckey)
-			var/found = 0
-			for(var/client/C in GLOB.clients)
-				if(C.ckey == L.ckey)
-					found = 1
-					break
-			if(!found)
-				msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (<font color='#ffcc00'><b>Disconnected</b></font>)\n"
+		if(L.ckey && !GLOB.directory[L.ckey])
+			msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (<font color='#ffcc00'><b>Disconnected</b></font>)\n"
 
 
 		if(L.ckey && L.client)
@@ -453,10 +447,7 @@
 						continue //Ghosted while alive
 
 
-
-	for(var/mob/M in GLOB.mob_list)
-		if(M.client && M.client.holder)
-			to_chat(M, msg)
+	message_admins(msg)
 
 /datum/game_mode/proc/printplayer(datum/mind/ply, fleecheck)
 	var/text = "<br><b>[ply.key]</b> was <b>[ply.name]</b> the <b>[ply.assigned_role]</b> and"
