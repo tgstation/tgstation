@@ -573,7 +573,8 @@ SUBSYSTEM_DEF(job)
 ////////////////////////////
 /datum/controller/subsystem/job/proc/get_all_heads()
 	. = list()
-	for(var/mob/player in GLOB.mob_list)
+	for(var/i in GLOB.mob_list)
+		var/mob/player = i
 		if(player.mind && (player.mind.assigned_role in GLOB.command_positions))
 			. |= player.mind
 
