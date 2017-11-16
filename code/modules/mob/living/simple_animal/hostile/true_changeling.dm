@@ -24,7 +24,7 @@
 	minbodytemp = 0
 	health = 100
 	maxHealth = 100 //pretty durable
-	//damage_coeff = list(BRUTE = 1, BURN = 2, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1) //feel the burn!! (i need to implement the scream effect on fireloss so this is on hold till i do)
+	damage_coeff = list(BRUTE = 0.75, BURN = 2, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1) //feel the burn!!
 	force_threshold = 10
 	healable = 0
 	environment_smash = 1 //Tables, closets, etc.
@@ -62,7 +62,7 @@
 	spine_crawl.Grant(src)
 	for(var/mob/M in view(7, src))
 		flash_color(M, flash_color = list("#db0000", "#db0000", "#db0000", rgb(0,0,0)), flash_time = 5)
-	playsound(src, 'sound/creatures/ling_scream.ogg', 100, 1)
+	playsound(src, 'sound/creatures/rawrXD.ogg', 100, 1)
 
 /mob/living/simple_animal/hostile/true_changeling/Destroy()
 	QDEL_NULL(reform)
@@ -118,7 +118,7 @@
 	return wallcrawl
 
 /mob/living/simple_animal/hostile/true_changeling/adjustFireLoss(amount)
-	amount *= 2 //True changelings take 2 times the burn damage!
+	playsound(src, 'sound/creatures/ling_scream.ogg', 100, 1)
 	..()
 
 /datum/action/innate/changeling
