@@ -51,7 +51,7 @@
 
 /mob/living/simple_animal/hostile/true_changeling/Initialize()
 	. = ..()
-	icon_state = "horror[rand(1, 4)]"
+	icon_state = "horror[rand(1, 5)]"
 	reform = new
 	reform.Grant(src)
 	devour = new
