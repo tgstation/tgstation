@@ -449,15 +449,8 @@
 						continue //Ghosted while alive
 
 
-<<<<<<< HEAD
-
-	for(var/mob/M in GLOB.mob_list)
-		if(M.client && check_rights_for(M.client, R_ADMIN))
-			to_chat(M, msg)
-=======
 	for (var/C in GLOB.admins)
 		to_chat(C, msg)
->>>>>>> 39375d5cc2... Replaces a bunch of mob loops with hopefully better ones (#32786)
 
 /datum/game_mode/proc/printplayer(datum/mind/ply, fleecheck)
 	var/text = "<br><b>[ply.key]</b> was <b>[ply.name]</b> the <b>[ply.assigned_role]</b> and"
