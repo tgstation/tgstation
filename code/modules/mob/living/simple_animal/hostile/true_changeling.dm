@@ -210,9 +210,9 @@
 	to_chat(C, "<span class='notice'>Our cacophony of noise is[active ? "silenced" : "humming once again"].<span>")
 	active = !active
 	if(active)
-		active_jammers |= src
+		GLOB.active_jammers |= src
 	else
-		active_jammers -= src
+		GLOB.active_jammers -= src
 
 /datum/action/innate/changeling/spine_crawl
 	name = "Spine Crawl"
