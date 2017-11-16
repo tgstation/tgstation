@@ -17,7 +17,7 @@
 	power_draw_per_use = 2
 
 /obj/item/integrated_circuit/time/delay/do_work()
-	addtimer(CALLBACK(src, .proc/activate_pin, 2), delay)
+	addtimer(CALLBACK(src, .proc/activate_pin, 2, last_iopulse), delay)
 
 /obj/item/integrated_circuit/time/delay/five_sec
 	name = "five-sec delay circuit"
@@ -72,8 +72,7 @@
 	desc = "This circuit sends an automatic pulse every four seconds."
 	icon_state = "tick-m"
 	complexity = 8
-	var/delay = 4 SECONDS
-	var/next_fire = 0
+	var/tick_delay = 40
 	var/is_running = FALSE
 	inputs = list("enable ticking" = IC_PINTYPE_BOOLEAN)
 	activators = list("outgoing pulse" = IC_PINTYPE_PULSE_OUT)
@@ -89,25 +88,21 @@
 	var/do_tick = get_pin_data(IC_INPUT, 1)
 	if(do_tick && !is_running)
 		is_running = TRUE
-		tick()
+		START_PROCESSING(SScircuit_ticker, src)
 	else if(is_running)
 		is_running = FALSE
+		STOP_PROCESSING(SScircuit_ticker, src)
 
-
-/obj/item/integrated_circuit/time/ticker/proc/tick()
-	if(is_running)
-		addtimer(CALLBACK(src, .proc/tick), delay)
-		if(world.time > next_fire)
-			next_fire = world.time + delay
-			activate_pin(1)
-
+/obj/item/integrated_circuit/time/ticker/process()
+	if(!(SScircuit_ticker.iteration % tick_delay))
+		activate_pin(1)
 
 /obj/item/integrated_circuit/time/ticker/fast
 	name = "fast ticker"
 	desc = "This advanced circuit sends an automatic pulse every two seconds."
 	icon_state = "tick-f"
 	complexity = 12
-	delay = 2 SECONDS
+	tick_delay = 20
 	spawn_flags = IC_SPAWN_RESEARCH
 	power_draw_per_use = 8
 
@@ -116,9 +111,27 @@
 	desc = "This simple circuit sends an automatic pulse every six seconds."
 	icon_state = "tick-s"
 	complexity = 4
-	delay = 6 SECONDS
+	tick_delay = 60
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 2
+
+/obj/item/integrated_circuit/time/ticker/priority
+	name = "priority ticker"
+	desc = "This advanced circuit sends an automatic pulse every second."
+	icon_state = "tick-f"
+	complexity = 16
+	tick_delay = 10
+	spawn_flags = IC_SPAWN_RESEARCH
+	power_draw_per_use = 12
+
+/obj/item/integrated_circuit/time/ticker/hyper
+	name = "hyper ticker"
+	desc = "This advanced circuit sends an automatic pulse every half second."
+	icon_state = "tick-f"
+	complexity = 32
+	tick_delay = 5
+	spawn_flags = IC_SPAWN_RESEARCH
+	power_draw_per_use = 16
 
 /obj/item/integrated_circuit/time/clock
 	name = "integrated clock"

@@ -218,13 +218,10 @@
 	activators = list("search" = IC_PINTYPE_PULSE_IN, "after search" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
-
-
 /obj/item/integrated_circuit/converter/findstring/do_work()
 
 	set_pin_data(IC_OUTPUT, 1, findtext(get_pin_data(IC_INPUT, 1),get_pin_data(IC_INPUT, 2)) )
 	push_data()
-
 	activate_pin(2)
 
 /obj/item/integrated_circuit/converter/exploders

@@ -23,7 +23,7 @@
 	var/displayed_name = ""
 	var/allow_multitool = TRUE		// Allows additional multitool functionality
 									// Used as a global var, (Do not set manually in children).
-
+	var/datum/iopulse/last_iopulse
 /*
 	Integrated circuits are essentially modular machines.  Each circuit has a specific function, and combining them inside Electronic Assemblies allows
 a creative player the means to solve many problems.  Circuits are held inside an electronic assembly, and are wired using special tools.
@@ -408,9 +408,18 @@ a creative player the means to solve many problems.  Circuits are held inside an
 		return TRUE // Battery has enough.
 	return FALSE // Not enough power.
 
-/obj/item/integrated_circuit/proc/check_then_do_work(var/ignore_power = FALSE)
+/obj/item/integrated_circuit/proc/check_then_do_work(ignore_power = FALSE, datum/iopulse/activation_pulse)
 	if(world.time < next_use) 	// All intergrated circuits have an internal cooldown, to protect from spam.
 		return
+	if(activation_pulse)
+		if(activation_pulse.pulsed[src])
+			return	//repeated pulse.
+		activation_pulse.pulsed[src] = TRUE
+		activation_pulse.dereference_time = world.time + INTEGRATED_CIRCUITS_PULSE_DEREFERENCE_DELAY
+		if(last_iopulse)
+			last_iopulse.referencing -= src
+		last_iopulse = activation_pulse
+		activation_pulse.referencing[src] = TRUE
 	if(power_draw_per_use && !ignore_power)
 		if(!check_power())
 			power_fail()
@@ -422,7 +431,6 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	return
 
 /obj/item/integrated_circuit/proc/disconnect_all()
-
 	for(var/k in 1 to inputs.len)
 		var/datum/integrated_io/I = inputs[k]
 		I.disconnect()
