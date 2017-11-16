@@ -71,6 +71,7 @@ JSON на выходе - строго ASCII, строки закодированы в Unicode, все Unicode-символ
 // Срезает макросы, меняет "я" на код И эскейпит HTML-символы.
 // Никогда не пропускайте текст через эту функцию больше чем один раз, на выходе будет каша.
 /proc/rhtml_encode(t)
+	t = rhtml_decode(t) //idk maybe it'll do
 	t = strip_macros(t)
 	var/list/c = splittext(t, "я")
 	if(c.len == 1)
@@ -195,6 +196,15 @@ var/list/rus_unicode_fix = null
 		text = replacetext(text, s, "&#x[rus_unicode_conversion[s]];")
 
 	return text
+
+/proc/r_text2ascii(t)
+	t = replacetext(t, "&#x044f;", "я")
+	t = replacetext(t, "&#255;", "я")
+	var/output = ""
+	var/L = lentext(t)
+	for(var/i = 1 to L)
+		output += "&#[text2ascii(t,i)];"
+	return output
 
 // Рекуривно заменяет "я" на код в листе
 /proc/sanitize_russian_list(list)

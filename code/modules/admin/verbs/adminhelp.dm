@@ -165,7 +165,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 //is_bwoink is TRUE if this ticket was started by an admin PM
 /datum/admin_help/New(msg, client/C, is_bwoink)
 	//clean the input msg
-	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN)) //не проебите санитайз HTML при мерже, пожалуйста
+	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
 	if(!msg || !C || !C.mob)
 		qdel(src)
 		return
@@ -173,7 +173,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	id = ++ticket_counter
 	opened_at = world.time
 
-	name = msg
+	name = r_text2ascii(msg)
 
 	initiator = C
 	initiator_ckey = initiator.ckey
