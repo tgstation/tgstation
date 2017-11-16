@@ -77,7 +77,7 @@
 
 /proc/alone_in_area(area/the_area, mob/must_be_alone, check_type = /mob/living/carbon)
 	var/area/our_area = get_area(the_area)
-	for(var/C in GLOB.living_mob_list)
+	for(var/C in GLOB.alive_mob_list)
 		if(!istype(C, check_type))
 			continue
 		if(C == must_be_alone)
@@ -318,7 +318,8 @@
 			break
 
 /proc/get_mob_by_key(key)
-	for(var/mob/M in GLOB.mob_list)
+	for(var/i in GLOB.player_list)
+		var/mob/M = i
 		if(M.ckey == lowertext(key))
 			return M
 	return null
