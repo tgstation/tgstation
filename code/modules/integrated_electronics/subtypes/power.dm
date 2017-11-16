@@ -51,18 +51,20 @@
 			if(A.Adjacent(B))
 				if(AM.loc != assembly)
 					transfer_amount *= 0.8 // Losses due to distance.
-
+				var/ch=cell.charge
+				var/mc=cell.maxcharge
+				var/per=cell.percent()
+				set_pin_data(IC_OUTPUT, 1, ch)
+				set_pin_data(IC_OUTPUT, 2, mc)
+				set_pin_data(IC_OUTPUT, 3, per)
+				activate_pin(2)
+				push_data()
 				if(cell.charge == cell.maxcharge)
 					return FALSE
 
 				if(transfer_amount && assembly.draw_power(amount_to_move)) // CELLRATE is already handled in draw_power()
 					cell.give(transfer_amount * GLOB.CELLRATE)
-				set_pin_data(IC_OUTPUT, 1, cell.charge)
-				set_pin_data(IC_OUTPUT, 2, cell.maxcharge)
-				set_pin_data(IC_OUTPUT, 3, cell.percent())
-				activate_pin(2)
-				push_data()
-				return TRUE
+					return TRUE
 		else
 			set_pin_data(IC_OUTPUT, 1, null)
 			set_pin_data(IC_OUTPUT, 2, null)
@@ -70,7 +72,8 @@
 			activate_pin(2)
 			push_data()
 			return FALSE
-	return FALSE
+	else
+		return FALSE
 
 /obj/item/integrated_circuit/power/transmitter/large/do_work()
 	if(..()) // If the above code succeeds, do this below.
@@ -79,3 +82,4 @@
 			s.set_up(12, 1, src)
 			s.start()
 			visible_message("<span class='warning'>\The [assembly] makes some sparks!</span>")
+		return TRUE
