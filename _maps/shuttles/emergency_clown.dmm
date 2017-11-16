@@ -38,7 +38,9 @@
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "ai" = (
-/obj/machinery/computer/atmos_alert,
+/obj/machinery/computer/atmos_alert{
+	dir = 4
+	},
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "aj" = (
@@ -58,11 +60,15 @@
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "am" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/security{
+	dir = 8
+	},
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "an" = (
-/obj/machinery/computer/crew,
+/obj/machinery/computer/crew{
+	dir = 4
+	},
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "ao" = (
@@ -88,7 +94,9 @@
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "ar" = (
-/obj/machinery/computer/communications,
+/obj/machinery/computer/communications{
+	dir = 8
+	},
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "as" = (

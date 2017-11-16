@@ -152,7 +152,9 @@
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/animal_hospital)
 "aB" = (
-/obj/machinery/computer/operating,
+/obj/machinery/computer/operating{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/animal_hospital)
 "aC" = (
