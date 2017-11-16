@@ -199,7 +199,7 @@
 		M.adjustBruteLoss(-100) //Tasty leetle peegy
 	else
 		M.adjustBruteLoss(-50)
-		
+
 /datum/action/innate/changeling/jammer
 	desc = "We may emit a slow chant that garbles radio messages from escaping."
 	check_flags = AB_CHECK_CONSCIOUS
