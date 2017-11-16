@@ -17,9 +17,12 @@ GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /
 
 /proc/gas_id2path(id)
 	var/list/meta_gas = GLOB.meta_gas_info
+	if(id in meta_gas)
+		return id
 	for(var/path in meta_gas)
 		if(meta_gas[path][META_GAS_ID] == id)
 			return path
+	return ""
 
 /*||||||||||||||/----------\||||||||||||||*\
 ||||||||||||||||[GAS DATUMS]||||||||||||||||

@@ -84,14 +84,14 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		if(!T || !(T.z in GLOB.station_z_levels))
 			continue
 
-		if(L in GLOB.overminds || L.checkpass(PASSBLOB))
+		if(L in GLOB.overminds || (L.pass_flags & PASSBLOB))
 			continue
 
 		var/area/Ablob = get_area(T)
 
 		if(!Ablob.blob_allowed)
 			continue
-		
+
 		if(!("blob" in L.faction))
 			playsound(L, 'sound/effects/splat.ogg', 50, 1)
 			L.death()

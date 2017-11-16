@@ -3426,7 +3426,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
-/obj/machinery/computer/crew,
+/obj/machinery/computer/crew{
+	dir = 8
+	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "ahY" = (
@@ -3597,7 +3599,9 @@
 	dir = 1;
 	network = list("SS13")
 	},
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/secure_data{
+	dir = 1
+	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -3623,7 +3627,9 @@
 	name = "Station Intercom (General)";
 	pixel_y = -29
 	},
-/obj/machinery/computer/security,
+/obj/machinery/computer/security{
+	dir = 1
+	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -4555,7 +4561,9 @@
 /turf/open/floor/plating,
 /area/maintenance/solars/port/fore)
 "akC" = (
-/obj/machinery/computer/shuttle/labor,
+/obj/machinery/computer/shuttle/labor{
+	dir = 4
+	},
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_x = -31
 	},
@@ -5157,7 +5165,9 @@
 /turf/open/floor/plasteel,
 /area/security/processing)
 "amc" = (
-/obj/machinery/computer/shuttle/labor,
+/obj/machinery/computer/shuttle/labor{
+	dir = 4
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -8801,7 +8811,9 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "avD" = (
-/obj/machinery/computer/holodeck,
+/obj/machinery/computer/holodeck{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "avE" = (
@@ -8910,7 +8922,9 @@
 	c_tag = "Auxillary Base Construction";
 	dir = 8
 	},
-/obj/machinery/computer/camera_advanced/base_construction,
+/obj/machinery/computer/camera_advanced/base_construction{
+	dir = 8
+	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 4
 	},
@@ -10804,6 +10818,7 @@
 /area/maintenance/department/electrical)
 "aAz" = (
 /obj/machinery/computer/monitor{
+	dir = 1;
 	name = "backup power monitoring console"
 	},
 /obj/structure/cable{
@@ -22202,7 +22217,9 @@
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
 "bee" = (
-/obj/machinery/computer/upload/ai,
+/obj/machinery/computer/upload/ai{
+	dir = 1
+	},
 /obj/machinery/flasher{
 	id = "AI";
 	pixel_y = -21
@@ -22210,7 +22227,9 @@
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
 "bef" = (
-/obj/machinery/computer/upload/borg,
+/obj/machinery/computer/upload/borg{
+	dir = 1
+	},
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
 	frequency = 1447;
@@ -23263,7 +23282,9 @@
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
 "bgT" = (
-/obj/machinery/computer/communications,
+/obj/machinery/computer/communications{
+	dir = 8
+	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
@@ -23829,7 +23850,9 @@
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
 "bil" = (
-/obj/machinery/computer/card,
+/obj/machinery/computer/card{
+	dir = 8
+	},
 /obj/item/card/id/captains_spare,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/wood,
@@ -23919,7 +23942,9 @@
 	},
 /area/security/checkpoint/medical)
 "biy" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/secure_data{
+	dir = 8
+	},
 /obj/item/device/radio/intercom{
 	pixel_x = 25
 	},
@@ -24460,7 +24485,9 @@
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bjP" = (
-/obj/machinery/computer/mech_bay_power_console,
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 8
+	},
 /obj/structure/cable{
 	icon_state = "0-8"
 	},
@@ -25174,7 +25201,9 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "blu" = (
-/obj/machinery/computer/mech_bay_power_console,
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 4
+	},
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
@@ -25946,7 +25975,9 @@
 /turf/closed/wall/r_wall,
 /area/science/research)
 "bnn" = (
-/obj/machinery/computer/rdconsole/core,
+/obj/machinery/computer/rdconsole/core{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/science/lab)
 "bno" = (
@@ -26348,7 +26379,9 @@
 	},
 /area/medical/medbay/central)
 "boi" = (
-/obj/machinery/computer/med_data,
+/obj/machinery/computer/med_data{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "boj" = (
@@ -26932,7 +26965,9 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "bpA" = (
-/obj/machinery/computer/cargo,
+/obj/machinery/computer/cargo{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bpB" = (
@@ -27317,7 +27352,9 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
 "bqA" = (
-/obj/machinery/computer/card,
+/obj/machinery/computer/card{
+	dir = 1
+	},
 /turf/open/floor/plasteel/blue/side{
 	dir = 10
 	},
@@ -27548,7 +27585,9 @@
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "brb" = (
-/obj/machinery/computer/scan_consolenew,
+/obj/machinery/computer/scan_consolenew{
+	dir = 8
+	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 6
 	},
@@ -28352,6 +28391,7 @@
 /area/science/robotics/lab)
 "bsR" = (
 /obj/machinery/computer/operating{
+	dir = 1;
 	name = "Robotics Operating Computer"
 	},
 /turf/open/floor/plasteel/black,
@@ -28905,7 +28945,9 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/hop)
 "buf" = (
-/obj/machinery/computer/scan_consolenew,
+/obj/machinery/computer/scan_consolenew{
+	dir = 8
+	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 5
 	},
@@ -29184,7 +29226,9 @@
 /obj/machinery/keycard_auth{
 	pixel_x = -24
 	},
-/obj/machinery/computer/cargo,
+/obj/machinery/computer/cargo{
+	dir = 4
+	},
 /turf/open/floor/plasteel/blue/side{
 	dir = 8
 	},
@@ -29873,7 +29917,9 @@
 /turf/open/floor/plating,
 /area/teleporter)
 "bwr" = (
-/obj/machinery/computer/teleporter,
+/obj/machinery/computer/teleporter{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/teleporter)
 "bws" = (
@@ -29949,7 +29995,9 @@
 /turf/open/floor/plasteel/black,
 /area/medical/sleeper)
 "bwC" = (
-/obj/machinery/computer/med_data,
+/obj/machinery/computer/med_data{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bwD" = (
@@ -30246,7 +30294,9 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bxi" = (
-/obj/machinery/computer/aifixer,
+/obj/machinery/computer/aifixer{
+	dir = 8
+	},
 /obj/machinery/requests_console{
 	announcementConsole = 1;
 	department = "Research Director's Desk";
@@ -30307,7 +30357,9 @@
 /turf/open/floor/plasteel,
 /area/science/explab)
 "bxp" = (
-/obj/machinery/computer/rdconsole/experiment,
+/obj/machinery/computer/rdconsole/experiment{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white/side{
 	dir = 1
 	},
@@ -30417,7 +30469,9 @@
 	},
 /area/security/checkpoint/supply)
 "bxE" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/secure_data{
+	dir = 8
+	},
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 24
@@ -30725,7 +30779,9 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
 "byp" = (
-/obj/machinery/computer/robotics,
+/obj/machinery/computer/robotics{
+	dir = 8
+	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -30901,6 +30957,7 @@
 	pixel_x = 27
 	},
 /obj/machinery/computer/security/mining{
+	dir = 8;
 	network = list("MINE","AuxBase")
 	},
 /turf/open/floor/plasteel/red/side{
@@ -31109,7 +31166,9 @@
 	},
 /area/medical/genetics)
 "bzn" = (
-/obj/machinery/computer/cloning,
+/obj/machinery/computer/cloning{
+	dir = 1
+	},
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
@@ -31295,7 +31354,9 @@
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "bzJ" = (
-/obj/machinery/computer/mecha,
+/obj/machinery/computer/mecha{
+	dir = 8
+	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -31330,7 +31391,9 @@
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/hor)
 "bzN" = (
-/obj/machinery/modular_computer/console/preset/research,
+/obj/machinery/modular_computer/console/preset/research{
+	dir = 8
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -31340,7 +31403,9 @@
 /turf/open/floor/engine,
 /area/science/explab)
 "bzP" = (
-/obj/machinery/computer/cargo,
+/obj/machinery/computer/cargo{
+	dir = 4
+	},
 /obj/machinery/light{
 	dir = 8
 	},
@@ -31784,6 +31849,7 @@
 /area/science/explab)
 "bAS" = (
 /obj/machinery/computer/security/mining{
+	dir = 4;
 	network = list("MINE","AuxBase")
 	},
 /obj/machinery/camera{
@@ -32259,7 +32325,9 @@
 /turf/open/floor/plasteel/black,
 /area/science/server)
 "bBX" = (
-/obj/machinery/computer/rdservercontrol,
+/obj/machinery/computer/rdservercontrol{
+	dir = 1
+	},
 /turf/open/floor/plasteel/black,
 /area/science/server)
 "bBY" = (
@@ -32300,7 +32368,9 @@
 	},
 /area/security/checkpoint/science)
 "bCc" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/secure_data{
+	dir = 1
+	},
 /obj/machinery/requests_console{
 	department = "Security";
 	departmentType = 5;
@@ -32368,7 +32438,9 @@
 	pixel_y = -24
 	},
 /obj/machinery/light,
-/obj/machinery/computer/card/minor/rd,
+/obj/machinery/computer/card/minor/rd{
+	dir = 1
+	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
 "bCi" = (
@@ -32954,7 +33026,9 @@
 	},
 /area/medical/sleeper)
 "bDC" = (
-/obj/machinery/computer/operating,
+/obj/machinery/computer/operating{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bDD" = (
@@ -33879,7 +33953,9 @@
 /turf/open/floor/plating,
 /area/crew_quarters/heads/cmo)
 "bFP" = (
-/obj/machinery/computer/card/minor/cmo,
+/obj/machinery/computer/card/minor/cmo{
+	dir = 1
+	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -33996,7 +34072,9 @@
 /turf/open/floor/plating,
 /area/quartermaster/miningdock)
 "bGj" = (
-/obj/machinery/computer/shuttle/mining,
+/obj/machinery/computer/shuttle/mining{
+	dir = 4
+	},
 /turf/open/floor/plasteel/brown{
 	dir = 9
 	},
@@ -37873,7 +37951,9 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bOW" = (
-/obj/machinery/computer/atmos_control,
+/obj/machinery/computer/atmos_control{
+	dir = 8
+	},
 /obj/machinery/requests_console{
 	department = "Atmospherics";
 	departmentType = 4;
@@ -38123,7 +38203,9 @@
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bPA" = (
-/obj/machinery/computer/camera_advanced/xenobio,
+/obj/machinery/computer/camera_advanced/xenobio{
+	dir = 1
+	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -38416,7 +38498,9 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bQl" = (
-/obj/machinery/computer/atmos_control,
+/obj/machinery/computer/atmos_control{
+	dir = 8
+	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -38520,6 +38604,7 @@
 /area/engine/atmos)
 "bQz" = (
 /obj/machinery/computer/atmos_control/tank{
+	dir = 8;
 	frequency = 1441;
 	input_tag = "mix_in";
 	name = "Gas Mix Tank Control";
@@ -38829,7 +38914,9 @@
 /turf/closed/wall,
 /area/construction)
 "bRo" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/secure_data{
+	dir = 8
+	},
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the Engine.";
 	dir = 8;
@@ -38886,7 +38973,9 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bRu" = (
-/obj/machinery/computer/atmos_alert,
+/obj/machinery/computer/atmos_alert{
+	dir = 8
+	},
 /turf/open/floor/plasteel/caution{
 	dir = 4
 	},
@@ -39365,7 +39454,9 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bSE" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	dir = 8
+	},
 /obj/machinery/light{
 	dir = 4
 	},
@@ -40368,6 +40459,7 @@
 /area/engine/atmos)
 "bUT" = (
 /obj/machinery/computer/atmos_control/tank{
+	dir = 8;
 	frequency = 1441;
 	input_tag = "n2o_in";
 	name = "Nitrous Oxide Supply Control";
@@ -41475,7 +41567,9 @@
 /turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "bXE" = (
-/obj/machinery/computer/message_monitor,
+/obj/machinery/computer/message_monitor{
+	dir = 4
+	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 8
 	},
@@ -41869,6 +41963,7 @@
 /area/tcommsat/server)
 "bYD" = (
 /obj/machinery/computer/telecomms/server{
+	dir = 4;
 	network = "tcommsat"
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -41963,6 +42058,7 @@
 /area/engine/atmos)
 "bYT" = (
 /obj/machinery/computer/atmos_control/tank{
+	dir = 8;
 	frequency = 1441;
 	input_tag = "tox_in";
 	name = "Plasma Supply Control";
@@ -43524,6 +43620,7 @@
 /area/engine/atmos)
 "ccA" = (
 /obj/machinery/computer/atmos_control/tank{
+	dir = 8;
 	frequency = 1441;
 	input_tag = "co2_in";
 	name = "Carbon Dioxide Supply Control";
@@ -43743,6 +43840,7 @@
 /area/tcommsat/server)
 "cdg" = (
 /obj/machinery/computer/telecomms/monitor{
+	dir = 4;
 	network = "tcommsat"
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -45158,6 +45256,7 @@
 /area/engine/engineering)
 "cgV" = (
 /obj/machinery/computer/atmos_control/tank{
+	dir = 1;
 	frequency = 1441;
 	input_tag = "n2_in";
 	name = "Nitrogen Supply Control";
@@ -45190,6 +45289,7 @@
 /area/engine/atmos)
 "cgZ" = (
 /obj/machinery/computer/atmos_control/tank{
+	dir = 1;
 	frequency = 1441;
 	input_tag = "o2_in";
 	name = "Oxygen Supply Control";
@@ -45218,6 +45318,7 @@
 /area/engine/atmos)
 "chc" = (
 /obj/machinery/computer/atmos_control/tank{
+	dir = 1;
 	frequency = 1441;
 	input_tag = "air_in";
 	name = "Mixed Air Supply Control";
@@ -45725,7 +45826,9 @@
 /turf/open/floor/plasteel/vault,
 /area/engine/engineering)
 "cik" = (
-/obj/machinery/computer/apc_control,
+/obj/machinery/computer/apc_control{
+	dir = 4
+	},
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -22
@@ -45935,6 +46038,7 @@
 /area/solar/port/aft)
 "ciQ" = (
 /obj/machinery/power/solar_control{
+	dir = 4;
 	id = "portsolar";
 	name = "Port Quarter Solar Control";
 	track = 0
@@ -46049,7 +46153,9 @@
 	},
 /area/engine/engineering)
 "cjg" = (
-/obj/machinery/computer/card/minor/ce,
+/obj/machinery/computer/card/minor/ce{
+	dir = 4
+	},
 /obj/machinery/requests_console{
 	announcementConsole = 1;
 	department = "Chief Engineer's Desk";
@@ -46348,7 +46454,9 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cjU" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	dir = 4
+	},
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the RD's goons from the safety of your own office.";
 	dir = 4;
@@ -46837,6 +46945,7 @@
 	pixel_y = -31
 	},
 /obj/machinery/computer/turbine_computer{
+	dir = 1;
 	id = "incineratorturbine"
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -47253,6 +47362,7 @@
 /area/maintenance/solars/starboard/aft)
 "cmw" = (
 /obj/machinery/power/solar_control{
+	dir = 1;
 	id = "starboardsolar";
 	name = "Starboard Quarter Solar Control";
 	track = 0
@@ -51081,7 +51191,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "cwK" = (
-/obj/machinery/computer/atmos_alert,
+/obj/machinery/computer/atmos_alert{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "cwL" = (
@@ -51103,7 +51215,9 @@
 	},
 /area/ai_monitored/security/armory)
 "cwN" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/security{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "cwO" = (
@@ -51116,7 +51230,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "cwP" = (
-/obj/machinery/computer/crew,
+/obj/machinery/computer/crew{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "cwQ" = (
@@ -51136,7 +51252,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "cwS" = (
-/obj/machinery/computer/communications,
+/obj/machinery/computer/communications{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "cwT" = (
@@ -53264,7 +53382,9 @@
 /turf/open/floor/pod/light,
 /area/shuttle/transport)
 "cCx" = (
-/obj/machinery/computer/shuttle/ferry/request,
+/obj/machinery/computer/shuttle/ferry/request{
+	dir = 8
+	},
 /turf/open/floor/pod/dark,
 /area/shuttle/transport)
 "cCy" = (
@@ -55525,7 +55645,9 @@
 /turf/open/floor/plating,
 /area/maintenance/central/secondary)
 "cTE" = (
-/obj/machinery/computer/shuttle/mining,
+/obj/machinery/computer/shuttle/mining{
+	dir = 8
+	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 4
 	},
@@ -56625,7 +56747,9 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/computer/shuttle/white_ship,
+/obj/machinery/computer/shuttle/white_ship{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "QmU" = (

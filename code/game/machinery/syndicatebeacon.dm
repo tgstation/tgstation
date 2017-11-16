@@ -88,10 +88,10 @@
 	if(surplus() > 1500)
 		add_load(1500)
 		if(cooldown <= world.time)
-			cooldown = world.time + 100
+			cooldown = world.time + 80
 			for(var/obj/singularity/singulo in GLOB.singularities)
 				if(singulo.z == z)
-					say("The [singulo] is now [get_dist(src,singulo)] standard lengths away to the [dir2text(get_dir(src,singulo))]")
+					say("[singulo] is now [get_dist(src,singulo)] standard lengths away to the [dir2text(get_dir(src,singulo))]")
 	else
 		Deactivate()
 		say("Insufficient charge detected - powering down")

@@ -25,7 +25,9 @@
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)
 "g" = (
-/obj/machinery/computer/shuttle/ferry/request,
+/obj/machinery/computer/shuttle/ferry/request{
+	dir = 8
+	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)
 "h" = (
