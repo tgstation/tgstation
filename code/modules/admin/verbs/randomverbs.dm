@@ -1043,7 +1043,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	if(confirm != "Yes")
 		return
 
-	var/list/mobs = shuffle(GLOB.living_mob_list.Copy()) // might change while iterating
+	var/list/mobs = shuffle(GLOB.alive_mob_list.Copy()) // might change while iterating
 	var/who_did_it = key_name_admin(usr)
 
 	message_admins("[key_name_admin(usr)] started polymorphed all living mobs.")

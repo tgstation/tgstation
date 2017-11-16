@@ -28,7 +28,7 @@
 	// find our chosen mob to breathe life into
 	// Mobs have to be simple animals, mindless and on station
 	var/list/potential = list()
-	for(var/mob/living/simple_animal/L in GLOB.living_mob_list)
+	for(var/mob/living/simple_animal/L in GLOB.alive_mob_list)
 		var/turf/T = get_turf(L)
 		if(!(T.z in GLOB.station_z_levels))
 			continue

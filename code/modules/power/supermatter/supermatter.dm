@@ -427,7 +427,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 				radio.talk_into(src, "Warning: Critical coolant mass reached.", engineering_channel, get_spans(), get_default_language())
 
 		if(damage > explosion_point)
-			for(var/mob in GLOB.living_mob_list)
+			for(var/mob in GLOB.alive_mob_list)
 				var/mob/living/L = mob
 				if(istype(L) && L.z == z)
 					if(ishuman(mob))
