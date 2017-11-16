@@ -65,12 +65,12 @@
 	playsound(src, 'sound/creatures/ling_scream.ogg', 100, 1)
 
 /mob/living/simple_animal/hostile/true_changeling/Destroy()
-    QDEL_NULL(reform)
-    QDEL_NULL(devour)
+	QDEL_NULL(reform)
+	QDEL_NULL(devour)
 	QDEL_NULL(jammer)
-    QDEL_NULL(spine_crawl)
-    stored_changeling = null
-    return ..()
+	QDEL_NULL(spine_crawl)
+	stored_changeling = null
+	return ..()
 
 /mob/living/simple_animal/hostile/true_changeling/Login()
 	. = ..()
