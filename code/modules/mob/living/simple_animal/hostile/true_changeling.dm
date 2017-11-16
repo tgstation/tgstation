@@ -6,8 +6,8 @@
 //Massive health and damage, but all of their chems and it's really obvious it's >them
 
 /mob/living/simple_animal/hostile/true_changeling
-	name = "ancient horror"
-	real_name = "ancient horror"
+	name = "horror"
+	real_name = "horror"
 	desc = "Holy shit, what the fuck is that thing?!"
 	speak_emote = list("says with one of its faces")
 	emote_hear = list("says with one of its faces")
@@ -24,7 +24,7 @@
 	minbodytemp = 0
 	health = 100
 	maxHealth = 100 //pretty durable
-	//damage_coeff = list(BRUTE = 1, BURN = 2, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1) //feel the burn!!
+	//damage_coeff = list(BRUTE = 1, BURN = 2, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1) //feel the burn!! (i need to implement the scream effect on fireloss so this is on hold till i do)
 	force_threshold = 10
 	healable = 0
 	environment_smash = 1 //Tables, closets, etc.
@@ -37,13 +37,15 @@
 	attack_sound = 'sound/creatures/hit3.ogg'
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 15) //It's a pretty big dude. Actually killing one is a feat.
 	var/time_spent_as_true = 0
-	var/playstyle_string = "<b><span class='big danger'>We have entered our true form!</span><br>We are unbelievably deadly, and regenerate life at a steady rate. However, most of \
-	our abilities are useless in this form, and we must utilise the abilities that we have gained as a result of our transformation. Taking too much damage will also turn us back into a \
+	var/playstyle_string = "<b><span class='big danger'>We have entered our true form!</span><br>We are unbelievably deadly, and regenerate life at a steady rate. We must utilise the abilities that we have gained as a result of our transformation, as our old ones are not usable in this form. Taking too much damage will also turn us back into a \
 	human in addition to knocking us out. We are not as strong health-wise as we are damage, and we must avoid fire at all costs. Finally, we will uncontrollably revert into a human after some time due to our inability to maintain this form.</b>"
 	var/mob/living/carbon/human/stored_changeling = null //The changeling that transformed
 	var/devouring = FALSE //If the true changeling is currently devouring a human
 	var/wallcrawl = FALSE //If the true changeling is crawling around the place, allowing it to counteract gravity loss
+	var/active = TRUE //radio jamming
+	var/range = 7
 	var/datum/action/innate/changeling/reform/reform
+	var/datum/action/innate/changeling/jammer/jammer
 	var/datum/action/innate/changeling/devour/devour
 	var/datum/action/innate/changeling/spine_crawl/spine_crawl
 
@@ -54,6 +56,8 @@
 	reform.Grant(src)
 	devour = new
 	devour.Grant(src)
+	jammer = new
+	jammer.Grant(src)
 	spine_crawl = new
 	spine_crawl.Grant(src)
 	playsound(src, 'sound/creatures/ling_scream.ogg', 100, 1)
@@ -61,6 +65,7 @@
 /mob/living/simple_animal/hostile/true_changeling/Destroy()
     QDEL_NULL(reform)
     QDEL_NULL(devour)
+	QDEL_NULL(jammer)
     QDEL_NULL(spine_crawl)
     stored_changeling = null
     return ..()
@@ -190,6 +195,19 @@
 		M.adjustBruteLoss(-100) //Tasty leetle peegy
 	else
 		M.adjustBruteLoss(-50)
+		
+/datum/action/innate/changeling/jammer
+	desc = "We may emit a slow chant that garbles radio messages from escaping."
+	check_flags = AB_CHECK_CONSCIOUS
+	button_icon_state = "devour"
+
+/datum/action/innate/changeling/jammer/Activate() //thank you anturk!!!
+	user << "<span class='notice'>Our cacophony of noise is[active ? "silenced" : "humming once again"].<span>"
+	active = !active
+	if(active)
+		active_jammers |= src
+	else
+		active_jammers -= src
 
 /datum/action/innate/changeling/spine_crawl
 	name = "Spine Crawl"
