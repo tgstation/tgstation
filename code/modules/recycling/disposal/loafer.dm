@@ -1,7 +1,7 @@
 /obj/item/reagent_containers/food/snacks/prison_loaf
 	name = "prison loaf"
 	desc = "A rather slapdash loaf designed to feed prisoners.  Technically nutritionally complete and edible in the same sense that potted meat product is edible."
-	icon = 'icons/obj/food/loafing_about.dmi'
+	icon = 'goon/icons/obj/loafing_it_up.dmi'
 	icon_state = "ploaf0"
 	force = 0
 	throwforce = 0
@@ -104,7 +104,7 @@
 /obj/item/reagent_containers/food/snacks/prison_loaf/process()
 	..()
 	if(get_turf(loc))
-		var/edge = get_edge_target_turf(src, pick(alldirs))
+		var/edge = get_edge_target_turf(src, pick(GLOB.diagonals))
 		throw_at(edge, 100, 1)
 
 /obj/item/reagent_containers/food/snacks/prison_loaf/Destroy()
@@ -114,16 +114,17 @@
 /obj/structure/disposalpipe/loafer
 	name = "disciplinary loaf processor"
 	desc = "A pipe segment designed to convert detritus into a nutritionally-complete meal for inmates."
+	icon = 'goon/icons/obj/loafing_around_town.dmi'
 	icon_state = "pipe-loaf0"
 
-/obj/structure/disposalpipe/loafer/transfer(obj/structure/disposalholder/H)
+/obj/structure/disposalpipe/loafer/transfer_to_dir(obj/structure/disposalholder/H, nextdir)
 	icon_state = "pipe-loaf1"
 	playsound(src.loc, "sound/machines/juicer.ogg", 50, 1)
-	var/obj/item/reagent_containers/food/snacks/prison_loaf/newLoaf = new(H)
+	var/obj/item/reagent_containers/food/snacks/prison_loaf/newLoaf = new(src)
 	for(var/atom/movable/A in H)
 		if(A.reagents)
 			A.reagents.trans_to(newLoaf, 1000)
-		if(istype(A, /obj/item/reagent_containers/food/snacks/prison_loaf)
+		if(istype(A, /obj/item/reagent_containers/food/snacks/prison_loaf))
 			var/obj/item/reagent_containers/food/snacks/prison_loaf/otherLoaf = A
 			newLoaf.loaf_factor += otherLoaf.loaf_factor * 1.2
 			newLoaf.loaf_recursion = otherLoaf.loaf_recursion + 1
@@ -142,14 +143,14 @@
 			else
 				newLoaf.loaf_factor += (newLoaf.loaf_factor / 10) + 50
 			poorSoul.emote("scream")
-			poorSoul.die()
 		if(istype(A, /obj/item))
 			var/obj/item/I = A
 			newLoaf.loaf_factor += I.w_class * 5
 		else
 			newLoaf.loaf_factor++
 		qdel(A)
+	newLoaf.forceMove(H)
 	newLoaf.loafing_it_up()
 	sleep(30)
 	icon_state = "pipe-loaf0"
-	return transfer_to_dir(H, nextdir(H))
+	. = ..()

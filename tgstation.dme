@@ -14,6 +14,7 @@
 
 // BEGIN_INCLUDE
 #include "_maps\basemap.dm"
+#include "_maps\runtimestation.dm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DATASTRUCTURES\globals.dm"
@@ -2069,6 +2070,7 @@
 #include "code\modules\recycling\disposal\construction.dm"
 #include "code\modules\recycling\disposal\eject.dm"
 #include "code\modules\recycling\disposal\holder.dm"
+#include "code\modules\recycling\disposal\loafer.dm"
 #include "code\modules\recycling\disposal\outlet.dm"
 #include "code\modules\recycling\disposal\pipe.dm"
 #include "code\modules\recycling\disposal\pipe_sorting.dm"
