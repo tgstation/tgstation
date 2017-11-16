@@ -928,7 +928,9 @@
 /turf/open/floor/mech_bay_recharge_floor,
 /area/awaymission/academy/classrooms)
 "dq" = (
-/obj/machinery/computer/mech_bay_power_console,
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 1
+	},
 /obj/structure/cable{
 	icon_state = "0-2"
 	},
@@ -3995,6 +3997,34 @@
 /mob/living/simple_animal/hostile/bear,
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/academy/academycellar)
+"nn" = (
+/obj/structure/frame/computer{
+	anchored = 1;
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/awaymission/academy/headmaster)
+"no" = (
+/obj/structure/frame/computer{
+	anchored = 1;
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/awaymission/academy/headmaster)
+"np" = (
+/obj/structure/frame/computer{
+	anchored = 1;
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/awaymission/academy/headmaster)
+"nq" = (
+/obj/structure/frame/computer{
+	anchored = 1;
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/awaymission/academy/headmaster)
 
 (1,1,1) = {"
 aa
@@ -11344,7 +11374,7 @@ bE
 fM
 dc
 dc
-gw
+db
 dc
 dc
 dc
@@ -11481,7 +11511,7 @@ ds
 dc
 fD
 ho
-hG
+hv
 hS
 fD
 il
@@ -11611,7 +11641,7 @@ dc
 dc
 fD
 ho
-hG
+hv
 hT
 fD
 il
@@ -11624,9 +11654,9 @@ kG
 il
 fD
 iR
-hG
+hv
 ji
-hG
+hv
 ju
 hc
 hc
@@ -11741,7 +11771,7 @@ dc
 dc
 fD
 hp
-hG
+hv
 hU
 fD
 im
@@ -11871,7 +11901,7 @@ dc
 dc
 fD
 ho
-hG
+hv
 hV
 fD
 il
@@ -12001,7 +12031,7 @@ dc
 dc
 fD
 ho
-hG
+hv
 hW
 fD
 in
@@ -12081,9 +12111,9 @@ ab
 ab
 ak
 ar
-ae
+nn
 aC
-ae
+np
 aM
 aN
 ab
@@ -12234,7 +12264,7 @@ br
 br
 br
 br
-cS
+bI
 br
 br
 aF
@@ -13069,7 +13099,7 @@ jV
 jV
 jY
 kd
-kg
+jU
 kk
 kf
 kf
@@ -13431,7 +13461,7 @@ gU
 gj
 fD
 ho
-hG
+hv
 hY
 fD
 il
@@ -13511,9 +13541,9 @@ ab
 ab
 aq
 aw
-ae
+no
 aI
-ae
+nq
 ak
 af
 ab
@@ -13561,7 +13591,7 @@ gV
 gj
 fD
 ho
-hG
+hv
 hZ
 fD
 il
@@ -13691,7 +13721,7 @@ gJ
 gO
 fD
 hp
-hG
+hv
 ia
 fD
 im
@@ -13821,7 +13851,7 @@ gJ
 gO
 fD
 ho
-hG
+hv
 ib
 fD
 il
@@ -13951,7 +13981,7 @@ gW
 gO
 fD
 ho
-hG
+hv
 ic
 fD
 il
@@ -14860,7 +14890,7 @@ aa
 aa
 aa
 hc
-hu
+hj
 hs
 hs
 hs
@@ -15120,7 +15150,7 @@ aa
 aa
 aa
 hc
-hw
+hh
 hf
 hf
 hf

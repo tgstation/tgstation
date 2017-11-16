@@ -610,7 +610,9 @@
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/unpowered)
 "bZ" = (
-/obj/machinery/computer,
+/obj/machinery/computer{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/unpowered)
 "ca" = (
@@ -1156,6 +1158,24 @@
 	},
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
+"dA" = (
+/obj/machinery/computer{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"dB" = (
+/obj/machinery/computer{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered)
+"dC" = (
+/obj/machinery/computer{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered)
 
 (1,1,1) = {"
 aa
@@ -1847,7 +1867,7 @@ aa
 aa
 ab
 ce
-cf
+dB
 ce
 ab
 aa
@@ -4269,7 +4289,7 @@ ab
 ay
 aG
 aM
-ay
+dA
 ab
 aa
 aa
@@ -4486,7 +4506,7 @@ aa
 aa
 ab
 ce
-cf
+dC
 ce
 ab
 aa
