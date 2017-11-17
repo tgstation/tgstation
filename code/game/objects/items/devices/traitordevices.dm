@@ -239,4 +239,4 @@ effective or pretty fucking useless.
 	icon_state = "jammer"
 
 /obj/item/device/jammer/Initialize()
-	AddComponent(/datum/component/jammer, 12)
+	AddComponent(/datum/component/jammer, 12, src)

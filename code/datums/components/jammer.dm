@@ -1,10 +1,12 @@
 /datum/component/jammer
 	var/active = FALSE
 	var/range
+	var/jammer_name
 
-/datum/component/jammer/Initialize(range)
+/datum/component/jammer/Initialize(range, var/jammer_name = parent)
 	RegisterSignal(COMSIG_ITEM_ATTACK_SELF, .proc/Toggle)
 	src.range = range
+	src.jammer_name = jammer_name
 
 /datum/component/jammer/Destroy()
 	if(active)
