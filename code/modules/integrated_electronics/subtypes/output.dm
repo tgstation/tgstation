@@ -142,7 +142,7 @@
 	text = get_pin_data(IC_INPUT, 1)
 	if(!isnull(text))
 		var/obj/O = assembly ? loc : assembly
-		O.say(strip_html_simple(text))
+		O.say(sanitize(text))
 
 /obj/item/integrated_circuit/output/sound/Initialize()
 	.= ..()
