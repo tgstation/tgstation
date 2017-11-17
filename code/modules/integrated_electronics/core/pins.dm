@@ -162,7 +162,7 @@ list[](
 	var/new_data = null
 	switch(type_to_use)
 		if("string")
-			new_data = input("Now type in a string.","[src] string writing", istext(default) ? default : null) as null|text
+			new_data = stripped_input(user, "Now type in a string.","[src] string writing", istext(default) ? default : null)
 			if(istext(new_data) && holder.check_interactivity(user) )
 				to_chat(user, "<span class='notice'>You input "+new_data+" into the pin.</span>")
 				return new_data
