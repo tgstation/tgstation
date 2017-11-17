@@ -74,3 +74,10 @@ GLOBAL_LIST(round_end_notifiees)
 	LAZYINITLIST(GLOB.round_end_notifiees)
 	GLOB.round_end_notifiees[sender] = TRUE
 	return "I will notify [sender] when the round ends."
+/datum/server_tools_command/ping
+	name = "ping"
+	help_text = "Tests both sending and recieving between the server tools and world"
+	admin_only = TRUE
+
+/datum/server_tools_command/ping/Run(sender, params)
+	SERVER_TOOLS_RELAY_BROADCAST("pong")
