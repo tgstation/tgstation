@@ -221,3 +221,12 @@ GLOBAL_PROTECT(security_mode)
 		hub_password = "kMZy3U5jJHSiBQjr"
 	else
 		hub_password = "SORRYNOPASSWORD"
+		
+/proc/get_world_params()
+	var/list/L = world.params.Copy()
+	L -= SERVICE_WORLD_PARAM
+	return L
+
+/proc/debug_world_params()
+	return english_list(get_world_params())
+
