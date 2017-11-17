@@ -38,7 +38,7 @@
 				to_chat(user, "<span class='notice'>You dig a hole.</span>")
 				gets_dug()
 				dug = TRUE
-				SSblackbox.add_details("pick_used_mining",W.type)
+				SSblackbox.record_feedback("tally", "pick_used_mining", 1, W.type)
 				return TRUE
 		return FALSE
 

@@ -160,7 +160,7 @@
 		user.sight |= SEE_MOBS
 		icon_state = "lantern"
 		wisp.orbit(user, 20)
-		SSblackbox.add_details("wisp_lantern","Freed")
+		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Freed")
 
 	else
 		to_chat(user, "<span class='notice'>You return the wisp to the lantern.</span>")
@@ -175,7 +175,7 @@
 		wisp.stop_orbit()
 		wisp.loc = src
 		icon_state = "lantern-blue"
-		SSblackbox.add_details("wisp_lantern","Returned")
+		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Returned")
 
 /obj/item/device/wisp_lantern/Initialize()
 	. = ..()
@@ -217,7 +217,7 @@
 	linked.teleporting = TRUE
 	var/turf/T = get_turf(src)
 	new /obj/effect/temp_visual/warp_cube(T, user, teleport_color, TRUE)
-	SSblackbox.add_details("warp_cube","[src.type]")
+	SSblackbox.record_feedback("tally", "warp_cube", 1, type)
 	new /obj/effect/temp_visual/warp_cube(get_turf(linked), user, linked.teleport_color, FALSE)
 	var/obj/effect/warp_cube/link_holder = new /obj/effect/warp_cube(T)
 	user.forceMove(link_holder) //mess around with loc so the user can't wander around
@@ -334,7 +334,7 @@
 
 /obj/item/device/immortality_talisman/attack_self(mob/user)
 	if(cooldown < world.time)
-		SSblackbox.add_details("immortality_talisman","Activated") // usage
+		SSblackbox.record_feedback("amount", "immortality_talisman_uses", 1)
 		cooldown = world.time + 600
 		user.visible_message("<span class='danger'>[user] vanishes from reality, leaving a hole in [user.p_their()] place!</span>")
 		var/obj/effect/immortality_talisman/Z = new(get_turf(src.loc))
@@ -1287,5 +1287,3 @@
 	for(var/t in RANGE_TURFS(1, T))
 		var/obj/effect/temp_visual/hierophant/blast/B = new(t, user, friendly_fire_check)
 		B.damage = 15 //keeps monster damage boost due to lower damage
-
-
