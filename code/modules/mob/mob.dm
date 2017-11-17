@@ -4,7 +4,7 @@
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
 	GLOB.mob_list -= src
 	GLOB.dead_mob_list -= src
-	GLOB.living_mob_list -= src
+	GLOB.alive_mob_list -= src
 	GLOB.all_clockwork_mobs -= src
 	GLOB.mob_directory -= tag
 	for (var/alert in alerts)
@@ -29,7 +29,7 @@
 	if(stat == DEAD)
 		GLOB.dead_mob_list += src
 	else
-		GLOB.living_mob_list += src
+		GLOB.alive_mob_list += src
 	prepare_huds()
 	for(var/v in GLOB.active_alternate_appearances)
 		if(!v)
@@ -918,9 +918,9 @@
 		if("stat")
 			if((stat == DEAD) && (var_value < DEAD))//Bringing the dead back to life
 				GLOB.dead_mob_list -= src
-				GLOB.living_mob_list += src
+				GLOB.alive_mob_list += src
 			if((stat < DEAD) && (var_value == DEAD))//Kill he
-				GLOB.living_mob_list -= src
+				GLOB.alive_mob_list -= src
 				GLOB.dead_mob_list += src
 	. = ..()
 	switch(var_name)

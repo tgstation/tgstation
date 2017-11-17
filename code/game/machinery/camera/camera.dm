@@ -97,11 +97,12 @@
 							GLOB.cameranet.addCamera(src)
 						emped = 0 //Resets the consecutive EMP count
 						addtimer(CALLBACK(src, .proc/cancelCameraAlarm), 100)
-			for(var/mob/O in GLOB.mob_list)
-				if (O.client && O.client.eye == src)
-					O.unset_machine()
-					O.reset_perspective(null)
-					to_chat(O, "The screen bursts into static.")
+			for(var/i in GLOB.player_list)
+				var/mob/M = i
+				if (M.client.eye == src)
+					M.unset_machine()
+					M.reset_perspective(null)
+					to_chat(M, "The screen bursts into static.")
 			..()
 
 /obj/machinery/camera/tesla_act(var/power)//EMP proof upgrade also makes it tesla immune

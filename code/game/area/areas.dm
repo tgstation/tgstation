@@ -326,7 +326,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			var/obj/machinery/camera/C = item
 			cameras += C
 
-	for (var/mob/living/silicon/SILICON in GLOB.player_list)
+	for (var/i in GLOB.silicon_mobs)
+		var/mob/living/silicon/SILICON = i
 		if(SILICON.triggerAlarm("Burglar", src, cameras, trigger))
 			//Cancel silicon alert after 1 minute
 			addtimer(CALLBACK(SILICON, /mob/living/silicon.proc/cancelAlarm,"Burglar",src,trigger), 600)
