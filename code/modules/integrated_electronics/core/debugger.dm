@@ -20,13 +20,13 @@
 	switch(type_to_use)
 		if("string")
 			accepting_refs = FALSE
-			new_data = input("Now type in a string.","[src] string writing") as null|text
+			new_data = stripped_input(user, "Now type in a string.","[src] string writing")
 			if(istext(new_data) && user.IsAdvancedToolUser())
 				data_to_write = new_data
 				to_chat(user, "<span class='notice'>You set \the [src]'s memory to \"[new_data]\".</span>")
 		if("number")
 			accepting_refs = FALSE
-			new_data = input("Now type in a number.","[src] number writing") as null|num
+			new_data = input(user, "Now type in a number.","[src] number writing") as null|num
 			if(isnum(new_data) && user.IsAdvancedToolUser())
 				data_to_write = new_data
 				to_chat(user, "<span class='notice'>You set \the [src]'s memory to [new_data].</span>")

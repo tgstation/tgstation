@@ -108,7 +108,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	if(!check_interactivity(M))
 		return
 
-	var/input = reject_bad_name(input("What do you want to name this?", "Rename", src.name) as null|text,1)
+	var/input = reject_bad_name(stripped_input(M, "What do you want to name this?", "Rename", src.name),1)
 	if(src && input && check_interactivity(M))
 		to_chat(M, "<span class='notice'>The circuit '[src.name]' is now labeled '[input]'.</span>")
 		displayed_name = input
@@ -278,7 +278,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 				var/new_data = null
 				switch(type_to_use)
 					if("string")
-						new_data = input("Now type in a string.","[src] string writing") as null|text
+						new_data = stripped_input(usr, "Now type in a string.","[src] string writing")
 						to_chat(usr, "<span class='notice'>You input [new_data] into the pin.</span>")
 							//to_chat(user, "<span class='notice'>You write '[new_data]' to the '[io]' pin of \the [io.holder].</span>")
 					if("number")
