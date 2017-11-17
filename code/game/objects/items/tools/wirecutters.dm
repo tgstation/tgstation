@@ -35,7 +35,7 @@
 /obj/item/wirecutters/Initialize()
 	. = ..()
 	if(random_color) //random colors!
-		icon_state = "screwdriver"
+		icon_state = "cutters"
 		var/our_color = pick(wirecutter_colors)
 		add_atom_colour(wirecutter_colors[our_color], FIXED_COLOUR_PRIORITY)
 		update_icon()
