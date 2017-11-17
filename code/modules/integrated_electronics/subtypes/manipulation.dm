@@ -238,6 +238,9 @@
 	origin_tech = list(TECH_ENGINEERING = 3, TECH_DATA = 3, TECH_COMBAT = 10)
 	spawn_flags = null			// Used for world initializing, see the #defines above.
 */
+
+#define SHOCKER_CIRCUIT_POWER_DRAW_COEFF 1200000
+
 /obj/item/integrated_circuit/manipulation/shocker
 	name = "shocker circuit"
 	desc = "Used to shock adjacent creatures with electricity."
@@ -254,7 +257,7 @@
 
 /obj/item/integrated_circuit/manipulation/shocker/on_data_written()
 	var/s = get_pin_data(IC_INPUT, 2)
-	power_draw_per_use = Clamp(s,0,60)*1200/60
+	power_draw_per_use = Clamp(s,0,60)*SHOCKER_CIRCUIT_POWER_DRAW_COEFF/60
 
 /obj/item/integrated_circuit/manipulation/shocker/do_work()
 	..()
@@ -272,6 +275,8 @@
 	var/stf=Clamp(get_pin_data(IC_INPUT, 2),0,60)
 	M.Knockdown(stf)
 	M.apply_effect(STUTTER, stf)
+
+#undef SHOCKER_CIRCUIT_POWER_DRAW_COEFF
 
 /obj/item/integrated_circuit/manipulation/plant_module
 	name = "plant manipulation module"
