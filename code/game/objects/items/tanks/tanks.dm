@@ -245,10 +245,12 @@
 		air_contents.react()
 		pressure = air_contents.return_pressure()
 		var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE
-		var/turf/epicenter = get_turf(loc)
+		//var/turf/epicenter = get_turf(loc)
+		var/range1 = range * 0.25
+		var/range2 = range * 0.5
+		message_admins("Explosive measurements: [range1]/[range2]/[range]")
 
-
-		explosion(epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
+		//explosion(epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
 		if(istype(src.loc, /obj/item/device/transfer_valve))
 			qdel(src.loc)
 		else
