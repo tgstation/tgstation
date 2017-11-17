@@ -235,8 +235,8 @@
 	icon_state = "absinthebottle"
 	list_reagents = list("absinthe" = 100)
 
-/obj/item/reagent_containers/food/drinks/bottle/absinthe/New()
-	..()
+/obj/item/reagent_containers/food/drinks/bottle/absinthe/Initialize()
+	. = ..()
 	redact()
 
 /obj/item/reagent_containers/food/drinks/bottle/absinthe/proc/redact()

@@ -701,7 +701,8 @@
 
 /datum/admins/proc/output_ai_laws()
 	var/ai_number = 0
-	for(var/mob/living/silicon/S in GLOB.mob_list)
+	for(var/i in GLOB.silicon_mobs)
+		var/mob/living/silicon/S = i
 		ai_number++
 		if(isAI(S))
 			to_chat(usr, "<b>AI [key_name(S, usr)]'s laws:</b>")
@@ -772,6 +773,11 @@
 	var/winheight = 100 + (count * 20)
 	winheight = min(winheight, 690)
 	usr << browse(dat, "window=players;size=375x[winheight]")
+
+/datum/admins/proc/create_or_modify_area()
+	set category = "Debug"
+	set name = "Create or modify area"
+	create_area(usr)
 
 //
 //

@@ -1,4 +1,0 @@
-author: "WJohnston"
-delete-after: True
-changes: 
-  - rscdel: "Removes stationary docking ports for syndicate infiltrator ships on all maps. Use the docking navigator computer instead! This gives the white ship and syndicate infiltrator more room to navigate and place custom locations that are otherwise occupied by fixed shuttle landing zones that are rarely used."

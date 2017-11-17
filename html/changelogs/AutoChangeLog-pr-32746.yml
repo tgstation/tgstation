@@ -1,0 +1,4 @@
+author: "duncathan"
+delete-after: True
+changes: 
+  - rscadd: "Atmos scrubbers (vent and portable) can now filter any and all gases."

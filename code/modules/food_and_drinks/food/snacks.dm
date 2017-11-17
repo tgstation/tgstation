@@ -315,10 +315,10 @@
 //	name = "Xenoburger"													//Name that displays in the UI.
 //	desc = "Smells caustic. Tastes like heresy."						//Duh
 //	icon_state = "xburger"												//Refers to an icon in food.dmi
-///obj/item/reagent_containers/food/snacks/xenoburger/New()		//Don't mess with this.
-//		..()															//Same here.
+///obj/item/reagent_containers/food/snacks/xenoburger/Initialize()		//Don't mess with this. | nO I WILL MESS WITH THIS
+//		. = ..()														//Same here.
 //		reagents.add_reagent("xenomicrobes", 10)						//This is what is in the food item. you may copy/paste
-//		reagents.add_reagent("nutriment", 2)							//	this line of code for all the contents.
+//		reagents.add_reagent("nutriment", 2)							//this line of code for all the contents.
 //		bitesize = 3													//This is the amount each bite consumes.
 
 //All foods are distributed among various categories. Use common sense.

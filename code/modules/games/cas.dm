@@ -27,7 +27,7 @@
 	decksize = 50
 	card_text_file = "strings/cas_black.txt"
 
-/obj/item/toy/cards/deck/cas/New()
+/obj/item/toy/cards/deck/cas/Initialize()
 	var/static/list/cards_against_space = list("cas_white" = world.file2list("strings/cas_white.txt"),"cas_black" = world.file2list("strings/cas_black.txt"))
 	allcards = cards_against_space[card_face]
 	var/list/possiblecards = allcards.Copy()
@@ -52,7 +52,7 @@
 		P.card_icon = "cas_white"
 		cards += P
 	shuffle_inplace(cards) // distribute blank cards throughout deck
-	..()
+	. = ..()
 
 /obj/item/toy/cards/deck/cas/attack_hand(mob/user)
 	if(user.lying)

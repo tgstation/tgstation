@@ -1,4 +1,4 @@
-#Script for jsonifying feedback table data as of 2017-11-12 made by Jordie0608
+#Python 3+ Script for jsonifying feedback table data as of 2017-11-12 made by Jordie0608
 #Apologies for the boilerplated and squirrely code in parts, this has been my first foray into python
 #
 #Before starting ensure you have installed the mysqlclient package https://github.com/PyMySQL/mysqlclient-python
@@ -38,6 +38,7 @@ import MySQLdb
 import argparse
 import json
 import re
+import sys
 from datetime import datetime
 
 def parse_text(details):
@@ -447,6 +448,8 @@ def pick_parsing(var_name, var_value, details, multirows_completed):
     else:
         return False
 
+if sys.version_info[0] < 3:
+    raise Exception("Python must be at least version 3 for this script.")
 text_keys = ["religion_book", "religion_deity", "religion_name", "shuttle_fasttravel", "shuttle_manipulator", "shuttle_purchase", "shuttle_reason", "station_renames"]
 amount_keys = ["admin_cookies_spawned", "cyborg_ais_created", "cyborg_frames_built", "cyborg_mmis_filled", "newscaster_newspapers_printed", "newscaster_stories", "nuclear_challenge_mode"]
 simple_tallies = ["admin_secrets_fun_used", "admin_verb", "assembly_made", "brother_success", "cell_used", "changeling_power_purchase", "changeling_success", "chaplain_weapon", "chemical_reaction", "circuit_printed", "clockcult_scripture_recited", "contamination", "cult_runes_scribed", "engine_started", "event_admin_cancelled", "event_ran", "food_harvested", "food_made", "gun_fired", "handcuffs", "item_deconstructed", "item_printed", "jaunter", "lazarus_injector", "megafauna_kills", "mining_voucher_redeemed", "mobs_killed_mining", "object_crafted", "ore_mined", "pick_used_mining", "slime_cores_used", "surgeries_completed", "time_dilation_current", "traitor_random_uplink_items_gotten", "traitor_success", "voice_of_god", "warp_cube", "wisp_lantern", "wizard_spell_learned", "wizard_success", "zone_targeted"]
