@@ -6,7 +6,7 @@
 /datum/component/jammer/Initialize(jammer_range, var/jammer_name = parent)
 	if(istype(parent, obj/item))
 		RegisterSignal(COMSIG_ITEM_ATTACK_SELF, .proc/Toggle)
-	range = range
+	range = jammer_range
 	name = jammer_name
 
 /datum/component/jammer/Destroy()
