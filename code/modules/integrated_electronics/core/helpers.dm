@@ -13,7 +13,6 @@
 			io_type_override = io_list_copy[io_entry]
 
 		if(io_type_override)
-	//		world << "io_type_override is now [io_type_override] on [src]."
 			io_list.Add(new io_type_override(src, io_entry, default_data))
 		else
 			io_list.Add(new io_type(src, io_entry, default_data))
