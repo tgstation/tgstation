@@ -4,7 +4,8 @@
 	var/jammer_name
 
 /datum/component/jammer/Initialize(range, var/jammer_name = parent)
-	RegisterSignal(COMSIG_ITEM_ATTACK_SELF, .proc/Toggle)
+	if(istype(parent, obj/item))
+		RegisterSignal(COMSIG_ITEM_ATTACK_SELF, .proc/Toggle)
 	src.range = range
 	src.jammer_name = jammer_name
 
