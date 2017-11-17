@@ -537,6 +537,11 @@
 		admin_delete(D)
 		href_list["datumrefresh"] = href_list["delete"]
 
+	else if(href_list["osay"])
+		if(!check_rights(R_FUN, 0))
+			return
+		usr.client.object_say(locate(href_list["osay"]))
+
 	else if(href_list["regenerateicons"])
 		if(!check_rights(0))
 			return
