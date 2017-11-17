@@ -242,6 +242,8 @@
 	var/jammed = FALSE
 	for(var/i in GLOB.active_jammers)
 		var/datum/component/jammer/jammer = i
+		if(jammer.parent.Z != Z)
+			continue
 		if(get_dist(position,get_turf(jammer.parent)) < jammer.range)
 			jammed = TRUE
 			break
