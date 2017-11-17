@@ -9,10 +9,13 @@
 	src.range = range
 	src.jammer_name = jammer_name
 
+/datum/component/jammer/proc/Destroy()
+	GLOB.active_jammers -= src
+
 /datum/component/jammer/proc/Toggle(mob/user)
 	to_chat(user,"<span class='notice'>You [active ? "deactivate" : "activate"] [jammer_name].</span>")
 	active = !active
 	if(active)
-		GLOB.active_jammers |= src
+		GLOB.active_jammers += src
 	else
 		GLOB.active_jammers -= src
