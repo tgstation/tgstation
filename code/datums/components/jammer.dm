@@ -9,7 +9,7 @@
 	src.range = range
 	src.jammer_name = jammer_name
 
-/datum/component/jammer/proc/Destroy()
+/datum/component/jammer/Destroy()
 	GLOB.active_jammers -= src
 
 /datum/component/jammer/proc/Toggle(mob/user)
