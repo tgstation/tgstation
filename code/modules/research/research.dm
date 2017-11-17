@@ -120,6 +120,7 @@ research holder datum.
 	var/datum/tech/KT = known_tech[ID]
 	if(KT && KT.level <= level)
 		KT.level = max(KT.level + 1, level)
+		SSblackbox.log_research(KT.name, level)
 
 //Checks if the origin level can raise current tech levels
 //Input: Tech's ID and Level; Output: TRUE for yes, FALSE for no
