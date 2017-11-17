@@ -274,7 +274,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /proc/findname(msg)
 	if(!istext(msg))
 		msg = "[msg]"
-	for(var/mob/M in GLOB.mob_list)
+	for(var/i in GLOB.mob_list)
+		var/mob/M = i
 		if(M.real_name == msg)
 			return M
 	return 0
