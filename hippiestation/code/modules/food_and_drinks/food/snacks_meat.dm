@@ -2,7 +2,7 @@
 	name = "rat-kebab"
 	desc = "Not so delicious rat meat, on a stick."
 	icon_state = "ratkebab"
-	icon = 'icons/obj/food/food.dmi'
+	icon = 'hippiestation/icons/obj/food/food.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	list_reagents = list("nutriment" = 6, "vitamin" = 2)
 	tastes = list("rat meat" = 1, "metal" = 1)
