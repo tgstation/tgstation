@@ -1,4 +1,4 @@
-//Invisible when armed. Non-servants walking over this will get spikes through the feet, immobilizing them until they're freed.
+//Non-servants standing over this will get spikes through the feet, immobilizing them until they're freed.
 /obj/structure/destructible/clockwork/trap/brass_skewer
 	name = "brass skewer"
 	desc = "A massive brass spike, cleverly concealed in the floor. You think you could prevent setting it off if you moved slowly."
@@ -10,6 +10,7 @@
 	can_buckle = TRUE
 	buckle_prevents_pull = TRUE
 	buckle_lying = FALSE
+	var/wiggle_wiggle
 
 /obj/structure/destructible/clockwork/trap/brass_skewer/Initialize()
 	. = ..()
@@ -20,7 +21,7 @@
 	if(buckled_mobs && buckled_mobs.len)
 		var/mob/living/L = buckled_mobs[1]
 		L.Knockdown(100)
-		L.visible_message("<span class='warning'>[L] convulses in pain as the skewer shatters while still in their body!</span>")
+		L.visible_message("<span class='warning'>[L] is maimed as the skewer shatters while still in their body!</span>")
 		L.adjustBruteLoss(15)
 	return ..()
 
@@ -28,25 +29,27 @@
 	if(density)
 		if(buckled_mobs.len)
 			var/mob/living/spitroast = buckled_mobs[1]
-			spitroast.Knockdown(10)
 			spitroast.adjustBruteLoss(0.1)
+			spitroast.dropItemToGround(spitroast.get_active_held_item()) //So they can't wield weapons, but can still try to free themselves
+
+/obj/structure/destructible/clockwork/trap/brass_skewer/bullet_act(obj/item/projectile/P)
+	if(buckled_mobs.len)
+		var/mob/living/L = buckled_mobs[1]
+		return L.bullet_act(P)
+	return ..()
 
 /obj/structure/destructible/clockwork/trap/brass_skewer/activate()
 	if(density)
 		return
 	var/mob/living/carbon/squirrel = locate() in get_turf(src)
 	if(squirrel)
-		squirrel.visible_message("<span class='boldwarning'>A massive brass spike erupts from the ground, impaling [squirrel] through the legs!</span>", \
-		"<span class='userdanger'>A massive brass spike rams through your legs, hoisting you into the air!</span>")
+		squirrel.visible_message("<span class='boldwarning'>A massive brass spike erupts from the ground, impaling [squirrel]!</span>", \
+		"<span class='userdanger'>A massive brass spike rams through your chest, hoisting you into the air!</span>")
 		squirrel.emote("scream")
 		playsound(squirrel, 'sound/effects/splat.ogg', 50, TRUE)
 		playsound(squirrel, 'sound/misc/desceration-03.ogg', 50, TRUE)
-		squirrel.apply_damage(10, BRUTE, "l_leg")
-		squirrel.apply_damage(10, BRUTE, "r_leg")
-		squirrel.pixel_y = -5
-		var/matrix/M = matrix()
-		M.Turn(180)
-		squirrel.transform = M
+		squirrel.apply_damage(20, BRUTE, "chest")
+		squirrel.pixel_y = 8
 		buckle_mob(squirrel, TRUE)
 	else
 		visible_message("<span class='danger'>A massive brass spike erupts from the ground!</span>")
@@ -59,15 +62,25 @@
 	return
 
 /obj/structure/destructible/clockwork/trap/brass_skewer/user_unbuckle_mob(mob/living/skewee, mob/living/user)
-	if(user == skewee)
-		to_chat(user, "<span class='boldwarning'>You can't free yourself from [src]! You need some help...</span>")
-		return
-	user.visible_message("<span class='danger'>You start tenderly lifting [user] off of [src]...</span>", \
-	"<span class='danger'>You start tenderly lifting [user] off of [src]...</span>")
-	if(!do_after(user, 60, target = skewee))
-		skewee.visible_message("<span class='warning'>[skewee] painfully slides back down [src].</span>")
-		skewee.emote("moan")
-		return
+	if(user == skewee && !wiggle_wiggle)
+		user.visible_message("<span class='warning'>[user] starts wriggling off of [src]!</span>", \
+		"<span class='danger'>You start agonizingly working your way off of [src]...</span>")
+		wiggle_wiggle = TRUE
+		if(!do_after(user, 300, target = user))
+			user.visible_message("<span class='warning'>[user] slides back down [src]!</span>")
+			user.emote("scream")
+			user.apply_damage(10, BRUTE, "chest")
+			playsound(user, 'sound/misc/desceration-03.ogg', 50, TRUE)
+			wiggle_wiggle = FALSE
+			return
+		wiggle_wiggle = FALSE
+	else
+		user.visible_message("<span class='danger'>You start tenderly lifting [user] off of [src]...</span>", \
+		"<span class='danger'>You start tenderly lifting [user] off of [src]...</span>")
+		if(!do_after(user, 60, target = skewee))
+			skewee.visible_message("<span class='warning'>[skewee] painfully slides back down [src].</span>")
+			skewee.emote("moan")
+			return
 	skewee.visible_message("<span class='danger'>[skewee] comes free of [src] with a squelching pop!</span>", \
 	"<span class='boldannounce'>You come free of [src]!</span>")
 	skewee.Knockdown(30)

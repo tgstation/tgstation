@@ -5,9 +5,7 @@
 	clockwork_desc = "A trigger that will activate when a non-servant runs across it."
 	icon_state = "pressure_sensor"
 	alpha = 40
-	density = FALSE
 	layer = LOW_ITEM_LAYER
-	break_message = "The trigger breaks apart!"
 
 /obj/structure/destructible/clockwork/trap/trigger/pressure_sensor/Crossed(atom/movable/AM)
 	if(isliving(AM) && !is_servant_of_ratvar(AM))

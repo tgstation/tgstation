@@ -9,6 +9,18 @@
 	. = ..()
 	wired_to = list()
 
+/obj/structure/destructible/clockwork/trap/examine(mob/user)
+	..()
+	if(is_servant_of_ratvar(user) || isobserver(user))
+		to_chat(user, "It's wired to:")
+		if(!wired_to.len)
+			to_chat(user, "Nothing.")
+		else
+			for(var/V in wired_to)
+				var/obj/O = V
+				var/distance = get_dist(src, O)
+				to_chat(user, "[O] ([distance == 0 ? "same tile" : "[distance] tiles [dir2text(get_dir(src, O))]"])")
+
 /obj/structure/destructible/clockwork/trap/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/clockwork/brass_filaments) && is_servant_of_ratvar(user))
 		var/obj/item/clockwork/brass_filaments/F = I
@@ -16,7 +28,7 @@
 			to_chat(user, "<span class='notice'>Beginning link. Activate the filaments to cancel, or use them on another trap object to link them.</span>")
 			F.linking = src
 		else
-			var/distance = get_dist(F.linking, src)
+			var/distance = max(1, get_dist(F.linking, src))
 			if(distance > F.filaments)
 				to_chat(user, "<span class='warning'>That's too far! You need [distance] filaments, but you only have [F.filaments].</span>")
 				return
@@ -56,10 +68,11 @@
 /obj/structure/destructible/clockwork/trap/trigger
 	name = "base trap trigger"
 	max_integrity = 5
-	d
+	break_message = "<span class='warning'>The trigger breaks apart!</span>"
+	density = FALSE
 
 /obj/structure/destructible/clockwork/trap/trigger/activate()
 	for(var/obj/structure/destructible/clockwork/trap/T in wired_to)
-		T.activate()
-	for(var/obj/structure/destructible/clockwork/trap/T in range(1, src))
+		if(istype(T, type)) //Triggers don't go off multiple times
+			continue
 		T.activate()
