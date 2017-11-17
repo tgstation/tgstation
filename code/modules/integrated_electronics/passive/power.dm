@@ -56,13 +56,13 @@
 	name = "tesla power relay"
 	desc = "A seemingly enigmatic device which connects to nearby APCs wirelessly and draws power from them."
 	w_class = WEIGHT_CLASS_SMALL
-	extended_desc = "The siphon generates 250W of energy, so long as an APC is in the same room, with a cell that has energy.  It will always drain \
+	extended_desc = "The siphon generates 50 W of energy, so long as an APC is in the same room, with a cell that has energy.  It will always drain \
 	from the 'equipment' power channel."
 	icon_state = "power_relay"
 	complexity = 7
 	origin_tech = list(TECH_POWER = 3, TECH_ENGINEERING = 3, TECH_DATA = 2)
 	spawn_flags = IC_SPAWN_RESEARCH
-	var/power_amount = 150
+	var/power_amount = 50
 //fuel cell
 
 /obj/item/integrated_circuit/passive/power/chemical_cell
@@ -108,7 +108,7 @@
 	name = "large tesla power relay"
 	desc = "A seemingly enigmatic device which connects to nearby APCs wirelessly and draws power from them, now in industiral size!"
 	w_class = WEIGHT_CLASS_BULKY
-	extended_desc = "The siphon generates 2 kW of energy, so long as an APC is in the same room, with a cell that has energy.  It will always drain \
+	extended_desc = "The siphon generates 1 kW of energy, so long as an APC is in the same room, with a cell that has energy.  It will always drain \
 	from the 'equipment' power channel."
 	icon_state = "power_relay"
 	complexity = 15

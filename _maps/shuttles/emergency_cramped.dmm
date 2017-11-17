@@ -23,7 +23,9 @@
 /turf/open/floor/plasteel/black,
 /area/shuttle/escape)
 "f" = (
-/obj/machinery/computer/emergency_shuttle,
+/obj/machinery/computer/emergency_shuttle{
+	dir = 8
+	},
 /turf/open/floor/plasteel/black,
 /area/shuttle/escape)
 "g" = (

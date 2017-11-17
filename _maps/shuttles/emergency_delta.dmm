@@ -262,7 +262,9 @@
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "ay" = (
-/obj/machinery/computer/med_data,
+/obj/machinery/computer/med_data{
+	dir = 4
+	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1
 	},
@@ -903,7 +905,9 @@
 	},
 /area/shuttle/escape)
 "ce" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/security{
+	dir = 4
+	},
 /turf/open/floor/plasteel/darkred/side{
 	dir = 9
 	},
@@ -935,13 +939,17 @@
 	},
 /area/shuttle/escape)
 "ci" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	dir = 8
+	},
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 5
 	},
 /area/shuttle/escape)
 "cj" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/secure_data{
+	dir = 4
+	},
 /turf/open/floor/plasteel/darkred/side{
 	dir = 10
 	},
@@ -974,7 +982,9 @@
 /turf/open/floor/plasteel/vault,
 /area/shuttle/escape)
 "cp" = (
-/obj/machinery/computer/atmos_alert,
+/obj/machinery/computer/atmos_alert{
+	dir = 8
+	},
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 6
 	},
@@ -995,23 +1005,31 @@
 /turf/open/floor/plasteel/vault,
 /area/shuttle/escape)
 "cs" = (
-/obj/machinery/computer/crew,
+/obj/machinery/computer/crew{
+	dir = 1
+	},
 /turf/open/floor/plasteel/darkblue/side,
 /area/shuttle/escape)
 "ct" = (
-/obj/machinery/computer/med_data,
+/obj/machinery/computer/med_data{
+	dir = 1
+	},
 /turf/open/floor/plasteel/darkblue/side{
 	dir = 6
 	},
 /area/shuttle/escape)
 "cu" = (
-/obj/machinery/computer/emergency_shuttle,
+/obj/machinery/computer/emergency_shuttle{
+	dir = 1
+	},
 /turf/open/floor/plasteel/darkblue/side{
 	dir = 10
 	},
 /area/shuttle/escape)
 "cv" = (
-/obj/machinery/computer/communications,
+/obj/machinery/computer/communications{
+	dir = 1
+	},
 /turf/open/floor/plasteel/darkblue/side,
 /area/shuttle/escape)
 "cw" = (

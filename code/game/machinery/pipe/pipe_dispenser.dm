@@ -155,6 +155,10 @@
 				qdel(C)
 				return
 
+
+			if(href_list["dir"])
+				C.setDir(text2num(href_list["dir"]))
+
 			C.add_fingerprint(usr)
 			C.update_icon()
 			wait = world.time + 15

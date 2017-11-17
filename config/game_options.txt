@@ -251,6 +251,10 @@ EVENTS_MIN_PLAYERS_MUL 1
 ## Allow the AI job to be picked.
 ALLOW_AI
 
+## Secborg ###
+## Uncomment to prevent the security cyborg module from being chosen
+#DISABLE_SECBORG
+
 ## Peacekeeper Borg ###
 ## Uncomment to prevent the peacekeeper cyborg module from being chosen
 #DISABLE_PEACEBORG

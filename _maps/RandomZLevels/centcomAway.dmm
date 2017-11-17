@@ -762,7 +762,9 @@
 	},
 /area/awaymission/centcomAway/general)
 "cU" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/secure_data{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/centcomAway/hangar)
 "cV" = (
@@ -1348,7 +1350,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/centcomAway/hangar)
 "fb" = (
-/obj/structure/frame/computer,
+/obj/structure/frame/computer{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/centcomAway/hangar)
 "fc" = (
@@ -1846,7 +1850,9 @@
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/general)
 "gN" = (
-/obj/machinery/computer/robotics,
+/obj/machinery/computer/robotics{
+	dir = 4
+	},
 /turf/open/floor/plasteel{
 	icon_state = "floor"
 	},
@@ -1868,7 +1874,9 @@
 	},
 /area/awaymission/centcomAway/general)
 "gQ" = (
-/obj/machinery/computer/med_data,
+/obj/machinery/computer/med_data{
+	dir = 8
+	},
 /turf/open/floor/plasteel{
 	icon_state = "floor"
 	},
@@ -1908,7 +1916,9 @@
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/general)
 "gY" = (
-/obj/machinery/computer/card,
+/obj/machinery/computer/card{
+	dir = 4
+	},
 /turf/open/floor/plasteel{
 	icon_state = "floor"
 	},
@@ -1920,7 +1930,9 @@
 	},
 /area/awaymission/centcomAway/general)
 "ha" = (
-/obj/machinery/computer/crew,
+/obj/machinery/computer/crew{
+	dir = 8
+	},
 /turf/open/floor/plasteel{
 	icon_state = "floor"
 	},
@@ -1978,19 +1990,25 @@
 	},
 /area/awaymission/centcomAway/general)
 "hl" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/secure_data{
+	dir = 1
+	},
 /turf/open/floor/plasteel{
 	icon_state = "floor"
 	},
 /area/awaymission/centcomAway/general)
 "hm" = (
-/obj/machinery/computer/communications,
+/obj/machinery/computer/communications{
+	dir = 1
+	},
 /turf/open/floor/plasteel{
 	icon_state = "floor"
 	},
 /area/awaymission/centcomAway/general)
 "hn" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/security{
+	dir = 1
+	},
 /turf/open/floor/plasteel{
 	icon_state = "floor"
 	},
@@ -2579,11 +2597,15 @@
 /turf/open/floor/plasteel/black,
 /area/awaymission/centcomAway/general)
 "jo" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/secure_data{
+	dir = 1
+	},
 /turf/open/floor/plasteel/black,
 /area/awaymission/centcomAway/general)
 "jp" = (
-/obj/machinery/computer/card,
+/obj/machinery/computer/card{
+	dir = 1
+	},
 /turf/open/floor/plasteel/black,
 /area/awaymission/centcomAway/general)
 "jq" = (
@@ -2946,7 +2968,9 @@
 /turf/open/floor/plasteel/black,
 /area/awaymission/centcomAway/general)
 "kt" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/secure_data{
+	dir = 8
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 1
 	},
@@ -2978,7 +3002,9 @@
 	},
 /area/awaymission/centcomAway/general)
 "ky" = (
-/obj/machinery/computer/card,
+/obj/machinery/computer/card{
+	dir = 8
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 1
 	},
@@ -3554,7 +3580,9 @@
 	},
 /area/awaymission/centcomAway/thunderdome)
 "mo" = (
-/obj/structure/frame/computer,
+/obj/structure/frame/computer{
+	dir = 1
+	},
 /turf/open/floor/plasteel/redyellow{
 	dir = 5
 	},
@@ -10508,12 +10536,12 @@ hG
 hG
 aV
 aa
-iC
+fw
 ev
 gW
 gW
 ev
-iC
+fw
 aa
 aV
 aV
@@ -11174,7 +11202,7 @@ jW
 fv
 eD
 ff
-iC
+fw
 aa
 aa
 aa
@@ -11299,9 +11327,9 @@ hW
 eu
 hI
 eD
-iC
+fw
 jD
-iC
+fw
 eD
 ff
 eu
@@ -11528,7 +11556,7 @@ aG
 ak
 dq
 aG
-dS
+ad
 ed
 eu
 eD
@@ -11658,7 +11686,7 @@ aG
 ak
 aH
 aG
-dT
+af
 ee
 eu
 cs
@@ -12178,7 +12206,7 @@ ai
 aI
 aI
 ai
-dS
+ad
 eg
 eu
 bN
@@ -12308,7 +12336,7 @@ ai
 aJ
 aJ
 ai
-dU
+ae
 ee
 eu
 cd
@@ -12352,7 +12380,7 @@ eV
 kF
 kG
 eu
-kM
+gM
 gX
 jK
 eu
@@ -12438,7 +12466,7 @@ ai
 dC
 aJ
 ai
-dT
+af
 eh
 eu
 cs
@@ -12447,7 +12475,7 @@ dw
 fw
 eF
 ff
-ge
+fw
 gs
 eD
 gN
@@ -12474,7 +12502,7 @@ eV
 eu
 mO
 eu
-kk
+eV
 eu
 ku
 kz
@@ -12724,7 +12752,7 @@ eD
 eD
 eD
 fY
-fx
+fw
 eD
 eD
 eD
@@ -12735,7 +12763,7 @@ eD
 eD
 eD
 ff
-fx
+fw
 kw
 kw
 kw
@@ -12829,7 +12857,7 @@ ai
 ai
 ai
 ai
-ei
+aK
 gW
 gW
 eV
@@ -12837,7 +12865,7 @@ eD
 eD
 eD
 ff
-gg
+fv
 gv
 gG
 eD
@@ -12875,7 +12903,7 @@ hz
 gW
 gW
 gW
-kM
+gM
 jK
 kS
 lc
@@ -12967,7 +12995,7 @@ dJ
 eD
 eD
 ff
-ge
+fw
 gw
 eD
 eD
@@ -13233,7 +13261,7 @@ eD
 gQ
 ha
 lM
-fx
+fw
 hI
 eD
 eu
@@ -13392,7 +13420,7 @@ eV
 gc
 fP
 eu
-kM
+gM
 gX
 jK
 eu
@@ -13484,7 +13512,7 @@ eu
 eJ
 eJ
 eJ
-fx
+fw
 fi
 fY
 gi
@@ -14026,7 +14054,7 @@ aa
 aa
 eu
 jG
-iC
+fw
 eD
 eD
 eD
@@ -14158,11 +14186,11 @@ eu
 eu
 eu
 jP
-jT
+fu
 jU
 eu
 jU
-kb
+fu
 jP
 gf
 jP
@@ -14294,7 +14322,7 @@ aa
 aa
 fv
 fr
-gg
+fv
 fr
 fv
 aa
@@ -14416,17 +14444,17 @@ aa
 aa
 aa
 aa
-iC
+fw
 jP
-iC
+fw
 aa
 aa
 aa
-iC
+fw
 jP
-km
+fw
 jP
-iC
+fw
 aa
 aa
 aa
