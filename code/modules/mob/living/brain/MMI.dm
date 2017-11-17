@@ -63,7 +63,7 @@
 		if(!newbrain.damaged_brain) // the brain organ hasn't been beaten to death.
 			brainmob.stat = CONSCIOUS //we manually revive the brain mob
 			GLOB.dead_mob_list -= brainmob
-			GLOB.living_mob_list += brainmob
+			GLOB.alive_mob_list += brainmob
 
 		brainmob.reset_perspective()
 		brain = newbrain
@@ -71,7 +71,7 @@
 		name = "Man-Machine Interface: [brainmob.real_name]"
 		update_icon()
 
-		SSblackbox.inc("cyborg_mmis_filled",1)
+		SSblackbox.record_feedback("amount", "mmis_filled", 1)
 
 	else if(brainmob)
 		O.attack(brainmob, user) //Oh noooeeeee
@@ -95,7 +95,7 @@
 	brainmob.stat = DEAD
 	brainmob.emp_damage = 0
 	brainmob.reset_perspective() //so the brainmob follows the brain organ instead of the mmi. And to update our vision
-	GLOB.living_mob_list -= brainmob //Get outta here
+	GLOB.alive_mob_list -= brainmob //Get outta here
 	GLOB.dead_mob_list += brainmob
 	brain.brainmob = brainmob //Set the brain to use the brainmob
 	brainmob = null //Set mmi brainmob var to null

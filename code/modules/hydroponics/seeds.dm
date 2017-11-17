@@ -150,7 +150,7 @@
 		t_amount++
 		product_name = t_prod.name
 	if(getYield() >= 1)
-		SSblackbox.add_details("food_harvested","[product_name]|[getYield()]")
+		SSblackbox.record_feedback("tally", "food_harvested", getYield(), product_name)
 	parent.update_tray()
 
 	return result

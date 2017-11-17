@@ -21,7 +21,7 @@
 
 /obj/item/integrated_circuit/trig/sine
 	name = "sin circuit"
-	desc = "Has nothing to do with evil, unless you consider trigonometry to be evil.  Outputs the sine of A."
+	desc = "Only evil if you're allergic to math. Takes a degree and outputs the sine of said degree."
 	icon_state = "sine"
 	inputs = list("A" = IC_PINTYPE_NUMBER)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
@@ -41,7 +41,7 @@
 
 /obj/item/integrated_circuit/trig/cosine
 	name = "cos circuit"
-	desc = "Outputs the cosine of A."
+	desc = "Takes a degree and outputs the cosine of said degree."
 	icon_state = "cosine"
 	inputs = list("A" = IC_PINTYPE_NUMBER)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
@@ -61,7 +61,7 @@
 
 /obj/item/integrated_circuit/trig/tangent
 	name = "tan circuit"
-	desc = "Outputs the tangent of A.  Guaranteed to not go on a tangent about its existance."
+	desc = "Takes a degree and outputs the tangent of said degree."
 	icon_state = "tangent"
 	inputs = list("A" = IC_PINTYPE_NUMBER)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
@@ -80,8 +80,8 @@
 // Cosecant //
 
 /obj/item/integrated_circuit/trig/cosecant
-	name = "csc circuit"
-	desc = "Outputs the cosecant of A."
+	name = "cosecant (CSC) circuit"
+	desc = "Takes a degree and outputs the cosecant of said degree."
 	icon_state = "cosecant"
 	inputs = list("A" = IC_PINTYPE_NUMBER)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
@@ -100,8 +100,8 @@
 // Secant //
 
 /obj/item/integrated_circuit/trig/secant
-	name = "sec circuit"
-	desc = "Outputs the secant of A.  Has nothing to do with the security department."
+	name = "secant (SEC) circuit"
+	desc = "Takes a degree and outputs the secant of said degree."
 	icon_state = "secant"
 	inputs = list("A" = IC_PINTYPE_NUMBER)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
@@ -120,8 +120,8 @@
 // Cotangent //
 
 /obj/item/integrated_circuit/trig/cotangent
-	name = "cot circuit"
-	desc = "Outputs the cotangent of A."
+	name = "cotangent (COT) circuit"
+	desc = "Takes a degree and outputs the cotangent of said degree."
 	icon_state = "cotangent"
 	inputs = list("A" = IC_PINTYPE_NUMBER)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
