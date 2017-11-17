@@ -1,6 +1,6 @@
 /obj/item/reagent_containers/food/snacks/store/bread/haggis
 	name = "haggis"
-	desc = "a savoury pudding containing intestines."
+	desc = "a Savoury pudding containing intestines."
 	icon = 'hippiestation/icons/obj/food/food.dmi'
 	icon_state = "haggis"
 	bonus_reagents = list("nutriment" = 10, "vitamin" = 15)
@@ -11,7 +11,7 @@
 
 /obj/item/reagent_containers/food/snacks/breadslice/haggis
 	name = "haggis chunk"
-	desc = "A chunk of delicious(?) haggis."
+	desc = "a Chunk of delicious(?) haggis."
 	icon = 'hippiestation/icons/obj/food/food.dmi'
-	icon_state = "haggis"
+	icon_state = "haggis_chunk"
 	foodtype = MEAT | GROSS | GRAIN
