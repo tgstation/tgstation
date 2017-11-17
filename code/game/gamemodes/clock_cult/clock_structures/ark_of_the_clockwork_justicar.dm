@@ -44,7 +44,8 @@
 		playsound(src, 'sound/machines/clockcult/ark_damage.ogg', 75, FALSE)
 		if(last_scream < world.time)
 			audible_message("<span class='boldwarning'>An unearthly screaming sound resonates throughout Reebe!</span>")
-			for(var/mob/M in GLOB.player_list)
+			for(var/V in GLOB.player_list)
+				var/mob/M = V
 				if(M.z == z || is_servant_of_ratvar(M) || isobserver(M))
 					M.playsound_local(M, 'sound/machines/clockcult/ark_scream.ogg', 100, FALSE, pressure_affected = FALSE)
 			hierophant_message("<span class='big boldwarning'>The Ark is taking damage!</span>")

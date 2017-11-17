@@ -1,7 +1,7 @@
 //The Eminence is a unique mob that functions like the leader of the cult. It's incorporeal but can interact with the world in several ways.
 /mob/camera/eminence
-	name = "\improper Emininence"
-	real_name = "\improper Eminence"
+	name = "\the Emininence"
+	real_name = "\the Eminence"
 	desc = "The leader-elect of the servants of Ratvar."
 	icon = 'icons/effects/clockwork_effects.dmi'
 	icon_state = "eminence"
@@ -10,7 +10,6 @@
 	see_in_dark = 8
 	invisibility = INVISIBILITY_OBSERVER
 	layer = FLY_LAYER
-
 	faction = list("ratvar")
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	var/static/superheated_walls = 0
@@ -33,6 +32,10 @@
 	if(NewLoc && !istype(NewLoc, /turf/open/indestructible/reebe_void))
 		forceMove(get_turf(NewLoc))
 	Moved(OldLoc, direct)
+	if(GLOB.ratvar_awakens)
+		for(var/turf/T in range(5, src))
+			if(prob(166 - (get_dist(src, T) * 33)))
+				T.ratvar_act() //Causes moving to leave a swath of proselytized area behind the Eminence
 
 /mob/camera/eminence/Login()
 	..()
@@ -42,10 +45,10 @@
 	to_chat(src, "<span class='brass'>You can move and see through walls, but you can't leave Reebe.</span>")
 	SSticker.mode.eminence = mind
 	eminence_help()
-	var/datum/action/innate/eminence/E
 	for(var/V in actions)
 		var/datum/action/A = V
-		A.Remove(src) //So we get rid of duplicate actions; this also removes Hierophant network, since normal speech goes across it
+		A.Remove(src) //So we get rid of duplicate actions; this also removes Hierophant network, since our say() goes across it anyway
+	var/datum/action/innate/eminence/E
 	for(var/V in subtypesof(/datum/action/innate/eminence))
 		E = new V
 		E.Grant(src)
@@ -55,10 +58,13 @@
 	if(!message)
 		return
 	log_talk(src, "[key_name(src)] : [message]", LOGSAY)
+	if(GLOB.ratvar_awakens)
+		visible_message("<span class='brass'><b>You feel light slam into your mind and form words:</b> \"[capitalize(message)]\"</span>")
+		playsound(src, 'sound/machines/clockcult/ark_scream.ogg', 50, FALSE)
 	hierophant_message("<span class='large_brass'><b>The Eminence:</b> \"[message]\"</span>")
 
 /mob/camera/eminence/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
-	if(z == ZLEVEL_CITYOFCOGS || is_servant_of_ratvar(speaker)) //Away from Reebe, the Eminence can't hear anything
+	if(z == ZLEVEL_CITYOFCOGS || is_servant_of_ratvar(speaker) || GLOB.ratvar_approaches || GLOB.ratvar_awakens) //Away from Reebe, the Eminence can't hear anything
 		to_chat(src, message)
 		return
 	to_chat(src, "<i>[speaker] says something, but you can't understand any of it...</i>")
@@ -71,7 +77,7 @@
 	if(modifiers["alt"] && istype(A, /turf/closed/wall/clockwork))
 		superheat_wall(A)
 		return
-	if(modifiers["middle"])
+	if(modifiers["middle"] || modifiers["ctrl"])
 		issue_command(A)
 		return
 	if(GLOB.ark_of_the_clockwork_justiciar == A)
@@ -84,6 +90,13 @@
 		if(alert(src, "Initiate mass recall?", "Mass Recall", "Yes", "No") != "Yes" || QDELETED(src) || QDELETED(G) || !G.obj_integrity)
 			return
 		G.initiate_mass_recall() //wHOOPS LOOKS LIKE A HULK GOT THROUGH
+
+/mob/camera/eminence/ratvar_act()
+	name = "\improper Radiance"
+	real_name = "\improper Radiance"
+	desc = "The light, forgotten."
+	transform = matrix() * 2
+	invisibility = SEE_INVISIBLE_MINIMUM
 
 /mob/camera/eminence/proc/issue_command(atom/movable/A)
 	var/list/commands
@@ -169,14 +182,14 @@
 	This lasts indefinitely, but only [SUPERHEATED_CLOCKWORK_WALL_LIMIT] clockwork walls can be superheated at once.</span>")
 	to_chat(src, "<span class='alloy'><b>Interact with the Ark</b> to initiate an emergency recall that teleports all servants directly to its location after a short delay. \
 	This can only be used a single time, or twice if the herald's beacon was activated,</span>")
-	to_chat(src, "<span class='alloy'><b>Middle-Click anywhere</b> to allow you to issue a variety of contextual commands to your cult. Different objects allow for different \
-	commands. <i>Middle-Clicking yourself will allow commands that tell the entire cult a goal.</i></span>")
+	to_chat(src, "<span class='alloy'><b>Middle or Ctrl-Click anywhere</b> to allow you to issue a variety of contextual commands to your cult. Different objects allow for different \
+	commands. <i>Doing this on yourself will provide commands that tell the entire cult a goal.</i></span>")
 
 
 //Eminence actions below this point
 /datum/action/innate/eminence
 	name = "Eminence Action"
-	desc = "You shouldn't see this. File a bug report"
+	desc = "You shouldn't see this. File a bug report!"
 	icon_icon = 'icons/mob/actions/actions_clockcult.dmi'
 	background_icon_state = "bg_clock"
 	buttontooltipstyle = "clockcult"
