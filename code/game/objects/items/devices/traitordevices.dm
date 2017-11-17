@@ -240,9 +240,3 @@ effective or pretty fucking useless.
 
 /obj/item/device/jammer/Initialize()
 	AddComponent(/datum/component/jammer, 12, src)
-
-/obj/item/device/jammer/attack_self(mob/user)
-	GET_COMPONENT(jammer, /datum/component/jammer)
-	if(jammer)
-		jammer.Toggle()
-		update_icon()
