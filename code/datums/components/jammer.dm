@@ -9,7 +9,7 @@
 	src.jammer_name = jammer_name
 
 /datum/component/jammer/proc/Toggle(mob/user)
-	to_chat(user,"<span class='notice'>You [active ? "deactivate" : "activate"] [parent].</span>")
+	to_chat(user,"<span class='notice'>You [active ? "deactivate" : "activate"] [jammer_name].</span>")
 	active = !active
 	if(active)
 		GLOB.active_jammers |= src
