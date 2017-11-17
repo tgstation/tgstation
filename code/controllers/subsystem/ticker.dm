@@ -114,7 +114,7 @@ SUBSYSTEM_DEF(ticker)
 				continue
 		music -= S
 
-	if(isemptylist(music))
+	if(!LAZYLEN(music))
 		music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
 		login_music = pick(music)
 	else

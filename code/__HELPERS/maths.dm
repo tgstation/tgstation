@@ -40,9 +40,15 @@ GLOBAL_LIST_INIT(sqrtTable, list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4,
 /proc/Default(a, b)
 	return a ? a : b
 
-// Greatest Common Divisor - Euclid's algorithm
+// Greatest Common Divisor
+// Iterative form of Euclid's algorithm
+// b ? Gcd(b, a % b) : a
 /proc/Gcd(a, b)
-	return b ? Gcd(b, a % b) : a
+	while(b)
+		var/olda = a
+		a = b
+		b = olda % b
+	return a
 
 /proc/Inverse(x)
 	return 1 / x
@@ -127,10 +133,9 @@ GLOBAL_LIST_INIT(sqrtTable, list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4,
 // Will filter out extra rotations and negative rotations
 // E.g: 540 becomes 180. -180 becomes 180.
 /proc/SimplifyDegrees(degrees)
-	degrees = degrees % 360
-	if(degrees < 0)
-		degrees += 360
-	return degrees
+	. = degrees % 360
+	if(. < 0)
+		. += 360
 
 // min is inclusive, max is exclusive
 /proc/Wrap(val, min, max)

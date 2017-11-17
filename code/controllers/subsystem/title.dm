@@ -26,7 +26,7 @@ SUBSYSTEM_DEF(title)
 		if((L.len == 1 && L[1] != "blank.png")|| (L.len > 1 && ((use_rare_screens && lowertext(L[1]) == "rare") || (lowertext(L[1]) == lowertext(SSmapping.config.map_name)))))
 			title_screens += S
 
-	if(!isemptylist(title_screens))
+	if(LAZYLEN(title_screens))
 		if(length(title_screens) > 1)
 			for(var/S in title_screens)
 				var/list/L = splittext(S,".")
@@ -36,7 +36,7 @@ SUBSYSTEM_DEF(title)
 				break
 
 		file_path = "config/title_screens/images/[pick(title_screens)]"
-		
+
 		icon = new(fcopy_rsc(file_path))
 
 		if(splash_turf)
