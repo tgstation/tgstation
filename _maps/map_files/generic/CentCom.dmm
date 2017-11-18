@@ -13263,7 +13263,12 @@
 	id = "thunderdomegen";
 	name = "General Supply"
 	},
-/turf/open/space/basic,
+/obj/effect/turf_decal/loading_area{
+	tag = "icon-loadingarea (EAST)";
+	icon_state = "loadingarea";
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "IA" = (
 /obj/effect/landmark/thunderdome/two,
@@ -13291,7 +13296,12 @@
 	id = "thunderdome";
 	name = "Thunderdome Blast Door"
 	},
-/turf/open/space/basic,
+/obj/effect/turf_decal/loading_area{
+	tag = "icon-loadingarea (EAST)";
+	icon_state = "loadingarea";
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "IE" = (
 /turf/open/floor/plasteel/red/side{
@@ -13636,7 +13646,8 @@
 	id = "thunderdomehea";
 	name = "Heavy Supply"
 	},
-/turf/open/space/basic,
+/obj/effect/turf_decal/loading_area,
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "JE" = (
 /obj/machinery/door/poddoor{
@@ -14523,6 +14534,150 @@
 	dir = 8
 	},
 /area/centcom/control)
+"Mh" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdome";
+	name = "Thunderdome Blast Door"
+	},
+/obj/effect/turf_decal/loading_area{
+	tag = "icon-loadingarea (WEST)";
+	icon_state = "loadingarea";
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"Mi" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdomegen";
+	name = "General Supply"
+	},
+/obj/effect/turf_decal/loading_area{
+	tag = "icon-loadingarea (WEST)";
+	icon_state = "loadingarea";
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"Mj" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdome";
+	name = "Thunderdome Blast Door"
+	},
+/obj/effect/turf_decal/loading_area{
+	tag = "icon-loadingarea (WEST)";
+	icon_state = "loadingarea";
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"Mk" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdomegen";
+	name = "General Supply"
+	},
+/obj/effect/turf_decal/loading_area{
+	tag = "icon-loadingarea (WEST)";
+	icon_state = "loadingarea";
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"Ml" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdome";
+	name = "Thunderdome Blast Door"
+	},
+/obj/effect/turf_decal/loading_area{
+	tag = "icon-loadingarea (WEST)";
+	icon_state = "loadingarea";
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"Mm" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdomegen";
+	name = "General Supply"
+	},
+/obj/effect/turf_decal/loading_area{
+	tag = "icon-loadingarea (WEST)";
+	icon_state = "loadingarea";
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"Mn" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdome";
+	name = "Thunderdome Blast Door"
+	},
+/obj/effect/turf_decal/loading_area{
+	tag = "icon-loadingarea (WEST)";
+	icon_state = "loadingarea";
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"Mo" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdomegen";
+	name = "General Supply"
+	},
+/obj/effect/turf_decal/loading_area{
+	tag = "icon-loadingarea (WEST)";
+	icon_state = "loadingarea";
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"Mp" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdome";
+	name = "Thunderdome Blast Door"
+	},
+/obj/effect/turf_decal/loading_area{
+	tag = "icon-loadingarea (WEST)";
+	icon_state = "loadingarea";
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"Mq" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdomegen";
+	name = "General Supply"
+	},
+/obj/effect/turf_decal/loading_area{
+	tag = "icon-loadingarea (WEST)";
+	icon_state = "loadingarea";
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"Mr" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdome";
+	name = "Thunderdome Blast Door"
+	},
+/obj/effect/turf_decal/loading_area{
+	tag = "icon-loadingarea (WEST)";
+	icon_state = "loadingarea";
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"Ms" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdomegen";
+	name = "General Supply"
+	},
+/obj/effect/turf_decal/loading_area{
+	tag = "icon-loadingarea (WEST)";
+	icon_state = "loadingarea";
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
 
 (1,1,1) = {"
 aa
@@ -59960,12 +60115,12 @@ HP
 Ic
 Ep
 Ep
-ID
-ID
-ID
-ID
-ID
-ID
+Mh
+Mj
+Ml
+Mn
+Mp
+Mr
 Iv
 Iv
 Iv
@@ -61502,12 +61657,12 @@ HY
 If
 Gq
 Ep
-Iz
-Iz
-Iz
-Iz
-Iz
-Iz
+Mi
+Mk
+Mm
+Mo
+Mq
+Ms
 Iv
 Iv
 Iv
