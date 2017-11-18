@@ -8,7 +8,7 @@
 	foodtype = GRAIN | VEGETABLES | MEAT | GROSS
 
 /obj/item/reagent_containers/food/snacks/taco/leg
-	desc = "An untraditional taco with leg,cheese, and lettuce."
+	desc = "An untraditional taco with leg, cheese, and lettuce."
 	icon = 'hippiestation/icons/obj/food/food.dmi'
 	icon_state = "legtaco"
 	bonus_reagents = list("nutriment" = 3, "vitamin" = 2)
