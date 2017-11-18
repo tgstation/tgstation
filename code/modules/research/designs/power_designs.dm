@@ -4,7 +4,7 @@
 
 /datum/design/basic_cell
 	name = "Basic Power Cell"
-	desc = "A basic power cell that holds 1000 units of energy."
+	desc = "A basic power cell that holds 1 kW of power."
 	id = "basic_cell"
 	req_tech = list("powerstorage" = 1)
 	build_type = PROTOLATHE | AUTOLATHE |MECHFAB
@@ -15,7 +15,7 @@
 
 /datum/design/high_cell
 	name = "High-Capacity Power Cell"
-	desc = "A power cell that holds 10000 units of energy."
+	desc = "A power cell that holds 10 kW of power."
 	id = "high_cell"
 	req_tech = list("powerstorage" = 2)
 	build_type = PROTOLATHE | AUTOLATHE | MECHFAB
@@ -26,7 +26,7 @@
 
 /datum/design/super_cell
 	name = "Super-Capacity Power Cell"
-	desc = "A power cell that holds 20000 units of energy."
+	desc = "A power cell that holds 20 kW of power."
 	id = "super_cell"
 	req_tech = list("powerstorage" = 3, "materials" = 3)
 	build_type = PROTOLATHE | MECHFAB
@@ -37,7 +37,7 @@
 
 /datum/design/hyper_cell
 	name = "Hyper-Capacity Power Cell"
-	desc = "A power cell that holds 30000 units of energy."
+	desc = "A power cell that holds 30 kW of power."
 	id = "hyper_cell"
 	req_tech = list("powerstorage" = 5, "materials" = 5, "engineering" = 5)
 	build_type = PROTOLATHE | MECHFAB
@@ -48,7 +48,7 @@
 
 /datum/design/bluespace_cell
 	name = "Bluespace Power Cell"
-	desc = "A power cell that holds 40000 units of energy."
+	desc = "A power cell that holds 40 kW of power."
 	id = "bluespace_cell"
 	req_tech = list("powerstorage" = 6, "materials" = 5, "engineering" = 5, "bluespace" = 5)
 	build_type = PROTOLATHE | MECHFAB
