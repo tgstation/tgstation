@@ -6,7 +6,9 @@
 	var/active_msg = "You charge your projectile!"
 	var/base_icon_state = "projectile"
 	var/active_icon_state = "projectile"
-	var/projectile_damage_override = -1
+	var/list/projectile_var_overrides = list()
+	var/projectile_amount = 1	//Projectiles per cast.
+	var/current_amount = 0	//How many projectiles left.
 
 /obj/effect/proc_holder/spell/aimed/Click()
 	var/mob/living/user = usr
@@ -19,9 +21,14 @@
 		return
 	if(active)
 		msg = "<span class='notice'>[deactive_msg]</span>"
+		if(charge_type == "recharge")
+			var/refund_percent = current_amount/projectile_amount
+			charge_counter = charge_max * refund_percent
+			start_recharge()
 		remove_ranged_ability(msg)
 	else
 		msg = "<span class='notice'>[active_msg]<B>Left-click to shoot it at a target!</B></span>"
+		current_amount = projectile_amount
 		add_ranged_ability(user, msg, TRUE)
 
 /obj/effect/proc_holder/spell/aimed/update_icon()
@@ -33,11 +40,12 @@
 /obj/effect/proc_holder/spell/aimed/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(..())
 		return FALSE
-	if(!cast_check(0, ranged_ability_user))
+	var/ran_out = (current_amount <= 0)
+	if(!cast_check(!ran_out, ranged_ability_user))
 		remove_ranged_ability()
 		return FALSE
 	var/list/targets = list(target)
-	perform(targets,user = ranged_ability_user)
+	perform(targets, ran_out, user = ranged_ability_user)
 	return TRUE
 
 /obj/effect/proc_holder/spell/aimed/cast(list/targets, mob/living/user)
@@ -48,18 +56,20 @@
 		return FALSE
 	fire_projectile(user, target)
 	user.newtonian_move(get_dir(U, T))
-	remove_ranged_ability() //Auto-disable the ability once successfully performed
+	if(current_amount <= 0)
+		remove_ranged_ability() //Auto-disable the ability once you run out of bullets.
+		charge_counter = 0
+		start_recharge()
 	return TRUE
 
 /obj/effect/proc_holder/spell/aimed/proc/fire_projectile(mob/living/user, atom/target)
+	current_amount--
 	var/obj/item/projectile/P = new projectile_type(user.loc)
-	P.current = get_turf(user)
-	P.preparePixelProjectile(target, get_turf(target), user)
-	if(projectile_damage_override != -1)
-		P.damage = projectile_damage_override
-		P.nodamage = TRUE
-		if(P.damage)
-			P.nodamage = FALSE
+	P.firer = user
+	P.preparePixelProjectile(target, user)
+	for(var/V in projectile_var_overrides)
+		if(P.vars[V])
+			P.vars[V] = projectile_var_overrides[V]
 	P.fire()
 	return TRUE
 
@@ -76,26 +86,10 @@
 	base_icon_state = "lightning"
 	sound = 'sound/magic/lightningbolt.ogg'
 	active = FALSE
-	var/tesla_range = 15
-	var/tesla_power = 20000
-	var/tesla_boom = FALSE
+	projectile_var_overrides = list("tesla_range" = 15, "tesla_power" = 20000, "tesla_boom" = FALSE)
 	active_msg = "You energize your hand with arcane lightning!"
 	deactive_msg = "You let the energy flow out of your hands back into yourself..."
-
-/obj/effect/proc_holder/spell/aimed/lightningbolt/fire_projectile(mob/living/user, atom/target)
-	var/obj/item/projectile/magic/aoe/lightning/P = new /obj/item/projectile/magic/aoe/lightning(user.loc)
-	P.current = get_turf(user)
-	P.preparePixelProjectile(target, get_turf(target), user)
-	if(projectile_damage_override != -1)
-		P.damage = projectile_damage_override
-		P.nodamage = TRUE
-		if(P.damage)
-			P.nodamage = FALSE
-	P.tesla_power = tesla_power
-	P.tesla_range = tesla_range
-	P.tesla_boom = tesla_boom
-	P.fire()
-	return TRUE
+	projectile_type = /obj/item/projectile/magic/aoe/lightning
 
 /obj/effect/proc_holder/spell/aimed/fireball
 	name = "Fireball"
@@ -110,7 +104,7 @@
 	projectile_type = /obj/item/projectile/magic/aoe/fireball
 	base_icon_state = "fireball"
 	action_icon_state = "fireball0"
-	sound = 'sound/magic/Fireball.ogg'
+	sound = 'sound/magic/fireball.ogg'
 	active_msg = "You prepare to cast your fireball spell!"
 	deactive_msg = "You extinguish your fireball... for now."
 	active = FALSE

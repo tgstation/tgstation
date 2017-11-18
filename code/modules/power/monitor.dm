@@ -3,10 +3,11 @@
 	desc = "It monitors power levels across the station."
 	icon_screen = "power"
 	icon_keyboard = "power_key"
-	use_power = 2
+	light_color = LIGHT_COLOR_YELLOW
+	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 20
 	active_power_usage = 100
-	circuit = /obj/item/weapon/circuitboard/computer/powermonitor
+	circuit = /obj/item/circuitboard/computer/powermonitor
 
 	var/obj/structure/cable/attached
 
@@ -15,18 +16,18 @@
 	var/record_interval = 50
 	var/next_record = 0
 
-/obj/machinery/computer/monitor/New()
-	..()
+/obj/machinery/computer/monitor/Initialize()
+	. = ..()
 	search()
 	history["supply"] = list()
 	history["demand"] = list()
 
 /obj/machinery/computer/monitor/process()
 	if(!attached)
-		use_power = 1
+		use_power = IDLE_POWER_USE
 		search()
 	else
-		use_power = 2
+		use_power = ACTIVE_POWER_USE
 		record()
 
 /obj/machinery/computer/monitor/proc/search()
@@ -49,8 +50,8 @@
 		if(demand.len > record_size)
 			demand.Cut(1, 2)
 
-/obj/machinery/computer/monitor/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-											datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+/obj/machinery/computer/monitor/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "power_monitor", name, 1200, 1000, master_ui, state)
@@ -65,8 +66,8 @@
 	data["areas"] = list()
 
 	if(attached)
-		data["supply"] = attached.powernet.viewavail
-		data["demand"] = attached.powernet.viewload
+		data["supply"] = DisplayPower(attached.powernet.viewavail)
+		data["demand"] = DisplayPower(attached.powernet.viewload)
 		for(var/obj/machinery/power/terminal/term in attached.powernet.nodes)
 			var/obj/machinery/power/apc/A = term.master
 			if(istype(A))
@@ -78,7 +79,7 @@
 				data["areas"] += list(list(
 					"name" = A.area.name,
 					"charge" = cell_charge,
-					"load" = A.lastused_total,
+					"load" = DisplayPower(A.lastused_total),
 					"charging" = A.charging,
 					"eqp" = A.equipment,
 					"lgt" = A.lighting,

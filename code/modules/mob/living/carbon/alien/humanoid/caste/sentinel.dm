@@ -6,9 +6,9 @@
 	icon_state = "aliens"
 
 
-/mob/living/carbon/alien/humanoid/sentinel/New()
+/mob/living/carbon/alien/humanoid/sentinel/Initialize()
 	AddAbility(new /obj/effect/proc_holder/alien/sneak)
-	..()
+	. = ..()
 
 /mob/living/carbon/alien/humanoid/sentinel/create_internal_organs()
 	internal_organs += new /obj/item/organ/alien/plasmavessel

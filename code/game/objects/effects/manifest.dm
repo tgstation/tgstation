@@ -8,9 +8,9 @@
 
 /obj/effect/manifest/proc/manifest()
 	var/dat = "<B>Crew Manifest</B>:<BR>"
-	for(var/mob/living/carbon/human/M in mob_list)
+	for(var/mob/living/carbon/human/M in GLOB.carbon_list)
 		dat += text("    <B>[]</B> -  []<BR>", M.name, M.get_assignment())
-	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( src.loc )
+	var/obj/item/paper/P = new /obj/item/paper( src.loc )
 	P.info = dat
 	P.name = "paper- 'Crew Manifest'"
 	//SN src = null

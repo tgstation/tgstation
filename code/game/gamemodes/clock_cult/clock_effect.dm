@@ -5,17 +5,17 @@
 	var/clockwork_desc = "A fabled artifact from beyond the stars. Contains concentrated meme essence." //Shown to clockwork cultists instead of the normal description
 	icon = 'icons/effects/clockwork_effects.dmi'
 	icon_state = "ratvars_flame"
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	opacity = 0
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/obj/effect/clockwork/New()
-	..()
-	all_clockwork_objects += src
+/obj/effect/clockwork/Initialize()
+	. = ..()
+	GLOB.all_clockwork_objects += src
 
 /obj/effect/clockwork/Destroy()
-	all_clockwork_objects -= src
+	GLOB.all_clockwork_objects -= src
 	return ..()
 
 /obj/effect/clockwork/examine(mob/user)

@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/changeling/resonant_shriek
 	name = "Resonant Shriek"
-	desc = "Our lungs and vocal chords shift, allowing us to briefly emit a noise that deafens and confuses the weak-minded."
+	desc = "Our lungs and vocal cords shift, allowing us to briefly emit a noise that deafens and confuses the weak-minded."
 	helptext = "Emits a high-frequency sound that confuses and deafens humans, blows out nearby lights and overloads cyborg sensors."
 	chemical_cost = 20
 	dna_cost = 1
@@ -10,23 +10,22 @@
 /obj/effect/proc_holder/changeling/resonant_shriek/sting_action(mob/user)
 	for(var/mob/living/M in get_hearers_in_view(4, user))
 		if(iscarbon(M))
-			if(!M.mind || !M.mind.changeling)
-				M.adjustEarDamage(0,30)
-				M.confused += 25
-				M.Jitter(50)
+			var/mob/living/carbon/C = M
+			if(!C.mind || !C.mind.has_antag_datum(/datum/antagonist/changeling))
+				C.adjustEarDamage(0, 30)
+				C.confused += 25
+				C.Jitter(50)
 			else
-				M << sound('sound/effects/screech.ogg')
+				SEND_SOUND(C, sound('sound/effects/screech.ogg'))
 
 		if(issilicon(M))
-			M << sound('sound/weapons/flash.ogg')
-			M.Weaken(rand(5,10))
+			SEND_SOUND(M, sound('sound/weapons/flash.ogg'))
+			M.Knockdown(rand(100,200))
 
 	for(var/obj/machinery/light/L in range(4, user))
 		L.on = 1
 		L.break_light_tube()
-
-	feedback_add_details("changeling_powers","RS")
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/changeling/dissonant_shriek
 	name = "Dissonant Shriek"
@@ -40,6 +39,4 @@
 		L.on = 1
 		L.break_light_tube()
 	empulse(get_turf(user), 2, 5, 1)
-	return 1
-
-
+	return TRUE

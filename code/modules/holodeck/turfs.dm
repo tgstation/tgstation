@@ -3,7 +3,7 @@
 	thermal_conductivity = 0
 	broken_states = list("engine")
 	burnt_states = list("engine")
-	flags = NONE
+	flags_1 = NONE
 
 /turf/open/floor/holofloor/attackby(obj/item/I, mob/living/user)
 	return // HOLOFLOOR DOES NOT GIVE A FUCK
@@ -43,16 +43,18 @@
 	icon_state = "asteroid0"
 
 /turf/open/floor/holofloor/asteroid/Initialize()
-	icon_state = "asteroid[pick(0,1,2,3,4,5,6,7,8,9,10,11,12)]"
-	..()
+	icon_state = "asteroid[rand(0, 12)]"
+	. = ..()
 
 /turf/open/floor/holofloor/basalt
 	name = "basalt"
 	icon_state = "basalt0"
 
 /turf/open/floor/holofloor/basalt/Initialize()
-	icon_state = "basalt[pick(0,1,2,3,4,5,6,7,8,9,10,11,12)]"
-	..()
+	. = ..()
+	if(prob(15))
+		icon_state = "basalt[rand(0, 12)]"
+		set_basalt_light(src)
 
 /turf/open/floor/holofloor/space
 	name = "Space"
@@ -61,7 +63,7 @@
 
 /turf/open/floor/holofloor/space/Initialize()
 	icon_state = SPACE_ICON_STATE // so realistic
-	..()
+	. = ..()
 
 /turf/open/floor/holofloor/hyperspace
 	name = "hyperspace"
@@ -70,10 +72,10 @@
 
 /turf/open/floor/holofloor/hyperspace/Initialize()
 	icon_state = "speedspace_ns_[(x + 5*y + (y%2+1)*7)%15+1]"
-	..()
+	. = ..()
 
 /turf/open/floor/holofloor/hyperspace/ns/Initialize()
-	..()
+	. = ..()
 	icon_state = "speedspace_ns_[(x + 5*y + (y%2+1)*7)%15+1]"
 
 /turf/open/floor/holofloor/carpet
@@ -87,7 +89,7 @@
 	canSmoothWith = null
 
 /turf/open/floor/holofloor/carpet/Initialize()
-	..()
+	. = ..()
 	addtimer(CALLBACK(src, .proc/update_icon), 1)
 
 /turf/open/floor/holofloor/carpet/update_icon()
@@ -104,7 +106,7 @@
 	slowdown = 2
 
 /turf/open/floor/holofloor/snow/cold
-	initial_gas_mix = "freon=7500;TEMP=0"
+	initial_gas_mix = "nob=7500;TEMP=2.7"
 
 /turf/open/floor/holofloor/asteroid
 	name = "asteroid sand"

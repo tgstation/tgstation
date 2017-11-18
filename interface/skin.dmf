@@ -63,6 +63,10 @@ macro "default"
 		name = "DELETE"
 		command = "delete-key-pressed"
 		is-disabled = false
+	elem
+		name = "CTRL+H"
+		command = "delete-key-pressed"
+		is-disabled = false
 	elem 
 		name = "CTRL+1"
 		command = "a-intent help"
@@ -102,10 +106,6 @@ macro "default"
 	elem 
 		name = "CTRL+G"
 		command = "a-intent right"
-		is-disabled = false
-	elem 
-		name = "CTRL+H"
-		command = "talk-wheel"
 		is-disabled = false
 	elem 
 		name = "CTRL+O"
@@ -289,6 +289,10 @@ macro "hotkeys"
 		name = "DELETE"
 		command = "delete-key-pressed"
 		is-disabled = false
+	elem
+		name = "H"
+		command = "delete-key-pressed"
+		is-disabled = false
 	elem 
 		name = "1"
 		command = "a-intent help"
@@ -368,14 +372,6 @@ macro "hotkeys"
 	elem 
 		name = "CTRL+G"
 		command = "a-intent right"
-		is-disabled = false
-	elem 
-		name = "H"
-		command = "talk-wheel"
-		is-disabled = false
-	elem 
-		name = "CTRL+H"
-		command = "talk-wheel"
 		is-disabled = false
 	elem 
 		name = "M"
@@ -595,6 +591,10 @@ macro "robot-default"
 		name = "DELETE"
 		command = "delete-key-pressed"
 		is-disabled = false
+	elem
+		name = "CTRL+H"
+		command = "delete-key-pressed"
+		is-disabled = false
 	elem 
 		name = "CTRL+1"
 		command = "toggle-module 1"
@@ -618,10 +618,6 @@ macro "robot-default"
 	elem 
 		name = "CTRL+B"
 		command = "resist"
-		is-disabled = false
-	elem 
-		name = "CTRL+H"
-		command = "talk-wheel"
 		is-disabled = false
 	elem 
 		name = "CTRL+O"
@@ -793,6 +789,10 @@ macro "robot-hotkeys"
 		name = "DELETE"
 		command = "delete-key-pressed"
 		is-disabled = false
+	elem
+		name = "H"
+		command = "delete-key-pressed"
+		is-disabled = false
 	elem 
 		name = "1"
 		command = "toggle-module 1"
@@ -841,14 +841,6 @@ macro "robot-hotkeys"
 		name = "CTRL+B"
 		command = "resist"
 		is-disabled = false	
-	elem 
-		name = "H"
-		command = "talk-wheel"
-		is-disabled = false
-	elem 
-		name = "CTRL+H"
-		command = "talk-wheel"
-		is-disabled = false
 	elem 
 		name = "M"
 		command = "me"
@@ -1060,60 +1052,6 @@ menu "menu"
 		is-checked = false
 		can-check = false
 		group = ""
-		is-disabled = false
-		saved-params = "is-checked"
-	elem 
-		name = "&Icons"
-		command = ""
-		category = ""
-		is-checked = false
-		can-check = false
-		group = ""
-		is-disabled = false
-		saved-params = "is-checked"
-	elem "auto"
-		name = "&Auto (stretch-to-fit)"
-		command = ".winset \"mapwindow.map.icon-size=0\""
-		category = "&Icons"
-		is-checked = true
-		can-check = true
-		group = "size"
-		is-disabled = false
-		saved-params = "is-checked"
-	elem "icon96"
-		name = "&96x96 (3x)"
-		command = ".winset \"mapwindow.map.icon-size=96\""
-		category = "&Icons"
-		is-checked = false
-		can-check = true
-		group = "size"
-		is-disabled = false
-		saved-params = "is-checked"
-	elem "icon64"
-		name = "&64x64 (2x)"
-		command = ".winset \"mapwindow.map.icon-size=64\""
-		category = "&Icons"
-		is-checked = false
-		can-check = true
-		group = "size"
-		is-disabled = false
-		saved-params = "is-checked"
-	elem "icon48"
-		name = "&48x48 (1.5x)"
-		command = ".winset \"mapwindow.map.icon-size=48\""
-		category = "&Icons"
-		is-checked = false
-		can-check = true
-		group = "size"
-		is-disabled = false
-		saved-params = "is-checked"
-	elem "icon32"
-		name = "&32x32"
-		command = ".winset \"mapwindow.map.icon-size=32\""
-		category = "&Icons"
-		is-checked = false
-		can-check = true
-		group = "size"
 		is-disabled = false
 		saved-params = "is-checked"
 	elem 
@@ -1383,6 +1321,7 @@ window "mapwindow"
 		on-show = ""
 		on-hide = ""
 		style = ""
+		zoom-mode = "distort"
 
 window "infowindow"
 	elem "infowindow"
@@ -1659,6 +1598,32 @@ window "outputwindow"
 		macro = ""
 		menu = ""
 		on-close = ""
+	elem "browseroutput"
+		type = BROWSER
+		pos = 0,0
+		size = 640x480
+		anchor1 = 0,0
+		anchor2 = 100,100
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = #ffffff
+		is-visible = false
+		is-disabled = true
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = ""
+		on-size = ""
+		show-history = false
+		show-url = false
+		auto-format = false
+		use-title = false
+		on_show = ""
+		on_hide = ""
 	elem "output"
 		type = OUTPUT
 		pos = 0,0
@@ -1677,14 +1642,14 @@ window "outputwindow"
 		border = none
 		drop-zone = false
 		right-click = false
-		saved-params = "max-lines"
+		saved-params = ""
 		on-size = ""
-		link-color = #0000ff
-		visited-color = #ff00ff
-		style = ""
-		enable-http-images = false
-		max-lines = 1000
-		image = ""
+		show-history = false
+		show-url = false
+		auto-format = false
+		use-title = false
+		on_show = ""
+		on_hide = ""		
 
 window "statwindow"
 	elem "statwindow"
@@ -1759,4 +1724,3 @@ window "statwindow"
 		on-tab = ""
 		prefix-color = none
 		suffix-color = none
-

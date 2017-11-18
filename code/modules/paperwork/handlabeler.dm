@@ -1,4 +1,4 @@
-/obj/item/weapon/hand_labeler
+/obj/item/hand_labeler
 	name = "hand labeler"
 	desc = "A combined label printer and applicator in a portable device, designed to be easy to operate and use."
 	icon = 'icons/obj/bureaucracy.dmi'
@@ -8,7 +8,7 @@
 	var/labels_left = 30
 	var/mode = 0
 
-/obj/item/weapon/hand_labeler/suicide_act(mob/user)
+/obj/item/hand_labeler/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is pointing [src] at [user.p_them()]self. [user.p_theyre(TRUE)] going to label [user.p_them()]self as a suicide!</span>")
 	labels_left = max(labels_left - 1, 0)
 
@@ -16,8 +16,8 @@
 	user.real_name += " (suicide)"
 	// no conflicts with their identification card
 	for(var/atom/A in user.GetAllContents())
-		if(istype(A, /obj/item/weapon/card/id))
-			var/obj/item/weapon/card/id/their_card = A
+		if(istype(A, /obj/item/card/id))
+			var/obj/item/card/id/their_card = A
 
 			// only renames their card, as opposed to tagging everyone's
 			if(their_card.registered_name != old_real_name)
@@ -35,25 +35,23 @@
 
 	return OXYLOSS
 
-/obj/item/weapon/hand_labeler/afterattack(atom/A, mob/user,proximity)
-	if(!proximity) return
+/obj/item/hand_labeler/afterattack(atom/A, mob/user,proximity)
+	if(!proximity)
+		return
 	if(!mode)	//if it's off, give up.
 		return
 
 	if(!labels_left)
-		user << "<span class='warning'>No labels left!</span>"
+		to_chat(user, "<span class='warning'>No labels left!</span>")
 		return
 	if(!label || !length(label))
-		user << "<span class='warning'>No text set!</span>"
+		to_chat(user, "<span class='warning'>No text set!</span>")
 		return
 	if(length(A.name) + length(label) > 64)
-		user << "<span class='warning'>Label too big!</span>"
+		to_chat(user, "<span class='warning'>Label too big!</span>")
 		return
-	if(ishuman(A))
-		user << "<span class='warning'>You can't label humans!</span>"
-		return
-	if(issilicon(A))
-		user << "<span class='warning'>You can't label cyborgs!</span>"
+	if(ismob(A))
+		to_chat(user, "<span class='warning'>You can't label creatures!</span>") // use a collar
 		return
 
 	user.visible_message("[user] labels [A] as [label].", \
@@ -62,35 +60,35 @@
 	labels_left--
 
 
-/obj/item/weapon/hand_labeler/attack_self(mob/user)
+/obj/item/hand_labeler/attack_self(mob/user)
 	if(!user.IsAdvancedToolUser())
-		user << "<span class='warning'>You don't have the dexterity to use [src]!</span>"
+		to_chat(user, "<span class='warning'>You don't have the dexterity to use [src]!</span>")
 		return
 	mode = !mode
 	icon_state = "labeler[mode]"
 	if(mode)
-		user << "<span class='notice'>You turn on [src].</span>"
+		to_chat(user, "<span class='notice'>You turn on [src].</span>")
 		//Now let them chose the text.
 		var/str = copytext(reject_bad_text(input(user,"Label text?","Set label","")),1,MAX_NAME_LEN)
 		if(!str || !length(str))
-			user << "<span class='warning'>Invalid text!</span>"
+			to_chat(user, "<span class='warning'>Invalid text!</span>")
 			return
 		label = str
-		user << "<span class='notice'>You set the text to '[str]'.</span>"
+		to_chat(user, "<span class='notice'>You set the text to '[str]'.</span>")
 	else
-		user << "<span class='notice'>You turn off [src].</span>"
+		to_chat(user, "<span class='notice'>You turn off [src].</span>")
 
-/obj/item/weapon/hand_labeler/attackby(obj/item/I, mob/user, params)
+/obj/item/hand_labeler/attackby(obj/item/I, mob/user, params)
 	..()
 	if(istype(I, /obj/item/hand_labeler_refill))
-		user << "<span class='notice'>You insert [I] into [src].</span>"
+		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
 		qdel(I)
 		labels_left = initial(labels_left)	//Yes, it's capped at its initial value
 
-/obj/item/weapon/hand_labeler/borg
+/obj/item/hand_labeler/borg
 	name = "cyborg-hand labeler"
 
-/obj/item/weapon/hand_labeler/borg/afterattack(atom/A, mob/user, proximity)
+/obj/item/hand_labeler/borg/afterattack(atom/A, mob/user, proximity)
 	..(A, user, proximity)
 	if(!iscyborg(user))
 		return
@@ -115,4 +113,6 @@
 	desc = "A roll of paper. Use it on a hand labeler to refill it."
 	icon_state = "labeler_refill"
 	item_state = "electropack"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY

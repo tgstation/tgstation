@@ -11,7 +11,9 @@
 	var/health_scan
 	var/alarm_health = 0
 
-
+/obj/item/device/assembly/health/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Use a multitool to swap between \"detect death\" mode and \"detect critical state\" mode.</span>")
 
 /obj/item/device/assembly/health/activate()
 	if(!..())
@@ -29,7 +31,7 @@
 	update_icon()
 	return secured
 
-/obj/item/device/assembly/health/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/device/assembly/health/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/device/multitool))
 		if(alarm_health == 0)
 			alarm_health = -90
@@ -57,7 +59,7 @@
 		health_scan = M.health
 		if(health_scan <= alarm_health)
 			pulse()
-			audible_message("\icon[src] *beep* *beep*", "*beep* *beep*")
+			audible_message("[icon2html(src, hearers(src))] *beep* *beep*", "*beep* *beep*")
 			toggle_scan()
 		return
 	return
@@ -76,7 +78,7 @@
 	if(!secured)
 		user.show_message("<span class='warning'>The [name] is unsecured!</span>")
 		return 0
-	var/dat = "<TT><B>Health Sensor</B> <A href='?src=\ref[src];scanning=1'>[scanning?"On":"Off"]</A>"
+	var/dat = "<TT><B>Health Sensor</B> <A href='?src=[REF(src)];scanning=1'>[scanning?"On":"Off"]</A>"
 	if(scanning && health_scan)
 		dat += "<BR>Health: [health_scan]"
 	user << browse(dat, "window=hscan")

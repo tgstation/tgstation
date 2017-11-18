@@ -7,6 +7,11 @@
 #define STATIC_LIGHT	6
 #define STATIC_ENVIRON	7
 
+//Power use
+#define NO_POWER_USE 0
+#define IDLE_POWER_USE 1
+#define ACTIVE_POWER_USE 2
+
 
 //bitflags for door switches.
 #define OPEN	1
@@ -23,6 +28,7 @@
 #define MECHFAB		16 //Remember, objects utilising this flag should have construction_time and construction_cost vars.
 #define BIOGENERATOR 32 //Uses biomass
 #define LIMBGROWER 64 //Uses synthetic flesh
+#define SMELTER 128 //uses various minerals
 //Note: More then one of these can be added to a design but imprinter and lathe designs are incompatable.
 
 //Modular computer/NTNet defines
@@ -63,3 +69,21 @@
 #define PROGRAM_STATE_KILLED 0
 #define PROGRAM_STATE_BACKGROUND 1
 #define PROGRAM_STATE_ACTIVE 2
+
+#define FIREDOOR_OPEN 1
+#define FIREDOOR_CLOSED 2
+
+
+
+// These are used by supermatter and supermatter monitor program, mostly for UI updating purposes. Higher should always be worse!
+#define SUPERMATTER_ERROR -1		// Unknown status, shouldn't happen but just in case.
+#define SUPERMATTER_INACTIVE 0		// No or minimal energy
+#define SUPERMATTER_NORMAL 1		// Normal operation
+#define SUPERMATTER_NOTIFY 2		// Ambient temp > 80% of CRITICAL_TEMPERATURE
+#define SUPERMATTER_WARNING 3		// Ambient temp > CRITICAL_TEMPERATURE OR integrity damaged
+#define SUPERMATTER_DANGER 4		// Integrity < 50%
+#define SUPERMATTER_EMERGENCY 5		// Integrity < 25%
+#define SUPERMATTER_DELAMINATING 6	// Pretty obvious.
+
+//R&D Snowflakes
+#define RD_CONSOLE_LOCKED_SCREEN 0.2

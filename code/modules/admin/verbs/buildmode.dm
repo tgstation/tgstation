@@ -82,6 +82,7 @@
 	var/valueholder = "derp"
 	var/objholder = /obj/structure/closet
 	var/atom/movable/stored = null
+	var/list/preview = list()
 
 /datum/buildmode/New(client/c)
 	create_buttons()
@@ -94,6 +95,8 @@
 	holder.screen -= buttons
 	holder.click_intercept = null
 	holder.show_popup_menus = 1
+	usr.client.images -= preview
+	preview.Cut()
 	qdel(src)
 	return
 
@@ -101,6 +104,7 @@
 	stored = null
 	for(var/button in buttons)
 		qdel(button)
+	return ..()
 
 /datum/buildmode/proc/create_buttons()
 	buttons += new /obj/screen/buildmode/mode(src)
@@ -114,47 +118,50 @@
 	return
 
 /datum/buildmode/proc/show_help(mob/user)
+	var/list/dat = list()
 	switch(mode)
 		if(BASIC_BUILDMODE)
-			user << "\blue ***********************************************************"
-			user << "\blue Left Mouse Button        = Construct / Upgrade"
-			user << "\blue Right Mouse Button       = Deconstruct / Delete / Downgrade"
-			user << "\blue Left Mouse Button + ctrl = R-Window"
-			user << "\blue Left Mouse Button + alt  = Airlock"
-			user << ""
-			user << "\blue Use the button in the upper left corner to"
-			user << "\blue change the direction of built objects."
-			user << "\blue ***********************************************************"
+			dat += "***********************************************************"
+			dat += "Left Mouse Button        = Construct / Upgrade"
+			dat += "Right Mouse Button       = Deconstruct / Delete / Downgrade"
+			dat += "Left Mouse Button + ctrl = R-Window"
+			dat += "Left Mouse Button + alt  = Airlock"
+			dat += ""
+			dat += "Use the button in the upper left corner to"
+			dat += "change the direction of built objects."
+			dat += "***********************************************************"
 		if(ADV_BUILDMODE)
-			user << "\blue ***********************************************************"
-			user << "\blue Right Mouse Button on buildmode button = Set object type"
-			user << "\blue Left Mouse Button on turf/obj          = Place objects"
-			user << "\blue Right Mouse Button                     = Delete objects"
-			user << ""
-			user << "\blue Use the button in the upper left corner to"
-			user << "\blue change the direction of built objects."
-			user << "\blue ***********************************************************"
+			dat += "***********************************************************"
+			dat += "Right Mouse Button on buildmode button = Set object type"
+			dat += "Left Mouse Button on turf/obj          = Place objects"
+			dat += "Right Mouse Button                     = Delete objects"
+			dat += ""
+			dat += "Use the button in the upper left corner to"
+			dat += "change the direction of built objects."
+			dat += "***********************************************************"
 		if(VAR_BUILDMODE)
-			user << "\blue ***********************************************************"
-			user << "\blue Right Mouse Button on buildmode button = Select var(type) & value"
-			user << "\blue Left Mouse Button on turf/obj/mob      = Set var(type) & value"
-			user << "\blue Right Mouse Button on turf/obj/mob     = Reset var's value"
-			user << "\blue ***********************************************************"
+			dat += "***********************************************************"
+			dat += "Right Mouse Button on buildmode button = Select var(type) & value"
+			dat += "Left Mouse Button on turf/obj/mob      = Set var(type) & value"
+			dat += "Right Mouse Button on turf/obj/mob     = Reset var's value"
+			dat += "***********************************************************"
 		if(THROW_BUILDMODE)
-			user << "\blue ***********************************************************"
-			user << "\blue Left Mouse Button on turf/obj/mob      = Select"
-			user << "\blue Right Mouse Button on turf/obj/mob     = Throw"
-			user << "\blue ***********************************************************"
+			dat += "***********************************************************"
+			dat += "Left Mouse Button on turf/obj/mob      = Select"
+			dat += "Right Mouse Button on turf/obj/mob     = Throw"
+			dat += "***********************************************************"
 		if(AREA_BUILDMODE)
-			user << "\blue ***********************************************************"
-			user << "\blue Left Mouse Button on turf/obj/mob      = Select corner"
-			user << "\blue Right Mouse Button on buildmode button = Select generator"
-			user << "\blue ***********************************************************"
+			dat += "***********************************************************"
+			dat += "Left Mouse Button on turf/obj/mob      = Select corner"
+			dat += "Right Mouse Button on turf/obj/mob     = Reset corner selection"
+			dat += "Right Mouse Button on buildmode button = Select generator"
+			dat += "***********************************************************"
 		if(COPY_BUILDMODE)
-			user << "\blue ***********************************************************"
-			user << "\blue Left Mouse Button on obj/turf/mob   = Spawn a Copy of selected target"
-			user << "\blue Right Mouse Button on obj/mob = Select target to copy"
-			user << "\blue ***********************************************************"
+			dat += "***********************************************************"
+			dat += "Left Mouse Button on obj/turf/mob   = Spawn a Copy of selected target"
+			dat += "Right Mouse Button on obj/mob = Select target to copy"
+			dat += "***********************************************************"
+	to_chat(user, "<font color='blue'>[dat.Join("\n")]</font>")
 
 /datum/buildmode/proc/change_settings(mob/user)
 	switch(mode)
@@ -169,7 +176,7 @@
 					objholder = /obj/structure/closet
 					alert("That path is not allowed.")
 			else
-				if(ispath(objholder,/mob) && !check_rights(R_DEBUG,0))
+				if(ispath(objholder, /mob) && !check_rights(R_DEBUG,0))
 					objholder = /obj/structure/closet
 		if(VAR_BUILDMODE)
 			var/list/locked = list("vars", "key", "ckey", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "viruses", "cuffed", "ka", "last_eaten", "urine")
@@ -178,25 +185,30 @@
 			if(varholder in locked && !check_rights(R_DEBUG,0))
 				return 1
 			var/thetype = input(user,"Select variable type:" ,"Type") in list("text","number","mob-reference","obj-reference","turf-reference")
-			if(!thetype) return 1
+			if(!thetype)
+				return 1
 			switch(thetype)
 				if("text")
 					valueholder = input(user,"Enter variable value:" ,"Value", "value") as text
 				if("number")
 					valueholder = input(user,"Enter variable value:" ,"Value", 123) as num
 				if("mob-reference")
-					valueholder = input(user,"Enter variable value:" ,"Value") as mob in mob_list
+					valueholder = input(user,"Enter variable value:" ,"Value") as mob in GLOB.mob_list
 				if("obj-reference")
 					valueholder = input(user,"Enter variable value:" ,"Value") as obj in world
 				if("turf-reference")
 					valueholder = input(user,"Enter variable value:" ,"Value") as turf in world
 		if(AREA_BUILDMODE)
 			var/list/gen_paths = subtypesof(/datum/mapGenerator)
+			var/list/options = list()
+			for(var/path in gen_paths)
+				var/datum/mapGenerator/MP = path
+				options[initial(MP.buildmode_name)] = path
+			var/type = input(user,"Select Generator Type","Type") as null|anything in options
+			if(!type)
+				return
 
-			var/type = input(user,"Select Generator Type","Type") as null|anything in gen_paths
-			if(!type) return
-
-			generator_path = type
+			generator_path = options[type]
 			cornerA = null
 			cornerB = null
 
@@ -218,11 +230,11 @@
 	cornerA = null
 	cornerB = null
 
-/proc/togglebuildmode(mob/M in player_list)
+/proc/togglebuildmode(mob/M in GLOB.player_list)
 	set name = "Toggle Build Mode"
 	set category = "Special Verbs"
 	if(M.client)
-		if(istype(M.client.click_intercept,/datum/buildmode))
+		if(istype(M.client.click_intercept, /datum/buildmode))
 			var/datum/buildmode/B = M.client.click_intercept
 			B.quit()
 			log_admin("[key_name(usr)] has left build mode.")
@@ -260,7 +272,7 @@
 				else if(isfloorturf(object))
 					var/turf/T = object
 					T.ChangeTurf(/turf/open/space)
-				else if(istype(object,/turf/closed/wall/r_wall))
+				else if(istype(object, /turf/closed/wall/r_wall))
 					var/turf/T = object
 					T.ChangeTurf(/turf/closed/wall)
 				else if(isobj(object))
@@ -284,12 +296,12 @@
 						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
 						WIN.setDir(WEST)
 					if(NORTHWEST)
-						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
+						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced/fulltile(get_turf(object))
 						WIN.setDir(NORTHWEST)
 				log_admin("Build Mode: [key_name(user)] built a window at ([object.x],[object.y],[object.z])")
 		if(ADV_BUILDMODE)
 			if(left_click)
-				if(ispath(objholder,/turf))
+				if(ispath(objholder, /turf))
 					var/turf/T = get_turf(object)
 					log_admin("Build Mode: [key_name(user)] modified [T] ([T.x],[T.y],[T.z]) to [objholder]")
 					T.ChangeTurf(objholder)
@@ -305,16 +317,20 @@
 		if(VAR_BUILDMODE)
 			if(left_click) //I cant believe this shit actually compiles.
 				if(object.vars.Find(varholder))
-					log_admin("Build Mode: [key_name(user)] modified [object.name]'s [varholder] to [valueholder]")
-					object.vars[varholder] = valueholder
+					if(object.vv_edit_var(varholder, valueholder))
+						log_admin("Build Mode: [key_name(user)] modified [object.name]'s [varholder] to [valueholder]")
+					else
+						to_chat(user, "<span class='warning'>Varedit rejected</span>")
 				else
-					user << "<span class='warning'>[initial(object.name)] does not have a var called '[varholder]'</span>"
+					to_chat(user, "<span class='warning'>[initial(object.name)] does not have a var called '[varholder]'</span>")
 			if(right_click)
 				if(object.vars.Find(varholder))
-					log_admin("Build Mode: [key_name(user)] modified [object.name]'s [varholder] to [valueholder]")
-					object.vars[varholder] = initial(object.vars[varholder])
+					if(object.vv_edit_var(varholder, initial(object.vars[varholder])))
+						log_admin("Build Mode: [key_name(user)] modified [object.name]'s [varholder] to [valueholder]")
+					else
+						to_chat(user, "<span class='warning'>Varedit rejected</span>")
 				else
-					user << "<span class='warning'>[initial(object.name)] does not have a var called '[varholder]'</span>"
+					to_chat(user, "<span class='warning'>[initial(object.name)] does not have a var called '[varholder]'</span>")
 
 		if(THROW_BUILDMODE)
 			if(left_click)
@@ -326,21 +342,41 @@
 					throw_atom.throw_at(object, 10, 1,user)
 					log_admin("Build Mode: [key_name(user)] threw [throw_atom] at [object] ([object.x],[object.y],[object.z])")
 		if(AREA_BUILDMODE)
-			if(!cornerA)
-				cornerA = get_turf(object)
-				return
-			if(cornerA && !cornerB)
-				cornerB = get_turf(object)
-
 			if(left_click) //rectangular
+				if(!cornerA)
+					cornerA = get_turf(object)
+					preview += image('icons/turf/overlays.dmi',cornerA,"greenOverlay")
+					usr.client.images -= preview
+					usr.client.images += preview
+					return
+				if(cornerA && !cornerB)
+					cornerB = get_turf(object)
+					preview += image('icons/turf/overlays.dmi',cornerB,"blueOverlay")
+					usr.client.images -= preview
+					usr.client.images += preview
+					to_chat(user, "<span class='boldwarning'>Region selected, if you're happy with your selection left click again, otherwise right click.</span>")
+					return
 				if(cornerA && cornerB)
 					if(!generator_path)
-						user << "<span class='warning'>Select generator type first.</span>"
+						to_chat(user, "<span class='warning'>Select generator type first.</span>")
+						return
 					var/datum/mapGenerator/G = new generator_path
-					G.defineRegion(cornerA,cornerB,1)
-					G.generate()
+					if(istype(G, /datum/mapGenerator/repair/reload_station_map))
+						if(GLOB.reloading_map)
+							to_chat(user, "<span class='boldwarning'>You are already reloading an area! Please wait for it to fully finish loading before trying to load another!</span>")
+							return
+					G.defineRegion(cornerA, cornerB, 1)
+					for(var/t in G.map)
+						preview += image('icons/turf/overlays.dmi', t ,"redOverlay")
+					usr.client.images -= preview
+					usr.client.images += preview
+					var/confirm = alert("Are you sure you want run the map generator?", "Run generator", "Yes", "No")
+					if(confirm == "Yes")
+						G.generate()
 					cornerA = null
 					cornerB = null
+					usr.client.images -= preview
+					preview.Cut()
 					return
 			//Something wrong - Reset
 			cornerA = null

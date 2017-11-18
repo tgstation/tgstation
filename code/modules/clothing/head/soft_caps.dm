@@ -24,7 +24,7 @@
 /obj/item/clothing/head/soft/AltClick(mob/user)
 	..()
 	if(!user.canUseTopic(src, be_close=TRUE))
-		user << "<span class='warning'>You can't do that right now!</span>"
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	else
 		flip(user)
@@ -35,15 +35,15 @@
 		src.flipped = !src.flipped
 		if(src.flipped)
 			icon_state = "[item_color]soft_flipped"
-			user << "<span class='notice'>You flip the hat backwards.</span>"
+			to_chat(user, "<span class='notice'>You flip the hat backwards.</span>")
 		else
 			icon_state = "[item_color]soft"
-			user << "<span class='notice'>You flip the hat back in normal position.</span>"
+			to_chat(user, "<span class='notice'>You flip the hat back in normal position.</span>")
 		usr.update_inv_head()	//so our mob-overlays update
 
 /obj/item/clothing/head/soft/examine(mob/user)
 	..()
-	user << "<span class='notice'>Alt-click the cap to flip it [flipped ? "forwards" : "backwards"].</span>"
+	to_chat(user, "<span class='notice'>Alt-click the cap to flip it [flipped ? "forwards" : "backwards"].</span>")
 
 /obj/item/clothing/head/soft/red
 	name = "red cap"

@@ -184,6 +184,13 @@
 	results = list("cryoxadone" = 3)
 	required_reagents = list("stable_plasma" = 1, "acetone" = 1, "mutagen" = 1)
 
+/datum/chemical_reaction/clonexadone
+	name = "Clonexadone"
+	id = "clonexadone"
+	results = list("clonexadone" = 2)
+	required_reagents = list("cryoxadone" = 1, "sodium" = 1)
+	required_catalysts = list("plasma" = 5)
+
 /datum/chemical_reaction/haloperidol
 	name = "Haloperidol"
 	id = "haloperidol"
@@ -213,3 +220,9 @@
 	id = "tricordrazine"
 	results = list("tricordrazine" = 3)
 	required_reagents = list("bicaridine" = 1, "kelotane" = 1, "antitoxin" = 1)
+
+/datum/chemical_reaction/corazone
+	name = "Corazone"
+	id = "corazone"
+	results = list("corazone" = 3)
+	required_reagents = list("phenol" = 2, "lithium" = 1)

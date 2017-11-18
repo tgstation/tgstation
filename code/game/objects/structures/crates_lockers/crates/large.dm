@@ -2,7 +2,7 @@
 	name = "large crate"
 	desc = "A hefty wooden crate."
 	icon_state = "largecrate"
-	density = 1
+	density = TRUE
 	material_drop = /obj/item/stack/sheet/mineral/wood
 	delivery_icon = "deliverybox"
 
@@ -11,10 +11,10 @@
 	if(manifest)
 		tear_manifest(user)
 	else
-		user << "<span class='warning'>You need a crowbar to pry this open!</span>"
+		to_chat(user, "<span class='warning'>You need a crowbar to pry this open!</span>")
 
-/obj/structure/closet/crate/large/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/crowbar))
+/obj/structure/closet/crate/large/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/crowbar))
 		var/turf/T = get_turf(src)
 		if(manifest)
 			tear_manifest(user)

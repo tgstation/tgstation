@@ -4,12 +4,13 @@
 	icon_state = "hardhat0_yellow"
 	item_state = "hardhat0_yellow"
 	var/brightness_on = 4 //luminosity when on
-	var/on = 0
+	var/on = FALSE
 	item_color = "yellow" //Determines used sprites: hardhat[on]_[item_color] and hardhat[on]_[item_color]2 (lying down sprite)
 	armor = list(melee = 15, bullet = 5, laser = 20,energy = 10, bomb = 20, bio = 10, rad = 20, fire = 100, acid = 50)
 	flags_inv = 0
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	resistance_flags = FIRE_PROOF
+	dynamic_hair_suffix = "+generic"
 
 	dog_fashion = /datum/dog_fashion/head
 
@@ -27,23 +28,11 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
-/obj/item/clothing/head/hardhat/pickup(mob/user)
-	..()
-	if(on)
-		user.AddLuminosity(brightness_on)
-		SetLuminosity(0)
-
-/obj/item/clothing/head/hardhat/dropped(mob/user)
-	..()
-	if(on)
-		user.AddLuminosity(-brightness_on)
-		SetLuminosity(brightness_on)
-
 /obj/item/clothing/head/hardhat/proc/turn_on(mob/user)
-	user.AddLuminosity(brightness_on)
+	set_light(brightness_on)
 
 /obj/item/clothing/head/hardhat/proc/turn_off(mob/user)
-	user.AddLuminosity(-brightness_on)
+	set_light(0)
 
 /obj/item/clothing/head/hardhat/orange
 	icon_state = "hardhat0_orange"
@@ -57,7 +46,7 @@
 	item_color = "red"
 	dog_fashion = null
 	name = "firefighter helmet"
-	flags = STOPSPRESSUREDMAGE
+	flags_1 = STOPSPRESSUREDMAGE_1
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
 	cold_protection = HEAD
@@ -67,7 +56,7 @@
 	icon_state = "hardhat0_white"
 	item_state = "hardhat0_white"
 	item_color = "white"
-	flags = STOPSPRESSUREDMAGE
+	flags_1 = STOPSPRESSUREDMAGE_1
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
 	cold_protection = HEAD
@@ -87,7 +76,7 @@
 	dog_fashion = null
 	name = "atmospheric technician's firefighting helmet"
 	desc = "A firefighter's helmet, able to keep the user cool in any situation."
-	flags = STOPSPRESSUREDMAGE | THICKMATERIAL
+	flags_1 = STOPSPRESSUREDMAGE_1 | THICKMATERIAL_1
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT

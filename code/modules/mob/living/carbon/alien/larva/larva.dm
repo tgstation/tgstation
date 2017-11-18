@@ -4,7 +4,7 @@
 	icon_state = "larva0"
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL
-	density = 0
+	density = FALSE
 
 	maxHealth = 25
 	health = 25
@@ -18,11 +18,11 @@
 
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
-/mob/living/carbon/alien/larva/New()
+/mob/living/carbon/alien/larva/Initialize()
 
 	AddAbility(new/obj/effect/proc_holder/alien/hide(null))
 	AddAbility(new/obj/effect/proc_holder/alien/larva_evolve(null))
-	..()
+	. = ..()
 
 /mob/living/carbon/alien/larva/create_internal_organs()
 	internal_organs += new /obj/item/organ/alien/plasmavessel/small/tiny
@@ -60,9 +60,9 @@
 	return
 
 /mob/living/carbon/alien/larva/stripPanelUnequip(obj/item/what, mob/who)
-	src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+	to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
 	return
 
 /mob/living/carbon/alien/larva/stripPanelEquip(obj/item/what, mob/who)
-	src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+	to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
 	return

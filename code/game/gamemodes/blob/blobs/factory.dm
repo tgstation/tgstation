@@ -3,7 +3,6 @@
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_factory"
 	desc = "A thick spire of tendrils."
-	obj_integrity = 200
 	max_integrity = 200
 	health_regen = 1
 	point_return = 25
@@ -25,7 +24,7 @@
 			spore.factory = null
 	if(naut)
 		naut.factory = null
-		naut << "<span class='userdanger'>Your factory was destroyed! You feel yourself dying!</span>"
+		to_chat(naut, "<span class='userdanger'>Your factory was destroyed! You feel yourself dying!</span>")
 		naut.throw_alert("nofactory", /obj/screen/alert/nofactory)
 	spores = null
 	return ..()

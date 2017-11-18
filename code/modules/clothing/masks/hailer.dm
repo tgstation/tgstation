@@ -6,10 +6,11 @@
 	desc = "A standard issue Security gas mask with integrated 'Compli-o-nator 3000' device. Plays over a dozen pre-recorded compliance phrases designed to get scumbags to stand still whilst you taze them. Do not tamper with the device."
 	actions_types = list(/datum/action/item_action/halt, /datum/action/item_action/adjust)
 	icon_state = "sechailer"
-	flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	item_state = "sechailer"
+	flags_1 = BLOCK_GAS_SMOKE_EFFECT_1 | MASKINTERNALS_1
 	flags_inv = HIDEFACIALHAIR|HIDEFACE
 	w_class = WEIGHT_CLASS_SMALL
-	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	visor_flags = BLOCK_GAS_SMOKE_EFFECT_1 | MASKINTERNALS_1
 	visor_flags_inv = HIDEFACE
 	flags_cover = MASKCOVERSMOUTH
 	visor_flags_cover = MASKCOVERSMOUTH
@@ -24,6 +25,7 @@
 	desc = "A close-fitting tactical mask with an especially aggressive Compli-o-nator 3000."
 	actions_types = list(/datum/action/item_action/halt)
 	icon_state = "swat"
+	item_state = "swat"
 	aggressiveness = 3
 	flags_inv = HIDEFACIALHAIR|HIDEFACE|HIDEEYES|HIDEEARS|HIDEHAIR
 	visor_flags_inv = 0
@@ -36,23 +38,23 @@
 	aggressiveness = 1 //Borgs are nicecurity!
 	actions_types = list(/datum/action/item_action/halt)
 
-/obj/item/clothing/mask/gas/sechailer/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/screwdriver))
+/obj/item/clothing/mask/gas/sechailer/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/screwdriver))
 		switch(aggressiveness)
 			if(1)
-				user << "<span class='notice'>You set the restrictor to the middle position.</span>"
+				to_chat(user, "<span class='notice'>You set the restrictor to the middle position.</span>")
 				aggressiveness = 2
 			if(2)
-				user << "<span class='notice'>You set the restrictor to the last position.</span>"
+				to_chat(user, "<span class='notice'>You set the restrictor to the last position.</span>")
 				aggressiveness = 3
 			if(3)
-				user << "<span class='notice'>You set the restrictor to the first position.</span>"
+				to_chat(user, "<span class='notice'>You set the restrictor to the first position.</span>")
 				aggressiveness = 1
 			if(4)
-				user << "<span class='danger'>You adjust the restrictor but nothing happens, probably because it's broken.</span>"
-	else if(istype(W, /obj/item/weapon/wirecutters))
+				to_chat(user, "<span class='danger'>You adjust the restrictor but nothing happens, probably because it's broken.</span>")
+	else if(istype(W, /obj/item/wirecutters))
 		if(aggressiveness != 4)
-			user << "<span class='danger'>You broke the restrictor!</span>"
+			to_chat(user, "<span class='danger'>You broke the restrictor!</span>")
 			aggressiveness = 4
 	else
 		..()
@@ -68,7 +70,7 @@
 /obj/item/clothing/mask/gas/sechailer/emag_act(mob/user as mob)
 	if(safety)
 		safety = FALSE
-		user << "<span class='warning'>You silently fry [src]'s vocal circuit with the cryptographic sequencer."
+		to_chat(user, "<span class='warning'>You silently fry [src]'s vocal circuit with the cryptographic sequencer.</span>")
 	else
 		return
 
@@ -81,7 +83,7 @@
 	if(!can_use(usr))
 		return
 	if(broken_hailer)
-		usr << "<span class='warning'>\The [src]'s hailing system is broken.</span>"
+		to_chat(usr, "<span class='warning'>\The [src]'s hailing system is broken.</span>")
 		return
 
 	var/phrase = 0	//selects which phrase to use
@@ -96,12 +98,12 @@
 
 		switch(recent_uses)
 			if(3)
-				usr << "<span class='warning'>\The [src] is starting to heat up.</span>"
+				to_chat(usr, "<span class='warning'>\The [src] is starting to heat up.</span>")
 			if(4)
-				usr << "<span class='userdanger'>\The [src] is heating up dangerously from overuse!</span>"
+				to_chat(usr, "<span class='userdanger'>\The [src] is heating up dangerously from overuse!</span>")
 			if(5) //overload
 				broken_hailer = 1
-				usr << "<span class='userdanger'>\The [src]'s power modulator overloads and breaks.</span>"
+				to_chat(usr, "<span class='userdanger'>\The [src]'s power modulator overloads and breaks.</span>")
 				return
 
 		switch(aggressiveness)		// checks if the user has unlocked the restricted phrases
@@ -179,7 +181,3 @@
 		playsound(src.loc, "sound/voice/complionator/[phrase_sound].ogg", 100, 0, 4)
 		cooldown = world.time
 		cooldown_special = world.time
-
-
-
-

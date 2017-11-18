@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "b" = (
 /turf/closed/mineral,
 /area/ruin/unpowered)
@@ -22,41 +22,35 @@
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "h" = (
-/turf/open/floor/plasteel/airless/shuttle,
+/turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/unpowered)
 "i" = (
 /obj/structure/chair,
 /obj/structure/window/reinforced{
-	tag = "icon-rwindow (WEST)";
-	icon_state = "rwindow";
 	dir = 8
 	},
-/turf/open/floor/plasteel/airless/shuttle,
+/turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/unpowered)
 "j" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel/airless/shuttle,
+/turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/unpowered)
 "k" = (
 /obj/effect/spawner/lootdrop/crate_spawner,
-/turf/open/floor/plasteel/airless/shuttle,
+/turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/unpowered)
 "l" = (
 /obj/structure/shuttle/engine/propulsion{
-	tag = "icon-propulsion (WEST)";
-	icon_state = "propulsion";
-	dir = 8
+	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "m" = (
-/obj/item/weapon/shard,
+/obj/item/shard,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "n" = (
 /obj/structure/chair{
-	tag = "icon-chair (WEST)";
-	icon_state = "chair";
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -67,27 +61,23 @@
 /area/ruin/unpowered)
 "p" = (
 /obj/structure/table,
-/turf/open/floor/plasteel/airless/shuttle,
+/turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/unpowered)
 "q" = (
-/obj/item/weapon/shard,
+/obj/item/shard,
 /obj/structure/chair{
-	tag = "icon-chair (WEST)";
-	icon_state = "chair";
 	dir = 8
 	},
-/turf/open/floor/plasteel/airless/shuttle,
+/turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/unpowered)
 "r" = (
 /obj/structure/chair{
 	dir = 1
 	},
 /obj/structure/window/reinforced{
-	tag = "icon-rwindow (WEST)";
-	icon_state = "rwindow";
 	dir = 8
 	},
-/turf/open/floor/plasteel/airless/shuttle,
+/turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/unpowered)
 "s" = (
 /obj/structure/chair{

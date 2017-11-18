@@ -34,7 +34,6 @@ Notes:
 /datum/tooltip
 	var/client/owner
 	var/control = "mainwindow.tooltip"
-	var/file = 'code/modules/tooltip/tooltip.html'
 	var/showing = 0
 	var/queueHide = 0
 	var/init = 0
@@ -43,7 +42,7 @@ Notes:
 /datum/tooltip/New(client/C)
 	if (C)
 		src.owner = C
-		src.owner << browse(file2text(src.file), "window=[src.control]")
+		src.owner << browse(file2text('code/modules/tooltip/tooltip.html'), "window=[src.control]")
 
 	..()
 
@@ -66,6 +65,10 @@ Notes:
 	else if (!title && content)
 		content = "<p>[content]</p>"
 
+	// Strip macros from item names
+	title = replacetext(title, "\proper", "")
+	title = replacetext(title, "\improper", "")
+
 	//Make our dumb param object
 	params = {"{ "cursor": "[params]", "screenLoc": "[thing.screen_loc]" }"}
 
@@ -82,15 +85,16 @@ Notes:
 
 /datum/tooltip/proc/hide()
 	if (src.queueHide)
-		spawn(1)
-			winshow(src.owner, src.control, 0)
+		addtimer(CALLBACK(src, .proc/do_hide), 1)
 	else
-		winshow(src.owner, src.control, 0)
+		do_hide()
 
-	src.queueHide = src.showing ? 1 : 0
+	queueHide = showing ? TRUE : FALSE
 
-	return 1
+	return TRUE
 
+/datum/tooltip/proc/do_hide()
+	winshow(owner, control, FALSE)
 
 /* TG SPECIFIC CODE */
 

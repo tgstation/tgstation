@@ -23,17 +23,12 @@
 
 	var/obj/screen/devil/soul_counter/devilsouldisplay
 
-	var/obj/screen/deity_power_display
-	var/obj/screen/deity_follower_display
-
 	var/obj/screen/nightvisionicon
 	var/obj/screen/action_intent
 	var/obj/screen/zone_select
 	var/obj/screen/pull_icon
 	var/obj/screen/throw_icon
 	var/obj/screen/module_store_icon
-
-	var/list/wheels = list() //list of the wheel screen objects
 
 	var/list/static_inventory = list() //the screen objects which are static
 	var/list/toggleable_inventory = list() //the screen objects which can be hidden
@@ -60,12 +55,15 @@
 
 	hide_actions_toggle = new
 	hide_actions_toggle.InitialiseIcon(src)
+	if(mymob.client)
+		hide_actions_toggle.locked = mymob.client.prefs.buttons_locked
 
 	hand_slots = list()
 
 	for(var/mytype in subtypesof(/obj/screen/plane_master))
 		var/obj/screen/plane_master/instance = new mytype()
 		plane_masters["[instance.plane]"] = instance
+		instance.backdrop(mymob)
 
 /datum/hud/Destroy()
 	if(mymob.hud_used == src)
@@ -76,8 +74,6 @@
 
 	qdel(module_store_icon)
 	module_store_icon = null
-
-	wheels = null //all wheels are also in static_inventory
 
 	if(static_inventory.len)
 		for(var/thing in static_inventory)
@@ -115,8 +111,6 @@
 	blobpwrdisplay = null
 	alien_plasma_display = null
 	alien_queen_finder = null
-	deity_power_display = null
-	deity_follower_display = null
 	nightvisionicon = null
 
 	if(plane_masters.len)
@@ -129,22 +123,24 @@
 			qdel(thing)
 		screenoverlays.Cut()
 	mymob = null
+
 	return ..()
 
 /mob/proc/create_mob_hud()
 	if(client && !hud_used)
 		hud_used = new /datum/hud(src)
+		update_sight()
 
 //Version denotes which style should be displayed. blank or 0 means "next version"
 /datum/hud/proc/show_hud(version = 0,mob/viewmob)
 	if(!ismob(mymob))
 		return 0
-	if(!mymob.client)
+	var/mob/screenmob = viewmob || mymob
+	if(!screenmob.client)
 		return 0
 
-	var/mob/screenmob = viewmob || mymob
-
 	screenmob.client.screen = list()
+	screenmob.client.apply_clickcatcher()
 
 	var/display_hud_version = version
 	if(!display_hud_version)	//If 0 or blank, display the next hud version
@@ -164,7 +160,7 @@
 			if(infodisplay.len)
 				screenmob.client.screen += infodisplay
 
-			mymob.client.screen += hide_actions_toggle
+			screenmob.client.screen += hide_actions_toggle
 
 			if(action_intent)
 				action_intent.screen_loc = initial(action_intent.screen_loc) //Restore intent selection to the original position
@@ -202,19 +198,19 @@
 
 	for(var/thing in plane_masters)
 		screenmob.client.screen += plane_masters[thing]
+
 	hud_version = display_hud_version
 	persistent_inventory_update(screenmob)
 	mymob.update_action_buttons(1)
 	reorganize_alerts()
 	mymob.reload_fullscreen()
-	create_parallax()
-
+	update_parallax_pref(screenmob)
 
 /datum/hud/human/show_hud(version = 0,mob/viewmob)
 	..()
 	hidden_inventory_update(viewmob)
 
-/datum/hud/robot/show_hud(version = 0)
+/datum/hud/robot/show_hud(version = 0, mob/viewmob)
 	..()
 	update_robot_modules_display()
 
@@ -224,16 +220,6 @@
 /datum/hud/proc/persistent_inventory_update(mob/viewer)
 	if(!mymob)
 		return
-	var/mob/living/L = mymob
-
-	var/mob/screenmob = viewer || L
-
-	for(var/X in wheels)
-		var/obj/screen/wheel/W = X
-		if(W.toggled)
-			screenmob.client.screen |= W.buttons_list
-		else
-			screenmob.client.screen -= W.buttons_list
 
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)
 /mob/verb/button_pressed_F12()
@@ -242,9 +228,9 @@
 
 	if(hud_used && client)
 		hud_used.show_hud() //Shows the next hud preset
-		usr << "<span class ='info'>Switched HUD mode. Press F12 to toggle.</span>"
+		to_chat(usr, "<span class ='info'>Switched HUD mode. Press F12 to toggle.</span>")
 	else
-		usr << "<span class ='warning'>This mob type does not use a HUD.</span>"
+		to_chat(usr, "<span class ='warning'>This mob type does not use a HUD.</span>")
 
 
 //(re)builds the hand ui slots, throwing away old ones
@@ -277,3 +263,6 @@
 		E.screen_loc = ui_equip_position(mymob)
 	if(mymob.hud_used)
 		show_hud(HUD_STYLE_STANDARD,mymob)
+
+/datum/hud/proc/update_locked_slots()
+	return

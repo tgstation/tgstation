@@ -1,4 +1,4 @@
-/obj/item/weapon/computer_hardware/hard_drive/portable
+/obj/item/computer_hardware/hard_drive/portable
 	name = "data disk"
 	desc = "Removable disk used to store data."
 	power_usage = 10
@@ -9,24 +9,24 @@
 	origin_tech = "programming=1"
 	device_type = MC_SDD
 
-/obj/item/weapon/computer_hardware/hard_drive/portable/on_install(obj/item/device/modular_computer/M, mob/living/user = null)
+/obj/item/computer_hardware/hard_drive/portable/on_install(obj/item/device/modular_computer/M, mob/living/user = null)
 	M.add_verb(device_type)
 
-/obj/item/weapon/computer_hardware/hard_drive/portable/on_remove(obj/item/device/modular_computer/M, mob/living/user = null)
+/obj/item/computer_hardware/hard_drive/portable/on_remove(obj/item/device/modular_computer/M, mob/living/user = null)
 	..()
 	M.remove_verb(device_type)
 
-/obj/item/weapon/computer_hardware/hard_drive/portable/install_default_programs()
+/obj/item/computer_hardware/hard_drive/portable/install_default_programs()
 	return // Empty by default
 
-/obj/item/weapon/computer_hardware/hard_drive/portable/advanced
+/obj/item/computer_hardware/hard_drive/portable/advanced
 	name = "advanced data disk"
 	power_usage = 20
 	icon_state = "datadisk5"
 	max_capacity = 64
 	origin_tech = "programming=2"
 
-/obj/item/weapon/computer_hardware/hard_drive/portable/super
+/obj/item/computer_hardware/hard_drive/portable/super
 	name = "super data disk"
 	desc = "Removable disk used to store large amounts of data."
 	power_usage = 40

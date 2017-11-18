@@ -69,4 +69,4 @@
 							"You announce you are operating in low power mode.")
 			playsound(loc, 'sound/machines/buzz-two.ogg', 50, 0)
 		else
-			src << "<span class='warning'>You can only use this emote when you're out of charge.</span>"
+			to_chat(src, "<span class='warning'>You can only use this emote when you're out of charge.</span>")

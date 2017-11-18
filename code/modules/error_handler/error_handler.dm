@@ -1,18 +1,33 @@
-var/global/list/error_last_seen = list()
-var/global/list/error_cooldown = list() /* Error_cooldown items will either be positive(cooldown time) or negative(silenced error)
-											 If negative, starts at -1, and goes down by 1 each time that error gets skipped*/
-var/global/total_runtimes = 0
-var/global/total_runtimes_skipped = 0
+GLOBAL_VAR_INIT(total_runtimes, 0)
+GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 
 #ifdef DEBUG
 /world/Error(exception/E, datum/e_src)
 	if(!istype(E)) //Something threw an unusual exception
 		log_world("\[[time_stamp()]] Uncaught exception: [E]")
 		return ..()
+	
+	//this is snowflake because of a byond bug (ID:2306577), do not attempt to call non-builtin procs in this if
+	if(copytext(E.name,1,32) == "Maximum recursion level reached")
+		var/list/split = splittext(E.desc, "\n")
+		for (var/i in 1 to split.len)
+			if (split[i] != "")
+				split[i] = "\[[time2text(world.timeofday,"hh:mm:ss")]\][split[i]]"
+		E.desc = jointext(split, "\n")
+		//log to world while intentionally triggering the byond bug.
+		log_world("\[[time2text(world.timeofday,"hh:mm:ss")]\]runtime error: [E.name]\n[E.desc]")
+		//if we got to here without silently ending, the byond bug has been fixed.
+		log_world("The bug with recursion runtimes has been fixed. Please remove the snowflake check from world/Error in [__FILE__]:[__LINE__]")
+		return //this will never happen.
+
+	var/static/list/error_last_seen = list()
+	var/static/list/error_cooldown = list() /* Error_cooldown items will either be positive(cooldown time) or negative(silenced error)
+												If negative, starts at -1, and goes down by 1 each time that error gets skipped*/
+
 	if(!error_last_seen) // A runtime is occurring too early in start-up initialization
 		return ..()
 
-	total_runtimes++
+	GLOB.total_runtimes++
 
 	var/erroruid = "[E.file][E.line]"
 	var/last_seen = error_last_seen[erroruid]
@@ -24,24 +39,30 @@ var/global/total_runtimes_skipped = 0
 
 	if(cooldown < 0)
 		error_cooldown[erroruid]-- //Used to keep track of skip count for this error
-		total_runtimes_skipped++
+		GLOB.total_runtimes_skipped++
 		return //Error is currently silenced, skip handling it
 	//Handle cooldowns and silencing spammy errors
 	var/silencing = FALSE
 
 	// We can runtime before config is initialized because BYOND initialize objs/map before a bunch of other stuff happens.
 	// This is a bunch of workaround code for that. Hooray!
-
-	var/configured_error_cooldown = initial(config.error_cooldown)
-	var/configured_error_limit = initial(config.error_limit)
-	var/configured_error_silence_time = initial(config.error_silence_time)
+	var/configured_error_cooldown
+	var/configured_error_limit
+	var/configured_error_silence_time
 	if(config)
-		configured_error_cooldown = config.error_cooldown
-		configured_error_limit = config.error_limit
-		configured_error_silence_time = config.error_silence_time
+		configured_error_cooldown = CONFIG_GET(number/error_cooldown)
+		configured_error_limit = CONFIG_GET(number/error_limit)
+		configured_error_silence_time = CONFIG_GET(number/error_silence_time)
+	else
+		var/datum/config_entry/CE = /datum/config_entry/number/error_cooldown
+		configured_error_cooldown = initial(CE.value)
+		CE = /datum/config_entry/number/error_limit
+		configured_error_limit = initial(CE.value)
+		CE = /datum/config_entry/number/error_silence_time
+		configured_error_silence_time = initial(CE.value)
 
 
-	//Each occurence of an unique error adds to its cooldown time...
+	//Each occurence of a unique error adds to its cooldown time...
 	cooldown = max(0, cooldown - (world.time - last_seen)) + configured_error_cooldown
 	// ... which is used to silence an error if it occurs too often, too fast
 	if(cooldown > configured_error_cooldown * configured_error_limit)
@@ -53,8 +74,8 @@ var/global/total_runtimes_skipped = 0
 			var/skipcount = abs(error_cooldown[erroruid]) - 1
 			error_cooldown[erroruid] = 0
 			if(skipcount > 0)
-				world.log << "\[[time_stamp()]] Skipped [skipcount] runtimes in [E.file],[E.line]."
-				error_cache.log_error(E, skip_count = skipcount)
+				SEND_TEXT(world.log, "\[[time_stamp()]] Skipped [skipcount] runtimes in [E.file],[E.line].")
+				GLOB.error_cache.log_error(E, skip_count = skipcount)
 
 	error_last_seen[erroruid] = world.time
 	error_cooldown[erroruid] = cooldown
@@ -86,13 +107,13 @@ var/global/total_runtimes_skipped = 0
 	if(usrinfo) //If this info isn't null, it hasn't been added yet
 		desclines.Add(usrinfo)
 	if(silencing)
-		desclines += "  (This error will now be silenced for [configured_error_silence_time / 600] minutes)"
-	if(error_cache)
-		error_cache.log_error(E, desclines)
+		desclines += "  (This error will now be silenced for [DisplayTimeText(configured_error_silence_time)])"
+	if(GLOB.error_cache)
+		GLOB.error_cache.log_error(E, desclines)
 
-	world.log << "\[[time_stamp()]] Runtime in [E.file],[E.line]: [E]"
+	SEND_TEXT(world.log, "\[[time_stamp()]] Runtime in [E.file],[E.line]: [E]")
 	for(var/line in desclines)
-		world.log << line
+		SEND_TEXT(world.log, line)
 
 /* This logs the runtime in the old format */
 
@@ -105,9 +126,8 @@ var/global/total_runtimes_skipped = 0
 		if (split[i] != "")
 			split[i] = "\[[time2text(world.timeofday,"hh:mm:ss")]\][split[i]]"
 	E.desc = jointext(split, "\n")
-	if(config && config.log_runtimes)
-		world.log = runtime_diary
-		..(E)
+	world.log = GLOB.world_runtime_log
+	..(E)
 
 	world.log = null
 

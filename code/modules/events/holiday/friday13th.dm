@@ -13,6 +13,6 @@
 	events.frequency_lower /= 2
 	events.frequency_upper /= 2
 
-/datum/round_event/fridaythethirteen/announce()
+/datum/round_event/fridaythethirteen/announce(fake)
 	for(var/mob/living/L in player_list)
-		L << "<span class='warning'>You are feeling unlucky today.</span>"
+		to_chat(L, "<span class='warning'>You are feeling unlucky today.</span>")

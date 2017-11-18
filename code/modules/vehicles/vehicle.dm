@@ -1,19 +1,22 @@
 
 /obj/vehicle
 	name = "vehicle"
-	desc = "A basic vehicle, vroom"
+	desc = "A basic vehicle, vroom."
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "fuckyou"
-	density = 1
-	anchored = 0
+	density = TRUE
+	anchored = FALSE
 	can_buckle = 1
 	buckle_lying = 0
-	obj_integrity = 300
 	max_integrity = 300
 	armor = list(melee = 30, bullet = 30, laser = 30, energy = 0, bomb = 30, bio = 0, rad = 0, fire = 60, acid = 60)
 	var/auto_door_open = TRUE
 	var/view_range = 7
 	var/datum/riding/riding_datum = null
+
+/obj/vehicle/Destroy()
+	QDEL_NULL(riding_datum)
+	return ..()
 
 /obj/vehicle/update_icon()
 	return
@@ -32,14 +35,14 @@
 		. = ..()
 
 
-/obj/vehicle/user_buckle_mob(mob/living/M, mob/user)
-	if(user.incapacitated())
+/obj/vehicle/user_buckle_mob(mob/living/M, mob/living/user)
+	if(!istype(user) || user.incapacitated())
 		return
 	for(var/atom/movable/A in get_turf(src))
 		if(A.density)
 			if(A != src && A != M)
 				return
-	M.loc = get_turf(src)
+	M.forceMove(get_turf(src))
 	..()
 	if(user.client)
 		user.client.change_view(view_range)
@@ -53,19 +56,19 @@
 		riding_datum.handle_ride(user, direction)
 
 
-/obj/vehicle/Move(NewLoc,Dir=0,step_x=0,step_y=0)
+/obj/vehicle/Moved()
 	. = ..()
 	if(riding_datum)
 		riding_datum.handle_vehicle_layer()
 		riding_datum.handle_vehicle_offsets()
 
 
-/obj/vehicle/Bump(atom/movable/M)
+/obj/vehicle/Collide(atom/movable/M)
 	. = ..()
 	if(auto_door_open)
 		if(istype(M, /obj/machinery/door) && has_buckled_mobs())
 			for(var/m in buckled_mobs)
-				M.Bumped(m)
+				M.CollidedWith(m)
 
 
 /obj/vehicle/Process_Spacemove(direction)
@@ -94,12 +97,12 @@
 	..()
 	if(!(resistance_flags & INDESTRUCTIBLE))
 		if(resistance_flags & ON_FIRE)
-			user << "<span class='warning'>It's on fire!</span>"
+			to_chat(user, "<span class='warning'>It's on fire!</span>")
 		var/healthpercent = (obj_integrity/max_integrity) * 100
 		switch(healthpercent)
 			if(50 to 99)
-				user <<  "It looks slightly damaged."
+				to_chat(user,  "It looks slightly damaged.")
 			if(25 to 50)
-				user <<  "It appears heavily damaged."
+				to_chat(user,  "It appears heavily damaged.")
 			if(0 to 25)
-				user <<  "<span class='warning'>It's falling apart!</span>"
+				to_chat(user,  "<span class='warning'>It's falling apart!</span>")

@@ -18,6 +18,7 @@
 	name = "Asteroid 1"
 	description = "I-spy with my little eye, something beginning with R."
 
+
 /datum/map_template/ruin/space/asteroid2
 	id = "asteroid2"
 	suffix = "asteroid2.dmm"
@@ -42,6 +43,13 @@
 	suffix = "asteroid5.dmm"
 	name = "Asteroid 5"
 	description = "Oh my god, another giant rock!"
+
+/datum/map_template/ruin/space/deep_storage
+	id = "deep-storage"
+	suffix = "deepstorage.dmm"
+	name = "Survivalist Bunker"
+	description = "Assume the best, prepare for the worst. Generally, you should do so by digging a three man heavily fortified bunker into a giant unused asteroid. \
+	Then make it self sufficient, mask any evidence of construction, hook it covertly into the telecommunications network and hope for the best."
 
 /datum/map_template/ruin/space/bigderelict1
 	id = "bigderelict1"
@@ -75,7 +83,7 @@
 	id = "derelict4"
 	suffix = "derelict4.dmm"
 	name = "Derelict 4"
-	description = "Centcom ferries have never crashed, will never crash, there is no current investigation into a crashed ferry, and we will not let Internal Affairs trample over high security \
+	description = "CentCom ferries have never crashed, will never crash, there is no current investigation into a crashed ferry, and we will not let Internal Affairs trample over high security \
 	information in the name of this baseless witchhunt."
 
 /datum/map_template/ruin/space/derelict5
@@ -136,18 +144,11 @@
 	description = "Based on the trace elements we've detected on the gutted asteroids, we suspect that a mining ship using a restricted engine is somewhere in the area. \
 	We'd like to request a patrol vessel to investigate."
 
-/datum/map_template/ruin/space/spacebar
-	id = "spacebar"
-	suffix = "spacebar.dmm"
-	name = "The Rampant Golem and Yellow Hound"
-	description = "No questions asked. No shoes/foot protection, no service. No tabs. No violence in the inside areas. That's it. Welcome to the Rampant Golem and Yellow Hound. \
-	Can I take your order?"
-
 /datum/map_template/ruin/space/spacehotel
 	id = "spacehotel"
 	suffix = "spacehotel.dmm"
 	name = "The Twin-Nexus Hotel"
-	description = "A interstellar hotel, where the weary spaceman can rest their head and relax, assured that the residental staff will not murder them in their sleep. Probably."
+	description = "An interstellar hotel, where the weary spaceman can rest their head and relax, assured that the residental staff will not murder them in their sleep. Probably."
 
 /datum/map_template/ruin/space/turreted_outpost
 	id = "turreted-outpost"
@@ -236,6 +237,12 @@
 	description = "There seems to be a pair of buses that pulled over for repairs. What were they doing..? Their shipment sure  seems to be filled with a strange mix. \
 	Anyway, it looks like some people tried to fix it up for a long time but didn't really get anywhere..."
 
+/datum/map_template/ruin/space/oldstation
+	id = "oldstation"
+	suffix = "oldstation.dmm"
+	name = "Ancient Space Station"
+	description = "The crew of a space station awaken one hundred years after a crisis. Awaking to a derelict space station on the verge of collapse, and a hostile force of invading \
+	hivebots. Can the surviving crew overcome the odds and survive and rebuild, or will the cold embrace of the stars become their new home?"
 
 /datum/map_template/ruin/space/miracle
 	id = "miracle"
@@ -243,8 +250,15 @@
 	name = "Ordinary Space Tile"
 	description = "Absolutely nothing strange going on here please move along, plenty more space to see right this way!"
 
-/datum/map_template/ruin/space/dragoon
-	id = "dragoon"
-	suffix = "dragoontomb.dmm"
-	name = "Sky Bulge Tomb"
-	description = "A tomb of a dice-loving dragoon in space. Turns out he got too good and jumped too high. Contains the Sky Bulge, which when thrown, warps the thrower."
+/datum/map_template/ruin/space/gondoland
+	id = "gondolaasteroid"
+	suffix = "gondolaasteroid.dmm"
+	name = "Gondoland"
+	description = "Just an ordinary rock- wait, what's that thing?"
+
+/datum/map_template/ruin/space/whiteshipruin_box
+	id = "whiteshipruin_box"
+	suffix = "whiteshipruin_box.dmm"
+	name = "NT Medical Ship"
+	description = "An ancient ship, said to be among the first discovered derelicts near Space Station 13 that was still in working order. \
+	Aged and deprecated by time, this relic of a vessel is now broken beyond repair."

@@ -4,7 +4,7 @@
   * Checks that the user is not inside src_object, and then makes the default checks.
  **/
 
-/var/global/datum/ui_state/notcontained_state/notcontained_state = new()
+GLOBAL_DATUM_INIT(notcontained_state, /datum/ui_state/notcontained_state, new)
 
 /datum/ui_state/notcontained_state/can_use_topic(atom/src_object, mob/user)
 	. = user.shared_ui_interaction(src_object)

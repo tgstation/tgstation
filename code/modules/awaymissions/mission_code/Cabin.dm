@@ -1,10 +1,27 @@
 
+/*Cabin areas*/
+/area/awaymission/snowforest
+	name = "Snow Forest"
+	icon_state = "away"
+	requires_power = FALSE
+	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+
+/area/awaymission/cabin
+	name = "Cabin"
+	icon_state = "away2"
+	requires_power = TRUE
+	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+
+/area/awaymission/snowforest/lumbermill
+	name = "Lumbermill"
+	icon_state = "away3"
+
 /obj/structure/firepit
 	name = "firepit"
-	desc = "warm and toasty"
+	desc = "Warm and toasty."
 	icon = 'icons/obj/fireplace.dmi'
 	icon_state = "firepit-active"
-	density = 0
+	density = FALSE
 	var/active = 1
 
 /obj/structure/firepit/Initialize()
@@ -32,10 +49,10 @@
 
 /obj/structure/firepit/proc/toggleFirepit()
 	if(active)
-		SetLuminosity(8)
+		set_light(8)
 		icon_state = "firepit-active"
 	else
-		SetLuminosity(0)
+		set_light(0)
 		icon_state = "firepit"
 
 /obj/structure/firepit/extinguish()
@@ -58,7 +75,7 @@
 	emagged = 2 //Always gibs people
 	item_recycle_sound = 'sound/weapons/chainsawhit.ogg'
 
-/obj/machinery/recycler/lumbermill/recycle_item(obj/item/weapon/grown/log/L)
+/obj/machinery/recycler/lumbermill/recycle_item(obj/item/grown/log/L)
 	if(!istype(L))
 		return
 	else
@@ -86,7 +103,7 @@
 	/datum/mapGeneratorModule/snow/bunnies)
 
 /datum/mapGeneratorModule/snow/checkPlaceAtom(turf/T)
-	if(istype(T,/turf/open/floor/plating/asteroid/snow))
+	if(istype(T, /turf/open/floor/plating/asteroid/snow))
 		return ..(T)
 	return 0
 
@@ -117,3 +134,7 @@
 
 /obj/effect/landmark/mapGenerator/snowy
 	mapGeneratorType = /datum/mapGenerator/snowy
+	endTurfX = 159
+	endTurfY = 157
+	startTurfX = 37
+	startTurfY = 35

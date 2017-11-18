@@ -30,8 +30,7 @@
 		return
 
 	if(..()) //not dead
-		for(var/datum/mutation/human/HM in dna.mutations)
-			HM.on_life(src)
+		handle_active_genes()
 
 	if(stat != DEAD)
 		//heart attack stuff
@@ -51,7 +50,7 @@
 
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
-	if((wear_suit && (wear_suit.flags & STOPSPRESSUREDMAGE)) && (head && (head.flags & STOPSPRESSUREDMAGE)))
+	if((wear_suit && (wear_suit.flags_1 & STOPSPRESSUREDMAGE_1)) && (head && (head.flags_1 & STOPSPRESSUREDMAGE_1)))
 		return ONE_ATMOSPHERE
 	else
 		return pressure
@@ -66,18 +65,8 @@
 	else if(eye_blurry)			//blurry eyes heal slowly
 		adjust_blurriness(-1)
 
-	//Ears
-	if(disabilities & DEAF)		//disabled-deaf, doesn't get better on its own
-		setEarDamage(-1, max(ear_deaf, 1))
-	else
-		if(istype(ears, /obj/item/clothing/ears/earmuffs)) // earmuffs rest your ears, healing ear_deaf faster and ear_damage, but keeping you deaf.
-			setEarDamage(max(ear_damage-0.10, 0), max(ear_deaf - 1, 1))
-		// deafness heals slowly over time, unless ear_damage is over 100
-		if(ear_damage < 100)
-			adjustEarDamage(-0.05,-1)
-
-	if (getBrainLoss() >= 60 && stat != DEAD)
-		if (prob(3))
+	if (getBrainLoss() >= 60 && stat == CONSCIOUS)
+		if(prob(3))
 			if(prob(25))
 				emote("drool")
 			else
@@ -92,10 +81,10 @@
 	if(!dna.species.breathe(src))
 		..()
 #define HUMAN_MAX_OXYLOSS 3
-#define HUMAN_CRIT_MAX_OXYLOSS (SSmob.wait/30)
+#define HUMAN_CRIT_MAX_OXYLOSS (SSmobs.wait/30)
 /mob/living/carbon/human/check_breath(datum/gas_mixture/breath)
 
-	var/L = getorganslot("lungs")
+	var/L = getorganslot(ORGAN_SLOT_LUNGS)
 
 	if(!L)
 		if(health >= HEALTH_THRESHOLD_CRIT)
@@ -109,15 +98,17 @@
 			var/datum/species/S = dna.species
 
 			if(S.breathid == "o2")
-				throw_alert("oxy", /obj/screen/alert/oxy)
+				throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
 			else if(S.breathid == "tox")
 				throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
 			else if(S.breathid == "co2")
 				throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
+			else if(S.breathid == "n2")
+				throw_alert("not_enough_nitro", /obj/screen/alert/not_enough_nitro)
 
 		return 0
 	else
-		if(istype(L,/obj/item/organ/lungs))
+		if(istype(L, /obj/item/organ/lungs))
 			var/obj/item/organ/lungs/lun = L
 			lun.check_breath(breath,src)
 
@@ -277,32 +268,25 @@
 
 	return min(1,thermal_protection)
 
-
-/mob/living/carbon/human/handle_chemicals_in_body()
-	if(reagents)
-		reagents.metabolize(src, can_overdose=1)
-	dna.species.handle_chemicals_in_body(src)
-
-
 /mob/living/carbon/human/handle_random_events()
 	//Puke if toxloss is too high
 	if(!stat)
 		if(getToxLoss() >= 45 && nutrition > 20)
-			lastpuke ++
-			if(lastpuke >= 25) // about 25 second delay I guess
-				vomit(20, 0, 1, 0, 1, 1)
+			lastpuke += prob(50)
+			if(lastpuke >= 50) // about 25 second delay I guess
+				vomit(20, toxic = TRUE)
 				lastpuke = 0
 
 
 /mob/living/carbon/human/has_smoke_protection()
 	if(wear_mask)
-		if(wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT)
+		if(wear_mask.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
 			. = 1
 	if(glasses)
-		if(glasses.flags & BLOCK_GAS_SMOKE_EFFECT)
+		if(glasses.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
 			. = 1
 	if(head)
-		if(head.flags & BLOCK_GAS_SMOKE_EFFECT)
+		if(head.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
 			. = 1
 	if(NOBREATH in dna.species.species_traits)
 		. = 1
@@ -315,37 +299,63 @@
 		for(var/obj/item/I in BP.embedded_objects)
 			if(prob(I.embedded_pain_chance))
 				BP.receive_damage(I.w_class*I.embedded_pain_multiplier)
-				src << "<span class='userdanger'>\the [I] embedded in your [BP.name] hurts!</span>"
+				to_chat(src, "<span class='userdanger'>[I] embedded in your [BP.name] hurts!</span>")
 
 			if(prob(I.embedded_fall_chance))
 				BP.receive_damage(I.w_class*I.embedded_fall_pain_multiplier)
 				BP.embedded_objects -= I
 				I.loc = get_turf(src)
-				visible_message("<span class='danger'>\the [I] falls out of [name]'s [BP.name]!</span>","<span class='userdanger'>\the [I] falls out of your [BP.name]!</span>")
+				visible_message("<span class='danger'>[I] falls out of [name]'s [BP.name]!</span>","<span class='userdanger'>[I] falls out of your [BP.name]!</span>")
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
 
+/mob/living/carbon/human/proc/can_heartattack()
+	CHECK_DNA_AND_SPECIES(src)
+	if(NOBLOOD in dna.species.species_traits)
+		return FALSE
+	return TRUE
+
+/mob/living/carbon/human/proc/undergoing_cardiac_arrest()
+	if(!can_heartattack())
+		return FALSE
+	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
+	if(istype(heart) && heart.beating)
+		return FALSE
+	return TRUE
+
+/mob/living/carbon/human/proc/set_heartattack(status)
+	if(!can_heartattack())
+		return FALSE
+
+	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
+	if(!istype(heart))
+		return
+
+	heart.beating = !status
+
+/mob/living/carbon/human/proc/handle_active_genes()
+	for(var/datum/mutation/human/HM in dna.mutations)
+		HM.on_life(src)
 
 /mob/living/carbon/human/proc/handle_heart()
-	CHECK_DNA_AND_SPECIES(src)
-	var/needs_heart = (!(NOBLOOD in dna.species.species_traits))
+	if(!can_heartattack())
+		return
+
 	var/we_breath = (!(NOBREATH in dna.species.species_traits))
 
-	if(heart_attack)
-		if(!needs_heart)
-			heart_attack = FALSE
-		else if(we_breath)
-			if(losebreath < 3)
-				losebreath += 2
-			adjustOxyLoss(5)
-			adjustBruteLoss(1)
-		else
-			// even though we don't require oxygen, our blood still needs
-			// circulation, and without it, our tissues die and start
-			// gaining toxins
-			adjustBruteLoss(3)
-			if(src.reagents)
-				src.reagents.add_reagent("toxin", 2)
+
+	if(!undergoing_cardiac_arrest())
+		return
+
+	// Cardiac arrest, unless corazone
+	if(reagents.get_reagent_amount("corazone"))
+		return
+
+	if(we_breath)
+		adjustOxyLoss(8)
+		Unconscious(80)
+	// Tissues die without blood circulation
+	adjustBruteLoss(2)
 
 /*
 Alcohol Poisoning Chart
@@ -369,10 +379,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /mob/living/carbon/human/handle_status_effects()
 	..()
 	if(drunkenness)
-		if(sleeping)
-			drunkenness = max(drunkenness - (drunkenness / 10), 0)
-		else
-			drunkenness = max(drunkenness - (drunkenness / 25), 0)
+		drunkenness = max(drunkenness - (drunkenness * 0.04), 0)
 
 		if(drunkenness >= 6)
 			if(prob(25))
@@ -403,16 +410,16 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		if(drunkenness >= 81)
 			adjustToxLoss(0.2)
 			if(prob(5) && !stat)
-				src << "<span class='warning'>Maybe you should lie down for a bit...</span>"
+				to_chat(src, "<span class='warning'>Maybe you should lie down for a bit...</span>")
 
 		if(drunkenness >= 91)
 			adjustBrainLoss(0.4)
 			if(prob(20) && !stat)
-				if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && z == ZLEVEL_STATION) //QoL mainly
-					src << "<span class='warning'>You're so tired... but you can't miss that shuttle...</span>"
+				if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && (z in GLOB.station_z_levels)) //QoL mainly
+					to_chat(src, "<span class='warning'>You're so tired... but you can't miss that shuttle...</span>")
 				else
-					src << "<span class='warning'>Just a quick nap...</span>"
-					Sleeping(45)
+					to_chat(src, "<span class='warning'>Just a quick nap...</span>")
+					Sleeping(900)
 
 		if(drunkenness >= 101)
 			adjustToxLoss(4) //Let's be honest you shouldn't be alive by now

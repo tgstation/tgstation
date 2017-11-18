@@ -3,7 +3,7 @@
 
 /datum/cellular_emporium
 	var/name = "cellular emporium"
-	var/datum/changeling/changeling
+	var/datum/antagonist/changeling/changeling
 
 /datum/cellular_emporium/New(my_changeling)
 	. = ..()
@@ -13,7 +13,7 @@
 	changeling = null
 	. = ..()
 
-/datum/cellular_emporium/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = always_state)
+/datum/cellular_emporium/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "cellular_emporium", name, 900, 480, master_ui, state)
@@ -32,7 +32,7 @@
 
 	var/list/abilities = list()
 
-	for(var/path in subtypesof(/obj/effect/proc_holder/changeling))
+	for(var/path in changeling.all_powers)
 		var/obj/effect/proc_holder/changeling/ability = path
 
 		var/dna_cost = initial(ability.dna_cost)
@@ -61,14 +61,15 @@
 	switch(action)
 		if("readapt")
 			if(changeling.canrespec)
-				changeling.lingRespec(usr)
+				changeling.readapt()
 		if("evolve")
 			var/sting_name = params["name"]
-			changeling.purchasePower(usr, sting_name)
+			changeling.purchase_power(sting_name)
 
 /datum/action/innate/cellular_emporium
 	name = "Cellular Emporium"
-	button_icon_state = "cellular_emporium"
+	icon_icon = 'icons/obj/drinks.dmi'
+	button_icon_state = "changelingsting"
 	background_icon_state = "bg_alien"
 	var/datum/cellular_emporium/cellular_emporium
 

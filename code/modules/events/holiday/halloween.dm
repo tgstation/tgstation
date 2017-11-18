@@ -8,131 +8,54 @@
 
 /datum/round_event/spooky/start()
 	..()
-	for(var/mob/living/carbon/human/H in mob_list)
-		var/obj/item/weapon/storage/backpack/b = locate() in H.contents
-		new /obj/item/weapon/storage/spooky(b)
-		if(ishuman(H) || islizard(H))
-			if(prob(50))
-				H.set_species(/datum/species/skeleton)
-			else
-				H.set_species(/datum/species/zombie)
+	for(var/mob/living/carbon/human/H in GLOB.carbon_list)
+		var/obj/item/storage/backpack/b = locate() in H.contents
+		if(b)
+			new /obj/item/storage/spooky(b)
 
-	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in mob_list)
-		Ian.place_on_head(new /obj/item/weapon/bedsheet(Ian))
-	for(var/mob/living/simple_animal/parrot/Poly/Poly in mob_list)
+	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in GLOB.mob_living_list)
+		Ian.place_on_head(new /obj/item/bedsheet(Ian))
+	for(var/mob/living/simple_animal/parrot/Poly/Poly in GLOB.mob_living_list)
 		new /mob/living/simple_animal/parrot/Poly/ghost(Poly.loc)
 		qdel(Poly)
 
-/datum/round_event/spooky/announce()
+/datum/round_event/spooky/announce(fake)
 	priority_announce(pick("RATTLE ME BONES!","THE RIDE NEVER ENDS!", "A SKELETON POPS OUT!", "SPOOKY SCARY SKELETONS!", "CREWMEMBERS BEWARE, YOU'RE IN FOR A SCARE!") , "THE CALL IS COMING FROM INSIDE THE HOUSE")
 
-//Eyeball migration
-/datum/round_event_control/carp_migration/eyeballs
-	name = "Eyeball Migration"
-	typepath = /datum/round_event/carp_migration/eyeballs
-	holidayID = HALLOWEEN
-	weight = 25
-	earliest_start = 0
-
-/datum/round_event/carp_migration/eyeballs/start()
-	for(var/obj/effect/landmark/C in landmarks_list)
-		if(C.name == "carpspawn")
-			new /mob/living/simple_animal/hostile/carp/eyeball(C.loc)
-
-//Pumpking meteors waves
-/datum/round_event_control/meteor_wave/spooky
-	name = "Pumpkin Wave"
-	typepath = /datum/round_event/meteor_wave/spooky
-	holidayID = HALLOWEEN
-	weight = 20
-	max_occurrences = 2
-
-/datum/round_event/meteor_wave/spooky
-	endWhen	= 40
-
-/datum/round_event/meteor_wave/spooky/tick()
-	if(IsMultiple(activeFor, 4))
-		spawn_meteors(3, meteorsSPOOKY) //meteor list types defined in gamemode/meteor/meteors.dm
-
-//Creepy clown invasion
-/datum/round_event_control/creepy_clowns
-	name = "Clowns"
-	typepath = /datum/round_event/creepy_clowns
-	holidayID = HALLOWEEN
-	weight = 20
-	earliest_start = 0
-
-/datum/round_event/creepy_clowns
-	endWhen = 40
-
-/datum/round_event/creepy_clowns/start()
-	for(var/mob/living/carbon/human/H in living_mob_list)
-		if(!H.client || !istype(H))
-			return
-		H << "<span class='danger'>Honk...</span>"
-		H << 'sound/spookoween/scary_clown_appear.ogg'
-		var/turf/T = get_turf(H)
-		if(T)
-			new /obj/effect/hallucination/simple/clown(T, H, 50)
-
-/datum/round_event/creepy_clowns/tick()
-	if(IsMultiple(activeFor, 4))
-		for(var/mob/living/carbon/human/H in living_mob_list)
-			if (prob(66))
-				playsound(H.loc, pick('sound/spookoween/scary_horn.ogg','sound/spookoween/scary_horn2.ogg', 'sound/spookoween/scary_horn3.ogg'), 100, 1)
-			if (prob(33))
-				var/turf/T = get_turf(H)
-				if(T)
-					new /obj/effect/hallucination/simple/clown(T, H, 25)
-			else if (prob(25))
-				var/turf/T = get_turf(H)
-				if(T)
-					new /obj/effect/hallucination/simple/clown/scary(T, H, 25)
-			else if (prob(5))
-				var/turf/T = get_turf(H)
-				if(T)
-					spawn_atom_to_turf(/obj/effect/mob_spawn/human/clown/corpse, H, 1)
-			else if (prob(1))
-				spawn_atom_to_turf(/mob/living/simple_animal/hostile/retaliate/clown, H, 1)
-
-/datum/round_event/creepy_clowns/announce()
-	priority_announce("Honk... Honk... honk... HONK! HONK! HONKHONKHONKHONKHONK", "HONK!", 'sound/spookoween/scary_horn.ogg')
-
 //spooky foods (you can't actually make these when it's not halloween)
-/obj/item/weapon/reagent_containers/food/snacks/sugarcookie/spookyskull
+/obj/item/reagent_containers/food/snacks/sugarcookie/spookyskull
 	name = "skull cookie"
 	desc = "Spooky! It's got delicious calcium flavouring!"
 	icon = 'icons/obj/halloween_items.dmi'
 	icon_state = "skeletoncookie"
 
-/obj/item/weapon/reagent_containers/food/snacks/sugarcookie/spookycoffin
+/obj/item/reagent_containers/food/snacks/sugarcookie/spookycoffin
 	name = "coffin cookie"
 	desc = "Spooky! It's got delicious coffee flavouring!"
 	icon = 'icons/obj/halloween_items.dmi'
 	icon_state = "coffincookie"
 
-
 //spooky items
 
-/obj/item/weapon/storage/spooky
+/obj/item/storage/spooky
 	name = "trick-o-treat bag"
 	desc = "A pumpkin-shaped bag that holds all sorts of goodies!"
 	icon = 'icons/obj/halloween_items.dmi'
 	icon_state = "treatbag"
 
-/obj/item/weapon/storage/spooky/New()
+/obj/item/storage/spooky/New()
 	..()
 	for(var/distrobuteinbag=0 to 5)
-		var/type = pick(/obj/item/weapon/reagent_containers/food/snacks/sugarcookie/spookyskull,
-		/obj/item/weapon/reagent_containers/food/snacks/sugarcookie/spookycoffin,
-		/obj/item/weapon/reagent_containers/food/snacks/candy_corn,
-		/obj/item/weapon/reagent_containers/food/snacks/candy,
-		/obj/item/weapon/reagent_containers/food/snacks/candiedapple,
-		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar,
+		var/type = pick(/obj/item/reagent_containers/food/snacks/sugarcookie/spookyskull,
+		/obj/item/reagent_containers/food/snacks/sugarcookie/spookycoffin,
+		/obj/item/reagent_containers/food/snacks/candy_corn,
+		/obj/item/reagent_containers/food/snacks/candy,
+		/obj/item/reagent_containers/food/snacks/candiedapple,
+		/obj/item/reagent_containers/food/snacks/chocolatebar,
 		/obj/item/organ/brain ) // OH GOD THIS ISN'T CANDY!
 		new type(src)
 
-/obj/item/weapon/card/emag/halloween
+/obj/item/card/emag/halloween
 	name = "hack-o'-lantern"
 	desc = "It's a pumpkin with a cryptographic sequencer sticking out."
 	icon_state = "hack_o_lantern"

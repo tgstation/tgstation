@@ -17,7 +17,7 @@
   *
   * return datum/tgui The found UI.
  **/
-/datum/subsystem/tgui/proc/try_update_ui(mob/user, datum/src_object, ui_key, datum/tgui/ui, force_open = 0)
+/datum/controller/subsystem/tgui/proc/try_update_ui(mob/user, datum/src_object, ui_key, datum/tgui/ui, force_open = FALSE)
 	if(isnull(ui)) // No UI was passed, so look for one.
 		ui = get_open_ui(user, src_object, ui_key)
 
@@ -42,8 +42,8 @@
   *
   * return datum/tgui The found UI.
  **/
-/datum/subsystem/tgui/proc/get_open_ui(mob/user, datum/src_object, ui_key)
-	var/src_object_key = "\ref[src_object]"
+/datum/controller/subsystem/tgui/proc/get_open_ui(mob/user, datum/src_object, ui_key)
+	var/src_object_key = "[REF(src_object)]"
 	if(isnull(open_uis[src_object_key]) || !istype(open_uis[src_object_key], /list))
 		return null // No UIs open.
 	else if(isnull(open_uis[src_object_key][ui_key]) || !istype(open_uis[src_object_key][ui_key], /list))
@@ -64,8 +64,8 @@
   *
   * return int The number of UIs updated.
  **/
-/datum/subsystem/tgui/proc/update_uis(datum/src_object)
-	var/src_object_key = "\ref[src_object]"
+/datum/controller/subsystem/tgui/proc/update_uis(datum/src_object)
+	var/src_object_key = "[REF(src_object)]"
 	if(isnull(open_uis[src_object_key]) || !istype(open_uis[src_object_key], /list))
 		return 0 // Couldn't find any UIs for this object.
 
@@ -86,8 +86,8 @@
   *
   * return int The number of UIs closed.
  **/
-/datum/subsystem/tgui/proc/close_uis(datum/src_object)
-	var/src_object_key = "\ref[src_object]"
+/datum/controller/subsystem/tgui/proc/close_uis(datum/src_object)
+	var/src_object_key = "[REF(src_object)]"
 	if(isnull(open_uis[src_object_key]) || !istype(open_uis[src_object_key], /list))
 		return 0 // Couldn't find any UIs for this object.
 
@@ -106,7 +106,7 @@
   *
   * return int The number of UIs closed.
  **/
-/datum/subsystem/tgui/proc/close_all_uis()
+/datum/controller/subsystem/tgui/proc/close_all_uis()
 	var/close_count = 0
 	for(var/src_object_key in open_uis)
 		for(var/ui_key in open_uis[src_object_key])
@@ -127,7 +127,7 @@
   *
   * return int The number of UIs updated.
  **/
-/datum/subsystem/tgui/proc/update_user_uis(mob/user, datum/src_object = null, ui_key = null)
+/datum/controller/subsystem/tgui/proc/update_user_uis(mob/user, datum/src_object = null, ui_key = null)
 	if(isnull(user.open_uis) || !istype(user.open_uis, /list) || open_uis.len == 0)
 		return 0 // Couldn't find any UIs for this user.
 
@@ -149,7 +149,7 @@
   *
   * return int The number of UIs closed.
  **/
-/datum/subsystem/tgui/proc/close_user_uis(mob/user, datum/src_object = null, ui_key = null)
+/datum/controller/subsystem/tgui/proc/close_user_uis(mob/user, datum/src_object = null, ui_key = null)
 	if(isnull(user.open_uis) || !istype(user.open_uis, /list) || open_uis.len == 0)
 		return 0 // Couldn't find any UIs for this user.
 
@@ -167,8 +167,8 @@
   *
   * required ui datum/tgui The UI to be added.
  **/
-/datum/subsystem/tgui/proc/on_open(datum/tgui/ui)
-	var/src_object_key = "\ref[ui.src_object]"
+/datum/controller/subsystem/tgui/proc/on_open(datum/tgui/ui)
+	var/src_object_key = "[REF(ui.src_object)]"
 	if(isnull(open_uis[src_object_key]) || !istype(open_uis[src_object_key], /list))
 		open_uis[src_object_key] = list(ui.ui_key = list()) // Make a list for the ui_key and src_object.
 	else if(isnull(open_uis[src_object_key][ui.ui_key]) || !istype(open_uis[src_object_key][ui.ui_key], /list))
@@ -189,8 +189,8 @@
   *
   * return bool If the UI was removed or not.
  **/
-/datum/subsystem/tgui/proc/on_close(datum/tgui/ui)
-	var/src_object_key = "\ref[ui.src_object]"
+/datum/controller/subsystem/tgui/proc/on_close(datum/tgui/ui)
+	var/src_object_key = "[REF(ui.src_object)]"
 	if(isnull(open_uis[src_object_key]) || !istype(open_uis[src_object_key], /list))
 		return 0 // It wasn't open.
 	else if(isnull(open_uis[src_object_key][ui.ui_key]) || !istype(open_uis[src_object_key][ui.ui_key], /list))
@@ -219,20 +219,20 @@
   *
   * return int The number of UIs closed.
  **/
-/datum/subsystem/tgui/proc/on_logout(mob/user)
+/datum/controller/subsystem/tgui/proc/on_logout(mob/user)
 	return close_user_uis(user)
 
  /**
   * private
   *
-  * Handle clients switching mobs, by transfering their UIs.
+  * Handle clients switching mobs, by transferring their UIs.
   *
   * required user source The client's original mob.
   * required user target The client's new mob.
   *
   * return bool If the UIs were transferred.
  **/
-/datum/subsystem/tgui/proc/on_transfer(mob/source, mob/target)
+/datum/controller/subsystem/tgui/proc/on_transfer(mob/source, mob/target)
 	if(!source || isnull(source.open_uis) || !istype(source.open_uis, /list) || open_uis.len == 0)
 		return 0 // The old mob had no open UIs.
 

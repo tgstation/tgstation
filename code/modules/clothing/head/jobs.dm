@@ -6,7 +6,8 @@
 	icon_state = "chef"
 	desc = "The commander in chef's head wear."
 	strip_delay = 10
-	put_on_delay = 10
+	equip_delay_other = 10
+	dynamic_hair_suffix = ""
 	dog_fashion = /datum/dog_fashion/head/chef
 
 /obj/item/clothing/head/chefhat/suicide_act(mob/user)
@@ -62,6 +63,7 @@
 	item_state = "cage"
 	worn_x_dimension = 64
 	worn_y_dimension = 64
+	dynamic_hair_suffix = ""
 
 
 /obj/item/clothing/head/witchunter_hat
@@ -72,26 +74,29 @@
 	flags_cover = HEADCOVERSEYES
 
 //Detective
-/obj/item/clothing/head/det_hat
+/obj/item/clothing/head/fedora/det_hat
 	name = "detective's fedora"
 	desc = "There's only one man who can sniff out the dirty stench of crime, and he's likely wearing this hat."
 	icon_state = "detective"
-	armor = list(melee = 25, bullet = 5, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0, fire = 30, acid = 50)
 	var/candy_cooldown = 0
-	pockets = /obj/item/weapon/storage/internal/pocket/small/detective
+	pockets = /obj/item/storage/internal/pocket/small/detective
 	dog_fashion = /datum/dog_fashion/head/detective
 
-/obj/item/clothing/head/det_hat/AltClick()
+/obj/item/clothing/head/fedora/det_hat/examine(mob/user)
 	..()
-	if(ismob(loc))
-		var/mob/M = loc
-		if(candy_cooldown < world.time)
-			var/obj/item/weapon/reagent_containers/food/snacks/candy_corn/CC = new /obj/item/weapon/reagent_containers/food/snacks/candy_corn(src)
-			M.put_in_hands(CC)
-			M << "You slip a candy corn from your hat."
-			candy_cooldown = world.time+1200
-		else
-			M << "You just took a candy corn! You should wait a couple minutes, lest you burn through your stash."
+	to_chat(user, "<span class='notice'>Alt-click to take a candy corn.</span>")
+
+/obj/item/clothing/head/fedora/det_hat/AltClick(mob/user)
+	if(user.canUseTopic(src, be_close=TRUE))
+		..()
+		if(loc == user)
+			if(candy_cooldown < world.time)
+				var/obj/item/reagent_containers/food/snacks/candy_corn/CC = new /obj/item/reagent_containers/food/snacks/candy_corn(src)
+				user.put_in_hands(CC)
+				to_chat(user, "You slip a candy corn from your hat.")
+				candy_cooldown = world.time+1200
+			else
+				to_chat(user, "You just took a candy corn! You should wait a couple minutes, lest you burn through your stash.")
 
 
 //Mime
@@ -99,12 +104,17 @@
 	name = "beret"
 	desc = "A beret, a mime's favorite headwear."
 	icon_state = "beret"
-
 	dog_fashion = /datum/dog_fashion/head/beret
+	dynamic_hair_suffix = ""
+
+/obj/item/clothing/head/beret/black
+	name = "black beret"
+	desc = "A black beret, perfect for war veterans and dark, brooding, anti-hero mimes."
+	icon_state = "beretblack"
 
 /obj/item/clothing/head/beret/highlander
 	desc = "That was white fabric. <i>Was.</i>"
-	flags = NODROP
+	flags_1 = NODROP_1
 	dog_fashion = null //THIS IS FOR SLAUGHTER, NOT PUPPIES
 
 //Security
@@ -115,11 +125,20 @@
 	icon_state = "hoscap"
 	armor = list(melee = 40, bullet = 30, laser = 25, energy = 10, bomb = 25, bio = 10, rad = 0, fire = 50, acid = 60)
 	strip_delay = 80
+	dynamic_hair_suffix = ""
+
+/obj/item/clothing/head/HoS/syndicate
+	name = "syndicate cap"
+	desc = "A black cap fit for a high ranking syndicate officer."
 
 /obj/item/clothing/head/HoS/beret
 	name = "head of security beret"
 	desc = "A robust beret for the Head of Security, for looking stylish while not sacrificing protection."
 	icon_state = "hosberetblack"
+
+/obj/item/clothing/head/HoS/beret/syndicate
+	name = "syndicate beret"
+	desc = "A black beret with thick armor padding inside. Stylish and robust."
 
 /obj/item/clothing/head/warden
 	name = "warden's police hat"
@@ -154,8 +173,7 @@
 	icon_state = "officerberet"
 
 //Curator
-/obj/item/clothing/head/curator
+/obj/item/clothing/head/fedora/curator
 	name = "treasure hunter's fedora"
 	desc = "You got red text today kid, but it doesn't mean you have to like it."
 	icon_state = "curator"
-	armor = list(melee = 25, bullet = 5, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0, fire = 30, acid = 50)

@@ -3,6 +3,7 @@
 /obj/machinery/computer/telecomms/server
 	name = "telecommunications server monitoring console"
 	icon_screen = "comm_logs"
+	desc = "Has full access to all details and record of the telecommunications network it's monitoring."
 
 	var/screen = 0				// the screen number:
 	var/list/servers = list()	// the servers located by the computer
@@ -13,8 +14,8 @@
 
 	var/universal_translate = 0 // set to 1 if it can translate nonhuman speech
 
-	req_access = list(access_tcomsat)
-	circuit = /obj/item/weapon/circuitboard/computer/comm_server
+	req_access = list(ACCESS_TCOMSAT)
+	circuit = /obj/item/circuitboard/computer/comm_server
 
 /obj/machinery/computer/telecomms/server/attack_hand(mob/user)
 	if(..())
@@ -29,23 +30,23 @@
 
 		if(0)
 			dat += "<br>[temp]<br>"
-			dat += "<br>Current Network: <a href='?src=\ref[src];network=1'>[network]</a><br>"
+			dat += "<br>Current Network: <a href='?src=[REF(src)];network=1'>[network]</a><br>"
 			if(servers.len)
 				dat += "<br>Detected Telecommunication Servers:<ul>"
 				for(var/obj/machinery/telecomms/T in servers)
-					dat += "<li><a href='?src=\ref[src];viewserver=[T.id]'>\ref[T] [T.name]</a> ([T.id])</li>"
+					dat += "<li><a href='?src=[REF(src)];viewserver=[T.id]'>[REF(T)] [T.name]</a> ([T.id])</li>"
 				dat += "</ul>"
-				dat += "<br><a href='?src=\ref[src];operation=release'>\[Flush Buffer\]</a>"
+				dat += "<br><a href='?src=[REF(src)];operation=release'>\[Flush Buffer\]</a>"
 
 			else
-				dat += "<br>No servers detected. Scan for servers: <a href='?src=\ref[src];operation=scan'>\[Scan\]</a>"
+				dat += "<br>No servers detected. Scan for servers: <a href='?src=[REF(src)];operation=scan'>\[Scan\]</a>"
 
 
 	  // --- Viewing Server ---
 
 		if(1)
 			dat += "<br>[temp]<br>"
-			dat += "<center><a href='?src=\ref[src];operation=mainmenu'>\[Main Menu\]</a>     <a href='?src=\ref[src];operation=refresh'>\[Refresh\]</a></center>"
+			dat += "<center><a href='?src=[REF(src)];operation=mainmenu'>\[Main Menu\]</a>     <a href='?src=[REF(src)];operation=refresh'>\[Refresh\]</a></center>"
 			dat += "<br>Current Network: [network]"
 			dat += "<br>Selected Server: [SelectedServer.id]"
 
@@ -64,7 +65,7 @@
 				// If the log is a speech file
 				if(C.input_type == "Speech File")
 
-					dat += "<li><font color = #008F00>[C.name]</font color>  <font color = #FF0000><a href='?src=\ref[src];delete=[i]'>\[X\]</a></font color><br>"
+					dat += "<li><font color = #008F00>[C.name]</font color>  <font color = #FF0000><a href='?src=[REF(src)];delete=[i]'>\[X\]</a></font color><br>"
 
 					// -- Determine race of orator --
 
@@ -127,7 +128,7 @@
 
 				else if(C.input_type == "Execution Error")
 
-					dat += "<li><font color = #990000>[C.name]</font color>  <font color = #FF0000><a href='?src=\ref[src];delete=[i]'>\[X\]</a></font color><br>"
+					dat += "<li><font color = #990000>[C.name]</font color>  <font color = #FF0000><a href='?src=[REF(src)];delete=[i]'>\[X\]</a></font color><br>"
 					dat += "<u><font color = #787700>Output</font color></u>: \"[C.parameters["message"]]\"<br>"
 					dat += "</li><br>"
 
@@ -187,7 +188,7 @@
 	if(href_list["delete"])
 
 		if(!src.allowed(usr) && !emagged)
-			usr << "<span class='danger'>ACCESS DENIED.</span>"
+			to_chat(usr, "<span class='danger'>ACCESS DENIED.</span>")
 			return
 
 		if(SelectedServer)

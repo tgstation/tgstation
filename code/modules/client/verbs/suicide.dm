@@ -11,15 +11,15 @@
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
-		suiciding = 1
-		log_game("[key_name(src)] (job: [job ? "[job]" : "None"]) commited suicide at [get_area(src)].")
+		suiciding = TRUE
+		log_game("[key_name(src)] (job: [job ? "[job]" : "None"]) committed suicide at [get_area(src)].")
 		var/obj/item/held_item = get_active_held_item()
 		if(held_item)
 			var/damagetype = held_item.suicide_act(src)
 			if(damagetype)
 				if(damagetype & SHAME)
 					adjustStaminaLoss(200)
-					suiciding = 0
+					suiciding = FALSE
 					return
 				var/damage_mod = 0
 				for(var/T in list(BRUTELOSS, FIRELOSS, TOXLOSS, OXYLOSS))
@@ -39,11 +39,14 @@
 				if(damagetype & OXYLOSS)
 					adjustOxyLoss(200/damage_mod)
 
+				if(damagetype & MANUAL_SUICIDE)	//Assume the object will handle the death.
+					return
+
 				//If something went wrong, just do normal oxyloss
 				if(!(damagetype & (BRUTELOSS | FIRELOSS | TOXLOSS | OXYLOSS) ))
 					adjustOxyLoss(max(200 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 
-				death(0)
+				death(FALSE)
 				return
 
 		var/suicide_message = pick("[src] is attempting to bite [p_their()] tongue off! It looks like [p_theyre()] trying to commit suicide.", \
@@ -124,7 +127,7 @@
 		 "<span class='notice'>[src] bleeps electronically.</span>")
 		death(0)
 	else
-		src << "Aborting suicide attempt."
+		to_chat(src, "Aborting suicide attempt.")
 
 /mob/living/carbon/alien/humanoid/verb/suicide()
 	set hidden = 1
@@ -160,18 +163,15 @@
 	if(stat == CONSCIOUS)
 		return TRUE
 	else if(stat == DEAD)
-		src << "You're already dead!"
+		to_chat(src, "You're already dead!")
 	else if(stat == UNCONSCIOUS)
-		src << "You need to be conscious to suicide!"
+		to_chat(src, "You need to be conscious to suicide!")
 	return
 
 /mob/living/carbon/canSuicide()
 	if(!..())
 		return
 	if(!canmove || restrained())	//just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
-		src << "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))"
-		return
-	if(has_brain_worms())
-		src << "You can't bring yourself to commit suicide!"
+		to_chat(src, "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))")
 		return
 	return TRUE

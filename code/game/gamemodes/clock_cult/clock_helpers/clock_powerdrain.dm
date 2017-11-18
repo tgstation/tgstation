@@ -1,12 +1,21 @@
 //horrifying power drain proc made for clockcult's power drain in lieu of six istypes or six for(x in view) loops
 /atom/movable/proc/power_drain(clockcult_user)
+	var/obj/item/stock_parts/cell/cell = get_cell()
+	if(cell)
+		return cell.power_drain(clockcult_user)
+	return 0
+
+/obj/item/melee/baton/power_drain(clockcult_user)	//balance memes
+	return 0
+
+/obj/item/gun/power_drain(clockcult_user)	//balance memes
 	return 0
 
 /obj/machinery/power/apc/power_drain(clockcult_user)
 	if(cell && cell.charge)
 		playsound(src, "sparks", 50, 1)
 		flick("apc-spark", src)
-		. = min(cell.charge, 250)
+		. = min(cell.charge, MIN_CLOCKCULT_POWER*3)
 		cell.use(.) //Better than a power sink!
 		if(!cell.charge && !shorted)
 			shorted = 1
@@ -16,42 +25,29 @@
 
 /obj/machinery/power/smes/power_drain(clockcult_user)
 	if(charge)
-		. = min(charge, 250)
+		. = min(charge, MIN_CLOCKCULT_POWER*3)
 		charge -= . * 50
 		if(!charge && !panel_open)
 			panel_open = TRUE
 			icon_state = "[initial(icon_state)]-o"
-			var/datum/effect_system/spark_spread/spks = new(get_turf(src))
-			spks.set_up(10, 0, get_turf(src))
-			spks.start()
-			visible_message("<span class='warning'>[src]'s panel flies open with a flurry of spark</span>")
+			do_sparks(10, FALSE, src)
+			visible_message("<span class='warning'>[src]'s panel flies open with a flurry of sparks!</span>")
 		update_icon()
 
-/obj/item/weapon/stock_parts/cell/power_drain(clockcult_user)
+/obj/item/stock_parts/cell/power_drain(clockcult_user)
 	if(charge)
-		. = min(charge, 250)
+		. = min(charge, MIN_CLOCKCULT_POWER*3)
 		charge = use(.)
-		updateicon()
-
-/obj/machinery/light/power_drain(clockcult_user)
-	if(on)
-		playsound(src, 'sound/effects/light_flicker.ogg', 50, 1)
-		. = 250
-		if(prob(50))
-			burn_out()
+		update_icon()
 
 /mob/living/silicon/robot/power_drain(clockcult_user)
 	if((!clockcult_user || !is_servant_of_ratvar(src)) && cell && cell.charge)
-		. = min(cell.charge, 250)
+		. = min(cell.charge, MIN_CLOCKCULT_POWER*4)
 		cell.use(.)
-		if(prob(20))
-			src << "<span class='userdanger'>ERROR: Power loss detected!</span>"
 		spark_system.start()
 
 /obj/mecha/power_drain(clockcult_user)
-	if((!clockcult_user || !occupant || occupant && !is_servant_of_ratvar(occupant)) && cell && cell.charge)
-		. = min(cell.charge, 250)
+	if((!clockcult_user || (occupant && !is_servant_of_ratvar(occupant))) && cell && cell.charge)
+		. = min(cell.charge, MIN_CLOCKCULT_POWER*4)
 		cell.use(.)
-		if(prob(20))
-			occupant_message("<span class='userdanger'>Power loss detected!</span>")
 		spark_system.start()

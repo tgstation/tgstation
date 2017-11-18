@@ -12,20 +12,20 @@
 	name = "bus mainframe"
 	icon_state = "bus"
 	desc = "A mighty piece of hardware used to send massive amounts of data quickly."
-	density = 1
-	anchored = 1
-	use_power = 1
+	density = TRUE
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	machinetype = 2
-	//heatgen = 20
 	netspeed = 40
+	circuit = /obj/item/circuitboard/machine/telecomms/bus
 	var/change_frequency = 0
 
 /obj/machinery/telecomms/bus/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 
 	if(is_freq_listening(signal))
 		if(change_frequency)
-			if(signal.frequency != SYND_FREQ)
+			if(signal.frequency != GLOB.SYND_FREQ)
 				signal.frequency = change_frequency
 
 		if(!istype(machine_from, /obj/machinery/telecomms/processor) && machine_from != src) // Signal must be ready (stupid assuming machine), let's send it
@@ -49,54 +49,36 @@
 			if(can_send)
 				break
 
-/obj/machinery/telecomms/bus/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/telecomms/bus(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/telecomms/bus
-	name = "Bus Mainframe (Machine Board)"
-	build_path = /obj/machinery/telecomms/bus
-	origin_tech = "programming=2;engineering=2"
-	req_components = list(
-							/obj/item/weapon/stock_parts/manipulator = 2,
-							/obj/item/stack/cable_coil = 1,
-							/obj/item/weapon/stock_parts/subspace/filter = 1)
-
-
-
-
-
 //Preset Buses
 
 /obj/machinery/telecomms/bus/preset_one
 	id = "Bus 1"
 	network = "tcommsat"
-	freq_listening = list(SCI_FREQ, MED_FREQ)
+	freq_listening = list(GLOB.SCI_FREQ, GLOB.MED_FREQ)
 	autolinkers = list("processor1", "science", "medical")
 
 /obj/machinery/telecomms/bus/preset_two
 	id = "Bus 2"
 	network = "tcommsat"
-	freq_listening = list(SUPP_FREQ,SERV_FREQ)
+	freq_listening = list(GLOB.SUPP_FREQ,GLOB.SERV_FREQ)
 	autolinkers = list("processor2", "supply", "service")
 
 /obj/machinery/telecomms/bus/preset_three
 	id = "Bus 3"
 	network = "tcommsat"
-	freq_listening = list(SEC_FREQ, COMM_FREQ)
+	freq_listening = list(GLOB.SEC_FREQ, GLOB.COMM_FREQ)
 	autolinkers = list("processor3", "security", "command")
 
 /obj/machinery/telecomms/bus/preset_four
 	id = "Bus 4"
 	network = "tcommsat"
-	freq_listening = list(ENG_FREQ)
+	freq_listening = list(GLOB.ENG_FREQ)
 	autolinkers = list("processor4", "engineering", "common")
 
-/obj/machinery/telecomms/bus/preset_four/New()
+/obj/machinery/telecomms/bus/preset_four/Initialize()
+	. = ..()
 	for(var/i = 1441, i < 1489, i += 2)
 		freq_listening |= i
-	..()
 
 /obj/machinery/telecomms/bus/preset_one/birdstation
 	name = "Bus"

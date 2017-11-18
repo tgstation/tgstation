@@ -123,7 +123,7 @@
 	L.time = time2text(world.timeofday, "hh:mm")
 	logs += L
 
-var/global/datum/stockMarket/stockExchange = new
+GLOBAL_DATUM_INIT(stockExchange, /datum/stockMarket, new)
 
 /proc/plotBarGraph(var/list/points, var/base_text, var/width=400, var/height=400)
 	var/output = "<table style='border:1px solid black; border-collapse: collapse; width: [width]px; height: [height]px'>"

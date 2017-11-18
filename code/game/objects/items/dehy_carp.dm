@@ -4,30 +4,22 @@
  */
 
 //Child of carpplushie because this should do everything the toy does and more
-/obj/item/toy/carpplushie/dehy_carp
+/obj/item/toy/plush/carpplushie/dehy_carp
 	var/mob/owner = null	//Carp doesn't attack owner, set when using in hand
 	var/owned = 0	//Boolean, no owner to begin with
 	var/mobtype = /mob/living/simple_animal/hostile/carp //So admins can change what mob spawns via var fuckery
 
 //Attack self
-/obj/item/toy/carpplushie/dehy_carp/attack_self(mob/user)
+/obj/item/toy/plush/carpplushie/dehy_carp/attack_self(mob/user)
 	src.add_fingerprint(user)	//Anyone can add their fingerprints to it with this
 	if(!owned)
-		user << "<span class='notice'>You pet [src]. You swear it looks up at you.</span>"
+		to_chat(user, "<span class='notice'>You pet [src]. You swear it looks up at you.</span>")
 		owner = user
 		owned = 1
-	return ..()
+	else
+		return ..()
 
-
-/obj/item/toy/carpplushie/dehy_carp/afterattack(obj/O, mob/user,proximity)
-	if(!proximity) return
-	if(istype(O,/obj/structure/sink))
-		user.drop_item()
-		loc = get_turf(O)
-		return Swell()
-	..()
-
-/obj/item/toy/carpplushie/dehy_carp/proc/Swell()
+/obj/item/toy/plush/carpplushie/dehy_carp/proc/Swell()
 	desc = "It's growing!"
 	visible_message("<span class='notice'>[src] swells up!</span>")
 

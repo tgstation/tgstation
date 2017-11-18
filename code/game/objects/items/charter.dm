@@ -5,8 +5,9 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll2"
 	desc = "An official document entrusting the governance of the station \
-		and surrounding space to the Captain. "
+		and surrounding space to the Captain."
 	var/used = FALSE
+	var/name_type = "station"
 
 	var/unlimited_uses = FALSE
 	var/ignores_timeout = FALSE
@@ -15,33 +16,25 @@
 
 	var/static/regex/standard_station_regex
 
-/obj/item/station_charter/New()
+/obj/item/station_charter/Initialize()
 	. = ..()
 	if(!standard_station_regex)
-		var/prefixes = jointext(station_prefixes, "|")
-		var/names = jointext(station_names, "|")
-		var/suffixes = jointext(station_suffixes, "|")
-		var/numerals = jointext(station_numerals, "|")
-		var/regexstr = "(([prefixes]) )?(([names]) ?)([suffixes]) ([numerals])"
+		var/prefixes = jointext(GLOB.station_prefixes, "|")
+		var/names = jointext(GLOB.station_names, "|")
+		var/suffixes = jointext(GLOB.station_suffixes, "|")
+		var/numerals = jointext(GLOB.station_numerals, "|")
+		var/regexstr = "^(([prefixes]) )?(([names]) ?)([suffixes]) ([numerals])$"
 		standard_station_regex = new(regexstr)
-
-/obj/item/station_charter/Destroy()
-	if(response_timer_id)
-		deltimer(response_timer_id)
-	response_timer_id = null
-	. = ..()
 
 /obj/item/station_charter/attack_self(mob/living/user)
 	if(used)
-		user << "This charter has already been used to name the station."
+		to_chat(user, "The [name_type] has already been named.")
 		return
-	if(!ignores_timeout && (world.time-round_start_time > STATION_RENAME_TIME_LIMIT)) //5 minutes
-		user << "The crew has already settled into the shift. \
-			It probably wouldn't be good to rename the station right now."
+	if(!ignores_timeout && (world.time-SSticker.round_start_time > STATION_RENAME_TIME_LIMIT)) //5 minutes
+		to_chat(user, "The crew has already settled into the shift. It probably wouldn't be good to rename the [name_type] right now.")
 		return
 	if(response_timer_id)
-		user << "You're still waiting for approval from your employers about \
-			your proposed name change, it'd be best to wait for now."
+		to_chat(user, "You're still waiting for approval from your employers about your proposed name change, it'd be best to wait for now.")
 		return
 
 	var/new_name = stripped_input(user, message="What do you want to name \
@@ -49,20 +42,24 @@
 		rejected by your employers, while names using the standard format, \
 		will automatically be accepted.", max_length=MAX_CHARTER_LEN)
 
+	if(response_timer_id)
+		to_chat(user, "You're still waiting for approval from your employers about your proposed name change, it'd be best to wait for now.")
+		return
+
 	if(!new_name)
 		return
 	log_game("[key_name(user)] has proposed to name the station as \
 		[new_name]")
 
 	if(standard_station_regex.Find(new_name))
-		user << "Your name has been automatically approved."
-		rename_station(new_name, user)
+		to_chat(user, "Your name has been automatically approved.")
+		rename_station(new_name, user.name, user.real_name, key_name(user))
 		return
 
-	user << "Your name has been sent to your employers for approval."
+	to_chat(user, "Your name has been sent to your employers for approval.")
 	// Autoapproves after a certain time
-	response_timer_id = addtimer(CALLBACK(src, .proc/rename_station, new_name, user), approval_time, TIMER_STOPPABLE)
-	admins << "<span class='adminnotice'><b><font color=orange>CUSTOM STATION RENAME:</font></b>[key_name_admin(user)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) proposes to rename the station to [new_name] (will autoapprove in [approval_time / 10] seconds). (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[user]'>BSA</A>) (<A HREF='?_src_=holder;reject_custom_name=\ref[src]'>REJECT</A>) (<a href='?_src_=holder;CentcommReply=\ref[user]'>RPLY</a>)</span>"
+	response_timer_id = addtimer(CALLBACK(src, .proc/rename_station, new_name, user.name, user.real_name, key_name(user)), approval_time, TIMER_STOPPABLE)
+	to_chat(GLOB.admins, "<span class='adminnotice'><b><font color=orange>CUSTOM STATION RENAME:</font></b>[ADMIN_LOOKUPFLW(user)] proposes to rename the [name_type] to [new_name] (will autoapprove in [DisplayTimeText(approval_time)]). [ADMIN_SMITE(user)] (<A HREF='?_src_=holder;[HrefToken(TRUE)];reject_custom_name=[REF(src)]'>REJECT</A>) [ADMIN_CENTCOM_REPLY(user)]</span>")
 
 /obj/item/station_charter/proc/reject_proposed(user)
 	if(!user)
@@ -80,19 +77,42 @@
 	deltimer(response_timer_id)
 	response_timer_id = null
 
-/obj/item/station_charter/proc/rename_station(designation, mob/user)
-	if(config && config.server_name)
-		world.name = "[config.server_name]: [designation]"
-	else
-		world.name = designation
-	station_name = designation
-	minor_announce("[user.real_name] has designated your station as [station_name()]", "Captain's Charter", 0)
-	log_game("[key_name(user)] has renamed the station as [station_name()].")
+/obj/item/station_charter/proc/rename_station(designation, uname, ureal_name, ukey)
+	set_station_name(designation)
+	minor_announce("[ureal_name] has designated your station as [station_name()]", "Captain's Charter", 0)
+	log_game("[ukey] has renamed the station as [station_name()].")
 
 	name = "station charter for [station_name()]"
 	desc = "An official document entrusting the governance of \
-		[station_name()] and surrounding space to Captain [user]."
+		[station_name()] and surrounding space to Captain [uname]."
+	SSblackbox.record_feedback("text", "station_renames", 1, "[station_name()]")
+	if(!unlimited_uses)
+		used = TRUE
 
+/obj/item/station_charter/admin
+	unlimited_uses = TRUE
+	ignores_timeout = TRUE
+
+
+/obj/item/station_charter/flag
+	name = "nanotrasen banner"
+	icon = 'icons/obj/items_and_weapons.dmi'
+	name_type = "planet"
+	icon_state = "banner"
+	item_state = "banner"
+	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
+	desc = "A cunning device used to claim ownership of planets."
+	w_class = 5
+	force = 15
+
+/obj/item/station_charter/flag/rename_station(designation, uname, ureal_name, ukey)
+	set_station_name(designation)
+	minor_announce("[ureal_name] has designated the planet as [station_name()]", "Captain's Banner", 0)
+	log_game("[ukey] has renamed the planet as [station_name()].")
+	name = "banner of [station_name()]"
+	desc = "The banner bears the official coat of arms of Nanotrasen, signifying that [station_name()] has been claimed by Captain [uname] in the name of the company."
+	SSblackbox.record_feedback("text", "station_renames", 1, "[station_name()]")
 	if(!unlimited_uses)
 		used = TRUE
 

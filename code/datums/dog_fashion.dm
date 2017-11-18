@@ -31,9 +31,9 @@
 	if(speak_emote)
 		D.speak_emote = speak_emote
 
-/datum/dog_fashion/proc/get_image(var/dir)
+/datum/dog_fashion/proc/get_overlay(var/dir)
 	if(icon_file && obj_icon_state)
-		var/image/corgI = image(icon_file, icon_state = obj_icon_state, dir = dir)
+		var/image/corgI = image(icon_file, obj_icon_state, dir = dir)
 		corgI.alpha = obj_alpha
 		corgI.color = obj_color
 		return corgI

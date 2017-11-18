@@ -1,5 +1,8 @@
 import sys
 import subprocess
+import os
+import pathlib
+import collections
 from datetime import datetime
 
 tgm_header = "//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE"
@@ -74,7 +77,10 @@ def merge_map(newfile, backupfile, tgm):
             if new_tile == old_tile: #this tile is the exact same as before, so the old key is used
                 merged_grid[x,y] = old_key
                 known_keys[new_key] = old_key
-                unused_keys.remove(old_key)
+                try:
+                    unused_keys.remove(old_key)
+                except ValueError as ve_exception:
+                    print("NOTICE: Correcting duplicate dictionary entry. ({})".format(new_key))
                 continue
 
             #the tile is different here, but if it exists in the old dictionary, its old key can be used
@@ -84,7 +90,7 @@ def merge_map(newfile, backupfile, tgm):
                 known_keys[new_key] = newold_key
                 try:
                     unused_keys.remove(newold_key)
-                except ValueError:
+                except ValueError as ve_exception:
                     print("NOTICE: Correcting duplicate dictionary entry. ({})".format(new_key))
 
             #the tile is brand new and it needs a new key, but if the old key isn't being used any longer it can be used instead
@@ -102,7 +108,7 @@ def merge_map(newfile, backupfile, tgm):
 
     header = False
     #step two: clean the dictionary if it has too many unused keys
-    if len(unused_keys) > min(300, (len(old_dict) * 0.5)):
+    if len(unused_keys) > min(1600, (len(old_dict) * 0.5)):
         print("NOTICE: Trimming the dictionary.")
         trimmed_dict_map = trim_dictionary({"dictionary": old_dict, "grid": merged_grid})
         old_dict = trimmed_dict_map["dictionary"]
@@ -122,7 +128,7 @@ def merge_map(newfile, backupfile, tgm):
 #######################
 #write to file helpers#
 def write_dictionary_tgm(filename, dictionary, header = None): #write dictionary in tgm format
-    with open(filename, "w") as output:
+    with open(filename, "w", newline='\n') as output:
         output.write("{}\n".format(tgm_header))
         if header:
             output.write("{}\n".format(header))
@@ -169,7 +175,7 @@ def write_dictionary_tgm(filename, dictionary, header = None): #write dictionary
 
 
 def write_grid_coord_small(filename, grid, maxx, maxy): #thanks to YotaXP for finding out about this one
-    with open(filename, "a") as output:
+    with open(filename, "a", newline='\n') as output:
         output.write("\n")
 
         for x in range(1, maxx+1):
@@ -180,7 +186,7 @@ def write_grid_coord_small(filename, grid, maxx, maxy): #thanks to YotaXP for fi
 
 
 def write_dictionary(filename, dictionary, header = None): #writes a tile dictionary the same way Dreammaker does
-    with open(filename, "w") as output:
+    with open(filename, "w", newline='\n') as output:
         for key, value in dictionary.items():
             if header:
                 output.write("{}\n".format(header))
@@ -188,7 +194,7 @@ def write_dictionary(filename, dictionary, header = None): #writes a tile dictio
 
 
 def write_grid(filename, grid, maxx, maxy): #writes a map grid the same way Dreammaker does
-    with open(filename, "a") as output:
+    with open(filename, "a", newline='\n') as output:
         output.write("\n")
         output.write("(1,1,1) = {\"\n")
 
@@ -724,3 +730,45 @@ def combine_tiles(tile_A, tile_B, priority, marker):
 
 def run_shell_command(command):
     return subprocess.run(command, shell=True, stdout=subprocess.PIPE, universal_newlines=True).stdout
+
+def prompt_maps(map_folder, verb, tgm):
+    list_of_files = list()
+    for root, directories, filenames in os.walk(map_folder):
+        for filename in [f for f in filenames if f.endswith(".dmm")]:
+            list_of_files.append(pathlib.Path(root, filename))
+
+    last_dir = ""
+    for i in range(0, len(list_of_files)):
+        this_dir = list_of_files[i].parent
+        if last_dir != this_dir:
+            print("--------------------------------")
+            last_dir = this_dir
+        print("[{}]: {}".format(i, str(list_of_files[i])[len(map_folder):]))
+
+    print("--------------------------------")
+    in_list = input("List the maps you want to " + verb + " (example: 1,3-5,12):\n")
+    in_list = in_list.replace(" ", "")
+    in_list = in_list.split(",")
+
+    valid_indices = list()
+    for m in in_list:
+        index_range = m.split("-")
+        if len(index_range) == 1:
+            index = string_to_num(index_range[0])
+            if index >= 0 and index < len(list_of_files):
+                valid_indices.append(index)
+        elif len(index_range) == 2:
+            index0 = string_to_num(index_range[0])
+            index1 = string_to_num(index_range[1])
+            if index0 >= 0 and index0 <= index1 and index1 < len(list_of_files):
+                valid_indices.extend(range(index0, index1 + 1))
+
+    if tgm == "1":
+        print("\nMaps will be converted to tgm.")
+        tgm = True
+    else:
+        print("\nMaps will not be converted to tgm.")
+        tgm = False
+
+    maps_to_run = collections.namedtuple('maps_to_run', ['files', 'indices'])
+    return maps_to_run(list_of_files, valid_indices)

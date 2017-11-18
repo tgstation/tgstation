@@ -56,7 +56,13 @@ validPrefixes = [
     'imagedel',
     'spellcheck',
     'experiment',
-    'tgs'
+    'tgs',
+    'balance',
+    'code_imp',
+    'refactor',
+    'config',
+    'admin',
+    'server'
 ]
 
 def dictToTuples(inp):

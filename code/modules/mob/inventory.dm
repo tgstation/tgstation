@@ -182,7 +182,7 @@
 
 
 /mob/proc/put_in_hand_check(obj/item/I)
-	if(lying && !(I.flags&ABSTRACT))
+	if(lying && !(I.flags_1&ABSTRACT_1))
 		return FALSE
 	if(!istype(I))
 		return FALSE
@@ -216,43 +216,23 @@
 	if(del_on_fail)
 		qdel(I)
 		return FALSE
-	I.forceMove(get_turf(src))
+	I.forceMove(drop_location())
 	I.layer = initial(I.layer)
 	I.plane = initial(I.plane)
 	I.dropped(src)
 	return FALSE
 
-
-/mob/proc/put_in_hands_or_del(obj/item/I)
-	return put_in_hands(I, TRUE)
-
-
-/mob/proc/drop_item_v()		//this is dumb.
-	if(stat == CONSCIOUS && isturf(loc))
-		return drop_item()
-	return FALSE
-
-
 /mob/proc/drop_all_held_items()
-	if(!loc || !loc.allow_drop())
-		return
+	. = FALSE
 	for(var/obj/item/I in held_items)
-		dropItemToGround(I)
-
-//Drops the item in our active hand.
-/mob/proc/drop_item()
-	if(!loc || !loc.allow_drop())
-		return
-	var/obj/item/held = get_active_held_item()
-	return dropItemToGround(held)
-
+		. |= dropItemToGround(I)
 
 //Here lie drop_from_inventory and before_item_take, already forgotten and not missed.
 
 /mob/proc/canUnEquip(obj/item/I, force)
 	if(!I)
 		return TRUE
-	if((I.flags & NODROP) && !force)
+	if((I.flags_1 & NODROP_1) && !force)
 		return FALSE
 	return TRUE
 
@@ -272,7 +252,7 @@
 //for when you want the item to end up on the ground
 //will force move the item to the ground and call the turf's Entered
 /mob/proc/dropItemToGround(obj/item/I, force = FALSE)
-	return doUnEquip(I, force, loc, FALSE)
+	return doUnEquip(I, force, drop_location(), FALSE)
 
 //for when the item will be immediately placed in a loc other than the ground
 /mob/proc/transferItemToLoc(obj/item/I, newloc = null, force = FALSE)
@@ -280,18 +260,19 @@
 
 //visibly unequips I but it is NOT MOVED AND REMAINS IN SRC
 //item MUST BE FORCEMOVE'D OR QDEL'D
-/mob/proc/temporarilyRemoveItemFromInventory(obj/item/I, force = FALSE)
-	return doUnEquip(I, force, null, TRUE)
+/mob/proc/temporarilyRemoveItemFromInventory(obj/item/I, force = FALSE, idrop = TRUE)
+	return doUnEquip(I, force, null, TRUE, idrop)
 
 //DO NOT CALL THIS PROC
 //use one of the above 2 helper procs
 //you may override it, but do not modify the args
-/mob/proc/doUnEquip(obj/item/I, force, newloc, no_move) //Force overrides NODROP for things like wizarditis and admin undress.
+/mob/proc/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE) //Force overrides NODROP_1 for things like wizarditis and admin undress.
 													//Use no_move if the item is just gonna be immediately moved afterward
-	if(!I) //If there's nothing to drop, the drop is automatically succesfull. If(unEquip) should generally be used to check for NODROP.
+													//Invdrop is used to prevent stuff in pockets dropping. only set to false if it's going to immediately be replaced
+	if(!I) //If there's nothing to drop, the drop is automatically succesfull. If(unEquip) should generally be used to check for NODROP_1.
 		return TRUE
 
-	if((I.flags & NODROP) && !force)
+	if((I.flags_1 & NODROP_1) && !force)
 		return FALSE
 
 	var/hand_index = get_held_index_of_item(I)
@@ -304,7 +285,7 @@
 		I.layer = initial(I.layer)
 		I.plane = initial(I.plane)
 		I.appearance_flags &= ~NO_CLIENT_COLOR
-		if(!no_move && !(I.flags & DROPDEL))	//item may be moved/qdel'd immedietely, don't bother moving it
+		if(!no_move && !(I.flags_1 & DROPDEL_1))	//item may be moved/qdel'd immedietely, don't bother moving it
 			I.forceMove(newloc)
 		I.dropped(src)
 	return TRUE
@@ -346,22 +327,30 @@
 		items += w_uniform
 	return items
 
-
+/mob/living/proc/unequip_everything()
+	var/list/items = list()
+	items |= get_equipped_items()
+	for(var/I in items)
+		dropItemToGround(I)
+	drop_all_held_items()
 
 /obj/item/proc/equip_to_best_slot(var/mob/M)
 	if(src != M.get_active_held_item())
-		M << "<span class='warning'>You are not holding anything to equip!</span>"
+		to_chat(M, "<span class='warning'>You are not holding anything to equip!</span>")
 		return FALSE
 
 	if(M.equip_to_appropriate_slot(src))
 		M.update_inv_hands()
 		return TRUE
+	else
+		if(equip_delay_self)
+			return
 
 	if(M.s_active && M.s_active.can_be_inserted(src,1))	//if storage active insert there
 		M.s_active.handle_item_insertion(src)
 		return TRUE
 
-	var/obj/item/weapon/storage/S = M.get_inactive_held_item()
+	var/obj/item/storage/S = M.get_inactive_held_item()
 	if(istype(S) && S.can_be_inserted(src,1))	//see if we have box in other hand
 		S.handle_item_insertion(src)
 		return TRUE
@@ -380,7 +369,7 @@
 		S.handle_item_insertion(src)
 		return TRUE
 
-	M << "<span class='warning'>You are unable to equip that!</span>"
+	to_chat(M, "<span class='warning'>You are unable to equip that!</span>")
 	return FALSE
 
 

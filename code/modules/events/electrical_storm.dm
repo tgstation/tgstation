@@ -11,7 +11,7 @@
 	var/lightsoutRange	= 25
 	announceWhen	= 1
 
-/datum/round_event/electrical_storm/announce()
+/datum/round_event/electrical_storm/announce(fake)
 	priority_announce("An electrical storm has been detected in your area, please repair potential electronic overloads.", "Electrical Storm Alert")
 
 
@@ -20,8 +20,8 @@
 
 	for(var/i=1, i <= lightsoutAmount, i++)
 		var/list/possibleEpicentres = list()
-		for(var/obj/effect/landmark/newEpicentre in landmarks_list)
-			if(newEpicentre.name == "lightsout" && !(newEpicentre in epicentreList))
+		for(var/obj/effect/landmark/lightsout/newEpicentre in GLOB.landmarks_list)
+			if(!(newEpicentre in epicentreList))
 				possibleEpicentres += newEpicentre
 		if(possibleEpicentres.len)
 			epicentreList += pick(possibleEpicentres)

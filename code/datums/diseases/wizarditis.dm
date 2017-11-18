@@ -10,7 +10,7 @@
 	disease_flags = CAN_CARRY|CAN_RESIST|CURABLE
 	permeability_mod = 0.75
 	desc = "Some speculate that this virus is the cause of the Space Wizard Federation's existence. Subjects affected show the signs of mental retardation, yelling obscure sentences or total gibberish. On late stages subjects sometime express the feelings of inner power, and, cite, 'the ability to control the forces of cosmos themselves!' A gulp of strong, manly spirits usually reverts them to normal, humanlike, condition."
-	severity = HARMFUL
+	severity = VIRUS_SEVERITY_HARMFUL
 	required_organs = list(/obj/item/bodypart/head)
 
 /*
@@ -31,14 +31,14 @@ STI KALY - blind
 			if(prob(1)&&prob(50))
 				affected_mob.say(pick("You shall not pass!", "Expeliarmus!", "By Merlins beard!", "Feel the power of the Dark Side!"))
 			if(prob(1)&&prob(50))
-				affected_mob << "<span class='danger'>You feel [pick("that you don't have enough mana", "that the winds of magic are gone", "an urge to summon familiar")].</span>"
+				to_chat(affected_mob, "<span class='danger'>You feel [pick("that you don't have enough mana", "that the winds of magic are gone", "an urge to summon familiar")].</span>")
 
 
 		if(3)
 			if(prob(1)&&prob(50))
 				affected_mob.say(pick("NEC CANTIO!","AULIE OXIN FIERA!", "STI KALY!", "TARCOL MINTI ZHERI!"))
 			if(prob(1)&&prob(50))
-				affected_mob << "<span class='danger'>You feel [pick("the magic bubbling in your veins","that this location gives you a +1 to INT","an urge to summon familiar")].</span>"
+				to_chat(affected_mob, "<span class='danger'>You feel [pick("the magic bubbling in your veins","that this location gives you a +1 to INT","an urge to summon familiar")].</span>")
 
 		if(4)
 
@@ -46,7 +46,7 @@ STI KALY - blind
 				affected_mob.say(pick("NEC CANTIO!","AULIE OXIN FIERA!","STI KALY!","EI NATH!"))
 				return
 			if(prob(1)&&prob(50))
-				affected_mob << "<span class='danger'>You feel [pick("the tidal wave of raw power building inside","that this location gives you a +2 to INT and +1 to WIS","an urge to teleport")].</span>"
+				to_chat(affected_mob, "<span class='danger'>You feel [pick("the tidal wave of raw power building inside","that this location gives you a +2 to INT and +1 to WIS","an urge to teleport")].</span>")
 				spawn_wizard_clothes(50)
 			if(prob(1)&&prob(1))
 				teleport()
@@ -78,7 +78,7 @@ STI KALY - blind
 	else
 		var/mob/living/carbon/H = affected_mob
 		if(prob(chance))
-			var/obj/item/weapon/staff/S = new(H)
+			var/obj/item/staff/S = new(H)
 			if(!H.put_in_hands(S))
 				qdel(S)
 
@@ -95,8 +95,10 @@ STI KALY - blind
 
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(thearea.type))
-		if(T.z != affected_mob.z) continue
-		if(T.name == "space") continue
+		if(T.z != affected_mob.z)
+			continue
+		if(T.name == "space")
+			continue
 		if(!T.density)
 			var/clear = 1
 			for(var/obj/O in T)
@@ -110,6 +112,6 @@ STI KALY - blind
 		return
 
 	affected_mob.say("SCYAR NILA [uppertext(thearea.name)]!")
-	affected_mob.loc = pick(L)
+	affected_mob.forceMove(pick(L))
 
 	return

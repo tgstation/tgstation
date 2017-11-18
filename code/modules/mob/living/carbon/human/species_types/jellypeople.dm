@@ -5,9 +5,11 @@
 	default_color = "00FF90"
 	say_mod = "chirps"
 	species_traits = list(MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE,TOXINLOVER)
-	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime
+	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = "slimejelly"
+	damage_overlay_type = ""
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
+	liked_food = MEAT
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)
@@ -26,7 +28,7 @@
 	if(!H.blood_volume)
 		H.blood_volume += 5
 		H.adjustBruteLoss(5)
-		H << "<span class='danger'>You feel empty!</span>"
+		to_chat(H, "<span class='danger'>You feel empty!</span>")
 
 	if(H.blood_volume < BLOOD_VOLUME_NORMAL)
 		if(H.nutrition >= NUTRITION_LEVEL_STARVING)
@@ -34,7 +36,7 @@
 			H.nutrition -= 2.5
 	if(H.blood_volume < BLOOD_VOLUME_OKAY)
 		if(prob(5))
-			H << "<span class='danger'>You feel drained!</span>"
+			to_chat(H, "<span class='danger'>You feel drained!</span>")
 	if(H.blood_volume < BLOOD_VOLUME_BAD)
 		Cannibalize_Body(H)
 	H.update_action_buttons_icon()
@@ -49,7 +51,7 @@
 		limbs_to_consume -= list("r_arm", "l_arm")
 	consumed_limb = H.get_bodypart(pick(limbs_to_consume))
 	consumed_limb.drop_limb()
-	H << "<span class='userdanger'>Your [consumed_limb] is drawn back into your body, unable to maintain its shape!</span>"
+	to_chat(H, "<span class='userdanger'>Your [consumed_limb] is drawn back into your body, unable to maintain its shape!</span>")
 	qdel(consumed_limb)
 	H.blood_volume += 20
 
@@ -57,6 +59,7 @@
 	name = "Regenerate Limbs"
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "slimeheal"
+	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
 
 /datum/action/innate/regenerate_limbs/IsAvailable()
@@ -73,13 +76,13 @@
 	var/mob/living/carbon/human/H = owner
 	var/list/limbs_to_heal = H.get_missing_limbs()
 	if(limbs_to_heal.len < 1)
-		H << "<span class='notice'>You feel intact enough as it is.</span>"
+		to_chat(H, "<span class='notice'>You feel intact enough as it is.</span>")
 		return
-	H << "<span class='notice'>You focus intently on your missing [limbs_to_heal.len >= 2 ? "limbs" : "limb"]...</span>"
+	to_chat(H, "<span class='notice'>You focus intently on your missing [limbs_to_heal.len >= 2 ? "limbs" : "limb"]...</span>")
 	if(H.blood_volume >= 40*limbs_to_heal.len+BLOOD_VOLUME_OKAY)
 		H.regenerate_limbs()
 		H.blood_volume -= 40*limbs_to_heal.len
-		H << "<span class='notice'>...and after a moment you finish reforming!</span>"
+		to_chat(H, "<span class='notice'>...and after a moment you finish reforming!</span>")
 		return
 	else if(H.blood_volume >= 40)//We can partially heal some limbs
 		while(H.blood_volume >= BLOOD_VOLUME_OKAY+40)
@@ -87,9 +90,9 @@
 			H.regenerate_limb(healed_limb)
 			limbs_to_heal -= healed_limb
 			H.blood_volume -= 40
-		H << "<span class='warning'>...but there is not enough of you to fix everything! You must attain more mass to heal completely!</span>"
+		to_chat(H, "<span class='warning'>...but there is not enough of you to fix everything! You must attain more mass to heal completely!</span>")
 		return
-	H << "<span class='warning'>...but there is not enough of you to go around! You must attain more mass to heal!</span>"
+	to_chat(H, "<span class='warning'>...but there is not enough of you to go around! You must attain more mass to heal!</span>")
 
 ////////////////////////////////////////////////////////SLIME PEOPLE///////////////////////////////////////////////////////////////////
 
@@ -137,10 +140,14 @@
 
 	C.faction |= "slime"
 
+//If you're cloned you get your body pool back
+/datum/species/jelly/slime/copy_properties_from(datum/species/jelly/slime/old_species)
+	bodies = old_species.bodies
+
 /datum/species/jelly/slime/spec_life(mob/living/carbon/human/H)
 	if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
 		if(prob(5))
-			H << "<span class='notice'>You feel very bloated!</span>"
+			to_chat(H, "<span class='notice'>You feel very bloated!</span>")
 	else if(H.nutrition >= NUTRITION_LEVEL_WELL_FED)
 		H.blood_volume += 3
 		H.nutrition -= 2.5
@@ -151,6 +158,7 @@
 	name = "Split Body"
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "slimesplit"
+	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
 
 /datum/action/innate/split_body/IsAvailable()
@@ -176,11 +184,9 @@
 		if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
 			make_dupe()
 		else
-			H << "<span class='warning'>...but there is not enough of you to \
-				go around! You must attain more mass to split!</span>"
+			to_chat(H, "<span class='warning'>...but there is not enough of you to go around! You must attain more mass to split!</span>")
 	else
-		H << "<span class='warning'>...but fail to stand perfectly still!\
-			</span>"
+		to_chat(H, "<span class='warning'>...but fail to stand perfectly still!</span>")
 
 	H.notransform = FALSE
 
@@ -219,16 +225,17 @@
 	name = "Swap Body"
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "slimeswap"
+	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
 
 /datum/action/innate/swap_body/Activate()
 	if(!isslimeperson(owner))
-		owner << "<span class='warning'>You are not a slimeperson.</span>"
+		to_chat(owner, "<span class='warning'>You are not a slimeperson.</span>")
 		Remove(owner)
 	else
 		ui_interact(owner)
 
-/datum/action/innate/swap_body/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = conscious_state)
+/datum/action/innate/swap_body/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.conscious_state)
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -269,7 +276,7 @@
 		L["status"] = stat
 		L["exoticblood"] = body.blood_volume
 		L["name"] = body.name
-		L["ref"] = "\ref[body]"
+		L["ref"] = "[REF(body)]"
 		L["is_current"] = current
 		var/button
 		if(current)

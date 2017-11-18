@@ -3,41 +3,40 @@
 	desc = "A bluespace quantum-linked telepad used for teleporting objects to other quantum pads."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "qpad-idle"
-	anchored = 1
-	use_power = 1
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 200
 	active_power_usage = 5000
 	unique_rename = 1
+	circuit = /obj/item/circuitboard/machine/quantumpad
 	var/teleport_cooldown = 400 //30 seconds base due to base parts
 	var/teleport_speed = 50
 	var/last_teleport //to handle the cooldown
 	var/teleporting = 0 //if it's in the process of teleporting
 	var/power_efficiency = 1
-	var/obj/machinery/quantumpad/linked_pad = null
-
-/obj/machinery/quantumpad/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/quantumpad(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/quantumpad
-	name = "Quantum Pad (Machine Board)"
-	build_path = /obj/machinery/quantumpad
-	origin_tech = "programming=3;engineering=3;plasmatech=3;bluespace=4"
-	req_components = list(
-							/obj/item/weapon/ore/bluespace_crystal = 1,
-							/obj/item/weapon/stock_parts/capacitor = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/stack/cable_coil = 1)
-	def_components = list(/obj/item/weapon/ore/bluespace_crystal = /obj/item/weapon/ore/bluespace_crystal/artificial)
+	var/obj/machinery/quantumpad/linked_pad
+	
+	//mapping
+	var/static/list/mapped_quantum_pads = list()
+	var/map_pad_id = "" as text //what's my name
+	var/map_pad_link_id = "" as text //who's my friend
+	
+/obj/machinery/quantumpad/Initialize()
+	. = ..()
+	if(map_pad_id)
+		mapped_quantum_pads[map_pad_id] = src
+		
+/obj/machinery/quantumpad/Destroy()
+	mapped_quantum_pads -= map_pad_id
+	return ..()
 
 /obj/machinery/quantumpad/RefreshParts()
 	var/E = 0
-	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
+	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		E += C.rating
 	power_efficiency = E
 	E = 0
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		E += M.rating
 	teleport_speed = initial(teleport_speed)
 	teleport_speed -= (E*10)
@@ -52,13 +51,13 @@
 		if(istype(I, /obj/item/device/multitool))
 			var/obj/item/device/multitool/M = I
 			M.buffer = src
-			user << "<span class='notice'>You save the data in the [I.name]'s buffer.</span>"
+			to_chat(user, "<span class='notice'>You save the data in [I]'s buffer.</span>")
 			return 1
 	else if(istype(I, /obj/item/device/multitool))
 		var/obj/item/device/multitool/M = I
 		if(istype(M.buffer, /obj/machinery/quantumpad))
 			linked_pad = M.buffer
-			user << "<span class='notice'>You link the [src] to the one in the [I.name]'s buffer.</span>"
+			to_chat(user, "<span class='notice'>You link [src] to the one in [I]'s buffer.</span>")
 			return 1
 
 	if(exchange_parts(user, I))
@@ -71,31 +70,31 @@
 
 /obj/machinery/quantumpad/attack_hand(mob/user)
 	if(panel_open)
-		user << "<span class='warning'>The panel must be closed before operating this machine!</span>"
+		to_chat(user, "<span class='warning'>The panel must be closed before operating this machine!</span>")
 		return
 
 	if(!linked_pad || QDELETED(linked_pad))
-		user << "<span class='warning'>There is no linked pad!</span>"
-		return
+		if(!map_pad_link_id || !initMappedLink())
+			to_chat(user, "<span class='warning'>There is no linked pad!</span>")
+			return
 
 	if(world.time < last_teleport + teleport_cooldown)
-		user << "<span class='warning'>[src] is recharging power. Please wait [round((last_teleport + teleport_cooldown - world.time) / 10)] seconds.</span>"
+		to_chat(user, "<span class='warning'>[src] is recharging power. Please wait [DisplayTimeText(last_teleport + teleport_cooldown - world.time)].</span>")
 		return
 
 	if(teleporting)
-		user << "<span class='warning'>[src] is charging up. Please wait.</span>"
+		to_chat(user, "<span class='warning'>[src] is charging up. Please wait.</span>")
 		return
 
 	if(linked_pad.teleporting)
-		user << "<span class='warning'>Linked pad is busy. Please wait.</span>"
+		to_chat(user, "<span class='warning'>Linked pad is busy. Please wait.</span>")
 		return
 
 	if(linked_pad.stat & NOPOWER)
-		user << "<span class='warning'>Linked pad is not responding to ping.</span>"
+		to_chat(user, "<span class='warning'>Linked pad is not responding to ping.</span>")
 		return
 	src.add_fingerprint(user)
 	doteleport(user)
-	return
 
 /obj/machinery/quantumpad/proc/sparks()
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
@@ -103,6 +102,8 @@
 	s.start()
 
 /obj/machinery/quantumpad/attack_ghost(mob/dead/observer/ghost)
+	if(!linked_pad && map_pad_link_id)
+		initMappedLink()
 	if(linked_pad)
 		ghost.forceMove(get_turf(linked_pad))
 
@@ -116,11 +117,11 @@
 				teleporting = 0
 				return
 			if(stat & NOPOWER)
-				user << "<span class='warning'>[src] is unpowered!</span>"
+				to_chat(user, "<span class='warning'>[src] is unpowered!</span>")
 				teleporting = 0
 				return
 			if(!linked_pad || QDELETED(linked_pad) || linked_pad.stat & NOPOWER)
-				user << "<span class='warning'>Linked pad is not responding to ping. Teleport aborted.</span>"
+				to_chat(user, "<span class='warning'>Linked pad is not responding to ping. Teleport aborted.</span>")
 				teleporting = 0
 				return
 
@@ -150,3 +151,14 @@
 					else if(!isobserver(ROI))
 						continue
 				do_teleport(ROI, get_turf(linked_pad))
+
+/obj/machinery/quantumpad/proc/initMappedLink()
+	. = FALSE
+	var/obj/machinery/quantumpad/link = mapped_quantum_pads[map_pad_link_id]
+	if(link)
+		linked_pad = link
+		. = TRUE
+
+/obj/item/paper/guides/quantumpad
+	name = "Quantum Pad For Dummies"
+	info = "<center><b>Dummies Guide To Quantum Pads</b></center><br><br><center>Do you hate the concept of having to use your legs, let alone <i>walk</i> to places? Well, with the Quantum Pad (tm), never again will the fear of cardio keep you from going places!<br><br><c><b>How to set up your Quantum Pad(tm)</b></center><br><br>1.Unscrew the Quantum Pad(tm) you wish to link.<br>2. Use your multi-tool to cache the buffer of the Quantum Pad(tm) you wish to link.<br>3. Apply the multi-tool to the secondary Quantum Pad(tm) you wish to link to the first Quantum Pad(tm)<br><br><center>If you followed these instructions carefully, your Quantum Pad(tm) should now be properly linked together for near-instant movement across the station! Bear in mind that this is technically a one-way teleport, so you'll need to do the same process with the secondary pad to the first one if you wish to travel between both.</center>"

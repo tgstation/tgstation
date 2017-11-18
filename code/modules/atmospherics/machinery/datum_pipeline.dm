@@ -5,7 +5,7 @@
 	var/list/obj/machinery/atmospherics/pipe/members
 	var/list/obj/machinery/atmospherics/components/other_atmosmch
 
-	var/update = 1
+	var/update = TRUE
 
 /datum/pipeline/New()
 	other_airs = list()
@@ -25,11 +25,9 @@
 
 /datum/pipeline/process()
 	if(update)
-		update = 0
+		update = FALSE
 		reconcile_air()
 	update = air.react()
-
-var/pipenetwarnings = 10
 
 /datum/pipeline/proc/build_pipeline(obj/machinery/atmospherics/base)
 	var/volume = 0
@@ -44,7 +42,6 @@ var/pipenetwarnings = 10
 		addMachineryMember(base)
 	if(!air)
 		air = new
-		air.holder = src
 	var/list/possible_expansions = list(base)
 	while(possible_expansions.len>0)
 		for(var/obj/machinery/atmospherics/borderline in possible_expansions)
@@ -58,6 +55,7 @@ var/pipenetwarnings = 10
 						if(!members.Find(item))
 
 							if(item.parent)
+								var/static/pipenetwarnings = 10
 								if(pipenetwarnings > 0)
 									warning("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) Nearby: ([item.x], [item.y], [item.z])")
 									pipenetwarnings -= 1
@@ -116,6 +114,7 @@ var/pipenetwarnings = 10
 	other_airs.Add(E.other_airs)
 	E.members.Cut()
 	E.other_atmosmch.Cut()
+	update = TRUE
 	qdel(E)
 
 /obj/machinery/atmospherics/proc/addMember(obj/machinery/atmospherics/A)
@@ -197,7 +196,7 @@ var/pipenetwarnings = 10
 				(partial_heat_capacity*target.heat_capacity/(partial_heat_capacity+target.heat_capacity))
 
 			air.temperature -= heat/total_heat_capacity
-	update = 1
+	update = TRUE
 
 /datum/pipeline/proc/return_air()
 	. = other_airs + air
@@ -233,7 +232,7 @@ var/pipenetwarnings = 10
 
 		total_gas_mixture.merge(G)
 
-		total_thermal_energy += G.thermal_energy()
+		total_thermal_energy += THERMAL_ENERGY(G)
 		total_heat_capacity += G.heat_capacity()
 
 	total_gas_mixture.temperature = total_heat_capacity ? total_thermal_energy/total_heat_capacity : 0
@@ -246,4 +245,3 @@ var/pipenetwarnings = 10
 			var/list/G_gases = G.gases
 			for(var/id in G_gases)
 				G_gases[id][MOLES] *= G.volume/total_gas_mixture.volume
-

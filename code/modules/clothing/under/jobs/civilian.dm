@@ -8,13 +8,20 @@
 	item_color = "barman"
 	alt_covers_chest = 1
 
+/obj/item/clothing/under/rank/bartender/purple
+	desc = "It looks like it has lots of flair!"
+	name = "purple bartender's uniform"
+	icon_state = "purplebartender"
+	item_state = "purplebartender"
+	alt_covers_chest = 1
+
 /obj/item/clothing/under/rank/captain //Alright, technically not a 'civilian' but its better then giving a .dm file for a single define.
 	desc = "It's a blue jumpsuit with some gold markings denoting the rank of \"Captain\"."
 	name = "captain's jumpsuit"
 	icon_state = "captain"
 	item_state = "b_suit"
 	item_color = "captain"
-	sensor_mode = 3
+	sensor_mode = SENSOR_COORDS
 	random_sensor = 0
 
 /obj/item/clothing/under/rank/cargo
@@ -32,6 +39,7 @@
 	item_color = "cargo"
 	body_parts_covered = CHEST|GROIN|ARMS
 	mutantrace_variation = MUTANTRACE_VARIATION
+	alt_covers_chest = TRUE
 
 
 /obj/item/clothing/under/rank/chaplain
@@ -58,7 +66,7 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
-/obj/item/clothing/under/rank/clown/hit_reaction()
+/obj/item/clothing/under/rank/clown/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	playsound(loc, 'sound/items/bikehorn.ogg', 50, 1, -1)
 	return 0
 
@@ -76,7 +84,7 @@
 	icon_state = "hydroponics"
 	item_state = "g_suit"
 	item_color = "hydroponics"
-	permeability_coefficient = 0.50
+	permeability_coefficient = 0.5
 
 /obj/item/clothing/under/rank/janitor
 	desc = "It's the official uniform of the station's janitor. It has minor protection from biohazards."
@@ -137,7 +145,7 @@
 	can_adjust = 1
 	alt_covers_chest = 1
 
-/obj/item/clothing/under/rank/librarian
+/obj/item/clothing/under/rank/curator
 	name = "sensible suit"
 	desc = "It's very... sensible."
 	icon_state = "red_suit"
@@ -145,7 +153,7 @@
 	item_color = "red_suit"
 	can_adjust = 0
 
-/obj/item/clothing/under/rank/librarian/curator
+/obj/item/clothing/under/rank/curator/treasure_hunter
 	name = "treasure hunter uniform"
 	desc = "A rugged uniform suitable for treasure hunting."
 	icon_state = "curator"

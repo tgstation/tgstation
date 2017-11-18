@@ -12,16 +12,15 @@
 /datum/round_event/wizard/magicarp/setup()
 	startWhen = rand(40, 60)
 
-/datum/round_event/wizard/magicarp/announce()
+/datum/round_event/wizard/magicarp/announce(fake)
 	priority_announce("Unknown magical entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")
 
 /datum/round_event/wizard/magicarp/start()
-	for(var/obj/effect/landmark/C in landmarks_list)
-		if(C.name == "carpspawn")
-			if(prob(5))
-				new /mob/living/simple_animal/hostile/carp/ranged/chaos(C.loc)
-			else
-				new /mob/living/simple_animal/hostile/carp/ranged(C.loc)
+	for(var/obj/effect/landmark/carpspawn/C in GLOB.landmarks_list)
+		if(prob(5))
+			new /mob/living/simple_animal/hostile/carp/ranged/chaos(C.loc)
+		else
+			new /mob/living/simple_animal/hostile/carp/ranged(C.loc)
 
 /mob/living/simple_animal/hostile/carp/ranged
 	name = "magicarp"
@@ -41,9 +40,9 @@
 	/obj/item/projectile/magic/death, /obj/item/projectile/magic/teleport, /obj/item/projectile/magic/door, /obj/item/projectile/magic/aoe/fireball,
 	/obj/item/projectile/magic/spellblade, /obj/item/projectile/magic/arcane_barrage)
 	
-/mob/living/simple_animal/hostile/carp/ranged/New()
+/mob/living/simple_animal/hostile/carp/ranged/Initialize()
 	projectiletype = pick(allowed_projectile_types)
-	..()
+	. = ..()
 
 /mob/living/simple_animal/hostile/carp/ranged/chaos
 	name = "chaos magicarp"

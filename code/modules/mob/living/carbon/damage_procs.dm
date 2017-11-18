@@ -1,12 +1,12 @@
 
 
-/mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = 0)
+/mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = FALSE)
 	var/hit_percent = (100-blocked)/100
 	if(!damage || hit_percent <= 0)
 		return 0
 
 	var/obj/item/bodypart/BP = null
-	if(islimb(def_zone)) //we specified a bodypart object
+	if(isbodypart(def_zone)) //we specified a bodypart object
 		BP = def_zone
 	else
 		if(!def_zone)
@@ -36,6 +36,8 @@
 			adjustCloneLoss(damage * hit_percent)
 		if(STAMINA)
 			adjustStaminaLoss(damage * hit_percent)
+		if(BRAIN)
+			adjustBrainLoss(damage * hit_percent)
 	return 1
 
 
@@ -145,8 +147,8 @@
 		parts -= picked
 	if(updating_health)
 		updatehealth()
-		if(update)
-			update_damage_overlays()
+	if(update)
+		update_damage_overlays()
 
 // damage MANY bodyparts, in random order
 /mob/living/carbon/take_overall_damage(brute, burn, updating_health = 1)

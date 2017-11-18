@@ -36,7 +36,7 @@
 	icon_state = "toxins"
 	item_state = "w_suit"
 	item_color = "toxinswhite"
-	permeability_coefficient = 0.50
+	permeability_coefficient = 0.5
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 10, bio = 0, rad = 0, fire = 0, acid = 0)
 
 
@@ -46,7 +46,7 @@
 	icon_state = "chemistry"
 	item_state = "w_suit"
 	item_color = "chemistrywhite"
-	permeability_coefficient = 0.50
+	permeability_coefficient = 0.5
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0, fire = 50, acid = 65)
 
 /*
@@ -58,7 +58,7 @@
 	icon_state = "cmo"
 	item_state = "w_suit"
 	item_color = "cmo"
-	permeability_coefficient = 0.50
+	permeability_coefficient = 0.5
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0, fire = 0, acid = 0)
 
 /obj/item/clothing/under/rank/geneticist
@@ -67,7 +67,7 @@
 	icon_state = "genetics"
 	item_state = "w_suit"
 	item_color = "geneticswhite"
-	permeability_coefficient = 0.50
+	permeability_coefficient = 0.5
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0, fire = 0, acid = 0)
 
 /obj/item/clothing/under/rank/virologist
@@ -76,7 +76,7 @@
 	icon_state = "virology"
 	item_state = "w_suit"
 	item_color = "virologywhite"
-	permeability_coefficient = 0.50
+	permeability_coefficient = 0.5
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0, fire = 0, acid = 0)
 
 /obj/item/clothing/under/rank/nursesuit
@@ -85,7 +85,7 @@
 	icon_state = "nursesuit"
 	item_state = "w_suit"
 	item_color = "nursesuit"
-	permeability_coefficient = 0.50
+	permeability_coefficient = 0.5
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0, fire = 0, acid = 0)
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = 0
@@ -96,7 +96,7 @@
 	icon_state = "medical"
 	item_state = "w_suit"
 	item_color = "medical"
-	permeability_coefficient = 0.50
+	permeability_coefficient = 0.5
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0, fire = 0, acid = 0)
 
 /obj/item/clothing/under/rank/medical/blue

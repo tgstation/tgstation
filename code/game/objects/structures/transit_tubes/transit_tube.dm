@@ -3,9 +3,10 @@
 	name = "transit tube"
 	icon = 'icons/obj/atmospherics/pipes/transit_tube.dmi'
 	icon_state = "straight"
-	density = 1
+	desc = "A transit tube for moving things around."
+	density = TRUE
 	layer = LOW_ITEM_LAYER
-	anchored = 1
+	anchored = TRUE
 	climbable = 1
 	var/tube_construction = /obj/structure/c_transit_tube
 	var/list/tube_dirs //list of directions this tube section can connect to.
@@ -13,7 +14,7 @@
 	var/enter_delay = 0
 
 /obj/structure/transit_tube/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && mover.checkpass(PASSGLASS))
+	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return 1
 	return !density
 
@@ -30,25 +31,26 @@
 	return ..()
 
 /obj/structure/transit_tube/singularity_pull(S, current_size)
+	..()
 	if(current_size >= STAGE_FIVE)
 		deconstruct(FALSE)
 
 /obj/structure/transit_tube/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(istype(W, /obj/item/wrench))
 		if(tube_construction)
 			for(var/obj/structure/transit_tube_pod/pod in src.loc)
-				user << "<span class='warning'>Remove the pod first!</span>"
+				to_chat(user, "<span class='warning'>Remove the pod first!</span>")
 				return
 			user.visible_message("[user] starts to deattach \the [src].", "<span class='notice'>You start to deattach the [name]...</span>")
 			playsound(src.loc, W.usesound, 50, 1)
 			if(do_after(user, 35*W.toolspeed, target = src))
-				user << "<span class='notice'>You deattach the [name].</span>"
+				to_chat(user, "<span class='notice'>You deattach the [name].</span>")
 				var/obj/structure/c_transit_tube/R = new tube_construction(loc)
 				R.setDir(dir)
 				transfer_fingerprints_to(R)
 				R.add_fingerprint(user)
 				qdel(src)
-	else if(istype(W, /obj/item/weapon/crowbar))
+	else if(istype(W, /obj/item/crowbar))
 		for(var/obj/structure/transit_tube_pod/pod in src.loc)
 			pod.attackby(W, user)
 	else
@@ -129,7 +131,7 @@
 
 /obj/structure/transit_tube/proc/generate_tube_overlays()
 	for(var/direction in tube_dirs)
-		if(direction in diagonals)
+		if(direction in GLOB.diagonals)
 			if(direction & NORTH)
 				create_tube_overlay(direction ^ 3, NORTH)
 
@@ -143,21 +145,21 @@
 
 
 /obj/structure/transit_tube/proc/create_tube_overlay(direction, shift_dir)
-	var/image/I
+	var/image/tube_overlay = new(dir = direction)
 	if(shift_dir)
-		I = image(loc = src, icon_state = "decorative_diag", dir = direction)
+		tube_overlay.icon_state = "decorative_diag"
 		switch(shift_dir)
 			if(NORTH)
-				I.pixel_y = 32
+				tube_overlay.pixel_y = 32
 			if(SOUTH)
-				I.pixel_y = -32
+				tube_overlay.pixel_y = -32
 			if(EAST)
-				I.pixel_x = 32
+				tube_overlay.pixel_x = 32
 			if(WEST)
-				I.pixel_x = -32
+				tube_overlay.pixel_x = -32
 	else
-		I = image(loc = src, icon_state = "decorative", dir = direction)
-	add_overlay(I)
+		tube_overlay.icon_state = "decorative"
+	add_overlay(tube_overlay)
 
 
 
@@ -187,7 +189,7 @@
 	dir = WEST
 
 /obj/structure/transit_tube/diagonal/crossing
-	density = 0
+	density = FALSE
 	icon_state = "diagonal_crossing"
 	tube_construction = /obj/structure/c_transit_tube/diagonal/crossing
 
@@ -261,7 +263,7 @@
 /obj/structure/transit_tube/crossing
 	icon_state = "crossing"
 	tube_construction = /obj/structure/c_transit_tube/crossing
-	density = 0
+	density = FALSE
 
 //mostly for mapping use
 /obj/structure/transit_tube/crossing/horizontal

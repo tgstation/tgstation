@@ -5,6 +5,9 @@
 	max_occurrences = 2
 	min_players = 1
 
+/datum/round_event/mass_hallucination
+	fakeable = FALSE
+
 /datum/round_event/mass_hallucination/start()
-	for(var/mob/living/carbon/C in living_mob_list)
+	for(var/mob/living/carbon/C in GLOB.alive_mob_list)
 		C.hallucination += rand(20, 50)

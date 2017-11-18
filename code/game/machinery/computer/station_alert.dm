@@ -3,26 +3,34 @@
 	desc = "Used to access the station's automated alert system."
 	icon_screen = "alert:0"
 	icon_keyboard = "atmos_key"
-	circuit = /obj/item/weapon/circuitboard/computer/stationalert
+	circuit = /obj/item/circuitboard/computer/stationalert
 	var/alarms = list("Fire" = list(), "Atmosphere" = list(), "Power" = list())
 
-/obj/machinery/computer/station_alert/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+	light_color = LIGHT_COLOR_CYAN
+
+/obj/machinery/computer/station_alert/Initialize()
+	. = ..()
+	GLOB.alert_consoles += src
+
+/obj/machinery/computer/station_alert/Destroy()
+	GLOB.alert_consoles -= src
+	return ..()
+
+/obj/machinery/computer/station_alert/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "station_alert", name, 300, 500, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/station_alert/ui_data(mob/user)
-	var/list/data = list()
+	. = list()
 
-	data["alarms"] = list()
+	.["alarms"] = list()
 	for(var/class in alarms)
-		data["alarms"][class] = list()
+		.["alarms"][class] = list()
 		for(var/area in alarms[class])
-			data["alarms"][class] += area
-
-	return data
+			.["alarms"][class] += area
 
 /obj/machinery/computer/station_alert/proc/triggerAlarm(class, area/A, O, obj/source)
 	if(source.z != z)
@@ -40,7 +48,7 @@
 			return 1
 	var/obj/machinery/camera/C = null
 	var/list/CL = null
-	if(O && istype(O, /list))
+	if(O && islist(O))
 		CL = O
 		if (CL.len == 1)
 			C = CL[1]
@@ -65,10 +73,6 @@
 				cleared = 1
 				L -= I
 	return !cleared
-
-
-/obj/machinery/computer/station_alert/process()
-	..()
 
 /obj/machinery/computer/station_alert/update_icon()
 	..()

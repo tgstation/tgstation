@@ -3,6 +3,8 @@
 	desc = "Used to remotely activate devices. Allows for syncing when using a secure signaler on another."
 	icon_state = "signaller"
 	item_state = "signaler"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	materials = list(MAT_METAL=400, MAT_GLASS=120)
 	origin_tech = "magnets=1;bluespace=1"
 	wires = WIRE_RECEIVE | WIRE_PULSE | WIRE_RADIO_PULSE | WIRE_RADIO_RECEIVE
@@ -20,8 +22,7 @@
 
 
 /obj/item/device/assembly/signaler/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src,frequency)
+	SSradio.remove_object(src,frequency)
 	return ..()
 
 /obj/item/device/assembly/signaler/activate()
@@ -39,27 +40,27 @@
 	if(is_secured(user))
 		var/t1 = "-------"
 	//	if ((src.b_stat && !( flag1 )))
-	//		t1 = text("-------<BR>\nGreen Wire: []<BR>\nRed Wire:   []<BR>\nBlue Wire:  []<BR>\n", (src.wires & 4 ? text("<A href='?src=\ref[];wires=4'>Cut Wire</A>", src) : text("<A href='?src=\ref[];wires=4'>Mend Wire</A>", src)), (src.wires & 2 ? text("<A href='?src=\ref[];wires=2'>Cut Wire</A>", src) : text("<A href='?src=\ref[];wires=2'>Mend Wire</A>", src)), (src.wires & 1 ? text("<A href='?src=\ref[];wires=1'>Cut Wire</A>", src) : text("<A href='?src=\ref[];wires=1'>Mend Wire</A>", src)))
+	//		t1 = text("-------<BR>\nGreen Wire: []<BR>\nRed Wire:   []<BR>\nBlue Wire:  []<BR>\n", (src.wires & 4 ? "<A href='?src=[REF(src)];wires=4'>Cut Wire</A>" : "<A href='?src=[REF(src)];wires=4'>Mend Wire</A>"), (src.wires & 2 ? "<A href='?src=[REF(src)];wires=2'>Cut Wire</A>" : "<A href='?src=[REF(src)];wires=2'>Mend Wire</A>"), (src.wires & 1 ? "<A href='?src=[REF(src)];wires=1'>Cut Wire</A>" : "<A href='?src=[REF(src)];wires=1'>Mend Wire</A>"))
 	//	else
-	//		t1 = "-------"	Speaker: [src.listening ? "<A href='byond://?src=\ref[src];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];listen=1'>Disengaged</A>"]<BR>
+	//		t1 = "-------"	Speaker: [src.listening ? "<A href='byond://?src=[REF(src)];listen=0'>Engaged</A>" : "<A href='byond://?src=[REF(src)];listen=1'>Disengaged</A>"]<BR>
 		var/dat = {"
 <TT>
 
-<A href='byond://?src=\ref[src];send=1'>Send Signal</A><BR>
+<A href='byond://?src=[REF(src)];send=1'>Send Signal</A><BR>
 <B>Frequency/Code</B> for signaler:<BR>
 Frequency:
-<A href='byond://?src=\ref[src];freq=-10'>-</A>
-<A href='byond://?src=\ref[src];freq=-2'>-</A>
+<A href='byond://?src=[REF(src)];freq=-10'>-</A>
+<A href='byond://?src=[REF(src)];freq=-2'>-</A>
 [format_frequency(src.frequency)]
-<A href='byond://?src=\ref[src];freq=2'>+</A>
-<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
+<A href='byond://?src=[REF(src)];freq=2'>+</A>
+<A href='byond://?src=[REF(src)];freq=10'>+</A><BR>
 
 Code:
-<A href='byond://?src=\ref[src];code=-5'>-</A>
-<A href='byond://?src=\ref[src];code=-1'>-</A>
+<A href='byond://?src=[REF(src)];code=-5'>-</A>
+<A href='byond://?src=[REF(src)];code=-1'>-</A>
 [src.code]
-<A href='byond://?src=\ref[src];code=1'>+</A>
-<A href='byond://?src=\ref[src];code=5'>+</A><BR>
+<A href='byond://?src=[REF(src)];code=1'>+</A>
+<A href='byond://?src=[REF(src)];code=5'>+</A><BR>
 [t1]
 </TT>"}
 		user << browse(dat, "window=radio")
@@ -96,18 +97,18 @@ Code:
 
 	return
 
-/obj/item/device/assembly/signaler/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/device/assembly/signaler/attackby(obj/item/W, mob/user, params)
 	if(issignaler(W))
 		var/obj/item/device/assembly/signaler/signaler2 = W
 		if(secured && signaler2.secured)
 			code = signaler2.code
 			frequency = signaler2.frequency
-			user << "You transfer the frequency and code of \the [signaler2.name] to \the [name]"
-	else
-		..()
+			to_chat(user, "You transfer the frequency and code of \the [signaler2.name] to \the [name]")
+	..()
 
 /obj/item/device/assembly/signaler/proc/signal()
-	if(!radio_connection) return
+	if(!radio_connection)
+		return
 
 	var/datum/signal/signal = new
 	signal.source = src
@@ -118,7 +119,7 @@ Code:
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	var/turf/T = get_turf(src)
 	if(usr)
-		lastsignalers.Add("[time] <B>:</B> [usr.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
+		GLOB.lastsignalers.Add("[time] <B>:</B> [usr.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
 
 
 	return
@@ -142,7 +143,7 @@ Code:
 	if(!(src.wires & WIRE_RADIO_RECEIVE))
 		return 0
 	pulse(1)
-	audible_message("\icon[src] *beep* *beep*", null, 1)
+	audible_message("[icon2html(src, hearers(src))] *beep* *beep*", null, 1)
 	return
 
 
@@ -153,14 +154,14 @@ Code:
 		return
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, RADIO_CHAT)
+	radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_CHAT)
 	return
 
 // Embedded signaller used in grenade construction.
 // It's necessary because the signaler doens't have an off state.
 // Generated during grenade construction.  -Sayu
 /obj/item/device/assembly/signaler/reciever
-	var/on = 0
+	var/on = FALSE
 
 /obj/item/device/assembly/signaler/reciever/proc/toggle_safety()
 	on = !on
@@ -173,7 +174,8 @@ Code:
 	return "The radio receiver is [on?"on":"off"]."
 
 /obj/item/device/assembly/signaler/reciever/receive_signal(datum/signal/signal)
-	if(!on) return
+	if(!on)
+		return
 	return ..(signal)
 
 
@@ -183,6 +185,8 @@ Code:
 	desc = "The neutralized core of an anomaly. It'd probably be valuable for research."
 	icon_state = "anomaly core"
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 
 /obj/item/device/assembly/signaler/anomaly/receive_signal(datum/signal/signal)
 	if(!signal)
@@ -198,5 +202,5 @@ Code:
 /obj/item/device/assembly/signaler/cyborg
 	origin_tech = null
 
-/obj/item/device/assembly/signaler/cyborg/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/device/assembly/signaler/cyborg/attackby(obj/item/W, mob/user, params)
 	return

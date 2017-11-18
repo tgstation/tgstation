@@ -7,17 +7,18 @@
 /obj/item/stack/wrapping_paper
 	name = "wrapping paper"
 	desc = "Wrap packages with this festive paper to make gifts."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "wrap_paper"
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 	amount = 25
 	max_amount = 25
 	resistance_flags = FLAMMABLE
 
-/obj/item/stack/wrapping_paper/Destroy()
-	if(!amount)
-		new /obj/item/weapon/c_tube(get_turf(src))
-	return ..()
+/obj/item/stack/wrapping_paper/use(used, transfer)
+	var/turf/T = get_turf(src)
+	. = ..()
+	if(QDELETED(src) && !transfer)
+		new /obj/item/c_tube(T)
 
 
 /*
@@ -27,9 +28,9 @@
 /obj/item/stack/packageWrap
 	name = "package wrapper"
 	desc = "You can use this to wrap items in."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "deliveryPaper"
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 	amount = 25
 	max_amount = 25
 	resistance_flags = FLAMMABLE
@@ -37,10 +38,10 @@
 /obj/item/proc/can_be_package_wrapped() //can the item be wrapped with package wrapper into a delivery package
 	return 1
 
-/obj/item/weapon/storage/can_be_package_wrapped()
+/obj/item/storage/can_be_package_wrapped()
 	return 0
 
-/obj/item/weapon/storage/box/can_be_package_wrapped()
+/obj/item/storage/box/can_be_package_wrapped()
 	return 1
 
 /obj/item/smallDelivery/can_be_package_wrapped()
@@ -54,7 +55,7 @@
 	if(target.anchored)
 		return
 
-	if(istype(target, /obj/item))
+	if(isitem(target))
 		var/obj/item/I = target
 		if(!I.can_be_package_wrapped())
 			return
@@ -81,7 +82,7 @@
 		if(O.opened)
 			return
 		if(!O.delivery_icon) //no delivery icon means unwrappable closet (e.g. body bags)
-			user << "<span class='warning'>You can't wrap this!</span>"
+			to_chat(user, "<span class='warning'>You can't wrap this!</span>")
 			return
 		if(use(3))
 			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
@@ -90,24 +91,25 @@
 			P.add_fingerprint(user)
 			O.add_fingerprint(user)
 		else
-			user << "<span class='warning'>You need more paper!</span>"
+			to_chat(user, "<span class='warning'>You need more paper!</span>")
 			return
 	else
-		user << "<span class='warning'>The object you are trying to wrap is unsuitable for the sorting machinery!</span>"
+		to_chat(user, "<span class='warning'>The object you are trying to wrap is unsuitable for the sorting machinery!</span>")
 		return
 
 	user.visible_message("<span class='notice'>[user] wraps [target].</span>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has used [name] on [target]</font>")
+	user.log_message("<font color='blue'>Has used [name] on [target]</font>", INDIVIDUAL_ATTACK_LOG)
 
-/obj/item/stack/packageWrap/Destroy()
-	if(!amount)
-		new /obj/item/weapon/c_tube(get_turf(src))
-	return ..()
+/obj/item/stack/packageWrap/use(used, transfer = FALSE)
+	var/turf/T = get_turf(src)
+	. = ..()
+	if(QDELETED(src) && !transfer)
+		new /obj/item/c_tube(T)
 
-/obj/item/weapon/c_tube
+/obj/item/c_tube
 	name = "cardboard tube"
 	desc = "A tube... of cardboard."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "c_tube"
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY

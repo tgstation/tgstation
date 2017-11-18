@@ -9,8 +9,8 @@ Buildable meters
 
 /obj/item/pipe
 	name = "pipe"
-	desc = "A pipe"
-	var/pipe_type = 0
+	desc = "A pipe."
+	var/pipe_type
 	var/pipename
 	force = 7
 	throwforce = 7
@@ -19,121 +19,70 @@ Buildable meters
 	item_state = "buildpipe"
 	w_class = WEIGHT_CLASS_NORMAL
 	level = 2
-	var/flipped = 0
-	var/is_bent = 0
+	var/piping_layer = PIPING_LAYER_DEFAULT
+	var/RPD_type
 
-	var/global/list/pipe_types = list(
-		PIPE_SIMPLE, \
-		PIPE_MANIFOLD, \
-		PIPE_4WAYMANIFOLD, \
-		PIPE_HE, \
-		PIPE_HE_MANIFOLD, \
-		PIPE_HE_4WAYMANIFOLD, \
-		PIPE_JUNCTION, \
-		\
-		PIPE_CONNECTOR, \
-		PIPE_UVENT, \
-		PIPE_SCRUBBER, \
-		PIPE_HEAT_EXCHANGE, \
-		\
-		PIPE_PUMP, \
-		PIPE_PASSIVE_GATE, \
-		PIPE_VOLUME_PUMP, \
-		PIPE_MVALVE, \
-		PIPE_DVALVE, \
-		\
-		PIPE_GAS_FILTER, \
-		PIPE_GAS_MIXER, \
-	)
+/obj/item/pipe/directional
+	RPD_type = PIPE_UNARY
+/obj/item/pipe/binary
+	RPD_type = PIPE_STRAIGHT
+/obj/item/pipe/binary/bendable
+	RPD_type = PIPE_BENDABLE
+/obj/item/pipe/trinary
+	RPD_type = PIPE_TRINARY
+/obj/item/pipe/trinary/flippable
+	RPD_type = PIPE_TRIN_M
+	var/flipped = FALSE
+/obj/item/pipe/quaternary
+	RPD_type = PIPE_ONEDIR
 
 /obj/item/pipe/examine(mob/user)
 	..()
-	user << "<span class='notice'>Alt-click to rotate it clockwise.</span>"
+	to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
 
-/obj/item/pipe/New(loc, pipe_type, dir, obj/machinery/atmospherics/make_from)
-	..()
+/obj/item/pipe/Initialize(mapload, _pipe_type, _dir, obj/machinery/atmospherics/make_from)
 	if(make_from)
-		src.setDir(make_from.dir)
-		src.pipename = make_from.name
-		add_atom_colour(make_from.color, FIXED_COLOUR_PRIORITY)
-
-		if(make_from.type in pipe_types)
-			src.pipe_type = make_from.type
-		else //make pipe_type a value we can work with
-			for(var/P in pipe_types)
-				if(istype(make_from, P))
-					src.pipe_type = P
-					break
-
-		var/obj/machinery/atmospherics/components/trinary/triP = make_from
-		if(istype(triP) && triP.flipped)
-			src.flipped = 1
-			src.setDir(turn(src.dir, -45))
+		make_from_existing(make_from)
 	else
-		src.pipe_type = pipe_type
-		src.setDir(dir)
-
-	if(src.dir in diagonals)
-		is_bent = 1
+		pipe_type = _pipe_type
+		setDir(_dir)
 
 	update()
-	src.pixel_x = rand(-5, 5)
-	src.pixel_y = rand(-5, 5)
+	pixel_x += rand(-5, 5)
+	pixel_y += rand(-5, 5)
+	return ..()
 
-//update the name and icon of the pipe item depending on the type
-var/global/list/pipeID2State = list(
-	"[PIPE_SIMPLE]"			 = "simple", \
-	"[PIPE_MANIFOLD]"		 = "manifold", \
-	"[PIPE_4WAYMANIFOLD]"	 = "manifold4w", \
-	"[PIPE_HE]"				 = "he", \
-	"[PIPE_HE_MANIFOLD]"	 = "he_manifold", \
-	"[PIPE_HE_4WAYMANIFOLD]" = "he_manifold4w", \
-	"[PIPE_JUNCTION]"		 = "junction", \
-	\
-	"[PIPE_CONNECTOR]"		 = "connector", \
-	"[PIPE_UVENT]"			 = "uvent", \
-	"[PIPE_SCRUBBER]"		 = "scrubber", \
-	"[PIPE_HEAT_EXCHANGE]"	 = "heunary", \
-	\
-	"[PIPE_PUMP]"			 = "pump", \
-	"[PIPE_PASSIVE_GATE]"	 = "passivegate", \
-	"[PIPE_VOLUME_PUMP]"	 = "volumepump", \
-	"[PIPE_MVALVE]"			 = "mvalve", \
-	"[PIPE_DVALVE]"			 = "dvalve", \
-	\
-	"[PIPE_GAS_FILTER]"		 = "filter", \
-	"[PIPE_GAS_MIXER]"		 = "mixer", \
-)
+/obj/item/pipe/proc/make_from_existing(obj/machinery/atmospherics/make_from)
+	setDir(make_from.dir)
+	pipename = make_from.name
+	add_atom_colour(make_from.color, FIXED_COLOUR_PRIORITY)
+	pipe_type = make_from.type
+
+/obj/item/pipe/trinary/flippable/make_from_existing(obj/machinery/atmospherics/components/trinary/make_from)
+	..()
+	if(make_from.flipped)
+		do_a_flip()
+
+/obj/item/pipe/dropped()
+	if(loc)
+		setPipingLayer(piping_layer)
+	return ..()
+
+/obj/item/pipe/proc/setPipingLayer(new_layer = PIPING_LAYER_DEFAULT)
+	var/obj/machinery/atmospherics/fakeA = pipe_type
+
+	if(initial(fakeA.pipe_flags) & PIPING_ALL_LAYER)
+		new_layer = PIPING_LAYER_DEFAULT
+	piping_layer = new_layer
+
+	pixel_x += (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X
+	pixel_y += (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y
+	layer = initial(layer) + ((piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE)
 
 /obj/item/pipe/proc/update()
-	var/list/nlist = list(\
-		"[PIPE_SIMPLE]" 		= "pipe", \
-		"[PIPE_SIMPLE]_b" 		= "bent pipe", \
-		"[PIPE_MANIFOLD]" 		= "manifold", \
-		"[PIPE_4WAYMANIFOLD]" 	= "4-way manifold", \
-		"[PIPE_HE]" 			= "h/e pipe", \
-		"[PIPE_HE]_b" 			= "bent h/e pipe", \
-		"[PIPE_HE_MANIFOLD]"	= "h/e manifold", \
-		"[PIPE_HE_4WAYMANIFOLD]"= "h/e 4-way manifold", \
-		"[PIPE_JUNCTION]" 		= "junction", \
-		\
-		"[PIPE_CONNECTOR]" 		= "connector", \
-		"[PIPE_UVENT]" 			= "vent", \
-		"[PIPE_SCRUBBER]" 		= "scrubber", \
-		"[PIPE_HEAT_EXCHANGE]" 	= "heat exchanger", \
-		\
-		"[PIPE_PUMP]" 			= "pump", \
-		"[PIPE_PASSIVE_GATE]" 	= "passive gate", \
-		"[PIPE_VOLUME_PUMP]" 	= "volume pump", \
-		"[PIPE_MVALVE]" 		= "manual valve", \
-		"[PIPE_DVALVE]" 		= "digital valve", \
-		\
-		"[PIPE_GAS_FILTER]" 	= "gas filter", \
-		"[PIPE_GAS_MIXER]" 		= "gas mixer", \
-		)
-	//fix_pipe_type()
-	name = nlist["[pipe_type][is_bent ? "_b" : ""]"] + " fitting"
-	icon_state = pipeID2State["[pipe_type]"]
+	var/obj/machinery/atmospherics/fakeA = pipe_type
+	name = "[initial(fakeA.name)] fitting"
+	icon_state = initial(fakeA.pipe_state)
 
 // rotate the pipe item clockwise
 
@@ -145,11 +94,8 @@ var/global/list/pipeID2State = list(
 	if ( usr.stat || usr.restrained() || !usr.canmove )
 		return
 
-	src.setDir(turn(src.dir, -90))
-
+	setDir(turn(dir, -90))
 	fixdir()
-
-	return
 
 /obj/item/pipe/verb/flip()
 	set category = "Object"
@@ -159,21 +105,20 @@ var/global/list/pipeID2State = list(
 	if ( usr.stat || usr.restrained() || !usr.canmove )
 		return
 
-	if (pipe_type in list(PIPE_GAS_FILTER, PIPE_GAS_MIXER))
-		src.setDir(turn(src.dir, flipped )? 45 : -45)
-		flipped = !flipped
-		return
+	do_a_flip()
 
-	src.setDir(turn(src.dir, -180))
-
+/obj/item/pipe/proc/do_a_flip()
+	setDir(turn(dir, -180))
 	fixdir()
 
-	return
+/obj/item/pipe/trinary/flippable/do_a_flip()
+	setDir(turn(dir, flipped ? 45 : -45))
+	flipped = !flipped
 
 /obj/item/pipe/AltClick(mob/user)
 	..()
 	if(user.incapacitated())
-		user << "<span class='warning'>You can't do that right now!</span>"
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(!in_range(src, user))
 		return
@@ -183,94 +128,115 @@ var/global/list/pipeID2State = list(
 /obj/item/pipe/Move()
 	var/old_dir = dir
 	..()
-	setDir(old_dir )//pipes changing direction when moved is just annoying and buggy
-
-/obj/item/pipe/proc/unflip(direction)
-	if(direction in diagonals)
-		return turn(direction, 45)
-
-	return direction
+	setDir(old_dir) //pipes changing direction when moved is just annoying and buggy
 
 //Helper to clean up dir
 /obj/item/pipe/proc/fixdir()
-	if((pipe_type in list (PIPE_SIMPLE, PIPE_HE, PIPE_MVALVE, PIPE_DVALVE)) && !is_bent)
-		if(dir==SOUTH)
-			setDir(NORTH)
-		else if(dir==WEST)
-			setDir(EAST)
+	return
+
+/obj/item/pipe/binary/fixdir()
+	if(dir == SOUTH)
+		setDir(NORTH)
+	else if(dir == WEST)
+		setDir(EAST)
+
+/obj/item/pipe/trinary/flippable/fixdir()
+	if(dir in GLOB.diagonals)
+		setDir(turn(dir, 45))
 
 /obj/item/pipe/attack_self(mob/user)
 	return rotate()
 
-/obj/item/pipe/attackby(obj/item/weapon/W, mob/user, params)
-	if (!istype(W, /obj/item/weapon/wrench))
+/obj/item/pipe/attackby(obj/item/W, mob/user, params)
+	if (!istype(W, /obj/item/wrench))
 		return ..()
-	if (!isturf(src.loc))
-		return 1
+	if (!isturf(loc))
+		return TRUE
+	add_fingerprint(user)
 
 	fixdir()
-	if(pipe_type in list(PIPE_GAS_MIXER, PIPE_GAS_FILTER))
-		setDir(unflip(dir))
 
-	var/obj/machinery/atmospherics/A = new pipe_type(src.loc)
-	A.setDir(src.dir)
-	A.SetInitDirections()
-
-	for(var/obj/machinery/atmospherics/M in src.loc)
-		if(M == A) //we don't want to check to see if it interferes with itself
+	var/obj/machinery/atmospherics/fakeA = pipe_type
+	var/flags = initial(fakeA.pipe_flags)
+	for(var/obj/machinery/atmospherics/M in loc)
+		if((M.pipe_flags & flags & PIPING_ONE_PER_TURF))	//Only one dense/requires density object per tile, eg connectors/cryo/heater/coolers.
+			to_chat(user, "<span class='warning'>Something is hogging the tile!</span>")
+			return TRUE
+		if((M.piping_layer != piping_layer) && !((M.pipe_flags | flags) & PIPING_ALL_LAYER)) //don't continue if either pipe goes across all layers
 			continue
-		if(M.GetInitDirections() & A.GetInitDirections())	// matches at least one direction on either type of pipe
-			user << "<span class='warning'>There is already a pipe at that location!</span>"
-			qdel(A)
-			return 1
+		if(M.GetInitDirections() & SSair.get_init_dirs(pipe_type, dir))	// matches at least one direction on either type of pipe
+			to_chat(user, "<span class='warning'>There is already a pipe at that location!</span>")
+			return TRUE
 	// no conflicts found
+
+	var/obj/machinery/atmospherics/A = new pipe_type(loc)
+	build_pipe(A)
+	A.on_construction(color, piping_layer)
+
+	playsound(src, W.usesound, 50, 1)
+	user.visible_message( \
+		"[user] fastens \the [src].", \
+		"<span class='notice'>You fasten \the [src].</span>", \
+		"<span class='italics'>You hear ratcheting.</span>")
+
+	qdel(src)
+
+/obj/item/pipe/proc/build_pipe(obj/machinery/atmospherics/A)
+	A.setDir(dir)
+	A.SetInitDirections()
 
 	if(pipename)
 		A.name = pipename
 
-	var/obj/machinery/atmospherics/components/trinary/T = A
-	if(istype(T))
-		T.flipped = flipped
-	A.on_construction(pipe_type, color)
+/obj/item/pipe/trinary/flippable/build_pipe(obj/machinery/atmospherics/components/trinary/T)
+	..()
+	T.flipped = flipped
 
-	playsound(src.loc, W.usesound, 50, 1)
-	user.visible_message( \
-		"[user] fastens \the [src].", \
-		"<span class='notice'>You fasten \the [src].</span>", \
-		"<span class='italics'>You hear ratchet.</span>")
-
-	qdel(src)
-
-/obj/item/pipe/suicide_act(mob/user)
-	if(pipe_type in list(PIPE_PUMP, PIPE_PASSIVE_GATE, PIPE_VOLUME_PUMP))
-		user.visible_message("<span class='suicide'>[user] shoves the [src] in [user.p_their()] mouth and turns it on!  It looks like [user.p_theyre()] trying to commit suicide!</span>")
-		if(istype(user, /mob/living/carbon))
-			var/mob/living/carbon/C = user
-			for(var/i=1 to 20)
-				C.vomit(0,1,0,4,0)
-				sleep(5)
-			C.blood_volume = 0
-		return(OXYLOSS|BRUTELOSS)
-	else
-		return ..()
+/obj/item/pipe/directional/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] shoves [src] in [user.p_their()] mouth and turns it on! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		for(var/i=1 to 20)
+			C.vomit(0, TRUE, FALSE, 4, FALSE)
+			if(prob(20))
+				C.spew_organ()
+			sleep(5)
+		C.blood_volume = 0
+	return(OXYLOSS|BRUTELOSS)
 
 /obj/item/pipe_meter
 	name = "meter"
-	desc = "A meter that can be laid on pipes"
+	desc = "A meter that can be laid on pipes."
 	icon = 'icons/obj/atmospherics/pipes/pipe_item.dmi'
 	icon_state = "meter"
 	item_state = "buildpipe"
 	w_class = WEIGHT_CLASS_BULKY
+	var/piping_layer = PIPING_LAYER_DEFAULT
 
-/obj/item/pipe_meter/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/pipe_meter/attackby(obj/item/I, mob/user, params)
 	..()
 
-	if (!istype(W, /obj/item/weapon/wrench))
+	if (!istype(I, /obj/item/wrench))
 		return ..()
-	if(!locate(/obj/machinery/atmospherics/pipe, src.loc))
-		user << "<span class='warning'>You need to fasten it to a pipe!</span>"
-		return 1
-	new/obj/machinery/meter( src.loc )
-	playsound(src.loc, W.usesound, 50, 1)
-	user << "<span class='notice'>You fasten the meter to the pipe.</span>"
+	var/obj/machinery/atmospherics/pipe/pipe
+	for(var/obj/machinery/atmospherics/pipe/P in loc)
+		if(P.piping_layer == piping_layer)
+			pipe = P
+			break
+	if(!pipe)
+		to_chat(user, "<span class='warning'>You need to fasten it to a pipe!</span>")
+		return TRUE
+	new /obj/machinery/meter(loc, piping_layer)
+	playsound(src, I.usesound, 50, 1)
+	to_chat(user, "<span class='notice'>You fasten the meter to the pipe.</span>")
 	qdel(src)
+
+/obj/item/pipe_meter/dropped()
+	. = ..()
+	if(loc)
+		setAttachLayer(piping_layer)
+
+/obj/item/pipe_meter/proc/setAttachLayer(new_layer = PIPING_LAYER_DEFAULT)
+	piping_layer = new_layer
+	pixel_x = (new_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X
+	pixel_y = (new_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y

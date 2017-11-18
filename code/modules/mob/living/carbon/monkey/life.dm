@@ -16,41 +16,32 @@
 			if(stat == CONSCIOUS)
 				if(!handle_combat())
 					if(prob(33) && canmove && isturf(loc) && !pulledby)
-						step(src, pick(cardinal))
+						step(src, pick(GLOB.cardinals))
 					if(prob(1))
 						emote(pick("scratch","jump","roll","tail"))
 			else
 				walk_to(src,0)
 
 /mob/living/carbon/monkey/handle_mutations_and_radiation()
-
-	if (radiation)
-		if (radiation > 100)
-			if(!weakened)
+	if(radiation)
+		if(radiation > RAD_MOB_KNOCKDOWN && prob(RAD_MOB_KNOCKDOWN_PROB))
+			if(!IsKnockdown())
 				emote("collapse")
-			Weaken(10)
-			src << "<span class='danger'>You feel weak.</span>"
+			Knockdown(RAD_MOB_KNOCKDOWN_AMOUNT)
+			to_chat(src, "<span class='danger'>You feel weak.</span>")
+		if(radiation > RAD_MOB_MUTATE)
+			if(prob(1))
+				to_chat(src, "<span class='danger'>You mutate!</span>")
+				randmutb()
+				emote("gasp")
+				domutcheck()
 
-		switch(radiation)
-
-			if(50 to 75)
-				if(prob(5))
-					if(!weakened)
-						emote("collapse")
-					Weaken(3)
-					src << "<span class='danger'>You feel weak.</span>"
-
-			if(75 to 100)
-				if(prob(1))
-					src << "<span class='danger'>You mutate!</span>"
-					randmutb()
-					emote("gasp")
-					domutcheck()
-		..()
-
-/mob/living/carbon/monkey/handle_chemicals_in_body()
-	if(reagents)
-		reagents.metabolize(src, can_overdose=1)
+				if(radiation > RAD_MOB_MUTATE * 2 && prob(50))
+					gorillize()
+					return
+		if(radiation > RAD_MOB_VOMIT && prob(RAD_MOB_VOMIT_PROB))
+			vomit(10, TRUE)
+	return ..()
 
 /mob/living/carbon/monkey/handle_breath_temperature(datum/gas_mixture/breath)
 	if(abs(310.15 - breath.temperature) > 50)
@@ -142,7 +133,7 @@
 
 /mob/living/carbon/monkey/has_smoke_protection()
 	if(wear_mask)
-		if(wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT)
+		if(wear_mask.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
 			return 1
 
 /mob/living/carbon/monkey/handle_fire()

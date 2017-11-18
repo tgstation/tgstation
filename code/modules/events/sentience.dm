@@ -10,18 +10,16 @@
 	var/animals = 1
 	var/one = "one"
 
-/datum/round_event/ghost_role/sentience/start()
-	var/sentience_report = "<font size=3><b>[command_name()] Medium-Priority Update</b></font>"
+/datum/round_event/ghost_role/sentience/announce(fake)
+	var/sentience_report = ""
 
 	var/data = pick("scans from our long-range sensors", "our sophisticated probabilistic models", "our omnipotence", "the communications traffic on your station", "energy emissions we detected", "\[REDACTED\]")
 	var/pets = pick("animals/bots", "bots/animals", "pets", "simple animals", "lesser lifeforms", "\[REDACTED\]")
 	var/strength = pick("human", "moderate", "lizard", "security", "command", "clown", "low", "very low", "\[REDACTED\]")
 
-	sentience_report += "<br><br>Based on [data], we believe that [one] of the station's [pets] has developed [strength] level intelligence, and the ability to communicate."
+	sentience_report += "Based on [data], we believe that [one] of the station's [pets] has developed [strength] level intelligence, and the ability to communicate."
 
-	print_command_report(sentience_report, "Classified [command_name()] Update")
-	priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/AI/commandreport.ogg')
-	..()
+	priority_announce(sentience_report,"[command_name()] Medium-Priority Update")
 
 /datum/round_event/ghost_role/sentience/spawn_role()
 	var/list/mob/dead/observer/candidates
@@ -30,11 +28,11 @@
 	// find our chosen mob to breathe life into
 	// Mobs have to be simple animals, mindless and on station
 	var/list/potential = list()
-	for(var/mob/living/simple_animal/L in living_mob_list)
+	for(var/mob/living/simple_animal/L in GLOB.alive_mob_list)
 		var/turf/T = get_turf(L)
-		if(T.z != ZLEVEL_STATION)
+		if(!(T.z in GLOB.station_z_levels))
 			continue
-		if(!(L in player_list) && !L.mind)
+		if(!(L in GLOB.player_list) && !L.mind)
 			potential += L
 
 	if(!potential.len)
@@ -50,8 +48,10 @@
 		spawned_animals++
 
 		SA.key = SG.key
-		SA.languages_spoken |= HUMAN
-		SA.languages_understood |= HUMAN
+
+		SA.grant_language(/datum/language/common)
+		SA.flags_2 |= OMNITONGUE_2
+
 		SA.sentience_act()
 
 		SA.maxHealth = max(SA.maxHealth, 200)
@@ -60,10 +60,10 @@
 
 		spawned_mobs += SA
 
-		SA << "<span class='userdanger'>Hello world!</span>"
-		SA << "<span class='warning'>Due to freak radiation and/or chemicals \
+		to_chat(SA, "<span class='userdanger'>Hello world!</span>")
+		to_chat(SA, "<span class='warning'>Due to freak radiation and/or chemicals \
 			and/or lucky chance, you have gained human level intelligence \
-			and the ability to speak and understand human language!</span>"
+			and the ability to speak and understand human language!</span>")
 
 	return SUCCESSFUL_SPAWN
 

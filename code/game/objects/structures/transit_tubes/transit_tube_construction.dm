@@ -5,9 +5,10 @@
 	name = "unattached transit tube"
 	icon = 'icons/obj/atmospherics/pipes/transit_tube.dmi'
 	icon_state = "straight"
-	density = 0
+	desc = "An unattached segment of transit tube."
+	density = FALSE
 	layer = LOW_ITEM_LAYER //same as the built tube
-	anchored = 0
+	anchored = FALSE
 	var/flipped = 0
 	var/build_type = /obj/structure/transit_tube
 	var/flipped_build_type
@@ -15,7 +16,7 @@
 
 /obj/structure/c_transit_tube/examine(mob/user)
 	..()
-	user << "<span class='notice'>Alt-click to rotate it clockwise.</span>"
+	to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
 
 /obj/structure/c_transit_tube/proc/tube_rotate()
 	setDir(turn(dir, -90))
@@ -46,7 +47,7 @@
 /obj/structure/c_transit_tube/AltClick(mob/user)
 	..()
 	if(user.incapacitated())
-		user << "<span class='warning'>You can't do that right now!</span>"
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(!in_range(src, user))
 		return
@@ -63,14 +64,14 @@
 
 
 /obj/structure/c_transit_tube/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/wrench))
-		user << "<span class='notice'>You start attaching the [name]...</span>"
+	if(istype(I, /obj/item/wrench))
+		to_chat(user, "<span class='notice'>You start attaching the [name]...</span>")
 		add_fingerprint(user)
 		playsound(src.loc, I.usesound, 50, 1)
 		if(do_after(user, 40*I.toolspeed, target = src))
 			if(QDELETED(src))
 				return
-			user << "<span class='notice'>You attach the [name].</span>"
+			to_chat(user, "<span class='notice'>You attach the [name].</span>")
 			var/obj/structure/transit_tube/R = new build_type(loc, dir)
 			transfer_fingerprints_to(R)
 			qdel(src)
@@ -154,5 +155,5 @@
 	name = "unattached transit tube pod"
 	icon = 'icons/obj/atmospherics/pipes/transit_tube.dmi'
 	icon_state = "pod"
-	anchored = 0
-	density = 0
+	anchored = FALSE
+	density = FALSE

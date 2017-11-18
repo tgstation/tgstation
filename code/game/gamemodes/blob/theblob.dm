@@ -2,14 +2,14 @@
 /obj/structure/blob
 	name = "blob"
 	icon = 'icons/mob/blob.dmi'
-	luminosity = 1
+	light_range = 2
 	desc = "A thick wall of writhing tendrils."
-	density = 0 //this being 0 causes two bugs, being able to attack blob tiles behind other blobs and being unable to move on blob tiles in no gravity, but turning it to 1 causes the blob mobs to be unable to path through blobs, which is probably worse.
+	density = FALSE //this being false causes two bugs, being able to attack blob tiles behind other blobs and being unable to move on blob tiles in no gravity, but turning it to 1 causes the blob mobs to be unable to path through blobs, which is probably worse.
 	opacity = 0
-	anchored = 1
+	anchored = TRUE
 	layer = BELOW_MOB_LAYER
+	CanAtmosPass = ATMOS_PASS_PROC
 	var/point_return = 0 //How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
-	obj_integrity = 30
 	max_integrity = 30
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 70)
 	var/health_regen = 2 //how much health this blob regens when pulsed
@@ -17,32 +17,32 @@
 	var/heal_timestamp = 0 //we got healed when?
 	var/brute_resist = 0.5 //multiplies brute damage by this
 	var/fire_resist = 1 //multiplies burn damage by this
-	var/atmosblock = 0 //if the blob blocks atmos and heat spread
+	var/atmosblock = FALSE //if the blob blocks atmos and heat spread
 	var/mob/camera/blob/overmind
 
-
-/obj/structure/blob/New(loc)
+/obj/structure/blob/Initialize(mapload, owner_overmind)
+	overmind = owner_overmind
 	var/area/Ablob = get_area(loc)
 	if(Ablob.blob_allowed) //Is this area allowed for winning as blob?
-		blobs_legit += src
-	blobs += src //Keep track of the blob in the normal list either way
-	setDir(pick(cardinal))
+		overmind.blobs_legit += src
+	GLOB.blobs += src //Keep track of the blob in the normal list either way
+	setDir(pick(GLOB.cardinals))
 	update_icon()
-	..()
-	ConsumeTile()
+	.= ..()
 	if(atmosblock)
-		CanAtmosPass = ATMOS_PASS_NO
 		air_update_turf(1)
+	ConsumeTile()
 
 /obj/structure/blob/proc/creation_action() //When it's created by the overmind, do this.
 	return
 
 /obj/structure/blob/Destroy()
 	if(atmosblock)
-		atmosblock = 0
+		atmosblock = FALSE
 		air_update_turf(1)
-	blobs_legit -= src  //if it was in the legit blobs list, it isn't now
-	blobs -= src //it's no longer in the all blobs list either
+	if(overmind)
+		overmind.blobs_legit -= src  //if it was in the legit blobs list, it isn't now
+	GLOB.blobs -= src //it's no longer in the all blobs list either
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Expand() is no longer broken, no check necessary.
 	return ..()
 
@@ -66,18 +66,19 @@
 /obj/structure/blob/BlockSuperconductivity()
 	return atmosblock
 
-/obj/structure/blob/CanPass(atom/movable/mover, turf/target, height=0)
-	if(height==0)
-		return 1
-	if(istype(mover) && mover.checkpass(PASSBLOB))
+/obj/structure/blob/CanPass(atom/movable/mover, turf/target)
+	if(istype(mover) && (mover.pass_flags & PASSBLOB))
 		return 1
 	return 0
+
+/obj/structure/blob/CanAtmosPass(turf/T)
+	return !atmosblock
 
 /obj/structure/blob/CanAStarPass(ID, dir, caller)
 	. = 0
 	if(ismovableatom(caller))
 		var/atom/movable/mover = caller
-		. = . || mover.checkpass(PASSBLOB)
+		. = . || (mover.pass_flags & PASSBLOB)
 
 /obj/structure/blob/update_icon() //Updates color based on overmind color if we have an overmind.
 	if(overmind)
@@ -91,15 +92,17 @@
 /obj/structure/blob/proc/Life()
 	return
 
-/obj/structure/blob/proc/Pulse_Area(pulsing_overmind = overmind, claim_range = 10, pulse_range = 3, expand_range = 2)
-	src.Be_Pulsed()
+/obj/structure/blob/proc/Pulse_Area(mob/camera/blob/pulsing_overmind, claim_range = 10, pulse_range = 3, expand_range = 2)
+	if(QDELETED(pulsing_overmind))
+		pulsing_overmind = overmind
+	Be_Pulsed()
 	var/expanded = FALSE
 	if(prob(70) && expand())
 		expanded = TRUE
 	var/list/blobs_to_affect = list()
 	for(var/obj/structure/blob/B in urange(claim_range, src, 1))
 		blobs_to_affect += B
-	shuffle(blobs_to_affect)
+	shuffle_inplace(blobs_to_affect)
 	for(var/L in blobs_to_affect)
 		var/obj/structure/blob/B = L
 		if(!B.overmind && !istype(B, /obj/structure/blob/core) && prob(30))
@@ -140,7 +143,7 @@
 		loc.blob_act(src) //don't ask how a wall got on top of the core, just eat it
 
 /obj/structure/blob/proc/blob_attack_animation(atom/A = null, controller) //visually attacks an atom
-	var/obj/effect/overlay/temp/blob/O = new /obj/effect/overlay/temp/blob(src.loc)
+	var/obj/effect/temp_visual/blob/O = new /obj/effect/temp_visual/blob(src.loc)
 	O.setDir(dir)
 	if(controller)
 		var/mob/camera/blob/BO = controller
@@ -172,24 +175,20 @@
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Let's give some feedback that we DID try to spawn in space, since players are used to it
 
 	ConsumeTile() //hit the tile we're in, making sure there are no border objects blocking us
-	if(!T.CanPass(src, T, 5)) //is the target turf impassable
+	if(!T.CanPass(src, T)) //is the target turf impassable
 		make_blob = FALSE
 		T.blob_act(src) //hit the turf if it is
 	for(var/atom/A in T)
-		if(!A.CanPass(src, T, 5)) //is anything in the turf impassable
+		if(!A.CanPass(src, T)) //is anything in the turf impassable
 			make_blob = FALSE
 		A.blob_act(src) //also hit everything in the turf
 
 	if(make_blob) //well, can we?
-		var/obj/structure/blob/B = new /obj/structure/blob/normal(src.loc)
-		if(controller)
-			B.overmind = controller
-		else
-			B.overmind = overmind
-		B.density = 1
+		var/obj/structure/blob/B = new /obj/structure/blob/normal(src.loc, (controller || overmind))
+		B.density = TRUE
 		if(T.Enter(B,src)) //NOW we can attempt to move into the tile
 			B.density = initial(B.density)
-			B.loc = T
+			B.forceMove(T)
 			B.update_icon()
 			if(B.overmind && expand_reaction)
 				B.overmind.blob_reagent_datum.expand_reaction(src, B, T, controller)
@@ -208,7 +207,7 @@
 		if(overmind)
 			overmind.blob_reagent_datum.emp_reaction(src, severity)
 		if(prob(100 - severity * 30))
-			new /obj/effect/overlay/temp/emp(get_turf(src))
+			new /obj/effect/temp_visual/emp(get_turf(src))
 
 /obj/structure/blob/tesla_act(power)
 	..()
@@ -229,8 +228,9 @@
 /obj/structure/blob/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/analyzer))
 		user.changeNext_move(CLICK_CD_MELEE)
-		user << "<b>The analyzer beeps once, then reports:</b><br>"
-		user << 'sound/machines/ping.ogg'
+		to_chat(user, "<b>The analyzer beeps once, then reports:</b><br>")
+		SEND_SOUND(user, sound('sound/machines/ping.ogg'))
+		to_chat(user, "<b>Progress to Critical Mass:</b> <span class='notice'>[overmind.blobs_legit.len]/[overmind.blobwincount].</span>")
 		chemeffectreport(user)
 		typereport(user)
 	else
@@ -238,16 +238,16 @@
 
 /obj/structure/blob/proc/chemeffectreport(mob/user)
 	if(overmind)
-		user << "<b>Material: <font color=\"[overmind.blob_reagent_datum.color]\">[overmind.blob_reagent_datum.name]</font><span class='notice'>.</span></b>"
-		user << "<b>Material Effects:</b> <span class='notice'>[overmind.blob_reagent_datum.analyzerdescdamage]</span>"
-		user << "<b>Material Properties:</b> <span class='notice'>[overmind.blob_reagent_datum.analyzerdesceffect]</span><br>"
+		to_chat(user, "<b>Material: <font color=\"[overmind.blob_reagent_datum.color]\">[overmind.blob_reagent_datum.name]</font><span class='notice'>.</span></b>")
+		to_chat(user, "<b>Material Effects:</b> <span class='notice'>[overmind.blob_reagent_datum.analyzerdescdamage]</span>")
+		to_chat(user, "<b>Material Properties:</b> <span class='notice'>[overmind.blob_reagent_datum.analyzerdesceffect]</span><br>")
 	else
-		user << "<b>No Material Detected!</b><br>"
+		to_chat(user, "<b>No Material Detected!</b><br>")
 
 /obj/structure/blob/proc/typereport(mob/user)
-	user << "<b>Blob Type:</b> <span class='notice'>[uppertext(initial(name))]</span>"
-	user << "<b>Health:</b> <span class='notice'>[obj_integrity]/[max_integrity]</span>"
-	user << "<b>Effects:</b> <span class='notice'>[scannerreport()]</span>"
+	to_chat(user, "<b>Blob Type:</b> <span class='notice'>[uppertext(initial(name))]</span>")
+	to_chat(user, "<b>Health:</b> <span class='notice'>[obj_integrity]/[max_integrity]</span>")
+	to_chat(user, "<b>Effects:</b> <span class='notice'>[scannerreport()]</span>")
 
 /obj/structure/blob/attack_animal(mob/living/simple_animal/M)
 	if("blob" in M.faction) //sorry, but you can't kill the blob as a blobbernaut
@@ -262,7 +262,7 @@
 			else
 				playsound(src, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 
 /obj/structure/blob/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	switch(damage_type)
@@ -295,9 +295,7 @@
 	if(!ispath(type))
 		throw EXCEPTION("change_to(): invalid type for blob")
 		return
-	var/obj/structure/blob/B = new type(src.loc)
-	if(controller)
-		B.overmind = controller
+	var/obj/structure/blob/B = new type(src.loc, controller)
 	B.creation_action()
 	B.update_icon()
 	B.setDir(dir)
@@ -306,13 +304,16 @@
 
 /obj/structure/blob/examine(mob/user)
 	..()
-	var/datum/atom_hud/hud_to_check = huds[DATA_HUD_MEDICAL_ADVANCED]
-	if(user.research_scanner || (user in hud_to_check.hudusers))
-		user << "<b>Your HUD displays an extensive report...</b><br>"
+	var/datum/atom_hud/hud_to_check = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
+	if(user.research_scanner || hud_to_check.hudusers[user])
+		to_chat(user, "<b>Your HUD displays an extensive report...</b><br>")
+		to_chat(user, "<b>Progress to Critical Mass:</b> <span class='notice'>[overmind.blobs_legit.len]/[overmind.blobwincount].</span>")
 		chemeffectreport(user)
 		typereport(user)
 	else
-		user << "It seems to be made of [get_chem_name()]."
+		if(isobserver(user))
+			to_chat(user, "<b>Progress to Critical Mass:</b> <span class='notice'>[overmind.blobs_legit.len]/[overmind.blobwincount].</span>")
+		to_chat(user, "It seems to be made of [get_chem_name()].")
 
 /obj/structure/blob/proc/scannerreport()
 	return "A generic blob. Looks like someone forgot to override this proc, adminhelp this."
@@ -325,8 +326,8 @@
 /obj/structure/blob/normal
 	name = "normal blob"
 	icon_state = "blob"
-	luminosity = 0
-	obj_integrity = 21
+	light_range = 0
+	obj_integrity = 21 //doesn't start at full health
 	max_integrity = 25
 	health_regen = 1
 	brute_resist = 0.25

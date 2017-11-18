@@ -4,7 +4,7 @@
 	var/name = "event"
 	var/next_phase = 0
 	var/datum/stock/company = null
-	var/current_title = "A company holding an pangalactic conference in the Seattle Conference Center, Seattle, Earth"
+	var/current_title = "A company holding a pangalactic conference in the Seattle Conference Center, Seattle, Earth"
 	var/current_desc = "We will continue to monitor their stocks as the situation unfolds."
 	var/phase_id = 0
 	var/hidden = 0
@@ -102,11 +102,11 @@
 				company.bankrupt = 1
 				for (var/X in company.shareholders)
 					var/amt = company.shareholders[X]
-					stockExchange.balanceLog(X, -amt * company.current_value)
+					GLOB.stockExchange.balanceLog(X, -amt * company.current_value)
 				company.shareholders = list()
 				company.current_value = 0
 				company.borrow_brokers = list()
-				stockExchange.generateStocks(1)
+				GLOB.stockExchange.generateStocks(1)
 
 			var/bailout = (effect > 0 && prob(80)) || (effect < 0 && prob(20))
 			current_title = "[company.name] [bailout ? "bailed out" : "on a painful rebound"]"
@@ -180,7 +180,7 @@
 /datum/stockEvent/arrest/transition()
 	switch (phase_id)
 		if (0)
-			tname = "[female ? pick(first_names_female) : pick(first_names_male)] [pick(last_names)]"
+			tname = "[female ? pick(GLOB.first_names_female) : pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
 			next_phase = world.time + rand(300*TIME_MULTIPLIER, 600*TIME_MULTIPLIER) * (10*TIME_MULTIPLIER)
 			var/datum/article/A = generateArrestArticle()
 			if (!A.opinion)

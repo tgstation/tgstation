@@ -1,30 +1,9 @@
 #define MAXIMUM_EMP_WIRES 3
 
-var/list/wire_colors = list(
-	"blue",
-	"brown",
-	"crimson",
-	"cyan",
-	"gold",
-	"grey",
-	"green",
-	"magenta",
-	"orange",
-	"pink",
-	"purple",
-	"red",
-	"silver",
-	"violet",
-	"white",
-	"yellow",
-)
-var/list/wire_color_directory = list()
-var/list/wire_name_directory = list()
-
 /proc/is_wire_tool(obj/item/I)
 	if(istype(I, /obj/item/device/multitool))
 		return TRUE
-	if(istype(I, /obj/item/weapon/wirecutters))
+	if(istype(I, /obj/item/wirecutters))
 		return TRUE
 	if(istype(I, /obj/item/device/assembly))
 		var/obj/item/device/assembly/A = I
@@ -57,12 +36,12 @@ var/list/wire_name_directory = list()
 	if(randomize)
 		randomize()
 	else
-		if(!wire_color_directory[holder_type])
+		if(!GLOB.wire_color_directory[holder_type])
 			randomize()
-			wire_color_directory[holder_type] = colors
-			wire_name_directory[holder_type] = proper_name
+			GLOB.wire_color_directory[holder_type] = colors
+			GLOB.wire_name_directory[holder_type] = proper_name
 		else
-			colors = wire_color_directory[holder_type]
+			colors = GLOB.wire_color_directory[holder_type]
 
 /datum/wires/Destroy()
 	holder = null
@@ -77,10 +56,29 @@ var/list/wire_name_directory = list()
 		wires += dud
 
 /datum/wires/proc/randomize()
-	var/list/possible_colors = wire_colors.Copy()
+	var/static/list/possible_colors = list(
+	"blue",
+	"brown",
+	"crimson",
+	"cyan",
+	"gold",
+	"grey",
+	"green",
+	"magenta",
+	"orange",
+	"pink",
+	"purple",
+	"red",
+	"silver",
+	"violet",
+	"white",
+	"yellow"
+	)
+
+	var/list/my_possible_colors = possible_colors.Copy()
 
 	for(var/wire in shuffle(wires))
-		colors[pick_n_take(possible_colors)] = wire
+		colors[pick_n_take(my_possible_colors)] = wire
 
 /datum/wires/proc/shuffle_wires()
 	colors.Cut()
@@ -129,13 +127,13 @@ var/list/wire_name_directory = list()
 	for(var/wire in wires)
 		cut(wire)
 
-/datum/wires/proc/pulse(wire)
+/datum/wires/proc/pulse(wire, user)
 	if(is_cut(wire))
 		return
-	on_pulse(wire)
+	on_pulse(wire, user)
 
-/datum/wires/proc/pulse_color(color)
-	pulse(get_wire(color))
+/datum/wires/proc/pulse_color(color, mob/living/user)
+	pulse(get_wire(color), user)
 
 /datum/wires/proc/pulse_assembly(obj/item/device/assembly/S)
 	for(var/color in assemblies)
@@ -146,7 +144,7 @@ var/list/wire_name_directory = list()
 /datum/wires/proc/attach_assembly(color, obj/item/device/assembly/S)
 	if(S && istype(S) && S.attachable && !is_attached(color))
 		assemblies[color] = S
-		S.loc = holder
+		S.forceMove(holder)
 		S.connected = src
 		return S
 
@@ -155,7 +153,7 @@ var/list/wire_name_directory = list()
 	if(S && istype(S))
 		assemblies -= color
 		S.connected = null
-		S.loc = holder.loc
+		S.forceMove(holder.drop_location())
 		return S
 
 /datum/wires/proc/emp_pulse()
@@ -165,9 +163,9 @@ var/list/wire_name_directory = list()
 	for(var/wire in possible_wires)
 		if(prob(33))
 			pulse(wire)
-		remaining_pulses--
-		if(remaining_pulses >= 0)
-			break
+			remaining_pulses--
+			if(!remaining_pulses)
+				break
 
 // Overridable Procs
 /datum/wires/proc/interactable(mob/user)
@@ -179,7 +177,7 @@ var/list/wire_name_directory = list()
 /datum/wires/proc/on_cut(wire, mend = FALSE)
 	return
 
-/datum/wires/proc/on_pulse(wire)
+/datum/wires/proc/on_pulse(wire, user)
 	return
 // End Overridable Procs
 
@@ -200,8 +198,8 @@ var/list/wire_name_directory = list()
 		return ..()
 	return UI_CLOSE
 
-/datum/wires/ui_interact(mob/user, ui_key = "wires", datum/tgui/ui = null, force_open = 0, \
-							datum/tgui/master_ui = null, datum/ui_state/state = physical_state)
+/datum/wires/ui_interact(mob/user, ui_key = "wires", datum/tgui/ui = null, force_open = FALSE, \
+							datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
 		ui = new(user, src, ui_key, "wires", "[holder.name] wires", 350, 150 + wires.len * 30, master_ui, state)
@@ -229,19 +227,19 @@ var/list/wire_name_directory = list()
 	var/obj/item/I = L.get_active_held_item()
 	switch(action)
 		if("cut")
-			if(istype(I, /obj/item/weapon/wirecutters) || IsAdminGhost(usr))
+			if(istype(I, /obj/item/wirecutters) || IsAdminGhost(usr))
 				playsound(holder, I.usesound, 20, 1)
 				cut_color(target_wire)
 				. = TRUE
 			else
-				L << "<span class='warning'>You need wirecutters!</span>"
+				to_chat(L, "<span class='warning'>You need wirecutters!</span>")
 		if("pulse")
 			if(istype(I, /obj/item/device/multitool) || IsAdminGhost(usr))
 				playsound(holder, 'sound/weapons/empty.ogg', 20, 1)
-				pulse_color(target_wire)
+				pulse_color(target_wire, L)
 				. = TRUE
 			else
-				L << "<span class='warning'>You need a multitool!</span>"
+				to_chat(L, "<span class='warning'>You need a multitool!</span>")
 		if("attach")
 			if(is_attached(target_wire))
 				var/obj/item/O = detach_assembly(target_wire)
@@ -252,11 +250,12 @@ var/list/wire_name_directory = list()
 				if(istype(I, /obj/item/device/assembly))
 					var/obj/item/device/assembly/A = I
 					if(A.attachable)
-						if(!L.drop_item())
+						if(!L.temporarilyRemoveItemFromInventory(A))
 							return
-						attach_assembly(target_wire, A)
+						if(!attach_assembly(target_wire, A))
+							A.forceMove(L.drop_location())
 						. = TRUE
 					else
-						L << "<span class='warning'>You need an attachable assembly!</span>"
+						to_chat(L, "<span class='warning'>You need an attachable assembly!</span>")
 
 #undef MAXIMUM_EMP_WIRES

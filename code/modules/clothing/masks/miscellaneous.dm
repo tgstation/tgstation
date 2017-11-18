@@ -5,14 +5,14 @@
 	item_state = "blindfold"
 	flags_cover = MASKCOVERSMOUTH
 	w_class = WEIGHT_CLASS_SMALL
-	gas_transfer_coefficient = 0.90
-	put_on_delay = 20
+	gas_transfer_coefficient = 0.9
+	equip_delay_other = 20
 
 /obj/item/clothing/mask/muzzle/attack_paw(mob/user)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(src == C.wear_mask)
-			user << "<span class='warning'>You need help taking this off!</span>"
+			to_chat(user, "<span class='warning'>You need help taking this off!</span>")
 			return
 	..()
 
@@ -26,7 +26,7 @@
 	flags_cover = MASKCOVERSMOUTH
 	visor_flags_inv = HIDEFACE
 	visor_flags_cover = MASKCOVERSMOUTH
-	gas_transfer_coefficient = 0.90
+	gas_transfer_coefficient = 0.9
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 25, rad = 0, fire = 0, acid = 0)
 	actions_types = list(/datum/action/item_action/adjust)
@@ -57,7 +57,7 @@
 
 /obj/item/clothing/mask/pig/attack_self(mob/user)
 	voicechange = !voicechange
-	user << "<span class='notice'>You turn the voice box [voicechange ? "on" : "off"]!</span>"
+	to_chat(user, "<span class='notice'>You turn the voice box [voicechange ? "on" : "off"]!</span>")
 
 /obj/item/clothing/mask/pig/speechModification(message)
 	if(voicechange)
@@ -77,6 +77,41 @@
 	if(voicechange)
 		message = pick("Oink!","Squeeeeeeee!","Oink Oink!")
 	return message
+
+///frog mask - reeee!!
+obj/item/clothing/mask/frog
+	name = "frog mask"
+	desc = "An ancient mask carved in the shape of a frog.<br> Sanity is like gravity, all it needs is a push."
+	icon_state = "frog"
+	item_state = "frog"
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	w_class = WEIGHT_CLASS_SMALL
+	var/voicechange = TRUE
+
+/obj/item/clothing/mask/frog/attack_self(mob/user)
+	voicechange = !voicechange
+	to_chat(user, "<span class='notice'>You turn the voice box [voicechange ? "on" : "off"]!</span>")
+
+/obj/item/clothing/mask/frog/speechModification(message) //whenever you speak
+	if(voicechange)
+		if(prob(5)) //sometimes, the angry spirit finds others words to speak.
+			message = pick("HUUUUU!!","SMOOOOOKIN'!!","Hello my baby, hello my honey, hello my rag-time gal.", "Feels bad, man.", "GIT DIS GUY OFF ME!!" ,"SOMEBODY STOP ME!!", "NORMIES, GET OUT!!")
+		else
+			message = pick("Ree!!", "Reee!!","REEE!!","REEEEE!!") //but its usually just angry gibberish,
+	return message
+
+obj/item/clothing/mask/frog/cursed
+	flags_1 = NODROP_1 //reee!!
+
+/obj/item/clothing/mask/frog/cursed/attack_self(mob/user)
+	return //no voicebox to alter.
+
+/obj/item/clothing/mask/frog/cursed/equipped(mob/user, slot)
+	var/mob/living/carbon/C = user
+	if(C.wear_mask == src)
+		to_chat(user, "<span class='warning'><B>[src] was cursed! Ree!!</B></span>")
+	return ..()
+
 
 /obj/item/clothing/mask/cowmask
 	name = "Cowface"
@@ -201,3 +236,17 @@
 	name = "skull bandana"
 	desc = "A fine black bandana with nanotech lining and a skull emblem."
 	icon_state = "bandskull"
+
+/obj/item/clothing/mask/mummy
+	name = "mummy mask"
+	desc = "Ancient bandages."
+	icon_state = "mummy_mask"
+	item_state = "mummy_mask"
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+
+/obj/item/clothing/mask/scarecrow
+	name = "sack mask"
+	desc = "A burlap sack with eyeholes."
+	icon_state = "scarecrow_sack"
+	item_state = "scarecrow_sack"
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR

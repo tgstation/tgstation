@@ -34,3 +34,15 @@
 #define FLOOR_BOT			4	// Floorbots
 #define CLEAN_BOT			8	// Cleanbots
 #define MED_BOT				16	// Medibots
+#define HONK_BOT			32	// Honkbots & ED-Honks
+
+//AI notification defines
+#define		NEW_BORG     1
+#define		NEW_MODULE   2
+#define		RENAME       3
+#define		AI_SHELL     4
+#define		DISCONNECT   5
+
+//Assembly defines
+#define ASSEMBLY_FIRST_STEP 	0
+#define ASSEMBLY_SECOND_STEP 	1

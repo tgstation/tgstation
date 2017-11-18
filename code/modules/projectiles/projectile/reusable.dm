@@ -5,7 +5,7 @@
 	var/dropped = 0
 	impact_effect_type = null
 
-/obj/item/projectile/bullet/reusable/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/reusable/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	handle_drop()
 
@@ -37,7 +37,7 @@
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart
 	range = 10
 	var/modified = 0
-	var/obj/item/weapon/pen/pen = null
+	var/obj/item/pen/pen = null
 
 /obj/item/projectile/bullet/reusable/foam_dart/handle_drop()
 	if(dropped)
@@ -67,11 +67,3 @@
 	icon_state = "foamdart_riot_proj"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/riot
 	stamina = 25
-
-/obj/item/projectile/bullet/reusable/arrow
-	name = "arrow"
-	icon_state = "arrow"
-	ammo_type = /obj/item/ammo_casing/caseless/arrow
-	range = 10
-	damage = 25
-	damage_type = BRUTE

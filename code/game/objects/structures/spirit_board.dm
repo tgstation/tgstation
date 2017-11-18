@@ -3,8 +3,8 @@
 	desc = "A wooden board with letters etched into it, used in seances."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "spirit_board"
-	density = 1
-	anchored = 0
+	density = TRUE
+	anchored = FALSE
 	var/virgin = 1
 	var/next_use = 0
 	var/planchette = "A"
@@ -57,8 +57,8 @@
 	light_amount = T.get_lumcount()
 
 
-	if(light_amount > 2)
-		M << "<span class='warning'>It's too bright here to use [src.name]!</span>"
+	if(light_amount > 0.2)
+		to_chat(M, "<span class='warning'>It's too bright here to use [src.name]!</span>")
 		return 0
 
 	//mobs in range check
@@ -66,12 +66,12 @@
 	for(var/mob/living/L in orange(1,src))
 		if(L.ckey && L.client)
 			if((world.time - L.client.inactivity) < (world.time - 300) || L.stat != CONSCIOUS || L.restrained())//no playing with braindeads or corpses or handcuffed dudes.
-				M << "<span class='warning'>[L] doesn't seem to be paying attention...</span>"
+				to_chat(M, "<span class='warning'>[L] doesn't seem to be paying attention...</span>")
 			else
 				users_in_range++
 
 	if(users_in_range < 2)
-		M << "<span class='warning'>There aren't enough people to use the [src.name]!</span>"
+		to_chat(M, "<span class='warning'>There aren't enough people to use the [src.name]!</span>")
 		return 0
 
 	return 1

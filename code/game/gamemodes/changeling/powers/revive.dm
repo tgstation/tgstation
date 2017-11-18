@@ -14,7 +14,7 @@
 	var/list/missing = user.get_missing_limbs()
 	missing -= "head" // headless changelings are funny
 	if(missing.len)
-		playsound(user, 'sound/magic/Demon_consume.ogg', 50, 1)
+		playsound(user, 'sound/magic/demon_consume.ogg', 50, 1)
 		user.visible_message("<span class='warning'>[user]'s missing limbs \
 			reform, making a loud, grotesque sound!</span>",
 			"<span class='userdanger'>Your limbs regrow, making a \
@@ -23,14 +23,15 @@
 			and tearing!</span>")
 		user.emote("scream")
 		user.regenerate_limbs(0, list("head"))
-		user.regenerate_organs()
-	user << "<span class='notice'>We have revived ourselves.</span>"
-	user.mind.changeling.purchasedpowers -= src
-	feedback_add_details("changeling_powers","CR")
-	return 1
+	user.regenerate_organs()
+	to_chat(user, "<span class='notice'>We have revived ourselves.</span>")
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	changeling.purchasedpowers -= src
+	return TRUE
 
 /obj/effect/proc_holder/changeling/revive/can_be_used_by(mob/user)
 	if((user.stat != DEAD) && !(user.status_flags & FAKEDEATH))
-		user.mind.changeling.purchasedpowers -= src
+		var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+		changeling.purchasedpowers -= src
 		return 0
 	. = ..()

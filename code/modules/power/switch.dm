@@ -10,10 +10,10 @@
 	icon_state = "switch-dbl-up"
 	var/icon_state_on = "switch-dbl-down"
 	var/icon_state_off = "switch-dbl-up"
-	density = 0
-	anchored = 1
-	var/on = 0  //up is off, down is on
-	var/busy = 0 //set to 1 when you start pulling
+	density = FALSE
+	anchored = TRUE
+	var/on = FALSE  //up is off, down is on
+	var/busy = FALSE //set to 1 when you start pulling
 
 /obj/structure/powerswitch/simple
 	icon_state = "switch-up"
@@ -24,23 +24,23 @@
 /obj/structure/powerswitch/examine(mob/user)
 	..()
 	if(on)
-		user << "The switch is in the on position"
+		to_chat(user, "The switch is in the on position")
 	else
-		user << "The switch is in the off position"
+		to_chat(user, "The switch is in the off position")
 
 /obj/structure/powerswitch/attack_ai(mob/user)
-	user << "\red You're an AI. This is a manual switch. It's not going to work."
+	to_chat(user, "\red You're an AI. This is a manual switch. It's not going to work.")
 	return
 
 /obj/structure/powerswitch/attack_hand(mob/user)
 
 	if(busy)
-		user << "\red This switch is already being toggled."
+		to_chat(user, "\red This switch is already being toggled.")
 		return
 
 	..()
 
-	busy = 1
+	busy = TRUE
 	for(var/mob/O in viewers(user))
 		O.show_message(text("\red [user] started pulling the [src]."), 1)
 
@@ -48,7 +48,7 @@
 		set_state(!on)
 		for(var/mob/O in viewers(user))
 			O.show_message(text("\red [user] flipped the [src] into the [on ? "on": "off"] position."), 1)
-	busy = 0
+	busy = FALSE
 
 /obj/structure/powerswitch/proc/set_state(var/state)
 	on = state

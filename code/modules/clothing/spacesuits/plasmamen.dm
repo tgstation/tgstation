@@ -3,8 +3,8 @@
 
 /obj/item/clothing/suit/space/eva/plasmaman
 	name = "EVA plasma envirosuit"
-	desc = "A special plasma containment suit designed to be space-worthy, as well as worn over other clothing. Like it's smaller counterpart, it can automatically extinguish the wearer in a crisis, and holds twice as many charges."
-	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_casing,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank)
+	desc = "A special plasma containment suit designed to be space-worthy, as well as worn over other clothing. Like its smaller counterpart, it can automatically extinguish the wearer in a crisis, and holds twice as many charges."
+	allowed = list(/obj/item/gun, /obj/item/ammo_casing, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/melee/transforming/energy/sword, /obj/item/restraints/handcuffs, /obj/item/tank)
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 0, fire = 100, acid = 75)
 	resistance_flags = FIRE_PROOF
 	icon_state = "plasmaman_suit"
@@ -16,7 +16,7 @@
 
 /obj/item/clothing/suit/space/eva/plasmaman/examine(mob/user)
 	..()
-	user << "<span class='notice'>There are [extinguishes_left] extinguisher charges left in this suit.</span>"
+	to_chat(user, "<span class='notice'>There [extinguishes_left == 1 ? "is" : "are"] [extinguishes_left] extinguisher charge\s left in this suit.</span>")
 
 
 /obj/item/clothing/suit/space/eva/plasmaman/proc/Extinguish(mob/living/carbon/human/H)
@@ -44,7 +44,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 0, fire = 100, acid = 75)
 	resistance_flags = FIRE_PROOF
 	var/brightness_on = 4 //luminosity when the light is on
-	var/on = 0
+	var/on = FALSE
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 
 /obj/item/clothing/head/helmet/space/plasmaman/attack_self(mob/user)
@@ -54,28 +54,10 @@
 	user.update_inv_head() //So the mob overlay updates
 
 	if(on)
-		turn_on(user)
+		set_light(brightness_on)
 	else
-		turn_off(user)
+		set_light(0)
+
 	for(var/X in actions)
 		var/datum/action/A=X
 		A.UpdateButtonIcon()
-
-/obj/item/clothing/head/helmet/space/plasmaman/pickup(mob/user)
-	..()
-	if(on)
-		user.AddLuminosity(brightness_on)
-		SetLuminosity(0)
-
-/obj/item/clothing/head/helmet/space/plasmaman/dropped(mob/user)
-	..()
-	if(on)
-		user.AddLuminosity(-brightness_on)
-		SetLuminosity(brightness_on)
-
-/obj/item/clothing/head/helmet/space/plasmaman/proc/turn_on/(mob/user)
-		user.AddLuminosity(brightness_on)
-
-/obj/item/clothing/head/helmet/space/plasmaman/proc/turn_off/(mob/user)
-		user.AddLuminosity(-brightness_on)
-

@@ -3,24 +3,26 @@
 	desc = "A device used to project your voice. Loudly."
 	icon_state = "megaphone"
 	item_state = "radio"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	flags = FPRINT
 	siemens_coefficient = 1
 	var/spamcheck = 0
-	var/emagged = 0
 	var/list/voicespan = list(SPAN_COMMAND)
 
 /obj/item/device/megaphone/get_held_item_speechspans(mob/living/carbon/user)
 	if(spamcheck > world.time)
-		user << "<span class='warning'>\The [src] needs to recharge!</span>"
+		to_chat(user, "<span class='warning'>\The [src] needs to recharge!</span>")
 	else
 		playsound(loc, 'sound/items/megaphone.ogg', 100, 0, 1)
 		spamcheck = world.time + 50
 		return voicespan
 
 /obj/item/device/megaphone/emag_act(mob/user)
-	user << "<span class='warning'>You overload \the [src]'s voice synthesizer.</span>"
-	emagged = 1
+	if(emagged)
+		return
+	to_chat(user, "<span class='warning'>You overload \the [src]'s voice synthesizer.</span>")
+	emagged = TRUE
 	voicespan = list(SPAN_REALLYBIG, "userdanger")
 
 /obj/item/device/megaphone/sec

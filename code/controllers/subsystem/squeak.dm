@@ -1,23 +1,21 @@
-var/datum/subsystem/squeak/SSsqueak
-
 // The Squeak
 // because this is about placement of mice mobs, and nothing to do with
 // mice - the computer peripheral
 
-/datum/subsystem/squeak
+SUBSYSTEM_DEF(squeak)
 	name = "Squeak"
-	priority = 40
+	init_order = INIT_ORDER_SQUEAK
 	flags = SS_NO_FIRE
 
 	var/list/exposed_wires = list()
 
-/datum/subsystem/squeak/New()
-	NEW_SS_GLOBAL(SSsqueak)
+/datum/controller/subsystem/squeak/Initialize(timeofday)
+	trigger_migration(CONFIG_GET(number/mice_roundstart))
+	return ..()
 
-/datum/subsystem/squeak/Initialize(timeofday)
-	trigger_migration()
-
-/datum/subsystem/squeak/proc/trigger_migration(num_mice=10)
+/datum/controller/subsystem/squeak/proc/trigger_migration(num_mice=10)
+	if(!num_mice)
+		return
 	find_exposed_wires()
 
 	var/mob/living/simple_animal/mouse/M
@@ -33,10 +31,11 @@ var/datum/subsystem/squeak/SSsqueak
 			num_mice -= 1
 			M = null
 
-/datum/subsystem/squeak/proc/find_exposed_wires()
+/datum/controller/subsystem/squeak/proc/find_exposed_wires()
 	exposed_wires.Cut()
-
-	var/list/all_turfs = block(locate(1,1,1), locate(world.maxx,world.maxy,1))
+	var/list/all_turfs
+	for (var/z in GLOB.station_z_levels)
+		all_turfs += block(locate(1,1,z), locate(world.maxx,world.maxy,z))
 	for(var/turf/open/floor/plating/T in all_turfs)
 		if(is_blocked_turf(T))
 			continue

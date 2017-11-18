@@ -9,15 +9,16 @@
 
 /datum/round_event/wizard/robelesscasting/start()
 
-	for(var/mob/living/L in mob_list) //Hey if a corgi has magic missle he should get the same benifit as anyone
+	for(var/i in GLOB.mob_living_list) //Hey if a corgi has magic missle he should get the same benifit as anyone
+		var/mob/living/L = i
 		if(L.mind && L.mind.spell_list.len != 0)
-			var/spell_improved = 0
+			var/spell_improved = FALSE
 			for(var/obj/effect/proc_holder/spell/S in L.mind.spell_list)
 				if(S.clothes_req)
 					S.clothes_req = 0
-					spell_improved = 1
+					spell_improved = TRUE
 			if(spell_improved)
-				L << "<span class='notice'>You suddenly feel like you never needed those garish robes in the first place...</span>"
+				to_chat(L, "<span class='notice'>You suddenly feel like you never needed those garish robes in the first place...</span>")
 
 //--//
 
@@ -29,7 +30,8 @@
 	earliest_start = 0
 
 /datum/round_event/wizard/improvedcasting/start()
-	for(var/mob/living/L in mob_list)
+	for(var/i in GLOB.mob_living_list)
+		var/mob/living/L = i
 		if(L.mind && L.mind.spell_list.len != 0)
 			for(var/obj/effect/proc_holder/spell/S in L.mind.spell_list)
 				S.name = initial(S.name)
@@ -53,4 +55,4 @@
 					if(5)
 						S.name = "Ludicrous [S.name]"
 
-			L << "<span class='notice'>You suddenly feel more competent with your casting!</span>"
+			to_chat(L, "<span class='notice'>You suddenly feel more competent with your casting!</span>")
