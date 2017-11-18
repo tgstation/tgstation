@@ -150,7 +150,7 @@
 /mob/living/carbon/human/CanContractDisease(datum/disease/D)
 
 	if(dna)
-		if(VIRUSIMMUNE in dna.species.species_traits) && !D.bypasses_immunity)
+		if((VIRUSIMMUNE in dna.species.species_traits) && !D.bypasses_immunity)
 			return FALSE
 
 		var/can_infect = FALSE
