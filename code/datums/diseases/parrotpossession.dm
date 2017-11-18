@@ -11,6 +11,7 @@
 	viable_mobtypes = list(/mob/living/carbon/human)
 	desc = "Subject is possesed by the vengeful spirit of a parrot. Call the priest."
 	severity = VIRUS_SEVERITY_MEDIUM
+	infectable_hosts = list(SPECIES_ORGANIC, SPECIES_UNDEAD, SPECIES_INORGANIC, SPECIES_ROBOTIC)
 	var/mob/living/simple_animal/parrot/Poly/ghost/parrot
 
 /datum/disease/parrot_possession/stage_act()
