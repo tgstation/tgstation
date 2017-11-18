@@ -22,3 +22,25 @@
 		)
 	result = /obj/item/reagent_containers/food/snacks/neep_tatty_haggis
 	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/l_legtaco
+	name ="Leg Taco L"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/tortilla = 1,
+		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
+		/obj/item/bodypart/l_leg = 1,
+		/obj/item/reagent_containers/food/snacks/grown/cabbage = 1,
+	)
+	result = /obj/item/reagent_containers/food/snacks/taco/leg
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/r_legtaco
+	name ="Leg Taco R"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/tortilla = 1,
+		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
+		/obj/item/bodypart/r_leg = 1,
+		/obj/item/reagent_containers/food/snacks/grown/cabbage = 1,
+	)
+	result = /obj/item/reagent_containers/food/snacks/taco/leg
+	subcategory = CAT_MISCFOOD
