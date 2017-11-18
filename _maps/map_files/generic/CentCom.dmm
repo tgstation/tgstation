@@ -13325,9 +13325,7 @@
 	id = "thunderdome";
 	name = "Thunderdome Blast Door"
 	},
-/turf/open/floor/plasteel/loadingarea{
-	dir = 8
-	},
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "IL" = (
 /obj/effect/landmark/thunderdome/one,
@@ -13355,9 +13353,7 @@
 	id = "thunderdomegen";
 	name = "General Supply"
 	},
-/turf/open/floor/plasteel/loadingarea{
-	dir = 8
-	},
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "IP" = (
 /obj/structure/rack,
@@ -13647,7 +13643,7 @@
 	id = "thunderdomehea";
 	name = "Heavy Supply"
 	},
-/turf/open/floor/plasteel/loadingarea,
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "JF" = (
 /obj/machinery/computer/camera_advanced/abductor{
