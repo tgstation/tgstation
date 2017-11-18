@@ -138,13 +138,13 @@
 	var/list/input_list = get_pin_data(IC_INPUT, 1)
 	var/index = get_pin_data(IC_INPUT, 2)
 	var/item = get_pin_data(IC_INPUT, 3)
-	var/list/red_list = list()
 	if(!islist(item))	
-		red_list = input_list.Copy()			//crash proof
+		var/list/red_list = input_list.Copy()			//crash proof
 		red_list[index] = item
 		set_pin_data(IC_OUTPUT, 1, red_list)
 		push_data()
 		activate_pin(2)
+
 
 obj/item/integrated_circuit/lists/len
 	name = "len circuit"
