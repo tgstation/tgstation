@@ -245,7 +245,7 @@
 		var/turf/T = get_turf(parent)
 		if(T.z != z)
 			continue
-		if(get_dist(position,get_turf(jammer.parent)) < jammer.range)
+		if(get_dist(position, T) < jammer.range)
 			jammed = TRUE
 			break
 
