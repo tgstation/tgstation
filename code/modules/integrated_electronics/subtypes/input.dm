@@ -798,7 +798,6 @@
 		if(C)
 			var/turf/A = get_turf(src)
 			if(get_turf(AM) in view(A))
-			if(get_turf(AM) in view(A))
 				set_pin_data(IC_OUTPUT, 1, C.charge)
 				set_pin_data(IC_OUTPUT, 2, C.maxcharge)
 				set_pin_data(IC_OUTPUT, 3, C.percent())
