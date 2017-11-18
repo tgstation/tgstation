@@ -21,6 +21,24 @@
 	. = ..()
 	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION)
 
+/obj/structure/grille/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+	. = ..()
+	update_icon()
+
+/obj/structure/grille/update_icon()
+	if(QDELETED(src))
+		return
+
+	var/ratio = obj_integrity / max_integrity
+	ratio = Ceiling(ratio*4) * 25
+
+	if(smooth)
+		queue_smooth(src)
+
+	if(ratio > 50)
+		return
+	icon_state = "grille50_[rand(0,3)]"
+
 /obj/structure/grille/examine(mob/user)
 	..()
 	if(anchored)
@@ -100,7 +118,7 @@
 
 
 /obj/structure/grille/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && mover.checkpass(PASSGRILLE))
+	if(istype(mover) && (mover.pass_flags & PASSGRILLE))
 		return TRUE
 	else
 		if(istype(mover, /obj/item/projectile) && density)
@@ -112,7 +130,7 @@
 	. = !density
 	if(ismovableatom(caller))
 		var/atom/movable/mover = caller
-		. = . || mover.checkpass(PASSGRILLE)
+		. = . || (mover.pass_flags & PASSGRILLE)
 
 /obj/structure/grille/attackby(obj/item/W, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)

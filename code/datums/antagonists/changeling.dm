@@ -80,7 +80,7 @@
 	. = ..()
 
 /datum/antagonist/changeling/on_removal()
-	remove_changeling_powers(FALSE)
+	remove_changeling_powers()
 	owner.objectives -= objectives
 	. = ..()
 
@@ -102,11 +102,11 @@
 	chem_recharge_slowdown = initial(chem_recharge_slowdown)
 	mimicing = ""
 
-/datum/antagonist/changeling/proc/remove_changeling_powers(keep_free_powers=0)
+/datum/antagonist/changeling/proc/remove_changeling_powers()
 	if(ishuman(owner.current) || ismonkey(owner.current))
 		reset_properties()
 		for(var/obj/effect/proc_holder/changeling/p in purchasedpowers)
-			if((p.dna_cost == 0 && keep_free_powers) || p.always_keep)
+			if(p.always_keep)
 				continue
 			purchasedpowers -= p
 			p.on_refund(owner.current)
@@ -118,13 +118,13 @@
 
 /datum/antagonist/changeling/proc/reset_powers()
 	if(purchasedpowers)
-		remove_changeling_powers(TRUE)
-	//Purchase free powers.
+		remove_changeling_powers()
+	//Repurchase free powers.
 	for(var/path in all_powers)
 		var/obj/effect/proc_holder/changeling/S = new path()
 		if(!S.dna_cost)
 			if(!has_sting(S))
-				purchasedpowers+=S
+				purchasedpowers += S
 				S.on_purchase(owner.current,TRUE)
 
 /datum/antagonist/changeling/proc/has_sting(obj/effect/proc_holder/changeling/power)
@@ -179,7 +179,7 @@
 		to_chat(owner.current, "<span class='notice'>We have removed our evolutions from this form, and are now ready to readapt.</span>")
 		reset_powers()
 		canrespec = 0
-		SSblackbox.add_details("changeling_power_purchase","Readapt")
+		SSblackbox.record_feedback("tally", "changeling_power_purchase", 1, "Readapt")
 		return 1
 	else
 		to_chat(owner.current, "<span class='danger'>You lack the power to readapt your evolutions!</span>")
@@ -279,7 +279,7 @@
 	if(stored_profiles.len > dna_max)
 		if(!push_out_profile())
 			return
-	
+
 	if(!first_prof)
 		first_prof = prof
 

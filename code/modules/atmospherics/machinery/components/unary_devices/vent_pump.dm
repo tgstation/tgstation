@@ -50,8 +50,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/New()
 	..()
 	if(!id_tag)
-		assign_uid()
-		id_tag = num2text(uid)
+		id_tag = assign_uid_vents()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
 	var/area/A = get_area(src)
@@ -95,7 +94,23 @@
 		return
 
 	if(!NODE1 || !on || !is_operational())
-		icon_state = "vent_off"
+		if(icon_state == "vent_welded")
+			icon_state = "vent_off"
+			return
+
+		if(pump_direction & RELEASING)
+			icon_state = "vent_out-off"
+		else // pump_direction == SIPHONING
+			icon_state = "vent_in-off"
+		return
+
+	if(icon_state == ("vent_out-off" || "vent_in-off" || "vent_off"))
+		if(pump_direction & RELEASING)
+			icon_state = "vent_out"
+			flick("vent_out-starting", src)
+		else // pump_direction == SIPHONING
+			icon_state = "vent_in"
+			flick("vent_in-starting", src)
 		return
 
 	if(pump_direction & RELEASING)

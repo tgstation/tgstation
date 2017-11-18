@@ -2935,6 +2935,7 @@
 /area/ruin/space/has_grav/deepstorage/power)
 "fJ" = (
 /obj/machinery/computer/atmos_control/tank{
+	dir = 8;
 	frequency = 1441;
 	input_tag = "o2_in_bunker";
 	name = "Oxygen Supply Control";
@@ -3387,6 +3388,7 @@
 /area/ruin/space/has_grav/deepstorage/power)
 "gC" = (
 /obj/machinery/computer/atmos_control/tank{
+	dir = 8;
 	frequency = 1441;
 	input_tag = "n2_in_bunker";
 	name = "Nitrogen Supply Control";

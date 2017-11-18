@@ -126,7 +126,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	brainmob.mind.assigned_role = new_role
 	brainmob.stat = CONSCIOUS
 	GLOB.dead_mob_list -= brainmob
-	GLOB.living_mob_list += brainmob
+	GLOB.alive_mob_list += brainmob
 
 	visible_message(new_mob_message)
 	check_success()

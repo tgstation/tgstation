@@ -73,9 +73,9 @@
 	var/impact_effect_type //what type of impact effect to show when hitting something
 	var/log_override = FALSE //is this type spammed enough to not log? (KAs)
 
-/obj/item/projectile/New()
+/obj/item/projectile/Initialize()
+	. = ..()
 	permutated = list()
-	return ..()
 
 /obj/item/projectile/proc/Range()
 	range--
@@ -405,7 +405,7 @@
 
 /obj/item/projectile/Crossed(atom/movable/AM) //A mob moving on a tile with a projectile is hit by it.
 	..()
-	if(isliving(AM) && (AM.density || AM == original) && !checkpass(PASSMOB))
+	if(isliving(AM) && (AM.density || AM == original) && !(src.pass_flags & PASSMOB))
 		Collide(AM)
 
 /obj/item/projectile/Destroy()

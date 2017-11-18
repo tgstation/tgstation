@@ -260,3 +260,5 @@ CONFIG_DEF(number/emergency_shuttle_autocall_threshold)
 	integer = FALSE
 
 CONFIG_DEF(flag/emergency_shuttle_has_voice)
+
+CONFIG_DEF(flag/ic_printing)

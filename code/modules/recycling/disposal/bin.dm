@@ -1,5 +1,4 @@
-
-//disposal bin and Delivery chute.
+// Disposal bin and Delivery chute.
 
 #define SEND_PRESSURE 0.05*ONE_ATMOSPHERE
 
@@ -30,14 +29,15 @@
 
 	if(make_from)
 		setDir(make_from.dir)
-		make_from.loc = 0
+		make_from.loc = null
 		stored = make_from
+		pressure_charging = FALSE // newly built disposal bins start with pump off
 	else
-		stored = new /obj/structure/disposalconstruct(0,DISP_END_BIN,dir)
+		stored = new /obj/structure/disposalconstruct(null, make_from = src)
 
 	trunk_check()
 
-	air_contents = new/datum/gas_mixture()
+	air_contents = new /datum/gas_mixture()
 	//gas.volume = 1.05 * CELLSTANDARD
 	update_icon()
 
@@ -167,16 +167,6 @@
 	flush = !flush
 	update_icon()
 
-// ai as human but can't flush
-/obj/machinery/disposal/attack_ai(mob/user)
-	interact(user, 1)
-
-// human interact with machine
-/obj/machinery/disposal/attack_hand(mob/user)
-	if(user && user.loc == src)
-		to_chat(usr, "<span class='warning'>You cannot reach the controls from inside!</span>")
-		return
-	interact(user, 0)
 
 // eject the contents of the disposal unit
 /obj/machinery/disposal/proc/eject()
@@ -210,7 +200,7 @@
 
 /obj/machinery/disposal/proc/newHolderDestination(obj/structure/disposalholder/H)
 	for(var/obj/item/smallDelivery/O in src)
-		H.tomail = 1
+		H.tomail = TRUE
 		return
 
 /obj/machinery/disposal/proc/flushAnimation()
@@ -222,21 +212,22 @@
 	update_icon()	// update icon
 
 // called when holder is expelled from a disposal
-// should usually only occur if the pipe network is modified
 /obj/machinery/disposal/proc/expel(obj/structure/disposalholder/H)
 	var/turf/T = get_turf(src)
 	var/turf/target
 	playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
-	if(H) // Somehow, someone managed to flush a window which broke mid-transit and caused the disposal to go in an infinite loop trying to expel null, hopefully this fixes it
-		for(var/atom/movable/AM in H)
-			target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
 
-			AM.forceMove(T)
-			AM.pipe_eject(0)
-			AM.throw_at(target, 5, 1)
+	for(var/A in H)
+		var/atom/movable/AM = A
 
-		H.vent_gas(loc)
-		qdel(H)
+		target = get_offset_target_turf(loc, rand(5)-rand(5), rand(5)-rand(5))
+
+		AM.forceMove(T)
+		AM.pipe_eject(0)
+		AM.throw_at(target, 5, 1)
+
+	H.vent_gas(loc)
+	qdel(H)
 
 /obj/machinery/disposal/deconstruct(disassembled = TRUE)
 	var/turf/T = loc
@@ -290,11 +281,8 @@
 // handle machine interaction
 
 /obj/machinery/disposal/bin/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
 	if(stat & BROKEN)
-		return
-	if(user.loc == src)
-		to_chat(user, "<span class='warning'>You cannot reach the controls from inside!</span>")
 		return
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -315,6 +303,7 @@
 /obj/machinery/disposal/bin/ui_act(action, params)
 	if(..())
 		return
+
 	switch(action)
 		if("handle-0")
 			flush = FALSE
@@ -385,7 +374,6 @@
 
 /obj/machinery/disposal/bin/proc/do_flush()
 	set waitfor = FALSE
-	SSblackbox.inc("disposal_auto_flush")
 	flush()
 
 //timed process
@@ -453,7 +441,6 @@
 
 /obj/machinery/disposal/deliveryChute/Initialize(mapload, obj/structure/disposalconstruct/make_from)
 	. = ..()
-	stored.ptype = DISP_END_CHUTE
 	trunk = locate() in loc
 	if(trunk)
 		trunk.linked = src	// link the pipe trunk to self
@@ -492,7 +479,7 @@
 	flush()
 
 /atom/movable/proc/CanEnterDisposals()
-	return 1
+	return TRUE
 
 /obj/item/projectile/CanEnterDisposals()
 	return

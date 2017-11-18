@@ -80,7 +80,7 @@
 
 /mob/living/simple_animal/drone/Initialize()
 	. = ..()
-
+	GLOB.drones_list += src
 	access_card = new /obj/item/card/id(src)
 	var/datum/job/captain/C = new /datum/job/captain
 	access_card.access = C.get_access()
@@ -124,6 +124,7 @@
 		holder.icon_state = "hudstat"
 
 /mob/living/simple_animal/drone/Destroy()
+	GLOB.drones_list -= src
 	qdel(access_card) //Otherwise it ends up on the floor!
 	return ..()
 

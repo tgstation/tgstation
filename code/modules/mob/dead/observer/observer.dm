@@ -565,7 +565,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set desc= "Take over the body of a mindless creature!"
 
 	var/list/possessible = list()
-	for(var/mob/living/L in GLOB.living_mob_list)
+	for(var/mob/living/L in GLOB.alive_mob_list)
 		if(!(L in GLOB.player_list) && !L.mind)
 			possessible += L
 

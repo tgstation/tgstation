@@ -277,11 +277,7 @@
 					"power"					= info["power"],
 					"scrubbing"				= info["scrubbing"],
 					"widenet"				= info["widenet"],
-					"filter_co2"			= info["filter_co2"],
-					"filter_toxins"			= info["filter_toxins"],
-					"filter_n2o"			= info["filter_n2o"],
-					"filter_rare"			= info["filter_rare"],
-					"filter_water_vapor"	= info["filter_water_vapor"]
+					"filter_types"			= info["filter_types"]
 				))
 		data["mode"] = mode
 		data["modes"] = list()
@@ -337,8 +333,8 @@
 			if(usr.has_unlimited_silicon_privilege && !wires.is_cut(WIRE_IDSCAN))
 				locked = !locked
 				. = TRUE
-		if("power", "co2_scrub", "tox_scrub", "n2o_scrub", "rare_scrub","water_vapor_scrub", "widenet", "scrubbing")
-			send_signal(device_id, list("[action]" = text2num(params["val"])))
+		if("power", "toggle_filter", "widenet", "scrubbing")
+			send_signal(device_id, list("[action]" = params["val"]))
 			. = TRUE
 		if("excheck")
 			send_signal(device_id, list("checks" = text2num(params["val"])^1))

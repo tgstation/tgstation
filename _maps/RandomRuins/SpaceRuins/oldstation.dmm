@@ -4156,6 +4156,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer{
 	desc = "A computer long since rendered non-functional due to lack of maintenance. Spitting out error messages.";
+	dir = 8;
 	name = "Broken Computer"
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -4345,6 +4346,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer{
 	desc = "A computer long since rendered non-functional due to lack of maintenance. Spitting out error messages.";
+	dir = 1;
 	name = "Broken Computer"
 	},
 /turf/open/floor/plasteel/white,
@@ -4783,6 +4785,15 @@
 "mO" = (
 /turf/closed/wall/rust,
 /area/ruin/space/has_grav/ancientstation/atmo)
+"mP" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/computer{
+	desc = "A computer long since rendered non-functional due to lack of maintenance. Spitting out error messages.";
+	dir = 1;
+	name = "Broken Computer"
+	},
+/turf/open/floor/plasteel/floorgrime,
+/area/ruin/space/has_grav/ancientstation/sec)
 
 (1,1,1) = {"
 aa
@@ -4797,15 +4808,15 @@ aa
 aa
 aa
 aa
-mh
-mk
+me
+me
 aA
-ml
-mm
+me
+me
 aa
 aA
-mr
-ms
+me
+me
 aa
 aa
 aa
@@ -4854,11 +4865,11 @@ bJ
 bH
 bH
 cK
-mn
+me
 bq
 bq
 eG
-mv
+me
 aA
 aA
 aA
@@ -4878,7 +4889,7 @@ jO
 kW
 km
 lk
-mN
+mH
 aa
 aa
 aa
@@ -4922,15 +4933,15 @@ aa
 mH
 jO
 km
-mI
-mJ
+mH
+mH
 kn
 kA
 kL
 kX
 le
-mL
-mO
+mH
+mH
 aa
 aa
 aa
@@ -4952,8 +4963,8 @@ aa
 aa
 aa
 aA
-mg
-mi
+me
+me
 bJ
 bI
 bI
@@ -4963,8 +4974,8 @@ bK
 ef
 bK
 bJ
-mx
-mA
+mf
+me
 aa
 aA
 aa
@@ -4975,13 +4986,13 @@ aa
 jh
 jO
 jQ
-mK
+mH
 ko
 kB
 kB
 kB
 lf
-mM
+mH
 aa
 aa
 aa
@@ -5005,7 +5016,7 @@ aa
 aa
 aa
 aA
-mj
+me
 bw
 bI
 bI
@@ -5018,7 +5029,7 @@ bq
 bq
 fX
 gT
-mC
+me
 aa
 aa
 aa
@@ -5070,7 +5081,7 @@ bq
 bq
 fY
 bq
-mD
+me
 hL
 aA
 aA
@@ -5123,7 +5134,7 @@ fA
 fY
 fA
 bJ
-mG
+mf
 aa
 aA
 aa
@@ -5167,9 +5178,9 @@ bI
 bI
 cL
 bJ
-mo
+me
 eg
-mt
+me
 bq
 bq
 fY
@@ -5219,14 +5230,14 @@ bI
 cf
 bI
 bJ
-mp
+me
 aA
-mu
+me
 fa
-my
+me
 fZ
 gU
-mE
+me
 aA
 aA
 bf
@@ -5274,11 +5285,11 @@ bJ
 aA
 aA
 aa
-mw
-mz
+me
+me
 ga
-mB
-mF
+me
+me
 aa
 aA
 bf
@@ -5323,7 +5334,7 @@ aa
 bd
 cM
 bJ
-mq
+mf
 aa
 aa
 aa
@@ -7251,7 +7262,7 @@ dU
 ev
 eu
 fr
-fN
+mP
 gC
 fN
 fr

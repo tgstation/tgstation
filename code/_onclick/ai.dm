@@ -38,6 +38,8 @@
 	if(isnull(pixel_turf))
 		return
 	if(!can_see(A))
+		if(isturf(A)) //On unmodified clients clicking the static overlay clicks the turf underneath
+			return //So there's no point messaging admins
 		message_admins("[key_name_admin(src)] might be running a modified client! (failed can_see on AI click of [A]([ADMIN_COORDJMP(pixel_turf)]))")
 		var/message = "[key_name(src)] might be running a modified client! (failed can_see on AI click of [A]([COORD(pixel_turf)]))"
 		log_admin(message)
@@ -136,36 +138,35 @@
 /obj/machinery/door/airlock/AICtrlClick() // Bolts doors
 	if(emagged)
 		return
+	
 	if(locked)
-		Topic("aiEnable=4", list("aiEnable"="4"), 1)// 1 meaning no window (consistency!)
+		bolt_raise(usr)
 	else
-		Topic("aiDisable=4", list("aiDisable"="4"), 1)
+		bolt_drop(usr)
 
 /obj/machinery/door/airlock/AIAltClick() // Eletrifies doors.
 	if(emagged)
 		return
+
 	if(!secondsElectrified)
-		// permanent shock
-		Topic("aiEnable=6", list("aiEnable"="6"), 1) // 1 meaning no window (consistency!)
+		shock_perm(usr)
 	else
-		// disable/6 is not in Topic; disable/5 disables both temporary and permenant shock
-		Topic("aiDisable=5", list("aiDisable"="5"), 1)
+		shock_restore(usr)
 
 /obj/machinery/door/airlock/AIShiftClick()  // Opens and closes doors!
 	if(emagged)
 		return
-	if(density)
-		Topic("aiEnable=7", list("aiEnable"="7"), 1) // 1 meaning no window (consistency!)
-	else
-		Topic("aiDisable=7", list("aiDisable"="7"), 1)
+
+	user_toggle_open(usr)
 
 /obj/machinery/door/airlock/AICtrlShiftClick()  // Sets/Unsets Emergency Access Override
 	if(emagged)
 		return
+	
 	if(!emergency)
-		Topic("aiEnable=11", list("aiEnable"="11"), 1) // 1 meaning no window (consistency!)
+		emergency_on(usr)
 	else
-		Topic("aiDisable=11", list("aiDisable"="11"), 1)
+		emergency_off(usr)
 
 /* APC */
 /obj/machinery/power/apc/AICtrlClick() // turns off/on APCs.
