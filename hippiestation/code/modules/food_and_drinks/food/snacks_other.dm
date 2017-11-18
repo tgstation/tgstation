@@ -1,4 +1,4 @@
-/obj/item/reagent_containers/food/snacks/neep_tatty_haggish
+/obj/item/reagent_containers/food/snacks/neep_tatty_haggis
 	name = "neep tatty haggis"
 	desc = "Oi mate! No neeps, but double beets! SCAM!!!"
 	icon_state = "neep_tatty_haggis"
