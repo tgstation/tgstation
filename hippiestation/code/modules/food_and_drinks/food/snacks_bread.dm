@@ -16,3 +16,15 @@
 	list_reagents = list("nutriment" = 10, "vitamin" = 5)
 	trash = /obj/item/trash/plate
 	foodtype = MEAT | GROSS | GRAIN
+
+/obj/item/reagent_containers/food/snacks/hearthytoast
+	name = "hearthy toast"
+	desc = "A human hearts on a buttered toast, really?"
+	icon = 'hippiestation/icons/obj/food/food.dmi'
+	icon_state = "hearthytoast"
+	bitesize = 3
+	filling_color = "#FF3333"
+	list_reagents = list("nutriment" = 5)
+	bonus_reagents = list("nutriment" = 10, "vitamin" = 4, "iron" = 8)
+	tastes = list("hearthy" = 2, "toasty" = 1)
+	foodtype = MEAT | GROSS | GRAIN
