@@ -249,7 +249,7 @@
 						src.ears = headset_to_add
 						to_chat(usr, "<span class='notice'>You fit the headset onto [src].</span>")
 
-						clearlist(available_channels)
+						LAZYCLEARLIST(available_channels)
 						for(var/ch in headset_to_add.channels)
 							switch(ch)
 								if("Engineering")

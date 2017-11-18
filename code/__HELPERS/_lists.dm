@@ -2,15 +2,21 @@
  * Holds procs to help with list operations
  */
 
-#define LAZYINITLIST(L) if (!L) L = list()
-#define UNSETEMPTY(L) if (L && !L.len) L = null
-#define LAZYREMOVE(L, I) if(L) { L -= I; if(!L.len) { L = null; } }
-#define LAZYADD(L, I) if(!L) { L = list(); } L += I;
-#define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= L.len ? L[I] : null) : L[I]) : null)
+#define FASTLEN(L) length(L) // Some benchmarking showed that length is slightly faster than len
+
+#define LAZYINITLIST(L) if(!L) L = list()
+#define UNSETEMPTY(L) if(L && !FASTLEN(L)) L = null
+#define LAZYREMOVE(L, I) if(FASTLEN(L) == 1) { L = null; } else if(FASTLEN(L)) { L -= I; }
+#define LAZYADD(L, I) if(!L) { L = list(I); } else { L += I };
+#define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= FASTLEN(L) ? L[I] : null) : L[I]) : null)
 #define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
+#define LAZYCLEARLIST(L) if(L) L.len = 0
 #define LAZYLEN(L) length(L)
-#define LAZYCLEARLIST(L) if(L) L.Cut()
 #define SANITIZE_LIST(L) ( islist(L) ? L : list() )
+
+/proc/safepick(list/L)
+	if(istype(L))
+		return pick(L)
 
 //Returns a list in plain english as a string
 /proc/english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
@@ -37,15 +43,10 @@
 /proc/listgetindex(list/L, index)
 	if(istype(L))
 		if(isnum(index) && IsInteger(index))
-			if(IsInRange(index,1,L.len))
+			if(IsInRange(index, 1, length(L)))
 				return L[index]
 		else if(index in L)
 			return L[index]
-
-//Return either pick(list) or null if list is not of type /list or is empty
-/proc/safepick(list/L)
-	if(LAZYLEN(L))
-		return pick(L)
 
 //Checks for specific types in a list
 /proc/is_type_in_list(atom/A, list/L)
@@ -64,19 +65,22 @@
 //returns a new list with only atoms that are in typecache L
 /proc/typecache_filter_list(list/atoms, list/typecache)
 	. = list()
-	for(var/atom/A in atoms)
+	for(var/i in atoms)
+		var/atom/A = i
 		if(typecache[A.type])
 			. += A
 
 /proc/typecache_filter_list_reverse(list/atoms, list/typecache)
 	. = list()
-	for(var/atom/A in atoms)
+	for(var/i in atoms)
+		var/atom/A = i
 		if(!typecache[A.type])
 			. += A
 
 /proc/typecache_filter_multi_list_exclusion(list/atoms, list/typecache_include, list/typecache_exclude)
 	. = list()
-	for(var/atom/A in atoms)
+	for(var/i in atoms)
+		var/atom/A = i
 		if(typecache_include[A.type] && !typecache_exclude[A.type])
 			. += A
 
@@ -101,18 +105,13 @@
 				for(var/T in typesof(P))
 					.[T] = TRUE
 
-//Empties the list by setting the length to 0. Hopefully the elements get garbage collected
-/proc/clearlist(list/list)
-	if(istype(list))
-		list.len = 0
-
 //Removes any null entries from the list
 //Returns TRUE if the list had nulls, FALSE otherwise
 /proc/listclearnulls(list/L)
-	var/start_len = L.len
+	var/start_len = FASTLEN(L)
 	var/list/N = new(start_len)
 	L -= N
-	return L.len < start_len
+	return FASTLEN(L) < start_len
 
 /*
  * Returns list containing all the entries from first list that are not present in second.
@@ -175,24 +174,24 @@
 
 //Pick a random element from the list and remove it from the list.
 /proc/pick_n_take(list/L)
-	if(L.len)
-		var/picked = rand(1, L.len)
+	if(FASTLEN(L))
+		var/picked = rand(1, FASTLEN(L))
 		. = L[picked]
 		L.Cut(picked, picked + 1)			//Cut is far more efficient that Remove()
 
 //Returns the top(last) element from the list and removes it from the list (typical stack function)
 /proc/pop(list/L)
-	if(L.len)
-		. = L[L.len]
+	if(FASTLEN(L))
+		. = L[FASTLEN(L)]
 		L.len--
 
 /proc/popleft(list/L)
-	if(L.len)
+	if(FASTLEN(L))
 		. = L[1]
 		L.Cut(1,2)
 
 /proc/sorted_insert(list/L, thing, comparator)
-	var/pos = L.len
+	var/pos = FASTLEN(L)
 	while(pos > 0 && call(comparator)(thing, L[pos]) > 0)
 		pos--
 	L.Insert(pos + 1, thing)
@@ -213,8 +212,10 @@
 		return
 	var/list/result = L.Copy()
 
-	for(var/i = 1, i < L.len, i++)
-		result.Swap(i, rand(i, L.len))
+	var/listlen = FASTLEN(L)
+
+	for(var/i = 1 to listlen - 1)
+		result.Swap(i, rand(i, listlen))
 
 	return result
 
@@ -223,8 +224,10 @@
 	if(!L)
 		return
 
-	for(var/i = 1, i < L.len, i++)
-		L.Swap(i, rand(i, L.len))
+	var/listlen = FASTLEN(L)
+
+	for(var/i = 1 to listlen - 1)
+		L.Swap(i, rand(i, listlen))
 
 //Return a list with no duplicate entries
 /proc/uniqueList(list/L)
@@ -317,7 +320,7 @@
 			return	//no need to move
 		fromIndex += len	//we want to shift left instead of right
 
-		for(var/i=0, i<distance, ++i)
+		for(var/i = 0 to distance - 1)
 			L.Insert(fromIndex, null)
 			L.Swap(fromIndex, toIndex)
 			L.Cut(toIndex, toIndex+1)
@@ -325,7 +328,7 @@
 		if(fromIndex > toIndex)
 			fromIndex += len
 
-		for(var/i=0, i<len, ++i)
+		for(var/i = 0 to len - 1)
 			L.Insert(toIndex, null)
 			L.Swap(fromIndex, toIndex)
 			L.Cut(fromIndex, fromIndex+1)
@@ -341,7 +344,7 @@
 		else
 			fromIndex += len
 
-		for(var/i=0, i<distance, ++i)
+		for(var/i = 0 to distance - 1)
 			L.Insert(fromIndex, null)
 			L.Swap(fromIndex, toIndex)
 			L.Cut(toIndex, toIndex+1)
@@ -351,22 +354,23 @@
 			toIndex = fromIndex
 			fromIndex = a
 
-		for(var/i=0, i<len, ++i)
+		for(var/i = 0 to len - 1)
 			L.Swap(fromIndex++, toIndex++)
 
 //replaces reverseList ~Carnie
 /proc/reverseRange(list/L, start=1, end=0)
-	if(L.len)
-		start = start % L.len
-		end = end % (L.len+1)
+	var/listlen = FASTLEN(L)
+	if(listlen)
+		start = start % listlen
+		end = end % (listlen + 1)
 		if(start <= 0)
-			start += L.len
+			start += listlen
 		if(end <= 0)
-			end += L.len + 1
+			end += listlen + 1
 
 		--end
 		while(start < end)
-			L.Swap(start++,end--)
+			L.Swap(start++, end--)
 
 	return L
 

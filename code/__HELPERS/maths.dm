@@ -1,13 +1,6 @@
 // Credits to Nickr5 for the useful procs I've taken from his library resource.
 
 GLOBAL_VAR_INIT(E, 2.71828183)
-GLOBAL_VAR_INIT(Sqrt2, 1.41421356)
-
-// List of square roots for the numbers 1-100.
-GLOBAL_LIST_INIT(sqrtTable, list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5,
-                          5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7,
-                          7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
-                          8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10))
 
 /proc/sign(x)
 	return x!=0?x/abs(x):0
