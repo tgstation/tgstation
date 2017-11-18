@@ -5,5 +5,5 @@
 		/obj/item/reagent_containers/food/snacks/butter = 1,
 		/obj/item/organ/heart = 2
 	)
-	result = /obj/item/reagent_containers/food/snacks/hearthytoast
+	result = /obj/item/reagent_containers/food/snacks/heartytoast
 	subcategory = CAT_BREAD
