@@ -25,12 +25,7 @@
 			if( A.type == I )
 				HTML += initial(I.name) +"=-="+A.name         //2-nd block.assembly type and name. Maybe in future there will also be color and accesories.
 				break
-		/*
-		If(I.name == "electronic implant")
-			var/obj/item/weapon/implant/integrated_circuit/PI = PA        //now it can't recreate electronic implants.and devices maybe I'll fix it later.
-			var/obj/item/device/electronic_assembly/implant/PIC = PI.IC
-			A = PIC
-			*/
+
 		HTML += "{{*}}components"                   //3-rd block.components. First element is useless.delimeter for elements is ^%^.In element first circuit's default name.Second is user given name.delimiter is =-=
 
 		for(var/obj/item/integrated_circuit/IC in A.contents)

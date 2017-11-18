@@ -1375,8 +1375,6 @@
 	power["backup_timeleft"] = src.secondsBackupPowerLost
 	data["power"] = power
 
-	data["density"] = density
-	data["welded"] = welded
 	data["shock"] = secondsElectrified == 0 ? 2 : 0
 	data["shock_timeleft"] = secondsElectrified
 	data["id_scanner"] = !aiDisabledIdScanner

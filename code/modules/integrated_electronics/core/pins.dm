@@ -38,10 +38,6 @@ D [1]/  ||
 	data = null
 	holder = null
 	return ..()
-/*
-/datum/integrated_io/nano_host()
-	return holder.nano_host()
-*/
 
 /datum/integrated_io/proc/data_as_type(var/as_type)
 	if(!isweakref(data))
@@ -56,14 +52,6 @@ D [1]/  ||
 
 	if(istext(input))
 		return "(\"[input]\")" // Wraps the 'string' in escaped quotes, so that people know it's a 'string'.
-
-/*
-list[](
-	"A",
-	"B",
-	"C"
-)
-*/
 
 	if(islist(input))
 		var/list/my_list = input
@@ -84,7 +72,6 @@ list[](
 		var/datum/weakref/w = input
 		var/atom/A = w.resolve()
 		return A ? "([A.name] \[Ref\])" : "(null)" // For refs, we want just the name displayed.
-		//return A ? "([REF(A)] \[Ref\])" : "(null)"
 
 	return "([input])" // Nothing special needed for numbers or other stuff.
 
