@@ -172,18 +172,6 @@
 		/obj/item/stack/cable_coil = 1,
 		/obj/item/stock_parts/subspace/filter = 1)
 
-/obj/item/circuitboard/machine/exonet_node
-	name = "Exonet Node(machine board)"
-	build_path = /obj/machinery/exonet_node
-	req_components = list(
-							/obj/item/stock_parts/subspace/ansible = 1,
-							/obj/item/stock_parts/subspace/filter = 1,
-							/obj/item/stock_parts/manipulator = 2,
-							/obj/item/stock_parts/micro_laser = 1,
-							/obj/item/stock_parts/subspace/crystal = 1,
-							/obj/item/stock_parts/subspace/treatment = 2,
-							/obj/item/stack/cable_coil = 2)
-
 /obj/item/circuitboard/machine/teleporter_hub
 	name = "Teleporter Hub (Machine Board)"
 	build_path = /obj/machinery/teleport/hub
