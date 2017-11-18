@@ -798,12 +798,10 @@
 		if(C)
 			var/turf/A = get_turf(src)
 			if(get_turf(AM) in view(A))
-				var/ch=C.charge
-				var/mc=C.maxcharge
-				var/per=C.percent()
-				set_pin_data(IC_OUTPUT, 1, ch)
-				set_pin_data(IC_OUTPUT, 2, mc)
-				set_pin_data(IC_OUTPUT, 3, per)
+			if(get_turf(AM) in view(A))
+				set_pin_data(IC_OUTPUT, 1, C.charge)
+				set_pin_data(IC_OUTPUT, 2, C.maxcharge)
+				set_pin_data(IC_OUTPUT, 3, C.percent())
 	activate_pin(2)
 	push_data()
 	return
