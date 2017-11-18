@@ -115,7 +115,7 @@ list[](
 		holder.on_data_written()
 	else if(islist(new_data))
 		var/list/new_list = new_data
-		data = new_list.Copy(1,min( IC_MAX_LIST_LENGTH+1, new_list.len ))
+		data = new_list.Copy(max(1,new_list.len - IC_MAX_LIST_LENGTH+1),0)
 		holder.on_data_written()
 
 /datum/integrated_io/proc/push_data()
