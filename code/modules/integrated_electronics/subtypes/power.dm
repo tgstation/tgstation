@@ -51,12 +51,9 @@
 			if(A.Adjacent(B))
 				if(AM.loc != assembly)
 					transfer_amount *= 0.8 // Losses due to distance.
-				var/ch=cell.charge
-				var/mc=cell.maxcharge
-				var/per=cell.percent()
-				set_pin_data(IC_OUTPUT, 1, ch)
-				set_pin_data(IC_OUTPUT, 2, mc)
-				set_pin_data(IC_OUTPUT, 3, per)
+				set_pin_data(IC_OUTPUT, 1, cell.charge)
+				set_pin_data(IC_OUTPUT, 2, cell.maxcharge)
+				set_pin_data(IC_OUTPUT, 3, cell.percent())
 				activate_pin(2)
 				push_data()
 				if(cell.charge == cell.maxcharge)
