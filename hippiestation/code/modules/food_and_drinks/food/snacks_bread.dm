@@ -17,9 +17,9 @@
 	trash = /obj/item/trash/plate
 	foodtype = MEAT | GROSS | GRAIN
 
-/obj/item/reagent_containers/food/snacks/hearthytoast
-	name = "hearthy toast"
-	desc = "A human hearts on a buttered toast, really?"
+/obj/item/reagent_containers/food/snacks/heartytoast
+	name = "hearty toast"
+	desc = "A human hearts on buttered toast, really?"
 	icon = 'hippiestation/icons/obj/food/food.dmi'
 	icon_state = "hearthytoast"
 	bitesize = 3
