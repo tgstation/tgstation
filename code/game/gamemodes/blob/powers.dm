@@ -168,7 +168,6 @@
 		blobber.factory = B
 		blobber.overmind = src
 		blobber.update_icons()
-		blobber.notransform = 1 //stop the naut from moving around
 		blobber.adjustHealth(blobber.maxHealth * 0.5)
 		blob_mobs += blobber
 		var/client/C = pick(candidates)
