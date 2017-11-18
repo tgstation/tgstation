@@ -1,5 +1,11 @@
 #define HOLOPAD_MAX_DIAL_TIME 200
 
+#define HOLORECORD_DELAY	"delay"
+#define HOLORECORD_SAY		"say"
+#define HOLORECORD_SOUND	"sound"
+#define HOLORECORD_LANGUAGE	"lang"
+#define HOLORECORD_MAX_LENGTH 200
+
 /mob/camera/aiEye/remote/holo/setLoc()
 	. = ..()
 	var/obj/machinery/holopad/H = origin
@@ -184,3 +190,103 @@
 
 /datum/action/innate/end_holocall/Activate()
 	hcall.Disconnect(hcall.calling_holopad)
+
+
+//RECORDS
+/datum/holorecord
+	var/caller_name = "Unknown" //Caller name
+	var/image/caller_image
+	var/list/entries = list()
+	var/language = /datum/language/common //Initial language, can be changed by HOLORECORD_LANGUAGE entries
+
+/obj/item/disk/holodisk
+	name = "holorecord disk"
+	desc = "Stores recorder holocalls."
+	var/datum/holorecord/record
+	//Preset variables
+	var/preset_image_type
+	var/preset_record_text
+
+/obj/item/disk/holodisk/Initialize(mapload)
+	. = ..()
+	if(preset_record_text)
+		build_record()
+
+/obj/item/disk/holodisk/proc/build_record()
+	record = new
+	var/list/lines = splittext(preset_record_text,"\n")
+	for(var/line in lines)
+		var/prepared_line = trim(line)
+		if(!length(prepared_line))
+			continue
+		var/splitpoint = findtext(prepared_line," ")
+		if(!splitpoint)
+			continue
+		var/command = copytext(prepared_line,1,splitpoint)
+		var/value = copytext(prepared_line,splitpoint+1)
+		switch(command)
+			if("DELAY")
+				var/delay_value = text2num(value)
+				if(!delay_value)
+					continue
+				record.entries += list(list(HOLORECORD_DELAY,delay_value))
+			if("NAME") //One time only for now
+				record.caller_name = value
+			if("SAY")
+				record.entries += list(list(HOLORECORD_SAY,value))
+			if("SOUND")
+				record.entries += list(list(HOLORECORD_SOUND,value))
+			if("LANGUAGE")
+				var/lang_type = text2path(value)
+				if(ispath(lang_type,/datum/language))
+					record.entries += list(list(HOLORECORD_LANGUAGE,lang_type))
+	if(!preset_image_type)
+		record.caller_image = image('icons/mob/animal.dmi',"old")
+	else
+		var/datum/preset_holoimage/H = new preset_image_type
+		record.caller_image = H.build_image()
+
+//These build caller image from outfit and some additional data, for use by mappers for ruin holorecords
+/datum/preset_holoimage
+	var/nonhuman_mobtype //Fill this if you just want something nonhuman
+	var/outfit_type
+	var/species_type = /datum/species/human
+
+/datum/preset_holoimage/proc/build_image()
+	if(nonhuman_mobtype)
+		var/mob/living/L = nonhuman_mobtype
+		. = image(initial(L.icon),initial(L.icon_state))
+	else
+		var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy("HOLODISK_PRESET")
+		if(species_type)
+			mannequin.set_species(species_type)
+		if(outfit_type)
+			mannequin.equipOutfit(outfit_type,TRUE)
+		mannequin.setDir(SOUTH)
+		COMPILE_OVERLAYS(mannequin)
+		. = getFlatIcon(mannequin)
+		unset_busy_human_dummy("HOLODISK_PRESET")
+
+/obj/item/disk/holodisk/example
+	preset_image_type = /datum/preset_holoimage/clown
+	preset_record_text = {"
+	NAME Clown
+	DELAY 10
+	SAY Why did the chaplain cross the maint ?
+	DELAY 20
+	SAY He wanted to get to the other side!
+	SOUND clownstep
+	DELAY 30
+	LANGUAGE /datum/language/narsie
+	SAY Helped him get there!
+	DELAY 20"}
+
+/datum/preset_holoimage/engineer
+	outfit_type = /datum/outfit/job/engineer/gloved/rig
+
+/datum/preset_holoimage/gorilla
+	nonhuman_mobtype = /mob/living/simple_animal/hostile/gorilla
+
+/datum/preset_holoimage/clown
+	outfit_type = /datum/outfit/job/clown
+
