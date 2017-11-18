@@ -51027,7 +51027,7 @@
 /area/security/checkpoint/medical)
 "cbQ" = (
 /obj/machinery/computer/secure_data{
-	dir = 1
+	dir = 4
 	},
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for monitoring medbay to ensure patient safety.";
@@ -51796,9 +51796,7 @@
 /turf/closed/wall,
 /area/medical/medbay/central)
 "cdx" = (
-/obj/machinery/computer/crew{
-	dir = 8
-	},
+/obj/machinery/computer/crew,
 /turf/open/floor/plasteel/vault,
 /area/medical/medbay/central)
 "cdy" = (
