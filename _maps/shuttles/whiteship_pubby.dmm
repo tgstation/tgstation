@@ -15,10 +15,10 @@
 /obj/machinery/door/airlock/glass{
 	name = "Shuttle Airlock"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned)
 "e" = (
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned)
 "f" = (
 /turf/open/floor/plasteel,
@@ -98,7 +98,7 @@
 	timid = 1;
 	width = 9
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned)
 "p" = (
 /obj/structure/window/reinforced{
