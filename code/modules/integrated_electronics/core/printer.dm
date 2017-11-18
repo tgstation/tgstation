@@ -276,13 +276,7 @@
 		else
 			return 0
 		to_chat(usr, "<span class='notice'>This is program for [element[2]]</span>")
-		/*
-		else if(istype(PA,/obj/item/weapon/implant/integrated_circuit))
-			var/obj/item/weapon/implant/integrated_circuit/PI = PA
-			var/obj/item/device/electronic_assembly/implant/PIC = PI.IC
-			maxcap = PIC.max_components
-			maxcomp = PIC.max_complexity
-			metalcost = metalcost + round( (initial(PIC.max_complexity) + initial(PIC.max_components) ) / 4)*/
+
 	else
 		return 0 //what's the point if there is no assembly?
 	if(chap[3] != "components")   //if there is only one word,there is no components.
