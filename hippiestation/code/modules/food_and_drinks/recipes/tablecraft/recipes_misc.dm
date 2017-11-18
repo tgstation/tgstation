@@ -1,5 +1,5 @@
 /datum/crafting_recipe/food/haggis
-	name = "Haggish"
+	name = "Haggis"
 	reqs = list(
 		/obj/item/organ/heart = 1,
 		/obj/item/organ/liver = 1,
@@ -20,5 +20,5 @@
 		/obj/item/reagent_containers/food/snacks/grown/redbeet = 1,
 		/obj/item/reagent_containers/food/snacks/grown/whitebeet = 1
 		)
-	result = /obj/item/reagent_containers/food/snacks/neep_tatty_haggish
+	result = /obj/item/reagent_containers/food/snacks/neep_tatty_haggis
 	subcategory = CAT_MISCFOOD
