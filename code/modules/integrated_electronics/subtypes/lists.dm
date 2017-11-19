@@ -11,7 +11,7 @@
 
 /obj/item/integrated_circuit/lists/pick
 	name = "pick circuit"
-	desc = "This circuit will randomly 'pick' an element from a list that is inputted."
+	desc = "This circuit will pick a random element from the input list, and output said element."
 	extended_desc = "Will output null if the list is empty.  Input list is unmodified."
 	icon_state = "addition"
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
@@ -54,7 +54,7 @@
 
 /obj/item/integrated_circuit/lists/search
 	name = "search circuit"
-	desc = "This circuit will give index of desired element in the list."
+	desc = "This circuit will get the index location of the desired element in a list."
 	extended_desc = "Search will start at 1 position and will return first matching position."
 	inputs = list(
 		"list" = IC_PINTYPE_LIST,
@@ -75,7 +75,7 @@
 
 /obj/item/integrated_circuit/lists/at
 	name = "at circuit"
-	desc = "This circuit will pick an element from a list by index."
+	desc = "This circuit will pick an element from a list by the input index."
 	extended_desc = "If there is no element with such index, result will be null."
 	inputs = list(
 		"list" = IC_PINTYPE_LIST,
@@ -95,7 +95,7 @@
 
 /obj/item/integrated_circuit/lists/delete
 	name = "delete circuit"
-	desc = "This circuit will delete the element from a list by index."
+	desc = "This circuit will remove an element from a list by the index."
 	extended_desc = "If there is no element with such index, result list will be unchanged."
 	inputs = list(
 		"list" = IC_PINTYPE_LIST,
@@ -121,7 +121,7 @@
 
 /obj/item/integrated_circuit/lists/write
 	name = "write circuit"
-	desc = "This circuit will write element in list with given index."
+	desc = "This circuit will write an element to a list at the given index location."
 	extended_desc = "If there is no element with such index, it will give the same list, as before."
 	inputs = list(
 		"list" = IC_PINTYPE_LIST,
@@ -138,15 +138,17 @@
 	var/list/input_list = get_pin_data(IC_INPUT, 1)
 	var/index = get_pin_data(IC_INPUT, 2)
 	var/item = get_pin_data(IC_INPUT, 3)
-	if(!islist(item))				//crh proof
-		input_list[index] = item
-		set_pin_data(IC_OUTPUT, 1, input_list)
+	if(!islist(item))	
+		var/list/red_list = input_list.Copy()			//crash proof
+		red_list[index] = item
+		set_pin_data(IC_OUTPUT, 1, red_list)
 		push_data()
 		activate_pin(2)
 
+
 obj/item/integrated_circuit/lists/len
 	name = "len circuit"
-	desc = "This circuit will give lenght of the list."
+	desc = "This circuit will return the length of the list."
 	inputs = list(
 		"list" = IC_PINTYPE_LIST,
 		)
@@ -165,7 +167,7 @@ obj/item/integrated_circuit/lists/len
 
 /obj/item/integrated_circuit/lists/jointext
 	name = "join text circuit"
-	desc = "This circuit will add all elements of a list into one string, seperated by a character."
+	desc = "This circuit will combine two lists into one and output it as a string."
 	extended_desc = "Default settings will encode the entire list into a string."
 	inputs = list(
 		"list to join" = IC_PINTYPE_LIST,//

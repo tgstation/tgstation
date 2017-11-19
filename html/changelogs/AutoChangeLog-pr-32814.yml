@@ -1,0 +1,4 @@
+author: "zennerx"
+delete-after: True
+changes: 
+  - bugfix: "fixed a bug that made you try and scream while unconscious due to a fire"

@@ -1,5 +1,4 @@
-/obj/item/bombcore/pizza
-	parent_type = /obj/item/bombcore/miniature
+/obj/item/bombcore/miniature/pizza
 	name = "pizza bomb"
 	desc = "Special delivery!"
 	icon_state = "pizzabomb_inactive"
@@ -23,7 +22,7 @@
 
 	var/obj/item/reagent_containers/food/snacks/pizza/pizza
 
-	var/obj/item/bombcore/pizza/bomb
+	var/obj/item/bombcore/miniature/pizza/bomb
 	var/bomb_active = FALSE // If the bomb is counting down.
 	var/bomb_defused = TRUE // If the bomb is inert.
 	var/bomb_timer = 1 // How long before blowing the bomb.
@@ -54,7 +53,7 @@
 	else
 		var/obj/item/pizzabox/box = boxes.len ? boxes[boxes.len] : src
 		if(boxes.len)
-			desc = "A pile of boxes suited for pizzas. There appears to be [boxes.len + 1] boxes in the pile."
+			desc = "A pile of boxes suited for pizzas. There appear to be [boxes.len + 1] boxes in the pile."
 		if(box.boxtag != "")
 			desc = "[desc] The [boxes.len ? "top box" : "box"]'s tag reads: [box.boxtag]"
 
@@ -157,7 +156,7 @@
 			var/list/add = list()
 			add += newbox
 			add += newbox.boxes
-			if(!user.transferItemToLoc(add, src))
+			if(!user.transferItemToLoc(newbox, src))
 				return
 			boxes += add
 			newbox.boxes.Cut()
@@ -185,7 +184,7 @@
 			to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
 			update_icon()
 			return
-	else if(istype(I, /obj/item/bombcore/pizza))
+	else if(istype(I, /obj/item/bombcore/miniature/pizza))
 		if(open && !bomb)
 			if(!user.transferItemToLoc(I, src))
 				return

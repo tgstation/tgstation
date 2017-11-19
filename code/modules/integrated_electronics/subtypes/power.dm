@@ -39,38 +39,35 @@
 /obj/item/integrated_circuit/power/transmitter/do_work()
 
 	var/atom/movable/AM = get_pin_data_as_type(IC_INPUT, 1, /atom/movable)
-	if(AM)
-		if(!assembly)
-			return FALSE // Pointless to do everything else if there's no battery to draw from.
-
-		var/obj/item/stock_parts/cell/cell = AM.get_cell()
-		if(cell)
-			var/transfer_amount = amount_to_move
-			var/turf/A = get_turf(src)
-			var/turf/B = get_turf(AM)
-			if(A.Adjacent(B))
-				if(AM.loc != assembly)
-					transfer_amount *= 0.8 // Losses due to distance.
-
-				if(cell.charge == cell.maxcharge)
-					return FALSE
-
-				if(transfer_amount && assembly.draw_power(amount_to_move)) // CELLRATE is already handled in draw_power()
-					cell.give(transfer_amount * GLOB.CELLRATE)
-				set_pin_data(IC_OUTPUT, 1, cell.charge)
-				set_pin_data(IC_OUTPUT, 2, cell.maxcharge)
-				set_pin_data(IC_OUTPUT, 3, cell.percent())
-				activate_pin(2)
-				push_data()
-				return TRUE
-		else
-			set_pin_data(IC_OUTPUT, 1, null)
-			set_pin_data(IC_OUTPUT, 2, null)
-			set_pin_data(IC_OUTPUT, 3, null)
+	if(!AM)
+		return FALSE
+	if(!assembly)
+		return FALSE // Pointless to do everything else if there's no battery to draw from.
+	var/obj/item/stock_parts/cell/cell = AM.get_cell()
+	if(cell)
+		var/transfer_amount = amount_to_move
+		var/turf/A = get_turf(src)
+		var/turf/B = get_turf(AM)
+		if(A.Adjacent(B))
+			if(AM.loc != assembly)
+				transfer_amount *= 0.8 // Losses due to distance.
+			set_pin_data(IC_OUTPUT, 1, cell.charge)
+			set_pin_data(IC_OUTPUT, 2, cell.maxcharge)
+			set_pin_data(IC_OUTPUT, 3, cell.percent())
 			activate_pin(2)
 			push_data()
-			return FALSE
-	return FALSE
+			if(cell.charge == cell.maxcharge)
+				return FALSE
+			if(transfer_amount && assembly.draw_power(amount_to_move)) // CELLRATE is already handled in draw_power()
+				cell.give(transfer_amount * GLOB.CELLRATE)
+				return TRUE
+	else
+		set_pin_data(IC_OUTPUT, 1, null)
+		set_pin_data(IC_OUTPUT, 2, null)
+		set_pin_data(IC_OUTPUT, 3, null)
+		activate_pin(2)
+		push_data()
+		return FALSE
 
 /obj/item/integrated_circuit/power/transmitter/large/do_work()
 	if(..()) // If the above code succeeds, do this below.
@@ -79,3 +76,4 @@
 			s.set_up(12, 1, src)
 			s.start()
 			visible_message("<span class='warning'>\The [assembly] makes some sparks!</span>")
+		return TRUE

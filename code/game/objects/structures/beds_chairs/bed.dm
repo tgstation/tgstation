@@ -99,6 +99,10 @@
 		M.pixel_x = M.get_standard_pixel_x_offset(M.lying)
 		M.pixel_y = M.get_standard_pixel_y_offset(M.lying)
 
+/obj/structure/bed/roller/Moved()
+	. = ..()
+	if(has_gravity())
+		playsound(src, 'sound/effects/roll.ogg', 100, 1)
 
 /obj/item/roller
 	name = "roller bed"

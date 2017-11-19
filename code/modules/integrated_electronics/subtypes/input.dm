@@ -70,7 +70,7 @@
 	power_draw_per_use = 4
 
 /obj/item/integrated_circuit/input/textpad/ask_for_input(mob/user)
-	var/new_input = input(user, "Enter some words, please.","Number pad") as null|text
+	var/new_input = stripped_input(user, "Enter some words, please.","Number pad")
 	if(istext(new_input) && user.IsAdvancedToolUser())
 		set_pin_data(IC_OUTPUT, 1, new_input)
 		push_data()
@@ -104,50 +104,6 @@
 
 	push_data()
 	activate_pin(2)
-/*
-/obj/item/integrated_circuit/input/pressure_plate
-	name = "pressure plate"
-	desc = "Electronic plate with a scanner, that could retrieve references to things,that was put onto the machine"
-	icon_state = "pressure_plate"
-	complexity = 4
-	inputs = list()
-	outputs = list("laid" = IC_PINTYPE_REF, "removed" = IC_PINTYPE_REF)
-	activators = list("laid" = IC_PINTYPE_PULSE_OUT, "removed" = IC_PINTYPE_PULSE_OUT)
-	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_BIO = 2)
-	power_draw_per_use = 40
-	var/list/cont
-
-/obj/item/integrated_circuit/input/pressure_plate/New()
-	..()
-	processing_objects |= src
-
-/obj/item/integrated_circuit/input/pressure_plate/Destroy()
-	processing_objects -= src
-
-/obj/item/integrated_circuit/input/pressure_plate/process()
-	var/list/newcont
-	var/turf/T = get_turf(src)
-	newcont = T.contents
-	var/list/U = cont & newcont
-	for(var/laid in U)
-		if(!(laid in cont))
-			var/datum/integrated_io/O = outputs[1]
-			O.data = WEAKREF(laid)
-			O.push_data()
-			activate_pin(1)
-			break
-	for(var/removed in U)
-		if(!(removed in newcont))
-			var/datum/integrated_io/O = outputs[2]
-			O.data = WEAKREF(removed)
-			O.push_data()
-			activate_pin(2)
-			break
-	cont = newcont
-
-*/
-
 
 /obj/item/integrated_circuit/input/adv_med_scanner
 	name = "integrated advanced medical analyser"
@@ -794,13 +750,13 @@
 	set_pin_data(IC_OUTPUT, 2, null)
 	set_pin_data(IC_OUTPUT, 3, null)
 	if(AM)
-		var/obj/item/stock_parts/cell/cell = get_cell(AM)
-		if(cell)
+		var/obj/item/stock_parts/cell/C = AM.get_cell()
+		if(C)
 			var/turf/A = get_turf(src)
-			if(AM in view(A))
-				push_data()
-				set_pin_data(IC_OUTPUT, 1, cell.charge)
-				set_pin_data(IC_OUTPUT, 2, cell.maxcharge)
-				set_pin_data(IC_OUTPUT, 3, cell.percent())
-	push_data()
+			if(get_turf(AM) in view(A))
+				set_pin_data(IC_OUTPUT, 1, C.charge)
+				set_pin_data(IC_OUTPUT, 2, C.maxcharge)
+				set_pin_data(IC_OUTPUT, 3, C.percent())
 	activate_pin(2)
+	push_data()
+	return

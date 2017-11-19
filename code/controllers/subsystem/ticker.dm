@@ -176,7 +176,7 @@ SUBSYSTEM_DEF(ticker)
 			if(!setup())
 				//setup failed
 				current_state = GAME_STATE_STARTUP
-				SSticker.SetTimeLeft(CONFIG_GET(number/lobby_countdown) * 10) // FULPSTATOION: Update time on fail! Otherwise we end up STUCK here without an admin to hit START.
+				start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)//SSticker.SetTimeLeft(CONFIG_GET(number/lobby_countdown) * 10) // FULPSTATION: Update time on fail! Otherwise we end up STUCK here without an admin to hit START.
 				Master.SetRunLevel(RUNLEVEL_LOBBY)
 
 		if(GAME_STATE_PLAYING)
