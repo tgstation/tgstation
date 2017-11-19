@@ -9453,7 +9453,6 @@
 /area/crew_quarters/dorms)
 "ayn" = (
 /obj/structure/chair/comfy{
-	tag = "icon-comfychair (EAST)";
 	icon_state = "comfychair";
 	dir = 4
 	},
@@ -9949,7 +9948,6 @@
 /area/crew_quarters/dorms)
 "azv" = (
 /obj/structure/chair/comfy{
-	tag = "icon-comfychair (EAST)";
 	icon_state = "comfychair";
 	dir = 4
 	},
@@ -11512,7 +11510,6 @@
 /area/crew_quarters/dorms)
 "aDk" = (
 /turf/open/floor/plasteel/white/corner{
-	tag = "icon-whitecorner (WEST)";
 	icon_state = "whitecorner";
 	dir = 8
 	},
@@ -13195,7 +13192,6 @@
 	name = "HoP Queue Shutters"
 	},
 /obj/effect/turf_decal/loading_area{
-	tag = "icon-loadingarea (NORTH)";
 	icon_state = "loadingarea";
 	dir = 1
 	},
@@ -14561,7 +14557,6 @@
 	icon_state = "plant-04"
 	},
 /turf/open/floor/plasteel/white/corner{
-	tag = "icon-whitecorner (EAST)";
 	icon_state = "whitecorner";
 	dir = 4
 	},
@@ -16126,7 +16121,6 @@
 /area/hallway/secondary/exit/departure_lounge)
 "aOm" = (
 /turf/open/floor/plasteel/escape/corner{
-	tag = "icon-escapecorner (EAST)";
 	icon_state = "escapecorner";
 	dir = 4
 	},
@@ -19276,7 +19270,6 @@
 	dir = 9
 	},
 /obj/effect/turf_decal/loading_area{
-	tag = "icon-loadingarea (WEST)";
 	icon_state = "loadingarea";
 	dir = 8
 	},
@@ -24422,7 +24415,6 @@
 	location = "Bar1"
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L7";
 	icon_state = "L7"
 	},
 /turf/open/floor/plasteel,
@@ -24631,7 +24623,6 @@
 	location = "Bar2"
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L8";
 	icon_state = "L8"
 	},
 /turf/open/floor/plasteel,
@@ -29798,7 +29789,6 @@
 	pixel_y = 10
 	},
 /turf/open/floor/plasteel/darkpurple/side{
-	tag = "icon-darkpurple (EAST)";
 	icon_state = "darkpurple";
 	dir = 4
 	},
@@ -30436,7 +30426,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkpurple/corner{
-	tag = "icon-darkpurplecorners (EAST)";
 	icon_state = "darkpurplecorners";
 	dir = 4
 	},
@@ -31899,7 +31888,6 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel/purple/side{
-	tag = "icon-purple (SOUTHWEST)";
 	icon_state = "purple";
 	dir = 10
 	},
@@ -31921,7 +31909,6 @@
 "byM" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/structure/disposalpipe/junction{
-	tag = "icon-pipe-j1 (NORTH)";
 	dir = 1
 	},
 /obj/structure/cable{
@@ -32015,7 +32002,6 @@
 	dir = 4
 	},
 /obj/structure/chair/comfy{
-	tag = "icon-comfychair (EAST)";
 	icon_state = "comfychair";
 	dir = 4
 	},
@@ -32056,7 +32042,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkpurple/corner{
-	tag = "icon-darkpurplecorners (WEST)";
 	icon_state = "darkpurplecorners";
 	dir = 8
 	},
@@ -32820,7 +32805,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/darkpurple/side{
-	tag = "icon-darkpurple (EAST)";
 	icon_state = "darkpurple";
 	dir = 4
 	},
@@ -33114,7 +33098,6 @@
 	icon_state = "0-4"
 	},
 /turf/open/floor/plasteel/darkpurple/side{
-	tag = "icon-darkpurple (NORTHWEST)";
 	icon_state = "darkpurple";
 	dir = 9
 	},
@@ -33165,7 +33148,6 @@
 	pixel_y = 6
 	},
 /turf/open/floor/plasteel/darkpurple/side{
-	tag = "icon-darkpurple (NORTHEAST)";
 	icon_state = "darkpurple";
 	dir = 5
 	},
@@ -33277,7 +33259,6 @@
 "bBJ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/darkpurple/side{
-	tag = "icon-darkpurple (EAST)";
 	icon_state = "darkpurple";
 	dir = 4
 	},
@@ -33748,7 +33729,6 @@
 	light_color = "#c1caff"
 	},
 /turf/open/floor/plasteel/darkpurple/side{
-	tag = "icon-darkpurple (EAST)";
 	icon_state = "darkpurple";
 	dir = 4
 	},
@@ -34094,7 +34074,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/darkpurple/side{
-	tag = "icon-darkpurple (EAST)";
 	icon_state = "darkpurple";
 	dir = 4
 	},
@@ -34209,7 +34188,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel/darkpurple/side{
-	tag = "icon-darkpurple (EAST)";
 	icon_state = "darkpurple";
 	dir = 4
 	},
@@ -34690,7 +34668,6 @@
 	pixel_y = -26
 	},
 /turf/open/floor/plasteel/darkpurple/side{
-	tag = "icon-darkpurple (SOUTHWEST)";
 	icon_state = "darkpurple";
 	dir = 10
 	},
@@ -34758,7 +34735,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/darkpurple/side{
-	tag = "icon-darkpurple (SOUTHEAST)";
 	icon_state = "darkpurple";
 	dir = 6
 	},
@@ -34835,7 +34811,6 @@
 /area/science/research)
 "bFf" = (
 /turf/open/floor/plasteel/darkpurple/side{
-	tag = "icon-darkpurple (EAST)";
 	icon_state = "darkpurple";
 	dir = 4
 	},
@@ -35357,7 +35332,6 @@
 "bGl" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plasteel/darkpurple/side{
-	tag = "icon-darkpurple (EAST)";
 	icon_state = "darkpurple";
 	dir = 4
 	},
@@ -35491,7 +35465,6 @@
 /area/science/mineral_storeroom)
 "bGB" = (
 /obj/effect/turf_decal/loading_area{
-	tag = "icon-loadingarea (EAST)";
 	icon_state = "loadingarea";
 	dir = 4
 	},
@@ -36925,7 +36898,6 @@
 	pixel_y = -24
 	},
 /obj/effect/turf_decal/loading_area{
-	tag = "icon-loadingarea (EAST)";
 	icon_state = "loadingarea";
 	dir = 4
 	},
@@ -37479,7 +37451,6 @@
 /area/science/mineral_storeroom)
 "bLk" = (
 /obj/effect/turf_decal/loading_area{
-	tag = "icon-loadingarea (WEST)";
 	icon_state = "loadingarea";
 	dir = 8
 	},
@@ -38391,7 +38362,6 @@
 /area/chapel/dock)
 "bNx" = (
 /obj/structure/transit_tube/station/reverse{
-	tag = "icon-closed_terminus0 (NORTH)";
 	icon_state = "closed_terminus0";
 	dir = 1
 	},
@@ -41245,7 +41215,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/purple/visible{
-	tag = "icon-intact (EAST)";
 	icon_state = "intact";
 	dir = 4
 	},
@@ -41254,7 +41223,6 @@
 "bUx" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible,
 /obj/machinery/atmospherics/pipe/simple/purple/visible{
-	tag = "icon-intact (EAST)";
 	icon_state = "intact";
 	dir = 4
 	},
@@ -41262,7 +41230,6 @@
 /area/engine/atmos)
 "bUy" = (
 /obj/machinery/atmospherics/pipe/simple/purple/visible{
-	tag = "icon-intact (EAST)";
 	icon_state = "intact";
 	dir = 4
 	},
@@ -41274,7 +41241,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /obj/machinery/atmospherics/pipe/simple/purple/visible{
-	tag = "icon-intact (EAST)";
 	icon_state = "intact";
 	dir = 4
 	},
@@ -41283,7 +41249,6 @@
 "bUA" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/purple/visible{
-	tag = "icon-intact (SOUTHWEST)";
 	icon_state = "intact";
 	dir = 10
 	},
@@ -41871,7 +41836,6 @@
 	pixel_x = -23
 	},
 /turf/open/floor/plasteel/darkyellow/side{
-	tag = "icon-darkyellow (WEST)";
 	icon_state = "darkyellow";
 	dir = 8
 	},
@@ -42203,7 +42167,6 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/darkyellow/side{
-	tag = "icon-darkyellow (WEST)";
 	icon_state = "darkyellow";
 	dir = 8
 	},
@@ -42513,7 +42476,6 @@
 /obj/item/stack/sheet/metal/fifty,
 /obj/item/stack/cable_coil,
 /turf/open/floor/plasteel/darkyellow/side{
-	tag = "icon-darkyellow (WEST)";
 	icon_state = "darkyellow";
 	dir = 8
 	},
@@ -43310,7 +43272,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/darkyellow/side{
-	tag = "icon-darkyellow (WEST)";
 	icon_state = "darkyellow";
 	dir = 8
 	},
@@ -43341,7 +43302,6 @@
 /area/maintenance/disposal/incinerator)
 "bZi" = (
 /obj/machinery/atmospherics/pipe/simple/purple/visible{
-	tag = "icon-intact (SOUTHEAST)";
 	icon_state = "intact";
 	dir = 6
 	},
@@ -43350,7 +43310,6 @@
 /area/maintenance/disposal/incinerator)
 "bZj" = (
 /obj/machinery/atmospherics/pipe/simple/purple/visible{
-	tag = "icon-intact (NORTHWEST)";
 	icon_state = "intact";
 	dir = 9
 	},
@@ -43555,7 +43514,6 @@
 	pixel_x = -27
 	},
 /turf/open/floor/plasteel/darkyellow/side{
-	tag = "icon-darkyellow (WEST)";
 	icon_state = "darkyellow";
 	dir = 8
 	},
@@ -43593,7 +43551,6 @@
 /area/maintenance/disposal/incinerator)
 "bZR" = (
 /obj/machinery/atmospherics/pipe/simple/purple/visible{
-	tag = "icon-intact (NORTHEAST)";
 	icon_state = "intact";
 	dir = 5
 	},
@@ -43696,7 +43653,6 @@
 "cag" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/loading_area{
-	tag = "icon-loadingarea (EAST)";
 	icon_state = "loadingarea";
 	dir = 4
 	},
@@ -43928,7 +43884,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkyellow/side{
-	tag = "icon-darkyellow (WEST)";
 	icon_state = "darkyellow";
 	dir = 8
 	},
@@ -44265,7 +44220,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkyellow/side{
-	tag = "icon-darkyellow (WEST)";
 	icon_state = "darkyellow";
 	dir = 8
 	},
@@ -44536,7 +44490,6 @@
 	pixel_x = -27
 	},
 /turf/open/floor/plasteel/darkyellow/side{
-	tag = "icon-darkyellow (WEST)";
 	icon_state = "darkyellow";
 	dir = 8
 	},
@@ -44763,7 +44716,6 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /turf/open/floor/plasteel/darkyellow/side{
-	tag = "icon-darkyellow (SOUTHWEST)";
 	icon_state = "darkyellow";
 	dir = 10
 	},
@@ -44776,7 +44728,6 @@
 "cdi" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /turf/open/floor/plasteel/darkyellow/side{
-	tag = "icon-darkyellow (SOUTHEAST)";
 	icon_state = "darkyellow";
 	dir = 6
 	},
@@ -48574,14 +48525,12 @@
 /area/crew_quarters/bar)
 "cpH" = (
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L1";
 	icon_state = "L1"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "cpI" = (
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L3";
 	icon_state = "L3"
 	},
 /turf/open/floor/plasteel,
@@ -48589,28 +48538,24 @@
 "cpJ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L5";
 	icon_state = "L5"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "cpK" = (
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L9";
 	icon_state = "L9"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "cpL" = (
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L11";
 	icon_state = "L11"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "cpM" = (
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L13";
 	icon_state = "L13"
 	},
 /turf/open/floor/plasteel,
@@ -48620,7 +48565,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L2";
 	icon_state = "L2"
 	},
 /turf/open/floor/plasteel,
@@ -48630,7 +48574,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L4";
 	icon_state = "L4"
 	},
 /turf/open/floor/plasteel,
@@ -48641,7 +48584,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L6";
 	icon_state = "L6"
 	},
 /turf/open/floor/plasteel,
@@ -48651,7 +48593,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L10";
 	icon_state = "L10"
 	},
 /turf/open/floor/plasteel,
@@ -48661,7 +48602,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L12";
 	icon_state = "L12"
 	},
 /turf/open/floor/plasteel,
@@ -48671,7 +48611,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L14";
 	icon_state = "L14"
 	},
 /turf/open/floor/plasteel,
@@ -49433,7 +49372,6 @@
 /area/chapel/main/monastery)
 "ctr" = (
 /turf/open/floor/plasteel/darkyellow/corner{
-	tag = "icon-darkyellowcorners (EAST)";
 	icon_state = "darkyellowcorners";
 	dir = 4
 	},
@@ -49443,7 +49381,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkyellow/corner{
-	tag = "icon-darkyellowcorners (EAST)";
 	icon_state = "darkyellowcorners";
 	dir = 4
 	},
@@ -49453,7 +49390,6 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel/darkyellow/corner{
-	tag = "icon-darkyellowcorners (EAST)";
 	icon_state = "darkyellowcorners";
 	dir = 4
 	},
@@ -51040,7 +50976,6 @@
 /obj/structure/table,
 /obj/item/lighter,
 /obj/structure/light_construct/small{
-	tag = "icon-bulb-construct-stage1 (WEST)";
 	icon_state = "bulb-construct-stage1";
 	dir = 8
 	},
@@ -51319,7 +51254,6 @@
 /area/science/lab)
 "cCB" = (
 /obj/effect/turf_decal/loading_area{
-	tag = "icon-loadingarea (WEST)";
 	icon_state = "loadingarea";
 	dir = 8
 	},

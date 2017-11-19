@@ -3933,7 +3933,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/loading_area{
-	tag = "icon-loadingarea (EAST)";
 	icon_state = "loadingarea";
 	dir = 4
 	},
@@ -4681,7 +4680,6 @@
 	name = "Queue Shutters"
 	},
 /obj/effect/turf_decal/loading_area{
-	tag = "icon-loadingarea (NORTH)";
 	icon_state = "loadingarea";
 	dir = 1
 	},
@@ -5724,7 +5722,6 @@
 	icon_state = "2-8"
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L1";
 	icon_state = "L1"
 	},
 /turf/open/floor/plasteel,
@@ -5738,7 +5735,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L3";
 	icon_state = "L3"
 	},
 /turf/open/floor/plasteel,
@@ -5755,7 +5751,6 @@
 	icon_state = "2-8"
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L5";
 	icon_state = "L5"
 	},
 /turf/open/floor/plasteel,
@@ -5775,7 +5770,6 @@
 	icon_state = "1-4"
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L7";
 	icon_state = "L7"
 	},
 /turf/open/floor/plasteel,
@@ -5786,7 +5780,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L9";
 	icon_state = "L9"
 	},
 /turf/open/floor/plasteel,
@@ -5799,7 +5792,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L11";
 	icon_state = "L11"
 	},
 /turf/open/floor/plasteel,
@@ -5815,7 +5807,6 @@
 	icon_state = "2-4"
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L13";
 	icon_state = "L13"
 	},
 /turf/open/floor/plasteel,
@@ -6212,7 +6203,6 @@
 	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L2";
 	icon_state = "L2"
 	},
 /turf/open/floor/plasteel,
@@ -6222,7 +6212,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L4";
 	icon_state = "L4"
 	},
 /turf/open/floor/plasteel,
@@ -6233,14 +6222,12 @@
 	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L6";
 	icon_state = "L6"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "alp" = (
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L8";
 	icon_state = "L8"
 	},
 /turf/open/floor/plasteel,
@@ -6248,7 +6235,6 @@
 "alq" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L10";
 	icon_state = "L10"
 	},
 /turf/open/floor/plasteel,
@@ -6258,7 +6244,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L12";
 	icon_state = "L12"
 	},
 /turf/open/floor/plasteel,
@@ -6274,7 +6259,6 @@
 	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L14";
 	icon_state = "L14"
 	},
 /turf/open/floor/plasteel,
@@ -7767,7 +7751,6 @@
 	},
 /obj/effect/landmark/start/shaft_miner,
 /obj/effect/turf_decal/loading_area{
-	tag = "icon-loadingarea (WEST)";
 	icon_state = "loadingarea";
 	dir = 8
 	},
@@ -10171,7 +10154,6 @@
 "asr" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/loading_area{
-	tag = "icon-loadingarea (EAST)";
 	icon_state = "loadingarea";
 	dir = 4
 	},
@@ -21920,7 +21902,6 @@
 	icon_state = "2-8"
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L1";
 	icon_state = "L1"
 	},
 /turf/open/floor/plasteel,
@@ -21933,7 +21914,6 @@
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L3";
 	icon_state = "L3"
 	},
 /turf/open/floor/plasteel,
@@ -21950,7 +21930,6 @@
 	icon_state = "1-8"
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L5";
 	icon_state = "L5"
 	},
 /turf/open/floor/plasteel,
@@ -21963,7 +21942,6 @@
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L7";
 	icon_state = "L7"
 	},
 /turf/open/floor/plasteel,
@@ -21974,7 +21952,6 @@
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L9";
 	icon_state = "L9"
 	},
 /turf/open/floor/plasteel,
@@ -21988,7 +21965,6 @@
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L11";
 	icon_state = "L11"
 	},
 /turf/open/floor/plasteel,
@@ -22001,7 +21977,6 @@
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L13";
 	icon_state = "L13"
 	},
 /turf/open/floor/plasteel,
@@ -22474,7 +22449,6 @@
 	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L2";
 	icon_state = "L2"
 	},
 /turf/open/floor/plasteel,
@@ -22487,7 +22461,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L4";
 	icon_state = "L4"
 	},
 /turf/open/floor/plasteel,
@@ -22496,7 +22469,6 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/effect/landmark/event_spawn,
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L6";
 	icon_state = "L6"
 	},
 /turf/open/floor/plasteel,
@@ -22508,7 +22480,6 @@
 	},
 /obj/effect/landmark/observer_start,
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L8";
 	icon_state = "L8"
 	},
 /turf/open/floor/plasteel,
@@ -22518,7 +22489,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L10";
 	icon_state = "L10"
 	},
 /turf/open/floor/plasteel,
@@ -22526,7 +22496,6 @@
 "aQr" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L12";
 	icon_state = "L12"
 	},
 /turf/open/floor/plasteel,
@@ -22536,7 +22505,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L14";
 	icon_state = "L14"
 	},
 /turf/open/floor/plasteel,

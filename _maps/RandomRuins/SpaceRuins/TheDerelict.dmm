@@ -4007,7 +4007,6 @@
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-derelict9";
 	icon_state = "derelict9"
 	},
 /turf/open/floor/plasteel/airless,
@@ -4020,7 +4019,6 @@
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-derelict10";
 	icon_state = "derelict10"
 	},
 /turf/open/floor/plasteel/airless,
@@ -4030,7 +4028,6 @@
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-derelict11";
 	icon_state = "derelict11"
 	},
 /turf/open/floor/plasteel/airless,
@@ -4040,7 +4037,6 @@
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-derelict12";
 	icon_state = "derelict12"
 	},
 /turf/open/floor/plasteel/airless,
@@ -4050,7 +4046,6 @@
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-derelict13";
 	icon_state = "derelict13"
 	},
 /turf/open/floor/plasteel/airless,
@@ -4060,7 +4055,6 @@
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-derelict14";
 	icon_state = "derelict14"
 	},
 /turf/open/floor/plasteel/airless,
@@ -4070,7 +4064,6 @@
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-derelict15";
 	icon_state = "derelict15"
 	},
 /turf/open/floor/plasteel/airless,
@@ -4083,7 +4076,6 @@
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-derelict16";
 	icon_state = "derelict16"
 	},
 /turf/open/floor/plasteel/airless,
@@ -4105,56 +4097,48 @@
 /area/ruin/space/derelict/hallway/secondary)
 "no" = (
 /obj/effect/turf_decal/plaque{
-	tag = "icon-derelict1";
 	icon_state = "derelict1"
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/secondary)
 "np" = (
 /obj/effect/turf_decal/plaque{
-	tag = "icon-derelict2";
 	icon_state = "derelict2"
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/secondary)
 "nq" = (
 /obj/effect/turf_decal/plaque{
-	tag = "icon-derelict3";
 	icon_state = "derelict3"
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/secondary)
 "nr" = (
 /obj/effect/turf_decal/plaque{
-	tag = "icon-derelict4";
 	icon_state = "derelict4"
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/secondary)
 "ns" = (
 /obj/effect/turf_decal/plaque{
-	tag = "icon-derelict5";
 	icon_state = "derelict5"
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/secondary)
 "nt" = (
 /obj/effect/turf_decal/plaque{
-	tag = "icon-derelict6";
 	icon_state = "derelict6"
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/secondary)
 "nu" = (
 /obj/effect/turf_decal/plaque{
-	tag = "icon-derelict7";
 	icon_state = "derelict7"
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/secondary)
 "nv" = (
 /obj/effect/turf_decal/plaque{
-	tag = "icon-derelict8";
 	icon_state = "derelict8"
 	},
 /turf/open/floor/plasteel/airless,

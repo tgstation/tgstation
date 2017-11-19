@@ -222,7 +222,6 @@
 "aM" = (
 /obj/machinery/light/small,
 /obj/effect/turf_decal/loading_area{
-	tag = "icon-loadingarea (EAST)";
 	icon_state = "loadingarea";
 	dir = 4
 	},
@@ -363,7 +362,6 @@
 /area/mine/laborcamp)
 "bk" = (
 /obj/effect/turf_decal/loading_area{
-	tag = "icon-loadingarea (WEST)";
 	icon_state = "loadingarea";
 	dir = 8
 	},
@@ -1031,7 +1029,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/loading_area{
-	tag = "icon-loadingarea (WEST)";
 	icon_state = "loadingarea";
 	dir = 8
 	},
@@ -1173,7 +1170,6 @@
 /area/mine/production)
 "dv" = (
 /obj/effect/turf_decal/loading_area{
-	tag = "icon-loadingarea (EAST)";
 	icon_state = "loadingarea";
 	dir = 4
 	},
@@ -1807,7 +1803,6 @@
 /area/mine/production)
 "eW" = (
 /obj/effect/turf_decal/loading_area{
-	tag = "icon-loadingarea (WEST)";
 	icon_state = "loadingarea";
 	dir = 8
 	},

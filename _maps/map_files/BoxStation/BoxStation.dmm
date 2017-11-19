@@ -3008,7 +3008,6 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/loading_area{
-	tag = "icon-loadingarea (WEST)";
 	icon_state = "loadingarea";
 	dir = 8
 	},
@@ -13112,7 +13111,6 @@
 	},
 /obj/machinery/light,
 /turf/open/floor/plasteel/vault/corner{
-	tag = "icon-vaultcorner (WEST)";
 	icon_state = "vaultcorner";
 	dir = 8
 	},
@@ -15135,7 +15133,6 @@
 	pixel_y = 28
 	},
 /obj/effect/turf_decal/loading_area{
-	tag = "icon-loadingarea (EAST)";
 	icon_state = "loadingarea";
 	dir = 4
 	},
@@ -15551,49 +15548,42 @@
 /area/hallway/primary/central)
 "aLZ" = (
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L3";
 	icon_state = "L3"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aMa" = (
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L1";
 	icon_state = "L1"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aMb" = (
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L7";
 	icon_state = "L7"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aMc" = (
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L5";
 	icon_state = "L5"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aMd" = (
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L11";
 	icon_state = "L11"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aMe" = (
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L9";
 	icon_state = "L9"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aMf" = (
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L13";
 	icon_state = "L13"
 	},
 /turf/open/floor/plasteel,
@@ -16007,14 +15997,12 @@
 /area/crew_quarters/bar)
 "aNv" = (
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L4";
 	icon_state = "L4"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aNw" = (
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L2";
 	icon_state = "L2"
 	},
 /turf/open/floor/plasteel,
@@ -16022,7 +16010,6 @@
 "aNx" = (
 /obj/effect/landmark/observer_start,
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L8";
 	icon_state = "L8"
 	},
 /turf/open/floor/plasteel,
@@ -16033,14 +16020,12 @@
 	location = "EVA"
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L6";
 	icon_state = "L6"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aNz" = (
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L12";
 	icon_state = "L12"
 	},
 /turf/open/floor/plasteel,
@@ -16051,14 +16036,12 @@
 	location = "EVA2"
 	},
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L10";
 	icon_state = "L10"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aNB" = (
 /obj/effect/turf_decal/plaque{
-	tag = "icon-L14";
 	icon_state = "L14"
 	},
 /turf/open/floor/plasteel,
@@ -22985,7 +22968,6 @@
 /area/science/robotics/mechbay)
 "bfU" = (
 /obj/effect/turf_decal/loading_area{
-	tag = "icon-loadingarea (NORTH)";
 	icon_state = "loadingarea";
 	dir = 1
 	},
@@ -26767,7 +26749,6 @@
 	name = "HoP Queue Shutters"
 	},
 /obj/effect/turf_decal/loading_area{
-	tag = "icon-loadingarea (WEST)";
 	icon_state = "loadingarea";
 	dir = 8
 	},
@@ -26956,7 +26937,6 @@
 	pixel_y = -23
 	},
 /obj/effect/turf_decal/loading_area{
-	tag = "icon-loadingarea (WEST)";
 	icon_state = "loadingarea";
 	dir = 8
 	},
@@ -26977,7 +26957,6 @@
 	dir = 5
 	},
 /obj/effect/turf_decal/loading_area{
-	tag = "icon-loadingarea (EAST)";
 	icon_state = "loadingarea";
 	dir = 4
 	},
@@ -28978,7 +28957,6 @@
 	pixel_y = -35
 	},
 /obj/effect/turf_decal/loading_area{
-	tag = "icon-loadingarea (WEST)";
 	icon_state = "loadingarea";
 	dir = 8
 	},
@@ -29041,7 +29019,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/loading_area{
-	tag = "icon-loadingarea (EAST)";
 	icon_state = "loadingarea";
 	dir = 4
 	},
@@ -29907,7 +29884,6 @@
 	name = "HoP Queue Shutters"
 	},
 /obj/effect/turf_decal/loading_area{
-	tag = "icon-loadingarea (EAST)";
 	icon_state = "loadingarea";
 	dir = 4
 	},
@@ -37522,7 +37498,6 @@
 /area/construction)
 "bNM" = (
 /obj/effect/turf_decal/loading_area{
-	tag = "icon-loadingarea (EAST)";
 	icon_state = "loadingarea";
 	dir = 4
 	},
@@ -37989,7 +37964,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/loading_area{
-	tag = "icon-loadingarea (WEST)";
 	icon_state = "loadingarea";
 	dir = 8
 	},
@@ -38009,7 +37983,6 @@
 	dir = 6
 	},
 /obj/effect/turf_decal/loading_area{
-	tag = "icon-loadingarea (EAST)";
 	icon_state = "loadingarea";
 	dir = 4
 	},
