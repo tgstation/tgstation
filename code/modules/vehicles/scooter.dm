@@ -57,6 +57,8 @@
 		H.throw_at(throw_target, 4, 3)
 		H.Knockdown(100)
 		H.adjustStaminaLoss(40)
+		H.adjustBrainLoss(3)
+		H.updatehealth()
 		visible_message("<span class='danger'>[src] crashes into [A], sending [H] flying!</span>")
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 
