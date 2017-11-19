@@ -9,7 +9,6 @@
 	desc = "A blue box with a button on top. Press the button to call upon a Mr. Meeseeks."
 	icon = 'hippiestation/icons/obj/device.dmi'
 	icon_state = "meeseeks_box"
-	origin_tech = "programming=2;materials=3;bluespace=4"
 	var/request = "Nothing"
 	var/next_summon
 	var/summoned = FALSE

@@ -2,7 +2,6 @@
 	name = "Combat Stimulant Implant"
 	desc = "A cocktail of potent drugs will heal damage allowing you to fight for longer"
 	icon_state = "adrenal"
-	origin_tech = "materials=2;biotech=4;combat=3;syndicate=4"
 	uses = 3
 
 /obj/item/implant/comstimms/get_data()

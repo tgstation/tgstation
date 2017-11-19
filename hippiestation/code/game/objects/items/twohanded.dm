@@ -7,7 +7,6 @@
 	righthand_file = 'hippiestation/icons/mob/inhands/righthand.dmi'
 	force_on = 60 //I'VE GONE COMPLETELY INSANE! HA HA HA HA!
 	w_class = WEIGHT_CLASS_HUGE
-	origin_tech = "materials=5;engineering=4;combat=4;syndicate=4"
 	attack_verb = list("sawed", "shred", "rended", "gutted", "eviscerated")
 	actions_types = list(/datum/action/item_action/startchainsaw)
 	block_chance = 50

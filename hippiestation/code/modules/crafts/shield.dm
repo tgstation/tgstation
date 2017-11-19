@@ -10,7 +10,6 @@
 	throw_speed = 2
 	throw_range = 3
 	w_class = WEIGHT_CLASS_BULKY
-	origin_tech = "materials=1;combat=1"
 	materials = list(MAT_METAL=1000)
 	attack_verb = list("shoved", "bashed")
 	block_chance = 45

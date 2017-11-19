@@ -2,7 +2,6 @@
 	name = "black tumor"
 	desc = "A tiny black mass with red tendrils trailing from it. It seems to shrivel in the light."
 	icon_state = "blacktumor"
-	origin_tech = "biotech=4"
 	w_class = 1
 	zone = "head"
 	slot = "brain_tumor"

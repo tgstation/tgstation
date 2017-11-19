@@ -73,7 +73,6 @@
 
 /obj/item/melee/transforming/butterfly/energy
 	name = "energy balisong"
-	origin_tech = "combat=4;syndicate=3"
 	desc = "A vicious carbon fibre blade and plasma tip allow for unparelled precision strikes against fat Nanotrasen backsides"
 	force_on = 20
 	throwforce_on = 20
