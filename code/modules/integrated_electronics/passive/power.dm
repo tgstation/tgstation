@@ -3,7 +3,6 @@
 	name = "power thingy"
 	desc = "Does power stuff."
 	complexity = 5
-	origin_tech = list(TECH_POWER = 2, TECH_ENGINEERING = 2, TECH_DATA = 2)
 	category_text = "Power - Passive"
 
 /obj/item/integrated_circuit/passive/power/proc/make_energy()
@@ -16,7 +15,6 @@
 	extended_desc = "The cell generates 1W of power per second in optimal lighting conditions.  Less light will result in less power being generated."
 	icon_state = "solar_cell"
 	complexity = 8
-	origin_tech = list(TECH_POWER = 3, TECH_ENGINEERING = 3, TECH_DATA = 2)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	var/max_power = 30
 
@@ -35,7 +33,6 @@
 	icon_state = "led"
 	complexity = 1
 	activators = list("pulse out" = IC_PINTYPE_PULSE_OUT)
-	origin_tech = list(TECH_POWER = 3, TECH_ENGINEERING = 3, TECH_DATA = 2)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	var/is_charge = FALSE
 
@@ -60,7 +57,6 @@
 	from the 'equipment' power channel."
 	icon_state = "power_relay"
 	complexity = 7
-	origin_tech = list(TECH_POWER = 3, TECH_ENGINEERING = 3, TECH_DATA = 2)
 	spawn_flags = IC_SPAWN_RESEARCH
 	var/power_amount = 50
 //fuel cell
@@ -77,7 +73,6 @@
 	outputs = list("volume used" = IC_PINTYPE_NUMBER,"self reference" = IC_PINTYPE_REF)
 	activators = list()
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_BIO = 2)
 	var/volume = 60
 	var/list/fuel = list("plasma" = 10000, "welding_fuel" = 3000, "carbon" = 2000, "ethanol"= 2000, "nutriment" =1600, "blood" = 1000)
 
@@ -112,7 +107,6 @@
 	from the 'equipment' power channel."
 	icon_state = "power_relay"
 	complexity = 15
-	origin_tech = list(TECH_POWER = 6, TECH_ENGINEERING = 5, TECH_DATA = 4)
 	spawn_flags = IC_SPAWN_RESEARCH
 	power_amount = 1000
 

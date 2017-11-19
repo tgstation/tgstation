@@ -10,7 +10,6 @@
 	det_time = 10
 	display_timer = 0
 	w_class = WEIGHT_CLASS_SMALL
-	origin_tech = "syndicate=1"
 	var/atom/target = null
 	var/mutable_appearance/plastic_overlay
 	var/obj/item/device/assembly_holder/nadeassembly = null

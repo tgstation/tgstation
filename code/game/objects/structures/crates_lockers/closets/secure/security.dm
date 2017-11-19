@@ -54,6 +54,7 @@
 	new /obj/item/gun/energy/e_gun(src)
 	new /obj/item/clothing/neck/petcollar(src)
 	new /obj/item/door_remote/civillian(src)
+	new /obj/item/circuitboard/machine/protolathe/department/service(src)
 
 /obj/structure/closet/secure_closet/hos
 	name = "\proper head of security's locker"

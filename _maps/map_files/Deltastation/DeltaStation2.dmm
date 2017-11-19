@@ -21838,6 +21838,7 @@
 	},
 /area/quartermaster/office)
 "aTW" = (
+/obj/machinery/rnd/protolathe/department/cargo,
 /turf/open/floor/plasteel/brown{
 	dir = 1
 	},
@@ -25888,6 +25889,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
 	},
+/obj/machinery/rnd/protolathe/department/service,
 /turf/open/floor/plasteel/loadingarea{
 	dir = 1
 	},
@@ -31320,10 +31322,10 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "bnz" = (
-/obj/machinery/mineral/ore_redemption,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/delivery,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
 "bnA" = (
@@ -41552,7 +41554,6 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/circuitboard/machine/protolathe,
 /obj/item/circuitboard/machine/mechfab,
 /obj/item/circuitboard/machine/circuit_imprinter{
 	pixel_x = 3;
@@ -73227,6 +73228,7 @@
 /area/medical/storage)
 "cSV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/rnd/protolathe/department/medical,
 /turf/open/floor/plasteel/cmo,
 /area/medical/storage)
 "cSW" = (
@@ -77953,7 +77955,7 @@
 /turf/open/floor/plasteel/neutral,
 /area/science/lab)
 "dcI" = (
-/obj/machinery/r_n_d/destructive_analyzer,
+/obj/machinery/rnd/destructive_analyzer,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -77966,7 +77968,6 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "dcK" = (
-/obj/machinery/r_n_d/protolathe,
 /obj/machinery/ai_status_display{
 	pixel_x = 32
 	},
@@ -77976,6 +77977,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/machinery/rnd/protolathe/department/science,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "dcL" = (
@@ -78625,11 +78627,11 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "dej" = (
-/obj/machinery/r_n_d/circuit_imprinter,
 /obj/item/reagent_containers/glass/beaker/sulphuric,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/machinery/rnd/circuit_imprinter/department/science,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "dek" = (
@@ -86109,7 +86111,7 @@
 	},
 /area/science/explab)
 "duA" = (
-/obj/machinery/r_n_d/experimentor,
+/obj/machinery/rnd/experimentor,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -91838,7 +91840,7 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "dGe" = (
-/obj/machinery/r_n_d/circuit_imprinter,
+/obj/machinery/rnd/circuit_imprinter,
 /obj/item/reagent_containers/glass/beaker/sulphuric,
 /obj/machinery/airalarm{
 	dir = 8;
@@ -93804,7 +93806,7 @@
 /turf/open/floor/plasteel,
 /area/science/storage)
 "dKe" = (
-/obj/machinery/r_n_d/server/core,
+/obj/machinery/rnd/server,
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 5
 	},
@@ -93817,7 +93819,7 @@
 	},
 /area/science/server)
 "dKg" = (
-/obj/machinery/r_n_d/server/robotics,
+/obj/machinery/rnd/server,
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 9
 	},
@@ -99635,9 +99637,7 @@
 /area/library/abandoned)
 "dWH" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/item/organ/tongue/bone{
-	origin_tech = "biotech=0"
-	},
+/obj/item/organ/tongue/bone,
 /turf/open/floor/plating,
 /area/library/abandoned)
 "dWI" = (
@@ -104770,6 +104770,35 @@
 /obj/machinery/power/tracker,
 /turf/open/floor/plasteel/airless/solarpanel,
 /area/solar/port/aft)
+"eht" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/mineral/ore_redemption{
+	input_dir = 4;
+	output_dir = 8
+	},
+/turf/open/floor/plasteel/neutral,
+/area/quartermaster/storage)
+"ehu" = (
+/obj/machinery/rnd/protolathe/department/security,
+/turf/open/floor/plasteel/neutral,
+/area/security/main)
+"ehv" = (
+/obj/machinery/rnd/circuit_imprinter,
+/turf/open/floor/plasteel/yellow/side,
+/area/engine/engineering)
+"ehw" = (
+/obj/machinery/computer/rdconsole/production,
+/turf/open/floor/plasteel/yellow/side,
+/area/engine/engineering)
+"ehx" = (
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/obj/machinery/rnd/protolathe/department/engineering,
+/turf/open/floor/plasteel/neutral,
+/area/engine/engineering)
 
 (1,1,1) = {"
 aaa
@@ -129332,7 +129361,7 @@ car
 cxE
 cjn
 cAM
-cCs
+ehv
 cDY
 cFQ
 cHk
@@ -129589,9 +129618,9 @@ car
 cxF
 cjn
 cAN
-cCs
+ehw
 cDZ
-cdN
+ehx
 cHl
 cIq
 cJW
@@ -147016,7 +147045,7 @@ aSh
 avW
 aVG
 aXq
-avU
+eht
 baQ
 baQ
 baU
@@ -158331,7 +158360,7 @@ aFm
 aad
 bhd
 biM
-bkw
+ehu
 bkw
 bnR
 bpq
