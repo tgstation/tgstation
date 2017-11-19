@@ -48,7 +48,7 @@
 
 /mob/living/carbon/human/proc/generate_agnosia_image()
 	//Image override for agnosiacs
-	var/icon/I = new(icon = 'icons/mob/simple_human.dmi', icon_state = "faceless", loc = src)
+	var/image/I = new(icon = 'icons/mob/simple_human.dmi', icon_state = "faceless", loc = src)
 	I.override = 1
 	I.name = "Unknown"
 	I.appearance_flags = KEEP_APART|RESET_COLOR|PIXEL_SCALE
