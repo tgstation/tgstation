@@ -1150,7 +1150,6 @@
 /area/awaymission/BMPship/Midship)
 "dO" = (
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime,

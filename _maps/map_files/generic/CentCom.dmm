@@ -2009,7 +2009,6 @@
 /area/tdome/arena_source)
 "fN" = (
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -2026,7 +2025,6 @@
 /area/tdome/arena_source)
 "fQ" = (
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -2911,7 +2909,6 @@
 /area/centcom/supply)
 "iP" = (
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -3266,7 +3263,6 @@
 /area/space)
 "jD" = (
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -4860,7 +4856,6 @@
 /area/centcom/supply)
 "nK" = (
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -13259,7 +13254,6 @@
 	name = "General Supply"
 	},
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -13291,7 +13285,6 @@
 	name = "Thunderdome Blast Door"
 	},
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -13490,7 +13483,6 @@
 /area/tdome/arena)
 "Jh" = (
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -13507,7 +13499,6 @@
 /area/tdome/arena)
 "Jk" = (
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -14531,7 +14522,6 @@
 	name = "Thunderdome Blast Door"
 	},
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -14542,7 +14532,6 @@
 	name = "General Supply"
 	},
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -14553,7 +14542,6 @@
 	name = "Thunderdome Blast Door"
 	},
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -14564,7 +14552,6 @@
 	name = "General Supply"
 	},
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -14575,7 +14562,6 @@
 	name = "Thunderdome Blast Door"
 	},
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -14586,7 +14572,6 @@
 	name = "General Supply"
 	},
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -14597,7 +14582,6 @@
 	name = "Thunderdome Blast Door"
 	},
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -14608,7 +14592,6 @@
 	name = "General Supply"
 	},
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -14619,7 +14602,6 @@
 	name = "Thunderdome Blast Door"
 	},
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -14630,7 +14612,6 @@
 	name = "General Supply"
 	},
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -14641,7 +14622,6 @@
 	name = "Thunderdome Blast Door"
 	},
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -14652,7 +14632,6 @@
 	name = "General Supply"
 	},
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 8
 	},
 /turf/open/floor/plasteel,

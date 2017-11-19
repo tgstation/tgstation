@@ -3933,7 +3933,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -4680,7 +4679,6 @@
 	name = "Queue Shutters"
 	},
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -7751,7 +7749,6 @@
 	},
 /obj/effect/landmark/start/shaft_miner,
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -10154,7 +10151,6 @@
 "asr" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 4
 	},
 /turf/open/floor/plasteel,

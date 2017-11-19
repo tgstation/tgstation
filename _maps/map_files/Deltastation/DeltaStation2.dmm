@@ -11443,7 +11443,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -11938,7 +11937,6 @@
 /area/quartermaster/storage)
 "azF" = (
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -12366,7 +12364,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -12989,7 +12986,6 @@
 /area/quartermaster/storage)
 "aBS" = (
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -13535,7 +13531,6 @@
 "aCZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -13914,7 +13909,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/window/reinforced,
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -18601,7 +18595,6 @@
 "aNw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -25910,7 +25903,6 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -26815,7 +26807,6 @@
 	name = "cargo camera"
 	},
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -26886,7 +26877,6 @@
 /area/quartermaster/miningoffice)
 "bed" = (
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -26894,7 +26884,6 @@
 "bee" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -28003,7 +27992,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -30561,7 +30549,6 @@
 "blP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -30578,7 +30565,6 @@
 	icon_state = "1-4"
 	},
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -35413,7 +35399,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 1
 	},
 /turf/open/floor/plasteel,

@@ -13192,7 +13192,6 @@
 	name = "HoP Queue Shutters"
 	},
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -19270,7 +19269,6 @@
 	dir = 9
 	},
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -35465,7 +35463,6 @@
 /area/science/mineral_storeroom)
 "bGB" = (
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -36898,7 +36895,6 @@
 	pixel_y = -24
 	},
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -37451,7 +37447,6 @@
 /area/science/mineral_storeroom)
 "bLk" = (
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -43653,7 +43648,6 @@
 "cag" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -51254,7 +51248,6 @@
 /area/science/lab)
 "cCB" = (
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 8
 	},
 /turf/open/floor/plasteel,

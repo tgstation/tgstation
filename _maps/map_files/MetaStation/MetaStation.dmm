@@ -12808,7 +12808,6 @@
 	req_access_txt = "48"
 	},
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -14718,7 +14717,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 1
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -16542,7 +16540,6 @@
 "aIi" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -17290,7 +17287,6 @@
 	pixel_y = 1
 	},
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -17821,7 +17817,6 @@
 "aKX" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -18408,7 +18403,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -18963,7 +18957,6 @@
 	},
 /obj/structure/window/reinforced,
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -24212,14 +24205,12 @@
 	pixel_x = -24
 	},
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aYK" = (
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -28171,7 +28162,6 @@
 /area/quartermaster/sorting)
 "bgH" = (
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -29174,7 +29164,6 @@
 	pixel_y = 18
 	},
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -38514,7 +38503,6 @@
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -40602,7 +40590,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
