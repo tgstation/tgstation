@@ -22962,7 +22962,7 @@
 	},
 /obj/structure/disposalpipe/junction{
 	dir = 8;
-	
+
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
@@ -25158,7 +25158,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/r_n_d/circuit_imprinter,
+/obj/machinery/rnd/circuit_imprinter,
 /turf/open/floor/plasteel/white,
 /area/science/robotics/lab)
 "bfC" = (
@@ -27141,14 +27141,14 @@
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "bjE" = (
-/obj/machinery/r_n_d/destructive_analyzer,
+/obj/machinery/rnd/destructive_analyzer,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/science/lab)
 "bjF" = (
-/obj/machinery/r_n_d/protolathe,
+/obj/machinery/rnd/protolathe,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -27847,7 +27847,7 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "blh" = (
-/obj/machinery/r_n_d/circuit_imprinter,
+/obj/machinery/rnd/circuit_imprinter,
 /obj/item/reagent_containers/glass/beaker/sulphuric,
 /turf/open/floor/plasteel,
 /area/science/lab)
@@ -33481,7 +33481,7 @@
 	},
 /area/science/server)
 "bwQ" = (
-/obj/machinery/r_n_d/server/robotics,
+/obj/machinery/rnd/server/robotics,
 /turf/open/floor/circuit{
 	name = "Server Base";
 	initial_gas_mix = "n2=500;TEMP=80"
@@ -34169,7 +34169,7 @@
 /turf/open/floor/engine,
 /area/science/explab)
 "byn" = (
-/obj/machinery/r_n_d/experimentor,
+/obj/machinery/rnd/experimentor,
 /turf/open/floor/engine,
 /area/science/explab)
 "byo" = (
@@ -34669,7 +34669,7 @@
 	},
 /area/science/server)
 "bzo" = (
-/obj/machinery/r_n_d/server/core,
+/obj/machinery/rnd/server/core,
 /turf/open/floor/circuit{
 	name = "Server Base";
 	initial_gas_mix = "n2=500;TEMP=80"
@@ -51008,7 +51008,7 @@
 "cip" = (
 /obj/structure/disposalpipe/junction/yjunction{
 	dir = 2;
-	
+
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
@@ -58355,7 +58355,7 @@
 "cyb" = (
 /obj/structure/disposalpipe/junction/flip{
 	dir = 4;
-	
+
 	},
 /turf/open/floor/plasteel/red/corner{
 	dir = 1
@@ -60582,7 +60582,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5;
 	dpdir = 0;
-	
+
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
