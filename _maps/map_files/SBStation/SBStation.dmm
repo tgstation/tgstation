@@ -1884,13 +1884,12 @@
 /area/security/brig)
 "aec" = (
 /obj/structure/closet/secure_closet/brig,
-/obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/item/clothing/suit/straight_jacket,
 /obj/item/device/electropack,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
 /turf/open/floor/plasteel,
 /area/security/brig)
 "aed" = (
@@ -2279,7 +2278,9 @@
 /area/security/brig)
 "aeW" = (
 /obj/structure/window/reinforced,
-/obj/machinery/computer/security,
+/obj/machinery/computer/security{
+	dir = 1
+	},
 /turf/open/floor/plasteel/red/side,
 /area/security/brig)
 "aeX" = (
@@ -2287,7 +2288,9 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced,
-/obj/machinery/computer/crew,
+/obj/machinery/computer/crew{
+	dir = 1
+	},
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
@@ -2737,6 +2740,7 @@
 /area/shuttle/arrival)
 "agh" = (
 /obj/machinery/door/airlock/glass_security{
+	cyclelinkeddir = 2;
 	id_tag = "secinterior";
 	name = "Brig";
 	req_access_txt = "63"
@@ -2747,6 +2751,7 @@
 /area/security/brig)
 "agi" = (
 /obj/machinery/door/airlock/glass_security{
+	cyclelinkeddir = 2;
 	id_tag = "secinterior";
 	name = "Brig";
 	req_access_txt = "63"
@@ -3203,6 +3208,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass_security{
+	cyclelinkeddir = 1;
 	id_tag = "secexterior";
 	name = "Brig";
 	req_access_txt = "63"
@@ -3219,6 +3225,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass_security{
+	cyclelinkeddir = 1;
 	id_tag = "secexterior";
 	name = "Brig";
 	req_access_txt = "63"
@@ -3382,7 +3389,9 @@
 /turf/open/floor/pod/light,
 /area/shuttle/transport)
 "ahO" = (
-/obj/machinery/computer/shuttle/ferry/request,
+/obj/machinery/computer/shuttle/ferry/request{
+	dir = 4
+	},
 /turf/open/floor/pod/light,
 /area/shuttle/transport)
 "ahP" = (
@@ -4123,7 +4132,9 @@
 /turf/closed/wall,
 /area/crew_quarters/heads/cmo)
 "ajE" = (
-/obj/machinery/computer/crew,
+/obj/machinery/computer/crew{
+	dir = 4
+	},
 /obj/machinery/light{
 	dir = 8
 	},
@@ -4379,7 +4390,9 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "akf" = (
-/obj/machinery/computer/med_data,
+/obj/machinery/computer/med_data{
+	dir = 4
+	},
 /obj/machinery/keycard_auth{
 	pixel_x = -24
 	},
@@ -4898,7 +4911,9 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "alu" = (
-/obj/machinery/computer/operating,
+/obj/machinery/computer/operating{
+	dir = 8
+	},
 /obj/machinery/light{
 	dir = 4
 	},
@@ -8083,9 +8098,8 @@
 /turf/open/floor/plasteel/black,
 /area/hydroponics)
 "ato" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/reagent_dispensers/cooking_oil,
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
 "atp" = (
@@ -8286,6 +8300,9 @@
 /area/hydroponics)
 "atQ" = (
 /obj/structure/closet/crate/bin,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
 "atR" = (
@@ -9091,7 +9108,9 @@
 /turf/open/floor/plasteel/black,
 /area/medical/genetics)
 "avL" = (
-/obj/machinery/computer/cloning,
+/obj/machinery/computer/cloning{
+	dir = 1
+	},
 /obj/machinery/light{
 	light_color = "#d1dfff"
 	},
@@ -11948,7 +11967,9 @@
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/ai_upload)
 "aCa" = (
-/obj/machinery/computer/upload/ai,
+/obj/machinery/computer/upload/ai{
+	dir = 4
+	},
 /obj/machinery/power/apc/highcap/five_k{
 	areastring = "/area/ai_monitored/turret_protected/ai_upload";
 	dir = 8;
@@ -12592,7 +12613,9 @@
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
 "aDu" = (
-/obj/machinery/computer/upload/borg,
+/obj/machinery/computer/upload/borg{
+	dir = 4
+	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
@@ -12800,7 +12823,9 @@
 	dir = 8;
 	light_color = "#d1ffee"
 	},
-/obj/machinery/computer/rdservercontrol,
+/obj/machinery/computer/rdservercontrol{
+	dir = 4
+	},
 /turf/open/floor/plasteel/black,
 /area/science/server)
 "aDQ" = (
@@ -13043,7 +13068,9 @@
 	name = "Station Intercom (General)";
 	pixel_x = -27
 	},
-/obj/machinery/computer/security/mining,
+/obj/machinery/computer/security/mining{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
 "aEp" = (
@@ -13165,7 +13192,9 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain)
 "aEE" = (
-/obj/machinery/computer/communications,
+/obj/machinery/computer/communications{
+	dir = 8
+	},
 /obj/item/device/radio/intercom{
 	dir = 8;
 	freerange = 1;
@@ -13579,7 +13608,9 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain)
 "aFF" = (
-/obj/machinery/computer/card,
+/obj/machinery/computer/card{
+	dir = 8
+	},
 /obj/machinery/requests_console{
 	announcementConsole = 1;
 	department = "Captain's Desk";
@@ -13729,7 +13760,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/machinery/computer/rdconsole/core,
+/obj/machinery/computer/rdconsole/core{
+	dir = 4
+	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
 	},
@@ -13848,6 +13881,7 @@
 /area/science/xenobiology)
 "aGj" = (
 /obj/machinery/computer/camera_advanced/xenobio{
+	dir = 8;
 	networks = list("Xeno")
 	},
 /obj/machinery/firealarm{
@@ -14394,6 +14428,7 @@
 /obj/item/stock_parts/cell/high/plus,
 /obj/item/disk/tech_disk,
 /obj/item/disk/design_disk,
+/obj/item/device/integrated_circuit_printer,
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 8
 	},
@@ -16021,7 +16056,9 @@
 	pixel_x = -24;
 	pixel_y = -8
 	},
-/obj/machinery/computer/cargo,
+/obj/machinery/computer/cargo{
+	dir = 4
+	},
 /obj/machinery/light{
 	dir = 8
 	},
@@ -16380,7 +16417,9 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "aLw" = (
-/obj/machinery/computer/mecha,
+/obj/machinery/computer/mecha{
+	dir = 4
+	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
 "aLx" = (
@@ -16904,7 +16943,9 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "aMy" = (
-/obj/machinery/computer/robotics,
+/obj/machinery/computer/robotics{
+	dir = 4
+	},
 /obj/machinery/keycard_auth{
 	pixel_x = -26;
 	pixel_y = 24
@@ -16934,7 +16975,9 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
 "aMB" = (
-/obj/machinery/computer/card/minor/rd,
+/obj/machinery/computer/card/minor/rd{
+	dir = 8
+	},
 /obj/machinery/button/door{
 	id = "director";
 	name = "Privacy Shutters";
@@ -17471,7 +17514,9 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "aND" = (
-/obj/machinery/computer/aifixer,
+/obj/machinery/computer/aifixer{
+	dir = 4
+	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
 	pixel_x = -28
@@ -17882,7 +17927,9 @@
 /turf/open/floor/plating,
 /area/quartermaster/miningdock)
 "aOA" = (
-/obj/machinery/computer/security/mining,
+/obj/machinery/computer/security/mining{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "aOB" = (
@@ -18316,7 +18363,9 @@
 /turf/open/floor/plating,
 /area/shuttle/mining)
 "aPw" = (
-/obj/machinery/computer/shuttle/mining,
+/obj/machinery/computer/shuttle/mining{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "aPx" = (
@@ -18760,7 +18809,9 @@
 	dir = 4;
 	layer = 2.9
 	},
-/obj/machinery/computer/operating,
+/obj/machinery/computer/operating{
+	dir = 8
+	},
 /turf/open/floor/plasteel/black,
 /area/science/robotics/lab)
 "aQO" = (
@@ -21453,6 +21504,7 @@
 "aWL" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible,
 /obj/machinery/computer/atmos_control/tank{
+	dir = 8;
 	frequency = 1441;
 	input_tag = "mix_in";
 	name = "Gas Mix Tank Control";
@@ -22045,6 +22097,7 @@
 "aYc" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible,
 /obj/machinery/computer/atmos_control/tank{
+	dir = 8;
 	frequency = 1441;
 	input_tag = "n2o_in";
 	name = "Nitrous Oxide Supply Control";
@@ -22563,7 +22616,9 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/chief)
 "aZg" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	dir = 8
+	},
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the Engine.";
 	dir = 8;
@@ -22689,6 +22744,7 @@
 "aZu" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible,
 /obj/machinery/computer/atmos_control/tank{
+	dir = 8;
 	frequency = 1441;
 	input_tag = "tox_in";
 	name = "Plasma Supply Control";
@@ -22779,7 +22835,9 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/chief)
 "aZE" = (
-/obj/machinery/computer/apc_control,
+/obj/machinery/computer/apc_control{
+	dir = 8
+	},
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
@@ -22995,7 +23053,9 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/chief)
 "bab" = (
-/obj/machinery/computer/card/minor/ce,
+/obj/machinery/computer/card/minor/ce{
+	dir = 8
+	},
 /obj/machinery/power/apc{
 	areastring = /area/crew_quarters/heads/chief;
 	dir = 4;
@@ -23404,6 +23464,7 @@
 /area/engine/atmos)
 "baZ" = (
 /obj/machinery/computer/atmos_control/tank{
+	dir = 1;
 	frequency = 1441;
 	input_tag = "n2_in";
 	name = "Nitrogen Supply Control";
@@ -23429,6 +23490,7 @@
 /area/engine/atmos)
 "bbc" = (
 /obj/machinery/computer/atmos_control/tank{
+	dir = 1;
 	frequency = 1441;
 	input_tag = "o2_in";
 	name = "Oxygen Supply Control";
@@ -23452,6 +23514,7 @@
 	dir = 4
 	},
 /obj/machinery/computer/atmos_control/tank{
+	dir = 1;
 	frequency = 1441;
 	input_tag = "air_in";
 	name = "Mixed Air Supply Control";
@@ -23486,6 +23549,7 @@
 	dir = 9
 	},
 /obj/machinery/computer/atmos_control/tank{
+	dir = 8;
 	frequency = 1441;
 	input_tag = "co2_in";
 	name = "Carbon Dioxide Supply Control";
@@ -25793,7 +25857,9 @@
 /area/security/courtroom)
 "bgU" = (
 /obj/structure/window/reinforced,
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/secure_data{
+	dir = 1
+	},
 /turf/open/floor/plasteel/red/side,
 /area/security/brig)
 "bgW" = (
@@ -39698,7 +39764,7 @@ aaa
 aaa
 aaa
 aaa
-bib
+aaa
 aaa
 aaa
 aaa
@@ -59791,7 +59857,7 @@ aaa
 aaa
 aaa
 aaa
-aid
+aaa
 aaa
 aaa
 aaa
@@ -62727,7 +62793,7 @@ aaa
 aaa
 aaa
 aaa
-bia
+aaa
 aaa
 aaa
 aaa
@@ -78955,7 +79021,7 @@ aaa
 aaa
 aaa
 aaa
-bhY
+aaa
 aaa
 aaa
 aaa

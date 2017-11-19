@@ -96,7 +96,9 @@
 	pixel_x = -26;
 	pixel_y = 0
 	},
-/obj/machinery/computer/atmos_alert,
+/obj/machinery/computer/atmos_alert{
+	dir = 1
+	},
 /turf/open/floor/circuit/green,
 /area/bridge)
 "ar" = (
@@ -104,11 +106,15 @@
 	pixel_x = 26;
 	pixel_y = 0
 	},
-/obj/machinery/computer/med_data,
+/obj/machinery/computer/med_data{
+	dir = 1
+	},
 /turf/open/floor/circuit/green,
 /area/bridge)
 "as" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/secure_data{
+	dir = 4
+	},
 /turf/open/floor/circuit/green,
 /area/bridge)
 "at" = (
@@ -141,12 +147,16 @@
 /turf/open/floor/circuit/green,
 /area/bridge)
 "ay" = (
-/obj/machinery/computer/message_monitor,
+/obj/machinery/computer/message_monitor{
+	dir = 8
+	},
 /obj/item/paper/monitorkey,
 /turf/open/floor/circuit/green,
 /area/bridge)
 "az" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/security{
+	dir = 4
+	},
 /turf/open/floor/circuit/green,
 /area/bridge)
 "aA" = (
@@ -214,7 +224,9 @@
 /turf/open/floor/circuit/green,
 /area/bridge)
 "aJ" = (
-/obj/machinery/computer/prisoner,
+/obj/machinery/computer/prisoner{
+	dir = 4
+	},
 /turf/open/floor/circuit/green,
 /area/bridge)
 "aK" = (
@@ -421,11 +433,15 @@
 /turf/open/floor/plasteel/black,
 /area/bridge)
 "bl" = (
-/obj/machinery/computer/upload/ai,
+/obj/machinery/computer/upload/ai{
+	dir = 8
+	},
 /turf/open/floor/circuit/green,
 /area/bridge)
 "bm" = (
-/obj/machinery/computer/upload/borg,
+/obj/machinery/computer/upload/borg{
+	dir = 8
+	},
 /turf/open/floor/circuit/green,
 /area/bridge)
 "bn" = (
@@ -708,11 +724,10 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
 /obj/effect/landmark/observer_start,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
 /turf/open/floor/plasteel/black,
 /area/hallway/primary/central)
 "bQ" = (
@@ -739,8 +754,7 @@
 /area/hallway/primary/central)
 "bT" = (
 /obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
+	dir = 9
 	},
 /turf/open/floor/plasteel/black,
 /area/hallway/primary/central)
@@ -1012,6 +1026,7 @@
 /area/science/lab)
 "cG" = (
 /obj/machinery/computer/camera_advanced/xenobio{
+	dir = 8;
 	networks = list("Xeno")
 	},
 /obj/machinery/button/door{
@@ -1465,6 +1480,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
+/obj/item/device/integrated_circuit_printer,
 /obj/item/clothing/glasses/welding,
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 8
@@ -1775,7 +1791,9 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "ev" = (
-/obj/machinery/computer/rdconsole/core,
+/obj/machinery/computer/rdconsole/core{
+	dir = 1
+	},
 /obj/machinery/light{
 	light_color = "#c9d3e8"
 	},
@@ -3007,7 +3025,9 @@
 /turf/open/floor/plasteel/red/side,
 /area/security/brig)
 "hn" = (
-/obj/machinery/computer/crew,
+/obj/machinery/computer/crew{
+	dir = 1
+	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -3018,7 +3038,9 @@
 /turf/open/floor/plasteel/red/side,
 /area/security/brig)
 "ho" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/secure_data{
+	dir = 1
+	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -3028,7 +3050,9 @@
 /turf/open/floor/plasteel/red/side,
 /area/security/brig)
 "hp" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/security{
+	dir = 1
+	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -3240,7 +3264,9 @@
 /turf/open/floor/plating,
 /area/medical/sleeper)
 "hR" = (
-/obj/machinery/computer/operating,
+/obj/machinery/computer/operating{
+	dir = 4
+	},
 /turf/open/floor/plasteel/black,
 /area/medical/sleeper)
 "hS" = (
@@ -3760,7 +3786,7 @@
 	dir = 1
 	},
 /obj/machinery/power/smes{
-	charge = 5000000
+	charge = 5e+006
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-4"
@@ -3894,7 +3920,9 @@
 /turf/open/floor/plasteel/whiteblue/side,
 /area/medical/sleeper)
 "js" = (
-/obj/machinery/computer/med_data,
+/obj/machinery/computer/med_data{
+	dir = 1
+	},
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
@@ -3902,7 +3930,9 @@
 /turf/open/floor/plasteel/whiteblue/side,
 /area/medical/sleeper)
 "jt" = (
-/obj/machinery/computer/crew,
+/obj/machinery/computer/crew{
+	dir = 1
+	},
 /turf/open/floor/plasteel/whiteblue/side,
 /area/medical/sleeper)
 "ju" = (
@@ -5751,16 +5781,15 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = -29
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 6
 	},
 /turf/open/floor/plasteel/yellow/side,
 /area/hallway/primary/central)
@@ -5879,11 +5908,10 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "op" = (
@@ -6598,12 +6626,14 @@
 /area/engine/engineering)
 "pO" = (
 /obj/machinery/computer/telecomms/monitor{
+	dir = 1;
 	network = "tcommsat"
 	},
 /turf/open/floor/plasteel/black,
 /area/tcommsat/server)
 "pP" = (
 /obj/machinery/computer/telecomms/server{
+	dir = 1;
 	network = "tcommsat"
 	},
 /obj/structure/cable/white{
@@ -7087,7 +7117,7 @@
 /obj/machinery/camera{
 	c_tag = "Supermatter Fore";
 	dir = 2;
-	network = list("Engine", "SS13")
+	network = list("Engine","SS13")
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -7210,7 +7240,9 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "ra" = (
-/obj/machinery/computer/atmos_alert,
+/obj/machinery/computer/atmos_alert{
+	dir = 8
+	},
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 23
@@ -7376,7 +7408,9 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "rw" = (
-/obj/machinery/computer/atmos_control,
+/obj/machinery/computer/atmos_control{
+	dir = 8
+	},
 /obj/item/device/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
@@ -8167,6 +8201,7 @@
 /area/engine/atmos)
 "ti" = (
 /obj/machinery/computer/atmos_control/tank{
+	dir = 1;
 	frequency = 1441;
 	input_tag = "o2_in";
 	name = "Oxygen Supply Control";
@@ -8311,8 +8346,7 @@
 	req_access_txt = "32"
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
+	dir = 5
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -8413,7 +8447,7 @@
 /obj/machinery/camera{
 	c_tag = "Supermatter Aft";
 	dir = 2;
-	network = list("Engine", "SS13")
+	network = list("Engine","SS13")
 	},
 /obj/machinery/light{
 	dir = 1
@@ -8636,6 +8670,7 @@
 /area/engine/atmos)
 "ue" = (
 /obj/machinery/computer/atmos_control/tank{
+	dir = 1;
 	frequency = 1441;
 	input_tag = "n2_in";
 	name = "Nitrogen Supply Control";
@@ -8811,6 +8846,7 @@
 /area/engine/atmos)
 "uB" = (
 /obj/machinery/computer/atmos_control/tank{
+	dir = 1;
 	frequency = 1441;
 	input_tag = "air_in";
 	name = "Mixed Air Supply Control";
@@ -9447,6 +9483,10 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/primary/central)
+"wj" = (
+/obj/structure/reagent_dispensers/cooking_oil,
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
 
 (1,1,1) = {"
 aa
@@ -44785,7 +44825,7 @@ lr
 mK
 nd
 ns
-nf
+wj
 mK
 nW
 oh
