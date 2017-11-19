@@ -9,7 +9,6 @@
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	materials = list(MAT_METAL=250, MAT_GLASS=500)
-	origin_tech = "magnets=5;engineering=5;powerstorage=4"
 	var/max_shield_integrity = 250
 	var/shield_integrity = 250
 	var/max_fields = 3

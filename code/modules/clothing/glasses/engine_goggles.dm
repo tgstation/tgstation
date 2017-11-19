@@ -11,7 +11,6 @@
 	icon_state = "trayson-meson"
 	item_state = "trayson-meson"
 	actions_types = list(/datum/action/item_action/toggle_mode)
-	origin_tech = "materials=3;magnets=3;engineering=3;plasmatech=3"
 
 	vision_flags = NONE
 	darkness_view = 2
@@ -135,8 +134,6 @@
 	icon_state = "trayson-t-ray"
 	item_state = "trayson-t-ray"
 	desc = "Used by engineering staff to see underfloor objects such as cables and pipes."
-	origin_tech = "materials=3;magnets=2;engineering=2"
-
 	range = 2
 
 	modes = list(MODE_NONE = MODE_TRAY, MODE_TRAY = MODE_NONE)

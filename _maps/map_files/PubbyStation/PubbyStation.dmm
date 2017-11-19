@@ -9016,6 +9016,7 @@
 	dir = 4;
 	pixel_x = 28
 	},
+/obj/machinery/computer/rdconsole,
 /turf/open/floor/plasteel/darkblue/side{
 	dir = 4
 	},
@@ -25929,7 +25930,7 @@
 	},
 /area/science/robotics/lab)
 "blM" = (
-/obj/machinery/r_n_d/server/core,
+/obj/machinery/rnd/server,
 /obj/structure/sign/poster/random{
 	pixel_y = 32
 	},
@@ -25946,7 +25947,7 @@
 /turf/open/floor/plasteel/black/telecomms/server/walkway,
 /area/science/server)
 "blO" = (
-/obj/machinery/r_n_d/server/robotics,
+/obj/machinery/rnd/server,
 /obj/structure/sign/poster/random{
 	pixel_y = 32
 	},
@@ -25961,7 +25962,7 @@
 /turf/open/floor/engine,
 /area/science/explab)
 "blQ" = (
-/obj/machinery/r_n_d/experimentor,
+/obj/machinery/rnd/experimentor,
 /turf/open/floor/engine,
 /area/science/explab)
 "blR" = (
@@ -26713,7 +26714,7 @@
 /turf/open/floor/plasteel,
 /area/science/research/lobby)
 "bnO" = (
-/obj/machinery/r_n_d/circuit_imprinter,
+/obj/machinery/rnd/circuit_imprinter,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -29695,7 +29696,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/lab)
 "bup" = (
-/obj/machinery/r_n_d/destructive_analyzer,
+/obj/machinery/rnd/destructive_analyzer,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/science/lab)
@@ -29706,8 +29707,8 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "bur" = (
-/obj/machinery/r_n_d/protolathe,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/rnd/protolathe/department/science,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "bus" = (
@@ -30240,11 +30241,9 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "bvy" = (
-/obj/machinery/r_n_d/circuit_imprinter{
-	pixel_y = 4
-	},
 /obj/item/reagent_containers/glass/beaker/sulphuric,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/rnd/circuit_imprinter/department/science,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "bvz" = (
@@ -34041,13 +34040,13 @@
 	},
 /area/hallway/primary/aft)
 "bDB" = (
-/obj/machinery/computer/aifixer{
-	dir = 4
-	},
 /obj/machinery/airalarm{
 	dir = 4;
 	locked = 0;
 	pixel_x = -23
+	},
+/obj/machinery/computer/rdconsole{
+	dir = 4
 	},
 /turf/open/floor/plasteel/darkpurple/side{
 	dir = 8
@@ -39464,7 +39463,6 @@
 	pixel_y = -3
 	},
 /obj/item/circuitboard/machine/destructive_analyzer,
-/obj/item/circuitboard/machine/protolathe,
 /obj/item/circuitboard/computer/aifixer,
 /obj/item/circuitboard/computer/teleporter,
 /obj/item/circuitboard/machine/circuit_imprinter,
@@ -42976,6 +42974,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/computer/rdconsole/production,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "bYL" = (
@@ -43005,6 +43004,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/rnd/circuit_imprinter,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "bYN" = (
@@ -43026,6 +43026,7 @@
 	icon_state = "map-pubby";
 	pixel_y = 32
 	},
+/obj/machinery/rnd/protolathe/department/engineering,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "bYO" = (
@@ -51261,6 +51262,25 @@
 "cCA" = (
 /turf/closed/wall,
 /area/science/lab)
+"cCB" = (
+/obj/machinery/rnd/protolathe/department/security,
+/turf/open/floor/plasteel,
+/area/security/main)
+"cCC" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/rnd/protolathe/department/cargo,
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
+"cCD" = (
+/obj/machinery/rnd/protolathe/department/service,
+/turf/closed/wall,
+/area/crew_quarters/kitchen)
+"cCE" = (
+/obj/machinery/rnd/protolathe/department/medical,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 
 (1,1,1) = {"
 aaa
@@ -76008,7 +76028,7 @@ agP
 ajn
 ajW
 ajV
-alE
+cCB
 amp
 and
 and
@@ -78133,7 +78153,7 @@ bBa
 bCj
 bsA
 bEw
-bkh
+cCE
 bkh
 bId
 bFO
@@ -79649,7 +79669,7 @@ aRN
 aRN
 aZZ
 bbf
-aRN
+cCD
 aRN
 beo
 aRN
@@ -84290,10 +84310,10 @@ bjq
 cqh
 bjo
 cCl
-cCq
-cCs
-cCv
-cCy
+cCl
+cCl
+cCl
+cCl
 bxa
 byD
 bAm
@@ -84546,11 +84566,11 @@ blv
 bkn
 cqi
 boP
-cCm
+cCl
 brp
 bsQ
 buo
-cCz
+cCl
 bxb
 byE
 bAn
@@ -84803,10 +84823,10 @@ blw
 bkn
 cqi
 boQ
-cCn
+cCl
 brq
 cCt
-cCw
+cCt
 bvv
 bxc
 byF
@@ -85060,7 +85080,7 @@ blx
 bkn
 bnI
 boR
-cCo
+cCl
 brr
 bsR
 bup
@@ -86088,10 +86108,10 @@ blA
 bmJ
 bnL
 boU
-cCp
-cCr
-cCu
-cCx
+cCl
+cCl
+cCl
+cCl
 bqb
 bxh
 bqb
@@ -86549,8 +86569,8 @@ aaa
 aaa
 aht
 cBU
-cBZ
-cCb
+cBU
+cBU
 apT
 apT
 apT
@@ -86805,7 +86825,7 @@ aaa
 aaa
 aaa
 aht
-cBV
+cBU
 aoA
 apq
 apU
@@ -87062,7 +87082,7 @@ aaa
 aaa
 aaa
 aht
-cBW
+cBU
 aoB
 apr
 apV
@@ -87070,7 +87090,7 @@ aqR
 arY
 atb
 aug
-cCj
+cBU
 awk
 axn
 axn
@@ -87319,7 +87339,7 @@ aaa
 aaa
 aaa
 aht
-cBX
+cBU
 aoC
 aps
 apW
@@ -87576,11 +87596,11 @@ aaa
 aaa
 aaa
 aht
-cBY
-cCa
-cCc
-cCd
-cCe
+cBU
+cBU
+cBU
+cBU
+cBU
 asa
 atd
 aui
@@ -87837,11 +87857,11 @@ aaa
 aaa
 aaa
 aaa
-cCf
-cCg
-cCh
-cCi
-cCk
+cBU
+cBU
+cBU
+cBU
+cBU
 awd
 axi
 aaa
@@ -90196,7 +90216,7 @@ aNR
 bix
 aFi
 bkx
-blO
+blM
 bmU
 bnT
 bpc
@@ -91468,7 +91488,7 @@ aVz
 aWz
 aVz
 aYz
-aZo
+cCC
 baC
 bbI
 bbI

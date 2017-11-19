@@ -29,7 +29,7 @@ GLOBAL_LIST_INIT(huds, list(
 	var/list/hud_icons = list() //these will be the indexes for the atom's hud_list
 
 /datum/atom_hud/proc/remove_hud_from(mob/M)
-	if(!M)
+	if(!M || !hudusers[M])
 		return
 	if (!--hudusers[M])
 		hudusers -= M
@@ -79,7 +79,8 @@ GLOBAL_LIST_INIT(huds, list(
 /mob/proc/reload_huds()
 	for(var/datum/atom_hud/hud in (GLOB.huds|GLOB.active_alternate_appearances))
 		if(hud && hud.hudusers[src])
-			hud.add_hud_to(src)
+			for(var/atom/A in hud.hudatoms)
+				hud.add_to_single_hud(src, A)
 
 /mob/dead/new_player/reload_huds()
 	return
