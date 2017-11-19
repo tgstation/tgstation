@@ -14,11 +14,11 @@ Format:
 endmap
 
 map hippiestation
+	default
 	#voteweight 1.5
 endmap
 
 map boxstation
-	default
 endmap
 
 map metastation
