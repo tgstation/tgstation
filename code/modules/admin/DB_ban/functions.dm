@@ -406,8 +406,6 @@
 	output += "Please note that all jobban bans or unbans are in-effect the following round."
 
 	if(adminckey || playerckey || ip || cid)
-		playerckey = sanitizeSQL(ckey(playerckey))
-		adminckey = sanitizeSQL(ckey(adminckey))
 		var/search = ""
 		if(playerckey)
 			search += "AND ckey = '[playerckey]' "
@@ -417,6 +415,7 @@
 			search += "AND ip = '[ip]' "
 		if(cid)
 			search += "AND computerid = '[cid]' "
+		search = sanitizeSQL(search)
 		var/bancount = 0
 		var/bansperpage = 15
 		var/pagecount = 0
