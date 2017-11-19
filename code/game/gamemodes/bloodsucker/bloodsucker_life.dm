@@ -47,9 +47,10 @@
 		// Advanced, Alive-Only Regenerate
 		if (!poweron_humandisguise)
 			// Run handle_healing_active(). It's free if you're feeding. If we start healing (and still have blood to do so), give notice.
-			if (handle_healing_active(1,poweron_feed?0:1) && healingnotice == 0 && owner.current.blood_volume > 0)
-				healingnotice = 1
-				to_chat(owner, "<span class='notice'>The power of your blood begins knitting your wounds...</span>")
+			if (handle_healing_active(1,poweron_feed?0:1))
+				if (healingnotice == 0 && owner.current.blood_volume > 0)
+					to_chat(owner, "<span class='notice'>The power of your blood begins knitting your wounds...</span>")
+					healingnotice = 1
 			else if (healingnotice == 1)
 				healingnotice = 0
 
@@ -59,7 +60,7 @@
 
 		// Deduct Blood
 		if (!poweron_feed)
-			set_blood_volume (-0.25) // (-0.3) // Default normal is 560. Also, humans REGROW blood at 0.1 a tick. Never go lower than BLOOD_VOLUME_BAD
+			set_blood_volume (-0.15) // (-0.3) // Default normal is 560. Also, humans REGROW blood at 0.1 a tick. Never go lower than BLOOD_VOLUME_BAD
 
 		// Shift Bloodsucker Temperature to Location's Temp
 		if (!poweron_humandisguise && owner.current)
@@ -200,7 +201,7 @@ datum/antagonist/bloodsucker/proc/handle_healing_natural()
 datum/antagonist/bloodsucker/proc/handle_healing_active(healmult=1,costmult=1, torpidhealing=FALSE) // Return TRUE if we just healed wounds. Return FALSE if we don't have any.
 
 	// No healing if: A) Dead while handle_life() healing, or B) Your powers are disabled (staked and no heart)
-	if (!torpidhealing && owner.current.stat == DEAD || !owner.current.BloodsuckerCanUsePowers()) // Do this AFTER healing so we can disable bleeding to death and crap. Handle Healing has its OWN am-dead check
+	if (!torpidhealing && owner.current.stat == DEAD || !owner.current.HaveBloodsuckerBodyparts()) // Do this AFTER healing so we can disable bleeding to death and crap. Handle Healing has its OWN am-dead check
 		return 1	// We return TRUE because we're not done healing.
 
 	// We ONLY heal if we have blood remaining.
@@ -223,7 +224,7 @@ datum/antagonist/bloodsucker/proc/handle_healing_active(healmult=1,costmult=1, t
 datum/antagonist/bloodsucker/proc/handle_healing_torpid() // Return TRUE if we just healed wounds. Return FALSE if we don't have any.
 
 	// No healing if your powers are disabled (no heart)
-	if (!owner.current.BloodsuckerCanUsePowers())
+	if (!owner.current.HaveBloodsuckerBodyparts())
 		return 1
 
 	// Toxins, Oxygen (Torpid vamps still heal this)

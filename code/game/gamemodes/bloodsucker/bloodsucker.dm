@@ -66,15 +66,21 @@
 
 
 
-/datum/game_mode/proc/can_make_bloodsucker(datum/mind/bloodsucker)
+/datum/game_mode/proc/can_make_bloodsucker(datum/mind/bloodsucker,datum/mind/creator) // Creator is just here so we can display fail messages to whoever is turning us.
 	// No Mind
-	if(!bloodsucker || !bloodsucker.key)
+	if(!bloodsucker || !bloodsucker.key) // KEY is client login?
+		if(creator)
+			to_chat(creator, "<span class='danger'>[bloodsucker] isn't self-aware enough to be raised as a Bloodsucker!</span>")
 		return 0
 	// Current body is invalid
 	if(!ishuman(bloodsucker.current) && !ismonkey(bloodsucker.current))
+		if(creator)
+			to_chat(creator, "<span class='danger'>[bloodsucker] isn't evolved enough to be raised as a Bloodsucker!</span>")
 		return 0
 	// Already a vamp
 	if(bloodsucker.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
+		if(creator)
+			to_chat(creator, "<span class='danger'>[bloodsucker] is already a Bloodsucker!</span>")
 		return 0
 	return 1
 

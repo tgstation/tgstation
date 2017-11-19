@@ -30,6 +30,21 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/datum/objective/bloodsucker/coffin
+	//dangerrating = 4
+	martyr_compatible = 1
+
+//						 GENERATE!
+/datum/objective/bloodsucker/coffin/proc/generate_objective()
+	update_explanation_text()
+
+/datum/objective/bloodsucker/embrace/update_explanation_text()
+	explanation_text = "Embrace [target_amount] crewmember[target_amount == 1 ? "" : "s"] into a creature of the night."
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 
 /datum/objective/bloodsucker/embrace
@@ -59,7 +74,7 @@
 /datum/objective/bloodsucker/embrace/check_completion()
 	var/datum/antagonist/bloodsucker/antagdatum = owner.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 
-	if (antagdatum && antagdatum.vampsMade > target_amount)
+	if (antagdatum && antagdatum.vampsMade >= target_amount)
 		return 1
 	return 0
 
@@ -165,7 +180,7 @@
 		return 0
 	// Dead, without a head or heart? Cya
 	//message_admins("[owner] DEBUG OBJECTIVE: Survive: [owner.current.stat] / [owner.current.BloodsuckerCanUsePowers()] .")
-	return owner.current.stat != DEAD || owner.current.BloodsuckerCanUsePowers()
+	return owner.current.stat != DEAD || owner.current.HaveBloodsuckerBodyparts()
 
 
 

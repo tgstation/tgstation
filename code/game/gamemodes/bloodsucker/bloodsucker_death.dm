@@ -21,7 +21,6 @@
 			 "<span class='italics'>You hear a wet, bursting sound.</span>")
 		owner.current.gib()
 
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //			RAISE BLOODSUCKERS AND VASSALS
@@ -44,23 +43,26 @@ datum/antagonist/bloodsucker/proc/attempt_turn_bloodsucker(mob/living/carbon/tar
 	// -NOT a Bloodsucker already
 
 	// Vamp-specific: just skip.
-	if (!target.mind)
-		to_chat(owner, "<span class='danger'>[target] cannot be raised as a Bloodsucker!</span>")
+	if (target.stat != DEAD)
+		if (target.stat > 0) // Only give warning if target isn't walking and talking.
+			to_chat(owner, "<span class='danger'>[target] cannot be raised as a Bloodsucker so long as they remain alive.</span>")
 		return 0
-	if (target.stat != DEAD || target.amTurning || target.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
-	//if (target.mind.bloodsuckerinfo || target.stat != DEAD || target.mind.CheckHaveCallback(CALLBACK(target, /mob/living/carbon.proc/turning_bloodsucker, user.mind))) // NOTE: FAKEDEATH is how we can tell if we're already trying to Turn.
+	if (!target.mind)
+		to_chat(owner, "<span class='danger'>[target] is not self-aware enough to be raised as a Bloodsucker!</span>")
+		return 0
+	if (target.amTurning || target.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
 		//to_chat(owner, "<span class='userdanger'>DEBUG: TurnBloodsucker fail [target.mind]/ [target.stat] / [target.status_flags & FAKEDEATH] </span>")
 		return 0
 	// Can be Bloodsucker? Player is active?
-	if (!target.can_turn_bloodsucker())	// Invalid, or Final Death (no Head/Heart)
-		to_chat(owner, "<span class='danger'>[target] cannot be raised as a Bloodsucker!</span>")
+	if (!target.can_turn_bloodsucker(owner))	// Invalid, or Final Death (no Head/Heart)
+		// NOTE: Warning given in the above proc
 		//message_admins("DEBUG: Turn Fail 3")
 		return 0
 	// Not Dead? Not dying of NO blood?
-	if (target.blood_volume > 0)
-		to_chat(owner, "<span class='danger'>[target] resists the power of your blood. Drain them of their mortal blood first.</span>")
-		//message_admins("DEBUG: Turn Fail 4")
-		return 0
+	//if (target.blood_volume > 0)
+	//	to_chat(owner, "<span class='danger'>[target] resists the power of your blood. Drain them of their mortal blood first.</span>")
+	//	//message_admins("DEBUG: Turn Fail 4")
+	//	return 0
 
 	// Check Blood Content of Stomach
 	//if (target.blood_volume > 0)
@@ -115,10 +117,33 @@ datum/antagonist/bloodsucker/proc/attempt_turn_bloodsucker(mob/living/carbon/tar
 	// var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as the spirit of [user.real_name]'s blade?", ROLE_PAI, null, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
 
 
-/mob/living/carbon/proc/can_turn_bloodsucker()
-	if (!client || stat != DEAD || !mind || !ckey || !SSticker.mode.can_make_bloodsucker(mind) || AmStaked())
-		//message_admins("DEBUG: Cannot turn [src] into bloodsucker: [stat] / [mind] / [ckey] / [SSticker.mode.can_make_bloodsucker(mind)] / [AmStaked()]")
+/mob/living/carbon/proc/can_turn_bloodsucker(datum/mind/creator)
+	if (!HaveBloodsuckerBodyparts())
+		if (creator)
+			to_chat(creator, "<span class='danger'>[src] is missing vital bodyparts to make regneration possible.</span>")
 		return 0
+	// Staked?
+	if (AmStaked())
+		if (creator)
+			to_chat(creator, "<span class='danger'>The stake in [src]'s chest is preventing their return from death.</span>")
+		return 0
+	// Not Dead, No Mind, or GENERAL CHECK (not human, already vamp, etc.)
+	if (stat != DEAD || !mind || !SSticker.mode.can_make_bloodsucker(mind,creator)) //  || !client)  <--- REMOVED. If you are ghosted, you have no client.
+		if (creator)
+			to_chat(creator, "<span class='danger'>[src] cannot be raised as a Bloodsucker!</span>")
+		//message_admins("DEBUG: Cannot turn [src] into bloodsucker: [client] / [stat] / [mind] / [ckey] / [SSticker.mode.can_make_bloodsucker(mind)] / [AmStaked()]  ||| [mind.key]")
+		return 0
+	// Ghost occupied a new
+	var/mob/G = mind.get_ghost()
+	if (!ckey && !G)
+		if (creator)
+			to_chat(creator, "<span class='danger'>[src] has passed on.</span>")
+		return 0
+	//if (mind.current != src)
+	//	to_chat(creator, "<span class='danger'>[src] has passed on.</span>")
+	//	return 0
+	// NOTE: If there is any problem figuring out ghosts and ckey reservation, look up both cloning.dm files (one for the machine, one for the process)
+	// ALSO: Use mind.get_ghost() to find their floating spooky ghost if needed.
 
 	return 1
 
@@ -132,6 +157,8 @@ datum/antagonist/bloodsucker/proc/attempt_turn_bloodsucker(mob/living/carbon/tar
 	amTurning = TRUE
 
 	for(var/turnphase in 0 to 1) // NOTE: can write for(var/mob in CONTAINER to sort thru all contents)   //var/turnphase = 0 //while(turnphase < 2)
+		// Bring Ghost Back //
+		ckey = mind.key
 		switch(turnphase)
 			if (0)
 				to_chat(src, "<span class='danger'>Something inside you is changing. Warmth seeps into your dead bones.</span>")
@@ -140,13 +167,13 @@ datum/antagonist/bloodsucker/proc/attempt_turn_bloodsucker(mob/living/carbon/tar
 				to_chat(src, "<span class='danger'>Your skin stretches taut across the reinvigorated fibers of your decaying muscles.</span>")
 
 		//message_admins("DEBUG: [name] Becoming Bloodsucker... SLEEPING 1 SEC, Final should be 15)")
-		sleep(10)//(150)
+		sleep(150)
 		turnphase ++
 		// Checks: Not dead anymore? Can't make Bloodsucker? EXIT.
-		ckey = mind.key
 		if (!can_turn_bloodsucker())//stat != DEAD || !mind || !ckey || !SSticker.mode.can_make_bloodsucker(mind, 1))
 			to_chat(src, "<span class='danger'>Your soul recoils and you return to death once more.</span>")
 			to_chat(vampfather.current, "<span class='userdanger'>Your attempt to bring [src] into unlife as a Bloodsucker has been thwarted. You lament your stillborn childe.</span>")
+			amTurning = FALSE
 			return
 
 	// Attempt Full Revive
@@ -160,7 +187,19 @@ datum/antagonist/bloodsucker/proc/attempt_turn_bloodsucker(mob/living/carbon/tar
 	SetKnockdown(0, 0)
 	SetSleeping(0, 0)
 	heal_overall_damage(max(0, getBruteLoss() - 50), max(0, getFireLoss() - 50), 0, 0, 1) //heal brute and burn dmg on both organic and robotic limbs, and update health right away.
+	ckey = mind.key
+	if (can_be_revived())
+		revive(0)
+
+	//blood_volume = min(blood_volume, BLOOD_VOLUME_SURVIVE)
 	//revive(0)
+
+	// Put Ghost in Body											// TO DO! If this GHOST is not in another body, put them back in their bloodsucker! ** IN FACT, dont rest them if they have a new body**
+	//var/mob/currentMob = owner.current
+	//	if(!currentMob)
+	//		currentMob = owner.get_ghost()
+	//		if(!currentMob)
+	// NOTE: When turning Ghost (voluntarily or by death), your ghost has the SAME MIND as your body.
 
 	// Ready!
 	SSticker.mode.make_bloodsucker(mind, 1)
@@ -169,7 +208,7 @@ datum/antagonist/bloodsucker/proc/attempt_turn_bloodsucker(mob/living/carbon/tar
 	// It's Happening!
 	var/datum/antagonist/bloodsucker/vampfatherdatum = vampfather.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	if (vampfatherdatum)
-		vampfatherdatum.vampsMade ++
+		vampfatherdatum.vampsMade ++ // Give credit for the Embrace.
 	if (vampfather.current)
 		to_chat(vampfather.current, "<span class='userdanger'>You feel a [vampfather.current.gender == MALE ? "fatherly" : "motherly"] twinge in your dead heart. [src] has risen as your Bloodsucker child!</span>")
 	message_admins("[src] has become a Bloodsucker, and was created by [vampfather.current].")
@@ -186,7 +225,7 @@ datum/antagonist/bloodsucker/proc/attempt_turn_bloodsucker(mob/living/carbon/tar
 		blood.volume = 0
 
 	// Mind not Present? Place into Torpor (wait for them to come back)
-	if (!key || stat == DEAD)
+	if (!client || stat == DEAD)
 		var/obj/effect/proc_holder/spell/bloodsucker/power_torpor = locate(/obj/effect/proc_holder/spell/bloodsucker/torpidsleep) in bloodsuckerdatum.powers
 		if (power_torpor)
 			power_torpor.perform(null, TRUE, src)
