@@ -154,6 +154,7 @@ feedback data can be recorded in 5 formats:
 	used to track the number of occurances of structured semi-relational values i.e. the results of arcade machines
 	similar to running total, but related values are nested in a multi-dimensional array built
 	the final element in the data list is used as the tracking key, all prior elements are used for nesting
+	all data list elements must be strings
 	further calls to the same key will:
 	 	add or subtract from the saved value of the data key if it already exists in the same multi-dimensional position
 		append the key and it's value if it doesn't exist
