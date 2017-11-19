@@ -5,6 +5,7 @@
 	icon = 'icons/mob/human.dmi'
 	icon_state = "caucasian_m"
 	appearance_flags = KEEP_TOGETHER|TILE_BOUND|PIXEL_SCALE
+	var/has_agnosia_image = TRUE
 
 /mob/living/carbon/human/Initialize()
 	verbs += /mob/living/proc/mob_sleep
@@ -28,12 +29,9 @@
 
 	. = ..()
 
-	//Image override for agnosiacs
-	var/mutable_appearance/I = mutable_appearance(icon = 'icons/mob/simple_human.dmi', icon_state = "faceless", loc = src)
-	I.override = 1
-	I.name = "Unknown"
-	I.appearance_flags = KEEP_APART|RESET_COLOR|PIXEL_SCALE
-	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/agnosia, "agnosia", I, FALSE)
+	if(has_agnosia_image)
+		generate_agnosia_image()
+
 
 /mob/living/carbon/human/OpenCraftingMenu()
 	handcrafting.ui_interact(src)
@@ -47,6 +45,15 @@
 	sec_hud_set_security_status()
 	//...and display them.
 	add_to_all_human_data_huds()
+
+/mob/living/carbon/human/proc/generate_agnosia_image()
+	//Image override for agnosiacs
+	var/icon/I = new(icon = 'icons/mob/simple_human.dmi', icon_state = "faceless", loc = src)
+	I.override = 1
+	I.name = "Unknown"
+	I.appearance_flags = KEEP_APART|RESET_COLOR|PIXEL_SCALE
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/agnosia, "agnosia", I, FALSE)
+
 
 /mob/living/carbon/human/Stat()
 	..()
