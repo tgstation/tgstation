@@ -14,6 +14,8 @@
 #define LAZYLEN(L) length(L)
 #define SANITIZE_LIST(L) ( islist(L) ? L : list() )
 
+#define LIST_CLEAR_NULLS(L) ( L -= new /list(FASTLEN(L)) )
+
 /proc/safepick(list/L)
 	if(istype(L))
 		return pick(L)
@@ -104,14 +106,6 @@
 			for(var/P in path)
 				for(var/T in typesof(P))
 					.[T] = TRUE
-
-//Removes any null entries from the list
-//Returns TRUE if the list had nulls, FALSE otherwise
-/proc/listclearnulls(list/L)
-	var/start_len = FASTLEN(L)
-	var/list/N = new(start_len)
-	L -= N
-	return FASTLEN(L) < start_len
 
 /*
  * Returns list containing all the entries from first list that are not present in second.

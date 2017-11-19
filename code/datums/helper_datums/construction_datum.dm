@@ -45,11 +45,11 @@
 
 /datum/construction/proc/check_all_steps(atom/used_atom,mob/user) //check all steps, remove matching one.
 	for(var/i=1;i<=steps.len;i++)
-		var/list/L = steps[i];
+		var/list/L = steps[i]
 		if(istype(used_atom, L["key"]))
 			if(custom_action(i, used_atom, user))
-				steps[i]=null;//stupid byond list from list removal...
-				listclearnulls(steps);
+				steps[i] = null //stupid byond list from list removal...
+				LIST_CLEAR_NULLS(steps)
 				if(!steps.len)
 					spawn_result()
 				return 1

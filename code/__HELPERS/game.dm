@@ -43,7 +43,7 @@
 			get_area(get_ranged_target_turf(center, SOUTH, 1)),
 			get_area(get_ranged_target_turf(center, EAST, 1)),
 			get_area(get_ranged_target_turf(center, WEST, 1)))
-	listclearnulls(.)
+	LIST_CLEAR_NULLS(.)
 
 /proc/get_open_turf_in_dir(atom/center, dir)
 	var/turf/open/T = get_ranged_target_turf(center, dir, 1)
@@ -55,7 +55,7 @@
 			get_open_turf_in_dir(center, SOUTH),
 			get_open_turf_in_dir(center, EAST),
 			get_open_turf_in_dir(center, WEST))
-	listclearnulls(.)
+	LIST_CLEAR_NULLS(.)
 
 /proc/get_adjacent_open_areas(atom/center)
 	. = list()
@@ -504,7 +504,7 @@
 		if(!M.key || !M.client)
 			result -= M
 
-	listclearnulls(result)
+	LIST_CLEAR_NULLS(result)
 
 	return result
 
