@@ -406,21 +406,21 @@
 	output += "Please note that all jobban bans or unbans are in-effect the following round."
 
 	if(adminckey || playerckey || ip || cid)
-		var/search = ""
+		var/list/searchlist = list()
 		if(playerckey)
-			search += "AND ckey = '[playerckey]' "
+			searchlist += "ckey = '[sanitizeSQL(ckey(playerckey))]'"
 		if(adminckey)
-			search += "AND a_ckey = '[adminckey]' "
+			searchlist += "a_ckey = '[sanitizeSQL(ckey(adminckey))]'"
 		if(ip)
-			search += "AND ip = '[ip]' "
+			searchlist += "ip = INET_ATON('[sanitizeSQL(ip)]')"
 		if(cid)
-			search += "AND computerid = '[cid]' "
-		search = sanitizeSQL(search)
+			searchlist += "computerid = '[sanitizeSQL(cid)]'"
+		var/search = searchlist.Join(" AND ")
 		var/bancount = 0
 		var/bansperpage = 15
 		var/pagecount = 0
 		page = text2num(page)
-		var/datum/DBQuery/query_count_bans = SSdbcore.NewQuery("SELECT COUNT(id) FROM [format_table_name("ban")] WHERE 1 [search]")
+		var/datum/DBQuery/query_count_bans = SSdbcore.NewQuery("SELECT COUNT(id) FROM [format_table_name("ban")] WHERE [search]")
 		if(!query_count_bans.warn_execute())
 			return
 		if(query_count_bans.NextRow())
@@ -446,7 +446,7 @@
 		output += "<th width='15%'><b>OPTIONS</b></th>"
 		output += "</tr>"
 		var/limit = " LIMIT [bansperpage * page], [bansperpage]"
-		var/datum/DBQuery/query_search_bans = SSdbcore.NewQuery("SELECT id, bantime, bantype, reason, job, duration, expiration_time, ckey, a_ckey, unbanned, unbanned_ckey, unbanned_datetime, edits, round_id FROM [format_table_name("ban")] WHERE 1 [search] ORDER BY bantime DESC[limit]")
+		var/datum/DBQuery/query_search_bans = SSdbcore.NewQuery("SELECT id, bantime, bantype, reason, job, duration, expiration_time, ckey, a_ckey, unbanned, unbanned_ckey, unbanned_datetime, edits, round_id FROM [format_table_name("ban")] WHERE [search] ORDER BY bantime DESC[limit]")
 		if(!query_search_bans.warn_execute())
 			return
 
