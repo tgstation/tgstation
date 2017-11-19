@@ -205,6 +205,7 @@
 /obj/item/disk/holodisk
 	name = "holorecord disk"
 	desc = "Stores recorder holocalls."
+	icon_state = "holodisk"
 	var/datum/holorecord/record
 	//Preset variables
 	var/preset_image_type
