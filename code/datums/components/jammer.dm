@@ -3,7 +3,7 @@
 	var/range
 	var/name
 
-/datum/component/jammer/Initialize(jammer_range, var/jammer_name = parent, start_actived = FALSE)
+/datum/component/jammer/Initialize(var/jammer_range, var/jammer_name = parent, var/start_actived = FALSE)
 	if(istype(parent, /obj/item))
 		RegisterSignal(COMSIG_ITEM_ATTACK_SELF, .proc/Toggle)
 	range = jammer_range
