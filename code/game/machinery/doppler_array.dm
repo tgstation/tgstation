@@ -7,8 +7,8 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	icon_state = "tdoppler"
 	density = TRUE
 	anchored = TRUE
-	var/integrated = 0
-	var/max_dist = 100
+	var/integrated = FALSE
+	var/max_dist = 150
 	verb_say = "states coldly"
 
 /obj/machinery/doppler_array/Initialize()
@@ -85,7 +85,7 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 							 "Epicenter at: grid ([epicenter.x],[epicenter.y]). Temporal displacement of tachyons: [took] seconds.", \
 							 "Factual: Epicenter radius: [devastation_range]. Outer radius: [heavy_impact_range]. Shockwave radius: [light_impact_range].")
 
-	// If the bomb was capped, say it's theoretical size.
+	// If the bomb was capped, say its theoretical size.
 	if(devastation_range < orig_dev_range || heavy_impact_range < orig_heavy_range || light_impact_range < orig_light_range)
 		messages += "Theoretical: Epicenter radius: [orig_dev_range]. Outer radius: [orig_heavy_range]. Shockwave radius: [orig_light_range]."
 
@@ -112,6 +112,32 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 //Portable version, built into EOD equipment. It simply provides an explosion's three damage levels.
 /obj/machinery/doppler_array/integrated
 	name = "integrated tachyon-doppler module"
-	integrated = 1
+	integrated = TRUE
 	max_dist = 21 //Should detect most explosions in hearing range.
 	use_power = NO_POWER_USE
+
+/obj/machinery/doppler_array/research
+	name = "tachyon-dopplar research array"
+	desc = "A specialized tacyhon-dopplar bomb detection array that uses the results of the highest yield of explosions for research."
+	var/datum/techweb/linked_techweb
+
+/obj/machinery/doppler_array/research/sense_explosion(turf/epicenter, dev, heavy, light, time, orig_dev, orig_heavy, orig_light)	//probably needs a way to ignore admin explosives later on
+	. = ..()
+	if(!istype(linked_techweb))
+		say("Warning: No linked research system!")
+		return
+	var/point_gain = techweb_scale_bomb(orig_light - 20 - linked_techweb.max_bomb_value)
+	if(!point_gain)
+		return
+	linked_techweb.max_bomb_value = orig_light - 20
+	linked_techweb.research_points += point_gain
+	say("Gained [point_gain] points from explosion dataset.")
+
+/obj/machinery/doppler_array/research/science
+
+/obj/machinery/doppler_array/research/science/Initialize()
+	. = ..()
+	linked_techweb = SSresearch.science_tech
+
+/proc/techweb_scale_bomb(lightradius)
+	return (lightradius ** 0.5) * 13000

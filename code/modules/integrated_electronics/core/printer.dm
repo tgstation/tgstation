@@ -68,6 +68,7 @@
 			return TRUE
 		to_chat(user, "<span class='notice'>You install \the [O] into  \the [src]. </span>")
 		upgraded = TRUE
+		qdel(O)
 		interact(user)
 		return TRUE
 
@@ -77,6 +78,7 @@
 			return TRUE
 		to_chat(user, "<span class='notice'>You install \the [O] into  \the [src]. </span>")
 		can_clone = TRUE
+		qdel(O)
 		interact(user)
 		return TRUE
 
@@ -216,7 +218,6 @@
 	icon_state = "upgrade_disk"
 	item_state = "card-id"
 	w_class = WEIGHT_CLASS_SMALL
-	origin_tech = list(TECH_ENGINEERING = 3, TECH_DATA = 4)
 
 /obj/item/disk/integrated_circuit/upgrade/advanced
 	name = "integrated circuit printer upgrade disk - advanced designs"
@@ -227,7 +228,6 @@
 	name = "integrated circuit printer upgrade disk - circuit cloner"
 	desc = "Install this into your integrated circuit printer to enhance it.  This one allows the printer to duplicate assemblies."
 	icon_state = "upgrade_disk_clone"
-	origin_tech = list(TECH_ENGINEERING = 4, TECH_DATA = 5)
 
 /obj/item/device/integrated_circuit_printer/proc/sanity_check(var/program,var/mob/user)
 	var/list/chap = splittext( program ,"{{*}}")

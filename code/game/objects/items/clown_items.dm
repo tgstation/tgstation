@@ -123,7 +123,6 @@
 	name = "air horn"
 	desc = "Damn son, where'd you find this?"
 	icon_state = "air_horn"
-	origin_tech = "materials=4;engineering=4"
 
 /obj/item/bikehorn/airhorn/Initialize()
 	. = ..()
