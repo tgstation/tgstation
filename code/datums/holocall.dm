@@ -4,6 +4,7 @@
 #define HOLORECORD_SAY		"say"
 #define HOLORECORD_SOUND	"sound"
 #define HOLORECORD_LANGUAGE	"lang"
+#define HOLORECORD_PRESET	"preset"
 #define HOLORECORD_MAX_LENGTH 200
 
 /mob/camera/aiEye/remote/holo/setLoc()
@@ -240,6 +241,10 @@
 				var/lang_type = text2path(value)
 				if(ispath(lang_type,/datum/language))
 					record.entries += list(list(HOLORECORD_LANGUAGE,lang_type))
+			if("PRESET")
+				var/preset_type = text2path(value)
+				if(ispath(preset_type,/datum/preset_holoimage))
+					record.entries += list(list(HOLORECORD_PRESET,preset_type))
 	if(!preset_image_type)
 		record.caller_image = image('icons/mob/animal.dmi',"old")
 	else
@@ -279,6 +284,9 @@
 	DELAY 30
 	LANGUAGE /datum/language/narsie
 	SAY Helped him get there!
+	DELAY 10
+	SAY ALSO IM SECRETLY A GORILLA
+	PRESET /datum/preset_holoimage/gorilla
 	DELAY 20"}
 
 /datum/preset_holoimage/engineer

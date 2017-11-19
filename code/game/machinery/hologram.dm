@@ -534,6 +534,11 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		if(HOLORECORD_LANGUAGE)
 			var/datum/language_holder/holder = replay_holo.get_language_holder()
 			holder.selected_default_language = entry[2]
+		if(HOLORECORD_PRESET)
+			var/preset_type = entry[2]
+			var/datum/preset_holoimage/H = new preset_type
+			replay_holo.cut_overlays()
+			replay_holo.add_overlay(H.build_image())
 	.(entry_number+1)
 
 /obj/machinery/holopad/proc/record_stop()
