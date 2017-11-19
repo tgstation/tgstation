@@ -139,8 +139,7 @@
 	if(usr.incapacitated())
 		return
 
-	setDir(turn(dir, 90))
-	return
+	setDir(turn(dir, -90))
 
 /obj/item/device/assembly/infra/AltClick(mob/user)
 	..()
