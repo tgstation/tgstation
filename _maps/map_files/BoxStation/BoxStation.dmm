@@ -49517,7 +49517,7 @@
 /area/engine/supermatter)
 "csC" = (
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "csD" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -57617,11 +57617,11 @@
 /area/engine/engineering)
 "QoE" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "QoF" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "QoG" = (
 /obj/structure/girder,

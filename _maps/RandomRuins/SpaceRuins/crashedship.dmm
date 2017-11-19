@@ -1630,10 +1630,6 @@
 /obj/structure/kitchenspike,
 /turf/open/floor/plasteel/bar,
 /area/awaymission/BMPship/Midship)
-"fh" = (
-/turf/open/floor/plasteel/loadingarea/dirty{
-	dir = 4
-	},
 /area/awaymission/BMPship/Midship)
 "fi" = (
 /obj/machinery/conveyor{

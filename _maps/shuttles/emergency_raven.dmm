@@ -582,7 +582,7 @@
 /area/shuttle/escape)
 "bw" = (
 /obj/machinery/door/airlock/shuttle,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bx" = (
 /obj/structure/chair{

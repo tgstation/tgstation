@@ -2024,7 +2024,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "gj" = (
 /obj/structure/cable{
