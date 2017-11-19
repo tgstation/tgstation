@@ -630,7 +630,7 @@
 /area/lavaland/surface/outdoors)
 "ca" = (
 /obj/machinery/atmospherics/components/unary/tank/air{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/grass{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
