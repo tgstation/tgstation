@@ -8,9 +8,8 @@
 
 // NOTE : proc_holder lives in modules/spell.dm
 
-// Am I able to use my powers?
-
-/mob/living/proc/BloodsuckerCanUsePowers(var/displaymessage="",) // displaymessage can be something such as "rising from death" for Torpid Sleep.
+// Am I able to use my powers? Do I have all the things needed?
+/mob/living/proc/HaveBloodsuckerBodyparts(var/displaymessage="") // displaymessage can be something such as "rising from death" for Torpid Sleep. givewarningto is the person receiving messages.
 	if (!getorganslot("heart"))
 		if (displaymessage != "")
 			to_chat(src, "<span class='warning'>Without a heart, you are incapable of [displaymessage].</span>")
@@ -192,11 +191,13 @@
 	//to_chat(user, "<span class='warning'>DEBUG: can_target() [name]</span>")
 	return TRUE
 
+
+	// REMOVED: We don't spend blood when you CAST the spell, we spend it when it's done! //
 // APPLY EFFECT //	// USE THIS FOR THE SPELL EFFECT //
-/obj/effect/proc_holder/spell/bloodsucker/cast(list/targets, mob/living/user = usr) 		// NOTE: Called from perform() in /proc_holder/spell
+///obj/effect/proc_holder/spell/bloodsucker/cast(list/targets, mob/living/user = usr) 		// NOTE: Called from perform() in /proc_holder/spell
 	//to_chat(user, "<span class='warning'>DEBUG1: cast() [name] by [user]</span>")
 	// Default: Spend Blood
-	user.blood_volume -= bloodcost
+//	user.blood_volume -= bloodcost
 
 
 // ABORT SPELL //	// USE THIS WHEN FAILING MID-SPELL. NOT THE SAME AS DISABLING BY CLICKING BUTTON //
@@ -210,6 +211,10 @@
 	//to_chat(user, "<span class='warning'>DEBUG: continue_valid() [name]</span>")
 	charge_counter = 0 // Reset timer.
 	return 1
+
+// CAST EFFECT //	// General effect (poof, splat, etc) when you cast. Doesn't happen automatically!
+/obj/effect/proc_holder/spell/bloodsucker/proc/cast_effect(mob/living/user = usr)
+	return
 
 
 
@@ -297,9 +302,10 @@
 
 	// Put target to Sleep (if valid)
 	if(!target.mind || !target.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
-		target.Sleeping(50,0) 	  // SetSleeping() only changes sleep if the input is higher than the current value. AdjustSleeping() adds or subtracts //
-		target.Unconscious(50,1)  // SetUnconscious() only changes sleep if the input is higher than the current value. AdjustUnconscious() adds or subtracts //
-	target.Move(user.loc)
+		target.Sleeping(100,0) 	  // SetSleeping() only changes sleep if the input is higher than the current value. AdjustSleeping() adds or subtracts //
+		target.Unconscious(100,1)  // SetUnconscious() only changes sleep if the input is higher than the current value. AdjustUnconscious() adds or subtracts //
+	if (!target.density) // Pull target to you if they don't take up space.
+		target.Move(user.loc)
 	sleep(5)
 
 	if (!user.pulling || !target) // Cancel. They're gone.
@@ -313,6 +319,7 @@
 	var/warning_target_inhuman = 0
 	var/warning_target_dead = 0
 	var/warning_full = 0
+	//var/warning_bloodremain = 100
 	bloodsuckerdatum.poweron_feed = TRUE
 	while (bloodsuckerdatum && target && active)
 		user.canmove = 0 // Prevents spilling blood accidentally.
@@ -365,6 +372,9 @@
 		if (!warning_full && user.blood_volume >= bloodsuckerdatum.maxBloodVolume)
 			to_chat(user, "<span class='notice'>You are full. Any further blood you take will be wasted.</span>")
 			warning_full = 1
+		// Blood Remaining?
+		//if (warning_bloodremain > target.blood_volume / (BLOOD_VOLUME_NORMAL / 100)) // Get percentage of blood
+
 
 		// END WHILE
 	//sleep(20) // If we ended via normal means, end here.
@@ -373,7 +383,7 @@
 						 "<span class='warning'>You retract your fangs and release [target] from your bite.</span>")
 
 
-// ABORT SPELL //	// USE THIS WHEN CANCELLING A SPELL //
+// ABORT SPELL //	// USE THIS WHEN FAILING MID-SPELL. NOT THE SAME AS DISABLING BY CLICKING BUTTON //
 /obj/effect/proc_holder/spell/bloodsucker/feed/cancel_spell(mob/living/user = usr)
 	var/mob/living/L = user
 	L.update_canmove()
@@ -413,7 +423,7 @@
 //obj/effect/proc_holder/spell/targeted/touch/expelblood
 /obj/effect/proc_holder/spell/bloodsucker/expelblood
 	name = "Expel Blood"
-	desc = "Secrete some of your blood as an addictive, healing goo. Feeding it to blood-drained corpses turns mortals to Bloodsuckers."
+	desc = "Secrete some of your blood as an addictive, healing goo. Feeding it to corpses turns mortals to Bloodsuckers."
 	bloodcost = 10
 	amToggleable = TRUE
 	amTargetted = TRUE
@@ -482,7 +492,7 @@
 		var/obj/effect/decal/cleanable/blood/vampblood/b = new /obj/effect/decal/cleanable/blood/vampblood(target, usr.mind)
 		b.MatchToCreator(usr) // Set Creator, DNA, and Diseases
 		// Subtract Blood, Play Sound.
-		bloodsuckerdatum.set_blood_volume(-10)
+		bloodsuckerdatum.set_blood_volume(-bloodcost)
 		playsound(b.loc,'sound/effects/splat.ogg', rand(30,40), 1)	//return 0
 		to_chat(usr, "<span class='notice'>You desecrate the [get_area(target)].</span>")
 		cancel_spell(usr)
@@ -499,10 +509,10 @@
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 
 		// BLOOD TRANSFER //
-	var/maxTransfer = min(10, user.blood_volume)
+	var/maxTransfer = min(bloodcost, user.blood_volume)
 	//to_chat(user, "<span class='notice'>DEBUG: Expel Blood - [target]</span>")
 	//to_chat(user, "<span class='notice'>DEBUG: Expel Blood - [target.reagents]</span>")
-	maxTransfer = min(10, target.reagents.maximum_volume - target.reagents.total_volume)
+	maxTransfer = min(maxTransfer, target.reagents.maximum_volume - target.reagents.total_volume)
 	if (maxTransfer == 0)
 		to_chat(user, "<span class='notice'>That container is full.</span>")
 		return 1
@@ -528,8 +538,8 @@
 		// Create Vassal?
 		//bloodsuckerdatum.attempt_make_vassal(C)
 
-	//cancel_spell(user)  // NOTE: We don't want to turn off Expel Blood, do we?
-
+	//cancel_spell(user)  	// TESTING: (This is if we WANT to end the spell here after successful use)
+							// 			If we return 0 (below), this spell ends but you click your target anyhow. We need to return 1, but end spell here anyway.
 	return 1
 
 
@@ -575,7 +585,7 @@
 		return 0
 	if(!..())// DEFAULT CHECKS
 		return 0
-	if (!user.BloodsuckerCanUsePowers("rising from death"))//if (!user.getorganslot("heart"))
+	if (!user.HaveBloodsuckerBodyparts("rising from death"))//if (!user.getorganslot("heart"))
 		return 0
 	//if (src.active)
 	//	to_chat(user, "<span class='warning'>You're already attempting to regenerate.</span>")
@@ -680,7 +690,7 @@
 			break
 
 		// Not able to heal anymore? Hard abort!
-		if (!user.BloodsuckerCanUsePowers())
+		if (!user.HaveBloodsuckerBodyparts())
 			to_chat(user, "<span class='warning'>You are suddenly incapable of regenerating any further!</span>")
 			//end_power(null, null, 0) // This ends the power, but without altering anything but the ICON and the ACTIVE status.
 			return;
@@ -746,7 +756,7 @@
 	cancel_spell(user)
 
 
-// ABORT SPELL //	// USE THIS WHEN CANCELLING A SPELL //
+// ABORT SPELL //	// USE THIS WHEN FAILING MID-SPELL. NOT THE SAME AS DISABLING BY CLICKING BUTTON //
 /obj/effect/proc_holder/spell/bloodsucker/torpidsleep/cancel_spell(mob/living/user = usr)
 	user.status_flags &= ~(FAKEDEATH) // Remove it
 	..() // Set Active FALSE
@@ -850,14 +860,136 @@
 	name = "Veil of Predation"
 	desc = "Further hide your identity, that you may hunt in secrecy without revealing your mortal disguise."
 	bloodcost = 20
+	charge_max = 100
 	amToggleable = TRUE
+	action_icon_state = "power_human"				// State for that image inside icon
+	stat_allowed = CONSCIOUS
 
 	// LOOK UP: get_visible_name() in human_helpers.dm
 	// NAME: name_override (in mob/living/carbon/human) as your Vamp name, then back to "" when done.
 	// VOICE: use SetSpecialVoice() and UnsetSpecialVoice() in say.dm (human folder)
-	// TODO: Hide outfit, create some cloak to cover you?
+
+	// TODO: Hide outfit, create some cloak to cover you? Use clothing/suit/space to simulate hiding your actual clothes!
+	// Check out check_obscured_slots() in human.dm to see how game finds obscuring clothing, and flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT  inside /obj/item/clothing
 
 
+
+// CAST CHECK //	// USE THIS TO SEE IF WE CAN EVEN ACTIVATE THIS POWER //  Called from Click()
+///obj/effect/proc_holder/spell/bloodsucker/veil/cast_check(skipcharge = 0,mob/living/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
+//	// Run Checks...
+//	return
+
+
+
+// APPLY EFFECT //	// USE THIS FOR THE SPELL EFFECT //
+/obj/effect/proc_holder/spell/bloodsucker/veil/cast(list/targets, mob/living/user = usr) 		// NOTE: Called from perform() in /proc_holder/spell
+
+	if (!ishuman(user))
+		return 0
+
+	// Change Name/Voice
+	var/mob/living/carbon/human/H = user
+	H.name_override = H.dna.species.random_name(H.gender)
+	H.name = H.name_override
+	H.SetSpecialVoice(H.name_override)
+	to_chat(user, "<span class='warning'>You mystify the air around your person. Your identity is now altered.</span>")
+
+	// Store Prev Appearance
+	var/prev_skin_tone = H.skin_tone
+	var/prev_hair_style = H.hair_style
+	var/prev_facial_hair_style = H.facial_hair_style
+	var/prev_hair_color = H.hair_color
+	var/prev_facial_hair_color = H.facial_hair_color
+
+	// Change Appearance
+	//H.real_name = random_unique_name(H.gender)
+	//H.name = H.real_name
+	H.skin_tone = random_skin_tone()
+	H.hair_style = random_hair_style(H.gender)
+	H.facial_hair_style = pick(random_facial_hair_style(H.gender),"Shaved")
+	H.hair_color = random_short_color()
+	H.facial_hair_color = H.hair_color
+	//H.gender = pick(MALE, FEMALE)
+	//H.underwear = random_underwear(H.gender)
+	//H.eye_color = random_eye_color()
+
+	// Apply Appearance
+	H.update_body() // Outfit and underware, also body.
+	H.update_hair()
+	H.update_body_parts()
+
+
+	// TODO: Look up /proc/randomize_human(mob/living/carbon/human/H)  in create_mob.dm, used by human.dm when making new dude.
+
+
+	// Spend Blood
+	var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+	bloodsuckerdatum.set_blood_volume(-bloodcost)
+
+	// Cast Effect (poof!)
+	cast_effect(user)
+
+	// Wait here til we deactivate power or go unconscious
+	while (active && user.stat <= stat_allowed)
+		sleep(10)
+
+	// Wait a moment if you fell unconscious...
+	if (user && user.stat > stat_allowed)
+		sleep(50)
+
+	if (!user)
+		return
+
+	// Revert Appearance
+	H.skin_tone = prev_skin_tone
+	H.hair_style = prev_hair_style
+	H.facial_hair_style = prev_facial_hair_style
+	H.hair_color = prev_hair_color
+	H.facial_hair_color = prev_facial_hair_color
+	// Apply Appearance
+	H.update_body() // Outfit and underware, also body.
+	H.update_hair()
+	H.update_body_parts()	// Body itself, maybe skin color?
+
+	// Done
+	cancel_spell(user)
+
+
+
+
+// ABORT SPELL //	// USE THIS WHEN FAILING MID-SPELL. NOT THE SAME AS DISABLING BY CLICKING BUTTON //
+/obj/effect/proc_holder/spell/bloodsucker/veil/cancel_spell(mob/living/user = usr)
+
+	var/mob/living/carbon/human/H = user
+	H.UnsetSpecialVoice()
+	H.name_override = null
+	H.name = H.real_name
+
+	if (user.stat == 0)
+		to_chat(user, "<span class='warning'>With a flourish, you dismiss your temporary disguise.</span>")
+
+	cast_effect(user)
+	..()
+
+
+// CAST EFFECT //	// General effect (poof, splat, etc) when you cast. Doesn't happen automatically!
+/obj/effect/proc_holder/spell/bloodsucker/veil/cast_effect(mob/living/user = usr)
+	// Effect
+	playsound(get_turf(user), 'sound/magic/smoke.ogg', 20, 1)
+	var/datum/effect_system/steam_spread/puff = new /datum/effect_system/steam_spread/()
+	puff.effect_type = /obj/effect/particle_effect/smoke/vampsmoke
+	puff.set_up(3, 0, get_turf(user))
+	puff.start()
+	user.spin(8, 1) // Spin around like a loon.
+
+	..()
+
+/obj/effect/particle_effect/smoke/vampsmoke
+	opaque = FALSE
+	amount = 0
+	lifetime = 0
+/obj/effect/particle_effect/smoke/vampsmoke/fade_out(frames = 8)
+	..(frames)
 
 // POWER IDEAS:
 

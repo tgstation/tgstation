@@ -13,25 +13,14 @@
 
 // On Contact:
 /datum/reagent/blood/vampblood/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
-
 	// NOTE: If drinking from a container, this datum/reagent is actually the container itself.
-
 	if(iscarbon(M))
-		// Vamps don't benefit.
-		//if (M.mind.bloodsuckerinfo)
-			//if(show_message)
-			//	to_chat(M, "<span class='warning'>You taste the presence of Vampiric blood.</span>")
 		// Ingest/Inject
-		// else
 		if(method in list(INGEST, INJECT)) // Types: TOUCH INGEST VAPOR INJECT PATCH
 			if (M.mind && !M.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER) && M.stat != DEAD)
 				M.adjustBruteLoss(-reac_volume) // Heal!
 				if(show_message)
 					to_chat(M, "<span class='danger'>A tingling warmth passes over you.</span>")
-		// Spray/Touch
-		//else
-		//	return 0
-
 	..()
 
 

@@ -89,7 +89,7 @@
 	var/fullname = ReturnFullName(owner.current, 1)
 	to_chat(owner, "<span class='userdanger'>You are [fullname], a bloodsucking vampire!</span>")
 	owner.announce_objectives()
-	to_chat(owner, "<span class='boldannounce'>You regenerate your health slowly, you're weak to fire, and you depend on blood to survive. Allow your stolen blood to run too low, and you may find yourself at\
+	to_chat(owner, "<span class='boldannounce'>You regenerate your health slowly, you're weak to fire, and you depend on blood to survive. Allow your stolen blood to run too low, and you may find yourself at \
 	risk of Frenzy!<span>")
 	to_chat(owner, "<span class='boldannounce'>Other Bloodsuckers are not necessarily your friends, but your survival may depend on cooperation.<span>")
 
@@ -136,8 +136,8 @@
 	// Titles [Master]
 	if (!am_fledgling)
 		vampreputation = pick("Butcher","Blood Fiend","Crimson","Red","Black","Terror","Nightman","Feared","Ravenous","Fiend","Malevolent","Wicked","Ancient","Plaguebringer","Sinister","Forgotten","Wretched","Baleful", \
-							"Inqqisitor","Harvester","Reviled","Robust","Betrayer","Destructor","Damned","Accursed","Terrible","Vicious","Profane","Vile","Depraved","Foul","Slayer","Manslayer","Sovereign","Slaughterer", \
-							"Forsaken","Mad","Dragon","Savage","Villainous","Nefarious","Inquisitor","Marauder")
+							"Inqisitor","Harvester","Reviled","Robust","Betrayer","Destructor","Damned","Accursed","Terrible","Vicious","Profane","Vile","Depraved","Foul","Slayer","Manslayer","Sovereign","Slaughterer", \
+							"Forsaken","Mad","Dragon","Savage","Villainous","Nefarious","Inquisitor","Marauder","Horrible")
 		if (gender == MALE)
 			vamptitle = pick ("Count","Baron","Viscount","Prince","Duke","Tzar","Dreadlord","Lord","Master")
 			if (prob(10)) // Gender override
@@ -168,17 +168,24 @@
 
 	return fullname
 
-/mob/living/carbon/proc/ReturnVampExamine(var/mob/viewer, var/include_rep=0)
+
+/mob/living/carbon/human/proc/ReturnVampExamine(var/mob/viewer, var/include_rep=0)
 	// So we can call from examine.dm in /human folder.
 
 	// Only Vamps see Vamps
 	if (!mind || !mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER) || !viewer.mind || !viewer.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
 		return ""
 
+	// Default String
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
-	//return "...but you recognize <span class='warning'>[bloodsuckerdatum.ReturnFullName(src,1)]</span> through their mortal disguise.\n"
-	return "\[<span class='warning'><EM>[bloodsuckerdatum.ReturnFullName(src,1)]</EM></span>\]\n"
+	var/returnString = "\[<span class='warning'><EM>[bloodsuckerdatum.ReturnFullName(src,1)]</EM></span>\]"
 
+	// In Disguise (Veil)?
+	if (name_override != null)
+		returnString += "<span class='warning'> (in disguise!) </span>"
+
+	returnString += "\n"
+	return returnString
 
 
 
@@ -267,6 +274,7 @@ datum/antagonist/bloodsucker/proc/AssignStarterPowersAndStats()
 	BuyPower(new /obj/effect/proc_holder/spell/bloodsucker/feed)
 	BuyPower(new /obj/effect/proc_holder/spell/bloodsucker/expelblood)
 	//BuyPower(new /obj/effect/proc_holder/spell/bloodsucker/humandisguise)
+	BuyPower(new /obj/effect/proc_holder/spell/bloodsucker/veil)
 	BuyPower(new /obj/effect/proc_holder/spell/bloodsucker/torpidsleep)
 
 	// Give Clown a crazy-person power
@@ -297,6 +305,7 @@ datum/antagonist/bloodsucker/proc/AssignStarterPowersAndStats()
 		S.species_traits |= NOCRITDAMAGE // No damage from being in critical condition.
 
 	// Disabilities
+	owner.current.disabilities = 0
 	//owner.current.disabilities |= NOCLONE
 
 	// Update Health
@@ -306,6 +315,8 @@ datum/antagonist/bloodsucker/proc/AssignStarterPowersAndStats()
 	var/obj/item/organ/eyes/E = owner.current.getorganslot("eye_sight")
 	E.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	E.see_in_dark = 8
+	E.flash_protect = -1
+	E.sight_flags |= SEE_TURFS // Taken from augmented_eyesight.dm
 	owner.current.update_sight()
 
 
@@ -348,6 +359,8 @@ datum/antagonist/bloodsucker/proc/ClearAllPowersAndStats()
 	var/obj/item/organ/eyes/E = owner.current.getorganslot("eye_sight")
 	E.lighting_alpha = initial(E.lighting_alpha)
 	E.see_in_dark = initial(E.lighting_alpha)
+	E.flash_protect = initial(E.flash_protect)
+	E.sight_flags ^= SEE_TURFS  // Taken from augmented_eyesight.dm
 	owner.current.update_sight()
 
 
@@ -359,12 +372,12 @@ datum/antagonist/bloodsucker/proc/ClearAllPowersAndStats()
 
 
 /datum/antagonist/bloodsucker/proc/update_bloodsucker_icons_added(mob/living/bloodsucker)
-	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_REV]//ANTAG_HUD_BLOODSUCKER]
+	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_DEVIL]//ANTAG_HUD_BLOODSUCKER]
 	hud.join_hud(bloodsucker)
 	set_antag_hud(bloodsucker, "bloodsucker") // Located in icons/mob/hud.dmi
 
 /datum/antagonist/bloodsucker/proc/update_bloodsucker_icons_removed(mob/living/bloodsucker)
-	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_REV]//ANTAG_HUD_BLOODSUCKER]
+	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_DEVIL]//ANTAG_HUD_BLOODSUCKER]
 	hud.leave_hud(bloodsucker)
 	set_antag_hud(bloodsucker, null)
 
@@ -420,7 +433,7 @@ datum/antagonist/bloodsucker/proc/ClearAllPowersAndStats()
 
 /obj/screen/bloodsucker/blood_counter		// NOTE: Look up /obj/screen/devil/soul_counter  in _onclick / hud / human.dm
 	icon = 'icons/mob/screen_gen.dmi'
-	name = "blood held"
+	name = "Blood Consumed"
 	icon_state = "power_display"
 	screen_loc = ui_blood_display
 

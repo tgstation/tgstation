@@ -219,7 +219,7 @@ datum/antagonist/bloodsucker/proc/start_frenzy(mob/living/target)
 			// Disqualify New Target if...
 			if (newtarget == owner.current || issilicon(newtarget) && !iscyborg(newtarget) || istype(newtarget, /mob/living/simple_animal/bot)) // Can't be self. Can't be a non-robot Silicon, or Beepsky.
 				newtarget = null
-			else if (newtarget && newtarget.stat == DEAD && (!iscarbon(newtarget) || target.blood_volume <= 0))	// Can't be dead AND un-suckable
+			else if (newtarget && newtarget.stat == DEAD && (!iscarbon(newtarget) || newtarget.blood_volume <= 0))	// Can't be dead AND un-suckable
 				newtarget = null
 			// Only replace target if I find a new one
 			if (newtarget)
@@ -306,6 +306,7 @@ datum/antagonist/bloodsucker/proc/start_frenzy(mob/living/target)
 	owner.current.SetFrenzied(FALSE)
 	walk(owner.current,0)			// Stop moving (I was probably pathfinding)
 	owner.current.update_canmove() 	// Updates if you can move or not. Frenzy has been removed.
+	owner.current.update_action_buttons_icon() // CHECK THIS : Updates icons?
 
 
 datum/antagonist/bloodsucker/proc/frenzy_pursue_target(mob/living/carbon/target)  // Copied over from interactive.dm/walk2derpless()
