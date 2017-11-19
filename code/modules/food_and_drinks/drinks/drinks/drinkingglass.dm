@@ -8,7 +8,7 @@
 	volume = 50
 	materials = list(MAT_GLASS=500)
 	max_integrity = 20
-	spillable = 1
+	spillable = TRUE
 	resistance_flags = ACID_PROOF
 	unique_rename = 1
 
@@ -28,17 +28,6 @@
 		icon_state = "glass_empty"
 		name = "drinking glass"
 		desc = "Your standard drinking glass."
-
-/obj/item/reagent_containers/food/drinks/drinkingglass/throw_impact(atom/target, throwingdatum)
-	. = ..()
-	var/datum/thrownthing/D = throwingdatum
-	if((target.CanPass(src, get_turf(src))) && D.thrower && D.thrower.mind && D.thrower.mind.assigned_role == "Bartender")
-		return
-	else if(!.) //if we're not being caught
-		playsound(src, "shatter", 70, 1)
-		var/obj/item/shard/S = new (loc)
-		transfer_fingerprints_to(S)
-		qdel(src)
 
 //Shot glasses!//
 //  This lets us add shots in here instead of lumping them in with drinks because >logic  //
