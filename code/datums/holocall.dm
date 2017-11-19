@@ -5,6 +5,8 @@
 #define HOLORECORD_SOUND	"sound"
 #define HOLORECORD_LANGUAGE	"lang"
 #define HOLORECORD_PRESET	"preset"
+#define HOLORECORD_RENAME "rename"
+
 #define HOLORECORD_MAX_LENGTH 200
 
 /mob/camera/aiEye/remote/holo/setLoc()
@@ -231,8 +233,11 @@
 				if(!delay_value)
 					continue
 				record.entries += list(list(HOLORECORD_DELAY,delay_value))
-			if("NAME") //One time only for now
-				record.caller_name = value
+			if("NAME")
+				if(!record.caller_name)
+					record.caller_name = value
+				else
+					record.entries += list(list(HOLORECORD_RENAME,value))
 			if("SAY")
 				record.entries += list(list(HOLORECORD_SAY,value))
 			if("SOUND")
@@ -286,7 +291,11 @@
 	SAY Helped him get there!
 	DELAY 10
 	SAY ALSO IM SECRETLY A GORILLA
+	DELAY 10
 	PRESET /datum/preset_holoimage/gorilla
+	NAME Gorilla
+	LANGUAGE /datum/language/common
+	SAY OOGA
 	DELAY 20"}
 
 /datum/preset_holoimage/engineer

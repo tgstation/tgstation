@@ -539,6 +539,8 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 			var/datum/preset_holoimage/H = new preset_type
 			replay_holo.cut_overlays()
 			replay_holo.add_overlay(H.build_image())
+		if(HOLORECORD_RENAME)
+			replay_holo.name = entry[2] + " (Hologram)"
 	.(entry_number+1)
 
 /obj/machinery/holopad/proc/record_stop()
