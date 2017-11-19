@@ -16,9 +16,9 @@ SUBSYSTEM_DEF(server_maint)
 
 /datum/controller/subsystem/server_maint/fire(resumed = FALSE)
 	if(!resumed)
-		var/oldlen = FASTLEN(GLOB.clients)
+		var/oldlen = length(GLOB.clients)
 		LIST_CLEAR_NULLS(GLOB.clients)
-		if(FASTLEN(GLOB.clients) < oldlen)
+		if(length(GLOB.clients) < oldlen)
 			log_world("Found a null in clients list!")
 		src.currentrun = GLOB.clients.Copy()
 

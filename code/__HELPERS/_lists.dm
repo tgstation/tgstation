@@ -2,19 +2,17 @@
  * Holds procs to help with list operations
  */
 
-#define FASTLEN(L) length(L) // Some benchmarking showed that length is slightly faster than len
-
 #define LAZYINITLIST(L) if(!L) L = list()
-#define UNSETEMPTY(L) if(L && !FASTLEN(L)) L = null
-#define LAZYREMOVE(L, I) if(FASTLEN(L) == 1) { L = null; } else if(FASTLEN(L)) { L -= I; }
+#define UNSETEMPTY(L) if(L && !length(L)) L = null
+#define LAZYREMOVE(L, I) if(length(L) == 1) { L = null; } else if(length(L)) { L -= I; }
 #define LAZYADD(L, I) if(!L) { L = list(I); } else { L += I };
-#define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= FASTLEN(L) ? L[I] : null) : L[I]) : null)
+#define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= length(L) ? L[I] : null) : L[I]) : null)
 #define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
 #define LAZYCLEARLIST(L) if(L) L.len = 0
 #define LAZYLEN(L) length(L)
 #define SANITIZE_LIST(L) ( islist(L) ? L : list() )
 
-#define LIST_CLEAR_NULLS(L) ( L -= new /list(FASTLEN(L)) )
+#define LIST_CLEAR_NULLS(L) L -= new /list(length(L));
 
 /proc/safepick(list/L)
 	if(istype(L))
@@ -168,24 +166,24 @@
 
 //Pick a random element from the list and remove it from the list.
 /proc/pick_n_take(list/L)
-	if(FASTLEN(L))
-		var/picked = rand(1, FASTLEN(L))
+	if(length(L))
+		var/picked = rand(1, length(L))
 		. = L[picked]
 		L.Cut(picked, picked + 1)			//Cut is far more efficient that Remove()
 
 //Returns the top(last) element from the list and removes it from the list (typical stack function)
 /proc/pop(list/L)
-	if(FASTLEN(L))
-		. = L[FASTLEN(L)]
+	if(length(L))
+		. = L[length(L)]
 		L.len--
 
 /proc/popleft(list/L)
-	if(FASTLEN(L))
+	if(length(L))
 		. = L[1]
 		L.Cut(1,2)
 
 /proc/sorted_insert(list/L, thing, comparator)
-	var/pos = FASTLEN(L)
+	var/pos = length(L)
 	while(pos > 0 && call(comparator)(thing, L[pos]) > 0)
 		pos--
 	L.Insert(pos + 1, thing)
@@ -206,7 +204,7 @@
 		return
 	var/list/result = L.Copy()
 
-	var/listlen = FASTLEN(L)
+	var/listlen = length(L)
 
 	for(var/i = 1 to listlen - 1)
 		result.Swap(i, rand(i, listlen))
@@ -218,7 +216,7 @@
 	if(!L)
 		return
 
-	var/listlen = FASTLEN(L)
+	var/listlen = length(L)
 
 	for(var/i = 1 to listlen - 1)
 		L.Swap(i, rand(i, listlen))
@@ -353,7 +351,7 @@
 
 //replaces reverseList ~Carnie
 /proc/reverseRange(list/L, start=1, end=0)
-	var/listlen = FASTLEN(L)
+	var/listlen = length(L)
 	if(listlen)
 		start = start % listlen
 		end = end % (listlen + 1)
