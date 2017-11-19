@@ -593,7 +593,7 @@
 	pixel_y = 30
 	},
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "bT" = (
 /obj/structure/window/reinforced{
@@ -660,16 +660,16 @@
 	name = "Station Intercom (General)";
 	pixel_y = 28
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "cd" = (
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "ce" = (
 /mob/living/simple_animal/hostile/syndicate/ranged/space{
 	name = "Syndicate Officer"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "cf" = (
 /obj/machinery/door/airlock/centcom{
@@ -711,7 +711,7 @@
 /area/awaymission/challenge/end)
 "cl" = (
 /mob/living/simple_animal/hostile/syndicate/melee,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "cm" = (
 /obj/structure/window/reinforced{
@@ -779,7 +779,7 @@
 	opacity = 1;
 	req_access_txt = "109"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "cy" = (
 /obj/structure/window/reinforced,
@@ -807,7 +807,7 @@
 	opacity = 1;
 	req_access_txt = "109"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "cC" = (
 /obj/item/storage/toolbox/electrical,
@@ -827,7 +827,7 @@
 /area/awaymission/challenge/end)
 "cF" = (
 /mob/living/simple_animal/hostile/syndicate/ranged,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "cG" = (
 /obj/machinery/light{
@@ -947,7 +947,7 @@
 /obj/machinery/gateway/centeraway{
 	calibrated = 0
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "cX" = (
 /obj/machinery/gateway{
@@ -990,7 +990,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "dd" = (
 /obj/structure/window/reinforced{
@@ -1006,19 +1006,19 @@
 "df" = (
 /obj/structure/table,
 /obj/item/paper/pamphlet/gateway,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "dg" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "dh" = (
 /obj/structure/table,
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "di" = (
 /obj/structure/table,
@@ -1032,7 +1032,7 @@
 /obj/item/implanter/explosive{
 	pixel_y = 12
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "dj" = (
 /obj/structure/window/reinforced{
@@ -1047,7 +1047,7 @@
 	opacity = 1;
 	req_access_txt = "109"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "dl" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
@@ -1065,13 +1065,13 @@
 /mob/living/simple_animal/hostile/syndicate{
 	name = "Syndicate Technician"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "dn" = (
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "do" = (
 /obj/machinery/light,
@@ -28760,7 +28760,7 @@ cd
 cn
 cH
 cN
-cQ
+cE
 cn
 cn
 db
@@ -29788,7 +29788,7 @@ cd
 cn
 cH
 cN
-cU
+cG
 cn
 cn
 db

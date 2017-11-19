@@ -62,13 +62,13 @@
 	name = "Shuttle"
 	})
 "j" = (
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/powered{
 	name = "Shuttle"
 	})
 "k" = (
 /obj/machinery/door/airlock/glass,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/powered{
 	name = "Shuttle"
 	})

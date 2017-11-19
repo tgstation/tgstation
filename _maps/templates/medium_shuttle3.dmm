@@ -185,7 +185,7 @@
 	name = "Shuttle"
 	})
 "A" = (
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/powered{
 	name = "Shuttle"
 	})

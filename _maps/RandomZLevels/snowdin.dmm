@@ -3535,7 +3535,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/dark{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3543,7 +3543,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/dark{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3582,7 +3582,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/snowdin/sekret)
 "jP" = (
 /obj/machinery/vending/cigarette,
@@ -3612,7 +3612,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/dark{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3663,7 +3663,7 @@
 	},
 /area/awaymission/snowdin/sekret)
 "jZ" = (
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/dark{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3684,7 +3684,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/dark{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3693,7 +3693,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/dark{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3832,7 +3832,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/snowdin/sekret)
 "kv" = (
 /turf/open/floor/plasteel/cafeteria{
@@ -3855,7 +3855,7 @@
 	},
 /obj/item/reagent_containers/food/drinks/bottle/vodka/badminka,
 /obj/item/paper/fluff/awaymissions/snowdin/saw_usage,
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/dark{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3864,7 +3864,7 @@
 	name = "SAW Security Door";
 	req_access_txt = "150"
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/dark{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3950,7 +3950,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/snowdin/sekret)
 "kJ" = (
 /obj/machinery/door/airlock/glass_security{
@@ -3973,7 +3973,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/dark{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -4008,7 +4008,7 @@
 /area/awaymission/snowdin/sekret)
 "kQ" = (
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/snowdin/sekret)
 "kR" = (
 /obj/structure/table,
@@ -4023,7 +4023,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/dark{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -4034,7 +4034,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/dark{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
