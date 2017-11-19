@@ -97,20 +97,23 @@
 		to_chat(user, "<span class='notice'>You heat [name] with [I]!</span>")
 	..()
 
-/obj/item/reagent_containers/food/drinks/throw_impact(atom/target,mob/thrower)
+/obj/item/reagent_containers/food/drinks/throw_impact(atom/target, mob/thrower)
 	. = ..()
 	if(!.) //if the bottle wasn't caught
-		smash(target, TRUE)
+		smash(target, thrower, TRUE)
 
-/obj/item/reagent_containers/food/drinks/proc/smash(atom/target, ranged = FALSE)
+/obj/item/reagent_containers/food/drinks/proc/smash(atom/target, mob/thrower, ranged = FALSE)
 	if(!isGlass)
 		return
-	if(bartender_check(target))
+	if(bartender_check(target) && ranged)
 		return
 	playsound(src, "shatter", 70, 1)
 	var/obj/item/shard/S = new (loc)
 	transfer_fingerprints_to(S)
 	qdel(src)
+
+
+
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Drinks. END
@@ -261,8 +264,8 @@
 	icon_state = "juicebox"
 	volume = 15 //I figure if you have to craft these it should at least be slightly better than something you can get for free from a watercooler
 
-/obj/item/reagent_containers/food/drinks/sillycup/smallcarton/smash(atom/target, ranged = FALSE)
-	if(bartender_check(target))
+/obj/item/reagent_containers/food/drinks/sillycup/smallcarton/smash(atom/target, mob/thrower, ranged = FALSE)
+	if(bartender_check(target) && ranged)
 		return
 	var/obj/item/broken_bottle/B = new(loc)
 	B.icon_state = icon_state

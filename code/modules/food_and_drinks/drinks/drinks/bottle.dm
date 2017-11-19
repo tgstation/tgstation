@@ -15,14 +15,15 @@
 	isGlass = TRUE
 	foodtype = ALCOHOL
 
-/obj/item/reagent_containers/food/drinks/bottle/smash(mob/living/target, ranged = FALSE)
+
+/obj/item/reagent_containers/food/drinks/bottle/smash(mob/living/target, mob/thrower, ranged = FALSE)
 	//Creates a shattering noise and replaces the bottle with a broken_bottle
 	if(bartender_check(target) && ranged)
 		return
 	var/new_location = get_turf(src)
 	var/obj/item/broken_bottle/B = new /obj/item/broken_bottle(new_location)
 	if(!ranged)
-		thrownby.put_in_hands(B)
+		thrower.put_in_hands(B)
 	B.icon_state = icon_state
 
 	var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
