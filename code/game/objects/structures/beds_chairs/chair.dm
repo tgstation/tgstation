@@ -194,6 +194,12 @@
 	buildstackamount = 5
 	item_chair = null
 
+
+/obj/structure/chair/office/Moved()
+	. = ..()
+	if(has_gravity())
+		playsound(src, 'sound/effects/roll.ogg', 100, 1)
+
 /obj/structure/chair/office/light
 	icon_state = "officechair_white"
 

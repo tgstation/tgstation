@@ -8,6 +8,13 @@
 	item_color = "barman"
 	alt_covers_chest = 1
 
+/obj/item/clothing/under/rank/bartender/purple
+	desc = "It looks like it has lots of flair!"
+	name = "purple bartender's uniform"
+	icon_state = "purplebartender"
+	item_state = "purplebartender"
+	alt_covers_chest = 1
+
 /obj/item/clothing/under/rank/captain //Alright, technically not a 'civilian' but its better then giving a .dm file for a single define.
 	desc = "It's a blue jumpsuit with some gold markings denoting the rank of \"Captain\"."
 	name = "captain's jumpsuit"

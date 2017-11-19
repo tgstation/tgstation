@@ -82,13 +82,13 @@
 		triggering = FALSE
 		message_admins("[key_name_admin(usr)] cancelled event [name].")
 		log_admin_private("[key_name(usr)] cancelled event [name].")
-		SSblackbox.add_details("event_admin_cancelled","[typepath]")
+		SSblackbox.record_feedback("tally", "event_admin_cancelled", 1, typepath)
 
 /datum/round_event_control/proc/runEvent(random)
 	var/datum/round_event/E = new typepath()
 	E.current_players = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
 	E.control = src
-	SSblackbox.add_details("event_ran","[E]")
+	SSblackbox.record_feedback("tally", "event_ran", 1, "E")
 	occurrences++
 
 	testing("[time2text(world.time, "hh:mm:ss")] [E.type]")

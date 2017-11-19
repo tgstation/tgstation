@@ -179,7 +179,7 @@
 		to_chat(owner.current, "<span class='notice'>We have removed our evolutions from this form, and are now ready to readapt.</span>")
 		reset_powers()
 		canrespec = 0
-		SSblackbox.add_details("changeling_power_purchase","Readapt")
+		SSblackbox.record_feedback("tally", "changeling_power_purchase", 1, "Readapt")
 		return 1
 	else
 		to_chat(owner.current, "<span class='danger'>You lack the power to readapt your evolutions!</span>")
@@ -279,7 +279,7 @@
 	if(stored_profiles.len > dna_max)
 		if(!push_out_profile())
 			return
-	
+
 	if(!first_prof)
 		first_prof = prof
 
