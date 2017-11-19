@@ -1,0 +1,5 @@
+author: "duncathan"
+delete-after: True
+changes: 
+  - rscadd: "The RPD has a shiny new UI!"
+  - rscadd: "The RPD can now paint pipes as it lays them, for quicker piping projects."

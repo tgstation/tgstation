@@ -184,7 +184,9 @@
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate3)
 "aK" = (
-/obj/machinery/computer/shuttle,
+/obj/machinery/computer/shuttle{
+	dir = 1
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate2)
 "aL" = (
@@ -327,6 +329,7 @@
 /area/awaymission/spacebattle/syndicate3)
 "bj" = (
 /obj/machinery/computer/pod{
+	dir = 1;
 	id = "spacebattlepod3";
 	name = "Hull Door Control"
 	},
@@ -388,7 +391,9 @@
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate1)
 "bu" = (
-/obj/machinery/computer/shuttle,
+/obj/machinery/computer/shuttle{
+	dir = 1
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate3)
 "bv" = (
@@ -436,7 +441,9 @@
 	},
 /area/awaymission/spacebattle/syndicate1)
 "bC" = (
-/obj/machinery/computer/shuttle,
+/obj/machinery/computer/shuttle{
+	dir = 1
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate1)
 "bD" = (
@@ -564,7 +571,9 @@
 /turf/open/floor/engine,
 /area/awaymission/spacebattle/cruiser)
 "bZ" = (
-/obj/machinery/computer/telecomms/monitor,
+/obj/machinery/computer/telecomms/monitor{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/awaymission/spacebattle/cruiser)
 "ca" = (
@@ -574,6 +583,7 @@
 /area/awaymission/spacebattle/cruiser)
 "cb" = (
 /obj/machinery/computer/pod{
+	dir = 1;
 	id = "spacebattlepod";
 	name = "Hull Door Control"
 	},
@@ -861,6 +871,7 @@
 /area/awaymission/spacebattle/syndicate3)
 "dc" = (
 /obj/machinery/computer/pod{
+	dir = 1;
 	id = "spacebattlepod2";
 	name = "Hull Door Control"
 	},
@@ -1357,7 +1368,9 @@
 /turf/open/floor/plasteel,
 /area/awaymission/spacebattle/cruiser)
 "eP" = (
-/obj/machinery/computer/med_data,
+/obj/machinery/computer/med_data{
+	dir = 8
+	},
 /turf/open/floor/plasteel/blue,
 /area/awaymission/spacebattle/cruiser)
 "eQ" = (
@@ -1412,7 +1425,9 @@
 /turf/open/floor/plasteel,
 /area/awaymission/spacebattle/cruiser)
 "eZ" = (
-/obj/machinery/computer/crew,
+/obj/machinery/computer/crew{
+	dir = 8
+	},
 /turf/open/floor/plasteel/blue,
 /area/awaymission/spacebattle/cruiser)
 "fa" = (
@@ -1548,7 +1563,9 @@
 /turf/open/floor/plasteel,
 /area/awaymission/spacebattle/cruiser)
 "fv" = (
-/obj/machinery/computer/shuttle,
+/obj/machinery/computer/shuttle{
+	dir = 8
+	},
 /turf/open/floor/plasteel/blue,
 /area/awaymission/spacebattle/cruiser)
 "fw" = (
@@ -1670,7 +1687,9 @@
 	},
 /area/awaymission/spacebattle/cruiser)
 "fP" = (
-/obj/machinery/computer/communications,
+/obj/machinery/computer/communications{
+	dir = 8
+	},
 /turf/open/floor/plasteel/blue,
 /area/awaymission/spacebattle/cruiser)
 "fQ" = (
@@ -1944,7 +1963,9 @@
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/spacebattle/cruiser)
 "gK" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/security{
+	dir = 8
+	},
 /turf/open/floor/plasteel/blue,
 /area/awaymission/spacebattle/cruiser)
 "gL" = (
@@ -1957,7 +1978,9 @@
 /turf/open/floor/wood,
 /area/awaymission/spacebattle/cruiser)
 "gN" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/secure_data{
+	dir = 8
+	},
 /turf/open/floor/plasteel/blue,
 /area/awaymission/spacebattle/cruiser)
 "gO" = (
@@ -2269,7 +2292,9 @@
 /turf/open/floor/plasteel,
 /area/awaymission/spacebattle/cruiser)
 "hS" = (
-/obj/machinery/computer/shuttle,
+/obj/machinery/computer/shuttle{
+	dir = 4
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate7)
 "hT" = (
@@ -2961,7 +2986,9 @@
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "kn" = (
-/obj/machinery/computer/mech_bay_power_console,
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "ko" = (

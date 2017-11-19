@@ -287,7 +287,7 @@
 			return TRUE
 
 /obj/structure/girder/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && mover.checkpass(PASSGRILLE))
+	if(istype(mover) && (mover.pass_flags & PASSGRILLE))
 		return prob(girderpasschance)
 	else
 		if(istype(mover, /obj/item/projectile))
@@ -299,7 +299,7 @@
 	. = !density
 	if(ismovableatom(caller))
 		var/atom/movable/mover = caller
-		. = . || mover.checkpass(PASSGRILLE)
+		. = . || (mover.pass_flags & PASSGRILLE)
 
 /obj/structure/girder/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))

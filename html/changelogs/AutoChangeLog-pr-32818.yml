@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "MetaStation - The consoles in medbay have had their directions corrected."

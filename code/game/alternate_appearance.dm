@@ -20,7 +20,6 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	var/list/arguments = args.Copy(2)
 	new type(arglist(arguments))
 
-
 /datum/atom_hud/alternate_appearance
 	var/appearance_key
 

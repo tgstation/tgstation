@@ -90,7 +90,9 @@
 /turf/open/floor/plasteel/darkpurple,
 /area/shuttle/escape)
 "as" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	dir = 4
+	},
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -104,7 +106,9 @@
 /turf/open/floor/plasteel/black,
 /area/shuttle/escape)
 "au" = (
-/obj/machinery/computer/communications,
+/obj/machinery/computer/communications{
+	dir = 8
+	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -128,7 +132,9 @@
 /turf/open/floor/plasteel/darkred,
 /area/shuttle/escape)
 "az" = (
-/obj/machinery/computer/med_data,
+/obj/machinery/computer/med_data{
+	dir = 4
+	},
 /turf/open/floor/plasteel/darkblue,
 /area/shuttle/escape)
 "aA" = (
@@ -159,11 +165,15 @@
 	},
 /area/shuttle/escape)
 "aF" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/security{
+	dir = 8
+	},
 /turf/open/floor/plasteel/darkred,
 /area/shuttle/escape)
 "aG" = (
-/obj/machinery/computer/crew,
+/obj/machinery/computer/crew{
+	dir = 4
+	},
 /turf/open/floor/plasteel/darkblue,
 /area/shuttle/escape)
 "aH" = (
@@ -189,7 +199,9 @@
 /turf/open/floor/plasteel/darkred,
 /area/shuttle/escape)
 "aL" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/secure_data{
+	dir = 8
+	},
 /turf/open/floor/plasteel/darkred,
 /area/shuttle/escape)
 "aM" = (
@@ -915,7 +927,9 @@
 	},
 /area/shuttle/escape)
 "cH" = (
-/obj/machinery/computer/operating,
+/obj/machinery/computer/operating{
+	dir = 4
+	},
 /turf/open/floor/plasteel/whiteblue,
 /area/shuttle/escape)
 "cI" = (
@@ -1190,6 +1204,12 @@
 "dz" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"dA" = (
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -1996,7 +2016,7 @@ ab
 ab
 bb
 bj
-bo
+dA
 bu
 bD
 bD

@@ -56,8 +56,8 @@
 							FP.update_icon()
 						update_inv_shoes()
 				//End bloody footprints
-
 				S.step_action()
+
 /mob/living/carbon/human/Moved()
 	. = ..()
 	if(buckled_mobs && buckled_mobs.len && riding_datum)

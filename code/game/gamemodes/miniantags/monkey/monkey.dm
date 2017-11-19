@@ -61,7 +61,7 @@
 				return FALSE
 
 		var/datum/disease/D = new /datum/disease/transformation/jungle_fever() //ugly but unfortunately needed
-		for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
+		for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 			if(!(H.z in GLOB.station_z_levels))
 				continue
 			if(H.mind && H.client && H.stat != DEAD)
@@ -74,7 +74,7 @@
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return FALSE
 	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
-	for(var/mob/living/carbon/monkey/M in GLOB.living_mob_list)
+	for(var/mob/living/carbon/monkey/M in GLOB.alive_mob_list)
 		if (M.HasDisease(D))
 			if(M.onCentCom() || M.onSyndieBase())
 				escaped_monkeys++

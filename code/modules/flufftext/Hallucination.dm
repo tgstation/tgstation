@@ -460,7 +460,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	var/image/A = null
 	var/kind = force_kind ? force_kind : pick("monkey","corgi","carp","skeleton","demon","zombie")
 	feedback_details += "Type: [kind]"
-	for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
+	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 		if(H == target)
 			continue
 		if(skip_nearby && (H in view(target)))
@@ -538,7 +538,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	var/mob/living/carbon/human/clone = null
 	var/clone_weapon = null
 
-	for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
+	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 		if(H.stat || H.lying)
 			continue
 		clone = H
@@ -769,7 +769,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 			target.client.images.Remove(speech_overlay)
 	else // Radio talk
 		var/list/humans = list()
-		for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
+		for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 			humans += H
 		person = pick(humans)
 		var/message = target.compose_message(person,understood_language,pick(radio_messages),"1459",person.get_spans(),face_name = TRUE)

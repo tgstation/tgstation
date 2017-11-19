@@ -15,7 +15,6 @@
 	throw_speed = 3
 	throw_range = 5
 	force = 5
-	origin_tech = "combat=1"
 	needs_permit = TRUE
 	unique_rename = FALSE
 	attack_verb = list("struck", "hit", "bashed")
@@ -276,7 +275,7 @@
 
 	if(user)
 		user.update_inv_hands()
-	SSblackbox.add_details("gun_fired","[src.type]")
+	SSblackbox.record_feedback("tally", "gun_fired", 1, type)
 	return TRUE
 
 /obj/item/gun/proc/reset_semicd()

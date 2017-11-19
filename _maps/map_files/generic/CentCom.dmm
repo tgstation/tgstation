@@ -590,7 +590,9 @@
 	},
 /area/holodeck/rec_center/medical)
 "bV" = (
-/obj/machinery/computer/operating,
+/obj/machinery/computer/operating{
+	dir = 8
+	},
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
@@ -1593,7 +1595,9 @@
 /turf/open/floor/holofloor/asteroid,
 /area/holodeck/rec_center/thunderdome1218)
 "eI" = (
-/obj/machinery/modular_computer/console/preset/civilian,
+/obj/machinery/modular_computer/console/preset/civilian{
+	dir = 4
+	},
 /turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center/kobayashi)
 "eJ" = (
@@ -1609,7 +1613,9 @@
 /turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center/kobayashi)
 "eL" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	dir = 8
+	},
 /turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center/kobayashi)
 "eM" = (
@@ -1637,12 +1643,16 @@
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/school)
 "eP" = (
-/obj/machinery/modular_computer/console/preset/civilian,
+/obj/machinery/modular_computer/console/preset/civilian{
+	dir = 4
+	},
 /obj/structure/window/reinforced,
 /turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center/kobayashi)
 "eQ" = (
-/obj/machinery/computer/atmos_alert,
+/obj/machinery/computer/atmos_alert{
+	dir = 8
+	},
 /obj/structure/window/reinforced,
 /turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center/kobayashi)
@@ -3200,7 +3210,9 @@
 	pixel_x = -27;
 	pixel_y = 5
 	},
-/obj/machinery/computer/cargo,
+/obj/machinery/computer/cargo{
+	dir = 4
+	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/centcom/supply)
@@ -4291,7 +4303,9 @@
 	},
 /area/centcom/control)
 "mm" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/secure_data{
+	dir = 8
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -4400,7 +4414,9 @@
 /turf/closed/indestructible/riveted,
 /area/centcom/supply)
 "mG" = (
-/obj/machinery/computer/cargo,
+/obj/machinery/computer/cargo{
+	dir = 4
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -4641,7 +4657,9 @@
 /turf/open/floor/plasteel/white,
 /area/centcom/ferry)
 "nl" = (
-/obj/machinery/computer/security/mining,
+/obj/machinery/computer/security/mining{
+	dir = 4
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -4786,14 +4804,18 @@
 /obj/machinery/newscaster/security_unit{
 	pixel_y = -32
 	},
-/obj/machinery/computer/cargo,
+/obj/machinery/computer/cargo{
+	dir = 1
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "nG" = (
-/obj/machinery/computer/security/mining,
+/obj/machinery/computer/security/mining{
+	dir = 1
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -4936,21 +4958,27 @@
 	},
 /area/centcom/control)
 "nY" = (
-/obj/machinery/computer/prisoner,
+/obj/machinery/computer/prisoner{
+	dir = 1
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "nZ" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/security{
+	dir = 1
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "oa" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/secure_data{
+	dir = 1
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -5121,7 +5149,9 @@
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "ov" = (
-/obj/machinery/computer/cargo,
+/obj/machinery/computer/cargo{
+	dir = 8
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -5254,7 +5284,9 @@
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
 "oL" = (
-/obj/machinery/modular_computer/console/preset/command,
+/obj/machinery/modular_computer/console/preset/command{
+	dir = 8
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -5273,7 +5305,9 @@
 	},
 /area/centcom/supply)
 "oO" = (
-/obj/machinery/computer/security/mining,
+/obj/machinery/computer/security/mining{
+	dir = 8
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -7327,7 +7361,9 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "tE" = (
-/obj/machinery/computer/monitor,
+/obj/machinery/computer/monitor{
+	dir = 1
+	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
@@ -7606,7 +7642,9 @@
 	},
 /area/centcom/ferry)
 "ul" = (
-/obj/machinery/computer/emergency_shuttle,
+/obj/machinery/computer/emergency_shuttle{
+	dir = 1
+	},
 /obj/machinery/newscaster/security_unit{
 	pixel_y = -32
 	},
@@ -7616,7 +7654,9 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "um" = (
-/obj/machinery/computer/communications,
+/obj/machinery/computer/communications{
+	dir = 1
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -7685,7 +7725,9 @@
 	},
 /area/centcom/control)
 "uv" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/security{
+	dir = 4
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -7695,7 +7737,9 @@
 /turf/open/floor/plasteel/darkred/side,
 /area/centcom/control)
 "ux" = (
-/obj/machinery/computer/card/centcom,
+/obj/machinery/computer/card/centcom{
+	dir = 1
+	},
 /obj/machinery/button/door{
 	id = "XCCcustoms1";
 	layer = 3.5;
@@ -7713,7 +7757,9 @@
 /turf/open/floor/plasteel/darkred/side,
 /area/centcom/control)
 "uy" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/security{
+	dir = 8
+	},
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 24
@@ -8690,7 +8736,9 @@
 	},
 /area/shuttle/syndicate/airlock)
 "wV" = (
-/obj/machinery/computer/telecrystals/boss,
+/obj/machinery/computer/telecrystals/boss{
+	dir = 1
+	},
 /turf/open/floor/plasteel/podhatch{
 	dir = 5
 	},
@@ -8822,13 +8870,17 @@
 	},
 /area/centcom/control)
 "xm" = (
-/obj/machinery/computer/med_data,
+/obj/machinery/computer/med_data{
+	dir = 4
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/centcom/control)
 "xn" = (
-/obj/machinery/computer/card/centcom,
+/obj/machinery/computer/card/centcom{
+	dir = 8
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -9035,7 +9087,9 @@
 	},
 /area/centcom/control)
 "xU" = (
-/obj/machinery/computer/crew,
+/obj/machinery/computer/crew{
+	dir = 4
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -9053,7 +9107,9 @@
 /turf/open/floor/wood,
 /area/centcom/control)
 "xX" = (
-/obj/machinery/computer/communications,
+/obj/machinery/computer/communications{
+	dir = 8
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -9204,14 +9260,18 @@
 	},
 /area/centcom/control)
 "yv" = (
-/obj/machinery/computer/prisoner,
+/obj/machinery/computer/prisoner{
+	dir = 1
+	},
 /obj/machinery/light,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/centcom/control)
 "yw" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/secure_data{
+	dir = 1
+	},
 /obj/machinery/light,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -9747,7 +9807,9 @@
 /turf/open/floor/plasteel/cmo,
 /area/centcom/control)
 "zK" = (
-/obj/machinery/computer/med_data,
+/obj/machinery/computer/med_data{
+	dir = 8
+	},
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
@@ -9972,7 +10034,9 @@
 /turf/open/floor/plasteel/blue,
 /area/centcom/control)
 "As" = (
-/obj/machinery/computer/communications,
+/obj/machinery/computer/communications{
+	dir = 8
+	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 24
 	},
@@ -10138,7 +10202,9 @@
 /turf/closed/indestructible/riveted,
 /area/centcom/control)
 "AU" = (
-/obj/machinery/computer/operating,
+/obj/machinery/computer/operating{
+	dir = 4
+	},
 /turf/open/floor/plasteel/cmo,
 /area/centcom/control)
 "AV" = (
@@ -10343,7 +10409,9 @@
 	},
 /area/centcom/ferry)
 "Bv" = (
-/obj/machinery/computer/card/centcom,
+/obj/machinery/computer/card/centcom{
+	dir = 1
+	},
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
 "Bw" = (
@@ -10687,7 +10755,9 @@
 	},
 /area/centcom/evac)
 "Ch" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/secure_data{
+	dir = 8
+	},
 /obj/machinery/button/door{
 	id = "XCCcustoms1";
 	layer = 3;
@@ -11008,7 +11078,9 @@
 	},
 /area/centcom/evac)
 "CR" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/security{
+	dir = 8
+	},
 /obj/machinery/newscaster{
 	pixel_x = 32
 	},
@@ -11439,7 +11511,9 @@
 	},
 /area/centcom/control)
 "DU" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/security{
+	dir = 1
+	},
 /obj/machinery/newscaster{
 	pixel_y = -32
 	},
@@ -11465,7 +11539,9 @@
 /obj/machinery/newscaster{
 	pixel_y = -32
 	},
-/obj/machinery/computer/med_data,
+/obj/machinery/computer/med_data{
+	dir = 1
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -13763,7 +13839,9 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "Kf" = (
-/obj/machinery/computer/emergency_shuttle,
+/obj/machinery/computer/emergency_shuttle{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "Kg" = (
@@ -14165,7 +14243,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "Lj" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/secure_data{
+	dir = 4
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/evac)
 "Lk" = (
@@ -14429,6 +14509,38 @@
 /obj/structure/lattice,
 /turf/open/space,
 /area/space)
+"Md" = (
+/obj/machinery/computer/secure_data{
+	dir = 4
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/centcom/control)
+"Me" = (
+/obj/machinery/computer/security{
+	dir = 1
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/centcom/control)
+"Mf" = (
+/obj/machinery/computer/secure_data{
+	dir = 1
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/centcom/control)
+"Mg" = (
+/obj/machinery/computer/crew{
+	dir = 1
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/centcom/control)
 
 (1,1,1) = {"
 aa
@@ -56765,7 +56877,7 @@ CH
 vM
 Ds
 DG
-mm
+Mf
 im
 Eu
 EM
@@ -57782,7 +57894,7 @@ vL
 wE
 km
 km
-uv
+Me
 iu
 nq
 nq
@@ -58821,7 +58933,7 @@ CM
 Da
 Dv
 DJ
-xU
+Mg
 im
 Eu
 EP
@@ -60859,7 +60971,7 @@ qv
 iu
 rN
 sK
-mm
+Md
 uv
 iu
 vR
