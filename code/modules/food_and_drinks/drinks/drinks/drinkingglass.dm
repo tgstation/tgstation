@@ -29,9 +29,12 @@
 		name = "drinking glass"
 		desc = "Your standard drinking glass."
 
-/obj/item/reagent_containers/food/drinks/drinkingglass/throw_impact(atom/target,)
+/obj/item/reagent_containers/food/drinks/drinkingglass/throw_impact(atom/target, throwingdatum)
 	. = ..()
-	if(!.) //if we're not being caught
+	var/datum/thrownthing/D = throwingdatum
+	if((target.CanPass(src, get_turf(src))) && D.thrower && D.thrower.mind && D.thrower.mind.assigned_role == "Bartender")
+		return
+	else if(!.) //if we're not being caught
 		playsound(src, "shatter", 70, 1)
 		var/obj/item/shard/S = new (loc)
 		transfer_fingerprints_to(S)
