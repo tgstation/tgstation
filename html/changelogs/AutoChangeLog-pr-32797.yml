@@ -1,0 +1,5 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - code_imp: "Ladders have been refactored and should be far less buggy."
+  - bugfix: "Jacob's ladder actually works again."
