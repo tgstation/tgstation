@@ -253,7 +253,8 @@
 /obj/machinery/gateway{
 	dir = 9
 	},
-/obj/effect/turf_decal/sand{
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 9
 	},
 /turf/open/floor/plating/beach/sand,
@@ -262,7 +263,8 @@
 /obj/machinery/gateway{
 	dir = 1
 	},
-/obj/effect/turf_decal/sand{
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
 	},
 /turf/open/floor/plating/beach/sand,
@@ -271,7 +273,8 @@
 /obj/machinery/gateway{
 	dir = 5
 	},
-/obj/effect/turf_decal/sand{
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 5
 	},
 /turf/open/floor/plating/beach/sand,
@@ -288,7 +291,8 @@
 /obj/machinery/gateway{
 	dir = 8
 	},
-/obj/effect/turf_decal/sand{
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 8
 	},
 /turf/open/floor/plating/beach/sand,
@@ -302,7 +306,8 @@
 /obj/machinery/gateway{
 	dir = 4
 	},
-/obj/effect/turf_decal/sand{
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 4
 	},
 /turf/open/floor/plating/beach/sand,
@@ -311,23 +316,24 @@
 /obj/machinery/gateway{
 	dir = 10
 	},
-/obj/effect/turf_decal/sand{
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 10
 	},
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "be" = (
-/obj/effect/turf_decal/sand{
-	dir = 1
-	},
 /obj/machinery/gateway,
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/stripes/asteroid/line,
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "bf" = (
 /obj/machinery/gateway{
 	dir = 6
 	},
-/obj/effect/turf_decal/sand{
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 6
 	},
 /turf/open/floor/plating/beach/sand,

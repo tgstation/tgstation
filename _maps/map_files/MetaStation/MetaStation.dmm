@@ -30939,8 +30939,8 @@
 "bmh" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/mineral/ore_redemption,
-/turf/open/floor/plasteel/dark,
 /obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plasteel/dark,
 /area/quartermaster/office)
 "bmi" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -80786,11 +80786,7 @@
 /turf/closed/wall,
 /area/hydroponics)
 "EDx" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 8;
-	icon_state = "diagonalWall3"
-	},
+/turf/closed/wall/mineral/plastitanium,
 /area/hallway/secondary/entry)
 "EDy" = (
 /turf/open/space,
@@ -80799,6 +80795,18 @@
 	icon_state = "diagonalWall3"
 	},
 /area/hallway/secondary/entry)
+"EDz" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/security/prison)
+"EDA" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/security/prison)
+"EDB" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/crew_quarters/fitness/recreation)
+"EDC" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/engine/break_room)
 
 (1,1,1) = {"
 aaa
@@ -90928,7 +90936,7 @@ aaa
 aaa
 aaf
 aaa
-EDy
+EDx
 aRA
 aRA
 aRA
@@ -105536,7 +105544,7 @@ aaf
 aaf
 aaf
 aaa
-bpu
+EDz
 aax
 aax
 aax
@@ -106564,7 +106572,7 @@ aaa
 aaf
 aaa
 aaa
-bpu
+EDA
 abe
 abe
 abe
@@ -118906,7 +118914,7 @@ aaa
 aaa
 aaf
 aaa
-acP
+EDB
 adl
 aQf
 adl
@@ -124609,7 +124617,7 @@ dgI
 bgb
 cTi
 bgb
-bpu
+EDC
 aNC
 brM
 aNC

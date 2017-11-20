@@ -14722,7 +14722,7 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
-/area/space)
+/area/hallway/secondary/exit/departure_lounge)
 "aKH" = (
 /obj/structure/closet/firecloset,
 /turf/open/floor/plasteel/vault{
@@ -51269,14 +51269,15 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "cCF" = (
-<<<<<<< HEAD
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/white,
 /area/engine/gravity_generator)
 "cCG" = (
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel/white,
-/area/engine/gravity_generator)
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/tcommsat/computer)
 "cCH" = (
 /obj/effect/turf_decal/bot/left,
 /turf/open/floor/plasteel/white,
@@ -51298,12 +51299,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/maintenance/department/chapel/monastery)
-"cCG" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 4
-	},
-/turf/open/floor/plating/airless,
-/area/tcommsat/computer)
 
 (1,1,1) = {"
 aaa
@@ -66402,7 +66397,7 @@ cvX
 cke
 cky
 cld
-cCF
+cCK
 aaa
 aaa
 aaa
@@ -76051,7 +76046,7 @@ agP
 ajn
 ajW
 ajV
-cCB
+alE
 amp
 and
 and
@@ -78958,7 +78953,7 @@ bNU
 bOG
 bPB
 bQn
-cCK
+cCI
 cCF
 cCH
 bTn
