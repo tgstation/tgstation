@@ -57,8 +57,6 @@ SUBSYSTEM_DEF(events)
 /datum/controller/subsystem/events/proc/spawnEvent()
 	set waitfor = FALSE	//for the admin prompt
 	if(!CONFIG_GET(flag/allow_random_events))
-//		var/datum/round_event_control/E = locate(/datum/round_event_control/dust) in control
-//		if(E)	E.runEvent()
 		return
 
 	var/gamemode = SSticker.mode.config_tag

@@ -4,7 +4,6 @@
 
 /**
  * Multitool -- A multitool is used for hacking electronic devices.
- * TO-DO -- Using it as a power measurement tool for cables etc. Nannek.
  *
  */
 
