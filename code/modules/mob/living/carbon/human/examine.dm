@@ -1,10 +1,4 @@
 /mob/living/carbon/human/examine(mob/user)
-
-	if((user.disabilities & AGNOSIA) && user != src)
-		var/msg = "<span class='warning'>You can't seem to focus on anything on this person...</span>"
-		to_chat(user, msg)
-		return
-
 	//this is very slightly better than it was because you can use it more places. still can't do \his[src] though.
 	var/t_He = p_they(TRUE)
 	var/t_His = p_their(TRUE)

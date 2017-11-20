@@ -241,9 +241,7 @@
 	var/is_human = FALSE
 	if(ishuman(A))
 		is_human = TRUE
-	visible_message("<b>[src]</b> points to [A]","You point to [A]",\
-		agnosia_message = is_human ? "<b>[src]</b> points to someone" : "",
-		agnosia_self_message = is_human ? "You point to someone" : "")
+	visible_message("<b>[src]</b> points to [A]")
 	return 1
 
 /mob/living/verb/succumb(whispered as null)
@@ -582,8 +580,7 @@
 
 	//resisting grabs (as if it helps anyone...)
 	if(!restrained(ignore_grab = 1) && pulledby)
-		visible_message("<span class='danger'>[src] resists against [pulledby]'s grip!</span>", \
-		agnosia_message = "<span class='danger'>Someone resists against someone else's grip!</span>")
+		visible_message("<span class='danger'>[src] resists against [pulledby]'s grip!</span>")
 		resist_grab()
 		add_logs(pulledby, src, "resisted grab")
 		return
@@ -619,8 +616,7 @@
 	. = 1
 	if(pulledby.grab_state)
 		if(prob(30/pulledby.grab_state))
-			visible_message("<span class='danger'>[src] has broken free of [pulledby]'s grip!</span>", \
-			agnosia_message = "<span class='danger'>Someone has broken free of someone else's grip!</span>")
+			visible_message("<span class='danger'>[src] has broken free of [pulledby]'s grip!</span>")
 			add_logs(pulledby, src, "broke grab")
 			pulledby.stop_pulling()
 			return 0
@@ -674,9 +670,7 @@
 		to_chat(src, "<span class='warning'>You can't remove \the [what.name], it appears to be stuck!</span>")
 		return
 	who.visible_message("<span class='danger'>[src] tries to remove [who]'s [what.name].</span>", \
-		"<span class='userdanger'>[src] tries to remove [who]'s [what.name].</span>", \
-		agnosia_message = "<span class='danger'>Someone tries to remove someone else's [what.name].</span>", \
-		agnosia_self_message = "<span class='userdanger'>You try to remove someone's [what.name].</span>")
+		"<span class='userdanger'>[src] tries to remove [who]'s [what.name].</span>")
 	what.add_fingerprint(src)
 	if(do_mob(src, who, what.strip_delay))
 		if(what && Adjacent(who))
@@ -710,8 +704,7 @@
 			to_chat(src, "<span class='warning'>\The [what.name] doesn't fit in that place!</span>")
 			return
 
-		visible_message("<span class='notice'>[src] tries to put [what] on [who].</span>", \
-		agnosia_message = "<span class='notice'>Someone tries to put [what] on someone else.</span>")
+		visible_message("<span class='notice'>[src] tries to put [what] on [who].</span>")
 		if(do_mob(src, who, what.equip_delay_other))
 			if(what && Adjacent(who) && what.mob_can_equip(who, src, final_where, TRUE, TRUE))
 				if(temporarilyRemoveItemFromInventory(what))
@@ -794,8 +787,7 @@
 			for(var/i = 1; i <= butcher_results[path];i++)
 				new path(src.loc)
 			butcher_results.Remove(path) //In case you want to have things like simple_animals drop their butcher results on gib, so it won't double up below.
-	visible_message("<span class='notice'>[user] butchers [src].</span>", \
-		agnosia_message = "<span class='notice'>Someone butchers [src].</span>")
+	visible_message("<span class='notice'>[user] butchers [src].</span>")
 	gib(0, 0, 1)
 
 /mob/living/canUseTopic(atom/movable/M, be_close = 0, no_dextery = 0)
@@ -900,9 +892,7 @@
 	if(fire_stacks > 0 && !on_fire)
 		on_fire = 1
 		src.visible_message("<span class='warning'>[src] catches fire!</span>", \
-			"<span class='userdanger'>You're set on fire!</span>", \
-			agnosia_message = "<span class='warning'>Someone catches fire!</span>", \
-			agnosia_self_message = "<span class='userdanger'>You're set on fire!</span>")
+			"<span class='userdanger'>You're set on fire!</span>")
 		new/obj/effect/dummy/fire(src)
 		throw_alert("fire", /obj/screen/alert/fire)
 		update_fire()

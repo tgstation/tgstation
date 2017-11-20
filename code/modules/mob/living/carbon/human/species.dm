@@ -1175,9 +1175,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(!damage || !affecting)
 			playsound(target.loc, user.dna.species.miss_sound, 25, 1, -1)
 			target.visible_message("<span class='danger'>[user] has attempted to [atk_verb] [target]!</span>",\
-			"<span class='userdanger'>[user] has attempted to [atk_verb] [target]!</span>", null, COMBAT_MESSAGE_RANGE, ,\
-			"<span class='danger'>Someone has attempted to [atk_verb] someone else!</span>",\
-			"<span class='userdanger'>Someone has attempted to [atk_verb] you!</span>")
+			"<span class='userdanger'>[user] has attempted to [atk_verb] [target]!</span>", null, COMBAT_MESSAGE_RANGE)
 			return 0
 
 
@@ -1186,9 +1184,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		playsound(target.loc, user.dna.species.attack_sound, 25, 1, -1)
 
 		target.visible_message("<span class='danger'>[user] has [atk_verb]ed [target]!</span>", \
-			"<span class='userdanger'>[user] has [atk_verb]ed [target]!</span>", null, COMBAT_MESSAGE_RANGE, ,\
-			"<span class='danger'>Someone has [atk_verb]ed someone else!</span>",\
-			"<span class='userdanger'>Someone has [atk_verb]ed you!</span>")
+			"<span class='userdanger'>[user] has [atk_verb]ed [target]!</span>", null, COMBAT_MESSAGE_RANGE)
 
 		if(user.limb_destroyer)
 			target.dismembering_strike(user, affecting.body_zone)
@@ -1196,9 +1192,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		add_logs(user, target, "punched")
 		if((target.stat != DEAD) && damage >= user.dna.species.punchstunthreshold)
 			target.visible_message("<span class='danger'>[user] has knocked  [target] down!</span>", \
-				"<span class='userdanger'>[user] has knocked [target] down!</span>", null, COMBAT_MESSAGE_RANGE, ,\
-				"<span class='danger'>Someone has knocked someone else down!</span>",\
-				"<span class='userdanger'>Someone has knocked you down!</span>")
+				"<span class='userdanger'>[user] has knocked [target] down!</span>", null, COMBAT_MESSAGE_RANGE)
 			target.apply_effect(80, KNOCKDOWN, armor_block)
 			target.forcesay(GLOB.hit_appends)
 		else if(target.lying)
@@ -1222,9 +1216,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(randn <= 25)
 			playsound(target, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 			target.visible_message("<span class='danger'>[user] has pushed [target]!</span>",
-				"<span class='userdanger'>[user] has pushed [target]!</span>", null, COMBAT_MESSAGE_RANGE, ,\
-				"<span class='danger'>Someone has pushed someone else!</span>",
-				"<span class='userdanger'>Someone has pushed you!</span>")
+				"<span class='userdanger'>[user] has pushed [target]!</span>", null, COMBAT_MESSAGE_RANGE)
 			target.apply_effect(40, KNOCKDOWN, target.run_armor_check(affecting, "melee", "Your armor prevents your fall!", "Your armor softens your fall!"))
 			target.forcesay(GLOB.hit_appends)
 			add_logs(user, target, "disarmed", " pushing them to the ground")
@@ -1234,17 +1226,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			var/obj/item/I = null
 			if(target.pulling)
 				target.visible_message("<span class='warning'>[user] has broken [target]'s grip on [target.pulling]!</span>",\
-					"<span class='warning'>[user] has broken your grip on [target.pulling]!</span>",\
-					agnosia_message = "<span class='warning'>Someone has broken someone else's grip on what they were pulling!</span>",\
-					agnosia_self_message = "<span class='warning'>Someone has broken your grip on what you were pulling!</span>")
+					"<span class='warning'>[user] has broken your grip on [target.pulling]!</span>")
 				target.stop_pulling()
 			else
 				I = target.get_active_held_item()
 				if(target.dropItemToGround(I))
 					target.visible_message("<span class='danger'>[user] has disarmed [target]!</span>", \
-						"<span class='userdanger'>[user] has disarmed [target]!</span>", null, COMBAT_MESSAGE_RANGE, ,\
-						"<span class='danger'>Someone has disarmed someone else!</span>", \
-						"<span class='userdanger'>Someone has disarmed you!</span>")
+						"<span class='userdanger'>[user] has disarmed [target]!</span>", null, COMBAT_MESSAGE_RANGE)
 				else
 					I = null
 			playsound(target, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
@@ -1254,9 +1242,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		playsound(target, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 		target.visible_message("<span class='danger'>[user] attempted to disarm [target]!</span>", \
-						"<span class='userdanger'>[user] attemped to disarm [target]!</span>", null, COMBAT_MESSAGE_RANGE, ,\
-						"<span class='danger'>Someone attempted to disarm someone else!</span>", \
-						"<span class='userdanger'>Someone attemped to disarm you!</span>")
+						"<span class='userdanger'>[user] attemped to disarm [target]!</span>", null, COMBAT_MESSAGE_RANGE)
 
 
 
@@ -1276,9 +1262,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if((M != H) && M.a_intent != INTENT_HELP && H.check_shields(M, 0, M.name, attack_type = UNARMED_ATTACK))
 		add_logs(M, H, "attempted to touch")
 		H.visible_message("<span class='warning'>[M] attempted to touch [H]!</span>",\
-			"<span class='warning'>[M] attempted to touch you!</span>",\
-			agnosia_message = "<span class='warning'>Someone attempted to touch someone else!</span>",\
-			agnosia_self_message = "<span class='warning'>Someone attempted to touch you!</span>")
+			"<span class='warning'>[M] attempted to touch you!</span>")
 		return 0
 	switch(M.a_intent)
 		if("help")
@@ -1299,9 +1283,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(H.check_shields(I, I.force, "the [I.name]", MELEE_ATTACK, I.armour_penetration))
 			return 0
 	if(H.check_block())
-		H.visible_message("<span class='warning'>[H] blocks [I]!</span>",\
-			agnosia_message = "<span class='warning'>Someone blocks [I]!</span>",\
-			agnosia_self_message = "<span class='warning'>You block [I]!</span>")
+		H.visible_message("<span class='warning'>[H] blocks [I]!</span>")
 		return 0
 
 	var/hit_area
@@ -1347,9 +1329,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				if(H.stat == CONSCIOUS && armor_block < 50)
 					if(prob(I.force))
 						H.visible_message("<span class='danger'>[H] has been knocked senseless!</span>", \
-										"<span class='userdanger'>[H] has been knocked senseless!</span>", \
-										agnosia_message = "<span class='danger'>Someone has been knocked senseless!</span>", \
-										agnosia_self_message = "<span class='userdanger'>You have been knocked senseless!</span>")
+										"<span class='userdanger'>[H] has been knocked senseless!</span>")
 						H.confused = max(H.confused, 20)
 						H.adjustBrainLoss(20)
 						H.adjust_blurriness(10)
@@ -1376,9 +1356,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				if(H.stat == CONSCIOUS && armor_block < 50)
 					if(prob(I.force))
 						H.visible_message("<span class='danger'>[H] has been knocked down!</span>", \
-							"<span class='userdanger'>[H] has been knocked down!</span>", \
-							agnosia_message = "<span class='danger'>Someone has been knocked down!</span>", \
-							agnosia_self_message = "<span class='userdanger'>You have been knocked down!</span>")
+							"<span class='userdanger'>[H] has been knocked down!</span>")
 						H.apply_effect(60, KNOCKDOWN, armor_block)
 
 				if(bloody)

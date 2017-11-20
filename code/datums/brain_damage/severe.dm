@@ -84,29 +84,6 @@
 		to_chat(owner, "<span class='warning'>You feel tired...</span>")
 		owner.drowsyness += 10
 
-GLOBAL_LIST_EMPTY(agnosiac_mobs)
-
-/datum/brain_trauma/severe/agnosia
-	name = "Agnosia"
-	desc = "Patient cannot tell people apart."
-	scan_desc = "agnosia"
-	gain_text = "<span class='warning'>You can't remember anyone's face...</span>"
-	lose_text = "<span class='notice'>You suddenly remember who everyone is.</span>"
-
-/datum/brain_trauma/severe/agnosia/on_gain()
-	..()
-	owner.disabilities |= AGNOSIA
-	GLOB.agnosiac_mobs += owner
-	for(var/datum/atom_hud/alternate_appearance/basic/agnosia/AA in GLOB.active_agnosia_appearances)
-		AA.onNewMob(owner)
-
-/datum/brain_trauma/severe/agnosia/on_lose()
-	..()
-	GLOB.agnosiac_mobs -= owner
-	for(var/datum/atom_hud/alternate_appearance/basic/agnosia/AA in GLOB.active_agnosia_appearances)
-		AA.remove_hud_from(owner)
-	owner.disabilities &= ~AGNOSIA
-
 /datum/brain_trauma/severe/monophobia
 	name = "Monophobia"
 	desc = "Patient feels sick and distressed when not around other people, leading to potentially lethal levels of stress."
