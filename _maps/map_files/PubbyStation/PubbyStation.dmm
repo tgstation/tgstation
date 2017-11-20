@@ -372,7 +372,7 @@
 "acF" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on,
 /turf/open/floor/plating/airless,
-/area/space)
+/area/ai_monitored/turret_protected/AIsatextAS)
 "acG" = (
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
@@ -35504,7 +35504,7 @@
 	layer = 2.9
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/chapel/dock)
 "bGH" = (
 /obj/structure/window/reinforced,
 /turf/open/space,
@@ -43498,7 +43498,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/space)
+/area/engine/atmos)
 "bZL" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/structure/grille,
@@ -45215,7 +45215,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/maintenance/disposal/incinerator)
 "ceB" = (
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -47304,7 +47304,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/space)
+/area/science/mixing)
 "cly" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -51281,6 +51281,18 @@
 /obj/machinery/rnd/protolathe/department/medical,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"cCF" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/maintenance/department/chapel/monastery)
+"cCG" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/tcommsat/computer)
 
 (1,1,1) = {"
 aaa
@@ -66379,7 +66391,7 @@ cvX
 cke
 cky
 cld
-ceA
+cCF
 aaa
 aaa
 aaa
@@ -67414,10 +67426,10 @@ cfN
 cfN
 cfN
 aaa
-cxG
-cxG
-cxG
-cxG
+aaa
+aaa
+aaa
+aaa
 cjp
 cyU
 cjp
@@ -67670,10 +67682,10 @@ caS
 caS
 caS
 caS
-cxF
-cxF
-cxF
-cxF
+aht
+aht
+aht
+aht
 cjp
 cjp
 ckH
@@ -67927,10 +67939,10 @@ cfN
 caS
 cfN
 aaa
-cxG
-cxG
-cxG
-cxG
+aaa
+aaa
+aaa
+aaa
 cjp
 ckW
 ckH
@@ -68184,10 +68196,10 @@ cfN
 caS
 caS
 aht
-cxF
-cxF
-cxF
-cxF
+aht
+aht
+aht
+aht
 cjp
 ckW
 ckH
@@ -68441,10 +68453,10 @@ cwe
 cwe
 cfN
 aaa
-cxG
-cxG
-cxG
-cxG
+aaa
+aaa
+aaa
+aaa
 cjp
 cyP
 ckH
@@ -69726,10 +69738,10 @@ cln
 cwe
 cfN
 aaa
-cxG
-cxG
-cxG
-cxG
+aaa
+aaa
+aaa
+aaa
 cjp
 cyS
 ckH
@@ -69983,10 +69995,10 @@ cln
 cwe
 caS
 aht
-cxF
-cxF
-cxF
-cxF
+aht
+aht
+aht
+aht
 cjp
 cko
 ckH
@@ -70240,10 +70252,10 @@ cln
 cwe
 cfN
 cfN
-cxG
-cxG
-cxG
-cxG
+aaa
+aaa
+aaa
+aaa
 cjp
 cyT
 ckH
@@ -70497,10 +70509,10 @@ cwe
 cwe
 caS
 caS
-cxF
-cxF
-cxF
-cxF
+aht
+aht
+aht
+aht
 cjp
 cjp
 ckH
@@ -70755,10 +70767,10 @@ cfN
 cfN
 cfN
 aaa
-cxG
-cxG
-cxG
-cxF
+aaa
+aaa
+aaa
+aht
 cjp
 cyU
 cjp
@@ -80266,7 +80278,7 @@ aaa
 aaa
 aaa
 aaa
-clx
+cCG
 clw
 clw
 clw

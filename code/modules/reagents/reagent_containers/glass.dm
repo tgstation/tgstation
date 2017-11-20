@@ -4,7 +4,7 @@
 	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50)
 	volume = 50
 	container_type = OPENCONTAINER_1
-	spillable = 1
+	spillable = TRUE
 	resistance_flags = ACID_PROOF
 
 

@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Throwing drinking glasses and cartons will now consistently cause them to break!"

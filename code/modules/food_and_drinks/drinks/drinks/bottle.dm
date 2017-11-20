@@ -12,21 +12,18 @@
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	var/const/duration = 13 //Directly relates to the 'knockdown' duration. Lowered by armor (i.e. helmets)
-	var/isGlass = 1 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
+	isGlass = TRUE
 	foodtype = ALCOHOL
 
-/obj/item/reagent_containers/food/drinks/bottle/throw_impact(atom/target,mob/thrower)
-	..()
-	smash(target,thrower,1)
 
-/obj/item/reagent_containers/food/drinks/bottle/proc/smash(mob/living/target, mob/living/user, ranged = 0)
-
+/obj/item/reagent_containers/food/drinks/bottle/smash(mob/living/target, mob/thrower, ranged = FALSE)
 	//Creates a shattering noise and replaces the bottle with a broken_bottle
-	var/new_location = get_turf(src)
-	var/obj/item/broken_bottle/B = new /obj/item/broken_bottle(new_location)
+	if(bartender_check(target) && ranged)
+		return
+	var/obj/item/broken_bottle/B = new (loc)
 	if(!ranged)
-		user.put_in_hands(B)
-	B.icon_state = src.icon_state
+		thrower.put_in_hands(B)
+	B.icon_state = icon_state
 
 	var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
 	I.Blend(B.broken_outline, ICON_OVERLAY, rand(5), 1)
@@ -35,14 +32,14 @@
 
 	if(isGlass)
 		if(prob(33))
-			new/obj/item/shard(new_location)
+			new/obj/item/shard(drop_location())
 		playsound(src, "shatter", 70, 1)
 	else
 		B.name = "broken carton"
 		B.force = 0
 		B.throwforce = 0
 		B.desc = "A carton with the bottom half burst open. Might give you a papercut."
-	src.transfer_fingerprints_to(B)
+	transfer_fingerprints_to(B)
 
 	qdel(src)
 
@@ -116,7 +113,7 @@
 	SplashReagents(target)
 
 	//Finally, smash the bottle. This kills (del) the bottle.
-	src.smash(target, user)
+	smash(target, user)
 
 	return
 
@@ -311,7 +308,7 @@
 	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
-	isGlass = 0
+	isGlass = FALSE
 	list_reagents = list("orangejuice" = 100)
 	foodtype = FRUIT
 
@@ -322,7 +319,7 @@
 	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
-	isGlass = 0
+	isGlass = FALSE
 	list_reagents = list("cream" = 100)
 	foodtype = DAIRY
 
@@ -333,7 +330,7 @@
 	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
-	isGlass = 0
+	isGlass = FALSE
 	list_reagents = list("tomatojuice" = 100)
 	foodtype = VEGETABLES
 
@@ -344,7 +341,7 @@
 	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
-	isGlass = 0
+	isGlass = FALSE
 	list_reagents = list("limejuice" = 100)
 	foodtype = FRUIT
 
@@ -367,7 +364,7 @@
 		B.reagents.copy_to(src,100)
 		if(!B.isGlass)
 			desc += " You're not sure if making this out of a carton was the brightest idea."
-			isGlass = 0
+			isGlass = FALSE
 	return
 
 /obj/item/reagent_containers/food/drinks/bottle/molotov/throw_impact(atom/target,mob/thrower)

@@ -8,7 +8,7 @@
 	volume = 50
 	materials = list(MAT_GLASS=500)
 	max_integrity = 20
-	spillable = 1
+	spillable = TRUE
 	resistance_flags = ACID_PROOF
 	unique_rename = 1
 

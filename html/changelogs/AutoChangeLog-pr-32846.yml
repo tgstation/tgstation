@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "PubbyStation - Unpowered air injectors in various locations have been fixed."
