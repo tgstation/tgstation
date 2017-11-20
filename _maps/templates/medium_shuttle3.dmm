@@ -40,7 +40,6 @@
 	name = "Shuttle"
 	})
 "g" = (
-/turf/open/floor/plating,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
@@ -55,7 +54,6 @@
 	name = "Shuttle"
 	})
 "i" = (
-/turf/open/floor/plating,
 /turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
@@ -124,7 +122,6 @@
 	name = "Shuttle"
 	})
 "s" = (
-/turf/open/floor/plating,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
@@ -140,7 +137,6 @@
 	name = "Shuttle"
 	})
 "u" = (
-/turf/open/floor/plating,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 8;
 	icon_state = "diagonalWall3"

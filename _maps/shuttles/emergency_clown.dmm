@@ -10,7 +10,6 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ad" = (
-/turf/open/floor/mineral/titanium,
 /turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/escape)
 "ae" = (

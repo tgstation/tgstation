@@ -24,7 +24,6 @@
 /turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/transport)
 "g" = (
-/turf/open/floor/mineral/titanium/blue,
 /turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/transport)
 "h" = (
@@ -72,7 +71,6 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "o" = (
-/turf/open/floor/plasteel/shuttle,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "p" = (

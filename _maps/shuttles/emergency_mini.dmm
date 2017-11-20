@@ -208,7 +208,6 @@
 /area/shuttle/escape)
 "G" = (
 /turf/closed/wall/mineral/titanium,
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "H" = (
 /obj/machinery/status_display,

@@ -78,11 +78,9 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/supply)
 "l" = (
-/turf/open/floor/mineral/titanium/blue,
 /turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/supply)
 "m" = (
-/turf/open/floor/plasteel/shuttle,
 /turf/closed/wall/mineral/titanium/interior{
 	icon_state = "swall_f6"
 	},

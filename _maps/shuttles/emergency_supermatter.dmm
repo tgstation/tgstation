@@ -113,7 +113,6 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "ax" = (
-/turf/open/floor/mineral/titanium/yellow,
 /turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/escape)
 "ay" = (

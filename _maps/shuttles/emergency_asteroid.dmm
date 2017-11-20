@@ -119,7 +119,6 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aB" = (
-/turf/open/floor/mineral/titanium,
 /turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/escape)
 "aC" = (

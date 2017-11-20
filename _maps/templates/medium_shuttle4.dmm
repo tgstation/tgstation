@@ -18,7 +18,6 @@
 /turf/closed/indestructible/oldshuttle/corner,
 /area/ruin/powered)
 "f" = (
-/turf/open/floor/oldshuttle,
 /turf/closed/indestructible/oldshuttle/corner{
 	dir = 1
 	},
@@ -27,7 +26,6 @@
 /turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "h" = (
-/turf/open/floor/oldshuttle,
 /turf/closed/indestructible/oldshuttle/corner{
 	dir = 4
 	},
@@ -57,13 +55,11 @@
 /turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "m" = (
-/turf/open/floor/oldshuttle,
 /turf/closed/indestructible/oldshuttle/corner{
 	dir = 8
 	},
 /area/ruin/powered)
 "n" = (
-/turf/open/floor/oldshuttle,
 /turf/closed/indestructible/oldshuttle/corner,
 /area/ruin/powered)
 "o" = (
@@ -77,7 +73,6 @@
 	},
 /area/ruin/powered)
 "q" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /turf/closed/indestructible/oldshuttle/corner,
 /area/ruin/powered)
 "r" = (
