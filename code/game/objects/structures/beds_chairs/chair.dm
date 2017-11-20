@@ -95,7 +95,7 @@
 	handle_layer()
 
 /obj/structure/chair/proc/spin()
-	setDir(turn(dir, 90))
+	setDir(turn(dir, -90))
 
 /obj/structure/chair/setDir(newdir)
 	..()
