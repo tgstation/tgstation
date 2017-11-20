@@ -336,7 +336,6 @@
 	step_towards(src, locate(new_x, new_y, z))
 	pixel_x = old_pixel_x
 	pixel_y = old_pixel_y
-	//var/animation_time = ((SSprojectiles.flags & SS_TICKER? (SSprojectiles.wait * world.tick_lag) : SSprojectiles.wait) / moves)
 	animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = 1, flags = ANIMATION_END_NOW)
 	old_pixel_x = pixel_x_offset
 	old_pixel_y = pixel_y_offset

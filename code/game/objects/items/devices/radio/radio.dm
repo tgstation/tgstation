@@ -454,18 +454,6 @@
 			if(message_mode == MODE_WHISPER || message_mode == MODE_WHISPER_CRIT)
 				raw_message = stars(raw_message)
 			talk_into(speaker, raw_message, , spans, language=message_language)
-/*
-/obj/item/device/radio/proc/accept_rad(obj/item/device/radio/R as obj, message)
-
-	if ((R.frequency == frequency && message))
-		return 1
-	else if
-
-	else
-		return null
-	return
-*/
-
 
 /obj/item/device/radio/proc/receive_range(freq, level)
 	// check if this radio can receive on the given frequency, and if so,
