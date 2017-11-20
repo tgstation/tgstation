@@ -343,15 +343,15 @@
 /obj/machinery/computer/turbine_computer/ui_data(mob/user)
 	var/list/data = list()
 
-	data["working"] = (src.compressor.starter && compressor && compressor.turbine && !compressor.stat && !compressor.turbine.stat)
+	data["working"] = (compressor.starter && compressor && compressor.turbine && !compressor.stat && !compressor.turbine.stat)
 	data["connected"] = (compressor && compressor.turbine) ? TRUE : FALSE
 	data["compressor_broke"] = (!compressor || compressor.stat) ? TRUE : FALSE
 	data["turbine_broke"] = (!compressor || compressor.turbine.stat) ? TRUE : FALSE
-	data["online"] = src.compressor.starter
+	data["online"] = compressor.starter
 
-	data["power"] = DisplayPower(src.compressor.turbine.lastgen)
-	data["rpm"] = src.compressor.rpm
-	data["temp"] = src.compressor.gas_contained.temperature
+	data["power"] = DisplayPower(compressor.turbine.lastgen)
+	data["rpm"] = compressor.rpm
+	data["temp"] = compressor.gas_contained.temperature
 
 	return data
 
