@@ -10,7 +10,7 @@
 
 /obj/item/integrated_circuit/reagent/smoke
 	name = "smoke generator"
-	desc = "Unlike most electronics, creating smoke is completely intentional."
+	desc = "Can hold 100u of reagents. Takes in a reference to itself, and a volume number, and upon being pulsed, will create a smoke cloud with said reagents."
 	icon_state = "smoke"
 	extended_desc = "This smoke generator creates clouds of smoke on command.  It can also hold liquids inside, which will go \
 	into the smoke clouds when activated.  The reagents are consumed when smoke is made."
@@ -57,7 +57,7 @@
 
 /obj/item/integrated_circuit/reagent/injector
 	name = "integrated hypo-injector"
-	desc = "This scary looking thing is able to pump liquids into whatever it's pointed at."
+	desc = "Can hold 30u of reagents. Takes in a target, and an injection volume, and when pulsed attempts to inject the target if they are adjacent to the circuit."
 	icon_state = "injector"
 	extended_desc = "This autoinjector can push reagents into another container or someone else outside of the machine.  The target \
 	must be adjacent to the machine, and if it is a person, they cannot be wearing thick clothing. Negative given amount makes injector suck out reagents."
@@ -185,7 +185,7 @@
 
 /obj/item/integrated_circuit/reagent/pump
 	name = "reagent pump"
-	desc = "Moves liquids safely inside a machine, or even nearby it."
+	desc = "Takes an input container, an output container, and a volume to move, and will move reagents from the input to the output with the specified volume used."
 	icon_state = "reagent_pump"
 	extended_desc = "This is a pump, which will move liquids from the source ref to the target ref.  The third pin determines \
 	how much liquid is moved per pulse, between 0 and 50.  The pump can move reagents to any open container inside the machine, or \
@@ -242,7 +242,7 @@
 
 /obj/item/integrated_circuit/reagent/storage
 	name = "reagent storage"
-	desc = "Stores liquid inside, and away from electrical components.  Can store up to 60u."
+	desc = "Can hold reagents. Stores 60u of reagents, and outputs the current volume and a reference to itself."
 	icon_state = "reagent_storage"
 	extended_desc = "This is effectively an internal beaker."
 	container_type = OPENCONTAINER_1
@@ -265,7 +265,7 @@
 
 /obj/item/integrated_circuit/reagent/storage/cryo
 	name = "cryo reagent storage"
-	desc = "Stores liquid inside, and away from electrical components.  Can store up to 60u.  This will also suppress reactions."
+	desc = "Can hold reagents. Stores 60u of reagents while preventing reactions, and outputs the current volume and a reference to itself."
 	icon_state = "reagent_storage_cryo"
 	extended_desc = "This is effectively an internal cryo beaker."
 	container_type = OPENCONTAINER_1
@@ -278,7 +278,7 @@
 
 /obj/item/integrated_circuit/reagent/storage/big
 	name = "big reagent storage"
-	desc = "Stores liquid inside, and away from electrical components.  Can store up to 180u."
+	desc = "Can hold reagents. Stores 180u of reagents, and outputs the current volume and a reference to itself."
 	icon_state = "reagent_storage_big"
 	extended_desc = "This is effectively an internal beaker."
 	container_type = OPENCONTAINER_1
@@ -288,7 +288,7 @@
 
 /obj/item/integrated_circuit/reagent/storage/scan
 	name = "reagent scanner"
-	desc = "Stores liquid inside, and away from electrical components.  Can store up to 60u.  On pulse this beaker will send list of contained reagents."
+	desc = "Can hold reagents. Stores 60u of reagents. Outputs the current volume and a reference to itself. When pulsed, it generates a list of all contained reagents."
 	icon_state = "reagent_scan"
 	extended_desc = "Mostly useful for reagent filter."
 	container_type = OPENCONTAINER_1
@@ -307,7 +307,7 @@
 
 /obj/item/integrated_circuit/reagent/filter
 	name = "reagent filter"
-	desc = "Filtering liquids by list of desired or unwanted reagents."
+	desc = "Takes in a input container, a target container, an injection amount, and a list of reagents to filter out. When pulsed, transfers reagents that pass the filter from the input to the output with the amount specified."
 	icon_state = "reagent_filter"
 	extended_desc = "This is a filter, which will move liquids from the source ref to the target ref. \
 	It will move all reagents, except list, given in fourth pin if amount value is positive.\
