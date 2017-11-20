@@ -317,7 +317,7 @@
 	dir = 8;
 	icon_state = "diagonalWall3"
 	},
-/area/space)
+/area/security/prison)
 "aaV" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_2)
@@ -327,7 +327,7 @@
 	dir = 1;
 	icon_state = "diagonalWall3"
 	},
-/area/space)
+/area/security/prison)
 "aaY" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -22513,7 +22513,7 @@
 	req_access_txt = "10"
 	},
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/maintenance/starboard)
 "aVh" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -27475,7 +27475,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/janitor)
+/area/maintenance/central)
 "bfo" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -34714,7 +34714,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/engine/break_room)
+/area/maintenance/starboard)
 "btA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
@@ -36202,7 +36202,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/heads/captain/private)
+/area/maintenance/central)
 "bwH" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
@@ -45447,7 +45447,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/gateway)
+/area/maintenance/central)
 "bQy" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -46679,7 +46679,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/kitchen)
+/area/maintenance/starboard)
 "bTa" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -52012,7 +52012,7 @@
 	req_one_access_txt = "0"
 	},
 /turf/open/floor/plating,
-/area/hydroponics)
+/area/maintenance/starboard/aft)
 "cdV" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -55206,7 +55206,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/space,
-/area/space)
+/area/maintenance/disposal/incinerator)
 "ckD" = (
 /obj/machinery/doorButtons/access_button{
 	idDoor = "incinerator_airlock_exterior";
@@ -56189,7 +56189,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/science/research)
+/area/maintenance/starboard/aft)
 "cmN" = (
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
@@ -58042,7 +58042,7 @@
 	req_access_txt = "40"
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/heads/cmo)
+/area/maintenance/aft)
 "cqq" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -58716,7 +58716,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/medical/chemistry)
+/area/maintenance/aft)
 "crF" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/item/device/radio/intercom{
@@ -59437,7 +59437,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/science/research)
+/area/maintenance/aft)
 "csV" = (
 /obj/structure/disposalpipe/junction{
 	dir = 8
@@ -59753,7 +59753,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/medical/genetics)
+/area/maintenance/aft)
 "ctD" = (
 /obj/structure/sign/directions/evac,
 /turf/closed/wall,
@@ -59812,7 +59812,7 @@
 	req_one_access_txt = "7;47;29"
 	},
 /turf/open/floor/plating,
-/area/science/misc_lab/range)
+/area/maintenance/aft)
 "ctN" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/light{
@@ -60805,7 +60805,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/science/robotics/mechbay)
+/area/maintenance/aft)
 "cvJ" = (
 /obj/structure/sign/nosmoking_2{
 	pixel_x = -29
@@ -67684,7 +67684,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/science/lab)
+/area/maintenance/aft)
 "cJn" = (
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
@@ -78718,7 +78718,7 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plating,
-/area/science/research)
+/area/maintenance/starboard/aft)
 "diI" = (
 /obj/item/poster/random_contraband,
 /obj/item/poster/random_contraband,
@@ -79478,7 +79478,7 @@
 	req_access_txt = "12"
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/locker)
+/area/maintenance/starboard/fore)
 "dtP" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -80718,6 +80718,20 @@
 /obj/machinery/rnd/protolathe/department/service,
 /turf/closed/wall,
 /area/hydroponics)
+"EDx" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 8;
+	icon_state = "diagonalWall3"
+	},
+/area/hallway/secondary/entry)
+"EDy" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 1;
+	icon_state = "diagonalWall3"
+	},
+/area/hallway/secondary/entry)
 
 (1,1,1) = {"
 aaa
@@ -89819,8 +89833,8 @@ aaa
 aaa
 aaa
 aaa
-aaU
-blx
+EDx
+aRA
 aRA
 aRA
 aRA
@@ -90847,8 +90861,8 @@ aaa
 aaa
 aaf
 aaa
-aaX
-blx
+EDy
+aRA
 aRA
 aRA
 aRA
@@ -100925,7 +100939,7 @@ coE
 cpZ
 coB
 csp
-ctp
+csr
 duH
 dyg
 ceu
@@ -118568,7 +118582,7 @@ aaa
 aaa
 aaf
 aaa
-blx
+acP
 adl
 bih
 adl
@@ -118825,7 +118839,7 @@ aaa
 aaa
 aaf
 aaa
-blx
+acP
 adl
 aQf
 adl
