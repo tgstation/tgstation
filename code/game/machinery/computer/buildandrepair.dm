@@ -146,9 +146,9 @@
 
 /obj/structure/frame/computer/AltClick(mob/user)
 	..()
-	if(!in_range(src, user) || user.incapacitated())
+	if(!in_range(src, user) || !isliving(user) || user.incapacitated())
 		return
-	
+
 	if(anchored)
 		to_chat(usr, "<span class='warning'>You must unwrench [src] before rotating it!</span>")
 		return
