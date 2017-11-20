@@ -65,7 +65,8 @@
 
 /obj/item/restraints/handcuffs/clockwork
 	name = "replicant manacles"
-	desc = "Cold, heavy manacles made out of some strange black metal."
+	desc = "Heavy manacles made out of freezing-cold metal. It looks like brass, but feels much more solid."
+	icon_state = "brass_manacles"
 	origin_tech = "materials=2;magnets=5"
 	flags_1 = DROPDEL_1
 
