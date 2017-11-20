@@ -80,13 +80,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	QDEL_LIST(outputs)
 	QDEL_LIST(activators)
 	. = ..()
-/*
-/obj/item/integrated_circuit/nano_host()
-	if(istype(src.loc, /obj/item/device/electronic_assembly))
-		var/obj/item/device/electronic_assembly/assembly = loc
-		return assembly.resolve_nano_host()
-	return ..()
-*/
+
 /obj/item/integrated_circuit/emp_act(severity)
 	for(var/k in 1 to inputs.len)
 		var/datum/integrated_io/I = inputs[k]
@@ -108,7 +102,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	if(!check_interactivity(M))
 		return
 
-	var/input = reject_bad_name(input("What do you want to name this?", "Rename", src.name) as null|text,1)
+	var/input = reject_bad_name(stripped_input(M, "What do you want to name this?", "Rename", src.name),1)
 	if(src && input && check_interactivity(M))
 		to_chat(M, "<span class='notice'>The circuit '[src.name]' is now labeled '[input]'.</span>")
 		displayed_name = input
@@ -116,14 +110,10 @@ a creative player the means to solve many problems.  Circuits are held inside an
 /obj/item/integrated_circuit/interact(mob/user)
 	if(!check_interactivity(user))
 		return
-//	if(!assembly)
-//		return
 
 	var/window_height = 350
 	var/window_width = 600
 
-	//var/table_edge_width = "[(window_width - window_width * 0.1) / 4]px"
-	//var/table_middle_width = "[(window_width - window_width * 0.1) - (table_edge_width * 2)]px"
 	var/table_edge_width = "30%"
 	var/table_middle_width = "40%"
 
@@ -163,7 +153,6 @@ a creative player the means to solve many problems.  Circuits are held inside an
 						if(io.linked.len)
 							for(var/k in 1 to io.linked.len)
 								var/datum/integrated_io/linked = io.linked[k]
-//								words += "<a href=?src=[REF(linked.holder)];pin_name=1;pin=[REF(linked)];link=[REF(io)]>\[[linked]\]</a>
 								words += "<a href=?src=[REF(src)];pin_unwire=1;pin=[REF(io)];link=[REF(linked)]>[linked]</a> \
 								@ <a href=?src=[REF(linked.holder)];examine=1;>[linked.holder.displayed_name]</a><br>"
 
@@ -182,7 +171,6 @@ a creative player the means to solve many problems.  Circuits are held inside an
 						if(io.linked.len)
 							for(var/k in 1 to io.linked.len)
 								var/datum/integrated_io/linked = io.linked[k]
-//								words += "<a href=?src=[REF(linked.holder)];pin_name=1;pin=[REF(linked)];link=[REF(io)]>\[[linked]\]</a>
 								words += "<a href=?src=[REF(src)];pin_unwire=1;pin=[REF(io)];link=[REF(linked)]>[linked]</a> \
 								@ <a href=?src=[REF(linked.holder)];examine=1;>[linked.holder.displayed_name]</a><br>"
 
@@ -199,7 +187,6 @@ a creative player the means to solve many problems.  Circuits are held inside an
 		if(io.linked.len)
 			for(var/k in 1 to io.linked.len)
 				var/datum/integrated_io/linked = io.linked[k]
-//				words += "<a href=?src=[REF(linked.holder)];pin_name=1;pin=[REF(linked)];link=[REF(io)]>\[[linked]\]</a>
 				words += "<a href=?src=[REF(src)];pin_unwire=1;pin=[REF(io)];link=[REF(linked)]><font color='FF0000'>[linked]</font></a> \
 				@ <a href=?src=[REF(linked.holder)];examine=1;><font color='FF0000'>[linked.holder.displayed_name]</font></a><br>"
 
@@ -209,9 +196,6 @@ a creative player the means to solve many problems.  Circuits are held inside an
 
 	HTML += "</table>"
 	HTML += "</div>"
-
-//	HTML += "<br><font color='33CC33'>Meta Variables;</font>" // If more meta vars get introduced, uncomment this.
-//	HTML += "<br>"
 
 	HTML += "<br><font color='0000AA'>Complexity: [complexity]</font>"
 	if(power_draw_idle)
@@ -268,34 +252,6 @@ a creative player the means to solve many problems.  Circuits are held inside an
 		else
 			var/datum/integrated_io/io = pin
 			io.ask_for_pin_data(usr) // The pins themselves will determine how to ask for data, and will validate the data.
-			/*
-			if(io.io_type == DATA_CHANNEL)
-
-				var/type_to_use = input("Please choose a type to use.","[src] type setting") as null|anything in list("string","number", "null")
-				if(!check_interactivity(usr))
-					return
-
-				var/new_data = null
-				switch(type_to_use)
-					if("string")
-						new_data = input("Now type in a string.","[src] string writing") as null|text
-						to_chat(usr, "<span class='notice'>You input [new_data] into the pin.</span>")
-							//to_chat(user, "<span class='notice'>You write '[new_data]' to the '[io]' pin of \the [io.holder].</span>")
-					if("number")
-						new_data = input("Now type in a number.","[src] number writing") as null|num
-						if(isnum(new_data) && check_interactivity(usr) )
-							to_chat(usr, "<span class='notice'>You input [new_data] into the pin.</span>")
-					if("null")
-						if(check_interactivity(usr))
-							to_chat(usr, "<span class='notice'>You clear the pin's memory.</span>")
-
-				io.write_data_to_pin(new_data)
-
-			else if(io.io_type == PULSE_CHANNEL)
-				io.holder.check_then_do_work(ignore_power = TRUE)
-				to_chat(usr, "<span class='notice'>You pulse \the [io.holder]'s [io] pin.</span>")
-			*/
-
 
 	if(href_list["pin_unwire"])
 		if (!istype(held_item, /obj/item/device/multitool) || !allow_multitool)

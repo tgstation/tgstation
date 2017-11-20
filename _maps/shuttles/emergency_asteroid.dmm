@@ -209,7 +209,9 @@
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "aR" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aS" = (
@@ -267,7 +269,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "bb" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/security{
+	dir = 4
+	},
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "bc" = (
@@ -309,7 +313,9 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "bj" = (
-/obj/machinery/computer/communications,
+/obj/machinery/computer/communications{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "bk" = (
@@ -344,7 +350,9 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "bp" = (
-/obj/machinery/computer/crew,
+/obj/machinery/computer/crew{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bq" = (
@@ -585,7 +593,7 @@ aU
 bd
 bl
 ac
-bO
+bN
 bu
 bE
 ad
@@ -759,7 +767,7 @@ aa
 ah
 ah
 aB
-bL
+bK
 at
 aZ
 ah
@@ -780,7 +788,7 @@ aZ
 ah
 aK
 at
-bQ
+bP
 ac
 aa
 aa

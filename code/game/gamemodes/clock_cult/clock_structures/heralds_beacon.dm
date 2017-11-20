@@ -100,7 +100,7 @@
 			continue
 		C.update_values()
 		to_chat(C, C.empower_string)
-	for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
+	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 		if(is_servant_of_ratvar(H))
 			to_chat(H, "<span class='bold alloy'>The beacon's power warps your body into a clockwork form! You are now immune to many hazards, and your body is more robust against damage!</span>")
 			H.set_species(/datum/species/golem/clockwork/no_scrap)

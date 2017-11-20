@@ -50,7 +50,7 @@
 #define MEDAL_PREFIX "Tendril"
 /mob/living/simple_animal/hostile/spawner/lavaland/death()
 	var/last_tendril = TRUE
-	for(var/mob/living/simple_animal/hostile/spawner/lavaland/other in GLOB.mob_list)
+	for(var/mob/living/simple_animal/hostile/spawner/lavaland/other in GLOB.mob_living_list)
 		if(other != src)
 			last_tendril = FALSE
 			break

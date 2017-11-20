@@ -38,10 +38,6 @@ D [1]/  ||
 	data = null
 	holder = null
 	return ..()
-/*
-/datum/integrated_io/nano_host()
-	return holder.nano_host()
-*/
 
 /datum/integrated_io/proc/data_as_type(var/as_type)
 	if(!isweakref(data))
@@ -56,14 +52,6 @@ D [1]/  ||
 
 	if(istext(input))
 		return "(\"[input]\")" // Wraps the 'string' in escaped quotes, so that people know it's a 'string'.
-
-/*
-list[](
-	"A",
-	"B",
-	"C"
-)
-*/
 
 	if(islist(input))
 		var/list/my_list = input
@@ -84,7 +72,6 @@ list[](
 		var/datum/weakref/w = input
 		var/atom/A = w.resolve()
 		return A ? "([A.name] \[Ref\])" : "(null)" // For refs, we want just the name displayed.
-		//return A ? "([REF(A)] \[Ref\])" : "(null)"
 
 	return "([input])" // Nothing special needed for numbers or other stuff.
 
@@ -115,7 +102,7 @@ list[](
 		holder.on_data_written()
 	else if(islist(new_data))
 		var/list/new_list = new_data
-		data = new_list.Copy(1,min( IC_MAX_LIST_LENGTH+1, new_list.len ))
+		data = new_list.Copy(max(1,new_list.len - IC_MAX_LIST_LENGTH+1),0)
 		holder.on_data_written()
 
 /datum/integrated_io/proc/push_data()
@@ -162,7 +149,7 @@ list[](
 	var/new_data = null
 	switch(type_to_use)
 		if("string")
-			new_data = input("Now type in a string.","[src] string writing", istext(default) ? default : null) as null|text
+			new_data = stripped_input(user, "Now type in a string.","[src] string writing", istext(default) ? default : null)
 			if(istext(new_data) && holder.check_interactivity(user) )
 				to_chat(user, "<span class='notice'>You input "+new_data+" into the pin.</span>")
 				return new_data

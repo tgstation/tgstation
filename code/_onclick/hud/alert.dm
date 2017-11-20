@@ -389,7 +389,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	else
 		var/servants = 0
 		var/list/textlist
-		for(var/mob/living/L in GLOB.living_mob_list)
+		for(var/mob/living/L in GLOB.alive_mob_list)
 			if(is_servant_of_ratvar(L))
 				servants++
 		textlist = list("There are currently <b>[servants]</b> servant[servants > 1 ? "s" : ""] of Ratvar.<br>")

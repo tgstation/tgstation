@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - bugfix: "Fix some permanent-on and permanent-off bugs caused by the HUD stacking change."
