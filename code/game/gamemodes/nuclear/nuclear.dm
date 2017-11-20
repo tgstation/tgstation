@@ -178,14 +178,6 @@
 			disk_rescued = 0
 			break
 	var/crew_evacuated = (SSshuttle.emergency.mode == SHUTTLE_ENDGAME)
-	//var/operatives_are_dead = is_operatives_are_dead()
-
-
-	//nukes_left
-	//station_was_nuked
-	//derp //Used for tracking if the syndies actually haul the nuke to the station	//no
-	//herp //Used for tracking if the syndies got the shuttle off of the z-level	//NO, DON'T FUCKING NAME VARS LIKE THIS
-
 
 	if(nuke_off_station == NUKE_SYNDICATE_BASE)
 		SSticker.mode_result = "loss - syndicate nuked - disk secured"
