@@ -1,0 +1,8 @@
+author: "Skylar Lineman, your local R&D moonlighter"
+delete-after: True
+changes: 
+  - rscadd: "Research has been completely overhauled into the techweb system! No more levels, the station now unlocks research \"nodes\" with research points passively generated when there is atleast one research server properly cooled, powered, and online."
+  - rscadd: "R&D lab has been replaced by the departmental lathe system on the three major maps. Each department gets a lathe and possibly a circuit imprinter that only have designs assigned by that department."
+  - rscadd: "The ore redemption machine has been moved into cargo bay on maps with decentralized research to prevent the hallways from becoming a free for all. Honk!"
+  - balance: "You shouldn't expect balance as this is the initial merge. Please put all feedback and concerns on the forum so we can revise the system over the days, weeks, and months, to make this enjoyable for everyone. Heavily wanted are ideas of how to add more ways of generating points."
+  - balance: "You can get techweb points by setting off bombs with an active science doppler array listening. The bombs have to have a theoretical radius far above maxcap to make a difference. You can only go up, not down, in radius, so you can't get 6 times the points with 6 TTVs. The algorithm is exponentially/logarithmically scaled to prevent \"world destroyer\" bombs from instantly finishing research."

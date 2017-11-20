@@ -5,7 +5,6 @@
 	item_state = "eshield0"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
-	origin_tech = "syndicate=3;engineering=3"
 
 /obj/item/pizzabox
 	name = "pizza box"

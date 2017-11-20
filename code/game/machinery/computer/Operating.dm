@@ -13,12 +13,12 @@
 	find_table()
 
 /obj/machinery/computer/operating/proc/find_table()
-	for(var/dir in GLOB.cardinals)
-		table = locate(/obj/structure/table/optable, get_step(src, dir))
+	for(var/direction in GLOB.cardinals)
+		table = locate(/obj/structure/table/optable, get_step(src, direction))
 		if(table)
 			table.computer = src
 			break
-			
+
 /obj/machinery/computer/operating/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -60,7 +60,7 @@
 					var/alternative_step
 					if(surgery_step.repeatable)
 						var/datum/surgery_step/next_step = procedure.get_surgery_next_step()
-						if(next_step) 
+						if(next_step)
 							alternative_step = capitalize(next_step.name)
 						else
 							alternative_step = "Finish operation"

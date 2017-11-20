@@ -6,7 +6,6 @@
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	var/code = "electronic"
-	origin_tech = "bluespace=1"
 	dog_fashion = null
 
 /obj/item/device/radio/beacon/Initialize()
@@ -35,9 +34,3 @@
 		src.code = "beacon"
 	src.add_fingerprint(usr)
 	return
-
-/*
-//Probably a better way of doing this, I'm lazy.
-/obj/item/device/radio/beacon/bacon/proc/digest_delay()
-	spawn(600)
-		qdel(src)*/ //Bacon beacons are no more rip in peace

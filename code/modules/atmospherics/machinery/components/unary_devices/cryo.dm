@@ -39,11 +39,6 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/Initialize()
 	. = ..()
 	initialize_directions = dir
-<<<<<<< HEAD
-	var/obj/item/circuitboard/machine/cryo_tube/B = new
-	B.apply_default_parts(src)
-=======
->>>>>>> d50b0c6e63f02be4b833ad3063363077c1d769c8
 
 	radio = new(src)
 	radio.keyslot = new radio_key
@@ -51,19 +46,6 @@
 	radio.canhear_range = 0
 	radio.recalculateChannels()
 
-<<<<<<< HEAD
-/obj/item/circuitboard/machine/cryo_tube
-	name = "Cryotube (Machine Board)"
-	build_path = /obj/machinery/atmospherics/components/unary/cryo_cell
-	origin_tech = "programming=4;biotech=3;engineering=4;plasmatech=3"
-	req_components = list(
-							/obj/item/stock_parts/matter_bin = 1,
-							/obj/item/stack/cable_coil = 1,
-							/obj/item/stock_parts/console_screen = 1,
-							/obj/item/stack/sheet/glass = 2)
-
-=======
->>>>>>> d50b0c6e63f02be4b833ad3063363077c1d769c8
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_construction()
 	..(dir, dir)
 
@@ -114,7 +96,6 @@
 
 		if(ismonkey(occupant)) // Monkey
 			occupant_overlay = image(CRYOMOBS, "monkey")
-			occupant_overlay.copy_overlays(occupant)
 		else if(isalienadult(occupant))
 			if(isalienroyal(occupant)) // Queen and prae
 				occupant_overlay = image(CRYOMOBS, "alienq")
@@ -126,9 +107,6 @@
 				occupant_overlay = image(CRYOMOBS, "aliend")
 
 		else if(ishuman(occupant) || islarva(occupant) || (isanimal(occupant) && !ismegafauna(occupant))) // Mobs that are smaller than cryotube
-			occupant_overlay = image(occupant.icon, occupant.icon_state)
-
-		if(ishuman(occupant) || islarva(occupant) || (isanimal(occupant) && !ismegafauna(occupant))) // Mobs that are smaller than cryotube
 			occupant_overlay = image(occupant.icon, occupant.icon_state)
 			occupant_overlay.copy_overlays(occupant)
 
