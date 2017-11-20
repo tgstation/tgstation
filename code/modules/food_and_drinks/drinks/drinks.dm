@@ -107,9 +107,16 @@
 		return
 	if(bartender_check(target) && ranged)
 		return
+	var/obj/item/broken_bottle/B = new (loc)
+	B.icon_state = icon_state
+	var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
+	I.Blend(B.broken_outline, ICON_OVERLAY, rand(5), 1)
+	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
+	B.icon = I
+	if(prob(33))
+		new/obj/item/shard(drop_location())
 	playsound(src, "shatter", 70, 1)
-	var/obj/item/shard/S = new (loc)
-	transfer_fingerprints_to(S)
+	transfer_fingerprints_to(B)
 	qdel(src)
 
 
@@ -267,7 +274,7 @@
 /obj/item/reagent_containers/food/drinks/sillycup/smallcarton/smash(atom/target, mob/thrower, ranged = FALSE)
 	if(bartender_check(target) && ranged)
 		return
-	var/obj/item/broken_bottle/B = new(loc)
+	var/obj/item/broken_bottle/B = new (loc)
 	B.icon_state = icon_state
 	var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
 	I.Blend(B.broken_outline, ICON_OVERLAY, rand(5), 1)

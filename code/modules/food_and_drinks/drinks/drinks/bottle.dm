@@ -20,8 +20,7 @@
 	//Creates a shattering noise and replaces the bottle with a broken_bottle
 	if(bartender_check(target) && ranged)
 		return
-	var/new_location = get_turf(src)
-	var/obj/item/broken_bottle/B = new /obj/item/broken_bottle(new_location)
+	var/obj/item/broken_bottle/B = new (loc)
 	if(!ranged)
 		thrower.put_in_hands(B)
 	B.icon_state = icon_state
@@ -33,7 +32,7 @@
 
 	if(isGlass)
 		if(prob(33))
-			new/obj/item/shard(new_location)
+			new/obj/item/shard(drop_location())
 		playsound(src, "shatter", 70, 1)
 	else
 		B.name = "broken carton"
