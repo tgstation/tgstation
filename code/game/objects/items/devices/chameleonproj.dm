@@ -10,7 +10,6 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
-	origin_tech = "syndicate=4;magnets=4"
 	var/can_use = 1
 	var/obj/effect/dummy/chameleon/active_dummy = null
 	var/saved_appearance = null
@@ -28,8 +27,8 @@
 	..()
 	disrupt()
 
-/obj/item/device/chameleon/attack_self()
-	toggle()
+/obj/item/device/chameleon/attack_self(mob/user)
+	toggle(user)
 
 /obj/item/device/chameleon/afterattack(atom/target, mob/user , proximity)
 	if(!proximity)
@@ -51,7 +50,7 @@
 		return TRUE
 	return FALSE
 
-/obj/item/device/chameleon/proc/toggle()
+/obj/item/device/chameleon/proc/toggle(mob/user)
 	if(!can_use || !saved_appearance)
 		return
 	if(active_dummy)
@@ -59,15 +58,15 @@
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
 		qdel(active_dummy)
 		active_dummy = null
-		to_chat(usr, "<span class='notice'>You deactivate \the [src].</span>")
+		to_chat(user, "<span class='notice'>You deactivate \the [src].</span>")
 		new /obj/effect/temp_visual/emp/pulse(get_turf(src))
 	else
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
-		var/obj/effect/dummy/chameleon/C = new/obj/effect/dummy/chameleon(usr.loc)
-		C.activate(usr, saved_appearance, src)
-		to_chat(usr, "<span class='notice'>You activate \the [src].</span>")
+		var/obj/effect/dummy/chameleon/C = new/obj/effect/dummy/chameleon(get_turf(user))
+		C.activate(user, saved_appearance, src)
+		to_chat(user, "<span class='notice'>You activate \the [src].</span>")
 		new /obj/effect/temp_visual/emp/pulse(get_turf(src))
-	usr.cancel_camera()
+	user.cancel_camera()
 
 /obj/item/device/chameleon/proc/disrupt(delete_dummy = 1)
 	if(active_dummy)
@@ -100,6 +99,9 @@
 
 /obj/effect/dummy/chameleon/proc/activate(mob/M, saved_appearance, obj/item/device/chameleon/C)
 	appearance = saved_appearance
+	if(istype(M.buckled, /obj/vehicle))
+		var/obj/vehicle/V = M.buckled
+		V.riding_datum.force_dismount(M)
 	M.loc = src
 	master = C
 	master.active_dummy = src

@@ -68,6 +68,7 @@
 			return TRUE
 		to_chat(user, "<span class='notice'>You install \the [O] into  \the [src]. </span>")
 		upgraded = TRUE
+		qdel(O)
 		interact(user)
 		return TRUE
 
@@ -77,6 +78,7 @@
 			return TRUE
 		to_chat(user, "<span class='notice'>You install \the [O] into  \the [src]. </span>")
 		can_clone = TRUE
+		qdel(O)
 		interact(user)
 		return TRUE
 
@@ -216,7 +218,6 @@
 	icon_state = "upgrade_disk"
 	item_state = "card-id"
 	w_class = WEIGHT_CLASS_SMALL
-	origin_tech = list(TECH_ENGINEERING = 3, TECH_DATA = 4)
 
 /obj/item/disk/integrated_circuit/upgrade/advanced
 	name = "integrated circuit printer upgrade disk - advanced designs"
@@ -227,7 +228,6 @@
 	name = "integrated circuit printer upgrade disk - circuit cloner"
 	desc = "Install this into your integrated circuit printer to enhance it.  This one allows the printer to duplicate assemblies."
 	icon_state = "upgrade_disk_clone"
-	origin_tech = list(TECH_ENGINEERING = 4, TECH_DATA = 5)
 
 /obj/item/device/integrated_circuit_printer/proc/sanity_check(var/program,var/mob/user)
 	var/list/chap = splittext( program ,"{{*}}")
@@ -276,13 +276,7 @@
 		else
 			return 0
 		to_chat(usr, "<span class='notice'>This is program for [element[2]]</span>")
-		/*
-		else if(istype(PA,/obj/item/weapon/implant/integrated_circuit))
-			var/obj/item/weapon/implant/integrated_circuit/PI = PA
-			var/obj/item/device/electronic_assembly/implant/PIC = PI.IC
-			maxcap = PIC.max_components
-			maxcomp = PIC.max_complexity
-			metalcost = metalcost + round( (initial(PIC.max_complexity) + initial(PIC.max_components) ) / 4)*/
+
 	else
 		return 0 //what's the point if there is no assembly?
 	if(chap[3] != "components")   //if there is only one word,there is no components.

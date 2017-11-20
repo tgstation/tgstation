@@ -22,7 +22,7 @@
 
 /datum/round_event/pirates/announce()
 	priority_announce("Incoming subspace communication. Secure channel opened at all communication consoles.", "Incoming Message", 'sound/ai/commandreport.ogg')
-	
+
 	if(!control) //Means this is false alarm, todo : explicit checks instead of using announceWhen
 		return
 	threat = new
@@ -45,7 +45,7 @@
 	if(!shuttle_spawned)
 		spawn_shuttle()
 
-	
+
 
 /datum/round_event/pirates/start()
 	if(!paid_off && !shuttle_spawned)
@@ -64,7 +64,7 @@
 	var/turf/T = locate(x,y,z)
 	if(!T)
 		CRASH("Pirate event found no turf to load in")
-	
+
 	if(!ship.load(T))
 		CRASH("Loading pirate ship failed!")
 	for(var/turf/A in ship.get_affected_turfs(T))
@@ -75,7 +75,7 @@
 				candidates -= M
 			else
 				notify_ghosts("Space pirates are waking up!", source = spawner, action=NOTIFY_ATTACK, flashwindow = FALSE)
-	
+
 	priority_announce("Unidentified armed ship detected near the station.")
 
 //Shuttle equipment
@@ -104,7 +104,7 @@
 			var/siphoned = min(SSshuttle.points,siphon_per_tick)
 			SSshuttle.points -= siphoned
 			credits_stored += siphoned
-			steal_tech()
+			interrupt_research()
 		else
 			return
 	else
@@ -130,23 +130,12 @@
 	else
 		dump_loot(user)
 
-//20% to sap tech levels on unlocked consoles
-/obj/machinery/shuttle_scrambler/proc/steal_tech()
-	if(!prob(20))
-		return
-	var/datum/tech/target_tech = pick(subtypesof(/datum/tech))
-	var/target_id = initial(target_tech.id)
-	for(var/obj/machinery/computer/rdconsole/C in GLOB.machines)
-		if(C.screen == RD_CONSOLE_LOCKED_SCREEN || C.stat & (NOPOWER|BROKEN))
-			continue
-		var/datum/research/files = C.files
-		files.LowerTech(target_id,1)
-		new /obj/effect/temp_visual/emp(get_turf(C))
-	for(var/obj/machinery/r_n_d/server/S in GLOB.machines)
+//interrupt_research
+/obj/machinery/shuttle_scrambler/proc/interrupt_research()
+	for(var/obj/machinery/rnd/server/S in GLOB.machines)
 		if(S.stat & (NOPOWER|BROKEN))
 			continue
-		var/datum/research/files = S.files
-		files.LowerTech(target_id,1)
+		S.emp_act(1)
 		new /obj/effect/temp_visual/emp(get_turf(S))
 
 /obj/machinery/shuttle_scrambler/proc/dump_loot(mob/user)
@@ -157,7 +146,7 @@
 		new /obj/item/stack/spacecash/c200(drop_location())
 		credits_stored -= 200
 	to_chat(user,"<span class='notice'>You retrieve the siphoned credits!</span>")
-		
+
 
 /obj/machinery/shuttle_scrambler/proc/send_notification()
 	priority_announce("Data theft signal detected, source registered on local gps units.")

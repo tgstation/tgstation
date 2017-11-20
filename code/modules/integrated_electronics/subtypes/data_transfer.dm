@@ -19,7 +19,7 @@
 /obj/item/integrated_circuit/transfer/multiplexer/New()
 	for(var/i = 1 to number_of_inputs)
 		inputs["input [i]"] = IC_PINTYPE_ANY // This is just a string since pins don't get built until ..() is called.
-//		inputs += "input [i]"
+
 	complexity = number_of_inputs
 	..()
 	desc += " It has [number_of_inputs] input pins."

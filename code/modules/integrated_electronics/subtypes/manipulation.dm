@@ -23,7 +23,6 @@
 	)
 	var/obj/item/gun/energy/installed_gun = null
 	spawn_flags = IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_ENGINEERING = 3, TECH_DATA = 3, TECH_COMBAT = 4)
 	power_draw_per_use = 0
 	var/mode = FALSE
 
@@ -139,7 +138,6 @@
 	being held, or anchored in some way.  It should be noted that the ability to move is dependant on the type of assembly that this circuit inhabits."
 	w_class = WEIGHT_CLASS_SMALL
 	complexity = 20
-//	size = 5
 	inputs = list("direction" = IC_PINTYPE_DIR)
 	outputs = list()
 	activators = list("step towards dir" = IC_PINTYPE_PULSE_IN,"on step"=IC_PINTYPE_PULSE_OUT,"blocked"=IC_PINTYPE_PULSE_OUT)
@@ -173,7 +171,6 @@
 	outputs = list()
 	activators = list("prime grenade" = IC_PINTYPE_PULSE_IN)
 	spawn_flags = IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_ENGINEERING = 3, TECH_DATA = 3, TECH_COMBAT = 4)
 	var/obj/item/grenade/attached_grenade
 	var/pre_attached_grenade_type
 
@@ -232,12 +229,7 @@
 	attached_grenade.forceMove(drop_location())
 	attached_grenade = null
 	desc = initial(desc)
-/*
-/obj/item/integrated_circuit/manipulation/grenade/frag
-	pre_attached_grenade_type = /obj/item/weapon/grenade/explosive
-	origin_tech = list(TECH_ENGINEERING = 3, TECH_DATA = 3, TECH_COMBAT = 10)
-	spawn_flags = null			// Used for world initializing, see the #defines above.
-*/
+
 /obj/item/integrated_circuit/manipulation/plant_module
 	name = "plant manipulation module"
 	desc = "Used to uproot weeds or harvest plants in trays."
@@ -306,19 +298,7 @@
 	power_draw_per_use = 50
 	var/max_w_class = WEIGHT_CLASS_NORMAL
 	var/max_items = 10
-/*
-/obj/item/integrated_circuit/manipulation/thrower/New()
-	processing_objects |= src
 
-/obj/item/integrated_circuit/manipulation/thrower/Destroy()
-	processing_objects -= src
-
-/obj/item/integrated_circuit/manipulation/thrower/process()
-	set_pin_data(IC_OUTPUT, 1, WEAKREF(contents[1]))
-	set_pin_data(IC_OUTPUT, 2, WEAKREF(contents[contents.len]))
-	set_pin_data(IC_OUTPUT, 3, contents.len)
-	push_data()
-*/
 /obj/item/integrated_circuit/manipulation/grabber/do_work()
 	var/turf/T = get_turf(src)
 	var/obj/item/AM = get_pin_data_as_type(IC_INPUT, 1, /obj/item)
@@ -381,7 +361,6 @@
 		"fire" = IC_PINTYPE_PULSE_IN
 	)
 	spawn_flags = IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_ENGINEERING = 3, TECH_DATA = 3, TECH_COMBAT = 4)
 	power_draw_per_use = 50
 
 /obj/item/integrated_circuit/manipulation/thrower/do_work()
