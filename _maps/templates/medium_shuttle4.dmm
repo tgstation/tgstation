@@ -1,9 +1,8 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "b" = (
-/turf/open/space,
 /turf/closed/indestructible/oldshuttle/corner{
 	dir = 8
 	},
@@ -16,7 +15,6 @@
 /turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "e" = (
-/turf/open/space,
 /turf/closed/indestructible/oldshuttle/corner,
 /area/ruin/powered)
 "f" = (
@@ -69,13 +67,11 @@
 /turf/closed/indestructible/oldshuttle/corner,
 /area/ruin/powered)
 "o" = (
-/turf/open/space,
 /turf/closed/indestructible/oldshuttle/corner{
 	dir = 1
 	},
 /area/ruin/powered)
 "p" = (
-/turf/open/space,
 /turf/closed/indestructible/oldshuttle/corner{
 	dir = 4
 	},

@@ -107,8 +107,8 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/supply)
 "s" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "t" = (
 /obj/structure/shuttle/engine/propulsion/burst/left,
 /turf/open/floor/plating/airless,
