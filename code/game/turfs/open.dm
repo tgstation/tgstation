@@ -173,7 +173,7 @@
 	for(var/mob/living/simple_animal/slime/M in src)
 		M.apply_water()
 
-	clean_blood()
+	SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 	for(var/obj/effect/O in src)
 		if(is_cleanable(O))
 			qdel(O)

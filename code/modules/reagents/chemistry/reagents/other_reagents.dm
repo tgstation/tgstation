@@ -79,8 +79,7 @@
 	if(!B)
 		B = new(T)
 	if(data["blood_DNA"])
-		B.blood_DNA[data["blood_DNA"]] = data["blood_type"]
-
+		B.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
 
 /datum/reagent/liquidgibs
 	name = "Liquid gibs"
@@ -941,12 +940,12 @@
 	else
 		if(O)
 			O.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-			O.clean_blood()
+			O.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 
 /datum/reagent/space_cleaner/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 1)
 		T.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-		T.clean_blood()
+		T.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 		for(var/obj/effect/decal/cleanable/C in T)
 			qdel(C)
 
@@ -964,26 +963,26 @@
 					H.lip_style = null
 					H.update_body()
 			for(var/obj/item/I in C.held_items)
-				I.clean_blood()
+				I.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 			if(C.wear_mask)
-				if(C.wear_mask.clean_blood())
+				if(C.wear_mask.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
 					C.update_inv_wear_mask()
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = C
 				if(H.head)
-					if(H.head.clean_blood())
+					if(H.head.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
 						H.update_inv_head()
 				if(H.wear_suit)
-					if(H.wear_suit.clean_blood())
+					if(H.wear_suit.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
 						H.update_inv_wear_suit()
 				else if(H.w_uniform)
-					if(H.w_uniform.clean_blood())
+					if(H.w_uniform.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
 						H.update_inv_w_uniform()
 				if(H.shoes)
-					if(H.shoes.clean_blood())
+					if(H.shoes.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
 						H.update_inv_shoes()
 				H.wash_cream()
-			M.clean_blood()
+			M.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 
 /datum/reagent/space_cleaner/ez_clean
 	name = "EZ Clean"

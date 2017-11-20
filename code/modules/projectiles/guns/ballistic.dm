@@ -164,7 +164,7 @@
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				user_dna = C.dna
-				B.add_blood(user_dna)
+				B.add_blood_DNA(user_dna)
 			var/datum/callback/gibspawner = CALLBACK(GLOBAL_PROC, /proc/spawn_atom_to_turf, /obj/effect/gibspawner/generic, B, 1, FALSE, list(user_dna))
 			B.throw_at(target, BRAINS_BLOWN_THROW_RANGE, BRAINS_BLOWN_THROW_SPEED, callback=gibspawner)
 			return(BRUTELOSS)
