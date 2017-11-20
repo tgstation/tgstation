@@ -51254,34 +51254,6 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "cCC" = (
-/obj/effect/turf_decal/bot/right,
-/turf/open/floor/plasteel/white,
-/area/engine/gravity_generator)
-"cCD" = (
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel/white,
-/area/engine/gravity_generator)
-"cCE" = (
-/obj/effect/turf_decal/bot/left,
-/turf/open/floor/plasteel/white,
-/area/engine/gravity_generator)
-"cCF" = (
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel/white,
-/area/engine/gravity_generator)
-"cCG" = (
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel/white,
-/area/engine/gravity_generator)
-"cCH" = (
-/obj/effect/turf_decal/bot/left,
-/turf/open/floor/plasteel/white,
-/area/engine/gravity_generator)
-"cCI" = (
-/obj/machinery/rnd/protolathe/department/security,
-/turf/open/floor/plasteel,
-/area/security/main)
-"cCC" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -51296,6 +51268,33 @@
 /obj/machinery/rnd/protolathe/department/medical,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"cCF" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel/white,
+/area/engine/gravity_generator)
+"cCG" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel/white,
+/area/engine/gravity_generator)
+"cCH" = (
+/obj/effect/turf_decal/bot/left,
+/turf/open/floor/plasteel/white,
+/area/engine/gravity_generator)
+"cCI" = (
+/obj/effect/turf_decal/bot/right,
+/turf/open/floor/plasteel/white,
+/area/engine/gravity_generator)
+"cCJ" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/rnd/protolathe/department/security,
+/turf/open/floor/plasteel/red/side,
+/area/security/main)
+"cCK" = (
+/obj/effect/turf_decal/bot/right,
+/turf/open/floor/plasteel/white,
+/area/engine/gravity_generator)
 
 (1,1,1) = {"
 aaa
@@ -75534,7 +75533,7 @@ amn
 alC
 alE
 aou
-apb
+cCJ
 agP
 aqx
 arq
@@ -78950,7 +78949,7 @@ bNU
 bOG
 bPB
 bQn
-cCC
+cCK
 cCF
 cCH
 bTn
@@ -79207,7 +79206,7 @@ bjc
 bOG
 bPB
 bQo
-cCD
+cCF
 bRa
 bSy
 bTo
@@ -79464,8 +79463,8 @@ bjc
 bOG
 bPB
 bQp
-cCE
-cCG
+cCH
+cCF
 cCI
 bTp
 bPB

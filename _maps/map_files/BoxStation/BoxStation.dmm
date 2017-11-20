@@ -57699,6 +57699,10 @@
 /obj/machinery/computer/rdconsole/production,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"QoT" = (
+/obj/effect/turf_decal/loading_area,
+/turf/open/floor/plasteel/showroomfloor,
+/area/crew_quarters/kitchen)
 
 (1,1,1) = {"
 aaa
@@ -96621,7 +96625,7 @@ aGL
 avI
 aJK
 aKV
-QoM
+QoT
 aMl
 aMF
 aJI
