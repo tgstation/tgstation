@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Chairs, PA parts, infrared emitters, and doppler arrays will now rotate clockwise."
