@@ -62,6 +62,7 @@
 	var/auth_weapons = 0	//checks if it can shoot people that have a weapon they aren't authorized to have
 	var/stun_all = 0		//if this is active, the turret shoots everything that isn't security or head of staff
 	var/check_anomalies = 1	//checks if it can shoot at unidentified lifeforms (ie xenos)
+	var/target_silicons = 0 //checks if it can shoot silicons
 
 	var/attacked = 0		//if set to 1, the turret gets pissed off and shoots at people nearby (unless they have sec access!)
 
@@ -175,6 +176,7 @@
 		dat += "Neutralize Identified Criminals: <A href='?src=[REF(src)];operation=shootcrooks'>[criminals ? "Yes" : "No"]</A><BR>"
 		dat += "Neutralize All Non-Security and Non-Command Personnel: <A href='?src=[REF(src)];operation=shootall'>[stun_all ? "Yes" : "No"]</A><BR>"
 		dat += "Neutralize All Unidentified Life Signs: <A href='?src=[REF(src)];operation=checkxenos'>[check_anomalies ? "Yes" : "No"]</A><BR>"
+		dat += "Neutralize All Silicons: <A href'?src=[REF(src)];operation=targetsilicons'>[target_silicons ? "Yes" : "No"]</A><BR>"
 
 	var/datum/browser/popup = new(user, "autosec", "Automatic Portable Turret Installation", 300, 300)
 	popup.set_content(dat)
@@ -206,6 +208,8 @@
 				stun_all = !stun_all
 			if("checkxenos")
 				check_anomalies = !check_anomalies
+			if("targetsilicons")
+				target_silicons = !target_silicons
 		interact(usr)
 
 /obj/machinery/porta_turret/power_change()
@@ -396,6 +400,11 @@
 			if(M.occupant && !in_faction(M.occupant))
 				if(assess_perp(M.occupant) >= 4)
 					targets += M
+					
+		if(issilicon(A))
+			var/mob/living/silicon/S = A
+			if(!in_faction(C) && target_silicons) //if the target is a silicon and not in our faction, target it if we are allowed to target silicons
+				targets += S
 
 	if(!tryToShootAt(targets))
 		if(!always_up)
@@ -550,6 +559,7 @@
 	faction = "syndicate"
 	emp_vunerable = 0
 	desc = "A ballistic machine gun auto-turret."
+	target_silicons = 1
 
 /obj/machinery/porta_turret/syndicate/energy
 	icon_state = "standard_stun"
