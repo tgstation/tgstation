@@ -563,7 +563,7 @@
 /obj/machinery/porta_turret/syndicate/setup()
 	return
 
-/obj/machinery/porta_turret/syndicate/assess_perp(mob/living/carbon/human/perp)
+/obj/machinery/porta_turret/syndicate/assess_perp(mob/living/carbon/human/perp, /mob/living/silicon/robot)
 	return 10 //Syndicate turrets shoot everything not in their faction
 
 /obj/machinery/porta_turret/syndicate/pod
