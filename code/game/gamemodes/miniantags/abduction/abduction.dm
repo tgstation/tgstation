@@ -49,7 +49,7 @@
 	var/team_number = team_count
 
 	if(team_number > max_teams)
-		return null //or should it try to stuff them in anway ?
+		return //or should it try to stuff them in anway ?
 
 	var/datum/objective_team/abductor_team/team = new
 	team.team_number = team_number
