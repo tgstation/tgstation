@@ -1184,7 +1184,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		playsound(target.loc, user.dna.species.attack_sound, 25, 1, -1)
 
 		target.visible_message("<span class='danger'>[user] has [atk_verb]ed [target]!</span>", \
-			"<span class='userdanger'>[user] has [atk_verb]ed [target]!</span>", null, COMBAT_MESSAGE_RANGE)
+					"<span class='userdanger'>[user] has [atk_verb]ed [target]!</span>", null, COMBAT_MESSAGE_RANGE)
 
 		if(user.limb_destroyer)
 			target.dismembering_strike(user, affecting.body_zone)
@@ -1192,7 +1192,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		add_logs(user, target, "punched")
 		if((target.stat != DEAD) && damage >= user.dna.species.punchstunthreshold)
 			target.visible_message("<span class='danger'>[user] has knocked  [target] down!</span>", \
-				"<span class='userdanger'>[user] has knocked [target] down!</span>", null, COMBAT_MESSAGE_RANGE)
+							"<span class='userdanger'>[user] has knocked [target] down!</span>", null, COMBAT_MESSAGE_RANGE)
 			target.apply_effect(80, KNOCKDOWN, armor_block)
 			target.forcesay(GLOB.hit_appends)
 		else if(target.lying)
@@ -1225,8 +1225,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(randn <= 60)
 			var/obj/item/I = null
 			if(target.pulling)
-				target.visible_message("<span class='warning'>[user] has broken [target]'s grip on [target.pulling]!</span>",\
-					"<span class='warning'>[user] has broken your grip on [target.pulling]!</span>")
+				target.visible_message("<span class='warning'>[user] has broken [target]'s grip on [target.pulling]!</span>")
 				target.stop_pulling()
 			else
 				I = target.get_active_held_item()
@@ -1261,8 +1260,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		attacker_style = M.mind.martial_art
 	if((M != H) && M.a_intent != INTENT_HELP && H.check_shields(M, 0, M.name, attack_type = UNARMED_ATTACK))
 		add_logs(M, H, "attempted to touch")
-		H.visible_message("<span class='warning'>[M] attempted to touch [H]!</span>",\
-			"<span class='warning'>[M] attempted to touch you!</span>")
+		H.visible_message("<span class='warning'>[M] attempted to touch [H]!</span>")
 		return 0
 	switch(M.a_intent)
 		if("help")
@@ -1356,7 +1354,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				if(H.stat == CONSCIOUS && armor_block < 50)
 					if(prob(I.force))
 						H.visible_message("<span class='danger'>[H] has been knocked down!</span>", \
-							"<span class='userdanger'>[H] has been knocked down!</span>")
+									"<span class='userdanger'>[H] has been knocked down!</span>")
 						H.apply_effect(60, KNOCKDOWN, armor_block)
 
 				if(bloody)

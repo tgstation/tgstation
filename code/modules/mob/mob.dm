@@ -101,8 +101,6 @@
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
 // vision_distance (optional) define how many tiles away the message can be seen.
 // ignored_mob (optional) doesn't show any message to a given mob if TRUE.
-// agnosia_message gives a redacted version of the message to those who suffer from agnosia, to avoid identifying people's names
-// agnosia_self_message is the same, for the self_message
 
 /atom/proc/visible_message(message, self_message, blind_message, vision_distance, ignored_mob)
 	var/turf/T = get_turf(src)
@@ -117,8 +115,7 @@
 		if(M == ignored_mob)
 			continue
 		var/msg = message
-
-		if(M == src)
+		if(M == src) //the src always see the main message or self message
 			if(self_message)
 				msg = self_message
 		else

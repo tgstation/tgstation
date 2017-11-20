@@ -158,7 +158,7 @@
 			if(GRAB_AGGRESSIVE)
 				add_logs(user, src, "grabbed", addition="aggressive grab")
 				visible_message("<span class='danger'>[user] has grabbed [src] aggressively!</span>", \
-					"<span class='userdanger'>[user] has grabbed [src] aggressively!</span>")
+								"<span class='userdanger'>[user] has grabbed [src] aggressively!</span>")
 				drop_all_held_items()
 				stop_pulling()
 			if(GRAB_NECK)
@@ -171,7 +171,7 @@
 			if(GRAB_KILL)
 				add_logs(user, src, "strangled", addition="grab")
 				visible_message("<span class='danger'>[user] is strangling [src]!</span>", \
-					"<span class='userdanger'>[user] is strangling you!</span>")
+								"<span class='userdanger'>[user] is strangling you!</span>")
 				update_canmove() //we fall down
 				if(!buckled && !density)
 					Move(user.loc)

@@ -28,7 +28,6 @@
 
 	. = ..()
 
-
 /mob/living/carbon/human/OpenCraftingMenu()
 	handcrafting.ui_interact(src)
 
