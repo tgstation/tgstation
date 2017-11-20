@@ -448,8 +448,7 @@
 						continue //Ghosted while alive
 
 
-	for (var/C in GLOB.admins)
-		to_chat(C, msg)
+	message_admins(msg)
 
 /datum/game_mode/proc/printplayer(datum/mind/ply, fleecheck)
 	var/text = "<br><b>[ply.key]</b> was <b>[ply.name]</b> the <b>[ply.assigned_role]</b> and"
