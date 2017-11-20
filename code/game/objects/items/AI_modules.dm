@@ -547,3 +547,10 @@ AI MODULES
 	name = "'Guardian of Balance' Core AI Module"
 	law_id = "balance"
 
+/obj/item/aiModule/core/full/maintain
+	name = "'Station Efficiency' Core AI Module"
+	law_id = "maintain"
+
+/obj/item/aiModule/core/full/peacekeeper
+	name = "'Peacekeeper' Core AI Module"
+	law_id = "peacekeeper"

@@ -177,6 +177,7 @@ SUBSYSTEM_DEF(ticker)
 				//setup failed
 				current_state = GAME_STATE_STARTUP
 				start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
+				timeLeft = null
 				Master.SetRunLevel(RUNLEVEL_LOBBY)
 
 		if(GAME_STATE_PLAYING)
