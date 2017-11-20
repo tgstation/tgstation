@@ -213,6 +213,8 @@
 
 // called when holder is expelled from a disposal
 /obj/machinery/disposal/proc/expel(obj/structure/disposalholder/H)
+	H.active = FALSE
+
 	var/turf/T = get_turf(src)
 	var/turf/target
 	playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
