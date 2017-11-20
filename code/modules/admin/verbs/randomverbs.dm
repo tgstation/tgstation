@@ -1091,8 +1091,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	log_admin("[key_name(usr)] sent \"[input]\" as the Tip of the Round.")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Tip")
 
-#define ON_PURRBATION(H) (\H.getorgan(/obj/item/organ/tail/cat) || H.getorgan(/obj/item/organ/ears/cat) || \
-							H.dna.features["ears"] == "Cat" || H.dna.features["human_tail"] == "Cat")
+#define ON_PURRBATION(H) ( iscatperson(H) )
 
 /proc/mass_purrbation()
 	for(var/M in GLOB.mob_list)
