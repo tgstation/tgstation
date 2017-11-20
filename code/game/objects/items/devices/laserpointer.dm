@@ -146,7 +146,7 @@
 			C.resting = 1
 			C.update_canmove()
 		else
-			C.visible_message("<span class='notice'>[C] looks uninterested in your games.>","<span class='warning'>You spot [user] shining [src] at you. How insulting!</span>")
+			C.visible_message("<span class='notice'>[C] looks uninterested in your games.</span>","<span class='warning'>You spot [user] shining [src] at you. How insulting!</span>")
 
 	//laser pointer image
 	icon_state = "pointer_[pointer_icon_state]"
