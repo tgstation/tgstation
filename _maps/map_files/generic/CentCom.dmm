@@ -9366,7 +9366,7 @@
 /turf/open/floor/grass,
 /area/wizard_station)
 "yL" = (
-/obj/machinery/sleeper/syndie{
+/obj/machinery/sleeper/chems/syndie{
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault{

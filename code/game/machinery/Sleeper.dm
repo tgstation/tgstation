@@ -16,12 +16,25 @@
 	circuit = /obj/item/circuitboard/machine/sleeper
 	var/efficiency = 1
 	var/min_health = -25
+	var/list/available_chems
 	var/controls_inside = FALSE
+	var/list/possible_chems
+	var/list/chem_buttons	//Used when emagged to scramble which chem is used, eg: antitoxin -> morphine
+	var/scrambled_chems = FALSE //Are chem buttons scrambled? used as a warning
 	var/enter_message = "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
+
+/obj/machinery/sleeper/chems
+	possible_chems = list(
+		list("epinephrine", "morphine", "salbutamol", "bicaridine", "kelotane"),
+		list("oculine","inacusiate"),
+		list("antitoxin", "mutadone", "mannitol", "pen_acid"),
+		list("omnizine")
+	)
 
 /obj/machinery/sleeper/Initialize()
 	. = ..()
 	update_icon()
+	reset_chem_buttons()
 
 /obj/machinery/sleeper/RefreshParts()
 	var/E
@@ -33,6 +46,14 @@
 
 	efficiency = initial(efficiency)* E
 	min_health = initial(min_health) * E
+	available_chems = list()
+	var/list/adding_chems
+	for(var/i in 1 to I)
+		adding_chems = LAZYACCESS(possible_chems, i)
+		if(adding_chems) //With LAZYACCESS, adding_chems can be null, so |= will add nulls, and we don't want nulls.
+			available_chems |= adding_chems
+	reset_chem_buttons()
+
 
 /obj/machinery/sleeper/update_icon()
 	icon_state = initial(icon_state)
@@ -107,6 +128,11 @@
 	data["occupied"] = occupant ? 1 : 0
 	data["open"] = state_open
 
+	data["chems"] = list()
+	for(var/chem in available_chems)
+		var/datum/reagent/R = GLOB.chemical_reagents_list[chem]
+		data["chems"] += list(list("name" = R.name, "id" = R.id, "allowed" = chem_allowed(chem)))
+
 	data["occupant"] = list()
 	var/mob/living/mob_occupant = occupant
 	if(mob_occupant)
@@ -133,11 +159,16 @@
 		data["occupant"]["fireLoss"] = mob_occupant.getFireLoss()
 		data["occupant"]["cloneLoss"] = mob_occupant.getCloneLoss()
 		data["occupant"]["brainLoss"] = mob_occupant.getBrainLoss()
+		data["occupant"]["reagents"] = list()
+		if(occupant.reagents.reagent_list.len)
+			for(var/datum/reagent/R in mob_occupant.reagents.reagent_list)
+				data["occupant"]["reagents"] += list(list("name" = R.name, "volume" = R.volume))
 	return data
 
 /obj/machinery/sleeper/ui_act(action, params)
 	if(..())
 		return
+	var/mob/living/mob_occupant = occupant
 
 	switch(action)
 		if("door")
@@ -146,7 +177,49 @@
 			else
 				open_machine()
 			. = TRUE
-/obj/machinery/sleeper/syndie
+		if("inject")
+			var/chem = params["chem"]
+			if(!is_operational() || !mob_occupant)
+				return
+			if(mob_occupant.health < min_health && chem != "epinephrine")
+				return
+			if(inject_chem(chem))
+				. = TRUE
+				if(scrambled_chems && prob(5))
+					to_chat(usr, "<span class='warning'>Chem System Re-route detected, results may not be as expected!</span>")
+
+/obj/machinery/sleeper/emag_act(mob/user)
+	if(LAZYLEN(available_chems))
+		scramble_chem_buttons()
+		to_chat(user, "<span class='warning'>You scramble the sleeper's user interface!</span>")
+
+/obj/machinery/sleeper/proc/inject_chem(chem)
+	if((chem in available_chems) && chem_allowed(chem))
+		occupant.reagents.add_reagent(chem_buttons[chem], 10) //emag effect kicks in here so that the "intended" chem is used for all checks, for extra FUUU
+		return TRUE
+
+/obj/machinery/sleeper/proc/chem_allowed(chem)
+	var/mob/living/mob_occupant = occupant
+	if(!mob_occupant)
+		return
+	var/amount = mob_occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency
+	var/occ_health = mob_occupant.health > min_health || chem == "epinephrine"
+	return amount && occ_health
+
+/obj/machinery/sleeper/proc/reset_chem_buttons()
+	scrambled_chems = FALSE
+	LAZYINITLIST(chem_buttons)
+	for(var/chem in available_chems)
+		chem_buttons[chem] = chem
+
+/obj/machinery/sleeper/proc/scramble_chem_buttons()
+	scrambled_chems = TRUE
+	var/list/av_chem = available_chems.Copy()
+	for(var/chem in av_chem)
+		chem_buttons[chem] = pick_n_take(av_chem) //no dupes, allow for random buttons to still be correct
+
+
+/obj/machinery/sleeper/chems/syndie
 	icon_state = "sleeper_s"
 	controls_inside = TRUE
 
@@ -155,6 +228,7 @@
 	desc = "A large cryogenics unit built from brass. Its surface is pleasantly cool the touch."
 	icon_state = "sleeper_clockwork"
 	enter_message = "<span class='bold inathneq_small'>You hear the gentle hum and click of machinery, and are lulled into a sense of peace.</span>"
+	possible_chems = list(list("epinephrine", "salbutamol", "bicaridine", "kelotane", "oculine", "inacusiate", "mannitol"))
 
 /obj/machinery/sleeper/clockwork/process()
 	if(occupant && isliving(occupant))
@@ -165,5 +239,5 @@
 			L.adjustFireLoss(-1)
 			L.adjustOxyLoss(-5)
 
-/obj/machinery/sleeper/old
+/obj/machinery/sleeper/chems/old
 	icon_state = "oldpod"
