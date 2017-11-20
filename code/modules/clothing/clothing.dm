@@ -153,6 +153,10 @@
 			how_cool_are_your_threads += "Adding or removing items from [src] makes no noise.\n"
 		how_cool_are_your_threads += "</span>"
 		to_chat(user, how_cool_are_your_threads.Join())
+	if(poo_stained)
+		to_chat(user, "<span class='warning'>It's covered in poo! Gross!</span>")
+	if(pee_stained)
+		to_chat(user, "<span class='warning'>It's covered in pee! Gross!</span>")
 
 /obj/item/clothing/obj_break(damage_flag)
 	if(!damaged_clothes)
