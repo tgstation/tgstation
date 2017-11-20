@@ -126,12 +126,27 @@
 
 	//catpeople
 	for(var/mob/living/carbon/human/H in view(1,targloc))
-		if(ishumanbasic(H) && (H.getorgan(/obj/item/organ/tail/cat) || H.getorgan(/obj/item/organ/ears/cat) || H.dna.features["ears"] == "Cat" || H.dna.features["human_tail"] == "Cat"))
-			if(!H.incapacitated() && !H.lying)
-				H.visible_message("<span class='warning'>[H] pounces on the light!</span>","<span class='userdanger'>LIGHT!</span>")
-				H.Knockdown(10)
-				H.Move(targloc)
-				H.setDir(NORTH) //Facedown looks best imo
+		if(iscatperson(H)) //only real catpeople have the urge
+			if(!H.incapacitated() && !H.eye_blind)
+				if(!H.lying)
+					H.setDir(get_dir(H,targloc)) // kitty always looks at the light
+					if(prob(effectchance))
+						H.visible_message("<span class='warning'>[H] makes a grab for the light!</span>","<span class='userdanger'>LIGHT!</span>")
+						H.Move(targloc)
+					else
+						H.visible_message("<span class='notice'>[H] looks briefly distracted by the light.</span>","<span class = 'warning'> You're briefly tempted by the shiny light... </span>")
+				else
+					H.visible_message("<span class='notice'>[H] stares at the light></span>","<span class = 'warning'> You stare at the light... </span>")
+
+	//cats!
+	for(var/mob/living/simple_animal/pet/cat/C in view(1,targloc))
+		if(prob(50))
+			C.visible_message("<span class='notice'>[C] pounces on the light!</span>","<span class='warning'>LIGHT!</span>")
+			C.Move(targloc)
+			C.resting = 1
+			C.update_canmove()
+		else
+			C.visible_message("<span class='notice'>[C] looks uninterested in your games.>","<span class='warning'>You spot [user] shining [src] at you. How insulting!</span>")
 
 	//laser pointer image
 	icon_state = "pointer_[pointer_icon_state]"
