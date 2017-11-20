@@ -1,7 +1,7 @@
 //Used to nominate oneself or ghosts for the role of Eminence.
 /obj/structure/destructible/clockwork/eminence_spire
 	name = "eminence spire"
-	desc = "A hulking machine made of powerful alloy, with three small obelisks and a huge plate in the center.."
+	desc = "A hulking machine made of powerful alloy, with three small obelisks and a huge plate in the center."
 	clockwork_desc = "This spire is used to become the Eminence, who functions as an invisible leader of the cult. Activate it to nominate yourself or propose that the Eminence should be \
 	selected from available ghosts. Once an Eminence is selected, they can't normally be changed."
 	icon_state = "tinkerers_daemon"

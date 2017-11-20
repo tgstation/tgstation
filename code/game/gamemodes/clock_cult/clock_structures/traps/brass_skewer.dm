@@ -1,7 +1,7 @@
 //Non-servants standing over this will get spikes through the feet, immobilizing them until they're freed.
 /obj/structure/destructible/clockwork/trap/brass_skewer
 	name = "brass skewer"
-	desc = "A massive brass spike, cleverly concealed in the floor. You think you could prevent setting it off if you moved slowly."
+	desc = "A deadly brass spike, cleverly concealed in the floor. You think you should be safe if you disarm whatever's meant to set it off."
 	clockwork_desc = "A barbaric but undeniably effective weapon: a spear through the chest. It immobilizes anyone unlucky enough to step on it and keeps them in place until they get help.."
 	icon_state = "brass_skewer"
 	break_message = "<span class='warning'>The skewer snaps in two!</span>"
@@ -11,6 +11,7 @@
 	buckle_prevents_pull = TRUE
 	buckle_lying = FALSE
 	var/wiggle_wiggle
+	var/mutable_appearance/impale_overlay //This is applied to any mob impaled so that they visibly have the skewer coming through their chest
 
 /obj/structure/destructible/clockwork/trap/brass_skewer/Initialize()
 	. = ..()
@@ -23,6 +24,7 @@
 		L.Knockdown(100)
 		L.visible_message("<span class='warning'>[L] is maimed as the skewer shatters while still in their body!</span>")
 		L.adjustBruteLoss(15)
+		unbuckle_mob(L)
 	return ..()
 
 /obj/structure/destructible/clockwork/trap/brass_skewer/process()
@@ -49,20 +51,31 @@
 		playsound(squirrel, 'sound/effects/splat.ogg', 50, TRUE)
 		playsound(squirrel, 'sound/misc/desceration-03.ogg', 50, TRUE)
 		squirrel.apply_damage(20, BRUTE, "chest")
-		squirrel.pixel_y = 8
+		mouse_opacity = MOUSE_OPACITY_OPAQUE //So players can interact with the tile it's on to pull them off
 		buckle_mob(squirrel, TRUE)
 	else
 		visible_message("<span class='danger'>A massive brass spike erupts from the ground!</span>")
 	playsound(src, 'sound/machines/clockcult/brass_skewer.ogg', 75, FALSE)
 	icon_state = "[initial(icon_state)]_extended"
 	density = TRUE //Skewers are one-use only
-	desc = "A massive brass spike protruding from the ground like a snapped bone. It makes you sick to look at."
+	desc = "A vicious brass spike protruding from the ground like a stala[pick("gm", "ct")]ite. It makes you sick to look at." //is stalagmite the ground one? or the ceiling one? who can ever remember?
 
 /obj/structure/destructible/clockwork/trap/brass_skewer/user_buckle_mob()
 	return
 
+/obj/structure/destructible/clockwork/trap/brass_skewer/post_buckle_mob(mob/living/L)
+	if(L in buckled_mobs)
+		L.pixel_y = 3
+		impale_overlay = mutable_appearance('icons/obj/clockwork_objects.dmi', "brass_skewer_pokeybit", ABOVE_MOB_LAYER)
+		L.add_overlay(impale_overlay)
+	else
+		L.pixel_y = initial(L.pixel_y)
+		L.cut_overlay(impale_overlay)
+
 /obj/structure/destructible/clockwork/trap/brass_skewer/user_unbuckle_mob(mob/living/skewee, mob/living/user)
-	if(user == skewee && !wiggle_wiggle)
+	if(user == skewee)
+		if(wiggle_wiggle)
+			return
 		user.visible_message("<span class='warning'>[user] starts wriggling off of [src]!</span>", \
 		"<span class='danger'>You start agonizingly working your way off of [src]...</span>")
 		wiggle_wiggle = TRUE
