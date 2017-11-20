@@ -29,7 +29,9 @@
 	},
 /area/ruin/space/oldteleporter)
 "h" = (
-/obj/machinery/computer/teleporter,
+/obj/machinery/computer/teleporter{
+	dir = 1
+	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/oldteleporter)
 "i" = (

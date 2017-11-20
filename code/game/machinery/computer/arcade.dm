@@ -228,7 +228,6 @@
 			playsound(loc, 'sound/arcade/win.ogg', 50, 1, extrarange = -3, falloff = 10)
 
 			if(emagged)
-				SSblackbox.inc("arcade_win_emagged")
 				new /obj/effect/spawner/newbomb/timer/syndicate(loc)
 				new /obj/item/clothing/head/collectable/petehat(loc)
 				message_admins("[key_name_admin(usr)] has outbombed Cuban Pete and been awarded a bomb.")
@@ -236,8 +235,9 @@
 				Reset()
 				emagged = FALSE
 			else
-				SSblackbox.inc("arcade_win_normal")
 				prizevend()
+			SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("win", (emagged ? "emagged":"normal")))
+
 
 	else if (emagged && (turtle >= 4))
 		var/boomamt = rand(5,10)
@@ -258,10 +258,8 @@
 			temp = "You have been drained! GAME OVER"
 			playsound(loc, 'sound/arcade/lose.ogg', 50, 1, extrarange = -3, falloff = 10)
 			if(emagged)
-				SSblackbox.inc("arcade_loss_mana_emagged")
 				usr.gib()
-			else
-				SSblackbox.inc("arcade_loss_mana_normal")
+			SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "mana", (emagged ? "emagged":"normal")))
 
 	else if ((enemy_hp <= 10) && (enemy_mp > 4))
 		temp = "[enemy_name] heals for 4 health!"
@@ -280,10 +278,8 @@
 		temp = "You have been crushed! GAME OVER"
 		playsound(loc, 'sound/arcade/lose.ogg', 50, 1, extrarange = -3, falloff = 10)
 		if(emagged)
-			SSblackbox.inc("arcade_loss_hp_emagged")
 			usr.gib()
-		else
-			SSblackbox.inc("arcade_loss_hp_normal")
+		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "hp", (emagged ? "emagged":"normal"))) 
 
 	blocked = FALSE
 	return

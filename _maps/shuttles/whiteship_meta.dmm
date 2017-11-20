@@ -999,7 +999,9 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/computer/shuttle/white_ship,
+/obj/machinery/computer/shuttle/white_ship{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bJ" = (
@@ -1115,6 +1117,7 @@
 	name = "dust"
 	},
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
+	dir = 1;
 	station_lock_override = 1;
 	view_range = 15;
 	x_offset = -3;

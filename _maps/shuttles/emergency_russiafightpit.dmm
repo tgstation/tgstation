@@ -37,7 +37,9 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "ai" = (
-/obj/machinery/computer/crew,
+/obj/machinery/computer/crew{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aj" = (
@@ -63,7 +65,9 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "an" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/security{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "ao" = (

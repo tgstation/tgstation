@@ -323,7 +323,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	icon_state = "morguet"
 
 /obj/structure/tray/m_tray/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && mover.checkpass(PASSTABLE))
+	if(istype(mover) && (mover.pass_flags & PASSTABLE))
 		return 1
 	if(locate(/obj/structure/table) in get_turf(mover))
 		return 1
@@ -334,4 +334,4 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	. = !density
 	if(ismovableatom(caller))
 		var/atom/movable/mover = caller
-		. = . || mover.checkpass(PASSTABLE)
+		. = . || (mover.pass_flags & PASSTABLE)

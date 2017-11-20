@@ -173,7 +173,7 @@
 					dat += "<a href='?src=[REF(src)];screen=1'>Back</a>"
 					dat += "<br><b>Medical Robots:</b>"
 					var/bdat = null
-					for(var/mob/living/simple_animal/bot/medbot/M in GLOB.living_mob_list)
+					for(var/mob/living/simple_animal/bot/medbot/M in GLOB.alive_mob_list)
 						if(M.z != src.z)
 							continue	//only find medibots on the same z-level as the computer
 						var/turf/bl = get_turf(M)
@@ -575,7 +575,7 @@
 					if(4)
 						R.fields["blood_type"] = random_blood_type()
 					if(5)
-						R.fields["p_stat"] = pick("*Unconcious*", "Active", "Physically Unfit")
+						R.fields["p_stat"] = pick("*Unconscious*", "Active", "Physically Unfit")
 					if(6)
 						R.fields["m_stat"] = pick("*Insane*", "*Unstable*", "*Watch*", "Stable")
 				continue

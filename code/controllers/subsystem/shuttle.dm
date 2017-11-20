@@ -28,7 +28,9 @@ SUBSYSTEM_DEF(shuttle)
 	var/emergencyCallAmount = 0		//how many times the escape shuttle was called
 	var/emergencyNoEscape
 	var/emergencyNoRecall = FALSE
-	var/list/hostileEnvironments = list()
+	var/list/hostileEnvironments = list() //Things blocking escape shuttle from leaving
+	var/list/tradeBlockade = list() //Things blocking cargo from leaving.
+	var/supplyBlocked = FALSE
 
 		//supply shuttle stuff
 	var/obj/docking_port/mobile/supply/supply
@@ -163,7 +165,7 @@ SUBSYSTEM_DEF(shuttle)
 		var/mob/M = I
 		if(M.stat != DEAD)
 			++alive
-	
+
 	var/total = GLOB.joined_player_list.len
 
 	if(alive / total <= threshold)
@@ -243,7 +245,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	log_game("[key_name(user)] has called the shuttle.")
 	if(call_reason)
-		SSblackbox.add_details("shuttle_reason", call_reason)
+		SSblackbox.record_feedback("text", "shuttle_reason", 1, "[call_reason]")
 		log_game("Shuttle call reason: [call_reason]")
 	message_admins("[key_name_admin(user)] has called the shuttle. (<A HREF='?_src_=holder;[HrefToken()];trigger_centcom_recall=1'>TRIGGER CENTCOM RECALL</A>)")
 
@@ -332,6 +334,30 @@ SUBSYSTEM_DEF(shuttle)
 /datum/controller/subsystem/shuttle/proc/clearHostileEnvironment(datum/bad)
 	hostileEnvironments -= bad
 	checkHostileEnvironment()
+
+
+/datum/controller/subsystem/shuttle/proc/registerTradeBlockade(datum/bad)
+	tradeBlockade[bad] = TRUE
+	checkTradeBlockade()
+
+/datum/controller/subsystem/shuttle/proc/clearTradeBlockade(datum/bad)
+	tradeBlockade -= bad
+	checkTradeBlockade()
+
+
+/datum/controller/subsystem/shuttle/proc/checkTradeBlockade()
+	for(var/datum/d in tradeBlockade)
+		if(!istype(d) || QDELETED(d))
+			tradeBlockade -= d
+	supplyBlocked = tradeBlockade.len
+
+	if(supplyBlocked && (supply.mode == SHUTTLE_IGNITING))
+		supply.mode = SHUTTLE_STRANDED
+		supply.timer = null
+		//Make all cargo consoles speak up
+	if(!supplyBlocked && (supply.mode == SHUTTLE_STRANDED))
+		supply.mode = SHUTTLE_DOCKED
+		//Make all cargo consoles speak up
 
 /datum/controller/subsystem/shuttle/proc/checkHostileEnvironment()
 	for(var/datum/d in hostileEnvironments)

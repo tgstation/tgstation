@@ -75,7 +75,6 @@
 	// The inlet of the compressor is the direction it faces
 	gas_contained = new
 	inturf = get_step(src, dir)
-
 	locate_machinery()
 	if(!turbine)
 		stat |= BROKEN
@@ -315,10 +314,19 @@
 
 /obj/machinery/computer/turbine_computer/Initialize()
 	. = ..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/computer/turbine_computer/LateInitialize()
 	locate_machinery()
 
 /obj/machinery/computer/turbine_computer/locate_machinery()
-	compressor = locate(/obj/machinery/power/compressor) in range(5, src)
+	if(id)
+		for(var/obj/machinery/power/compressor/C in GLOB.machines)
+			if(C.comp_id == id)
+				compressor = C
+				return
+	else
+		compressor = locate(/obj/machinery/power/compressor) in range(5, src)
 
 /obj/machinery/computer/turbine_computer/attack_hand(var/mob/user as mob)
 	if(..())

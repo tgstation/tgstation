@@ -28,12 +28,6 @@ Class Variables:
    component_parts (list)
       A list of component parts of machine used by frame based machines.
 
-   uid (num)
-      Unique id of machine across all machines.
-
-   gl_uid (global num)
-      Next uid value in sequence
-
    stat (bitflag)
       Machine status bit flags.
       Possible bit flags:
@@ -77,9 +71,6 @@ Class Procs:
 
       Default definition does nothing.
 
-   assign_uid()               'game/machinery/machine.dm'
-      Called by machine to assign a value to the uid variable.
-
    process()                  'game/machinery/machine.dm'
       Called by the 'machinery subsystem' once per machinery tick for each machine that is listed in its 'machines' list.
 
@@ -112,8 +103,6 @@ Class Procs:
 	var/power_channel = EQUIP
 		//EQUIP,ENVIRON or LIGHT
 	var/list/component_parts = null //list of all the parts used to build it, if made from certain kinds of frames.
-	var/uid
-	var/global/gl_uid = 1
 	var/panel_open = FALSE
 	var/state_open = FALSE
 	var/critical_machine = FALSE //If this machine is critical to station operation and should have the area be excempted from power failures.
@@ -301,10 +290,6 @@ Class Procs:
 
 /obj/machinery/proc/RefreshParts() //Placeholder proc for machines that are built using frames.
 	return
-
-/obj/machinery/proc/assign_uid()
-	uid = gl_uid
-	gl_uid++
 
 /obj/machinery/proc/default_pry_open(obj/item/crowbar/C)
 	. = !(state_open || panel_open || is_operational() || (flags_1 & NODECONSTRUCT_1)) && istype(C)
@@ -508,11 +493,16 @@ Class Procs:
 
 /obj/machinery/proc/adjust_item_drop_location(atom/movable/AM)	// Adjust item drop location to a 3x3 grid inside the tile, returns slot id from 0 to 8
 	var/md5 = md5(AM.name)										// Oh, and it's deterministic too. A specific item will always drop from the same slot.
-#if DM_VERSION > 511
-#warn Refactor the loop in /obj/machinery/proc/adjust_item_drop_location() to make use of 512's list-like access to characters in a string
-#endif
 	for (var/i in 1 to 32)
+		#if DM_VERSION >= 513
+		#warning 512 is definitely stable now, remove the old code
+		#endif
+
+		#if DM_VERSION >= 512
+		. += hex2num(md5[i])
+		#else
 		. += hex2num(copytext(md5,i,i+1))
+		#endif
 	. = . % 9
 	AM.pixel_x = -8 + ((.%3)*8)
 	AM.pixel_y = -8 + (round( . / 3)*8)

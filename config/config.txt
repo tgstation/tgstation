@@ -339,7 +339,9 @@ AUTOADMIN_RANK Game Master
 ## This allows you to configure the minimum required client version, as well as a warning version, and message for both.
 ## These trigger for any version below (non-inclusive) the given version, so 510 triggers on 509 or lower.
 ## These messages will be followed by one stating the clients current version and the required version for clarity.
+## If CLIENT_WARN_POPUP is uncommented a popup window with the message will be displayed instead
 #CLIENT_WARN_VERSION 511
+#CLIENT_WARN_POPUP
 #CLIENT_WARN_MESSAGE Byond released 511 as the stable release. You can set the framerate your client runs at, which makes the game feel very different and cool. Shortly after its release we will end up using 511 client features and you will be forced to update.
 CLIENT_ERROR_VERSION 511
 CLIENT_ERROR_MESSAGE Your version of byond is not supported. Please upgrade.
@@ -388,3 +390,6 @@ HIGH_POP_MC_MODE_AMOUNT 65
 
 ##Disengage high pop mode if player count drops below this
 DISABLE_HIGH_POP_MC_MODE_AMOUNT 60
+
+## Uncomment to prevent the world from sleeping while no players are connected after initializations
+#RESUME_AFTER_INITIALIZATIONS

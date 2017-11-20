@@ -35,8 +35,8 @@
 	var/weed_rate = 1 //If the chance below passes, then this many weeds sprout during growth
 	var/weed_chance = 5 //Percentage chance per tray update to grow weeds
 
-/obj/item/seeds/New(loc, nogenes = 0)
-	..()
+/obj/item/seeds/Initialize(loc, nogenes = 0)
+	. = ..()
 	pixel_x = rand(-8, 8)
 	pixel_y = rand(-8, 8)
 
@@ -150,7 +150,7 @@
 		t_amount++
 		product_name = t_prod.name
 	if(getYield() >= 1)
-		SSblackbox.add_details("food_harvested","[product_name]|[getYield()]")
+		SSblackbox.record_feedback("tally", "food_harvested", getYield(), product_name)
 	parent.update_tray()
 
 	return result

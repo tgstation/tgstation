@@ -178,20 +178,17 @@
 	GLOB.nukeop_leader_start += loc
 	return INITIALIZE_HINT_QDEL
 
+// Must be immediate because players will
+// join before SSatom initializes everything.
+INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
+
 /obj/effect/landmark/start/new_player
 	name = "New Player"
 
-// Must be on New() rather than Initialize, because players will
-// join before SSatom initializes everything.
-/obj/effect/landmark/start/new_player/New(loc)
+/obj/effect/landmark/start/new_player/Initialize()
 	..()
 	GLOB.newplayer_start += loc
-
-/obj/effect/landmark/start/new_player/Initialize(mapload)
-	..()
 	return INITIALIZE_HINT_QDEL
-
-
 
 /obj/effect/landmark/latejoin
 	name = "JoinLate"

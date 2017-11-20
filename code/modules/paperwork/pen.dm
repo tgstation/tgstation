@@ -167,7 +167,6 @@
  * Sleepypens
  */
 /obj/item/pen/sleepy
-	origin_tech = "engineering=4;syndicate=2"
 	container_type = OPENCONTAINER_1
 
 
@@ -181,18 +180,17 @@
 				reagents.trans_to(M, reagents.total_volume)
 
 
-/obj/item/pen/sleepy/New()
+/obj/item/pen/sleepy/Initialize()
+	. = ..()	
 	create_reagents(45)
 	reagents.add_reagent("chloralhydrate2", 20)
 	reagents.add_reagent("mutetoxin", 15)
 	reagents.add_reagent("tirizene", 10)
-	..()
 
 /*
  * (Alan) Edaggers
  */
 /obj/item/pen/edagger
-	origin_tech = "combat=3;syndicate=1"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut") //these wont show up if the pen is off
 	var/on = FALSE
 

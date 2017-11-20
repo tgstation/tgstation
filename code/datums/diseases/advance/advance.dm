@@ -416,7 +416,7 @@
 		for(var/datum/disease/advance/AD in SSdisease.active_diseases)
 			AD.Refresh()
 
-		for(var/mob/living/carbon/human/H in shuffle(GLOB.living_mob_list))
+		for(var/mob/living/carbon/human/H in shuffle(GLOB.alive_mob_list))
 			if(!(H.z in GLOB.station_z_levels))
 				continue
 			if(!H.HasDisease(D))
