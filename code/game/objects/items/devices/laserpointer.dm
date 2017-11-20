@@ -124,6 +124,15 @@
 		else
 			outmsg = "<span class='warning'>You miss the lens of [C] with [src]!</span>"
 
+	//catpeople
+	for(var/mob/living/carbon/human/H in view(1,targloc))
+		if(ishumanbasic(H) && (H.getorgan(/obj/item/organ/tail/cat) || H.getorgan(/obj/item/organ/ears/cat) || H.dna.features["ears"] == "Cat" || H.dna.features["human_tail"] == "Cat"))
+			if(!H.incapacitated() && !H.lying)
+				H.visible_message("<span class='warning'>[H] pounces on the light!</span>","<span class='userdanger'>LIGHT!</span>")
+				H.Knockdown(10)
+				H.Move(targloc)
+				H.setDir(NORTH) //Facedown looks best imo
+
 	//laser pointer image
 	icon_state = "pointer_[pointer_icon_state]"
 	var/image/I = image('icons/obj/projectiles.dmi',targloc,pointer_icon_state,10)
