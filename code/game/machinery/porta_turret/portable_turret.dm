@@ -57,12 +57,12 @@
 	var/shot_delay = 15		//ticks until next shot (1.5 ?)
 
 
-	var/check_records = 1	//checks if it can use the security records
-	var/criminals = 1		//checks if it can shoot people on arrest
-	var/auth_weapons = 0	//checks if it can shoot people that have a weapon they aren't authorized to have
-	var/stun_all = 0		//if this is active, the turret shoots everything that isn't security or head of staff
-	var/check_anomalies = 1	//checks if it can shoot at unidentified lifeforms (ie xenos)
-	var/target_silicons = 0 //checks if it can shoot silicons
+	var/check_records = TRUE	//checks if it can use the security records
+	var/criminals = TRUE		//checks if it can shoot people on arrest
+	var/auth_weapons = FALSE	//checks if it can shoot people that have a weapon they aren't authorized to have
+	var/stun_all = FALSE		//if this is active, the turret shoots everything that isn't security or head of staff
+	var/check_anomalies = TRUE	//checks if it can shoot at unidentified lifeforms (ie xenos)
+	var/target_silicons = FALSE //checks if it can shoot silicons
 
 	var/attacked = 0		//if set to 1, the turret gets pissed off and shoots at people nearby (unless they have sec access!)
 
@@ -403,7 +403,7 @@
 					
 		if(issilicon(A))
 			var/mob/living/silicon/S = A
-			if(!in_faction(C) && target_silicons) //if the target is a silicon and not in our faction, target it if we are allowed to target silicons
+			if(target_silicons && !in_faction(S)) //if the target is a silicon and not in our faction, target it if we are allowed to target silicons
 				targets += S
 
 	if(!tryToShootAt(targets))
@@ -559,7 +559,7 @@
 	faction = "syndicate"
 	emp_vunerable = 0
 	desc = "A ballistic machine gun auto-turret."
-	target_silicons = 1
+	target_silicons = TRUE
 
 /obj/machinery/porta_turret/syndicate/energy
 	icon_state = "standard_stun"
