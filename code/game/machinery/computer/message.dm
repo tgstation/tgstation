@@ -120,9 +120,6 @@
 		//Message Logs
 		if(1)
 			var/index = 0
-			//var/recipient = "Unspecified" //name of the person
-			//var/sender = "Unspecified" //name of the sender
-			//var/message = "Blank" //transferred message
 			dat += "<center><A href='?src=[REF(src)];back=1'>Back</a> - <A href='?src=[REF(src)];refresh=1'>Refresh</center><hr>"
 			dat += "<table border='1' width='100%'><tr><th width = '5%'>X</th><th width='15%'>Sender</th><th width='15%'>Recipient</th><th width='300px' word-wrap: break-word>Message</th></tr>"
 			for(var/datum/data_pda_msg/pda in src.linkedServer.pda_msgs)

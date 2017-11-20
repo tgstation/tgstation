@@ -142,6 +142,8 @@
 		if(loc.vars[A] == src)
 			loc.vars[A] = O
 
+	transfer_observers_to(O)
+
 	. = O
 
 	qdel(src)
@@ -298,6 +300,8 @@
 	O.a_intent = INTENT_HELP
 	if (tr_flags & TR_DEFAULTMSG)
 		to_chat(O, "<B>You are now a human.</B>")
+
+	transfer_observers_to(O)
 
 	. = O
 

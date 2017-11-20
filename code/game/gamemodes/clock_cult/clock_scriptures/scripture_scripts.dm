@@ -322,7 +322,7 @@
 		to_chat(invoker, "<span class='warning'>You must not be inside an object to use this scripture!</span>")
 		return FALSE
 	var/other_servants = 0
-	for(var/mob/living/L in GLOB.living_mob_list)
+	for(var/mob/living/L in GLOB.alive_mob_list)
 		if(is_servant_of_ratvar(L) && !L.stat && L != invoker)
 			other_servants++
 	for(var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/O in GLOB.all_clockwork_objects)

@@ -29,7 +29,6 @@
 
 	var/access = 0 //Bit flags for cartridge access
 
-//	var/access_flora = 0
 	var/remote_door_id = ""
 
 	var/bot_access_flags = 0 //Bit flags. Selection: SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT
@@ -109,13 +108,6 @@
 	name = "\improper Lib-Tweet cartridge"
 	icon_state = "cart-s"
 	access = CART_NEWSCASTER
-
-/*
-/obj/item/cartridge/botanist
-	name = "\improper Green Thumb v4.20 cartridge"
-	icon_state = "cart-b"
-	access_flora = 1
-*/
 
 /obj/item/cartridge/roboticist
 	name = "\improper B.O.O.P. Remote Control cartridge"
@@ -505,7 +497,7 @@ Code:
 				menu += "<h4>Located Cleanbots:</h4>"
 
 				ldat = null
-				for (var/mob/living/simple_animal/bot/cleanbot/B in GLOB.living_mob_list)
+				for (var/mob/living/simple_animal/bot/cleanbot/B in GLOB.alive_mob_list)
 					var/turf/bl = get_turf(B)
 
 					if(bl)
@@ -669,9 +661,6 @@ Code:
 
 	var/mob/living/simple_animal/bot/Bot
 
-//	if(!SC)
-//		menu = "Interlink Error - Please reinsert cartridge."
-//		return
 	if(active_bot)
 		menu += "<B>[active_bot]</B><BR> Status: (<A href='byond://?src=[REF(src)];op=control;bot=[REF(active_bot)]'><img src=pda_refresh.png><i>refresh</i></A>)<BR>"
 		menu += "Model: [active_bot.model]<BR>"
@@ -715,7 +704,7 @@ Code:
 		var/turf/current_turf = get_turf(src)
 		var/zlevel = current_turf.z
 		var/botcount = 0
-		for(Bot in GLOB.living_mob_list) //Git da botz
+		for(Bot in GLOB.alive_mob_list) //Git da botz
 			if(!Bot.on || Bot.z != zlevel || Bot.remote_disabled || !(bot_access_flags & Bot.bot_type)) //Only non-emagged bots on the same Z-level are detected!
 				continue //Also, the PDA must have access to the bot type.
 			menu += "<A href='byond://?src=[REF(src)];op=control;bot=[REF(Bot)]'><b>[Bot.name]</b> ([Bot.get_mode()])<BR>"

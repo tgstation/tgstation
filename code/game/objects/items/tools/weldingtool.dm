@@ -22,7 +22,6 @@
 	resistance_flags = FIRE_PROOF
 
 	materials = list(MAT_METAL=70, MAT_GLASS=30)
-	origin_tech = "engineering=1;plasmatech=1"
 	var/welding = 0 	//Whether or not the welding tool is off(0), on(1) or currently welding(2)
 	var/status = TRUE 		//Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
 	var/max_fuel = 20 	//The max amount of fuel the welder can hold
@@ -90,18 +89,15 @@
 		flamethrower_screwdriver(I, user)
 	else if(istype(I, /obj/item/stack/rods))
 		flamethrower_rods(I, user)
-	else if(istype(I, /obj/item/reagent_containers) && I.is_open_container())
-		var/amountNeeded = max_fuel - get_fuel()
-		var/obj/item/reagent_containers/container = I
-		if(length(container.reagents.reagent_list) > 1)
-			to_chat(user, "<span class='warning'>[container] has too many chemicals mixed into it. You wouldn't want to put the wrong chemicals into [src].</span>")
-			return ..()
-		if(amountNeeded > 0 && container.reagents.has_reagent("welding_fuel"))
-			container.reagents.trans_id_to(src, "welding_fuel", amountNeeded)
-			to_chat(user, "<span class='notice'>You transfer some fuel from [container] to [src].</span>")
 	else
-		return ..()
+		. = ..()
+	update_icon()
 
+/obj/item/weldingtool/proc/explode()
+	var/turf/T = get_turf(loc)
+	var/plasmaAmount = reagents.get_reagent_amount("plasma")
+	dyn_explosion(T, plasmaAmount/5)//20 plasma in a standard welder has a 4 power explosion. no breaches, but enough to kill/dismember holder
+	qdel(src)
 
 /obj/item/weldingtool/attack(mob/living/carbon/human/H, mob/user)
 	if(!istype(H))
@@ -124,7 +120,10 @@
 /obj/item/weldingtool/afterattack(atom/O, mob/user, proximity)
 	if(!proximity)
 		return
-
+	if(!status && istype(O, /obj/item/reagent_containers) && O.is_open_container())
+		reagents.trans_to(O, reagents.total_volume)
+		to_chat(user, "<span class='notice'>You empty [src]'s fuel tank into [O].</span>")
+		update_icon()
 	if(welding)
 		remove_fuel(1)
 		var/turf/location = get_turf(user)
@@ -140,6 +139,9 @@
 
 
 /obj/item/weldingtool/attack_self(mob/user)
+	if(src.reagents.has_reagent("plasma"))
+		message_admins("[key_name_admin(user)] activated a rigged welder.")
+		explode()
 	switched_on(user)
 	if(welding)
 		set_light(light_intensity)
@@ -235,9 +237,11 @@
 		return
 	status = !status
 	if(status)
-		to_chat(user, "<span class='notice'>You resecure [src].</span>")
+		to_chat(user, "<span class='notice'>You resecure [src] and close the fuel tank.</span>")
+		container_type = NONE
 	else
-		to_chat(user, "<span class='notice'>[src] can now be attached and modified.</span>")
+		to_chat(user, "<span class='notice'>[src] can now be attached, modified, and refuelled.</span>")
+		container_type = OPENCONTAINER_1
 	add_fingerprint(user)
 
 /obj/item/weldingtool/proc/flamethrower_rods(obj/item/I, mob/user)
@@ -266,7 +270,6 @@
 	icon_state = "indwelder"
 	max_fuel = 40
 	materials = list(MAT_GLASS=60)
-	origin_tech = "engineering=2;plasmatech=2"
 
 /obj/item/weldingtool/largetank/cyborg
 	name = "integrated welding tool"
@@ -297,7 +300,6 @@
 	toolspeed = 0.1
 	light_intensity = 0
 	change_icons = 0
-	origin_tech = "plasmatech=5;engineering=5;abductor=3"
 
 /obj/item/weldingtool/abductor/process()
 	if(get_fuel() <= max_fuel)
@@ -311,7 +313,6 @@
 	item_state = "upindwelder"
 	max_fuel = 80
 	materials = list(MAT_METAL=70, MAT_GLASS=120)
-	origin_tech = "engineering=3;plasmatech=2"
 
 /obj/item/weldingtool/experimental
 	name = "experimental welding tool"
@@ -320,7 +321,6 @@
 	item_state = "exwelder"
 	max_fuel = 40
 	materials = list(MAT_METAL=70, MAT_GLASS=120)
-	origin_tech = "materials=4;engineering=4;bluespace=3;plasmatech=4"
 	var/last_gen = 0
 	change_icons = 0
 	can_off_process = 1

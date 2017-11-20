@@ -511,10 +511,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Research Director's Private Quarters"
 	icon_state = "rd_private"
 
-/area/mint
-	name = "Mint"
-	icon_state = "green"
-
 /area/comms
 	name = "Communications Relay"
 	icon_state = "tcomsatcham"
@@ -1375,16 +1371,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "eva"
 	ambientsounds = HIGHSEC
 
-/area/ai_monitored/storage/secure
-	name = "AI Satellite Storage"
-	icon_state = "storage"
-	ambientsounds = HIGHSEC
-
-/area/ai_monitored/storage/emergency
-	name = "Emergency Storage"
-	icon_state = "storage"
-	ambientsounds = HIGHSEC
-
 /area/ai_monitored/storage/satellite
 	name = "AI Satellite Maint"
 	icon_state = "storage"
@@ -1522,7 +1508,6 @@ GLOBAL_LIST_INIT(the_station_areas, list (
 	/area/library,
 	/area/maintenance,
 	/area/medical,
-//	/area/mint,		//not present on map
 	/area/quartermaster,
 	/area/science,
 	/area/security,
@@ -1530,8 +1515,6 @@ GLOBAL_LIST_INIT(the_station_areas, list (
 	/area/storage,
 	/area/teleporter,
 	/area/ai_monitored/storage/eva, //do not try to simplify to "/area/ai_monitored" --rastaf0
-//	/area/ai_monitored/storage/secure,	//not present on map
-//	/area/ai_monitored/storage/emergency,	//not present on map
 	/area/ai_monitored/turret_protected/ai_upload, //do not try to simplify to "/area/ai_monitored/turret_protected" --rastaf0
 	/area/ai_monitored/turret_protected/ai_upload_foyer,
 	/area/ai_monitored/turret_protected/ai,

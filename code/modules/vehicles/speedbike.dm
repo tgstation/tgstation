@@ -10,7 +10,7 @@
 	. = ..()
 	riding_datum = new/datum/riding/space/speedbike
 
-/obj/vehicle/space/speedbike/New()
+/obj/vehicle/space/speedbike/Initialize()
 	. = ..()
 	overlay = overlay ||  mutable_appearance(icon, overlay_state, ABOVE_MOB_LAYER)
 	add_overlay(overlay)

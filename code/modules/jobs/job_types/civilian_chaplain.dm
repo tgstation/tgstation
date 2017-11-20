@@ -33,7 +33,7 @@ Chaplain
 		H.equip_to_slot_or_del(B, slot_in_backpack)
 		var/nrt = SSreligion.holy_weapon_type || /obj/item/nullrod
 		var/obj/item/nullrod/N = new nrt(H)
-		H.equip_to_slot_or_del(N, slot_in_backpack)
+		H.put_in_hands(N)
 		return
 
 	var/new_religion = "Christianity"
@@ -80,8 +80,8 @@ Chaplain
 
 	H.equip_to_slot_or_del(B, slot_in_backpack)
 
-	SSblackbox.set_details("religion_name","[new_religion]")
-	SSblackbox.set_details("religion_deity","[new_deity]")
+	SSblackbox.record_feedback("text", "religion_name", 1, "[new_religion]", 1)
+	SSblackbox.record_feedback("text", "religion_deity", 1, "[new_deity]", 1)
 
 /datum/outfit/job/chaplain
 	name = "Chaplain"

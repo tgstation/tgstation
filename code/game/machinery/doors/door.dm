@@ -63,9 +63,6 @@
 		spark_system = null
 	return ..()
 
-//process()
-	//return
-
 /obj/machinery/door/CollidedWith(atom/movable/AM)
 	if(operating || emagged)
 		return
@@ -103,7 +100,7 @@
 	move_update_air(T)
 
 /obj/machinery/door/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && mover.checkpass(PASSGLASS))
+	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return !opacity
 	return !density
 

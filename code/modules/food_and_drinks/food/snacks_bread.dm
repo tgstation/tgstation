@@ -185,36 +185,39 @@
 	icon_state = ""
 	bitesize = 2
 
-/obj/item/reagent_containers/food/snacks/deepfryholder/proc/fry(obj/item/frying, datum/reagents/reagents, cook_time = 30)
-	if(istype(frying, /obj/item/reagent_containers/))
-		var/obj/item/reagent_containers/food = frying
-		food.reagents.trans_to(src, food.reagents.total_volume)
-	icon = frying.icon
-	overlays = frying.overlays
-	icon_state = frying.icon_state
-	desc = frying.desc
-	w_class = frying.w_class
-	reagents.trans_to(src, 2*(cook_time/15))
+/obj/item/reagent_containers/food/snacks/deepfryholder/Initialize(mapload, obj/item/fried)
+	. = ..()
+	name = fried.name //We'll determine the other stuff when it's actually removed
+	icon = fried.icon
+	overlays = fried.copy_overlays()
+	icon_state = fried.icon_state
+	desc = fried.desc
+	if(istype(fried, /obj/item/reagent_containers/food/snacks))
+		fried.reagents.trans_to(src, fried.reagents.total_volume)
+		qdel(fried)
+	else
+		fried.forceMove(src)
+
+/obj/item/reagent_containers/food/snacks/deepfryholder/proc/fry(cook_time = 30)
 	switch(cook_time)
 		if(0 to 15)
 			add_atom_colour(rgb(166,103,54), FIXED_COLOUR_PRIORITY)
-			name = "lightly-fried [frying.name]"
+			name = "lightly-fried [name]"
+			desc = "[desc] It's been lightly fried in a deep fryer."
 		if(16 to 49)
 			add_atom_colour(rgb(103,63,24), FIXED_COLOUR_PRIORITY)
-			name = "fried [frying.name]"
+			name = "fried [name]"
+			desc = "[desc] It's been fried, increasing its tastiness value by [rand(1, 75)]%."
 		if(50 to 59)
 			add_atom_colour(rgb(63,23,4), FIXED_COLOUR_PRIORITY)
-			name = "deep-fried [frying.name]"
+			name = "deep-fried [name]"
+			desc = "[desc] Deep-fried to perfection."
 		if(60 to INFINITY)
 			add_atom_colour(rgb(33,19,9), FIXED_COLOUR_PRIORITY)
 			name = "the physical manifestation of the very concept of fried foods"
-			desc = "A heavily fried...something.  Who can tell anymore?"
+			desc = "A heavily-fried...something.  Who can tell anymore?"
 	filling_color = color
 	foodtype |= FRIED
-	if(istype(frying, /obj/item/reagent_containers/food/snacks/))
-		qdel(frying)
-	else
-		frying.forceMove(src)
 
 /obj/item/reagent_containers/food/snacks/butteredtoast
 	name = "buttered toast"
