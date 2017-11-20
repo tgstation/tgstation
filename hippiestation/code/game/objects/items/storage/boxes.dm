@@ -18,3 +18,6 @@
 
 /obj/item/storage/toolbox/brass
 	icon = 'icons/obj/storage.dmi'
+
+/obj/item/storage/box/lights
+	icon = 'hippiestation/icons/obj/storage.dmi'
