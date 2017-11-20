@@ -38,10 +38,6 @@
 /obj/item/device/assembly/signaler/interact(mob/user, flag1)
 	if(is_secured(user))
 		var/t1 = "-------"
-	//	if ((src.b_stat && !( flag1 )))
-	//		t1 = text("-------<BR>\nGreen Wire: []<BR>\nRed Wire:   []<BR>\nBlue Wire:  []<BR>\n", (src.wires & 4 ? "<A href='?src=[REF(src)];wires=4'>Cut Wire</A>" : "<A href='?src=[REF(src)];wires=4'>Mend Wire</A>"), (src.wires & 2 ? "<A href='?src=[REF(src)];wires=2'>Cut Wire</A>" : "<A href='?src=[REF(src)];wires=2'>Mend Wire</A>"), (src.wires & 1 ? "<A href='?src=[REF(src)];wires=1'>Cut Wire</A>" : "<A href='?src=[REF(src)];wires=1'>Mend Wire</A>"))
-	//	else
-	//		t1 = "-------"	Speaker: [src.listening ? "<A href='byond://?src=[REF(src)];listen=0'>Engaged</A>" : "<A href='byond://?src=[REF(src)];listen=1'>Disengaged</A>"]<BR>
 		var/dat = {"
 <TT>
 
@@ -122,17 +118,6 @@ Code:
 
 
 	return
-/*
-		for(var/obj/item/device/assembly/signaler/S in world)
-			if(!S)
-				continue
-			if(S == src)
-				continue
-			if((S.frequency == src.frequency) && (S.code == src.code))
-				spawn(0)
-					if(S)
-						S.pulse(0)
-		return 0*/
 
 /obj/item/device/assembly/signaler/receive_signal(datum/signal/signal)
 	if(!signal)

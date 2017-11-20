@@ -138,7 +138,6 @@
 	// It's a simplified version taking only 1/10 of the moles from the turf nearby. It should be later changed into a better version
 
 	var/transfer_moles = environment.total_moles()/10
-	//var/transfer_moles = rpm/10000*capacity
 	var/datum/gas_mixture/removed = inturf.remove_air(transfer_moles)
 	gas_contained.merge(removed)
 

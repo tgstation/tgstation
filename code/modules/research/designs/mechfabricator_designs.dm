@@ -191,16 +191,6 @@
 	construction_time = 130
 	category = list("Odysseus")
 
-/*/datum/design/odysseus_armor
-	name = "Exosuit Armor (\"Odysseus\")"
-	id = "odysseus_armor"
-	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/part/odysseus_armor
-	materials = list(MAT_METAL=15000)
-	construction_time = 200
-	category = list("Odysseus")
-	*/
-
 //Gygax
 /datum/design/gygax_chassis
 	name = "Exosuit Chassis (\"Gygax\")"

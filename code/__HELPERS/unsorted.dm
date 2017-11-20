@@ -64,7 +64,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 	errorx = abs(errorx)//Error should never be negative.
 	errory = abs(errory)
-	//var/errorxy = round((errorx+errory)/2)//Used for diagonal boxes.
 
 	switch(target.dir)//This can be done through equations but switch is the simpler method. And works fast to boot.
 	//Directs on what values need modifying.
@@ -342,10 +341,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 		moblist.Add(M)
 	for(var/mob/living/simple_animal/M in sortmob)
 		moblist.Add(M)
-//	for(var/mob/living/silicon/hivebot/M in world)
-//		mob_list.Add(M)
-//	for(var/mob/living/silicon/hive_mainframe/M in world)
-//		mob_list.Add(M)
 	for(var/mob/living/carbon/true_devil/M in sortmob)
 		moblist.Add(M)
 	return moblist
@@ -1449,7 +1444,6 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	var/target_loc = target.loc
 
 	var/endtime = world.time+time
-//	var/starttime = world.time
 	. = TRUE
 	while (world.time < endtime)
 		stoplag(1)
