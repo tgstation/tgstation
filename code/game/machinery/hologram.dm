@@ -47,14 +47,14 @@ Possible to do for anyone motivated enough:
 	var/temp = ""
 	var/list/holo_calls	//array of /datum/holocalls
 	var/datum/holocall/outgoing_call	//do not modify the datums only check and call the public procs
-	var/static/force_answer_call = FALSE	//Calls will be automatically answered after a couple rings, here for debugging
-	var/static/list/holopads = list()
 	var/obj/item/disk/holodisk/disk //Record disk
 	var/replay_mode = FALSE //currently replaying a recording
 	var/record_mode = FALSE //currently recording
 	var/record_start = 0  	//recording start time
 	var/record_user			//user that inititiated the recording
 	var/obj/effect/overlay/holo_pad_hologram/replay_holo	//replay hologram
+	var/static/force_answer_call = FALSE	//Calls will be automatically answered after a couple rings, here for debugging
+	var/static/list/holopads = list()
 
 /obj/machinery/holopad/Initialize()
 	. = ..()

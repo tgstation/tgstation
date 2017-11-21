@@ -216,6 +216,10 @@
 	if(preset_record_text)
 		build_record()
 
+/obj/item/disk/holodisk/Destroy()
+	QDEL_NULL(record)
+	return ..()
+
 /obj/item/disk/holodisk/proc/build_record()
 	record = new
 	var/list/lines = splittext(preset_record_text,"\n")
