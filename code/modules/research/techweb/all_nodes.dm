@@ -85,7 +85,7 @@
 	description = "Deeper understanding of how the Bluespace dimension works"
 	prereq_ids = list("practical_bluespace", "high_efficiency")
 	design_ids = list("bluespace_matter_bin", "femto_mani", "triphasic_scanning", "tele_station", "tele_hub", "quantumpad", "launchpad", "launchpad_console",
-	"teleconsole", "bag_holding", "bluespace_crystal", "wormholeprojector")
+	"teleconsole", "bag_holding", "bluespace_crystal", "wormholeprojector", "telepad", "telesci_console")
 	research_cost = 2500
 	export_price = 10000
 
