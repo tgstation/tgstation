@@ -1696,7 +1696,6 @@
 /turf/open/floor/plating/snowed/colder,
 /area/awaymission/snowdin/dungeon1)
 "ez" = (
-/turf/open/space,
 /turf/open/floor/plating/snowed,
 /area/awaymission/snowdin/post)
 "eA" = (
@@ -2312,7 +2311,6 @@
 	},
 /area/awaymission/snowdin/cave)
 "gr" = (
-/turf/open/floor/plating,
 /turf/open/floor/plating/snowed,
 /area/awaymission/snowdin/post)
 "gs" = (
@@ -3552,7 +3550,6 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin)
 "jL" = (
-/turf/open/floor/plating,
 /turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
@@ -3567,7 +3564,6 @@
 	},
 /area/awaymission/snowdin)
 "jN" = (
-/turf/open/floor/plating,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
@@ -4408,7 +4404,6 @@
 	},
 /area/awaymission/snowdin)
 "lR" = (
-/turf/open/floor/plating/asteroid/snow,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 8;
 	icon_state = "diagonalWall3"

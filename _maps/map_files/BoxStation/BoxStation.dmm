@@ -49285,7 +49285,6 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "crO" = (
-/turf/open/floor/mineral/titanium,
 /turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/escape)
 "crP" = (
@@ -52213,7 +52212,6 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "czf" = (
-/turf/open/floor/mineral/titanium/blue,
 /turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/supply)
 "czg" = (

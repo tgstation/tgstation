@@ -14122,11 +14122,9 @@
 /turf/open/floor/plating,
 /area/centcom/evac)
 "KS" = (
-/turf/open/floor/plating,
 /turf/closed/wall/mineral/titanium/interior,
 /area/centcom/evac)
 "KT" = (
-/turf/open/floor/mineral/titanium/blue,
 /turf/closed/wall/mineral/titanium/interior,
 /area/centcom/evac)
 "KU" = (
