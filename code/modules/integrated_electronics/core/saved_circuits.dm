@@ -17,8 +17,7 @@
 	if(length(inputs))
 		var/list/saved_inputs = list()
 
-		var/index = 0
-		for(index in 1 to inputs.len)
+		for(var/index in 1 to inputs.len)
 			var/datum/integrated_io/input = inputs[index]
 
 			// Don't waste space saving the default values

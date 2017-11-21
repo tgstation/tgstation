@@ -4,7 +4,6 @@
 	icon = 'icons/obj/electronic_assemblies.dmi'
 	icon_state = "circuit_printer"
 	w_class = WEIGHT_CLASS_BULKY
-	var/debug = FALSE
 	var/upgraded = FALSE		// When hit with an upgrade disk, will turn true, allowing it to print the higher tier circuits.
 	var/can_clone = FALSE		// Same for above, but will allow the printer to duplicate a specific assembly.
 	var/current_category = null
@@ -48,9 +47,6 @@
 	interact(user)
 
 /obj/item/device/integrated_circuit_printer/interact(mob/user)
-	var/window_height = 600
-	var/window_width = 500
-
 	if(isnull(current_category))
 		current_category = SScircuit.circuit_fabricator_recipe_list[1]
 
@@ -98,7 +94,7 @@
 		else
 			HTML += "<s>\[[initial(O.name)]\]</s>: [initial(O.desc)]<br>"
 
-	user << browse(HTML, "window=integrated_printer;size=[window_width]x[window_height];border=1;can_resize=1;can_close=1;can_minimize=1")
+	user << browse(HTML, "window=integrated_printer;size=600x500;border=1;can_resize=1;can_close=1;can_minimize=1")
 
 /obj/item/device/integrated_circuit_printer/Topic(href, href_list)
 	if(!check_interactivity(usr))
