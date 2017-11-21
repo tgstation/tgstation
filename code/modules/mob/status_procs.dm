@@ -121,6 +121,8 @@
 /////////////////////////////////// STASIS ///////////////////////////////////
 
 /mob/proc/IsInStasis()
+	. = FALSE
+
 /mob/living/IsInStasis()
 	. = has_status_effect(STATUS_EFFECT_STASIS)
 

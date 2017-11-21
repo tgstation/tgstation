@@ -19,14 +19,14 @@
 		if(stat != DEAD)
 			handle_liver()
 
-		//Updates the number of stored chemicals for powers
-		handle_changeling()
-
 	else
 		..()
 
 	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
+
+	//Updates the number of stored chemicals for powers
+	handle_changeling()
 
 	if(stat != DEAD)
 		return TRUE
