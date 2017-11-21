@@ -8,7 +8,7 @@
 	desc = "Patient occasionally and uncontrollably channels an eldritch god when speaking."
 	scan_desc = "god delusion"
 	gain_text = "<span class='notice'>You feel a higher power inside your mind...</span>"
-	lose_text = "<span class='warning'>The divinity leaves your head, no longer interested.</span>"
+	lose_text = "<span class='warning'>The divine presence leaves your head, no longer interested.</span>"
 	var/next_speech = 0
 
 /datum/brain_trauma/special/godwoken/on_say(message)
@@ -86,3 +86,23 @@
 	user.visible_message("<span class='warning'>[user] [slip_in_message].</span>", "<span class='notice'>You slip into the bluespace stream...</span>")
 	user.forceMove(get_turf(linked_to))
 	user.visible_message("<span class='warning'>[user] [slip_out_message].</span>", "<span class='notice'>...and find your way to the other side.</span>")
+
+/datum/brain_trauma/special/psychotic_brawling
+	name = "Violent Psychosis"
+	desc = "Patient fights in unpredictable ways, ranging from helping his target to hitting them with brutal strength."
+	scan_desc = "violent psychosis"
+	gain_text = "<span class='warning'>You feel unhinged...</span>"
+	lose_text = "<span class='notice'>You feel more balanced.</span>"
+	var/datum/martial_art/psychotic_brawling/psychotic_brawling
+
+/datum/brain_trauma/special/psychotic_brawling/on_gain()
+	..()
+	psychotic_brawling = new(null)
+	if(!psychotic_brawling.teach(owner, TRUE))
+		to_chat(owner, "<span class='notice'>But your martial knowledge keeps you grounded.</span>")
+		qdel(src)
+
+/datum/brain_trauma/special/psychotic_brawling/on_lose()
+	..()
+	psychotic_brawling.remove(owner)
+	QDEL_NULL(psychotic_brawling)
