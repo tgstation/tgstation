@@ -495,7 +495,7 @@
 /obj/structure/cable{
 	icon_state = "2-4"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/academy/headmaster)
 "bO" = (
 /obj/structure/cable{
@@ -509,7 +509,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/academy/headmaster)
 "bQ" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -576,7 +576,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/headmaster)
 "cd" = (
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/academy/headmaster)
 "ce" = (
 /obj/structure/cable{
@@ -629,7 +629,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/academy/headmaster)
 "cn" = (
 /turf/open/floor/plasteel/vault{
@@ -738,7 +738,7 @@
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/academy/headmaster)
 "cH" = (
 /obj/structure/sign/nosmoking_1,
@@ -814,7 +814,7 @@
 /obj/structure/closet/crate/internals,
 /obj/item/tank/internals/oxygen,
 /obj/item/tank/internals/oxygen/red,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/academy/headmaster)
 "cV" = (
 /obj/structure/closet/crate,
@@ -12113,7 +12113,7 @@ ak
 ar
 nn
 aC
-np
+nn
 aM
 aN
 ab
@@ -13543,7 +13543,7 @@ aq
 aw
 no
 aI
-nq
+no
 ak
 af
 ab
