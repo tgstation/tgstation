@@ -253,8 +253,8 @@
 			to_chat(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
 		death()
 
-/mob/living/incapacitated(ignore_restraints, ignore_grab)
-	if(stat || IsUnconscious() || IsStun() || IsKnockdown() || (!ignore_restraints && restrained(ignore_grab)))
+/mob/living/incapacitated(ignore_restraints, ignore_grab, ignore_stasis)
+	if(stat || IsUnconscious() || IsStun() || IsKnockdown() || (!ignore_stasis && IsInStasis()) || (!ignore_restraints && restrained(ignore_grab)))
 		return 1
 
 /mob/living/proc/InCritical()
@@ -566,7 +566,7 @@
 		..(pressure_difference, direction, pressure_resistance_prob_delta)
 
 /mob/living/can_resist()
-	return !((next_move > world.time) || incapacitated(ignore_restraints = TRUE))
+	return !((next_move > world.time) || incapacitated(ignore_restraints = TRUE, ignore_stasis = TRUE))
 
 /mob/living/verb/resist()
 	set name = "Resist"
@@ -980,7 +980,7 @@
 			fall()
 		else if(ko || move_and_fall || (!has_legs && !ignore_legs) || chokehold)
 			fall(forced = 1)
-	canmove = !(ko || resting || IsStun() || IsFrozen() || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms))
+	canmove = !(ko || resting || IsStun() || IsFrozen() || IsInStasis() || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms))
 	density = !lying
 	if(lying)
 		if(layer == initial(layer)) //to avoid special cases like hiding larvas.

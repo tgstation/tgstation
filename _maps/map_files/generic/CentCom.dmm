@@ -9358,7 +9358,7 @@
 /turf/open/floor/grass,
 /area/wizard_station)
 "yL" = (
-/obj/machinery/sleeper/syndie{
+/obj/machinery/sleeper/chems/syndie{
 	dir = 4
 	},
 /obj/effect/turf_decal/bot_white,

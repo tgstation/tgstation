@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/template_noop,
 /area/template_noop)
@@ -77,6 +77,9 @@
 "p" = (
 /obj/structure/table/survival_pod,
 /obj/item/kitchen/knife/combat/survival,
+/obj/machinery/vending/wallmed/survival_pod{
+	pixel_x = -24
+	},
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
 "q" = (

@@ -9,14 +9,18 @@
 		damageoverlaytemp = 0
 		update_damage_hud()
 
-	if(stat != DEAD) //Reagent processing needs to come before breathing, to prevent edge cases.
-		handle_organs()
+	if(!IsInStasis())
+		if(stat != DEAD) //Reagent processing needs to come before breathing, to prevent edge cases.
+			handle_organs()
 
-	if(..()) //not dead
-		handle_blood()
+		if(..()) //not dead
+			handle_blood()
 
-	if(stat != DEAD)
-		handle_liver()
+		if(stat != DEAD)
+			handle_liver()
+
+	else
+		..()
 
 	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
@@ -25,7 +29,7 @@
 	handle_changeling()
 
 	if(stat != DEAD)
-		return 1
+		return TRUE
 
 ///////////////
 // BREATHING //

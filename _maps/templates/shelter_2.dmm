@@ -9,7 +9,15 @@
 /turf/closed/wall/mineral/titanium/survival/pod,
 /area/survivalpod)
 "c" = (
-/turf/closed/wall/mineral/titanium/survival,
+/obj/structure/table/survival_pod,
+/obj/item/storage/firstaid/regular,
+/obj/item/storage/firstaid/brute{
+	pixel_x = 5
+	},
+/obj/machinery/vending/wallmed/survival_pod{
+	pixel_x = -24
+	},
+/turf/open/floor/pod,
 /area/survivalpod)
 "d" = (
 /obj/structure/sign/mining/survival{
@@ -88,14 +96,6 @@
 	dir = 1
 	},
 /turf/open/floor/carpet/black,
-/area/survivalpod)
-"p" = (
-/obj/structure/table/survival_pod,
-/obj/item/storage/firstaid/regular,
-/obj/item/storage/firstaid/brute{
-	pixel_x = 5
-	},
-/turf/open/floor/pod,
 /area/survivalpod)
 "q" = (
 /obj/structure/tubes,
@@ -224,7 +224,7 @@ a
 b
 e
 k
-p
+c
 t
 y
 C

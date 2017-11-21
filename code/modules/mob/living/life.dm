@@ -1,7 +1,6 @@
 /mob/living/Life(seconds, times_fired)
 	set invisibility = 0
 	set background = BACKGROUND_ENABLED
-
 	if(digitalinvis)
 		handle_diginvis() //AI becomes unable to see mob
 
@@ -21,28 +20,34 @@
 			return
 	var/datum/gas_mixture/environment = loc.return_air()
 
-	if(stat != DEAD)
-		//Mutations and radiation
-		handle_mutations_and_radiation()
+	if(!IsInStasis())
+		if(stat != DEAD)
+			//Mutations and radiation
+			handle_mutations_and_radiation()
 
-	if(stat != DEAD)
-		//Breathing, if applicable
-		handle_breathing(times_fired)
+		if(stat != DEAD)
+			//Breathing, if applicable
+			handle_breathing(times_fired)
 
-	handle_diseases() // DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
+		handle_diseases() // DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
 
-	if(stat != DEAD)
-		//Random events (vomiting etc)
-		handle_random_events()
+		if(stat != DEAD)
+			//Random events (vomiting etc)
+			handle_random_events()
 
 	//Handle temperature/pressure differences between body and environment
-	if(environment)
-		handle_environment(environment)
+		if(environment)
+			handle_environment(environment)
+
+		//stuff in the stomach
+		handle_stomach()
+
+		if(stat != DEAD)
+			handle_disabilities() // eye, ear, brain damages
+		if(stat != DEAD)
+			handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
 
 	handle_fire()
-
-	//stuff in the stomach
-	handle_stomach()
 
 	update_gravity(mob_has_gravity())
 
@@ -50,12 +55,7 @@
 		machine.check_eye(src)
 
 	if(stat != DEAD)
-		handle_disabilities() // eye, ear, brain damages
-	if(stat != DEAD)
-		handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
-
-	if(stat != DEAD)
-		return 1
+		return TRUE
 
 /mob/living/proc/handle_breathing(times_fired)
 	return

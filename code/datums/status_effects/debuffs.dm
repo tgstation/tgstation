@@ -80,6 +80,18 @@
 	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
 	icon_state = "asleep"
 
+//STASIS
+/datum/status_effect/incapacitating/stasis
+	id = "stasis"
+	duration = -1
+	tick_interval = 10
+	alert_type = /obj/screen/alert/status_effect/stasis
+
+/obj/screen/alert/status_effect/stasis
+	name = "Stasis"
+	desc = "Your biological functions have halted. You could live forever this way, but it's pretty boring."
+	icon_state = "stasis"
+
 //OTHER DEBUFFS
 /datum/status_effect/his_wrath //does minor damage over time unless holding His Grace
 	id = "his_wrath"

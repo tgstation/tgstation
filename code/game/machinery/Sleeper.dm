@@ -7,7 +7,7 @@
 
 /obj/machinery/sleeper
 	name = "sleeper"
-	desc = "An enclosed machine used to stabilize and heal patients."
+	desc = "An enclosed machine used to stabilize patients."
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 	density = FALSE
@@ -18,15 +18,18 @@
 	var/min_health = -25
 	var/list/available_chems
 	var/controls_inside = FALSE
-	var/list/possible_chems = list(
+	var/list/possible_chems
+	var/list/chem_buttons	//Used when emagged to scramble which chem is used, eg: antitoxin -> morphine
+	var/scrambled_chems = FALSE //Are chem buttons scrambled? used as a warning
+	var/enter_message = "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
+
+/obj/machinery/sleeper/chems
+	possible_chems = list(
 		list("epinephrine", "morphine", "salbutamol", "bicaridine", "kelotane"),
 		list("oculine","inacusiate"),
 		list("antitoxin", "mutadone", "mannitol", "pen_acid"),
 		list("omnizine")
 	)
-	var/list/chem_buttons	//Used when emagged to scramble which chem is used, eg: antitoxin -> morphine
-	var/scrambled_chems = FALSE //Are chem buttons scrambled? used as a warning
-	var/enter_message = "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
 
 /obj/machinery/sleeper/Initialize()
 	. = ..()
@@ -44,9 +47,13 @@
 	efficiency = initial(efficiency)* E
 	min_health = initial(min_health) * E
 	available_chems = list()
+	var/list/adding_chems
 	for(var/i in 1 to I)
-		available_chems |= possible_chems[i]
+		adding_chems = LAZYACCESS(possible_chems, i)
+		if(adding_chems) //With LAZYACCESS, adding_chems can be null, so |= will add nulls, and we don't want nulls.
+			available_chems |= adding_chems
 	reset_chem_buttons()
+
 
 /obj/machinery/sleeper/update_icon()
 	icon_state = initial(icon_state)
@@ -65,12 +72,21 @@
 	if(!state_open && !panel_open)
 		..()
 
-/obj/machinery/sleeper/close_machine(mob/user)
+/obj/machinery/sleeper/dropContents()
+	if(occupant && isliving(occupant))
+		var/mob/living/L = occupant
+		L.SetStasis(FALSE)
+	..()
+
+/obj/machinery/sleeper/close_machine(mob/living/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		..(user)
 		var/mob/living/mob_occupant = occupant
-		if(mob_occupant && mob_occupant.stat != DEAD)
-			to_chat(occupant, "[enter_message]")
+		if(mob_occupant)
+			mob_occupant.SetStasis(TRUE)
+			mob_occupant.ExtinguishMob()
+			if(mob_occupant.stat != DEAD)
+				to_chat(occupant, "[enter_message]")
 
 /obj/machinery/sleeper/emp_act(severity)
 	if(is_operational() && occupant)
@@ -173,8 +189,9 @@
 					to_chat(usr, "<span class='warning'>Chem System Re-route detected, results may not be as expected!</span>")
 
 /obj/machinery/sleeper/emag_act(mob/user)
-	scramble_chem_buttons()
-	to_chat(user, "<span class='warning'>You scramble the sleeper's user interface!</span>")
+	if(LAZYLEN(available_chems))
+		scramble_chem_buttons()
+		to_chat(user, "<span class='warning'>You scramble the sleeper's user interface!</span>")
 
 /obj/machinery/sleeper/proc/inject_chem(chem)
 	if((chem in available_chems) && chem_allowed(chem))
@@ -202,7 +219,7 @@
 		chem_buttons[chem] = pick_n_take(av_chem) //no dupes, allow for random buttons to still be correct
 
 
-/obj/machinery/sleeper/syndie
+/obj/machinery/sleeper/chems/syndie
 	icon_state = "sleeper_s"
 	controls_inside = TRUE
 
@@ -222,5 +239,5 @@
 			L.adjustFireLoss(-1)
 			L.adjustOxyLoss(-5)
 
-/obj/machinery/sleeper/old
+/obj/machinery/sleeper/chems/old
 	icon_state = "oldpod"

@@ -1000,7 +1000,7 @@
 /turf/open/floor/plasteel/vault,
 /area/ruin/powered/syndicate_lava_base)
 "ct" = (
-/obj/machinery/sleeper/syndie{
+/obj/machinery/sleeper/chems/syndie{
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault{

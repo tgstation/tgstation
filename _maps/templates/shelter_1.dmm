@@ -46,6 +46,9 @@
 /area/survivalpod)
 "k" = (
 /obj/structure/table/survival_pod,
+/obj/machinery/vending/wallmed/survival_pod{
+	pixel_x = -24
+	},
 /turf/open/floor/pod,
 /area/survivalpod)
 "l" = (
