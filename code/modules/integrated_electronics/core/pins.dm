@@ -102,7 +102,29 @@ D [1]/  ||
 /datum/integrated_io/activate/scramble()
 	push_data()
 
-/datum/integrated_io/proc/write_data_to_pin(var/new_data)
+/datum/integrated_io/proc/handle_wire(datum/integrated_io/linked_pin, obj/item/tool, action)
+	if(istype(tool, /obj/item/device/multitool))
+		var/obj/item/device/multitool/multitool = tool
+		switch(action)
+			if("wire")
+				multitool.wire(src, usr)
+				return TRUE
+			if("unwire")
+				if(linked_pin)
+					multitool.unwire(src, linked_pin, usr)
+					return TRUE
+			if("data")
+				ask_for_pin_data(usr)
+				return TRUE
+
+	else if(istype(tool, /obj/item/device/integrated_electronics/debugger))
+		var/obj/item/device/integrated_electronics/debugger/debugger = tool
+		debugger.write_data(src, usr)
+		return TRUE
+
+	return FALSE
+
+/datum/integrated_io/proc/write_data_to_pin(new_data)
 	if(isnull(new_data) || isnum(new_data) || istext(new_data) || isweakref(new_data))
 		data = new_data
 		holder.on_data_written()

@@ -54,7 +54,6 @@ PROCESSING_SUBSYSTEM_DEF(circuit)
 		)
 
 	circuit_fabricator_recipe_list["Tools"] = list(
-		/obj/item/device/integrated_electronics/wirer,
 		/obj/item/device/integrated_electronics/debugger,
 		/obj/item/device/integrated_electronics/analyzer
 		)

@@ -54,21 +54,6 @@
 			return activators[pin_number]
 	return
 
-/obj/item/integrated_circuit/proc/handle_wire(var/datum/integrated_io/pin, var/obj/item/device/integrated_electronics/tool)
-	if(istype(tool, /obj/item/device/integrated_electronics/wirer))
-		var/obj/item/device/integrated_electronics/wirer/wirer = tool
-		if(pin)
-			wirer.wire(pin, usr)
-			return TRUE
-
-	else if(istype(tool, /obj/item/device/integrated_electronics/debugger))
-		var/obj/item/device/integrated_electronics/debugger/debugger = tool
-		if(pin)
-			debugger.write_data(pin, usr)
-			return TRUE
-	return FALSE
-
-
 /datum/integrated_io/proc/get_data()
 	if(isweakref(data))
 		return data.resolve()

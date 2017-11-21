@@ -22,8 +22,6 @@
 	var/category_text = "NO CATEGORY THIS IS A BUG"	// To show up on circuit printer, and perhaps other places.
 	var/removable = TRUE 			// Determines if a circuit is removable from the assembly.
 	var/displayed_name = ""
-	var/allow_multitool = TRUE		// Allows additional multitool functionality
-									// Used as a global var, (Do not set manually in children).
 
 /*
 	Integrated circuits are essentially modular machines.  Each circuit has a specific function, and combining them inside Electronic Assemblies allows
@@ -151,11 +149,11 @@ a creative player the means to solve many problems.  Circuits are held inside an
 				if(1)
 					io = get_pin_ref(IC_INPUT, i)
 					if(io)
-						words += "<b><a href=?src=[REF(src)];pin_name=1;pin=[REF(io)]>[io.display_pin_type()] [io.name]</a> <a href=?src=[REF(src)];pin_data=1;pin=[REF(io)]>[io.display_data(io.data)]</a></b><br>"
+						words += "<b><a href=?src=[REF(src)];act=wire;pin=[REF(io)]>[io.display_pin_type()] [io.name]</a> <a href=?src=[REF(src)];act=data;pin=[REF(io)]>[io.display_data(io.data)]</a></b><br>"
 						if(io.linked.len)
 							for(var/k in 1 to io.linked.len)
 								var/datum/integrated_io/linked = io.linked[k]
-								words += "<a href=?src=[REF(src)];pin_unwire=1;pin=[REF(io)];link=[REF(linked)]>[linked]</a> \
+								words += "<a href=?src=[REF(src)];act=unwire;pin=[REF(io)];link=[REF(linked)]>[linked]</a> \
 								@ <a href=?src=[REF(linked.holder)];examine=1;>[linked.holder.displayed_name]</a><br>"
 
 						if(outputs.len > inputs.len)
@@ -169,11 +167,11 @@ a creative player the means to solve many problems.  Circuits are held inside an
 				if(3)
 					io = get_pin_ref(IC_OUTPUT, i)
 					if(io)
-						words += "<b><a href=?src=[REF(src)];pin_name=1;pin=[REF(io)]>[io.display_pin_type()] [io.name]</a> <a href=?src=[REF(src)];pin_data=1;pin=[REF(io)]>[io.display_data(io.data)]</a></b><br>"
+						words += "<b><a href=?src=[REF(src)];act=wire;pin=[REF(io)]>[io.display_pin_type()] [io.name]</a> <a href=?src=[REF(src)];act=data;pin=[REF(io)]>[io.display_data(io.data)]</a></b><br>"
 						if(io.linked.len)
 							for(var/k in 1 to io.linked.len)
 								var/datum/integrated_io/linked = io.linked[k]
-								words += "<a href=?src=[REF(src)];pin_unwire=1;pin=[REF(io)];link=[REF(linked)]>[linked]</a> \
+								words += "<a href=?src=[REF(src)];act=unwire;pin=[REF(io)];link=[REF(linked)]>[linked]</a> \
 								@ <a href=?src=[REF(linked.holder)];examine=1;>[linked.holder.displayed_name]</a><br>"
 
 						if(inputs.len > outputs.len)
@@ -185,11 +183,11 @@ a creative player the means to solve many problems.  Circuits are held inside an
 		var/datum/integrated_io/io = activator
 		var/words = list()
 
-		words += "<b><a href=?src=[REF(src)];pin_name=1;pin=[REF(io)]><font color='FF0000'>[io]</font></a> <a href=?src=[REF(src)];pin_data=1;pin=[REF(io)]><font color='FF0000'>[io.data?"\<PULSE OUT\>":"\<PULSE IN\>"]</font></a></b><br>"
+		words += "<b><a href=?src=[REF(src)];act=wire;pin=[REF(io)]><font color='FF0000'>[io]</font></a> <a href=?src=[REF(src)];act=data;pin=[REF(io)]><font color='FF0000'>[io.data?"\<PULSE OUT\>":"\<PULSE IN\>"]</font></a></b><br>"
 		if(io.linked.len)
 			for(var/k in 1 to io.linked.len)
 				var/datum/integrated_io/linked = io.linked[k]
-				words += "<a href=?src=[REF(src)];pin_unwire=1;pin=[REF(io)];link=[REF(linked)]><font color='FF0000'>[linked]</font></a> \
+				words += "<a href=?src=[REF(src)];act=unwire;pin=[REF(io)];link=[REF(linked)]><font color='FF0000'>[linked]</font></a> \
 				@ <a href=?src=[REF(linked.holder)];examine=1;><font color='FF0000'>[linked.holder.displayed_name]</font></a><br>"
 
 		HTML += "<tr>"
@@ -221,59 +219,23 @@ a creative player the means to solve many problems.  Circuits are held inside an
 		return TRUE
 
 	var/update = TRUE
-	var/obj/item/device/electronic_assembly/A = src.assembly
 	var/update_to_assembly = FALSE
 	var/datum/integrated_io/pin = locate(href_list["pin"]) in inputs + outputs + activators
 	var/datum/integrated_io/linked = null
-	if(href_list["link"])
+	if(href_list["link"] && pin)
 		linked = locate(href_list["link"]) in pin.linked
 
-	var/obj/held_item = usr.get_active_held_item()
+	var/obj/item/held_item = usr.get_active_held_item()
 
 	if(href_list["rename"])
 		rename_component(usr)
 		if(href_list["from_assembly"])
-			update = FALSE
-			var/obj/item/device/electronic_assembly/ea = loc
-			if(istype(ea))
-				ea.interact(usr)
+			update_to_assembly = TRUE
 
-	if(href_list["pin_name"])
-		if (!istype(held_item, /obj/item/device/multitool) || !allow_multitool)
-			href_list["wire"] = TRUE
-		else
-			var/obj/item/device/multitool/M = held_item
-			M.wire(pin,usr)
-
-
-
-	if(href_list["pin_data"])
-		if (!istype(held_item, /obj/item/device/multitool) || !allow_multitool)
-			href_list["wire"] = TRUE
-
-		else
-			var/datum/integrated_io/io = pin
-			io.ask_for_pin_data(usr) // The pins themselves will determine how to ask for data, and will validate the data.
-
-	if(href_list["pin_unwire"])
-		if (!istype(held_item, /obj/item/device/multitool) || !allow_multitool)
-			href_list["wire"] = TRUE
-		else
-			var/obj/item/device/multitool/M = held_item
-			M.unwire(pin, linked, usr)
-
-	if(href_list["wire"])
-		if(istype(held_item, /obj/item/device/integrated_electronics/wirer))
-			var/obj/item/device/integrated_electronics/wirer/wirer = held_item
-			if(linked)
-				wirer.wire(linked, usr)
-			else if(pin)
-				wirer.wire(pin, usr)
-
-		else if(istype(held_item, /obj/item/device/integrated_electronics/debugger))
-			var/obj/item/device/integrated_electronics/debugger/debugger = held_item
-			if(pin)
-				debugger.write_data(pin, usr)
+	if(href_list["act"] && pin)
+		// Handle wiring, unwiring and value reading/writing
+		if(istype(held_item, /obj/item/device/integrated_electronics/debugger) || istype(held_item, /obj/item/device/multitool))
+			pin.handle_wire(linked, held_item, href_list["act"])
 		else
 			to_chat(usr, "<span class='warning'>You can't do a whole lot without the proper tools.</span>")
 
@@ -287,12 +249,11 @@ a creative player the means to solve many problems.  Circuits are held inside an
 		update = FALSE
 
 	if(href_list["bottom"])
-		var/obj/item/integrated_circuit/circuit = locate(href_list["bottom"]) in src.assembly.contents
-		var/assy = circuit.assembly
+		var/obj/item/integrated_circuit/circuit = locate(href_list["bottom"]) in assembly.contents
 		if(!circuit)
 			return
 		circuit.loc = null
-		circuit.loc = assy
+		circuit.loc = circuit.assembly
 		. = TRUE
 		update_to_assembly = TRUE
 
@@ -304,27 +265,26 @@ a creative player the means to solve many problems.  Circuits are held inside an
 			else
 				to_chat(usr, "<span class='warning'>The debugger's 'ref scanner' needs to be on.</span>")
 		else
-			to_chat(usr, "<span class='warning'>You need a multitool/debugger set to 'ref' mode to do that.</span>")
+			to_chat(usr, "<span class='warning'>You need a debugger set to 'ref' mode to do that.</span>")
 
 	if(href_list["return"])
-		if(A)
+		if(assembly)
 			update_to_assembly = TRUE
-			usr << browse(null, "window=circuit-[REF(src)];border=1;can_resize=1;can_close=1;can_minimize=1")
 		else
 			to_chat(usr, "<span class='warning'>This circuit is not in an assembly!</span>")
 
 
 	if(href_list["remove"])
-		if(!A)
+		if(!assembly)
 			to_chat(usr, "<span class='warning'>This circuit is not in an assembly!</span>")
 			return
 		if(!removable)
 			to_chat(usr, "<span class='warning'>\The [src] seems to be permanently attached to the case.</span>")
 			return
-		var/obj/item/device/electronic_assembly/ea = loc
 		disconnect_all()
 		var/turf/T = get_turf(src)
 		forceMove(T)
+		var/obj/item/device/electronic_assembly/ea = assembly
 		assembly = null
 		playsound(T, 'sound/items/Crowbar.ogg', 50, 1)
 		to_chat(usr, "<span class='notice'>You pop \the [src] out of the case, and slide it out.</span>")
@@ -335,8 +295,9 @@ a creative player the means to solve many problems.  Circuits are held inside an
 		return
 
 	if(update)
-		if(A && istype(A) && update_to_assembly)
-			A.interact(usr)
+		if(update_to_assembly && assembly)
+			usr << browse(null, "window=circuit-[REF(src)]")
+			assembly.interact(usr)
 		else
 			interact(usr) // To refresh the UI.
 
