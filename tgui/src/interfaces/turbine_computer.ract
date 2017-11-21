@@ -34,7 +34,7 @@ component.exports = {
 		{{/if}}
 		{{#if data.turbine_broke}}
 			<br>
-			[ <span class='bad'>Compressor is inoperable</span> ]
+			[ <span class='bad'>Turbine is inoperable</span> ]
 		{{/if}}
 	</ui-section>
 </ui-display>
