@@ -288,7 +288,7 @@ datum/antagonist/bloodsucker/proc/AssignStarterPowersAndStats()
 		S.burnmod += 1
 		S.coldmod = 0
 		S.heatmod += 1
-		S.stunmod *= 0.25
+		S.stunmod *= 0.5
 		S.punchdamagelow += 2       //lowest possible punch damage   0
 		S.punchdamagehigh += 2      //highest possible punch damage	 9
 		S.punchstunthreshold = 8	//damage at which punches from this race will stun  9

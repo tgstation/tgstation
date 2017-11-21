@@ -707,18 +707,18 @@
 		// WARNING: Stopped Healing
 		if (user.blood_volume <= 0 && !healingnotice)
 			healingnotice = 1
-			to_chat(user, "<span class='warning'>You've run out of blood before your body was repaired. You'll remain dead until blood is somehow fed to you...</span>")
+			to_chat(user, "<span class='warning'>You've run out of blood before your body was repaired. Your healing has slowed to a crawl.</span>")
 			continue
 		else if (user.blood_volume > 0 && healingnotice)
-			to_chat(user, "<span class='notice'>Fresh blood enters your system. You begin healing again.</span>")
+			to_chat(user, "<span class='notice'>Fresh blood enters your system. Your healing accelerates.</span>")
 			healingnotice = 0
 
 		// Heal: Basic
-		if (bloodsuckerdatum.handle_healing_active(insideCoffin ? 2 : 1, insideCoffin ? 0 : 1, TRUE)) // Did we heal? Then continue to next tick until we're done healing.
+		if (bloodsuckerdatum.handle_healing_active(insideCoffin ? 2 : 1, insideCoffin ? 0 : 0.5, TRUE) != FALSE) // Did we heal or FAIL? Then continue to next tick until we're done healing.
 			continue
 
 		// Heal: Advanced
-		if (bloodsuckerdatum.handle_healing_torpid()) // Did we heal a limb or organ?
+		if (bloodsuckerdatum.handle_healing_torpid() != FALSE) // Did we heal a limb or organ?
 			continue
 
 		// Wait til owner comes back...
@@ -822,6 +822,7 @@
 	name = "Immortal Haste"
 	desc = "Select a target to sprint toward them rapidly. While active, your running speed will also increase."
 	bloodcost = 10
+	charge_max = 0
 	amToggleable = TRUE
 	amTargetted = TRUE
 	//targetmessage_ON =  "<span class='notice'>You open your wrist. Choose what, or whom, will receive your blood.</span>"
@@ -830,7 +831,7 @@
 	// NOTE: STAY ON UNTIL DISABLED?? Don't disable like ExpelBlood
  	// Affect species:  S.speedmod = -1
 
-
+	// MUST BE STANDING to use (no floating, not sideways, not grabbed)
 
 
 
@@ -842,8 +843,27 @@
 	name = "Terrible Brawn"
 	desc = "Target a door or container to wrench it open, or target a person to throw them violently away."
 	bloodcost = 10
+	charge_max = 0
 	amToggleable = TRUE
 	amTargetted = TRUE
+	//targetmessage_ON =  "<span class='notice'>You open your wrist. Choose what, or whom, will receive your blood.</span>"
+	//targetmessage_OFF = "<span class='notice'>The wound on your wrist heals instantly.</span>"
+
+	// NOTE: STAY ON UNTIL DISABLED?? Don't disable like ExpelBlood
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/obj/effect/proc_holder/spell/bloodsucker/recover
+	name = "Preternatural Recovery"
+	desc = "With uncanny grace, recover from stun or fall. If grappled, you'll throw your attacker to the ground."
+	bloodcost = 10
+	charge_max = 20
+	amToggleable = FALSE
+	//amTargetted = TRUE
 	//targetmessage_ON =  "<span class='notice'>You open your wrist. Choose what, or whom, will receive your blood.</span>"
 	//targetmessage_OFF = "<span class='notice'>The wound on your wrist heals instantly.</span>"
 
@@ -900,6 +920,7 @@
 	var/prev_facial_hair_style = H.facial_hair_style
 	var/prev_hair_color = H.hair_color
 	var/prev_facial_hair_color = H.facial_hair_color
+	//var/prev_underwear = H.underwear
 
 	// Change Appearance
 	//H.real_name = random_unique_name(H.gender)
@@ -909,18 +930,14 @@
 	H.facial_hair_style = pick(random_facial_hair_style(H.gender),"Shaved")
 	H.hair_color = random_short_color()
 	H.facial_hair_color = H.hair_color
-	//H.gender = pick(MALE, FEMALE)
 	//H.underwear = random_underwear(H.gender)
+	//H.gender = pick(MALE, FEMALE)
 	//H.eye_color = random_eye_color()
 
 	// Apply Appearance
 	H.update_body() // Outfit and underware, also body.
 	H.update_hair()
 	H.update_body_parts()
-
-
-	// TODO: Look up /proc/randomize_human(mob/living/carbon/human/H)  in create_mob.dm, used by human.dm when making new dude.
-
 
 	// Spend Blood
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
@@ -930,7 +947,7 @@
 	cast_effect(user)
 
 	// Wait here til we deactivate power or go unconscious
-	while (active && user.stat <= stat_allowed)
+	while (active && user && user.stat <= stat_allowed)
 		sleep(10)
 
 	// Wait a moment if you fell unconscious...
@@ -946,6 +963,8 @@
 	H.facial_hair_style = prev_facial_hair_style
 	H.hair_color = prev_hair_color
 	H.facial_hair_color = prev_facial_hair_color
+	//H.underwear = prev_underwear
+
 	// Apply Appearance
 	H.update_body() // Outfit and underware, also body.
 	H.update_hair()

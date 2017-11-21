@@ -47,7 +47,7 @@
 		// Advanced, Alive-Only Regenerate
 		if (!poweron_humandisguise)
 			// Run handle_healing_active(). It's free if you're feeding. If we start healing (and still have blood to do so), give notice.
-			if (handle_healing_active(1,poweron_feed?0:1))
+			if (handle_healing_active(1,poweron_feed?0:1) == TRUE)
 				if (healingnotice == 0 && owner.current.blood_volume > 0)
 					to_chat(owner, "<span class='notice'>The power of your blood begins knitting your wounds...</span>")
 					healingnotice = 1
@@ -110,7 +110,7 @@ datum/antagonist/bloodsucker/proc/handle_feed_blood(mob/living/carbon/target)
 
 	// Simple Animals lose a LOT of blood, and take damage. This is to keep cats, cows, and so forth from giving you insane amounts of blood.
 	if (!ishuman(target))
-		target.blood_volume -= (blood_taken / target.mob_size) * 3.5
+		target.blood_volume -= (blood_taken / max(target.mob_size, 0.1)) * 3.5 // max() to prevent divide-by-zero
 		target.apply_damage_type(blood_taken / 3.5) // Don't do too much damage, or else they die and provide no blood nourishment.
 		if (target.blood_volume <= 0)
 			target.blood_volume = 0
@@ -184,10 +184,10 @@ datum/antagonist/bloodsucker/proc/handle_healing_natural()
 		H.bleed_rate = 0 // NOTE: This is done HERE, not in hande_healing_natural, because
 
 	// Stamina/Clone/Brain damage heal quickly as a Vamp, regardless of Blood.
-	owner.current.adjustStaminaLoss(-5, 0)
+	owner.current.adjustStaminaLoss(-1, 0)
 	owner.current.adjustCloneLoss(-1, 0)
 	owner.current.adjustBrainLoss(-1, 0)
-	owner.current.AdjustStun(-5, 0)
+	owner.current.AdjustStun(-1, 0)
 	owner.current.AdjustUnconscious(-5, TRUE)
 
 	// metabolism_efficiency <---this is covered in handle_chemicals_in_body() below, but let's see how it can be used
@@ -201,20 +201,23 @@ datum/antagonist/bloodsucker/proc/handle_healing_natural()
 datum/antagonist/bloodsucker/proc/handle_healing_active(healmult=1,costmult=1, torpidhealing=FALSE) // Return TRUE if we just healed wounds. Return FALSE if we don't have any.
 
 	// No healing if: A) Dead while handle_life() healing, or B) Your powers are disabled (staked and no heart)
-	if (!torpidhealing && owner.current.stat == DEAD || !owner.current.HaveBloodsuckerBodyparts()) // Do this AFTER healing so we can disable bleeding to death and crap. Handle Healing has its OWN am-dead check
-		return 1	// We return TRUE because we're not done healing.
+	if (!torpidhealing && owner.current.stat == DEAD || !owner.current.HaveBloodsuckerBodyparts() || owner.current.AmStaked()) // Do this AFTER healing so we can disable bleeding to death and crap. Handle Healing has its OWN am-dead check
+		return 2	// We return TRUE because we're not done healing.
 
-	// We ONLY heal if we have blood remaining.
-	if (costmult > 0 && owner.current.blood_volume <= 0)
-		return 1	// We return TRUE because we're not done healing.
+	// We ONLY heal if we have blood remaining while OUT of torpor.
+	if (costmult > 0 && !torpidhealing && owner.current.blood_volume <= 0)
+		return 2	// We return TRUE because we're not done healing.
 
 	// Do I have damage to ANY bodypart?
 	var/mob/living/carbon/C = owner.current
-	if (C.getBruteLoss() + C.getFireLoss() > 0)//C.get_damaged_bodyparts(TRUE, TRUE))
+	if (C.getBruteLoss() + C.getFireLoss() > 0)
+
 		// We have damage. Let's heal (one time)
 		C.heal_overall_damage(regenRate * healmult, (torpidhealing ? 1 : 0.1) * healmult) 	// Heal BRUTE / BURN in random portions throughout the body.
+
 		// NOTE: Burn damage heals 10x quicker in Torpor (the only way we can be healing while dead)
 		set_blood_volume(-regenRate * healmult * costmult)	// Costs blood to heal.
+
 		// DONE! After healing, we stop here.
 		return 1
 
@@ -224,7 +227,7 @@ datum/antagonist/bloodsucker/proc/handle_healing_active(healmult=1,costmult=1, t
 datum/antagonist/bloodsucker/proc/handle_healing_torpid() // Return TRUE if we just healed wounds. Return FALSE if we don't have any.
 
 	// No healing if your powers are disabled (no heart)
-	if (!owner.current.HaveBloodsuckerBodyparts())
+	if (!owner.current.HaveBloodsuckerBodyparts() || owner.current.AmStaked())
 		return 1
 
 	// Toxins, Oxygen (Torpid vamps still heal this)

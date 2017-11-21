@@ -119,7 +119,7 @@
 			text += printplayer(bloodsucker)
 			text += printbloodsuckerinfo(bloodsucker)
 			text += printobjectives(bloodsucker)
-		text += "<br>"
+		text += "<br><br>"
 		to_chat(world, text)
 
 /datum/game_mode/proc/printbloodsuckerinfo(datum/mind/ply)

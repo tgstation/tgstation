@@ -207,3 +207,106 @@
 
 
 
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+//   BLOOD BAGS! Add ability to drank em
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+/obj/structure/closet/coffin/bloodsucker // closet.dmi, closets.dm, and job_closets.dm
+	name = "Black Coffin"
+	desc = "For those departed who are not so dear."
+	icon_state = "coffin"
+	icon = 'icons/Fulpstation/fulpobjects.dmi'
+	var/mob/living/carbon/creator	// Who made me? Locks when they sleep inside, unlocks when they are awake. Assigned when using Blood on this during construction.
+	can_weld_shut = FALSE
+	resistance_flags = 0			// Start off with no bonuses.
+	open_sound = 'sound/machines/door_open.ogg'
+	close_sound = 'sound/machines/door_close.ogg'
+
+	// Locks when going into Torpor inside it (NOTE: give warning if you sleep in your OWN coffin.
+
+/obj/structure/closet/coffin/bloodsucker/proc/ClaimCoffin(mob/living/carbon/claimant)
+	// We're a Vampire Coffin? Why didn't you say so!
+	anchored = 1					// No moving this
+	resistance_flags = FIRE_PROOF	// Vamp coffins are fireproof.
+	// Make it BLOODY!
+	icon_state = "coffin_bloody"
+	icon_door = "coffin"
+	icon_door_override = TRUE // Have door use icon_door to pick out its art. This way we can swap to a bloody coffin without redundant door art.
+	update_icon()
+	creator = claimant
+	to_chat(claimant, "<span class='notice'>You have claimed the [src] for your own.</span>")
+
+/obj/structure/closet/coffin/
+	can_weld_shut = FALSE
+	breakout_time = 600
+
+/obj/structure/closet/coffin/bloodsucker/can_open(mob/living/user)
+	// You cannot lock in/out a coffin's owner. SORRY.
+	if (locked)
+		if(user == creator)
+			if (welded)
+				welded = FALSE
+				update_icon()
+			to_chat(user, "<span class='notice'>You flip a secret latch and unlock the [src].</span>")
+			locked = FALSE
+			return 1
+		else
+			playsound(get_turf(src), 'sound/machines/door_locked.ogg', 20, 1)
+			to_chat(user, "<span class='notice'>The [src] is locked tight from the inside.</span>")
+	return ..()
+
+/obj/structure/closet/coffin/bloodsucker/close(mob/living/user)
+	if (!..())
+		return 0
+	// Creator inside Coffin? Lock it (no matter who closed us)
+	to_chat(user, "<span class='userdanger'>DEBUG: close() [user] / [src] / [creator] / [creator in src]. </span>")
+	if (creator && creator in src && creator.stat == CONSCIOUS)
+		if (!broken)
+			locked = TRUE
+			to_chat(creator, "<span class='notice'>You flip a secret latch and lock yourself inside the [src].</span>")
+		else
+			to_chat(creator, "<span class='notice'>The secret latch to lock the [src] from the inside is broken. You set it back into place...</span>")
+			if (do_mob(creator, src, 50))//sleep(10)
+				to_chat(creator, "<span class='notice'>You fix the mechanism.</span>")
+				broken = FALSE
+				locked = TRUE
+		// Play Sound: locktoggle.ogg  ?
+	return 1
+
+/obj/structure/closet/coffin/bloodsucker/attackby(obj/item/W, mob/user, params)
+	// You cannot weld or deconstruct an owned coffin. STILL NOT SORRY.
+	if (creator != null && user != creator)
+		if(opened)
+			if(istype(W, cutting_tool))
+				to_chat(user, "<span class='notice'>This is a much more complex mechanical structure than you thought. You don't know where to begin cutting the [src].</span>")
+				return
+	..()
+
+
+
+
+/obj/structure/bloodaltar
+	name = "Bloody Altar"
+
+/obj/structure/statue/bloodstatue
+	name = "Bloody Countenance"

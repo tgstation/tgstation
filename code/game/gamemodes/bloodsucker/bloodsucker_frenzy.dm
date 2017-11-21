@@ -31,7 +31,7 @@ datum/antagonist/bloodsucker/proc/handle_hunger_and_frenzy()
 		frenzy_state --
 
 	// Low Blood: Enter Frenzy Stage 1
-	if (owner.current.blood_volume < BLOODSUCKER_STARVE_VOLUME)
+	if (owner.current.blood_volume <= BLOODSUCKER_STARVE_VOLUME)
 		if(frenzy_state <= 0)
 			to_chat(owner, "<span class='danger'>A gnawing hunger overcomes you. You are at risk of Frenzy if you don't find nourishment soon!</span>")
 			frenzy_state = 1
@@ -47,6 +47,9 @@ datum/antagonist/bloodsucker/proc/handle_hunger_and_frenzy()
 		frenzy_state = 0
 		owner.current.jitteriness = 0
 
+	// Done with Frenzy?	 (failsafe in case of error in Frenzy loop)
+	if (frenzy_state <= 2)
+		end_frenzy() // NOTE: This fails if we're not actually frenzied, so no worries.
 
 	// Slowly Tick Down Frenzy Buffer (so you don't fly right back into it)
 	if (frenzy_buffer > 0)
@@ -291,22 +294,33 @@ datum/antagonist/bloodsucker/proc/start_frenzy(mob/living/target)
 
 	// FRENZY OVER!
 	//message_admins("[T] DEBUG: FRENZY OVER! Stat: [owner.current.stat], BS: [frenzy_state].")
-	if (!owner.current.stat)
-		if (!poweron_feed)
-			owner.current.spin(10, 1) // Spin around like a loon.
-	owner.current.clear_fullscreen("blurry", 0) 	// Restore sight from blurry visuals.
+
 	owner.current.a_intent = startIntent			// Return to start intent
-	frenzy_buffer = 60	// Timer til we check for frenzy again
+	walk(owner.current,0)			// Stop moving (I was probably pathfinding)
+	end_frenzy()
+
+
+// Called from handle_hunger_and_frenzy() in case Frenzy Loop has an error and we get stuck.
+datum/antagonist/bloodsucker/proc/end_frenzy()
+	if (!owner.current.IsFrenzied())
+		return
+	owner.current.SetFrenzied(FALSE)
+
+	owner.current.clear_fullscreen("blurry", 0) 	// Restore sight from blurry visuals.
+	frenzy_buffer = BLOODSUCKER_FRENZY_OUT_TIME	// Timer til we check for frenzy again
 	owner.current.stop_pulling()
-	if (frenzy_state > 1)
-		to_chat(owner, "<span class='notice'>You can feel your lust for carnage ebb as your Frenzy subsides. You are once more the master of your own flesh.</span>")
+	if (frenzy_state > 1 && owner.current.stat == CONSCIOUS)
+		to_chat(owner, "<span class='notice'>You can feel your lust for carnage ebb as your Frenzy subsides. You are the master of your own flesh...for now.</span>")
 		owner.current.Jitter(50)
 		frenzy_state = 1
+		if (!poweron_feed)
+			owner.current.spin(10, 1) // Spin around like a loon.
+	var/mob/living/carbon/C = owner.current
 	C.silent = 1
-	owner.current.SetFrenzied(FALSE)
 	walk(owner.current,0)			// Stop moving (I was probably pathfinding)
 	owner.current.update_canmove() 	// Updates if you can move or not. Frenzy has been removed.
 	owner.current.update_action_buttons_icon() // CHECK THIS : Updates icons?
+
 
 
 datum/antagonist/bloodsucker/proc/frenzy_pursue_target(mob/living/carbon/target)  // Copied over from interactive.dm/walk2derpless()
