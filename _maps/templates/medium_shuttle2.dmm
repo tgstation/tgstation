@@ -70,7 +70,7 @@
 	name = "Shuttle"
 	})
 "k" = (
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/powered{
 	name = "Shuttle"
 	})
@@ -87,7 +87,7 @@
 	})
 "n" = (
 /obj/machinery/door/airlock/glass,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/powered{
 	name = "Shuttle"
 	})

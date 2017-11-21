@@ -1,6 +1,6 @@
-#define IC_INPUT "input"
-#define IC_OUTPUT "output"
-#define IC_ACTIVATOR "activator"
+#define IC_INPUT 		"I"
+#define IC_OUTPUT		"O"
+#define IC_ACTIVATOR	"A"
 
 // Pin functionality.
 #define DATA_CHANNEL "data channel"

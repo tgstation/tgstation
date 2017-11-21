@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/closed/mineral/random,
-/area/space)
+/area/space/nearstation)
 "ab" = (
 /turf/open/space,
 /area/space)
@@ -2476,46 +2476,46 @@
 "ix" = (
 /obj/structure/lattice,
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "iy" = (
 /obj/effect/mob_spawn/human/syndicatesoldier,
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "iz" = (
 /turf/closed/wall/mineral/plastitanium,
-/area/space)
+/area/space/nearstation)
 "iA" = (
 /turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
 	},
-/area/space)
+/area/space/nearstation)
 "iB" = (
 /obj/machinery/sleeper,
 /turf/open/floor/mineral/plastitanium/airless,
-/area/space)
+/area/space/nearstation)
 "iC" = (
 /turf/open/floor/mineral/plastitanium/airless,
-/area/space)
+/area/space/nearstation)
 "iD" = (
 /obj/effect/mob_spawn/human/syndicatesoldier,
 /turf/open/floor/mineral/plastitanium/airless,
-/area/space)
+/area/space/nearstation)
 "iE" = (
 /turf/closed/mineral/clown,
-/area/space)
+/area/space/nearstation)
 "iF" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plasteel/airless{
 	icon_state = "floor4";
 	dir = 10
 	},
-/area/space)
+/area/space/nearstation)
 "iG" = (
 /obj/item/stack/rods,
 /turf/open/floor/mineral/plastitanium/airless,
-/area/space)
+/area/space/nearstation)
 "iH" = (
 /turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
@@ -2536,7 +2536,7 @@
 "iK" = (
 /obj/machinery/sleeper,
 /turf/open/floor/plasteel/airless,
-/area/space)
+/area/space/nearstation)
 "iL" = (
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate5)
@@ -2549,14 +2549,14 @@
 /turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
-/area/space)
+/area/space/nearstation)
 "iO" = (
 /turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
 	},
-/area/space)
+/area/space/nearstation)
 "iP" = (
 /obj/machinery/sleeper,
 /turf/open/floor/mineral/plastitanium,
@@ -2574,11 +2574,11 @@
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/space)
+/area/space/nearstation)
 "iS" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "iT" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/mineral/plastitanium,
@@ -2672,7 +2672,7 @@
 /area/awaymission/spacebattle/syndicate6)
 "jk" = (
 /turf/open/floor/plating/asteroid/airless,
-/area/space)
+/area/space/nearstation)
 "jl" = (
 /turf/closed/wall/mineral/plasma,
 /area/awaymission/spacebattle/secret)
@@ -3083,11 +3083,11 @@
 "kE" = (
 /obj/item/shard,
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "kF" = (
 /obj/item/stack/rods,
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "kG" = (
 /obj/item/ammo_casing/c10mm,
 /obj/item/ammo_casing/c10mm,
@@ -3106,17 +3106,17 @@
 "kI" = (
 /obj/item/stack/sheet/metal,
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "kJ" = (
 /obj/item/shard,
 /obj/structure/lattice,
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "kK" = (
 /obj/structure/lattice,
 /obj/item/stack/rods,
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "kL" = (
 /obj/structure/closet/crate,
 /obj/item/stock_parts/cell/high,
@@ -3127,7 +3127,7 @@
 "kM" = (
 /obj/effect/mapping_helpers/planet_z,
 /turf/closed/mineral/random,
-/area/space)
+/area/space/nearstation)
 
 (1,1,1) = {"
 aa

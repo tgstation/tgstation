@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Humans missing legs or are legcuffed will no longer move slower in areas without gravity."

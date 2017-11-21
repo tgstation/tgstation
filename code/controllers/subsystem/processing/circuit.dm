@@ -9,8 +9,12 @@ PROCESSING_SUBSYSTEM_DEF(circuit)
 	var/list/all_exonet_connections = list()						//Address = connection datum.
 	var/list/obj/machinery/exonet_node/all_exonet_nodes = list()
 
-	var/list/all_circuits = list()									// Associative list of [circuit_name]:[circuit_path] pairs
+	var/list/all_components = list()								// Associative list of [component_name]:[component_path] pairs
+	var/list/cached_components = list()								// Associative list of [component_path]:[component] pairs
+	var/list/all_assemblies = list()								// Associative list of [assembly_name]:[assembly_path] pairs
+	var/list/cached_assemblies = list()								// Associative list of [assembly_path]:[assembly] pairs
 	var/list/circuit_fabricator_recipe_list = list()				// Associative list of [category_name]:[list_of_circuit_paths] pairs
+	var/cost_multiplier = MINERAL_MATERIAL_AMOUNT / 10 // Each circuit cost unit is 200cm3
 
 /datum/controller/subsystem/processing/circuit/Initialize(start_timeofday)
 	SScircuit.cipherkey = random_string(2000+rand(0,10), GLOB.alphabet)
@@ -19,12 +23,11 @@ PROCESSING_SUBSYSTEM_DEF(circuit)
 
 /datum/controller/subsystem/processing/circuit/proc/circuits_init()
 	//Cached lists for free performance
-	var/list/all_circuits = src.all_circuits
-	var/list/circuit_fabricator_recipe_list = src.circuit_fabricator_recipe_list
 	for(var/path in typesof(/obj/item/integrated_circuit))
 		var/obj/item/integrated_circuit/IC = path
 		var/name = initial(IC.name)
-		all_circuits[name] = IC // Populating the complete list
+		all_components[name] = path // Populating the component lists
+		cached_components[IC] = new path
 
 		if(!(initial(IC.spawn_flags) & (IC_SPAWN_DEFAULT | IC_SPAWN_RESEARCH)))
 			continue
@@ -35,13 +38,19 @@ PROCESSING_SUBSYSTEM_DEF(circuit)
 		var/list/category_list = circuit_fabricator_recipe_list[category]
 		category_list += IC // Populating the fabricator categories
 
+	for(var/path in typesof(/obj/item/device/electronic_assembly))
+		var/obj/item/device/electronic_assembly/A = path
+		var/name = initial(A.name)
+		all_assemblies[name] = path
+		cached_assemblies[A] = new path
+
+
 	circuit_fabricator_recipe_list["Assemblies"] = list(
 		/obj/item/device/electronic_assembly,
 		/obj/item/device/electronic_assembly/medium,
 		/obj/item/device/electronic_assembly/large,
 		/obj/item/device/electronic_assembly/drone
-		//new /obj/item/weapon/implant/integrated_circuit,
-		//new /obj/item/device/assembly/electronic_assembly
+		///obj/item/weapon/implant/integrated_circuit
 		)
 
 	circuit_fabricator_recipe_list["Tools"] = list(

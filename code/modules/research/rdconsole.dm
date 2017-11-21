@@ -150,7 +150,7 @@ doesn't have toxins access.
 		return FALSE
 	var/price = TN.get_price(stored_research)
 	if(stored_research.research_points >= price)
-		investigate_log("[key_name_admin(user)] researched [id]([price]) on techweb id [stored_research.id].")
+		investigate_log("[key_name_admin(user)] researched [id]([price]) on techweb id [stored_research.id].", INVESTIGATE_RESEARCH)
 		if(stored_research == SSresearch.science_tech)
 			if(stored_research.researched_nodes.len < 30)
 				SSblackbox.record_feedback("tally", "science_techweb_unlock_first_thirty", 1, "[id]")

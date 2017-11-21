@@ -188,7 +188,6 @@
 // if unmarked==1, only return those with no powernet
 /proc/power_list(turf/T, source, d, unmarked=0, cable_only = 0)
 	. = list()
-	//var/fdir = (!d)? 0 : turn(d, 180)			// the opposite direction to d (or 0 if d==0)
 
 	for(var/AM in T)
 		if(AM == source)

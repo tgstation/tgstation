@@ -52,18 +52,6 @@
 
 	init_subtypes(/datum/crafting_recipe, GLOB.crafting_recipes)
 
-/* // Uncomment to debug chemical reaction list.
-/client/verb/debug_chemical_list()
-
-	for (var/reaction in chemical_reactions_list)
-		. += "chemical_reactions_list\[\"[reaction]\"\] = \"[chemical_reactions_list[reaction]]\"\n"
-		if(islist(chemical_reactions_list[reaction]))
-			var/list/L = chemical_reactions_list[reaction]
-			for(var/t in L)
-				. += "    has: [t]\n"
-	to_chat(world, .)
-*/
-
 //creates every subtype of prototype (excluding prototype) and adds it to list L.
 //if no list/L is provided, one is created.
 /proc/init_subtypes(prototype, list/L)
