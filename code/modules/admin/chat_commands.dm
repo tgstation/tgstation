@@ -42,7 +42,7 @@
 	all_params.Cut(1, 2)
 	var/id = text2num(target)
 	if(id != null)
-		var/datum/ahelp_ticket/AH = GLOB.ahelp_tickets.TicketByID(id)
+		var/datum/admin_help/AH = GLOB.ahelp_tickets.TicketByID(id)
 		if(AH)
 			target = AH.initiator_ckey
 		else
