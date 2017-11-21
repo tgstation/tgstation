@@ -73,6 +73,8 @@
 
 	var/obj/machinery/turretid/cp = null
 
+	var/wall_turret_direction //The turret will try to shoot from a turf in that direction when in a wall
+
 /obj/machinery/porta_turret/Initialize()
 	. = ..()
 	if(!base)
@@ -505,12 +507,17 @@
 
 	//Wall turrets will try to find adjacent empty turf to shoot from to cover full arc
 	if(T.density)
-		var/target_dir = get_dir(T,target)
-		for(var/d in list(0,-45,45))
-			var/turf/closer = get_step(T,turn(target_dir,d))
+		if(wall_turret_direction)
+			var/turf/closer = get_step(T,wall_turret_direction)
 			if(istype(closer) && !is_blocked_turf(closer) && T.Adjacent(closer))
 				T = closer
-				break
+		else
+			var/target_dir = get_dir(T,target)
+			for(var/d in list(0,-45,45))
+				var/turf/closer = get_step(T,turn(target_dir,d))
+				if(istype(closer) && !is_blocked_turf(closer) && T.Adjacent(closer))
+					T = closer
+					break
 
 	update_icon()
 	var/obj/item/projectile/A
@@ -530,6 +537,9 @@
 	A.fire()
 	return A
 
+/obj/machinery/porta_turret/shuttleRotate(rotation)
+	if(wall_turret_direction)
+		wall_turret_direction = turn(wall_turret_direction,rotation)
 
 /obj/machinery/porta_turret/proc/setState(on, mode)
 	if(controllock)
