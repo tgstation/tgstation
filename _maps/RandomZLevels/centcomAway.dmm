@@ -507,11 +507,9 @@
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/hangar)
 "bS" = (
-/turf/open/floor/plating,
 /turf/closed/wall/mineral/titanium/interior,
 /area/awaymission/centcomAway/hangar)
 "bT" = (
-/turf/open/floor/mineral/titanium/blue,
 /turf/closed/wall/mineral/titanium/interior,
 /area/awaymission/centcomAway/hangar)
 "bU" = (
@@ -1893,7 +1891,6 @@
 /turf/closed/wall/mineral/titanium/interior,
 /area/awaymission/centcomAway/hangar)
 "gT" = (
-/turf/open/floor/plasteel/dark,
 /turf/closed/wall/mineral/titanium/interior,
 /area/awaymission/centcomAway/hangar)
 "gU" = (

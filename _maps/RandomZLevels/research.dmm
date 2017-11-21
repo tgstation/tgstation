@@ -19,7 +19,6 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/awaymission/research/exterior)
 "ag" = (
-/turf/open/floor/plating/asteroid/airless,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 8;
 	icon_state = "diagonalWall3"
@@ -42,7 +41,6 @@
 /turf/open/space,
 /area/awaymission/research/interior/engineering)
 "ak" = (
-/turf/open/floor/plating/asteroid/airless,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
@@ -4151,7 +4149,6 @@
 	},
 /area/awaymission/research/interior/escapepods)
 "my" = (
-/turf/open/floor/plating/asteroid/airless,
 /turf/closed/wall/mineral/titanium/interior,
 /area/awaymission/research/exterior)
 "mz" = (

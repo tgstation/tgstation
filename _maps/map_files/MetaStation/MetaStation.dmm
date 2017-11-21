@@ -312,7 +312,6 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/security/prison)
 "aaU" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 8;
 	icon_state = "diagonalWall3"
@@ -322,7 +321,6 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_2)
 "aaX" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
@@ -72850,7 +72848,6 @@
 /turf/open/floor/wood,
 /area/library)
 "cVc" = (
-/turf/open/floor/mineral/titanium/blue,
 /turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/supply)
 "cVd" = (
@@ -80788,7 +80785,6 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/hallway/secondary/entry)
 "EDy" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
