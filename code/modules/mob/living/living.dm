@@ -240,9 +240,6 @@
 		return 0
 	if(!..())
 		return 0
-	var/is_human = FALSE
-	if(ishuman(A))
-		is_human = TRUE
 	visible_message("<b>[src]</b> points to [A]")
 	return 1
 
