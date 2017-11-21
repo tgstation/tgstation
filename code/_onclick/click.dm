@@ -440,10 +440,10 @@
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	screen_loc = "CENTER"
 
-/obj/screen/click_catcher/proc/UpdateGreed(view_size_x = 7, view_size_y = 7)
+/obj/screen/click_catcher/proc/UpdateGreed(view_size_x = 15, view_size_y = 15)
 	var/icon/newicon = icon('icons/mob/screen_gen.dmi', "flash")
 	if(view_size_x > 16 || view_size_y > 16)
-		newicon.Scale((16 * 2 + 1) * world.icon_size,(16 * 2 + 1) * world.icon_size)
+		newicon.Scale(16 * world.icon_size,16 * world.icon_size)
 		icon = newicon
 		var/tx = view_size_x/16
 		var/ty = view_size_y/16
@@ -453,7 +453,7 @@
 		screen_loc = "CENTER-16,CENTER-16"
 	else
 		screen_loc = "CENTER-[view_size_x],CENTER-[view_size_y]"
-		newicon.Scale((view_size_x * 2 + 1) * world.icon_size,(view_size_y * 2 + 1) * world.icon_size)
+		newicon.Scale(view_size_x * world.icon_size,view_size_y * world.icon_size)
 		icon = newicon
 
 /obj/screen/click_catcher/Click(location, control, params)

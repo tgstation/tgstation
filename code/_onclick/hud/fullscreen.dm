@@ -17,18 +17,9 @@
 	if (client && screen.should_show_to(src))
 		client.screen += screen
 		if (screen.screen_loc == "CENTER-7,CENTER-7" && screen.view != client.view)
-			var/scaleX = 1
-			var/scaleY = 1
-			if(isnum(client.view))
-				var/scale = (1 + 2 * client.view) / 15
-				scaleX = scale
-				scaleY = scale
-			else
-				var/list/viewscalelist = splittext(client.view,"x")
-				scaleX = text2num(viewscalelist[1]) / 15
-				scaleY = text2num(viewscalelist[2]) / 15
+			var/list/actualview = getviewsize(client.view)
 			screen.view = client.view
-			screen.transform = matrix(scaleX, 0, 0, 0, scaleY, 0)
+			screen.transform = matrix(actualview[1]/15, 0, 0, 0, actualview[2]/15, 0)
 
 	return screen
 
