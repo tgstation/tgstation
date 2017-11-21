@@ -9,7 +9,6 @@
 /obj/item/circuitboard/computer/telesci_console // Telesci boy
 	name = "Telescience Console (Computer Board)"
 	build_path = /obj/machinery/computer/telescience
-	origin_tech = "programming=3;bluespace=3;plasmatech=4"
 
 /obj/item/circuitboard/computer/message_monitor
 	name = "Message Monitor (Computer Board)"
