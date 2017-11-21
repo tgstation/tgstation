@@ -1228,7 +1228,7 @@
 "dF" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space)
+/area/space/nearstation)
 "dG" = (
 /turf/open/floor/plasteel/airless,
 /area/template_noop)
@@ -2498,7 +2498,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/space)
+/area/space/nearstation)
 "gG" = (
 /obj/effect/spawner/structure/window/hollow/reinforced,
 /obj/structure/cable{
