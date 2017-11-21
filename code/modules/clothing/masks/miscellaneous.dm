@@ -78,6 +78,41 @@
 		message = pick("Oink!","Squeeeeeeee!","Oink Oink!")
 	return message
 
+///frog mask - reeee!!
+obj/item/clothing/mask/frog
+	name = "frog mask"
+	desc = "An ancient mask carved in the shape of a frog.<br> Sanity is like gravity, all it needs is a push."
+	icon_state = "frog"
+	item_state = "frog"
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	w_class = WEIGHT_CLASS_SMALL
+	var/voicechange = TRUE
+
+/obj/item/clothing/mask/frog/attack_self(mob/user)
+	voicechange = !voicechange
+	to_chat(user, "<span class='notice'>You turn the voice box [voicechange ? "on" : "off"]!</span>")
+
+/obj/item/clothing/mask/frog/speechModification(message) //whenever you speak
+	if(voicechange)
+		if(prob(5)) //sometimes, the angry spirit finds others words to speak.
+			message = pick("HUUUUU!!","SMOOOOOKIN'!!","Hello my baby, hello my honey, hello my rag-time gal.", "Feels bad, man.", "GIT DIS GUY OFF ME!!" ,"SOMEBODY STOP ME!!", "NORMIES, GET OUT!!")
+		else
+			message = pick("Ree!!", "Reee!!","REEE!!","REEEEE!!") //but its usually just angry gibberish,
+	return message
+
+obj/item/clothing/mask/frog/cursed
+	flags_1 = NODROP_1 //reee!!
+
+/obj/item/clothing/mask/frog/cursed/attack_self(mob/user)
+	return //no voicebox to alter.
+
+/obj/item/clothing/mask/frog/cursed/equipped(mob/user, slot)
+	var/mob/living/carbon/C = user
+	if(C.wear_mask == src)
+		to_chat(user, "<span class='warning'><B>[src] was cursed! Ree!!</B></span>")
+	return ..()
+
+
 /obj/item/clothing/mask/cowmask
 	name = "Cowface"
 	desc = "It looks like a mask, but closer inspection reveals it's melded onto this persons face!"

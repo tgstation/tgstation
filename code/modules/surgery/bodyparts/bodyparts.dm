@@ -539,15 +539,3 @@
 	dismemberable = 0
 	max_damage = 5000
 	animal_origin = DEVIL_BODYPART
-
-
-/////////////////////////////////////////////////////////////////////////
-
-/obj/item/severedtail
-	name = "tail"
-	desc = "A severed tail. Somewhere, no doubt, a lizard hater is very \
-		pleased with themselves."
-	icon = 'icons/obj/surgery.dmi'
-	icon_state = "severedtail"
-	color = "#161"
-	var/markings = "Smooth"

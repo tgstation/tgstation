@@ -53,7 +53,7 @@
 		return
 
 	var/title = ""
-	var/refid = "[REF(D)]"
+	var/refid = REF(D)
 	var/icon/sprite
 	var/hash
 
@@ -432,9 +432,6 @@
 	else if (isfile(value))
 		item = "[VV_rhtml_encode(name)] = <span class='value'>'[value]'</span>"
 
-	//else if (istype(value, /client))
-	//	var/client/C = value
-	//	item = "<a href='?_src_=vars;Vars=[REF(value)]'>[VV_rhtml_encode(name)] [REF(value)]</a> = [C] [C.type]"
 	else if (istype(value, /datum))
 		var/datum/D = value
 		if ("[D]" != "[D.type]") //if the thing as a name var, lets use it.
@@ -451,7 +448,7 @@
 				var/val
 				if (IS_NORMAL_LIST(L) && !isnum(key))
 					val = L[key]
-				if (!val)
+				if (isnull(val))	// we still want to display non-null false values, such as 0 or ""
 					val = key
 					key = i
 
@@ -533,6 +530,11 @@
 			to_chat(usr, "Unable to locate item!")
 		admin_delete(D)
 		href_list["datumrefresh"] = href_list["delete"]
+
+	else if(href_list["osay"])
+		if(!check_rights(R_FUN, 0))
+			return
+		usr.client.object_say(locate(href_list["osay"]))
 
 	else if(href_list["regenerateicons"])
 		if(!check_rights(0))

@@ -34,7 +34,9 @@
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "h" = (
-/obj/machinery/computer/atmos_alert,
+/obj/machinery/computer/atmos_alert{
+	dir = 4
+	},
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "i" = (
@@ -53,11 +55,15 @@
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "l" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/security{
+	dir = 8
+	},
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "m" = (
-/obj/machinery/computer/crew,
+/obj/machinery/computer/crew{
+	dir = 4
+	},
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "n" = (
@@ -77,7 +83,9 @@
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "p" = (
-/obj/machinery/computer/communications,
+/obj/machinery/computer/communications{
+	dir = 8
+	},
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "q" = (

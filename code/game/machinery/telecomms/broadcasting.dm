@@ -142,9 +142,7 @@
 
 	if(length(receive))
 		// --- This following recording is intended for research and feedback in the use of department radio channels ---
-
-		var/blackbox_msg = "[AM] [AM.say_quote(message, spans)]"
-		SSblackbox.LogBroadcast(blackbox_msg, freq)
+		SSblackbox.LogBroadcast(freq)
 
 	sleep(50)
 	if(!QDELETED(virt)) //It could happen to YOU

@@ -225,8 +225,8 @@
 
 /obj/item/paper/talisman/horror/afterattack(mob/living/target, mob/living/user)
 	if(iscultist(user) && (get_dist(user, target) < 7))
-		to_chat(user, "<span class='cultitalic'>You disturb [target] with visions of madness!</span>")
 		if(iscarbon(target))
+			to_chat(user, "<span class='cultitalic'>You disturb [target] with visions of madness!</span>")
 			var/mob/living/carbon/H = target
 			H.reagents.add_reagent("mindbreaker", 12)
 			if(is_servant_of_ratvar(target))
@@ -234,8 +234,7 @@
 				target.emote("scream")
 				target.confused = max(0, target.confused + 3)
 				target.flash_act()
-		qdel(src)
-
+			qdel(src)
 
 //Talisman of Fabrication: Creates a construct shell out of 25 metal sheets, or converts plasteel into runed metal up to 25 times
 /obj/item/paper/talisman/construction
@@ -339,7 +338,6 @@
 	name = "cult shackles"
 	desc = "Shackles that bind the wrists with sinister magic."
 	trashtype = /obj/item/restraints/handcuffs/energy/used
-	origin_tech = "materials=2;magnets=5"
 	flags_1 = DROPDEL_1
 
 /obj/item/restraints/handcuffs/energy/cult/used/dropped(mob/user)

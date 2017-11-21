@@ -53,6 +53,7 @@ Applications: 8 servants, 3 caches, and 100 CV
 		if(slab.busy)
 			to_chat(invoker, "<span class='warning'>[slab] refuses to work, displaying the message: \"[slab.busy]!\"</span>")
 			return FALSE
+		pre_recital()
 		slab.busy = "Invocation ([name]) in progress"
 		if(GLOB.ratvar_awakens)
 			channel_time *= 0.5 //if ratvar has awoken, half channel time and no cost
@@ -65,7 +66,7 @@ Applications: 8 servants, 3 caches, and 100 CV
 		else
 			successful = TRUE
 			if(slab && !slab.no_cost && !GLOB.ratvar_awakens) //if the slab exists and isn't debug and ratvar isn't up, log the scripture as being used
-				SSblackbox.add_details("clockcult_scripture_recited", name)
+				SSblackbox.record_feedback("tally", "clockcult_scripture_recited", 1, name)
 	if(slab)
 		slab.busy = null
 	post_recital()
@@ -174,6 +175,9 @@ Applications: 8 servants, 3 caches, and 100 CV
 
 
 /datum/clockwork_scripture/proc/scripture_fail() //Called if the scripture fails to invoke.
+
+
+/datum/clockwork_scripture/proc/pre_recital() //Called before the scripture is recited
 
 
 /datum/clockwork_scripture/proc/post_recital() //Called after the scripture is recited

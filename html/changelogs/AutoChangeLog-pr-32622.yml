@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - bugfix: "HUDs from mechs and helmets no longer conflict with HUD glasses and no longer inappropriately remove implanted HUDs."

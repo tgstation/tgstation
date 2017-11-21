@@ -1,0 +1,4 @@
+author: "arsserpentarium"
+delete-after: True
+changes: 
+  - bugfix: "now lists should work properly"

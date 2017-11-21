@@ -1,8 +1,0 @@
-author: "ACCount"
-delete-after: True
-changes: 
-  - imageadd: "New sprites for reflectors. They finally look like something."
-  - rscadd: "You can lock reflector's rotation by using a screwdriver. Use the screwdriver again to unlock it."
-  - rscadd: "Reflector examine now shows the current angle and rotation lock status."
-  - rscadd: "You can now use a welder to repair damaged reflectors."
-  - bugfix: "Multiple reflector bugs are fixed."

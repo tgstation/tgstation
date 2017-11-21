@@ -137,9 +137,7 @@
 /area/shuttle/abandoned)
 "as" = (
 /obj/structure/table,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
 /obj/item/stock_parts/cell/high{
 	charge = 100;
 	maxcharge = 15000;
@@ -330,11 +328,8 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/effect/decal/cleanable/ash{
-	desc = "They look like human remains, and have clearly been gnawed at.";
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "remains";
-	name = "remains"
+/obj/effect/decal/remains/human{
+	desc = "They look like human remains, and have clearly been gnawed at."
 	},
 /obj/item/gun/energy/laser/retro,
 /turf/open/floor/mineral/titanium/blue,
@@ -407,11 +402,8 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/effect/decal/cleanable/ash{
-	desc = "They look like human remains, and have clearly been gnawed at.";
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "remains";
-	name = "remains"
+/obj/effect/decal/remains/human{
+	desc = "They look like human remains, and have clearly been gnawed at."
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -478,11 +470,8 @@
 	name = "dust"
 	},
 /obj/item/soap/nanotrasen,
-/obj/effect/decal/cleanable/ash{
-	desc = "They look like human remains, and have clearly been gnawed at.";
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "remains";
-	name = "remains"
+/obj/effect/decal/remains/human{
+	desc = "They look like human remains, and have clearly been gnawed at."
 	},
 /obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/floor/mineral/titanium,
@@ -525,14 +514,11 @@
 /area/shuttle/abandoned)
 "aW" = (
 /obj/structure/table,
-/obj/item/stack/sheet/glass{
-	amount = 50;
+/obj/item/stack/sheet/glass/fifty{
 	pixel_x = -2;
 	pixel_y = 2
 	},
-/obj/item/stack/rods{
-	amount = 50
-	},
+/obj/item/stack/rods/fifty,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -540,12 +526,8 @@
 /obj/item/wrench,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
-"aX" = (
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9;
-	pixel_y = 2
-	},
+"aN" = (
+/obj/structure/rack,
 /obj/item/storage/toolbox/electrical{
 	pixel_x = 1;
 	pixel_y = 6
@@ -970,11 +952,8 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/effect/decal/cleanable/ash{
-	desc = "They look like human remains, and have clearly been gnawed at.";
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "remains";
-	name = "remains"
+/obj/effect/decal/remains/human{
+	desc = "They look like human remains, and have clearly been gnawed at."
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -1044,7 +1023,9 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/computer/shuttle/white_ship,
+/obj/machinery/computer/shuttle/white_ship{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bU" = (
@@ -1117,11 +1098,8 @@
 	desc = "There's a gouge through the top where something has clawed clean through it. Whoever was wearing it probably doesn't need a hat any more.";
 	name = "\improper damaged CentCom hat"
 	},
-/obj/effect/decal/cleanable/ash{
-	desc = "They look like human remains, and have clearly been gnawed at.";
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "remains";
-	name = "remains"
+/obj/effect/decal/remains/human{
+	desc = "They look like human remains, and have clearly been gnawed at."
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -1173,6 +1151,9 @@
 	},
 /obj/structure/light_construct,
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
+	dir = 1;
+	station_lock_override = 1;
+	view_range = 15;
 	x_offset = -3;
 	y_offset = -7
 	},
@@ -1510,11 +1491,8 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/effect/decal/cleanable/ash{
-	desc = "A pile of remains that look vaguely humanoid. The skull is abnormally elongated, and there are burns through some of the other bones.";
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "remainsxeno";
-	name = "remains"
+/obj/effect/decal/remains/xeno{
+	desc = "A pile of remains that look vaguely humanoid. The skull is abnormally elongated, and there are burns through some of the other bones."
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)

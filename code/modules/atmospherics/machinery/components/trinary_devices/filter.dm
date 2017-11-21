@@ -124,7 +124,7 @@
 																	datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "atmos_filter", name, 475, 155, master_ui, state)
+		ui = new(user, src, ui_key, "atmos_filter", name, 475, 195, master_ui, state)
 		ui.open()
 
 /obj/machinery/atmospherics/components/trinary/filter/ui_data()
@@ -133,13 +133,11 @@
 	data["pressure"] = round(target_pressure)
 	data["max_pressure"] = round(MAX_OUTPUT_PRESSURE)
 
-	if(filter_type) //ui code is garbage and this is needed for it to work grr
-		if(ispath(filter_type))	//we need to send the gas ID. if it's a path, get it from the metainfo list...
-			data["filter_type"] = GLOB.meta_gas_info[filter_type][META_GAS_ID]
-		else //...otherwise, it's already in the form we need.
-			data["filter_type"] = filter_type
-	else
-		data["filter_type"] = "none"
+	data["filter_types"] = list()
+	data["filter_types"] += list(list("name" = "Nothing", "path" = "", "selected" = !filter_type))
+	for(var/path in GLOB.meta_gas_info)
+		var/list/gas = GLOB.meta_gas_info[path]
+		data["filter_types"] += list(list("name" = gas[META_GAS_NAME], "id" = gas[META_GAS_ID], "selected" = (path == gas_id2path(filter_type))))
 
 	return data
 
@@ -169,7 +167,7 @@
 		if("filter")
 			filter_type = null
 			var/filter_name = "nothing"
-			var/gas = text2path(params["mode"]) || gas_id2path(params["mode"])
+			var/gas = gas_id2path(params["mode"])
 			if(gas in GLOB.meta_gas_info)
 				filter_type = gas
 				filter_name	= GLOB.meta_gas_info[gas][META_GAS_NAME]
