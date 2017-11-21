@@ -13111,7 +13111,6 @@
 	},
 /obj/machinery/light,
 /turf/open/floor/plasteel/vault/corner{
-	icon_state = "vaultcorner";
 	dir = 8
 	},
 /area/ai_monitored/nuke_storage)

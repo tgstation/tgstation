@@ -82,14 +82,12 @@
 "as" = (
 /obj/structure/rack,
 /turf/open/floor/plasteel/vault/side{
-	icon_state = "vault";
 	dir = 1
 	},
 /area/ruin/space/has_grav/turretedoutpost)
 "at" = (
 /obj/item/rack_parts,
 /turf/open/floor/plasteel/vault/side{
-	icon_state = "vault";
 	dir = 1
 	},
 /area/ruin/space/has_grav/turretedoutpost)
@@ -99,7 +97,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/vault/side{
-	icon_state = "vault";
 	dir = 1
 	},
 /area/ruin/space/has_grav/turretedoutpost)
@@ -107,7 +104,6 @@
 /obj/structure/rack,
 /obj/item/device/firing_pin,
 /turf/open/floor/plasteel/vault/side{
-	icon_state = "vault";
 	dir = 1
 	},
 /area/ruin/space/has_grav/turretedoutpost)
@@ -122,7 +118,6 @@
 "ay" = (
 /obj/item/rack_parts,
 /turf/open/floor/plasteel/vault/side{
-	icon_state = "vault";
 	dir = 8
 	},
 /area/ruin/space/has_grav/turretedoutpost)
@@ -164,7 +159,6 @@
 "aF" = (
 /obj/structure/rack,
 /turf/open/floor/plasteel/vault/side{
-	icon_state = "vault";
 	dir = 8
 	},
 /area/ruin/space/has_grav/turretedoutpost)
@@ -199,7 +193,6 @@
 /obj/structure/rack,
 /obj/item/clothing/head/helmet/swat,
 /turf/open/floor/plasteel/vault/side{
-	icon_state = "vault";
 	dir = 8
 	},
 /area/ruin/space/has_grav/turretedoutpost)

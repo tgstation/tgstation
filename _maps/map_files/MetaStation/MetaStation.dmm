@@ -13521,7 +13521,6 @@
 	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel/vault/corner{
-	icon_state = "vaultcorner";
 	dir = 8
 	},
 /area/security/nuke_storage)
