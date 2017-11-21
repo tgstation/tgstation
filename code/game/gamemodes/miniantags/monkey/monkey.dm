@@ -48,7 +48,7 @@
 /datum/game_mode/monkey/post_setup()
 	for(var/datum/mind/carriermind in carriers)
 		add_monkey_leader(carriermind)
-	. = ..()
+	return ..()
 
 /datum/game_mode/monkey/check_finished()
 	if((SSshuttle.emergency.mode == SHUTTLE_ENDGAME) || station_was_nuked)
@@ -68,7 +68,7 @@
 				if(H.HasDisease(D))
 					return FALSE
 
-	. = ..()
+	return ..()
 
 /datum/game_mode/monkey/proc/check_monkey_victory()
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
@@ -114,15 +114,15 @@
 	D.affected_mob = monkey_mind.current
 	monkey_mind.current.viruses += D
 
-	to_chat(monkey_mind.current, "<B><span class='notice'>You are the Jungle Fever patient zero!!</B></span>")
-	to_chat(monkey_mind.current, "<b>You have been planted onto this station by the Animal Rights Consortium.</b>")
-	to_chat(monkey_mind.current, "<b>Soon the disease will transform you into an ape. Afterwards, you will be able spread the infection to others with a bite.</b>")
-	to_chat(monkey_mind.current, "<b>While your infection strain is undetectable by scanners, any other infectees will show up on medical equipment.</b>")
-	to_chat(monkey_mind.current, "<b>Your mission will be deemed a success if any of the live infected monkeys reach CentCom.</b>")
-	to_chat(monkey_mind.current, "<b>As an initial infectee, you will be considered a 'leader' by your fellow monkeys.</b>")
-	to_chat(monkey_mind.current, "<b>You can use :k to talk to fellow monkeys!</b>")
-	monkey_mind.current.playsound_local(get_turf(monkey_mind.current), 'sound/ambience/antag/monkey.ogg', 100, FALSE, pressure_affected = FALSE)
+	to_chat(monkey_mind, "<B><span class='notice'>You are the Jungle Fever patient zero!!</B></span>")
+	to_chat(monkey_mind, "<b>You have been planted onto this station by the Animal Rights Consortium.</b>")
+	to_chat(monkey_mind, "<b>Soon the disease will transform you into an ape. Afterwards, you will be able spread the infection to others with a bite.</b>")
+	to_chat(monkey_mind, "<b>While your infection strain is undetectable by scanners, any other infectees will show up on medical equipment.</b>")
+	to_chat(monkey_mind, "<b>Your mission will be deemed a success if any of the live infected monkeys reach CentCom.</b>")
+	to_chat(monkey_mind, "<b>As an initial infectee, you will be considered a 'leader' by your fellow monkeys.</b>")
+	to_chat(monkey_mind, "<b>You can use :k to talk to fellow monkeys!</b>")
+	SEND_SOUND(monkey_mind.current, sound('sound/ambience/antag/monkey.ogg'))
 
 /proc/remove_monkey(datum/mind/monkey_mind)
-	SSticker.mode.ape_infectees.Remove(monkey_mind)
+	SSticker.mode.ape_infectees -= monkey_mind
 	monkey_mind.special_role = null

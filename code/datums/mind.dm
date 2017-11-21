@@ -1242,7 +1242,7 @@
 				if(check_rights(R_ADMIN, 0))
 					add_monkey_leader(src)
 					log_admin("[key_name(usr)] made [key_name(current)] a monkey leader!")
-					message_admins("[key_name(usr)] made [key_name(current)] a monkey leader!")
+					message_admins("[key_name_admin(usr)] made [key_name_admin(current)] a monkey leader!")
 			if("infected")
 				if (check_rights(R_ADMIN, 0))
 					var/mob/living/carbon/human/H = current
