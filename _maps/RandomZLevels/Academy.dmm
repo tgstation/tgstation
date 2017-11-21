@@ -10,7 +10,7 @@
 	faction = list("wizard")
 	},
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "ad" = (
 /obj/structure/filingcabinet/filingcabinet,
 /turf/open/floor/carpet,
@@ -183,7 +183,7 @@
 /area/awaymission/academy/headmaster)
 "aG" = (
 /turf/closed/indestructible/rock,
-/area/space)
+/area/space/nearstation)
 "aH" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -231,7 +231,7 @@
 "aP" = (
 /obj/structure/lattice,
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "aQ" = (
 /obj/machinery/door/airlock/gold{
 	locked = 1
@@ -1240,7 +1240,7 @@
 "eu" = (
 /obj/singularity/academy,
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "ev" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -2988,7 +2988,7 @@
 	icon_state = "medium"
 	},
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "jC" = (
 /obj/machinery/igniter,
 /turf/open/floor/plating,
@@ -3916,7 +3916,7 @@
 /area/awaymission/academy/academycellar)
 "mY" = (
 /turf/closed/mineral/random,
-/area/space)
+/area/space/nearstation)
 "mZ" = (
 /turf/closed/indestructible/fakeglass{
 	icon_state = "fakewindows";

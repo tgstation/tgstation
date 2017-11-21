@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/closed/indestructible/rock,
-/area/space)
+/area/space/nearstation)
 "ab" = (
 /turf/open/space,
 /area/space)
@@ -2680,7 +2680,7 @@
 "gW" = (
 /obj/effect/mapping_helpers/planet_z,
 /turf/closed/indestructible/rock,
-/area/space)
+/area/space/nearstation)
 
 (1,1,1) = {"
 aa

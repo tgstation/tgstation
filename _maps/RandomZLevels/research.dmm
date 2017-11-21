@@ -4,10 +4,10 @@
 /area/space)
 "ab" = (
 /turf/closed/mineral,
-/area/space)
+/area/space/nearstation)
 "ac" = (
 /turf/open/floor/plating/asteroid/airless,
-/area/space)
+/area/space/nearstation)
 "ad" = (
 /turf/closed/mineral,
 /area/awaymission/research/exterior)
@@ -268,7 +268,7 @@
 	amount = 50
 	},
 /turf/open/floor/plating/asteroid/airless,
-/area/space)
+/area/space/nearstation)
 "aY" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -355,7 +355,7 @@
 "bk" = (
 /obj/item/bikehorn,
 /turf/open/floor/plating/asteroid/airless,
-/area/space)
+/area/space/nearstation)
 "bl" = (
 /turf/closed/wall/r_wall,
 /area/awaymission/research/interior/gateway)
@@ -449,7 +449,7 @@
 "by" = (
 /obj/item/clothing/mask/gas/clown_hat,
 /turf/open/floor/plating/asteroid/airless,
-/area/space)
+/area/space/nearstation)
 "bz" = (
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
@@ -3756,7 +3756,7 @@
 /area/awaymission/research/interior/dorm)
 "ln" = (
 /turf/open/floor/plasteel,
-/area/space)
+/area/space/nearstation)
 "lo" = (
 /obj/structure/table/wood,
 /obj/structure/bedsheetbin,
@@ -4343,23 +4343,23 @@
 /area/awaymission/research/interior/escapepods)
 "na" = (
 /turf/closed/wall/mineral/plasma,
-/area/space)
+/area/space/nearstation)
 "nb" = (
 /obj/structure/table/wood,
 /obj/item/spellbook/oneuse/random,
 /turf/open/floor/mineral/plasma,
-/area/space)
+/area/space/nearstation)
 "nc" = (
 /mob/living/simple_animal/hostile/creature,
 /turf/open/floor/mineral/plasma,
-/area/space)
+/area/space/nearstation)
 "nd" = (
 /obj/structure/healingfountain,
 /turf/open/floor/mineral/plasma,
-/area/space)
+/area/space/nearstation)
 "ne" = (
 /turf/open/floor/mineral/plasma,
-/area/space)
+/area/space/nearstation)
 
 (1,1,1) = {"
 aa

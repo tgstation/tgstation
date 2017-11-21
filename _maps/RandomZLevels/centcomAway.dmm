@@ -335,7 +335,7 @@
 "bk" = (
 /obj/structure/lattice,
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "bl" = (
 /obj/machinery/door/poddoor{
 	id = "XCCHangar1";
@@ -2332,7 +2332,7 @@
 "iv" = (
 /obj/effect/spawner/structure/window/hollow/reinforced,
 /turf/open/floor/plating,
-/area/space)
+/area/space/nearstation)
 "iw" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
@@ -3135,19 +3135,19 @@
 	dir = 1
 	},
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "kU" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 1
 	},
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "kV" = (
 /obj/structure/shuttle/engine/propulsion/left{
 	dir = 1
 	},
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "kW" = (
 /obj/structure/table,
 /obj/item/device/paicard,
