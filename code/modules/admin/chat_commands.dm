@@ -74,3 +74,10 @@ GLOBAL_LIST(round_end_notifiees)
 	LAZYINITLIST(GLOB.round_end_notifiees)
 	GLOB.round_end_notifiees[sender] = TRUE
 	return "I will notify [sender] when the round ends."
+
+/datum/server_tools_command/master_revision
+	name = "master_revision"
+	help_text = "Displays the SHA of the last commit from origin/master"
+
+/datum/server_tools_command/master_revision/Run(sender, params)
+	return "^[GLOB.revdata.originmastercommit]"
