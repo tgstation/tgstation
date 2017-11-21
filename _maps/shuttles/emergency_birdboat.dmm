@@ -81,7 +81,9 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "aq" = (
-/obj/machinery/computer/communications,
+/obj/machinery/computer/communications{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "ar" = (

@@ -31,7 +31,6 @@
 
 	// asset_cache
 	if(href_list["asset_cache_confirm_arrival"])
-		//to_chat(src, "ASSET JOB [href_list["asset_cache_confirm_arrival"]] ARRIVED.")
 		var/job = text2num(href_list["asset_cache_confirm_arrival"])
 		//because we skip the limiter, we have to make sure this is a valid arrival and not somebody tricking us
 		//	into letting append to a list without limit.
@@ -132,13 +131,6 @@
 	if(filelength > UPLOAD_LIMIT)
 		to_chat(src, "<font color='red'>Error: AllowUpload(): File Upload too large. Upload Limit: [UPLOAD_LIMIT/1024]KiB.</font>")
 		return 0
-/*	//Don't need this at the moment. But it's here if it's needed later.
-	//Helps prevent multiple files being uploaded at once. Or right after eachother.
-	var/time_to_wait = fileaccess_timer - world.time
-	if(time_to_wait > 0)
-		to_chat(src, "<font color='red'>Error: AllowUpload(): Spam prevention. Please wait [round(time_to_wait/10)] seconds.</font>")
-		return 0
-	fileaccess_timer = world.time + FTPDELAY	*/
 	return 1
 
 
@@ -255,11 +247,19 @@ GLOBAL_LIST(external_rsc_urls)
 			qdel(src)
 			return 0
 	else if (byond_version < cwv)	//We have words for this client.
-		to_chat(src, "<span class='danger'><b>Your version of byond may be getting out of date:</b></span>")
-		to_chat(src, CONFIG_GET(string/client_warn_message))
-		to_chat(src, "Your version: [byond_version]")
-		to_chat(src, "Required version to remove this message: [cwv] or later")
-		to_chat(src, "Visit http://www.byond.com/download/ to get the latest version of byond.")
+		if(CONFIG_GET(flag/client_warn_popup))
+			var/msg = "<b>Your version of byond may be getting out of date:</b><br>"
+			msg += CONFIG_GET(string/client_warn_message) + "<br><br>"
+			msg += "Your version: [byond_version]<br>"
+			msg += "Required version to remove this message: [cwv] or later<br>"
+			msg += "Visit http://www.byond.com/download/ to get the latest version of byond.<br>"
+			src << browse(msg, "window=warning_popup")
+		else
+			to_chat(src, "<span class='danger'><b>Your version of byond may be getting out of date:</b></span>")
+			to_chat(src, CONFIG_GET(string/client_warn_message))
+			to_chat(src, "Your version: [byond_version]")
+			to_chat(src, "Required version to remove this message: [cwv] or later")
+			to_chat(src, "Visit http://www.byond.com/download/ to get the latest version of byond.")
 
 	if (connection == "web" && !holder)
 		if (!CONFIG_GET(flag/allow_webclient))

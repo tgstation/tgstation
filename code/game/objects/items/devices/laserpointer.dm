@@ -9,7 +9,6 @@
 	slot_flags = SLOT_BELT
 	materials = list(MAT_METAL=500, MAT_GLASS=500)
 	w_class = WEIGHT_CLASS_SMALL
-	origin_tech = "combat=1;magnets=2"
 	var/turf/pointer_loc
 	var/energy = 5
 	var/max_energy = 5
@@ -124,6 +123,15 @@
 			add_logs(user, C, "EMPed", src)
 		else
 			outmsg = "<span class='warning'>You miss the lens of [C] with [src]!</span>"
+
+	//catpeople
+	for(var/mob/living/carbon/human/H in view(1,targloc))
+		if(ishumanbasic(H) && (H.getorgan(/obj/item/organ/tail/cat) || H.getorgan(/obj/item/organ/ears/cat) || H.dna.features["ears"] == "Cat" || H.dna.features["human_tail"] == "Cat"))
+			if(!H.incapacitated() && !H.lying)
+				H.visible_message("<span class='warning'>[H] pounces on the light!</span>","<span class='userdanger'>LIGHT!</span>")
+				H.Knockdown(10)
+				H.Move(targloc)
+				H.setDir(NORTH) //Facedown looks best imo
 
 	//laser pointer image
 	icon_state = "pointer_[pointer_icon_state]"

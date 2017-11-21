@@ -66,7 +66,6 @@
 /obj/item/restraints/handcuffs/clockwork
 	name = "replicant manacles"
 	desc = "Cold, heavy manacles made out of some strange black metal."
-	origin_tech = "materials=2;magnets=5"
 	flags_1 = DROPDEL_1
 
 /obj/item/restraints/handcuffs/clockwork/dropped(mob/user)

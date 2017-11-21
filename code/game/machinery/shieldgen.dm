@@ -450,7 +450,7 @@
 			gen_secondary.use_stored_power(drain_amount*0.5)
 
 /obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && mover.checkpass(PASSGLASS))
+	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return prob(20)
 	else
 		if(istype(mover, /obj/item/projectile))

@@ -9,7 +9,6 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
-	origin_tech = "materials=2;biotech=3"
 	materials = list(MAT_METAL=600, MAT_GLASS=200)
 	var/obj/item/implant/imp = null
 	var/imp_type = null
@@ -18,10 +17,8 @@
 /obj/item/implanter/update_icon()
 	if(imp)
 		icon_state = "implanter1"
-		origin_tech = imp.origin_tech
 	else
 		icon_state = "implanter0"
-		origin_tech = initial(origin_tech)
 
 
 /obj/item/implanter/attack(mob/living/M, mob/user)

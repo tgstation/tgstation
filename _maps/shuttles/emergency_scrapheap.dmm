@@ -34,7 +34,9 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "ai" = (
-/obj/machinery/computer/atmos_alert,
+/obj/machinery/computer/atmos_alert{
+	dir = 4
+	},
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "aj" = (
@@ -57,7 +59,9 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "am" = (
-/obj/machinery/computer/crew,
+/obj/machinery/computer/crew{
+	dir = 4
+	},
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "an" = (

@@ -80,6 +80,12 @@
 	item_state = "overalls"
 	body_parts_covered = CHEST|GROIN|LEGS
 
+/obj/item/clothing/suit/apron/purple_bartender
+	name = "purple bartender apron"
+	desc = "A fancy purple apron for a stylish person."
+	icon_state = "purplebartenderapron"
+	item_state = "purplebartenderapron"
+	body_parts_covered = CHEST|GROIN|LEGS
 
 /obj/item/clothing/suit/syndicatefake
 	name = "black and red space suit replica"

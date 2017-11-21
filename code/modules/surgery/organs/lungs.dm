@@ -355,7 +355,6 @@
 	name = "cybernetic lungs"
 	desc = "A cybernetic version of the lungs found in traditional humanoid entities. It functions the same as an organic lung and is merely meant as a replacement."
 	icon_state = "lungs-c"
-	origin_tech = "biotech=4"
 
 /obj/item/organ/lungs/cybernetic/emp_act()
 	owner.losebreath = 20
@@ -365,8 +364,6 @@
 	name = "upgraded cybernetic lungs"
 	desc = "A more advanced version of the stock cybernetic lungs. They are capable of filtering out lower levels of toxins and carbon dioxide."
 	icon_state = "lungs-c-u"
-	origin_tech = "biotech=5"
-
 	safe_toxins_max = 20
 	safe_co2_max = 20
 

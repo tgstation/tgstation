@@ -22,8 +22,6 @@
 	var/last_insert_success
 	var/precise_insertion = FALSE
 	var/datum/callback/precondition
-	//MAX_STACK_SIZE = 50
-	//MINERAL_MATERIAL_AMOUNT = 2000
 
 /datum/component/material_container/Initialize(list/mat_list, max_amt = 0, _show_on_examine = FALSE, list/allowed_types, datum/callback/_precondition)
 	materials = list()

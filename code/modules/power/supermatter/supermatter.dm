@@ -63,6 +63,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	icon_state = "darkmatter_shard"
 	density = TRUE
 	anchored = FALSE
+	var/uid = 1
+	var/static/gl_uid = 1
 	light_range = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 
@@ -137,6 +139,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 
 /obj/machinery/power/supermatter_shard/Initialize()
 	. = ..()
+	uid = gl_uid++
 	SSair.atmos_machinery += src
 	countdown = new(src)
 	countdown.start()
@@ -226,7 +229,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 
 /obj/machinery/power/supermatter_shard/proc/explode()
 	var/turf/T = get_turf(src)
-	for(var/mob/M in GLOB.mob_list)
+	for(var/mob/M in GLOB.player_list)
 		if(M.z == z)
 			SEND_SOUND(M, 'sound/magic/charge.ogg')
 			to_chat(M, "<span class='boldannounce'>You feel reality distort for a moment...</span>")
@@ -424,7 +427,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 				radio.talk_into(src, "Warning: Critical coolant mass reached.", engineering_channel, get_spans(), get_default_language())
 
 		if(damage > explosion_point)
-			for(var/mob in GLOB.living_mob_list)
+			for(var/mob in GLOB.alive_mob_list)
 				var/mob/living/L = mob
 				if(istype(L) && L.z == z)
 					if(ishuman(mob))
@@ -463,7 +466,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	investigate_log("Supermatter shard consumed by singularity.", INVESTIGATE_SINGULO)
 	message_admins("Singularity has consumed a supermatter shard and can now become stage six.")
 	visible_message("<span class='userdanger'>[src] is consumed by the singularity!</span>")
-	for(var/mob/M in GLOB.mob_list)
+	for(var/mob/M in GLOB.player_list)
 		if(M.z == z)
 			SEND_SOUND(M, 'sound/effects/supermatter.ogg') //everyone goan know bout this
 			to_chat(M, "<span class='boldannounce'>A horrible screeching fills your ears, and a wave of dread washes over you...</span>")

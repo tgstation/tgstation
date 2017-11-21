@@ -168,7 +168,9 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "G" = (
-/obj/machinery/computer/emergency_shuttle,
+/obj/machinery/computer/emergency_shuttle{
+	dir = 8
+	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},

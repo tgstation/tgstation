@@ -98,8 +98,6 @@ GLOBAL_LIST_INIT(message_servers, list())
 	return newKey
 
 /obj/machinery/message_server/process()
-	//if(decryptkey == "password")
-	//	decryptkey = generateKey()
 	if(active && (stat & (BROKEN|NOPOWER)))
 		active = 0
 		return

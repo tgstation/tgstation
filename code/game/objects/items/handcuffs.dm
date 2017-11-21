@@ -18,7 +18,6 @@
 	throw_speed = 3
 	throw_range = 5
 	materials = list(MAT_METAL=500)
-	origin_tech = "engineering=3;combat=3"
 	breakouttime = 600 //Deciseconds = 60s = 1 minute
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
@@ -47,7 +46,7 @@
 			if(do_mob(user, C, 30) && (C.get_num_arms() >= 2 || C.get_arm_ignore()))
 				apply_cuffs(C,user)
 				to_chat(user, "<span class='notice'>You handcuff [C].</span>")
-				SSblackbox.add_details("handcuffs","[type]")
+				SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 
 				add_logs(user, C, "handcuffed")
 			else
@@ -95,7 +94,6 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	materials = list(MAT_METAL=150, MAT_GLASS=75)
-	origin_tech = "engineering=2"
 	breakouttime = 300 //Deciseconds = 30s
 	cuffsound = 'sound/weapons/cablecuff.ogg'
 	var/datum/robot_energy_storage/wirestorage = null
@@ -248,7 +246,6 @@
 	flags_1 = CONDUCT_1
 	throwforce = 0
 	w_class = WEIGHT_CLASS_NORMAL
-	origin_tech = "engineering=3;combat=3"
 	slowdown = 7
 	breakouttime = 300	//Deciseconds = 30s = 0.5 minute
 
@@ -258,7 +255,6 @@
 	throw_range = 1
 	icon_state = "beartrap"
 	desc = "A trap used to catch bears and other legged creatures."
-	origin_tech = "engineering=4"
 	var/armed = 0
 	var/trap_damage = 20
 
@@ -293,7 +289,7 @@
 						C.legcuffed = src
 						src.loc = C
 						C.update_inv_legcuffed()
-						SSblackbox.add_details("handcuffs","[type]")
+						SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 			else if(isanimal(L))
 				var/mob/living/simple_animal/SA = L
 				if(SA.mob_size > MOB_SIZE_TINY)
@@ -337,7 +333,6 @@
 	icon_state = "bola"
 	breakouttime = 35//easy to apply, easy to break out of
 	gender = NEUTER
-	origin_tech = "engineering=3;combat=1"
 	var/knockdown = 0
 
 /obj/item/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
@@ -354,7 +349,7 @@
 		C.legcuffed = src
 		src.loc = C
 		C.update_inv_legcuffed()
-		SSblackbox.add_details("handcuffs","[type]")
+		SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 		to_chat(C, "<span class='userdanger'>\The [src] ensnares you!</span>")
 		C.Knockdown(knockdown)
 
@@ -363,7 +358,6 @@
 	desc = "A strong bola, made with a long steel chain. It looks heavy, enough so that it could trip somebody."
 	icon_state = "bola_r"
 	breakouttime = 70
-	origin_tech = "engineering=4;combat=3"
 	knockdown = 20
 
 /obj/item/restraints/legcuffs/bola/energy //For Security

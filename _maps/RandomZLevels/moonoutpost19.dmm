@@ -3336,8 +3336,7 @@
 "gv" = (
 /obj/structure/disposalpipe/segment{
 	desc = "An underfloor disposal pipe. This one has been applied with an acid-proof coating.";
-	dir = 2;
-	icon_state = "pipe-c";
+	dir = 10;
 	name = "Acid-Proof disposal pipe"
 	},
 /obj/structure/alien/weeds,
@@ -3377,7 +3376,9 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "gA" = (
-/obj/machinery/computer/monitor,
+/obj/machinery/computer/monitor{
+	dir = 1
+	},
 /obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -3548,6 +3549,7 @@
 	},
 /obj/machinery/computer/security{
 	desc = "Used to access the various cameras on the outpost.";
+	dir = 4;
 	network = list("MO19R","MO19")
 	},
 /turf/open/floor/plasteel/red/side{
@@ -3605,7 +3607,9 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "gU" = (
-/obj/machinery/computer/operating,
+/obj/machinery/computer/operating{
+	dir = 8
+	},
 /obj/structure/alien/weeds,
 /turf/open/floor/plasteel/white/side{
 	dir = 1;
@@ -6367,7 +6371,9 @@
 /turf/open/floor/plasteel/black,
 /area/awaymission/moonoutpost19/arrivals)
 "mG" = (
-/obj/machinery/computer/shuttle,
+/obj/machinery/computer/shuttle{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/moonoutpost19/arrivals)
 "mH" = (

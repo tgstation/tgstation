@@ -597,7 +597,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "bM" = (
-/obj/machinery/computer,
+/obj/machinery/computer{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "bN" = (
