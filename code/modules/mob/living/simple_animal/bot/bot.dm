@@ -50,7 +50,7 @@
 	var/frustration = 0 //Used by some bots for tracking failures to reach their target.
 	var/base_speed = 2 //The speed at which the bot moves, or the number of times it moves per process() tick.
 	var/turf/ai_waypoint //The end point of a bot's path, or the target location.
-	var/list/path = list() //List of turfs through which a bot 'steps' to reach the waypoint.
+	var/list/path = list() //List of turfs through which a bot 'steps' to reach the waypoint, associated with the path image, if there is one.
 	var/pathset = 0
 	var/list/ignore_list = list() //List of unreachable targets for an ignore-list enabled bot to ignore.
 	var/mode = BOT_IDLE //Standardizes the vars that indicate the bot is busy with its function.
@@ -77,15 +77,19 @@
 	var/beacon_freq = 1445		// navigation beacon frequency
 	var/model = "" //The type of bot it is.
 	var/bot_type = 0 //The type of bot it is, for radio control.
-	var/data_hud_type = DATA_HUD_DIAGNOSTIC //The type of data HUD the bot uses. Diagnostic by default.
+	var/data_hud_type = DATA_HUD_DIAGNOSTIC_BASIC //The type of data HUD the bot uses. Diagnostic by default.
 	var/list/mode_name = list("In Pursuit","Preparing to Arrest", "Arresting", \
 	"Beginning Patrol", "Patrolling", "Summoned by PDA", \
 	"Cleaning", "Repairing", "Proceeding to work site", "Healing", \
 	"Proceeding to AI waypoint", "Navigating to Delivery Location", "Navigating to Home", \
 	"Waiting for clear path", "Calculating navigation path", "Pinging beacon network", "Unable to reach destination")
+	var/datum/atom_hud/data/bot_path/path_hud = new /datum/atom_hud/data/bot_path()
+	var/path_image_icon = 'icons/mob/aibots.dmi'
+	var/path_image_icon_state = "path_indicator"
+	var/path_image_color = "#FFFFFF"
 	//This holds text for what the bot is mode doing, reported on the remote bot control interface.
 
-	hud_possible = list(DIAG_STAT_HUD, DIAG_BOT_HUD, DIAG_HUD) //Diagnostic HUD views
+	hud_possible = list(DIAG_STAT_HUD, DIAG_BOT_HUD, DIAG_HUD, DIAG_PATH_HUD = HUD_LIST_LIST) //Diagnostic HUD views
 
 /mob/living/simple_animal/bot/proc/get_mode()
 	if(client) //Player bots do not have modes, thus the override. Also an easy way for PDA users/AI to know when a bot is a player.
@@ -119,6 +123,7 @@
 
 /mob/living/simple_animal/bot/Initialize()
 	. = ..()
+	GLOB.bots_list += src
 	access_card = new /obj/item/card/id(src)
 //This access is so bots can be immediately set to patrol and leave Robotics, instead of having to be let out first.
 	access_card.access += ACCESS_ROBOTICS
@@ -134,15 +139,19 @@
 
 	//Adds bot to the diagnostic HUD system
 	prepare_huds()
-	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
-	diag_hud.add_to_hud(src)
+	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
+		diag_hud.add_to_hud(src)
 	diag_hud_set_bothealth()
 	diag_hud_set_botstat()
 	diag_hud_set_botmode()
 
-	//Gives a HUD view to player bots that use a HUD.
-	activate_data_hud()
-
+	//If a bot has its own HUD (for player bots), provide it.
+	if(data_hud_type)
+		var/datum/atom_hud/datahud = GLOB.huds[data_hud_type]
+		datahud.add_hud_to(src)
+	if(path_hud)
+		path_hud.add_to_hud(src)
+		path_hud.add_hud_to(src)
 
 /mob/living/simple_animal/bot/update_canmove()
 	. = ..()
@@ -151,6 +160,10 @@
 	canmove = .
 
 /mob/living/simple_animal/bot/Destroy()
+	if(path_hud)
+		qdel(path_hud)
+		path_hud = null
+	GLOB.bots_list -= src
 	if(paicard)
 		ejectpai()
 	qdel(Radio)
@@ -425,14 +438,14 @@ Pass a positive integer as an argument to override a bot's default speed.
 /mob/living/simple_animal/bot/proc/bot_move(dest, move_speed)
 
 	if(!dest || !path || path.len == 0) //A-star failed or a path/destination was not set.
-		path = list()
+		set_path(null)
 		return 0
 	dest = get_turf(dest) //We must always compare turfs, so get the turf of the dest var if dest was originally something else.
 	var/turf/last_node = get_turf(path[path.len]) //This is the turf at the end of the path, it should be equal to dest.
 	if(get_turf(src) == dest) //We have arrived, no need to move again.
 		return 1
 	else if(dest != last_node) //The path should lead us to our given destination. If this is not true, we must stop.
-		path = list()
+		set_path(null)
 		return 0
 	var/step_count = move_speed ? move_speed : base_speed //If a value is passed into move_speed, use that instead of the default speed var.
 
@@ -451,14 +464,14 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(path.len > 1)
 		step_towards(src, path[1])
 		if(get_turf(src) == path[1]) //Successful move
-			path -= path[1]
+			increment_path()
 			tries = 0
 		else
 			tries++
 			return 0
 	else if(path.len == 1)
 		step_to(src, dest)
-		path = list()
+		set_path(null)
 	return 1
 
 
@@ -471,14 +484,14 @@ Pass a positive integer as an argument to override a bot's default speed.
 	var/area/end_area = get_area(waypoint)
 
 	if(client) //Player bots instead get a location command from the AI
-		to_chat(src, "<span class='noticebig'>Priority waypoint set by [icon2html(caller, src)] <b>[caller]</b>. Proceed to <b>[end_area.name]<\b>.")
+		to_chat(src, "<span class='noticebig'>Priority waypoint set by [icon2html(caller, src)] <b>[caller]</b>. Proceed to <b>[end_area.name]<\b>.</span>")
 
 	//For giving the bot temporary all-access.
 	var/obj/item/card/id/all_access = new /obj/item/card/id
 	var/datum/job/captain/All = new/datum/job/captain
 	all_access.access = All.get_access()
 
-	path = get_path_to(src, waypoint, /turf/proc/Distance_cardinal, 0, 200, id=all_access)
+	set_path(get_path_to(src, waypoint, /turf/proc/Distance_cardinal, 0, 200, id=all_access))
 	calling_ai = caller //Link the AI to the bot!
 	ai_waypoint = waypoint
 
@@ -486,6 +499,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 		if(!on)
 			turn_on() //Saves the AI the hassle of having to activate a bot manually.
 		access_card = all_access //Give the bot all-access while under the AI's command.
+		if(client)
+			addtimer(CALLBACK (src, .proc/bot_reset), 300, TIMER_UNIQUE) //if the bot is player controlled, they only get the extra access for 30 seconds.
 		if(message)
 			to_chat(calling_ai, "<span class='notice'>[icon2html(src, calling_ai)] [name] called to [end_area.name]. [path.len-1] meters to destination.</span>")
 		pathset = 1
@@ -495,7 +510,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		if(message)
 			to_chat(calling_ai, "<span class='danger'>Failed to calculate a valid route. Ensure destination is clear of obstructions and within range.</span>")
 		calling_ai = null
-		path = list()
+		set_path(null)
 
 /mob/living/simple_animal/bot/proc/call_mode() //Handles preparing a bot for a call, as well as calling the move proc.
 //Handles the bot's movement during a call.
@@ -510,7 +525,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(calling_ai) //Simple notification to the AI if it called a bot. It will not know the cause or identity of the bot.
 		to_chat(calling_ai, "<span class='danger'>Call command to a bot has been reset.</span>")
 		calling_ai = null
-	path = list()
+	set_path(null)
 	summon_target = null
 	pathset = 0
 	access_card.access = prev_access
@@ -575,7 +590,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	else if(path.len > 0 && patrol_target)		// valid path
 		var/turf/next = path[1]
 		if(next == loc)
-			path -= next
+			increment_path()
 			return
 
 
@@ -687,12 +702,12 @@ Pass a positive integer as an argument to override a bot's default speed.
 // given an optional turf to avoid
 /mob/living/simple_animal/bot/proc/calc_path(turf/avoid)
 	check_bot_access()
-	path = get_path_to(src, patrol_target, /turf/proc/Distance_cardinal, 0, 120, id=access_card, exclude=avoid)
+	set_path(get_path_to(src, patrol_target, /turf/proc/Distance_cardinal, 0, 120, id=access_card, exclude=avoid))
 
 /mob/living/simple_animal/bot/proc/calc_summon_path(turf/avoid)
 	check_bot_access()
 	spawn()
-		path = get_path_to(src, summon_target, /turf/proc/Distance_cardinal, 0, 150, id=access_card, exclude=avoid)
+		set_path(get_path_to(src, summon_target, /turf/proc/Distance_cardinal, 0, 150, id=access_card, exclude=avoid))
 		if(!path.len) //Cannot reach target. Give up and announce the issue.
 			speak("Summon command failed, destination unreachable.",radio_channel)
 			bot_reset()
@@ -709,7 +724,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	else if(path.len > 0 && summon_target)		//Proper path acquired!
 		var/turf/next = path[1]
 		if(next == loc)
-			path -= next
+			increment_path()
 			return
 
 		var/moved = bot_move(summon_target, 3)	// Move attempt
@@ -896,7 +911,6 @@ Pass a positive integer as an argument to override a bot's default speed.
 	. = ..()
 	access_card.access += player_access
 	diag_hud_set_botmode()
-	activate_data_hud()
 
 /mob/living/simple_animal/bot/Logout()
 	. = ..()
@@ -916,9 +930,60 @@ Pass a positive integer as an argument to override a bot's default speed.
 /mob/living/simple_animal/bot/sentience_act()
 	faction -= "silicon"
 
-/mob/living/simple_animal/bot/proc/activate_data_hud()
-//If a bot has its own HUD (for player bots), provide it.
-	if(!data_hud_type)
+/mob/living/simple_animal/bot/proc/set_path(list/newpath)
+	path = newpath ? newpath : list()
+	if(!path_hud)
 		return
-	var/datum/atom_hud/datahud = GLOB.huds[data_hud_type]
-	datahud.add_hud_to(src)
+	var/list/path_huds_watching_me = list(GLOB.huds[DATA_HUD_DIAGNOSTIC_ADVANCED])
+	if(path_hud)
+		path_huds_watching_me += path_hud
+	for(var/V in path_huds_watching_me)
+		var/datum/atom_hud/H = V
+		H.remove_from_hud(src)
+
+	var/list/path_images = hud_list[DIAG_PATH_HUD]
+	if(path_images.len)
+		for(var/V in path_images)
+			qdel(V)
+		path_images.Cut()
+	if(newpath && newpath.len)
+		for(var/i in 1 to newpath.len)
+			var/turf/T = newpath[i]
+			var/direction = NORTH
+			if(i > 1)
+				var/turf/prevT = path[i - 1]
+				var/image/prevI = path[prevT]
+				direction = get_dir(prevT, T)
+				if(i > 2)
+					var/turf/prevprevT = path[i - 2]
+					var/prevDir = get_dir(prevprevT, prevT)
+					var/mixDir = direction|prevDir
+					if(mixDir in GLOB.diagonals)
+						prevI.dir = mixDir
+						if(prevDir & (NORTH|SOUTH))
+							var/matrix/ntransform = matrix(transform)
+							ntransform.Turn(90)
+							if((mixDir == NORTHWEST) || (mixDir == SOUTHEAST))
+								ntransform.Scale(-1, 1)
+							else
+								ntransform.Scale(1, -1)
+							prevI.transform = ntransform
+			var/image/I = image(path_image_icon, T, path_image_icon_state, ABOVE_OPEN_TURF_LAYER, dir=direction)
+			I.plane = 0
+			I.appearance_flags = RESET_COLOR
+			I.color = path_image_color
+			path[T] = I
+			path_images += I
+
+	for(var/V in path_huds_watching_me)
+		var/datum/atom_hud/H = V
+		H.add_to_hud(src)
+
+
+/mob/living/simple_animal/bot/proc/increment_path()
+	if(!path || !path.len)
+		return
+	var/image/I = path[path[1]]
+	if(I)
+		I.icon = null
+	path.Cut(1, 2)
