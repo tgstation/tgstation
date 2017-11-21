@@ -1,4 +1,6 @@
 /proc/getviewsize(view)
+	var/viewX = 15
+	var/viewY = 15
 	if(isnum(view))
 		var/totalviewrange = 1 + 2 * client.view
 		viewX = totalviewrange
