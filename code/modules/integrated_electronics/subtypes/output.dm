@@ -84,7 +84,7 @@
 	var/brightness = get_pin_data(IC_INPUT, 2)
 
 	if(new_color && isnum(brightness))
-		brightness = CLAMP(brightness, 0, 6)
+		brightness = Clamp(brightness, 0, 6)
 		light_rgb = new_color
 		light_brightness = brightness
 
@@ -160,7 +160,7 @@
 		var/selected_sound = sounds[ID]
 		if(!selected_sound)
 			return
-		vol = CLAMP(vol ,0 , 100)
+		vol = Clamp(vol ,0 , 100)
 		playsound(get_turf(src), selected_sound, vol, freq, -1)
 
 /obj/item/integrated_circuit/output/sound/on_data_written()
