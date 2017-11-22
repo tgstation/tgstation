@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Added two new symptoms: one allows viruses to still work while dead, and allows infection of undead species, and one allows infection of inorganic species (such as plasmapeople or golems)."
