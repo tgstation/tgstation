@@ -442,17 +442,17 @@
 
 /obj/screen/click_catcher/proc/UpdateGreed(view_size_x = 15, view_size_y = 15)
 	var/icon/newicon = icon('icons/mob/screen_gen.dmi', "flash")
-	if(view_size_x > 16 || view_size_y > 16)
+	if(view_size_x > 32 || view_size_y > 32)
 		newicon.Scale(16 * world.icon_size,16 * world.icon_size)
 		icon = newicon
-		var/tx = ((view_size_x - 1)/2)/16
-		var/ty = ((view_size_y - 1)/2)/16
+		var/tx = ((view_size_x - 1)*.5)/16
+		var/ty = ((view_size_y - 1)*.5)/16
 		var/matrix/M = new
 		M.Scale(tx, ty)
 		transform = M
 		screen_loc = "CENTER-16,CENTER-16"
 	else
-		screen_loc = "CENTER-[view_size_x],CENTER-[view_size_y]"
+		screen_loc = "CENTER-[(view_size_x-1)*.5],CENTER-[(view_size_y-1)*.5]"
 		newicon.Scale(view_size_x * world.icon_size,view_size_y * world.icon_size)
 		icon = newicon
 
