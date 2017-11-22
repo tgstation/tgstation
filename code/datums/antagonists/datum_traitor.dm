@@ -32,7 +32,7 @@
 	if(give_objectives)
 		forge_traitor_objectives()
 	finalize_traitor()
-	owner.faction += "syndicate"
+	owner.current.faction += "syndicate"
 	..()
 
 /datum/antagonist/traitor/apply_innate_effects()
@@ -59,7 +59,7 @@
 	if(!silent && owner.current)
 		to_chat(owner.current,"<span class='userdanger'> You are no longer the [special_role]! </span>")
 	owner.special_role = null
-	owner.faction -= "syndicate"
+	owner.current.faction -= "syndicate"
 	..()
 
 /datum/antagonist/traitor/AI/on_removal()
