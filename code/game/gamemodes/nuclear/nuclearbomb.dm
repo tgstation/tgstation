@@ -77,9 +77,9 @@
 	icon = 'icons/obj/machines/nuke_terminal.dmi'
 	icon_state = "nuclearbomb_base"
 	anchored = TRUE //stops it being moved
-	use_tag = TRUE
 
 /obj/machinery/nuclearbomb/syndicate
+	use_tag = TRUE
 	//ui_style = "syndicate" // actually the nuke op bomb is a stole nt bomb
 
 /obj/machinery/nuclearbomb/syndicate/get_cinematic_type(off_station)
