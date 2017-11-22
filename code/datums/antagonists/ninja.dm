@@ -58,7 +58,7 @@
 				var/is_bad_guy = possible_targets[M]
 				possible_targets.Cut(index,index+1)
 
-				if(is_bad_guy && !helping_station)			//kill (good-ninja + bad-guy or bad-ninja + good-guy)
+				if(is_bad_guy ^ helping_station)			//kill (good-ninja + bad-guy or bad-ninja + good-guy)
 					var/datum/objective/assassinate/O = new /datum/objective/assassinate()
 					O.owner = owner
 					O.target = M
@@ -77,7 +77,7 @@
 				var/is_bad_guy = possible_targets[M]
 				possible_targets.Cut(selected,selected+1)
 
-				if(is_bad_guy && !helping_station)			//debrain (good-ninja + bad-guy or bad-ninja + good-guy)
+				if(is_bad_guy ^ helping_station)			//debrain (good-ninja + bad-guy or bad-ninja + good-guy)
 					var/datum/objective/debrain/O = new /datum/objective/debrain()
 					O.owner = owner
 					O.target = M
