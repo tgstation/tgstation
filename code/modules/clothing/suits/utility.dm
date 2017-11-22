@@ -68,7 +68,7 @@
 	strip_delay = 70
 	equip_delay_other = 70
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-	resistance_flags = 0
+	resistance_flags = NONE
 
 
 /obj/item/clothing/suit/bomb_suit
@@ -90,7 +90,7 @@
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
 	strip_delay = 70
 	equip_delay_other = 70
-	resistance_flags = 0
+	resistance_flags = NONE
 
 
 /obj/item/clothing/head/bomb_hood/security
@@ -125,7 +125,7 @@
 	strip_delay = 60
 	equip_delay_other = 60
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-	resistance_flags = 0
+	resistance_flags = NONE
 
 /obj/item/clothing/head/radiation/ComponentInitialize()
 	. = ..()
@@ -147,7 +147,7 @@
 	strip_delay = 60
 	equip_delay_other = 60
 	flags_inv = HIDEJUMPSUIT
-	resistance_flags = 0
+	resistance_flags = NONE
 
 /obj/item/clothing/suit/radiation/ComponentInitialize()
 	. = ..()
