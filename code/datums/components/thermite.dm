@@ -3,7 +3,7 @@
 	var/amount
 	var/overlay
 
-	var/static/list/blacklist = typecacheof(/turf/closed/wall/mineral/diamond)
+	var/static/list/blacklist = typecacheof(/turf/closed/wall/mineral/diamond, /turf/open/lava)
 	var/static/list/resistlist = typecacheof(/turf/closed/wall/r_wall)
 
 /datum/component/thermite/Initialize(_amount)
