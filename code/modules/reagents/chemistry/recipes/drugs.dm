@@ -1,5 +1,5 @@
 /datum/chemical_reaction/space_drugs
-	name = "Space Drugs"
+	name = "Tetrahydrocannabinol"
 	id = "space_drugs"
 	results = list("space_drugs" = 3)
 	required_reagents = list("mercury" = 1, "sugar" = 1, "lithium" = 1)
