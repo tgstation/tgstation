@@ -188,7 +188,7 @@
 			O.intercept_user_move(direct, mob, n, oldloc)
 
 	var/atom/movable/pulled_thing = mob.pulling
-	if(pulled_thing && GLOB.typecache_machine_or_structure[pulled_thing])
+	if(pulled_thing && GLOB.typecache_machine_or_structure[pulled_thing.type])
 		mob.dir = turn(mob.dir, 180)
 
 /mob/Moved(oldLoc, dir, Forced = FALSE)
