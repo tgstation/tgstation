@@ -288,9 +288,9 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	GLOB.ahelp_tickets.resolved_tickets -= src
 	switch(state)
 		if(AHELP_CLOSED)
-			SSblackbox.dec("ahelp_close")
+			SSblackbox.record_feedback("tally", "ahelp_stats", -1, "closed")
 		if(AHELP_RESOLVED)
-			SSblackbox.dec("ahelp_resolve")
+			SSblackbox.record_feedback("tally", "ahelp_stats", -1, "resolved")
 	state = AHELP_ACTIVE
 	closed_at = null
 	if(initiator)
@@ -300,7 +300,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/msg = "<span class='adminhelp'>Ticket [TicketHref("#[id]")] reopened by [key_name_admin(usr)].</span>"
 	message_admins(msg)
 	log_admin_private(msg)
-	SSblackbox.inc("ahelp_reopen")
+	SSblackbox.record_feedback("tally", "ahelp_stats", 1, "reopened")
 	TicketPanel()	//can only be done from here, so refresh it
 
 //private
@@ -322,7 +322,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	GLOB.ahelp_tickets.ListInsert(src)
 	AddInteraction("<font color='red'>Closed by [key_name].</font>")
 	if(!silent)
-		SSblackbox.inc("ahelp_close")
+		SSblackbox.record_feedback("tally", "ahelp_stats", 1, "closed")
 		var/msg = "Ticket [TicketHref("#[id]")] closed by [key_name]."
 		message_admins(msg)
 		log_admin_private(msg)
@@ -340,7 +340,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	AddInteraction("<font color='green'>Resolved by [key_name].</font>")
 	to_chat(initiator, "<span class='adminhelp'>Your ticket has been resolved by an admin. The Adminhelp verb will be returned to you shortly.</span>")
 	if(!silent)
-		SSblackbox.inc("ahelp_resolve")
+		SSblackbox.record_feedback("tally", "ahelp_stats", 1, "resolved")
 		var/msg = "Ticket [TicketHref("#[id]")] resolved by [key_name]"
 		message_admins(msg)
 		log_admin_private(msg)
@@ -359,7 +359,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		to_chat(initiator, "<font color='red'><b>Your admin help was rejected.</b> The adminhelp verb has been returned to you so that you may try again.</font>")
 		to_chat(initiator, "Please try to be calm, clear, and descriptive in admin helps, do not assume the admin has seen any related events, and clearly state the names of anybody you are reporting.")
 
-	SSblackbox.inc("ahelp_reject")
+	SSblackbox.record_feedback("tally", "ahelp_stats", 1, "rejected")
 	var/msg = "Ticket [TicketHref("#[id]")] rejected by [key_name]"
 	message_admins(msg)
 	log_admin_private(msg)
@@ -378,7 +378,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(initiator)
 		to_chat(initiator, msg)
 
-	SSblackbox.inc("ahelp_icissue")
+	SSblackbox.record_feedback("tally", "ahelp_stats", 1, "IC")
 	msg = "Ticket [TicketHref("#[id]")] marked as IC by [key_name]"
 	message_admins(msg)
 	log_admin_private(msg)
@@ -492,13 +492,13 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		return
 	if(handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
-	
+
 	msg = trim(msg)
-	
+
 	if(!msg)
 		return
 
-	SSblackbox.add_details("admin_verb","Adminhelp") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Adminhelp") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	if(current_ticket)
 		if(alert(usr, "You already have a ticket open. Is this for the same issue?",,"Yes","No") != "No")
 			if(current_ticket)
@@ -593,8 +593,9 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 
 /proc/send2irc(msg,msg2)
-	if(SERVER_TOOLS_PRESENT)
-		SERVER_TOOLS_RELAY_BROADCAST("[msg] | [msg2]")
+	msg = replacetext(replacetext(msg, "\proper", ""), "\improper", "")
+	msg2 = replacetext(replacetext(msg2, "\proper", ""), "\improper", "")
+	SERVER_TOOLS_RELAY_BROADCAST("[msg] | [msg2]")
 
 /proc/send2otherserver(source,msg,type = "Ahelp")
 	var/comms_key = CONFIG_GET(string/comms_key)

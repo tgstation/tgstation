@@ -91,9 +91,11 @@
 	var/obj/item/device/nuclear_challenge/challenge = new /obj/item/device/nuclear_challenge
 	synd_mind.current.put_in_hands(challenge, TRUE)
 
-	var/list/foundIDs = synd_mind.current.search_contents_for(/obj/item/card/id)
+	var/static/id_cache = typecacheof(/obj/item/card/id)
+	var/list/foundIDs = typecache_filter_list(synd_mind.current.GetAllContents(), id_cache)
 	if(foundIDs.len)
-		for(var/obj/item/card/id/ID in foundIDs)
+		for(var/i in 1 to foundIDs.len)
+			var/obj/item/card/id/ID = foundIDs[i]
 			ID.name = "lead agent card"
 			ID.access += ACCESS_SYNDICATE_LEADER
 	else
@@ -176,14 +178,6 @@
 			disk_rescued = 0
 			break
 	var/crew_evacuated = (SSshuttle.emergency.mode == SHUTTLE_ENDGAME)
-	//var/operatives_are_dead = is_operatives_are_dead()
-
-
-	//nukes_left
-	//station_was_nuked
-	//derp //Used for tracking if the syndies actually haul the nuke to the station	//no
-	//herp //Used for tracking if the syndies got the shuttle off of the z-level	//NO, DON'T FUCKING NAME VARS LIKE THIS
-
 
 	if(nuke_off_station == NUKE_SYNDICATE_BASE)
 		SSticker.mode_result = "loss - syndicate nuked - disk secured"

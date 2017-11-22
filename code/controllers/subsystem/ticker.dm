@@ -30,8 +30,7 @@ SUBSYSTEM_DEF(ticker)
 	var/list/availablefactions = list()		//list of factions with openings
 	var/list/scripture_states = list(SCRIPTURE_DRIVER = TRUE, \
 	SCRIPTURE_SCRIPT = FALSE, \
-	SCRIPTURE_APPLICATION = FALSE, \
-	SCRIPTURE_JUDGEMENT = FALSE) //list of clockcult scripture states for announcements
+	SCRIPTURE_APPLICATION = FALSE) //list of clockcult scripture states for announcements
 
 	var/delay_end = 0						//if set true, the round will not restart on it's own
 
@@ -177,6 +176,8 @@ SUBSYSTEM_DEF(ticker)
 			if(!setup())
 				//setup failed
 				current_state = GAME_STATE_STARTUP
+				start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
+				timeLeft = null
 				Master.SetRunLevel(RUNLEVEL_LOBBY)
 
 		if(GAME_STATE_PLAYING)
@@ -264,8 +265,6 @@ SUBSYSTEM_DEF(ticker)
 	collect_minds()
 	equip_characters()
 
-	SSoverlays.Flush()	//Flush the majority of the shit
-
 	GLOB.data_core.manifest()
 
 	transfer_characters()	//transfer keys to the new mobs
@@ -298,7 +297,7 @@ SUBSYSTEM_DEF(ticker)
 	set waitfor = FALSE
 	mode.post_setup()
 	GLOB.start_state = new /datum/station_state()
-	GLOB.start_state.count(1)
+	GLOB.start_state.count()
 	//Cleanup some stuff
 	for(var/obj/effect/landmark/start/S in GLOB.landmarks_list)
 		//Deleting Startpoints but we need the ai point to AI-ize people later
@@ -391,7 +390,8 @@ SUBSYSTEM_DEF(ticker)
 		C.playtitlemusic(40)
 
 	//Player status report
-	for(var/mob/Player in GLOB.mob_list)
+	for(var/i in GLOB.mob_list)
+		var/mob/Player = i
 		if(Player.mind && !isnewplayer(Player))
 			if(Player.stat != DEAD && !isbrain(Player))
 				num_survivors++
@@ -437,7 +437,8 @@ SUBSYSTEM_DEF(ticker)
 	CHECK_TICK
 
 	//Silicon laws report
-	for (var/mob/living/silicon/ai/aiPlayer in GLOB.mob_list)
+	for (var/i in GLOB.ai_list)
+		var/mob/living/silicon/ai/aiPlayer = i
 		if (aiPlayer.stat != DEAD && aiPlayer.mind)
 			to_chat(world, "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws at the end of the round were:</b>")
 			aiPlayer.show_laws(1)
@@ -456,7 +457,7 @@ SUBSYSTEM_DEF(ticker)
 
 	CHECK_TICK
 
-	for (var/mob/living/silicon/robot/robo in GLOB.mob_list)
+	for (var/mob/living/silicon/robot/robo in GLOB.silicon_mobs)
 		if (!robo.connected_ai && robo.mind)
 			if (robo.stat != DEAD)
 				to_chat(world, "<b>[robo.name] (Played by: [robo.mind.key]) survived as an AI-less borg! Its laws were:</b>")

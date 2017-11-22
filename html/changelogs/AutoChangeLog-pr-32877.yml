@@ -1,0 +1,5 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Computers will no longer rotate incorrectly when being deconstructed."
+  - bugfix: "You can now rotate computer frames during construction."

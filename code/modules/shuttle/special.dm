@@ -140,6 +140,7 @@
 	name = "Bardrone"
 	desc = "A barkeeping drone, an indestructible robot built to tend bars."
 	seeStatic = FALSE
+	hacked = TRUE
 	laws = "1. Serve drinks.\n\
 		2. Talk to patrons.\n\
 		3. Don't get messed up in their affairs."
@@ -227,10 +228,10 @@
 /obj/effect/forcefield/luxury_shuttle/CollidedWith(atom/movable/AM)
 	if(!isliving(AM))
 		return ..()
-	
+
 	if(check_times[AM] && check_times[AM] > world.time) //Let's not spam the message
 		return ..()
-	
+
 	check_times[AM] = world.time + LUXURY_MESSAGE_COOLDOWN
 
 	var/total_cash = 0

@@ -10,6 +10,7 @@
 	speak_chance = 1
 	icon = 'icons/mob/mob.dmi'
 	speed = 0
+	spacewalk = TRUE
 	a_intent = INTENT_HARM
 	stop_automated_movement = 1
 	status_flags = CANPUSH
@@ -84,9 +85,6 @@
 				to_chat(M, "<span class='cult'>You cannot repair your own dents, as you have none!</span>")
 	else if(src != M)
 		return ..()
-
-/mob/living/simple_animal/hostile/construct/Process_Spacemove(movement_dir = 0)
-	return 1
 
 /mob/living/simple_animal/hostile/construct/narsie_act()
 	return

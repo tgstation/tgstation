@@ -295,7 +295,9 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bd" = (
-/obj/machinery/computer/emergency_shuttle,
+/obj/machinery/computer/emergency_shuttle{
+	dir = 1
+	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "be" = (

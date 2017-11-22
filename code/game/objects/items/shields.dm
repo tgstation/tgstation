@@ -17,7 +17,6 @@
 	throw_range = 3
 	w_class = WEIGHT_CLASS_BULKY
 	materials = list(MAT_GLASS=7500, MAT_METAL=1000)
-	origin_tech = "materials=3;combat=4"
 	attack_verb = list("shoved", "bashed")
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 
@@ -54,7 +53,6 @@
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	materials = list()
-	origin_tech = "materials=1;combat=3;biotech=2"
 	resistance_flags = FLAMMABLE
 	block_chance = 30
 
@@ -70,7 +68,6 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
-	origin_tech = "materials=4;magnets=5;syndicate=6"
 	attack_verb = list("shoved", "bashed")
 	var/active = 0
 
@@ -110,7 +107,6 @@
 	icon_state = "teleriot0"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
-	origin_tech = "materials=3;combat=4;engineering=4"
 	slot_flags = null
 	force = 3
 	throwforce = 3

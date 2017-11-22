@@ -17,7 +17,7 @@
 	var/list/affecting	// the list of all items that will be moved this ptick
 	var/id = ""			// the control ID	- must match controller ID
 	var/verted = 1		// set to -1 to have the conveyour belt be inverted, so you can use the other corner icons
-	speed_process = 1
+	speed_process = TRUE
 
 /obj/machinery/conveyor/centcom_auto
 	id = "round_end_belt"
@@ -179,12 +179,6 @@
 	if(C)
 		C.set_operable(stepdir, id, op)
 
-/*
-/obj/machinery/conveyor/verb/destroy()
-	set src in view()
-	src.broken()
-*/
-
 /obj/machinery/conveyor/power_change()
 	..()
 	update()
@@ -208,7 +202,7 @@
 
 	var/list/conveyors		// the list of converyors that are controlled by this switch
 	anchored = TRUE
-	speed_process = 1
+	speed_process = TRUE
 
 
 

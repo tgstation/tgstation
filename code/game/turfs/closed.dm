@@ -15,6 +15,12 @@
 /turf/closed/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	return FALSE
 
+/turf/closed/CanPass(atom/movable/mover, turf/target)
+	if(istype(mover) && (mover.pass_flags & PASSCLOSEDTURF))
+		return TRUE
+	else
+		..()
+
 /turf/closed/indestructible
 	name = "wall"
 	icon = 'icons/turf/walls.dmi'
@@ -36,7 +42,7 @@
 
 /turf/closed/indestructible/splashscreen
 	name = "Space Station 13"
-	icon = 'config/title_screens/images/blank.png'
+	icon = 'icons/blank_title.png'
 	icon_state = ""
 	layer = FLY_LAYER
 

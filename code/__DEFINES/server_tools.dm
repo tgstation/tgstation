@@ -1,28 +1,29 @@
-// /tg/station 13 server tools API v3.1.0.2
+// /tg/station 13 server tools API
+#define SERVICE_API_VERSION_STRING "3.2.0.1"
 
 //CONFIGURATION
 //use this define if you want to do configuration outside of this file
 #ifndef SERVER_TOOLS_EXTERNAL_CONFIGURATION
 //Comment this out once you've filled in the below
-//#error /tg/station server tools interface unconfigured
+#error /tg/station server tools interface unconfigured
 
 //Required interfaces (fill in with your codebase equivalent):
 
 //create a global variable named `Name` and set it to `Value`
 //These globals must not be modifiable from anywhere outside of the server tools
-#define SERVER_TOOLS_DEFINE_AND_SET_GLOBAL(Name, Value) GLOBAL_VAR_INIT(##Name, ##Value); GLOBAL_PROTECT(##Name)
+#define SERVER_TOOLS_DEFINE_AND_SET_GLOBAL(Name, Value)
 //Read the value in the global variable `Name`
-#define SERVER_TOOLS_READ_GLOBAL(Name) GLOB.##Name
+#define SERVER_TOOLS_READ_GLOBAL(Name)
 //Set the value in the global variable `Name` to `Value`
-#define SERVER_TOOLS_WRITE_GLOBAL(Name, Value) GLOB.##Name = ##Value
+#define SERVER_TOOLS_WRITE_GLOBAL(Name, Value)
 //display an announcement `message` from the server to all players
-#define SERVER_TOOLS_WORLD_ANNOUNCE(message) to_chat(world, "<span class='boldannounce'>[rhtml_encode(##message)]</span>")
+#define SERVER_TOOLS_WORLD_ANNOUNCE(message)
 //Write a string `message` to a server log
-#define SERVER_TOOLS_LOG(message) log_world("SERVICE: [##message]")
+#define SERVER_TOOLS_LOG(message)
 //Notify current in-game administrators of a string `event`
-#define SERVER_TOOLS_NOTIFY_ADMINS(event) message_admins(##event)
+#define SERVER_TOOLS_NOTIFY_ADMINS(event)
 //The current amount of connected clients
-#define SERVER_TOOLS_CLIENT_COUNT GLOB.clients.len
+#define SERVER_TOOLS_CLIENT_COUNT
 #endif
 
 //Required hooks:
@@ -72,8 +73,9 @@
 
 #define SERVICE_WORLD_PARAM "server_service"
 #define SERVICE_VERSION_PARAM "server_service_version"
+#define SERVICE_INSTANCE_PARAM "server_instance"
 #define SERVICE_PR_TEST_JSON "prtestjob.json"
-#define SERVICE_INTERFACE_DLL "TGServiceInterface.dll"
+#define SERVICE_INTERFACE_DLL "TGDreamDaemonBridge.dll"
 #define SERVICE_INTERFACE_FUNCTION "DDEntryPoint"
 
 #define SERVICE_CMD_HARD_REBOOT "hard_reboot"
@@ -98,29 +100,30 @@
 #define SERVICE_REQUEST_WORLD_REBOOT "worldreboot"
 #define SERVICE_REQUEST_API_VERSION "api_ver"
 
+#define SERVICE_RETURN_SUCCESS "SUCCESS"
+
 /*
 The MIT License
 
-Copyright (c) 2011 Dominic Tarr
-
-Permission is hereby granted, free of charge,
-to any person obtaining a copy of this software and
-associated documentation files (the "Software"), to
-deal in the Software without restriction, including
-without limitation the rights to use, copy, modify,
-merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom
-the Software is furnished to do so,
+Copyright (c) 2017 Jordan Brown
+Permission is hereby granted, free of charge, 
+to any person obtaining a copy of this software and 
+associated documentation files (the "Software"), to 
+deal in the Software without restriction, including 
+without limitation the rights to use, copy, modify, 
+merge, publish, distribute, sublicense, and/or sell 
+copies of the Software, and to permit persons to whom 
+the Software is furnished to do so, 
 subject to the following conditions:
 
-The above copyright notice and this permission notice
+The above copyright notice and this permission notice 
 shall be included in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR
-ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, 
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES 
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR 
+ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, 
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */

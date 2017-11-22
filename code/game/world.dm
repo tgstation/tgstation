@@ -115,6 +115,9 @@ GLOBAL_PROTECT(security_mode)
 		warning("/tg/station 13 uses many file operations, a few shell()s, and some external call()s. Trusted mode is recommended. You can download our source code for your own browsing and compilation at https://github.com/tgstation/tgstation")
 
 /world/Topic(T, addr, master, key)
+
+	SERVER_TOOLS_ON_TOPIC	//redirect to server tools if necessary
+
 	var/static/list/topic_handlers = TopicHandlers()
 
 	var/list/input = params2list(T)
@@ -124,12 +127,8 @@ GLOBAL_PROTECT(security_mode)
 			handler = topic_handlers[I]
 			break
 
-	input["active_players"] = get_active_player_count(Import())
-
 	if((!handler || initial(handler.log)) && config && CONFIG_GET(flag/log_world_topic))
 		WRITE_FILE(GLOB.world_game_log, "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
-
-	SERVER_TOOLS_ON_TOPIC	//redirect to server tools if necessary
 
 	if(!handler)
 		return

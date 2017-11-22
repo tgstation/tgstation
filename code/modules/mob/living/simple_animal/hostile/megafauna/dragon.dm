@@ -36,6 +36,7 @@ Difficulty: Medium
 	desc = "Guardians of the necropolis."
 	health = 2500
 	maxHealth = 2500
+	spacewalk = TRUE
 	attacktext = "chomps"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	icon_state = "dragon"
@@ -95,9 +96,6 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/dragon/Goto(target, delay, minimum_distance)
 	if(!swooping)
 		..()
-
-/mob/living/simple_animal/hostile/megafauna/dragon/Process_Spacemove(movement_dir = 0)
-	return 1
 
 /mob/living/simple_animal/hostile/megafauna/dragon/OpenFire()
 	if(swooping)
@@ -384,6 +382,7 @@ Difficulty: Medium
 	melee_damage_lower = 30
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	loot = list()
+	crusher_loot = list()
 	butcher_results = list(/obj/item/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/lesser/grant_achievement(medaltype,scoretype)

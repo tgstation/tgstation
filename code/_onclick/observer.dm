@@ -53,22 +53,18 @@
 	if(user.client)
 		if(IsAdminGhost(user))
 			attack_ai(user)
-		if(user.client.prefs.inquisitive_ghost)
+		else if(user.client.prefs.inquisitive_ghost)
 			user.examinate(src)
+
+/mob/living/attack_ghost(mob/dead/observer/user)
+	if(user.client && user.health_scan)
+		healthscan(user, src, 1, TRUE)
+		return
+	..()
 
 // ---------------------------------------
 // And here are some good things for free:
 // Now you can click through portals, wormholes, gateways, and teleporters while observing. -Sayu
-
-/obj/machinery/teleport/hub/attack_ghost(mob/user)
-	var/atom/l = loc
-	var/obj/machinery/computer/teleporter/com = locate(/obj/machinery/computer/teleporter, locate(l.x - 2, l.y, l.z))
-	if(com && com.locked)
-		user.forceMove(get_turf(com.locked))
-
-/obj/effect/portal/attack_ghost(mob/user)
-	if(linked)
-		user.forceMove(get_turf(linked))
 
 /obj/machinery/gateway/centerstation/attack_ghost(mob/user)
 	if(awaygate)

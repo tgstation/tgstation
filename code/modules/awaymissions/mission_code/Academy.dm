@@ -47,7 +47,7 @@
 /obj/item/paper/fluff/awaymissions/academy/grade/aplus
 	name = "Summoning Midterm Exam"
 	info = "Grade: A+ Educator's Notes: Excellent form."
-	
+
 /obj/item/paper/fluff/awaymissions/academy/grade/bminus
 	name = "Summoning Midterm Exam"
 	info = "Grade: B- Educator's Notes: Keep applying yourself, you're showing improvement."
@@ -55,7 +55,7 @@
 /obj/item/paper/fluff/awaymissions/academy/grade/dminus
 	name = "Summoning Midterm Exam"
 	info = "Grade: D- Educator's Notes: SEE ME AFTER CLASS."
-	
+
 /obj/item/paper/fluff/awaymissions/academy/grade/failure
 	name = "Pyromancy Evaluation"
 	info = "Current Grade: F. Educator's Notes: No improvement shown despite multiple private lessons.  Suggest additional tutilage."
@@ -139,7 +139,7 @@
 /obj/structure/academy_wizard_spawner/proc/summon_wizard()
 	var/turf/T = src.loc
 	var/mob/living/carbon/human/wizbody = new(T)
-	wizbody.fully_replace_character_name("Academy Teacher")
+	wizbody.fully_replace_character_name(wizbody.real_name, "Academy Teacher")
 	wizbody.mind_initialize()
 	var/datum/mind/wizmind = wizbody.mind
 	wizmind.special_role = "Academy Defender"
@@ -335,7 +335,7 @@
 			target_mob.Move(T)
 
 /obj/structure/ladder/unbreakable/rune
-	name = "Teleportation Rune"
+	name = "\improper Teleportation Rune"
 	desc = "Could lead anywhere."
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "1"
@@ -347,7 +347,6 @@
 /obj/structure/ladder/unbreakable/rune/show_fluff_message(up,mob/user)
 	user.visible_message("[user] activates \the [src].","<span class='notice'>You activate \the [src].</span>")
 
-/obj/structure/ladder/can_use(mob/user)
-	if(user.mind in SSticker.mode.wizards)
-		return 0
-	return 1
+/obj/structure/ladder/unbreakable/rune/use(mob/user, is_ghost=FALSE)
+	if(is_ghost || !(user.mind in SSticker.mode.wizards))
+		..()

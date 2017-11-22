@@ -57,8 +57,6 @@
 		playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
 		return
 
-	return ..()
-
 
 /turf/open/floor/plating/asteroid/singularity_act()
 	if(turf_z_is_planet(src))

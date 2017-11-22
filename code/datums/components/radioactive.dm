@@ -37,11 +37,15 @@
 	return ..()
 
 /datum/component/radioactive/process()
-	if(hl3_release_date && prob(50))
-		radiation_pulse(parent, strength, RAD_DISTANCE_COEFFICIENT*2, FALSE, can_contaminate)
-		strength -= strength / hl3_release_date
-		if(strength <= RAD_BACKGROUND_RADIATION)
-			qdel(src)
+	if(!prob(50))
+		return
+	radiation_pulse(parent, strength, RAD_DISTANCE_COEFFICIENT*2, FALSE, can_contaminate)
+
+	if(!hl3_release_date)
+		return
+	strength -= strength / hl3_release_date
+	if(strength <= RAD_BACKGROUND_RADIATION)
+		return PROCESS_KILL
 
 /datum/component/radioactive/InheritComponent(datum/component/C, i_am_original)
 	if(!i_am_original)

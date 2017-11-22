@@ -4,7 +4,7 @@
 	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50)
 	volume = 50
 	container_type = OPENCONTAINER_1
-	spillable = 1
+	spillable = TRUE
 	resistance_flags = ACID_PROOF
 
 
@@ -91,15 +91,9 @@
 
 /obj/item/reagent_containers/glass/attackby(obj/item/I, mob/user, params)
 	var/hotness = I.is_hot()
-	if(hotness)
-		var/added_heat = (hotness / 100) //ishot returns a temperature
-		if(reagents)
-			if(reagents.chem_temp < hotness) //can't be heated to be hotter than the source
-				reagents.chem_temp += added_heat
-				to_chat(user, "<span class='notice'>You heat [src] with [I].</span>")
-				reagents.handle_reactions()
-			else
-				to_chat(user, "<span class='warning'>[src] is already hotter than [I]!</span>")
+	if(hotness && reagents)
+		reagents.expose_temperature(hotness)
+		to_chat(user, "<span class='notice'>You heat [name] with [I]!</span>")
 
 	if(istype(I, /obj/item/reagent_containers/food/snacks/egg)) //breaking eggs
 		var/obj/item/reagent_containers/food/snacks/egg/E = I
@@ -179,7 +173,6 @@
 	materials = list(MAT_METAL=3000)
 	volume = 50
 	amount_per_transfer_from_this = 10
-	origin_tech = "materials=2;engineering=3;plasmatech=3"
 	flags_1 = OPENCONTAINER_1
 
 /obj/item/reagent_containers/glass/beaker/noreact/Initialize()
@@ -197,7 +190,6 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,300)
 	flags_1 = OPENCONTAINER_1
-	origin_tech = "bluespace=5;materials=4;plasmatech=4"
 
 /obj/item/reagent_containers/glass/beaker/cryoxadone
 	list_reagents = list("cryoxadone" = 30)
@@ -217,7 +209,7 @@
 	list_reagents = list("silver_sulfadiazine" = 50)
 
 /obj/item/reagent_containers/glass/beaker/large/charcoal
-	name = "antitoxin reserve tank"
+	name = "charcoal reserve tank"
 	list_reagents = list("charcoal" = 50)
 
 /obj/item/reagent_containers/glass/beaker/large/epinephrine
@@ -298,7 +290,6 @@
 	materials = list(MAT_GLASS=0)
 	volume = 50
 	amount_per_transfer_from_this = 10
-	origin_tech = null
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/empty
 	list_reagents = list()

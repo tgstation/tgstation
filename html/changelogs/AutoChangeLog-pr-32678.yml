@@ -1,0 +1,5 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Chameleon goggles will no longer go invisible when selecting Optical Tray scanners."
+  - rscadd: "Engineering and Atmos scanner goggles will now have correctly colored inhand sprites."

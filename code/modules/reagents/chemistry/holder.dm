@@ -230,8 +230,7 @@
 	var/list/cached_reagents = reagent_list
 	var/list/cached_addictions = addiction_list
 	if(C)
-		chem_temp = C.bodytemperature
-		handle_reactions()
+		expose_temperature(C.bodytemperature, 0.25)
 	var/need_mob_update = 0
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
@@ -379,8 +378,8 @@
 						remove_reagent(B, (multiplier * cached_required_reagents[B]), safety = 1)
 
 					for(var/P in C.results)
-						SSblackbox.add_details("chemical_reaction", "[P]|[cached_results[P]*multiplier]")
 						multiplier = max(multiplier, 1) //this shouldnt happen ...
+						SSblackbox.record_feedback("tally", "chemical_reaction", cached_results[P]*multiplier, P)
 						add_reagent(P, cached_results[P]*multiplier, null, chem_temp)
 
 					var/list/seen = viewers(4, get_turf(my_atom))
@@ -734,6 +733,15 @@
 					out += "[taste_desc]"
 
 	return english_list(out, "something indescribable")
+	
+/datum/reagents/proc/expose_temperature(var/temperature, var/coeff=0.02)
+	var/temp_delta = (temperature - chem_temp) * coeff
+	if(temp_delta > 0)
+		chem_temp = min(chem_temp + max(temp_delta, 1), temperature)
+	else
+		chem_temp = max(chem_temp + min(temp_delta, -1), temperature)
+	chem_temp = round(chem_temp)
+	handle_reactions()
 
 ///////////////////////////////////////////////////////////////////////////////////
 

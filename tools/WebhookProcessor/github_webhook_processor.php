@@ -172,6 +172,23 @@ function check_tag_and_replace($payload, $title_tag, $label, &$array_to_add_labe
 	return false;
 }
 
+function set_labels($payload, $labels, $remove) {
+	$existing = get_labels($payload);
+
+	$tags = array();
+
+	$tags = array_merge($labels, $existing);
+	$tags = array_unique($tags);
+	$tags = array_diff($tags, $remove);
+
+	$final = array();
+	foreach($tags as $t)
+		$final[] = $t;
+
+	$url = $payload['pull_request']['issue_url'] . '/labels';
+	echo apisend($url, 'PUT', $final);
+}
+
 //rip bs-12
 function tag_pr($payload, $opened) {
 	//get the mergeable state
@@ -200,11 +217,11 @@ function tag_pr($payload, $opened) {
 	$mergeable = $payload['pull_request']['mergeable'];
 	if($mergeable === TRUE)	//only look for the false value
 		$remove[] = 'Merge Conflict';
-	else if ($mergable === FALSE)
+	else if ($mergeable === FALSE)
 		$tags[] = 'Merge Conflict';
 
 	$treetags = array('_maps' => 'Map Edit', 'tools' => 'Tools', 'SQL' => 'SQL');
-	$addonlytags = array('icons' => 'Sprites', 'sounds' => 'Sound', 'config' => 'Config Update', 'code/controllers/configuration/entries' => 'Config Update', 'tgui' => 'UI');
+	$addonlytags = array('icons' => 'Sprites', 'sound' => 'Sound', 'config' => 'Config Update', 'code/controllers/configuration/entries' => 'Config Update', 'tgui' => 'UI');
 	foreach($treetags as $tree => $tag)
 		if(has_tree_been_edited($payload, $tree))
 			$tags[] = $tag;
@@ -215,31 +232,16 @@ function tag_pr($payload, $opened) {
 			$tags[] = $tag;
 
 	check_tag_and_replace($payload, '[dnm]', 'Do Not Merge', $tags);
-	if(!check_tag_and_replace($payload, '[wip]', 'Work In Progress', $tags))
-		check_tag_and_replace($payload, '[ready]', 'Work In Progress', $remove);
+	if(!check_tag_and_replace($payload, '[wip]', 'Work In Progress', $tags) && check_tag_and_replace($payload, '[ready]', 'Work In Progress', $remove))
+		$tags[] = 'Needs Review';
 
-	$url = $payload['pull_request']['issue_url'] . '/labels';
-
-	$existing = get_labels($payload);
-
-	$tags = array_merge($tags, $existing);
-	$tags = array_unique($tags);
-	$tags = array_diff($tags, $remove);
-
-	$final = array();
-	foreach($tags as $t)
-		$final[] = $t;
-
-
-	echo apisend($url, 'PUT', $final);
-
-	return $final;
+	return array($tags, $remove);
 }
 
 function remove_ready_for_review($payload, $labels = null){
 	if($labels == null)
 		$labels = get_labels($payload);
-	$index = array_search('Review Again', $labels);
+	$index = array_search('Needs Review', $labels);
 	if($index !== FALSE)
 		unset($labels[$index]);
 	$url = $payload['pull_request']['issue_url'] . '/labels';
@@ -255,13 +257,14 @@ function get_reviews($payload){
 	return json_decode(apisend($payload['pull_request']['url'] . '/reviews'), true);
 }
 
-function check_ready_for_review($payload, $labels = null){
-	$r4rlabel = 'Review Again';
+function check_ready_for_review($payload, $labels = null, $remove = array()){
+	$r4rlabel = 'Needs Review';
 	$labels_which_should_not_be_ready = array('Do Not Merge', 'Work In Progress', 'Merge Conflict');
 	$has_label_already = false;
 	$should_not_have_label = false;
 	if($labels == null)
 		$labels = get_labels($payload);
+	$returned = array($labels, $remove);
 	//if the label is already there we may need to remove it
 	foreach($labels as $L){
 		if(in_array($L, $labels_which_should_not_be_ready))
@@ -271,8 +274,8 @@ function check_ready_for_review($payload, $labels = null){
 	}
 	
 	if($has_label_already && $should_not_have_label){
-		remove_ready_for_review($payload, $labels, $r4rlabel);
-		return;
+		$remove[] = $r4rlabel;
+		return $returned;
 	}
 
 	//find all reviews to see if changes were requested at some point
@@ -282,7 +285,7 @@ function check_ready_for_review($payload, $labels = null){
 	$dismissed_an_approved_review = false;
 
 	foreach($reviews as $R)
-		if(is_maintainer($R['user']['login'])){
+		if(is_maintainer($payload, $R['user']['login'])){
 			$lower_state = strtolower($R['state']);
 			if($lower_state == 'changes_requested')
 				$reviews_ids_with_changes_requested[] = $R['id'];
@@ -294,8 +297,8 @@ function check_ready_for_review($payload, $labels = null){
 
 	if(!$dismissed_an_approved_review && count($reviews_ids_with_changes_requested) == 0){
 		if($has_label_already)
-			remove_ready_for_review($payload, $labels);
-		return;	//no need to be here
+			$remove[] = $r4rlabel;
+		return $returned;	//no need to be here
 	}
 
 	if(count($reviews_ids_with_changes_requested) > 0){
@@ -311,8 +314,8 @@ function check_ready_for_review($payload, $labels = null){
 			//review comments which are outdated have a null position
 			if($C['position'] !== null){
 				if($has_label_already)
-					remove_ready_for_review($payload, $labels);
-				return;	//no need to tag
+					$remove[] = $r4rlabel;
+				return $returned;	//no need to tag
 			}
 		}
 	}
@@ -320,9 +323,8 @@ function check_ready_for_review($payload, $labels = null){
 	//finally, add it if necessary
 	if(!$has_label_already){
 		$labels[] = $r4rlabel;
-		$url = $payload['pull_request']['issue_url'] . '/labels';
-		apisend($url, 'PUT', $labels);
 	}
+	return $returned;
 }
 
 function check_dismiss_changelog_review($payload){
@@ -359,10 +361,11 @@ function handle_pr($payload) {
 	$validated = validate_user($payload);
 	switch ($payload["action"]) {
 		case 'opened':
-			tag_pr($payload, true);
+			list($labels, $remove) = tag_pr($payload, true);
+			set_labels($payload, $labels, $remove);
 			if($no_changelog)
 				check_dismiss_changelog_review($payload);
-			if(get_pr_code_friendliness($payload) < 0){
+			if(get_pr_code_friendliness($payload) <= 0){
 				$balances = pr_balances();
 				$author = $payload['pull_request']['user']['login'];
 				if(isset($balances[$author]) && $balances[$author] < 0 && !is_maintainer($payload, $author))
@@ -372,9 +375,10 @@ function handle_pr($payload) {
 		case 'edited':
 			check_dismiss_changelog_review($payload);
 		case 'synchronize':
-			$labels = tag_pr($payload, false);
+			list($labels, $remove) = tag_pr($payload, false);
 			if($payload['action'] == 'synchronize')
-				check_ready_for_review($payload, $labels);
+				list($labels, $remove) = check_ready_for_review($payload, $labels, $remove);
+			set_labels($payload, $labels, $remove);
 			return;
 		case 'reopened':
 			$action = $payload['action'];
@@ -452,13 +456,11 @@ function get_pr_code_friendliness($payload, $oldbalance = null){
 		'Grammar and Formatting' => 1,
 		'Priority: High' => 4,
 		'Priority: CRITICAL' => 5,
-		'Atmospherics' => 4,
 		'Logging' => 1,
 		'Feedback' => 1,
 		'Performance' => 3,
 		'Feature' => -1,
 		'Balance/Rebalance' => -1,
-		'Tweak' => -1,
 		'PRB: Reset' => $startingPRBalance - $oldbalance,
 	);
 

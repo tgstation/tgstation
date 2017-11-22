@@ -60,7 +60,9 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "am" = (
-/obj/machinery/computer/atmos_alert,
+/obj/machinery/computer/atmos_alert{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "an" = (
@@ -79,7 +81,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aq" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/security{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "ar" = (
@@ -99,11 +103,15 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "au" = (
-/obj/machinery/computer/crew,
+/obj/machinery/computer/crew{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "av" = (
-/obj/machinery/computer/communications,
+/obj/machinery/computer/communications{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aw" = (
@@ -427,13 +435,13 @@ ab
 ab
 ab
 ab
-bf
+bd
 aI
 aL
 aL
 aL
 aT
-bh
+bd
 ab
 ab
 ab
@@ -523,7 +531,7 @@ bc
 (10,1,1) = {"
 ab
 ab
-be
+bd
 aq
 av
 aA
@@ -547,13 +555,13 @@ ab
 ab
 ab
 ab
-bg
+bd
 aI
 aK
 aK
 aK
 aT
-bi
+bd
 ab
 ab
 ab

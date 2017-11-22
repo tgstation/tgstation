@@ -349,7 +349,7 @@
 	var/injection_amount = 1
 	amount_per_transfer_from_this = 5
 	container_type = OPENCONTAINER_1
-	spillable = 0
+	spillable = FALSE
 	possible_transfer_amounts = list(5,10,15)
 
 /obj/item/reagent_containers/chemtank/ui_action_click()

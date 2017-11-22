@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - bugfix: "Using a chameleon projector will now dismount you from any vehicles you are riding, in order to prevent wacky space glitches and being sent to a realm outside space and time."

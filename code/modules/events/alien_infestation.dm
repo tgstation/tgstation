@@ -29,8 +29,8 @@
 		control.occurrences--
 	return ..()
 
-/datum/round_event/ghost_role/alien_infestation/announce()
-	if(successSpawn)
+/datum/round_event/ghost_role/alien_infestation/announce(fake)
+	if(successSpawn || fake)
 		priority_announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", 'sound/ai/aliens.ogg')
 
 

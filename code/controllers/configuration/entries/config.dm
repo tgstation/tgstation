@@ -318,6 +318,8 @@ CONFIG_DEF(number/client_warn_version)
 CONFIG_DEF(string/client_warn_message)
 	value = "Your version of byond may have issues or be blocked from accessing this server in the future."
 
+CONFIG_DEF(flag/client_warn_popup)
+
 CONFIG_DEF(number/client_error_version)
 	value = null
 	min_val = 500
@@ -372,3 +374,10 @@ CONFIG_TWEAK(number/mc_tick_rate/ValidateAndSet(str_val))
 	. = ..()
 	if (.)
 		Master.UpdateTickRate()
+
+CONFIG_DEF(flag/resume_after_initializations)
+
+CONFIG_TWEAK(flag/ValidateAndSet(str_val))
+	. = ..()
+	if(. && Master.current_runlevel)
+		world.sleep_offline = !value
