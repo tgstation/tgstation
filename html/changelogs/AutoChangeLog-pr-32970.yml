@@ -1,0 +1,4 @@
+author: "Cyberboss"
+delete-after: True
+changes: 
+  - admin: "\"ahelp\" chat command can now accept a ticket number as opposed to a ckey"
