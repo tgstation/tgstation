@@ -294,7 +294,7 @@
 
 /obj/machinery/biogenerator/proc/detach()
 	if(beaker)
-		beaker.loc = src.loc
+		beaker.forceMove(drop_location())
 		beaker = null
 		update_icon()
 
