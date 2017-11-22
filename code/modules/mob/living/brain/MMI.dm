@@ -13,6 +13,8 @@
 	var/datum/ai_laws/laws = new()
 	var/force_replace_ai_name = FALSE
 	var/overrides_aicore_laws = FALSE // Whether the laws on the MMI, if any, override possible pre-existing laws loaded on the AI core.
+	var/cooldown = FALSE
+	var/spam_level = 0
 
 /obj/item/device/mmi/update_icon()
 	if(brain)
@@ -40,6 +42,15 @@
 /obj/item/device/mmi/attackby(obj/item/O, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(istype(O, /obj/item/organ/brain)) //Time to stick a brain in it --NEO
+		if(cooldown)
+			to_chat(user, "<span class='notice'>\the [src] is currently cooling off!</span>")
+			return
+		if(spam_level >= 3)
+			cooldown = TRUE
+			addtimer(CALLBACK(src, .proc/stop_cooldown), 25 SECONDS)
+			to_chat(user, "<span class='notice'>A red right flashes on \the [src] as it rejects \the [O]!</span>")
+			return
+		
 		var/obj/item/organ/brain/newbrain = O
 		if(brain)
 			to_chat(user, "<span class='warning'>There's already a brain in the MMI!</span>")
@@ -68,6 +79,7 @@
 		brain = newbrain
 
 		name = "Man-Machine Interface: [brainmob.real_name]"
+		spam_level++
 		update_icon()
 
 		SSblackbox.record_feedback("amount", "mmis_filled", 1)
@@ -77,6 +89,8 @@
 	else
 		return ..()
 
+/obj/item/device/mmi/proc/stop_cooldown()
+	cooldown = FALSE
 
 /obj/item/device/mmi/attack_self(mob/user)
 	if(!brain)
