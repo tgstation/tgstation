@@ -16,7 +16,7 @@
 	if(Initialize(arglist(arguments)) == COMPONENT_INCOMPATIBLE)
 		qdel(src, TRUE, TRUE)
 		return
-	
+
 	_CheckDupesAndJoinParent(P)
 
 /datum/component/proc/_CheckDupesAndJoinParent()
@@ -45,12 +45,12 @@
 	if(!old)
 		//let the others know
 		P.SendSignal(COMSIG_COMPONENT_ADDED, src)
-	
+
 	//lazy init the parent's dc list
 	var/list/dc = P.datum_components
 	if(!dc)
 		P.datum_components = dc = list()
-	
+
 	//set up the typecache
 	var/our_type = type
 	for(var/I in _GetInverseTypeList(our_type))
@@ -114,7 +114,7 @@
 	if(!procs)
 		procs = list()
 		signal_procs = procs
-	
+
 	var/list/sig_types = islist(sig_type_or_types) ? sig_type_or_types : list(sig_type_or_types)
 	for(var/sig_type in sig_types)
 		if(!override)
@@ -177,7 +177,7 @@
 		for(var/I in target)
 			var/datum/component/C = I
 			if(!C.enabled)
-				continue			
+				continue
 			var/list/sps = C.signal_procs
 			var/datum/callback/CB = LAZYACCESS(sps, sigtype)
 			if(!CB)
@@ -255,3 +255,6 @@
 			target.TakeComponent(I)
 	else
 		target.TakeComponent(comps)
+
+/datum/component/ui_host()
+	return parent
