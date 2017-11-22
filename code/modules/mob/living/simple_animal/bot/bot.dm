@@ -87,6 +87,7 @@
 	var/path_image_icon = 'icons/mob/aibots.dmi'
 	var/path_image_icon_state = "path_indicator"
 	var/path_image_color = "#FFFFFF"
+	var/reset_access_timer_id
 	//This holds text for what the bot is mode doing, reported on the remote bot control interface.
 
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BOT_HUD, DIAG_HUD, DIAG_PATH_HUD = HUD_LIST_LIST) //Diagnostic HUD views
@@ -161,7 +162,7 @@
 
 /mob/living/simple_animal/bot/Destroy()
 	if(path_hud)
-		qdel(path_hud)
+		QDEL_NULL(path_hud)
 		path_hud = null
 	GLOB.bots_list -= src
 	if(paicard)
@@ -483,9 +484,6 @@ Pass a positive integer as an argument to override a bot's default speed.
 	bot_reset() //Reset a bot before setting it to call mode.
 	var/area/end_area = get_area(waypoint)
 
-	if(client) //Player bots instead get a location command from the AI
-		to_chat(src, "<span class='noticebig'>Priority waypoint set by [icon2html(caller, src)] <b>[caller]</b>. Proceed to <b>[end_area.name]<\b>.</span>")
-
 	//For giving the bot temporary all-access.
 	var/obj/item/card/id/all_access = new /obj/item/card/id
 	var/datum/job/captain/All = new/datum/job/captain
@@ -500,7 +498,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 			turn_on() //Saves the AI the hassle of having to activate a bot manually.
 		access_card = all_access //Give the bot all-access while under the AI's command.
 		if(client)
-			addtimer(CALLBACK (src, .proc/bot_reset), 300, TIMER_UNIQUE) //if the bot is player controlled, they only get the extra access for 30 seconds.
+			reset_access_timer_id = addtimer(CALLBACK (src, .proc/bot_reset), 600, TIMER_OVERRIDE|TIMER_STOPPABLE) //if the bot is player controlled, they get the extra access for a limited time
+			to_chat(src, "<span class='notice'><span class='big'>Priority waypoint set by [icon2html(calling_ai, src)] <b>[caller]</b>. Proceed to <b>[end_area.name]</b>.</span><br>[path.len-1] meters to destination. You have been granted additional door access for 60 seconds.</span>")
 		if(message)
 			to_chat(calling_ai, "<span class='notice'>[icon2html(src, calling_ai)] [name] called to [end_area.name]. [path.len-1] meters to destination.</span>")
 		pathset = 1
@@ -525,6 +524,9 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(calling_ai) //Simple notification to the AI if it called a bot. It will not know the cause or identity of the bot.
 		to_chat(calling_ai, "<span class='danger'>Call command to a bot has been reset.</span>")
 		calling_ai = null
+	if(reset_access_timer_id)
+		deltimer(reset_access_timer_id)
+		reset_access_timer_id = null
 	set_path(null)
 	summon_target = null
 	pathset = 0
@@ -942,11 +944,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 		H.remove_from_hud(src)
 
 	var/list/path_images = hud_list[DIAG_PATH_HUD]
-	if(path_images.len)
-		for(var/V in path_images)
-			qdel(V)
-		path_images.Cut()
-	if(newpath && newpath.len)
+	QDEL_LIST(path_images)
+	if(newpath)
 		for(var/i in 1 to newpath.len)
 			var/turf/T = newpath[i]
 			var/direction = NORTH
@@ -961,17 +960,23 @@ Pass a positive integer as an argument to override a bot's default speed.
 					if(mixDir in GLOB.diagonals)
 						prevI.dir = mixDir
 						if(prevDir & (NORTH|SOUTH))
-							var/matrix/ntransform = matrix(transform)
+							var/matrix/ntransform = matrix()
 							ntransform.Turn(90)
 							if((mixDir == NORTHWEST) || (mixDir == SOUTHEAST))
 								ntransform.Scale(-1, 1)
 							else
 								ntransform.Scale(1, -1)
 							prevI.transform = ntransform
-			var/image/I = image(path_image_icon, T, path_image_icon_state, ABOVE_OPEN_TURF_LAYER, dir=direction)
-			I.plane = 0
-			I.appearance_flags = RESET_COLOR
-			I.color = path_image_color
+			var/mutable_appearance/MA = new /mutable_appearance()
+			MA.icon = path_image_icon
+			MA.icon_state = path_image_icon_state
+			MA.layer = ABOVE_OPEN_TURF_LAYER
+			MA.plane = 0
+			MA.appearance_flags = RESET_COLOR|RESET_TRANSFORM
+			MA.color = path_image_color
+			MA.dir = direction
+			var/image/I = image(loc = T)
+			I.appearance = MA
 			path[T] = I
 			path_images += I
 
