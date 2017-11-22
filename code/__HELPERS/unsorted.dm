@@ -1496,3 +1496,11 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 			else
 				return "\[[url_encode(thing.tag)]\]"
 	return "\ref[input]"
+
+// Makes a call in the context of a different usr
+// Use sparingly
+/world/proc/PushUsr(mob/M, datum/callback/CB)
+	var/temp = usr
+	usr = M
+	CB.Invoke()
+	usr = temp
