@@ -1,0 +1,5 @@
+author: "Y0SH1 M4S73R"
+delete-after: True
+changes: 
+  - spellcheck: "The R&D Server's name is now improper."
+  - spellcheck: "The R&D Server now has an explanation of what it does."
