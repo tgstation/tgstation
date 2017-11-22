@@ -757,6 +757,9 @@
 				to_chat(usr, "This can only be used on instances of type /mob")
 				return
 
+			if(tgalert(usr, "Are you sure you want to make [M] into a ninja?", "Confirmation", "Yes", "No") == "No")
+				return
+
 			if(!M.mind)
 				M.mind_initialize()
 
