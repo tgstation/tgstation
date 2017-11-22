@@ -80,6 +80,7 @@
 
 		name = "Man-Machine Interface: [brainmob.real_name]"
 		spam_level++
+		addtimer(CALLBACK(src, .proc/lower_spam), 10 SECONDS)
 		update_icon()
 
 		SSblackbox.record_feedback("amount", "mmis_filled", 1)
@@ -91,6 +92,10 @@
 
 /obj/item/device/mmi/proc/stop_cooldown()
 	cooldown = FALSE
+	lower_spam()
+
+/obj/item/device/mmi/proc/lower_spam()
+	spam_level = min(spam_level - 1, 0)
 
 /obj/item/device/mmi/attack_self(mob/user)
 	if(!brain)
