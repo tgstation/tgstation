@@ -445,14 +445,14 @@
 	if(view_size_x > 32 || view_size_y > 32)
 		newicon.Scale(16 * world.icon_size,16 * world.icon_size)
 		icon = newicon
-		var/tx = ((view_size_x - 1)*.5)/16
-		var/ty = ((view_size_y - 1)*.5)/16
+		var/tx = ((view_size_x - 1)*0.5)/16
+		var/ty = ((view_size_y - 1)*0.5)/16
 		var/matrix/M = new
 		M.Scale(tx, ty)
 		transform = M
 		screen_loc = "CENTER-16,CENTER-16"
 	else
-		screen_loc = "CENTER-[(view_size_x-1)*.5],CENTER-[(view_size_y-1)*.5]"
+		screen_loc = "CENTER-[(view_size_x-1)*0.5],CENTER-[(view_size_y-1)*0.5]"
 		newicon.Scale(view_size_x * world.icon_size,view_size_y * world.icon_size)
 		icon = newicon
 
