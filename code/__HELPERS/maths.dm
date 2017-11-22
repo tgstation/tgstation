@@ -192,7 +192,7 @@ GLOBAL_LIST_INIT(sqrtTable, list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4,
 
 /proc/mouse_angle_from_client(client/client)
 	var/list/mouse_control = params2list(client.mouseParams)
-	if(mouse_control["screen-loc"])
+	if(mouse_control["screen-loc"] && client)
 		var/list/screen_loc_params = splittext(mouse_control["screen-loc"], ",")
 		var/list/screen_loc_X = splittext(screen_loc_params[1],":")
 		var/list/screen_loc_Y = splittext(screen_loc_params[2],":")
