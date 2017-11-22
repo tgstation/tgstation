@@ -1486,36 +1486,3 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/tcommsat/lounge
 	name = "Telecommunications Satellite Lounge"
 	icon_state = "tcomsatlounge"
-
-/////////////////////////////////////////////////////////////////////
-/*
- Lists of areas to be used with is_type_in_list.
- Used in gamemodes code at the moment. --rastaf0
-*/
-
-//SPACE STATION 13
-GLOBAL_LIST_INIT(the_station_areas, list (
-	/area/bridge,
-	/area/chapel,
-	/area/construction,
-	/area/crew_quarters,
-	/area/engine,
-	/area/hallway,
-	/area/holodeck,
-	/area/hydroponics,
-	/area/janitor,
-	/area/lawoffice,
-	/area/library,
-	/area/maintenance,
-	/area/medical,
-	/area/quartermaster,
-	/area/science,
-	/area/security,
-	/area/solar,
-	/area/storage,
-	/area/teleporter,
-	/area/ai_monitored/storage/eva, //do not try to simplify to "/area/ai_monitored" --rastaf0
-	/area/ai_monitored/turret_protected/ai_upload, //do not try to simplify to "/area/ai_monitored/turret_protected" --rastaf0
-	/area/ai_monitored/turret_protected/ai_upload_foyer,
-	/area/ai_monitored/turret_protected/ai,
-))
