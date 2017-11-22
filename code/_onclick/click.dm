@@ -445,8 +445,8 @@
 	if(view_size_x > 16 || view_size_y > 16)
 		newicon.Scale(16 * world.icon_size,16 * world.icon_size)
 		icon = newicon
-		var/tx = view_size_x/16
-		var/ty = view_size_y/16
+		var/tx = ((view_size_x - 1)/2)/16
+		var/ty = ((view_size_y - 1)/2)/16
 		var/matrix/M = new
 		M.Scale(tx, ty)
 		transform = M
