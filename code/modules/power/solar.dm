@@ -378,14 +378,14 @@
 		if("direction")
 			var/adjust = text2num(params["adjust"])
 			if(adjust)
-				currentdir = Clamp((360 + adjust + currentdir) % 360, 0, 359)
+				currentdir = CLAMP((360 + adjust + currentdir) % 360, 0, 359)
 				targetdir = currentdir
 				set_panels(currentdir)
 				. = TRUE
 		if("rate")
 			var/adjust = text2num(params["adjust"])
 			if(adjust)
-				trackrate = Clamp(trackrate + adjust, -7200, 7200)
+				trackrate = CLAMP(trackrate + adjust, -7200, 7200)
 				if(trackrate)
 					nexttime = world.time + 36000 / abs(trackrate)
 				. = TRUE

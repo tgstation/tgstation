@@ -182,7 +182,7 @@
 /mob/living/carbon/adjustStaminaLoss(amount, updating_stamina = 1)
 	if(status_flags & GODMODE)
 		return 0
-	staminaloss = Clamp(staminaloss + amount, 0, maxHealth*2)
+	staminaloss = CLAMP(staminaloss + amount, 0, maxHealth*2)
 	if(updating_stamina)
 		update_stamina()
 

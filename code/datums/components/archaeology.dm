@@ -5,7 +5,7 @@
 	var/dug
 
 /datum/component/archaeology/Initialize(_prob2drop, list/_archdrops = list())
-	prob2drop = Clamp(_prob2drop, 0, 100)
+	prob2drop = CLAMP(_prob2drop, 0, 100)
 	archdrops = _archdrops
 	RegisterSignal(COMSIG_PARENT_ATTACKBY,.proc/Dig)
 	RegisterSignal(COMSIG_ATOM_EX_ACT, .proc/BombDig)

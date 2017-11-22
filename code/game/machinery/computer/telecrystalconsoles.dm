@@ -155,7 +155,7 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 /obj/machinery/computer/telecrystals/boss/proc/getDangerous()//This scales the TC assigned with the round population.
 	..()
 	var/danger = GLOB.joined_player_list.len - SSticker.mode.syndicates.len
-	danger = Ceiling(danger, 10)
+	danger = CEILING(danger, 10)
 	scaleTC(danger)
 
 /obj/machinery/computer/telecrystals/boss/proc/scaleTC(amt)//Its own proc, since it'll probably need a lot of tweaks for balance, use a fancier algorhithm, etc.
