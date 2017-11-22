@@ -222,8 +222,10 @@
 	. = 0
 
 /mob/living/proc/adjustBrainLoss(amount, maximum = BRAIN_DAMAGE_DEATH)
+	return
 
 /mob/living/proc/setBrainLoss(amount)
+	return
 
 /mob/living/proc/getStaminaLoss()
 	return staminaloss

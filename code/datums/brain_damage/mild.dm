@@ -121,10 +121,10 @@
 	var/next_scare = 0
 	var/list/trigger_words
 	//instead of cycling every atom, only cycle the relevant types
-	var/list/trigger_mobs = list()
-	var/list/trigger_objs = list() //also checked in mob equipment
-	var/list/trigger_turfs = list()
-	var/list/trigger_species = list()
+	var/list/trigger_mobs
+	var/list/trigger_objs //also checked in mob equipment
+	var/list/trigger_turfs
+	var/list/trigger_species
 
 /datum/brain_trauma/mild/phobia/New(mob/living/carbon/C, _permanent, specific_type)
 	phobia_type = specific_type
