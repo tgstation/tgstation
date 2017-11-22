@@ -1,0 +1,4 @@
+author: "GupGup"
+delete-after: True
+changes: 
+  - bugfix: "Fixes hostile mobs attacking surrounding tiles when trying to attack someone"
