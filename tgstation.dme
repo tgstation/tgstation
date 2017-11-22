@@ -283,6 +283,7 @@
 #include "code\datums\antagonists\datum_traitor.dm"
 #include "code\datums\antagonists\devil.dm"
 #include "code\datums\antagonists\internal_affairs.dm"
+#include "code\datums\antagonists\monkey.dm"
 #include "code\datums\antagonists\ninja.dm"
 #include "code\datums\antagonists\pirate.dm"
 #include "code\datums\antagonists\revolution.dm"

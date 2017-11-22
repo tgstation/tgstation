@@ -96,33 +96,27 @@
 	return "Reports of an ancient [pick("retrovirus", "flesh eating bacteria", "disease", "magical curse blamed on viruses", "banana blight")] outbreak that turn humans into monkeys has been reported in your quadrant.  Any such infections may be treated with banana juice.  If an outbreak occurs, ensure the station is quarantined to prevent a largescale outbreak at CentCom."
 
 
-/proc/add_monkey(datum/mind/monkey_mind)
-	SSticker.mode.ape_infectees |= monkey_mind
-	monkey_mind.special_role = "Infected Monkey"
-
 /proc/add_monkey_leader(datum/mind/monkey_mind)
-	SSticker.mode.ape_infectees |= monkey_mind
-	SSticker.mode.ape_leaders |= monkey_mind
-	monkey_mind.special_role = "Monkey Leader"
+	if(is_monkey_leader(monkey_mind))
+		return FALSE
+	var/datum/antagonist/monkey/leader/M = monkey_mind.add_antag_datum(ANTAG_DATUM_MONKEY_LEADER)
+	return M
 
-	var/obj/item/organ/heart/freedom/F = new /obj/item/organ/heart/freedom
-	F.Insert(monkey_mind.current, drop_if_replaced = FALSE)
-
-
-	var/datum/disease/D = new /datum/disease/transformation/jungle_fever
-	D.visibility_flags = HIDDEN_SCANNER|HIDDEN_PANDEMIC
-	D.affected_mob = monkey_mind.current
-	monkey_mind.current.viruses += D
-
-	to_chat(monkey_mind, "<B><span class='notice'>You are the Jungle Fever patient zero!!</B></span>")
-	to_chat(monkey_mind, "<b>You have been planted onto this station by the Animal Rights Consortium.</b>")
-	to_chat(monkey_mind, "<b>Soon the disease will transform you into an ape. Afterwards, you will be able spread the infection to others with a bite.</b>")
-	to_chat(monkey_mind, "<b>While your infection strain is undetectable by scanners, any other infectees will show up on medical equipment.</b>")
-	to_chat(monkey_mind, "<b>Your mission will be deemed a success if any of the live infected monkeys reach CentCom.</b>")
-	to_chat(monkey_mind, "<b>As an initial infectee, you will be considered a 'leader' by your fellow monkeys.</b>")
-	to_chat(monkey_mind, "<b>You can use :k to talk to fellow monkeys!</b>")
-	SEND_SOUND(monkey_mind.current, sound('sound/ambience/antag/monkey.ogg'))
+/proc/add_monkey(datum/mind/monkey_mind)
+	if(is_monkey(monkey_mind))
+		return FALSE
+	var/datum/antagonist/monkey/M = monkey_mind.add_antag_datum(ANTAG_DATUM_MONKEY)
+	return M
 
 /proc/remove_monkey(datum/mind/monkey_mind)
-	SSticker.mode.ape_infectees -= monkey_mind
-	monkey_mind.special_role = null
+	if(!is_monkey(monkey_mind))
+		return FALSE
+	var/datum/antagonist/monkey/M = monkey_mind.has_antag_datum(ANTAG_DATUM_MONKEY)
+	M.on_removal()
+	return TRUE
+
+/proc/is_monkey_leader(datum/mind/monkey_mind)
+	return monkey_mind.has_antag_datum(ANTAG_DATUM_MONKEY_LEADER)
+
+/proc/is_monkey(datum/mind/monkey_mind)
+	return monkey_mind.has_antag_datum(ANTAG_DATUM_MONKEY) || is_monkey_leader(monkey_mind)

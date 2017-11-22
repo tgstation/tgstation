@@ -462,17 +462,20 @@
 			text = uppertext(text)
 		text = "<i><b>[text]</b></i>: "
 		if (ishuman(current))
-			text += "<a href='?src=[REF(src)];monkey=healthy'>healthy</a> | <a href='?src=[REF(src)];monkey=infected'>infected</a> | <b>HUMAN</b> | other"
+			if(is_monkey_leader(src))
+				text += "<a href='?src=[REF(src)];monkey=healthy'>healthy</a> | <a href='?src=[REF(src)];monkey=infected'>infected</a> <b>LEADER</b> | <a href='?src=[REF(src)];monkey=human'>human</a> | other"
+			else
+				text += "<a href='?src=[REF(src)];monkey=healthy'>healthy</a> | <a href='?src=[REF(src)];monkey=infected'>infected</a> | <a href='?src=[REF(src)];monkey=leader'>leader</a> | <b>HUMAN</b> | other"
 		else if(ismonkey(current))
 			var/found = FALSE
 			for(var/datum/disease/transformation/jungle_fever/JF in current.viruses)
 				found = TRUE
 				break
 
-			var/isLeader = (src in SSticker.mode.ape_leaders)
+			var/isLeader = is_monkey_leader(src)
 
 			if(isLeader)
-				text += "<b>HEALTHY</b> | <a href='?src=[REF(src)];monkey=infected'>infected</a> <b>LEADER</b> | <a href='?src=[REF(src)];monkey=human'>human</a> | other"
+				text += "<a href='?src=[REF(src)];monkey=healthy'>healthy</a> | <a href='?src=[REF(src)];monkey=infected'>infected</a> <b>LEADER</b> | <a href='?src=[REF(src)];monkey=human'>human</a> | other"
 			else if(found)
 				text += "<a href='?src=[REF(src)];monkey=healthy'>healthy</a> | <b>INFECTED</b> | <a href='?src=[REF(src)];monkey=leader'>leader</a> | <a href='?src=[REF(src)];monkey=human'>human</a> | other"
 			else
@@ -1237,14 +1240,14 @@
 					else if (istype(M) && length(M.viruses))
 						for(var/thing in M.viruses)
 							var/datum/disease/D = thing
-							D.cure(0)
+							D.cure(FALSE)
 			if("leader")
 				if(check_rights(R_ADMIN, 0))
 					add_monkey_leader(src)
 					log_admin("[key_name(usr)] made [key_name(current)] a monkey leader!")
 					message_admins("[key_name_admin(usr)] made [key_name_admin(current)] a monkey leader!")
 			if("infected")
-				if (check_rights(R_ADMIN, 0))
+				if(check_rights(R_ADMIN, 0))
 					var/mob/living/carbon/human/H = current
 					var/mob/living/carbon/monkey/M = current
 					add_monkey(src)
@@ -1265,6 +1268,7 @@
 						for(var/datum/disease/transformation/jungle_fever/JF in M.viruses)
 							JF.cure(0)
 							stoplag() //because deleting of virus is doing throught spawn(0) //What
+						remove_monkey(src)
 						log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")
 						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to humanize [key_name_admin(current)]</span>")
 						H = M.humanize(TR_KEEPITEMS  |  TR_KEEPIMPLANTS  |  TR_KEEPORGANS  |  TR_KEEPDAMAGE  |  TR_KEEPVIRUS  |  TR_DEFAULTMSG)

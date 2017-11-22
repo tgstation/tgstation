@@ -370,17 +370,17 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 				V.speak_with(message) //action
 		return TRUE
 	if(message_mode == MODE_MONKEY)
-		if((ismonkey(src) || (mind in SSticker.mode.ape_leaders)) && (mind in SSticker.mode.ape_infectees))
+		if(is_monkey_leader(mind) || (ismonkey(src) && is_monkey(mind)))
 			log_talk(src, "[src]/[key]: [message]",LOGSAY)
 			if(prob(75) && ismonkey(src))
 				visible_message("<span class='notice'>\The [src] chimpers.</span>")
-			var/msg = "<span class='[(mind in SSticker.mode.ape_leaders) ? "monkeylead" : "monkeyhive"]'><b><font size=2>\[Monkey\]</font> [src]</b>: [message]</span>"
+			var/msg = "<span class='[is_monkey_leader(mind) ? "monkeylead" : "monkeyhive"]'><b><font size=2>\[Monkey\]</font> [src]</b>: [message]</span>"
 			for(var/_M in GLOB.mob_list)
 				var/mob/M = _M
 				if(M in GLOB.dead_mob_list)
 					var/link = FOLLOW_LINK(M, src)
 					to_chat(M, "[link] [msg]")
-				if(ismonkey(M) && (M.mind in SSticker.mode.ape_infectees))
+				if((is_monkey_leader(M.mind) || ismonkey(M)) && (M.mind in SSticker.mode.ape_infectees))
 					to_chat(M, msg)
 			return TRUE
 
