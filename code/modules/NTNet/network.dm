@@ -1,8 +1,7 @@
-GLOBAL_DATUM_INIT(ntnet_global, /datum/ntnet, new)
-
-
-// This is the NTNet datum. There can be only one NTNet datum in game at once. Modular computers read data from this.
 /datum/ntnet
+	var/network_id = "Network"
+	var/connected_interfaces_by_id = list()		//id = datum/component/ntnet_interface
+
 	var/list/relays = list()
 	var/list/logs = list()
 	var/list/available_station_software = list()
@@ -14,25 +13,59 @@ GLOBAL_DATUM_INIT(ntnet_global, /datum/ntnet, new)
 	var/setting_maxlogcount = 100
 
 	// These only affect wireless. LAN (consoles) are unaffected since it would be possible to create scenario where someone turns off NTNet, and is unable to turn it back on since it refuses connections
-	var/setting_softwaredownload = 1
-	var/setting_peertopeer = 1
-	var/setting_communication = 1
-	var/setting_systemcontrol = 1
-	var/setting_disabled = 0					// Setting to 1 will disable all wireless, independently on relays status.
+	var/setting_softwaredownload = TRUE
+	var/setting_peertopeer = TRUE
+	var/setting_communication = TRUE
+	var/setting_systemcontrol = TRUE
+	var/setting_disabled = FALSE					// Setting to 1 will disable all wireless, independently on relays status.
 
-	var/intrusion_detection_enabled = 1 		// Whether the IDS warning system is enabled
-	var/intrusion_detection_alarm = 0			// Set when there is an IDS warning due to malicious (antag) software.
-
+	var/intrusion_detection_enabled = TRUE 		// Whether the IDS warning system is enabled
+	var/intrusion_detection_alarm = FALSE			// Set when there is an IDS warning due to malicious (antag) software.
 
 // If new NTNet datum is spawned, it replaces the old one.
-/datum/ntnet/New()
-	if(GLOB.ntnet_global && (GLOB.ntnet_global != src))
-		GLOB.ntnet_global = src // There can be only one.
-	for(var/obj/machinery/ntnet_relay/R in GLOB.machines)
-		relays.Add(R)
-		R.NTNet = src
+/datum/ntnet/New(_netid)
 	build_software_lists()
 	add_log("NTNet logging system activated.")
+	if(_netid)
+		network_id = _netid
+	if(!SSnetworks.register_network(src))
+		stack_trace("Network [type] with ID [network_id] failed to register and has been deleted.")
+		qdel(src)
+
+/datum/ntnet/proc/interface_connect(datum/component/ntnet_interface/I)
+	connected_interfaces_by_id[I.hardware_id] = I
+	return TRUE
+
+/datum/ntnet/proc/interface_disconnect(datum/component/ntnet_interface/I)
+	connected_interfaces_by_id -= I.hardware_id
+	return TRUE
+
+/datum/ntnet/proc/find_interface_id(id)
+	return connected_interfaces_by_id[id]
+
+/datum/ntnet/proc/process_data_transmit(datum/component/ntnet_interface/sender, datum/netdata/data)
+	data.network_id = src
+	log_data_transfer(data)
+	if(!check_relay_operation())
+		return FALSE
+	for(var/i in data.recipient_ids)
+		var/datum/component/ntnet_interface/reciever = find_interface_id(i)
+		if(reciever)
+			reciever.__network_recieve(data)
+	return TRUE
+
+/datum/ntnet/proc/check_relay_operation(zlevel)	//can be expanded later but right now it's true/false.
+	for(var/i in relays)
+		var/obj/machinery/ntnet_relay/n = i
+		if(zlevel && n.z != zlevel)
+			continue
+		if(n.is_operational())
+			return TRUE
+	return FALSE
+
+/datum/ntnet/proc/log_data_transfer(datum/netdata/data)
+	logs += "[worldtime2text()] - [data.generate_netlog()]"
+	return
 
 // Simplified logging: Adds a log. log_string is mandatory parameter, source is optional.
 /datum/ntnet/proc/add_log(log_string, obj/item/computer_hardware/network_card/source = null)
@@ -44,7 +77,6 @@ GLOBAL_DATUM_INIT(ntnet_global, /datum/ntnet, new)
 	log_text += log_string
 	logs.Add(log_text)
 
-
 	// We have too many logs, remove the oldest entries until we get into the limit
 	if(logs.len > setting_maxlogcount)
 		logs = logs.Copy(logs.len-setting_maxlogcount,0)
@@ -55,28 +87,23 @@ GLOBAL_DATUM_INIT(ntnet_global, /datum/ntnet, new)
 	if(!relays || !relays.len) // No relays found. NTNet is down
 		return FALSE
 
-	var/operating = FALSE
-
 	// Check all relays. If we have at least one working relay, network is up.
-	for(var/M in relays)
-		var/obj/machinery/ntnet_relay/R = M
-		if(R.is_operational())
-			operating = TRUE
-			break
+	if(!check_relay_operation())
+		return FALSE
 
 	if(setting_disabled)
 		return FALSE
 
 	switch(specific_action)
 		if(NTNET_SOFTWAREDOWNLOAD)
-			return (operating && setting_softwaredownload)
+			return setting_softwaredownload
 		if(NTNET_PEERTOPEER)
-			return (operating && setting_peertopeer)
+			return setting_peertopeer
 		if(NTNET_COMMUNICATION)
-			return (operating && setting_communication)
+			return setting_communication
 		if(NTNET_SYSTEMCONTROL)
-			return (operating && setting_systemcontrol)
-	return operating
+			return setting_systemcontrol
+	return TRUE
 
 // Builds lists that contain downloadable software.
 /datum/ntnet/proc/build_software_lists()
@@ -106,7 +133,7 @@ GLOBAL_DATUM_INIT(ntnet_global, /datum/ntnet, new)
 
 // Resets the IDS alarm
 /datum/ntnet/proc/resetIDS()
-	intrusion_detection_alarm = 0
+	intrusion_detection_alarm = FALSE
 
 /datum/ntnet/proc/toggleIDS()
 	resetIDS()
@@ -143,3 +170,11 @@ GLOBAL_DATUM_INIT(ntnet_global, /datum/ntnet, new)
 		if(NTNET_SYSTEMCONTROL)
 			setting_systemcontrol = !setting_systemcontrol
 			add_log("Configuration Updated. Wireless network firewall now [setting_systemcontrol ? "allows" : "disallows"] remote control of station's systems.")
+
+/datum/ntnet/station
+	network_id = "SS13-NTNET"
+
+/datum/ntnet/station/proc/register_map_supremecy()					//called at map init to make this what station networks use.
+	for(var/obj/machinery/ntnet_relay/R in GLOB.machines)
+		relays.Add(R)
+		R.NTNet = src
