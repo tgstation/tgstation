@@ -144,8 +144,8 @@ Note: Must be placed west/left of and R&D console to function.
 
 /obj/machinery/rnd/protolathe/proc/do_print(path, amount, list/matlist, notify_admins)
 	if(notify_admins && usr)
-			investigate_log("[key_name(usr)] built [amount] of [path] at a protolathe.", INVESTIGATE_RESEARCH)
-			message_admins("[ADMIN_LOOKUPFLW(usr)] has built [amount] of [path] at a protolathe")
+		investigate_log("[key_name(usr)] built [amount] of [path] at a protolathe.", INVESTIGATE_RESEARCH)
+		message_admins("[ADMIN_LOOKUPFLW(usr)] has built [amount] of [path] at a protolathe")
 	for(var/i in 1 to amount)
 		var/obj/item/I = new path(get_turf(src))
 		if(!istype(I, /obj/item/stack/sheet) && !istype(I, /obj/item/ore/bluespace_crystal))
