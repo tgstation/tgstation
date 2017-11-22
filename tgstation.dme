@@ -289,6 +289,7 @@
 #include "code\datums\antagonists\wizard.dm"
 #include "code\datums\components\_component.dm"
 #include "code\datums\components\archaeology.dm"
+#include "code\datums\components\chasm.dm"
 #include "code\datums\components\decal.dm"
 #include "code\datums\components\infective.dm"
 #include "code\datums\components\material_container.dm"
