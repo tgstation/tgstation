@@ -50971,7 +50971,10 @@
 	id = "hopline";
 	name = "Queue Shutters"
 	},
-/turf/open/space/basic,
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bYX" = (
 /obj/machinery/flasher{
@@ -55499,7 +55502,10 @@
 	name = "Queue Shutters"
 	},
 /obj/effect/landmark/event_spawn,
-/turf/open/space/basic,
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "chZ" = (
 /obj/machinery/computer/security/mining{
@@ -57639,10 +57645,12 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/space/basic,
+/obj/effect/turf_decal/loading_area,
+/turf/open/floor/plasteel,
 /area/teleporter)
 "cmH" = (
-/turf/open/space/basic,
+/obj/effect/turf_decal/loading_area,
+/turf/open/floor/plasteel,
 /area/teleporter)
 "cmI" = (
 /obj/structure/table,
