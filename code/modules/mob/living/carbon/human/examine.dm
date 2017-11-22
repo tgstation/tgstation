@@ -207,11 +207,11 @@
 	temp = getCloneLoss()
 	if(temp)
 		if(temp < 25)
-			msg += "[t_He] [t_is] slightly deformed.\n"
+			msg += "[t_He] [t_has] minor cellular damage.\n"
 		else if (temp < 50)
-			msg += "[t_He] [t_is] <b>moderately</b> deformed!\n"
+			msg += "[t_He] [t_has] <b>moderate</b> cellular damage!\n"
 		else
-			msg += "<b>[t_He] [t_is] severely deformed!</b>\n"
+			msg += "<b>[t_He] [t_has] severe cellular damage!</b>\n"
 
 
 	if(fire_stacks > 0)
