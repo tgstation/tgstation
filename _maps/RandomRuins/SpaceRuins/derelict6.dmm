@@ -74,7 +74,6 @@
 	},
 /area/ruin/unpowered)
 "al" = (
-/turf/open/floor/plating/airless,
 /turf/open/floor/plating/airless{
 	icon_plating = "platingdmg2";
 	icon_state = "platingdmg2"
@@ -186,7 +185,6 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered)
 "aD" = (
-/turf/template_noop,
 /turf/open/floor/plating/airless{
 	icon_plating = "platingdmg2";
 	icon_state = "platingdmg2"

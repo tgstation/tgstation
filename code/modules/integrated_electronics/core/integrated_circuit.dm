@@ -4,6 +4,7 @@
 	icon = 'icons/obj/electronic_assemblies.dmi'
 	icon_state = "template"
 	w_class = WEIGHT_CLASS_TINY
+	materials = list()				// To be filled later
 	var/obj/item/device/electronic_assembly/assembly // Reference to the assembly holding this circuit, if any.
 	var/extended_desc
 	var/list/inputs = list()
@@ -13,7 +14,7 @@
 	var/list/activators = list()
 	var/next_use = 0 				// Uses world.time
 	var/complexity = 1 				// This acts as a limitation on building machines, more resource-intensive components cost more 'space'.
-	var/size = 1						// This acts as a limitation on building machines, bigger components cost more 'space'. -1 for size 0
+	var/size = 1					// This acts as a limitation on building machines, bigger components cost more 'space'. -1 for size 0
 	var/cooldown_per_use = 9		// Circuits are limited in how many times they can be work()'d by this variable.
 	var/power_draw_per_use = 0 		// How much power is drawn when work()'d.
 	var/power_draw_idle = 0			// How much power is drawn when doing nothing.
@@ -67,10 +68,11 @@ a creative player the means to solve many problems.  Circuits are held inside an
 
 /obj/item/integrated_circuit/Initialize()
 	displayed_name = name
-	setup_io(inputs, /datum/integrated_io, inputs_default)
-	setup_io(outputs, /datum/integrated_io, outputs_default)
-	setup_io(activators, /datum/integrated_io/activate)
-	..()
+	setup_io(inputs, /datum/integrated_io, inputs_default, IC_INPUT)
+	setup_io(outputs, /datum/integrated_io, outputs_default, IC_OUTPUT)
+	setup_io(activators, /datum/integrated_io/activate, null, IC_ACTIVATOR)
+	materials[MAT_METAL] = w_class * SScircuit.cost_multiplier
+	. = ..()
 
 /obj/item/integrated_circuit/proc/on_data_written() //Override this for special behaviour when new data gets pushed to the circuit.
 	return
@@ -117,7 +119,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	var/table_edge_width = "30%"
 	var/table_middle_width = "40%"
 
-	var/HTML = list()
+	var/HTML = ""
 	HTML += "<html><head><title>[src.displayed_name]</title></head><body>"
 	HTML += "<div align='center'>"
 	HTML += "<table border='1' style='undefined;table-layout: fixed; width: 80%'>"
@@ -127,7 +129,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	HTML += "<br><a href='?src=[REF(src)];'>\[Refresh\]</a>  |  "
 	HTML += "<a href='?src=[REF(src)];rename=1'>\[Rename\]</a>  |  "
 	HTML += "<a href='?src=[REF(src)];scan=1'>\[Scan with Device\]</a>  |  "
-	if(src.removable)
+	if(removable)
 		HTML += "<a href='?src=[REF(src)];remove=1'>\[Remove\]</a><br>"
 
 	HTML += "<colgroup>"
@@ -205,10 +207,10 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	HTML += "<br><font color='0000AA'>[extended_desc]</font>"
 
 	HTML += "</body></html>"
-	if(src.assembly)
-		user << browse(jointext(HTML, null), "window=assembly-[REF(src.assembly)];size=[window_width]x[window_height];border=1;can_resize=1;can_close=1;can_minimize=1")
+	if(assembly)
+		user << browse(HTML, "window=assembly-[REF(assembly)];size=[window_width]x[window_height];border=1;can_resize=1;can_close=1;can_minimize=1")
 	else
-		user << browse(jointext(HTML, null), "window=circuit-[REF(src)];size=[window_width]x[window_height];border=1;can_resize=1;can_close=1;can_minimize=1")
+		user << browse(HTML, "window=circuit-[REF(src)];size=[window_width]x[window_height];border=1;can_resize=1;can_close=1;can_minimize=1")
 
 	onclose(user, "assembly-[REF(src.assembly)]")
 
@@ -300,7 +302,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 			if(D.accepting_refs)
 				D.afterattack(src, usr, TRUE)
 			else
-				to_chat(usr, "<span class='warning'>The Debugger's 'ref scanner' needs to be on.</span>")
+				to_chat(usr, "<span class='warning'>The debugger's 'ref scanner' needs to be on.</span>")
 		else
 			to_chat(usr, "<span class='warning'>You need a multitool/debugger set to 'ref' mode to do that.</span>")
 
@@ -378,16 +380,22 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	return
 
 /obj/item/integrated_circuit/proc/disconnect_all()
+	var/datum/integrated_io/I
 
-	for(var/k in 1 to inputs.len)
-		var/datum/integrated_io/I = inputs[k]
+	for(var/i in inputs)
+		I = i
 		I.disconnect()
-	for(var/k in 1 to outputs.len)
-		var/datum/integrated_io/O = outputs[k]
-		O.disconnect()
-	for(var/k in 1 to activators.len)
-		var/datum/integrated_io/activate/A = activators[k]
-		A.disconnect()
+
+	for(var/i in outputs)
+		I = i
+		I.disconnect()
+
+	for(var/i in activators)
+		I = i
+		I.disconnect()
 
 /obj/item/integrated_circuit/proc/ext_moved(oldLoc, dir)
 	return
+
+
+

@@ -58,6 +58,10 @@
 				return FALSE
 			if(transfer_amount && assembly.draw_power(amount_to_move)) // CELLRATE is already handled in draw_power()
 				cell.give(transfer_amount * GLOB.CELLRATE)
+				if(istype(AM, /obj/item))
+					var/obj/item/I = AM
+					I.update_icon()
+
 				return TRUE
 	else
 		set_pin_data(IC_OUTPUT, 1, null)

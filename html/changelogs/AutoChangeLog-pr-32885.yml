@@ -1,0 +1,5 @@
+author: "zennerx"
+delete-after: True
+changes: 
+  - tweak: "Skateboard crashes now give slight brain damage!"
+  - rscadd: "Using a helmet prevents brain damage from the skateboard!"

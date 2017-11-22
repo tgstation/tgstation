@@ -13,6 +13,7 @@
 	name = "purple bartender's uniform"
 	icon_state = "purplebartender"
 	item_state = "purplebartender"
+	item_color = "purplebartender"
 	alt_covers_chest = 1
 
 /obj/item/clothing/under/rank/captain //Alright, technically not a 'civilian' but its better then giving a .dm file for a single define.

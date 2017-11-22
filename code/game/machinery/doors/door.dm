@@ -63,9 +63,6 @@
 		spark_system = null
 	return ..()
 
-//process()
-	//return
-
 /obj/machinery/door/CollidedWith(atom/movable/AM)
 	if(operating || emagged)
 		return

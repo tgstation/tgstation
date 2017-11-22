@@ -1,0 +1,5 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - code_imp: "Chasm code has been refactored to be more sane."
+  - bugfix: "Building lattices over chasms no longer sometimes deletes the chasm."
