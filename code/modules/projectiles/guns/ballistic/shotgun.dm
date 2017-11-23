@@ -107,6 +107,8 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction
 	var/bolt_open = FALSE
 	can_bayonet = TRUE
+	knife_x_offset = 27
+	knife_y_offset = 13
 
 /obj/item/gun/ballistic/shotgun/boltaction/pump(mob/M)
 	playsound(M, 'sound/weapons/shotgunpump.ogg', 60, 1)
