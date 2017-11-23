@@ -8558,7 +8558,7 @@
 	name = "XCC Ferry Hangar"
 	},
 /obj/effect/turf_decal/loading_area{
-	dir = 8
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/centcom/ferry)

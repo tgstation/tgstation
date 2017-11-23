@@ -25890,6 +25890,7 @@
 	forwards = 2;
 	id = "packageSort2"
 	},
+/obj/effect/turf_decal/loading_area,
 /turf/open/floor/plating,
 /area/quartermaster/sorting)
 "bbP" = (
