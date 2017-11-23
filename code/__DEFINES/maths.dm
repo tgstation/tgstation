@@ -1,4 +1,5 @@
 // Credits to Nickr5 for the useful procs I've taken from his library resource.
+// This file is quadruple wrapped for your pleasure
 
 #define NUM_E 2.71828183
 #define NUM_SQRT2 1.41421356
@@ -16,7 +17,7 @@
 #define TICK_DELTA_TO_MS(percent_of_tick_used) ((percent_of_tick_used) * world.tick_lag)
 #define TICK_USAGE_TO_MS(starting_tickusage) (TICK_DELTA_TO_MS(TICK_USAGE_REAL - starting_tickusage))
 
-#define PERCENT(val) (round(val*100, 0.1))
+#define PERCENT(val) (round((val)*100, 0.1))
 #define CLAMP01(x) (CLAMP(x, 0, 1))
 
 //time of day but automatically adjusts to the server going into the next day within the same round.
@@ -24,17 +25,20 @@
 #define REALTIMEOFDAY (world.timeofday + (MIDNIGHT_ROLLOVER * MIDNIGHT_ROLLOVER_CHECK))
 #define MIDNIGHT_ROLLOVER_CHECK ( GLOB.rollovercheck_last_timeofday != world.timeofday ? update_midnight_rollover() : GLOB.midnight_rollovers )
 
-#define SIGN(x) (x!=0 ? x / abs(x) : 0)
+#define SIGN(x) ((x)!=0 ? (x) / abs(x) : 0)
 
-#define ATAN2(x, y) ( !x && !y ? 0 : (y >= 0 ? arccos(x / sqrt(x*x + y*y)) : -arccos(x / sqrt(x*x + y*y)) ) )
+#define ATAN2(x, y) ( !x && !y ? 0 : y >= 0 ? arccos((x) / sqrt((x)*(x) + (y)*(y))) : -arccos((x) / sqrt((x)*(x) + (y)*(y))) )
 
-#define CEILING(x, y) (-round(-x / y) * y)
+#define CEILING(x, y) (-round(-(x) / (y)) * (y))
 
-#define FLOOR(x, y) (round(x / y) * y)
+#define FLOOR(x, y) (round((x) / (y)) * (y))
 
 #define CLAMP(CLVALUE,CLMIN,CLMAX) ( max( (CLMIN), min((CLVALUE), (CLMAX)) ) )
 
-#define MODULUS(x, y) (x - y * round(x / y))
+// Similar to clamp but the low end becomes the high end
+#define ROLLING_CLAMP(value, start, length) (ISINRANGE(value, start, (start)+(length)) ? value : (MODULUS((value) - (start), (length)) + (start)))
+
+#define MODULUS(x, y) ((x) - (y) * round((x) / (y)))
 
 // Tangent
 #define TAN(x) (sin(x) / cos(x))
@@ -48,16 +52,16 @@
 
 // Greatest Common Divisor - Euclid's algorithm
 /proc/Gcd(a, b)
-	return b ? Gcd(b, a % b) : a
+	return b ? Gcd(b, (a) % (b)) : a
 
 // Least Common Multiple
 #define Lcm(a, b) (abs(a) / Gcd(a, b) * abs(b))
 
-#define INVERSE(x) (1/x)
+#define INVERSE(x) (1/(x))
 
-#define INVERSE_SQUARE(initial_strength,cur_distance,initial_distance) (initial_strength*(initial_distance**2/cur_distance**2))
+#define INVERSE_SQUARE(initial_strength,cur_distance,initial_distance) ((initial_strength)*((initial_distance)**2/(cur_distance)**2))
 
-#define ISABOUTEQUAL(a, b, deviation) (deviation ? abs(a - b) <= deviation : abs(a - b) <= 0.1)
+#define ISABOUTEQUAL(a, b, deviation) (deviation ? abs((a) - (b)) <= deviation : abs((a) - (b)) <= 0.1)
 
 #define ISEVEN(x) (x % 2 == 0)
 
@@ -66,17 +70,19 @@
 // Returns true if val is from min to max, inclusive.
 #define ISINRANGE(val, min, max) (min <= val && val <= max)
 
+#define ISINRANGE_EX(val, min, max) (min < val && val > max)
+
 #define ISINTEGER(x) (round(x) == x)
 
-#define ISMULTIPLE(x, y) (x % y == 0)
+#define ISMULTIPLE(x, y) ((x) % (y) == 0)
 
 // Performs a linear interpolation between a and b.
 // Note that amount=0 returns a, amount=1 returns b, and
 // amount=0.5 returns the mean of a and b.
-#define LERP(a, b, amount) (amount ? (a + (b - a) * amount) : (a + (b - a) * 0.5)
+#define LERP(a, b, amount) (amount ? ((a) + ((b) - (a)) * (amount)) : ((a) + ((b) - (a)) * 0.5)
 
 // Returns the nth root of x.
-#define ROOT(n, x) (x ** (1 / n))
+#define ROOT(n, x) ((x) ** (1 / (n)))
 
 // secant
 #define SEC(x) (1 / cos(x))
@@ -96,26 +102,22 @@
 		return
 	. += (-b - root) / bottom
 
-#define TODEGREES(radians) (radians * 57.2957795)
+#define TODEGREES(radians) ((radians) * 57.2957795)
 
-#define TORADIANS(degrees) (degrees * 0.0174532925)
+#define TORADIANS(degrees) ((degrees) * 0.0174532925)
 
 // Will filter out extra rotations and negative rotations
 // E.g: 540 becomes 180. -180 becomes 180.
-#define SIMPLIFY_DEGREES(degrees) ((degrees*SIGN(degrees))%360)
+#define SIMPLIFY_DEGREES(degrees) (MODULUS((degrees), 360))
 
 // min is inclusive, max is exclusive
-#define WRAP(val, min, max) (val - ((round(val - min) / (max - min)) * (max - min)))
+#define WRAP(val, min, max) (val - ((round((val) - (min)) / ((max) - (min))) * ((max) - (min))))
 
-#define NORM_ROT(rot) ((((rot % 360) + (rot - round(rot, 1))) >= 0) ? ((rot % 360) + (rot - round(rot, 1))) : (((rot % 360) + (rot - round(rot, 1))) + 360))
-
-#define GET_ANGLE_OF_INCIDENCE(face_angle, angle_in) (NORM_ROT(face_angle) - NORM_ROT(angle_in))
-
-#define NORM_ANGLE_OF_INCIDENCE(angle) ( angle == 0 ? 0 : angle > 0 ? ((angle+90) % 180) - 90 : ((angle-90) % 180) + 90 )
+#define GET_ANGLE_OF_INCIDENCE(face_angle, angle_in) (SIMPLIFY_DEGREES(face_angle) - SIMPLIFY_DEGREES(angle_in))
 
 //A logarithm that converts an integer to a number scaled between 0 and 1 (can be tweaked to be higher).
 //Currently, this is used for hydroponics-produce sprite transforming, but could be useful for other transform functions.
-#define TRANSFORM_USING_VARIABLE(input, max) ( sin((90*input)/max)**2 )
+#define TRANSFORM_USING_VARIABLE(input, max) ( sin((90*(input))/(max))**2 )
 
 //converts a uniform distributed random number into a normal distributed one
 //since this method produces two random numbers, one is saved for subsequent calls
@@ -154,7 +156,7 @@
 		var/screenview = (client.view * 2 + 1) * world.icon_size //Refer to http://www.byond.com/docs/ref/info.html#/client/var/view for mad maths
 		var/ox = round(screenview/2) - client.pixel_x //"origin" x
 		var/oy = round(screenview/2) - client.pixel_y //"origin" y
-		var/angle = NORM_ROT(ATAN2(y - oy, x - ox))
+		var/angle = SIMPLIFY_DEGREES(ATAN2(y - oy, x - ox))
 		return angle
 
 /proc/get_turf_in_angle(angle, turf/starting, increments)
