@@ -1496,3 +1496,14 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 			else
 				return "\[[url_encode(thing.tag)]\]"
 	return "\ref[input]"
+
+/atom/proc/contents_in_typecache(var/list/typecache)
+	var/list/processing_list = list(contents)
+	. = list()
+	while(processing_list.len)
+		var/atom/A = processing_list[1]
+		if(is_type_in_typecache(A, typecache))
+			. += A
+		processing_list.Cut(1, 2)
+		if(LAZYLEN(A.contents))
+			processing_list += A.contents

@@ -315,6 +315,9 @@
 	name = "Derelict Secret Room"
 	icon_state = "library"
 
+/area/ruin/space/derelict/secret/holomapAlwaysDraw()
+	return FALSE
+
 /area/ruin/space/derelict/bridge/access
 	name = "Derelict Control Room Access"
 	icon_state = "auxstorage"
@@ -358,6 +361,9 @@
 /area/ruin/space/derelict/ship
 	name = "Abandoned Ship"
 	icon_state = "yellow"
+
+/area/ruin/space/derelict/ship/holomapAlwaysDraw()
+	return FALSE
 
 /area/solar/derelict_starboard
 	name = "Derelict Starboard Solar Array"

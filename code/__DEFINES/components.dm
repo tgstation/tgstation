@@ -65,3 +65,5 @@
 // /obj/machinery signals
 #define COMSIG_MACHINE_PROCESS "machine_process"				//from machinery subsystem fire(): ()
 #define COMSIG_MACHINE_PROCESS_ATMOS "machine_process_atmos"	//from air subsystem process_atmos_machinery(): ()
+
+#define COMSIG_ITEM_EQUIPPED "item_equipped"
