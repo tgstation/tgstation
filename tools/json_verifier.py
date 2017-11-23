@@ -7,7 +7,7 @@ if len(sys.argv) <= 1:
 files = filter(len, sys.argv[1].split('\n'))
 msg = []
 for file in files:
-    with open(file) as f:
+    with open(file, encoding="ISO-8859-1") as f:
         try:
             json.load(f)
         except ValueError as exception:
