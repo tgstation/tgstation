@@ -26,6 +26,8 @@
 	icon_dead = "mi-go-dead"
 	attacktext = "lacerates"
 	var/list/migo_sounds
+	deathmessage = "wails as it's form turns into a pulpy mush."
+	death_sound = 'sound/voice/hiss6.ogg'
 
 /mob/living/simple_animal/hostile/netherworld/migo/Initialize()
     . = ..()
@@ -44,11 +46,11 @@
 
 /mob/living/simple_animal/hostile/spawner/nether
 	name = "netherworld link"
-	desc = "A direct link to another dimension, and one that isn't very happy to see you. <span class='warning'>Entering the link would be a very bad idea.</span>"
+	desc = "A direct link to another dimension full of creatures not very happy to see you. <span class='warning'>Entering the link would be a very bad idea.</span>"
 	icon_state = "nether"
 	icon_living = "nether"
-	health = 100
-	maxHealth = 100
+	health = 20
+	maxHealth = 20
 	max_mobs = 7
 	icon = 'icons/mob/nest.dmi'
 	spawn_text = "crawls through"

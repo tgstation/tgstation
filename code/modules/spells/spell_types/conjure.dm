@@ -59,10 +59,13 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/linkWorlds
 	name = "Link Worlds"
 	desc = "A whole new dimension for you to play with! They won't be happy about it, though."
-
+	invocation = "OPN WO'LD"
+	charge_max = 600
+	cooldown_min = 200
 	summon_type = list(/mob/living/simple_animal/hostile/spawner/nether)
 	summon_amt = 1
 	range = 1
+	cast_sound = 'sound/weapons/marauder.ogg'
 
 /obj/effect/proc_holder/spell/targeted/conjure_item
 	name = "Summon weapon"

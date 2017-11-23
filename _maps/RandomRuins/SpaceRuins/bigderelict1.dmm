@@ -990,7 +990,7 @@
 	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
 	name = "gelatinous floor"
 	},
-/mob/living/simple_animal/hostile/creature{
+/mob/living/simple_animal/hostile/netherworld{
 	desc = "Awh its so sm-OH GOD WHAT THE FUCK.";
 	health = 25;
 	maxHealth = 25;
@@ -1010,7 +1010,7 @@
 	icon_state = "trails_1";
 	dir = 10
 	},
-/mob/living/simple_animal/hostile/creature{
+/mob/living/simple_animal/hostile/netherworld{
 	desc = "Awh its so sm-OH GOD WHAT THE FUCK.";
 	health = 25;
 	maxHealth = 25;
@@ -1378,7 +1378,7 @@
 	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
 	name = "gelatinous floor"
 	},
-/mob/living/simple_animal/hostile/creature{
+/mob/living/simple_animal/hostile/netherworld{
 	name = "Miss Tiggles"
 	},
 /turf/open/floor/plasteel,
@@ -1888,7 +1888,7 @@
 	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
 	name = "gelatinous floor"
 	},
-/mob/living/simple_animal/hostile/creature{
+/mob/living/simple_animal/hostile/netherworld{
 	desc = "Awh its so sm-OH GOD WHAT THE FUCK.";
 	health = 25;
 	maxHealth = 25;
