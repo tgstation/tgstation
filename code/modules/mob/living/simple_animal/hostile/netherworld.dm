@@ -1,6 +1,6 @@
 /mob/living/simple_animal/hostile/netherworld
 	name = "creature"
-	desc = "A sanity-destroying otherthing from the netherworlds."
+	desc = "A sanity-destroying otherthing from the netherworld."
 	icon_state = "otherthing"
 	icon_living = "otherthing"
 	icon_dead = "otherthing-dead"
@@ -16,6 +16,7 @@
 	gold_core_spawnable = 1
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
+	faction = list("nether")
 
 /mob/living/simple_animal/hostile/netherworld/migo
 	name = "mi-go"
@@ -40,3 +41,17 @@
 	if(prob(10))
 		var/chosen_sound = pick(migo_sounds)
 		playsound(src, chosen_sound, 100, TRUE)
+
+/mob/living/simple_animal/hostile/spawner/nether
+	name = "netherworld link"
+	desc = "A direct link to another dimension, and one that isn't very happy to see you. <span class='warning'>Entering the link would be a very bad idea.</span>"
+	icon_state = "nether"
+	icon_living = "nether"
+	health = 100
+	maxHealth = 100
+	max_mobs = 7
+	icon = 'icons/mob/nest.dmi'
+	spawn_text = "crawls through"
+	mob_type = /mob/living/simple_animal/hostile/netherworld/migo
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	faction = list("nether")
