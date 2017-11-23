@@ -58,10 +58,6 @@
 	if(L.incapacitated())
 		return
 
-	if(string_pulled)
-		to_chat(L, "<span class='info'>The string has already been pulled!</span>")
-		return
-
 	to_chat(L, "<span class='info'>You pull on the party string!</span>")
 
 	emerge()
