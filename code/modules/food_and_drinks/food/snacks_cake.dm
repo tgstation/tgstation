@@ -252,14 +252,3 @@
 	tastes = list("cake" = 5, "sweetness" = 1, "pumpkin" = 1)
 
 	foodtype = GRAIN | DAIRY | VEGETABLES | SUGAR
-
-/obj/item/reagent_containers/food/snacks/store/cake/popout
-	name = "large cake"
-	desc = "An enormous multi-tiered cake."
-	icon_state = "popoutcake"
-	w_class = WEIGHT_CLASS_GIGANTIC
-	slices_num
-	custom_food_type = /obj/item/reagent_containers/food/snacks/customizable/cake
-	bonus_reagents = list("nutriment" = 10, "vitamin" = 2)
-	tastes = list("vanilla" = 1, "sweetness" = 2,"cake" = 5)
-	foodtype = GRAIN | DAIRY | SUGAR

@@ -1305,6 +1305,13 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 1
 	surplus = 40
 
+/datum/uplink_item/badass/popoutcake
+	name = "Popout Cake"
+	desc = "An extremely large cake, capable of hiding a single person inside. Be warned,\
+			the cake is too big to hold!"
+	item = /obj/item/reagent_containers/food/snacks/store/cake/popout
+	cost = 15
+
 /datum/uplink_item/badass/syndiecash
 	name = "Syndicate Briefcase Full of Cash"
 	desc = "A secure briefcase containing 5000 space credits. Useful for bribing personnel, or purchasing goods \
