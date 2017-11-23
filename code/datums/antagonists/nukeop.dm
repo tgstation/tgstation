@@ -302,10 +302,13 @@
 	var/TC_uses = 0
 	for(var/datum/mind/syndicate in members)
 		text += SSticker.mode.printplayer(syndicate) //to be moved
-		for(var/obj/item/device/uplink/H in GLOB.uplinks)
-			if(H && H.owner && H.owner == syndicate.key)
+		for(var/datum/component/uplink/H in GLOB.uplinks)
+			if(H.owner == syndicate.key)
 				TC_uses += H.spent_telecrystals
-				purchases += H.purchase_log
+				if(H.purchase_log)
+					purchases += H.purchase_log.generate_render(show_key = FALSE)
+				else
+					stack_trace("WARNING: Nuke Op uplink with no purchase_log Owner: [H.owner]")
 	text += "<br>"
 	text += "(Syndicates used [TC_uses] TC) [purchases]"
 	if(TC_uses == 0 && SSticker.mode.station_was_nuked && !operatives_dead())

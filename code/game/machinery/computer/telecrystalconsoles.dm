@@ -156,7 +156,7 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 	..()
 	var/list/nukeops = get_antagonists(/datum/antagonist/nukeop)
 	var/danger = GLOB.joined_player_list.len - nukeops.len
-	danger = Ceiling(danger, 10)
+	danger = CEILING(danger, 10)
 	scaleTC(danger)
 
 /obj/machinery/computer/telecrystals/boss/proc/scaleTC(amt)//Its own proc, since it'll probably need a lot of tweaks for balance, use a fancier algorhithm, etc.
