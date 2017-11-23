@@ -55,3 +55,8 @@
 	mob_type = /mob/living/simple_animal/hostile/netherworld/migo
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	faction = list("nether")
+
+/mob/living/simple_animal/hostile/spawner/nether/attack_hand(mob/user)
+	user.visible_message("<span class='warning'>[user] is violently pulled into the link!</span>", \
+						  "<span class='userdanger'>touching the portal, you are quickly pulled through into a world of unimaginable horror!</span>")
+	qdel(user)

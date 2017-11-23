@@ -140,6 +140,13 @@
 	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop
 	category = "Defensive"
 
+/datum/spellbook_entry/linkworlds
+	name = "Link Worlds"
+	desc = "Opens a dimension to the netherworld, which has horrors inside to help you kill the station. Just make sure to run when you open the link and do NOT touch the link."
+	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/linkWorlds
+	cost = 4
+	category = "Defensive"
+
 /datum/spellbook_entry/smoke
 	name = "Smoke"
 	spell_type = /obj/effect/proc_holder/spell/targeted/smoke
