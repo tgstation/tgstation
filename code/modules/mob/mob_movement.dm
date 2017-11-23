@@ -187,7 +187,8 @@
 		for(var/obj/O in mob.user_movement_hooks)
 			O.intercept_user_move(direct, mob, n, oldloc)
 
-	if(mob.pulling && !ismob(mob.pulling))
+	var/atom/movable/pulled_thing = mob.pulling
+	if(pulled_thing && GLOB.typecache_machine_or_structure[pulled_thing.type])
 		mob.dir = turn(mob.dir, 180)
 
 /mob/Moved(oldLoc, dir, Forced = FALSE)
