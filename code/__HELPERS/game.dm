@@ -311,6 +311,7 @@
 		else
 			return get_step(start, EAST)
 
+
 /proc/try_move_adjacent(atom/movable/AM)
 	var/turf/T = get_turf(AM)
 	for(var/direction in GLOB.cardinals)

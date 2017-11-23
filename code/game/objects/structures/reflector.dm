@@ -197,8 +197,8 @@
 	anchored = TRUE
 
 /obj/structure/reflector/single/auto_reflect(obj/item/projectile/P, pdir, turf/ploc, pangle)
-	var/incidence = get_angle_of_incidence(rotation_angle, P.Angle)
-	var/incidence_norm = get_angle_of_incidence(rotation_angle, P.Angle, FALSE)
+	var/incidence = GET_ANGLE_OF_INCIDENCE(rotation_angle, P.Angle)
+	var/incidence_norm = NORM_ANGLE_OF_INCIDENCE(incidence)
 	if((incidence_norm > -90) && (incidence_norm < 90))
 		return FALSE
 	var/new_angle_s = rotation_angle + incidence
@@ -228,8 +228,8 @@
 	anchored = TRUE
 
 /obj/structure/reflector/double/auto_reflect(obj/item/projectile/P, pdir, turf/ploc, pangle)
-	var/incidence = get_angle_of_incidence(rotation_angle, P.Angle)
-	var/incidence_norm = get_angle_of_incidence(rotation_angle, P.Angle, FALSE)
+	var/incidence = GET_ANGLE_OF_INCIDENCE(rotation_angle, P.Angle)
+	var/incidence_norm = NORM_ANGLE_OF_INCIDENCE(incidence)
 	var/invert = ((incidence_norm > -90) && (incidence_norm < 90))
 	var/new_angle_s = rotation_angle + incidence
 	if(invert)

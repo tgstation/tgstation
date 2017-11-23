@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "b" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 1
@@ -24,7 +24,6 @@
 	name = "Shuttle"
 	})
 "e" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 8;
 	icon_state = "diagonalWall3"
@@ -33,7 +32,6 @@
 	name = "Shuttle"
 	})
 "f" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
@@ -42,7 +40,6 @@
 	name = "Shuttle"
 	})
 "g" = (
-/turf/open/floor/plating,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
@@ -57,7 +54,6 @@
 	name = "Shuttle"
 	})
 "i" = (
-/turf/open/floor/plating,
 /turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
@@ -126,7 +122,6 @@
 	name = "Shuttle"
 	})
 "s" = (
-/turf/open/floor/plating,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
@@ -142,7 +137,6 @@
 	name = "Shuttle"
 	})
 "u" = (
-/turf/open/floor/plating,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 8;
 	icon_state = "diagonalWall3"
@@ -171,7 +165,6 @@
 	name = "Shuttle"
 	})
 "y" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
@@ -185,12 +178,11 @@
 	name = "Shuttle"
 	})
 "A" = (
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/powered{
 	name = "Shuttle"
 	})
 "B" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"

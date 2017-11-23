@@ -43,19 +43,6 @@
 		temp_list[O] = text2num(temp_list[O])
 	return temp_list
 
-/* //uncomment to enable forced reactions.
-/obj/machinery/rnd/experimentor/verb/forceReaction()
-	set name = "Force Experimentor Reaction"
-	set category = "Debug"
-	set src in oview(1)
-	var/reaction = input(usr,"What reaction?") in list(SCANTYPE_POKE,SCANTYPE_IRRADIATE,SCANTYPE_GAS,SCANTYPE_HEAT,SCANTYPE_COLD,SCANTYPE_OBLITERATE)
-	var/oldReaction = item_reactions["[loaded_item.type]"]
-	item_reactions["[loaded_item.type]"] = reaction
-	experiment(item_reactions["[loaded_item.type]"],loaded_item)
-	spawn(10)
-		if(loaded_item)
-			item_reactions["[loaded_item.type]"] = oldReaction
-*/
 
 /obj/machinery/rnd/experimentor/proc/SetTypeReactions()
 	var/probWeight = 0

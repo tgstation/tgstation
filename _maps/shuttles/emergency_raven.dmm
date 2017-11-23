@@ -19,8 +19,8 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ad" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ae" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
@@ -33,19 +33,19 @@
 /area/shuttle/escape)
 "ag" = (
 /obj/machinery/computer/med_data,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "ah" = (
 /obj/machinery/computer/shuttle,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "ai" = (
 /obj/machinery/computer/communications,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aj" = (
 /obj/machinery/computer/crew,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "ak" = (
 /obj/structure/table/reinforced,
@@ -62,7 +62,7 @@
 /obj/machinery/computer/security{
 	dir = 4
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "an" = (
 /turf/open/floor/plasteel/darkblue/side{
@@ -86,7 +86,7 @@
 /obj/machinery/computer/station_alert{
 	dir = 8
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "ar" = (
 /turf/closed/wall/mineral/plastitanium,
@@ -110,7 +110,7 @@
 /obj/machinery/computer/secure_data{
 	dir = 4
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "av" = (
 /obj/structure/chair/office/dark{
@@ -144,7 +144,7 @@
 /obj/machinery/computer/atmos_alert{
 	dir = 8
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aB" = (
 /obj/structure/table/reinforced,
@@ -157,13 +157,13 @@
 	},
 /area/shuttle/escape)
 "aC" = (
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aD" = (
 /obj/structure/chair/office/dark{
 	dir = 1
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aE" = (
 /obj/structure/table/reinforced,
@@ -259,21 +259,21 @@
 	name = "Shuttle Security Bride Access";
 	req_access_txt = "2"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aQ" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Shuttle Bridge Access";
 	req_access_txt = "19"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aR" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Shuttle EVA";
 	req_access_txt = "19"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aS" = (
 /turf/open/floor/plasteel/darkpurple/side{
@@ -287,7 +287,7 @@
 	pixel_y = 4
 	},
 /obj/item/storage/firstaid/toxin,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aU" = (
 /obj/structure/table/reinforced,
@@ -296,7 +296,7 @@
 	pixel_y = 4
 	},
 /obj/item/storage/firstaid/fire,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aV" = (
 /turf/open/floor/plasteel/darkpurple/side{
@@ -460,7 +460,7 @@
 /obj/structure/chair/office/dark{
 	dir = 8
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bi" = (
 /obj/structure/bed/roller,
@@ -564,7 +564,7 @@
 /area/shuttle/escape)
 "bs" = (
 /obj/machinery/door/airlock/hatch,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bt" = (
 /turf/open/floor/plasteel/darkpurple/side{
@@ -578,11 +578,11 @@
 /area/shuttle/escape)
 "bv" = (
 /obj/structure/chair/office/dark,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bw" = (
 /obj/machinery/door/airlock/shuttle,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bx" = (
 /obj/structure/chair{
@@ -620,7 +620,7 @@
 	name = "Shuttle Brig";
 	req_access_txt = "2"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bE" = (
 /obj/docking_port/mobile/emergency{
@@ -631,7 +631,7 @@
 	width = 32
 	},
 /obj/machinery/door/airlock/hatch,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bF" = (
 /turf/open/floor/plasteel/darkgreen/side{
@@ -839,7 +839,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bY" = (
 /obj/structure/chair{
@@ -848,21 +848,21 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bZ" = (
 /obj/structure/chair{
 	dir = 1
 	},
 /obj/structure/window/reinforced,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "ca" = (
 /obj/structure/chair,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "cb" = (
 /obj/structure/chair,
@@ -989,14 +989,12 @@
 /turf/closed/wall/mineral/plastitanium/interior,
 /area/shuttle/escape)
 "cx" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 8;
 	icon_state = "diagonalWall3"
 	},
 /area/shuttle/escape)
 "cy" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
@@ -1021,13 +1019,11 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "cD" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
 /area/shuttle/escape)
 "cI" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
@@ -1120,8 +1116,8 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/escape)
 "eQ" = (
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 
 (1,1,1) = {"
 aa

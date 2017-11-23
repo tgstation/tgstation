@@ -26,6 +26,7 @@
 	var/max_teams = 4
 	var/list/datum/objective_team/abductor_team/abductor_teams = list()
 	var/finished = FALSE
+	var/static/team_count = 0
 
 /datum/game_mode/abduction/announce()
 	to_chat(world, "<B>The current game mode is - Abduction!</B>")
@@ -44,7 +45,11 @@
 	return TRUE
 
 /datum/game_mode/abduction/proc/make_abductor_team(datum/mind/agent, datum/mind/scientist)
-	var/team_number = abductor_teams.len+1
+	team_count++ //TODO: Fix the edge case of abductor game mode rolling twice+ and failing to setup on first time.
+	var/team_number = team_count
+
+	if(team_number > max_teams)
+		return //or should it try to stuff them in anway ?
 
 	var/datum/objective_team/abductor_team/team = new
 	team.team_number = team_number

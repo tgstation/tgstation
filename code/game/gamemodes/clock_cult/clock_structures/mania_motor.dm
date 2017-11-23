@@ -60,4 +60,4 @@
 				break
 		if(!M)
 			M = H.apply_status_effect(STATUS_EFFECT_MANIAMOTOR, src)
-		M.severity = Clamp(M.severity + ((11 - get_dist(src, H)) * efficiency * efficiency), 0, MAX_MANIA_SEVERITY)
+		M.severity = CLAMP(M.severity + ((11 - get_dist(src, H)) * efficiency * efficiency), 0, MAX_MANIA_SEVERITY)

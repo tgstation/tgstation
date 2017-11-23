@@ -151,7 +151,7 @@
 	GLOB.apcs_list -= src
 
 	if(malfai && operating)
-		malfai.malf_picker.processing_time = Clamp(malfai.malf_picker.processing_time - 10,0,1000)
+		malfai.malf_picker.processing_time = CLAMP(malfai.malf_picker.processing_time - 10,0,1000)
 	area.power_light = FALSE
 	area.power_equip = FALSE
 	area.power_environ = FALSE
@@ -1052,15 +1052,6 @@
 		force_update = 1
 		return
 
-	/*
-	if (equipment > 1) // off=0, off auto=1, on=2, on auto=3
-		use_power(src.equip_consumption, EQUIP)
-	if (lighting > 1) // off=0, off auto=1, on=2, on auto=3
-		use_power(src.light_consumption, LIGHT)
-	if (environ > 1) // off=0, off auto=1, on=2, on auto=3
-		use_power(src.environ_consumption, ENVIRON)
-
-	area.calc_lighting() */
 	lastused_light = area.usage(STATIC_LIGHT)
 	lastused_light += area.usage(LIGHT)
 	lastused_equip = area.usage(EQUIP)
@@ -1251,7 +1242,7 @@
 
 /obj/machinery/power/apc/proc/set_broken()
 	if(malfai && operating)
-		malfai.malf_picker.processing_time = Clamp(malfai.malf_picker.processing_time - 10,0,1000)
+		malfai.malf_picker.processing_time = CLAMP(malfai.malf_picker.processing_time - 10,0,1000)
 	stat |= BROKEN
 	operating = FALSE
 	if(occupier)

@@ -112,7 +112,6 @@
 	if(!environment)
 		return
 
-	//var/environment_heat_capacity = environment.heat_capacity()
 	var/loc_temp = get_temperature(environment)
 
 	bodytemperature += adjust_body_temperature(bodytemperature, loc_temp, 1)

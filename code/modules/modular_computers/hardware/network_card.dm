@@ -41,7 +41,7 @@
 	if(ethernet) // Computer is connected via wired connection.
 		return 3
 
-	if(!GLOB.ntnet_global || !GLOB.ntnet_global.check_function(specific_action)) // NTNet is down and we are not connected via wired connection. No signal.
+	if(!SSnetworks.station_network || !SSnetworks.station_network.check_function(specific_action)) // NTNet is down and we are not connected via wired connection. No signal.
 		return 0
 
 	if(holder)

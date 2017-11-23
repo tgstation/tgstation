@@ -10,7 +10,7 @@
 	faction = list("wizard")
 	},
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "ad" = (
 /obj/structure/filingcabinet/filingcabinet,
 /turf/open/floor/carpet,
@@ -183,7 +183,7 @@
 /area/awaymission/academy/headmaster)
 "aG" = (
 /turf/closed/indestructible/rock,
-/area/space)
+/area/space/nearstation)
 "aH" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -231,7 +231,7 @@
 "aP" = (
 /obj/structure/lattice,
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "aQ" = (
 /obj/machinery/door/airlock/gold{
 	locked = 1
@@ -495,7 +495,7 @@
 /obj/structure/cable{
 	icon_state = "2-4"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/academy/headmaster)
 "bO" = (
 /obj/structure/cable{
@@ -509,7 +509,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/academy/headmaster)
 "bQ" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -576,7 +576,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/headmaster)
 "cd" = (
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/academy/headmaster)
 "ce" = (
 /obj/structure/cable{
@@ -629,7 +629,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/academy/headmaster)
 "cn" = (
 /turf/open/floor/plasteel/vault{
@@ -738,7 +738,7 @@
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/academy/headmaster)
 "cH" = (
 /obj/structure/sign/nosmoking_1,
@@ -814,7 +814,7 @@
 /obj/structure/closet/crate/internals,
 /obj/item/tank/internals/oxygen,
 /obj/item/tank/internals/oxygen/red,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/academy/headmaster)
 "cV" = (
 /obj/structure/closet/crate,
@@ -1240,7 +1240,7 @@
 "eu" = (
 /obj/singularity/academy,
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "ev" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -2988,7 +2988,7 @@
 	icon_state = "medium"
 	},
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "jC" = (
 /obj/machinery/igniter,
 /turf/open/floor/plating,
@@ -3916,7 +3916,7 @@
 /area/awaymission/academy/academycellar)
 "mY" = (
 /turf/closed/mineral/random,
-/area/space)
+/area/space/nearstation)
 "mZ" = (
 /turf/closed/indestructible/fakeglass{
 	icon_state = "fakewindows";
@@ -12113,7 +12113,7 @@ ak
 ar
 nn
 aC
-np
+nn
 aM
 aN
 ab
@@ -13543,7 +13543,7 @@ aq
 aw
 no
 aI
-nq
+no
 ak
 af
 ab

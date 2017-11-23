@@ -125,7 +125,7 @@
 /obj/item/integrated_circuit/transfer/pulsedemultiplexer/do_work()
 	var/output_index = get_pin_data(IC_INPUT, 1)
 
-	if(output_index == Clamp(output_index, 1, number_of_outputs))
+	if(output_index == CLAMP(output_index, 1, number_of_outputs))
 		activate_pin(round(output_index + 1 ,1))
 
 /obj/item/integrated_circuit/transfer/pulsedemultiplexer/medium

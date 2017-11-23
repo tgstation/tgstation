@@ -23,7 +23,7 @@
 	if(downloaded_file)
 		return 0
 
-	var/datum/computer_file/program/PRG = GLOB.ntnet_global.find_ntnet_file_by_name(filename)
+	var/datum/computer_file/program/PRG = SSnetworks.station_network.find_ntnet_file_by_name(filename)
 
 	if(!PRG || !istype(PRG))
 		return 0
@@ -39,10 +39,10 @@
 
 	ui_header = "downloader_running.gif"
 
-	if(PRG in GLOB.ntnet_global.available_station_software)
+	if(PRG in SSnetworks.station_network.available_station_software)
 		generate_network_log("Began downloading file [PRG.filename].[PRG.filetype] from NTNet Software Repository.")
 		hacked_download = 0
-	else if(PRG in GLOB.ntnet_global.available_antag_software)
+	else if(PRG in SSnetworks.station_network.available_antag_software)
 		generate_network_log("Began downloading file **ENCRYPTED**.[PRG.filetype] from unspecified server.")
 		hacked_download = 1
 	else
@@ -127,7 +127,7 @@
 		data["disk_size"] = hard_drive.max_capacity
 		data["disk_used"] = hard_drive.used_capacity
 		var/list/all_entries[0]
-		for(var/A in GLOB.ntnet_global.available_station_software)
+		for(var/A in SSnetworks.station_network.available_station_software)
 			var/datum/computer_file/program/P = A
 			// Only those programs our user can run will show in the list
 			if(!P.can_run(user,transfer = 1) || hard_drive.find_file_by_name(P.filename))
@@ -142,7 +142,7 @@
 		data["hackedavailable"] = 0
 		if(computer.emagged) // If we are running on emagged computer we have access to some "bonus" software
 			var/list/hacked_programs[0]
-			for(var/S in GLOB.ntnet_global.available_antag_software)
+			for(var/S in SSnetworks.station_network.available_antag_software)
 				var/datum/computer_file/program/P = S
 				if(hard_drive.find_file_by_name(P.filename))
 					continue

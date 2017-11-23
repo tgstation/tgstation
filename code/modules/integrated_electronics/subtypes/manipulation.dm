@@ -93,8 +93,8 @@
 			yo.data = round(yo.data, 1)
 
 		var/turf/T = get_turf(assembly)
-		var/target_x = Clamp(T.x + xo.data, 0, world.maxx)
-		var/target_y = Clamp(T.y + yo.data, 0, world.maxy)
+		var/target_x = CLAMP(T.x + xo.data, 0, world.maxx)
+		var/target_y = CLAMP(T.y + yo.data, 0, world.maxy)
 
 		shootAt(locate(target_x, target_y, T.z))
 
@@ -210,7 +210,7 @@
 		var/datum/integrated_io/detonation_time = inputs[1]
 		var/dt
 		if(isnum(detonation_time.data) && detonation_time.data > 0)
-			dt = Clamp(detonation_time.data, 1, 12)*10
+			dt = CLAMP(detonation_time.data, 1, 12)*10
 		else
 			dt = 15
 		addtimer(CALLBACK(attached_grenade, /obj/item/grenade.proc/prime), dt)
@@ -380,8 +380,8 @@
 			target_x.data = round(target_x.data, 1)
 		if(isnum(target_y.data))
 			target_y.data = round(target_y.data, 1)
-		var/_x = Clamp(T.x + target_x.data, 0, world.maxx)
-		var/_y = Clamp(T.y + target_y.data, 0, world.maxy)
+		var/_x = CLAMP(T.x + target_x.data, 0, world.maxx)
+		var/_y = CLAMP(T.y + target_y.data, 0, world.maxy)
 
 		A.forceMove(drop_location())
-		A.throw_at(locate(_x, _y, T.z), round(Clamp(sqrt(target_x.data*target_x.data+target_y.data*target_y.data),0,8),1), 3)
+		A.throw_at(locate(_x, _y, T.z), round(CLAMP(sqrt(target_x.data*target_x.data+target_y.data*target_y.data),0,8),1), 3)

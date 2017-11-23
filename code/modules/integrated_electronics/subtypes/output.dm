@@ -84,7 +84,7 @@
 	var/brightness = get_pin_data(IC_INPUT, 2)
 
 	if(new_color && isnum(brightness))
-		brightness = Clamp(brightness, 0, 6)
+		brightness = CLAMP(brightness, 0, 6)
 		light_rgb = new_color
 		light_brightness = brightness
 
@@ -160,7 +160,7 @@
 		var/selected_sound = sounds[ID]
 		if(!selected_sound)
 			return
-		vol = Clamp(vol ,0 , 100)
+		vol = CLAMP(vol ,0 , 100)
 		playsound(get_turf(src), selected_sound, vol, freq, -1)
 
 /obj/item/integrated_circuit/output/sound/on_data_written()
@@ -306,16 +306,14 @@
 	set_pin_data(IC_INPUT, 1, FALSE)
 
 /obj/item/integrated_circuit/output/led/external_examine(mob/user)
-	var/text_output = list()
+	var/text_output = "There is "
 
-	// Doing all this work just to have a color-blind friendly output.
-	text_output += "There is "
-	if(name == displayed_name )
+	if(name == displayed_name)
 		text_output += "\an [name]"
 	else
-		text_output += "\an ["\improper[name]"] labeled '[displayed_name ]'"
-	text_output += " which is currently [(get_pin_data(IC_INPUT, 1)==1) ? "lit <font color=[led_color]>*</font>" : "unlit."]"
-	to_chat(user,jointext(text_output,null))
+		text_output += "\an ["\improper[name]"] labeled '[displayed_name]'"
+	text_output += " which is currently [get_pin_data(IC_INPUT, 1) ? "lit <font color=[led_color]>*</font>" : "unlit"]."
+	to_chat(user, text_output)
 
 /obj/item/integrated_circuit/output/led/red
 	name = "red LED"

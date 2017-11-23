@@ -181,12 +181,14 @@
 			log_admin("[key_name(usr)] has triggered an event. ([E.name])")
 		return
 
-	else if(href_list["dbsearchckey"] || href_list["dbsearchadmin"])
+	else if(href_list["dbsearchckey"] || href_list["dbsearchadmin"] || href_list["dbsearchip"] || href_list["dbsearchcid"])
 		var/adminckey = href_list["dbsearchadmin"]
 		var/playerckey = href_list["dbsearchckey"]
+		var/ip = href_list["dbsearchip"]
+		var/cid = href_list["dbsearchcid"]
 		var/page = href_list["dbsearchpage"]
 
-		DB_ban_panel(playerckey, adminckey, page)
+		DB_ban_panel(playerckey, adminckey, ip, cid, page)
 		return
 
 	else if(href_list["dbbanedit"])
@@ -1873,7 +1875,7 @@
 			return
 
 		var/list/offset = splittext(href_list["offset"],",")
-		var/number = Clamp(text2num(href_list["object_count"]), 1, 100)
+		var/number = CLAMP(text2num(href_list["object_count"]), 1, 100)
 		var/X = offset.len > 0 ? text2num(offset[1]) : 0
 		var/Y = offset.len > 1 ? text2num(offset[2]) : 0
 		var/Z = offset.len > 2 ? text2num(offset[3]) : 0

@@ -265,7 +265,7 @@
 					justzap = TRUE
 					addtimer(CALLBACK(src, .proc/unzap), 10)
 					return
-			else /*if(src.justzap)*/
+			else
 				return
 		else if(user.hallucinating() && ishuman(user) && prob(4) && !operating)
 			var/mob/living/carbon/human/H = user

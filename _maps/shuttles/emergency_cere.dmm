@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ab" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
@@ -36,22 +36,22 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "ai" = (
 /obj/machinery/computer/card,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aj" = (
 /obj/machinery/computer/emergency_shuttle,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "ak" = (
 /obj/structure/table,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "al" = (
 /obj/structure/table,
@@ -96,14 +96,14 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "at" = (
 /obj/structure/chair/office/light{
 	icon_state = "officechair_white";
 	dir = 1
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "au" = (
 /obj/machinery/computer/communications{
@@ -112,7 +112,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "av" = (
 /turf/open/floor/plasteel/darkyellow,
@@ -147,17 +147,17 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aC" = (
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aD" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/structure/window/reinforced,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aE" = (
 /turf/open/floor/plasteel/darkyellow/side{
@@ -218,13 +218,13 @@
 /area/shuttle/escape)
 "aN" = (
 /obj/machinery/light,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aO" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aP" = (
 /obj/item/twohanded/required/kirbyplants{
@@ -248,7 +248,7 @@
 	name = "Emergency Shuttle Cockpit";
 	req_access_txt = "19"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aS" = (
 /obj/structure/chair,

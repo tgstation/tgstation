@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "b" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
@@ -15,10 +15,10 @@
 /obj/machinery/door/airlock/glass{
 	name = "Shuttle Airlock"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned)
 "e" = (
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned)
 "f" = (
 /turf/open/floor/plasteel,
@@ -98,7 +98,7 @@
 	timid = 1;
 	width = 9
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned)
 "p" = (
 /obj/structure/window/reinforced{

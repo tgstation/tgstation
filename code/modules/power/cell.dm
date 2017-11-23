@@ -110,12 +110,6 @@
 
 /obj/item/stock_parts/cell/proc/explode()
 	var/turf/T = get_turf(src.loc)
-/*
- * 1000-cell	explosion(T, -1, 0, 1, 1)
- * 2500-cell	explosion(T, -1, 0, 1, 1)
- * 10000-cell	explosion(T, -1, 1, 3, 3)
- * 15000-cell	explosion(T, -1, 2, 4, 4)
- * */
 	if (charge==0)
 		return
 	var/devastation_range = -1 //round(charge/11000)
@@ -159,7 +153,7 @@
 
 /obj/item/stock_parts/cell/proc/get_electrocute_damage()
 	if(charge >= 1000)
-		return Clamp(round(charge/10000), 10, 90) + rand(-5,5)
+		return CLAMP(round(charge/10000), 10, 90) + rand(-5,5)
 	else
 		return 0
 
@@ -338,4 +332,4 @@
 	return
 
 /obj/item/stock_parts/cell/beam_rifle/emp_act(severity)
-	charge = Clamp((charge-(10000/severity)),0,maxcharge)
+	charge = CLAMP((charge-(10000/severity)),0,maxcharge)

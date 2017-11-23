@@ -51,14 +51,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/item_color = null //this needs deprecating, soonish
 
 	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
-	//var/heat_transfer_coefficient = 1 //0 prevents all transfers, 1 is invisible
 	var/gas_transfer_coefficient = 1 // for leaking gas from turf to mask and vice-versa (for masks right now, but at some point, i'd like to include space helmets)
 	var/permeability_coefficient = 1 // for chemicals/diseases
 	var/siemens_coefficient = 1 // for electrical admittance/conductance (electrocution checks and shit)
 	var/slowdown = 0 // How much clothing is slowing you down. Negative values speeds you up
 	var/armour_penetration = 0 //percentage of armour effectiveness to remove
 	var/list/allowed = null //suit storage stuff.
-	var/obj/item/device/uplink/hidden_uplink = null
 	var/equip_delay_self = 0 //In deciseconds, how long an item takes to equip; counts only for normal clothing slots, not pockets etc.
 	var/equip_delay_other = 20 //In deciseconds, how long an item takes to put on another person
 	var/strip_delay = 40 //In deciseconds, how long an item takes to remove from another person
@@ -229,9 +227,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/interact(mob/user)
 	add_fingerprint(user)
-	if(hidden_uplink && hidden_uplink.active)
-		hidden_uplink.interact(user)
-		return 1
 	ui_interact(user)
 
 /obj/item/ui_act(action, params)

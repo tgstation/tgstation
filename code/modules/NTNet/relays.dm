@@ -17,7 +17,6 @@
 	var/uid
 	var/static/gl_uid = 1
 
-
 	// Denial of Service attack variables
 	var/dos_overload = 0		// Amount of DoS "packets" in this relay's buffer
 	var/dos_capacity = 500		// Amount of DoS "packets" in buffer required to crash the relay
@@ -27,12 +26,12 @@
 // TODO: Implement more logic here. For now it's only a placeholder.
 /obj/machinery/ntnet_relay/is_operational()
 	if(stat & (BROKEN | NOPOWER | EMPED))
-		return 0
+		return FALSE
 	if(dos_failure)
-		return 0
+		return FALSE
 	if(!enabled)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/machinery/ntnet_relay/update_icon()
 	if(is_operational())
@@ -55,12 +54,12 @@
 	if((dos_overload > dos_capacity) && !dos_failure)
 		dos_failure = 1
 		update_icon()
-		GLOB.ntnet_global.add_log("Quantum relay switched from normal operation mode to overload recovery mode.")
+		SSnetworks.station_network.add_log("Quantum relay switched from normal operation mode to overload recovery mode.")
 	// If the DoS buffer reaches 0 again, restart.
 	if((dos_overload == 0) && dos_failure)
 		dos_failure = 0
 		update_icon()
-		GLOB.ntnet_global.add_log("Quantum relay switched from overload recovery mode to normal operation mode.")
+		SSnetworks.station_network.add_log("Quantum relay switched from overload recovery mode to normal operation mode.")
 	..()
 
 /obj/machinery/ntnet_relay/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
@@ -89,12 +88,11 @@
 			dos_overload = 0
 			dos_failure = 0
 			update_icon()
-			GLOB.ntnet_global.add_log("Quantum relay manually restarted from overload recovery mode to normal operation mode.")
+			SSnetworks.station_network.add_log("Quantum relay manually restarted from overload recovery mode to normal operation mode.")
 		if("toggle")
 			enabled = !enabled
-			GLOB.ntnet_global.add_log("Quantum relay manually [enabled ? "enabled" : "disabled"].")
+			SSnetworks.station_network.add_log("Quantum relay manually [enabled ? "enabled" : "disabled"].")
 			update_icon()
-
 
 /obj/machinery/ntnet_relay/attack_hand(mob/living/user)
 	ui_interact(user)
@@ -103,16 +101,16 @@
 	uid = gl_uid++
 	component_parts = list()
 
-	if(GLOB.ntnet_global)
-		GLOB.ntnet_global.relays.Add(src)
-		NTNet = GLOB.ntnet_global
-		GLOB.ntnet_global.add_log("New quantum relay activated. Current amount of linked relays: [NTNet.relays.len]")
+	if(SSnetworks.station_network)
+		SSnetworks.station_network.relays.Add(src)
+		NTNet = SSnetworks.station_network
+		SSnetworks.station_network.add_log("New quantum relay activated. Current amount of linked relays: [NTNet.relays.len]")
 	. = ..()
 
 /obj/machinery/ntnet_relay/Destroy()
-	if(GLOB.ntnet_global)
-		GLOB.ntnet_global.relays.Remove(src)
-		GLOB.ntnet_global.add_log("Quantum relay connection severed. Current amount of linked relays: [NTNet.relays.len]")
+	if(SSnetworks.station_network)
+		SSnetworks.station_network.relays.Remove(src)
+		SSnetworks.station_network.add_log("Quantum relay connection severed. Current amount of linked relays: [NTNet.relays.len]")
 		NTNet = null
 
 	for(var/datum/computer_file/program/ntnet_dos/D in dos_sources)
