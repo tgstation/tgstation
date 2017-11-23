@@ -25890,7 +25890,8 @@
 	forwards = 2;
 	id = "packageSort2"
 	},
-/turf/open/space/basic,
+/obj/effect/turf_decal/loading_area,
+/turf/open/floor/plating,
 /area/quartermaster/sorting)
 "bbP" = (
 /obj/structure/disposalpipe/segment,
@@ -106567,7 +106568,7 @@ aaa
 aaf
 aaa
 aaa
-EDA
+EDz
 abe
 abe
 abe
