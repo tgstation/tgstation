@@ -542,8 +542,11 @@ try:
     print("Conversion completed at {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
     print("Script duration: {0}".format(end_time - start_time))
 except Exception as e:
+    cursor.execute("SELECT round_id FROM {0} WHERE id = {1}".format(current_table, current_id-1))
+    query_round_id = cursor.fetchone()
     end_time = datetime.now()
     print("Error encountered on row ID {0} at {1}".format(current_id, datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+    print("Note SQL insertion errors will be due to data from round ID {0}".format(query_round_id[0])) #since data is inserted when the round id changes on a new row
     print("Script duration: {0}".format(end_time - start_time))
     cursor.execute("TRUNCATE {0} ".format(new_table))
     raise e
