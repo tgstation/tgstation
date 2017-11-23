@@ -111,7 +111,7 @@
 #define SIMPLIFY_DEGREES(degrees) (MODULUS((degrees), 360))
 
 // min is inclusive, max is exclusive
-#define WRAP(val, min, max) (val - ((round((val) - (min)) / ((max) - (min))) * ((max) - (min))))
+#define WRAP(val, min, max) ( (val) - (round(((val) - (min))/((max) - (min))) * ((max) - (min))) )
 
 #define GET_ANGLE_OF_INCIDENCE(face_angle, angle_in) (SIMPLIFY_DEGREES(face_angle) - SIMPLIFY_DEGREES(angle_in))
 
