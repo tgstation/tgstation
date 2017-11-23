@@ -3,6 +3,7 @@
 	name = "repeater"
 	desc = "A small black prism with a gem in the center."
 	clockwork_desc = "A repeater that will send an activation signal every second."
+	max_integrity = 15 //Fragile!
 	icon_state = "repeater"
 
 /obj/structure/destructible/clockwork/trap/trigger/repeater/attack_hand(mob/living/user)

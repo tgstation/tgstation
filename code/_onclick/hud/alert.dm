@@ -392,7 +392,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		for(var/mob/living/L in GLOB.alive_mob_list)
 			if(is_servant_of_ratvar(L))
 				servants++
-		textlist = list("There are currently <b>[servants]</b> servant[servants > 1 ? "s" : ""] of Ratvar.<br>")
+		textlist = list("[SSticker.mode.eminence ? "There is an Eminence." : "<b>There is no Eminence! Get one ASAP!</b>"]<br>")
+		textlist += "There are currently <b>[servants]</b> servant[servants > 1 ? "s" : ""] of Ratvar.<br>"
 		for(var/i in SSticker.scripture_states)
 			if(i != SCRIPTURE_DRIVER) //ignore the always-unlocked stuff
 				textlist += "[i] Scripture: <b>[SSticker.scripture_states[i] ? "UNLOCKED":"LOCKED"]</b><br>"

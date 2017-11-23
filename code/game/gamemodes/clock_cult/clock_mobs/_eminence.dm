@@ -91,6 +91,11 @@
 		if(alert(src, "Initiate mass recall?", "Mass Recall", "Yes", "No") != "Yes" || QDELETED(src) || QDELETED(G) || !G.obj_integrity)
 			return
 		G.initiate_mass_recall() //wHOOPS LOOKS LIKE A HULK GOT THROUGH
+	else if(istype(A, /obj/structure/destructible/clockwork/trap/trigger))
+		var/obj/structure/destructible/clockwork/trap/trigger/T = A
+		T.visible_message("<span class='danger'>[T] clunks as it's activated remotely.</span>")
+		to_chat(src, "<span class='brass'>You activate [T].</span>")
+		T.activate()
 
 /mob/camera/eminence/ratvar_act()
 	name = "\improper Radiance"

@@ -1,0 +1,7 @@
+Added the <b>Eminence</b>, a leader role that servants can become by interacting with the new eminence spire structure in Reebe.
+Scripture has been re-colored in the slab interface to show its niche at a glance.
+Added traps, including the brass skewer and steam vent.
+Added trap triggers, including the pressure sensor, lever, and repeater.
+Traps and trap triggers can be linked by using your clockwork slab on them. Traps chained to each other will cause those traps to activate as well.
+You can instantly remove traps you misplace by using a wrench on them.
+<b><i>Mending Mantra has been removed.</i></b>

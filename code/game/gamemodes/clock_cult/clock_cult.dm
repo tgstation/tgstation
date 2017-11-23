@@ -283,6 +283,9 @@ Credit where due:
 	PDA.id_check(H, W)
 	H.sec_hud_set_ID()
 
+
+//This paper serves as a quick run-down to the cult as well as a changelog to refer to.
+//Check strings/clockwork_cult_changelog.txt for the changelog, and update it when you can!
 /obj/item/paper/servant_primer
 	name = "The Ark And You: A Primer On Servitude"
 	color = "#DAAA18"
@@ -312,13 +315,18 @@ Credit where due:
 	<hr>\
 	<h2>Things that have changed:</h2>\
 	<ul>\
-	<li><b><i>Scripture no longer requires components, and instead uses power.</i></b></li>\
-	<li>Added a <b>5-minute grace period</b> for the crew to prepare for the assault when the Ark activates.</li>\
-	<li>Script and Application scriptures can now be unlocked with enough power.</li>\
-	<li><b>Added the Hateful Manacles scripture</b>, which handcuffs targets!</li>\
+	CLOCKCULTCHANGELOG\
 	</ul>\
 	<hr>\
 	<b>Good luck!</b>"
+
+/obj/item/paper/servant_primer/Initialize()
+	. = ..()
+	var/changelog = world.file2list("strings/clockwork_cult_changelog.txt")
+	var/changelog_contents = ""
+	for(var/entry in changelog)
+		changelog_contents += "<li>[entry]</li>"
+	info = replacetext(info, "CLOCKCULTCHANGELOG", changelog_contents)
 
 /obj/item/paper/servant_primer/examine(mob/user)
 	if(!is_servant_of_ratvar(user) && !isobserver(user))

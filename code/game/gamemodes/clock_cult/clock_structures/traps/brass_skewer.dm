@@ -32,7 +32,12 @@
 		if(buckled_mobs.len)
 			var/mob/living/spitroast = buckled_mobs[1]
 			spitroast.adjustBruteLoss(0.1)
-			spitroast.dropItemToGround(spitroast.get_active_held_item()) //So they can't wield weapons, but can still try to free themselves
+
+/obj/structure/destructible/clockwork/trap/attackby(obj/item/I, mob/living/user, params)
+	if(user in buckled_mobs)
+		to_chat(user, "<span class='warning'>You can't reach!</span>")
+		return
+	..()
 
 /obj/structure/destructible/clockwork/trap/brass_skewer/bullet_act(obj/item/projectile/P)
 	if(buckled_mobs.len)
@@ -67,7 +72,7 @@
 	if(L in buckled_mobs)
 		L.pixel_y = 3
 		impale_overlay = mutable_appearance('icons/obj/clockwork_objects.dmi', "brass_skewer_pokeybit", ABOVE_MOB_LAYER)
-		L.add_overlay(impale_overlay)
+		add_overlay(impale_overlay)
 	else
 		L.pixel_y = initial(L.pixel_y)
 		L.cut_overlay(impale_overlay)

@@ -12,11 +12,9 @@
 	opacity = !opacity
 	icon_state = "steam_vent_[opacity]"
 	if(opacity)
-		visible_message("<span class='warning'>[src] billows out clouds of steam!</span>")
 		playsound(src, 'sound/machines/clockcult/steam_whoosh.ogg', 50, TRUE)
 
 	else
-		visible_message("<span class='danger'>[src]'s slats slide shut.</span>")
 		playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
 
 /obj/structure/destructible/clockwork/trap/steam_vent/Crossed(atom/movable/AM)
