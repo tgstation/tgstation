@@ -10,6 +10,14 @@
 		qdel(src)
 		CRASH("[type] instantiated!")
 
+	//check for common mishaps
+	if(!isnum(dupe_mode))
+		qdel(src)
+		CRASH("[type]: Invalid dupe_mode!")
+	if(!ispath(dupe_type))
+		qdel(src)
+		CRASH("[type]: Invalid dupe_type!")
+
 	parent = P
 	var/list/arguments = args.Copy()
 	arguments.Cut(1, 2)
