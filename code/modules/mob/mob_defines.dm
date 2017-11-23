@@ -31,7 +31,6 @@
 	var/list/logging = list(INDIVIDUAL_ATTACK_LOG, INDIVIDUAL_SAY_LOG, INDIVIDUAL_EMOTE_LOG, INDIVIDUAL_OOC_LOG)
 	var/obj/machinery/machine = null
 	var/other_mobs = null
-	var/disabilities = 0	//Carbon
 	var/movement_type = GROUND		//Incase you have multiple types, you automatically use the most useful one. IE: Skating on ice, flippers on water, flying over chasm/space, etc.
 
 	var/atom/movable/pulling = null

@@ -108,7 +108,7 @@
 	add_fingerprint(user)
 
 /obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user)
-	if(status && user.disabilities & CLUMSY && prob(50))
+	if(status && user.has_disability(CLUMSY) && prob(50))
 		user.visible_message("<span class='danger'>[user] accidentally hits themself with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
 		user.Knockdown(stunforce*3)

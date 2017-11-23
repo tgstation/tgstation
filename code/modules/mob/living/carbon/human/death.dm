@@ -48,7 +48,7 @@
 
 
 /mob/living/carbon/proc/Drain()
-	become_husk()
-	disabilities |= NOCLONE
+	become_husk("drain")
+	add_disability(NOCLONE, "drain")
 	blood_volume = 0
 	return 1

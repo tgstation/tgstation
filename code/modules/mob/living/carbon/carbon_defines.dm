@@ -49,3 +49,5 @@
 
 	var/icon_render_key = ""
 	var/static/list/limb_icon_cache = list()
+
+	var/disabilities = list()

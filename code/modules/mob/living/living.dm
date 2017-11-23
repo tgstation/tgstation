@@ -407,7 +407,7 @@
 	cure_nearsighted()
 	cure_blind()
 	cure_husk()
-	disabilities = 0
+	remove_all_disabilities()
 	hallucination = 0
 	heal_overall_damage(100000, 100000, 0, 0, 1) //heal brute and burn dmg on both organic and robotic limbs, and update health right away.
 	ExtinguishMob()

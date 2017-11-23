@@ -300,7 +300,7 @@
 			unwield()
 			return
 	..()
-	if(user.disabilities & CLUMSY && (wielded) && prob(40))
+	if(user.has_disability(CLUMSY) && (wielded) && prob(40))
 		impale(user)
 		return
 	if((wielded) && prob(50))

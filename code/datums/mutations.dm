@@ -219,12 +219,12 @@ GLOBAL_LIST_EMPTY(mutations_list)
 /datum/mutation/human/nearsight/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.become_nearsighted()
+	owner.become_nearsighted("genetic")
 
 /datum/mutation/human/nearsight/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.cure_nearsighted()
+	owner.cure_nearsighted(list("genetic"))
 
 /datum/mutation/human/epilepsy
 
@@ -304,12 +304,12 @@ GLOBAL_LIST_EMPTY(mutations_list)
 /datum/mutation/human/clumsy/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.disabilities |= CLUMSY
+	owner.add_disability(CLUMSY, "genetic")
 
 /datum/mutation/human/clumsy/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.disabilities &= ~CLUMSY
+	owner.remove_disability(CLUMSY, "genetic")
 
 /datum/mutation/human/tourettes
 	name = "Tourettes Syndrome"
@@ -348,12 +348,12 @@ GLOBAL_LIST_EMPTY(mutations_list)
 /datum/mutation/human/deaf/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.disabilities |= DEAF
+	owner.add_disability(DEAF, "genetic")
 
 /datum/mutation/human/deaf/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.disabilities &= ~DEAF
+	owner.remove_disability(DEAF, "genetic")
 
 /datum/mutation/human/blind
 	name = "Blindness"
@@ -363,12 +363,12 @@ GLOBAL_LIST_EMPTY(mutations_list)
 /datum/mutation/human/blind/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.become_blind()
+	owner.become_blind("genetic")
 
 /datum/mutation/human/blind/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.cure_blind()
+	owner.cure_blind(list("genetic"))
 
 
 /datum/mutation/human/race
@@ -433,12 +433,12 @@ GLOBAL_LIST_EMPTY(mutations_list)
 /datum/mutation/human/mute/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.disabilities |= MUTE
+	owner.add_disability(MUTE, "genetic")
 
 /datum/mutation/human/mute/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.disabilities &= ~MUTE
+	owner.remove_disability(MUTE, "genetic")
 
 /datum/mutation/human/smile
 	name = "Smile"

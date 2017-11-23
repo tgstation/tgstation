@@ -393,7 +393,7 @@
 
 /obj/item/twohanded/shockpaddles/proc/can_defib(mob/living/carbon/human/H)
 	var/obj/item/organ/brain/BR = H.getorgan(/obj/item/organ/brain)
-	return	(!H.suiciding && !(H.disabilities & NOCLONE) && !H.hellbound && ((world.time - H.timeofdeath) < tlimit) && (H.getBruteLoss() < 180) && (H.getFireLoss() < 180) && H.getorgan(/obj/item/organ/heart) && BR && !BR.damaged_brain)
+	return	(!H.suiciding && !(H.has_disability(NOCLONE)) && !H.hellbound && ((world.time - H.timeofdeath) < tlimit) && (H.getBruteLoss() < 180) && (H.getFireLoss() < 180) && H.getorgan(/obj/item/organ/heart) && BR && !BR.damaged_brain)
 
 /obj/item/twohanded/shockpaddles/proc/do_disarm(mob/living/M, mob/living/user)
 	if(req_defib && defib.safety)
@@ -506,7 +506,7 @@
 
 				var/failed = null
 
-				if (H.suiciding || (H.disabilities & NOCLONE))
+				if (H.suiciding || (H.has_disability(NOCLONE)))
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Recovery of patient impossible. Further attempts futile.</span>"
 				else if (H.hellbound)
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's soul appears to be on another plane of existence.  Further attempts futile.</span>"
