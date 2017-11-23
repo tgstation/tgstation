@@ -187,7 +187,7 @@
 		for(var/obj/O in mob.user_movement_hooks)
 			O.intercept_user_move(direct, mob, n, oldloc)
 
-	if(mob.pulling && !ismob(mob.pulling))
+	if(mob.pulling && !ismob(mob.pulling) && mob.pulling.density)
 		mob.dir = turn(mob.dir, 180)
 
 /mob/Moved(oldLoc, dir, Forced = FALSE)
