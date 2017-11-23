@@ -1,0 +1,4 @@
+author: "Robustin"
+delete-after: True
+changes: 
+  - tweak: "RND consoles will no longer display options for machines or disks that are not connected/inserted."
