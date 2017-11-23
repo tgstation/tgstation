@@ -471,9 +471,15 @@
 	var/list/turfs = ripple_area(S1)
 	for(var/t in turfs)
 		ripples += new /obj/effect/temp_visual/ripple(t, animate_time)
+		for(var/obj/machinery/door/airlock/A in range(1,src))
+			A.danger_lights = TRUE
+			A.update_icon()
 
 /obj/docking_port/mobile/proc/remove_ripples()
 	for(var/R in ripples)
+		for(var/obj/machinery/door/airlock/A in range(1,R))
+			A.danger_lights = FALSE
+			A.update_icon()
 		qdel(R)
 	ripples.Cut()
 

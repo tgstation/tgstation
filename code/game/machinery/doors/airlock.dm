@@ -95,6 +95,8 @@
 	var/air_tight = FALSE	//TRUE means density will be set as soon as the door begins to close
 	var/prying_so_hard = FALSE
 
+	var/danger_lights = FALSE
+
 	var/static/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock/Initialize()
@@ -441,6 +443,8 @@
 			if(lights && hasPower())
 				if(locked)
 					lights_overlay = get_airlock_overlay("lights_bolts", overlays_file)
+				else if(danger_lights)
+					lights_overlay = get_airlock_overlay("lights_warning", overlays_file)
 				else if(emergency)
 					lights_overlay = get_airlock_overlay("lights_emergency", overlays_file)
 			if(note)
