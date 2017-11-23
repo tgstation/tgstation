@@ -9,10 +9,10 @@
 	obj_damage = 100
 	melee_damage_lower = 25
 	melee_damage_upper = 50
-	attacktext = "chomps"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attacktext = "slashes"
+	attack_sound = 'sound/weapons/bladeslice.ogg'
 	faction = list("creature")
-	speak_emote = list("screams")
+	speak_emote = list("screams", "clicks", "chitters", "barks", "moans", "growls", "meows", "reverberates", "roars", "squeaks", "rattles", "exclaims", "yells")
 	gold_core_spawnable = 1
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
