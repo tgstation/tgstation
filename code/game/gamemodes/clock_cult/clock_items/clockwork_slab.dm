@@ -163,7 +163,7 @@
 /obj/item/clockwork/slab/AltClick(mob/living/user)
 	if(is_servant_of_ratvar(user) && linking)
 		linking = null
-		to_chat(user, ",span class='notice'>Object link canceled.</span>")
+		to_chat(user, "<span class='notice'>Object link canceled.</span>")
 
 /obj/item/clockwork/slab/proc/access_display(mob/living/user)
 	if(!is_servant_of_ratvar(user))
