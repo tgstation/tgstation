@@ -52,7 +52,7 @@
 	var/turf/p_turf = get_turf(P)
 	var/face_direction = get_dir(src, p_turf)
 	var/face_angle = dir2angle(face_direction)
-	var/incidence_s = get_angle_of_incidence(face_angle, P.Angle)
+	var/incidence_s = GET_ANGLE_OF_INCIDENCE(face_angle, P.Angle)
 	var/new_angle = face_angle + incidence_s
 	var/new_angle_s = new_angle
 	while(new_angle_s > 180)	// Translate to regular projectile degrees

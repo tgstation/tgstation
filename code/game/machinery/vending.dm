@@ -175,7 +175,7 @@
 		for(var/datum/data/vending_product/machine_content in machine)
 			if(refill.charges[charge_type] == 0)
 				break
-			var/restock = Ceiling(((machine_content.max_amount - machine_content.amount)/to_restock)*tmp_charges)
+			var/restock = CEILING(((machine_content.max_amount - machine_content.amount)/to_restock)*tmp_charges, 1)
 			if(restock > refill.charges[charge_type])
 				restock = refill.charges[charge_type]
 			machine_content.amount += restock

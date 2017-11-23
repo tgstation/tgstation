@@ -87,7 +87,7 @@
 		return
 	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num
 	if(user.get_active_held_item() == src)
-		newtime = Clamp(newtime, 10, 60000)
+		newtime = CLAMP(newtime, 10, 60000)
 		det_time = newtime
 		to_chat(user, "Timer set for [det_time] seconds.")
 
@@ -204,7 +204,7 @@
 /obj/item/grenade/plastic/c4/attack_self(mob/user)
 	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num
 	if(user.get_active_held_item() == src)
-		newtime = Clamp(newtime, 10, 60000)
+		newtime = CLAMP(newtime, 10, 60000)
 		timer = newtime
 		to_chat(user, "Timer set for [timer] seconds.")
 

@@ -25,7 +25,7 @@
 	if (prob(meteorminutes/2))
 		wavetype = GLOB.meteors_catastrophic
 
-	var/ramp_up_final = Clamp(round(meteorminutes/rampupdelta), 1, 10)
+	var/ramp_up_final = CLAMP(round(meteorminutes/rampupdelta), 1, 10)
 
 	spawn_meteors(ramp_up_final, wavetype)
 
