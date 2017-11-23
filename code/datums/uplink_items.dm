@@ -23,12 +23,12 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			if(!istype(I))
 				continue
 			if(I.include_modes.len)
-				if(!gamemode && SSticker && !(SSticker.mode.type in I.include_modes))
+				if(!gamemode && SSticker && SSticker.mode && !(SSticker.mode.type in I.include_modes))
 					continue
 				if(gamemode && !(gamemode in I.include_modes))
 					continue
 			if(I.exclude_modes.len)
-				if(!gamemode && SSticker && (SSticker.mode.type in I.exclude_modes))
+				if(!gamemode && SSticker && SSticker.mode && (SSticker.mode.type in I.exclude_modes))
 					continue
 				if(gamemode && (gamemode in I.exclude_modes))
 					continue
@@ -1348,7 +1348,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cant_discount = TRUE
 
 /datum/uplink_item/badass/surplus/spawn_item(turf/loc, datum/component/uplink/U)
-	var/list/uplink_items = get_uplink_items(SSticker.mode)
+	var/list/uplink_items = get_uplink_items(SSticker && SSticker.mode? SSticker.mode : null)
 
 	var/crate_value = 50
 	var/obj/structure/closet/crate/C = new(loc)
@@ -1376,7 +1376,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cant_discount = TRUE
 
 /datum/uplink_item/badass/random/spawn_item(turf/loc, datum/component/uplink/U)
-	var/list/uplink_items = get_uplink_items(SSticker.mode)
+	var/list/uplink_items = get_uplink_items(SSticker && SSticker.mode? SSticker.mode : null)
 	var/list/possible_items = list()
 	for(var/category in uplink_items)
 		for(var/item in uplink_items[category])
