@@ -1,0 +1,4 @@
+author: "ACCount"
+delete-after: True
+changes: 
+  - rscdel: "Removed \"console screen\" stock part. Just use glass sheets instead."
