@@ -28,6 +28,9 @@
 		else
 			to_chat(user, ("<span class='warning'>There's not enough cable to finish the task!</span>"))
 			return FALSE
+	else if(istype(used_atom, /obj/item/stack/ore/bluespace_crystal))
+		var/obj/item/stack/ore/bluespace_crystal/BSC = used_atom
+		BSC.use(1)
 	else if(istype(used_atom, /obj/item/stack))
 		var/obj/item/stack/S = used_atom
 		if(S.get_amount() < 5)
@@ -1320,7 +1323,7 @@
 					 		"backkey"=/obj/item/crowbar,
 					 		"desc"="The bluespace crystal is installed."),
 					 //12
-					 list("key"=/obj/item/ore/bluespace_crystal,
+					 list("key"=/obj/item/stack/ore/bluespace_crystal,
 					 		"backkey"=/obj/item/screwdriver,
 					 		"desc"="Super capacitor is secured."),
 					 //13
@@ -1514,7 +1517,7 @@
 				holder.icon_state = "phazon16"
 			else
 				user.visible_message("[user] removes the bluespace crystal from the [holder].", "<span class='notice'>You remove the bluespace crystal from the [holder].</span>")
-				new /obj/item/ore/bluespace_crystal(get_turf(holder))
+				new /obj/item/stack/ore/bluespace_crystal(get_turf(holder))
 				holder.icon_state = "phazon14"
 		if(11)
 			if(diff==FORWARD)

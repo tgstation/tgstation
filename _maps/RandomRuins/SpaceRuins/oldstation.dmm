@@ -43,9 +43,9 @@
 /obj/item/stack/sheet/mineral/gold{
 	amount = 15
 	},
-/obj/item/ore/bluespace_crystal,
-/obj/item/ore/bluespace_crystal,
-/obj/item/ore/bluespace_crystal,
+/obj/item/stack/ore/bluespace_crystal,
+/obj/item/stack/ore/bluespace_crystal,
+/obj/item/stack/ore/bluespace_crystal,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/ancientstation/hivebot)
 "ak" = (
@@ -4360,6 +4360,19 @@
 /obj/item/pickaxe,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
+<<<<<<< HEAD
+=======
+"lr" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stack/ore/bluespace_crystal,
+/turf/open/floor/plasteel/white,
+/area/ruin/space/has_grav/ancientstation/rnd)
+"ls" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stack/ore/bluespace_crystal/refined,
+/turf/open/floor/plasteel/white,
+/area/ruin/space/has_grav/ancientstation/rnd)
+>>>>>>> 3a87ab7f51... Ore Stacking
 "lt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/mirror{

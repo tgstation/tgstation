@@ -129,6 +129,6 @@ Note: Must be placed west/left of and R&D console to function.
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has built [amount] of [path] at a protolathe")
 	for(var/i in 1 to amount)
 		var/obj/item/I = new path(get_turf(src))
-		if(!istype(I, /obj/item/stack/sheet) && !istype(I, /obj/item/ore/bluespace_crystal))
+		if(!istype(I, /obj/item/stack/sheet) && !istype(I, /obj/item/stack/ore/bluespace_crystal))
 			I.materials = matlist.Copy()
 	SSblackbox.record_feedback("nested tally", "item_printed", amount, list("[type]", "[path]"))
