@@ -34,8 +34,7 @@
 
 /mob/living/simple_animal/drone/syndrone/Initialize()
 	. = ..()
-	GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, internal_storage)
-	hidden_uplink.telecrystals = 10
+	internal_storage.hidden_uplink.telecrystals = 10
 
 /mob/living/simple_animal/drone/syndrone/Login()
 	..()
@@ -48,8 +47,7 @@
 
 /mob/living/simple_animal/drone/syndrone/badass/Initialize()
 	. = ..()
-	GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, internal_storage)
-	hidden_uplink.telecrystals = 30
+	internal_storage.hidden_uplink.telecrystals = 30
 	var/obj/item/implant/weapons_auth/W = new/obj/item/implant/weapons_auth(src)
 	W.implant(src)
 

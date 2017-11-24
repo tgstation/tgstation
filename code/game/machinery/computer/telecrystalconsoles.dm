@@ -33,8 +33,7 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 	if(uplinkholder)
 		to_chat(user, "<span class='notice'>[src] already has an uplink in it.</span>")
 		return
-	GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, I)
-	if(hidden_uplink)
+	if(I.hidden_uplink)
 		if(!user.transferItemToLoc(I, src))
 			return
 		uplinkholder = I
@@ -57,28 +56,26 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 
 /obj/machinery/computer/telecrystals/uplinker/proc/donateTC(amt, addLog = 1)
 	if(uplinkholder && linkedboss)
-		GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, uplinkholder)
 		if(amt < 0)
-			linkedboss.storedcrystals += hidden_uplink.telecrystals
+			linkedboss.storedcrystals += uplinkholder.hidden_uplink.telecrystals
 			if(addLog)
-				linkedboss.logTransfer("[src] donated [hidden_uplink.telecrystals] telecrystals to [linkedboss].")
-			hidden_uplink.telecrystals = 0
-		else if(amt <= hidden_uplink.telecrystals)
-			hidden_uplink.telecrystals -= amt
+				linkedboss.logTransfer("[src] donated [uplinkholder.hidden_uplink.telecrystals] telecrystals to [linkedboss].")
+			uplinkholder.hidden_uplink.telecrystals = 0
+		else if(amt <= uplinkholder.hidden_uplink.telecrystals)
+			uplinkholder.hidden_uplink.telecrystals -= amt
 			linkedboss.storedcrystals += amt
 			if(addLog)
 				linkedboss.logTransfer("[src] donated [amt] telecrystals to [linkedboss].")
 
 /obj/machinery/computer/telecrystals/uplinker/proc/giveTC(amt, addLog = 1)
 	if(uplinkholder && linkedboss)
-		GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, uplinkholder)
 		if(amt < 0)
-			hidden_uplink.telecrystals += linkedboss.storedcrystals
+			uplinkholder.hidden_uplink.telecrystals += linkedboss.storedcrystals
 			if(addLog)
 				linkedboss.logTransfer("[src] received [linkedboss.storedcrystals] telecrystals from [linkedboss].")
 			linkedboss.storedcrystals = 0
 		else if(amt <= linkedboss.storedcrystals)
-			hidden_uplink.telecrystals += amt
+			uplinkholder.hidden_uplink.telecrystals += amt
 			linkedboss.storedcrystals -= amt
 			if(addLog)
 				linkedboss.logTransfer("[src] received [amt] telecrystals from [linkedboss].")
@@ -98,8 +95,7 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 		dat += "No linked management consoles detected. Scan for uplink stations using the management console.<BR><BR>"
 
 	if(uplinkholder)
-		GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, uplinkholder)
-		dat += "[hidden_uplink.telecrystals] telecrystals remain in this uplink.<BR>"
+		dat += "[uplinkholder.hidden_uplink.telecrystals] telecrystals remain in this uplink.<BR>"
 		if(linkedboss)
 			dat += "Donate TC: <a href='byond://?src=[REF(src)];donate=1'>1</a> | <a href='byond://?src=[REF(src)];donate=5'>5</a> | <a href='byond://?src=[REF(src)];donate=-1'>All</a>"
 		dat += "<br><a href='byond://?src=[REF(src)];eject=1'>Eject Uplink</a>"
@@ -179,8 +175,7 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 	for(var/obj/machinery/computer/telecrystals/uplinker/A in TCstations)
 		dat += "[A.name] | "
 		if(A.uplinkholder)
-			GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, A.uplinkholder)
-			dat += "[hidden_uplink.telecrystals] telecrystals."
+			dat += "[A.uplinkholder.hidden_uplink.telecrystals] telecrystals."
 		if(storedcrystals)
 			dat+= "<BR>Add TC: <a href ='?src=[REF(src)];target=[REF(A)];give=1'>1</a> | <a href ='?src=[REF(src)];target=[REF(A)];give=5'>5</a> | <a href ='?src=[REF(src)];target=[REF(A)];give=10'>10</a> | <a href ='?src=[REF(src)];target=[REF(A)];give=-1'>All</a>"
 		dat += "<BR>"

@@ -54,7 +54,10 @@
 		var/obj/item/circuitboard/computer/syndicate_shuttle/board = V
 		board.challenge = TRUE
 
-	new /obj/item/device/radio/uplink/nuclear(get_turf(user), user.key, CHALLENGE_TELECRYSTALS)
+	var/obj/item/device/radio/uplink/nuclear/U = new(get_turf(user))
+	U.hidden_uplink.owner = "[user.key]"
+	U.hidden_uplink.telecrystals = CHALLENGE_TELECRYSTALS
+	U.hidden_uplink.set_gamemode(/datum/game_mode/nuclear)
 	CONFIG_SET(number/shuttle_refuel_delay, max(CONFIG_GET(number/shuttle_refuel_delay), CHALLENGE_SHUTTLE_DELAY))
 	SSblackbox.record_feedback("amount", "nuclear_challenge_mode", 1)
 
@@ -63,22 +66,22 @@
 /obj/item/device/nuclear_challenge/proc/check_allowed(mob/living/user)
 	if(declaring_war)
 		to_chat(user, "You are already in the process of declaring war! Make your mind up.")
-		return FALSE
+		return 0
 	if(GLOB.player_list.len < CHALLENGE_MIN_PLAYERS)
 		to_chat(user, "The enemy crew is too small to be worth declaring war on.")
-		return FALSE
+		return 0
 	if(user.z != ZLEVEL_CENTCOM)
 		to_chat(user, "You have to be at your base to use this.")
-		return FALSE
+		return 0
 	if(world.time-SSticker.round_start_time > CHALLENGE_TIME_LIMIT)
 		to_chat(user, "It's too late to declare hostilities. Your benefactors are already busy with other schemes. You'll have to make do with what you have on hand.")
-		return FALSE
+		return 0
 	for(var/V in GLOB.syndicate_shuttle_boards)
 		var/obj/item/circuitboard/computer/syndicate_shuttle/board = V
 		if(board.moved)
 			to_chat(user, "The shuttle has already been moved! You have forfeit the right to declare war.")
-			return FALSE
-	return TRUE
+			return 0
+	return 1
 
 #undef CHALLENGE_TELECRYSTALS
 #undef CHALLENGE_MIN_PLAYERS
