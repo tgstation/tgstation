@@ -20,9 +20,11 @@
 	return TRUE
 
 /obj/effect/proc_holder/changeling/fakedeath/proc/ready_to_regenerate(mob/user)
-	if(user && user.mind && user.mind.changeling && user.mind.changeling.purchasedpowers)
-		to_chat(user, "<span class='notice'>We are ready to revive.</span>")
-		user.mind.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/revive(null)
+	if(user && user.mind)
+		var/datum/antagonist/changeling/C = user.mind.has_antag_datum(/datum/antagonist/changeling)
+		if(C && C.purchasedpowers)
+			to_chat(user, "<span class='notice'>We are ready to revive.</span>")
+			C.purchasedpowers += new /obj/effect/proc_holder/changeling/revive(null)
 
 /obj/effect/proc_holder/changeling/fakedeath/can_sting(mob/user)
 	if(user.status_flags & FAKEDEATH)

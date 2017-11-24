@@ -157,7 +157,6 @@
 /turf/closed/wall/mineral/titanium,
 /area/ruin/powered)
 "G" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /turf/closed/wall/mineral/titanium/interior,
 /area/ruin/powered)
 "H" = (

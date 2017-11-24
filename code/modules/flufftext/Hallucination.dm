@@ -460,7 +460,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	var/image/A = null
 	var/kind = force_kind ? force_kind : pick("monkey","corgi","carp","skeleton","demon","zombie")
 	feedback_details += "Type: [kind]"
-	for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
+	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 		if(H == target)
 			continue
 		if(skip_nearby && (H in view(target)))
@@ -538,7 +538,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	var/mob/living/carbon/human/clone = null
 	var/clone_weapon = null
 
-	for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
+	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 		if(H.stat || H.lying)
 			continue
 		clone = H
@@ -769,7 +769,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 			target.client.images.Remove(speech_overlay)
 	else // Radio talk
 		var/list/humans = list()
-		for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
+		for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 			humans += H
 		person = pick(humans)
 		var/message = target.compose_message(person,understood_language,pick(radio_messages),"1459",person.get_spans(),face_name = TRUE)
@@ -905,45 +905,47 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 		alert_type = specific
 	feedback_details += "Type: [alert_type]"
 	switch(alert_type)
-		if("oxy")
-			target.throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy, override = TRUE)
+		if("not_enough_oxy")
+			target.throw_alert(alert_type, /obj/screen/alert/not_enough_oxy, override = TRUE)
 		if("not_enough_tox")
-			target.throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox, override = TRUE)
+			target.throw_alert(alert_type, /obj/screen/alert/not_enough_tox, override = TRUE)
 		if("not_enough_co2")
-			target.throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2, override = TRUE)
+			target.throw_alert(alert_type, /obj/screen/alert/not_enough_co2, override = TRUE)
 		if("too_much_oxy")
-			target.throw_alert("too_much_oxy", /obj/screen/alert/too_much_oxy, override = TRUE)
+			target.throw_alert(alert_type, /obj/screen/alert/too_much_oxy, override = TRUE)
 		if("too_much_co2")
-			target.throw_alert("too_much_co2", /obj/screen/alert/too_much_co2, override = TRUE)
-		if("tox_in_air")
-			target.throw_alert("too_much_tox", /obj/screen/alert/too_much_tox, override = TRUE)
+			target.throw_alert(alert_type, /obj/screen/alert/too_much_co2, override = TRUE)
+		if("too_much_tox")
+			target.throw_alert(alert_type, /obj/screen/alert/too_much_tox, override = TRUE)
 		if("nutrition")
 			if(prob(50))
-				target.throw_alert("nutrition", /obj/screen/alert/fat, override = TRUE)
+				target.throw_alert(alert_type, /obj/screen/alert/fat, override = TRUE)
 			else
-				target.throw_alert("nutrition", /obj/screen/alert/starving, override = TRUE)
+				target.throw_alert(alert_type, /obj/screen/alert/starving, override = TRUE)
 		if("weightless")
-			target.throw_alert("weightless", /obj/screen/alert/weightless, override = TRUE)
+			target.throw_alert(alert_type, /obj/screen/alert/weightless, override = TRUE)
 		if("fire")
-			target.throw_alert("fire", /obj/screen/alert/fire, override = TRUE)
+			target.throw_alert(alert_type, /obj/screen/alert/fire, override = TRUE)
 		if("temphot")
-			target.throw_alert("temp", /obj/screen/alert/hot, 3, override = TRUE)
+			alert_type = "temp"
+			target.throw_alert(alert_type, /obj/screen/alert/hot, 3, override = TRUE)
 		if("tempcold")
-			target.throw_alert("temp", /obj/screen/alert/cold, 3, override = TRUE)
+			alert_type = "temp"
+			target.throw_alert(alert_type, /obj/screen/alert/cold, 3, override = TRUE)
 		if("pressure")
 			if(prob(50))
-				target.throw_alert("pressure", /obj/screen/alert/highpressure, 2, override = TRUE)
+				target.throw_alert(alert_type, /obj/screen/alert/highpressure, 2, override = TRUE)
 			else
-				target.throw_alert("pressure", /obj/screen/alert/lowpressure, 2, override = TRUE)
+				target.throw_alert(alert_type, /obj/screen/alert/lowpressure, 2, override = TRUE)
 		//BEEP BOOP I AM A ROBOT
 		if("newlaw")
-			target.throw_alert("newlaw", /obj/screen/alert/newlaw, override = TRUE)
+			target.throw_alert(alert_type, /obj/screen/alert/newlaw, override = TRUE)
 		if("locked")
-			target.throw_alert("locked", /obj/screen/alert/locked, override = TRUE)
+			target.throw_alert(alert_type, /obj/screen/alert/locked, override = TRUE)
 		if("hacked")
-			target.throw_alert("hacked", /obj/screen/alert/hacked, override = TRUE)
+			target.throw_alert(alert_type, /obj/screen/alert/hacked, override = TRUE)
 		if("charge")
-			target.throw_alert("charge",/obj/screen/alert/emptycell, override = TRUE)
+			target.throw_alert(alert_type,/obj/screen/alert/emptycell, override = TRUE)
 	sleep(duration)
 	target.clear_alert(alert_type, clear_override = TRUE)
 	qdel(src)

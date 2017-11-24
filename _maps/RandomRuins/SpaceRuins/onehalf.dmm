@@ -4,8 +4,6 @@
 /area/template_noop)
 "ab" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/structure/lattice/catwalk,
@@ -13,8 +11,6 @@
 /area/template_noop)
 "ac" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/structure/lattice/catwalk,
@@ -22,8 +18,6 @@
 /area/template_noop)
 "ad" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/structure/lattice/catwalk,
@@ -40,8 +34,6 @@
 /area/template_noop)
 "af" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/structure/lattice/catwalk,
@@ -56,8 +48,6 @@
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "ai" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/structure/lattice/catwalk,
@@ -98,8 +88,6 @@
 "aq" = (
 /obj/machinery/door/airlock/external,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
@@ -189,8 +177,6 @@
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aD" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/light/small{
@@ -233,15 +219,12 @@
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aL" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aM" = (
 /obj/structure/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/structure/closet/crate/medical,
@@ -302,8 +285,6 @@
 /area/template_noop)
 "aT" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/airless{
@@ -318,8 +299,6 @@
 "aV" = (
 /obj/machinery/door/airlock/glass_medical,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/white,
@@ -330,13 +309,9 @@
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aX" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -346,7 +321,6 @@
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "aY" = (
 /obj/structure/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
@@ -452,7 +426,6 @@
 /area/ruin/space/has_grav/onehalf/hallway)
 "bg" = (
 /obj/structure/disposalpipe/broken{
-	icon_state = "pipe-b";
 	dir = 4
 	},
 /obj/item/stack/cable_coil/cut{
@@ -470,13 +443,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/airless{
@@ -488,8 +457,6 @@
 	dir = 4
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/airless{
@@ -501,25 +468,18 @@
 	dir = 4
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bk" = (
 /obj/structure/disposalpipe/junction{
-	icon_state = "pipe-j1";
 	dir = 4
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/airless{
@@ -531,25 +491,18 @@
 	dir = 4
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bm" = (
 /obj/structure/disposalpipe/junction{
-	icon_state = "pipe-j1";
 	dir = 4
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/airless,
@@ -560,8 +513,6 @@
 	},
 /obj/machinery/door/airlock/glass,
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -571,8 +522,6 @@
 	dir = 4
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel,
@@ -609,8 +558,7 @@
 	},
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bt" = (
-/obj/structure/disposalpipe/junction{
-	icon_state = "pipe-y";
+/obj/structure/disposalpipe/junction/yjunction{
 	dir = 1
 	},
 /turf/open/floor/plasteel{
@@ -626,7 +574,6 @@
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bv" = (
 /obj/structure/disposalpipe/broken{
-	icon_state = "pipe-b";
 	dir = 4
 	},
 /turf/open/floor/plating/airless{
@@ -692,8 +639,7 @@
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bD" = (
 /obj/structure/disposalpipe/junction{
-	dir = 8;
-	icon_state = "pipe-j1"
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/drone_bay)
@@ -706,8 +652,7 @@
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bF" = (
 /obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
+	dir = 9
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/drone_bay)
@@ -843,8 +788,7 @@
 /area/ruin/space/has_grav/onehalf/bridge)
 "cf" = (
 /obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
+	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
 	dir = 1;
@@ -855,8 +799,6 @@
 /area/ruin/space/has_grav/onehalf/bridge)
 "cg" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/structure/table/reinforced,
@@ -868,7 +810,6 @@
 /area/ruin/space/has_grav/onehalf/bridge)
 "ch" = (
 /obj/structure/disposalpipe/junction{
-	icon_state = "pipe-j1";
 	dir = 1
 	},
 /obj/item/shard,
@@ -880,11 +821,9 @@
 "ci" = (
 /obj/structure/lattice,
 /obj/structure/disposalpipe/broken{
-	icon_state = "pipe-b";
 	dir = 4
 	},
 /obj/structure/disposalpipe/broken{
-	icon_state = "pipe-b";
 	dir = 8
 	},
 /obj/item/stack/rods,
@@ -913,8 +852,7 @@
 /area/ruin/space/has_grav/onehalf/bridge)
 "cl" = (
 /obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
+	dir = 10
 	},
 /obj/structure/table/reinforced,
 /obj/item/paper_bin{
@@ -939,13 +877,9 @@
 /area/ruin/space/has_grav/onehalf/bridge)
 "cp" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/structure/table/reinforced,
@@ -955,16 +889,12 @@
 "cq" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
+	icon_state = "0-4"
 	},
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1;
-	d2 = 2
+	icon_state = "0-2"
 	},
 /obj/structure/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/door/poddoor/preopen{
@@ -1021,9 +951,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1;
-	d2 = 2
+	icon_state = "0-2"
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge_onehalf";
@@ -1041,8 +969,6 @@
 "cC" = (
 /obj/structure/lattice,
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/open/space,
@@ -1050,11 +976,9 @@
 "cD" = (
 /obj/structure/lattice,
 /obj/structure/disposalpipe/broken{
-	icon_state = "pipe-b";
 	dir = 8
 	},
 /obj/structure/disposalpipe/broken{
-	icon_state = "pipe-b";
 	dir = 1
 	},
 /turf/template_noop,
@@ -1129,8 +1053,6 @@
 "cO" = (
 /obj/structure/lattice,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/space,
@@ -1169,8 +1091,7 @@
 "cV" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
+	icon_state = "0-4"
 	},
 /obj/structure/cable,
 /obj/machinery/door/poddoor/preopen{
@@ -1181,13 +1102,9 @@
 /area/ruin/space/has_grav/onehalf/bridge)
 "cW" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/structure/lattice/catwalk,
@@ -1195,8 +1112,6 @@
 /area/template_noop)
 "cX" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/airless{
@@ -1227,8 +1142,6 @@
 "dc" = (
 /obj/structure/grille/broken,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating/airless{
@@ -1246,13 +1159,10 @@
 "de" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1;
-	d2 = 2
+	icon_state = "0-2"
 	},
 /obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
+	icon_state = "0-4"
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge_onehalf";
@@ -1263,11 +1173,9 @@
 "df" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
+	icon_state = "0-4"
 	},
 /obj/structure/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/door/poddoor/preopen{
@@ -1279,12 +1187,9 @@
 "dg" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1;
-	d2 = 2
+	icon_state = "0-2"
 	},
 /obj/structure/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/door/poddoor/preopen{
@@ -1300,8 +1205,6 @@
 /area/template_noop)
 "di" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/item/shard{
@@ -1312,13 +1215,9 @@
 /area/template_noop)
 "dj" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/item/stack/rods,
@@ -1327,13 +1226,9 @@
 /area/template_noop)
 "dk" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/structure/lattice/catwalk,

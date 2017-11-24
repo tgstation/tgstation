@@ -375,7 +375,8 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 /obj/machinery/doomsday_device/proc/detonate()
 	sound_to_playing_players('sound/machines/alarm.ogg')
 	sleep(100)
-	for(var/mob/living/L in GLOB.mob_list)
+	for(var/i in GLOB.mob_living_list)
+		var/mob/living/L = i
 		var/turf/T = get_turf(L)
 		if(!T || !(T.z in GLOB.station_z_levels))
 			continue
@@ -679,7 +680,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		C.images -= I
 
 /mob/living/silicon/ai/proc/can_place_transformer(datum/action/innate/ai/place_transformer/action)
-	if(!eyeobj || !isturf(loc) || !canUseTopic() || !action)
+	if(!eyeobj || !isturf(loc) || incapacitated() || !action)
 		return
 	var/turf/middle = get_turf(eyeobj)
 	var/list/turfs = list(middle, locate(middle.x - 1, middle.y, middle.z), locate(middle.x + 1, middle.y, middle.z))

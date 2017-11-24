@@ -98,7 +98,7 @@
 		load_item(IW, user)
 
 /obj/item/pneumatic_cannon/proc/can_load_item(obj/item/I, mob/user)
-	if(allowed_typecache && is_type_in_typecache(I, allowed_typecache))
+	if(allowed_typecache && !is_type_in_typecache(I, allowed_typecache))
 		if(user)
 			to_chat(user, "<span class='warning'>[I] won't fit into [src]!</span>")
 		return
@@ -198,8 +198,8 @@
 		return target
 	var/x_o = (target.x - starting.x)
 	var/y_o = (target.y - starting.y)
-	var/new_x = Clamp((starting.x + (x_o * range_multiplier)), 0, world.maxx)
-	var/new_y = Clamp((starting.y + (y_o * range_multiplier)), 0, world.maxy)
+	var/new_x = CLAMP((starting.x + (x_o * range_multiplier)), 0, world.maxx)
+	var/new_y = CLAMP((starting.y + (y_o * range_multiplier)), 0, world.maxy)
 	var/turf/newtarget = locate(new_x, new_y, starting.z)
 	return newtarget
 

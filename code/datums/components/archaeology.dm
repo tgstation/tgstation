@@ -1,11 +1,11 @@
 /datum/component/archaeology
-	dupe_type = COMPONENT_DUPE_UNIQUE
+	dupe_mode = COMPONENT_DUPE_UNIQUE
 	var/list/archdrops
 	var/prob2drop
 	var/dug
 
 /datum/component/archaeology/Initialize(_prob2drop, list/_archdrops = list())
-	prob2drop = Clamp(_prob2drop, 0, 100)
+	prob2drop = CLAMP(_prob2drop, 0, 100)
 	archdrops = _archdrops
 	RegisterSignal(COMSIG_PARENT_ATTACKBY,.proc/Dig)
 	RegisterSignal(COMSIG_ATOM_EX_ACT, .proc/BombDig)
@@ -38,7 +38,7 @@
 				to_chat(user, "<span class='notice'>You dig a hole.</span>")
 				gets_dug()
 				dug = TRUE
-				SSblackbox.add_details("pick_used_mining",W.type)
+				SSblackbox.record_feedback("tally", "pick_used_mining", 1, W.type)
 				return TRUE
 		return FALSE
 

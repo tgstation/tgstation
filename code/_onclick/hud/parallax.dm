@@ -256,7 +256,7 @@
 	if (!view)
 		view = world.view
 
-	var/count = Ceiling(view/(480/world.icon_size))+1
+	var/count = CEILING(view/(480/world.icon_size), 1)+1
 	var/list/new_overlays = new
 	for(var/x in -count to count)
 		for(var/y in -count to count)

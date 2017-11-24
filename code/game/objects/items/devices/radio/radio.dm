@@ -11,7 +11,6 @@
 	var/frequency = 1459 //common chat
 	var/traitor_frequency = 0 //tune to frequency to unlock traitor supplies
 	var/canhear_range = 3 // the range which mobs can hear this radio from
-	var/obj/item/device/radio/patch_link = null
 	var/list/secure_radio_connections
 	var/prison_radio = 0
 	var/b_stat = 0
@@ -82,7 +81,6 @@
 	qdel(wires)
 	wires = null
 	remove_radio_all(src) //Just to be sure
-	patch_link = null
 	keyslot = null
 	return ..()
 
@@ -157,7 +155,9 @@
 			if(.)
 				frequency = sanitize_frequency(tune, freerange)
 				set_frequency(frequency)
-				if(frequency == traitor_frequency && hidden_uplink)
+				GET_COMPONENT(hidden_uplink, /datum/component/uplink)
+				if(hidden_uplink && (frequency == traitor_frequency))
+					hidden_uplink.locked = FALSE
 					hidden_uplink.interact(usr)
 					ui.close()
 		if("listen")
@@ -456,18 +456,6 @@
 			if(message_mode == MODE_WHISPER || message_mode == MODE_WHISPER_CRIT)
 				raw_message = stars(raw_message)
 			talk_into(speaker, raw_message, , spans, language=message_language)
-/*
-/obj/item/device/radio/proc/accept_rad(obj/item/device/radio/R as obj, message)
-
-	if ((R.frequency == frequency && message))
-		return 1
-	else if
-
-	else
-		return null
-	return
-*/
-
 
 /obj/item/device/radio/proc/receive_range(freq, level)
 	// check if this radio can receive on the given frequency, and if so,

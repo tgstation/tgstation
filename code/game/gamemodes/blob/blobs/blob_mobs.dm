@@ -42,7 +42,7 @@
 /mob/living/simple_animal/hostile/blob/fire_act(exposed_temperature, exposed_volume)
 	..()
 	if(exposed_temperature)
-		adjustFireLoss(Clamp(0.01 * exposed_temperature, 1, 5))
+		adjustFireLoss(CLAMP(0.01 * exposed_temperature, 1, 5))
 	else
 		adjustFireLoss(5)
 
@@ -226,6 +226,8 @@
 	. = ..()
 	if(!independent) //no pulling people deep into the blob
 		verbs -= /mob/living/verb/pulled
+	else
+		pass_flags &= ~PASSBLOB
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/Life()
 	if(..())

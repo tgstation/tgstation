@@ -57,8 +57,6 @@
 		playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
 		return
 
-	return ..()
-
 
 /turf/open/floor/plating/asteroid/singularity_act()
 	if(turf_z_is_planet(src))
@@ -193,7 +191,7 @@
 			break
 
 		var/list/L = list(45)
-		if(IsOdd(dir2angle(dir))) // We're going at an angle and we want thick angled tunnels.
+		if(ISODD(dir2angle(dir))) // We're going at an angle and we want thick angled tunnels.
 			L += -45
 
 		// Expand the edges of our tunnel

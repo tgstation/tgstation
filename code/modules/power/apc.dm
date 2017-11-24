@@ -151,7 +151,7 @@
 	GLOB.apcs_list -= src
 
 	if(malfai && operating)
-		malfai.malf_picker.processing_time = Clamp(malfai.malf_picker.processing_time - 10,0,1000)
+		malfai.malf_picker.processing_time = CLAMP(malfai.malf_picker.processing_time - 10,0,1000)
 	area.power_light = FALSE
 	area.power_equip = FALSE
 	area.power_environ = FALSE
@@ -487,21 +487,7 @@
 			update_icon()
 
 	else if (W.GetID())			// trying to unlock the interface with an ID card
-		if(emagged)
-			to_chat(user, "<span class='warning'>The interface is broken!</span>")
-		else if(opened)
-			to_chat(user, "<span class='warning'>You must close the cover to swipe an ID card!</span>")
-		else if(panel_open)
-			to_chat(user, "<span class='warning'>You must close the panel!</span>")
-		else if(stat & (BROKEN|MAINT))
-			to_chat(user, "<span class='warning'>Nothing happens!</span>")
-		else
-			if(allowed(usr) && !wires.is_cut(WIRE_IDSCAN) && !malfhack)
-				locked = !locked
-				to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the APC interface.</span>")
-				update_icon()
-			else
-				to_chat(user, "<span class='warning'>Access denied.</span>")
+		togglelock(user)
 
 	else if (istype(W, /obj/item/stack/cable_coil) && opened)
 		var/turf/host_turf = get_turf(src)
@@ -671,6 +657,31 @@
 		wires.interact(user)
 	else
 		return ..()
+		
+/obj/machinery/power/apc/AltClick(mob/user)
+	..()
+	if(!issilicon(user) && (!user.canUseTopic(src, be_close=TRUE) || !isturf(loc)))
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+		return
+	else
+		togglelock(user)
+		
+/obj/machinery/power/apc/proc/togglelock(mob/living/user)
+	if(emagged)
+		to_chat(user, "<span class='warning'>The interface is broken!</span>")
+	else if(opened)
+		to_chat(user, "<span class='warning'>You must close the cover to swipe an ID card!</span>")
+	else if(panel_open)
+		to_chat(user, "<span class='warning'>You must close the panel!</span>")
+	else if(stat & (BROKEN|MAINT))
+		to_chat(user, "<span class='warning'>Nothing happens!</span>")
+	else
+		if(allowed(usr) && !wires.is_cut(WIRE_IDSCAN) && !malfhack)
+			locked = !locked
+			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the APC interface.</span>")
+			update_icon()
+		else
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 
 /obj/machinery/power/apc/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == "melee" && damage_amount < 15 && (!(stat & BROKEN) || malfai))
@@ -1041,15 +1052,6 @@
 		force_update = 1
 		return
 
-	/*
-	if (equipment > 1) // off=0, off auto=1, on=2, on auto=3
-		use_power(src.equip_consumption, EQUIP)
-	if (lighting > 1) // off=0, off auto=1, on=2, on auto=3
-		use_power(src.light_consumption, LIGHT)
-	if (environ > 1) // off=0, off auto=1, on=2, on auto=3
-		use_power(src.environ_consumption, ENVIRON)
-
-	area.calc_lighting() */
 	lastused_light = area.usage(STATIC_LIGHT)
 	lastused_light += area.usage(LIGHT)
 	lastused_equip = area.usage(EQUIP)
@@ -1240,7 +1242,7 @@
 
 /obj/machinery/power/apc/proc/set_broken()
 	if(malfai && operating)
-		malfai.malf_picker.processing_time = Clamp(malfai.malf_picker.processing_time - 10,0,1000)
+		malfai.malf_picker.processing_time = CLAMP(malfai.malf_picker.processing_time - 10,0,1000)
 	stat |= BROKEN
 	operating = FALSE
 	if(occupier)

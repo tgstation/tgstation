@@ -7,6 +7,7 @@
 /datum/round_event/ghost_role/operative
 	minimum_required = 1
 	role_name = "lone operative"
+	fakeable = FALSE
 
 /datum/round_event/ghost_role/operative/spawn_role()
 	var/list/candidates = get_candidates("operative", null, ROLE_OPERATIVE)

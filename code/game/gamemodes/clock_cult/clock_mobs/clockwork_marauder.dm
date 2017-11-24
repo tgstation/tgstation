@@ -17,6 +17,7 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	weather_immunities = list("lava")
 	movement_type = FLYING
+	a_intent = INTENT_HARM
 	loot = list(/obj/item/clockwork/component/geis_capacitor/fallen_armor)
 	light_range = 2
 	light_power = 1.1
@@ -24,7 +25,6 @@
 	unique abilities, you're a fearsome fighter in one-on-one combat, and your shield protects from projectiles!<br><br>Obey the Servants and do as they \
 	tell you. Your primary goal is to defend the Ark from destruction; they are your allies in this, and should be protected from harm.</b>"
 	empower_string = "<span class='neovgre'>The Anima Bulwark's power flows through you! Your weapon will strike harder, your armor is sturdier, and your shield is more durable.</span>"
-	var/deflect_chance = 40 //Chance to deflect any given projectile (non-damaging energy projectiles are always deflected)
 	var/max_shield_health = 3
 	var/shield_health = 3 //Amount of projectiles that can be deflected within
 	var/shield_health_regen = 0 //When world.time equals this, shield health will regenerate
@@ -55,8 +55,6 @@
 		obj_damage = 100
 		max_shield_health = INFINITY
 	else if(GLOB.ratvar_approaches) //Hefty health bonus and slight attack damage increase
-		health = 200
-		maxHealth = 200
 		melee_damage_upper = 15
 		melee_damage_lower = 15
 		attacktext = "carves"

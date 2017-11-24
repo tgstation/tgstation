@@ -38,8 +38,11 @@
 		beckon(AM)
 
 /obj/effect/clockwork/city_of_cogs_rift/proc/beckon(atom/movable/AM)
+	var/turf/T = get_turf(pick(GLOB.city_of_cogs_spawns))
+	if(is_servant_of_ratvar(AM))
+		T = GLOB.ark_of_the_clockwork_justiciar ? get_step(GLOB.ark_of_the_clockwork_justiciar, SOUTH) : get_turf(pick(GLOB.servant_spawns))
 	AM.visible_message("<span class='danger'>[AM] passes through [src]!</span>", ignored_mob = AM)
-	AM.forceMove(pick(!is_servant_of_ratvar(AM) ? GLOB.city_of_cogs_spawns : GLOB.servant_spawns))
+	AM.forceMove(T)
 	AM.visible_message("<span class='danger'>[AM] materializes from the air!</span>", \
 	"<span class='boldannounce'>You pass through [src] and appear [is_servant_of_ratvar(AM) ? "back at the City of Cogs" : "somewhere unfamiliar. Looks like it was a one-way trip.."].</span>")
 	do_sparks(5, TRUE, src)

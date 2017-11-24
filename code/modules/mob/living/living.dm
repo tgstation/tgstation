@@ -16,6 +16,7 @@
 	var/datum/atom_hud/data/human/medical/advanced/medhud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	medhud.add_to_hud(src)
 	faction += "[REF(src)]"
+	GLOB.mob_living_list += src
 
 
 /mob/living/prepare_huds()
@@ -47,6 +48,7 @@
 			qdel(I)
 	staticOverlays.len = 0
 	remove_from_all_data_huds()
+	GLOB.mob_living_list -= src
 
 	return ..()
 
@@ -105,7 +107,8 @@
 
 //Called when we bump onto a mob
 /mob/living/proc/MobCollide(mob/M)
-
+	//Even if we don't push/swap places, we "touched" them, so spread fire
+	spreadFire(M)
 	//Also diseases
 	for(var/thing in viruses)
 		var/datum/disease/D = thing
@@ -120,29 +123,6 @@
 	if(now_pushing)
 		return TRUE
 
-	//TODO FOR LATER PRS: Make passing tables an automatic thing for flying and passable objects be determined better to prevent huge amounts of flags being set when mobs fly.
-	if((movement_type) ^ (M.movement_type))	//Fly past each other.
-		now_pushing = TRUE
-		var/old = pass_flags & PASSMOB
-		var/old_p = pulling? (pulling.pass_flags & PASSMOB) : NONE
-		var/atom/movable/cached = pulling
-		pass_flags |= PASSMOB
-		var/obj/item/I = cached
-		if(cached && (isliving(cached) || (istype(I) && (I.w_class < WEIGHT_CLASS_BULKY))))
-			var/mob/living/l = cached
-			if(l.mob_size <= mob_size)
-				cached.pass_flags |= PASSMOB
-		Move(get_turf(M))
-		if(!old)
-			pass_flags &= ~PASSMOB
-		if(cached && !old_p)
-			cached.pass_flags &= ~PASSMOB
-		cached = null
-		now_pushing = FALSE
-		return TRUE
-
-	//Even if we don't push/swap places, we "touched" them, so spread fire
-	spreadFire(M)
 
 	//Should stop you pushing a restrained person out of the way
 	if(isliving(M))
@@ -390,7 +370,7 @@
 		fully_heal(admin_revive)
 	if(stat == DEAD && can_be_revived()) //in some cases you can't revive (e.g. no brain)
 		GLOB.dead_mob_list -= src
-		GLOB.living_mob_list += src
+		GLOB.alive_mob_list += src
 		suiciding = 0
 		stat = UNCONSCIOUS //the mob starts unconscious,
 		blind_eyes(1)
@@ -493,7 +473,6 @@
 		s_active.close(src)
 
 	if(lying && !buckled && prob(getBruteLoss()*200/maxHealth))
-
 		makeTrail(newloc, T, old_direction)
 
 /mob/living/movement_delay(ignorewalk = 0)
@@ -501,21 +480,21 @@
 	if(isopenturf(loc) && !is_flying())
 		var/turf/open/T = loc
 		. += T.slowdown
-	var/static/config_run_delay
-	var/static/config_walk_delay
+	var/static/datum/config_entry/number/run_delay/config_run_delay
+	var/static/datum/config_entry/number/walk_delay/config_walk_delay
 	if(isnull(config_run_delay))
 		config_run_delay = CONFIG_GET(number/run_delay)
 		config_walk_delay = CONFIG_GET(number/walk_delay)
 	if(ignorewalk)
-		. += config_run_delay
+		. += config_run_delay.value_cache
 	else
 		switch(m_intent)
 			if(MOVE_INTENT_RUN)
 				if(drowsyness > 0)
 					. += 6
-				. += config_run_delay
+				. += config_run_delay.value_cache
 			if(MOVE_INTENT_WALK)
-				. += config_walk_delay
+				. += config_walk_delay.value_cache
 
 /mob/living/proc/makeTrail(turf/target_turf, turf/start, direction)
 	if(!has_gravity())
@@ -928,7 +907,7 @@
 		update_fire()
 
 /mob/living/proc/adjust_fire_stacks(add_fire_stacks) //Adjusting the amount of fire_stacks we have on person
-	fire_stacks = Clamp(fire_stacks + add_fire_stacks, -20, 20)
+	fire_stacks = CLAMP(fire_stacks + add_fire_stacks, -20, 20)
 	if(on_fire && fire_stacks <= 0)
 		ExtinguishMob()
 

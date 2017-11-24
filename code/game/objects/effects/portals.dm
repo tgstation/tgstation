@@ -25,6 +25,7 @@
 	var/atmos_link = FALSE			//Link source/destination atmos.
 	var/turf/open/atmos_source		//Atmos link source
 	var/turf/open/atmos_destination	//Atmos link destination
+	var/allow_anchored = FALSE
 
 /obj/effect/portal/anom
 	name = "wormhole"
@@ -43,6 +44,8 @@
 		user.forceMove(get_turf(src))
 
 /obj/effect/portal/Crossed(atom/movable/AM, oldloc)
+	if(isobserver(AM))
+		return ..()
 	if(linked && (get_turf(oldloc) == get_turf(linked)))
 		return ..()
 	if(!teleport(AM))
@@ -52,6 +55,8 @@
 	return
 
 /obj/effect/portal/attack_hand(mob/user)
+	if(get_turf(user) == get_turf(src))
+		teleport(user)
 	if(Adjacent(user))
 		user.forceMove(get_turf(src))
 
@@ -124,12 +129,18 @@
 		linked = null
 	return ..()
 
+/obj/effect/portal/attack_ghost(mob/dead/observer/O)
+	if(!teleport(O))
+		return ..()
+
 /obj/effect/portal/proc/teleport(atom/movable/M)
 	if(!istype(M) || istype(M, /obj/effect) || (ismecha(M) && !mech_sized) || (!isobj(M) && !ismob(M))) //Things that shouldn't teleport.
 		return
 	var/turf/real_target = get_link_target_turf()
 	if(!istype(real_target))
 		return FALSE
+	if(!ismecha(M) && M.anchored && !allow_anchored)
+		return
 	if(ismegafauna(M))
 		message_admins("[M] has used a portal at [ADMIN_COORDJMP(src)] made by [usr].")
 	if(do_teleport(M, real_target, 0))

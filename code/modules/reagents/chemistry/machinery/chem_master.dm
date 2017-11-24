@@ -205,7 +205,7 @@
 				var/amount = 1
 				var/vol_each = min(reagents.total_volume, 50)
 				if(text2num(many))
-					amount = Clamp(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many pills?", amount) as num|null), 0, 10)
+					amount = CLAMP(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many pills?", amount) as num|null), 0, 10)
 					if(!amount)
 						return
 					vol_each = min(reagents.total_volume / amount, 50)
@@ -241,7 +241,7 @@
 			var/amount = 1
 			var/vol_each = min(reagents.total_volume, 40)
 			if(text2num(many))
-				amount = Clamp(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many patches?", amount) as num|null), 0, 10)
+				amount = CLAMP(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many patches?", amount) as num|null), 0, 10)
 				if(!amount)
 					return
 				vol_each = min(reagents.total_volume / amount, 40)
@@ -344,11 +344,16 @@
 		return null
 	else
 		var/md5 = md5(AM.name)
-#if DM_VERSION > 511
-#warn Refactor the loop in /obj/machinery/chem_master/adjust_item_drop_location() to make use of 512's list-like access to characters in a string
-#endif
 		for (var/i in 1 to 32)
+			#if DM_VERSION >= 513
+			#warning 512 is definitely stable now, remove the old code
+			#endif
+			
+			#if DM_VERSION >= 512
+			. += hex2num(md5[i])
+			#else
 			. += hex2num(copytext(md5,i,i+1))
+			#endif
 		. = . % 9
 		AM.pixel_x = ((.%3)*6)
 		AM.pixel_y = -8 + (round( . / 3)*8)

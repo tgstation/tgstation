@@ -1,23 +1,17 @@
 //Construction Categories
-#define PIPE_BINARY			0 //2 directions: N/S, E/W
+#define PIPE_STRAIGHT		0 //2 directions: N/S, E/W
 #define PIPE_BENDABLE		1 //6 directions: N/S, E/W, N/E, N/W, S/E, S/W
 #define PIPE_TRINARY		2 //4 directions: N/E/S, E/S/W, S/W/N, W/N/E
 #define PIPE_TRIN_M			3 //8 directions: N->S+E, S->N+E, N->S+W, S->N+W, E->W+S, W->E+S, E->W+N, W->E+N
 #define PIPE_UNARY			4 //4 directions: N, S, E, W
-#define PIPE_QUAD			5 //1 directions: N/S/E/W
+#define PIPE_ONEDIR			5 //1 direction: N/S/E/W
 
-//Disposal piping numbers - do NOT hardcode these, use the defines
-#define DISP_PIPE_STRAIGHT		0
-#define DISP_PIPE_BENT			1
-#define DISP_JUNCTION			2
-#define DISP_JUNCTION_FLIP		3
-#define DISP_YJUNCTION			4
-#define DISP_END_TRUNK			5
-#define DISP_END_BIN			6
-#define DISP_END_OUTLET			7
-#define DISP_END_CHUTE			8
-#define DISP_SORTJUNCTION		9
-#define DISP_SORTJUNCTION_FLIP	10
+//Disposal pipe relative connection directions
+#define DISP_DIR_BASE	0
+#define DISP_DIR_LEFT	1
+#define DISP_DIR_RIGHT	2
+#define DISP_DIR_FLIP	4
+#define DISP_DIR_NONE	8
 
 //Transit tubes
 #define TRANSIT_TUBE_STRAIGHT			0

@@ -1,3 +1,5 @@
+#define CULT_SCALING_COEFFICIENT 9.3 //Roughly one new cultist at roundstart per this many players
+
 /datum/game_mode
 	var/list/datum/mind/cult = list()
 	var/list/cult_objectives = list()
@@ -64,7 +66,10 @@
 		restricted_jobs += "Assistant"
 
 	//cult scaling goes here
-	recommended_enemies = 3 + round(num_players()/15)
+	recommended_enemies = 1 + round(num_players()/CULT_SCALING_COEFFICIENT)
+	var/remaining = (num_players() % CULT_SCALING_COEFFICIENT) * 10 //Basically the % of how close the population is toward adding another cultis
+	if(prob(remaining))
+		recommended_enemies++
 
 
 	for(var/cultists_number = 1 to recommended_enemies)
@@ -232,30 +237,34 @@
 				if("survive")
 					if(!check_survive())
 						explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. ([acolytes_survived] escaped) <span class='greenannounce'>Success!</span>"
-						SSblackbox.add_details("cult_objective","cult_survive|SUCCESS|[acolytes_needed]")
+						SSblackbox.record_feedback("nested tally", "cult_objective", 1, list("cult_survive", "SUCCESS"))
 						SSticker.news_report = CULT_ESCAPE
 					else
 						explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. ([acolytes_survived] escaped) <span class='boldannounce'>Fail.</span>"
-						SSblackbox.add_details("cult_objective","cult_survive|FAIL|[acolytes_needed]")
+						SSblackbox.record_feedback("nested tally", "cult_objective", 1, list("cult_survive", "FAIL"))
 						SSticker.news_report = CULT_FAILURE
 				if("sacrifice")
 					if(GLOB.sac_complete)
 						explanation = "Sacrifice [GLOB.sac_mind], the [GLOB.sac_mind.assigned_role]. <span class='greenannounce'>Success!</span>"
-						SSblackbox.add_details("cult_objective","cult_sacrifice|SUCCESS")
+						SSblackbox.record_feedback("nested tally", "cult_objective", 1, list("cult_sacrifice", "SUCCESS"))
 					else
 						explanation = "Sacrifice [GLOB.sac_mind], the [GLOB.sac_mind.assigned_role]. <span class='boldannounce'>Fail.</span>"
-						SSblackbox.add_details("cult_objective","cult_sacrifice|FAIL")
+						SSblackbox.record_feedback("nested tally", "cult_objective", 1, list("cult_sacrifice", "FAIL"))
 				if("eldergod")
 					if(!eldergod)
 						explanation = "Summon Nar-Sie. The summoning can only be accomplished in [english_list(GLOB.summon_spots)].<span class='greenannounce'>Success!</span>"
-						SSblackbox.add_details("cult_objective","cult_narsie|SUCCESS")
+						SSblackbox.record_feedback("nested tally", "cult_objective", 1, list("cult_narsie", "SUCCESS"))
 						SSticker.news_report = CULT_SUMMON
 					else
 						explanation = "Summon Nar-Sie. The summoning can only be accomplished in [english_list(GLOB.summon_spots)]<span class='boldannounce'>Fail.</span>"
-						SSblackbox.add_details("cult_objective","cult_narsie|FAIL")
+						SSblackbox.record_feedback("nested tally", "cult_objective", 1, list("cult_narsie", "FAIL"))
 						SSticker.news_report = CULT_FAILURE
 
 			text += "<br><B>Objective #[obj_count]</B>: [explanation]"
+	if(cult.len)
+		text += "<br><b>The cultists were:</b>"
+		for(var/datum/mind/M in cult)
+			text += printplayer(M)
 	to_chat(world, text)
 	..()
 	return 1
@@ -288,18 +297,20 @@
 					if(GLOB.sac_mind)
 						if(GLOB.sac_complete)
 							explanation = "Sacrifice [GLOB.sac_mind], the [GLOB.sac_mind.assigned_role]. <span class='greenannounce'>Success!</span>"
-							SSblackbox.add_details("cult_objective","cult_sacrifice|SUCCESS")
+							SSblackbox.record_feedback("nested tally", "cult_objective", 1, list("cult_sacrifice", "SUCCESS"))
 						else
 							explanation = "Sacrifice [GLOB.sac_mind], the [GLOB.sac_mind.assigned_role]. <span class='boldannounce'>Fail.</span>"
-							SSblackbox.add_details("cult_objective","cult_sacrifice|FAIL")
+							SSblackbox.record_feedback("nested tally", "cult_objective", 1, list("cult_sacrifice", "FAIL"))
 				if("eldergod")
 					if(!eldergod)
 						explanation = "Summon Nar-Sie. <span class='greenannounce'>Success!</span>"
-						SSblackbox.add_details("cult_objective","cult_narsie|SUCCESS")
+						SSblackbox.record_feedback("nested tally", "cult_objective", 1, list("cult_narsie", "SUCCESS"))
 						SSticker.news_report = CULT_SUMMON
 					else
 						explanation = "Summon Nar-Sie. <span class='boldannounce'>Fail.</span>"
-						SSblackbox.add_details("cult_objective","cult_narsie|FAIL")
+						SSblackbox.record_feedback("nested tally", "cult_objective", 1, list("cult_narsie", "FAIL"))
 						SSticker.news_report = CULT_FAILURE
 			text += "<br><B>Objective #[obj_count]</B>: [explanation]"
 	to_chat(world, text)
+
+#undef CULT_SCALING_COEFFICIENT

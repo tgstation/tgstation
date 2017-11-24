@@ -46,13 +46,16 @@
 #define INIT_ORDER_DBCORE 18
 #define INIT_ORDER_BLACKBOX 17
 #define INIT_ORDER_SERVER_MAINT 16
-#define INIT_ORDER_EVENTS 15
-#define INIT_ORDER_JOBS 14
-#define INIT_ORDER_TICKER 13
-#define INIT_ORDER_MAPPING 12
-#define INIT_ORDER_ATOMS 11
-#define INIT_ORDER_LANGUAGE 10
-#define INIT_ORDER_MACHINES 9
+#define INIT_ORDER_RESEARCH 15
+#define INIT_ORDER_EVENTS 14
+#define INIT_ORDER_JOBS 13
+#define INIT_ORDER_TICKER 12
+#define INIT_ORDER_MAPPING 11
+#define INIT_ORDER_ATOMS 10
+#define INIT_ORDER_NETWORKS 9
+#define INIT_ORDER_LANGUAGE 8
+#define INIT_ORDER_MACHINES 7
+#define INIT_ORDER_CIRCUIT 6
 #define INIT_ORDER_TIMER 1
 #define INIT_ORDER_DEFAULT 0
 #define INIT_ORDER_AIR -1
@@ -76,3 +79,27 @@
 #define RUNLEVEL_POSTGAME 8
 
 #define RUNLEVELS_DEFAULT (RUNLEVEL_SETUP | RUNLEVEL_GAME | RUNLEVEL_POSTGAME)
+
+
+
+
+#define COMPILE_OVERLAYS(A)\
+	if (TRUE) {\
+		var/list/oo = A.our_overlays;\
+		var/list/po = A.priority_overlays;\
+		if(LAZYLEN(po)){\
+			if(LAZYLEN(oo)){\
+				A.overlays = oo + po;\
+			}\
+			else{\
+				A.overlays = po;\
+			}\
+		}\
+		else if(LAZYLEN(oo)){\
+			A.overlays = oo;\
+		}\
+		else{\
+			A.overlays.Cut();\
+		}\
+		A.flags_1 &= ~OVERLAY_QUEUED_1;\
+	}

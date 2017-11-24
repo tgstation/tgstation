@@ -93,11 +93,11 @@
 		/datum/gas/plasma			= new/datum/tlv/dangerous, // Partial pressure, kpa
 		/datum/gas/nitrous_oxide	= new/datum/tlv/dangerous, // Partial pressure, kpa
 		/datum/gas/bz				= new/datum/tlv/dangerous,
-		/datum/gas/hypernoblium			= new/datum/tlv/dangerous,
+		/datum/gas/hypernoblium		= new/datum/tlv/dangerous,
 		/datum/gas/water_vapor		= new/datum/tlv/dangerous,
 		/datum/gas/tritium			= new/datum/tlv/dangerous,
 		/datum/gas/stimulum			= new/datum/tlv/dangerous,
-		/datum/gas/brown_gas			= new/datum/tlv/dangerous,
+		/datum/gas/nitryl			= new/datum/tlv/dangerous,
 		/datum/gas/pluoxium			= new/datum/tlv/dangerous
 	)
 
@@ -111,11 +111,11 @@
 		/datum/gas/plasma			= new/datum/tlv/no_checks,
 		/datum/gas/nitrous_oxide	= new/datum/tlv/no_checks,
 		/datum/gas/bz				= new/datum/tlv/no_checks,
-		/datum/gas/hypernoblium			= new/datum/tlv/no_checks,
+		/datum/gas/hypernoblium		= new/datum/tlv/no_checks,
 		/datum/gas/water_vapor		= new/datum/tlv/no_checks,
 		/datum/gas/tritium			= new/datum/tlv/no_checks,
 		/datum/gas/stimulum			= new/datum/tlv/no_checks,
-		/datum/gas/brown_gas			= new/datum/tlv/no_checks,
+		/datum/gas/nitryl			= new/datum/tlv/no_checks,
 		/datum/gas/pluoxium			= new/datum/tlv/no_checks
 	)
 
@@ -133,7 +133,7 @@
 		/datum/gas/water_vapor		= new/datum/tlv/dangerous,
 		/datum/gas/tritium			= new/datum/tlv/dangerous,
 		/datum/gas/stimulum			= new/datum/tlv/dangerous,
-		/datum/gas/brown_gas		= new/datum/tlv/dangerous,
+		/datum/gas/nitryl			= new/datum/tlv/dangerous,
 		/datum/gas/pluoxium			= new/datum/tlv/dangerous
 	)
 
@@ -277,11 +277,7 @@
 					"power"					= info["power"],
 					"scrubbing"				= info["scrubbing"],
 					"widenet"				= info["widenet"],
-					"filter_co2"			= info["filter_co2"],
-					"filter_toxins"			= info["filter_toxins"],
-					"filter_n2o"			= info["filter_n2o"],
-					"filter_rare"			= info["filter_rare"],
-					"filter_water_vapor"	= info["filter_water_vapor"]
+					"filter_types"			= info["filter_types"]
 				))
 		data["mode"] = mode
 		data["modes"] = list()
@@ -337,8 +333,8 @@
 			if(usr.has_unlimited_silicon_privilege && !wires.is_cut(WIRE_IDSCAN))
 				locked = !locked
 				. = TRUE
-		if("power", "co2_scrub", "tox_scrub", "n2o_scrub", "rare_scrub","water_vapor_scrub", "widenet", "scrubbing")
-			send_signal(device_id, list("[action]" = text2num(params["val"])))
+		if("power", "toggle_filter", "widenet", "scrubbing")
+			send_signal(device_id, list("[action]" = params["val"]))
 			. = TRUE
 		if("excheck")
 			send_signal(device_id, list("checks" = text2num(params["val"])^1))
@@ -678,15 +674,7 @@
 				update_icon()
 				return
 			else if(istype(W, /obj/item/card/id) || istype(W, /obj/item/device/pda))// trying to unlock the interface with an ID card
-				if(stat & (NOPOWER|BROKEN))
-					to_chat(user, "<span class='warning'>It does nothing!</span>")
-				else
-					if(src.allowed(usr) && !wires.is_cut(WIRE_IDSCAN))
-						locked = !locked
-						to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the air alarm interface.</span>")
-					else
-						to_chat(user, "<span class='danger'>Access denied.</span>")
-				return
+				togglelock(user)
 			else if(panel_open && is_wire_tool(W))
 				wires.interact(user)
 				return
@@ -751,6 +739,25 @@
 				return
 
 	return ..()
+	
+/obj/machinery/airalarm/AltClick(mob/user)
+	..()
+	if(!issilicon(user) && (!user.canUseTopic(src, be_close=TRUE) || !isturf(loc)))
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+		return
+	else
+		togglelock(user)
+		
+/obj/machinery/airalarm/proc/togglelock(mob/living/user)
+	if(stat & (NOPOWER|BROKEN))
+		to_chat(user, "<span class='warning'>It does nothing!</span>")
+	else
+		if(src.allowed(usr) && !wires.is_cut(WIRE_IDSCAN))
+			locked = !locked
+			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the air alarm interface.</span>")
+		else
+			to_chat(user, "<span class='danger'>Access denied.</span>")
+	return
 
 /obj/machinery/airalarm/power_change()
 	..()

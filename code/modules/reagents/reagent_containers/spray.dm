@@ -123,6 +123,13 @@
 		current_range = spray_range
 	to_chat(user, "<span class='notice'>You switch the nozzle setting to [stream_mode ? "\"stream\"":"\"spray\""]. You'll now use [amount_per_transfer_from_this] units per use.</span>")
 
+/obj/item/reagent_containers/spray/attackby(obj/item/I, mob/user, params)
+	var/hotness = I.is_hot()
+	if(hotness && reagents)
+		reagents.expose_temperature(hotness)
+		to_chat(user, "<span class='notice'>You heat [name] with [I]!</span>")
+	return ..()
+
 /obj/item/reagent_containers/spray/verb/empty()
 	set name = "Empty Spray Bottle"
 	set category = "Object"
@@ -214,7 +221,6 @@
 	stream_range = 7
 	amount_per_transfer_from_this = 10
 	volume = 600
-	origin_tech = "combat=3;materials=3;engineering=3"
 
 /obj/item/reagent_containers/spray/chemsprayer/afterattack(atom/A as mob|obj, mob/user)
 	// Make it so the bioterror spray doesn't spray yourself when you click your inventory items

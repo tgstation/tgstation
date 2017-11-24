@@ -76,7 +76,7 @@
 		if(H.dna.species.id != "human")
 			H.set_species(/datum/species/human)
 			H.rename_self("human", H.client)
-		H.remove_catshit()
+		purrbation_remove(H, silent=TRUE)
 
 	if(!visualsOnly && announce)
 		announce(H)

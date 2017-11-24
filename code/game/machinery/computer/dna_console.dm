@@ -54,8 +54,8 @@
 
 /obj/machinery/computer/scan_consolenew/Initialize()
 	. = ..()
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
-		connected = locate(/obj/machinery/dna_scannernew, get_step(src, dir))
+	for(var/direction in GLOB.cardinals)
+		connected = locate(/obj/machinery/dna_scannernew, get_step(src, direction))
 		if(!isnull(connected))
 			break
 	injectorready = world.time + INJECTOR_TIMEOUT
@@ -75,9 +75,9 @@
 	popup.add_stylesheet("scannernew", 'html/browser/scannernew.css')
 
 	var/mob/living/carbon/viable_occupant
-	var/occupant_status = "<div class='line'><div class='statusLabel'>Subject Status:</div><div class='statusValue'>"
+	var/list/occupant_status = list("<div class='line'><div class='statusLabel'>Subject Status:</div><div class='statusValue'>")
 	var/scanner_status
-	var/temp_html
+	var/list/temp_html = list()
 	if(connected && connected.is_operational())
 		if(connected.occupant)	//set occupant_status message
 			viable_occupant = connected.occupant
@@ -117,9 +117,9 @@
 		occupant_status += "<span class='bad'>----</span></div></div>"
 		scanner_status += "<span class='bad'>Error: No scanner detected</span>"
 
-	var/status = "<div class='statusDisplay'>"
+	var/list/status = list("<div class='statusDisplay'>")
 	status += "<div class='line'><div class='statusLabel'>Scanner:</div><div class='statusValue'>[scanner_status]</div></div>"
-	status += "[occupant_status]"
+	status += occupant_status
 
 
 	status += "<div class='line'><h3>Radiation Emitter Status</h3></div>"
@@ -143,7 +143,7 @@
 	status += "<div class='line'><div class='statusLabel'>Pulse Duration:</div><div class='statusValue'>[radduration]</div></div>"
 	status += "<div class='line'><div class='statusLabel'>&nbsp;&nbsp;\> Accuracy:</div><div class='statusValue'>[chance_to_hit]</div></div>"
 	status += "<br></div>" // Close statusDisplay div
-	var/buttons = "<a href='?src=[REF(src)];'>Scan</a> "
+	var/list/buttons = list("<a href='?src=[REF(src)];'>Scan</a> ")
 	if(connected)
 		buttons += " <a href='?src=[REF(src)];task=toggleopen;'>[connected.state_open ? "Close" : "Open"] Scanner</a> "
 		if (connected.state_open)
@@ -304,7 +304,7 @@
 				temp_html += "----"
 			temp_html += "</div></div></div>"
 
-	popup.set_content(temp_html)
+	popup.set_content(temp_html.Join())
 	popup.open()
 
 
@@ -337,12 +337,12 @@
 			if(!num)
 				num = round(input(usr, "Choose pulse duration:", "Input an Integer", null) as num|null)
 			if(num)
-				radduration = Wrap(num, 1, RADIATION_DURATION_MAX+1)
+				radduration = WRAP(num, 1, RADIATION_DURATION_MAX+1)
 		if("setstrength")
 			if(!num)
 				num = round(input(usr, "Choose pulse strength:", "Input an Integer", null) as num|null)
 			if(num)
-				radstrength = Wrap(num, 1, RADIATION_STRENGTH_MAX+1)
+				radstrength = WRAP(num, 1, RADIATION_STRENGTH_MAX+1)
 		if("screen")
 			current_screen = href_list["text"]
 		if("rejuv")
@@ -353,13 +353,13 @@
 		if("setbufferlabel")
 			var/text = sanitize(input(usr, "Input a new label:", "Input an Text", null) as text|null)
 			if(num && text)
-				num = Clamp(num, 1, NUMBER_OF_BUFFERS)
+				num = CLAMP(num, 1, NUMBER_OF_BUFFERS)
 				var/list/buffer_slot = buffer[num]
 				if(istype(buffer_slot))
 					buffer_slot["label"] = text
 		if("setbuffer")
 			if(num && viable_occupant)
-				num = Clamp(num, 1, NUMBER_OF_BUFFERS)
+				num = CLAMP(num, 1, NUMBER_OF_BUFFERS)
 				buffer[num] = list(
 					"label"="Buffer[num]:[viable_occupant.real_name]",
 					"UI"=viable_occupant.dna.uni_identity,
@@ -370,7 +370,7 @@
 					)
 		if("clearbuffer")
 			if(num)
-				num = Clamp(num, 1, NUMBER_OF_BUFFERS)
+				num = CLAMP(num, 1, NUMBER_OF_BUFFERS)
 				var/list/buffer_slot = buffer[num]
 				if(istype(buffer_slot))
 					buffer_slot.Cut()
@@ -387,7 +387,7 @@
 						apply_buffer(SCANNER_ACTION_MIXED,num)
 		if("injector")
 			if(num && injectorready < world.time)
-				num = Clamp(num, 1, NUMBER_OF_BUFFERS)
+				num = CLAMP(num, 1, NUMBER_OF_BUFFERS)
 				var/list/buffer_slot = buffer[num]
 				if(istype(buffer_slot))
 					var/obj/item/dnainjector/timed/I
@@ -405,7 +405,6 @@
 											powers -= 1 //To prevent just unlocking everything to get all powers to a syringe for max tech
 									else
 										I.remove_mutations.Add(HM)
-								I.origin_tech = "biotech=2;engineering=[max(1,min(6,powers))]" //With 6 powers available this tech level will be 1-6, also safety check if new powers get added
 								var/time_coeff
 								for(var/datum/mutation/human/HM in I.add_mutations)
 									if(!time_coeff)
@@ -437,11 +436,11 @@
 						injectorready = world.time + INJECTOR_TIMEOUT
 		if("loaddisk")
 			if(num && diskette && diskette.fields)
-				num = Clamp(num, 1, NUMBER_OF_BUFFERS)
+				num = CLAMP(num, 1, NUMBER_OF_BUFFERS)
 				buffer[num] = diskette.fields.Copy()
 		if("savedisk")
 			if(num && diskette && !diskette.read_only)
-				num = Clamp(num, 1, NUMBER_OF_BUFFERS)
+				num = CLAMP(num, 1, NUMBER_OF_BUFFERS)
 				var/list/buffer_slot = buffer[num]
 				if(istype(buffer_slot))
 					diskette.name = "data disk \[[buffer_slot["label"]]\]"
@@ -455,8 +454,8 @@
 				delayed_action = list("action"=text2num(href_list["delayaction"]),"buffer"=num)
 		if("pulseui","pulsese")
 			if(num && viable_occupant && connected)
-				radduration = Wrap(radduration, 1, RADIATION_DURATION_MAX+1)
-				radstrength = Wrap(radstrength, 1, RADIATION_STRENGTH_MAX+1)
+				radduration = WRAP(radduration, 1, RADIATION_DURATION_MAX+1)
+				radstrength = WRAP(radstrength, 1, RADIATION_STRENGTH_MAX+1)
 
 				var/locked_state = connected.locked
 				connected.locked = TRUE
@@ -472,7 +471,7 @@
 					switch(href_list["task"])                                                                                             //Same thing as there but values are even lower, on best part they are about 0.0*, effectively no damage
 						if("pulseui")
 							var/len = length(viable_occupant.dna.uni_identity)
-							num = Wrap(num, 1, len+1)
+							num = WRAP(num, 1, len+1)
 							num = randomize_radiation_accuracy(num, radduration + (connected.precision_coeff ** 2), len) //Each manipulator level above 1 makes randomization as accurate as selected time + manipulator lvl^2
                                                                                                                          //Value is this high for the same reason as with laser - not worth the hassle of upgrading if the bonus is low
 							var/block = round((num-1)/DNA_BLOCK_SIZE)+1
@@ -488,7 +487,7 @@
 							viable_occupant.updateappearance(mutations_overlay_update=1)
 						if("pulsese")
 							var/len = length(viable_occupant.dna.struc_enzymes)
-							num = Wrap(num, 1, len+1)
+							num = WRAP(num, 1, len+1)
 							num = randomize_radiation_accuracy(num, radduration + (connected.precision_coeff ** 2), len)
 
 							var/block = round((num-1)/DNA_BLOCK_SIZE)+1
@@ -519,10 +518,10 @@
 		ran = round(ran)	//negative, so floor it
 	else
 		ran = -round(-ran)	//positive, so ceiling it
-	return num2hex(Wrap(hex2num(input)+ran, 0, 16**length), length)
+	return num2hex(WRAP(hex2num(input)+ran, 0, 16**length), length)
 
 /obj/machinery/computer/scan_consolenew/proc/randomize_radiation_accuracy(position_we_were_supposed_to_hit, radduration, number_of_blocks)
-	return Wrap(round(position_we_were_supposed_to_hit + gaussian(0, RADIATION_ACCURACY_MULTIPLIER/radduration), 1), 1, number_of_blocks+1)
+	return WRAP(round(position_we_were_supposed_to_hit + gaussian(0, RADIATION_ACCURACY_MULTIPLIER/radduration), 1), 1, number_of_blocks+1)
 
 /obj/machinery/computer/scan_consolenew/proc/get_viable_occupant()
 	var/mob/living/carbon/viable_occupant = null
@@ -533,7 +532,7 @@
 	return viable_occupant
 
 /obj/machinery/computer/scan_consolenew/proc/apply_buffer(action,buffer_num)
-	buffer_num = Clamp(buffer_num, 1, NUMBER_OF_BUFFERS)
+	buffer_num = CLAMP(buffer_num, 1, NUMBER_OF_BUFFERS)
 	var/list/buffer_slot = buffer[buffer_num]
 	var/mob/living/carbon/viable_occupant = get_viable_occupant()
 	if(istype(buffer_slot))
