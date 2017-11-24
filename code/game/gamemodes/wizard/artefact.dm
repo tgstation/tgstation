@@ -66,6 +66,12 @@
 	else
 		return ..()
 
+/obj/effect/rend/singularity_pull()
+	return
+
+/obj/effect/rend/singularity_pull()
+	return
+
 /obj/item/veilrender/vealrender
 	name = "veal render"
 	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast farm."
