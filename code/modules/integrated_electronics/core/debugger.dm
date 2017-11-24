@@ -20,7 +20,7 @@
 	switch(type_to_use)
 		if("string")
 			accepting_refs = FALSE
-			new_data = stripped_input(user, "Now type in a string.","[src] string writing")
+			new_data = stripped_input(user, "Now type in a string.","[src] string writing", no_trim = TRUE)
 			if(istext(new_data) && user.IsAdvancedToolUser())
 				data_to_write = new_data
 				to_chat(user, "<span class='notice'>You set \the [src]'s memory to \"[new_data]\".</span>")
