@@ -93,7 +93,7 @@
 	burst_size = 2
 	pin = /obj/item/device/firing_pin/implant/pindicate
 	can_bayonet = TRUE
-	knife_x_offset = 22
+	knife_x_offset = 26
 	knife_y_offset = 12
 
 /obj/item/gun/ballistic/automatic/c20r/unrestricted
@@ -123,7 +123,7 @@
 	burst_size = 0
 	actions_types = list()
 	can_bayonet = TRUE
-	knife_x_offset = 23
+	knife_x_offset = 25
 	knife_y_offset = 12
 
 /obj/item/gun/ballistic/automatic/wt550/update_icon()
