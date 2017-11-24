@@ -1,0 +1,5 @@
+author: "Dorsisdwarf"
+delete-after: True
+changes: 
+  - tweak: "Catpeople are now distracted instead of debilitated"
+  - rscadd: "Normal cats now go for laser pointers"
