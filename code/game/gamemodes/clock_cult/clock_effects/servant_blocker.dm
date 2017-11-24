@@ -18,3 +18,9 @@
 			to_chat(L, "<span class='danger'>The space beyond here can't be accessed by you or other servants.</span>")
 			return
 	return TRUE
+
+/obj/effect/clockwork/servant_blocker/singularity_act()
+	return
+
+/obj/effect/clockwork/servant_blocker/singularity_pull()
+	return

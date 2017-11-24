@@ -8,6 +8,7 @@
 	icon = 'icons/obj/electronic_assemblies.dmi'
 	icon_state = "setup_small"
 	flags_1 = NOBLUDGEON_1
+	materials = list()		// To be filled later
 	var/max_components = IC_MAX_SIZE_BASE
 	var/max_complexity = IC_COMPLEXITY_BASE
 	var/opened = FALSE
@@ -23,52 +24,12 @@
 	return user.canUseTopic(src,be_close = TRUE)
 
 
-/obj/item/device/electronic_assembly/medium
-	name = "electronic mechanism"
-	icon_state = "setup_medium"
-	desc = "It's a case, for building medium-sized electronics with."
-	w_class = WEIGHT_CLASS_NORMAL
-	max_components = IC_MAX_SIZE_BASE * 2
-	max_complexity = IC_COMPLEXITY_BASE * 2
-
-/obj/item/device/electronic_assembly/large
-	name = "electronic machine"
-	icon_state = "setup_large"
-	desc = "It's a case, for building large electronics with."
-	w_class = WEIGHT_CLASS_BULKY
-	max_components = IC_MAX_SIZE_BASE * 4
-	max_complexity = IC_COMPLEXITY_BASE * 4
-	anchored = FALSE
-
-/obj/item/device/electronic_assembly/large/attackby(var/obj/item/O, var/mob/user)
-	if(default_unfasten_wrench(user, O, 20))
-		return
-	..()
-
-/obj/item/device/electronic_assembly/large/attack_tk(mob/user)
-	if(anchored)
-		return
-	..()
-
-/obj/item/device/electronic_assembly/large/attack_hand(mob/user)
-	if(anchored)
-		attack_self(user)
-		return
-	..()
-
-/obj/item/device/electronic_assembly/drone
-	name = "electronic drone"
-	icon_state = "setup_drone"
-	desc = "It's a case, for building mobile electronics with."
-	w_class = WEIGHT_CLASS_SMALL
-	max_components = IC_MAX_SIZE_BASE * 3
-	max_complexity = IC_COMPLEXITY_BASE * 3
-
-
-
 /obj/item/device/electronic_assembly/Initialize()
 	.=..()
 	START_PROCESSING(SScircuit, src)
+	materials[MAT_METAL] = round((max_complexity + max_components) / 4) * SScircuit.cost_multiplier
+
+
 
 /obj/item/device/electronic_assembly/Destroy()
 	STOP_PROCESSING(SScircuit, src)
@@ -95,7 +56,7 @@
 
 	var/total_part_size = return_total_size()
 	var/total_complexity = return_total_complexity()
-	var/HTML = list()
+	var/HTML = ""
 
 	HTML += "<html><head><title>[name]</title></head><body>"
 	HTML += "<br><a href='?src=[REF(src)]'>\[Refresh\]</a>  |  "
@@ -105,25 +66,37 @@
 	if(battery)
 		HTML += "[round(battery.charge, 0.1)]/[battery.maxcharge] ([round(battery.percent(), 0.1)]%) cell charge. <a href='?src=[REF(src)];remove_cell=1'>\[Remove\]</a>"
 	else
-		HTML += "<span class='danger'>No powercell detected!</span>"
+		HTML += "<span class='danger'>No power cell detected!</span>"
 	HTML += "<br><br>"
-	HTML += "Components:<hr>"
-	HTML += "Built in:<br>"
 
 
-//Put removable circuits in separate categories from non-removable
-	for(var/obj/item/integrated_circuit/circuit in contents)
+
+	HTML += "Components:"
+
+	var/list/components = return_all_components()
+	var/builtin_components = ""
+
+	for(var/c in components)
+		var/obj/item/integrated_circuit/circuit = c
 		if(!circuit.removable)
-			HTML += "<a href=?src=[REF(circuit)];examine=1;from_assembly=1>[circuit.displayed_name]</a> | "
-			HTML += "<a href=?src=[REF(circuit)];rename=1;from_assembly=1>\[Rename\]</a> | "
-			HTML += "<a href=?src=[REF(circuit)];scan=1;from_assembly=1>\[Scan with Debugger\]</a> | "
-			HTML += "<a href=?src=[REF(circuit)];bottom=[REF(circuit)];from_assembly=1>\[Move to Bottom\]</a>"
-			HTML += "<br>"
+			builtin_components += "<a href=?src=[REF(circuit)];examine=1;from_assembly=1>[circuit.displayed_name]</a> | "
+			builtin_components += "<a href=?src=[REF(circuit)];rename=1;from_assembly=1>\[Rename\]</a> | "
+			builtin_components += "<a href=?src=[REF(circuit)];scan=1;from_assembly=1>\[Scan with Debugger\]</a> | "
+			builtin_components += "<a href=?src=[REF(circuit)];bottom=[REF(circuit)];from_assembly=1>\[Move to Bottom\]</a>"
+			builtin_components += "<br>"
 
-	HTML += "<hr>"
-	HTML += "Removable:<br>"
+	// Put removable circuits (if any) in separate categories from non-removable
+	if(builtin_components)
+		HTML += "<hr>"
+		HTML += "Built in:<br>"
+		HTML += builtin_components
+		HTML += "<hr>"
+		HTML += "Removable:"
 
-	for(var/obj/item/integrated_circuit/circuit in contents)
+	HTML += "<br>"
+
+	for(var/c in components)
+		var/obj/item/integrated_circuit/circuit = c
 		if(circuit.removable)
 			HTML += "<a href=?src=[REF(circuit)];examine=1;from_assembly=1>[circuit.displayed_name]</a> | "
 			HTML += "<a href=?src=[REF(circuit)];rename=1;from_assembly=1>\[Rename\]</a> | "
@@ -133,9 +106,9 @@
 			HTML += "<br>"
 
 	HTML += "</body></html>"
-	user << browse(jointext(HTML,null), "window=assembly-\[REF(src)];size=600x350;border=1;can_resize=1;can_close=1;can_minimize=1")
+	user << browse(HTML, "window=assembly-[REF(src)];size=600x350;border=1;can_resize=1;can_close=1;can_minimize=1")
 
-/obj/item/device/electronic_assembly/Topic(href, href_list[])
+/obj/item/device/electronic_assembly/Topic(href, href_list)
 	if(..())
 		return 1
 
@@ -155,12 +128,11 @@
 	interact(usr) // To refresh the UI.
 
 /obj/item/device/electronic_assembly/proc/rename()
-
 	var/mob/M = usr
 	if(!check_interactivity(M))
 		return
 
-	var/input = reject_bad_name(input("What do you want to name this?", "Rename", src.name) as null|text,1)
+	var/input = reject_bad_name(input("What do you want to name this?", "Rename", src.name) as null|text, TRUE)
 	if(!check_interactivity(M))
 		return
 	if(src && input)
@@ -200,10 +172,15 @@
 	for(var/obj/item/integrated_circuit/part in contents)
 		. += part.size
 
+/obj/item/device/electronic_assembly/proc/return_all_components()
+	. = list()
+	for(var/obj/item/integrated_circuit/part in contents)
+		. += part
+
 // Returns true if the circuit made it inside.
 /obj/item/device/electronic_assembly/proc/add_circuit(var/obj/item/integrated_circuit/IC, var/mob/user)
 	if(!opened)
-		to_chat(user, "<span class='warning'>\The [src] isn't opened, so you can't put anything inside.  Try using a crowbar.</span>")
+		to_chat(user, "<span class='warning'>\The [src]'s hatch is closed, you can't put anything inside.</span>")
 		return FALSE
 
 	if(IC.w_class > w_class)
@@ -245,7 +222,15 @@
 
 	visible_message("<span class='notice'> [user] waves [src] around [target].</span>")
 
-/obj/item/device/electronic_assembly/attackby(var/obj/item/I, var/mob/user)
+
+/obj/item/device/electronic_assembly/screwdriver_act(mob/living/user, obj/item/S)
+	playsound(src, S.usesound, 50, 1)
+	opened = !opened
+	to_chat(user, "<span class='notice'>You [opened ? "open" : "close"] the maintenance hatch of [src].</span>")
+	update_icon()
+	return TRUE
+
+/obj/item/device/electronic_assembly/attackby(obj/item/I, mob/living/user)
 	if(istype(I, /obj/item/integrated_circuit))
 		if(!user.canUnEquip(I))
 			return FALSE
@@ -254,24 +239,17 @@
 			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 			interact(user)
 			return TRUE
-	else if(istype(I, /obj/item/crowbar))
-		playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-		opened = !opened
-		to_chat(user, "<span class='notice'>You [opened ? "opened" : "closed"] [src].</span>")
-		update_icon()
-		return TRUE
-	else if(istype(I, /obj/item/device/integrated_electronics/wirer) || istype(I, /obj/item/device/integrated_electronics/debugger) || istype(I, /obj/item/screwdriver))
+	else if(istype(I, /obj/item/device/integrated_electronics/wirer) || istype(I, /obj/item/device/integrated_electronics/debugger))
 		if(opened)
 			interact(user)
 		else
-			to_chat(user, "<span class='warning'> [src] isn't opened, so you can't fiddle with the internal components.  \
-			Try using a crowbar.</span>")
+			to_chat(user, "<span class='warning'>[src]'s hatch is closed, so you can't fiddle with the internal components.</span>")
 	else if(istype(I, /obj/item/stock_parts/cell))
 		if(!opened)
-			to_chat(user, "<span class='warning'> [src] isn't opened, so you can't put anything inside.  Try using a crowbar.</span>")
+			to_chat(user, "<span class='warning'>[src]'s hatch is closed, so you can't put anything inside.</span>")
 			return FALSE
 		if(battery)
-			to_chat(user, "<span class='warning'> [src] already has \a [battery] inside.  Remove it first if you want to replace it.</span>")
+			to_chat(user, "<span class='warning'>[src] already has \a [battery] installed. Remove it first if you want to replace it.</span>")
 			return FALSE
 		var/obj/item/stock_parts/cell = I
 		user.transferItemToLoc(I, loc)
@@ -340,3 +318,48 @@
 /obj/item/device/electronic_assembly/Moved(oldLoc, dir)
 	for(var/obj/item/integrated_circuit/IC in contents)
 		IC.ext_moved(oldLoc, dir)
+
+
+
+
+
+/obj/item/device/electronic_assembly/medium
+	name = "electronic mechanism"
+	icon_state = "setup_medium"
+	desc = "It's a case, for building medium-sized electronics with."
+	w_class = WEIGHT_CLASS_NORMAL
+	max_components = IC_MAX_SIZE_BASE * 2
+	max_complexity = IC_COMPLEXITY_BASE * 2
+
+/obj/item/device/electronic_assembly/large
+	name = "electronic machine"
+	icon_state = "setup_large"
+	desc = "It's a case, for building large electronics with."
+	w_class = WEIGHT_CLASS_BULKY
+	max_components = IC_MAX_SIZE_BASE * 4
+	max_complexity = IC_COMPLEXITY_BASE * 4
+	anchored = FALSE
+
+/obj/item/device/electronic_assembly/large/attackby(obj/item/O, mob/user)
+	if(default_unfasten_wrench(user, O, 20))
+		return
+	..()
+
+/obj/item/device/electronic_assembly/large/attack_tk(mob/user)
+	if(anchored)
+		return
+	..()
+
+/obj/item/device/electronic_assembly/large/attack_hand(mob/user)
+	if(anchored)
+		attack_self(user)
+		return
+	..()
+
+/obj/item/device/electronic_assembly/drone
+	name = "electronic drone"
+	icon_state = "setup_drone"
+	desc = "It's a case, for building mobile electronics with."
+	w_class = WEIGHT_CLASS_SMALL
+	max_components = IC_MAX_SIZE_BASE * 3
+	max_complexity = IC_COMPLEXITY_BASE * 3

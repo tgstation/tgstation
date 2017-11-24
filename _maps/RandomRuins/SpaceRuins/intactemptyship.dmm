@@ -3,7 +3,6 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/turf/template_noop,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 8;
 	icon_state = "diagonalWall3"
@@ -13,7 +12,6 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/authorship)
 "d" = (
-/turf/template_noop,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
@@ -132,7 +130,6 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/powered/authorship)
 "z" = (
-/turf/template_noop,
 /turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
@@ -142,7 +139,6 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/powered/authorship)
 "B" = (
-/turf/template_noop,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"

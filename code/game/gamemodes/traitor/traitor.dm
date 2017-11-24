@@ -103,11 +103,11 @@
 			var/TC_uses = 0
 			var/uplink_true = FALSE
 			var/purchases = ""
-			for(var/obj/item/device/uplink/H in GLOB.uplinks)
+			for(var/datum/component/uplink/H in GLOB.uplinks)
 				if(H && H.owner && H.owner == traitor.key)
 					TC_uses += H.spent_telecrystals
 					uplink_true = TRUE
-					purchases += H.purchase_log
+					purchases += H.purchase_log.generate_render(FALSE)
 
 			var/objectives = ""
 			if(traitor.objectives.len)//If the traitor had no objectives, don't need to process this.
