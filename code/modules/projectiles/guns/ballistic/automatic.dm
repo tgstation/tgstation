@@ -93,8 +93,8 @@
 	burst_size = 2
 	pin = /obj/item/device/firing_pin/implant/pindicate
 	can_bayonet = TRUE
-	knife_x_offset = 15
-	knife_y_offset = 13
+	knife_x_offset = 22
+	knife_y_offset = 12
 
 /obj/item/gun/ballistic/automatic/c20r/unrestricted
 	pin = /obj/item/device/firing_pin
@@ -123,8 +123,8 @@
 	burst_size = 0
 	actions_types = list()
 	can_bayonet = TRUE
-	knife_x_offset = 15
-	knife_y_offset = 13
+	knife_x_offset = 23
+	knife_y_offset = 12
 
 /obj/item/gun/ballistic/automatic/wt550/update_icon()
 	..()
@@ -245,9 +245,6 @@
 	mag_type = /obj/item/ammo_box/magazine/m12g
 	fire_sound = 'sound/weapons/gunshot.ogg'
 	can_suppress = FALSE
-	can_bayonet = TRUE
-	knife_x_offset = 15
-	knife_y_offset = 13
 	burst_size = 1
 	fire_delay = 0
 	pin = /obj/item/device/firing_pin/implant/pindicate
@@ -396,9 +393,6 @@
 	burst_size = 1
 	can_unsuppress = TRUE
 	can_suppress = TRUE
-	can_bayonet = TRUE
-	knife_x_offset = 15
-	knife_y_offset = 13
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = SLOT_BACK
 	actions_types = list()
