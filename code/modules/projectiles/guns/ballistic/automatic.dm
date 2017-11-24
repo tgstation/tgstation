@@ -19,7 +19,6 @@
 
 /obj/item/gun/ballistic/automatic/update_icon()
 	..()
-	cut_overlays()
 	if(!select)
 		add_overlay("[initial(icon_state)]semi")
 	if(select == 1)
