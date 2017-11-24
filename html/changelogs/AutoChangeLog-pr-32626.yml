@@ -1,4 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - bugfix: "Custom shuttle dockers can no longer place docking regions inside other custom docker regions."

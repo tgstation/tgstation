@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - bugfix: "Fix water misters being inappropriately glued to hands in some cases."
