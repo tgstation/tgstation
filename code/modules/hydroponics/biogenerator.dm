@@ -53,7 +53,7 @@
 	productivity = P
 	max_items = max_storage
 
-/obj/machinery/biogenerator/on_reagent_change()			//When the reagents change, change the icon as well.
+/obj/machinery/biogenerator/on_reagent_change(changetype)			//When the reagents change, change the icon as well.
 	update_icon()
 
 /obj/machinery/biogenerator/update_icon()
