@@ -20,6 +20,7 @@
 	icon_state = "x"
 	anchored = TRUE
 	var/jobspawn_override = FALSE
+	var/delete_after_roundstart = TRUE
 
 /obj/effect/landmark/start/New()
 	GLOB.start_landmarks_list += src
@@ -45,6 +46,7 @@
 
 /obj/effect/landmark/start/assistant/override
 	jobspawn_override = TRUE
+	delete_after_roundstart = FALSE
 
 /obj/effect/landmark/start/janitor
 	name = "Janitor"
@@ -84,6 +86,7 @@
 
 /obj/effect/landmark/start/ai
 	name = "AI"
+	delete_after_roundstart = FALSE
 
 /obj/effect/landmark/start/captain
 	name = "Captain"
