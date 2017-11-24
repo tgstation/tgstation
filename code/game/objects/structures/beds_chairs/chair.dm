@@ -6,7 +6,7 @@
 	anchored = TRUE
 	can_buckle = 1
 	buckle_lying = 0 //you sit in a chair, not lay
-	resistance_flags = 0
+	resistance_flags = NONE
 	max_integrity = 250
 	integrity_failure = 25
 	var/buildstacktype = /obj/item/stack/sheet/metal
@@ -95,7 +95,7 @@
 	handle_layer()
 
 /obj/structure/chair/proc/spin()
-	setDir(turn(dir, 90))
+	setDir(turn(dir, -90))
 
 /obj/structure/chair/setDir(newdir)
 	..()
@@ -193,6 +193,12 @@
 	anchored = FALSE
 	buildstackamount = 5
 	item_chair = null
+
+
+/obj/structure/chair/office/Moved()
+	. = ..()
+	if(has_gravity())
+		playsound(src, 'sound/effects/roll.ogg', 100, 1)
 
 /obj/structure/chair/office/light
 	icon_state = "officechair_white"

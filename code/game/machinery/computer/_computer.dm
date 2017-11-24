@@ -15,12 +15,9 @@
 	var/icon_keyboard = "generic_key"
 	var/icon_screen = "generic"
 	var/clockwork = FALSE
-	var/datum/looping_sound/computer/soundloop
 
 /obj/machinery/computer/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
-
-	soundloop = new(list(src))
 	power_change()
 	if(!QDELETED(C))
 		qdel(circuit)
@@ -29,7 +26,6 @@
 
 /obj/machinery/computer/Destroy()
 	QDEL_NULL(circuit)
-	QDEL_NULL(soundloop)
 	return ..()
 
 /obj/machinery/computer/process()
@@ -67,12 +63,9 @@
 /obj/machinery/computer/power_change()
 	..()
 	if(stat & NOPOWER)
-		soundloop.stop()
 		set_light(0)
 	else
 		set_light(brightness_on)
-		if(soundloop)
-			soundloop.start()
 	update_icon()
 	return
 
@@ -118,15 +111,16 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(circuit) //no circuit, no computer frame
 			var/obj/structure/frame/computer/A = new /obj/structure/frame/computer(src.loc)
+			A.dir = dir
 			A.circuit = circuit
 			A.anchored = TRUE
 			if(stat & BROKEN)
 				if(user)
 					to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
 				else
-					playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
-				new /obj/item/shard(src.loc)
-				new /obj/item/shard(src.loc)
+					playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+				new /obj/item/shard(drop_location())
+				new /obj/item/shard(drop_location())
 				A.state = 3
 				A.icon_state = "3"
 			else

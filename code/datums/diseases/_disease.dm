@@ -30,6 +30,8 @@
 	var/list/required_organs = list()
 	var/needs_all_cures = TRUE
 	var/list/strain_data = list() //dna_spread special bullshit
+	var/list/infectable_hosts = list(SPECIES_ORGANIC) //if the disease can spread on organics, synthetics, or undead
+	var/process_dead = FALSE //if this ticks while the host is dead
 
 /datum/disease/Destroy()
 	affected_mob = null

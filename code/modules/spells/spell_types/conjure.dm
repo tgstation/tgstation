@@ -84,4 +84,5 @@
 	return ..()
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/proc/make_item()
-	return new item_type
+	item = new item_type
+	return item

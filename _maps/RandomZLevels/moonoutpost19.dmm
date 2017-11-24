@@ -199,7 +199,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "aA" = (
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -322,7 +322,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -339,7 +339,7 @@
 /obj/machinery/gateway/centeraway{
 	calibrated = 0
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -356,7 +356,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -453,14 +453,14 @@
 /area/awaymission/moonoutpost19/hive)
 "bd" = (
 /obj/machinery/vending/cola,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/moonoutpost19/syndicate)
 "be" = (
 /obj/machinery/vending/cigarette,
 /obj/structure/sign/poster/contraband/smoke{
 	pixel_y = 32
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/moonoutpost19/syndicate)
 "bf" = (
 /obj/effect/decal/cleanable/dirt,
@@ -473,7 +473,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -921,13 +921,15 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "bZ" = (
-/obj/structure/alien/weeds,
 /obj/structure/sign/poster/contraband/syndicate_recruitment{
 	pixel_y = 32
 	},
-/turf/open/floor/plasteel/loadingarea{
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/obj/structure/alien/weeds,
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
-	dir = 8;
 	heat_capacity = 1e+006;
 	temperature = 251
 	},
@@ -1646,8 +1648,9 @@
 /area/awaymission/moonoutpost19/syndicate)
 "dl" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/loading_area,
 /obj/structure/alien/weeds,
-/turf/open/floor/plasteel/loadingarea{
+/turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	temperature = 251
@@ -2096,7 +2099,7 @@
 /area/awaymission/moonoutpost19/research)
 "ed" = (
 /obj/machinery/vending/snack,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/moonoutpost19/research)
 "ee" = (
 /turf/open/floor/plasteel/floorgrime{
@@ -2234,7 +2237,7 @@
 /area/awaymission/moonoutpost19/research)
 "et" = (
 /obj/machinery/vending/coffee,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/moonoutpost19/research)
 "eu" = (
 /turf/open/floor/plasteel{
@@ -3336,8 +3339,7 @@
 "gv" = (
 /obj/structure/disposalpipe/segment{
 	desc = "An underfloor disposal pipe. This one has been applied with an acid-proof coating.";
-	dir = 2;
-	icon_state = "pipe-c";
+	dir = 10;
 	name = "Acid-Proof disposal pipe"
 	},
 /obj/structure/alien/weeds,
@@ -3377,7 +3379,9 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "gA" = (
-/obj/machinery/computer/monitor,
+/obj/machinery/computer/monitor{
+	dir = 1
+	},
 /obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -3548,6 +3552,7 @@
 	},
 /obj/machinery/computer/security{
 	desc = "Used to access the various cameras on the outpost.";
+	dir = 4;
 	network = list("MO19R","MO19")
 	},
 /turf/open/floor/plasteel/red/side{
@@ -3605,7 +3610,9 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "gU" = (
-/obj/machinery/computer/operating,
+/obj/machinery/computer/operating{
+	dir = 8
+	},
 /obj/structure/alien/weeds,
 /turf/open/floor/plasteel/white/side{
 	dir = 1;
@@ -4754,11 +4761,11 @@
 /area/awaymission/moonoutpost19/arrivals)
 "jf" = (
 /obj/machinery/vending/cola,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/moonoutpost19/arrivals)
 "jg" = (
 /obj/machinery/vending/coffee,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/moonoutpost19/arrivals)
 "jh" = (
 /obj/machinery/door/airlock{
@@ -6049,20 +6056,20 @@
 	name = "Kitchen";
 	req_access_txt = "201"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/moonoutpost19/arrivals)
 "lR" = (
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/moonoutpost19/arrivals)
 "lS" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/moonoutpost19/arrivals)
 "lT" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/suit/hooded/chaplain_hoodie,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/moonoutpost19/arrivals)
 "lU" = (
 /obj/machinery/light/small{
@@ -6078,7 +6085,6 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "lV" = (
-/turf/open/floor/mineral/titanium/blue,
 /turf/closed/wall/mineral/titanium/interior,
 /area/awaymission/moonoutpost19/arrivals)
 "lW" = (
@@ -6182,7 +6188,7 @@
 "ml" = (
 /obj/structure/table,
 /obj/item/storage/backpack/satchel/leather/withwallet,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/moonoutpost19/arrivals)
 "mm" = (
 /obj/structure/closet/secure_closet{
@@ -6331,21 +6337,21 @@
 /area/awaymission/moonoutpost19/arrivals)
 "mB" = (
 /obj/machinery/computer/arcade,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/moonoutpost19/arrivals)
 "mC" = (
 /obj/machinery/vending/cigarette,
 /obj/structure/sign/poster/contraband/smoke{
 	pixel_y = -32
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/moonoutpost19/arrivals)
 "mD" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
 /obj/structure/chair/comfy/beige,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/moonoutpost19/arrivals)
 "mE" = (
 /obj/structure/table,
@@ -6360,14 +6366,16 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass{
 	pixel_x = 3
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/moonoutpost19/arrivals)
 "mF" = (
 /obj/structure/chair/comfy/beige,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/moonoutpost19/arrivals)
 "mG" = (
-/obj/machinery/computer/shuttle,
+/obj/machinery/computer/shuttle{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/moonoutpost19/arrivals)
 "mH" = (

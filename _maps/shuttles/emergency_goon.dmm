@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "b" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4
@@ -93,12 +93,11 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "t" = (
-/turf/open/floor/mineral/titanium/blue,
 /turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/escape)
 "u" = (
-/turf/open/space,
-/area/shuttle/escape)
+/turf/template_noop,
+/area/template_noop)
 "v" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -168,7 +167,9 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "G" = (
-/obj/machinery/computer/emergency_shuttle,
+/obj/machinery/computer/emergency_shuttle{
+	dir = 8
+	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},

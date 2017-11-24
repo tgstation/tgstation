@@ -165,7 +165,7 @@ SUBSYSTEM_DEF(shuttle)
 		var/mob/M = I
 		if(M.stat != DEAD)
 			++alive
-	
+
 	var/total = GLOB.joined_player_list.len
 
 	if(alive / total <= threshold)
@@ -245,7 +245,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	log_game("[key_name(user)] has called the shuttle.")
 	if(call_reason)
-		SSblackbox.add_details("shuttle_reason", call_reason)
+		SSblackbox.record_feedback("text", "shuttle_reason", 1, "[call_reason]")
 		log_game("Shuttle call reason: [call_reason]")
 	message_admins("[key_name_admin(user)] has called the shuttle. (<A HREF='?_src_=holder;[HrefToken()];trigger_centcom_recall=1'>TRIGGER CENTCOM RECALL</A>)")
 
@@ -496,14 +496,7 @@ SUBSYSTEM_DEF(shuttle)
 	// Then we want the point closest to -infinity,-infinity
 	var/x2 = min(x0, x1)
 	var/y2 = min(y0, y1)
-/*
-	var/lowx = topleft.x + SHUTTLE_TRANSIT_BORDER
-	var/lowy = topleft.y + SHUTTLE_TRANSIT_BORDER
 
-	var/turf/low_point = locate(lowx, lowy, topleft.z)
-	new /obj/effect/landmark/stationary(low_point)
-	to_chat(world, "Starting at the low point, we go [x2],[y2]")
-*/
 	// Then invert the numbers
 	var/transit_x = topleft.x + SHUTTLE_TRANSIT_BORDER + abs(x2)
 	var/transit_y = topleft.y + SHUTTLE_TRANSIT_BORDER + abs(y2)
