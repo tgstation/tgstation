@@ -697,14 +697,14 @@
 
 /mob/living/simple_animal/bot/mulebot/explode()
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
-	var/turf/Tsec = get_turf(src)
+	var/atom/Tsec = drop_location()
 
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/stack/cable_coil/cut(Tsec)
 	if(cell)
-		cell.loc = Tsec
+		cell.forceMove(Tsec)
 		cell.update_icon()
 		cell = null
 
