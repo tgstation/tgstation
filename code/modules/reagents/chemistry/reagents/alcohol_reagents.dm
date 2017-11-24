@@ -40,6 +40,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			H.drunkenness = max((H.drunkenness + (sqrt(volume) * boozepwr * ALCOHOL_RATE)), 0) //Volume, power, and server alcohol rate effect how quickly one gets drunk
 			var/obj/item/organ/liver/L = H.getorganslot(ORGAN_SLOT_LIVER)
 			H.applyLiverDamage((max(sqrt(volume) * boozepwr * L.alcohol_tolerance, 0))/10)
+		H.vitamins -= (boozepwr * 0.005) //Alcohol is, obviously, not good for you
 	return ..() || .
 
 /datum/reagent/consumable/ethanol/reaction_obj(obj/O, reac_volume)
@@ -1116,6 +1117,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "hearty_punch"
 	glass_name = "Hearty Punch"
 	glass_desc = "Aromatic beverage served piping hot. According to folk tales it can almost wake the dead."
+	healthiness = 0.2 //Hearty and healthy!
 
 /datum/reagent/consumable/ethanol/hearty_punch/on_mob_life(mob/living/M)
 	if(M.health <= 0)

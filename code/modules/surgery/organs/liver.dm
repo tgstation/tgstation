@@ -47,6 +47,11 @@
 			if(damage > 10 && prob(damage/3))//the higher the damage the higher the probability
 				to_chat(C, "<span class='notice'>You feel [pick("nauseous", "dull pain in your lower body", "confused")].</span>")
 
+			var/natural_healing = max(0, 0.05 + (C.vitamins * 0.0002))
+			if(C.vitamins >= VITAMIN_LEVEL_HYPERVITAMINITOSIS)
+				natural_healing *= -1 //If we have too many vitamins, take toxin damage instead!
+			C.adjustToxLoss(-natural_healing)
+
 /obj/item/organ/liver/prepare_eat()
 	var/obj/S = ..()
 	S.reagents.add_reagent("iron", 5)

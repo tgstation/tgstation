@@ -14,6 +14,7 @@
 	if(istype(H))
 		H.dna.species.handle_digestion(H)
 		handle_disgust(H)
+		handle_nutrition(H) //This is nutrition in the "vitamins" sense, not the "fed" sense
 
 /obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/H)
 	if(H.disgust)
@@ -46,6 +47,18 @@
 			H.throw_alert("disgust", /obj/screen/alert/verygross)
 		if(DISGUST_LEVEL_DISGUSTED to INFINITY)
 			H.throw_alert("disgust", /obj/screen/alert/disgusted)
+
+/obj/item/organ/stomach/proc/handle_nutrition(mob/living/carbon/human/H)
+	//First, calculate the actual vitamin levels
+	var/vitamin_decay_rate = H.vitamins * 0.001 //Vitamin levels will slowly decay towards neutral
+	vitamin_decay_rate = Clamp(vitamin_decay_rate, -0.05, 0.05)
+	H.vitamins -= vitamin_decay_rate //Yes, this works for negatives, don't ask me how
+	H.vitamins = Clamp(H.vitamins, -VITAMIN_CLAMP, VITAMIN_CLAMP) //So we don't have 1000% vitamin level
+
+	if(H.vitamins < VITAMIN_LEVEL_HYPERVITAMINITOSIS)
+		//Then, our body heals depending on nutrition!
+		H.adjustBruteLoss(-max(0, 0.01 + (H.vitamins * 0.0005))) //Natural healing remains very slow, but is faster for people who are well-nourished
+		H.adjustFireLoss(-max(0, 0.01 + (H.vitamins * 0.0003))) //Burn wounds heal slightly more slowly
 
 /obj/item/organ/stomach/Remove(mob/living/carbon/M, special = 0)
 	var/mob/living/carbon/human/H = owner
