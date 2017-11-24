@@ -310,6 +310,7 @@
 	back = /obj/item/storage/backpack
 	ears = /obj/item/device/radio/headset/syndicate/alt
 	l_pocket = /obj/item/pinpointer/nuke/syndicate
+	r_pocket = /obj/item/kitchen/knife/combat
 	id = /obj/item/card/id/syndicate
 	belt = /obj/item/gun/ballistic/automatic/pistol
 	backpack_contents = list(/obj/item/storage/box/syndie=1)
