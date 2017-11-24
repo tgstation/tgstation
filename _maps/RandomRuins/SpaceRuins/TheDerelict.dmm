@@ -559,7 +559,7 @@
 /turf/template_noop,
 /area/ruin/space/derelict/bridge/ai_upload)
 "bM" = (
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
 /turf/template_noop,
 /area/ruin/space/derelict/bridge/ai_upload)
 "bN" = (
@@ -991,7 +991,7 @@
 	icon_state = "0-8"
 	},
 /obj/structure/frame/machine,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/gravity_generator)
 "dj" = (

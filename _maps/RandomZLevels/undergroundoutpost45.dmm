@@ -3734,9 +3734,9 @@
 /area/awaymission/undergroundoutpost45/research)
 "ik" = (
 /obj/structure/table/glass,
-/obj/item/stock_parts/console_screen,
-/obj/item/stock_parts/console_screen,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
 /obj/item/stock_parts/matter_bin,
 /obj/item/stock_parts/matter_bin,
 /turf/open/floor/plasteel/white/side{

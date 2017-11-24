@@ -32698,8 +32698,8 @@
 /area/science/lab)
 "bAq" = (
 /obj/structure/table,
-/obj/item/stock_parts/console_screen,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
 /obj/item/stock_parts/capacitor,
 /obj/item/stock_parts/capacitor,
 /obj/item/stock_parts/manipulator,
@@ -47955,8 +47955,8 @@
 /area/tcommsat/server)
 "cnw" = (
 /obj/structure/table,
-/obj/item/stock_parts/console_screen,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
 /obj/item/stock_parts/micro_laser,
 /obj/item/stock_parts/micro_laser,
 /turf/open/floor/plasteel/dark/telecomms,
