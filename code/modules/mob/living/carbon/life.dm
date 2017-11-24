@@ -248,7 +248,7 @@
 		if(prob(D.infectivity))
 			D.spread()
 
-		if(stat != DEAD)
+		if(stat != DEAD && !D.process_dead)
 			D.stage_act()
 
 //todo generalize this and move hud out

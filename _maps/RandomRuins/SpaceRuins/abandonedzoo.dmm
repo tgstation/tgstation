@@ -671,7 +671,7 @@
 "bK" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating/airless,
-/area/space)
+/area/space/nearstation)
 "bL" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -717,7 +717,7 @@
 	},
 /obj/structure/disposaloutlet,
 /turf/open/floor/plating/airless,
-/area/space)
+/area/space/nearstation)
 "bS" = (
 /obj/structure/cable{
 	icon_state = "1-4"

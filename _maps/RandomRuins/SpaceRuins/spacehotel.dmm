@@ -3301,18 +3301,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel)
-"iX" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/hotel)
 "iY" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -3944,7 +3932,7 @@
 /area/ruin/space/has_grav/hotel/security)
 "kP" = (
 /obj/effect/turf_decal/stripes/corner{
-	dir = 2
+	dir = 1
 	},
 /turf/open/floor/plasteel/darkyellow,
 /area/ruin/space/has_grav/hotel/security)

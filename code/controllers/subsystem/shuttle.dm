@@ -613,6 +613,30 @@ SUBSYSTEM_DEF(shuttle)
 			return TRUE
 
 /datum/controller/subsystem/shuttle/proc/get_containing_shuttle(atom/A)
-	for(var/obj/docking_port/mobile/M in mobile)
-		if(M.is_in_shuttle_bounds(A))
-			return M
+	var/list/mobile_cache = mobile
+	for(var/i in 1 to mobile_cache.len)
+		var/obj/docking_port/port = mobile_cache[i]
+		if(port.is_in_shuttle_bounds(A))
+			return port
+
+/datum/controller/subsystem/shuttle/proc/get_containing_dock(atom/A)
+	. = list()
+	var/list/stationary_cache = stationary
+	for(var/i in 1 to stationary_cache.len)
+		var/obj/docking_port/port = stationary_cache[i]
+		if(port.is_in_shuttle_bounds(A))
+			. += port
+
+/datum/controller/subsystem/shuttle/proc/get_dock_overlap(x0, y0, x1, y1, z)
+	. = list()
+	var/list/stationary_cache = stationary
+	for(var/i in 1 to stationary_cache.len)
+		var/obj/docking_port/port = stationary_cache[i]
+		if(!port || port.z != z)
+			continue
+		var/list/bounds = port.return_coords()
+		var/list/overlap = get_overlap(x0, y0, x1, y1, bounds[1], bounds[2], bounds[3], bounds[4])
+		var/list/xs = overlap[1]
+		var/list/ys = overlap[2]
+		if(xs.len && ys.len)
+			.[port] = overlap

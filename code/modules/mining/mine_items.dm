@@ -12,6 +12,12 @@
 	. = ..()
 	set_light(set_luminosity, set_cap)
 
+/obj/effect/light_emitter/singularity_pull()
+	return
+
+/obj/effect/light_emitter/singularity_act()
+	return
+
 /**********************Miner Lockers**************************/
 
 /obj/structure/closet/wardrobe/miner

@@ -5,10 +5,10 @@
 "ab" = (
 /obj/structure/lattice,
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "ac" = (
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "ad" = (
 /turf/closed/wall/r_wall,
 /area/maintenance/department/bridge)

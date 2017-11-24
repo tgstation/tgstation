@@ -155,7 +155,9 @@
 			if(.)
 				frequency = sanitize_frequency(tune, freerange)
 				set_frequency(frequency)
-				if(frequency == traitor_frequency && hidden_uplink)
+				GET_COMPONENT(hidden_uplink, /datum/component/uplink)
+				if(hidden_uplink && (frequency == traitor_frequency))
+					hidden_uplink.locked = FALSE
 					hidden_uplink.interact(usr)
 					ui.close()
 		if("listen")

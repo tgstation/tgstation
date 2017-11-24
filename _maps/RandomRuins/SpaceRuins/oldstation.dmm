@@ -1228,7 +1228,7 @@
 "dF" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space)
+/area/space/nearstation)
 "dG" = (
 /turf/open/floor/plasteel/airless,
 /area/template_noop)
@@ -2498,7 +2498,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/space)
+/area/space/nearstation)
 "gG" = (
 /obj/effect/spawner/structure/window/hollow/reinforced,
 /obj/structure/cable{
@@ -2610,8 +2610,8 @@
 /area/ruin/space/has_grav/ancientstation/rnd)
 "gQ" = (
 /obj/structure/table,
-/obj/item/stock_parts/console_screen,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
 /obj/item/stock_parts/matter_bin,
 /obj/item/stock_parts/scanning_module{
 	pixel_x = 2;
@@ -4457,7 +4457,7 @@
 /area/template_noop)
 "lv" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
 /turf/open/floor/plasteel/airless/white/side{
 	dir = 4
 	},
