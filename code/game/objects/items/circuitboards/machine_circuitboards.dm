@@ -5,15 +5,14 @@
 		/obj/item/stock_parts/matter_bin = 1,
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/stack/cable_coil = 1,
-		/obj/item/stock_parts/console_screen = 1,
-		/obj/item/stack/sheet/glass = 1)
+		/obj/item/stack/sheet/glass = 2)
 
 /obj/item/circuitboard/machine/announcement_system
 	name = "Announcement System (Machine Board)"
 	build_path = /obj/machinery/announcement_system
 	req_components = list(
 		/obj/item/stack/cable_coil = 2,
-		/obj/item/stock_parts/console_screen = 1)
+		/obj/item/stack/sheet/glass = 1)
 
 /obj/item/circuitboard/machine/autolathe
 	name = "Autolathe (Machine Board)"
@@ -21,7 +20,7 @@
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 3,
 		/obj/item/stock_parts/manipulator = 1,
-		/obj/item/stock_parts/console_screen = 1)
+		/obj/item/stack/sheet/glass = 1)
 
 /obj/item/circuitboard/machine/clonepod
 	name = "Clone Pod (Machine Board)"
@@ -69,7 +68,7 @@
 	req_components = list(
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/reagent_containers/glass/beaker = 2,
-		/obj/item/stock_parts/console_screen = 1)
+		/obj/item/stack/sheet/glass = 1)
 
 /obj/item/circuitboard/machine/quantumpad
 	name = "Quantum Pad (Machine Board)"
@@ -186,7 +185,7 @@
 	req_components = list(
 		/obj/item/ore/bluespace_crystal = 2,
 		/obj/item/stock_parts/capacitor = 2,
-		/obj/item/stock_parts/console_screen = 1)
+		/obj/item/stack/sheet/glass = 1)
 	def_components = list(/obj/item/ore/bluespace_crystal = /obj/item/ore/bluespace_crystal/artificial)
 
 /obj/item/circuitboard/machine/vendor
@@ -242,7 +241,7 @@
 		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/stock_parts/micro_laser = 1,
-		/obj/item/stock_parts/console_screen = 1)
+		/obj/item/stack/sheet/glass = 1)
 
 /obj/item/circuitboard/machine/cryo_tube
 	name = "Cryotube (Machine Board)"
@@ -250,17 +249,16 @@
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 1,
 		/obj/item/stack/cable_coil = 1,
-		/obj/item/stock_parts/console_screen = 1,
-		/obj/item/stack/sheet/glass = 2)
+		/obj/item/stack/sheet/glass = 4)
 
 /obj/item/circuitboard/machine/thermomachine
 	name = "Thermomachine (Machine Board)"
 	desc = "You can use a screwdriver to switch between heater and freezer."
 	req_components = list(
-							/obj/item/stock_parts/matter_bin = 2,
-							/obj/item/stock_parts/micro_laser = 2,
-							/obj/item/stack/cable_coil = 1,
-							/obj/item/stock_parts/console_screen = 1)
+		/obj/item/stock_parts/matter_bin = 2,
+		/obj/item/stock_parts/micro_laser = 2,
+		/obj/item/stack/cable_coil = 1,
+		/obj/item/stack/sheet/glass = 1)
 
 #define PATH_FREEZER /obj/machinery/atmospherics/components/unary/thermomachine/freezer
 #define PATH_HEATER  /obj/machinery/atmospherics/components/unary/thermomachine/heater
@@ -384,7 +382,7 @@
 		/obj/item/stock_parts/matter_bin = 1,
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/stack/cable_coil = 1,
-		/obj/item/stock_parts/console_screen = 1)
+		/obj/item/stack/sheet/glass = 1)
 
 /obj/item/circuitboard/machine/plantgenes
 	name = "Plant DNA Manipulator (Machine Board)"
@@ -392,7 +390,7 @@
 	req_components = list(
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/stock_parts/micro_laser = 1,
-		/obj/item/stock_parts/console_screen = 1,
+		/obj/item/stack/sheet/glass = 1,
 		/obj/item/stock_parts/scanning_module = 1)
 
 /obj/item/circuitboard/machine/plantgenes/vault
@@ -411,7 +409,7 @@
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/stock_parts/manipulator = 1,
-		/obj/item/stock_parts/console_screen = 1)
+		/obj/item/stack/sheet/glass = 1)
 
 /obj/item/circuitboard/machine/seed_extractor
 	name = "Seed Extractor (Machine Board)"
@@ -424,7 +422,7 @@
 	name = "Ore Redemption (Machine Board)"
 	build_path = /obj/machinery/mineral/ore_redemption
 	req_components = list(
-		/obj/item/stock_parts/console_screen = 1,
+		/obj/item/stack/sheet/glass = 1,
 		/obj/item/stock_parts/matter_bin = 1,
 		/obj/item/stock_parts/micro_laser = 1,
 		/obj/item/stock_parts/manipulator = 1,
@@ -434,7 +432,7 @@
 	name = "Mining Equipment Vendor (Machine Board)"
 	build_path = /obj/machinery/mineral/equipment_vendor
 	req_components = list(
-		/obj/item/stock_parts/console_screen = 1,
+		/obj/item/stack/sheet/glass = 1,
 		/obj/item/stock_parts/matter_bin = 3)
 
 /obj/item/circuitboard/machine/mining_equipment_vendor/golem
@@ -541,7 +539,7 @@
 		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/stock_parts/capacitor = 1,
 		/obj/item/stock_parts/manipulator = 1,
-		/obj/item/stock_parts/console_screen = 1,
+		/obj/item/stack/sheet/glass = 1,
 		/obj/item/stock_parts/cell = 1)
 	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/high)
 
@@ -552,7 +550,7 @@
 		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/stock_parts/capacitor = 1,
 		/obj/item/stock_parts/manipulator = 1,
-		/obj/item/stock_parts/console_screen = 1,
+		/obj/item/stack/sheet/glass = 1,
 		/obj/item/stock_parts/cell = 1)
 
 /obj/item/circuitboard/machine/chem_heater
@@ -560,7 +558,7 @@
 	build_path = /obj/machinery/chem_heater
 	req_components = list(
 		/obj/item/stock_parts/micro_laser = 1,
-		/obj/item/stock_parts/console_screen = 1)
+		/obj/item/stack/sheet/glass = 1)
 
 /obj/item/circuitboard/machine/chem_master
 	name = "ChemMaster 3000 (Machine Board)"
@@ -568,7 +566,7 @@
 	req_components = list(
 		/obj/item/reagent_containers/glass/beaker = 2,
 		/obj/item/stock_parts/manipulator = 1,
-		/obj/item/stock_parts/console_screen = 1)
+		/obj/item/stack/sheet/glass = 1)
 
 /obj/item/circuitboard/machine/chem_master/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/screwdriver))
@@ -700,12 +698,11 @@
 		/obj/item/stock_parts/micro_laser = 1,
 		/obj/item/stock_parts/matter_bin = 1,
 		/obj/item/stack/cable_coil = 2,
-		/obj/item/stock_parts/console_screen = 1,
-		/obj/item/stack/sheet/glass = 1)
+		/obj/item/stack/sheet/glass = 2)
 
 /obj/item/circuitboard/machine/vending/donksofttoyvendor
 	name = "Donksoft Toy Vendor (Machine Board)"
 	build_path = /obj/machinery/vending/donksofttoyvendor
 	req_components = list(
-		/obj/item/stock_parts/console_screen = 1,
+		/obj/item/stack/sheet/glass = 1,
 		/obj/item/vending_refill/donksoft = 3)

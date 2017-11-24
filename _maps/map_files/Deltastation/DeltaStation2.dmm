@@ -3164,7 +3164,7 @@
 	name = "dust"
 	},
 /obj/structure/frame/computer,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 8
 	},
@@ -7652,8 +7652,8 @@
 	},
 /obj/item/stack/cable_coil/white,
 /obj/item/stack/cable_coil/white,
-/obj/item/stock_parts/console_screen,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
 /obj/item/circuitboard/machine/microwave,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/electronic_marketing_den)
@@ -43456,9 +43456,9 @@
 /obj/structure/table/reinforced,
 /obj/item/folder/white,
 /obj/item/stock_parts/cell/high,
-/obj/item/stock_parts/console_screen,
-/obj/item/stock_parts/console_screen,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -61777,7 +61777,7 @@
 /obj/item/clipboard,
 /obj/item/folder/blue,
 /obj/item/electronics/firelock,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/maintenance/port)
@@ -75479,7 +75479,7 @@
 /obj/structure/table,
 /obj/item/clipboard,
 /obj/item/electronics/airlock,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
 /obj/item/device/assembly/signaler,
 /obj/machinery/airalarm{
 	dir = 1;
@@ -79183,9 +79183,9 @@
 /obj/structure/table/reinforced,
 /obj/item/folder/white,
 /obj/item/stock_parts/cell/high,
-/obj/item/stock_parts/console_screen,
-/obj/item/stock_parts/console_screen,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
 /obj/structure/cable/white{
 	icon_state = "0-4"
 	},
@@ -84098,9 +84098,9 @@
 /obj/structure/table/reinforced,
 /obj/item/folder/white,
 /obj/item/stock_parts/cell/high,
-/obj/item/stock_parts/console_screen,
-/obj/item/stock_parts/console_screen,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/science/research/abandoned)
@@ -86113,7 +86113,7 @@
 /area/science/research/abandoned)
 "dus" = (
 /obj/structure/table/reinforced,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
 /obj/item/stock_parts/micro_laser,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
@@ -87682,7 +87682,7 @@
 /obj/item/clipboard,
 /obj/item/folder/yellow,
 /obj/item/electronics/firealarm,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/construction)
@@ -90533,7 +90533,7 @@
 "dDk" = (
 /obj/structure/frame/machine,
 /obj/machinery/light/small,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/science/research/abandoned)
