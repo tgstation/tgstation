@@ -155,7 +155,7 @@
 		briefcase = loc
 	else
 		log_game("[src] has been spawned without a briefcase.")
-		qdel(src)
+		return INITIALIZE_HINT_QDEL
 
 /obj/machinery/launchpad/briefcase/Destroy()
 	QDEL_NULL(briefcase)
