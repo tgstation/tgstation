@@ -248,7 +248,9 @@
 	relative coordinates, total amount of reagents, and maximum amount of reagents of the referenced object."
 	icon_state = "video_camera"
 	complexity = 6
-	inputs = list("\<REF\> target" = IC_PINTYPE_REF)
+	inputs = list(
+		"target" = IC_PINTYPE_REF
+		)
 	outputs = list(
 		"name"	            	= IC_PINTYPE_STRING,
 		"description"       	= IC_PINTYPE_STRING,
