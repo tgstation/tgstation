@@ -185,9 +185,6 @@
 /obj/item/device/electronic_assembly/proc/can_move()
 	return FALSE
 
-/obj/item/device/electronic_assembly/drone/can_move()
-	return TRUE
-
 /obj/item/device/electronic_assembly/update_icon()
 	if(opened)
 		icon_state = initial(icon_state) + "-open"
@@ -252,7 +249,7 @@
 
 // Actually puts the circuit inside, doesn't perform any checks.
 /obj/item/device/electronic_assembly/proc/add_component(obj/item/integrated_circuit/component)
-	component.forceMove(src)
+	component.forceMove(get_object())
 	component.assembly = src
 	components |= component
 
@@ -442,3 +439,6 @@
 	w_class = WEIGHT_CLASS_SMALL
 	max_components = IC_MAX_SIZE_BASE * 3
 	max_complexity = IC_COMPLEXITY_BASE * 3
+
+/obj/item/device/electronic_assembly/drone/can_move()
+	return TRUE
