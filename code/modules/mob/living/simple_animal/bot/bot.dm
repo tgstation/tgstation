@@ -102,13 +102,13 @@
 
 /mob/living/simple_animal/bot/proc/turn_on()
 	if(stat)
-		return 0
+		return FALSE
 	on = TRUE
 	canmove = TRUE
 	set_light(initial(light_range))
 	update_icon()
 	diag_hud_set_botstat()
-	return 1
+	return TRUE
 
 /mob/living/simple_animal/bot/proc/turn_off()
 	on = FALSE
@@ -159,7 +159,7 @@
 	return ..()
 
 /mob/living/simple_animal/bot/bee_friendly()
-	return 1
+	return TRUE
 
 /mob/living/simple_animal/bot/death(gibbed)
 	explode()
@@ -225,7 +225,7 @@
 		if(BOT_SUMMON)		//Called by PDA
 			bot_summon()
 			return
-	return 1 //Successful completion. Used to prevent child process() continuing if this one is ended early.
+	return TRUE //Successful completion. Used to prevent child process() continuing if this one is ended early.
 
 
 /mob/living/simple_animal/bot/attack_hand(mob/living/carbon/human/H)
@@ -332,7 +332,7 @@
 /mob/living/simple_animal/bot/radio(message, message_mode, list/spans, language)
 	. = ..()
 	if(. != 0)
-		return .
+		return
 
 	switch(message_mode)
 		if(MODE_HEADSET)
@@ -346,7 +346,6 @@
 	if(message_mode in GLOB.radiochannels)
 		Radio.talk_into(src, message, message_mode, spans, language)
 		return REDUCE_RANGE
-	return 0
 
 //Generalized behavior code, override where needed!
 
@@ -388,15 +387,15 @@ Pass the desired type path itself, declaring a temporary var beforehand is not r
 
 /mob/living/simple_animal/bot/proc/checkscan(scan, scan_type, old_target)
 	if(!istype(scan, scan_type)) //Check that the thing we found is the type we want!
-		return 0 //If not, keep searching!
-	if( (scan in ignore_list) || (scan == old_target) ) //Filter for blacklisted elements, usually unreachable or previously processed oness
-		return 0
+		return FALSE //If not, keep searching!
+	if( (REF(scan) in ignore_list) || (scan == old_target) ) //Filter for blacklisted elements, usually unreachable or previously processed oness
+		return FALSE
 
 	var/scan_result = process_scan(scan) //Some bots may require additional processing when a result is selected.
 	if(scan_result)
 		return scan_result
 	else
-		return 0 //The current element failed assessment, move on to the next.
+		return FALSE //The current element failed assessment, move on to the next.
 	return
 
 /mob/living/simple_animal/bot/proc/check_bot(targ)
@@ -404,7 +403,7 @@ Pass the desired type path itself, declaring a temporary var beforehand is not r
 	if(T)
 		for(var/C in T.contents)
 			if(istype(C,type) && (C != src))	//Is there another bot there already? If so, let's skip it so we dont all atack on top of eachother.
-				return 1	//Let's abort if we find a bot so we dont have to keep rechecking
+				return TRUE	//Let's abort if we find a bot so we dont have to keep rechecking
 
 //When the scan finds a target, run bot specific processing to select it for the next step. Empty by default.
 /mob/living/simple_animal/bot/proc/process_scan(scan_target)
@@ -413,27 +412,26 @@ Pass the desired type path itself, declaring a temporary var beforehand is not r
 
 /mob/living/simple_animal/bot/proc/add_to_ignore(subject)
 	if(ignore_list.len < 50) //This will help keep track of them, so the bot is always trying to reach a blocked spot.
-		ignore_list |= subject
-	else if(ignore_list.len >= subject) //If the list is full, insert newest, delete oldest.
-		ignore_list -= ignore_list[1]
-		ignore_list |= subject
+		ignore_list += REF(subject)
+	else  //If the list is full, insert newest, delete oldest.
+		ignore_list.Cut(1,2)
+		ignore_list += REF(subject)
 
 /*
 Movement proc for stepping a bot through a path generated through A-star.
 Pass a positive integer as an argument to override a bot's default speed.
 */
 /mob/living/simple_animal/bot/proc/bot_move(dest, move_speed)
-
 	if(!dest || !path || path.len == 0) //A-star failed or a path/destination was not set.
 		path = list()
-		return 0
+		return FALSE
 	dest = get_turf(dest) //We must always compare turfs, so get the turf of the dest var if dest was originally something else.
 	var/turf/last_node = get_turf(path[path.len]) //This is the turf at the end of the path, it should be equal to dest.
 	if(get_turf(src) == dest) //We have arrived, no need to move again.
-		return 1
+		return TRUE
 	else if(dest != last_node) //The path should lead us to our given destination. If this is not true, we must stop.
 		path = list()
-		return 0
+		return FALSE
 	var/step_count = move_speed ? move_speed : base_speed //If a value is passed into move_speed, use that instead of the default speed var.
 
 	if(step_count >= 1 && tries < BOT_STEP_MAX_RETRIES)
@@ -441,13 +439,13 @@ Pass a positive integer as an argument to override a bot's default speed.
 			spawn(BOT_STEP_DELAY*step_number)
 				bot_step(dest)
 	else
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 
 /mob/living/simple_animal/bot/proc/bot_step(dest) //Step,increase tries if failed
 	if(!path)
-		return 0
+		return FALSE
 	if(path.len > 1)
 		step_towards(src, path[1])
 		if(get_turf(src) == path[1]) //Successful move
@@ -455,11 +453,11 @@ Pass a positive integer as an argument to override a bot's default speed.
 			tries = 0
 		else
 			tries++
-			return 0
+			return FALSE
 	else if(path.len == 1)
 		step_to(src, dest)
 		path = list()
-	return 1
+	return TRUE
 
 
 /mob/living/simple_animal/bot/proc/check_bot_access()
@@ -610,7 +608,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 			destination = new_destination //We now know the name of where we want to go.
 			patrol_target = NB.loc //Get its location and set it as the target.
 			next_destination = NB.codes["next_patrol"] //Also get the name of the next beacon in line.
-			return 1
+			return TRUE
 
 /mob/living/simple_animal/bot/proc/find_nearest_beacon()
 	for(var/obj/machinery/navbeacon/NB in GLOB.navbeacons["[z]"])
@@ -632,7 +630,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 //PDA control. Some bots, especially MULEs, may have more parameters.
 /mob/living/simple_animal/bot/proc/bot_control(command, mob/user, turf/user_turf, list/user_access = list())
 	if(!on || emagged == 2 || remote_disabled) //Emagged bots do not respect anyone's authority! Bots with their remote controls off cannot get commands.
-		return 1 //ACCESS DENIED
+		return TRUE //ACCESS DENIED
 	if(client)
 		bot_control_message(command,user,user_turf,user_access)
 	// process control input
@@ -751,11 +749,11 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(href_list["close"])// HUE HUE
 		if(usr in users)
 			users.Remove(usr)
-		return 1
+		return TRUE
 
 	if(topic_denied(usr))
 		to_chat(usr, "<span class='warning'>[src]'s interface is not responding!</span>")
-		return 1
+		return TRUE
 	add_fingerprint(usr)
 
 	if((href_list["power"]) && (bot_core.allowed(usr) || !locked))
@@ -806,14 +804,14 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/proc/topic_denied(mob/user) //Access check proc for bot topics! Remember to place in a bot's individual Topic if desired.
 	if(!user.canUseTopic(src))
-		return 1
+		return TRUE
 	// 0 for access, 1 for denied.
 	if(emagged == 2) //An emagged bot cannot be controlled by humans, silicons can if one hacked it.
 		if(!hacked) //Manually emagged by a human - access denied to all.
-			return 1
+			return TRUE
 		else if(!issilicon(user) && !IsAdminGhost(user)) //Bot is hacked, so only silicons and admins are allowed access.
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /mob/living/simple_animal/bot/proc/hack(mob/user)
 	var/hack
@@ -859,7 +857,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 				faction = user.faction.Copy()
 				language_holder = paicard.pai.language_holder.copy(src)
 				add_logs(user, paicard.pai, "uploaded to [bot_name],")
-				return 1
+				return TRUE
 			else
 				to_chat(user, "<span class='warning'>[card] is inactive.</span>")
 		else
