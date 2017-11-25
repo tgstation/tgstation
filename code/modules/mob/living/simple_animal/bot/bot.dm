@@ -1,5 +1,3 @@
-//Defines for bots are now found in code\__DEFINES\bots.dm
-
 // AI (i.e. game AI, not the AI player) controlled bots
 /mob/living/simple_animal/bot
 	icon = 'icons/mob/aibots.dmi'
@@ -84,6 +82,8 @@
 	"Proceeding to AI waypoint", "Navigating to Delivery Location", "Navigating to Home", \
 	"Waiting for clear path", "Calculating navigation path", "Pinging beacon network", "Unable to reach destination")
 	//This holds text for what the bot is mode doing, reported on the remote bot control interface.
+
+	var/ignorelistcleanuptimer = 1 // This ticks up every automated action, at 300 we clean the ignore list
 
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BOT_HUD, DIAG_HUD) //Diagnostic HUD views
 
@@ -214,6 +214,15 @@
 /mob/living/simple_animal/bot/handle_automated_action() //Master process which handles code common across most bots.
 	set background = BACKGROUND_ENABLED
 	diag_hud_set_botmode()
+
+	if (ignorelistcleanuptimer % 300 = 0) // Every 300 actions, clean up the ignore list from old junk
+		for(var/ref in ignore_list)
+			var/atom/referredatom = locate(ref)
+			if (!referredatom || !istype(referredatom) || QDELETED(referredatom))
+				ignore_list -= ref
+		ignorelistcleanuptimer = 1
+	else
+		ignorelistcleanuptimer++
 
 	if(!on || client)
 		return
@@ -449,7 +458,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(path.len > 1)
 		step_towards(src, path[1])
 		if(get_turf(src) == path[1]) //Successful move
-			path -= path[1]
+			path.Cut(1,2)
 			tries = 0
 		else
 			tries++
@@ -571,9 +580,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 		return
 
 	else if(path.len > 0 && patrol_target)		// valid path
-		var/turf/next = path[1]
-		if(next == loc)
-			path -= next
+		if(path[1] == loc)
+			path.Cut(1,2)
 			return
 
 
@@ -705,9 +713,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 		return
 
 	else if(path.len > 0 && summon_target)		//Proper path acquired!
-		var/turf/next = path[1]
-		if(next == loc)
-			path -= next
+		if(path[1] == loc)
+			path.Cut(1,2)
 			return
 
 		var/moved = bot_move(summon_target, 3)	// Move attempt
