@@ -19,15 +19,23 @@
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "x"
 	anchored = TRUE
+	var/jobspawn_override = FALSE
+	var/delete_after_roundstart = TRUE
 
 /obj/effect/landmark/start/New()
 	GLOB.start_landmarks_list += src
+	if(jobspawn_override)
+		if(!GLOB.jobspawn_overrides[name])
+			GLOB.jobspawn_overrides[name] = list()
+		GLOB.jobspawn_overrides[name] += src
 	..()
 	if(name != "start")
 		tag = "start*[name]"
 
 /obj/effect/landmark/start/Destroy()
 	GLOB.start_landmarks_list -= src
+	if(jobspawn_override)
+		GLOB.jobspawn_overrides[name] -= src
 	return ..()
 
 // START LANDMARKS FOLLOW. Don't change the names unless
@@ -35,6 +43,10 @@
 
 /obj/effect/landmark/start/assistant
 	name = "Assistant"
+
+/obj/effect/landmark/start/assistant/override
+	jobspawn_override = TRUE
+	delete_after_roundstart = FALSE
 
 /obj/effect/landmark/start/janitor
 	name = "Janitor"
@@ -74,6 +86,7 @@
 
 /obj/effect/landmark/start/ai
 	name = "AI"
+	delete_after_roundstart = FALSE
 
 /obj/effect/landmark/start/captain
 	name = "Captain"
