@@ -73,7 +73,9 @@
 				return power * nearspace_penalty
 
 /datum/symptom/heal/toxin/Heal(mob/living/M, datum/disease/advance/A, actual_power)
-	var/heal_amt = 1 * actual_power
+	var/heal_amt = actual_power
+	if(M.getToxLoss() && prob(5))
+		to_chat(M, "<span class='notice'>Your skin tingles as the starlight purges toxins from your bloodstream.</span>")
 	M.adjustToxLoss(-heal_amt)
 	return 1
 
@@ -104,6 +106,8 @@
 		M.reagents.remove_reagent(R.id, actual_power)
 		if(food_conversion)
 			M.nutrition += 0.3
+		if(prob(2))
+			to_chat(M, "<span class='notice'>You feel a mild warmth as your blood purifies itself.</span>")
 	return 1
 
 
@@ -139,6 +143,8 @@
 	C.overeatduration = max(C.overeatduration - 2, 0)
 	var/lost_nutrition = 9 - (reduced_hunger * 5)
 	C.nutrition = max(C.nutrition - (lost_nutrition * HUNGER_FACTOR), 0) //Hunger depletes at 10x the normal speed
+	if(prob(2))
+		to_chat(M, "<span class='notice'>You feel an odd gurgle in your stomach, as if it was working much faster than normal.</span>")
 	return 1
 
 
@@ -183,6 +189,9 @@
 
 	if(!parts.len)
 		return
+
+	if(prob(5))
+		to_chat(M, "<span class='notice'>You feel your flesh moving beneath your heated skin, mending your wounds.</span>")
 
 	for(var/obj/item/bodypart/L in parts)
 		if(L.heal_damage(heal_amt/parts.len, 0))
@@ -303,6 +312,9 @@
 	if(!parts.len)
 		return
 
+	if(prob(5))
+		to_chat(M, "<span class='notice'>You feel yourself absorbing the water around you to soothe your burned skin.</span>")
+
 	for(var/obj/item/bodypart/L in parts)
 		if(L.heal_damage(0, heal_amt/parts.len))
 			M.update_damage_overlays()
@@ -352,13 +364,22 @@
 
 	var/list/parts = M.get_damaged_bodyparts(0,1) //burn only
 
+	if(prob(5))
+		to_chat(M, "<span class='notice'>You feel yourself absorbing plasma inside and around you.</span>")
+
 	if(M.bodytemperature > 310)
 		M.bodytemperature = max(310, M.bodytemperature - (20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT))
+		if(prob(5))
+			to_chat(M, "<span class='notice'>You feel less hot.</span>")
 	else if(M.bodytemperature < 311)
 		M.bodytemperature = min(310, M.bodytemperature + (20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT))
+		if(prob(5))
+			to_chat(M, "<span class='notice'>You feel warmer.</span>")
 
 	if(!parts.len)
 		return
+	if(prob(5))
+		to_chat(M, "<span class='notice'>The pain from your burns fades.</span>")
 
 	for(var/obj/item/bodypart/L in parts)
 		if(L.heal_damage(0, heal_amt/parts.len))
@@ -406,7 +427,7 @@
 			return 1.5
 
 /datum/symptom/heal/radiation/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
-	var/heal_amt = 1 * actual_power
+	var/heal_amt = actual_power
 
 	if(cellular_damage)
 		M.adjustCloneLoss(-heal_amt * 0.5)
@@ -415,6 +436,9 @@
 
 	if(!parts.len)
 		return
+
+	if(prob(4))
+		to_chat(M, "<span class='notice'>Your skin glows faintly, and you feel your wounds mending themselves.</span>")
 
 	for(var/obj/item/bodypart/L in parts)
 		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len))
