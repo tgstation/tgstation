@@ -1,0 +1,4 @@
+author: "zennerx"
+delete-after: True
+changes: 
+  - bugfix: "Zombies don't reanimate with no head!"
