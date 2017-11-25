@@ -406,4 +406,20 @@
 		return G.temperature
 	return ..()
 
+/obj/machinery/atmospherics/components/unary/cryo_cell/default_change_direction_wrench(mob/user, obj/item/wrench/W)
+	. = ..()
+	if(.)
+		SetInitDirections()
+		var/obj/machinery/atmospherics/node = NODE1
+		if(node)
+			node.disconnect(src)
+			NODE1 = null
+		nullifyPipenet(PARENT1)
+		atmosinit()
+		node = NODE1
+		if(node)
+			node.atmosinit()
+			node.addMember(src)
+		build_network()
+
 #undef CRYOMOBS
