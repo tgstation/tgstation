@@ -140,12 +140,6 @@
 	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop
 	category = "Defensive"
 
-/datum/spellbook_entry/linkworlds
-	name = "Link Worlds"
-	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/linkWorlds
-	cost = 3
-	category = "Defensive"
-
 /datum/spellbook_entry/smoke
 	name = "Smoke"
 	spell_type = /obj/effect/proc_holder/spell/targeted/smoke
