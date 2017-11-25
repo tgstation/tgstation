@@ -1205,11 +1205,12 @@
 				href_list["datumrefresh"] = href_list["mobToDamage"]
 
 		else if(href_list["curse"])
-			if(!check_rights(R_SPAWN))
+			if(!check_rights(0))
 				return
-			var/obj/item/C = locate(href_list["curse"])
-			if(istype(C.loc, /mob))
-				to_chat(usr,"Can't curse items on or inside mobs")
+			var/obj/item/I = locate(href_list["curse"])
+			var/C = input("Select a type", "Pick Type") as null|anything in subtypesof(/datum/curse)
+			if(!C)
 				return
-			new /obj/item/cursed_necro(C.drop_location(),C)
-			log_admin("[key_name(usr)] cursed [C] with the necropolis curse")
+			var/datum/curse/AC = new C()
+			I.apply_curse(AC)
+			log_admin("[key_name(usr)] cursed [I] with the [AC.curse_name]")
