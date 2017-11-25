@@ -215,7 +215,7 @@
 	set background = BACKGROUND_ENABLED
 	diag_hud_set_botmode()
 
-	if (ignorelistcleanuptimer % 300 = 0) // Every 300 actions, clean up the ignore list from old junk
+	if (ignorelistcleanuptimer % 300 == 0) // Every 300 actions, clean up the ignore list from old junk
 		for(var/ref in ignore_list)
 			var/atom/referredatom = locate(ref)
 			if (!referredatom || !istype(referredatom) || QDELETED(referredatom))
