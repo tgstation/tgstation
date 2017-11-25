@@ -25332,6 +25332,14 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
+"bfu" = (
+/obj/machinery/atmospherics/components/trinary/filter{
+	dir = 4;
+	filter_type = "n2";
+	on = 1
+	},
+/turf/open/floor/plasteel,
+/area/engine/atmos)
 
 (1,1,1) = {"
 aaa
@@ -63518,7 +63526,7 @@ aVO
 aWk
 aWG
 aSz
-aXK
+bfu
 aYs
 aYY
 aZv
