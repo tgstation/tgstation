@@ -1,7 +1,7 @@
 /obj/item/twohanded/singularityhammer
 	name = "singularity hammer"
 	desc = "The pinnacle of close combat technology, the hammer harnesses the power of a miniaturized singularity to deal crushing blows."
-	icon_state = "mjollnir0"
+	icon_state = "shammer0"
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -31,7 +31,7 @@
 	return
 
 /obj/item/twohanded/singularityhammer/update_icon()  //Currently only here to fuck with the on-mob icons.
-	icon_state = "mjollnir[wielded]"
+	icon_state = "shammer[wielded]"
 	return
 
 /obj/item/twohanded/singularityhammer/proc/vortex(turf/pull, mob/wielder)
