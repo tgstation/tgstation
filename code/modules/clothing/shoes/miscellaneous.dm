@@ -22,7 +22,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	armor = list(melee = 25, bullet = 25, laser = 25, energy = 25, bomb = 50, bio = 10, rad = 0, fire = 70, acid = 50)
 	strip_delay = 70
-	resistance_flags = 0
+	resistance_flags = NONE
 	permeability_coefficient = 0.05 //Thick soles, and covers the ankle
 	pockets = /obj/item/storage/internal/pocket/shoes
 
@@ -61,7 +61,7 @@
 	slowdown = SHOES_SLOWDOWN+1
 	strip_delay = 50
 	equip_delay_other = 50
-	resistance_flags = 0
+	resistance_flags = NONE
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 40, acid = 75)
 
 /obj/item/clothing/shoes/galoshes/dry
@@ -103,7 +103,7 @@
 	item_color = "hosred"
 	strip_delay = 50
 	equip_delay_other = 50
-	resistance_flags = 0
+	resistance_flags = NONE
 	permeability_coefficient = 0.05 //Thick soles, and covers the ankle
 	pockets = /obj/item/storage/internal/pocket/shoes
 

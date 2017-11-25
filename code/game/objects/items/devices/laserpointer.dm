@@ -95,7 +95,7 @@
 			else if(prob(50))
 				severity = 0
 
-			//20% chance to actually hit the eyes
+			//chance to actually hit the eyes depends on internal component
 			if(prob(effectchance * diode.rating) && C.flash_act(severity))
 				outmsg = "<span class='notice'>You blind [C] by shining [src] in their eyes.</span>"
 			else
@@ -104,13 +104,13 @@
 	//robots
 	else if(iscyborg(target))
 		var/mob/living/silicon/S = target
-		//20% chance to actually hit the sensors
+		add_logs(user, S, "shone in the sensors", src)
+		//chance to actually hit the eyes depends on internal component
 		if(prob(effectchance * diode.rating))
 			S.flash_act(affect_silicon = 1)
 			S.Knockdown(rand(100,200))
 			to_chat(S, "<span class='danger'>Your sensors were overloaded by a laser!</span>")
 			outmsg = "<span class='notice'>You overload [S] by shining [src] at their sensors.</span>"
-			add_logs(user, S, "shone in the sensors", src)
 		else
 			outmsg = "<span class='warning'>You fail to overload [S] by shining [src] at their sensors!</span>"
 
@@ -126,12 +126,28 @@
 
 	//catpeople
 	for(var/mob/living/carbon/human/H in view(1,targloc))
-		if(ishumanbasic(H) && (H.getorgan(/obj/item/organ/tail/cat) || H.getorgan(/obj/item/organ/ears/cat) || H.dna.features["ears"] == "Cat" || H.dna.features["human_tail"] == "Cat"))
-			if(!H.incapacitated() && !H.lying)
-				H.visible_message("<span class='warning'>[H] pounces on the light!</span>","<span class='userdanger'>LIGHT!</span>")
-				H.Knockdown(10)
+		if(!iscatperson(H) || H.incapacitated() || H.eye_blind )
+			continue
+		if(!H.lying)
+			H.setDir(get_dir(H,targloc)) // kitty always looks at the light
+			if(prob(effectchance))
+				H.visible_message("<span class='warning'>[H] makes a grab for the light!</span>","<span class='userdanger'>LIGHT!</span>")
 				H.Move(targloc)
-				H.setDir(NORTH) //Facedown looks best imo
+				add_logs(user, H, "moved with a laser pointer",src)
+			else
+				H.visible_message("<span class='notice'>[H] looks briefly distracted by the light.</span>","<span class = 'warning'> You're briefly tempted by the shiny light... </span>")
+		else
+			H.visible_message("<span class='notice'>[H] stares at the light</span>","<span class = 'warning'> You stare at the light... </span>")
+
+	//cats!
+	for(var/mob/living/simple_animal/pet/cat/C in view(1,targloc))
+		if(prob(50))
+			C.visible_message("<span class='notice'>[C] pounces on the light!</span>","<span class='warning'>LIGHT!</span>")
+			C.Move(targloc)
+			C.resting = TRUE
+			C.update_canmove()
+		else
+			C.visible_message("<span class='notice'>[C] looks uninterested in your games.</span>","<span class='warning'>You spot [user] shining [src] at you. How insulting!</span>")
 
 	//laser pointer image
 	icon_state = "pointer_[pointer_icon_state]"

@@ -183,3 +183,9 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			if(L.stat != DEAD)
 				return 1
 	return 0
+
+/obj/effect/extraction_holder/singularity_pull()
+	return
+
+/obj/effect/extraction_holder/singularity_pull()
+	return

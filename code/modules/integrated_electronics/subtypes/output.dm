@@ -306,16 +306,14 @@
 	set_pin_data(IC_INPUT, 1, FALSE)
 
 /obj/item/integrated_circuit/output/led/external_examine(mob/user)
-	var/text_output = list()
+	var/text_output = "There is "
 
-	// Doing all this work just to have a color-blind friendly output.
-	text_output += "There is "
-	if(name == displayed_name )
+	if(name == displayed_name)
 		text_output += "\an [name]"
 	else
-		text_output += "\an ["\improper[name]"] labeled '[displayed_name ]'"
-	text_output += " which is currently [(get_pin_data(IC_INPUT, 1)==1) ? "lit <font color=[led_color]>*</font>" : "unlit."]"
-	to_chat(user,jointext(text_output,null))
+		text_output += "\an ["\improper[name]"] labeled '[displayed_name]'"
+	text_output += " which is currently [get_pin_data(IC_INPUT, 1) ? "lit <font color=[led_color]>*</font>" : "unlit"]."
+	to_chat(user, text_output)
 
 /obj/item/integrated_circuit/output/led/red
 	name = "red LED"

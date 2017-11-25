@@ -170,7 +170,7 @@
 				. = TRUE
 		if("eject")
 			if(beaker)
-				beaker.forceMove(loc)
+				beaker.forceMove(drop_location())
 				beaker = null
 				cut_overlays()
 				. = TRUE
@@ -301,7 +301,7 @@
 
 /obj/machinery/chem_dispenser/constructable/on_deconstruction()
 	if(beaker)
-		beaker.loc = loc
+		beaker.forceMove(drop_location())
 		beaker = null
 
 /obj/machinery/chem_dispenser/drinks
