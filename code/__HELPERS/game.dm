@@ -224,7 +224,6 @@
 		processing_list += T.contents // We can shave off one iteration by assuming turfs cannot hear
 	else  // A variation of get_hear inlined here to take advantage of the compiler's fastpath for obj/mob in view
 		var/lum = T.luminosity
-		processing_list = list()
 		T.luminosity = 6 // This is the maximum luminosity
 		for(var/mob/M in view(R, T))
 			processing_list += M
