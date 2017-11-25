@@ -111,18 +111,6 @@
 /turf/open/floor/plasteel,
 /area/shuttle/mining)
 "v" = (
-/obj/structure/closet/crate,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/shuttle/mining)
-"w" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -141,7 +129,7 @@
 /obj/item/storage/belt/security/full,
 /turf/open/floor/plasteel,
 /area/shuttle/mining)
-"x" = (
+"w" = (
 /obj/structure/closet/crate{
 	name = "research kit"
 	},
@@ -157,14 +145,13 @@
 /obj/item/circuitboard/machine/destructive_analyzer,
 /turf/open/floor/plasteel,
 /area/shuttle/mining)
-"y" = (
+"x" = (
 /obj/structure/window/reinforced{
 	dir = 1;
 	layer = 2.9
 	},
 /obj/structure/window/reinforced,
 /obj/item/stock_parts/manipulator,
-/obj/item/stock_parts/console_screen,
 /obj/item/stock_parts/matter_bin,
 /obj/item/stock_parts/matter_bin,
 /obj/item/stock_parts/matter_bin,
@@ -178,7 +165,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/shuttle/mining)
-"z" = (
+"y" = (
 /obj/docking_port/mobile/crashland{
 	dheight = 2;
 	dir = 8;
@@ -192,7 +179,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/shuttle/mining)
-"A" = (
+"z" = (
 /obj/machinery/door/airlock/external{
 	glass = 1;
 	name = "Mining Shuttle Airlock";
@@ -201,19 +188,19 @@
 	},
 /turf/open/floor/plasteel,
 /area/space)
-"B" = (
+"A" = (
 /turf/open/floor/plasteel,
 /area/space)
-"C" = (
+"B" = (
 /obj/machinery/sleeper/crashland,
 /turf/open/floor/plasteel,
 /area/shuttle/mining)
-"D" = (
+"C" = (
 /obj/item/stack/cable_coil/random/five,
 /obj/structure/table,
 /turf/open/floor/plasteel,
 /area/shuttle/mining)
-"E" = (
+"D" = (
 /obj/machinery/light/small{
 	brightness = 3;
 	dir = 8
@@ -221,19 +208,19 @@
 /obj/machinery/suit_storage_unit/engine,
 /turf/open/floor/plasteel,
 /area/shuttle/mining)
-"F" = (
+"E" = (
 /obj/structure/closet/secure_closet/miner,
 /turf/open/floor/plasteel,
 /area/shuttle/mining)
-"G" = (
+"F" = (
 /obj/machinery/suit_storage_unit/mining,
 /turf/open/floor/plasteel,
 /area/shuttle/mining)
-"H" = (
+"G" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/plasteel,
 /area/shuttle/mining)
-"I" = (
+"H" = (
 /obj/machinery/light/small{
 	dir = 4;
 	light_color = "#fff4bc"
@@ -241,44 +228,44 @@
 /obj/structure/closet/secure_closet/quartermaster,
 /turf/open/floor/plasteel,
 /area/shuttle/mining)
-"J" = (
-/turf/open/floor/plasteel/black/telecomms,
+"I" = (
+/turf/open/floor/plasteel/dark/telecomms,
 /area/tcommsat/server)
-"K" = (
+"J" = (
 /obj/machinery/ntnet_relay,
 /turf/open/floor/circuit/green/telecomms,
 /area/tcommsat/server)
-"L" = (
+"K" = (
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/black/telecomms,
+/turf/open/floor/plasteel/dark/telecomms,
 /area/tcommsat/server)
-"M" = (
+"L" = (
 /obj/machinery/telecomms/broadcaster/preset_left/birdstation,
 /turf/open/floor/circuit/green/telecomms,
 /area/tcommsat/server)
-"N" = (
+"M" = (
 /obj/machinery/telecomms/bus/preset_one/birdstation,
 /turf/open/floor/circuit/green/telecomms,
 /area/tcommsat/server)
-"O" = (
+"N" = (
 /obj/machinery/announcement_system,
 /turf/open/floor/circuit/green/telecomms,
 /area/tcommsat/server)
-"P" = (
+"O" = (
 /obj/machinery/telecomms/server/presets/common/birdstation,
 /turf/open/floor/circuit/green/telecomms,
 /area/tcommsat/server)
-"Q" = (
+"P" = (
 /obj/machinery/telecomms/processor/preset_one/birdstation,
 /turf/open/floor/circuit/green/telecomms,
 /area/tcommsat/server)
-"R" = (
+"Q" = (
 /obj/machinery/telecomms/receiver/preset_left/birdstation,
 /turf/open/floor/circuit/green/telecomms,
 /area/tcommsat/server)
-"S" = (
+"R" = (
 /obj/structure/closet/secure_closet/engineering_electrical,
 /turf/open/floor/plasteel,
 /area/shuttle/mining)
@@ -774,9 +761,9 @@ g
 o
 r
 t
-C
+B
 o
-E
+D
 e
 a
 a
@@ -816,9 +803,9 @@ h
 o
 r
 t
-C
+B
 o
-S
+R
 f
 a
 a
@@ -841,10 +828,10 @@ a
 a
 b
 b
-J
-M
-O
-Q
+I
+L
+N
+P
 b
 b
 a
@@ -858,9 +845,9 @@ i
 o
 r
 u
-C
+B
 o
-G
+F
 f
 a
 a
@@ -883,10 +870,10 @@ a
 a
 b
 b
-J
-J
-J
-J
+I
+I
+I
+I
 b
 b
 a
@@ -900,9 +887,9 @@ j
 o
 r
 e
-C
+B
 o
-F
+E
 f
 a
 a
@@ -925,10 +912,10 @@ a
 a
 b
 b
-K
+J
 c
 d
-J
+I
 b
 b
 a
@@ -941,10 +928,10 @@ f
 k
 o
 r
-w
-C
+v
+B
 o
-G
+F
 f
 a
 a
@@ -967,10 +954,10 @@ a
 a
 b
 b
-J
-J
-J
-J
+I
+I
+I
+I
 b
 b
 a
@@ -983,10 +970,10 @@ f
 l
 o
 r
-x
-C
+w
+B
 o
-F
+E
 f
 a
 a
@@ -1009,10 +996,10 @@ a
 a
 b
 b
-L
-N
-P
-R
+K
+M
+O
+Q
 b
 b
 a
@@ -1025,10 +1012,10 @@ f
 m
 o
 r
-y
-C
+x
+B
 o
-H
+G
 f
 a
 a
@@ -1067,10 +1054,10 @@ e
 n
 o
 o
-z
+y
 o
 o
-I
+H
 e
 a
 a
@@ -1109,9 +1096,9 @@ e
 e
 p
 q
-A
+z
 q
-D
+C
 e
 e
 a
@@ -1151,7 +1138,7 @@ a
 e
 e
 q
-B
+A
 q
 e
 e
@@ -1193,7 +1180,7 @@ a
 a
 q
 q
-A
+z
 q
 q
 a
