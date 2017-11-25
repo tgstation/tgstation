@@ -407,7 +407,7 @@ MASS SPECTROMETER
 	..()
 	create_reagents(5)
 
-/obj/item/device/mass_spectrometer/on_reagent_change()
+/obj/item/device/mass_spectrometer/on_reagent_change(changetype)
 	if(reagents.total_volume)
 		icon_state = initial(icon_state) + "_s"
 	else

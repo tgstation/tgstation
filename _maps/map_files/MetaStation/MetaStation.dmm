@@ -50306,7 +50306,7 @@
 /area/science/research)
 "caA" = (
 /obj/structure/table,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
 /obj/item/electronics/airlock,
 /obj/item/device/assembly/timer{
 	pixel_x = -4;
@@ -52898,7 +52898,7 @@
 "cfC" = (
 /obj/item/trash/pistachios,
 /obj/structure/closet,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
 /obj/item/extinguisher,
 /obj/item/storage/belt/utility,
 /turf/open/floor/plating,
@@ -56880,9 +56880,9 @@
 /area/science/lab)
 "cnW" = (
 /obj/structure/table,
-/obj/item/stock_parts/console_screen,
-/obj/item/stock_parts/console_screen,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
 /obj/item/stock_parts/cell/high{
 	charge = 100;
 	maxcharge = 15000

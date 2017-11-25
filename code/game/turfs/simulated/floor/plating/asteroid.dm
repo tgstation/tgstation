@@ -191,7 +191,7 @@
 			break
 
 		var/list/L = list(45)
-		if(ISODD(dir2angle(dir))) // We're going at an angle and we want thick angled tunnels.
+		if(IsOdd(dir2angle(dir))) // We're going at an angle and we want thick angled tunnels.
 			L += -45
 
 		// Expand the edges of our tunnel

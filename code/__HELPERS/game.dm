@@ -225,7 +225,8 @@
 	else  // A variation of get_hear inlined here to take advantage of the compiler's fastpath for obj/mob in view
 		var/lum = T.luminosity
 		T.luminosity = 6 // This is the maximum luminosity
-		processing_list = viewers(R, T)
+		for(var/mob/M in view(R, T))
+			processing_list += M
 		for(var/obj/O in view(R, T))
 			processing_list += O
 		T.luminosity = lum

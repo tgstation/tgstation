@@ -168,7 +168,7 @@
 
 /obj/item/projectile/proc/vol_by_damage()
 	if(src.damage)
-		return CLAMP((src.damage) * 0.67, 30, 100)// Multiply projectile damage by 0.67, then clamp the value between 30 and 100
+		return Clamp((src.damage) * 0.67, 30, 100)// Multiply projectile damage by 0.67, then clamp the value between 30 and 100
 	else
 		return 50 //if the projectile doesn't do damage, play its hitsound at 50% volume
 
@@ -187,7 +187,7 @@
 	def_zone = ran_zone(def_zone, max(100-(7*distance), 5)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
 
 	if(isturf(A) && hitsound_wall)
-		var/volume = CLAMP(vol_by_damage() + 20, 0, 100)
+		var/volume = Clamp(vol_by_damage() + 20, 0, 100)
 		if(suppressed)
 			volume = 5
 		playsound(loc, hitsound_wall, volume, 1, -1)
@@ -258,7 +258,7 @@
 		return
 	var/elapsed_time_deciseconds = (world.time - last_projectile_move) + time_offset
 	time_offset = 0
-	var/required_moves = speed > 0? FLOOR(elapsed_time_deciseconds / speed, 1) : MOVES_HITSCAN			//Would be better if a 0 speed made hitscan but everyone hates those so I can't make it a universal system :<
+	var/required_moves = speed > 0? Floor(elapsed_time_deciseconds / speed) : MOVES_HITSCAN			//Would be better if a 0 speed made hitscan but everyone hates those so I can't make it a universal system :<
 	if(required_moves == MOVES_HITSCAN)
 		required_moves = SSprojectiles.global_max_tick_moves
 	else
@@ -266,7 +266,7 @@
 			var/overrun = required_moves - SSprojectiles.global_max_tick_moves
 			required_moves = SSprojectiles.global_max_tick_moves
 			time_offset += overrun * speed
-		time_offset += MODULUS(elapsed_time_deciseconds, speed)
+		time_offset += Modulus(elapsed_time_deciseconds, speed)
 
 	for(var/i in 1 to required_moves)
 		pixel_move(required_moves)
@@ -286,7 +286,7 @@
 		setAngle(Angle + ((rand() - 0.5) * spread))
 	if(isnull(Angle))	//Try to resolve through offsets if there's no angle set.
 		var/turf/starting = get_turf(src)
-		var/turf/target = locate(CLAMP(starting + xo, 1, world.maxx), CLAMP(starting + yo, 1, world.maxy), starting.z)
+		var/turf/target = locate(Clamp(starting + xo, 1, world.maxx), Clamp(starting + yo, 1, world.maxy), starting.z)
 		setAngle(Get_Angle(src, target))
 	if(!nondirectional_sprite)
 		var/matrix/M = new
@@ -397,9 +397,9 @@
 		//Calculate the "resolution" of screen based on client's view and world's icon size. This will work if the user can view more tiles than average.
 		var/screenview = (user.client.view * 2 + 1) * world.icon_size //Refer to http://www.byond.com/docs/ref/info.html#/client/var/view for mad maths
 
-		var/ox = x - (round(screenview/2) - user.client.pixel_x) //"origin" x
-		var/oy = y - (round(screenview/2) - user.client.pixel_y) //"origin" y
-		angle = ATAN2(oy, ox)
+		var/ox = round(screenview/2) - user.client.pixel_x //"origin" x
+		var/oy = round(screenview/2) - user.client.pixel_y //"origin" y
+		angle = Atan2(y - oy, x - ox)
 	return list(angle, p_x, p_y)
 
 /obj/item/projectile/Crossed(atom/movable/AM) //A mob moving on a tile with a projectile is hit by it.

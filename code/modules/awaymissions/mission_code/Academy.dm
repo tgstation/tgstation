@@ -230,7 +230,7 @@
 			user.throw_at(throw_target, 200, 4)
 		if(8)
 			//Fueltank Explosion
-			explosion(src.loc,-1,0,2, flame_range = 2)
+			explosion(loc,-1,0,2, flame_range = 2)
 		if(9)
 			//Cold
 			var/datum/disease/D = new /datum/disease/cold
@@ -240,7 +240,7 @@
 			visible_message("<span class='notice'>[src] roll perfectly.</span>")
 		if(11)
 			//Cookie
-			var/obj/item/reagent_containers/food/snacks/cookie/C = new(get_turf(src))
+			var/obj/item/reagent_containers/food/snacks/cookie/C = new(drop_location())
 			C.name = "Cookie of Fate"
 		if(12)
 			//Healing
@@ -258,13 +258,13 @@
 						new /obj/item/coin/gold(M)
 		if(14)
 			//Free Gun
-			new /obj/item/gun/ballistic/revolver/mateba(get_turf(src))
+			new /obj/item/gun/ballistic/revolver/mateba(drop_location())
 		if(15)
 			//Random One-use spellbook
-			new /obj/item/spellbook/oneuse/random(get_turf(src))
+			new /obj/item/spellbook/oneuse/random(drop_location())
 		if(16)
 			//Servant & Servant Summon
-			var/mob/living/carbon/human/H = new(get_turf(src))
+			var/mob/living/carbon/human/H = new(drop_location())
 			H.equipOutfit(/datum/outfit/butler)
 			var/datum/mind/servant_mind = new /datum/mind()
 			var/datum/objective/O = new("Serve [user.real_name].")
@@ -285,10 +285,10 @@
 
 		if(17)
 			//Tator Kit
-			new /obj/item/storage/box/syndicate/(get_turf(src))
+			new /obj/item/storage/box/syndicate(drop_location())
 		if(18)
 			//Captain ID
-			new /obj/item/card/id/captains_spare(get_turf(src))
+			new /obj/item/card/id/captains_spare(drop_location())
 		if(19)
 			//Instrinct Resistance
 			to_chat(user, "<span class='notice'>You feel robust.</span>")

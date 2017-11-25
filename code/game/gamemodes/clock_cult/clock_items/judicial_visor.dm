@@ -162,6 +162,12 @@
 	user = caster
 	INVOKE_ASYNC(src, .proc/judicialblast)
 
+/obj/effect/clockwork/judicial_marker/singularity_act()
+	return
+
+/obj/effect/clockwork/judicial_marker/singularity_pull()
+	return
+
 /obj/effect/clockwork/judicial_marker/proc/judicialblast()
 	playsound(src, 'sound/magic/magic_missile.ogg', 50, 1, 1, 1)
 	flick("judicial_marker", src)

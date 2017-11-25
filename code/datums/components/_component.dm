@@ -14,7 +14,7 @@
 	if(!isnum(dupe_mode))
 		qdel(src)
 		CRASH("[type]: Invalid dupe_mode!")
-	if(!ispath(dupe_type))
+	if(dupe_type && !ispath(dupe_type))
 		qdel(src)
 		CRASH("[type]: Invalid dupe_type!")
 
