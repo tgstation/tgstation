@@ -76,7 +76,7 @@
 	item = /obj/item/paper
 	cost = 200
 
-/datum/uplink_item/nukeoffer/blastco/spawn_item(turf/loc, obj/item/device/uplink/U)
+/datum/uplink_item/nukeoffer/blastco/spawn_item(turf/loc, datum/component/uplink/U, mob/user)
 	LAZYINITLIST(blastco_doors)
 	if(LAZYLEN(blastco_doors))
 		for(var/V in blastco_doors)

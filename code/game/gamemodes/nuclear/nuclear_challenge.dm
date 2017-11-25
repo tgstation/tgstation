@@ -54,7 +54,7 @@
 		var/obj/item/circuitboard/computer/syndicate_shuttle/board = V
 		board.challenge = TRUE
 
-	new /obj/item/device/radio/uplink/nuclear(get_turf(user), user.key, CHALLENGE_TELECRYSTALS)
+	new /obj/item/device/radio/uplink/nuclear(get_turf(user), user.key, GLOB.player_list.len * 6) // hippie-code: Changed this to scale better
 	CONFIG_SET(number/shuttle_refuel_delay, max(CONFIG_GET(number/shuttle_refuel_delay), CHALLENGE_SHUTTLE_DELAY))
 	SSblackbox.record_feedback("amount", "nuclear_challenge_mode", 1)
 
