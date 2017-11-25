@@ -216,8 +216,8 @@
 /obj/item/integrated_circuit/output/text_to_speech/do_work()
 	text = get_pin_data(IC_INPUT, 1)
 	if(!isnull(text))
-		var/obj/O = assembly ? loc : assembly
-		O.say(sanitize(text))
+		var/atom/movable/A = get_object()
+		A.say(sanitize(text))
 
 
 /obj/item/integrated_circuit/output/video_camera

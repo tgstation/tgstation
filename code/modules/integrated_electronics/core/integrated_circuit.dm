@@ -323,4 +323,10 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	return
 
 
-
+// Returns the object that is supposed to be used in attack messages, location checks, etc.
+/obj/item/integrated_circuit/proc/get_object()
+	// If the component is located in an assembly, let assembly determine it.
+	if(assembly)
+		return assembly.get_object()
+	else
+		return src	// If not, the component is acting on its own.
