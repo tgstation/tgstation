@@ -51,21 +51,18 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/item_color = null //this needs deprecating, soonish
 
 	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
-	//var/heat_transfer_coefficient = 1 //0 prevents all transfers, 1 is invisible
 	var/gas_transfer_coefficient = 1 // for leaking gas from turf to mask and vice-versa (for masks right now, but at some point, i'd like to include space helmets)
 	var/permeability_coefficient = 1 // for chemicals/diseases
 	var/siemens_coefficient = 1 // for electrical admittance/conductance (electrocution checks and shit)
 	var/slowdown = 0 // How much clothing is slowing you down. Negative values speeds you up
 	var/armour_penetration = 0 //percentage of armour effectiveness to remove
 	var/list/allowed = null //suit storage stuff.
-	var/obj/item/device/uplink/hidden_uplink = null
 	var/equip_delay_self = 0 //In deciseconds, how long an item takes to equip; counts only for normal clothing slots, not pockets etc.
 	var/equip_delay_other = 20 //In deciseconds, how long an item takes to put on another person
 	var/strip_delay = 40 //In deciseconds, how long an item takes to remove from another person
 	var/breakouttime = 0
 	var/being_removed = FALSE
 	var/list/materials
-	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
 	var/needs_permit = 0			//Used by security bots to determine if this item is safe for public use.
 	var/emagged = FALSE
 
@@ -197,35 +194,39 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/size = weightclass2text(src.w_class)
 	to_chat(user, "[pronoun] a [size] item." )
 
-	if(user.research_scanner) //Mob has a research scanner active.
-		var/msg = "*--------* <BR>"
+	if(!user.research_scanner)
+		return
+	var/list/input = techweb_item_boost_check(src)
+	if(input)
+		var/list/output = list("<b><font color='purple'>Research Boost Data:</font></b>")
+		var/list/res = list("<b><font color='blue'>Already researched:</font></b>")
+		var/list/boosted = list("<b><font color='red'>Already boosted:</font></b>")
+		for(var/datum/techweb_node/N in input)
+			var/str = "<b>[N.display_name]</b>: [input[N]] points.</b>"
+			if(SSresearch.science_tech.researched_nodes[N])
+				res += str
+			else if(SSresearch.science_tech.boosted_nodes[N])
+				boosted += str
+			if(SSresearch.science_tech.visible_nodes[N])	//JOY OF DISCOVERY!
+				output += str
+		var/list/combine = output + res + boosted
+		var/strout = combine.Join("<br>")
+		to_chat(user, strout)
 
-		if(origin_tech)
-			msg += "<span class='notice'>Testing potentials:</span><BR>"
-			var/list/techlvls = params2list(origin_tech)
-			for(var/T in techlvls) //This needs to use the better names.
-				msg += "Tech: [CallTechName(T)] | magnitude: [techlvls[T]] <BR>"
-		else
-			msg += "<span class='danger'>No tech origins detected.</span><BR>"
+	var/list/msg = list("<span class='notice'>*--------*<BR>Extractable materials:")
+	if(materials.len)
+		for(var/mat in materials)
+			msg += "[CallMaterialName(mat)]" //Capitize first word, remove the "$"
+	else
+		msg += "<span class='danger'>No extractable materials detected.</span>"
+	msg += "*--------*"
+	to_chat(user, msg.Join("<br>"))
 
-
-		if(materials.len)
-			msg += "<span class='notice'>Extractable materials:<BR>"
-			for(var/mat in materials)
-				msg += "[CallMaterialName(mat)]<BR>" //Capitize first word, remove the "$"
-		else
-			msg += "<span class='danger'>No extractable materials detected.</span><BR>"
-		msg += "*--------*"
-		to_chat(user, msg)
-
-/obj/item/proc/speechModification(message)		//For speech modification by mask slot items.
+/obj/item/proc/speechModification(message)			//for message modding by mask slot.
 	return message
 
 /obj/item/interact(mob/user)
 	add_fingerprint(user)
-	if(hidden_uplink && hidden_uplink.active)
-		hidden_uplink.interact(user)
-		return 1
 	ui_interact(user)
 
 /obj/item/ui_act(action, params)
@@ -377,6 +378,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	progress.update(progress.goal - things.len)
 	return FALSE
+
+/obj/item/proc/GetDeconstructableContents()
+	return GetAllContents() - src
 
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 

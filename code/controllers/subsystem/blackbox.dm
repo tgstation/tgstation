@@ -9,7 +9,8 @@ SUBSYSTEM_DEF(blackbox)
 	var/triggertime = 0
 	var/sealed = FALSE	//time to stop tracking stats?
 	var/list/research_levels = list() //list of highest tech levels attained that isn't lost lost by destruction of RD computers
-	var/list/versions = list() //associative list of any feedback variables that have had their format changed since creation and their current version, remember to update this
+	var/list/versions = list("time_dilation_current" = 2,
+							"science_techweb_unlock" = 2) //associative list of any feedback variables that have had their format changed since creation and their current version, remember to update this
 
 
 /datum/controller/subsystem/blackbox/Initialize()
@@ -154,6 +155,7 @@ feedback data can be recorded in 5 formats:
 	used to track the number of occurances of structured semi-relational values i.e. the results of arcade machines
 	similar to running total, but related values are nested in a multi-dimensional array built
 	the final element in the data list is used as the tracking key, all prior elements are used for nesting
+	all data list elements must be strings
 	further calls to the same key will:
 	 	add or subtract from the saved value of the data key if it already exists in the same multi-dimensional position
 		append the key and it's value if it doesn't exist

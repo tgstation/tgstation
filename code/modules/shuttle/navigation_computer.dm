@@ -8,7 +8,6 @@
 	var/shuttlePortId = ""
 	var/shuttlePortName = ""
 	var/list/jumpto_ports = list() //hashset of ports to jump to and ignore for collision purposes
-	var/list/blacklisted_turfs //turfs we cannot go on, by default, any turf covered by a docking port that we did not place and cannot jump to
 	var/obj/docking_port/stationary/my_port //the custom docking port placed by this console
 	var/obj/docking_port/mobile/shuttle_port //the mobile docking port of the connected shuttle
 	var/view_range = 7
@@ -56,7 +55,6 @@
 			I.pixel_x = x_off * 32
 			I.pixel_y = y_off * 32
 			the_eye.placement_images[I] = list(x_off, y_off)
-	generateBlacklistedTurfs()
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/give_eye_control(mob/user)
 	..()
@@ -110,54 +108,61 @@
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/rotateLandingSpot()
 	var/mob/camera/aiEye/remote/shuttle_docker/the_eye = eyeobj
+	var/list/image_cache = the_eye.placement_images
 	the_eye.dir = turn(the_eye.dir, -90)
-	for(var/V in the_eye.placement_images)
-		var/image/I = V
-		var/list/coords = the_eye.placement_images[V]
+	for(var/i in 1 to image_cache.len)
+		var/image/pic = image_cache[i]
+		var/list/coords = image_cache[pic]
 		var/Tmp = coords[1]
 		coords[1] = coords[2]
 		coords[2] = -Tmp
-
-		I.pixel_x = coords[1] * 32
-		I.pixel_y = coords[2] * 32
+		pic.pixel_x = coords[1] * 32
+		pic.pixel_y = coords[2] * 32
 	var/Tmp = x_offset
 	x_offset = y_offset
 	y_offset = -Tmp
 	checkLandingSpot()
-
-/obj/machinery/computer/camera_advanced/shuttle_docker/proc/checkLandingTurf(turf/T)
-	return T && (shuttle_port.shuttle_areas[T.loc] || (!blacklisted_turfs || !blacklisted_turfs[T]) && (!space_turfs_only || isspaceturf(T)) ) && (T.x > 1 && T.y > 1 && T.x < world.maxx && T.y < world.maxy)
-
-/obj/machinery/computer/camera_advanced/shuttle_docker/proc/generateBlacklistedTurfs()
-	blacklisted_turfs = list()
-	for(var/V in SSshuttle.stationary)
-		if(!V)
-			continue
-		var/obj/docking_port/stationary/S = V
-		if(z_lock.len && !(S.z in z_lock))
-			continue
-		if((S.id == shuttlePortId) || jumpto_ports[S.id])
-			continue
-		for(var/T in S.return_turfs())
-			blacklisted_turfs[T] = TRUE
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/checkLandingSpot()
 	var/mob/camera/aiEye/remote/shuttle_docker/the_eye = eyeobj
 	var/turf/eyeturf = get_turf(the_eye)
 	if(!eyeturf)
 		return
-	var/landing_spot_clear = TRUE
-	for(var/V in the_eye.placement_images)
-		var/image/I = V
+	var/list/bounds = shuttle_port.return_coords(the_eye.x - x_offset, the_eye.y - y_offset, the_eye.dir)
+	var/list/overlappers = SSshuttle.get_dock_overlap(bounds[1], bounds[2], bounds[3], bounds[4], the_eye.z)
+	. = TRUE
+	var/list/image_cache = the_eye.placement_images
+	for(var/i in 1 to image_cache.len)
+		var/image/I = image_cache[i]
 		I.loc = eyeturf
-		var/list/coords = the_eye.placement_images[V]
+		var/list/coords = image_cache[I]
 		var/turf/T = locate(eyeturf.x + coords[1], eyeturf.y + coords[2], eyeturf.z)
-		if(checkLandingTurf(T))
+		if(checkLandingTurf(T, overlappers))
 			I.icon_state = "green"
 		else
 			I.icon_state = "red"
-			landing_spot_clear = FALSE
-	return landing_spot_clear
+			. = FALSE
+
+/obj/machinery/computer/camera_advanced/shuttle_docker/proc/checkLandingTurf(turf/T, list/overlappers) 
+	// Too close to the map edge is never allowed 
+	if(!T || T.x == 1 || T.y == 1 || T.x == world.maxx || T.y == world.maxy) 
+		return FALSE
+	// If it's one of our shuttle areas assume it's ok to be there 
+	if(shuttle_port.shuttle_areas[T.loc]) 
+		return TRUE
+	// Checking for overlapping dock boundaries
+	for(var/i in 1 to overlappers.len)
+		var/obj/docking_port/port = overlappers[i]
+		if(port == my_port)
+			continue
+		var/list/overlap = overlappers[port]
+		var/list/xs = overlap[1]
+		var/list/ys = overlap[2]
+		if(xs["[T.x]"] && ys["[T.y]"])
+			return FALSE
+	if(space_turfs_only && !isspaceturf(T)) 
+		return FALSE
+	return TRUE
 
 /mob/camera/aiEye/remote/shuttle_docker
 	visible_icon = FALSE

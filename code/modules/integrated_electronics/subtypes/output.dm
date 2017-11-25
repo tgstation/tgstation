@@ -105,7 +105,6 @@
 	)
 	outputs = list()
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_ENGINEERING = 3, TECH_DATA = 3)
 
 /obj/item/integrated_circuit/output/light/advanced/on_data_written()
 	update_lighting()
@@ -196,7 +195,6 @@
 		"secure day"	= 'sound/voice/bsecureday.ogg',
 		)
 	spawn_flags = IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_ILLEGAL = 1)
 
 /obj/item/integrated_circuit/output/sound/medbot
 	name = "medbot sound circuit"
@@ -219,7 +217,6 @@
 		"no"			= 'sound/voice/mno.ogg',
 		)
 	spawn_flags = IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_BIO = 1)
 
 /obj/item/integrated_circuit/output/video_camera
 	name = "video camera circuit"
@@ -309,16 +306,14 @@
 	set_pin_data(IC_INPUT, 1, FALSE)
 
 /obj/item/integrated_circuit/output/led/external_examine(mob/user)
-	var/text_output = list()
+	var/text_output = "There is "
 
-	// Doing all this work just to have a color-blind friendly output.
-	text_output += "There is "
-	if(name == displayed_name )
+	if(name == displayed_name)
 		text_output += "\an [name]"
 	else
-		text_output += "\an ["\improper[name]"] labeled '[displayed_name ]'"
-	text_output += " which is currently [(get_pin_data(IC_INPUT, 1)==1) ? "lit <font color=[led_color]>*</font>" : "unlit."]"
-	to_chat(user,jointext(text_output,null))
+		text_output += "\an ["\improper[name]"] labeled '[displayed_name]'"
+	text_output += " which is currently [get_pin_data(IC_INPUT, 1) ? "lit <font color=[led_color]>*</font>" : "unlit"]."
+	to_chat(user, text_output)
 
 /obj/item/integrated_circuit/output/led/red
 	name = "red LED"

@@ -4,7 +4,7 @@
 	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50)
 	volume = 50
 	container_type = OPENCONTAINER_1
-	spillable = 1
+	spillable = TRUE
 	resistance_flags = ACID_PROOF
 
 
@@ -120,7 +120,7 @@
 	. = ..()
 	update_icon()
 
-/obj/item/reagent_containers/glass/beaker/on_reagent_change()
+/obj/item/reagent_containers/glass/beaker/on_reagent_change(changetype)
 	update_icon()
 
 /obj/item/reagent_containers/glass/beaker/update_icon()
@@ -173,7 +173,6 @@
 	materials = list(MAT_METAL=3000)
 	volume = 50
 	amount_per_transfer_from_this = 10
-	origin_tech = "materials=2;engineering=3;plasmatech=3"
 	flags_1 = OPENCONTAINER_1
 
 /obj/item/reagent_containers/glass/beaker/noreact/Initialize()
@@ -191,7 +190,6 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,300)
 	flags_1 = OPENCONTAINER_1
-	origin_tech = "bluespace=5;materials=4;plasmatech=4"
 
 /obj/item/reagent_containers/glass/beaker/cryoxadone
 	list_reagents = list("cryoxadone" = 30)
@@ -237,7 +235,7 @@
 	flags_1 = OPENCONTAINER_1
 	flags_inv = HIDEHAIR
 	slot_flags = SLOT_HEAD
-	resistance_flags = 0
+	resistance_flags = NONE
 	armor = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 75, acid = 50) //Weak melee protection, because you can wear it on your head
 	slot_equipment_priority = list( \
 		slot_back, slot_wear_id,\
@@ -292,7 +290,6 @@
 	materials = list(MAT_GLASS=0)
 	volume = 50
 	amount_per_transfer_from_this = 10
-	origin_tech = null
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/empty
 	list_reagents = list()

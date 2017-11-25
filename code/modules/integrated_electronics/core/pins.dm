@@ -24,12 +24,18 @@ D [1]/  ||
 	var/datum/weakref/data  // This is a weakref, to reduce typecasts.  Note that oftentimes numbers and text may also occupy this.
 	var/list/linked = list()
 	var/io_type = DATA_CHANNEL
+	var/pin_type			// IC_INPUT, IC_OUTPUT, IC_ACTIVATOR - used in saving assembly wiring
 
-/datum/integrated_io/New(newloc, name1, new_data)
-	name = name1
-	if(new_data)
-		data = new_data
-	holder = newloc
+
+/datum/integrated_io/New(loc, _name, _data, _pin_type)
+	name = _name
+	if(_data)
+		data = _data
+	if(_pin_type)
+		pin_type = _pin_type
+
+	holder = loc
+
 	if(!istype(holder))
 		message_admins("ERROR: An integrated_io ([name]) spawned without a valid holder!  This is a bug.")
 
@@ -38,10 +44,6 @@ D [1]/  ||
 	data = null
 	holder = null
 	return ..()
-/*
-/datum/integrated_io/nano_host()
-	return holder.nano_host()
-*/
 
 /datum/integrated_io/proc/data_as_type(var/as_type)
 	if(!isweakref(data))
@@ -56,14 +58,6 @@ D [1]/  ||
 
 	if(istext(input))
 		return "(\"[input]\")" // Wraps the 'string' in escaped quotes, so that people know it's a 'string'.
-
-/*
-list[](
-	"A",
-	"B",
-	"C"
-)
-*/
 
 	if(islist(input))
 		var/list/my_list = input
@@ -84,7 +78,6 @@ list[](
 		var/datum/weakref/w = input
 		var/atom/A = w.resolve()
 		return A ? "([A.name] \[Ref\])" : "(null)" // For refs, we want just the name displayed.
-		//return A ? "([REF(A)] \[Ref\])" : "(null)"
 
 	return "([input])" // Nothing special needed for numbers or other stuff.
 
@@ -115,7 +108,7 @@ list[](
 		holder.on_data_written()
 	else if(islist(new_data))
 		var/list/new_list = new_data
-		data = new_list.Copy(1,min( IC_MAX_LIST_LENGTH+1, new_list.len ))
+		data = new_list.Copy(max(1,new_list.len - IC_MAX_LIST_LENGTH+1),0)
 		holder.on_data_written()
 
 /datum/integrated_io/proc/push_data()
