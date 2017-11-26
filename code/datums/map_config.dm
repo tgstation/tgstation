@@ -79,19 +79,6 @@
 	if(!fexists(path))
 		log_world("Map file ([path]) does not exist!")
 		return
-
-	var/tc = json["transition_config"]
-	if(tc != null && tc != "default")
-		if(!islist(tc))
-			log_world("transition_config is not a list!")
-			return
-
-		for(var/I in tc)
-			if(isnull(TransitionStringToEnum(I)))
-				log_world("Invalid transition_config option: [I]!")
-			if(isnull(TransitionStringToEnum(tc[I])))
-				log_world("Invalid transition_config option: [I]!")
-
 	return TRUE
 #undef CHECK_EXISTS
 

@@ -1,6 +1,6 @@
 #define is_station_level(z) SSmapping.check_level_trait(z, STATION_LEVEL)
 
-#define is_station_contact(z) SSmapping.check_level_trait(z, STATION_CONTACT)
+#define is_station_contact_level(z) SSmapping.check_level_trait(z, STATION_CONTACT)
 
 #define is_teleport_allowed(z) !SSmapping.check_level_trait(z, BLOCK_TELEPORT)
 

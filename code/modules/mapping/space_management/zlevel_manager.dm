@@ -174,10 +174,13 @@
 	return S.zpos
 
 /datum/controller/subsystem/mapping/proc/TransitLevel()
+	. = 2
 	CRASH("Implement me :(")
 
 /datum/controller/subsystem/mapping/proc/FirstStationZ()
+	. = 3
 	CRASH("Implement me :(")
 
 /datum/controller/subsystem/mapping/proc/LastStationZ()
+	. = 4
 	CRASH("Implement me :(")

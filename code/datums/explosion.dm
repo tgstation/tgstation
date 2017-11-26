@@ -57,11 +57,10 @@ GLOBAL_LIST_EMPTY(explosions)
 	
 	//Zlevel specific bomb cap multiplier
 	var/cap_multiplier = 1
-	switch(epicenter.z)
-		if(ZLEVEL_CITYOFCOGS)
-			cap_multiplier = CITYOFCOGS_CAP_MULTIPLIER
-		if(ZLEVEL_MINING)
-			cap_multiplier = MINING_CAP_MULTIPLIER
+	if(is_reebe(epicenter.z))
+		cap_multiplier = CITYOFCOGS_CAP_MULTIPLIER
+	if(is_mining_level(epicenter.z))
+		cap_multiplier = MINING_CAP_MULTIPLIER
 	
 	if(!ignorecap)
 		devastation_range = min(GLOB.MAX_EX_DEVESTATION_RANGE * cap_multiplier, devastation_range)

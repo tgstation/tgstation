@@ -39,11 +39,11 @@
 		exit the area."
 	question = "Leave? You might never come back."
 
-/obj/structure/signpost/exit/New()
+/obj/structure/signpost/exit/Initialize()
 	. = ..()
 	zlevels = list()
 	for(var/i in 1 to world.maxz)
-		zlevels += i
-	zlevels -= ZLEVEL_CENTCOM // no easy victory, even with meme signposts
+		if(!is_centcom(i))
+			zlevels += i
 	// also, could you think of the horror if they ended up in a holodeck
 	// template or something

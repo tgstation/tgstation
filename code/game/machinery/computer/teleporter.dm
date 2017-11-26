@@ -184,8 +184,6 @@
 			to_chat(user, "<span class='alert'>No connected stations located.</span>")
 			return
 		for(var/obj/machinery/teleport/station/R in S)
-			if(!T || !R.teleporter_hub || !R.teleporter_console)
-				continue
 			if(is_eligible(R))
 				L[avoid_assoc_duplicate_keys(R.loc.loc.name, areaindex)] = R
 		var/desc = input("Please select a station to lock in.", "Locking Computer") as null|anything in L
@@ -206,7 +204,7 @@
 	if(!T)
 		return FALSE
 	var/Tz = T.z
-	if(is_centcom(Tz) || is_away_mission(Tz))
+	if(is_centcom(Tz) || is_away_level(Tz))
 		return FALSE
 	var/area/A = get_area(T)
 	if(!A || A.noteleport)
