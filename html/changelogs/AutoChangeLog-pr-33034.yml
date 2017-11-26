@@ -1,0 +1,5 @@
+author: "ACCount"
+delete-after: True
+changes: 
+  - rscadd: "New integrated circuit components: list constructors/deconstructors. Useful for building lists and taking them apart."
+  - bugfix: "Fixed multiple bugs in integrated circuits UIs, improved overall usability."

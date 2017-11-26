@@ -26,9 +26,10 @@
 	var/smoke_radius = 5
 	var/notified = FALSE
 
-/obj/item/integrated_circuit/reagent/smoke/on_reagent_change()
-	//reset warning
-	notified = FALSE
+/obj/item/integrated_circuit/reagent/smoke/on_reagent_change(changetype)
+	//reset warning only if we have reagents now
+	if(changetype == ADD_REAGENT)
+		notified = FALSE
 	set_pin_data(IC_OUTPUT, 1, reagents.total_volume)
 	push_data()
 
@@ -46,7 +47,6 @@
 	if(S)
 		S.set_up(reagents, smoke_radius, location, notified)
 		if(!notified)
-			//we have now notified
 			notified = TRUE
 		S.start()
 
@@ -81,7 +81,7 @@
 	..()
 
 
-/obj/item/integrated_circuit/reagent/injector/on_reagent_change()
+/obj/item/integrated_circuit/reagent/injector/on_reagent_change(changetype)
 	set_pin_data(IC_OUTPUT, 1, reagents.total_volume)
 	push_data()
 
@@ -93,7 +93,7 @@
 	else
 		direction_mode = SYRINGE_INJECT
 	if(isnum(new_amount))
-		new_amount = CLAMP(new_amount, 0, volume)
+		new_amount = Clamp(new_amount, 0, volume)
 		transfer_amount = new_amount
 
 /obj/item/integrated_circuit/reagent/proc/inject_tray(var/obj/machinery/hydroponics/H,var/atom/movable/SO,var/A)
@@ -159,7 +159,7 @@
 		if(reagents.total_volume >= reagents.maximum_volume) // Full
 			activate_pin(3)
 			return
-		var/tramount = CLAMP(min(transfer_amount, reagents.maximum_volume - reagents.total_volume), 0, reagents.maximum_volume)
+		var/tramount = Clamp(min(transfer_amount, reagents.maximum_volume - reagents.total_volume), 0, reagents.maximum_volume)
 		if(isliving(AM))
 			var/mob/living/L = AM
 			L.visible_message("<span class='danger'>[src] is trying to take a blood sample from [L]!</span>", \
@@ -209,7 +209,7 @@
 	else
 		direction_mode = SYRINGE_INJECT
 	if(isnum(new_amount))
-		new_amount = CLAMP(new_amount, 0, 50)
+		new_amount = Clamp(new_amount, 0, 50)
 		transfer_amount = new_amount
 
 /obj/item/integrated_circuit/reagent/pump/do_work()
@@ -259,7 +259,7 @@
 	push_data()
 	..()
 
-/obj/item/integrated_circuit/reagent/storage/on_reagent_change()
+/obj/item/integrated_circuit/reagent/storage/on_reagent_change(changetype)
 	set_pin_data(IC_OUTPUT, 1, reagents.total_volume)
 	push_data()
 
@@ -332,7 +332,7 @@
 	else
 		direction_mode = SYRINGE_INJECT
 	if(isnum(new_amount))
-		new_amount = CLAMP(new_amount, 0, 50)
+		new_amount = Clamp(new_amount, 0, 50)
 		transfer_amount = new_amount
 
 /obj/item/integrated_circuit/reagent/filter/do_work()

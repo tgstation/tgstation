@@ -103,7 +103,7 @@
 				target = text2num(target)
 				. = TRUE
 			if(.)
-				target_temperature = CLAMP(target, 0, 1000)
+				target_temperature = Clamp(target, 0, 1000)
 		if("eject")
 			on = FALSE
 			eject_beaker()
@@ -111,7 +111,7 @@
 
 /obj/machinery/chem_heater/proc/eject_beaker()
 	if(beaker)
-		beaker.loc = get_turf(src)
+		beaker.forceMove(drop_location())
 		beaker.reagents.handle_reactions()
 		beaker = null
 		icon_state = "mixer0b"

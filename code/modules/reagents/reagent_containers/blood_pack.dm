@@ -13,7 +13,7 @@
 		reagents.add_reagent("blood", 200, list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=blood_type,"resistances"=null,"trace_chem"=null))
 		update_icon()
 
-/obj/item/reagent_containers/blood/on_reagent_change()
+/obj/item/reagent_containers/blood/on_reagent_change(changetype)
 	if(reagents)
 		var/datum/reagent/blood/B = reagents.has_reagent("blood")
 		if(B && B.data && B.data["blood_type"])
