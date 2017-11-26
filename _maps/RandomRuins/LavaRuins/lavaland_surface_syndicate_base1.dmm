@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
@@ -19,9 +19,10 @@
 	req_access = null;
 	req_access_txt = "150"
 	},
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "ag" = (
 /obj/structure/table/wood,
@@ -36,14 +37,16 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/podhatch,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "ah" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/snacks/salad/validsalad,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "ai" = (
 /obj/structure/rack{
@@ -93,12 +96,13 @@
 /area/ruin/powered/syndicate_lava_base)
 "ao" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "ap" = (
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/powered/syndicate_lava_base)
 "aq" = (
 /turf/open/floor/plasteel/vault{
@@ -111,9 +115,10 @@
 	},
 /obj/item/stack/rods/fifty,
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "as" = (
 /turf/open/floor/wood,
@@ -137,9 +142,10 @@
 /area/ruin/powered/syndicate_lava_base)
 "aw" = (
 /obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "ax" = (
 /obj/item/stack/cable_coil/white,
@@ -150,9 +156,10 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "ay" = (
 /obj/structure/table/wood,
@@ -188,18 +195,20 @@
 /area/ruin/powered/syndicate_lava_base)
 "aA" = (
 /obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "aB" = (
 /obj/item/stack/sheet/metal/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/structure/table/reinforced,
 /obj/item/wrench,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "aC" = (
 /obj/structure/table/wood,
@@ -253,7 +262,7 @@
 "aK" = (
 /obj/structure/closet/crate/bin,
 /obj/item/trash/syndi_cakes,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/powered/syndicate_lava_base)
 "aL" = (
 /obj/structure/chair/stool/bar,
@@ -263,7 +272,7 @@
 /area/ruin/powered/syndicate_lava_base)
 "aM" = (
 /obj/structure/chair/stool/bar,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/powered/syndicate_lava_base)
 "aN" = (
 /obj/structure/table/wood,
@@ -306,9 +315,10 @@
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/device/flashlight/seclite,
 /obj/item/clothing/mask/gas,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "aS" = (
 /obj/item/twohanded/required/kirbyplants{
@@ -335,9 +345,10 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "aV" = (
 /obj/machinery/door/airlock/hatch{
@@ -370,23 +381,26 @@
 	},
 /area/ruin/powered/syndicate_lava_base)
 "aY" = (
-/turf/open/floor/plasteel/podhatch{
-	dir = 8
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "aZ" = (
-/turf/open/floor/plasteel/podhatch{
-	dir = 4
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "ba" = (
 /obj/structure/closet/emcloset/anchored,
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/device/flashlight/seclite,
 /obj/item/clothing/mask/gas,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bb" = (
 /obj/item/twohanded/required/kirbyplants{
@@ -407,11 +421,11 @@
 	icon_state = "plant-21"
 	},
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/powered/syndicate_lava_base)
 "be" = (
 /obj/structure/bookcase/random,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/powered/syndicate_lava_base)
 "bf" = (
 /obj/structure/toilet{
@@ -435,9 +449,10 @@
 /area/ruin/powered/syndicate_lava_base)
 "bh" = (
 /obj/machinery/chem_dispenser,
-/turf/open/floor/plasteel/podhatch{
-	dir = 8
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bi" = (
 /obj/structure/table/reinforced,
@@ -451,15 +466,17 @@
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/item/reagent_containers/glass/beaker/large,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bj" = (
 /obj/machinery/chem_master,
-/turf/open/floor/plasteel/podhatch{
-	dir = 4
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bk" = (
 /obj/structure/noticeboard{
@@ -508,17 +525,19 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bo" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bp" = (
 /obj/structure/table/reinforced,
@@ -529,7 +548,8 @@
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
-/turf/open/floor/plasteel/podhatch/corner,
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bq" = (
 /obj/structure/reagent_dispensers/virusfood{
@@ -540,14 +560,18 @@
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 5
 	},
-/turf/open/floor/plasteel/podhatch,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "br" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 32
 	},
 /obj/machinery/computer/pandemic,
-/turf/open/floor/plasteel/podhatch,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bs" = (
 /obj/structure/table/reinforced,
@@ -559,15 +583,17 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plasteel/podhatch,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bt" = (
 /obj/structure/bed/roller,
 /obj/machinery/iv_drip,
 /obj/item/reagent_containers/blood/random,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bu" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -617,21 +643,24 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
 	},
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bC" = (
 /obj/structure/chair/office/dark{
 	dir = 1
 	},
-/turf/open/floor/plasteel/podhatch,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bD" = (
 /obj/structure/closet/crate/bin,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bE" = (
 /turf/open/floor/plasteel/vault,
@@ -663,9 +692,10 @@
 /obj/item/stack/sheet/mineral/silver{
 	amount = 10
 	},
-/turf/open/floor/plasteel/podhatch{
-	dir = 4
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bH" = (
 /obj/structure/chair/office/dark{
@@ -680,7 +710,7 @@
 	name = "Monkey Pen";
 	req_access_txt = "150"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/powered/syndicate_lava_base)
 "bJ" = (
 /obj/structure/table/reinforced,
@@ -714,9 +744,10 @@
 /area/ruin/powered/syndicate_lava_base)
 "bM" = (
 /obj/machinery/smartfridge/chemistry/virology/preloaded,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bN" = (
 /obj/machinery/vending/toyliberationstation{
@@ -738,21 +769,24 @@
 /area/ruin/powered/syndicate_lava_base)
 "bP" = (
 /obj/structure/closet/crate/bin,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bQ" = (
 /obj/structure/chair/office/dark,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bR" = (
 /obj/machinery/chem_heater,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bS" = (
 /obj/structure/table/reinforced,
@@ -761,9 +795,10 @@
 /obj/item/reagent_containers/dropper,
 /obj/item/reagent_containers/syringe,
 /obj/item/reagent_containers/glass/beaker/large,
-/turf/open/floor/plasteel/podhatch{
-	dir = 4
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bT" = (
 /obj/structure/chair/office/dark,
@@ -800,9 +835,10 @@
 /area/ruin/powered/syndicate_lava_base)
 "bX" = (
 /obj/machinery/chem_master,
-/turf/open/floor/plasteel/podhatch{
-	dir = 8
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bY" = (
 /obj/structure/table/reinforced,
@@ -813,16 +849,18 @@
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/item/reagent_containers/glass/beaker/large,
-/turf/open/floor/plasteel/podhatch,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bZ" = (
 /obj/machinery/chem_dispenser,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 26
 	},
-/turf/open/floor/plasteel/podhatch{
-	dir = 4
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "ca" = (
 /obj/structure/table/reinforced,
@@ -831,9 +869,10 @@
 /obj/item/clothing/head/bio_hood/general,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/science,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "cb" = (
 /obj/machinery/shower{
@@ -855,9 +894,10 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/machinery/light,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "cd" = (
 /obj/structure/table/reinforced,
@@ -868,9 +908,10 @@
 /obj/item/stack/sheet/mineral/uranium{
 	amount = 10
 	},
-/turf/open/floor/plasteel/podhatch{
-	dir = 1
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "ce" = (
 /obj/structure/bed/roller,
@@ -929,40 +970,46 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "cm" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "cn" = (
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "co" = (
-/turf/open/floor/plasteel/podhatch/corner{
+/obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "cp" = (
-/turf/open/floor/plasteel/podhatch/corner{
+/obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "cq" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21"
 	},
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "cr" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -998,36 +1045,43 @@
 /obj/item/target/alien,
 /obj/item/target/clown,
 /obj/item/target/clown,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "cv" = (
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "cw" = (
-/turf/open/floor/plasteel/podhatch,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "cx" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -32
 	},
-/turf/open/floor/plasteel/podhatch,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "cy" = (
-/turf/open/floor/plasteel/podhatch/corner{
+/obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "cz" = (
-/turf/open/floor/plasteel/podhatch/corner,
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "cA" = (
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "cB" = (
 /obj/machinery/door/airlock/hatch{
@@ -1471,7 +1525,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/powered/syndicate_lava_base)
 "fS" = (
 /obj/machinery/iv_drip,
@@ -1488,17 +1542,19 @@
 	brightness = 3;
 	dir = 8
 	},
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "fU" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "fV" = (
 /obj/machinery/light/small,
@@ -1510,9 +1566,10 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "fZ" = (
 /obj/machinery/light{
@@ -1524,7 +1581,8 @@
 /area/ruin/powered/syndicate_lava_base)
 "ga" = (
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/podhatch,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "ge" = (
 /obj/machinery/light{
@@ -1549,6 +1607,114 @@
 	dir = 4
 	},
 /turf/open/floor/circuit/red,
+/area/ruin/powered/syndicate_lava_base)
+"gm" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"gn" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"go" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"gp" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"gq" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"gr" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"gs" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"gt" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"gu" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"gv" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"gw" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"gx" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"gy" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"gz" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"gA" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"gB" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"gC" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"gD" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 
 (1,1,1) = {"
@@ -1927,7 +2093,7 @@ aq
 aq
 aY
 fP
-aY
+gm
 bz
 bJ
 bN
@@ -2007,7 +2173,7 @@ fL
 aq
 aZ
 aq
-aZ
+gn
 bz
 bK
 aq
@@ -2094,7 +2260,7 @@ fS
 bO
 cf
 cm
-cv
+gm
 ad
 cG
 cG
@@ -2368,20 +2534,20 @@ ap
 aq
 bg
 bn
-aY
-aY
-aY
+go
+go
+go
 fT
-aY
+go
 co
 cy
-aY
+go
 fT
-aY
-aY
+go
+go
 fT
-aY
-cv
+go
+gm
 dn
 dq
 aO
@@ -2408,20 +2574,20 @@ aq
 ap
 bg
 bo
-aZ
-aZ
-aZ
+gp
+gp
+gp
 fU
-aZ
+gp
 cp
 cz
-aZ
+gp
 fU
-aZ
-aZ
+gp
+gp
 fU
-aZ
-cA
+gp
+gn
 dn
 dr
 aO
@@ -2694,7 +2860,7 @@ bx
 bx
 ae
 cq
-cA
+gn
 ad
 cI
 cP

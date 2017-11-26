@@ -50,11 +50,11 @@
 
 
 /mob/living/simple_animal/bot/secbot/beepsky/explode()
-	var/turf/Tsec = get_turf(src)
+	var/atom/Tsec = drop_location()
 	new /obj/item/stock_parts/cell/potato(Tsec)
 	var/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/S = new(Tsec)
 	S.reagents.add_reagent("whiskey", 15)
-	S.on_reagent_change()
+	S.on_reagent_change(ADD_REAGENT)
 	..()
 
 /mob/living/simple_animal/bot/secbot/pingsky
@@ -399,9 +399,9 @@ Auto Patrol: []"},
 
 	walk_to(src,0)
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
-	var/turf/Tsec = get_turf(src)
+	var/atom/Tsec = drop_location()
 
-	var/obj/item/secbot_assembly/Sa = new /obj/item/secbot_assembly(Tsec)
+	var/obj/item/secbot_assembly/Sa = new (Tsec)
 	Sa.build_step = 1
 	Sa.add_overlay("hs_hole")
 	Sa.created_name = name

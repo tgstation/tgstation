@@ -4,8 +4,7 @@
 	desc = "A shell of swarmer that was completely powered down. It can no longer activate itself."
 	icon = 'icons/mob/swarmer.dmi'
 	icon_state = "swarmer_unactivated"
-	origin_tech = "bluespace=4;materials=4;programming=7"
-	materials = list(MAT_METAL = 10000, MAT_GLASS = 4000)
+	materials = list(MAT_METAL=10000, MAT_GLASS=4000)
 
 /obj/effect/mob_spawn/swarmer
 	name = "unactivated swarmer"
@@ -654,7 +653,8 @@
 
 /mob/living/simple_animal/hostile/swarmer/proc/swarmer_chat(msg)
 	var/rendered = "<B>Swarm communication - [src]</b> [say_quote(msg, get_spans())]"
-	for(var/mob/M in GLOB.mob_list)
+	for(var/i in GLOB.mob_list)
+		var/mob/M = i
 		if(isswarmer(M))
 			to_chat(M, rendered)
 		if(isobserver(M))

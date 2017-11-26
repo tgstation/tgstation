@@ -172,7 +172,7 @@
 			if(mmi.brainmob.stat == DEAD)
 				mmi.brainmob.stat = CONSCIOUS
 				GLOB.dead_mob_list -= mmi.brainmob
-				GLOB.living_mob_list += mmi.brainmob
+				GLOB.alive_mob_list += mmi.brainmob
 			mind.transfer_to(mmi.brainmob)
 			mmi.update_icon()
 		else
@@ -210,6 +210,8 @@
 	"Service" = /obj/item/robot_module/butler)
 	if(!CONFIG_GET(flag/disable_peaceborg))
 		modulelist["Peacekeeper"] = /obj/item/robot_module/peacekeeper
+	if(!CONFIG_GET(flag/disable_secborg))
+		modulelist["Security"] = /obj/item/robot_module/security
 
 	var/input_module = input("Please, select a module!", "Robot", null, null) as null|anything in modulelist
 	if(!input_module || module.type != /obj/item/robot_module)

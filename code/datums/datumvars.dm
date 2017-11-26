@@ -31,7 +31,7 @@
 	.["Show VV To Player"] = "?_src_=vars;[HrefToken(TRUE)];expose=[REF(src)]"
 
 
-/datum/proc/on_reagent_change()
+/datum/proc/on_reagent_change(changetype)
 	return
 
 
@@ -418,23 +418,8 @@
 		item = "[VV_HTML_ENCODE(name)] = /icon (<span class='value'>[value]</span>)"
 		#endif
 
-/*		else if (istype(value, /image))
-		#ifdef VARSICON
-		var/rnd = rand(1, 10000)
-		var/image/I = value
-
-		src << browse_rsc(I.icon, "tmp[REF(value)][rnd].png")
-		html += "[name] = <img src=\"tmp[REF(value)][rnd].png\">"
-		#else
-		html += "[name] = /image (<span class='value'>[value]</span>)"
-		#endif
-*/
 	else if (isfile(value))
 		item = "[VV_HTML_ENCODE(name)] = <span class='value'>'[value]'</span>"
-
-	//else if (istype(value, /client))
-	//	var/client/C = value
-	//	item = "<a href='?_src_=vars;Vars=[REF(value)]'>[VV_HTML_ENCODE(name)] [REF(value)]</a> = [C] [C.type]"
 
 	else if (istype(value, /datum))
 		var/datum/D = value
@@ -536,6 +521,11 @@
 			to_chat(usr, "Unable to locate item!")
 		admin_delete(D)
 		href_list["datumrefresh"] = href_list["delete"]
+
+	else if(href_list["osay"])
+		if(!check_rights(R_FUN, 0))
+			return
+		usr.client.object_say(locate(href_list["osay"]))
 
 	else if(href_list["regenerateicons"])
 		if(!check_rights(0))

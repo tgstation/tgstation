@@ -375,7 +375,8 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 /obj/machinery/doomsday_device/proc/detonate()
 	sound_to_playing_players('sound/machines/alarm.ogg')
 	sleep(100)
-	for(var/mob/living/L in GLOB.mob_list)
+	for(var/i in GLOB.mob_living_list)
+		var/mob/living/L = i
 		var/turf/T = get_turf(L)
 		if(!T || !(T.z in GLOB.station_z_levels))
 			continue

@@ -257,8 +257,6 @@
 
 	if(desc)
 		to_chat(user, desc)
-	// *****RM
-	//to_chat(user, "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]")
 
 	if(reagents && (is_open_container() || is_transparent())) //is_open_container() isn't really the right proc for this, but w/e
 		to_chat(user, "It contains:")

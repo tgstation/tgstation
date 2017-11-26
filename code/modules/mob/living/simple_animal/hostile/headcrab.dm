@@ -53,7 +53,6 @@
 /obj/item/organ/body_egg/changeling_egg
 	name = "changeling egg"
 	desc = "Twitching and disgusting."
-	origin_tech = "biotech=7" // You need to be really lucky to obtain it.
 	var/datum/mind/origin
 	var/time
 
@@ -72,7 +71,7 @@
 	for(var/obj/item/organ/I in src)
 		I.Insert(M, 1)
 
-	if(origin && origin.current && (origin.current.stat == DEAD))
+	if(origin && (origin.current ? (origin.current.stat == DEAD) : origin.get_ghost()))
 		origin.transfer_to(M)
 		var/datum/antagonist/changeling/C = origin.has_antag_datum(/datum/antagonist/changeling)
 		if(!C)

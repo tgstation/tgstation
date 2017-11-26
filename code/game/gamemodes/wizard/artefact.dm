@@ -66,6 +66,12 @@
 	else
 		return ..()
 
+/obj/effect/rend/singularity_pull()
+	return
+
+/obj/effect/rend/singularity_pull()
+	return
+
 /obj/item/veilrender/vealrender
 	name = "veal render"
 	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast farm."
@@ -131,7 +137,6 @@
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	origin_tech = "bluespace=4;materials=4"
 	w_class = WEIGHT_CLASS_TINY
 	var/list/spooky_scaries = list()
 	var/unlimited = 0
@@ -288,7 +293,7 @@
 	possible = list()
 	if(!link)
 		return
-	for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
+	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 		if(md5(H.dna.uni_identity) in link.fingerprints)
 			possible |= H
 

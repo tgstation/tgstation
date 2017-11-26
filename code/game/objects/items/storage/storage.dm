@@ -260,7 +260,6 @@
 				adjusted_contents++
 				numbered_contents.Add( new/datum/numbered_display(I) )
 
-	//var/mob/living/carbon/human/H = user
 	var/row_num = 0
 	var/col_count = min(7,storage_slots) -1
 	if(adjusted_contents > 7)

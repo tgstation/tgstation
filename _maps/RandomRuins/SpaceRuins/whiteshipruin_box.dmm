@@ -47,11 +47,11 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/whiteship/box)
 "aj" = (
-/turf/open/floor/plating,
 /turf/closed/wall/mineral/titanium/interior,
 /area/ruin/space/has_grav/whiteship/box)
 "ak" = (
 /obj/machinery/computer/pod{
+	dir = 8;
 	id = "oldship_ruin_gun"
 	},
 /turf/open/floor/mineral/titanium,
@@ -60,7 +60,6 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/whiteship/box)
 "am" = (
-/turf/open/floor/mineral/titanium,
 /turf/closed/wall/mineral/titanium/interior,
 /area/ruin/space/has_grav/whiteship/box)
 "an" = (
@@ -211,7 +210,9 @@
 /turf/open/floor/mineral/titanium,
 /area/ruin/space/has_grav/whiteship/box)
 "aM" = (
-/obj/machinery/computer/shuttle/white_ship/ruin,
+/obj/machinery/computer/shuttle/white_ship/ruin{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium,
 /area/ruin/space/has_grav/whiteship/box)
 "aN" = (

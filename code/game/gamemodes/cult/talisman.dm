@@ -338,7 +338,6 @@
 	name = "cult shackles"
 	desc = "Shackles that bind the wrists with sinister magic."
 	trashtype = /obj/item/restraints/handcuffs/energy/used
-	origin_tech = "materials=2;magnets=5"
 	flags_1 = DROPDEL_1
 
 /obj/item/restraints/handcuffs/energy/cult/used/dropped(mob/user)

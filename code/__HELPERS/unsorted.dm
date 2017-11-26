@@ -64,7 +64,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 	errorx = abs(errorx)//Error should never be negative.
 	errory = abs(errory)
-	//var/errorxy = round((errorx+errory)/2)//Used for diagonal boxes.
 
 	switch(target.dir)//This can be done through equations but switch is the simpler method. And works fast to boot.
 	//Directs on what values need modifying.
@@ -234,7 +233,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 //Returns a list of unslaved cyborgs
 /proc/active_free_borgs()
 	. = list()
-	for(var/mob/living/silicon/robot/R in GLOB.living_mob_list)
+	for(var/mob/living/silicon/robot/R in GLOB.alive_mob_list)
 		if(R.connected_ai || R.shell)
 			continue
 		if(R.stat == DEAD)
@@ -246,7 +245,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 //Returns a list of AI's
 /proc/active_ais(check_mind=0)
 	. = list()
-	for(var/mob/living/silicon/ai/A in GLOB.living_mob_list)
+	for(var/mob/living/silicon/ai/A in GLOB.alive_mob_list)
 		if(A.stat == DEAD)
 			continue
 		if(A.control_disabled == 1)
@@ -342,10 +341,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 		moblist.Add(M)
 	for(var/mob/living/simple_animal/M in sortmob)
 		moblist.Add(M)
-//	for(var/mob/living/silicon/hivebot/M in world)
-//		mob_list.Add(M)
-//	for(var/mob/living/silicon/hive_mainframe/M in world)
-//		mob_list.Add(M)
 	for(var/mob/living/carbon/true_devil/M in sortmob)
 		moblist.Add(M)
 	return moblist
@@ -922,7 +917,7 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 /proc/living_player_count()
 	var/living_player_count = 0
 	for(var/mob in GLOB.player_list)
-		if(mob in GLOB.living_mob_list)
+		if(mob in GLOB.alive_mob_list)
 			living_player_count += 1
 	return living_player_count
 
@@ -1359,6 +1354,9 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	anchored = TRUE
 	var/ready_to_die = FALSE
 
+/mob/dview/Initialize() //Properly prevents this mob from gaining huds or joining any global lists
+	return
+
 /mob/dview/Destroy(force = FALSE)
 	if(!ready_to_die)
 		stack_trace("ALRIGHT WHICH FUCKER TRIED TO DELETE *MY* DVIEW?")
@@ -1446,7 +1444,6 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	var/target_loc = target.loc
 
 	var/endtime = world.time+time
-//	var/starttime = world.time
 	. = TRUE
 	while (world.time < endtime)
 		stoplag(1)
