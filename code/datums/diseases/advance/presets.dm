@@ -25,12 +25,12 @@
 	..(process, D, copy)
 
 
-// Toxin Filter
+// Toxin Conversion
 
 /datum/disease/advance/heal/New(var/process = TRUE, var/datum/disease/advance/D, var/copy = FALSE)
 	if(!D)
-		name = "Liver Enhancer"
-		symptoms = list(new/datum/symptom/heal)
+		name = "Toxin Eater"
+		symptoms = list(new/datum/symptom/conversion/toxin)
 	..(process, D, copy)
 
 
