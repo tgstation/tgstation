@@ -1,0 +1,44 @@
+{{#if !data.vault}}
+<ui-notice>
+    <span>VAULT STORAGE NOT FOUND!</span>
+</ui-notice>
+{{/if}}
+<ui-display>
+    <section class='candystripe' style='min-height:30px'>
+        <section class='cell'></section>
+        {{#each data.materials}}
+            <section class='cell'>{{material_name}}</section>
+        {{/each}}
+    </section>
+    {{#if data.vault}}
+    <section class='candystripe' style='min-height:30px'>
+        <section class='cell'>Vault</section>
+        {{#each data.materials}}
+            <section class='cell'>{{data.vault.storage_amount[material_id]}}</section>
+        {{/each}}
+    </section>
+    {{/if}}
+    {{#each data.storages}}
+    <section class='candystripe' style='min-height:60px'>
+        <section class='cell'>{{storage_name}}</section>
+        {{#each data.materials}}
+            <section class='cell'>
+                <div>
+                    {{storage_amount[material_id]}} 
+                    {{#if requested_materials.includes(material_id)}}
+                        <span class='bad'>R</span>
+                    {{/if}}
+                </div>
+                {{#if data.vault}}
+                    <div>
+                        <ui-button action='send' params='{"storage_id": "{{storage_id}}","material_id":"{{material_id}}"}'>Send</ui-button>
+                        <ui-button action='take' params='{"storage_id": "{{storage_id}}","material_id":"{{material_id}}"}'>Take</ui-button>
+                    </div>
+                {{else}}
+                    <ui-button action='setvault' params='{"storage_id": "{{storage_id}}"}'>Set Vault</ui-button>
+                {{/if}}
+            </section>
+        {{/each}}
+    </section>
+    {{/each}}
+</ui-display>

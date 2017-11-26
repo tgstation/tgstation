@@ -24,11 +24,23 @@
 	var/list/ore_buffer = list()
 	var/datum/techweb/stored_research
 	var/obj/item/disk/design_disk/inserted_disk
+	
+	var/storage_map_id = "vault"
+	var/obj/machinery/material_storage/storage
 
 /obj/machinery/mineral/ore_redemption/Initialize()
 	. = ..()
 	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE),INFINITY)
 	stored_research = new /datum/techweb/specialized/autounlocking/smelter
+	if(storage_map_id)
+		return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/mineral/ore_redemption/LateInitialize()
+	if(storage_map_id)
+		for(var/obj/machinery/material_storage/V in GLOB.machines)
+			if(V.map_id == storage_map_id)
+				storage = V
+				break
 
 /obj/machinery/mineral/ore_redemption/Destroy()
 	QDEL_NULL(stored_research)
@@ -334,6 +346,15 @@
 					var/output = new alloy.build_path(src)
 					unload_mineral(output)
 					CHECK_TICK
+			else
+				to_chat(usr, "<span class='warning'>Required access not found.</span>")
+			return TRUE
+		if("vault_store")
+			if(check_access(inserted_id) || allowed(usr)) //Check the ID inside, otherwise check the user
+				if(!storage)
+					return
+				GET_COMPONENT_FROM(storage_materials,/datum/component/material_container,storage)
+				materials.transfer_all_to(storage_materials)
 			else
 				to_chat(usr, "<span class='warning'>Required access not found.</span>")
 			return TRUE
