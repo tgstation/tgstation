@@ -76,9 +76,6 @@
 "an" = (
 /turf/closed/mineral/random/labormineral/volcanic,
 /area/lavaland/surface/outdoors)
-"ao" = (
-/turf/closed/mineral/random/volcanic,
-/area/lavaland/surface/outdoors)
 "ap" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -196,6 +193,7 @@
 /area/mine/laborcamp)
 "aI" = (
 /obj/machinery/door/airlock{
+	cyclelinkeddir = 4;
 	name = "Labor Camp External Access"
 	},
 /turf/open/floor/plasteel,
@@ -286,6 +284,7 @@
 /area/lavaland/surface/outdoors/explored)
 "aY" = (
 /obj/machinery/door/airlock/glass_security{
+	cyclelinkeddir = 4;
 	name = "Labor Camp Shuttle Security Airlock";
 	req_access_txt = "2"
 	},
@@ -449,6 +448,7 @@
 /area/mine/eva)
 "bx" = (
 /obj/machinery/door/airlock/glass_security{
+	cyclelinkeddir = 4;
 	name = "Labor Camp Shuttle Prisoner Airlock";
 	req_access_txt = "0"
 	},
@@ -659,6 +659,7 @@
 /area/mine/eva)
 "bX" = (
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
 	glass = 1;
 	name = "Mining External Airlock";
 	opacity = 0;
@@ -744,6 +745,7 @@
 /area/mine/laborcamp)
 "cj" = (
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
 	glass = 1;
 	name = "Mining Shuttle Airlock";
 	opacity = 0;
@@ -1155,10 +1157,6 @@
 /turf/open/floor/plasteel/purple/side{
 	dir = 4
 	},
-/area/mine/production)
-"dt" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
 /area/mine/production)
 "du" = (
 /obj/effect/turf_decal/loading_area,
@@ -3317,6 +3315,49 @@
 /obj/effect/mapping_helpers/planet_z,
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"WA" = (
+/obj/machinery/door/airlock{
+	cyclelinkeddir = 8;
+	name = "Labor Camp External Access"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"WB" = (
+/obj/machinery/door/airlock/glass_security{
+	cyclelinkeddir = 8;
+	name = "Labor Camp Shuttle Security Airlock";
+	req_access_txt = "2"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"WC" = (
+/obj/machinery/door/airlock/glass_security{
+	cyclelinkeddir = 8;
+	name = "Labor Camp Shuttle Prisoner Airlock";
+	req_access_txt = "0"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"WD" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
+	glass = 1;
+	name = "Mining External Airlock";
+	opacity = 0;
+	req_access_txt = "54"
+	},
+/turf/open/floor/plasteel,
+/area/mine/eva)
+"WE" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
+	glass = 1;
+	name = "Mining Shuttle Airlock";
+	opacity = 0;
+	req_access_txt = "0"
+	},
+/turf/open/floor/plasteel,
+/area/mine/production)
 
 (1,1,1) = {"
 aa
@@ -8415,11 +8456,11 @@ aH
 az
 aQ
 aq
-aY
+WB
 aq
 bi
 aq
-bx
+WC
 aq
 bZ
 bZ
@@ -11238,7 +11279,7 @@ an
 an
 aD
 aq
-aI
+WA
 aq
 aT
 aD
@@ -17930,7 +17971,7 @@ aj
 aj
 br
 br
-cj
+WE
 br
 br
 ab
@@ -21270,7 +21311,7 @@ aj
 ab
 bf
 bg
-bX
+WD
 bg
 bf
 ai
@@ -21517,7 +21558,7 @@ am
 am
 am
 am
-ao
+ai
 ab
 ab
 ab
@@ -22024,7 +22065,7 @@ am
 am
 am
 am
-ao
+ai
 ab
 ab
 ai
@@ -22808,7 +22849,7 @@ ab
 ab
 ab
 ab
-ao
+ai
 ab
 ab
 ab
@@ -24598,7 +24639,7 @@ am
 am
 am
 am
-ao
+ai
 ab
 ab
 ab
@@ -24855,7 +24896,7 @@ am
 am
 am
 am
-ao
+ai
 ab
 ab
 ab
@@ -25132,7 +25173,7 @@ ab
 ab
 ab
 ab
-ao
+ai
 am
 am
 ai
@@ -25376,7 +25417,7 @@ ab
 ab
 ab
 ai
-ao
+ai
 ab
 ab
 ab
@@ -25626,7 +25667,7 @@ am
 am
 am
 am
-ao
+ai
 ab
 ab
 ab
@@ -25910,7 +25951,7 @@ am
 am
 am
 am
-ao
+ai
 ab
 ab
 ab
@@ -26153,7 +26194,7 @@ ab
 ab
 ab
 ab
-ao
+ai
 am
 am
 am
@@ -26167,7 +26208,7 @@ am
 am
 am
 am
-ao
+ai
 ab
 ab
 ab
@@ -26926,7 +26967,7 @@ ab
 ab
 ab
 ab
-ao
+ai
 am
 am
 am
@@ -28465,7 +28506,7 @@ ab
 ab
 ab
 ai
-ao
+ai
 ab
 ab
 ab
@@ -28975,7 +29016,7 @@ ab
 ab
 ab
 ab
-ao
+ai
 ab
 ab
 ai
@@ -28984,13 +29025,13 @@ am
 am
 am
 am
-ao
+ai
 ab
 ab
 ab
 ab
-ao
-ao
+ai
+ai
 ab
 ab
 ab
@@ -29232,8 +29273,8 @@ ab
 ab
 ab
 ab
-ao
-ao
+ai
+ai
 ab
 ai
 am
@@ -30014,8 +30055,8 @@ ab
 ab
 ab
 ab
-ao
-ao
+ai
+ai
 ab
 ab
 ab
@@ -30527,7 +30568,7 @@ ai
 ai
 ab
 ab
-ao
+ai
 am
 am
 am
