@@ -14,7 +14,7 @@
 	response_help = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm = "kicks"
-	gold_core_spawnable = 2
+	gold_core_spawnable = FRIENDLY_SPAWN
 	melee_damage_lower = 18
 	melee_damage_upper = 18
 	health = 50
@@ -26,7 +26,7 @@
 /mob/living/simple_animal/sloth/paperwork
 	name = "Paperwork"
 	desc = "Cargo's pet sloth. About as useful as the rest of the techs."
-	gold_core_spawnable = 0
+	gold_core_spawnable = NO_SPAWN
 
 //Cargo Sloth 2
 
@@ -38,4 +38,4 @@
 	icon_dead = "cool_sloth_dead"
 	gender = FEMALE
 	butcher_results = list(/obj/item/toy/spinningtoy = 1)
-	gold_core_spawnable = 0
+	gold_core_spawnable = NO_SPAWN
