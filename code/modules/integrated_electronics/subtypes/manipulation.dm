@@ -373,11 +373,11 @@
 		return
 
 	var/atom/movable/acting_object = get_object()
-	var/turf/T = get_turf(acting_object)
-	if(!T)
+	if(!A.Adjacent(acting_object) && !(A in acting_object.GetAllContents()))
 		return
 
-	if(!A.Adjacent(T) && !(A in acting_object.GetAllContents()))
+	var/turf/T = get_turf(acting_object)
+	if(!T)
 		return
 
 	// No ejecting assembly components or power cells
