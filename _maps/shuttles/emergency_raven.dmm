@@ -19,8 +19,8 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ad" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ae" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
@@ -989,14 +989,12 @@
 /turf/closed/wall/mineral/plastitanium/interior,
 /area/shuttle/escape)
 "cx" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 8;
 	icon_state = "diagonalWall3"
 	},
 /area/shuttle/escape)
 "cy" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
@@ -1021,13 +1019,11 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "cD" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
 /area/shuttle/escape)
 "cI" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
@@ -1120,8 +1116,8 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/escape)
 "eQ" = (
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 
 (1,1,1) = {"
 aa

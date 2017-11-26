@@ -1,4 +1,0 @@
-author: "DaxDupont"
-delete-after: True
-changes: 
-  - bugfix: "Proximity sensors no longer beep when unarmed."

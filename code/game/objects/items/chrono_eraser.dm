@@ -252,6 +252,9 @@
 /obj/effect/chrono_field/singularity_act()
 	return
 
+/obj/effect/chrono_field/singularity_pull()
+	return
+
 /obj/effect/chrono_field/ex_act()
 	return
 

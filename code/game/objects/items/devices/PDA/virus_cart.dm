@@ -7,7 +7,7 @@
 
 /obj/item/cartridge/virus/message_header()
 	return "<b>[charges] viral files left.</b><HR>"
-	
+
 /obj/item/cartridge/virus/message_special(obj/item/device/pda/target)
 	if (!istype(loc, /obj/item/device/pda))
 		return ""  //Sanity check, this shouldn't be possible.
@@ -67,11 +67,12 @@
 		var/difficulty = 0
 		if(target.cartridge)
 			difficulty += BitCount(target.cartridge.access&(CART_MEDICAL | CART_SECURITY | CART_ENGINE | CART_CLOWN | CART_JANITOR | CART_MANIFEST))
-		if(target.cartridge.access & CART_MANIFEST) 
+		if(target.cartridge.access & CART_MANIFEST)
 			difficulty++ //if cartridge has manifest access it has extra snowflake difficulty
 		else
 			difficulty += 2
-		if(!target.detonatable || prob(difficulty * 15) || (target.hidden_uplink))
+		GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, target)
+		if(!target.detonatable || prob(difficulty * 15) || (hidden_uplink))
 			U.show_message("<span class='danger'>An error flashes on your [src].</span>", 1)
 		else
 			U.show_message("<span class='notice'>Success!</span>", 1)
@@ -92,14 +93,14 @@
 		charges--
 		var/lock_code = "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
 		to_chat(U, "<span class='notice'>Virus Sent!  The unlock code to the target is: [lock_code]</span>")
-		if(!target.hidden_uplink)
-			var/obj/item/device/uplink/uplink = new(target)
-			target.hidden_uplink = uplink
+		GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, target)
+		if(!hidden_uplink)
+			hidden_uplink = target.LoadComponent(/datum/component/uplink)
 			target.lock_code = lock_code
 		else
-			target.hidden_uplink.hidden_crystals += target.hidden_uplink.telecrystals //Temporarially hide the PDA's crystals, so you can't steal telecrystals.
-		target.hidden_uplink.telecrystals = telecrystals
+			hidden_uplink.hidden_crystals += hidden_uplink.telecrystals //Temporarially hide the PDA's crystals, so you can't steal telecrystals.
+		hidden_uplink.telecrystals = telecrystals
 		telecrystals = 0
-		target.hidden_uplink.active = TRUE
+		hidden_uplink.active = TRUE
 	else
 		to_chat(U, "PDA not found.")

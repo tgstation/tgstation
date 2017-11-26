@@ -381,3 +381,7 @@ CONFIG_TWEAK(flag/ValidateAndSet(str_val))
 	. = ..()
 	if(. && Master.current_runlevel)
 		world.sleep_offline = !value
+
+CONFIG_DEF(number/rounds_until_hard_restart)
+	value = -1
+	min_val = 0

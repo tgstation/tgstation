@@ -19,7 +19,10 @@
 	req_access = null;
 	req_access_txt = "150"
 	},
-/turf/open/space/basic,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "ag" = (
 /obj/structure/table/wood,
@@ -34,12 +37,16 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/space/basic,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "ah" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/snacks/salad/validsalad,
-/turf/open/space/basic,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "ai" = (
 /obj/structure/rack{
@@ -108,7 +115,10 @@
 	},
 /obj/item/stack/rods/fifty,
 /obj/structure/table/reinforced,
-/turf/open/space/basic,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "as" = (
 /turf/open/floor/wood,
@@ -146,7 +156,10 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/space/basic,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "ay" = (
 /obj/structure/table/wood,
@@ -192,7 +205,10 @@
 /obj/item/stack/sheet/glass/fifty,
 /obj/structure/table/reinforced,
 /obj/item/wrench,
-/turf/open/space/basic,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "aC" = (
 /obj/structure/table/wood,
@@ -532,7 +548,8 @@
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
-/turf/open/space/basic,
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bq" = (
 /obj/structure/reagent_dispensers/virusfood{
@@ -543,7 +560,8 @@
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 5
 	},
-/turf/open/space/basic,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "br" = (
 /obj/structure/extinguisher_cabinet{
@@ -674,7 +692,10 @@
 /obj/item/stack/sheet/mineral/silver{
 	amount = 10
 	},
-/turf/open/space/basic,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bH" = (
 /obj/structure/chair/office/dark{
@@ -723,7 +744,10 @@
 /area/ruin/powered/syndicate_lava_base)
 "bM" = (
 /obj/machinery/smartfridge/chemistry/virology/preloaded,
-/turf/open/space/basic,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bN" = (
 /obj/machinery/vending/toyliberationstation{
@@ -771,7 +795,10 @@
 /obj/item/reagent_containers/dropper,
 /obj/item/reagent_containers/syringe,
 /obj/item/reagent_containers/glass/beaker/large,
-/turf/open/space/basic,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bT" = (
 /obj/structure/chair/office/dark,
@@ -842,7 +869,10 @@
 /obj/item/clothing/head/bio_hood/general,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/science,
-/turf/open/space/basic,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "cb" = (
 /obj/machinery/shower{
@@ -2230,7 +2260,7 @@ fS
 bO
 cf
 cm
-cv
+gm
 ad
 cG
 cG
@@ -2505,19 +2535,19 @@ aq
 bg
 bn
 go
-gq
-gs
+go
+go
 fT
-gu
+go
 co
 cy
-gw
+go
 fT
-gy
-gA
+go
+go
 fT
-gC
-cv
+go
+gm
 dn
 dq
 aO
@@ -2545,19 +2575,19 @@ ap
 bg
 bo
 gp
-gr
-gt
+gp
+gp
 fU
-gv
+gp
 cp
 cz
-gx
+gp
 fU
-gz
-gB
+gp
+gp
 fU
-gD
-cA
+gp
+gn
 dn
 dr
 aO
@@ -2830,7 +2860,7 @@ bx
 bx
 ae
 cq
-cA
+gn
 ad
 cI
 cP
