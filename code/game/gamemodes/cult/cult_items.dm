@@ -76,7 +76,6 @@
 	name = "bloody bastard sword"
 	desc = "An enormous sword used by Nar-Sien cultists to rapidly harvest the souls of non-believers."
 	w_class = WEIGHT_CLASS_HUGE
-	block_chance = 50
 	throwforce = 20
 	force = 35
 	armour_penetration = 45
