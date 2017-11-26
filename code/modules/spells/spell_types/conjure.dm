@@ -59,7 +59,8 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/linkWorlds
 	name = "Link Worlds"
 	desc = "A whole new dimension for you to play with! They won't be happy about it, though."
-	invocation = "OPN WO'LD"
+	invocation = "WTF"
+	clothes_req = 0
 	charge_max = 600
 	cooldown_min = 200
 	summon_type = list(/mob/living/simple_animal/hostile/spawner/nether)
