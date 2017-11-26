@@ -50,6 +50,20 @@
 		var/chosen_sound = pick(migo_sounds)
 		playsound(src, chosen_sound, 100, TRUE)
 
+/mob/living/simple_animal/hostile/netherworld/blankbody
+	name = "blank body"
+	desc = "This looks human enough, but its flesh has an ashy texture, and it's face is featureless save an eerie smile."
+	icon_state = "blank-body"
+	icon_living = "blank-body"
+	icon_dead = "blank-dead"
+	gold_core_spawnable = 0
+	health = 100
+	maxHealth = 100
+	melee_damage_lower = 5
+	melee_damage_upper = 10
+	attacktext = "punches"
+	deathmessage = "falls apart into a fine dust."
+
 /mob/living/simple_animal/hostile/spawner/nether
 	name = "netherworld link"
 	desc = "A direct link to another dimension full of creatures not very happy to see you. <span class='warning'>Entering the link would be a very bad idea.</span>"
@@ -68,6 +82,22 @@
 	del_on_death = 1
 
 /mob/living/simple_animal/hostile/spawner/nether/attack_hand(mob/user)
-	user.visible_message("<span class='warning'>[user] is violently pulled into the link!</span>", \
+		user.visible_message("<span class='warning'>[user] is violently pulled into the link!</span>", \
 						  "<span class='userdanger'>Touching the portal, you are quickly pulled through into a world of unimaginable horror!</span>")
-	qdel(user)
+		contents.Add(user)
+
+/mob/living/simple_animal/hostile/spawner/nether/Life()
+	..()
+	var/list/C = src.get_contents()
+	for(var/mob/living/M in C)
+		if(M)
+			playsound(src, 'sound/magic/demon_consume.ogg', 50, 1)
+			M.adjustBruteLoss(60)
+			new /obj/effect/gibspawner/human(get_turf(M))
+			if(M.stat == DEAD)
+				var/mob/living/simple_animal/hostile/netherworld/blankbody/blank
+				blank = new(get_turf(src))
+				blank.name = "[M]"
+				blank.desc = "It's [M], but their flesh has an ashy texture, and their face is featureless save an eerie smile."
+				src.visible_message("<span class='warning'>[M] reemerges from the link!</span>")
+				qdel(M)
