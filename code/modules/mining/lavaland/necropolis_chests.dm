@@ -580,7 +580,7 @@
 	to_chat(user, "<span class='notice'>You unfold the ladder. It extends much farther than you were expecting.</span>")
 	var/last_ladder = null
 	for(var/i in 1 to world.maxz)
-		if(is_centcom(i) || i == ZLEVEL_TRANSIT || is_reebe(i))
+		if(SSMapping.check_level_has_trait(i, list(CENTCOM, REEBE, TRANSIT)))
 			continue
 		var/turf/T2 = locate(ladder_x, ladder_y, i)
 		last_ladder = new /obj/structure/ladder/unbreakable/jacob(T2, null, last_ladder)

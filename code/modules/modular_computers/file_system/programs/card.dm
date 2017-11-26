@@ -11,7 +11,7 @@
 	ui_y = 700
 
 	var/mod_mode = 1
-	var/is_centcom = 0
+	var/is_centcom_var = FALSE
 	var/show_assignments = 0
 	var/minor = 0
 	var/authenticated = 0
@@ -219,7 +219,7 @@
 						id_card.assignment = temp_t
 				else
 					var/list/access = list()
-					if(is_centcom)
+					if(is_centcom_var)
 						access = get_centcom_access(t1)
 					else
 						var/datum/job/jobdatum
@@ -242,7 +242,7 @@
 			if(params["allowed"] && computer && authorized())
 				var/access_type = text2num(params["access_target"])
 				var/access_allowed = text2num(params["allowed"])
-				if(access_type in (is_centcom ? get_all_centcom_access() : get_all_accesses()))
+				if(access_type in (is_centcom_var ? get_all_centcom_access() : get_all_accesses()))
 					id_card.access -= access_type
 					if(!access_allowed)
 						id_card.access += access_type
@@ -354,7 +354,7 @@
 		data["have_id_slot"] = 0
 		data["have_printer"] = 0
 
-	data["centcom_access"] = is_centcom
+	data["centcom_access"] = is_centcom_var
 
 
 	data["authenticated"] = authed
@@ -381,7 +381,7 @@
 
 		if(card_slot.stored_card)
 			var/obj/item/card/id/id_card = card_slot.stored_card
-			if(is_centcom)
+			if(is_centcom_var)
 				var/list/all_centcom_access = list()
 				for(var/access in get_all_centcom_access())
 					all_centcom_access.Add(list(list(

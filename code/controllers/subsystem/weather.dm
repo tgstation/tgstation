@@ -6,7 +6,7 @@ SUBSYSTEM_DEF(weather)
 	runlevels = RUNLEVEL_GAME
 	var/list/processing = list()
 	var/list/existing_weather = list()
-	var/list/eligible_zlevels = list(ZLEVEL_LAVALAND)
+	var/list/eligible_zlevel_traits = list(MINING_LEVEL)
 
 /datum/controller/subsystem/weather/fire()
 	for(var/V in processing)
@@ -17,14 +17,14 @@ SUBSYSTEM_DEF(weather)
 			var/mob/living/L = i
 			if(W.can_weather_act(L))
 				W.weather_act(L)
-	for(var/Z in eligible_zlevels)
+	for(var/Z in SSmapping.levels_by_traits(eligible_zlevel_traits))
 		var/list/possible_weather_for_this_z = list()
 		for(var/V in existing_weather)
 			var/datum/weather/WE = V
 			if(WE.target_z == Z && WE.probability) //Another check so that it doesn't run extra weather
 				possible_weather_for_this_z[WE] = WE.probability
 		var/datum/weather/W = pickweight(possible_weather_for_this_z)
-		run_weather(W.name, MINING_LEVEL)	//HACK ALERT
+		run_weather(W.name, Z)	//HACK ALERT
 		eligible_zlevels -= Z
 		addtimer(CALLBACK(src, .proc/make_z_eligible, Z), rand(3000, 6000) + W.weather_duration_upper, TIMER_UNIQUE) //Around 5-10 minutes between weathers
 

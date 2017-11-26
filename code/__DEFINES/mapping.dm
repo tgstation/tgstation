@@ -34,6 +34,8 @@ Everything else = Handled by mapping subsystem
 #define CENTCOM "Centcom"
 // It's Reebe
 #define REEBE "Reebe"
+// It's transit space
+#define TRANSIT "Transit"
 
 //for modifying jobs
 #define MAP_JOB_CHECK if(SSmapping.config.map_name != JOB_MODIFICATION_MAP_NAME) { return; }
@@ -55,10 +57,12 @@ DECLARE_LEVEL("Lavaland", UNAFFECTED, list(STATION_LEVEL = TRUE, STATION_CONTACT
 DECLARE_LEVEL("Main Station", CROSSLINKED, STATION_TRAITS),\
 )
 
-#define ZLEVEL_STATION_PRIMARY 3    //kept for legacy reasons, should be removed eventually
+//LEGACY ONLY PLS REMOOF
+#define ZLEVEL_STATION_PRIMARY SSmapping.FirstStationZ()
+#define ZLEVEL_TRANSIT SSmapping.TransitLevel()
 
 // How many levels of empty space there should be
-#define ZLEVEL_EMPTY_SPACE_COUNT 5  // 
+#define ZLEVEL_EMPTY_SPACE_COUNT 5
 
 #define Z_LEVEL_NORTH "[NORTH]"
 #define Z_LEVEL_SOUTH "[SOUTH]"

@@ -143,7 +143,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		to_chat(user, "<span class='warning'>This station is not equipped with an auxillary base. Please contact your Nanotrasen contractor.</span>")
 		return
 	if(!no_restrictions)
-		if(T.z != ZLEVEL_MINING)
+		if(!is_mining_level(ZLEVEL_MINING))
 			return BAD_ZLEVEL
 		var/colony_radius = max(base_dock.width, base_dock.height)*0.5
 		if(T.x - colony_radius < 1 || T.x + colony_radius >= world.maxx || T.y - colony_radius < 1 || T.y + colony_radius >= world.maxx)
@@ -270,7 +270,7 @@ obj/docking_port/stationary/public_mining_dock
 
 	var/turf/landing_spot = get_turf(src)
 
-	if(landing_spot.z != ZLEVEL_MINING)
+	if(is_mining_level(landing_spot.z))
 		to_chat(user, "<span class='warning'>This device is only to be used in a mining zone.</span>")
 		return
 	var/obj/machinery/computer/auxillary_base/aux_base_console

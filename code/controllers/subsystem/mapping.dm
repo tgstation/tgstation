@@ -52,13 +52,13 @@ SUBSYSTEM_DEF(mapping)
 	loading_ruins = TRUE
 	var/mining_type = config.minetype
 	if (mining_type == "lavaland")
-		seedRuins(list(ZLEVEL_LAVALAND), CONFIG_GET(number/lavaland_budget), /area/lavaland/surface/outdoors/unexplored, lava_ruins_templates)
+		seedRuins(levels_by_trait(MINING_LEVEL), CONFIG_GET(number/lavaland_budget), /area/lavaland/surface/outdoors/unexplored, lava_ruins_templates)
 		spawn_rivers()
 
 	// deep space ruins
 	var/space_zlevels = list()
 	for(var/I in 1 to ZLEVEL_EMPTY_SPACE_COUNT)
-		var/datum/space_level/S = add_new_zlevel("Empty Space #[I]", CROSSLINKED, list(AI_OK = TRUE, STATION_CONTACT = TRUE))
+		add_new_zlevel("Empty Space #[I]", CROSSLINKED, list(AI_OK = TRUE, STATION_CONTACT = TRUE))
 		space_zlevels += I
 
 	seedRuins(space_zlevels, CONFIG_GET(number/space_budget), /area/space, space_ruins_templates)
@@ -166,7 +166,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	var/list/station_areas_blacklist = typecacheof(list(/area/space, /area/mine, /area/ruin))
 	for(var/area/A in world)
 		var/turf/picked = safepick(get_area_turfs(A.type))
-		if(picked && (picked.z in GLOB.station_z_levels))
+		if(picked && is_station_level(picked.z)))
 			if(!(A.type in GLOB.the_station_areas) && !is_type_in_typecache(A, station_areas_blacklist))
 				GLOB.the_station_areas.Add(A.type)
 

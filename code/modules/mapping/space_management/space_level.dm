@@ -94,6 +94,7 @@
 	if(S.x >= (world.maxx - TRANSITIONEDGE - 1))
 		transit_east -= S
 
+/*
 /datum/space_level/proc/apply_transition(turf/open/space/S)
 	if(SSmapping.unbuilt_space_transitions[src])
 		return // Let SSmapping handle this one
@@ -115,6 +116,8 @@
 				E = get_connection("[WEST]")
 				S.set_transition_west(E.zpos)
 
+*/
+
 /datum/space_level/proc/return_turfs()
 	return block(locate(1, 1, zpos), locate(world.maxx, world.maxy, zpos))
 
@@ -123,6 +126,15 @@
 		var/datum/spacewalk_grid/linkage_map = SSmapping.linkage_map
 		if(linkage_map)
 			remove_from_space_network(linkage_map)
+
+/datum/space_level/proc/remove_from_space_network(datum/spacewalk_grid/SW)
+	var/datum/point/P = SW.get(xi,yi)
+	SW.release_node(P)
+	// Only do this when we're done, or we'll trample vars needed for releasing
+	// the level
+	xi = initial(xi)
+	yi = initial(yi)
+	reset_connections()
 
 /datum/space_level/proc/set_linkage(transition_type)
 	if(linkage == transition_type)

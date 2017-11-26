@@ -26,7 +26,7 @@
 
 	. = ..()
 
-/mob/dead/new_player/SendToStartLocIfRequired()
+/mob/dead/new_player/proc/SendToStartLocIfRequired()
 	if(loc)
 		return
 	var/turf/T = safepick(GLOB.newplayer_start)

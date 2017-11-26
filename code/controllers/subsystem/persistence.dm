@@ -65,7 +65,7 @@ SUBSYSTEM_DEF(persistence)
 			new path(F)
 		placed_satchel++
 	var/free_satchels = 0
-	for(var/turf/T in shuffle(block(locate(TRANSITIONEDGE,TRANSITIONEDGE,ZLEVEL_STATION_PRIMARY), locate(world.maxx-TRANSITIONEDGE,world.maxy-TRANSITIONEDGE,ZLEVEL_STATION_PRIMARY)))) //Nontrivially expensive but it's roundstart only
+	for(var/turf/T in shuffle(block(locate(TRANSITIONEDGE,TRANSITIONEDGE,SSmapping.FirstStationZ()), locate(world.maxx-TRANSITIONEDGE,world.maxy-TRANSITIONEDGE,SSmapping.LastStationZ())))) //Nontrivially expensive but it's roundstart only
 		if(isfloorturf(T) && !isplatingturf(T))
 			new /obj/item/storage/backpack/satchel/flat/secret(T)
 			free_satchels++

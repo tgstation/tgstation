@@ -14,6 +14,8 @@
 
 #define is_centcom(z) SSmapping.check_level_trait(z, CENTCOM)
 
+#define is_transit_level(z) SSmapping.check_level_trait(z, TRANSIT)
+
 #define level_blocks_magic(z) SSmapping.check_level_trait(z, IMPEDES_MAGIC)
 
 #define level_ignores_bombcap(z) SSmapping.check_level_trait(z, IGNORES_BOMBCAP)

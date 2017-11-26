@@ -164,7 +164,7 @@
 		if(S.flags[trait])
 			. |= S.zpos
 
-/datum/controller/subsystem/mapping/proc/levels_by_traits(z, list/traits)
+/datum/controller/subsystem/mapping/proc/levels_by_traits(list/traits)
 	. = list()
 	for(var/I in traits)
 		. |= levels_by_trait(I)
@@ -172,3 +172,12 @@
 /datum/controller/subsystem/mapping/proc/level_name_to_num(name)
 	var/datum/space_level/S = get_zlev_by_name(name)
 	return S.zpos
+
+/datum/controller/subsystem/mapping/proc/TransitLevel()
+	CRASH("Implement me :(")
+
+/datum/controller/subsystem/mapping/proc/FirstStationZ()
+	CRASH("Implement me :(")
+
+/datum/controller/subsystem/mapping/proc/LastStationZ()
+	CRASH("Implement me :(")

@@ -161,17 +161,8 @@
 	var/list/areaindex = list()
 	if(regime_set == "Teleporter")
 		for(var/obj/item/device/radio/beacon/R in GLOB.teleportbeacons)
-<<<<<<< HEAD
-			var/turf/T = get_turf(R)
-			if(!T)
-				continue
-			if(is_centcom(T.z) || is_away_mission(T.z))
-				continue
-			L[avoid_assoc_duplicate_keys(T.loc.name, areaindex)] = R
-=======
 			if(is_eligible(R))
 				L[avoid_assoc_duplicate_keys(R.loc.loc.name, areaindex)] = R
->>>>>>> 5941e802ee8090684c0e1ff336b496859702c73f
 
 		for(var/obj/item/implant/tracking/I in GLOB.tracked_implants)
 			if(!I.imp_in || !ismob(I.loc))
@@ -181,17 +172,8 @@
 				if(M.stat == DEAD)
 					if(M.timeofdeath + 6000 < world.time)
 						continue
-<<<<<<< HEAD
-				var/turf/T = get_turf(M)
-				if(!T)
-					continue
-				if(is_centcom(T.z))
-					continue
-				L[avoid_assoc_duplicate_keys(M.real_name, areaindex)] = I
-=======
 				if(is_eligible(I))
 					L[avoid_assoc_duplicate_keys(M.real_name, areaindex)] = I
->>>>>>> 5941e802ee8090684c0e1ff336b496859702c73f
 
 		var/desc = input("Please select a location to lock in.", "Locking Computer") as null|anything in L
 		target = L[desc]
