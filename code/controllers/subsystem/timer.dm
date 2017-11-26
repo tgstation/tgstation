@@ -1,5 +1,5 @@
 #define BUCKET_LEN (world.fps*1*60) //how many ticks should we keep in the bucket. (1 minutes worth)
-#define BUCKET_POS(timer) (round((timer.timeToRun - SStimer.head_offset) / world.tick_lag) + 1)
+#define BUCKET_POS(timer) ((round((timer.timeToRun - SStimer.head_offset) / world.tick_lag) + 1) % BUCKET_LEN)
 #define TIMER_ID_MAX (2**24) //max float with integer precision
 
 SUBSYSTEM_DEF(timer)
@@ -13,7 +13,7 @@ SUBSYSTEM_DEF(timer)
 	var/list/hashes = list()
 
 	var/head_offset = 0 //world.time of the first entry in the the bucket.
-	var/practical_offset = 0 //index of the first non-empty item in the bucket.
+	var/practical_offset = 1 //index of the first non-empty item in the bucket.
 	var/bucket_resolution = 0 //world.tick_lag the bucket was designed for
 	var/bucket_count = 0 //how many timers are in the buckets
 
@@ -26,6 +26,9 @@ SUBSYSTEM_DEF(timer)
 	var/last_invoke_tick = 0
 	var/static/last_invoke_warning = 0
 	var/static/bucket_auto_reset = TRUE
+
+/datum/controller/subsystem/timer/PreInit()
+	bucket_list.len = BUCKET_LEN
 
 /datum/controller/subsystem/timer/stat_entry(msg)
 	..("B:[bucket_count] P:[length(processing)] H:[length(hashes)] C:[length(clienttime_timers)]")
@@ -79,28 +82,28 @@ SUBSYSTEM_DEF(timer)
 
 	var/static/list/spent = list()
 	var/static/datum/timedevent/timer
-	var/static/datum/timedevent/head
+	var/static/current_offset = 1
+	if (practical_offset > BUCKET_LEN)
+		head_offset += BUCKET_LEN
+		practical_offset = 1
 
-	if (practical_offset > BUCKET_LEN || (!resumed  && length(bucket_list) != BUCKET_LEN || world.tick_lag != bucket_resolution))
-		shift_buckets()
+	if ((length(bucket_list) != BUCKET_LEN) || (world.tick_lag != bucket_resolution))
+		reset_buckets()
 		bucket_list = src.bucket_list
 		resumed = FALSE
 
 
 	if (!resumed)
 		timer = null
-		head = null
+		current_offset = practical_offset
 
-	while (practical_offset <= BUCKET_LEN && head_offset + (practical_offset*world.tick_lag) <= world.time && !MC_TICK_CHECK)
+	while (practical_offset <= BUCKET_LEN && head_offset + (practical_offset*world.tick_lag) <= world.time)
+		var/datum/timedevent/head = bucket_list[current_offset]
 		if (!timer || !head || timer == head)
-			head = bucket_list[practical_offset]
-			if (!head)
-				practical_offset++
-				if (MC_TICK_CHECK)
-					break
-				continue
+			current_offset = practical_offset
+			head = bucket_list[current_offset]
 			timer = head
-		do
+		while (timer)
 			var/datum/callback/callBack = timer.callBack
 			if (!callBack)
 				qdel(timer)
@@ -114,14 +117,40 @@ SUBSYSTEM_DEF(timer)
 				last_invoke_tick = world.time
 
 			timer = timer.next
-
+			if (timer == head)
+				break
 			if (MC_TICK_CHECK)
 				return
-		while (timer && timer != head)
-		timer = null
-		bucket_list[practical_offset++] = null
-		if (MC_TICK_CHECK)
-			return
+
+		bucket_list[current_offset++] = null
+		practical_offset = current_offset
+
+		//we freed up a bucket, lets see if anything in processing needs to be shifted to that bucket.
+		var/max_time = world.time + min(world.time-head_offset, TICKS2DS(practical_offset))
+		var/i = 1
+		var/L = length(processing)
+		for (i in 1 to L)
+			timer = processing[i]
+			if (timer.timeToRun < max_time)
+				break
+			bucket_count++
+			var/bucket_pos = BUCKET_POS(timer)
+			var/datum/timedevent/bucket_head = bucket_list[bucket_pos]
+			if (!bucket_head)
+				bucket_list[bucket_pos] = timer
+				timer.next = null
+				timer.prev = null
+				continue
+
+			if (!bucket_head.prev)
+				bucket_head.prev = bucket_head
+			timer.next = bucket_head
+			timer.prev = bucket_head.prev
+			timer.next.prev = timer
+			timer.prev.next = timer
+			timer = processing[i++]
+		if (i > 1)
+			processing.Cut(1, i)
 
 	bucket_count -= length(spent)
 
@@ -141,7 +170,7 @@ SUBSYSTEM_DEF(timer)
 	if(!TE.callBack)
 		. += ", NO CALLBACK"
 
-/datum/controller/subsystem/timer/proc/shift_buckets()
+/datum/controller/subsystem/timer/proc/reset_buckets()
 	var/list/bucket_list = src.bucket_list
 	var/list/alltimers = list()
 	//collect the timers currently in the bucket
@@ -232,7 +261,7 @@ SUBSYSTEM_DEF(timer)
 	src.timeToRun = timeToRun
 	src.flags = flags
 	src.hash = hash
-	
+
 	if (flags & TIMER_UNIQUE)
 		SStimer.hashes[hash] = src
 	if (flags & TIMER_STOPPABLE)
@@ -251,32 +280,47 @@ SUBSYSTEM_DEF(timer)
 	if (callBack.object != GLOBAL_PROC)
 		LAZYADD(callBack.object.active_timers, src)
 
+
+	var/list/L
+
 	if (flags & TIMER_CLIENT_TIME)
-		//sorted insert
-		var/list/ctts = SStimer.clienttime_timers
-		var/cttl = length(ctts)
+		L = SStimer.clienttime_timers
+	else
+		//calculate the longest timer the bucket list can hold
+		var/max_time = world.time + min(world.time-SStimer.head_offset, TICKS2DS(SStimer.practical_offset))
+		if (timeToRun >= max_time)
+			L = SStimer.processing
+
+
+	if (L)
+		//binary search sorted insert
+		var/cttl = length(L)
 		if(cttl)
-			var/datum/timedevent/Last = ctts[cttl]
-			if(Last.timeToRun >= timeToRun)
-				ctts += src
-			else
-				for(var/i in cttl to 1 step -1)
-					var/datum/timedevent/E = ctts[i]
-					if(E.timeToRun <= timeToRun)
-						ctts.Insert(i, src)
-						break
+			var/left = 1
+			var/right = cttl
+			var/mid = (left+right) >> 1 //rounded divide by two for hedgehogs
+
+			var/datum/timedevent/item = L[1]
+			while (left < right)
+				item = L[mid]
+				if (item.timeToRun <= timeToRun)
+					left = mid+1
+				else
+					right = mid
+				mid = (left+right) >> 1
+			mid = item.timeToRun < timeToRun ? mid : mid+1
+			L.Insert(mid, src)
+
 		else
-			ctts += src
+			L += src
 		return
 
 	//get the list of buckets
 	var/list/bucket_list = SStimer.bucket_list
+
 	//calculate our place in the bucket list
 	var/bucket_pos = BUCKET_POS(src)
-	//we are too far aways from needing to run to be in the bucket list, shift_buckets() will handle us.
-	if (bucket_pos > length(bucket_list))
-		SStimer.processing += src
-		return
+
 	//get the bucket for our tick
 	var/datum/timedevent/bucket_head = bucket_list[bucket_pos]
 	SStimer.bucket_count++
