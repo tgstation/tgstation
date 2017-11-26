@@ -609,11 +609,6 @@
 /obj/item/circuitboard/machine/autolathe/soviet
 	name = "Sovietlathe (Machine Board)"
 	build_path = /obj/machinery/autolathe/soviet
-	origin_tech = "engineering=2;programming=2"
-	req_components = list(
-		/obj/item/stock_parts/matter_bin = 3,
-		/obj/item/stock_parts/manipulator = 1,
-		/obj/item/stock_parts/console_screen = 1)
 
 /*********************Radio Shit*************************/
 
