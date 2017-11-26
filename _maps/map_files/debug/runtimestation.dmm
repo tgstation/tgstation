@@ -5,7 +5,7 @@
 "ab" = (
 /obj/structure/lattice,
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "ac" = (
 /turf/open/space,
 /area/space)
@@ -16,14 +16,14 @@
 /obj/structure/lattice,
 /obj/structure/grille,
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "af" = (
 /turf/open/floor/plating,
 /area/maintenance/department/bridge)
 "ag" = (
 /obj/structure/lattice,
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "ah" = (
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
@@ -56,7 +56,7 @@
 	icon_state = "1-4"
 	},
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "ao" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
@@ -66,7 +66,7 @@
 	icon_state = "2-8"
 	},
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "ap" = (
 /obj/machinery/airalarm{
 	frequency = 1439;
@@ -173,14 +173,14 @@
 	icon_state = "2-4"
 	},
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "aB" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "aC" = (
 /obj/machinery/door/airlock,
 /obj/structure/cable{
@@ -281,7 +281,7 @@
 	icon_state = "2-4"
 	},
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "aR" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
@@ -291,7 +291,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "aS" = (
 /obj/structure/table,
 /obj/item/device/flashlight{

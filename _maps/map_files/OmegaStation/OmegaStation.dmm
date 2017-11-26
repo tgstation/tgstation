@@ -19,17 +19,17 @@
 "aae" = (
 /obj/structure/lattice,
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "aaf" = (
 /obj/structure/lattice,
 /obj/structure/grille,
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "aag" = (
 /obj/structure/lattice,
 /obj/structure/grille/broken,
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "aah" = (
 /obj/structure/sign/securearea,
 /turf/closed/wall,
@@ -34038,7 +34038,7 @@
 	width = 18
 	},
 /turf/open/space/basic,
-/area/space/nearstation)
+/area/space)
 "sws" = (
 /obj/docking_port/stationary{
 	dheight = 9;
@@ -34051,7 +34051,7 @@
 	width = 18
 	},
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "swt" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
