@@ -145,7 +145,7 @@
 // Returns null if assembly is not complete enough to be saved.
 /datum/controller/subsystem/processing/circuit/proc/save_electronic_assembly(obj/item/device/electronic_assembly/assembly)
 	// No components? Don't even try to save it.
-	if(!length(assembly.components))
+	if(!length(assembly.assembly_components))
 		return
 
 
@@ -158,7 +158,7 @@
 
 	// Block 2. Components.
 	var/list/components = list()
-	for(var/c in assembly.components)
+	for(var/c in assembly.assembly_components)
 		var/obj/item/integrated_circuit/component = c
 		components.Add(list(component.save()))
 	blocks["components"] = components
@@ -168,7 +168,7 @@
 	var/list/wires = list()
 	var/list/saved_wires = list()
 
-	for(var/c in assembly.components)
+	for(var/c in assembly.assembly_components)
 		var/obj/item/integrated_circuit/component = c
 		var/list/all_pins = component.inputs + component.outputs + component.activators
 

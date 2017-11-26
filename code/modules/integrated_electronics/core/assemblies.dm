@@ -9,7 +9,7 @@
 	icon_state = "setup_small"
 	flags_1 = NOBLUDGEON_1
 	materials = list()		// To be filled later
-	var/list/components = list()
+	var/list/assembly_components = list()
 	var/max_components = IC_MAX_SIZE_BASE
 	var/max_complexity = IC_COMPLEXITY_BASE
 	var/opened = FALSE
@@ -41,11 +41,11 @@
 
 /obj/item/device/electronic_assembly/proc/handle_idle_power()
 	// First we generate power.
-	for(var/obj/item/integrated_circuit/passive/power/P in components)
+	for(var/obj/item/integrated_circuit/passive/power/P in assembly_components)
 		P.make_energy()
 
 	// Now spend it.
-	for(var/I in components)
+	for(var/I in assembly_components)
 		var/obj/item/integrated_circuit/IC = I
 		if(IC.power_draw_idle)
 			if(!draw_power(IC.power_draw_idle))
@@ -77,7 +77,7 @@
 
 	var/builtin_components = ""
 
-	for(var/c in components)
+	for(var/c in assembly_components)
 		var/obj/item/integrated_circuit/circuit = c
 		if(!circuit.removable)
 			builtin_components += "<a href='?src=[REF(circuit)]'>[circuit.displayed_name]</a> | "
@@ -95,7 +95,7 @@
 
 	HTML += "<br>"
 
-	for(var/c in components)
+	for(var/c in assembly_components)
 		var/obj/item/integrated_circuit/circuit = c
 		if(circuit.removable)
 			HTML += "<a href='?src=[REF(circuit)]'>[circuit.displayed_name]</a> | "
@@ -129,18 +129,18 @@
 			battery = null
 
 	if(href_list["component"])
-		var/obj/item/integrated_circuit/component = locate(href_list["component"]) in components
+		var/obj/item/integrated_circuit/component = locate(href_list["component"]) in assembly_components
 		if(component)
 			// Builtin components are not supposed to be removed or rearranged
 			if(!component.removable)
 				return
 
-			var/current_pos = components.Find(component)
+			var/current_pos = assembly_components.Find(component)
 
 			// Find the position of a first removable component
 			var/first_removable_pos
-			for(var/i in 1 to components.len)
-				var/obj/item/integrated_circuit/temp_component = components[i]
+			for(var/i in 1 to assembly_components.len)
+				var/obj/item/integrated_circuit/temp_component = assembly_components[i]
 				if(temp_component.removable)
 					first_removable_pos = i
 					break
@@ -157,16 +157,16 @@
 				else if(href_list["top"])
 					current_pos = first_removable_pos
 				else if(href_list["bottom"])
-					current_pos = components.len
+					current_pos = assembly_components.len
 
 				// Wrap around nicely
 				if(current_pos < first_removable_pos)
-					current_pos = components.len
-				else if(current_pos > components.len)
+					current_pos = assembly_components.len
+				else if(current_pos > assembly_components.len)
 					current_pos = first_removable_pos
 
-				components.Remove(component)
-				components.Insert(current_pos, component)
+				assembly_components.Remove(component)
+				assembly_components.Insert(current_pos, component)
 
 	interact(usr) // To refresh the UI.
 
@@ -193,7 +193,7 @@
 
 /obj/item/device/electronic_assembly/examine(mob/user)
 	..()
-	for(var/I in components)
+	for(var/I in assembly_components)
 		var/obj/item/integrated_circuit/IC = I
 		IC.external_examine(user)
 		if(istype(IC, /obj/item/integrated_circuit/output/screen))
@@ -206,14 +206,14 @@
 /obj/item/device/electronic_assembly/proc/return_total_complexity()
 	. = 0
 	var/obj/item/integrated_circuit/part
-	for(var/p in components)
+	for(var/p in assembly_components)
 		part = p
 		. += part.complexity
 
 /obj/item/device/electronic_assembly/proc/return_total_size()
 	. = 0
 	var/obj/item/integrated_circuit/part
-	for(var/p in components)
+	for(var/p in assembly_components)
 		part = p
 		. += part.size
 
@@ -251,7 +251,7 @@
 /obj/item/device/electronic_assembly/proc/add_component(obj/item/integrated_circuit/component)
 	component.forceMove(get_object())
 	component.assembly = src
-	components |= component
+	assembly_components |= component
 
 
 /obj/item/device/electronic_assembly/proc/try_remove_component(obj/item/integrated_circuit/IC, mob/user)
@@ -274,11 +274,11 @@
 	component.disconnect_all()
 	component.forceMove(drop_location())
 	component.assembly = null
-	components.Remove(component)
+	assembly_components.Remove(component)
 
 
 /obj/item/device/electronic_assembly/afterattack(atom/target, mob/user, proximity)
-	for(var/obj/item/integrated_circuit/input/sensor/S in components)
+	for(var/obj/item/integrated_circuit/input/sensor/S in assembly_components)
 		if(!proximity)
 			if(istype(S,/obj/item/integrated_circuit/input/sensor/ranged)||(!user))
 				if(user.client)
@@ -341,7 +341,7 @@
 
 	var/list/input_selection = list()
 	var/list/available_inputs = list()
-	for(var/obj/item/integrated_circuit/input/input in components)
+	for(var/obj/item/integrated_circuit/input/input in assembly_components)
 		if(input.can_be_asked_input)
 			available_inputs.Add(input)
 			var/i = 0
@@ -387,7 +387,7 @@
 	return FALSE
 
 /obj/item/device/electronic_assembly/Moved(oldLoc, dir)
-	for(var/I in components)
+	for(var/I in assembly_components)
 		var/obj/item/integrated_circuit/IC = I
 		IC.ext_moved(oldLoc, dir)
 

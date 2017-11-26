@@ -382,7 +382,7 @@
 
 	// No ejecting assembly components or power cells
 	if(assembly)
-		if((A in assembly.components) || A == assembly.battery)
+		if((A in assembly.assembly_components) || A == assembly.battery)
 			return
 
 	// If the item is in mob's inventory, try to remove it from there.

@@ -69,7 +69,7 @@
 	if(!components)
 		if(!holder.assembly)
 			return
-		components = holder.assembly.components
+		components = holder.assembly.assembly_components
 
 	var/component_number = components.Find(holder)
 
@@ -91,22 +91,22 @@
 
 // Locates a pin in the assembly when given component number, pin type and pin number
 // Components list can be supplied from the outside, for use in savefiles
-/obj/item/device/electronic_assembly/proc/get_pin_ref(component_number, pin_type, pin_number, list/ext_components)
-	if(!ext_components)
-		ext_components = components
+/obj/item/device/electronic_assembly/proc/get_pin_ref(component_number, pin_type, pin_number, list/components)
+	if(!components)
+		components = assembly_components
 
-	if(component_number > ext_components.len)
+	if(component_number > components.len)
 		return
 
-	var/obj/item/integrated_circuit/component = ext_components[component_number]
+	var/obj/item/integrated_circuit/component = components[component_number]
 	return component.get_pin_ref(pin_type, pin_number)
 
 
 // Same as get_pin_ref, but takes in a list of 3 parameters (same format as get_pin_parameters)
 // and performs extra sanity checks on parameters list and index numbers
-/obj/item/device/electronic_assembly/proc/get_pin_ref_list(list/parameters, list/ext_components)
-	if(!ext_components)
-		ext_components = components
+/obj/item/device/electronic_assembly/proc/get_pin_ref_list(list/parameters, list/components)
+	if(!components)
+		components = assembly_components
 
 	if(!islist(parameters) || parameters.len != 3)
 		return
@@ -118,7 +118,7 @@
 	if(!isnum(parameters[3]) || parameters[3] % 1 || parameters[3] < 1)
 		return
 
-	return get_pin_ref(parameters[1], parameters[2], parameters[3], ext_components)
+	return get_pin_ref(parameters[1], parameters[2], parameters[3], components)
 
 
 
