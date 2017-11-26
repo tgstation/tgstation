@@ -13138,7 +13138,7 @@
 "zi" = (
 /obj/effect/mapping_helpers/planet_z,
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 
 (1,1,1) = {"
 aa

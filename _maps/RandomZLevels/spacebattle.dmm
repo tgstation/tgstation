@@ -2448,11 +2448,11 @@
 "ix" = (
 /obj/structure/lattice,
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "iy" = (
 /obj/effect/mob_spawn/human/syndicatesoldier,
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "iz" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/space/nearstation)
@@ -2545,7 +2545,7 @@
 "iS" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "iT" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/mineral/plastitanium,
@@ -3044,11 +3044,11 @@
 "kE" = (
 /obj/item/shard,
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "kF" = (
 /obj/item/stack/rods,
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "kG" = (
 /obj/item/ammo_casing/c10mm,
 /obj/item/ammo_casing/c10mm,
@@ -3067,17 +3067,17 @@
 "kI" = (
 /obj/item/stack/sheet/metal,
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "kJ" = (
 /obj/item/shard,
 /obj/structure/lattice,
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "kK" = (
 /obj/structure/lattice,
 /obj/item/stack/rods,
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "kL" = (
 /obj/structure/closet/crate,
 /obj/item/stock_parts/cell/high,

@@ -335,7 +335,7 @@
 "bk" = (
 /obj/structure/lattice,
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "bl" = (
 /obj/machinery/door/poddoor{
 	id = "XCCHangar1";
@@ -3132,19 +3132,19 @@
 	dir = 1
 	},
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "kU" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 1
 	},
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "kV" = (
 /obj/structure/shuttle/engine/propulsion/left{
 	dir = 1
 	},
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "kW" = (
 /obj/structure/table,
 /obj/item/device/paicard,
