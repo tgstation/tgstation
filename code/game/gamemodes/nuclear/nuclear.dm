@@ -313,7 +313,7 @@
 	id = /obj/item/card/id/syndicate
 	belt = /obj/item/gun/ballistic/automatic/pistol
 	backpack_contents = list(/obj/item/storage/box/syndie=1,\
-		/obj/item/kitchen/knife/combat)
+		/obj/item/kitchen/knife/combat/survival)
 
 	var/tc = 25
 
@@ -350,4 +350,4 @@
 	backpack_contents = list(/obj/item/storage/box/syndie=1,\
 		/obj/item/tank/jetpack/oxygen/harness=1,\
 		/obj/item/gun/ballistic/automatic/pistol=1,\
-		/obj/item/kitchen/knife/combat)
+		/obj/item/kitchen/knife/combat/survival)
