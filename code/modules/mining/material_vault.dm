@@ -24,12 +24,11 @@ GLOBAL_VAR_INIT(material_data,initialize_material_data())
 	icon_state ="mineral"
 	name = "material network node"
 	desc = "Storage using bluespace technology to transport materials"
+	anchored = TRUE
 	var/id = 1
 	var/map_id	//for designating vaults during maptime
 	var/static/gid = 1
 	var/department = "Generic"
-	var/hacked = FALSE
-	var/vault = FALSE
 	var/list/requested_materials = list()
 
 /obj/machinery/material_storage/vault
@@ -117,7 +116,6 @@ GLOBAL_VAR_INIT(material_data,initialize_material_data())
 	. = list()
 	.["storage_name"] = department
 	.["storage_id"] = id
-	.["storage_responsive"] = !hacked
 	var/mat_list = list()
 	GET_COMPONENT(materials, /datum/component/material_container)
 	for(var/mat_id in materials.materials)
@@ -208,6 +206,9 @@ GLOBAL_VAR_INIT(material_data,initialize_material_data())
 	var/obj/machinery/material_storage/source = get_material_storage(source_id)
 	var/obj/machinery/material_storage/target = get_material_storage(target_id)
 	if(!source || !target)
+		return
+	if(source.stat || target.stat)
+		to_chat(user,"<span class='warning>Target storage unresponsive.</span>")
 		return
 	var/requested_amount = input(user, "How much do you want to transfer?", "Transfer to [target.department]") as num|null
 	if(isnull(requested_amount) || (requested_amount <= 0))

@@ -42,6 +42,16 @@
 				storage = V
 				break
 
+/obj/machinery/mineral/ore_redemption/proc/cycle_storage()
+	var/list/all_storages = list()
+	for(var/obj/machinery/material_storage/V in GLOB.machines)
+		all_storages += V
+	if(!all_storages.len)
+		return
+	var/current_index = all_storages.Find(storage)
+	current_index = Wrap(current_index+1,1,all_storages.len+1)
+	storage = all_storages[current_index]
+
 /obj/machinery/mineral/ore_redemption/Destroy()
 	QDEL_NULL(stored_research)
 	return ..()
@@ -195,6 +205,11 @@
 			inserted_disk = W
 			return TRUE
 	return ..()
+
+/obj/machinery/mineral/ore_redemption/wirecutter_act(user,tool)
+	cycle_storage()
+	to_chat(user,"<span class='notice'>You set [src] vault identifier to [storage ? storage.department : "nothing"].</span>")
+	return TRUE
 
 /obj/machinery/mineral/ore_redemption/on_deconstruction()
 	GET_COMPONENT(materials, /datum/component/material_container)
