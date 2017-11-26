@@ -110,7 +110,7 @@
 		if(!build_type || !ispath(build_type))
 			return TRUE
 
-		var/cost = 1
+		var/cost = 400
 		if(ispath(build_type, /obj/item/device/electronic_assembly))
 			var/obj/item/device/electronic_assembly/E = SScircuit.cached_assemblies[build_type]
 			cost = E.materials[MAT_METAL]
