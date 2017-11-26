@@ -36,7 +36,7 @@
 	circuit = /obj/item/circuitboard/machine/protolathe/department/cargo
 
 /obj/machinery/rnd/protolathe/department/science
-	allowed_department_flags = DEPARTMENTAL_FLAG_ALL|DEPARTMENTAL_FLAG_SCIENCE
+	allowed_department_flags = DEPARTMENTAL_FLAG_ALL|DEPARTMENTAL_FLAG_SCIENCE |DEPARTMENTAL_FLAG_CARGO|DEPARTMENTAL_FLAG_SECURITY|DEPARTMENTAL_FLAG_MEDICAL|DEPARTMENTAL_FLAG_SERVICE
 	department_tag = "Science"
 	circuit = /obj/item/circuitboard/machine/protolathe/department/science
 
