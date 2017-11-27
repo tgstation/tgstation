@@ -712,7 +712,7 @@
 		to_chat(cloth_golem, "<span class='notice'>You start gathering your life energy, preparing to rise again...</span>")
 		addtimer(CALLBACK(src, .proc/revive), revive_time)
 	else
-		qdel(src)
+		return INITIALIZE_HINT_QDEL
 
 /obj/structure/cloth_pile/Destroy()
 	if(cloth_golem)
