@@ -1,5 +1,6 @@
 #define BUCKET_LEN (world.fps*1*60) //how many ticks should we keep in the bucket. (1 minutes worth)
-#define BUCKET_POS(timer) ((round((timer.timeToRun - SStimer.head_offset) / world.tick_lag) + 1) % BUCKET_LEN)
+#define BUCKET_POS(timer) ((round((timer.timeToRun - SStimer.head_offset) / world.tick_lag) % BUCKET_LEN) + 1)
+#define TIMER_MAX (world.time + TICKS2DS(min(BUCKET_LEN-(SStimer.practical_offset-DS2TICKS(world.time - SStimer.head_offset))-1, BUCKET_LEN-1)))
 #define TIMER_ID_MAX (2**24) //max float with integer precision
 
 SUBSYSTEM_DEF(timer)
@@ -84,8 +85,9 @@ SUBSYSTEM_DEF(timer)
 	var/static/datum/timedevent/timer
 	var/static/current_offset = 1
 	if (practical_offset > BUCKET_LEN)
-		head_offset += BUCKET_LEN
+		head_offset += TICKS2DS(BUCKET_LEN)
 		practical_offset = 1
+		resumed = FALSE
 
 	if ((length(bucket_list) != BUCKET_LEN) || (world.tick_lag != bucket_resolution))
 		reset_buckets()
@@ -126,15 +128,16 @@ SUBSYSTEM_DEF(timer)
 		practical_offset = current_offset
 
 		//we freed up a bucket, lets see if anything in processing needs to be shifted to that bucket.
-		var/max_time = world.time + min(world.time-head_offset, TICKS2DS(practical_offset))
 		var/i = 1
 		var/L = length(processing)
 		for (i in 1 to L)
 			timer = processing[i]
-			if (timer.timeToRun < max_time)
+			if (timer.timeToRun >= TIMER_MAX)
+				debug_admins("Ending timer minishift: i=[i], L = [L], timer.timeToRun = [timer.timeToRun], TIMER_MAX = [TIMER_MAX].")
 				break
 			bucket_count++
-			var/bucket_pos = BUCKET_POS(timer)
+			var/bucket_pos = max(1, BUCKET_POS(timer))
+
 			var/datum/timedevent/bucket_head = bucket_list[bucket_pos]
 			if (!bucket_head)
 				bucket_list[bucket_pos] = timer
@@ -148,9 +151,10 @@ SUBSYSTEM_DEF(timer)
 			timer.prev = bucket_head.prev
 			timer.next.prev = timer
 			timer.prev.next = timer
-			timer = processing[i++]
 		if (i > 1)
 			processing.Cut(1, i)
+
+		timer = null
 
 	bucket_count -= length(spent)
 
@@ -211,7 +215,7 @@ SUBSYSTEM_DEF(timer)
 			continue
 
 		var/bucket_pos = BUCKET_POS(timer)
-		if (bucket_pos > BUCKET_LEN)
+		if (timer.timeToRun >= TIMER_MAX)
 			break
 
 		timers_to_remove += timer //remove it from the big list once we are done
@@ -287,8 +291,7 @@ SUBSYSTEM_DEF(timer)
 		L = SStimer.clienttime_timers
 	else
 		//calculate the longest timer the bucket list can hold
-		var/max_time = world.time + min(world.time-SStimer.head_offset, TICKS2DS(SStimer.practical_offset))
-		if (timeToRun >= max_time)
+		if (timeToRun >= TIMER_MAX)
 			L = SStimer.processing
 
 
@@ -298,17 +301,18 @@ SUBSYSTEM_DEF(timer)
 		if(cttl)
 			var/left = 1
 			var/right = cttl
-			var/mid = (left+right) >> 1 //rounded divide by two for hedgehogs
+			var/mid
 
 			var/datum/timedevent/item = L[1]
 			while (left < right)
+				mid = (left+right) >> 1 //rounded divide by two for hedgehogs
 				item = L[mid]
 				if (item.timeToRun <= timeToRun)
 					left = mid+1
 				else
 					right = mid
-				mid = (left+right) >> 1
-			mid = item.timeToRun < timeToRun ? mid : mid+1
+
+			mid = item.timeToRun > timeToRun ? mid : mid+1
 			L.Insert(mid, src)
 
 		else
@@ -327,8 +331,6 @@ SUBSYSTEM_DEF(timer)
 	//empty bucket, we will just add ourselves
 	if (!bucket_head)
 		bucket_list[bucket_pos] = src
-		if (bucket_pos < SStimer.practical_offset)
-			SStimer.practical_offset = bucket_pos
 		return
 	//other wise, lets do a simplified linked list add.
 	if (!bucket_head.prev)
@@ -367,18 +369,17 @@ SUBSYSTEM_DEF(timer)
 			if (next)
 				next.prev = prev
 
-		var/bucketpos = BUCKET_POS(src)
-		var/datum/timedevent/buckethead
-		var/list/bucket_list = SStimer.bucket_list
 
-		if (bucketpos > 0 && bucketpos <= length(bucket_list))
+		if (timeToRun >= TIMER_MAX)
+			SStimer.processing -= src
+		else
+			var/bucketpos = BUCKET_POS(src)
+			var/datum/timedevent/buckethead
+			var/list/bucket_list = SStimer.bucket_list
 			buckethead = bucket_list[bucketpos]
 			SStimer.bucket_count--
-		else
-			SStimer.processing -= src
-
-		if (buckethead == src)
-			bucket_list[bucketpos] = next
+			if (buckethead == src)
+				bucket_list[bucketpos] = next
 	else
 		if (prev && prev.next == src)
 			prev.next = next
@@ -453,3 +454,5 @@ SUBSYSTEM_DEF(timer)
 
 #undef BUCKET_LEN
 #undef BUCKET_POS
+#undef TIMER_MAX
+#undef TIMER_ID_MAX
