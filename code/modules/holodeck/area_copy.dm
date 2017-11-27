@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list("tag","area","type","loc","locs",
 			if(islist(original.vars[V]))
 				var/list/L = original.vars[V]
 				O.vars[V] = L.Copy()
-			else if(istype(original.vars[V],/datum))
+			else if(istype(original.vars[V], /datum))
 				continue	// this would reference the original's object, that will break when it is used or deleted.
 			else
 				O.vars[V] = original.vars[V]
@@ -31,12 +31,12 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list("tag","area","type","loc","locs",
 			I.damtype = STAMINA // thou shalt not
 
 		N.update_icon()
-		if(istype(O,/obj/machinery))
+		if(ismachinery(O))
 			var/obj/machinery/M = O
 			M.power_change()
 
 	if(holoitem)
-		SET_SECONDARY_FLAG(O, HOLOGRAM)
+		O.flags_2 |= HOLOGRAM_2
 	return O
 
 
@@ -47,7 +47,8 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list("tag","area","type","loc","locs",
 	//       Movement based on lower left corner. Tiles that do not fit
 	//		 into the new area will not be moved.
 
-	if(!A || !src) return 0
+	if(!A || !src)
+		return 0
 
 	var/list/turfs_src = get_area_turfs(src.type)
 	var/list/turfs_trg = get_area_turfs(A.type)
@@ -77,7 +78,6 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list("tag","area","type","loc","locs",
 	var/copiedobjs = list()
 
 	for (var/turf/T in refined_src)
-		//var/datum/coords/C_src = refined_src[T]
 		var/coordstring = refined_src[T]
 		var/turf/B = refined_trg[coordstring]
 		if(!istype(B))
@@ -103,7 +103,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list("tag","area","type","loc","locs",
 			copiedobjs += O2.GetAllContents()
 
 		for(var/mob/M in T)
-			if(istype(M, /mob/camera))
+			if(iscameramob(M))
 				continue // If we need to check for more mobs, I'll add a variable
 			var/mob/SM = DuplicateObject(M , perfectcopy=TRUE, newloc = B, holoitem=TRUE)
 			copiedobjs += SM.GetAllContents()

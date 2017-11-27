@@ -21,7 +21,8 @@
 	)
 
 /datum/debugFileOutput/proc/error(fileName, message, client/C)
-	if (!fileName || !message) return 0
+	if (!fileName || !message)
+		return 0
 
 	if (!(fileName in src.validFiles))
 		throw EXCEPTION("Debug log file '[fileName].[src.ext]' is not a valid path.")
@@ -32,11 +33,12 @@
 		CRASH("Debug Error Handling encountered an error! This is highly ironic! File: '[fileName]' has exceeded the filesize limit of: [src.logFileLimit] bytes")
 
 	message = "\[[time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")]\] Client: \[[C && C.key ? C.key : "Unknown Client"]\] triggered: [message]"
-	logFile << message
+	WRITE_FILE(logFile, message)
 	return 1
 
 /datum/debugFileOutput/proc/clear(fileName)
-	if (!fileName) return 0
+	if (!fileName)
+		return 0
 
 	if (!fexists("[src.directory]/[fileName].[src.ext]"))
 		throw EXCEPTION("Debug log file '[fileName].[src.ext]' does not exist.")

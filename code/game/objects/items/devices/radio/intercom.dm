@@ -2,7 +2,7 @@
 	name = "station intercom"
 	desc = "Talk through this."
 	icon_state = "intercom"
-	anchored = 1
+	anchored = TRUE
 	w_class = WEIGHT_CLASS_BULKY
 	canhear_range = 2
 	var/number = 0
@@ -14,6 +14,29 @@
 
 /obj/item/device/radio/intercom/unscrewed
 	unfastened = TRUE
+
+/obj/item/device/radio/intercom/ratvar
+	name = "hierophant intercom"
+	desc = "A modified intercom that uses the Hierophant network instead of subspace tech. Can listen to and broadcast on any frequency."
+	icon_state = "intercom_ratvar"
+	freerange = TRUE
+
+/obj/item/device/radio/intercom/ratvar/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/screwdriver))
+		to_chat(user, "<span class='danger'>[src] is fastened to the wall with [is_servant_of_ratvar(user) ? "replicant alloy" : "some material you've never seen"], and can't be removed.</span>")
+		return //no unfastening!
+	. = ..()
+
+/obj/item/device/radio/intercom/ratvar/process()
+	if(!istype(SSticker.mode, /datum/game_mode/clockwork_cult))
+		invisibility = INVISIBILITY_OBSERVER
+		alpha = 125
+		emped = TRUE
+	else
+		invisibility = initial(invisibility)
+		alpha = initial(alpha)
+		emped = FALSE
+	..()
 
 /obj/item/device/radio/intercom/Initialize(mapload, ndir, building)
 	. = ..()
@@ -33,8 +56,8 @@
 		to_chat(user, "<span class='notice'>It's <i>unscrewed</i> from the wall, and can be <b>detached</b>.</span>")
 
 /obj/item/device/radio/intercom/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon/screwdriver))
-		var/obj/item/weapon/screwdriver/S = I
+	if(istype(I, /obj/item/screwdriver))
+		var/obj/item/screwdriver/S = I
 		if(unfastened)
 			user.visible_message("<span class='notice'>[user] starts tightening [src]'s screws...</span>", "<span class='notice'>You start screwing in [src]...</span>")
 			playsound(src, S.usesound, 50, 1)
@@ -52,11 +75,11 @@
 			playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
 			unfastened = TRUE
 		return
-	else if(istype(I, /obj/item/weapon/wrench))
+	else if(istype(I, /obj/item/wrench))
 		if(!unfastened)
 			to_chat(user, "<span class='warning'>You need to unscrew [src] from the wall first!</span>")
 			return
-		var/obj/item/weapon/wrench/W = I
+		var/obj/item/wrench/W = I
 		user.visible_message("<span class='notice'>[user] starts unsecuring [src]...</span>", "<span class='notice'>You start unsecuring [src]...</span>")
 		playsound(src, W.usesound, 50, 1)
 		if(!do_after(user, 80 * W.toolspeed, target = src))
@@ -107,14 +130,14 @@
 
 		var/area/A = get_area(src)
 		if(!A || emped)
-			on = 0
+			on = FALSE
 		else
 			on = A.powered(EQUIP) // set "on" to the power status
 
 		if(!on)
 			icon_state = "intercom-p"
 		else
-			icon_state = "intercom"
+			icon_state = initial(icon_state)
 
 /obj/item/device/radio/intercom/add_blood(list/blood_dna)
 	return 0

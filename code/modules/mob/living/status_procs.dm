@@ -99,6 +99,11 @@
 			K = apply_status_effect(STATUS_EFFECT_KNOCKDOWN, amount, updating)
 		return K
 
+///////////////////////////////// FROZEN /////////////////////////////////////
+
+/mob/living/proc/IsFrozen()
+	return has_status_effect(/datum/status_effect/freon)
+
 ///////////////////////////////////// STUN ABSORPTION /////////////////////////////////////
 
 /mob/living/proc/add_stun_absorption(key, duration, priority, message, self_message, examine_message)

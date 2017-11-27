@@ -1,13 +1,12 @@
 /*********************Hivelord stabilizer****************/
-/obj/item/weapon/hivelordstabilizer
+/obj/item/hivelordstabilizer
 	name = "stabilizing serum"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle19"
 	desc = "Inject certain types of monster organs with this stabilizer to preserve their healing powers indefinitely."
 	w_class = WEIGHT_CLASS_TINY
-	origin_tech = "biotech=3"
 
-/obj/item/weapon/hivelordstabilizer/afterattack(obj/item/organ/M, mob/user)
+/obj/item/hivelordstabilizer/afterattack(obj/item/organ/M, mob/user)
 	var/obj/item/organ/regenerative_core/C = M
 	if(!istype(C, /obj/item/organ/regenerative_core))
 		to_chat(user, "<span class='warning'>The stabilizer only works on certain types of monster organs, generally regenerative in nature.</span>")
@@ -22,7 +21,7 @@
 	name = "regenerative core"
 	desc = "All that remains of a hivelord. It can be used to heal completely, but it will rapidly decay into uselessness."
 	icon_state = "roro core 2"
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 	slot = "hivecore"
 	force = 0
 	actions_types = list(/datum/action/item_action/organ_action/use)
@@ -43,15 +42,15 @@
 	update_icon()
 	desc = "All that remains of a hivelord. It is preserved, allowing you to use it to heal completely without danger of decay."
 	if(implanted)
-		SSblackbox.add_details("hivelord_core", "[type]|implanted")
+		SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "implanted"))
 	else
-		SSblackbox.add_details("hivelord_core", "[type]|stabilizer")
+		SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "stabilizer"))
 
 /obj/item/organ/regenerative_core/proc/go_inert()
 	inert = TRUE
 	name = "decayed regenerative core"
 	desc = "All that remains of a hivelord. It has decayed, and is completely useless."
-	SSblackbox.add_details("hivelord_core", "[type]|inert")
+	SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "inert"))
 	update_icon()
 
 /obj/item/organ/regenerative_core/ui_action_click()
@@ -78,10 +77,10 @@
 				return
 			if(H != user)
 				H.visible_message("[user] forces [H] to apply [src]... [H.p_they()] quickly regenerate all injuries!")
-				SSblackbox.add_details("hivelord_core","[src.type]|used|other")
+				SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "used", "other"))
 			else
 				to_chat(user, "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>")
-				SSblackbox.add_details("hivelord_core","[src.type]|used|self")
+				SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "used", "self"))
 			H.revive(full_heal = 1)
 			qdel(src)
 	..()

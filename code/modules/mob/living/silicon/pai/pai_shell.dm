@@ -93,7 +93,7 @@
 	return FALSE
 
 /mob/living/silicon/pai/proc/toggle_integrated_light()
-	if(!luminosity)
+	if(!light_range)
 		set_light(brightness_power)
 		to_chat(src, "<span class='notice'>You enable your integrated light.</span>")
 	else

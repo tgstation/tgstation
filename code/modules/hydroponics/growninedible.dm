@@ -2,7 +2,7 @@
 // Other harvested materials from plants (that are not food)
 // **********************
 
-/obj/item/weapon/grown // Grown weapons
+/obj/item/grown // Grown weapons
 	name = "grown_weapon"
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	resistance_flags = FLAMMABLE
@@ -15,8 +15,8 @@
 		my_reagents += R.id
 	return list("reagents" = my_reagents, "booze_power" = booze_power, "prefix" = name)
 
-/obj/item/weapon/grown/New(newloc, var/obj/item/seeds/new_seed = null)
-	..()
+/obj/item/grown/Initialize(newloc, obj/item/seeds/new_seed)
+	. = ..()
 	create_reagents(50)
 
 	if(new_seed)
@@ -39,7 +39,7 @@
 		add_juice()
 
 
-/obj/item/weapon/grown/attackby(obj/item/O, mob/user, params)
+/obj/item/grown/attackby(obj/item/O, mob/user, params)
 	..()
 	if (istype(O, /obj/item/device/plant_analyzer))
 		var/msg = "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>\n"
@@ -49,23 +49,23 @@
 		to_chat(usr, msg)
 		return
 
-/obj/item/weapon/grown/proc/add_juice()
+/obj/item/grown/proc/add_juice()
 	if(reagents)
 		return 1
 	return 0
 
 
-/obj/item/weapon/grown/Crossed(atom/movable/AM)
+/obj/item/grown/Crossed(atom/movable/AM)
 	if(seed)
 		for(var/datum/plant_gene/trait/T in seed.genes)
 			T.on_cross(src, AM)
 	..()
 
-/obj/item/weapon/grown/throw_impact(atom/hit_atom)
+/obj/item/grown/throw_impact(atom/hit_atom)
 	if(!..()) //was it caught by a mob?
 		if(seed)
 			for(var/datum/plant_gene/trait/T in seed.genes)
 				T.on_throw_impact(src, hit_atom)
 
-/obj/item/weapon/grown/microwave_act(obj/machine/microwave/M)
+/obj/item/grown/microwave_act(obj/machine/microwave/M)
 	return

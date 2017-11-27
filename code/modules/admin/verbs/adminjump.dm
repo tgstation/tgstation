@@ -23,7 +23,7 @@
 	usr.forceMove(T)
 	log_admin("[key_name(usr)] jumped to [A]")
 	message_admins("[key_name_admin(usr)] jumped to [A]")
-	SSblackbox.add_details("admin_verb","Jump To Area") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Jump To Area") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/jumptoturf(turf/T in world)
 	set name = "Jump to Turf"
@@ -35,7 +35,7 @@
 	log_admin("[key_name(usr)] jumped to [T.x],[T.y],[T.z] in [T.loc]")
 	message_admins("[key_name_admin(usr)] jumped to [T.x],[T.y],[T.z] in [T.loc]")
 	usr.loc = T
-	SSblackbox.add_details("admin_verb","Jump To Turf") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Jump To Turf") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /client/proc/jumptomob(mob/M in GLOB.mob_list)
@@ -52,7 +52,7 @@
 		var/mob/A = src.mob
 		var/turf/T = get_turf(M)
 		if(T && isturf(T))
-			SSblackbox.add_details("admin_verb","Jump To Mob") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+			SSblackbox.record_feedback("tally", "admin_verb", 1, "Jump To Mob") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 			A.forceMove(M.loc)
 		else
 			to_chat(A, "This mob is not located in the game world.")
@@ -70,7 +70,7 @@
 		A.x = tx
 		A.y = ty
 		A.z = tz
-		SSblackbox.add_details("admin_verb","Jump To Coordiate") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		SSblackbox.record_feedback("tally", "admin_verb", 1, "Jump To Coordiate") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	message_admins("[key_name_admin(usr)] jumped to coordinates [tx], [ty], [tz]")
 
 /client/proc/jumptokey()
@@ -84,17 +84,17 @@
 	var/list/keys = list()
 	for(var/mob/M in GLOB.player_list)
 		keys += M.client
-	var/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in sortKey(keys)
+	var/client/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in sortKey(keys)
 	if(!selection)
 		to_chat(src, "No keys found.")
 		return
-	var/mob/M = selection:mob
+	var/mob/M = selection.mob
 	log_admin("[key_name(usr)] jumped to [key_name(M)]")
 	message_admins("[key_name_admin(usr)] jumped to [key_name_admin(M)]")
 
 	usr.forceMove(M.loc)
 
-	SSblackbox.add_details("admin_verb","Jump To Key") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Jump To Key") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/Getmob(mob/M in GLOB.mob_list)
 	set category = "Admin"
@@ -110,7 +110,7 @@
 	message_admins(msg)
 	admin_ticket_log(M, msg)
 	M.forceMove(loc)
-	SSblackbox.add_details("admin_verb","Get Mob") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Get Mob") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/Getkey()
 	set category = "Admin"
@@ -138,7 +138,7 @@
 	if(M)
 		M.forceMove(get_turf(usr))
 		usr.loc = M.loc
-		SSblackbox.add_details("admin_verb","Get Key") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		SSblackbox.record_feedback("tally", "admin_verb", 1, "Get Key") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/sendmob(mob/M in sortmobs())
 	set category = "Admin"
@@ -156,4 +156,4 @@
 			admin_ticket_log(M, msg)
 		else
 			to_chat(src, "Failed to move mob to a valid location.")
-		SSblackbox.add_details("admin_verb","Send Mob") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		SSblackbox.record_feedback("tally", "admin_verb", 1, "Send Mob") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

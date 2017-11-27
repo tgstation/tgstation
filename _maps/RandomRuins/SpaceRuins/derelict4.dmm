@@ -46,7 +46,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "m" = (
-/obj/item/weapon/shard,
+/obj/item/shard,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "n" = (
@@ -64,7 +64,7 @@
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/unpowered)
 "q" = (
-/obj/item/weapon/shard,
+/obj/item/shard,
 /obj/structure/chair{
 	dir = 8
 	},

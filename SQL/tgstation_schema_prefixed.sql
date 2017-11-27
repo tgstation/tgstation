@@ -31,7 +31,7 @@ CREATE TABLE `SS13_admin` (
 -- Table structure for table `SS13_admin_log`
 --
 
-DROP TABLE IF EXISTS `SS13_dmin_log`;
+DROP TABLE IF EXISTS `SS13_admin_log`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `SS13_admin_log` (
@@ -110,6 +110,7 @@ CREATE TABLE `SS13_connection_log` (
   `datetime` datetime DEFAULT NULL,
   `server_ip` int(10) unsigned NOT NULL,
   `server_port` smallint(5) unsigned NOT NULL,
+  `round_id` int(11) unsigned NOT NULL,
   `ckey` varchar(45) DEFAULT NULL,
   `ip` int(10) unsigned NOT NULL,
   `computerid` varchar(45) DEFAULT NULL,
@@ -148,6 +149,8 @@ CREATE TABLE `SS13_death` (
   `toxloss` smallint(5) unsigned NOT NULL,
   `cloneloss` smallint(5) unsigned NOT NULL,
   `staminaloss` smallint(5) unsigned NOT NULL,
+  `last_words` varchar(255) DEFAULT NULL,
+  `suicide` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -160,12 +163,13 @@ DROP TABLE IF EXISTS `SS13_feedback`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `SS13_feedback` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `time` datetime NOT NULL,
-  `round_id` int(8) NOT NULL,
-  `var_name` varchar(32) NOT NULL,
-  `var_value` int(16) DEFAULT NULL,
-  `details` text,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `datetime` datetime NOT NULL,
+  `round_id` int(11) unsigned NOT NULL,
+  `key_name` varchar(32) NOT NULL,
+  `version` tinyint(3) unsigned NOT NULL,
+  `key_type` enum('text', 'amount', 'tally', 'nested tally', 'associative') NOT NULL,
+  `json` json NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -200,6 +204,7 @@ CREATE TABLE `SS13_legacy_population` (
   `time` datetime NOT NULL,
   `server_ip` int(10) unsigned NOT NULL,
   `server_port` smallint(5) unsigned NOT NULL,
+  `round_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -220,6 +225,7 @@ CREATE TABLE `SS13_library` (
   `ckey` varchar(32) NOT NULL DEFAULT 'LEGACY',
   `datetime` datetime NOT NULL,
   `deleted` tinyint(1) unsigned DEFAULT NULL,
+  `round_id_created` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `deleted_idx` (`deleted`),
   KEY `idx_lib_id_del` (`id`,`deleted`),
@@ -243,15 +249,34 @@ CREATE TABLE `SS13_messages` (
   `text` varchar(2048) NOT NULL,
   `timestamp` datetime NOT NULL,
   `server` varchar(32) DEFAULT NULL,
+  `server_ip` int(10) unsigned NOT NULL,
+  `server_port` smallint(5) unsigned NOT NULL,
+  `round_id` int(11) unsigned NOT NULL,
   `secret` tinyint(1) unsigned NOT NULL,
   `lasteditor` varchar(32) DEFAULT NULL,
   `edits` text,
+  `deleted` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `idx_msg_ckey_time` (`targetckey`,`timestamp`),
-  KEY `idx_msg_type_ckeys_time` (`type`,`targetckey`,`adminckey`,`timestamp`),
-  KEY `idx_msg_type_ckey_time_odr` (`type`,`targetckey`,`timestamp`)
+  KEY `idx_msg_ckey_time` (`targetckey`,`timestamp`, `deleted`),
+  KEY `idx_msg_type_ckeys_time` (`type`,`targetckey`,`adminckey`,`timestamp`, `deleted`),
+  KEY `idx_msg_type_ckey_time_odr` (`type`,`targetckey`,`timestamp`, `deleted`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `SS13_role_time`
+--
+
+DROP TABLE IF EXISTS `SS13_role_time`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+
+CREATE TABLE `SS13_role_time` 
+( `ckey` VARCHAR(32) NOT NULL ,
+ `job` VARCHAR(32) NOT NULL ,
+ `minutes` INT UNSIGNED NOT NULL,
+ PRIMARY KEY (`ckey`, `job`) 
+ ) ENGINE = InnoDB;
 
 --
 -- Table structure for table `SS13_player`
@@ -263,11 +288,14 @@ DROP TABLE IF EXISTS `SS13_player`;
 CREATE TABLE `SS13_player` (
   `ckey` varchar(32) NOT NULL,
   `firstseen` datetime NOT NULL,
+  `firstseen_round_id` int(11) unsigned NOT NULL,
   `lastseen` datetime NOT NULL,
+  `lastseen_round_id` int(11) unsigned NOT NULL,
   `ip` int(10) unsigned NOT NULL,
   `computerid` varchar(32) NOT NULL,
   `lastadminrank` varchar(32) NOT NULL DEFAULT 'Player',
   `accountjoindate` DATE DEFAULT NULL,
+  `flags` smallint(5) unsigned DEFAULT '0' NOT NULL,
   PRIMARY KEY (`ckey`),
   KEY `idx_player_cid_ckey` (`computerid`,`ckey`),
   KEY `idx_player_ip_ckey` (`ip`,`ckey`)
@@ -290,6 +318,7 @@ CREATE TABLE `SS13_poll_option` (
   `descmin` varchar(32) DEFAULT NULL,
   `descmid` varchar(32) DEFAULT NULL,
   `descmax` varchar(32) DEFAULT NULL,
+  `default_percentage_calc` tinyint(1) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `idx_pop_pollid` (`pollid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -385,6 +414,17 @@ CREATE TABLE `SS13_round` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+--
+-- Table structure for table `SS13_schema_revision`
+--
+DROP TABLE IF EXISTS `SS13_schema_revision`;
+CREATE TABLE `SS13_schema_revision` (
+  `major` TINYINT(3) unsigned NOT NULL,
+  `minor` TINYINT(3) unsigned NOT NULL,
+  `date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`major`,`minor`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

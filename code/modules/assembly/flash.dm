@@ -3,10 +3,11 @@
 	desc = "A powerful and versatile flashbulb device, with applications ranging from disorienting attackers to acting as visual receptors in robot production."
 	icon_state = "flash"
 	item_state = "flashtool"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	materials = list(MAT_METAL = 300, MAT_GLASS = 300)
-	origin_tech = "magnets=2;combat=1"
 
 	crit_fail = 0     //Is the flash burnt out?
 	var/times_used = 0 //Number of times it's been used.
@@ -144,31 +145,23 @@
 
 /obj/item/device/assembly/flash/proc/terrible_conversion_proc(mob/living/carbon/human/H, mob/user)
 	if(istype(H) && ishuman(user) && H.stat != DEAD)
-		if(user.mind && (user.mind in SSticker.mode.head_revolutionaries))
-			if(H.client)
-				if(H.stat == CONSCIOUS)
-					H.mind_initialize() //give them a mind datum if they don't have one.
-					var/resisted
-					if(!H.isloyal())
-						if(user.mind in SSticker.mode.head_revolutionaries)
-							if(SSticker.mode.add_revolutionary(H.mind))
-								H.Stun(60)
-								times_used -- //Flashes less likely to burn out for headrevs when used for conversion
-							else
-								resisted = 1
-					else
-						resisted = 1
-
-					if(resisted)
-						to_chat(user, "<span class='warning'>This mind seems resistant to the flash!</span>")
-				else
-					to_chat(user, "<span class='warning'>They must be conscious before you can convert them!</span>")
-			else
+		if(user.mind)
+			var/datum/antagonist/rev/head/converter = user.mind.has_antag_datum(/datum/antagonist/rev/head)
+			if(!converter)
+				return
+			if(!H.client)
 				to_chat(user, "<span class='warning'>This mind is so vacant that it is not susceptible to influence!</span>")
+				return
+			if(H.stat != CONSCIOUS)
+				to_chat(user, "<span class='warning'>They must be conscious before you can convert them!</span>")
+				return
+			if(converter.add_revolutionary(H.mind))
+				times_used -- //Flashes less likely to burn out for headrevs when used for conversion
+			else
+				to_chat(user, "<span class='warning'>This mind seems resistant to the flash!</span>")
 
 
 /obj/item/device/assembly/flash/cyborg
-	origin_tech = null
 
 /obj/item/device/assembly/flash/cyborg/attack(mob/living/M, mob/user)
 	..()
@@ -178,7 +171,7 @@
 	..()
 	new /obj/effect/temp_visual/borgflash(get_turf(src))
 
-/obj/item/device/assembly/flash/cyborg/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/device/assembly/flash/cyborg/attackby(obj/item/W, mob/user, params)
 	return
 
 /obj/item/device/assembly/flash/memorizer
@@ -222,9 +215,11 @@
 /obj/item/device/assembly/flash/shield
 	name = "strobe shield"
 	desc = "A shield with a built in, high intensity light capable of blinding and disorienting suspects. Takes regular handheld flashes as bulbs."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "flashshield"
 	item_state = "flashshield"
+	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	slot_flags = SLOT_BACK
 	force = 10
 	throwforce = 5
@@ -232,7 +227,6 @@
 	throw_range = 3
 	w_class = WEIGHT_CLASS_BULKY
 	materials = list(MAT_GLASS=7500, MAT_METAL=1000)
-	origin_tech = "materials=3;combat=4"
 	attack_verb = list("shoved", "bashed")
 	block_chance = 50
 	armor = list(melee = 50, bullet = 50, laser = 50, energy = 0, bomb = 30, bio = 0, rad = 0, fire = 80, acid = 70)
@@ -243,7 +237,7 @@
 		return 0
 	return 1
 
-/obj/item/device/assembly/flash/shield/attackby(obj/item/weapon/W, mob/user)
+/obj/item/device/assembly/flash/shield/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/device/assembly/flash/handheld))
 		var/obj/item/device/assembly/flash/handheld/flash = W
 		if(flash.crit_fail)

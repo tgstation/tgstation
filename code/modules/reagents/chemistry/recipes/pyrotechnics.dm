@@ -144,6 +144,7 @@
 	required_reagents = list("methamphetamine" = 1)
 	strengthdiv = 6
 	modifier = 1
+	mob_react = FALSE
 
 /datum/chemical_reaction/reagent_explosion/methsplosion/on_reaction(datum/reagents/holder, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
@@ -154,7 +155,7 @@
 
 /datum/chemical_reaction/reagent_explosion/methsplosion/methboom2
 	required_reagents = list("diethylamine" = 1, "iodine" = 1, "phosphorus" = 1, "hydrogen" = 1) //diethylamine is often left over from mixing the ephedrine.
-	required_temp = 300 //room temperature, chilling it even a little will prevent the explosion
+	required_temp = 300 //room temperature, chilling it even a little will prevent the explosion 
 	results = list("methboom1" = 4) // this is ugly. Sorry goof.
 
 /datum/chemical_reaction/sorium
@@ -269,7 +270,7 @@
 	required_reagents = list("smoke_powder" = 1)
 	required_temp = 374
 	secondary = 1
-	mob_react = 1
+	mob_react = FALSE
 
 /datum/chemical_reaction/smoke_powder_smoke/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -341,6 +342,23 @@
 	holder.chem_temp = 20 // cools the fuck down
 	return
 
+/datum/chemical_reaction/cryostylane_oxygen
+	name = "ephemeral cryostylane reaction"
+	id = "cryostylane_oxygen"
+	results = list("cryostylane" = 1)
+	required_reagents = list("cryostylane" = 1, "oxygen" = 1)
+
+/datum/chemical_reaction/cryostylane_oxygen/on_reaction(datum/reagents/holder, created_volume)
+	holder.chem_temp -= 10*created_volume
+
+/datum/chemical_reaction/pyrosium_oxygen
+	name = "ephemeral pyrosium reaction"
+	id = "pyrosium_oxygen"
+	results = list("pyrosium" = 1)
+	required_reagents = list("pyrosium" = 1, "oxygen" = 1)
+
+/datum/chemical_reaction/pyrosium_oxygen/on_reaction(datum/reagents/holder, created_volume)
+	holder.chem_temp += 10*created_volume
 
 /datum/chemical_reaction/pyrosium
 	name = "pyrosium"

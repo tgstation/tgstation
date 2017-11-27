@@ -4,11 +4,13 @@
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "electropack0"
 	item_state = "electropack"
-	flags = CONDUCT
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	flags_1 = CONDUCT_1
 	slot_flags = SLOT_BACK
 	w_class = WEIGHT_CLASS_HUGE
 	materials = list(MAT_METAL=10000, MAT_GLASS=2500)
-	var/on = 1
+	var/on = TRUE
 	var/code = 2
 	var/frequency = 1449
 	var/shock_cooldown = 0
@@ -18,12 +20,11 @@
 	return (FIRELOSS)
 
 /obj/item/device/electropack/Initialize()
-	..()
+	. = ..()
 	SSradio.add_object(src, frequency, GLOB.RADIO_CHAT)
 
 /obj/item/device/electropack/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src, frequency)
+	SSradio.remove_object(src, frequency)
 	return ..()
 
 /obj/item/device/electropack/attack_hand(mob/user)
@@ -34,7 +35,7 @@
 			return
 	..()
 
-/obj/item/device/electropack/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/device/electropack/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/clothing/head/helmet))
 		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit( user )
 		A.icon = 'icons/obj/assemblies.dmi'
@@ -51,8 +52,8 @@
 
 		user.put_in_hands(A)
 		A.add_fingerprint(user)
-		if(src.flags & NODROP)
-			A.flags |= NODROP
+		if(src.flags_1 & NODROP_1)
+			A.flags_1 |= NODROP_1
 	else
 		return ..()
 
@@ -107,7 +108,7 @@
 		spawn(100)
 			shock_cooldown = 0
 		var/mob/living/L = loc
-		step(L, pick(GLOB.cardinal))
+		step(L, pick(GLOB.cardinals))
 
 		to_chat(L, "<span class='danger'>You feel a sharp shock!</span>")
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
@@ -126,19 +127,19 @@
 		return
 	user.set_machine(src)
 	var/dat = {"<TT>Turned [on ? "On" : "Off"] -
-<A href='?src=\ref[src];power=1'>Toggle</A><BR>
+<A href='?src=[REF(src)];power=1'>Toggle</A><BR>
 <B>Frequency/Code</B> for electropack:<BR>
 Frequency:
-<A href='byond://?src=\ref[src];freq=-10'>-</A>
-<A href='byond://?src=\ref[src];freq=-2'>-</A> [format_frequency(frequency)]
-<A href='byond://?src=\ref[src];freq=2'>+</A>
-<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
+<A href='byond://?src=[REF(src)];freq=-10'>-</A>
+<A href='byond://?src=[REF(src)];freq=-2'>-</A> [format_frequency(frequency)]
+<A href='byond://?src=[REF(src)];freq=2'>+</A>
+<A href='byond://?src=[REF(src)];freq=10'>+</A><BR>
 
 Code:
-<A href='byond://?src=\ref[src];code=-5'>-</A>
-<A href='byond://?src=\ref[src];code=-1'>-</A> [code]
-<A href='byond://?src=\ref[src];code=1'>+</A>
-<A href='byond://?src=\ref[src];code=5'>+</A><BR>
+<A href='byond://?src=[REF(src)];code=-5'>-</A>
+<A href='byond://?src=[REF(src)];code=-1'>-</A> [code]
+<A href='byond://?src=[REF(src)];code=1'>+</A>
+<A href='byond://?src=[REF(src)];code=5'>+</A><BR>
 </TT>"}
 	user << browse(dat, "window=radio")
 	onclose(user, "radio")

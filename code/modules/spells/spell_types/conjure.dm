@@ -7,7 +7,7 @@
 
 	var/summon_lifespan = 0 // 0=permanent, any other time in deciseconds
 	var/summon_amt = 1 //amount of objects summoned
-	var/summon_ignore_density = 0 //if set to 1, adds dense tiles to possible spawn places
+	var/summon_ignore_density = FALSE //if set to 1, adds dense tiles to possible spawn places
 	var/summon_ignore_prev_spawn_points = 0 //if set to 1, each new object is summoned on a new spawn point
 
 	var/list/newVars = list() //vars of the summoned objects will be replaced with those where they meet
@@ -28,7 +28,7 @@
 		var/spawn_place = pick(targets)
 		if(summon_ignore_prev_spawn_points)
 			targets -= spawn_place
-		if(ispath(summoned_object_type,/turf))
+		if(ispath(summoned_object_type, /turf))
 			var/turf/O = spawn_place
 			var/N = summoned_object_type
 			O.ChangeTurf(N)
@@ -64,7 +64,7 @@
 	range = -1
 	clothes_req = 0
 	var/obj/item/item
-	var/item_type = /obj/item/weapon/banhammer
+	var/item_type = /obj/item/banhammer
 	school = "conjuration"
 	charge_max = 150
 	cooldown_min = 10
@@ -75,9 +75,8 @@
 		item = null
 	else
 		for(var/mob/living/carbon/C in targets)
-			if(C.drop_item())
-				item = make_item()
-				C.put_in_hands(item)
+			if(C.dropItemToGround(C.get_active_held_item()))
+				C.put_in_hands(make_item(), TRUE)
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/Destroy()
 	if(item)
@@ -85,4 +84,5 @@
 	return ..()
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/proc/make_item()
-	return new item_type
+	item = new item_type
+	return item

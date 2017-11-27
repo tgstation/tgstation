@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "b" = (
 /turf/closed/mineral,
 /area/shuttle/escape{
@@ -23,6 +23,7 @@
 	})
 "e" = (
 /obj/machinery/computer/emergency_shuttle{
+	dir = 4;
 	use_power = 0
 	},
 /turf/open/floor/plating/asteroid,
@@ -42,25 +43,13 @@
 	luminosity = 0
 	})
 "h" = (
-/obj/item/weapon/pickaxe,
+/obj/item/pickaxe,
 /turf/open/floor/plating/asteroid,
 /area/shuttle/escape{
 	luminosity = 0
 	})
 "i" = (
 /obj/effect/station_crash,
-/turf/open/floor/plating/asteroid,
-/area/shuttle/escape{
-	luminosity = 0
-	})
-"j" = (
-/obj/docking_port/mobile/emergency{
-	dwidth = 20;
-	height = 40;
-	name = "a meteor with engines strapped to it";
-	timid = 1;
-	width = 40
-	},
 /turf/open/floor/plating/asteroid,
 /area/shuttle/escape{
 	luminosity = 0
@@ -92,6 +81,19 @@
 /area/shuttle/escape{
 	luminosity = 0
 	})
+"L" = (
+/obj/docking_port/mobile/emergency{
+	dwidth = 20;
+	height = 40;
+	movement_force = list("KNOCKDOWN" = 3, "THROW" = 6);
+	name = "a meteor with engines strapped to it";
+	timid = 1;
+	width = 40
+	},
+/turf/open/floor/plating/asteroid,
+/area/shuttle/escape{
+	luminosity = 0
+	})
 
 (1,1,1) = {"
 a
@@ -114,7 +116,7 @@ b
 d
 d
 d
-j
+L
 d
 d
 b

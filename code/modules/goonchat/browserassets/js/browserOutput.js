@@ -22,22 +22,23 @@ window.onerror = function(msg, url, line, col, error) {
 
 //Globals
 window.status = 'Output';
-var $messages, $subOptions, $contextMenu, $filterMessages;
+var $messages, $subOptions, $subAudio, $selectedSub, $contextMenu, $filterMessages;
 var opts = {
 	//General
 	'messageCount': 0, //A count...of messages...
 	'messageLimit': 2053, //A limit...for the messages...
-	'scrollSnapTolerance': 5, //If within x pixels of bottom
+	'scrollSnapTolerance': 10, //If within x pixels of bottom
 	'clickTolerance': 10, //Keep focus if outside x pixels of mousedown position on mouseup
+	'imageRetryDelay': 50, //how long between attempts to reload images (in ms)
+	'imageRetryLimit': 50, //how many attempts should we make? 
 	'popups': 0, //Amount of popups opened ever
 	'wasd': false, //Is the user in wasd mode?
-	'chatMode': 'default', //The mode the chat is in
 	'priorChatHeight': 0, //Thing for height-resizing detection
 	'restarting': false, //Is the round restarting?
 
 	//Options menu
-	'subOptionsLoop': null, //Contains the interval loop for closing the options menu
-	'suppressOptionsClose': false, //Whether or not we should be hiding the suboptions menu
+	'selectedSubLoop': null, //Contains the interval loop for closing the selected sub menu
+	'suppressSubClose': false, //Whether or not we should be hiding the selected sub menu
 	'highlightTerms': [],
 	'highlightLimit': 5,
 	'highlightColor': '#FFFF00', //The color of the highlighted message
@@ -60,7 +61,18 @@ var opts = {
 	'clientDataLimit': 5,
 	'clientData': [],
 
+	//Admin music volume update
+	'volumeUpdateDelay': 5000, //Time from when the volume updates to data being sent to the server
+	'volumeUpdating': false, //True if volume update function set to fire
+	'updatedVolume': 0, //The volume level that is sent to the server
+	
+	'defaultMusicVolume': 25,
+
 };
+
+function clamp(val, min, max) {
+	return Math.max(min, Math.min(val, max))
+}
 
 function outerHTML(el) {
     var wrap = document.createElement('div');
@@ -92,6 +104,15 @@ function linkify(text) {
 			return $1 ? $0: '<a href="http://'+$0+'">'+$0+'</a>';
 		}
 	});
+}
+
+function byondDecode(message) {
+	// Basically we url_encode twice server side so we can manually read the encoded version and actually do UTF-8.
+	// The replace for + is because FOR SOME REASON, BYOND replaces spaces with a + instead of %20, and a plus with %2b.
+	// Marvelous.
+	message = message.replace(/\+/g, "%20");
+	message = decoder(message);
+	return message;
 }
 
 //Actually turns the highlight term match into appropriate html
@@ -133,7 +154,8 @@ function highlightTerms(el) {
 							newWord = words[w].replace("<", "&lt;").replace(new RegExp(opts.highlightTerms[i], 'gi'), addHighlightMarkup);
 							break;
 						}
-						console.log(newWord)
+						if (window.console)
+							console.log(newWord)
 					}
 					newText += newWord || words[w].replace("<", "&lt;");
 					newText += w >= words.length ? '' : ' ';
@@ -145,6 +167,23 @@ function highlightTerms(el) {
 		el.innerHTML = newText;
 	}
 }
+
+function iconError(E) {
+	var that = this;
+	setTimeout(function() {
+		var attempts = $(that).data('reload_attempts');
+		if (typeof attempts === 'undefined' || !attempts) {
+			attempts = 1;
+		}
+		if (attempts > opts.imageRetryLimit)
+			return;
+		var src = that.src;
+		that.src = null;
+		that.src = src+'#'+attempts;
+		$(that).data('reload_attempts', ++attempts);
+	}, opts.imageRetryDelay);
+}
+
 //Send a message to the client
 function output(message, flag) {
 	if (typeof message === 'undefined') {
@@ -157,11 +196,7 @@ function output(message, flag) {
 	if (flag !== 'internal')
 		opts.lastPang = Date.now();
 
-	// Basically we url_encode twice server side so we can manually read the encoded version and actually do UTF-8.
-	// The replace for + is because FOR SOME REASON, BYOND replaces spaces with a + instead of %20, and a plus with %2b.
-	// Marvelous.
-	message = message.replace(/\+/g, "%20")
-	message = decoder(message)
+	message = byondDecode(message)
 
 	//The behemoth of filter-code (for Admin message filters)
 	//Note: This is proooobably hella inefficient
@@ -270,7 +305,7 @@ function output(message, flag) {
 
 	entry.innerHTML = message.trim();
 	$messages[0].appendChild(entry);
-
+	$(entry).find("img.icon").error(iconError);
 	//Actually do the snap
 	if (!filteredOut && atBottom) {
 		$('body,html').scrollTop($messages.outerHeight());
@@ -319,23 +354,6 @@ function toHex(n) {
 	if (isNaN(n)) return "00";
 	n = Math.max(0,Math.min(n,255));
 	return "0123456789ABCDEF".charAt((n-n%16)/16) + "0123456789ABCDEF".charAt(n%16);
-}
-
-function changeMode(mode) {
-	switch (mode) {
-		case 'geocities':
-			//switch in stylesheet
-			opts.chatMode = mode;
-			break;
-		case 'console':
-
-			opts.chatMode = mode;
-			break;
-		case 'default':
-		default:
-			//remove loaded stylesheet/s
-			opts.chatMode = 'default';
-	}
 }
 
 function handleClientData(ckey, ip, compid) {
@@ -389,8 +407,6 @@ function ehjaxCallback(data) {
 	} else if (data == 'roundrestart') {
 		opts.restarting = true;
 		internalOutput('<div class="connectionClosed internal restarting">The connection has been closed because the server is restarting. Please wait while you automatically reconnect.</div>', 'internal');
-	} else if (data == 'stopaudio') {
-		$('.dectalk').remove();
 	} else {
 		//Oh we're actually being sent data instead of an instruction
 		var dataJ;
@@ -414,8 +430,7 @@ function ehjaxCallback(data) {
 			} else {
 				handleClientData(data.clientData.ckey, data.clientData.ip, data.clientData.compid);
 			}
-		} else if (data.modeChange) {
-			changeMode(data.modeChange);
+			sendVolumeUpdate();
 		} else if (data.firebug) {
 			if (data.trigger) {
 				internalOutput('<span class="internal boldnshit">Loading firebug console, triggered by '+data.trigger+'...</span>', 'internal');
@@ -425,13 +440,21 @@ function ehjaxCallback(data) {
 			var firebugEl = document.createElement('script');
 			firebugEl.src = 'https://getfirebug.com/firebug-lite-debug.js';
 			document.body.appendChild(firebugEl);
-		} else if (data.dectalk) {
-			var message = '<audio class="dectalk" src="'+data.dectalk+'" autoplay="autoplay"></audio>';
-			if (data.decTalkTrigger) {
-				message = '<a href="#" class="stopAudio icon-stack" title="Stop Audio" style="color: black;"><i class="icon-volume-off"></i><i class="icon-ban-circle" style="color: red;"></i></a> '+
-				'<span class="italic">You hear a strange robotic voice...</span>' + message;
+		} else if (data.adminMusic) {
+			if (typeof data.adminMusic === 'string') {
+				var adminMusic = byondDecode(data.adminMusic);
+				adminMusic = adminMusic.match(/https?:\/\/\S+/) || '';
+				if (data.musicRate) {
+					var newRate = Number(data.musicRate);
+					if(newRate) {
+						$('#adminMusic').prop('defaultPlaybackRate', newRate);
+					}
+				} else {
+					$('#adminMusic').prop('defaultPlaybackRate', 1.0);
+				}
+				$('#adminMusic').prop('src', adminMusic);
+				$('#adminMusic').trigger("play");
 			}
-			internalOutput(message, 'preventLink');
 		}
 	}
 }
@@ -455,6 +478,53 @@ function toggleWasd(state) {
 	opts.wasd = (state == 'on' ? true : false);
 }
 
+function sendVolumeUpdate() {
+	opts.volumeUpdating = false;
+	if(opts.updatedVolume) {
+		runByond('?_src_=chat&proc=setMusicVolume&param[volume]='+opts.updatedVolume);
+	}
+}
+
+function subSlideUp() {
+	$(this).removeClass('scroll');
+	$(this).css('height', '');
+}
+
+function startSubLoop() {
+	if (opts.selectedSubLoop) {
+		clearInterval(opts.selectedSubLoop);
+	}
+	return setInterval(function() {
+		if (!opts.suppressSubClose && $selectedSub.is(':visible')) {
+			$selectedSub.slideUp('fast', subSlideUp);
+			clearInterval(opts.selectedSubLoop);
+		}
+	}, 5000); //every 5 seconds
+}
+
+function handleToggleClick($sub, $toggle) {
+	if ($selectedSub !== $sub && $selectedSub.is(':visible')) {
+		$selectedSub.slideUp('fast', subSlideUp);
+	}
+	$selectedSub = $sub
+	if ($selectedSub.is(':visible')) {
+		$selectedSub.slideUp('fast', subSlideUp);
+		clearInterval(opts.selectedSubLoop);
+	} else {
+		$selectedSub.slideDown('fast', function() {
+			var windowHeight = $(window).height();
+			var toggleHeight = $toggle.outerHeight();
+			var priorSubHeight = $selectedSub.outerHeight();
+			var newSubHeight = windowHeight - toggleHeight;
+			$(this).height(newSubHeight);
+			if (priorSubHeight > (windowHeight - toggleHeight)) {
+				$(this).addClass('scroll');
+			}
+		});
+		opts.selectedSubLoop = startSubLoop();
+	}
+}
+
 /*****************************************
 *
 * DOM READY
@@ -469,6 +539,8 @@ if (typeof $ === 'undefined') {
 $(function() {
 	$messages = $('#messages');
 	$subOptions = $('#subOptions');
+	$subAudio = $('#subAudio');
+	$selectedSub = $subOptions;
 
 	//Hey look it's a controller loop!
 	setInterval(function() {
@@ -495,6 +567,7 @@ $(function() {
 		'spingDisabled': getCookie('pingdisabled'),
 		'shighlightTerms': getCookie('highlightterms'),
 		'shighlightColor': getCookie('highlightcolor'),
+		'smusicVolume': getCookie('musicVolume'),
 	};
 
 	if (savedConfig.sfontSize) {
@@ -525,6 +598,16 @@ $(function() {
 	if (savedConfig.shighlightColor) {
 		opts.highlightColor = savedConfig.shighlightColor;
 		internalOutput('<span class="internal boldnshit">Loaded highlight color of: '+savedConfig.shighlightColor+'</span>', 'internal');
+	}
+	if (savedConfig.smusicVolume) {
+		var newVolume = clamp(savedConfig.smusicVolume, 0, 100);
+		$('#adminMusic').prop('volume', newVolume / 100);
+		$('#musicVolume').val(newVolume);
+		opts.updatedVolume = newVolume;
+		sendVolumeUpdate();
+		internalOutput('<span class="internal boldnshit">Loaded music volume of: '+savedConfig.smusicVolume+'</span>', 'internal');
+	} else {
+		$('#adminMusic').prop('volume', opts.defaultMusicVolume / 100);
 	}
 
 	(function() {
@@ -570,12 +653,9 @@ $(function() {
 	});
 
 	$messages.on('mousedown', function(e) {
-		if ($subOptions && $subOptions.is(':visible')) {
-			$subOptions.slideUp('fast', function() {
-				$(this).removeClass('scroll');
-				$(this).css('height', '');
-			});
-			clearInterval(opts.subOptionsLoop);
+		if ($selectedSub && $selectedSub.is(':visible')) {
+			$selectedSub.slideUp('fast', subSlideUp);
+			clearInterval(opts.selectedSubLoop);
 		}
 	});
 
@@ -614,8 +694,6 @@ $(function() {
 		e.preventDefault()
 
 		var k = e.which;
-		var command; // Command to execute through winset.
-
 		// Hardcoded because else there would be no feedback message.
 		if (k == 113) { // F2
 			runByond('byond://winset?screenshot=auto');
@@ -661,14 +739,7 @@ $(function() {
 				c = String.fromCharCode(k);
 		}
 
-//		if(opts.macros.hasOwnProperty(c.toUpperCase()))
-	//		command = opts.macros[c];
-
-		if (command) {
-			runByond('byond://winset?mapwindow.map.focus=true;command='+command);
-			return false;
-		}
-		else if (c.length == 0) {
+		if (c.length == 0) {
 			if (!e.shiftKey) {
 				c = c.toLowerCase();
 			}
@@ -688,14 +759,6 @@ $(function() {
 		}
 	});
 
-	//Audio sound prevention
-	$messages.on('click', '.stopAudio', function() {
-		var $audio = $(this).parent().children('audio');
-		if ($audio) {
-			$audio.remove();
-		}
-	});
-
 
 	/*****************************************
 	*
@@ -711,41 +774,19 @@ $(function() {
 	});
 
 	$('#toggleOptions').click(function(e) {
-		if ($subOptions.is(':visible')) {
-			$subOptions.slideUp('fast', function() {
-				$(this).removeClass('scroll');
-				$(this).css('height', '');
-			});
-			clearInterval(opts.subOptionsLoop);
-		} else {
-			$subOptions.slideDown('fast', function() {
-				var windowHeight = $(window).height();
-				var toggleHeight = $('#toggleOptions').outerHeight();
-				var priorSubHeight = $subOptions.outerHeight();
-				var newSubHeight = windowHeight - toggleHeight;
-				$(this).height(newSubHeight);
-				if (priorSubHeight > (windowHeight - toggleHeight)) {
-					$(this).addClass('scroll');
-				}
-			});
-			opts.subOptionsLoop = setInterval(function() {
-				if (!opts.suppressOptionsClose && $('#subOptions').is(':visible')) {
-					$subOptions.slideUp('fast', function() {
-						$(this).removeClass('scroll');
-						$(this).css('height', '');
-					});
-					clearInterval(opts.subOptionsLoop);
-				}
-			}, 5000); //Every 5 seconds
-		}
+		handleToggleClick($subOptions, $(this));
 	});
 
-	$('#subOptions, #toggleOptions').mouseenter(function() {
-		opts.suppressOptionsClose = true;
+	$('#toggleAudio').click(function(e) {
+		handleToggleClick($subAudio, $(this));
 	});
 
-	$('#subOptions, #toggleOptions').mouseleave(function() {
-		opts.suppressOptionsClose = false;
+	$('.sub, .toggle').mouseenter(function() {
+		opts.suppressSubClose = true;
+	});
+
+	$('.sub, .toggle').mouseleave(function() {
+		opts.suppressSubClose = false;
 	});
 
 	$('#decreaseFont').click(function(e) {
@@ -860,7 +901,31 @@ $(function() {
 		$messages.empty();
 		opts.messageCount = 0;
 	});
+	
+	$('#musicVolumeSpan').hover(function() {
+		$('#musicVolumeText').addClass('hidden');
+		$('#musicVolume').removeClass('hidden');
+	}, function() {
+		$('#musicVolume').addClass('hidden');
+		$('#musicVolumeText').removeClass('hidden');
+	});
 
+	$('#musicVolume').change(function() {
+		var newVolume = $('#musicVolume').val();
+		newVolume = clamp(newVolume, 0, 100);
+		$('#adminMusic').prop('volume', newVolume / 100);
+		setCookie('musicVolume', newVolume, 365);
+		opts.updatedVolume = newVolume;
+		if(!opts.volumeUpdating) {
+			setTimeout(sendVolumeUpdate, opts.volumeUpdateDelay);
+			opts.volumeUpdating = true;
+		}
+	});
+
+	$('img.icon').error(iconError);
+	
+	
+		
 
 	/*****************************************
 	*

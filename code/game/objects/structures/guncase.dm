@@ -4,12 +4,12 @@
 	desc = "A locker that holds guns."
 	icon = 'icons/obj/closet.dmi'
 	icon_state = "shotguncase"
-	anchored = 0
-	density = 1
+	anchored = FALSE
+	density = TRUE
 	opacity = 0
 	var/case_type = ""
-	var/gun_category = /obj/item/weapon/gun
-	var/open = 1
+	var/gun_category = /obj/item/gun
+	var/open = TRUE
 	var/capacity = 4
 
 /obj/structure/guncase/Initialize(mapload)
@@ -39,9 +39,8 @@
 		return
 	if(istype(I, gun_category) && open)
 		if(LAZYLEN(contents) < capacity)
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(I, src))
 				return
-			I.forceMove(src)
 			to_chat(user, "<span class='notice'>You place [I] in [src].</span>")
 			update_icon()
 		else
@@ -70,7 +69,7 @@
 	if(LAZYLEN(contents))
 		for(var/i in 1 to contents.len)
 			var/obj/item/I = contents[i]
-			dat += "<tr><A href='?src=\ref[src];retrieve=\ref[I]'>[I.name]</A><br>"
+			dat += "<tr><A href='?src=[REF(src)];retrieve=[REF(I)]'>[I.name]</A><br>"
 	dat += "</table></div>"
 
 	var/datum/browser/popup = new(user, "gunlocker", "<div align='center'>[name]</div>", 350, 300)
@@ -101,11 +100,11 @@
 	name = "shotgun locker"
 	desc = "A locker that holds shotguns."
 	case_type = "shotgun"
-	gun_category = /obj/item/weapon/gun/ballistic/shotgun
+	gun_category = /obj/item/gun/ballistic/shotgun
 
 /obj/structure/guncase/ecase
 	name = "energy gun locker"
 	desc = "A locker that holds energy guns."
 	icon_state = "ecase"
 	case_type = "egun"
-	gun_category = /obj/item/weapon/gun/energy/e_gun
+	gun_category = /obj/item/gun/energy/e_gun

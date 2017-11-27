@@ -6,8 +6,8 @@
 
 /obj/machinery/doorButtons
 	power_channel = ENVIRON
-	anchored = 1
-	use_power = 1
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -27,12 +27,13 @@
 	findObjsByTag()
 
 /obj/machinery/doorButtons/emag_act(mob/user)
-	if(!emagged)
-		emagged = 1
-		req_access = list()
-		req_one_access = list()
-		playsound(src.loc, "sparks", 100, 1)
-		to_chat(user, "<span class='warning'>You short out the access controller.</span>")
+	if(emagged)
+		return
+	emagged = TRUE
+	req_access = list()
+	req_one_access = list()
+	playsound(src, "sparks", 100, 1)
+	to_chat(user, "<span class='warning'>You short out the access controller.</span>")
 
 /obj/machinery/doorButtons/proc/removeMe()
 
@@ -41,6 +42,7 @@
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "access_button_standby"
 	name = "access button"
+	desc = "A button used for the explicit purpose of opening an airlock."
 	var/idDoor
 	var/obj/machinery/door/airlock/door
 	var/obj/machinery/doorButtons/airlock_controller/controller
@@ -67,7 +69,7 @@
 	if(controller && !controller.busy && door)
 		if(controller.stat & NOPOWER)
 			return
-		busy = 1
+		busy = TRUE
 		update_icon()
 		if(door.density)
 			if(!controller.exteriorAirlock || !controller.interiorAirlock)
@@ -80,7 +82,7 @@
 		else
 			controller.onlyClose(door)
 		sleep(20)
-		busy = 0
+		busy = FALSE
 		update_icon()
 
 /obj/machinery/doorButtons/access_button/update_icon()
@@ -106,6 +108,7 @@
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "access_control_standby"
 	name = "access console"
+	desc = "A small console that can cycle opening between two airlocks."
 	var/obj/machinery/door/airlock/interiorAirlock
 	var/obj/machinery/door/airlock/exteriorAirlock
 	var/idInterior
@@ -218,7 +221,7 @@
 
 /obj/machinery/doorButtons/airlock_controller/proc/goIdle(update)
 	lostPower = 0
-	busy = 0
+	busy = FALSE
 	if(update)
 		update_icon()
 	updateUsrDialog()
@@ -274,29 +277,29 @@
 		if(!exteriorAirlock || !interiorAirlock)
 			if(!exteriorAirlock)
 				if(interiorAirlock.density)
-					output = "<A href='?src=\ref[src];command=open_interior'>Open Interior Airlock</A><BR>"
+					output = "<A href='?src=[REF(src)];command=open_interior'>Open Interior Airlock</A><BR>"
 				else
-					output = "<A href='?src=\ref[src];command=close_interior'>Close Interior Airlock</A><BR>"
+					output = "<A href='?src=[REF(src)];command=close_interior'>Close Interior Airlock</A><BR>"
 			else
 				if(exteriorAirlock.density)
-					output = "<A href='?src=\ref[src];command=open_exterior'>Open Exterior Airlock</A><BR>"
+					output = "<A href='?src=[REF(src)];command=open_exterior'>Open Exterior Airlock</A><BR>"
 				else
-					output = "<A href='?src=\ref[src];command=close_exterior'>Close Exterior Airlock</A><BR>"
+					output = "<A href='?src=[REF(src)];command=close_exterior'>Close Exterior Airlock</A><BR>"
 		else
 			if(exteriorAirlock.density)
 				if(interiorAirlock.density)
-					output = {"<A href='?src=\ref[src];command=open_exterior'>Open Exterior Airlock</A><BR>
-					<A href='?src=\ref[src];command=open_interior'>Open Interior Airlock</A><BR>"}
+					output = {"<A href='?src=[REF(src)];command=open_exterior'>Open Exterior Airlock</A><BR>
+					<A href='?src=[REF(src)];command=open_interior'>Open Interior Airlock</A><BR>"}
 				else
-					output = {"<A href='?src=\ref[src];command=cycle_exterior'>Cycle to Exterior Airlock</A><BR>
-					<A href='?src=\ref[src];command=close_interior'>Close Interior Airlock</A><BR>"}
+					output = {"<A href='?src=[REF(src)];command=cycle_exterior'>Cycle to Exterior Airlock</A><BR>
+					<A href='?src=[REF(src)];command=close_interior'>Close Interior Airlock</A><BR>"}
 			else
 				if(interiorAirlock.density)
-					output = {"<A href='?src=\ref[src];command=close_exterior'>Close Exterior Airlock</A><BR>
-					<A href='?src=\ref[src];command=cycle_interior'>Cycle to Interior Airlock</A><BR>"}
+					output = {"<A href='?src=[REF(src)];command=close_exterior'>Close Exterior Airlock</A><BR>
+					<A href='?src=[REF(src)];command=cycle_interior'>Cycle to Interior Airlock</A><BR>"}
 				else
-					output = {"<A href='?src=\ref[src];command=close_exterior'>Close Exterior Airlock</A><BR>
-					<A href='?src=\ref[src];command=close_interior'>Close Interior Airlock</A><BR>"}
+					output = {"<A href='?src=[REF(src)];command=close_exterior'>Close Exterior Airlock</A><BR>
+					<A href='?src=[REF(src)];command=close_interior'>Close Interior Airlock</A><BR>"}
 
 
 	output = {"<B>Access Control Console</B><HR>

@@ -16,14 +16,15 @@
 /obj/structure/bodycontainer
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "morgue1"
-	density = 1
-	anchored = 1
-	obj_integrity = 400
+	density = TRUE
+	anchored = TRUE
 	max_integrity = 400
 
 	var/obj/structure/tray/connected = null
-	var/locked = 0
+	var/locked = FALSE
 	var/opendir = SOUTH
+	var/message_cooldown
+	var/breakout_time = 600
 
 /obj/structure/bodycontainer/Destroy()
 	open()
@@ -41,6 +42,11 @@
 
 /obj/structure/bodycontainer/relaymove(mob/user)
 	if(user.stat || !isturf(loc))
+		return
+	if(locked)
+		if(message_cooldown <= world.time)
+			message_cooldown = world.time + 50
+			to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
 		return
 	open()
 
@@ -67,7 +73,7 @@
 
 /obj/structure/bodycontainer/attackby(obj/P, mob/user, params)
 	add_fingerprint(user)
-	if(istype(P, /obj/item/weapon/pen))
+	if(istype(P, /obj/item/pen))
 		var/t = stripped_input(user, "What would you like the label to be?", text("[]", name), null)
 		if (user.get_active_held_item() != P)
 			return
@@ -85,11 +91,20 @@
 	qdel(src)
 
 /obj/structure/bodycontainer/container_resist(mob/living/user)
-	open()
-
-/obj/structure/bodycontainer/relay_container_resist(mob/living/user, obj/O)
-	to_chat(user, "<span class='notice'>You slam yourself into the side of [O].</span>")
-	container_resist(user)
+	if(!locked)
+		open()
+		return
+	user.changeNext_move(CLICK_CD_BREAKOUT)
+	user.last_special = world.time + CLICK_CD_BREAKOUT
+	user.visible_message(null, \
+		"<span class='notice'>You lean on the back of [src] and start pushing the tray open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
+		"<span class='italics'>You hear a metallic creaking from [src].</span>")
+	if(do_after(user,(breakout_time), target = src))
+		if(!user || user.stat != CONSCIOUS || user.loc != src )
+			return
+		user.visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>", \
+			"<span class='notice'>You successfully break out of [src]!</span>")
+		open()
 
 /obj/structure/bodycontainer/proc/open()
 	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
@@ -139,9 +154,9 @@
 					icon_state = "morgue4" // Cloneable
 					break
 
-/obj/item/weapon/paper/morguereminder
+/obj/item/paper/guides/jobs/medical/morgue
 	name = "morgue memo"
-	info = "<font size='2'>Since this station's medbay never seems to fail to be staffed by the mindless monkeys meant for genetics experiments, I'm leaving a reminder here for anyone handling the pile of cadavers the quacks are sure to leave.</font><BR><BR><font size='4'><font color=red>Red lights mean there's a plain ol' dead body inside.</font><BR><BR><font color=orange>Yellow lights mean there's non-body objects inside.</font><BR><font size='2'>Probably stuff pried off a corpse someone grabbed, or if you're lucky it's stashed booze.</font><BR><BR><font color=green>Green lights mean the morgue system detects the body may be able to be cloned.</font></font><BR><font size='2'>I don't know how that works, but keep it away from the kitchen and go yell at the geneticists.</font><BR><BR>- Centcom medical inspector"
+	info = "<font size='2'>Since this station's medbay never seems to fail to be staffed by the mindless monkeys meant for genetics experiments, I'm leaving a reminder here for anyone handling the pile of cadavers the quacks are sure to leave.</font><BR><BR><font size='4'><font color=red>Red lights mean there's a plain ol' dead body inside.</font><BR><BR><font color=orange>Yellow lights mean there's non-body objects inside.</font><BR><font size='2'>Probably stuff pried off a corpse someone grabbed, or if you're lucky it's stashed booze.</font><BR><BR><font color=green>Green lights mean the morgue system detects the body may be able to be cloned.</font></font><BR><font size='2'>I don't know how that works, but keep it away from the kitchen and go yell at the geneticists.</font><BR><BR>- CentCom medical inspector"
 
 /*
  * Crematorium
@@ -197,7 +212,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	else
 		audible_message("<span class='italics'>You hear a roar as the crematorium activates.</span>")
 
-		locked = 1
+		locked = TRUE
 		update_icon()
 
 		for(var/mob/living/M in conts)
@@ -220,7 +235,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		new /obj/effect/decal/cleanable/ash(src)
 		sleep(30)
 		if(!QDELETED(src))
-			locked = 0
+			locked = FALSE
 			update_icon()
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1) //you horrible people
 
@@ -231,7 +246,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 /obj/structure/bodycontainer/crematorium/creamatorium/cremate(mob/user)
 	var/list/icecreams = new()
 	for(var/mob/living/i_scream in GetAllContents())
-		var/obj/item/weapon/reagent_containers/food/snacks/icecream/IC = new()
+		var/obj/item/reagent_containers/food/snacks/icecream/IC = new()
 		IC.set_cone_type("waffle")
 		IC.add_mob_flavor(i_scream)
 		icecreams += IC
@@ -246,12 +261,11 @@ GLOBAL_LIST_EMPTY(crematoriums)
  */
 /obj/structure/tray
 	icon = 'icons/obj/stationobjs.dmi'
-	density = 1
+	density = TRUE
 	layer = BELOW_OBJ_LAYER
 	var/obj/structure/bodycontainer/connected = null
-	anchored = 1
+	anchored = TRUE
 	pass_flags = LETPASSTHROW
-	obj_integrity = 350
 	max_integrity = 350
 
 /obj/structure/tray/Destroy()
@@ -308,11 +322,8 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	desc = "Apply corpse before closing."
 	icon_state = "morguet"
 
-/obj/structure/tray/m_tray/CanPass(atom/movable/mover, turf/target, height=0)
-	if(height == 0)
-		return 1
-
-	if(istype(mover) && mover.checkpass(PASSTABLE))
+/obj/structure/tray/m_tray/CanPass(atom/movable/mover, turf/target)
+	if(istype(mover) && (mover.pass_flags & PASSTABLE))
 		return 1
 	if(locate(/obj/structure/table) in get_turf(mover))
 		return 1
@@ -323,4 +334,4 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	. = !density
 	if(ismovableatom(caller))
 		var/atom/movable/mover = caller
-		. = . || mover.checkpass(PASSTABLE)
+		. = . || (mover.pass_flags & PASSTABLE)

@@ -9,7 +9,7 @@
 
 // Fake Voice
 /obj/effect/proc_holder/changeling/mimicvoice/sting_action(mob/user)
-	var/datum/changeling/changeling=user.mind.changeling
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(changeling.mimicing)
 		changeling.mimicing = ""
 		changeling.chem_recharge_slowdown -= 0.5

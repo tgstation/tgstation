@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "a" = (
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -6,37 +6,31 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "c" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /turf/closed/indestructible/abductor{
 	icon_state = "alien20"
 	},
 /area/lavaland/surface/outdoors)
 "d" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /turf/closed/indestructible/abductor{
 	icon_state = "alien21"
 	},
 /area/ruin/unpowered)
 "e" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /turf/closed/indestructible/abductor{
 	icon_state = "alien22"
 	},
 /area/ruin/unpowered)
 "f" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /turf/closed/indestructible/abductor{
 	icon_state = "alien23"
 	},
 /area/ruin/unpowered)
 "g" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /turf/closed/indestructible/abductor{
 	icon_state = "alien24"
 	},
 /area/lavaland/surface/outdoors)
 "h" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /turf/closed/indestructible/abductor{
 	icon_state = "alien16"
 	},
@@ -48,25 +42,22 @@
 /area/ruin/unpowered)
 "j" = (
 /obj/machinery/abductor/experiment{
-	team = 100
+	team_number = 100
 	},
 /turf/open/floor/plating/abductor{
-	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "o2=16;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
 "k" = (
 /turf/open/floor/plating/abductor{
-	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "o2=16;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
 "l" = (
 /obj/machinery/abductor/pad{
-	team = 100
+	team_number = 100
 	},
 /turf/open/floor/plating/abductor{
-	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "o2=16;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
@@ -76,78 +67,68 @@
 	},
 /area/ruin/unpowered)
 "n" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /turf/closed/indestructible/abductor{
 	icon_state = "alien19"
 	},
 /area/lavaland/surface/outdoors)
 "o" = (
-/obj/item/weapon/hemostat/alien,
+/obj/item/hemostat/alien,
 /turf/open/floor/plating/abductor{
-	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "o2=16;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
 "p" = (
-obj/effect/mob_spawn/human/abductor,
+/obj/effect/mob_spawn/human/abductor,
 /turf/open/floor/plating/abductor{
-	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "o2=16;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
 "q" = (
 /obj/structure/closet/abductor,
 /turf/open/floor/plating/abductor{
-	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "o2=16;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
 "r" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /turf/closed/indestructible/abductor{
 	icon_state = "alien14"
 	},
 /area/ruin/unpowered)
 "s" = (
 /obj/structure/table/optable/abductor,
-/obj/item/weapon/cautery/alien,
+/obj/item/cautery/alien,
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plating/abductor{
-	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "o2=16;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
 "t" = (
 /obj/structure/table/abductor,
-/obj/item/weapon/storage/box/alienhandcuffs,
+/obj/item/storage/box/alienhandcuffs,
 /turf/open/floor/plating/abductor{
-	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "o2=16;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
 "u" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /turf/closed/indestructible/abductor{
 	icon_state = "alien12"
 	},
 /area/ruin/unpowered)
 "v" = (
-/obj/item/weapon/scalpel/alien,
-/obj/item/weapon/surgical_drapes,
+/obj/item/scalpel/alien,
+/obj/item/surgical_drapes,
 /turf/open/floor/plating/abductor{
-	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "o2=16;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
 "w" = (
-/obj/item/weapon/retractor/alien,
-/obj/item/weapon/paper/abductor,
+/obj/item/retractor/alien,
+/obj/item/paper/guides/antag/abductor,
 /turf/open/floor/plating/abductor{
-	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "o2=16;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
 "x" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /turf/closed/indestructible/abductor{
 	icon_state = "alien10"
 	},
@@ -155,23 +136,20 @@ obj/effect/mob_spawn/human/abductor,
 "y" = (
 /obj/machinery/abductor/gland_dispenser,
 /turf/open/floor/plating/abductor{
-	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "o2=16;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
 "z" = (
 /obj/structure/table/abductor,
-/obj/item/weapon/surgicaldrill/alien,
-/obj/item/weapon/circular_saw/alien,
+/obj/item/surgicaldrill/alien,
+/obj/item/circular_saw/alien,
 /turf/open/floor/plating/abductor{
-	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "o2=16;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
 "A" = (
 /obj/structure/bed/abductor,
 /turf/open/floor/plating/abductor{
-	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "o2=16;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
@@ -181,31 +159,26 @@ obj/effect/mob_spawn/human/abductor,
 	},
 /area/ruin/unpowered)
 "C" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /turf/closed/indestructible/abductor{
 	icon_state = "alien9"
 	},
 /area/lavaland/surface/outdoors)
 "D" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /turf/closed/indestructible/abductor{
 	icon_state = "alien2"
 	},
 /area/ruin/unpowered)
 "E" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /turf/closed/indestructible/abductor{
 	icon_state = "alien3"
 	},
 /area/ruin/unpowered)
 "F" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /turf/closed/indestructible/abductor{
 	icon_state = "alien4"
 	},
 /area/ruin/unpowered)
 "G" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /turf/closed/indestructible/abductor{
 	icon_state = "alien5"
 	},

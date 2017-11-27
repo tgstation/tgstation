@@ -69,6 +69,10 @@
 	holder.remove_reagent(src.id, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
 	return
 
+// Called when this reagent is first added to a mob
+/datum/reagent/proc/on_mob_add(mob/M)
+	return
+
 // Called when this reagent is removed while inside a mob
 /datum/reagent/proc/on_mob_delete(mob/M)
 	return
@@ -85,10 +89,6 @@
 	return
 
 /datum/reagent/proc/on_update(atom/A)
-	return
-
-// Called every time reagent containers process.
-/datum/reagent/proc/on_tick(data)
 	return
 
 // Called when the reagent container is hit by an explosion

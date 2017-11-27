@@ -9,10 +9,10 @@
 	desc = "Ashes to ashes, dust to dust, and into space."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "ash"
-	mergeable_decal = 0
+	mergeable_decal = FALSE
 
 /obj/effect/decal/cleanable/ash/Initialize()
-	..()
+	. = ..()
 	reagents.add_reagent("ash", 30)
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
@@ -22,7 +22,7 @@
 	icon_state = "big_ash"
 
 /obj/effect/decal/cleanable/ash/large/Initialize()
-	..()
+	. = ..()
 	reagents.add_reagent("ash", 30) //double the amount of ash.
 
 
@@ -30,7 +30,7 @@
 	name = "dirt"
 	desc = "Someone should clean that up."
 	icon_state = "dirt"
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/effect/decal/cleanable/flour
 	name = "flour"
@@ -44,7 +44,7 @@
 	icon_state = "greenglow"
 
 /obj/effect/decal/cleanable/greenglow/Initialize(mapload)
-	..()
+	. = ..()
 	set_light(1)
 
 /obj/effect/decal/cleanable/greenglow/ex_act()
@@ -67,7 +67,7 @@
 	gender = NEUTER
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "molten"
-	mergeable_decal = 0
+	mergeable_decal = FALSE
 
 /obj/effect/decal/cleanable/molten_object/large
 	name = "big gooey grey mass"
@@ -80,9 +80,8 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "vomit_1"
 	random_icon_states = list("vomit_1", "vomit_2", "vomit_3", "vomit_4")
-	var/list/viruses = list()
 
-/obj/effect/decal/cleanable/vomit/attack_hand(var/mob/user)
+/obj/effect/decal/cleanable/vomit/attack_hand(mob/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(isflyperson(H))
@@ -98,18 +97,12 @@
 			reagents.trans_to(H, reagents.total_volume)
 			qdel(src)
 
-/obj/effect/decal/cleanable/vomit/Destroy()
-	for(var/datum/disease/D in viruses)
-		D.cure(0)
-	viruses = null
-	return ..()
-
 /obj/effect/decal/cleanable/vomit/old
 	name = "crusty dried vomit"
 	desc = "You try not to look at the chunks, and fail."
 
-/obj/effect/decal/cleanable/vomit/old/Initialize()
-	..()
+/obj/effect/decal/cleanable/vomit/old/Initialize(mapload, list/datum/disease/diseases)
+	. = ..()
 	icon_state += "-old"
 
 /obj/effect/decal/cleanable/tomato_smudge
@@ -151,7 +144,7 @@
 	desc = "The shredded remains of what appears to be clothing."
 	icon_state = "shreds"
 	gender = PLURAL
-	mergeable_decal = 0
+	mergeable_decal = FALSE
 
 /obj/effect/decal/cleanable/shreds/ex_act(severity, target)
 	if(severity == 1) //so shreds created during an explosion aren't deleted by the explosion.
@@ -160,7 +153,7 @@
 /obj/effect/decal/cleanable/shreds/Initialize()
 	pixel_x = rand(-10, 10)
 	pixel_y = rand(-10, 10)
-	..()
+	. = ..()
 
 /obj/effect/decal/cleanable/salt
 	name = "salt pile"

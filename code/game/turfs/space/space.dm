@@ -14,6 +14,7 @@
 
 	var/global/datum/gas_mixture/immutable/space/space_gas = new
 	plane = PLANE_SPACE
+	layer = SPACE_LAYER
 	light_power = 0.25
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
@@ -43,6 +44,8 @@
 	if (opacity)
 		has_opaque_atom = TRUE
 
+	ComponentInitialize()
+
 	return INITIALIZE_HINT_NORMAL
 
 /turf/open/space/attack_ghost(mob/dead/observer/user)
@@ -66,7 +69,7 @@
 	return
 
 /turf/open/space/proc/update_starlight()
-	if(config.starlight)
+	if(CONFIG_GET(flag/starlight))
 		for(var/t in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 			if(isspaceturf(t))
 				//let's NOT update this that much pls
@@ -167,7 +170,7 @@
 	return TRUE
 
 
-/turf/open/space/rcd_vals(mob/user, obj/item/weapon/construction/rcd/the_rcd)
+/turf/open/space/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(!CanBuildHere())
 		return FALSE
 
@@ -176,10 +179,11 @@
 			var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 			if(L)
 				return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 1)
-			else return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 3)
+			else
+				return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 3)
 	return FALSE
 
-/turf/open/space/rcd_act(mob/user, obj/item/weapon/construction/rcd/the_rcd, passed_mode)
+/turf/open/space/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
 			to_chat(user, "<span class='notice'>You build a floor.</span>")

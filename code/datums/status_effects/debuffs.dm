@@ -4,6 +4,7 @@
 	tick_interval = 0
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
+	var/needs_update_stat = FALSE
 
 /datum/status_effect/incapacitating/on_creation(mob/living/new_owner, set_duration, updating_canmove)
 	if(isnum(set_duration))
@@ -12,12 +13,12 @@
 	if(.)
 		if(updating_canmove)
 			owner.update_canmove()
-			if(issilicon(owner))
+			if(needs_update_stat || issilicon(owner))
 				owner.update_stat()
 
 /datum/status_effect/incapacitating/on_remove()
 	owner.update_canmove()
-	if(issilicon(owner)) //silicons need stat updates in addition to normal canmove updates
+	if(needs_update_stat || issilicon(owner)) //silicons need stat updates in addition to normal canmove updates
 		owner.update_stat()
 
 //STUN
@@ -28,22 +29,31 @@
 /datum/status_effect/incapacitating/knockdown
 	id = "knockdown"
 
+/datum/status_effect/incapacitating/knockdown/tick()
+	if(owner.staminaloss)
+		owner.adjustStaminaLoss(-0.3) //reduce stamina loss by 0.3 per tick, 6 per 2 seconds
+
+
 //UNCONSCIOUS
 /datum/status_effect/incapacitating/unconscious
 	id = "unconscious"
+	needs_update_stat = TRUE
+
+/datum/status_effect/incapacitating/unconscious/tick()
+	if(owner.staminaloss)
+		owner.adjustStaminaLoss(-0.3) //reduce stamina loss by 0.3 per tick, 6 per 2 seconds
 
 //SLEEPING
 /datum/status_effect/incapacitating/sleeping
 	id = "sleeping"
 	alert_type = /obj/screen/alert/status_effect/asleep
+	needs_update_stat = TRUE
 	var/mob/living/carbon/carbon_owner
 	var/mob/living/carbon/human/human_owner
 
 /datum/status_effect/incapacitating/sleeping/on_creation(mob/living/new_owner, updating_canmove)
 	. = ..()
 	if(.)
-		if(updating_canmove)
-			owner.update_stat()
 		if(iscarbon(owner)) //to avoid repeated istypes
 			carbon_owner = owner
 		if(ishuman(owner))
@@ -56,7 +66,7 @@
 
 /datum/status_effect/incapacitating/sleeping/tick()
 	if(owner.staminaloss)
-		owner.adjustStaminaLoss(-0.35) //reduce stamina loss by 0.35 per tick, 7 per 2 seconds
+		owner.adjustStaminaLoss(-0.5) //reduce stamina loss by 0.5 per tick, 10 per 2 seconds
 	if(human_owner && human_owner.drunkenness)
 		human_owner.drunkenness *= 0.997 //reduce drunkenness by 0.3% per tick, 6% per 2 seconds
 	if(prob(20))
@@ -64,10 +74,6 @@
 			carbon_owner.handle_dreams()
 		if(prob(10) && owner.health > HEALTH_THRESHOLD_CRIT)
 			owner.emote("snore")
-
-/datum/status_effect/incapacitating/sleeping/on_remove()
-	..()
-	owner.update_stat()
 
 /obj/screen/alert/status_effect/asleep
 	name = "Asleep"
@@ -88,7 +94,7 @@
 	alerttooltipstyle = "hisgrace"
 
 /datum/status_effect/his_wrath/tick()
-	for(var/obj/item/weapon/his_grace/HG in owner.held_items)
+	for(var/obj/item/his_grace/HG in owner.held_items)
 		qdel(src)
 		return
 	owner.adjustBruteLoss(0.1)
@@ -142,7 +148,6 @@
 	if(owner.m_intent == MOVE_INTENT_WALK)
 		owner.toggle_move_intent()
 
-
 /datum/status_effect/maniamotor
 	id = "maniamotor"
 	duration = -1
@@ -180,7 +185,7 @@
 		return
 	if(!motor.active) //it being off makes it fall off much faster
 		if(!is_servant && !warned_turnoff)
-			if(motor.total_accessable_power() > motor.mania_cost)
+			if(can_access_clockwork_power(motor, motor.mania_cost))
 				to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar(pick(turnoff_messages))]\"</span>")
 			else
 				var/pickedmessage = pick(powerloss_messages)
@@ -218,7 +223,8 @@
 		if(owner.getToxLoss() > MANIA_DAMAGE_TO_CONVERT)
 			if(is_eligible_servant(owner))
 				to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar("You are mine and his, now.")]\"</span>")
-				add_servant_of_ratvar(owner)
+				if(add_servant_of_ratvar(owner))
+					owner.log_message("<font color=#BE8700>Conversion was done with a Mania Motor.</font>", INDIVIDUAL_ATTACK_LOG)
 			owner.Unconscious(100)
 		else
 			if(prob(severity * 0.15))
@@ -239,15 +245,19 @@
 	duration = -1
 	alert_type = null
 
+/datum/status_effect/cultghost/tick()
+	if(owner.reagents)
+		owner.reagents.del_reagent("holywater") //can't be deconverted
+
 /datum/status_effect/crusher_mark
 	id = "crusher_mark"
 	duration = 300 //if you leave for 30 seconds you lose the mark, deal with it
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
 	var/mutable_appearance/marked_underlay
-	var/obj/item/weapon/twohanded/required/kinetic_crusher/hammer_synced
+	var/obj/item/twohanded/required/kinetic_crusher/hammer_synced
 
-/datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, obj/item/weapon/twohanded/required/kinetic_crusher/new_hammer_synced)
+/datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, obj/item/twohanded/required/kinetic_crusher/new_hammer_synced)
 	. = ..()
 	if(.)
 		hammer_synced = new_hammer_synced
@@ -303,7 +313,7 @@
 	bleed_overlay.pixel_y = Floor(icon_height * 0.25)
 	bleed_overlay.transform = matrix() * (icon_height/world.icon_size) //scale the bleed overlay's size based on the target's icon size
 	bleed_underlay.pixel_x = -owner.pixel_x
-	bleed_underlay.transform = matrix() * (icon_height/world.icon_size) * 4
+	bleed_underlay.transform = matrix() * (icon_height/world.icon_size) * 3
 	bleed_underlay.alpha = 40
 	owner.add_overlay(bleed_overlay)
 	owner.underlays += bleed_underlay
@@ -343,3 +353,129 @@
 		owner.adjustBruteLoss(bleed_damage)
 	else
 		new /obj/effect/temp_visual/bleed(get_turf(owner))
+
+/mob/living/proc/apply_necropolis_curse(set_curse)
+	var/datum/status_effect/necropolis_curse/C = has_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE)
+	if(!set_curse)
+		set_curse = pick(CURSE_BLINDING, CURSE_SPAWNING, CURSE_WASTING, CURSE_GRASPING)
+	if(QDELETED(C))
+		apply_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE, set_curse)
+	else
+		C.apply_curse(set_curse)
+		C.duration += 3000 //additional curses add 5 minutes
+
+/datum/status_effect/necropolis_curse
+	id = "necrocurse"
+	duration = 6000 //you're cursed for 10 minutes have fun
+	tick_interval = 50
+	alert_type = null
+	var/curse_flags = NONE
+	var/effect_last_activation = 0
+	var/effect_cooldown = 100
+	var/obj/effect/temp_visual/curse/wasting_effect = new
+
+/datum/status_effect/necropolis_curse/on_creation(mob/living/new_owner, set_curse)
+	. = ..()
+	if(.)
+		apply_curse(set_curse)
+
+/datum/status_effect/necropolis_curse/Destroy()
+	if(!QDELETED(wasting_effect))
+		qdel(wasting_effect)
+		wasting_effect = null
+	return ..()
+
+/datum/status_effect/necropolis_curse/on_remove()
+	remove_curse(curse_flags)
+
+/datum/status_effect/necropolis_curse/proc/apply_curse(set_curse)
+	curse_flags |= set_curse
+	if(curse_flags & CURSE_BLINDING)
+		owner.overlay_fullscreen("curse", /obj/screen/fullscreen/curse, 1)
+
+/datum/status_effect/necropolis_curse/proc/remove_curse(remove_curse)
+	if(remove_curse & CURSE_BLINDING)
+		owner.clear_fullscreen("curse", 50)
+	curse_flags &= ~remove_curse
+
+/datum/status_effect/necropolis_curse/tick()
+	if(owner.stat == DEAD)
+		return
+	if(curse_flags & CURSE_WASTING)
+		wasting_effect.forceMove(owner.loc)
+		wasting_effect.setDir(owner.dir)
+		wasting_effect.transform = owner.transform //if the owner has been stunned the overlay should inherit that position
+		wasting_effect.alpha = 255
+		animate(wasting_effect, alpha = 0, time = 32)
+		playsound(owner, 'sound/effects/curse5.ogg', 20, 1, -1)
+		owner.adjustFireLoss(0.75)
+	if(effect_last_activation <= world.time)
+		effect_last_activation = world.time + effect_cooldown
+		if(curse_flags & CURSE_SPAWNING)
+			var/turf/spawn_turf
+			var/sanity = 10
+			while(!spawn_turf && sanity)
+				spawn_turf = locate(owner.x + pick(rand(10, 15), rand(-10, -15)), owner.y + pick(rand(10, 15), rand(-10, -15)), owner.z)
+				sanity--
+			if(spawn_turf)
+				var/mob/living/simple_animal/hostile/asteroid/curseblob/C = new (spawn_turf)
+				C.set_target = owner
+				C.GiveTarget()
+		if(curse_flags & CURSE_GRASPING)
+			var/grab_dir = turn(owner.dir, pick(-90, 90, 180, 180)) //grab them from a random direction other than the one faced, favoring grabbing from behind
+			var/turf/spawn_turf = get_ranged_target_turf(owner, grab_dir, 5)
+			if(spawn_turf)
+				grasp(spawn_turf)
+
+/datum/status_effect/necropolis_curse/proc/grasp(turf/spawn_turf)
+	set waitfor = FALSE
+	new/obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, owner.dir)
+	playsound(spawn_turf, 'sound/effects/curse2.ogg', 80, 1, -1)
+	var/turf/ownerloc = get_turf(owner)
+	var/obj/item/projectile/curse_hand/C = new (spawn_turf)
+	C.preparePixelProjectile(ownerloc, spawn_turf)
+	C.fire()
+
+/obj/effect/temp_visual/curse
+	icon_state = "curse"
+
+/obj/effect/temp_visual/curse/Initialize()
+	. = ..()
+	deltimer(timerid)
+
+
+//Kindle: Used by servants of Ratvar. 10-second knockdown, reduced by 1 second per 5 damage taken while the effect is active.
+/datum/status_effect/kindle
+	id = "kindle"
+	status_type = STATUS_EFFECT_UNIQUE
+	tick_interval = 5
+	duration = 100
+	alert_type = /obj/screen/alert/status_effect/kindle
+	var/old_health
+
+/datum/status_effect/kindle/tick()
+	owner.Knockdown(15)
+	if(iscarbon(owner))
+		var/mob/living/carbon/C = owner
+		C.silent = max(2, C.silent)
+		C.stuttering = max(5, C.stuttering)
+	if(!old_health)
+		old_health = owner.health
+	var/health_difference = old_health - owner.health
+	if(!health_difference)
+		return
+	owner.visible_message("<span class='warning'>The light in [owner]'s eyes dims as they're harmed!</span>", \
+	"<span class='boldannounce'>The dazzling lights dim as you're harmed!</span>")
+	health_difference *= 2 //so 10 health difference translates to 20 deciseconds of stun reduction
+	duration -= health_difference
+	old_health = owner.health
+
+/datum/status_effect/kindle/on_remove()
+	owner.visible_message("<span class='warning'>The light in [owner]'s eyes fades!</span>", \
+	"<span class='boldannounce'>You snap out of your daze!</span>")
+
+/obj/screen/alert/status_effect/kindle
+	name = "Dazzling Lights"
+	desc = "Blinding light dances in your vision, stunning and silencing you. <i>Any damage taken will shorten the light's effects!</i>"
+	icon_state = "kindle"
+	alerttooltipstyle = "clockcult"

@@ -3,9 +3,9 @@
 // eye damage, eye_blind, eye_blurry, druggy, BLIND disability, NEARSIGHT disability, and HUSK disability.
 
 /mob/living/carbon/damage_eyes(amount)
-	var/obj/item/organ/eyes/eyes = getorganslot("eyes_sight")
+	var/obj/item/organ/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
 	if (!eyes)
-		return 
+		return
 	if(amount>0)
 		eyes.eye_damage = amount
 		if(eyes.eye_damage > 20)
@@ -15,9 +15,9 @@
 				overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
 
 /mob/living/carbon/set_eye_damage(amount)
-	var/obj/item/organ/eyes/eyes = getorganslot("eyes_sight")
+	var/obj/item/organ/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
 	if (!eyes)
-		return 
+		return
 	eyes.eye_damage = max(amount,0)
 	if(eyes.eye_damage > 20)
 		if(eyes.eye_damage > 30)
@@ -28,7 +28,7 @@
 		clear_fullscreen("eye_damage")
 
 /mob/living/carbon/adjust_eye_damage(amount)
-	var/obj/item/organ/eyes/eyes = getorganslot("eyes_sight")
+	var/obj/item/organ/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
 	if (!eyes)
 		return
 	eyes.eye_damage = max(eyes.eye_damage+amount, 0)
@@ -41,28 +41,28 @@
 		clear_fullscreen("eye_damage")
 
 /mob/living/carbon/adjust_drugginess(amount)
-	var/old_druggy = druggy
-	if(amount>0)
-		druggy += amount
-		if(!old_druggy)
-			overlay_fullscreen("high", /obj/screen/fullscreen/high)
-			throw_alert("high", /obj/screen/alert/high)
-	else if(old_druggy)
-		druggy = max(druggy+amount, 0)
-		if(!druggy)
-			clear_fullscreen("high")
-			clear_alert("high")
-/mob/living/carbon/set_drugginess(amount)
-	var/old_druggy = druggy
-	druggy = amount
-	if(amount>0)
-		if(!old_druggy)
-			overlay_fullscreen("high", /obj/screen/fullscreen/high)
-			throw_alert("high", /obj/screen/alert/high)
-	else if(old_druggy)
+	druggy = max(druggy+amount, 0)
+	if(druggy)
+		overlay_fullscreen("high", /obj/screen/fullscreen/high)
+		throw_alert("high", /obj/screen/alert/high)
+	else
 		clear_fullscreen("high")
 		clear_alert("high")
 
+/mob/living/carbon/set_drugginess(amount)
+	druggy = max(amount, 0)
+	if(druggy)
+		overlay_fullscreen("high", /obj/screen/fullscreen/high)
+		throw_alert("high", /obj/screen/alert/high)
+	else
+		clear_fullscreen("high")
+		clear_alert("high")
+
+/mob/living/carbon/adjust_disgust(amount)
+	disgust = Clamp(disgust+amount, 0, DISGUST_LEVEL_MAXEDOUT)
+
+/mob/living/carbon/set_disgust(amount)
+	disgust = Clamp(amount, 0, DISGUST_LEVEL_MAXEDOUT)
 
 /mob/living/carbon/cure_blind()
 	if(disabilities & BLIND)

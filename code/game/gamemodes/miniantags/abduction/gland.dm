@@ -4,7 +4,6 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "gland"
 	status = ORGAN_ROBOTIC
-	origin_tech = "materials=4;biotech=7;abductor=3"
 	beating = TRUE
 	var/cooldown_low = 300
 	var/cooldown_high = 300
@@ -83,7 +82,6 @@
 	Slime.Leader = owner
 
 /obj/item/organ/heart/gland/mindshock
-	origin_tech = "materials=4;biotech=4;magnets=6;abductor=3"
 	cooldown_low = 300
 	cooldown_high = 300
 	uses = -1
@@ -108,11 +106,10 @@
 
 /obj/item/organ/heart/gland/pop/activate()
 	to_chat(owner, "<span class='notice'>You feel unlike yourself.</span>")
-	var/species = pick(list(/datum/species/lizard,/datum/species/jelly/slime,/datum/species/pod,/datum/species/fly,/datum/species/jelly))
+	var/species = pick(list(/datum/species/lizard, /datum/species/jelly/slime, /datum/species/pod, /datum/species/fly, /datum/species/jelly))
 	owner.set_species(species)
 
 /obj/item/organ/heart/gland/ventcrawling
-	origin_tech = "materials=4;biotech=5;bluespace=4;abductor=3"
 	cooldown_low = 1800
 	cooldown_high = 2400
 	uses = 1
@@ -133,15 +130,13 @@
 	to_chat(owner, "<span class='warning'>You feel sick.</span>")
 	var/virus_type = pick(/datum/disease/beesease, /datum/disease/brainrot, /datum/disease/magnitis)
 	var/datum/disease/D = new virus_type()
-	D.carrier = 1
+	D.carrier = TRUE
 	owner.viruses += D
 	D.affected_mob = owner
-	D.holder = owner
 	owner.med_hud_set_status()
 
 
 /obj/item/organ/heart/gland/emp //TODO : Replace with something more interesting
-	origin_tech = "materials=4;biotech=4;magnets=6;abductor=3"
 	cooldown_low = 900
 	cooldown_high = 1600
 	uses = 10
@@ -167,10 +162,12 @@
 	cooldown_high = 400
 	uses = -1
 	icon_state = "egg"
+	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 
 /obj/item/organ/heart/gland/egg/activate()
 	to_chat(owner, "<span class='boldannounce'>You lay an egg!</span>")
-	var/obj/item/weapon/reagent_containers/food/snacks/egg/egg = new(owner.loc)
+	var/obj/item/reagent_containers/food/snacks/egg/egg = new(owner.loc)
 	egg.reagents.add_reagent("sacid",20)
 	egg.desc += " It smells bad."
 
@@ -212,12 +209,12 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "cocoon_large3"
 	color = rgb(10,120,10)
-	density = 1
+	density = TRUE
 	var/hatch_time = 0
 
 /obj/structure/spider/cocoon/abductor/proc/Copy(mob/living/carbon/human/H)
 	var/mob/living/carbon/human/interactive/greytide/clone = new(src)
-	clone.hardset_dna(H.dna.uni_identity,H.dna.struc_enzymes,H.real_name, H.dna.blood_type, H.dna.species.type, H.dna.features)
+	clone.hardset_dna(H.dna.uni_identity,H.dna.struc_enzymes,H.real_name, H.dna.blood_type, H.dna.species, H.dna.features)
 
 /obj/structure/spider/cocoon/abductor/proc/Start()
 	hatch_time = world.time + 600
@@ -235,16 +232,16 @@
 /obj/item/organ/heart/gland/plasma
 	cooldown_low = 1200
 	cooldown_high = 1800
-	origin_tech = "materials=4;biotech=4;plasmatech=6;abductor=3"
 	uses = -1
 
 /obj/item/organ/heart/gland/plasma/activate()
 	to_chat(owner, "<span class='warning'>You feel bloated.</span>")
-	sleep(150)
-	if(!owner) return
-	to_chat(owner, "<span class='userdanger'>A massive stomachache overcomes you.</span>")
-	sleep(50)
-	if(!owner) return
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, owner, "<span class='userdanger'>A massive stomachache overcomes you.</span>"), 150)
+	addtimer(CALLBACK(src, .proc/vomit_plasma), 200)
+
+/obj/item/organ/heart/gland/plasma/proc/vomit_plasma()
+	if(!owner)
+		return
 	owner.visible_message("<span class='danger'>[owner] vomits a cloud of plasma!</span>")
 	var/turf/open/T = get_turf(owner)
 	if(istype(T))

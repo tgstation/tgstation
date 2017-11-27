@@ -2,10 +2,13 @@
 	desc = "A space wizard's magic wall."
 	name = "FORCEWALL"
 	icon_state = "m_shield"
-	anchored = 1
+	anchored = TRUE
 	opacity = 0
-	density = 1
+	density = TRUE
 	CanAtmosPass = ATMOS_PASS_DENSITY
+
+/obj/effect/forcefield/singularity_pull()
+	return
 
 /obj/effect/forcefield/cult
 	desc = "An unholy shield that blocks all attacks."

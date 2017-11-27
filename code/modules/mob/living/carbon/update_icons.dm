@@ -153,6 +153,7 @@
 	if(back)
 		overlays_standing[BACK_LAYER] = back.build_worn_icon(state = back.icon_state, default_layer = BACK_LAYER, default_icon_file = 'icons/mob/back.dmi')
 		update_hud_back(back)
+
 	apply_overlay(BACK_LAYER)
 
 /mob/living/carbon/update_inv_head()
@@ -209,7 +210,8 @@
 
 //Overlays for the worn overlay so you can overlay while you overlay
 //eg: ammo counters, primed grenade flashing, etc.
-/obj/item/proc/worn_overlays(isinhands = FALSE)
+//"icon_file" is used automatically for inhands etc. to make sure it gets the right inhand file
+/obj/item/proc/worn_overlays(isinhands = FALSE, icon_file)
 	. = list()
 
 

@@ -141,13 +141,18 @@
 	afterDraw()
 
 /obj/effect/ebeam
-	mouse_opacity = 0
-	anchored = 1
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	anchored = TRUE
 	var/datum/beam/owner
 
 /obj/effect/ebeam/Destroy()
 	owner = null
 	return ..()
+
+/obj/effect/ebeam/singularity_pull()
+	return
+/obj/effect/ebeam/singularity_act()
+	return
 
 /atom/proc/Beam(atom/BeamTarget,icon_state="b_beam",icon='icons/effects/beam.dmi',time=50, maxdistance=10,beam_type=/obj/effect/ebeam,beam_sleep_time = 3)
 	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type,beam_sleep_time)

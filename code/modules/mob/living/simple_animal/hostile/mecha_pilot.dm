@@ -40,8 +40,8 @@
 	search_objects = 2
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/no_mech/Initialize()
-	..()
-	wanted_objects = typecacheof(/obj/mecha/combat, ignore_root_path=TRUE)
+	. = ..()
+	wanted_objects = typecacheof(/obj/mecha/combat, TRUE)
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/nanotrasen //nanotrasen are syndies! no it's just a weird path.
 	name = "Nanotrasen Mecha Pilot"
@@ -60,7 +60,7 @@
 
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/Initialize()
-	..()
+	. = ..()
 	if(spawn_mecha_type)
 		var/obj/mecha/M = new spawn_mecha_type (get_turf(src))
 		if(istype(M))
@@ -101,7 +101,7 @@
 	targets_from = src
 
 	//Find a new mecha
-	wanted_objects = typecacheof(/obj/mecha/combat, ignore_root_path=TRUE)
+	wanted_objects = typecacheof(/obj/mecha/combat, TRUE)
 	var/search_aggressiveness = 2
 	for(var/obj/mecha/combat/C in range(vision_range,src))
 		if(is_valid_mecha(C))
@@ -184,7 +184,7 @@
 			mecha_face_target(target)
 			target.mech_melee_attack(mecha)
 	else
-		if(istype(target, /obj/mecha))
+		if(ismecha(target))
 			var/obj/mecha/M = target
 			if(is_valid_mecha(M))
 				enter_mecha(M)
@@ -259,7 +259,7 @@
 //Yes they actually try and pull this shit
 //~simple animals~
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/CanAttack(atom/the_target)
-	if(istype(the_target, /obj/mecha))
+	if(ismecha(the_target))
 		var/obj/mecha/M = the_target
 		if(mecha)
 			if(M == mecha || !CanAttack(M.occupant))
