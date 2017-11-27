@@ -17,6 +17,8 @@
 	var/id = "generic"
 	var/list/research_logs = list()								//IC logs.
 	var/max_bomb_value = 0
+	var/organization = "Third-Party"							//Organization name, used for display.
+	var/last_bitcoins = 0										//Current per-second production, used for display only.
 
 /datum/techweb/New()
 	for(var/i in SSresearch.techweb_nodes_starting)
@@ -28,6 +30,7 @@
 /datum/techweb/admin
 	research_points = INFINITY	//KEKKLES.
 	id = "ADMIN"
+	organization = "CentCom"
 
 /datum/techweb/admin/New()	//All unlocked.
 	. = ..()
@@ -38,6 +41,7 @@
 
 /datum/techweb/science	//Global science techweb for RND consoles.
 	id = "SCIENCE"
+	organization = "Nanotrasen"
 
 /datum/techweb/Destroy()
 	researched_nodes = null
