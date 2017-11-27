@@ -50,7 +50,7 @@
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "alarm0"
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 4
 	active_power_usage = 8
 	power_channel = ENVIRON

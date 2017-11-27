@@ -36,6 +36,7 @@
 	var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]
 	hard_drive.store_file(new/datum/computer_file/program/power_monitor())
 	hard_drive.store_file(new/datum/computer_file/program/alarm_monitor())
+	hard_drive.store_file(new/datum/computer_file/program/supermatter_monitor())
 
 // ===== RESEARCH CONSOLE =====
 /obj/machinery/modular_computer/console/preset/research

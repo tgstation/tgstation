@@ -89,7 +89,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 /obj/machinery/gateway/centerstation
 	density = TRUE
 	icon_state = "offcenter"
-	use_power = TRUE
+	use_power = IDLE_POWER_USE
 
 	//warping vars
 	var/wait = 0				//this just grabs world.time at world start
@@ -176,7 +176,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 /obj/machinery/gateway/centeraway
 	density = TRUE
 	icon_state = "offcenter"
-	use_power = FALSE
+	use_power = NO_POWER_USE
 	var/obj/machinery/gateway/centeraway/stationgate = null
 	can_link = TRUE
 

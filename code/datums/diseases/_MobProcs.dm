@@ -46,7 +46,7 @@
 		for(var/V in DD.vars)
 			if(V in skipped)
 				continue
-			if(istype(DD.vars[V],/list))
+			if(islist(DD.vars[V]))
 				var/list/L = D.vars[V]
 				DD.vars[V] = L.Copy()
 			else

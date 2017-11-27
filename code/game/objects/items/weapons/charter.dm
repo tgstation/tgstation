@@ -23,7 +23,7 @@
 		var/names = jointext(GLOB.station_names, "|")
 		var/suffixes = jointext(GLOB.station_suffixes, "|")
 		var/numerals = jointext(GLOB.station_numerals, "|")
-		var/regexstr = "(([prefixes]) )?(([names]) ?)([suffixes]) ([numerals])"
+		var/regexstr = "^(([prefixes]) )?(([names]) ?)([suffixes]) ([numerals])$"
 		standard_station_regex = new(regexstr)
 
 /obj/item/weapon/station_charter/attack_self(mob/living/user)

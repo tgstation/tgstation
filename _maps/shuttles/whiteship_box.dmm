@@ -40,9 +40,8 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "ag" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 8;
-	icon_state = "propulsion_l"
+/obj/structure/shuttle/engine/propulsion/left{
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -82,14 +81,12 @@
 /area/shuttle/abandoned)
 "an" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 8;
-	icon_state = "propulsion"
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "ao" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 8
 	},
 /obj/structure/window/reinforced{
@@ -164,9 +161,8 @@
 	},
 /area/shuttle/abandoned)
 "aB" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 8;
-	icon_state = "propulsion_r"
+/obj/structure/shuttle/engine/propulsion/right{
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -338,7 +334,6 @@
 /area/shuttle/abandoned)
 "bh" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /obj/effect/decal/remains/human,

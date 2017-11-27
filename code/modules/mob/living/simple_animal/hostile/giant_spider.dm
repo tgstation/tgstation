@@ -177,7 +177,7 @@
 						if(O.anchored)
 							continue
 
-						if(istype(O, /obj/item) || istype(O, /obj/structure) || istype(O, /obj/machinery))
+						if(isitem(O) || istype(O, /obj/structure) || istype(O, /obj/machinery))
 							cocoon_target = O
 							busy = MOVING_TO_TARGET
 							stop_automated_movement = 1

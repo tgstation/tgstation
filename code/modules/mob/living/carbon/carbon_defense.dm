@@ -155,10 +155,9 @@
 
 				do_sparks(5, TRUE, src)
 				var/power = M.powerlevel + rand(0,3)
-				Weaken(power)
+				Knockdown(power*20)
 				if(stuttering < power)
 					stuttering = power
-				Stun(power)
 				if (prob(stunprob) && M.powerlevel >= 8)
 					adjustFireLoss(M.powerlevel * rand(6,10))
 					updatehealth()
@@ -223,12 +222,11 @@
 	do_jitter_animation(jitteriness)
 	stuttering += 2
 	if((!tesla_shock || (tesla_shock && siemens_coeff > 0.5)) && stun)
-		Stun(2)
+		Stun(40)
 	spawn(20)
 		jitteriness = max(jitteriness - 990, 10) //Still jittery, but vastly less
 		if((!tesla_shock || (tesla_shock && siemens_coeff > 0.5)) && stun)
-			Stun(3)
-			Weaken(3)
+			Knockdown(60)
 	if(override)
 		return override
 	else
@@ -247,10 +245,10 @@
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
 						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
-		AdjustSleeping(-5)
-		AdjustParalysis(-3)
-		AdjustStunned(-3)
-		AdjustWeakened(-3)
+		AdjustStun(-60)
+		AdjustKnockdown(-60)
+		AdjustUnconscious(-60)
+		AdjustSleeping(-100)
 		if(resting)
 			resting = 0
 			update_canmove()
@@ -263,6 +261,9 @@
 
 	var/damage = intensity - get_eye_protection()
 	if(.) // we've been flashed
+		var/obj/item/organ/eyes/eyes = getorganslot("eyes_sight")
+		if (!eyes)
+			return
 		if(visual)
 			return
 
@@ -279,15 +280,15 @@
 			to_chat(src, "<span class='warning'>Your eyes itch and burn severely!</span>")
 			adjust_eye_damage(rand(12, 16))
 
-		if(eye_damage > 10)
+		if(eyes.eye_damage > 10)
 			blind_eyes(damage)
 			blur_eyes(damage * rand(3, 6))
 
-			if(eye_damage > 20)
-				if(prob(eye_damage - 20))
+			if(eyes.eye_damage > 20)
+				if(prob(eyes.eye_damage - 20))
 					if(become_nearsighted())
 						to_chat(src, "<span class='warning'>Your eyes start to burn badly!</span>")
-				else if(prob(eye_damage - 25))
+				else if(prob(eyes.eye_damage - 25))
 					if(become_blind())
 						to_chat(src, "<span class='warning'>You can't see anything!</span>")
 			else
@@ -302,14 +303,13 @@
 			mind.disrupt_spells(0)
 
 
-/mob/living/carbon/soundbang_act(intensity = 1, stun_pwr = 1, damage_pwr = 5, deafen_pwr = 15)
+/mob/living/carbon/soundbang_act(intensity = 1, stun_pwr = 20, damage_pwr = 5, deafen_pwr = 15)
 	var/ear_safety = get_ear_protection()
 	var/obj/item/organ/ears/ears = getorganslot("ears")
 	var/effect_amount = intensity - ear_safety
 	if(effect_amount > 0)
 		if(stun_pwr)
-			Stun(stun_pwr*effect_amount)
-			Weaken(stun_pwr*effect_amount)
+			Knockdown(stun_pwr*effect_amount)
 
 		if(istype(ears) && (deafen_pwr || damage_pwr))
 			var/ear_damage = damage_pwr * effect_amount

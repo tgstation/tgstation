@@ -25,7 +25,7 @@
 			for(var/j = 1, j<= gibamounts[i], j++)
 				var/gibType = gibtypes[i]
 				gib = new gibType(loc)
-				if(istype(loc,/mob/living/carbon))
+				if(iscarbon(loc))
 					var/mob/living/carbon/digester = loc
 					digester.stomach_contents += gib
 

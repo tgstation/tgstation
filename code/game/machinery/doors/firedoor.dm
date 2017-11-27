@@ -50,6 +50,11 @@
 		var/area/A = I
 		LAZYADD(A.firedoors, src)
 
+/obj/machinery/door/firedoor/closed
+	icon_state = "door_closed"
+	opacity = TRUE
+	density = TRUE
+
 //see also turf/AfterChange for adjacency shennanigans
 
 /obj/machinery/door/firedoor/proc/remove_from_areas()

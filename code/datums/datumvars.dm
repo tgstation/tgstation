@@ -387,7 +387,7 @@
 /proc/debug_variable(name, value, level, datum/DA = null, sanitize = TRUE)
 	var/header
 	if(DA)
-		if (istype(DA, /list))
+		if (islist(DA))
 			var/index = name
 			if (value)
 				name = DA[name] //name is really the index until this line
@@ -442,7 +442,7 @@
 		else
 			item = "<a href='?_src_=vars;Vars=\ref[value]'>[VV_HTML_ENCODE(name)] \ref[value]</a> = [D.type]"
 
-	else if (istype(value, /list))
+	else if (islist(value))
 		var/list/L = value
 		var/list/items = list()
 
@@ -494,7 +494,7 @@
 		href_list["datumrefresh"] = href_list["mob_player_panel"]
 
 	else if(href_list["godmode"])
-		if(!check_rights(R_REJUVINATE))
+		if(!check_rights(R_ADMIN))
 			return
 
 		var/mob/M = locate(href_list["godmode"])

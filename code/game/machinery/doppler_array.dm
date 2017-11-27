@@ -108,4 +108,4 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	name = "integrated tachyon-doppler module"
 	integrated = 1
 	max_dist = 21 //Should detect most explosions in hearing range.
-	use_power = 0
+	use_power = NO_POWER_USE

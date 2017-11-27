@@ -173,6 +173,7 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 // Used by NewsCaster and NewsPaper.
 // Used by Modular Computers
 #define PEN_FONT "Verdana"
+#define FOUNTAIN_PEN_FONT "Segoe Script"
 #define CRAYON_FONT "Comic Sans MS"
 #define PRINTER_FONT "Times New Roman"
 #define SIGNFONT "Times New Roman"
@@ -433,3 +434,10 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 //for obj explosion block calculation
 #define EXPLOSION_BLOCK_PROC -1
+
+//for determining which type of heartbeat sound is playing
+#define BEAT_FAST 1
+#define BEAT_SLOW 2
+#define BEAT_NONE 0
+
+

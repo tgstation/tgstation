@@ -55,7 +55,7 @@
 		var/atom/throw_target = get_edge_target_turf(H, pick(GLOB.cardinal))
 		unbuckle_mob(H)
 		H.throw_at(throw_target, 4, 3)
-		H.Weaken(5)
+		H.Knockdown(100)
 		H.adjustStaminaLoss(40)
 		visible_message("<span class='danger'>[src] crashes into [A], sending [H] flying!</span>")
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)

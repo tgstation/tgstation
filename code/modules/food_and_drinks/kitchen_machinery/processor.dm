@@ -9,7 +9,7 @@
 	anchored = 1
 	var/broken = 0
 	var/processing = 0
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 50
 	var/rating_speed = 1
@@ -297,7 +297,7 @@
 
 /obj/machinery/processor/slime
 	name = "Slime processor"
-	desc = "An industrial grinder with a sSSticker saying appropriated for science department. Keep hands clear of intake area while operating."
+	desc = "An industrial grinder with a sticker saying appropriated for science department. Keep hands clear of intake area while operating."
 
 /obj/machinery/processor/slime/New()
 	..()

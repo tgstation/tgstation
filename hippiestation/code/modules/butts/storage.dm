@@ -1,5 +1,3 @@
-/obj/item/weapon/storage/internal/pocket/butt
-
 /obj/item/weapon/storage/internal/pocket/butt/handle_item_insertion(obj/item/W, prevent_warning = 1, mob/user)
 	if(istype(loc, /obj/item/organ/butt))
 		var/obj/item/organ/butt/B = loc
@@ -29,13 +27,13 @@
 						user.s_active.close(user)
 					B.inv.orient2hud(user)
 					B.inv.show_to(user)
-					return 1
+					return TRUE
 				else
 					user.visible_message("<span class='warning'>[user] fails to inspect [user == src ? "his own" : "[src]'s"] ass!</span>", "<span class='warning'>You fail to inspect [user == src ? "your" : "[src]'s"] ass!</span>")
-					return 1
+					return TRUE
 			else
 				to_chat(user, "<span class='warning'>There's nothing to inspect!</span>")
-				return 1
+				return TRUE
 		else
 			if(user == src)
 				user.visible_message("<span class='warning'>[user] grabs his own butt!</span>", "<span class='warning'>You grab your own butt!</span>")
@@ -44,26 +42,24 @@
 				user.visible_message("<span class='warning'>[user] grabs [src]'s butt!</span>", "<span class='warning'>You grab [src]'s butt!</span>")
 				to_chat(user, "<span class='warning'>You'll need to remove [src]'s jumpsuit first!</span>")
 				to_chat(src, "<span class='userdanger'>You feel your butt being grabbed!</span>")
-			return 1
+			return TRUE
 
 /mob/living/carbon/proc/checkbuttinsert(obj/item/I, mob/living/carbon/user)
 	if(user.zone_selected == "groin")
 		if(user.a_intent == "grab")
 			var/mob/living/carbon/human/buttowner = src
 			if(!istype(buttowner))
-				return 0
+				return FALSE
 			if(buttowner.w_uniform)
-				return 0
+				return FALSE
 			var/obj/item/organ/butt/B = buttowner.getorgan(/obj/item/organ/butt)
 			if(B)
 				var/obj/item/weapon/storage/internal/pocket/butt/pocket = B.inv
 				if(!pocket)
-					return
+					return FALSE
 				user.visible_message("<span class='warning'>[user] starts hiding [I] inside [src == user ? "his own" : "[user]'s"] butt.</span>", "<span class='warning'>You start hiding [I] inside [user == src ? "your" : "[user]'s"] butt.</span>")
 				if(do_mob(user, src, 20) && pocket.can_be_inserted(I, 0, user))
 					pocket.handle_item_insertion(I, 0, user)
 					user.visible_message("<span class='warning'>[user] hides [I] inside [src == user ? "his own" : "[user]'s"] butt.</span>", "<span class='warning'>You hide [I] inside [user == src ? "your" : "[user]'s"] butt.</span>")
-					return 1
-				return 1
-			else
-				return 0
+				return TRUE
+	return FALSE

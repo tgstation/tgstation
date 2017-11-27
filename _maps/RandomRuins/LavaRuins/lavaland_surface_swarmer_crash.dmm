@@ -17,8 +17,7 @@
 /area/ruin/unpowered)
 "e" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 4;
-	icon_state = "propulsion"
+	dir = 4
 	},
 /turf/template_noop,
 /area/ruin/unpowered)

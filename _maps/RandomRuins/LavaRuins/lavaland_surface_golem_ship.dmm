@@ -53,7 +53,6 @@
 /area/ruin/powered/golem_ship)
 "h" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 4
 	},
 /obj/structure/window/reinforced{
@@ -66,7 +65,6 @@
 /area/ruin/powered/golem_ship)
 "i" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
 	dir = 8
 	},
 /turf/open/floor/plating{
@@ -119,8 +117,7 @@
 /obj/structure/statue/gold/rd,
 /obj/structure/window/reinforced{
 	dir = 4;
-	name = "shrine of the liberator";
-	pixel_x = 0
+	name = "shrine of the liberator"
 	},
 /obj/machinery/light{
 	dir = 8
@@ -163,8 +160,7 @@
 	},
 /obj/structure/window/reinforced{
 	dir = 4;
-	name = "shrine of the liberator";
-	pixel_x = 0
+	name = "shrine of the liberator"
 	},
 /turf/open/floor/mineral/titanium/purple{
 	baseturf = /turf/open/floor/plating/lava/smooth

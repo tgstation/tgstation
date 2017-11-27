@@ -4,9 +4,7 @@
 /area/space)
 "b" = (
 /obj/structure/shuttle/engine/propulsion/burst/left{
-	dir = 8;
-	icon_state = "burst_l";
-	tag = "icon-burst_l (EAST)"
+	dir = 8
 	},
 /turf/open/space,
 /area/ruin/powered{
@@ -14,13 +12,9 @@
 	})
 "c" = (
 /obj/structure/shuttle/engine/heater{
-	tag = "icon-heater (WEST)";
-	icon_state = "heater";
 	dir = 8
 	},
 /obj/structure/window/reinforced{
-	tag = "icon-rwindow (EAST)";
-	icon_state = "rwindow";
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
@@ -43,9 +37,7 @@
 	})
 "f" = (
 /obj/structure/shuttle/engine/propulsion/burst/right{
-	dir = 8;
-	icon_state = "burst_r";
-	tag = "icon-burst_r (EAST)"
+	dir = 8
 	},
 /turf/open/space,
 /area/ruin/powered{
@@ -135,7 +127,6 @@
 	})
 "t" = (
 /obj/machinery/sleeper{
-	tag = "icon-sleeper (NORTH)";
 	icon_state = "sleeper";
 	dir = 1
 	},
@@ -170,8 +161,6 @@
 	})
 "y" = (
 /obj/structure/chair/comfy{
-	tag = "icon-comfychair (EAST)";
-	icon_state = "comfychair";
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkyellow,

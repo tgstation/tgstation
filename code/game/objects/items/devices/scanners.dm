@@ -120,11 +120,6 @@ MASS SPECTROMETER
 		if(H.undergoing_cardiac_arrest() && H.stat != DEAD)
 			to_chat(user, "<span class='danger'>Subject suffering from heart attack: Apply defibrillator immediately!</span>")
 
-	if(iscarbon(M))
-		var/mob/living/carbon/C = M
-		if(C.has_brain_worms())
-			to_chat(user, "<span class='danger'>Foreign organism detected in subject's cranium. Recommended treatment: Dosage of sucrose solution and removal of object via surgery.</span>")
-
 	to_chat(user, "<span class='info'>Analyzing results for [M]:\n\tOverall status: [mob_status]</span>")
 
 	// Damage descriptions

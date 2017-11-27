@@ -191,7 +191,7 @@
 /mob/living/simple_animal/hostile/spawner/legion
 	name = "legion"
 	desc = "One of many."
-	icon = 'icons/mob/lavaland/dragon.dmi'
+	icon = 'icons/mob/lavaland/64x64megafauna.dmi'
 	icon_state = "legion"
 	icon_living = "legion"
 	icon_dead = "legion"

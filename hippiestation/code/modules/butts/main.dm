@@ -59,7 +59,7 @@
 
 /obj/item/organ/butt/Destroy()
 	if(inv)
-		if(inv.contents.len)
+		if(LAZYLEN(inv.contents))
 			for(var/i in inv.contents)
 				var/obj/item/I = i
 				inv.remove_from_storage(I, get_turf(src))
@@ -91,7 +91,7 @@
 	if((ishuman(hit_atom)))
 		M.apply_damage(5, STAMINA)
 		if(prob(5))
-			M.Weaken(3)
+			M.Knockdown(60)
 			visible_message("<span class='danger'>The [src.name] smacks [M] right in the face!</span>", 3)
 
 /proc/buttificate(phrase)

@@ -4,7 +4,7 @@
 	name = "modular computer"
 	desc = "An advanced computer."
 
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	var/hardware_flag = 0								// A flag that describes this device type
 	var/last_power_usage = 0							// Power usage during last tick

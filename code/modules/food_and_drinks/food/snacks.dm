@@ -227,7 +227,7 @@
 			. = new trash(location)
 			trash = null
 			return
-		else if(istype(trash, /obj/item))
+		else if(isitem(trash))
 			var/obj/item/trash_item = trash
 			trash_item.forceMove(location)
 			. = trash

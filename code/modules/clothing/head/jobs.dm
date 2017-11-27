@@ -6,7 +6,7 @@
 	icon_state = "chef"
 	desc = "The commander in chef's head wear."
 	strip_delay = 10
-	put_on_delay = 10
+	equip_delay_other = 10
 	dog_fashion = /datum/dog_fashion/head/chef
 
 /obj/item/clothing/head/chefhat/suicide_act(mob/user)

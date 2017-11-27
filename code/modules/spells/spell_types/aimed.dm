@@ -105,7 +105,7 @@
 	projectile_type = /obj/item/projectile/magic/aoe/fireball
 	base_icon_state = "fireball"
 	action_icon_state = "fireball0"
-	sound = 'sound/magic/fleshtostone.ogg'
+	sound = 'sound/magic/fireball.ogg'
 	active_msg = "You prepare to cast your fireball spell!"
 	deactive_msg = "You extinguish your fireball... for now."
 	active = FALSE

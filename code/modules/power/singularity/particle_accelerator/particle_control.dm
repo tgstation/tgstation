@@ -5,7 +5,7 @@
 	icon_state = "control_box"
 	anchored = 0
 	density = 1
-	use_power = 0
+	use_power = NO_POWER_USE
 	idle_power_usage = 500
 	active_power_usage = 10000
 	dir = NORTH
@@ -43,7 +43,7 @@
 
 /obj/machinery/particle_accelerator/control_box/proc/update_state()
 	if(construction_state < PA_CONSTRUCTION_COMPLETE)
-		use_power = 0
+		use_power = NO_POWER_USE
 		assembled = 0
 		active = 0
 		for(var/CP in connected_parts)
@@ -54,7 +54,7 @@
 		connected_parts.Cut()
 		return
 	if(!part_scan())
-		use_power = 1
+		use_power = IDLE_POWER_USE
 		active = 0
 		connected_parts.Cut()
 
@@ -136,9 +136,9 @@
 	..()
 	if(stat & NOPOWER)
 		active = 0
-		use_power = 0
+		use_power = NO_POWER_USE
 	else if(!stat && construction_state == PA_CONSTRUCTION_COMPLETE)
-		use_power = 1
+		use_power = IDLE_POWER_USE
 
 /obj/machinery/particle_accelerator/control_box/process()
 	if(active)
@@ -208,14 +208,14 @@
 	message_admins("PA Control Computer turned [active ?"ON":"OFF"] by [usr ? key_name_admin(usr) : "outside forces"](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 	log_game("PA Control Computer turned [active ?"ON":"OFF"] by [usr ? "[key_name(usr)]" : "outside forces"] in ([x],[y],[z])")
 	if(active)
-		use_power = 2
+		use_power = ACTIVE_POWER_USE
 		for(var/CP in connected_parts)
 			var/obj/structure/particle_accelerator/part = CP
 			part.strength = strength
 			part.powered = 1
 			part.update_icon()
 	else
-		use_power = 1
+		use_power = IDLE_POWER_USE
 		for(var/CP in connected_parts)
 			var/obj/structure/particle_accelerator/part = CP
 			part.strength = null

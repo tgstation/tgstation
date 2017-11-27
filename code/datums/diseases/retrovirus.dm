@@ -52,7 +52,7 @@
 				to_chat(affected_mob, "You feel very strange.")
 			if (prob(4))
 				to_chat(affected_mob, "<span class='danger'>You feel a stabbing pain in your head!</span>")
-				affected_mob.Paralyse(2)
+				affected_mob.Unconscious(40)
 			if (prob(4))
 				to_chat(affected_mob, "<span class='danger'>Your stomach churns.</span>")
 		if(3)

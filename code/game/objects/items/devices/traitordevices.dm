@@ -42,9 +42,7 @@ effective or pretty fucking useless.
 	for(var/mob/living/carbon/human/M in urange(10, user, 1))
 		if(prob(50))
 
-			M.Weaken(rand(10,20))
-			if(prob(25))
-				M.Stun(rand(5,10))
+			M.Knockdown(rand(200,400))
 			to_chat(M, "<span class='userdanger'>You feel a tremendous, paralyzing wave flood your mind.</span>")
 
 		else
@@ -90,7 +88,7 @@ effective or pretty fucking useless.
 		spawn((wavelength+(intensity*4))*5)
 			if(M)
 				if(intensity >= 5)
-					M.apply_effect(round(intensity/1.5), PARALYZE)
+					M.apply_effect(round(intensity/0.075), UNCONSCIOUS)
 				M.rad_act(intensity*10)
 	else
 		to_chat(user, "<span class='warning'>The radioactive microlaser is still recharging.</span>")
@@ -233,7 +231,7 @@ effective or pretty fucking useless.
 	var/range = 12
 
 /obj/item/device/jammer/attack_self(mob/user)
-	to_chat(user,"<span class='notice'>You [active ? "deactivate" : "activate"] the [src]<span>") 
+	to_chat(user,"<span class='notice'>You [active ? "deactivate" : "activate"] the [src]<span>")
 	active = !active
 	if(active)
 		GLOB.active_jammers |= src
@@ -241,4 +239,3 @@ effective or pretty fucking useless.
 		GLOB.active_jammers -= src
 	update_icon()
 
-	

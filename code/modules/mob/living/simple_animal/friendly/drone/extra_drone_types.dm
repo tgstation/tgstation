@@ -213,27 +213,27 @@
 	if(.)
 		update_icons()
 
-/mob/living/simple_animal/drone/cogscarab/SetStunned(amount, updating = 1, ignore_canstun = 0)
+/mob/living/simple_animal/drone/cogscarab/SetStun(amount, updating = 1, ignore_canstun = 0)
 	. = ..()
 	if(.)
 		update_icons()
 
-/mob/living/simple_animal/drone/cogscarab/AdjustStunned(amount, updating = 1, ignore_canstun = 0)
+/mob/living/simple_animal/drone/cogscarab/AdjustStun(amount, updating = 1, ignore_canstun = 0)
 	. = ..()
 	if(.)
 		update_icons()
 
-/mob/living/simple_animal/drone/cogscarab/Weaken(amount, updating = 1, ignore_canweaken = 0)
+/mob/living/simple_animal/drone/cogscarab/Knockdown(amount, updating = 1, ignore_canknockdown = 0)
 	. = ..()
 	if(.)
 		update_icons()
 
-/mob/living/simple_animal/drone/cogscarab/SetWeakened(amount, updating = 1, ignore_canweaken = 0)
+/mob/living/simple_animal/drone/cogscarab/SetKnockdown(amount, updating = 1, ignore_canknockdown = 0)
 	. = ..()
 	if(.)
 		update_icons()
 
-/mob/living/simple_animal/drone/cogscarab/AdjustWeakened(amount, updating = 1, ignore_canweaken = 0)
+/mob/living/simple_animal/drone/cogscarab/AdjustKnockdown(amount, updating = 1, ignore_canknockdown = 0)
 	. = ..()
 	if(.)
 		update_icons()

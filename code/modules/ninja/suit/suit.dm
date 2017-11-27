@@ -22,7 +22,7 @@ Contents:
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 100, acid = 100)
 	strip_delay = 12
 
-	actions_types = list(/datum/action/item_action/initialize_ninja_suit, /datum/action/item_action/ninjajaunt, /datum/action/item_action/ninjasmoke, /datum/action/item_action/ninjaboost, /datum/action/item_action/ninjapulse, /datum/action/item_action/ninjastar, /datum/action/item_action/ninjanet, /datum/action/item_action/ninja_sword_recall, /datum/action/item_action/ninja_stealth, /datum/action/item_action/toggle_glove)
+	actions_types = list(/datum/action/item_action/initialize_ninja_suit, /datum/action/item_action/ninjasmoke, /datum/action/item_action/ninjaboost, /datum/action/item_action/ninjapulse, /datum/action/item_action/ninjastar, /datum/action/item_action/ninjanet, /datum/action/item_action/ninja_sword_recall, /datum/action/item_action/ninja_stealth, /datum/action/item_action/toggle_glove)
 
 		//Important parts of the suit.
 	var/mob/living/carbon/human/affecting = null
@@ -31,7 +31,7 @@ Contents:
 	var/list/reagent_list = list("omnizine","salbutamol","spaceacillin","charcoal","nutriment","radium","potass_iodide")//The reagents ids which are added to the suit at New().
 	var/list/stored_research = list()//For stealing station research.
 	var/obj/item/weapon/disk/tech_disk/t_disk//To copy design onto disk.
-	var/obj/item/weapon/katana/energy/energyKatana //For teleporting the katana back to the ninja (It's an ability)
+	var/obj/item/weapon/dash/energy_katana/energyKatana //For teleporting the katana back to the ninja (It's an ability)
 
 		//Other articles of ninja gear worn together, used to easily reference them after initializing.
 	var/obj/item/clothing/head/helmet/space/space_ninja/n_hood
@@ -182,9 +182,6 @@ Contents:
 	if(!s_initialized)
 		to_chat(user, "<span class='warning'><b>ERROR</b>: suit offline.  Please activate suit.</span>")
 		return FALSE
-	if(istype(action, /datum/action/item_action/ninjajaunt))
-		ninjajaunt()
-		return TRUE
 	if(istype(action, /datum/action/item_action/ninjasmoke))
 		ninjasmoke()
 		return TRUE

@@ -4,8 +4,6 @@
 /area/space)
 "b" = (
 /obj/structure/shuttle/engine/propulsion{
-	tag = "icon-propulsion (NORTH)";
-	icon_state = "propulsion";
 	dir = 1
 	},
 /turf/open/space,
@@ -19,8 +17,6 @@
 	})
 "d" = (
 /obj/structure/shuttle/engine/heater{
-	tag = "icon-heater (NORTH)";
-	icon_state = "heater";
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
@@ -93,9 +89,7 @@
 	})
 "n" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 8;
-	icon_state = "propulsion";
-	tag = "icon-propulsion (EAST)"
+	dir = 8
 	},
 /turf/open/space,
 /area/ruin/powered{
@@ -103,8 +97,6 @@
 	})
 "o" = (
 /obj/structure/shuttle/engine/heater{
-	tag = "icon-heater (WEST)";
-	icon_state = "heater";
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -119,8 +111,6 @@
 	})
 "q" = (
 /obj/structure/shuttle/engine/heater{
-	tag = "icon-heater (EAST)";
-	icon_state = "heater";
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
@@ -129,9 +119,7 @@
 	})
 "r" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 4;
-	icon_state = "propulsion";
-	tag = "icon-propulsion (WEST)"
+	dir = 4
 	},
 /turf/open/space,
 /area/ruin/powered{
@@ -176,8 +164,6 @@
 	})
 "x" = (
 /obj/structure/chair/comfy{
-	tag = "icon-comfychair (WEST)";
-	icon_state = "comfychair";
 	dir = 8
 	},
 /turf/open/floor/plasteel/darkyellow,

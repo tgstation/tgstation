@@ -103,7 +103,7 @@
 /proc/datum_info_line(datum/D)
 	if(!istype(D))
 		return
-	if(!istype(D, /mob))
+	if(!ismob(D))
 		return "[D] ([D.type])"
 	var/mob/M = D
 	return "[M] ([M.ckey]) ([M.type])"

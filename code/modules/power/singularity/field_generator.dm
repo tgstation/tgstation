@@ -25,7 +25,7 @@ field_generator power level display
 	icon_state = "Field_Gen"
 	anchored = 0
 	density = 1
-	use_power = 0
+	use_power = NO_POWER_USE
 	obj_integrity = 500
 	max_integrity = 500
 	//100% immune to lasers and energy projectiles since it absorbs their energy.

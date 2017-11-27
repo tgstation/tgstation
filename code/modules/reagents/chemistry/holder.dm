@@ -452,21 +452,21 @@
 	return 1
 
 /datum/reagents/proc/check_ignoreslow(mob/M)
-	if(istype(M, /mob))
+	if(ismob(M))
 		if(M.reagents.has_reagent("morphine"))
 			return 1
 		else
 			M.status_flags &= ~IGNORESLOWDOWN
 
 /datum/reagents/proc/check_gofast(mob/M)
-	if(istype(M, /mob))
+	if(ismob(M))
 		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola")||M.reagents.has_reagent("stimulants")||M.reagents.has_reagent("ephedrine"))
 			return 1
 		else
 			M.status_flags &= ~GOTTAGOFAST
 
 /datum/reagents/proc/check_goreallyfast(mob/M)
-	if(istype(M, /mob))
+	if(ismob(M))
 		if(M.reagents.has_reagent("methamphetamine"))
 			return 1
 		else

@@ -36,6 +36,11 @@
 /obj/item/stack/teeth/generic //Used for species without unique teeth defined yet
 	name = "teeth"
 
+/obj/item/stack/teeth/meeseeks
+	name = "teethseeks"
+	singular_name = "toothseeks"
+	desc = "I'm Mr. Teethseeks, look at me!"
+
 /obj/item/stack/teeth/generic/Initialize()
 	..()
 	transform *= TransformUsingVariable(0.25, 1, 0.5) //Half-size the teeth

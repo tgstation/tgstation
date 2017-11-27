@@ -29,7 +29,7 @@
 				sound = 'hippiestation/sound/voice/scream_lizard.ogg'
 			if(is_species(user, get_all_of_type(/datum/species/skeleton)))
 				sound = 'hippiestation/sound/voice/scream_skeleton.ogg'
-			if (is_species(user, /datum/species/fly))
+			if (is_species(user, /datum/species/fly) || is_species(user, /datum/species/moth))
 				sound = 'hippiestation/sound/voice/scream_moth.ogg'
 			if (is_species(user, /datum/species/bird))
 				sound = 'hippiestation/sound/voice/caw.ogg'

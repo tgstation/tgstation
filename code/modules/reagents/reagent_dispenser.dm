@@ -5,6 +5,7 @@
 	icon_state = "water"
 	density = 1
 	anchored = 0
+	container_type = DRAWABLE
 	pressure_resistance = 2*ONE_ATMOSPHERE
 	obj_integrity = 300
 	max_integrity = 300
@@ -25,7 +26,9 @@
 
 /obj/structure/reagent_dispensers/Initialize()
 	create_reagents(tank_volume)
-	reagents.add_reagent(reagent_id, tank_volume)
+	if(reagent_id)
+		reagents.add_reagent(reagent_id, tank_volume)
+	generate_reagent_icon()
 	. = ..()
 
 /obj/structure/reagent_dispensers/examine(mob/user)

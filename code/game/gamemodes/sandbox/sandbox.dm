@@ -5,6 +5,8 @@
 
 	announce_span = "info"
 	announce_text = "Build your own station... or just shoot each other!"
+	
+	allow_persistence_save = FALSE
 
 /datum/game_mode/sandbox/pre_setup()
 	for(var/mob/M in GLOB.player_list)

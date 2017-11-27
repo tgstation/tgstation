@@ -31,8 +31,8 @@
 				return 2.5 // Will take four hits with a normal toolbox to crit.
 		if(BANE_HARVEST)
 			if(istype(weapon,/obj/item/weapon/reagent_containers/food/snacks/grown/))
-				src.visible_message("<span class='warning'>The spirits of the harvest aid in the exorcism.</span>", "<span class='notice'>The harvest spirits are harming you.</span>")
-				src.Weaken(2)
+				visible_message("<span class='warning'>The spirits of the harvest aid in the exorcism.</span>", "<span class='notice'>The harvest spirits are harming you.</span>")
+				Knockdown(40)
 				qdel(weapon)
 				return 2
 	return 1

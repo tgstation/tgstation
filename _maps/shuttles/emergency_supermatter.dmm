@@ -46,7 +46,6 @@
 "ak" = (
 /obj/structure/sign/radiation,
 /turf/closed/wall/shuttle{
-	tag = "icon-swall3";
 	icon_state = "swall3"
 	},
 /area/shuttle/escape)
@@ -73,7 +72,6 @@
 /area/shuttle/escape)
 "ao" = (
 /obj/structure/reflector/single{
-	tag = "icon-reflector (WEST)";
 	icon_state = "reflector";
 	dir = 8;
 	anchored = 1
@@ -236,7 +234,6 @@
 /area/shuttle/escape)
 "aP" = (
 /obj/structure/reflector/double{
-	tag = "icon-reflector_double (NORTH)";
 	icon_state = "reflector_double";
 	dir = 1;
 	anchored = 1
@@ -245,7 +242,6 @@
 /area/shuttle/escape)
 "aQ" = (
 /obj/structure/reflector/single{
-	tag = "icon-reflector (WEST)";
 	icon_state = "reflector";
 	dir = 8;
 	anchored = 1
@@ -356,7 +352,6 @@
 	},
 /obj/item/clothing/glasses/meson/engine,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/yellow,
@@ -376,7 +371,6 @@
 	dir = 8
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plating,

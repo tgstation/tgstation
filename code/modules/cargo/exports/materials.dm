@@ -11,7 +11,7 @@
 /datum/export/material/get_amount(obj/O)
 	if(!material_id)
 		return 0
-	if(!istype(O, /obj/item))
+	if(!isitem(O))
 		return 0
 	var/obj/item/I = O
 	if(!(material_id in I.materials))

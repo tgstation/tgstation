@@ -85,7 +85,7 @@
 		. = message_AI
 	else if(ismonkey(user) && message_monkey)
 		. = message_monkey
-	else if(istype(user, /mob/living/simple_animal) && message_simple)
+	else if(isanimal(user) && message_simple)
 		. = message_simple
 
 /datum/emote/proc/select_param(mob/user, params)

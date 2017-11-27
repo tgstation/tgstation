@@ -217,7 +217,7 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 /*/datum/game_mode/changeling/check_finished()
 	var/changelings_alive = 0
 	for(var/datum/mind/changeling in changelings)
-		if(!istype(changeling.current,/mob/living/carbon))
+		if(!iscarbon(changeling.current))
 			continue
 		if(changeling.current.stat==2)
 			continue

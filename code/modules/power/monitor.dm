@@ -4,7 +4,7 @@
 	icon_screen = "power"
 	icon_keyboard = "power_key"
 	light_color = LIGHT_COLOR_YELLOW
-	use_power = 2
+	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 20
 	active_power_usage = 100
 	circuit = /obj/item/weapon/circuitboard/computer/powermonitor
@@ -24,10 +24,10 @@
 
 /obj/machinery/computer/monitor/process()
 	if(!attached)
-		use_power = 1
+		use_power = IDLE_POWER_USE
 		search()
 	else
-		use_power = 2
+		use_power = ACTIVE_POWER_USE
 		record()
 
 /obj/machinery/computer/monitor/proc/search()

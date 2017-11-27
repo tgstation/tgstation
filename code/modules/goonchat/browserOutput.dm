@@ -32,7 +32,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 		alert(owner.mob, "Updated chat window does not exist. If you are using a custom skin file please allow the game to update.")
 		return
 
-	if(winget(owner, "browseroutput", "is-disabled") == "false") //Already setup
+	if(winget(owner, "browseroutput", "is-visible") == "true") //Already setup
 		doneLoading()
 
 	else //Not setup
@@ -90,14 +90,23 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 	testing("Chat loaded for [owner.ckey]")
 	loaded = TRUE
-	winset(owner, "browseroutput", "is-disabled=false")
+	showChat()
+
+
 	for(var/message in messageQueue)
 		to_chat(owner, message)
 
 	messageQueue = null
 	sendClientData()
 
+	//do not convert to to_chat()
+	owner << {"<span class="userdanger">If you can see this, update byond.</span>"}
+
 	pingLoop()
+
+/datum/chatOutput/proc/showChat()
+	winset(owner, "output", "is-visible=false")
+	winset(owner, "browseroutput", "is-disabled=false;is-visible=true")
 
 /datum/chatOutput/proc/pingLoop()
 	set waitfor = FALSE
@@ -143,7 +152,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 			if (found.len > 0)
 				//TODO: add a new evasion ban for the CURRENT client details, using the matched row details
 				message_admins("[key_name(src.owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
-				log_admin("[key_name(src.owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
+				log_admin_private("[key_name(owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
 
 	cookieSent = TRUE
 
@@ -214,21 +223,21 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	if (istype(message, /image) || istype(message, /sound) || istype(target, /savefile))
 		target << message
 		CRASH("Invalid message! [message]")
-	
+
 	if(!istext(message))
 		return
 
 	if(target == world)
 		target = GLOB.clients
-	
+
 	var/list/targets
 	if(!islist(target))
 		targets = list(target)
 	else
-		targets = target 
+		targets = target
 		if(!targets.len)
 			return
-
+	var/original_message = message
 	//Some macros remain in the string even after parsing and fuck up the eventual output
 	message = replacetext(message, "\improper", "")
 	message = replacetext(message, "\proper", "")
@@ -241,15 +250,17 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 		if (!C)
 			continue
-		
+
+		//Send it to the old style output window.
+		C << original_message
+
 		if(!C.chatOutput || C.chatOutput.broken) // A player who hasn't updated his skin file.
-			C << message
-			return TRUE
-			
+			continue
+
 		if(!C.chatOutput.loaded)
-			//Client sucks at loading things, put their messages in a queue
+			//Client still loading, put their messages in a queue
 			C.chatOutput.messageQueue += message
-			return
+			continue
 
 		// url_encode it TWICE, this way any UTF-8 characters are able to be decoded by the Javascript.
 		C << output(url_encode(url_encode(message)), "browseroutput:output")
@@ -257,7 +268,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 /proc/grab_client(target)
 	if(istype(target, /client))
 		return target
-	else if(istype(target, /mob))
+	else if(ismob(target))
 		var/mob/M = target
 		if(M.client)
 			return M.client

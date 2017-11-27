@@ -314,3 +314,29 @@ update_label("John Doe", "Clowny")
 /obj/item/weapon/card/id/away/hotel/securty
 	name = "Officer ID"
 	access = list(GLOB.access_away_general, GLOB.access_away_maint, GLOB.access_away_sec)
+
+/obj/item/weapon/card/id/away/old
+	name = "a perfectly generic identification card"
+	desc = "A perfectly generic identification card. Looks like it could use some flavor."
+	access = list(GLOB.access_away_general)
+
+/obj/item/weapon/card/id/away/old/sec
+	name = "Security Officer ID"
+	desc = "Security officers ID card."
+	icon_state = "centcom"
+
+/obj/item/weapon/card/id/away/old/sci
+	name = "Scientist ID"
+	desc = "Scientists ID card."
+	icon_state = "centcom"
+
+/obj/item/weapon/card/id/away/old/eng
+	name = "Engineer ID"
+	desc = "Engineers ID card."
+	icon_state = "centcom"
+
+/obj/item/weapon/card/id/away/old/apc
+	name = "APC Access ID"
+	desc = "Special ID card to allow access to APCs"
+	icon_state = "centcom"
+	access = list(GLOB.access_engine_equip)

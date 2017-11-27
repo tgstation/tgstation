@@ -27,7 +27,7 @@
 		return
 	if(user && imp)
 		if(M != user)
-			M.visible_message("<span class='warning'>[user] is attemping to implant [M].</span>")
+			M.visible_message("<span class='warning'>[user] is attempting to implant [M].</span>")
 
 		var/turf/T = get_turf(M)
 		if(T && (M == user || do_mob(user, M, 50)))

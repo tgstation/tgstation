@@ -35,8 +35,8 @@
 							/obj/item/stack/cable_coil = 1,
 							/obj/item/weapon/stock_parts/console_screen = 1)
 
-/obj/item/weapon/circuitboard/machine/thermomachine/New()
-	..()
+/obj/item/weapon/circuitboard/machine/thermomachine/Initialize()
+	. = ..()
 	if(prob(50))
 		name = "Freezer (Machine Board)"
 		build_path = /obj/machinery/atmospherics/components/unary/thermomachine/freezer
@@ -174,7 +174,7 @@
 	switch(action)
 		if("power")
 			on = !on
-			use_power = 1 + on
+			use_power = on ? ACTIVE_POWER_USE : IDLE_POWER_USE
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("target")

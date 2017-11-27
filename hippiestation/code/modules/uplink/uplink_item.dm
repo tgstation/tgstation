@@ -57,17 +57,26 @@
 /datum/uplink_item/badass/sports
 	name = "Sports bundle"
 	desc = "A hand-selected box of paraphernalia from one of the best sports. \
-			Currently available are hockey, wrestling, and bowling kits."
+			Currently available are hockey, wrestling, football, and bowling kits."
 	item = /obj/item/weapon/paper
 	cost = 20
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 	cant_discount = TRUE
 
+/* Holo Parasites */
+/datum/uplink_item/dangerous/guardian
+	name = "Holoparasites"
+	desc = "Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, they require an organic host as a home base and source of fuel."
+	item = /obj/item/weapon/storage/box/syndie_kit/guardian
+	cost = 20
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+
 /datum/uplink_item/badass/sports/spawn_item(turf/loc, obj/item/device/uplink/U)
 	var/list/possible_items = list(
 								"/obj/item/weapon/storage/box/syndie_kit/wrestling",
 								"/obj/item/weapon/storage/box/syndie_kit/bowling",
-								"/obj/item/weapon/storage/box/syndie_kit/hockey"
+								"/obj/item/weapon/storage/box/syndie_kit/hockey",
+								"/obj/item/weapon/storage/box/syndie_kit/football"
 								)
 	if(possible_items.len)
 		var/obj/item/I = pick(possible_items)

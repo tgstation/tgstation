@@ -4,7 +4,7 @@
 /datum/action/innate/cult
 	background_icon_state = "bg_demon"
 	buttontooltipstyle = "cult"
-	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
 
 /datum/action/innate/cult/IsAvailable()
 	if(!iscultist(owner))

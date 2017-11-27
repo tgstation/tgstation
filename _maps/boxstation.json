@@ -1,0 +1,7 @@
+{
+    "map_name": "Box Station",
+    "map_path": "map_files/BoxStation",
+    "map_file": "BoxStation.dmm",
+    "minetype": "lavaland",
+    "transition_config": "default"
+}

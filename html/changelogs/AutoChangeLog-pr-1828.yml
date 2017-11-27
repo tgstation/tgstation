@@ -1,5 +1,0 @@
-author: "lordpidey"
-delete-after: True
-changes: 
-  - rscadd: "Added F.R.A.M.E. cartridge to uplinks.  This PDA cartridge contains 5 viruses, which when used will unlock the target's PDA into a syndicate uplink, in addition, you will receive the code needed to unlock the uplink again, if you so desire."
-  - rscadd: "If you use telecrystals on a F.R.A.M.E. cartridge, the next time it is used, it will also give those crystals to the target uplink."

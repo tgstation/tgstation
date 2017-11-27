@@ -2,7 +2,7 @@
 #define REBOOT_MODE_HARD 1
 #define REBOOT_MODE_SHUTDOWN 2
 
-#define IRC_STATUS_THROTTLE 50
+#define IRC_STATUS_THROTTLE 5
 
 //keep these in sync with TGS3
 #define SERVICE_WORLD_PARAM "server_service"

@@ -1,8 +1,0 @@
-author: "GuyonBroadway"
-delete-after: True
-changes: 
-  - balance: "Disablers now do 21 stamina damage, it takes five shots to down a perp, same as laser crit."
-  - balance: "Made disabler beams slightly slower yet still faster than they were pre buff."
-  - balance: "Tasers now do 60 stamina damage, enough to slow someone down but not so slow that its impossible to dodge."
-  - balance: "Tasers, detective revolver and makeshift stunprods have had the mechanism that makes them drop items removed as it was causing a full second of stun as opposed to one tenth of a second. This is because currently stuns cannot be measured in anything lower than a second, but /tg/ does have a PR that supposedly allows you to do this so until then imma just remove the feature for now."
-  - balance: "Makeshift batons also now have a slight attack delay between swings, Juuust long enough to get one, maybe two disarms in before you are knocked down."

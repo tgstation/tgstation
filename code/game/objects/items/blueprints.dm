@@ -188,7 +188,7 @@
 
 /proc/create_area(mob/living/creator)
 	var/res = detect_room(get_turf(creator))
-	if(!istype(res,/list))
+	if(!islist(res))
 		switch(res)
 			if(ROOM_ERR_SPACE)
 				to_chat(creator, "<span class='warning'>The new area must be completely airtight.</span>")

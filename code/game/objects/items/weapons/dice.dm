@@ -181,7 +181,7 @@
 			return 0
 		to_chat(H, "<span class='userdanger'>You step on the D4!</span>")
 		H.apply_damage(4,BRUTE,(pick("l_leg", "r_leg")))
-		H.Weaken(3)
+		H.Knockdown(60)
 
 /obj/item/weapon/dice/update_icon()
 	cut_overlays()

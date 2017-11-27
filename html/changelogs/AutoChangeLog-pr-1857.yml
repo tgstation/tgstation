@@ -1,4 +1,0 @@
-author: "WJohn"
-delete-after: True
-changes: 
-  - bugfix: "It is now easier to wire the powernet into box's telecomms SMES cell."

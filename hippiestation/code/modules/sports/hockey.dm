@@ -265,7 +265,7 @@
 	slowdown = -1
 
 /obj/item/clothing/mask/hippie/hockey
-	name = "Ka-Nada Hokcey Mask"
+	name = "Ka-Nada Hockey Mask"
 	desc = "The iconic mask of the Ka-Nada special sports forces, guaranteed to strike terror into the hearts of men and goalies."
 	icon_state = "hockey_mask"
 	item_state = "hockey_mask"

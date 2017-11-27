@@ -64,7 +64,7 @@
 		else
 			explosion(location, boom_sizes[1], boom_sizes[2], boom_sizes[3])
 		location.ex_act(2, target)
-	if(istype(target, /mob))
+	if(ismob(target))
 		var/mob/M = target
 		M.gib()
 	qdel(src)

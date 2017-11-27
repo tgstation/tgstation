@@ -24,7 +24,7 @@ Jesus icons by rumpelgeist and FurryMcFlurry
 	if(target.reagents)
 		target.reagents.add_reagent("wine",rand(25,100))
 	if(prob(100*dist/range))
-		addtimer(CALLBACK(target, /mob/living/proc/apply_effect, rand(5,20), PARALYZE), rand(10,60))
+		addtimer(CALLBACK(target, /mob/living/proc/apply_effect, rand(5,20), UNCONSCIOUS), rand(10,60))
 	target.visible_message("<span class='danger'>Some of [target]'s blood turns into wine!</span>", \
 							"<span class='userdanger'>Some of your blood turns into wine!</span>")
 
@@ -120,12 +120,12 @@ Jesus icons by rumpelgeist and FurryMcFlurry
 	user.revive(full_heal = TRUE)
 	addtimer(CALLBACK(user, /mob/proc/jesus_unascend), 20)
 
-/mob/proc/ascend_animation(time = 20)
+/mob/living/proc/ascend_animation(time = 20)
 	dir = 2
 	src.visible_message("<span class='notice'>[src] ascends beyond this plane of existence!</span>")
 	opacity = FALSE
 	mouse_opacity = FALSE
-	Stun(2)
+	src.SetStun(2)
 	playsound(src, 'hippiestation/sound/misc/choir.ogg', 50)
 	animate(src, pixel_y = 128, alpha = 0, time = time, easing = LINEAR_EASING)
 

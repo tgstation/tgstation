@@ -11,7 +11,7 @@
 	var/gibtime = 40 // Time from starting until meat appears
 	var/meat_produced = 0
 	var/ignore_clothing = 0
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 500
 

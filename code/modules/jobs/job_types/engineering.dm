@@ -84,7 +84,7 @@ Station Engineer
 	name = "Station Engineer"
 	jobtype = /datum/job/engineer
 
-	belt = /obj/item/weapon/storage/belt/utility/full
+	belt = /obj/item/weapon/storage/belt/utility/full/engi
 	l_pocket = /obj/item/device/pda/engineering
 	ears = /obj/item/device/radio/headset/headset_eng
 	uniform = /obj/item/clothing/under/rank/engineer

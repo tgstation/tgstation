@@ -50,7 +50,6 @@
 /area/shuttle/escape)
 "k" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /obj/machinery/vending/boozeomat,
@@ -66,8 +65,6 @@
 /area/shuttle/escape)
 "n" = (
 /obj/structure/chair/comfy/teal{
-	tag = "icon-comfychair (WEST)";
-	icon_state = "comfychair";
 	dir = 8
 	},
 /turf/open/floor/carpet,
@@ -106,7 +103,6 @@
 /area/shuttle/escape)
 "u" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/wood,

@@ -77,11 +77,6 @@
 	else if(implement_type in implements_extract)
 		current_type = "extract"
 		var/list/organs = target.getorganszone(target_zone)
-		var/mob/living/simple_animal/borer/B = target.has_brain_worms()
-		if(target.has_brain_worms())
-			user.visible_message("[user] begins to extract [B] from [target]'s [parse_zone(target_zone)].",
-					"<span class='notice'>You begin to extract [B] from [target]'s [parse_zone(target_zone)]...</span>")
-			return TRUE
 		if(!organs.len)
 			to_chat(user, "<span class='notice'>There are no removeable organs in [target]'s [parse_zone(target_zone)]!</span>")
 			return -1
@@ -131,13 +126,6 @@
 			"<span class='notice'>You insert [tool] into [target]'s [parse_zone(target_zone)].</span>")
 
 	else if(current_type == "extract")
-		var/mob/living/simple_animal/borer/B = target.has_brain_worms()
-		if(B && B.victim == target)
-			user.visible_message("[user] successfully extracts [B] from [target]'s [parse_zone(target_zone)]!",
-				"<span class='notice'>You successfully extract [B] from [target]'s [parse_zone(target_zone)].</span>")
-			add_logs(user, target, "surgically removed [B] from", addition="INTENT: [uppertext(user.a_intent)]")
-			B.leave_victim()
-			return FALSE
 		if(I && I.owner == target)
 			user.visible_message("[user] successfully extracts [I] from [target]'s [parse_zone(target_zone)]!",
 				"<span class='notice'>You successfully extract [I] from [target]'s [parse_zone(target_zone)].</span>")

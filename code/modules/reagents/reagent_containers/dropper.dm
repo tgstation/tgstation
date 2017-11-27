@@ -17,7 +17,7 @@
 			to_chat(user, "<span class='notice'>[target] is full.</span>")
 			return
 
-		if(!target.is_open_container() && !ismob(target) && !istype(target,/obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/clothing/mask/cigarette)) //You can inject humans and food but you cant remove the shit.
+		if(!target.is_injectable())
 			to_chat(user, "<span class='warning'>You cannot directly fill [target]!</span>")
 			return
 
@@ -74,7 +74,7 @@
 
 	else
 
-		if(!target.is_open_container() && !istype(target,/obj/structure/reagent_dispensers))
+		if(!target.is_drawable(FALSE)) //No drawing from mobs here
 			to_chat(user, "<span class='notice'>You cannot directly remove reagents from [target].</span>")
 			return
 

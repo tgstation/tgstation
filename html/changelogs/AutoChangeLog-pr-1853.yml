@@ -1,4 +1,0 @@
-author: "Nanotrasen Consistency Affairs"
-delete-after: True
-changes: 
-  - bugfix: "You no longer see yourself in place of the user when examining active Spirit Sight runes."

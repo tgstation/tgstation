@@ -1,3 +1,15 @@
+/obj/item/clothing/head/helmet/hippie
+	alternate_worn_icon = 'hippiestation/icons/mob/head.dmi'
+	icon = 'hippiestation/icons/obj/clothing/hats.dmi'
+
+/obj/item/clothing/head/helmet/hippie/football
+	name = "space football helmet"
+	desc = "Helps to protect the wearer's head from sports-related injuries. Not certified for actual use in outer-space."
+	icon_state = "football_head"
+	armor = list(melee = 75, bullet = 30, laser = 20,energy = 5, bomb = 15, bio = 0, rad = 0)
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR
+	flags_cover = HEADCOVERSEYES
+
 /obj/item/clothing/head/wizard/hippie
 	alternate_worn_icon = 'hippiestation/icons/mob/head.dmi'
 	icon = 'hippiestation/icons/obj/clothing/hats.dmi'

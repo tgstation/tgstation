@@ -42,7 +42,7 @@
 			return 1
 	var/obj/machinery/camera/C = null
 	var/list/CL = null
-	if(O && istype(O, /list))
+	if(O && islist(O))
 		CL = O
 		if (CL.len == 1)
 			C = CL[1]

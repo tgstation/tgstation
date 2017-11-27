@@ -71,7 +71,6 @@
 
 /obj/item/clothing/suit/space/space_ninja/proc/deinitialize_three(delay, mob/living/carbon/human/U)
 	to_chat(U, "<span class='notice'>Logging off, [U:real_name]. Shutting down <B>SpiderOS</B>.</span>")
-	remove_ninja_verbs()
 	addtimer(CALLBACK(src, .proc/deinitialize_four, delay, U), delay)
 
 /obj/item/clothing/suit/space/space_ninja/proc/deinitialize_four(delay, mob/living/carbon/human/U)

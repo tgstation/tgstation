@@ -23,6 +23,7 @@
 //Hide/Show Action Buttons ... Button
 /obj/screen/movable/action_button/hide_toggle
 	name = "Hide Buttons"
+	desc = "Shift-click any button to reset its position. Alt-click to reset all buttons to their default positions."
 	icon = 'icons/mob/actions.dmi'
 	icon_state = "bg_default"
 	var/hidden = 0
@@ -33,8 +34,18 @@
 /obj/screen/movable/action_button/hide_toggle/Click(location,control,params)
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"])
-		moved = 0
-		return 1
+		moved = FALSE
+		usr.update_action_buttons(TRUE)
+		return TRUE
+	if(modifiers["alt"])
+		for(var/V in usr.actions)
+			var/datum/action/A = V
+			var/obj/screen/movable/action_button/B = A.button
+			B.moved = FALSE
+		moved = FALSE
+		usr.update_action_buttons(TRUE)
+		to_chat(usr, "<span class='notice'>Action button positions have been reset.</span>")
+		return TRUE
 	usr.hud_used.action_buttons_hidden = !usr.hud_used.action_buttons_hidden
 
 	hidden = usr.hud_used.action_buttons_hidden
@@ -44,6 +55,16 @@
 		name = "Hide Buttons"
 	UpdateIcon()
 	usr.update_action_buttons()
+
+/obj/screen/movable/action_button/hide_toggle/AltClick(mob/user)
+	for(var/V in user.actions)
+		var/datum/action/A = V
+		var/obj/screen/movable/action_button/B = A.button
+		B.moved = FALSE
+	if(moved)
+		moved = FALSE
+	user.update_action_buttons(TRUE)
+	to_chat(user, "<span class='notice'>Action button positions have been reset.</span>")
 
 
 /obj/screen/movable/action_button/hide_toggle/proc/InitialiseIcon(datum/hud/owner_hud)

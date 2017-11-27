@@ -102,6 +102,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	item_state = "cigoff"
 	w_class = WEIGHT_CLASS_TINY
 	body_parts_covered = null
+	container_type = INJECTABLE
 	var/lit = FALSE
 	var/starts_lit = FALSE
 	var/icon_on = "cigon"  //Note - these are in masks.dmi not in cigarette.dmi
@@ -482,7 +483,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		icon_state = "[initial(icon_state)]"
 
 /obj/item/weapon/lighter/ignition_effect(atom/A, mob/user)
-	. = "<span class='rose'>With a single flick of their wrist, [user] smoothly lights [A] with [src]. Damn [user.p_theyre()] cool.</span>"
+	if(is_hot())
+		. = "<span class='rose'>With a single flick of their wrist, [user] smoothly lights [A] with [src]. Damn [user.p_theyre()] cool.</span>"
 
 /obj/item/weapon/lighter/proc/set_lit(new_lit)
 	lit = new_lit
@@ -579,7 +581,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	add_overlay(base_overlay)
 
 /obj/item/weapon/lighter/greyscale/ignition_effect(atom/A, mob/user)
-	. = "<span class='notice'>After some fiddling, [user] manages to light [A] with [src].</span>"
+	if(is_hot())
+		. = "<span class='notice'>After some fiddling, [user] manages to light [A] with [src].</span>"
 
 ///////////
 //ROLLING//
@@ -619,6 +622,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon = 'hippiestation/icons/obj/clothing/masks.dmi'
 	icon_state = null
 	item_state = null
+	w_class = WEIGHT_CLASS_TINY
+	container_type = null
 	var/chem_volume = 100
 	var/vapetime = 0 //this so it won't puff out clouds every tick
 	var/screw = FALSE //Vape is opened by screwdriver
@@ -630,13 +635,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	playsound(user.loc,'sound/items/eatfood.ogg', 50, 1)
 	return (TOXLOSS|OXYLOSS)
 
-/obj/item/clothing/mask/vape/Initialize()
+/obj/item/clothing/mask/vape/Initialize(mapload, param_color)
 	. = ..()
 	create_reagents(chem_volume)
 	reagents.set_reacting(FALSE)
 	reagents.add_reagent("nicotine", 50)
 	if(!icon_state)
-		var/param_color = pick("red","blue","black","white","green","purple","yellow","orange")
+		if(!param_color)
+			param_color = pick("red","blue","black","white","green","purple","yellow","orange")
 		icon_state = "[param_color]_vape"
 		item_state = "[param_color]_vape"
 
@@ -767,7 +773,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			playsound(get_turf(src), 'sound/effects/pop_expl.ogg', 50, 0)
 			M.apply_damage(15, BURN, "head") //Less damage
 			M.doUnEquip(src, 1)
-			M.Weaken(15, 1, 0)
+			M.Knockdown(300, 1, 0)
 			do_sparks(5, TRUE, src)
 			to_chat(M, "<span class='userdanger'>The [name] suddenly explodes in your mouth!</span>")
 			qdel(src)
@@ -781,7 +787,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			playsound(get_turf(src), 'sound/effects/pop_expl.ogg', 50, 0)
 			M.apply_damage(20, BURN, "head")
 			M.doUnEquip(src, 1)
-			M.Weaken(15, 1, 0)
+			M.Knockdown(300, 1, 0)
 			do_sparks(5, TRUE, src)
 			to_chat(M, "<span class='userdanger'>The [name] suddenly explodes in your mouth!</span>")
 			qdel(src)

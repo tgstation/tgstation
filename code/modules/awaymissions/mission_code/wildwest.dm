@@ -16,7 +16,7 @@
 
 	anchored = 1
 	density = 1
-	use_power = 0
+	use_power = NO_POWER_USE
 
 	var/chargesa = 1
 	var/insistinga = 0

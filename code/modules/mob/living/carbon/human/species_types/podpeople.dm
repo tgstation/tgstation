@@ -50,7 +50,7 @@
 		if(/obj/item/projectile/energy/floramut)
 			if(prob(15))
 				H.rad_act(rand(30,80))
-				H.Weaken(5)
+				H.Knockdown(100)
 				H.visible_message("<span class='warning'>[H] writhes in pain as [H.p_their()] vacuoles boil.</span>", "<span class='userdanger'>You writhe in pain as your vacuoles boil!</span>", "<span class='italics'>You hear the crunching of leaves.</span>")
 				if(prob(80))
 					H.randmutb()

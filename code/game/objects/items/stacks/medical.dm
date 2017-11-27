@@ -28,7 +28,7 @@
 		to_chat(user, "<span class='danger'>\The [M] is dead, you cannot help [t_him]!</span>")
 		return
 
-	if(!istype(M, /mob/living/carbon) && !istype(M, /mob/living/simple_animal))
+	if(!iscarbon(M) && !isanimal(M))
 		to_chat(user, "<span class='danger'>You don't know how to apply \the [src] to [M]!</span>")
 		return 1
 
@@ -56,7 +56,7 @@
 
 	if(user)
 		if (M != user)
-			if (istype(M, /mob/living/simple_animal))
+			if (isanimal(M))
 				var/mob/living/simple_animal/critter = M
 				if (!(critter.healable))
 					to_chat(user, "<span class='notice'> You cannot use [src] on [M]!</span>")

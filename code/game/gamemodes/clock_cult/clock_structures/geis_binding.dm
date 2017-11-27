@@ -88,7 +88,7 @@
 	for(var/m in buckled_mobs)
 		var/mob/living/L = m
 		if(L)
-			L.Stun(1, 1, 1)
+			L.Stun(20, 1, 1)
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
 				C.silent += 4

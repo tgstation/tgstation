@@ -1,5 +1,0 @@
-author: "Tortellini Tony"
-delete-after: True
-changes: 
-  - bugfix: "Nearcrit players will be forced to whisper."
-  - bugfix: "You can no longer spam deadchat with emote hotkeys."

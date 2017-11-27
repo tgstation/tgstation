@@ -271,7 +271,7 @@ Difficulty: Very Hard
 	max_n_of_items = INFINITY
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	pixel_y = -4
-	use_power = 0
+	use_power = NO_POWER_USE
 	var/memory_saved = FALSE
 	var/list/stored_items = list()
 	var/static/list/blacklist = typecacheof(list(/obj/item/weapon/spellbook))
@@ -373,7 +373,7 @@ Difficulty: Very Hard
 	icon_state = "anomaly_crystal"
 	light_range = 8
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	use_power = 0
+	use_power = NO_POWER_USE
 	density = 1
 	flags = HEAR
 	var/activation_method
@@ -535,8 +535,7 @@ Difficulty: Very Hard
 
 /obj/machinery/anomalous_crystal/emitter/Initialize()
 	. = ..()
-	generated_projectile = pick(/obj/item/projectile/magic/aoe/fireball/infernal,/obj/item/projectile/magic/aoe/lightning,/obj/item/projectile/magic/spellblade,
-								 /obj/item/projectile/bullet/meteorshot, /obj/item/projectile/beam/xray, /obj/item/projectile/colossus)
+	generated_projectile = pick(/obj/item/projectile/colossus)
 
 	var/proj_name = initial(generated_projectile.name)
 	observer_desc = "This crystal generates \a [proj_name] when activated."
@@ -575,6 +574,8 @@ Difficulty: Very Hard
 				var/mob/living/carbon/human/H = i
 				if(H.stat == DEAD)
 					H.set_species(/datum/species/shadow, 1)
+					H.regenerate_limbs()
+					H.regenerate_organs()
 					H.revive(1,0)
 					H.disabilities |= NOCLONE //Free revives, but significantly limits your options for reviving except via the crystal
 					H.grab_ghost(force = TRUE)
@@ -689,7 +690,7 @@ Difficulty: Very Hard
 		var/turf/T = get_step(src, dir)
 		new /obj/effect/temp_visual/emp/pulse(T)
 		for(var/i in T)
-			if(istype(i, /obj/item) && !is_type_in_typecache(i, banned_items_typecache))
+			if(isitem(i) && !is_type_in_typecache(i, banned_items_typecache))
 				var/obj/item/W = i
 				if(!W.admin_spawned)
 					L += W
@@ -727,7 +728,7 @@ Difficulty: Very Hard
 
 /obj/structure/closet/stasis/process()
 	if(holder_animal)
-		if(holder_animal.stat == DEAD && !QDELETED(holder_animal))
+		if(holder_animal.stat == DEAD)
 			dump_contents()
 			holder_animal.gib()
 			return
@@ -755,7 +756,7 @@ Difficulty: Very Hard
 		L.disabilities &= ~MUTE
 		L.status_flags &= ~GODMODE
 		L.notransform = 0
-		if(holder_animal && !QDELETED(holder_animal))
+		if(holder_animal)
 			holder_animal.mind.transfer_to(L)
 			L.mind.RemoveSpell(/obj/effect/proc_holder/spell/targeted/exit_possession)
 		if(kill || !isanimal(loc))

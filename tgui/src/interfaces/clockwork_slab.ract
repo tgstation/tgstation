@@ -5,6 +5,11 @@
 {{#if data.recollection}}
 	 <ui-display>
 		{{{data.rec_text}}}
+		{{#each data.recollection_categories}}
+			<br><ui-button action='rec_category' params='{"category": "{{name}}"}'>{{{name}}} - {{{desc}}}</ui-button>
+		{{/each}}
+		{{{data.rec_section}}}
+		{{{data.rec_binds}}}
  	 </ui-display>
 {{else}}
 	<ui-display title='Components (with Global Cache)' button>

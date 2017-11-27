@@ -205,7 +205,7 @@
 	//Get the clone body ready
 	maim_clone(H)
 	check_brine() // put in chemicals NOW to stop death via cardiac arrest
-	H.Paralyse(4)
+	H.Unconscious(80)
 
 	clonemind.transfer_to(H)
 
@@ -243,7 +243,7 @@
 			go_out()
 
 		else if(mob_occupant.cloneloss > (100 - heal_level))
-			mob_occupant.Paralyse(4)
+			mob_occupant.Unconscious(80)
 
 			 //Slowly get that clone healed and finished.
 			mob_occupant.adjustCloneLoss(-((speed_coeff/2) * config.damage_multiplier))

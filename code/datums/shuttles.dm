@@ -21,6 +21,10 @@
 	mappath = "[prefix][shuttle_id].dmm"
 	. = ..()
 
+//Whatever special stuff you want
+/datum/map_template/shuttle/proc/on_bought()
+	return
+
 /datum/map_template/shuttle/emergency
 	port_id = "emergency"
 	name = "Base Shuttle Template (Emergency)"
@@ -48,6 +52,12 @@
 /datum/map_template/shuttle/emergency/airless/prerequisites_met()
 	// first 10 minutes only
 	return world.time - SSticker.round_start_time < 6000
+
+/datum/map_template/shuttle/emergency/airless/on_bought()
+	//enable buying engines from cargo
+	var/datum/supply_pack/P = SSshuttle.supply_packs[/datum/supply_pack/engineering/shuttle_engine]
+	P.special_enabled = TRUE
+
 
 /datum/map_template/shuttle/emergency/asteroid
 	suffix = "asteroid"

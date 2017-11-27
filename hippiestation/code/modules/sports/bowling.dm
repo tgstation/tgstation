@@ -59,7 +59,7 @@
 		visible_message("<span class='danger'>\The expertly-bowled [src] knocks over [H] like a bowling pin!</span>")
 		H.adjust_blurriness(6)
 		H.adjustStaminaLoss(30)
-		H.Weaken(8)
+		H.Knockdown(160)
 		H.adjustBruteLoss(25)
 		playsound(src,'hippiestation/sound/effects/bowlhit.ogg',60,0)
 		unspin()

@@ -54,3 +54,6 @@
 
 /mob/living/simple_animal/drone/rad_act(amount)
 	. = ..(amount, TRUE)
+
+/mob/living/simple_animal/hostile/swarmer/rad_act(amount)
+	. = ..(amount, TRUE)

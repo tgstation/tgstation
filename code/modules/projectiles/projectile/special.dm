@@ -59,7 +59,7 @@
 	if(istype(target, /obj/mecha))
 		var/obj/mecha/M = target
 		M.take_damage(anti_armour_damage)
-	if(istype(target, /mob/living/silicon))
+	if(issilicon(target))
 		var/mob/living/silicon/S = target
 		S.take_overall_damage(anti_armour_damage*0.75, anti_armour_damage*0.25)
 	return 1
@@ -183,12 +183,12 @@
 		return ..()
 	if(!gun)
 		qdel(src)
-	gun.create_portal(src)
+	gun.create_portal(src, get_turf(src))
 
 /obj/item/projectile/bullet/frag12
 	name ="explosive slug"
 	damage = 25
-	weaken = 5
+	knockdown = 50
 
 /obj/item/projectile/bullet/frag12/on_hit(atom/target, blocked = 0)
 	..()
@@ -199,23 +199,20 @@
 	name = "plasma blast"
 	icon_state = "plasmacutter"
 	damage_type = BRUTE
-	damage = 5
+	damage = 20
 	range = 4
 	dismemberment = 20
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
-	var/mine_range = 3 //mines this many additional tiles
+	var/pressure_decrease_active = FALSE
+	var/pressure_decrease = 0.25
+	var/mine_range = 3 //mines this many additional tiles of rock
 
 /obj/item/projectile/plasma/Initialize()
 	. = ..()
-	var/turf/proj_turf = get_turf(src)
-	if(!isturf(proj_turf))
-		return
-	var/datum/gas_mixture/environment = proj_turf.return_air()
-	if(environment)
-		var/pressure = environment.return_pressure()
-		if(pressure < 60)
-			name = "full strength [name]"
-			damage *= 4
+	if(!lavaland_equipment_pressure_check(get_turf(src)))
+		name = "weakened [name]"
+		damage = damage * pressure_decrease
+		pressure_decrease_active = TRUE
 
 /obj/item/projectile/plasma/on_hit(atom/target)
 	. = ..()
@@ -229,19 +226,19 @@
 			return -1
 
 /obj/item/projectile/plasma/adv
-	damage = 7
+	damage = 28
 	range = 5
 	mine_range = 5
 
 /obj/item/projectile/plasma/adv/mech
-	damage = 10
+	damage = 40
 	range = 9
 	mine_range = 3
 
 /obj/item/projectile/plasma/turret
 	//Between normal and advanced for damage, made a beam so not the turret does not destroy glass
 	name = "plasma beam"
-	damage = 6
+	damage = 24
 	range = 7
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 

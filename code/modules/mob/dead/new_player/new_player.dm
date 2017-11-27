@@ -51,16 +51,15 @@
 			if(src.client && src.client.holder)
 				isadmin = 1
 			var/datum/DBQuery/query_get_new_polls = SSdbcore.NewQuery("SELECT id FROM [format_table_name("poll_question")] WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM [format_table_name("poll_vote")] WHERE ckey = \"[ckey]\") AND id NOT IN (SELECT pollid FROM [format_table_name("poll_textreply")] WHERE ckey = \"[ckey]\")")
-			if(!query_get_new_polls.Execute())
-				return
-			var/newpoll = 0
-			if(query_get_new_polls.NextRow())
-				newpoll = 1
+			if(query_get_new_polls.Execute())
+				var/newpoll = 0
+				if(query_get_new_polls.NextRow())
+					newpoll = 1
 
-			if(newpoll)
-				output += "<p><b><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A> (NEW!)</b></p>"
-			else
-				output += "<p><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A></p>"
+				if(newpoll)
+					output += "<p><b><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A> (NEW!)</b></p>"
+				else
+					output += "<p><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A></p>"
 
 	output += "</center>"
 

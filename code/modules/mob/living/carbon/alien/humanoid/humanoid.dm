@@ -27,7 +27,7 @@
 
 /mob/living/carbon/alien/humanoid/movement_delay()
 	. = ..()
-	. += move_delay_add + config.alien_delay + sneaking	//move_delay_add is used to slow aliens with stuns
+	. += move_delay_add + config.alien_delay + sneaking //move_delay_add is used to slow aliens with stun
 
 /mob/living/carbon/alien/humanoid/restrained(ignore_grab)
 	. = handcuffed

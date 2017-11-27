@@ -14,11 +14,21 @@
 	var/overall_sanity = 100
 	var/list/ruins = potentialRuins.Copy()
 
+	var/is_picking = FALSE
+	var/last_checked_ruin_index = 0
 	while(budget > 0 && overall_sanity > 0)
 		// Pick a ruin
 		var/datum/map_template/ruin/ruin = null
 		if(ruins && ruins.len)
-			ruin = ruins[pick(ruins)]
+			last_checked_ruin_index++ //ruins with no cost come first in the ruin list, so they'll get picked really often
+			if(is_picking)
+				ruin = ruins[pick(ruins)]
+			else
+				var/ruin_key = ruins[last_checked_ruin_index] //get the ruin's key via index
+				ruin = ruins[ruin_key] //use that key to get the ruin datum itself
+				if(ruin.cost >= 0) //if it has a non-negative cost, cancel out and pick another, to ensure true randomness
+					is_picking = TRUE
+					ruin = ruins[pick(ruins)]
 		else
 			log_world("Ruin loader had no ruins to pick from with [budget] left to spend.")
 			break
@@ -51,9 +61,14 @@
 
 			var/obj/effect/ruin_loader/R = new /obj/effect/ruin_loader(T)
 			R.Load(ruins,ruin)
-			budget -= ruin.cost
+			if(ruin.cost >= 0)
+				budget -= ruin.cost
 			if(!ruin.allow_duplicates)
-				ruins -= ruin.name
+				for(var/m in ruins)
+					var/datum/map_template/ruin/ruin_to_remove = ruins[m]
+					if(ruin_to_remove.id == ruin.id) //remove all ruins with the same ID, to make sure that ruins with multiple variants work properly
+						ruins -= ruin_to_remove.name
+						last_checked_ruin_index--
 			break
 
 	if(!overall_sanity)

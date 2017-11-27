@@ -53,7 +53,7 @@ GLOBAL_DATUM_INIT(ntnet_global, /datum/ntnet, new)
 // Checks whether NTNet operates. If parameter is passed checks whether specific function is enabled.
 /datum/ntnet/proc/check_function(specific_action = 0)
 	if(!relays || !relays.len) // No relays found. NTNet is down
-		return 0
+		return FALSE
 
 	var/operating = 0
 
@@ -65,7 +65,7 @@ GLOBAL_DATUM_INIT(ntnet_global, /datum/ntnet, new)
 			break
 
 	if(setting_disabled)
-		return 0
+		return FALSE
 
 	switch(specific_action)
 		if(NTNET_SOFTWAREDOWNLOAD)
@@ -120,7 +120,7 @@ GLOBAL_DATUM_INIT(ntnet_global, /datum/ntnet, new)
 // Updates maximal amount of stored logs. Use this instead of setting the number, it performs required checks.
 /datum/ntnet/proc/update_max_log_count(lognumber)
 	if(!lognumber)
-		return 0
+		return FALSE
 	// Trim the value if necessary
 	lognumber = max(MIN_NTNET_LOGS, min(lognumber, MAX_NTNET_LOGS))
 	setting_maxlogcount = lognumber

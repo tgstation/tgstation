@@ -30,10 +30,9 @@
 	spawned_mobs = null
 	return ..()
 
-/mob/living/simple_animal/hostile/spawner/Life()
-	..()
-	if(!stat)
-		spawn_mob()
+/mob/living/simple_animal/hostile/spawner/handle_automated_action()
+	. = ..()
+	spawn_mob()
 
 /mob/living/simple_animal/hostile/spawner/proc/spawn_mob()
 	if(spawned_mobs.len >= max_mobs)

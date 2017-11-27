@@ -7,8 +7,6 @@
 /area/shuttle/abandoned)
 "c" = (
 /obj/structure/shuttle/engine/propulsion/burst{
-	tag = "icon-propulsion (NORTH)";
-	icon_state = "propulsion";
 	dir = 1
 	},
 /turf/closed/wall/mineral/titanium,
@@ -62,9 +60,7 @@
 /area/shuttle/abandoned)
 "k" = (
 /obj/structure/shuttle/engine/propulsion/burst{
-	dir = 4;
-	icon_state = "propulsion";
-	tag = "icon-propulsion (WEST)"
+	dir = 4
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)

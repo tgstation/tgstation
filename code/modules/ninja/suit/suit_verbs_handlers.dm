@@ -22,11 +22,5 @@ Contents:
 
 
 /obj/item/clothing/suit/space/space_ninja/proc/grant_ninja_verbs()
-	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjashift
-
 	s_initialized=1
 	slowdown=0
-
-
-/obj/item/clothing/suit/space/space_ninja/proc/remove_ninja_verbs()
-	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjashift

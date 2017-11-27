@@ -19,6 +19,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	//game-preferences
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
 	var/ooccolor = null
+	var/enable_tips = TRUE
+	var/tip_delay = 500 //tip delay in milliseconds
 
 	//Antag preferences
 	var/list/be_special = list()		//Special role selection
@@ -326,6 +328,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "<a href='?_src_=prefs;preference=legs;task=input'>[features["legs"]]</a><BR>"
 
 					dat += "</td>"
+				dat = add_hippie_choices(dat)
 			if(config.mutant_humans)
 
 				if("tail_human" in pref_species.mutant_bodyparts)
@@ -1047,7 +1050,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("ooccolor")
 					var/new_ooccolor = input(user, "Choose your OOC colour:", "Game Preference") as color|null
 					if(new_ooccolor)
-						ooccolor = sanitize_ooccolor(new_ooccolor)
+						ooccolor = new_ooccolor
 
 				if("bag")
 					var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference")  as null|anything in GLOB.backbaglist
@@ -1240,6 +1243,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if (href_list["tab"])
 						current_tab = text2num(href_list["tab"])
 
+	process_hippie_link(user, href_list)
 	ShowChoices(user)
 	return 1
 

@@ -20,6 +20,4 @@
 /obj/item/clothing/proc/checkbuttuniform(mob/user)
 	var/obj/item/organ/butt/B = user.getorgan(/obj/item/organ/butt)
 	if(B)
-		var/obj/item/weapon/storage/internal/pocket/butt/pocket = B.inv
-		if(pocket)
-			pocket.close_all()
+		B.inv.close_all()

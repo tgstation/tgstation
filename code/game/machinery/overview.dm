@@ -95,7 +95,7 @@
 								colour = rgb(255,255,0)
 								colour2 = rgb(255,128,0)
 
-						if(istype(AM, /mob))
+						if(ismob(AM))
 							if(AM:client)
 								colour = rgb(255,0,0)
 							else
@@ -241,7 +241,7 @@
 							if(AM.icon_state=="alarm:1")
 								colour = rgb(255,255,0)
 
-						if(istype(AM, /mob))
+						if(ismob(AM))
 							if(AM:client)
 								colour = rgb(255,0,0)
 							else

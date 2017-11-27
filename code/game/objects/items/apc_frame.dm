@@ -6,8 +6,8 @@
 	item_state = "syringe_kit"
 	w_class = WEIGHT_CLASS_SMALL
 	var/result_path
-	var/inverse = 0
-	// For inverse dir frames like light fixtures.
+	var/inverse = 0 // For inverse dir frames like light fixtures.
+	var/pixel_shift //The amount of pixels
 
 /obj/item/wallframe/proc/try_build(turf/on_wall, mob/user)
 	if(get_dist(on_wall,user)>1)
@@ -40,6 +40,16 @@
 			ndir = turn(ndir, 180)
 
 		var/obj/O = new result_path(get_turf(user), ndir, TRUE)
+		if(pixel_shift)
+			switch(ndir)
+				if(NORTH)
+					O.pixel_y = pixel_shift
+				if(SOUTH)
+					O.pixel_y = -pixel_shift
+				if(EAST)
+					O.pixel_x = pixel_shift
+				if(WEST)
+					O.pixel_x = -pixel_shift
 		after_attach(O)
 
 	qdel(src)

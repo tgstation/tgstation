@@ -106,9 +106,6 @@
 	if(ridden.has_gravity())
 		return 1
 
-	if(ridden.pulledby)
-		return 1
-
 	return 0
 
 /datum/riding/space/Process_Spacemove(direction)
@@ -333,8 +330,7 @@
 
 /datum/riding/human/force_dismount(mob/living/user)
 	ridden.unbuckle_mob(user)
-	user.Weaken(3)
-	user.Stun(3)
+	user.Knockdown(60)
 	user.visible_message("<span class='warning'>[ridden] pushes [user] off of them!</span>")
 
 /datum/riding/cyborg
@@ -343,7 +339,7 @@
 /datum/riding/cyborg/ride_check(mob/user)
 	if(user.incapacitated())
 		var/kick = TRUE
-		if(istype(ridden, /mob/living/silicon/robot))
+		if(iscyborg(ridden))
 			var/mob/living/silicon/robot/R = ridden
 			if(R.module && R.module.ride_allow_incapacitated)
 				kick = FALSE
@@ -351,7 +347,7 @@
 			to_chat(user, "<span class='userdanger'>You fall off of [ridden]!</span>")
 			Unbuckle(user)
 			return
-	if(istype(user, /mob/living/carbon))
+	if(iscarbon(user))
 		var/mob/living/carbon/carbonuser = user
 		if(!carbonuser.get_num_arms())
 			Unbuckle(user)
@@ -389,7 +385,7 @@
 	M.Move(targetm)
 	M.visible_message("<span class='warning'>[M] is thrown clear of [ridden]!</span>")
 	M.throw_at(target, 14, 5, ridden)
-	M.Weaken(3)
+	M.Knockdown(60)
 
 /datum/riding/proc/equip_buckle_inhands(mob/living/carbon/human/user, amount_required = 1)
 	var/amount_equipped = 0

@@ -15,7 +15,7 @@
 	desc = "A mighty piece of hardware used to send/receive massive amounts of data."
 	density = 1
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 80
 	machinetype = 7
 	//heatgen = 40

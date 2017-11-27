@@ -18,8 +18,8 @@
 #define SHAME 16
 
 #define STUN		"stun"
-#define WEAKEN		"weaken"
-#define PARALYZE	"paralize"
+#define KNOCKDOWN		"knockdown"
+#define UNCONSCIOUS	"unconscious"
 #define IRRADIATE	"irradiate"
 #define STUTTER		"stutter"
 #define SLUR 		"slur"
@@ -29,8 +29,8 @@
 
 //Bitflags defining which status effects could be or are inflicted on a mob
 #define CANSTUN		1
-#define CANWEAKEN	2
-#define CANPARALYSE	4
+#define CANKNOCKDOWN	2
+#define CANUNCONSCIOUS	4
 #define CANPUSH		8
 #define IGNORESLOWDOWN	16
 #define GOTTAGOFAST	32

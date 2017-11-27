@@ -25,6 +25,12 @@
 /turf/open/floor/plating/asteroid/burn_tile()
 	return
 
+/turf/open/floor/plating/asteroid/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0)
+	return
+
+/turf/open/floor/plating/asteroid/MakeDry(wet_setting = TURF_WET_WATER)
+	return
+
 /turf/open/floor/plating/asteroid/ex_act(severity, target)
 	contents_explosion(severity, target)
 	switch(severity)
@@ -137,7 +143,7 @@
 ///////Surface. The surface is warm, but survivable without a suit. Internals are required. The floors break to chasms, which drop you into the underground.
 
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 
@@ -176,7 +182,7 @@
 
 	data_having_type = /turf/open/floor/plating/asteroid/airless/cave/volcanic/has_data
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 
 /turf/open/floor/plating/asteroid/airless/cave/volcanic/has_data //subtype for producing a tunnel with given data
 	has_data = TRUE

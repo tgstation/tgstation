@@ -5,7 +5,7 @@
 	desc = "Nothing is being built."
 	density = 1
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
 	active_power_usage = 5000
 	req_access = list(GLOB.access_robotics)
@@ -156,10 +156,10 @@
 
 	materials.use_amount(res_coef)
 	add_overlay("fab-active")
-	use_power = 2
+	use_power = ACTIVE_POWER_USE
 	updateUsrDialog()
 	sleep(get_construction_time_w_coeff(D))
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	cut_overlay("fab-active")
 	desc = initial(desc)
 
