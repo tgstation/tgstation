@@ -188,7 +188,7 @@
 		msg += "[t_He] [p_do()]n't seem all there.\n"
 
 	if(temp)
-		if (temp < 25)
+		if(temp < 25)
 			msg += "[t_He] [t_has] minor bruising.\n"
 		else if (temp < 50)
 			msg += "[t_He] [t_has] <b>moderate</b> bruising!\n"
@@ -197,7 +197,7 @@
 
 	temp = getFireLoss()
 	if(temp)
-		if (temp < 25)
+		if(temp < 25)
 			msg += "[t_He] [t_has] minor burns.\n"
 		else if (temp < 50)
 			msg += "[t_He] [t_has] <b>moderate</b> burns!\n"
