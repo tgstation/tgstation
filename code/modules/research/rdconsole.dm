@@ -218,10 +218,8 @@ doesn't have toxins access.
 	var/list/l = list()
 	l += "<h2>Nanotrasen Research and Development</h2>[RDSCREEN_NOBREAK]"
 	l += "<div class='statusDisplay'><b>Connected Technology database: [stored_research == SSresearch.science_tech? "Nanotrasen" : "Third Party"]"
-	l += "Available Points: [stored_research.research_points]"
+	l += "Available Research Points: [stored_research.research_points]"
 	l += "Security protocols: [emagged? "<font color='red'>Disabled</font>" : "<font color='green'>Enabled</font>"]"
-	l += "Design Disk: [d_disk? "<font color='green'>Loaded</font>" : "<font color='red'>Not Loaded</font>"] | \
-	 Technology Disk: [t_disk? "<font color='green'>Loaded</font>" : "<font color='red'>Not Loaded</font>"]</b>"
 	l += "<a href='?src=[REF(src)];switch_screen=[RDSCREEN_MENU]'>Main Menu</a> | <a href='?src=[REF(src)];switch_screen=[back]'>Back</a></div>[RDSCREEN_NOBREAK]"
 	return l
 

@@ -19,6 +19,7 @@
 	allowed_department_flags = DEPARTMENTAL_FLAG_ALL|DEPARTMENTAL_FLAG_ENGINEERING
 	department_tag = "Engineering"
 	circuit = /obj/item/circuitboard/machine/protolathe/department/engineering
+	console_link = TRUE
 
 /obj/machinery/rnd/protolathe/department/service
 	allowed_department_flags = DEPARTMENTAL_FLAG_ALL|DEPARTMENTAL_FLAG_SERVICE
