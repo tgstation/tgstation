@@ -19,7 +19,7 @@
 	strip_delay = 50
 	equip_delay_other = 50
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-	resistance_flags = 0
+	resistance_flags = NONE
 	dog_fashion = null
 
 /obj/item/clothing/suit/space
@@ -42,4 +42,4 @@
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	strip_delay = 80
 	equip_delay_other = 80
-	resistance_flags = 0
+	resistance_flags = NONE

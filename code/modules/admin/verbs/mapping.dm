@@ -229,15 +229,6 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 				if(B.z == num_level)
 					count++
 					atom_list += A
-	/*
-	var/atom/temp_atom
-	for(var/i = 0; i <= (atom_list.len/10); i++)
-		var/line = ""
-		for(var/j = 1; j <= 10; j++)
-			if(i*10+j <= atom_list.len)
-				temp_atom = atom_list[i*10+j]
-				line += " no.[i+10+j]@\[[temp_atom.x], [temp_atom.y], [temp_atom.z]\]; "
-		to_chat(world, line)*/
 
 	to_chat(world, "There are [count] objects of type [type_path] on z-level [num_level]")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Count Objects Zlevel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -258,15 +249,6 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	for(var/atom/A in world)
 		if(istype(A,type_path))
 			count++
-	/*
-	var/atom/temp_atom
-	for(var/i = 0; i <= (atom_list.len/10); i++)
-		var/line = ""
-		for(var/j = 1; j <= 10; j++)
-			if(i*10+j <= atom_list.len)
-				temp_atom = atom_list[i*10+j]
-				line += " no.[i+10+j]@\[[temp_atom.x], [temp_atom.y], [temp_atom.z]\]; "
-		to_chat(world, line)*/
 
 	to_chat(world, "There are [count] objects of type [type_path] in the game world")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Count Objects All") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

@@ -227,8 +227,8 @@
 		"umf","ora","stu","si","ri","li","ka","red","ani","lup","ala","pro",
 		"to","siz","nu","pra","ga","ump","ort","a","ya","yach","tu","lit",
 		"wa","mabo","mati","anta","tat","tana","prol",
-
-		"tsa","si","tra","te","ele","fa","inz"	// Start: Romanian
+		"tsa","si","tra","te","ele","fa","inz",					// Start: Romanian
+		"nza","est","sti","ra","pral","tsu","ago","esch","chi"	// Start: Custom
 		)
 
 	icon_state = "bloodsucker"

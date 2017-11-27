@@ -93,6 +93,10 @@
 	else
 		return ..()
 
+/obj/item/watertank/dropped(mob/user)
+	..()
+	remove_noz()
+
 // This mister item is intended as an extension of the watertank and always attached to it.
 // Therefore, it's designed to be "locked" to the player's hands or extended back onto
 // the watertank backpack. Allowing it to be placed elsewhere or created without a parent
@@ -109,7 +113,7 @@
 	amount_per_transfer_from_this = 50
 	possible_transfer_amounts = list(25,50,100)
 	volume = 500
-	flags_1 = NODROP_1 | NOBLUDGEON_1
+	flags_1 = NOBLUDGEON_1
 	container_type = OPENCONTAINER_1
 	slot_flags = 0
 
@@ -221,7 +225,6 @@
 	precision = 1
 	cooling_power = 5
 	w_class = WEIGHT_CLASS_HUGE
-	flags_1 = NODROP_1 //Necessary to ensure that the nozzle and tank never separate
 	var/obj/item/watertank/tank
 	var/nozzle_mode = 0
 	var/metal_synthesis_cooldown = 0
@@ -349,7 +352,7 @@
 	var/injection_amount = 1
 	amount_per_transfer_from_this = 5
 	container_type = OPENCONTAINER_1
-	spillable = 0
+	spillable = FALSE
 	possible_transfer_amounts = list(5,10,15)
 
 /obj/item/reagent_containers/chemtank/ui_action_click()

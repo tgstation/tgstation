@@ -152,11 +152,6 @@
 
 
 /obj/machinery/power/emitter/emp_act(severity)//Emitters are hardened but still might have issues
-//	add_load(1000)
-/*	if((severity == 1)&&prob(1)&&prob(1))
-		if(src.active)
-			src.active = 0
-			src.use_power = IDLE_POWER_USE	*/
 	return 1
 
 

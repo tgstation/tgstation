@@ -225,7 +225,8 @@
 	else  // A variation of get_hear inlined here to take advantage of the compiler's fastpath for obj/mob in view
 		var/lum = T.luminosity
 		T.luminosity = 6 // This is the maximum luminosity
-		processing_list = viewers(R, T)
+		for(var/mob/M in view(R, T))
+			processing_list += M
 		for(var/obj/O in view(R, T))
 			processing_list += O
 		T.luminosity = lum
@@ -310,6 +311,7 @@
 			return get_step(start, WEST)
 		else
 			return get_step(start, EAST)
+
 
 /proc/try_move_adjacent(atom/movable/AM)
 	var/turf/T = get_turf(AM)

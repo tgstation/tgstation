@@ -2,7 +2,6 @@
 	category_text = "Reagent"
 	var/volume = 0
 	resistance_flags = UNACIDABLE | FIRE_PROOF
-	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_BIO = 2)
 
 /obj/item/integrated_circuit/reagent/New()
 	..()
@@ -22,15 +21,15 @@
 	outputs = list("volume used" = IC_PINTYPE_NUMBER,"self reference" = IC_PINTYPE_REF)
 	activators = list("create smoke" = IC_PINTYPE_PULSE_IN,"on smoked" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_ENGINEERING = 3, TECH_DATA = 3, TECH_BIO = 3)
 	volume = 100
 	power_draw_per_use = 20
 	var/smoke_radius = 5
 	var/notified = FALSE
 
-/obj/item/integrated_circuit/reagent/smoke/on_reagent_change()
-	//reset warning
-	notified = FALSE
+/obj/item/integrated_circuit/reagent/smoke/on_reagent_change(changetype)
+	//reset warning only if we have reagents now
+	if(changetype == ADD_REAGENT)
+		notified = FALSE
 	set_pin_data(IC_OUTPUT, 1, reagents.total_volume)
 	push_data()
 
@@ -48,7 +47,6 @@
 	if(S)
 		S.set_up(reagents, smoke_radius, location, notified)
 		if(!notified)
-			//we have now notified
 			notified = TRUE
 		S.start()
 
@@ -83,7 +81,7 @@
 	..()
 
 
-/obj/item/integrated_circuit/reagent/injector/on_reagent_change()
+/obj/item/integrated_circuit/reagent/injector/on_reagent_change(changetype)
 	set_pin_data(IC_OUTPUT, 1, reagents.total_volume)
 	push_data()
 
@@ -199,7 +197,6 @@
 	outputs = list()
 	activators = list("transfer reagents" = IC_PINTYPE_PULSE_IN, "on transfer" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_BIO = 2)
 	var/transfer_amount = 10
 	var/direction_mode = SYRINGE_INJECT
 	power_draw_per_use = 10
@@ -254,7 +251,6 @@
 	outputs = list("volume used" = IC_PINTYPE_NUMBER,"self reference" = IC_PINTYPE_REF)
 	activators = list()
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_BIO = 2)
 	volume = 60
 
 
@@ -263,7 +259,7 @@
 	push_data()
 	..()
 
-/obj/item/integrated_circuit/reagent/storage/on_reagent_change()
+/obj/item/integrated_circuit/reagent/storage/on_reagent_change(changetype)
 	set_pin_data(IC_OUTPUT, 1, reagents.total_volume)
 	push_data()
 
@@ -275,7 +271,6 @@
 	container_type = OPENCONTAINER_1
 	complexity = 8
 	spawn_flags = IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_MATERIALS = 4, TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_BIO = 2)
 
 /obj/item/integrated_circuit/reagent/storage/cryo/New()
 	. = ..()
@@ -290,7 +285,6 @@
 	complexity = 16
 	volume = 180
 	spawn_flags = IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_MATERIALS = 3, TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_BIO = 2)
 
 /obj/item/integrated_circuit/reagent/storage/scan
 	name = "reagent scanner"
@@ -302,7 +296,6 @@
 	outputs = list("volume used" = IC_PINTYPE_NUMBER,"self reference" = IC_PINTYPE_REF,"list of reagents" = IC_PINTYPE_LIST)
 	activators = list("scan" = IC_PINTYPE_PULSE_IN)
 	spawn_flags = IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_MATERIALS = 3, TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_BIO = 2)
 
 /obj/item/integrated_circuit/reagent/storage/scan/do_work()
 	var/cont[0]
@@ -327,7 +320,6 @@
 	outputs = list()
 	activators = list("transfer reagents" = IC_PINTYPE_PULSE_IN, "on transfer" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_BIO = 2)
 	var/transfer_amount = 10
 	var/direction_mode = SYRINGE_INJECT
 	power_draw_per_use = 10

@@ -461,7 +461,8 @@
 		M.visible_message("<span class='notice'>[usr] places their wrist to [M]'s mouth.</span>", \
 						  "<span class='userdanger'>[usr] puts their bloodied wrist to your mouth!</span>")
 		// Timer...
-		if(!do_mob(usr, M, 30))
+		var/drink_time = (M.stat > CONSCIOUS || usr.pulling == M && user.grab_state >= GRAB_AGGRESSIVE) ? 30 : 60
+		if(!do_mob(usr, M, drink_time)) // Slower if they are awake and not being grabbed.
 			to_chat(usr, "<span class='notice'>The transfer was interrupted!</span>")
 			return 0
 		// Success Message
@@ -471,7 +472,7 @@
 		playsound(M.loc,'sound/items/drink.ogg', rand(30,40), 1)
 		return 1
 
-	// Target Type: Living
+	// Target Type: Living (but NOT Carbon)
 	else if (isliving(target))
 		to_chat(usr, "<span class='notice'>[src] cannot take your blood.</span>")
 		return 0
@@ -555,8 +556,9 @@
 
 		// Create Bloodsucker?
 		bloodsuckerdatum.attempt_turn_bloodsucker(C)
-		// Create Vassal?
-		//bloodsuckerdatum.attempt_make_vassal(C)
+		// Create Vassal? (if not Bloodsucker now)
+		if (!C.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
+			bloodsuckerdatum.attempt_make_vassal(C)
 
 	//cancel_spell(user)  	// TESTING: (This is if we WANT to end the spell here after successful use)
 							// 			If we return 0 (below), this spell ends but you click your target anyhow. We need to return 1, but end spell here anyway.

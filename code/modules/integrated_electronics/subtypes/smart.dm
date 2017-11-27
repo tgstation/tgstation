@@ -12,7 +12,6 @@
 	outputs = list("dir" = IC_PINTYPE_DIR)
 	activators = list("calculate dir" = IC_PINTYPE_PULSE_IN, "on calculated" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_ENGINEERING = 4, TECH_DATA = 5)
 	power_draw_per_use = 40
 
 /obj/item/integrated_circuit/smart/basic_pathfinder/do_work()

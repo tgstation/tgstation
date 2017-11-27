@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ab" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
@@ -154,20 +154,20 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aD" = (
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aE" = (
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aF" = (
 /obj/structure/table,
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aG" = (
 /obj/machinery/door/airlock/titanium,
@@ -177,7 +177,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aI" = (
 /obj/structure/table,
@@ -186,7 +186,7 @@
 	pixel_x = 4;
 	pixel_y = 7
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aJ" = (
 /obj/machinery/light/small,
@@ -208,19 +208,19 @@
 /area/shuttle/escape)
 "aL" = (
 /obj/structure/table,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aM" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/snacks/chocolatebar,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aN" = (
 /obj/structure/chair{
 	dir = 1
 	},
 /obj/structure/window/reinforced,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aO" = (
 /obj/structure/chair{
@@ -230,7 +230,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aP" = (
 /obj/structure/chair,
@@ -238,7 +238,7 @@
 	dir = 1;
 	pixel_y = 2
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aQ" = (
 /obj/structure/extinguisher_cabinet{
@@ -259,14 +259,14 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aT" = (
 /obj/structure/chair{
 	dir = 1
 	},
 /obj/machinery/light,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aU" = (
 /obj/structure/table/glass,
@@ -288,7 +288,7 @@
 /area/shuttle/escape)
 "aW" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aX" = (
 /obj/machinery/sleeper{

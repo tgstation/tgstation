@@ -110,7 +110,6 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	heal_brute = 40
-	origin_tech = "biotech=2"
 	self_delay = 20
 
 /obj/item/stack/medical/gauze
@@ -143,5 +142,4 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	heal_burn = 40
-	origin_tech = "biotech=2"
 	self_delay = 20

@@ -178,14 +178,6 @@
 			disk_rescued = 0
 			break
 	var/crew_evacuated = (SSshuttle.emergency.mode == SHUTTLE_ENDGAME)
-	//var/operatives_are_dead = is_operatives_are_dead()
-
-
-	//nukes_left
-	//station_was_nuked
-	//derp //Used for tracking if the syndies actually haul the nuke to the station	//no
-	//herp //Used for tracking if the syndies got the shuttle off of the z-level	//NO, DON'T FUCKING NAME VARS LIKE THIS
-
 
 	if(nuke_off_station == NUKE_SYNDICATE_BASE)
 		SSticker.mode_result = "loss - syndicate nuked - disk secured"
@@ -272,10 +264,11 @@
 		var/TC_uses = 0
 		for(var/datum/mind/syndicate in syndicates)
 			text += printplayer(syndicate)
-			for(var/obj/item/device/uplink/H in GLOB.uplinks)
-				if(H && H.owner && H.owner == syndicate.key)
-					TC_uses += H.spent_telecrystals
-					purchases += H.purchase_log
+			for(var/datum/component/uplink/H in GLOB.uplinks)
+				if(H.purchase_log)
+					purchases += H.purchase_log.generate_render()
+				else
+					stack_trace("WARNING: Uplink with no purchase_log in nuclear mode! Owner: [H.owner]")
 		text += "<br>"
 		text += "(Syndicates used [TC_uses] TC) [purchases]"
 		if(TC_uses == 0 && station_was_nuked && !are_operatives_dead())
@@ -333,9 +326,7 @@
 	R.freqlock = 1
 
 	if(tc)
-		var/obj/item/device/radio/uplink/nuclear/U = new(H)
-		U.hidden_uplink.owner = "[H.key]"
-		U.hidden_uplink.telecrystals = tc
+		var/obj/item/device/radio/uplink/nuclear/U = new(H, H.key, tc)
 		H.equip_to_slot_or_del(U, slot_in_backpack)
 
 	var/obj/item/implant/weapons_auth/W = new/obj/item/implant/weapons_auth(H)

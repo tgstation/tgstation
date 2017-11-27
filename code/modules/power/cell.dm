@@ -6,7 +6,6 @@
 	item_state = "cell"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	origin_tech = "powerstorage=1"
 	force = 5
 	throwforce = 5
 	throw_speed = 2
@@ -111,12 +110,6 @@
 
 /obj/item/stock_parts/cell/proc/explode()
 	var/turf/T = get_turf(src.loc)
-/*
- * 1000-cell	explosion(T, -1, 0, 1, 1)
- * 2500-cell	explosion(T, -1, 0, 1, 1)
- * 10000-cell	explosion(T, -1, 1, 3, 3)
- * 15000-cell	explosion(T, -1, 2, 4, 4)
- * */
 	if (charge==0)
 		return
 	var/devastation_range = -1 //round(charge/11000)
@@ -191,7 +184,6 @@
 
 /obj/item/stock_parts/cell/secborg
 	name = "security borg rechargeable D battery"
-	origin_tech = null
 	maxcharge = 600	//600 max charge / 100 charge per shot = six shots
 	materials = list(MAT_GLASS=40)
 	rating = 2.5
@@ -216,7 +208,6 @@
 
 /obj/item/stock_parts/cell/high
 	name = "high-capacity power cell"
-	origin_tech = "powerstorage=2"
 	icon_state = "hcell"
 	maxcharge = 10000
 	materials = list(MAT_GLASS=60)
@@ -236,7 +227,6 @@
 
 /obj/item/stock_parts/cell/super
 	name = "super-capacity power cell"
-	origin_tech = "powerstorage=3;materials=3"
 	icon_state = "scell"
 	maxcharge = 20000
 	materials = list(MAT_GLASS=300)
@@ -249,7 +239,6 @@
 
 /obj/item/stock_parts/cell/hyper
 	name = "hyper-capacity power cell"
-	origin_tech = "powerstorage=4;engineering=4;materials=4"
 	icon_state = "hpcell"
 	maxcharge = 30000
 	materials = list(MAT_GLASS=400)
@@ -263,7 +252,6 @@
 /obj/item/stock_parts/cell/bluespace
 	name = "bluespace power cell"
 	desc = "A rechargeable transdimensional power cell."
-	origin_tech = "powerstorage=5;bluespace=4;materials=4;engineering=4"
 	icon_state = "bscell"
 	maxcharge = 40000
 	materials = list(MAT_GLASS=600)
@@ -277,7 +265,6 @@
 /obj/item/stock_parts/cell/infinite
 	name = "infinite-capacity power cell!"
 	icon_state = "icell"
-	origin_tech =  "powerstorage=7"
 	maxcharge = 30000
 	materials = list(MAT_GLASS=1000)
 	rating = 6
@@ -291,7 +278,6 @@
 	desc = "An alien power cell that produces energy seemingly out of nowhere."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "cell"
-	origin_tech =  "abductor=5;powerstorage=8;engineering=6"
 	maxcharge = 50000
 	rating = 12
 	ratingdesc = FALSE
@@ -305,7 +291,6 @@
 	desc = "A rechargeable starch based power cell."
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "potato"
-	origin_tech = "powerstorage=1;biotech=1"
 	charge = 100
 	maxcharge = 300
 	materials = list()
@@ -315,7 +300,6 @@
 /obj/item/stock_parts/cell/high/slime
 	name = "charged slime core"
 	desc = "A yellow slime core infused with plasma, it crackles with power."
-	origin_tech = "powerstorage=5;biotech=4"
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "yellow slime extract"
 	materials = list()
