@@ -57,7 +57,7 @@
 			if(istype(var_value, /atom))
 				forceMove(var_value)
 				return TRUE
-			else if(var_value == null)
+			else if(isnull(var_value))
 				moveToNullspace()
 				return TRUE
 			return FALSE
