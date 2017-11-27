@@ -5,7 +5,7 @@
 /obj/machinery/vr_sleeper
 	name = "virtual reality sleeper"
 	desc = "A sleeper modified to alter the subconscious state of the user, allowing them to visit virtual worlds."
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	state_open = TRUE
 	anchored = TRUE
