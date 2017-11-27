@@ -26,7 +26,7 @@
 	health = 200
 	del_on_death = TRUE
 	//cannot wear pet collars and tags because nobody has made relevant icons
-	canwear = 0
+	can_wear_pet_items = FALSE
 
 /mob/living/simple_animal/pet/gondola/Initialize()
 	. = ..()

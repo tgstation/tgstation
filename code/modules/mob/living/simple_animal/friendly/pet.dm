@@ -4,12 +4,12 @@
 	var/obj/item/clothing/neck/petcollar/pcollar = null
 	var/collar = ""
 	var/pettag = ""
-	var/canwear = 1
+	var/can_wear_pet_items = TRUE
 	blood_volume = BLOOD_VOLUME_NORMAL
 
 /mob/living/simple_animal/pet/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/clothing/neck/petcollar) && !pcollar)
-		if(canwear)
+		if(can_wear_pet_items)
 			var/obj/item/clothing/neck/petcollar/P = O
 			pcollar = P
 			collar = "[icon_state]collar"
