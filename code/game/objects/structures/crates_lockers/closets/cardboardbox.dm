@@ -64,7 +64,7 @@
 	icon_state = "metalbox"
 	max_integrity = 500
 	mob_storage_capacity = 5
-	resistance_flags = 0
+	resistance_flags = NONE
 	move_speed_multiplier = 2
 	cutting_tool = /obj/item/weldingtool
 	open_sound = 'sound/machines/click.ogg'

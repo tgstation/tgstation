@@ -175,7 +175,7 @@
 		return
 
 	if(beaker)
-		beaker.forceMove(get_turf(src))
+		beaker.forceMove(drop_location())
 		beaker = null
 		update_icon()
 

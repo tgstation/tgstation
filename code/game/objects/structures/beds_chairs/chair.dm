@@ -6,7 +6,7 @@
 	anchored = TRUE
 	can_buckle = 1
 	buckle_lying = 0 //you sit in a chair, not lay
-	resistance_flags = 0
+	resistance_flags = NONE
 	max_integrity = 250
 	integrity_failure = 25
 	var/buildstacktype = /obj/item/stack/sheet/metal

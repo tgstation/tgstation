@@ -313,7 +313,7 @@
 		. = ..()
 	return
 
-/obj/item/reagent_containers/glass/bowl/on_reagent_change()
+/obj/item/reagent_containers/glass/bowl/on_reagent_change(changetype)
 	..()
 	update_icon()
 

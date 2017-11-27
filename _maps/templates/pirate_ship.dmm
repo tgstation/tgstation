@@ -14,12 +14,12 @@
 /obj/structure/table,
 /obj/machinery/recharger,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "ad" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer/shuttle/pirate,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "ae" = (
 /obj/structure/table,
@@ -34,17 +34,17 @@
 /obj/item/device/radio/intercom{
 	pixel_y = 5
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "af" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "ag" = (
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "ah" = (
 /obj/effect/decal/cleanable/dirt,
@@ -52,7 +52,7 @@
 /obj/machinery/computer/monitor{
 	dir = 8
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "ai" = (
 /turf/closed/wall/mineral/plastitanium,
@@ -65,7 +65,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/shuttle_scrambler,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "al" = (
 /obj/machinery/airalarm{
@@ -79,32 +79,32 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "am" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "an" = (
 /obj/structure/chair{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "ao" = (
 /obj/machinery/light/small,
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate{
 	dir = 8
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "ap" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mob_spawn/human/pirate{
 	dir = 4
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "aq" = (
 /obj/machinery/light/small{
@@ -116,7 +116,7 @@
 	pixel_y = 24;
 	req_access = null
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "ar" = (
 /obj/effect/decal/cleanable/dirt,
@@ -124,14 +124,14 @@
 /obj/effect/mob_spawn/human/pirate/gunner{
 	dir = 8
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "as" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock/command{
 	name = "Bridge"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "at" = (
 /obj/structure/closet/crate/freezer/blood,
@@ -168,7 +168,7 @@
 	name = "Crew Cabin";
 	req_access_txt = "0"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "ay" = (
 /obj/machinery/light/small{
@@ -180,16 +180,16 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/toolbox/emergency,
 /obj/item/extinguisher,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "az" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "aA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "aB" = (
 /obj/effect/decal/cleanable/dirt,
@@ -197,7 +197,7 @@
 	pixel_y = 24;
 	req_access = null
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "aC" = (
 /obj/machinery/light/small{
@@ -211,7 +211,7 @@
 	},
 /obj/item/folder,
 /obj/item/pen,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "aD" = (
 /obj/structure/sign/bluecross_2,
@@ -312,29 +312,29 @@
 /obj/machinery/door/airlock/command{
 	name = "Bridge"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "aQ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "aR" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "aS" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "aT" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "aU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -344,7 +344,7 @@
 	name = "Bridge"
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "aV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -1765,13 +1765,6 @@
 	luminosity = 2;
 	on = 0
 	},
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	layer = 4;
-	name = "EXTERNAL AIRLOCK";
-	pixel_y = -32
-	},
 /turf/open/floor/engine/vacuum,
 /area/shuttle/pirate)
 "dO" = (
@@ -1788,6 +1781,13 @@
 	dir = 1;
 	frequency = 1441;
 	id = "inc_in"
+	},
+/obj/structure/sign/securearea{
+	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
+	icon_state = "space";
+	layer = 4;
+	name = "EXTERNAL AIRLOCK";
+	pixel_y = -32
 	},
 /turf/open/floor/engine/vacuum,
 /area/shuttle/pirate)
