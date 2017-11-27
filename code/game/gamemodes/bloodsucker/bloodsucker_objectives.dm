@@ -114,7 +114,7 @@
 //						WIN CONDITIONS?
 /datum/objective/bloodsucker/embracetarget/check_completion()
 	//if (target.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)) // && target.bloodsuckerinfo.creator == owner)  // NOTE: Probably don't want to make creation exclusive to one person.
-	if (target in SSticker.mode.bloodsuckers)
+	if (target in SSticker.mode.bloodsuckers || target.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
 		return 1
 	return 0
 

@@ -129,8 +129,8 @@
 /obj/effect/proc_holder/spell/bloodsucker/cast_check(skipcharge = 0,mob/living/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 	//to_chat(user, "<span class='warning'>DEBUG: cast_check() [name] / [charge_max] </span>")
 	// Not Bloodsucker
-	if (!user.mind || !user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
-		to_chat(user, "<span class='warning'>You are not a Bloodsucker.</span>")
+	if (!user.mind)// || !user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
+		//to_chat(user, "<span class='warning'>You are not a Bloodsucker.</span>")
 		return 0
 	// Recharge Time, Incapacitation
 	if  (!..())
@@ -476,6 +476,26 @@
 		to_chat(usr, "<span class='notice'>[src] cannot take your blood.</span>")
 		return 0
 
+	// Target Type: Coffin
+	else if (istype(target, /obj/structure/closet/coffin))
+		// Timer...
+		if(!do_mob(usr, target, 30))
+			return 0
+		if (bloodsuckerdatum.coffin)
+			if (target == bloodsuckerdatum.coffin)
+				to_chat(usr, "<span class='notice'>This [target] is already bound to you.</span>")
+			else
+				to_chat(usr, "<span class='notice'>You have already claimed a coffin as your own.</span>")
+		usr.visible_message("<span class='notice'>[usr] smears ichorous blood along the inside of the [target].</span>", \
+				  "<span class='notice'>You smear ichorous blood along the inside of the [target], marking it as yours.</span>")
+		var/obj/structure/closet/coffin/targetCoffin = target
+		targetCoffin.ClaimCoffin(usr)
+		bloodsuckerdatum.coffin = targetCoffin
+		playsound(usr.loc,'sound/effects/splat.ogg', rand(30,40), 1)	//return 0
+		usr.playsound_local(null, 'sound/effects/singlebeat.ogg', 30, 1) // Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
+		cancel_spell(usr)
+		return 0
+
 	// Target Type: Container
 	else if (istype(target, /obj/item/reagent_containers))
 		if (target.reagents.maximum_volume - target.reagents.total_volume > 0) // Only tell them they succeeded if there is space for blood.
@@ -489,7 +509,7 @@
 			//to_chat(usr, "<span class='notice'>The desecration was interrupted!</span>")
 			return 0
 		// Create Splat
-		var/obj/effect/decal/cleanable/blood/vampblood/b = new /obj/effect/decal/cleanable/blood/vampblood(target, usr.mind)
+		var/obj/effect/decal/cleanable/blood/vampblood/b = new /obj/effect/decal/cleanable/blood/vampblood(target, usr.mind, bloodcost)
 		b.MatchToCreator(usr) // Set Creator, DNA, and Diseases
 		// Subtract Blood, Play Sound.
 		bloodsuckerdatum.set_blood_volume(-bloodcost)

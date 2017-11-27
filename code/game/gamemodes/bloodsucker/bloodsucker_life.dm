@@ -58,8 +58,8 @@
 		if (owner.current.stat == CONSCIOUS)
 			handle_hunger_and_frenzy()
 
-		// Deduct Blood
-		if (!poweron_feed)
+		// Deduct Blood  (NOT if feeding, and NOT if in a closed coffin)
+		if (!poweron_feed && !istype(owner.current.loc, /obj/structure/closet/coffin))
 			set_blood_volume (-0.15) // (-0.3) // Default normal is 560. Also, humans REGROW blood at 0.1 a tick. Never go lower than BLOOD_VOLUME_BAD
 
 		// Shift Bloodsucker Temperature to Location's Temp
@@ -130,13 +130,16 @@ datum/antagonist/bloodsucker/proc/handle_feed_blood(mob/living/carbon/target)
 	////////////
 
 	// Reduce Value Quantity
-	if (target.stat == DEAD)						// Penalty for Dead Blood
-		blood_taken /= 4
+	if (target.stat == DEAD)	// Penalty for Dead Blood
+		blood_taken /= 2
 		nutrition_mult = 0
 		satiety_mult = 0
-	if (!ishuman(target))							// Penalty for Non-Human Blood
+	if (!ishuman(target))		// Penalty for Non-Human Blood
 		blood_taken /= 2
-		nutrition_mult /= 2
+		nutrition_mult /= 5
+		satiety_mult = 0
+	if (!iscarbon(target))		// Penalty for Animals (they're junk food)
+		nutrition_mult = 0
 		satiety_mult = 0
 
 	////////////
@@ -148,10 +151,10 @@ datum/antagonist/bloodsucker/proc/handle_feed_blood(mob/living/carbon/target)
 	// Nutrition & Satiety
 	owner.current.nutrition = min(NUTRITION_LEVEL_FULL, owner.current.nutrition + blood_taken * nutrition_mult)		//#define NUTRITION_LEVEL_FAT 600   #define NUTRITION_LEVEL_FULL 550   #define NUTRITION_LEVEL_WELL_FED 450   #define NUTRITION_LEVEL_FED 350   #define NUTRITION_LEVEL_HUNGRY 250   #define NUTRITION_LEVEL_STARVING 150
 	owner.current.satiety += blood_taken * satiety_mult
-	// Reagents
+	// Reagents (NOT Blood!)
 	if(target.reagents && target.reagents.total_volume)
-		target.reagents.reaction(owner.current, INGEST, 1 / target.reagents.total_volume)
-		target.reagents.trans_to(owner.current, 1)
+		target.reagents.reaction(owner.current, INGEST, 1 / target.reagents.total_volume) // Run Reaction: what happens when what they have mixes with what I have?
+		target.reagents.trans_to(owner.current, 1)	// Run transfer of 1 unit of reagent from them to me.
 
 	////////////
 
@@ -210,13 +213,14 @@ datum/antagonist/bloodsucker/proc/handle_healing_active(healmult=1,costmult=1, t
 
 	// Do I have damage to ANY bodypart?
 	var/mob/living/carbon/C = owner.current
-	if (C.getBruteLoss() + C.getFireLoss() > 0)
+	// Calculate what we need to heal
+	var/bruteheal = min(C.getBruteLoss(), (regenRate + (torpidhealing ? 1 : 0)) * healmult)
+	var/fireheal = min(C.getFireLoss(), (torpidhealing ? 1 : 0.1) * healmult) // NOTE: Burn damage heals 5x quicker in Torpor (the only way we can be healing while dead)
+	if (bruteheal + fireheal > 0)
 
 		// We have damage. Let's heal (one time)
-		C.heal_overall_damage(regenRate * healmult, (torpidhealing ? 1 : 0.1) * healmult) 	// Heal BRUTE / BURN in random portions throughout the body.
-
-		// NOTE: Burn damage heals 10x quicker in Torpor (the only way we can be healing while dead)
-		set_blood_volume(-regenRate * healmult * costmult)	// Costs blood to heal.
+		C.heal_overall_damage(bruteheal, fireheal) 					// Heal BRUTE / BURN in random portions throughout the body.
+		set_blood_volume(-(bruteheal + fireheal) * costmult * 0.5)	// Costs blood to heal.
 
 		// DONE! After healing, we stop here.
 		return 1

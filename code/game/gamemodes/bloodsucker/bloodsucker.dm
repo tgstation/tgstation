@@ -1,5 +1,5 @@
 /datum/game_mode
-	var/list/datum/mind/bloodsuckers = list() // List of minds belonging to this game mode.
+	var/list/datum/mind/bloodsuckers = list() 	// List of minds belonging to this game mode.
 
 /datum/game_mode/bloodsucker
 	name = "bloodsucker"
@@ -91,18 +91,16 @@
 
 	// Create Datum: Fledgling
 	var/datum/antagonist/bloodsucker/A
+
 	// [FLEDGLING]
 	if (creator)
 		A = new ANTAG_DATUM_BLOODSUCKER(bloodsucker) //bloodsucker.add_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 		A.creator = creator
 		bloodsucker.add_antag_datum(A)
+
 	// [MASTER]
 	else
 		A = bloodsucker.add_antag_datum(ANTAG_DATUM_BLOODSUCKER)
-
-	// Make Master Vampire
-	//if (am_fledgling)
-	//	A.SelectTitle(bloodsucker.current.gender, 0) // NOTE: on_gain() takes place AFTER this, even though it occurs above.
 
 	return 1
 
@@ -119,7 +117,9 @@
 			text += printplayer(bloodsucker)
 			text += printbloodsuckerinfo(bloodsucker)
 			text += printobjectives(bloodsucker)
-		text += "<br><br>"
+			text += printvassalinfo(bloodsucker)
+			text += "<br>"
+		text += "<br>"
 		to_chat(world, text)
 
 /datum/game_mode/proc/printbloodsuckerinfo(datum/mind/ply)
@@ -127,3 +127,13 @@
 	// Return title!
 	var/list/endphrase = pick("...but Eternity will remember them as", "...but the Light cowers before the one known as", "...yet Darkness bows before", "...but Mortals forever cower before", "...and know no Evil like")
 	return "</br>[endphrase] <span class='notice'><EM>[antagdatum.ReturnFullName(ply.current,1)]</EM></span>"//</br>"
+
+/datum/game_mode/proc/printvassalinfo(datum/mind/ply)
+	var/datum/antagonist/bloodsucker/antagdatum = ply.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+	var/text = ""
+	if(antagdatum.vassals.len)
+		text = "<br><font size=2><b>[antagdatum.owner.current ? antagdatum.owner.current.p_their(TRUE) : "their"] Vassals were:</b></font>"
+		for(var/datum/mind/vassal in antagdatum.vassals)
+			text += "   " + printplayer(vassal)
+		text += "<br>"
+	return text
