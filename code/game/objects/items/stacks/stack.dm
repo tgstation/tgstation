@@ -87,9 +87,9 @@
 		. = (amount)
 
 /obj/item/stack/attack_self(mob/user)
-	list_recipes(user)
+	interact(user)
 
-/obj/item/stack/proc/list_recipes(mob/user, recipes_sublist)
+/obj/item/stack/interact(mob/user, recipes_sublist)
 	if (!recipes)
 		return
 	if (!src || get_amount() <= 0)
@@ -99,7 +99,7 @@
 	if (recipes_sublist && recipe_list[recipes_sublist] && istype(recipe_list[recipes_sublist], /datum/stack_recipe_list))
 		var/datum/stack_recipe_list/srl = recipe_list[recipes_sublist]
 		recipe_list = srl.recipes
-	var/t1 = text("<HTML><HEAD><title>Constructions from []</title></HEAD><body><TT>Amount Left: []<br>", src, src.get_amount())
+	var/t1 = text("<HTML><HEAD><title>Constructions from []</title></HEAD><body><TT>Amount Left: []<br>", src, get_amount())
 	for(var/i in 1 to length(recipe_list))
 		var/E = recipe_list[i]
 		if (isnull(E))
@@ -114,7 +114,7 @@
 
 		if (istype(E, /datum/stack_recipe))
 			var/datum/stack_recipe/R = E
-			var/max_multiplier = round(src.get_amount() / R.req_amount)
+			var/max_multiplier = round(get_amount() / R.req_amount)
 			var/title as text
 			var/can_build = 1
 			can_build = can_build && (max_multiplier>0)
@@ -123,7 +123,7 @@
 				title+= "[R.res_amount]x [R.title]\s"
 			else
 				title+= "[R.title]"
-			title+= " ([R.req_amount] [src.singular_name]\s)"
+			title+= " ([R.req_amount] [singular_name]\s)"
 			if (can_build)
 				t1 += text("<A href='?src=\ref[src];sublist=[recipes_sublist];make=[i];multiplier=1'>[title]</A>  ")
 			else
@@ -148,7 +148,7 @@
 	if (usr.restrained() || usr.stat || usr.get_active_held_item() != src)
 		return
 	if (href_list["sublist"] && !href_list["make"])
-		list_recipes(usr, text2num(href_list["sublist"]))
+		interact(usr, text2num(href_list["sublist"]))
 	if (href_list["make"])
 		if (get_amount() < 1)
 			qdel(src) //Never should happen
@@ -204,9 +204,6 @@
 			for (var/obj/item/I in O)
 				qdel(I)
 		//BubbleWrap END
-
-	if (src && usr.machine==src) //do not reopen closed window
-		addtimer(CALLBACK(src, /atom/.proc/interact, usr), 0)
 
 /obj/item/stack/proc/building_checks(datum/stack_recipe/R, multiplier)
 	if (get_amount() < R.req_amount*multiplier)
