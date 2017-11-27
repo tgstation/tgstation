@@ -47,13 +47,12 @@
 			if(T.z != origin.z)
 				continue
 			var/image/I = image('icons/effects/alphacolors.dmi', origin, "red")
+			var/x_off = T.x - origin.x
+			var/y_off = T.y - origin.y
+			I.loc = locate(origin.x + x_off, origin.y + y_off, origin.z) //we have to set this after creating the image because it might be null, and images created in nullspace are immutable.
 			I.layer = ABOVE_NORMAL_TURF_LAYER
 			I.plane = 0
 			I.mouse_opacity = 0
-			var/x_off = T.x - origin.x
-			var/y_off = T.y - origin.y
-			I.pixel_x = x_off * 32
-			I.pixel_y = y_off * 32
 			the_eye.placement_images[I] = list(x_off, y_off)
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/give_eye_control(mob/user)
@@ -95,12 +94,13 @@
 	the_eye.placed_images = list()
 
 	for(var/V in the_eye.placement_images)
-		var/turf/T = locate(eyeobj.x + the_eye.placement_images[V][1], eyeobj.y + the_eye.placement_images[V][2], eyeobj.z)
-		var/image/I = image('icons/effects/alphacolors.dmi', T, "blue")
-		I.layer = ABOVE_OPEN_TURF_LAYER
-		I.plane = 0
-		I.mouse_opacity = 0
-		the_eye.placed_images += I
+		var/image/I = V
+		var/image/newI = image('icons/effects/alphacolors.dmi', the_eye.loc, "blue")
+		newI.loc = I.loc //It is highly unlikely that any landing spot including a null tile will get this far, but better safe than sorry
+		newI.layer = ABOVE_OPEN_TURF_LAYER
+		newI.plane = 0
+		newI.mouse_opacity = 0
+		the_eye.placed_images += newI
 
 	if(current_user && current_user.client)
 		current_user.client.images += the_eye.placed_images
@@ -116,8 +116,7 @@
 		var/Tmp = coords[1]
 		coords[1] = coords[2]
 		coords[2] = -Tmp
-		pic.pixel_x = coords[1] * 32
-		pic.pixel_y = coords[2] * 32
+		pic.loc = locate(the_eye.x + coords[1], the_eye.y + coords[2], the_eye.z)
 	var/Tmp = x_offset
 	x_offset = y_offset
 	y_offset = -Tmp
@@ -134,21 +133,21 @@
 	var/list/image_cache = the_eye.placement_images
 	for(var/i in 1 to image_cache.len)
 		var/image/I = image_cache[i]
-		I.loc = eyeturf
 		var/list/coords = image_cache[I]
 		var/turf/T = locate(eyeturf.x + coords[1], eyeturf.y + coords[2], eyeturf.z)
+		I.loc = T
 		if(checkLandingTurf(T, overlappers))
 			I.icon_state = "green"
 		else
 			I.icon_state = "red"
 			. = FALSE
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/proc/checkLandingTurf(turf/T, list/overlappers) 
-	// Too close to the map edge is never allowed 
-	if(!T || T.x == 1 || T.y == 1 || T.x == world.maxx || T.y == world.maxy) 
+/obj/machinery/computer/camera_advanced/shuttle_docker/proc/checkLandingTurf(turf/T, list/overlappers)
+	// Too close to the map edge is never allowed
+	if(!T || T.x == 1 || T.y == 1 || T.x == world.maxx || T.y == world.maxy)
 		return FALSE
-	// If it's one of our shuttle areas assume it's ok to be there 
-	if(shuttle_port.shuttle_areas[T.loc]) 
+	// If it's one of our shuttle areas assume it's ok to be there
+	if(shuttle_port.shuttle_areas[T.loc])
 		return TRUE
 	// Checking for overlapping dock boundaries
 	for(var/i in 1 to overlappers.len)
@@ -160,7 +159,7 @@
 		var/list/ys = overlap[2]
 		if(xs["[T.x]"] && ys["[T.y]"])
 			return FALSE
-	if(space_turfs_only && !isspaceturf(T)) 
+	if(space_turfs_only && !isspaceturf(T))
 		return FALSE
 	return TRUE
 
