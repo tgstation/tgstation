@@ -19,17 +19,17 @@
 "aae" = (
 /obj/structure/lattice,
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "aaf" = (
 /obj/structure/lattice,
 /obj/structure/grille,
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "aag" = (
 /obj/structure/lattice,
 /obj/structure/grille/broken,
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "aah" = (
 /obj/structure/sign/securearea,
 /turf/closed/wall,
@@ -24725,9 +24725,9 @@
 /obj/structure/table/reinforced,
 /obj/item/folder/white,
 /obj/item/stock_parts/cell/high,
-/obj/item/stock_parts/console_screen,
-/obj/item/stock_parts/console_screen,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -25201,8 +25201,8 @@
 /obj/structure/table/wood,
 /obj/item/stack/cable_coil/white,
 /obj/item/stack/cable_coil/white,
-/obj/item/stock_parts/console_screen,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
 /obj/item/circuitboard/machine/microwave,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
@@ -34038,7 +34038,7 @@
 	width = 18
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "sws" = (
 /obj/docking_port/stationary{
 	dheight = 9;
@@ -34051,7 +34051,7 @@
 	width = 18
 	},
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "swt" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4

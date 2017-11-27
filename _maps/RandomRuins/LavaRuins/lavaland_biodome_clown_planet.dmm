@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
@@ -848,7 +848,7 @@
 	},
 /area/lavaland/surface/outdoors/explored)
 "gX" = (
-/turf/open/chasm/straight_down/lava_land_surface,
+/turf/open/chasm/lavaland,
 /area/lavaland/surface/outdoors/explored)
 "hY" = (
 /obj/machinery/light,

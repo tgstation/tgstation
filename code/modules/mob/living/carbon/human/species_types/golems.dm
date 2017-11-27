@@ -2,7 +2,7 @@
 	// Animated beings of stone. They have increased defenses, and do not need to breathe. They're also slow as fuuuck.
 	name = "Golem"
 	id = "iron golem"
-	species_traits = list(NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOFIRE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS,NO_UNDERWEAR)
+	species_traits = list(SPECIES_INORGANIC,NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOFIRE,NOGUNS,NOBLOOD,RADIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS,NO_UNDERWEAR)
 	mutant_organs = list(/obj/item/organ/adamantine_resonator)
 	speedmod = 2
 	armor = 55
@@ -76,7 +76,7 @@
 	fixed_mut_color = "a3d"
 	meat = /obj/item/ore/plasma
 	//Can burn and takes damage from heat
-	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS,NO_UNDERWEAR)
+	species_traits = list(SPECIES_INORGANIC,NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS,NO_UNDERWEAR)
 	info_text = "As a <span class='danger'>Plasma Golem</span>, you burn easily. Be careful, if you get hot enough while burning, you'll blow up!"
 	heatmod = 0 //fine until they blow up
 	prefix = "Plasma"
@@ -242,7 +242,7 @@
 	fixed_mut_color = "49311c"
 	meat = /obj/item/stack/sheet/mineral/wood
 	//Can burn and take damage from heat
-	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS,NO_UNDERWEAR)
+	species_traits = list(SPECIES_ORGANIC,NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS,NO_UNDERWEAR)
 	armor = 30
 	burnmod = 1.25
 	heatmod = 1.5
@@ -549,7 +549,7 @@
 	limbs_id = "cultgolem"
 	sexes = FALSE
 	info_text = "As a <span class='danger'>Runic Golem</span>, you possess eldritch powers granted by the Elder God Nar'Sie."
-	species_traits = list(NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOFIRE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,NO_UNDERWEAR) //no mutcolors
+	species_traits = list(SPECIES_INORGANIC,NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOFIRE,NOGUNS,NOBLOOD,RADIMMUNE,PIERCEIMMUNE,NODISMEMBER,NO_UNDERWEAR) //no mutcolors
 	prefix = "Runic"
 
 	var/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/golem/phase_shift
@@ -603,7 +603,7 @@
 	limbs_id = "clockgolem"
 	info_text = "<span class='bold alloy'>As a </span><span class='bold brass'>clockwork golem</span><span class='bold alloy'>, you are faster than \
 	other types of golem (being a machine), and are immune to electric shocks.</span>"
-	species_traits = list(NO_UNDERWEAR, NOTRANSSTING, NOBREATH, NOZOMBIE, VIRUSIMMUNE, RADIMMUNE, NOBLOOD, RESISTCOLD, RESISTPRESSURE, PIERCEIMMUNE)
+	species_traits = list(SPECIES_INORGANIC,NO_UNDERWEAR, NOTRANSSTING, NOBREATH, NOZOMBIE, RADIMMUNE, NOBLOOD, RESISTCOLD, RESISTPRESSURE, PIERCEIMMUNE)
 	armor = 20 //Reinforced, but much less so to allow for fast movement
 	attack_verb = "smash"
 	attack_sound = 'sound/magic/clockwork/anima_fragment_attack.ogg'
@@ -655,7 +655,7 @@
 	limbs_id = "clothgolem"
 	sexes = FALSE
 	info_text = "As a <span class='danger'>Cloth Golem</span>, you are able to reform yourself after death, provided your remains aren't burned or destroyed. You are, of course, very flammable."
-	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,NO_UNDERWEAR) //no mutcolors, and can burn
+	species_traits = list(SPECIES_UNDEAD,NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,PIERCEIMMUNE,NODISMEMBER,NO_UNDERWEAR) //no mutcolors, and can burn
 	armor = 15 //feels no pain, but not too resistant
 	burnmod = 2 // don't get burned
 	speedmod = 1 // not as heavy as stone

@@ -31,7 +31,7 @@
 	.["Show VV To Player"] = "?_src_=vars;[HrefToken(TRUE)];expose=[REF(src)]"
 
 
-/datum/proc/on_reagent_change()
+/datum/proc/on_reagent_change(changetype)
 	return
 
 

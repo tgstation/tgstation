@@ -1091,9 +1091,6 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	log_admin("[key_name(usr)] sent \"[input]\" as the Tip of the Round.")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Tip")
 
-#define ON_PURRBATION(H) (\H.getorgan(/obj/item/organ/tail/cat) || H.getorgan(/obj/item/organ/ears/cat) || \
-							H.dna.features["ears"] == "Cat" || H.dna.features["human_tail"] == "Cat")
-
 /proc/mass_purrbation()
 	for(var/M in GLOB.mob_list)
 		if(ishumanbasic(M))
@@ -1109,7 +1106,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 /proc/purrbation_toggle(mob/living/carbon/human/H, silent = FALSE)
 	if(!ishumanbasic(H))
 		return
-	if(!ON_PURRBATION(H))
+	if(!iscatperson(H))
 		purrbation_apply(H, silent)
 		. = TRUE
 	else
@@ -1119,7 +1116,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 /proc/purrbation_apply(mob/living/carbon/human/H, silent = FALSE)
 	if(!ishuman(H))
 		return
-	if(ON_PURRBATION(H))
+	if(iscatperson(H))
 		return
 
 	var/obj/item/organ/ears/cat/ears = new
@@ -1134,7 +1131,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 /proc/purrbation_remove(mob/living/carbon/human/H, silent = FALSE)
 	if(!ishuman(H))
 		return
-	if(!ON_PURRBATION(H))
+	if(!iscatperson(H))
 		return
 
 	var/obj/item/organ/ears/cat/ears = H.getorgan(/obj/item/organ/ears/cat)
@@ -1172,8 +1169,6 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 
 	if(!silent)
 		to_chat(H, "You are no longer a cat.")
-
-#undef ON_PURRBATION
 
 /client/proc/modify_goals()
 	set category = "Debug"

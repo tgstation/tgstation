@@ -1,0 +1,4 @@
+author: "More Robust Than You"
+delete-after: True
+changes: 
+  - bugfix: "Fixed cult leaders being de-culted upon election if they had a mindshield implant"

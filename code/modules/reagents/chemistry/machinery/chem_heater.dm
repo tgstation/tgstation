@@ -111,7 +111,7 @@
 
 /obj/machinery/chem_heater/proc/eject_beaker()
 	if(beaker)
-		beaker.loc = get_turf(src)
+		beaker.forceMove(drop_location())
 		beaker.reagents.handle_reactions()
 		beaker = null
 		icon_state = "mixer0b"

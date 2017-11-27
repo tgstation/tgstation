@@ -117,3 +117,9 @@
 		var/list/guardians = spawner.summoner.hasparasites()
 		for(var/para in guardians)
 			to_chat(para, "<span class='danger'><B>[AM] has crossed surveillance snare, [name].</span></B>")
+
+/obj/effect/snare/singularity_act()
+	return
+
+/obj/effect/snare/singularity_pull()
+	return

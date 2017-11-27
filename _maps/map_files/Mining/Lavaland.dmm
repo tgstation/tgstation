@@ -77,7 +77,6 @@
 /turf/closed/mineral/random/labormineral/volcanic,
 /area/lavaland/surface/outdoors)
 "ao" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /turf/closed/mineral/random/volcanic,
 /area/lavaland/surface/outdoors)
 "ap" = (

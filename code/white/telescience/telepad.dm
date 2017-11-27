@@ -22,7 +22,7 @@
 							/obj/item/ore/bluespace_crystal = 2,
 							/obj/item/stock_parts/capacitor = 1,
 							/obj/item/stack/cable_coil = 1,
-							/obj/item/stock_parts/console_screen = 1)
+							/obj/item/stack/sheet/glass = 1)
 	def_components = list(/obj/item/ore/bluespace_crystal = /obj/item/ore/bluespace_crystal/artificial)
 
 /obj/machinery/telepad/RefreshParts()

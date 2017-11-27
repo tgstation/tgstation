@@ -3,7 +3,6 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/turf/template_noop,
 /turf/closed/indestructible/oldshuttle/corner{
 	dir = 8
 	},
@@ -16,11 +15,9 @@
 /turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "e" = (
-/turf/template_noop,
 /turf/closed/indestructible/oldshuttle/corner,
 /area/ruin/powered)
 "f" = (
-/turf/open/floor/oldshuttle,
 /turf/closed/indestructible/oldshuttle/corner{
 	dir = 1
 	},
@@ -29,7 +26,6 @@
 /turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "h" = (
-/turf/open/floor/oldshuttle,
 /turf/closed/indestructible/oldshuttle/corner{
 	dir = 4
 	},
@@ -84,23 +80,19 @@
 /turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "p" = (
-/turf/open/floor/oldshuttle,
 /turf/closed/indestructible/oldshuttle/corner{
 	dir = 8
 	},
 /area/ruin/powered)
 "q" = (
-/turf/open/floor/oldshuttle,
 /turf/closed/indestructible/oldshuttle/corner,
 /area/ruin/powered)
 "r" = (
-/turf/template_noop,
 /turf/closed/indestructible/oldshuttle/corner{
 	dir = 1
 	},
 /area/ruin/powered)
 "s" = (
-/turf/template_noop,
 /turf/closed/indestructible/oldshuttle/corner{
 	dir = 4
 	},
