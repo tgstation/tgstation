@@ -1,6 +1,0 @@
-author: "tserpas1289"
-delete-after: True
-changes: 
-  - tweak: "Any suit that could hold emergency oxygen tanks can now also hold plasma man internals"
-  - tweak: "Hydroponics winter coats now can hold emergency oxygen tanks just like the other winter coats."
-  - bugfix: "Plasma men jumpsuits can now hold accessories like pocket protectors and medals."

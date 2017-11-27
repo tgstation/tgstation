@@ -136,11 +136,9 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	return TRUE
 
 /obj/machinery/rnd/circuit_imprinter/proc/do_print(path, list/matlist, notify_admins)
-	if(notify_admins)
-		if(usr)
-			usr.investigate_log("built [path] at a circuit imprinter.", INVESTIGATE_RESEARCH)
-			var/turf/T = get_turf(usr)
-			message_admins("[key_name(usr)][ADMIN_JMP(T)] has built [path] at a circuit imprinter at [COORD(usr)]")
+	if(notify_admins && usr)
+		investigate_log("[key_name(usr)] built [path] at a circuit imprinter.", INVESTIGATE_RESEARCH)
+		message_admins("[ADMIN_LOOKUPFLW(usr)] has built [path] at a circuit imprinter.")
 	var/obj/item/I = new path(get_turf(src))
 	I.materials = matlist.Copy()
 	SSblackbox.record_feedback("nested_tally", "circuit_printed", 1, list("[type]", "[path]"))

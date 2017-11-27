@@ -769,3 +769,9 @@
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "zoom_mode"
 	background_icon_state = "bg_tech"
+
+/obj/effect/projectile_beam/singularity_pull()
+	return
+
+/obj/effect/projectile_beam/singularity_act()
+	return
