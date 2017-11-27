@@ -21,7 +21,7 @@
 		mode = SYRINGE_INJECT
 		update_icon()
 
-/obj/item/reagent_containers/syringe/on_reagent_change()
+/obj/item/reagent_containers/syringe/on_reagent_change(changetype)
 	update_icon()
 
 /obj/item/reagent_containers/syringe/pickup(mob/user)
@@ -157,7 +157,7 @@
 
 
 /obj/item/reagent_containers/syringe/update_icon()
-	var/rounded_vol = CLAMP(round((reagents.total_volume / volume * 15),5), 0, 15)
+	var/rounded_vol = Clamp(round((reagents.total_volume / volume * 15),5), 0, 15)
 	cut_overlays()
 	if(ismob(loc))
 		var/injoverlay

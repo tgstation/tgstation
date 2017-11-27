@@ -170,7 +170,7 @@
 				. = TRUE
 		if("eject")
 			if(beaker)
-				beaker.forceMove(loc)
+				beaker.forceMove(drop_location())
 				beaker = null
 				cut_overlays()
 				. = TRUE
@@ -206,7 +206,7 @@
 
 /obj/machinery/chem_dispenser/emp_act(severity)
 	var/list/datum/reagents/R = list()
-	var/total = min(rand(7,15), FLOOR(cell.charge*powerefficiency, 1))
+	var/total = min(rand(7,15), Floor(cell.charge*powerefficiency))
 	var/datum/reagents/Q = new(total*10)
 	if(beaker && beaker.reagents)
 		R += beaker.reagents
@@ -301,7 +301,7 @@
 
 /obj/machinery/chem_dispenser/constructable/on_deconstruction()
 	if(beaker)
-		beaker.loc = loc
+		beaker.forceMove(drop_location())
 		beaker = null
 
 /obj/machinery/chem_dispenser/drinks

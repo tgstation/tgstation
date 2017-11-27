@@ -79,6 +79,12 @@
 	. = ..()
 	. += slowdown
 
+/mob/living/silicon/pai/can_unbuckle()
+	return FALSE
+
+/mob/living/silicon/pai/can_buckle()
+	return FALSE
+
 /mob/living/silicon/pai/Destroy()
 	GLOB.pai_list -= src
 	return ..()
@@ -130,7 +136,7 @@
 /mob/living/silicon/pai/proc/process_hack()
 
 	if(cable && cable.machine && istype(cable.machine, /obj/machinery/door) && cable.machine == hackdoor && get_dist(src, hackdoor) <= 1)
-		hackprogress = CLAMP(hackprogress + 4, 0, 100)
+		hackprogress = Clamp(hackprogress + 4, 0, 100)
 	else
 		temp = "Door Jack: Connection to airlock has been lost. Hack aborted."
 		hackprogress = 0
@@ -266,8 +272,8 @@
 
 
 /mob/living/silicon/pai/process()
-	emitterhealth = CLAMP((emitterhealth + emitterregen), -50, emittermaxhealth)
-	hit_slowdown = CLAMP((hit_slowdown - 1), 0, 100)
+	emitterhealth = Clamp((emitterhealth + emitterregen), -50, emittermaxhealth)
+	hit_slowdown = Clamp((hit_slowdown - 1), 0, 100)
 
 /mob/living/silicon/pai/generateStaticOverlay()
 	return

@@ -13,9 +13,11 @@
 	if(!loc)
 		if(client)
 			for(var/obj/effect/landmark/error/E in GLOB.landmarks_list)
-				loc = E.loc
+				forceMove(E.loc)
 				break
-			message_admins("[key_name_admin(src)] was found to have no .loc with an attached client, if the cause is unknown it would be wise to ask how this was accomplished.")
+			var/msg = "[key_name_admin(src)] was found to have no .loc with an attached client, if the cause is unknown it would be wise to ask how this was accomplished."
+			message_admins(msg)
+			send2irc_adminless_only("Mob", msg, R_ADMIN)
 			log_game("[key_name(src)] was found to have no .loc with an attached client.")
 		else
 			return

@@ -31,7 +31,7 @@
 	minbodytemp = 0
 
 	faction = list("faithless")
-	gold_core_spawnable = 1
+	gold_core_spawnable = HOSTILE_SPAWN
 
 /mob/living/simple_animal/hostile/faithless/AttackingTarget()
 	. = ..()

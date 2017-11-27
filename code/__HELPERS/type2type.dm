@@ -124,7 +124,7 @@
 //Converts an angle (degrees) into an ss13 direction
 /proc/angle2dir(degree)
 
-	degree = SIMPLIFY_DEGREES(degree)
+	degree = SimplifyDegrees(degree)
 	switch(degree)
 		if(0 to 22.5) //north requires two angle ranges
 			return NORTH
