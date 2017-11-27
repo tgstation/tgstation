@@ -26,10 +26,11 @@
 	var/vassalsMade = 0					// Total vassals controlled
 	var/datum/mind/creator				// Who made me? For both Vassals AND Bloodsuckers (though Master Vamps won't have one)
 	var/list/obj/effect/decal/cleanable/blood/vampblood/desecrateBlood = list()	// All the blood I've spilled with Expel Blood to desecrate for an objective.
-
+	//var/list/
+	var/obj/structure/closet/coffin/coffin	// Where I lay my head is home.
 	// Powers
 	var/list/obj/effect/proc_holder/spell/bloodsucker/powers = list()// Purchased powers
-	var/mob/living/carbon/vassals = list()							// Vassals under my control. Periodically remove the dead ones.
+	var/list/datum/mind/vassals = list()						// Vassals under my control. Periodically remove the dead ones.
 //	var/mob/living/carbon/feedTarget								// Who am I feeding from?
 	//var/humanDisguise												// Am I currently faking as a human?
 	var/poweron_feed = 0				// Am I feeding?
@@ -37,7 +38,7 @@
 
 	// Values
 	var/regenLimbCounter				// Regenerating limbs happens over time.
-	var/regenRate = 1					// How many points of Brute do I heal per tick? Note: Fire never changes its rate.
+	var/regenRate = 0.5					// How many points of Brute do I heal per tick? Note: Fire never changes its rate (0.1)
 	var/feedAmount = 15					// Amount of blood drawn from a target per tick.
 	var/maxBloodVolume = 600			// Maximum blood a Vamp can hold via feeding.
 	var/badfood	= 0						// When eating human food or drink, keep track of how much we've had so we can purge it at once.
@@ -93,7 +94,7 @@
 	risk of Frenzy!<span>")
 	to_chat(owner, "<span class='boldannounce'>Other Bloodsuckers are not necessarily your friends, but your survival may depend on cooperation.<span>")
 
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/BloodsuckerAlert.ogg', 100, FALSE, pressure_affected = FALSE)
+	owner.current.playsound_local(null, 'sound/ambience/antag/BloodsuckerAlert.ogg', 100, FALSE, pressure_affected = FALSE)
 
 
 
@@ -277,7 +278,19 @@ datum/antagonist/bloodsucker/proc/AssignStarterPowersAndStats()
 	BuyPower(new /obj/effect/proc_holder/spell/bloodsucker/veil)
 	BuyPower(new /obj/effect/proc_holder/spell/bloodsucker/torpidsleep)
 
+	// Language
+	owner.current.grant_language(/datum/language/vampiric)
+	//var/obj/item/organ/tongue/T = owner.current.getorganslot(ORGAN_SLOT_TONGUE) // Learn to PRONOUNCE Vampire language. Other folks can UNDERSTAND it, but only Bloodsuckers speak it.
+		// Populate New List
+	//var/list/languages_possible/newList = list() // Borrowed structure from tongue.dm
+	//newList += /datum/language/vampiric
+	//for(var/datum/language/L in T.languages_possible)
+	//	newList += L 		// Take existing language & apply to new list.
+	//T.languages_possible = typecacheof(newList) 	// Apply
+
+
 	// Give Clown a crazy-person power
+
 
 	// Stats
 	if (ishuman(owner.current))
@@ -288,7 +301,7 @@ datum/antagonist/bloodsucker/proc/AssignStarterPowersAndStats()
 		S.burnmod += 1
 		S.coldmod = 0
 		S.heatmod += 1
-		S.stunmod *= 0.25
+		S.stunmod *= 0.5
 		S.punchdamagelow += 2       //lowest possible punch damage   0
 		S.punchdamagehigh += 2      //highest possible punch damage	 9
 		S.punchstunthreshold = 8	//damage at which punches from this race will stun  9
@@ -312,13 +325,15 @@ datum/antagonist/bloodsucker/proc/AssignStarterPowersAndStats()
 	owner.current.setMaxHealth(150)
 
 	// Other Cool Stuff
-	var/obj/item/organ/eyes/E = owner.current.getorganslot("eye_sight")
+	var/obj/item/organ/eyes/E = owner.current.getorganslot(ORGAN_SLOT_EYES)
 	E.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	E.see_in_dark = 8
 	E.flash_protect = -1
 	E.sight_flags |= SEE_TURFS // Taken from augmented_eyesight.dm
 	owner.current.update_sight()
 
+	// Loyalty
+	owner.unconvertable = TRUE
 
 datum/antagonist/bloodsucker/proc/ClearAllPowersAndStats()
 
@@ -330,6 +345,11 @@ datum/antagonist/bloodsucker/proc/ClearAllPowersAndStats()
 		var/obj/effect/proc_holder/spell/power = pick(powers)
 		powers -= power
 		owner.RemoveSpell(power)
+
+	// Language
+	owner.current.remove_language(/datum/language/vampiric)
+	//var/obj/item/organ/tongue/T = owner.current.getorganslot(ORGAN_SLOT_TONGUE)					// TODO: Create vampire tongue that can pronounce this language. tongue.dm's list of languages is a shared STATIC
+	//T.languages_possible = T.languages_possible_base // RESET Tongue's language to default.
 
 	// Stats
 	if (ishuman(owner.current))
@@ -356,13 +376,15 @@ datum/antagonist/bloodsucker/proc/ClearAllPowersAndStats()
 	owner.current.setMaxHealth(100)
 
 	// Goodbye Cool Stuff
-	var/obj/item/organ/eyes/E = owner.current.getorganslot("eye_sight")
+	var/obj/item/organ/eyes/E = owner.current.getorganslot(ORGAN_SLOT_EYES)
 	E.lighting_alpha = initial(E.lighting_alpha)
 	E.see_in_dark = initial(E.lighting_alpha)
 	E.flash_protect = initial(E.flash_protect)
 	E.sight_flags ^= SEE_TURFS  // Taken from augmented_eyesight.dm
 	owner.current.update_sight()
 
+	// Loyalty
+	owner.unconvertable = FALSE
 
 
 

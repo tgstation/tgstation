@@ -191,7 +191,8 @@ datum/antagonist/bloodsucker/proc/attempt_turn_bloodsucker(mob/living/carbon/tar
 	if (can_be_revived())
 		revive(0)
 
-	//blood_volume = min(blood_volume, BLOOD_VOLUME_SURVIVE)
+	blood_volume = min(blood_volume, 50)
+
 	//revive(0)
 
 	// Put Ghost in Body											// TO DO! If this GHOST is not in another body, put them back in their bloodsucker! ** IN FACT, dont rest them if they have a new body**

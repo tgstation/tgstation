@@ -1,7 +1,7 @@
 /datum/reagent/blood/vampblood
 	taste_description = "sweetness"
 	metabolization_rate = 0.25  	// Blood is normally 5, which disappears fast.
-	//overdose_threshold = 10
+	overdose_threshold = 25			// Drink thrice and you're his.
 	addiction_threshold = 20		// They always come back.
 	id = "vampblood"
 
@@ -45,7 +45,7 @@
 //	return
 
 /datum/reagent/blood/vampblood/overdose_process(mob/living/M)
-	M.adjustStaminaLoss(1)
+	//M.adjustStaminaLoss(1)
 	..()
 	. = 1
 
@@ -88,8 +88,9 @@
 
 /obj/effect/decal/cleanable/blood/vampblood// From objects/effects/decal/cleanable/humans.dm  &  cleanable.dm
 	var/datum/mind/vamp_mind		// The Bloodsucker who made this puddle.
-	bloodiness = 10
+	//bloodiness = 10
 
+	// VARIABLES for Reference:
 	//name = "blood"
 	//desc = "It's red and gooey. Perhaps it's the chef's cooking?"
 	//icon = 'icons/effects/blood.dmi'
@@ -101,8 +102,9 @@
 	//bloodiness = MAX_SHOE_BLOODINESS
 
 
-/obj/effect/decal/cleanable/blood/vampblood/Initialize(mapload, datum/mind/bloodsucker)
+/obj/effect/decal/cleanable/blood/vampblood/Initialize(mapload, datum/mind/bloodsucker, amount)
 	..(mapload)
+	bloodiness = amount * 10
 	vamp_mind = bloodsucker
 	var/datum/antagonist/bloodsucker/antagdatum = vamp_mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	if (antagdatum)
@@ -129,3 +131,131 @@
 			to_chat(vamp_mind.current, "You sense that your bloody desacration of the [get_area(src)] has been cleansed.")
 
 	return ..()
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// LICK UP BLOOD PUDDLE //
+
+/*
+// DITCHED. There is no function for clicking a puddle with an empty hand. Just use a beaker to scoop up the blood anyway.
+//
+/obj/effect/decal/cleanable/blood/attack_self(mob/user)
+	// Must be empty handed and "helping"
+	message_admins("DEBUG1: attackby() [src] [user] ")
+	if (user || user.a_intent != INTENT_HELP)
+		return ..()
+	message_admins("DEBUG2: attackby() [src] [user] ")
+	// Lick it up. Lick it up off the floor!
+	if (!do_mob(user, src, 30))
+		return
+	message_admins("DEBUG3: attackby() [src] [user] ")
+	user.visible_message("<span class='notice'>[user] licks the [src] off the floor. What an idiot!</span>", \
+					  "<span class='notice'>You lick the [src] from the floor.</span>")
+
+	var/mob/living/carbon/C = user
+	if(C.dna && C.dna.species && (DRINKSBLOOD in C.dna.species.species_traits))
+		C.blood_volume = min(C.blood_volume + 0.5 + (bloodiness / 25), BLOOD_VOLUME_MAXIMUM)
+	else
+		C.reagents.add_reagent("toxin", 0.5 + bloodiness / 30)
+		spawn()
+			sleep(rand(50,300))
+			C.vomit(5, 1, 0)  // (var/lost_nutrition = 10, var/blood = 0, var/stun = 1, var/distance = 0, var/message = 1, var/toxic = 0)
+
+	qdel(src)
+*/
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+// DRINK BLOOD BAG //
+
+
+/obj/item/reagent_containers/blood/attack(mob/M, mob/user, def_zone)
+
+	if(user.a_intent == INTENT_HELP)
+		if (user == M)
+			user.visible_message("<span class='userdanger'>[user] forces [M] to drink from the [src].</span>", \
+							  	"<span class='notice'>You put the [src] up to [M]'s mouth.</span>")
+			if (!do_mob(user, M, 50))
+				return
+		else
+			if (!do_mob(user, M, 10))
+				return
+			user.visible_message("<span class='notice'>[user] puts the [src] up to their mouth.</span>", \
+		  		"<span class='notice'>You take a sip from the [src].</span>")
+
+
+		// Taken from drinks.dm //
+		var/gulp_size = 5
+		var/fraction = min(gulp_size/reagents.total_volume, 1)
+		//checkLiked(fraction, M) // Blood isn't food, sorry.
+		reagents.reaction(M, INGEST, fraction)
+		reagents.trans_to(M, gulp_size)
+		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
+
+	..()
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+//	VAMPIRE LANGUAGE //
+
+/datum/language/vampiric
+	name = "Blah-Sucker"
+	desc = "The native language of the Bloodsucker elders, learned intuitively by Fledglings as they pass from death into mortality."
+	speech_verb = "growls"
+	ask_verb = "growls"
+	exclaim_verb = "snarls"
+	whisper_verb = "hisses"
+	key = "b"
+	space_chance = 40
+	default_priority = 90
+
+	flags = TONGUELESS_SPEECH | LANGUAGE_HIDE_ICON_IF_NOT_UNDERSTOOD // Hide the icon next to your text if someone doesn't know this language.
+	syllables = list(
+		"luk","cha","no","kra","pru","chi","busi","tam","pol","spu","och",		// Start: Vampiric
+		"umf","ora","stu","si","ri","li","ka","red","ani","lup","ala","pro",
+		"to","siz","nu","pra","ga","ump","ort","a","ya","yach","tu","lit",
+		"wa","mabo","mati","anta","tat","tana","prol",
+
+		"tsa","si","tra","te","ele","fa","inz"	// Start: Romanian
+		)
+
+	icon_state = "bloodsucker"
+
+//datum/language
+	//var/name = "an unknown language"  // Fluff name of language if any.
+	//var/desc = "A language."          // Short description for 'Check Languages'.
+	//var/speech_verb = "says"          // 'says', 'hisses', 'farts'.
+	//var/ask_verb = "asks"             // Used when sentence ends in a ?
+	//var/exclaim_verb = "exclaims"     // Used when sentence ends in a !
+	//var/whisper_verb = "whispers"     // Optional. When not specified speech_verb + quietly/softly is used instead.
+	//var/list/signlang_verb = list("signs", "gestures") // list of emotes that might be displayed if this language has NONVERBAL or SIGNLANG flags
+	//var/key  							// If key is null, then the language isn't real or learnable.
+	//var/flags                         // Various language flags.
+	//var/list/syllables                // Used when scrambling text for a non-speaker.
+	//var/sentence_chance = 5      // Likelihood of making a new sentence after each syllable.
+	//var/space_chance = 55        // Likelihood of getting a space in the random scramble string
+	//var/list/spans = list()
+	//var/list/scramble_cache = list()
+	//var/default_priority = 0          // the language that an atom knows with the highest "default_priority" is selected by default.
+
+	// if you are seeing someone speak popcorn language, then something is wrong.
+	//var/icon = 'icons/misc/language.dmi'
+	//var/icon_state = "popcorn"
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+

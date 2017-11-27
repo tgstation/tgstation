@@ -207,3 +207,139 @@
 
 
 
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+//   BLOOD BAGS! Add ability to drank em
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+/obj/structure/closet/coffin/blackcoffin // closet.dmi, closets.dm, and job_closets.dm
+	name = "Black Coffin"
+	desc = "For those departed who are not so dear."
+	icon_state = "coffin"
+	icon = 'icons/Fulpstation/fulpobjects.dmi'
+	can_weld_shut = FALSE
+	resistance_flags = 0			// Start off with no bonuses.
+	open_sound = 'sound/machines/door_open.ogg'
+	close_sound = 'sound/machines/door_close.ogg'
+	breakout_time = 600
+	pryLidTimer = 450
+
+/obj/structure/closet/coffin/
+	var/mob/resident	// Who has claimed me? Locks when they sleep inside, unlocks when they are awake. Assigned when using Blood on this during construction.
+	var/pryLidTimer = 250
+	can_weld_shut = FALSE
+	breakout_time = 300
+
+/obj/structure/closet/coffin/proc/ClaimCoffin(mob/claimant)
+	// We're a Vampire Coffin? Why didn't you say so!
+	anchored = 1					// No moving this
+	resident = claimant
+	to_chat(claimant, "<span class='notice'>You have claimed the [src] for your own.</span>")
+
+/obj/structure/closet/coffin/blackcoffin/ClaimCoffin(mob/claimant)
+	// Black Coffins get a lil bloody
+	icon_state = "coffin_bloody"
+	icon_door = "coffin"
+	icon_door_override = TRUE // Have door use icon_door to pick out its art. This way we can swap to a bloody coffin without redundant door art.
+	update_icon()
+	resistance_flags = FIRE_PROOF	// Vamp coffins are fireproof.
+	..()
+
+/obj/structure/closet/coffin/Destroy()
+	if (resident)
+		to_chat(resident, "<span class='danger'><span class='italics'>You sense that your [src], your sacred place of rest, has been destroyed! You will need to seek another...</span></span>")
+	return ..()
+
+/obj/structure/closet/coffin/can_open(mob/living/user)
+	// You cannot lock in/out a coffin's owner. SORRY.
+	if (locked)
+		if(user == resident)
+			if (welded)
+				welded = FALSE
+				update_icon()
+			to_chat(user, "<span class='notice'>You flip a secret latch and unlock the [src].</span>")
+			locked = FALSE
+			return 1
+		else
+			playsound(get_turf(src), 'sound/machines/door_locked.ogg', 20, 1)
+			to_chat(user, "<span class='notice'>The [src] is locked tight from the inside.</span>")
+	return ..()
+
+/obj/structure/closet/coffin/close(mob/living/user)
+	if (!..())
+		return 0
+	// Creator inside Coffin? Doesn't matter who closed it! Lock it up if he's awake.
+	if (resident)
+		if ((resident in src) && resident.stat == CONSCIOUS)
+			if (!broken)
+				locked = TRUE
+				to_chat(resident, "<span class='notice'>You flip a secret latch and lock yourself inside the [src].</span>")
+			else
+				to_chat(resident, "<span class='notice'>The secret latch to lock the [src] from the inside is broken. You set it back into place...</span>")
+				if (do_mob(resident, src, 50))//sleep(10)
+					to_chat(resident, "<span class='notice'>You fix the mechanism.</span>")
+					broken = FALSE
+					locked = TRUE
+			// Play Sound: locktoggle.ogg  ?
+	return 1
+
+/obj/structure/closet/coffin/attackby(obj/item/W, mob/user, params)
+	// You cannot weld or deconstruct an owned coffin. STILL NOT SORRY.
+	if (resident != null && user != resident) // Owner can destroy their own coffin.
+		if(opened)
+			if(istype(W, cutting_tool))
+				to_chat(user, "<span class='notice'>This is a much more complex mechanical structure than you thought. You don't know where to begin cutting the [src].</span>")
+				return
+	if(locked && istype(W, /obj/item/crowbar))
+		user.visible_message("<span class='notice'>[user] tries to pry the lid off of the [src].</span>", \
+							  "<span class='notice'>You begin prying the lid off of the [src]. This should take about [DisplayTimeText(pryLidTimer)].</span>")
+		if (!do_mob(user,src,pryLidTimer))
+			return
+		bust_open()
+		return
+
+	..()
+
+// Look up recipes.dm OR pneumaticCannon.dm
+/datum/crafting_recipe/blackcoffin
+	name = "Black Coffin"
+	result = /obj/structure/closet/coffin/blackcoffin
+	tools = list(/obj/item/weldingtool,
+				 /obj/item/screwdriver)
+	reqs = list(/obj/item/stack/sheet/leather = 4,
+				/obj/item/stack/sheet/mineral/wood = 5,
+				/obj/item/stack/sheet/metal = 2)
+				///obj/item/stack/packageWrap = 8,
+				///obj/item/pipe = 2)
+	time = 150
+	category = CAT_MISC
+
+
+
+
+
+
+/obj/structure/bloodaltar
+	name = "Bloody Altar"
+
+/obj/structure/statue/bloodstatue
+	name = "Bloody Countenance"

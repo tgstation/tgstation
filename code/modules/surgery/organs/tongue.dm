@@ -15,6 +15,7 @@
 		/datum/language/monkey,
 		/datum/language/narsie,
 		/datum/language/beachbum,
+		/datum/language/vampiric,
 		/datum/language/ratvar
 	))
 
