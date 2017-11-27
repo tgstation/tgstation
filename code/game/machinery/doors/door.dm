@@ -261,6 +261,8 @@
 				if(autoclose)
 					addtimer(CALLBACK(src, .proc/autoclose), 60)
 				return
+	if(welded)
+		return
 	operating = TRUE
 
 	do_animate("closing")
