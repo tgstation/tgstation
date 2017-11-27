@@ -1,6 +1,7 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell
 	sleep_factor = 0
-	paralyze_factor = 0
+	unconscious_factor = 0
+	var/opening = FALSE
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/container_resist(mob/living/user)
 	if(opening)
@@ -11,3 +12,7 @@
 		open_machine()
 	else
 		opening = FALSE
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/open_machine(drop = FALSE)
+	. = ..()
+	opening = FALSE
