@@ -133,7 +133,6 @@ SUBSYSTEM_DEF(timer)
 		for (i in 1 to L)
 			timer = processing[i]
 			if (timer.timeToRun >= TIMER_MAX)
-				debug_admins("Ending timer minishift: i=[i], L = [L], timer.timeToRun = [timer.timeToRun], TIMER_MAX = [TIMER_MAX].")
 				break
 			bucket_count++
 			var/bucket_pos = max(1, BUCKET_POS(timer))
