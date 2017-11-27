@@ -19,6 +19,10 @@
 #define NOCLONE		"noclone"
 #define CLUMSY		"clumsy"
 
+// common disability sources
+#define EYE_DAMAGE "eye_damage"
+#define GENETIC_MUTATION "genetic"
+
 // bitflags for machine stat variable
 #define BROKEN		1
 #define NOPOWER		2

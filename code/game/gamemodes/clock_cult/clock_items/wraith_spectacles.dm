@@ -51,7 +51,7 @@
 		to_chat(victim, "<span class='heavy_brass'>\"It looks like Nar-Sie's dogs really don't value their eyes.\"</span>")
 		to_chat(victim, "<span class='userdanger'>Your eyes explode with horrific pain!</span>")
 		victim.emote("scream")
-		victim.become_blind("damage")
+		victim.become_blind(EYE_DAMAGE)
 		victim.adjust_blurriness(30)
 		victim.adjust_blindness(30)
 		return TRUE
@@ -142,8 +142,8 @@
 		apply_eye_damage(H)
 	else
 		if(GLOB.ratvar_awakens)
-			H.cure_nearsighted(list("damage"))
-			H.cure_blind(list("damage"))
+			H.cure_nearsighted(list(EYE_DAMAGE))
+			H.cure_blind(list(EYE_DAMAGE))
 			H.adjust_eye_damage(-eye_damage_done)
 			eye_damage_done = 0
 		else if(prob(50) && eye_damage_done)
@@ -161,12 +161,12 @@
 		H.adjust_blurriness(2)
 	if(eye_damage_done >= nearsight_breakpoint)
 		if(!H.has_disability(NEARSIGHT))
-			to_chat(H, "<span class='nzcrentr'>Your vision doubles, then trebles. Darkness begins to close in. You can't keep this up!</span>")
-		H.become_nearsighted("damage")
+			to_chat(H, "<span class='nzcrentr'>Your vision doubles, then trembles. Darkness begins to close in. You can't keep this up!</span>")
+		H.become_nearsighted(EYE_DAMAGE)
 	if(eye_damage_done >= blind_breakpoint)
 		if(!H.has_disability(BLIND))
 			to_chat(H, "<span class='nzcrentr_large'>A piercing white light floods your vision. Suddenly, all goes dark!</span>")
-		H.become_blind("damage")
+		H.become_blind(EYE_DAMAGE)
 
 	if(prob(min(20, 5 + eye_damage_done)))
 		to_chat(H, "<span class='nzcrentr_small'><i>Your eyes continue to burn.</i></span>")

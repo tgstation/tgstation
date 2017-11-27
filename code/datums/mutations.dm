@@ -219,12 +219,12 @@ GLOBAL_LIST_EMPTY(mutations_list)
 /datum/mutation/human/nearsight/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.become_nearsighted("genetic")
+	owner.become_nearsighted(GENETIC_MUTATION)
 
 /datum/mutation/human/nearsight/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.cure_nearsighted(list("genetic"))
+	owner.cure_nearsighted(list(GENETIC_MUTATION))
 
 /datum/mutation/human/epilepsy
 
@@ -296,7 +296,6 @@ GLOBAL_LIST_EMPTY(mutations_list)
 	owner.visible_message("<span class='danger'>[owner] suddenly grows!</span>", "<span class='notice'>Everything around you seems to shrink..</span>")
 
 /datum/mutation/human/clumsy
-
 	name = "Clumsiness"
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel lightheaded.</span>"
@@ -304,12 +303,12 @@ GLOBAL_LIST_EMPTY(mutations_list)
 /datum/mutation/human/clumsy/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.add_disability(CLUMSY, "genetic")
+	owner.add_disability(CLUMSY, GENETIC_MUTATION)
 
 /datum/mutation/human/clumsy/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.remove_disability(CLUMSY, "genetic")
+	owner.remove_disability(CLUMSY, GENETIC_MUTATION)
 
 /datum/mutation/human/tourettes
 	name = "Tourettes Syndrome"
@@ -348,12 +347,12 @@ GLOBAL_LIST_EMPTY(mutations_list)
 /datum/mutation/human/deaf/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.add_disability(DEAF, "genetic")
+	owner.add_disability(DEAF, GENETIC_MUTATION)
 
 /datum/mutation/human/deaf/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.remove_disability(DEAF, "genetic")
+	owner.remove_disability(DEAF, GENETIC_MUTATION)
 
 /datum/mutation/human/blind
 	name = "Blindness"
@@ -363,12 +362,12 @@ GLOBAL_LIST_EMPTY(mutations_list)
 /datum/mutation/human/blind/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.become_blind("genetic")
+	owner.become_blind(GENETIC_MUTATION)
 
 /datum/mutation/human/blind/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.cure_blind(list("genetic"))
+	owner.cure_blind(list(GENETIC_MUTATION))
 
 
 /datum/mutation/human/race
@@ -433,12 +432,12 @@ GLOBAL_LIST_EMPTY(mutations_list)
 /datum/mutation/human/mute/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.add_disability(MUTE, "genetic")
+	owner.add_disability(MUTE, GENETIC_MUTATION)
 
 /datum/mutation/human/mute/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.remove_disability(MUTE, "genetic")
+	owner.remove_disability(MUTE, GENETIC_MUTATION)
 
 /datum/mutation/human/smile
 	name = "Smile"

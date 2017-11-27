@@ -171,7 +171,7 @@ MASS SPECTROMETER
 			to_chat(user, "\t<span class='info'><b>==EAR STATUS==</b></span>")
 			if(istype(ears))
 				var/healthy = TRUE
-				if(C.has_disability(DEAF, "genetic"))
+				if(C.has_disability(DEAF, GENETIC_MUTATION))
 					healthy = FALSE
 					to_chat(user, "\t<span class='alert'>Subject is genetically deaf.</span>")
 				else if(C.has_disability(DEAF))
