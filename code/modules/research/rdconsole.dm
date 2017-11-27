@@ -216,12 +216,9 @@ doesn't have toxins access.
 
 /obj/machinery/computer/rdconsole/proc/ui_header()
 	var/list/l = list()
-	l += "<h2>Nanotrasen Research and Development</h2>[RDSCREEN_NOBREAK]"
-	l += "<div class='statusDisplay'><b>Connected Technology database: [stored_research == SSresearch.science_tech? "Nanotrasen" : "Third Party"]"
-	l += "Available Points: [stored_research.research_points]"
+	l += "<div class='statusDisplay'><b>[stored_research.organization] Research and Development Network</b>"
+	l += "Available points: [stored_research.research_points] (+[round(stored_research.last_bitcoins * 60)] / minute)"
 	l += "Security protocols: [emagged? "<font color='red'>Disabled</font>" : "<font color='green'>Enabled</font>"]"
-	l += "Design Disk: [d_disk? "<font color='green'>Loaded</font>" : "<font color='red'>Not Loaded</font>"] | \
-	 Technology Disk: [t_disk? "<font color='green'>Loaded</font>" : "<font color='red'>Not Loaded</font>"]</b>"
 	l += "<a href='?src=[REF(src)];switch_screen=[RDSCREEN_MENU]'>Main Menu</a> | <a href='?src=[REF(src)];switch_screen=[back]'>Back</a></div>[RDSCREEN_NOBREAK]"
 	return l
 
@@ -572,9 +569,13 @@ doesn't have toxins access.
 	l += "<h2>Technology Nodes:</h2>[RDSCREEN_NOBREAK]"
 	l += "<div><h3>Available for Research:</h3>"
 	for(var/datum/techweb_node/N in avail)
-		var/not_unlocked = (stored_research.available_nodes[N.id] && !stored_research.researched_nodes[N.id])
-		var/has_points = (stored_research.research_points >= N.get_price(stored_research))
-		var/research_href = not_unlocked? (has_points? "<A href='?src=[REF(src)];research_node=[N.id]'>Research</A>" : "<span class='linkOff bad'>Not Enough Points</span>") : null
+		var/research_href
+		if (stored_research.available_nodes[N.id] && !stored_research.researched_nodes[N.id])
+			var/price = N.get_price(stored_research)
+			if (stored_research.research_points >= price)
+				research_href = "<A href='?src=[REF(src)];research_node=[N.id]'>[price]</A>"
+			else
+				research_href = "<span class='linkOff bad'>[price]</span>"
 		l += "<A href='?src=[REF(src)];view_node=[N.id];back_screen=[screen]'>[N.display_name]</A>[research_href]"
 	l += "</div><div><h3>Locked Nodes:</h3>"
 	for(var/datum/techweb_node/N in unavail)
@@ -585,39 +586,59 @@ doesn't have toxins access.
 	l += "</div>[RDSCREEN_NOBREAK]"
 	return l
 
+/obj/machinery/computer/rdconsole/proc/ui_techweb_single_node(datum/techweb_node/node)
+	var/list/l = list()
+	var/price = node.get_price(stored_research)
+	l += "<div class='statusDisplay technode'><b>[node.display_name]</b> [RDSCREEN_NOBREAK]"
+	if(stored_research.researched_nodes[node.id])
+		l += "<span class='linkOff'>Researched</span>"
+	else if(stored_research.available_nodes[node.id])
+		if(stored_research.research_points >= price)
+			l += "<A href='?src=[REF(src)];research_node=[node.id]'>[price]</A>"
+		else
+			l += "<span class='linkOff'>[price]</span>"  // gray - too expensive
+	else
+		l += "<span class='linkOff bad'>[price]</span>"  // red - missing prereqs
+	l += "[node.description]"
+	for(var/i in node.designs)
+		var/datum/design/D = node.designs[i]
+		var/atom/item = D.build_path
+		if (ispath(item, /obj/item/circuitboard))
+			var/obj/item/circuitboard/C = item
+			var/build_path = initial(C.build_path)
+			if (build_path)
+				item = initial(C.build_path)
+		var/icon_file = initial(item.icon)
+		var/icon/item_icon = icon(icon_file, initial(item.icon_state), SOUTH)
+		if (ispath(item, /obj/machinery/computer))
+			var/obj/machinery/computer/C = item
+			var/screen = initial(C.icon_screen)
+			var/keyboard = initial(C.icon_keyboard)
+			if (screen)
+				item_icon.Blend(icon(icon_file, screen), ICON_OVERLAY)
+			if (keyboard)
+				item_icon.Blend(icon(icon_file, keyboard), ICON_OVERLAY)
+
+		//l += "[icon2html(item_icon, usr)] <A href='?src=[REF(src)];view_design=[i]'>[D.name]</A>: [D.desc]"
+		l += "<span data-tooltip='[D.name]'>[icon2html(item_icon, usr)]</span>[RDSCREEN_NOBREAK]"
+	l += "</div>[RDSCREEN_NOBREAK]"
+	return l
+
 /obj/machinery/computer/rdconsole/proc/ui_techweb_nodeview()	//Legacy code
 	RDSCREEN_UI_SNODE_CHECK
 	var/list/l = list()
 	if(stored_research.hidden_nodes[selected_node.id])
 		l += "<div><h3>ERROR: RESEARCH NODE UNKNOWN.</h3></div>"
-	l += "<div><h3>[selected_node.display_name]</h3>"
-	l += "Description: [selected_node.description]"
-	l += "Status: [stored_research.researched_nodes[selected_node.id]? "<font color='green'><b>Researched</b></font>" : "<span class='bad'>Locked</span>"]"
-	l += "Point Cost: [selected_node.get_price(stored_research)]. </div>[RDSCREEN_NOBREAK]"
-	if(stored_research.researched_nodes[selected_node.id])
-		l += "<h3><span class='linkOff'>Already Researched</span></h3>[RDSCREEN_NOBREAK]"
-	else if(stored_research.available_nodes[selected_node.id])
-		if(stored_research.research_points >= selected_node.get_price(stored_research))
-			l += "<h3><A href='?src=[REF(src)];research_node=[selected_node.id]'>Research</A></h3>[RDSCREEN_NOBREAK]"
-		else
-			l += "<h3><span class='linkOff bad'>Not Enough Points</span></h3>[RDSCREEN_NOBREAK]"
-	else if(stored_research.visible_nodes[selected_node.id])
-		l += "<h3><span class='linkOff bad'>Prerequisites not met!</span></h3>[RDSCREEN_NOBREAK]"
-	else
-		l += "<h3><span class='linkOff bad'>ERROR</span></h3>[RDSCREEN_NOBREAK]"
-	l += "<div><h3>Designs:</h3>[RDSCREEN_NOBREAK]"
-	for(var/i in selected_node.designs)
-		var/datum/design/D = selected_node.designs[i]
-		l += "<A href='?src=[REF(src)];view_design=[i]'>[D.name]</A>"
-	l += "</div><div><h3>Prerequisites:</h3>[RDSCREEN_NOBREAK]"
+	l += ui_techweb_single_node(selected_node)
+	l += "<div><h3>Prerequisites:</h3>[RDSCREEN_NOBREAK]"
 	for(var/i in selected_node.prerequisites)
 		var/datum/techweb_node/prereq = selected_node.prerequisites[i]
 		var/sc = stored_research.researched_nodes[prereq.id]
 		var/begin
 		var/end
 		if(sc)
-			begin = "<font color='green'><b>"
-			end = "</font></b>"
+			begin = "<b>"
+			end = "</b>"
 		else
 			begin = "<span class='bad'>"
 			end = "</span>"
@@ -866,6 +887,7 @@ doesn't have toxins access.
 /obj/machinery/computer/rdconsole/interact(mob/user)
 	user.set_machine(src)
 	var/datum/browser/popup = new(user, "rndconsole", name, 460, 550)
+	popup.add_stylesheet("techwebs", 'html/browser/techwebs.css')
 	popup.set_content(generate_ui())
 	popup.open()
 
