@@ -15,13 +15,11 @@
 	var/srange = 6 //The range of the search for pool turfs, change this for bigger or smaller pools.
 	var/linkedmist = list() //Used to keep track of created mist
 	var/misted = FALSE //Used to check for mist.
-	var/obj/item/weapon/reagent_containers/beaker = null
+	var/obj/item/reagent_containers/beaker = null
 	var/cur_reagent = "water"
 	var/drainable = FALSE
 	var/drained = FALSE
 	var/bloody = 0
-	var/bloodcolor = "#FFFFFF"
-	var/lastbloody = 99
 	var/obj/machinery/drain/linkeddrain = null
 	var/timer = 0 //we need a cooldown on that shit.
 	var/reagenttimer = 0 //We need 2.
@@ -51,33 +49,49 @@
 			log_say("[key_name(user)] emagged the poolcontroller")
 			message_admins("[key_name_admin(user)] emagged the poolcontroller")
 
-/obj/machinery/poolcontroller/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/poolcontroller/attackby(obj/item/W, mob/user)
 	if(shocked && !(stat & NOPOWER))
 		shock(user,50)
+
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if (istype(W,/obj/item/weapon/reagent_containers/glass/beaker))
+
+	if(istype(W,/obj/item/reagent_containers/glass/beaker))
 		if(beaker)
 			to_chat(user, "A beaker is already loaded into the machine.")
 			return
+
 		if(W.reagents.total_volume >= 100 && W.reagents.reagent_list.len == 1) //check if full and allow one reageant only.
-			beaker =  W
-			user.drop_item()
-			W.loc = src
-			to_chat(user, "You add the beaker to the machine!")
-			updateUsrDialog()
-			for(var/X in beaker.reagents.reagent_list)
-				var/datum/reagent/R  = X
-				cur_reagent = "[R.name]"
-				if(GLOB.adminlog)
-					log_say("[key_name(user)] has changed the pool's chems to [R.name]")
-					message_admins("[key_name_admin(user)] has changed the pool's chems to [R.name].")
-			timer = 15
+
+			for(var/X in W.reagents.reagent_list)
+				var/datum/reagent/R = X
+				if(R.reagent_state == SOLID)
+					to_chat(user, "The pool cannot accept reagents in solid form!.")
+					return
+
+				else
+					beaker =  W
+					user.dropItemToGround(W)
+					W.loc = src
+					to_chat(user, "You add the beaker to the machine!")
+					updateUsrDialog()
+					cur_reagent = "[R.name]"
+
+					for(var/I in linkedturfs)
+						var/turf/open/pool/P = I
+						if(P.reagents)
+							P.reagents.clear_reagents()
+							P.reagents.add_reagent(R.id, 100)
+
+					if(GLOB.adminlog)
+						log_say("[key_name(user)] has changed the pool's chems to [R.name]")
+						message_admins("[key_name_admin(user)] has changed the pool's chems to [R.name].")
+					timer = 15
 		else
 			to_chat(user, "<span class='notice'>This machine only accepts full large beakers of one reagent.</span>")
 		return
 
-	if (istype(W,/obj/item/weapon/screwdriver))
+	if (istype(W,/obj/item/screwdriver))
 		cut_overlays()
 		panel_open = !panel_open
 		to_chat(user, "You [panel_open ? "open" : "close"] the maintenance panel.")
@@ -106,15 +120,20 @@
 	for(var/X in linkedturfs)
 		var/turf/open/pool/W = X
 		for(var/mob/living/carbon/human/swimee in W)
-			if(beaker && cur_reagent)
-				beaker.reagents.reaction(swimee, VAPOR, 0.03) //3 percent
-				for(var/Q in beaker.reagents.reagent_list)
+			if(beaker && cur_reagent && W.reagents)
+				for(var/Q in W.reagents.reagent_list)
+					var/datum/reagent/R = Q
+					if(R.reagent_state == SOLID)
+						R.reagent_state = LIQUID
+				W.reagents.reaction(swimee, VAPOR, 0.03) //3 percent
+				for(var/Q in W.reagents.reagent_list)
 					var/datum/reagent/R = Q
 					swimee.reagents.add_reagent(R.id, 0.5) //osmosis
 		for(var/obj/objects in W)
-			if(beaker && cur_reagent)
-				beaker.reagents.reaction(objects, VAPOR, 1)
+			if(beaker && cur_reagent && W.reagents)
+				W.reagents.reaction(objects, VAPOR, 1)
 			reagenttimer = 4
+	changecolor()
 
 
 /obj/machinery/poolcontroller/process()
@@ -165,44 +184,32 @@
 
 			for(var/obj/effect/decal/cleanable/decal in W)
 				CHECK_TICK
-				if(bloody < 800)
-					animate(decal, alpha = 10, time = 20)
-					QDEL_IN(decal, 25)
+				animate(decal, alpha = 10, time = 20)
+				QDEL_IN(decal, 25)
 				if(istype(decal,/obj/effect/decal/cleanable/blood) || istype(decal, /obj/effect/decal/cleanable/trail_holder))
-					bloody++
-					if(bloody > lastbloody)
-						changecolor()
+					bloody = TRUE
+	changecolor()
 
 /obj/machinery/poolcontroller/proc/changecolor()
-	lastbloody = bloody+99
-	switch(bloody)
-		if(0 to 99)
-			bloodcolor = "#FFFFFF"
-		if(100 to 199)
-			bloodcolor = "#FFDDDD"
-		if(100 to 199)
-			bloodcolor = "#FFCCCC"
-		if(200 to 299)
-			bloodcolor = "#FFBBBB"
-		if(300 to 399)
-			bloodcolor = "#FFAAAA"
-		if(400 to 499)
-			bloodcolor = "#FF9999"
-		if(500 to 599)
-			bloodcolor = "#FF8888"
-		if(600 to 699)
-			bloodcolor = "#FF7777"
-		if(700 to 799)
-			bloodcolor = "#FF7777"
-		if(800 to 899)
-			bloodcolor = "#FF6666"
-		if(900 to INFINITY)
-			bloodcolor = "#FF5555"
-			src.bloody = 1000
+	var/rcolor
+	if(beaker && LAZYLEN(beaker.reagents.reagent_list))
+		rcolor = mix_color_from_reagents(beaker.reagents.reagent_list)
 	for(var/X in linkedturfs)
 		var/turf/open/pool/color1 = X
-		color1.color = "bloodcolor"
-		color1.watereffect.color = "bloodcolor"
+		if(bloody)
+			if(rcolor)
+				color1.color = BlendRGB(rgb(150, 20, 20), rcolor, 0.5)
+				color1.watereffect.color = BlendRGB(rgb(150, 20, 20), rcolor, 0.5)
+			else
+				color1.color = rgb(150, 20, 20)
+				color1.watereffect.color = rgb(150, 20, 20)
+		else if(!bloody && rcolor)
+			color1.color = rcolor
+			color1.watereffect.color = rcolor
+
+		if(!bloody && (!beaker || !LAZYLEN(beaker.reagents.reagent_list)))
+			color1.color = null
+			color1.watereffect.color = null
 
 /obj/machinery/poolcontroller/proc/miston() //Spawn /obj/effect/mist (from the shower) on all linked pool tiles
 	for(var/X in linkedturfs)
@@ -290,10 +297,11 @@
 			handle_temp()
 		if("eject")
 			if(beaker)
-				var/obj/item/weapon/reagent_containers/glass/B = beaker
+				var/obj/item/reagent_containers/glass/B = beaker
 				B.loc = loc
 				beaker = null
 				. = TRUE
+			changecolor()
 		if("drain")
 			if(drainable)
 				mistoff()
@@ -307,6 +315,7 @@
 					new /obj/effect/effect/waterspout(linkeddrain.loc)
 					temperature = 3
 				handle_temp()
+				bloody = FALSE
 				. = TRUE
 
 /obj/machinery/poolcontroller/attack_hand(mob/user)

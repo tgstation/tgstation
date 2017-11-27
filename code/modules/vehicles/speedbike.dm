@@ -10,7 +10,7 @@
 	. = ..()
 	riding_datum = new/datum/riding/space/speedbike
 
-/obj/vehicle/space/speedbike/New()
+/obj/vehicle/space/speedbike/Initialize()
 	. = ..()
 	overlay = overlay ||  mutable_appearance(icon, overlay_state, ABOVE_MOB_LAYER)
 	add_overlay(overlay)
@@ -38,10 +38,10 @@
 	pixel_y = -48 //to fix the offset when Initialized()
 	pixel_x = -48
 
-/obj/vehicle/space/speedbike/speedwagon/Bump(atom/movable/A)
+/obj/vehicle/space/speedbike/speedwagon/Collide(atom/movable/A)
 	. = ..()
 	if(A.density && has_buckled_mobs())
-		var/atom/throw_target = get_edge_target_turf(A, src.dir)
+		var/atom/throw_target = get_edge_target_turf(A, dir)
 		if(crash_all)
 			A.throw_at(throw_target, 4, 3)
 			visible_message("<span class='danger'>[src] crashes into [A]!</span>")
@@ -62,7 +62,7 @@
 
 /obj/vehicle/space/speedbike/speedwagon/Moved()
 	. = ..()
-	if(src.has_buckled_mobs())
+	if(has_buckled_mobs())
 		for(var/atom/A in range(2, src))
-			if(!(A in src.buckled_mobs))
-				Bump(A)
+			if(!(A in buckled_mobs))
+				Collide(A)

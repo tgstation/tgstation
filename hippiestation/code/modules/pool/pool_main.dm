@@ -4,8 +4,15 @@
 	name = "poolwater"
 	desc = "You're safer here than in the deep."
 	icon_state = "deep"
+	heat_capacity = INFINITY
 	var/next_splash = 1
 	var/obj/effect/overlay/water/watereffect
+
+
+/turf/open/pool/Initialize()
+	. =..()
+	create_reagents(100)
+
 
 /turf/open/pool/proc/update_icon()
 	if(!filled)
@@ -204,7 +211,7 @@
 				var/mob/living/carbon/H = M
 				if(filled)
 					wash_mob(H)
-					if (H.wear_mask && H.wear_mask.flags & MASKCOVERSMOUTH)
+					if (H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSMOUTH)
 						H.visible_message("<span class='danger'>[H] falls in the water!</span>",
 											"<span class='userdanger'>You fall in the water!</span>")
 						playsound(src, 'hippiestation/sound/effects/splash.ogg', 60, 1, 1)
@@ -212,7 +219,7 @@
 						H.swimming = 1
 						return
 					else
-						H.drop_item()
+						H.dropItemToGround(H.get_active_held_item())
 						H.adjustOxyLoss(5)
 						H.emote("cough")
 						H.visible_message("<span class='danger'>[H] falls in and takes a drink!</span>",
@@ -278,7 +285,7 @@
 	dir = 4
 
 /obj/structure/pool/Rboard/CheckExit(atom/movable/O as mob|obj, target as turf)
-	if(istype(O) && O.checkpass(PASSGLASS))
+	if(istype(O) && O.pass_flags & PASSGLASS)
 		return TRUE
 	if(get_dir(O.loc, target) == dir)
 		return FALSE
@@ -421,8 +428,8 @@
 					L.emote("cough")
 				L.adjustStaminaLoss(4) //You need to give em a break!
 
-/turf/open/pool/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/mop) && filled)
+/turf/open/pool/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/mop) && filled)
 		W.reagents.add_reagent("water", 5)
 		to_chat(user, "<span class='notice'>You wet [W] in [src].</span>")
 		playsound(loc, 'sound/effects/slosh.ogg', 25, 1)

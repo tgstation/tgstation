@@ -3,7 +3,7 @@
 	desc = "A large delivery parcel."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "deliverycloset"
-	density = 1
+	density = TRUE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	var/giftwrapped = FALSE
 	var/sortTag = 0
@@ -32,7 +32,7 @@
 			sortTag = O.currTag
 			playsound(loc, 'sound/machines/twobeep.ogg', 100, 1)
 
-	else if(istype(W, /obj/item/weapon/pen))
+	else if(istype(W, /obj/item/pen))
 		var/str = copytext(sanitize(input(user,"Label text?","Set label","")),1,MAX_NAME_LEN)
 		if(!str || !length(str))
 			to_chat(user, "<span class='warning'>Invalid text!</span>")
@@ -113,7 +113,7 @@
 			sortTag = O.currTag
 			playsound(loc, 'sound/machines/twobeep.ogg', 100, 1)
 
-	else if(istype(W, /obj/item/weapon/pen))
+	else if(istype(W, /obj/item/pen))
 		var/str = copytext(sanitize(input(user,"Label text?","Set label","")),1,MAX_NAME_LEN)
 		if(!str || !length(str))
 			to_chat(user, "<span class='warning'>Invalid text!</span>")
@@ -144,7 +144,9 @@
 
 	w_class = WEIGHT_CLASS_TINY
 	item_state = "electronic"
-	flags = CONDUCT
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	flags_1 = CONDUCT_1
 	slot_flags = SLOT_BELT
 
 /obj/item/device/destTagger/proc/openwindow(mob/user)
@@ -152,7 +154,7 @@
 
 	dat += "<table style='width:100%; padding:4px;'><tr>"
 	for (var/i = 1, i <= GLOB.TAGGERLOCATIONS.len, i++)
-		dat += "<td><a href='?src=\ref[src];nextTag=[i]'>[GLOB.TAGGERLOCATIONS[i]]</a></td>"
+		dat += "<td><a href='?src=[REF(src)];nextTag=[i]'>[GLOB.TAGGERLOCATIONS[i]]</a></td>"
 
 		if(i%4==0)
 			dat += "</tr><tr>"

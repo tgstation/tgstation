@@ -22,7 +22,7 @@
 
 /atom/movable/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()
-	if(can_buckle && istype(M))
+	if(can_buckle && istype(M) && istype(user))
 		if(user_buckle_mob(M, user))
 			return 1
 
@@ -47,9 +47,9 @@
 		return FALSE
 	if(!M.can_buckle() && !force)
 		if(M == usr)
-			to_chat(M, "<span class='warning'>You are unable to buckle yourself to the [src]!</span>")
+			to_chat(M, "<span class='warning'>You are unable to buckle yourself to [src]!</span>")
 		else
-			to_chat(usr, "<span class='warning'>You are unable to buckle [M] to the [src]!</span>")
+			to_chat(usr, "<span class='warning'>You are unable to buckle [M] to [src]!</span>")
 		return FALSE
 
 	if(M.pulledby && buckle_prevents_pull)
@@ -62,7 +62,7 @@
 	M.setDir(dir)
 	buckled_mobs |= M
 	M.update_canmove()
-	M.throw_alert("buckled", /obj/screen/alert/restrained/buckled, new_master = src)
+	M.throw_alert("buckled", /obj/screen/alert/restrained/buckled)
 	post_buckle_mob(M)
 
 	return TRUE
@@ -99,7 +99,7 @@
 
 //Wrapper procs that handle sanity and user feedback
 /atom/movable/proc/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
-	if(!in_range(user, src) || user.stat || user.restrained())
+	if(!in_range(user, src) || !isturf(user.loc) || user.incapacitated())
 		return FALSE
 
 	add_fingerprint(user)
@@ -131,5 +131,3 @@
 				"<span class='italics'>You hear metal clanking.</span>")
 		add_fingerprint(user)
 	return M
-
-

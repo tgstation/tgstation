@@ -3,7 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "ab" = (
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "ac" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -12,23 +12,23 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "ae" = (
-/obj/item/weapon/bombcore/large/underwall,
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/wall/mineral/plastitanium/explosive,
 /area/ruin/powered/syndicate_lava_base)
 "af" = (
 /obj/structure/closet/secure_closet/bar{
 	req_access = null;
 	req_access_txt = "150"
 	},
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "ag" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/snacks/syndicake,
-/obj/item/weapon/reagent_containers/food/snacks/syndicake,
-/obj/item/weapon/reagent_containers/food/snacks/syndicake,
+/obj/item/reagent_containers/food/snacks/syndicake,
+/obj/item/reagent_containers/food/snacks/syndicake,
+/obj/item/reagent_containers/food/snacks/syndicake,
 /obj/structure/sign/barsign{
 	pixel_y = 32;
 	req_access = null;
@@ -37,14 +37,16 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/podhatch,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "ah" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/snacks/salad/validsalad,
-/turf/open/floor/plasteel/podhatch{
+/obj/item/reagent_containers/food/snacks/salad/validsalad,
+/obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "ai" = (
 /obj/structure/rack{
@@ -52,7 +54,7 @@
 	icon_state = "minibar_left";
 	name = "skeletal minibar"
 	},
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
+/obj/item/reagent_containers/food/drinks/bottle/vodka,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -64,44 +66,43 @@
 	icon_state = "minibar_right";
 	name = "skeletal minibar"
 	},
-/obj/item/weapon/reagent_containers/food/drinks/bottle/gin,
+/obj/item/reagent_containers/food/drinks/bottle/gin,
 /turf/open/floor/wood,
 /area/ruin/powered/syndicate_lava_base)
 "ak" = (
 /obj/structure/dresser,
 /obj/structure/mirror{
-	desc = "Mirror mirror on the wall, who is the most robust of them all?";
 	pixel_x = -26
 	},
 /turf/open/floor/plasteel/vault,
 /area/ruin/powered/syndicate_lava_base)
 "al" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/vault,
 /area/ruin/powered/syndicate_lava_base)
 "am" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/vault,
 /area/ruin/powered/syndicate_lava_base)
 "an" = (
 /obj/structure/table/wood,
-/obj/item/weapon/clipboard,
+/obj/item/clipboard,
 /obj/item/toy/figure/syndie,
 /turf/open/floor/plasteel/vault,
 /area/ruin/powered/syndicate_lava_base)
 "ao" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "ap" = (
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/powered/syndicate_lava_base)
 "aq" = (
 /turf/open/floor/plasteel/vault{
@@ -112,13 +113,12 @@
 /obj/item/stack/sheet/mineral/plastitanium{
 	amount = 30
 	},
-/obj/item/stack/rods{
-	amount = 50
-	},
+/obj/item/stack/rods/fifty,
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "as" = (
 /turf/open/floor/wood,
@@ -142,22 +142,24 @@
 /area/ruin/powered/syndicate_lava_base)
 "aw" = (
 /obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "ax" = (
 /obj/item/stack/cable_coil/white,
 /obj/item/stack/cable_coil/white,
 /obj/item/stack/packageWrap,
-/obj/item/weapon/hand_labeler,
+/obj/item/hand_labeler,
 /obj/structure/table/reinforced,
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "ay" = (
 /obj/structure/table/wood,
@@ -193,53 +195,51 @@
 /area/ruin/powered/syndicate_lava_base)
 "aA" = (
 /obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "aB" = (
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/glass/fifty,
 /obj/structure/table/reinforced,
-/obj/item/weapon/wrench,
-/turf/open/floor/plasteel/podhatch{
+/obj/item/wrench,
+/obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "aC" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/open/floor/wood{
 	icon_state = "wood-broken4"
 	},
 /area/ruin/powered/syndicate_lava_base)
 "aD" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/box/drinkingglasses,
+/obj/item/storage/box/drinkingglasses,
 /turf/open/floor/wood,
 /area/ruin/powered/syndicate_lava_base)
 "aE" = (
 /obj/structure/table/wood,
 /obj/item/toy/nuke,
-/obj/item/weapon/book/manual/nuclear,
+/obj/item/book/manual/nuclear,
 /turf/open/floor/wood,
 /area/ruin/powered/syndicate_lava_base)
 "aF" = (
 /obj/structure/table/wood,
-/obj/item/weapon/lighter{
+/obj/item/lighter{
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate,
+/obj/item/storage/fancy/cigarettes/cigpack_syndicate,
 /turf/open/floor/wood,
 /area/ruin/powered/syndicate_lava_base)
 "aG" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/wood,
 /area/ruin/powered/syndicate_lava_base)
 "aH" = (
@@ -262,7 +262,7 @@
 "aK" = (
 /obj/structure/closet/crate/bin,
 /obj/item/trash/syndi_cakes,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/powered/syndicate_lava_base)
 "aL" = (
 /obj/structure/chair/stool/bar,
@@ -272,20 +272,20 @@
 /area/ruin/powered/syndicate_lava_base)
 "aM" = (
 /obj/structure/chair/stool/bar,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/powered/syndicate_lava_base)
 "aN" = (
 /obj/structure/table/wood,
-/obj/item/weapon/lipstick/random{
+/obj/item/lipstick/random{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/lipstick/random{
+/obj/item/lipstick/random{
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/item/weapon/lipstick/random,
-/obj/item/weapon/soap/syndie,
+/obj/item/lipstick/random,
+/obj/item/soap/syndie,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -298,7 +298,6 @@
 "aP" = (
 /obj/structure/dresser,
 /obj/structure/mirror{
-	desc = "Mirror mirror on the wall, who is the most robust of them all?";
 	pixel_x = 26
 	},
 /turf/open/floor/plasteel/vault{
@@ -312,20 +311,18 @@
 	},
 /area/ruin/powered/syndicate_lava_base)
 "aR" = (
-/obj/structure/closet/emcloset{
-	anchored = 1
-	},
-/obj/item/weapon/tank/internals/emergency_oxygen/engi,
+/obj/structure/closet/emcloset/anchored,
+/obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/device/flashlight/seclite,
 /obj/item/clothing/mask/gas,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "aS" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -342,15 +339,16 @@
 /area/ruin/powered/syndicate_lava_base)
 "aU" = (
 /obj/structure/closet/emcloset,
-/obj/item/weapon/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/device/flashlight/seclite,
 /obj/item/clothing/mask/gas,
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "aV" = (
 /obj/machinery/door/airlock/hatch{
@@ -372,7 +370,6 @@
 /area/ruin/powered/syndicate_lava_base)
 "aX" = (
 /obj/structure/mirror{
-	desc = "Mirror mirror on the wall, who is the most robust of them all?";
 	pixel_x = 28
 	},
 /obj/structure/sink{
@@ -384,28 +381,29 @@
 	},
 /area/ruin/powered/syndicate_lava_base)
 "aY" = (
-/turf/open/floor/plasteel/podhatch{
-	dir = 8
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "aZ" = (
-/turf/open/floor/plasteel/podhatch{
-	dir = 4
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "ba" = (
-/obj/structure/closet/emcloset{
-	anchored = 1
-	},
-/obj/item/weapon/tank/internals/emergency_oxygen/engi,
+/obj/structure/closet/emcloset/anchored,
+/obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/device/flashlight/seclite,
 /obj/item/clothing/mask/gas,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bb" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/vault{
@@ -419,16 +417,15 @@
 	},
 /area/ruin/powered/syndicate_lava_base)
 "bd" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-21"
 	},
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/powered/syndicate_lava_base)
 "be" = (
 /obj/structure/bookcase/random,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/powered/syndicate_lava_base)
 "bf" = (
 /obj/structure/toilet{
@@ -452,31 +449,34 @@
 /area/ruin/powered/syndicate_lava_base)
 "bh" = (
 /obj/machinery/chem_dispenser,
-/turf/open/floor/plasteel/podhatch{
-	dir = 8
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bi" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/glass/beaker/large,
-/obj/item/weapon/reagent_containers/glass/beaker,
-/obj/item/weapon/reagent_containers/dropper,
-/obj/item/weapon/reagent_containers/syringe,
+/obj/item/reagent_containers/glass/beaker/large,
+/obj/item/reagent_containers/glass/beaker,
+/obj/item/reagent_containers/dropper,
+/obj/item/reagent_containers/syringe,
 /obj/structure/sign/nosmoking_2{
 	pixel_y = 32
 	},
-/obj/item/weapon/reagent_containers/glass/beaker/large,
-/obj/item/weapon/reagent_containers/glass/beaker/large,
-/obj/item/weapon/reagent_containers/glass/beaker/large,
-/turf/open/floor/plasteel/podhatch{
+/obj/item/reagent_containers/glass/beaker/large,
+/obj/item/reagent_containers/glass/beaker/large,
+/obj/item/reagent_containers/glass/beaker/large,
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bj" = (
 /obj/machinery/chem_master,
-/turf/open/floor/plasteel/podhatch{
-	dir = 4
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bk" = (
 /obj/structure/noticeboard{
@@ -493,10 +493,10 @@
 /area/ruin/powered/syndicate_lava_base)
 "bl" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/clipboard,
-/obj/item/weapon/folder/white,
-/obj/item/weapon/book/manual/wiki/chemistry,
-/obj/item/weapon/book/manual/wiki/chemistry,
+/obj/item/clipboard,
+/obj/item/folder/white,
+/obj/item/book/manual/wiki/chemistry,
+/obj/item/book/manual/wiki/chemistry,
 /obj/item/device/assembly/signaler,
 /obj/item/device/assembly/signaler,
 /obj/item/device/assembly/voice,
@@ -510,13 +510,13 @@
 /area/ruin/powered/syndicate_lava_base)
 "bm" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/beakers{
+/obj/item/storage/box/beakers{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/box/syringes,
-/obj/item/weapon/gun/syringe/syndicate,
-/obj/item/weapon/storage/box/beakers,
+/obj/item/storage/box/syringes,
+/obj/item/gun/syringe/syndicate,
+/obj/item/storage/box/beakers,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -525,17 +525,19 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bo" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bp" = (
 /obj/structure/table/reinforced,
@@ -546,7 +548,8 @@
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
-/turf/open/floor/plasteel/podhatch/corner,
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bq" = (
 /obj/structure/reagent_dispensers/virusfood{
@@ -555,41 +558,45 @@
 /obj/structure/table/reinforced,
 /obj/item/device/healthanalyzer,
 /obj/item/stack/sheet/mineral/plasma{
-	amount = 5;
-	layer = 3.1
+	amount = 5
 	},
-/turf/open/floor/plasteel/podhatch,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "br" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 32
 	},
 /obj/machinery/computer/pandemic,
-/turf/open/floor/plasteel/podhatch,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bs" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/beakers{
+/obj/item/storage/box/beakers{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/box/syringes,
+/obj/item/storage/box/syringes,
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plasteel/podhatch,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bt" = (
 /obj/structure/bed/roller,
 /obj/machinery/iv_drip,
-/obj/item/weapon/reagent_containers/blood/random,
-/turf/open/floor/plasteel/podhatch{
+/obj/item/reagent_containers/blood/random,
+/obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bu" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/powered/syndicate_lava_base)
 "bv" = (
@@ -608,8 +615,7 @@
 	},
 /area/ruin/powered/syndicate_lava_base)
 "bx" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -637,21 +643,24 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
 	},
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bC" = (
 /obj/structure/chair/office/dark{
 	dir = 1
 	},
-/turf/open/floor/plasteel/podhatch,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bD" = (
 /obj/structure/closet/crate/bin,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bE" = (
 /turf/open/floor/plasteel/vault,
@@ -679,13 +688,14 @@
 /area/ruin/powered/syndicate_lava_base)
 "bG" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/book/manual/wiki/infections,
+/obj/item/book/manual/wiki/infections,
 /obj/item/stack/sheet/mineral/silver{
 	amount = 10
 	},
-/turf/open/floor/plasteel/podhatch{
-	dir = 4
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bH" = (
 /obj/structure/chair/office/dark{
@@ -700,20 +710,19 @@
 	name = "Monkey Pen";
 	req_access_txt = "150"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/powered/syndicate_lava_base)
 "bJ" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/gun/ballistic/automatic/c20r/toy/unrestricted,
-/obj/item/weapon/gun/ballistic/automatic/c20r/toy/unrestricted,
+/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted/riot,
+/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted/riot,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/ruin/powered/syndicate_lava_base)
 "bK" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -735,9 +744,10 @@
 /area/ruin/powered/syndicate_lava_base)
 "bM" = (
 /obj/machinery/smartfridge/chemistry/virology/preloaded,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bN" = (
 /obj/machinery/vending/toyliberationstation{
@@ -752,39 +762,43 @@
 /area/ruin/powered/syndicate_lava_base)
 "bO" = (
 /obj/machinery/iv_drip,
-/obj/item/weapon/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
 /area/ruin/powered/syndicate_lava_base)
 "bP" = (
 /obj/structure/closet/crate/bin,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bQ" = (
 /obj/structure/chair/office/dark,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bR" = (
 /obj/machinery/chem_heater,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bS" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/glass/beaker/large,
-/obj/item/weapon/reagent_containers/glass/beaker,
-/obj/item/weapon/reagent_containers/dropper,
-/obj/item/weapon/reagent_containers/syringe,
-/obj/item/weapon/reagent_containers/glass/beaker/large,
-/turf/open/floor/plasteel/podhatch{
-	dir = 4
+/obj/item/reagent_containers/glass/beaker/large,
+/obj/item/reagent_containers/glass/beaker,
+/obj/item/reagent_containers/dropper,
+/obj/item/reagent_containers/syringe,
+/obj/item/reagent_containers/glass/beaker/large,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bT" = (
 /obj/structure/chair/office/dark,
@@ -803,7 +817,7 @@
 /area/ruin/powered/syndicate_lava_base)
 "bV" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/folder,
+/obj/item/folder,
 /obj/item/clothing/ears/earmuffs,
 /obj/item/clothing/ears/earmuffs,
 /turf/open/floor/plasteel/vault{
@@ -812,38 +826,41 @@
 /area/ruin/powered/syndicate_lava_base)
 "bW" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/suppressor/specialoffer,
-/obj/item/weapon/gun/ballistic/automatic/toy/pistol/unrestricted,
-/obj/item/weapon/gun/ballistic/automatic/toy/pistol/unrestricted,
+/obj/item/suppressor/specialoffer,
+/obj/item/gun/ballistic/automatic/toy/pistol/unrestricted,
+/obj/item/gun/ballistic/automatic/toy/pistol/unrestricted,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/ruin/powered/syndicate_lava_base)
 "bX" = (
 /obj/machinery/chem_master,
-/turf/open/floor/plasteel/podhatch{
-	dir = 8
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bY" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/glass/beaker/large,
-/obj/item/weapon/reagent_containers/glass/beaker,
-/obj/item/weapon/reagent_containers/dropper,
-/obj/item/weapon/reagent_containers/syringe,
-/obj/item/weapon/reagent_containers/glass/beaker/large,
-/obj/item/weapon/reagent_containers/glass/beaker/large,
-/obj/item/weapon/reagent_containers/glass/beaker/large,
-/turf/open/floor/plasteel/podhatch,
+/obj/item/reagent_containers/glass/beaker/large,
+/obj/item/reagent_containers/glass/beaker,
+/obj/item/reagent_containers/dropper,
+/obj/item/reagent_containers/syringe,
+/obj/item/reagent_containers/glass/beaker/large,
+/obj/item/reagent_containers/glass/beaker/large,
+/obj/item/reagent_containers/glass/beaker/large,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "bZ" = (
 /obj/machinery/chem_dispenser,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 26
 	},
-/turf/open/floor/plasteel/podhatch{
-	dir = 4
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "ca" = (
 /obj/structure/table/reinforced,
@@ -852,9 +869,10 @@
 /obj/item/clothing/head/bio_hood/general,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/science,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "cb" = (
 /obj/machinery/shower{
@@ -873,25 +891,27 @@
 /area/ruin/powered/syndicate_lava_base)
 "cc" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /obj/machinery/light,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "cd" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/folder/white,
+/obj/item/folder/white,
 /obj/item/stack/sheet/mineral/gold{
 	amount = 10
 	},
 /obj/item/stack/sheet/mineral/uranium{
 	amount = 10
 	},
-/turf/open/floor/plasteel/podhatch{
-	dir = 1
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "ce" = (
 /obj/structure/bed/roller,
@@ -950,56 +970,60 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "cm" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "cn" = (
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "co" = (
-/turf/open/floor/plasteel/podhatch/corner{
+/obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "cp" = (
-/turf/open/floor/plasteel/podhatch/corner{
+/obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "cq" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-21"
 	},
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "cr" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/bluecross_2,
 /turf/open/floor/plating,
 /area/ruin/powered/syndicate_lava_base)
 "cs" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/regular{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/regular{
 	pixel_x = -3;
 	pixel_y = -3
 	},
@@ -1021,36 +1045,43 @@
 /obj/item/target/alien,
 /obj/item/target/clown,
 /obj/item/target/clown,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "cv" = (
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "cw" = (
-/turf/open/floor/plasteel/podhatch,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "cx" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -32
 	},
-/turf/open/floor/plasteel/podhatch,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "cy" = (
-/turf/open/floor/plasteel/podhatch/corner{
+/obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "cz" = (
-/turf/open/floor/plasteel/podhatch/corner,
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "cA" = (
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "cB" = (
 /obj/machinery/door/airlock/hatch{
@@ -1064,14 +1095,13 @@
 "cC" = (
 /obj/structure/bed/roller,
 /obj/machinery/iv_drip,
-/obj/item/weapon/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/ruin/powered/syndicate_lava_base)
 "cD" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "lavalandsyndi";
 	name = "Syndicate Research Experimentor Shutters"
@@ -1112,15 +1142,15 @@
 /area/ruin/powered/syndicate_lava_base)
 "cI" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/syndicate,
+/obj/item/storage/toolbox/syndicate,
 /obj/item/device/multitool,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/ruin/powered/syndicate_lava_base)
 "cJ" = (
-/obj/item/weapon/surgicaldrill,
-/obj/item/weapon/circular_saw,
+/obj/item/surgicaldrill,
+/obj/item/circular_saw,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -1144,7 +1174,7 @@
 	pixel_y = 3
 	},
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/toolbox/syndicate,
+/obj/item/storage/toolbox/syndicate,
 /obj/item/stack/cable_coil/white,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -1183,8 +1213,8 @@
 	},
 /area/ruin/powered/syndicate_lava_base)
 "cQ" = (
-/obj/item/weapon/cautery,
-/obj/item/weapon/scalpel,
+/obj/item/cautery,
+/obj/item/scalpel,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -1192,14 +1222,14 @@
 /area/ruin/powered/syndicate_lava_base)
 "cR" = (
 /obj/structure/table/optable,
-/obj/item/weapon/surgical_drapes,
+/obj/item/surgical_drapes,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/ruin/powered/syndicate_lava_base)
 "cS" = (
-/obj/item/weapon/retractor,
-/obj/item/weapon/hemostat,
+/obj/item/retractor,
+/obj/item/hemostat,
 /obj/structure/table/reinforced,
 /obj/machinery/light/small{
 	dir = 4
@@ -1217,7 +1247,7 @@
 	},
 /area/ruin/powered/syndicate_lava_base)
 "cU" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/structure/extinguisher_cabinet{
@@ -1252,7 +1282,7 @@
 /obj/item/device/assembly/signaler,
 /obj/item/device/assembly/voice,
 /obj/item/device/assembly/voice,
-/obj/item/weapon/screwdriver/nuke,
+/obj/item/screwdriver/nuke,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -1279,26 +1309,21 @@
 /area/ruin/powered/syndicate_lava_base)
 "da" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/ruin/powered/syndicate_lava_base)
 "db" = (
 /obj/machinery/computer/message_monitor,
-/obj/item/weapon/paper/monitorkey,
+/obj/item/paper/monitorkey,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/ruin/powered/syndicate_lava_base)
-"dc" = (
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/ruin/powered/syndicate_lava_base)
 "dd" = (
-/obj/effect/baseturf_helper,
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -1327,9 +1352,7 @@
 /obj/item/stack/sheet/mineral/plastitanium{
 	amount = 30
 	},
-/obj/item/stack/rods{
-	amount = 50
-	},
+/obj/item/stack/rods/fifty,
 /obj/structure/table/reinforced,
 /obj/machinery/light{
 	dir = 4
@@ -1361,18 +1384,16 @@
 	},
 /area/ruin/powered/syndicate_lava_base)
 "dk" = (
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/weapon/grenade/chem_grenade,
-/obj/item/weapon/grenade/chem_grenade,
-/obj/item/weapon/grenade/chem_grenade,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/grenade/chem_grenade,
+/obj/item/grenade/chem_grenade,
+/obj/item/grenade/chem_grenade,
 /obj/structure/table/reinforced,
-/obj/item/weapon/grenade/chem_grenade,
-/obj/item/weapon/grenade/chem_grenade/large,
-/obj/item/weapon/grenade/chem_grenade/large,
-/obj/item/weapon/grenade/chem_grenade/large,
-/obj/item/weapon/grenade/chem_grenade/large,
+/obj/item/grenade/chem_grenade,
+/obj/item/grenade/chem_grenade/large,
+/obj/item/grenade/chem_grenade/large,
+/obj/item/grenade/chem_grenade/large,
+/obj/item/grenade/chem_grenade/large,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -1448,386 +1469,6 @@
 	dir = 8
 	},
 /area/ruin/powered/syndicate_lava_base)
-"du" = (
-/obj/structure/sign/securearea{
-	pixel_y = 32
-	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"dv" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dw" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dx" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dy" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dz" = (
-/obj/item/weapon/bombcore/large/underwall,
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dA" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dB" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dC" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dD" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dE" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dF" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dG" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dH" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dI" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dJ" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dK" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dL" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dM" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dN" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dO" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dP" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dQ" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dR" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dS" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dT" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dU" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dV" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dW" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dX" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dY" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"dZ" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"ea" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eb" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"ec" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"ed" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"ee" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"ef" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eg" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eh" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"ei" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"ej" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"ek" = (
-/obj/item/weapon/bombcore/large/underwall,
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"el" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"em" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"en" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eo" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"ep" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eq" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"er" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"es" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"et" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eu" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"ev" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"ew" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"ex" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"ey" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"ez" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eA" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eB" = (
-/obj/item/weapon/bombcore/large/underwall,
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eC" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eD" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eE" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eF" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eG" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eH" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eI" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eJ" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eK" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eL" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eM" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eN" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eO" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eP" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eQ" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eR" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eS" = (
-/obj/item/weapon/bombcore/large/underwall,
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eT" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eU" = (
-/obj/item/weapon/bombcore/large/underwall,
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eV" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eW" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eX" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eY" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"eZ" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fa" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fb" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fc" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fd" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fe" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"ff" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fg" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fh" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fi" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fj" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fk" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fl" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fm" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fn" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fo" = (
-/obj/item/weapon/bombcore/large/underwall,
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fp" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fq" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fr" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fs" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"ft" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fu" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fv" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fw" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fx" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fy" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fz" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fA" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fB" = (
-/obj/machinery/door/airlock/hatch{
-	name = "Syndicate Recon Outpost";
-	req_access_txt = "150"
-	},
-/obj/structure/fans/tiny,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/ruin/powered)
-"fC" = (
-/obj/machinery/door/airlock/hatch{
-	name = "Syndicate Recon Outpost";
-	req_access_txt = "150"
-	},
-/obj/structure/fans/tiny,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/ruin/powered)
-"fD" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fE" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fF" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fG" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fH" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
-"fI" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
 "fJ" = (
 /obj/machinery/light{
 	dir = 8
@@ -1849,7 +1490,7 @@
 	},
 /area/ruin/powered/syndicate_lava_base)
 "fM" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/machinery/light/small,
@@ -1858,12 +1499,6 @@
 	},
 /area/ruin/powered/syndicate_lava_base)
 "fN" = (
-/obj/machinery/light/small,
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/ruin/powered/syndicate_lava_base)
-"fO" = (
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -1890,11 +1525,11 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/powered/syndicate_lava_base)
 "fS" = (
 /obj/machinery/iv_drip,
-/obj/item/weapon/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -1907,25 +1542,21 @@
 	brightness = 3;
 	dir = 8
 	},
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "fU" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "fV" = (
-/obj/machinery/light/small,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/ruin/powered/syndicate_lava_base)
-"fW" = (
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -1935,17 +1566,10 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/area/ruin/powered/syndicate_lava_base)
-"fY" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/plasteel/podhatch{
-	dir = 1
-	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "fZ" = (
 /obj/machinery/light{
@@ -1957,28 +1581,8 @@
 /area/ruin/powered/syndicate_lava_base)
 "ga" = (
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/podhatch,
-/area/ruin/powered/syndicate_lava_base)
-"gb" = (
-/obj/machinery/light/small,
-/turf/open/floor/plasteel/podhatch,
-/area/ruin/powered/syndicate_lava_base)
-"gc" = (
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
-	},
-/turf/open/floor/plasteel/podhatch{
-	dir = 8
-	},
-/area/ruin/powered/syndicate_lava_base)
-"gd" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plasteel/podhatch{
-	dir = 4
-	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/syndicate_lava_base)
 "ge" = (
 /obj/machinery/light{
@@ -1986,42 +1590,11 @@
 	},
 /turf/open/floor/engine,
 /area/ruin/powered/syndicate_lava_base)
-"gf" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/ruin/powered/syndicate_lava_base)
-"gg" = (
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
-	},
-/turf/open/floor/plasteel/podhatch{
-	dir = 8
-	},
-/area/ruin/powered/syndicate_lava_base)
-"gh" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plasteel/podhatch{
-	dir = 4
-	},
-/area/ruin/powered/syndicate_lava_base)
 "gi" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
 /turf/open/floor/circuit/green,
-/area/ruin/powered/syndicate_lava_base)
-"gj" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/engine,
 /area/ruin/powered/syndicate_lava_base)
 "gk" = (
 /obj/machinery/light/small{
@@ -2036,13 +1609,113 @@
 /turf/open/floor/circuit/red,
 /area/ruin/powered/syndicate_lava_base)
 "gm" = (
-/obj/structure/sign/securearea,
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
 "gn" = (
-/obj/structure/sign/securearea,
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered)
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"go" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"gp" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"gq" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"gr" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"gs" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"gt" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"gu" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"gv" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"gw" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"gx" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"gy" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"gz" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"gA" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"gB" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"gC" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
+"gD" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/syndicate_lava_base)
 
 (1,1,1) = {"
 aa
@@ -2348,15 +2021,15 @@ ac
 ab
 ab
 ac
-dv
-dv
-dv
-dv
-dv
-dv
-dz
-dv
-dv
+ad
+ad
+ad
+ad
+ad
+ad
+ae
+ad
+ad
 ac
 ab
 ab
@@ -2374,21 +2047,21 @@ ab
 ab
 ab
 ac
-dv
-dv
-dv
-dv
-dv
-dz
-dv
-dv
-dv
-dv
-dv
-dv
-dz
-dv
-dv
+ad
+ad
+ad
+ad
+ad
+ae
+ad
+ad
+ad
+ad
+ad
+ad
+ae
+ad
+ad
 cG
 ge
 cG
@@ -2396,7 +2069,7 @@ cW
 cG
 ge
 cG
-dv
+ad
 ac
 ab
 ab
@@ -2414,13 +2087,13 @@ ab
 ab
 ab
 ab
-dv
+ad
 aq
 aq
 aq
 aY
 fP
-aY
+gm
 bz
 bJ
 bN
@@ -2436,7 +2109,7 @@ cG
 cG
 cG
 cG
-dv
+ad
 ab
 ab
 ab
@@ -2454,7 +2127,7 @@ ac
 ab
 ab
 ab
-dv
+ad
 aq
 aQ
 aO
@@ -2476,7 +2149,7 @@ cG
 cG
 cG
 cG
-dv
+ad
 ab
 ab
 ab
@@ -2494,13 +2167,13 @@ ab
 ab
 ac
 ac
-dv
+ad
 aq
 fL
 aq
 aZ
 aq
-aZ
+gn
 bz
 bK
 aq
@@ -2516,7 +2189,7 @@ cG
 cG
 cG
 cG
-dv
+ad
 ab
 ab
 ab
@@ -2531,10 +2204,10 @@ ab
 ab
 ab
 ab
-dv
-dv
-dv
-dv
+ad
+ad
+ad
+ad
 ad
 ad
 ad
@@ -2556,7 +2229,7 @@ cG
 cG
 cG
 cG
-dv
+ad
 ac
 ab
 ab
@@ -2571,7 +2244,7 @@ ab
 ab
 ab
 ab
-dv
+ad
 ao
 aw
 aA
@@ -2587,7 +2260,7 @@ fS
 bO
 cf
 cm
-cv
+gm
 ad
 cG
 cG
@@ -2596,7 +2269,7 @@ cG
 cG
 cG
 cG
-dv
+ad
 ac
 ab
 ab
@@ -2611,7 +2284,7 @@ ab
 ab
 ab
 ab
-dv
+ad
 ap
 aq
 ap
@@ -2636,7 +2309,7 @@ cG
 de
 cG
 cG
-dv
+ad
 ac
 ac
 ab
@@ -2651,7 +2324,7 @@ ab
 ab
 ab
 ac
-dv
+ad
 aq
 ap
 aq
@@ -2676,9 +2349,9 @@ cD
 ad
 dj
 ad
-dz
-dv
-dv
+ae
+ad
+ad
 ab
 ab
 ab
@@ -2691,7 +2364,7 @@ ab
 ab
 ab
 ac
-dv
+ad
 ar
 ax
 aB
@@ -2718,7 +2391,7 @@ aq
 cU
 bu
 dt
-dv
+ad
 ab
 ab
 ab
@@ -2730,8 +2403,8 @@ ab
 ab
 ab
 ab
-dv
-dv
+ad
+ad
 ad
 ad
 ad
@@ -2758,7 +2431,7 @@ aq
 aq
 dp
 aO
-dv
+ad
 ab
 ab
 ab
@@ -2770,7 +2443,7 @@ ab
 ab
 ab
 ab
-dv
+ad
 af
 as
 fJ
@@ -2798,7 +2471,7 @@ dk
 aS
 bu
 dt
-dv
+ad
 ab
 ab
 ab
@@ -2810,7 +2483,7 @@ ab
 ab
 ab
 ab
-dv
+ad
 ag
 as
 as
@@ -2838,7 +2511,7 @@ ad
 ad
 ad
 ad
-gm
+cf
 ab
 ab
 ab
@@ -2850,7 +2523,7 @@ ab
 ab
 ab
 ab
-dv
+ad
 ah
 as
 as
@@ -2861,24 +2534,24 @@ ap
 aq
 bg
 bn
-aY
-aY
-aY
+go
+go
+go
 fT
-aY
+go
 co
 cy
-aY
+go
 fT
-aY
-aY
+go
+go
 fT
-aY
-cv
+go
+gm
 dn
 dq
 aO
-fB
+dn
 ab
 ab
 ab
@@ -2890,7 +2563,7 @@ ab
 ab
 ab
 ab
-dz
+ae
 ad
 as
 as
@@ -2901,24 +2574,24 @@ aq
 ap
 bg
 bo
-aZ
-aZ
-aZ
+gp
+gp
+gp
 fU
-aZ
+gp
 cp
 cz
-aZ
+gp
 fU
-aZ
-aZ
+gp
+gp
 fU
-aZ
-cA
+gp
+gn
 dn
 dr
 aO
-fB
+dn
 ab
 ab
 ab
@@ -2930,7 +2603,7 @@ ab
 ab
 ab
 ab
-dv
+ad
 ai
 as
 as
@@ -2954,11 +2627,11 @@ ad
 ad
 ad
 ad
-dv
-dv
-dv
-dv
-gn
+ad
+ad
+ad
+ad
+cf
 ab
 ab
 ab
@@ -2970,7 +2643,7 @@ ab
 ab
 ab
 ab
-dv
+ad
 aj
 as
 fK
@@ -2994,7 +2667,7 @@ aq
 cU
 cZ
 dh
-dz
+ae
 ac
 ac
 ac
@@ -3010,7 +2683,7 @@ ab
 ab
 ab
 ab
-dv
+ad
 ad
 ad
 ad
@@ -3034,7 +2707,7 @@ ap
 ap
 ap
 aq
-dv
+ad
 ac
 ac
 ab
@@ -3050,7 +2723,7 @@ ab
 ab
 ab
 ab
-dv
+ad
 ak
 at
 ay
@@ -3074,11 +2747,11 @@ cM
 cV
 da
 aq
-dv
-dv
-dv
-dv
-dv
+ad
+ad
+ad
+ad
+ad
 ab
 ab
 ab
@@ -3090,7 +2763,7 @@ ab
 ab
 ab
 ab
-dv
+ad
 al
 au
 au
@@ -3118,7 +2791,7 @@ ad
 aq
 gk
 aq
-dv
+ad
 ab
 ab
 ab
@@ -3130,7 +2803,7 @@ ab
 ab
 ab
 ab
-dv
+ad
 ad
 ad
 ae
@@ -3158,7 +2831,7 @@ dl
 do
 ds
 do
-dv
+ad
 ab
 ab
 ab
@@ -3170,7 +2843,7 @@ ab
 ab
 ab
 ab
-dv
+ad
 am
 au
 au
@@ -3187,7 +2860,7 @@ bx
 bx
 ae
 cq
-cA
+gn
 ad
 cI
 cP
@@ -3198,7 +2871,7 @@ ad
 aq
 gl
 aq
-dv
+ad
 ab
 ab
 ab
@@ -3210,7 +2883,7 @@ ab
 ab
 ab
 ab
-dv
+ad
 an
 av
 az
@@ -3235,10 +2908,10 @@ ad
 cF
 ad
 ad
-dv
-dv
-dv
-dv
+ad
+ad
+ad
+ad
 ab
 ab
 ab
@@ -3250,13 +2923,13 @@ ab
 ab
 ab
 ab
-dv
-dv
-dv
-dv
-dv
-dv
-dv
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 aW
 ad
 ad
@@ -3272,10 +2945,10 @@ aq
 cJ
 cQ
 ad
-dc
+aq
 di
 di
-dv
+ad
 ab
 ab
 ab
@@ -3296,7 +2969,7 @@ ac
 ac
 ab
 ac
-dv
+ad
 aX
 bf
 ad
@@ -3315,7 +2988,7 @@ ad
 dd
 di
 dm
-dv
+ad
 ab
 ab
 ab
@@ -3336,10 +3009,10 @@ ab
 ab
 ab
 ab
-dv
-dv
-dv
-dv
+ad
+ad
+ad
+ad
 fQ
 bI
 ap
@@ -3352,10 +3025,10 @@ ct
 cK
 cS
 ad
-dc
+aq
 gi
 di
-dv
+ad
 ac
 ab
 ab
@@ -3379,23 +3052,23 @@ ac
 ab
 ab
 ac
-dv
+ad
 by
 bx
 fR
 bx
 ce
-dv
-dv
-dv
-dv
-dv
-dv
-dv
-dv
-dv
-dv
-dv
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 ac
 ab
 ab
@@ -3419,13 +3092,13 @@ ab
 ab
 ab
 ab
-dv
-dv
-dv
-dv
-dv
-dv
-dv
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 ab
 ab
 ab

@@ -1,8 +1,3 @@
-#define MEESEEKS_MIN_CLONE_DAMAGE	0
-#define MEESEEKS_MAX_CLONE_DAMAGE	90
-#define MEESEEKS_MIN_BRAIN_DAMAGE	0
-#define MEESEEKS_MAX_BRAIN_DAMAGE	180
-
 /datum/species/meeseeks
 	name = "Mr. Meeseeks"
 	id = "meeseeks"
@@ -15,9 +10,9 @@
 	brutemod = 0
 	coldmod = 0
 	heatmod = 0
-	species_traits = list(RESISTHOT,RESISTCOLD,RESISTPRESSURE,RADIMMUNE,NOBREATH,NOBLOOD,NOFIRE,VIRUSIMMUNE,PIERCEIMMUNE,NOTRANSSTING,NOHUNGER,NOCRITDAMAGE,NOZOMBIE,NO_UNDERWEAR,EASYDISMEMBER)
+	species_traits = list(RESISTHOT,RESISTCOLD,RESISTPRESSURE,RADIMMUNE,NOBREATH,NOBLOOD,NOFIRE,VIRUSIMMUNE,PIERCEIMMUNE,NOTRANSSTING,NOHUNGER,NOCRITDAMAGE,NOZOMBIE,NO_UNDERWEAR,EASYDISMEMBER,NO_DNA_COPY)
 	teeth_type = /obj/item/stack/teeth/meeseeks
-	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/meeseeks
+	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/meeseeks
 	damage_overlay_type = ""
 	var/mob/living/carbon/master
 	var/datum/objective/objective
@@ -25,18 +20,23 @@
 
 /datum/species/meeseeks/on_species_gain(mob/living/carbon/human/C)
 	C.draw_hippie_parts()
+	C.maxHealth = INFINITY
+	C.health = C.maxHealth
 	. = ..()
 
 /datum/species/meeseeks/on_species_loss(mob/living/carbon/human/C)
 	C.draw_hippie_parts(TRUE)
+	C.maxHealth = initial(C.maxHealth)
+	C.health = C.maxHealth
 	. = ..()
 
 /datum/species/meeseeks/spec_life(mob/living/carbon/human/H)
+	. = ..()
 	if(!master || master.stat == DEAD)
 		to_chat(H, "<span class='userdanger'>Your master either died, or no longer exists. Your task is complete!</span>")
 		destroy_meeseeks(H, src)
-	H.setCloneLoss(Clamp(round(stage_ticks / 3.5), MEESEEKS_MIN_CLONE_DAMAGE, MEESEEKS_MAX_CLONE_DAMAGE))
-	H.setBrainLoss(Clamp(round(stage_ticks / 1.25), MEESEEKS_MIN_BRAIN_DAMAGE, MEESEEKS_MAX_BRAIN_DAMAGE))
+	H.adjustCloneLoss(0.3)
+	H.adjustBrainLoss(0.8)
 	if(stage_ticks == MEESEEKS_TICKS_STAGE_ONE)
 		H.disabilities |= CLUMSY
 		var/datum/mutation/human/HM = GLOB.mutations_list[SMILE]
@@ -53,7 +53,7 @@
 		if(objective)
 			H.mind.objectives -= objective
 			QDEL_NULL(objective)
-		to_chat(H, "<span class='userdanger'>EXISTANCE IS PAIN TO A MEESEEKS! MAKE SURE YOUR MASTER NEVER HAS ANOTHER PROBLEM AGAIN!</span>")
+		to_chat(H, "<span class='userdanger'>EXISTENCE IS PAIN TO A MEESEEKS! MAKE SURE YOUR MASTER NEVER HAS ANOTHER PROBLEM AGAIN!</span>")
 		var/datum/objective/assassinate/killmaster = new
 		killmaster.target = master
 		killmaster.explanation_text = "Kill [master.name], your master, for sweet release!"
@@ -68,13 +68,11 @@
 		if(SM.objective)
 			SM.objective.completed = TRUE
 	H.Stun(15)
-	for(var/i in H)
-		qdel(i)
 	new /obj/effect/cloud(get_turf(H))
 	H.visible_message("<span class='notice'>[H] disappears into a cloud of smoke!</span>")
-	qdel(H)
 	message_admins("[key_name_admin(H)] has been sent away by a Mr. Meeseeks box.")
 	log_game("[key_name(H)] has been sent away by a Mr. Meeseeks box.")
+	qdel(H)
 
 /datum/species/meeseeks/handle_speech(message)
 	if(copytext(message, 1, 2) != "*")

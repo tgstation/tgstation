@@ -5,10 +5,14 @@
 		play_attack_sound(damage_amount, damage_type, damage_flag)
 	if(!(resistance_flags & INDESTRUCTIBLE) && obj_integrity > 0)
 		damage_amount = run_obj_armor(damage_amount, damage_type, damage_flag, attack_dir)
-		if(damage_amount >= 1)
+		if(damage_amount >= 0.1)
 			. = damage_amount
-			obj_integrity = max(obj_integrity - damage_amount, 0)
+			var/old_integ = obj_integrity
+			obj_integrity = max(old_integ - damage_amount, 0)
 			if(obj_integrity <= 0)
+				var/int_fail = integrity_failure
+				if(int_fail && old_integ > int_fail)
+					obj_break(damage_flag)
 				obj_destruction(damage_flag)
 			else if(integrity_failure)
 				if(obj_integrity <= integrity_failure)
@@ -52,10 +56,12 @@
 		return
 	..() //contents explosion
 	if(target == src)
+		obj_integrity = 0
 		qdel(src)
 		return
 	switch(severity)
 		if(1)
+			obj_integrity = 0
 			qdel(src)
 		if(2)
 			take_damage(rand(100, 250), BRUTE, "bomb", 0)
@@ -142,7 +148,7 @@
 	return take_damage(M.force*3, mech_damtype, "melee", play_soundeffect, get_dir(src, M)) // multiplied by 3 so we can hit objs hard but not be overpowered against mobs.
 
 /obj/singularity_act()
-	ex_act(1)
+	ex_act(EXPLODE_DEVASTATE)
 	if(src && !QDELETED(src))
 		qdel(src)
 	return 2
@@ -214,13 +220,13 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 
 /obj/proc/tesla_act(var/power)
-	being_shocked = 1
+	being_shocked = TRUE
 	var/power_bounced = power / 2
 	tesla_zap(src, 3, power_bounced)
 	addtimer(CALLBACK(src, .proc/reset_shocked), 10)
 
 /obj/proc/reset_shocked()
-	being_shocked = 0
+	being_shocked = FALSE
 
 //the obj is deconstructed into pieces, whether through careful disassembly or when destroyed.
 /obj/proc/deconstruct(disassembled = TRUE)

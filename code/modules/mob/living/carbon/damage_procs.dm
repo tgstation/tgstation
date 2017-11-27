@@ -1,6 +1,6 @@
 
 
-/mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = 0)
+/mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = FALSE)
 	var/hit_percent = (100-blocked)/100
 	if(!damage || hit_percent <= 0)
 		return 0
@@ -36,6 +36,8 @@
 			adjustCloneLoss(damage * hit_percent)
 		if(STAMINA)
 			adjustStaminaLoss(damage * hit_percent)
+		if(BRAIN)
+			adjustBrainLoss(damage * hit_percent)
 	return 1
 
 

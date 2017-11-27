@@ -7,7 +7,7 @@
 	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 20
 	active_power_usage = 100
-	circuit = /obj/item/weapon/circuitboard/computer/powermonitor
+	circuit = /obj/item/circuitboard/computer/powermonitor
 
 	var/obj/structure/cable/attached
 
@@ -16,8 +16,8 @@
 	var/record_interval = 50
 	var/next_record = 0
 
-/obj/machinery/computer/monitor/New()
-	..()
+/obj/machinery/computer/monitor/Initialize()
+	. = ..()
 	search()
 	history["supply"] = list()
 	history["demand"] = list()
@@ -50,7 +50,7 @@
 		if(demand.len > record_size)
 			demand.Cut(1, 2)
 
-/obj/machinery/computer/monitor/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/obj/machinery/computer/monitor/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -66,8 +66,8 @@
 	data["areas"] = list()
 
 	if(attached)
-		data["supply"] = attached.powernet.viewavail
-		data["demand"] = attached.powernet.viewload
+		data["supply"] = DisplayPower(attached.powernet.viewavail)
+		data["demand"] = DisplayPower(attached.powernet.viewload)
 		for(var/obj/machinery/power/terminal/term in attached.powernet.nodes)
 			var/obj/machinery/power/apc/A = term.master
 			if(istype(A))
@@ -79,7 +79,7 @@
 				data["areas"] += list(list(
 					"name" = A.area.name,
 					"charge" = cell_charge,
-					"load" = A.lastused_total,
+					"load" = DisplayPower(A.lastused_total),
 					"charging" = A.charging,
 					"eqp" = A.equipment,
 					"lgt" = A.lighting,

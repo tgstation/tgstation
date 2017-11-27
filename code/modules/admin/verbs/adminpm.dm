@@ -11,7 +11,7 @@
 	if( !ismob(M) || !M.client )
 		return
 	cmd_admin_pm(M.client,null)
-	SSblackbox.add_details("admin_verb","Admin PM Mob") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin PM Mob") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 //shows a list of clients we could send PMs to, then forwards our choice to cmd_admin_pm
 /client/proc/cmd_admin_pm_panel()
@@ -33,7 +33,7 @@
 			targets["(No Mob) - [T]"] = T
 	var/target = input(src,"To whom shall we send a message?","Admin PM",null) as null|anything in sortList(targets)
 	cmd_admin_pm(targets[target],null)
-	SSblackbox.add_details("admin_verb","Admin PM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin PM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_ahelp_reply(whom)
 	if(prefs.muted & MUTE_ADMINHELP)
@@ -44,7 +44,7 @@
 		if(cmptext(copytext(whom,1,2),"@"))
 			whom = findStealthKey(whom)
 		C = GLOB.directory[whom]
-	else if(istype(whom,/client))
+	else if(istype(whom, /client))
 		C = whom
 	if(!C)
 		if(holder)
@@ -82,7 +82,7 @@
 			irc = 1
 		else
 			recipient = GLOB.directory[whom]
-	else if(istype(whom,/client))
+	else if(istype(whom, /client))
 		recipient = whom
 	
 
@@ -131,7 +131,7 @@
 
 	//clean the message if it's not sent by a high-rank admin
 	if(!check_rights(R_SERVER|R_DEBUG,0)||irc)//no sending html to the poor bots
-		msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
+		msg = trim(sanitize(copytext(msg,1,MAX_MESSAGE_LEN)))
 		if(!msg)
 			return
 
@@ -167,7 +167,7 @@
 
 			//play the recieving admin the adminhelp sound (if they have them enabled)
 			if(recipient.prefs.toggles & SOUND_ADMINHELP)
-				recipient << 'sound/effects/adminhelp.ogg'
+				SEND_SOUND(recipient, sound('sound/effects/adminhelp.ogg'))
 
 		else
 			if(holder)	//sender is an admin but recipient is not. Do BIG RED TEXT
@@ -182,10 +182,10 @@
 				admin_ticket_log(recipient, "<font color='blue'>PM From [key_name_admin(src)]: [keywordparsedmsg]</font>")
 
 				//always play non-admin recipients the adminhelp sound
-				recipient << 'sound/effects/adminhelp.ogg'
+				SEND_SOUND(recipient, sound('sound/effects/adminhelp.ogg'))
 
 				//AdminPM popup for ApocStation and anybody else who wants to use it. Set it with POPUP_ADMIN_PM in config.txt ~Carn
-				if(config.popup_admin_pm)
+				if(CONFIG_GET(flag/popup_admin_pm))
 					spawn()	//so we don't hold the caller proc up
 						var/sender = src
 						var/sendername = key
@@ -281,7 +281,7 @@
 		return "Error: Ticket could not be found"
 
 	var/static/stealthkey
-	var/adminname = config.showircname ? irc_tagged : "Administrator"
+	var/adminname = CONFIG_GET(flag/show_irc_name) ? irc_tagged : "Administrator"
 
 	if(!C)
 		return "Error: No client"
@@ -305,7 +305,7 @@
 
 	window_flash(C, ignorepref = TRUE)
 	//always play non-admin recipients the adminhelp sound
-	C << 'sound/effects/adminhelp.ogg'
+	SEND_SOUND(C, 'sound/effects/adminhelp.ogg')
 
 	C.ircreplyamount = IRCREPLYCOUNT
 

@@ -18,6 +18,7 @@
 	name = "Asteroid 1"
 	description = "I-spy with my little eye, something beginning with R."
 
+
 /datum/map_template/ruin/space/asteroid2
 	id = "asteroid2"
 	suffix = "asteroid2.dmm"
@@ -82,7 +83,7 @@
 	id = "derelict4"
 	suffix = "derelict4.dmm"
 	name = "Derelict 4"
-	description = "Centcom ferries have never crashed, will never crash, there is no current investigation into a crashed ferry, and we will not let Internal Affairs trample over high security \
+	description = "CentCom ferries have never crashed, will never crash, there is no current investigation into a crashed ferry, and we will not let Internal Affairs trample over high security \
 	information in the name of this baseless witchhunt."
 
 /datum/map_template/ruin/space/derelict5
@@ -147,7 +148,7 @@
 	id = "spacehotel"
 	suffix = "spacehotel.dmm"
 	name = "The Twin-Nexus Hotel"
-	description = "A interstellar hotel, where the weary spaceman can rest their head and relax, assured that the residental staff will not murder them in their sleep. Probably."
+	description = "An interstellar hotel, where the weary spaceman can rest their head and relax, assured that the residental staff will not murder them in their sleep. Probably."
 
 /datum/map_template/ruin/space/turreted_outpost
 	id = "turreted-outpost"
@@ -248,3 +249,16 @@
 	suffix = "miracle.dmm"
 	name = "Ordinary Space Tile"
 	description = "Absolutely nothing strange going on here please move along, plenty more space to see right this way!"
+
+/datum/map_template/ruin/space/gondoland
+	id = "gondolaasteroid"
+	suffix = "gondolaasteroid.dmm"
+	name = "Gondoland"
+	description = "Just an ordinary rock- wait, what's that thing?"
+
+/datum/map_template/ruin/space/whiteshipruin_box
+	id = "whiteshipruin_box"
+	suffix = "whiteshipruin_box.dmm"
+	name = "NT Medical Ship"
+	description = "An ancient ship, said to be among the first discovered derelicts near Space Station 13 that was still in working order. \
+	Aged and deprecated by time, this relic of a vessel is now broken beyond repair."

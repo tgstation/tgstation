@@ -50,7 +50,7 @@
 /obj/machinery/computer/holodeck/LateInitialize()
 	if(ispath(holodeck_type, /area))
 		linked = pop(get_areas(holodeck_type, FALSE))
-	if(ispath(offline_program,/area))
+	if(ispath(offline_program, /area))
 		offline_program = pop(get_areas(offline_program), FALSE)
 	// the following is necessary for power reasons
 	if(!linked || !offline_program)
@@ -135,7 +135,7 @@
 		for(var/turf/T in linked)
 			if(prob(30))
 				do_sparks(2, 1, T)
-			T.ex_act(3)
+			T.ex_act(EXPLODE_LIGHT)
 			T.hotspot_expose(1000,500,1)
 
 	if(!emagged)
@@ -154,7 +154,7 @@
 	if(!LAZYLEN(emag_programs))
 		to_chat(user, "[src] does not seem to have a card swipe port. It must be an inferior model.")
 		return
-	playsound(src, 'sound/effects/sparks4.ogg', 75, 1)
+	playsound(src, "sparks", 75, 1)
 	emagged = TRUE
 	to_chat(user, "<span class='warning'>You vastly increase projector power and override the safety and security protocols.</span>")
 	to_chat(user, "Warning.  Automatic shutoff and derezing protocols have been corrupted.  Please call Nanotrasen maintenance and do not use the simulator.")
@@ -176,7 +176,7 @@
 /obj/machinery/computer/holodeck/proc/generate_program_list()
 	for(var/typekey in subtypesof(program_type))
 		var/area/holodeck/A = locate(typekey) in GLOB.sortedAreas
-		if(!A || A == offline_program || !A.contents.len)
+		if(!A || !A.contents.len)
 			continue
 		var/list/info_this = list()
 		info_this["name"] = A.name
@@ -247,9 +247,9 @@
 	// this is an exercise left to others I'm afraid.  -Sayu
 	spawned = A.copy_contents_to(linked, 1, nerf_weapons = !emagged)
 	for(var/obj/machinery/M in spawned)
-		M.flags |= NODECONSTRUCT
+		M.flags_1 |= NODECONSTRUCT_1
 	for(var/obj/structure/S in spawned)
-		S.flags |= NODECONSTRUCT
+		S.flags_1 |= NODECONSTRUCT_1
 	effects = list()
 
 	addtimer(CALLBACK(src, .proc/finish_spawn), 30)
@@ -264,9 +264,9 @@
 			spawned += x // holocarp are not forever
 			added += x
 	for(var/obj/machinery/M in added)
-		M.flags |= NODECONSTRUCT
+		M.flags_1 |= NODECONSTRUCT_1
 	for(var/obj/structure/S in added)
-		S.flags |= NODECONSTRUCT
+		S.flags_1 |= NODECONSTRUCT_1
 
 /obj/machinery/computer/holodeck/proc/derez(obj/O, silent = TRUE, forced = FALSE)
 	// Emagging a machine creates an anomaly in the derez systems.

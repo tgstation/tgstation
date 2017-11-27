@@ -21,17 +21,17 @@
 /mob/living/simple_animal/hostile/guardian/fire/AttackingTarget()
 	. = ..()
 	if(. && ishuman(target) && target != summoner)
-		new /obj/effect/hallucination/delusion(target.loc,target,"custom",200,0, icon_state,icon)
+		new /datum/hallucination/delusion(target,TRUE,"custom",200,0, icon_state,icon)
 
 /mob/living/simple_animal/hostile/guardian/fire/Crossed(AM as mob|obj)
 	..()
 	collision_ignite(AM)
 
-/mob/living/simple_animal/hostile/guardian/fire/Bumped(AM as mob|obj)
+/mob/living/simple_animal/hostile/guardian/fire/CollidedWith(atom/movable/AM)
 	..()
 	collision_ignite(AM)
 
-/mob/living/simple_animal/hostile/guardian/fire/Bump(AM as mob|obj)
+/mob/living/simple_animal/hostile/guardian/fire/Collide(AM as mob|obj)
 	..()
 	collision_ignite(AM)
 

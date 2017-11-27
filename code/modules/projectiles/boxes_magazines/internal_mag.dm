@@ -156,9 +156,9 @@
 	max_ammo = 6
 	multiload = 0
 
-/obj/item/ammo_box/magazine/internal/rus357/New()
+/obj/item/ammo_box/magazine/internal/rus357/Initialize()
 	stored_ammo += new ammo_type(src)
-	..()
+	. = ..()
 
 /obj/item/ammo_box/magazine/internal/boltaction
 	name = "bolt action rifle internal magazine"
@@ -188,10 +188,3 @@
 	ammo_type = /obj/item/ammo_casing/caseless/laser/gatling
 	caliber = "gatling"
 	max_ammo = 5000
-
-
-/obj/item/ammo_box/magazine/internal/bow
-	name = "bow internal magazine"
-	ammo_type = /obj/item/ammo_casing/caseless/arrow
-	caliber = "arrow"
-	max_ammo = 1

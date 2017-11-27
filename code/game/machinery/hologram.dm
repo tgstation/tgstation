@@ -33,14 +33,14 @@ Possible to do for anyone motivated enough:
 	desc = "It's a floor-mounted device for projecting holographic images."
 	icon_state = "holopad0"
 	layer = LOW_OBJ_LAYER
-	flags = HEAR
-	anchored = 1
+	flags_1 = HEAR_1
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100
-	obj_integrity = 300
 	max_integrity = 300
 	armor = list(melee = 50, bullet = 20, laser = 20, energy = 20, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 0)
+	circuit = /obj/item/circuitboard/machine/holopad
 	var/list/masters = list()//List of living mobs that use the holopad
 	var/last_request = 0 //to prevent request spam. ~Carn
 	var/holo_range = 5 // Change to change how far the AI can move away from the holopad before deactivating.
@@ -52,8 +52,6 @@ Possible to do for anyone motivated enough:
 
 /obj/machinery/holopad/Initialize()
 	. = ..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/holopad(null)
-	B.apply_default_parts(src)
 	holopads += src
 
 /obj/machinery/holopad/Destroy()
@@ -84,7 +82,7 @@ Possible to do for anyone motivated enough:
 
 /obj/machinery/holopad/RefreshParts()
 	var/holograph_range = 4
-	for(var/obj/item/weapon/stock_parts/capacitor/B in component_parts)
+	for(var/obj/item/stock_parts/capacitor/B in component_parts)
 		holograph_range += 1 * B.rating
 	holo_range = holograph_range
 
@@ -122,8 +120,8 @@ Possible to do for anyone motivated enough:
 	if(temp)
 		dat = temp
 	else
-		dat = "<a href='?src=\ref[src];AIrequest=1'>Request an AI's presence.</a><br>"
-		dat += "<a href='?src=\ref[src];Holocall=1'>Call another holopad.</a><br>"
+		dat = "<a href='?src=[REF(src)];AIrequest=1'>Request an AI's presence.</a><br>"
+		dat += "<a href='?src=[REF(src)];Holocall=1'>Call another holopad.</a><br>"
 
 		if(LAZYLEN(holo_calls))
 			dat += "=====================================================<br>"
@@ -133,7 +131,7 @@ Possible to do for anyone motivated enough:
 		for(var/I in holo_calls)
 			var/datum/holocall/HC = I
 			if(HC.connected_holopad != src)
-				dat += "<a href='?src=\ref[src];connectcall=\ref[HC]'>Answer call from [get_area(HC.calling_holopad)].</a><br>"
+				dat += "<a href='?src=[REF(src)];connectcall=[REF(HC)]'>Answer call from [get_area(HC.calling_holopad)].</a><br>"
 				one_unanswered_call = TRUE
 			else
 				one_answered_call = TRUE
@@ -144,7 +142,7 @@ Possible to do for anyone motivated enough:
 		for(var/I in holo_calls)
 			var/datum/holocall/HC = I
 			if(HC.connected_holopad == src)
-				dat += "<a href='?src=\ref[src];disconnectcall=\ref[HC]'>Disconnect call from [HC.user].</a><br>"
+				dat += "<a href='?src=[REF(src)];disconnectcall=[REF(HC)]'>Disconnect call from [HC.user].</a><br>"
 
 
 	var/datum/browser/popup = new(user, "holopad", name, 300, 130)
@@ -168,22 +166,22 @@ Possible to do for anyone motivated enough:
 		if(last_request + 200 < world.time)
 			last_request = world.time
 			temp = "You requested an AI's presence.<BR>"
-			temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
+			temp += "<A href='?src=[REF(src)];mainmenu=1'>Main Menu</A>"
 			var/area/area = get_area(src)
 			for(var/mob/living/silicon/ai/AI in GLOB.silicon_mobs)
 				if(!AI.client)
 					continue
-				to_chat(AI, "<span class='info'>Your presence is requested at <a href='?src=\ref[AI];jumptoholopad=\ref[src]'>\the [area]</a>.</span>")
+				to_chat(AI, "<span class='info'>Your presence is requested at <a href='?src=[REF(AI)];jumptoholopad=[REF(src)]'>\the [area]</a>.</span>")
 		else
 			temp = "A request for AI presence was already sent recently.<BR>"
-			temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
+			temp += "<A href='?src=[REF(src)];mainmenu=1'>Main Menu</A>"
 
 	else if(href_list["Holocall"])
 		if(outgoing_call)
 			return
 
 		temp = "You must stand on the holopad to make a call!<br>"
-		temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
+		temp += "<A href='?src=[REF(src)];mainmenu=1'>Main Menu</A>"
 		if(usr.loc == loc)
 			var/list/callnames = list()
 			for(var/I in holopads)
@@ -198,7 +196,7 @@ Possible to do for anyone motivated enough:
 
 			if(usr.loc == loc)
 				temp = "Dialing...<br>"
-				temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
+				temp += "<A href='?src=[REF(src)];mainmenu=1'>Main Menu</A>"
 				new /datum/holocall(usr, src, callnames[result])
 
 	else if(href_list["connectcall"])
@@ -294,9 +292,9 @@ Possible to do for anyone motivated enough:
 			Hologram.Impersonation = user
 
 		Hologram.copy_known_languages_from(user,replace = TRUE)
-		Hologram.mouse_opacity = 0//So you can't click on it.
+		Hologram.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
 		Hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
-		Hologram.anchored = 1//So space wind cannot drag it.
+		Hologram.anchored = TRUE//So space wind cannot drag it.
 		Hologram.name = "[user.name] (Hologram)"//If someone decides to right click.
 		Hologram.set_light(2)	//hologram lighting
 
@@ -384,12 +382,6 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if(Impersonation)
 		return Impersonation.examine(user)
 	return ..()
-
-/obj/item/weapon/circuitboard/machine/holopad
-	name = "AI Holopad (Machine Board)"
-	build_path = /obj/machinery/holopad
-	origin_tech = "programming=1"
-	req_components = list(/obj/item/weapon/stock_parts/capacitor = 1)
 
 #undef HOLOPAD_PASSIVE_POWER_USAGE
 #undef HOLOGRAM_POWER_USAGE

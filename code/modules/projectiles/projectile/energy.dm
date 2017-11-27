@@ -4,6 +4,7 @@
 	damage = 0
 	damage_type = BURN
 	flag = "energy"
+	is_reflectable = TRUE
 
 /obj/item/projectile/energy/chameleon
 	nodamage = TRUE
@@ -19,7 +20,7 @@
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 7
 
-/obj/item/projectile/energy/electrode/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/energy/electrode/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(!ismob(target) || blocked >= 100) //Fully blocked by mob or collided with dense object - burst into sparks!
 		do_sparks(1, TRUE, src)
@@ -46,7 +47,7 @@
 	. = ..()
 	SpinAnimation()
 
-/obj/item/projectile/energy/net/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/energy/net/on_hit(atom/target, blocked = FALSE)
 	if(isliving(target))
 		var/turf/Tloc = get_turf(target)
 		if(!locate(/obj/effect/nettingportal) in Tloc)
@@ -63,7 +64,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "dragnetfield"
 	light_range = 3
-	anchored = 1
+	anchored = TRUE
 
 /obj/effect/nettingportal/Initialize()
 	. = ..()
@@ -85,6 +86,12 @@
 
 	qdel(src)
 
+/obj/effect/nettingportal/singularity_act()
+	return
+
+/obj/effect/nettingportal/singularity_pull()
+	return
+
 
 /obj/item/projectile/energy/trap
 	name = "energy snare"
@@ -94,16 +101,16 @@
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 4
 
-/obj/item/projectile/energy/trap/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/energy/trap/on_hit(atom/target, blocked = FALSE)
 	if(!ismob(target) || blocked >= 100) //Fully blocked by mob or collided with dense object - drop a trap
-		new/obj/item/weapon/restraints/legcuffs/beartrap/energy(get_turf(loc))
+		new/obj/item/restraints/legcuffs/beartrap/energy(get_turf(loc))
 	else if(iscarbon(target))
-		var/obj/item/weapon/restraints/legcuffs/beartrap/B = new /obj/item/weapon/restraints/legcuffs/beartrap/energy(get_turf(target))
+		var/obj/item/restraints/legcuffs/beartrap/B = new /obj/item/restraints/legcuffs/beartrap/energy(get_turf(target))
 		B.Crossed(target)
 	..()
 
 /obj/item/projectile/energy/trap/on_range()
-	new /obj/item/weapon/restraints/legcuffs/beartrap/energy(loc)
+	new /obj/item/restraints/legcuffs/beartrap/energy(loc)
 	..()
 
 /obj/item/projectile/energy/trap/cyborg
@@ -114,12 +121,12 @@
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 10
 
-/obj/item/projectile/energy/trap/cyborg/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/energy/trap/cyborg/on_hit(atom/target, blocked = FALSE)
 	if(!ismob(target) || blocked >= 100)
 		do_sparks(1, TRUE, src)
 		qdel(src)
 	if(iscarbon(target))
-		var/obj/item/weapon/restraints/legcuffs/beartrap/B = new /obj/item/weapon/restraints/legcuffs/beartrap/energy/cyborg(get_turf(target))
+		var/obj/item/restraints/legcuffs/beartrap/B = new /obj/item/restraints/legcuffs/beartrap/energy/cyborg(get_turf(target))
 		B.Crossed(target)
 	QDEL_IN(src, 10)
 	..()

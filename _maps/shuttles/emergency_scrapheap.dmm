@@ -1,13 +1,12 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ab" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "ac" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ad" = (
@@ -35,7 +34,9 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "ai" = (
-/obj/machinery/computer/atmos_alert,
+/obj/machinery/computer/atmos_alert{
+	dir = 4
+	},
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "aj" = (
@@ -58,7 +59,9 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "am" = (
-/obj/machinery/computer/crew,
+/obj/machinery/computer/crew{
+	dir = 4
+	},
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "an" = (
@@ -170,8 +173,8 @@
 	pixel_y = -30
 	},
 /obj/structure/table,
-/obj/item/weapon/extinguisher,
-/obj/item/weapon/crowbar,
+/obj/item/extinguisher,
+/obj/item/crowbar,
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "aE" = (
@@ -181,7 +184,7 @@
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "aF" = (
-/obj/item/weapon/twohanded/required/kirbyplants/random,
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aG" = (
@@ -190,7 +193,7 @@
 /area/shuttle/escape)
 "aH" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aI" = (
@@ -260,7 +263,7 @@
 /area/shuttle/escape)
 "aS" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/firstaid/fire,
+/obj/item/storage/firstaid/fire,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aT" = (

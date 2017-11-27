@@ -42,18 +42,21 @@
 			for(var/X in adminslist)
 				var/client/C = X
 				if(!C.holder.fakekey)
-					Lines += "\t <font color='#FF0000'>[C.key]</font>[show_info(C)] ([round(C.avgping, 1)]ms)"
+					Lines += "\t <font color='#FF0000'>[C.key]</font>[show_admin_info(C)] ([round(C.avgping, 1)]ms)"
 		if(mentorslist.len)
 			Lines += "<b>Mentors:</b>"
 			for(var/X in mentorslist)
 				var/client/C = X
-				Lines += "\t <font color='#0033CC'>[C.key]</font>[show_info(C)] ([round(C.avgping, 1)]ms)"
+				Lines += "\t <font color='#0033CC'>[C.key]</font>[show_admin_info(C)] ([round(C.avgping, 1)]ms)"
 
 	Lines += "<b>Players:</b>"
 	for(var/X in sortList(GLOB.clients))
 		var/client/C = X
 		if(!check_rights_for(C, R_MENTOR) || C.holder.fakekey)
-			Lines += "\t [C.key][show_info(C)] ([round(C.avgping, 1)]ms)"
+			var/key = C.key
+			if(C.holder && C.holder.fakekey)
+				key = C.holder.fakekey
+			Lines += "\t [key][show_admin_info(C)] ([round(C.avgping, 1)]ms)"
 
 	for(var/line in Lines)
 		msg += "[line]\n"
@@ -61,7 +64,7 @@
 	msg += "<b>Total Players: [length(GLOB.clients)]</b>"
 	to_chat(src, msg)
 
-/client/proc/show_info(var/client/C)
+/client/proc/show_admin_info(var/client/C)
 	if(!C)
 		return ""
 

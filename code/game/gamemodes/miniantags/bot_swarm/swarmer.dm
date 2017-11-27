@@ -4,8 +4,7 @@
 	desc = "A shell of swarmer that was completely powered down. It can no longer activate itself."
 	icon = 'icons/mob/swarmer.dmi'
 	icon_state = "swarmer_unactivated"
-	origin_tech = "bluespace=4;materials=4;programming=7"
-	materials = list(MAT_METAL = 10000, MAT_GLASS = 4000)
+	materials = list(MAT_METAL=10000, MAT_GLASS=4000)
 
 /obj/effect/mob_spawn/swarmer
 	name = "unactivated swarmer"
@@ -29,11 +28,17 @@
 	3. Biological resources will be harvested at a later date; do not harm them.
 	"}
 
+/obj/effect/mob_spawn/swarmer/Initialize()
+	. = ..()
+	var/area/A = get_area(src)
+	if(A)
+		notify_ghosts("A swarmer shell has been created in [A.name].", 'sound/effects/bin_close.ogg', source = src, action = NOTIFY_ATTACK, flashwindow = FALSE)
+
 /obj/effect/mob_spawn/swarmer/attack_hand(mob/living/user)
 	to_chat(user, "<span class='notice'>Picking up the swarmer may cause it to activate. You should be careful about this.</span>")
 
-/obj/effect/mob_spawn/swarmer/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/screwdriver) && user.a_intent != INTENT_HARM)
+/obj/effect/mob_spawn/swarmer/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/screwdriver) && user.a_intent != INTENT_HARM)
 		user.visible_message("<span class='warning'>[usr.name] deactivates [src].</span>",
 			"<span class='notice'>After some fiddling, you find a way to disable [src]'s power source.</span>",
 			"<span class='italics'>You hear clicking.</span>")
@@ -85,7 +90,7 @@
 	projectiletype = /obj/item/projectile/beam/disabler
 	ranged_cooldown_time = 20
 	projectilesound = 'sound/weapons/taser2.ogg'
-	loot = list(/obj/effect/decal/cleanable/robot_debris, /obj/item/weapon/ore/bluespace_crystal)
+	loot = list(/obj/effect/decal/cleanable/robot_debris, /obj/item/ore/bluespace_crystal)
 	del_on_death = 1
 	deathmessage = "explodes with a sharp pop!"
 	light_color = LIGHT_COLOR_CYAN
@@ -185,7 +190,7 @@
 		return 1
 	return ..()
 
-/obj/item/weapon/gun/swarmer_act()//Stops you from eating the entire armory
+/obj/item/gun/swarmer_act()//Stops you from eating the entire armory
 	return FALSE
 
 /obj/item/clockwork/alloy_shards/IntegrateAmount()
@@ -229,7 +234,7 @@
 /obj/structure/flora/swarmer_act()
 	return FALSE
 
-/turf/open/floor/plating/lava/swarmer_act()
+/turf/open/lava/swarmer_act()
 	if(!is_safe())
 		new /obj/structure/lattice/catwalk/swarmer_catwalk(src)
 	return FALSE
@@ -251,8 +256,13 @@
 /obj/machinery/door/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	var/isonshuttle = istype(get_area(src), /area/shuttle)
 	for(var/turf/T in range(1, src))
-		if(isspaceturf(T) || (!isonshuttle && (istype(T.loc, /area/shuttle) || istype(T.loc, /area/space))) || (isonshuttle && !istype(T.loc, /area/shuttle)))
+		var/area/A = get_area(T)
+		if(isspaceturf(T) || (!isonshuttle && (istype(A, /area/shuttle) || istype(A, /area/space))) || (isonshuttle && !istype(A, /area/shuttle)))
 			to_chat(S, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
+			S.target = null
+			return FALSE
+		else if(istype(A, /area/engine/supermatter))
+			to_chat(S, "<span class='warning'>Disrupting the containment of a supermatter crystal would not be to our benefit. Aborting.</span>")
 			S.target = null
 			return FALSE
 	S.DisIntegrate(src)
@@ -295,10 +305,6 @@
 	to_chat(S, "<span class='warning'>This device is attempting to corrupt our entire network; attempting to interact with it is too risky. Aborting.</span>")
 	return FALSE
 
-/obj/effect/decal/cleanable/crayon/gang/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	to_chat(S, "<span class='warning'>Searching... sensor malfunction! Target lost. Aborting.</span>")
-	return FALSE
-
 /obj/effect/rune/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	to_chat(S, "<span class='warning'>Searching... sensor malfunction! Target lost. Aborting.</span>")
 	return FALSE
@@ -338,8 +344,13 @@
 /turf/closed/wall/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	var/isonshuttle = istype(loc, /area/shuttle)
 	for(var/turf/T in range(1, src))
-		if(isspaceturf(T) || (!isonshuttle && (istype(T.loc, /area/shuttle) || istype(T.loc, /area/space))) || (isonshuttle && !istype(T.loc, /area/shuttle)))
+		var/area/A = get_area(T)
+		if(isspaceturf(T) || (!isonshuttle && (istype(A, /area/shuttle) || istype(A, /area/space))) || (isonshuttle && !istype(A, /area/shuttle)))
 			to_chat(S, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
+			S.target = null
+			return TRUE
+		else if(istype(A, /area/engine/supermatter))
+			to_chat(S, "<span class='warning'>Disrupting the containment of a supermatter crystal would not be to our benefit. Aborting.</span>")
 			S.target = null
 			return TRUE
 	return ..()
@@ -347,8 +358,13 @@
 /obj/structure/window/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	var/isonshuttle = istype(get_area(src), /area/shuttle)
 	for(var/turf/T in range(1, src))
-		if(isspaceturf(T) || (!isonshuttle && (istype(T.loc, /area/shuttle) || istype(T.loc, /area/space))) || (isonshuttle && !istype(T.loc, /area/shuttle)))
+		var/area/A = get_area(T)
+		if(isspaceturf(T) || (!isonshuttle && (istype(A, /area/shuttle) || istype(A, /area/space))) || (isonshuttle && !istype(A, /area/shuttle)))
 			to_chat(S, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
+			S.target = null
+			return TRUE
+		else if(istype(A, /area/engine/supermatter))
+			to_chat(S, "<span class='warning'>Disrupting the containment of a supermatter crystal would not be to our benefit. Aborting.</span>")
 			S.target = null
 			return TRUE
 	return ..()
@@ -434,14 +450,14 @@
 	new /obj/effect/temp_visual/swarmer/disintegration(get_turf(target))
 	do_attack_animation(target)
 	changeNext_move(CLICK_CD_MELEE)
-	target.ex_act(3)
+	target.ex_act(EXPLODE_LIGHT)
 
 
 /mob/living/simple_animal/hostile/swarmer/proc/DisperseTarget(mob/living/target)
 	if(target == src)
 		return
 
-	if(z != ZLEVEL_STATION && z != ZLEVEL_LAVALAND)
+	if(!(z in GLOB.station_z_levels) && z != ZLEVEL_LAVALAND)
 		to_chat(src, "<span class='warning'>Our bluespace transceiver cannot locate a viable bluespace link, our teleportation abilities are useless in this area.</span>")
 		return
 
@@ -451,11 +467,8 @@
 		return
 
 	var/turf/open/floor/F
-	switch(z) //Only the station/lavaland
-		if(ZLEVEL_STATION)
-			F =find_safe_turf(zlevels = ZLEVEL_STATION, extended_safety_checks = TRUE)
-		if(ZLEVEL_LAVALAND)
-			F = find_safe_turf(zlevels = ZLEVEL_LAVALAND, extended_safety_checks = TRUE)
+	F = find_safe_turf(zlevels = z, extended_safety_checks = TRUE)
+
 	if(!F)
 		return
 	// If we're getting rid of a human, slap some energy cuffs on
@@ -463,7 +476,7 @@
 
 	var/mob/living/carbon/human/H = target
 	if(ishuman(target) && (!H.handcuffed))
-		H.handcuffed = new /obj/item/weapon/restraints/handcuffs/energy/used(H)
+		H.handcuffed = new /obj/item/restraints/handcuffs/energy/used(H)
 		H.update_handcuffed()
 		add_logs(src, H, "handcuffed")
 
@@ -485,7 +498,7 @@
 		var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/metal(target.loc)
 		M.amount = 5
 		for(var/obj/item/I in target.component_parts)
-			I.loc = M.loc
+			I.forceMove(M.drop_location())
 		var/obj/effect/temp_visual/swarmer/disintegration/N = new /obj/effect/temp_visual/swarmer/disintegration(get_turf(target))
 		N.pixel_x = target.pixel_x
 		N.pixel_y = target.pixel_y
@@ -494,7 +507,7 @@
 		if(istype(target, /obj/machinery/computer))
 			var/obj/machinery/computer/C = target
 			if(C.circuit)
-				C.circuit.loc = M.loc
+				C.circuit.forceMove(M.drop_location())
 		qdel(target)
 
 
@@ -527,7 +540,6 @@
 	layer = MOB_LAYER
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	light_color = LIGHT_COLOR_CYAN
-	obj_integrity = 30
 	max_integrity = 30
 	anchored = TRUE
 	var/lon_range = 1
@@ -550,9 +562,8 @@
 	name = "swarmer trap"
 	desc = "A quickly assembled trap that electrifies living beings and overwhelms machine sensors. Will not retain its form if damaged enough."
 	icon_state = "trap"
-	obj_integrity = 10
 	max_integrity = 10
-	density = 0
+	density = FALSE
 
 /obj/structure/swarmer/trap/Crossed(atom/movable/AM)
 	if(isliving(AM))
@@ -594,7 +605,6 @@
 	desc = "A quickly assembled energy blockade. Will not retain its form if damaged enough, but disabler beams and swarmers pass right through."
 	icon_state = "barricade"
 	light_range = 1
-	obj_integrity = 50
 	max_integrity = 50
 
 /obj/structure/swarmer/blockade/CanPass(atom/movable/O)
@@ -643,7 +653,8 @@
 
 /mob/living/simple_animal/hostile/swarmer/proc/swarmer_chat(msg)
 	var/rendered = "<B>Swarm communication - [src]</b> [say_quote(msg, get_spans())]"
-	for(var/mob/M in GLOB.mob_list)
+	for(var/i in GLOB.mob_list)
+		var/mob/M = i
 		if(isswarmer(M))
 			to_chat(M, rendered)
 		if(isobserver(M))
@@ -651,7 +662,7 @@
 			to_chat(M, "[link] [rendered]")
 
 /mob/living/simple_animal/hostile/swarmer/proc/ContactSwarmers()
-	var/message = input(src, "Announce to other swarmers", "Swarmer contact")
+	var/message = stripped_input(src, "Announce to other swarmers", "Swarmer contact")
 	// TODO get swarmers their own colour rather than just boldtext
 	if(message)
 		swarmer_chat(message)

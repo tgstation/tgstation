@@ -4,8 +4,8 @@
 	desc = "A little cleaning robot, he looks so excited!"
 	icon = 'icons/mob/aibots.dmi'
 	icon_state = "cleanbot0"
-	density = 0
-	anchored = 0
+	density = FALSE
+	anchored = FALSE
 	health = 25
 	maxHealth = 25
 	radio_key = /obj/item/device/encryptionkey/headset_service
@@ -61,8 +61,8 @@
 	text_dehack = "[name]'s software has been reset!"
 	text_dehack_fail = "[name] does not seem to respond to your repair code!"
 
-/mob/living/simple_animal/bot/cleanbot/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+/mob/living/simple_animal/bot/cleanbot/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/card/id)||istype(W, /obj/item/device/pda))
 		if(bot_core.allowed(user) && !open && !emagged)
 			locked = !locked
 			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] \the [src] behaviour controls.</span>")
@@ -124,6 +124,9 @@
 
 	if(!target) //Search for decals then.
 		target = scan(/obj/effect/decal/cleanable)
+	
+	if(!target) //Checks for remains
+		target = scan(/obj/effect/decal/remains)
 
 	if(!target && trash) //Then for trash.
 		target = scan(/obj/item/trash)
@@ -178,7 +181,8 @@
 		/obj/effect/decal/cleanable/ash,
 		/obj/effect/decal/cleanable/greenglow,
 		/obj/effect/decal/cleanable/dirt,
-		/obj/effect/decal/cleanable/deadcockroach
+		/obj/effect/decal/cleanable/deadcockroach,
+		/obj/effect/decal/remains
 		)
 
 	if(blood)
@@ -197,7 +201,7 @@
 
 /mob/living/simple_animal/bot/cleanbot/UnarmedAttack(atom/A)
 	if(istype(A, /obj/effect/decal/cleanable))
-		anchored = 1
+		anchored = TRUE
 		icon_state = "cleanbot-c"
 		visible_message("<span class='notice'>[src] begins to clean up [A].</span>")
 		mode = BOT_CLEANING
@@ -206,15 +210,16 @@
 				if(A && isturf(A.loc))
 					var/atom/movable/AM = A
 					if(istype(AM, /obj/effect/decal/cleanable))
-						qdel(AM)
+						for(var/obj/effect/decal/cleanable/C in A.loc)
+							qdel(C)
 
-				anchored = 0
+				anchored = FALSE
 				target = null
 			mode = BOT_IDLE
 			icon_state = "cleanbot[on]"
-	else if(istype(A, /obj/item))
+	else if(istype(A, /obj/item) || istype(A, /obj/effect/decal/remains))
 		visible_message("<span class='danger'>[src] sprays hydrofluoric acid at [A]!</span>")
-		playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
+		playsound(src, 'sound/effects/spray2.ogg', 50, 1, -6)
 		A.acid_act(75, 10)
 	else if(istype(A, /mob/living/simple_animal/cockroach) || istype(A, /mob/living/simple_animal/mouse))
 		var/mob/living/simple_animal/M = target
@@ -250,11 +255,11 @@
 		..()
 
 /mob/living/simple_animal/bot/cleanbot/explode()
-	on = 0
+	on = FALSE
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
-	var/turf/Tsec = get_turf(src)
+	var/atom/Tsec = drop_location()
 
-	new /obj/item/weapon/reagent_containers/glass/bucket(Tsec)
+	new /obj/item/reagent_containers/glass/bucket(Tsec)
 
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
@@ -265,7 +270,7 @@
 	..()
 
 /obj/machinery/bot_core/cleanbot
-	req_one_access = list(GLOB.access_janitor, GLOB.access_robotics)
+	req_one_access = list(ACCESS_JANITOR, ACCESS_ROBOTICS)
 
 
 /mob/living/simple_animal/bot/cleanbot/get_controls(mob/user)
@@ -273,14 +278,14 @@
 	dat += hack(user)
 	dat += showpai(user)
 	dat += text({"
-Status: <A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A><BR>
+Status: <A href='?src=[REF(src)];power=1'>[on ? "On" : "Off"]</A><BR>
 Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
 Maintenance panel panel is [open ? "opened" : "closed"]"})
 	if(!locked || issilicon(user)|| IsAdminGhost(user))
-		dat += "<BR>Clean Blood: <A href='?src=\ref[src];operation=blood'>[blood ? "Yes" : "No"]</A>"
-		dat += "<BR>Clean Trash: <A href='?src=\ref[src];operation=trash'>[trash ? "Yes" : "No"]</A>"
-		dat += "<BR>Exterminate Pests: <A href='?src=\ref[src];operation=pests'>[pests ? "Yes" : "No"]</A>"
-		dat += "<BR><BR>Patrol Station: <A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "Yes" : "No"]</A>"
+		dat += "<BR>Clean Blood: <A href='?src=[REF(src)];operation=blood'>[blood ? "Yes" : "No"]</A>"
+		dat += "<BR>Clean Trash: <A href='?src=[REF(src)];operation=trash'>[trash ? "Yes" : "No"]</A>"
+		dat += "<BR>Exterminate Pests: <A href='?src=[REF(src)];operation=pests'>[pests ? "Yes" : "No"]</A>"
+		dat += "<BR><BR>Patrol Station: <A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "Yes" : "No"]</A>"
 	return dat
 
 /mob/living/simple_animal/bot/cleanbot/Topic(href, href_list)

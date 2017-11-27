@@ -46,8 +46,9 @@
 	if(placed && blob_core)
 		blob_core.forceMove(loc)
 	else
-		var/obj/structure/blob/core/core = new(get_turf(src), null, point_rate, 1)
+		var/obj/structure/blob/core/core = new(get_turf(src), src, point_rate, 1)
 		core.overmind = src
+		blobs_legit += src
 		blob_core = core
 		core.update_icon()
 	update_health_hud()
@@ -59,7 +60,7 @@
 	set name = "Jump to Core"
 	set desc = "Move your camera to your core."
 	if(blob_core)
-		src.loc = blob_core.loc
+		forceMove(blob_core.drop_location())
 
 /mob/camera/blob/verb/jump_to_node()
 	set category = "Blob"
@@ -153,33 +154,34 @@
 		return
 	if(!can_buy(40))
 		return
-	B.max_integrity = initial(B.max_integrity) * 0.25 //factories that produced a blobbernaut have much lower health
-	B.obj_integrity = min(B.obj_integrity, B.max_integrity)
-	B.update_icon()
-	B.visible_message("<span class='warning'><b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b></span>")
-	playsound(B.loc, 'sound/effects/splat.ogg', 50, 1)
-	var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(B))
-	flick("blobbernaut_produce", blobber)
-	B.naut = blobber
-	blobber.factory = B
-	blobber.overmind = src
-	blobber.update_icons()
-	blobber.notransform = 1 //stop the naut from moving around
-	blobber.adjustHealth(blobber.maxHealth * 0.5)
-	blob_mobs += blobber
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [blob_reagent_datum.name] blobbernaut?", ROLE_BLOB, null, ROLE_BLOB, 50, blobber) //players must answer rapidly
+
+	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as a [blob_reagent_datum.name] blobbernaut?", ROLE_BLOB, null, ROLE_BLOB, 50) //players must answer rapidly
 	if(candidates.len) //if we got at least one candidate, they're a blobbernaut now.
+		B.max_integrity = initial(B.max_integrity) * 0.25 //factories that produced a blobbernaut have much lower health
+		B.obj_integrity = min(B.obj_integrity, B.max_integrity)
+		B.update_icon()
+		B.visible_message("<span class='warning'><b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b></span>")
+		playsound(B.loc, 'sound/effects/splat.ogg', 50, 1)
+		var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(B))
+		flick("blobbernaut_produce", blobber)
+		B.naut = blobber
+		blobber.factory = B
+		blobber.overmind = src
+		blobber.update_icons()
+		blobber.adjustHealth(blobber.maxHealth * 0.5)
+		blob_mobs += blobber
 		var/client/C = pick(candidates)
 		blobber.key = C.key
-		blobber << 'sound/effects/blobattack.ogg'
-		blobber << 'sound/effects/attackblob.ogg'
+		SEND_SOUND(blobber, sound('sound/effects/blobattack.ogg'))
+		SEND_SOUND(blobber, sound('sound/effects/attackblob.ogg'))
 		to_chat(blobber, "<b>You are a blobbernaut!</b>")
-		to_chat(blobber, "You are powerful, hard to kill, and slowly regenerate near nodes and cores, but will slowly die if not near the blob or if the factory that made you is killed.")
-		to_chat(blobber, "You can communicate with other blobbernauts and GLOB.overminds via <b>:b</b>")
+		to_chat(blobber, "You are powerful, hard to kill, and slowly regenerate near nodes and cores, <span class='cultlarge'>but will slowly die if not near the blob</span> or if the factory that made you is killed.")
+		to_chat(blobber, "You can communicate with other blobbernauts and overminds via <b>:b</b>")
 		to_chat(blobber, "Your overmind's blob reagent is: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!")
 		to_chat(blobber, "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.shortdesc ? "[blob_reagent_datum.shortdesc]" : "[blob_reagent_datum.description]"]")
-	if(blobber)
-		blobber.notransform = 0
+	else
+		to_chat(src, "<span class='warning'>You could not conjure a sentience for your blobbernaut. Your points have been refunded. Try again later.</span>")
+		add_points(40)
 
 /mob/camera/blob/verb/relocate_core()
 	set category = "Blob"
@@ -267,7 +269,7 @@
 			var/list/diagonalblobs = list()
 			for(var/I in possibleblobs)
 				var/obj/structure/blob/IB = I
-				if(get_dir(IB, T) in GLOB.cardinal)
+				if(get_dir(IB, T) in GLOB.cardinals)
 					cardinalblobs += IB
 				else
 					diagonalblobs += IB
@@ -363,7 +365,7 @@
 	to_chat(src, "<i>Node Blobs</i> are blobs which grow, like the core. Like the core it can activate resource and factory blobs.")
 	to_chat(src, "<b>In addition to the buttons on your HUD, there are a few click shortcuts to speed up expansion and defense.</b>")
 	to_chat(src, "<b>Shortcuts:</b> Click = Expand Blob <b>|</b> Middle Mouse Click = Rally Spores <b>|</b> Ctrl Click = Create Shield Blob <b>|</b> Alt Click = Remove Blob")
-	to_chat(src, "Attempting to talk will send a message to all other GLOB.overminds, allowing you to coordinate with them.")
+	to_chat(src, "Attempting to talk will send a message to all other overminds, allowing you to coordinate with them.")
 	if(!placed && autoplace_max_time <= world.time)
-		to_chat(src, "<span class='big'><font color=\"#EE4000\">You will automatically place your blob core in [round((autoplace_max_time - world.time)/600, 0.5)] minutes.</font></span>")
+		to_chat(src, "<span class='big'><font color=\"#EE4000\">You will automatically place your blob core in [DisplayTimeText(autoplace_max_time - world.time)].</font></span>")
 		to_chat(src, "<span class='big'><font color=\"#EE4000\">You [manualplace_min_time ? "will be able to":"can"] manually place your blob core by pressing the Place Blob Core button in the bottom right corner of the screen.</font></span>")

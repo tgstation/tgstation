@@ -36,7 +36,7 @@
 	if(istext(proj_type))
 		var/projectile_type = text2path(proj_type)
 		projectile = new projectile_type(user)
-	if(istype(proj_type,/obj/effect/proc_holder/spell))
+	if(istype(proj_type, /obj/effect/proc_holder/spell))
 		projectile = new /obj/effect/proc_holder/spell/targeted/trigger(user)
 		var/obj/effect/proc_holder/spell/targeted/trigger/T = projectile
 		T.linked_spells += proj_type
@@ -47,7 +47,7 @@
 
 	var/current_loc = user.loc
 
-	projectile.loc = current_loc
+	projectile.forceMove(current_loc)
 
 	for(var/i = 0,i < proj_lifespan,i++)
 		if(!projectile)
@@ -56,12 +56,12 @@
 		if(proj_homing)
 			if(proj_insubstantial)
 				projectile.setDir(get_dir(projectile,target))
-				projectile.loc = get_step_to(projectile,target)
+				projectile.forceMove(get_step_to(projectile,target))
 			else
 				step_to(projectile,target)
 		else
 			if(proj_insubstantial)
-				projectile.loc = get_step(projectile,dir)
+				projectile.forceMove(get_step(projectile,dir))
 			else
 				step(projectile,dir)
 

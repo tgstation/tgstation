@@ -1,3 +1,25 @@
+/datum/reagent/drug/burpinate
+    name = "Burpinate"
+    id = "burpinate"
+    description = "They call me gaseous clay."
+    reagent_state = LIQUID
+    color = "#bfe8a7" // rgb: 191, 232, 167
+    metabolization_rate = 0.9 * REAGENTS_METABOLISM
+    taste_description = "wet hot dogs"
+
+/datum/reagent/drug/burpinate/on_mob_life(mob/living/M)
+    if(ishuman(M))
+        var/mob/living/carbon/human/H = M
+        if(prob(5+(current_cycle*0.6))) //burping intensifies
+            H.emote("burp")
+            if(prob(5))
+                to_chat(H, "<span class='danger'>You feel your bloated stomach rumble with gas.</span>")
+
+        if(current_cycle>90) //chance to burp = 55% (you can't stop burping)
+            if(prob(5))
+                to_chat(H, "<span class='danger'>Your throat is sore from all the gas coming out!</span>")
+    return ..()
+
 /datum/reagent/drug/fartium
 	name = "Fartium"
 	id = "fartium"
@@ -138,10 +160,113 @@
 	M.adjustToxLoss(4)
 	M.hallucination += 20
 	if(M.canmove && !istype(M.loc, /atom/movable))
-		step(M, pick(GLOB.cardinal))
-		step(M, pick(GLOB.cardinal))
+		step(M, pick(GLOB.cardinals))
+		step(M, pick(GLOB.cardinals))
 	if(prob(40))
 		var/obj/item/I = M.get_active_held_item()
 		if(I)
-			M.drop_item()
+			M.dropItemToGround(M.get_active_held_item())
 	return FINISHONMOBLIFE(M)
+
+/datum/reagent/drug/flipout
+	name = "Flipout"
+	id = "flipout"
+	description = "A chemical compound that causes uncontrolled and extremely violent flipping."
+	color = "#ff33cc" // rgb: 255, 51, 204
+	reagent_state = LIQUID
+	overdose_threshold = 40
+	addiction_threshold = 30
+
+
+/datum/reagent/drug/flipout/on_mob_life(mob/living/M)
+	var/high_message = pick("You have the uncontrollable, all consuming urge to FLIP!.", "You feel as if you are flipping to a higher plane of existence.", "You just can't stop FLIPPING.")
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(prob(80))
+			H.SpinAnimation(10,1)
+		if(prob(10))
+			M << "<span class='notice'>[high_message].</span>"
+
+	..()
+	return
+
+/datum/reagent/drug/flipout/overdose_process(mob/living/M)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.SpinAnimation(16,100)
+		if(prob(70))
+			H.Dizzy(20)
+			if(M.canmove && !istype(M.loc, /atom/movable))
+				for(var/i = 0, i < 4, i++)
+				step(M, pick(GLOB.cardinals))
+		if(prob(15))
+			M << "<span class='danger'>The flipping is so intense you begin to tire </span>"
+			H.confused +=4
+			M.adjustStaminaLoss(10)
+			H.transform *= -1
+	..()
+	return
+
+/datum/reagent/drug/flipout/addiction_act_stage1(mob/living/M)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(prob(85))
+			H.SpinAnimation(12,1)
+		else
+			H.Dizzy(16)
+	..()
+
+/datum/reagent/drug/flipout/addiction_act_stage2(mob/living/M)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(prob(90))
+			H.SpinAnimation(10,3)
+		else
+			H.Dizzy(20)
+			M.adjustStaminaLoss(25)
+	..()
+
+/datum/reagent/drug/flipout/addiction_act_stage3(mob/living/M)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(prob(95))
+			H.SpinAnimation(7,20)
+		else
+			H.Dizzy(30)
+			M.adjustStaminaLoss(40)
+	..()
+
+/datum/reagent/drug/flipout/addiction_act_stage4(mob/living/M)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.SpinAnimation(2,100)
+		if(prob(10))
+			M << "<span class='danger'>Your flipping has become so intense you've become an improvised generator </span>"
+			H.Dizzy(25)
+			M.electrocute_act(rand(1,5), 1, 1)
+			playsound(M, "sparks", 50, 1)
+			H.emote("scream")
+			H.Jitter(-100)
+
+		else
+			H.Dizzy(60)
+	..()
+
+/datum/reagent/drug/flipout/reaction_obj(obj/O, reac_volume)
+	if(istype(O,/obj))
+		O.SpinAnimation(16,40)
+
+/datum/reagent/drug/yespowder
+	name = "Yes Powder"
+	id = "yespowder"
+	description = "Powder that makes you say yes."
+	color = "#fffae0"
+	reagent_state = LIQUID
+
+/datum/reagent/drug/yespowder/on_mob_life(mob/living/M)
+	var/high_message = pick("Agreement fills your mind.", "'No' is so last year. 'Yes' is in.", "Yes.")
+	if(prob(5))
+		to_chat(M, "<span class='notice'>[high_message]</span>")
+	if(prob(20))
+		M.say("Yes.")
+	..()

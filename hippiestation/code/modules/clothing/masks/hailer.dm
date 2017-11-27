@@ -7,10 +7,10 @@
 	actions_types = list(/datum/action/item_action/halt, /datum/action/item_action/adjust)
 	icon_state = "sechailer"
 	item_state = "sechailer"
-	flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	flags_1 = BLOCK_GAS_SMOKE_EFFECT_1 | MASKINTERNALS_1
 	flags_inv = HIDEFACIALHAIR|HIDEFACE
 	w_class = WEIGHT_CLASS_SMALL
-	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	visor_flags = BLOCK_GAS_SMOKE_EFFECT_1 | MASKINTERNALS_1
 	visor_flags_inv = HIDEFACE
 	flags_cover = MASKCOVERSMOUTH
 	visor_flags_cover = MASKCOVERSMOUTH
@@ -18,7 +18,6 @@
 	var/cooldown_special
 	var/recent_uses = 0
 	var/broken_hailer = 0
-	var/emagged = FALSE
 
 /obj/item/clothing/mask/gas/sechailer/swat
 	name = "\improper SWAT mask"
@@ -38,8 +37,8 @@
 	aggressiveness = 1 //Borgs are nicecurity!
 	actions_types = list(/datum/action/item_action/halt)
 
-/obj/item/clothing/mask/gas/sechailer/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/screwdriver))
+/obj/item/clothing/mask/gas/sechailer/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/screwdriver))
 		switch(aggressiveness)
 			if(1)
 				to_chat(user, "<span class='notice'>You set the restrictor to the middle position.</span>")
@@ -54,7 +53,7 @@
 				to_chat(user, "<span class='danger'>You adjust the restrictor but nothing happens, probably because it's broken.</span>")
 			if(5)
 				to_chat(user, "<span class='danger'>\The [src]'s Big Guy synthesizer cannot be modified!</span>")
-	else if(istype(W, /obj/item/weapon/wirecutters))
+	else if(istype(W, /obj/item/wirecutters))
 		if(emagged)
 			to_chat(user, "<span class='danger'>\The [src]'s Big Guy synthesizer cannot be broken!</span>")
 		else if(aggressiveness != 4)
@@ -76,7 +75,7 @@
 		var/mob/living/carbon/H = user
 		if(H.wear_mask == src)
 			emagged = TRUE
-			flags |= NODROP // If I pull that off will you die?
+			flags_1 |= NODROP_1 // If I pull that off will you die?
 			to_chat(user, "<span class='warning'>You overload \the [src]'s Big Guy synthesizer.")
 			aggressiveness = 5
 		else

@@ -13,11 +13,10 @@
 	desc = "A shell of a maintenance drone, an expendable robot built to perform station repairs."
 	icon = 'icons/mob/drone.dmi'
 	icon_state = "drone_maint_hat"//yes reuse the _hat state.
-	origin_tech = "programming=2;biotech=4"
 	var/drone_type = /mob/living/simple_animal/drone //Type of drone that will be spawned
 
-/obj/item/drone_shell/New()
-	..()
+/obj/item/drone_shell/Initialize()
+	. = ..()
 	var/area/A = get_area(src)
 	if(A)
 		notify_ghosts("A drone shell has been created in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
@@ -30,7 +29,7 @@
 /obj/item/drone_shell/attack_ghost(mob/user)
 	if(jobban_isbanned(user,"drone"))
 		return
-	if(config.use_age_restriction_for_jobs)
+	if(CONFIG_GET(flag/use_age_restriction_for_jobs))
 		if(!isnum(user.client.player_age)) //apparently what happens when there's no DB connected. just don't let anybody be a drone without admin intervention
 			return
 		if(user.client.player_age < DRONE_MINIMUM_AGE)

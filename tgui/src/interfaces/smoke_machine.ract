@@ -1,0 +1,38 @@
+﻿{{#if data.screen == "home"}}
+	<ui-display title='Dispersal Tank'>	
+	<ui-section label='Power'>
+   		<ui-button icon='{{data.active ? "power-off" : "close"}}'
+			style='{{data.active ? "selected" : null}}'
+			state='{{data.isTankLoaded ? null : "disabled"}}'
+			action='power'>{{data.active ? "On" : "Off"}}
+		</ui-button>
+	</ui-section>
+	<ui-section label='Smoke Radius Setting'>
+			<div class='content' style='float:left'>
+				<ui-button icon='plus' state='{{data.setting == 3 ? "selected" : null}}' action='setting' params='{"amount": 3}'>3</ui-button>
+				<ui-button icon='plus' state='{{data.setting == 6 ? "selected" : null}}' action='setting' params='{"amount": 6}'>6</ui-button>
+				<ui-button icon='plus' state='{{data.setting == 9 ? "selected" : null}}' action='setting' params='{"amount": 9}'>9</ui-button>
+				<ui-button icon='plus' state='{{data.setting == 12 ? "selected" : null}}' action='setting' params='{"amount": 12}'>12</ui-button>
+				<ui-button icon='plus' state='{{data.setting == 15 ? "selected" : null}}' action='setting' params='{"amount": 15}'>15</ui-button>				
+			</div>	
+	</ui-section>
+		  <ui-section label='Contents'>
+   			{{#if data.isTankLoaded}}
+     				<span>{{Math.round(adata.TankCurrentVolume)}}/{{data.TankMaxVolume}} Units</span>
+     				<br/>
+				<br/>
+      				{{#each adata.TankContents}}
+       					<span class='highlight' intro-outro='fade'>{{Math.fixed(volume, 2)}} units of {{name}}</span><br/>
+      				{{/each}}
+			{{else}}
+       				<span class='bad'>Tank Empty</span>
+			{{/if}}
+			<ui-button icon='{{data.isTankLoaded ? "Eject" : "Close"}}'
+				style='{{data.isTankLoaded ? "selected" : null}}'
+				state='{{data.isTankLoaded ? null : "disabled"}}'
+				action='purge'>{{data.isTankLoaded ? "Purge Contents" : "No chemicals detected"}}
+			</ui-button>
+		</ui-section>
+	</ui-display>
+{{/if}}
+

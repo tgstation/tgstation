@@ -85,7 +85,7 @@
 							"<span class='userdanger'>[A] strikes your abdomen, neck and back consecutively!</span>")
 		playsound(get_turf(D), 'sound/weapons/cqchit2.ogg', 50, 1, -1)
 		var/obj/item/I = D.get_active_held_item()
-		if(I && D.drop_item())
+		if(I && D.temporarilyRemoveItemFromInventory(I))
 			A.put_in_hands(I)
 		D.adjustStaminaLoss(50)
 		D.apply_damage(25, BRUTE)
@@ -145,7 +145,7 @@
 			D.visible_message("<span class='warning'>[A] strikes [D]'s jaw with their hand!</span>", \
 								"<span class='userdanger'>[A] strikes your jaw, disorienting you!</span>")
 			playsound(get_turf(D), 'sound/weapons/cqchit1.ogg', 50, 1, -1)
-			if(I && D.drop_item())
+			if(I && D.temporarilyRemoveItemFromInventory(I))
 				A.put_in_hands(I)
 			D.Jitter(2)
 			D.apply_damage(5, BRUTE)
@@ -181,19 +181,18 @@
 
 	to_chat(usr, "<b><i>In addition, by having your throw mode on when being attacked, you enter an active defense mode where you have a chance to block and sometimes even counter attacks done to you.</i></b>")
 
-/obj/item/weapon/cqc_manual
+/obj/item/cqc_manual
 	name = "old manual"
 	desc = "A small, black manual. There are drawn instructions of tactical hand-to-hand combat."
 	icon = 'icons/obj/library.dmi'
 	icon_state ="cqcmanual"
 
-/obj/item/weapon/cqc_manual/attack_self(mob/living/carbon/human/user)
+/obj/item/cqc_manual/attack_self(mob/living/carbon/human/user)
 	if(!istype(user) || !user)
 		return
 	to_chat(user, "<span class='boldannounce'>You remember the basics of CQC.</span>")
 	var/datum/martial_art/cqc/D = new(null)
 	D.teach(user)
-	user.drop_item()
 	visible_message("<span class='warning'>[src] beeps ominously, and a moment later it bursts up in flames.</span>")
-	new /obj/effect/decal/cleanable/ash(get_turf(src))
 	qdel(src)
+	new /obj/effect/decal/cleanable/ash(user.drop_location())

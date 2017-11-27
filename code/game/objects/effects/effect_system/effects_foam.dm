@@ -9,10 +9,10 @@
 	name = "foam"
 	icon_state = "foam"
 	opacity = 0
-	anchored = 1
-	density = 0
-	layer = WALL_OBJ_LAYER
-	mouse_opacity = 0
+	anchored = TRUE
+	density = FALSE
+	layer = EDGED_TURF_LAYER
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/amount = 3
 	animate_movement = 0
 	var/metal = 0
@@ -21,13 +21,19 @@
 	var/static/list/blacklisted_turfs = typecacheof(list(
 	/turf/open/space/transit,
 	/turf/open/chasm,
-	/turf/open/floor/plating/lava))
+	/turf/open/lava))
 
 
 /obj/effect/particle_effect/foam/metal
 	name = "aluminium foam"
 	metal = ALUMINUM_FOAM
 	icon_state = "mfoam"
+
+/obj/effect/particle_effect/foam/metal/MakeSlippery()
+	return
+
+/obj/effect/particle_effect/foam/metal/smart
+	name = "smart foam"
 
 /obj/effect/particle_effect/foam/metal/iron
 	name = "iron foam"
@@ -38,11 +44,15 @@
 	metal = RESIN_FOAM
 
 
-/obj/effect/particle_effect/foam/New(loc)
-	..(loc)
+/obj/effect/particle_effect/foam/Initialize()
+	. = ..()
+	MakeSlippery()
 	create_reagents(1000) //limited by the size of the reagent holder anyway.
 	START_PROCESSING(SSfastprocess, src)
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, 1, -3)
+
+/obj/effect/particle_effect/foam/proc/MakeSlippery()
+	AddComponent(/datum/component/slippery, 100)
 
 /obj/effect/particle_effect/foam/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
@@ -58,6 +68,20 @@
 			new /obj/structure/foamedmetal/iron(get_turf(src))
 		if(RESIN_FOAM)
 			new /obj/structure/foamedmetal/resin(get_turf(src))
+	flick("[icon_state]-disolve", src)
+	QDEL_IN(src, 5)
+
+/obj/effect/particle_effect/foam/smart/kill_foam() //Smart foam adheres to area borders for walls
+	STOP_PROCESSING(SSfastprocess, src)
+	if(metal)
+		var/turf/T = get_turf(src)
+		if(isspaceturf(T)) //Block up any exposed space
+			T.ChangeTurf(/turf/open/floor/plating/foam)
+		for(var/direction in GLOB.cardinals)
+			var/turf/cardinal_turf = get_step(T, direction)
+			if(get_area(cardinal_turf) != get_area(T)) //We're at an area boundary, so let's block off this turf!
+				new/obj/structure/foamedmetal(T)
+				break
 	flick("[icon_state]-disolve", src)
 	QDEL_IN(src, 5)
 
@@ -101,15 +125,6 @@
 	lifetime--
 	return 1
 
-/obj/effect/particle_effect/foam/Crossed(atom/movable/AM)
-	if(istype(AM, /mob/living/carbon))
-		var/mob/living/carbon/M = AM
-		M.slip(100, src)
-
-/obj/effect/particle_effect/foam/metal/Crossed(atom/movable/AM)
-	return
-
-
 /obj/effect/particle_effect/foam/proc/spread_foam()
 	var/turf/t_loc = get_turf(src)
 	for(var/turf/T in t_loc.GetAtmosAdjacentTurfs())
@@ -149,6 +164,10 @@
 
 /datum/effect_system/foam_spread/metal
 	effect_type = /obj/effect/particle_effect/foam/metal
+
+
+/datum/effect_system/foam_spread/metal/smart
+	effect_type = /obj/effect/particle_effect/foam/smart
 
 
 /datum/effect_system/foam_spread/New()
@@ -194,14 +213,14 @@
 /obj/structure/foamedmetal
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "metalfoam"
-	density = 1
+	density = TRUE
 	opacity = 1 	// changed in New()
-	anchored = 1
+	anchored = TRUE
+	layer = EDGED_TURF_LAYER
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall."
 	gender = PLURAL
-	obj_integrity = 20
 	max_integrity = 20
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
@@ -211,7 +230,7 @@
 
 
 /obj/structure/foamedmetal/Destroy()
-	density = 0
+	density = FALSE
 	air_update_turf(1)
 	return ..()
 
@@ -232,29 +251,27 @@
 	to_chat(user, "<span class='warning'>You hit [src] but bounce off it!</span>")
 	playsound(src.loc, 'sound/weapons/tap.ogg', 100, 1)
 
-/obj/structure/foamedmetal/CanPass(atom/movable/mover, turf/target, height=1.5)
+/obj/structure/foamedmetal/CanPass(atom/movable/mover, turf/target)
 	return !density
 
 /obj/structure/foamedmetal/iron
-	obj_integrity = 50
 	max_integrity = 50
 	icon_state = "ironfoam"
 
 //Atmos Backpack Resin, transparent, prevents atmos and filters the air
 /obj/structure/foamedmetal/resin
-	name = "ATMOS Resin"
-	desc = "A lightweight, transparent resin used to suffocate fires, scrub the air of toxins, and restore the air to a safe temperature"
+	name = "\improper ATMOS Resin"
+	desc = "A lightweight, transparent resin used to suffocate fires, scrub the air of toxins, and restore the air to a safe temperature."
 	opacity = FALSE
 	icon_state = "atmos_resin"
 	alpha = 120
-	obj_integrity = 10
 	max_integrity = 10
-	layer = EDGED_TURF_LAYER
 
 /obj/structure/foamedmetal/resin/Initialize()
 	. = ..()
 	if(isopenturf(loc))
 		var/turf/open/O = loc
+		O.ClearWet()
 		if(O.air)
 			var/datum/gas_mixture/G = O.air
 			G.temperature = 293.15
@@ -262,8 +279,9 @@
 				qdel(H)
 			var/list/G_gases = G.gases
 			for(var/I in G_gases)
-				if(I != "o2" && I != "n2")
-					G.gases[I][MOLES] = 0
+				if(I == /datum/gas/oxygen || I == /datum/gas/nitrogen)
+					continue
+				G_gases[I][MOLES] = 0
 			G.garbage_collect()
 			O.air_update_turf()
 		for(var/obj/machinery/atmospherics/components/unary/U in O)
@@ -276,8 +294,8 @@
 		for(var/obj/item/Item in O)
 			Item.extinguish()
 
-/obj/structure/foamedmetal/resin/CanPass(atom/movable/mover, turf/target, height)
-	if(istype(mover) && mover.checkpass(PASSGLASS))
+/obj/structure/foamedmetal/resin/CanPass(atom/movable/mover, turf/target)
+	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return TRUE
 	. = ..()
 

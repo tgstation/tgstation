@@ -22,7 +22,7 @@
 #define SHUTTLE_ALREADY_DOCKED "we_are_already_docked"
 #define SHUTTLE_SOMEONE_ELSE_DOCKED "someone_else_docked"
 
-//Launching Shuttles to Centcomm
+//Launching Shuttles to CentCom
 #define NOLAUNCH -1
 #define UNLAUNCHED 0
 #define ENDGAME_LAUNCHED 1
@@ -52,3 +52,21 @@
 #define ENGINE_COEFF_MIN 0.5
 #define ENGINE_COEFF_MAX 2
 #define ENGINE_DEFAULT_MAXSPEED_ENGINES 5
+
+//Docking error flags
+#define DOCKING_SUCCESS 0
+#define DOCKING_BLOCKED 1
+#define DOCKING_IMMOBILIZED 2
+#define DOCKING_AREA_EMPTY 4
+#define DOCKING_NULL_DESTINATION 8
+#define DOCKING_NULL_SOURCE 16
+
+//Docking turf movements
+#define MOVE_TURF 1
+#define MOVE_AREA 2
+#define MOVE_CONTENTS 4
+
+//Rotation params
+#define ROTATE_DIR 		1
+#define ROTATE_SMOOTH 	2
+#define ROTATE_OFFSET	4

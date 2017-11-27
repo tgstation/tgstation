@@ -8,7 +8,7 @@
  * Stacks
  */
 /obj/item/stack
-	origin_tech = "materials=1"
+	icon = 'icons/obj/stack_objects.dmi'
 	gender = PLURAL
 	var/list/datum/stack_recipe/recipes
 	var/singular_name
@@ -22,7 +22,7 @@
 	var/novariants = TRUE //Determines whether the item should update it's sprites based on amount.
 
 /obj/item/stack/Initialize(mapload, new_amount=null , merge = TRUE)
-	..()
+	. = ..()
 	if(new_amount)
 		amount = new_amount
 	if(!merge_type)
@@ -62,20 +62,21 @@
 /obj/item/stack/examine(mob/user)
 	..()
 	if (is_cyborg)
-		if(src.singular_name)
-			to_chat(user, "There is enough energy for [src.get_amount()] [src.singular_name]\s.")
+		if(singular_name)
+			to_chat(user, "There is enough energy for [get_amount()] [singular_name]\s.")
 		else
-			to_chat(user, "There is enough energy for [src.get_amount()].")
+			to_chat(user, "There is enough energy for [get_amount()].")
 		return
-	if(src.singular_name)
-		if(src.get_amount()>1)
-			to_chat(user, "There are [src.get_amount()] [src.singular_name]\s in the stack.")
+	if(singular_name)
+		if(get_amount()>1)
+			to_chat(user, "There are [get_amount()] [singular_name]\s in the stack.")
 		else
-			to_chat(user, "There is [src.get_amount()] [src.singular_name] in the stack.")
-	else if(src.get_amount()>1)
-		to_chat(user, "There are [src.get_amount()] in the stack.")
+			to_chat(user, "There is [get_amount()] [singular_name] in the stack.")
+	else if(get_amount()>1)
+		to_chat(user, "There are [get_amount()] in the stack.")
 	else
-		to_chat(user, "There is [src.get_amount()] in the stack.")
+		to_chat(user, "There is [get_amount()] in the stack.")
+	to_chat(user, "<span class='notice'>Alt-click to take a custom amount.</span>")
 
 /obj/item/stack/proc/get_amount()
 	if(is_cyborg)
@@ -93,7 +94,7 @@
 		user << browse(null, "window=stack")
 		return
 	user.set_machine(src) //for correct work of onclose
-	var/t1 = text("<HTML><HEAD><title>Constructions from []</title></HEAD><body><TT>Amount Left: []<br>", src, src.get_amount())
+	var/t1 = text("<HTML><HEAD><title>Constructions from []</title></HEAD><body><TT>Amount Left: []<br>", src, get_amount())
 	for(var/i=1;i<=recipes.len,i++)
 		var/datum/stack_recipe/R = recipes[i]
 		if (isnull(R))
@@ -101,7 +102,7 @@
 			continue
 		if (i>1 && !isnull(recipes[i-1]))
 			t1+="<br>"
-		var/max_multiplier = round(src.get_amount() / R.req_amount)
+		var/max_multiplier = round(get_amount() / R.req_amount)
 		var/title as text
 		var/can_build = 1
 		can_build = can_build && (max_multiplier>0)
@@ -109,9 +110,9 @@
 			title+= "[R.res_amount]x [R.title]\s"
 		else
 			title+= "[R.title]"
-		title+= " ([R.req_amount] [src.singular_name]\s)"
+		title+= " ([R.req_amount] [singular_name]\s)"
 		if (can_build)
-			t1 += text("<A href='?src=\ref[];make=[];multiplier=1'>[]</A>  ", src, i, title)
+			t1 += text("<A href='?src=[REF(src)];make=[];multiplier=1'>[]</A>  ", i, title)
 		else
 			t1 += text("[]", title)
 			continue
@@ -121,9 +122,9 @@
 			var/list/multipliers = list(5,10,25)
 			for (var/n in multipliers)
 				if (max_multiplier>=n)
-					t1 += " <A href='?src=\ref[src];make=[i];multiplier=[n]'>[n*R.res_amount]x</A>"
+					t1 += " <A href='?src=[REF(src)];make=[i];multiplier=[n]'>[n*R.res_amount]x</A>"
 			if (!(max_multiplier in multipliers))
-				t1 += " <A href='?src=\ref[src];make=[i];multiplier=[max_multiplier]'>[max_multiplier*R.res_amount]x</A>"
+				t1 += " <A href='?src=[REF(src)];make=[i];multiplier=[max_multiplier]'>[max_multiplier*R.res_amount]x</A>"
 
 	t1 += "</TT></body></HTML>"
 	user << browse(t1, "window=stack")
@@ -134,7 +135,8 @@
 	if (usr.restrained() || usr.stat || usr.get_active_held_item() != src)
 		return
 	if (href_list["make"])
-		if (src.get_amount() < 1) qdel(src) //Never should happen
+		if (get_amount() < 1)
+			qdel(src) //Never should happen
 
 		var/datum/stack_recipe/R = recipes[text2num(href_list["make"])]
 		var/multiplier = text2num(href_list["multiplier"])
@@ -149,7 +151,11 @@
 			if(!building_checks(R, multiplier))
 				return
 
-		var/atom/O = new R.result_type( usr.loc )
+		var/obj/O
+		if(R.max_res_amount > 1) //Is it a stack?
+			O = new R.result_type(usr.drop_location(), R.res_amount * multiplier)
+		else
+			O = new R.result_type(usr.drop_location())
 		O.setDir(usr.dir)
 		use(R.req_amount * multiplier)
 
@@ -162,21 +168,20 @@
 			W.ini_dir = W.dir
 		//END: oh fuck i'm so sorry
 
-		//is it a stack ?
-		if (R.max_res_amount > 1)
-			var/obj/item/stack/new_item = O
-			new_item.amount = R.res_amount*multiplier
-			new_item.update_icon()
+		else if(istype(O, /obj/item/restraints/handcuffs/cable))
+			var/obj/item/cuffs = O
+			cuffs.item_color = item_color
+			cuffs.update_icon()
 
-			if(new_item.amount <= 0)//if the stack is empty, i.e it has been merged with an existing stack and has been garbage collected
-				return
+		if (QDELETED(O))
+			return //It's a stack and has already been merged
 
 		if (isitem(O))
 			usr.put_in_hands(O)
 		O.add_fingerprint(usr)
 
 		//BubbleWrap - so newly formed boxes are empty
-		if ( istype(O, /obj/item/weapon/storage) )
+		if ( istype(O, /obj/item/storage) )
 			for (var/obj/item/I in O)
 				qdel(I)
 		//BubbleWrap END
@@ -185,7 +190,7 @@
 		addtimer(CALLBACK(src, /atom/.proc/interact, usr), 0)
 
 /obj/item/stack/proc/building_checks(datum/stack_recipe/R, multiplier)
-	if (src.get_amount() < R.req_amount*multiplier)
+	if (get_amount() < R.req_amount*multiplier)
 		if (R.req_amount*multiplier>1)
 			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>")
 		else
@@ -244,6 +249,7 @@
 	S.copy_evidences(src)
 	use(transfer, TRUE)
 	S.add(transfer)
+	return transfer
 
 /obj/item/stack/Crossed(obj/o)
 	if(istype(o, merge_type) && !o.throwing)
@@ -259,7 +265,7 @@
 	if (user.get_inactive_held_item() == src)
 		if(zero_amount())
 			return
-		change_stack(user,1)
+		return change_stack(user,1)
 	else
 		..()
 
@@ -276,9 +282,9 @@
 			return
 		//get amount from user
 		var/min = 0
-		var/max = src.get_amount()
+		var/max = get_amount()
 		var/stackmaterial = round(input(user,"How many sheets do you wish to take out of this stack? (Maximum  [max])") as num)
-		if(stackmaterial == null || stackmaterial <= min || stackmaterial >= src.get_amount())
+		if(stackmaterial == null || stackmaterial <= min || stackmaterial >= get_amount() || !user.canUseTopic(src))
 			return
 		else
 			change_stack(user,stackmaterial)
@@ -298,16 +304,16 @@
 /obj/item/stack/attackby(obj/item/W, mob/user, params)
 	if(istype(W, merge_type))
 		var/obj/item/stack/S = W
-		merge(S)
-		to_chat(user, "<span class='notice'>Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s.</span>")
+		if(merge(S))
+			to_chat(user, "<span class='notice'>Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s.</span>")
 	else
 		. = ..()
 
 /obj/item/stack/proc/copy_evidences(obj/item/stack/from as obj)
-	src.blood_DNA = from.blood_DNA
-	src.fingerprints  = from.fingerprints
-	src.fingerprintshidden  = from.fingerprintshidden
-	src.fingerprintslast  = from.fingerprintslast
+	blood_DNA = from.blood_DNA
+	fingerprints  = from.fingerprints
+	fingerprintshidden  = from.fingerprintshidden
+	fingerprintslast  = from.fingerprintslast
 	//TODO bloody overlay
 
 /obj/item/stack/microwave_act(obj/machinery/microwave/M)

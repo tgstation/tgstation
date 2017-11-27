@@ -3,7 +3,7 @@
 	return ..() | SPAN_ROBOT
 
 /mob/living/proc/robot_talk(message)
-	log_say("[key_name(src)] : [message]")
+	log_talk(src,"[key_name(src)] : [message]",LOGSAY)
 	log_message(message, INDIVIDUAL_SAY_LOG)
 	var/desig = "Default Cyborg" //ezmode for taters
 	if(issilicon(src))
@@ -14,7 +14,7 @@
 	for(var/mob/M in GLOB.player_list)
 		if(M.binarycheck())
 			if(isAI(M))
-				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='?src=\ref[M];track=[html_encode(name)]'><span class='name'>[name] ([desig])</span></a> <span class='message'>[message_a]</span></span></i>"
+				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='?src=[REF(M)];track=[html_encode(name)]'><span class='name'>[name] ([desig])</span></a> <span class='message'>[message_a]</span></span></i>"
 				to_chat(M, renderedAI)
 			else
 				to_chat(M, rendered)

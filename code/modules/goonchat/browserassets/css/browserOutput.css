@@ -28,10 +28,14 @@ img {
 	margin: 0;
 	padding: 0;
 	line-height: 1;
+	-ms-interpolation-mode: nearest-neighbor;
+	image-rendering: pixelated;
 }
 img.icon {
-	width: 16px;
-	height: 16px;
+	height: 1em;
+	min-height: 16px;
+	width: auto;
+	vertical-align: bottom;
 }
 
 a {color: #0000ff;}
@@ -79,7 +83,7 @@ a.popt {text-decoration: none;}
 #ping {
 	position: fixed;
 	top: 0;
-	right: 40px;
+	right: 80px;
 	width: 45px;
 	background: #ddd;
 	height: 30px;
@@ -92,12 +96,12 @@ a.popt {text-decoration: none;}
 	font-size: 8pt;
 	padding-top: 2px;
 }
-#options {
+#userBar {
 	position: fixed;
 	top: 0;
 	right: 0;
 }
-#options a {
+#userBar .subCell {
 	background: #ddd;
     height: 30px;
 	padding: 5px 0;
@@ -107,23 +111,23 @@ a.popt {text-decoration: none;}
     line-height: 28px;
     border-top: 1px solid #b4b4b4;
 }
-#options a:hover {background: #ccc;}
-#options .toggle {
+#userBar .subCell:hover {background: #ccc;}
+#userBar .toggle {
 	width: 40px;
     background: #ccc;
     border-top: 0;
     float: right;
     text-align: center;
 }
-#options .sub {clear: both; display: none; width: 160px;}
-#options .sub.scroll {overflow-y: scroll;}
-#options .sub a {padding: 3px 0 3px 8px; line-height: 30px; font-size: 0.9em; clear: both;}
-#options .sub span {
+#userBar .sub {clear: both; display: none; width: 160px;}
+#userBar .sub.scroll {overflow-y: scroll;}
+#userBar .sub.subCell {padding: 3px 0 3px 8px; line-height: 30px; font-size: 0.9em; clear: both;}
+#userBar .sub span {
 	display: block;
 	line-height: 30px;
 	float: left;
 }
-#options .sub i {
+#userBar .sub i {
 	display: block;
 	padding: 0 5px;
 	font-size: 1.1em;
@@ -132,7 +136,14 @@ a.popt {text-decoration: none;}
 	line-height: 30px;
 	float: right;
 }
-#options .decreaseFont {border-top: 0;}
+#userBar .sub input {
+	position: absolute;
+	padding: 7px 5px;
+	width: 121px;
+	line-height: 30px;
+	float: left;
+}
+#userBar .topCell {border-top: 0;}
 
 /* POPUPS */
 .popup {
@@ -341,6 +352,8 @@ h1.alert, h2.alert		{color: #000000;}
 .alertalien				{color: #00c000;	font-weight: bold;}
 .changeling				{color: #800080;	font-style: italic;}
 
+.spider					{color: #4d004d;}
+
 .interface				{color: #330033;}
 
 .sans					{font-family: "Comic Sans MS", cursive, sans-serif;}
@@ -348,18 +361,17 @@ h1.alert, h2.alert		{color: #000000;}
 .robot					{font-family: "Courier New", cursive, sans-serif;}
 
 .command_headset		{font-weight: bold; font-size: 24px;}
-.small					{font-size: 1;}
-.big					{font-size: 3;}
-.reallybig				{font-size: 4;}
-.greentext				{color: #00FF00;	font-size: 3;}
-.redtext				{color: #FF0000;	font-size: 3;}
-.clown					{color: #FF69Bf;	font-size: 3; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: bold;}
+.small					{font-size: 8px;}
+.big					{font-size: 24px;}
+.reallybig				{font-size: 32px;}
+.greentext				{color: #00FF00;	font-size: 24px;}
+.redtext				{color: #FF0000;	font-size: 24px;}
+.clown					{color: #FF69Bf;	font-size: 24px; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: bold;}
 .his_grace				{color: #15D512;	font-family: "Courier New", cursive, sans-serif; font-style: italic;}
 
-BIG IMG.icon 			{width: 32px; height: 32px;}
 
 .memo					{color: #638500;	text-align: center;}
-.memoedit				{text-align: center;	font-size: 2;}
+.memoedit				{text-align: center;	font-size: 16px;}
 .abductor				{color: #800080; font-style: italic;}
 .slime					{color: #00CED1;}
 .drone					{color: #848482;}

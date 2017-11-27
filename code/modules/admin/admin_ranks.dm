@@ -75,6 +75,11 @@ GLOBAL_PROTECT(admin_ranks)
 
 // Adds/removes rights to this admin_rank
 /datum/admin_rank/proc/process_keyword(word, previous_rights=0)
+	if(IsAdminAdvancedProcCall())
+		var/msg = " has tried to elevate permissions!"
+		message_admins("[key_name_admin(usr)][msg]")
+		log_admin_private("[key_name(usr)][msg]")
+		return
 	var/flag = admin_keyword_to_flag(word, previous_rights)
 	if(flag)
 		switch(text2ascii(word,1))
@@ -94,6 +99,7 @@ GLOBAL_PROTECT(admin_ranks)
 					if(!adds.Remove(path))
 						subs += path	//-
 
+
 // Checks for (keyword-formatted) rights on this admin
 /datum/admins/proc/check_keyword(word)
 	var/flag = admin_keyword_to_flag(word)
@@ -108,11 +114,14 @@ GLOBAL_PROTECT(admin_ranks)
 
 //load our rank - > rights associations
 /proc/load_admin_ranks()
+	if(IsAdminAdvancedProcCall())
+		to_chat(usr, "<span class='admin prefix'>Admin Reload blocked: Advanced ProcCall detected.</span>")
+		return
 	GLOB.admin_ranks.Cut()
 
-	if(config.admin_legacy_system)
+	if(CONFIG_GET(flag/admin_legacy_system))
 		var/previous_rights = 0
-		//load text from file and process each line seperately
+		//load text from file and process each line separately
 		for(var/line in world.file2list("config/admin_ranks.txt"))
 			if(!line)
 				continue
@@ -135,8 +144,8 @@ GLOBAL_PROTECT(admin_ranks)
 	else
 		if(!SSdbcore.Connect())
 			log_world("Failed to connect to database in load_admin_ranks(). Reverting to legacy system.")
-			GLOB.world_game_log << "Failed to connect to database in load_admin_ranks(). Reverting to legacy system."
-			config.admin_legacy_system = 1
+			WRITE_FILE(GLOB.world_game_log, "Failed to connect to database in load_admin_ranks(). Reverting to legacy system.")
+			CONFIG_SET(flag/admin_legacy_system, TRUE)
 			load_admin_ranks()
 			return
 
@@ -165,6 +174,9 @@ GLOBAL_PROTECT(admin_ranks)
 
 
 /proc/load_admins(target = null)
+	if(IsAdminAdvancedProcCall())
+		to_chat(usr, "<span class='admin prefix'>Admin Reload blocked: Advanced ProcCall detected.</span>")
+		return
 	//clear the datums references
 	if(!target)
 		GLOB.admin_datums.Cut()
@@ -181,11 +193,11 @@ GLOBAL_PROTECT(admin_ranks)
 	for(var/datum/admin_rank/R in GLOB.admin_ranks)
 		rank_names[R.name] = R
 
-	if(config.admin_legacy_system)
+	if(CONFIG_GET(flag/admin_legacy_system))
 		//load text from file
 		var/list/lines = world.file2list("config/admins.txt")
 
-		//process each line seperately
+		//process each line separately
 		for(var/line in lines)
 			if(!length(line))
 				continue
@@ -204,14 +216,12 @@ GLOBAL_PROTECT(admin_ranks)
 			var/datum/admins/D = new(rank_names[rank], ckey)	//create the admin datum and store it for later use
 			if(!D)
 				continue									//will occur if an invalid rank is provided
-			if(D.rank.rights & R_DEBUG) //grant profile access
-				world.SetConfig("APP/admin", ckey, "role=admin")
 			D.associate(GLOB.directory[ckey])	//find the client for a ckey if they are connected and associate them with the new admin datum
 	else
 		if(!SSdbcore.Connect())
 			log_world("Failed to connect to database in load_admins(). Reverting to legacy system.")
-			GLOB.world_game_log << "Failed to connect to database in load_admins(). Reverting to legacy system."
-			config.admin_legacy_system = 1
+			WRITE_FILE(GLOB.world_game_log, "Failed to connect to database in load_admins(). Reverting to legacy system.")
+			CONFIG_SET(flag/admin_legacy_system, TRUE)
 			load_admins()
 			return
 
@@ -266,6 +276,9 @@ GLOBAL_PROTECT(admin_ranks)
 	if(!check_rights(R_PERMISSIONS))
 		message_admins("[key_name_admin(usr)] attempted to edit the admin permissions without sufficient rights.")
 		log_admin("[key_name(usr)] attempted to edit the admin permissions without sufficient rights.")
+		return
+	if(IsAdminAdvancedProcCall())
+		to_chat(usr, "<span class='admin prefix'>Admin Edit blocked: Advanced ProcCall detected.</span>")
 		return
 
 	var/adm_ckey
@@ -368,7 +381,6 @@ GLOBAL_PROTECT(admin_ranks)
 			if(!findtext(D.rank.name, "([adm_ckey])"))	//not a modified subrank, need to duplicate the admin_rank datum to prevent modifying others too
 				D.rank = new("[D.rank.name]([adm_ckey])", D.rank.rights, D.rank.adds, D.rank.subs)	//duplicate our previous admin_rank but with a new name
 				//we don't add this clone to the admin_ranks list, as it is unique to that ckey
-
 			D.rank.process_keyword(keyword)
 
 			var/client/C = GLOB.directory[adm_ckey]	//find the client with the specified ckey (if they are logged in)

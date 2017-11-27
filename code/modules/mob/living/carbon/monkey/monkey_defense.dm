@@ -16,9 +16,6 @@
 		if(stat != DEAD)
 			var/dmg = rand(1, 5)
 			apply_damage(dmg, BRUTE, affecting)
-			damage_clothes(dmg, BRUTE, "melee", affecting.body_zone)
-
-
 
 /mob/living/carbon/monkey/attack_larva(mob/living/carbon/alien/larva/L)
 	if(..()) //successful larva bite.
@@ -29,7 +26,6 @@
 			if(!affecting)
 				affecting = get_bodypart("chest")
 			apply_damage(damage, BRUTE, affecting)
-			damage_clothes(damage, BRUTE, "melee", affecting.body_zone)
 
 /mob/living/carbon/monkey/attack_hand(mob/living/carbon/human/M)
 	if(..())	//To allow surgery to return properly.
@@ -58,7 +54,6 @@
 				if(!affecting)
 					affecting = get_bodypart("chest")
 				apply_damage(damage, BRUTE, affecting)
-				damage_clothes(damage, BRUTE, "melee", affecting.body_zone)
 				add_logs(M, src, "attacked")
 
 			else
@@ -74,11 +69,9 @@
 					add_logs(M, src, "pushed")
 					visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \
 						"<span class='userdanger'>[M] has pushed down [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-				else
-					if(drop_item())
-						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-						visible_message("<span class='danger'>[M] has disarmed [src]!</span>", \
-							"<span class='userdanger'>[M] has disarmed [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+				else if(dropItemToGround(get_active_held_item()))
+					playsound(src, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+					visible_message("<span class='danger'>[M] has disarmed [src]!</span>", "<span class='userdanger'>[M] has disarmed [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 
 /mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if(..()) //if harm or disarm intent.
@@ -103,7 +96,6 @@
 				if(!dismembering_strike(M, affecting.body_zone)) //Dismemberment successful
 					return 1
 				apply_damage(damage, BRUTE, affecting)
-				damage_clothes(damage, BRUTE, "melee", affecting.body_zone)
 
 			else
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
@@ -119,12 +111,10 @@
 						"<span class='userdanger'>[M] has tackled down [name]!</span>", null, COMBAT_MESSAGE_RANGE)
 			else
 				I = get_active_held_item()
-				if(drop_item())
-					visible_message("<span class='danger'>[M] has disarmed [name]!</span>", \
-							"<span class='userdanger'>[M] has disarmed [name]!</span>", null, COMBAT_MESSAGE_RANGE)
+				if(dropItemToGround(I))
+					visible_message("<span class='danger'>[M] has disarmed [name]!</span>", "<span class='userdanger'>[M] has disarmed [name]!</span>", null, COMBAT_MESSAGE_RANGE)
 				else
-					I = null//did not manage to actually disarm the item, gross but no time to refactor
-
+					I = null
 			add_logs(M, src, "disarmed", "[I ? " removing \the [I]" : ""]")
 			updatehealth()
 
@@ -140,9 +130,6 @@
 		if(!affecting)
 			affecting = get_bodypart("chest")
 		apply_damage(damage, M.melee_damage_type, affecting)
-		damage_clothes(damage, M.melee_damage_type, "melee", affecting.body_zone)
-
-
 
 /mob/living/carbon/monkey/attack_slime(mob/living/simple_animal/slime/M)
 	if(..()) //successful slime attack
@@ -156,8 +143,6 @@
 		if(!affecting)
 			affecting = get_bodypart("chest")
 		apply_damage(damage, BRUTE, affecting)
-		damage_clothes(damage, BRUTE, "melee", affecting.body_zone)
-
 
 /mob/living/carbon/monkey/acid_act(acidpwr, acid_volume, bodyzone_hit)
 	. = 1

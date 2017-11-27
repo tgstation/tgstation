@@ -5,19 +5,20 @@
 	include_user = 1
 	range = -1
 	clothes_req = 0
-	item_type = /obj/item/weapon/twohanded/pitchfork/demonic
+	item_type = /obj/item/twohanded/pitchfork/demonic
 
 	school = "conjuration"
 	charge_max = 150
 	cooldown_min = 10
+	action_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	action_icon_state = "pitchfork"
 	action_background_icon_state = "bg_demon"
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/greater
-	item_type = /obj/item/weapon/twohanded/pitchfork/demonic/greater
+	item_type = /obj/item/twohanded/pitchfork/demonic/greater
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/ascended
-	item_type = /obj/item/weapon/twohanded/pitchfork/demonic/ascended
+	item_type = /obj/item/twohanded/pitchfork/demonic/ascended
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/violin
 	item_type = /obj/item/device/instrument/violin/golden
@@ -26,6 +27,7 @@
 	invocation = "I aint have this much fun since Georgia."
 	action_icon_state = "golden_violin"
 	name = "Summon golden violin"
+	action_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	action_background_icon_state = "bg_demon"
 
 /obj/effect/proc_holder/spell/targeted/summon_contract
@@ -47,25 +49,25 @@
 	for(var/mob/living/carbon/C in targets)
 		if(C.mind && user.mind)
 			if(C.stat == DEAD)
-				if(user.drop_item())
-					var/obj/item/weapon/paper/contract/infernal/revive/contract = new(user.loc, C.mind, user.mind)
+				if(user.dropItemToGround(user.get_active_held_item()))
+					var/obj/item/paper/contract/infernal/revive/contract = new(user.loc, C.mind, user.mind)
 					user.put_in_hands(contract)
 			else
-				var/obj/item/weapon/paper/contract/infernal/contract  // = new(user.loc, C.mind, contractType, user.mind)
+				var/obj/item/paper/contract/infernal/contract  // = new(user.loc, C.mind, contractType, user.mind)
 				var/contractTypeName = input(user, "What type of contract?") in list ("Power", "Wealth", "Prestige", "Magic", "Knowledge", "Friendship")
 				switch(contractTypeName)
 					if("Power")
-						contract = new /obj/item/weapon/paper/contract/infernal/power(C.loc, C.mind, user.mind)
+						contract = new /obj/item/paper/contract/infernal/power(C.loc, C.mind, user.mind)
 					if("Wealth")
-						contract = new /obj/item/weapon/paper/contract/infernal/wealth(C.loc, C.mind, user.mind)
+						contract = new /obj/item/paper/contract/infernal/wealth(C.loc, C.mind, user.mind)
 					if("Prestige")
-						contract = new /obj/item/weapon/paper/contract/infernal/prestige(C.loc, C.mind, user.mind)
+						contract = new /obj/item/paper/contract/infernal/prestige(C.loc, C.mind, user.mind)
 					if("Magic")
-						contract = new /obj/item/weapon/paper/contract/infernal/magic(C.loc, C.mind, user.mind)
+						contract = new /obj/item/paper/contract/infernal/magic(C.loc, C.mind, user.mind)
 					if("Knowledge")
-						contract = new /obj/item/weapon/paper/contract/infernal/knowledge(C.loc, C.mind, user.mind)
+						contract = new /obj/item/paper/contract/infernal/knowledge(C.loc, C.mind, user.mind)
 					if("Friendship")
-						contract = new /obj/item/weapon/paper/contract/infernal/friend(C.loc, C.mind, user.mind)
+						contract = new /obj/item/paper/contract/infernal/friend(C.loc, C.mind, user.mind)
 				C.put_in_hands(contract)
 		else
 			to_chat(user, "<span class='notice'>[C] seems to not be sentient.  You cannot summon a contract for [C.p_them()].</span>")
@@ -110,9 +112,9 @@
 						user.infernalphasein()
 					else
 						to_chat(user, "<span class='warning'>You are no longer near a potential signer.</span>")
-					
+
 			else
-				to_chat(user, "<span class='warning'>You can only re-appear near a potential signer.")
+				to_chat(user, "<span class='warning'>You can only re-appear near a potential signer.</span>")
 				revert_cast()
 				return ..()
 		else
@@ -140,31 +142,23 @@
 /mob/living/proc/infernalphaseout()
 	dust_animation()
 	spawn_dust()
-	src.visible_message("<span class='warning'>[src] disappears in a flashfire!</span>")
+	visible_message("<span class='warning'>[src] disappears in a flashfire!</span>")
 	playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, 1, -1)
 	var/obj/effect/dummy/slaughter/holder = new /obj/effect/dummy/slaughter(loc)
-	src.ExtinguishMob()
-	if(buckled)
-		buckled.unbuckle_mob(src,force=1)
-	if(has_buckled_mobs())
-		unbuckle_all_mobs(force=1)
-	if(pulledby)
-		pulledby.stop_pulling()
-	if(pulling)
-		stop_pulling()
-	src.loc = holder
-	src.holder = holder
-	src.notransform = 0
+	ExtinguishMob()
+	forceMove(holder)
+	holder = holder
+	notransform = 0
 	fakefireextinguish()
 
 /mob/living/proc/infernalphasein()
-	if(src.notransform)
+	if(notransform)
 		to_chat(src, "<span class='warning'>You're too busy to jaunt in.</span>")
-		return 0
+		return FALSE
 	fakefire()
-	src.loc = get_turf(src)
-	src.client.eye = src
-	src.visible_message("<span class='warning'><B>[src] appears in a fiery blaze!</B>")
+	forceMove(drop_location())
+	client.eye = src
+	visible_message("<span class='warning'><B>[src] appears in a fiery blaze!</B></span>")
 	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
 	addtimer(CALLBACK(src, .proc/fakefireextinguish), 15, TIMER_UNIQUE)
 
@@ -178,6 +172,7 @@
 	cooldown_min = 0
 	overlay = null
 	include_user = 0
+	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_icon_state = "sintouch"
 	action_background_icon_state = "bg_demon"
 	phase_allowed = 0
@@ -213,6 +208,7 @@
 	school = "conjuration"
 	charge_max = 10
 	cooldown_min = 50 //5 seconds, so the smoke can't be spammed
+	action_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	action_icon_state = "funk"
 	action_background_icon_state = "bg_demon"
 

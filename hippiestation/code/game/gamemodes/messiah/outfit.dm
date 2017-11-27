@@ -5,11 +5,11 @@
 	shoes = /obj/item/clothing/shoes/sandal/spacejesus
 	ears = /obj/item/device/radio/headset
 	head = /obj/item/clothing/head/hippie/halo/spacejesus
-	suit_store = /obj/item/weapon/storage/book/bible
+	suit_store = /obj/item/storage/book/bible
 
 /datum/outfit/jesus/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
-	
+
 	H.skin_tone = "latino"
 	H.hair_color = "754"
 	H.facial_hair_color = "754"
@@ -23,7 +23,7 @@
 		return
 
 	//Conversion preventative measures
-	var/obj/item/weapon/implant/mindshield/imp = new(H)
+	var/obj/item/implant/mindshield/imp = new(H)
 	H.implants += imp
 	imp.imp_in = H
 	H.sec_hud_set_implants()
@@ -47,25 +47,25 @@
 
 /obj/item/clothing/head/hippie/halo/spacejesus
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	flags = NODROP
+	flags_1 = NODROP_1
 
 /obj/item/clothing/suit/hippie/jesus
 	name = "Messiah Robes"
 	desc = "They seem very holy."
 	icon_state = "jesus"
-	allowed = list(/obj/item/weapon/storage/book/bible)
+	allowed = list(/obj/item/storage/book/bible)
 
 /obj/item/clothing/suit/hippie/jesus/spacejesus
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	flags = NODROP
+	flags_1 = NODROP_1
 
 /obj/item/clothing/under/rank/chef/spacejesus
 	name = "Sacred Jumpsuit"
 	desc = "It seems very holy."
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	flags = NODROP
+	flags_1 = NODROP_1
 
 /obj/item/clothing/shoes/sandal/spacejesus
 	name = "Holy Sandals"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	flags = NODROP
+	flags_1 = NODROP_1

@@ -18,7 +18,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	// Faction
 	"t" = "Syndicate",
-	"y" = "Centcom",
+	"y" = "CentCom",
 
 	// Species
 	"b" = "binary",
@@ -37,39 +37,39 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	//kinda localization -- rastaf0
 	//same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
 	// Location
-	"?" = "right hand",
-	"?" = "left hand",
-	"?" = "intercom",
+	"ê" = "right hand",
+	"ä" = "left hand",
+	"ø" = "intercom",
 
 	// Department
-	"?" = "department",
-	"?" = "Command",
-	"?" = "Science",
-	"?" = "Medical",
-	"?" = "Engineering",
-	"?" = "Security",
-	"?" = "Supply",
-	"?" = "Service",
+	"ð" = "department",
+	"ñ" = "Command",
+	"ò" = "Science",
+	"ü" = "Medical",
+	"ó" = "Engineering",
+	"û" = "Security",
+	"ã" = "Supply",
+	"ì" = "Service",
 
 	// Faction
-	"?" = "Syndicate",
-	"?" = "Centcom",
+	"å" = "Syndicate",
+	"í" = "CentCom",
 
 	// Species
-	"?" = "binary",
-	"?" = "changeling",
-	"?" = "alientalk",
+	"è" = "binary",
+	"ï" = "changeling",
+	"ô" = "alientalk",
 
 	// Admin
-	"?" = "admin",
-	"?" = "deadmin",
+	"ç" = "admin",
+	"â" = "deadmin",
 
 	// Misc
-	"?" = "AI Private",
-	"?" = "cords"
+	"ù" = "AI Private",
+	"÷" = "cords"
 ))
 
-/mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null)
+/mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE)
 	var/static/list/crit_allowed_modes = list(MODE_WHISPER = TRUE, MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
 	var/static/list/unconscious_allowed_modes = list(MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
 
@@ -107,12 +107,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		say_dead(original_message)
 		return
 
-	if(check_emote(original_message) || !can_speak_basic(original_message))
+	if(check_emote(original_message) || !can_speak_basic(original_message, ignore_spam))
 		return
-
-	if(is_nearcrit()) //in_critical variable is handled separately.
-		if(!(message_mode in crit_allowed_modes))
-			message_mode = MODE_WHISPER
 
 	if(in_critical)
 		if(!(crit_allowed_modes[message_mode]))
@@ -151,26 +147,27 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	var/succumbed = FALSE
 
-	if(message_mode == MODE_WHISPER)
+	var/fullcrit = InFullCritical()
+	if((InCritical() && !fullcrit) || message_mode == MODE_WHISPER)
 		message_range = 1
-		spans |= SPAN_ITALICS
-		log_whisper("[src.name]/[src.key] : [message]")
-		if(in_critical)
+		message_mode = MODE_WHISPER
+		log_talk(src,"[key_name(src)] : [message]",LOGWHISPER)
+		if(fullcrit)
 			var/health_diff = round(-HEALTH_THRESHOLD_DEAD + health)
 			// If we cut our message short, abruptly end it with a-..
 			var/message_len = length(message)
 			message = copytext(message, 1, health_diff) + "[message_len > health_diff ? "-.." : "..."]"
 			message = Ellipsis(message, 10, 1)
+			last_words = message
 			message_mode = MODE_WHISPER_CRIT
-			succumbed = TRUE
 	else
-		log_say("[name]/[key] : [message]")
+		log_talk(src,"[name]/[key] : [message]",LOGSAY)
 
 	message = treat_message(message)
 	if(!message)
 		return
 
-	spans += get_spans()
+	spans |= get_spans()
 
 	if(language)
 		var/datum/language/L = GLOB.language_datum_instances[language]
@@ -184,6 +181,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		spans |= SPAN_ITALICS
 	if(radio_return & REDUCE_RANGE)
 		message_range = 1
+	if(radio_return & NOPASS)
+		return 1
 
 	//No screams in space, unless you're next to someone.
 	var/turf/T = get_turf(src)
@@ -272,12 +271,12 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(can_speak_basic(message) && can_speak_vocal(message))
 		return 1
 
-/mob/living/proc/can_speak_basic(message) //Check BEFORE handling of xeno and ling channels
+/mob/living/proc/can_speak_basic(message, ignore_spam = FALSE) //Check BEFORE handling of xeno and ling channels
 	if(client)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "<span class='danger'>You cannot speak in IC (muted).</span>")
 			return 0
-		if(client.handle_spam_prevention(message,MUTE_IC))
+		if(!ignore_spam && client.handle_spam_prevention(message,MUTE_IC))
 			return 0
 
 	return 1
@@ -301,10 +300,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 /mob/living/proc/get_message_mode(message)
 	var/key = copytext(message, 1, 2)
-	if(key == ";")
-		return MODE_HEADSET
-	else if(key == "#")
+	if(key == "#")
 		return MODE_WHISPER
+	else if(key == ";")
+		return MODE_HEADSET
 	else if(length(message) > 2 && (key in GLOB.department_radio_prefixes))
 		var/key_symbol = lowertext(copytext(message, 2, 3))
 		return GLOB.department_radio_keys[key_symbol]
@@ -338,8 +337,9 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 								if(prob(40))
 									to_chat(M, "<i><font color=#800080>We can faintly sense an outsider trying to communicate through the hivemind...</font></i>")
 			if(2)
-				var/msg = "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
-				log_say("[mind.changeling.changelingID]/[src.key] : [message]")
+				var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
+				var/msg = "<i><font color=#800080><b>[changeling.changelingID]:</b> [message]</font></i>"
+				log_talk(src,"[changeling.changelingID]/[key] : [message]",LOGSAY)
 				for(var/_M in GLOB.mob_list)
 					var/mob/M = _M
 					if(M in GLOB.dead_mob_list)
@@ -364,7 +364,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(message_mode == MODE_VOCALCORDS)
 		if(iscarbon(src))
 			var/mob/living/carbon/C = src
-			var/obj/item/organ/vocal_cords/V = C.getorganslot("vocal_cords")
+			var/obj/item/organ/vocal_cords/V = C.getorganslot(ORGAN_SLOT_VOICE)
 			if(V && V.can_speak_with())
 				V.handle_speech(message) //message
 				V.speak_with(message) //action
@@ -390,6 +390,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 /mob/living/proc/radio(message, message_mode, list/spans, language)
 	switch(message_mode)
+		if(MODE_WHISPER)
+			return ITALICS
 		if(MODE_R_HAND)
 			for(var/obj/item/r_hand in get_held_items_for_side("r", all = TRUE))
 				if (r_hand)
@@ -413,10 +415,12 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return 0
 
 /mob/living/lingcheck() //1 is ling w/ no hivemind. 2 is ling w/hivemind. 3 is ling victim being linked into hivemind.
-	if(mind && mind.changeling)
-		if(mind.changeling.changeling_speak)
-			return 2
-		return 1
+	if(mind)
+		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
+		if(changeling)
+			if(changeling.changeling_speak)
+				return 2
+			return 1
 	if(mind && mind.linglink)
 		return 3
 	return 0
@@ -425,7 +429,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(message_mode == MODE_WHISPER)
 		. = verb_whisper
 	else if(message_mode == MODE_WHISPER_CRIT)
-		. = "[verb_whisper] in [p_their()] last breath"
+		. = "painfully [verb_whisper]"
+		apply_damage(1, OXY)
 	else if(stuttering)
 		. = "stammers"
 	else if(getBrainLoss() >= 60)

@@ -1,9 +1,9 @@
 /obj/structure/trap
 	name = "IT'S A TRAP"
-	desc = "stepping on me is a guaranteed bad day"
+	desc = "Stepping on me is a guaranteed bad day."
 	icon = 'icons/obj/hand_of_god_structures.dmi'
 	icon_state = "trap"
-	density = 0
+	density = FALSE
 	anchored = TRUE
 	alpha = 30 //initially quite hidden when not "recharging"
 	var/last_trigger = 0
@@ -16,7 +16,7 @@
 	var/datum/effect_system/spark_spread/spark_system
 
 /obj/structure/trap/Initialize(mapload)
-	..()
+	. = ..()
 	spark_system = new
 	spark_system.set_up(4,1,src)
 	spark_system.attach(src)
@@ -130,7 +130,7 @@
 	name = "divine ward"
 	desc = "A divine barrier, It looks like you could destroy it with enough effort, or wait for it to dissipate..."
 	icon_state = "ward"
-	density = 1
+	density = TRUE
 	time_between_triggers = 1200 //Exists for 2 minutes
 
 

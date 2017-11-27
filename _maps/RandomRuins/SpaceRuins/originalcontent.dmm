@@ -106,9 +106,7 @@
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "as" = (
-/obj/item/weapon/paper/crumpled{
-	desc = "<i>Various scrawled out drawings and sketches reside on the paper, apparently he didn't much care for these drawings.</i>"
-	},
+/obj/item/paper/crumpled/ruins/originalcontent,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "at" = (
@@ -495,7 +493,7 @@
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "bt" = (
-/obj/item/weapon/storage/crayons,
+/obj/item/storage/crayons,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "bu" = (
@@ -543,12 +541,7 @@
 /area/ruin/powered)
 "bB" = (
 /obj/structure/easel,
-/obj/item/weapon/paper/pamphlet{
-	icon = 'icons/obj/fluff.dmi';
-	icon_state = "painting4";
-	info = "<i>This picture depicts a crudely-drawn stickman firing a crudely-drawn gun.</i>";
-	name = "Painting - 'BANG' "
-	},
+/obj/item/paper/pamphlet/ruin/originalcontent/stickman,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "bC" = (
@@ -598,15 +591,9 @@
 	dir = 9
 	},
 /obj/structure/closet/crate/bin,
-/obj/item/weapon/paper/crumpled{
-	desc = "<i>Various scrawled out drawings and sketches reside on the paper, apparently he didn't much care for these drawings.</i>"
-	},
-/obj/item/weapon/paper/crumpled{
-	desc = "<i>Various scrawled out drawings and sketches reside on the paper, apparently he didn't much care for these drawings.</i>"
-	},
-/obj/item/weapon/paper/crumpled{
-	desc = "<i>Various scrawled out drawings and sketches reside on the paper, apparently he didn't much care for these drawings.</i>"
-	},
+/obj/item/paper/crumpled/ruins/originalcontent,
+/obj/item/paper/crumpled/ruins/originalcontent,
+/obj/item/paper/crumpled/ruins/originalcontent,
 /obj/item/device/gps{
 	gpstag = "Pulpy Signal"
 	},
@@ -617,12 +604,7 @@
 	dir = 1
 	},
 /obj/structure/easel,
-/obj/item/weapon/paper/pamphlet{
-	icon = 'icons/obj/fluff.dmi';
-	icon_state = "painting1";
-	info = "<i>This picture depicts a sunny day on a lush hillside, set under a shaded tree.</i>";
-	name = "Painting - 'Treeside' "
-	},
+/obj/item/paper/pamphlet/ruin/originalcontent/treeside,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "bK" = (
@@ -630,7 +612,7 @@
 	dir = 5
 	},
 /obj/structure/table/wood,
-/obj/item/weapon/storage/crayons,
+/obj/item/storage/crayons,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "bL" = (
@@ -724,12 +706,7 @@
 	dir = 8
 	},
 /obj/structure/easel,
-/obj/item/weapon/paper/pamphlet{
-	icon = 'icons/obj/fluff.dmi';
-	icon_state = "painting3";
-	info = "<i>This picture depicts a smiling clown. Something doesn't feel right about this..</i>";
-	name = "Painting - 'Pennywise' "
-	},
+/obj/item/paper/pamphlet/ruin/originalcontent/pennywise,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "bX" = (
@@ -745,7 +722,7 @@
 	dir = 4
 	},
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/rainbow,
+/obj/item/bedsheet/rainbow,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "ca" = (
@@ -753,7 +730,7 @@
 	dir = 10
 	},
 /obj/structure/table/wood,
-/obj/item/weapon/storage/crayons,
+/obj/item/storage/crayons,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "cb" = (
@@ -797,14 +774,12 @@
 	dir = 4
 	},
 /obj/structure/table/wood,
-/obj/item/weapon/paper_bin,
+/obj/item/paper_bin,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "ch" = (
 /obj/structure/fluff/paper,
-/obj/item/weapon/paper/crumpled{
-	desc = "<i>Various scrawled out drawings and sketches reside on the paper, apparently he didn't much care for these drawings.</i>"
-	},
+/obj/item/paper/crumpled/ruins/originalcontent,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "ci" = (
@@ -840,8 +815,8 @@
 "cm" = (
 /obj/structure/fluff/paper,
 /obj/structure/table/wood,
-/obj/item/weapon/storage/crayons,
-/obj/item/weapon/storage/crayons,
+/obj/item/storage/crayons,
+/obj/item/storage/crayons,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "cn" = (
@@ -849,9 +824,9 @@
 	dir = 6
 	},
 /obj/structure/table/wood,
-/obj/item/weapon/canvas/twentythreeXtwentythree,
-/obj/item/weapon/canvas,
-/obj/item/weapon/canvas/nineteenXnineteen,
+/obj/item/canvas/twentythreeXtwentythree,
+/obj/item/canvas,
+/obj/item/canvas/nineteenXnineteen,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "co" = (
@@ -872,19 +847,14 @@
 "cq" = (
 /obj/structure/fluff/paper,
 /obj/structure/table/wood,
-/obj/item/weapon/storage/crayons,
-/obj/item/weapon/pen/fourcolor,
+/obj/item/storage/crayons,
+/obj/item/pen/fourcolor,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "cr" = (
 /obj/structure/fluff/paper,
 /obj/structure/easel,
-/obj/item/weapon/paper/pamphlet{
-	icon = 'icons/obj/fluff.dmi';
-	icon_state = "painting2";
-	info = "<i>This picture depicts a man yelling on a bridge for no apparent reason.</i>";
-	name = "Painting - 'Hands-On-Face' "
-	},
+/obj/item/paper/pamphlet/ruin/originalcontent/yelling,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "cs" = (

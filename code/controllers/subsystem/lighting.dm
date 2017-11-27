@@ -16,7 +16,7 @@ SUBSYSTEM_DEF(lighting)
 
 /datum/controller/subsystem/lighting/Initialize(timeofday)
 	if(!initialized)
-		if (config.starlight)
+		if (CONFIG_GET(flag/starlight))
 			for(var/I in GLOB.sortedAreas)
 				var/area/A = I
 				if (A.dynamic_lighting == DYNAMIC_LIGHTING_IFSTARLIGHT)
@@ -88,3 +88,11 @@ SUBSYSTEM_DEF(lighting)
 /datum/controller/subsystem/lighting/Recover()
 	initialized = SSlighting.initialized
 	..()
+
+
+/datum/controller/subsystem/lighting/proc/initialize_lighting_objects(list/turfs)
+	for(var/turf/T in turfs)
+		if(!IS_DYNAMIC_LIGHTING(T))
+			continue
+		new/atom/movable/lighting_object(T)
+		CHECK_TICK

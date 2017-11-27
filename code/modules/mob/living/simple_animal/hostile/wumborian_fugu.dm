@@ -8,7 +8,7 @@
 	icon_aggro = "Fugu"
 	icon_dead = "Fugu_dead"
 	icon_gib = "syndicate_gib"
-	mouse_opacity = 2
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	move_to_delay = 5
 	friendly = "floats near"
 	speak_emote = list("puffs")
@@ -27,6 +27,7 @@
 	idle_vision_range = 5
 	mob_size = MOB_SIZE_SMALL
 	environment_smash = ENVIRONMENT_SMASH_NONE
+	gold_core_spawnable = TRUE
 	var/wumbo = 0
 	var/inflate_cooldown = 0
 	loot = list(/obj/item/asteroid/fugu_gland{layer = ABOVE_MOB_LAYER})
@@ -104,17 +105,16 @@
 	desc = "The key to the wumborian fugu's ability to increase its mass arbitrarily, this disgusting remnant can apply the same effect to other creatures, giving them great strength."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "fugu_gland"
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
-	origin_tech = "biotech=6"
-	var/list/banned_mobs()
+	var/list/banned_mobs
 
 /obj/item/asteroid/fugu_gland/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag && isanimal(target))
 		var/mob/living/simple_animal/A = target
 		if(A.buffed || (A.type in banned_mobs) || A.stat)
-			to_chat(user, "<span class='warning'>Something's interfering with the [src]'s effects. It's no use.</span>")
+			to_chat(user, "<span class='warning'>Something's interfering with [src]'s effects. It's no use.</span>")
 			return
 		A.buffed++
 		A.maxHealth *= 1.5
@@ -122,6 +122,6 @@
 		A.melee_damage_lower = max((A.melee_damage_lower * 2), 10)
 		A.melee_damage_upper = max((A.melee_damage_upper * 2), 10)
 		A.transform *= 2
-		A.environment_smash += 2
+		A.environment_smash |= ENVIRONMENT_SMASH_STRUCTURES | ENVIRONMENT_SMASH_RWALLS
 		to_chat(user, "<span class='info'>You increase the size of [A], giving it a surge of strength!</span>")
 		qdel(src)

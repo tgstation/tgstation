@@ -5,14 +5,13 @@
 	icon_state = "ai-slipper0"
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
 	anchored = TRUE
-	obj_integrity = 200
 	max_integrity = 200
 	armor = list(melee = 50, bullet = 20, laser = 20, energy = 20, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 
 	var/uses = 20
 	var/cooldown = 0
 	var/cooldown_time = 100
-	req_access = list(GLOB.access_ai_upload)
+	req_access = list(ACCESS_AI_UPLOAD)
 
 /obj/machinery/ai_slipper/examine(mob/user)
 	..()
@@ -44,7 +43,7 @@
 		to_chat(user, "<span class='danger'>[src] is out of foam and cannot be activated.</span>")
 		return
 	if(cooldown_time > world.time)
-		to_chat(user, "<span class='danger'>[src] cannot be activated for another <b>[round((world.time - cooldown_time) * 0.1)]</b> second\s.</span>")
+		to_chat(user, "<span class='danger'>[src] cannot be activated for <b>[DisplayTimeText(world.time - cooldown_time)]</b>.</span>")
 		return
 	new /obj/effect/particle_effect/foam(loc)
 	uses--

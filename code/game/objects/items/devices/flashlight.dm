@@ -4,17 +4,19 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flashlight"
 	item_state = "flashlight"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	slot_flags = SLOT_BELT
 	materials = list(MAT_METAL=50, MAT_GLASS=20)
 	actions_types = list(/datum/action/item_action/toggle_light)
-	var/on = 0
+	var/on = FALSE
 	var/brightness_on = 4 //range of light when on
 	var/flashlight_power = 1 //strength of the light when on
 
 /obj/item/device/flashlight/Initialize()
-	..()
+	. = ..()
 	update_brightness()
 
 /obj/item/device/flashlight/proc/update_brightness(mob/user = null)
@@ -67,7 +69,7 @@
 					to_chat(user, "<span class='notice'>You're going to need to remove that [(M.head && M.head.flags_cover & HEADCOVERSEYES) ? "helmet" : (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSEYES) ? "mask": "glasses"] first.</span>")
 					return
 
-				var/obj/item/organ/eyes/E = M.getorganslot("eye_sight")
+				var/obj/item/organ/eyes/E = M.getorganslot(ORGAN_SLOT_EYES)
 				if(!E)
 					to_chat(user, "<span class='danger'>[M] doesn't have any eyes!</span>")
 					return
@@ -150,7 +152,7 @@
 					else
 						to_chat(user, "<span class='notice'>[M] doesn't have any organs in [their] mouth.</span>")
 					if(pill_count)
-						to_chat(user, "<span class='notice'>[M] has [pill_count] pill[pill_count > 1 ? "s" : ""] implanted in [their] teeth.")
+						to_chat(user, "<span class='notice'>[M] has [pill_count] pill[pill_count > 1 ? "s" : ""] implanted in [their] teeth.</span>")
 
 	else
 		return ..()
@@ -160,7 +162,7 @@
 	desc = "A pen-sized light, used by medical staff. It can also be used to create a hologram to alert people of incoming medical assistance."
 	icon_state = "penlight"
 	item_state = ""
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	brightness_on = 2
 	var/holo_cooldown = 0
 
@@ -194,7 +196,9 @@
 	desc = "A robust flashlight used by security."
 	icon_state = "seclite"
 	item_state = "seclite"
-	force = 9 // Not as good as a stun baton.
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
+	force = 15 // robust
 	brightness_on = 5 // A little better than the standard flashlight.
 	hitsound = 'sound/weapons/genhit1.ogg'
 
@@ -204,11 +208,14 @@
 	desc = "A desk lamp with an adjustable mount."
 	icon_state = "lamp"
 	item_state = "lamp"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	force = 10
 	brightness_on = 5
 	w_class = WEIGHT_CLASS_BULKY
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	materials = list()
-	on = 1
+	on = TRUE
 
 
 // green-shaded desk lamp
@@ -271,7 +278,7 @@
 		. = ""
 
 /obj/item/device/flashlight/flare/proc/turn_off()
-	on = 0
+	on = FALSE
 	force = initial(src.force)
 	damtype = initial(src.damtype)
 	if(ismob(loc))
@@ -322,6 +329,8 @@
 	name = "lantern"
 	icon_state = "lantern"
 	item_state = "lantern"
+	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	desc = "A mining lantern."
 	brightness_on = 6			// luminosity when on
 
@@ -339,7 +348,6 @@
 	brightness_on = 6 //luminosity when on
 
 /obj/item/device/flashlight/emp
-	origin_tech = "magnets=3;syndicate=1"
 	var/emp_max_charges = 4
 	var/emp_cur_charges = 4
 	var/charge_tick = 0
@@ -381,7 +389,7 @@
 		else
 			A.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].")
 		to_chat(user, "\The [src] now has [emp_cur_charges] charge\s.")
-		A.emp_act(1)
+		A.emp_act(EMP_HEAVY)
 	else
 		to_chat(user, "<span class='warning'>\The [src] needs time to recharge!</span>")
 	return
@@ -401,7 +409,7 @@
 /obj/item/device/flashlight/glowstick/Initialize()
 	fuel = rand(1600, 2000)
 	light_color = color
-	..()
+	. = ..()
 
 /obj/item/device/flashlight/glowstick/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -415,12 +423,12 @@
 		update_icon()
 
 /obj/item/device/flashlight/glowstick/proc/turn_off()
-	on = 0
+	on = FALSE
 	update_icon()
 
 /obj/item/device/flashlight/glowstick/update_icon()
 	item_state = "glowstick"
-	overlays.Cut()
+	cut_overlays()
 	if(!fuel)
 		icon_state = "glowstick-empty"
 		cut_overlays()
@@ -479,16 +487,14 @@
 
 /obj/item/device/flashlight/glowstick/random
 	name = "random colored glowstick"
+	icon_state = "random_glowstick"
+	color = null
 
 /obj/item/device/flashlight/glowstick/random/Initialize()
-	var/list/glowtypes = typesof(/obj/item/device/flashlight/glowstick)
-	glowtypes -= /obj/item/device/flashlight/glowstick/random
-
-	var/obj/item/device/flashlight/glowstick/glowtype = pick(glowtypes)
-
-	name = initial(glowtype.name)
-	color = initial(glowtype.color)
 	. = ..()
+	var/T = pick(typesof(/obj/item/device/flashlight/glowstick) - /obj/item/device/flashlight/glowstick/random)
+	new T(loc)
+	return INITIALIZE_HINT_QDEL
 
 /obj/item/device/flashlight/spotlight //invisible lighting source
 	name = "disco light"
@@ -518,5 +524,5 @@
 	desc = "This shouldn't exist outside of someone's head, how are you seeing this?"
 	brightness_on = 15
 	flashlight_power = 1
-	flags = CONDUCT | DROPDEL
+	flags_1 = CONDUCT_1 | DROPDEL_1
 	actions_types = list()

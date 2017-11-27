@@ -3,7 +3,6 @@
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_factory"
 	desc = "A thick spire of tendrils."
-	obj_integrity = 200
 	max_integrity = 200
 	health_regen = 1
 	point_return = 25

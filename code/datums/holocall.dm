@@ -49,16 +49,16 @@
 	if(user_good)
 		user.reset_perspective()
 		user.remote_control = null
-	
+
 	if(!QDELETED(eye))
 		if(user_good && user.client)
 			for(var/datum/camerachunk/chunk in eye.visibleCameraChunks)
 				chunk.remove(eye)
 		qdel(eye)
 	eye = null
-	
+
 	user = null
-	
+
 	if(hologram)
 		hologram.HC = null
 		hologram = null
@@ -174,6 +174,7 @@
 
 /datum/action/innate/end_holocall
 	name = "End Holocall"
+	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
 	button_icon_state = "camera_off"
 	var/datum/holocall/hcall
 

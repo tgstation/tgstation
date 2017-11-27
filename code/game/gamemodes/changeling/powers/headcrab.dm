@@ -30,7 +30,7 @@
 	sleep(5) // So it's not killed in explosion
 	var/mob/living/simple_animal/hostile/headcrab/crab = new(turf)
 	for(var/obj/item/organ/I in organs)
-		I.loc = crab
+		I.forceMove(crab)
 	crab.origin = M
 	if(crab.origin)
 		crab.origin.active = 1

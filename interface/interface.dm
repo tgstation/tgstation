@@ -1,12 +1,15 @@
 //Please use mob or src (not usr) in these procs. This way they can be called in the same fashion as procs.
-/client/verb/wiki()
+/client/verb/wiki(query as text)
 	set name = "wiki"
-	set desc = "Visit the wiki."
+	set desc = "Type what you want to know about.  This will open the wiki in your web browser. Type nothing to go to the main page."
 	set hidden = 1
-	if(config.wikiurl)
-		if(alert("This will open the wiki in your browser. Are you sure?",,"Yes","No")=="No")
-			return
-		src << link(config.wikiurl)
+	var/wikiurl = CONFIG_GET(string/wikiurl)
+	if(wikiurl)
+		if(query)
+			var/output = wikiurl + "/index.php?title=Special%3ASearch&profile=default&search=" + query
+			src << link(output)
+		else if (query != null)
+			src << link(wikiurl)
 	else
 		to_chat(src, "<span class='danger'>The wiki URL is not set in the server configuration.</span>")
 	return
@@ -15,10 +18,11 @@
 	set name = "forum"
 	set desc = "Visit the forum."
 	set hidden = 1
-	if(config.forumurl)
+	var/forumurl = CONFIG_GET(string/forumurl)
+	if(forumurl)
 		if(alert("This will open the forum in your browser. Are you sure?",,"Yes","No")=="No")
 			return
-		src << link(config.forumurl)
+		src << link(forumurl)
 	else
 		to_chat(src, "<span class='danger'>The forum URL is not set in the server configuration.</span>")
 	return
@@ -27,10 +31,11 @@
 	set name = "rules"
 	set desc = "Show Server Rules."
 	set hidden = 1
-	if(config.rulesurl)
+	var/rulesurl = CONFIG_GET(string/rulesurl)
+	if(rulesurl)
 		if(alert("This will open the rules in your browser. Are you sure?",,"Yes","No")=="No")
 			return
-		src << link(config.rulesurl)
+		src << link(rulesurl)
 	else
 		to_chat(src, "<span class='danger'>The rules URL is not set in the server configuration.</span>")
 	return
@@ -39,10 +44,11 @@
 	set name = "github"
 	set desc = "Visit Github"
 	set hidden = 1
-	if(config.githuburl)
+	var/githuburl = CONFIG_GET(string/githuburl)
+	if(githuburl)
 		if(alert("This will open the Github repository in your browser. Are you sure?",,"Yes","No")=="No")
 			return
-		src << link(config.githuburl)
+		src << link(githuburl)
 	else
 		to_chat(src, "<span class='danger'>The Github URL is not set in the server configuration.</span>")
 	return
@@ -52,19 +58,21 @@
 	set desc = "Report an issue"
 	set hidden = 1
 	
-	var/compileinfo = ""
 	var/message = "This will open the issue reporter. Are you sure?"
-	
-	if(config.githuburl)
+	var/githuburl = CONFIG_GET(string/githuburl)
+	if(githuburl)
 		if(GLOB.revdata.testmerge.len)
 			message += "<br>The following experimental changes are active and are probably the cause of any new or sudden issues you may experience. If possible, please try to find a specific thread for your issue instead of posting to the general issue tracker:<br>"
 			message += GLOB.revdata.GetTestMergeInfo(FALSE)
 		if(tgalert(src, message, "Report Issue","Yes","No")=="No")
 			return
-	
-	var/dat = {"	<title>Hippie Station 13 Github Ingame Reporting</title>
-					<iframe src='https://tools.hippiestation.com/githubreport/?ckey=[ckey(key)]&sinfo=[compileinfo]' style='border:none' width='850' height='660' scroll=no></iframe>"}
-	src << browse(dat, "window=github;size=900x700")
+		var/servername = CONFIG_GET(string/servername)
+		var/compileinfo = "[GLOB.round_id][servername ? " ([servername])" : ""]"
+		var/dat = {"	<title>Hippie Station 13 Github Ingame Reporting</title>
+ 			<iframe src='https://tools.hippiestation.com/githubreport/?ckey=[ckey(key)]&sinfo=[compileinfo]' style='border:none' width='850' height='660' scroll=no></iframe>"}
+		src << browse(dat, "window=github;size=900x700")
+	else
+		to_chat(src, "<span class='danger'>The Github URL is not set in the server configuration.</span>")
 	return
 
 /client/verb/hotkeys_help()
@@ -111,6 +119,7 @@ Hotkey-Mode: (hotkey-mode must be on)
 \tt = say
 \to = OOC
 \tb = resist
+\t<B></B>h = stop pulling
 \tx = swap-hand
 \tz = activate held object (or y)
 \tf = cycle-intents-left
@@ -133,6 +142,7 @@ Any-Mode: (hotkey doesn't need to be on)
 \tCtrl+e = equip
 \tCtrl+r = throw
 \tCtrl+b = resist
+\tCtrl+h = stop pulling
 \tCtrl+o = OOC
 \tCtrl+x = swap-hand
 \tCtrl+z = activate held object (or Ctrl+y)
@@ -144,7 +154,7 @@ Any-Mode: (hotkey doesn't need to be on)
 \tCtrl+4 = harm-intent
 \tCtrl+'+/-' OR
 \tShift+Mousewheel = Ghost zoom in/out
-\tDEL = pull
+\tDEL = stop pulling
 \tINS = cycle-intents-right
 \tHOME = drop
 \tPGUP = swap-hand
@@ -166,9 +176,9 @@ Hotkey-Mode: (hotkey-mode must be on)
 \td = right
 \tw = up
 \tq = unequip active module
+\t<B></B>h = stop pulling
 \tm = me
 \tt = say
-\t<B></B>h = talk-wheel
 \to = OOC
 \tx = cycle active modules
 \tb = resist
@@ -190,7 +200,7 @@ Any-Mode: (hotkey doesn't need to be on)
 \tCtrl+q = unequip active module
 \tCtrl+x = cycle active modules
 \tCtrl+b = resist
-\tCtrl+h = talk-wheel
+\tCtrl+h = stop pulling
 \tCtrl+o = OOC
 \tCtrl+z = activate held object (or Ctrl+y)
 \tCtrl+f = cycle-intents-left
@@ -199,7 +209,7 @@ Any-Mode: (hotkey doesn't need to be on)
 \tCtrl+2 = activate module 2
 \tCtrl+3 = activate module 3
 \tCtrl+4 = toggle intents
-\tDEL = pull
+\tDEL = stop pulling
 \tINS = toggle intents
 \tPGUP = cycle active modules
 \tPGDN = activate held object

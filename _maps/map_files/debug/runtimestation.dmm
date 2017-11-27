@@ -5,10 +5,10 @@
 "ab" = (
 /obj/structure/lattice,
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "ac" = (
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "ad" = (
 /turf/closed/wall/r_wall,
 /area/maintenance/department/bridge)
@@ -53,8 +53,6 @@
 "an" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/open/space,
@@ -62,13 +60,9 @@
 "ao" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/open/space,
@@ -85,16 +79,13 @@
 	},
 /obj/structure/closet/secure_closet/engineering_electrical,
 /obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
+	icon_state = "0-4"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aq" = (
 /obj/machinery/computer/monitor,
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/open/floor/plating,
@@ -113,13 +104,12 @@
 	pixel_y = 23
 	},
 /obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
+	icon_state = "0-4"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "at" = (
 /obj/machinery/power/apc{
@@ -128,21 +118,18 @@
 	pixel_y = 25
 	},
 /obj/structure/cable{
-	icon_state = "0-8";
-	d2 = 8
+	icon_state = "0-8"
 	},
 /obj/structure/cable{
-	icon_state = "0-2";
-	d2 = 2
+	icon_state = "0-2"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "au" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'RADIOACTIVE AREA'";
 	icon_state = "radiation";
@@ -152,7 +139,7 @@
 /turf/open/floor/plating,
 /area/engine/gravity_generator)
 "av" = (
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/engine/gravity_generator)
 "aw" = (
 /turf/open/floor/plating,
@@ -177,18 +164,12 @@
 "aA" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/open/space,
@@ -196,8 +177,6 @@
 "aB" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/space,
@@ -205,29 +184,21 @@
 "aC" = (
 /obj/machinery/door/airlock,
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aD" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aE" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/open/floor/plating,
@@ -242,25 +213,22 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "aH" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "aI" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/engine/gravity_generator)
 "aJ" = (
@@ -287,10 +255,10 @@
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
-/turf/open/floor/plasteel{
+/obj/effect/turf_decal/bot{
 	dir = 2
 	},
-/obj/effect/turf_decal/bot{
+/turf/open/floor/plasteel{
 	dir = 2
 	},
 /area/engine/atmos)
@@ -310,8 +278,6 @@
 "aQ" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/open/space,
@@ -322,8 +288,6 @@
 	icon_state = "1-8"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/space,
@@ -333,18 +297,14 @@
 /obj/item/device/flashlight{
 	pixel_y = 5
 	},
-/obj/item/weapon/airlock_painter,
+/obj/item/airlock_painter,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aT" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/open/floor/plating,
@@ -356,31 +316,27 @@
 	req_one_access_txt = "0"
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "aV" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "aW" = (
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "aX" = (
 /obj/machinery/door/airlock/glass_engineering{
@@ -388,13 +344,13 @@
 	req_access_txt = "11";
 	req_one_access_txt = "0"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/engine/gravity_generator)
 "aY" = (
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/engine/gravity_generator)
 "aZ" = (
 /obj/structure/tank_dispenser{
@@ -411,10 +367,10 @@
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister,
-/turf/open/floor/plasteel{
+/obj/effect/turf_decal/bot{
 	dir = 2
 	},
-/obj/effect/turf_decal/bot{
+/turf/open/floor/plasteel{
 	dir = 2
 	},
 /area/engine/atmos)
@@ -427,13 +383,11 @@
 /area/engine/atmos)
 "bd" = (
 /obj/structure/table,
-/obj/item/weapon/weldingtool/experimental,
+/obj/item/weldingtool/experimental,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "be" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
@@ -443,16 +397,16 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "bg" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "bh" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "bi" = (
 /obj/machinery/gravity_generator/main/station,
@@ -466,14 +420,12 @@
 	pixel_x = -24
 	},
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1;
-	d2 = 2
+	icon_state = "0-2"
 	},
 /obj/machinery/light,
 /obj/structure/table,
 /obj/item/device/analyzer,
-/obj/item/weapon/wrench,
+/obj/item/wrench,
 /turf/open/floor/plating,
 /area/engine/atmos)
 "bk" = (
@@ -505,33 +457,31 @@
 "bo" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/table,
-/obj/item/weapon/screwdriver/power,
-/obj/item/weapon/wirecutters/power,
+/obj/item/screwdriver/power,
+/obj/item/wirecutters/power,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "bp" = (
 /obj/machinery/light,
-/obj/item/weapon/storage/box/lights/mixed,
+/obj/item/storage/box/lights/mixed,
 /obj/item/device/lightreplacer,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "bq" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "br" = (
 /obj/structure/closet/radiation,
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "bs" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/closed/wall/r_wall,
@@ -545,8 +495,7 @@
 /turf/closed/wall/r_wall,
 /area/bridge)
 "bv" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/bridge)
 "bw" = (
@@ -556,8 +505,6 @@
 "bx" = (
 /obj/machinery/door/airlock,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
@@ -581,9 +528,7 @@
 	},
 /obj/structure/cable,
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1;
-	d2 = 2
+	icon_state = "0-2"
 	},
 /obj/machinery/airalarm{
 	frequency = 1439;
@@ -623,9 +568,7 @@
 	pixel_x = -24
 	},
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1;
-	d2 = 2
+	icon_state = "0-2"
 	},
 /obj/structure/closet/secure_closet/captains,
 /turf/open/floor/plasteel/blue/side{
@@ -635,7 +578,7 @@
 "bH" = (
 /obj/structure/table,
 /obj/item/ammo_box/c10mm,
-/obj/item/weapon/gun/ballistic,
+/obj/item/gun/ballistic,
 /turf/open/floor/plasteel,
 /area/bridge)
 "bI" = (
@@ -644,20 +587,20 @@
 /area/bridge)
 "bJ" = (
 /obj/structure/table,
-/obj/item/weapon/card/id/captains_spare,
+/obj/item/card/id/captains_spare,
 /turf/open/floor/plasteel,
 /area/bridge)
 "bK" = (
 /obj/structure/table,
-/obj/item/weapon/storage/backpack/holding,
+/obj/item/storage/backpack/holding,
 /turf/open/floor/plasteel,
 /area/bridge)
 "bL" = (
 /obj/structure/table,
-/obj/item/weapon/rcd_ammo/large,
-/obj/item/weapon/rcd_ammo/large,
-/obj/item/weapon/rcd_ammo/large,
-/obj/item/weapon/construction/rcd,
+/obj/item/rcd_ammo/large,
+/obj/item/rcd_ammo/large,
+/obj/item/rcd_ammo/large,
+/obj/item/construction/rcd,
 /turf/open/floor/plasteel,
 /area/bridge)
 "bM" = (
@@ -672,31 +615,29 @@
 /area/hallway/primary/central)
 "bO" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bP" = (
 /obj/machinery/vending/cigarette,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
 "bQ" = (
 /obj/machinery/vending/coffee,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
 "bR" = (
 /obj/machinery/vending/cola,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
 "bS" = (
 /obj/machinery/vending/snack,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
 "bT" = (
 /obj/machinery/computer/arcade,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
 "bU" = (
 /obj/machinery/airalarm{
@@ -709,13 +650,10 @@
 	pixel_x = -24
 	},
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1;
-	d2 = 2
+	icon_state = "0-2"
 	},
 /obj/structure/closet/firecloset/full,
 /turf/open/floor/plasteel/arrival{
-	icon_state = "arrival";
 	dir = 9
 	},
 /area/hallway/secondary/entry)
@@ -741,32 +679,24 @@
 	},
 /area/hallway/secondary/entry)
 "bY" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/department/bridge)
 "bZ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/hallway/primary/central)
 "ca" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "cb" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -774,31 +704,22 @@
 /area/hallway/primary/central)
 "cc" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "cd" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
 /area/bridge)
 "ce" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/blue/side{
@@ -807,16 +728,12 @@
 /area/bridge)
 "cf" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/bridge)
 "cg" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/blue/side{
@@ -824,16 +741,11 @@
 	},
 /area/bridge)
 "ch" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/open/floor/plating,
@@ -841,16 +753,12 @@
 "ci" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "cj" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/structure/cable{
@@ -860,16 +768,12 @@
 /area/hallway/primary/central)
 "ck" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/closed/wall/r_wall,
 /area/hallway/secondary/entry)
 "cl" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel/arrival{
@@ -907,8 +811,6 @@
 /area/bridge)
 "cs" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/closed/wall/r_wall,
@@ -938,9 +840,10 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "cy" = (
-/turf/open/floor/plasteel/loadingarea{
+/obj/effect/turf_decal/loading_area{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "cz" = (
 /turf/open/floor/plating,
@@ -978,8 +881,6 @@
 /area/hallway/primary/central)
 "cE" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -1012,32 +913,28 @@
 /area/hallway/secondary/entry)
 "cI" = (
 /obj/structure/table,
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/plasteel/arrival{
 	dir = 8
 	},
 /area/hallway/secondary/entry)
 "cJ" = (
 /obj/structure/table,
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/plasteel/arrival{
 	dir = 10
 	},
 /area/hallway/secondary/entry)
 "cK" = (
 /obj/structure/table,
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/stack/rods{
-	amount = 50
-	},
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/rods/fifty,
 /obj/machinery/light,
 /turf/open/floor/plasteel/arrival,
 /area/hallway/secondary/entry)
 "cL" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin{
+/obj/item/paper_bin{
 	pixel_x = -3;
 	pixel_y = 7
 	},
@@ -1045,8 +942,8 @@
 /area/hallway/secondary/entry)
 "cM" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /obj/item/device/healthanalyzer,
 /turf/open/floor/plasteel/arrival,
 /area/hallway/secondary/entry)
@@ -1055,8 +952,6 @@
 /area/construction)
 "cO" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/closed/wall/r_wall,
@@ -1070,8 +965,7 @@
 /turf/open/floor/plasteel,
 /area/construction)
 "cR" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/construction)
 "cS" = (
@@ -1079,8 +973,6 @@
 /area/storage/primary)
 "cT" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/closed/wall/r_wall,
@@ -1104,25 +996,25 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/plasteel,
 /area/construction)
 "cX" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/construction)
 "cY" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/construction)
 "cZ" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/construction)
 "da" = (
 /obj/machinery/airalarm{
@@ -1144,10 +1036,10 @@
 /turf/open/floor/plating,
 /area/storage/primary)
 "dc" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/storage/primary)
 "dd" = (
 /turf/open/floor/plasteel{
@@ -1191,10 +1083,10 @@
 	},
 /area/storage/primary)
 "dk" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/storage/primary)
 "dl" = (
 /turf/open/floor/plating,
@@ -1203,10 +1095,10 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/construction)
 "dn" = (
 /turf/open/floor/plating,
@@ -1215,10 +1107,10 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/construction)
 "dp" = (
 /obj/machinery/light{
@@ -1268,50 +1160,50 @@
 /turf/open/floor/plating,
 /area/storage/primary)
 "dy" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/construction)
 "dz" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/construction)
 "dA" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/turf/open/floor/plasteel,
 /area/storage/primary)
 "dB" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/storage/primary)
 "dC" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/plasteel,
 /area/storage/primary)
 "dD" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/turf/open/floor/plasteel,
 /area/storage/primary)
 "dE" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/storage/primary)
 "dF" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/plasteel,
 /area/storage/primary)
 "dG" = (
 /obj/machinery/door/airlock,
@@ -1329,22 +1221,22 @@
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "dK" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/construction)
 "dL" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/construction)
 "dM" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/construction)
 "dN" = (
 /obj/structure/table,
@@ -1353,8 +1245,8 @@
 "dO" = (
 /obj/structure/table,
 /obj/machinery/light,
-/obj/item/weapon/twohanded/fireaxe,
-/obj/item/weapon/extinguisher,
+/obj/item/twohanded/fireaxe,
+/obj/item/extinguisher,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "dP" = (
@@ -1364,8 +1256,8 @@
 /area/storage/primary)
 "dQ" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/lights/mixed,
-/obj/item/weapon/storage/box/lights/tubes,
+/obj/item/storage/box/lights/mixed,
+/obj/item/storage/box/lights/tubes,
 /obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/storage/primary)

@@ -6,8 +6,8 @@
 	icon_state = null
 	alpha = 0
 	invisibility = INVISIBILITY_ABSTRACT
-	flags = ABSTRACT|ON_BORDER
-	mouse_opacity = 0
+	flags_1 = ABSTRACT_1|ON_BORDER_1
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/datum/proximity_monitor/advanced/parent = null
 
 /obj/effect/abstract/proximity_checker/advanced/Initialize(mapload, _monitor)
@@ -23,7 +23,7 @@
 	name = "energy field"
 	desc = "Get off my turf!"
 
-/obj/effect/abstract/proximity_checker/advanced/field_turf/CanPass(atom/movable/AM, turf/target, height)
+/obj/effect/abstract/proximity_checker/advanced/field_turf/CanPass(atom/movable/AM, turf/target)
 	if(parent)
 		return parent.field_turf_canpass(AM, src, target)
 	return TRUE
@@ -47,7 +47,7 @@
 	name = "energy field edge"
 	desc = "Edgy description here."
 
-/obj/effect/abstract/proximity_checker/advanced/field_edge/CanPass(atom/movable/AM, turf/target, height)
+/obj/effect/abstract/proximity_checker/advanced/field_edge/CanPass(atom/movable/AM, turf/target)
 	if(parent)
 		return parent.field_edge_canpass(AM, src, target)
 	return TRUE

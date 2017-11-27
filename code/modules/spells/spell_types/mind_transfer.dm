@@ -17,7 +17,7 @@
 
 /*
 Urist: I don't feel like figuring out how you store object spells so I'm leaving this for you to do.
-Make sure spells that are removed from spell_list are actually removed and deleted when mind transfering.
+Make sure spells that are removed from spell_list are actually removed and deleted when mind transferring.
 Also, you never added distance checking after target is selected. I've went ahead and did that.
 */
 /obj/effect/proc_holder/spell/targeted/mind_transfer/cast(list/targets, mob/living/user = usr, distanceoverride)
@@ -75,5 +75,5 @@ Also, you never added distance checking after target is selected. I've went ahea
 	//Here we knock both mobs out for a time.
 	caster.Unconscious(unconscious_amount_caster)
 	victim.Unconscious(unconscious_amount_victim)
-	caster << sound('sound/magic/mandswap.ogg')
-	victim << sound('sound/magic/mandswap.ogg')// only the caster and victim hear the sounds, that way no one knows for sure if the swap happened
+	SEND_SOUND(caster, sound('sound/magic/mandswap.ogg'))
+	SEND_SOUND(victim, sound('sound/magic/mandswap.ogg'))// only the caster and victim hear the sounds, that way no one knows for sure if the swap happened

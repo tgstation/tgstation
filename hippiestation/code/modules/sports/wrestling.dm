@@ -2,7 +2,7 @@
 	name = "wrestling mustache"
 	desc = "A high-tech mustache that can connect to an air tank."
 	icon_state = "mustache"
-	flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	flags_1 = BLOCK_GAS_SMOKE_EFFECT_1 | MASKINTERNALS_1
 	flags_inv = HIDEFACE|HIDEFACIALHAIR
 	w_class = WEIGHT_CLASS_SMALL
 	item_state = "mustache"
@@ -24,7 +24,7 @@
 	desc = "Protects great from ranged attacks, but not against much else. A good wrestler does not need melee protection."
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF
 	body_parts_covered = CHEST|GROIN|LEGS
-	flags = THICKMATERIAL
+	flags_1 = THICKMATERIAL_1
 	armor = list(melee = 0, bullet = 70, laser = 60, energy = 50, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 100)
 	can_adjust = FALSE
 	icon_state = "unitard"

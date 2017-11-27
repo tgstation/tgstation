@@ -3,7 +3,7 @@
 	icon_state = "bowlingshoes"
 	desc = "Made for use in only the finest bowling alleys."
 	permeability_coefficient = 0.01
-	flags = NOSLIP
+	flags_1 = NOSLIP_1
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF
 	body_parts_covered = FEET
 	permeability_coefficient = 0.01
@@ -16,14 +16,14 @@
 	icon_state = "bowlinguniform"
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF
 	body_parts_covered = CHEST|GROIN|LEGS
-	flags = THICKMATERIAL | STOPSPRESSUREDMAGE
+	flags_1 = THICKMATERIAL_1 | STOPSPRESSUREDMAGE_1
 	armor = list(melee = 70, bullet = 60, laser = 80, energy = 60, bomb = 75, bio = 30, rad = 50, fire = 100, acid = 100)
 	can_adjust = FALSE
 	var/next_bowl = 1
 
-/obj/item/weapon/bowling
+/obj/item/bowling
 	name = "bowling ball"
-	icon = 'hippiestation/icons/obj/weapons.dmi'
+	icon = 'hippiestation/icons/obj/items_and_weapons.dmi'
 	icon_state = "bowling_ball"
 	desc = "A heavy, round device used to knock pins (or people) down."
 	force = 6
@@ -33,11 +33,11 @@
 	throw_speed = 1
 	var/pro_wielded = FALSE
 
-/obj/item/weapon/bowling/Initialize()
+/obj/item/bowling/Initialize()
 	. = ..()
 	color = pick("white","green","yellow","purple")
 
-/obj/item/weapon/bowling/throw_at(atom/target, range, speed, mob/thrower, spin=FALSE, diagonals_first = FALSE, datum/callback/callback)
+/obj/item/bowling/throw_at(atom/target, range, speed, mob/thrower, spin=FALSE, diagonals_first = FALSE, datum/callback/callback)
 	if(istype(thrower, /mob/living/carbon/human))
 		var/mob/living/carbon/human/user = thrower
 		if(user.w_uniform && istype(user.w_uniform, /obj/item/clothing/under/hippie/bowling))
@@ -50,7 +50,7 @@
 				bowling.next_bowl = world.time + 10
 	. = ..(target, range, speed, thrower, FALSE, diagonals_first, callback)
 
-/obj/item/weapon/bowling/throw_impact(atom/hit_atom)
+/obj/item/bowling/throw_impact(atom/hit_atom)
 	if(!ishuman(hit_atom))//if the ball hits a nonhuman
 		unspin()
 		return ..()
@@ -68,7 +68,7 @@
 		unspin()
 		return ..()
 
-/obj/item/weapon/bowling/proc/unspin()
+/obj/item/bowling/proc/unspin()
 	icon_state = "bowling_ball"
 	unlimitedthrow = FALSE
 	pro_wielded = FALSE

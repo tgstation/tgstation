@@ -39,11 +39,9 @@ Contents:
 	//selecting a spawn_loc
 	if(!spawn_loc)
 		var/list/spawn_locs = list()
-		for(var/obj/effect/landmark/L in GLOB.landmarks_list)
+		for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
 			if(isturf(L.loc))
-				switch(L.name)
-					if("ninjaspawn","carpspawn")
-						spawn_locs += L.loc
+				spawn_locs += L.loc
 		if(!spawn_locs.len)
 			return kill()
 		spawn_loc = pick(spawn_locs)
@@ -71,12 +69,8 @@ Contents:
 	var/datum/antagonist/ninja/ninjadatum = add_ninja(Ninja)
 	ninjadatum.equip_space_ninja()
 
-	Ninja.internal = Ninja.s_store
-	Ninja.update_internals_hud_icon(1)
-
 	if(Ninja.mind != Mind)			//something has gone wrong!
 		throw EXCEPTION("Ninja created with incorrect mind")
-
 
 	SSticker.mode.update_ninja_icons_added(Ninja)
 	spawned_mobs += Ninja

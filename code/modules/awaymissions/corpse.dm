@@ -4,6 +4,8 @@
 
 /obj/effect/mob_spawn
 	name = "Unknown"
+	density = TRUE
+	anchored = TRUE
 	var/mob_type = null
 	var/mob_name = ""
 	var/mob_gender = null
@@ -19,10 +21,10 @@
 	var/brute_damage = 0
 	var/oxy_damage = 0
 	var/burn_damage = 0
+	var/datum/disease/disease = null //Do they start with a pre-spawned disease?
 	var/mob_color //Change the mob's color
 	var/assignedrole
-	density = 1
-	anchored = 1
+	var/show_flavour = TRUE
 	var/banType = "lavaland"
 
 /obj/effect/mob_spawn/attack_ghost(mob/user)
@@ -46,10 +48,13 @@
 		create()
 	else
 		GLOB.poi_list |= src
+		LAZYADD(GLOB.mob_spawners[name], src)
 
 /obj/effect/mob_spawn/Destroy()
-	GLOB.poi_list.Remove(src)
-	. = ..()
+	GLOB.poi_list -= src
+	var/list/spawners = GLOB.mob_spawners[name]
+	LAZYREMOVE(spawners, src)
+	return ..()
 
 /obj/effect/mob_spawn/proc/special(mob/M)
 	return
@@ -57,7 +62,7 @@
 /obj/effect/mob_spawn/proc/equip(mob/M)
 	return
 
-/obj/effect/mob_spawn/proc/create(ckey, flavour = TRUE, name)
+/obj/effect/mob_spawn/proc/create(ckey, name)
 	var/mob/living/M = new mob_type(get_turf(src)) //living mobs only
 	if(!random)
 		M.real_name = mob_name ? mob_name : M.name
@@ -66,6 +71,8 @@
 		M.gender = mob_gender
 	if(faction)
 		M.faction = list(faction)
+	if(disease)
+		M.ForceContractDisease(new disease)
 	if(death)
 		M.death(1) //Kills the new mob
 
@@ -77,7 +84,7 @@
 
 	if(ckey)
 		M.ckey = ckey
-		if(flavour)
+		if(show_flavour)
 			to_chat(M, "[flavour_text]")
 		var/datum/mind/MM = M.mind
 		if(objectives)
@@ -127,6 +134,10 @@
 	var/backpack_contents = -1
 	var/suit_store = -1
 
+	var/hair_style
+	var/facial_hair_style
+	var/skin_tone
+
 /obj/effect/mob_spawn/human/Initialize()
 	if(ispath(outfit))
 		outfit = new outfit()
@@ -144,6 +155,20 @@
 	H.underwear = "Nude"
 	H.undershirt = "Nude"
 	H.socks = "Nude"
+	if(hair_style)
+		H.hair_style = hair_style
+	else
+		H.hair_style = random_hair_style(gender)
+	if(facial_hair_style)
+		H.facial_hair_style = facial_hair_style
+	else
+		H.facial_hair_style = random_facial_hair_style(gender)
+	if(skin_tone)
+		H.skin_tone = skin_tone
+	else
+		H.skin_tone = random_skin_tone()
+	H.update_hair()
+	H.update_body()
 	if(outfit)
 		var/static/list/slots = list("uniform", "r_hand", "l_hand", "suit", "shoes", "gloves", "ears", "glasses", "mask", "head", "belt", "r_pocket", "l_pocket", "back", "id", "neck", "backpack_contents", "suit_store")
 		for(var/slot in slots)
@@ -156,7 +181,7 @@
 			var/obj/item/device/pda/PDA = locate(/obj/item/device/pda) in H
 			if(PDA)
 				PDA.toff = TRUE
-	var/obj/item/weapon/card/id/W = H.wear_id
+	var/obj/item/card/id/W = H.wear_id
 	if(W)
 		if(id_access)
 			for(var/jobtype in typesof(/datum/job))
@@ -237,6 +262,19 @@
 
 ///////////Civilians//////////////////////
 
+/obj/effect/mob_spawn/human/corpse/assistant
+	name = "Assistant"
+	outfit = /datum/outfit/job/assistant
+
+/obj/effect/mob_spawn/human/corpse/assistant/beesease_infection
+	disease = /datum/disease/beesease
+
+/obj/effect/mob_spawn/human/corpse/assistant/brainrot_infection
+	disease = /datum/disease/brainrot
+
+/obj/effect/mob_spawn/human/corpse/assistant/spanishflu_infection
+	disease = /datum/disease/fluspanish
+
 /obj/effect/mob_spawn/human/cook
 	name = "Cook"
 	outfit = /datum/outfit/job/cook
@@ -299,7 +337,7 @@
 /obj/effect/mob_spawn/human/bartender
 	name = "Space Bartender"
 	id_job = "Bartender"
-	id_access_list = list(GLOB.access_bar)
+	id_access_list = list(ACCESS_BAR)
 	outfit = /datum/outfit/spacebartender
 
 /obj/effect/mob_spawn/human/bartender/alive
@@ -315,11 +353,11 @@
 /datum/outfit/spacebartender
 	name = "Space Bartender"
 	uniform = /obj/item/clothing/under/rank/bartender
-	back = /obj/item/weapon/storage/backpack
+	back = /obj/item/storage/backpack
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	suit = /obj/item/clothing/suit/armor/vest
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
-	id = /obj/item/weapon/card/id
+	id = /obj/item/card/id
 
 
 /obj/effect/mob_spawn/human/beach
@@ -340,7 +378,7 @@
 	name = "Beach Bum"
 	glasses = /obj/item/clothing/glasses/sunglasses
 	uniform = /obj/item/clothing/under/shorts/red
-	r_pocket = /obj/item/weapon/storage/wallet/random
+	r_pocket = /obj/item/storage/wallet/random
 
 /datum/outfit/beachbum/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -353,7 +391,7 @@
 /obj/effect/mob_spawn/human/bridgeofficer
 	name = "Bridge Officer"
 	id_job = "Bridge Officer"
-	id_access_list = list(GLOB.access_cent_captain)
+	id_access_list = list(ACCESS_CENT_CAPTAIN)
 	outfit = /datum/outfit/nanotrasenbridgeofficercorpse
 
 /datum/outfit/nanotrasenbridgeofficercorpse
@@ -363,13 +401,13 @@
 	suit = /obj/item/clothing/suit/armor/bulletproof
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	glasses = /obj/item/clothing/glasses/sunglasses
-	id = /obj/item/weapon/card/id
+	id = /obj/item/card/id
 
 
 /obj/effect/mob_spawn/human/commander
 	name = "Commander"
 	id_job = "Commander"
-	id_access_list = list(GLOB.access_cent_captain, GLOB.access_cent_general, GLOB.access_cent_specops, GLOB.access_cent_medical, GLOB.access_cent_storage)
+	id_access_list = list(ACCESS_CENT_CAPTAIN, ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_MEDICAL, ACCESS_CENT_STORAGE)
 	outfit = /datum/outfit/nanotrasencommandercorpse
 
 /datum/outfit/nanotrasencommandercorpse
@@ -382,14 +420,14 @@
 	head = /obj/item/clothing/head/centhat
 	gloves = /obj/item/clothing/gloves/combat
 	shoes = /obj/item/clothing/shoes/combat/swat
-	r_pocket = /obj/item/weapon/lighter
-	id = /obj/item/weapon/card/id
+	r_pocket = /obj/item/lighter
+	id = /obj/item/card/id
 
 
 /obj/effect/mob_spawn/human/nanotrasensoldier
 	name = "Nanotrasen Private Security Officer"
 	id_job = "Private Security Force"
-	id_access_list = list(GLOB.access_cent_captain, GLOB.access_cent_general, GLOB.access_cent_specops, GLOB.access_cent_medical, GLOB.access_cent_storage, GLOB.access_security)
+	id_access_list = list(ACCESS_CENT_CAPTAIN, ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_MEDICAL, ACCESS_CENT_STORAGE, ACCESS_SECURITY)
 	outfit = /datum/outfit/nanotrasensoldiercorpse
 
 /datum/outfit/nanotrasensoldiercorpse
@@ -400,8 +438,8 @@
 	gloves = /obj/item/clothing/gloves/combat
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
 	head = /obj/item/clothing/head/helmet/swat/nanotrasen
-	back = /obj/item/weapon/storage/backpack/security
-	id = /obj/item/weapon/card/id
+	back = /obj/item/storage/backpack/security
+	id = /obj/item/card/id
 
 
 /obj/effect/mob_spawn/human/commander/alive
@@ -486,7 +524,7 @@
 /datum/outfit/cryobartender
 	name = "Cryogenic Bartender"
 	uniform = /obj/item/clothing/under/rank/bartender
-	back = /obj/item/weapon/storage/backpack
+	back = /obj/item/storage/backpack
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	suit = /obj/item/clothing/suit/armor/vest
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent

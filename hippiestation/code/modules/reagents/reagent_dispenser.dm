@@ -26,7 +26,7 @@
 	name = "chem tank"
 	desc = "It can hold a large amount of chemicals. Use a screwdriver to open and close its lid."
 	icon_state = "chem"
-	tank_volume = 300
+	tank_volume = 1000
 	use_reagent_icon = TRUE
 	reagent_id = null
 
@@ -36,19 +36,19 @@
 	reagent_icon = new
 	update_icon()
 
-/obj/structure/reagent_dispensers/attackby(obj/item/weapon/W, mob/user, params)
+/obj/structure/reagent_dispensers/attackby(obj/item/W, mob/user, params)
 	..()
 	update_icon()
 
-/obj/structure/reagent_dispensers/chemical/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/screwdriver))
-		if(container_type & DRAWABLE)
-			container_type |= INJECTABLE
-			container_type &= ~DRAWABLE
+/obj/structure/reagent_dispensers/chemical/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/screwdriver))
+		if(container_type & DRAWABLE_1)
+			container_type |= OPENCONTAINER_1
+			container_type &= ~DRAWABLE_1
 			to_chat(user, "<span class='notice'>You unfasten the tank's cap.</span>")
-		else if(container_type & INJECTABLE)
-			container_type |= DRAWABLE
-			container_type &= ~INJECTABLE
+		else if(container_type & OPENCONTAINER_1)
+			container_type |= DRAWABLE_1
+			container_type &= ~OPENCONTAINER_1
 			to_chat(user, "<span class='notice'>You fasten the tank's cap.</span>")
 		update_icon()
 		playsound(src.loc, 'sound/machines/click.ogg', 20, 1)
@@ -67,7 +67,7 @@
 
 /obj/structure/reagent_dispensers/chemical/update_icon()
 	..()
-	if(container_type & DRAWABLE)
+	if(container_type & DRAWABLE_1)
 		add_overlay("chemlid")
 
 /obj/structure/reagent_dispensers/watertank
@@ -84,3 +84,6 @@
 	desc = "A machine that dispenses the clown's thick juice. HONK!"
 	icon_state = "honk_cooler"
 	reagent_id = "banana"
+
+/obj/structure/reagent_dispensers/cooking_oil
+	icon = 'icons/obj/objects.dmi'

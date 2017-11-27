@@ -23,7 +23,7 @@
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	del_on_death = 0
 
-/mob/living/simple_animal/hostile/retaliate/nanotrasenpeace
+/mob/living/simple_animal/hostile/retaliate/nanotrasenpeace //this should be in a different file
 	name = "Nanotrasen Private Security Officer"
 	desc = "An officer part of Nanotrasen's private security force."
 	icon = 'icons/mob/simple_human.dmi'
@@ -36,7 +36,7 @@
 	response_disarm = "shoves"
 	response_harm = "hits"
 	speed = 0
-	stat_attack = 1
+	stat_attack = UNCONSCIOUS
 	robust_searching = 1
 	vision_range = 3
 	maxHealth = 100
@@ -69,5 +69,5 @@
 	minimum_distance = 5
 	casingtype = /obj/item/ammo_casing/c46x30mm
 	projectilesound = 'sound/weapons/gunshot_smg.ogg'
-	loot = list(/obj/item/weapon/gun/ballistic/automatic/wt550,
+	loot = list(/obj/item/gun/ballistic/automatic/wt550,
 				/obj/effect/mob_spawn/human/corpse/nanotrasensoldier)

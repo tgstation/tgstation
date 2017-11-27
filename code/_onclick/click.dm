@@ -32,6 +32,7 @@
 */
 /atom/Click(location,control,params)
 	if(initialized)
+		SendSignal(COMSIG_CLICK, location, control, params)
 		usr.ClickOn(src, params)
 
 /atom/DblClick(location,control,params)
@@ -95,7 +96,7 @@
 	if(!modifiers["catcher"] && A.IsObscured())
 		return
 
-	if(istype(loc,/obj/mecha))
+	if(ismecha(loc))
 		var/obj/mecha/M = loc
 		return M.click_action(A,src,params)
 
@@ -144,7 +145,7 @@
 		else
 			RangedAttack(A,params)
 
-//Is the atom obscured by a PREVENT_CLICK_UNDER object above it
+//Is the atom obscured by a PREVENT_CLICK_UNDER_1 object above it
 /atom/proc/IsObscured()
 	if(!isturf(loc)) //This only makes sense for things directly on turfs for now
 		return FALSE
@@ -152,13 +153,13 @@
 	if(!T)
 		return FALSE
 	for(var/atom/movable/AM in T)
-		if(AM.flags & PREVENT_CLICK_UNDER && AM.density && AM.layer > layer)
+		if(AM.flags_1 & PREVENT_CLICK_UNDER_1 && AM.density && AM.layer > layer)
 			return TRUE
 	return FALSE
 
 /turf/IsObscured()
 	for(var/atom/movable/AM in src)
-		if(AM.flags & PREVENT_CLICK_UNDER && AM.density)
+		if(AM.flags_1 & PREVENT_CLICK_UNDER_1 && AM.density)
 			return TRUE
 	return FALSE
 
@@ -180,7 +181,7 @@
 /atom/proc/CanReachStorage(atom/target,user,depth)
 	return FALSE
 
-/obj/item/weapon/storage/CanReachStorage(atom/target,user,depth)
+/obj/item/storage/CanReachStorage(atom/target,user,depth)
 	while(target && depth > 0)
 		target = target.loc
 		depth--
@@ -281,11 +282,13 @@
 	return
 
 /mob/living/carbon/MiddleClickOn(atom/A)
-	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (iscarbon(A)) && (A != src))
-		next_click = world.time + 5
-		mind.changeling.chosen_sting.try_to_sting(src, A)
-	else
-		swap_hand()
+	if(!stat && mind && iscarbon(A) && A != src)
+		var/datum/antagonist/changeling/C = mind.has_antag_datum(/datum/antagonist/changeling)
+		if(C && C.chosen_sting)
+			C.chosen_sting.try_to_sting(src,A)	
+			next_click = world.time + 5
+			return
+	swap_hand()
 
 /mob/living/simple_animal/drone/MiddleClickOn(atom/A)
 	swap_hand()
@@ -305,6 +308,7 @@
 	A.ShiftClick(src)
 	return
 /atom/proc/ShiftClick(mob/user)
+	SendSignal(COMSIG_CLICK_SHIFT, user)
 	if(user.client && user.client.eye == user || user.client.eye == user.loc)
 		user.examinate(src)
 	return
@@ -319,12 +323,13 @@
 	return
 
 /atom/proc/CtrlClick(mob/user)
+	SendSignal(COMSIG_CLICK_CTRL, user)
 	var/mob/living/ML = user
 	if(istype(ML))
 		ML.pulled(src)
 
 /mob/living/carbon/human/CtrlClick(mob/user)
-	if(ishuman(user) && Adjacent(user))
+	if(ishuman(user) && Adjacent(user) && !user.incapacitated())
 		if(world.time < user.next_move)
 			return FALSE
 		var/mob/living/carbon/human/H = user
@@ -341,13 +346,16 @@
 	return
 
 /mob/living/carbon/AltClickOn(atom/A)
-	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (iscarbon(A)) && (A != src))
-		next_click = world.time + 5
-		mind.changeling.chosen_sting.try_to_sting(src, A)
-	else
-		..()
+	if(!stat && mind && iscarbon(A) && A != src)
+		var/datum/antagonist/changeling/C = mind.has_antag_datum(/datum/antagonist/changeling)
+		if(C && C.chosen_sting)
+			C.chosen_sting.try_to_sting(src,A)	
+			next_click = world.time + 5
+			return
+	..()
 
 /atom/proc/AltClick(mob/user)
+	SendSignal(COMSIG_CLICK_ALT, user)
 	var/turf/T = get_turf(src)
 	if(T && user.TurfAdjacent(T))
 		if(user.listed_turf == T)
@@ -355,7 +363,6 @@
 		else
 			user.listed_turf = T
 			user.client.statpanel = T.name
-	return
 
 /mob/proc/TurfAdjacent(turf/T)
 	return T.Adjacent(src)
@@ -373,6 +380,7 @@
 	return
 
 /atom/proc/CtrlShiftClick(mob/user)
+	SendSignal(COMSIG_CLICK_CTRL_SHIFT)
 	return
 
 /*
@@ -381,13 +389,11 @@
 	Laser Eyes: as the name implies, handles this since nothing else does currently
 	face_atom: turns the mob towards what you clicked on
 */
-/mob/proc/LaserEyes(atom/A)
+/mob/proc/LaserEyes(atom/A, params)
 	return
 
-/mob/living/LaserEyes(atom/A)
+/mob/living/LaserEyes(atom/A, params)
 	changeNext_move(CLICK_CD_RANGE)
-	var/turf/T = get_turf(src)
-	var/turf/U = get_turf(A)
 
 	var/obj/item/projectile/beam/LE = new /obj/item/projectile/beam( loc )
 	LE.icon = 'icons/effects/genetics.dmi'
@@ -396,10 +402,7 @@
 
 	LE.firer = src
 	LE.def_zone = get_organ_target()
-	LE.original = A
-	LE.current = T
-	LE.yo = U.y - T.y
-	LE.xo = U.x - T.x
+	LE.preparePixelProjectile(A, src, params)
 	LE.fire()
 
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
@@ -432,14 +435,26 @@
 
 /obj/screen/click_catcher
 	icon = 'icons/mob/screen_gen.dmi'
-	icon_state = "click_catcher"
+	icon_state = "flash"
 	plane = CLICKCATCHER_PLANE
-	mouse_opacity = 2
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	screen_loc = "CENTER"
 
-/obj/screen/click_catcher/New()
-	..()
-	transform = matrix(200, 0, 0, 0, 200, 0)
+/obj/screen/click_catcher/proc/UpdateGreed(view_size_x = 7, view_size_y = 7)
+	var/icon/newicon = icon('icons/mob/screen_gen.dmi', "flash")
+	if(view_size_x > 16 || view_size_y > 16)
+		newicon.Scale((16 * 2 + 1) * world.icon_size,(16 * 2 + 1) * world.icon_size)
+		icon = newicon
+		var/tx = view_size_x/16
+		var/ty = view_size_y/16
+		var/matrix/M = new
+		M.Scale(tx, ty)
+		transform = M
+		screen_loc = "CENTER-16,CENTER-16"
+	else
+		screen_loc = "CENTER-[view_size_x],CENTER-[view_size_y]"
+		newicon.Scale((view_size_x * 2 + 1) * world.icon_size,(view_size_y * 2 + 1) * world.icon_size)
+		icon = newicon
 
 /obj/screen/click_catcher/Click(location, control, params)
 	var/list/modifiers = params2list(params)
@@ -452,7 +467,6 @@
 		if(T)
 			T.Click(location, control, params)
 	. = 1
-
 
 /* MouseWheelOn */
 

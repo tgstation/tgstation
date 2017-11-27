@@ -149,20 +149,21 @@
 
 /datum/teleport/instant/science/setPrecision(aprecision)
 	..()
-	if(istype(teleatom, /obj/item/weapon/storage/backpack/holding))
+	if(istype(teleatom, /obj/item/storage/backpack/holding))
 		precision = rand(1,100)
 
-	var/list/bagholding = teleatom.search_contents_for(/obj/item/weapon/storage/backpack/holding)
+	var/static/list/bag_cache = typecacheof(/obj/item/storage/backpack/holding)
+	var/list/bagholding = typecache_filter_list(teleatom.GetAllContents(), bag_cache)
 	if(bagholding.len)
 		precision = max(rand(1,100)*bagholding.len,100)
 		if(isliving(teleatom))
 			var/mob/living/MM = teleatom
 			to_chat(MM, "<span class='warning'>The bluespace interface on your bag of holding interferes with the teleport!</span>")
-	return 1
+	return TRUE
 
 // Safe location finder
 
-/proc/find_safe_turf(zlevel = ZLEVEL_STATION, list/zlevels, extended_safety_checks = FALSE)
+/proc/find_safe_turf(zlevel = ZLEVEL_STATION_PRIMARY, list/zlevels, extended_safety_checks = FALSE)
 	if(!zlevels)
 		zlevels = list(zlevel)
 	var/cycles = 1000
@@ -191,11 +192,11 @@
 		// Can most things breathe?
 		if(trace_gases)
 			continue
-		if(!(A_gases["o2"] && A_gases["o2"][MOLES] >= 16))
+		if(!(A_gases[/datum/gas/oxygen] && A_gases[/datum/gas/oxygen][MOLES] >= 16))
 			continue
-		if(A_gases["plasma"])
+		if(A_gases[/datum/gas/plasma])
 			continue
-		if(A_gases["co2"] && A_gases["co2"][MOLES] >= 10)
+		if(A_gases[/datum/gas/carbon_dioxide] && A_gases[/datum/gas/carbon_dioxide][MOLES] >= 10)
 			continue
 
 		// Aim for goldilocks temperatures and pressure
@@ -206,8 +207,8 @@
 			continue
 
 		if(extended_safety_checks)
-			if(istype(F, /turf/open/floor/plating/lava)) //chasms aren't /floor, and so are pre-filtered
-				var/turf/open/floor/plating/lava/L = F
+			if(islava(F)) //chasms aren't /floor, and so are pre-filtered
+				var/turf/open/lava/L = F
 				if(!L.is_safe())
 					continue
 

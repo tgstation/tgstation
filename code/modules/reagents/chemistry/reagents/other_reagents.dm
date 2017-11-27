@@ -13,19 +13,20 @@
 
 /datum/reagent/blood/reaction_mob(mob/M, method=TOUCH, reac_volume)
 	if(data && data["viruses"])
-		for(var/datum/disease/D in data["viruses"])
+		for(var/thing in data["viruses"])
+			var/datum/disease/D = thing
 
-			if((D.spread_flags & SPECIAL) || (D.spread_flags & NON_CONTAGIOUS))
+			if((D.spread_flags & VIRUS_SPREAD_SPECIAL) || (D.spread_flags & VIRUS_SPREAD_NON_CONTAGIOUS))
 				continue
 
-			if(method == TOUCH || method == VAPOR)
-				M.ContractDisease(D)
+			if((method == TOUCH || method == VAPOR) && (D.spread_flags & VIRUS_SPREAD_CONTACT_FLUIDS))
+				M.ContactContractDisease(D)
 			else //ingest, patch or inject
 				M.ForceContractDisease(D)
 
-	if(method == INJECT && iscarbon(M))
+	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		if(C.get_blood_id() == "blood")
+		if(C.get_blood_id() == "blood" && (method == INJECT || (method == INGEST && C.dna && C.dna.species && (DRINKSBLOOD in C.dna.species.species_traits))))
 			if(!data || !(data["blood_type"] in get_safe_blood(C.dna.blood_type)))
 				C.reagents.add_reagent("toxin", reac_volume * 0.5)
 			else
@@ -61,6 +62,13 @@
 				data["viruses"] = preserve
 	return 1
 
+/datum/reagent/blood/proc/get_diseases()
+	. = list()
+	if(data && data["viruses"])
+		for(var/thing in data["viruses"])
+			var/datum/disease/D = thing
+			. += D
+
 /datum/reagent/blood/reaction_turf(turf/T, reac_volume)//splash the blood all over the place
 	if(!istype(T))
 		return
@@ -72,11 +80,6 @@
 		B = new(T)
 	if(data["blood_DNA"])
 		B.blood_DNA[data["blood_DNA"]] = data["blood_type"]
-
-	for(var/datum/disease/D in data["viruses"])
-		var/datum/disease/newVirus = D.Copy(1)
-		B.viruses += newVirus
-		newVirus.holder = B
 
 
 /datum/reagent/liquidgibs
@@ -96,7 +99,8 @@
 
 /datum/reagent/vaccine/reaction_mob(mob/M, method=TOUCH, reac_volume)
 	if(islist(data) && (method == INGEST || method == INJECT))
-		for(var/datum/disease/D in M.viruses)
+		for(var/thing in M.viruses)
+			var/datum/disease/D = thing
 			if(D.GetDiseaseID() in data)
 				D.cure()
 		M.resistances |= data
@@ -108,7 +112,7 @@
 /datum/reagent/water
 	name = "Water"
 	id = "water"
-	description = "A ubiquitous chemical substance that is composed of hydrogen and oxygen."
+	description = "An ubiquitous chemical substance that is composed of hydrogen and oxygen."
 	color = "#AAAAAA77" // rgb: 170, 170, 170, 77 (alpha)
 	taste_description = "water"
 	var/cooling_temperature = 2
@@ -151,13 +155,13 @@
 	O.extinguish()
 	O.acid_level = 0
 	// Monkey cube
-	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/monkeycube))
-		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O
+	if(istype(O, /obj/item/reagent_containers/food/snacks/monkeycube))
+		var/obj/item/reagent_containers/food/snacks/monkeycube/cube = O
 		cube.Expand()
 
 	// Dehydrated carp
-	else if(istype(O,/obj/item/toy/carpplushie/dehy_carp))
-		var/obj/item/toy/carpplushie/dehy_carp/dehy = O
+	else if(istype(O, /obj/item/toy/plush/carpplushie/dehy_carp))
+		var/obj/item/toy/plush/carpplushie/dehy_carp/dehy = O
 		dehy.Swell() // Makes a carp
 
 	else if(istype(O, /obj/item/stack/sheet/hairlesshide))
@@ -193,7 +197,8 @@
 	..()
 
 /datum/reagent/water/holywater/on_mob_life(mob/living/M)
-	if(!data) data = 1
+	if(!data)
+		data = 1
 	data++
 	M.jitteriness = min(M.jitteriness+4,10)
 	if(data >= 30)		// 12 units, 54 seconds @ metabolism 0.4 units & tick rate 1.8 sec
@@ -226,7 +231,8 @@
 
 /datum/reagent/water/holywater/reaction_turf(turf/T, reac_volume)
 	..()
-	if(!istype(T)) return
+	if(!istype(T))
+		return
 	if(reac_volume>=10)
 		for(var/obj/effect/rune/R in T)
 			qdel(R)
@@ -363,8 +369,6 @@
 		if(method == INGEST)
 			if(show_message)
 				to_chat(M, "<span class='notice'>That tasted horrible.</span>")
-			M.AdjustStun(40)
-			M.AdjustKnockdown(40)
 	..()
 
 
@@ -410,7 +414,7 @@
 		return
 	to_chat(H, "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>")
 	H.visible_message("<b>[H]</b> falls to the ground and screams as [H.p_their()] skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
-	H.Knockdown(60, 0)
+	H.Knockdown(60)
 	addtimer(CALLBACK(src, .proc/mutate, H), 30)
 	return
 
@@ -669,7 +673,7 @@
 
 /datum/reagent/mercury/on_mob_life(mob/living/M)
 	if(M.canmove && !isspaceturf(M.loc))
-		step(M, pick(GLOB.cardinal))
+		step(M, pick(GLOB.cardinals))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
 	M.adjustBrainLoss(2)
@@ -749,7 +753,7 @@
 
 /datum/reagent/lithium/on_mob_life(mob/living/M)
 	if(M.canmove && !isspaceturf(M.loc))
-		step(M, pick(GLOB.cardinal))
+		step(M, pick(GLOB.cardinals))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
 	..()
@@ -793,7 +797,7 @@
 		var/mob/living/carbon/C = M
 		for(var/s in C.surgeries)
 			var/datum/surgery/S = s
-			S.success_multiplier = max(0.20, S.success_multiplier)
+			S.success_multiplier = max(0.2, S.success_multiplier)
 			// +20% success propability on each step, useful while operating in less-than-perfect conditions
 	..()
 
@@ -932,7 +936,7 @@
 	taste_description = "sourness"
 
 /datum/reagent/space_cleaner/reaction_obj(obj/O, reac_volume)
-	if(istype(O,/obj/effect/decal/cleanable))
+	if(istype(O, /obj/effect/decal/cleanable))
 		qdel(O)
 	else
 		if(O)
@@ -1054,7 +1058,7 @@
 
 /datum/reagent/xenomicrobes/reaction_mob(mob/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
 	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
-		M.ContractDisease(new /datum/disease/transformation/xeno(0))
+		M.ForceContractDisease(new /datum/disease/transformation/xeno(0))
 
 /datum/reagent/fungalspores
 	name = "Tubercle bacillus Cosmosis microbes"
@@ -1077,7 +1081,15 @@
 /datum/reagent/foaming_agent// Metal foaming agent. This is lithium hydride. Add other recipes (e.g. LiH + H2O -> LiOH + H2) eventually.
 	name = "Foaming agent"
 	id = "foaming_agent"
-	description = "A agent that yields metallic foam when mixed with light metal and a strong acid."
+	description = "An agent that yields metallic foam when mixed with light metal and a strong acid."
+	reagent_state = SOLID
+	color = "#664B63" // rgb: 102, 75, 99
+	taste_description = "metal"
+
+/datum/reagent/smart_foaming_agent //Smart foaming agent. Functions similarly to metal foam, but conforms to walls.
+	name = "Smart foaming agent"
+	id = "smart_foaming_agent"
+	description = "An agent that yields metallic foam which conforms to area boundaries when mixed with light metal and a strong acid."
 	reagent_state = SOLID
 	color = "#664B63" // rgb: 102, 75, 99
 	taste_description = "metal"
@@ -1145,6 +1157,37 @@
 	if(prob(20))
 		M.losebreath += 2
 		M.confused = min(M.confused + 2, 5)
+	..()
+
+/datum/reagent/stimulum
+	name = "Stimulum"
+	id = "stimulum"
+	description = "An unstable experimental gas that greatly increases the energy of those that inhale it"
+	reagent_state = GAS
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	color = "E1A116"
+	taste_description = "sourness"
+
+/datum/reagent/stimulum/on_mob_life(mob/living/M) // Has a speedup, and the anti-stun effects of nicotine.
+	M.status_flags |= GOTTAGOFAST
+	M.AdjustStun(-20, 0)
+	M.AdjustKnockdown(-20, 0)
+	M.AdjustUnconscious(-20, 0)
+	M.adjustStaminaLoss(-0.5*REM, 0)
+	..()
+	. = TRUE //Update status effects.
+
+/datum/reagent/nitryl
+	name = "Nitryl"
+	id = "no2"
+	description = "A highly reactive gas that makes you feel faster"
+	reagent_state = GAS
+	metabolization_rate = REAGENTS_METABOLISM
+	color = "90560B"
+	taste_description = "burning"
+
+/datum/reagent/nitryl/on_mob_life(mob/living/M) //Has just a speedup
+	M.status_flags |= GOTTAGOFAST
 	..()
 
 /////////////////////////Coloured Crayon Powder////////////////////////////
@@ -1318,7 +1361,7 @@
 	taste_description = "carpet" // Your tounge feels furry.
 
 /datum/reagent/carpet/reaction_turf(turf/T, reac_volume)
-	if(istype(T, /turf/open/floor/plating) || istype(T, /turf/open/floor/plasteel))
+	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
 		var/turf/open/floor/F = T
 		F.ChangeTurf(/turf/open/floor/carpet)
 	..()
@@ -1556,10 +1599,22 @@
 
 /datum/reagent/romerol/on_mob_life(mob/living/carbon/human/H)
 	// Silently add the zombie infection organ to be activated upon death
-	if(!H.getorganslot("zombie_infection"))
+	if(!H.getorganslot(ORGAN_SLOT_ZOMBIE))
 		var/obj/item/organ/zombie_infection/ZI = new()
 		ZI.Insert(H)
 	..()
+
+/datum/reagent/magillitis
+	name = "Magillitis"
+	id = "magillitis"
+	description = "An experimental serum which causes rapid muscular growth in Hominidae. Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas."
+	reagent_state = LIQUID
+	color = "#00f041"
+
+/datum/reagent/magillitis/on_mob_life(mob/living/carbon/M)
+	..()
+	if((ismonkey(M) || ishuman(M)) && current_cycle >= 10)
+		M.gorillize()
 
 /datum/reagent/growthserum
 	name = "Growth Serum"

@@ -3,7 +3,7 @@
 	desc = "A bullet casing."
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "s-casing"
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	slot_flags = SLOT_BELT
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
@@ -19,8 +19,8 @@
 	var/firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect	//the visual effect appearing when the ammo is fired.
 
 
-/obj/item/ammo_casing/New()
-	..()
+/obj/item/ammo_casing/Initialize()
+	. = ..()
 	if(projectile_type)
 		BB = new projectile_type(src)
 	pixel_x = rand(-10, 10)

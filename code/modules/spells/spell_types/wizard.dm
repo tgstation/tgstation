@@ -182,7 +182,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct
 	name = "Artificer"
-	desc = "This spell conjures a construct which may be controlled by Shades"
+	desc = "This spell conjures a construct which may be controlled by Shades."
 
 	school = "conjuration"
 	charge_max = 600
@@ -199,7 +199,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/creature
 	name = "Summon Creature Swarm"
-	desc = "This spell tears the fabric of reality, allowing horrific daemons to spill forth"
+	desc = "This spell tears the fabric of reality, allowing horrific daemons to spill forth."
 
 	school = "conjuration"
 	charge_max = 1200
@@ -301,6 +301,7 @@
 	cooldown_min = 150
 	invocation_type = "none"
 	sparkle_path = /obj/effect/temp_visual/dir_setting/tailsweep
+	action_icon = 'icons/mob/actions/actions_xeno.dmi'
 	action_icon_state = "tailsweep"
 	action_background_icon_state = "bg_alien"
 

@@ -62,6 +62,17 @@
 /obj/effect/temp_visual/ratvar/grille/broken
 	icon_state = "ratvarbrokengrilleglow"
 
+/obj/effect/temp_visual/ratvar/belligerent
+	layer = ABOVE_MOB_LAYER
+	icon = 'icons/obj/clockwork_objects.dmi'
+	icon_state = "belligerent_eye"
+	pixel_y = 20
+	duration = 20
+
+/obj/effect/temp_visual/ratvar/belligerent_cast/Initialize()
+	. = ..()
+	animate(src, alpha = 0, time = duration, easing = EASE_OUT)
+
 /obj/effect/temp_visual/ratvar/mending_mantra
 	layer = ABOVE_MOB_LAYER
 	duration = 20
@@ -78,56 +89,6 @@
 	animate(src, alpha = 20, time = duration, easing = BOUNCE_EASING, flags = ANIMATION_PARALLEL)
 	animate(src, transform = M, time = duration, flags = ANIMATION_PARALLEL)
 
-/obj/effect/temp_visual/ratvar/volt_hit
-	name = "volt blast"
-	layer = ABOVE_MOB_LAYER
-	duration = 8
-	icon_state = "volt_hit"
-	light_range = 1.5
-	light_power = 2
-	light_color = LIGHT_COLOR_ORANGE
-	var/mob/user
-	var/damage = 25
-
-/obj/effect/temp_visual/ratvar/volt_hit/Initialize(mapload, caster)
-	. = ..()
-	user = caster
-	if(user)
-		var/matrix/M = new
-		M.Turn(Get_Angle(src, user))
-		transform = M
-	INVOKE_ASYNC(src, .proc/volthit)
-
-/obj/effect/temp_visual/ratvar/volt_hit/proc/volthit()
-	if(user)
-		Beam(get_turf(user), "volt_ray", time=duration, maxdistance=8, beam_type=/obj/effect/ebeam/volt_ray)
-	var/hit_amount = 0
-	var/turf/T = get_turf(src)
-	for(var/mob/living/L in T)
-		if(is_servant_of_ratvar(L))
-			continue
-		var/obj/item/I = L.null_rod_check()
-		if(I)
-			L.visible_message("<span class='warning'>Strange energy flows into [L]'s [I.name]!</span>", \
-			"<span class='userdanger'>Your [I.name] shields you from [src]!</span>")
-			continue
-		L.visible_message("<span class='warning'>[L] is struck by a [name]!</span>", "<span class='userdanger'>You're struck by a [name]!</span>")
-		L.apply_damage(damage, BURN, "chest", L.run_armor_check("chest", "laser", "Your armor absorbs [src]!", "Your armor blocks part of [src]!", 0, "Your armor was penetrated by [src]!"))
-		add_logs(user, L, "struck with a volt blast")
-		hit_amount++
-	for(var/obj/mecha/M in T)
-		if(M.occupant)
-			if(is_servant_of_ratvar(M.occupant))
-				continue
-			to_chat(M.occupant, "<span class='userdanger'>Your [M.name] is struck by a [name]!</span>")
-		M.visible_message("<span class='warning'>[M] is struck by a [name]!</span>")
-		M.take_damage(damage, BURN, 0, 0)
-		hit_amount++
-	if(hit_amount)
-		playsound(src, 'sound/machines/defib_zap.ogg', damage*hit_amount, 1, -1)
-	else
-		playsound(src, "sparks", 50, 1)
-
 /obj/effect/temp_visual/ratvar/ocular_warden
 	name = "warden's gaze"
 	layer = ABOVE_MOB_LAYER
@@ -138,7 +99,7 @@
 	. = ..()
 	pixel_x = rand(-8, 8)
 	pixel_y = rand(-10, 10)
-	animate(src, alpha = 0, time = 3, easing = EASE_OUT)
+	animate(src, alpha = 0, time = duration, easing = EASE_OUT)
 
 /obj/effect/temp_visual/ratvar/prolonging_prism
 	icon = 'icons/effects/64x64.dmi'
@@ -210,6 +171,20 @@
 	animate(src, transform = matrix()*2, time = 5)
 	animate(transform = oldtransform, alpha = 0, time = 65)
 
+/obj/effect/temp_visual/ratvar/sigil/transmission
+	color = "#EC8A2D"
+	layer = ABOVE_MOB_LAYER
+	duration = 20
+	light_range = 3
+	light_power = 1
+	light_color = "#EC8A2D"
+
+/obj/effect/temp_visual/ratvar/sigil/transmission/Initialize(mapload, transform_multiplier)
+	. = ..()
+	var/oldtransform = transform
+	transform = matrix()*transform_multiplier
+	animate(src, transform = oldtransform, alpha = 0, time = 20)
+
 /obj/effect/temp_visual/ratvar/sigil/vitality
 	color = "#1E8CE1"
 	icon_state = "sigilactivepulse"
@@ -218,9 +193,63 @@
 	light_power = 0.5
 	light_color = "#1E8CE1"
 
-/obj/effect/temp_visual/ratvar/sigil/accession
+/obj/effect/temp_visual/ratvar/sigil/submission
 	color = "#AF0AAF"
 	layer = ABOVE_MOB_LAYER
-	duration = 70
+	duration = 80
 	icon_state = "sigilactiveoverlay"
 	alpha = 0
+
+/obj/effect/temp_visual/steam
+	name = "steam"
+	desc = "Steam! It's hot. It also serves as a game distribution platform."
+	icon_state = "smoke"
+	duration = 15
+
+/obj/effect/temp_visual/steam/Initialize(mapload, steam_direction)
+	. = ..()
+	setDir(steam_direction)
+	var/x_offset = 0
+	var/y_offset = 0
+	switch(dir)
+		if(NORTH)
+			y_offset = 8
+		if(EAST)
+			x_offset = 4
+			y_offset = 4
+		if(SOUTH)
+			y_offset = 2
+		if(WEST)
+			x_offset = -4
+			y_offset = 4
+	animate(src, pixel_x = x_offset, pixel_y = y_offset, alpha = 50, time = 15)
+
+/obj/effect/temp_visual/steam_release
+	name = "all the steam"
+
+/obj/effect/temp_visual/steam_release/Initialize()
+	..()
+	for(var/V in GLOB.cardinals)
+		var/turf/T = get_step(src, V)
+		new/obj/effect/temp_visual/steam(T, V)
+	return INITIALIZE_HINT_QDEL
+
+//Foreshadows a servant warping in.
+/obj/effect/temp_visual/ratvar/warp_marker
+	name = "illuminant marker"
+	desc = "A silhouette of dim light. It's getting brighter!"
+	resistance_flags = INDESTRUCTIBLE
+	icon = 'icons/effects/genetics.dmi'
+	icon_state = "servitude"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	anchored = TRUE
+	alpha = 0
+	light_color = "#FFE48E"
+	light_range = 2
+	light_power = 0.7
+	duration = 55
+
+/obj/effect/temp_visual/ratvar/warp_marker/Initialize(mapload, mob/living/servant)
+	. = ..()
+	animate(src, alpha = 255, time = 50)
+

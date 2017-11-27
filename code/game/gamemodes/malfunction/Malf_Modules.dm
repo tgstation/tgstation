@@ -1,4 +1,5 @@
 #define DEFAULT_DOOMSDAY_TIMER 4500
+#define DOOMSDAY_ANNOUNCE_INTERVAL 600
 
 GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		/obj/machinery/field/containment,
@@ -20,7 +21,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	name = "AI Action"
 	desc = "You aren't entirely sure what this does, but it's very beepy and boopy."
 	background_icon_state = "bg_tech_blue"
-	icon_icon = 'icons/mob/actions_AI.dmi'
+	icon_icon = 'icons/mob/actions/actions_AI.dmi'
 	var/mob/living/silicon/ai/owner_AI //The owner AI, so we don't have to typecast every time
 	var/uses //If we have multiple uses of the same power
 	var/auto_use_uses = TRUE //If we automatically use up uses on each activation
@@ -132,9 +133,9 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	dat += "<B>Install Module:</B><BR>"
 	dat += "<I>The number afterwards is the amount of processing time it consumes.</I><BR>"
 	for(var/datum/AI_Module/large/module in possible_modules)
-		dat += "<A href='byond://?src=\ref[src];[module.mod_pick_name]=1'>[module.module_name]</A><A href='byond://?src=\ref[src];showdesc=[module.mod_pick_name]'>\[?\]</A> ([module.cost])<BR>"
+		dat += "<A href='byond://?src=[REF(src)];[module.mod_pick_name]=1'>[module.module_name]</A><A href='byond://?src=[REF(src)];showdesc=[module.mod_pick_name]'>\[?\]</A> ([module.cost])<BR>"
 	for(var/datum/AI_Module/small/module in possible_modules)
-		dat += "<A href='byond://?src=\ref[src];[module.mod_pick_name]=1'>[module.module_name]</A><A href='byond://?src=\ref[src];showdesc=[module.mod_pick_name]'>\[?\]</A> ([module.cost])<BR>"
+		dat += "<A href='byond://?src=[REF(src)];[module.mod_pick_name]=1'>[module.module_name]</A><A href='byond://?src=[REF(src)];showdesc=[module.mod_pick_name]'>\[?\]</A> ([module.cost])<BR>"
 	dat += "<HR>"
 	if(temp)
 		dat += "[temp]"
@@ -232,7 +233,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 
 /datum/action/innate/ai/nuke_station/Activate()
 	var/turf/T = get_turf(owner)
-	if(!istype(T) || T.z != ZLEVEL_STATION)
+	if(!istype(T) || !(T.z in GLOB.station_z_levels))
 		to_chat(owner, "<span class='warning'>You cannot activate the doomsday device while off-station!</span>")
 		return
 	if(alert(owner, "Send arming signal? (true = arm, false = cancel)", "purge_all_life()", "confirm = TRUE;", "confirm = FALSE;") != "confirm = TRUE;")
@@ -309,8 +310,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	owner_AI.nuking = TRUE
 	owner_AI.doomsday_device = DOOM
 	owner_AI.doomsday_device.start()
-	for(var/pinpointer in GLOB.pinpointer_list)
-		var/obj/item/weapon/pinpointer/P = pinpointer
+	for(var/obj/item/pinpointer/nuke/P in GLOB.pinpointer_list)
 		P.switch_mode_to(TRACK_MALF_AI) //Pinpointers start tracking the AI wherever it goes
 	qdel(src)
 
@@ -325,12 +325,11 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	var/timing = FALSE
 	var/obj/effect/countdown/doomsday/countdown
 	var/detonation_timer
-	var/list/milestones
+	var/next_announce
 
 /obj/machinery/doomsday_device/Initialize()
 	. = ..()
 	countdown = new(src)
-	milestones = list()
 
 /obj/machinery/doomsday_device/Destroy()
 	QDEL_NULL(countdown)
@@ -345,6 +344,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 
 /obj/machinery/doomsday_device/proc/start()
 	detonation_timer = world.time + DEFAULT_DOOMSDAY_TIMER
+	next_announce = world.time + DOOMSDAY_ANNOUNCE_INTERVAL
 	timing = TRUE
 	countdown.start()
 	START_PROCESSING(SSfastprocess, src)
@@ -356,7 +356,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 
 /obj/machinery/doomsday_device/process()
 	var/turf/T = get_turf(src)
-	if(!T || T.z != ZLEVEL_STATION)
+	if(!T || !(T.z in GLOB.station_z_levels))
 		minor_announce("DOOMSDAY DEVICE OUT OF STATION RANGE, ABORTING", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", TRUE)
 		SSshuttle.clearHostileEnvironment(src)
 		qdel(src)
@@ -367,20 +367,18 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	var/sec_left = seconds_remaining()
 	if(!sec_left)
 		timing = FALSE
-		detonate(T.z)
-	else
-		var/key = num2text(sec_left)
-		if(!(sec_left % 60) && !(key in milestones))
-			milestones[key] = TRUE
-			minor_announce("[key] SECONDS UNTIL DOOMSDAY DEVICE ACTIVATION!", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", TRUE)
+		detonate()
+	else if(world.time >= next_announce)
+		minor_announce("[sec_left] SECONDS UNTIL DOOMSDAY DEVICE ACTIVATION!", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", TRUE)
+		next_announce += DOOMSDAY_ANNOUNCE_INTERVAL
 
-/obj/machinery/doomsday_device/proc/detonate(z_level = ZLEVEL_STATION)
-	for(var/mob/M in GLOB.player_list)
-		M << 'sound/machines/alarm.ogg'
+/obj/machinery/doomsday_device/proc/detonate()
+	sound_to_playing_players('sound/machines/alarm.ogg')
 	sleep(100)
-	for(var/mob/living/L in GLOB.mob_list)
+	for(var/i in GLOB.mob_living_list)
+		var/mob/living/L = i
 		var/turf/T = get_turf(L)
-		if(!T || T.z != z_level)
+		if(!T || !(T.z in GLOB.station_z_levels))
 			continue
 		if(issilicon(L))
 			continue
@@ -427,9 +425,9 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 
 /datum/action/innate/ai/lockdown/Activate()
 	for(var/obj/machinery/door/D in GLOB.airlocks)
-		if(D.z != ZLEVEL_STATION)
+		if(!(D.z in GLOB.station_z_levels))
 			continue
-		INVOKE_ASYNC(D, /obj/machinery/door.proc/hostile_lockdown, src)
+		INVOKE_ASYNC(D, /obj/machinery/door.proc/hostile_lockdown, owner)
 		addtimer(CALLBACK(D, /obj/machinery/door.proc/disable_lockdown), 900)
 
 	var/obj/machinery/computer/communications/C = locate() in GLOB.machines
@@ -463,8 +461,8 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 
 /datum/action/innate/ai/destroy_rcds/Activate()
 	for(var/I in GLOB.rcd_list)
-		if(!istype(I, /obj/item/weapon/construction/rcd/borg)) //Ensures that cyborg RCDs are spared.
-			var/obj/item/weapon/construction/rcd/RCD = I
+		if(!istype(I, /obj/item/construction/rcd/borg)) //Ensures that cyborg RCDs are spared.
+			var/obj/item/construction/rcd/RCD = I
 			RCD.detonate_pulse()
 	to_chat(owner, "<span class='danger'>RCD detonation pulse emitted.</span>")
 	owner.playsound_local(owner, 'sound/machines/twobeep.ogg', 50, 0)
@@ -505,7 +503,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 
 /datum/action/innate/ai/break_fire_alarms/Activate()
 	for(var/obj/machinery/firealarm/F in GLOB.machines)
-		if(F.z != ZLEVEL_STATION)
+		if(!(F.z in GLOB.station_z_levels))
 			continue
 		F.emagged = TRUE
 	to_chat(owner, "<span class='notice'>All thermal sensors on the station have been disabled. Fire alerts will no longer be recognized.</span>")
@@ -532,10 +530,10 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 
 /datum/action/innate/ai/break_air_alarms/Activate()
 	for(var/obj/machinery/airalarm/AA in GLOB.machines)
-		if(AA.z != ZLEVEL_STATION)
+		if(!(AA.z in GLOB.station_z_levels))
 			continue
 		AA.emagged = TRUE
-	to_chat(owner, "<span class='notice'>All air alarm safeties on the station have been overriden. Air alarms may now use the Flood environmental mode.")
+	to_chat(owner, "<span class='notice'>All air alarm safeties on the station have been overriden. Air alarms may now use the Flood environmental mode.</span>")
 	owner.playsound_local(owner, 'sound/machines/terminal_off.ogg', 50, 0)
 
 
@@ -673,7 +671,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	var/obj/machinery/transformer/conveyor = new(T)
 	conveyor.masterAI = owner
 	playsound(T, 'sound/effects/phasein.ogg', 100, 1)
-	owner_AI.can_shunt = TRUE
+	owner_AI.can_shunt = FALSE
 	to_chat(owner, "<span class='warning'>You are no longer able to shunt your core to APCs.</span>")
 	adjust_uses(-1)
 
@@ -682,7 +680,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		C.images -= I
 
 /mob/living/silicon/ai/proc/can_place_transformer(datum/action/innate/ai/place_transformer/action)
-	if(!eyeobj || !isturf(loc) || !canUseTopic() || !action)
+	if(!eyeobj || !isturf(loc) || incapacitated() || !action)
 		return
 	var/turf/middle = get_turf(eyeobj)
 	var/list/turfs = list(middle, locate(middle.x - 1, middle.y, middle.z), locate(middle.x + 1, middle.y, middle.z))
@@ -830,3 +828,4 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		AI.eyeobj.relay_speech = TRUE
 
 #undef DEFAULT_DOOMSDAY_TIMER
+#undef DOOMSDAY_ANNOUNCE_INTERVAL

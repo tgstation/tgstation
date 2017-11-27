@@ -11,11 +11,11 @@
 	icon_state = "noose"
 	icon = 'hippiestation/icons/obj/objects.dmi'
 	layer = FLY_LAYER
-	flags = NODECONSTRUCT
+	flags_1 = NODECONSTRUCT_1
 	var/image/over
 
 /obj/structure/chair/noose/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/wirecutters))
+	if(istype(W, /obj/item/wirecutters))
 		user.visible_message("[user] cuts the noose.", "<span class='notice'>You cut the noose.</span>")
 		if(has_buckled_mobs())
 			for(var/m in buckled_mobs)

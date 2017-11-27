@@ -50,7 +50,7 @@
 
 			for(var/turf/check in ruin.get_affected_turfs(T,1))
 				var/area/new_area = get_area(check)
-				if(!(istype(new_area, whitelist)))
+				if(!(istype(new_area, whitelist)) || check.flags_1 & NO_RUINS_1)
 					valid = FALSE
 					break
 
@@ -77,7 +77,7 @@
 
 /obj/effect/ruin_loader
 	name = "random ruin"
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "syndballoon"
 	invisibility = 0
 

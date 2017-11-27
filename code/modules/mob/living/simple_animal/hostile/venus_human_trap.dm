@@ -12,8 +12,8 @@
 	var/growth_time = 1200
 
 
-/obj/structure/alien/resin/flower_bud_enemy/New()
-	..()
+/obj/structure/alien/resin/flower_bud_enemy/Initialize()
+	. = ..()
 	var/list/anchors = list()
 	anchors += locate(x-2,y+2,z)
 	anchors += locate(x+2,y+2,z)
@@ -33,7 +33,7 @@
 
 /obj/effect/ebeam/vine
 	name = "thick vine"
-	mouse_opacity = 1
+	mouse_opacity = MOUSE_OPACITY_ICON
 	desc = "A thick vine, painful to the touch."
 
 

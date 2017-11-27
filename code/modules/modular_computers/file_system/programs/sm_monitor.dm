@@ -5,7 +5,7 @@
 	program_icon_state = "smmon_0"
 	extended_desc = "This program connects to specially calibrated supermatter sensors to provide information on the status of supermatter-based engines."
 	requires_ntnet = TRUE
-	transfer_access = GLOB.access_engine
+	transfer_access = ACCESS_CONSTRUCTION
 	network_destination = "supermatter monitoring system"
 	size = 5
 	tgui_id = "ntos_supermatter_monitor"
@@ -22,16 +22,12 @@
 	if(last_status != new_status)
 		last_status = new_status
 		ui_header = "smmon_[last_status].gif"
-		if(istype(computer) && !(computer.hardware_flag == PROGRAM_LAPTOP))
-			program_icon_state = "smmon_[last_status]"
-			if(istype(computer))
-				computer.update_icon()
+		program_icon_state = "smmon_[last_status]"
+		if(istype(computer))
+			computer.update_icon()
 
 /datum/computer_file/program/supermatter_monitor/run_program(mob/living/user)
 	. = ..(user)
-	if(istype(computer) && (computer.hardware_flag == PROGRAM_LAPTOP))
-		program_icon_state = "engine"
-		computer.update_icon()
 	refresh()
 
 /datum/computer_file/program/supermatter_monitor/kill_program(forced = FALSE)
@@ -45,10 +41,9 @@
 	var/turf/T = get_turf(ui_host())
 	if(!T)
 		return
-	//var/valid_z_levels = (GetConnectedZlevels(T.z) & using_map.station_levels)
 	for(var/obj/machinery/power/supermatter_shard/S in GLOB.machines)
 		// Delaminating, not within coverage, not on a tile.
-		if(!(S.z == ZLEVEL_STATION || S.z == ZLEVEL_MINING || S.z == T.z) || !istype(S.loc, /turf/))
+		if(!((S.z in GLOB.station_z_levels) || S.z == ZLEVEL_MINING || S.z == T.z || !isturf(S.loc)))
 			continue
 		supermatters.Add(S)
 
@@ -124,7 +119,7 @@
 			refresh()
 			return TRUE
 		if("PRG_set")
-			var/newuid = text2num(params["set"])
+			var/newuid = text2num(params["target"])
 			for(var/obj/machinery/power/supermatter_shard/S in supermatters)
 				if(S.uid == newuid)
 					active = S

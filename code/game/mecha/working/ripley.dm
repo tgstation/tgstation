@@ -6,7 +6,6 @@
 	var/fast_pressure_step_in = 2 //step_in while in normal pressure conditions
 	var/slow_pressure_step_in = 4 //step_in while in better pressure conditions
 	max_temperature = 20000
-	obj_integrity = 200
 	max_integrity = 200
 	lights_power = 7
 	deflect_chance = 15
@@ -27,7 +26,7 @@
 	if(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in equipment)
 		var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in cargo
 		if(ore_box)
-			for(var/obj/item/weapon/ore/ore in range(1, src))
+			for(var/obj/item/ore/ore in range(1, src))
 				if(ore.Adjacent(src) && ((get_dir(src, ore) & dir) || ore.loc == loc)) //we can reach it and it's in front of us? grab it!
 					ore.forceMove(ore_box)
 
@@ -63,7 +62,6 @@
 	name = "\improper APLU \"Firefighter\""
 	icon_state = "firefighter"
 	max_temperature = 65000
-	obj_integrity = 250
 	max_integrity = 250
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	lights_power = 7
@@ -105,9 +103,9 @@
 			var/obj/item/mecha_parts/mecha_equipment/drill/D = new
 			D.attach(src)
 
-	else //Add possible plasma cutter if no drill
-		var/obj/item/mecha_parts/mecha_equipment/M = new
-		M.attach(src)
+	else //Add plasma cutter if no drill
+		var/obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma/P = new
+		P.attach(src)
 
 	//Add ore box to cargo
 	cargo.Add(new /obj/structure/ore_box(src))
@@ -151,7 +149,7 @@
 	output += "<b>Cargo Compartment Contents:</b><div style=\"margin-left: 15px;\">"
 	if(cargo.len)
 		for(var/obj/O in cargo)
-			output += "<a href='?src=\ref[src];drop_from_cargo=\ref[O]'>Unload</a> : [O]<br>"
+			output += "<a href='?src=[REF(src)];drop_from_cargo=[REF(O)]'>Unload</a> : [O]<br>"
 	else
 		output += "Nothing"
 	output += "</div>"

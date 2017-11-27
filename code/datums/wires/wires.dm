@@ -3,7 +3,7 @@
 /proc/is_wire_tool(obj/item/I)
 	if(istype(I, /obj/item/device/multitool))
 		return TRUE
-	if(istype(I, /obj/item/weapon/wirecutters))
+	if(istype(I, /obj/item/wirecutters))
 		return TRUE
 	if(istype(I, /obj/item/device/assembly))
 		var/obj/item/device/assembly/A = I
@@ -74,7 +74,7 @@
 	"white",
 	"yellow"
 	)
-	
+
 	var/list/my_possible_colors = possible_colors.Copy()
 
 	for(var/wire in shuffle(wires))
@@ -144,7 +144,7 @@
 /datum/wires/proc/attach_assembly(color, obj/item/device/assembly/S)
 	if(S && istype(S) && S.attachable && !is_attached(color))
 		assemblies[color] = S
-		S.loc = holder
+		S.forceMove(holder)
 		S.connected = src
 		return S
 
@@ -153,7 +153,7 @@
 	if(S && istype(S))
 		assemblies -= color
 		S.connected = null
-		S.loc = holder.loc
+		S.forceMove(holder.drop_location())
 		return S
 
 /datum/wires/proc/emp_pulse()
@@ -163,9 +163,9 @@
 	for(var/wire in possible_wires)
 		if(prob(33))
 			pulse(wire)
-		remaining_pulses--
-		if(remaining_pulses >= 0)
-			break
+			remaining_pulses--
+			if(!remaining_pulses)
+				break
 
 // Overridable Procs
 /datum/wires/proc/interactable(mob/user)
@@ -198,7 +198,7 @@
 		return ..()
 	return UI_CLOSE
 
-/datum/wires/ui_interact(mob/user, ui_key = "wires", datum/tgui/ui = null, force_open = 0, \
+/datum/wires/ui_interact(mob/user, ui_key = "wires", datum/tgui/ui = null, force_open = FALSE, \
 							datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
@@ -227,7 +227,7 @@
 	var/obj/item/I = L.get_active_held_item()
 	switch(action)
 		if("cut")
-			if(istype(I, /obj/item/weapon/wirecutters) || IsAdminGhost(usr))
+			if(istype(I, /obj/item/wirecutters) || IsAdminGhost(usr))
 				playsound(holder, I.usesound, 20, 1)
 				cut_color(target_wire)
 				. = TRUE
@@ -250,9 +250,10 @@
 				if(istype(I, /obj/item/device/assembly))
 					var/obj/item/device/assembly/A = I
 					if(A.attachable)
-						if(!L.drop_item())
+						if(!L.temporarilyRemoveItemFromInventory(A))
 							return
-						attach_assembly(target_wire, A)
+						if(!attach_assembly(target_wire, A))
+							A.forceMove(L.drop_location())
 						. = TRUE
 					else
 						to_chat(L, "<span class='warning'>You need an attachable assembly!</span>")
