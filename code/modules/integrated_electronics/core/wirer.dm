@@ -8,7 +8,7 @@
 	desc = "It's a small wiring tool, with a wire roll, electric soldering iron, wire cutter, and more in one package. \
 	The wires used are generally useful for small electronics, such as circuitboards and breadboards, as opposed to larger wires \
 	used for power or data transmission."
-	icon = 'icons/obj/electronic_assemblies.dmi'
+	icon = 'icons/obj/assemblies/electronic_tools.dmi'
 	icon_state = "wirer-wire"
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_SMALL
@@ -38,8 +38,7 @@
 		if(io.holder.assembly && io.holder.assembly != selected_io.holder.assembly)
 			to_chat(user, "<span class='warning'>Both \the [io.holder] and \the [selected_io.holder] need to be inside the same assembly.</span>")
 			return
-		selected_io.linked |= io
-		io.linked |= selected_io
+		selected_io.connect_pin(io)
 
 		to_chat(user, "<span class='notice'>You connect \the [selected_io.holder]'s [selected_io.name] to \the [io.holder]'s [io.name].</span>")
 		mode = WIRE
@@ -64,8 +63,7 @@
 			the same pin is rather moot.</span>")
 			return
 		if(selected_io in io.linked)
-			io.linked.Remove(selected_io)
-			selected_io.linked.Remove(io)
+			selected_io.disconnect_pin(io)
 			to_chat(user, "<span class='notice'>You disconnect \the [selected_io.holder]'s [selected_io.name] from \
 			\the [io.holder]'s [io.name].</span>")
 			selected_io.holder.interact(user) // This is to update the UI.

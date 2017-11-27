@@ -8,11 +8,11 @@
 	volume = 50
 	materials = list(MAT_GLASS=500)
 	max_integrity = 20
-	spillable = 1
+	spillable = TRUE
 	resistance_flags = ACID_PROOF
 	unique_rename = 1
 
-/obj/item/reagent_containers/food/drinks/drinkingglass/on_reagent_change()
+/obj/item/reagent_containers/food/drinks/drinkingglass/on_reagent_change(changetype)
 	cut_overlays()
 	if(reagents.reagent_list.len)
 		var/datum/reagent/R = reagents.get_master_reagent()
@@ -46,7 +46,7 @@
 	volume = 15
 	materials = list(MAT_GLASS=100)
 
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/on_reagent_change()
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/on_reagent_change(changetype)
 	cut_overlays()
 
 	if (gulp_size < 15)
@@ -76,7 +76,7 @@
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/filled/Initialize()
 	. = ..()
-	on_reagent_change()
+	on_reagent_change(ADD_REAGENT)
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/filled/soda
 	name = "Soda Water"

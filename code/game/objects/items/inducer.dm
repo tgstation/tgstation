@@ -6,7 +6,6 @@
 	item_state = "inducer-engi"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	origin_tech = "engineering=4;magnets=4;powerstorage=4"
 	force = 7
 	var/powertransfer = 1000
 	var/opened = FALSE
@@ -120,7 +119,7 @@
 		user.visible_message("[user] starts recharging [A] with [src].","<span class='notice'>You start recharging [A] with [src].</span>")
 		while(C.charge < C.maxcharge)
 			if(E)
-				E.chambered = null  // Prevents someone from firing continuously while recharging the gun.
+				E.semicd = TRUE  // Prevents someone from firing continuously while recharging the gun.
 			if(do_after(user, 10, target = user) && cell.charge)
 				done_any = TRUE
 				induce(C, coefficient)
@@ -130,7 +129,7 @@
 			else
 				break
 		if(E)
-			E.recharge_newshot() //We're done charging, so we'll let someone fire it now.
+			E.reset_semicd() //We're done charging, so we'll let someone fire it now.
 		if(done_any) // Only show a message if we succeeded at least once
 			user.visible_message("[user] recharged [A]!","<span class='notice'>You recharged [A]!</span>")
 		recharging = FALSE

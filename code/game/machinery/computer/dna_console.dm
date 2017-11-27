@@ -75,9 +75,9 @@
 	popup.add_stylesheet("scannernew", 'html/browser/scannernew.css')
 
 	var/mob/living/carbon/viable_occupant
-	var/occupant_status = "<div class='line'><div class='statusLabel'>Subject Status:</div><div class='statusValue'>"
+	var/list/occupant_status = list("<div class='line'><div class='statusLabel'>Subject Status:</div><div class='statusValue'>")
 	var/scanner_status
-	var/temp_html
+	var/list/temp_html = list()
 	if(connected && connected.is_operational())
 		if(connected.occupant)	//set occupant_status message
 			viable_occupant = connected.occupant
@@ -117,9 +117,9 @@
 		occupant_status += "<span class='bad'>----</span></div></div>"
 		scanner_status += "<span class='bad'>Error: No scanner detected</span>"
 
-	var/status = "<div class='statusDisplay'>"
+	var/list/status = list("<div class='statusDisplay'>")
 	status += "<div class='line'><div class='statusLabel'>Scanner:</div><div class='statusValue'>[scanner_status]</div></div>"
-	status += "[occupant_status]"
+	status += occupant_status
 
 
 	status += "<div class='line'><h3>Radiation Emitter Status</h3></div>"
@@ -143,7 +143,7 @@
 	status += "<div class='line'><div class='statusLabel'>Pulse Duration:</div><div class='statusValue'>[radduration]</div></div>"
 	status += "<div class='line'><div class='statusLabel'>&nbsp;&nbsp;\> Accuracy:</div><div class='statusValue'>[chance_to_hit]</div></div>"
 	status += "<br></div>" // Close statusDisplay div
-	var/buttons = "<a href='?src=[REF(src)];'>Scan</a> "
+	var/list/buttons = list("<a href='?src=[REF(src)];'>Scan</a> ")
 	if(connected)
 		buttons += " <a href='?src=[REF(src)];task=toggleopen;'>[connected.state_open ? "Close" : "Open"] Scanner</a> "
 		if (connected.state_open)
@@ -304,7 +304,7 @@
 				temp_html += "----"
 			temp_html += "</div></div></div>"
 
-	popup.set_content(temp_html)
+	popup.set_content(temp_html.Join())
 	popup.open()
 
 
@@ -405,7 +405,6 @@
 											powers -= 1 //To prevent just unlocking everything to get all powers to a syringe for max tech
 									else
 										I.remove_mutations.Add(HM)
-								I.origin_tech = "biotech=2;engineering=[max(1,min(6,powers))]" //With 6 powers available this tech level will be 1-6, also safety check if new powers get added
 								var/time_coeff
 								for(var/datum/mutation/human/HM in I.add_mutations)
 									if(!time_coeff)

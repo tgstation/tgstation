@@ -4,7 +4,6 @@
 	icon_state = "heart-on"
 	zone = "chest"
 	slot = ORGAN_SLOT_HEART
-	origin_tech = "biotech=5"
 	// Heart attack code is in code/modules/mob/living/carbon/human/life.dm
 	var/beating = 1
 	var/icon_base = "heart"
@@ -54,7 +53,7 @@
 		var/sound/slowbeat = sound('sound/health/slowbeat.ogg', repeat = TRUE)
 		var/sound/fastbeat = sound('sound/health/fastbeat.ogg', repeat = TRUE)
 		var/mob/living/carbon/H = owner
-		
+
 		if(H.health <= HEALTH_THRESHOLD_CRIT && beat != BEAT_SLOW)
 			beat = BEAT_SLOW
 			H.playsound_local(get_turf(H), slowbeat,40,0, channel = CHANNEL_HEARTBEAT)
@@ -72,7 +71,6 @@
 	desc = "A heart that, when inserted, will force you to pump it manually."
 	icon_state = "cursedheart-off"
 	icon_base = "cursedheart"
-	origin_tech = "biotech=6"
 	actions_types = list(/datum/action/item_action/organ_action/cursed_heart)
 	var/last_pump = 0
 	var/add_colour = TRUE //So we're not constantly recreating colour datums
@@ -147,7 +145,6 @@
 	name = "cybernetic heart"
 	desc = "An electronic device designed to mimic the functions of an organic human heart. Offers no benefit over an organic heart other than being easy to make."
 	icon_state = "heart-c"
-	origin_tech = "biotech=5"
 
 /obj/item/organ/heart/cybernetic/emp_act()
 	Stop()

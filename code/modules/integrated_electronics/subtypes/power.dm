@@ -19,7 +19,6 @@
 		)
 	activators = list("transmit" = IC_PINTYPE_PULSE_IN, "on transmit" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_ENGINEERING = 4, TECH_DATA = 4, TECH_POWER = 4, TECH_MAGNET = 3)
 	power_draw_per_use = 500 // Inefficency has to come from somewhere.
 	var/amount_to_move = 5000
 
@@ -32,7 +31,6 @@
 	some power is lost due to ineffiency."
 	w_class = WEIGHT_CLASS_BULKY
 	complexity = 32
-	origin_tech = list(TECH_ENGINEERING = 4, TECH_DATA = 4, TECH_POWER = 6, TECH_MAGNET = 5)
 	power_draw_per_use = 2000
 	amount_to_move = 20000
 
@@ -60,6 +58,10 @@
 				return FALSE
 			if(transfer_amount && assembly.draw_power(amount_to_move)) // CELLRATE is already handled in draw_power()
 				cell.give(transfer_amount * GLOB.CELLRATE)
+				if(istype(AM, /obj/item))
+					var/obj/item/I = AM
+					I.update_icon()
+
 				return TRUE
 	else
 		set_pin_data(IC_OUTPUT, 1, null)

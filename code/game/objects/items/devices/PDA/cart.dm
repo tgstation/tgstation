@@ -29,7 +29,6 @@
 
 	var/access = 0 //Bit flags for cartridge access
 
-//	var/access_flora = 0
 	var/remote_door_id = ""
 
 	var/bot_access_flags = 0 //Bit flags. Selection: SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT
@@ -109,13 +108,6 @@
 	name = "\improper Lib-Tweet cartridge"
 	icon_state = "cart-s"
 	access = CART_NEWSCASTER
-
-/*
-/obj/item/cartridge/botanist
-	name = "\improper Green Thumb v4.20 cartridge"
-	icon_state = "cart-b"
-	access_flora = 1
-*/
 
 /obj/item/cartridge/roboticist
 	name = "\improper B.O.O.P. Remote Control cartridge"
@@ -669,9 +661,6 @@ Code:
 
 	var/mob/living/simple_animal/bot/Bot
 
-//	if(!SC)
-//		menu = "Interlink Error - Please reinsert cartridge."
-//		return
 	if(active_bot)
 		menu += "<B>[active_bot]</B><BR> Status: (<A href='byond://?src=[REF(src)];op=control;bot=[REF(active_bot)]'><img src=pda_refresh.png><i>refresh</i></A>)<BR>"
 		menu += "Model: [active_bot.model]<BR>"

@@ -15,7 +15,7 @@
 	for(var/turf/T in get_area_turfs(thearea, z))
 		if(T.baseturf != T.type) //Don't break indestructible walls and the like
 			T.baseturf = baseturf
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 
 /obj/effect/baseturf_helper/asteroid
@@ -65,5 +65,5 @@ GLOBAL_LIST_EMPTY(z_is_planet)
 	var/turf/T = get_turf(src)
 	if(!turf_z_is_planet(T))
 		GLOB.z_is_planet["[T.z]"] = list()
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 

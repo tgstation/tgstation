@@ -179,9 +179,6 @@
 /obj/item/mecha_parts/mecha_equipment/extinguisher/get_equip_info()
 	return "[..()] \[[src.reagents.total_volume]\]"
 
-/obj/item/mecha_parts/mecha_equipment/extinguisher/on_reagent_change()
-	return
-
 /obj/item/mecha_parts/mecha_equipment/extinguisher/can_attach(obj/mecha/working/M as obj)
 	if(..())
 		if(istype(M))
@@ -194,7 +191,6 @@
 	name = "mounted RCD"
 	desc = "An exosuit-mounted Rapid Construction Device."
 	icon_state = "mecha_rcd"
-	origin_tech = "materials=4;bluespace=3;magnets=4;powerstorage=4;engineering=4"
 	equip_cooldown = 10
 	energy_drain = 250
 	range = MELEE|RANGED
