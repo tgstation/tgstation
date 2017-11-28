@@ -76,8 +76,7 @@ Possible to do for anyone motivated enough:
 	if(record_mode)
 		record_stop()
 	
-	if(disk)
-		QDEL_NULL(disk)
+	QDEL_NULL(disk)
 
 	holopads -= src
 	return ..()
