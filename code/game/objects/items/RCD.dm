@@ -245,7 +245,7 @@ ARCD
 	switch(airlockcat)
 		if("Solid")
 			if(advanced_airlock_setting == 1)
-				var/airlockpaint = input(usr, "Select the type of the airlock.") in list("Standard", "Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Freezer", "Science", "Virology", "Mining", "Maintenance", "External", "External Maintenance", "High Security", "Airtight Hatch", "Maintenance Hatch")
+				var/airlockpaint = input(usr, "Select the type of the airlock.") in list("Standard", "Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Freezer", "Science", "Virology", "Mining", "Maintenance", "External", "External Maintenance", "Airtight Hatch", "Maintenance Hatch")
 				switch(airlockpaint)
 					if("Standard")
 						airlock_type = /obj/machinery/door/airlock
@@ -277,8 +277,6 @@ ARCD
 						airlock_type = /obj/machinery/door/airlock/external
 					if("External Maintenance")
 						airlock_type = /obj/machinery/door/airlock/maintenance/external
-					if("High Security")
-						airlock_type = /obj/machinery/door/airlock/highsecurity
 					if("Airtight Hatch")
 						airlock_type = /obj/machinery/door/airlock/hatch
 					if("Maintenance Hatch")

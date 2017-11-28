@@ -23,6 +23,7 @@
 	var/previous_assembly = /obj/structure/door_assembly
 	var/noglass = FALSE //airlocks with no glass version, also cannot be modified with sheets
 	var/material_type = /obj/item/stack/sheet/metal
+	var/material_amt = 4
 
 /obj/structure/door_assembly/New()
 	update_icon()
@@ -148,6 +149,8 @@
 	overlays_file = 'icons/obj/doors/airlocks/highsec/overlays.dmi'
 	airlock_type = /obj/machinery/door/airlock/highsecurity
 	noglass = TRUE
+	material_type = /obj/item/stack/sheet/plasteel
+	material_amt = 6
 
 /obj/structure/door_assembly/door_assembly_vault
 	name = "vault door assembly"
@@ -157,6 +160,7 @@
 	airlock_type = /obj/machinery/door/airlock/vault
 	noglass = TRUE
 	material_type = /obj/item/stack/sheet/plasteel
+	material_amt = 8
 
 /obj/structure/door_assembly/door_assembly_shuttle
 	name = "shuttle airlock assembly"
@@ -432,20 +436,6 @@
 				ae = electronics
 				electronics = null
 				ae.forceMove(src.loc)
-	else if(istype(W, /obj/item/stack/sheet/rglass) && glass)
-		var/obj/item/stack/sheet/rglass/RG = W
-		if(RG)
-			if(RG.get_amount() >= 1)
-				playsound(src, 'sound/items/crowbar.ogg', 100, 1)
-				user.visible_message("[user] adds [RG.name] to the airlock assembly.", \
-									"<span class='notice'>You start to install [RG.name] into the airlock assembly...</span>")
-				if(do_after(user, 40, target = src))
-					if(RG.get_amount() < 1 || !glass)
-						return
-					to_chat(user, "<span class='notice'>You replace the regular glass windows with reinforced glass windows.</span>")
-					RG.use(1)
-					new/obj/item/stack/sheet/glass(get_turf(src))
-					heat_proof_finished = 1
 
 	else if(istype(W, /obj/item/stack/sheet) && (!glass || !mineral) && !noglass)
 		var/obj/item/stack/sheet/G = W
@@ -548,7 +538,6 @@
 /obj/structure/door_assembly/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		var/turf/T = get_turf(src)
-		var/material_amt = 4
 		if(!disassembled)
 			material_amt = rand(2,4)
 		new material_type(T, material_amt)
