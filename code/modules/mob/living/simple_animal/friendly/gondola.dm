@@ -25,8 +25,7 @@
 	maxHealth = 200
 	health = 200
 	del_on_death = TRUE
-	//cannot wear pet collars and tags because nobody has made relevant icons
-	can_wear_pet_items = FALSE
+
 
 /mob/living/simple_animal/pet/gondola/Initialize()
 	. = ..()

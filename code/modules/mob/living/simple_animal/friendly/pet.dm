@@ -4,12 +4,12 @@
 	var/obj/item/clothing/neck/petcollar/pcollar = null
 	var/collar = ""
 	var/pettag = ""
-	var/can_wear_pet_items = TRUE
 	blood_volume = BLOOD_VOLUME_NORMAL
 
 /mob/living/simple_animal/pet/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/clothing/neck/petcollar) && !pcollar)
-		if(can_wear_pet_items)
+		var/pet_icon_states = icon_states("[icon]")
+		if(("[icon_state]" + "collar" in pet_icon_states))
 			var/obj/item/clothing/neck/petcollar/P = O
 			pcollar = P
 			collar = "[icon_state]collar"
@@ -21,6 +21,7 @@
 				name = real_name
 			qdel(P)
 			return
+
 	if(istype(O, /obj/item/newspaper))
 		if(!stat)
 			user.visible_message("[user] baps [name] on the nose with the rolled up [O].")
