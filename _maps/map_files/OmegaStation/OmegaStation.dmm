@@ -7546,7 +7546,7 @@
 "anR" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/glass_public{
 	name = "Atrium"
 	},
 /obj/structure/cable/white{
@@ -7559,7 +7559,7 @@
 /area/hallway/primary/central)
 "anS" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/glass_public{
 	name = "Atrium"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -7570,7 +7570,7 @@
 "anT" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/glass_public{
 	name = "Atrium"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -9324,7 +9324,7 @@
 "arc" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/glass_public{
 	name = "Atrium"
 	},
 /obj/structure/cable/white{
@@ -9337,7 +9337,7 @@
 /area/crew_quarters/bar/atrium)
 "ard" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/glass_public{
 	name = "Atrium"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -9348,7 +9348,7 @@
 "are" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/glass_public{
 	name = "Atrium"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -14268,7 +14268,7 @@
 /area/hallway/primary/central)
 "aAD" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/glass_public{
 	name = "Lockerroom"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -14851,7 +14851,7 @@
 /area/hallway/primary/central)
 "aBM" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/glass_public{
 	name = "Lockerroom"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -16323,7 +16323,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/glass_public{
 	name = "Engineering Foyer"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -16632,7 +16632,7 @@
 /area/hallway/primary/central)
 "aFj" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/glass_public{
 	name = "Departure Lounge"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -16891,7 +16891,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/glass_public{
 	name = "Engineering Foyer"
 	},
 /obj/structure/cable/white{
@@ -17045,7 +17045,7 @@
 /area/hallway/primary/central)
 "aFZ" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/glass_public{
 	name = "Departure Lounge"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -20928,7 +20928,7 @@
 /area/hydroponics)
 "aNy" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/glass_public{
 	name = "Atrium"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -20942,7 +20942,7 @@
 /area/crew_quarters/bar/atrium)
 "aNz" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/glass_public{
 	name = "Atrium"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -22757,7 +22757,7 @@
 /area/library)
 "aQY" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/glass_public{
 	name = "Library Access"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -22768,7 +22768,7 @@
 /area/library)
 "aQZ" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/glass_public{
 	name = "Library Access"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -30481,7 +30481,7 @@
 /area/hallway/secondary/entry)
 "bgR" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/glass_public{
 	name = "Arrivals Port"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -30492,7 +30492,7 @@
 /area/hallway/secondary/entry)
 "bgS" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/glass_public{
 	name = "Arrivals Port"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -30518,7 +30518,7 @@
 /area/hallway/secondary/entry)
 "bgW" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/glass_public{
 	name = "Arrivals Port"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -32876,7 +32876,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "blL" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/glass_public{
 	name = "Departure Lounge"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -32924,7 +32924,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "blY" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/glass_public{
 	name = "Departure Lounge"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -33026,7 +33026,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bsB" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/glass_public{
 	name = "Departure Lounge"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -33096,7 +33096,7 @@
 /area/hallway/secondary/exit)
 "bsN" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/glass_public{
 	name = "Departure Lounge"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{

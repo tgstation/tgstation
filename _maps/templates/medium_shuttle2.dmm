@@ -86,7 +86,7 @@
 	name = "Shuttle"
 	})
 "n" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/glass_public,
 /turf/open/floor/plasteel/dark,
 /area/ruin/powered{
 	name = "Shuttle"

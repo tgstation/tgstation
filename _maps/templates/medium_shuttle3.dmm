@@ -100,7 +100,7 @@
 	name = "Shuttle"
 	})
 "p" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/glass_public,
 /turf/open/floor/plasteel,
 /area/ruin/powered{
 	name = "Shuttle"
