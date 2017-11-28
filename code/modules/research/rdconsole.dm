@@ -553,37 +553,48 @@ doesn't have toxins access.
 
 /obj/machinery/computer/rdconsole/proc/ui_techweb()		//Legacy code.
 	var/list/l = list()
-	var/list/avail = list()			//This could probably be optimized a bit later.
-	var/list/unavail = list()
-	var/list/res = list()
+	var/list/backlog = list()
 	for(var/v in stored_research.researched_nodes)
-		res += stored_research.researched_nodes[v]
+		backlog += stored_research.researched_nodes[v]
+
+	var/list/tiers = list()
+	var/list/current = list()
 	for(var/v in stored_research.available_nodes)
 		if(stored_research.researched_nodes[v])
 			continue
-		avail += stored_research.available_nodes[v]
-	for(var/v in stored_research.visible_nodes)
-		if(stored_research.available_nodes[v])
-			continue
-		unavail += stored_research.visible_nodes[v]
-	l += "<h2>Technology Nodes:</h2>[RDSCREEN_NOBREAK]"
-	l += "<div><h3>Available for Research:</h3>"
-	for(var/datum/techweb_node/N in avail)
-		var/research_href
-		if (stored_research.available_nodes[N.id] && !stored_research.researched_nodes[N.id])
-			var/price = N.get_price(stored_research)
-			if (stored_research.research_points >= price)
-				research_href = "<A href='?src=[REF(src)];research_node=[N.id]'>[price]</A>"
-			else
-				research_href = "<span class='linkOff bad'>[price]</span>"
-		l += "<A href='?src=[REF(src)];view_node=[N.id];back_screen=[screen]'>[N.display_name]</A>[research_href]"
-	l += "</div><div><h3>Locked Nodes:</h3>"
-	for(var/datum/techweb_node/N in unavail)
-		l += "<A href='?src=[REF(src)];view_node=[N.id];back_screen=[screen]'>[N.display_name]</A>"
-	l += "</div><div><h3>Researched Nodes:</h3>"
-	for(var/datum/techweb_node/N in res)
-		l += "<A href='?src=[REF(src)];view_node=[N.id];back_screen=[screen]'>[N.display_name]</A>"
-	l += "</div>[RDSCREEN_NOBREAK]"
+		current += stored_research.available_nodes[v]
+
+	while (current.len)
+		var/list/next = list()
+		for (var/node_ in current)
+			var/datum/techweb_node/node = node_
+			var/current_value = tiers[node]
+			if (!current_value)
+				current_value = tiers[node] = 1
+			for (var/id in node.unlocks)
+				var/datum/techweb_node/follows = node.unlocks[id]
+				if (tiers[follows] < current_value + 1)
+					tiers[follows] = current_value + 1
+					next += follows
+		current = next
+
+	var/list/columns = list()
+	var/max_tier = 0
+	for (var/node_ in tiers)
+		var/datum/techweb_node/node = node_
+		var/tier = tiers[node]
+		LAZYINITLIST(columns["[tier]"])  // String hackery to make the numbers associative
+		columns["[tier]"] += ui_techweb_single_node(node, minimal=(tier != 1))
+		max_tier = max(max_tier, tier)
+
+	l += "<table><tr><th align='left'>Researched</th><th align='left'>Available</th><th align='left'>Future</th></tr><tr>[RDSCREEN_NOBREAK]"
+	l += "<td valign='top'>[RDSCREEN_NOBREAK]"
+	for(var/datum/techweb_node/N in backlog)
+		l += ui_techweb_single_node(N, minimal=TRUE)
+	for(var/tier in 1 to max_tier)
+		l += "</td><td valign='top'>[RDSCREEN_NOBREAK]"
+		l += columns["[tier]"]
+	l += "</td></tr></table>[RDSCREEN_NOBREAK]"
 	return l
 
 /obj/machinery/computer/rdconsole/proc/build_path_icon(atom/item, user)
@@ -604,26 +615,29 @@ doesn't have toxins access.
 			item_icon.Blend(icon(icon_file, keyboard), ICON_OVERLAY)
 	return icon2html(item_icon, user || usr)
 
-/obj/machinery/computer/rdconsole/proc/ui_techweb_single_node(datum/techweb_node/node, selflink=TRUE)
+/obj/machinery/computer/rdconsole/proc/ui_techweb_single_node(datum/techweb_node/node, selflink=TRUE, minimal=FALSE)
 	var/list/l = list()
 	var/price = node.get_price(stored_research)
 	var/display_name = node.display_name
 	if (selflink)
 		display_name = "<A href='?src=[REF(src)];view_node=[node.id];back_screen=[screen]'>[display_name]</A>"
 	l += "<div class='statusDisplay technode'><b>[display_name]</b> [RDSCREEN_NOBREAK]"
-	if(stored_research.researched_nodes[node.id])
-		l += "<span class='linkOff'>Researched</span>"
-	else if(stored_research.available_nodes[node.id])
-		if(stored_research.research_points >= price)
-			l += "<A href='?src=[REF(src)];research_node=[node.id]'>[price]</A>"
-		else
-			l += "<span class='linkOff'>[price]</span>"  // gray - too expensive
+	if (minimal)
+		l += "<br>[node.description]"
 	else
-		l += "<span class='linkOff bad'>[price]</span>"  // red - missing prereqs
-	l += "[node.description]"
-	for(var/i in node.designs)
-		var/datum/design/D = node.designs[i]
-		l += "<span data-tooltip='[D.name]' onclick='location=\"?src=[REF(src)];view_design=[i]\"'>[build_path_icon(D.build_path)]</span>[RDSCREEN_NOBREAK]"
+		if(stored_research.researched_nodes[node.id])
+			l += "<span class='linkOff'>Researched</span>"
+		else if(stored_research.available_nodes[node.id])
+			if(stored_research.research_points >= price)
+				l += "<A href='?src=[REF(src)];research_node=[node.id]'>[price]</A>"
+			else
+				l += "<span class='linkOff'>[price]</span>"  // gray - too expensive
+		else
+			l += "<span class='linkOff bad'>[price]</span>"  // red - missing prereqs
+		l += "[node.description]"
+		for(var/i in node.designs)
+			var/datum/design/D = node.designs[i]
+			l += "<span data-tooltip='[D.name]' onclick='location=\"?src=[REF(src)];view_design=[i];back_screen=[screen]\"'>[build_path_icon(D.build_path)]</span>[RDSCREEN_NOBREAK]"
 	l += "</div>[RDSCREEN_NOBREAK]"
 	return l
 
@@ -632,7 +646,7 @@ doesn't have toxins access.
 	var/list/l = list()
 	if(stored_research.hidden_nodes[selected_node.id])
 		l += "<div><h3>ERROR: RESEARCH NODE UNKNOWN.</h3></div>"
-	l += ui_techweb_single_node(selected_node, FALSE)
+	l += ui_techweb_single_node(selected_node, selflink=FALSE)
 	l += "<div><h3>Prerequisites:</h3>[RDSCREEN_NOBREAK]"
 	for(var/i in selected_node.prerequisites)
 		var/datum/techweb_node/prereq = selected_node.prerequisites[i]
@@ -905,7 +919,7 @@ doesn't have toxins access.
 
 /obj/machinery/computer/rdconsole/interact(mob/user)
 	user.set_machine(src)
-	var/datum/browser/popup = new(user, "rndconsole", name, 460, 550)
+	var/datum/browser/popup = new(user, "rndconsole", name, 900, 600)
 	popup.add_stylesheet("techwebs", 'html/browser/techwebs.css')
 	popup.set_content(generate_ui())
 	popup.open()
