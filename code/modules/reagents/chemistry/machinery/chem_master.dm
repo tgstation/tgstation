@@ -44,7 +44,7 @@
 	if(A == beaker)
 		beaker = null
 		reagents.clear_reagents()
-		icon_state = "mixer0"
+		update_icon()
 	else if(A == bottle)
 		bottle = null
 
@@ -58,6 +58,17 @@
 		stat &= ~NOPOWER
 	else
 		stat |= NOPOWER
+
+	update_icon()
+
+/obj/machinery/chem_master/update_icon()
+	if(stat & NOPOWER)
+		icon_state = "mixer0_nopower"
+
+	if(beaker)
+		icon_state = "mixer1"
+	else
+		icon_state = "mixer0[powered() ? "" : "_nopower"]"
 
 /obj/machinery/chem_master/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "mixer0_nopower", "mixer0", I))
@@ -94,7 +105,7 @@
 		beaker = I
 		to_chat(user, "<span class='notice'>You add [I] to [src].</span>")
 		src.updateUsrDialog()
-		icon_state = "mixer1"
+		update_icon()
 
 	else if(!condi && istype(I, /obj/item/storage/pill_bottle))
 		if(bottle)
@@ -159,7 +170,7 @@
 				adjust_item_drop_location(beaker)
 				beaker = null
 				reagents.clear_reagents()
-				icon_state = "mixer0"
+				update_icon()
 				. = TRUE
 
 		if("ejectp")
@@ -316,20 +327,6 @@
 
 
 
-
-/obj/machinery/chem_master/proc/isgoodnumber(num)
-	if(isnum(num))
-		if(num > 200)
-			num = 200
-		else if(num < 0)
-			num = 0
-		else
-			num = round(num)
-		return num
-	else
-		return 0
-
-
 /obj/machinery/chem_master/adjust_item_drop_location(atom/movable/AM) // Special version for chemmasters and condimasters
 	if (AM == beaker)
 		AM.pixel_x = -8
@@ -348,7 +345,7 @@
 			#if DM_VERSION >= 513
 			#warning 512 is definitely stable now, remove the old code
 			#endif
-			
+
 			#if DM_VERSION >= 512
 			. += hex2num(md5[i])
 			#else

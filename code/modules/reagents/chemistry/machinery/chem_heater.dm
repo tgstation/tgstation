@@ -3,12 +3,13 @@
 	density = TRUE
 	anchored = TRUE
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "mixer0b"
+	icon_state = "heater"
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 40
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/chem_heater
 	var/obj/item/reagent_containers/beaker = null
+	var/mutable_appearance/beaker_overlay
 	var/target_temperature = 300
 	var/heater_coefficient = 0.1
 	var/on = FALSE
@@ -17,6 +18,13 @@
 	heater_coefficient = 0.1
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		heater_coefficient *= M.rating
+
+/obj/machinery/chem_heater/update_icon()
+	if(on && beaker)
+		icon_state = (target_temperature > beaker.reagents.chem_temp) ? "heater-heating" : "heater-cooling"
+		return
+	icon_state = "heater"
+
 
 /obj/machinery/chem_heater/process()
 	..()
@@ -33,7 +41,7 @@
 			beaker.reagents.handle_reactions()
 
 /obj/machinery/chem_heater/attackby(obj/item/I, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "mixer0b", "mixer0b", I))
+	if(default_deconstruction_screwdriver(user, "heater", "heater", I))
 		return
 
 	if(exchange_parts(user, I))
@@ -52,7 +60,10 @@
 			return
 		beaker = I
 		to_chat(user, "<span class='notice'>You add [I] to [src].</span>")
-		icon_state = "mixer1b"
+
+		//Add beaker overlay.
+		beaker_overlay = beaker_overlay || mutable_appearance(icon, "disp_beaker_heater")
+		add_overlay(beaker_overlay)
 		return
 	return ..()
 
@@ -89,6 +100,7 @@
 	switch(action)
 		if("power")
 			on = !on
+			update_icon()
 			. = TRUE
 		if("temperature")
 			var/target = params["target"]
@@ -104,6 +116,7 @@
 				. = TRUE
 			if(.)
 				target_temperature = Clamp(target, 0, 1000)
+			update_icon()
 		if("eject")
 			on = FALSE
 			eject_beaker()
@@ -114,4 +127,5 @@
 		beaker.forceMove(drop_location())
 		beaker.reagents.handle_reactions()
 		beaker = null
-		icon_state = "mixer0b"
+		cut_overlays()
+		update_icon()

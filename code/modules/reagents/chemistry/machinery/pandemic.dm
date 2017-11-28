@@ -115,6 +115,7 @@
 		return
 
 	icon_state = "mixer[(beaker) ? "1" : "0"][powered() ? "" : "_nopower"]"
+
 	if(wait)
 		cut_overlays()
 	else
