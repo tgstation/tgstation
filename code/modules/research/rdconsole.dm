@@ -590,6 +590,8 @@ doesn't have toxins access.
 
 /obj/machinery/computer/rdconsole/proc/ui_techweb_single_node(datum/techweb_node/node, selflink=TRUE, minimal=FALSE)
 	var/list/l = list()
+	if (stored_research.hidden_nodes[node.id])
+		return l
 	var/price = node.get_price(stored_research)
 	var/display_name = node.display_name
 	if (selflink)
@@ -619,26 +621,31 @@ doesn't have toxins access.
 	var/list/l = list()
 	if(stored_research.hidden_nodes[selected_node.id])
 		l += "<div><h3>ERROR: RESEARCH NODE UNKNOWN.</h3></div>"
-	l += ui_techweb_single_node(selected_node, selflink=FALSE)
-	l += "<div><h3>Prerequisites:</h3>[RDSCREEN_NOBREAK]"
-	for(var/i in selected_node.prerequisites)
-		var/datum/techweb_node/prereq = selected_node.prerequisites[i]
-		var/sc = stored_research.researched_nodes[prereq.id]
-		var/begin
-		var/end
-		if(sc)
-			begin = "<b>"
-			end = "</b>"
-		else
-			begin = "<span class='bad'>"
-			end = "</span>"
-		l += "<A href='?src=[REF(src)];view_node=[i]'>[begin][prereq.display_name][end]</A>"
-	l += "</div><div><h3>Unlocks:</h3>[RDSCREEN_NOBREAK]"
-	for(var/i in selected_node.unlocks)
-		var/datum/techweb_node/unlock = selected_node.unlocks[i]
-		l += "<A href='?src=[REF(src)];view_node=[i]'>[unlock.display_name]</A>"
+		return
 
-	l += "</div>[RDSCREEN_NOBREAK]"
+	l += "<table><tr>[RDSCREEN_NOBREAK]"
+	if (length(selected_node.prerequisites))
+		l += "<th align='left'>Requires</th>[RDSCREEN_NOBREAK]"
+	l += "<th align='left'>Current Node</th>[RDSCREEN_NOBREAK]"
+	if (length(selected_node.unlocks))
+		l += "<th align='left'>Unlocks</th>[RDSCREEN_NOBREAK]"
+
+	l += "</tr><tr>[RDSCREEN_NOBREAK]"
+	if (length(selected_node.prerequisites))
+		l += "<td valign='top'>[RDSCREEN_NOBREAK]"
+		for (var/i in selected_node.prerequisites)
+			l += ui_techweb_single_node(selected_node.prerequisites[i])
+		l += "</td>[RDSCREEN_NOBREAK]"
+	l += "<td valign='top'>[RDSCREEN_NOBREAK]"
+	l += ui_techweb_single_node(selected_node, selflink=FALSE)
+	l += "</td>[RDSCREEN_NOBREAK]"
+	if (length(selected_node.unlocks))
+		l += "<td valign='top'>[RDSCREEN_NOBREAK]"
+		for (var/i in selected_node.unlocks)
+			l += ui_techweb_single_node(selected_node.unlocks[i])
+		l += "</td>[RDSCREEN_NOBREAK]"
+
+	l += "</tr></table>[RDSCREEN_NOBREAK]"
 	return l
 
 /obj/machinery/computer/rdconsole/proc/ui_techweb_designview()		//Legacy code
@@ -666,9 +673,9 @@ doesn't have toxins access.
 			lathes += "<span data-tooltip='Limbgrower'>[build_path_icon(/obj/machinery/limbgrower)]</span>"
 		if(D.build_type & SMELTER)
 			lathes += "<span data-tooltip='Smelter'>[build_path_icon(/obj/machinery/mineral/processing_unit)]</span>"
-		l += "Lathe types:"
+		l += "Construction types:"
 		l += lathes
-	l += "Required Materials:"
+	l += "Required materials:"
 	var/all_mats = D.materials + D.reagents_list
 	for(var/M in all_mats)
 		l += "* [CallMaterialName(M)] x [all_mats[M]]"
