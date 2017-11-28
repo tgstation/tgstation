@@ -639,27 +639,28 @@ doesn't have toxins access.
 	var/datum/design/D = selected_design
 	l += "<div>[D.icon_html(usr)] <b>[D.name]</b>"
 	if(D.build_type)
-		var/lathes = ""
+		var/lathes = list()
 		if(D.build_type & IMPRINTER)
-			lathes += "<span data-tooltip='Circuit Imprinter'>[machine_icon(/obj/machinery/rnd/circuit_imprinter)]</span>"
+			lathes += "<span data-tooltip='Circuit Imprinter'>[machine_icon(/obj/machinery/rnd/circuit_imprinter)]</span>[RDSCREEN_NOBREAK]"
 			if (linked_imprinter && D.id in stored_research.researched_designs)
 				l += "<A href='?src=[REF(src)];search=1;type=imprint;to_search=[D.name]'>Imprint</A>"
 		if(D.build_type & PROTOLATHE)
-			lathes += "<span data-tooltip='Protolathe'>[machine_icon(/obj/machinery/rnd/protolathe)]</span>"
+			lathes += "<span data-tooltip='Protolathe'>[machine_icon(/obj/machinery/rnd/protolathe)]</span>[RDSCREEN_NOBREAK]"
 			if (linked_lathe && D.id in stored_research.researched_designs)
 				l += "<A href='?src=[REF(src)];search=1;type=proto;to_search=[D.name]'>Construct</A>"
 		if(D.build_type & AUTOLATHE)
-			lathes += "<span data-tooltip='Autolathe'>[machine_icon(/obj/machinery/autolathe)]</span>"
+			lathes += "<span data-tooltip='Autolathe'>[machine_icon(/obj/machinery/autolathe)]</span>[RDSCREEN_NOBREAK]"
 		if(D.build_type & MECHFAB)
-			lathes += "<span data-tooltip='Exosuit Fabricator'>[machine_icon(/obj/machinery/mecha_part_fabricator)]</span>"
+			lathes += "<span data-tooltip='Exosuit Fabricator'>[machine_icon(/obj/machinery/mecha_part_fabricator)]</span>[RDSCREEN_NOBREAK]"
 		if(D.build_type & BIOGENERATOR)
-			lathes += "<span data-tooltip='Biogenerator'>[machine_icon(/obj/machinery/biogenerator)]</span>"
+			lathes += "<span data-tooltip='Biogenerator'>[machine_icon(/obj/machinery/biogenerator)]</span>[RDSCREEN_NOBREAK]"
 		if(D.build_type & LIMBGROWER)
-			lathes += "<span data-tooltip='Limbgrower'>[machine_icon(/obj/machinery/limbgrower)]</span>"
+			lathes += "<span data-tooltip='Limbgrower'>[machine_icon(/obj/machinery/limbgrower)]</span>[RDSCREEN_NOBREAK]"
 		if(D.build_type & SMELTER)
-			lathes += "<span data-tooltip='Smelter'>[machine_icon(/obj/machinery/mineral/processing_unit)]</span>"
+			lathes += "<span data-tooltip='Smelter'>[machine_icon(/obj/machinery/mineral/processing_unit)]</span>[RDSCREEN_NOBREAK]"
 		l += "Construction types:"
 		l += lathes
+		l += ""
 	l += "Required materials:"
 	var/all_mats = D.materials + D.reagents_list
 	for(var/M in all_mats)
