@@ -570,23 +570,8 @@ doesn't have toxins access.
 	l += "</tr></table>[RDSCREEN_NOBREAK]"
 	return l
 
-/obj/machinery/computer/rdconsole/proc/build_path_icon(atom/item, user)
-	if (ispath(item, /obj/item/circuitboard))
-		var/obj/item/circuitboard/C = item
-		var/machine = initial(C.build_path)
-		if (machine)
-			item = machine
-	var/icon_file = initial(item.icon)
-	var/icon/item_icon = icon(icon_file, initial(item.icon_state), SOUTH)
-	if (ispath(item, /obj/machinery/computer))
-		var/obj/machinery/computer/C = item
-		var/screen = initial(C.icon_screen)
-		var/keyboard = initial(C.icon_keyboard)
-		if (screen)
-			item_icon.Blend(icon(icon_file, screen), ICON_OVERLAY)
-		if (keyboard)
-			item_icon.Blend(icon(icon_file, keyboard), ICON_OVERLAY)
-	return icon2html(item_icon, user || usr)
+/obj/machinery/computer/rdconsole/proc/machine_icon(atom/item)
+	return icon2html(initial(item.icon), usr, initial(item.icon_state), SOUTH)
 
 /obj/machinery/computer/rdconsole/proc/ui_techweb_single_node(datum/techweb_node/node, selflink=TRUE, minimal=FALSE)
 	var/list/l = list()
@@ -612,7 +597,7 @@ doesn't have toxins access.
 		l += "[node.description]"
 		for(var/i in node.designs)
 			var/datum/design/D = node.designs[i]
-			l += "<span data-tooltip='[D.name]' onclick='location=\"?src=[REF(src)];view_design=[i];back_screen=[screen]\"'>[build_path_icon(D.build_path)]</span>[RDSCREEN_NOBREAK]"
+			l += "<span data-tooltip='[D.name]' onclick='location=\"?src=[REF(src)];view_design=[i];back_screen=[screen]\"'>[D.icon_html(usr)]</span>[RDSCREEN_NOBREAK]"
 	l += "</div>[RDSCREEN_NOBREAK]"
 	return l
 
@@ -652,27 +637,27 @@ doesn't have toxins access.
 	RDSCREEN_UI_SDESIGN_CHECK
 	var/list/l = list()
 	var/datum/design/D = selected_design
-	l += "<div>[build_path_icon(D.build_path)] <b>[D.name]</b>"
+	l += "<div>[D.icon_html(usr)] <b>[D.name]</b>"
 	if(D.build_type)
 		var/lathes = ""
 		if(D.build_type & IMPRINTER)
-			lathes += "<span data-tooltip='Circuit Imprinter'>[build_path_icon(/obj/machinery/rnd/circuit_imprinter)]</span>"
+			lathes += "<span data-tooltip='Circuit Imprinter'>[machine_icon(/obj/machinery/rnd/circuit_imprinter)]</span>"
 			if (linked_imprinter && D.id in stored_research.researched_designs)
 				l += "<A href='?src=[REF(src)];search=1;type=imprint;to_search=[D.name]'>Imprint</A>"
 		if(D.build_type & PROTOLATHE)
-			lathes += "<span data-tooltip='Protolathe'>[build_path_icon(/obj/machinery/rnd/protolathe)]</span>"
+			lathes += "<span data-tooltip='Protolathe'>[machine_icon(/obj/machinery/rnd/protolathe)]</span>"
 			if (linked_lathe && D.id in stored_research.researched_designs)
 				l += "<A href='?src=[REF(src)];search=1;type=proto;to_search=[D.name]'>Construct</A>"
 		if(D.build_type & AUTOLATHE)
-			lathes += "<span data-tooltip='Autolathe'>[build_path_icon(/obj/machinery/autolathe)]</span>"
+			lathes += "<span data-tooltip='Autolathe'>[machine_icon(/obj/machinery/autolathe)]</span>"
 		if(D.build_type & MECHFAB)
-			lathes += "<span data-tooltip='Exosuit Fabricator'>[build_path_icon(/obj/machinery/mecha_part_fabricator)]</span>"
+			lathes += "<span data-tooltip='Exosuit Fabricator'>[machine_icon(/obj/machinery/mecha_part_fabricator)]</span>"
 		if(D.build_type & BIOGENERATOR)
-			lathes += "<span data-tooltip='Biogenerator'>[build_path_icon(/obj/machinery/biogenerator)]</span>"
+			lathes += "<span data-tooltip='Biogenerator'>[machine_icon(/obj/machinery/biogenerator)]</span>"
 		if(D.build_type & LIMBGROWER)
-			lathes += "<span data-tooltip='Limbgrower'>[build_path_icon(/obj/machinery/limbgrower)]</span>"
+			lathes += "<span data-tooltip='Limbgrower'>[machine_icon(/obj/machinery/limbgrower)]</span>"
 		if(D.build_type & SMELTER)
-			lathes += "<span data-tooltip='Smelter'>[build_path_icon(/obj/machinery/mineral/processing_unit)]</span>"
+			lathes += "<span data-tooltip='Smelter'>[machine_icon(/obj/machinery/mineral/processing_unit)]</span>"
 		l += "Construction types:"
 		l += lathes
 	l += "Required materials:"
