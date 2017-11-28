@@ -217,7 +217,7 @@ doesn't have toxins access.
 /obj/machinery/computer/rdconsole/proc/ui_header()
 	var/list/l = list()
 	l += "<div class='statusDisplay'><b>[stored_research.organization] Research and Development Network</b>"
-	l += "Available points: [stored_research.research_points] (+[round(stored_research.last_bitcoins * 60)] / minute)"
+	l += "Available points: [round(stored_research.research_points)] (+[round(stored_research.last_bitcoins * 60)] / minute)"
 	l += "Security protocols: [emagged? "<font color='red'>Disabled</font>" : "<font color='green'>Enabled</font>"]"
 	l += "<a href='?src=[REF(src)];switch_screen=[RDSCREEN_MENU]'>Main Menu</a> | <a href='?src=[REF(src)];switch_screen=[back]'>Back</a></div>[RDSCREEN_NOBREAK]"
 	return l
@@ -586,10 +586,31 @@ doesn't have toxins access.
 	l += "</div>[RDSCREEN_NOBREAK]"
 	return l
 
-/obj/machinery/computer/rdconsole/proc/ui_techweb_single_node(datum/techweb_node/node)
+/obj/machinery/computer/rdconsole/proc/build_path_icon(atom/item, user)
+	if (ispath(item, /obj/item/circuitboard))
+		var/obj/item/circuitboard/C = item
+		var/machine = initial(C.build_path)
+		if (machine)
+			item = machine
+	var/icon_file = initial(item.icon)
+	var/icon/item_icon = icon(icon_file, initial(item.icon_state), SOUTH)
+	if (ispath(item, /obj/machinery/computer))
+		var/obj/machinery/computer/C = item
+		var/screen = initial(C.icon_screen)
+		var/keyboard = initial(C.icon_keyboard)
+		if (screen)
+			item_icon.Blend(icon(icon_file, screen), ICON_OVERLAY)
+		if (keyboard)
+			item_icon.Blend(icon(icon_file, keyboard), ICON_OVERLAY)
+	return icon2html(item_icon, user || usr)
+
+/obj/machinery/computer/rdconsole/proc/ui_techweb_single_node(datum/techweb_node/node, selflink=TRUE)
 	var/list/l = list()
 	var/price = node.get_price(stored_research)
-	l += "<div class='statusDisplay technode'><b>[node.display_name]</b> [RDSCREEN_NOBREAK]"
+	var/display_name = node.display_name
+	if (selflink)
+		display_name = "<A href='?src=[REF(src)];view_node=[node.id];back_screen=[screen]'>[display_name]</A>"
+	l += "<div class='statusDisplay technode'><b>[display_name]</b> [RDSCREEN_NOBREAK]"
 	if(stored_research.researched_nodes[node.id])
 		l += "<span class='linkOff'>Researched</span>"
 	else if(stored_research.available_nodes[node.id])
@@ -602,25 +623,7 @@ doesn't have toxins access.
 	l += "[node.description]"
 	for(var/i in node.designs)
 		var/datum/design/D = node.designs[i]
-		var/atom/item = D.build_path
-		if (ispath(item, /obj/item/circuitboard))
-			var/obj/item/circuitboard/C = item
-			var/build_path = initial(C.build_path)
-			if (build_path)
-				item = initial(C.build_path)
-		var/icon_file = initial(item.icon)
-		var/icon/item_icon = icon(icon_file, initial(item.icon_state), SOUTH)
-		if (ispath(item, /obj/machinery/computer))
-			var/obj/machinery/computer/C = item
-			var/screen = initial(C.icon_screen)
-			var/keyboard = initial(C.icon_keyboard)
-			if (screen)
-				item_icon.Blend(icon(icon_file, screen), ICON_OVERLAY)
-			if (keyboard)
-				item_icon.Blend(icon(icon_file, keyboard), ICON_OVERLAY)
-
-		//l += "[icon2html(item_icon, usr)] <A href='?src=[REF(src)];view_design=[i]'>[D.name]</A>: [D.desc]"
-		l += "<span data-tooltip='[D.name]'>[icon2html(item_icon, usr)]</span>[RDSCREEN_NOBREAK]"
+		l += "<span data-tooltip='[D.name]' onclick='location=\"?src=[REF(src)];view_design=[i]\"'>[build_path_icon(D.build_path)]</span>[RDSCREEN_NOBREAK]"
 	l += "</div>[RDSCREEN_NOBREAK]"
 	return l
 
@@ -629,7 +632,7 @@ doesn't have toxins access.
 	var/list/l = list()
 	if(stored_research.hidden_nodes[selected_node.id])
 		l += "<div><h3>ERROR: RESEARCH NODE UNKNOWN.</h3></div>"
-	l += ui_techweb_single_node(selected_node)
+	l += ui_techweb_single_node(selected_node, FALSE)
 	l += "<div><h3>Prerequisites:</h3>[RDSCREEN_NOBREAK]"
 	for(var/i in selected_node.prerequisites)
 		var/datum/techweb_node/prereq = selected_node.prerequisites[i]
@@ -655,20 +658,36 @@ doesn't have toxins access.
 	RDSCREEN_UI_SDESIGN_CHECK
 	var/list/l = list()
 	var/datum/design/D = selected_design
-	l += "<div>Name: [D.name]"
+	l += "<div>[build_path_icon(D.build_path)] <b>[D.name]</b>"
 	if(D.build_type)
-		l += "Lathe Types:"
-		if(D.build_type & IMPRINTER) l += "Circuit Imprinter"
-		if(D.build_type & PROTOLATHE) l += "Protolathe"
-		if(D.build_type & AUTOLATHE) l += "Autolathe"
-		if(D.build_type & MECHFAB) l += "Exosuit Fabricator"
-		if(D.build_type & BIOGENERATOR) l += "Biogenerator"
-		if(D.build_type & LIMBGROWER) l += "Limbgrower"
-		if(D.build_type & SMELTER) l += "Smelter"
+		var/lathes = ""
+		if(D.build_type & IMPRINTER)
+			lathes += "<span data-tooltip='Circuit Imprinter'>[build_path_icon(/obj/machinery/rnd/circuit_imprinter)]</span>"
+			if (linked_imprinter && D.id in stored_research.researched_designs)
+				l += "<A href='?src=[REF(src)];search=1;type=imprint;to_search=[D.name]'>Imprint</A>"
+		if(D.build_type & PROTOLATHE)
+			lathes += "<span data-tooltip='Protolathe'>[build_path_icon(/obj/machinery/rnd/protolathe)]</span>"
+			if (linked_lathe && D.id in stored_research.researched_designs)
+				l += "<A href='?src=[REF(src)];search=1;type=proto;to_search=[D.name]'>Construct</A>"
+		if(D.build_type & AUTOLATHE)
+			lathes += "<span data-tooltip='Autolathe'>[build_path_icon(/obj/machinery/autolathe)]</span>"
+		if(D.build_type & MECHFAB)
+			lathes += "<span data-tooltip='Exosuit Fabricator'>[build_path_icon(/obj/machinery/mecha_part_fabricator)]</span>"
+		if(D.build_type & BIOGENERATOR)
+			lathes += "<span data-tooltip='Biogenerator'>[build_path_icon(/obj/machinery/biogenerator)]</span>"
+		if(D.build_type & LIMBGROWER)
+			lathes += "<span data-tooltip='Limbgrower'>[build_path_icon(/obj/machinery/limbgrower)]</span>"
+		if(D.build_type & SMELTER)
+			lathes += "<span data-tooltip='Smelter'>[build_path_icon(/obj/machinery/mineral/processing_unit)]</span>"
+		l += "Lathe types:"
+		l += lathes
 	l += "Required Materials:"
 	var/all_mats = D.materials + D.reagents_list
 	for(var/M in all_mats)
 		l += "* [CallMaterialName(M)] x [all_mats[M]]"
+	l += "Unlocked by:"
+	for (var/node in D.unlocked_by)
+		l += ui_techweb_single_node(node)
 	l += "[RDSCREEN_NOBREAK]</div>"
 	return l
 
