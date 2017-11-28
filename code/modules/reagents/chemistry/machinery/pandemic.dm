@@ -111,13 +111,10 @@
 
 /obj/machinery/computer/pandemic/update_icon()
 	if(stat & BROKEN)
-		icon_state = "mixer0b"
+		icon_state = (beaker ? "mixer1_b" : "mixer0_b")
 		return
 
-	if(beaker)
-		icon_state = "mixer1"
-	else
-		icon_state = "mixer0[powered() ? "" : "_nopower"]"
+	icon_state = "mixer[(beaker) ? "1" : "0"][powered() ? "" : "_nopower"]"
 
 	if(wait)
 		cut_overlays()

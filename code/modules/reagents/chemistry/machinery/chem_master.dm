@@ -59,6 +59,8 @@
 	else
 		stat |= NOPOWER
 
+	update_icon()
+
 /obj/machinery/chem_master/update_icon()
 	if(stat & NOPOWER)
 		icon_state = "mixer0_nopower"

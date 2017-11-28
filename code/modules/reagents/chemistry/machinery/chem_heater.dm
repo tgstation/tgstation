@@ -21,7 +21,7 @@
 
 /obj/machinery/chem_heater/update_icon()
 	if(on && beaker)
-		icon_state = (target_temperature > beaker.reagents.chem_temp) ? "heater-heat" : "heater-cool"
+		icon_state = (target_temperature > beaker.reagents.chem_temp) ? "heater-heating" : "heater-cooling"
 		return
 	icon_state = "heater"
 
@@ -62,7 +62,7 @@
 		to_chat(user, "<span class='notice'>You add [I] to [src].</span>")
 
 		//Add beaker overlay.
-		beaker_overlay = beaker_overlay || mutable_appearance(icon, "disp_beaker")
+		beaker_overlay = beaker_overlay || mutable_appearance(icon, "disp_beaker_heater")
 		add_overlay(beaker_overlay)
 		return
 	return ..()
