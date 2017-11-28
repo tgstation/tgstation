@@ -26,6 +26,7 @@
 	health = 200
 	del_on_death = TRUE
 
+
 /mob/living/simple_animal/pet/gondola/Initialize()
 	. = ..()
 	CreateGondola()
