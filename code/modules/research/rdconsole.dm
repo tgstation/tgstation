@@ -553,48 +553,21 @@ doesn't have toxins access.
 
 /obj/machinery/computer/rdconsole/proc/ui_techweb()		//Legacy code.
 	var/list/l = list()
-	var/list/backlog = list()
-	for(var/v in stored_research.researched_nodes)
-		backlog += stored_research.researched_nodes[v]
-
-	var/list/tiers = list()
-	var/list/current = list()
-	for(var/v in stored_research.available_nodes)
-		if(stored_research.researched_nodes[v])
-			continue
-		current += stored_research.available_nodes[v]
-
-	while (current.len)
-		var/list/next = list()
-		for (var/node_ in current)
-			var/datum/techweb_node/node = node_
-			var/current_value = tiers[node]
-			if (!current_value)
-				current_value = tiers[node] = 1
-			for (var/id in node.unlocks)
-				var/datum/techweb_node/follows = node.unlocks[id]
-				if (tiers[follows] < current_value + 1)
-					tiers[follows] = current_value + 1
-					next += follows
-		current = next
-
 	var/list/columns = list()
 	var/max_tier = 0
-	for (var/node_ in tiers)
+	for (var/node_ in stored_research.tiers)
 		var/datum/techweb_node/node = node_
-		var/tier = tiers[node]
+		var/tier = stored_research.tiers[node]
 		LAZYINITLIST(columns["[tier]"])  // String hackery to make the numbers associative
 		columns["[tier]"] += ui_techweb_single_node(node, minimal=(tier != 1))
 		max_tier = max(max_tier, tier)
 
 	l += "<table><tr><th align='left'>Researched</th><th align='left'>Available</th><th align='left'>Future</th></tr><tr>[RDSCREEN_NOBREAK]"
-	l += "<td valign='top'>[RDSCREEN_NOBREAK]"
-	for(var/datum/techweb_node/N in backlog)
-		l += ui_techweb_single_node(N, minimal=TRUE)
-	for(var/tier in 1 to max_tier)
-		l += "</td><td valign='top'>[RDSCREEN_NOBREAK]"
+	for(var/tier in 0 to max_tier)
+		l += "<td valign='top'>[RDSCREEN_NOBREAK]"
 		l += columns["[tier]"]
-	l += "</td></tr></table>[RDSCREEN_NOBREAK]"
+		l += "</td>[RDSCREEN_NOBREAK]"
+	l += "</tr></table>[RDSCREEN_NOBREAK]"
 	return l
 
 /obj/machinery/computer/rdconsole/proc/build_path_icon(atom/item, user)
