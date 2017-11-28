@@ -153,6 +153,8 @@
 
 					C.on_reaction(src, multiplier)
 					reaction_occurred = 1
+					if(istype(cached_my_atom, /obj/effect/liquid))
+						qdel(cached_my_atom)
 					break
 
 	while(reaction_occurred)
