@@ -11,7 +11,6 @@ SUBSYSTEM_DEF(mobs)
 	..("P:[GLOB.mob_living_list.len]")
 
 /datum/controller/subsystem/mobs/Initialize(start_timeofday)
-	warning("world.maxz is [world.maxz]")
 	by_zlevel.len = world.maxz
 	for (var/i = 1 to world.maxz)
 		by_zlevel.[i] = list()
