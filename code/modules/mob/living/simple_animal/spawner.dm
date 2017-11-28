@@ -57,7 +57,7 @@
 
 /mob/living/simple_animal/hostile/spawner/skeleton
 	name = "bone pit"
-	desc = "A pit full of bones, some still seem to be moving.."
+	desc = "A pit full of bones, and some still seem to be moving..."
 	icon_state = "hole"
 	icon_living = "hole"
 	icon = 'icons/mob/nest.dmi'

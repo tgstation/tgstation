@@ -127,7 +127,8 @@
 			if(istype(P, /obj/item/screwdriver))
 				playsound(src, P.usesound, 50, 1)
 				to_chat(user, "<span class='notice'>You connect the monitor.</span>")
-				var/obj/B = new src.circuit.build_path (src, circuit)
+				var/obj/B = new circuit.build_path (loc, circuit)
+				B.dir = dir
 				transfer_fingerprints_to(B)
 				qdel(src)
 				return

@@ -179,6 +179,9 @@
 		var/mob/living/L = AM
 		L.fire_act(temperature, volume)
 
+/obj/effect/hotspot/singularity_pull()
+	return
+
 /obj/effect/dummy/fire
 	name = "fire"
 	desc = "OWWWWWW. IT BURNS. Tell a coder if you're seeing this."
