@@ -635,15 +635,3 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 
 /atom/proc/wirecutter_act(mob/user, obj/item/tool)
 	return
-
-/atom/proc/on_brew()
-	return
-
-/atom/proc/on_smelt()
-	return
-
-/atom/proc/on_bar_smelt()
-	return
-
-/atom/proc/post_smithing()
-	return
