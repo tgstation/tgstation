@@ -194,7 +194,7 @@
 		use_beaker = !use_beaker
 
 	else if(href_list["eject"] && (!isnull(reagent_glass)))
-		reagent_glass.loc = get_turf(src)
+		reagent_glass.forceMove(drop_location())
 		reagent_glass = null
 
 	else if(href_list["togglevoice"])
@@ -516,7 +516,7 @@
 /mob/living/simple_animal/bot/medbot/explode()
 	on = FALSE
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
-	var/turf/Tsec = get_turf(src)
+	var/atom/Tsec = drop_location()
 
 	new /obj/item/storage/firstaid(Tsec)
 
@@ -525,7 +525,7 @@
 	new /obj/item/device/healthanalyzer(Tsec)
 
 	if(reagent_glass)
-		reagent_glass.loc = Tsec
+		reagent_glass.forceMove(Tsec)
 		reagent_glass = null
 
 	if(prob(50))

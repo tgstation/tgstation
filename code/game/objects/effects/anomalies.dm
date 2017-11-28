@@ -86,7 +86,6 @@
 
 /obj/effect/anomaly/grav/New()
 	..()
-	aSignal.origin_tech = "magnets=7"
 
 /obj/effect/anomaly/grav/anomalyEffect()
 	..()
@@ -132,7 +131,6 @@
 
 /obj/effect/anomaly/flux/New()
 	..()
-	aSignal.origin_tech = "powerstorage=7"
 
 /obj/effect/anomaly/flux/anomalyEffect()
 	..()
@@ -181,7 +179,6 @@
 
 /obj/effect/anomaly/bluespace/New()
 	..()
-	aSignal.origin_tech = "bluespace=7"
 
 /obj/effect/anomaly/bluespace/anomalyEffect()
 	..()
@@ -255,7 +252,6 @@
 
 /obj/effect/anomaly/pyro/New()
 	..()
-	aSignal.origin_tech = "plasmatech=7"
 
 /obj/effect/anomaly/pyro/anomalyEffect()
 	..()
@@ -291,7 +287,6 @@
 
 /obj/effect/anomaly/bhole/New()
 	..()
-	aSignal.origin_tech = "engineering=7"
 
 /obj/effect/anomaly/bhole/anomalyEffect()
 	..()

@@ -49,6 +49,7 @@
 	var/normal_integrity = AIRLOCK_INTEGRITY_N
 	integrity_failure = 70
 	damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_N
+	interact_open = TRUE
 
 	var/security_level = 0 //How much are wires secured
 	var/aiControlDisabled = 0 //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
@@ -265,7 +266,7 @@
 					justzap = TRUE
 					addtimer(CALLBACK(src, .proc/unzap), 10)
 					return
-			else /*if(src.justzap)*/
+			else
 				return
 		else if(user.hallucinating() && ishuman(user) && prob(4) && !operating)
 			var/mob/living/carbon/human/H = user
@@ -1362,7 +1363,7 @@
 													datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "ai_airlock", name, 550, 430, master_ui, state)
+		ui = new(user, src, ui_key, "ai_airlock", name, 550, 456, master_ui, state)
 		ui.open()
 
 /obj/machinery/door/airlock/ui_data()
@@ -1375,8 +1376,6 @@
 	power["backup_timeleft"] = src.secondsBackupPowerLost
 	data["power"] = power
 
-	data["density"] = density
-	data["welded"] = welded
 	data["shock"] = secondsElectrified == 0 ? 2 : 0
 	data["shock_timeleft"] = secondsElectrified
 	data["id_scanner"] = !aiDisabledIdScanner
@@ -1385,6 +1384,8 @@
 	data["lights"] = lights // bolt lights
 	data["safe"] = safe // safeties
 	data["speed"] = normalspeed // safe speed
+	data["welded"] = welded // welded
+	data["opened"] = !density // opened
 
 	var/list/wire = list()
 	wire["main_1"] = !wires.is_cut(WIRE_POWER1)

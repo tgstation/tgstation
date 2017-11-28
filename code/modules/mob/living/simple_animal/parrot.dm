@@ -59,7 +59,7 @@
 	friendly = "grooms"
 	mob_size = MOB_SIZE_SMALL
 	movement_type = FLYING
-	gold_core_spawnable = 2
+	gold_core_spawnable = FRIENDLY_SPAWN
 
 	var/parrot_damage_upper = 10
 	var/parrot_state = PARROT_WANDER //Hunt for a perch when created
@@ -68,8 +68,6 @@
 	var/parrot_dam_zone = list("chest", "head", "l_arm", "l_leg", "r_arm", "r_leg") //For humans, select a bodypart to attack
 
 	var/parrot_speed = 5 //"Delay in world ticks between movement." according to byond. Yeah, that's BS but it does directly affect movement. Higher number = slower.
-	//var/parrot_been_shot = 0 this wasn't working right, and parrots don't survive bullets.((Parrots get a speed bonus after being shot. This will deincrement every Life() and at 0 the parrot will return to regular speed.))
-
 	var/parrot_lastmove = null //Updates/Stores position of the parrot while it's moving
 	var/parrot_stuck = 0	//If parrot_lastmove hasnt changed, this will increment until it reaches parrot_stuck_threshold
 	var/parrot_stuck_threshold = 10 //if this == parrot_stuck, it'll force the parrot back to wandering
@@ -545,8 +543,6 @@
 			parrot_state = PARROT_WANDER
 
 		walk_away(src, parrot_interest, 1, parrot_speed)
-		/*if(parrot_been_shot > 0)
-			parrot_been_shot--  didn't work anyways, and besides, any bullet poly survives isn't worth the speed boost.*/
 		if(isStuck())
 			return
 
@@ -873,7 +869,7 @@
 	name = "Poly"
 	desc = "Poly the Parrot. An expert on quantum cracker theory."
 	speak = list("Poly wanna cracker!", ":e Check the crystal, you chucklefucks!",":e Wire the solars, you lazy bums!",":e WHO TOOK THE DAMN HARDSUITS?",":e OH GOD ITS ABOUT TO DELAMINATE CALL THE SHUTTLE")
-	gold_core_spawnable = 0
+	gold_core_spawnable = NO_SPAWN
 	speak_chance = 3
 	var/memory_saved = FALSE
 	var/rounds_survived = 0
@@ -1015,7 +1011,7 @@
 	emote_hear = list("squawks rustily.", "bawks metallically!")
 	emote_see = list("flutters its metal wings.")
 	faction = list("ratvar")
-	gold_core_spawnable = FALSE
+	gold_core_spawnable = NO_SPAWN
 	del_on_death = TRUE
 	death_sound = 'sound/magic/clockwork/anima_fragment_death.ogg'
 

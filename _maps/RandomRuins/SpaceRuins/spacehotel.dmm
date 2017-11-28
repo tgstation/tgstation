@@ -2359,7 +2359,7 @@
 	name = "Hotel Staff Room";
 	req_access_txt = "200"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/workroom)
 "gt" = (
 /obj/structure/table/wood,
@@ -2396,7 +2396,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/ruin/space/has_grav/hotel/dock)
 "gw" = (
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/dock)
 "gx" = (
 /obj/structure/table,
@@ -2406,7 +2406,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/dock)
 "gy" = (
 /obj/structure/chair/comfy/brown{
@@ -2448,10 +2448,10 @@
 /area/ruin/space/has_grav/hotel/bar)
 "gF" = (
 /obj/machinery/vending/cola,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/workroom)
 "gG" = (
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/workroom)
 "gH" = (
 /obj/structure/table,
@@ -2459,23 +2459,23 @@
 	dir = 1
 	},
 /obj/item/crowbar,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/workroom)
 "gI" = (
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
 /obj/item/paper/fluff/ruins/spacehotel/notice,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/workroom)
 "gJ" = (
 /obj/structure/closet/secure_closet/freezer/kitchen/mining,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/workroom)
 "gK" = (
 /obj/structure/table,
 /obj/machinery/microwave,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/workroom)
 "gL" = (
 /obj/structure/table,
@@ -2483,11 +2483,11 @@
 /obj/structure/sign/nosmoking_1{
 	pixel_y = 32
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/workroom)
 "gM" = (
 /obj/effect/mob_spawn/human/hotel_staff,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/workroom)
 "gN" = (
 /obj/structure/filingcabinet,
@@ -2505,15 +2505,15 @@
 /area/ruin/space/has_grav/hotel/dock)
 "gQ" = (
 /obj/machinery/computer/teleporter,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/dock)
 "gR" = (
 /obj/machinery/teleport/station,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/dock)
 "gS" = (
 /obj/machinery/teleport/hub,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/dock)
 "gT" = (
 /obj/machinery/light{
@@ -2572,7 +2572,7 @@
 /obj/machinery/vending/wallmed{
 	pixel_x = -32
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/workroom)
 "hb" = (
 /turf/open/floor/plasteel/grimy,
@@ -2680,11 +2680,11 @@
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-18"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/workroom)
 "hr" = (
 /obj/item/device/radio/beacon,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/dock)
 "hs" = (
 /obj/structure/table/wood,
@@ -2770,24 +2770,24 @@
 /mob/living/simple_animal/bot/medbot{
 	name = "Accidents Happen"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/workroom)
 "hB" = (
 /obj/structure/mirror{
 	pixel_y = -32
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/workroom)
 "hC" = (
 /obj/structure/closet/crate/bin,
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/workroom)
 "hD" = (
 /obj/structure/reagent_dispensers/water_cooler,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/workroom)
 "hE" = (
 /obj/structure/table,
@@ -2797,12 +2797,12 @@
 /obj/item/card/id/away/hotel,
 /obj/item/card/id/away/hotel,
 /obj/item/card/id/away/hotel,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/workroom)
 "hF" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/workroom)
 "hG" = (
 /obj/effect/mob_spawn/human/hotel_staff{
@@ -2810,14 +2810,14 @@
 	dir = 1
 	},
 /obj/machinery/light,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/workroom)
 "hH" = (
 /obj/effect/mob_spawn/human/hotel_staff{
 	icon_state = "sleeper_s";
 	dir = 1
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/workroom)
 "hI" = (
 /obj/machinery/door/airlock/maintenance{
@@ -2860,7 +2860,7 @@
 /area/ruin/space/has_grav/hotel/dock)
 "hO" = (
 /obj/machinery/light,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/dock)
 "hP" = (
 /obj/structure/cable{
@@ -3299,18 +3299,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/hotel)
-"iX" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 1
-	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel)
 "iY" = (
@@ -3944,7 +3932,7 @@
 /area/ruin/space/has_grav/hotel/security)
 "kP" = (
 /obj/effect/turf_decal/stripes/corner{
-	dir = 2
+	dir = 1
 	},
 /turf/open/floor/plasteel/darkyellow,
 /area/ruin/space/has_grav/hotel/security)
@@ -4619,7 +4607,7 @@
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/workroom)
 "mQ" = (
 /obj/machinery/door/airlock/centcom{
@@ -4629,7 +4617,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/workroom)
 "mR" = (
 /obj/structure/cable{

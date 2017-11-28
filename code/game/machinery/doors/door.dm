@@ -63,9 +63,6 @@
 		spark_system = null
 	return ..()
 
-//process()
-	//return
-
 /obj/machinery/door/CollidedWith(atom/movable/AM)
 	if(operating || emagged)
 		return
@@ -258,12 +255,15 @@
 		return 1
 	if(operating)
 		return
+	if(welded)
+		return
 	if(safe)
 		for(var/atom/movable/M in get_turf(src))
 			if(M.density && M != src) //something is blocking the door
 				if(autoclose)
 					addtimer(CALLBACK(src, .proc/autoclose), 60)
 				return
+
 	operating = TRUE
 
 	do_animate("closing")

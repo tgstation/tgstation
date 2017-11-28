@@ -66,7 +66,7 @@
 			if(ismineralturf(src))
 				to_chat(user, "<span class='notice'>You finish cutting into the rock.</span>")
 				gets_drilled(user)
-				SSblackbox.add_details("pick_used_mining","[P.type]")
+				SSblackbox.record_feedback("tally", "pick_used_mining", 1, P.type)
 	else
 		return attack_hand(user)
 
@@ -75,7 +75,7 @@
 		var/i
 		for(i in 1 to mineralAmt)
 			new mineralType(src)
-			SSblackbox.add_details("ore_mined",mineralType)
+			SSblackbox.record_feedback("tally", "ore_mined", 1, mineralType)
 	for(var/obj/effect/temp_visual/mining_overlay/M in src)
 		qdel(M)
 	ChangeTurf(turf_type, FALSE, defer_change)
@@ -451,7 +451,7 @@
 		stage = GIBTONITE_DETONATE
 		explosion(bombturf,1,2,5, adminlog = 0)
 	if(stage == GIBTONITE_STABLE) //Gibtonite deposit is now benign and extractable. Depending on how close you were to it blowing up before defusing, you get better quality ore.
-		var/obj/item/twohanded/required/gibtonite/G = new /obj/item/twohanded/required/gibtonite/(src)
+		var/obj/item/twohanded/required/gibtonite/G = new (src)
 		if(det_time <= 0)
 			G.quality = 3
 			G.icon_state = "Gibtonite ore 3"

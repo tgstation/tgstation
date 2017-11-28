@@ -5,28 +5,34 @@
 	icon_state = "radio"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	origin_tech = "materials=4;magnets=4;programming=4;biotech=4;syndicate=5;bluespace=5"
 	var/starting_tc = 0
 
-/obj/item/implant/uplink/New()
-	hidden_uplink = new(src)
-	hidden_uplink.telecrystals = starting_tc
-	..()
+/obj/item/implant/uplink/Initialize(mapload, _owner)
+	. = ..()
+	LoadComponent(/datum/component/uplink, _owner, TRUE, FALSE, null, starting_tc)
 
 /obj/item/implant/uplink/implant(mob/living/target, mob/user, silent = 0)
-	for(var/X in target.implants)
-		if(istype(X, type))
-			var/obj/item/implant/imp_e = X
-			imp_e.hidden_uplink.telecrystals += hidden_uplink.telecrystals
-			qdel(src)
-			return 1
+	GET_COMPONENT(hidden_uplink, /datum/component/uplink)
+	if(hidden_uplink)
+		for(var/X in target.implants)
+			if(istype(X, type))
+				var/obj/item/implant/imp_e = X
+				GET_COMPONENT_FROM(their_hidden_uplink, /datum/component/uplink, imp_e)
+				if(their_hidden_uplink)
+					their_hidden_uplink.telecrystals += hidden_uplink.telecrystals
+					qdel(src)
+					return TRUE
+				else
+					qdel(imp_e)	//INFERIOR AND EMPTY!
 
 	if(..())
-		hidden_uplink.owner = "[user.key]"
-		return 1
-	return 0
+		if(hidden_uplink)
+			hidden_uplink.owner = "[user.key]"
+			return TRUE
+	return FALSE
 
 /obj/item/implant/uplink/activate()
+	GET_COMPONENT(hidden_uplink, /datum/component/uplink)
 	if(hidden_uplink)
 		hidden_uplink.interact(usr)
 

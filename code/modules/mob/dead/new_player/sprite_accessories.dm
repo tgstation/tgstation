@@ -480,6 +480,10 @@
 	name = "Long Hair 2"
 	icon_state = "hair_long2"
 
+/datum/sprite_accessory/hair/long3
+	name = "Long Hair 3"
+	icon_state = "hair_long3"
+
 /datum/sprite_accessory/hair/pixie
 	name = "Pixie Cut"
 	icon_state = "hair_pixie"

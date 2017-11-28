@@ -182,6 +182,25 @@
 	if(P)
 		return P.id
 
+/obj/docking_port/proc/is_in_shuttle_bounds(atom/A)
+	var/turf/T = get_turf(A)
+	if(T.z != z)
+		return FALSE
+	var/list/bounds = return_coords()
+	var/x0 = bounds[1]
+	var/y0 = bounds[2]
+	var/x1 = bounds[3]
+	var/y1 = bounds[4]
+	if(x0 <= x1 && !IsInRange(T.x, x0, x1))
+		return FALSE
+	else if(!IsInRange(T.x, x1, x0))
+		return FALSE
+	if(y0 <= y1 && !IsInRange(T.y, y0, y1))
+		return FALSE
+	else if(!IsInRange(T.y, y1, y0))
+		return FALSE
+	return TRUE
+
 /obj/docking_port/stationary
 	name = "dock"
 
@@ -235,7 +254,7 @@
 /obj/docking_port/stationary/transit/Destroy(force=FALSE)
 	if(force)
 		if(get_docked())
-			to_chat("A transit dock was destroyed while something was docked to it.")
+			log_world("A transit dock was destroyed while something was docked to it.")
 		SSshuttle.transit -= src
 		if(owner)
 			owner = null
@@ -854,17 +873,6 @@
 	for(var/A in areas)
 		for(var/obj/machinery/door/E in A)	//dumb, I know, but playing it on the engines doesn't do it justice
 			playsound(E, s, 100, FALSE, max(width, height) - world.view)
-
-/obj/docking_port/mobile/proc/is_in_shuttle_bounds(atom/A)
-	var/turf/T = get_turf(A)
-	if(T.z != z)
-		return FALSE
-	var/list/bounds= return_coords()
-	var/turf/T0 = locate(bounds[1],bounds[2],z)
-	var/turf/T1 = locate(bounds[3],bounds[4],z)
-	if(T in block(T0,T1))
-		return TRUE
-	return FALSE
 
 // Losing all initial engines should get you 2
 // Adding another set of engines at 0.5 time

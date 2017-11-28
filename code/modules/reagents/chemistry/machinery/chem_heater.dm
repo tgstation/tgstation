@@ -124,7 +124,7 @@
 
 /obj/machinery/chem_heater/proc/eject_beaker()
 	if(beaker)
-		beaker.forceMove(loc)
+		beaker.forceMove(drop_location())
 		beaker.reagents.handle_reactions()
 		beaker = null
 		cut_overlays()

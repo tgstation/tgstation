@@ -48,7 +48,7 @@
 
 /obj/item/integrated_circuit/logic/binary/equals
 	name = "equal gate"
-	desc = "This gate compares two values, and outputs the number one if both are the same."
+	desc = "This gate compares two values, and outputs '1' if both are the same."
 	icon_state = "equal"
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
@@ -57,7 +57,7 @@
 
 /obj/item/integrated_circuit/logic/binary/jklatch
 	name = "JK latch"
-	desc = "This gate is synchronysed JK latch."
+	desc = "This gate is a synchronized JK latch."
 	icon_state = "jklatch"
 	inputs = list("J","K")
 	outputs = list("Q","!Q")
@@ -89,7 +89,7 @@
 
 /obj/item/integrated_circuit/logic/binary/rslatch
 	name = "RS latch"
-	desc = "This gate is synchronysed RS latch. If both R and S are true, state will not change."
+	desc = "This gate is a synchronized RS latch. If both R and S are true, state will not change."
 	icon_state = "sr_nor"
 	inputs = list("S","R")
 	outputs = list("Q","!Q")
@@ -119,7 +119,7 @@
 
 /obj/item/integrated_circuit/logic/binary/gdlatch
 	name = "gated D latch"
-	desc = "This gate is synchronysed gated D latch."
+	desc = "This gate is a synchronized gated D latch."
 	icon_state = "gated_d"
 	inputs = list("D","E")
 	outputs = list("Q","!Q")
@@ -149,7 +149,7 @@
 
 /obj/item/integrated_circuit/logic/binary/not_equals
 	name = "not equal gate"
-	desc = "This gate compares two values, and outputs the number one if both are different."
+	desc = "This gate compares two values, and outputs '1' if both are different."
 	icon_state = "not_equal"
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
@@ -158,7 +158,7 @@
 
 /obj/item/integrated_circuit/logic/binary/and
 	name = "and gate"
-	desc = "This gate will output 'one' if both inputs evaluate to true."
+	desc = "This gate will output '1' if both inputs evaluate to true."
 	icon_state = "and"
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
@@ -167,7 +167,7 @@
 
 /obj/item/integrated_circuit/logic/binary/or
 	name = "or gate"
-	desc = "This gate will output 'one' if one of the inputs evaluate to true."
+	desc = "This gate will output '1' if one of the inputs evaluate to true."
 	icon_state = "or"
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
@@ -176,7 +176,7 @@
 
 /obj/item/integrated_circuit/logic/binary/less_than
 	name = "less than gate"
-	desc = "This will output 'one' if the first input is less than the second input."
+	desc = "This will output '1' if the first input is less than the second input."
 	icon_state = "less_than"
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
@@ -185,7 +185,7 @@
 
 /obj/item/integrated_circuit/logic/binary/less_than_or_equal
 	name = "less than or equal gate"
-	desc = "This will output 'one' if the first input is less than, or equal to the second input."
+	desc = "This will output '1' if the first input is less than, or equal to the second input."
 	icon_state = "less_than_or_equal"
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
@@ -194,7 +194,7 @@
 
 /obj/item/integrated_circuit/logic/binary/greater_than
 	name = "greater than gate"
-	desc = "This will output 'one' if the first input is greater than the second input."
+	desc = "This will output '1' if the first input is greater than the second input."
 	icon_state = "greater_than"
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
@@ -203,7 +203,7 @@
 
 /obj/item/integrated_circuit/logic/binary/greater_than_or_equal
 	name = "greater_than or equal gate"
-	desc = "This will output 'one' if the first input is greater than, or equal to the second input."
+	desc = "This will output '1' if the first input is greater than, or equal to the second input."
 	icon_state = "greater_than_or_equal"
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
