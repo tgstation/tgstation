@@ -43,10 +43,16 @@
 				return
 			Remove(owner)
 		owner = M
+		var/button_id = 1
+		for(var/datum/action/A in M.actions)
+			if(A.name == name)
+				button_id += 1 //counting actions with same name to assign special name to button ([name]_[id]) for positioning memory
+		button.id = "[name]_[button_id]"
 		M.actions += src
 		if(M.client)
 			M.client.screen += button
-			button.locked = M.client.prefs.buttons_locked
+			button.locked = M.client.prefs.buttons_locked || M.client.prefs.action_buttons_screen_locs[button.id] //even if it's not defaultly locked we should remember we locked it before
+			button.moved = M.client.prefs.action_buttons_screen_locs[button.id] // null ~ FALSE
 		M.update_action_buttons()
 	else
 		Remove(owner)
