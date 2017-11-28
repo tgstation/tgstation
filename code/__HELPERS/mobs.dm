@@ -272,7 +272,7 @@ Proc for attack log creation, because really why not
 	if(!user)
 		return 0
 	var/atom/Tloc = null
-	if(target)
+	if(target && !isturf(target))
 		Tloc = target.loc
 
 	var/atom/Uloc = user.loc

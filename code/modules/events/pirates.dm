@@ -193,6 +193,7 @@
 	shuttlePortName = "custom location"
 	x_offset = 9
 	y_offset = 0
+	see_hidden = FALSE
 
 /obj/docking_port/mobile/pirate
 	name = "pirate shuttle"
