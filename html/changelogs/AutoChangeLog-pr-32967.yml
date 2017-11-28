@@ -1,4 +1,0 @@
-author: "Cruix"
-delete-after: True
-changes: 
-  - rscadd: "AI and observer diagnostic huds will now show the astar path of all bots, and Pai bots will be given a visible path to follow when called by the AI."
