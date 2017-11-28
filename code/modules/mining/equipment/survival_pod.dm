@@ -320,32 +320,32 @@
 	icon_state = initial(I.icon_state)
 	item_state = initial(I.item_state)
 
-/obj/item/weapon/survivalcapsule/fort_in_a_box
+/obj/item/survivalcapsule/fort_in_a_box
 	name = "fort-in-a-box"
 	desc = "Dwarven engineering at it's finest. Rumor has it drawbridges are used in the production of these."
 	icon_state = "dorf"
 
-/obj/item/weapon/survivalcapsule/fort_in_a_box/smeltery
+/obj/item/survivalcapsule/fort_in_a_box/smeltery
 	name = "smeltery-in-a-box"
 	template_id = "smeltery"
-/obj/item/weapon/survivalcapsule/fort_in_a_box/throne_room
+/obj/item/survivalcapsule/fort_in_a_box/throne_room
 	name = "throne-in-a-box"
 	template_id = "throne_room"
-/obj/item/weapon/survivalcapsule/fort_in_a_box/dining_hall
+/obj/item/survivalcapsule/fort_in_a_box/dining_hall
 	name = "diner-in-a-box"
 	template_id = "dining_hall"
-/obj/item/weapon/survivalcapsule/fort_in_a_box/brewery
+/obj/item/survivalcapsule/fort_in_a_box/brewery
 	name = "brewery-in-a-box"
 	template_id = "brewery"
-/obj/item/weapon/survivalcapsule/fort_in_a_box/dorm
+/obj/item/survivalcapsule/fort_in_a_box/dorm
 	name = "dorm-in-a-box"
 	template_id = "dorm"
 
-/obj/item/weapon/survivalcapsule/fort_in_a_box/dorm/attack_self()
+/obj/item/survivalcapsule/fort_in_a_box/dorm/attack_self()
 	if(..())
 		for(var/obj/machinery/migrant_spawner/M in GLOB.poi_list)
 			M.spawns_left += 6
 			M.ghost_message()
-/obj/item/weapon/survivalcapsule/fort_in_a_box/farm
+/obj/item/survivalcapsule/fort_in_a_box/farm
 	name = "farm-in-a-box"
 	template_id = "farm"

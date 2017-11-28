@@ -82,7 +82,8 @@
 	throw_range = 4
 	mopspeed = 20
 
-/obj/item/mop/advanced	desc = "The most advanced tool in a custodian's arsenal, complete with a condenser for self-wetting! Just think of all the viscera you will clean up with this!"
+/obj/item/mop/advanced
+	desc = "The most advanced tool in a custodian's arsenal, complete with a condenser for self-wetting! Just think of all the viscera you will clean up with this!"
 	name = "advanced mop"
 	mopcap = 10
 	icon_state = "advmop"

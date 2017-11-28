@@ -1,7 +1,6 @@
 /obj/item/organ/alcoholvessel //essentially the opposite of the xeno's plasmavessel, but with alcohol
 	name = "adamantine infused lungs"
 	icon_state = "plasma"
-	origin_tech = "biotech=5"
 	w_class = WEIGHT_CLASS_NORMAL
 	zone = "chest"
 	slot = "dwarf_organ"

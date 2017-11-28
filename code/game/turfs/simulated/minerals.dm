@@ -375,7 +375,7 @@ GLOBAL_VAR_INIT(secret_triggered, FALSE)
 	defer_change = 1
 
 /turf/closed/mineral/adamantine
-	mineralType = /obj/item/weapon/ore/adamantine
+	mineralType = /obj/item/ore/adamantine
 	mineralAmt = 1
 	spreadChance = 0
 	spread = 0

@@ -117,7 +117,7 @@
 	possible_tools += contents
 
 	for(var/obj/I2 in spiral_range_turfs(user,1))
-		if(istype(I2, /obj/item/weapon/storage))
+		if(istype(I2, /obj/item/storage))
 			for(var/obj/SI in I2.contents)
 				possible_tools += SI.type
 		possible_tools += I2.type

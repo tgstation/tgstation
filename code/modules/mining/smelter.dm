@@ -6,7 +6,7 @@
 	density = TRUE
 	anchored = TRUE
 
-/obj/machinery/smelter/attackby(obj/item/weapon/W, mob/user, params)
+/obj/machinery/smelter/attackby(obj/item/W, mob/user, params)
 	if(!isdwarf(user))
 		to_chat(user, "You don't comprehend this tool well enough to use it.")
 		return
@@ -16,7 +16,7 @@
 	if(user.temporarilyRemoveItemFromInventory(W))
 		to_chat(user, "You smelt [W].")
 		qdel(W)
-		var/obj/item/weapon/reagent_containers/glass/bucket/dwarf/AB = new(get_turf(src)) //New bucket that holds 75u, adding snowflake sprite soon
+		var/obj/item/reagent_containers/glass/bucket/dwarf/AB = new(get_turf(src)) //New bucket that holds 75u, adding snowflake sprite soon
 		AB.reagents.add_reagent(smelting_result, 75)
 		AB.reagents.chem_temp = 1000
 		AB.reagents.handle_reactions()
@@ -30,22 +30,21 @@
 	icon_state = "anvil"
 	density = TRUE
 	anchored = FALSE
-	var/obj/item/weapon/reagent_containers/glass/mold/current_mold = null
+	var/obj/item/reagent_containers/glass/mold/current_mold = null
 	var/mutable_appearance/my_mold = null
 
-/obj/machinery/anvil/attackby(obj/item/weapon/W, mob/user, params)
+/obj/machinery/anvil/attackby(obj/item/W, mob/user, params)
 	if(!isdwarf(user))
 		to_chat(user, "You don't comprehend this tool well enough to use it.")
 		return
-	if(!istype(W, /obj/item/weapon/smith_hammer))
+	if(!istype(W, /obj/item/smith_hammer))
 		..()
-	if(!current_mold && istype(W, /obj/item/weapon/reagent_containers/glass/mold))
-		var/obj/item/weapon/reagent_containers/glass/mold/M = W
+	if(!current_mold && istype(W, /obj/item/reagent_containers/glass/mold))
+		var/obj/item/reagent_containers/glass/mold/M = W
 		var/datum/reagent/R = M.reagents.get_master_reagent()
 		if(R && R.volume == 25)
-			if(user.drop_item())
+			if(user.transferItemToLoc(M,src))
 				to_chat(user, "You place [M] on [src].")
-				M.loc = src
 				current_mold = M
 				my_mold = mutable_appearance('icons/obj/blacksmithing.dmi', M.icon_state)
 				add_overlay(my_mold)
@@ -56,7 +55,7 @@
 		else
 			to_chat(user, "There's nothing in the mold!")
 			return FALSE
-	if(istype(W, /obj/item/weapon/smith_hammer))
+	if(istype(W, /obj/item/smith_hammer))
 		if(current_mold)
 			to_chat(user, "You break the result out of the mold.")
 			new current_mold.type(get_turf(src))
@@ -68,7 +67,7 @@
 				current_mold = null
 				return
 			var/obj/item/I //what the fook is this
-			if(!istype(current_mold, /obj/item/weapon/reagent_containers/glass/mold/bar))
+			if(!istype(current_mold, /obj/item/reagent_containers/glass/mold/bar))
 				I = new current_mold.produce_type(get_turf(src))
 				I.smelted_material = new R.type()
 				I.post_smithing()
@@ -84,7 +83,7 @@
 		else
 			to_chat(user, "There's nothing in the mold!")
 
-/obj/item/weapon/smith_hammer
+/obj/item/smith_hammer
 	name = "smith's hammer"
 	desc = "John was here."
 	icon = 'icons/obj/blacksmithing.dmi'
@@ -92,7 +91,7 @@
 	force = 10
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/weapon/mold_result
+/obj/item/mold_result
 	name = "molten blob"
 	desc = "A hardened blob of ore. You shouldn't be seeing this."
 	icon = 'icons/obj/blacksmithing.dmi'
@@ -105,63 +104,63 @@
 	var/attack_amt = 0 //how much it hurts to be hit by it
 	var/blunt_bonus = FALSE //determines if the reagent used for the part has a bonus for blunt materials (uranium, ect)
 
-/obj/item/weapon/mold_result/blade
+/obj/item/mold_result/blade
 	name = "blade"
 	desc = "A blade made of "
 	icon = 'icons/obj/blacksmithing.dmi'
 	icon_state = "sword_blade"
 	mold_type = "offensive"
 
-/obj/item/weapon/mold_result/hammer_head
+/obj/item/mold_result/hammer_head
 	name = "hammer head"
 	desc = "A hammer head made of "
 	icon = 'icons/obj/blacksmithing.dmi'
 	icon_state = "hammer_head"
 	mold_type = "offensive"
 
-/obj/item/weapon/mold_result/armor_plating
+/obj/item/mold_result/armor_plating
 	name = "armor plating"
 	desc = "Armor plating made of "
 	icon = 'icons/obj/blacksmithing.dmi'
 	icon_state = "armor"
 	mold_type = "offensive"
 
-/obj/item/weapon/mold_result/helmet_plating
+/obj/item/mold_result/helmet_plating
 	name = "helmet plating"
 	desc = "Helmet plating made of "
 	icon = 'icons/obj/blacksmithing.dmi'
 	icon_state = "helmet"
 	mold_type = "offensive"
 
-/obj/item/weapon/mold_result/crossbow_base
+/obj/item/mold_result/crossbow_base
 	name = "crossbow base"
 	desc = "Crossbow base made of "
 	icon = 'icons/obj/blacksmithing.dmi'
 	icon_state = "dwarf_crossbow"
 	mold_type = "offensive"
 
-/obj/item/weapon/mold_result/shield_backing
+/obj/item/mold_result/shield_backing
 	name = "shield backing"
 	desc = "Shield backing made of "
 	icon = 'icons/obj/blacksmithing.dmi'
 	icon_state = "dwarf_shield"
 	mold_type = "offensive"
 
-/obj/item/weapon/mold_result/pickaxe_head
+/obj/item/mold_result/pickaxe_head
 	name = "pickaxe head"
 	desc = "A pickaxe head made of "
 	icon = 'icons/obj/blacksmithing.dmi'
 	icon_state = "pickaxe_head"
 	mold_type = "digging"
 
-/obj/item/weapon/mold_result/shovel_head
+/obj/item/mold_result/shovel_head
 	name = "shovel head"
 	desc = "A shovel head made of "
 	icon = 'icons/obj/blacksmithing.dmi'
 	icon_state = "shovel_head"
 	mold_type = "digging"
 
-/obj/item/weapon/mold_result/post_smithing()
+/obj/item/mold_result/post_smithing()
 	name = "[smelted_material.name] [name]"
 	material_type = "[smelted_material.name]"
 	color = smelted_material.color
@@ -179,17 +178,17 @@
 
 ////////////////////////// Smithed Items///////////////////////
 /*Sword*/
-/obj/item/weapon/smithed_sword
+/obj/item/smithed_sword
 	name = "unobtanium broadsword"
 	desc = "A broadsword made of unobtanium, you probably shouldn't be seeing this."
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "claymore"
 	item_state = "claymore"
 
-/obj/item/weapon/smithed_sword/CheckParts(list/parts_list)
+/obj/item/smithed_sword/CheckParts(list/parts_list)
 	..()
-	var/obj/item/weapon/mold_result/blade/B = locate() in contents
+	var/obj/item/mold_result/blade/B = locate() in contents
 	if(B)
 		var/image/I = image('icons/obj/blacksmithing.dmi', "sword_blade")
 		I.color = B.color
@@ -202,10 +201,10 @@
 		sharpness = B.sharpness
 
 /*Warhammer*/
-/obj/item/weapon/twohanded/smithed_warhammer
+/obj/item/twohanded/smithed_warhammer
 	name = "unobtanium warhammer"
 	desc = "A warhammer made of unobtanium, you probably shouldn't be seeing this."
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "sledgehammer"
 	item_state = "sledgehammer"
 	force = 11
@@ -214,9 +213,9 @@
 	throw_speed = 4
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
 
-/obj/item/weapon/twohanded/smithed_warhammer/CheckParts(list/parts_list)
+/obj/item/twohanded/smithed_warhammer/CheckParts(list/parts_list)
 	..()
-	var/obj/item/weapon/mold_result/hammer_head/M = locate() in contents
+	var/obj/item/mold_result/hammer_head/M = locate() in contents
 	if(M)
 		var/image/I = image('icons/obj/blacksmithing.dmi', "hammer_head")
 		I.color = M.color
@@ -236,16 +235,16 @@
 		sharpness = M.sharpness
 
 /*Pickaxe*/
-/obj/item/weapon/pickaxe/smithed_pickaxe
+/obj/item/pickaxe/smithed_pickaxe
 	name = "unobtanium pickaxe"
 	desc = "A pickaxe made of unobtanium, you probably shouldn't be seeing this."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "spickaxe"
 	item_state = "spickaxe"
 
-/obj/item/weapon/pickaxe/smithed_pickaxe/CheckParts(list/parts_list)
+/obj/item/pickaxe/smithed_pickaxe/CheckParts(list/parts_list)
 	..()
-	var/obj/item/weapon/mold_result/pickaxe_head/P = locate() in contents
+	var/obj/item/mold_result/pickaxe_head/P = locate() in contents
 	if(P)
 		var/image/O = image('icons/obj/blacksmithing.dmi', "pickaxe_head")
 		O.color = P.color
@@ -259,15 +258,15 @@
 		sharpness = P.sharpness
 
 /*Shovel*/
-/obj/item/weapon/shovel/smithed_shovel
+/obj/item/shovel/smithed_shovel
 	name = "unobtanium shovel"
 	desc = "A shovel made of unobtanium, you probably shouldn't be seeing this."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "shovel"
 
-/obj/item/weapon/shovel/smithed_shovel/CheckParts(list/parts_list)
+/obj/item/shovel/smithed_shovel/CheckParts(list/parts_list)
 	..()
-	var/obj/item/weapon/mold_result/shovel_head/S = locate() in contents
+	var/obj/item/mold_result/shovel_head/S = locate() in contents
 	if(S)
 		var/image/Q = image('icons/obj/blacksmithing.dmi', "shovel_head")
 		Q.color = S.color
@@ -285,16 +284,16 @@
 
 
 
-/obj/item/weapon/shield/riot/buckler/smith
+/obj/item/shield/riot/buckler/smith
 	name = "buckler"
 	desc = "A dwarven buckler."
 	icon_state = "dwarf_buckler"
 	item_state = "dwarf_buckler"
 	block_chance = 30
 
-/obj/item/weapon/shield/riot/buckler/smith/CheckParts(list/parts_list)
+/obj/item/shield/riot/buckler/smith/CheckParts(list/parts_list)
 	..()
-	var/obj/item/weapon/mold_result/shield_backing/S = locate() in contents
+	var/obj/item/mold_result/shield_backing/S = locate() in contents
 	if(S)
 		var/image/Q = image('icons/obj/blacksmithing.dmi', "dwarf_shield")
 		Q.color = S.color
@@ -306,7 +305,7 @@
 			A = S.attack_amt*2
 
 
-/obj/item/weapon/gun/ballistic/automatic/speargun/crossbow
+/obj/item/gun/ballistic/automatic/speargun/crossbow
 	name = "dwarven crossbow"
 	desc = "A dwarven crossbow."
 	icon_state = "dwarf_crossbow"
@@ -314,9 +313,9 @@
 	w_class = WEIGHT_CLASS_BULKY
 	mag_type = /obj/item/ammo_box/magazine/internal/speargun/crossbow
 
-/obj/item/weapon/gun/ballistic/automatic/speargun/crossbow/CheckParts(list/parts_list)
+/obj/item/gun/ballistic/automatic/speargun/crossbow/CheckParts(list/parts_list)
 	..()
-	var/obj/item/weapon/mold_result/crossbow_base/S = locate() in contents
+	var/obj/item/mold_result/crossbow_base/S = locate() in contents
 	if(S)
 		var/image/Q = image('icons/obj/blacksmithing.dmi', "dwarf_crossbow")
 		Q.color = S.color

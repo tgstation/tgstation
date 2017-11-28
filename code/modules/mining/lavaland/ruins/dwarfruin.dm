@@ -52,7 +52,7 @@ GLOBAL_LIST_INIT(dwarves_list, list())
 	LAZYADD(GLOB.dwarves_list, M)
 	to_chat(M, "<b>Be sure to read the wiki page at https://tgstation13.org/wiki/Lava_Dwarf to learn how to strike the earth!</b>")
 
-/obj/machinery/migrant_spawner/attackby(obj/item/weapon/W, mob/user, params)
+/obj/machinery/migrant_spawner/attackby(obj/item/W, mob/user, params)
 	if(isdwarf(user))
 		to_chat(user, "You wouldn't dare.")
 		return
@@ -63,10 +63,10 @@ GLOBAL_LIST_INIT(dwarves_list, list())
 	name = "Dwarf Standard"
 	uniform = /obj/item/clothing/under/dwarf
 	shoes = /obj/item/clothing/shoes/dwarf
-	back = /obj/item/weapon/storage/backpack/satchel/leather
+	back = /obj/item/storage/backpack/satchel/leather
 
 /*Misc Items + Crafting Parts*/
-/obj/item/weapon/reagent_containers/food/drinks/wooden_mug
+/obj/item/reagent_containers/food/drinks/wooden_mug
 	name = "wooden mug"
 	desc = "A mug for serving hearty brews."
 	icon = 'icons/obj/drinks.dmi'
@@ -74,6 +74,6 @@ GLOBAL_LIST_INIT(dwarves_list, list())
 	icon_state = "manlydorfglass"
 	spillable = 1
 
-/obj/item/weapon/sword_hilt
+/obj/item/sword_hilt
 	name = "leather hilt"
 	desc = "A handle made of leather, meant as base for a sword."

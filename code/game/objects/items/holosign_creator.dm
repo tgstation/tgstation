@@ -75,7 +75,8 @@
 
 
 
-/obj/item/holosign_creator/security	name = "security holobarrier projector"
+/obj/item/holosign_creator/security
+	name = "security holobarrier projector"
 	desc = "A holographic projector that creates holographic security barriers."
 	icon_state = "signmaker_sec"
 	holosign_type = /obj/structure/holosign/barrier
@@ -140,7 +141,7 @@
 
 
 
-/obj/item/weapon/holosign_creator/mandate
+/obj/item/holosign_creator/mandate
 	name = "royal scepter"
 	desc = "Allows you to mandate orders to your dwarves."
 	icon_state = "mandate"
@@ -148,16 +149,16 @@
 	creation_time = 30
 	max_signs = 1
 
-/obj/item/weapon/holosign_creator/mandate/name_sign(mob/user)
+/obj/item/holosign_creator/mandate/name_sign(mob/user)
 	var/mandate
-	if(istype(src, /obj/item/weapon/holosign_creator/mandate))
+	if(istype(src, /obj/item/holosign_creator/mandate))
 		mandate = stripped_input(user, "What Mandate do you wish to declare?", "Mandate")
 		if(!mandate)
 			to_chat(user,"You decide against a mandate.")
 			return FALSE
 	return mandate
 
-/obj/item/weapon/holosign_creator/mandate/make_sign(target, mob/user)
+/obj/item/holosign_creator/mandate/make_sign(target, mob/user)
 	var/obj/structure/holosign/mandate/M = new holosign_type(target, src)
 	M.mandate = sign_message
 	for(var/D in GLOB.dwarves_list)

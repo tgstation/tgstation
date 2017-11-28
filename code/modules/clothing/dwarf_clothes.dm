@@ -12,7 +12,7 @@
 
 /obj/item/clothing/suit/armor/vest/dwarf/CheckParts(list/parts_list)
 	..()
-	var/obj/item/weapon/mold_result/armor_plating/S = locate() in contents
+	var/obj/item/mold_result/armor_plating/S = locate() in contents
 	if(S)
 		var/image/Q = image(icon, icon_state)
 		Q.color = S.color
@@ -57,7 +57,7 @@
 
 /obj/item/clothing/head/helmet/dwarf/CheckParts(list/parts_list)
 	..()
-	var/obj/item/weapon/mold_result/helmet_plating/S = locate() in contents
+	var/obj/item/mold_result/helmet_plating/S = locate() in contents
 	if(S)
 		var/image/Q = image(icon, icon_state)
 		Q.color = S.color

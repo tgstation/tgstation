@@ -1627,7 +1627,7 @@
 
 /mob/living/carbon/human/interactive/greytide/clown/death()
 	for(var/i in 1 to 3)
-		new /obj/item/weapon/ore/bananium(get_turf(src))
+		new /obj/item/ore/bananium(get_turf(src))
 	..()
 //Walk softly and carry a big stick
 /mob/living/carbon/human/interactive/robust/Initialize()

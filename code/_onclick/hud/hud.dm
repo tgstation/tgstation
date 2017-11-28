@@ -114,8 +114,6 @@
 	alien_plasma_display = null
 	alien_queen_finder = null
 	alcohol_amount = null
-	deity_power_display = null
-	deity_follower_display = null
 	nightvisionicon = null
 
 	if(plane_masters.len)

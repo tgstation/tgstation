@@ -13,7 +13,7 @@
 	var/refined_type = null //What this ore defaults to being refined into
 	var/reagent_id = null
 
-/obj/item/weapon/ore/on_smelt()
+/obj/item/ore/on_smelt()
 	if(reagent_id)
 		return reagent_id
 
@@ -456,10 +456,9 @@
  							 "<span class='notice'>You flip [src]. It lands on [coinflip].</span>", \
 							 "<span class='italics'>You hear the clattering of loose change.</span>")
 
-/obj/item/weapon/ore/adamantine
+/obj/item/ore/adamantine
 	name = "adamantine ore"
 	icon_state = "ore"
-	origin_tech = "materials=8"
 	points = 0
 	materials = list(MAT_TITANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = null
