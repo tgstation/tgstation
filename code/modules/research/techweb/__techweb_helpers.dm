@@ -141,8 +141,9 @@
 		for(var/i in node.prereq_ids)
 			node.prerequisites[i] = SSresearch.techweb_nodes[i]
 		for(var/i in node.design_ids)
-			node.designs[i] = SSresearch.techweb_designs[i]
-			SSresearch.techweb_designs[i].unlocked_by += node
+			var/datum/design/D = SSresearch.techweb_designs[i]
+			node.designs[i] = D
+			D.unlocked_by += node
 		if(node.hidden)
 			SSresearch.techweb_nodes_hidden[node.id] = node
 		CHECK_TICK

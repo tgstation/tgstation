@@ -552,10 +552,6 @@ doesn't have toxins access.
 
 /obj/machinery/computer/rdconsole/proc/ui_techweb()		//Legacy code.
 	var/list/l = list()
-	var/list/backlog = list()
-	for(var/v in stored_research.researched_nodes)
-		backlog += stored_research.researched_nodes[v]
-
 	var/list/columns = list()
 	var/max_tier = 0
 	for (var/node_ in stored_research.tiers)
