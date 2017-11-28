@@ -1,7 +1,7 @@
 ///mob/living/simple_animal/mouse
 //	blood_volume = 200
 
-
+/*
 /mob/proc/can_turn_vassal(datum/mind/creator)
 	if (!ishuman(src) || !creator)
 		//to_chat(creator, "<span class='danger'>[src].</span>")
@@ -16,21 +16,47 @@
 /mob/living/carbon/human/can_turn_vassal(datum/mind/creator)
 	if (!..())
 		return 0
+	// Already My Vassal
+	if (mind.enslaved_to == creator)
+		return 0
 	// Check Overdose
 	// if (GET REGAGENT[type].overdosed)
 	// Check Loyalty Implant OR Enslaved Already
-	if (isloyal() || mind.enslaved_to)
+	if (isloyal() || mind.enslaved_to || mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
 		to_chat(creator, "<span class='danger'>[src] resists the power of your blood to dominate their mind!</span>")
 		return 0
 	return 1
 
-
-/mob/living/carbon/human/proc/attempt_make_vassal(datum/mind/creator)
+// Make Me into Vassal
+/mob/proc/attempt_make_vassal(datum/mind/creator)
+	return 0
+/mob/living/carbon/human/attempt_make_vassal(datum/mind/creator)
 	if (!can_turn_vassal(creator))
-		return
+		return 0
+
 	// Make Vassal
-	mind.enslave_mind_to_creator(creator.current)
 	greet_vassal(creator)
+	mind.enslave_mind_to_creator(creator.current)
+
+	// Give to Vamp
+	var/datum/antagonist/bloodsucker/bloodsuckerdatum = creator.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+	bloodsuckerdatum.vassals |= mind
+	SSticker.mode.vassals |= mind
+
+	return 1
+
+// No Longer Vassal
+/mob/living/carbon/human/proc/end_vassal()
+	// Find my owner and remove me.
+	for (var/datum/mind/bloodsucker in SSticker.mode.bloodsuckers)
+		// Remove me from Master's list
+		var/datum/antagonist/bloodsucker/bloodsuckerdatum = bloodsucker.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+		if(bloodsuckerdatum && (mind in bloodsuckerdatum.vassals))
+			bloodsuckerdatum.vassals -= mind
+		// Un-Enslave me
+		if (mind.enslaved_to == bloodsucker)
+			mind.enslaved_to = null
+	SSticker.mode.vassals -= mind
 
 
 
@@ -41,3 +67,4 @@
 
 	playsound_local(null, 'sound/magic/mutate.ogg', 100, FALSE, pressure_affected = FALSE)
 	mind.store_memory("You became the mortal servant of [creator], a bloodsucking vampire!")
+*/

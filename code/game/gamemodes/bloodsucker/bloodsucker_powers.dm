@@ -461,7 +461,7 @@
 		M.visible_message("<span class='notice'>[usr] places their wrist to [M]'s mouth.</span>", \
 						  "<span class='userdanger'>[usr] puts their bloodied wrist to your mouth!</span>")
 		// Timer...
-		var/drink_time = (M.stat > CONSCIOUS || usr.pulling == M && user.grab_state >= GRAB_AGGRESSIVE) ? 30 : 60
+		var/drink_time = (M.stat > CONSCIOUS || usr.pulling == M && usr.grab_state >= GRAB_AGGRESSIVE) ? 30 : 60
 		if(!do_mob(usr, M, drink_time)) // Slower if they are awake and not being grabbed.
 			to_chat(usr, "<span class='notice'>The transfer was interrupted!</span>")
 			return 0
@@ -544,7 +544,7 @@
 	// Create Temporary Reagent Container and Fill It
 	var/datum/reagents/tempreagents = new(999) // 999 Max Cap.  																// NOTE: Why are we creating a NEW reagents container and not just transferring from the Vamp's reagents? Because we don't want
 	tempreagents.add_reagent("vampblood", maxTransfer, user.get_blood_data(user.get_blood_id()), user.bodytemperature)	// reaction() to react with EVERYTHING in the Vamp's stomach. So we create a tidy little container, share it, and destroy it.
-	// Give Blood from Container
+	// Give Blood To, and Apply Effects against target's contained reagents
 	tempreagents.reaction(target, INGEST)//  , 1) // The 1 means transfer all contents.
 	tempreagents.trans_to(target, tempreagents.total_volume)
 	// Kill Temporary Reagent Container
@@ -557,8 +557,7 @@
 		// Create Bloodsucker?
 		bloodsuckerdatum.attempt_turn_bloodsucker(C)
 		// Create Vassal? (if not Bloodsucker now)
-		if (!C.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
-			bloodsuckerdatum.attempt_make_vassal(C)
+		bloodsuckerdatum.attempt_turn_vassal(C)
 
 	//cancel_spell(user)  	// TESTING: (This is if we WANT to end the spell here after successful use)
 							// 			If we return 0 (below), this spell ends but you click your target anyhow. We need to return 1, but end spell here anyway.

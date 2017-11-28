@@ -26,10 +26,12 @@
 			removed(target, 1)
 			qdel(src)
 			return FALSE
-		
+
 		var/datum/antagonist/rev/rev = target.mind.has_antag_datum(/datum/antagonist/rev)
 		if(rev)
 			rev.remove_revolutionary(FALSE, user)
+		if(target.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)) // FULPSTATION: Remove Vassal if Loyalty implant
+			SSticker.mode.remove_vassal(target.mind)
 		if(!silent)
 			if(target.mind in SSticker.mode.cult)
 				to_chat(target, "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")

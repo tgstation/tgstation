@@ -381,6 +381,8 @@ SUBSYSTEM_DEF(ticker)
 	var/num_shuttle_escapees = 0
 
 	to_chat(world, "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>")
+	SEND_SOUND(world, sound('sound/Fulpsounds/Fulp_Piano.ogg')) // FULPSTATION: Play end music! SO SAD!
+
 	if(LAZYLEN(GLOB.round_end_notifiees))
 		send2irc("Notice", "[GLOB.round_end_notifiees.Join(", ")] the round has ended.")
 
@@ -759,9 +761,9 @@ SUBSYSTEM_DEF(ticker)
 		'sound/roundend/newroundsexy.ogg',
 		'sound/roundend/apcdestroyed.ogg',
 		'sound/roundend/bangindonk.ogg',
-		'sound/roundend/leavingtg.ogg',
 		'sound/roundend/its_only_game.ogg',\
 		)
+		//'sound/roundend/leavingtg.ogg',
 		//'sound/roundend/yeehaw.ogg',
 		//'sound/roundend/disappointed.ogg'
 

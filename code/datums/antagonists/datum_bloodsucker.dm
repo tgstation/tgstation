@@ -23,14 +23,15 @@
 	var/list/objectives_given = list()	// For removal if needed.
 	var/bloodTakenLifetime = 0			// Total blood ever fed from humans.
 	var/vampsMade = 0					// Total bloodsuckers created from victims.
-	var/vassalsMade = 0					// Total vassals controlled
+	//var/vassalsMade = 0				// Total vassals controlled // REMOVED: use vassals.len
+	var/list/datum/mind/vassals2 = list()// Vassals under my control. Periodically remove the dead ones.
+	var/list/datum/antagonist/vassal/vassals = list()// Vassals under my control. Periodically remove the dead ones.
 	var/datum/mind/creator				// Who made me? For both Vassals AND Bloodsuckers (though Master Vamps won't have one)
 	var/list/obj/effect/decal/cleanable/blood/vampblood/desecrateBlood = list()	// All the blood I've spilled with Expel Blood to desecrate for an objective.
 	//var/list/
 	var/obj/structure/closet/coffin/coffin	// Where I lay my head is home.
 	// Powers
 	var/list/obj/effect/proc_holder/spell/bloodsucker/powers = list()// Purchased powers
-	var/list/datum/mind/vassals = list()						// Vassals under my control. Periodically remove the dead ones.
 //	var/mob/living/carbon/feedTarget								// Who am I feeding from?
 	//var/humanDisguise												// Am I currently faking as a human?
 	var/poweron_feed = 0				// Am I feeding?
@@ -73,6 +74,9 @@
 
 	SSticker.mode.bloodsuckers -= owner
 
+	// Free Vassals
+	FreeAllVassals()
+
 	// Clear Powers & Stats
 	ClearAllPowersAndStats()
 
@@ -81,7 +85,6 @@
 
 	// Clear Antag HUD
 	update_bloodsucker_icons_removed(owner.current)
-
 
 	return ..() // Do base stuff.
 
@@ -97,8 +100,11 @@
 	owner.current.playsound_local(null, 'sound/ambience/antag/BloodsuckerAlert.ogg', 100, FALSE, pressure_affected = FALSE)
 
 
-
-
+/datum/antagonist/bloodsucker/farewell()
+	owner.current.visible_message("[owner.current]'s skin flushes with color, their eyes growing glossier. They look...alive.",\
+			"<span class='userdanger'><FONT size = 3>With a snap, your curse has ended. You are no longer a Bloodsucker. You are alive once more!</FONT></span>")
+	// Refill with Blood
+	owner.current.blood_volume = max(owner.current.blood_volume,BLOOD_VOLUME_SAFE)
 
 
 
@@ -196,6 +202,7 @@
 
 			// ROUND ONE: CREWMATE OBJECTIVES //
 
+	/*
 	// Embrace Target Objective:		Turn [Specific Person]into a vampire
 	var/datum/objective/bloodsucker/embracetarget/embracetarget_objective = new
 	embracetarget_objective.owner = owner
@@ -213,7 +220,7 @@
 		embrace_objective.owner = owner
 		embrace_objective.generate_objective()
 		add_objective(embrace_objective)
-
+	*/
 			// ROUND ONE: STEALTH OBJECTIVES //
 
 	// Desecrate Objective:		Spill your blood in a location.
@@ -465,3 +472,88 @@ datum/antagonist/bloodsucker/proc/ClearAllPowersAndStats()
 
 /obj/screen/bloodsucker/blood_counter/proc/clear()
 	invisibility = INVISIBILITY_ABSTRACT
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//																		VASSALS
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/datum/antagonist/bloodsucker/proc/FreeAllVassals()
+	for (var/datum/antagonist/vassal/V in vassals)
+		SSticker.mode.remove_vassal(V.owner)
+
+
+
+
+
+
+
+
+/datum/antagonist/vassal
+	var/datum/antagonist/bloodsucker/master // Whom do I obey?
+
+/datum/antagonist/bloodsucker/proc/attempt_turn_vassal(mob/living/carbon/C)
+	SSticker.mode.make_vassal(C.mind,owner)
+
+//Proc called when the datum is given to a mind.
+/datum/antagonist/vassal/on_gain()
+
+	SSticker.mode.vassals |= owner
+
+	// Assign Master
+	owner.enslave_mind_to_creator(master.owner)
+	var/datum/antagonist/bloodsucker/B = master.owner.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+	if (B)
+		B.vassals |= owner
+	owner.enslave_mind_to_creator(master.owner.current)
+
+	return ..() // Do base stuff: greet(), etc.
+
+/datum/antagonist/vassal/on_removal()
+
+	if (master)
+		master.vassals -= src
+		if (owner.enslaved_to == master.owner)
+			owner.enslaved_to = null
+
+	SSticker.mode.vassals -= owner
+
+	return ..() // Do base stuff.
+
+
+
+/datum/antagonist/vassal/greet()
+	to_chat(src, "<span class='userdanger'>You are now the mortal servant of [master.owner.current], a bloodsucking vampire!</span>")
+	to_chat(src, "<span class='boldannounce'>The power of [master.owner.current.p_their()] immortal blood compells you to obey [master.owner.current.p_them()] in all things, even offering your own life to prolong theirs.<br>\
+			You are not required to obey any other Bloodsucker, as only [master.owner.current] is your master. The laws of Nanotransen do not apply to you now; only your vampiric master's word must be obeyed.<span>")
+	// Effects...
+	owner.current.playsound_local(null, 'sound/magic/mutate.ogg', 100, FALSE, pressure_affected = FALSE)
+	owner.store_memory("You became the mortal servant of [master.owner.current], a bloodsucking vampire!")
+	// And to your new Master...
+	to_chat(master.owner, "<span class='userdanger'>[owner.current] has become addicted to your immortal blood. [owner.current.p_they(TRUE)] is now your undying servant!</span>")
+
+/datum/antagonist/vassal/farewell()
+	owner.current.visible_message("[owner.current]'s eyes dart feverishly from side to side, and then stop. [owner.current.p_they(TRUE)] seems calm, \
+			like [owner.current.p_they()] [owner.current.p_have()] regained some lost part of [owner.current.p_them()]self.",\
+			"<span class='userdanger'><FONT size = 3>With a snap, you are no longer enslaved to [master.owner]! You breathe in heavily, having regained your free will.</FONT></span>")
+	// And to your former Master...
+	//if (master && master.owner)
+	//	to_chat(master.owner, "<span class='userdanger'>You feel the bond with your vassal [owner.current] has somehow been broken!</span>")
+
+

@@ -8,6 +8,9 @@
 	var/mob/living/carbon/C = owner.current
 	C.remove_all_embedded_objects()
 
+	// Free my Vassals!
+	FreeAllVassals()
+
 	// Elders get Dusted
 	if (vamptitle)
 		owner.current.visible_message("<span class='warning'>[owner.current]'s skin crackles and dries, their skin and bones withering to dust. A hollow cry whips from what is now a sandy pile of remains.</span>", \
@@ -211,7 +214,7 @@ datum/antagonist/bloodsucker/proc/attempt_turn_bloodsucker(mob/living/carbon/tar
 	if (vampfatherdatum)
 		vampfatherdatum.vampsMade ++ // Give credit for the Embrace.
 	if (vampfather.current)
-		to_chat(vampfather.current, "<span class='userdanger'>You feel a [vampfather.current.gender == MALE ? "fatherly" : "motherly"] twinge in your dead heart. [src] has risen as your Bloodsucker child!</span>")
+		to_chat(vampfather, "<span class='userdanger'>You feel a [vampfather.current.gender == MALE ? "fatherly" : "motherly"] twinge in your dead heart. [src] has risen as your Bloodsucker child!</span>")
 	message_admins("[src] has become a Bloodsucker, and was created by [vampfather.current].")
 	log_admin("[src] has become a Bloodsucker, and was created by [vampfather.current].")
 
