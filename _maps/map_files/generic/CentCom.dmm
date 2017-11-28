@@ -1948,7 +1948,7 @@
 	id = "thunderdomegen";
 	name = "General Supply"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/tdome/arena_source)
 "fD" = (
 /obj/machinery/door/poddoor{
@@ -2008,9 +2008,10 @@
 	},
 /area/tdome/arena_source)
 "fN" = (
-/turf/open/floor/plasteel/loadingarea{
+/obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/tdome/arena_source)
 "fO" = (
 /turf/open/floor/circuit/green,
@@ -2023,9 +2024,10 @@
 /turf/open/floor/circuit/green,
 /area/tdome/arena_source)
 "fQ" = (
-/turf/open/floor/plasteel/loadingarea{
+/obj/effect/turf_decal/loading_area{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/tdome/arena_source)
 "fR" = (
 /obj/machinery/camera{
@@ -2048,7 +2050,7 @@
 	id = "thunderdomehea";
 	name = "Heavy Supply"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/tdome/arena_source)
 "fV" = (
 /obj/structure/rack,
@@ -2120,7 +2122,7 @@
 	},
 /area/ctf)
 "gh" = (
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ctf)
 "gi" = (
 /turf/open/floor/plasteel/darkblue/side{
@@ -2167,7 +2169,7 @@
 /area/ctf)
 "gt" = (
 /obj/structure/kitchenspike,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ctf)
 "gu" = (
 /turf/closed/indestructible/splashscreen,
@@ -2208,7 +2210,7 @@
 /area/ctf)
 "gC" = (
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ctf)
 "gD" = (
 /obj/effect/turf_decal/stripes/line{
@@ -2231,7 +2233,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ctf)
 "gG" = (
 /obj/effect/turf_decal/stripes/line{
@@ -2246,7 +2248,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ctf)
 "gI" = (
 /obj/machinery/power/emitter/energycannon,
@@ -2256,7 +2258,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ctf)
 "gK" = (
 /obj/effect/turf_decal/stripes/line{
@@ -2284,7 +2286,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ctf)
 "gP" = (
 /obj/effect/turf_decal/stripes/line{
@@ -2347,7 +2349,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ctf)
 "ha" = (
 /obj/machinery/power/emitter/energycannon{
@@ -2622,7 +2624,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ctf)
 "hY" = (
 /obj/effect/turf_decal/stripes/line{
@@ -2684,7 +2686,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ctf)
 "ii" = (
 /obj/effect/turf_decal/stripes/line,
@@ -2906,9 +2908,10 @@
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "iP" = (
-/turf/open/floor/plasteel/loadingarea{
+/obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "iQ" = (
 /obj/machinery/light{
@@ -3259,9 +3262,10 @@
 /turf/open/space,
 /area/space)
 "jD" = (
-/turf/open/floor/plasteel/loadingarea{
+/obj/effect/turf_decal/loading_area{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "jE" = (
 /obj/machinery/status_display,
@@ -4851,9 +4855,10 @@
 	},
 /area/centcom/supply)
 "nK" = (
-/turf/open/floor/plasteel/loadingarea{
+/obj/effect/turf_decal/loading_area{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "nL" = (
 /obj/structure/chair{
@@ -5611,45 +5616,37 @@
 /area/centcom/control)
 "px" = (
 /obj/machinery/computer/med_data/syndie,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/bridge)
 "py" = (
 /obj/machinery/computer/crew/syndie,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/bridge)
 "pz" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/bridge)
 "pA" = (
 /obj/machinery/computer/shuttle/syndicate,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/bridge)
 "pB" = (
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/bridge)
 "pC" = (
 /obj/machinery/computer/camera_advanced/syndie,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/bridge)
 "pD" = (
 /obj/machinery/computer/secure_data/syndie,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/bridge)
 "pE" = (
 /turf/closed/indestructible/fakeglass{
@@ -5793,10 +5790,10 @@
 	dir = 8;
 	name = "tactical swivel chair"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/bridge)
 "pT" = (
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/bridge)
 "pU" = (
 /obj/structure/chair/office/dark{
@@ -5810,14 +5807,14 @@
 	pixel_y = 32;
 	req_access_txt = "150"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/bridge)
 "pV" = (
 /obj/structure/chair/office/dark{
 	dir = 4;
 	name = "tactical swivel chair"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/bridge)
 "pW" = (
 /obj/structure/table/reinforced,
@@ -6119,7 +6116,7 @@
 	},
 /area/wizard_station)
 "qI" = (
-/turf/open/floor/plasteel/vault,
+/turf/open/floor/plasteel/vault/side,
 /area/shuttle/syndicate/bridge)
 "qJ" = (
 /obj/machinery/computer/shuttle/syndicate/recall,
@@ -6755,9 +6752,10 @@
 /area/syndicate_mothership/control)
 "si" = (
 /obj/machinery/computer/telecrystals/uplinker,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/syndicate_mothership/control)
 "sj" = (
 /obj/structure/toilet{
@@ -7132,7 +7130,7 @@
 	},
 /area/shuttle/syndicate/hallway)
 "sZ" = (
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/hallway)
 "ta" = (
 /obj/structure/chair{
@@ -7185,9 +7183,10 @@
 /area/syndicate_mothership/control)
 "tg" = (
 /obj/machinery/computer/telecrystals/uplinker,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/syndicate_mothership/control)
 "th" = (
 /obj/structure/closet/cardboard,
@@ -7201,12 +7200,8 @@
 /turf/open/floor/plating/airless,
 /area/syndicate_mothership/control)
 "tj" = (
-/turf/open/floor/plating/asteroid/snow/airless,
 /obj/machinery/porta_turret/syndicate/pod,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 8;
-	icon_state = "diagonalWall3"
-	},
+/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/assault_pod)
 "tk" = (
 /turf/closed/wall/mineral/plastitanium,
@@ -7810,9 +7805,10 @@
 /area/wizard_station)
 "uG" = (
 /obj/machinery/suit_storage_unit/syndicate,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/eva)
 "uH" = (
 /turf/open/floor/plasteel/vault{
@@ -7821,9 +7817,8 @@
 /area/shuttle/syndicate/eva)
 "uI" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/eva)
 "uJ" = (
 /obj/machinery/door/airlock/external{
@@ -7850,9 +7845,10 @@
 /area/syndicate_mothership/control)
 "uM" = (
 /obj/machinery/computer/telecrystals/uplinker,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/syndicate_mothership/control)
 "uN" = (
 /obj/structure/chair{
@@ -8067,15 +8063,15 @@
 /area/wizard_station)
 "vo" = (
 /obj/machinery/suit_storage_unit/syndicate,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/eva)
 "vp" = (
 /obj/structure/tank_dispenser/oxygen,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/eva)
 "vq" = (
 /turf/closed/wall/mineral/plastitanium,
@@ -8115,9 +8111,10 @@
 	width = 18
 	},
 /obj/structure/fans/tiny,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
 "vs" = (
 /obj/structure/sign/securearea{
@@ -8449,9 +8446,8 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/eva)
 "wg" = (
 /obj/structure/grille,
@@ -8474,20 +8470,23 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
 "wj" = (
-/turf/open/floor/plasteel/podhatch,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
 "wk" = (
 /obj/structure/chair{
 	name = "tactical chair"
 	},
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
 "wl" = (
 /obj/machinery/light,
@@ -8558,9 +8557,10 @@
 	id = "XCCFerry";
 	name = "XCC Ferry Hangar"
 	},
-/turf/open/floor/plasteel/loadingarea{
+/obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "ww" = (
 /obj/machinery/button/door{
@@ -8650,7 +8650,8 @@
 	},
 /area/centcom/control)
 "wH" = (
-/turf/open/floor/plasteel/loadingarea,
+/obj/effect/turf_decal/loading_area,
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "wI" = (
 /turf/open/floor/plasteel/green/side{
@@ -8711,9 +8712,7 @@
 /turf/open/floor/carpet,
 /area/wizard_station)
 "wR" = (
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/eva)
 "wS" = (
 /obj/machinery/door/airlock/external{
@@ -8739,9 +8738,10 @@
 /obj/machinery/computer/telecrystals/boss{
 	dir = 1
 	},
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/syndicate_mothership/control)
 "wW" = (
 /obj/structure/sign/map/left{
@@ -8961,15 +8961,15 @@
 /area/wizard_station)
 "xA" = (
 /obj/machinery/suit_storage_unit/syndicate,
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/eva)
 "xB" = (
 /obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/eva)
 "xC" = (
 /obj/structure/grille,
@@ -8986,20 +8986,18 @@
 	dir = 1;
 	name = "tactical chair"
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/airlock)
 "xF" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/syndicate/black/red,
 /obj/item/clothing/head/helmet/space/syndicate/black/red,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/airlock)
 "xG" = (
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/syndicate_mothership/control)
 "xH" = (
 /obj/machinery/mech_bay_recharge_port,
@@ -9017,7 +9015,7 @@
 /area/syndicate_mothership/control)
 "xK" = (
 /obj/machinery/vending/tool,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/syndicate_mothership/control)
 "xL" = (
 /obj/structure/closet/cardboard/metal,
@@ -9369,22 +9367,17 @@
 /obj/machinery/sleeper/syndie{
 	dir = 4
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/medical)
 "yM" = (
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/medical)
 "yN" = (
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/medical)
 "yO" = (
 /obj/item/reagent_containers/glass/bottle/epinephrine{
@@ -9418,18 +9411,16 @@
 	pixel_y = 8
 	},
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/medical)
 "yP" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/medical/gauze,
 /obj/item/stack/medical/bruise_pack,
 /obj/item/stack/medical/ointment,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/medical)
 "yQ" = (
 /obj/structure/grille,
@@ -9448,9 +9439,7 @@
 	},
 /obj/item/stock_parts/cell/high,
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/armory)
 "yT" = (
 /obj/item/screwdriver{
@@ -9460,9 +9449,7 @@
 	pixel_y = 3
 	},
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/armory)
 "yU" = (
 /obj/item/wrench,
@@ -9471,9 +9458,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/armory)
 "yV" = (
 /obj/item/device/assembly/signaler,
@@ -9487,9 +9472,7 @@
 	pixel_y = 4
 	},
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/armory)
 "yW" = (
 /obj/item/weldingtool/largetank{
@@ -9497,13 +9480,11 @@
 	},
 /obj/item/device/multitool,
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/armory)
 "yX" = (
 /obj/structure/chair/stool,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/syndicate_mothership/control)
 "yY" = (
 /obj/structure/table/wood,
@@ -9690,12 +9671,11 @@
 "zs" = (
 /obj/structure/bed/roller,
 /obj/machinery/iv_drip,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/medical)
 "zt" = (
-/turf/open/floor/plasteel/vault,
+/turf/open/floor/plasteel/vault/side,
 /area/shuttle/syndicate/medical)
 "zu" = (
 /obj/machinery/light{
@@ -9714,14 +9694,14 @@
 	},
 /area/shuttle/syndicate/hallway)
 "zw" = (
-/turf/open/floor/plasteel/vault,
+/turf/open/floor/plasteel/vault/side,
 /area/shuttle/syndicate/armory)
 "zx" = (
 /obj/structure/closet/syndicate/personal,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/syndicate_mothership/control)
 "zy" = (
 /obj/structure/table,
@@ -9731,7 +9711,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/syndicate_mothership/control)
 "zz" = (
 /obj/structure/table/wood,
@@ -9744,12 +9724,12 @@
 	},
 /area/centcom/ferry)
 "zA" = (
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "zB" = (
 /obj/structure/chair/office/dark,
 /obj/effect/landmark/ert_spawn,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "zC" = (
 /obj/structure/chair/office/dark,
@@ -9865,14 +9845,16 @@
 	},
 /area/shuttle/syndicate/medical)
 "zS" = (
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/medical)
 "zT" = (
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/medical)
 "zU" = (
 /obj/machinery/door/airlock/hatch{
@@ -9883,9 +9865,10 @@
 	},
 /area/shuttle/syndicate/medical)
 "zV" = (
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/hallway)
 "zW" = (
 /obj/machinery/door/airlock/hatch{
@@ -9896,14 +9879,16 @@
 	},
 /area/shuttle/syndicate/armory)
 "zX" = (
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/armory)
 "zY" = (
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/armory)
 "zZ" = (
 /turf/open/floor/plasteel/vault{
@@ -9912,9 +9897,8 @@
 /area/shuttle/syndicate/armory)
 "Aa" = (
 /obj/structure/closet/syndicate/personal,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/armory)
 "Ab" = (
 /obj/machinery/photocopier,
@@ -9969,7 +9953,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/ert_spawn,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "Ai" = (
 /obj/machinery/door/poddoor/ert,
@@ -10090,34 +10074,36 @@
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/item/reagent_containers/glass/beaker,
 /obj/item/reagent_containers/dropper,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/turf/open/floor/plasteel/vault/side,
 /area/shuttle/syndicate/medical)
 "AD" = (
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/medical)
 "AE" = (
-/turf/open/floor/plasteel/podhatch,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/medical)
 "AF" = (
-/turf/open/floor/plasteel/podhatch,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/hallway)
 "AG" = (
-/turf/open/floor/plasteel/podhatch,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/armory)
 "AH" = (
-/turf/open/floor/plasteel/podhatch{
+/obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/armory)
 "AI" = (
 /obj/structure/closet/syndicate/nuclear,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/armory)
 "AJ" = (
 /obj/structure/chair/comfy/brown{
@@ -10299,7 +10285,7 @@
 /obj/item/bodypart/l_arm/robot,
 /obj/structure/table/reinforced,
 /obj/item/toy/plush/nukeplushie,
-/turf/open/floor/plasteel/vault,
+/turf/open/floor/plasteel/vault/side,
 /area/shuttle/syndicate/medical)
 "Bk" = (
 /obj/machinery/door/window{
@@ -10307,13 +10293,13 @@
 	name = "Surgery";
 	req_access_txt = "150"
 	},
-/turf/open/floor/plasteel/vault,
+/turf/open/floor/plasteel/vault/side,
 /area/shuttle/syndicate/medical)
 "Bl" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/floor/plasteel/vault,
+/turf/open/floor/plasteel/vault/side,
 /area/shuttle/syndicate/medical)
 "Bm" = (
 /obj/structure/window/reinforced{
@@ -10329,7 +10315,7 @@
 	pixel_y = -3
 	},
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault,
+/turf/open/floor/plasteel/vault/side,
 /area/shuttle/syndicate/medical)
 "Bn" = (
 /obj/item/storage/firstaid/regular{
@@ -10342,7 +10328,7 @@
 	pixel_y = -3
 	},
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault,
+/turf/open/floor/plasteel/vault/side,
 /area/shuttle/syndicate/medical)
 "Bo" = (
 /turf/open/floor/plasteel/vault,
@@ -10353,9 +10339,7 @@
 	},
 /obj/item/device/sbeacondrop/bomb,
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/turf/open/floor/plasteel/vault/side,
 /area/shuttle/syndicate/armory)
 "Bq" = (
 /obj/item/grenade/syndieminibomb{
@@ -10374,15 +10358,13 @@
 /obj/item/grenade/plastic/c4,
 /obj/item/grenade/plastic/c4,
 /obj/item/grenade/plastic/c4,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/turf/open/floor/plasteel/vault/side,
 /area/shuttle/syndicate/armory)
 "Br" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/floor/plasteel/vault,
+/turf/open/floor/plasteel/vault/side,
 /area/shuttle/syndicate/armory)
 "Bs" = (
 /obj/machinery/door/window{
@@ -10390,7 +10372,7 @@
 	name = "Technological Storage";
 	req_access_txt = "150"
 	},
-/turf/open/floor/plasteel/vault,
+/turf/open/floor/plasteel/vault/side,
 /area/shuttle/syndicate/armory)
 "Bt" = (
 /obj/structure/window/reinforced{
@@ -10398,7 +10380,7 @@
 	},
 /obj/structure/table/reinforced,
 /obj/item/device/aicard,
-/turf/open/floor/plasteel/vault,
+/turf/open/floor/plasteel/vault/side,
 /area/shuttle/syndicate/armory)
 "Bu" = (
 /obj/structure/table/wood,
@@ -10652,7 +10634,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
-	dir = 8
+	dir = 5
 	},
 /area/shuttle/syndicate/medical)
 "BU" = (
@@ -10705,7 +10687,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/ert_spawn,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "Cb" = (
 /obj/structure/chair/office/dark{
@@ -10780,22 +10762,21 @@
 /obj/item/scalpel,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/vault{
-	dir = 8
+	dir = 5
 	},
 /area/shuttle/syndicate/medical)
 "Ck" = (
 /obj/structure/table/optable,
 /obj/item/surgical_drapes,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/medical)
 "Cl" = (
 /obj/item/retractor,
 /obj/item/hemostat,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/vault{
-	dir = 8
+	dir = 5
 	},
 /area/shuttle/syndicate/medical)
 "Cm" = (
@@ -12315,7 +12296,8 @@
 /turf/open/floor/plasteel/redyellow/side,
 /area/tdome/tdomeobserve)
 "Gm" = (
-/turf/open/floor/plasteel/loadingarea,
+/obj/effect/turf_decal/loading_area,
+/turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "Gn" = (
 /obj/item/twohanded/required/kirbyplants{
@@ -13277,9 +13259,10 @@
 	id = "thunderdomegen";
 	name = "General Supply"
 	},
-/turf/open/floor/plasteel/loadingarea{
+/obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "IA" = (
 /obj/effect/landmark/thunderdome/two,
@@ -13307,9 +13290,10 @@
 	id = "thunderdome";
 	name = "Thunderdome Blast Door"
 	},
-/turf/open/floor/plasteel/loadingarea{
+/obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "IE" = (
 /turf/open/floor/plasteel/red/side{
@@ -13343,9 +13327,7 @@
 	id = "thunderdome";
 	name = "Thunderdome Blast Door"
 	},
-/turf/open/floor/plasteel/loadingarea{
-	dir = 8
-	},
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "IL" = (
 /obj/effect/landmark/thunderdome/one,
@@ -13373,9 +13355,7 @@
 	id = "thunderdomegen";
 	name = "General Supply"
 	},
-/turf/open/floor/plasteel/loadingarea{
-	dir = 8
-	},
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "IP" = (
 /obj/structure/rack,
@@ -13508,9 +13488,10 @@
 /turf/open/floor/plasteel/neutral,
 /area/tdome/arena)
 "Jh" = (
-/turf/open/floor/plasteel/loadingarea{
+/obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "Ji" = (
 /turf/open/floor/circuit/green,
@@ -13523,9 +13504,10 @@
 /turf/open/floor/circuit/green,
 /area/tdome/arena)
 "Jk" = (
-/turf/open/floor/plasteel/loadingarea{
+/obj/effect/turf_decal/loading_area{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "Jl" = (
 /obj/machinery/camera{
@@ -13652,16 +13634,15 @@
 	id = "thunderdomehea";
 	name = "Heavy Supply"
 	},
-/turf/open/floor/plasteel/loadingarea{
-	dir = 1
-	},
+/obj/effect/turf_decal/loading_area,
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "JE" = (
 /obj/machinery/door/poddoor{
 	id = "thunderdomehea";
 	name = "Heavy Supply"
 	},
-/turf/open/floor/plasteel/loadingarea,
+/turf/open/floor/plasteel,
 /area/tdome/arena)
 "JF" = (
 /obj/machinery/computer/camera_advanced/abductor{
@@ -14147,11 +14128,9 @@
 /turf/open/floor/plating,
 /area/centcom/evac)
 "KS" = (
-/turf/open/floor/plating,
 /turf/closed/wall/mineral/titanium/interior,
 /area/centcom/evac)
 "KT" = (
-/turf/open/floor/mineral/titanium/blue,
 /turf/closed/wall/mineral/titanium/interior,
 /area/centcom/evac)
 "KU" = (
@@ -14541,6 +14520,126 @@
 	dir = 8
 	},
 /area/centcom/control)
+"Mh" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdome";
+	name = "Thunderdome Blast Door"
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"Mi" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdomegen";
+	name = "General Supply"
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"Mj" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdome";
+	name = "Thunderdome Blast Door"
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"Mk" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdomegen";
+	name = "General Supply"
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"Ml" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdome";
+	name = "Thunderdome Blast Door"
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"Mm" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdomegen";
+	name = "General Supply"
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"Mn" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdome";
+	name = "Thunderdome Blast Door"
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"Mo" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdomegen";
+	name = "General Supply"
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"Mp" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdome";
+	name = "Thunderdome Blast Door"
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"Mq" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdomegen";
+	name = "General Supply"
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"Mr" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdome";
+	name = "Thunderdome Blast Door"
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"Ms" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdomegen";
+	name = "General Supply"
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
 
 (1,1,1) = {"
 aa
@@ -35790,7 +35889,7 @@ tj
 tk
 vy
 tk
-wZ
+tj
 xM
 yk
 ku
@@ -36048,7 +36147,7 @@ uf
 ug
 uf
 tk
-wZ
+tj
 yl
 ku
 aa
@@ -37070,13 +37169,13 @@ hh
 aa
 ku
 so
-tm
+tj
 tk
 uh
 ug
 uh
 tk
-xa
+tj
 yl
 ku
 aa
@@ -37328,11 +37427,11 @@ aa
 ku
 sp
 tn
-tm
+tj
 tk
 vy
 tk
-xa
+tj
 xO
 xP
 ku
@@ -40463,7 +40562,7 @@ aa
 aa
 KH
 KH
-KT
+KS
 La
 Lb
 Ld
@@ -42519,7 +42618,7 @@ aa
 aa
 KH
 KH
-KT
+KS
 Lc
 Lb
 Li
@@ -59978,12 +60077,12 @@ HP
 Ic
 Ep
 Ep
-IK
-IK
-IK
-IK
-IK
-IK
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
 Iv
 Iv
 Iv
@@ -60241,7 +60340,7 @@ IZ
 IZ
 IZ
 Jx
-JE
+JD
 JL
 Iv
 JY
@@ -60498,7 +60597,7 @@ Jb
 Jb
 Ja
 Jy
-JE
+JD
 JL
 Iv
 JG
@@ -60755,7 +60854,7 @@ Jl
 Jb
 Jb
 Jy
-JE
+JD
 JL
 Iv
 JG
@@ -61012,7 +61111,7 @@ Jb
 Jb
 Ja
 Jy
-JE
+JD
 JL
 Iv
 JG
@@ -61269,7 +61368,7 @@ Jc
 Jc
 Jc
 Jz
-JE
+JD
 JL
 Iv
 JG
@@ -61520,12 +61619,12 @@ HY
 If
 Gq
 Ep
-IO
-IO
-IO
-IO
-IO
-IO
+Mi
+Mi
+Mi
+Mi
+Mi
+Mi
 Iv
 Iv
 Iv

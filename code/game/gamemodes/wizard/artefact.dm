@@ -33,7 +33,7 @@
 /obj/effect/rend
 	name = "tear in the fabric of reality"
 	desc = "You should run now."
-	icon = 'icons/obj/biomass.dmi'
+	icon = 'icons/effects/effects.dmi'
 	icon_state = "rift"
 	density = TRUE
 	anchored = TRUE
@@ -65,6 +65,12 @@
 		return
 	else
 		return ..()
+
+/obj/effect/rend/singularity_pull()
+	return
+
+/obj/effect/rend/singularity_pull()
+	return
 
 /obj/item/veilrender/vealrender
 	name = "veal render"

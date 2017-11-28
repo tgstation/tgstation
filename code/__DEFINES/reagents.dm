@@ -12,3 +12,8 @@
 #define VAPOR 3 //foam, spray, blob attack
 #define PATCH 4 //patches
 #define INJECT 5 //injection
+
+//defines passed through to the on_reagent_change proc
+#define DEL_REAGENT 1 //reagent deleted (fully cleared)
+#define ADD_REAGENT 2 // reagent added
+#define REM_REAGENT 3 // reagent removed (may still exist)

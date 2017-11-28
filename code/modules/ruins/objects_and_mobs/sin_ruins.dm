@@ -102,7 +102,7 @@
 	"<span class='notice'>Perfect. Much better! Now <i>nobody</i> will be able to resist yo-</span>")
 	var/turf/T = get_turf(user)
 	T.ChangeTurf(/turf/open/chasm/straight_down)
-	var/turf/open/chasm/straight_down/C = T
+	var/turf/open/chasm/C = T
 	C.drop(user)
 
 //can't be bothered to do sloth right now, will make later

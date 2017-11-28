@@ -107,6 +107,7 @@
 /datum/design/unique_modkit
 	category = list("Mining Designs", "Cyborg Upgrade Modules") //can't be normally obtained
 	build_type = PROTOLATHE | MECHFAB
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO
 
 /datum/design/unique_modkit/offensive_turf_aoe
 	name = "Kinetic Accelerator Offensive Mining Explosion Mod"
@@ -365,7 +366,7 @@
 	return
 
 /obj/effect/immortality_talisman/singularity_pull()
-	return 0
+	return
 
 /obj/effect/immortality_talisman/Destroy(force)
 	if(!can_destroy && !force)
