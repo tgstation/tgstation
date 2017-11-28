@@ -130,6 +130,9 @@
 		CHECK_TICK
 
 /proc/calculate_techweb_nodes()
+	for(var/design_id in SSresearch.techweb_designs)
+		var/datum/design/D = SSresearch.techweb_designs[design_id]
+		D.unlocked_by.Cut()
 	for(var/node_id in SSresearch.techweb_nodes)
 		var/datum/techweb_node/node = SSresearch.techweb_nodes[node_id]
 		node.prerequisites = list()
@@ -139,6 +142,7 @@
 			node.prerequisites[i] = SSresearch.techweb_nodes[i]
 		for(var/i in node.design_ids)
 			node.designs[i] = SSresearch.techweb_designs[i]
+			SSresearch.techweb_designs[i].unlocked_by += node
 		if(node.hidden)
 			SSresearch.techweb_nodes_hidden[node.id] = node
 		CHECK_TICK
