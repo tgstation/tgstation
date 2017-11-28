@@ -30,6 +30,9 @@ GLOBAL_LIST_INIT(dwarves_list, list())
 /obj/machinery/migrant_spawner/attack_ghost(mob/user)
 	if(!SSticker.HasRoundStarted())
 		return
+	if(jobban_isbanned(user, "lavaland"))
+		to_chat(user, "<span class='warning'>You are jobanned!</span>")
+		return
 	if(spawns_left)
 		spawns_left--
 		var/client/new_dorf = user.client
