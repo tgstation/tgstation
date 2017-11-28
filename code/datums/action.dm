@@ -43,16 +43,27 @@
 				return
 			Remove(owner)
 		owner = M
-		var/button_id = 1
+
+		//button id generation
+		var/counter = 0
+		var/bitfield = 0
 		for(var/datum/action/A in M.actions)
-			if(A.name == name)
-				button_id += 1 //counting actions with same name to assign special name to button ([name]_[id]) for positioning memory
-		button.id = "[name]_[button_id]"
+			if(A.name == name && A.button.id)
+				counter += 1
+				bitfield |= A.button.id
+		bitfield = ~bitfield
+		var/bitflag = 1
+		for(var/i in 1 to (counter + 1))
+			if(bitfield & bitflag)
+				button.id = bitflag
+				break
+			bitflag *= 2
+
 		M.actions += src
 		if(M.client)
 			M.client.screen += button
-			button.locked = M.client.prefs.buttons_locked || M.client.prefs.action_buttons_screen_locs[button.id] //even if it's not defaultly locked we should remember we locked it before
-			button.moved = M.client.prefs.action_buttons_screen_locs[button.id] // null ~ FALSE
+			button.locked = M.client.prefs.buttons_locked || button.id ? M.client.prefs.action_buttons_screen_locs["[name]_[button.id]"] : FALSE //even if it's not defaultly locked we should remember we locked it before
+			button.moved = button.id ? M.client.prefs.action_buttons_screen_locs["[name]_[button.id]"] : FALSE
 		M.update_action_buttons()
 	else
 		Remove(owner)
@@ -66,6 +77,7 @@
 	owner = null
 	button.moved = FALSE //so the button appears in its normal position when given to another owner.
 	button.locked = FALSE
+	button.id = null
 
 /datum/action/proc/Trigger()
 	if(!IsAvailable())

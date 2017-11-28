@@ -23,7 +23,7 @@
 		locked = !locked
 		to_chat(usr, "<span class='notice'>Action button \"[name]\" [locked ? "" : "un"]locked.</span>")
 		if(id && usr.client) //try to (un)remember position
-			usr.client.prefs.action_buttons_screen_locs[id] = locked ? moved : null
+			usr.client.prefs.action_buttons_screen_locs["[name]_[id]"] = locked ? moved : null
 		return TRUE
 	if(usr.next_click > world.time)
 		return
@@ -55,7 +55,7 @@
 		locked = !locked
 		to_chat(usr, "<span class='notice'>Action button \"[name]\" [locked ? "" : "un"]locked.</span>")
 		if(id && usr.client) //try to (un)remember position
-			usr.client.prefs.action_buttons_screen_locs[id] = locked ? moved : null
+			usr.client.prefs.action_buttons_screen_locs["[name]_[id]"] = locked ? moved : null
 		return TRUE
 	if(modifiers["alt"])
 		for(var/V in usr.actions)
