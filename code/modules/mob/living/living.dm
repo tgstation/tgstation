@@ -1010,3 +1010,30 @@
 /mob/living/proc/add_abilities_to_panel()
 	for(var/obj/effect/proc_holder/A in abilities)
 		statpanel("[A.panel]",A.get_panel_text(),A)
+
+/mob/living/proc/update_z(new_z) // 1+ to register, null to unregister
+	if (registered_z != new_z)
+		if (registered_z)
+			SSmobs.by_zlevel[registered_z] -= src
+		if (new_z)
+			SSmobs.by_zlevel[new_z] += src
+		registered_z = new_z
+
+/mob/living/Login()
+	..()
+	update_z(src.z)
+
+/mob/living/Logout()
+	..()
+	update_z(null)
+
+/mob/living/forceMove(atom/destination)
+	var/old_z = z
+	. = ..()
+	if (z != old_z)
+		update_z(z)
+
+/mob/living/onShuttleMove(turf/newT, turf/oldT, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)
+	. = ..()
+	if (z != registered_z)
+		update_z(z)

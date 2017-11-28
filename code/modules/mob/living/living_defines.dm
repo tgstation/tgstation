@@ -79,3 +79,5 @@
 	var/last_words	//used for database logging
 
 	var/list/obj/effect/proc_holder/abilities = list()
+
+	var/registered_z = null // The Z-level this mob is "registered" to, if it has a client. This is to track non-observing player mobs per z-level.

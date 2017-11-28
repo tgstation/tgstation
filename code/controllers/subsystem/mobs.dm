@@ -1,13 +1,21 @@
 SUBSYSTEM_DEF(mobs)
 	name = "Mobs"
 	priority = 100
-	flags = SS_KEEP_TIMING|SS_NO_INIT
+	flags = SS_KEEP_TIMING
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/currentrun = list()
+	var/static/list/by_zlevel = list()
 
 /datum/controller/subsystem/mobs/stat_entry()
 	..("P:[GLOB.mob_living_list.len]")
+
+/datum/controller/subsystem/mobs/Initialize(start_timeofday)
+	warning("world.maxz is [world.maxz]")
+	by_zlevel.len = world.maxz
+	for (var/i = 1 to world.maxz)
+		by_zlevel.[i] = list()
+	return ..()
 
 
 /datum/controller/subsystem/mobs/fire(resumed = 0)
@@ -27,5 +35,15 @@ SUBSYSTEM_DEF(mobs)
 			M.Life(seconds, times_fired)
 		else
 			GLOB.mob_living_list.Remove(M)
+		if (istype(M, /mob/living))
+			var/mob/living/L = M
+			if (L.client && L.registered_z != L.z)
+				message_admins("[L] [ADMIN_FLW(L)] has somehow ended up in Z-level [L.z] despite being registered in Z-level [L.registered_z]. If you could ask them how that happened and notify coderbus, it would be appreciated.")
+				log_game("Z-TRACKING: [L] has somehow ended up in Z-level [L.z] despite being registered in Z-level [L.registered_z].")
+				L.update_z(L.z)
+			else if (!L.client && L.registered_z)
+				message_admins("[L] [ADMIN_FLW(L)] has a Z-registration despite not having a client.")
+				log_game("Z-TRACKING: [L] of type [L.type] has a Z-registration despite not having a client.")
+				L.update_z(null)
 		if (MC_TICK_CHECK)
 			return
