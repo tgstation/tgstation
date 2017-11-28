@@ -713,7 +713,7 @@
 
 /datum/admins/proc/output_devil_info(mob/living/M)
 	if(is_devil(M))
-		to_chat(usr, SSticker.mode.printdevilinfo(M.mind))
+		to_chat(usr, SSticker.mode.printdevilinfo(M))
 	else
 		to_chat(usr, "<b>[M] is not a devil.")
 

@@ -1,4 +1,0 @@
-author: "Kor"
-delete-after: True
-changes: 
-  - bugfix: "Blobbernauts will no longer spawn if a player is not selected to control it, preventing AI blobbernauts from running off the blob and to their deaths."

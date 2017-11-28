@@ -1,5 +1,5 @@
 /datum/component/archaeology
-	dupe_type = COMPONENT_DUPE_UNIQUE
+	dupe_mode = COMPONENT_DUPE_UNIQUE
 	var/list/archdrops
 	var/prob2drop
 	var/dug

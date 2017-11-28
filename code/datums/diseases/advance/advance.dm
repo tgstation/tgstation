@@ -95,15 +95,6 @@
 		return 0
 	return 1
 
-// To add special resistances.
-/datum/disease/advance/cure(resistance=1)
-	if(affected_mob)
-		var/id = "[GetDiseaseID()]"
-		if(resistance && !(id in affected_mob.resistances))
-			affected_mob.resistances[id] = id
-		remove_virus()
-	qdel(src)	//delete the datum to stop it processing
-
 // Returns the advance disease with a different reference memory.
 /datum/disease/advance/Copy(process = 0)
 	return new /datum/disease/advance(process, src, 1)

@@ -1,0 +1,4 @@
+author: "improvedname"
+delete-after: True
+changes: 
+  - tweak: "toolbelts can now carry geiger counters"

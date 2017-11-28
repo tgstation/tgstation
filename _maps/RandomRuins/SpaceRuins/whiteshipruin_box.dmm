@@ -47,7 +47,6 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/whiteship/box)
 "aj" = (
-/turf/open/floor/plating,
 /turf/closed/wall/mineral/titanium/interior,
 /area/ruin/space/has_grav/whiteship/box)
 "ak" = (
@@ -61,7 +60,6 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/whiteship/box)
 "am" = (
-/turf/open/floor/mineral/titanium,
 /turf/closed/wall/mineral/titanium/interior,
 /area/ruin/space/has_grav/whiteship/box)
 "an" = (

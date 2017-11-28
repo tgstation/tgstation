@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "MetaStation - Air injector leading out of the incinerator has been fixed"
-  - bugfix: "MetaStation - Corrected a couple maintenance airlocks being powered by the wrong areas."

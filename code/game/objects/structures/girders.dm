@@ -408,7 +408,7 @@
 
 /obj/structure/girder/cult/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		new/obj/item/stack/sheet/runed_metal/(get_turf(src), 1)
+		new /obj/item/stack/sheet/runed_metal(drop_location(), 1)
 	qdel(src)
 
 /obj/structure/girder/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)

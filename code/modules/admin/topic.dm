@@ -181,12 +181,14 @@
 			log_admin("[key_name(usr)] has triggered an event. ([E.name])")
 		return
 
-	else if(href_list["dbsearchckey"] || href_list["dbsearchadmin"])
+	else if(href_list["dbsearchckey"] || href_list["dbsearchadmin"] || href_list["dbsearchip"] || href_list["dbsearchcid"])
 		var/adminckey = href_list["dbsearchadmin"]
 		var/playerckey = href_list["dbsearchckey"]
+		var/ip = href_list["dbsearchip"]
+		var/cid = href_list["dbsearchcid"]
 		var/page = href_list["dbsearchpage"]
 
-		DB_ban_panel(playerckey, adminckey, page)
+		DB_ban_panel(playerckey, adminckey, ip, cid, page)
 		return
 
 	else if(href_list["dbbanedit"])
