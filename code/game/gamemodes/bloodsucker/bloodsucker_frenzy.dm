@@ -104,6 +104,9 @@ datum/antagonist/bloodsucker/proc/start_frenzy(mob/living/target)
 	owner.current.update_canmove() // Updates if you can move or not. Frenzy has been added.
 	//overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry) <---Copied from blur_eyes in mob.dm.  We can add an overlay to screen_full.dmi and have it affected by hud/fullscreen.dm
 
+	// AHHHHHH!!!!
+	playsound(owner.current.loc,'sound/Fulpsounds/frenzyscream.ogg', 30, 1)	//return 0
+
 	// Disable Controls
 	// affect user.mind
 

@@ -1,5 +1,6 @@
 /datum/game_mode
 	var/list/datum/mind/bloodsuckers = list() 	// List of minds belonging to this game mode.
+	var/list/datum/mind/vassals = list() 		// List of minds that have been turned into Vassals.
 
 /datum/game_mode/bloodsucker
 	name = "bloodsucker"
@@ -108,6 +109,55 @@
 /datum/game_mode/proc/remove_bloodsucker(datum/mind/bloodsucker)
 	bloodsucker.remove_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/datum/game_mode/proc/can_make_vassal(datum/mind/vassal, datum/mind/creator)
+	if (!vassal || !vassal.key)
+		to_chat(creator, "<span class='danger'>[src] isn't self-aware enough to be made into a Vassal!</span>")
+		return 0
+	if (!ishuman(vassal.current) || !creator)
+		//to_chat(creator, "<span class='danger'>[src].</span>")
+		return 0
+	if (vassal.current.stat > UNCONSCIOUS)
+		return 0
+	// Check Overdose: Am I even addicted to blood?
+	if (!vassal.current.reagents.addiction_list)
+		return 0
+	// Check Overdose: Did my current volume go over the Overdose threshold?
+	var/am_od_on_blood = 0
+	for (var/datum/reagent/blood/vampblood/blood in vassal.current.reagents.reagent_list) // overdosed is tracked in reagent_list, not addiction_list.
+		//message_admins("DEBUG: Found vampblood [blood.id], Volume [blood.volume]")
+		if (blood.overdosed)
+			am_od_on_blood = 1
+	if (!am_od_on_blood)
+		return 0
+	// Already MY Vassal
+	var/datum/antagonist/vassal/V = vassal.has_antag_datum(ANTAG_DATUM_VASSAL)
+	if (V && V.master && V.master.owner == creator)
+		return 0
+	// Already Antag or Loyal
+	if (vassal.antag_datums && vassal.antag_datums.len > 0 || vassal.current.isloyal() || vassal in SSticker.mode.vassals || vassal.enslaved_to)
+		to_chat(creator, "<span class='danger'>[src] resists the power of your blood to dominate their mind!</span>")
+		return 0
+	return 1
+
+/datum/game_mode/proc/make_vassal(datum/mind/vassal, datum/mind/creator)
+	if (!can_make_vassal(vassal,creator))
+		return 0
+	// Make Vassal
+	var/datum/antagonist/vassal/V = new ANTAG_DATUM_VASSAL(vassal)
+	V.master = creator
+	vassal.add_antag_datum(V)
+	vassals |= vassal
+
+
+/datum/game_mode/proc/remove_vassal(datum/mind/vassal)
+	vassal.remove_antag_datum(ANTAG_DATUM_VASSAL)
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 /datum/game_mode/proc/auto_declare_completion_bloodsucker()

@@ -238,8 +238,8 @@
 	icon = 'icons/Fulpstation/fulpobjects.dmi'
 	can_weld_shut = FALSE
 	resistance_flags = 0			// Start off with no bonuses.
-	open_sound = 'sound/machines/door_open.ogg'
-	close_sound = 'sound/machines/door_close.ogg'
+	open_sound = 'sound/Fulpsounds/coffin_open.ogg'//'sound/machines/door_open.ogg'
+	close_sound = 'sound/Fulpsounds/coffin_close.ogg'//'sound/machines/door_close.ogg'
 	breakout_time = 600
 	pryLidTimer = 450
 

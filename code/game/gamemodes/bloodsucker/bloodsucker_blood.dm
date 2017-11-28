@@ -31,11 +31,12 @@
 	if (M.mind && M.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
 		volume = 0
 		addiction_stage = 0
+		overdosed = 0
 		return
-	M.adjustBruteLoss(-1, 0) // All heal values USED TO be multiplied by  * REM, the "REAGENTS_EFFECT_MULTIPLIER" found in reagents.dm. But comes up undefined here.
-	M.adjustToxLoss(-1, 0)
-	M.adjustBrainLoss(-0.5,0)
-	M.adjustStaminaLoss(-1,0)
+	M.adjustBruteLoss(-0.25, 0) // All heal values USED TO be multiplied by  * REM, the "REAGENTS_EFFECT_MULTIPLIER" found in reagents.dm. But comes up undefined here.
+	M.adjustToxLoss(-0.25, 0)
+	M.adjustBrainLoss(-0.15,0)
+	M.adjustStaminaLoss(-0.5,1)
 	..()
 	. = 1
 
@@ -56,24 +57,26 @@
 	..()
 
 /datum/reagent/blood/vampblood/addiction_act_stage2(mob/living/M)
-	M.adjustToxLoss(4, 0)
-	M.Jitter(5)
+	M.adjustStaminaLoss(3)
+	M.adjustToxLoss(2, 0)
+	M.Jitter(20)
 	M.Dizzy(5)
 	..()
 	. = 1
 
 /datum/reagent/blood/vampblood/addiction_act_stage3(mob/living/M)
-	M.adjustBruteLoss(5, 0)
-	M.Jitter(10)
+	M.adjustStaminaLoss(4)
+	M.adjustBruteLoss(2, 0)
+	M.Jitter(30)
 	M.Dizzy(10)
 	..()
 	. = 1
 
 /datum/reagent/blood/vampblood/addiction_act_stage4(mob/living/M)
-	M.adjustStaminaLoss(1)
-	M.adjustToxLoss(1, 0)
-	M.adjustBruteLoss(1, 0)
-	M.Jitter(15)
+	M.adjustStaminaLoss(5)
+	M.adjustToxLoss(3, 0)
+	M.adjustBruteLoss(3, 0)
+	M.Jitter(50)
 	M.Dizzy(15)
 	..()
 	. = 1
@@ -227,8 +230,10 @@
 		"umf","ora","stu","si","ri","li","ka","red","ani","lup","ala","pro",
 		"to","siz","nu","pra","ga","ump","ort","a","ya","yach","tu","lit",
 		"wa","mabo","mati","anta","tat","tana","prol",
-		"tsa","si","tra","te","ele","fa","inz",					// Start: Romanian
-		"nza","est","sti","ra","pral","tsu","ago","esch","chi"	// Start: Custom
+		"tsa","si","tra","te","ele","fa","inz",									// Start: Romanian
+		"nza","est","sti","ra","pral","tsu","ago","esch","chi","kys","praz",	// Start: Custom
+		"froz","etz","tzil",
+		"t'","k'","t'","k'"
 		)
 
 	icon_state = "bloodsucker"
