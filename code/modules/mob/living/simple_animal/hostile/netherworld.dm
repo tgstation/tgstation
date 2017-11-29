@@ -13,7 +13,7 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	faction = list("creature")
 	speak_emote = list("screams")
-	gold_core_spawnable = 1
+	gold_core_spawnable = HOSTILE_SPAWN
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	faction = list("nether")
@@ -56,7 +56,6 @@
 	icon_state = "blank-body"
 	icon_living = "blank-body"
 	icon_dead = "blank-dead"
-	gold_core_spawnable = 0
 	health = 100
 	maxHealth = 100
 	melee_damage_lower = 5
@@ -79,7 +78,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	faction = list("nether")
 	deathmessage = "shatters into oblivion."
-	del_on_death = 1
+	del_on_death = TRUE
 
 /mob/living/simple_animal/hostile/spawner/nether/attack_hand(mob/user)
 		user.visible_message("<span class='warning'>[user] is violently pulled into the link!</span>", \
