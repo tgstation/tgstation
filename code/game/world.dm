@@ -27,6 +27,7 @@ GLOBAL_PROTECT(security_mode)
 	load_motd()
 	load_admins()
 	LoadVerbs(/datum/verbs/menu)
+	haven_initialize() // HAVEN - Initialize haven features. Look in haven/code/init.dm
 	if(CONFIG_GET(flag/usewhitelist))
 		load_whitelist()
 	LoadBans()
