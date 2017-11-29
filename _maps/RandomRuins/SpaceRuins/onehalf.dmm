@@ -190,7 +190,7 @@
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "aF" = (
 /obj/structure/disposalpipe/trunk,
-/obj/item/ore/diamond,
+/obj/item/stack/ore/diamond,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "aG" = (
@@ -1125,7 +1125,7 @@
 /area/ruin/space/has_grav/onehalf/bridge)
 "cZ" = (
 /obj/structure/table/reinforced,
-/obj/item/ore/bluespace_crystal,
+/obj/item/stack/ore/bluespace_crystal,
 /obj/item/coin/plasma,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
