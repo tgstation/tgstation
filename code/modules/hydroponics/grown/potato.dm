@@ -17,6 +17,7 @@
 	genes = list(/datum/plant_gene/trait/battery)
 	mutatelist = list(/obj/item/seeds/potato/sweet)
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
+	juice_results = list("potato" = 0)
 
 /obj/item/reagent_containers/food/snacks/grown/potato
 	seed = /obj/item/seeds/potato

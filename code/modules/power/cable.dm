@@ -472,6 +472,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 	singular_name = "cable piece"
 	full_w_class = WEIGHT_CLASS_SMALL
+	grind_results = list("copper" = 2) //2 copper per cable in the coil
 
 /obj/item/stack/cable_coil/cyborg
 	is_cyborg = 1

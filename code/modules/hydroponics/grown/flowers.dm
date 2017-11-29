@@ -182,6 +182,7 @@
 	throw_speed = 1
 	throw_range = 3
 	attack_verb = list("roasted", "scorched", "burned")
+	grind_results = list("capsaicin" = 0, "condensedcapsaicin" = 0)
 
 /obj/item/grown/novaflower/add_juice()
 	..()

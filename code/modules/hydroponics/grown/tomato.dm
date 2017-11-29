@@ -13,6 +13,7 @@
 	genes = list(/datum/plant_gene/trait/squash, /datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/tomato/blue, /obj/item/seeds/tomato/blood, /obj/item/seeds/tomato/killer)
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
+	grind_results = list("ketchup" = 0)
 
 /obj/item/reagent_containers/food/snacks/grown/tomato
 	seed = /obj/item/seeds/tomato
@@ -23,6 +24,7 @@
 	filling_color = "#FF6347"
 	bitesize_mod = 2
 	foodtype = VEGETABLES
+	juice_results = list("tomatojuice" = 0)
 
 // Blood Tomato
 /obj/item/seeds/tomato/blood
@@ -35,6 +37,7 @@
 	mutatelist = list()
 	reagents_add = list("blood" = 0.2, "vitamin" = 0.04, "nutriment" = 0.1)
 	rarity = 20
+	grind_results = list("ketchup" = 0, "blood" = 0)
 
 /obj/item/reagent_containers/food/snacks/grown/tomato/blood
 	seed = /obj/item/seeds/tomato/blood

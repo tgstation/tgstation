@@ -111,7 +111,7 @@
 	return TRUE
 
 
-/obj/item/electronics
+/obj/item/electronics //WHY IS THIS DEFINED HERE?
 	desc = "Looks like a circuit. Probably is."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "door_electronics"
@@ -121,3 +121,4 @@
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_SMALL
 	materials = list(MAT_METAL=50, MAT_GLASS=50)
+	grind_results = list("iron" = 10, "silicon" = 10)

@@ -111,6 +111,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	heal_brute = 40
 	self_delay = 20
+	grind_results = list("styptic_powder" = 1)
 
 /obj/item/stack/medical/gauze
 	name = "medical gauze"
@@ -143,3 +144,4 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	heal_burn = 40
 	self_delay = 20
+	grind_results = list("silver_sulfadiazine" = 1)
