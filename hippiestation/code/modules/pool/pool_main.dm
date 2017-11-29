@@ -28,7 +28,7 @@
 		watereffect = new /obj/effect/overlay/water(src)
 
 /obj/effect/overlay/water
-	name = "Water"
+	name = "water"
 	icon = 'hippiestation/icons/turf/pool.dmi'
 	icon_state = "overlay"
 	density = 0
