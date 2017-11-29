@@ -153,13 +153,11 @@
 	recalculate_nodes(TRUE)				//Fully rebuild the tree.
 
 /datum/techweb/proc/boost_with_path(datum/techweb_node/N, itempath)
-	if(!istype(N)||!ispath(itempath))
+	if(!istype(N) || !ispath(itempath))
 		return FALSE
-	var/boost = N.boost_item_paths[itempath]
-	if(!boosted_nodes[N])
-		boosted_nodes[N] = boost
-		if(N.autounlock_by_boost)
-			hidden_nodes -= N.id
+	boosted_nodes[N] = max(boosted_nodes[N], N.boost_item_paths[itempath])
+	if(N.autounlock_by_boost)
+		hidden_nodes -= N.id
 	return TRUE
 
 /datum/techweb/proc/update_tiers(datum/techweb_node/base)
