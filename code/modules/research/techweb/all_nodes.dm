@@ -779,7 +779,7 @@
 
 /datum/techweb_node/mech_lmg
 	id = "mech_lmg"
-	display_name =  "Exosuit Weapon (PBT \"Pacifier\" Mounted Taser)"
+	display_name = "Exosuit Weapon (\"Ultra AC 2\" LMG)"
 	description = "An advanced piece of mech weaponry"
 	prereq_ids = list("adv_mecha", "adv_weaponry", "ballistic_weapons")
 	design_ids = list("mech_lmg")
