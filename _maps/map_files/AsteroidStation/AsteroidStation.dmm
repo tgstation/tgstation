@@ -1590,7 +1590,9 @@
 	icon_state = "1-4"
 	},
 /obj/structure/cable/orange,
-/obj/machinery/computer/monitor,
+/obj/machinery/computer/monitor{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "adY" = (
@@ -2573,11 +2575,15 @@
 	},
 /area/security/checkpoint)
 "agm" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/secure_data{
+	dir = 1
+	},
 /turf/open/floor/plasteel/red/side,
 /area/security/checkpoint)
 "agn" = (
-/obj/machinery/computer/card,
+/obj/machinery/computer/card{
+	dir = 1
+	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = -29
@@ -2585,7 +2591,9 @@
 /turf/open/floor/plasteel/red/side,
 /area/security/checkpoint)
 "ago" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/security{
+	dir = 1
+	},
 /obj/machinery/light,
 /turf/open/floor/plasteel/red/side,
 /area/security/checkpoint)
@@ -4072,7 +4080,9 @@
 /turf/open/floor/plating,
 /area/maintenance/arrivals/north)
 "ajo" = (
-/obj/machinery/computer/atmos_alert,
+/obj/machinery/computer/atmos_alert{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/maintenance/arrivals/north)
 "ajp" = (
@@ -4236,7 +4246,7 @@
 	d2 = 4
 	},
 /turf/open/floor/plasteel/airless/solarpanel,
-/area/solar/starboard/fore)
+/area/maintenance/solars/asteroid/command)
 "ajI" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -4251,7 +4261,7 @@
 /turf/open/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/solar/starboard/fore)
+/area/maintenance/solars/asteroid/command)
 "ajJ" = (
 /obj/machinery/power/solar{
 	id = "auxsolareast";
@@ -4522,7 +4532,7 @@
 /turf/open/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/solar/starboard/fore)
+/area/maintenance/solars/asteroid/command)
 "akr" = (
 /obj/machinery/camera{
 	c_tag = "Auxillary Mining Base";
@@ -5191,7 +5201,6 @@
 	},
 /area/construction/mining/aux_base)
 "alJ" = (
-/obj/structure/closet/toolcloset,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 1
 	},
@@ -5346,11 +5355,11 @@
 /area/ai_monitored/turret_protected/ai)
 "ama" = (
 /turf/closed/wall/r_wall,
-/area/solar/starboard/fore)
+/area/maintenance/solars/asteroid/command)
 "amb" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/solar/starboard/fore)
+/area/maintenance/solars/asteroid/command)
 "amc" = (
 /obj/machinery/door/airlock/external{
 	cyclelinkeddir = 1;
@@ -5362,6 +5371,7 @@
 /turf/open/floor/plating,
 /area/construction/mining/aux_base)
 "amd" = (
+/obj/structure/closet/toolcloset,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 8
 	},
@@ -5571,7 +5581,7 @@
 	d2 = 2
 	},
 /turf/open/floor/plating,
-/area/solar/starboard/fore)
+/area/maintenance/solars/asteroid/command)
 "amI" = (
 /obj/machinery/power/terminal{
 	dir = 8
@@ -5581,7 +5591,7 @@
 	d2 = 4
 	},
 /turf/open/floor/plating,
-/area/solar/starboard/fore)
+/area/maintenance/solars/asteroid/command)
 "amJ" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -5592,7 +5602,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/solar/starboard/fore)
+/area/maintenance/solars/asteroid/command)
 "amK" = (
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
@@ -5607,13 +5617,13 @@
 	icon_state = "2-8"
 	},
 /turf/open/floor/plating,
-/area/solar/starboard/fore)
+/area/maintenance/solars/asteroid/command)
 "amL" = (
 /obj/structure/cable,
 /turf/open/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/solar/starboard/fore)
+/area/maintenance/solars/asteroid/command)
 "amM" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -5914,7 +5924,7 @@
 	icon_state = "1-4"
 	},
 /turf/open/floor/plating,
-/area/solar/starboard/fore)
+/area/maintenance/solars/asteroid/command)
 "anu" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -5922,10 +5932,10 @@
 	icon_state = "2-8"
 	},
 /turf/open/floor/plating,
-/area/solar/starboard/fore)
+/area/maintenance/solars/asteroid/command)
 "anv" = (
 /turf/open/floor/plating,
-/area/solar/starboard/fore)
+/area/maintenance/solars/asteroid/command)
 "anw" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -5938,7 +5948,7 @@
 	icon_state = "2-4"
 	},
 /turf/open/floor/plating,
-/area/solar/starboard/fore)
+/area/maintenance/solars/asteroid/command)
 "anx" = (
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance";
@@ -5951,7 +5961,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
-/area/solar/starboard/fore)
+/area/maintenance/solars/asteroid/command)
 "any" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -5959,7 +5969,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
-/area/solar/starboard/fore)
+/area/maintenance/solars/asteroid/command)
 "anz" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -5969,7 +5979,7 @@
 /turf/open/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/solar/starboard/fore)
+/area/maintenance/solars/asteroid/command)
 "anA" = (
 /obj/structure/cable{
 	d2 = 8;
@@ -5978,12 +5988,12 @@
 /turf/open/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/solar/starboard/fore)
+/area/maintenance/solars/asteroid/command)
 "anB" = (
 /turf/open/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/solar/starboard/fore)
+/area/maintenance/solars/asteroid/command)
 "anC" = (
 /obj/structure/cable{
 	icon_state = "0-4";
@@ -5992,7 +6002,7 @@
 /turf/open/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/solar/starboard/fore)
+/area/maintenance/solars/asteroid/command)
 "anD" = (
 /obj/machinery/power/tracker,
 /obj/structure/cable{
@@ -6000,7 +6010,7 @@
 	icon_state = "0-8"
 	},
 /turf/open/floor/plasteel/airless/solarpanel,
-/area/solar/starboard/fore)
+/area/maintenance/solars/asteroid/command)
 "anE" = (
 /turf/closed/wall,
 /area/quartermaster/miningdock)
@@ -6483,7 +6493,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/solar/starboard/fore)
+/area/maintenance/solars/asteroid/command)
 "aoB" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -6491,7 +6501,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/solar/starboard/fore)
+/area/maintenance/solars/asteroid/command)
 "aoC" = (
 /obj/structure/chair/stool,
 /obj/machinery/camera{
@@ -6499,15 +6509,16 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/solar/starboard/fore)
+/area/maintenance/solars/asteroid/command)
 "aoD" = (
 /obj/machinery/power/solar_control{
+	dir = 8;
 	id = "auxsolareast";
-	name = "Fore Starboard Solar Control"
+	name = "Command Asteroid Solar Control"
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/solar/starboard/fore)
+/area/maintenance/solars/asteroid/command)
 "aoE" = (
 /obj/structure/cable{
 	icon_state = "0-2";
@@ -6516,7 +6527,7 @@
 /turf/open/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/solar/starboard/fore)
+/area/maintenance/solars/asteroid/command)
 "aoF" = (
 /obj/structure/rack,
 /obj/item/pickaxe{
@@ -6549,16 +6560,16 @@
 	},
 /area/quartermaster/miningdock)
 "aoH" = (
-/obj/machinery/suit_storage_unit/mining,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 30
+	},
+/obj/machinery/suit_storage_unit/mining/eva,
 /turf/open/floor/plasteel/brown{
 	dir = 1
 	},
 /area/quartermaster/miningdock)
 "aoI" = (
-/obj/machinery/suit_storage_unit/mining,
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 30
-	},
+/obj/machinery/suit_storage_unit/mining/eva,
 /turf/open/floor/plasteel/brown{
 	dir = 1
 	},
@@ -6786,6 +6797,9 @@
 	dir = 1
 	},
 /obj/structure/disposalpipe/segment,
+/obj/effect/landmark/start{
+	name = "Quartermaster"
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
 "apl" = (
@@ -6916,7 +6930,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/solar/starboard/fore)
+/area/maintenance/solars/asteroid/command)
 "apF" = (
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'HIGH VOLTAGE'";
@@ -6924,7 +6938,7 @@
 	name = "HIGH VOLTAGE"
 	},
 /turf/closed/wall/r_wall,
-/area/solar/starboard/fore)
+/area/maintenance/solars/asteroid/command)
 "apG" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -6944,11 +6958,14 @@
 /turf/open/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/solar/starboard/fore)
+/area/maintenance/solars/asteroid/command)
 "apH" = (
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -22
+	},
+/obj/effect/landmark/start{
+	name = "Shaft Miner"
 	},
 /turf/open/floor/plasteel/brown{
 	dir = 8
@@ -7772,7 +7789,9 @@
 	},
 /area/quartermaster/qm)
 "arD" = (
-/obj/machinery/computer/cargo,
+/obj/machinery/computer/cargo{
+	dir = 8
+	},
 /turf/open/floor/plasteel/brown,
 /area/quartermaster/qm)
 "arE" = (
@@ -8381,7 +8400,9 @@
 	},
 /area/tcommsat/computer)
 "atc" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	dir = 4
+	},
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload_foyer)
 "atd" = (
@@ -8432,7 +8453,7 @@
 	},
 /area/quartermaster/miningdock)
 "atl" = (
-/obj/structure/closet/secure_closet/miner,
+/obj/machinery/suit_storage_unit/mining/eva,
 /turf/open/floor/plasteel/brown,
 /area/quartermaster/miningdock)
 "atm" = (
@@ -8899,7 +8920,9 @@
 	},
 /area/tcommsat/computer)
 "auq" = (
-/obj/machinery/computer/message_monitor,
+/obj/machinery/computer/message_monitor{
+	dir = 4
+	},
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload_foyer)
 "aur" = (
@@ -8997,7 +9020,7 @@
 /turf/open/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/solar/starboard/fore)
+/area/maintenance/solars/asteroid/command)
 "auA" = (
 /obj/machinery/light{
 	dir = 4
@@ -9271,7 +9294,9 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "ave" = (
-/obj/machinery/computer/cargo/request,
+/obj/machinery/computer/cargo/request{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "avf" = (
@@ -9503,7 +9528,9 @@
 /turf/open/floor/plating,
 /area/maintenance/arrivals/north)
 "avE" = (
-/obj/machinery/computer/crew,
+/obj/machinery/computer/crew{
+	dir = 4
+	},
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload_foyer)
 "avF" = (
@@ -10213,7 +10240,9 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "axk" = (
-/obj/machinery/computer/cargo,
+/obj/machinery/computer/cargo{
+	dir = 1
+	},
 /turf/open/floor/plasteel/brown/corner{
 	dir = 1
 	},
@@ -10680,7 +10709,9 @@
 /turf/open/floor/mech_bay_recharge_floor,
 /area/quartermaster/miningdock)
 "aya" = (
-/obj/machinery/computer/mech_bay_power_console,
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 1
+	},
 /turf/open/floor/plasteel/brown,
 /area/quartermaster/miningdock)
 "ayb" = (
@@ -13215,7 +13246,9 @@
 /turf/open/floor/plating,
 /area/maintenance/department/bridge)
 "aCU" = (
-/obj/machinery/computer/monitor,
+/obj/machinery/computer/monitor{
+	dir = 8
+	},
 /obj/structure/cable/blue,
 /obj/structure/cable/blue{
 	d1 = 1;
@@ -14945,7 +14978,9 @@
 /turf/open/floor/plating,
 /area/maintenance/department/bridge)
 "aGW" = (
-/obj/machinery/computer/med_data,
+/obj/machinery/computer/med_data{
+	dir = 4
+	},
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "aGX" = (
@@ -15126,7 +15161,9 @@
 /area/maintenance/department/crew_quarters/bar)
 "aHw" = (
 /obj/structure/cable/green,
-/obj/machinery/computer/monitor,
+/obj/machinery/computer/monitor{
+	dir = 8
+	},
 /obj/structure/cable/green{
 	icon_state = "0-2"
 	},
@@ -15270,7 +15307,9 @@
 /turf/open/floor/plating,
 /area/maintenance/department/bridge)
 "aHM" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/secure_data{
+	dir = 4
+	},
 /obj/item/device/radio/intercom{
 	dir = 8;
 	name = "Station Intercom (General)";
@@ -17651,7 +17690,9 @@
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain/private)
 "aNl" = (
-/obj/machinery/computer/card,
+/obj/machinery/computer/card{
+	dir = 4
+	},
 /obj/item/card/id/captains_spare,
 /obj/machinery/button/door{
 	id = "capffice";
@@ -18115,7 +18156,9 @@
 /turf/closed/wall/r_wall,
 /area/crew_quarters/heads/captain/private)
 "aOo" = (
-/obj/machinery/computer/communications,
+/obj/machinery/computer/communications{
+	dir = 4
+	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -19094,7 +19137,9 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aQE" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	dir = 4
+	},
 /obj/machinery/button/door{
 	desc = "A remote control-switch for secure storage.";
 	id = "Secure Storage";
@@ -20975,7 +21020,9 @@
 	},
 /area/bridge)
 "aUN" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/secure_data{
+	dir = 8
+	},
 /obj/machinery/light{
 	dir = 1
 	},
@@ -21774,7 +21821,9 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/machinery/computer/prisoner,
+/obj/machinery/computer/prisoner{
+	dir = 8
+	},
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
@@ -22273,7 +22322,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/obj/machinery/computer/atmos_alert,
+/obj/machinery/computer/atmos_alert{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "aXg" = (
@@ -22503,7 +22554,9 @@
 /turf/open/floor/plasteel,
 /area/bridge)
 "aXG" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/security{
+	dir = 8
+	},
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
@@ -22851,7 +22904,9 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aYt" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	dir = 8
+	},
 /obj/machinery/light{
 	dir = 4
 	},
@@ -23141,13 +23196,17 @@
 	},
 /area/security/prison)
 "aZd" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/secure_data{
+	dir = 1
+	},
 /turf/open/floor/plasteel/red/side{
 	dir = 10
 	},
 /area/security/brig)
 "aZe" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/security{
+	dir = 1
+	},
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
 	},
@@ -24308,7 +24367,9 @@
 	},
 /area/bridge)
 "bbz" = (
-/obj/machinery/computer/atmos_alert,
+/obj/machinery/computer/atmos_alert{
+	dir = 8
+	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 8
 	},
@@ -25672,7 +25733,9 @@
 	},
 /area/bridge)
 "ben" = (
-/obj/machinery/computer/communications,
+/obj/machinery/computer/communications{
+	dir = 8
+	},
 /turf/open/floor/plasteel/blue/side{
 	dir = 8
 	},
@@ -25832,14 +25895,18 @@
 /turf/open/floor/plasteel,
 /area/security/warden)
 "beC" = (
-/obj/machinery/computer/crew,
+/obj/machinery/computer/crew{
+	dir = 1
+	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/security/warden)
 "beD" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/security{
+	dir = 1
+	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -26589,7 +26656,9 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "bgc" = (
-/obj/machinery/computer/monitor,
+/obj/machinery/computer/monitor{
+	dir = 8
+	},
 /obj/machinery/light{
 	dir = 4
 	},
@@ -26807,7 +26876,9 @@
 	},
 /area/bridge)
 "bgx" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	dir = 8
+	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 8
 	},
@@ -27100,7 +27171,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/computer/security,
+/obj/machinery/computer/security{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/security/brig)
 "bgY" = (
@@ -27109,7 +27182,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/secure_data{
+	dir = 1
+	},
 /obj/machinery/button/door{
 	id = "Secure Gate";
 	name = "Brig Lockdown";
@@ -27339,7 +27414,9 @@
 	},
 /area/engine/engineering)
 "bhp" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/secure_data{
+	dir = 4
+	},
 /obj/machinery/light{
 	dir = 8
 	},
@@ -28496,7 +28573,9 @@
 	},
 /area/bridge)
 "bjI" = (
-/obj/machinery/computer/crew,
+/obj/machinery/computer/crew{
+	dir = 8
+	},
 /turf/open/floor/plasteel/white/side{
 	dir = 8
 	},
@@ -28936,7 +29015,9 @@
 	},
 /area/bridge)
 "bkA" = (
-/obj/machinery/computer/med_data,
+/obj/machinery/computer/med_data{
+	dir = 8
+	},
 /turf/open/floor/plasteel/white/side{
 	dir = 8
 	},
@@ -30261,7 +30342,9 @@
 /turf/open/floor/wood,
 /area/bridge)
 "bnn" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/secure_data{
+	dir = 4
+	},
 /obj/structure/sign/securearea{
 	pixel_x = -32
 	},
@@ -30594,7 +30677,9 @@
 /turf/open/floor/plating,
 /area/bridge)
 "bog" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/security{
+	dir = 4
+	},
 /obj/machinery/button/door{
 	id = "Prison Gate";
 	name = "Prison Wing Lockdown";
@@ -32100,6 +32185,7 @@
 "brU" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/firedoor,
+/obj/structure/barricade/wooden,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "brV" = (
@@ -32114,6 +32200,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/barricade/wooden,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "brX" = (
@@ -33151,7 +33238,9 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "buz" = (
-/obj/machinery/computer/holodeck,
+/obj/machinery/computer/holodeck{
+	dir = 8
+	},
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
@@ -34184,7 +34273,9 @@
 /turf/open/floor/plating,
 /area/maintenance/department/science)
 "bwz" = (
-/obj/machinery/computer/atmos_alert,
+/obj/machinery/computer/atmos_alert{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/maintenance/department/science)
 "bwA" = (
@@ -35545,7 +35636,9 @@
 	},
 /area/crew_quarters/fitness)
 "bzp" = (
-/obj/machinery/computer/monitor,
+/obj/machinery/computer/monitor{
+	dir = 1
+	},
 /obj/structure/cable{
 	icon_state = "0-4";
 	d2 = 4
@@ -36176,7 +36269,9 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "bAT" = (
-/obj/machinery/computer/rdconsole/robotics,
+/obj/machinery/computer/rdconsole/robotics{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "bAU" = (
@@ -39422,7 +39517,9 @@
 	},
 /area/medical/medbay)
 "bIK" = (
-/obj/machinery/computer/med_data,
+/obj/machinery/computer/med_data{
+	dir = 4
+	},
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
@@ -39445,7 +39542,9 @@
 /turf/open/floor/plasteel,
 /area/medical/medbay)
 "bIO" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/secure_data{
+	dir = 8
+	},
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
@@ -39605,7 +39704,9 @@
 	icon_state = "1-4"
 	},
 /obj/structure/cable/pink,
-/obj/machinery/computer/monitor,
+/obj/machinery/computer/monitor{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/department/science)
 "bJp" = (
@@ -41679,7 +41780,9 @@
 	dir = 8;
 	pixel_x = 24
 	},
-/obj/machinery/computer/card/minor/rd,
+/obj/machinery/computer/card/minor/rd{
+	dir = 8
+	},
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 4
 	},
@@ -42016,7 +42119,7 @@
 /turf/open/floor/plasteel{
 	dir = 8
 	},
-/area/maintenance/department/medical)
+/area/medical/medbay)
 "bOQ" = (
 /obj/structure/cable/cyan{
 	icon_state = "1-4"
@@ -42457,7 +42560,9 @@
 /turf/open/floor/plating,
 /area/maintenance/department/science)
 "bQd" = (
-/obj/machinery/computer/rdservercontrol,
+/obj/machinery/computer/rdservercontrol{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/hor)
 "bQe" = (
@@ -42586,7 +42691,7 @@
 	icon_state = "1-4"
 	},
 /obj/structure/cable/cyan{
-	icon_state = "4-8"
+	icon_state = "1-8"
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
@@ -44101,7 +44206,9 @@
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "bTN" = (
-/obj/machinery/computer/cloning,
+/obj/machinery/computer/cloning{
+	dir = 8
+	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -44494,7 +44601,9 @@
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "bUJ" = (
-/obj/machinery/computer/scan_consolenew,
+/obj/machinery/computer/scan_consolenew{
+	dir = 8
+	},
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 4
 	},
@@ -44627,7 +44736,9 @@
 /obj/machinery/status_display{
 	pixel_x = 32
 	},
-/obj/machinery/computer/card/minor/cmo,
+/obj/machinery/computer/card/minor/cmo{
+	dir = 8
+	},
 /turf/open/floor/plasteel/barber{
 	dir = 8
 	},
@@ -44718,7 +44829,7 @@
 	d2 = 4
 	},
 /turf/open/floor/plasteel/airless/solarpanel,
-/area/solar/starboard)
+/area/maintenance/solars/asteroid/fore)
 "bVk" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -44733,7 +44844,7 @@
 /turf/open/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/solar/starboard)
+/area/maintenance/solars/asteroid/fore)
 "bVl" = (
 /obj/machinery/power/solar{
 	id = "starboardsolar";
@@ -44744,7 +44855,7 @@
 	icon_state = "0-8"
 	},
 /turf/open/floor/plasteel/airless/solarpanel,
-/area/solar/starboard)
+/area/maintenance/solars/asteroid/fore)
 "bVm" = (
 /obj/structure/bed,
 /turf/open/floor/plating,
@@ -45119,7 +45230,9 @@
 	},
 /area/crew_quarters/heads/cmo)
 "bWe" = (
-/obj/machinery/computer/crew,
+/obj/machinery/computer/crew{
+	dir = 8
+	},
 /turf/open/floor/plasteel/barber{
 	dir = 8
 	},
@@ -45218,7 +45331,7 @@
 /turf/open/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/solar/starboard)
+/area/maintenance/solars/asteroid/fore)
 "bWr" = (
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'BOMB RANGE";
@@ -46413,11 +46526,11 @@
 /area/maintenance/department/medical)
 "bYS" = (
 /turf/closed/wall/r_wall,
-/area/solar/starboard)
+/area/maintenance/solars/asteroid/fore)
 "bYT" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/solar/starboard)
+/area/maintenance/solars/asteroid/fore)
 "bYU" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -46623,7 +46736,7 @@
 	name = "HIGH VOLTAGE"
 	},
 /turf/closed/wall/r_wall,
-/area/solar/starboard)
+/area/maintenance/solars/asteroid/fore)
 "bZw" = (
 /obj/machinery/power/smes{
 	charge = 1e+006
@@ -46633,7 +46746,7 @@
 	d2 = 2
 	},
 /turf/open/floor/plating,
-/area/solar/starboard)
+/area/maintenance/solars/asteroid/fore)
 "bZx" = (
 /obj/machinery/power/terminal{
 	dir = 8
@@ -46643,7 +46756,7 @@
 	d2 = 4
 	},
 /turf/open/floor/plating,
-/area/solar/starboard)
+/area/maintenance/solars/asteroid/fore)
 "bZy" = (
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
@@ -46658,13 +46771,13 @@
 	icon_state = "2-8"
 	},
 /turf/open/floor/plating,
-/area/solar/starboard)
+/area/maintenance/solars/asteroid/fore)
 "bZz" = (
 /obj/structure/cable,
 /turf/open/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/solar/starboard)
+/area/maintenance/solars/asteroid/fore)
 "bZA" = (
 /obj/machinery/door/airlock/external{
 	name = "Toxins Test Chamber";
@@ -47041,7 +47154,7 @@
 	req_access_txt = "10"
 	},
 /turf/open/floor/plating,
-/area/solar/starboard)
+/area/maintenance/solars/asteroid/fore)
 "cau" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -47054,10 +47167,10 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/solar/starboard)
+/area/maintenance/solars/asteroid/fore)
 "cav" = (
 /turf/open/floor/plating,
-/area/solar/starboard)
+/area/maintenance/solars/asteroid/fore)
 "caw" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -47070,7 +47183,7 @@
 	icon_state = "2-4"
 	},
 /turf/open/floor/plating,
-/area/solar/starboard)
+/area/maintenance/solars/asteroid/fore)
 "cax" = (
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance";
@@ -47083,7 +47196,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
-/area/solar/starboard)
+/area/maintenance/solars/asteroid/fore)
 "cay" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -47091,7 +47204,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
-/area/solar/starboard)
+/area/maintenance/solars/asteroid/fore)
 "caz" = (
 /obj/structure/cable{
 	d2 = 8;
@@ -47100,12 +47213,12 @@
 /turf/open/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/solar/starboard)
+/area/maintenance/solars/asteroid/fore)
 "caA" = (
 /turf/open/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/solar/starboard)
+/area/maintenance/solars/asteroid/fore)
 "caB" = (
 /obj/structure/cable{
 	icon_state = "0-4";
@@ -47114,7 +47227,7 @@
 /turf/open/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/solar/starboard)
+/area/maintenance/solars/asteroid/fore)
 "caC" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -47124,7 +47237,7 @@
 /turf/open/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/solar/starboard)
+/area/maintenance/solars/asteroid/fore)
 "caD" = (
 /obj/machinery/power/tracker,
 /obj/structure/cable{
@@ -47132,7 +47245,7 @@
 	icon_state = "0-8"
 	},
 /turf/open/floor/plasteel/airless/solarpanel,
-/area/solar/starboard)
+/area/maintenance/solars/asteroid/fore)
 "caE" = (
 /turf/open/floor/plating/airless,
 /area/science/test_area)
@@ -47463,7 +47576,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/solar/starboard)
+/area/maintenance/solars/asteroid/fore)
 "cby" = (
 /obj/structure/chair/stool,
 /obj/machinery/camera{
@@ -47471,15 +47584,16 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/solar/starboard)
+/area/maintenance/solars/asteroid/fore)
 "cbz" = (
 /obj/machinery/power/solar_control{
+	dir = 8;
 	id = "starboardsolar";
-	name = "Aft Starboard Solar Control"
+	name = "Fore Asteroid Solar Control"
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/solar/starboard)
+/area/maintenance/solars/asteroid/fore)
 "cbA" = (
 /obj/structure/cable{
 	icon_state = "0-2";
@@ -47488,7 +47602,7 @@
 /turf/open/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/solar/starboard)
+/area/maintenance/solars/asteroid/fore)
 "cbB" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -47767,7 +47881,7 @@
 /turf/open/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/solar/starboard)
+/area/maintenance/solars/asteroid/fore)
 "ccm" = (
 /obj/machinery/camera{
 	c_tag = "Toxins Test Chamber Starboard";
@@ -48285,7 +48399,9 @@
 /turf/open/floor/plasteel,
 /area/science)
 "cdz" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/secure_data{
+	dir = 8
+	},
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
@@ -49137,7 +49253,7 @@
 /turf/open/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/solar/starboard)
+/area/maintenance/solars/asteroid/fore)
 "cfF" = (
 /obj/machinery/portable_atmospherics/scrubber/huge,
 /turf/open/floor/plasteel,
@@ -50841,6 +50957,7 @@
 	dir = 4
 	},
 /obj/machinery/computer/atmos_control/tank{
+	dir = 8;
 	input_tag = "air_in";
 	name = "Air Tank Supply Control";
 	output_tag = "air_out";
@@ -51281,7 +51398,9 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "ckV" = (
-/obj/machinery/computer/atmos_control,
+/obj/machinery/computer/atmos_control{
+	dir = 8
+	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 4
 	},
@@ -51442,7 +51561,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/machinery/computer/rdconsole/experiment,
+/obj/machinery/computer/rdconsole/experiment{
+	dir = 1
+	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/white,
 /area/science/explab)
@@ -51460,7 +51581,9 @@
 /turf/open/floor/plasteel/white,
 /area/science/explab)
 "cll" = (
-/obj/machinery/computer/teleporter,
+/obj/machinery/computer/teleporter{
+	dir = 8
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -51677,7 +51800,9 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "clL" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	dir = 8
+	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 4
 	},
@@ -51973,7 +52098,9 @@
 /turf/open/floor/plasteel/yellow/side,
 /area/engine/atmos)
 "cmy" = (
-/obj/machinery/computer/atmos_control,
+/obj/machinery/computer/atmos_control{
+	dir = 8
+	},
 /obj/machinery/light,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 6
@@ -52530,6 +52657,7 @@
 /area/engine/atmos)
 "cnR" = (
 /obj/machinery/computer/atmos_control/tank{
+	dir = 8;
 	frequency = 1441;
 	input_tag = "mix_in";
 	name = "Gas Mix Tank Control";
@@ -53345,7 +53473,9 @@
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
 "cpy" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	dir = 1
+	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -53610,6 +53740,7 @@
 /area/engine/atmos)
 "cqf" = (
 /obj/machinery/computer/atmos_control/tank{
+	dir = 1;
 	input_tag = "n2_in";
 	name = "Nitrogen Supply Control";
 	output_tag = "n2_out";
@@ -53639,6 +53770,7 @@
 "cqi" = (
 /obj/structure/window/reinforced,
 /obj/machinery/computer/atmos_control/tank{
+	dir = 1;
 	input_tag = "o2_in";
 	name = "Oxygen Supply Control";
 	output_tag = "o2_out";
@@ -53666,6 +53798,7 @@
 /area/engine/atmos)
 "cql" = (
 /obj/machinery/computer/atmos_control/tank{
+	dir = 1;
 	input_tag = "co2_in";
 	name = "Carbon Dioxide Supply Control";
 	output_tag = "co2_out";
@@ -53685,6 +53818,7 @@
 /area/engine/atmos)
 "cqn" = (
 /obj/machinery/computer/atmos_control/tank{
+	dir = 1;
 	input_tag = "tox_in";
 	name = "Plasma Supply Control";
 	output_tag = "tox_out";
@@ -53695,6 +53829,7 @@
 /area/engine/atmos)
 "cqo" = (
 /obj/machinery/computer/atmos_control/tank{
+	dir = 1;
 	input_tag = "n2o_in";
 	name = "Nitrous Oxide Supply Control";
 	output_tag = "n2o_out";
@@ -53706,10 +53841,10 @@
 "cqp" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating/airless,
-/area/solar/port)
+/area/maintenance/solars/asteroid/aft)
 "cqq" = (
 /turf/closed/wall/r_wall,
-/area/solar/port)
+/area/maintenance/solars/asteroid/aft)
 "cqr" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "Xenolab";
@@ -53985,7 +54120,7 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plating,
-/area/solar/port)
+/area/maintenance/solars/asteroid/aft)
 "cqW" = (
 /obj/machinery/power/terminal{
 	dir = 4
@@ -53998,7 +54133,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/solar/port)
+/area/maintenance/solars/asteroid/aft)
 "cqX" = (
 /obj/structure/cable{
 	icon_state = "0-2";
@@ -54008,7 +54143,7 @@
 	charge = 1e+006
 	},
 /turf/open/floor/plating,
-/area/solar/port)
+/area/maintenance/solars/asteroid/aft)
 "cqY" = (
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'HIGH VOLTAGE'";
@@ -54016,7 +54151,7 @@
 	name = "HIGH VOLTAGE"
 	},
 /turf/closed/wall/r_wall,
-/area/solar/port)
+/area/maintenance/solars/asteroid/aft)
 "cqZ" = (
 /obj/machinery/light,
 /turf/open/floor/engine,
@@ -54201,7 +54336,7 @@
 /turf/open/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/solar/port)
+/area/maintenance/solars/asteroid/aft)
 "crw" = (
 /obj/structure/cable{
 	icon_state = "0-4";
@@ -54210,7 +54345,7 @@
 /turf/open/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/solar/port)
+/area/maintenance/solars/asteroid/aft)
 "crx" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -54223,7 +54358,7 @@
 	req_access_txt = "10; 13"
 	},
 /turf/open/floor/plating,
-/area/solar/port)
+/area/maintenance/solars/asteroid/aft)
 "cry" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -54231,7 +54366,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
-/area/solar/port)
+/area/maintenance/solars/asteroid/aft)
 "crz" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -54244,7 +54379,7 @@
 	icon_state = "2-8"
 	},
 /turf/open/floor/plating,
-/area/solar/port)
+/area/maintenance/solars/asteroid/aft)
 "crA" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -54252,7 +54387,7 @@
 	icon_state = "1-8"
 	},
 /turf/open/floor/plating,
-/area/solar/port)
+/area/maintenance/solars/asteroid/aft)
 "crB" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -54265,7 +54400,7 @@
 	icon_state = "1-4"
 	},
 /turf/open/floor/plating,
-/area/solar/port)
+/area/maintenance/solars/asteroid/aft)
 "crC" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Aft Port Solar Access";
@@ -54277,7 +54412,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
-/area/solar/port)
+/area/maintenance/solars/asteroid/aft)
 "crD" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -54376,16 +54511,17 @@
 /area/engine/atmos)
 "crT" = (
 /obj/machinery/power/solar_control{
+	dir = 4;
 	id = "portsolar";
-	name = "Aft Port Solar Control"
+	name = "Aft Asteroid Solar Control"
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/solar/port)
+/area/maintenance/solars/asteroid/aft)
 "crU" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plating,
-/area/solar/port)
+/area/maintenance/solars/asteroid/aft)
 "crV" = (
 /obj/machinery/power/apc{
 	dir = 4;
@@ -54399,7 +54535,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/solar/port)
+/area/maintenance/solars/asteroid/aft)
 "crW" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -54734,7 +54870,7 @@
 	d2 = 2
 	},
 /turf/open/floor/plasteel/airless/solarpanel,
-/area/solar/port)
+/area/maintenance/solars/asteroid/aft)
 "csQ" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
@@ -54795,7 +54931,7 @@
 /turf/open/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/solar/port)
+/area/maintenance/solars/asteroid/aft)
 "csX" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -54815,7 +54951,7 @@
 /turf/open/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/solar/port)
+/area/maintenance/solars/asteroid/aft)
 "csY" = (
 /obj/structure/cable{
 	d2 = 8;
@@ -54824,7 +54960,7 @@
 /turf/open/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/solar/port)
+/area/maintenance/solars/asteroid/aft)
 "csZ" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -54844,7 +54980,7 @@
 /turf/open/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/solar/port)
+/area/maintenance/solars/asteroid/aft)
 "cta" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -54859,7 +54995,7 @@
 /turf/open/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/solar/port)
+/area/maintenance/solars/asteroid/aft)
 "ctb" = (
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion";
@@ -54922,7 +55058,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless/solarpanel,
-/area/solar/port)
+/area/maintenance/solars/asteroid/aft)
 "ctl" = (
 /turf/open/floor/plasteel/yellow/side{
 	dir = 8
@@ -55516,7 +55652,7 @@
 /turf/open/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/solar/port)
+/area/maintenance/solars/asteroid/aft)
 "cuZ" = (
 /obj/item/device/radio/intercom{
 	dir = 8;
@@ -55542,7 +55678,7 @@
 /turf/open/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/solar/port)
+/area/maintenance/solars/asteroid/aft)
 "cvc" = (
 /obj/structure/toilet{
 	dir = 1
@@ -55578,7 +55714,7 @@
 /obj/machinery/power/tracker,
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless/solarpanel,
-/area/solar/port)
+/area/maintenance/solars/asteroid/aft)
 "cvh" = (
 /obj/docking_port/stationary{
 	area_type = /area/space;
@@ -55607,6 +55743,802 @@
 	},
 /turf/open/space,
 /area/space)
+"cvj" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+"cvk" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+"cvl" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+"cvm" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+"cvn" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+"cvo" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+"cvp" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+"cvq" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+"cvr" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cvs" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cvt" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/mining)
+"cvu" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cvv" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cvw" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+"cvx" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+"cvy" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cvz" = (
+/obj/structure/table,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"cvA" = (
+/obj/machinery/computer/shuttle/mining,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"cvB" = (
+/obj/structure/table,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"cvC" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cvD" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+"cvE" = (
+/obj/machinery/power/solar{
+	id = "auxsolareast";
+	name = "Port Auxiliary Solar Array"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/maintenance/solars/asteroid/command)
+"cvF" = (
+/obj/machinery/power/solar{
+	id = "auxsolareast";
+	name = "Port Auxiliary Solar Array"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/maintenance/solars/asteroid/command)
+"cvG" = (
+/obj/machinery/power/solar{
+	id = "auxsolareast";
+	name = "Port Auxiliary Solar Array"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/maintenance/solars/asteroid/command)
+"cvH" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+"cvI" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/mining)
+"cvJ" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"cvK" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"cvL" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"cvM" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/mining)
+"cvN" = (
+/obj/structure/table,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
+"cvO" = (
+/obj/structure/table,
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
+"cvP" = (
+/obj/machinery/computer/security/mining{
+	network = list("MINE","AuxBase")
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
+"cvQ" = (
+/obj/structure/filingcabinet,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
+"cvR" = (
+/obj/machinery/power/solar{
+	id = "auxsolareast";
+	name = "Port Auxiliary Solar Array"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/maintenance/solars/asteroid/command)
+"cvS" = (
+/obj/machinery/power/solar{
+	id = "auxsolareast";
+	name = "Port Auxiliary Solar Array"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/maintenance/solars/asteroid/command)
+"cvT" = (
+/obj/machinery/power/solar{
+	id = "auxsolareast";
+	name = "Port Auxiliary Solar Array"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/maintenance/solars/asteroid/command)
+"cvU" = (
+/obj/machinery/computer/shuttle/mining{
+	dir = 4
+	},
+/turf/closed/mineral/random/low_chance,
+/area/mine/explored)
+"cvV" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+"cvW" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cvX" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"cvY" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"cvZ" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"cwa" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Mining Shuttle Airlock";
+	req_access_txt = "0"
+	},
+/obj/docking_port/mobile{
+	dir = 8;
+	dwidth = 3;
+	height = 5;
+	id = "mining";
+	name = "mining shuttle";
+	port_direction = 4;
+	width = 7
+	},
+/obj/docking_port/stationary{
+	dir = 8;
+	dwidth = 3;
+	height = 5;
+	id = "mining_home";
+	name = "mining shuttle bay";
+	width = 7
+	},
+/turf/open/floor/plating,
+/area/shuttle/mining)
+"cwb" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
+	name = "Mining Dock Airlock";
+	req_access = null;
+	req_access_txt = "48";
+	shuttledocked = 1
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"cwc" = (
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"cwd" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
+	name = "Mining Dock Airlock";
+	req_access = null;
+	req_access_txt = "48";
+	shuttledocked = 1
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"cwe" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
+"cwf" = (
+/obj/structure/chair/stool{
+	pixel_y = 8
+	},
+/obj/effect/landmark/start{
+	name = "Shaft Miner"
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
+"cwg" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
+"cwh" = (
+/obj/machinery/power/solar{
+	id = "auxsolareast";
+	name = "Port Auxiliary Solar Array"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/maintenance/solars/asteroid/command)
+"cwi" = (
+/obj/machinery/power/solar{
+	id = "auxsolareast";
+	name = "Port Auxiliary Solar Array"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/maintenance/solars/asteroid/command)
+"cwj" = (
+/obj/machinery/power/solar{
+	id = "auxsolareast";
+	name = "Port Auxiliary Solar Array"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/maintenance/solars/asteroid/command)
+"cwk" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+"cwl" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/mining)
+"cwm" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"cwn" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"cwo" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"cwp" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/mining)
+"cwq" = (
+/obj/structure/closet/crate,
+/obj/item/ore/silver,
+/obj/item/ore/silver,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
+"cwr" = (
+/obj/machinery/camera{
+	c_tag = "Mining Dock External";
+	dir = 8
+	},
+/obj/structure/reagent_dispensers/fueltank,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
+"cws" = (
+/obj/machinery/power/solar{
+	id = "auxsolareast";
+	name = "Port Auxiliary Solar Array"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/maintenance/solars/asteroid/command)
+"cwt" = (
+/obj/machinery/power/solar{
+	id = "auxsolareast";
+	name = "Port Auxiliary Solar Array"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/maintenance/solars/asteroid/command)
+"cwu" = (
+/obj/machinery/power/solar{
+	id = "auxsolareast";
+	name = "Port Auxiliary Solar Array"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/maintenance/solars/asteroid/command)
+"cwv" = (
+/obj/machinery/door/airlock/glass_mining{
+	cyclelinkeddir = 8;
+	name = "Mining Dock";
+	req_access_txt = "48"
+	},
+/turf/closed/mineral/random/low_chance,
+/area/mine/explored)
+"cww" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+"cwx" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cwy" = (
+/obj/structure/closet/crate,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"cwz" = (
+/obj/structure/shuttle/engine/heater,
+/turf/open/floor/plating,
+/area/shuttle/mining)
+"cwA" = (
+/obj/structure/ore_box,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"cwB" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cwC" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+"cwD" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/computer/shuttle/mining{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
+"cwE" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/closet/secure_closet/miner,
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
+"cwF" = (
+/obj/machinery/power/solar{
+	id = "auxsolareast";
+	name = "Port Auxiliary Solar Array"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/maintenance/solars/asteroid/command)
+"cwG" = (
+/obj/machinery/power/solar{
+	id = "auxsolareast";
+	name = "Port Auxiliary Solar Array"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/maintenance/solars/asteroid/command)
+"cwH" = (
+/obj/structure/sign/securearea{
+	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
+	icon_state = "space";
+	layer = 4;
+	name = "EXTERNAL AIRLOCK"
+	},
+/turf/closed/mineral/random/low_chance,
+/area/mine/explored)
+"cwI" = (
+/obj/structure/closet/emcloset,
+/turf/closed/mineral/random/low_chance,
+/area/mine/explored)
+"cwJ" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+"cwK" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cwL" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cwM" = (
+/obj/structure/shuttle/engine/propulsion/burst,
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/mining)
+"cwN" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cwO" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cwP" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+"cwQ" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
+"cwR" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/closet/secure_closet/miner,
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
+"cwS" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+"cwT" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+"cwU" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+"cwV" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+"cwW" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+"cwX" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+"cwY" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+"cwZ" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
+"cxa" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
+"cxb" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
+"cxc" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/structure/closet/secure_closet/miner,
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
+"cxd" = (
+/obj/structure/lattice,
+/turf/closed/mineral/random/low_chance,
+/area/mine/explored)
+"cxe" = (
+/turf/open/floor/plasteel/brown{
+	dir = 9
+	},
+/area/quartermaster/miningdock)
+"cxf" = (
+/turf/open/floor/plasteel/brown{
+	dir = 5
+	},
+/area/quartermaster/miningdock)
+"cxg" = (
+/obj/structure/table,
+/obj/item/device/mining_scanner,
+/obj/item/device/mining_scanner,
+/turf/open/floor/plasteel/brown{
+	dir = 1
+	},
+/area/quartermaster/miningdock)
+"cxh" = (
+/turf/open/floor/plasteel/brown/corner{
+	dir = 1
+	},
+/area/quartermaster/miningdock)
+"cxi" = (
+/obj/machinery/power/solar{
+	id = "auxsolareast";
+	name = "Port Auxiliary Solar Array"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/maintenance/solars/asteroid/command)
+"cxj" = (
+/obj/machinery/power/solar{
+	id = "auxsolareast";
+	name = "Port Auxiliary Solar Array"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/maintenance/solars/asteroid/command)
+"cxk" = (
+/obj/machinery/power/solar{
+	id = "auxsolareast";
+	name = "Port Auxiliary Solar Array"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/maintenance/solars/asteroid/command)
+"cxl" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/landmark/start{
+	name = "Shaft Miner"
+	},
+/turf/open/floor/plasteel/brown{
+	dir = 8
+	},
+/area/quartermaster/miningdock)
+"cxm" = (
+/obj/machinery/power/solar{
+	id = "auxsolareast";
+	name = "Port Auxiliary Solar Array"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/maintenance/solars/asteroid/command)
+"cxn" = (
+/obj/machinery/power/solar{
+	id = "auxsolareast";
+	name = "Port Auxiliary Solar Array"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/maintenance/solars/asteroid/command)
+"cxo" = (
+/obj/machinery/power/solar{
+	id = "auxsolareast";
+	name = "Port Auxiliary Solar Array"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/maintenance/solars/asteroid/command)
+"cxp" = (
+/obj/machinery/power/solar{
+	id = "auxsolareast";
+	name = "Port Auxiliary Solar Array"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/maintenance/solars/asteroid/command)
+"cxq" = (
+/obj/machinery/power/solar{
+	id = "auxsolareast";
+	name = "Port Auxiliary Solar Array"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/maintenance/solars/asteroid/command)
+"cxr" = (
+/obj/machinery/power/solar{
+	id = "auxsolareast";
+	name = "Port Auxiliary Solar Array"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/maintenance/solars/asteroid/command)
+"cxs" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/landmark/start{
+	name = "Shaft Miner"
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
+"cxt" = (
+/obj/machinery/power/solar{
+	id = "auxsolareast";
+	name = "Port Auxiliary Solar Array"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/maintenance/solars/asteroid/command)
+"cxu" = (
+/obj/machinery/power/solar{
+	id = "auxsolareast";
+	name = "Port Auxiliary Solar Array"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/maintenance/solars/asteroid/command)
+"cxv" = (
+/obj/machinery/power/solar{
+	id = "auxsolareast";
+	name = "Port Auxiliary Solar Array"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/maintenance/solars/asteroid/command)
+"cxw" = (
+/obj/machinery/power/solar{
+	id = "auxsolareast";
+	name = "Port Auxiliary Solar Array"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/maintenance/solars/asteroid/command)
+"cxx" = (
+/obj/machinery/power/solar{
+	id = "auxsolareast";
+	name = "Port Auxiliary Solar Array"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/maintenance/solars/asteroid/command)
+"cxy" = (
+/obj/machinery/power/solar{
+	id = "auxsolareast";
+	name = "Port Auxiliary Solar Array"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/maintenance/solars/asteroid/command)
 
 (1,1,1) = {"
 aaa
@@ -80624,10 +81556,10 @@ aab
 aab
 aab
 aab
+cwv
+cwH
 aab
-aab
-aab
-aab
+cxd
 aab
 aab
 aaf
@@ -80879,10 +81811,10 @@ aab
 aab
 aab
 aab
+cvU
 aab
 aab
-aab
-aab
+cwI
 aab
 aab
 aab
@@ -81129,12 +82061,12 @@ aac
 aac
 aac
 aac
-aac
-aac
-aac
-aac
-aac
-aac
+aab
+aab
+aab
+aab
+aab
+aab
 aab
 aab
 aab
@@ -81386,12 +82318,12 @@ aac
 aac
 aac
 aac
-aac
-aac
-aac
-aac
-aac
-aac
+aab
+aab
+aab
+aab
+aab
+aab
 aab
 aab
 aab
@@ -81643,12 +82575,12 @@ aac
 aac
 aac
 aac
-aac
-aac
-aac
-aac
-aac
-aac
+aab
+aab
+aab
+aab
+aab
+aab
 aab
 aab
 aab
@@ -81899,13 +82831,13 @@ aac
 aac
 aac
 aac
-aac
-aac
-aac
-aac
-aac
-aac
-aac
+aab
+aab
+aab
+aab
+aab
+aab
+aab
 aab
 aab
 aab
@@ -82155,20 +83087,20 @@ aac
 aac
 aac
 aac
-aac
-aac
-aac
-aac
-aac
-aac
-aac
-aac
 aab
 aab
 aab
 aab
 aab
-aab
+cvj
+cvq
+cvx
+cvH
+cvV
+cwk
+cww
+cwJ
+cwS
 aab
 aaf
 aaf
@@ -82412,20 +83344,20 @@ aac
 aac
 aac
 aac
-aac
-aac
-aac
-aac
-aac
-aac
-aac
-aac
 aab
 aab
 aab
 aab
 aab
-aab
+cvk
+cvr
+cvy
+cvI
+cvW
+cwl
+cwx
+cwK
+cwT
 aab
 aaf
 aaf
@@ -82669,20 +83601,20 @@ aac
 aac
 aac
 aac
-aac
-aac
-aac
-aac
-aac
-aac
-aac
-aac
 aab
 aab
 aab
 aab
 aab
-aab
+cvl
+cvs
+cvz
+cvJ
+cvX
+cwm
+cwy
+cwL
+cwU
 aaf
 aaf
 aaf
@@ -82926,20 +83858,20 @@ aac
 aac
 aac
 aac
-aac
-aac
-aac
-aac
-aac
-aac
-aac
-aac
 aab
 aab
 aab
 aab
 aab
-aab
+cvm
+cvt
+cvA
+cvK
+cvY
+cwn
+cwz
+cwM
+cwV
 anE
 anE
 anE
@@ -83188,15 +84120,15 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+cvn
+cvu
+cvB
+cvL
+cvZ
+cwo
+cwA
+cwN
+cwW
 anE
 aoF
 apH
@@ -83445,15 +84377,15 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+cvo
+cvv
+cvC
+cvM
+cwa
+cwp
+cwB
+cwO
+cwX
 anE
 aoG
 apI
@@ -83702,20 +84634,20 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+cvp
+cvw
+cvD
+aAn
+cwb
+aAn
+cwC
+cwP
+cwY
 anE
 aoH
 apI
-ara
-asg
+apI
+cxs
 atl
 anE
 avP
@@ -83953,22 +84885,22 @@ aac
 aac
 aac
 aac
-aac
 aab
 aab
 aab
 aab
-agI
-agI
-agI
-agI
-agI
-agI
-agI
-agI
-agI
-agI
-agI
+aab
+aab
+aab
+aax
+aax
+aAn
+cwc
+aAn
+aax
+aax
+aax
+anE
 aoI
 apI
 apI
@@ -84210,25 +85142,25 @@ aac
 aac
 aac
 aac
-aac
 aab
 aab
 aab
 aab
-agI
-aht
-aih
-aih
-aih
-aih
-aih
-aih
-aih
-amM
-agI
-aoH
+aab
+aab
+aab
+aax
+aAn
+aAn
+cwd
+aAn
+aAn
+anE
+anE
+anE
+cxg
 apI
-ara
+apI
 asg
 atm
 auC
@@ -84465,25 +85397,25 @@ aac
 aac
 aac
 aac
-aac
-aac
-aac
 aab
 aab
 aab
 aab
-agI
-ahu
-aii
-aii
-aii
-aii
-aii
-aii
-aii
-amN
-agI
-aoH
+aab
+aab
+aab
+aab
+aab
+aab
+anE
+cvN
+cwe
+cwq
+cwD
+cwQ
+cwZ
+cxe
+cxh
 apJ
 apI
 asg
@@ -84722,29 +85654,29 @@ aac
 aac
 aac
 aac
-aac
-aac
-aac
 aab
 aab
 aab
 aab
-agI
-ahu
-aii
-aii
-aii
-aii
-aii
-aii
-aii
-amN
-agI
-aoJ
+aab
+aab
+aab
+aab
+aab
+aab
+anE
+cvO
+apI
+apI
+apI
+apI
+cxa
+cxf
+arb
 apK
 arb
 ash
-atn
+aoI
 anE
 avS
 ash
@@ -84979,25 +85911,25 @@ aac
 aac
 aac
 aac
-aac
-aac
-aac
 aab
 aab
 aab
 aab
-agI
-ahu
-aii
-aii
-aii
-akr
-aii
-aii
-aii
-amN
-agI
+aab
+aab
+aab
+aab
+aab
+aab
 anE
+cvP
+cwf
+apI
+apI
+ara
+cxb
+auB
+auB
 apL
 arc
 asi
@@ -85236,26 +86168,26 @@ aac
 aac
 aac
 aac
-aac
-aac
-aac
 aab
 aab
 aab
 aab
-agI
-ahu
-aii
-aii
-ajK
-aks
-akZ
-aii
-aii
-amN
-agI
+aab
+aab
+aab
+aab
+aab
+aab
+anE
+cvQ
+cwg
+cwr
+cwE
+cwR
+cxc
+auB
 aoK
-apM
+cxl
 ard
 asj
 ato
@@ -85493,24 +86425,24 @@ aac
 aac
 aac
 aac
-aac
-aac
-aac
-aab
 aab
 aab
 aab
 agI
-ahu
-aii
-aii
-aii
-akt
-aii
-aii
-aii
-amN
 agI
+agI
+agI
+agI
+agI
+agI
+agI
+agI
+agI
+agI
+anE
+anE
+anE
+anE
 aoL
 apN
 are
@@ -85750,24 +86682,24 @@ aac
 aac
 aac
 aac
-aac
-aac
-aac
-aab
 aab
 aab
 aab
 agI
-ahu
-aii
-aii
-aii
-aii
-aii
-aii
-aii
-amN
+aht
+aih
+aih
+aih
+aih
+aih
+aih
+aih
+amM
 agI
+aab
+aab
+aab
+anE
 aoM
 apO
 arf
@@ -86007,10 +86939,6 @@ aac
 aac
 aac
 aac
-aac
-aac
-aac
-aab
 aab
 aab
 aab
@@ -86025,6 +86953,10 @@ aii
 aii
 amN
 agI
+aab
+aab
+aab
+anE
 aoN
 apN
 apI
@@ -86264,24 +87196,24 @@ aac
 aac
 aac
 aac
-aac
-aac
-aac
-aab
 aab
 aab
 aab
 agI
-ahv
-aij
-aij
-aij
-aku
-aij
-aij
-aij
-amO
+ahu
+aii
+aii
+aii
+aii
+aii
+aii
+aii
+amN
 agI
+aab
+aab
+aab
+anE
 aoO
 apP
 arg
@@ -86520,25 +87452,25 @@ aac
 aac
 aac
 aac
-aac
-aac
-aac
-aac
 aab
 aab
 aab
 aab
 agI
+ahu
+aii
+aii
+aii
+akr
+aii
+aii
+aii
+amN
 agI
 agI
 agI
 agI
-agI
-agI
-ala
-amc
-ala
-agI
+anE
 anE
 apQ
 anE
@@ -86777,21 +87709,21 @@ aac
 aac
 aac
 aac
-aac
-aac
-aac
-aac
 aab
 aab
 aab
 aab
-aab
-aab
-aab
-aaf
-aaf
-aaf
 agI
+ahu
+aii
+aii
+ajK
+aks
+akZ
+aii
+aii
+amN
+ala
 alI
 amd
 amP
@@ -87034,21 +87966,21 @@ aac
 aac
 aac
 aac
-aac
-aac
-aac
-aac
 aab
 aab
 aab
 aab
-aab
-aab
-aab
-aaf
-aaf
-aaf
-ala
+agI
+ahu
+aii
+aii
+aii
+akt
+aii
+aii
+aii
+amN
+amc
 alJ
 ame
 ame
@@ -87295,17 +88227,17 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aaf
-aaf
 agI
+ahu
+aii
+aii
+aii
+aii
+aii
+aii
+aii
+amN
+ala
 alK
 amf
 amQ
@@ -87552,16 +88484,16 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aaf
-aaf
+agI
+ahu
+aii
+aii
+aii
+aii
+aii
+aii
+aii
+amN
 agI
 agI
 agI
@@ -87809,17 +88741,17 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aaf
-abd
+agI
+ahv
+aij
+aij
+aij
+aku
+aij
+aij
+aij
+amO
+agI
 alL
 abW
 abW
@@ -88066,17 +88998,17 @@ aab
 aab
 abd
 abd
-abd
-abd
-abd
-abd
-abd
-abd
-abd
-abd
-abd
-abd
-abd
+agI
+agI
+agI
+agI
+agI
+agI
+agI
+agI
+agI
+agI
+agI
 abW
 abW
 abW
@@ -89416,9 +90348,9 @@ aEj
 bov
 bpl
 aEj
-aHk
+aHl
 bqL
-aHk
+aHl
 aEj
 aEj
 aEj
@@ -89894,7 +90826,7 @@ axb
 aBb
 aCm
 aDj
-aHk
+aHl
 bqH
 aFk
 aFk
@@ -90408,7 +91340,7 @@ aAs
 aBd
 aCl
 aDl
-aHk
+aHl
 bqH
 aFk
 aFk
@@ -95273,8 +96205,8 @@ aje
 adK
 akK
 alq
-aeY
-aeY
+alq
+alq
 anc
 anc
 anc
@@ -97395,12 +98327,12 @@ bwX
 bxV
 byO
 bzZ
+bzZ
+bzZ
+bzZ
+bzZ
+bzZ
 bBr
-bCx
-bCx
-bCx
-bCx
-bGn
 bCx
 bCx
 bCx
@@ -97652,7 +98584,7 @@ bwM
 bxT
 byP
 bAa
-bBs
+bAa
 bCy
 bDv
 bEA
@@ -98346,11 +99278,11 @@ acI
 acZ
 acZ
 aci
-aes
-aeY
-aeY
-aeY
-aeY
+axQ
+afN
+afN
+afN
+afN
 aeY
 aiF
 ajm
@@ -106658,7 +107590,7 @@ bBR
 bBR
 bLr
 byZ
-bHt
+byR
 bOP
 bPS
 bQO
@@ -107659,7 +108591,7 @@ bku
 blh
 bmd
 beY
-bnP
+bsG
 bnP
 bjw
 bqi
@@ -113773,19 +114705,19 @@ aaf
 aaf
 aaf
 aaf
-ajJ
-ajJ
-ajJ
-ajJ
+cvE
+cvR
+cwh
+cws
 ajJ
 aaf
 anB
 aaf
-ajJ
-ajJ
-ajJ
-ajJ
-ajJ
+cxi
+cxm
+cxp
+cxt
+cxw
 aaf
 awQ
 aaf
@@ -114801,19 +115733,19 @@ aaf
 aaf
 aif
 aaf
-ajJ
-ajJ
-ajJ
-ajJ
-ajJ
+cvF
+cvS
+cwi
+cwt
+cwF
 aaf
 anB
 aaf
-ajJ
-ajJ
-ajJ
-ajJ
-ajJ
+cxj
+cxn
+cxq
+cxu
+cxx
 aaf
 awQ
 aaf
@@ -115829,19 +116761,19 @@ aaf
 aaf
 aaf
 aaf
-ajJ
-ajJ
-ajJ
-ajJ
-ajJ
+cvG
+cvT
+cwj
+cwu
+cwG
 aaf
 anB
 aaf
-ajJ
-ajJ
-ajJ
-ajJ
-ajJ
+cxk
+cxo
+cxr
+cxv
+cxy
 aaf
 awQ
 aaf
