@@ -22,6 +22,7 @@
 	if(!B)
 		to_chat(user, "<span class='warning'>It's hard to do surgery on someone's brain when they don't have one.</span>")
 		return FALSE
+	return TRUE
 
 /datum/surgery_step/fix_brain/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] begins to fix [target]'s brain.", "<span class='notice'>You begin to fix [target]'s brain...</span>")

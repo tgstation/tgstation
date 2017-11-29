@@ -16,6 +16,7 @@
 	if(!E)
 		to_chat(user, "It's hard to do surgery on someone's eyes when they don't have any.")
 		return FALSE
+	return TRUE
 
 /datum/surgery_step/fix_eyes/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] begins to fix [target]'s eyes.", "<span class='notice'>You begin to fix [target]'s eyes...</span>")
