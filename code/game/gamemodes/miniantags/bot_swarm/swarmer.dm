@@ -90,7 +90,7 @@
 	projectiletype = /obj/item/projectile/beam/disabler
 	ranged_cooldown_time = 20
 	projectilesound = 'sound/weapons/taser2.ogg'
-	loot = list(/obj/effect/decal/cleanable/robot_debris, /obj/item/ore/bluespace_crystal)
+	loot = list(/obj/effect/decal/cleanable/robot_debris, /obj/item/stack/ore/bluespace_crystal)
 	del_on_death = 1
 	deathmessage = "explodes with a sharp pop!"
 	light_color = LIGHT_COLOR_CYAN
@@ -100,8 +100,8 @@
 /mob/living/simple_animal/hostile/swarmer/Initialize()
 	. = ..()
 	verbs -= /mob/living/verb/pulled
-	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
-	diag_hud.add_to_hud(src)
+	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
+		diag_hud.add_to_hud(src)
 
 /mob/living/simple_animal/hostile/swarmer/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]

@@ -16,31 +16,37 @@
 #define DIAG_BOT_HUD	"12"// Bot HUDs
 #define DIAG_TRACK_HUD	"13"// Mech tracking beacon
 #define DIAG_AIRLOCK_HUD "14"//Airlock shock overlay
+#define DIAG_PATH_HUD "15"//Bot path indicators
 //for antag huds. these are used at the /mob level
-#define ANTAG_HUD		"15"
+#define ANTAG_HUD		"16"
+
+//by default everything in the hud_list of an atom is an image
+//a value in hud_list with one of these will change that behavior
+#define HUD_LIST_LIST 1
 
 //data HUD (medhud, sechud) defines
 //Don't forget to update human/New() if you change these!
-#define DATA_HUD_SECURITY_BASIC		1
-#define DATA_HUD_SECURITY_ADVANCED	2
-#define DATA_HUD_MEDICAL_BASIC		3
-#define DATA_HUD_MEDICAL_ADVANCED	4
-#define DATA_HUD_DIAGNOSTIC			5
+#define DATA_HUD_SECURITY_BASIC			1
+#define DATA_HUD_SECURITY_ADVANCED		2
+#define DATA_HUD_MEDICAL_BASIC			3
+#define DATA_HUD_MEDICAL_ADVANCED		4
+#define DATA_HUD_DIAGNOSTIC_BASIC		5
+#define DATA_HUD_DIAGNOSTIC_ADVANCED	6
 //antag HUD defines
-#define ANTAG_HUD_CULT			6
-#define ANTAG_HUD_REV			7
-#define ANTAG_HUD_OPS			8
-#define ANTAG_HUD_WIZ			9
-#define ANTAG_HUD_SHADOW    	10
-#define ANTAG_HUD_TRAITOR 		11
-#define ANTAG_HUD_NINJA 		12
-#define ANTAG_HUD_CHANGELING 	13
-#define ANTAG_HUD_ABDUCTOR 		14
-#define ANTAG_HUD_DEVIL			15
-#define ANTAG_HUD_SINTOUCHED	16
-#define ANTAG_HUD_SOULLESS		17
-#define ANTAG_HUD_CLOCKWORK		18
-#define ANTAG_HUD_BROTHER		19
+#define ANTAG_HUD_CULT			7
+#define ANTAG_HUD_REV			8
+#define ANTAG_HUD_OPS			9
+#define ANTAG_HUD_WIZ			10
+#define ANTAG_HUD_SHADOW    	11
+#define ANTAG_HUD_TRAITOR 		12
+#define ANTAG_HUD_NINJA 		13
+#define ANTAG_HUD_CHANGELING 	14
+#define ANTAG_HUD_ABDUCTOR 		15
+#define ANTAG_HUD_DEVIL			16
+#define ANTAG_HUD_SINTOUCHED	17
+#define ANTAG_HUD_SOULLESS		18
+#define ANTAG_HUD_CLOCKWORK		19
+#define ANTAG_HUD_BROTHER		20
 
 // Notification action types
 #define NOTIFY_JUMP "jump"

@@ -165,10 +165,10 @@ The console is located at computer/gulag_teleporter.dm
 	name = "labor camp teleporter (Machine Board)"
 	build_path = /obj/machinery/gulag_teleporter
 	req_components = list(
-							/obj/item/ore/bluespace_crystal = 2,
+							/obj/item/stack/ore/bluespace_crystal = 2,
 							/obj/item/stock_parts/scanning_module,
 							/obj/item/stock_parts/manipulator)
-	def_components = list(/obj/item/ore/bluespace_crystal = /obj/item/ore/bluespace_crystal/artificial)
+	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
 /*  beacon that receives the teleported prisoner */
 /obj/structure/gulag_beacon
