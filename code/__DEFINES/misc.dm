@@ -478,3 +478,6 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define NO_SPAWN 0
 #define HOSTILE_SPAWN 1
 #define FRIENDLY_SPAWN 2
+
+//text files
+#define BRAIN_DAMAGE_FILE "brain_damage_lines.json"
