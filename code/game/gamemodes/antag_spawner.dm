@@ -4,7 +4,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	var/used = 0
 
-/obj/item/antag_spawner/proc/spawn_antag(client/C, turf/T, type = "")
+/obj/item/antag_spawner/proc/spawn_antag(client/C, turf/T, kind = "", datum/mind/user)
 	return
 
 /obj/item/antag_spawner/proc/equip_antag(mob/target)
@@ -67,18 +67,16 @@
 			else
 				to_chat(H, "Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later.")
 
-/obj/item/antag_spawner/contract/spawn_antag(client/C, turf/T, school,datum/mind/user)
+/obj/item/antag_spawner/contract/spawn_antag(client/C, turf/T, kind ,datum/mind/user)
 	new /obj/effect/particle_effect/smoke(T)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.copy_to(M)
 	M.key = C.key
 	var/datum/mind/app_mind = M.mind
 	
-	
-	
 	var/datum/antagonist/wizard/apprentice/app = new(app_mind)
 	app.master = user
-	app.school = school
+	app.school = kind
 
 	var/datum/antagonist/wizard/master_wizard = user.has_antag_datum(/datum/antagonist/wizard)
 	if(master_wizard)
@@ -107,7 +105,7 @@
 	if(used)
 		to_chat(user, "<span class='warning'>[src] is out of power!</span>")
 		return FALSE
-	if(!(user.mind in SSticker.mode.syndicates))
+	if(!user.mind.has_antag_datum(/datum/antagonist/nukeop,TRUE))
 		to_chat(user, "<span class='danger'>AUTHENTICATION FAILURE. ACCESS DENIED.</span>")
 		return FALSE
 	if(user.z != ZLEVEL_CENTCOM)
@@ -133,19 +131,19 @@
 	else
 		to_chat(user, "<span class='warning'>Unable to connect to Syndicate command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>")
 
-/obj/item/antag_spawner/nuke_ops/spawn_antag(client/C, turf/T)
+/obj/item/antag_spawner/nuke_ops/spawn_antag(client/C, turf/T, kind, datum/mind/user)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.copy_to(M)
 	M.key = C.key
-	var/code = "BOMB-NOT-FOUND"
-	var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in GLOB.nuke_list
-	if(nuke)
-		code = nuke.r_code
-	M.mind.make_Nuke(null, code, 0, FALSE)
-	var/newname = M.dna.species.random_name(M.gender,0,SSticker.mode.nukeops_lastname)
-	M.mind.name = newname
-	M.real_name = newname
-	M.name = newname
+
+	var/datum/antagonist/nukeop/new_op = new(M.mind)
+	new_op.send_to_spawnpoint = FALSE
+	new_op.nukeop_outfit = /datum/outfit/syndicate/no_crystals
+
+	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop,TRUE)
+	if(creator_op)
+		M.mind.add_antag_datum(new_op,creator_op.nuke_team)
+		M.mind.special_role = "Nuclear Operative"
 
 //////SYNDICATE BORG
 /obj/item/antag_spawner/nuke_ops/borg_tele
@@ -162,8 +160,12 @@
 	name = "syndicate medical teleporter"
 	borg_to_spawn = "Medical"
 
-/obj/item/antag_spawner/nuke_ops/borg_tele/spawn_antag(client/C, turf/T)
+/obj/item/antag_spawner/nuke_ops/borg_tele/spawn_antag(client/C, turf/T, kind, datum/mind/user)
 	var/mob/living/silicon/robot/R
+	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop,TRUE)
+	if(!creator_op)
+		return
+	
 	switch(borg_to_spawn)
 		if("Medical")
 			R = new /mob/living/silicon/robot/modules/syndicate/medical(T)
@@ -174,8 +176,8 @@
 	if(prob(50))
 		brainfirstname = pick(GLOB.first_names_female)
 	var/brainopslastname = pick(GLOB.last_names)
-	if(SSticker.mode.nukeops_lastname)  //the brain inside the syndiborg has the same last name as the other ops.
-		brainopslastname = SSticker.mode.nukeops_lastname
+	if(creator_op.nuke_team.syndicate_name)  //the brain inside the syndiborg has the same last name as the other ops.
+		brainopslastname = creator_op.nuke_team.syndicate_name
 	var/brainopsname = "[brainfirstname] [brainopslastname]"
 
 	R.mmi.name = "Man-Machine Interface: [brainopsname]"
@@ -185,7 +187,11 @@
 	R.real_name = R.name
 
 	R.key = C.key
-	R.mind.make_Nuke(null, nuke_code = null,leader=0, telecrystals = TRUE)
+	
+	var/datum/antagonist/nukeop/new_borg = new(R.mind)
+	new_borg.send_to_spawnpoint = FALSE
+	R.mind.add_antag_datum(new_borg,creator_op.nuke_team)
+	R.mind.special_role = "Syndicate Cyborg"
 
 ///////////SLAUGHTER DEMON
 
@@ -222,8 +228,7 @@
 		to_chat(user, "<span class='notice'>You can't seem to work up the nerve to shatter the bottle. Perhaps you should try again later.</span>")
 
 
-/obj/item/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, type = "")
-
+/obj/item/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, kind = "", datum/mind/user)
 	var/obj/effect/dummy/slaughter/holder = new /obj/effect/dummy/slaughter(T)
 	var/mob/living/simple_animal/slaughter/S = new demon_type(holder)
 	S.holder = holder

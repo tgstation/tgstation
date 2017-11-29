@@ -1,0 +1,5 @@
+## SERVER POLICIES ##
+# Each line is pure html that gets sent to the user under certain conditions
+
+# When a mob is polymorphed
+POLYMORPH <span class='danger'>Note that you are allowed to act as an antagonist while transformed into a hostile mob, unless you volunteered for or sought out transformation.</span>
