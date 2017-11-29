@@ -111,7 +111,7 @@
 	return TRUE
 
 
-/obj/item/electronics //WHY IS THIS DEFINED HERE?
+/obj/item/electronics
 	desc = "Looks like a circuit. Probably is."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "door_electronics"
