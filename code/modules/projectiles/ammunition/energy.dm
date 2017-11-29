@@ -33,8 +33,10 @@
 /obj/item/ammo_casing/energy/lasergun/old
 	projectile_type = /obj/item/projectile/beam/laser
 	e_cost = 200
-	select_name = "kill"
 
+/obj/item/ammo_casing/energy/laser/cyborg
+	e_cost = 350
+	
 /obj/item/ammo_casing/energy/laser/hos
 	e_cost = 100
 
