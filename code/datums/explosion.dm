@@ -1,6 +1,6 @@
 #define EXPLOSION_THROW_SPEED 4
 #define CITYOFCOGS_CAP_MULTIPLIER 0.5
-#define MINING_CAP_MULTIPLIER 3
+#define MINING_CAP_MULTIPLIER 12
 
 GLOBAL_LIST_EMPTY(explosions)
 //Against my better judgement, I will return the explosion datum
