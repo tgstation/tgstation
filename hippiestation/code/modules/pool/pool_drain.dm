@@ -1,5 +1,5 @@
 /obj/machinery/drain
-	name = "Drain"
+	name = "drain"
 	icon = 'hippiestation/icons/turf/pool.dmi'
 	icon_state = "drain"
 	desc = "This removes things that clog the pool."
