@@ -4,7 +4,7 @@
 #define LERP(a, b, amount) (amount ? (a + (b - a) * amount) : (a + (b - a) * 0.5))
 
 /datum/liquid_pool//abstract shit to manage pools of liquid
-	var/total_activity//cached activity for last 50 runs
+	var/total_activity //cached activity for last 50 runs
 	var/list/liquids = list()
 	var/throttle = 0//we throttle inactive pools
 	var/spread_time = 0
@@ -55,8 +55,8 @@
 
 
 /obj/effect/liquid
-	name = "Liquid"
-	desc = "Looks wet"
+	name = "liquid"
+	desc = "Looks wet."
 	icon = 'hippiestation/icons/obj/liquid.dmi'
 	icon_state = "fulltile_deep"
 	alpha = 100
@@ -68,7 +68,7 @@
 	var/volatile = FALSE//does it evaporate on its own?
 	var/spread_rate = 1//self explanatory
 	var/is_static = FALSE//a static liquid will never lose volume and will only add to other liquids, good for permanent liquid sources
-	var/datum/liquid_pool/pool///a pool is a group of interconnected liquid tiles that process together, this is used for organisation and optimisation
+	var/datum/liquid_pool/pool //a pool is a group of interconnected liquid tiles that process together, this is used for organisation and optimisation
 	var/cached_activity = 0//this is used to judge the activity of a pool, if it is 0 or close to 0 the processing for a pool will be throttled or stopped to save performance
 
 

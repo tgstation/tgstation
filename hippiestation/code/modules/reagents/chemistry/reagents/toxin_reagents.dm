@@ -440,8 +440,8 @@
 
 /datum/reagent/toxin/vomit
 	name = "Vomit"
-	id =  "vomit"
-	description = "Chunky"
+	id = "vomit"
+	description = "Chunky."
 	reagent_state = LIQUID
 	color = "#f4f442" // rgb(244, 244, 66)
 	toxpwr = 0.5
