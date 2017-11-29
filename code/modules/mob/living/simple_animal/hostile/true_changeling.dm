@@ -42,7 +42,6 @@
 	var/mob/living/carbon/human/stored_changeling = null //The changeling that transformed
 	var/devouring = FALSE //If the true changeling is currently devouring a human
 	var/wallcrawl = FALSE //If the true changeling is crawling around the place, allowing it to counteract gravity loss
-	var/active = FALSE //radio jamming
 	var/range = 7
 	var/datum/action/innate/changeling/reform/reform
 	var/datum/action/innate/changeling/devour/devour
@@ -87,7 +86,6 @@
 			time_left = Clamp(time_left, 0, INFINITY)
 			stat(null, "Time Remaining: [time_left]")
 		stat(null, "Ignoring Gravity: [wallcrawl ? "YES" : "NO"]")
-		stat(null, "Silencing Radio: [active ? "YES" : "NO"]")
 
 /mob/living/simple_animal/hostile/true_changeling/death()
 	..(1)
@@ -161,7 +159,7 @@
 		to_chat(M, "<span class='warning'>We are already feasting on a human!</span>")
 		return FALSE
 	var/list/potential_targets = list()
-	for(var/mob/living/carbon/human/H in range(1, src))
+	for(var/mob/living/carbon/human/H in range(1, M))
 		potential_targets.Add(H)
 	if(!potential_targets.len)
 		to_chat(M, "<span class='warning'>There are no humans nearby!</span>")
@@ -189,7 +187,7 @@
 	to_chat(lunch, "<span class='userdanger'>[M] tears into you!</span>")
 	var/obj/effect/decal/cleanable/blood/gibs/G = new(get_turf(lunch))
 	step(G, pick(GLOB.alldirs)) //Make some gibs spray out for dramatic effect
-	playsound(lunch, 'sound/creatures/hit6.ogg', 50, 1)
+	playsound(lunch, 'sound/creatures/hit6.ogg', 100, 1)
 	if(!lunch.stat)
 		lunch.emote("scream")
 	if(lunch.disabilities & FAT)
