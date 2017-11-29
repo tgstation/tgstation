@@ -218,41 +218,6 @@
 	holdingitems -= O
 	qdel(O)
 
-/obj/machinery/reagentgrinder/proc/juice()
-	power_change()
-	if(!beaker || (beaker && (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)))
-		return
-	operate_for(50, juicing = TRUE)
-
-	//Snacks
-	for(var/obj/item/i in holdingitems)
-		if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
-			break
-		var/obj/item/I = i
-		if(I.juice_results)
-			juice_item(I)
-		/*if(istype(I, /obj/item/reagent_containers/food/snacks))
-			var/obj/item/reagent_containers/food/snacks/O = I
-			if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
-				break
-			var/list/allowed = get_allowed_juice_by_obj(O)
-			if(isnull(allowed))
-				break
-			for(var/r_id in allowed)
-				var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
-				var/amount = get_juice_amount(O)
-				beaker.reagents.add_reagent(r_id, min(amount, space))
-				if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
-					break
-			remove_object(O)*/
-
-/obj/machinery/reagentgrinder/proc/juice_item(obj/item/I) //Juicing results can be found in respective object definitions
-	if(I.on_juice(src) == -1)
-		to_chat(usr, "<span class='danger'>[src] shorts out as it tries to juice up [I], and transfers it back to storage.</span>")
-		return
-	beaker.reagents.add_reagent_list(I.juice_results)
-	remove_object(I)
-
 /obj/machinery/reagentgrinder/proc/shake_for(duration)
 	var/offset = prob(50) ? -2 : 2
 	var/old_pixel_x = pixel_x
@@ -278,6 +243,25 @@
 	operating = FALSE
 	updateUsrDialog()
 
+/obj/machinery/reagentgrinder/proc/juice()
+	power_change()
+	if(!beaker || (beaker && (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)))
+		return
+	operate_for(50, juicing = TRUE)
+	for(var/obj/item/i in holdingitems)
+		if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+			break
+		var/obj/item/I = i
+		if(I.juice_results)
+			juice_item(I)
+
+/obj/machinery/reagentgrinder/proc/juice_item(obj/item/I) //Juicing results can be found in respective object definitions
+	if(I.on_juice(src) == -1)
+		to_chat(usr, "<span class='danger'>[src] shorts out as it tries to juice up [I], and transfers it back to storage.</span>")
+		return
+	beaker.reagents.add_reagent_list(I.juice_results)
+	remove_object(I)
+
 /obj/machinery/reagentgrinder/proc/grind()
 	power_change()
 	if(!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
@@ -289,82 +273,6 @@
 		var/obj/item/I = i
 		if(I.grind_results)
 			grind_item(i)
-		/*
-		if(istype(I, /obj/item/reagent_containers/food/snacks))
-			var/obj/item/reagent_containers/food/snacks/O = I
-			var/list/allowed = get_allowed_by_obj(O)
-			if(isnull(allowed))
-				continue
-			for(var/r_id in allowed)
-				var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
-				var/amount = allowed[r_id]
-				if(amount <= 0)
-					if(amount == 0)
-						if (O.reagents != null && O.reagents.has_reagent("nutriment"))
-							beaker.reagents.add_reagent(r_id, min(O.reagents.get_reagent_amount("nutriment"), space))
-							O.reagents.remove_reagent("nutriment", min(O.reagents.get_reagent_amount("nutriment"), space))
-					else
-						if (O.reagents != null && O.reagents.has_reagent("nutriment"))
-							beaker.reagents.add_reagent(r_id, min(round(O.reagents.get_reagent_amount("nutriment")*abs(amount)), space))
-							O.reagents.remove_reagent("nutriment", min(O.reagents.get_reagent_amount("nutriment"), space))
-				else
-					O.reagents.trans_id_to(beaker, r_id, min(amount, space))
-				if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
-					break
-			if(O.reagents.reagent_list.len == 0)
-				remove_object(O)
-		//Sheets
-		else if(istype(I, /obj/item/stack/sheet))
-			var/obj/item/stack/sheet/O = I
-			var/list/allowed = get_allowed_by_obj(O)
-			for(var/t in 1 to round(O.amount, 1))
-				for(var/r_id in allowed)
-					var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
-					var/amount = allowed[r_id]
-					beaker.reagents.add_reagent(r_id,min(amount, space))
-					if (space < amount)
-						break
-				if(t == round(O.amount, 1))
-					remove_object(O)
-					break
-		//Plants
-		else if(istype(I, /obj/item/grown))
-			var/obj/item/grown/O = I
-			var/list/allowed = get_allowed_by_obj(O)
-			for (var/r_id in allowed)
-				var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
-				var/amount = allowed[r_id]
-				if (amount == 0)
-					if (O.reagents != null && O.reagents.has_reagent(r_id))
-						beaker.reagents.add_reagent(r_id,min(O.reagents.get_reagent_amount(r_id), space))
-				else
-					beaker.reagents.add_reagent(r_id,min(amount, space))
-				if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
-					break
-			remove_object(O)
-		else if(istype(I, /obj/item/slime_extract))
-			var/obj/item/slime_extract/O = I
-			var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
-			if (O.reagents != null)
-				var/amount = O.reagents.total_volume
-				O.reagents.trans_to(beaker, min(amount, space))
-			if (O.Uses > 0)
-				beaker.reagents.add_reagent("slimejelly",min(20, space))
-			remove_object(O)
-		if(istype(I, /obj/item/reagent_containers))
-			var/obj/item/reagent_containers/O = I
-			var/amount = O.reagents.total_volume
-			O.reagents.trans_to(beaker, amount)
-			if(!O.reagents.total_volume)
-				remove_object(O)
-		else if(istype(I, /obj/item/toy/crayon))
-			var/obj/item/toy/crayon/O = I
-			for (var/r_id in O.reagent_contents)
-				var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
-				if(!space)
-					break
-				beaker.reagents.add_reagent(r_id, min(O.reagent_contents[r_id], space))
-				remove_object(O)*/
 
 /obj/machinery/reagentgrinder/proc/grind_item(obj/item/I) //Grind results can be found in respective object definitions
 	if(I.on_grind(src) == -1) //Call on_grind() to change amount as needed, and stop grinding the item if it returns -1
