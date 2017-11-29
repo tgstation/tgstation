@@ -45,7 +45,6 @@
 	var/active = FALSE //radio jamming
 	var/range = 7
 	var/datum/action/innate/changeling/reform/reform
-	var/datum/action/innate/changeling/jammer/jammer
 	var/datum/action/innate/changeling/devour/devour
 	var/datum/action/innate/changeling/spine_crawl/spine_crawl
 
@@ -56,8 +55,6 @@
 	reform.Grant(src)
 	devour = new
 	devour.Grant(src)
-	jammer = new
-	jammer.Grant(src)
 	spine_crawl = new
 	spine_crawl.Grant(src)
 	for(var/mob/M in view(7, src))
@@ -67,7 +64,6 @@
 /mob/living/simple_animal/hostile/true_changeling/Destroy()
 	QDEL_NULL(reform)
 	QDEL_NULL(devour)
-	QDEL_NULL(jammer)
 	QDEL_NULL(spine_crawl)
 	stored_changeling = null
 	return ..()
@@ -144,7 +140,7 @@
 		return FALSE
 	M.visible_message("<span class='warning'>[M] suddenly crunches and twists into a smaller form!</span>", \
 					"<span class='danger'>We return to our human form.</span>")
-	M.stored_changeling.forceMove(get_turf(src))
+	M.stored_changeling.forceMove(get_turf(M))
 	M.mind.transfer_to(M.stored_changeling)
 	M.stored_changeling.Unconscious(200)
 	M.stored_changeling.status_flags &= ~GODMODE
@@ -190,7 +186,7 @@
 	M.visible_message("<span class='warning'>[M] tears a chunk from [lunch]'s flesh!</span>", \
 						"<span class='danger'>We tear a chunk of flesh from [lunch] and devour it!</span>")
 	lunch.adjustBruteLoss(60)
-	to_chat(lunch, "<span class='userdager'>[M] tears into you!</span>")
+	to_chat(lunch, "<span class='userdanger'>[M] tears into you!</span>")
 	var/obj/effect/decal/cleanable/blood/gibs/G = new(get_turf(lunch))
 	step(G, pick(GLOB.alldirs)) //Make some gibs spray out for dramatic effect
 	playsound(lunch, 'sound/creatures/hit6.ogg', 50, 1)
@@ -201,24 +197,9 @@
 	else
 		M.adjustBruteLoss(-50)
 
-/datum/action/innate/changeling/jammer
-	name = "Electrostatic Lullaby"
-	desc = "We may emit a slow chant that garbles radio messages from escaping."
-	check_flags = AB_CHECK_CONSCIOUS
-	button_icon_state = "jammer"
-
-/datum/action/innate/changeling/jammer/Activate() //thank you anturk!!!
-	var/mob/living/simple_animal/hostile/true_changeling/C = owner
-	to_chat(C, "<span class='notice'>Our cacophony of noise is [active ? "silenced" : "humming once again"].<span>")
-	active = !active
-	if(active)
-		GLOB.active_jammers |= C
-	else
-		GLOB.active_jammers -= C
-
 /datum/action/innate/changeling/spine_crawl
 	name = "Spine Crawl"
-	desc = "We use our spines to gouge into terrain and crawl along it, negating gravity loss. This makes us very slow."
+	desc = "We use our spines to gouge into terrain and crawl along it, negating gravity loss. This makes us slower."
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "spine"
 
@@ -230,7 +211,7 @@
 	if(M.wallcrawl)
 		M.visible_message("<span class='danger'>[M] begins gouging its spines into the terrain!</span>", \
 							"<span class='notice'>We begin using our spines for movement.</span>")
-		M.speed = 1 //slow
+		M.speed = 1
 	else
 		M.visible_message("<span class='danger'>[M] recedes their spines back into their body!</span>", \
 							"<span class='notice'>We return moving normally.</span>")
