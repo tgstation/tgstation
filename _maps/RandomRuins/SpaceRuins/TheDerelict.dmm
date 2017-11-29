@@ -701,9 +701,9 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/solar_control)
 "cn" = (
-/obj/item/ore/iron,
-/obj/item/ore/iron,
-/obj/item/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
 /turf/template_noop,
 /area/template_noop)
 "co" = (
@@ -747,7 +747,7 @@
 	},
 /area/ruin/space/derelict/gravity_generator)
 "cv" = (
-/obj/item/ore/slag,
+/obj/item/stack/ore/slag,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged4"
 	},
@@ -818,7 +818,7 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/gravity_generator)
 "cI" = (
-/obj/item/ore/slag,
+/obj/item/stack/ore/slag,
 /turf/template_noop,
 /area/template_noop)
 "cJ" = (
@@ -1933,7 +1933,7 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/access)
 "gh" = (
-/obj/item/ore/slag,
+/obj/item/stack/ore/slag,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/singularity_engine)
 "gi" = (
