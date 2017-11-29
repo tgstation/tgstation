@@ -5,15 +5,13 @@ SUBSYSTEM_DEF(mobs)
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/currentrun = list()
-	var/static/list/by_zlevel = list()
+	var/static/list/by_zlevel[][]
 
 /datum/controller/subsystem/mobs/stat_entry()
 	..("P:[GLOB.mob_living_list.len]")
 
 /datum/controller/subsystem/mobs/Initialize(start_timeofday)
-	by_zlevel.len = world.maxz
-	for (var/i = 1 to world.maxz)
-		by_zlevel.[i] = list()
+	by_zlevel = new /list(world.maxz,0)
 	return ..()
 
 
