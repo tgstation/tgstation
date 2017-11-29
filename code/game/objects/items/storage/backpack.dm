@@ -69,7 +69,7 @@
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
 	return 0
 
-/obj/item/storage/backpack/holding/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)
+/obj/item/storage/backpack/holding/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/living/user)
 	if((istype(W, /obj/item/storage/backpack/holding) || count_by_type(W.GetAllContents(), /obj/item/storage/backpack/holding)))
 		var/turf/loccheck = get_turf(src)
 		if(loccheck.z == ZLEVEL_CITYOFCOGS)
