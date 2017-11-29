@@ -50,6 +50,7 @@
 	can_charge = 0
 	desc = "An energy-based laser gun that draws power from the cyborg's internal energy cell directly. So this is what freedom looks like?"
 	use_cyborg_cell = 1
+	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/cyborg)
 
 /obj/item/gun/energy/laser/cyborg/emp_act()
 	return
