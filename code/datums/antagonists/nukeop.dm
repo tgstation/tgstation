@@ -46,7 +46,7 @@
 
 /datum/antagonist/nukeop/greet()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0)
-	to_chat(owner.current, "<span class='notice'>You are a [nuke_team ? nuke_team.syndicate_name : "syndicate"] agent!</span>")
+	to_chat(owner, "<span class='notice'>You are a [nuke_team ? nuke_team.syndicate_name : "syndicate"] agent!</span>")
 	owner.announce_objectives()
 	return
 
@@ -85,9 +85,9 @@
 /datum/antagonist/nukeop/proc/memorize_code()
 	if(nuke_team && nuke_team.tracked_nuke && nuke_team.memorized_code)
 		owner.store_memory("<B>[nuke_team.tracked_nuke] Code</B>: [nuke_team.memorized_code]", 0, 0)
-		to_chat(owner.current, "The nuclear authorization code is: <B>[nuke_team.memorized_code]</B>")
+		to_chat(owner, "The nuclear authorization code is: <B>[nuke_team.memorized_code]</B>")
 	else
-		to_chat(owner.current, "Unfortunately the syndicate was unable to provide you with nuclear authorization code.")
+		to_chat(owner, "Unfortunately the syndicate was unable to provide you with nuclear authorization code.")
 
 /datum/antagonist/nukeop/proc/forge_objectives()
 	if(nuke_team)
@@ -145,9 +145,9 @@
 
 /datum/antagonist/nukeop/leader/greet()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0)
-	to_chat(owner.current, "<B>You are the Syndicate [title] for this mission. You are responsible for the distribution of telecrystals and your ID is the only one who can open the launch bay doors.</B>")
-	to_chat(owner.current, "<B>If you feel you are not up to this task, give your ID to another operative.</B>")
-	to_chat(owner.current, "<B>In your hand you will find a special item capable of triggering a greater challenge for your team. Examine it carefully and consult with your fellow operatives before activating it.</B>")
+	to_chat(owner, "<B>You are the Syndicate [title] for this mission. You are responsible for the distribution of telecrystals and your ID is the only one who can open the launch bay doors.</B>")
+	to_chat(owner, "<B>If you feel you are not up to this task, give your ID to another operative.</B>")
+	to_chat(owner, "<B>In your hand you will find a special item capable of triggering a greater challenge for your team. Examine it carefully and consult with your fellow operatives before activating it.</B>")
 	owner.announce_objectives()
 	addtimer(CALLBACK(src, .proc/nuketeam_name_assign), 1)
 
@@ -160,7 +160,8 @@
 /datum/objective_team/nuclear/proc/rename_team(new_name)
 	syndicate_name = new_name
 	name = "[syndicate_name] Team"
-	for(var/datum/mind/synd_mind in members)
+	for(var/I in members)
+		var/datum/mind/synd_mind = I
 		var/mob/living/carbon/human/H = synd_mind.current
 		if(!istype(H))
 			continue
@@ -225,14 +226,15 @@
 	return TRUE
 
 /datum/objective_team/nuclear/proc/operatives_dead()
-	for(var/datum/mind/operative_mind in members)
+	for(var/I in members)
+		var/datum/mind/operative_mind = I
 		if(ishuman(operative_mind.current) && (operative_mind.current.stat != DEAD))
 			return FALSE
 	return TRUE
 
 /datum/objective_team/nuclear/proc/syndies_escaped()
 	var/obj/docking_port/mobile/S = SSshuttle.getShuttle("syndicate")
-	return (S && (S.z == ZLEVEL_CENTCOM || S.z == ZLEVEL_TRANSIT)) ? 1 : 0
+	return (S && (S.z == ZLEVEL_CENTCOM || S.z == ZLEVEL_TRANSIT))
 
 /datum/objective_team/nuclear/proc/get_result()
 	var/evacuation = SSshuttle.emergency.mode == SHUTTLE_ENDGAME
@@ -300,9 +302,11 @@
 	var/text = "<br><FONT size=3><B>The syndicate operatives were:</B></FONT>"
 	var/purchases = ""
 	var/TC_uses = 0
-	for(var/datum/mind/syndicate in members)
+	for(var/I in members)
+		var/datum/mind/syndicate = I
 		text += SSticker.mode.printplayer(syndicate) //to be moved
-		for(var/datum/component/uplink/H in GLOB.uplinks)
+		for(var/U in GLOB.uplinks)
+			var/datum/component/uplink/H = U
 			if(H.owner == syndicate.key)
 				TC_uses += H.spent_telecrystals
 				if(H.purchase_log)
