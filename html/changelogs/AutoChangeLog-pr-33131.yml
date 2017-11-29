@@ -1,0 +1,5 @@
+author: "MrStonedOne"
+delete-after: True
+changes: 
+  - tweak: "The sloth no longer suspiciously moves fast when gliding between tiles."
+  - balance: "The sloth's movespeed when inhabited by a player has been lowered from once every 1/5 of a second to once every second."
