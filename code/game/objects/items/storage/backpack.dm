@@ -73,8 +73,7 @@
 	if((istype(W, /obj/item/storage/backpack/holding) || count_by_type(W.GetAllContents(), /obj/item/storage/backpack/holding)))
 		var/turf/loccheck = get_turf(src)
 		if(loccheck.z == ZLEVEL_CITYOFCOGS)
-			 to_chat(user, "<span class='inathneq_large'><i>I don't think so...</i></span>"
-			 user.visible_message("<span class='inathneq_small'>An unseen force knocks [user] to the ground!</span>")
+			 user.visible_message("<span class='warning'>An unseen force knocks [user] to the ground!</span>", "<span class='big_brass'>\"I think not!\"</span>")
 			 user.Knockdown(60)
 			 return
 		var/safety = alert(user, "Doing this will have extremely dire consequences for the station and its crew. Be sure you know what you're doing.", "Put in [name]?", "Proceed", "Abort")
