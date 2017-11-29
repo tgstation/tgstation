@@ -13,9 +13,10 @@
 	range = RANGED
 
 /obj/item/mecha_parts/mecha_equipment/teleporter/action(atom/target)
-	if(!action_checks(target) || src.loc.z == ZLEVEL_CENTCOM)
+	var/turf/T = get_turf(src)
+	if(!action_checks(target) || is_centcom(T.z))
 		return
-	var/turf/T = get_turf(target)
+	T = get_turf(target)
 	if(T)
 		do_teleport(chassis, T, 4)
 		return 1
@@ -34,7 +35,8 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/wormhole_generator/action(atom/target)
-	if(!action_checks(target) || src.loc.z == ZLEVEL_CENTCOM)
+	var/turf/T = get_turf(src)
+	if(!action_checks(target) || is_centcom(T.z))
 		return
 	var/list/theareas = get_areas_in_range(100, chassis)
 	if(!theareas.len)
@@ -42,7 +44,8 @@
 	var/area/thearea = pick(theareas)
 	var/list/L = list()
 	var/turf/pos = get_turf(src)
-	for(var/turf/T in get_area_turfs(thearea.type))
+	for(var/I in get_area_turfs(thearea.type))
+		T = I
 		if(!T.density && pos.z == T.z)
 			var/clear = 1
 			for(var/obj/O in T)
@@ -57,7 +60,7 @@
 	if(!target_turf)
 		return
 	var/list/obj/effect/portal/created = create_portal_pair(get_turf(src), target_turf, src, 300, 1, /obj/effect/portal/anom)
-	var/turf/T = get_turf(target)
+	T = get_turf(target)
 	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] used a Wormhole Generator in [ADMIN_COORDJMP(T)]",0,1)
 	log_game("[key_name(chassis.occupant)] used a Wormhole Generator in [COORD(T)]")
 	src = null

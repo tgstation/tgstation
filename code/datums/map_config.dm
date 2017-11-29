@@ -12,18 +12,7 @@
 	var/minetype = "lavaland"
 
 	//Order matters here.
-	var/list/transition_config = list(CENTCOM = SELFLOOPING,
-									MAIN_STATION = CROSSLINKED,
-									EMPTY_AREA_1 = CROSSLINKED,
-									EMPTY_AREA_2 = CROSSLINKED,
-									MINING = SELFLOOPING,
-									CITY_OF_COGS = SELFLOOPING,
-									EMPTY_AREA_3 = CROSSLINKED,
-									EMPTY_AREA_4 = CROSSLINKED,
-									EMPTY_AREA_5 = CROSSLINKED,
-									EMPTY_AREA_6 = CROSSLINKED,
-									EMPTY_AREA_7 = CROSSLINKED,
-									EMPTY_AREA_8 = CROSSLINKED)
+	var/list/traits = STATION_TRAITS
 	var/defaulted = TRUE    //if New failed
 
 	var/config_max_users = 0
@@ -71,12 +60,12 @@
 	minetype = json["minetype"] || minetype
 	allow_custom_shuttles = json["allow_custom_shuttles"] != FALSE
 
-	var/jtcl = json["transition_config"]
-	if(jtcl && jtcl != "default")
-		transition_config.Cut()
+	var/list/jtcl = json["traits"]
 
+	if(jtcl && jtcl != "default")
+		traits.Cut()
 		for(var/I in jtcl)
-			transition_config[TransitionStringToEnum(I)] = TransitionStringToEnum(jtcl[I])
+			traits[I] = TRUE
 
 	defaulted = FALSE
 
@@ -90,54 +79,8 @@
 	if(!fexists(path))
 		log_world("Map file ([path]) does not exist!")
 		return
-
-	var/tc = json["transition_config"]
-	if(tc != null && tc != "default")
-		if(!islist(tc))
-			log_world("transition_config is not a list!")
-			return
-
-		for(var/I in tc)
-			if(isnull(TransitionStringToEnum(I)))
-				log_world("Invalid transition_config option: [I]!")
-			if(isnull(TransitionStringToEnum(tc[I])))
-				log_world("Invalid transition_config option: [I]!")
-
 	return TRUE
 #undef CHECK_EXISTS
-
-/datum/map_config/proc/TransitionStringToEnum(string)
-	switch(string)
-		if("CROSSLINKED")
-			return CROSSLINKED
-		if("SELFLOOPING")
-			return SELFLOOPING
-		if("UNAFFECTED")
-			return UNAFFECTED
-		if("MAIN_STATION")
-			return MAIN_STATION
-		if("CENTCOM")
-			return CENTCOM
-		if("CITY_OF_COGS")
-			return CITY_OF_COGS
-		if("MINING")
-			return MINING
-		if("EMPTY_AREA_1")
-			return EMPTY_AREA_1
-		if("EMPTY_AREA_2")
-			return EMPTY_AREA_2
-		if("EMPTY_AREA_3")
-			return EMPTY_AREA_3
-		if("EMPTY_AREA_4")
-			return EMPTY_AREA_4
-		if("EMPTY_AREA_5")
-			return EMPTY_AREA_5
-		if("EMPTY_AREA_6")
-			return EMPTY_AREA_6
-		if("EMPTY_AREA_7")
-			return EMPTY_AREA_7
-		if("EMPTY_AREA_8")
-			return EMPTY_AREA_8
 
 /datum/map_config/proc/GetFullMapPath(mp = map_path, mf = map_file)
 	return "_maps/[mp]/[mf]"

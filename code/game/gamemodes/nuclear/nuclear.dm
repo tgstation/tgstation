@@ -145,7 +145,7 @@
 	..()
 	nukes_left--
 	var/obj/docking_port/mobile/Shuttle = SSshuttle.getShuttle("syndicate")
-	syndies_didnt_escape = (Shuttle && (Shuttle.z == ZLEVEL_CENTCOM || Shuttle.z == ZLEVEL_TRANSIT)) ? 0 : 1
+	syndies_didnt_escape = Shuttle && SSmapping.check_level_traits(Shuttle.z, list(CENTCOM, TRANSIT))
 	nuke_off_station = off_station
 
 /datum/game_mode/nuclear/check_win()

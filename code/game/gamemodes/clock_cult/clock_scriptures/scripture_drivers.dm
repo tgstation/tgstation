@@ -118,10 +118,9 @@
 	quickbind_desc = "Returns you to Reebe."
 
 /datum/clockwork_scripture/abscond/check_special_requirements()
-	if(invoker.z == ZLEVEL_CITYOFCOGS)
+	. = !is_reebe(invoker.z)
+	if(!.)
 		to_chat(invoker, "<span class='danger'>You're already at Reebe.</span>")
-		return
-	return TRUE
 
 /datum/clockwork_scripture/abscond/recital()
 	animate(invoker.client, color = "#AF0AAF", time = 50)

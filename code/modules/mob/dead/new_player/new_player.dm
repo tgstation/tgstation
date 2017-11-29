@@ -14,20 +14,26 @@
 
 	anchored = TRUE	//  don't get pushed around
 	var/mob/living/new_character	//for instant transfer once the round is set up
+	var/obj/screen/splash/splash_screen
 
 /mob/dead/new_player/Initialize()
 	if(client && SSticker.state == GAME_STATE_STARTUP)
-		var/obj/screen/splash/S = new(client, TRUE, TRUE)
-		S.Fade(TRUE)
+		splash_screen = new(client, TRUE, TRUE)
 
-	if(length(GLOB.newplayer_start))
-		loc = pick(GLOB.newplayer_start)
-	else
-		loc = locate(1,1,1)
+	SendToStartLocIfRequired()
 
 	ComponentInitialize()
 
 	. = ..()
+
+/mob/dead/new_player/proc/SendToStartLocIfRequired()
+	if(loc)
+		return
+	var/turf/T = safepick(GLOB.newplayer_start)
+	if(T)
+		forceMove(T)
+		splash_screen.Fade(TRUE)
+		splash_screen = null
 
 /mob/dead/new_player/prepare_huds()
 	return

@@ -115,7 +115,7 @@
 	if(!T)
 		return FALSE
 
-	if(T.z == ZLEVEL_TRANSIT)
+	if(is_transit_level(T.z))
 		for(var/A in SSshuttle.mobile)
 			var/obj/docking_port/mobile/M = A
 			if(M.launch_status == ENDGAME_TRANSIT)
@@ -124,7 +124,7 @@
 					if(T in shuttle_area)
 						return TRUE
 
-	if(T.z != ZLEVEL_CENTCOM)//if not, don't bother
+	if(!is_centcom(T.z))//if not, don't bother
 		return FALSE
 
 	//Check for centcom itself
@@ -145,7 +145,7 @@
 	if(!T)
 		return 0
 
-	if(T.z != ZLEVEL_CENTCOM)//if not, don't bother
+	if(!is_centcom(T.z))//if not, don't bother
 		return 0
 
 	if(istype(T.loc, /area/shuttle/syndicate) || istype(T.loc, /area/syndicate_mothership))

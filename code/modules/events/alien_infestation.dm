@@ -39,7 +39,8 @@
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in GLOB.machines)
 		if(QDELETED(temp_vent))
 			continue
-		if((temp_vent.loc.z in GLOB.station_z_levels) && !temp_vent.welded)
+		var/turf/T = get_turf(temp_vent)
+		if(T && is_station_level(T.z) && !temp_vent.welded)
 			var/datum/pipeline/temp_vent_parent = temp_vent.PARENT1
 			//Stops Aliens getting stuck in small networks.
 			//See: Security, Virology

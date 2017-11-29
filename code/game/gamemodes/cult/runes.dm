@@ -268,7 +268,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/list/teleportnames = list()
 	for(var/R in GLOB.teleport_runes)
 		var/obj/effect/rune/teleport/T = R
-		if(T != src && (T.z <= ZLEVEL_SPACEMAX))
+		if(T != src && !is_away_level(T.z))
 			potential_runes[avoid_assoc_duplicate_keys(T.listkey, teleportnames)] = T
 
 	if(!potential_runes.len)
@@ -277,7 +277,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		fail_invoke()
 		return
 
-	if(user.z > ZLEVEL_SPACEMAX)
+	if(is_away_level(T.z))
 		to_chat(user, "<span class='cultitalic'>You are not in the right dimension!</span>")
 		log_game("Teleport rune failed - user in away mission")
 		fail_invoke()
@@ -802,7 +802,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		fail_invoke()
 		log_game("Summon Cultist rune failed - target was deconverted")
 		return
-	if(cultist_to_summon.z > ZLEVEL_SPACEMAX)
+	if(is_away_level(cultist_to_summon.z))
 		to_chat(user, "<span class='cultitalic'>[cultist_to_summon] is not in our dimension!</span>")
 		fail_invoke()
 		log_game("Summon Cultist rune failed - target in away mission")

@@ -203,7 +203,8 @@
 	var/turf/T = get_turf(AM)
 	if(!T)
 		return FALSE
-	if(T.z == ZLEVEL_CENTCOM || T.z > ZLEVEL_SPACEMAX)
+	var/Tz = T.z
+	if(is_centcom(Tz) || is_away_level(Tz))
 		return FALSE
 	var/area/A = get_area(T)
 	if(!A || A.noteleport)

@@ -584,7 +584,7 @@
 		flags_2 |= STATIONLOVING_2
 
 /atom/movable/proc/relocate()
-	var/targetturf = find_safe_turf(ZLEVEL_STATION_PRIMARY)
+	var/targetturf = find_safe_turf()
 	if(!targetturf)
 		if(GLOB.blobstart.len > 0)
 			targetturf = get_turf(pick(GLOB.blobstart))
@@ -614,11 +614,8 @@
 			message_admins("[src] has been moved out of bounds in [ADMIN_COORDJMP(currentturf)]. Moving it to [ADMIN_COORDJMP(targetturf)].")
 
 /atom/movable/proc/in_bounds()
-	. = FALSE
 	var/turf/currentturf = get_turf(src)
-	if(currentturf && (currentturf.z == ZLEVEL_CENTCOM || (currentturf.z in GLOB.station_z_levels) || currentturf.z == ZLEVEL_TRANSIT))
-		. = TRUE
-
+	return is_secure_level(currentturf.z)
 
 /* Language procs */
 /atom/movable/proc/get_language_holder(shadow=TRUE)

@@ -22,6 +22,14 @@ SUBSYSTEM_DEF(mapping)
 
 	var/loading_ruins = FALSE
 
+	///Stuff for the z manager
+	
+	// A list of z-levels
+	var/list/z_list
+	var/list/zs_being_cleared
+	var/list/levels_by_name
+	var/list/heaps
+
 /datum/controller/subsystem/mapping/PreInit()
 	if(!config)
 #ifdef FORCE_MAP
@@ -30,7 +38,6 @@ SUBSYSTEM_DEF(mapping)
 		config = new
 #endif
 	return ..()
-
 
 /datum/controller/subsystem/mapping/Initialize(timeofday)
 	if(config.defaulted)
@@ -45,17 +52,14 @@ SUBSYSTEM_DEF(mapping)
 	loading_ruins = TRUE
 	var/mining_type = config.minetype
 	if (mining_type == "lavaland")
-		seedRuins(list(ZLEVEL_LAVALAND), CONFIG_GET(number/lavaland_budget), /area/lavaland/surface/outdoors/unexplored, lava_ruins_templates)
+		seedRuins(levels_by_trait(MINING_LEVEL), CONFIG_GET(number/lavaland_budget), /area/lavaland/surface/outdoors/unexplored, lava_ruins_templates)
 		spawn_rivers()
 
 	// deep space ruins
 	var/space_zlevels = list()
-	for(var/i in ZLEVEL_SPACEMIN to ZLEVEL_SPACEMAX)
-		switch(i)
-			if(ZLEVEL_MINING, ZLEVEL_LAVALAND, ZLEVEL_EMPTY_SPACE, ZLEVEL_TRANSIT, ZLEVEL_CITYOFCOGS)
-				continue
-			else
-				space_zlevels += i
+	for(var/I in 1 to ZLEVEL_EMPTY_SPACE_COUNT)
+		add_new_zlevel("Empty Space #[I]", CROSSLINKED, list(AI_OK = TRUE, STATION_CONTACT = TRUE))
+		space_zlevels += I
 
 	seedRuins(space_zlevels, CONFIG_GET(number/space_budget), /area/space, space_ruins_templates)
 	loading_ruins = FALSE
@@ -98,6 +102,11 @@ SUBSYSTEM_DEF(mapping)
 	config = SSmapping.config
 	next_map_config = SSmapping.next_map_config
 
+	z_list = SSmapping.z_list
+	zs_being_cleared = SSmapping.zs_being_cleared
+	levels_by_name = SSmapping.levels_by_name
+	heaps = SSmapping.heaps
+
 /datum/controller/subsystem/mapping/proc/TryLoadZ(filename, errorList, forceLevel, last)
 	var/static/dmm_suite/loader
 	if(!loader)
@@ -107,29 +116,38 @@ SUBSYSTEM_DEF(mapping)
 	if(last)
 		QDEL_NULL(loader)
 
-/datum/controller/subsystem/mapping/proc/CreateSpace(MaxZLevel)
-	while(world.maxz < MaxZLevel)
-		++world.maxz
-		CHECK_TICK
-
 #define INIT_ANNOUNCE(X) to_chat(world, "<span class='boldannounce'>[X]</span>"); log_world(X)
 /datum/controller/subsystem/mapping/proc/loadWorld()
 	//if any of these fail, something has gone horribly, HORRIBLY, wrong
 	var/list/FailedZs = list()
 
 	var/start_time = REALTIMEOFDAY
+	INIT_ANNOUNCE("Loading CentCom")
+	TryLoadZ("_maps/map_files/generic/CentCom.dmm", FailedZs)
+
+	//splash turfs are ready, send em in
+	for(var/mob/dead/new_player/NP in GLOB.player_list)
+		NP.SendToStartLocIfRequired()
+
+	INIT_ANNOUNCE("Loading Lavaland")
+	TryLoadZ("_maps/map_files/Mining/Lavaland.dmm", FailedZs)
 
 	INIT_ANNOUNCE("Loading [config.map_name]...")
-	TryLoadZ(config.GetFullMapPath(), FailedZs, ZLEVEL_STATION_PRIMARY)
-	INIT_ANNOUNCE("Loaded station in [(REALTIMEOFDAY - start_time)/10]s!")
+	TryLoadZ(config.GetFullMapPath(), FailedZs)
+
+	InitializeDefaultZLevels()
+
 	if(SSdbcore.Connect())
 		var/datum/DBQuery/query_round_map_name = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET map_name = '[config.map_name]' WHERE id = [GLOB.round_id]")
 		query_round_map_name.Execute()
 
-	if(config.minetype != "lavaland")
-		INIT_ANNOUNCE("WARNING: A map without lavaland set as its minetype was loaded! This is being ignored! Update the maploader code!")
+	//we need 1 area of empty space
+	add_new_zlevel("Empty Space", CROSSLINKED, list())
+	//then load spacedock.dmm
+	add_new_zlevel("Empty Space With Dock", CROSSLINKED, list())
+	TryLoadZ("_maps/map_files/generic/SpaceDock.dmm", FailedZs, world.maxz, last = TRUE)
 
-	CreateSpace(ZLEVEL_SPACEMAX)
+	increase_max_zlevel_to(world.maxz + ZLEVEL_EMPTY_SPACE_COUNT)
 
 	if(LAZYLEN(FailedZs))	//but seriously, unless the server's filesystem is messed up this will never happen
 		var/msg = "RED ALERT! The following map files failed to load: [FailedZs[1]]"
@@ -138,6 +156,8 @@ SUBSYSTEM_DEF(mapping)
 				msg += ", [FailedZs[I]]"
 		msg += ". Yell at your server host!"
 		INIT_ANNOUNCE(msg)
+
+	INIT_ANNOUNCE("Loaded maps in [(REALTIMEOFDAY - start_time)/10]s!")
 #undef INIT_ANNOUNCE
 
 GLOBAL_LIST_EMPTY(the_station_areas)
@@ -146,7 +166,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	var/list/station_areas_blacklist = typecacheof(list(/area/space, /area/mine, /area/ruin))
 	for(var/area/A in world)
 		var/turf/picked = safepick(get_area_turfs(A.type))
-		if(picked && (picked.z in GLOB.station_z_levels))
+		if(picked && is_station_level(picked.z))
 			if(!(A.type in GLOB.the_station_areas) && !is_type_in_typecache(A, station_areas_blacklist))
 				GLOB.the_station_areas.Add(A.type)
 

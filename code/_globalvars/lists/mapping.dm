@@ -7,8 +7,6 @@ GLOBAL_LIST_INIT(cardinals, list(NORTH, SOUTH, EAST, WEST))
 GLOBAL_LIST_INIT(alldirs, list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
 GLOBAL_LIST_INIT(diagonals, list(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
 
-GLOBAL_LIST_INIT(station_z_levels, list(ZLEVEL_STATION_PRIMARY))
-
 GLOBAL_LIST(global_map)
 	//list/global_map = list(list(1,5),list(4,3))//an array of map Z levels.
 	//Resulting sector map looks like
