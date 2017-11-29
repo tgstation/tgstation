@@ -248,3 +248,25 @@
 
 /obj/item/device/assembly/igniter/proc/ignite_turf(obj/item/flamethrower/F,turf/open/location,release_amount = 0.05)
 	F.default_ignite(location,release_amount)
+
+
+//Upgraded version of the flamethrower for syndie use, identical except for a larger release_amount & air_transfer
+/obj/item/flamethrower/op
+	name = "syndicate flamethrower"
+	desc = "You are a firestarter! Twisted firestarter!"
+	create_full = TRUE
+	create_with_tank = TRUE
+
+
+
+
+/obj/item/flamethrower/op/default_ignite(turf/target, release_amount = 0.075)
+	var/datum/gas_mixture/air_transfer = ptank.air_contents.remove_ratio(release_amount)
+	if(air_transfer.gases[/datum/gas/plasma])
+		air_transfer.gases[/datum/gas/plasma][MOLES] *= 7.5
+	target.assume_air(air_transfer)
+	//Burn it based on transfered gas
+	target.hotspot_expose((ptank.air_contents.temperature*2) + 380,500)
+	//location.hotspot_expose(1000,500,1)
+	SSair.add_to_active(target, 0)
+
