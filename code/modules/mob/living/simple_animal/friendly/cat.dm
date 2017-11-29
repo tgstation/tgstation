@@ -28,7 +28,7 @@
 	response_harm   = "kicks"
 	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target
-	gold_core_spawnable = 2
+	gold_core_spawnable = FRIENDLY_SPAWN
 
 /mob/living/simple_animal/pet/cat/Initialize()
 	. = ..()
@@ -79,7 +79,7 @@
 	icon_living = "cat"
 	icon_dead = "cat_dead"
 	gender = FEMALE
-	gold_core_spawnable = 0
+	gold_core_spawnable = NO_SPAWN
 	var/list/family = list()//var restored from savefile, has count of each child type
 	var/list/children = list()//Actual mob instances of children
 	var/cats_deployed = 0
@@ -152,7 +152,7 @@
 /mob/living/simple_animal/pet/cat/Proc
 	name = "Proc"
 	gender = MALE
-	gold_core_spawnable = 0
+	gold_core_spawnable = NO_SPAWN
 
 /mob/living/simple_animal/pet/cat/Life()
 	if(!stat && !buckled && !client)

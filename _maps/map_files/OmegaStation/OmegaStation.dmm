@@ -470,7 +470,7 @@
 	name = "Asteroid"
 	})
 "aaW" = (
-/obj/item/ore/iron,
+/obj/item/stack/ore/iron,
 /turf/open/floor/plating/asteroid,
 /area/ruin/unpowered{
 	name = "Asteroid"
@@ -948,7 +948,7 @@
 	})
 "abS" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/ore/glass,
+/obj/item/stack/ore/glass,
 /turf/open/floor/plating/astplate,
 /area/ruin/unpowered{
 	name = "Asteroid"
@@ -3094,7 +3094,7 @@
 	})
 "afM" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/ore/iron,
+/obj/item/stack/ore/iron,
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating/astplate,
 /area/ruin/unpowered{
@@ -3551,8 +3551,8 @@
 /area/shuttle/supply)
 "agE" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/ore/silver,
-/obj/item/ore/iron,
+/obj/item/stack/ore/silver,
+/obj/item/stack/ore/iron,
 /turf/open/floor/plating/astplate,
 /area/ruin/unpowered{
 	name = "Asteroid"
@@ -4733,9 +4733,7 @@
 	},
 /area/quartermaster/storage)
 "aiK" = (
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-22"
-	},
+/obj/structure/closet/crate/bin,
 /turf/open/floor/plasteel/brown{
 	dir = 1
 	},
@@ -4835,9 +4833,7 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "aiV" = (
-/obj/structure/table/reinforced,
-/obj/item/paper_bin,
-/obj/item/pen,
+/obj/machinery/rnd/protolathe/department/security,
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
@@ -5269,7 +5265,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/rnd/protolathe/department/cargo,
 /turf/open/floor/plasteel/brown{
 	dir = 4
 	},
@@ -5325,7 +5320,7 @@
 /area/shuttle/supply)
 "ajQ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/ore/iron,
+/obj/item/stack/ore/iron,
 /turf/open/floor/plating/astplate,
 /area/ruin/unpowered{
 	name = "Asteroid"
@@ -6382,7 +6377,6 @@
 /turf/open/floor/plasteel/neutral,
 /area/quartermaster/storage)
 "alF" = (
-/obj/structure/closet/crate/bin,
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Cargo Bay APC";
@@ -6392,6 +6386,7 @@
 /obj/structure/cable/white{
 	icon_state = "0-8"
 	},
+/obj/machinery/rnd/protolathe/department/cargo,
 /turf/open/floor/plasteel/brown{
 	dir = 4
 	},
@@ -6955,7 +6950,6 @@
 	dir = 4;
 	network = list("MINE")
 	},
-/obj/machinery/rnd/protolathe/department/security,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
 	},
@@ -8773,6 +8767,7 @@
 "apX" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/rnd/protolathe/department/service,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar/atrium)
 "apY" = (
@@ -18966,12 +18961,18 @@
 /obj/item/stack/sheet/metal/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/glass/fifty,
-/obj/item/crowbar,
-/obj/item/grenade/chem_grenade/smart_metal_foam,
-/obj/item/grenade/chem_grenade/smart_metal_foam,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/item/stack/sheet/rglass{
+	amount = 50;
+	pixel_x = 2;
+	pixel_y = -2
+	},
+/obj/item/stack/sheet/plasteel/fifty,
+/obj/item/grenade/chem_grenade/smart_metal_foam,
+/obj/item/grenade/chem_grenade/smart_metal_foam,
+/obj/item/crowbar,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 8
 	},
@@ -19560,7 +19561,6 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/obj/machinery/rnd/protolathe/department/engineering,
 /turf/open/floor/plasteel/neutral,
 /area/engine/engineering)
 "aKK" = (
@@ -20714,13 +20714,6 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aNd" = (
-/obj/structure/table/reinforced,
-/obj/item/stack/sheet/plasteel/fifty,
-/obj/item/stack/sheet/rglass{
-	amount = 50;
-	pixel_x = 2;
-	pixel_y = -2
-	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the Engine.";
@@ -20729,6 +20722,7 @@
 	network = list("Engine");
 	pixel_y = -32
 	},
+/obj/machinery/rnd/protolathe/department/engineering,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aNe" = (
@@ -25904,6 +25898,12 @@
 	pixel_y = 24
 	},
 /obj/effect/turf_decal/bot,
+/obj/item/storage/box/beakers{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/storage/box/syringes,
+/obj/item/gun/syringe,
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
 "aXR" = (
@@ -27184,13 +27184,6 @@
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
 "bau" = (
-/obj/structure/table/glass,
-/obj/item/storage/box/beakers{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/box/syringes,
-/obj/item/gun/syringe,
 /obj/machinery/light,
 /obj/structure/noticeboard{
 	dir = 1;
@@ -27200,6 +27193,7 @@
 	dir = 5
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/rnd/protolathe/department/medical,
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
 "bav" = (
@@ -71716,7 +71710,7 @@ aUm
 aVe
 aWa
 aWJ
-swu
+aSh
 aXQ
 aYI
 aZE
@@ -75807,7 +75801,7 @@ avi
 azK
 aAP
 aBZ
-swt
+avi
 aDP
 aEX
 aFO

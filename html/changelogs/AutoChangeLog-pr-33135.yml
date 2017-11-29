@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - spellcheck: "The techweb node for mech LMGs no longer claims to be for mech tasers."
