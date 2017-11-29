@@ -685,9 +685,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
  //Called BEFORE the object is ground up - use this to change grind results based on conditions
  //Use "return -1" to prevent the grinding from occurring
-/obj/item/proc/on_grind(obj/machinery/reagentgrinder/R) //Note that it isn't necessary to include the argument if you don't mess with the reagent grinder at all
+/obj/item/proc/on_grind()
 
-/obj/item/proc/on_juice(obj/machinery/reagentgrinder/R)
+/obj/item/proc/on_juice()
 
 /obj/item/proc/set_force_string()
 	switch(force)
