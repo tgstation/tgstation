@@ -231,7 +231,7 @@ doesn't have toxins access.
 	if(t_disk)
 		l += "<hr><a href='?src=[REF(src)];switch_screen=[RDSCREEN_TECHDISK]'>Tech Disk</a>"
 	if(linked_destroy)
-		l += "<hr><a href='?src=[REF(src)];switch_screen=[RDSCREEN_DECONSTRUCT]'>Deconstructive Analyzer</a>"
+		l += "<hr><a href='?src=[REF(src)];switch_screen=[RDSCREEN_DECONSTRUCT]'>Destructive Analyzer</a>"
 	if(linked_lathe)
 		l += "<hr><a href='?src=[REF(src)];switch_screen=[RDSCREEN_PROTOLATHE]'>Protolathe</a>"
 	if(linked_imprinter)
@@ -529,25 +529,64 @@ doesn't have toxins access.
 	RDSCREEN_UI_DECONSTRUCT_CHECK
 	var/list/l = list()
 	if(!linked_destroy.loaded_item)
-		l += "<div class='statusDisplay'>No Item Loaded. Standing-by...</div>"
+		l += "<div class='statusDisplay'>No item loaded. Standing-by...</div>"
 	else
-		l += "<div class='statusDisplay'><h3>Deconstruction Menu</h3>"
-		l += "<A href='?src=[REF(src)];eject_item=1'>Eject Item</A>"
-		l += "Name: [linked_destroy.loaded_item.name]"
-		l += "Select a node to boost by deconstructing this item."
-		l += "This item is able to boost:"
-		var/list/listin = techweb_item_boost_check(linked_destroy.loaded_item)
-		for(var/node_id in listin)
-			var/datum/techweb_node/N = get_techweb_node_by_id(node_id)
-			var/worth = listin[N.id]
-			if(!stored_research.researched_nodes[N.id] && !stored_research.boosted_nodes[N.id])
-				l += "<A href='?src=[REF(src)];deconstruct=[N.id]'>[N.display_name]: [worth] points</A>"
-			else
-				l += "<span class='linkOff>[N.display_name]: [worth] points</span>"
+		l += "<div class='statusDisplay'>[RDSCREEN_NOBREAK]"
+		l += "<table><tr><td>[icon2html(linked_destroy.loaded_item, usr)]</td><td><b>[linked_destroy.loaded_item.name]</b> <A href='?src=[REF(src)];eject_item=1'>Eject</A></td></tr></table>[RDSCREEN_NOBREAK]"
+		l += "Select a node to boost by deconstructing this item. This item can boost:"
+
+		var/anything = FALSE
+		var/list/boostable_nodes = techweb_item_boost_check(linked_destroy.loaded_item)
+		for(var/id in boostable_nodes)
+			anything = TRUE
+			var/worth = boostable_nodes[id]
+			var/datum/techweb_node/N = get_techweb_node_by_id(id)
+
+			l += "<div class='statusDisplay'>[RDSCREEN_NOBREAK]"
+			if (stored_research.researched_nodes[N.id])  // already researched
+				l += "<span class='linkOff'>[N.display_name]</span>"
+				l += "This node has already been researched."
+			else if (worth == 0)  // reveal only
+				if (stored_research.hidden_nodes[N.id])
+					l += "<A href='?src=[REF(src)];deconstruct=[N.id]'>[N.display_name]</A>"
+					l += "This node will be revealed."
+				else
+					l += "<span class='linkOff'>[N.display_name]</span>"
+					l += "This node has already been revealed."
+			else  // boost by the difference
+				var/difference = min(worth, N.research_cost) - stored_research.boosted_nodes[N.id]
+				if (difference > 0)
+					l += "<A href='?src=[REF(src)];deconstruct=[N.id]'>[N.display_name]</A>"
+					l += "This node will be boosted by [difference] points."
+				else
+					l += "<span class='linkOff'>[N.display_name]</span>"
+					l += "This node has already been boosted.</span>"
+			l += "</div>[RDSCREEN_NOBREAK]"
+
+		// point deconstruction and material reclamation use the same ID to prevent accidentally missing the points
 		var/point_value = techweb_item_point_check(linked_destroy.loaded_item)
-		if(point_value && isnull(stored_research.deconstructed_items[linked_destroy.loaded_item.type]))
-			l += "<A href='?src=[REF(src)];deconstruct=[RESEARCH_MATERIAL_RECLAMATION_ID]'>Generic Point Deconstruction - [point_value] points</A>"
-		l += "<A href='?src=[REF(src)];deconstruct=[RESEARCH_MATERIAL_RECLAMATION_ID]'>Material Reclaimation Deconstruction</A>"
+		if(point_value)
+			anything = TRUE
+			l += "<div class='statusDisplay'>[RDSCREEN_NOBREAK]"
+			if (stored_research.deconstructed_items[linked_destroy.loaded_item.type])
+				l += "<span class='linkOff'>Point Deconstruction</span>"
+				l += "This item's [point_value] point\s have already been claimed."
+			else
+				l += "<A href='?src=[REF(src)];deconstruct=[RESEARCH_MATERIAL_RECLAMATION_ID]'>Point Deconstruction</A>"
+				l += "This item is worth [point_value] point\s!"
+			l += "</div>[RDSCREEN_NOBREAK]"
+
+		var/list/materials = linked_destroy.loaded_item.materials
+		if (materials.len)
+			l += "<div class='statusDisplay'><A href='?src=[REF(src)];deconstruct=[RESEARCH_MATERIAL_RECLAMATION_ID]'>Material Reclamation</A>"
+			for (var/M in materials)
+				l += "* [CallMaterialName(M)] x [materials[M]]"
+			l += "</div>[RDSCREEN_NOBREAK]"
+			anything = TRUE
+
+		if (!anything)
+			l += "Nothing!"
+
 		l += "</div>"
 	return l
 
@@ -637,7 +676,7 @@ doesn't have toxins access.
 	RDSCREEN_UI_SDESIGN_CHECK
 	var/list/l = list()
 	var/datum/design/D = selected_design
-	l += "<div>[D.icon_html(usr)] <b>[D.name]</b>"
+	l += "<div><table><tr><td>[D.icon_html(usr)]</td><td><b>[D.name]</b></td></tr></table>[RDSCREEN_NOBREAK]"
 	if(D.build_type)
 		var/lathes = list()
 		if(D.build_type & IMPRINTER)
