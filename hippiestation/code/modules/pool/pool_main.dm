@@ -84,7 +84,7 @@
 	return ..()
 
 /turf/open/pool/Initialize()
-	..()
+	. = ..()
 	watereffect = new /obj/effect/overlay/water(src)
 
 /turf/open/pool/ex_act(severity, target)
