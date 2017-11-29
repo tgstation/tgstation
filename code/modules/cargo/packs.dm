@@ -1587,7 +1587,7 @@
 					/obj/item/device/instrument/trombone,
 					/obj/item/device/instrument/recorder,
 					/obj/item/device/instrument/harmonica,
-					/obj/structure/piano)
+					/obj/structure/piano/unanchored)
 	name = "Big band instrument collection"
 	cost = 5000
 	crate_name = "Big band musical instruments collection"
