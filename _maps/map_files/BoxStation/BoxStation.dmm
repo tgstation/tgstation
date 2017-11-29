@@ -44115,7 +44115,6 @@
 /area/maintenance/aft)
 "cdM" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/mob/living/simple_animal/mouse,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cdN" = (
