@@ -7663,7 +7663,7 @@
 /obj/item/ammo_box/a357,
 /obj/item/tank/internals/plasma/full,
 /obj/item/disk/fakenucleardisk,
-/obj/item/stack/ore/diamond,
+/obj/item/ore/diamond,
 /obj/item/gun/energy/disabler,
 /turf/open/floor/plasteel/vault{
 	dir = 4

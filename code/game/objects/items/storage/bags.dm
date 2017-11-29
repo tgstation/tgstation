@@ -85,10 +85,10 @@
 	icon_state = "satchel"
 	slot_flags = SLOT_BELT | SLOT_POCKET
 	w_class = WEIGHT_CLASS_NORMAL
-	storage_slots = 8
-	max_combined_w_class = 16 //Doesn't matter what this is, so long as it's more or equal to storage_slots * ore.w_class
-	max_w_class = WEIGHT_CLASS_HUGE
-	can_hold = list(/obj/item/stack/ore)
+	storage_slots = 50
+	max_combined_w_class = 200 //Doesn't matter what this is, so long as it's more or equal to storage_slots * ore.w_class
+	max_w_class = WEIGHT_CLASS_NORMAL
+	can_hold = list(/obj/item/ore)
 	var/spam_protection = FALSE //If this is TRUE, the holder won't receive any messages when they fail to pick up ore through crossing it
 
 /obj/item/storage/bag/ore/cyborg
@@ -228,7 +228,7 @@
 	var/col_count = min(7,storage_slots) -1
 	if (adjusted_contents > 7)
 		row_num = round((adjusted_contents-1) / 7) // 7 is the maximum allowed width.
-	standard_orient_objs(row_num, col_count, numbered_contents)
+	src.standard_orient_objs(row_num, col_count, numbered_contents)
 	return
 
 

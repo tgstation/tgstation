@@ -48,12 +48,12 @@
 	point_upgrade = point_upgrade_temp
 	sheet_per_ore = sheet_per_ore_temp
 
-/obj/machinery/mineral/ore_redemption/proc/smelt_ore(obj/item/stack/ore/O)
+/obj/machinery/mineral/ore_redemption/proc/smelt_ore(obj/item/ore/O)
 
 	ore_buffer -= O
 
 	if(O && O.refined_type)
-		points += O.points * point_upgrade * O.amount
+		points += O.points * point_upgrade
 
 	GET_COMPONENT(materials, /datum/component/material_container)
 	var/material_amount = materials.get_item_material_amount(O)
@@ -61,7 +61,7 @@
 	if(!material_amount)
 		qdel(O) //no materials, incinerate it
 
-	else if(!materials.has_space(material_amount * sheet_per_ore * O.amount)) //if there is no space, eject it
+	else if(!materials.has_space(material_amount * sheet_per_ore)) //if there is no space, eject it
 		unload_mineral(O)
 
 	else
@@ -133,7 +133,7 @@
 	if(OB)
 		input = OB
 
-	for(var/obj/item/stack/ore/O in input)
+	for(var/obj/item/ore/O in input)
 		if(QDELETED(O))
 			continue
 		ore_buffer |= O

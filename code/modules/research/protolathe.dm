@@ -37,7 +37,7 @@ Note: Must be placed west/left of and R&D console to function.
 	create_reagents(0)
 	materials = AddComponent(/datum/component/material_container,
 		list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE),
-		FALSE, list(/obj/item/stack, /obj/item/stack/ore/bluespace_crystal), CALLBACK(src, .proc/is_insertion_ready))
+		FALSE, list(/obj/item/stack, /obj/item/ore/bluespace_crystal), CALLBACK(src, .proc/is_insertion_ready))
 	materials.precise_insertion = TRUE
 	return ..()
 
@@ -88,13 +88,13 @@ Note: Must be placed west/left of and R&D console to function.
 			return
 		var/lit = M.last_inserted_type
 		var/stack_name
-		if(ispath(lit, /obj/item/stack/ore/bluespace_crystal))
+		if(ispath(lit, /obj/item/ore/bluespace_crystal))
 			stack_name = "bluespace"
-			use_power(min(1000, MINERAL_MATERIAL_AMOUNT * M.last_amount_inserted / 10))
+			use_power(MINERAL_MATERIAL_AMOUNT / 10)
 		else
 			var/obj/item/stack/S = lit
 			stack_name = initial(S.name)
-			use_power(min(1000, (MINERAL_MATERIAL_AMOUNT * M.last_amount_inserted / 10)))
+			use_power(max(1000, (MINERAL_MATERIAL_AMOUNT * M.last_amount_inserted / 10)))
 		add_overlay("protolathe_[stack_name]")
 		addtimer(CALLBACK(src, /atom/proc/cut_overlay, "protolathe_[stack_name]"), 10)
 
@@ -148,6 +148,6 @@ Note: Must be placed west/left of and R&D console to function.
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has built [amount] of [path] at a protolathe")
 	for(var/i in 1 to amount)
 		var/obj/item/I = new path(get_turf(src))
-		if(!istype(I, /obj/item/stack/sheet) && !istype(I, /obj/item/stack/ore/bluespace_crystal))
+		if(!istype(I, /obj/item/stack/sheet) && !istype(I, /obj/item/ore/bluespace_crystal))
 			I.materials = matlist.Copy()
 	SSblackbox.record_feedback("nested_tally", "item_printed", amount, list("[type]", "[path]"))

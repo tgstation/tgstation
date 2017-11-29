@@ -13,7 +13,7 @@
 	var/environment_type = "asteroid"
 	var/turf_type = /turf/open/floor/plating/asteroid //Because caves do whacky shit to revert to normal
 	var/floor_variance = 20 //probability floor has a different icon state
-	archdrops = list(/obj/item/stack/ore/glass = 5)
+	archdrops = list(/obj/item/ore/glass = 5)
 	attachment_holes = FALSE
 
 /turf/open/floor/plating/asteroid/Initialize()
@@ -41,7 +41,7 @@
 	if(istype(W, /obj/item/storage/bag/ore))
 		var/obj/item/storage/bag/ore/S = W
 		if(S.collection_mode == 1)
-			for(var/obj/item/stack/ore/O in contents)
+			for(var/obj/item/ore/O in src.contents)
 				O.attackby(W,user)
 				return
 
@@ -75,7 +75,7 @@
 	icon_state = "basalt"
 	icon_plating = "basalt"
 	environment_type = "basalt"
-	archdrops = list(/obj/item/stack/ore/glass/basalt = 5)
+	archdrops = list(/obj/item/ore/glass/basalt = 5)
 	floor_variance = 15
 
 /turf/open/floor/plating/asteroid/basalt/lava //lava underneath
@@ -214,7 +214,7 @@
 				C.produce_tunnel_from_data(rand(10, 15), dir)
 			else
 				SpawnFloor(tunnel)
-		else //if(!istype(tunnel, parent)) // We hit space/normal/wall, stop our tunnel.
+		else //if(!istype(tunnel, src.parent)) // We hit space/normal/wall, stop our tunnel.
 			break
 
 		// Chance to change our direction left or right.
