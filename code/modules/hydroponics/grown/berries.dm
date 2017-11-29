@@ -113,7 +113,6 @@
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/cherry/blue)
 	reagents_add = list("nutriment" = 0.07, "sugar" = 0.07)
-	grind_results = list("cherryjelly" = 0)
 
 /obj/item/reagent_containers/food/snacks/grown/cherries
 	seed = /obj/item/seeds/cherry
@@ -124,6 +123,7 @@
 	filling_color = "#FF0000"
 	bitesize_mod = 2
 	foodtype = FRUIT
+	grind_results = list("cherryjelly" = 0)
 
 // Blue Cherries
 /obj/item/seeds/cherry/blue

@@ -25,7 +25,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/smoketime = 5
 	w_class = WEIGHT_CLASS_TINY
 	heat = 1000
-	grind_results = list("phosphorous" = 2)
+	grind_results = list("phosphorus" = 2)
 
 /obj/item/match/process()
 	smoketime--

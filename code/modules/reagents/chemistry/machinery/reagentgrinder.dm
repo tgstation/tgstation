@@ -226,10 +226,11 @@
 
 	//Snacks
 	for(var/obj/item/i in holdingitems)
-		var/obj/item/I = i
 		if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break
-		juice_item(I)
+		var/obj/item/I = i
+		if(I.juice_results)
+			juice_item(I)
 		/*if(istype(I, /obj/item/reagent_containers/food/snacks))
 			var/obj/item/reagent_containers/food/snacks/O = I
 			if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
@@ -285,7 +286,9 @@
 	for(var/i in holdingitems)
 		if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break
-		grind_item(i)
+		var/obj/item/I = i
+		if(I.grind_results)
+			grind_item(i)
 		/*
 		if(istype(I, /obj/item/reagent_containers/food/snacks))
 			var/obj/item/reagent_containers/food/snacks/O = I
@@ -369,7 +372,7 @@
 		return
 	beaker.reagents.add_reagent_list(I.grind_results)
 	if(I.reagents)
-		I.reagents.trans_to(beaker)
+		I.reagents.trans_to(beaker, I.reagents.total_volume)
 	remove_object(I)
 
 /obj/machinery/reagentgrinder/proc/mix(mob/user)
