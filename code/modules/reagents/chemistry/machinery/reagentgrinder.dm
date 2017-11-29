@@ -246,7 +246,7 @@
 			remove_object(O)*/
 
 /obj/machinery/reagentgrinder/proc/juice_item(obj/item/I) //Juicing results can be found in respective object definitions
-	if(I.on_grind(src) == -1)
+	if(I.on_juice(src) == -1)
 		to_chat(usr, "<span class='danger'>[src] shorts out as it tries to juice up [I], and transfers it back to storage.</span>")
 		return
 	beaker.reagents.add_reagent_list(I.juice_results)
