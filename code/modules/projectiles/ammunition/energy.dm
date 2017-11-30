@@ -33,8 +33,10 @@
 /obj/item/ammo_casing/energy/lasergun/old
 	projectile_type = /obj/item/projectile/beam/laser
 	e_cost = 200
-	select_name = "kill"
 
+/obj/item/ammo_casing/energy/laser/cyborg
+	e_cost = 350
+	
 /obj/item/ammo_casing/energy/laser/hos
 	e_cost = 100
 
@@ -141,6 +143,9 @@
 	select_name  = "disable"
 	e_cost = 50
 	fire_sound = 'sound/weapons/taser2.ogg'
+
+/obj/item/ammo_casing/energy/disabler/cyborg
+	e_cost = 500
 
 /obj/item/ammo_casing/energy/plasma
 	projectile_type = /obj/item/projectile/plasma
