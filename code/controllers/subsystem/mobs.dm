@@ -39,7 +39,7 @@ SUBSYSTEM_DEF(mobs)
 				log_game("Z-TRACKING: [L] has somehow ended up in Z-level [L.z] despite being registered in Z-level [L.registered_z].")
 				L.update_z(L.z)
 			else if (!L.client && L.registered_z)
-				message_admins("[L] [ADMIN_FLW(L)] has a Z-registration despite not having a client.")
+				// message_admins("[L] [ADMIN_FLW(L)] has a Z-registration despite not having a client.") removed for spam
 				log_game("Z-TRACKING: [L] of type [L.type] has a Z-registration despite not having a client.")
 				L.update_z(null)
 		if (MC_TICK_CHECK)
