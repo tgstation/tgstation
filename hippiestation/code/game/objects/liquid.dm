@@ -1,4 +1,5 @@
 #define LIQUID_TICKS_UNTIL_THROTTLE 50
+#define LIQUID_TICKS_UNTIL_WAKE_UP 200 //failsafe to make sure sleeping liquids aren't failing to distribute depth
 #define REAGENT_TO_DEPTH 2//one 'depth' per 2u
 #define MAX_INITIAL_DEPTH 25
 #define LERP(a, b, amount) (amount ? (a + (b - a) * amount) : (a + (b - a) * 0.5))
@@ -34,20 +35,34 @@
 				INVOKE_ASYNC(L, /obj/effect/liquid.proc/equilibrate)//async to make it more natural
 				total_activity += L.cached_activity
 				average_viscosity += L.viscosity
+			if(L.blocked && L.cached_activity == 0 || L.depth <= 1)//we could have a situation where a liquid of high depth is trapped by dense atoms so it's better to have this affect liquids of any depth that aren't doing anything
+				L.active = FALSE
+
 			L.cached_activity = 0
 			var/turf/T = get_turf(L)
-			if(T)
+			if(T && L.is_immersing)
+				var/check = 0
 				for(var/obj/O in T.contents)
 					L.immerse_obj(O)
+					if(O != src)
+						check++
 				for(var/mob/M in T.contents)
 					L.immerse_mob(M)
+					check++
+				if(!check)
+					L.is_immersing = FALSE
 
 		if(counter >= LIQUID_TICKS_UNTIL_THROTTLE)
 			if(total_activity <= 4)
-				throttle = 20
+				throttle = 10
 			else
 				throttle = 0
 			total_activity = 0
+		if(counter >= LIQUID_TICKS_UNTIL_WAKE_UP)
+			for(var/I in liquids)
+				var/obj/effect/liquid/L = I
+				L.active = TRUE
+				L.blocked = FALSE
 			counter = 0
 		if(average_viscosity && LAZYLEN(liquids))//fucking division by zero shit
 			average_viscosity = max(average_viscosity / LAZYLEN(liquids), 0.1)
@@ -70,12 +85,19 @@
 	var/is_static = FALSE//a static liquid will never lose volume and will only add to other liquids, good for permanent liquid sources
 	var/datum/liquid_pool/pool //a pool is a group of interconnected liquid tiles that process together, this is used for organisation and optimisation
 	var/cached_activity = 0//this is used to judge the activity of a pool, if it is 0 or close to 0 the processing for a pool will be throttled or stopped to save performance
+	var/is_immersing = FALSE //do we a share a tile with a mob or obj? reduces proc calls
+	var/active = TRUE//if it isn't doing much we wait for something to change
+	var/blocked = FALSE
 
 
 /obj/effect/liquid/Initialize()
 	. = ..()
 	create_reagents(1000)
 	addtimer(CALLBACK(src, .proc/get_pool), 0)
+	var/turf/T = get_turf(src)
+	var/atom/movable/AM = locate() in T//since crossed doesn't work if the liquid is the one doing the 'moving'
+	if(AM)
+		is_immersing = TRUE
 
 
 /obj/effect/liquid/proc/get_pool()
@@ -90,6 +112,9 @@
 
 
 /obj/effect/liquid/proc/equilibrate()
+	if(!active)
+		return
+
 	var/turf/OT = get_turf(src)
 	if(!OT)
 		return//this is stuck here to HUGELY reduce the amount of unneeded immersed calls
@@ -107,53 +132,70 @@
 	if(depth < 2)
 		return
 	var/list/cached_turfs = OT.GetAtmosAdjacentTurfs()
+	var/cached_turfs_len = LAZYLEN(cached_turfs)
+	if(!cached_turfs_len)
+		blocked = TRUE
+		return
+	var/block_counter = 0
 
-	for(var/I in 1 to 4)
-		if(LAZYLEN(cached_turfs) > 0)
-			var/turf/T = pick(cached_turfs)
-			LAZYREMOVE(cached_turfs, T)
-			var/obj/effect/liquid/LT = locate() in T
-			if(depth + OT.elevation < T.elevation)
-				continue
-			if(LT && depth > 1)
-				if(LT != src && LT.depth < depth && !LT.is_static && (LT.depth + T.elevation) <= (depth + OT.elevation) && reagents)
-					LT.depth++
-					if(!is_static)
-						depth--
-					if(reagents)
-						reagents.trans_to(LT, REAGENT_TO_DEPTH)
-					LT.update_depth()
-					update_depth()
-					for(var/obj/O in T)
-						if(prob(50) && !O.anchored && !O.pulledby && O != src)
-							step_to(O, T)
+	for(var/I in 1 to cached_turfs_len)
+		var/turf/T = pick(cached_turfs)
+		LAZYREMOVE(cached_turfs, T)
+		if(!T)
+			return
+		var/obj/effect/liquid/LT = locate() in T
+		if(depth + OT.elevation < T.elevation)
+			continue
+		if(LT && depth > 1)
+			if(LT == src || LT.depth >= depth || LT.is_static || (LT.depth + T.elevation) >= (depth + OT.elevation) || !reagents)
+				block_counter++
 				continue
 
-			if(depth < 2)
-				return
-
-			var/obj/effect/liquid/LN = new(T)
-			LN.is_static = is_static
-			LN.depth++
+			LT.depth++
 			if(!is_static)
 				depth--
-			LN.pool = pool
-			LAZYADD(pool.liquids, LN)
 			if(reagents)
-				reagents.trans_to(LN, REAGENT_TO_DEPTH)
-			LN.update_depth()
+				reagents.trans_to(LT, REAGENT_TO_DEPTH)
+			LT.update_depth()
 			update_depth()
 			cached_activity++
-			for(var/atom/movable/AM in OT)
-				if(prob(50) && !AM.anchored && !AM.pulledby && AM != src)
-					step_to(AM, T)
+			block_counter--
+			for(var/obj/O in T)
+				if(prob(50) && !O.anchored && !O.pulledby && O != src)
+					step_to(O, T)
+			continue
 
+		if(depth <= 1)
+			return
+
+		var/obj/effect/liquid/LN = new(T)
+		LN.is_static = is_static
+		LN.depth++
+		if(!is_static)
+			depth--
+		LN.pool = pool
+		LAZYADD(pool.liquids, LN)
+		if(reagents)
+			reagents.trans_to(LN, REAGENT_TO_DEPTH)
+		LN.update_depth()
+		update_depth()
+		cached_activity++
+		block_counter--
+		for(var/atom/movable/AM in OT)
+			if(prob(50) && !AM.anchored && !AM.pulledby && AM != src)
+				step_to(AM, T)
+
+	if(block_counter >= cached_turfs_len)//all adjacent turfs are flagged as blocked
+		blocked = TRUE
+	else
+		blocked = FALSE
 
 /obj/effect/liquid/proc/update_depth()
 	alpha = LERP(100, 240, depth / 15)
 	layer = LERP(LOW_OBJ_LAYER, FLY_LAYER, depth / 15)
 
-
+	if(!active && depth <= 1)//something called this but we either gained no depth or lost depth so do not continue
+		return
 	if(is_static)
 		return
 	if(!reagents)
@@ -163,7 +205,7 @@
 		if(depth <= 0 || reagents.total_volume <= 0)
 			qdel(src)
 			return
-
+		active = TRUE//we must've gained depth!
 		viscosity = 0
 		var/reag_amount = LAZYLEN(reagents.reagent_list)
 		for(var/I in reagents.reagent_list)
@@ -217,7 +259,18 @@
 			reagents.reaction(O, TOUCH, 0.05 * depth)
 
 
+/obj/effect/liquid/proc/activate()
+	active = TRUE
+	blocked = FALSE
+	for(var/obj/effect/liquid/L in orange(1, src))
+		if(L.depth > 1 && L != src)
+			L.active = TRUE
+
+
 /obj/effect/liquid/Crossed(atom/movable/AM, turf/old)
+	is_immersing = TRUE
+	active = TRUE//a moving atom can trigger a wake up as well
+	blocked = FALSE
 	if(iscarbon(AM) && old)
 		var/mob/living/carbon/C = AM
 		if(C.movement_type & FLYING)
