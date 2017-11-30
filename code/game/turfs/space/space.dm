@@ -135,6 +135,7 @@
 		A.z = destination_z
 
 		if(isliving(A))
+			var/mob/living/L = A
 			if(L.pulling)
 				var/turf/T = get_step(L.loc,turn(A.dir, 180))
 				L.pulling.loc = T

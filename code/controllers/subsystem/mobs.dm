@@ -38,7 +38,6 @@ SUBSYSTEM_DEF(mobs)
 			if (L.client && L.registered_z != T.z)
 				L.update_z(T.z)
 			else if (!L.client && L.registered_z)
-				log_game("Z-TRACKING: [L] of type [L.type] has a Z-registration despite not having a client.")
 				L.update_z(null)
 		if (MC_TICK_CHECK)
 			return
