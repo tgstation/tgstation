@@ -114,9 +114,6 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			for(var/turf/open/floor in orange(1, beacon))
 				flooring_near_beacon += floor
 			holder_obj.forceMove(pick(flooring_near_beacon))
-			if (isliving(A)) // Best do this now and not after sleeps
-				var/mob/living/carbon/human/L = A
-				L.update_z(holder_obj.z)
 			animate(holder_obj, pixel_z = 10, time = 50)
 			sleep(50)
 			animate(holder_obj, pixel_z = 15, time = 10)

@@ -1021,22 +1021,14 @@
 			if (new_z)
 				SSmobs.by_zlevel[new_z] += src
 			registered_z = new_z
+		else
+			registered_z = null
 
 /mob/living/Login()
 	..()
-	update_z(src.z)
+	var/turf/T = get_turf(src)
+	update_z(T.z)
 
 /mob/living/Logout()
 	..()
 	update_z(null)
-
-/mob/living/forceMove(atom/destination)
-	var/old_z = z
-	. = ..()
-	if (z != old_z)
-		update_z(z)
-
-/mob/living/onShuttleMove(turf/newT, turf/oldT, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)
-	. = ..()
-	if (z != registered_z)
-		update_z(z)
