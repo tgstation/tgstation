@@ -443,13 +443,10 @@
 	name = "Arrivals Lounge"
 	})
 "abq" = (
-/obj/structure/disposalpipe/junction{
-	icon_state = "pipe-y";
-	dir = 2
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/disposalpipe/junction/yjunction,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry{
 	name = "Arrivals Lounge"
@@ -2556,7 +2553,6 @@
 	name = "External Airlock";
 	req_access_txt = "13"
 	},
-/obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/arrivals/north)
 "agD" = (
@@ -3142,7 +3138,6 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/arrivals/north)
 "ahR" = (
@@ -4556,6 +4551,7 @@
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/arrivals/north)
 "akS" = (
@@ -5156,6 +5152,7 @@
 	pixel_y = -24
 	},
 /obj/structure/cable/orange,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/quartermaster/office)
 "amu" = (
@@ -5173,16 +5170,11 @@
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "amw" = (
-/obj/machinery/door/poddoor{
-	id = "QMLoaddoor";
-	name = "Supply Dock Loading Door"
-	},
 /obj/machinery/conveyor{
-	dir = 2;
 	id = "QMLoad"
 	},
-/turf/open/floor/plasteel/shuttle,
-/area/shuttle/supply)
+/turf/open/floor/plating,
+/area/quartermaster/office)
 "amx" = (
 /obj/machinery/telecomms/processor/preset_two,
 /turf/open/floor/circuit/telecomms,
@@ -5454,6 +5446,7 @@
 /obj/machinery/conveyor{
 	id = "QMLoad"
 	},
+/obj/structure/plasticflaps,
 /obj/machinery/door/poddoor{
 	id = "QMLoaddoor";
 	name = "Supply Dock Loading Door"
@@ -5859,6 +5852,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/brown{
 	dir = 9
 	},
@@ -6401,6 +6395,7 @@
 /turf/open/floor/plating,
 /area/quartermaster/qm)
 "apn" = (
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/brown{
 	dir = 8
 	},
@@ -6887,6 +6882,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/brown{
 	dir = 8
 	},
@@ -7835,7 +7831,6 @@
 /obj/structure/cable/blue{
 	icon_state = "0-2"
 	},
-/obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/tcommsat/computer)
 "asS" = (
@@ -8238,6 +8233,7 @@
 	},
 /area/quartermaster/office)
 "atT" = (
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/brown/corner{
 	dir = 1
 	},
@@ -8334,7 +8330,6 @@
 /obj/structure/cable/blue{
 	icon_state = "2-8"
 	},
-/obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/arrivals/north)
 "aug" = (
@@ -8922,7 +8917,6 @@
 /obj/structure/cable/blue{
 	icon_state = "1-2"
 	},
-/obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/arrivals/north)
 "avu" = (
@@ -9438,7 +9432,6 @@
 	name = "Maintenance Access";
 	req_one_access_txt = "12; 31; 61"
 	},
-/obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/arrivals/north)
 "awA" = (
@@ -9748,6 +9741,7 @@
 /area/quartermaster/office)
 "axn" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "axo" = (
@@ -9821,7 +9815,6 @@
 /obj/structure/cable/blue{
 	icon_state = "1-4"
 	},
-/obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
@@ -10252,6 +10245,9 @@
 /area/quartermaster/office)
 "ayl" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "aym" = (
@@ -10260,6 +10256,9 @@
 	},
 /obj/machinery/conveyor_switch/oneway{
 	id = "packageSort2"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
@@ -10275,6 +10274,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
@@ -10306,6 +10308,9 @@
 	pixel_x = 2;
 	pixel_y = -3
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "ayp" = (
@@ -10314,6 +10319,9 @@
 /obj/item/storage/box,
 /obj/item/storage/box,
 /obj/item/storage/box,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "ayq" = (
@@ -10321,10 +10329,16 @@
 	dir = 4;
 	pixel_x = -22
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/quartermaster/office)
 "ayr" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
@@ -10334,14 +10348,23 @@
 	dir = 9
 	},
 /obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/quartermaster/office)
 "ayt" = (
 /obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/quartermaster/office)
 "ayu" = (
 /obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
@@ -10357,6 +10380,9 @@
 "ayw" = (
 /obj/structure/cable{
 	icon_state = "2-4"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard{
@@ -10838,8 +10864,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/disposalpipe/junction{
-	icon_state = "pipe-j2";
+/obj/structure/disposalpipe/junction/flip{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -11789,8 +11814,7 @@
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
 	dir = 4
 	},
-/obj/structure/disposalpipe/junction{
-	icon_state = "pipe-j2";
+/obj/structure/disposalpipe/junction/flip{
 	dir = 4
 	},
 /turf/open/floor/plasteel/brown/corner{
@@ -12732,7 +12756,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/green/side,
+/obj/structure/cable/green{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel/neutral/corner,
 /area/hallway/secondary/construction{
 	name = "Fore Central Hallway"
 	})
@@ -12745,9 +12772,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = -29
 	},
-/turf/open/floor/plasteel/green/corner{
-	dir = 8
-	},
+/turf/open/floor/plasteel/neutral/corner,
 /area/hallway/secondary/construction{
 	name = "Fore Central Hallway"
 	})
@@ -12831,6 +12856,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/cable/green{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel/green/corner,
 /area/hallway/secondary/construction{
 	name = "Fore Central Hallway"
@@ -12840,9 +12868,10 @@
 	dir = 4
 	},
 /obj/machinery/light,
-/turf/open/floor/plasteel/green/corner{
-	dir = 8
+/obj/structure/cable/green{
+	icon_state = "4-8"
 	},
+/turf/open/floor/plasteel/neutral/corner,
 /area/hallway/secondary/construction{
 	name = "Fore Central Hallway"
 	})
@@ -12850,7 +12879,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/neutral/side,
+/obj/structure/cable/green{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/neutral/corner,
 /area/hallway/secondary/construction{
 	name = "Fore Central Hallway"
 	})
@@ -12867,6 +12899,9 @@
 "aDE" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
+	},
+/obj/structure/cable/green{
+	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/green/side,
 /area/hallway/secondary/construction{
@@ -13087,12 +13122,10 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "aEh" = (
-/obj/machinery/door/airlock/glass{
-	name = "Fore Starboard Transit"
-	},
-/obj/structure/barricade/wooden,
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
-/area/maintenance/aft)
+/area/hydroponics/garden)
 "aEi" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -13119,11 +13152,11 @@
 	name = "Fore Central Hallway"
 	})
 "aEm" = (
-/obj/machinery/hydroponics/constructable,
-/turf/open/floor/plasteel/green,
-/area/hallway/secondary/construction{
-	name = "Fore Central Hallway"
-	})
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/turf/closed/wall,
+/area/maintenance/aft)
 "aEn" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Fore Interior Maintenance Access";
@@ -13136,10 +13169,12 @@
 /area/maintenance/aft)
 "aEo" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable/green{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
-/area/hallway/secondary/construction{
-	name = "Fore Central Hallway"
-	})
+/area/hydroponics/garden)
 "aEp" = (
 /obj/structure/table/glass,
 /obj/item/device/gps,
@@ -13156,15 +13191,14 @@
 "aEr" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/airlock/glass{
-	desc = "Supplies available to the public to help with cultivating the open hydro trays in the hallways.";
-	name = "Public Garden Storage"
+	name = "Garden"
 	},
-/turf/open/floor/plasteel/green/side{
-	dir = 1
+/obj/structure/cable/green{
+	icon_state = "1-2"
 	},
-/area/hallway/secondary/construction{
-	name = "Fore Central Hallway"
-	})
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel/green,
+/area/hydroponics/garden)
 "aEs" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/status_display{
@@ -13284,9 +13318,7 @@
 	location = "Hydroponics"
 	},
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel{
-	dir = 4
-	},
+/turf/open/floor/plating,
 /area/hydroponics)
 "aEE" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -13647,51 +13679,67 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "aFs" = (
-/obj/structure/reagent_dispensers/water_cooler,
-/turf/open/floor/plating,
-/area/maintenance/aft)
-"aFt" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel,
-/area/hallway/secondary/construction{
-	name = "Fore Central Hallway"
-	})
-"aFu" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/turf/open/floor/plating,
-/area/maintenance/aft)
-"aFv" = (
 /obj/structure/table/glass,
 /obj/item/storage/bag/plants/portaseeder,
 /obj/item/device/plant_analyzer,
-/turf/open/floor/plasteel,
-/area/hallway/secondary/construction{
-	name = "Fore Central Hallway"
-	})
+/turf/open/floor/plasteel/green/side{
+	dir = 1
+	},
+/area/hydroponics/garden)
+"aFt" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable/green{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/green/side{
+	dir = 1
+	},
+/area/hydroponics/garden)
+"aFu" = (
+/obj/structure/cable{
+	tag = "icon-2-8";
+	icon_state = "2-8"
+	},
+/turf/open/floor/plasteel/green/side{
+	dir = 8
+	},
+/area/hydroponics/garden)
+"aFv" = (
+/obj/structure/table/glass,
+/obj/item/reagent_containers/spray/plantbgone,
+/obj/item/reagent_containers/glass/bottle/nutrient/rh{
+	pixel_x = 2;
+	pixel_y = 1
+	},
+/obj/item/reagent_containers/glass/bottle/nutrient/ez,
+/obj/item/reagent_containers/spray/pestspray,
+/turf/open/floor/plasteel/green/side{
+	dir = 1
+	},
+/area/hydroponics/garden)
 "aFw" = (
-/turf/open/floor/plasteel,
-/area/hallway/secondary/construction{
-	name = "Fore Central Hallway"
-	})
+/turf/open/floor/plasteel/green/side{
+	dir = 1
+	},
+/area/hydroponics/garden)
 "aFx" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/construction{
-	name = "Fore Central Hallway"
-	})
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/green/side{
+	dir = 5
+	},
+/area/hydroponics/garden)
 "aFy" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/closed/wall,
-/area/hallway/secondary/construction{
-	name = "Fore Central Hallway"
-	})
+/area/hydroponics/garden)
 "aFz" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/firealarm{
@@ -13934,11 +13982,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/disposalpipe/junction{
-	dir = 1;
-	icon_state = "pipe-j2"
-	},
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/obj/structure/disposalpipe/junction/flip{
+	dir = 1
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
@@ -14003,31 +14050,33 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "aGu" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 27
-	},
-/turf/open/floor/plating,
-/area/maintenance/aft)
+/turf/open/floor/plasteel,
+/area/hydroponics/garden)
 "aGv" = (
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -22
+	},
 /obj/machinery/light{
 	dir = 8
 	},
 /obj/structure/cable{
-	icon_state = "1-2"
+	icon_state = "1-2";
+	pixel_y = 0
 	},
-/turf/open/floor/plating,
-/area/maintenance/aft)
+/turf/open/floor/plasteel/green/side{
+	dir = 8
+	},
+/area/hydroponics/garden)
 "aGw" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
+/obj/structure/cable/green{
+	icon_state = "1-4"
+	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/construction{
-	name = "Fore Central Hallway"
-	})
+/area/hydroponics/garden)
 "aGx" = (
 /obj/structure/chair{
 	dir = 8
@@ -14061,6 +14110,9 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/structure/cable/green{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/bar)
 "aGC" = (
@@ -14072,6 +14124,9 @@
 /obj/item/device/multitool,
 /obj/structure/cable/green{
 	icon_state = "2-4"
+	},
+/obj/structure/cable/green{
+	icon_state = "2-8"
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/bar)
@@ -14303,16 +14358,19 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/construction{
-	name = "Fore Central Hallway"
-	})
+/turf/open/floor/plasteel/green/side{
+	dir = 4
+	},
+/area/hydroponics/garden)
 "aHj" = (
 /obj/structure/cable{
-	icon_state = "1-2"
+	icon_state = "1-2";
+	pixel_y = 0
 	},
-/turf/open/floor/plating,
-/area/maintenance/aft)
+/turf/open/floor/plasteel/green/side{
+	dir = 10
+	},
+/area/hydroponics/garden)
 "aHk" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -14327,23 +14385,17 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/construction{
-	name = "Fore Central Hallway"
-	})
+/area/hydroponics/garden)
 "aHs" = (
-/obj/machinery/door/airlock/glass{
-	desc = "Supplies available to the public to help with cultivating the open hydro trays in the hallways.";
-	name = "Public Garden Storage"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/green/side{
-	dir = 4
+/obj/machinery/door/airlock/glass{
+	name = "Garden"
 	},
-/area/hallway/secondary/construction{
-	name = "Fore Central Hallway"
-	})
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel/green,
+/area/hydroponics/garden)
 "aHt" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -14682,29 +14734,16 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "aIl" = (
-/obj/structure/table/glass,
-/obj/item/reagent_containers/spray/plantbgone,
-/obj/item/reagent_containers/glass/bottle/nutrient/rh{
-	pixel_x = 2;
-	pixel_y = 1
-	},
-/obj/item/reagent_containers/glass/bottle/nutrient/ez,
-/obj/item/reagent_containers/spray/pestspray,
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/construction{
-	name = "Fore Central Hallway"
-	})
+/turf/open/floor/plasteel/green/side,
+/area/hydroponics/garden)
 "aIm" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/construction{
-	name = "Fore Central Hallway"
-	})
+/turf/open/floor/plasteel/green/side{
+	dir = 4
+	},
+/area/hydroponics/garden)
 "aIn" = (
 /obj/structure/cable,
 /obj/machinery/power/terminal{
@@ -14733,7 +14772,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel,
+/turf/open/floor/plating,
 /area/crew_quarters/kitchen)
 "aIr" = (
 /obj/structure/cable/green{
@@ -14881,24 +14920,23 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/mine/explored)
 "aIM" = (
-/obj/structure/table/glass,
-/obj/item/hatchet,
-/obj/item/reagent_containers/glass/bucket,
-/obj/item/reagent_containers/glass/bucket,
-/turf/open/floor/plasteel,
-/area/hallway/secondary/construction{
-	name = "Fore Central Hallway"
-	})
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/obj/machinery/hydroponics/soil,
+/turf/open/floor/grass,
+/area/hydroponics/garden)
 "aIN" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
 	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/construction{
-	name = "Fore Central Hallway"
-	})
+/turf/open/floor/plasteel/green/side{
+	dir = 10
+	},
+/area/hydroponics/garden)
 "aIO" = (
 /obj/structure/closet/crate/hydroponics,
 /obj/item/seeds/carrot,
@@ -14914,10 +14952,8 @@
 	name = "Station Intercom (General)";
 	pixel_y = -29
 	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/construction{
-	name = "Fore Central Hallway"
-	})
+/turf/open/floor/plasteel/green/side,
+/area/hydroponics/garden)
 "aIP" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/sink{
@@ -14926,10 +14962,10 @@
 	pixel_x = 11;
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/construction{
-	name = "Fore Central Hallway"
-	})
+/turf/open/floor/plasteel/green/side{
+	dir = 6
+	},
+/area/hydroponics/garden)
 "aIQ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/light{
@@ -14963,7 +14999,7 @@
 	},
 /obj/structure/window/reinforced,
 /obj/effect/turf_decal/loading_area,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
 "aIU" = (
 /obj/machinery/airalarm{
@@ -15276,11 +15312,10 @@
 /turf/open/floor/wood,
 /area/lawoffice)
 "aJB" = (
-/obj/structure/disposalpipe/segment{
-	dir = 10;
-	icon_state = "pipe"
-	},
 /obj/machinery/photocopier,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/lawoffice)
 "aJC" = (
@@ -15624,9 +15659,6 @@
 	name = "Law Office";
 	req_access_txt = "38"
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -15634,13 +15666,10 @@
 /area/lawoffice)
 "aKv" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
-/obj/structure/disposalpipe/junction{
-	dir = 1;
-	icon_state = "pipe-j2"
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8
 	},
@@ -17534,7 +17563,7 @@
 	c_tag = "Port Hallway Fore";
 	dir = 8
 	},
-/turf/open/floor/plasteel/green/corner,
+/turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/port{
 	name = "Port Hallway"
 	})
@@ -18183,9 +18212,10 @@
 	})
 "aQA" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/green/side{
-	dir = 4
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 27
 	},
+/turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/port{
 	name = "Port Hallway"
 	})
@@ -18463,6 +18493,7 @@
 /obj/item/device/radio/intercom{
 	pixel_y = 25
 	},
+/obj/machinery/light/small,
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/pod_3)
 "aRi" = (
@@ -19155,9 +19186,7 @@
 	name = "Station Intercom (General)";
 	pixel_x = 29
 	},
-/turf/open/floor/plasteel/green/corner{
-	dir = 4
-	},
+/turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/port{
 	name = "Port Hallway"
 	})
@@ -19310,6 +19339,7 @@
 	name = "Chief Engineer's Office";
 	req_access_txt = "56"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/yellow{
 	dir = 4
 	},
@@ -22665,6 +22695,10 @@
 /area/security/brig)
 "baG" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/obj/structure/disposalpipe/junction{
+	dir = 1;
+	icon_state = "pipe-j2"
+	},
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
@@ -25353,11 +25387,8 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "bgk" = (
-/obj/structure/disposalpipe/junction{
-	icon_state = "pipe-j2";
-	dir = 2
-	},
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/obj/structure/disposalpipe/junction/flip,
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard{
 	name = "Starboard Hallway"
@@ -32074,7 +32105,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plasteel/green/corner{
+/turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
 /area/hallway/primary/central{
@@ -54182,6 +54213,389 @@
 /area/hallway/primary/starboard{
 	name = "Starboard Hallway"
 	})
+"cxC" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/item/device/radio/intercom{
+	pixel_x = 25
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/pod_1)
+"cxD" = (
+/turf/closed/wall/r_wall,
+/area/hallway/secondary/entry{
+	name = "Arrivals Lounge"
+	})
+"cxE" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/item/device/radio/intercom{
+	pixel_x = 25
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/pod_2)
+"cxF" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10;
+	icon_state = "pipe"
+	},
+/turf/closed/wall,
+/area/maintenance/disposal)
+"cxG" = (
+/obj/structure/disposalpipe/segment,
+/turf/closed/wall,
+/area/maintenance/disposal)
+"cxH" = (
+/obj/structure/disposalpipe/segment,
+/turf/closed/wall,
+/area/maintenance/disposal)
+"cxI" = (
+/obj/structure/disposalpipe/segment,
+/turf/closed/wall,
+/area/maintenance/disposal)
+"cxJ" = (
+/obj/structure/disposalpipe/segment,
+/turf/closed/wall,
+/area/maintenance/disposal)
+"cxK" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/closed/wall,
+/area/maintenance/arrivals/north)
+"cxL" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/closed/wall,
+/area/maintenance/arrivals/north)
+"cxM" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/turf/open/floor/plating,
+/area/maintenance/arrivals/north)
+"cxN" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/arrivals/north)
+"cxO" = (
+/obj/structure/cable/orange{
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 10;
+	icon_state = "pipe"
+	},
+/turf/open/floor/plating,
+/area/maintenance/arrivals/north)
+"cxP" = (
+/obj/machinery/conveyor{
+	dir = 2;
+	id = "QMLoad"
+	},
+/obj/structure/plasticflaps,
+/obj/machinery/door/poddoor{
+	id = "QMLoaddoor";
+	name = "Supply Dock Loading Door"
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/supply)
+"cxQ" = (
+/obj/structure/cable/orange{
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/maintenance/arrivals/north)
+"cxR" = (
+/obj/machinery/conveyor{
+	id = "QMLoad"
+	},
+/turf/open/floor/plating,
+/area/quartermaster/office)
+"cxS" = (
+/turf/open/floor/plating,
+/area/quartermaster/office)
+"cxT" = (
+/turf/open/floor/plating,
+/area/quartermaster/office)
+"cxU" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plasteel,
+/area/quartermaster/office)
+"cxV" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plasteel,
+/area/quartermaster/office)
+"cxW" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/quartermaster/office)
+"cxX" = (
+/obj/structure/closet/crate,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/quartermaster/office)
+"cxY" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 8
+	},
+/area/hallway/primary/starboard{
+	name = "Starboard Hallway"
+	})
+"cxZ" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable/green{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/neutral/corner,
+/area/hallway/secondary/construction{
+	name = "Fore Central Hallway"
+	})
+"cya" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable/green{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/green/side,
+/area/hallway/secondary/construction{
+	name = "Fore Central Hallway"
+	})
+"cyb" = (
+/turf/closed/wall,
+/area/hydroponics/garden)
+"cyc" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plating,
+/area/hydroponics/garden)
+"cyd" = (
+/turf/closed/wall,
+/area/hydroponics/garden)
+"cye" = (
+/turf/closed/wall,
+/area/hydroponics/garden)
+"cyf" = (
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Garden APC";
+	areastring = "/area/hydroponics/garden";
+	pixel_x = 27;
+	pixel_y = 2
+	},
+/obj/structure/cable/green,
+/turf/open/floor/plating,
+/area/hydroponics/garden)
+"cyg" = (
+/turf/closed/wall,
+/area/hydroponics/garden)
+"cyh" = (
+/obj/machinery/biogenerator,
+/turf/open/floor/plasteel/green/side{
+	dir = 9
+	},
+/area/hydroponics/garden)
+"cyi" = (
+/obj/machinery/seed_extractor,
+/turf/open/floor/plasteel/green/side{
+	dir = 1
+	},
+/area/hydroponics/garden)
+"cyj" = (
+/obj/structure/table/glass,
+/obj/item/hatchet,
+/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/bucket,
+/turf/open/floor/plasteel/green/side{
+	dir = 1
+	},
+/area/hydroponics/garden)
+"cyk" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Garden Maintenance";
+	req_access_txt = "12"
+	},
+/obj/structure/cable{
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/open/floor/plating,
+/area/maintenance/aft)
+"cyl" = (
+/turf/open/floor/plasteel,
+/area/hydroponics/garden)
+"cym" = (
+/obj/structure/cable/green{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/hydroponics/garden)
+"cyn" = (
+/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/cable/green{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/green/side{
+	dir = 4
+	},
+/area/hydroponics/garden)
+"cyo" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable/green{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/green/side{
+	dir = 8
+	},
+/area/hallway/primary/starboard{
+	name = "Starboard Hallway"
+	})
+"cyp" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/green{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/starboard{
+	name = "Starboard Hallway"
+	})
+"cyq" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/obj/structure/cable/green{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/neutral/corner,
+/area/hallway/primary/starboard{
+	name = "Starboard Hallway"
+	})
+"cyr" = (
+/turf/closed/wall,
+/area/hydroponics/garden)
+"cys" = (
+/turf/open/floor/plasteel/green/side,
+/area/hydroponics/garden)
+"cyt" = (
+/turf/open/floor/plasteel/green/side,
+/area/hydroponics/garden)
+"cyu" = (
+/turf/open/floor/plasteel/green/side,
+/area/hydroponics/garden)
+"cyv" = (
+/turf/open/floor/plasteel/green/corner{
+	dir = 8
+	},
+/area/hydroponics/garden)
+"cyw" = (
+/obj/machinery/hydroponics/soil,
+/obj/structure/cable{
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/grass,
+/area/hydroponics/garden)
+"cyx" = (
+/obj/machinery/hydroponics/soil,
+/turf/open/floor/grass,
+/area/hydroponics/garden)
+"cyy" = (
+/obj/machinery/hydroponics/soil,
+/turf/open/floor/grass,
+/area/hydroponics/garden)
+"cyz" = (
+/obj/machinery/hydroponics/soil,
+/turf/open/floor/grass,
+/area/hydroponics/garden)
+"cyA" = (
+/turf/closed/wall,
+/area/hydroponics/garden)
+"cyB" = (
+/obj/structure/grille,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "law";
+	layer = 2.9
+	},
+/obj/structure/window/reinforced/fulltile,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/lawoffice)
+"cyC" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/obj/structure/disposalpipe/junction/flip{
+	dir = 1
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 8
+	},
+/area/hallway/primary/port{
+	name = "Port Hallway"
+	})
+"cyD" = (
+/obj/machinery/deepfryer,
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
+"cyE" = (
+/obj/machinery/door/airlock/external{
+	desc = "Leads to one of the station's small, FTL-capable lifeboats.";
+	name = "Bridge Escape Pod";
+	req_access = null;
+	req_access_txt = "0"
+	},
+/turf/open/floor/plating,
+/area/bridge)
+"cyF" = (
+/obj/machinery/door/airlock/external{
+	desc = "Leads to one of the station's small, FTL-capable lifeboats.";
+	name = "Engineering Escape Pod";
+	req_access = null;
+	req_access_txt = "0"
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cyG" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/item/device/radio/intercom{
+	pixel_y = 25
+	},
+/obj/machinery/light/small,
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/pod_4)
 
 (1,1,1) = {"
 aaa
@@ -86677,7 +87091,7 @@ aCl
 aId
 aIE
 aJB
-aKt
+aKs
 aKq
 aMF
 aNK
@@ -86933,7 +87347,7 @@ aGe
 aCl
 aHZ
 aIE
-aJC
+cyB
 aKu
 aJC
 aIE
@@ -87190,7 +87604,7 @@ aGf
 aHf
 aIe
 aIF
-aJD
+cyC
 aKv
 aJD
 aMG
@@ -87711,7 +88125,7 @@ aJF
 aJF
 aOX
 aQA
-aQA
+aJF
 aSK
 aJF
 aVo
@@ -87730,13 +88144,13 @@ bjZ
 aJF
 aWM
 bmC
-bny
 aQA
-aQA
-bpS
 aJF
-brn
-bqO
+aJF
+aKx
+aJF
+aWM
+aJF
 bsr
 aJF
 btN
@@ -87967,8 +88381,8 @@ aLL
 aEj
 aEj
 aEj
-aQB
-aRI
+blH
+blH
 aEj
 aEj
 aEj
@@ -87988,8 +88402,8 @@ aEj
 blH
 bmD
 aEj
-bov
-bpl
+blH
+blH
 aEj
 aHl
 bqL
@@ -88223,10 +88637,10 @@ aFk
 aFk
 aFk
 aFk
-aEj
-aEj
-aEj
-aEj
+aFk
+aFk
+aFk
+aFk
 aTX
 aFk
 aFk
@@ -88244,9 +88658,9 @@ aFk
 aFk
 blI
 bmE
-aEj
-aEj
-aEj
+aFk
+aFk
+aFk
 aEj
 aFk
 aFk
@@ -89024,9 +89438,9 @@ bqM
 aGo
 aEj
 aFk
+aFk
 aEj
-aEj
-bvG
+bvS
 bwM
 bxF
 byD
@@ -89281,9 +89695,9 @@ aHk
 aHk
 aEj
 aFk
-aEj
-buL
-bvH
+aFk
+brY
+bvF
 bwM
 bxE
 byD
@@ -89538,9 +89952,9 @@ aaj
 aMH
 aEj
 aFk
-aEj
-buL
-bvH
+aFk
+brY
+bvF
 bwO
 bxG
 byF
@@ -89795,7 +90209,7 @@ aMH
 aMH
 aEj
 aFk
-aEj
+aFk
 aEj
 bvI
 bwP
@@ -90781,9 +91195,9 @@ azh
 auY
 aBg
 aCq
-aDq
+aDx
 aEj
-aEj
+aFk
 aFk
 aEj
 aIj
@@ -91038,9 +91452,9 @@ azi
 atE
 aBh
 aCq
-aDr
-aEl
-aEj
+aDy
+aEq
+aFk
 aFk
 aEj
 aIi
@@ -91295,9 +91709,9 @@ azj
 auY
 aBg
 aCq
-aDr
-aEm
-aEj
+aDp
+aEq
+aFk
 aFk
 aEj
 awQ
@@ -91554,7 +91968,7 @@ aBi
 aCr
 aDs
 aEj
-aEj
+aFk
 aFk
 aEj
 aaf
@@ -93568,7 +93982,7 @@ aau
 aau
 aau
 aap
-aaN
+aaz
 aaS
 aaZ
 aaS
@@ -95109,8 +95523,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aak
+aaT
 aaT
 aaT
 aaT
@@ -95364,11 +95778,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aaD
 aaD
 aaD
 aaU
+aaR
 aba
 aaT
 abw
@@ -95621,11 +96035,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aaE
 aaL
-aaO
+cxC
 aaV
+abf
 aaZ
 abf
 abx
@@ -95878,11 +96292,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aaD
 aaD
 aaD
 aaU
+aaR
 abb
 abg
 aby
@@ -96136,10 +96550,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aak
+cxD
 aaP
-aaW
+aaT
 aaT
 aaT
 abz
@@ -96392,11 +96806,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aaF
 aaF
 aaF
 aaX
+aaR
 aba
 aaT
 abA
@@ -96412,12 +96826,12 @@ aeW
 afN
 agy
 ahb
-aeY
-aeY
-aeY
-aeY
+cxK
+ajX
+ajX
+ajX
 akR
-ahh
+cxM
 ahh
 amq
 ane
@@ -96649,11 +97063,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aaG
 aaM
-aaQ
+cxE
 aaY
+abh
 aaZ
 abh
 abB
@@ -96669,12 +97083,12 @@ aeX
 afO
 agz
 ahc
-aeY
+aes
 aiE
 ajl
 ajZ
 akS
-ahh
+cxN
 ahh
 ajt
 ane
@@ -96906,11 +97320,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aaF
 aaF
 aaF
 aaX
+aaR
 abc
 abg
 abC
@@ -96921,28 +97335,28 @@ acI
 acZ
 acZ
 aci
-axQ
-afN
-afN
-afN
-afN
-aeY
+cxF
+cxG
+cxH
+cxI
+cxJ
+cxL
 aiF
 ajm
 aka
 akT
-alr
-alr
+cxO
+cxQ
 amt
-anc
+aAw
 aoa
 apn
 aqw
 apn
 apn
 atT
-avh
-arK
+cxU
+cxV
 axn
 ayl
 azx
@@ -97165,8 +97579,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aak
+aaT
 aaT
 aaT
 aaT
@@ -97178,7 +97592,7 @@ aci
 aci
 aci
 aci
-aet
+aaf
 aaf
 aaf
 aaf
@@ -97201,7 +97615,7 @@ aoi
 avh
 arK
 aoi
-aqx
+aqB
 azw
 anc
 aBt
@@ -97422,7 +97836,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aak
 aak
 aak
 aaT
@@ -97435,7 +97849,7 @@ aaf
 aaf
 aaf
 aaf
-aet
+aaf
 aaf
 aaf
 aaf
@@ -97492,10 +97906,10 @@ bfY
 aXb
 bil
 bjr
-aUg
-bkV
-blQ
-bkV
+bkn
+bgj
+cyF
+bgj
 aMI
 aak
 aak
@@ -97691,10 +98105,10 @@ aaR
 aak
 aaa
 aaa
-aak
-aeu
-aak
-aak
+aaa
+aaa
+aaa
+aaa
 aaf
 aaf
 aeY
@@ -97706,7 +98120,7 @@ aeY
 aeY
 aeY
 anc
-aod
+aoi
 app
 aqz
 arI
@@ -97749,11 +98163,11 @@ beN
 bhk
 bim
 bjs
-bkn
-bkW
-blR
-bkW
-aYj
+aUg
+bkV
+blQ
+bkV
+aak
 aak
 aak
 aak
@@ -97948,10 +98362,10 @@ aaR
 aak
 aaa
 aaa
-aak
-aeu
-aak
-aak
+aaa
+aaa
+aaa
+aaa
 aak
 aak
 aax
@@ -97977,9 +98391,9 @@ azv
 anc
 aBt
 aCq
-aDA
+aDp
 aEj
-aEj
+aFk
 aGt
 aEj
 aab
@@ -98008,9 +98422,9 @@ bin
 bjt
 aUg
 bkW
-blS
+cyG
 bkW
-aYj
+aak
 aak
 aak
 aak
@@ -98019,9 +98433,9 @@ aak
 aak
 aEj
 aFk
+aFk
 aEj
-aEj
-bvX
+bvF
 bwU
 bxT
 byQ
@@ -98205,8 +98619,8 @@ aak
 aak
 aaa
 aaa
-aak
-aeu
+aaa
+aaa
 aak
 aak
 aax
@@ -98234,9 +98648,9 @@ azw
 anc
 aBv
 aCq
-aDr
-aEm
+aDp
 aEj
+aFk
 aGt
 aEj
 aaf
@@ -98265,7 +98679,7 @@ bio
 aMI
 aMI
 bkW
-blT
+blS
 bkW
 aak
 aak
@@ -98276,9 +98690,9 @@ aak
 aak
 aHk
 aFk
-aEj
-buL
-bvH
+aFk
+brY
+bvF
 bwU
 bxT
 byQ
@@ -98462,9 +98876,7 @@ aaa
 aae
 aae
 aae
-aax
-aeu
-aax
+aae
 aax
 agA
 agA
@@ -98476,6 +98888,8 @@ agA
 agA
 agA
 agA
+anh
+anh
 anc
 aoe
 app
@@ -98486,14 +98900,14 @@ aoi
 avh
 aoi
 axq
-anc
+avm
 azz
 anc
 aBw
 aCq
 aDr
 aEm
-aEj
+cyf
 aGt
 aEj
 aaf
@@ -98521,9 +98935,9 @@ bhn
 bip
 aMI
 aMH
-aak
-aak
-aak
+bkW
+blT
+bkW
 aak
 aak
 aak
@@ -98532,10 +98946,10 @@ aak
 aaf
 aaf
 aHk
-bqR
-aEj
-buL
-bvH
+aFk
+aFk
+brY
+bvF
 bwU
 bxT
 byQ
@@ -98719,9 +99133,7 @@ aaa
 aae
 aae
 aae
-aax
-aeu
-aax
+aae
 afP
 agA
 agA
@@ -98734,6 +99146,8 @@ ahd
 ahd
 amv
 ani
+cxS
+ani
 aod
 app
 aqB
@@ -98743,18 +99157,18 @@ aoi
 avk
 aoi
 axr
-and
+cxW
 azA
 and
 aBx
 aCr
 aDB
-aEj
-aEj
-aGt
-aEj
-aHk
-aHk
+cyb
+cyg
+cyk
+cyr
+aEh
+aEh
 aJG
 aKz
 aJI
@@ -98790,9 +99204,9 @@ aaf
 aaf
 aHk
 aFk
+aFk
 aEj
-aEj
-bvY
+bwd
 bxa
 bxY
 byR
@@ -98976,9 +99390,7 @@ aaa
 aae
 aae
 aae
-aax
-aeu
-aax
+aae
 afP
 agB
 ahd
@@ -98990,6 +99402,8 @@ ahd
 ahd
 ahd
 agA
+anh
+anh
 anc
 aof
 apq
@@ -99000,18 +99414,18 @@ atW
 avl
 awu
 axs
-anc
+avm
 azB
 anc
 aBt
 aCq
-aDp
-aHl
-aFk
+cxZ
+cyc
+cyh
 aFu
 aGv
 aHj
-aHj
+cyw
 aJH
 aKA
 aLN
@@ -99233,9 +99647,7 @@ aae
 aae
 aae
 aae
-aax
-aeu
-aax
+aae
 afP
 agB
 ahd
@@ -99246,6 +99658,8 @@ ahd
 ahd
 ahd
 ahd
+cxP
+cxR
 amw
 anj
 aog
@@ -99257,18 +99671,18 @@ anc
 avm
 anc
 anc
-anc
+avm
 avm
 anc
 aBt
 aCq
 aDC
 aEh
-aFk
-aFk
-aFk
-aFk
-aFk
+cyi
+cyl
+aGu
+cys
+cyx
 aJI
 aKB
 aLO
@@ -99306,7 +99720,7 @@ aHk
 bqS
 aFk
 brU
-bvZ
+bvT
 bxb
 bya
 byT
@@ -99490,9 +99904,7 @@ aae
 aae
 aae
 aae
-aax
-aeu
-aax
+aae
 afP
 agB
 ahd
@@ -99504,6 +99916,8 @@ ahd
 ahd
 alU
 agA
+anh
+anh
 anc
 aoh
 aps
@@ -99519,13 +99933,13 @@ avo
 anc
 aBy
 aCq
-aDD
-aHl
+aDC
+aEh
 aFs
 aGu
-aGx
-aFk
-aFk
+aGu
+cyt
+cyy
 aJI
 aKC
 aLP
@@ -99563,7 +99977,7 @@ aGo
 brj
 brr
 brV
-brX
+bvF
 bvM
 byb
 byU
@@ -99747,9 +100161,7 @@ aae
 aae
 aae
 aae
-aax
-aeu
-aax
+aae
 afP
 agA
 agA
@@ -99761,6 +100173,8 @@ ahd
 ahd
 ahd
 amv
+ani
+cxT
 ani
 aoi
 aoi
@@ -99777,12 +100191,12 @@ anc
 aBt
 aCq
 aDA
-aEq
-aEq
-aEq
-aEq
-aEq
-aEq
+aEh
+cyj
+aGu
+aGu
+cyu
+cyz
 aJI
 aKD
 aLP
@@ -100004,9 +100418,7 @@ aae
 aae
 aae
 aae
-aax
-aeu
-aax
+aae
 aax
 agA
 agA
@@ -100018,6 +100430,8 @@ agA
 agA
 agA
 agA
+anh
+anh
 anc
 aoj
 apt
@@ -100033,11 +100447,11 @@ azD
 anc
 aBt
 aCq
-aDr
-aEo
+cya
+aEh
 aFv
-aGy
-aHh
+aGu
+aGu
 aIl
 aIM
 aJI
@@ -100261,8 +100675,8 @@ aae
 aae
 aae
 aae
-aak
-aeu
+aaa
+aaa
 aak
 aak
 aax
@@ -100294,8 +100708,8 @@ aDE
 aEr
 aFt
 aGw
-aFw
-aFw
+aGu
+cyv
 aIN
 aJI
 aKF
@@ -100518,8 +100932,8 @@ aae
 aae
 aae
 aae
-aak
-aeu
+aaa
+aaa
 aak
 aak
 aak
@@ -100542,16 +100956,16 @@ aub
 avr
 atX
 atX
-awy
+cxX
 azF
 anc
 aBz
 aCp
 aDF
-aEo
+aEh
 aFw
-aFw
-aFw
+cym
+aGu
 aHm
 aIO
 aJJ
@@ -100775,11 +101189,11 @@ aae
 aae
 aae
 aae
-aak
-aeu
-aak
-aak
-aak
+aaa
+aaa
+aaa
+aaf
+aaf
 aak
 aax
 aax
@@ -100805,9 +101219,9 @@ anc
 aBA
 aCq
 aDG
-aEq
+cyd
 aFx
-aFw
+cyn
 aHi
 aIm
 aIP
@@ -101032,10 +101446,10 @@ aae
 aae
 aae
 aae
-aak
-aeu
-aak
-aak
+aaa
+aaa
+aaf
+aaf
 aeY
 aeY
 aeY
@@ -101056,18 +101470,18 @@ aud
 aud
 anc
 anc
-anc
+avm
 avm
 anc
 axx
 ayy
 azJ
-aEq
+cye
 aFy
 aEo
 aHs
-aEo
-aEq
+aEh
+cyA
 aJJ
 aKI
 aLT
@@ -101289,10 +101703,10 @@ aae
 aae
 aae
 aae
-aak
-aeu
-aak
-aak
+aaa
+aaa
+aaf
+aaf
 aeY
 ahe
 ahP
@@ -101313,7 +101727,7 @@ anc
 anc
 anc
 axu
-ayv
+cxY
 azG
 aAA
 aBC
@@ -101321,7 +101735,7 @@ aCx
 aDI
 aEs
 aFz
-aGz
+cyo
 aHt
 aGz
 aIQ
@@ -101546,12 +101960,12 @@ aae
 aae
 aae
 aae
-aak
-aev
-aeZ
-aeZ
+aaa
+aaa
+aaf
+aaf
 agC
-ahf
+ahh
 ahh
 aeY
 ahi
@@ -101578,7 +101992,7 @@ aCy
 azW
 aEt
 aFA
-aFA
+cyp
 aHu
 aFA
 aFA
@@ -101805,29 +102219,29 @@ aaa
 aaa
 aaa
 aaa
-aaj
-aaj
+aaf
+aaf
 aeY
-ahg
+ahh
 ahQ
 agC
-ajs
-akd
-akd
-akd
-akd
-akd
-akd
-akd
-akd
-akd
-akd
+ajt
+ahh
+ahh
+ahh
+ahh
+ahh
+ahh
+ahh
+ahh
+ahh
+ahh
 asR
 auf
 avt
 awz
 axw
-ayx
+ayz
 azI
 aAB
 aBE
@@ -101835,7 +102249,7 @@ aCz
 aDJ
 aEu
 aCz
-aCz
+cyq
 aCz
 aCz
 aCz
@@ -102062,7 +102476,7 @@ aaa
 aaa
 aaa
 aaj
-aaj
+aaf
 aab
 aeY
 aeY
@@ -104179,7 +104593,7 @@ blc
 blW
 bmS
 bnJ
-boE
+bnL
 bjw
 bjw
 bjw
@@ -104414,7 +104828,7 @@ aIV
 aMb
 aNc
 aIp
-aPv
+cyD
 aQY
 aPv
 aTk
@@ -112381,9 +112795,9 @@ aab
 aab
 aab
 aOv
-aPQ
-aPQ
-aPQ
+bof
+cyE
+bof
 aOv
 aaj
 aak
