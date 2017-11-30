@@ -1581,6 +1581,7 @@
 #include "code\modules\mining\machine_stacking.dm"
 #include "code\modules\mining\machine_unloading.dm"
 #include "code\modules\mining\machine_vending.dm"
+#include "code\modules\mining\material_vault.dm"
 #include "code\modules\mining\mine_items.dm"
 #include "code\modules\mining\minebot.dm"
 #include "code\modules\mining\mint.dm"

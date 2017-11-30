@@ -24,11 +24,33 @@
 	var/list/ore_buffer = list()
 	var/datum/techweb/stored_research
 	var/obj/item/disk/design_disk/inserted_disk
+	
+	var/storage_map_id = "vault"
+	var/obj/machinery/material_storage/storage
 
 /obj/machinery/mineral/ore_redemption/Initialize()
 	. = ..()
 	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE),INFINITY)
 	stored_research = new /datum/techweb/specialized/autounlocking/smelter
+	if(storage_map_id)
+		return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/mineral/ore_redemption/LateInitialize()
+	if(storage_map_id)
+		for(var/obj/machinery/material_storage/V in GLOB.machines)
+			if(V.map_id == storage_map_id)
+				storage = V
+				break
+
+/obj/machinery/mineral/ore_redemption/proc/cycle_storage()
+	var/list/all_storages = list()
+	for(var/obj/machinery/material_storage/V in GLOB.machines)
+		all_storages += V
+	if(!all_storages.len)
+		return
+	var/current_index = all_storages.Find(storage)
+	current_index = Wrap(current_index+1,1,all_storages.len+1)
+	storage = all_storages[current_index]
 
 /obj/machinery/mineral/ore_redemption/Destroy()
 	QDEL_NULL(stored_research)
@@ -184,6 +206,11 @@
 			return TRUE
 	return ..()
 
+/obj/machinery/mineral/ore_redemption/wirecutter_act(user,tool)
+	cycle_storage()
+	to_chat(user,"<span class='notice'>You set [src] vault identifier to [storage ? storage.department : "nothing"].</span>")
+	return TRUE
+
 /obj/machinery/mineral/ore_redemption/on_deconstruction()
 	GET_COMPONENT(materials, /datum/component/material_container)
 	materials.retrieve_all()
@@ -334,6 +361,15 @@
 					var/output = new alloy.build_path(src)
 					unload_mineral(output)
 					CHECK_TICK
+			else
+				to_chat(usr, "<span class='warning'>Required access not found.</span>")
+			return TRUE
+		if("vault_store")
+			if(check_access(inserted_id) || allowed(usr)) //Check the ID inside, otherwise check the user
+				if(!storage)
+					return
+				GET_COMPONENT_FROM(storage_materials,/datum/component/material_container,storage)
+				materials.transfer_all_to(storage_materials)
 			else
 				to_chat(usr, "<span class='warning'>Required access not found.</span>")
 			return TRUE

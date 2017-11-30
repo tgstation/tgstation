@@ -22,6 +22,9 @@
 			</ui-button>
 		{{/if}}
 	</ui-section>
+	<ui-section>
+		<ui-button action="vault_store">Send to Vault</ui-button>
+	</ui-section>
 </ui-display>
 <ui-display>
 	{{#if data.hasDisk}}

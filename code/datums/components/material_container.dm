@@ -246,6 +246,19 @@
 		result += retrieve_sheets(amount2sheet(M.amount), MAT, target)
 	return result
 
+/datum/component/material_container/proc/transfer_to(amt,id,datum/component/material_container/target)
+	var/datum/material/M = materials[id]
+	if(!M || M.amount < amt || !target.has_space(amt) || !target.materials[id])
+		return
+	amt = Clamp(amt,0,M.amount)
+	use_amount_type(amt,id)
+	target.insert_amount(amt,id)
+
+/datum/component/material_container/proc/transfer_all_to(datum/component/material_container/target)
+	for(var/id in materials)
+		var/datum/material/M = materials[id]
+		transfer_to(M.amount,id,target)
+	
 /datum/component/material_container/proc/has_space(amt = 0)
 	return (total_amount + amt) <= max_amount
 
