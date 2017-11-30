@@ -47,7 +47,7 @@
 
 /obj/structure/showcase/machinery/oldpod/used
 	name = "opened cyrogenic pod"
-	desc = "Cyrogenic pod that has recently discharged its occupand. The pod appears non-functional."
+	desc = "Cyrogenic pod that has recently discharged its occupant. The pod appears non-functional."
 
 /obj/structure/showcase/cyborg/old
 	name = "Cyborg Statue"
