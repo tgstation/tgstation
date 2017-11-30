@@ -23,7 +23,7 @@
 		for(var/A in mutations)
 			target.dna.add_mutation(A)
 		for(var/A in disabilities)
-			target.add_disability(A, "genetic_spell")
+			target.add_disability(A, GENETICS_SPELL)
 		addtimer(CALLBACK(src, .proc/remove, target), duration)
 
 /obj/effect/proc_holder/spell/targeted/genetic/proc/remove(mob/living/carbon/target)
@@ -31,4 +31,4 @@
 		for(var/A in mutations)
 			target.dna.remove_mutation(A)
 		for(var/A in disabilities)
-			target.remove_disability(A, "genetic_spell")
+			target.remove_disability(A, GENETICS_SPELL)

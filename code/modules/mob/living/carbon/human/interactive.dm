@@ -339,7 +339,7 @@
 	if(TRAITS & TRAIT_SMART)
 		smartness = 75
 	else if(TRAITS & TRAIT_DUMB)
-		add_disability(CLUMSY, "clown")
+		add_disability(CLUMSY, GENETIC_MUTATION)
 		smartness = 25
 
 	if(TRAITS & TRAIT_MEAN)

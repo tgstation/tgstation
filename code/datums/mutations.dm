@@ -8,7 +8,6 @@ GLOBAL_LIST_EMPTY(mutations_list)
 	GLOB.mutations_list[name] = src
 
 /datum/mutation/human
-
 	var/dna_block
 	var/quality
 	var/get_chance = 100
