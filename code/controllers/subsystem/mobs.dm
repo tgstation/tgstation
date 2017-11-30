@@ -32,7 +32,7 @@ SUBSYSTEM_DEF(mobs)
 			M.Life(seconds, times_fired)
 		else
 			GLOB.mob_living_list.Remove(M)
-		if (istype(M, /mob/living))
+		if (istype(M, /mob/living)) // This check can be removed if blob cameras are moved into their own system so that they do not require Life() ticks from this subsystem to function
 			var/mob/living/L = M
 			var/turf/T = get_turf(L)
 			if (L.client && L.registered_z != T.z)
