@@ -168,7 +168,6 @@
 	var/list/arguments = args.Copy()
 	arguments.Cut(1, 2)
 	var/target = comps[/datum/component]
-	. = NONE
 	if(!length(target))
 		var/datum/component/C = target
 		if(!C.enabled)
@@ -177,11 +176,12 @@
 		var/datum/callback/CB = LAZYACCESS(sps, sigtype)
 		if(!CB)
 			return NONE
-		. |= CB.InvokeAsync(arglist(arguments))
+		. = CB.InvokeAsync(arglist(arguments))
 		if(. & COMPONENT_ACTIVATED)
 			ComponentActivated(C)
 			C.AfterComponentActivated()
 	else
+		. = NONE
 		for(var/I in target)
 			var/datum/component/C = I
 			if(!C.enabled)
