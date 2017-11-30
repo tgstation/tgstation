@@ -20,7 +20,6 @@
 /datum/component/archaeology/proc/Dig(obj/item/W, mob/living/user)
 	if(dug)
 		to_chat(user, "<span class='notice'>Looks like someone has dug here already.</span>")
-		return FALSE
 	else
 		var/digging_speed
 		if (istype(W, /obj/item/shovel))
@@ -39,8 +38,7 @@
 				gets_dug()
 				dug = TRUE
 				SSblackbox.record_feedback("tally", "pick_used_mining", 1, W.type)
-				return TRUE
-		return FALSE
+				return COMPONENT_NO_AFTERATTACK
 
 /datum/component/archaeology/proc/gets_dug()
 	if(dug)
