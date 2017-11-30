@@ -1017,9 +1017,10 @@
 	if (registered_z != new_z)
 		if (registered_z)
 			SSmobs.by_zlevel[registered_z] -= src
-		if (new_z)
-			SSmobs.by_zlevel[new_z] += src
-		registered_z = new_z
+		if (client)
+			if (new_z)
+				SSmobs.by_zlevel[new_z] += src
+			registered_z = new_z
 
 /mob/living/Login()
 	..()
