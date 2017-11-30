@@ -1,35 +1,3 @@
-GLOBAL_LIST_INIT(phobia_spider_words, list("spider","web","arachnid"))
-GLOBAL_LIST_INIT(phobia_spider_mobs, typecacheof(/mob/living/simple_animal/hostile/poison/giant_spider))
-GLOBAL_LIST_INIT(phobia_spider_objs, typecacheof(/obj/structure/spider))
-
-GLOBAL_LIST_INIT(phobia_space_words, list("space", "star", "universe", "void"))
-GLOBAL_LIST_INIT(phobia_space_turfs, typecacheof(/turf/open/space, /turf/open/floor/holofloor/space, /turf/open/floor/fakespace))
-
-GLOBAL_LIST_INIT(phobia_security_words, list(" sec ", "security", "shitcurity", "stunbaton", "taser", "beepsky"))
-GLOBAL_LIST_INIT(phobia_security_mobs, typecacheof(/mob/living/simple_animal/bot/secbot))
-GLOBAL_LIST_INIT(phobia_security_objs, typecacheof(/obj/item/clothing/under/rank/security, /obj/item/clothing/under/rank/warden, /obj/item/clothing/under/rank/head_of_security,\
-				/obj/item/clothing/under/rank/det, /obj/item/melee/baton, /obj/item/gun/energy/taser, /obj/item/restraints/handcuffs, /obj/machinery/door/airlock/security))
-
-GLOBAL_LIST_INIT(phobia_clown_words, list("clown", "honk", "banana", "slip"))
-GLOBAL_LIST_INIT(phobia_clown_objs, typecacheof(/obj/item/clothing/under/rank/clown, /obj/item/clothing/shoes/clown_shoes, /obj/item/clothing/mask/gas/clown_hat,\
-				/obj/item/device/instrument/bikehorn, /obj/item/device/pda/clown, /obj/item/grown/bananapeel))
-
-GLOBAL_LIST_INIT(phobia_greytide_words, list("assistant", "grey", "gasmask", "gas mask", "stunprod", "spear", "revolution", "viva"))
-GLOBAL_LIST_INIT(phobia_greytide_objs, typecacheof(/obj/item/clothing/under/color/grey, /obj/item/melee/baton/cattleprod, /obj/item/twohanded/spear,\
-				/obj/item/clothing/mask/gas))
-
-GLOBAL_LIST_INIT(phobia_lizard_words,list("lizard", "ligger", "hiss", " wag "))
-GLOBAL_LIST_INIT(phobia_lizard_mobs, typecacheof(/mob/living/simple_animal/hostile/lizard))
-GLOBAL_LIST_INIT(phobia_lizard_objs, typecacheof(/obj/item/toy/plush/lizardplushie, /obj/item/reagent_containers/food/snacks/kebab/tail, /obj/item/organ/tail/lizard,\
-				/obj/item/reagent_containers/food/drinks/bottle/lizardwine))
-GLOBAL_LIST_INIT(phobia_lizard_species, typecacheof(/datum/species/lizard))
-
-GLOBAL_LIST_INIT(phobia_skeleton_words, list("skeleton", "milk", "xylophone", "bone", "calcium", "the ride never ends"))
-GLOBAL_LIST_INIT(phobia_skeleton_objs, typecacheof(/obj/item/organ/tongue/bone, /obj/item/clothing/suit/armor/bone, /obj/item/stack/sheet/bone,\
-				/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton, /obj/effect/decal/remains/human))
-GLOBAL_LIST_INIT(phobia_skeleton_species, typecacheof(/datum/species/skeleton, /datum/species/plasmaman))
-
-
 /datum/brain_trauma/mild/phobia
 	name = "Phobia"
 	desc = "Patient is unreasonably afraid of something."
@@ -49,39 +17,16 @@ GLOBAL_LIST_INIT(phobia_skeleton_species, typecacheof(/datum/species/skeleton, /
 /datum/brain_trauma/mild/phobia/New(mob/living/carbon/C, _permanent, specific_type)
 	phobia_type = specific_type
 	if(!phobia_type)
-		phobia_type = pick("spiders", "space", "security", "clowns", "greytide", "lizards","skeletons")
+		phobia_type = pick(SStraumas.phobia_types)
 
 	gain_text = "<span class='warning'>You start finding [phobia_type] very unnerving...</span>"
 	lose_text = "<span class='notice'>You no longer feel afraid of [phobia_type].</span>"
 	scan_desc += " of [phobia_type]"
-	switch(phobia_type)
-		if("spiders")
-			trigger_words = GLOB.phobia_spider_words
-			trigger_mobs = GLOB.phobia_spider_mobs
-			trigger_objs = GLOB.phobia_spider_objs
-		if("space")
-			trigger_words = GLOB.phobia_space_words
-			trigger_turfs = GLOB.phobia_space_turfs
-		if("security")
-			trigger_words = GLOB.phobia_security_words
-			trigger_mobs = GLOB.phobia_security_mobs
-			trigger_objs = GLOB.phobia_security_objs
-		if("clowns")
-			trigger_words = GLOB.phobia_clown_words
-			trigger_objs = GLOB.phobia_clown_objs
-		if("greytide")
-			trigger_words = GLOB.phobia_greytide_words
-			trigger_objs = GLOB.phobia_greytide_objs
-		if("lizards")
-			trigger_words = GLOB.phobia_lizard_words
-			trigger_objs = GLOB.phobia_lizard_objs
-			trigger_mobs = GLOB.phobia_lizard_mobs
-			trigger_species = GLOB.phobia_lizard_species
-		if("skeletons")
-			trigger_words = GLOB.phobia_skeleton_words
-			trigger_objs = GLOB.phobia_skeleton_objs
-			trigger_species = GLOB.phobia_skeleton_species
-
+	trigger_words = SStraumas.phobia_words[phobia_type]
+	trigger_mobs = SStraumas.phobia_mobs[phobia_type]
+	trigger_objs = SStraumas.phobia_objs[phobia_type]
+	trigger_turfs = SStraumas.phobia_turfs[phobia_type]
+	trigger_species = SStraumas.phobia_species[phobia_type]
 	..()
 
 /datum/brain_trauma/mild/phobia/on_life()
