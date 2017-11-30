@@ -1,0 +1,4 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - tweak: "Reduced the max volume of sm by 1/5th and made the upper bounds only play mid delamination."
