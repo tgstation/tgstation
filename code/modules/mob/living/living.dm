@@ -49,6 +49,8 @@
 	staticOverlays.len = 0
 	remove_from_all_data_huds()
 	GLOB.mob_living_list -= src
+	if (registered_z)
+		update_z(null)
 
 	return ..()
 
