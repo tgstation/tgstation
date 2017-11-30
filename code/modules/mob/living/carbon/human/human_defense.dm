@@ -355,7 +355,8 @@
 
 
 /mob/living/carbon/human/ex_act(severity, target, origin)
-
+	if (!severity)
+		return
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
 		return
 	..()
