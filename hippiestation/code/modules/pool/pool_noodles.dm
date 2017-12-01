@@ -3,7 +3,7 @@
 /obj/item/toy/poolnoodle
 	icon = 'hippiestation/icons/obj/toy.dmi'
 	icon_state = "noodle"
-	name = "Pool noodle"
+	name = "pool noodle"
 	desc = "A strange, bulky, bendable toy that can annoy people."
 	force = 0
 	color = "#000000"
