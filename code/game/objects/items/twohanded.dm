@@ -487,14 +487,14 @@
 	update_icon()
 
 //maul
-/obj/item/twohanded/maul
-	icon_state = "toolboxmaulr0"
+/obj/item/twohanded/mallet
+	icon_state = "toolboxmalletr0"
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
-	name = "makeshift maul"
-	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
-	force = 10
-	w_class = WEIGHT_CLASS_BULKY
+	name = "makeshift mallet"
+	desc = "A haphazardly-constructed yet still deadly weapon of ancient design. Wield for a critical hit, to your opponent and your mallet."
+	force = 14
+	w_class = WEIGHT_CLASS_HUGE
 	force_unwielded = 14
 	force_wielded = 30
 	throwforce = 15
@@ -510,17 +510,18 @@
 		return
 	if(isopenturf(AM)) //I think this prevents it from smashing if you click an open tile
 		return
-	user.visible_message("<span class='notice'>[user]'s [src] smashes into pieces!</span>", \
-			"<span class='warning'>\"Your [src] smashes into pieces!\"</span>")
+	if(!wielded)
+		return
+	user.visible_message("<span class='notice'>[src] smashes into pieces!</span>")
 	qdel(src)
 
-/obj/item/twohanded/maul/b
+/obj/item/twohanded/mallet/b
 	icon_state = "toolboxmaulb0"
 
-/obj/item/twohanded/maul/g
+/obj/item/twohanded/mallet/g
 	icon_state = "toolboxmaulg0"
 
-/obj/item/twohanded/maul/s
+/obj/item/twohanded/mallet/s
 	icon_state = "toolboxmauls0"
 
 // CHAINSAW
