@@ -133,7 +133,7 @@ All code after [commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at
 All code before [commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at 4:38 PM PST](https://github.com/tgstation/tgstation/commit/333c566b88108de218d882840e61928a9b759d8f) is licensed under [GNU GPL v3](https://www.gnu.org/licenses/gpl-3.0.html).
 (Including tools unless their readme specifies otherwise.)
 
-See LICENSE and OLD_LICENSE-GPLv3.txt for more details.
+See LICENSE and GPLv3.txt for more details.
 
 tgui clientside is licensed as a subproject under the MIT license.
 Font Awesome font files, used by tgui, are licensed under the SIL Open Font License v1.1
