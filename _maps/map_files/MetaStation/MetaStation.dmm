@@ -30945,8 +30945,7 @@
 /turf/open/floor/plating,
 /area/quartermaster/sorting)
 "bmh" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/mineral/ore_redemption,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plasteel/dark,
 /area/quartermaster/office)
 "bmi" = (
