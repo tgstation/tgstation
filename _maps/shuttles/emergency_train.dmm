@@ -1,0 +1,79 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/turf/closed/wall/mineral/titanium,/area/shuttle/escape)
+"c" = (/obj/effect/spawner/structure/window/shuttle,/turf/open/floor/plating,/area/shuttle/escape)
+"d" = (/obj/machinery/computer/emergency_shuttle,/turf/open/floor/mineral/titanium/blue,/area/shuttle/escape)
+"e" = (/obj/machinery/computer/security,/turf/open/floor/mineral/titanium/blue,/area/shuttle/escape)
+"f" = (/obj/machinery/computer/atmos_alert{dir = 4},/turf/open/floor/mineral/titanium,/area/shuttle/escape)
+"g" = (/obj/structure/chair{dir = 1},/turf/open/floor/mineral/titanium/blue,/area/shuttle/escape)
+"h" = (/obj/machinery/computer/security{dir = 8},/turf/open/floor/mineral/titanium,/area/shuttle/escape)
+"i" = (/obj/machinery/computer/crew{dir = 4},/turf/open/floor/mineral/titanium,/area/shuttle/escape)
+"j" = (/turf/open/floor/mineral/titanium/blue,/area/shuttle/escape)
+"k" = (/obj/machinery/computer/communications{dir = 8},/turf/open/floor/mineral/titanium,/area/shuttle/escape)
+"l" = (/obj/machinery/door/airlock/titanium{name = "Emergency Shuttle Cargo"},/turf/open/floor/mineral/titanium/blue,/area/shuttle/escape)
+"m" = (/turf/open/floor/plating,/area/shuttle/escape)
+"n" = (/obj/structure/chair,/turf/open/floor/mineral/plastitanium/brig,/area/shuttle/escape)
+"o" = (/turf/open/floor/mineral/plastitanium/brig,/area/shuttle/escape)
+"p" = (/obj/machinery/flasher{id = "shuttle_flasher"; pixel_x = -24; pixel_y = 6},/obj/machinery/button/flasher{id = "shuttle_flasher"; pixel_x = -24; pixel_y = -6},/obj/machinery/light/small{brightness = 3; dir = 8},/turf/open/floor/mineral/plastitanium/brig,/area/shuttle/escape)
+"q" = (/obj/machinery/door/airlock/titanium{name = "Emergency Shuttle Airlock"; req_access_txt = "2"},/turf/open/floor/mineral/plastitanium/brig,/area/shuttle/escape)
+"r" = (/obj/structure/extinguisher_cabinet{pixel_y = -30},/turf/open/floor/mineral/plastitanium/brig,/area/shuttle/escape)
+"s" = (/obj/structure/chair{dir = 1},/turf/open/floor/mineral/plastitanium/brig,/area/shuttle/escape)
+"t" = (/obj/machinery/door/airlock/titanium{name = "Emergency Shuttle Airlock"},/turf/open/floor/plating,/area/shuttle/escape)
+"u" = (/obj/structure/chair{dir = 4},/turf/open/floor/mineral/titanium,/area/shuttle/escape)
+"v" = (/obj/structure/chair{dir = 8},/turf/open/floor/mineral/titanium,/area/shuttle/escape)
+"w" = (/obj/machinery/light/small,/turf/open/floor/mineral/titanium/blue,/area/shuttle/escape)
+"x" = (/obj/structure/extinguisher_cabinet{pixel_y = -30},/turf/open/floor/mineral/titanium/blue,/area/shuttle/escape)
+"y" = (/obj/machinery/door/airlock/titanium{name = "Emergency Shuttle Airlock"},/obj/docking_port/mobile/emergency{name = "Train emergency shuttle"; timid = 1},/turf/open/floor/plating,/area/shuttle/escape)
+"z" = (/obj/structure/extinguisher_cabinet{step_y = 28; pixel_y = -30},/turf/closed/wall/mineral/titanium,/area/shuttle/escape)
+"A" = (/turf/open/floor/mineral/titanium/yellow,/area/shuttle/escape)
+"B" = (/obj/machinery/light/small{brightness = 3; dir = 8},/turf/open/floor/mineral/titanium/yellow,/area/shuttle/escape)
+"C" = (/obj/machinery/light/small{dir = 4},/turf/open/floor/mineral/titanium/yellow,/area/shuttle/escape)
+"D" = (/obj/structure/closet,/turf/open/floor/mineral/titanium/yellow,/area/shuttle/escape)
+"E" = (/obj/structure/closet/crate,/turf/open/floor/mineral/titanium/yellow,/area/shuttle/escape)
+"F" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/shuttle/engine/heater,/turf/open/floor/plating/airless,/area/shuttle/escape)
+"G" = (/obj/structure/window/reinforced{dir = 1},/turf/template_noop,/area/template_noop)
+"H" = (/obj/structure/shuttle/engine/propulsion,/turf/open/floor/plating/airless,/area/shuttle/escape)
+
+(1,1,1) = {"
+abccba
+bbdebb
+bfgghb
+bijjkb
+bbllbb
+mammam
+mammam
+bbllbb
+bnonnb
+bpooob
+qrssoq
+bbbblb
+amaama
+amaama
+bbbblb
+tjjjjt
+bujjvb
+cujjvc
+bujjvb
+cujjvc
+bujjvb
+twxjjt
+blbbbb
+amaama
+amaama
+blbbbb
+yjjjjt
+bujjvb
+cujjvc
+bujjvb
+cujjvc
+bujjvb
+twxjjt
+bbbblb
+amaama
+amaama
+bbzblb
+tAAAAt
+bBAACb
+bDDEEb
+bFGGFb
+bHaaHb
+"}
