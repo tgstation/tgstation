@@ -556,7 +556,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		var/mob/dead/observer/theghost = null
 		if(candidates.len)
 			theghost = pick(candidates)
-			to_chat(owner, "Your physical form has been taken over by another soul! Appeal your job ban if you want to avoid this in the future!")
+			to_chat(owner, "Your physical form has been taken over by another soul due to your inactivity! Ahelp if you wish to regain your form.")
 			message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(owner.current)]) to replace an AFK player.")
 			owner.current.ghostize(0)
 			owner.current.key = theghost.key
