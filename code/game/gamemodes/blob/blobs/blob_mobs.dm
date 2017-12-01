@@ -42,7 +42,7 @@
 /mob/living/simple_animal/hostile/blob/fire_act(exposed_temperature, exposed_volume)
 	..()
 	if(exposed_temperature)
-		adjustFireLoss(CLAMP(0.01 * exposed_temperature, 1, 5))
+		adjustFireLoss(Clamp(0.01 * exposed_temperature, 1, 5))
 	else
 		adjustFireLoss(5)
 
@@ -100,7 +100,7 @@
 	var/death_cloud_size = 1 //size of cloud produced from a dying spore
 	var/mob/living/carbon/human/oldguy
 	var/is_zombie = 0
-	gold_core_spawnable = 1
+	gold_core_spawnable = HOSTILE_SPAWN
 
 /mob/living/simple_animal/hostile/blob/blobspore/Initialize(mapload, var/obj/structure/blob/factory/linked_node)
 	if(istype(linked_node))
@@ -299,4 +299,4 @@
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/independent
 	independent = TRUE
-	gold_core_spawnable = 1
+	gold_core_spawnable = HOSTILE_SPAWN

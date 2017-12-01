@@ -107,6 +107,7 @@
 /datum/design/unique_modkit
 	category = list("Mining Designs", "Cyborg Upgrade Modules") //can't be normally obtained
 	build_type = PROTOLATHE | MECHFAB
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO
 
 /datum/design/unique_modkit/offensive_turf_aoe
 	name = "Kinetic Accelerator Offensive Mining Explosion Mod"
@@ -365,7 +366,7 @@
 	return
 
 /obj/effect/immortality_talisman/singularity_pull()
-	return 0
+	return
 
 /obj/effect/immortality_talisman/Destroy(force)
 	if(!can_destroy && !force)
@@ -793,13 +794,13 @@
 	force = 0
 	var/ghost_counter = ghost_check()
 
-	force = CLAMP((ghost_counter * 4), 0, 75)
+	force = Clamp((ghost_counter * 4), 0, 75)
 	user.visible_message("<span class='danger'>[user] strikes with the force of [ghost_counter] vengeful spirits!</span>")
 	..()
 
 /obj/item/melee/ghost_sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	var/ghost_counter = ghost_check()
-	final_block_chance += CLAMP((ghost_counter * 5), 0, 75)
+	final_block_chance += Clamp((ghost_counter * 5), 0, 75)
 	owner.visible_message("<span class='danger'>[owner] is protected by a ring of [ghost_counter] ghosts!</span>")
 	return ..()
 

@@ -49,7 +49,7 @@
 
 	for(var/i in 0 to name_count)
 		new_name = ""
-		var/Y = rand(FLOOR(syllable_count/syllable_divisor, 1), syllable_count)
+		var/Y = rand(Floor(syllable_count/syllable_divisor), syllable_count)
 		for(var/x in Y to 0)
 			new_name += pick(syllables)
 		full_name += " [capitalize(lowertext(new_name))]"

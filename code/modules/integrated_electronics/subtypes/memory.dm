@@ -11,12 +11,12 @@
 	power_draw_per_use = 1
 	var/number_of_pins = 1
 
-/obj/item/integrated_circuit/memory/New()
+/obj/item/integrated_circuit/memory/Initialize()
 	for(var/i = 1 to number_of_pins)
 		inputs["input [i]"] = IC_PINTYPE_ANY // This is just a string since pins don't get built until ..() is called.
 		outputs["output [i]"] = IC_PINTYPE_ANY
 	complexity = number_of_pins
-	..()
+	. = ..()
 
 /obj/item/integrated_circuit/memory/examine(mob/user)
 	..()

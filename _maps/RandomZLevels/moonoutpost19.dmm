@@ -361,7 +361,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "aS" = (
-/obj/item/ore/iron{
+/obj/item/stack/ore/iron{
 	pixel_x = 7;
 	pixel_y = -6
 	},
@@ -1770,8 +1770,8 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "dv" = (
-/obj/item/ore/iron,
-/obj/item/ore/iron{
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron{
 	pixel_x = -7;
 	pixel_y = -4
 	},
@@ -1822,7 +1822,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "dz" = (
-/obj/item/ore/iron{
+/obj/item/stack/ore/iron{
 	pixel_x = -3;
 	pixel_y = 9
 	},
@@ -1969,7 +1969,7 @@
 	},
 /area/awaymission/moonoutpost19/main)
 "dN" = (
-/obj/item/ore/iron{
+/obj/item/stack/ore/iron{
 	pixel_x = -7;
 	pixel_y = -4
 	},

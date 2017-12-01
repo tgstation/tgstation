@@ -272,6 +272,8 @@ All ShuttleMove procs go here
 	. = ..()
 
 /mob/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+	if(!move_on_shuttle)
+		return
 	. = ..()
 	if(client && movement_force)
 		var/shake_force = max(movement_force["THROW"], movement_force["KNOCKDOWN"])

@@ -49,6 +49,7 @@
 	max_integrity = 200
 	integrity_failure = 50
 	resistance_flags = FIRE_PROOF
+	interact_open = TRUE
 
 	var/lon_range = 1.5
 	var/area/area
@@ -151,7 +152,7 @@
 	GLOB.apcs_list -= src
 
 	if(malfai && operating)
-		malfai.malf_picker.processing_time = CLAMP(malfai.malf_picker.processing_time - 10,0,1000)
+		malfai.malf_picker.processing_time = Clamp(malfai.malf_picker.processing_time - 10,0,1000)
 	area.power_light = FALSE
 	area.power_equip = FALSE
 	area.power_environ = FALSE
@@ -657,7 +658,7 @@
 		wires.interact(user)
 	else
 		return ..()
-		
+
 /obj/machinery/power/apc/AltClick(mob/user)
 	..()
 	if(!issilicon(user) && (!user.canUseTopic(src, be_close=TRUE) || !isturf(loc)))
@@ -665,7 +666,7 @@
 		return
 	else
 		togglelock(user)
-		
+
 /obj/machinery/power/apc/proc/togglelock(mob/living/user)
 	if(emagged)
 		to_chat(user, "<span class='warning'>The interface is broken!</span>")
@@ -1242,7 +1243,7 @@
 
 /obj/machinery/power/apc/proc/set_broken()
 	if(malfai && operating)
-		malfai.malf_picker.processing_time = CLAMP(malfai.malf_picker.processing_time - 10,0,1000)
+		malfai.malf_picker.processing_time = Clamp(malfai.malf_picker.processing_time - 10,0,1000)
 	stat |= BROKEN
 	operating = FALSE
 	if(occupier)

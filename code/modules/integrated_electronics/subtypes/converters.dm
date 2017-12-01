@@ -175,6 +175,7 @@
 	extended_desc = "This circuits splits a given string into two, based on the string, and the index value. \
 	The index splits the string <b>after</b> the given index, including spaces. So 'a person' with an index of '3' \
 	will split into 'a p' and 'erson'."
+	icon_state = "split"
 	complexity = 4
 	inputs = list(
 		"string to split" = IC_PINTYPE_STRING,
@@ -232,6 +233,7 @@
 	desc = "This splits a single string into a list of strings."
 	extended_desc = "This circuit splits a given string into a list of strings based on the string and given delimiter. \
 	For example, 'eat this burger',' ' will be converted to list('eat','this','burger')."
+	icon_state = "split"
 	complexity = 4
 	inputs = list(
 		"string to split" = IC_PINTYPE_STRING,
@@ -245,8 +247,8 @@
 
 /obj/item/integrated_circuit/converter/exploders/do_work()
 	var/strin = get_pin_data(IC_INPUT, 1)
-	var/sample = get_pin_data(IC_INPUT, 2)
-	set_pin_data(IC_OUTPUT, 1, splittext( strin ,sample ))
+	var/delimiter = get_pin_data(IC_INPUT, 2)
+	set_pin_data(IC_OUTPUT, 1, splittext(strin, delimiter))
 	push_data()
 
 	activate_pin(2)
@@ -263,7 +265,7 @@
 	pull_data()
 	var/incoming = get_pin_data(IC_INPUT, 1)
 	if(!isnull(incoming))
-		result = TODEGREES(incoming)
+		result = ToDegrees(incoming)
 
 	set_pin_data(IC_OUTPUT, 1, result)
 	push_data()
@@ -281,7 +283,7 @@
 	pull_data()
 	var/incoming = get_pin_data(IC_INPUT, 1)
 	if(!isnull(incoming))
-		result = TORADIANS(incoming)
+		result = ToRadians(incoming)
 
 	set_pin_data(IC_OUTPUT, 1, result)
 	push_data()
