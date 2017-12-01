@@ -1,0 +1,5 @@
+author: "BeeSting12"
+delete-after: True
+changes: 
+  - spellcheck: "Occupand ---> Occupant on opened cryogenic pods."
+  - spellcheck: "Cyrogenic ---> Cryogenic on opened cryogenic pods."
