@@ -14,7 +14,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "e" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/communications,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "f" = (
@@ -45,14 +45,17 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "k" = (
-/obj/machinery/computer/communications{
+/obj/machinery/computer/card{
+	tag = "icon-computer (WEST)";
+	icon_state = "computer";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "l" = (
+/obj/structure/fans/tiny,
 /obj/machinery/door/airlock/titanium{
-	name = "Emergency Shuttle Cargo"
+	name = "Emergency Shuttle Airlock"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -188,6 +191,66 @@
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
+"I" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/brig,
+/area/shuttle/escape)
+"J" = (
+/obj/machinery/light/small{
+	tag = "icon-bulb1 (NORTH)";
+	icon_state = "bulb1";
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"K" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"L" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"M" = (
+/obj/machinery/light/small{
+	tag = "icon-bulb1 (NORTH)";
+	icon_state = "bulb1";
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"N" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"O" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 a
@@ -249,13 +312,13 @@ b
 m
 m
 b
+J
+u
+u
+K
+u
+u
 j
-u
-u
-u
-u
-u
-w
 l
 m
 m
@@ -263,7 +326,7 @@ l
 j
 u
 u
-u
+N
 u
 u
 w
@@ -375,7 +438,7 @@ a
 a
 b
 n
-o
+I
 o
 l
 m
@@ -384,18 +447,18 @@ l
 j
 v
 v
+L
 v
 v
-v
-j
+w
 b
 m
 m
 b
-j
+M
 v
 v
-v
+O
 v
 v
 j
