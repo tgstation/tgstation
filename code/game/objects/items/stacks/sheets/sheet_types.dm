@@ -247,6 +247,8 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	singular_name = "cardboard sheet"
 	icon_state = "sheet-card"
 	resistance_flags = FLAMMABLE
+	force = 0
+	throwforce = 0
 	merge_type = /obj/item/stack/sheet/cardboard
 	novariants = TRUE
 
