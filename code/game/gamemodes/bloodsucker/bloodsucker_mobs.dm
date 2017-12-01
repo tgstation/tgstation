@@ -1,7 +1,62 @@
 ///mob/living/simple_animal/mouse
 //	blood_volume = 200
 
+/mob/living/carbon/human/proc/ReturnVampExamine(var/mob/viewer)
+	// So we can call from examine.dm in /human folder.
+	if (!mind || !viewer.mind)
+		return ""
+	// Only looking for Vamps here...
+	var/datum/antagonist/bloodsucker/bloodsuckerdatum = mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+	if (!bloodsuckerdatum)
+		return ""
+	// Viewer not a Vamp, AND not the target's vassal?
+	if (!viewer.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER) && !(viewer in bloodsuckerdatum.vassals))
+		return ""
+
+	// Default String
+	var/returnString = "\[<span class='warning'><EM>[bloodsuckerdatum.ReturnFullName(src,1)]</EM></span>\]"
+
+	// In Disguise (Veil)?
+	if (name_override != null)
+		returnString += "<span class='suicide'> (in disguise!) </span>"
+
+	returnString += "\n"
+	return returnString
+
+
+/mob/living/carbon/human/proc/ReturnVassalExamine(var/mob/viewer)
+	// So we can call from examine.dm in /human folder.
+	if (!mind || !viewer.mind)
+		return ""
+	// Am I not even a Vassal? Then I am not marked.
+	var/datum/antagonist/vassal/vassaldatum = mind.has_antag_datum(ANTAG_DATUM_VASSAL)
+	if (!vassaldatum)
+		return ""
+	// Only Vassals and Bloodsuckers can recognize marks.
+	if (!viewer.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER) && !viewer.mind.has_antag_datum(ANTAG_DATUM_VASSAL))
+		return ""
+
+	// Default String
+	var/returnString = "\[<span class='warning'>"
+
+	// Am I Viewer's Vassal?
+	if (vassaldatum.master.owner == viewer.mind)
+		returnString += "<span class='warning'>This [dna.species.name] bears YOUR mark!</span>"
+	// Am I someone ELSE'S Vassal?
+	else if (viewer.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
+		returnString +=	"<span class='boldwarning'>This [dna.species.name] bears the mark of [vassaldatum.master.ReturnFullName(vassaldatum.master.owner.current,1)]</span>"
+	// Are you serving the same master as I am?
+	else if (viewer.mind.has_antag_datum(ANTAG_DATUM_VASSAL) in vassaldatum.master.vassals)
+		returnString += "<span class='warning'>[viewer.p_they(TRUE)] bears the mark of your Master</span>"
+	// You serve a different Master than I do.
+	else
+		returnString += "<span class='boldwarning'>[viewer.p_they(TRUE)] bears the mark of another Bloodsucker</span>"
+
+	returnString += "</span>\]\n"
+	return returnString
 /*
+
+
 /mob/proc/can_turn_vassal(datum/mind/creator)
 	if (!ishuman(src) || !creator)
 		//to_chat(creator, "<span class='danger'>[src].</span>")

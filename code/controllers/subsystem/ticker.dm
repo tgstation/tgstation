@@ -381,15 +381,15 @@ SUBSYSTEM_DEF(ticker)
 	var/num_shuttle_escapees = 0
 
 	to_chat(world, "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>")
-	SEND_SOUND(world, sound('sound/Fulpsounds/Fulp_Piano.ogg')) // FULPSTATION: Play end music! SO SAD!
 
 	if(LAZYLEN(GLOB.round_end_notifiees))
 		send2irc("Notice", "[GLOB.round_end_notifiees.Join(", ")] the round has ended.")
 
-	for(var/client/C in GLOB.clients)
-		if(!C.credits)
-			C.RollCredits()
-		C.playtitlemusic(40)
+	SEND_SOUND(world, sound('sound/Fulpsounds/Fulp_Piano.ogg')) // FULPSTATION: Play end music! SO SAD!
+	//for(var/client/C in GLOB.clients)	// FULPSTATION: DON'T play lobby music!
+	//	if(!C.credits)
+	//		C.RollCredits()
+	//	C.playtitlemusic(40)
 
 	//Player status report
 	for(var/i in GLOB.mob_list)

@@ -99,6 +99,9 @@
 // ATTEMPT ENTIRE CASTING OF SPELL //
 /obj/effect/proc_holder/spell/bloodsucker/proc/attempt_cast(mob/living/user = usr) // This is done so that Frenzy can try to Feed (usr is EMPTY if called automatically)
 	//to_chat(user, "<span class='warning'>DEBUG: AttemptCast() [name] by [user]</span>")
+
+	//message_admins("DEBUG: attempt_cast() Casting [name]: usr = '[usr]'  //  user = '[user]'")
+
 	if(cast_check(0, user))	// 1) Can we cast?
 		SetActive(TRUE)		// 2) Set spell ACTIVE
 		choose_targets(user)// 3) Pick targets (which will then have affects applied)
@@ -126,7 +129,7 @@
 
 
 // CAST CHECK //	// USE THIS TO SEE IF WE CAN EVEN ACTIVATE THIS POWER //  Called from Click()
-/obj/effect/proc_holder/spell/bloodsucker/cast_check(skipcharge = 0,mob/living/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
+/obj/effect/proc_holder/spell/bloodsucker/cast_check(skipcharge = 0, mob/living/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 	//to_chat(user, "<span class='warning'>DEBUG: cast_check() [name] / [charge_max] </span>")
 	// Not Bloodsucker
 	if (!user.mind)// || !user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
@@ -136,8 +139,8 @@
 	if  (!..())
 		return 0
 	// Am in Frenzy!
-	var/datum/antagonist/bloodsucker/bloodsucker = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
-	if (bloodsucker.frenzy_state > 1 && usr == user) // This means, if I am in FRENZY and this power was called by someone CLICKING on me...(otherwise usr would be NULL if called from code)
+	//var/datum/antagonist/bloodsucker/bloodsucker = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+	if (user.IsFrenzied() && !user.castDuringFrenzy)// && usr == user) // This means, if I am in FRENZY and this power was called by someone CLICKING on me...(otherwise usr would be NULL if called from code)
 		to_chat(user, "<span class='warning'>You're lost to Frenzy...you cannot activate powers!</span>")
 		return 0
 	// Have enough blood?
@@ -151,6 +154,9 @@
 /obj/effect/proc_holder/spell/bloodsucker/proc/cancel_check(mob/living/user = usr) // Checks if a toggleable power can be cancelled.
 	// We're not even on.
 	if (!active)
+		return 0
+	if (user.IsFrenzied() && !user.castDuringFrenzy)
+		to_chat(user, "<span class='warning'>You're lost to Frenzy...you cannot disable powers!</span>")
 		return 0
 	return 1
 	// NOTE: Used by Torpid Sleep to disable use if appropriate.
@@ -300,8 +306,8 @@
 		cancel_spell(user)
 		return
 
-	// Put target to Sleep (if valid)
-	if(!target.mind || !target.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
+	// Put target to Sleep (Bloodsuckers are immune to their own bit's sleep effect)
+	if((!target.mind || !target.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)) && target.stat <= UNCONSCIOUS)
 		target.Sleeping(100,0) 	  // SetSleeping() only changes sleep if the input is higher than the current value. AdjustSleeping() adds or subtracts //
 		target.Unconscious(100,1)  // SetUnconscious() only changes sleep if the input is higher than the current value. AdjustUnconscious() adds or subtracts //
 	if (!target.density) // Pull target to you if they don't take up space.
@@ -423,7 +429,7 @@
 //obj/effect/proc_holder/spell/targeted/touch/expelblood
 /obj/effect/proc_holder/spell/bloodsucker/expelblood
 	name = "Expel Blood"
-	desc = "Secrete some of your blood as an addictive, healing goo. Feeding it to corpses turns mortals to Bloodsuckers."
+	desc = "Secrete some of your blood as an addictive, healing goo. Feeding it to corpses turns mortals to Bloodsuckers. Enough of it can turn living victims into your slaves!"
 	bloodcost = 10
 	amToggleable = TRUE
 	amTargetted = TRUE
@@ -474,7 +480,7 @@
 
 	// Target Type: Living (but NOT Carbon)
 	else if (isliving(target))
-		to_chat(usr, "<span class='notice'>[src] cannot take your blood.</span>")
+		to_chat(usr, "<span class='notice'>[target] cannot take your blood.</span>")
 		return 0
 
 	// Target Type: Coffin

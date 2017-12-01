@@ -1,9 +1,10 @@
 
 // These are placed here because in some cases, if they are placed in the Bloodsucker antag folder, they won't get read by mind.dm, etc.
 
+#define ANTAG_HUD_BLOODSUCKER		20
+
 #define ANTAG_DATUM_BLOODSUCKER			/datum/antagonist/bloodsucker
 #define ANTAG_DATUM_VASSAL				/datum/antagonist/vassal
-#define ANTAG_HUD_BLOODSUCKER	50
 
 #define BLOODSUCKER_FRENZY_TIME	25		// How long the vamp stays in frenzy.
 #define BLOODSUCKER_FRENZY_OUT_TIME	300	// How long the vamp goes back into frenzy.

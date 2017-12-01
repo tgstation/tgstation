@@ -70,8 +70,8 @@
 /datum/game_mode/proc/can_make_bloodsucker(datum/mind/bloodsucker,datum/mind/creator) // Creator is just here so we can display fail messages to whoever is turning us.
 	// No Mind
 	if(!bloodsucker || !bloodsucker.key) // KEY is client login?
-		if(creator)
-			to_chat(creator, "<span class='danger'>[bloodsucker] isn't self-aware enough to be raised as a Bloodsucker!</span>")
+		//if(creator) // REMOVED. You wouldn't see their name if there is no mind, so why say anything?
+		//	to_chat(creator, "<span class='danger'>[bloodsucker] isn't self-aware enough to be raised as a Bloodsucker!</span>")
 		return 0
 	// Current body is invalid
 	if(!ishuman(bloodsucker.current) && !ismonkey(bloodsucker.current))
@@ -113,45 +113,54 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-/datum/game_mode/proc/can_make_vassal(datum/mind/vassal, datum/mind/creator)
-	if (!vassal || !vassal.key)
-		to_chat(creator, "<span class='danger'>[src] isn't self-aware enough to be made into a Vassal!</span>")
-		return 0
-	if (!ishuman(vassal.current) || !creator)
+/datum/game_mode/proc/can_make_vassal(mob/living/target, datum/mind/creator)
+	// Not Correct Type: Abort
+	if (!iscarbon(target) || !creator)
+		//message_admins("DEBUG1: can_make_vassal() Abort: Creator or Not Carbon [target] / [iscarbon(target)] / [creator]")
 		//to_chat(creator, "<span class='danger'>[src].</span>")
 		return 0
-	if (vassal.current.stat > UNCONSCIOUS)
+	if (target.stat > UNCONSCIOUS)
+		//message_admins("DEBUG1: can_make_vassal() Abort: Dead")
 		return 0
-	// Check Overdose: Am I even addicted to blood?
-	if (!vassal.current.reagents.addiction_list)
+	// Check Overdose: Am I even addicted to blood? Do I even have any in me?
+	if (!target.reagents.addiction_list || !target.reagents.reagent_list)
+		//message_admins("DEBUG2: can_make_vassal() Abort: No reagents")
 		return 0
 	// Check Overdose: Did my current volume go over the Overdose threshold?
 	var/am_od_on_blood = 0
-	for (var/datum/reagent/blood/vampblood/blood in vassal.current.reagents.reagent_list) // overdosed is tracked in reagent_list, not addiction_list.
-		//message_admins("DEBUG: Found vampblood [blood.id], Volume [blood.volume]")
+	for (var/datum/reagent/blood/vampblood/blood in target.reagents.reagent_list) // overdosed is tracked in reagent_list, not addiction_list.
+		//message_admins("DEBUG3: can_make_vassal() Found Blood! [blood] [blood.overdose]")
 		if (blood.overdosed)
 			am_od_on_blood = 1
+
 	if (!am_od_on_blood)
+		//message_admins("DEBUG4: can_make_vassal() Abort: No Blood")
+		return 0
+	// No Mind!
+	if (!target.mind || !target.mind.key)
+		to_chat(creator, "<span class='danger'>[target] isn't self-aware enough to be made into a Vassal!</span>")
 		return 0
 	// Already MY Vassal
-	var/datum/antagonist/vassal/V = vassal.has_antag_datum(ANTAG_DATUM_VASSAL)
+	var/datum/antagonist/vassal/V = target.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
 	if (V && V.master && V.master.owner == creator)
+		//message_admins("DEBUG5: can_make_vassal() Abort: Already Mine")
 		return 0
 	// Already Antag or Loyal
-	if (vassal.antag_datums && vassal.antag_datums.len > 0 || vassal.current.isloyal() || vassal in SSticker.mode.vassals || vassal.enslaved_to)
-		to_chat(creator, "<span class='danger'>[src] resists the power of your blood to dominate their mind!</span>")
+	if (target.mind.antag_datums && target.mind.antag_datums.len > 0 || target.isloyal() || (target.mind in SSticker.mode.vassals) || target.mind.enslaved_to)
+		//message_admins("DEBUG6: can_make_vassal() Abort: Am Bad Guy Already [target.mind.antag_datums] [target.mind.current.isloyal()]")
+		to_chat(creator, "<span class='danger'>[target] resists the power of your blood to dominate their mind!</span>")
 		return 0
 	return 1
 
-/datum/game_mode/proc/make_vassal(datum/mind/vassal, datum/mind/creator)
-	if (!can_make_vassal(vassal,creator))
+/datum/game_mode/proc/make_vassal(mob/living/target, datum/mind/creator)
+	if (!can_make_vassal(target,creator))
 		return 0
 	// Make Vassal
-	var/datum/antagonist/vassal/V = new ANTAG_DATUM_VASSAL(vassal)
-	V.master = creator
-	vassal.add_antag_datum(V)
-	vassals |= vassal
+	var/datum/antagonist/vassal/V = new ANTAG_DATUM_VASSAL(target.mind)
+	V.master = creator.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+	target.mind.add_antag_datum(V)
 
+	return 1
 
 /datum/game_mode/proc/remove_vassal(datum/mind/vassal)
 	vassal.remove_antag_datum(ANTAG_DATUM_VASSAL)

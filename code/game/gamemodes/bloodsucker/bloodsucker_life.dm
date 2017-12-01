@@ -73,6 +73,8 @@
 	// Message his Ghost
 	if (owner && !owner.current)
 		to_chat(owner, "<span class='userdanger'>You have met your Final Death!</span>")
+		// Free my Vassals! (if I haven't yet)
+		FreeAllVassals()
 
 
 
@@ -159,12 +161,12 @@ datum/antagonist/bloodsucker/proc/handle_feed_blood(mob/living/carbon/target)
 	////////////
 
 	// Non-Bloodsucker Drawbacks!
-	if(!target.mind || !target.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
-		// More Heal while Feeding
+	if((!target.mind || !target.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)) && target.stat <= UNCONSCIOUS)
+		// More Heal while Feeding (INCLUDING fire!)
 		owner.current.heal_overall_damage(regenRate, regenRate) // Heal BRUTE / BURN
 		// Continue Target Sleep
-		target.Sleeping(50,0) 	 // SetSleeping() only changes sleep if the input is higher than the current value. AdjustSleeping() adds or subtracts //
-		target.Unconscious(50,1) // SetUnconscious() only changes sleep if the input is higher than the current value. AdjustUnconscious() adds or subtracts //
+		target.Sleeping(100,0) 	 // SetSleeping() only changes sleep if the input is higher than the current value. AdjustSleeping() adds or subtracts //
+		target.Unconscious(100,1) // SetUnconscious() only changes sleep if the input is higher than the current value. AdjustUnconscious() adds or subtracts //
 
 
 	// Blood Gulp Sound

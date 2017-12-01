@@ -23,8 +23,7 @@
 	var/list/objectives_given = list()	// For removal if needed.
 	var/bloodTakenLifetime = 0			// Total blood ever fed from humans.
 	var/vampsMade = 0					// Total bloodsuckers created from victims.
-	//var/vassalsMade = 0				// Total vassals controlled // REMOVED: use vassals.len
-	var/list/datum/mind/vassals2 = list()// Vassals under my control. Periodically remove the dead ones.
+	//var/list/datum/mind/vassals2 = list()// Vassals under my control. Periodically remove the dead ones.
 	var/list/datum/antagonist/vassal/vassals = list()// Vassals under my control. Periodically remove the dead ones.
 	var/datum/mind/creator				// Who made me? For both Vassals AND Bloodsuckers (though Master Vamps won't have one)
 	var/list/obj/effect/decal/cleanable/blood/vampblood/desecrateBlood = list()	// All the blood I've spilled with Expel Blood to desecrate for an objective.
@@ -64,7 +63,7 @@
 	forge_bloodsucker_objectives()
 
 	// Add Antag HUD
-	update_bloodsucker_icons_added(owner.current)
+	update_bloodsucker_icons_added(owner.current, "bloodsucker")
 
 	// Run Life Functions
 	handle_life()
@@ -134,10 +133,17 @@
 	// Names (EVERYONE gets one))
 	if (gender == MALE)
 		vampname = pick("Desmond","Rudolph","Dracul","Vlad","Pyotr","Gregor","Cristian","Christoff","Marcu","Andrei","Constantin","Gheorghe","Grigore","Ilie","Iacob","Luca","Mihail","Pavel","Vasile","Octavian","Sorin", \
-						"Sveyn","Aurel","Alexe","Iustin","Theodor","Dimitrie","Octav","Damien","Magnus","Caine","Abel")
+						"Sveyn","Aurel","Alexe","Iustin","Theodor","Dimitrie","Octav","Damien","Magnus","Caine","Abel", // Romanian/Ancient
+						"Lucius","Gaius","Otho","Balbinus","Arcadius","Romanos","Alexios","Vitellius",  // Latin
+						"Melanthus","Teuthras","Orchamus","Amyntor","Axion",  // Greek
+						"Thoth","Thutmose") // Egyptian
+
 	else
 		vampname = pick("Islana","Tyrra","Greganna","Pytra","Hilda","Andra","Crina","Viorela","Viorica","Anemona","Camelia","Narcisa","Sorina","Alessia","Sophia","Gladda","Arcana","Morgan","Lasarra","Ioana","Elena", \
-						"Alina","Rodica","Teodora","Denisa","Mihaela","Svetla","Stefania","Diyana","Kelssa","Lilith")
+						"Alina","Rodica","Teodora","Denisa","Mihaela","Svetla","Stefania","Diyana","Kelssa","Lilith", // Romanian/Ancient
+						"Alexia","Athanasia","Callista","Karena","Nephele","Scylla","Ursa",  // Latin
+						"Alcestis","Damaris","Elisavet","Khthonia","Teodora",  // Greek
+						"Nefret") // Egyptian
 
 /datum/antagonist/bloodsucker/proc/SelectTitle(gender=MALE, am_fledgling = 0)
 	// Titles [Master]
@@ -148,11 +154,11 @@
 		if (gender == MALE)
 			vamptitle = pick ("Count","Baron","Viscount","Prince","Duke","Tzar","Dreadlord","Lord","Master")
 			if (prob(10)) // Gender override
-				vampreputation = pick("King of the Damned", "Blood King", "Emperor of Blades", "Sinlord")
+				vampreputation = pick("King of the Damned", "Blood King", "Emperor of Blades", "Sinlord", "God-King")
 		else
 			vamptitle = pick ("Countess","Baroness","Viscountess","Princess","Duchess","Tzarina","Dreadlady","Lady","Mistress")
 			if (prob(10)) // Gender override
-				vampreputation = pick("Queen of the Damned", "Blood Queen", "Empress of Blades", "Sinlady")
+				vampreputation = pick("Queen of the Damned", "Blood Queen", "Empress of Blades", "Sinlady", "God-Queen")
 	// Titles [Fledgling]
 	else
 		vamptitle = null
@@ -165,7 +171,7 @@
 
 	var/fullname
 	// Name First
-	fullname = (vampname ? vampname : owner.real_name)
+	fullname = (vampname ? vampname : owner.name)
 	// Title
 	if (vamptitle)
 		fullname = vamptitle + " " + fullname
@@ -175,24 +181,6 @@
 
 	return fullname
 
-
-/mob/living/carbon/human/proc/ReturnVampExamine(var/mob/viewer, var/include_rep=0)
-	// So we can call from examine.dm in /human folder.
-
-	// Only Vamps see Vamps
-	if (!mind || !mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER) || !viewer.mind || !viewer.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
-		return ""
-
-	// Default String
-	var/datum/antagonist/bloodsucker/bloodsuckerdatum = mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
-	var/returnString = "\[<span class='warning'><EM>[bloodsuckerdatum.ReturnFullName(src,1)]</EM></span>\]"
-
-	// In Disguise (Veil)?
-	if (name_override != null)
-		returnString += "<span class='warning'> (in disguise!) </span>"
-
-	returnString += "\n"
-	return returnString
 
 
 
@@ -400,19 +388,84 @@ datum/antagonist/bloodsucker/proc/ClearAllPowersAndStats()
 		// HUD! //
 
 
-/datum/antagonist/bloodsucker/proc/update_bloodsucker_icons_added(mob/living/bloodsucker)
-	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_DEVIL]//ANTAG_HUD_BLOODSUCKER]
+/datum/antagonist/bloodsucker/proc/update_bloodsucker_icons_added(mob/living/bloodsucker, icontype="bloodsucker")
+	var/datum/atom_hud/antag/bloodsucker/hud = GLOB.huds[ANTAG_HUD_BLOODSUCKER]// ANTAG_HUD_DEVIL
 	hud.join_hud(bloodsucker)
-	set_antag_hud(bloodsucker, "bloodsucker") // Located in icons/mob/hud.dmi
+	set_antag_hud(bloodsucker, icontype) // Located in icons/mob/hud.dmi
 
 /datum/antagonist/bloodsucker/proc/update_bloodsucker_icons_removed(mob/living/bloodsucker)
-	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_DEVIL]//ANTAG_HUD_BLOODSUCKER]
+	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_BLOODSUCKER]//ANTAG_HUD_BLOODSUCKER]
 	hud.leave_hud(bloodsucker)
 	set_antag_hud(bloodsucker, null)
 
-// NOTE: Gang members can only see their own kind. Perhaps we can have Vassals do the same thing with their master ONLY, and vice versa?
 
-/////////////////////////////////////
+// NOTE: Gang members can only see their own kind. Perhaps we can have Vassals do the same thing with their master ONLY, and vice versa?
+/datum/atom_hud/antag/bloodsucker  // from hud.dm in /datums/   Also see data_huds.dm + antag_hud.dm
+	// For Reference:
+	//var/list/atom/hudatoms = list() //list of all atoms which display this hud			AKA Every living person goes into the MEDICAL HUD. They just can't see it.
+	//var/list/mob/hudusers = list() //list with all mobs who can see the hud				AKA anyone who can SEE the hud.
+	//var/list/hud_icons = list() //these will be the indexes for the atom's hud_list
+
+
+/datum/atom_hud/antag/bloodsucker/proc/add_hud_to_BACKUP_NOT_USED(mob/M) // This is for REFERENCE NOTES only.
+	..()
+	return
+	// Taken DIRECTLY from datums/hud.dm until we can learn how to integrate this method a little more easily.
+	if(!M)
+		return
+	if (!hudusers[M])
+		hudusers[M] = 1 // This adds M (the vassal) to the list of people who SEE the hud. This should stay this way, because he IS technically on the list.
+		for(var/atom/A in hudatoms)
+			add_to_single_hud(M, A) // This adds A to M's hud. That means add_to_single_hud() is where we actually make our changes.
+	else
+		hudusers[M]++
+
+/datum/atom_hud/antag/bloodsucker/add_to_single_hud(mob/M, atom/A)
+	if (!check_valid_hud_user(M,A)) 	// FULP: This checks if the Mob is a Vassal, and if the Atom is his master OR on his team.
+		return
+	..()
+
+/datum/atom_hud/antag/bloodsucker/proc/check_valid_hud_user(mob/M, atom/A) // Remember: A is being added to M's hud. Because M's hud is a /antag/vassal hud, this means M is the vassal here.
+	// GOAL: Vassals see their Master and his other Vassals.
+	// GOAL: Vassals can BE seen by their Bloodsucker and his other Vassals.
+	// GOAL: Bloodsuckers can see each other.
+	if (!M || !A || !ismob(A) || !M.mind)// || !A.mind)
+		return 0
+	var/mob/A_mob = A
+	if (!A_mob.mind)
+		return 0
+
+	// Find Datums: Bloodsucker
+	var/datum/antagonist/bloodsucker/atom_B = A_mob.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+	var/datum/antagonist/bloodsucker/mob_B = M.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+
+	// Check 1) Are we both Bloodsuckers?
+	if (atom_B && mob_B)
+		return 1
+
+	// Find Datums: Vassal
+	var/datum/antagonist/vassal/atom_V = A_mob.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
+	var/datum/antagonist/vassal/mob_V = M.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
+
+	// Check 2) If they are a BLOODSUCKER, then are they my Master?
+	if (mob_V && atom_B == mob_V.master)
+		return 1 // SUCCESS!
+
+	// Check 3) If I am a BLOODSUCKER, then are they my Vassal?
+	if (mob_B && atom_V && (atom_V in mob_B.vassals))
+		return 1 // SUCCESS!
+
+	// Check 4) If we are both VASSAL, then do we have the same master?
+	if (atom_V && mob_V && atom_V.master == mob_V.master)
+		return 1 // SUCCESS!
+
+	return 0
+
+
+				/////////////////////////////////////
+
+
+		// BLOOD COUNTER ! //
 
 /datum/hud
 	var/obj/screen/bloodsucker/blood_counter/blood_display
@@ -509,7 +562,7 @@ datum/antagonist/bloodsucker/proc/ClearAllPowersAndStats()
 	var/datum/antagonist/bloodsucker/master // Whom do I obey?
 
 /datum/antagonist/bloodsucker/proc/attempt_turn_vassal(mob/living/carbon/C)
-	SSticker.mode.make_vassal(C.mind,owner)
+	SSticker.mode.make_vassal(C,owner)
 
 //Proc called when the datum is given to a mind.
 /datum/antagonist/vassal/on_gain()
@@ -517,15 +570,20 @@ datum/antagonist/bloodsucker/proc/ClearAllPowersAndStats()
 	SSticker.mode.vassals |= owner
 
 	// Assign Master
-	owner.enslave_mind_to_creator(master.owner)
 	var/datum/antagonist/bloodsucker/B = master.owner.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	if (B)
-		B.vassals |= owner
+		B.vassals |= src
 	owner.enslave_mind_to_creator(master.owner.current)
+
+	// Add Antag HUD
+	update_vassal_icons_added(owner.current, "vassal")
 
 	return ..() // Do base stuff: greet(), etc.
 
 /datum/antagonist/vassal/on_removal()
+
+	// Clear Antag HUD
+	update_vassal_icons_removed(owner.current)
 
 	if (master)
 		master.vassals -= src
@@ -535,7 +593,6 @@ datum/antagonist/bloodsucker/proc/ClearAllPowersAndStats()
 	SSticker.mode.vassals -= owner
 
 	return ..() // Do base stuff.
-
 
 
 /datum/antagonist/vassal/greet()
@@ -552,8 +609,22 @@ datum/antagonist/bloodsucker/proc/ClearAllPowersAndStats()
 	owner.current.visible_message("[owner.current]'s eyes dart feverishly from side to side, and then stop. [owner.current.p_they(TRUE)] seems calm, \
 			like [owner.current.p_they()] [owner.current.p_have()] regained some lost part of [owner.current.p_them()]self.",\
 			"<span class='userdanger'><FONT size = 3>With a snap, you are no longer enslaved to [master.owner]! You breathe in heavily, having regained your free will.</FONT></span>")
+	// Effects...
+	owner.store_memory("Your Bloodsucker master has lost their control over you!")
+	owner.current.playsound_local(null, 'sound/magic/mutate.ogg', 100, FALSE, pressure_affected = FALSE)
 	// And to your former Master...
 	//if (master && master.owner)
 	//	to_chat(master.owner, "<span class='userdanger'>You feel the bond with your vassal [owner.current] has somehow been broken!</span>")
 
+
+
+/datum/antagonist/vassal/proc/update_vassal_icons_added(mob/living/bloodsucker, icontype="vassal")
+	var/datum/atom_hud/antag/bloodsucker/hud = GLOB.huds[ANTAG_HUD_BLOODSUCKER]// ANTAG_HUD_DEVIL
+	hud.join_hud(bloodsucker)
+	set_antag_hud(bloodsucker, icontype) // Located in icons/mob/hud.dmi
+
+/datum/antagonist/vassal/proc/update_vassal_icons_removed(mob/living/bloodsucker)
+	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_BLOODSUCKER]//ANTAG_HUD_BLOODSUCKER]
+	hud.leave_hud(bloodsucker)
+	set_antag_hud(bloodsucker, null)
 
