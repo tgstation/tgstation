@@ -251,16 +251,34 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
+"P" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"Q" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"R" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"S" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"T" = (
+/obj/structure/extinguisher_cabinet{
+	step_y = 29
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 a
 b
 b
 b
-b
+P
 m
 m
-b
+R
 b
 b
 q
@@ -326,7 +344,7 @@ l
 j
 u
 u
-N
+K
 u
 u
 w
@@ -362,23 +380,23 @@ j
 j
 j
 j
+w
+b
+a
+a
+b
+J
+j
+j
+j
+j
+j
 x
 b
 a
 a
 b
-j
-j
-j
-j
-j
-j
-x
-b
-a
-a
-z
-A
+T
 A
 D
 G
@@ -393,20 +411,20 @@ l
 m
 m
 l
-n
+o
 o
 s
 b
 a
 a
 b
+J
 j
 j
 j
 j
 j
-j
-j
+x
 b
 a
 a
@@ -417,7 +435,7 @@ j
 j
 j
 j
-j
+w
 b
 a
 a
@@ -455,10 +473,10 @@ b
 m
 m
 b
-M
+J
 v
 v
-O
+L
 v
 v
 j
@@ -477,10 +495,10 @@ a
 b
 b
 b
-b
+Q
 m
 m
-b
+S
 b
 b
 q
