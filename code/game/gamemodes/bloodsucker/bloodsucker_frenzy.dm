@@ -1,10 +1,13 @@
 
 /mob/living // NOTE: This adds my own contribution to the /mob/living datum.
-	var/frenzied = FALSE 	// I am no longer in control of my actions.
+	var/frenzied = FALSE 		// I am no longer in control of my actions.
+	var/castDuringFrenzy = FALSE// Can I cast spells during frenzy? Turned TRUE just before casting so you pass the test.
 /mob/living/proc/IsFrenzied()
 	return frenzied
 /mob/living/proc/SetFrenzied(amFrenzied = 1)
 	frenzied = amFrenzied
+/mob/living/proc/SetCastDuringFrenzy(canCast = 1)
+	castDuringFrenzy = canCast
 
 // 			How Frenzy Works
 //
@@ -90,7 +93,11 @@ datum/antagonist/bloodsucker/proc/start_frenzy(mob/living/target)
 	to_chat(owner, "<span class='warning'>Your inner monster churns. Control of your body begins to slip away...</span>")
 	owner.current.Jitter(250)
 
-	sleep(40)
+	// AHHHHHH!!!!
+	sleep(20)
+	playsound(owner.current.loc,'sound/Fulpsounds/frenzyscream.ogg', 100, 1)	// This sound has about two seconds of lead-up.
+
+	sleep(20)
 	to_chat(owner, "<span class='userdanger'>You enter a savage, bloodthirsty Frenzy! Your actions are no longer your own!</span>")
 	owner.current.jitteriness = 0
 
@@ -103,9 +110,6 @@ datum/antagonist/bloodsucker/proc/start_frenzy(mob/living/target)
 	owner.current.overlay_fullscreen("blurry", /obj/screen/fullscreen/frenzy) // Big red FRENZY overlay!
 	owner.current.update_canmove() // Updates if you can move or not. Frenzy has been added.
 	//overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry) <---Copied from blur_eyes in mob.dm.  We can add an overlay to screen_full.dmi and have it affected by hud/fullscreen.dm
-
-	// AHHHHHH!!!!
-	playsound(owner.current.loc,'sound/Fulpsounds/frenzyscream.ogg', 30, 1)	//return 0
 
 	// Disable Controls
 	// affect user.mind
@@ -206,12 +210,15 @@ datum/antagonist/bloodsucker/proc/start_frenzy(mob/living/target)
 		// START FEED
 		if (owner.current.pulling)
 			// DEAL BITING DAMAGE TO TARGET!
-			owner.current.grab_state = GRAB_AGGRESSIVE
+			owner.current.grab_state = max(owner.current.grab_state,GRAB_AGGRESSIVE)
 			for (var/obj/effect/proc_holder/spell/bloodsucker/feed/feedpower in powers)
 				//to_chat(owner, "<span class='warning'>DEBUG: Frenzy about to attempt Feed:  [feedpower] by [owner.current] </span>")
+				owner.current.SetCastDuringFrenzy(TRUE)
 				if (!feedpower.active && feedpower.attempt_cast(owner.current))
 					inactivity_period = 5
+					owner.current.SetCastDuringFrenzy(FALSE) // Disable Casting
 					continue
+				owner.current.SetCastDuringFrenzy(FALSE) // Disable Casting...again. GOD this is dirty.
 
 		// LOSE TARGET
 		if (target)
@@ -309,7 +316,7 @@ datum/antagonist/bloodsucker/proc/end_frenzy()
 		return
 	owner.current.SetFrenzied(FALSE)
 
-	owner.current.clear_fullscreen("blurry", 0) 	// Restore sight from blurry visuals.
+	owner.current.clear_fullscreen("blurry") 	// Restore sight from blurry visuals.
 	frenzy_buffer = BLOODSUCKER_FRENZY_OUT_TIME	// Timer til we check for frenzy again
 	owner.current.stop_pulling()
 	if (frenzy_state > 1 && owner.current.stat == CONSCIOUS)

@@ -241,7 +241,7 @@
 	open_sound = 'sound/Fulpsounds/coffin_open.ogg'//'sound/machines/door_open.ogg'
 	close_sound = 'sound/Fulpsounds/coffin_close.ogg'//'sound/machines/door_close.ogg'
 	breakout_time = 600
-	pryLidTimer = 450
+	pryLidTimer = 600
 
 /obj/structure/closet/coffin/
 	var/mob/resident	// Who has claimed me? Locks when they sleep inside, unlocks when they are awake. Assigned when using Blood on this during construction.
@@ -253,7 +253,7 @@
 	// We're a Vampire Coffin? Why didn't you say so!
 	anchored = 1					// No moving this
 	resident = claimant
-	to_chat(claimant, "<span class='notice'>You have claimed the [src] for your own.</span>")
+	to_chat(claimant, "<span class='danger'>You have claimed the [src] for your own.</span>")
 
 /obj/structure/closet/coffin/blackcoffin/ClaimCoffin(mob/claimant)
 	// Black Coffins get a lil bloody
@@ -310,11 +310,14 @@
 				to_chat(user, "<span class='notice'>This is a much more complex mechanical structure than you thought. You don't know where to begin cutting the [src].</span>")
 				return
 	if(locked && istype(W, /obj/item/crowbar))
-		user.visible_message("<span class='notice'>[user] tries to pry the lid off of the [src].</span>", \
-							  "<span class='notice'>You begin prying the lid off of the [src]. This should take about [DisplayTimeText(pryLidTimer)].</span>")
-		if (!do_mob(user,src,pryLidTimer))
+		var/pry_time = pryLidTimer * W.toolspeed // Pry speed must be affected by the speed of the tool.
+		user.visible_message("<span class='notice'>[user] tries to pry the lid off of the [src] with the [W].</span>", \
+							  "<span class='notice'>You begin prying the lid off of the [src] with the [W]. This should take about [DisplayTimeText(pry_time)].</span>")
+		if (!do_mob(user,src,pry_time))
 			return
 		bust_open()
+		user.visible_message("<span class='notice'>[user] snaps the door of the [src] wide open.</span>", \
+							  "<span class='notice'>The door of the [src] snaps open.</span>")
 		return
 
 	..()

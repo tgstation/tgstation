@@ -31,7 +31,7 @@
 # END_KEYWORDS
 
 Head Coder  = +EVERYTHING
-Council Member  = +EVERYTHING
+Fulp Crew  = +EVERYTHING
 
 Admin Observer
 Moderator		= +ADMIN

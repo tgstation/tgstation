@@ -7,9 +7,9 @@
 # NOTE: if the rank-name cannot be found in admin_ranks.txt, they will not be adminned! ~Carn #
 # NOTE: syntax was changed to allow hyphenation of ranknames, since spaces are stripped.      #
 ###############################################################################################
-TheSwain	=	Council Member
-Clowno	=	Council Member
-fulpstation	=	Council Member
+TheSwain	=	Fulp Crew
+Clowno	=	Fulp Crew
+fulpstation	=	Fulp Crew
 tomamoto	=	Host
 Grupert87	=	Moderator
 90sSitcomWriter	=	Moderator
@@ -20,7 +20,7 @@ ImpendingRiot	=	Moderator
 falconhoof	=	Game Master
 spazkidin3d =   Game Master
 mwelsh	=	Moderator
-Oney	=	Game Master
+Oney	=	Fulp Crew
 FaKanza		=	Game Master
 Trickytyfly		=	Game Master
 
@@ -36,6 +36,8 @@ ChocolateJ		=	Administrator
 Axolotl123		=	Administrator
 Qustinnus		=	Administrator
 Idontcareacount		=	Administrator
+Ss4gogeta0	=	Administrator
 
 #TRIAL ADMINS
-Ss4gogeta0	=	Trial Admin
+Windarkata	=	Trial Admin
+Bricksqwad	=	Trial Admin

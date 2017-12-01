@@ -606,6 +606,19 @@
 					dat += "<tr><td><a href='?_src_=vars;[HrefToken()];Vars=[REF(N)]'>[N.name]([N.key])</a><i>Bloodsucker met Final Death!</i></td>"
 					dat += "<td><A href='?priv_msg=[N.key]'>PM</A></td></tr>"
 			dat += "</table>"
+		if(SSticker.mode.vassals.len > 0)	// FULPSTATION
+			dat += "<br><table cellspacing=5><tr><td><B>Vassals</B></td><td></td><td></td></tr>"
+			for(var/datum/mind/N in SSticker.mode.vassals)
+				var/mob/M = N.current
+				if(M)
+					dat += "<tr><td><a href='?_src_=holder;[HrefToken()];adminplayeropts=[REF(M)]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
+					dat += "<td><A href='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(M)]'>FLW</a></td>"
+					dat += "<td><A HREF='?_src_=holder;[HrefToken()];traitor=[REF(M)]'>Show Objective</A></td></tr>"
+				else
+					dat += "<tr><td><a href='?_src_=vars;[HrefToken()];Vars=[REF(N)]'>[N.name]([N.key])</a><i>Their body was destroyed!</i></td>"
+					dat += "<td><A href='?priv_msg=[N.key]'>PM</A></td></tr>"
+			dat += "</table>"
 
 		var/list/blob_minds = list()
 		for(var/mob/camera/blob/B in GLOB.mob_list)
@@ -624,7 +637,7 @@
 					dat += "<td><A href='?priv_msg=[blob.key]'>PM</A></td></tr>"
 			dat += "</table>"
 
-		
+
 		var/list/pirates = get_antagonists(/datum/antagonist/pirate)
 		if(pirates.len > 0)
 			dat += "<br><table cellspacing=5><tr><td><B>Pirates</B></td><td></td></tr>"
