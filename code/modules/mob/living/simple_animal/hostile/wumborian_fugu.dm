@@ -73,7 +73,7 @@
 		to_chat(F, "<span class='notice'>YOU'RE ALREADY WUMBO!</span>")
 		return
 	if(F.inflate_cooldown)
-		to_chat(F, "<span class='notice'>You need time to gather our strength.</span>")
+		to_chat(F, "<span class='notice'>You need time to gather your strength.</span>")
 		return
 	if(F.buffed)
 		to_chat(F, "<span class='notice'>Something is interfering with your growth.</span>")
