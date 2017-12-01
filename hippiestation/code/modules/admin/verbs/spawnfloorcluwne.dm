@@ -17,4 +17,4 @@
 		new /mob/living/simple_animal/hostile/floor_cluwne(T)
 	log_admin("[key_name(usr)] spawned floor cluwne.")
 	message_admins("[key_name(usr)] spawned floor cluwne.")
-	SSblackbox.add_details("admin_verb","SFC")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "SFC")

@@ -31,7 +31,7 @@
 	.["Show VV To Player"] = "?_src_=vars;[HrefToken(TRUE)];expose=[REF(src)]"
 
 
-/datum/proc/on_reagent_change()
+/datum/proc/on_reagent_change(changetype)
 	return
 
 
@@ -418,23 +418,8 @@
 		item = "[VV_HTML_ENCODE(name)] = /icon (<span class='value'>[value]</span>)"
 		#endif
 
-/*		else if (istype(value, /image))
-		#ifdef VARSICON
-		var/rnd = rand(1, 10000)
-		var/image/I = value
-
-		src << browse_rsc(I.icon, "tmp[REF(value)][rnd].png")
-		html += "[name] = <img src=\"tmp[REF(value)][rnd].png\">"
-		#else
-		html += "[name] = /image (<span class='value'>[value]</span>)"
-		#endif
-*/
 	else if (isfile(value))
 		item = "[VV_HTML_ENCODE(name)] = <span class='value'>'[value]'</span>"
-
-	//else if (istype(value, /client))
-	//	var/client/C = value
-	//	item = "<a href='?_src_=vars;Vars=[REF(value)]'>[VV_HTML_ENCODE(name)] [REF(value)]</a> = [C] [C.type]"
 
 	else if (istype(value, /datum))
 		var/datum/D = value
@@ -762,6 +747,28 @@
 
 			src.give_disease(M)
 			href_list["datumrefresh"] = href_list["give_spell"]
+
+		else if(href_list["ninja"])
+			if(!check_rights(R_FUN))
+				return
+
+			var/mob/living/carbon/human/M = locate(href_list["ninja"]) in GLOB.carbon_list
+			if(!istype(M))
+				to_chat(usr, "This can only be used on instances of type /mob")
+				return
+
+			if(tgalert(usr, "Are you sure you want to make [M] into a ninja?", "Confirmation", "Yes", "No") == "No")
+				return
+
+			if(!M.mind)
+				M.mind_initialize()
+
+			var/datum/antagonist/ninja/hiyah = M.mind.has_antag_datum(/datum/antagonist/ninja)
+			if(!hiyah)
+				hiyah = add_ninja(M)
+			if(hiyah)
+				hiyah.equip_space_ninja()
+			href_list["datumrefresh"] = href_list["ninja"]
 
 		else if(href_list["gib"])
 			if(!check_rights(R_FUN))

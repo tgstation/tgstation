@@ -49,6 +49,7 @@
 	var/normal_integrity = AIRLOCK_INTEGRITY_N
 	integrity_failure = 70
 	damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_N
+	interact_open = TRUE
 
 	var/security_level = 0 //How much are wires secured
 	var/aiControlDisabled = 0 //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
@@ -118,8 +119,8 @@
 	if(damage_deflection == AIRLOCK_DAMAGE_DEFLECTION_N && security_level > AIRLOCK_SECURITY_METAL)
 		damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_R
 	prepare_huds()
-	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
-	diag_hud.add_to_hud(src)
+	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
+		diag_hud.add_to_hud(src)
 	diag_hud_set_electrified()
 
 	return INITIALIZE_HINT_LATELOAD
@@ -245,8 +246,8 @@
 		for(var/obj/machinery/doorButtons/D in GLOB.machines)
 			D.removeMe(src)
 	qdel(note)
-	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
-	diag_hud.remove_from_hud(src)
+	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
+		diag_hud.remove_from_hud(src)
 	return ..()
 
 /obj/machinery/door/airlock/handle_atom_del(atom/A)
@@ -265,7 +266,7 @@
 					justzap = TRUE
 					addtimer(CALLBACK(src, .proc/unzap), 10)
 					return
-			else /*if(src.justzap)*/
+			else
 				return
 		else if(user.hallucinating() && ishuman(user) && prob(4) && !operating)
 			var/mob/living/carbon/human/H = user
@@ -1375,8 +1376,6 @@
 	power["backup_timeleft"] = src.secondsBackupPowerLost
 	data["power"] = power
 
-	data["density"] = density
-	data["welded"] = welded
 	data["shock"] = secondsElectrified == 0 ? 2 : 0
 	data["shock_timeleft"] = secondsElectrified
 	data["id_scanner"] = !aiDisabledIdScanner

@@ -1,12 +1,15 @@
 /* HUD DATUMS */
 
+GLOBAL_LIST_EMPTY(all_huds)
+
 //GLOBAL HUD LIST
 GLOBAL_LIST_INIT(huds, list(
 	DATA_HUD_SECURITY_BASIC = new/datum/atom_hud/data/human/security/basic(),
 	DATA_HUD_SECURITY_ADVANCED = new/datum/atom_hud/data/human/security/advanced(),
 	DATA_HUD_MEDICAL_BASIC = new/datum/atom_hud/data/human/medical/basic(),
 	DATA_HUD_MEDICAL_ADVANCED = new/datum/atom_hud/data/human/medical/advanced(),
-	DATA_HUD_DIAGNOSTIC = new/datum/atom_hud/data/diagnostic(),
+	DATA_HUD_DIAGNOSTIC_BASIC = new/datum/atom_hud/data/diagnostic/basic(),
+	DATA_HUD_DIAGNOSTIC_ADVANCED = new/datum/atom_hud/data/diagnostic/advanced(),
 	ANTAG_HUD_CULT = new/datum/atom_hud/antag(),
 	ANTAG_HUD_REV = new/datum/atom_hud/antag(),
 	ANTAG_HUD_OPS = new/datum/atom_hud/antag(),
@@ -29,8 +32,19 @@ GLOBAL_LIST_INIT(huds, list(
 	var/list/mob/hudusers = list() //list with all mobs who can see the hud
 	var/list/hud_icons = list() //these will be the indexes for the atom's hud_list
 
+/datum/atom_hud/New()
+	GLOB.all_huds += src
+
+/datum/atom_hud/Destroy()
+	for(var/v in hudusers)
+		remove_hud_from(v)
+	for(var/v in hudatoms)
+		remove_from_hud(v)
+	GLOB.all_huds -= src
+	return ..()
+
 /datum/atom_hud/proc/remove_hud_from(mob/M)
-	if(!M)
+	if(!M || !hudusers[M])
 		return
 	if (!--hudusers[M])
 		hudusers -= M
@@ -78,9 +92,10 @@ GLOBAL_LIST_INIT(huds, list(
 
 //MOB PROCS
 /mob/proc/reload_huds()
-	for(var/datum/atom_hud/hud in (GLOB.huds|GLOB.active_alternate_appearances))
+	for(var/datum/atom_hud/hud in GLOB.all_huds)
 		if(hud && hud.hudusers[src])
-			hud.add_hud_to(src)
+			for(var/atom/A in hud.hudatoms)
+				hud.add_to_single_hud(src, A)
 
 /mob/dead/new_player/reload_huds()
 	return

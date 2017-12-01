@@ -472,3 +472,9 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 #define SYRINGE_DRAW 0
 #define SYRINGE_INJECT 1
+#define RESEARCH_MATERIAL_RECLAMATION_ID "0"
+
+//gold slime core spawning
+#define NO_SPAWN 0
+#define HOSTILE_SPAWN 1
+#define FRIENDLY_SPAWN 2

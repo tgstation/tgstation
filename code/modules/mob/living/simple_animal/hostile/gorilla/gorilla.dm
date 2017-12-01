@@ -74,8 +74,10 @@
 	var/list/parts = target_bodyparts(target)
 	return ..() && !istype(the_target, /mob/living/carbon/monkey) && (!parts  || parts.len > 3)
 
+
 /mob/living/simple_animal/hostile/gorilla/CanSmashTurfs(turf/T)
 	return iswallturf(T)
+
 
 /mob/living/simple_animal/hostile/gorilla/gib(no_brain)
 	if(!no_brain)

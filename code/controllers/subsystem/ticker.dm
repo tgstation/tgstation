@@ -176,6 +176,8 @@ SUBSYSTEM_DEF(ticker)
 			if(!setup())
 				//setup failed
 				current_state = GAME_STATE_STARTUP
+				start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
+				timeLeft = null
 				Master.SetRunLevel(RUNLEVEL_LOBBY)
 
 		if(GAME_STATE_PLAYING)
@@ -299,7 +301,7 @@ SUBSYSTEM_DEF(ticker)
 	//Cleanup some stuff
 	for(var/obj/effect/landmark/start/S in GLOB.landmarks_list)
 		//Deleting Startpoints but we need the ai point to AI-ize people later
-		if(S.name != "AI")
+		if(S.delete_after_roundstart)
 			qdel(S)
 
 	var/list/adm = get_admin_counts()

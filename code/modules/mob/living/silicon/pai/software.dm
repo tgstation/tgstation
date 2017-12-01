@@ -588,7 +588,6 @@
 	if(!istype(machine, /obj/machinery/door))
 		dat += "Connected device's firmware does not appear to be compatible with Airlock Jack protocols.<br>"
 		return dat
-//	var/obj/machinery/airlock/door = machine
 
 	if(!hackdoor)
 		dat += "<a href='byond://?src=[REF(src)];software=doorjack;jack=1;sub=0'>Begin Airlock Jacking</a> <br>"

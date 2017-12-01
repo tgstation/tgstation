@@ -4,8 +4,7 @@
 	desc = "A shell of swarmer that was completely powered down. It can no longer activate itself."
 	icon = 'icons/mob/swarmer.dmi'
 	icon_state = "swarmer_unactivated"
-	origin_tech = "bluespace=4;materials=4;programming=7"
-	materials = list(MAT_METAL = 10000, MAT_GLASS = 4000)
+	materials = list(MAT_METAL=10000, MAT_GLASS=4000)
 
 /obj/effect/mob_spawn/swarmer
 	name = "unactivated swarmer"
@@ -101,8 +100,8 @@
 /mob/living/simple_animal/hostile/swarmer/Initialize()
 	. = ..()
 	verbs -= /mob/living/verb/pulled
-	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
-	diag_hud.add_to_hud(src)
+	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
+		diag_hud.add_to_hud(src)
 
 /mob/living/simple_animal/hostile/swarmer/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]

@@ -120,7 +120,7 @@
 					return
 				inserted_id = I
 				to_chat(usr, "<span class='notice'>You insert the ID into [src]'s card slot.</span>")
-			else 
+			else
 				to_chat(usr, "<span class='warning'>Error: No valid ID!</span>")
 				flick(icon_deny, src)
 	if(href_list["purchase"])
@@ -137,10 +137,7 @@
 				inserted_id.mining_points -= prize.cost
 				to_chat(usr, "<span class='notice'>[src] clanks to life briefly before vending [prize.equipment_name]!</span>")
 				new prize.equipment_path(src.loc)
-				SSblackbox.add_details("mining_equipment_bought",
-					"[src.type]|[prize.equipment_path]")
-				// Add src.type to keep track of free golem purchases
-				// separately.
+				SSblackbox.record_feedback("nested tally", "mining_equipment_bought", 1, list("[type]", "[prize.equipment_path]"))
 		else
 			to_chat(usr, "<span class='warning'>Error: Please insert a valid ID!</span>")
 			flick(icon_deny, src)
@@ -194,7 +191,7 @@
 		if("Mining Conscription Kit")
 			new /obj/item/storage/backpack/duffelbag/mining_conscript(loc)
 
-	SSblackbox.add_details("mining_voucher_redeemed", selection)
+	SSblackbox.record_feedback("tally", "mining_voucher_redeemed", 1, selection)
 	qdel(voucher)
 
 /obj/machinery/mineral/equipment_vendor/ex_act(severity, target)

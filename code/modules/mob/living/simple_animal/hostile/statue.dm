@@ -95,7 +95,7 @@
 	else
 		return ..()
 
-/mob/living/simple_animal/hostile/statue/DestroySurroundings()
+/mob/living/simple_animal/hostile/statue/DestroyPathToTarget()
 	if(!can_be_seen(get_turf(loc)))
 		..()
 

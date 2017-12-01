@@ -99,18 +99,12 @@
 	if(deg && (deg > 0 && deg <= 360))
 		degrees = deg
 		to_chat(user, "<span class='notice'>You rotate the top of the pen to [degrees] degrees.</span>")
+		GET_COMPONENT(hidden_uplink, /datum/component/uplink)
 		if(hidden_uplink && degrees == traitor_unlock_degrees)
 			to_chat(user, "<span class='warning'>Your pen makes a clicking noise, before quickly rotating back to 0 degrees!</span>")
 			degrees = 0
+			hidden_uplink.locked = FALSE
 			hidden_uplink.interact(user)
-
-
-/obj/item/pen/attackby(obj/item/I, mob/user, params)
-	if(hidden_uplink)
-		return hidden_uplink.attackby(I, user, params)
-	else
-		return ..()
-
 
 /obj/item/pen/attack(mob/living/M, mob/user,stealth)
 	if(!istype(M))
@@ -167,7 +161,6 @@
  * Sleepypens
  */
 /obj/item/pen/sleepy
-	origin_tech = "engineering=4;syndicate=2"
 	container_type = OPENCONTAINER_1
 
 
@@ -192,7 +185,6 @@
  * (Alan) Edaggers
  */
 /obj/item/pen/edagger
-	origin_tech = "combat=3;syndicate=1"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut") //these wont show up if the pen is off
 	var/on = FALSE
 

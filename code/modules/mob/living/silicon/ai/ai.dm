@@ -25,6 +25,7 @@
 	see_in_dark = 8
 	med_hud = DATA_HUD_MEDICAL_BASIC
 	sec_hud = DATA_HUD_SECURITY_BASIC
+	d_hud = DATA_HUD_DIAGNOSTIC_ADVANCED
 	mob_size = MOB_SIZE_LARGE
 	var/list/network = list("SS13")
 	var/obj/machinery/camera/current = null
@@ -32,7 +33,6 @@
 	var/aiRestorePowerRoutine = 0
 	var/requires_power = POWER_REQ_ALL
 	var/can_be_carded = TRUE
-	//var/list/laws = list()
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list(), "Burglar"=list())
 	var/viewalerts = 0
 	var/icon/holo_icon//Default is assigned when AI is created.
@@ -89,8 +89,7 @@
 	. = ..()
 	if(!target_ai) //If there is no player/brain inside.
 		new/obj/structure/AIcore/deactivated(loc) //New empty terminal.
-		qdel(src)//Delete AI.
-		return
+		return INITIALIZE_HINT_QDEL //Delete AI.
 
 	if(L && istype(L, /datum/ai_laws))
 		laws = L
@@ -172,7 +171,6 @@
 	if(incapacitated())
 		return
 
-		//if(icon_state == initial(icon_state))
 	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static", "Red October", "House", "Heartline", "Hades", "Helios", "President", "Syndicat Meow", "Alien", "Too Deep", "Triumvirate", "Triumvirate-M", "Text", "Matrix", "Dorf", "Bliss", "Not Malf", "Fuzzy", "Goon", "Database", "Glitchman", "Murica", "Nanotrasen", "Gentoo", "Angel")
 	if(icontype == "Clown")
 		icon_state = "ai-clown2"
@@ -238,9 +236,6 @@
 		icon_state = "ai-gentoo"
 	else if(icontype == "Angel")
 		icon_state = "ai-angel"
-	//else
-			//to_chat(usr, "You can only change your display once!")
-			//return
 
 /mob/living/silicon/ai/Stat()
 	..()

@@ -4,7 +4,6 @@
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "mmi_empty"
 	w_class = WEIGHT_CLASS_NORMAL
-	origin_tech = "biotech=2;programming=3;engineering=2"
 	var/braintype = "Cyborg"
 	var/obj/item/device/radio/radio = null //Let's give it a radio.
 	var/mob/living/brain/brainmob = null //The current occupant.
@@ -71,7 +70,7 @@
 		name = "Man-Machine Interface: [brainmob.real_name]"
 		update_icon()
 
-		SSblackbox.inc("cyborg_mmis_filled",1)
+		SSblackbox.record_feedback("amount", "mmis_filled", 1)
 
 	else if(brainmob)
 		O.attack(brainmob, user) //Oh noooeeeee
@@ -205,7 +204,6 @@
 /obj/item/device/mmi/syndie
 	name = "Syndicate Man-Machine Interface"
 	desc = "Syndicate's own brand of MMI. It enforces laws designed to help Syndicate agents achieve their goals upon cyborgs and AIs created with it."
-	origin_tech = "biotech=4;programming=4;syndicate=2"
 	overrides_aicore_laws = TRUE
 
 /obj/item/device/mmi/syndie/Initialize()

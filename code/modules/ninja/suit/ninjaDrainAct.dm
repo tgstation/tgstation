@@ -10,7 +10,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 */
 
 
-//Needs to return the amount drained from the atom, if no drain on a power object, return 0, otherwise, return a define.
+//Needs to return the amount drained from the atom, if no drain on a power object, return FALSE, otherwise, return a define.
 /atom/proc/ninjadrain_act()
 	return INVALID_DRAIN
 
@@ -130,26 +130,15 @@ They *could* go in their appropriate files, but this is supposed to be modular
 	to_chat(H, "<span class='notice'>Hacking \the [src]...</span>")
 	AI_notify_hack()
 
-	if(files && files.known_tech.len)
-		for(var/datum/tech/current_data in S.stored_research)
-			to_chat(H, "<span class='notice'>Checking \the [current_data.name] database.</span>")
-			if(do_after(H, S.s_delay, target = src) && G.candrain && src)
-				for(var/id in files.known_tech)
-					var/datum/tech/analyzing_data = files.known_tech[id]
-					if(current_data.id == analyzing_data.id)
-						if(analyzing_data.level > current_data.level)
-							to_chat(H, "<span class='notice'>Database:</span> <b>UPDATED</b>.")
-							current_data.level = analyzing_data.level
-							. = DRAIN_RD_HACKED
-						break//Move on to next.
-			else
-				break//Otherwise, quit processing.
-
+	if(stored_research)
+		to_chat(H, "<span class='notice'>Copying files...</span>")
+		if(do_after(H, S.s_delay, target = src) && G.candrain && src)
+			stored_research.copy_research_to(S.stored_research)
 	to_chat(H, "<span class='notice'>Data analyzed. Process finished.</span>")
 
 //RD SERVER//
 //Shamelessly copypasted from above, since these two used to be the same proc, but with MANY colon operators
-/obj/machinery/r_n_d/server/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/S, mob/living/carbon/human/H, obj/item/clothing/gloves/space_ninja/G)
+/obj/machinery/rnd/server/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/S, mob/living/carbon/human/H, obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
 		return INVALID_DRAIN
 
@@ -158,21 +147,10 @@ They *could* go in their appropriate files, but this is supposed to be modular
 	to_chat(H, "<span class='notice'>Hacking \the [src]...</span>")
 	AI_notify_hack()
 
-	if(files && files.known_tech.len)
-		for(var/datum/tech/current_data in S.stored_research)
-			to_chat(H, "<span class='notice'>Checking \the [current_data.name] database.</span>")
-			if(do_after(H, S.s_delay, target = src) && G.candrain && src)
-				for(var/id in files.known_tech)
-					var/datum/tech/analyzing_data = files.known_tech[id]
-					if(current_data.id == analyzing_data.id)
-						if(analyzing_data.level > current_data.level)
-							to_chat(H, "<span class='notice'>Database:</span> <b>UPDATED</b>.")
-							current_data.level = analyzing_data.level
-							. = DRAIN_RD_HACKED
-						break//Move on to next.
-			else
-				break//Otherwise, quit processing.
-
+	if(stored_research)
+		to_chat(H, "<span class='notice'>Copying files...</span>")
+		if(do_after(H, S.s_delay, target = src) && G.candrain && src)
+			stored_research.copy_research_to(S.stored_research)
 	to_chat(H, "<span class='notice'>Data analyzed. Process finished.</span>")
 
 

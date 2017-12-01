@@ -33,7 +33,7 @@
 /obj/effect/rend
 	name = "tear in the fabric of reality"
 	desc = "You should run now."
-	icon = 'icons/obj/biomass.dmi'
+	icon = 'icons/effects/effects.dmi'
 	icon_state = "rift"
 	density = TRUE
 	anchored = TRUE
@@ -65,6 +65,12 @@
 		return
 	else
 		return ..()
+
+/obj/effect/rend/singularity_pull()
+	return
+
+/obj/effect/rend/singularity_pull()
+	return
 
 /obj/item/veilrender/vealrender
 	name = "veal render"
@@ -131,7 +137,6 @@
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	origin_tech = "bluespace=4;materials=4"
 	w_class = WEIGHT_CLASS_TINY
 	var/list/spooky_scaries = list()
 	var/unlimited = 0
@@ -300,13 +305,17 @@
 		var/area/A = get_area(src)
 		to_chat(victim, "<span class='notice'>You feel a dark presence from [A.name]</span>")
 
+/obj/item/voodoo/suicide_act(mob/living/carbon/user)
+    user.visible_message("<span class='suicide'>[user] links the voodoo doll to themself and sits on it, infinitely crushing themself! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+    user.gib()
+    return(BRUTELOSS)
+
 /obj/item/voodoo/fire_act(exposed_temperature, exposed_volume)
 	if(target)
 		target.adjust_fire_stacks(20)
 		target.IgniteMob()
 		GiveHint(target,1)
 	return ..()
-
 
 //Provides a decent heal, need to pump every 6 seconds
 /obj/item/organ/heart/cursed/wizard

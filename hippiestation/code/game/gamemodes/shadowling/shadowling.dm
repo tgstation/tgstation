@@ -1,6 +1,10 @@
-#define LIGHT_DAM_THRESHOLD 0.25
 #define LIGHT_HEAL_THRESHOLD 2
 #define LIGHT_DAMAGE_TAKEN 7
+
+#define LIGHT_DAM_THRESHOLD 0.25
+#define LIGHT_RED_MULTIPLIER 0.4
+#define LIGHT_GREEN_MULTIPLIER 0.8
+#define LIGHT_BLUE_MULTIPLIER 1
 
 /*
 
@@ -51,7 +55,7 @@ Made by Xhuis
 	var/shadowling_dead = 0 //is shadowling kill
 	var/objective_explanation
 	var/thrall_ratio = 1
-	
+
 /datum/game_mode/proc/replace_jobbaned_player(mob/living/M, role_type, pref)
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [role_type]?", "[role_type]", null, pref, 50, M)
 	var/mob/dead/observer/theghost = null
@@ -175,17 +179,17 @@ Made by Xhuis
 		new_thrall_mind.AddSpell(new /obj/effect/proc_holder/spell/self/lesser_shadowling_hivemind(null))
 		new_thrall_mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/lesser_glare(null))
 		new_thrall_mind.AddSpell(new /obj/effect/proc_holder/spell/self/lesser_shadow_walk(null))
-		new_thrall_mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/night_vision/thrall(null))
+		new_thrall_mind.AddSpell(new /obj/effect/proc_holder/spell/self/thrall_night_vision(null))
 		to_chat(new_thrall_mind.current, "<span class='shadowling'><b>You see the truth. Reality has been torn away and you realize what a fool you've been.</b></span>")
 		to_chat(new_thrall_mind.current, "<span class='shadowling'><b>The shadowlings are your masters.</b> Serve them above all else and ensure they complete their goals.</span>")
 		to_chat(new_thrall_mind.current, "<span class='shadowling'>You may not harm other thralls or the shadowlings. However, you do not need to obey other thralls.</span>")
 		to_chat(new_thrall_mind.current, "<span class='shadowling'>Your body has been irreversibly altered. The attentive can see this - you may conceal it by wearing a mask.</span>")
 		to_chat(new_thrall_mind.current, "<span class='shadowling'>Though not nearly as powerful as your masters, you possess some weak powers. These can be found in the Thrall Abilities tab.</span>")
 		to_chat(new_thrall_mind.current, "<span class='shadowling'>You may communicate with your allies by using the Lesser Commune ability.</span>")
-		new_thrall_mind.current.playsound_local(get_turf(new_thrall_mind.current), 'hippiestation/sound/ambience/antag/thrall.ogg', 100, FALSE, pressure_affected = FALSE)
+		SEND_SOUND(new_thrall_mind.current, sound('hippiestation/sound/ambience/antag/thrall.ogg'))
 		if(jobban_isbanned(new_thrall_mind.current, ROLE_SHADOWLING))
 			replace_jobbaned_player(new_thrall_mind.current, ROLE_SHADOWLING, ROLE_SHADOWLING)
-		return 1
+		return TRUE
 
 /datum/game_mode/proc/remove_thrall(datum/mind/thrall_mind, var/kill = 0)
 	if(!istype(thrall_mind) || !(thrall_mind in thralls) || !isliving(thrall_mind.current)) return 0 //If there is no mind, the mind isn't a thrall, or the mind's mob isn't alive, return
@@ -201,7 +205,7 @@ Made by Xhuis
 		H.visible_message("<span class='warning'>[H] jerks violently and falls still.</span>", \
 						  "<span class='userdanger'>A piercing white light floods your mind, banishing your memories as a thrall and--</span>")
 		H.death()
-		return 1
+		return TRUE
 	var/mob/living/M = thrall_mind.current
 	if(issilicon(M))
 		M.audible_message("<span class='notice'>[M] lets out a short blip.</span>", \
@@ -210,7 +214,7 @@ Made by Xhuis
 		M.visible_message("<span class='big'>[M] looks like their mind is their own again!</span>", \
 						  "<span class='userdanger'>A piercing white light floods your eyes. Your mind is your own again! Though you try, you cannot remember anything about the shadowlings or your time \
 						  under their command...</span>")
-	return 1
+	return TRUE
 
 /datum/game_mode/proc/remove_shadowling(datum/mind/ling_mind)
 	if(!istype(ling_mind) || !(ling_mind in shadows)) return 0
@@ -260,7 +264,7 @@ Made by Xhuis
 			if(ishuman(shadow_mind.current))
 				return FALSE
 	return TRUE
-	
+
 /datum/game_mode/shadowling/check_finished()
 	. = ..()
 	if(check_shadow_death())
@@ -298,13 +302,19 @@ Made by Xhuis
 	mutanteyes = /obj/item/organ/eyes/night_vision/alien/sling
 	burnmod = 1.5 //1.5x burn damage, 2x is excessive
 	heatmod = 1.5
+	var/mutable_appearance/eyes_overlay
 
 /datum/species/shadow/ling/on_species_gain(mob/living/carbon/human/C)
 	C.draw_hippie_parts()
+	eyes_overlay = mutable_appearance('hippiestation/icons/mob/sling.dmi', "eyes", 16)
+	C.add_overlay(eyes_overlay)
 	. = ..()
 
 /datum/species/shadow/ling/on_species_loss(mob/living/carbon/human/C)
 	C.draw_hippie_parts(TRUE)
+	if(eyes_overlay)
+		C.cut_overlay(eyes_overlay)
+		QDEL_NULL(eyes_overlay)
 	. = ..()
 
 /datum/species/shadow/ling/spec_life(mob/living/carbon/human/H)
@@ -312,7 +322,7 @@ Made by Xhuis
 	H.nutrition = NUTRITION_LEVEL_WELL_FED //i aint never get hongry
 	if(isturf(H.loc))
 		var/turf/T = H.loc
-		light_amount = T.get_lumcount()
+		light_amount = T.get_rgb_lumcount(r_mul = LIGHT_RED_MULTIPLIER, g_mul = LIGHT_GREEN_MULTIPLIER, b_mul = LIGHT_BLUE_MULTIPLIER)
 		if(light_amount > LIGHT_DAM_THRESHOLD) //Can survive in very small light levels. Also doesn't take damage while incorporeal, for shadow walk purposes
 			H.take_overall_damage(0, LIGHT_DAMAGE_TAKEN)
 			if(H.stat != DEAD)
