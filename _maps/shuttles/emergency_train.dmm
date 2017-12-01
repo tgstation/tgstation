@@ -46,7 +46,6 @@
 /area/shuttle/escape)
 "k" = (
 /obj/machinery/computer/card{
-	tag = "icon-computer (WEST)";
 	icon_state = "computer";
 	dir = 8
 	},
@@ -140,7 +139,7 @@
 /obj/docking_port/mobile/emergency{
 	bound_height = 42;
 	bound_width = 6;
-	name = "Train emergency shuttle";
+	name = "Train Emergency Shuttle";
 	timid = 1
 	},
 /turf/open/floor/plating,
@@ -201,7 +200,6 @@
 /area/shuttle/escape)
 "J" = (
 /obj/machinery/light/small{
-	tag = "icon-bulb1 (NORTH)";
 	icon_state = "bulb1";
 	dir = 1
 	},
@@ -228,8 +226,6 @@
 /area/shuttle/escape)
 "M" = (
 /obj/machinery/light/small{
-	tag = "icon-bulb1 (NORTH)";
-	icon_state = "bulb1";
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
