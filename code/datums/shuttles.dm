@@ -82,7 +82,7 @@
 
 /datum/map_template/shuttle/emergency/train
 	suffix = "train"
-	name = "The Emergency Escape Train
+	name = "The Emergency Escape Train"
 	description = "Fuck shuttles, Trains are AWESOME. And now, with a small transaction of funds, YOU can be the next universal conductor."
 	admin_notes = "Mostly just normal box shuttle but with no medbay, but it can and will crash into most stations."
 	credit_cost = 500 //kind of a downgrade but not troll downgrade
