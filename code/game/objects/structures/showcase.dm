@@ -40,14 +40,14 @@
 	icon_state = "pod_g"
 
 /obj/structure/showcase/machinery/oldpod
-	name = "damaged cyrogenic pod"
-	desc = "A damaged cyrogenic pod long since lost to time, including its former occupant..."
+	name = "damaged cryogenic pod"
+	desc = "A damaged cryogenic pod long since lost to time, including its former occupant..."
 	icon = 'icons/obj/cryogenic2.dmi'
 	icon_state = "sleeper-open"
 
 /obj/structure/showcase/machinery/oldpod/used
-	name = "opened cyrogenic pod"
-	desc = "Cyrogenic pod that has recently discharged its occupand. The pod appears non-functional."
+	name = "opened cryogenic pod"
+	desc = "A cryogenic pod that has recently discharged its occupant. The pod appears non-functional."
 
 /obj/structure/showcase/cyborg/old
 	name = "Cyborg Statue"
