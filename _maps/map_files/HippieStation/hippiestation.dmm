@@ -52471,7 +52471,6 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "cnQ" = (
-/obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
 	name = "Air Outlet Pump";
@@ -71779,7 +71778,7 @@ aHK
 aGt
 aER
 aBg
-cHQ
+cHE
 aDz
 azU
 aVI
@@ -72819,7 +72818,7 @@ bdF
 aYJ
 aBf
 ayF
-cIf
+cHO
 azU
 blF
 aBf
@@ -73568,7 +73567,7 @@ aog
 ayG
 azW
 aBg
-cHF
+cHE
 aDz
 aER
 aGt
@@ -73578,7 +73577,7 @@ aGt
 aGt
 aER
 aBg
-cHR
+cHE
 aDz
 azU
 aVI
@@ -77433,7 +77432,7 @@ aLk
 azU
 cHO
 aQd
-cHS
+cHO
 azU
 azU
 aVP
@@ -83157,7 +83156,7 @@ bOC
 bOC
 bOC
 cyB
-cIB
+cIy
 czq
 czT
 bSz
@@ -95166,7 +95165,7 @@ aLR
 aBR
 aPh
 aQF
-cHT
+cHN
 aLI
 aLI
 aLI
@@ -95177,7 +95176,7 @@ aLI
 aOR
 aLI
 bhg
-cId
+cHN
 bjz
 aLI
 aLI
@@ -96180,7 +96179,7 @@ auc
 avg
 avX
 avX
-cHB
+cHA
 azz
 avX
 aBR
@@ -97226,7 +97225,7 @@ aRW
 aNz
 aNz
 aWt
-cHW
+cHP
 aNz
 aWp
 aNz
@@ -98751,7 +98750,7 @@ avm
 cHA
 avX
 avX
-cHC
+cHA
 aug
 aBZ
 aDt
@@ -99310,7 +99309,7 @@ bHj
 bBM
 bJG
 bKQ
-cIs
+cIr
 bDj
 bPj
 bQB
@@ -101637,7 +101636,7 @@ bYY
 caf
 cbh
 cci
-cIw
+cIv
 cei
 cfs
 cgu
@@ -102627,7 +102626,7 @@ aVq
 aZO
 aVq
 aVq
-cIa
+cHZ
 bgj
 beV
 beV
