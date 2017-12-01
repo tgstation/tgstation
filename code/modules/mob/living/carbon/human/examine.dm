@@ -208,7 +208,7 @@
 	if(temp)
 		if(temp < 25)
 			msg += "[t_He] [t_has] minor cellular damage.\n"
-		else if (temp < 50)
+		else if(temp < 50)
 			msg += "[t_He] [t_has] <b>moderate</b> cellular damage!\n"
 		else
 			msg += "<b>[t_He] [t_has] severe cellular damage!</b>\n"
