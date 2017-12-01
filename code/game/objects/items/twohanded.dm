@@ -504,8 +504,9 @@
 	attack_verb = list("smacked", "cracked", "attacked")
 	max_integrity = 50
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
+	var/integ = 1 //different toolboxes get different amount of hits before breaking, only used for the syndicate mallet and mtoolnir
 
-/obj/item/twohanded/spear/update_icon()
+/obj/item/twohanded/mallet/update_icon()
 	icon_state = "toolbox_mallet_r[wielded]"
 
 /obj/item/twohanded/mallet/afterattack(atom/movable/AM, mob/user, proximity)
@@ -515,17 +516,53 @@
 		return
 	if(!wielded)
 		return
-	src.visible_message("<span class='notice'>[src] smashes into pieces!</span>")
-	qdel(src)
+	integ--
+	if(!integ)
+		user.visible_message("<span class='notice'>[src] smashes into pieces!</span>")
+		qdel(src)
 
 /obj/item/twohanded/mallet/b
 	icon_state = "toolbox_mallet_b0"
 
+/obj/item/twohanded/mallet/b/update_icon()
+	icon_state = "toolbox_mallet_b[wielded]"
+
 /obj/item/twohanded/mallet/g
 	icon_state = "toolbox_mallet_g0"
 
+/obj/item/twohanded/mallet/g/update_icon()
+	icon_state = "toolbox_mallet_g[wielded]"
+
 /obj/item/twohanded/mallet/s
 	icon_state = "toolbox_mallet_s0"
+	integ = 2 //extra hit, for an extremely rare mallet
+
+/obj/item/twohanded/mallet/s/update_icon()
+	icon_state = "toolbox_mallet_s[wielded]"
+
+/obj/item/twohanded/mallet/mtoolnir
+	icon_state = "toolbox_mallet_y0"
+	name = "mtoolnir"
+	desc = "A distant relative of His Grace, perhaps. The power of the tide is with you."
+	force_wielded = 100 //nelly
+	integ = 5
+
+/obj/item/twohanded/mallet/mtoolnir/afterattack(atom/movable/AM, mob/user, proximity, mob/target)
+	if(!proximity)
+		return
+	if(isopenturf(AM)) //see above
+		return
+	if(!wielded)
+		return
+	integ--
+	target.visible_message("<span class='userdanger'>[target] smashes into pieces!</span>")
+	target.gib()
+	if(!integ)
+		user.visible_message("<span class='notice'>[src] smashes into pieces!</span>")
+		qdel(src)
+
+/obj/item/twohanded/mallet/mtoolnir/update_icon()
+	icon_state = "toolbox_mallet_y[wielded]"
 
 // CHAINSAW
 /obj/item/twohanded/required/chainsaw
