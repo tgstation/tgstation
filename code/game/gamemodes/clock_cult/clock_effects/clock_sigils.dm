@@ -323,6 +323,20 @@
 					L.visible_message("<span class='warning'>[L] suddenly gets back up, [L.p_their()] body dripping blue ichor!</span>", "<span class='inathneq'>\"[text2ratvar("You will be okay, child.")]\"</span>")
 					GLOB.clockwork_vitality -= revival_cost
 				break
+			if(!L.client || L.client.is_afk())
+				set waitfor = FALSE
+				var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [name], an inactive clock cultist?", "[name]", null, job_rank, 50, owner.current)
+				var/mob/dead/observer/theghost = null
+				if(candidates.len)
+					to_chat(owner, "Your physical form has been taken over by another soul due to your inactivity! Ahelp if you wish to regain your form!")
+					message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(owner.current)]) to replace an inactive clock cultist.")
+					owner.current.ghostize(0)
+					owner.current.key = theghost.key
+					var/obj/effect/temp_visual/ratvar/sigil/vitality/V = new /obj/effect/temp_visual/ratvar/sigil/vitality(get_turf(src))
+					animate(V, alpha = 0, transform = matrix()*2, time = 8)
+					playsound(L, 'sound/magic/staff_healing.ogg', 50, 1)
+					L.visible_message("<span class='warning'>[L]'s eyes suddenly open wide, gleaming with renewed vigor for the cause!</span>", "<span class='inathneq'>\"[text2ratvar("Awaken!")]\"</span>")
+					break
 			var/vitality_for_cycle = 3
 			if(!GLOB.ratvar_awakens)
 				if(L.stat == CONSCIOUS)
