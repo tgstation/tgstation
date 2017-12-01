@@ -60,6 +60,9 @@
 /datum/atom_hud/data/bot_path
 	hud_icons = list(DIAG_PATH_HUD)
 
+/datum/atom_hud/abductor
+	hud_icons = list(GLAND_HUD)
+
 /* MED/SEC/DIAG HUD HOOKS */
 
 /*
