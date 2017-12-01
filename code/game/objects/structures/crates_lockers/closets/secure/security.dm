@@ -86,6 +86,7 @@
 	new /obj/item/gun/energy/e_gun/hos(src)
 	new /obj/item/device/flashlight/seclite(src)
 	new /obj/item/pinpointer/nuke(src)
+	new /obj/item/circuitboard/machine/protolathe/department/security(src)
 
 /obj/structure/closet/secure_closet/warden
 	name = "\proper warden's locker"
