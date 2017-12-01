@@ -1322,9 +1322,9 @@
 		else
 			A = new /obj/structure/door_assembly/door_assembly_0(src.loc)
 			//If you come across a null assemblytype, it will produce the default assembly instead of disintegrating.
-		A.anchored = 1
+		A.anchored = TRUE
 		A.glass = src.glass
-		A.state = 1
+		A.state = AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS
 		A.created_name = name
 		A.previous_assembly = previous_airlock
 		A.update_name()
