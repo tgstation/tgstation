@@ -138,6 +138,8 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
+	bound_height = 42;
+	bound_width = 6;
 	name = "Train emergency shuttle";
 	timid = 1
 	},
@@ -278,7 +280,7 @@ b
 P
 m
 m
-R
+P
 b
 b
 q
@@ -330,24 +332,24 @@ b
 m
 m
 b
-J
-u
+j
+K
 u
 K
 u
-u
+K
 j
 l
 m
 m
 l
 j
-u
+K
 u
 K
 u
-u
-w
+K
+j
 b
 m
 m
@@ -380,12 +382,12 @@ j
 j
 j
 j
-w
+j
 b
 a
 a
 b
-J
+j
 j
 j
 j
@@ -418,7 +420,7 @@ b
 a
 a
 b
-J
+j
 j
 j
 j
@@ -435,7 +437,7 @@ j
 j
 j
 j
-w
+j
 b
 a
 a
@@ -463,22 +465,22 @@ m
 m
 l
 j
-v
+L
 v
 L
 v
-v
-w
+L
+j
 b
 m
 m
 b
-J
-v
+j
+L
 v
 L
 v
-v
+L
 j
 l
 m
@@ -495,10 +497,10 @@ a
 b
 b
 b
-Q
+P
 m
 m
-S
+P
 b
 b
 q
