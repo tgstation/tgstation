@@ -4,6 +4,7 @@
  *		Fireaxe
  *		Double-Bladed Energy Swords
  *		Spears
+ *		Mauls
  *		CHAINSAWS
  *		Bone Axe and Spear
  */
@@ -484,6 +485,43 @@
 		name = "explosive lance"
 		desc = "A makeshift spear with [G] attached to it."
 	update_icon()
+
+//maul
+/obj/item/twohanded/maul
+	icon_state = "toolboxmaulr0"
+	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
+	name = "makeshift maul"
+	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
+	force = 10
+	w_class = WEIGHT_CLASS_BULKY
+	force_unwielded = 14
+	force_wielded = 30
+	throwforce = 15
+	throw_speed = 2
+	materials = list(MAT_METAL=2000)
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	attack_verb = list("smacked", "cracked", "attacked")
+	max_integrity = 50
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
+
+/obj/item/twohanded/maul/afterattack(atom/movable/AM, mob/user, proximity)
+	if(!proximity)
+		return
+	if(isopenturf(AM)) //I think this prevents it from smashing if you click an open tile
+		return
+	user.visible_message("<span class='notice'>[user]'s [src] smashes into pieces!</span>", \
+			"<span class='warning'>\"Your [src] smashes into pieces!\"</span>")
+	qdel(src)
+
+/obj/item/twohanded/maul/b
+	icon_state = "toolboxmaulb0"
+
+/obj/item/twohanded/maul/g
+	icon_state = "toolboxmaulg0"
+
+/obj/item/twohanded/maul/s
+	icon_state = "toolboxmauls0"
 
 // CHAINSAW
 /obj/item/twohanded/required/chainsaw
