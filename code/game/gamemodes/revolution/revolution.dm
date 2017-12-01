@@ -174,16 +174,29 @@
 //////////////////////////////////////////////////////////////////////
 /datum/game_mode/revolution/declare_completion()
 	if(finished == 1)
-		SSticker.mode_result = "win - heads killed"
-		to_chat(world, "<span class='redtext'>The heads of staff were killed or exiled! The revolutionaries win!</span>")
-
-		SSticker.news_report = REVS_WIN
+		if(crew_live_count(50))
+			SSticker.mode_result = "win - heads killed"
+			to_chat(world, "<FONT size = 3><B>Revolution Major Success</B></FONT>")
+			to_chat(world, "<span class='redtext'>The heads of staff were killed or exiled! The revolution was a great success!</span>")
+			SSticker.news_report = REVS_WIN
+		else
+			SSticker.mode_result = "halfwin - heads killed - too many died"
+			to_chat(world, "<FONT size = 3><B>Revolution Pyrrhic Victory</B></FONT>")
+			to_chat(world, "<span class='redtext'>The heads of staff were killed or exiled but too many lives were lost in the process.</span>")
+			SSticker.news_report = REVS_WIN_COSTLY
 
 	else if(finished == 2)
-		SSticker.mode_result = "loss - rev heads killed"
-		to_chat(world, "<span class='redtext'>The heads of staff managed to stop the revolution!</span>")
+		if(crew_live_count(50))
+			SSticker.mode_result = "loss - revheads killed"
+			to_chat(world, "<FONT size = 3><B>Revolution Major Failure</B></FONT>")
+			to_chat(world, "<span class='redtext'>The crew successfully defended against the revolution.</span>")
+			SSticker.news_report = REVS_LOSE
+		else
+			SSticker.mode_result = "halfwin - revheads killed - too many died"
+			to_chat(world, "<FONT size = 3><B>Staff Pyrrhic Victory</B></FONT>")
+			to_chat(world, "<span class='redtext'>The crew successfully defended against the revolution but too many lives were lost in the process.</span>")
+			SSticker.news_report = REVS_LOSE_COSTLY
 
-		SSticker.news_report = REVS_LOSE
 	..()
 	return TRUE
 

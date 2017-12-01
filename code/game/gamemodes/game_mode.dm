@@ -534,3 +534,21 @@
 /datum/game_mode/proc/OnNukeExplosion(off_station)
 	if(off_station < 2)
 		station_was_nuked = TRUE //Will end the round on next check.
+
+/datum/game_mode/proc/crew_live_count(var/min_percent_as_num) //return number of survivors OR T/F if argument is set
+	var/players = 0
+	var/survivors = 0
+	for(var/i in GLOB.mob_list)
+		var/mob/Player = i
+		if(Player.mind && !isnewplayer(Player))
+			players++
+			if(Player.stat != DEAD && !isbrain(Player))
+				survivors++
+
+	if(min_percent_as_num && players)
+		if((survivors / players * 100) >= min_percent_as_num)
+			return TRUE
+		else
+			return FALSE
+	else
+		return survivors
