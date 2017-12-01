@@ -125,7 +125,7 @@
 			return
 		used = TRUE
 		var/mob/dead/observer/theghost = pick(nuke_candidates)
-		spawn_antag(theghost.client, get_turf(src), "syndieborg")
+		spawn_antag(theghost.client, get_turf(src), "syndieborg", user)
 		do_sparks(4, TRUE, src)
 		qdel(src)
 	else
