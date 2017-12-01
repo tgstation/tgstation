@@ -4,7 +4,7 @@
  *		Fireaxe
  *		Double-Bladed Energy Swords
  *		Spears
- *		Mauls
+ *		Mallets
  *		CHAINSAWS
  *		Bone Axe and Spear
  */
@@ -486,9 +486,9 @@
 		desc = "A makeshift spear with [G] attached to it."
 	update_icon()
 
-//maul
+//mallet
 /obj/item/twohanded/mallet
-	icon_state = "toolboxmalletr0"
+	icon_state = "toolbox_mallet_r0"
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	name = "makeshift mallet"
@@ -505,24 +505,27 @@
 	max_integrity = 50
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 
-/obj/item/twohanded/maul/afterattack(atom/movable/AM, mob/user, proximity)
+/obj/item/twohanded/spear/update_icon()
+	icon_state = "toolbox_mallet_r[wielded]"
+
+/obj/item/twohanded/mallet/afterattack(atom/movable/AM, mob/user, proximity)
 	if(!proximity)
 		return
 	if(isopenturf(AM)) //I think this prevents it from smashing if you click an open tile
 		return
 	if(!wielded)
 		return
-	user.visible_message("<span class='notice'>[src] smashes into pieces!</span>")
+	src.visible_message("<span class='notice'>[src] smashes into pieces!</span>")
 	qdel(src)
 
 /obj/item/twohanded/mallet/b
-	icon_state = "toolboxmaulb0"
+	icon_state = "toolbox_mallet_b0"
 
 /obj/item/twohanded/mallet/g
-	icon_state = "toolboxmaulg0"
+	icon_state = "toolbox_mallet_g0"
 
 /obj/item/twohanded/mallet/s
-	icon_state = "toolboxmauls0"
+	icon_state = "toolbox_mallet_s0"
 
 // CHAINSAW
 /obj/item/twohanded/required/chainsaw
