@@ -281,6 +281,8 @@ doesn't have toxins access.
 		var/datum/design/D = stored_research.researched_designs[v]
 		if(!(selected_category in D.category)|| !(D.build_type & PROTOLATHE))
 			continue
+		if(!(D.departmental_flags & linked_lathe.allowed_department_flags))
+			continue
 		var/temp_material
 		var/c = 50
 		var/t
@@ -331,6 +333,8 @@ doesn't have toxins access.
 	l += ui_protolathe_header()
 	var/coeff = linked_lathe.efficiency_coeff
 	for(var/datum/design/D in matching_designs)
+		if(!(D.departmental_flags & linked_lathe.allowed_department_flags))
+			continue
 		var/temp_material
 		var/c = 50
 		var/t
@@ -419,6 +423,8 @@ doesn't have toxins access.
 		var/datum/design/D = stored_research.researched_designs[v]
 		if(!(selected_category in D.category) || !(D.build_type & IMPRINTER))
 			continue
+		if(!(D.departmental_flags & linked_imprinter.allowed_department_flags))
+			continue
 		var/temp_materials
 		var/check_materials = TRUE
 
@@ -446,6 +452,8 @@ doesn't have toxins access.
 
 	var/coeff = linked_imprinter.efficiency_coeff
 	for(var/datum/design/D in matching_designs)
+		if(!(D.departmental_flags & linked_imprinter.allowed_department_flags))
+			continue
 		var/temp_materials
 		var/check_materials = TRUE
 		var/all_materials = D.materials + D.reagents_list
