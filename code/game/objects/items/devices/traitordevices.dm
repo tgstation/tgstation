@@ -235,14 +235,6 @@ effective or pretty fucking useless.
 	name = "radio jammer"
 	desc = "Device used to disrupt nearby radio communication."
 	icon_state = "jammer"
-	var/active = FALSE
-	var/range = 12
 
-/obj/item/device/jammer/attack_self(mob/user)
-	to_chat(user,"<span class='notice'>You [active ? "deactivate" : "activate"] [src].</span>")
-	active = !active
-	if(active)
-		GLOB.active_jammers |= src
-	else
-		GLOB.active_jammers -= src
-	update_icon()
+/obj/item/device/jammer/Initialize()
+	AddComponent(/datum/component/jammer, 12, src)

@@ -242,8 +242,12 @@
 	var/turf/position = get_turf(src)
 
 	var/jammed = FALSE
-	for(var/obj/item/device/jammer/jammer in GLOB.active_jammers)
-		if(get_dist(position,get_turf(jammer)) < jammer.range)
+	for(var/i in GLOB.active_jammers)
+		var/datum/component/jammer/jammer = i
+		var/turf/T = get_turf(jammer.parent)
+		if(T.z != z)
+			continue
+		if(get_dist(position, T) < jammer.range)
 			jammed = TRUE
 			break
 
