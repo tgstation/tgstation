@@ -8,16 +8,18 @@ SUBSYSTEM_DEF(traumas)
 	var/list/phobia_turfs
 	var/list/phobia_species
 
+#define PHOBIA_FILE "phobia.json"
+
 /datum/controller/subsystem/traumas/Initialize()
 	phobia_types = list("spiders", "space", "security", "clowns", "greytide", "lizards", "skeletons")
 
-	phobia_words = list("spiders"   = list("spider","web","arachnid"),
-						"space"     = list("space", "star", "universe", "void"),
-						"security"  = list(" sec ", "security", "shitcurity", "stunbaton", "taser", "beepsky"),
-						"clowns"    = list("clown", "honk", "banana", "slip"),
-						"greytide"  = list("assistant", "grey", "gasmask", "gas mask", "stunprod", "spear", "revolution", "viva"),
-						"lizards"   = list("lizard", "ligger", "hiss", " wag "),
-						"skeletons" = list("skeleton", "milk", "xylophone", "bone", "calcium", "the ride never ends")
+	phobia_words = list("spiders"   = strings(PHOBIA_FILE, "spiders"),
+						"space"     = strings(PHOBIA_FILE, "space"),
+						"security"  = strings(PHOBIA_FILE, "security"),
+						"clowns"    = strings(PHOBIA_FILE, "clowns"),
+						"greytide"  = strings(PHOBIA_FILE, "greytide"),
+						"lizards"   = strings(PHOBIA_FILE, "lizards"),
+						"skeletons" = strings(PHOBIA_FILE, "skeletons"),
 					   )
 
 	phobia_mobs = list("spiders"  = typecacheof(/mob/living/simple_animal/hostile/poison/giant_spider),
@@ -46,3 +48,5 @@ SUBSYSTEM_DEF(traumas)
 	phobia_species = list("lizards"   = typecacheof(/datum/species/lizard),
 						  "skeletons" = typecacheof(/datum/species/skeleton, /datum/species/plasmaman)
 						 )
+
+#undef PHOBIA_FILE
