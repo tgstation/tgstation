@@ -61,14 +61,11 @@
 			add_overlay("[icon_state]_door")
 		if(welded)
 			add_overlay("welded")
-		if(secure)
-			if(!broken)
-				if(locked)
-					add_overlay("locked")
-				else
-					add_overlay("unlocked")
+		if(secure && !broken)
+			if(locked)
+				add_overlay("locked")
 			else
-				add_overlay("off")
+				add_overlay("unlocked")
 
 	else
 		layer = BELOW_OBJ_LAYER
