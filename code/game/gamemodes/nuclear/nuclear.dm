@@ -117,8 +117,6 @@
 		nuke_team.roundend_display()
 	return TRUE
 
-
-<<<<<<< HEAD
 /proc/nukelastname(mob/M) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea. Also praise Urist for copypasta ho.
 	var/randomname = pick(GLOB.last_names)
 	var/newname = copytext(sanitize(input(M,"You are the nuke operative [pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")]. Please choose a last name for your family.", "Name change",randomname)),1,MAX_NAME_LEN)
@@ -142,8 +140,6 @@
 		synd_mind.current.real_name = synd_mind.name
 	return
 
-=======
->>>>>>> 3ac9d24cb0... Nuke Op Datumization (#32680)
 /proc/is_nuclear_operative(mob/M)
 	return M && istype(M) && M.mind && M.mind.has_antag_datum(/datum/antagonist/nukeop)
 
