@@ -166,7 +166,7 @@
 		var/obj/item/bodypart/BP = X
 		missing -= BP.body_zone
 		for(var/obj/item/I in BP.embedded_objects)
-			msg += "<B>[t_He] [t_has] \a [icon2html(I, user)] [I] embedded in [t_his] [BP.name]!</B>\n"
+			msg += "<B>[t_He] [t_has] \a [icon2html(I, user)] [I] embedded in [t_his] [BP.name]! [I.pinned ? "It [t_has] pinned [t_him] down to \the [I.pinned]!" : ""]</B>\n" // Hippie - Show what embedded part has them pinned
 
 	//stores missing limbs
 	var/l_limbs_missing = 0
@@ -190,24 +190,30 @@
 		msg += "[t_He] [p_do()]n't seem all there.\n"
 
 	if(temp)
-		if(temp < 30)
+		if(temp < 25)
 			msg += "[t_He] [t_has] minor bruising.\n"
+		else if(temp < 50)
+			msg += "[t_He] [t_has] <b>moderate</b> bruising!\n"
 		else
 			msg += "<B>[t_He] [t_has] severe bruising!</B>\n"
 
 	temp = getFireLoss()
 	if(temp)
-		if(temp < 30)
+		if(temp < 25)
 			msg += "[t_He] [t_has] minor burns.\n"
+		else if (temp < 50)
+			msg += "[t_He] [t_has] <b>moderate</b> burns!\n"
 		else
 			msg += "<B>[t_He] [t_has] severe burns!</B>\n"
 
 	temp = getCloneLoss()
 	if(temp)
-		if(temp < 30)
+		if(temp < 25)
 			msg += "[t_He] [t_has] minor cellular damage.\n"
+		else if(temp < 50)
+			msg += "[t_He] [t_has] <b>moderate</b> cellular damage!\n"
 		else
-			msg += "<B>[t_He] [t_has] severe cellular damage.</B>\n"
+			msg += "<b>[t_He] [t_has] severe cellular damage!</b>\n"
 
 
 	if(fire_stacks > 0)

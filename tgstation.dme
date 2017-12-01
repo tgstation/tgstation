@@ -287,6 +287,7 @@
 #include "code\datums\antagonists\devil.dm"
 #include "code\datums\antagonists\internal_affairs.dm"
 #include "code\datums\antagonists\ninja.dm"
+#include "code\datums\antagonists\nukeop.dm"
 #include "code\datums\antagonists\pirate.dm"
 #include "code\datums\antagonists\revolution.dm"
 #include "code\datums\antagonists\wizard.dm"
