@@ -3,7 +3,6 @@
 	desc = "A suspicious revolver. Uses .357 ammo." //usually used by syndicates
 	icon_state = "revolver"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
-	origin_tech = "combat=3;materials=2"
 	casing_ejector = FALSE
 
 /obj/item/gun/ballistic/revolver/Initialize()
@@ -158,8 +157,8 @@
 	name = "nagant revolver"
 	desc = "An old model of revolver that originated in Russia. Able to be suppressed. Uses 7.62x38mmR ammo."
 	icon_state = "nagant"
-	origin_tech = "combat=3"
 	can_suppress = TRUE
+
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev762
 
 
@@ -169,7 +168,6 @@
 /obj/item/gun/ballistic/revolver/russian
 	name = "\improper russian revolver"
 	desc = "A Russian-made revolver for drinking games. Uses .357 ammo, and has a mechanism requiring you to spin the chamber before each trigger pull."
-	origin_tech = "combat=2;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	var/spun = FALSE
 

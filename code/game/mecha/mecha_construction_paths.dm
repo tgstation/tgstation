@@ -28,6 +28,9 @@
 		else
 			to_chat(user, ("<span class='warning'>There's not enough cable to finish the task!</span>"))
 			return FALSE
+	else if(istype(used_atom, /obj/item/stack/ore/bluespace_crystal))
+		var/obj/item/stack/ore/bluespace_crystal/BSC = used_atom
+		BSC.use(1)
 	else if(istype(used_atom, /obj/item/stack))
 		var/obj/item/stack/S = used_atom
 		if(S.get_amount() < 5)
@@ -303,13 +306,6 @@
 				user.visible_message("[user] unfastens the external armor layer.", "<span class='notice'>You unfasten the external armor layer.</span>")
 				holder.icon_state = "ripley14"
 	return TRUE
-
-/datum/construction/reversible/mecha/ripley/spawn_mecha_result()
-	..()
-	SSblackbox.inc("mecha_ripley_created",1)
-	return
-
-
 
 /datum/construction/mecha/gygax_chassis
 	steps = list(list("key"=/obj/item/mecha_parts/part/gygax_torso), //1
@@ -617,11 +613,6 @@
 				holder.icon_state = "gygax20"
 	return TRUE
 
-/datum/construction/reversible/mecha/gygax/spawn_mecha_result()
-	..()
-	SSblackbox.inc("mecha_gygax_created",1)
-	return
-
 /datum/construction/mecha/firefighter_chassis
 	steps = list(list("key"=/obj/item/mecha_parts/part/ripley_torso), //1
 					 list("key"=/obj/item/mecha_parts/part/ripley_left_arm), //2
@@ -866,13 +857,6 @@
 				holder.icon_state = "fireripley15"
 	return TRUE
 
-/datum/construction/reversible/mecha/firefighter/spawn_mecha_result()
-	..()
-	SSblackbox.inc("mecha_firefighter_created",1)
-	return
-
-
-
 /datum/construction/mecha/honker_chassis
 	steps = list(list("key"=/obj/item/mecha_parts/part/honker_torso), //1
 					 list("key"=/obj/item/mecha_parts/part/honker_left_arm), //2
@@ -952,10 +936,6 @@
 			user.visible_message("[user] puts clown boots on the [holder].", "<span class='notice'>You put clown boots on the [holder].</span>")
 			qdel(used_atom)
 	return TRUE
-
-/datum/construction/mecha/honker/spawn_mecha_result()
-	..()
-	SSblackbox.inc("mecha_honker_created",1)
 
 /datum/construction/mecha/durand_chassis
 	steps = list(list("key"=/obj/item/mecha_parts/part/durand_torso), //1
@@ -1264,10 +1244,6 @@
 				holder.icon_state = "durand20"
 	return TRUE
 
-/datum/construction/reversible/mecha/durand/spawn_mecha_result()
-	..()
-	SSblackbox.inc("mecha_durand_created",1)
-
 //PHAZON
 
 /datum/construction/mecha/phazon_chassis
@@ -1347,7 +1323,7 @@
 					 		"backkey"=/obj/item/crowbar,
 					 		"desc"="The bluespace crystal is installed."),
 					 //12
-					 list("key"=/obj/item/ore/bluespace_crystal,
+					 list("key"=/obj/item/stack/ore/bluespace_crystal,
 					 		"backkey"=/obj/item/screwdriver,
 					 		"desc"="Super capacitor is secured."),
 					 //13
@@ -1541,7 +1517,7 @@
 				holder.icon_state = "phazon16"
 			else
 				user.visible_message("[user] removes the bluespace crystal from the [holder].", "<span class='notice'>You remove the bluespace crystal from the [holder].</span>")
-				new /obj/item/ore/bluespace_crystal(get_turf(holder))
+				new /obj/item/stack/ore/bluespace_crystal(get_turf(holder))
 				holder.icon_state = "phazon14"
 		if(11)
 			if(diff==FORWARD)
@@ -1619,10 +1595,6 @@
 				qdel(used_atom)
 				spawn_mecha_result()
 	return TRUE
-
-/datum/construction/reversible/mecha/phazon/spawn_mecha_result()
-	..()
-	SSblackbox.inc("mecha_phazon_created",1)
 
 //ODYSSEUS
 
@@ -1857,7 +1829,3 @@
 				user.visible_message("[user] unfastens the external armor layer.", "<span class='notice'>You unfasten the external armor layer.</span>")
 				holder.icon_state = "odysseus14"
 	return TRUE
-
-/datum/construction/reversible/mecha/odysseus/spawn_mecha_result()
-	..()
-	SSblackbox.inc("mecha_odysseus_created",1)

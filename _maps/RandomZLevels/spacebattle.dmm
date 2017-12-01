@@ -1,12 +1,11 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/closed/mineral/random,
-/area/space)
+/area/space/nearstation)
 "ab" = (
 /turf/open/space,
 /area/space)
 "ac" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 8;
 	icon_state = "diagonalWall3"
@@ -31,7 +30,6 @@
 /turf/open/space,
 /area/awaymission/spacebattle/syndicate2)
 "ag" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
@@ -101,7 +99,6 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/spacebattle/syndicate2)
 "av" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 8;
 	icon_state = "diagonalWall3"
@@ -126,7 +123,6 @@
 /turf/open/space,
 /area/awaymission/spacebattle/syndicate3)
 "az" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
@@ -155,7 +151,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate3)
 "aF" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
@@ -168,7 +163,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate2)
 "aH" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
@@ -190,7 +184,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate2)
 "aL" = (
-/turf/open/floor/mineral/plastitanium,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 8;
 	icon_state = "diagonalWall3"
@@ -201,14 +194,12 @@
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate2)
 "aN" = (
-/turf/open/floor/mineral/plastitanium,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
 	},
 /area/awaymission/spacebattle/syndicate2)
 "aO" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 8;
 	icon_state = "diagonalWall3"
@@ -233,7 +224,6 @@
 /turf/open/space,
 /area/awaymission/spacebattle/syndicate1)
 "aS" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
@@ -369,7 +359,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate1)
 "bq" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
@@ -379,7 +368,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate3)
 "bs" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
@@ -397,14 +385,12 @@
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate3)
 "bv" = (
-/turf/open/floor/mineral/plastitanium,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 8;
 	icon_state = "diagonalWall3"
 	},
 /area/awaymission/spacebattle/syndicate3)
 "bw" = (
-/turf/open/floor/mineral/plastitanium,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
@@ -424,7 +410,6 @@
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/syndicate3)
 "bz" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
@@ -434,7 +419,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate2)
 "bB" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
@@ -447,7 +431,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate1)
 "bD" = (
-/turf/open/floor/mineral/plastitanium,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 8;
 	icon_state = "diagonalWall3"
@@ -458,7 +441,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate1)
 "bF" = (
-/turf/open/floor/mineral/plastitanium,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
@@ -473,7 +455,6 @@
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/syndicate1)
 "bH" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 8;
 	icon_state = "diagonalWall3"
@@ -496,7 +477,6 @@
 /turf/open/space,
 /area/awaymission/spacebattle/cruiser)
 "bL" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
@@ -1242,7 +1222,6 @@
 /turf/open/floor/plasteel/bar,
 /area/awaymission/spacebattle/cruiser)
 "eq" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 8;
 	icon_state = "diagonalWall3"
@@ -1252,7 +1231,6 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate4)
 "es" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
@@ -1912,13 +1890,11 @@
 /turf/open/floor/plasteel,
 /area/awaymission/spacebattle/cruiser)
 "gA" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
 /area/awaymission/spacebattle/syndicate4)
 "gB" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
@@ -2000,7 +1976,6 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/spacebattle/syndicate7)
 "gQ" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
@@ -2018,11 +1993,11 @@
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "gT" = (
-/obj/item/ore/bananium,
-/obj/item/ore/bananium,
-/obj/item/ore/bananium,
-/obj/item/ore/bananium,
-/obj/item/ore/bananium,
+/obj/item/stack/ore/bananium,
+/obj/item/stack/ore/bananium,
+/obj/item/stack/ore/bananium,
+/obj/item/stack/ore/bananium,
+/obj/item/stack/ore/bananium,
 /obj/structure/closet/crate,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
@@ -2065,7 +2040,6 @@
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "hb" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 8;
 	icon_state = "diagonalWall3"
@@ -2225,7 +2199,6 @@
 	},
 /area/awaymission/spacebattle/cruiser)
 "hG" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
@@ -2410,7 +2383,6 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/spacebattle/cruiser)
 "in" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
@@ -2476,48 +2448,46 @@
 "ix" = (
 /obj/structure/lattice,
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "iy" = (
 /obj/effect/mob_spawn/human/syndicatesoldier,
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "iz" = (
 /turf/closed/wall/mineral/plastitanium,
-/area/space)
+/area/space/nearstation)
 "iA" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
 	},
-/area/space)
+/area/space/nearstation)
 "iB" = (
 /obj/machinery/sleeper,
 /turf/open/floor/mineral/plastitanium/airless,
-/area/space)
+/area/space/nearstation)
 "iC" = (
 /turf/open/floor/mineral/plastitanium/airless,
-/area/space)
+/area/space/nearstation)
 "iD" = (
 /obj/effect/mob_spawn/human/syndicatesoldier,
 /turf/open/floor/mineral/plastitanium/airless,
-/area/space)
+/area/space/nearstation)
 "iE" = (
 /turf/closed/mineral/clown,
-/area/space)
+/area/space/nearstation)
 "iF" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plasteel/airless{
 	icon_state = "floor4";
 	dir = 10
 	},
-/area/space)
+/area/space/nearstation)
 "iG" = (
 /obj/item/stack/rods,
 /turf/open/floor/mineral/plastitanium/airless,
-/area/space)
+/area/space/nearstation)
 "iH" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 8;
 	icon_state = "diagonalWall3"
@@ -2527,7 +2497,6 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate5)
 "iJ" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
@@ -2536,7 +2505,7 @@
 "iK" = (
 /obj/machinery/sleeper,
 /turf/open/floor/plasteel/airless,
-/area/space)
+/area/space/nearstation)
 "iL" = (
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate5)
@@ -2545,18 +2514,16 @@
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate5)
 "iN" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
-/area/space)
+/area/space/nearstation)
 "iO" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
 	},
-/area/space)
+/area/space/nearstation)
 "iP" = (
 /obj/machinery/sleeper,
 /turf/open/floor/mineral/plastitanium,
@@ -2574,23 +2541,21 @@
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/space)
+/area/space/nearstation)
 "iS" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "iT" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate5)
 "iU" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
 /area/awaymission/spacebattle/syndicate5)
 "iV" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
@@ -2608,7 +2573,6 @@
 /turf/open/space,
 /area/awaymission/spacebattle/syndicate5)
 "iY" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 8;
 	icon_state = "diagonalWall3"
@@ -2618,7 +2582,6 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate6)
 "ja" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
@@ -2647,13 +2610,11 @@
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate6)
 "jg" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
 /area/awaymission/spacebattle/syndicate6)
 "jh" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
@@ -2672,7 +2633,7 @@
 /area/awaymission/spacebattle/syndicate6)
 "jk" = (
 /turf/open/floor/plating/asteroid/airless,
-/area/space)
+/area/space/nearstation)
 "jl" = (
 /turf/closed/wall/mineral/plasma,
 /area/awaymission/spacebattle/secret)
@@ -3083,11 +3044,11 @@
 "kE" = (
 /obj/item/shard,
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "kF" = (
 /obj/item/stack/rods,
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "kG" = (
 /obj/item/ammo_casing/c10mm,
 /obj/item/ammo_casing/c10mm,
@@ -3106,17 +3067,17 @@
 "kI" = (
 /obj/item/stack/sheet/metal,
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "kJ" = (
 /obj/item/shard,
 /obj/structure/lattice,
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "kK" = (
 /obj/structure/lattice,
 /obj/item/stack/rods,
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "kL" = (
 /obj/structure/closet/crate,
 /obj/item/stock_parts/cell/high,
@@ -3127,7 +3088,7 @@
 "kM" = (
 /obj/effect/mapping_helpers/planet_z,
 /turf/closed/mineral/random,
-/area/space)
+/area/space/nearstation)
 
 (1,1,1) = {"
 aa

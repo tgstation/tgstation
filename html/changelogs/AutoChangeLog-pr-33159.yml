@@ -1,0 +1,4 @@
+author: "Robustin"
+delete-after: True
+changes: 
+  - balance: "Clockwork magicks will now prevent Bags of Holding from being combined on Reebe."

@@ -155,7 +155,7 @@
 		briefcase = loc
 	else
 		log_game("[src] has been spawned without a briefcase.")
-		qdel(src)
+		return INITIALIZE_HINT_QDEL
 
 /obj/machinery/launchpad/briefcase/Destroy()
 	QDEL_NULL(briefcase)
@@ -242,7 +242,6 @@
 	icon_state = "blpad-remote"
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = SLOT_BELT
-	origin_tech = "materials=3;magnets=2;bluespace=4;syndicate=3"
 	var/sending = TRUE
 	var/obj/machinery/launchpad/briefcase/pad
 

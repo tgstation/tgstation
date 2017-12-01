@@ -49,6 +49,7 @@
 	max_integrity = 200
 	integrity_failure = 50
 	resistance_flags = FIRE_PROOF
+	interact_open = TRUE
 
 	var/lon_range = 1.5
 	var/area/area
@@ -657,7 +658,7 @@
 		wires.interact(user)
 	else
 		return ..()
-		
+
 /obj/machinery/power/apc/AltClick(mob/user)
 	..()
 	if(!issilicon(user) && (!user.canUseTopic(src, be_close=TRUE) || !isturf(loc)))
@@ -665,7 +666,7 @@
 		return
 	else
 		togglelock(user)
-		
+
 /obj/machinery/power/apc/proc/togglelock(mob/living/user)
 	if(emagged)
 		to_chat(user, "<span class='warning'>The interface is broken!</span>")
@@ -1052,15 +1053,6 @@
 		force_update = 1
 		return
 
-	/*
-	if (equipment > 1) // off=0, off auto=1, on=2, on auto=3
-		use_power(src.equip_consumption, EQUIP)
-	if (lighting > 1) // off=0, off auto=1, on=2, on auto=3
-		use_power(src.light_consumption, LIGHT)
-	if (environ > 1) // off=0, off auto=1, on=2, on auto=3
-		use_power(src.environ_consumption, ENVIRON)
-
-	area.calc_lighting() */
 	lastused_light = area.usage(STATIC_LIGHT)
 	lastused_light += area.usage(LIGHT)
 	lastused_equip = area.usage(EQUIP)

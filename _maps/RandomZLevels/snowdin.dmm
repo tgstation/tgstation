@@ -1696,7 +1696,6 @@
 /turf/open/floor/plating/snowed/colder,
 /area/awaymission/snowdin/dungeon1)
 "ez" = (
-/turf/open/space,
 /turf/open/floor/plating/snowed,
 /area/awaymission/snowdin/post)
 "eA" = (
@@ -2312,7 +2311,6 @@
 	},
 /area/awaymission/snowdin/cave)
 "gr" = (
-/turf/open/floor/plating,
 /turf/open/floor/plating/snowed,
 /area/awaymission/snowdin/post)
 "gs" = (
@@ -3535,7 +3533,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/dark{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3543,7 +3541,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/dark{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3552,7 +3550,6 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin)
 "jL" = (
-/turf/open/floor/plating,
 /turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
@@ -3567,7 +3564,6 @@
 	},
 /area/awaymission/snowdin)
 "jN" = (
-/turf/open/floor/plating,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
@@ -3582,7 +3578,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/snowdin/sekret)
 "jP" = (
 /obj/machinery/vending/cigarette,
@@ -3612,7 +3608,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/dark{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3663,7 +3659,7 @@
 	},
 /area/awaymission/snowdin/sekret)
 "jZ" = (
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/dark{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3684,7 +3680,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/dark{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3693,7 +3689,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/dark{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3832,7 +3828,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/snowdin/sekret)
 "kv" = (
 /turf/open/floor/plasteel/cafeteria{
@@ -3855,7 +3851,7 @@
 	},
 /obj/item/reagent_containers/food/drinks/bottle/vodka/badminka,
 /obj/item/paper/fluff/awaymissions/snowdin/saw_usage,
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/dark{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3864,7 +3860,7 @@
 	name = "SAW Security Door";
 	req_access_txt = "150"
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/dark{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -3950,7 +3946,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/snowdin/sekret)
 "kJ" = (
 /obj/machinery/door/airlock/glass_security{
@@ -3973,7 +3969,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/dark{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -4008,7 +4004,7 @@
 /area/awaymission/snowdin/sekret)
 "kQ" = (
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/snowdin/sekret)
 "kR" = (
 /obj/structure/table,
@@ -4023,7 +4019,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/dark{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -4034,7 +4030,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/dark{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
@@ -4408,7 +4404,6 @@
 	},
 /area/awaymission/snowdin)
 "lR" = (
-/turf/open/floor/plating/asteroid/snow,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 8;
 	icon_state = "diagonalWall3"

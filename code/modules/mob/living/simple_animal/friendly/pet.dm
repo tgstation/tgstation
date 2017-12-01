@@ -8,17 +8,20 @@
 
 /mob/living/simple_animal/pet/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/clothing/neck/petcollar) && !pcollar)
-		var/obj/item/clothing/neck/petcollar/P = O
-		pcollar = P
-		collar = "[icon_state]collar"
-		pettag = "[icon_state]tag"
-		regenerate_icons()
-		to_chat(user, "<span class='notice'>You put the [P] around [src]'s neck.</span>")
-		if(P.tagname)
-			real_name = "\proper [P.tagname]"
-			name = real_name
-		qdel(P)
-		return
+		var/pet_icon_states = icon_states("[icon]")
+		if("[icon_state]collar" in pet_icon_states)
+			var/obj/item/clothing/neck/petcollar/P = O
+			pcollar = P
+			collar = "[icon_state]collar"
+			pettag = "[icon_state]tag"
+			regenerate_icons()
+			to_chat(user, "<span class='notice'>You put the [P] around [src]'s neck.</span>")
+			if(P.tagname)
+				real_name = "\proper [P.tagname]"
+				name = real_name
+			qdel(P)
+			return
+
 	if(istype(O, /obj/item/newspaper))
 		if(!stat)
 			user.visible_message("[user] baps [name] on the nose with the rolled up [O].")
@@ -50,3 +53,4 @@
 		add_overlay(collar)
 	if(pettag)
 		add_overlay(pettag)
+

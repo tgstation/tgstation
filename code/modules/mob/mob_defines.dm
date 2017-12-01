@@ -109,9 +109,6 @@
 
 	var/list/mob_spell_list = list() //construct spells and mime spells. Spells that do not transfer from one mob to another and can not be lost in mindswap.
 
-//Changlings, but can be used in other modes
-//	var/obj/effect/proc_holder/changpower/list/power_list = list()
-
 //List of active diseases
 
 	var/list/viruses = list() // list of all diseases in a mob
@@ -133,8 +130,6 @@
 
 
 	var/turf/listed_turf = null	//the current turf being examined in the stat panel
-
-	var/list/permanent_huds = list()
 
 	var/resize = 1 //Badminnery resize
 

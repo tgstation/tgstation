@@ -22,7 +22,6 @@
 	resistance_flags = FIRE_PROOF
 
 	materials = list(MAT_METAL=70, MAT_GLASS=30)
-	origin_tech = "engineering=1;plasmatech=1"
 	var/welding = 0 	//Whether or not the welding tool is off(0), on(1) or currently welding(2)
 	var/status = TRUE 		//Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
 	var/max_fuel = 20 	//The max amount of fuel the welder can hold
@@ -271,7 +270,6 @@
 	icon_state = "indwelder"
 	max_fuel = 40
 	materials = list(MAT_GLASS=60)
-	origin_tech = "engineering=2;plasmatech=2"
 
 /obj/item/weldingtool/largetank/cyborg
 	name = "integrated welding tool"
@@ -302,7 +300,6 @@
 	toolspeed = 0.1
 	light_intensity = 0
 	change_icons = 0
-	origin_tech = "plasmatech=5;engineering=5;abductor=3"
 
 /obj/item/weldingtool/abductor/process()
 	if(get_fuel() <= max_fuel)
@@ -316,7 +313,6 @@
 	item_state = "upindwelder"
 	max_fuel = 80
 	materials = list(MAT_METAL=70, MAT_GLASS=120)
-	origin_tech = "engineering=3;plasmatech=2"
 
 /obj/item/weldingtool/experimental
 	name = "experimental welding tool"
@@ -325,7 +321,6 @@
 	item_state = "exwelder"
 	max_fuel = 40
 	materials = list(MAT_METAL=70, MAT_GLASS=120)
-	origin_tech = "materials=4;engineering=4;bluespace=3;plasmatech=4"
 	var/last_gen = 0
 	change_icons = 0
 	can_off_process = 1

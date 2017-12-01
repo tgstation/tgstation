@@ -163,7 +163,7 @@
 	death = 0;
 	desc = "Looks secure.";
 	flavour_text = "You are a bartender for the beach!";
-	icon = 'icons/obj/Cryogenic2.dmi';
+	icon = 'icons/obj/cryogenic2.dmi';
 	icon_state = "sleeper";
 	mob_name = "Jerry Thomas";
 	name = "bartenders cryosleeper";
@@ -253,7 +253,8 @@
 /obj/machinery/gateway{
 	dir = 9
 	},
-/obj/effect/turf_decal/sand/warning{
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 9
 	},
 /turf/open/floor/plating/beach/sand,
@@ -262,7 +263,8 @@
 /obj/machinery/gateway{
 	dir = 1
 	},
-/obj/effect/turf_decal/sand/warning{
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
 	},
 /turf/open/floor/plating/beach/sand,
@@ -271,7 +273,8 @@
 /obj/machinery/gateway{
 	dir = 5
 	},
-/obj/effect/turf_decal/sand/warning{
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 5
 	},
 /turf/open/floor/plating/beach/sand,
@@ -288,7 +291,8 @@
 /obj/machinery/gateway{
 	dir = 8
 	},
-/obj/effect/turf_decal/sand/warning{
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 8
 	},
 /turf/open/floor/plating/beach/sand,
@@ -302,7 +306,8 @@
 /obj/machinery/gateway{
 	dir = 4
 	},
-/obj/effect/turf_decal/sand/warning{
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 4
 	},
 /turf/open/floor/plating/beach/sand,
@@ -311,24 +316,24 @@
 /obj/machinery/gateway{
 	dir = 10
 	},
-/obj/effect/turf_decal/sand/warning{
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 10
 	},
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "be" = (
-/obj/effect/turf_decal/sand/warning/corner{
-	dir = 1
-	},
 /obj/machinery/gateway,
-/obj/effect/turf_decal/sand/warning/corner,
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/stripes/asteroid/line,
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "bf" = (
 /obj/machinery/gateway{
 	dir = 6
 	},
-/obj/effect/turf_decal/sand/warning{
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 6
 	},
 /turf/open/floor/plating/beach/sand,
@@ -27763,7 +27768,7 @@ ai
 ai
 ai
 ai
-aR
+ai
 ai
 ai
 ai
@@ -28020,7 +28025,7 @@ ai
 ai
 ai
 ai
-aR
+ai
 aV
 ba
 bd
@@ -28277,7 +28282,7 @@ ai
 ai
 ai
 ai
-aR
+ai
 aW
 bb
 be
@@ -28534,7 +28539,7 @@ ai
 ai
 ai
 ai
-aR
+ai
 aX
 bc
 bf
@@ -28791,7 +28796,7 @@ ai
 ai
 ai
 ai
-aR
+ai
 ai
 ai
 ai
@@ -29048,7 +29053,7 @@ ai
 ai
 ai
 ai
-aR
+ai
 ai
 ai
 ai
@@ -29305,7 +29310,7 @@ ai
 ai
 ai
 ai
-aR
+ai
 ai
 ai
 ai
@@ -29562,7 +29567,7 @@ ai
 ai
 ai
 ai
-aR
+ai
 ai
 ai
 ai
@@ -29819,7 +29824,7 @@ ai
 ai
 ai
 ai
-aR
+ai
 ai
 aU
 ai
@@ -30076,7 +30081,7 @@ ai
 ai
 ak
 ai
-aR
+ai
 ai
 ai
 ai
@@ -33931,7 +33936,7 @@ ai
 aG
 aG
 ai
-aR
+ai
 ai
 ai
 ai
@@ -34188,7 +34193,7 @@ ai
 aG
 aG
 ai
-aR
+ai
 ai
 ai
 ai
@@ -34445,7 +34450,7 @@ ai
 aG
 aG
 ai
-aR
+ai
 ai
 ai
 bg
@@ -34702,7 +34707,7 @@ ai
 aG
 aG
 ai
-aR
+ai
 ai
 ai
 bh
@@ -34959,7 +34964,7 @@ ai
 aG
 aG
 ai
-aR
+ai
 ai
 ai
 bg
@@ -35216,7 +35221,7 @@ aj
 aG
 aG
 ai
-aR
+ai
 ai
 ai
 bh
@@ -35473,7 +35478,7 @@ aj
 aG
 aG
 ai
-aR
+ai
 ai
 ai
 bg
@@ -35730,7 +35735,7 @@ aj
 aG
 aG
 ai
-aR
+ai
 ai
 ai
 bh
@@ -35987,7 +35992,7 @@ aj
 aG
 aG
 ai
-aR
+ai
 ai
 ai
 bg
@@ -36244,7 +36249,7 @@ aj
 aG
 aG
 ai
-aR
+ai
 ai
 ai
 bh
@@ -36501,7 +36506,7 @@ aH
 aG
 aG
 ai
-aR
+ai
 ai
 ai
 bg
@@ -36758,7 +36763,7 @@ aj
 aG
 aG
 ai
-aR
+ai
 ai
 ai
 bh
@@ -37015,7 +37020,7 @@ aH
 aG
 aG
 ai
-aR
+ai
 ai
 ai
 bg
@@ -37272,7 +37277,7 @@ aj
 aG
 aG
 ai
-aR
+ai
 aZ
 ai
 bh
@@ -37529,7 +37534,7 @@ aj
 aG
 aG
 ai
-aR
+ai
 ai
 ai
 bg
@@ -37786,20 +37791,20 @@ aj
 ai
 ai
 ai
-aR
-aR
-aR
-aR
-aR
-aR
-aR
-aR
-aR
-aR
-aR
-aR
-aR
-aR
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
 bq
 bt
 bx

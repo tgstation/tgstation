@@ -13,13 +13,6 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 #define HAL_LINES_FILE "hallucination.json"
 
-/mob/living/carbon
-	var/image/halimage
-	var/image/halbody
-	var/obj/halitem
-	var/hal_screwyhud = SCREWYHUD_NONE
-	var/next_hallucination = 0
-
 GLOBAL_LIST_INIT(hallucinations_minor, list(
 	/datum/hallucination/sounds,
 	/datum/hallucination/bolts,
@@ -82,6 +75,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 
 /datum/hallucination/Destroy()
 	target.investigate_log("was afflicted with a hallucination of type [type]. [feedback_details]", INVESTIGATE_HALLUCINATIONS)
+	target = null
 	return ..()
 
 /obj/effect/hallucination
@@ -97,6 +91,12 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	var/image/current_image = null
 	var/image_layer = MOB_LAYER
 	var/active = TRUE //qdelery
+
+/obj/effect/hallucination/singularity_pull()
+	return
+
+/obj/effect/hallucination/singularity_act()
+	return
 
 /obj/effect/hallucination/simple/Initialize(mapload, var/mob/living/carbon/T)
 	. = ..()
@@ -197,7 +197,6 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	flood_turfs = list()
 	if(target.client)
 		target.client.images.Remove(flood_images)
-	target = null
 	qdel(flood_images)
 	flood_images = list()
 	return ..()
@@ -460,7 +459,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	var/image/A = null
 	var/kind = force_kind ? force_kind : pick("monkey","corgi","carp","skeleton","demon","zombie")
 	feedback_details += "Type: [kind]"
-	for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
+	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 		if(H == target)
 			continue
 		if(skip_nearby && (H in view(target)))
@@ -538,7 +537,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	var/mob/living/carbon/human/clone = null
 	var/clone_weapon = null
 
-	for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
+	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 		if(H.stat || H.lying)
 			continue
 		clone = H
@@ -769,7 +768,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 			target.client.images.Remove(speech_overlay)
 	else // Radio talk
 		var/list/humans = list()
-		for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
+		for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 			humans += H
 		person = pick(humans)
 		var/message = target.compose_message(person,understood_language,pick(radio_messages),"1459",person.get_spans(),face_name = TRUE)
@@ -1153,4 +1152,3 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	H.preparePixelProjectile(target, start)
 	H.fire()
 	qdel(src)
-

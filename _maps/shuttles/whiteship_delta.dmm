@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ab" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 1
@@ -786,7 +786,8 @@
 	},
 /obj/structure/table,
 /obj/item/clothing/head/helmet/swat/nanotrasen,
-/turf/open/floor/plasteel/bot,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "by" = (
 /obj/effect/decal/cleanable/dirt{
@@ -805,7 +806,8 @@
 	},
 /obj/structure/table,
 /obj/item/clothing/gloves/color/black,
-/turf/open/floor/plasteel/bot,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "bA" = (
 /obj/structure/table/optable,
@@ -846,7 +848,8 @@
 	},
 /obj/structure/table,
 /obj/item/clothing/suit/armor/vest,
-/turf/open/floor/plasteel/bot,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "bE" = (
 /obj/effect/decal/cleanable/dirt{
@@ -858,7 +861,8 @@
 	},
 /obj/structure/table,
 /obj/item/gun/energy/e_gun/mini,
-/turf/open/floor/plasteel/bot,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "bF" = (
 /obj/machinery/light/small{
@@ -1409,7 +1413,7 @@
 	name = "dust"
 	},
 /obj/structure/frame/computer,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 8
 	},

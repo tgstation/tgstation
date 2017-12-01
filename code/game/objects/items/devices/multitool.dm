@@ -4,7 +4,6 @@
 
 /**
  * Multitool -- A multitool is used for hacking electronic devices.
- * TO-DO -- Using it as a power measurement tool for cables etc. Nannek.
  *
  */
 
@@ -23,7 +22,6 @@
 	throw_range = 7
 	throw_speed = 3
 	materials = list(MAT_METAL=50, MAT_GLASS=20)
-	origin_tech = "magnets=1;engineering=2"
 	var/obj/machinery/buffer // simple machine buffer for device linkage
 	hitsound = 'sound/weapons/tap.ogg'
 	toolspeed = 1
@@ -60,8 +58,7 @@
 		if(io.holder.assembly && io.holder.assembly != selected_io.holder.assembly)
 			to_chat(user, "<span class='warning'>Both \the [io.holder] and \the [selected_io.holder] need to be inside the same assembly.</span>")
 			return
-		selected_io.linked |= io
-		io.linked |= selected_io
+		io.connect_pin(selected_io)
 
 		to_chat(user, "<span class='notice'>You connect \the [selected_io.holder]'s [selected_io.name] to \the [io.holder]'s [io.name].</span>")
 		selected_io.holder.interact(user) // This is to update the UI.
@@ -83,8 +80,7 @@
 		to_chat(user, "<span class='warning'>These data pins aren't connected!</span>")
 		return
 	else
-		io1.linked.Remove(io2)
-		io2.linked.Remove(io1)
+		io1.disconnect_pin(io2)
 		to_chat(user, "<span class='notice'>You clip the data connection between the [io1.holder.displayed_name]'s \
 		[io1.name] and the [io2.holder.displayed_name]'s [io2.name].</span>")
 		io1.holder.interact(user) // This is to update the UI.
@@ -101,7 +97,6 @@
 	var/detect_state = PROXIMITY_NONE
 	var/rangealert = 8	//Glows red when inside
 	var/rangewarning = 20 //Glows yellow when inside
-	origin_tech = "magnets=1;engineering=2;syndicate=1"
 
 /obj/item/device/multitool/ai_detect/New()
 	..()
@@ -164,4 +159,3 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "multitool"
 	toolspeed = 0.1
-	origin_tech = "magnets=5;engineering=5;abductor=3"
