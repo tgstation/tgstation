@@ -263,7 +263,7 @@
 /area/shuttle/escape)
 "T" = (
 /obj/structure/extinguisher_cabinet{
-	step_y = 29
+	pixel_y = 29
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
