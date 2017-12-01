@@ -166,7 +166,7 @@
 		var/obj/item/bodypart/BP = X
 		missing -= BP.body_zone
 		for(var/obj/item/I in BP.embedded_objects)
-			msg += "<B>[t_He] [t_has] \a [icon2html(I, user)] [I] embedded in [t_his] [BP.name]!</B>\n"
+			msg += "<B>[t_He] [t_has] \a [icon2html(I, user)] [I] embedded in [t_his] [BP.name]! [I.pinned ? "It [t_has] pinned [t_him] down to \the [I.pinned]!" : ""]</B>\n" // Hippie - Show what embedded part has them pinned
 
 	//stores missing limbs
 	var/l_limbs_missing = 0

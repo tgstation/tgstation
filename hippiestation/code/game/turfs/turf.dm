@@ -1,5 +1,6 @@
 /turf
 	var/elevation = 10
+	var/pinned = null
 
 /turf/open/floor
 	elevation = 11
@@ -28,3 +29,19 @@
 /turf/open/pool/examine(mob/user)
 	..()
 	to_chat(user, "<span class='notice'>Its height seems very low.</span>")
+
+/turf/Destroy(force)
+	..()
+
+	if (pinned)
+		var/mob/living/carbon/human/H = pinned
+
+		if (istype(H))
+			H.anchored = FALSE
+			H.pinned_to = null
+			H.do_pindown(src, 0)
+			H.update_canmove()
+
+			for (var/obj/item/stack/rods/R in H.contents)
+				if (R.pinned)
+					R.pinned = null

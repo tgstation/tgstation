@@ -183,7 +183,7 @@
 			var/obj/item/bodypart/L = I
 
 			for(var/obj/item/J in L.embedded_objects)
-				dat += "<tr><td><a href='byond://?src=\ref[src];embedded_object=\ref[J];embedded_limb=\ref[L]'>Embedded in [L]: [J]</a><br></td></tr>"
+				dat += "<tr><td><a href='byond://?src=\ref[src];embedded_object=\ref[J];embedded_limb=\ref[L]'>Embedded in [L]: [J] [J.pinned ? "(Pinned down)" : ""]</a><br></td></tr>" // Hippie - Show what item has them pinned
 
 	dat += {"</table>
 	<A href='?src=[REF(user)];mach_close=mob[REF(src)]'>Close</A>
@@ -219,7 +219,20 @@
 					return
 				L.embedded_objects -= I
 				L.receive_damage(I.embedded_unsafe_removal_pain_multiplier*I.w_class)//It hurts to rip it out, get surgery you dingus.
-				I.forceMove(get_turf(src))
+				
+				// Hippie Start - Remove pinned item
+				if (I.pinned)
+					do_pindown(src.pinned_to, 0)
+					src.pinned_to = null
+					src.anchored = FALSE
+					update_canmove()
+					I.pinned = null
+
+				// Don't move stacks because it could merge items still pinned
+				if (!istype(I, /obj/item/stack))
+					I.forceMove(get_turf(src))
+				// Hippie End
+				
 				usr.put_in_hands(I)
 				emote("scream")
 
