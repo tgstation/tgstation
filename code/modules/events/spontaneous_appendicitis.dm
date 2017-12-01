@@ -10,7 +10,7 @@
 	fakeable = FALSE
 
 /datum/round_event/spontaneous_appendicitis/start()
-	for(var/mob/living/carbon/human/H in shuffle(GLOB.living_mob_list))
+	for(var/mob/living/carbon/human/H in shuffle(GLOB.alive_mob_list))
 		if(!H.client)
 			continue
 		if(H.stat == DEAD)

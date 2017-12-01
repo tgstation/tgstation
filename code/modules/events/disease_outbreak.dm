@@ -29,7 +29,7 @@
 	if(!virus_type && !advanced_virus)
 		virus_type = pick(/datum/disease/dnaspread, /datum/disease/advance/flu, /datum/disease/advance/cold, /datum/disease/brainrot, /datum/disease/magnitis)
 
-	for(var/mob/living/carbon/human/H in shuffle(GLOB.living_mob_list))
+	for(var/mob/living/carbon/human/H in shuffle(GLOB.alive_mob_list))
 		var/turf/T = get_turf(H)
 		if(!T)
 			continue

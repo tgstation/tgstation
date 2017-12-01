@@ -86,8 +86,8 @@
 /obj/machinery/r_n_d/experimentor/Initialize()
 	. = ..()
 
-	trackedIan = locate(/mob/living/simple_animal/pet/dog/corgi/Ian) in GLOB.mob_list
-	trackedRuntime = locate(/mob/living/simple_animal/pet/cat/Runtime) in GLOB.mob_list
+	trackedIan = locate(/mob/living/simple_animal/pet/dog/corgi/Ian) in GLOB.mob_living_list
+	trackedRuntime = locate(/mob/living/simple_animal/pet/cat/Runtime) in GLOB.mob_living_list
 	SetTypeReactions()
 
 /obj/machinery/r_n_d/experimentor/RefreshParts()

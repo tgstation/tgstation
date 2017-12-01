@@ -145,8 +145,8 @@
 					var/fraction = min(transfer_amount/reagents.total_volume, 1)
 					reagents.reaction(L, INJECT, fraction)
 					reagents.trans_to(L, transfer_amount)
-					L.visible_message("<span class='danger'>[src] injects [L] with it's needle!</span>", \
-											"<span class='userdanger'>[src] injects you with it's needle!</span>")
+					L.visible_message("<span class='danger'>[src] injects [L] with its needle!</span>", \
+											"<span class='userdanger'>[src] injects you with its needle!</span>")
 				else
 					busy = FALSE
 					activate_pin(3)
