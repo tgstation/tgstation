@@ -55,7 +55,8 @@
 		if(user.nextsoundemote >= world.time)
 			return
 		user.nextsoundemote = world.time + 7
-		playsound(user, 'hippiestation/sound/voice/burp.ogg', 50, 1, -1)
+		var/burp_noise = pick('hippiestation/sound/voice/burp1.ogg', 'hippiestation/sound/voice/burp2.ogg', 'hippiestation/sound/voice/burp3.ogg', 'hippiestation/sound/voice/burp4.ogg', 'hippiestation/sound/voice/burp5.ogg', 'hippiestation/sound/voice/burp6.ogg')
+		playsound(user, burp_noise, 50, 1, -1)
 	. = ..()
 
 /datum/emote/living/cough/run_emote(mob/living/user, params)
