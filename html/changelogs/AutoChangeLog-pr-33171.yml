@@ -1,0 +1,4 @@
+author: "uraniummeltdown"
+delete-after: True
+changes: 
+  - imageadd: "Construct shells have a new animated sprite"
