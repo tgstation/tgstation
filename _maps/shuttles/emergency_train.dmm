@@ -145,7 +145,7 @@
 /area/shuttle/escape)
 "z" = (
 /obj/structure/extinguisher_cabinet{
-	step_y = 28;
+	pixel_x = 28;
 	pixel_y = -30
 	},
 /turf/closed/wall/mineral/titanium,
