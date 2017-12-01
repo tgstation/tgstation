@@ -198,7 +198,12 @@
 			C.log_message("<font color='orange'>Slipped[O ? " on the [O.name]" : ""][(lube&SLIDE)? " (LUBE)" : ""]!</font>", INDIVIDUAL_ATTACK_LOG)
 		if(!(lube&SLIDE_ICE))
 			if(prob(95))
-				playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+				// Hippie Start - custom sounds for banana
+				if (istype(O, /obj/item/grown/bananapeel))
+					playsound(C.loc, 'hippiestation/sound/misc/banana_slip.ogg', 50, 1)
+				else
+					playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+				// Hippie End
 			else
 				playsound(C.loc, 'hippiestation/sound/misc/oof.ogg', 50, 1, -3)
 
