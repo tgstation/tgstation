@@ -320,9 +320,6 @@
 /obj/machinery/particle_accelerator/control_box/blob_act(obj/structure/blob/B)
 	if(prob(50))
 		qdel(src)
-		
-/obj/machinery/particle_accelerator/control_box/emp_act(severity) // this is to stop the singulo fucking with the PA.
-	return
 
 #undef PA_CONSTRUCTION_UNSECURED
 #undef PA_CONSTRUCTION_UNWIRED
