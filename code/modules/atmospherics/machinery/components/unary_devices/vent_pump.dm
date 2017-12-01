@@ -94,23 +94,7 @@
 		return
 
 	if(!NODE1 || !on || !is_operational())
-		if(icon_state == "vent_welded")
-			icon_state = "vent_off"
-			return
-
-		if(pump_direction & RELEASING)
-			icon_state = "vent_out-off"
-		else // pump_direction == SIPHONING
-			icon_state = "vent_in-off"
-		return
-
-	if(icon_state == ("vent_out-off" || "vent_in-off" || "vent_off"))
-		if(pump_direction & RELEASING)
-			icon_state = "vent_out"
-			flick("vent_out-starting", src)
-		else // pump_direction == SIPHONING
-			icon_state = "vent_in"
-			flick("vent_in-starting", src)
+		icon_state = "vent_off"
 		return
 
 	if(pump_direction & RELEASING)
