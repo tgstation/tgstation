@@ -33,10 +33,7 @@ hassle if you want to make any changes at all, so it's not recommended.)
 First-time installation should be fairly straightforward. First, you'll need
 BYOND installed. You can get it from http://www.byond.com/. Once you've done
 that, extract the game files to wherever you want to keep them. This is a
-sourcecode-only release, so the next step is to compile the server files.
-
-Open hippiestation.dme by double-clicking it, open the Build menu, and click
-compile.  This'll take a little while, and if everything's done right you'll get
+sourcecode-only release, so the next step is to compile the server files. Open hippiestation.dme by double-clicking it, open the Build menu, and click compile. This'll take a little while, and if everything's done right you'll get a message like this:
 
 ```
 saving hippiestation.dmb (DEBUG mode)
