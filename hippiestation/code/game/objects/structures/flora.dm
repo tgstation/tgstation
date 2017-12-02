@@ -1,5 +1,5 @@
-#DEFINE SHARP_DESC_ADD = "This one appears to have a bunch of sharp edges peeking out from under its leaves."
-#DEFINE EMAG_DESC_ADD = "This plant appears to have been illegally modified.
+#define SHARP_DESC_ADD = "This one appears to have a bunch of sharp edges peeking out from under its leaves."
+#define EMAG_DESC_ADD = "This plant appears to have been illegally modified. //typically we write 'define' in lowercase -- Spankmaster, Dec 2017
 
 /obj/item/twohanded/required/kirbyplants
 	var/disable = 0 //for screwdriver
