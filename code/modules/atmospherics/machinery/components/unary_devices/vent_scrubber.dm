@@ -82,10 +82,7 @@
 		return
 
 	if(scrubbing & SCRUBBING)	
-		if(widenet)
-			icon_state = "scrub_wide"
-		else
-			icon_state = "scrub_on"
+		icon_state = "scrub_on"
 	else //scrubbing == SIPHONING
 		icon_state = "scrub_purge"
 
