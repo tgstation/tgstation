@@ -22,5 +22,5 @@
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/grown/grapes = 3)
 	gold_core_spawnable = HOSTILE_SPAWN
 
-/mob/living/simple_animal/hostile/retaliate/frog/Initialize()
+/mob/living/simple_animal/hostile/retaliate/pottedlean/Initialize()
 	. = ..()
