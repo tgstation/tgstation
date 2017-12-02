@@ -89,7 +89,7 @@
 	var/auto_name = 0
 	var/failure_timer = 0
 	var/force_update = 0
-	var/emergency_lights = TRUE
+	var/emergency_lights = FALSE
 	var/update_state = -1
 	var/update_overlay = -1
 	var/icon_update_needed = FALSE
