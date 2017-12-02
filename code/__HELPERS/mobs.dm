@@ -388,7 +388,7 @@ Proc for attack log creation, because really why not
 
 	for(var/j in 1 to amount)
 		var/atom/X = new spawn_type(arglist(new_args))
-		if(flags_2 & ADMIN_SPAWNED_2)
+		if(admin_spawn)
 			X.flags_2 |= ADMIN_SPAWNED_2
 
 /proc/spawn_and_random_walk(spawn_type, target, amount, walk_chance=100, max_walk=3, always_max_walk=FALSE, admin_spawn=FALSE)
