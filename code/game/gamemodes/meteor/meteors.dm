@@ -167,8 +167,8 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 #define METEOR_MEDAL "Your Life Before Your Eyes"
 
 /obj/effect/meteor/examine(mob/user)
-	if(!admin_spawned && isliving(user))
-		UnlockMedal(METEOR_MEDAL,user.client)
+	if(!(flags_2 & ADMIN_SPAWNED_2) && isliving(user))
+		UnlockMedal(METEOR_MEDAL, user.client)
 	..()
 
 #undef METEOR_MEDAL

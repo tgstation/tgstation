@@ -54,7 +54,7 @@
 		if(other != src)
 			last_tendril = FALSE
 			break
-	if(last_tendril && !admin_spawned)
+	if(last_tendril && !(flags_2 & ADMIN_SPAWNED_2))
 		if(MedalsAvailable())
 			for(var/mob/living/L in view(7,src))
 				if(L.stat)

@@ -98,7 +98,7 @@
 		loc.layer = LARGE_MOB_LAYER //NO HIDING BEHIND PLANTS FOR YOU, DICKWEED (HA GET IT, BECAUSE WEEDS ARE PLANTS)
 		H.bleedsuppress = TRUE //AND WE WON'T BLEED OUT LIKE COWARDS
 	else
-		if(!admin_spawned)
+		if(!(flags_2 & ADMIN_SPAWNED_2))
 			qdel(src)
 
 

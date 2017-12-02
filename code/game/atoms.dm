@@ -8,9 +8,10 @@
 
 	var/list/fingerprints
 	var/list/fingerprintshidden
+	var/fingerprintslast = null
+
 	var/list/blood_DNA
 	var/container_type = NONE
-	var/admin_spawned = 0	//was this spawned by an admin? used for stat tracking stuff.
 	var/datum/reagents/reagents = null
 
 	//This atom's HUD (med/sec, etc) images. Associative list.
@@ -23,7 +24,6 @@
 
 	var/list/atom_colours	 //used to store the different colors on an atom
 							//its inherent color, the colored paint applied on it, special color effect etc...
-	var/initialized = FALSE
 
 	var/list/our_overlays	//our local copy of (non-priority) overlays without byond magic. Use procs in SSoverlays to manipulate
 	var/list/priority_overlays	//overlays that should remain on top and not normally removed when using cut_overlay functions, like c4.
@@ -61,9 +61,10 @@
 
 //Do also note that this proc always runs in New for /mob/dead
 /atom/proc/Initialize(mapload, ...)
-	if(initialized)
+	if(flags_2 & ATOM_INITIALIZED_2)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
-	initialized = TRUE
+	else
+		flags_2 |= ATOM_INITIALIZED_2
 
 	//atom color stuff
 	if(color)
@@ -575,7 +576,7 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 
 /atom/vv_edit_var(var_name, var_value)
 	if(!GLOB.Debug2)
-		admin_spawned = TRUE
+		flags_2 |= ADMIN_SPAWNED_2
 	. = ..()
 	switch(var_name)
 		if("color")

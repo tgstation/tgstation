@@ -31,9 +31,10 @@
 	. = ..()
 
 /turf/Initialize()
-	if(initialized)
+	if(flags_2 & ATOM_INITIALIZED_2)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
-	initialized = TRUE
+	else
+		flags_2 |= ATOM_INITIALIZED_2
 
 	levelupdate()
 	if(smooth)
@@ -81,7 +82,7 @@
 	SSair.remove_from_active(src)
 	visibilityChanged()
 	QDEL_LIST(blueprint_data)
-	initialized = FALSE
+	flags_2 &= ~ATOM_INITIALIZED_2
 	requires_activation = FALSE
 	..()
 

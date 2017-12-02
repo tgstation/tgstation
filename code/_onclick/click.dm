@@ -30,17 +30,17 @@
 
 	Note that this proc can be overridden, and is in the case of screen objects.
 */
-/atom/Click(location,control,params)
-	if(initialized)
+/atom/Click(location, control, params)
+	if(flags_2 & ATOM_INITIALIZED_2)
 		SendSignal(COMSIG_CLICK, location, control, params)
 		usr.ClickOn(src, params)
 
-/atom/DblClick(location,control,params)
-	if(initialized)
+/atom/DblClick(location, control,params)
+	if(flags_2 & ATOM_INITIALIZED_2)
 		usr.DblClickOn(src,params)
 
-/atom/MouseWheel(delta_x,delta_y,location,control,params)
-	if(initialized)
+/atom/MouseWheel(delta_x, delta_y, location,control,params)
+	if(flags_2 & ATOM_INITIALIZED_2)
 		usr.MouseWheelOn(src, delta_x, delta_y, params)
 
 /*
@@ -285,7 +285,7 @@
 	if(!stat && mind && iscarbon(A) && A != src)
 		var/datum/antagonist/changeling/C = mind.has_antag_datum(/datum/antagonist/changeling)
 		if(C && C.chosen_sting)
-			C.chosen_sting.try_to_sting(src,A)	
+			C.chosen_sting.try_to_sting(src,A)
 			next_click = world.time + 5
 			return
 	swap_hand()
@@ -349,7 +349,7 @@
 	if(!stat && mind && iscarbon(A) && A != src)
 		var/datum/antagonist/changeling/C = mind.has_antag_datum(/datum/antagonist/changeling)
 		if(C && C.chosen_sting)
-			C.chosen_sting.try_to_sting(src,A)	
+			C.chosen_sting.try_to_sting(src,A)
 			next_click = world.time + 5
 			return
 	..()

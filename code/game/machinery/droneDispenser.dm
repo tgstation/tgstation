@@ -174,7 +174,9 @@
 				use_power(power_used)
 
 			var/atom/A = new dispense_type(loc)
-			A.admin_spawned = admin_spawned
+
+			if(flags_2 & ADMIN_SPAWNED_2)
+				A.flags_2 |= ADMIN_SPAWNED_2
 
 			if(create_sound)
 				playsound(src, create_sound, 50, 1)

@@ -1926,7 +1926,7 @@
 					else
 						var/atom/O = new path(target)
 						if(O)
-							O.admin_spawned = TRUE
+							O.flags_2 |= ADMIN_SPAWNED_2
 							O.setDir(obj_dir)
 							if(obj_name)
 								O.name = obj_name
