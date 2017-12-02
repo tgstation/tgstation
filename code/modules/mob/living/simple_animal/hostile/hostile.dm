@@ -14,7 +14,7 @@
 	var/list/emote_taunt = list()
 	var/taunt_chance = 0
 
-//typecache of things this mob will attack in DestroySurroundings() if it has environment_smash
+//typecache of things this mob will attack in DestroyPathToTarget() if it has environment_smash
 	var/list/environment_target_typecache = list(
 	/obj/machinery/door/window,
 	/obj/structure/window,
@@ -81,7 +81,8 @@
 		EscapeConfinement()
 
 	if(AICanContinue(possible_targets))
-		DestroySurroundings()
+		if(!QDELETED(target) && !targets_from.Adjacent(target))
+			DestroyPathToTarget()
 		if(!MoveToTarget(possible_targets))     //if we lose our target
 			if(AIShouldSleep(possible_targets))	// we try to acquire a new one
 				toggle_ai(AI_IDLE)			// otherwise we go idle
@@ -359,23 +360,44 @@
 		P.fire()
 		return P
 
+
 /mob/living/simple_animal/hostile/proc/CanSmashTurfs(turf/T)
 	return iswallturf(T) || ismineralturf(T)
 
-/mob/living/simple_animal/hostile/proc/DestroySurroundings()
+
+/mob/living/simple_animal/hostile/proc/DestroyObjectsInDirection(direction)
+	var/turf/T = get_step(targets_from, direction)
+	if(T.Adjacent(targets_from))
+		if(CanSmashTurfs(T))
+			T.attack_animal(src)
+		for(var/a in T)
+			var/atom/A = a
+			if(is_type_in_typecache(A, environment_target_typecache) && !A.IsObscured())
+				A.attack_animal(src)
+				return
+
+
+/mob/living/simple_animal/hostile/proc/DestroyPathToTarget()
+	if(environment_smash)
+		EscapeConfinement()
+		var/dir_to_target = get_dir(targets_from, target)
+		var/dir_list = list()
+		if(dir_to_target in GLOB.diagonals) //it's diagonal, so we need two directions to hit
+			for(var/direction in GLOB.cardinals)
+				if(direction & dir_to_target)
+					dir_list += direction
+		else
+			dir_list += dir_to_target
+		for(var/direction in dir_list) //now we hit all of the directions we got in this fashion, since it's the only directions we should actually need
+			DestroyObjectsInDirection(direction)
+
+
+mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with megafauna destroying everything around them
 	if(environment_smash)
 		EscapeConfinement()
 		for(var/dir in GLOB.cardinals)
-			var/turf/T = get_step(targets_from, dir)
-			if(CanSmashTurfs(T))
-				if(T.Adjacent(targets_from))
-					T.attack_animal(src)
-			for(var/a in T)
-				var/atom/A = a
-				if(!A.Adjacent(targets_from))
-					continue
-				if(is_type_in_typecache(A, environment_target_typecache) && !A.IsObscured())
-					A.attack_animal(src)
+			DestroyObjectsInDirection(dir)
+
 
 /mob/living/simple_animal/hostile/proc/EscapeConfinement()
 	if(buckled)

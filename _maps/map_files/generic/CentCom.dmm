@@ -8111,7 +8111,10 @@
 	width = 18
 	},
 /obj/structure/fans/tiny,
-/turf/open/space/basic,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
 "vs" = (
 /obj/structure/sign/securearea{
@@ -8554,7 +8557,10 @@
 	id = "XCCFerry";
 	name = "XCC Ferry Hangar"
 	},
-/turf/open/space/basic,
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "ww" = (
 /obj/machinery/button/door{
@@ -40556,7 +40562,7 @@ aa
 aa
 KH
 KH
-KT
+KS
 La
 Lb
 Ld
@@ -42612,7 +42618,7 @@ aa
 aa
 KH
 KH
-KT
+KS
 Lc
 Lb
 Li
@@ -60072,11 +60078,11 @@ Ic
 Ep
 Ep
 Mh
-Mj
-Ml
-Mn
-Mp
-Mr
+Mh
+Mh
+Mh
+Mh
+Mh
 Iv
 Iv
 Iv
@@ -61614,11 +61620,11 @@ If
 Gq
 Ep
 Mi
-Mk
-Mm
-Mo
-Mq
-Ms
+Mi
+Mi
+Mi
+Mi
+Mi
 Iv
 Iv
 Iv

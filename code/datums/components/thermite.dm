@@ -3,13 +3,30 @@
 	var/amount
 	var/overlay
 
-	var/static/list/blacklist = typecacheof(/turf/closed/wall/mineral/diamond)
-	var/static/list/resistlist = typecacheof(/turf/closed/wall/r_wall)
+	var/static/list/blacklist = typecacheof(
+		/turf/open/lava,
+		/turf/open/space,
+		/turf/open/water,
+		/turf/open/chasm,
+		)
+
+	var/static/list/immunelist = typecacheof(
+		/turf/closed/wall/mineral/diamond,
+		/turf/closed/indestructible,
+		/turf/open/indestructible,
+		)
+	
+	var/static/list/resistlist = typecacheof(
+		/turf/closed/wall/r_wall,
+		)
 
 /datum/component/thermite/Initialize(_amount)
 	if(!istype(parent, /turf))
-		return COMPONENT_INCOMPATIBLE
+		. = COMPONENT_INCOMPATIBLE
+		CRASH("A thermite component has been applied to an incorrect object. parent: [parent]")
 	if(blacklist[parent.type])
+		return COMPONENT_INCOMPATIBLE
+	if(immunelist[parent.type])
 		_amount*=0 //Yeah the overlay can still go on it and be cleaned but you arent burning down a diamond wall
 	if(resistlist[parent.type])
 		_amount*=0.25

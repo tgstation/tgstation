@@ -1009,9 +1009,9 @@
 
 /mob/living/proc/add_abilities_to_panel()
 	for(var/obj/effect/proc_holder/A in abilities)
-		statpanel("[A.panel]",A.get_panel_text(),A)
+    statpanel("[A.panel]",A.get_panel_text(),A)
 
-/mob/living/lingcheck() //1 is ling w/ no hivemind. 2 is ling w/hivemind. 3 is ling victim being linked into hivemind.
+/mob/living/lingcheck()
 	if(mind)
 		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
 		if(changeling)

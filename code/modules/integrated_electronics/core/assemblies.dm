@@ -5,10 +5,11 @@
 	name = "electronic assembly"
 	desc = "It's a case, for building small electronics with."
 	w_class = WEIGHT_CLASS_SMALL
-	icon = 'icons/obj/electronic_assemblies.dmi'
+	icon = 'icons/obj/assemblies/electronic_setups.dmi'
 	icon_state = "setup_small"
 	flags_1 = NOBLUDGEON_1
 	materials = list()		// To be filled later
+	var/list/assembly_components = list()
 	var/max_components = IC_MAX_SIZE_BASE
 	var/max_complexity = IC_COMPLEXITY_BASE
 	var/opened = FALSE
@@ -40,11 +41,12 @@
 
 /obj/item/device/electronic_assembly/proc/handle_idle_power()
 	// First we generate power.
-	for(var/obj/item/integrated_circuit/passive/power/P in contents)
+	for(var/obj/item/integrated_circuit/passive/power/P in assembly_components)
 		P.make_energy()
 
 	// Now spend it.
-	for(var/obj/item/integrated_circuit/IC in contents)
+	for(var/I in assembly_components)
+		var/obj/item/integrated_circuit/IC = I
 		if(IC.power_draw_idle)
 			if(!draw_power(IC.power_draw_idle))
 				IC.power_fail()
@@ -59,8 +61,8 @@
 	var/HTML = ""
 
 	HTML += "<html><head><title>[name]</title></head><body>"
-	HTML += "<br><a href='?src=[REF(src)]'>\[Refresh\]</a>  |  "
-	HTML += "<a href='?src=[REF(src)];rename=1'>\[Rename\]</a><br>"
+
+	HTML += "<a href='?src=[REF(src)]'>\[Refresh\]</a>  |  <a href='?src=[REF(src)];rename=1'>\[Rename\]</a><br>"
 	HTML += "[total_part_size]/[max_components] ([round((total_part_size / max_components) * 100, 0.1)]%) space taken up in the assembly.<br>"
 	HTML += "[total_complexity]/[max_complexity] ([round((total_complexity / max_complexity) * 100, 0.1)]%) maximum complexity.<br>"
 	if(battery)
@@ -73,16 +75,14 @@
 
 	HTML += "Components:"
 
-	var/list/components = return_all_components()
 	var/builtin_components = ""
 
-	for(var/c in components)
+	for(var/c in assembly_components)
 		var/obj/item/integrated_circuit/circuit = c
 		if(!circuit.removable)
-			builtin_components += "<a href=?src=[REF(circuit)];examine=1;from_assembly=1>[circuit.displayed_name]</a> | "
-			builtin_components += "<a href=?src=[REF(circuit)];rename=1;from_assembly=1>\[Rename\]</a> | "
-			builtin_components += "<a href=?src=[REF(circuit)];scan=1;from_assembly=1>\[Scan with Debugger\]</a> | "
-			builtin_components += "<a href=?src=[REF(circuit)];bottom=[REF(circuit)];from_assembly=1>\[Move to Bottom\]</a>"
+			builtin_components += "<a href='?src=[REF(circuit)]'>[circuit.displayed_name]</a> | "
+			builtin_components += "<a href='?src=[REF(circuit)];rename=1;return=1'>\[Rename\]</a> | "
+			builtin_components += "<a href='?src=[REF(circuit)];scan=1'>\[Scan with Debugger\]</a>"
 			builtin_components += "<br>"
 
 	// Put removable circuits (if any) in separate categories from non-removable
@@ -95,14 +95,17 @@
 
 	HTML += "<br>"
 
-	for(var/c in components)
+	for(var/c in assembly_components)
 		var/obj/item/integrated_circuit/circuit = c
 		if(circuit.removable)
-			HTML += "<a href=?src=[REF(circuit)];examine=1;from_assembly=1>[circuit.displayed_name]</a> | "
-			HTML += "<a href=?src=[REF(circuit)];rename=1;from_assembly=1>\[Rename\]</a> | "
-			HTML += "<a href=?src=[REF(circuit)];scan=1;from_assembly=1>\[Scan with Debugger\]</a> | "
-			HTML += "<a href=?src=[REF(circuit)];remove=1;from_assembly=1>\[Remove\]</a> | "
-			HTML += "<a href=?src=[REF(circuit)];bottom=[REF(circuit)];from_assembly=1>\[Move to Bottom\]</a>"
+			HTML += "<a href='?src=[REF(circuit)]'>[circuit.displayed_name]</a> | "
+			HTML += "<a href='?src=[REF(circuit)];rename=1;return=1'>\[Rename\]</a> | "
+			HTML += "<a href='?src=[REF(circuit)];scan=1'>\[Scan with Debugger\]</a> | "
+			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];remove=1'>\[Remove\]</a> | "
+			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];up=1' style='text-decoration:none;'>&#8593;</a> "
+			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];down=1' style='text-decoration:none;'>&#8595;</a>  "
+			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];top=1' style='text-decoration:none;'>&#10514;</a> "
+			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];bottom=1' style='text-decoration:none;'>&#10515;</a>"
 			HTML += "<br>"
 
 	HTML += "</body></html>"
@@ -125,6 +128,46 @@
 			to_chat(usr, "<span class='notice'>You pull \the [battery] out of \the [src]'s power supplier.</span>")
 			battery = null
 
+	if(href_list["component"])
+		var/obj/item/integrated_circuit/component = locate(href_list["component"]) in assembly_components
+		if(component)
+			// Builtin components are not supposed to be removed or rearranged
+			if(!component.removable)
+				return
+
+			var/current_pos = assembly_components.Find(component)
+
+			// Find the position of a first removable component
+			var/first_removable_pos
+			for(var/i in 1 to assembly_components.len)
+				var/obj/item/integrated_circuit/temp_component = assembly_components[i]
+				if(temp_component.removable)
+					first_removable_pos = i
+					break
+
+			if(href_list["remove"])
+				try_remove_component(component, usr)
+
+			else
+				// Adjust the position
+				if(href_list["up"])
+					current_pos--
+				else if(href_list["down"])
+					current_pos++
+				else if(href_list["top"])
+					current_pos = first_removable_pos
+				else if(href_list["bottom"])
+					current_pos = assembly_components.len
+
+				// Wrap around nicely
+				if(current_pos < first_removable_pos)
+					current_pos = assembly_components.len
+				else if(current_pos > assembly_components.len)
+					current_pos = first_removable_pos
+
+				assembly_components.Remove(component)
+				assembly_components.Insert(current_pos, component)
+
 	interact(usr) // To refresh the UI.
 
 /obj/item/device/electronic_assembly/proc/rename()
@@ -142,9 +185,6 @@
 /obj/item/device/electronic_assembly/proc/can_move()
 	return FALSE
 
-/obj/item/device/electronic_assembly/drone/can_move()
-	return TRUE
-
 /obj/item/device/electronic_assembly/update_icon()
 	if(opened)
 		icon_state = initial(icon_state) + "-open"
@@ -153,9 +193,10 @@
 
 /obj/item/device/electronic_assembly/examine(mob/user)
 	..()
-	for(var/obj/item/integrated_circuit/IC in contents)
+	for(var/I in assembly_components)
+		var/obj/item/integrated_circuit/IC = I
 		IC.external_examine(user)
-		if(istype(IC,/obj/item/integrated_circuit/output/screen))
+		if(istype(IC, /obj/item/integrated_circuit/output/screen))
 			var/obj/item/integrated_circuit/output/screen/S
 			if(S.stuff_to_display)
 				to_chat(user, "There's a little screen labeled '[S]', which displays '[S.stuff_to_display]'.")
@@ -164,21 +205,20 @@
 
 /obj/item/device/electronic_assembly/proc/return_total_complexity()
 	. = 0
-	for(var/obj/item/integrated_circuit/part in contents)
+	var/obj/item/integrated_circuit/part
+	for(var/p in assembly_components)
+		part = p
 		. += part.complexity
 
 /obj/item/device/electronic_assembly/proc/return_total_size()
 	. = 0
-	for(var/obj/item/integrated_circuit/part in contents)
+	var/obj/item/integrated_circuit/part
+	for(var/p in assembly_components)
+		part = p
 		. += part.size
 
-/obj/item/device/electronic_assembly/proc/return_all_components()
-	. = list()
-	for(var/obj/item/integrated_circuit/part in contents)
-		. += part
-
 // Returns true if the circuit made it inside.
-/obj/item/device/electronic_assembly/proc/add_circuit(var/obj/item/integrated_circuit/IC, var/mob/user)
+/obj/item/device/electronic_assembly/proc/try_add_component(obj/item/integrated_circuit/IC, mob/user)
 	if(!opened)
 		to_chat(user, "<span class='warning'>\The [src]'s hatch is closed, you can't put anything inside.</span>")
 		return FALSE
@@ -200,12 +240,45 @@
 	if(!user.transferItemToLoc(IC, src))
 		return FALSE
 
-	IC.assembly = src
+	to_chat(user, "<span class='notice'>You slide [IC] inside [src].</span>")
+	playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 
+	add_component(IC)
 	return TRUE
 
+
+// Actually puts the circuit inside, doesn't perform any checks.
+/obj/item/device/electronic_assembly/proc/add_component(obj/item/integrated_circuit/component)
+	component.forceMove(get_object())
+	component.assembly = src
+	assembly_components |= component
+
+
+/obj/item/device/electronic_assembly/proc/try_remove_component(obj/item/integrated_circuit/IC, mob/user)
+	if(!opened)
+		to_chat(user, "<span class='warning'>[src]'s hatch is closed, so you can't fiddle with the internal components.</span>")
+		return FALSE
+
+	if(!IC.removable)
+		to_chat(user, "<span class='warning'>[src] is permanently attached to the case.</span>")
+		return FALSE
+
+	to_chat(user, "<span class='notice'>You pop \the [src] out of the case, and slide it out.</span>")
+	playsound(src, 'sound/items/Crowbar.ogg', 50, 1)
+
+	remove_component(IC)
+	return TRUE
+
+// Actually removes the component, doesn't perform any checks.
+/obj/item/device/electronic_assembly/proc/remove_component(obj/item/integrated_circuit/component)
+	component.disconnect_all()
+	component.forceMove(drop_location())
+	component.assembly = null
+	assembly_components.Remove(component)
+
+
 /obj/item/device/electronic_assembly/afterattack(atom/target, mob/user, proximity)
-	for(var/obj/item/integrated_circuit/input/sensor/S in contents)
+	for(var/obj/item/integrated_circuit/input/sensor/S in assembly_components)
 		if(!proximity)
 			if(istype(S,/obj/item/integrated_circuit/input/sensor/ranged)||(!user))
 				if(user.client)
@@ -234,12 +307,10 @@
 	if(istype(I, /obj/item/integrated_circuit))
 		if(!user.canUnEquip(I))
 			return FALSE
-		if(add_circuit(I, user))
-			to_chat(user, "<span class='notice'>You slide [I] inside [src].</span>")
-			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+		if(try_add_component(I, user))
 			interact(user)
 			return TRUE
-	else if(istype(I, /obj/item/device/integrated_electronics/wirer) || istype(I, /obj/item/device/integrated_electronics/debugger))
+	else if(istype(I, /obj/item/device/multitool) || istype(I, /obj/item/device/integrated_electronics/wirer) || istype(I, /obj/item/device/integrated_electronics/debugger))
 		if(opened)
 			interact(user)
 		else
@@ -270,7 +341,7 @@
 
 	var/list/input_selection = list()
 	var/list/available_inputs = list()
-	for(var/obj/item/integrated_circuit/input/input in contents)
+	for(var/obj/item/integrated_circuit/input/input in assembly_components)
 		if(input.can_be_asked_input)
 			available_inputs.Add(input)
 			var/i = 0
@@ -316,9 +387,14 @@
 	return FALSE
 
 /obj/item/device/electronic_assembly/Moved(oldLoc, dir)
-	for(var/obj/item/integrated_circuit/IC in contents)
+	for(var/I in assembly_components)
+		var/obj/item/integrated_circuit/IC = I
 		IC.ext_moved(oldLoc, dir)
 
+// Returns the object that is supposed to be used in attack messages, location checks, etc.
+// Override in children for special behavior.
+/obj/item/device/electronic_assembly/proc/get_object()
+	return src
 
 
 
@@ -363,3 +439,6 @@
 	w_class = WEIGHT_CLASS_SMALL
 	max_components = IC_MAX_SIZE_BASE * 3
 	max_complexity = IC_COMPLEXITY_BASE * 3
+
+/obj/item/device/electronic_assembly/drone/can_move()
+	return TRUE

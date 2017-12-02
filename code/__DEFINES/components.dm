@@ -10,6 +10,11 @@
 #define COMPONENT_DUPE_ALLOWED 1    //duplicates allowed
 #define COMPONENT_DUPE_UNIQUE 2     //new component is deleted
 
+// Signal return value flags
+// The other defines are under the signal they're used in
+
+#define COMPONENT_ACTIVATED 1 // call parent.ComponentActivated(comp) and component.AfterComponentActivated()
+
 // All signals. Format:
 // When the signal is called: (signal arguments)
 
@@ -19,9 +24,11 @@
 #define COMSIG_PARENT_QDELETED "parent_qdeleted"				//before a datum's Destroy() is called: ()
 
 #define COMSIG_COMPONENT_CLEAN_ACT "clean_act"					//called on an object to clean it of cleanables. Usualy with soap: (num/strength)
+#define COMSIG_COMPONENT_NTNET_RECIEVE "ntnet_recieve"			//called on an object by its NTNET connection component on recieve. (sending_id(number), sending_netname(text), data(datum/netdata))
 
 // /atom signals
 #define COMSIG_PARENT_ATTACKBY "atom_attackby"			        //from base of atom/attackby(): (/obj/item, /mob/living, params)
+	#define COMPONENT_NO_AFTERATTACK 2								//Return this in response if you don't want afterattack to be called
 #define COMSIG_ATOM_HULK_ATTACK "hulk_attack"					//from base of atom/attack_hulk(): (/mob/living/carbon/human)
 #define COMSIG_PARENT_EXAMINE "atom_examine"                    //from base of atom/examine(): (/mob)
 #define COMSIG_ATOM_ENTERED "atom_entered"                      //from base of atom/Entered(): (/atom/movable, /atom)
@@ -63,4 +70,4 @@
 
 // /obj/machinery signals
 #define COMSIG_MACHINE_PROCESS "machine_process"				//from machinery subsystem fire(): ()
-#define COMSIG_MACHINE_PROCESS_ATMOS "machine_process_atmos"	//from air subsystem process_atmos_machinery(): () 
+#define COMSIG_MACHINE_PROCESS_ATMOS "machine_process_atmos"	//from air subsystem process_atmos_machinery(): ()
