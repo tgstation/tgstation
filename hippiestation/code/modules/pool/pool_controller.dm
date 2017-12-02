@@ -2,7 +2,7 @@
 //Originally stolen from paradise. Credits to tigercat2000.
 //Modified a lot by Kokojo and Tortellini Tony.
 /obj/machinery/poolcontroller
-	name = "Pool Controller"
+	name = "pool controller"
 	desc = "A controller for the nearby pool."
 	icon = 'hippiestation/icons/turf/pool.dmi'
 	icon_state = "poolc_3"

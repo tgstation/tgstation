@@ -75,6 +75,7 @@
 
 /obj/structure/reagent_dispensers/watertank/high
 	use_reagent_icon = FALSE
+	tank_volume = 1000//nerfed because 10000u of liquid shouldn't be a thing
 
 /obj/structure/reagent_dispensers/fueltank
 	use_reagent_icon = TRUE

@@ -981,12 +981,16 @@
 		lying = 0
 	if(buckled)
 		lying = 90*buckle_lying
+	// Hippie Start
+	else if (pinned_to)
+		lying = 0
+	// Hippie End
 	else if(!lying)
 		if(resting)
 			fall()
 		else if(ko || move_and_fall || (!has_legs && !ignore_legs) || chokehold)
 			fall(forced = 1)
-	canmove = !(ko || resting || IsStun() || IsFrozen() || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms))
+	canmove = !(ko || resting || IsStun() || IsFrozen() || chokehold || pinned_to || buckled || (!has_legs && !ignore_legs && !has_arms)) // Hippie - Added check for person being pinned
 	density = !lying
 	if(lying)
 		if(layer == initial(layer)) //to avoid special cases like hiding larvas.

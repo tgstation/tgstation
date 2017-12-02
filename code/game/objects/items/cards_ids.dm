@@ -197,6 +197,10 @@ update_label("John Doe", "Clowny")
 /obj/item/card/id/syndicate/anyone
 	anyone = TRUE
 
+/obj/item/card/id/syndicate/nuke_leader
+	name = "lead agent card"
+	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE, ACCESS_SYNDICATE_LEADER)
+
 /obj/item/card/id/syndicate_command
 	name = "syndicate ID card"
 	desc = "An ID straight from the Syndicate."
