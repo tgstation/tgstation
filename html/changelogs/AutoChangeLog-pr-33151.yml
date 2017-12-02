@@ -1,0 +1,5 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - tweak: "The R&D Console has been given a much prettier interface."
+  - tweak: "Research scanner goggles now show materials and technology prospects in a nicer way."

@@ -1,0 +1,4 @@
+author: "Robustin"
+delete-after: True
+changes: 
+  - tweak: "Damage examinations now include a \"moderate\" classification. Before minor was <30 and severe was anything 30 or above. Now minor is <25, moderate is 25 to <50, and severe is 50+."
