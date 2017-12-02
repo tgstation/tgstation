@@ -319,6 +319,7 @@
 				use_power = ACTIVE_POWER_USE
 				set_light(brightness, 1, "#FFFFFF")
 	else if(has_emergency_power() && !turned_off())
+		use_power = IDLE_POWER_USE
 		emergency_mode = TRUE
 		process() //Force a process tick to update the light immediately
 	else
