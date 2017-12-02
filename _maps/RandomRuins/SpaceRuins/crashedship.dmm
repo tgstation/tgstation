@@ -1149,9 +1149,10 @@
 /turf/open/floor/plasteel/bar,
 /area/awaymission/BMPship/Midship)
 "dO" = (
-/turf/open/floor/plasteel/loadingarea/dirtydirty{
+/obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
+/turf/open/floor/plasteel/floorgrime,
 /area/awaymission/BMPship/Midship)
 "dP" = (
 /obj/machinery/conveyor{
@@ -1628,11 +1629,6 @@
 "fg" = (
 /obj/structure/kitchenspike,
 /turf/open/floor/plasteel/bar,
-/area/awaymission/BMPship/Midship)
-"fh" = (
-/turf/open/floor/plasteel/loadingarea/dirty{
-	dir = 4
-	},
 /area/awaymission/BMPship/Midship)
 "fi" = (
 /obj/machinery/conveyor{
@@ -3818,7 +3814,7 @@ ce
 ce
 ce
 ce
-fh
+dO
 ce
 dh
 ce

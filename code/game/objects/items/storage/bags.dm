@@ -70,7 +70,6 @@
 	name = "trash bag of holding"
 	desc = "The latest and greatest in custodial convenience, a trashbag that is capable of holding vast quantities of garbage."
 	icon_state = "bluetrashbag"
-	origin_tech = "materials=4;bluespace=4;engineering=4;plasmatech=3"
 	max_combined_w_class = 60
 	storage_slots = 60
 	flags_2 = NO_MAT_REDEMPTION_2
@@ -84,13 +83,12 @@
 	desc = "This little bugger can be used to store and transport ores."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "satchel"
-	origin_tech = "engineering=2"
 	slot_flags = SLOT_BELT | SLOT_POCKET
 	w_class = WEIGHT_CLASS_NORMAL
-	storage_slots = 50
-	max_combined_w_class = 200 //Doesn't matter what this is, so long as it's more or equal to storage_slots * ore.w_class
-	max_w_class = WEIGHT_CLASS_NORMAL
-	can_hold = list(/obj/item/ore)
+	storage_slots = 8
+	max_combined_w_class = 16 //Doesn't matter what this is, so long as it's more or equal to storage_slots * ore.w_class
+	max_w_class = WEIGHT_CLASS_HUGE
+	can_hold = list(/obj/item/stack/ore)
 	var/spam_protection = FALSE //If this is TRUE, the holder won't receive any messages when they fail to pick up ore through crossing it
 
 /obj/item/storage/bag/ore/cyborg
@@ -101,7 +99,6 @@
 	desc = "A revolution in convenience, this satchel allows for huge amounts of ore storage. It's been outfitted with anti-malfunction safety measures."
 	storage_slots = INFINITY
 	max_combined_w_class = INFINITY
-	origin_tech = "bluespace=4;materials=3;engineering=3"
 	icon_state = "satchel_bspace"
 
 // -----------------------------
@@ -125,7 +122,6 @@
 	name = "portable seed extractor"
 	desc = "For the enterprising botanist on the go. Less efficient than the stationary model, it creates one seed per plant."
 	icon_state = "portaseeder"
-	origin_tech = "biotech=3;engineering=2"
 
 /obj/item/storage/bag/plants/portaseeder/verb/dissolve_contents()
 	set name = "Activate Seed Extraction"
@@ -232,7 +228,7 @@
 	var/col_count = min(7,storage_slots) -1
 	if (adjusted_contents > 7)
 		row_num = round((adjusted_contents-1) / 7) // 7 is the maximum allowed width.
-	src.standard_orient_objs(row_num, col_count, numbered_contents)
+	standard_orient_objs(row_num, col_count, numbered_contents)
 	return
 
 

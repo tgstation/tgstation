@@ -1,5 +1,4 @@
 /obj/item/gun/ballistic/automatic
-	origin_tech = "combat=4;materials=2"
 	w_class = WEIGHT_CLASS_NORMAL
 	var/alarmed = 0
 	var/select = 1
@@ -20,7 +19,6 @@
 
 /obj/item/gun/ballistic/automatic/update_icon()
 	..()
-	cut_overlays()
 	if(!select)
 		add_overlay("[initial(icon_state)]semi")
 	if(select == 1)
@@ -89,12 +87,14 @@
 	desc = "A bullpup two-round burst .45 SMG, designated 'C-20r'. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp."
 	icon_state = "c20r"
 	item_state = "c20r"
-	origin_tech = "combat=5;materials=2;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/smgm45
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	fire_delay = 2
 	burst_size = 2
 	pin = /obj/item/device/firing_pin/implant/pindicate
+	can_bayonet = TRUE
+	knife_x_offset = 26
+	knife_y_offset = 12
 
 /obj/item/gun/ballistic/automatic/c20r/unrestricted
 	pin = /obj/item/device/firing_pin
@@ -122,6 +122,9 @@
 	can_suppress = FALSE
 	burst_size = 0
 	actions_types = list()
+	can_bayonet = TRUE
+	knife_x_offset = 25
+	knife_y_offset = 12
 
 /obj/item/gun/ballistic/automatic/wt550/update_icon()
 	..()
@@ -131,7 +134,6 @@
 	name = "\improper Type U3 Uzi"
 	desc = "A lightweight, burst-fire submachine gun, for when you really want someone dead. Uses 9mm rounds."
 	icon_state = "mini-uzi"
-	origin_tech = "combat=4;materials=2;syndicate=4"
 	mag_type = /obj/item/ammo_box/magazine/uzim9mm
 	burst_size = 2
 
@@ -140,7 +142,6 @@
 	desc = "A three-round burst 5.56 toploading carbine, designated 'M-90gl'. Has an attached underbarrel grenade launcher which can be toggled on and off."
 	icon_state = "m90"
 	item_state = "m90"
-	origin_tech = "combat=5;materials=2;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m556
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	can_suppress = FALSE
@@ -214,7 +215,6 @@
 	item_state = "shotgun"
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = 0
-	origin_tech = "combat=5;materials=1;syndicate=3"
 	mag_type = /obj/item/ammo_box/magazine/tommygunm45
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	can_suppress = FALSE
@@ -227,7 +227,6 @@
 	icon_state = "arg"
 	item_state = "arg"
 	slot_flags = 0
-	origin_tech = "combat=6;engineering=4"
 	mag_type = /obj/item/ammo_box/magazine/m556
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	can_suppress = FALSE
@@ -243,7 +242,6 @@
 	item_state = "bulldog"
 	w_class = WEIGHT_CLASS_NORMAL
 	weapon_weight = WEAPON_MEDIUM
-	origin_tech = "combat=6;materials=4;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m12g
 	fire_sound = 'sound/weapons/gunshot.ogg'
 	can_suppress = FALSE
@@ -281,7 +279,6 @@
 	item_state = "l6closedmag"
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = 0
-	origin_tech = "combat=6;engineering=3;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/mm195x129
 	weapon_weight = WEAPON_HEAVY
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
@@ -361,7 +358,6 @@
 	mag_type = /obj/item/ammo_box/magazine/sniper_rounds
 	fire_delay = 40
 	burst_size = 1
-	origin_tech = "combat=7"
 	can_unsuppress = TRUE
 	can_suppress = TRUE
 	w_class = WEIGHT_CLASS_NORMAL
@@ -383,14 +379,12 @@
 	name = "syndicate sniper rifle"
 	desc = "An illegally modified .50 cal sniper rifle with suppression compatibility. Quickscoping still doesn't work."
 	pin = /obj/item/device/firing_pin/implant/pindicate
-	origin_tech = "combat=7;syndicate=6"
 
 // Old Semi-Auto Rifle //
 
 /obj/item/gun/ballistic/automatic/surplus
 	name = "Surplus Rifle"
 	desc = "One of countless obsolete ballistic rifles that still sees use as a cheap deterrent. Uses 10mm ammo and its bulky frame prevents one-hand firing."
-	origin_tech = "combat=3;materials=2"
 	icon_state = "surplus"
 	item_state = "moistnugget"
 	weapon_weight = WEAPON_HEAVY

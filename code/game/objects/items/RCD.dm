@@ -21,7 +21,6 @@ ARCD
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=100000)
-	origin_tech = "engineering=4;materials=2"
 	req_access_txt = "11"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
@@ -412,12 +411,10 @@ ARCD
 	item_state = "rcdammo"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	origin_tech = "materials=3"
 	materials = list(MAT_METAL=12000, MAT_GLASS=8000)
 	var/ammoamt = 40
 
 /obj/item/rcd_ammo/large
-	origin_tech = "materials=4"
 	materials = list(MAT_METAL=48000, MAT_GLASS=32000)
 	ammoamt = 160
 

@@ -70,7 +70,7 @@
 	power_draw_per_use = 4
 
 /obj/item/integrated_circuit/input/textpad/ask_for_input(mob/user)
-	var/new_input = input(user, "Enter some words, please.","Number pad") as null|text
+	var/new_input = stripped_input(user, "Enter some words, please.","Number pad")
 	if(istext(new_input) && user.IsAdvancedToolUser())
 		set_pin_data(IC_OUTPUT, 1, new_input)
 		push_data()
@@ -88,7 +88,6 @@
 		)
 	activators = list("scan" = IC_PINTYPE_PULSE_IN, "on scanned" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_BIO = 2)
 	power_draw_per_use = 40
 
 /obj/item/integrated_circuit/input/med_scanner/do_work()
@@ -104,50 +103,6 @@
 
 	push_data()
 	activate_pin(2)
-/*
-/obj/item/integrated_circuit/input/pressure_plate
-	name = "pressure plate"
-	desc = "Electronic plate with a scanner, that could retrieve references to things,that was put onto the machine"
-	icon_state = "pressure_plate"
-	complexity = 4
-	inputs = list()
-	outputs = list("laid" = IC_PINTYPE_REF, "removed" = IC_PINTYPE_REF)
-	activators = list("laid" = IC_PINTYPE_PULSE_OUT, "removed" = IC_PINTYPE_PULSE_OUT)
-	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_BIO = 2)
-	power_draw_per_use = 40
-	var/list/cont
-
-/obj/item/integrated_circuit/input/pressure_plate/New()
-	..()
-	processing_objects |= src
-
-/obj/item/integrated_circuit/input/pressure_plate/Destroy()
-	processing_objects -= src
-
-/obj/item/integrated_circuit/input/pressure_plate/process()
-	var/list/newcont
-	var/turf/T = get_turf(src)
-	newcont = T.contents
-	var/list/U = cont & newcont
-	for(var/laid in U)
-		if(!(laid in cont))
-			var/datum/integrated_io/O = outputs[1]
-			O.data = WEAKREF(laid)
-			O.push_data()
-			activate_pin(1)
-			break
-	for(var/removed in U)
-		if(!(removed in newcont))
-			var/datum/integrated_io/O = outputs[2]
-			O.data = WEAKREF(removed)
-			O.push_data()
-			activate_pin(2)
-			break
-	cont = newcont
-
-*/
-
 
 /obj/item/integrated_circuit/input/adv_med_scanner
 	name = "integrated advanced medical analyser"
@@ -167,7 +122,6 @@
 	)
 	activators = list("scan" = IC_PINTYPE_PULSE_IN, "on scanned" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_ENGINEERING = 3, TECH_DATA = 3, TECH_BIO = 4)
 	power_draw_per_use = 80
 
 /obj/item/integrated_circuit/input/adv_med_scanner/do_work()
@@ -218,7 +172,6 @@
 	)
 	activators = list("scan" = IC_PINTYPE_PULSE_IN, "on scanned" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_ENGINEERING = 3, TECH_DATA = 3, TECH_BIO = 4)
 	power_draw_per_use = 10
 
 /obj/item/integrated_circuit/input/plant_scanner/do_work()
@@ -292,10 +245,12 @@
 /obj/item/integrated_circuit/input/examiner
 	name = "examiner"
 	desc = "It' s a little machine vision system. It can return the name, description, distance, \
-	relative coordinates, total amount of reagents, and maximum amount of reagents of the referenced object."
+	relative coordinates, total amount of reagents, maximum amount of reagents, density and opacity of the referenced object."
 	icon_state = "video_camera"
 	complexity = 6
-	inputs = list("\<REF\> target" = IC_PINTYPE_REF)
+	inputs = list(
+		"target" = IC_PINTYPE_REF
+		)
 	outputs = list(
 		"name"	            	= IC_PINTYPE_STRING,
 		"description"       	= IC_PINTYPE_STRING,
@@ -304,10 +259,15 @@
 		"distance"			    = IC_PINTYPE_NUMBER,
 		"max reagents"			= IC_PINTYPE_NUMBER,
 		"amount of reagents"    = IC_PINTYPE_NUMBER,
-	)
-	activators = list("scan" = IC_PINTYPE_PULSE_IN, "on scanned" = IC_PINTYPE_PULSE_OUT, "not scanned" = IC_PINTYPE_PULSE_OUT)
+		"density"    			= IC_PINTYPE_BOOLEAN,
+		"opacity"    			= IC_PINTYPE_BOOLEAN,
+		)
+	activators = list(
+		"scan" = IC_PINTYPE_PULSE_IN,
+		"on scanned" = IC_PINTYPE_PULSE_OUT,
+		"not scanned" = IC_PINTYPE_PULSE_OUT
+		)
 	spawn_flags = IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_ENGINEERING = 3, TECH_DATA = 3, TECH_BIO = 4)
 	power_draw_per_use = 80
 
 /obj/item/integrated_circuit/input/examiner/do_work()
@@ -317,8 +277,6 @@
 		return
 
 	if(H in view(T)) // This is a camera. It can't examine thngs,that it can't see.
-
-
 		set_pin_data(IC_OUTPUT, 1, H.name)
 		set_pin_data(IC_OUTPUT, 2, H.desc)
 		set_pin_data(IC_OUTPUT, 3, H.x-T.x)
@@ -331,6 +289,8 @@
 			tr = H.reagents.total_volume
 		set_pin_data(IC_OUTPUT, 6, mr)
 		set_pin_data(IC_OUTPUT, 7, tr)
+		set_pin_data(IC_OUTPUT, 8, H.density)
+		set_pin_data(IC_OUTPUT, 9, H.opacity)
 		push_data()
 		activate_pin(2)
 	else
@@ -515,7 +475,6 @@
 		"on signal sent" = IC_PINTYPE_PULSE_OUT,
 		"on signal received" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_MAGNET = 2)
 	power_draw_idle = 5
 	power_draw_per_use = 40
 
@@ -587,55 +546,54 @@
 	for(var/mob/O in hearers(1, get_turf(src)))
 		audible_message("[icon2html(src, hearers(src))] *beep* *beep*", null, 1)
 
-/obj/item/integrated_circuit/input/EPv2
-	name = "EPv2 circuit"
-	desc = "Enables the sending and receiving of messages on the Exonet with the EPv2 protocol."
-	extended_desc = "An EPv2 address is a string with the format of XXXX:XXXX:XXXX:XXXX.  Data can be send or received using the \
+/obj/item/integrated_circuit/input/ntnet_packet
+	name = "NTNet networking circuit"
+	desc = "Enables the sending and receiving of messages on NTNet with packet data protocol."
+	extended_desc = "Data can be send or received using the \
 	second pin on each side, with additonal data reserved for the third pin.  When a message is received, the second activation pin \
 	will pulse whatever's connected to it.  Pulsing the first activation pin will send a message."
 	icon_state = "signal"
 	complexity = 4
 	inputs = list(
-		"target EPv2 address"	= IC_PINTYPE_STRING,
+		"target NTNet address"	= IC_PINTYPE_STRING,
 		"data to send"			= IC_PINTYPE_STRING,
-		"secondary text"		= IC_PINTYPE_STRING
+		"secondary text"		= IC_PINTYPE_STRING,
+		"passkey"				= IC_PINTYPE_STRING,							//No this isn't a real passkey encryption scheme but that's why you keep your nodes secure so no one can find it out!
 		)
 	outputs = list(
 		"address received"			= IC_PINTYPE_STRING,
 		"data received"				= IC_PINTYPE_STRING,
-		"secondary text received"	= IC_PINTYPE_STRING
+		"secondary text received"	= IC_PINTYPE_STRING,
+		"passkey"				= IC_PINTYPE_STRING
 		)
 	activators = list("send data" = IC_PINTYPE_PULSE_IN, "on data received" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_MAGNET = 2, TECH_BLUESPACE = 2)
 	power_draw_per_use = 50
-	var/datum/exonet_protocol/exonet = null
+	var/datum/ntnet_connection/exonet = null
 
-/obj/item/integrated_circuit/input/EPv2/New()
-	..()
-	exonet = new(src)
-	exonet.make_address("EPv2_circuit-[REF(src)]")
-	desc += "<br>This circuit's EPv2 address is: [exonet.address]"
+/obj/item/integrated_circuit/input/ntnet_packet/Initialize()
+	. = ..()
+	var/datum/component/ntnet_interface/net = LoadComponent(/datum/component/ntnet_interface)
+	desc += "<br>This circuit's NTNet hardware address is: [net.hardware_id]"
 
-/obj/item/integrated_circuit/input/EPv2/Destroy()
-	if(exonet)
-		exonet.remove_address()
-		qdel(exonet)
-		exonet = null
-	return ..()
-
-/obj/item/integrated_circuit/input/EPv2/do_work()
+/obj/item/integrated_circuit/input/ntnet_packet/do_work()
 	var/target_address = get_pin_data(IC_INPUT, 1)
 	var/message = get_pin_data(IC_INPUT, 2)
 	var/text = get_pin_data(IC_INPUT, 3)
+	var/key = get_pin_data(IC_INPUT, 4)
 
-	if(target_address && istext(target_address))
-		exonet.send_message(target_address, message, text)
+	var/datum/netdata/data = new
+	data.recipient_ids += target_address
+	data.plaintext_data = message
+	data.plaintext_data_secondary = text
+	data.plaintext_passkey = key
+	ntnet_send(data)
 
-/obj/item/integrated_circuit/input/receive_exonet_message(var/atom/origin_atom, var/origin_address, var/message, var/text)
-	set_pin_data(IC_OUTPUT, 1, origin_address)
-	set_pin_data(IC_OUTPUT, 2, message)
-	set_pin_data(IC_OUTPUT, 3, text)
+/obj/item/integrated_circuit/input/ntnet_recieve(datum/netdata/data)
+	set_pin_data(IC_OUTPUT, 1, length(data.recipient_ids) >= 1? data.recipient_ids[1] : null)
+	set_pin_data(IC_OUTPUT, 2, data.plaintext_data)
+	set_pin_data(IC_OUTPUT, 3, data.plaintext_data_secondary)
+	set_pin_data(IC_OUTPUT, 4, data.plaintext_passkey)
 
 	push_data()
 	activate_pin(2)
@@ -725,7 +683,7 @@
 	return TRUE
 
 /obj/item/integrated_circuit/input/sensor/ranged
-	name = "Ranged sensor"
+	name = "ranged sensor"
 	desc = "Scans and obtains a reference for any objects or persons in range.  All you need to do is point the machine towards target."
 	extended_desc = "If 'ignore storage' pin is set to true, the sensor will disregard scanning various storage containers such as backpacks."
 	icon_state = "recorder"
@@ -752,7 +710,6 @@
 		)
 	activators = list("read" = IC_PINTYPE_PULSE_IN, "on read" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_ENGINEERING = 4, TECH_DATA = 4, TECH_POWER = 4, TECH_MAGNET = 3)
 	power_draw_per_use = 1
 
 /obj/item/integrated_circuit/input/internalbm/do_work()
@@ -784,7 +741,6 @@
 		)
 	activators = list("read" = IC_PINTYPE_PULSE_IN, "on read" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_ENGINEERING = 4, TECH_DATA = 4, TECH_POWER = 4, TECH_MAGNET = 3)
 	power_draw_per_use = 1
 
 /obj/item/integrated_circuit/input/externalbm/do_work()
@@ -794,13 +750,13 @@
 	set_pin_data(IC_OUTPUT, 2, null)
 	set_pin_data(IC_OUTPUT, 3, null)
 	if(AM)
-		var/obj/item/stock_parts/cell/cell = get_cell(AM)
-		if(cell)
+		var/obj/item/stock_parts/cell/C = AM.get_cell()
+		if(C)
 			var/turf/A = get_turf(src)
-			if(AM in view(A))
-				push_data()
-				set_pin_data(IC_OUTPUT, 1, cell.charge)
-				set_pin_data(IC_OUTPUT, 2, cell.maxcharge)
-				set_pin_data(IC_OUTPUT, 3, cell.percent())
-	push_data()
+			if(get_turf(AM) in view(A))
+				set_pin_data(IC_OUTPUT, 1, C.charge)
+				set_pin_data(IC_OUTPUT, 2, C.maxcharge)
+				set_pin_data(IC_OUTPUT, 3, C.percent())
 	activate_pin(2)
+	push_data()
+	return

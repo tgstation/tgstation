@@ -86,7 +86,6 @@
 
 /obj/effect/anomaly/grav/New()
 	..()
-	aSignal.origin_tech = "magnets=7"
 
 /obj/effect/anomaly/grav/anomalyEffect()
 	..()
@@ -132,7 +131,6 @@
 
 /obj/effect/anomaly/flux/New()
 	..()
-	aSignal.origin_tech = "powerstorage=7"
 
 /obj/effect/anomaly/flux/anomalyEffect()
 	..()
@@ -181,7 +179,6 @@
 
 /obj/effect/anomaly/bluespace/New()
 	..()
-	aSignal.origin_tech = "bluespace=7"
 
 /obj/effect/anomaly/bluespace/anomalyEffect()
 	..()
@@ -228,7 +225,7 @@
 
 				var/turf/newloc = locate(A.x + x_distance, A.y + y_distance, TO.z) // calculate the new place
 				if(!A.Move(newloc) && newloc) // if the atom, for some reason, can't move, FORCE them to move! :) We try Move() first to invoke any movement-related checks the atom needs to perform after moving
-					A.loc = newloc
+					A.forceMove(newloc)
 
 				spawn()
 					if(ismob(A) && !(A in flashers)) // don't flash if we're already doing an effect
@@ -255,7 +252,6 @@
 
 /obj/effect/anomaly/pyro/New()
 	..()
-	aSignal.origin_tech = "plasmatech=7"
 
 /obj/effect/anomaly/pyro/anomalyEffect()
 	..()
@@ -291,7 +287,6 @@
 
 /obj/effect/anomaly/bhole/New()
 	..()
-	aSignal.origin_tech = "engineering=7"
 
 /obj/effect/anomaly/bhole/anomalyEffect()
 	..()

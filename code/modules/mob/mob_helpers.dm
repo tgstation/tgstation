@@ -274,7 +274,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /proc/findname(msg)
 	if(!istext(msg))
 		msg = "[msg]"
-	for(var/mob/M in GLOB.mob_list)
+	for(var/i in GLOB.mob_list)
+		var/mob/M = i
 		if(M.real_name == msg)
 			return M
 	return 0
@@ -362,7 +363,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 				if(M.mind in SSticker.mode.cult)
 					return 2
 			if("nuclear")
-				if(M.mind in SSticker.mode.syndicates)
+				if(M.mind.has_antag_datum(/datum/antagonist/nukeop,TRUE))
 					return 2
 			if("changeling")
 				if(M.mind.has_antag_datum(/datum/antagonist/changeling,TRUE))

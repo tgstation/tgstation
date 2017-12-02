@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ab" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
@@ -46,8 +46,8 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "af" = (
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ag" = (
 /obj/structure/shuttle/engine/propulsion/left{
 	dir = 8
@@ -1134,7 +1134,6 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/item/device/mass_spectrometer,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bW" = (

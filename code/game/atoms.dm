@@ -258,8 +258,6 @@
 
 	if(desc)
 		to_chat(user, desc)
-	// *****RM
-	//to_chat(user, "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]")
 
 	if(reagents && (is_open_container() || is_transparent())) //is_open_container() isn't really the right proc for this, but w/e
 		to_chat(user, "It contains:")
@@ -423,22 +421,6 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 
 /atom/proc/wash_cream()
 	return 1
-
-/atom/proc/get_global_map_pos()
-	if(!islist(GLOB.global_map) || isemptylist(GLOB.global_map))
-		return
-	var/cur_x = null
-	var/cur_y = null
-	var/list/y_arr = null
-	for(cur_x=1,cur_x<=GLOB.global_map.len,cur_x++)
-		y_arr = GLOB.global_map[cur_x]
-		cur_y = y_arr.Find(src.z)
-		if(cur_y)
-			break
-	if(cur_x && cur_y)
-		return list("x"=cur_x,"y"=cur_y)
-	else
-		return 0
 
 /atom/proc/isinspace()
 	if(isspaceturf(get_turf(src)))

@@ -22,16 +22,16 @@
 	var/list/ore_values = list(MAT_GLASS = 1, MAT_METAL = 1, MAT_PLASMA = 15, MAT_SILVER = 16, MAT_GOLD = 18, MAT_TITANIUM = 30, MAT_URANIUM = 30, MAT_DIAMOND = 50, MAT_BLUESPACE = 50, MAT_BANANIUM = 60)
 	var/message_sent = FALSE
 	var/list/ore_buffer = list()
-	var/datum/research/files
+	var/datum/techweb/stored_research
 	var/obj/item/disk/design_disk/inserted_disk
 
 /obj/machinery/mineral/ore_redemption/Initialize()
 	. = ..()
 	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE),INFINITY)
-	files = new /datum/research/smelter(src)
+	stored_research = new /datum/techweb/specialized/autounlocking/smelter
 
 /obj/machinery/mineral/ore_redemption/Destroy()
-	QDEL_NULL(files)
+	QDEL_NULL(stored_research)
 	return ..()
 
 /obj/machinery/mineral/ore_redemption/RefreshParts()
@@ -48,12 +48,12 @@
 	point_upgrade = point_upgrade_temp
 	sheet_per_ore = sheet_per_ore_temp
 
-/obj/machinery/mineral/ore_redemption/proc/smelt_ore(obj/item/ore/O)
+/obj/machinery/mineral/ore_redemption/proc/smelt_ore(obj/item/stack/ore/O)
 
 	ore_buffer -= O
 
 	if(O && O.refined_type)
-		points += O.points * point_upgrade
+		points += O.points * point_upgrade * O.amount
 
 	GET_COMPONENT(materials, /datum/component/material_container)
 	var/material_amount = materials.get_item_material_amount(O)
@@ -61,7 +61,7 @@
 	if(!material_amount)
 		qdel(O) //no materials, incinerate it
 
-	else if(!materials.has_space(material_amount * sheet_per_ore)) //if there is no space, eject it
+	else if(!materials.has_space(material_amount * sheet_per_ore * O.amount)) //if there is no space, eject it
 		unload_mineral(O)
 
 	else
@@ -70,7 +70,7 @@
 
 /obj/machinery/mineral/ore_redemption/proc/can_smelt_alloy(datum/design/D)
 	if(D.make_reagents.len)
-		return 0
+		return FALSE
 
 	var/build_amount = 0
 
@@ -80,12 +80,12 @@
 		var/datum/material/redemption_mat = materials.materials[mat_id]
 
 		if(!M || !redemption_mat)
-			return 0
+			return FALSE
 
 		var/smeltable_sheets = Floor(redemption_mat.amount / M)
 
 		if(!smeltable_sheets)
-			return 0
+			return FALSE
 
 		if(!build_amount)
 			build_amount = smeltable_sheets
@@ -133,7 +133,7 @@
 	if(OB)
 		input = OB
 
-	for(var/obj/item/ore/O in input)
+	for(var/obj/item/stack/ore/O in input)
 		if(QDELETED(O))
 			continue
 		ore_buffer |= O
@@ -215,8 +215,8 @@
 		data["materials"] += list(list("name" = M.name, "id" = M.id, "amount" = sheet_amount, "value" = ore_values[M.id] * point_upgrade))
 
 	data["alloys"] = list()
-	for(var/v in files.known_designs)
-		var/datum/design/D = files.known_designs[v]
+	for(var/v in stored_research.researched_designs)
+		var/datum/design/D = stored_research.researched_designs[v]
 		data["alloys"] += list(list("name" = D.name, "id" = D.id, "amount" = can_smelt_alloy(D)))
 	data["diskDesigns"] = list()
 	if(inserted_disk)
@@ -299,11 +299,11 @@
 		if("diskUpload")
 			var/n = text2num(params["design"])
 			if(inserted_disk && inserted_disk.blueprints && inserted_disk.blueprints[n])
-				files.AddDesign2Known(inserted_disk.blueprints[n])
+				stored_research.add_design(inserted_disk.blueprints[n])
 			return TRUE
 		if("Smelt")
 			var/alloy_id = params["id"]
-			var/datum/design/alloy = files.FindDesignByID(alloy_id)
+			var/datum/design/alloy = stored_research.isDesignResearchedID(alloy_id)
 			if((check_access(inserted_id) || allowed(usr)) && alloy)
 				var/smelt_amount = can_smelt_alloy(alloy)
 				var/desired = 0
@@ -325,7 +325,7 @@
 			return TRUE
 		if("SmeltAll")
 			var/alloy_id = params["id"]
-			var/datum/design/alloy = files.FindDesignByID(alloy_id)
+			var/datum/design/alloy = stored_research.isDesignResearchedID(alloy_id)
 			if((check_access(inserted_id) || allowed(usr)) && alloy)
 				var/smelt_amount = can_smelt_alloy(alloy)
 				while(smelt_amount > 0)

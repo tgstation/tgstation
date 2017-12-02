@@ -27,7 +27,7 @@
 	var/prod_coeff = 1
 
 	var/datum/design/being_built
-	var/datum/research/files
+	var/datum/techweb/stored_research
 	var/list/datum/design/matching_designs
 	var/selected_category
 	var/screen = 1
@@ -50,7 +50,7 @@
 	. = ..()
 
 	wires = new /datum/wires/autolathe(src)
-	files = new /datum/research/autolathe(src)
+	stored_research = new /datum/techweb/specialized/autounlocking/autolathe
 	matching_designs = list()
 
 /obj/machinery/autolathe/Destroy()
@@ -85,7 +85,7 @@
 /obj/machinery/autolathe/attackby(obj/item/O, mob/user, params)
 	if (busy)
 		to_chat(user, "<span class=\"alert\">The autolathe is busy. Please wait for completion of previous operation.</span>")
-		return 1
+		return TRUE
 
 	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", O))
 		updateUsrDialog()
@@ -97,16 +97,16 @@
 	if(panel_open)
 		if(istype(O, /obj/item/crowbar))
 			default_deconstruction_crowbar(O)
-			return 1
+			return TRUE
 		else if(is_wire_tool(O))
 			wires.interact(user)
-			return 1
+			return TRUE
 
 	if(user.a_intent == INTENT_HARM) //so we can hit the machine
 		return ..()
 
 	if(stat)
-		return 1
+		return TRUE
 
 	if(istype(O, /obj/item/disk/design_disk))
 		user.visible_message("[user] begins to load \the [O] in \the [src]...",
@@ -117,10 +117,9 @@
 		if(do_after(user, 14.4, target = src))
 			for(var/B in D.blueprints)
 				if(B)
-					files.AddDesign2Known(B)
-
+					stored_research.add_design(B)
 		busy = FALSE
-		return 1
+		return TRUE
 
 	return ..()
 
@@ -131,8 +130,8 @@
 		if(!M.last_insert_success)
 			return
 		var/lit = M.last_inserted_type
-		if(ispath(lit, /obj/item/ore/bluespace_crystal))
-			use_power(max(500,M.last_amount_inserted/10))
+		if(ispath(lit, /obj/item/stack/ore/bluespace_crystal))
+			use_power(min(500,M.last_amount_inserted/10))
 		else
 			switch(M.last_inserted_id)
 				if (MAT_METAL)
@@ -160,7 +159,7 @@
 
 			/////////////////
 			//href protection
-			being_built = files.FindDesignByID(href_list["make"]) //check if it's a valid design
+			being_built = stored_research.isDesignResearchedID(href_list["make"])
 			if(!being_built)
 				return
 
@@ -213,8 +212,8 @@
 		if(href_list["search"])
 			matching_designs.Cut()
 
-			for(var/v in files.known_designs)
-				var/datum/design/D = files.known_designs[v]
+			for(var/v in stored_research.researched_designs)
+				var/datum/design/D = stored_research.researched_designs[v]
 				if(findtext(D.name,href_list["to_search"]))
 					matching_designs.Add(D)
 			updateUsrDialog()
@@ -267,8 +266,8 @@
 	dat += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3><br>"
 	dat += materials_printout()
 
-	for(var/v in files.known_designs)
-		var/datum/design/D = files.known_designs[v]
+	for(var/v in stored_research.researched_designs)
+		var/datum/design/D = stored_research.researched_designs[v]
 		if(!(selected_category in D.category))
 			continue
 
@@ -334,16 +333,16 @@
 
 /obj/machinery/autolathe/proc/can_build(datum/design/D, amount = 1)
 	if(D.make_reagents.len)
-		return 0
+		return FALSE
 
 	var/coeff = (ispath(D.build_path, /obj/item/stack) ? 1 : prod_coeff)
 
 	GET_COMPONENT(materials, /datum/component/material_container)
 	if(D.materials[MAT_METAL] && (materials.amount(MAT_METAL) < (D.materials[MAT_METAL] * coeff * amount)))
-		return 0
+		return FALSE
 	if(D.materials[MAT_GLASS] && (materials.amount(MAT_GLASS) < (D.materials[MAT_GLASS] * coeff * amount)))
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/machinery/autolathe/proc/get_design_cost(datum/design/D)
 	var/coeff = (ispath(D.build_path, /obj/item/stack) ? 1 : prod_coeff)
@@ -368,25 +367,26 @@
 
 /obj/machinery/autolathe/proc/shock(mob/user, prb)
 	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
-		return 0
+		return FALSE
 	if(!prob(prb))
-		return 0
+		return FALSE
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
 	if (electrocute_mob(user, get_area(src), src, 0.7, TRUE))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /obj/machinery/autolathe/proc/adjust_hacked(state)
 	hacked = state
-	for(var/datum/design/D in files.possible_designs)
+	for(var/id in SSresearch.techweb_designs)
+		var/datum/design/D = SSresearch.techweb_designs[id]
 		if((D.build_type & AUTOLATHE) && ("hacked" in D.category))
 			if(hacked)
-				files.AddDesign2Known(D)
+				stored_research.add_design(D)
 			else
-				files.known_designs -= D.id
+				stored_research.remove_design(D)
 
 /obj/machinery/autolathe/hacked/Initialize()
 	. = ..()

@@ -79,6 +79,7 @@
 	last_slogan = world.time + rand(0, slogan_delay)
 	power_change()
 
+
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
 	QDEL_NULL(coin)
@@ -510,7 +511,7 @@
 		if(icon_vend) //Show the vending animation if needed
 			flick(icon_vend,src)
 		new R.product_path(get_turf(src))
-		SSblackbox.add_details("vending_machine_usage","[type]|[R.product_path]")
+		SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[R.product_path]"))
 		vend_ready = 1
 		return
 
@@ -620,16 +621,6 @@
 	premium = list()
 
 IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY CANISTER CHARGES in vending_items.dm
-*/
-
-/*
-/obj/machinery/vending/atmospherics //Commenting this out until someone ponies up some actual working, broken, and unpowered sprites - Quarxink
-	name = "Tank Vendor"
-	desc = "A vendor with a wide variety of masks and gas tanks."
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "dispenser"
-	product_paths = "/obj/item/tank/internals/oxygen;/obj/item/tank/internals/plasma;/obj/item/tank/internals/emergency_oxygen;/obj/item/tank/internals/emergency_oxygen/engi;/obj/item/clothing/mask/breath"
-	product_amounts = "10;10;10;5;25"
 */
 
 /obj/machinery/vending/boozeomat
@@ -1076,7 +1067,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/crowbar = 12, /obj/item/wirecutters = 12, /obj/item/device/multitool = 12, /obj/item/wrench = 12, /obj/item/device/t_scanner = 12,
 					/obj/item/stock_parts/cell = 8, /obj/item/weldingtool = 8, /obj/item/clothing/head/welding = 8,
 					/obj/item/light/tube = 10, /obj/item/clothing/suit/fire = 4, /obj/item/stock_parts/scanning_module = 5, /obj/item/stock_parts/micro_laser = 5,
-					/obj/item/stock_parts/matter_bin = 5, /obj/item/stock_parts/manipulator = 5, /obj/item/stock_parts/console_screen = 5)
+					/obj/item/stock_parts/matter_bin = 5, /obj/item/stock_parts/manipulator = 5)
 	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
 
@@ -1126,7 +1117,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	/obj/item/clothing/head/beanie/purple=1, /obj/item/clothing/head/beanie/yellow=1, /obj/item/clothing/head/beanie/orange=1, /obj/item/clothing/head/beanie/cyan=1, /obj/item/clothing/head/beanie/christmas=1,
 	/obj/item/clothing/head/beanie/striped=1, /obj/item/clothing/head/beanie/stripedred=1, /obj/item/clothing/head/beanie/stripedblue=1, /obj/item/clothing/head/beanie/stripedgreen=1,
 	/obj/item/clothing/suit/jacket/letterman_red=1,
-	/obj/item/clothing/ears/headphones = 10)
+	/obj/item/clothing/ears/headphones = 10, /obj/item/clothing/suit/apron/purple_bartender=2, /obj/item/clothing/under/rank/bartender/purple=2)
 	contraband = list(/obj/item/clothing/under/syndicate/tacticool=1, /obj/item/clothing/mask/balaclava=1, /obj/item/clothing/head/ushanka=1, /obj/item/clothing/under/soviet=1, /obj/item/storage/belt/fannypack/black=2, /obj/item/clothing/suit/jacket/letterman_syndie=1, /obj/item/clothing/under/jabroni=1, /obj/item/clothing/suit/vapeshirt=1, /obj/item/clothing/under/geisha=1)
 	premium = list(/obj/item/clothing/under/suit_jacket/checkered=1, /obj/item/clothing/head/mailman=1, /obj/item/clothing/under/rank/mailman=1, /obj/item/clothing/suit/jacket/leather=1, /obj/item/clothing/suit/jacket/leather/overcoat=1, /obj/item/clothing/under/pants/mustangjeans=1, /obj/item/clothing/neck/necklace/dope=3, /obj/item/clothing/suit/jacket/letterman_nanotrasen=1)
 	refill_canister = /obj/item/vending_refill/clothing

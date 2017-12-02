@@ -77,7 +77,6 @@
 /turf/closed/mineral/random/labormineral/volcanic,
 /area/lavaland/surface/outdoors)
 "ao" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /turf/closed/mineral/random/volcanic,
 /area/lavaland/surface/outdoors)
 "ap" = (
@@ -221,9 +220,10 @@
 /area/mine/laborcamp)
 "aM" = (
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/loadingarea{
+/obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "aN" = (
 /obj/effect/turf_decal/delivery,
@@ -359,9 +359,10 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "bk" = (
-/turf/open/floor/plasteel/loadingarea{
+/obj/effect/turf_decal/loading_area{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "bl" = (
 /obj/machinery/conveyor{
@@ -1024,9 +1025,10 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/loadingarea{
+/obj/effect/turf_decal/loading_area{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/mine/production)
 "dc" = (
 /obj/structure/closet/crate,
@@ -1068,7 +1070,7 @@
 	pixel_x = 1;
 	pixel_y = 25
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/mine/maintenance)
 "di" = (
 /obj/machinery/telecomms/relay/preset/mining,
@@ -1081,7 +1083,7 @@
 /area/mine/maintenance)
 "dj" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/mine/maintenance)
 "dk" = (
 /obj/machinery/airalarm{
@@ -1159,12 +1161,14 @@
 /turf/open/floor/plating,
 /area/mine/production)
 "du" = (
-/turf/open/floor/plasteel/loadingarea,
+/obj/effect/turf_decal/loading_area,
+/turf/open/floor/plasteel,
 /area/mine/production)
 "dv" = (
-/turf/open/floor/plasteel/loadingarea{
+/obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/mine/production)
 "dw" = (
 /obj/machinery/light/small{
@@ -1187,7 +1191,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/mine/maintenance)
 "dz" = (
 /obj/machinery/light_switch{
@@ -1793,9 +1797,10 @@
 	},
 /area/mine/production)
 "eW" = (
-/turf/open/floor/plasteel/loadingarea{
+/obj/effect/turf_decal/loading_area{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/mine/production)
 "eX" = (
 /obj/machinery/conveyor{

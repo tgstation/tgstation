@@ -37,6 +37,7 @@
 		/obj/item/stack/cable_coil,
 		/obj/item/device/t_scanner,
 		/obj/item/device/analyzer,
+		/obj/item/device/geiger_counter,
 		/obj/item/extinguisher/mini,
 		/obj/item/device/radio,
 		/obj/item/clothing/gloves
@@ -225,7 +226,7 @@
 		/obj/item/device/t_scanner/adv_mining_scanner,
 		/obj/item/reagent_containers/pill,
 		/obj/item/storage/pill_bottle,
-		/obj/item/ore,
+		/obj/item/stack/ore,
 		/obj/item/reagent_containers/food/drinks,
 		/obj/item/organ/regenerative_core,
 		/obj/item/device/wormhole_jaunter,

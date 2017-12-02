@@ -471,7 +471,6 @@
 		else //If tile is fully grown
 			SV.entangle_mob()
 
-		//if(prob(25))
 		SV.spread()
 		if(i >= length)
 			break

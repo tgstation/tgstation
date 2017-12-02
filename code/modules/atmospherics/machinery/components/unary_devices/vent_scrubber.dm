@@ -163,14 +163,7 @@
 		return FALSE
 
 	if(scrubbing & SCRUBBING)
-		var/should_we_scrub = FALSE
-		for(var/id in env_gases)
-			if(id == /datum/gas/nitrogen || id == /datum/gas/oxygen)
-				continue
-			if(env_gases[id][MOLES] && filter_types[id])
-				should_we_scrub = TRUE
-				break
-		if(should_we_scrub)
+		if(length(env_gases & filter_types))
 			var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles()
 
 			//Take a gas sample

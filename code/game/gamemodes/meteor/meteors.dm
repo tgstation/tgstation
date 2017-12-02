@@ -99,7 +99,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	var/threat = 0 // used for determining which meteors are most interesting
 	var/lifetime = DEFAULT_METEOR_LIFETIME
 	var/timerid = null
-	var/list/meteordrop = list(/obj/item/ore/iron)
+	var/list/meteordrop = list(/obj/item/stack/ore/iron)
 	var/dropamt = 2
 
 /obj/effect/meteor/Move()
@@ -217,7 +217,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	hits = 1
 	hitpwr = 3
 	meteorsound = 'sound/weapons/gunshot_smg.ogg'
-	meteordrop = list(/obj/item/ore/glass)
+	meteordrop = list(/obj/item/stack/ore/glass)
 	threat = 1
 
 //Medium-sized
@@ -250,7 +250,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	hits = 5
 	heavy = 1
 	meteorsound = 'sound/effects/bamf.ogg'
-	meteordrop = list(/obj/item/ore/plasma)
+	meteordrop = list(/obj/item/stack/ore/plasma)
 	threat = 20
 
 /obj/effect/meteor/flaming/meteor_effect()
@@ -262,7 +262,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	name = "glowing meteor"
 	icon_state = "glowing"
 	heavy = 1
-	meteordrop = list(/obj/item/ore/uranium)
+	meteordrop = list(/obj/item/stack/ore/uranium)
 	threat = 15
 
 
@@ -332,7 +332,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	hitpwr = 1
 	heavy = 1
 	meteorsound = 'sound/effects/bamf.ogg'
-	meteordrop = list(/obj/item/ore/plasma)
+	meteordrop = list(/obj/item/stack/ore/plasma)
 	threat = 50
 
 /obj/effect/meteor/tunguska/Move()

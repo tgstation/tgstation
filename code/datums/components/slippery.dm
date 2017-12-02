@@ -12,7 +12,7 @@
 	var/mob/victim = AM
 	if(istype(victim) && !victim.is_flying() && victim.slip(intensity, parent, lube_flags))
 		slip_victim = victim
-		return TRUE
+		return COMPONENT_ACTIVATED
 
 /datum/component/slippery/AfterComponentActivated()
 	slip_victim = null

@@ -75,7 +75,6 @@
 	// The inlet of the compressor is the direction it faces
 	gas_contained = new
 	inturf = get_step(src, dir)
-
 	locate_machinery()
 	if(!turbine)
 		stat |= BROKEN
@@ -139,7 +138,6 @@
 	// It's a simplified version taking only 1/10 of the moles from the turf nearby. It should be later changed into a better version
 
 	var/transfer_moles = environment.total_moles()/10
-	//var/transfer_moles = rpm/10000*capacity
 	var/datum/gas_mixture/removed = inturf.remove_air(transfer_moles)
 	gas_contained.merge(removed)
 
@@ -333,51 +331,42 @@
 	if(..())
 		return
 
-	interact(user)
+	ui_interact(user)
 
-/obj/machinery/computer/turbine_computer/interact(mob/user)
+/obj/machinery/computer/turbine_computer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "turbine_computer", name, 350, 280, master_ui, state)
+		ui.open()
 
-	var/dat
-	if(compressor && compressor.turbine)
-		dat += "<BR><B>Gas turbine remote control system</B><HR>"
-		if(compressor.stat || compressor.turbine.stat)
-			dat += "[compressor.stat ? "<B>Compressor is inoperable</B><BR>" : "<B>Turbine is inoperable</B>"]"
-		else
-			dat += {"Turbine status: [ src.compressor.starter ? "<A href='?src=[REF(src)];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=[REF(src)];str=1'>On</A>"]
-			\n<BR>
-			\nTurbine speed: [src.compressor.rpm]rpm<BR>
-			\nPower currently being generated: [DisplayPower(src.compressor.turbine.lastgen)]<BR>
-			\nInternal gas temperature: [src.compressor.gas_contained.temperature]K<BR>
-			\n</PRE><HR><A href='?src=[REF(src)];close=1'>Close</A>
-			\n<BR>
-			\n"}
-	else
-		dat += "<B>There is [!compressor ? "no compressor" : " compressor[!compressor.turbine ? " but no turbine" : ""]"].</B><BR>"
-		if(!compressor)
-			dat += "<A href='?src=[REF(src)];search=1'>Search for compressor</A>"
+/obj/machinery/computer/turbine_computer/ui_data(mob/user)
+	var/list/data = list()
 
-	var/datum/browser/popup = new(user, "turbinecomputer", name)
-	popup.set_content(dat)
-	popup.open()
-	return
+	data["connected"] = (compressor && compressor.turbine) ? TRUE : FALSE
+	data["compressor_broke"] = (!compressor || (compressor.stat & BROKEN)) ? TRUE : FALSE
+	data["turbine_broke"] = (!compressor || !compressor.turbine || (compressor.turbine.stat & BROKEN)) ? TRUE : FALSE
+	data["broken"] = (data["compressor_broke"] || data["turbine_broke"])
+	data["online"] = compressor.starter
 
-/obj/machinery/computer/turbine_computer/Topic(href, href_list)
+	data["power"] = DisplayPower(compressor.turbine.lastgen)
+	data["rpm"] = compressor.rpm
+	data["temp"] = compressor.gas_contained.temperature
+
+	return data
+
+/obj/machinery/computer/turbine_computer/ui_act(action, params)
 	if(..())
 		return
-
-	else if( href_list["str"] )
-		if(compressor && compressor.turbine)
-			compressor.starter = !compressor.starter
-	else if( href_list["close"] )
-		usr << browse(null, "window=turbinecomputer")
-		usr.unset_machine(src)
-		return
-	else if(href_list["search"])
-		locate_machinery()
-
-	src.updateUsrDialog()
-	return
-
-/obj/machinery/computer/turbine_computer/process()
-	src.updateDialog()
-	return
+	switch(action)
+		if("power-on")
+			if(compressor && compressor.turbine)
+				compressor.starter = TRUE
+				. = TRUE
+		if("power-off")
+			if(compressor && compressor.turbine)
+				compressor.starter = FALSE
+				. = TRUE
+		if("reconnect")
+			locate_machinery()
+			. = TRUE
