@@ -16,7 +16,7 @@
 	if(W.is_sharp() && disable)  //If screwdriven and the item is sharp, it creates sharp plant
 		user.visible_message("[user] places something sharp inside the plant's branches..", "<span class='notice'>You've sharpened the potted plant!</span>")
 		name = "[sharp_prefix] [name]"
-		desc = "[desc]" + SHARP_DESC_ADD
+		desc = "[desc] " + SHARP_DESC_ADD
 		sharpness = W.sharpness
 		hitsound='hippiestation/sound/weapons/sharpBushHit.ogg' //cool sound
 		qdel(W)
@@ -39,7 +39,7 @@
 	emagged = TRUE
 	force_wielded = 0
 	wielded = 0
-	desc = "[desc]" + EMAG_DESC_ADD
+	desc = "[desc] " + EMAG_DESC_ADD
 	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/twohanded/required/kirbyplants/photosynthetic/emag_act(mob/user) //do not emag this one!
