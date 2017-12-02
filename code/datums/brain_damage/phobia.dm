@@ -34,7 +34,7 @@
 	if(owner.eye_blind)
 		return
 	if(world.time > next_check && world.time > next_scare)
-		next_check = world.time + 200
+		next_check = world.time + 50
 		var/list/seen_atoms = view(7, owner)
 
 		if(LAZYLEN(trigger_objs))
@@ -72,12 +72,19 @@
 		return message
 	for(var/word in trigger_words)
 		if(findtext(message, word))
-			freak_out(null, word)
+			addtimer(CALLBACK(src, .proc/freak_out, null, word), 10) //to react AFTER the chat message
 			break
 	return message
 
+/datum/brain_trauma/mild/phobia/on_say(message)
+	for(var/word in trigger_words)
+		if(findtext(message, word))
+			to_chat(owner, "<span class='warning'>You can't bring yourself to say the word \"[word]\"!</span>")
+			return ""
+	return message
+
 /datum/brain_trauma/mild/phobia/proc/freak_out(atom/reason, trigger_word)
-	next_scare = world.time + 200
+	next_scare = world.time + 120
 	var/message = pick("spooks you to the bone", "shakes you up", "terrifies you", "sends you into a panic", "sends chills down your spine")
 	if(reason)
 		to_chat(owner, "<span class='userdanger'>Seeing [reason] [message]!</span>")
@@ -94,11 +101,12 @@
 		if(2)
 			owner.emote("scream")
 			owner.Jitter(5)
-			owner.say("AAAAH! [uppertext(phobia_type)]!!")
+			owner.say("AAAAH!!")
 			if(reason)
 				owner.pointed(reason)
 		if(3)
 			to_chat(owner, "<span class='warning'>You shut your eyes in terror!</span>")
+			owner.Jitter(5)
 			owner.blind_eyes(10)
 		if(4)
 			owner.dizziness += 10

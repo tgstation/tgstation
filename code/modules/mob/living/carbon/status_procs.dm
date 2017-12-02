@@ -113,10 +113,10 @@
 	if(B)
 		. = B.has_trauma_type(brain_trauma_type, consider_permanent)
 
-/mob/living/carbon/proc/gain_trauma(datum/brain_trauma/trauma, permanent = FALSE, ...)
+/mob/living/carbon/proc/gain_trauma(datum/brain_trauma/trauma, permanent = FALSE, list/arguments)
 	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
 	if(B)
-		. = B.gain_trauma(trauma, permanent, args)
+		. = B.gain_trauma(trauma, permanent, arguments)
 
 /mob/living/carbon/proc/gain_trauma_type(brain_trauma_type = /datum/brain_trauma, permanent = FALSE)
 	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)

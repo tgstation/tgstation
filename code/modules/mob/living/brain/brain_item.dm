@@ -188,11 +188,11 @@
 
 
 //Add a specific trauma
-/obj/item/organ/brain/proc/gain_trauma(datum/brain_trauma/trauma, permanent = FALSE, ...)
+/obj/item/organ/brain/proc/gain_trauma(datum/brain_trauma/trauma, permanent = FALSE, list/arguments)
 	var/trauma_type
 	if(ispath(trauma))
 		trauma_type = trauma
-		traumas += new trauma_type(src, permanent, args)
+		traumas += new trauma_type(arglist(list(src, permanent) + arguments))
 	else
 		traumas += trauma
 		trauma.permanent = permanent

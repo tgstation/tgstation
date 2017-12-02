@@ -22,31 +22,31 @@ SUBSYSTEM_DEF(traumas)
 						"skeletons" = strings(PHOBIA_FILE, "skeletons"),
 					   )
 
-	phobia_mobs = list("spiders"  = typecacheof(/mob/living/simple_animal/hostile/poison/giant_spider),
-					   "security" = typecacheof(/mob/living/simple_animal/bot/secbot),
-					   "lizards"  = typecacheof(/mob/living/simple_animal/hostile/lizard)
+	phobia_mobs = list("spiders"  = typecacheof(list(/mob/living/simple_animal/hostile/poison/giant_spider)),
+					   "security" = typecacheof(list(/mob/living/simple_animal/bot/secbot)),
+					   "lizards"  = typecacheof(list(/mob/living/simple_animal/hostile/lizard))
 					   )
 
-	phobia_objs = list("spiders"   = typecacheof(/obj/structure/spider),
-					   "security"  = typecacheof(/obj/item/clothing/under/rank/security, /obj/item/clothing/under/rank/warden,
+	phobia_objs = list("spiders"   = typecacheof(list(/obj/structure/spider)),
+					   "security"  = typecacheof(list(/obj/item/clothing/under/rank/security, /obj/item/clothing/under/rank/warden,
 											 	 /obj/item/clothing/under/rank/head_of_security, /obj/item/clothing/under/rank/det,
 												 /obj/item/melee/baton, /obj/item/gun/energy/taser, /obj/item/restraints/handcuffs,
-												 /obj/machinery/door/airlock/security),
-					   "clowns"    = typecacheof(/obj/item/clothing/under/rank/clown, /obj/item/clothing/shoes/clown_shoes,
+												 /obj/machinery/door/airlock/security)),
+					   "clowns"    = typecacheof(list(/obj/item/clothing/under/rank/clown, /obj/item/clothing/shoes/clown_shoes,
 												 /obj/item/clothing/mask/gas/clown_hat, /obj/item/device/instrument/bikehorn,
-												 /obj/item/device/pda/clown, /obj/item/grown/bananapeel),
-					   "greytide"  = typecacheof(/obj/item/clothing/under/color/grey, /obj/item/melee/baton/cattleprod,
-												 /obj/item/twohanded/spear, /obj/item/clothing/mask/gas),
-					   "lizards"   = typecacheof(/obj/item/toy/plush/lizardplushie, /obj/item/reagent_containers/food/snacks/kebab/tail,
-												 /obj/item/organ/tail/lizard, /obj/item/reagent_containers/food/drinks/bottle/lizardwine),
-					   "skeletons" = typecacheof(/obj/item/organ/tongue/bone, /obj/item/clothing/suit/armor/bone, /obj/item/stack/sheet/bone,
+												 /obj/item/device/pda/clown, /obj/item/grown/bananapeel)),
+					   "greytide"  = typecacheof(list(/obj/item/clothing/under/color/grey, /obj/item/melee/baton/cattleprod,
+												 /obj/item/twohanded/spear, /obj/item/clothing/mask/gas)),
+					   "lizards"   = typecacheof(list(/obj/item/toy/plush/lizardplushie, /obj/item/reagent_containers/food/snacks/kebab/tail,
+												 /obj/item/organ/tail/lizard, /obj/item/reagent_containers/food/drinks/bottle/lizardwine)),
+					   "skeletons" = typecacheof(list(/obj/item/organ/tongue/bone, /obj/item/clothing/suit/armor/bone, /obj/item/stack/sheet/bone,
 												 /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton,
-												 /obj/effect/decal/remains/human)
+												 /obj/effect/decal/remains/human))
 					   )
-	phobia_turfs = list("space" = typecacheof(/turf/open/space, /turf/open/floor/holofloor/space, /turf/open/floor/fakespace))
+	phobia_turfs = list("space" = typecacheof(list(/turf/open/space, /turf/open/floor/holofloor/space, /turf/open/floor/fakespace)))
 
-	phobia_species = list("lizards"   = typecacheof(/datum/species/lizard),
-						  "skeletons" = typecacheof(/datum/species/skeleton, /datum/species/plasmaman)
+	phobia_species = list("lizards"   = typecacheof(list(/datum/species/lizard)),
+						  "skeletons" = typecacheof(list(/datum/species/skeleton, /datum/species/plasmaman))
 						 )
 
 #undef PHOBIA_FILE
