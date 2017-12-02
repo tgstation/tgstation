@@ -14,13 +14,11 @@
 
 /datum/liquid_pool/New()
 	..()
-	LAZYADD(SSliquids.pools, src)
 	START_PROCESSING(SSliquids, src)
 
 /datum/liquid_pool/Destroy()
 	for(var/I in liquids)
 		qdel(I)
-	LAZYREMOVE(SSliquids.pools, src)
 	STOP_PROCESSING(SSliquids, src)
 	return ..()
 
