@@ -3,6 +3,7 @@
 
 /obj/item/twohanded/required/kirbyplants
 	var/disable = 0 //for screwdriver
+	var/is_sharpened = 0 //to prevent multiple sharpenings
 	var/sharp_prefix = "thorny"
 
 /obj/item/twohanded/required/kirbyplants/attackby(obj/item/W, mob/user, params)
@@ -17,9 +18,13 @@
 		user.visible_message("[user] places something sharp inside the plant's branches..", "<span class='notice'>You've sharpened the potted plant!</span>")
 		name = "[sharp_prefix] [name]"
 		desc = "[desc] " + SHARP_DESC_ADD
+		sharpened = 1
 		sharpness = W.sharpness
 		hitsound='hippiestation/sound/weapons/sharpBushHit.ogg' //cool sound
 		qdel(W)
+	if((W.is_sharp() && disable) && is_sharpened)
+		user.visible_message("Tries to place an object among the plant's branches, but there's already something sharp inside. Be careful!", "<span class='notice'>You cut yourself on the plant! It's already full...</span>")
+		user.apply_damage(5, BRUTE, hit_hand)
 	if(istype(W, /obj/item/reagent_containers) && emagged)
 		if(W.reagents.has_reagent("lean"))
 			W.reagents.clear_reagents()
