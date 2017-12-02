@@ -35,7 +35,6 @@
 		return
 	if(world.time > next_check && world.time > next_scare)
 		next_check = world.time + 200
-		next_scare = world.time + 200
 		var/list/seen_atoms = view(7, owner)
 
 		if(LAZYLEN(trigger_objs))
@@ -74,11 +73,11 @@
 	for(var/word in trigger_words)
 		if(findtext(message, word))
 			freak_out(null, word)
-			next_scare = world.time + 200 //prevents phobia spam
 			break
 	return message
 
 /datum/brain_trauma/mild/phobia/proc/freak_out(atom/reason, trigger_word)
+	next_scare = world.time + 200
 	var/message = pick("spooks you to the bone", "shakes you up", "terrifies you", "sends you into a panic", "sends chills down your spine")
 	if(reason)
 		to_chat(owner, "<span class='userdanger'>Seeing [reason] [message]!</span>")
