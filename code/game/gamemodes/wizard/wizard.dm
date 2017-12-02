@@ -98,7 +98,7 @@
 					wizardwin = 0
 				count++
 
-			if(wizard.current && wizard.current.stat!=2 && wizardwin)
+			if(wizard.current && wizardwin)
 				text += "<br><font color='green'><B>The wizard was successful!</B></font>"
 				SSblackbox.record_feedback("tally", "wizard_success", 1, "SUCCESS")
 			else

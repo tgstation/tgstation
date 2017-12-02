@@ -1,4 +1,0 @@
-author: "jammer312"
-delete-after: True
-changes: 
-  - bugfix: "fixed conjuration spells forgetting about conjured items"

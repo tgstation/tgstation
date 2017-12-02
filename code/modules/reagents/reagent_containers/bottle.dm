@@ -15,7 +15,7 @@
 		icon_state = "bottle"
 	update_icon()
 
-/obj/item/reagent_containers/glass/bottle/on_reagent_change()
+/obj/item/reagent_containers/glass/bottle/on_reagent_change(changetype)
 	update_icon()
 
 /obj/item/reagent_containers/glass/bottle/update_icon()

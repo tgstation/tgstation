@@ -937,15 +937,6 @@
 	crate_type = /obj/structure/closet/crate/secure/science
 	dangerous = TRUE
 
-
-/datum/supply_pack/science/research
-	name = "Machine Prototype Crate"
-	cost = 8000
-	access = ACCESS_RESEARCH
-	contains = list(/obj/item/device/machineprototype)
-	crate_name = "machine prototype crate"
-	crate_type = /obj/structure/closet/crate/secure/science
-
 /datum/supply_pack/science/tablets
 	name = "Tablet Crate"
 	cost = 5000
@@ -1596,7 +1587,7 @@
 					/obj/item/device/instrument/trombone,
 					/obj/item/device/instrument/recorder,
 					/obj/item/device/instrument/harmonica,
-					/obj/structure/piano)
+					/obj/structure/piano/unanchored)
 	name = "Big band instrument collection"
 	cost = 5000
 	crate_name = "Big band musical instruments collection"
