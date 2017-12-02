@@ -12,5 +12,7 @@ PROCESSING_SUBSYSTEM_DEF(liquids)
 		var/datum/liquid_pool/P = currentrun[currentrun.len]
 		if(!P.liquids)
 			qdel(P)
+			src.currentrun.Remove(P)
 		else if(!LAZYLEN(P.liquids))
 			qdel(P)
+			src.currentrun.Remove(P)
