@@ -371,7 +371,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		return TRUE
 	if(message_mode == MODE_MONKEY)
 		if(is_monkey_leader(mind) || (ismonkey(src) && is_monkey(mind)))
-			log_talk(src, "[src]/[key]: [message]",LOGSAY)
+			log_talk(src, "(MONKEY) [src]/[key]: [message]",LOGSAY)
 			if(prob(75) && ismonkey(src))
 				visible_message("<span class='notice'>\The [src] chimpers.</span>")
 			var/msg = "<span class='[is_monkey_leader(mind) ? "monkeylead" : "monkeyhive"]'><b><font size=2>\[[is_monkey_leader(mind) ? "Monkey Leader" : "Monkey"]\]</font> [src]</b>: [message]</span>"
