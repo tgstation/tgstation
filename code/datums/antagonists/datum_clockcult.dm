@@ -117,7 +117,7 @@
 	hierophant_network.Grant(current)
 	current.throw_alert("clockinfo", /obj/screen/alert/clockwork/infodump)
 	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
-	if(G.active && ishuman(current))
+	if((G.active || GLOB.ratvar_approaches) && ishuman(current))
 		current.add_overlay(mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER))
 
 /datum/antagonist/clockcult/remove_innate_effects(mob/living/mob_override)
