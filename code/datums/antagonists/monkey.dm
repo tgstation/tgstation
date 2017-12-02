@@ -1,6 +1,12 @@
+#define MONKEYS_ESCAPED		1
+#define MONKEYS_LIVED		2
+#define MONKEYS_DIED		3
+#define DISEASE_ESCAPED		4
+
 /datum/antagonist/monkey
 	name = "Monkey"
 	job_rank = ROLE_MONKEY
+	var/datum/objective_team/monkey/monkey_team
 
 /datum/antagonist/monkey/on_gain()
 	. = ..()
@@ -30,6 +36,23 @@
 	if(D)
 		D.cure()
 
+/datum/antagonist/monkey/create_team(datum/objective_team/monkey/new_team)
+	if(!new_team)
+		if(!always_new_team)
+			for(var/datum/antagonist/monkey/N in GLOB.antagonists)
+				if(N.monkey_team)
+					monkey_team = N.monkey_team
+					return
+		monkey_team = new /datum/objective_team/monkey
+		monkey_team.update_objectives()
+		return
+	if(!istype(new_team))
+		stack_trace("Wrong team type passed to [type] initialization.")
+	monkey_team = new_team
+
+/datum/antagonist/monkey/proc/forge_objectives()
+	if(monkey_team)
+		owner.objectives |= monkey_team.objectives
 
 /datum/antagonist/monkey/leader
 	name = "Monkey Leader"
@@ -59,3 +82,82 @@
 	to_chat(owner, "<b>As an initial infectee, you will be considered a 'leader' by your fellow monkeys.</b>")
 	to_chat(owner, "<b>You can use :k to talk to fellow monkeys!</b>")
 	SEND_SOUND(owner.current, sound('sound/ambience/antag/monkey.ogg'))
+
+/datum/objective/monkey
+	explanation_text = "Ensure [monkeys_to_win] infected monkeys escape on the emergency shuttle."
+	martyr_compatible = TRUE
+	var/monkeys_to_win = 1
+
+/datum/objective/monkey/check_completion()
+	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
+	for(var/mob/living/carbon/monkey/M in GLOB.alive_mob_list)
+		if (M.HasDisease(D) && (M.onCentCom() || M.onSyndieBase()))
+			escaped_monkeys++
+	if(escaped_monkeys >= monkeys_to_win)
+		return TRUE
+	else
+		return FALSE
+
+/datum/objective_team/monkey
+	var/list/objectives
+	var/core_objective = /datum/objective/monkey
+
+/datum/objective_team/monkey/proc/update_objectives()
+	objectives = list()
+	if(core_objective)
+		var/datum/objective/O = new core_objective
+		O.team = src
+		objectives += O
+	return
+
+/datum/objective_team/monkey/proc/infected_monkeys_alive()
+	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
+	for(var/mob/living/carbon/monkey/M in GLOB.alive_mob_list)
+		if(M.HasDisease(D))
+			return TRUE
+	return FALSE
+
+/datum/objective_team/monkey/proc/infected_monkeys_escaped()
+	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
+	for(var/mob/living/carbon/monkey/M in GLOB.alive_mob_list)
+		if(M.HasDisease(D) && (M.onCentCom() || M.onSyndieBase()))
+			return TRUE
+	return FALSE
+
+/datum/objective_team/monkey/proc/infected_humans_escaped()
+	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
+	for(var/mob/living/carbon/human/M in GLOB.alive_mob_list)
+		if(M.HasDisease(D) && (M.onCentCom() || M.onSyndieBase()))
+			return TRUE
+	return FALSE
+
+/datum/objective_team/monkey/proc/infected_humans_alive()
+	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
+	for(var/mob/living/carbon/human/M in GLOB.alive_mob_list)
+		if(M.HasDisease(D))
+			return TRUE
+	return FALSE
+
+/datum/objective_team/monkey/proc/get_result()
+	if(infected_monkeys_escaped())
+		return MONKEYS_ESCAPED
+	if(infected_monkeys_alive())
+		return MONKEYS_LIVED
+	if(infected_humans_alive(), infected_humans_escaped())
+		return DISEASE_LIVED
+	return MONKEYS_DIED
+
+/datum/objective_team/monkey/proc/roundend_display()
+	switch(get_result())
+		if(MONKEYS_ESCAPED)
+			to_chat(world, "<FONT size = 3><B>Monkey Major Victory!</B></FONT>")
+			to_chat(world, "<B>Central Command and [station_name()] were taken over by the monkeys! Ook ook!</B>")
+		if(MONKEYS_LIVED)
+			to_chat(world, "<FONT size = 3><B>Monkey Minor Victory!</B></FONT>")
+			to_chat(world, "<B>[station_name()] was taken over by the monkeys! Ook ook!</B>")
+		if(DISEASE_LIVED)
+			to_chat(world, "<FONT size = 3><B>Monkey Minor Defeat!</B></FONT>")
+			to_chat(world, "<B>All the monkeys died, but the disease lives on! The future is uncertain.</B>")
+		if(MONKEYS_DIED)
+			to_chat(world, "<FONT size = 3><B>Monkey Major Defeat!</B></FONT>")
+			to_chat(world, "<B>All the monkeys died, and Jungle Fever was wiped out!</B>")

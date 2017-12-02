@@ -22,6 +22,9 @@
 
 	var/players_per_carrier = 30
 
+	var/datum/objective_team/monkey/monkey_team
+
+
 
 /datum/game_mode/monkey/pre_setup()
 	carriers_to_make = max(round(num_players()/players_per_carrier, 1), 1)
@@ -47,7 +50,9 @@
 
 /datum/game_mode/monkey/post_setup()
 	for(var/datum/mind/carriermind in carriers)
-		add_monkey_leader(carriermind)
+		var/datum/antagonist/monkey/M = add_monkey_leader(carriermind, monkey_team)
+		if(M)
+			monkey_team = M.monkey_team
 	return ..()
 
 /datum/game_mode/monkey/check_finished()
@@ -96,6 +101,14 @@
 	return "Reports of an ancient [pick("retrovirus", "flesh eating bacteria", "disease", "magical curse blamed on viruses", "banana blight")] outbreak that turn humans into monkeys has been reported in your quadrant.  Any such infections may be treated with banana juice.  If an outbreak occurs, ensure the station is quarantined to prevent a largescale outbreak at CentCom."
 
 
+/datum/game_mode/proc/auto_declare_completion_monkey()
+	var/list/monkey_teams = list()
+	for(var/datum/antagonist/monkey/N in GLOB.antagonists) //collect all monkey teams
+		monkey_teams |= N.monkey_team
+	for(var/datum/objective_team/nuclear/monkey_team in monkey_teams)
+		monkey_team.roundend_display()
+	return TRUE
+
 /proc/add_monkey_leader(datum/mind/monkey_mind)
 	if(is_monkey_leader(monkey_mind))
 		return FALSE
@@ -120,4 +133,4 @@
 
 /proc/is_monkey(datum/mind/monkey_mind)
 	return monkey_mind && (monkey_mind.has_antag_datum(ANTAG_DATUM_MONKEY) || is_monkey_leader(monkey_mind))
-	
+
