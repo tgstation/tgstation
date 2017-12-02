@@ -30,7 +30,7 @@
 /datum/surgery_step/fix_brain/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] successfully fixes [target]'s brain!", "<span class='notice'>You succeed in fixing [target]'s brain.</span>")
 	target.adjustBrainLoss(-60)
-	target.cure_all_traumas() //only cures them if the brain damage's below the threshold
+	target.cure_all_traumas()
 	return TRUE
 
 /datum/surgery_step/fix_brain/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

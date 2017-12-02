@@ -123,18 +123,13 @@
 	if(B)
 		. = B.gain_trauma_type(brain_trauma_type, permanent)
 
-/mob/living/carbon/proc/cure_trauma(datum/brain_trauma/trauma, cure_permanent = FALSE)
-	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
-	if(B)
-		. = B.cure_trauma(trauma, cure_permanent)
-
 /mob/living/carbon/proc/cure_trauma_type(brain_trauma_type, cure_permanent = FALSE)
 	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
 	if(B)
 		. = B.cure_trauma_type(brain_trauma_type, cure_permanent)
 
-/mob/living/carbon/proc/cure_all_traumas(cure_permanent = FALSE, ignore_thresholds = FALSE)
+/mob/living/carbon/proc/cure_all_traumas(cure_permanent = FALSE)
 	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
 	if(B)
-		. = B.cure_all_traumas(cure_permanent, ignore_thresholds)
+		. = B.cure_all_traumas(cure_permanent)
 

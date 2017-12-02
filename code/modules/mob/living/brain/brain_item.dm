@@ -192,11 +192,10 @@
 	var/trauma_type
 	if(ispath(trauma))
 		trauma_type = trauma
+		traumas += new trauma_type(src, permanent, args)
 	else
-		trauma_type = trauma.type
-
-	traumas += new trauma_type(src, permanent, args)
-
+		traumas += trauma
+		trauma.permanent = permanent
 
 //Add a random trauma of a certain subtype
 /obj/item/organ/brain/proc/gain_trauma_type(brain_trauma_type = /datum/brain_trauma, permanent = FALSE)
@@ -209,25 +208,15 @@
 	var/trauma_type = pick(possible_traumas)
 	traumas += new trauma_type(src, permanent)
 
-
-//Cure a specific trauma
-/obj/item/organ/brain/proc/cure_trauma(datum/brain_trauma/trauma, cure_permanent = FALSE)
-	if(!trauma in traumas)
-		return
-
-	if(cure_permanent || !trauma.permanent)
-		qdel(trauma)
-
 //Cure a random trauma of a certain subtype
 /obj/item/organ/brain/proc/cure_trauma_type(brain_trauma_type, cure_permanent = FALSE)
 	var/datum/brain_trauma/trauma = has_trauma_type(brain_trauma_type)
 	if(trauma && (cure_permanent || !trauma.permanent))
 		qdel(trauma)
 
-/obj/item/organ/brain/proc/cure_all_traumas(cure_permanent = FALSE, ignore_thresholds = FALSE)
+/obj/item/organ/brain/proc/cure_all_traumas(cure_permanent = FALSE)
 	var/brainloss = get_brain_damage()
 	for(var/X in traumas)
-		if(ignore_thresholds || (istype(X, BRAIN_TRAUMA_MILD) && brainloss < BRAIN_DAMAGE_MILD))
-			cure_trauma(X, cure_permanent)
-		else if(ignore_thresholds || ((istype(X, BRAIN_TRAUMA_SEVERE) || istype(X, BRAIN_TRAUMA_SPECIAL)) && brainloss < BRAIN_DAMAGE_SEVERE))
-			cure_trauma(X, cure_permanent)
+		var/datum/brain_trauma/trauma = X
+		if(cure_permanent || !trauma.permanent)
+			qdel(trauma)
