@@ -15,7 +15,7 @@
 #define LIST_CLEAR_NULLS(L) L -= new /list(length(L));
 
 /proc/safepick(list/L)
-	if(istype(L))
+	if(istype(L) && length(L))
 		return pick(L)
 
 //Returns a list in plain english as a string
