@@ -175,6 +175,8 @@
 		if(!C.enabled)
 			return NONE
 		var/datum/callback/CB = C.signal_procs[sigtype]
+		if(!CB)
+			return NONE
 		. = CB.InvokeAsync(arglist(arguments))
 		if(. & COMPONENT_ACTIVATED)
 			ComponentActivated(C)
@@ -186,6 +188,8 @@
 			if(!C.enabled)
 				continue
 			var/datum/callback/CB = C.signal_procs[sigtype]
+			if(!CB)
+				continue
 			var/retval = CB.InvokeAsync(arglist(arguments))
 			. |= retval
 			if(retval & COMPONENT_ACTIVATED)
