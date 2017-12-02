@@ -23,7 +23,7 @@
 	if(istype(W, /obj/item/reagent_containers) && emagged)
 		if(W.reagents.has_reagent("lean"))
 			W.reagents.clear_reagents()
-			playsound(src.loc, 'hippiestation/sound/effects/pottedLeanSpawnSound', 25)
+			playsound(src.loc, 'hippiestation/sound/effects/pottedLeanSpawnSound.ogg', 25)
 			new /mob/living/simple_animal/hostile/retaliate/pottedlean(get_turf(src))
 			qdel(src)
 
