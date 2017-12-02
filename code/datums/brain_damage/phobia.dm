@@ -75,6 +75,7 @@
 		if(findtext(message, word))
 			freak_out(null, word)
 			next_scare = world.time + 200 //prevents phobia spam
+			break
 	return message
 
 /datum/brain_trauma/mild/phobia/proc/freak_out(atom/reason, trigger_word)

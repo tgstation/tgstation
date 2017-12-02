@@ -103,7 +103,7 @@
 	..()
 	if(check_alone())
 		stress = min(stress + 1, 100)
-		if(prob(stress / 8) + 1)
+		if(prob((stress / 8) + 1))
 			stress_reaction()
 	else
 		stress -= 4
@@ -150,12 +150,6 @@
 				to_chat(owner, "<span class='warning'>You're going mad with loneliness!</span>")
 				owner.hallucination += 35
 
-		if(5)
-			if(!high_stress)
-				to_chat(owner, "<span class='warning'>You feel really lonely...</span>")
-			else
-				to_chat(owner, "<span class='warning'>You're going mad with loneliness!</span>")
-				owner.hallucination += 35
 		if(5)
 			if(!high_stress)
 				to_chat(owner, "<span class='warning'>Your heart skips a beat.</span>")
