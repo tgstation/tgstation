@@ -497,6 +497,7 @@
 					door = new glass_type( loc )
 				else
 					door = new airlock_type( loc )
+				door.setDir(dir)
 				//door.req_access = req_access
 				door.electronics = electronics
 				door.heat_proof = heat_proof_finished
