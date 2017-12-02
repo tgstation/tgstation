@@ -1012,23 +1012,3 @@
 /mob/living/proc/add_abilities_to_panel()
 	for(var/obj/effect/proc_holder/A in abilities)
 		statpanel("[A.panel]",A.get_panel_text(),A)
-
-/mob/living/proc/update_z(new_z) // 1+ to register, null to unregister
-	if (registered_z != new_z)
-		if (registered_z)
-			SSmobs.by_zlevel[registered_z] -= src
-		if (client)
-			if (new_z)
-				SSmobs.by_zlevel[new_z] += src
-			registered_z = new_z
-		else
-			registered_z = null
-
-/mob/living/Login()
-	..()
-	var/turf/T = get_turf(src)
-	update_z(T.z)
-
-/mob/living/Logout()
-	..()
-	update_z(null)

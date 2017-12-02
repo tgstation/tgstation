@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(mobs)
 	name = "Mobs"
 	priority = 100
-	flags = SS_KEEP_TIMING
+	flags = SS_KEEP_TIMING|SS_NO_INIT
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/currentrun = list()
@@ -9,10 +9,6 @@ SUBSYSTEM_DEF(mobs)
 
 /datum/controller/subsystem/mobs/stat_entry()
 	..("P:[GLOB.mob_living_list.len]")
-
-/datum/controller/subsystem/mobs/Initialize(start_timeofday)
-	by_zlevel = new /list(world.maxz,0)
-	return ..()
 
 
 /datum/controller/subsystem/mobs/fire(resumed = 0)
@@ -32,12 +28,5 @@ SUBSYSTEM_DEF(mobs)
 			M.Life(seconds, times_fired)
 		else
 			GLOB.mob_living_list.Remove(M)
-		if (istype(M, /mob/living)) // This check can be removed if blob cameras are moved into their own system so that they do not require Life() ticks from this subsystem to function
-			var/mob/living/L = M
-			var/turf/T = get_turf(L)
-			if (L.client && L.registered_z != T.z)
-				L.update_z(T.z)
-			else if (!L.client && L.registered_z)
-				L.update_z(null)
 		if (MC_TICK_CHECK)
 			return
