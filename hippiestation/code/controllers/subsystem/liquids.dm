@@ -10,6 +10,7 @@ PROCESSING_SUBSYSTEM_DEF(liquids)
 	var/list/currentrun = src.currentrun
 	while(currentrun.len)
 		var/datum/liquid_pool/P = currentrun[currentrun.len]
+		currentrun.len--
 		if(!P.liquids)
 			qdel(P)
 			src.currentrun.Remove(P)
