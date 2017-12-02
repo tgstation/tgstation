@@ -1,15 +1,13 @@
-## HippieStation 13 [![Build Status](https://travis-ci.org/HippieStation/HippieStation.png)](https://travis-ci.org/HippieStation/HippieStation/) [![Krihelimeter](http://www.krihelinator.xyz/badge/HippieStation/HippieStation)](http://www.krihelinator.xyz/repositories/HippieStation/HippieStation) [![GitHub forks](https://img.shields.io/github/forks/HippieStation/HippieStation.svg?style=social&label=Fork)](https://github.com/HippieStation/HippieStation#fork-destination-box)
+## HippieStation 13 [![GitHub forks](https://img.shields.io/github/forks/HippieStation/HippieStation.svg?style=social&label=Fork)](https://github.com/HippieStation/HippieStation#fork-destination-box)
 
-<<<<<<< HEAD
 **Website:** http://www.hippiestation.com <BR>
 **Code:** https://github.com/hippiestation/hippiestation <BR>
 **Wiki** https://wiki.hippiestation.com/index.php?title=Main_Page <BR>
 **Discord:** [Request access here.](https://hippiestation.com/threads/discord-invites.6055) <BR>
-=======
-[![Build Status](https://travis-ci.org/tgstation/tgstation.png)](https://travis-ci.org/tgstation/tgstation) [![Krihelimeter](https://www.krihelinator.xyz/badge/tgstation/tgstation)](https://www.krihelinator.xyz)  
-[![Percentage of issues still open](https://isitmaintained.com/badge/open/tgstation/tgstation.svg)](https://isitmaintained.com/project/tgstation/tgstation "Percentage of issues still open") [![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/tgstation/tgstation.svg)](https://isitmaintained.com/project/tgstation/tgstation "Average time to resolve an issue") ![Coverage](https://img.shields.io/badge/coverage---2%25-red.svg)  
+
+[![Build Status](https://travis-ci.org/HippieStation/HippieStation.png)](https://travis-ci.org/HippieStation/HippieStation/) [![Krihelimeter](http://www.krihelinator.xyz/badge/HippieStation/HippieStation)](http://www.krihelinator.xyz/repositories/HippieStation/HippieStation)  
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/HippieStation/HippieStation.svg)](https://isitmaintained.com/project/HippieStation/HippieStation "Percentage of issues still open") [![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/HippieStation/HippieStation.svg)](https://isitmaintained.com/project/HippieStation/HippieStation "Average time to resolve an issue") ![Coverage](https://img.shields.io/badge/coverage---2%25-red.svg)  
 [![forthebadge](https://forthebadge.com/images/badges/built-with-resentment.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/contains-technical-debt.svg)](https://forthebadge.com) [![forinfinityandbyond](https://user-images.githubusercontent.com/5211576/29499758-4efff304-85e6-11e7-8267-62919c3688a9.gif)](https://www.reddit.com/r/SS13/comments/5oplxp/what_is_the_main_problem_with_byond_as_an_engine/dclbu1a)
->>>>>>> c47dde9282... Merge pull request #33172 from praisenarsie/patch-12
 
 ## ABOUT
 
@@ -36,14 +34,9 @@ First-time installation should be fairly straightforward. First, you'll need
 BYOND installed. You can get it from http://www.byond.com/. Once you've done
 that, extract the game files to wherever you want to keep them. This is a
 sourcecode-only release, so the next step is to compile the server files.
-<<<<<<< HEAD
+
 Open hippiestation.dme by double-clicking it, open the Build menu, and click
 compile.  This'll take a little while, and if everything's done right you'll get
-=======
-Open tgstation.dme by double-clicking it, open the Build menu, and click
-compile. This'll take a little while, and if everything's done right you'll get
->>>>>>> c47dde9282... Merge pull request #33172 from praisenarsie/patch-12
-a message like this:
 
 ```
 saving hippiestation.dmb (DEBUG mode)
