@@ -300,15 +300,15 @@
 	var/max_items = 10
 
 /obj/item/integrated_circuit/manipulation/grabber/do_work()
-	var/turf/T = get_turf(src)
+	var/atom/movable/acting_object = get_object()
+	var/turf/T = get_turf(acting_object)
 	var/obj/item/AM = get_pin_data_as_type(IC_INPUT, 1, /obj/item)
 	if(AM)
-		var/turf/P = get_turf(AM)
 		var/mode = get_pin_data(IC_INPUT, 2)
 
 		if(mode == 1)
-			if(P.Adjacent(T))
-				if((contents.len < max_items) && AM && (AM.w_class <= max_w_class))
+			if(AM.Adjacent(acting_object) && isturf(AM.loc))
+				if((contents.len < max_items) && (!max_w_class || AM.w_class <= max_w_class))
 					AM.forceMove(src)
 		if(mode == 0)
 			if(contents.len)
@@ -369,11 +369,14 @@
 	var/target_y_rel = round(get_pin_data(IC_INPUT, 2))
 	var/obj/item/A = get_pin_data_as_type(IC_INPUT, 3, /obj/item)
 
-	if(!A || A.anchored || (A.w_class > max_w_class))
+	if(!A || A.anchored || A.throwing)
+		return
+
+	if(max_w_class && (A.w_class > max_w_class))
 		return
 
 	var/atom/movable/acting_object = get_object()
-	if(!A.Adjacent(acting_object) && !(A in acting_object.GetAllContents()))
+	if(!(A.Adjacent(acting_object) && isturf(A.loc)) && !(A in acting_object.GetAllContents()))
 		return
 
 	var/turf/T = get_turf(acting_object)
