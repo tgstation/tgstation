@@ -283,15 +283,9 @@
 		loc = null
 
 /atom/movable/proc/onTransitZ(old_z,new_z)
-	for (var/item in contents) // Notify contents of Z-transition. This can be overridden IF we know the items contents do not care.
+	for (var/item in src) // Notify contents of Z-transition. This can be overridden IF we know the items contents do not care.
 		var/atom/movable/AM = item
 		AM.onTransitZ(old_z,new_z)
-
-/atom/movable/lighting_object/onTransitZ()
-	return
-
-/atom/movable/light/onTransitZ()
-	return
 
 /mob/living/forceMove(atom/destination)
 	stop_pulling()

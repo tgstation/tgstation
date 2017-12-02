@@ -134,7 +134,8 @@
 		A.x = destination_x
 		A.y = destination_y
 		A.z = destination_z
-		A.onTransitZ(old_z, destination_z)
+		if (old_z != destination_z)
+			A.onTransitZ(old_z, destination_z)
 
 		if(isliving(A))
 			var/mob/living/L = A
