@@ -5,11 +5,12 @@ PROCESSING_SUBSYSTEM_DEF(liquids)
 	stat_tag = "L"
 
 /datum/controller/subsystem/processing/liquids/fire(resumed = 0)
-	..()
-	if(currentrun)
-		for(var/I in currentrun)
-			var/datum/liquid_pool/P = I
-			if(!P.liquids)
-				qdel(P)
-			else if(!LAZYLEN(P.liquids))
-				qdel(P)
+	. = ..()
+	//cache for sanic speed (lists are references anyways)
+	var/list/currentrun = src.currentrun
+	while(currentrun.len)
+		var/datum/liquid_pool/P = currentrun[currentrun.len]
+		if(!P.liquids)
+			qdel(P)
+		else if(!LAZYLEN(P.liquids))
+			qdel(P)
