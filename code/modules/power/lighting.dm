@@ -98,7 +98,6 @@
 			"<span class='notice'>You swap [src]'s power cells.</span>")
 			cell.forceMove(drop_location())
 			user.put_in_hands(cell)
-			cell = null
 		else
 			user.visible_message("<span class='notice'>[user] hooks up [W] to [src].</span>", \
 			"<span class='notice'>You add [W] to [src].</span>")
