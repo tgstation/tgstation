@@ -215,7 +215,6 @@
 		qdel(trauma)
 
 /obj/item/organ/brain/proc/cure_all_traumas(cure_permanent = FALSE)
-	var/brainloss = get_brain_damage()
 	for(var/X in traumas)
 		var/datum/brain_trauma/trauma = X
 		if(cure_permanent || !trauma.permanent)
