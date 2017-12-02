@@ -1,4 +1,4 @@
-[Changelogs]: # (Your PR should contain a detailed changelog of notable changes, titled and categorized appropriately. This includes, new features, sprites, sounds, balance changes, admin tools, map edits, removals, big refactors, config changes, hosting changes and important fixes. An example changelog has been provided below for you to edit. If you need additional help, read https://github.com/tgstation/tgstation/wiki/Changelogs)
+[Changelogs]: # (Your PR should contain a detailed changelog of notable changes, titled and categorized appropriately. This includes, new features, sprites, sounds, balance changes, admin tools, map edits, removals, big refactors, config changes, hosting changes and important fixes. An example changelog has been provided below for you to edit. If you need additional help, read https://github.com/tgstation/tgstation/wiki/Changelogs. Do not roleplay/put in character entries in the changelog)
 
 :cl: optional name here
 add: Added new things
