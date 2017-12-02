@@ -48,7 +48,7 @@
 
 /obj/item/twohanded/required/kirbyplants/equipped(mob/user, slot)
 	if(emagged && wielded)
-			unwield(user) //This is a ghetto way to make it one-handed and it works
+		unwield(user) //This is a ghetto way to make it one-handed and it works
 	var/image/I = image(icon = 'icons/obj/flora/plants.dmi' , icon_state = src.icon_state, loc = user)
 	I.copy_overlays(src)
 	I.override = 1
