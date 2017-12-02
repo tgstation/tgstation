@@ -540,7 +540,7 @@
 	var/survivors = 0
 	for(var/i in GLOB.mob_list)
 		var/mob/Player = i
-		if(Player.mind && !isnewplayer(Player))
+		if(Player.mind && !isnewplayer(Player) && !Player.suiciding)
 			players++
 			if(Player.stat != DEAD && !isbrain(Player))
 				survivors++
