@@ -161,9 +161,7 @@
 /area/shuttle/escape)
 "F" = (
 /obj/structure/table/wood/poker,
-/obj/item/toy/cards/deck{
-	step_y = 5
-	},
+/obj/item/toy/cards/deck,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "G" = (
