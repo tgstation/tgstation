@@ -55,6 +55,7 @@
 	. = ..()
 	lay_web = new
 	lay_web.Grant(src)
+	LAZYADD(GLOB.mob_spawners["giant spider"], src)
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Destroy()
 	QDEL_NULL(lay_web)
@@ -78,15 +79,17 @@
 
 /mob/living/simple_animal/hostile/poison/giant_spider/proc/humanize_spider(mob/user)
 	if(key || !playable_spider)//Someone is in it or the fun police are shutting it down
-		return 0
+		return FALSE
 	var/spider_ask = alert("Become a spider?", "Are you australian?", "Yes", "No")
 	if(spider_ask == "No" || !src || QDELETED(src))
-		return 1
+		return TRUE
 	if(key)
 		to_chat(user, "<span class='notice'>Someone else already took this spider.</span>")
-		return 1
+		return TRUE
 	key = user.key
-	return 1
+	var/list/spawners = GLOB.mob_spawners["giant spider"]
+	LAZYREMOVE(spawners, src)
+	return TRUE
 
 //nursemaids - these create webs and eggs
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse
