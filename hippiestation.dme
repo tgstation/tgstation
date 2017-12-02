@@ -2618,7 +2618,6 @@
 #include "hippiestation\code\modules\power\cable.dm"
 #include "hippiestation\code\modules\power\port_gen.dm"
 #include "hippiestation\code\modules\power\solar.dm"
-#include "hippiestation\code\modules\power\singularity\particle_accelerator\particle_control.dm"
 #include "hippiestation\code\modules\projectiles\ammunition\ammo_casings.dm"
 #include "hippiestation\code\modules\projectiles\ammunition\energy.dm"
 #include "hippiestation\code\modules\projectiles\boxes_magazines\external_mag.dm"
