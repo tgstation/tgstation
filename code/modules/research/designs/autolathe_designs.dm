@@ -791,3 +791,11 @@
 	materials = list(MAT_METAL = 300, MAT_GLASS = 200)
 	build_path = /obj/item/device/slime_scanner
 	category = list("initial", "Misc")
+
+/datum/design/pet_carrier
+	name = "Pet Carrier"
+	id = "pet_carrier"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 7500, MAT_GLASS = 100)
+	build_path = /obj/item/pet_carrier
+	category = list("initial", "Misc")
