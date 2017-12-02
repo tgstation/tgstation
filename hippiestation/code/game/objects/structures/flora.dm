@@ -5,14 +5,14 @@
 	var/emag_desc_add = "This plant appears to have been illegally modified."
 
 /obj/item/twohanded/required/kirbyplants/attackby(obj/item/W, mob/user, params)
-	if (istype(W, /obj/item/screwdriver)) //If you screwdrive it, it is attachable
+	if(istype(W, /obj/item/screwdriver)) //If you screwdrive it, it is attachable
 		add_fingerprint(user)
-		src.disable = !src.disable
-		if(src.disable)
+		disable = !disable
+		if(disable)
 			user.visible_message("[user] prepares the foliage for connection.", "<span class='notice'>You can now attach the potted plant!</span>")
-		if(!src.disable)
+		if(!disable)
 			user.visible_message("[user] impedes the foliage from connection.", "<span class='notice'>You can no longer attach the potted plant.</span>")
-	if (W.is_sharp() && disable == 1)  //If screwdriven and the item is sharp, it creates sharp plant
+	if(W.is_sharp() && disable)  //If screwdriven and the item is sharp, it creates sharp plant
 		user.visible_message("[user] places something sharp inside the plant's branches..", "<span class='notice'>You've sharpened the potted plant!</span>")
 		name = "[sharp_prefix] [name]"
 		desc = "[desc] [sharp_desc_add]"
@@ -45,8 +45,7 @@
 	qdel(src)
 
 /obj/item/twohanded/required/kirbyplants/equipped(mob/user, slot)
-	if(emagged)
-		if(wielded)
+	if(emagged && wielded)
 			unwield(user) //This is a ghetto way to make it one-handed and it works
 	var/image/I = image(icon = 'icons/obj/flora/plants.dmi' , icon_state = src.icon_state, loc = user)
 	I.copy_overlays(src)
