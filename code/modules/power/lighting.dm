@@ -164,8 +164,10 @@
 						newlight = new /obj/machinery/light/small/built(loc)
 				newlight.setDir(dir)
 				transfer_fingerprints_to(newlight)
-				newlight.cell = cell
-				cell.forceMove(newlight)
+				if(cell)
+					newlight.cell = cell
+					cell.forceMove(newlight)
+					cell = null
 				qdel(src)
 				return
 	return ..()
@@ -454,9 +456,10 @@
 				drop_light_tube()
 			new /obj/item/stack/cable_coil(loc, 1, "red")
 		transfer_fingerprints_to(newlight)
-		newlight.cell = cell
-		cell.forceMove(newlight)
-		cell = null
+		if(cell)
+			newlight.cell = cell
+			cell.forceMove(newlight)
+			cell = null
 	qdel(src)
 
 /obj/machinery/light/attacked_by(obj/item/I, mob/living/user)
