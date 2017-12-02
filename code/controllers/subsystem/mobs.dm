@@ -5,7 +5,6 @@ SUBSYSTEM_DEF(mobs)
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/currentrun = list()
-	var/static/list/by_zlevel[][]
 
 /datum/controller/subsystem/mobs/stat_entry()
 	..("P:[GLOB.mob_living_list.len]")
