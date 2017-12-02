@@ -380,7 +380,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 
 		if(variable == "(CLEAR NULLS)")
 			L = L.Copy()
-			listclearnulls(L)
+			LIST_CLEAR_NULLS(L)
 			if (!O.vv_edit_var(objectvar, L))
 				to_chat(src, "Your edit was rejected by the object.")
 				return

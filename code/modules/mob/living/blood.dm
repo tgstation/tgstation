@@ -76,7 +76,7 @@
 			var/brutedamage = BP.brute_dam
 
 			//We want an accurate reading of .len
-			listclearnulls(BP.embedded_objects)
+			LIST_CLEAR_NULLS(BP.embedded_objects)
 			temp_bleed += 0.5*BP.embedded_objects.len
 
 			if(brutedamage >= 20)

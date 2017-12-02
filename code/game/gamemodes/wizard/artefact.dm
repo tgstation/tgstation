@@ -187,7 +187,7 @@
 			H.dust(TRUE)
 			spooky_scaries.Remove(X)
 			continue
-	listclearnulls(spooky_scaries)
+	LIST_CLEAR_NULLS(spooky_scaries)
 
 //Funny gimmick, skeletons always seem to wear roman/ancient armour
 /obj/item/device/necromantic_stone/proc/equip_roman_skeleton(mob/living/carbon/human/H)

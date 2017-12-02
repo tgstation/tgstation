@@ -163,7 +163,7 @@ SUBSYSTEM_DEF(persistence)
 
 		var/list/chosen_trophy = trophy_data
 
-		if(!chosen_trophy || isemptylist(chosen_trophy)) //Malformed
+		if(!chosen_trophy || !LAZYLEN(chosen_trophy)) //Malformed
 			continue
 
 		var/path = text2path(chosen_trophy["path"]) //If the item no longer exist, this returns null
@@ -197,7 +197,7 @@ SUBSYSTEM_DEF(persistence)
 				savable_obj += O.persistence_replacement
 			else
 				savable_obj += O.type
-		if(isemptylist(savable_obj))
+		if(!LAZYLEN(savable_obj))
 			continue
 		var/list/data = list()
 		data["x"] = F.x

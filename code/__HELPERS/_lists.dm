@@ -1,13 +1,22 @@
 /*
  * Holds procs to help with list operations
- * Contains groups:
- *			Misc
- *			Sorting
  */
 
-/*
- * Misc
- */
+#define LAZYINITLIST(L) if(!L) L = list()
+#define UNSETEMPTY(L) if(L && !length(L)) L = null
+#define LAZYREMOVE(L, I) if(length(L) == 1) { L = null; } else if(length(L)) { L -= I; }
+#define LAZYADD(L, I) if(!L) { L = list(I); } else { L += I };
+#define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= length(L) ? L[I] : null) : L[I]) : null)
+#define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
+#define LAZYCLEARLIST(L) if(L) L.len = 0
+#define LAZYLEN(L) length(L)
+#define SANITIZE_LIST(L) ( islist(L) ? L : list() )
+
+#define LIST_CLEAR_NULLS(L) L -= new /list(length(L));
+
+/proc/safepick(list/L)
+	if(istype(L) && length(L))
+		return pick(L)
 
 //Returns a list in plain english as a string
 /proc/english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
@@ -34,66 +43,31 @@
 /proc/listgetindex(list/L, index)
 	if(istype(L))
 		if(isnum(index) && IsInteger(index))
-			if(IsInRange(index,1,L.len))
+			if(IsInRange(index, 1, length(L)))
 				return L[index]
 		else if(index in L)
 			return L[index]
-	return
-
-//Return either pick(list) or null if list is not of type /list or is empty
-/proc/safepick(list/L)
-	if(istype(L) && L.len)
-		return pick(L)
-
-//Checks if the list is empty
-/proc/isemptylist(list/L)
-	if(!L.len)
-		return TRUE
-	return FALSE
 
 //Checks for specific types in a list
 /proc/is_type_in_list(atom/A, list/L)
-	if(!L || !L.len || !A)
-		return FALSE
+	if(!LAZYLEN(L) || !A)
+		return
 	for(var/type in L)
 		if(istype(A, type))
 			return TRUE
-	return FALSE
 
 //Checks for specific types in specifically structured (Assoc "type" = TRUE) lists ('typecaches')
 /proc/is_type_in_typecache(atom/A, list/L)
-	if(!L || !L.len || !A)
-
-		return FALSE
-	if(ispath(A))
-		. = L[A]
-	else
-		. = L[A.type]
-
-//Checks for a string in a list
-/proc/is_string_in_list(string, list/L)
-	if(!L || !L.len || !string)
+	if(!LAZYLEN(L) || !A)
 		return
-	for(var/V in L)
-		if(string == V)
-			return TRUE
-	return
-
-//Removes a string from a list
-/proc/remove_strings_from_list(string, list/L)
-	if(!L || !L.len || !string)
-		return
-	for(var/V in L)
-		if(V == string)
-			L -= V //No return here so that it removes all strings of that type
-	return
+	return L[ispath(A) ? A : A.type]
 
 //returns a new list with only atoms that are in typecache L
 /proc/typecache_filter_list(list/atoms, list/typecache)
 	. = list()
 	for(var/thing in atoms)
 		var/atom/A = thing
-		if (typecache[A.type])
+		if(typecache[A.type])
 			. += A
 
 /proc/typecache_filter_list_reverse(list/atoms, list/typecache)
@@ -113,44 +87,23 @@
 //Like typesof() or subtypesof(), but returns a typecache instead of a list
 /proc/typecacheof(path, ignore_root_path, only_root_path = FALSE)
 	if(ispath(path))
-		var/list/types = list()
-		if(only_root_path)
-			types = list(path)
-		else
-			types = ignore_root_path ? subtypesof(path) : typesof(path)
-		var/list/L = list()
+		. = list()
+		var/list/types = only_root_path ? list(path) : ignore_root_path ? subtypesof(path) : typesof(path)
 		for(var/T in types)
-			L[T] = TRUE
-		return L
+			.[T] = TRUE
 	else if(islist(path))
-		var/list/pathlist = path
-		var/list/L = list()
+		. = list()
 		if(ignore_root_path)
-			for(var/P in pathlist)
+			for(var/P in path)
 				for(var/T in subtypesof(P))
-					L[T] = TRUE
+					.[T] = TRUE
+		else if(only_root_path)
+			for(var/P in path)
+				.[P] = TRUE
 		else
-			for(var/P in pathlist)
-				if(only_root_path)
-					L[P] = TRUE
-				else
-					for(var/T in typesof(P))
-						L[T] = TRUE
-		return L
-
-//Empties the list by setting the length to 0. Hopefully the elements get garbage collected
-/proc/clearlist(list/list)
-	if(istype(list))
-		list.len = 0
-	return
-
-//Removes any null entries from the list
-//Returns TRUE if the list had nulls, FALSE otherwise
-/proc/listclearnulls(list/L)
-	var/start_len = L.len
-	var/list/N = new(start_len)
-	L -= N
-	return L.len < start_len
+			for(var/P in path)
+				for(var/T in typesof(P))
+					.[T] = TRUE
 
 /*
  * Returns list containing all the entries from first list that are not present in second.
@@ -160,14 +113,13 @@
 /proc/difflist(list/first, list/second, skiprep=0)
 	if(!islist(first) || !islist(second))
 		return
-	var/list/result = new
 	if(skiprep)
+		. = list()
 		for(var/e in first)
-			if(!(e in result) && !(e in second))
-				result += e
+			if(!(e in .) && !(e in second))
+				. += e
 	else
-		result = first - second
-	return result
+		return first - second
 
 /*
  * Returns list containing entries that are in either list but not both.
@@ -175,14 +127,8 @@
  * If either of arguments is not a list, returns null
  */
 /proc/uniquemergelist(list/first, list/second, skiprep=0)
-	if(!islist(first) || !islist(second))
-		return
-	var/list/result = new
-	if(skiprep)
-		result = difflist(first, second, skiprep)+difflist(second, first, skiprep)
-	else
-		result = first ^ second
-	return result
+	if(islist(first) && islist(second))
+		return skiprep ? difflist(first, second, skiprep) + difflist(second, first, skiprep) : (first ^ second)
 
 //Picks a random element from a list based on a weighting system:
 //1. Adds up the total of weights for each element
@@ -192,97 +138,88 @@
 /proc/pickweight(list/L)
 	var/total = 0
 	var/item
-	for (item in L)
-		if (!L[item])
+	for(item in L)
+		if(!L[item])
 			L[item] = 1
 		total += L[item]
 
 	total = rand(1, total)
-	for (item in L)
-		total -=L [item]
-		if (total <= 0)
+	for(item in L)
+		total -=L[item]
+		if(total <= 0)
 			return item
 
-	return null
 
 /proc/pickweightAllowZero(list/L) //The original pickweight proc will sometimes pick entries with zero weight.  I'm not sure if changing the original will break anything, so I left it be.
 	var/total = 0
 	var/item
-	for (item in L)
-		if (!L[item])
+	for(item in L)
+		if(!L[item])
 			L[item] = 0
 		total += L[item]
 
 	total = rand(0, total)
-	for (item in L)
-		total -=L [item]
-		if (total <= 0 && L[item])
+	for(item in L)
+		total -= L[item]
+		if(total <= 0 && L[item])
 			return item
-
-	return null
 
 //Pick a random element from the list and remove it from the list.
 /proc/pick_n_take(list/L)
-	if(L.len)
-		var/picked = rand(1,L.len)
+	if(length(L))
+		var/picked = rand(1, length(L))
 		. = L[picked]
-		L.Cut(picked,picked+1)			//Cut is far more efficient that Remove()
+		L.Cut(picked, picked + 1)			//Cut is far more efficient that Remove()
 
 //Returns the top(last) element from the list and removes it from the list (typical stack function)
 /proc/pop(list/L)
-	if(L.len)
-		. = L[L.len]
+	if(length(L))
+		. = L[length(L)]
 		L.len--
 
 /proc/popleft(list/L)
-	if(L.len)
+	if(length(L))
 		. = L[1]
 		L.Cut(1,2)
 
 /proc/sorted_insert(list/L, thing, comparator)
-	var/pos = L.len
+	var/pos = length(L)
 	while(pos > 0 && call(comparator)(thing, L[pos]) > 0)
 		pos--
-	L.Insert(pos+1, thing)
+	L.Insert(pos + 1, thing)
 
 // Returns the next item in a list
 /proc/next_list_item(item, list/L)
-	var/i
-	i = L.Find(item)
-	if(i == L.len)
-		i = 1
-	else
-		i++
-	return L[i]
+	var/i = L.Find(item)
+	return L[i == L.len ? 1 : (i + 1)]
 
 // Returns the previous item in a list
 /proc/previous_list_item(item, list/L)
-	var/i
-	i = L.Find(item)
-	if(i == 1)
-		i = L.len
-	else
-		i--
-	return L[i]
+	var/i = L.Find(item)
+	return L[i == 1 ? L.len : (i - 1)]
 
 //Randomize: Return the list in a random order
 /proc/shuffle(list/L)
 	if(!L)
 		return
-	L = L.Copy()
+	var/list/result = L.Copy()
 
-	for(var/i=1, i<L.len, ++i)
-		L.Swap(i,rand(i,L.len))
+	var/listlen = length(L)
 
-	return L
+	for(var/i = 1 to listlen - 1)
+		result.Swap(i, rand(i, listlen))
+
+	return result
 
 //same, but returns nothing and acts on list in place
 /proc/shuffle_inplace(list/L)
 	if(!L)
 		return
 
-	for(var/i=1, i<L.len, ++i)
-		L.Swap(i,rand(i,L.len))
+	var/listlen = length(L)
+
+	for(var/i = 1 to listlen - 1)
+		L.Swap(i, rand(i, listlen))
 
 //Return a list with no duplicate entries
 /proc/uniqueList(list/L)
@@ -295,7 +232,7 @@
 	var/temp = L.Copy()
 	L.len = 0
 	for(var/key in temp)
-		if (isnum(key))
+		if(isnum(key))
 			L |= key
 		else
 			L[key] = temp[key]
@@ -320,30 +257,27 @@
 
 //Converts a bitfield to a list of numbers (or words if a wordlist is provided)
 /proc/bitfield2list(bitfield = 0, list/wordlist)
-	var/list/r = list()
+	. = list()
 	if(islist(wordlist))
-		var/max = min(wordlist.len,16)
+		var/max = min(wordlist.len, 16)
 		var/bit = 1
-		for(var/i=1, i<=max, i++)
+		for(var/i = 1, i <= max, i++)
 			if(bitfield & bit)
-				r += wordlist[i]
+				. += wordlist[i]
 			bit = bit << 1
 	else
-		for(var/bit=1, bit<=65535, bit = bit << 1)
+		for(var/bit = 1, bit <= 65535, bit = bit << 1)
 			if(bitfield & bit)
-				r += bit
-
-	return r
+				. += bit
 
 // Returns the key based on the index
 #define KEYBYINDEX(L, index) (((index <= length(L)) && (index > 0)) ? L[index] : null)
 
 /proc/count_by_type(list/L, type)
-	var/i = 0
+	. = 0
 	for(var/T in L)
 		if(istype(T, type))
-			i++
-	return i
+			.++
 
 /proc/find_record(field, value, list/L)
 	for(var/datum/data/record/R in L)
@@ -378,7 +312,7 @@
 			return	//no need to move
 		fromIndex += len	//we want to shift left instead of right
 
-		for(var/i=0, i<distance, ++i)
+		for(var/i = 0 to distance - 1)
 			L.Insert(fromIndex, null)
 			L.Swap(fromIndex, toIndex)
 			L.Cut(toIndex, toIndex+1)
@@ -386,7 +320,7 @@
 		if(fromIndex > toIndex)
 			fromIndex += len
 
-		for(var/i=0, i<len, ++i)
+		for(var/i = 0 to len - 1)
 			L.Insert(toIndex, null)
 			L.Swap(fromIndex, toIndex)
 			L.Cut(fromIndex, fromIndex+1)
@@ -402,7 +336,7 @@
 		else
 			fromIndex += len
 
-		for(var/i=0, i<distance, ++i)
+		for(var/i = 0 to distance - 1)
 			L.Insert(fromIndex, null)
 			L.Swap(fromIndex, toIndex)
 			L.Cut(toIndex, toIndex+1)
@@ -412,22 +346,23 @@
 			toIndex = fromIndex
 			fromIndex = a
 
-		for(var/i=0, i<len, ++i)
+		for(var/i = 0 to len - 1)
 			L.Swap(fromIndex++, toIndex++)
 
 //replaces reverseList ~Carnie
 /proc/reverseRange(list/L, start=1, end=0)
-	if(L.len)
-		start = start % L.len
-		end = end % (L.len+1)
+	var/listlen = length(L)
+	if(listlen)
+		start = start % listlen
+		end = end % (listlen + 1)
 		if(start <= 0)
-			start += L.len
+			start += listlen
 		if(end <= 0)
-			end += L.len + 1
+			end += listlen + 1
 
 		--end
 		while(start < end)
-			L.Swap(start++,end--)
+			L.Swap(start++, end--)
 
 	return L
 
@@ -441,12 +376,6 @@
 		if(D.vars.Find(varname))
 			if(D.vars[varname] == value)
 				return D
-
-//remove all nulls from a list
-/proc/removeNullsFromList(list/L)
-	while(L.Remove(null))
-		continue
-	return L
 
 //Copies a list, and all lists inside it recusively
 //Does not copy any other reference type
@@ -485,16 +414,6 @@
 
 //Picks from the list, with some safeties, and returns the "default" arg if it fails
 #define DEFAULTPICK(L, default) ((islist(L) && length(L)) ? pick(L) : default)
-
-#define LAZYINITLIST(L) if (!L) L = list()
-#define UNSETEMPTY(L) if (L && !L.len) L = null
-#define LAZYREMOVE(L, I) if(L) { L -= I; if(!L.len) { L = null; } }
-#define LAZYADD(L, I) if(!L) { L = list(); } L += I;
-#define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= L.len ? L[I] : null) : L[I]) : null)
-#define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
-#define LAZYLEN(L) length(L)
-#define LAZYCLEARLIST(L) if(L) L.Cut()
-#define SANITIZE_LIST(L) ( islist(L) ? L : list() )
 
 /* Definining a counter as a series of key -> numeric value entries
 

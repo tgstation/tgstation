@@ -1,13 +1,6 @@
 // Credits to Nickr5 for the useful procs I've taken from his library resource.
 
 GLOBAL_VAR_INIT(E, 2.71828183)
-GLOBAL_VAR_INIT(Sqrt2, 1.41421356)
-
-// List of square roots for the numbers 1-100.
-GLOBAL_LIST_INIT(sqrtTable, list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5,
-                          5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7,
-                          7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
-                          8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10))
 
 /proc/sign(x)
 	return x!=0?x/abs(x):0
@@ -40,9 +33,15 @@ GLOBAL_LIST_INIT(sqrtTable, list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4,
 /proc/Default(a, b)
 	return a ? a : b
 
-// Greatest Common Divisor - Euclid's algorithm
+// Greatest Common Divisor
+// Iterative form of Euclid's algorithm
+// b ? Gcd(b, a % b) : a
 /proc/Gcd(a, b)
-	return b ? Gcd(b, a % b) : a
+	while(b)
+		var/olda = a
+		a = b
+		b = olda % b
+	return a
 
 /proc/Inverse(x)
 	return 1 / x
@@ -127,10 +126,9 @@ GLOBAL_LIST_INIT(sqrtTable, list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4,
 // Will filter out extra rotations and negative rotations
 // E.g: 540 becomes 180. -180 becomes 180.
 /proc/SimplifyDegrees(degrees)
-	degrees = degrees % 360
-	if(degrees < 0)
-		degrees += 360
-	return degrees
+	. = degrees % 360
+	if(. < 0)
+		. += 360
 
 // min is inclusive, max is exclusive
 /proc/Wrap(val, min, max)

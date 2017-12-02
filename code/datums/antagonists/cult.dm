@@ -22,7 +22,7 @@
 		for(var/mob/living/carbon/human/player in GLOB.player_list)
 			if(player.mind && !player.mind.has_antag_datum(ANTAG_DATUM_CULT) && (player != owner) && player.stat != DEAD)
 				target_candidates += player.mind
-	listclearnulls(target_candidates)
+	LIST_CLEAR_NULLS(target_candidates)
 	if(LAZYLEN(target_candidates))
 		GLOB.sac_mind = pick(target_candidates)
 		if(!GLOB.sac_mind)
