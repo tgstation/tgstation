@@ -18,7 +18,7 @@
 		message_admins("[usr.key] has attempted to override the admin panel!")
 		log_admin("[key_name(usr)] tried to use the admin panel without authorization.")
 		return
-	
+
 	if(!CheckAdminHref(href, href_list))
 		return
 
@@ -1936,7 +1936,7 @@
 					else
 						var/atom/O = new path(target)
 						if(O)
-							O.admin_spawned = TRUE
+							O.flags_2 |= ADMIN_SPAWNED_2
 							O.setDir(obj_dir)
 							if(obj_name)
 								O.name = obj_name

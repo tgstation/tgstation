@@ -41,7 +41,8 @@
 		return 0
 	spawn_delay = world.time + spawn_time
 	var/mob/living/simple_animal/L = new mob_type(src.loc)
-	L.admin_spawned = admin_spawned	//If we were admin spawned, lets have our children count as that as well.
+	if(flags_2 & ADMIN_SPAWNED_2)
+		L.flags_2 |= ADMIN_SPAWNED_2	//If we were admin spawned, lets have our children count as that as well.
 	spawned_mobs += L
 	L.nest = src
 	L.faction = src.faction

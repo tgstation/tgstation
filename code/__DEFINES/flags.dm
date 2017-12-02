@@ -6,6 +6,9 @@
 
 GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768))
 
+#define DATUM_FLAG_USETAG 1
+#define DATUM_FLAG_VAREDITTED 2
+
 //FLAGS BITMASK
 #define STOPSPRESSUREDMAGE_1 1	//This flag is used on the flags_1 variable for SUIT and HEAD items which stop pressure damage. Note that the flag 1 was previous used as ONBACK, so it is possible for some code to use (flags & 1) when checking if something can be put on your back. Replace this code with (inv_flags & SLOT_BACK) if you see it anywhere
 //To successfully stop you taking all pressure damage you must have both a suit and head item with this flag.
@@ -55,6 +58,10 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 // Stops you from putting things like an RCD or other items into an ORM or protolathe for materials.
 #define NO_MAT_REDEMPTION_2		1024
+
+// Was this spawned by an admin? used for stat tracking stuff.
+#define ADMIN_SPAWNED_2			2048
+#define ATOM_INITIALIZED_2		4096
 
 //turf-only flags
 #define NOJAUNT_1				1

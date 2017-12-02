@@ -43,7 +43,8 @@
 	if(be_drone == "No" || QDELETED(src) || !isobserver(user))
 		return
 	var/mob/living/simple_animal/drone/D = new drone_type(get_turf(loc))
-	D.admin_spawned = admin_spawned
+	if(flags_2 & ADMIN_SPAWNED_2)
+		D.flags_2 |= ADMIN_SPAWNED_2
 	D.key = user.key
 	qdel(src)
 

@@ -157,7 +157,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/proc/light(flavor_text = null)
 	if(lit)
 		return
-	if(!initialized)
+	if(!(flags_2 & ATOM_INITIALIZED_2))
 		icon_state = icon_on
 		item_state = icon_on
 		return

@@ -1,17 +1,11 @@
-/datum
-	var/var_edited = FALSE //Warrenty void if seal is broken
-	var/fingerprintslast = null
-
 /datum/proc/can_vv_get(var_name)
 	return TRUE
 
 /datum/proc/vv_edit_var(var_name, var_value) //called whenever a var is edited
 	switch(var_name)
-		if ("vars")
+		if("vars")
 			return FALSE
-		if ("var_edited")
-			return FALSE
-	var_edited = TRUE
+	datum_flags |= DATUM_FLAG_VAREDITTED
 	vars[var_name] = var_value
 
 /datum/proc/vv_get_var(var_name)
@@ -117,7 +111,7 @@
 	if(holder && holder.marked_datum && holder.marked_datum == D)
 		marked = "<br><font size='1' color='red'><b>Marked Object</b></font>"
 	var/varedited_line = ""
-	if(!islist && D.var_edited)
+	if(!islist && (datum_flags & DATUM_FLAG_VAREDITTED))
 		varedited_line = "<br><font size='1' color='red'><b>Var Edited</b></font>"
 
 	var/list/dropdownoptions = list()

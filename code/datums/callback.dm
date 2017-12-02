@@ -78,7 +78,7 @@
 			calling_arguments = calling_arguments + args //not += so that it creates a new list so the arguments list stays clean
 		else
 			calling_arguments = args
-	if(var_edited)
+	if(datum_flags & DATUM_FLAG_VAREDITTED)
 		return WrapAdminProcCall(object, delegate, calling_arguments)
 	if (object == GLOBAL_PROC)
 		return call(delegate)(arglist(calling_arguments))
@@ -95,7 +95,7 @@
 			calling_arguments = calling_arguments + args //not += so that it creates a new list so the arguments list stays clean
 		else
 			calling_arguments = args
-	if(var_edited)
+	if(datum_flags & DATUM_FLAG_VAREDITTED)
 		return WrapAdminProcCall(object, delegate, calling_arguments)
 	if (object == GLOBAL_PROC)
 		return call(delegate)(arglist(calling_arguments))
@@ -149,7 +149,7 @@
 	var/datum/callback_select/CS = new(count, savereturns)
 	for (var/i in 1 to count)
 		CS.invoke_callback(i, callbacks[i], callback_args[i], savereturns)
-	
+
 	while(CS.pendingcount)
 		sleep(resolution*world.tick_lag)
 	return CS.finished

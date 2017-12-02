@@ -6,9 +6,10 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 
 /mob/dead/Initialize()
-	if(initialized)
+	if(flags_2 & ATOM_INITIALIZED_2)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
-	initialized = TRUE
+	else
+		flags_2 |= ATOM_INITIALIZED_2
 	tag = "mob_[next_mob_id++]"
 	GLOB.mob_list += src
 

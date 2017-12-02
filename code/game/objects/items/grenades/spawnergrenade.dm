@@ -18,7 +18,7 @@
 			C.flash_act()
 
 		// Spawn some hostile syndicate critters and spread them out
-		spawn_and_random_walk(spawner_type, T, deliveryamt, walk_chance=50, admin_spawn=admin_spawned)
+		spawn_and_random_walk(spawner_type, T, deliveryamt, walk_chance=50, admin_spawn=(flags_2 & ADMIN_SPAWNED_2))
 
 	qdel(src)
 

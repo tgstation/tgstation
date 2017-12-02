@@ -62,7 +62,7 @@
 		if(C && crusher_loot)
 			if(C.total_damage >= maxHealth * 0.6) //if you do at least 60% of its health with the crusher, you'll get the item
 				spawn_crusher_loot()
-		if(!admin_spawned)
+		if(!(flags_2 & ADMIN_SPAWNED_2))
 			SSblackbox.set_details("megafauna_kills","[initial(name)]")
 			if(!elimination)	//used so the achievment only occurs for the last legion to die.
 				grant_achievement(medal_type,score_type)
@@ -123,7 +123,7 @@
 	if(medal_type == "Boss")	//Don't award medals if the medal type isn't set
 		return FALSE
 
-	if(admin_spawned)
+	if(flags_2 & ADMIN_SPAWNED_2)
 		return FALSE
 
 	if(MedalsAvailable())

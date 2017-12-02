@@ -65,7 +65,7 @@ GLOBAL_VAR_INIT(highlander, FALSE)
 
 	var/obj/item/claymore/highlander/H1 = new(src)
 	if(!GLOB.highlander)
-		H1.admin_spawned = TRUE //To prevent announcing
+		H1.flags_2 |= ADMIN_SPAWNED_2 //To prevent announcing
 	put_in_hands(H1)
 	H1.pickup(src) //For the stun shielding
 
