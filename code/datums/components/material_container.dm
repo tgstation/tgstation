@@ -67,7 +67,7 @@
 	if(!has_space(material_amount))
 		to_chat(user, "<span class='warning'>[parent] is full. Please remove metal or glass from [parent] in order to insert more.</span>")
 		return
-	user_insert(I, user)
+	INVOKE_ASYNC(src, .proc/user_insert, I, user)		//It wasn't returning COMPONENT_NO_AFTERATTACK properly without this being specifically asynced.
 
 /datum/component/material_container/proc/user_insert(obj/item/I, mob/living/user)
 	var/requested_amount
