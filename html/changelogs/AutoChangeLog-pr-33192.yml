@@ -1,0 +1,4 @@
+author: "Robustin"
+delete-after: True
+changes: 
+  - bugfix: "Flashes will now burn out AFTER flashing when they fail instead of being a ticking time bomb that waits to screw you over on your next attempt."
