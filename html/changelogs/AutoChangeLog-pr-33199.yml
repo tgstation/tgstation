@@ -1,0 +1,4 @@
+author: "Frozenguy5"
+delete-after: True
+changes: 
+  - tweak: "The Particle Accelerator's wires can no longer be EMP'd"
