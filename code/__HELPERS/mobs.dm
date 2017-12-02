@@ -400,7 +400,7 @@ Proc for attack log creation, because really why not
 	for(var/j in 1 to amount)
 		var/atom/movable/X = new spawn_type(T)
 
-		if(flags_2 & ADMIN_SPAWNED_2)
+		if(admin_spawn)
 			X.flags_2 |= ADMIN_SPAWNED_2
 
 		if(always_max_walk || prob(walk_chance))
