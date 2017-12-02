@@ -1,8 +1,9 @@
+#DEFINE SHARP_DESC_ADD = "This one appears to have a bunch of sharp edges peeking out from under its leaves."
+#DEFINE EMAG_DESC_ADD = "This plant appears to have been illegally modified.
+
 /obj/item/twohanded/required/kirbyplants
 	var/disable = 0 //for screwdriver
 	var/sharp_prefix = "thorny"
-	var/sharp_desc_add = "This one appears to have a bunch of sharp edges peeking out from under its leaves."
-	var/emag_desc_add = "This plant appears to have been illegally modified."
 
 /obj/item/twohanded/required/kirbyplants/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/screwdriver)) //If you screwdrive it, it is attachable
@@ -15,7 +16,7 @@
 	if(W.is_sharp() && disable)  //If screwdriven and the item is sharp, it creates sharp plant
 		user.visible_message("[user] places something sharp inside the plant's branches..", "<span class='notice'>You've sharpened the potted plant!</span>")
 		name = "[sharp_prefix] [name]"
-		desc = "[desc] [sharp_desc_add]"
+		desc = "[desc] [SHARP_DESC_ADD]"
 		sharpness = W.sharpness
 		hitsound='hippiestation/sound/weapons/sharpBushHit.ogg' //cool sound
 		qdel(W)
@@ -37,7 +38,7 @@
 	emagged = TRUE
 	force_wielded = 0
 	wielded = 0
-	desc = "[desc] [emag_desc_add]"
+	desc = "[desc] [EMAG_DESC_ADD]"
 	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/twohanded/required/kirbyplants/photosynthetic/emag_act(mob/user) //do not emag this one!
