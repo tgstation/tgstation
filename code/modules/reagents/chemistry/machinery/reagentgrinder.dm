@@ -31,7 +31,7 @@
 			/obj/item/stack/sheet/mineral/gold = list("gold" = 20),
 			/obj/item/stack/sheet/bluespace_crystal = list("bluespace" = 20),
 			/obj/item/stack/cable_coil = list ("copper" = 5),
-			/obj/item/stack/ore/bluespace_crystal = list("bluespace" = 20),
+			/obj/item/ore/bluespace_crystal = list("bluespace" = 20),
 			/obj/item/grown/nettle/basic = list("sacid" = 0),
 			/obj/item/grown/nettle/death = list("facid" = 0, "sacid" = 0),
 			/obj/item/grown/novaflower = list("capsaicin" = 0, "condensedcapsaicin" = 0),
@@ -261,7 +261,7 @@
 
 	var/datum/browser/popup = new(user, "reagentgrinder", "All-In-One Grinder")
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open(1)
 	return
 
