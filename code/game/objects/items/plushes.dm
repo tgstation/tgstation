@@ -16,13 +16,14 @@
 	var/obj/item/toy/plush/plush_child
 	var/obj/item/toy/plush/paternal_parent	//who initiated creation
 	var/obj/item/toy/plush/maternal_parent	//who owns, see love()
-	var/list/scorned	//who the plush hates
-	var/list/scorned_by	//who hates the plush, to remove external references on Destroy()
+	var/list/scorned	= list()	//who the plush hates
+	var/list/scorned_by	= list()	//who hates the plush, to remove external references on Destroy()
 	var/heartbroken = FALSE
 	var/vowbroken = FALSE
 	var/young = FALSE
 	var/mood_message
 	var/list/love_message
+	var/list/partner_message
 	var/list/heartbroken_message
 	var/list/vowbroken_message
 	var/list/parent_message
@@ -40,10 +41,11 @@
 		else
 			gender = MALE
 
-	love_message		= list("\n\The [src] is so happy, \he could rip a seam!")
-	heartbroken_message	= list("\n\The [src] looks so sad.")
-	vowbroken_message	= list("\n\The [src] lost \his ring...")
-	parent_message		= list("\n\The [src] can't remember what sleep is.")
+	love_message		= list("\n[src] is so happy, \he could rip a seam!")
+	partner_message		= list("\n[src] has a ring on \his finger! It says bound to my dear [partner].")
+	heartbroken_message	= list("\n[src] looks so sad.")
+	vowbroken_message	= list("\n[src] lost \his ring...")
+	parent_message		= list("\n[src] can't remember what sleep is.")
 
 	normal_desc = desc
 
@@ -87,6 +89,7 @@
 	squeak_override = null
 
 	love_message = null
+	partner_message = null
 	heartbroken_message = null
 	vowbroken_message = null
 	parent_message = null
@@ -153,7 +156,7 @@
 	var/duty = 50		//conquering another's is what I live for
 
 	//we are not catholic
-	if (young == TRUE || Kisser.young == TRUE)
+	if(young == TRUE || Kisser.young == TRUE)
 		user.show_message("<span class='notice'>[src] plays tag with [Kisser].</span>", 1,
 			"<span class='notice'>They're happy.</span>", 0)
 		Kisser.cheer_up()
@@ -179,8 +182,8 @@
 			chance -= duty	//do we mate for life?
 
 		if(prob(chance))	//did we bag a date?
-			user.visible_message("<span class='notice'>[user] makes \the [Kisser] kiss \the [src]!</span>",
-									"<span class='notice'>You make \the [Kisser] kiss \the [src]!</span>")
+			user.visible_message("<span class='notice'>[user] makes [Kisser] kiss [src]!</span>",
+									"<span class='notice'>You make [Kisser] kiss [src]!</span>")
 			if(lover)	//who cares for the past, we live in the present
 				lover.heartbreak(src)
 			new_lover(Kisser)
@@ -191,55 +194,62 @@
 
 	//then comes marriage
 	else if(Kisser.lover == src && Kisser.partner != src)	//need to be lovers (assumes loving is a two way street) but not married (also assumes similar)
-		user.visible_message("<span class='notice'>[user] pronounces \the [Kisser] and \the [src] married! D'aw.</span>",
-									"<span class='notice'>You pronounce \the [Kisser] and \the [src] married!</span>")
+		user.visible_message("<span class='notice'>[user] pronounces [Kisser] and [src] married! D'aw.</span>",
+									"<span class='notice'>You pronounce [Kisser] and [src] married!</span>")
 		new_partner(Kisser)
 		Kisser.new_partner(src)
 
 	//then comes a baby in a baby's carriage, or an adoption in an adoption's orphanage
 	else if(Kisser.partner == src && !plush_child)	//the one advancing does not take ownership of the child and we have a one child policy in the toyshop
-		user.visible_message("<span class='notice'>[user] is going to break \the [Kisser] and \the [src] by bashing them like that.</span>",
-									"<span class='notice'>\The [Kisser] passionately embraces \the [src] in your hands. Look away you perv!</span>")
+		user.visible_message("<span class='notice'>[user] is going to break [Kisser] and [src] by bashing them like that.</span>",
+									"<span class='notice'>[Kisser] passionately embraces [src] in your hands. Look away you perv!</span>")
 		plop(Kisser)
 		user.visible_message("<span class='notice'>Something drops at the feet of [user].</span>",
-							"<span class='notice'>The miracle of oh god did that just come out of \the [src]?!</span>")
+							"<span class='notice'>The miracle of oh god did that just come out of [src]?!</span>")
 
 	//then comes protection, or abstinence if we are catholic
 	else if(Kisser.partner == src && plush_child)
-		user.visible_message("<span class='notice'>[user] makes \the [Kisser] nuzzle \the [src]!</span>",
-									"<span class='notice'>You make \the [Kisser] nuzzle \the [src]!</span>")
+		user.visible_message("<span class='notice'>[user] makes [Kisser] nuzzle [src]!</span>",
+									"<span class='notice'>You make [Kisser] nuzzle [src]!</span>")
 
 	//then oh fuck something unexpected happened
 	else
-		user.show_message("<span class='warning'>\The [Kisser] and \the [src] don't know what to do with one another.</span>", 0)
+		user.show_message("<span class='warning'>[Kisser] and [src] don't know what to do with one another.</span>", 0)
 
 /obj/item/toy/plush/proc/heartbreak(obj/item/toy/plush/Brutus)
 	if(lover != Brutus)
+		to_chat(world, "lover != Brutus")
 		return	//why are we considering someone we don't love?
 
-	scorned += Brutus
+	scorned.Add(Brutus)
 	Brutus.scorned_by(src)
+
 	lover = null
 	Brutus.lover = null	//feeling's mutual
+
 	heartbroken = TRUE
-	mood_message = heartbroken_message
+	mood_message = pick(heartbroken_message)
 
 	if(partner == Brutus)	//oh dear...
 		partner = null
 		Brutus.partner = null	//it'd be weird otherwise
 		vowbroken = TRUE
-		mood_message = vowbroken_message
+		mood_message = pick(vowbroken_message)
 
 	update_desc()
 
 /obj/item/toy/plush/proc/scorned_by(obj/item/toy/plush/Outmoded)
-	scorned_by += Outmoded
+	scorned_by.Add(Outmoded)
 
 /obj/item/toy/plush/proc/new_lover(obj/item/toy/plush/Juliet)
 	if(lover == Juliet)
 		return	//nice try
 	lover = Juliet
-	mood_message = love_message
+
+	cheer_up()
+	lover.cheer_up()
+
+	mood_message = pick(love_message)
 	update_desc()
 
 	if(partner)	//who?
@@ -252,7 +262,11 @@
 		return	//union not born out of love will falter
 
 	partner = Apple_of_my_eye
-	mood_message = "\n\The [src] has a ring on \his finger! It says bound to my dear [partner]."
+
+	heal_memories()
+	partner.heal_memories()
+
+	mood_message = pick(partner_message)
 	update_desc()
 
 /obj/item/toy/plush/proc/plop(obj/item/toy/plush/Daddy)
@@ -265,20 +279,22 @@
 		plush_child = new Daddy.type(get_turf(loc))
 
 	plush_child.make_young(src, Daddy)
-	Daddy.mood_message = Daddy.parent_message
-	Daddy.update_desc()
-	mood_message = parent_message
-	update_desc()
 
 /obj/item/toy/plush/proc/make_young(obj/item/toy/plush/Mama, obj/item/toy/plush/Dada)
 	if(Mama == Dada)
 		return	//cloning is reserved for plants and spacemen
-	else
-		maternal_parent = Mama
-		paternal_parent = Dada
-		young = TRUE
-		normal_desc = "\n\The [src] is a little baby of [maternal_parent] and [paternal_parent]!"	//original desc won't be used so the child can have moods
-		update_desc()
+
+	maternal_parent = Mama
+	paternal_parent = Dada
+	young = TRUE
+	name = "[Mama] Jr"	//Icelandic naming convention pending
+	normal_desc = "[src] is a little baby of [maternal_parent] and [paternal_parent]!"	//original desc won't be used so the child can have moods
+	update_desc()
+
+	Mama.mood_message = pick(Mama.parent_message)
+	Mama.update_desc()
+	Dada.mood_message = pick(Dada.parent_message)
+	Dada.update_desc()
 
 /obj/item/toy/plush/proc/bad_news(obj/item/toy/plush/Deceased)	//cotton to cotton, sawdust to sawdust
 	var/is_that_letter_for_me = FALSE
@@ -316,15 +332,27 @@
 
 	if(is_that_letter_for_me)
 		heartbroken = TRUE
-		mood_message = heartbroken_message
+		mood_message = pick(heartbroken_message)
 		update_desc()
 
 /obj/item/toy/plush/proc/cheer_up()	//it'll be all right
-	if(mood_message in heartbroken_message)
+	if(!heartbroken)
 		return	//you cannot make smile what is already
+	if(vowbroken)
+		return	//it's a pretty big deal
 
-	mood_message = null
+	heartbroken = !heartbroken
+
+	if(mood_message in heartbroken_message)
+		mood_message = null
 	update_desc()
+
+/obj/item/toy/plush/proc/heal_memories()	//time fixes all wounds
+	if(!vowbroken)
+		vowbroken = !vowbroken
+		if(mood_message in vowbroken_message)
+			mood_message = null
+	cheer_up()
 
 /obj/item/toy/plush/proc/update_desc()
 	desc = normal_desc
