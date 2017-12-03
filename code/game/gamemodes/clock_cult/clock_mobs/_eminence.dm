@@ -20,7 +20,7 @@
 	. = ..()
 
 /mob/camera/eminence/Destroy(force)
-	if(!force && SSticker.mode.eminence)
+	if(!force && mind && SSticker.mode.eminence == mind)
 		return QDEL_HINT_LETMELIVE
 	return ..()
 
@@ -156,16 +156,11 @@
 			command_text = "The Eminence orders that defenses should be built starting from the top of Reebe!"
 	if(marker_icon)
 		new/obj/effect/temp_visual/ratvar/command_point(get_turf(A), marker_icon)
-		for(var/V in GLOB.player_list)
-			var/mob/M = V
-			if(is_servant_of_ratvar(M) || isobserver(M) )
-				to_chat(M, "<span class='large_brass'>[replacetext(command_text, "GETDIR", dir2text(get_dir(M, command_location)))]</span>")
+		for(var/mob/M in servants_and_ghosts())
+			to_chat(M, "<span class='large_brass'>[replacetext(command_text, "GETDIR", dir2text(get_dir(M, command_location)))]</span>")
+			M.playsound_local(M, 'sound/machines/clockcult/eminence_command.ogg', 75, FALSE, pressure_affected = FALSE)
 	else
 		hierophant_message("<span class='bold large_brass'>[command_text]</span>")
-	for(var/V in GLOB.player_list)
-		var/mob/M = V
-		if(is_servant_of_ratvar(M) || isobserver(M) )
-			M.playsound_local(M, 'sound/machines/clockcult/eminence_command.ogg', 75, FALSE, pressure_affected = FALSE)
 
 /mob/camera/eminence/proc/superheat_wall(turf/closed/wall/clockwork/wall)
 	if(!istype(wall))
