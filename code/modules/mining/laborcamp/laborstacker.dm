@@ -102,8 +102,8 @@
 						to_chat(usr, "<span class='notice'>No permission to dock could be granted.</span>")
 					else
 						if(!emagged)
-							Radio.set_frequency(GLOB.SEC_FREQ)
-							Radio.talk_into(src, "[inserted_id.registered_name] has returned to the station. Minerals and Prisoner ID card ready for retrieval.", GLOB.SEC_FREQ, get_spans(), get_default_language())
+							Radio.set_frequency(FREQ_SECURITY)
+							Radio.talk_into(src, "[inserted_id.registered_name] has returned to the station. Minerals and Prisoner ID card ready for retrieval.", FREQ_SECURITY, get_spans(), get_default_language())
 						to_chat(usr, "<span class='notice'>Shuttle received message and will be sent shortly.</span>")
 
 /obj/machinery/mineral/labor_claim_console/proc/check_auth()
