@@ -102,8 +102,8 @@
 /datum/brain_trauma/severe/monophobia/on_life()
 	..()
 	if(check_alone())
-		stress = min(stress + 1, 100)
-		if(prob((stress / 8) + 1))
+		stress = min(stress + 0.5, 100)
+		if(stress > 10 && (prob(5)))
 			stress_reaction()
 	else
 		stress -= 4
@@ -129,7 +129,7 @@
 				to_chat(owner, "<span class='warning'>You feel sick...</span>")
 			else
 				to_chat(owner, "<span class='warning'>You feel really sick at the thought of being alone!</span>")
-			addtimer(CALLBACK(owner, /mob/living/carbon.proc/vomit, high_stress ? FALSE : TRUE), 50) //blood vomit if high stress
+			addtimer(CALLBACK(owner, /mob/living/carbon.proc/vomit, high_stress), 50) //blood vomit if high stress
 		if(2)
 			if(!high_stress)
 				to_chat(owner, "<span class='warning'>You can't stop shaking...</span>")
@@ -148,20 +148,20 @@
 				to_chat(owner, "<span class='warning'>You feel really lonely...</span>")
 			else
 				to_chat(owner, "<span class='warning'>You're going mad with loneliness!</span>")
-				owner.hallucination += 35
+				owner.hallucination += 20
 
 		if(5)
 			if(!high_stress)
 				to_chat(owner, "<span class='warning'>Your heart skips a beat.</span>")
 				owner.adjustOxyLoss(8)
-				owner.adjustBruteLoss(2)
 			else
 				if(prob(15) && ishuman(owner))
 					var/mob/living/carbon/human/H = owner
 					H.set_heartattack(TRUE)
 					to_chat(H, "<span class='userdanger'>You feel a stabbing pain in your heart!</span>")
 				else
-					to_chat(owner, "<span class='warning'>You feel your heart lurching in your chest...</span>")
+					to_chat(owner, "<span class='userdanger'>You feel your heart lurching in your chest...</span>")
+					owner.adjustOxyLoss(8)
 
 /datum/brain_trauma/severe/discoordination
 	name = "Discoordination"
