@@ -93,3 +93,11 @@
 	result = /obj/item/reagent_containers/food/snacks/butterbiscuit
 	subcategory = CAT_BREAD
 
+/datum/crafting_recipe/food/butterdog
+	name = "Butterdog"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/bun = 1,
+		/obj/item/reagent_containers/food/snacks/butter = 3,
+		)
+	result = /obj/item/reagent_containers/food/snacks/butterdog
+	subcategory = CAT_BREAD

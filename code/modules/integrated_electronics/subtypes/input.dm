@@ -245,10 +245,12 @@
 /obj/item/integrated_circuit/input/examiner
 	name = "examiner"
 	desc = "It' s a little machine vision system. It can return the name, description, distance, \
-	relative coordinates, total amount of reagents, and maximum amount of reagents of the referenced object."
+	relative coordinates, total amount of reagents, maximum amount of reagents, density and opacity of the referenced object."
 	icon_state = "video_camera"
 	complexity = 6
-	inputs = list("\<REF\> target" = IC_PINTYPE_REF)
+	inputs = list(
+		"target" = IC_PINTYPE_REF
+		)
 	outputs = list(
 		"name"	            	= IC_PINTYPE_STRING,
 		"description"       	= IC_PINTYPE_STRING,
@@ -257,8 +259,14 @@
 		"distance"			    = IC_PINTYPE_NUMBER,
 		"max reagents"			= IC_PINTYPE_NUMBER,
 		"amount of reagents"    = IC_PINTYPE_NUMBER,
-	)
-	activators = list("scan" = IC_PINTYPE_PULSE_IN, "on scanned" = IC_PINTYPE_PULSE_OUT, "not scanned" = IC_PINTYPE_PULSE_OUT)
+		"density"    			= IC_PINTYPE_BOOLEAN,
+		"opacity"    			= IC_PINTYPE_BOOLEAN,
+		)
+	activators = list(
+		"scan" = IC_PINTYPE_PULSE_IN,
+		"on scanned" = IC_PINTYPE_PULSE_OUT,
+		"not scanned" = IC_PINTYPE_PULSE_OUT
+		)
 	spawn_flags = IC_SPAWN_RESEARCH
 	power_draw_per_use = 80
 
@@ -269,8 +277,6 @@
 		return
 
 	if(H in view(T)) // This is a camera. It can't examine thngs,that it can't see.
-
-
 		set_pin_data(IC_OUTPUT, 1, H.name)
 		set_pin_data(IC_OUTPUT, 2, H.desc)
 		set_pin_data(IC_OUTPUT, 3, H.x-T.x)
@@ -283,6 +289,8 @@
 			tr = H.reagents.total_volume
 		set_pin_data(IC_OUTPUT, 6, mr)
 		set_pin_data(IC_OUTPUT, 7, tr)
+		set_pin_data(IC_OUTPUT, 8, H.density)
+		set_pin_data(IC_OUTPUT, 9, H.opacity)
 		push_data()
 		activate_pin(2)
 	else

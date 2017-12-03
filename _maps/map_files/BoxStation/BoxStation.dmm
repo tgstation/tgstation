@@ -2193,7 +2193,6 @@
 /area/security/main)
 "aff" = (
 /obj/effect/landmark/start/security_officer,
-/obj/machinery/rnd/protolathe/department/security,
 /turf/open/floor/plasteel/red/side{
 	dir = 9
 	},
@@ -17958,7 +17957,7 @@
 /area/crew_quarters/kitchen)
 "aSP" = (
 /obj/machinery/smartfridge,
-/turf/closed/wall,
+/turf/open/floor/plating,
 /area/crew_quarters/kitchen)
 "aSQ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -44172,7 +44171,6 @@
 /area/maintenance/aft)
 "cdM" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/mob/living/simple_animal/mouse,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cdN" = (
@@ -47261,6 +47259,7 @@
 /area/engine/engineering)
 "clS" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/machinery/rnd/protolathe/department/security,
 /turf/open/floor/plasteel/red/side,
 /area/security/main)
 "clT" = (
@@ -48398,6 +48397,9 @@
 	name = "HIGH VOLTAGE";
 	pixel_x = -32
 	},
+/obj/machinery/computer/rdconsole/production{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cps" = (
@@ -48610,12 +48612,12 @@
 /turf/open/floor/plasteel,
 /area/engine/engine_smes)
 "cpV" = (
-/obj/structure/table,
 /obj/machinery/camera{
 	c_tag = "Engineering Storage";
 	dir = 4;
 	network = list("SS13")
 	},
+/obj/machinery/rnd/protolathe/department/engineering,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cpW" = (
@@ -48829,13 +48831,10 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cqw" = (
-/obj/structure/table,
-/obj/item/stack/sheet/plasteel{
-	amount = 10
-	},
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/machinery/rnd/circuit_imprinter,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cqx" = (
@@ -48961,6 +48960,9 @@
 /obj/structure/table,
 /obj/item/stack/sheet/metal/fifty,
 /obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/plasteel{
+	amount = 10
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cqO" = (
@@ -53741,7 +53743,6 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/station_engineer,
-/obj/machinery/rnd/circuit_imprinter,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cDC" = (
@@ -56995,7 +56996,6 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/item/device/mass_spectrometer,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "Qnn" = (
@@ -57662,7 +57662,7 @@
 /area/crew_quarters/kitchen)
 "QoM" = (
 /obj/machinery/rnd/protolathe/department/service,
-/turf/closed/wall,
+/turf/open/floor/plating,
 /area/crew_quarters/kitchen)
 "QoN" = (
 /obj/machinery/rnd/protolathe/department/cargo,
@@ -57707,6 +57707,13 @@
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
+"QoU" = (
+/obj/structure/closet/crate/freezer/surplus_limbs,
+/obj/item/reagent_containers/glass/beaker/synthflesh,
+/turf/open/floor/plasteel/white/side{
+	dir = 8
+	},
+/area/medical/sleeper)
 
 (1,1,1) = {"
 aaa
@@ -70176,7 +70183,7 @@ ayl
 beM
 aAC
 aaf
-aHr
+aoV
 aaa
 aaa
 aaa
@@ -73744,7 +73751,7 @@ arH
 alU
 aaH
 bNb
-apQ
+aaf
 atO
 asK
 azF
@@ -75347,8 +75354,8 @@ aag
 aaa
 aoV
 bVz
-apQ
-apQ
+aaf
+aaf
 aoV
 aaa
 aaS
@@ -75602,10 +75609,10 @@ aaa
 aaa
 aag
 aaa
-bVw
+aag
 bVz
-bVw
-bVw
+aag
+aag
 aoV
 aaa
 aaS
@@ -75793,7 +75800,7 @@ amC
 amC
 amC
 ali
-apQ
+aaf
 ali
 amC
 alU
@@ -75859,10 +75866,10 @@ aaa
 aaa
 aag
 aaa
-apQ
+aaf
 bVz
 aoV
-bVw
+aag
 aoV
 aaa
 aaS
@@ -76116,10 +76123,10 @@ aaa
 aaa
 aag
 aaa
-apQ
+aaf
 bVz
-apQ
-bVw
+aaf
+aag
 aoV
 aaa
 aaa
@@ -76376,8 +76383,8 @@ aaa
 bVx
 caf
 aoV
-bVw
-apQ
+aag
+aaf
 aaa
 aaa
 aaf
@@ -76564,7 +76571,7 @@ amF
 alU
 amC
 alU
-apQ
+aaf
 alU
 alU
 alU
@@ -76633,8 +76640,8 @@ bCq
 aoV
 cbj
 aoV
-bVw
-apQ
+aag
+aaf
 aaf
 bCq
 bCq
@@ -76821,7 +76828,7 @@ alU
 alU
 amC
 alU
-apQ
+aaf
 aaH
 alU
 arO
@@ -77336,8 +77343,8 @@ alU
 amC
 alU
 aaH
-apQ
-apQ
+aaf
+aaf
 aaH
 alU
 ali
@@ -77593,12 +77600,12 @@ ali
 aKY
 ali
 asC
-apQ
+aaf
 aaH
-apQ
+aaf
 aoV
 aoV
-apQ
+aaf
 avY
 axo
 ayB
@@ -77851,7 +77858,7 @@ amC
 ali
 asC
 aaH
-apQ
+aaf
 aoV
 aoV
 aoV
@@ -78109,10 +78116,10 @@ alU
 alU
 alU
 aaH
-apQ
+aaf
 aoV
-apQ
-apQ
+aaf
+aaf
 avY
 axo
 ayA
@@ -79193,8 +79200,8 @@ bxy
 bJd
 bKm
 bxy
-apQ
-apQ
+aaf
+aaf
 bCq
 bPY
 cOw
@@ -79463,7 +79470,7 @@ bHE
 bHE
 bHE
 bLv
-apQ
+aaf
 aoV
 aoV
 aoV
@@ -79707,8 +79714,8 @@ byE
 byE
 byE
 bGi
-apQ
-apQ
+aaf
+aaf
 bLv
 bQa
 bHE
@@ -79725,7 +79732,7 @@ aoV
 aoV
 aoV
 aoV
-apQ
+aaf
 bLv
 bUs
 bLv
@@ -80221,8 +80228,8 @@ byE
 byE
 bKp
 bGi
-apQ
-apQ
+aaf
+aaf
 bLv
 bHE
 bHE
@@ -80234,7 +80241,7 @@ aoV
 aoV
 aoV
 bcU
-apQ
+aaf
 aaH
 cCa
 aoV
@@ -80487,16 +80494,16 @@ bLu
 bCq
 bHE
 bLv
-apQ
-apQ
+aaf
+aaf
 aoV
 aoV
 aaH
 bdV
 aaH
-apQ
-apQ
-apQ
+aaf
+aaf
+aaf
 bLv
 bUs
 bLv
@@ -80735,8 +80742,8 @@ bGn
 bGn
 bKq
 bxy
-apQ
-apQ
+aaf
+aaf
 bCq
 bOK
 bCq
@@ -81007,7 +81014,7 @@ aoV
 aoV
 aoV
 aaH
-apQ
+aaf
 aoV
 aoV
 aoV
@@ -81258,16 +81265,16 @@ aaf
 bLv
 bUt
 bLv
-apQ
-apQ
+aaf
+aaf
 aoV
 aoV
 aoV
 aaH
 aoV
 aoV
-apQ
-apQ
+aaf
+aaf
 bLv
 bUs
 bLv
@@ -81520,7 +81527,7 @@ aoV
 aoV
 aoV
 aoV
-apQ
+aaf
 aoV
 aoV
 aoV
@@ -82821,7 +82828,7 @@ cfe
 cfD
 cgv
 chE
-QoR
+ciN
 ciN
 cji
 cDZ
@@ -83335,7 +83342,7 @@ ckB
 ccw
 cnY
 coH
-QoS
+cgR
 cgR
 cqx
 cqR
@@ -89752,7 +89759,7 @@ bOd
 cfN
 cfN
 bLK
-apQ
+aaf
 bOh
 bOh
 bOh
@@ -90266,7 +90273,7 @@ cfi
 bRH
 cgV
 bMQ
-apQ
+aaf
 bQA
 ckU
 clT
@@ -91294,7 +91301,7 @@ bOd
 cfP
 cgZ
 bMQ
-apQ
+aaf
 bQA
 ckX
 clV
@@ -91808,7 +91815,7 @@ bUL
 cfP
 bOd
 bMQ
-apQ
+aaf
 bOh
 bOh
 bOh
@@ -92075,7 +92082,7 @@ aaa
 cpd
 cpM
 cpd
-cDS
+cCQ
 aaf
 aaa
 aaa
@@ -92322,7 +92329,7 @@ bUR
 cfT
 chc
 bMQ
-apQ
+aaf
 bQA
 cla
 cBP
@@ -92332,7 +92339,7 @@ aaa
 aaa
 czN
 aaa
-cDS
+cCQ
 aaf
 aaa
 aaa
@@ -92552,7 +92559,7 @@ bvh
 bzS
 bBc
 bCJ
-buk
+QoU
 cCp
 bvd
 bKH
@@ -92589,7 +92596,7 @@ aaa
 aaa
 aaa
 aaa
-cDS
+cCQ
 aaf
 aaa
 aaa
@@ -92836,7 +92843,7 @@ bLK
 bLK
 che
 bLK
-apQ
+aaf
 bOh
 bOh
 bOh
@@ -92846,7 +92853,7 @@ aaa
 aaa
 aaa
 aaa
-cDS
+cCQ
 aaf
 aaa
 aaa
@@ -93072,13 +93079,13 @@ bvd
 bKH
 bzs
 bRK
-apQ
+aaf
 bRK
-apQ
+aaf
 bVv
-apQ
+aaf
 bRK
-apQ
+aaf
 bVv
 cCG
 cCH
@@ -93093,12 +93100,12 @@ cCP
 bLK
 chg
 bLK
-apQ
+aaf
 aoV
 aoV
-apQ
-apQ
-apQ
+aaf
+aaf
+aaf
 aoV
 aoV
 aoV
@@ -93353,8 +93360,8 @@ bLK
 aoV
 aoV
 aoV
-apQ
-apQ
+aaf
+aaf
 aoV
 aoV
 aoV
@@ -93618,7 +93625,7 @@ cCI
 cCI
 cCI
 cDY
-apQ
+aaf
 aaf
 aaf
 aaf
@@ -93860,21 +93867,21 @@ cbH
 ccB
 cbH
 bOh
-apQ
+aaf
 aoV
 aoV
-apQ
-aoV
-aoV
-aoV
-apQ
+aaf
 aoV
 aoV
 aoV
+aaf
 aoV
 aoV
 aoV
-apQ
+aoV
+aoV
+aoV
+aaf
 aoV
 aaa
 aaa
@@ -94117,21 +94124,21 @@ cbH
 ccD
 cbH
 bOh
-apQ
-apQ
-apQ
-apQ
-apQ
+aaf
+aaf
+aaf
+aaf
+aaf
 aoV
 aoV
-apQ
+aaf
 aoV
 aoV
 aoV
 aoV
 aoV
-csz
-apQ
+aae
+aaf
 aoV
 aaa
 aaa
@@ -94374,8 +94381,8 @@ bOh
 bOh
 bOh
 bOh
-apQ
-apQ
+aaf
+aaf
 ciC
 bVu
 bVu
@@ -94388,7 +94395,7 @@ aoV
 aoV
 aoV
 aoV
-apQ
+aaf
 aoV
 aaa
 aaa
@@ -94627,11 +94634,11 @@ bVu
 bVu
 bVu
 caJ
-apQ
-apQ
-apQ
-apQ
-apQ
+aaf
+aaf
+aaf
+aaf
+aaf
 cfj
 cfU
 cfj
@@ -94647,19 +94654,19 @@ bVu
 bVu
 bVu
 bVu
-csw
-csw
-csw
-csw
+bVu
+bVu
+bVu
+bVu
 csM
-csw
-csw
+bVu
+bVu
 ctd
-csw
-csw
-csw
-csw
-ctO
+bVu
+bVu
+bVu
+bVu
+caJ
 ctZ
 ctZ
 cuo
@@ -95122,7 +95129,7 @@ bvj
 bCO
 bDR
 bDR
-QoQ
+bDR
 bIn
 bJC
 bKL
@@ -95379,7 +95386,7 @@ bvj
 bCN
 bEa
 bFA
-bGS
+QoQ
 bIm
 bJD
 bKK
@@ -95416,7 +95423,7 @@ cpQ
 cpQ
 cpQ
 czJ
-apQ
+aaf
 aoV
 aaa
 aaa
@@ -95671,10 +95678,10 @@ cmd
 cmd
 cmd
 cmd
-bVw
-bVw
-bVw
-bVw
+aag
+aag
+aag
+aag
 aaa
 aaa
 aaf
@@ -95931,7 +95938,7 @@ cmd
 cmd
 cqs
 aaa
-bVw
+aag
 aaa
 aaa
 aaf
@@ -96188,7 +96195,7 @@ ciM
 cpN
 cqt
 aaa
-bVw
+aag
 aaa
 aaa
 aaf
@@ -96445,7 +96452,7 @@ cmd
 cmd
 cqs
 aaa
-bVw
+aag
 aaa
 aaa
 aaf
@@ -96700,9 +96707,9 @@ cmd
 cos
 cmd
 czI
-bVw
-bVw
-bVw
+aag
+aag
+aag
 aaa
 aaa
 aaf
@@ -96954,11 +96961,11 @@ clk
 clk
 bAw
 bzs
-apQ
+aaf
 aaa
-apQ
-apQ
-apQ
+aaf
+aaf
+aaf
 aaa
 aaa
 aaa
@@ -97212,8 +97219,8 @@ cmg
 cnc
 cnD
 bzs
-apQ
-apQ
+aaf
+aaf
 aaa
 aaa
 aaa
@@ -105866,13 +105873,13 @@ aaf
 aaa
 aaa
 atS
-apQ
+aaf
 aoV
 aoV
 atS
-apQ
-apQ
-apQ
+aaf
+aaf
+aaf
 atS
 aCR
 aEn
@@ -106129,7 +106136,7 @@ aoV
 atS
 aoV
 aoV
-apQ
+aaf
 atS
 aaf
 aaa
@@ -106386,7 +106393,7 @@ aoV
 aaH
 aoV
 aoV
-apQ
+aaf
 atS
 aaf
 aaa
@@ -107158,7 +107165,7 @@ atS
 aoV
 aoV
 aoV
-apQ
+aaf
 aaf
 aaa
 aaf
@@ -107664,7 +107671,7 @@ aaa
 aaa
 aaa
 aaa
-apQ
+aaf
 aoV
 aoV
 aoV
@@ -107921,11 +107928,11 @@ aaa
 aaa
 aaa
 aaa
-apQ
+aaf
 aoV
 aoV
 aoV
-apQ
+aaf
 aoV
 aoV
 aoV
@@ -108182,7 +108189,7 @@ aoV
 aoV
 aoV
 aoV
-apQ
+aaf
 aoV
 aoV
 aoV
@@ -119248,7 +119255,7 @@ aaa
 aaa
 aaa
 aaa
-aHr
+aoV
 aaa
 aaa
 aaa
@@ -119520,7 +119527,7 @@ aaa
 aaa
 aaa
 aaa
-aHr
+aoV
 aaa
 aaa
 aaa
@@ -119810,7 +119817,7 @@ aaa
 aaa
 aaa
 aaa
-aHr
+aoV
 aaa
 aaa
 aaa
@@ -121040,7 +121047,7 @@ aaa
 aaa
 aaa
 aaa
-aHr
+aoV
 aaa
 aaa
 aaa
@@ -121073,7 +121080,7 @@ aaa
 aaa
 aaa
 aaa
-aHr
+aoV
 aaa
 aaa
 aaa
@@ -121365,7 +121372,7 @@ aaa
 aaa
 aaa
 aaa
-aHr
+aoV
 aaa
 aaa
 aaa

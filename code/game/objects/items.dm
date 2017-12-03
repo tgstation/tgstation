@@ -228,7 +228,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	else
 		research_msg += "None"
 	research_msg += "."
-	to_chat(user, research_msg.Join(""))
+	to_chat(user, research_msg.Join())
 
 /obj/item/proc/speechModification(message)			//for message modding by mask slot.
 	return message

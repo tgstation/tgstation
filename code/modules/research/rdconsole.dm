@@ -193,6 +193,7 @@ doesn't have toxins access.
 	if(!emagged)
 		to_chat(user, "<span class='notice'>You disable the security protocols</span>")
 		playsound(src, "sparks", 75, 1)
+		emagged = TRUE
 	return ..()
 
 /obj/machinery/computer/rdconsole/proc/list_categories(list/categories, menu_num as num)
