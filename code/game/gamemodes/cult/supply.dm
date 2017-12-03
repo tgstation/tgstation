@@ -22,7 +22,7 @@
 	dat += "<HR>"
 	for(var/s in possible_summons)
 		var/datum/cult_supply/S = s
-		dat += "<a href='?src=\ref[src];id=[initial(S.id)]'>[initial(S.invocation)]</a> - [initial(S.desc)]<br>"
+		dat += "<a href='?src=[REF(src)];id=[initial(S.id)]'>[initial(S.invocation)]</a> - [initial(S.desc)]<br>"
 	var/datum/browser/popup = new(user, "talisman", "", 400, 400)
 	popup.set_content(dat.Join(""))
 	popup.open()

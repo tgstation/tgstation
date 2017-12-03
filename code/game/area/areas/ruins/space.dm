@@ -22,7 +22,7 @@
 	power_environ = FALSE
 	valid_territory = FALSE
 	outdoors = TRUE
-	ambientsounds = list('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg')
+	ambientsounds = SPACE
 	blob_allowed = FALSE
 
 /////////////
@@ -427,3 +427,11 @@
 /area/ruin/space/old_ai_sat/bridge
 	name = "Bridge"
 	icon_state = "bridge"
+
+
+//ABANDONED BOX WHITESHIP
+
+/area/ruin/space/has_grav/whiteship/box
+
+	name = "Abandoned Ship"
+	icon_state = "red"

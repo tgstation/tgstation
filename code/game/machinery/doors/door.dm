@@ -63,9 +63,6 @@
 		spark_system = null
 	return ..()
 
-//process()
-	//return
-
 /obj/machinery/door/CollidedWith(atom/movable/AM)
 	if(operating || emagged)
 		return
@@ -83,7 +80,7 @@
 			bumpopen(M)
 			return
 
-	if(istype(AM, /obj/mecha))
+	if(ismecha(AM))
 		var/obj/mecha/mecha = AM
 		if(density)
 			if(mecha.occupant)
@@ -115,7 +112,7 @@
 	move_update_air(T)
 
 /obj/machinery/door/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && mover.checkpass(PASSGLASS))
+	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return !opacity
 	return !density
 
@@ -270,12 +267,15 @@
 		return 1
 	if(operating)
 		return
+	if(welded)
+		return
 	if(safe)
 		for(var/atom/movable/M in get_turf(src))
 			if(M.density && M != src) //something is blocking the door
 				if(autoclose)
 					addtimer(CALLBACK(src, .proc/autoclose), 60)
 				return
+
 	operating = TRUE
 
 	do_animate("closing")

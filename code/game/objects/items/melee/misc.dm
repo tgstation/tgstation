@@ -21,7 +21,6 @@
 	force = 10
 	throwforce = 7
 	w_class = WEIGHT_CLASS_NORMAL
-	origin_tech = "combat=5"
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
 	hitsound = 'sound/weapons/chainhit.ogg'
 	materials = list(MAT_METAL = 1000)
@@ -38,7 +37,6 @@
 	item_state = "arm_blade"
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
-	origin_tech = "combat=5;biotech=5"
 	w_class = WEIGHT_CLASS_HUGE
 	force = 20
 	throwforce = 10
@@ -61,7 +59,6 @@
 	block_chance = 50
 	armour_penetration = 75
 	sharpness = IS_SHARP
-	origin_tech = "combat=5"
 	attack_verb = list("slashed", "cut")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	materials = list(MAT_METAL = 1000)
@@ -208,7 +205,6 @@
 	armour_penetration = 1000
 	var/obj/machinery/power/supermatter_shard/shard
 	var/balanced = 1
-	origin_tech = "combat=7;materials=6"
 	force_string = "INFINITE"
 
 /obj/item/melee/supermatter_sword/Initialize()
@@ -233,7 +229,7 @@
 
 /obj/item/melee/supermatter_sword/afterattack(target, mob/user, proximity_flag)
 	if(user && target == user)
-		user.drop_item()
+		user.dropItemToGround(src)
 	if(proximity_flag)
 		consume_everything(target)
 	..()
@@ -243,7 +239,7 @@
 	if(ismob(target))
 		var/mob/M
 		if(src.loc == M)
-			M.drop_item()
+			M.dropItemToGround(src)
 	consume_everything(target)
 
 /obj/item/melee/supermatter_sword/pickup(user)
@@ -267,7 +263,7 @@
 
 /obj/item/melee/supermatter_sword/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] touches [src]'s blade. It looks like [user.p_theyre()] tired of waiting for the radiation to kill [user.p_them()]!</span>")
-	user.drop_item()
+	user.dropItemToGround(src, TRUE)
 	shard.CollidedWith(user)
 
 /obj/item/melee/supermatter_sword/proc/consume_everything(target)

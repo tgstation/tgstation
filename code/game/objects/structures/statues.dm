@@ -131,7 +131,7 @@
 	if(!active)
 		if(world.time > last_event+15)
 			active = 1
-			radiation_pulse(get_turf(src), 3, 3, 12, 0)
+			radiation_pulse(src, 30)
 			last_event = world.time
 			active = null
 			return
@@ -177,8 +177,8 @@
 	else
 		return ..()
 
-/obj/structure/statue/plasma/proc/PlasmaBurn()
-	atmos_spawn_air("plasma=400;TEMP=1000")
+/obj/structure/statue/plasma/proc/PlasmaBurn(exposed_temperature)
+	atmos_spawn_air("plasma=[oreAmount*10];TEMP=[exposed_temperature]")
 	deconstruct(FALSE)
 
 /obj/structure/statue/plasma/proc/ignite(exposed_temperature)
@@ -244,7 +244,7 @@
 /obj/structure/statue/diamond
 	max_integrity = 1000
 	material_drop_type = /obj/item/stack/sheet/mineral/diamond
-	desc = "This is a very expensive diamond statue"
+	desc = "This is a very expensive diamond statue."
 
 /obj/structure/statue/diamond/captain
 	name = "statue of THE captain."

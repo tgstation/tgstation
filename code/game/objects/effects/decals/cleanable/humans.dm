@@ -18,7 +18,7 @@
 	desc = "Looks like it's been here a while.  Eew."
 	bloodiness = 0
 
-/obj/effect/decal/cleanable/blood/old/Initialize()
+/obj/effect/decal/cleanable/blood/old/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	icon_state += "-old" //This IS necessary because the parent /blood type uses icon randomization.
 	blood_DNA["Non-human DNA"] = "A+"
@@ -39,7 +39,6 @@
 	var/list/existing_dirs = list()
 	blood_DNA = list()
 
-
 /obj/effect/decal/cleanable/trail_holder/can_bloodcrawl_in()
 	return 1
 
@@ -51,9 +50,9 @@
 	icon_state = "gibbl5"
 	layer = LOW_OBJ_LAYER
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
-	mergeable_decal = 0
+	mergeable_decal = FALSE
 
-/obj/effect/decal/cleanable/blood/gibs/Initialize()
+/obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	reagents.add_reagent("liquidgibs", 5)
 
@@ -66,7 +65,11 @@
 	for(var/i = 0, i < pick(1, 200; 2, 150; 3, 50), i++)
 		sleep(2)
 		if(i > 0)
-			new /obj/effect/decal/cleanable/blood/splatter(loc)
+			var/list/datum/disease/diseases
+			GET_COMPONENT(infective, /datum/component/infective)
+			if(infective)
+				diseases = infective.diseases
+			new /obj/effect/decal/cleanable/blood/splatter(loc, diseases)
 		if(!step_to(src, get_step(src, direction), 0))
 			break
 
@@ -93,7 +96,7 @@
 	desc = "Space Jesus, why didn't anyone clean this up?  It smells terrible."
 	bloodiness = 0
 
-/obj/effect/decal/cleanable/blood/gibs/old/Initialize()
+/obj/effect/decal/cleanable/blood/gibs/old/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	setDir(pick(1,2,4,8))
 	icon_state += "-old"
@@ -126,24 +129,29 @@
 	var/list/shoe_types = list()
 
 /obj/effect/decal/cleanable/blood/footprints/Crossed(atom/movable/O)
+	..()
 	if(ishuman(O))
 		var/mob/living/carbon/human/H = O
 		var/obj/item/clothing/shoes/S = H.shoes
 		if(S && S.bloody_shoes[blood_state])
 			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
-			entered_dirs|= H.dir
-			shoe_types |= H.shoes.type
-	update_icon()
+			shoe_types |= S.type
+			if (!(entered_dirs & H.dir))
+				entered_dirs |= H.dir
+				update_icon()
 
 /obj/effect/decal/cleanable/blood/footprints/Uncrossed(atom/movable/O)
+	..()
 	if(ishuman(O))
 		var/mob/living/carbon/human/H = O
 		var/obj/item/clothing/shoes/S = H.shoes
 		if(S && S.bloody_shoes[blood_state])
 			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
-			exited_dirs|= H.dir
-			shoe_types |= H.shoes.type
-	update_icon()
+			shoe_types  |= S.type
+			if (!(exited_dirs & H.dir))
+				exited_dirs |= H.dir
+				update_icon()
+			
 
 /obj/effect/decal/cleanable/blood/footprints/update_icon()
 	cut_overlays()
@@ -169,7 +177,7 @@
 		. += "You recognise the footprints as belonging to:\n"
 		for(var/shoe in shoe_types)
 			var/obj/item/clothing/shoes/S = shoe
-			. += "some <B>[initial(S.name)]</B> [icon2html(initial(S.icon), user)]\n"
+			. += "[icon2html(initial(S.icon), user)] Some <B>[initial(S.name)]</B>.\n"
 
 	to_chat(user, .)
 

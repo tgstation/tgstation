@@ -16,7 +16,8 @@
 		to_chat(user, "<span class='notice'>You pet [src]. You swear it looks up at you.</span>")
 		owner = user
 		owned = 1
-	else return ..()
+	else
+		return ..()
 
 /obj/item/toy/plush/carpplushie/dehy_carp/proc/Swell()
 	desc = "It's growing!"

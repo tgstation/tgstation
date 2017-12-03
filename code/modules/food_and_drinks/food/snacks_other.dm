@@ -66,8 +66,8 @@
 	tastes = list("popcorn" = 3, "butter" = 1)
 	foodtype = JUNKFOOD
 
-/obj/item/reagent_containers/food/snacks/popcorn/New()
-	..()
+/obj/item/reagent_containers/food/snacks/popcorn/Initialize()
+	. = ..()
 	eatverb = pick("bite","crunch","nibble","gnaw","gobble","chomp")
 
 /obj/item/reagent_containers/food/snacks/loadedbakedpotato
@@ -151,7 +151,7 @@
 
 /obj/item/reagent_containers/food/snacks/mint
 	name = "mint"
-	desc = "it is only wafer thin."
+	desc = "It is only wafer thin."
 	icon_state = "mint"
 	bitesize = 1
 	trash = /obj/item/trash/plate
@@ -229,7 +229,7 @@
 
 /obj/item/reagent_containers/food/snacks/chocoorange
 	name = "chocolate orange"
-	desc = "A festive chocolate orange"
+	desc = "A festive chocolate orange."
 	icon_state = "chocoorange"
 	bonus_reagents = list("nutriment" = 1, "sugar" = 1)
 	list_reagents = list("nutriment" = 3, "sugar" = 1)
@@ -447,8 +447,8 @@
 	tastes = list("candy" = 1)
 	foodtype = JUNKFOOD | SUGAR
 
-/obj/item/reagent_containers/food/snacks/lollipop/New()
-	..()
+/obj/item/reagent_containers/food/snacks/lollipop/Initialize()
+	. = ..()
 	head = mutable_appearance('icons/obj/lollipop.dmi', "lollipop_head")
 	change_head_color(rgb(rand(0, 255), rand(0, 255), rand(0, 255)))
 
@@ -466,8 +466,8 @@
 /obj/item/reagent_containers/food/snacks/lollipop/cyborg
 	var/spamchecking = TRUE
 
-/obj/item/reagent_containers/food/snacks/lollipop/cyborg/New()
-	..()
+/obj/item/reagent_containers/food/snacks/lollipop/cyborg/Initialize()
+	. = ..()
 	addtimer(CALLBACK(src, .proc/spamcheck), 1200)
 
 /obj/item/reagent_containers/food/snacks/lollipop/cyborg/equipped(mob/living/user, slot)
@@ -487,15 +487,15 @@
 	tastes = list("candy")
 	foodtype = JUNKFOOD
 
-/obj/item/reagent_containers/food/snacks/gumball/New()
-	..()
+/obj/item/reagent_containers/food/snacks/gumball/Initialize()
+	. = ..()
 	color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 
 /obj/item/reagent_containers/food/snacks/gumball/cyborg
 	var/spamchecking = TRUE
 
-/obj/item/reagent_containers/food/snacks/gumball/cyborg/New()
-	..()
+/obj/item/reagent_containers/food/snacks/gumball/cyborg/Initialize()
+	. = ..()
 	addtimer(CALLBACK(src, .proc/spamcheck), 1200)
 
 /obj/item/reagent_containers/food/snacks/gumball/cyborg/equipped(mob/living/user, slot)

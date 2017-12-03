@@ -21,6 +21,10 @@
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 2
 
+/obj/structure/bed/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>")
+
 /obj/structure/bed/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(buildstacktype)
@@ -45,7 +49,7 @@
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "down"
 	anchored = FALSE
-	resistance_flags = 0
+	resistance_flags = NONE
 	var/foldabletype = /obj/item/roller
 
 /obj/structure/bed/roller/attackby(obj/item/W, mob/user, params)
@@ -85,23 +89,27 @@
 		qdel(src)
 
 /obj/structure/bed/roller/post_buckle_mob(mob/living/M)
-	if(M in buckled_mobs)
-		density = TRUE
-		icon_state = "up"
-		M.pixel_y = initial(M.pixel_y)
-	else
-		density = FALSE
-		icon_state = "down"
-		M.pixel_x = M.get_standard_pixel_x_offset(M.lying)
-		M.pixel_y = M.get_standard_pixel_y_offset(M.lying)
+	density = TRUE
+	icon_state = "up"
+	M.pixel_y = initial(M.pixel_y)
 
+/obj/structure/bed/roller/Moved()
+	. = ..()
+	if(has_gravity())
+		playsound(src, 'sound/effects/roll.ogg', 100, 1)
+
+/obj/structure/bed/roller/post_unbuckle_mob(mob/living/M)
+	density = FALSE
+	icon_state = "down"
+	M.pixel_x = M.get_standard_pixel_x_offset(M.lying)
+	M.pixel_y = M.get_standard_pixel_y_offset(M.lying)
 
 /obj/item/roller
 	name = "roller bed"
 	desc = "A collapsed roller bed that can be carried around."
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "folded"
-	w_class = WEIGHT_CLASS_BULKY // Can't be put in backpacks.
+	w_class = WEIGHT_CLASS_NORMAL // No more excuses, stop getting blood everywhere
 
 /obj/item/roller/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/roller/robo))
@@ -113,7 +121,8 @@
 		R.loaded = new/obj/structure/bed/roller(R)
 		qdel(src) //"Load"
 		return
-	else return ..()
+	else
+		return ..()
 
 /obj/item/roller/attack_self(mob/user)
 	deploy_roller(user, user.loc)
@@ -140,7 +149,7 @@
 
 /obj/item/roller/robo/examine(mob/user)
 	..()
-	to_chat(user, "The dock is [loaded ? "loaded" : "empty"]")
+	to_chat(user, "The dock is [loaded ? "loaded" : "empty"].")
 
 /obj/item/roller/robo/deploy_roller(mob/user, atom/location)
 	if(loaded)
@@ -193,5 +202,5 @@
 
 /obj/structure/bed/alien
 	name = "resting contraption"
-	desc = "This looks similar to contraptions from earth. Could aliens be stealing our technology?"
+	desc = "This looks similar to contraptions from Earth. Could aliens be stealing our technology?"
 	icon_state = "abed"

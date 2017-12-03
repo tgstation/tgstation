@@ -14,7 +14,7 @@
 	var/list/emote_taunt = list()
 	var/taunt_chance = 0
 
-//typecache of things this mob will attack in DestroySurroundings() if it has environment_smash
+//typecache of things this mob will attack in DestroyPathToTarget() if it has environment_smash
 	var/list/environment_target_typecache = list(
 	/obj/machinery/door/window,
 	/obj/structure/window,
@@ -46,7 +46,6 @@
 	var/stat_attack = CONSCIOUS //Mobs with stat_attack to UNCONSCIOUS will attempt to attack things that are unconscious, Mobs with stat_attack set to DEAD will attempt to attack the dead.
 	var/stat_exclusive = FALSE //Mobs with this set to TRUE will exclusively attack things defined by stat_attack, stat_attack DEAD means they will only attack corpses
 	var/attack_same = 0 //Set us to 1 to allow us to attack our own faction
-	var/AIStatus = AI_ON //The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever)
 	var/atom/targets_from = null //all range/attack/etc. calculations should be done from this atom, defaults to the mob itself, useful for Vehicles and such
 	var/attack_all_objects = FALSE //if true, equivalent to having a wanted_objects list containing ALL objects.
 
@@ -82,10 +81,11 @@
 		EscapeConfinement()
 
 	if(AICanContinue(possible_targets))
-		DestroySurroundings()
+		if(!QDELETED(target) && !targets_from.Adjacent(target))
+			DestroyPathToTarget()
 		if(!MoveToTarget(possible_targets))     //if we lose our target
 			if(AIShouldSleep(possible_targets))	// we try to acquire a new one
-				AIStatus = AI_IDLE				// otherwise we go idle
+				toggle_ai(AI_IDLE)			// otherwise we go idle
 	return 1
 
 /mob/living/simple_animal/hostile/attacked_by(obj/item/I, mob/living/user)
@@ -112,7 +112,11 @@
 			if(can_see(targets_from, HM, vision_range))
 				. += HM
 	else
-		. = oview(vision_range, targets_from)
+		. = list() // The following code is only very slightly slower than just returning oview(vision_range, targets_from), but it saves us much more work down the line, particularly when bees are involved
+		for (var/obj/A in oview(vision_range, targets_from))
+			. += A
+		for (var/mob/A in oview(vision_range, targets_from))
+			. += A
 
 /mob/living/simple_animal/hostile/proc/FindTarget(var/list/possible_targets, var/HasTargetsList = 0)//Step 2, filter down possible targets to things we actually care about
 	. = list()
@@ -162,7 +166,7 @@
 	return chosen_target
 
 // Please do not add one-off mob AIs here, but override this function for your mob
-/mob/living/simple_animal/hostile/CanAttack(atom/the_target)//Can we actually attack a possible target? 
+/mob/living/simple_animal/hostile/CanAttack(atom/the_target)//Can we actually attack a possible target?
 	if(isturf(the_target) || !the_target || the_target.type == /atom/movable/lighting_object) // bail out on invalids
 		return FALSE
 
@@ -184,7 +188,7 @@
 					return FALSE
 			return TRUE
 
-		if(istype(the_target, /obj/mecha))
+		if(ismecha(the_target))
 			var/obj/mecha/M = the_target
 			if(M.occupant)//Just so we don't attack empty mechs
 				if(CanAttack(M.occupant))
@@ -278,7 +282,7 @@
 			target = null
 			LoseSearchObjects()
 		if(AIStatus == AI_IDLE)
-			AIStatus = AI_ON
+			toggle_ai(AI_ON)
 			FindTarget()
 		else if(target != null && prob(40))//No more pulling a mob forever and having a second player attack it, it can switch targets now if it finds a more suitable one
 			FindTarget()
@@ -351,7 +355,6 @@
 	else if(projectiletype)
 		var/obj/item/projectile/P = new projectiletype(startloc)
 		playsound(src, projectilesound, 100, 1)
-		P.current = startloc
 		P.starting = startloc
 		P.firer = src
 		P.yo = targeted_atom.y - startloc.y
@@ -359,26 +362,48 @@
 		if(AIStatus != AI_ON)//Don't want mindless mobs to have their movement screwed up firing in space
 			newtonian_move(get_dir(targeted_atom, targets_from))
 		P.original = targeted_atom
+		P.preparePixelProjectile(targeted_atom, src)
 		P.fire()
 		return P
+
 
 /mob/living/simple_animal/hostile/proc/CanSmashTurfs(turf/T)
 	return iswallturf(T) || ismineralturf(T)
 
-/mob/living/simple_animal/hostile/proc/DestroySurroundings()
+
+/mob/living/simple_animal/hostile/proc/DestroyObjectsInDirection(direction)
+	var/turf/T = get_step(targets_from, direction)
+	if(T.Adjacent(targets_from))
+		if(CanSmashTurfs(T))
+			T.attack_animal(src)
+		for(var/a in T)
+			var/atom/A = a
+			if(is_type_in_typecache(A, environment_target_typecache) && !A.IsObscured())
+				A.attack_animal(src)
+				return
+
+
+/mob/living/simple_animal/hostile/proc/DestroyPathToTarget()
+	if(environment_smash)
+		EscapeConfinement()
+		var/dir_to_target = get_dir(targets_from, target)
+		var/dir_list = list()
+		if(dir_to_target in GLOB.diagonals) //it's diagonal, so we need two directions to hit
+			for(var/direction in GLOB.cardinals)
+				if(direction & dir_to_target)
+					dir_list += direction
+		else
+			dir_list += dir_to_target
+		for(var/direction in dir_list) //now we hit all of the directions we got in this fashion, since it's the only directions we should actually need
+			DestroyObjectsInDirection(direction)
+
+
+mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with megafauna destroying everything around them
 	if(environment_smash)
 		EscapeConfinement()
 		for(var/dir in GLOB.cardinals)
-			var/turf/T = get_step(targets_from, dir)
-			if(CanSmashTurfs(T))
-				if(T.Adjacent(targets_from))
-					T.attack_animal(src)
-			for(var/a in T)
-				var/atom/A = a
-				if(!A.Adjacent(targets_from))
-					continue
-				if(is_type_in_typecache(A, environment_target_typecache) && !A.IsObscured())
-					A.attack_animal(src)
+			DestroyObjectsInDirection(dir)
+
 
 /mob/living/simple_animal/hostile/proc/EscapeConfinement()
 	if(buckled)
@@ -412,7 +437,7 @@
 		if(AI_IDLE)
 			if(FindTarget(possible_targets, 1))
 				. = 1
-				AIStatus = AI_ON //Wake up for more than one Life() cycle.
+				toggle_ai(AI_ON) //Wake up for more than one Life() cycle.
 			else
 				. = 0
 
@@ -443,3 +468,9 @@
 	if(!value)
 		value = initial(search_objects)
 	search_objects = value
+
+/mob/living/simple_animal/hostile/consider_wakeup()
+	..()
+	if(AIStatus == AI_IDLE && FindTarget(ListTargets(), 1))
+		toggle_ai(AI_ON)
+

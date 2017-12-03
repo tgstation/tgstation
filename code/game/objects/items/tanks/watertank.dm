@@ -93,6 +93,10 @@
 	else
 		return ..()
 
+/obj/item/watertank/dropped(mob/user)
+	..()
+	remove_noz()
+
 // This mister item is intended as an extension of the watertank and always attached to it.
 // Therefore, it's designed to be "locked" to the player's hands or extended back onto
 // the watertank backpack. Allowing it to be placed elsewhere or created without a parent
@@ -109,7 +113,7 @@
 	amount_per_transfer_from_this = 50
 	possible_transfer_amounts = list(25,50,100)
 	volume = 500
-	flags_1 = NODROP_1 | NOBLUDGEON_1
+	flags_1 = NOBLUDGEON_1
 	container_type = OPENCONTAINER_1
 	slot_flags = 0
 
@@ -221,7 +225,6 @@
 	precision = 1
 	cooling_power = 5
 	w_class = WEIGHT_CLASS_HUGE
-	flags_1 = NODROP_1 //Necessary to ensure that the nozzle and tank never separate
 	var/obj/item/watertank/tank
 	var/nozzle_mode = 0
 	var/metal_synthesis_cooldown = 0
@@ -349,7 +352,7 @@
 	var/injection_amount = 1
 	amount_per_transfer_from_this = 5
 	container_type = OPENCONTAINER_1
-	spillable = 0
+	spillable = FALSE
 	possible_transfer_amounts = list(5,10,15)
 
 /obj/item/reagent_containers/chemtank/ui_action_click()
@@ -439,7 +442,7 @@
 	user.update_inv_back() //for overlays update
 
 //Operator backpack spray
-/obj/item/watertank/operator
+/obj/item/watertank/op
 	name = "backpack water tank"
 	desc = "A New Russian backpack spray for systematic cleansing of carbon lifeforms."
 	icon_state = "waterbackpackjani"
@@ -448,7 +451,7 @@
 	volume = 2000
 	slowdown = 0
 
-/obj/item/watertank/operator/New()
+/obj/item/watertank/op/New()
 	..()
 	reagents.add_reagent("mutagen",350)
 	reagents.add_reagent("napalm",125)
@@ -458,8 +461,7 @@
 	reagents.add_reagent("plasma",250)
 	reagents.add_reagent("condensedcapsaicin",500)
 
-/obj/item/reagent_containers/spray/mister/operator
-	name = "janitor spray nozzle"
+/obj/item/reagent_containers/spray/mister/op
 	desc = "A mister nozzle attached to several extended water tanks. It suspiciously has a compressor in the system and is labelled entirely in New Cyrillic."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "misterjani"
@@ -470,5 +472,5 @@
 	amount_per_transfer_from_this = 100
 	possible_transfer_amounts = list(75,100,150)
 
-/obj/item/watertank/operator/make_noz()
-	return new /obj/item/reagent_containers/spray/mister/operator(src)
+/obj/item/watertank/op/make_noz()
+	return new /obj/item/reagent_containers/spray/mister/op(src)

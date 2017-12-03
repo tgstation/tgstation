@@ -45,7 +45,7 @@
 	..()
 	explosion(target, -1, 1, 3, 1, 0, flame_range = 4)
 
-	if(istype(target, /obj/mecha))
+	if(ismecha(target))
 		var/obj/mecha/M = target
 		M.take_damage(anti_armour_damage)
 	if(issilicon(target))
@@ -55,7 +55,7 @@
 
 /obj/item/projectile/bullet/srmrocket
 	name ="SRM-8 Rocket"
-	desc = "Boom"
+	desc = "Boom."
 	icon_state = "missile"
 	damage = 30
 	ricochets_max = 0 //it's a MISSILE
@@ -469,7 +469,9 @@
 			layer = ABOVE_MOB_LAYER
 	hal_target.client.images += blood
 	animate(blood, pixel_x = target_pixel_x, pixel_y = target_pixel_y, alpha = 0, time = 5)
-	sleep(5)
+	addtimer(CALLBACK(src, .proc/cleanup_blood), 5)
+
+/obj/item/projectile/hallucination/proc/cleanup_blood(image/blood)
 	hal_target.client.images -= blood
 	qdel(blood)
 

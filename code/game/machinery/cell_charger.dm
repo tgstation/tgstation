@@ -13,21 +13,19 @@
 
 /obj/machinery/cell_charger/proc/updateicon()
 	cut_overlays()
-
 	if(charging)
 		add_overlay(image(charging.icon, charging.icon_state))
 		add_overlay("ccharger-on")
 		if(!(stat & (BROKEN|NOPOWER)))
 			var/newlevel = 	round(charging.percent() * 4 / 100)
-			if(chargelevel != newlevel)
-				chargelevel = newlevel
-				add_overlay("ccharger-o[newlevel]")
+			chargelevel = newlevel
+			add_overlay("ccharger-o[newlevel]")
 
 /obj/machinery/cell_charger/examine(mob/user)
 	..()
 	to_chat(user, "There's [charging ? "a" : "no"] cell in the charger.")
 	if(charging)
-		to_chat(user, "Current charge: [round(charging.percent(), 1)]%")
+		to_chat(user, "Current charge: [round(charging.percent(), 1)]%.")
 
 /obj/machinery/cell_charger/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stock_parts/cell))
@@ -45,7 +43,7 @@
 			if(!isarea(a))
 				return
 			if(a.power_equip == 0) // There's no APC in this area, don't try to cheat power!
-				to_chat(user, "<span class='warning'>The [src] blinks red as you try to insert the cell!</span>")
+				to_chat(user, "<span class='warning'>[src] blinks red as you try to insert the cell!</span>")
 				return
 			if(!user.transferItemToLoc(W,src))
 				return

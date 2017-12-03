@@ -56,13 +56,6 @@
 		return 1
 	return ..()
 
-/mob/living/simple_animal/hostile/blob/handle_inherent_channels(message, message_mode)
-	if(message_mode == MODE_BINARY)
-		blob_chat(message)
-		return 1
-	else
-		..()
-
 /mob/living/simple_animal/hostile/blob/proc/blob_chat(msg)
 	var/spanned_message = say_quote(msg, get_spans())
 	var/rendered = "<font color=\"#EE4000\"><b>\[Blob Telepathy\] [real_name]</b> [spanned_message]</font>"
@@ -100,7 +93,7 @@
 	var/death_cloud_size = 1 //size of cloud produced from a dying spore
 	var/mob/living/carbon/human/oldguy
 	var/is_zombie = 0
-	gold_core_spawnable = 1
+	gold_core_spawnable = HOSTILE_SPAWN
 
 /mob/living/simple_animal/hostile/blob/blobspore/Initialize(mapload, var/obj/structure/blob/factory/linked_node)
 	if(istype(linked_node))
@@ -226,6 +219,8 @@
 	. = ..()
 	if(!independent) //no pulling people deep into the blob
 		verbs -= /mob/living/verb/pulled
+	else
+		pass_flags &= ~PASSBLOB
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/Life()
 	if(..())
@@ -297,4 +292,4 @@
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/independent
 	independent = TRUE
-	gold_core_spawnable = 1
+	gold_core_spawnable = HOSTILE_SPAWN

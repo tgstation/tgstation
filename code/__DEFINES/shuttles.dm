@@ -58,8 +58,15 @@
 #define DOCKING_BLOCKED 1
 #define DOCKING_IMMOBILIZED 2
 #define DOCKING_AREA_EMPTY 4
+#define DOCKING_NULL_DESTINATION 8
+#define DOCKING_NULL_SOURCE 16
 
 //Docking turf movements
 #define MOVE_TURF 1
 #define MOVE_AREA 2
 #define MOVE_CONTENTS 4
+
+//Rotation params
+#define ROTATE_DIR 		1
+#define ROTATE_SMOOTH 	2
+#define ROTATE_OFFSET	4

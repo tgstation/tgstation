@@ -6,45 +6,66 @@
 	var/datum/parent
 
 /datum/component/New(datum/P, ...)
+	if(type == /datum/component)
+		qdel(src)
+		CRASH("[type] instantiated!")
+
+	//check for common mishaps
+	if(!isnum(dupe_mode))
+		qdel(src)
+		CRASH("[type]: Invalid dupe_mode!")
+	if(dupe_type && !ispath(dupe_type))
+		qdel(src)
+		CRASH("[type]: Invalid dupe_type!")
+
 	parent = P
 	var/list/arguments = args.Copy()
 	arguments.Cut(1, 2)
-	Initialize(arglist(arguments))
+	if(Initialize(arglist(arguments)) == COMPONENT_INCOMPATIBLE)
+		qdel(src, TRUE, TRUE)
+		return
 
+	_CheckDupesAndJoinParent(P)
+
+/datum/component/proc/_CheckDupesAndJoinParent()
+	var/datum/P = parent
 	var/dm = dupe_mode
+
+	var/datum/component/old
 	if(dm != COMPONENT_DUPE_ALLOWED)
 		var/dt = dupe_type
-		var/datum/component/old 
 		if(!dt)
 			old = P.GetExactComponent(type)
 		else
 			old = P.GetComponent(dt)
 		if(old)
+			//One or the other has to die
 			switch(dm)
 				if(COMPONENT_DUPE_UNIQUE)
 					old.InheritComponent(src, TRUE)
-					parent = null	//prevent COMPONENT_REMOVING signal
-					qdel(src)
+					qdel(src, TRUE, TRUE)
 					return
 				if(COMPONENT_DUPE_HIGHLANDER)
 					InheritComponent(old, FALSE)
-					qdel(old)
-	
-	//let the others know
-	P.SendSignal(COMSIG_COMPONENT_ADDED, src)
-	
+					qdel(old, FALSE, TRUE)
+
+	//provided we didn't eat someone
+	if(!old)
+		//let the others know
+		P.SendSignal(COMSIG_COMPONENT_ADDED, src)
+
 	//lazy init the parent's dc list
 	var/list/dc = P.datum_components
 	if(!dc)
 		P.datum_components = dc = list()
-	
+
 	//set up the typecache
 	var/our_type = type
 	for(var/I in _GetInverseTypeList(our_type))
 		var/test = dc[I]
 		if(test)	//already another component of this type here
 			var/list/components_of_type
-			if(!islist(test))
+			if(!length(test))
 				components_of_type = list(test)
 				dc[I] = components_of_type
 			else
@@ -67,50 +88,51 @@
 /datum/component/proc/Initialize(...)
 	return
 
-/datum/component/Destroy()
+/datum/component/Destroy(force=FALSE, silent=FALSE)
 	enabled = FALSE
 	var/datum/P = parent
-	if(P)
-		_RemoveNoSignal()
+	if(!force)
+		_RemoveFromParent()
+	if(!silent)
 		P.SendSignal(COMSIG_COMPONENT_REMOVING, src)
+	parent = null
 	LAZYCLEARLIST(signal_procs)
 	return ..()
 
-/datum/component/proc/_RemoveNoSignal()
+/datum/component/proc/_RemoveFromParent()
 	var/datum/P = parent
-	if(P)
-		var/list/dc = P.datum_components
-		var/our_type = type
-		for(var/I in _GetInverseTypeList(our_type))
-			var/list/components_of_type = dc[I]
-			if(islist(components_of_type))	//
-				var/list/subtracted = components_of_type - src
-				if(subtracted.len == 1)	//only 1 guy left
-					dc[I] = subtracted[1]	//make him special
-				else
-					dc[I] = subtracted
-			else	//just us
-				dc -= I
-		if(!dc.len)
-			P.datum_components = null
-		parent = null
+	var/list/dc = P.datum_components
+	for(var/I in _GetInverseTypeList())
+		var/list/components_of_type = dc[I]
+		if(length(components_of_type))	//
+			var/list/subtracted = components_of_type - src
+			if(subtracted.len == 1)	//only 1 guy left
+				dc[I] = subtracted[1]	//make him special
+			else
+				dc[I] = subtracted
+		else	//just us
+			dc -= I
+	if(!dc.len)
+		P.datum_components = null
 
-/datum/component/proc/RegisterSignal(sig_type_or_types, proc_on_self, override = FALSE)
+/datum/component/proc/RegisterSignal(sig_type_or_types, proc_or_callback, override = FALSE)
 	if(QDELETED(src))
 		return
 	var/list/procs = signal_procs
 	if(!procs)
 		procs = list()
 		signal_procs = procs
-	
+
 	var/list/sig_types = islist(sig_type_or_types) ? sig_type_or_types : list(sig_type_or_types)
 	for(var/sig_type in sig_types)
 		if(!override)
 			. = procs[sig_type]
 			if(.)
 				stack_trace("[sig_type] overridden. Use override = TRUE to suppress this warning")
-		
-		procs[sig_type] = CALLBACK(src, proc_on_self)    
+
+		if(!istype(proc_or_callback, /datum/callback)) //if it wasnt a callback before, it is now
+			proc_or_callback = CALLBACK(src, proc_or_callback)
+		procs[sig_type] = proc_or_callback
 
 /datum/component/proc/InheritComponent(datum/component/C, i_am_original)
 	return
@@ -122,8 +144,19 @@
 	set waitfor = FALSE
 	return
 
-/datum/component/proc/_GetInverseTypeList(current_type)
-	. = list(current_type)
+/datum/component/proc/_GetInverseTypeList(our_type = type)
+	#if DM_VERSION >= 513
+	#warning 512 is definitely stable now, remove the old code
+	#endif
+
+	#if DM_VERSION < 512
+	//remove this when we use 512 full time
+	set invisibility = 101
+	#endif
+	//we can do this one simple trick
+	var/current_type = parent_type
+	. = list(our_type, current_type)
+	//and since most components are root level + 1, this won't even have to run
 	while (current_type != /datum/component)
 		current_type = type2parent(current_type)
 		. += current_type
@@ -131,36 +164,37 @@
 /datum/proc/SendSignal(sigtype, ...)
 	var/list/comps = datum_components
 	if(!comps)
-		return FALSE
+		return NONE
 	var/list/arguments = args.Copy()
 	arguments.Cut(1, 2)
 	var/target = comps[/datum/component]
-	if(!islist(target))
+	if(!length(target))
 		var/datum/component/C = target
 		if(!C.enabled)
-			return FALSE
+			return NONE
 		var/list/sps = C.signal_procs
 		var/datum/callback/CB = LAZYACCESS(sps, sigtype)
 		if(!CB)
-			return FALSE
+			return NONE
 		. = CB.InvokeAsync(arglist(arguments))
-		if(.)
+		if(. & COMPONENT_ACTIVATED)
 			ComponentActivated(C)
 			C.AfterComponentActivated()
 	else
-		. = FALSE
+		. = NONE
 		for(var/I in target)
 			var/datum/component/C = I
 			if(!C.enabled)
-				continue			
+				continue
 			var/list/sps = C.signal_procs
 			var/datum/callback/CB = LAZYACCESS(sps, sigtype)
 			if(!CB)
 				continue
-			if(CB.InvokeAsync(arglist(arguments)))
+			var/retval = CB.InvokeAsync(arglist(arguments))
+			. |= retval
+			if(retval & COMPONENT_ACTIVATED)
 				ComponentActivated(C)
 				C.AfterComponentActivated()
-				. = TRUE
 
 /datum/proc/ComponentActivated(datum/component/C)
 	set waitfor = FALSE
@@ -171,7 +205,7 @@
 	if(!dc)
 		return null
 	. = dc[c_type]
-	if(islist(.))
+	if(length(.))
 		return .[1]
 
 /datum/proc/GetExactComponent(c_type)
@@ -180,7 +214,7 @@
 		return null
 	var/datum/component/C = dc[c_type]
 	if(C)
-		if(islist(C))
+		if(length(C))
 			C = C[1]
 		if(C.type == c_type)
 			return C
@@ -191,14 +225,14 @@
 	if(!dc)
 		return null
 	. = dc[c_type]
-	if(!islist(.))
+	if(!length(.))
 		return list(.)
 
 /datum/proc/AddComponent(new_type, ...)
 	var/nt = new_type
 	args[1] = src
 	var/datum/component/C = new nt(arglist(args))
-	return QDELING(C) ? GetComponent(new_type) : C
+	return QDELING(C) ? GetExactComponent(new_type) : C
 
 /datum/proc/LoadComponent(component_type, ...)
 	. = GetComponent(component_type)
@@ -210,10 +244,26 @@
 		return
 	var/datum/helicopter = C.parent
 	if(helicopter == src)
-		//wat
+		//if we're taking to the same thing no need for anything
 		return
-	C._RemoveNoSignal()
+	if(C.OnTransfer(src) == COMPONENT_INCOMPATIBLE)
+		qdel(C)
+		return
+	C._RemoveFromParent()
 	helicopter.SendSignal(COMSIG_COMPONENT_REMOVING, C)
-	C.OnTransfer(src)
 	C.parent = src
-	SendSignal(COMSIG_COMPONENT_ADDED, C)
+	C._CheckDupesAndJoinParent()
+
+/datum/proc/TransferComponents(datum/target)
+	var/list/dc = datum_components
+	if(!dc)
+		return
+	var/comps = dc[/datum/component]
+	if(islist(comps))
+		for(var/I in comps)
+			target.TakeComponent(I)
+	else
+		target.TakeComponent(comps)
+
+/datum/component/ui_host()
+	return parent

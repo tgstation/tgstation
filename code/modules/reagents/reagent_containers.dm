@@ -10,7 +10,7 @@
 	var/list/list_reagents = null
 	var/spawned_disease = null
 	var/disease_amount = 20
-	var/spillable = 0
+	var/spillable = FALSE
 
 /obj/item/reagent_containers/Initialize(mapload, vol)
 	. = ..()
@@ -54,7 +54,8 @@
 		for (var/datum/reagent/R in snack.reagents.reagent_list) //no reagents will be left behind
 			data += "[R.id]([R.volume] units); " //Using IDs because SOME chemicals(I'm looking at you, chlorhydrate-beer) have the same names as other chemicals.
 		return data
-	else return "No reagents"
+	else
+		return "No reagents"
 
 /obj/item/reagent_containers/proc/canconsume(mob/eater, mob/user)
 	if(!iscarbon(eater))
@@ -79,13 +80,15 @@
 		..()
 
 /obj/item/reagent_containers/fire_act(exposed_temperature, exposed_volume)
-	reagents.chem_temp += 30
-	reagents.handle_reactions()
+	reagents.expose_temperature(exposed_temperature)
 	..()
 
 /obj/item/reagent_containers/throw_impact(atom/target)
 	. = ..()
 	SplashReagents(target, TRUE)
+
+/obj/item/reagent_containers/proc/bartender_check(atom/target)
+	return (target.CanPass(src, get_turf(src)) && thrownby && thrownby.mind && thrownby.mind.assigned_role == "Bartender")
 
 /obj/item/reagent_containers/proc/SplashReagents(atom/target, thrown = FALSE)
 	if(!reagents || !reagents.total_volume || !spillable)
@@ -106,7 +109,7 @@
 			add_logs(thrownby, M, "splashed", R)
 		reagents.reaction(target, TOUCH)
 
-	else if((target.CanPass(src, get_turf(src))) && thrown && thrownby && thrownby.mind && thrownby.mind.assigned_role == "Bartender")
+	else if(bartender_check(target) && thrown)
 		visible_message("<span class='notice'>[src] lands onto the [target.name] without spilling a single drop.</span>")
 		return
 
@@ -124,6 +127,8 @@
 
 /obj/item/reagent_containers/microwave_act(obj/machinery/microwave/M)
 	if(is_open_container())
-		reagents.chem_temp = max(reagents.chem_temp, 1000)
-		reagents.handle_reactions()
+		reagents.expose_temperature(1000)
 	..()
+
+/obj/item/reagent_containers/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	reagents.expose_temperature(exposed_temperature)

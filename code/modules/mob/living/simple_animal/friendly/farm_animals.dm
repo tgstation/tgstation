@@ -115,7 +115,7 @@
 	health = 50
 	maxHealth = 50
 	var/obj/item/udder/udder = null
-	gold_core_spawnable = 2
+	gold_core_spawnable = FRIENDLY_SPAWN
 	blood_volume = BLOOD_VOLUME_NORMAL
 
 /mob/living/simple_animal/cow/Initialize()
@@ -191,7 +191,7 @@
 	var/amount_grown = 0
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
-	gold_core_spawnable = 2
+	gold_core_spawnable = FRIENDLY_SPAWN
 
 /mob/living/simple_animal/chick/Initialize()
 	. = ..()
@@ -245,7 +245,7 @@
 	var/list/feedMessages = list("It clucks happily.","It clucks happily.")
 	var/list/layMessage = list("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")
 	var/list/validColors = list("brown","black","white")
-	gold_core_spawnable = 2
+	gold_core_spawnable = FRIENDLY_SPAWN
 	var/static/chicken_count = 0
 
 /mob/living/simple_animal/chicken/Initialize()
@@ -268,7 +268,6 @@
 		if(!stat && eggsleft < 8)
 			var/feedmsg = "[user] feeds [O] to [name]! [pick(feedMessages)]"
 			user.visible_message(feedmsg)
-			user.drop_item()
 			qdel(O)
 			eggsleft += rand(1, 4)
 		else

@@ -8,7 +8,6 @@
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	materials = list(MAT_METAL = 300, MAT_GLASS = 300)
-	origin_tech = "magnets=2;combat=1"
 
 	crit_fail = 0     //Is the flash burnt out?
 	var/times_used = 0 //Number of times it's been used.
@@ -71,15 +70,12 @@
 	return 1
 
 /obj/item/device/assembly/flash/proc/try_use_flash(mob/user = null)
-	flash_recharge(10)
-
 	if(crit_fail)
 		return 0
-
 	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
-	update_icon(1)
 	times_used++
-
+	flash_recharge(10)
+	update_icon(1)
 	if(user && !clown_check(user))
 		return 0
 
@@ -107,11 +103,9 @@
 /obj/item/device/assembly/flash/attack(mob/living/M, mob/user)
 	if(!try_use_flash(user))
 		return 0
-
 	if(iscarbon(M))
 		flash_carbon(M, user, 5, 1)
 		return 1
-
 	else if(issilicon(M))
 		var/mob/living/silicon/robot/R = M
 		add_logs(user, R, "flashed", src)
@@ -146,31 +140,23 @@
 
 /obj/item/device/assembly/flash/proc/terrible_conversion_proc(mob/living/carbon/human/H, mob/user)
 	if(istype(H) && ishuman(user) && H.stat != DEAD)
-		if(user.mind && (user.mind in SSticker.mode.head_revolutionaries))
-			if(H.client)
-				if(H.stat == CONSCIOUS)
-					H.mind_initialize() //give them a mind datum if they don't have one.
-					var/resisted
-					if(!H.isloyal())
-						if(user.mind in SSticker.mode.head_revolutionaries)
-							if(SSticker.mode.add_revolutionary(H.mind))
-								H.Stun(60)
-								times_used -- //Flashes less likely to burn out for headrevs when used for conversion
-							else
-								resisted = 1
-					else
-						resisted = 1
-
-					if(resisted)
-						to_chat(user, "<span class='warning'>This mind seems resistant to the flash!</span>")
-				else
-					to_chat(user, "<span class='warning'>They must be conscious before you can convert them!</span>")
-			else
+		if(user.mind)
+			var/datum/antagonist/rev/head/converter = user.mind.has_antag_datum(/datum/antagonist/rev/head)
+			if(!converter)
+				return
+			if(!H.client)
 				to_chat(user, "<span class='warning'>This mind is so vacant that it is not susceptible to influence!</span>")
+				return
+			if(H.stat != CONSCIOUS)
+				to_chat(user, "<span class='warning'>They must be conscious before you can convert them!</span>")
+				return
+			if(converter.add_revolutionary(H.mind))
+				times_used -- //Flashes less likely to burn out for headrevs when used for conversion
+			else
+				to_chat(user, "<span class='warning'>This mind seems resistant to the flash!</span>")
 
 
 /obj/item/device/assembly/flash/cyborg
-	origin_tech = null
 
 /obj/item/device/assembly/flash/cyborg/attack(mob/living/M, mob/user)
 	..()
@@ -236,7 +222,6 @@
 	throw_range = 3
 	w_class = WEIGHT_CLASS_BULKY
 	materials = list(MAT_GLASS=7500, MAT_METAL=1000)
-	origin_tech = "materials=3;combat=4"
 	attack_verb = list("shoved", "bashed")
 	block_chance = 50
 	armor = list(melee = 50, bullet = 50, laser = 50, energy = 0, bomb = 30, bio = 0, rad = 0, fire = 80, acid = 70)

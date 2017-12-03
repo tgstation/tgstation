@@ -64,7 +64,7 @@
 	return 1 //diseases, stings, etc can pass
 
 /obj/structure/plasticflaps/CanPass(atom/movable/A, turf/T)
-	if(istype(A) && A.checkpass(PASSGLASS))
+	if(istype(A) && (A.pass_flags & PASSGLASS))
 		return prob(60)
 
 	var/obj/structure/bed/B = A
@@ -76,7 +76,7 @@
 		if(C.move_delay)
 			return 0
 
-	if(istype(A, /obj/mecha))
+	if(ismecha(A))
 		return 0
 
 

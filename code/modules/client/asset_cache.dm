@@ -61,7 +61,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	var/t = 0
 	var/timeout_time = (ASSET_CACHE_SEND_TIMEOUT * client.sending.len) + ASSET_CACHE_SEND_TIMEOUT
 	while(client && !client.completed_asset_jobs.Find(job) && t < timeout_time) // Reception is handled in Topic()
-		sleep(1) // Lock up the caller until this is received.
+		stoplag(1) // Lock up the caller until this is received.
 		t++
 
 	if(client)
@@ -112,7 +112,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	var/t = 0
 	var/timeout_time = ASSET_CACHE_SEND_TIMEOUT * client.sending.len
 	while(client && !client.completed_asset_jobs.Find(job) && t < timeout_time) // Reception is handled in Topic()
-		sleep(1) // Lock up the caller until this is received.
+		stoplag(1) // Lock up the caller until this is received.
 		t++
 
 	if(client)
@@ -131,7 +131,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		if (register_asset)
 			register_asset(file,files[file])
 		send_asset(client,file)
-		sleep(0) //queuing calls like this too quickly can cause issues in some client versions
+		stoplag(0) //queuing calls like this too quickly can cause issues in some client versions
 
 //This proc "registers" an asset, it adds it to the cache for further use, you cannot touch it from this point on or you'll fuck things up.
 //if it's an icon or something be careful, you'll have to copy it before further use.
@@ -180,7 +180,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 //Generates assets based on iconstates of a single icon
 /datum/asset/simple/icon_states
 	var/icon
-	var/direction = SOUTH
+	var/list/directions = list(SOUTH)
 	var/frame = 1
 	var/movement_states = FALSE
 
@@ -189,19 +189,26 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 	verify = FALSE
 
-/datum/asset/simple/icon_states/register()
-	for(var/icon_state_name in icon_states(icon))
-		var/asset = icon(icon, icon_state_name, direction, frame, movement_states)
-		if (!asset)
-			continue
-		asset = fcopy_rsc(asset) //dedupe
-		var/asset_name = sanitize_filename("[prefix].[icon_state_name].png")
-		if (generic_icon_names)
-			asset_name = "[generate_asset_name(asset)].png"
+/datum/asset/simple/icon_states/register(_icon = icon)
+	for(var/icon_state_name in icon_states(_icon))
+		for(var/direction in directions)
+			var/asset = icon(_icon, icon_state_name, direction, frame, movement_states)
+			if (!asset)
+				continue
+			asset = fcopy_rsc(asset) //dedupe
+			var/prefix2 = (directions.len > 1) ? "[dir2text(direction)]." : ""
+			var/asset_name = sanitize_filename("[prefix].[prefix2][icon_state_name].png")
+			if (generic_icon_names)
+				asset_name = "[generate_asset_name(asset)].png"
 
-		assets[asset_name] = asset
+			register_asset(asset_name, asset)
 
-	..()
+/datum/asset/simple/icon_states/multiple_icons
+	var/list/icons
+
+/datum/asset/simple/icon_states/multiple_icons/register()
+	for(var/i in icons)
+		..(i)
 
 
 //DEFINITIONS FOR ASSET DATUMS START HERE.
@@ -354,3 +361,17 @@ GLOBAL_LIST_EMPTY(asset_datums)
 /datum/asset/simple/icon_states/emojis
 	icon = 'icons/emoji.dmi'
 	generic_icon_names = TRUE
+
+/datum/asset/simple/icon_states/multiple_icons/pipes
+	icons = list('icons/obj/atmospherics/pipes/pipe_item.dmi', 'icons/obj/atmospherics/pipes/disposal.dmi')
+	prefix = "pipe"
+
+/datum/asset/simple/icon_states/multiple_icons/pipes/New()
+	directions = GLOB.alldirs
+	..()
+
+/datum/asset/simple/icon_states/multiple_icons/pipes/register()
+	..()
+	var/meter = icon('icons/obj/atmospherics/pipes/simple.dmi', "meterX", SOUTH, frame, movement_states)
+	if(meter)
+		register_asset(sanitize_filename("[prefix].south.meterX.png"), fcopy_rsc(meter))

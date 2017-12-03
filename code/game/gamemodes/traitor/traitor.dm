@@ -60,13 +60,13 @@
 
 /datum/game_mode/traitor/post_setup()
 	for(var/datum/mind/traitor in pre_traitors)
-		spawn(rand(10,100))
-			traitor.add_antag_datum(antag_datum)
+		var/datum/antagonist/traitor/new_antag = new antag_datum(traitor)
+		new_antag.should_specialise = TRUE
+		addtimer(CALLBACK(traitor, /datum/mind.proc/add_antag_datum, new_antag), rand(10,100))
 	if(!exchange_blue)
 		exchange_blue = -1 //Block latejoiners from getting exchange objectives
-	modePlayer += traitors
 	..()
-	return 1
+	return TRUE
 
 /datum/game_mode/traitor/make_antag_chance(mob/living/carbon/human/character) //Assigns traitor to latejoiners
 	var/tsc = CONFIG_GET(number/traitor_scaling_coeff)
@@ -81,7 +81,9 @@
 						add_latejoin_traitor(character.mind)
 
 /datum/game_mode/traitor/proc/add_latejoin_traitor(datum/mind/character)
-	character.add_antag_datum(antag_datum)
+	var/datum/antagonist/traitor/new_antag = new antag_datum(character)
+	new_antag.should_specialise = TRUE
+	character.add_antag_datum(new_antag)
 
 
 
@@ -94,18 +96,18 @@
 	if(traitors.len)
 		var/text = "<br><font size=3><b>The [traitor_name]s were:</b></font>"
 		for(var/datum/mind/traitor in traitors)
-			var/traitorwin = 1
+			var/traitorwin = TRUE
 
 			text += printplayer(traitor)
 
 			var/TC_uses = 0
-			var/uplink_true = 0
+			var/uplink_true = FALSE
 			var/purchases = ""
-			for(var/obj/item/device/uplink/H in GLOB.uplinks)
+			for(var/datum/component/uplink/H in GLOB.uplinks)
 				if(H && H.owner && H.owner == traitor.key)
 					TC_uses += H.spent_telecrystals
-					uplink_true = 1
-					purchases += H.purchase_log
+					uplink_true = TRUE
+					purchases += H.purchase_log.generate_render(FALSE)
 
 			var/objectives = ""
 			if(traitor.objectives.len)//If the traitor had no objectives, don't need to process this.
@@ -113,11 +115,11 @@
 				for(var/datum/objective/objective in traitor.objectives)
 					if(objective.check_completion())
 						objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
-						SSblackbox.add_details("traitor_objective","[objective.type]|SUCCESS")
+						SSblackbox.record_feedback("nested tally", "traitor_objective", 1, list("[objective.type]", "SUCCESS"))
 					else
 						objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
-						SSblackbox.add_details("traitor_objective","[objective.type]|FAIL")
-						traitorwin = 0
+						SSblackbox.record_feedback("nested tally", "traitor_objective", 1, list("[objective.type]", "FAIL"))
+						traitorwin = FALSE
 					count++
 
 			if(uplink_true)
@@ -137,10 +139,11 @@
 
 			if(traitorwin)
 				text += "<br><font color='green'><B>The [special_role_text] was successful!</B></font>"
-				SSblackbox.add_details("traitor_success","SUCCESS")
+				SSblackbox.record_feedback("tally", "traitor_success", 1, "SUCCESS")
 			else
 				text += "<br><font color='red'><B>The [special_role_text] has failed!</B></font>"
-				SSblackbox.add_details("traitor_success","FAIL")
+				SSblackbox.record_feedback("tally", "traitor_success", 1, "FAIL")
+				SEND_SOUND(traitor.current, 'sound/ambience/ambifailure.ogg')
 
 			text += "<br>"
 
@@ -148,7 +151,7 @@
 		<b>The code responses were:</b> <font color='red'>[GLOB.syndicate_code_response]</font><br>"
 		to_chat(world, text)
 
-	return 1
+	return TRUE
 
 /datum/game_mode/traitor/generate_report()
 	return "Although more specific threats are commonplace, you should always remain vigilant for Syndicate agents aboard your station. Syndicate communications have implied that many \

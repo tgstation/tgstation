@@ -240,7 +240,7 @@
 
 	if(!tracker)
 		if(istype(W, /obj/item/electronics/tracker))
-			if(!user.drop_item())
+			if(!user.temporarilyRemoveItemFromInventory(W))
 				return
 			tracker = 1
 			qdel(W)

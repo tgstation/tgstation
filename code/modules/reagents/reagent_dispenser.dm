@@ -31,7 +31,7 @@
 /obj/structure/reagent_dispensers/examine(mob/user)
 	..()
 	if(reagents.total_volume)
-		to_chat(user, "<span class='notice'>It has [reagents.total_volume] units left.</span>")
+		to_chat(user, "<span class='notice'>It has [reagents.total_volume] unit\s left.</span>")
 	else
 		to_chat(user, "<span class='danger'>It's empty.</span>")
 
@@ -146,7 +146,12 @@
 
 /obj/structure/reagent_dispensers/water_cooler/examine(mob/user)
 	..()
-	to_chat(user, "There are [paper_cups ? paper_cups : "no"] paper cups left.")
+	if (paper_cups > 1)
+		to_chat(user, "There are [paper_cups] paper cups left.")
+	else if (paper_cups == 1)
+		to_chat(user, "There is one paper cup left.")
+	else
+		to_chat(user, "There are no paper cups left.")
 
 /obj/structure/reagent_dispensers/water_cooler/attack_hand(mob/living/user)
 	if(!paper_cups)
@@ -177,3 +182,11 @@
 	anchored = TRUE
 	density = FALSE
 	reagent_id = "virusfood"
+
+
+/obj/structure/reagent_dispensers/cooking_oil
+	name = "vat of cooking oil"
+	desc = "A huge metal vat with a tap on the front. Filled with cooking oil for use in frying food."
+	icon_state = "vat"
+	anchored = TRUE
+	reagent_id = "cooking_oil"

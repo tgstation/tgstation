@@ -21,6 +21,7 @@
 	maxHealth = INFINITY
 	layer = GHOST_LAYER
 	healable = FALSE
+	spacewalk = TRUE
 	sight = SEE_SELF
 
 	see_in_dark = 8
@@ -153,8 +154,6 @@
 
 
 //Immunities
-/mob/living/simple_animal/revenant/Process_Spacemove(movement_dir = 0)
-	return 1
 
 /mob/living/simple_animal/revenant/ex_act(severity, target)
 	return 1 //Immune to the effects of explosions.
@@ -353,7 +352,7 @@
 		return ..()
 	user.visible_message("<span class='notice'>[user] scatters [src] in all directions.</span>", \
 						 "<span class='notice'>You scatter [src] across the area. The particles slowly fade away.</span>")
-	user.drop_item()
+	user.dropItemToGround(src)
 	scatter()
 
 /obj/item/ectoplasm/revenant/throw_impact(atom/hit_atom)

@@ -14,7 +14,7 @@
 	for(var/mob/M in GLOB.player_list)
 		if(M.binarycheck())
 			if(isAI(M))
-				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='?src=\ref[M];track=[html_encode(name)]'><span class='name'>[name] ([desig])</span></a> <span class='message'>[message_a]</span></span></i>"
+				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='?src=[REF(M)];track=[html_encode(name)]'><span class='name'>[name] ([desig])</span></a> <span class='message'>[message_a]</span></span></i>"
 				to_chat(M, renderedAI)
 			else
 				to_chat(M, rendered)
@@ -57,14 +57,3 @@
 		return MODE_ROBOT
 	else
 		return .
-
-/mob/living/silicon/handle_inherent_channels(message, message_mode)
-	. = ..()
-	if(.)
-		return .
-
-	if(message_mode == MODE_BINARY)
-		if(binarycheck())
-			robot_talk(message)
-		return 1
-	return 0

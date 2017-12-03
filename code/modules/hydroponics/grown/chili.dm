@@ -45,11 +45,10 @@
 /obj/item/reagent_containers/food/snacks/grown/icepepper
 	seed = /obj/item/seeds/chili/ice
 	name = "ice pepper"
-	desc = "It's a mutant strain of chili"
+	desc = "It's a mutant strain of chili."
 	icon_state = "icepepper"
 	filling_color = "#0000CD"
 	bitesize_mod = 2
-	origin_tech = "biotech=4"
 	foodtype = VEGETABLES
 
 // Ghost Chili
@@ -76,7 +75,6 @@
 	var/mob/living/carbon/human/held_mob
 	filling_color = "#F8F8FF"
 	bitesize_mod = 4
-	origin_tech = "biotech=4;magnets=5"
 	foodtype = VEGETABLES
 
 /obj/item/reagent_containers/food/snacks/grown/ghost_chili/attack_hand(mob/user)

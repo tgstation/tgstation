@@ -44,6 +44,8 @@
 	if (opacity)
 		has_opaque_atom = TRUE
 
+	ComponentInitialize()
+
 	return INITIALIZE_HINT_NORMAL
 
 /turf/open/space/attack_ghost(mob/dead/observer/user)
@@ -177,7 +179,8 @@
 			var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 			if(L)
 				return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 1)
-			else return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 3)
+			else
+				return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 3)
 	return FALSE
 
 /turf/open/space/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)

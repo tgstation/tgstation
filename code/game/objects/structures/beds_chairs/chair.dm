@@ -1,18 +1,26 @@
 /obj/structure/chair
 	name = "chair"
-	desc = "You sit in this. Either by will or force.\n<span class='notice'>Drag your sprite to sit in the chair. Alt-click to rotate it clockwise.</span>"
+	desc = "You sit in this. Either by will or force."
 	icon = 'icons/obj/chairs.dmi'
 	icon_state = "chair"
 	anchored = TRUE
 	can_buckle = 1
 	buckle_lying = 0 //you sit in a chair, not lay
-	resistance_flags = 0
+	resistance_flags = NONE
 	max_integrity = 250
 	integrity_failure = 25
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 1
 	var/item_chair = /obj/item/chair // if null it can't be picked up
 	layer = OBJ_LAYER
+
+/obj/structure/chair/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>")
+	if(!has_buckled_mobs())
+		to_chat(user, "<span class='notice'>Drag your sprite to sit in it. Alt-click to rotate.</span>")
+	else
+		to_chat(user, "<span class='notice'>Alt-click to rotate.</span>")
 
 /obj/structure/chair/Initialize()
 	. = ..()
@@ -50,14 +58,14 @@
 		playsound(src.loc, W.usesound, 50, 1)
 		deconstruct()
 	else if(istype(W, /obj/item/assembly/shock_kit))
-		if(!user.drop_item())
+		if(!user.temporarilyRemoveItemFromInventory(W))
 			return
 		var/obj/item/assembly/shock_kit/SK = W
 		var/obj/structure/chair/e_chair/E = new /obj/structure/chair/e_chair(src.loc)
 		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 		E.setDir(dir)
 		E.part = SK
-		SK.loc = E
+		SK.forceMove(E)
 		SK.master = E
 		qdel(src)
 	else
@@ -83,11 +91,15 @@
 		layer = OBJ_LAYER
 
 /obj/structure/chair/post_buckle_mob(mob/living/M)
-	..()
+	. = ..()
+	handle_layer()
+
+/obj/structure/chair/post_unbuckle_mob()
+	. = ..()
 	handle_layer()
 
 /obj/structure/chair/proc/spin()
-	setDir(turn(dir, 90))
+	setDir(turn(dir, -90))
 
 /obj/structure/chair/setDir(newdir)
 	..()
@@ -140,7 +152,7 @@
 
 /obj/structure/chair/comfy
 	name = "comfy chair"
-	desc = "It looks comfy.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
+	desc = "It looks comfy."
 	icon_state = "comfychair"
 	color = rgb(255,255,255)
 	resistance_flags = FLAMMABLE
@@ -159,12 +171,18 @@
 	return ..()
 
 /obj/structure/chair/comfy/post_buckle_mob(mob/living/M)
-	..()
+	. = ..()
+	update_armrest()
+
+/obj/structure/chair/comfy/proc/update_armrest()
 	if(has_buckled_mobs())
 		add_overlay(armrest)
 	else
 		cut_overlay(armrest)
 
+/obj/structure/chair/comfy/post_unbuckle_mob()
+	. = ..()
+	update_armrest()
 
 /obj/structure/chair/comfy/brown
 	color = rgb(255,113,0)
@@ -185,6 +203,12 @@
 	anchored = FALSE
 	buildstackamount = 5
 	item_chair = null
+
+
+/obj/structure/chair/office/Moved()
+	. = ..()
+	if(has_gravity())
+		playsound(src, 'sound/effects/roll.ogg', 100, 1)
 
 /obj/structure/chair/office/light
 	icon_state = "officechair_white"
@@ -344,6 +368,7 @@
 	max_integrity = 150
 	buildstacktype = /obj/item/stack/tile/brass
 	buildstackamount = 1
+	item_chair = null
 
 /obj/structure/chair/brass/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)

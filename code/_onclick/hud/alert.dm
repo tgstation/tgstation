@@ -15,7 +15,7 @@
  Override makes it so the alert is not replaced until cleared by a clear_alert with clear_override, and it's used for hallucinations.
  */
 
-	if(!category)
+	if(!category || QDELETED(src))
 		return
 
 	var/obj/screen/alert/thealert
@@ -173,7 +173,7 @@
 
 /obj/screen/alert/verygross
 	name = "Very grossed out."
-	desc = "I'm not feeling very well.."
+	desc = "You're not feeling very well..."
 	icon_state = "gross2"
 
 /obj/screen/alert/disgusted
@@ -243,7 +243,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /obj/screen/alert/fire/Click()
 	var/mob/living/L = usr
-	if(!L.can_resist())
+	if(!istype(L) || !L.can_resist())
 		return
 	L.changeNext_move(CLICK_CD_RESIST)
 	if(L.canmove)
@@ -390,7 +390,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		var/servants = 0
 		var/validservants = 0
 		var/list/textlist
-		for(var/mob/living/L in GLOB.living_mob_list)
+		for(var/mob/living/L in GLOB.alive_mob_list)
 			if(is_servant_of_ratvar(L))
 				servants++
 				if(ishuman(L) || issilicon(L))
@@ -407,16 +407,13 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 					textlist += "[i] Scripture: <b>[SSticker.scripture_states[i] ? "UNLOCKED":"LOCKED"]</b><br>"
 		var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
 		if(G)
-			var/time_info
+			var/time_info = G.get_arrival_time(FALSE)
 			var/time_name
 			if(G.seconds_until_activation)
-				time_info = G.seconds_until_activation
 				time_name = "until the Ark activates"
 			else if(G.grace_period)
-				time_info = G.grace_period
 				time_name = "of grace period remaining"
 			else if(G.progress_in_seconds)
-				time_info = GATEWAY_RATVAR_ARRIVAL - G.progress_in_seconds
 				time_name = "until the Ark finishes summoning"
 			if(time_info)
 				textlist += "<b>[time_info / 60] minutes</b> [time_name].<br>"
@@ -491,8 +488,10 @@ so as to remain in compliance with the most up-to-date laws."
 	var/atom/target = null
 
 /obj/screen/alert/hackingapc/Click()
-	if(!usr || !usr.client) return
-	if(!target) return
+	if(!usr || !usr.client)
+		return
+	if(!target)
+		return
 	var/mob/living/silicon/ai/AI = usr
 	var/turf/T = get_turf(target)
 	if(T)
@@ -515,7 +514,8 @@ so as to remain in compliance with the most up-to-date laws."
 	timeout = 300
 
 /obj/screen/alert/notify_cloning/Click()
-	if(!usr || !usr.client) return
+	if(!usr || !usr.client)
+		return
 	var/mob/dead/observer/G = usr
 	G.reenter_corpse()
 
@@ -528,10 +528,13 @@ so as to remain in compliance with the most up-to-date laws."
 	var/action = NOTIFY_JUMP
 
 /obj/screen/alert/notify_action/Click()
-	if(!usr || !usr.client) return
-	if(!target) return
+	if(!usr || !usr.client)
+		return
+	if(!target)
+		return
 	var/mob/dead/observer/G = usr
-	if(!istype(G)) return
+	if(!istype(G))
+		return
 	switch(action)
 		if(NOTIFY_ATTACK)
 			target.attack_ghost(G)
@@ -559,7 +562,7 @@ so as to remain in compliance with the most up-to-date laws."
 
 /obj/screen/alert/restrained/Click()
 	var/mob/living/L = usr
-	if(!L.can_resist())
+	if(!istype(L) || !L.can_resist())
 		return
 	L.changeNext_move(CLICK_CD_RESIST)
 	if((L.canmove) && (L.last_special <= world.time))
@@ -567,7 +570,7 @@ so as to remain in compliance with the most up-to-date laws."
 
 /obj/screen/alert/restrained/buckled/Click()
 	var/mob/living/L = usr
-	if(!L.can_resist())
+	if(!istype(L) || !L.can_resist())
 		return
 	L.changeNext_move(CLICK_CD_RESIST)
 	if(L.last_special <= world.time)
@@ -623,4 +626,5 @@ so as to remain in compliance with the most up-to-date laws."
 	. = ..()
 	severity = 0
 	master = null
+	mob_viewer = null
 	screen_loc = ""

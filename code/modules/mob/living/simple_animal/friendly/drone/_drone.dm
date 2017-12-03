@@ -80,7 +80,7 @@
 
 /mob/living/simple_animal/drone/Initialize()
 	. = ..()
-
+	GLOB.drones_list += src
 	access_card = new /obj/item/card/id(src)
 	var/datum/job/captain/C = new /datum/job/captain
 	access_card.access = C.get_access()
@@ -102,8 +102,8 @@
 	else
 		verbs -= /mob/living/simple_animal/drone/verb/toggle_statics
 
-	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
-	diag_hud.add_to_hud(src)
+	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
+		diag_hud.add_to_hud(src)
 
 
 /mob/living/simple_animal/drone/med_hud_set_health()
@@ -124,6 +124,7 @@
 		holder.icon_state = "hudstat"
 
 /mob/living/simple_animal/drone/Destroy()
+	GLOB.drones_list -= src
 	qdel(access_card) //Otherwise it ends up on the floor!
 	return ..()
 

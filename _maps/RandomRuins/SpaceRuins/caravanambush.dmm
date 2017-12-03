@@ -16,7 +16,6 @@
 /turf/closed/wall,
 /area/ruin/powered)
 "ae" = (
-/turf/template_noop,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
@@ -275,7 +274,6 @@
 /turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/unpowered/no_grav)
 "aX" = (
-/turf/template_noop,
 /turf/open/floor/plating/airless{
 	icon = 'icons/obj/smooth_structures/lattice.dmi';
 	icon_plating = "lattice";
@@ -301,7 +299,6 @@
 /turf/open/floor/plasteel,
 /area/ruin/powered)
 "bb" = (
-/turf/template_noop,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
@@ -441,7 +438,6 @@
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/unpowered)
 "bz" = (
-/turf/open/floor/mineral/titanium/blue,
 /turf/closed/wall/mineral/titanium/interior,
 /area/ruin/unpowered)
 "bA" = (
@@ -533,7 +529,6 @@
 	},
 /area/ruin/unpowered)
 "bP" = (
-/turf/template_noop,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 8;
 	icon_state = "diagonalWall3"
@@ -610,7 +605,9 @@
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/unpowered)
 "bZ" = (
-/obj/machinery/computer,
+/obj/machinery/computer{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/unpowered)
 "ca" = (
@@ -735,30 +732,10 @@
 /area/ruin/powered)
 "cu" = (
 /obj/structure/closet/crate/secure/engineering,
-/obj/item/wrench{
-	color = "#ff0000";
-	desc = "A prototype of a new wrench design, allegedly the red color scheme makes it go faster.";
-	name = "experimental wrench";
-	toolspeed = 3
-	},
-/obj/item/screwdriver{
-	color = "#ff0000";
-	desc = "A prototype of a new screwdriver design, allegedly the red color scheme makes it go faster.";
-	name = "experimental screwdriver";
-	toolspeed = 3
-	},
-/obj/item/wirecutters{
-	color = "#ff0000";
-	desc = "A prototype of a new wirecutter design, allegedly the red color scheme makes it go faster.";
-	name = "experimental wirecutters";
-	toolspeed = 3
-	},
-/obj/item/crowbar/red{
-	color = "#ff0000";
-	desc = "A prototype of a new crowbar design, allegedly the red color scheme makes it go faster.";
-	name = "experimental crowbar";
-	toolspeed = 3
-	},
+/obj/item/wrench/caravan,
+/obj/item/screwdriver/caravan,
+/obj/item/wirecutters/caravan,
+/obj/item/crowbar/red/caravan,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/powered)
 "cv" = (
@@ -1176,6 +1153,24 @@
 	},
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
+"dA" = (
+/obj/machinery/computer{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"dB" = (
+/obj/machinery/computer{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered)
+"dC" = (
+/obj/machinery/computer{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered)
 
 (1,1,1) = {"
 aa
@@ -1867,7 +1862,7 @@ aa
 aa
 ab
 ce
-cf
+dB
 ce
 ab
 aa
@@ -4289,7 +4284,7 @@ ab
 ay
 aG
 aM
-ay
+dA
 ab
 aa
 aa
@@ -4506,7 +4501,7 @@ aa
 aa
 ab
 ce
-cf
+dC
 ce
 ab
 aa

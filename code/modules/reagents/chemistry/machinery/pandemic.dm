@@ -121,7 +121,7 @@
 		add_overlay("waitlight")
 
 /obj/machinery/computer/pandemic/proc/eject_beaker()
-	beaker.forceMove(get_turf(src))
+	beaker.forceMove(drop_location())
 	beaker = null
 	update_icon()
 
@@ -159,14 +159,17 @@
 		return
 	switch(action)
 		if("eject_beaker")
-			eject_beaker()
+			if(beaker)
+				eject_beaker()
 			. = TRUE
 		if("empty_beaker")
-			beaker.reagents.clear_reagents()
+			if(beaker)
+				beaker.reagents.clear_reagents()
 			. = TRUE
 		if("empty_eject_beaker")
-			beaker.reagents.clear_reagents()
-			eject_beaker()
+			if(beaker)
+				beaker.reagents.clear_reagents()
+				eject_beaker()
 			. = TRUE
 		if("rename_disease")
 			var/id = get_virus_id_by_index(text2num(params["index"]))
@@ -183,7 +186,7 @@
 			var/id = get_virus_id_by_index(text2num(params["index"]))
 			var/datum/disease/advance/A = new(FALSE, SSdisease.archive_diseases[id])
 			var/list/data = list("viruses" = list(A))
-			var/obj/item/reagent_containers/glass/bottle/B = new(get_turf(src))
+			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location())
 			B.name = "[A.name] culture bottle"
 			B.desc = "A small bottle. Contains [A.agent] culture in synthblood medium."
 			B.reagents.add_reagent("blood", 20, data)
@@ -194,7 +197,7 @@
 		if("create_vaccine_bottle")
 			var/id = params["index"]
 			var/datum/disease/D = SSdisease.archive_diseases[id]
-			var/obj/item/reagent_containers/glass/bottle/B = new(get_turf(src))
+			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location())
 			B.name = "[D.name] vaccine bottle"
 			B.reagents.add_reagent("vaccine", 15, list(id))
 			wait = TRUE
@@ -234,6 +237,6 @@
 
 /obj/machinery/computer/pandemic/on_deconstruction()
 	if(beaker)
-		beaker.forceMove(get_turf(src))
+		beaker.forceMove(drop_location())
 		beaker = null
 	. = ..()

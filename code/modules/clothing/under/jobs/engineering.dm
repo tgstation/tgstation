@@ -31,8 +31,6 @@
 	icon_state = "robotics"
 	item_state = "robotics"
 	item_color = "robotics"
-	resistance_flags = NONE
-
 
 /obj/item/clothing/under/rank/mechanic
 	desc = "It's a pair of overalls worn by mechanics."

@@ -32,7 +32,7 @@
 		if(getorgan(/obj/item/organ/brain))
 			msg += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive, with no signs of life.</span>\n"
 		else if(get_bodypart("head"))
-			msg += "<span class='deadsay'>[t_He] appears that [t_his] brain is missing...</span>\n"
+			msg += "<span class='deadsay'>It appears that [t_his] brain is missing...</span>\n"
 
 	var/list/missing = get_missing_limbs()
 	for(var/t in missing)
@@ -44,32 +44,38 @@
 	msg += "<span class='warning'>"
 	var/temp = getBruteLoss()
 	if(temp)
-		if (temp < 30)
+		if (temp < 25)
 			msg += "[t_He] [t_has] minor bruising.\n"
+		else if (temp < 50)
+			msg += "[t_He] [t_has] <b>moderate</b> bruising!\n"
 		else
 			msg += "<B>[t_He] [t_has] severe bruising!</B>\n"
 
 	temp = getFireLoss()
 	if(temp)
-		if (temp < 30)
+		if (temp < 25)
 			msg += "[t_He] [t_has] minor burns.\n"
+		else if (temp < 50)
+			msg += "[t_He] [t_has] <b>moderate</b> burns!\n"
 		else
 			msg += "<B>[t_He] [t_has] severe burns!</B>\n"
 
 	temp = getCloneLoss()
 	if(temp)
-		if(getCloneLoss() < 30)
+		if(temp < 25)
 			msg += "[t_He] [t_is] slightly deformed.\n"
+		else if (temp < 50)
+			msg += "[t_He] [t_is] <b>moderately</b> deformed!\n"
 		else
-			msg += "<b>[t_He] [t_is] severely deformed.</b>\n"
+			msg += "<b>[t_He] [t_is] severely deformed!</b>\n"
 
 	if(getBrainLoss() > 60)
-		msg += "[t_He] seems to be clumsy and unable to think.\n"
+		msg += "[t_He] seem[p_s()] to be clumsy and unable to think.\n"
 
 	if(fire_stacks > 0)
 		msg += "[t_He] [t_is] covered in something flammable.\n"
 	if(fire_stacks < 0)
-		msg += "[t_He] [t_is] looks a little soaked.\n"
+		msg += "[t_He] look[p_s()] a little soaked.\n"
 
 	if(pulledby && pulledby.grab_state)
 		msg += "[t_He] [t_is] restrained by [pulledby]'s grip.\n"

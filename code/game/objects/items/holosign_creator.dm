@@ -11,7 +11,6 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
-	origin_tech = "magnets=1;programming=3"
 	flags_1 = NOBLUDGEON_1
 	var/list/signs = list()
 	var/max_signs = 10
@@ -86,7 +85,7 @@
 
 /obj/item/holosign_creator/cyborg
 	name = "Energy Barrier Projector"
-	desc = "A holographic projector that creates fragile energy fields"
+	desc = "A holographic projector that creates fragile energy fields."
 	creation_time = 15
 	max_signs = 9
 	holosign_type = /obj/structure/holosign/barrier/cyborg

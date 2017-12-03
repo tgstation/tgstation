@@ -150,7 +150,7 @@
 	if(prob(60))
 		I = D.get_active_held_item()
 		if(I)
-			if(D.drop_item())
+			if(D.temporarilyRemoveItemFromInventory(I))
 				A.put_in_hands(I)
 		D.visible_message("<span class='danger'>[A] has disarmed [D]!</span>", \
 							"<span class='userdanger'>[A] has disarmed [D]!</span>")
@@ -190,4 +190,4 @@
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
-	resistance_flags = 0
+	resistance_flags = NONE

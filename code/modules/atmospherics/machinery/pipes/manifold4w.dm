@@ -6,11 +6,14 @@
 	icon_state = "manifold4w"
 
 	name = "4-way pipe manifold"
-	desc = "A manifold composed of regular pipes"
+	desc = "A manifold composed of regular pipes."
 
 	initialize_directions = NORTH|SOUTH|EAST|WEST
 
 	device_type = QUATERNARY
+
+	construction_type = /obj/item/pipe/quaternary
+	pipe_state = "manifold4w"
 
 /obj/machinery/atmospherics/pipe/manifold4w/SetInitDirections()
 	initialize_directions = initial(initialize_directions)

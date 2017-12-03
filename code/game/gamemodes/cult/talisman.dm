@@ -21,7 +21,6 @@
 	if(invoke(user))
 		uses--
 	if(uses <= 0)
-		user.drop_item()
 		qdel(src)
 
 /obj/item/paper/talisman/proc/invoke(mob/living/user, successfuluse = 1)
@@ -182,7 +181,6 @@
 				C.Jitter(15)
 			if(is_servant_of_ratvar(target))
 				target.adjustBruteLoss(15)
-		user.drop_item()
 		qdel(src)
 		return
 	..()
@@ -204,13 +202,13 @@
 	user.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(user), slot_wear_suit)
 	user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult/alt(user), slot_shoes)
 	user.equip_to_slot_or_del(new /obj/item/storage/backpack/cultpack(user), slot_back)
-	user.drop_item()
+	user.dropItemToGround(src)
 	user.put_in_hands(new /obj/item/melee/cultblade(user))
 	user.put_in_hands(new /obj/item/restraints/legcuffs/bola/cult(user))
 
 /obj/item/paper/talisman/armor/attack(mob/living/target, mob/living/user)
 	if(iscultist(user) && iscultist(target))
-		user.drop_item()
+		user.temporarilyRemoveItemFromInventory(src)
 		invoke(target)
 		qdel(src)
 		return
@@ -227,8 +225,8 @@
 
 /obj/item/paper/talisman/horror/afterattack(mob/living/target, mob/living/user)
 	if(iscultist(user) && (get_dist(user, target) < 7))
-		to_chat(user, "<span class='cultitalic'>You disturb [target] with visions of madness!</span>")
 		if(iscarbon(target))
+			to_chat(user, "<span class='cultitalic'>You disturb [target] with visions of madness!</span>")
 			var/mob/living/carbon/H = target
 			H.reagents.add_reagent("mindbreaker", 12)
 			if(is_servant_of_ratvar(target))
@@ -236,8 +234,7 @@
 				target.emote("scream")
 				target.confused = max(0, target.confused + 3)
 				target.flash_act()
-		qdel(src)
-
+			qdel(src)
 
 //Talisman of Fabrication: Creates a construct shell out of 25 metal sheets, or converts plasteel into runed metal up to 25 times
 /obj/item/paper/talisman/construction
@@ -335,14 +332,12 @@
 	else
 		to_chat(user, "<span class='warning'>[C] is already bound.</span>")
 	if(uses <= 0)
-		user.drop_item()
 		qdel(src)
 
 /obj/item/restraints/handcuffs/energy/cult //For the talisman of shackling
 	name = "cult shackles"
 	desc = "Shackles that bind the wrists with sinister magic."
 	trashtype = /obj/item/restraints/handcuffs/energy/used
-	origin_tech = "materials=2;magnets=5"
 	flags_1 = DROPDEL_1
 
 /obj/item/restraints/handcuffs/energy/cult/used/dropped(mob/user)

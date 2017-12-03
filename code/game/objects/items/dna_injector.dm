@@ -8,7 +8,6 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
-	origin_tech = "biotech=1"
 
 	var/damage_coeff  = 1
 	var/list/fields
@@ -171,7 +170,7 @@
 
 /obj/item/dnainjector/stuttmut
 	name = "\improper DNA injector (Stutt.)"
-	desc = "Makes you s-s-stuttterrr"
+	desc = "Makes you s-s-stuttterrr."
 	add_mutations_static = list(NERVOUS)
 
 /obj/item/dnainjector/antistutt

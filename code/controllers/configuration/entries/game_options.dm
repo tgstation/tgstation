@@ -110,29 +110,7 @@ CONFIG_DEF(number/shuttle_refuel_delay)
 
 CONFIG_DEF(flag/show_game_type_odds)	//if set this allows players to see the odds of each roundtype on the get revision screen
 
-CONFIG_DEF(flag/join_with_mutant_race)	//players can choose their mutant race before joining the game
-
-CONFIG_DEF(keyed_flag_list/roundstart_races)	//races you can play as from the get go. If left undefined the game's roundstart var for species is used
-	var/first_edit = TRUE
-
-/datum/config_entry/keyed_flag_list/roundstart_races/New()
-	for(var/I in subtypesof(/datum/species))
-		var/datum/species/S = I
-		if(initial(S.roundstart))
-			value[initial(S.id)] = TRUE
-	..()
-
-/datum/config_entry/keyed_flag_list/roundstart_races/ValidateAndSet(str_val)
-	var/list/old_val
-	if(first_edit)
-		old_val = value
-		old_val = old_val.Copy()
-	. = ..()
-	if(first_edit)
-		if(!.)
-			value = old_val
-		else
-			first_edit = FALSE
+CONFIG_DEF(keyed_flag_list/roundstart_races)	//races you can play as from the get go.
 
 CONFIG_DEF(flag/join_with_mutant_humans)	//players can pick mutant bodyparts for humans before joining the game
 
@@ -185,10 +163,21 @@ CONFIG_DEF(flag/ooc_during_round)
 CONFIG_DEF(flag/emojis)
 
 CONFIG_DEF(number/run_delay)	//Used for modifying movement speed for mobs.
+	var/static/value_cache = 0
+
+CONFIG_TWEAK(number/run_delay/ValidateAndSet())
+	. = ..()
+	if(.)
+		value_cache = value
 
 CONFIG_DEF(number/walk_delay)
+	var/static/value_cache = 0
 
-	
+CONFIG_TWEAK(number/walk_delay/ValidateAndSet())
+	. = ..()
+	if(.)
+		value_cache = value
+
 CONFIG_DEF(number/human_delay)	//Mob specific modifiers. NOTE: These will affect different mob types in different ways
 CONFIG_DEF(number/robot_delay)
 CONFIG_DEF(number/monkey_delay)
@@ -264,3 +253,10 @@ CONFIG_DEF(number/bombcap)
 		GLOB.MAX_EX_LIGHT_RANGE = value
 		GLOB.MAX_EX_FLASH_RANGE = value
 		GLOB.MAX_EX_FLAME_RANGE = value
+
+CONFIG_DEF(number/emergency_shuttle_autocall_threshold)
+	min_val = 0
+	max_val = 1
+	integer = FALSE
+
+CONFIG_DEF(flag/ic_printing)

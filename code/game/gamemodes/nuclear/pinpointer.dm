@@ -16,7 +16,7 @@
 	to_chat(user, msg)
 	for(var/obj/machinery/nuclearbomb/bomb in GLOB.machines)
 		if(bomb.timing)
-			to_chat(user, "Extreme danger. Arming signal detected. Time remaining: [bomb.get_time_left()]")
+			to_chat(user, "Extreme danger. Arming signal detected. Time remaining: [bomb.get_time_left()].")
 
 /obj/item/pinpointer/nuke/process()
 	..()
@@ -71,9 +71,9 @@
 	target = null
 	var/list/possible_targets = list()
 	var/turf/here = get_turf(src)
-	for(var/V in SSticker.mode.syndicates)
+	for(var/V in get_antagonists(/datum/antagonist/nukeop))
 		var/datum/mind/M = V
-		if(M.current && M.current.stat != DEAD)
+		if(ishuman(M.current) && M.current.stat != DEAD)
 			possible_targets |= M.current
 	var/mob/living/closest_operative = get_closest_atom(/mob/living/carbon/human, possible_targets, here)
 	if(closest_operative)

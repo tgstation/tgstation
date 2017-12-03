@@ -28,10 +28,9 @@
 	desc = "A device that wirelessly recharges connected device from nearby APC."
 	icon_state = "charger_APC"
 	w_class = WEIGHT_CLASS_SMALL // Can't be installed into tablets/PDAs
-	origin_tech = "programming=2;engineering=2;powerstorage=3"
 
 /obj/item/computer_hardware/recharger/APC/use_power(amount, charging=0)
-	if(istype(holder.physical, /obj/machinery))
+	if(ismachinery(holder.physical))
 		var/obj/machinery/M = holder.physical
 		if(M.powered())
 			M.use_power(amount)
@@ -52,16 +51,15 @@
 	desc = "A power connector that recharges connected device from nearby power wire. Incompatible with portable computers."
 	icon_state = "charger_wire"
 	w_class = WEIGHT_CLASS_NORMAL
-	origin_tech = "engineering=2;powerstorage=1"
 
 /obj/item/computer_hardware/recharger/wired/can_install(obj/item/device/modular_computer/M, mob/living/user = null)
-	if(istype(M.physical, /obj/machinery) && M.physical.anchored)
+	if(ismachinery(M.physical) && M.physical.anchored)
 		return ..()
 	to_chat(user, "<span class='warning'>\The [src] is incompatible with portable computers!</span>")
 	return 0
 
 /obj/item/computer_hardware/recharger/wired/use_power(amount, charging=0)
-	if(istype(holder.physical, /obj/machinery) && holder.physical.anchored)
+	if(ismachinery(holder.physical) && holder.physical.anchored)
 		var/obj/machinery/M = holder.physical
 		var/turf/T = M.loc
 		if(!T || !istype(T))

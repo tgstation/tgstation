@@ -32,7 +32,7 @@
 
 /datum/server_tools_command/ahelp
 	name = "ahelp"
-	help_text = "<ckey> <message|ticket <close|resolve|icissue|reject|reopen <ticket #>|list>>"
+	help_text = "<ckey|ticket #> <message|ticket <close|resolve|icissue|reject|reopen <ticket #>|list>>"
 	required_parameters = 2
 	admin_only = TRUE
 
@@ -40,6 +40,13 @@
 	var/list/all_params = splittext(params, " ")
 	var/target = all_params[1]
 	all_params.Cut(1, 2)
+	var/id = text2num(target)
+	if(id != null)
+		var/datum/admin_help/AH = GLOB.ahelp_tickets.TicketByID(id)
+		if(AH)
+			target = AH.initiator_ckey
+		else
+			return "Ticket #[id] not found!"
 	return IrcPm(target, all_params.Join(" "), sender)
 
 /datum/server_tools_command/namecheck
@@ -49,8 +56,8 @@
 	admin_only = TRUE
 
 /datum/server_tools_command/namecheck/Run(sender, params)
-	log_admin("IRC Name Check: [sender] on [params]")
-	message_admins("IRC name checking on [params] from [sender]")
+	log_admin("Chat Name Check: [sender] on [params]")
+	message_admins("Name checking [params] from [sender]")
 	return keywords_lookup(params, 1)
 
 /datum/server_tools_command/adminwho
@@ -60,3 +67,17 @@
 
 /datum/server_tools_command/adminwho/Run(sender, params)
 	return ircadminwho()
+
+GLOBAL_LIST(round_end_notifiees)
+
+/datum/server_tools_command/notify
+	name = "notify"
+	help_text = "Pings the invoker when the round ends"
+	admin_only = TRUE
+
+/datum/server_tools_command/notify/Run(sender, params)
+	if(!SSticker.IsRoundInProgress() && SSticker.HasRoundStarted())
+		return "[sender], the round has already ended!"
+	LAZYINITLIST(GLOB.round_end_notifiees)
+	GLOB.round_end_notifiees[sender] = TRUE
+	return "I will notify [sender] when the round ends."

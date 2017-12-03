@@ -1,7 +1,7 @@
-#define PR_ANNOUNCEMENTS_PER_ROUND 5 //The number of unique PR announcements allowed per round
-									//This makes sure that a single person can only spam 3 reopens and 3 closes before being ignored
+#define RESTART_COUNTER_PATH "data/round_counter.txt"
 
 GLOBAL_VAR(security_mode)
+GLOBAL_VAR(restart_counter)
 GLOBAL_PROTECT(security_mode)
 
 /world/New()
@@ -9,7 +9,7 @@ GLOBAL_PROTECT(security_mode)
 
 	SetupExternalRSC()
 
-	GLOB.config_error_log = GLOB.world_pda_log = GLOB.sql_error_log = GLOB.world_href_log = GLOB.world_runtime_log = GLOB.world_attack_log = GLOB.world_game_log = file("data/logs/config_error.log") //temporary file used to record errors with loading config, moved to log directory once logging is set bl
+	GLOB.config_error_log = GLOB.manifest_log = GLOB.world_pda_log = GLOB.sql_error_log = GLOB.world_href_log = GLOB.world_runtime_log = GLOB.world_attack_log = GLOB.world_game_log = file("data/logs/config_error.log") //temporary file used to record errors with loading config, moved to log directory once logging is set bl
 
 	CheckSecurityMode()
 
@@ -32,6 +32,10 @@ GLOBAL_PROTECT(security_mode)
 	LoadBans()
 
 	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
+
+	if(fexists(RESTART_COUNTER_PATH))
+		GLOB.restart_counter = text2num(trim(file2text(RESTART_COUNTER_PATH)))
+		fdel(RESTART_COUNTER_PATH)
 
 	Master.Initialize(10, FALSE)
 
@@ -89,10 +93,12 @@ GLOBAL_PROTECT(security_mode)
 	GLOB.world_href_log = file("[GLOB.log_directory]/hrefs.html")
 	GLOB.world_pda_log = file("[GLOB.log_directory]/pda.log")
 	GLOB.sql_error_log = file("[GLOB.log_directory]/sql.log")
+	GLOB.manifest_log = file("[GLOB.log_directory]/manifest.log")
 	WRITE_FILE(GLOB.world_game_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
 	WRITE_FILE(GLOB.world_attack_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
 	WRITE_FILE(GLOB.world_runtime_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
 	WRITE_FILE(GLOB.world_pda_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
+	WRITE_FILE(GLOB.manifest_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
 	GLOB.changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
 	if(fexists(GLOB.config_error_log))
 		fcopy(GLOB.config_error_log, "[GLOB.log_directory]/config_error.log")
@@ -116,91 +122,26 @@ GLOBAL_PROTECT(security_mode)
 		warning("/tg/station 13 uses many file operations, a few shell()s, and some external call()s. Trusted mode is recommended. You can download our source code for your own browsing and compilation at https://github.com/tgstation/tgstation")
 
 /world/Topic(T, addr, master, key)
-	var/list/input = params2list(T)
-
-	var/pinging = ("ping" in input)
-	var/playing = ("players" in input)
-
-	if(!pinging && !playing && config && CONFIG_GET(flag/log_world_topic))
-		WRITE_FILE(GLOB.world_game_log, "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
 
 	SERVER_TOOLS_ON_TOPIC	//redirect to server tools if necessary
 
-	var/comms_key = CONFIG_GET(string/comms_key)
-	var/key_valid = (comms_key && input["key"] == comms_key)
+	var/static/list/topic_handlers = TopicHandlers()
 
-	if(pinging)
-		var/x = 1
-		for (var/client/C in GLOB.clients)
-			x++
-		return x
+	var/list/input = params2list(T)
+	var/datum/world_topic/handler
+	for(var/I in topic_handlers)
+		if(I in input)
+			handler = topic_handlers[I]
+			break
 
-	else if(playing)
-		var/n = 0
-		for(var/mob/M in GLOB.player_list)
-			if(M.client)
-				n++
-		return n
+	if((!handler || initial(handler.log)) && config && CONFIG_GET(flag/log_world_topic))
+		WRITE_FILE(GLOB.world_game_log, "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
 
-	else if("status" in input)
-		var/list/s = list()
-		s["version"] = GLOB.game_version
-		s["mode"] = GLOB.master_mode
-		s["respawn"] = config ? !CONFIG_GET(flag/norespawn) : FALSE
-		s["enter"] = GLOB.enter_allowed
-		s["vote"] = CONFIG_GET(flag/allow_vote_mode)
-		s["ai"] = CONFIG_GET(flag/allow_ai)
-		s["host"] = host ? host : null
-		s["active_players"] = get_active_player_count()
-		s["players"] = GLOB.clients.len
-		s["revision"] = GLOB.revdata.commit
-		s["revision_date"] = GLOB.revdata.date
+	if(!handler)
+		return
 
-		var/list/adm = get_admin_counts()
-		var/list/presentmins = adm["present"]
-		var/list/afkmins = adm["afk"]
-		s["admins"] = presentmins.len + afkmins.len //equivalent to the info gotten from adminwho
-		s["gamestate"] = SSticker.current_state
-
-		s["map_name"] = SSmapping.config.map_name
-
-		if(key_valid && SSticker.HasRoundStarted())
-			s["real_mode"] = SSticker.mode.name
-			// Key-authed callers may know the truth behind the "secret"
-
-		s["security_level"] = get_security_level()
-		s["round_duration"] = SSticker ? round((world.time-SSticker.round_start_time)/10) : 0
-		// Amount of world's ticks in seconds, useful for calculating round duration
-
-		if(SSshuttle && SSshuttle.emergency)
-			s["shuttle_mode"] = SSshuttle.emergency.mode
-			// Shuttle status, see /__DEFINES/stat.dm
-			s["shuttle_timer"] = SSshuttle.emergency.timeLeft()
-			// Shuttle timer, in seconds
-
-		return list2params(s)
-
-	else if("announce" in input)
-		if(!key_valid)
-			return "Bad Key"
-		else
-			AnnouncePR(input["announce"], json_decode(input["payload"]))
-
-	else if("crossmessage" in input)
-		if(!key_valid)
-			return
-		else
-			if(input["crossmessage"] == "Ahelp")
-				relay_msg_admins("<span class='adminnotice'><b><font color=red>HELP: </font> [input["source"]] [input["message_sender"]]: [input["message"]]</b></span>")
-			if(input["crossmessage"] == "Comms_Console")
-				minor_announce(input["message"], "Incoming message from [input["message_sender"]]")
-				for(var/obj/machinery/computer/communications/CM in GLOB.machines)
-					CM.overrideCooldown()
-			if(input["crossmessage"] == "News_Report")
-				minor_announce(input["message"], "Breaking Update From [input["message_sender"]]")
-
-	else if("server_hop" in input)
-		show_server_hop_transfer_screen(input["server_hop"])
+	handler = new handler()
+	return handler.TryRun(input)
 
 /world/proc/AnnouncePR(announcement, list/payload)
 	var/static/list/PRcounts = list()	//PR id -> number of times announced this round
@@ -226,6 +167,27 @@ GLOBAL_PROTECT(security_mode)
 	else
 		to_chat(world, "<span class='boldannounce'>Rebooting world...</span>")
 		Master.Shutdown()	//run SS shutdowns
+
+	if(SERVER_TOOLS_PRESENT)
+		var/do_hard_reboot
+		// check the hard reboot counter
+		var/ruhr = CONFIG_GET(number/rounds_until_hard_restart)
+		switch(ruhr)
+			if(-1)
+				do_hard_reboot = FALSE
+			if(0)
+				do_hard_reboot = TRUE
+			else
+				if(GLOB.restart_counter >= ruhr)
+					do_hard_reboot = TRUE
+				else
+					text2file("[++GLOB.restart_counter]", RESTART_COUNTER_PATH)
+					do_hard_reboot = FALSE
+
+		if(do_hard_reboot)
+			log_world("World hard rebooted at [time_stamp()]")
+			SERVER_TOOLS_REBOOT_BYOND
+
 	log_world("World rebooted at [time_stamp()]")
 	..()
 

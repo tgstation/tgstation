@@ -7,8 +7,12 @@
 		damage_amount = run_obj_armor(damage_amount, damage_type, damage_flag, attack_dir)
 		if(damage_amount >= 0.1)
 			. = damage_amount
-			obj_integrity = max(obj_integrity - damage_amount, 0)
+			var/old_integ = obj_integrity
+			obj_integrity = max(old_integ - damage_amount, 0)
 			if(obj_integrity <= 0)
+				var/int_fail = integrity_failure
+				if(int_fail && old_integ > int_fail)
+					obj_break(damage_flag)
 				obj_destruction(damage_flag)
 			else if(integrity_failure)
 				if(obj_integrity <= integrity_failure)
@@ -52,10 +56,12 @@
 		return
 	..() //contents explosion
 	if(target == src)
+		obj_integrity = 0
 		qdel(src)
 		return
 	switch(severity)
 		if(1)
+			obj_integrity = 0
 			qdel(src)
 		if(2)
 			take_damage(rand(100, 250), BRUTE, "bomb", 0)

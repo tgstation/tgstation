@@ -1,6 +1,6 @@
 /mob/living/simple_animal/hostile/faithless
 	name = "The Faithless"
-	desc = "The Wish Granter's faith in humanity, incarnate"
+	desc = "The Wish Granter's faith in humanity, incarnate."
 	icon_state = "faithless"
 	icon_living = "faithless"
 	icon_dead = "faithless_dead"
@@ -15,6 +15,7 @@
 	speed = 0
 	maxHealth = 80
 	health = 80
+	spacewalk = TRUE
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
 
@@ -30,10 +31,7 @@
 	minbodytemp = 0
 
 	faction = list("faithless")
-	gold_core_spawnable = 1
-
-/mob/living/simple_animal/hostile/faithless/Process_Spacemove(movement_dir = 0)
-	return 1
+	gold_core_spawnable = HOSTILE_SPAWN
 
 /mob/living/simple_animal/hostile/faithless/AttackingTarget()
 	. = ..()

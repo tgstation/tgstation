@@ -8,9 +8,11 @@
 
 
 /obj/machinery/door/airlock/receive_signal(datum/signal/signal)
-	if(!signal || signal.encryption) return
+	if(!signal || signal.encryption)
+		return
 
-	if(id_tag != signal.data["tag"] || !signal.data["command"]) return
+	if(id_tag != signal.data["tag"] || !signal.data["command"])
+		return
 
 	switch(signal.data["command"])
 		if("open")
@@ -63,12 +65,14 @@
 
 /obj/machinery/door/airlock/open(surpress_send)
 	. = ..()
-	if(!surpress_send) send_status()
+	if(!surpress_send)
+		send_status()
 
 
 /obj/machinery/door/airlock/close(surpress_send)
 	. = ..()
-	if(!surpress_send) send_status()
+	if(!surpress_send)
+		send_status()
 
 
 /obj/machinery/door/airlock/proc/set_frequency(new_frequency)

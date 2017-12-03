@@ -17,6 +17,11 @@
 	var/obj/item/bodypart/chest/CH = target.get_bodypart("chest")
 	IC = CH.cavity_item
 	if(tool)
+		if(istype(tool, /obj/item/surgical_drapes) || istype(tool, /obj/item/bedsheet))
+			var/obj/item/inactive = user.get_inactive_held_item()
+			if(istype(inactive, /obj/item/cautery) || istype(inactive, /obj/item/screwdriver) || iscyborg(user))
+				attempt_cancel_surgery(surgery, tool, target, user)
+				return -1
 		user.visible_message("[user] begins to insert [tool] into [target]'s [target_zone].", "<span class='notice'>You begin to insert [tool] into [target]'s [target_zone]...</span>")
 	else
 		user.visible_message("[user] checks for items in [target]'s [target_zone].", "<span class='notice'>You check for items in [target]'s [target_zone]...</span>")
@@ -29,9 +34,8 @@
 			return 0
 		else
 			user.visible_message("[user] stuffs [tool] into [target]'s [target_zone]!", "<span class='notice'>You stuff [tool] into [target]'s [target_zone].</span>")
-			user.drop_item()
+			user.transferItemToLoc(tool, target, TRUE)
 			CH.cavity_item = tool
-			tool.loc = target
 			return 1
 	else
 		if(IC)

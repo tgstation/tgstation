@@ -13,7 +13,6 @@
 	force = 5
 	throwforce = 6
 	w_class = WEIGHT_CLASS_BULKY
-	origin_tech = "biotech=4"
 	actions_types = list(/datum/action/item_action/toggle_paddles)
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
@@ -236,7 +235,6 @@
 	item_state = "defibcompact"
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = SLOT_BELT
-	origin_tech = "biotech=5"
 
 /obj/item/defibrillator/compact/item_action_slot_check(slot, mob/user)
 	if(slot == user.getBeltSlot())
@@ -286,6 +284,7 @@
 	var/req_defib = 1
 	var/combat = 0 //If it penetrates armor and gives additional functionality
 	var/grab_ghost = FALSE
+	var/tlimit = DEFIB_TIME_LIMIT * 10
 
 /obj/item/twohanded/shockpaddles/proc/recharge(var/time)
 	if(req_defib || !time)
@@ -387,11 +386,14 @@
 	if((!req_defib && grab_ghost) || (req_defib && defib.grab_ghost))
 		H.notify_ghost_cloning("Your heart is being defibrillated!")
 		H.grab_ghost() // Shove them back in their body.
-	else if(!H.suiciding && !(H.disabilities & NOCLONE)&& !H.hellbound)
+	else if(can_defib(H))
 		H.notify_ghost_cloning("Your heart is being defibrillated. Re-enter your corpse if you want to be revived!", source = src)
 
 	do_help(H, user)
 
+/obj/item/twohanded/shockpaddles/proc/can_defib(mob/living/carbon/human/H)
+	var/obj/item/organ/brain/BR = H.getorgan(/obj/item/organ/brain)
+	return	(!H.suiciding && !(H.disabilities & NOCLONE) && !H.hellbound && ((world.time - H.timeofdeath) < tlimit) && (H.getBruteLoss() < 180) && (H.getFireLoss() < 180) && H.getorgan(/obj/item/organ/heart) && BR && !BR.damaged_brain)
 
 /obj/item/twohanded/shockpaddles/proc/do_disarm(mob/living/M, mob/living/user)
 	if(req_defib && defib.safety)
@@ -481,7 +483,6 @@
 		var/tplus = world.time - H.timeofdeath
 		// past this much time the patient is unrecoverable
 		// (in deciseconds)
-		var/tlimit = DEFIB_TIME_LIMIT * 10
 		// brain damage starts setting in on the patient after
 		// some time left rotting
 		var/tloss = DEFIB_TIME_LOSS * 10

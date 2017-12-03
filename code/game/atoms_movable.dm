@@ -26,6 +26,7 @@
 	appearance_flags = TILE_BOUND|PIXEL_SCALE
 	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
 	var/floating = FALSE
+	var/movement_type = GROUND		//Incase you have multiple types, you automatically use the most useful one. IE: Skating on ice, flippers on water, flying over chasm/space, etc.
 
 /atom/movable/vv_edit_var(var_name, var_value)
 	var/static/list/banned_edits = list("step_x", "step_y", "step_size")
@@ -61,7 +62,8 @@
 	return ..()
 
 /atom/movable/Move(atom/newloc, direct = 0)
-	if(!loc || !newloc) return 0
+	if(!loc || !newloc)
+		return FALSE
 	var/atom/oldloc = loc
 
 	if(loc != newloc)
@@ -112,11 +114,11 @@
 	last_move = direct
 	setDir(direct)
 	if(. && has_buckled_mobs() && !handle_buckled_mob_movement(loc,direct)) //movement failed due to buckled mob(s)
-		. = 0
+		return FALSE
 
 //Called after a successful Move(). By this point, we've already moved
-/atom/movable/proc/Moved(atom/OldLoc, Dir)
-	SendSignal(COMSIG_MOVABLE_MOVED, OldLoc, Dir)
+/atom/movable/proc/Moved(atom/OldLoc, Dir, Forced = FALSE)
+	SendSignal(COMSIG_MOVABLE_MOVED, OldLoc, Dir, Forced)
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
 		newtonian_move(Dir)
@@ -219,7 +221,7 @@
 	if(A)
 		if(throwing)
 			throwing.hit_atom(A)
-			. = 1
+			. = TRUE
 			if(!A || QDELETED(A))
 				return
 		A.CollidedWith(src)
@@ -260,8 +262,7 @@
 				if(AM == src)
 					continue
 				AM.Crossed(src, oldloc)
-
-		Moved(oldloc, 0)
+		Moved(oldloc, NONE, TRUE)
 		. = TRUE
 
 	//If no destination, move the atom into nullspace (don't do this unless you know what you're doing)
@@ -277,9 +278,9 @@
 /mob/living/forceMove(atom/destination)
 	stop_pulling()
 	if(buckled)
-		buckled.unbuckle_mob(src,force=1)
+		buckled.unbuckle_mob(src, force = TRUE)
 	if(has_buckled_mobs())
-		unbuckle_all_mobs(force=1)
+		unbuckle_all_mobs(force = TRUE)
 	. = ..()
 	if(.)
 		if(client)
@@ -324,9 +325,6 @@
 	inertia_last_loc = loc
 	SSspacedrift.processing[src] = src
 	return 1
-
-/atom/movable/proc/checkpass(passflag)
-	return pass_flags&passflag
 
 /atom/movable/proc/throw_impact(atom/hit_atom, throwingdatum)
 	set waitfor = 0
@@ -523,7 +521,7 @@
 /atom/movable/vv_get_dropdown()
 	. = ..()
 	. -= "Jump to"
-	.["Follow"] = "?_src_=holder;[HrefToken()];adminplayerobservefollow=\ref[src]"
+	.["Follow"] = "?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(src)]"
 
 /atom/movable/proc/ex_check(ex_id)
 	if(!ex_id)
@@ -534,6 +532,7 @@
 	acted_explosions += ex_id
 	return TRUE
 
+//TODO: Better floating
 /atom/movable/proc/float(on)
 	if(throwing)
 		return

@@ -50,7 +50,9 @@
 		H.adjust_blurriness(1)
 		H.visible_message("<span class='warning'>[H] is creamed by [src]!</span>", "<span class='userdanger'>You've been creamed by [src]!</span>")
 		playsound(H, "desceration", 50, TRUE)
-		H.add_overlay(creamoverlay)
+		if (!H.creamed) // one layer at a time
+			H.add_overlay(creamoverlay)
+			H.creamed = TRUE
 	qdel(src)
 
 
@@ -110,13 +112,13 @@
 	foodtype = GRAIN | VEGETABLES
 
 
-/obj/item/reagent_containers/food/snacks/pie/plump_pie/New()
+/obj/item/reagent_containers/food/snacks/pie/plump_pie/Initialize()
+	. = ..()
 	var/fey = prob(10)
 	if(fey)
 		name = "exceptional plump pie"
 		desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump pie!"
 		bonus_reagents = list("nutriment" = 1, "omnizine" = 5, "vitamin" = 4)
-	..()
 	if(fey)
 		reagents.add_reagent("omnizine", 5)
 

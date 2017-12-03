@@ -16,7 +16,7 @@
 
 	var/list/cards = list()
 
-/obj/item/deck/New()
+/obj/item/deck/Initialize()
 	. = ..()
 
 	var/cardcolor
@@ -59,12 +59,14 @@
 	if (istype(O, /obj/item/hand))
 		var/obj/item/hand/H = O
 
-		for (var/datum/playingcard/P in H.cards) src.cards.Add(P)
+		for (var/datum/playingcard/P in H.cards)
+			src.cards.Add(P)
 
 		qdel (O)
 
 		user.show_message("You place your cards on the bottom of the deck.")
-	else return ..()
+	else
+		return ..()
 
 /obj/item/deck/attack_self(mob/user)
 	var/list/newcards           = list()
@@ -155,7 +157,8 @@
 	else if(istype(O, /obj/item/hand))
 		var/obj/item/hand/H = O
 
-		for(var/datum/playingcard/P in src.cards) H.cards.Add(P)
+		for(var/datum/playingcard/P in src.cards)
+			H.cards.Add(P)
 
 		H.update_icon()
 
@@ -215,9 +218,9 @@
 
 /obj/item/hand/proc/update_conceal()
 	if (src.concealed)
-		src.hi.updateContent("headbar", "You are currently concealing your hand. <a href=\"byond://?src=\ref[hi]&action=toggle_conceal\">Reveal your hand.</a>")
+		src.hi.updateContent("headbar", "You are currently concealing your hand. <a href=\"byond://?src=[REF(hi)]&action=toggle_conceal\">Reveal your hand.</a>")
 	else
-		src.hi.updateContent("headbar", "You are currently revealing your hand. <a href=\"byond://?src=\ref[hi]&action=toggle_conceal\">Conceal your hand.</a>")
+		src.hi.updateContent("headbar", "You are currently revealing your hand. <a href=\"byond://?src=[REF(hi)]&action=toggle_conceal\">Conceal your hand.</a>")
 
 /obj/item/hand/update_icon()
 	if (!cards.len)
@@ -257,7 +260,7 @@
 		var/html = ""
 
 		for(var/datum/playingcard/card in cards)
-			html = html + "<a href=\"byond://?src=\ref[src.hi]&action=play_card&card=\ref[card]\" class=\"card [card.suit] [card.number]\"></a>"
+			html = html + "<a href=\"byond://?src=[REF(src.hi)]&action=play_card&card=[REF(card)]\" class=\"card [card.suit] [card.number]\"></a>"
 
 		src.hi.updateContent("hand", html)
 

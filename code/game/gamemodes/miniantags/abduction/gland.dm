@@ -4,7 +4,6 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "gland"
 	status = ORGAN_ROBOTIC
-	origin_tech = "materials=4;biotech=7;abductor=3"
 	beating = TRUE
 	var/cooldown_low = 300
 	var/cooldown_high = 300
@@ -83,7 +82,6 @@
 	Slime.Leader = owner
 
 /obj/item/organ/heart/gland/mindshock
-	origin_tech = "materials=4;biotech=4;magnets=6;abductor=3"
 	cooldown_low = 300
 	cooldown_high = 300
 	uses = -1
@@ -112,7 +110,6 @@
 	owner.set_species(species)
 
 /obj/item/organ/heart/gland/ventcrawling
-	origin_tech = "materials=4;biotech=5;bluespace=4;abductor=3"
 	cooldown_low = 1800
 	cooldown_high = 2400
 	uses = 1
@@ -140,7 +137,6 @@
 
 
 /obj/item/organ/heart/gland/emp //TODO : Replace with something more interesting
-	origin_tech = "materials=4;biotech=4;magnets=6;abductor=3"
 	cooldown_low = 900
 	cooldown_high = 1600
 	uses = 10
@@ -236,16 +232,16 @@
 /obj/item/organ/heart/gland/plasma
 	cooldown_low = 1200
 	cooldown_high = 1800
-	origin_tech = "materials=4;biotech=4;plasmatech=6;abductor=3"
 	uses = -1
 
 /obj/item/organ/heart/gland/plasma/activate()
 	to_chat(owner, "<span class='warning'>You feel bloated.</span>")
-	sleep(150)
-	if(!owner) return
-	to_chat(owner, "<span class='userdanger'>A massive stomachache overcomes you.</span>")
-	sleep(50)
-	if(!owner) return
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, owner, "<span class='userdanger'>A massive stomachache overcomes you.</span>"), 150)
+	addtimer(CALLBACK(src, .proc/vomit_plasma), 200)
+
+/obj/item/organ/heart/gland/plasma/proc/vomit_plasma()
+	if(!owner)
+		return
 	owner.visible_message("<span class='danger'>[owner] vomits a cloud of plasma!</span>")
 	var/turf/open/T = get_turf(owner)
 	if(istype(T))

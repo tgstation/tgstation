@@ -66,7 +66,6 @@
 /obj/item/restraints/handcuffs/clockwork
 	name = "replicant manacles"
 	desc = "Cold, heavy manacles made out of some strange black metal."
-	origin_tech = "materials=2;magnets=5"
 	flags_1 = DROPDEL_1
 
 /obj/item/restraints/handcuffs/clockwork/dropped(mob/user)
@@ -156,11 +155,7 @@
 		add_logs(ranged_ability_user, U, "fired at with Kindle")
 		playsound(ranged_ability_user, 'sound/magic/blink.ogg', 50, TRUE, frequency = 0.5)
 		var/obj/item/projectile/kindle/A = new(T)
-		A.original = target
-		A.starting = T
-		A.current = T
-		A.yo = U.y - T.y
-		A.xo = U.x - T.x
+		A.preparePixelProjectile(target, caller, params)
 		A.fire()
 
 		remove_ranged_ability()

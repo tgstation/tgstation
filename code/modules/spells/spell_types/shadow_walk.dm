@@ -25,8 +25,9 @@
 		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
 			playsound(get_turf(user), 'sound/magic/ethereal_enter.ogg', 50, 1, -1)
 			visible_message("<span class='boldwarning'>[user] melts into the shadows!</span>")
-			user.AdjustStun(-20, 0)
-			user.AdjustKnockdown(-20, 0)
+			user.SetStun(0, FALSE)
+			user.SetKnockdown(0, FALSE)
+			user.setStaminaLoss(0, 0)
 			var/obj/effect/dummy/shadow/S2 = new(get_turf(user.loc))
 			user.forceMove(S2)
 			S2.jaunter = user

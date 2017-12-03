@@ -63,10 +63,9 @@
 
 	else if (istype(W, /obj/item/device/assembly/flash/handheld))
 		if (!bulb)
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(W, src))
 				return
 			user.visible_message("[user] installs [W] into [src].", "<span class='notice'>You install [W] into [src].</span>")
-			W.forceMove(src)
 			bulb = W
 			power_change()
 		else

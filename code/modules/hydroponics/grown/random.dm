@@ -2,7 +2,7 @@
 
 /obj/item/seeds/random
 	name = "pack of strange seeds"
-	desc = "Mysterious seeds as strange as their name implies. Spooky"
+	desc = "Mysterious seeds as strange as their name implies. Spooky."
 	icon_state = "seed-x"
 	species = "?????"
 	plantname = "strange plant"
@@ -12,9 +12,9 @@
 	icon_harvest = "xpod-harvest"
 	growthstages = 4
 
-/obj/item/seeds/random/New()
+/obj/item/seeds/random/Initialize()
+	. = ..()
 	randomize_stats()
-	..()
 	if(prob(60))
 		add_random_reagents()
 	if(prob(50))

@@ -79,7 +79,8 @@
 
 
 /obj/item/paint/afterattack(turf/target, mob/user, proximity)
-	if(!proximity) return
+	if(!proximity)
+		return
 	if(paintleft <= 0)
 		icon_state = "paint_empty"
 		return

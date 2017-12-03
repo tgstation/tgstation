@@ -4,7 +4,6 @@
 	power_usage = 100 //W
 	icon_state = "card_mini"
 	w_class = WEIGHT_CLASS_SMALL
-	origin_tech = "programming=2"
 	device_type = MC_AI
 
 	var/obj/item/device/aicard/stored_card = null
@@ -14,7 +13,7 @@
 /obj/item/computer_hardware/ai_slot/examine(mob/user)
 	..()
 	if(stored_card)
-		to_chat(user, "There appears to be an intelliCard loaded. There appears to be a pinhole protecting a manual eject button. A screwdriver could probably press it")
+		to_chat(user, "There appears to be an intelliCard loaded. There appears to be a pinhole protecting a manual eject button. A screwdriver could probably press it.")
 
 /obj/item/computer_hardware/ai_slot/on_install(obj/item/device/modular_computer/M, mob/living/user = null)
 	M.add_verb(device_type)

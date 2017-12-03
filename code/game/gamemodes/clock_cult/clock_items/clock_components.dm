@@ -20,7 +20,6 @@
 		"<span class='alloy'>You crush [src], capturing its escaping energy for use as power.</span>")
 		playsound(user, 'sound/effects/pop_expl.ogg', 50, TRUE)
 		adjust_clockwork_power(POWER_WALL_TOTAL)
-		user.drop_item()
 		qdel(src)
 
 /obj/item/clockwork/component/pickup(mob/living/user)
@@ -28,7 +27,7 @@
 	if(iscultist(user) || (user.mind && user.mind.isholy))
 		to_chat(user, "<span class='[message_span]'>[cultist_message]</span>")
 		if(user.mind && user.mind.isholy)
-			to_chat(user, "<span class='boldannounce'>The power of your faith melts away the [src]!</span>")
+			to_chat(user, "<span class='boldannounce'>The power of your faith melts away [src]!</span>")
 			var/obj/item/ore/slag/wrath = new /obj/item/ore/slag
 			qdel(src)
 			user.put_in_active_hand(wrath)

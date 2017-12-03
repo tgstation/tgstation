@@ -31,6 +31,8 @@
 
 	suffix = ""
 
+	path_image_color = "#7F5200"
+
 	var/atom/movable/load = null
 	var/mob/living/passenger = null
 	var/turf/target				// this is turf to navigate to (location of beacon)
@@ -84,11 +86,9 @@
 		if(open)
 			on = FALSE
 	else if(istype(I, /obj/item/stock_parts/cell) && open && !cell)
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(I, src))
 			return
-		var/obj/item/stock_parts/cell/C = I
-		C.loc = src
-		cell = C
+		cell = I
 		visible_message("[user] inserts a cell into [src].",
 						"<span class='notice'>You insert the new cell into [src].</span>")
 	else if(istype(I, /obj/item/crowbar) && open && cell)
@@ -117,7 +117,7 @@
 		emagged = TRUE
 	if(!open)
 		locked = !locked
-		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the [src]'s controls!</span>")
+		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] [src]'s controls!</span>")
 	flick("mulebot-emagged", src)
 	playsound(src, "sparks", 100, 0)
 
@@ -284,22 +284,22 @@
 	dat += "<b>Power level:</b> [cell ? cell.percent() : 0]%"
 
 	if(locked && !ai && !IsAdminGhost(user))
-		dat += "&nbsp;<br /><div class='notice'>Controls are locked</div><A href='byond://?src=\ref[src];op=unlock'>Unlock Controls</A>"
+		dat += "&nbsp;<br /><div class='notice'>Controls are locked</div><A href='byond://?src=[REF(src)];op=unlock'>Unlock Controls</A>"
 	else
-		dat += "&nbsp;<br /><div class='notice'>Controls are unlocked</div><A href='byond://?src=\ref[src];op=lock'>Lock Controls</A><BR><BR>"
+		dat += "&nbsp;<br /><div class='notice'>Controls are unlocked</div><A href='byond://?src=[REF(src)];op=lock'>Lock Controls</A><BR><BR>"
 
-		dat += "<A href='byond://?src=\ref[src];op=power'>Toggle Power</A><BR>"
-		dat += "<A href='byond://?src=\ref[src];op=stop'>Stop</A><BR>"
-		dat += "<A href='byond://?src=\ref[src];op=go'>Proceed</A><BR>"
-		dat += "<A href='byond://?src=\ref[src];op=home'>Return to Home</A><BR>"
-		dat += "<A href='byond://?src=\ref[src];op=destination'>Set Destination</A><BR>"
-		dat += "<A href='byond://?src=\ref[src];op=setid'>Set Bot ID</A><BR>"
-		dat += "<A href='byond://?src=\ref[src];op=sethome'>Set Home</A><BR>"
-		dat += "<A href='byond://?src=\ref[src];op=autoret'>Toggle Auto Return Home</A> ([auto_return ? "On":"Off"])<BR>"
-		dat += "<A href='byond://?src=\ref[src];op=autopick'>Toggle Auto Pickup Crate</A> ([auto_pickup ? "On":"Off"])<BR>"
-		dat += "<A href='byond://?src=\ref[src];op=report'>Toggle Delivery Reporting</A> ([report_delivery ? "On" : "Off"])<BR>"
+		dat += "<A href='byond://?src=[REF(src)];op=power'>Toggle Power</A><BR>"
+		dat += "<A href='byond://?src=[REF(src)];op=stop'>Stop</A><BR>"
+		dat += "<A href='byond://?src=[REF(src)];op=go'>Proceed</A><BR>"
+		dat += "<A href='byond://?src=[REF(src)];op=home'>Return to Home</A><BR>"
+		dat += "<A href='byond://?src=[REF(src)];op=destination'>Set Destination</A><BR>"
+		dat += "<A href='byond://?src=[REF(src)];op=setid'>Set Bot ID</A><BR>"
+		dat += "<A href='byond://?src=[REF(src)];op=sethome'>Set Home</A><BR>"
+		dat += "<A href='byond://?src=[REF(src)];op=autoret'>Toggle Auto Return Home</A> ([auto_return ? "On":"Off"])<BR>"
+		dat += "<A href='byond://?src=[REF(src)];op=autopick'>Toggle Auto Pickup Crate</A> ([auto_pickup ? "On":"Off"])<BR>"
+		dat += "<A href='byond://?src=[REF(src)];op=report'>Toggle Delivery Reporting</A> ([report_delivery ? "On" : "Off"])<BR>"
 		if(load)
-			dat += "<A href='byond://?src=\ref[src];op=unload'>Unload Now</A><BR>"
+			dat += "<A href='byond://?src=[REF(src)];op=unload'>Unload Now</A><BR>"
 		dat += "<div class='notice'>The maintenance hatch is closed.</div>"
 
 	return dat
@@ -379,12 +379,11 @@
 	return FALSE
 
 /mob/living/simple_animal/bot/mulebot/post_buckle_mob(mob/living/M)
-	if(M in buckled_mobs) //post buckling
-		M.pixel_y = initial(M.pixel_y) + 9
-		if(M.layer < layer)
-			M.layer = layer + 0.01
+	M.pixel_y = initial(M.pixel_y) + 9
+	if(M.layer < layer)
+		M.layer = layer + 0.01
 
-	else //post unbuckling
+/mob/living/simple_animal/bot/mulebot/post_unbuckle_mob(mob/living/M)
 		load = null
 		M.layer = initial(M.layer)
 		M.pixel_y = initial(M.pixel_y)
@@ -492,7 +491,8 @@
 
 					var/oldloc = loc
 					var/moved = step_towards(src, next)	// attempt to move
-					if(cell) cell.use(1)
+					if(cell)
+						cell.use(1)
 					if(moved && oldloc!=loc)	// successful move
 						blockcount = 0
 						path -= loc
@@ -698,14 +698,14 @@
 
 /mob/living/simple_animal/bot/mulebot/explode()
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
-	var/turf/Tsec = get_turf(src)
+	var/atom/Tsec = drop_location()
 
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/stack/cable_coil/cut(Tsec)
 	if(cell)
-		cell.loc = Tsec
+		cell.forceMove(Tsec)
 		cell.update_icon()
 		cell = null
 

@@ -1,10 +1,9 @@
 /obj/item/organ/stomach
 	name = "stomach"
 	icon_state = "stomach"
-	origin_tech = "biotech=4"
 	w_class = WEIGHT_CLASS_NORMAL
 	zone = "chest"
-	slot = "stomach"
+	slot = ORGAN_SLOT_STOMACH
 	attack_verb = list("gored", "squished", "slapped", "digested")
 	desc = "Onaka ga suite imasu."
 	var/disgust_metabolism = 1

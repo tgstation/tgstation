@@ -197,7 +197,6 @@ Acts like a normal vent, but has an input AND output.
 		spawn(2)
 			broadcast_status()
 		return //do not update_icon
-	//if(signal.data["tag"])
 	spawn(2)
 		broadcast_status()
 	update_icon()

@@ -61,7 +61,7 @@ Doesn't work on other aliens/AI.*/
 
 /obj/effect/proc_holder/alien/plant
 	name = "Plant Weeds"
-	desc = "Plants some alien weeds"
+	desc = "Plants some alien weeds."
 	plasma_cost = 50
 	check_turf = 1
 	action_icon_state = "alien_plant"
@@ -76,7 +76,7 @@ Doesn't work on other aliens/AI.*/
 
 /obj/effect/proc_holder/alien/whisper
 	name = "Whisper"
-	desc = "Whisper to someone"
+	desc = "Whisper to someone."
 	plasma_cost = 10
 	action_icon_state = "alien_whisper"
 
@@ -104,7 +104,7 @@ Doesn't work on other aliens/AI.*/
 
 /obj/effect/proc_holder/alien/transfer
 	name = "Transfer Plasma"
-	desc = "Transfer Plasma to another alien"
+	desc = "Transfer Plasma to another alien."
 	plasma_cost = 0
 	action_icon_state = "alien_transfer"
 
@@ -169,7 +169,8 @@ Doesn't work on other aliens/AI.*/
 		return
 	var/mob/living/carbon/user = usr
 	var/obj/effect/proc_holder/alien/acid/A = locate() in user.abilities
-	if(!A) return
+	if(!A)
+		return
 	if(user.getPlasma() > A.plasma_cost && A.corrode(O))
 		user.adjustPlasma(-A.plasma_cost)
 
@@ -214,8 +215,7 @@ Doesn't work on other aliens/AI.*/
 
 	user.visible_message("<span class='danger'>[user] spits neurotoxin!", "<span class='alertalien'>You spit neurotoxin.</span>")
 	var/obj/item/projectile/bullet/neurotoxin/A = new /obj/item/projectile/bullet/neurotoxin(user.loc)
-	A.current = U
-	A.preparePixelProjectile(target, get_turf(target), user, params)
+	A.preparePixelProjectile(target, user, params)
 	A.fire()
 	user.newtonian_move(get_dir(U, T))
 	user.adjustPlasma(-p_cost)
@@ -269,7 +269,7 @@ Doesn't work on other aliens/AI.*/
 
 /obj/effect/proc_holder/alien/regurgitate
 	name = "Regurgitate"
-	desc = "Empties the contents of your stomach"
+	desc = "Empties the contents of your stomach."
 	plasma_cost = 0
 	action_icon_state = "alien_barf"
 
@@ -306,13 +306,15 @@ Doesn't work on other aliens/AI.*/
 
 /mob/living/carbon/proc/getPlasma()
 	var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
-	if(!vessel) return 0
+	if(!vessel)
+		return 0
 	return vessel.storedPlasma
 
 
 /mob/living/carbon/proc/adjustPlasma(amount)
 	var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
-	if(!vessel) return 0
+	if(!vessel)
+		return 0
 	vessel.storedPlasma = max(vessel.storedPlasma + amount,0)
 	vessel.storedPlasma = min(vessel.storedPlasma, vessel.max_plasma) //upper limit of max_plasma, lower limit of 0
 	for(var/X in abilities)

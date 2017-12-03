@@ -31,7 +31,7 @@
 		H.internal = null
 		H.update_internals_hud_icon(0)
 	else
-		if(!H.getorganslot("breathing_tube"))
+		if(!H.getorganslot(ORGAN_SLOT_BREATHING_TUBE))
 			if(!H.wear_mask)
 				to_chat(H, "<span class='warning'>You need a mask!</span>")
 				return
@@ -71,7 +71,8 @@
 	if (istype(src.loc, /obj/item/assembly))
 		icon = src.loc
 	if(!in_range(src, user))
-		if (icon == src) to_chat(user, "<span class='notice'>If you want any more information you'll need to get closer.</span>")
+		if (icon == src)
+			to_chat(user, "<span class='notice'>If you want any more information you'll need to get closer.</span>")
 		return
 
 	to_chat(user, "<span class='notice'>The pressure gauge reads [round(src.air_contents.return_pressure(),0.01)] kPa.</span>")
@@ -232,6 +233,8 @@
 		return 0
 
 	var/pressure = air_contents.return_pressure()
+	var/temperature = air_contents.return_pressure()
+
 	if(pressure > TANK_FRAGMENT_PRESSURE)
 		if(!istype(src.loc, /obj/item/device/transfer_valve))
 			message_admins("Explosive tank rupture! Last key to touch the tank was [src.fingerprintslast].")
@@ -251,7 +254,7 @@
 		else
 			qdel(src)
 
-	else if(pressure > TANK_RUPTURE_PRESSURE)
+	else if(pressure > TANK_RUPTURE_PRESSURE || temperature > TANK_MELT_TEMPERATURE)
 		if(integrity <= 0)
 			var/turf/T = get_turf(src)
 			if(!T)

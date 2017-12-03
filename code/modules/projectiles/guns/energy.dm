@@ -102,6 +102,16 @@
 	chambered = null //either way, released the prepared shot
 	recharge_newshot() //try to charge a new shot
 
+/obj/item/gun/energy/process_fire()
+	if(!chambered && can_shoot())
+		process_chamber()	// If the gun was drained and then recharged, load a new shot.
+	return ..()
+
+/obj/item/gun/energy/process_burst()
+	if(!chambered && can_shoot())
+		process_chamber()	// Ditto.
+	return ..()
+
 /obj/item/gun/energy/proc/select_fire(mob/living/user)
 	select++
 	if (select > ammo_type.len)
@@ -150,7 +160,7 @@
 	toggle_gunlight()
 
 /obj/item/gun/energy/suicide_act(mob/user)
-	if (src.can_shoot() && can_trigger_gun(user))
+	if (can_shoot() && can_trigger_gun(user))
 		user.visible_message("<span class='suicide'>[user] is putting the barrel of [src] in [user.p_their()] mouth.  It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		sleep(25)
 		if(user.is_holding(src))

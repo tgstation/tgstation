@@ -1,0 +1,4 @@
+author: "ExcessiveUseOfCobblestone"
+delete-after: True
+changes: 
+  - bugfix: "You can now lay (buckle!) yourself to a bed to avoid being burnt to a crisp during \"the floor is lava\" event."
