@@ -187,11 +187,7 @@
 		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.a_intent == INTENT_DISARM)
-			if(H.buckled_mobs && (src in H.buckled_mobs) && H.riding_datum)
-				H.riding_datum.force_dismount(src)
 		dna.species.spec_attack_hand(H, src)
-
 
 /mob/living/carbon/human/attack_paw(mob/living/carbon/monkey/M)
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
@@ -355,10 +351,11 @@
 
 
 /mob/living/carbon/human/ex_act(severity, target, origin)
-
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
 		return
 	..()
+	if (!severity)
+		return
 	var/b_loss = 0
 	var/f_loss = 0
 	var/bomb_armor = getarmor(null, "bomb")

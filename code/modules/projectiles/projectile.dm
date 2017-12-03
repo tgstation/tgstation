@@ -177,6 +177,7 @@
 		ricochets++
 		if(A.handle_ricochet(src))
 			ignore_source_check = TRUE
+			range = initial(range)
 			return FALSE
 	if(firer && !ignore_source_check)
 		if(A == firer || (A == firer.loc && ismecha(A))) //cannot shoot yourself or your mech
