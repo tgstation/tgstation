@@ -161,6 +161,8 @@
 			M.playsound_local(M, 'sound/machines/clockcult/eminence_command.ogg', 75, FALSE, pressure_affected = FALSE)
 	else
 		hierophant_message("<span class='bold large_brass'>[command_text]</span>")
+		for(var/mob/M in servants_and_ghosts())
+			M.playsound_local(M, 'sound/machines/clockcult/eminence_command.ogg', 75, FALSE, pressure_affected = FALSE)
 
 /mob/camera/eminence/proc/superheat_wall(turf/closed/wall/clockwork/wall)
 	if(!istype(wall))
