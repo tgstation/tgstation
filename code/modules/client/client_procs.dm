@@ -688,6 +688,6 @@ GLOBAL_LIST(external_rsc_urls)
 	set desc = "This is a verb to toggle widescreen on and off, intended mainly for testmerging."
 	
 	if(view && view == 7)
-		view = "21x15"
+		change_view("21x15")
 	else
-		view = 7
+		change_view(7)
