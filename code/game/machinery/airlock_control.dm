@@ -53,7 +53,7 @@
 /obj/machinery/door/airlock/proc/send_status()
 	if(radio_connection)
 		var/datum/signal/signal = new
-		signal.transmission_method = 1 //radio signal
+		signal.transmission_method = TRANSMISSION_RADIO
 		signal.data["tag"] = id_tag
 		signal.data["timestamp"] = world.time
 
@@ -116,7 +116,7 @@
 
 /obj/machinery/airlock_sensor/attack_hand(mob/user)
 	var/datum/signal/signal = new
-	signal.transmission_method = 1 //radio signal
+	signal.transmission_method = TRANSMISSION_RADIO
 	signal.data["tag"] = master_tag
 	signal.data["command"] = "cycle"
 
@@ -126,7 +126,7 @@
 /obj/machinery/airlock_sensor/process()
 	if(on)
 		var/datum/signal/signal = new
-		signal.transmission_method = 1 //radio signal
+		signal.transmission_method = TRANSMISSION_RADIO
 		signal.data["tag"] = id_tag
 		signal.data["timestamp"] = world.time
 

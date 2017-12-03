@@ -199,7 +199,7 @@
 
 	var/datum/signal/status_signal = new
 	status_signal.source = src
-	status_signal.transmission_method = 1
+	status_signal.transmission_method = TRANSMISSION_RADIO
 	status_signal.data["command"] = command
 
 	switch(command)

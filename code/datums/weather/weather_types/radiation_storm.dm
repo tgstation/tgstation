@@ -60,7 +60,7 @@
 	var/datum/signal/status_signal = new
 	var/atom/movable/virtualspeaker/virt = new /atom/movable/virtualspeaker(null)
 	status_signal.source = virt
-	status_signal.transmission_method = 1
+	status_signal.transmission_method = TRANSMISSION_RADIO
 	status_signal.data["command"] = "shuttle"
 
 	if(command == "alert")

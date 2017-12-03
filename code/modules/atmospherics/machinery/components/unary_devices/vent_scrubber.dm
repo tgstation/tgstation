@@ -81,7 +81,7 @@
 		icon_state = "scrub_off"
 		return
 
-	if(scrubbing & SCRUBBING)	
+	if(scrubbing & SCRUBBING)
 		if(widenet)
 			icon_state = "scrub_wide"
 		else
@@ -99,7 +99,7 @@
 		return FALSE
 
 	var/datum/signal/signal = new
-	signal.transmission_method = 1 //radio signal
+	signal.transmission_method = TRANSMISSION_RADIO
 	signal.source = src
 
 	var/list/f_types = list()

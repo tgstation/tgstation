@@ -22,7 +22,7 @@
 		var/datum/signal/signal = new
 		var/datum/gas_mixture/air_sample = return_air()
 
-		signal.transmission_method = 1 //radio signal
+		signal.transmission_method = TRANSMISSION_RADIO
 		signal.data = list(
 			"sigtype" = "status",
 			"id_tag" = id_tag,
@@ -195,7 +195,7 @@
 	if(..() || !radio_connection)
 		return
 	var/datum/signal/signal = new
-	signal.transmission_method = 1
+	signal.transmission_method = TRANSMISSION_RADIO
 	signal.source = src
 	signal.data = list("sigtype" = "command")
 	switch(action)

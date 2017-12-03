@@ -169,9 +169,6 @@ GLOBAL_VAR_CONST(AIPRIV_FREQ, 1447) //AI private, colored magenta in chat window
 GLOBAL_VAR_CONST(REDTEAM_FREQ, 1215) // red team (CTF) frequency, coloured red
 GLOBAL_VAR_CONST(BLUETEAM_FREQ, 1217) // blue team (CTF) frequency, coloured blue
 
-#define TRANSMISSION_WIRE	0
-#define TRANSMISSION_RADIO	1
-
 /* filters */
 GLOBAL_VAR_INIT(RADIO_TO_AIRALARM, "1")
 GLOBAL_VAR_INIT(RADIO_FROM_AIRALARM, "2")
@@ -264,10 +261,7 @@ GLOBAL_VAR_INIT(RADIO_MAGNETS, "9")
 /datum/signal
 	var/obj/source
 
-	var/transmission_method = 0
-	//0 = wire
-	//1 = radio transmission
-	//2 = subspace transmission
+	var/transmission_method = TRANSMISSION_WIRE
 
 	var/data = list()
 	var/encryption
