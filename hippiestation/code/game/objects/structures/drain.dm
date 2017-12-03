@@ -20,7 +20,7 @@
 	counter++
 	for(var/obj/effect/liquid/L in view(4, src))
 		if(!L.is_static && L.viscosity)
-			var/chance = Clamp(50 / L.viscosity, 15, 100)
+			var/chance = Clamp(30 / L.viscosity, 10, 100)
 			if(get_dist(src,L) < 2)
 				qdel(L)
 			else if(prob(chance))
@@ -45,19 +45,6 @@
 				desc += " It looks permanently sealed!"
 		return
 	..()
-
-/obj/structure/drain/AltClick(mob/living/user)
-	if(isobserver(user))
-		return
-
-	if (!user.canUseTopic(src))
-		to_chat(user, "<span class='info'>You can't do this right now!</span>")
-		return
-	if(!isprocessing)
-		to_chat(user, "<span class='info'>You activate [src] via a digital switch.</span>")
-		START_PROCESSING(SSobj, src)
-	else
-		to_chat(user, "<span class='info'>[src] is already active!</span>")
 
 /obj/structure/drain/Destroy()
 	STOP_PROCESSING(SSobj, src)
