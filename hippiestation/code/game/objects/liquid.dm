@@ -1,6 +1,6 @@
 #define LIQUID_TICKS_UNTIL_THROTTLE 50
 #define LIQUID_TICKS_UNTIL_WAKE_UP 200 //failsafe to make sure sleeping liquids aren't failing to distribute depth
-#define REAGENT_TO_DEPTH 4//one 'depth' per 4u
+#define REAGENT_TO_DEPTH 2//one 'depth' per 2u
 #define MAX_INITIAL_DEPTH 25
 #define LERP(a, b, amount) (amount ? (a + (b - a) * amount) : (a + (b - a) * 0.5))
 
@@ -275,12 +275,10 @@
 		var/mob/living/carbon/C = AM
 		if(C.movement_type & FLYING)
 			return FALSE
-
-			return FALSE
 		var/turf/T = get_turf(src)
-		if(old.elevation > T.elevation && C.mob_has_gravity() && C.m_intent != MOVE_INTENT_WALK)
+		if(old.elevation > T.elevation && C.mob_has_gravity())
 			var/elevation_difference = old.elevation - T.elevation
-			C.Knockdown(elevation_difference * 4)
+			C.Knockdown(elevation_difference * 5)
 			to_chat(C, "<span class='userdanger'>You slip off the edge of [old] and plunge straight into the liquid!</span>")
 			playsound(C, 'hippiestation/sound/effects/splash.ogg', 60, 1, 1)
 			C.emote("cough")
