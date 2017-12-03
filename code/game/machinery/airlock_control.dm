@@ -82,7 +82,7 @@
 		radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_AIRLOCK)
 
 /obj/machinery/door/airlock/Destroy()
-	if(frequency && SSradio)
+	if(frequency)
 		SSradio.remove_object(src,frequency)
 	return ..()
 
