@@ -4,8 +4,6 @@
 #undef JOB_MODIFICATION_MAP_NAME
 #include "..\..\..\..\_maps\map_files\PubbyStation\job_changes.dm"
 #undef JOB_MODIFICATION_MAP_NAME
-#include "..\..\..\..\_maps\map_files\BozStation\job_changes.dm"
-#undef JOB_MODIFICATION_MAP_NAME
 #include "..\..\..\..\_maps\map_files\SBStation\job_changes.dm"
 #undef JOB_MODIFICATION_MAP_NAME
 #include "..\..\..\..\_maps\map_files\FrenzyStation\job_changes.dm"

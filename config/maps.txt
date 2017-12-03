@@ -53,8 +53,3 @@ endmap
 map crashland
 	maxplayers 20
 endmap
-
-map bozstation
-	disabled
-	maxplayers 35
-endmap
