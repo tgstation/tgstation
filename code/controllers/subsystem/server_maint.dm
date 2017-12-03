@@ -56,7 +56,7 @@ SUBSYSTEM_DEF(server_maint)
 		if(server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[server]")
 	if(SERVER_TOOLS_PRESENT)
-		SSblackbox.record_feedback("text", "server_tools", null, SERVER_TOOLS_VERSION)
-	SSblackbox.record_feedback("text", "server_tools_api", null, SERVER_TOOLS_API_VERSION)
+		SSblackbox.record_feedback("text", "server_tools", 1, SERVER_TOOLS_VERSION)
+	SSblackbox.record_feedback("text", "server_tools_api", 1, SERVER_TOOLS_API_VERSION)
 
 #undef PING_BUFFER_TIME
