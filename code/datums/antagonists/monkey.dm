@@ -1,7 +1,7 @@
 #define MONKEYS_ESCAPED		1
 #define MONKEYS_LIVED		2
 #define MONKEYS_DIED		3
-#define DISEASE_ESCAPED		4
+#define DISEASE_LIVED		4
 
 /datum/antagonist/monkey
 	name = "Monkey"
@@ -38,11 +38,10 @@
 
 /datum/antagonist/monkey/create_team(datum/objective_team/monkey/new_team)
 	if(!new_team)
-		if(!always_new_team)
-			for(var/datum/antagonist/monkey/N in GLOB.antagonists)
-				if(N.monkey_team)
-					monkey_team = N.monkey_team
-					return
+		for(var/datum/antagonist/monkey/N in GLOB.antagonists)
+			if(N.monkey_team)
+				monkey_team = N.monkey_team
+				return
 		monkey_team = new /datum/objective_team/monkey
 		monkey_team.update_objectives()
 		return
@@ -84,9 +83,10 @@
 	SEND_SOUND(owner.current, sound('sound/ambience/antag/monkey.ogg'))
 
 /datum/objective/monkey
-	explanation_text = "Ensure [monkeys_to_win] infected monkeys escape on the emergency shuttle."
+	explanation_text = "Ensure that infected monkeys escape on the emergency shuttle!"
 	martyr_compatible = TRUE
 	var/monkeys_to_win = 1
+	var/escaped_monkeys = 0
 
 /datum/objective/monkey/check_completion()
 	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
@@ -95,19 +95,16 @@
 			escaped_monkeys++
 	if(escaped_monkeys >= monkeys_to_win)
 		return TRUE
-	else
-		return FALSE
+	return FALSE
 
 /datum/objective_team/monkey
 	var/list/objectives
-	var/core_objective = /datum/objective/monkey
 
 /datum/objective_team/monkey/proc/update_objectives()
 	objectives = list()
-	if(core_objective)
-		var/datum/objective/O = new core_objective
-		O.team = src
-		objectives += O
+	var/datum/objective/monkey/O = new /datum/objective/monkey()
+	O.team = src
+	objectives += O
 	return
 
 /datum/objective_team/monkey/proc/infected_monkeys_alive()
@@ -143,7 +140,7 @@
 		return MONKEYS_ESCAPED
 	if(infected_monkeys_alive())
 		return MONKEYS_LIVED
-	if(infected_humans_alive(), infected_humans_escaped())
+	if(infected_humans_alive() || infected_humans_escaped())
 		return DISEASE_LIVED
 	return MONKEYS_DIED
 
