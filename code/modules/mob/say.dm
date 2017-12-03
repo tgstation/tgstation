@@ -79,4 +79,4 @@
 	return 0
 
 /mob/proc/lingcheck()
-	return 0
+	return LINGHIVE_NONE
