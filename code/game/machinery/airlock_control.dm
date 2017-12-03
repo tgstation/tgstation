@@ -97,7 +97,7 @@
 
 	var/id_tag
 	var/master_tag
-	var/frequency = 1449
+	var/frequency = FREQ_AIRLOCK_CONTROL
 
 	var/datum/radio_frequency/radio_connection
 

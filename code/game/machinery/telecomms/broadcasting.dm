@@ -173,7 +173,7 @@
 		"done" = 0,
 		"level" = pos.z // The level it is being broadcasted at.
 	)
-	signal.frequency = 1459// Common channel
+	signal.frequency = FREQ_COMMON
 
   //#### Sending the signal to all subspace receivers ####//
 	for(var/obj/machinery/telecomms/receiver/R in GLOB.telecomms_list)

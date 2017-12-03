@@ -209,7 +209,7 @@
 	name = "airlock console"
 	density = FALSE
 
-	frequency = 1449
+	frequency = FREQ_AIRLOCK_CONTROL
 	power_channel = ENVIRON
 
 	// Setup parameters only

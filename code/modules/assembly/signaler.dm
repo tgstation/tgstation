@@ -10,7 +10,7 @@
 	attachable = 1
 
 	var/code = 30
-	var/frequency = 1457
+	var/frequency = FREQ_SIGNALER
 	var/delay = 0
 	var/datum/radio_frequency/radio_connection
 

@@ -8,7 +8,7 @@
 	glass = TRUE
 
 	var/datum/radio_frequency/air_connection
-	var/air_frequency = 1437
+	var/air_frequency = FREQ_ATMOS_ALARMS
 	autoclose = FALSE
 
 /obj/machinery/door/airlock/alarmlock/New()

@@ -478,7 +478,7 @@
 	power_draw_idle = 5
 	power_draw_per_use = 40
 
-	var/frequency = 1457
+	var/frequency = FREQ_SIGNALER
 	var/code = 30
 	var/datum/radio_frequency/radio_connection
 

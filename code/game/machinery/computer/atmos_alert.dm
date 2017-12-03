@@ -6,7 +6,7 @@
 	icon_keyboard = "atmos_key"
 	var/list/priority_alarms = list()
 	var/list/minor_alarms = list()
-	var/receive_frequency = 1437
+	var/receive_frequency = FREQ_ATMOS_ALARMS
 	var/datum/radio_frequency/radio_connection
 
 	light_color = LIGHT_COLOR_CYAN

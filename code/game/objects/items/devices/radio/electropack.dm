@@ -12,7 +12,7 @@
 	materials = list(MAT_METAL=10000, MAT_GLASS=2500)
 	var/on = TRUE
 	var/code = 2
-	var/frequency = 1449
+	var/frequency = FREQ_ELECTROPACK
 	var/shock_cooldown = 0
 
 /obj/item/device/electropack/suicide_act(mob/user)

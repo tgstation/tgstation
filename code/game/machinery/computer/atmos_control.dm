@@ -11,7 +11,7 @@
 	var/on = TRUE
 
 	var/id_tag
-	var/frequency = 1441
+	var/frequency = FREQ_ATMOS_STORAGE
 	var/datum/radio_frequency/radio_connection
 
 /obj/machinery/air_sensor/update_icon()
@@ -66,7 +66,7 @@
 	icon_keyboard = "atmos_key"
 	circuit = /obj/item/circuitboard/computer/atmos_control
 
-	var/frequency = 1441
+	var/frequency = FREQ_ATMOS_STORAGE
 	var/list/sensors = list(
 		"n2_sensor" = "Nitrogen Tank",
 		"o2_sensor" = "Oxygen Tank",
@@ -138,7 +138,7 @@
 /obj/machinery/computer/atmos_control/tank
 	var/input_tag
 	var/output_tag
-	frequency = 1441
+	frequency = FREQ_ATMOS_STORAGE
 	circuit = /obj/item/circuitboard/computer/atmos_control/tank
 
 	var/list/input_info
@@ -147,7 +147,7 @@
 // This hacky madness is the evidence of the fact that a lot of machines were never meant to be constructable, im so sorry you had to see this
 /obj/machinery/computer/atmos_control/tank/proc/reconnect(mob/user)
 	var/list/IO = list()
-	var/datum/radio_frequency/freq = SSradio.return_frequency(1441)
+	var/datum/radio_frequency/freq = SSradio.return_frequency(FREQ_ATMOS_STORAGE)
 	var/list/devices = freq.devices["_default"]
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in devices)
 		var/list/text = splittext(U.id_tag, "_")
