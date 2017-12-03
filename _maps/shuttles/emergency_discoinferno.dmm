@@ -110,7 +110,8 @@
 /area/shuttle/escape)
 "v" = (
 /obj/machinery/disco{
-	anchored = 1
+	anchored = 1;
+	req_access = null
 	},
 /turf/open/floor/light/colour_cycle,
 /area/shuttle/escape)
@@ -241,7 +242,7 @@ c
 c
 c
 b
-Q
+O
 b
 w
 b
@@ -446,7 +447,7 @@ a
 b
 b
 b
-P
+O
 q
 r
 r
