@@ -469,19 +469,16 @@
 
 //Boat
 
-/obj/vehicle/ridden/lavaboat
+/obj/vehicle/lavaboat
 	name = "lava boat"
 	desc = "A boat used for traversing lava."
 	icon_state = "goliath_boat"
 	icon = 'icons/obj/lavaland/dragonboat.dmi'
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
-	can_buckle = TRUE
 
-/obj/vehicle/ridden/lavaboat/Initialize()
+/obj/vehicle/lavaboat/buckle_mob(mob/living/M, force = 0, check_loc = 1)
 	. = ..()
-	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.keytype = /obj/item/oar
-	D.allowed_turf_typecache = typecacheof(/turf/open/lava)
+	riding_datum = new/datum/riding/boat
 
 /obj/item/oar
 	name = "oar"
@@ -504,7 +501,7 @@
 
 /datum/crafting_recipe/boat
 	name = "goliath hide boat"
-	result = /obj/vehicle/ridden/lavaboat
+	result = /obj/vehicle/lavaboat
 	reqs = list(/obj/item/stack/sheet/animalhide/goliath_hide = 3)
 	time = 50
 	category = CAT_PRIMAL
@@ -521,20 +518,17 @@
 /obj/item/ship_in_a_bottle/attack_self(mob/user)
 	to_chat(user, "You're not sure how they get the ships in these things, but you're pretty sure you know how to get it out.")
 	playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, 1)
-	new /obj/vehicle/ridden/lavaboat/dragon(get_turf(src))
+	new /obj/vehicle/lavaboat/dragon(get_turf(src))
 	qdel(src)
 
-/obj/vehicle/ridden/lavaboat/dragon
+/obj/vehicle/lavaboat/dragon
 	name = "mysterious boat"
 	desc = "This boat moves where you will it, without the need for an oar."
 	icon_state = "dragon_boat"
 
-/obj/vehicle/ridden/lavaboat/dragon/Initialize()
-	. = ..()
-	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.vehicle_move_delay = 1
-	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(1, 2), TEXT_SOUTH = list(1, 2), TEXT_EAST = list(1, 2), TEXT_WEST = list( 1, 2)))
-	D.keytype = null
+/obj/vehicle/lavaboat/dragon/buckle_mob(mob/living/M, force = 0, check_loc = 1)
+	..()
+	riding_datum = new/datum/riding/boat/dragon
 
 //Potion of Flight
 /obj/item/reagent_containers/glass/bottle/potion

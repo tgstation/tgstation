@@ -491,14 +491,14 @@
 	. = ..()
 	if(.)
 		user.spin(20, 1)
-		if(iscyborg(user) && user.has_buckled_mobs())
+		if(iscyborg(user))
 			var/mob/living/silicon/robot/R = user
-			GET_COMPONENT_FROM(riding_datum, /datum/component/riding, R)
-			if(riding_datum)
+			if(R.buckled_mobs)
 				for(var/mob/M in R.buckled_mobs)
-					riding_datum.force_dismount(M)
-			else
-				R.unbuckle_all_mobs()
+					if(R.riding_datum)
+						R.riding_datum.force_dismount(M)
+					else
+						R.unbuckle_all_mobs()
 
 
 /datum/emote/living/circle

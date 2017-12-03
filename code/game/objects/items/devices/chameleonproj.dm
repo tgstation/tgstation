@@ -101,11 +101,7 @@
 	appearance = saved_appearance
 	if(istype(M.buckled, /obj/vehicle))
 		var/obj/vehicle/V = M.buckled
-		GET_COMPONENT_FROM(VRD, /datum/component/riding, V)
-		if(VRD)
-			VRD.force_dismount(M)
-		else
-			V.unbuckle_mob(M, force = TRUE)
+		V.riding_datum.force_dismount(M)
 	M.loc = src
 	master = C
 	master.active_dummy = src

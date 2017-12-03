@@ -11604,7 +11604,7 @@
 /turf/open/floor/plasteel,
 /area/wizard_station)
 "Ej" = (
-/obj/vehicle/ridden/scooter/skateboard{
+/obj/vehicle/scooter/skateboard{
 	icon_state = "skateboard";
 	dir = 4
 	},

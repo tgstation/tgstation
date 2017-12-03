@@ -270,7 +270,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "be" = (
-/obj/vehicle/ridden/scooter/skateboard{
+/obj/vehicle/scooter/skateboard{
 	dir = 4
 	},
 /turf/open/floor/plating/beach/sand,

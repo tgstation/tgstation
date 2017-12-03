@@ -338,8 +338,8 @@
 
 	if(istype(C, /obj/vehicle))
 		var/obj/vehicle/V = C
-		var/datum/component/riding/R = V.GetComponent(/datum/component/riding)
-		if(R)
+		var/datum/riding/R = V.riding_datum
+		if(V.riding_datum)
 			if(R.vehicle_move_delay <= 0 )
 				to_chat(user, "<span class='warning'>The [C] can't be made any faster!</span>")
 				return ..()
@@ -349,6 +349,7 @@
 	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 	C.add_atom_colour("#FF0000", FIXED_COLOUR_PRIORITY)
 	qdel(src)
+
 
 /obj/item/slimepotion/fireproof
 	name = "slime chill potion"

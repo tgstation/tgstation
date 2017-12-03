@@ -528,7 +528,7 @@
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/animal_hospital)
 "bL" = (
-/obj/vehicle/ridden/scooter/skateboard{
+/obj/vehicle/scooter/skateboard{
 	dir = 4
 	},
 /turf/open/floor/grass{
