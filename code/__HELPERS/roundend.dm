@@ -1,5 +1,5 @@
 /datum/controller/subsystem/ticker/proc/gather_roundend_feedback()
-	var/clients = 0
+	var/clients = GLOB.player_list.len
 	var/surviving_humans = 0
 	var/surviving_total = 0
 	var/ghosts = 0
@@ -7,21 +7,18 @@
 	var/escaped_total = 0
 
 	for(var/mob/M in GLOB.player_list)
-		if(M.client)
-			clients++
-			if(ishuman(M))
-				if(!M.stat)
-					surviving_humans++
-					if(M.z == ZLEVEL_CENTCOM)
-						escaped_humans++
+		if(ishuman(M))
 			if(!M.stat)
-				surviving_total++
+				surviving_humans++
 				if(M.z == ZLEVEL_CENTCOM)
-					escaped_total++
+					escaped_humans++
+		if(!M.stat)
+			surviving_total++
+			if(M.z == ZLEVEL_CENTCOM)
+				escaped_total++
 
-
-			if(isobserver(M))
-				ghosts++
+		if(isobserver(M))
+			ghosts++
 
 	if(clients)
 		SSblackbox.record_feedback("nested tally", "round_end_stats", clients, list("clients"))
