@@ -171,6 +171,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/maintenance/department/science/xenobiology
 	name = "Xenobiology Maintenance"
 	icon_state = "xenomaint"
+	xenobiology_compatible = TRUE
 
 
 //Maintenance - Generic
