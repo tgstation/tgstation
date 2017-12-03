@@ -80,8 +80,8 @@
 	var/shorted = 0
 	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
 
-	var/frequency = 1439
-	var/alarm_frequency = 1437
+	var/frequency = FREQ_ATMOS_CONTROL
+	var/alarm_frequency = FREQ_ATMOS_ALARMS
 	var/datum/radio_frequency/radio_connection
 
 	var/list/TLV = list( // Breathable air.

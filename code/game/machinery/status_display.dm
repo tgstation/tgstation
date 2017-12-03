@@ -32,7 +32,7 @@
 	var/index1			// display index for scrolling messages or 0 if non-scrolling
 	var/index2
 
-	var/frequency = 1435		// radio frequency
+	var/frequency = FREQ_STATUS_DISPLAYS
 	var/supply_display = 0		// true if a supply shuttle display
 	var/shuttle_id				// Id used for "generic shuttle timer" mode
 

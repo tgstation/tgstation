@@ -201,7 +201,7 @@
 
 /obj/machinery/computer/cargo/proc/post_signal(command)
 
-	var/datum/radio_frequency/frequency = SSradio.return_frequency(1435)
+	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
 
 	if(!frequency)
 		return

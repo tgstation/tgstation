@@ -28,7 +28,6 @@
 	var/const/STATE_TOGGLE_EMERGENCY = 10
 	var/const/STATE_PURCHASE = 11
 
-	var/status_display_freq = "1435"
 	var/stat_msg1
 	var/stat_msg2
 
@@ -693,7 +692,7 @@
 
 /obj/machinery/computer/communications/proc/post_status(command, data1, data2)
 
-	var/datum/radio_frequency/frequency = SSradio.return_frequency(1435)
+	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
 
 	if(!frequency)
 		return

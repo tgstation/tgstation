@@ -8,7 +8,7 @@
 	dog_fashion = /datum/dog_fashion/back
 	var/on = TRUE // 0 for off
 	var/last_transmission
-	var/frequency = 1459 //common chat
+	var/frequency = FREQ_COMMON
 	var/traitor_frequency = 0 //tune to frequency to unlock traitor supplies
 	var/canhear_range = 3 // the range which mobs can hear this radio from
 	var/list/secure_radio_connections

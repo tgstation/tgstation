@@ -771,7 +771,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 		for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 			humans += H
 		person = pick(humans)
-		var/message = target.compose_message(person,understood_language,pick(radio_messages),"1459",person.get_spans(),face_name = TRUE)
+		var/message = target.compose_message(person,understood_language,pick(radio_messages),"[FREQ_COMMON]",person.get_spans(),face_name = TRUE)
 		feedback_details += "Type: Radio, Source: [person.real_name], Message: [message]"
 		to_chat(target, message)
 	qdel(src)

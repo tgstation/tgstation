@@ -154,11 +154,10 @@
 	freq_listening = list()
 	autolinkers = list("common")
 
-	//Common and other radio frequencies for people to freely use
-	// 1441 to 1489
+//Common and other radio frequencies for people to freely use
 /obj/machinery/telecomms/server/presets/common/Initialize()
 	. = ..()
-	for(var/i = 1441, i < 1489, i += 2)
+	for(var/i = MIN_FREQ, i <= MAX_FREQ, i += 2)
 		freq_listening |= i
 
 /obj/machinery/telecomms/server/presets/command
