@@ -1,4 +1,7 @@
 sound/ambience/title1.ogg
 sound/ambience/title2.ogg
-sound/ambience/title3.ogg
 sound/ambience/clown.ogg
+config/title_music/bepoprush.ogg
+config/title_music/dontstopme.ogg
+config/title_music/thebluewrath.ogg
+config/title_music/malfunction.ogg
