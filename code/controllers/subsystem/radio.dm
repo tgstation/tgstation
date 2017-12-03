@@ -3,6 +3,13 @@ SUBSYSTEM_DEF(radio)
 	flags = SS_NO_FIRE|SS_NO_INIT
 
 	var/list/datum/radio_frequency/frequencies = list()
+	var/list/saymodes = list()
+
+/datum/controller/subsystem/radio/PreInit(timeofday)
+	for(var/_SM in subtypesof(/datum/saymode))
+		var/datum/saymode/SM = new _SM()
+		saymodes[SM.key] = SM
+	return ..()
 
 /datum/controller/subsystem/radio/proc/add_object(obj/device, new_frequency as num, filter = null as text|null)
 	var/f_text = num2text(new_frequency)

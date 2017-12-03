@@ -5,16 +5,14 @@
 
 /**********************Mineral ores**************************/
 
-/obj/item/stack/ore
+/obj/item/ore
 	name = "rock"
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "ore"
-	full_w_class = WEIGHT_CLASS_BULKY
 	var/points = 0 //How many points this ore gets you from the ore redemption machine
 	var/refined_type = null //What this ore defaults to being refined into
-	novariants = FALSE
 
-/obj/item/stack/ore/attackby(obj/item/I, mob/user, params)
+/obj/item/ore/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weldingtool))
 		var/obj/item/weldingtool/W = I
 		if(W.remove_fuel(15) && refined_type)
@@ -24,10 +22,10 @@
 			to_chat(user, "<span class='info'>Not enough fuel to smelt [src].</span>")
 	..()
 
-/obj/item/stack/ore/Crossed(atom/movable/AM)
+/obj/item/ore/Crossed(atom/movable/AM)
 	set waitfor = FALSE
 	var/show_message = TRUE
-	for(var/obj/item/stack/ore/O in loc)
+	for(var/obj/item/ore/O in loc)
 		if(O != src)
 			show_message = FALSE
 			break
@@ -55,7 +53,7 @@
 		var/mob/living/L = AM
 		if(istype(L.pulling, /obj/structure/ore_box))
 			box = L.pulling
-			for(var/obj/item/stack/ore/O in OB)
+			for(var/obj/item/ore/O in OB)
 				OB.remove_from_storage(src, box)
 		if(show_message)
 			playsound(L, "rustle", 50, TRUE)
@@ -67,32 +65,32 @@
 				"<span class='notice'>You scoop up the ores beneath you with your [OB.name].</span>")
 	return ..()
 
-/obj/item/stack/ore/uranium
+/obj/item/ore/uranium
 	name = "uranium ore"
-	icon_state = "ore_uranium"
+	icon_state = "Uranium ore"
 	points = 30
 	materials = list(MAT_URANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/uranium
 
-/obj/item/stack/ore/iron
+/obj/item/ore/iron
 	name = "iron ore"
-	icon_state = "ore_iron"
+	icon_state = "Iron ore"
 	points = 1
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/metal
 
-/obj/item/stack/ore/glass
+/obj/item/ore/glass
 	name = "sand pile"
-	icon_state = "ore_glass"
+	icon_state = "Glass ore"
 	points = 1
 	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/glass
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/stack/ore/glass/attack_self(mob/living/user)
+/obj/item/ore/glass/attack_self(mob/living/user)
 	to_chat(user, "<span class='notice'>You use the sand to make sandstone.</span>")
 	var/sandAmt = 1
-	for(var/obj/item/stack/ore/glass/G in user.loc) // The sand on the floor
+	for(var/obj/item/ore/glass/G in user.loc) // The sand on the floor
 		sandAmt += 1
 		qdel(G)
 	while(sandAmt > 0)
@@ -108,7 +106,7 @@
 	qdel(src)
 	return
 
-/obj/item/stack/ore/glass/throw_impact(atom/hit_atom)
+/obj/item/ore/glass/throw_impact(atom/hit_atom)
 	if(..() || !ishuman(hit_atom))
 		return
 	var/mob/living/carbon/human/C = hit_atom
@@ -127,18 +125,18 @@
 	to_chat(C, "<span class='userdanger'>\The [src] gets into your eyes! The pain, it burns!</span>")
 	qdel(src)
 
-/obj/item/stack/ore/glass/basalt
+/obj/item/ore/glass/basalt
 	name = "volcanic ash"
 	icon_state = "volcanic_sand"
 
-/obj/item/stack/ore/plasma
+/obj/item/ore/plasma
 	name = "plasma ore"
-	icon_state = "ore_plasma"
+	icon_state = "Plasma ore"
 	points = 15
 	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/plasma
 
-/obj/item/stack/ore/plasma/attackby(obj/item/I, mob/user, params)
+/obj/item/ore/plasma/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weldingtool))
 		var/obj/item/weldingtool/W = I
 		if(W.welding)
@@ -147,42 +145,42 @@
 		..()
 
 
-/obj/item/stack/ore/silver
+/obj/item/ore/silver
 	name = "silver ore"
-	icon_state = "ore_silver"
+	icon_state = "Silver ore"
 	points = 16
 	materials = list(MAT_SILVER=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/silver
 
-/obj/item/stack/ore/gold
+/obj/item/ore/gold
 	name = "gold ore"
-	icon_state = "ore_gold"
+	icon_state = "Gold ore"
 	points = 18
 	materials = list(MAT_GOLD=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/gold
 
-/obj/item/stack/ore/diamond
+/obj/item/ore/diamond
 	name = "diamond ore"
-	icon_state = "ore_diamond"
+	icon_state = "Diamond ore"
 	points = 50
 	materials = list(MAT_DIAMOND=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/diamond
 
-/obj/item/stack/ore/bananium
+/obj/item/ore/bananium
 	name = "bananium ore"
-	icon_state = "ore_clown"
+	icon_state = "Clown ore"
 	points = 60
 	materials = list(MAT_BANANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/bananium
 
-/obj/item/stack/ore/titanium
+/obj/item/ore/titanium
 	name = "titanium ore"
-	icon_state = "ore_titanium"
+	icon_state = "Titanium ore"
 	points = 50
 	materials = list(MAT_TITANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/titanium
 
-/obj/item/stack/ore/slag
+/obj/item/ore/slag
 	name = "slag"
 	desc = "Completely useless."
 	icon_state = "slag"
@@ -287,12 +285,12 @@
 				explosion(src,0,1,3,adminlog = notify_admins)
 		qdel(src)
 
-/obj/item/stack/ore/Initialize()
+/obj/item/ore/Initialize()
 	. = ..()
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
 
-/obj/item/stack/ore/ex_act()
+/obj/item/ore/ex_act()
 	return
 
 /*****************************Coin********************************/

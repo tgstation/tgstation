@@ -113,7 +113,7 @@
 		return (total_amount - total_amount_saved)
 	return FALSE
 
-/datum/component/material_container/proc/insert_stack(obj/item/stack/S, amt, multiplier = 1)
+/datum/component/material_container/proc/insert_stack(obj/item/stack/S, amt)
 	if(isnull(amt))
 		amt = S.amount
 
@@ -131,7 +131,7 @@
 	if(!amt)
 		return FALSE
 
-	last_inserted_id = insert_materials(S,amt * multiplier)
+	last_inserted_id = insert_materials(S,amt)
 	last_inserted_type = S.type
 	S.use(amt)
 	last_amount_inserted = amt
@@ -141,7 +141,7 @@
 	if(!I)
 		return FALSE
 	if(istype(I, /obj/item/stack))
-		return insert_stack(I, stack_amt, multiplier)
+		return insert_stack(I, stack_amt)
 
 	var/material_amount = get_item_material_amount(I)
 	if(!material_amount || !has_space(material_amount))
