@@ -122,15 +122,6 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 	"[FREQ_CTF_BLUE]" = "Blue Team"
 ))
 
-// Filters, used as an optimization, to allow only receiving signals you care about
-GLOBAL_VAR_INIT(RADIO_TO_AIRALARM, "1")
-GLOBAL_VAR_INIT(RADIO_FROM_AIRALARM, "2")
-GLOBAL_VAR_INIT(RADIO_CHAT, "3") //deprecated
-GLOBAL_VAR_INIT(RADIO_ATMOSIA, "4")
-GLOBAL_VAR_INIT(RADIO_NAVBEACONS, "5")
-GLOBAL_VAR_INIT(RADIO_AIRLOCK, "6")
-GLOBAL_VAR_INIT(RADIO_MAGNETS, "9")
-
 /datum/radio_frequency
 
 	var/frequency as num

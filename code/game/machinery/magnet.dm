@@ -33,7 +33,7 @@
 	var/turf/T = loc
 	hide(T.intact)
 	center = T
-	SSradio.add_object(src, freq, GLOB.RADIO_MAGNETS)
+	SSradio.add_object(src, freq, RADIO_MAGNETS)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/magnetic_module/LateInitialize()
@@ -224,7 +224,7 @@
 
 	if(path) // check for default path
 		filter_path() // renders rpath
-	radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_MAGNETS)
+	radio_connection = SSradio.add_object(src, frequency, RADIO_MAGNETS)
 
 /obj/machinery/magnetic_controller/Destroy()
 	SSradio.remove_object(src, frequency)
@@ -302,7 +302,7 @@
 
 		// Broadcast the signal
 
-		radio_connection.post_signal(src, signal, filter = GLOB.RADIO_MAGNETS)
+		radio_connection.post_signal(src, signal, filter = RADIO_MAGNETS)
 
 		spawn(1)
 			updateUsrDialog() // pretty sure this increases responsiveness
@@ -370,7 +370,7 @@
 
 		// Broadcast the signal
 		spawn()
-			radio_connection.post_signal(src, signal, filter = GLOB.RADIO_MAGNETS)
+			radio_connection.post_signal(src, signal, filter = RADIO_MAGNETS)
 
 		if(speed == 10)
 			sleep(1)

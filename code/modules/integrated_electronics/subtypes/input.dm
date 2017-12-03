@@ -522,7 +522,7 @@
 		return
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_CHAT)
+	radio_connection = SSradio.add_object(src, frequency, RADIO_SIGNALER)
 
 /obj/item/integrated_circuit/input/signaler/receive_signal(datum/signal/signal)
 	var/new_code = get_pin_data(IC_INPUT, 2)

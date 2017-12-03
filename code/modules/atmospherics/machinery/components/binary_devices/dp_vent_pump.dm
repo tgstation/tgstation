@@ -131,7 +131,7 @@ Acts like a normal vent, but has an input AND output.
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
-		radio_connection = SSradio.add_object(src, frequency, filter = GLOB.RADIO_ATMOSIA)
+		radio_connection = SSradio.add_object(src, frequency, filter = RADIO_ATMOSIA)
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/proc/broadcast_status()
 	if(!radio_connection)
@@ -152,7 +152,7 @@ Acts like a normal vent, but has an input AND output.
 		"external" = external_pressure_bound,
 		"sigtype" = "status"
 	)
-	radio_connection.post_signal(src, signal, filter = GLOB.RADIO_ATMOSIA)
+	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/atmosinit()
 	..()

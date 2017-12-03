@@ -39,7 +39,7 @@
 /obj/item/radio/integrated/signal/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency)
+	radio_connection = SSradio.add_object(src, frequency, RADIO_SIGNALER)
 
 /obj/item/radio/integrated/signal/proc/send_signal(message="ACTIVATE")
 
