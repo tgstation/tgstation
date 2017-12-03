@@ -44,7 +44,7 @@
 	if(user.incapacitated() || !istype(user) || !in_range(src, user))
 		return
 
-	var/choice = input(user,"polychromic thread options", "Clothing Recolor") in list("Primary Color","Secondary Color","Tertiary Color","*CANCEL*")
+	var/choice = input(user,"polychromic thread options", "Clothing Recolor") as null|anything in list("[hasprimary ? "Primary Color" : ""]", "[hassecondary ? "Secondary Color" : ""]", "[hastertiary ? "Tertiary Color" : ""]")
 	switch(choice)
 
 		if("Primary Color")
