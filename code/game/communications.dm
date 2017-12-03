@@ -155,21 +155,10 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 	"1217" = "Blue Team"
 ))
 
-//depenging helpers
-GLOBAL_VAR_CONST(SYND_FREQ, 1213) //nuke op frequency, coloured dark brown in chat window
-GLOBAL_VAR_CONST(SUPP_FREQ, 1347) //supply, coloured light brown in chat window
-GLOBAL_VAR_CONST(SERV_FREQ, 1349) //service, coloured green in chat window
-GLOBAL_VAR_CONST(SCI_FREQ, 1351) //science, coloured plum in chat window
-GLOBAL_VAR_CONST(COMM_FREQ, 1353) //command, colored gold in chat window
-GLOBAL_VAR_CONST(MED_FREQ, 1355) //medical, coloured blue in chat window
-GLOBAL_VAR_CONST(ENG_FREQ, 1357) //engineering, coloured orange in chat window
-GLOBAL_VAR_CONST(SEC_FREQ, 1359) //security, coloured red in chat window
-GLOBAL_VAR_CONST(CENTCOM_FREQ, 1337) //centcom frequency, coloured grey in chat window
-GLOBAL_VAR_CONST(AIPRIV_FREQ, 1447) //AI private, colored magenta in chat window
-GLOBAL_VAR_CONST(REDTEAM_FREQ, 1215) // red team (CTF) frequency, coloured red
-GLOBAL_VAR_CONST(BLUETEAM_FREQ, 1217) // blue team (CTF) frequency, coloured blue
+// Radio channels used for
 
-/* filters */
+
+// Filters, used as an optimization, to allow only receiving signals you care about
 GLOBAL_VAR_INIT(RADIO_TO_AIRALARM, "1")
 GLOBAL_VAR_INIT(RADIO_FROM_AIRALARM, "2")
 GLOBAL_VAR_INIT(RADIO_CHAT, "3") //deprecated

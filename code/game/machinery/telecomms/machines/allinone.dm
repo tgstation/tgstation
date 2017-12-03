@@ -36,12 +36,12 @@
 
 
 		/* ###### Copy all syndie communications to the Syndicate Frequency ###### */
-		if(intercept && signal.frequency == GLOB.SYND_FREQ)
+		if(intercept && signal.frequency == FREQ_SYNDICATE)
 			Broadcast_Message(signal.data["mob"],
 							  signal.data["vmask"],
 							  signal.data["radio"], signal.data["message"],
 							  signal.data["name"], signal.data["job"],
-							  signal.data["realname"],, signal.data["compression"], list(0, z), GLOB.SYND_FREQ, signal.data["spans"],
+							  signal.data["realname"],, signal.data["compression"], list(0, z), FREQ_SYNDICATE, signal.data["spans"],
 							  signal.data["verb_say"], signal.data["verb_ask"], signal.data["verb_exclaim"], signal.data["verb_yell"],
 							  signal.data["language"])
 		/* ###### Broadcast a message using signal.data ###### */

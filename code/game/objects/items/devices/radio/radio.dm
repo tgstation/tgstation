@@ -469,10 +469,10 @@
 		var/turf/position = get_turf(src)
 		if(!position || !(position.z in level))
 			return -1
-	if(freq == GLOB.SYND_FREQ)
+	if(freq == FREQ_SYNDICATE)
 		if(!(src.syndie)) //Checks to see if it's allowed on that frequency, based on the encryption keys
 			return -1
-	if(freq == GLOB.CENTCOM_FREQ)
+	if(freq == FREQ_CENTCOM)
 		if(!independent)
 			return -1
 	if (!on)
@@ -554,7 +554,7 @@
 
 /obj/item/device/radio/borg/syndicate/Initialize()
 	. = ..()
-	set_frequency(GLOB.SYND_FREQ)
+	set_frequency(FREQ_SYNDICATE)
 
 /obj/item/device/radio/borg/attackby(obj/item/W, mob/user, params)
 

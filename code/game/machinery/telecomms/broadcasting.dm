@@ -121,8 +121,8 @@
 				radios += R
 
 		var/freqtext = num2text(freq)
-		for(var/obj/item/device/radio/R in GLOB.all_radios["[GLOB.SYND_FREQ]"]) //syndicate radios use magic that allows them to hear everything. this was already the case, now it just doesn't need the allinone anymore. solves annoying bugs that aren't worth solving.
-			if(R.receive_range(GLOB.SYND_FREQ, list(R.z)) > -1 && freqtext in GLOB.reverseradiochannels)
+		for(var/obj/item/device/radio/R in GLOB.all_radios["[FREQ_SYNDICATE]"]) //syndicate radios use magic that allows them to hear everything. this was already the case, now it just doesn't need the allinone anymore. solves annoying bugs that aren't worth solving.
+			if(R.receive_range(FREQ_SYNDICATE, list(R.z)) > -1 && freqtext in GLOB.reverseradiochannels)
 				radios |= R
 
 	// Get a list of mobs who can hear from the radios we collected.

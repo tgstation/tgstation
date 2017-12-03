@@ -112,7 +112,7 @@
 			return -1
 	if(!src.listening)
 		return -1
-	if(freq == GLOB.SYND_FREQ)
+	if(freq == FREQ_SYNDICATE)
 		if(!(src.syndie))
 			return -1//Prevents broadcast of messages over devices lacking the encryption
 
