@@ -87,7 +87,8 @@
 /area/shuttle/escape)
 "q" = (
 /obj/structure/statue/plasma/scientist{
-	anchored = 1
+	anchored = 1;
+	oreAmount = 50
 	},
 /turf/open/floor/light/colour_cycle,
 /area/shuttle/escape)
