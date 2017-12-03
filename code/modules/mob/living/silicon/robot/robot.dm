@@ -1123,7 +1123,8 @@
 	if(!is_type_in_typecache(M, can_ride_typecache))
 		M.visible_message("<span class='warning'>[M] really can't seem to mount [src]...</span>")
 		return
-	var/datum/component/riding/riding_datum = LoadComponent(/datum/component/riding/cyborg)
+	if(!riding_datum)
+		riding_datum = new /datum/riding/cyborg(src)
 	if(buckled_mobs)
 		if(buckled_mobs.len >= max_buckled_mobs)
 			return
@@ -1146,8 +1147,7 @@
 
 /mob/living/silicon/robot/unbuckle_mob(mob/user)
 	if(iscarbon(user))
-		GET_COMPONENT(riding_datum, /datum/component/riding)
-		if(istype(riding_datum))
+		if(riding_datum)
 			riding_datum.unequip_buckle_inhands(user)
 			riding_datum.restore_position(user)
 	. = ..(user)

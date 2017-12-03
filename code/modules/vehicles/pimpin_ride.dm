@@ -1,23 +1,32 @@
 //PIMP-CART
-/obj/vehicle/ridden/janicart
+/obj/vehicle/janicart
 	name = "janicart (pimpin' ride)"
 	desc = "A brave janitor cyborg gave its life to produce such an amazing combination of speed and utility."
 	icon_state = "pussywagon"
-	key_type = /obj/item/key/janitor
+
 	var/obj/item/storage/bag/trash/mybag = null
 	var/floorbuffer = FALSE
 
-/obj/vehicle/ridden/janicart/Initialize(mapload)
+/obj/vehicle/janicart/Initialize(mapload)
 	. = ..()
 	update_icon()
-	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 7), TEXT_EAST = list(-12, 7), TEXT_WEST = list( 12, 7)))
 
-/obj/vehicle/ridden/janicart/Destroy()
+/obj/vehicle/janicart/Destroy()
 	if(mybag)
 		qdel(mybag)
 		mybag = null
 	. = ..()
+
+/obj/vehicle/janicart/buckle_mob(mob/living/buckled_mob, force = 0, check_loc = 0)
+	. = ..()
+	riding_datum = new/datum/riding/janicart
+
+
+
+/obj/item/key/janitor
+	desc = "A keyring with a small steel key, and a pink fob reading \"Pussy Wagon\"."
+	icon_state = "keyjanitor"
+
 
 /obj/item/janiupgrade
 	name = "floor buffer upgrade"
@@ -25,12 +34,14 @@
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "upgrade"
 
-/obj/vehicle/ridden/janicart/examine(mob/user)
+
+/obj/vehicle/janicart/examine(mob/user)
 	..()
 	if(floorbuffer)
 		to_chat(user, "It has been upgraded with a floor buffer.")
 
-/obj/vehicle/ridden/janicart/attackby(obj/item/I, mob/user, params)
+
+/obj/vehicle/janicart/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/storage/bag/trash))
 		if(mybag)
 			to_chat(user, "<span class='warning'>[src] already has a trashbag hooked!</span>")
@@ -52,14 +63,16 @@
 	else
 		return ..()
 
-/obj/vehicle/ridden/janicart/update_icon()
+
+/obj/vehicle/janicart/update_icon()
 	cut_overlays()
 	if(mybag)
 		add_overlay("cart_garbage")
 	if(floorbuffer)
 		add_overlay("cart_buffer")
 
-/obj/vehicle/ridden/janicart/attack_hand(mob/user)
+
+/obj/vehicle/janicart/attack_hand(mob/user)
 	if(..())
 		return 1
 	else if(mybag)
@@ -68,5 +81,5 @@
 		mybag = null
 		update_icon()
 
-/obj/vehicle/ridden/janicart/upgraded
+/obj/vehicle/janicart/upgraded
 	floorbuffer = TRUE
