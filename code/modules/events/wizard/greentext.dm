@@ -63,6 +63,7 @@
 		if(!(new_holder in SSticker.mode.traitors))
 			SSticker.mode.traitors += new_holder.mind
 		new_holder.mind.special_role = "winner"
+		new_holder.mind.add_antag_datum(/datum/antagonist/auto_custom)
 		var/datum/objective/O = new /datum/objective("Succeed")
 		O.completed = 1 //YES!
 		O.owner = new_holder.mind

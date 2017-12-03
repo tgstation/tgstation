@@ -990,11 +990,13 @@
 					message_admins("[key_name_admin(usr)] has cult'ed [current].")
 					log_admin("[key_name(usr)] has cult'ed [current].")
 			if("tome")
-				if (!SSticker.mode.equip_cultist(current,1))
+				var/datum/antagonist/cult/C = has_antag_datum(/datum/antagonist/cult,TRUE)
+				if (C.equip_cultist(current,1))
 					to_chat(usr, "<span class='danger'>Spawning tome failed!</span>")
 
 			if("amulet")
-				if (!SSticker.mode.equip_cultist(current))
+				var/datum/antagonist/cult/C = has_antag_datum(/datum/antagonist/cult,TRUE)
+				if (C.equip_cultist(current))
 					to_chat(usr, "<span class='danger'>Spawning amulet failed!</span>")
 
 	else if(href_list["clockcult"])
@@ -1335,16 +1337,11 @@
 
 
 /datum/mind/proc/make_Cultist()
-	if(!(src in SSticker.mode.cult))
-		SSticker.mode.add_cultist(src,FALSE)
+	if(!has_antag_datum(/datum/antagonist/cult,TRUE))
+		SSticker.mode.add_cultist(src,FALSE,equip=TRUE)
 		special_role = "Cultist"
 		to_chat(current, "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy your world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>")
 		to_chat(current, "<font color=\"purple\"><b><i>Assist your new bretheren in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>")
-		var/datum/antagonist/cult/C
-		C.cult_memorization(src)
-	var/mob/living/carbon/human/H = current
-	if (!SSticker.mode.equip_cultist(current))
-		to_chat(H, "Spawning an amulet from your Master failed.")
 
 /datum/mind/proc/make_Rev()
 	var/datum/antagonist/rev/head/head = new(src)

@@ -236,6 +236,7 @@
 	S.mind.assigned_role = S.name
 	S.mind.special_role = S.name
 	SSticker.mode.traitors += S.mind
+	S.mind.add_antag_datum(/datum/antagonist/auto_custom)
 	var/datum/objective/assassinate/new_objective
 	if(usr)
 		new_objective = new /datum/objective/assassinate

@@ -1,5 +1,6 @@
 /datum/antagonist/abductor
 	name = "Abductor"
+	roundend_category = "abductors"
 	job_rank = ROLE_ABDUCTOR
 	var/datum/objective_team/abductor_team/team
 	var/sub_role
@@ -70,3 +71,42 @@
 	var/mob/living/carbon/human/H = owner.current
 	var/datum/species/abductor/A = H.dna.species
 	A.scientist = TRUE
+
+
+/datum/objective_team/abductor_team
+	member_name = "abductor" 
+	var/list/objectives = list()
+	var/team_number
+	var/list/datum/mind/abductees = list()
+
+/datum/objective_team/abductor_team/is_solo()
+	return FALSE
+
+/datum/objective_team/abductor_team/proc/add_objective(datum/objective/O)
+	O.team = src
+	O.update_explanation_text()
+	objectives += O
+
+/datum/objective_team/abductor_team/roundend_report()
+	var/list/result = list()
+
+	var/won = TRUE
+	for(var/datum/objective/O in objectives)
+		if(!O.check_completion())
+			won = FALSE
+	if(won)
+		result += "<span class='greenannounce'>[name] team fulfilled its mission!</span>"
+	else
+		result += "<span class='boldannounce'>[name] team failed its mission.</span>"
+
+	result += "<span class='big'><b>The abductors of [name] were:</b></span>"
+	for(var/datum/mind/abductor_mind in members)
+		result += printplayer(abductor_mind)
+		result += printobjectives(abductor_mind)
+	if(abductees.len) //TODO: Make these proper antag datums instead
+		result += "<span class='big'><b>The abductees were:</b></span>"
+		for(var/datum/mind/abductee_mind in abductees)
+			result += printplayer(abductee_mind)
+			result += printobjectives(abductee_mind)
+
+	return result.Join("<br>")

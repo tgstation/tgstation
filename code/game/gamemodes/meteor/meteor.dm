@@ -30,30 +30,29 @@
 	spawn_meteors(ramp_up_final, wavetype)
 
 
-/datum/game_mode/meteor/declare_completion()
-	var/text
+/datum/game_mode/meteor/special_report()
 	var/survivors = 0
+	var/list/survivor_list = list()
 
 	for(var/mob/living/player in GLOB.player_list)
 		if(player.stat != DEAD)
 			++survivors
 
 			if(player.onCentCom())
-				text += "<br><b><font size=2>[player.real_name] escaped to the safety of CentCom.</font></b>"
+				survivor_list += "<b><font size=2>[player.real_name] escaped to the safety of CentCom.</font></b>"
 			else if(player.onSyndieBase())
-				text += "<br><b><font size=2>[player.real_name] escaped to the (relative) safety of Syndicate Space.</font></b>"
+				survivor_list += "<b><font size=2>[player.real_name] escaped to the (relative) safety of Syndicate Space.</font></b>"
 			else
-				text += "<br><font size=1>[player.real_name] survived but is stranded without any hope of rescue.</font>"
-
+				survivor_list += "<font size=1>[player.real_name] survived but is stranded without any hope of rescue.</font>"
 
 	if(survivors)
-		to_chat(world, "<span class='boldnotice'>The following survived the meteor storm</span>:[text]")
+		return "<span class='boldnotice'>The following survived the meteor storm</span>:[survivor_list.Join("<br>")]"
 	else
-		to_chat(world, "<span class='boldnotice'>Nobody survived the meteor storm!</span>")
+		return "<span class='boldnotice'>Nobody survived the meteor storm!</span>"
 
-	SSticker.mode_result = "end - evacuation"
+/datum/game_mode/meteor/set_round_result()
 	..()
-	return 1
+	SSticker.mode_result = "end - evacuation"
 
 /datum/game_mode/meteor/generate_report()
 	return "[pick("Asteroids have", "Meteors have", "Large rocks have", "Stellar minerals have", "Space hail has", "Debris has")] been detected near your station, and a collision is possible, \

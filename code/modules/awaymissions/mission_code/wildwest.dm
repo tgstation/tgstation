@@ -115,6 +115,7 @@
 				to_chat(user, "The Wish Granter punishes you for your wickedness, claiming your soul and warping your body to match the darkness in your heart.")
 				SSticker.mode.traitors += user.mind
 				user.mind.special_role = "traitor"
+				user.mind.add_antag_datum(/datum/antagonist/auto_custom)
 				var/datum/objective/hijack/hijack = new
 				hijack.owner = user.mind
 				user.mind.objectives += hijack

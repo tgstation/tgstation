@@ -45,6 +45,8 @@
 			to_chat(L, "<span class='warning'><B>You didn't get a date! They're all having fun without you! you'll show them though...</B></span>")
 			var/datum/objective/martyr/normiesgetout = new
 			normiesgetout.owner = L.mind
+			L.mind.special_role = "heartbreaker"
+			L.mind.add_antag_datum(/datum/antagonist/auto_custom)
 			SSticker.mode.traitors |= L.mind
 			L.mind.objectives += normiesgetout
 
@@ -52,6 +54,7 @@
 
 	SSticker.mode.traitors |= lover.mind
 	lover.mind.special_role = "valentine"
+	lover.mind.add_antag_datum(/datum/antagonist/auto_custom)
 
 	var/datum/objective/protect/protect_objective = new /datum/objective/protect
 	protect_objective.owner = lover.mind

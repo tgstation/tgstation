@@ -5,6 +5,7 @@
 
 /datum/antagonist/wizard
 	name = "Space Wizard"
+	roundend_category = "wizards/witches"
 	job_rank = ROLE_WIZARD
 	var/give_objectives = TRUE
 	var/strip = TRUE //strip before equipping
@@ -284,3 +285,33 @@
 	new_objective.owner = owner
 	owner.objectives += new_objective
 	objectives += new_objective
+
+
+/datum/antagonist/wizard/roundend_report()
+	var/list/parts = list()
+
+	parts += printplayer(owner)
+
+	var/count = 1
+	var/wizardwin = 1
+	for(var/datum/objective/objective in objectives)
+		if(objective.check_completion())
+			parts += "<B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+		else
+			parts += "<B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+			wizardwin = 0
+		count++
+
+	if(wizardwin)
+		parts += "<font color='green'><B>The wizard was successful!</B></font>"
+	else
+		parts += "<font color='red'><B>The wizard has failed!</B></font>"
+	
+	if(owner.spell_list.len>0)
+		parts += "<B>[owner.name] used the following spells: </B>"
+		var/list/spell_names = list()
+		for(var/obj/effect/proc_holder/spell/S in owner.spell_list)
+			spell_names += S.name
+		parts += spell_names.Join(", ")
+	
+	return parts.Join("<br>")

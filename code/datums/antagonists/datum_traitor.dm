@@ -1,5 +1,6 @@
 /datum/antagonist/traitor
 	name = "Traitor"
+	roundend_category = "traitors"
 	job_rank = ROLE_TRAITOR
 	var/should_specialise = FALSE //do we split into AI and human, set to true on inital assignment only
 	var/ai_datum = ANTAG_DATUM_TRAITOR_AI
@@ -290,3 +291,53 @@
 		where = "In your [equipped_slot]"
 	to_chat(mob, "<BR><BR><span class='info'>[where] is a folder containing <b>secret documents</b> that another Syndicate group wants. We have set up a meeting with one of their agents on station to make an exchange. Exercise extreme caution as they cannot be trusted and may be hostile.</span><BR>")
 
+//TODO Collate
+/datum/antagonist/traitor/roundend_report()
+	var/list/result = list()
+
+	var/traitorwin = TRUE
+
+	result += printplayer(owner)
+
+	var/TC_uses = 0
+	var/uplink_true = FALSE
+	var/purchases = ""
+	for(var/datum/component/uplink/H in GLOB.uplinks)
+		if(H && H.owner && H.owner == owner.key)
+			TC_uses += H.spent_telecrystals
+			uplink_true = TRUE
+			purchases += H.purchase_log.generate_render(FALSE)
+
+	var/objectives = ""
+	if(objectives_given.len)//If the traitor had no objectives, don't need to process this.
+		var/count = 1
+		for(var/datum/objective/objective in objectives_given)
+			if(objective.check_completion())
+				objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+			else
+				objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+				traitorwin = FALSE
+			count++
+
+	if(uplink_true)
+		var/uplink_text = "(used [TC_uses] TC) [purchases]"
+		if(TC_uses==0 && traitorwin)
+			var/static/icon/badass = icon('icons/badass.dmi', "badass")
+			uplink_text += "<BIG>[icon2html(badass, world)]</BIG>"
+		result += uplink_text
+	
+	result += objectives
+
+	var/special_role_text = lowertext(name)
+
+	if(traitorwin)
+		result += "<font color='green'><B>The [special_role_text] was successful!</B></font>"
+	else
+		result += "<font color='red'><B>The [special_role_text] has failed!</B></font>"
+		SEND_SOUND(owner.current, 'sound/ambience/ambifailure.ogg')
+
+	return result.Join("<br>")
+
+/datum/antagonist/traitor/roundend_report_footer()
+	return "<br><b>The code phrases were:</b> <font color='red'>[GLOB.syndicate_code_phrase]</font><br>\
+		<b>The code responses were:</b> <font color='red'>[GLOB.syndicate_code_response]</font><br>"

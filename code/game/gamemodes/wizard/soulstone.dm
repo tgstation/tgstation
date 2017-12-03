@@ -141,7 +141,8 @@
 
 		if("VICTIM")
 			var/mob/living/carbon/human/T = target
-			if(is_sacrifice_target(T.mind))
+			var/datum/antagonist/cult/C = user.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+			if(C && C.cult_team.is_sacrifice_target(T.mind))
 				if(iscultist(user))
 					to_chat(user, "<span class='cult'><b>\"This soul is mine.</b></span> <span class='cultlarge'>SACRIFICE THEM!\"</span>")
 				else

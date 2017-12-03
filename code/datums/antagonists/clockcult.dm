@@ -1,8 +1,10 @@
 //CLOCKCULT PROOF OF CONCEPT
 /datum/antagonist/clockcult
 	name = "Clock Cultist"
-	var/datum/action/innate/hierophant/hierophant_network = new()
+	roundend_category = "clock cultists"
 	job_rank = ROLE_SERVANT_OF_RATVAR
+	var/datum/action/innate/hierophant/hierophant_network = new()
+	var/datum/objective_team/clockcult/clock_team
 
 /datum/antagonist/clockcult/silent
 	silent = TRUE
@@ -10,6 +12,22 @@
 /datum/antagonist/clockcult/Destroy()
 	qdel(hierophant_network)
 	return ..()
+
+/datum/antagonist/clockcult/get_team()
+	return clock_team
+
+/datum/antagonist/clockcult/create_team(datum/objective_team/clockcult/new_team)
+	if(!new_team)
+		//TODO blah blah same as the others, allow multiple
+		for(var/datum/antagonist/clockcult/H in GLOB.antagonists)
+			if(H.clock_team)
+				clock_team = H.clock_team
+				return
+		clock_team = new /datum/objective_team/clockcult
+		return
+	if(!istype(new_team))
+		stack_trace("Wrong team type passed to [type] initialization.")
+	clock_team = new_team
 
 /datum/antagonist/clockcult/can_be_owned(datum/mind/new_owner)
 	. = ..()
@@ -164,3 +182,35 @@
 	if(iscyborg(owner.current))
 		to_chat(owner.current, "<span class='warning'>Despite your freedom from Ratvar's influence, you are still irreparably damaged and no longer possess certain functions such as AI linking.</span>")
 	. = ..()
+
+
+/datum/objective_team/clockcult
+	name = "Clockcult"
+	var/list/objective
+
+/datum/objective_team/clockcult/proc/check_clockwork_victory()
+	if(GLOB.clockwork_gateway_activated)
+		return TRUE
+	return FALSE
+
+/datum/objective_team/clockcult/roundend_report()
+	var/list/parts = list()
+	
+	if(check_clockwork_victory())
+		parts += "<span class='bold large_brass'>Ratvar's servants defended the Ark until its activation!</span>"
+	else
+		parts += "<span class='userdanger'>The Ark was destroyed! Ratvar will rust away for all eternity!</span>"
+	
+	parts += "<b>The servants' objective was:</b> [CLOCKCULT_OBJECTIVE]."
+	parts += "Ratvar's servants had <b>[GLOB.clockwork_caches]</b> Tinkerer's Caches."
+	parts += "<b>Construction Value(CV)</b> was: <b>[GLOB.clockwork_construction_value]</b>"
+	for(var/i in SSticker.scripture_states)
+		if(i != SCRIPTURE_DRIVER)
+			parts += "<b>[i] scripture</b> was: <b>[SSticker.scripture_states[i] ? "UN":""]LOCKED</b>"
+	
+	if(members.len)
+		parts += "<b>Ratvar's servants were:</b>"
+		for(var/datum/mind/M in members)
+			parts += printplayer(M)
+	
+	return parts.Join("<br>")

@@ -28,6 +28,7 @@ GLOBAL_VAR_INIT(highlander, FALSE)
 /mob/living/carbon/human/proc/make_scottish()
 	SSticker.mode.traitors += mind
 	mind.special_role = "highlander"
+	mind.add_antag_datum(/datum/antagonist/auto_custom)
 	dna.species.species_traits |= NOGUNS //nice try jackass
 
 	var/datum/objective/steal/steal_objective = new

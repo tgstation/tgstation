@@ -2,6 +2,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist
 	var/name = "Antagonist"
+	var/roundend_category = "other antagonists"				//Section of roundend report, datums with same category will be displayed together, also default header for the section
+	var/show_in_roundend = TRUE								//Set to false to hide the antagonists from roundend report
 	var/datum/mind/owner						//Mind that owns this datum
 	var/silent = FALSE							//Silent will prevent the gain/lose texts to show
 	var/can_coexist_with_others = TRUE			//Whether or not the person will be able to have more than one datum
@@ -96,9 +98,51 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/get_team()
 	return
 
+//Individual roundend report
+/datum/antagonist/proc/roundend_report()
+	var/list/report = list()
+
+	if(!owner)
+		CRASH("antagonist datum without owner")
+
+	report += printplayer(owner)
+
+	var/objectives_complete = TRUE
+	if(owner.objectives.len)
+		report += printobjectives(owner)
+		for(var/datum/objective/objective in owner.objectives)
+			if(!objective.check_completion())
+				objectives_complete = FALSE
+				break
+
+	if(owner.objectives.len == 0 || objectives_complete)
+		report += "<font color='green'><B>The [name] was successful!</B></font>"
+	else
+		report += "<font color='red'><B>The [name] has failed!</B></font>"
+
+	return report.Join("<br>")
+
+//Displayed at the start of roundend_category section, default to roundend_category header
+/datum/antagonist/proc/roundend_report_header()
+	return 	"<br><font size=3><B>The [roundend_category] were:</b></font><br>"
+
+//Displayed at the end of roundend_category section
+/datum/antagonist/proc/roundend_report_footer()
+	return
+
 //Should probably be on ticker or job ss ?
 /proc/get_antagonists(antag_type,specific = FALSE)
 	. = list()
 	for(var/datum/antagonist/A in GLOB.antagonists)
 		if(!specific && istype(A,antag_type) || specific && A.type == antag_type)
 			. += A.owner
+
+
+
+//This datum will autofill the name with special_role
+//Used as placeholder for minor antagonists, please create proper datums for these
+/datum/antagonist/auto_custom
+
+/datum/antagonist/auto_custom/on_gain()
+	..()
+	name = owner.special_role

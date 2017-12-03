@@ -349,7 +349,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 	color = RUNE_COLOR_DARKRED
 	var/mob/living/L = pick(myriad_targets)
 	var/is_clock = is_servant_of_ratvar(L)
-	var/is_convertable = is_convertable_to_cult(L)
+
+	var/mob/living/F = invokers[1]
+	var/datum/antagonist/cult/C = F.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+
+	var/is_convertable = is_convertable_to_cult(L,C.cult_team)
 	if(L.stat != DEAD && (is_clock || is_convertable))
 		invocation = "Mah'weyh pleggh at e'ntrath!"
 		..()
@@ -397,17 +401,27 @@ structure_check() searches for nearby cultist structures required for the invoca
 	return 1
 
 /obj/effect/rune/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers)
+	var/mob/living/first_invoker = invokers[1]
+	if(!first_invoker)
+		return FALSE
+	var/datum/antagonist/cult/C = first_invoker.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+	if(!C)
+		return
+	
+	
 	var/big_sac = FALSE
-	if((((ishuman(sacrificial) || iscyborg(sacrificial)) && sacrificial.stat != DEAD) || is_sacrifice_target(sacrificial.mind)) && invokers.len < 3)
+	if((((ishuman(sacrificial) || iscyborg(sacrificial)) && sacrificial.stat != DEAD) || C.cult_team.is_sacrifice_target(sacrificial.mind)) && invokers.len < 3)
 		for(var/M in invokers)
 			to_chat(M, "<span class='cultitalic'>[sacrificial] is too greatly linked to the world! You need three acolytes!</span>")
 		log_game("Offer rune failed - not enough acolytes and target is living or sac target")
 		return FALSE
 	if(sacrificial.mind)
 		GLOB.sacrificed += sacrificial.mind
-		if(is_sacrifice_target(sacrificial.mind))
-			GLOB.sac_complete = TRUE
-			big_sac = TRUE
+		for(var/datum/objective/sacrifice/sac_objective in C.cult_team.objectives)
+			if(sac_objective.target == sacrificial.mind)
+				sac_objective.sacced = TRUE
+				sac_objective.update_explanation_text()
+				big_sac = TRUE
 	else
 		GLOB.sacrificed += sacrificial
 
@@ -481,7 +495,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 	sleep(40)
 	if(src)
 		color = RUNE_COLOR_RED
-	SSticker.mode.eldergod = FALSE
 	new /obj/singularity/narsie/large/cult(T) //Causes Nar-Sie to spawn even if the rune has been removed
 
 /obj/effect/rune/narsie/attackby(obj/I, mob/user, params)	//Since the narsie rune takes a long time to make, add logging to removal.

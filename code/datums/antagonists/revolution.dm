@@ -3,6 +3,7 @@
 
 /datum/antagonist/rev
 	name = "Revolutionary"
+	roundend_category = "revolutionaries" // if by some miracle revolutionaries without revolution happen
 	job_rank = ROLE_REV
 	var/hud_type = "rev"
 	var/datum/objective_team/revolution/rev_team
@@ -227,3 +228,50 @@
 				rev.promote()
 
 	addtimer(CALLBACK(src,.proc/update_heads),HEAD_UPDATE_PERIOD,TIMER_UNIQUE)
+
+
+/datum/objective_team/revolution/roundend_report()
+	if(!members.len)
+		return
+
+	var/list/result = list()
+
+	var/list/targets = list()
+	var/list/datum/mind/headrevs = get_antagonists(/datum/antagonist/rev/head)
+	var/list/datum/mind/revs = get_antagonists(/datum/antagonist/rev,TRUE)
+	if(headrevs.len)
+		var/num_revs = 0
+		var/num_survivors = 0
+		for(var/mob/living/carbon/survivor in GLOB.alive_mob_list)
+			if(survivor.ckey)
+				num_survivors++
+				if(survivor.mind)
+					if(is_revolutionary(survivor))
+						num_revs++
+		if(num_survivors)
+			result += "Command's Approval Rating: <B>[100 - round((num_revs/num_survivors)*100, 0.1)]%</B>"
+		var/text = "<br><font size=3><b>The head revolutionaries were:</b></font>"
+		for(var/datum/mind/headrev in headrevs)
+			text += "<br>[printplayer(headrev, 1)]"
+		text += "<br>"
+		result += text
+
+	if(revs.len)
+		var/text = "<br><font size=3><b>The revolutionaries were:</b></font>"
+		for(var/datum/mind/rev in revs)
+			text += "<br>[printplayer(rev, 1)]"
+		text += "<br>"
+		result += text
+
+	if(revs.len || headrevs.len)
+		var/text = "<br><font size=3><b>The heads of staff were:</b></font>"
+		var/list/heads = SSjob.get_all_heads()
+		for(var/datum/mind/head in heads)
+			var/target = (head in targets)
+			if(target)
+				text += "<span class='boldannounce'>Target</span>"
+			text += "<br>[printplayer(head, 1)]"
+		text += "<br>"
+		result += text
+	
+	return result.Join("<br>")

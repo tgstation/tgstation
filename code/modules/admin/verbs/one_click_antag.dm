@@ -308,6 +308,7 @@
 			//Assign antag status and the mission
 			SSticker.mode.traitors += Commando.mind
 			Commando.mind.special_role = "deathsquad"
+			Commando.mind.add_antag_datum(/datum/antagonist/auto_custom)
 			var/datum/objective/missionobj = new
 			missionobj.owner = Commando.mind
 			missionobj.explanation_text = mission
@@ -360,6 +361,7 @@
 		//Assign antag status and the mission
 		SSticker.mode.traitors += newmob.mind
 		newmob.mind.special_role = "official"
+		newmob.mind.add_antag_datum(/datum/antagonist/auto_custom)
 		var/datum/objective/missionobj = new
 		missionobj.owner = newmob.mind
 		missionobj.explanation_text = mission
@@ -465,6 +467,7 @@
 			//Assign antag status and the mission
 			SSticker.mode.traitors += ERTOperative.mind
 			ERTOperative.mind.special_role = "ERT"
+			ERTOperative.mind.add_antag_datum(/datum/antagonist/auto_custom)
 			var/datum/objective/missionobj = new
 			missionobj.owner = ERTOperative.mind
 			missionobj.explanation_text = mission
