@@ -6,8 +6,8 @@
 	desc = "This somewhat complicated system allows one to slot in a gun, direct it towards a position, and remotely fire it."
 	extended_desc = "The firing mechanism can slot in any energy weapon.  \
 	The first and second inputs need to be numbers.  They are coordinates for the gun to fire at, relative to the machine itself.  \
-	The 'fire' activator will cause the mechanism to attempt to fire the weapon at the coordinates, if possible.  Mode is switch between\
-	letal(TRUE) or stun(FALSE) modes.It uses internal battery of weapon."
+	The 'fire' activator will cause the mechanism to attempt to fire the weapon at the coordinates, if possible.  Mode is switch between  \
+	lethal (TRUE) or stun (FALSE) modes.It uses internal battery of weapon."
 	complexity = 20
 	w_class = WEIGHT_CLASS_SMALL
 	size = 3
