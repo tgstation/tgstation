@@ -1030,14 +1030,6 @@
 				if(density && !open(2))
 					to_chat(user, "<span class='warning'>Despite your attempts, [src] refuses to open.</span>")
 
-/obj/machinery/door/airlock/plasma/attackby(obj/item/C, mob/user, params)
-	if(C.is_hot() > 300)//If the temperature of the object is over 300, then ignite
-		message_admins("Plasma airlock ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(src)]")
-		log_game("Plasma wall ignited by [key_name(user)] in [COORD(src)]")
-		ignite(C.is_hot())
-	else
-		return ..()
-
 /obj/machinery/door/airlock/open(forced=0)
 	if( operating || welded || locked )
 		return FALSE
@@ -1318,10 +1310,10 @@
 		var/obj/structure/door_assembly/A
 		if(assemblytype)
 			A = new assemblytype(src.loc)
-			A.heat_proof_finished = src.heat_proof //tracks whether there's rglass in
 		else
 			A = new /obj/structure/door_assembly(loc)
 			//If you come across a null assemblytype, it will produce the default assembly instead of disintegrating.
+		A.heat_proof_finished = src.heat_proof //tracks whether there's rglass in
 		A.anchored = TRUE
 		A.glass = src.glass
 		A.state = AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS

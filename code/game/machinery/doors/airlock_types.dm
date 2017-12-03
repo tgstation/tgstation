@@ -234,6 +234,14 @@
 /obj/machinery/door/airlock/plasma/BlockSuperconductivity() //we don't stop the heat~
 	return 0
 
+/obj/machinery/door/airlock/plasma/attackby(obj/item/C, mob/user, params)
+	if(C.is_hot() > 300)//If the temperature of the object is over 300, then ignite
+		message_admins("Plasma airlock ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(src)]")
+		log_game("Plasma airlock ignited by [key_name(user)] in [COORD(src)]")
+		ignite(C.is_hot())
+	else
+		return ..()
+
 /obj/machinery/door/airlock/plasma/glass
 	opacity = 0
 	glass = TRUE

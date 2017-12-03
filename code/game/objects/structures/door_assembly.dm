@@ -274,11 +274,11 @@
 			to_chat(user, "<span class='notice'>The maintenance panel is <b>wired</b>, but the circuit slot is <i>empty</i>.</span>")
 		if(AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER)
 			to_chat(user, "<span class='notice'>The circuit is <b>connected loosely</b> to its slot, but the maintenance panel is <i>unscrewed and open</i>.</span>")
-	if(!mineral && !glass)
+	if(!mineral && !glass && !noglass)
 		to_chat(user, "<span class='notice'>There is a small <i>paper</i> placard on the assembly. There are <i>empty</i> slots for glass windows and mineral covers.</span>")
-	else if(!mineral && glass)
+	else if(!mineral && glass && !noglass)
 		to_chat(user, "<span class='notice'>There is a small <i>paper</i> placard on the assembly. There are <i>empty</i> slots for mineral covers.</span>")
-	else if(mineral && !glass)
+	else if(mineral && !glass && !noglass)
 		to_chat(user, "<span class='notice'>There is a small <i>paper</i> placard on the assembly. There are <i>empty</i> slots for glass windows.</span>")
 	else
 		to_chat(user, "<span class='notice'>There is a small <i>paper</i> placard on the assembly.</span>")
@@ -305,17 +305,7 @@
 					to_chat(user, "<span class='notice'>You weld the [mineral] plating off.</span>")
 					new mineral_path(loc, 2)
 					var/obj/structure/door_assembly/PA = new previous_assembly(loc)
-					PA.glass = src.glass
-					PA.heat_proof_finished = src.heat_proof_finished
-					PA.created_name = src.created_name
-					PA.state = src.state
-					PA.anchored = src.anchored
-					if(electronics)
-						PA.electronics = src.electronics
-						src.electronics.forceMove(PA)
-					PA.update_icon()
-					PA.update_name()
-					qdel(src)
+					transfer_assembly_vars(src, PA)
 
 			else if(glass)
 				user.visible_message("[user] welds the glass panel out of the airlock assembly.", "You start to weld the glass panel out of the airlock assembly...")
@@ -436,53 +426,49 @@
 				electronics = null
 				ae.forceMove(src.loc)
 
-	else if(istype(W, /obj/item/stack/sheet) && (!glass || !mineral) && !noglass)
+	else if(istype(W, /obj/item/stack/sheet) && (!glass || !mineral))
 		var/obj/item/stack/sheet/G = W
 		if(G)
 			if(G.get_amount() >= 1)
-				if(!glass)
-					if(istype(G, /obj/item/stack/sheet/rglass) || istype(G, /obj/item/stack/sheet/glass))
-						playsound(src, 'sound/items/crowbar.ogg', 100, 1)
-						user.visible_message("[user] adds [G.name] to the airlock assembly.", \
-											"<span class='notice'>You start to install [G.name] into the airlock assembly...</span>")
-						if(do_after(user, 40, target = src))
-							if(G.get_amount() < 1 || glass)
-								return
-							if(G.type == /obj/item/stack/sheet/rglass)
-								to_chat(user, "<span class='notice'>You install [G.name] windows into the airlock assembly.</span>")
-								heat_proof_finished = 1 //reinforced glass makes the airlock heat-proof
-								name = "near finished heat-proofed window airlock assembly"
-							else
-								to_chat(user, "<span class='notice'>You install regular glass windows into the airlock assembly.</span>")
-								name = "near finished window airlock assembly"
-							G.use(1)
-							glass = 1
-				if(!mineral)
-					if(istype(G, /obj/item/stack/sheet/mineral) && G.sheettype)
-						var/M = G.sheettype
-						if(G.get_amount() >= 2)
+				if(!noglass)
+					if(!glass)
+						if(istype(G, /obj/item/stack/sheet/rglass) || istype(G, /obj/item/stack/sheet/glass))
 							playsound(src, 'sound/items/crowbar.ogg', 100, 1)
 							user.visible_message("[user] adds [G.name] to the airlock assembly.", \
-											 "<span class='notice'>You start to install [G.name] into the airlock assembly...</span>")
+												"<span class='notice'>You start to install [G.name] into the airlock assembly...</span>")
 							if(do_after(user, 40, target = src))
-								if(G.get_amount() < 2 || mineral)
+								if(G.get_amount() < 1 || glass)
 									return
-								to_chat(user, "<span class='notice'>You install [M] plating into the airlock assembly.</span>")
-								G.use(2)
-								var/mineralassembly = text2path("/obj/structure/door_assembly/door_assembly_[M]")
-								var/obj/structure/door_assembly/MA = new mineralassembly(loc)
-								MA.glass = src.glass
-								MA.heat_proof_finished = src.heat_proof_finished
-								MA.created_name = src.created_name
-								MA.state = src.state
-								MA.anchored = src.anchored
-								MA.previous_assembly = src.type
-								if(electronics)
-									MA.electronics = src.electronics
-									src.electronics.forceMove(MA)
-								MA.update_icon()
-								MA.update_name()
-								qdel(src)
+								if(G.type == /obj/item/stack/sheet/rglass)
+									to_chat(user, "<span class='notice'>You install [G.name] windows into the airlock assembly.</span>")
+									heat_proof_finished = 1 //reinforced glass makes the airlock heat-proof
+									name = "near finished heat-proofed window airlock assembly"
+								else
+									to_chat(user, "<span class='notice'>You install regular glass windows into the airlock assembly.</span>")
+									name = "near finished window airlock assembly"
+								G.use(1)
+								glass = TRUE
+					if(!mineral)
+						if(istype(G, /obj/item/stack/sheet/mineral) && G.sheettype)
+							var/M = G.sheettype
+							if(G.get_amount() >= 2)
+								playsound(src, 'sound/items/crowbar.ogg', 100, 1)
+								user.visible_message("[user] adds [G.name] to the airlock assembly.", \
+												 "<span class='notice'>You start to install [G.name] into the airlock assembly...</span>")
+								if(do_after(user, 40, target = src))
+									if(G.get_amount() < 2 || mineral)
+										return
+									to_chat(user, "<span class='notice'>You install [M] plating into the airlock assembly.</span>")
+									G.use(2)
+									var/mineralassembly = text2path("/obj/structure/door_assembly/door_assembly_[M]")
+									var/obj/structure/door_assembly/MA = new mineralassembly(loc)
+									transfer_assembly_vars(src, MA, TRUE)
+							else
+								to_chat(user, "<span class='warning'>You need at least two sheets add a mineral cover!</span>")
+					else
+						to_chat(user, "<span class='warning'>You cannot add [G] to [src]!</span>")
+				else
+					to_chat(user, "<span class='warning'>You cannot add [G] to [src]!</span>")
 
 	else if(istype(W, /obj/item/screwdriver) && state == AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER )
 		playsound(src, W.usesound, 100, 1)
@@ -507,6 +493,8 @@
 					door.req_access = electronics.accesses
 				if(created_name)
 					door.name = created_name
+				else
+					door.name = base_name
 				door.previous_airlock = previous_assembly
 				electronics.forceMove(door)
 				qdel(src)
@@ -534,6 +522,21 @@
 		if(AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER)
 			name = "near finished "
 	name += "[heat_proof_finished ? "heat-proofed " : ""][glass ? "window " : ""][base_name] assembly"
+
+/obj/structure/door_assembly/proc/transfer_assembly_vars(obj/structure/door_assembly/source, obj/structure/door_assembly/target, previous = FALSE)
+	target.glass = source.glass
+	target.heat_proof_finished = source.heat_proof_finished
+	target.created_name = source.created_name
+	target.state = source.state
+	target.anchored = source.anchored
+	if(previous)
+		target.previous_assembly = source.type
+	if(electronics)
+		target.electronics = source.electronics
+		source.electronics.forceMove(target)
+	target.update_icon()
+	target.update_name()
+	qdel(source)
 
 /obj/structure/door_assembly/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
