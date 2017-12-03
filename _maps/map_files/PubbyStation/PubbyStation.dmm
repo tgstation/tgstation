@@ -2614,7 +2614,7 @@
 /turf/open/floor/plasteel/dark,
 /area/security/armory)
 "ail" = (
-/obj/vehicle/secway,
+/obj/vehicle/ridden/secway,
 /turf/open/floor/plasteel/dark,
 /area/security/armory)
 "aim" = (
@@ -2647,7 +2647,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
 "air" = (
-/obj/vehicle/secway,
+/obj/vehicle/ridden/secway,
 /obj/item/key/security,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/showroomfloor,
@@ -21623,7 +21623,7 @@
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central)
 "baX" = (
-/obj/vehicle/janicart,
+/obj/vehicle/ridden/janicart,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
