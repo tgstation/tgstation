@@ -29,7 +29,8 @@
 	icon = beam_icon
 	icon_state = beam_icon_state
 	beam_type = btype
-	addtimer(CALLBACK(src,.proc/End), time)
+	if(time < INFINITY)
+		addtimer(CALLBACK(src,.proc/End), time)
 
 /datum/beam/proc/Start()
 	Draw()
