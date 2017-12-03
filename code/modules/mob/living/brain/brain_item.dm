@@ -152,12 +152,15 @@
 
 /obj/item/organ/brain/proc/adjust_brain_damage(amount, maximum)
 	var/adjusted_amount
-	if(maximum)
+	if(amount >= 0 && maximum)
 		var/brainloss = get_brain_damage()
-		var/new_brainloss = brainloss + amount
-		adjusted_amount = Clamp(new_brainloss, 0, maximum) - brainloss
+		var/new_brainloss = Clamp(brainloss + amount, 0, maximum)
+		if(brainloss > new_brainloss) //brainloss is over the cap already
+			return 0
+		adjusted_amount = new_brainloss - brainloss
 	else
 		adjusted_amount = amount
+
 	adjusted_amount *= BRAIN_DAMAGE_INTEGRITY_MULTIPLIER
 	if(adjusted_amount)
 		if(adjusted_amount >= 0.1)
