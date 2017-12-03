@@ -20,8 +20,8 @@ if [ "$BUILD_TOOLS" = false ]; then
 	fi;
     source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
 	if [ "$BUILD_TESTING" = true ]; then
-		tools/travis/dm.sh -DTRAVISBUILDING tgstation.dme
+		tools/travis/dm.sh -DTRAVISBUILDING outerhaven.dme
 	else
-		tools/travis/dm.sh -DTRAVISBUILDING -DTRAVISTESTING -DALL_MAPS tgstation.dme
+		tools/travis/dm.sh -DTRAVISBUILDING -DTRAVISTESTING -DALL_MAPS outerhaven.dme
 	fi;
 fi;
