@@ -53,11 +53,11 @@
 /datum/component/material_container/proc/OnAttackBy(obj/item/I, mob/living/user)
 	var/list/tc = allowed_typecache
 	if(user.a_intent == INTENT_HARM)
-		return FALSE
+		return
 	if((I.flags_2 & (HOLOGRAM_2 | NO_MAT_REDEMPTION_2)) || (tc && !is_type_in_typecache(I, tc)))
 		to_chat(user, "<span class='warning'>[parent] won't accept [I]!</span>")
-		return FALSE
-	. = TRUE
+		return
+	. = COMPONENT_ACTIVATED | COMPONENT_NO_AFTERATTACK
 	last_insert_success = FALSE
 	var/datum/callback/pc = precondition
 	if(pc && !pc.Invoke())
@@ -113,7 +113,7 @@
 		return (total_amount - total_amount_saved)
 	return FALSE
 
-/datum/component/material_container/proc/insert_stack(obj/item/stack/S, amt, multiplier = 1)
+/datum/component/material_container/proc/insert_stack(obj/item/stack/S, amt)
 	if(isnull(amt))
 		amt = S.amount
 
@@ -131,7 +131,7 @@
 	if(!amt)
 		return FALSE
 
-	last_inserted_id = insert_materials(S,amt * multiplier)
+	last_inserted_id = insert_materials(S,amt)
 	last_inserted_type = S.type
 	S.use(amt)
 	last_amount_inserted = amt
@@ -141,7 +141,7 @@
 	if(!I)
 		return FALSE
 	if(istype(I, /obj/item/stack))
-		return insert_stack(I, stack_amt, multiplier)
+		return insert_stack(I, stack_amt)
 
 	var/material_amount = get_item_material_amount(I)
 	if(!material_amount || !has_space(material_amount))

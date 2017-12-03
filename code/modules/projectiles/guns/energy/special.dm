@@ -140,9 +140,8 @@
 		S.use(1)
 		cell.give(1000)
 		to_chat(user, "<span class='notice'>You insert [A] in [src], recharging it.</span>")
-	else if(istype(A, /obj/item/stack/ore/plasma))
-		var/obj/item/stack/ore/S = A
-		S.use(1)
+	else if(istype(A, /obj/item/ore/plasma))
+		qdel(A)
 		cell.give(500)
 		to_chat(user, "<span class='notice'>You insert [A] in [src], recharging it.</span>")
 	else

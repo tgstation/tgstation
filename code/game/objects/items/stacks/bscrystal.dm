@@ -1,5 +1,5 @@
 //Bluespace crystals, used in telescience and when crushed it will blink you to a random turf.
-/obj/item/stack/ore/bluespace_crystal
+/obj/item/ore/bluespace_crystal
 	name = "bluespace crystal"
 	desc = "A glowing bluespace crystal, not much is known about how they work. It looks very delicate."
 	icon = 'icons/obj/telescience.dmi'
@@ -10,38 +10,38 @@
 	var/blink_range = 8 // The teleport range when crushed/thrown at someone.
 	refined_type = /obj/item/stack/sheet/bluespace_crystal
 
-/obj/item/stack/ore/bluespace_crystal/refined
+/obj/item/ore/bluespace_crystal/refined
 	name = "refined bluespace crystal"
 	points = 0
 	refined_type = null
 
-/obj/item/stack/ore/bluespace_crystal/Initialize()
-	. = ..()
+/obj/item/ore/bluespace_crystal/New()
+	..()
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
 
-/obj/item/stack/ore/bluespace_crystal/attack_self(mob/user)
+/obj/item/ore/bluespace_crystal/attack_self(mob/user)
 	user.visible_message("<span class='warning'>[user] crushes [src]!</span>", "<span class='danger'>You crush [src]!</span>")
 	new /obj/effect/particle_effect/sparks(loc)
-	playsound(loc, "sparks", 50, 1)
+	playsound(src.loc, "sparks", 50, 1)
 	blink_mob(user)
-	use(1)
+	qdel(src)
 
-/obj/item/stack/ore/bluespace_crystal/proc/blink_mob(mob/living/L)
+/obj/item/ore/bluespace_crystal/proc/blink_mob(mob/living/L)
 	do_teleport(L, get_turf(L), blink_range, asoundin = 'sound/effects/phasein.ogg')
 
-/obj/item/stack/ore/bluespace_crystal/throw_impact(atom/hit_atom)
+/obj/item/ore/bluespace_crystal/throw_impact(atom/hit_atom)
 	if(!..()) // not caught in mid-air
 		visible_message("<span class='notice'>[src] fizzles and disappears upon impact!</span>")
 		var/turf/T = get_turf(hit_atom)
 		new /obj/effect/particle_effect/sparks(T)
-		playsound(loc, "sparks", 50, 1)
+		playsound(src.loc, "sparks", 50, 1)
 		if(isliving(hit_atom))
 			blink_mob(hit_atom)
-		use(1)
+		qdel(src)
 
 //Artifical bluespace crystal, doesn't give you much research.
-/obj/item/stack/ore/bluespace_crystal/artificial
+/obj/item/ore/bluespace_crystal/artificial
 	name = "artificial bluespace crystal"
 	desc = "An artificially made bluespace crystal, it looks delicate."
 	materials = list(MAT_BLUESPACE=MINERAL_MATERIAL_AMOUNT / 2)
@@ -58,7 +58,7 @@
 	materials = list(MAT_BLUESPACE=MINERAL_MATERIAL_AMOUNT)
 	attack_verb = list("bluespace polybashed", "bluespace polybattered", "bluespace polybludgeoned", "bluespace polythrashed", "bluespace polysmashed")
 	novariants = TRUE
-	var/crystal_type = /obj/item/stack/ore/bluespace_crystal/refined
+	var/crystal_type = /obj/item/ore/bluespace_crystal/refined
 
 /obj/item/stack/sheet/bluespace_crystal/attack_self(mob/user)// to prevent the construction menu from ever happening
 	to_chat(user, "<span class='warning'>You cannot crush the polycrystal in-hand, try breaking one off.</span>")
