@@ -310,7 +310,7 @@
 		else
 			if(L.stat == DEAD)
 				var/revival_cost = revive_cost
-				if(GLOB.ratvar_awakens)
+				if(GLOB.ratvar_awakens || L.suiciding) // No cost if Ratvar is summoned or if you're reviving a convert who suicided
 					revival_cost = 0
 				var/mob/dead/observer/ghost = L.get_ghost(TRUE)
 				if(GLOB.clockwork_vitality >= revival_cost && (ghost || (L.mind && L.mind.active)))
