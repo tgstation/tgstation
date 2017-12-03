@@ -31,7 +31,7 @@
 
 /obj/item/radio/integrated/signal/Initialize()
 	. = ..()
-	if (src.frequency < 1200 || src.frequency > 1600)
+	if (src.frequency < MIN_FREE_FREQ || src.frequency > MAX_FREE_FREQ)
 		src.frequency = sanitize_frequency(src.frequency)
 
 	set_frequency(frequency)
