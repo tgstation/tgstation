@@ -57,6 +57,6 @@ SUBSYSTEM_DEF(server_maint)
 			C << link("byond://[server]")
 	if(SERVER_TOOLS_PRESENT)
 		SSblackbox.record_feedback("text", "server_tools", null, SERVER_TOOLS_VERSION)
-	SSblackbox.set_details("text", "server_tools_api", null, SERVER_TOOLS_API_VERSION)
+	SSblackbox.record_feedback("text", "server_tools_api", null, SERVER_TOOLS_API_VERSION)
 
 #undef PING_BUFFER_TIME
