@@ -357,6 +357,9 @@ SUBSYSTEM_DEF(timer)
 
 	wait = max(wait, 0)
 
+	if(wait >= INFINITY)
+		CRASH("Attempted to create timer with INFINITY delay")
+
 	var/hash
 
 	if (flags & TIMER_UNIQUE)
