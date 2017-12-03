@@ -237,24 +237,6 @@ GLOBAL_VAR_INIT(RADIO_MAGNETS, "9")
 			devices -= devices_filter
 
 
-
-
-
-/client/proc/print_pointers()
-	set name = "Debug Signals"
-	set category = "Debug"
-
-	if(!holder)
-		return
-
-	var/datum/signal/S
-	to_chat(src, "There are [S.pointers.len] pointers:")
-	for(var/p in S.pointers)
-		to_chat(src, p)
-		S = locate(p)
-		if(istype(S))
-			to_chat(src, S.debug_print())
-
 /obj/proc/receive_signal(datum/signal/signal, receive_method, receive_param)
 	return
 
@@ -267,15 +249,6 @@ GLOBAL_VAR_INIT(RADIO_MAGNETS, "9")
 	var/encryption
 
 	var/frequency = 0
-	var/static/list/pointers = list()
-
-/datum/signal/New()
-	..()
-	pointers += "[REF(src)]"
-
-/datum/signal/Destroy()
-	pointers -= "[REF(src)]"
-	return ..()
 
 /datum/signal/proc/copy_from(datum/signal/model)
 	source = model.source
