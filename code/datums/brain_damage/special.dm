@@ -27,10 +27,12 @@
 	scan_desc = "bluespace attunement"
 	gain_text = "<span class='notice'>You feel the bluespace pulsing around you...</span>"
 	lose_text = "<span class='warning'>The faint pulsing of bluespace fades into silence.</span>"
+	var/next_portal = 0
 
 /datum/brain_trauma/special/bluespace_prophet/on_life()
-	if(prob(4))
-		var/list/turf/possible_turfs
+	if(world.time > next_portal)
+		next_portal = world.time + 100
+		var/list/turf/possible_turfs = list()
 		for(var/turf/T in range(owner, 8))
 			if(!T.density)
 				var/clear = TRUE
@@ -54,8 +56,8 @@
 		if(!second_turf)
 			return
 
-		var/obj/effect/hallucination/simple/bluespace_stream/first = new(first_turf)
-		var/obj/effect/hallucination/simple/bluespace_stream/second = new(second_turf)
+		var/obj/effect/hallucination/simple/bluespace_stream/first = new(first_turf, owner)
+		var/obj/effect/hallucination/simple/bluespace_stream/second = new(second_turf, owner)
 
 		first.linked_to = second
 		second.linked_to = first
@@ -83,9 +85,13 @@
 		"is pulled into an invisible vortex, vanishing from sight")
 	var/slip_out_message = pick("silently fades in", "leaps out of thin air","appears", "walks out of an invisible doorway",\
 		"slides out of a fold in spacetime")
-	user.visible_message("<span class='warning'>[user] [slip_in_message].</span>", "<span class='notice'>You slip into the bluespace stream...</span>")
-	user.forceMove(get_turf(linked_to))
-	user.visible_message("<span class='warning'>[user] [slip_out_message].</span>", "<span class='notice'>...and find your way to the other side.</span>")
+	to_chat(user, "<span class='notice'>You try to align with the bluespace stream...</span>"
+	if(do_after(user, 20, target = src))
+		new /obj/effect/temp_visual/bluespace_fissure(get_turf(src))
+		new /obj/effect/temp_visual/bluespace_fissure(get_turf(linked_to))
+		user.forceMove(get_turf(linked_to))
+		user.visible_message("<span class='warning'>[user] [slip_in_message].</span>", ignored_mob = user)
+		user.visible_message("<span class='warning'>[user] [slip_out_message].</span>", "<span class='notice'>...and find your way to the other side.</span>")
 
 /datum/brain_trauma/special/psychotic_brawling
 	name = "Violent Psychosis"
