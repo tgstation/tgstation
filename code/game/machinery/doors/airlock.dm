@@ -64,7 +64,7 @@
 	var/obj/machinery/door/airlock/closeOther = null
 	var/closeOtherId = null
 	var/lockdownbyai = FALSE
-	assemblytype = /obj/structure/door_assembly/door_assembly_0
+	assemblytype = /obj/structure/door_assembly
 	var/justzap = FALSE
 	normalspeed = 1
 	var/obj/item/electronics/airlock/electronics = null
@@ -1169,7 +1169,7 @@
 		if("Standard")
 			icon = 'icons/obj/doors/airlocks/station/public.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-			assemblytype = /obj/structure/door_assembly/door_assembly_0
+			assemblytype = /obj/structure/door_assembly
 		if("Public")
 			icon = 'icons/obj/doors/airlocks/station2/glass.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/station2/overlays.dmi'
@@ -1320,7 +1320,7 @@
 			A = new assemblytype(src.loc)
 			A.heat_proof_finished = src.heat_proof //tracks whether there's rglass in
 		else
-			A = new /obj/structure/door_assembly/door_assembly_0(src.loc)
+			A = new /obj/structure/door_assembly(loc)
 			//If you come across a null assemblytype, it will produce the default assembly instead of disintegrating.
 		A.anchored = TRUE
 		A.glass = src.glass

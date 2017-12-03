@@ -117,7 +117,7 @@
 /turf/closed/wall/rust,
 /area/shuttle/escape)
 "at" = (
-/obj/machinery/door/airlock/glass_public{
+/obj/machinery/door/airlock/public/glass{
 	name = "Glorious Leaders";
 	req_access_txt = "19"
 	},

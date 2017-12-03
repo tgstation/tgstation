@@ -197,7 +197,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "aF" = (
-/obj/machinery/door/airlock/glass_public,
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/plasteel/airless/bar,
 /area/ruin/unpowered)
 "aG" = (
