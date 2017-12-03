@@ -53,17 +53,6 @@
 	set category = "Debug"
 	set name = "Radio report"
 
-	var/filters = list(
-		"1" = "GLOB.RADIO_TO_AIRALARM",
-		"2" = "GLOB.RADIO_FROM_AIRALARM",
-		"3" = "GLOB.RADIO_CHAT",
-		"4" = "GLOB.RADIO_ATMOSIA",
-		"5" = "GLOB.RADIO_NAVBEACONS",
-		"6" = "GLOB.RADIO_AIRLOCK",
-		"7" = "RADIO_SECBOT",
-		"8" = "RADIO_MULEBOT",
-		"_default" = "NO_FILTER"
-		)
 	var/output = "<b>Radio Report</b><hr>"
 	for (var/fq in SSradio.frequencies)
 		output += "<b>Freq: [fq]</b><br>"
@@ -74,9 +63,9 @@
 		for (var/filter in fqs.devices)
 			var/list/f = fqs.devices[filter]
 			if (!f)
-				output += "&nbsp;&nbsp;[filters[filter]]: ERROR<br>"
+				output += "&nbsp;&nbsp;[filter]: ERROR<br>"
 				continue
-			output += "&nbsp;&nbsp;[filters[filter]]: [f.len]<br>"
+			output += "&nbsp;&nbsp;[filter]: [f.len]<br>"
 			for (var/device in f)
 				if (istype(device, /atom))
 					var/atom/A = device

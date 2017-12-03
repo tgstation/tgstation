@@ -130,8 +130,8 @@
 	return TRUE
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/atmosinit()
-	radio_filter_in = frequency==initial(frequency)?(GLOB.RADIO_FROM_AIRALARM):null
-	radio_filter_out = frequency==initial(frequency)?(GLOB.RADIO_TO_AIRALARM):null
+	radio_filter_in = frequency==initial(frequency)?(RADIO_FROM_AIRALARM):null
+	radio_filter_out = frequency==initial(frequency)?(RADIO_TO_AIRALARM):null
 	if(frequency)
 		set_frequency(frequency)
 	broadcast_status()
