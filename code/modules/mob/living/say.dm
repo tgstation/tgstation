@@ -135,8 +135,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	// AIs use inherent channels for the holopad. Most inherent channels
 	// ignore the language argument however.
 
-	if(key && SSradio.saymodes[key])
-		var/datum/saymode/SM = SSradio.saymodes[key]
+	var/datum/saymode/SM = SSradio.saymodes[key]
+	if(key && SM)
 		if(!SM.handle_message(src, message, language))
 			return
 
