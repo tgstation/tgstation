@@ -130,8 +130,8 @@
 		if(!M.last_insert_success)
 			return
 		var/lit = M.last_inserted_type
-		if(ispath(lit, /obj/item/stack/ore/bluespace_crystal))
-			use_power(min(500,M.last_amount_inserted/10))
+		if(ispath(lit, /obj/item/ore/bluespace_crystal))
+			use_power(max(500,M.last_amount_inserted/10))
 		else
 			switch(M.last_inserted_id)
 				if (MAT_METAL)
