@@ -535,7 +535,7 @@
 	if(off_station < 2)
 		station_was_nuked = TRUE //Will end the round on next check.
 
-/datum/game_mode/proc/crew_live_count(var/min_percent_as_num) //return number of survivors OR T/F if argument is set
+/datum/game_mode/proc/crew_live_count(min_percent_as_num) //return number of survivors OR T/F if argument is set
 	var/players = 0
 	var/survivors = 0
 	for(var/i in GLOB.mob_list)
