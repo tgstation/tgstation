@@ -78,6 +78,7 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
 1. `/datum/proc/SendSignal(signal, ...)` (public, final)
     * Call to send a signal to the components of the target datum
     * Extra arguments are to be specified in the signal definition
+    * Returns a bitflag with signal specific information assembled from all activated components
 1. `/datum/component/New(datum/parent, ...)` (private, final)
     * Runs internal setup for the component
     * Extra arguments are passed to `Initialize()`
