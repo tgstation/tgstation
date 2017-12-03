@@ -79,7 +79,7 @@
 
 		var/datum/signal/signal = new
 		signal.source = src
-		signal.transmission_method = 1
+		signal.transmission_method = TRANSMISSION_RADIO
 		signal.data = list(
 			"id_tag" = id_tag,
 			"device" = "AM",

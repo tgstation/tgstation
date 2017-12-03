@@ -431,7 +431,7 @@
 		return 0
 
 	var/datum/signal/signal = new
-	signal.transmission_method = 1 //radio signal
+	signal.transmission_method = TRANSMISSION_RADIO
 	signal.source = src
 
 	signal.data = command
@@ -631,7 +631,7 @@
 
 	var/datum/signal/alert_signal = new
 	alert_signal.source = src
-	alert_signal.transmission_method = 1
+	alert_signal.transmission_method = TRANSMISSION_RADIO
 	alert_signal.data["zone"] = A.name
 	alert_signal.data["type"] = "Atmospheric"
 
@@ -739,7 +739,7 @@
 				return
 
 	return ..()
-	
+
 /obj/machinery/airalarm/AltClick(mob/user)
 	..()
 	if(!issilicon(user) && (!user.canUseTopic(src, be_close=TRUE) || !isturf(loc)))
@@ -747,7 +747,7 @@
 		return
 	else
 		togglelock(user)
-		
+
 /obj/machinery/airalarm/proc/togglelock(mob/living/user)
 	if(stat & (NOPOWER|BROKEN))
 		to_chat(user, "<span class='warning'>It does nothing!</span>")

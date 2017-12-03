@@ -26,7 +26,7 @@
 		return
 	if(!check_receive_level(signal))
 		return
-	if(signal.transmission_method == 2)
+	if(signal.transmission_method == TRANSMISSION_SUBSPACE)
 
 		if(is_freq_listening(signal)) // detect subspace signals
 

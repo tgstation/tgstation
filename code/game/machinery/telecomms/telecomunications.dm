@@ -61,7 +61,7 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 		var/datum/signal/copy = new
 		if(copysig)
 
-			copy.transmission_method = 2
+			copy.transmission_method = TRANSMISSION_SUBSPACE
 			copy.frequency = signal.frequency
 			// Copy the main data contents! Workaround for some nasty bug where the actual array memory is copied and not its contents.
 			copy.data = list(
