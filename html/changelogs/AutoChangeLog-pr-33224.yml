@@ -1,0 +1,4 @@
+author: "Robustin"
+delete-after: True
+changes: 
+  - tweak: "Igniting plasma statues no longer ignores ignition temperature and only creates as much plasma as was used in its creation."
