@@ -164,24 +164,24 @@
 /datum/proc/SendSignal(sigtype, ...)
 	var/list/comps = datum_components
 	if(!comps)
-		return FALSE
+		return NONE
 	var/list/arguments = args.Copy()
 	arguments.Cut(1, 2)
 	var/target = comps[/datum/component]
 	if(!length(target))
 		var/datum/component/C = target
 		if(!C.enabled)
-			return FALSE
+			return NONE
 		var/list/sps = C.signal_procs
 		var/datum/callback/CB = LAZYACCESS(sps, sigtype)
 		if(!CB)
-			return FALSE
+			return NONE
 		. = CB.InvokeAsync(arglist(arguments))
-		if(.)
+		if(. & COMPONENT_ACTIVATED)
 			ComponentActivated(C)
 			C.AfterComponentActivated()
 	else
-		. = FALSE
+		. = NONE
 		for(var/I in target)
 			var/datum/component/C = I
 			if(!C.enabled)
@@ -190,10 +190,11 @@
 			var/datum/callback/CB = LAZYACCESS(sps, sigtype)
 			if(!CB)
 				continue
-			if(CB.InvokeAsync(arglist(arguments)))
+			var/retval = CB.InvokeAsync(arglist(arguments))
+			. |= retval
+			if(retval & COMPONENT_ACTIVATED)
 				ComponentActivated(C)
 				C.AfterComponentActivated()
-				. = TRUE
 
 /datum/proc/ComponentActivated(datum/component/C)
 	set waitfor = FALSE

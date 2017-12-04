@@ -1,14 +1,20 @@
-/obj/vehicle/scooter
+/obj/vehicle/ridden/scooter
 	name = "scooter"
 	desc = "A fun way to get around."
 	icon_state = "scooter"
 
-/obj/vehicle/scooter/attackby(obj/item/I, mob/user, params)
+/obj/vehicle/ridden/scooter/Initialize()
+	. = ..()
+	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
+	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0), TEXT_SOUTH = list(-2), TEXT_EAST = list(0), TEXT_WEST = list( 2)))
+
+
+/obj/vehicle/ridden/scooter/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/wrench))
 		to_chat(user, "<span class='notice'>You begin to remove the handlebars...</span>")
 		playsound(get_turf(user), 'sound/items/ratchet.ogg', 50, 1)
 		if(do_after(user, 40*I.toolspeed, target = src))
-			var/obj/vehicle/scooter/skateboard/S = new /obj/vehicle/scooter/skateboard(get_turf(src))
+			var/obj/vehicle/ridden/scooter/skateboard/S = new(loc)
 			new /obj/item/stack/rods(get_turf(src),2)
 			to_chat(user, "<span class='notice'>You remove the handlebars from [src].</span>")
 			if(has_buckled_mobs())
@@ -17,9 +23,16 @@
 				S.buckle_mob(H)
 			qdel(src)
 
+/obj/vehicle/ridden/scooter/Moved()
+	. = ..()
+	for(var/m in buckled_mobs)
+		var/mob/living/buckled_mob = m
+		if(buckled_mob.get_num_legs() > 0)
+			buckled_mob.pixel_y = 5
+		else
+			buckled_mob.pixel_y = -4
 
-/obj/vehicle/scooter/buckle_mob(mob/living/M, force = 0, check_loc = 1)
-	riding_datum = new/datum/riding/scooter
+/obj/vehicle/ridden/scooter/buckle_mob(mob/living/M, force = 0, check_loc = 1)
 	if(!istype(M))
 		return 0
 	if(M.get_num_legs() < 2 && M.get_num_arms() <= 0)
@@ -27,29 +40,32 @@
 		return 0
 	. = ..()
 
-/obj/vehicle/scooter/post_buckle_mob(mob/living/M)
-	riding_datum.account_limbs(M)
-
-/obj/vehicle/scooter/skateboard
+/obj/vehicle/ridden/scooter/skateboard
 	name = "skateboard"
 	desc = "An unfinished scooter which can only barely be called a skateboard. It's still rideable, but probably unsafe. Looks like you'll need to add a few rods to make handlebars."
 	icon_state = "skateboard"
-
 	density = FALSE
 
-/obj/vehicle/scooter/skateboard/buckle_mob(mob/living/M, force = 0, check_loc = 1)
+/obj/vehicle/ridden/scooter/skateboard/Initialize()
 	. = ..()
-	riding_datum = new/datum/riding/scooter/skateboard
+	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
+	D.vehicle_move_delay = 0
+	D.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
+	D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
+	D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
+	D.set_vehicle_dir_layer(WEST, OBJ_LAYER)
 
-/obj/vehicle/scooter/skateboard/post_buckle_mob(mob/living/M)//allows skateboards to be non-dense but still allows 2 skateboarders to collide with each other
-	if(has_buckled_mobs())
-		density = TRUE
-	else
+/obj/vehicle/ridden/scooter/skateboard/post_buckle_mob(mob/living/M)//allows skateboards to be non-dense but still allows 2 skateboarders to collide with each other
+	density = TRUE
+	return ..()
+
+/obj/vehicle/ridden/scooter/skateboard/post_unbuckle_mob(mob/living/M)
+	if(!has_buckled_mobs())
 		density = FALSE
-	..()
+	return ..()
 
-/obj/vehicle/scooter/skateboard/Collide(atom/A)
-	..()
+/obj/vehicle/ridden/scooter/skateboard/Collide(atom/A)
+	. = ..()
 	if(A.density && has_buckled_mobs())
 		var/mob/living/carbon/H = buckled_mobs[1]
 		var/atom/throw_target = get_edge_target_turf(H, pick(GLOB.cardinals))
@@ -63,7 +79,7 @@
 		visible_message("<span class='danger'>[src] crashes into [A], sending [H] flying!</span>")
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 
-/obj/vehicle/scooter/skateboard/MouseDrop(atom/over_object)
+/obj/vehicle/ridden/scooter/skateboard/MouseDrop(atom/over_object)
 	var/mob/living/carbon/M = usr
 	if(!istype(M) || M.incapacitated() || !Adjacent(M))
 		return
@@ -102,10 +118,10 @@
 				return
 			M.use(5)
 			to_chat(user, "<span class='notice'>You finish making wheels for [src].</span>")
-			new /obj/vehicle/scooter/skateboard(user.loc)
+			new /obj/vehicle/ridden/scooter/skateboard(user.loc)
 			qdel(src)
 
-/obj/vehicle/scooter/skateboard/attackby(obj/item/I, mob/user, params)
+/obj/vehicle/ridden/scooter/skateboard/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/screwdriver))
 		to_chat(user, "<span class='notice'>You begin to deconstruct and remove the wheels on [src]...</span>")
 		playsound(get_turf(user), I.usesound, 50, 1)
@@ -129,7 +145,7 @@
 				return
 			to_chat(user, "<span class='notice'>You add the rods to [src], creating handlebars.</span>")
 			C.use(2)
-			var/obj/vehicle/scooter/S = new/obj/vehicle/scooter(get_turf(src))
+			var/obj/vehicle/ridden/scooter/S = new(loc)
 			if(has_buckled_mobs())
 				var/mob/living/carbon/H = buckled_mobs[1]
 				unbuckle_mob(H)
