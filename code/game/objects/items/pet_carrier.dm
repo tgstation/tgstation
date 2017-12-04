@@ -1,3 +1,5 @@
+#define pet_carrier_full(carrier) carrier.occupants.len >= carrier.max_occupants || carrier.occupant_weight >= carrier.max_occupant_weight
+
 //Used to transport little animals without having to drag them across the station.
 //Comes with a handy lock to prevent them from running off.
 /obj/item/pet_carrier
@@ -31,13 +33,13 @@
 	if(occupant in occupants && isliving(occupant))
 		var/mob/living/L = occupant
 		occupants -= occupant
-		occpuant_weight -= L.mob_size
+		occupant_weight -= L.mob_size
 
 /obj/item/pet_carrier/handle_atom_del(atom/A)
 	if(A in occupants && isliving(A))
-		var/mob/living/L = occupant
+		var/mob/living/L = A
 		occupants -= L
-		occpuant_weight -= L.mob_size
+		occupant_weight -= L.mob_size
 	..()
 
 /obj/item/pet_carrier/examine(mob/user)
@@ -156,11 +158,8 @@
 			remove_occupant(V, over_atom)
 
 /obj/item/pet_carrier/proc/load_occupant(mob/living/user, mob/living/target)
-	if(occupants.len >= max_occupants)
-		to_chat(user, "<span class='warning'>[src] is already carrying something!</span>")
-		return
-	if(occupant_weight >= max_occupant_weight)
-		to_chat(user, "<span class='warning'>[src] is too heavy to hold any more animals!</span>")
+	if(pet_carrier_full(src))
+		to_chat(user, "<span class='warning'>[src] is already carrying too much!</span>")
 		return
 	user.visible_message("<span class='notice'>[user] starts loading [target] into [src].</span>", \
 	"<span class='notice'>You start loading [target] into [src]...</span>", ignored_mob = target)
@@ -169,11 +168,8 @@
 		return
 	if(target in occupants)
 		return
-	if(occupants.len >= max_occupants) //Run the checks again, just in case
-		to_chat(user, "<span class='warning'>[src] is already carrying something!</span>")
-		return
-	if(occupant_weight >= max_occupant_weight)
-		to_chat(user, "<span class='warning'>[src] is too heavy to hold any more animals!</span>")
+	if(pet_carrier_full(src)) //Run the checks again, just in case
+		to_chat(user, "<span class='warning'>[src] is already carrying too much!</span>")
 		return
 	user.visible_message("<span class='notice'>[user] loads [target] into [src]!</span>", \
 	"<span class='notice'>You load [target] into [src].</span>", ignored_mob = target)
@@ -194,3 +190,5 @@
 	occupants -= occupant
 	occupant_weight -= occupant.mob_size
 	occupant.setDir(SOUTH)
+
+#undef pet_carrier_full

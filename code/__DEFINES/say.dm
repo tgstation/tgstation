@@ -50,3 +50,9 @@
 #define LOGASAY "adminsay"
 #define LOGCOMMENT "comment"
 #define LOGOOC "ooc"
+
+
+#define LINGHIVE_NONE 0
+#define LINGHIVE_OUTSIDER 1
+#define LINGHIVE_LING 2
+#define LINGHIVE_LINK 3
