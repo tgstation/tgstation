@@ -1,14 +1,28 @@
-/obj/item/clothing/under/polychromic
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//	Polychromic Clothes:																							  //
+//																													  //
+//		Polychromic clothes simply consist of 4 sprites: A base, unrecoloured sprite, and up to 3 greyscaled sprites. //
+//	In order to add more polychromic clothes, simply create a base sprite, and up to 3 recolourable overlays for it,  //
+//	and then name them as follows: [name], [name]-primary, [name]-secondary, [name]-tertiary. The sprites should	  //
+//	ideally be in 'haven/icons/polyclothes/item/uniform.dmi' and 'haven/icons/polyclothes/mob/uniform.dmi' for the	  //
+//	worn sprites. After that, copy paste the code from any of the example clothes beneath the giant mass of procs and //
+//	change the names around. [name] should go in BOTH icon_state and item_color. You can preset colors and disable	  //
+//	any overlays using the self-explainatory vars.																					  //
+//																													  //
+//																								-Tori				  //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/obj/item/clothing/under/polychromic	//This is the parent object. DO NOT copy paste this and its vars if you want to make something new.
 	name = "polychromic suit"
 	desc = "For when you want to show off your horrible colour coordination skills."
 	icon = 'haven/icons/polyclothes/item/uniform.dmi'
-	alternate_worn_icon = 'haven/icons/polyclothes/mob/uniform.dmi'
+	alternate_worn_icon = 'haven/icons/polyclothes/mob/uniform.dmi'	//To make human/update_icon.dm read worn sprites from here.
 	icon_state = "polysuit"
-	item_color = "polysuit"
-	item_state = "sl_suit"
-	can_adjust = FALSE
+	item_color = "polysuit"		//The item color is used to select its mob icon
+	item_state = "sl_suit"	//Inhand sprites. Would be an arse to make one for all the clothes. Should probably be standardized to rainbow.
+	can_adjust = FALSE	//to prevent you from "wearing it casually"
 
-	var/hasprimary = TRUE
+	var/hasprimary = TRUE	//These vars allow you to choose which overlays a clothing has
 	var/hassecondary = TRUE
 	var/hastertiary = TRUE
 
@@ -18,49 +32,41 @@
 
 /obj/item/clothing/under/polychromic/update_icon()
 	..()
-	cut_overlays()
-
-	if(hasprimary)
-		var/mutable_appearance/primary_overlay = mutable_appearance('haven/icons/polyclothes/item/uniform.dmi', "[item_color]-primary")
-		primary_overlay.color = primary_color
-		add_overlay(primary_overlay)
-
+	cut_overlays()	//prevents the overlays from infinitely stacking
+	if(hasprimary)	//Checks if the overlay is enabled
+		var/mutable_appearance/primary_overlay = mutable_appearance('haven/icons/polyclothes/item/uniform.dmi', "[item_color]-primary")	//Automagically picks overlays
+		primary_overlay.color = primary_color	//Colors the greyscaled overlay
+		add_overlay(primary_overlay)	//Applies the coloured overlay onto the item sprite. but NOT the mob sprite.
 	if(hassecondary)
 		var/mutable_appearance/secondary_overlay = mutable_appearance('haven/icons/polyclothes/item/uniform.dmi', "[item_color]-secondary")
 		secondary_overlay.color = secondary_color
 		add_overlay(secondary_overlay)
-
 	if(hastertiary)
 		var/mutable_appearance/tertiary_overlay = mutable_appearance('haven/icons/polyclothes/item/uniform.dmi', "[item_color]-tertiary")
 		tertiary_overlay.color = tertiary_color
 		add_overlay(tertiary_overlay)
 
 /obj/item/clothing/under/polychromic/AltClick(mob/living/user)
+	if(!in_range(src, user))	//Basic checks to prevent abuse
+		return
 	if(user.incapacitated() || !istype(user))
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
-	if(!in_range(src, user))
-		return
-	if(user.incapacitated() || !istype(user) || !in_range(src, user))
-		return
 
-	var/choice = input(user,"polychromic thread options", "Clothing Recolor") as null|anything in list("[hasprimary ? "Primary Color" : ""]", "[hassecondary ? "Secondary Color" : ""]", "[hastertiary ? "Tertiary Color" : ""]")
-	switch(choice)
-
+	var/choice = input(user,"polychromic thread options", "Clothing Recolor") as null|anything in list("[hasprimary ? "Primary Color" : ""]", "[hassecondary ? "Secondary Color" : ""]", "[hastertiary ? "Tertiary Color" : ""]")	//generates a list depending on the enabled overlays
+	switch(choice)	//Lets the list's options actually lead to something
 		if("Primary Color")
-			var/primary_color_input = input(usr,"Choose Primary Color") as color|null
-			if(primary_color_input)
-				primary_color = sanitize_hexcolor(primary_color_input, desired_format=6, include_crunch=1)
-			update_icon()
-			user.update_inv_w_uniform()
-
+			var/primary_color_input = input(usr,"Choose Primary Color") as color|null	//color input menu, the "|null" adds a cancel button to it.
+			if(primary_color_input)	//Checks if the color selected is NULL, rejects it if it is NULL.
+				primary_color = sanitize_hexcolor(primary_color_input, desired_format=6, include_crunch=1)	//formats the selected color properly
+			update_icon()	//updates the item icon
+			user.update_inv_w_uniform()	//updates the worn icon
 		if("Secondary Color")
 			var/secondary_color_input = input(usr,"Choose Secondary Color") as color|null
 			if(secondary_color_input)
 				secondary_color = sanitize_hexcolor(secondary_color_input, desired_format=6, include_crunch=1)
 			update_icon()
 			user.update_inv_w_uniform()
-
 		if("Tertiary Color")
 			var/tertiary_color_input = input(usr,"Choose Tertiary Color") as color|null
 			if(tertiary_color_input)
@@ -68,13 +74,13 @@
 			update_icon()
 			user.update_inv_w_uniform()
 
-/obj/item/clothing/under/polychromic/worn_overlays(isinhands, icon_file)
+/obj/item/clothing/under/polychromic/worn_overlays(isinhands, icon_file)	//this is where the main magic happens
 	. = ..()
-	if(!isinhands)
-		if(hasprimary)
-			var/mutable_appearance/primary_worn = mutable_appearance('haven/icons/polyclothes/mob/uniform.dmi', "[item_color]-primary")
-			primary_worn.color = primary_color
-			. += primary_worn
+	if(!isinhands)	//prevents the worn sprites from showing up if you're just holding them
+		if(hasprimary)	//checks if overlays are enabled
+			var/mutable_appearance/primary_worn = mutable_appearance('haven/icons/polyclothes/mob/uniform.dmi', "[item_color]-primary")	//automagical sprite selection
+			primary_worn.color = primary_color	//colors the overlay
+			. += primary_worn	//adds the overlay onto the buffer list to draw on the mob sprite.
 		if(hassecondary)
 			var/mutable_appearance/secondary_worn = mutable_appearance('haven/icons/polyclothes/mob/uniform.dmi', "[item_color]-secondary")
 			secondary_worn.color = secondary_color
@@ -86,11 +92,11 @@
 
 /obj/item/clothing/under/polychromic/examine(mob/user)
 	..()
-	to_chat(user, "<span class='notice'>Alt-click to recolor it.</span>")
+	to_chat(user, "<span class='notice'>Alt-click to recolor it.</span>")	// so people don't "OOC how do you use polychromic clothes????"
 
 /obj/item/clothing/under/polychromic/Initialize()
 	..()
-	update_icon()
+	update_icon()	//Applies the overlays and default colors onto the clothes on spawn.
 
 /obj/item/clothing/under/polychromic/shirt
 	name = "polychromic button-up shirt"
@@ -156,39 +162,3 @@
 	primary_color = "#FFFFFF" //RGB in hexcode
 	secondary_color = "#808080"
 	tertiary_color = "#FF3535"
-
-//replaces the jumpsuit contents of the mixed wardrobe
-
-/obj/structure/closet/wardrobe/mixed/PopulateContents()
-	if(prob(40))
-		new /obj/item/clothing/suit/jacket(src)
-	if(prob(40))
-		new /obj/item/clothing/suit/jacket(src)
-	new /obj/item/clothing/under/polychromic/jumpsuit(src)
-	new /obj/item/clothing/under/polychromic/jumpsuit(src)
-	new /obj/item/clothing/under/polychromic/jumpsuit(src)
-	new /obj/item/clothing/under/polychromic/shirt(src)
-	new /obj/item/clothing/under/polychromic/shirt(src)
-	new /obj/item/clothing/under/polychromic/shirt(src)
-	new /obj/item/clothing/under/polychromic/kilt(src)
-	new /obj/item/clothing/under/polychromic/kilt(src)
-	new /obj/item/clothing/under/polychromic/kilt(src)
-	new /obj/item/clothing/under/polychromic/skirt(src)
-	new /obj/item/clothing/under/polychromic/skirt(src)
-	new /obj/item/clothing/under/polychromic/skirt(src)
-	new /obj/item/clothing/under/polychromic/shorts(src)
-	new /obj/item/clothing/under/polychromic/shorts(src)
-	new /obj/item/clothing/under/polychromic/shorts(src)
-	new /obj/item/clothing/mask/bandana/red(src)
-	new /obj/item/clothing/mask/bandana/red(src)
-	new /obj/item/clothing/mask/bandana/blue(src)
-	new /obj/item/clothing/mask/bandana/blue(src)
-	new /obj/item/clothing/mask/bandana/gold(src)
-	new /obj/item/clothing/mask/bandana/gold(src)
-	new /obj/item/clothing/shoes/sneakers/black(src)
-	new /obj/item/clothing/shoes/sneakers/brown(src)
-	new /obj/item/clothing/shoes/sneakers/white(src)
-	if(prob(30))
-		new /obj/item/clothing/suit/hooded/wintercoat(src)
-		new /obj/item/clothing/shoes/winterboots(src)
-	return

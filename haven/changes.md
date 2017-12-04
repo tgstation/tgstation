@@ -13,3 +13,7 @@ Example icon change
 
 ### Haven Init
 haven_initialize() in code/game/world.dm
+
+### Polychromic Clothes Spawning in Mixed Wardrobes
+/obj/structure/closet/wardrobe/mixed/PopulateContents() in code/game/objects/structures/crates_lockers/closets/wardrobe.dm
+This simply replaces the jumpsuits that normally spawn in hte mixed wardrobe to be replaced by a sample of polychromic clothes.
