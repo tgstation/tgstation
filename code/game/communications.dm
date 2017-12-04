@@ -192,7 +192,6 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 
 /datum/signal
 	var/obj/source
+	var/frequency = 0
 	var/transmission_method = TRANSMISSION_WIRE
 	var/data = list()
-	var/encryption
-	var/frequency = 0

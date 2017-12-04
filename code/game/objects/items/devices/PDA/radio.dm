@@ -38,8 +38,7 @@
 	frequency = new_frequency
 	radio_connection = SSradio.add_object(src, frequency, RADIO_SIGNALER)
 
-/obj/item/radio/integrated/signal/proc/send_signal(message="ACTIVATE")
-
+/obj/item/radio/integrated/signal/proc/send_activation()
 	if(last_transmission && world.time < (last_transmission + 5))
 		return
 	last_transmission = world.time
@@ -50,8 +49,7 @@
 
 	var/datum/signal/signal = new
 	signal.source = src
-	signal.encryption = code
-	signal.data["message"] = message
+	signal.data["code"] = code
 
 	radio_connection.post_signal(src, signal)
 
