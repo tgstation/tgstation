@@ -1,44 +1,31 @@
-/obj/item/radio/integrated
+// Radio Cartridge, essentially a remote signaler with limited spectrum.
+/obj/item/integrated_signaler
 	name = "\improper PDA radio module"
-	desc = "An electronic radio system of nanotrasen origin."
+	desc = "An electronic radio system of Nanotrasen origin."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "power_mod"
 
-/obj/item/radio/integrated/Initialize()
-	. = ..()
-
-/obj/item/radio/integrated/Destroy()
-	return ..()
-
-/*
- *	Radio Cartridge, essentially a signaler.
- */
-
-
-/obj/item/radio/integrated/signal
+/obj/item/integrated_signaler
 	var/frequency = FREQ_SIGNALER
 	var/code = DEFAULT_SIGNALER_CODE
 	var/last_transmission
 	var/datum/radio_frequency/radio_connection
 
-/obj/item/radio/integrated/signal/Destroy()
-	SSradio.remove_object(src, frequency)
+/obj/item/integrated_signaler/Destroy()
 	radio_connection = null
 	return ..()
 
-/obj/item/radio/integrated/signal/Initialize()
+/obj/item/integrated_signaler/Initialize()
 	. = ..()
-	if (src.frequency < MIN_FREE_FREQ || src.frequency > MAX_FREE_FREQ)
-		src.frequency = sanitize_frequency(src.frequency)
-
+	if (frequency < MIN_FREE_FREQ || frequency > MAX_FREE_FREQ)
+		frequency = sanitize_frequency(frequency)
 	set_frequency(frequency)
 
-/obj/item/radio/integrated/signal/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
+/obj/item/integrated_signaler/proc/set_frequency(new_frequency)
 	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, RADIO_SIGNALER)
+	radio_connection = SSradio.return_frequency(frequency)
 
-/obj/item/radio/integrated/signal/proc/send_activation()
+/obj/item/integrated_signaler/proc/send_activation()
 	if(last_transmission && world.time < (last_transmission + 5))
 		return
 	last_transmission = world.time
@@ -48,6 +35,4 @@
 	GLOB.lastsignalers.Add("[time] <B>:</B> [usr.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
 
 	var/datum/signal/signal = new(list("code" = code))
-	radio_connection.post_signal(src, signal)
-
-	return
+	radio_connection.post_signal(src, signal, filter = RADIO_SIGNALER)
