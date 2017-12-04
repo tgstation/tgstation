@@ -73,55 +73,79 @@
 	
 // relics of lavaland
 
-/datum/export/weapon/hierophant
-	cost = 40000
+// Skill based Relics - Megafauna
+
+/datum/export/weapon/tail_spike // Ash drake - Skill level minor.
+	cost = 20000
+	unit_name = "Tail Spike"
+	export_types = list(/obj/item/crusher_trophy/tail_spike)
+	
+/datum/export/weapon/demon_claws // Bubble Gum - Skill level medium.
+	cost = 20000
+	unit_name = "Demon Claws"
+	export_types = list(/obj/item/crusher_trophy/demon_claws)
+	
+/datum/export/weapon/blaster_tubes // Collusus - Skill level Insane.
+	cost = 20000
+	unit_name = "Blaster_Tube"
+	export_types = list(/obj/item/crusher_trophy/blaster_tubes)
+	
+// Relics - Megafauna 
+
+/datum/export/weapon/hierophant //Hierophant drop
+	cost = 10000
 	unit_name = "Hierophant Club"
 	export_types = list(/obj/item/hierophant_club)
 	
-/datum/export/weapon/lava
-	cost = 40000
+/datum/export/weapon/lava //Ash Drake drop
+	cost = 10000
 	unit_name = "Lava Staff"
 	export_types = list(/obj/item/lava_staff)
 	
-/datum/export/weapon/cleaving_saw
-	cost = 40000
+/datum/export/weapon/lava //Ash drake drop
+	cost = 10000
+	unit_name = "dragon_blood"
+	export_types = list(/obj/item/dragons_blood)
+	
+/datum/export/weapon/cleaving_saw //Blood drunk miner drop
+	cost = 10000
 	unit_name = "Cleaving Saw"
 	export_types = list(/obj/item/melee/transforming/cleaving_saw)
 	
-/datum/export/weapon/mayhem
-	cost = 40000
+/datum/export/weapon/mayhem //Bubblegum drop
+	cost = 10000
 	unit_name = "Mayhem in a bottle"
 	export_types = list(/obj/item/mayhem)
 	
-/datum/export/weapon/blood_contract
-	cost = 40000
+/datum/export/weapon/blood_contract //Bubblegum Drop
+	cost = 10000
 	unit_name = "Blood Contract"
 	export_types = list(/obj/item/blood_contract)
 	
-//Artifacts of lavaland
+//Relics - tendrils
 
 /datum/export/weapon/immortality_talisman
-	cost = 10000
+	cost = 5000
 	unit_name = "Immortality Talisman"
 	export_types = list(/obj/item/device/immortality_talisman)
 	
 /datum/export/weapon/babel
-	cost = 10000
+	cost = 5000
 	unit_name = "Book of Babel"
 	export_types = list(/obj/item/book_of_babel)
 	
 /datum/export/weapon/hook
-	cost = 10000
+	cost = 5000
 	unit_name = "Meat hook"
 	export_types = list(/obj/item/gun/magic/hook)
 	
 /datum/export/weapon/shipbottle //the price for not breaking the bottle.
-	cost = 20000
+	cost = 10000
 	unit_name = "Ship in a bottle"
 	export_types = list(/obj/item/ship_in_a_bottle)
 	
 /datum/export/weapon/tarot //price for sacraficing a very profitiable ally
-	cost = 20000
+	cost = 10000
 	unit_name = "Tarot cards"
 	export_types = list(/obj/item/guardiancreator)
 
@@ -136,31 +160,26 @@
 	export_types = list(/obj/item/device/warp_cube)
 	
 /datum/export/weapon/wisplantern //thermals on lavaland
-	cost = 10000
+	cost = 5000
 	unit_name = "Wisp Lantern"
 	export_types = list(/obj/item/device/wisp_lantern)
 	
-/datum/export/weapon/flight //if xenobiology ever reaches the point to get these without shuttle being called they deserve it
-	cost = 10000
-	unit_name = "Strange Elixer"
-	export_types = list(/obj/item/reagent_containers/glass/bottle/potion/flight)
-	
 /datum/export/weapon/cheart //is a very powerfull healing artifact in the robust hands
-	cost = 10000
+	cost = 5000
 	unit_name = "Cursed Heart"
 	export_types = list(/obj/item/organ/heart/cursed/wizard)
 	
-/datum/export/weapon/ckatana
+/datum/export/weapon/ckatana // 40 brute 50 block chance.
 	cost = 10000
 	unit_name = "Katana"
 	export_types = list(/obj/item/katana/cursed)
 	
-/datum/export/weapon/geye //xray
+/datum/export/weapon/geye //xray - if you dont get stuck in your hand that is...
 	cost = 10000
 	unit_name = "God eye"
 	export_types = list(/obj/item/clothing/glasses/godeye)
 	
 /datum/export/weapon/spectral
-	cost = 10000
+	cost = 5000
 	unit_name = "Spectral Sword"
 	export_types = list(/obj/item/melee/ghost_sword)
