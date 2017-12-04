@@ -38,7 +38,7 @@
 #define isplatingturf(A) (istype(A, /turf/open/floor/plating))
 
 //Mobs
-#define isliving(A) (istype(A, /mob/living))
+#define isliving(A) (is_type_in_typecache(A, GLOB.typecache_living))
 
 #define isbrain(A) (istype(A, /mob/living/brain))
 
