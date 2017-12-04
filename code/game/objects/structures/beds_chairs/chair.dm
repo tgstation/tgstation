@@ -91,7 +91,11 @@
 		layer = OBJ_LAYER
 
 /obj/structure/chair/post_buckle_mob(mob/living/M)
-	..()
+	. = ..()
+	handle_layer()
+
+/obj/structure/chair/post_unbuckle_mob()
+	. = ..()
 	handle_layer()
 
 /obj/structure/chair/proc/spin()
@@ -167,12 +171,18 @@
 	return ..()
 
 /obj/structure/chair/comfy/post_buckle_mob(mob/living/M)
-	..()
+	. = ..()
+	update_armrest()
+
+/obj/structure/chair/comfy/proc/update_armrest()
 	if(has_buckled_mobs())
 		add_overlay(armrest)
 	else
 		cut_overlay(armrest)
 
+/obj/structure/chair/comfy/post_unbuckle_mob()
+	. = ..()
+	update_armrest()
 
 /obj/structure/chair/comfy/brown
 	color = rgb(255,113,0)
