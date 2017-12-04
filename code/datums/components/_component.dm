@@ -20,7 +20,7 @@
 		CRASH("[type]: Invalid dupe_type!")
 
 	parent = P
-	var/list/arguments = args.Copy(2, args.len)
+	var/list/arguments = args.Copy(2)
 	if(Initialize(arglist(arguments)) == COMPONENT_INCOMPATIBLE)
 		qdel(src, TRUE, TRUE)
 		return
@@ -167,7 +167,7 @@
 	var/list/comps = datum_components
 	if(!comps)
 		return NONE
-	var/list/arguments = args.Copy(2, args.len)
+	var/list/arguments = args.Copy(2)
 	var/target = comps[/datum/component]
 	if(!length(target))
 		var/datum/component/C = target
