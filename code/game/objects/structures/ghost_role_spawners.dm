@@ -77,7 +77,7 @@
 	name = "timeless prison"
 	desc = "Although this stasis pod looks medicinal, it seems as though it's meant to preserve something for a very long time."
 	mob_name = "a penitent exile"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	roundstart = FALSE
 	death = FALSE
@@ -260,7 +260,7 @@
 	name = "prisoner containment sleeper"
 	desc = "A sleeper designed to put its occupant into a deep coma, unbreakable until the sleeper turns off. This one's glass is cracked and you can see a pale, sleeping face staring out."
 	mob_name = "an escaped prisoner"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper_s"
 	outfit = /datum/outfit/lavalandprisoner
 	roundstart = FALSE
@@ -297,7 +297,7 @@
 	name = "staff sleeper"
 	desc = "A sleeper designed for long-term stasis between guest visits."
 	mob_name = "hotel staff member"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper_s"
 	objectives = "Cater to visiting guests with your fellow staff. Do not leave your assigned hotel and always remember: The customer is always right!"
 	death = FALSE
@@ -394,7 +394,7 @@
 	name = "Syndicate Operative"
 	roundstart = FALSE
 	death = FALSE
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper_s"
 	id_access_list = list(ACCESS_SYNDICATE)
 	outfit = /datum/outfit/syndicate_empty
@@ -462,7 +462,7 @@
 	name = "old cryogenics pod"
 	desc = "A humming cryo pod. You can barely recognise a security uniform underneath the built up ice. The machine is attempting to wake up its occupant."
 	mob_name = "a security officer"
-	icon = 'icons/obj/cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	roundstart = FALSE
 	death = FALSE
@@ -486,7 +486,7 @@
 	name = "old cryogenics pod"
 	desc = "A humming cryo pod. You can barely recognise an engineering uniform underneath the built up ice. The machine is attempting to wake up its occupant."
 	mob_name = "an engineer"
-	icon = 'icons/obj/cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	roundstart = FALSE
 	death = FALSE
@@ -510,7 +510,7 @@
 	name = "old cryogenics pod"
 	desc = "A humming cryo pod. You can barely recognise a science uniform underneath the built up ice. The machine is attempting to wake up its occupant."
 	mob_name = "a scientist"
-	icon = 'icons/obj/cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	roundstart = FALSE
 	death = FALSE
@@ -536,7 +536,7 @@
 	name = "space pirate sleeper"
 	desc = "A cryo sleeper smelling faintly of rum."
 	random = TRUE
-	icon = 'icons/obj/cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	mob_name = "a space pirate"
 	mob_species = /datum/species/human
@@ -562,7 +562,7 @@
 /obj/effect/mob_spawn/human/pirate/Destroy()
 	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
 	return ..()
-	
+
 /obj/effect/mob_spawn/human/pirate/captain
 	rank = "Captain"
 	outfit = /datum/outfit/pirate/space/captain

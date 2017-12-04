@@ -229,7 +229,7 @@
 /obj/effect/mob_spawn/human/syndicatesoldier/coldres/alive
 	name = "sleeper"
 	mob_name = "Syndicate Snow Operative"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	roundstart = FALSE
 	death = FALSE
