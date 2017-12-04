@@ -452,6 +452,11 @@
 			playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 100, 1, -1)
 			playsound(loc, 'sound/weapons/egloves.ogg', 100, 1, -1)
 			H.emote("scream")
+			if(isliving(H.pulledby))		//CLEAR!
+				var/mob/living/M = H.pulledby
+				M.electrocute_act(45, src)
+				M.visible_message("<span class='danger'>[M] is electrocuted by their contact with [H]!</span>")
+				M.emote("scream")
 			if(H.can_heartattack() && !H.undergoing_cardiac_arrest())
 				if(!H.stat)
 					H.visible_message("<span class='warning'>[H] thrashes wildly, clutching at their chest!</span>",
@@ -479,7 +484,7 @@
 	update_icon()
 	if(do_after(user, 30, target = H)) //beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
 		user.visible_message("<span class='notice'>[user] places [src] on [H]'s chest.</span>", "<span class='warning'>You place [src] on [H]'s chest.</span>")
-		playsound(get_turf(src), 'sound/machines/defib_charge.ogg', 50, 0)
+		playsound(get_turf(src), 'sound/machines/defib_charge.ogg', 75, 0)
 		var/tplus = world.time - H.timeofdeath
 		// past this much time the patient is unrecoverable
 		// (in deciseconds)
@@ -500,11 +505,15 @@
 			if(H.stat == DEAD)
 				H.visible_message("<span class='warning'>[H]'s body convulses a bit.</span>")
 				playsound(get_turf(src), "bodyfall", 50, 1)
-				playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
+				playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 75, 1, -1)
 				total_brute	= H.getBruteLoss()
 				total_burn	= H.getFireLoss()
+				if(isliving(H.pulledby))		//CLEAR!
+					var/mob/living/M = H.pulledby
+					M.electrocute_act(30, src)
+					M.visible_message("<span class='danger'>[M] is electrocuted by their contact with [H]!</span>")
 
-				var/failed = null
+				var/failed
 
 				if (H.suiciding || (H.disabilities & NOCLONE))
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Recovery of patient impossible. Further attempts futile.</span>"
