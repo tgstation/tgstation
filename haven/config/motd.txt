@@ -1,5 +1,6 @@
 <!-- Most valid html will work in here, excluding images. -->
 
-<h1>Welcome to Space Station 13!</h1>
+<h1>Welcome to the Outer Haven Project!</h1>
 
-<i>This server is running a fork of the /tg/station 13 Git build.</i>
+<i>Join our Forums at: http://outerhaven13.boards.net
+<i>Join our discord at: PERMANENT DISCORD LINKS ARE SPOOPY</i>
