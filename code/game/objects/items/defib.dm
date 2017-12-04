@@ -543,6 +543,7 @@
 					H.set_heartattack(FALSE)
 					H.revive()
 					H.emote("gasp")
+					H.Jitter(100)
 					if(tplus > tloss)
 						H.adjustBrainLoss( max(0, min(99, ((tlimit - tplus) / tlimit * 100))), 150)
 					add_logs(user, H, "revived", defib)

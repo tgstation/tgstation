@@ -1,4 +1,0 @@
-author: "ACCount"
-delete-after: True
-changes: 
-  - rscdel: "Mass-spectrometers are removed. Would anyone notice if not for this changelog entry?"

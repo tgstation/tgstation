@@ -343,10 +343,10 @@
 /obj/machinery/computer/turbine_computer/ui_data(mob/user)
 	var/list/data = list()
 
-	data["working"] = (compressor.starter && compressor && compressor.turbine && !compressor.stat && !compressor.turbine.stat)
 	data["connected"] = (compressor && compressor.turbine) ? TRUE : FALSE
-	data["compressor_broke"] = (!compressor || compressor.stat) ? TRUE : FALSE
-	data["turbine_broke"] = (!compressor || compressor.turbine.stat) ? TRUE : FALSE
+	data["compressor_broke"] = (!compressor || (compressor.stat & BROKEN)) ? TRUE : FALSE
+	data["turbine_broke"] = (!compressor || !compressor.turbine || (compressor.turbine.stat & BROKEN)) ? TRUE : FALSE
+	data["broken"] = (data["compressor_broke"] || data["turbine_broke"])
 	data["online"] = compressor.starter
 
 	data["power"] = DisplayPower(compressor.turbine.lastgen)
@@ -359,9 +359,13 @@
 	if(..())
 		return
 	switch(action)
-		if("power")
+		if("power-on")
 			if(compressor && compressor.turbine)
-				compressor.starter = !compressor.starter
+				compressor.starter = TRUE
+				. = TRUE
+		if("power-off")
+			if(compressor && compressor.turbine)
+				compressor.starter = FALSE
 				. = TRUE
 		if("reconnect")
 			locate_machinery()

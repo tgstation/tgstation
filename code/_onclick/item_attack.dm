@@ -34,7 +34,9 @@
 
 // No comment
 /atom/proc/attackby(obj/item/W, mob/user, params)
-	return SendSignal(COMSIG_PARENT_ATTACKBY, W, user, params)
+	if(SendSignal(COMSIG_PARENT_ATTACKBY, W, user, params) & COMPONENT_NO_AFTERATTACK)
+		return TRUE
+	return FALSE
 
 /obj/attackby(obj/item/I, mob/living/user, params)
 	return ..() || (can_be_hit && I.attack_obj(src, user))

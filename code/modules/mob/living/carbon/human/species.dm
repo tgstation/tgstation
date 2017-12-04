@@ -440,9 +440,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	var/obj/item/bodypart/head/HD = H.get_bodypart("head")
 
-	if(!(H.disabilities & HUSK))
+	if(HD && !(H.disabilities & HUSK))
 		// lipstick
-		if(H.lip_style && (LIPS in species_traits) && HD)
+		if(H.lip_style && (LIPS in species_traits))
 			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[H.lip_style]", -BODY_LAYER)
 			lip_overlay.color = H.lip_color
 			if(OFFSET_FACE in H.dna.species.offset_features)
@@ -451,13 +451,18 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			standing += lip_overlay
 
 		// eyes
-		if((EYECOLOR in species_traits) && HD)
-			var/mutable_appearance/eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes", -BODY_LAYER)
+		var/has_eyes = H.getorganslot(ORGAN_SLOT_EYES)
+		var/mutable_appearance/eye_overlay
+		if(!has_eyes)
+			eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER)
+		else
+			eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes", -BODY_LAYER)
+		if((EYECOLOR in species_traits) && has_eyes)
 			eye_overlay.color = "#" + H.eye_color
-			if(OFFSET_FACE in H.dna.species.offset_features)
-				eye_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FACE][1]
-				eye_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
-			standing += eye_overlay
+		if(OFFSET_FACE in H.dna.species.offset_features)
+			eye_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FACE][1]
+			eye_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
+		standing += eye_overlay
 
 	//Underwear, Undershirts & Socks
 	if(!(NO_UNDERWEAR in species_traits))

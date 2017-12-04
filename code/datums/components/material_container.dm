@@ -53,11 +53,11 @@
 /datum/component/material_container/proc/OnAttackBy(obj/item/I, mob/living/user)
 	var/list/tc = allowed_typecache
 	if(user.a_intent == INTENT_HARM)
-		return FALSE
+		return
 	if((I.flags_2 & (HOLOGRAM_2 | NO_MAT_REDEMPTION_2)) || (tc && !is_type_in_typecache(I, tc)))
 		to_chat(user, "<span class='warning'>[parent] won't accept [I]!</span>")
-		return FALSE
-	. = TRUE
+		return
+	. = COMPONENT_ACTIVATED | COMPONENT_NO_AFTERATTACK
 	last_insert_success = FALSE
 	var/datum/callback/pc = precondition
 	if(pc && !pc.Invoke())
