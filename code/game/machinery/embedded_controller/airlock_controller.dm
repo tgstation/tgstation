@@ -17,7 +17,7 @@
 	var/target_state = AIRLOCK_STATE_CLOSED
 	var/sensor_pressure = null
 
-/datum/computer/file/embedded_program/airlock_controller/receive_signal(datum/signal/signal, receive_method, receive_param)
+/datum/computer/file/embedded_program/airlock_controller/receive_signal(datum/signal/signal)
 	var/receive_tag = signal.data["tag"]
 	if(!receive_tag)
 		return
