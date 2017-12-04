@@ -98,16 +98,12 @@
 	if(!radio_connection)
 		return FALSE
 
-	var/datum/signal/signal = new
-	signal.transmission_method = TRANSMISSION_RADIO
-	signal.source = src
-
 	var/list/f_types = list()
 	for(var/path in GLOB.meta_gas_info)
 		var/list/gas = GLOB.meta_gas_info[path]
 		f_types += list(list("gas_id" = gas[META_GAS_ID], "gas_name" = gas[META_GAS_NAME], "enabled" = (path in filter_types)))
 
-	signal.data = list(
+	var/datum/signal/signal = new(list(
 		"tag" = id_tag,
 		"frequency" = frequency,
 		"device" = "VS",
@@ -117,7 +113,7 @@
 		"widenet" = widenet,
 		"filter_types" = f_types,
 		"sigtype" = "status"
-	)
+	))
 
 	var/area/A = get_area(src)
 	if(!A.air_scrub_names[id_tag])

@@ -25,7 +25,7 @@
 
 /datum/weather/rad_storm/telegraph()
 	..()
-	status_alarm("alert")
+	status_alarm(TRUE)
 
 
 /datum/weather/rad_storm/weather_act(mob/living/L)
@@ -49,22 +49,19 @@
 	if(..())
 		return
 	priority_announce("The radiation threat has passed. Please return to your workplaces.", "Anomaly Alert")
-	status_alarm()
+	status_alarm(FALSE)
 
-/datum/weather/rad_storm/proc/status_alarm(command)	//Makes the status displays show the radiation warning for those who missed the announcement.
+/datum/weather/rad_storm/proc/status_alarm(active)	//Makes the status displays show the radiation warning for those who missed the announcement.
 	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
-
 	if(!frequency)
 		return
 
-	var/datum/signal/status_signal = new
-	var/atom/movable/virtualspeaker/virt = new /atom/movable/virtualspeaker(null)
-	status_signal.source = virt
-	status_signal.transmission_method = TRANSMISSION_RADIO
-	status_signal.data["command"] = "shuttle"
+	var/datum/signal/signal = new
+	if (active)
+		signal.data["command"] = "alert"
+		signal.data["picture_state"] = "radiation"
+	else
+		signal.data["command"] = "shuttle"
 
-	if(command == "alert")
-		status_signal.data["command"] = "alert"
-		status_signal.data["picture_state"] = "radiation"
-
-	frequency.post_signal(src, status_signal)
+	var/atom/movable/virtualspeaker/virt = new(null)
+	frequency.post_signal(virt, signal)

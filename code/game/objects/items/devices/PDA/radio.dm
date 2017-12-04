@@ -47,10 +47,7 @@
 	var/turf/T = get_turf(src)
 	GLOB.lastsignalers.Add("[time] <B>:</B> [usr.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
 
-	var/datum/signal/signal = new
-	signal.source = src
-	signal.data["code"] = code
-
+	var/datum/signal/signal = new(list("code" = code))
 	radio_connection.post_signal(src, signal)
 
 	return

@@ -133,10 +133,8 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 //Use range = -1, to restrain to the same z_level without limiting range
 /datum/radio_frequency/proc/post_signal(obj/source as obj|null, datum/signal/signal, filter = null as text|null, range = null as num|null)
 	// Ensure the signal's data is fully filled
-	if (!signal.source)
-		signal.source = source
-	if (!signal.frequency)
-		signal.frequency = frequency
+	signal.source = source
+	signal.frequency = frequency
 
 	//Apply filter to the signal. If none supply, broadcast to every devices
 	//_default channel is always checked
@@ -193,5 +191,9 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 /datum/signal
 	var/obj/source
 	var/frequency = 0
-	var/transmission_method = TRANSMISSION_WIRE
-	var/data = list()
+	var/transmission_method
+	var/data
+
+/datum/signal/New(data, transmission_method = TRANSMISSION_RADIO)
+	src.data = data || list()
+	src.transmission_method = transmission_method

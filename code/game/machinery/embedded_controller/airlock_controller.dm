@@ -68,19 +68,17 @@
 						state = AIRLOCK_STATE_CLOSED
 						process_again = 1
 					else
-						var/datum/signal/signal = new
-						signal.data["tag"] = interior_door_tag
-						signal.data["command"] = "secure_close"
-						post_signal(signal)
+						post_signal(new /datum/signal(list(
+							"tag" = interior_door_tag,
+							"command" = "secure_close"
+						)))
 				else
 					if(memory["pump_status"] != "off")
-						var/datum/signal/signal = new
-						signal.data = list(
+						post_signal(new /datum/signal(list(
 							"tag" = airpump_tag,
 							"power" = 0,
-							"sigtype"="command"
-						)
-						post_signal(signal)
+							"sigtype" = "command"
+						)))
 
 			if(AIRLOCK_STATE_PRESSURIZE)
 				if(target_state < state)
@@ -89,16 +87,15 @@
 							state = AIRLOCK_STATE_INOPEN
 							process_again = 1
 						else
-							var/datum/signal/signal = new
-							signal.data["tag"] = interior_door_tag
-							signal.data["command"] = "secure_open"
-							post_signal(signal)
+							post_signal(new /datum/signal(list(
+								"tag" = interior_door_tag,
+								"command" = "secure_open"
+							)))
 					else
-						var/datum/signal/signal = new
-						signal.data = list(
+						var/datum/signal/signal = new(list(
 							"tag" = airpump_tag,
-							"sigtype"="command"
-						)
+							"sigtype" = "command"
+						))
 						if(memory["pump_status"] == "siphon")
 							signal.data["stabalize"] = 1
 						else if(memory["pump_status"] != "release")
@@ -114,29 +111,27 @@
 						state = AIRLOCK_STATE_DEPRESSURIZE
 						process_again = 1
 					else
-						var/datum/signal/signal = new
-						signal.data["tag"] = interior_door_tag
-						signal.data["command"] = "secure_close"
-						post_signal(signal)
+						post_signal(new /datum/signal(list(
+							"tag" = interior_door_tag,
+							"command" = "secure_close"
+						)))
 				else if(target_state < state)
 					if(memory["exterior_status"] == "closed")
 						state = AIRLOCK_STATE_PRESSURIZE
 						process_again = 1
 					else
-						var/datum/signal/signal = new
-						signal.data["tag"] = exterior_door_tag
-						signal.data["command"] = "secure_close"
-						post_signal(signal)
+						post_signal(new /datum/signal(list(
+							"tag" = exterior_door_tag,
+							"command" = "secure_close"
+						)))
 
 				else
 					if(memory["pump_status"] != "off")
-						var/datum/signal/signal = new
-						signal.data = list(
+						post_signal(new /datum/signal(list(
 							"tag" = airpump_tag,
 							"power" = 0,
-							"sigtype"="command"
-						)
-						post_signal(signal)
+							"sigtype" = "command"
+						)))
 
 			if(AIRLOCK_STATE_DEPRESSURIZE)
 				var/target_pressure = ONE_ATMOSPHERE*0.05
@@ -148,10 +143,10 @@
 						if(memory["exterior_status"] == "open")
 							state = AIRLOCK_STATE_OUTOPEN
 						else
-							var/datum/signal/signal = new
-							signal.data["tag"] = exterior_door_tag
-							signal.data["command"] = "secure_open"
-							post_signal(signal)
+							post_signal(new /datum/signal(list(
+								"tag" = exterior_door_tag,
+								"command" = "secure_open"
+							)))
 					else if(target_state < state)
 						state = AIRLOCK_STATE_CLOSED
 						process_again = 1
@@ -159,12 +154,10 @@
 					state = AIRLOCK_STATE_CLOSED
 					process_again = 1
 				else
-					var/datum/signal/signal = new
-					signal.transmission_method = TRANSMISSION_RADIO
-					signal.data = list(
+					var/datum/signal/signal = new(list(
 						"tag" = airpump_tag,
-						"sigtype"="command"
-					)
+						"sigtype" = "command"
+					))
 					if(memory["pump_status"] == "release")
 						signal.data["purge"] = 1
 					else if(memory["pump_status"] != "siphon")
@@ -181,19 +174,17 @@
 							state = AIRLOCK_STATE_CLOSED
 							process_again = 1
 					else
-						var/datum/signal/signal = new
-						signal.data["tag"] = exterior_door_tag
-						signal.data["command"] = "secure_close"
-						post_signal(signal)
+						post_signal(new /datum/signal(list(
+							"tag" = exterior_door_tag,
+							"command" = "secure_close"
+						)))
 				else
 					if(memory["pump_status"] != "off")
-						var/datum/signal/signal = new
-						signal.data = list(
+						post_signal(new /datum/signal(list(
 							"tag" = airpump_tag,
 							"power" = 0,
-							"sigtype"="command"
-						)
-						post_signal(signal)
+							"sigtype" = "command"
+						)))
 
 	memory["sensor_pressure"] = sensor_pressure
 	memory["processing"] = state != target_state

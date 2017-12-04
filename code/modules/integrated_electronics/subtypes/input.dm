@@ -509,11 +509,8 @@
 	if(!radio_connection)
 		return
 
-	var/datum/signal/signal = new
-	signal.source = src
-	signal.data["code"] = code
+	var/datum/signal/signal = new(list("code" = code))
 	radio_connection.post_signal(src, signal)
-
 	activate_pin(2)
 
 /obj/item/integrated_circuit/input/signaler/proc/set_frequency(new_frequency)
