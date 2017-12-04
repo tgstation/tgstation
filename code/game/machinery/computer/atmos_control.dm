@@ -19,18 +19,16 @@
 
 /obj/machinery/air_sensor/process_atmos()
 	if(on)
-		var/datum/signal/signal = new
 		var/datum/gas_mixture/air_sample = return_air()
 
-		signal.transmission_method = TRANSMISSION_RADIO
-		signal.data = list(
+		var/datum/signal/signal = new(list(
 			"sigtype" = "status",
 			"id_tag" = id_tag,
 			"timestamp" = world.time,
 			"pressure" = air_sample.return_pressure(),
 			"temperature" = air_sample.temperature,
 			"gases" = list()
-		)
+		))
 		var/total_moles = air_sample.total_moles()
 		if(total_moles)
 			for(var/gas_id in air_sample.gases)
@@ -194,10 +192,7 @@
 /obj/machinery/computer/atmos_control/tank/ui_act(action, params)
 	if(..() || !radio_connection)
 		return
-	var/datum/signal/signal = new
-	signal.transmission_method = TRANSMISSION_RADIO
-	signal.source = src
-	signal.data = list("sigtype" = "command")
+	var/datum/signal/signal = new(list("sigtype" = "command"))
 	switch(action)
 		if("reconnect")
 			reconnect(usr)

@@ -105,9 +105,7 @@ Code:
 	if(!radio_connection)
 		return
 
-	var/datum/signal/signal = new
-	signal.source = src
-	signal.data["code"] = code
+	var/datum/signal/signal = new(list("code" = code))
 	radio_connection.post_signal(src, signal)
 
 	var/time = time2text(world.realtime,"hh:mm:ss")
