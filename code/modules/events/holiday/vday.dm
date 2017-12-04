@@ -46,21 +46,25 @@
 			var/datum/objective/martyr/normiesgetout = new
 			normiesgetout.owner = L.mind
 			L.mind.special_role = "heartbreaker"
-			L.mind.add_antag_datum(/datum/antagonist/auto_custom)
 			SSticker.mode.traitors |= L.mind
 			L.mind.objectives += normiesgetout
+
+			L.mind.add_antag_datum(/datum/antagonist/auto_custom)
 
 /proc/forge_valentines_objective(mob/living/lover,mob/living/date)
 
 	SSticker.mode.traitors |= lover.mind
 	lover.mind.special_role = "valentine"
-	lover.mind.add_antag_datum(/datum/antagonist/auto_custom)
+	
 
 	var/datum/objective/protect/protect_objective = new /datum/objective/protect
 	protect_objective.owner = lover.mind
 	protect_objective.target = date.mind
 	protect_objective.explanation_text = "Protect [date.real_name], your date."
 	lover.mind.objectives += protect_objective
+
+	lover.mind.add_antag_datum(/datum/antagonist/auto_custom)
+
 	to_chat(lover, "<span class='warning'><B>You're on a date with [date]! Protect them at all costs. This takes priority over all other loyalties.</B></span>")
 
 

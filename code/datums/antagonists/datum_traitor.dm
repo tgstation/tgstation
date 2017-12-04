@@ -9,7 +9,6 @@
 	var/employer = "The Syndicate"
 	var/give_objectives = TRUE
 	var/should_give_codewords = TRUE
-	var/list/objectives_given = list()
 
 /datum/antagonist/traitor/human
 	var/should_equip = TRUE
@@ -53,9 +52,9 @@
 	if(should_specialise)
 		return ..()//we never did any of this anyway
 	SSticker.mode.traitors -= owner
-	for(var/O in objectives_given)
+	for(var/O in objectives)
 		owner.objectives -= O
-	objectives_given = list()
+	objectives = list()
 	if(!silent && owner.current)
 		to_chat(owner.current,"<span class='userdanger'> You are no longer the [special_role]! </span>")
 	owner.special_role = null
@@ -72,11 +71,11 @@
 
 /datum/antagonist/traitor/proc/add_objective(var/datum/objective/O)
 	owner.objectives += O
-	objectives_given += O
+	objectives += O
 
 /datum/antagonist/traitor/proc/remove_objective(var/datum/objective/O)
 	owner.objectives -= O
-	objectives_given -= O
+	objectives -= O
 
 /datum/antagonist/traitor/proc/forge_traitor_objectives()
 	return
@@ -309,9 +308,9 @@
 			purchases += H.purchase_log.generate_render(FALSE)
 
 	var/objectives = ""
-	if(objectives_given.len)//If the traitor had no objectives, don't need to process this.
+	if(objectives.len)//If the traitor had no objectives, don't need to process this.
 		var/count = 1
-		for(var/datum/objective/objective in objectives_given)
+		for(var/datum/objective/objective in objectives)
 			if(objective.check_completion())
 				objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
 			else

@@ -184,7 +184,6 @@
 
 /datum/objective_team/cult
 	name = "Cult"
-	var/list/objectives = list()
 
 	var/blood_target
 	var/image/blood_target_image

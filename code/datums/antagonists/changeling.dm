@@ -9,7 +9,6 @@
 
 	var/you_are_greet = TRUE
 	var/give_objectives = TRUE
-	var/list/objectives = list()
 	var/team_mode = FALSE //Should assign team objectives ?
 
 	//Changeling Stuff

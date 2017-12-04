@@ -36,7 +36,6 @@
 
 /datum/objective_team/pirate
 	name = "Pirate crew"
-	var/list/objectives = list()
 
 /datum/objective_team/pirate/proc/forge_objectives()
 	var/datum/objective/loot/getbooty = new()

@@ -12,7 +12,6 @@
 	var/allow_rename = TRUE
 	var/hud_version = "wizard"
 	var/datum/objective_team/wizard/wiz_team //Only created if wizard summons apprentices
-	var/list/objectives = list() //this should be base datum antag proc and list, todo make lazy
 	var/move_to_lair = TRUE
 	var/outfit_type = /datum/outfit/wizard
 	var/wiz_age = WIZARD_AGE_MIN /* Wizards by nature cannot be too young. */

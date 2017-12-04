@@ -202,7 +202,6 @@
 			nuke_team.memorized_code = null
 
 /datum/objective_team/nuclear
-	var/list/objectives
 	var/syndicate_name
 	var/obj/machinery/nuclearbomb/tracked_nuke
 	var/core_objective = /datum/objective/nuclear
@@ -213,12 +212,10 @@
 	syndicate_name = syndicate_name()
 
 /datum/objective_team/nuclear/proc/update_objectives()
-	objectives = list()
 	if(core_objective)
 		var/datum/objective/O = new core_objective
 		O.team = src
 		objectives += O
-	return
 
 /datum/objective_team/nuclear/proc/disk_rescued()
 	for(var/obj/item/disk/nuclear/D in GLOB.poi_list)

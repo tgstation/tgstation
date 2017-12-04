@@ -75,7 +75,6 @@
 
 /datum/objective_team/abductor_team
 	member_name = "abductor" 
-	var/list/objectives = list()
 	var/team_number
 	var/list/datum/mind/abductees = list()
 

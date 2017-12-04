@@ -185,7 +185,6 @@
 
 /datum/objective_team/revolution
 	name = "Revolution"
-	var/list/objectives = list()
 	var/max_headrevs = 3
 
 /datum/objective_team/revolution/proc/update_objectives(initial = FALSE)

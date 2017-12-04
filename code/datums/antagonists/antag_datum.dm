@@ -11,6 +11,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/delete_on_mind_deletion = TRUE
 	var/job_rank
 	var/replace_banned = TRUE //Should replace jobbaned player with ghosts if granted.
+	var/list/objectives = list()
 
 /datum/antagonist/New(datum/mind/new_owner)
 	GLOB.antagonists += src
@@ -146,3 +147,13 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/auto_custom/on_gain()
 	..()
 	name = owner.special_role
+	//Add all objectives not already owned by other datums to this one.
+	var/list/already_registered_objectives = list()
+	for(var/datum/antagonist/A in owner.datum_antags)
+		if(A == src)
+			continue
+		else
+			already_registered_objectives |= A.objectives
+	objectives = owner.objectives - already_registered_objectives
+		
+	

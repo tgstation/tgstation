@@ -3,6 +3,7 @@
 	var/list/datum/mind/members = list()
 	var/name = "team"
 	var/member_name = "member"
+	var/list/objectives = list() //common objectives, these won't be added or removed automatically, subtypes handle this, this is here for bookkeeping purposes.
 
 /datum/objective_team/New(starting_members)
 	. = ..()

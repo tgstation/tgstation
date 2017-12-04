@@ -1,7 +1,6 @@
 /datum/objective_team/brother_team
 	name = "brotherhood"
 	member_name = "blood brother"
-	var/list/objectives = list()
 	var/meeting_area
 
 /datum/objective_team/brother_team/is_solo()
