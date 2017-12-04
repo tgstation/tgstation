@@ -43,6 +43,8 @@
 			all_teams |= T
 		if(!A.owner)
 			continue
+		if(!A.objectives.len)
+			SSblackbox.record_feedback("nested tally", "antagonists", 1, list("[A.owner.key]", "[A.type]", "OBJECTIVELESS"))
 		for(var/datum/objective/O in A.objectives)
 			if(O.check_completion())
 				SSblackbox.record_feedback("nested tally", "antagonists", 1, list("[A.owner.key]", "[A.type]", "[O.type]" ,"[O.explanation_text]", "SUCCESS"))
@@ -78,13 +80,12 @@
 	
 	send2irc("Server", "Round just ended.")
 	
-	//autodeclares
-
 	if(CONFIG_GET(string/cross_server_address))
 		send_news_report()
 
 	CHECK_TICK
 
+	//These need update to actually reflect the real antagonists
 	//Print a list of antagonists to the server log
 	var/list/total_antagonists = list()
 	//Look into all mobs in world, dead or alive
@@ -226,9 +227,10 @@
 	roundend_report.open(0)
 
 /datum/controller/subsystem/ticker/proc/display_report()
-	var/common_report = build_roundend_report()
+	GLOB.common_report = build_roundend_report()
 	for(var/client/C in GLOB.clients)
-		show_roundend_report(C,common_report)
+		show_roundend_report(C,GLOB.common_report)
+	give_show_report_button()
 
 /datum/controller/subsystem/ticker/proc/law_report()
 	. = list()
@@ -311,3 +313,21 @@
 
 /proc/cmp_antag_category(datum/antagonist/A,datum/antagonist/B)
 	return sorttext(B.roundend_category,A.roundend_category)
+
+
+/datum/controller/subsystem/ticker/proc/give_show_report_button()
+	for(var/v in GLOB.clients)
+		var/client/C = v
+		var/datum/action/report/R = new
+		R.Grant(C.mob)
+
+/datum/action/report
+	name = "Show roundend report"
+	button_icon_state = "vote"
+
+/datum/action/report/Trigger()
+	if(owner && GLOB.common_report && SSticker.current_state == GAME_STATE_FINISHED)
+		SSticker.show_roundend_report(owner.client,GLOB.common_report)
+
+/datum/action/report/IsAvailable()
+	return 1

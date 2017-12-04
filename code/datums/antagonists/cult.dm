@@ -29,10 +29,11 @@
 	cult_team = new_team
 
 /datum/antagonist/cult/proc/add_objectives()
-	owner.objectives |= cult_team.objectives
+	objectives |= cult_team.objectives
+	owner.objectives |= objectives
 
 /datum/antagonist/cult/proc/remove_objectives()
-	owner.objectives -= cult_team.objectives
+	owner.objectives -= objectives
 
 /datum/antagonist/cult/Destroy()
 	QDEL_NULL(communion)

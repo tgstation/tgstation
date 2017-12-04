@@ -125,7 +125,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 //Displayed at the start of roundend_category section, default to roundend_category header
 /datum/antagonist/proc/roundend_report_header()
-	return 	"<br><font size=3><B>The [roundend_category] were:</b></font><br>"
+	return 	"<font size=3><B>The [roundend_category] were:</b></font><br>"
 
 //Displayed at the end of roundend_category section
 /datum/antagonist/proc/roundend_report_footer()
