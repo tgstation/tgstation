@@ -307,14 +307,14 @@
 			uplink_true = TRUE
 			purchases += H.purchase_log.generate_render(FALSE)
 
-	var/objectives = ""
+	var/objectives_text = ""
 	if(objectives.len)//If the traitor had no objectives, don't need to process this.
 		var/count = 1
 		for(var/datum/objective/objective in objectives)
 			if(objective.check_completion())
-				objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
 			else
-				objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
 				traitorwin = FALSE
 			count++
 
@@ -325,7 +325,7 @@
 			uplink_text += "<BIG>[icon2html(badass, world)]</BIG>"
 		result += uplink_text
 	
-	result += objectives
+	result += objectives_text
 
 	var/special_role_text = lowertext(name)
 

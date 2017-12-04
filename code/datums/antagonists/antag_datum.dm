@@ -149,7 +149,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	name = owner.special_role
 	//Add all objectives not already owned by other datums to this one.
 	var/list/already_registered_objectives = list()
-	for(var/datum/antagonist/A in owner.datum_antags)
+	for(var/datum/antagonist/A in owner.antag_datums)
 		if(A == src)
 			continue
 		else
