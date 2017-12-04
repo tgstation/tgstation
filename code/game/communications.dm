@@ -158,7 +158,7 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 					continue
 				if(start_point.z != end_point.z || (range > 0 && get_dist(start_point, end_point) > range))
 					continue
-			device.receive_signal(signal, TRANSMISSION_RADIO, frequency)
+			device.receive_signal(signal)
 
 /datum/radio_frequency/proc/add_listener(obj/device, filter as text|null)
 	if (!filter)
@@ -181,7 +181,7 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 			devices -= devices_filter
 
 
-/obj/proc/receive_signal(datum/signal/signal, receive_method, receive_param)
+/obj/proc/receive_signal(datum/signal/signal)
 	return
 
 /datum/signal

@@ -11,7 +11,7 @@
 
 /datum/computer/file/embedded_program/proc/receive_user_command(command)
 
-/datum/computer/file/embedded_program/proc/receive_signal(datum/signal/signal, receive_method, receive_param)
+/datum/computer/file/embedded_program/proc/receive_signal(datum/signal/signal)
 	return null
 
 /datum/computer/file/embedded_program/process()
@@ -43,12 +43,12 @@
 /obj/machinery/embedded_controller/proc/post_signal(datum/signal/signal, comm_line)
 	return 0
 
-/obj/machinery/embedded_controller/receive_signal(datum/signal/signal, receive_method, receive_param)
+/obj/machinery/embedded_controller/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption)
 		return
 
 	if(program)
-		program.receive_signal(signal, receive_method, receive_param)
+		program.receive_signal(signal)
 		//spawn(5) program.process() //no, program.process sends some signals and machines respond and we here again and we lag -rastaf0
 
 /obj/machinery/embedded_controller/Topic(href, href_list)
