@@ -511,8 +511,7 @@
 
 	var/datum/signal/signal = new
 	signal.source = src
-	signal.encryption = code
-	signal.data["message"] = "ACTIVATE"
+	signal.data["code"] = code
 	radio_connection.post_signal(src, signal)
 
 	activate_pin(2)
@@ -532,7 +531,7 @@
 		code = new_code
 	if(!signal)
 		return 0
-	if(signal.encryption != code)
+	if(signal.data["code"] != code)
 		return 0
 	if(signal.source == src) // Don't trigger ourselves.
 		return 0

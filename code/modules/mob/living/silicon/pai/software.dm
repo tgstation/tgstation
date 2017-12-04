@@ -171,19 +171,16 @@
 		if("signaller")
 
 			if(href_list["send"])
-
-				sradio.send_signal("ACTIVATE")
+				sradio.send_activation()
 				audible_message("[icon2html(src, world)] *beep* *beep*")
 
 			if(href_list["freq"])
-
 				var/new_frequency = (sradio.frequency + text2num(href_list["freq"]))
 				if(new_frequency < MIN_FREE_FREQ || new_frequency > MAX_FREE_FREQ)
 					new_frequency = sanitize_frequency(new_frequency)
 				sradio.set_frequency(new_frequency)
 
 			if(href_list["code"])
-
 				sradio.code += text2num(href_list["code"])
 				sradio.code = round(sradio.code)
 				sradio.code = min(100, sradio.code)

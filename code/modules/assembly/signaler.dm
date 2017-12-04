@@ -107,8 +107,7 @@ Code:
 
 	var/datum/signal/signal = new
 	signal.source = src
-	signal.encryption = code
-	signal.data["message"] = "ACTIVATE"
+	signal.data["code"] = code
 	radio_connection.post_signal(src, signal)
 
 	var/time = time2text(world.realtime,"hh:mm:ss")
@@ -122,7 +121,7 @@ Code:
 /obj/item/device/assembly/signaler/receive_signal(datum/signal/signal)
 	if(!signal)
 		return 0
-	if(signal.encryption != code)
+	if(signal.data["code"] != code)
 		return 0
 	if(!(src.wires & WIRE_RADIO_RECEIVE))
 		return 0
@@ -171,7 +170,7 @@ Code:
 /obj/item/device/assembly/signaler/anomaly/receive_signal(datum/signal/signal)
 	if(!signal)
 		return 0
-	if(signal.encryption != code)
+	if(signal.data["code"] != code)
 		return 0
 	for(var/obj/effect/anomaly/A in get_turf(src))
 		A.anomalyNeutralize()

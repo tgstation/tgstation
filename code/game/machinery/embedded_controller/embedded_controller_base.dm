@@ -44,12 +44,8 @@
 	return 0
 
 /obj/machinery/embedded_controller/receive_signal(datum/signal/signal)
-	if(!signal || signal.encryption)
-		return
-
-	if(program)
+	if(istype(signal) && program)
 		program.receive_signal(signal)
-		//spawn(5) program.process() //no, program.process sends some signals and machines respond and we here again and we lag -rastaf0
 
 /obj/machinery/embedded_controller/Topic(href, href_list)
 	if(..())

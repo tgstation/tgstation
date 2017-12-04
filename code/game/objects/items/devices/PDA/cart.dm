@@ -573,7 +573,7 @@ Code:
 		if("Send Signal")
 			spawn( 0 )
 				var/obj/item/radio/integrated/signal/S = radio
-				S.send_signal("ACTIVATE")
+				S.send_activation()
 				return
 
 		if("Signal Frequency")

@@ -8,7 +8,7 @@
 
 
 /obj/machinery/door/airlock/receive_signal(datum/signal/signal)
-	if(!signal || signal.encryption)
+	if(!signal)
 		return
 
 	if(id_tag != signal.data["tag"] || !signal.data["command"])

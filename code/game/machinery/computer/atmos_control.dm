@@ -117,7 +117,7 @@
 	return data
 
 /obj/machinery/computer/atmos_control/receive_signal(datum/signal/signal)
-	if(!signal || signal.encryption)
+	if(!signal)
 		return
 
 	var/id_tag = signal.data["id_tag"]
@@ -217,7 +217,7 @@
 	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
 /obj/machinery/computer/atmos_control/tank/receive_signal(datum/signal/signal)
-	if(!signal || signal.encryption)
+	if(!signal)
 		return
 
 	var/id_tag = signal.data["tag"]
