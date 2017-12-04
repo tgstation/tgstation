@@ -472,7 +472,7 @@
 	attack_verb = list("smacked", "whacked", "slammed", "smashed")
 
 /obj/item/melee/skateboard/attack_self(mob/user)
-	new /obj/vehicle/scooter/skateboard(get_turf(user))
+	new /obj/vehicle/ridden/scooter/skateboard(get_turf(user))
 	qdel(src)
 
 /obj/item/melee/baseball_bat
