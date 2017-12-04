@@ -36,8 +36,24 @@
 	gather_antag_success_rate()
 
 /datum/controller/subsystem/ticker/proc/gather_antag_success_rate()
-	//TODO
-	return
+	var/list/all_teams = list()
+	for(var/datum/antagonist/A in GLOB.antagonists)
+		var/T = A.get_team()
+		if(T)
+			all_teams |= T
+		if(!A.owner)
+			continue
+		for(var/datum/objective/O in A.objectives)
+			if(O.check_completion())
+				SSblackbox.record_feedback("nested tally", "antagonists", 1, list("[A.owner.key]", "[A.type]", "[O.type]" , "SUCCESS"))
+			else
+				SSblackbox.record_feedback("nested tally", "antagonists", 1, list("[A.owner.key]", "[A.type]", "[O.type]", "FAIL"))
+	
+	var/gid = 1 //To diffrentiate multiple teams of same type for now. Ideally all of them get names later
+	for(var/datum/objective_team/T in all_teams)
+		for(var/datum/mind/M in T.members)
+			SSblackbox.record_feedback("nested tally", "teams", 1, list("[T.type]", "[gid]", "[M.key]"))
+		gid++
 
 /datum/controller/subsystem/ticker/proc/declare_completion()
 	set waitfor = FALSE
