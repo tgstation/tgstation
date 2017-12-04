@@ -10,7 +10,7 @@
 
  	// Looping through the player list has the added bonus of working for mobs inside containers
 	var/sound/S = sound(get_sfx(soundin))
-	var/maxdistance = (world.view + extrarange) * 3
+	var/maxdistance = (world.view + extrarange)
 	for(var/P in GLOB.player_list)
 		var/mob/M = P
 		if(!M || !M.client)
