@@ -106,7 +106,11 @@
 	name = "Disco Inferno";
 	timid = 1
 	},
-/obj/machinery/door/airlock/plasma,
+/obj/machinery/door/airlock/gold{
+	armor = list("melee" = 30, "bullet" = 30, "laser" = 20, "energy" = 20, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100);
+	heat_proof = 1;
+	resistance_flags = 2
+	},
 /turf/open/floor/mineral/plasma,
 /area/shuttle/escape)
 "v" = (
