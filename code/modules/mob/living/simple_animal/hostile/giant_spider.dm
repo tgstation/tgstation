@@ -50,12 +50,13 @@
 	var/playable_spider = FALSE
 	var/datum/action/innate/spider/lay_web/lay_web
 	var/directive = "" //Message passed down to children, to relay the creator's orders
+	var/menu_name = "Giant Spider"
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Initialize()
 	. = ..()
 	lay_web = new
 	lay_web.Grant(src)
-	LAZYADD(GLOB.mob_spawners["giant spider"], src)
+	LAZYADD(GLOB.mob_spawners[menu_name], src)
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Destroy()
 	QDEL_NULL(lay_web)
@@ -87,7 +88,7 @@
 		to_chat(user, "<span class='notice'>Someone else already took this spider.</span>")
 		return TRUE
 	key = user.key
-	var/list/spawners = GLOB.mob_spawners["giant spider"]
+	var/list/spawners = GLOB.mob_spawners[menu_name]
 	LAZYREMOVE(spawners, src)
 	return TRUE
 
@@ -104,6 +105,7 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 10
 	poison_per_bite = 3
+	menu_name = "Nurse Spider"
 	var/atom/movable/cocoon_target
 	var/fed = 0
 	var/obj/effect/proc_holder/wrap/wrap
@@ -138,6 +140,7 @@
 	melee_damage_upper = 20
 	poison_per_bite = 5
 	move_to_delay = 5
+	menu_name = "Hunter Spider"
 
 //vipers are the rare variant of the hunter, no IMMEDIATE damage but so much poison medical care will be needed fast.
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter/viper
@@ -155,6 +158,7 @@
 	poison_type = "venom" //all in venom, glass cannon. you bite 5 times and they are DEFINITELY dead, but 40 health and you are extremely obvious. Ambush, maybe?
 	speed = 1
 	gold_core_spawnable = NO_SPAWN
+	menu_name = "Viper Spider"
 
 //tarantulas are really tanky, regenerating (maybe), hulky monster but are also extremely slow, so.
 /mob/living/simple_animal/hostile/poison/giant_spider/tarantula
@@ -173,6 +177,7 @@
 	status_flags = NONE
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = NO_SPAWN
+	menu_name = "Tarantula"
 
 /mob/living/simple_animal/hostile/poison/giant_spider/tarantula/movement_delay()
 	var/turf/T = get_turf(src)
@@ -193,6 +198,7 @@
 	health = 40
 	var/datum/action/innate/spider/comm/letmetalkpls
 	gold_core_spawnable = NO_SPAWN
+	menu_name = "Midwife Spider"
 
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife/Initialize()
 	. = ..()
@@ -211,6 +217,7 @@
 	poison_type = "frost_oil"
 	color = rgb(114,228,250)
 	gold_core_spawnable = NO_SPAWN
+	menu_name = "Ice Spider"
 
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/ice
 	name = "giant ice spider"
@@ -220,6 +227,7 @@
 	poison_type = "frost_oil"
 	color = rgb(114,228,250)
 	gold_core_spawnable = NO_SPAWN
+	menu_name = "Nurse Ice Spider"
 
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter/ice
 	name = "giant ice spider"
@@ -229,6 +237,7 @@
 	poison_type = "frost_oil"
 	color = rgb(114,228,250)
 	gold_core_spawnable = NO_SPAWN
+	menu_name = "Hunter Ice Spider"
 
 /mob/living/simple_animal/hostile/poison/giant_spider/handle_automated_action()
 	if(!..()) //AIStatus is off
