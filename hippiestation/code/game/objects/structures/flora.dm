@@ -11,9 +11,9 @@
 		add_fingerprint(user)
 		disable = !disable
 		if(disable)
-			user.visible_message("[user] prepares the foliage for connection.", "<span class='notice'>You can now attach the potted plant!</span>")
+			user.visible_message("[user] prepares the foliage for connection.", "<span class='notice'>The screwdriver reveals a panel labelled 'INSERT SHARP ITEM HERE'...</span>")
 		if(!disable)
-			user.visible_message("[user] impedes the foliage from connection.", "<span class='notice'>You can no longer attach the potted plant.</span>")
+			user.visible_message("[user] impedes the foliage from connection.", "<span class='notice'>You close the panel back up.</span>")
 	if(W.is_sharp() && disable)  //If screwdriven and the item is sharp, it creates sharp plant
 		if(is_sharpened)
 			var/mob/living/carbon/C = user
@@ -21,13 +21,16 @@
 			user.visible_message("Tries to place an object among the plant's branches, but there's already something sharp inside. Be careful!", "<span class='notice'>You cut yourself on the plant! It's already full...</span>")
 			C.apply_damage(5, BRUTE, hit_hand)
 		else
-			user.visible_message("[user] places something sharp inside the plant's branches..", "<span class='notice'>You've sharpened the potted plant!</span>")
+			var/item_name=W.name
+			user.visible_message("[user] places something sharp inside the plant's branches..", "<span class='notice'>You insert the [item_name] into the panel and close it. The plant suddenly seems more dangerous.</span>")
 			name = "[sharp_prefix] [name]"
 			desc = "[desc] " + SHARP_DESC_ADD
 			is_sharpened = 1
+			force = W.force
 			sharpness = W.sharpness
 			hitsound='hippiestation/sound/weapons/sharpBushHit.ogg' //cool sound
 			qdel(W)
+			disable = !disable
 	if(istype(W, /obj/item/reagent_containers) && emagged)
 		if(W.reagents.has_reagent("lean"))
 			W.reagents.clear_reagents()
