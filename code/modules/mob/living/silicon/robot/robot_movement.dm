@@ -19,11 +19,8 @@
 /mob/living/silicon/robot/experience_pressure_difference(pressure_difference, direction)
 	if(!magpulse)
 		return ..()
-<<<<<<< HEAD
 
 /mob/living/silicon/robot/Moved()
 	. = ..()
 	if(riding_datum)
 		riding_datum.on_vehicle_move()
-=======
->>>>>>> 5182128d2a... refactors riding datums to a component, vehicle refactor staging for mech overhaul (#32249)
