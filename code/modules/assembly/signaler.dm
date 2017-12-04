@@ -9,7 +9,7 @@
 	wires = WIRE_RECEIVE | WIRE_PULSE | WIRE_RADIO_PULSE | WIRE_RADIO_RECEIVE
 	attachable = 1
 
-	var/code = 30
+	var/code = DEFAULT_SIGNALER_CODE
 	var/frequency = FREQ_SIGNALER
 	var/delay = 0
 	var/datum/radio_frequency/radio_connection

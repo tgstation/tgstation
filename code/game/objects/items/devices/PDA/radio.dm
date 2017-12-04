@@ -17,7 +17,7 @@
 
 /obj/item/radio/integrated/signal
 	var/frequency = FREQ_SIGNALER
-	var/code = 30
+	var/code = DEFAULT_SIGNALER_CODE
 	var/last_transmission
 	var/datum/radio_frequency/radio_connection
 

@@ -51,3 +51,5 @@
 #define RADIO_NAVBEACONS "navbeacons"
 #define RADIO_AIRLOCK "airlock"
 #define RADIO_MAGNETS "magnets"
+
+#define DEFAULT_SIGNALER_CODE 30

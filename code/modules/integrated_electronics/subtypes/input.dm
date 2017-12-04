@@ -479,7 +479,7 @@
 	power_draw_per_use = 40
 
 	var/frequency = FREQ_SIGNALER
-	var/code = 30
+	var/code = DEFAULT_SIGNALER_CODE
 	var/datum/radio_frequency/radio_connection
 
 /obj/item/integrated_circuit/input/signaler/Initialize()
