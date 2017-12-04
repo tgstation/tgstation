@@ -81,12 +81,12 @@
 	export_types = list(/obj/item/crusher_trophy/tail_spike)
 	
 /datum/export/weapon/demon_claws // Bubble Gum - Skill level medium.
-	cost = 20000
+	cost = 40000
 	unit_name = "Demon Claws"
 	export_types = list(/obj/item/crusher_trophy/demon_claws)
 	
 /datum/export/weapon/blaster_tubes // Collusus - Skill level Insane.
-	cost = 20000
+	cost = 80000
 	unit_name = "Blaster_Tube"
 	export_types = list(/obj/item/crusher_trophy/blaster_tubes)
 	
