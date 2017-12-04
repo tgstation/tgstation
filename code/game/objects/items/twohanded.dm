@@ -499,7 +499,7 @@
 	force_wielded = 30
 	throwforce = 15
 	throw_speed = 2
-	materials = list(MAT_METAL=2000)
+	materials = list(MAT_METAL=1650, MAT_GLASS=75)
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("smacked", "cracked", "attacked")
 	max_integrity = 50
