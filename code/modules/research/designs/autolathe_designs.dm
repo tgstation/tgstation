@@ -791,8 +791,6 @@
 	materials = list(MAT_METAL = 300, MAT_GLASS = 200)
 	build_path = /obj/item/device/slime_scanner
 	category = list("initial", "Misc")
-<<<<<<< HEAD
-=======
 
 /datum/design/miniature_power_cell
 	name = "Light Fixture Battery"
@@ -809,4 +807,3 @@
 	materials = list(MAT_METAL = 1000)
 	build_path = /obj/item/disk/holodisk
 	category = list("initial", "Misc")
->>>>>>> 78fe2bc747... Holorecord disks. (#32868)
