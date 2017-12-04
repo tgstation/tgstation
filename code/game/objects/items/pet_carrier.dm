@@ -21,23 +21,24 @@
 	var/max_occupants = 3 //Hard-cap so you can't have infinite mice or something in one carrier
 	var/max_occupant_weight = MOB_SIZE_SMALL //This is calculated from the mob sizes of occupants
 
-/obj/item/pet_carrier/Initialize()
-	. = ..()
-	START_PROCESSING(SSfastprocess, src)
-
 /obj/item/pet_carrier/Destroy()
 	if(occupants.len)
 		for(var/V in occupants)
 			remove_occupant(V)
-	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
-/obj/item/pet_carrier/process()
-	listclearnulls(occupants)
-	for(var/V in occupants)
-		var/mob/living/L = V
-		if(L.loc != src)
-			occupants -= L
+/obj/item/pet_carrier/Exited(atom/movable/occupant)
+	if(occupant in occupants && isliving(occupant))
+		var/mob/living/L = occupant
+		occupants -= occupant
+		occpuant_weight -= L.mob_size
+
+/obj/item/pet_carrier/handle_atom_del(atom/A)
+	if(A in occupants && isliving(A))
+		var/mob/living/L = occupant
+		occupants -= L
+		occpuant_weight -= L.mob_size
+	..()
 
 /obj/item/pet_carrier/examine(mob/user)
 	..()
