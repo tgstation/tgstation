@@ -21,7 +21,7 @@
 	attack_sound = 'hippiestation/sound/effects/plantAttack.ogg'
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/grown/grapes = 3)
 	gold_core_spawnable = HOSTILE_SPAWN
-	var/attackInject = "lean"
+	var/attack_inject = "lean"
 
 /mob/living/simple_animal/hostile/retaliate/pottedlean/Initialize()
 	. = ..()
