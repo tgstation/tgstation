@@ -89,7 +89,7 @@
 	set_basalt_light(src)
 	GET_COMPONENT(arch, /datum/component/archaeology)
 	ASSERT(isnull(arch.callback))
-	arch.callback = CALLBACK(src, .proc/set_light, 0)
+	arch.callback = CALLBACK(src, /atom/proc/set_light, 0)
 
 /proc/set_basalt_light(turf/open/floor/B)
 	switch(B.icon_state)
