@@ -5,7 +5,7 @@
 	icon_state = "radio"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	LoadComponent(/datum/component/uplink, _owner, FALSE, TRUE, null, _tc_amount)
+	AddComponent(/datum/component/uplink, _owner, FALSE, TRUE, null, _tc_amount)
 
 /obj/item/device/radio/uplink/nuclear/Initialize()
 	. = ..()
@@ -14,11 +14,11 @@
 
 /obj/item/device/multitool/uplink/Initialize(mapload, _owner, _tc_amount = 20)
 	. = ..()
-	LoadComponent(/datum/component/uplink, _owner, FALSE, TRUE, null, _tc_amount)
+	AddComponent(/datum/component/uplink, _owner, FALSE, TRUE, null, _tc_amount)
 
 /obj/item/pen/uplink/Initialize(mapload, _owner, _tc_amount = 20)
 	. = ..()
-	LoadComponent(/datum/component/uplink)
+	AddComponent(/datum/component/uplink)
 	traitor_unlock_degrees = 360
 
 /obj/item/device/radio/uplink/old
