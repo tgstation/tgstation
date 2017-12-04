@@ -123,13 +123,20 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 ))
 
 /datum/radio_frequency
-
 	var/frequency as num
 	var/list/list/obj/devices = list()
+
+/datum/radio_frequency/New(freq)
+	frequency = freq
 
 //If range > 0, only post to devices on the same z_level and within range
 //Use range = -1, to restrain to the same z_level without limiting range
 /datum/radio_frequency/proc/post_signal(obj/source as obj|null, datum/signal/signal, filter = null as text|null, range = null as num|null)
+	// Ensure the signal's data is fully filled
+	if (!signal.source)
+		signal.source = source
+	if (!signal.frequency)
+		signal.frequency = frequency
 
 	//Apply filter to the signal. If none supply, broadcast to every devices
 	//_default channel is always checked
@@ -166,8 +173,7 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 
 	var/list/devices_line = devices[filter]
 	if(!devices_line)
-		devices_line = list()
-		devices[filter] = devices_line
+		devices[filter] = devices_line = list()
 	devices_line += device
 
 
@@ -186,35 +192,7 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 
 /datum/signal
 	var/obj/source
-
 	var/transmission_method = TRANSMISSION_WIRE
-
 	var/data = list()
 	var/encryption
-
 	var/frequency = 0
-
-/datum/signal/proc/copy_from(datum/signal/model)
-	source = model.source
-	transmission_method = model.transmission_method
-	data = model.data
-	encryption = model.encryption
-	frequency = model.frequency
-
-/datum/signal/proc/debug_print()
-	if (source)
-		. = "signal = {source = '[source]' [COORD(source)]\n"
-	else
-		. = "signal = {source = '[source]' ()\n"
-	for (var/i in data)
-		. += "data\[\"[i]\"\] = \"[data[i]]\"\n"
-		if(islist(data[i]))
-			var/list/L = data[i]
-			for(var/t in L)
-				. += "data\[\"[i]\"\] list has: [t]"
-
-/datum/signal/proc/sanitize_data()
-	for(var/d in data)
-		var/val = data[d]
-		if(istext(val))
-			data[d] = html_encode(val)
