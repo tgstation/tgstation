@@ -311,6 +311,3 @@
 
 /proc/cmp_antag_category(datum/antagonist/A,datum/antagonist/B)
 	return sorttext(B.roundend_category,A.roundend_category)
-
-/mob/verb/debug_report()
-	SSticker.display_report()
