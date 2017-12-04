@@ -45,9 +45,9 @@
 			continue
 		for(var/datum/objective/O in A.objectives)
 			if(O.check_completion())
-				SSblackbox.record_feedback("nested tally", "antagonists", 1, list("[A.owner.key]", "[A.type]", "[O.type]" , "SUCCESS"))
+				SSblackbox.record_feedback("nested tally", "antagonists", 1, list("[A.owner.key]", "[A.type]", "[O.type]" ,"[O.explanation_text]", "SUCCESS"))
 			else
-				SSblackbox.record_feedback("nested tally", "antagonists", 1, list("[A.owner.key]", "[A.type]", "[O.type]", "FAIL"))
+				SSblackbox.record_feedback("nested tally", "antagonists", 1, list("[A.owner.key]", "[A.type]", "[O.type]","[O.explanation_text]", "FAIL"))
 	
 	var/gid = 1 //To diffrentiate multiple teams of same type for now. Ideally all of them get names later
 	for(var/datum/objective_team/T in all_teams)
