@@ -32,7 +32,7 @@
 
 //Returns list element or null. Should prevent "index out of bounds" error.
 /proc/listgetindex(list/L, index)
-	if(istype(L))
+	if(LAZYLEN(L))
 		if(isnum(index) && IsInteger(index))
 			if(IsInRange(index,1,L.len))
 				return L[index]
@@ -42,7 +42,7 @@
 
 //Return either pick(list) or null if list is not of type /list or is empty
 /proc/safepick(list/L)
-	if(istype(L) && L.len)
+	if(LAZYLEN(L))
 		return pick(L)
 
 //Checks if the list is empty
@@ -53,7 +53,7 @@
 
 //Checks for specific types in a list
 /proc/is_type_in_list(atom/A, list/L)
-	if(!L || !L.len || !A)
+	if(!LAZYLEN(L) || !A)
 		return FALSE
 	for(var/type in L)
 		if(istype(A, type))
@@ -62,7 +62,7 @@
 
 //Checks for specific types in specifically structured (Assoc "type" = TRUE) lists ('typecaches')
 /proc/is_type_in_typecache(atom/A, list/L)
-	if(!L || !L.len || !A)
+	if(!LAZYLEN(L) || !A)
 
 		return FALSE
 	if(ispath(A))
@@ -72,7 +72,7 @@
 
 //Checks for a string in a list
 /proc/is_string_in_list(string, list/L)
-	if(!L || !L.len || !string)
+	if(!LAZYLEN(L) || !string)
 		return
 	for(var/V in L)
 		if(string == V)
@@ -81,7 +81,7 @@
 
 //Removes a string from a list
 /proc/remove_strings_from_list(string, list/L)
-	if(!L || !L.len || !string)
+	if(!LAZYLEN(L) || !string)
 		return
 	for(var/V in L)
 		if(V == string)
