@@ -496,10 +496,10 @@
 		usr.visible_message("<span class='notice'>[usr] smears ichorous blood along the inside of the [target].</span>", \
 				  "<span class='notice'>You smear ichorous blood along the inside of the [target], marking it as yours.</span>")
 		var/obj/structure/closet/coffin/targetCoffin = target
-		targetCoffin.ClaimCoffin(usr)
-		bloodsuckerdatum.coffin = targetCoffin
-		playsound(usr.loc,'sound/effects/splat.ogg', rand(30,40), 1)	//return 0
-		usr.playsound_local(null, 'sound/effects/singlebeat.ogg', 30, 1) // Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
+		if (targetCoffin.ClaimCoffin(usr))
+			bloodsuckerdatum.coffin = targetCoffin
+			playsound(usr.loc,'sound/effects/splat.ogg', rand(30,40), 1)	//return 0
+			usr.playsound_local(null, 'sound/effects/singlebeat.ogg', 30, 1) // Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
 		cancel_spell(usr)
 		return 0
 
@@ -649,13 +649,6 @@
 
 	// Already Alive? "Kill" me.
 	if(user.stat != DEAD)
-		to_chat(user, "<span class='notice'>You give in to the call of an ancient sleep. The light of this world fades...</span>")
-		user.emote("deathgasp")
-		user.tod = worldtime2text()
-		user.status_flags |= FAKEDEATH //play dead
-		user.update_stat()
-		user.update_canmove()
-
 		// Find Coffin Test
 		insideCoffin = istype(user.loc, /obj/structure/closet/coffin)
 		if (!insideCoffin)
@@ -665,6 +658,14 @@
 				//floorCoffin.open()
 				floorCoffin.close()
 				insideCoffin = istype(user.loc, /obj/structure/closet/coffin)
+
+		// Apply Willing "Death"
+		to_chat(user, "<span class='notice'>You give in to the call of an ancient sleep. The light of this world fades...</span>")
+		user.emote("deathgasp")
+		user.tod = worldtime2text()
+		user.status_flags |= FAKEDEATH //play dead
+		user.update_stat()
+		user.update_canmove()
 
 
 	sleep(50) // 5 seconds...

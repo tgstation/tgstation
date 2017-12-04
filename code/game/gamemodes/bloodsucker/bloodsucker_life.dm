@@ -25,7 +25,7 @@
 
 	// Loop forever while I'm still a Bloodsucker.
 	var/healingnotice = 0
-	while (owner && owner.current) // owner.has_antag_datum(ANTAG_DATUM_BLOODSUCKER) == src
+	while (owner && !AmFinalDeath()) // owner.has_antag_datum(ANTAG_DATUM_BLOODSUCKER) == src
 
 		// Standard Update
 		update_hud()
@@ -71,10 +71,10 @@
 		sleep(10)
 
 	// Message his Ghost
-	if (owner && !owner.current)
+	if (owner)
 		to_chat(owner, "<span class='userdanger'>You have met your Final Death!</span>")
-		// Free my Vassals! (if I haven't yet)
-		FreeAllVassals()
+	// Free my Vassals! (if I haven't yet)
+	FreeAllVassals()
 
 
 

@@ -1,6 +1,6 @@
 /datum/reagent/blood/vampblood
 	taste_description = "sweetness"
-	metabolization_rate = 0.25  	// Blood is normally 5, which disappears fast.
+	metabolization_rate = 0.05  	// Blood is normally 5, which disappears fast.
 	overdose_threshold = 25			// Drink thrice and you're his.
 	addiction_threshold = 20		// They always come back.
 	id = "vampblood"
@@ -33,10 +33,10 @@
 		addiction_stage = 0
 		overdosed = 0
 		return
-	M.adjustBruteLoss(-0.25, 0) // All heal values USED TO be multiplied by  * REM, the "REAGENTS_EFFECT_MULTIPLIER" found in reagents.dm. But comes up undefined here.
-	M.adjustToxLoss(-0.25, 0)
-	M.adjustBrainLoss(-0.15,0)
-	M.adjustStaminaLoss(-0.5,1)
+	M.adjustBruteLoss(-0.05, 0) // All heal values USED TO be multiplied by  * REM, the "REAGENTS_EFFECT_MULTIPLIER" found in reagents.dm. But comes up undefined here.
+	M.adjustToxLoss(-0.05, 0)
+	M.adjustBrainLoss(-0.025,0)
+	M.adjustStaminaLoss(-0.25,1)
 	..()
 	. = 1
 

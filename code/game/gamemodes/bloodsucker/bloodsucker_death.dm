@@ -1,4 +1,6 @@
 
+/datum/antagonist/bloodsucker/proc/AmFinalDeath()
+ 	return !owner.current || !isliving(owner.current) || isbrain(owner.current)
 
 /datum/antagonist/bloodsucker/proc/FinalDeath()
 
@@ -205,6 +207,9 @@ datum/antagonist/bloodsucker/proc/attempt_turn_bloodsucker(mob/living/carbon/tar
 	//		if(!currentMob)
 	// NOTE: When turning Ghost (voluntarily or by death), your ghost has the SAME MIND as your body.
 
+	// Remove Vassal...
+	mind.remove_antag_datum(ANTAG_DATUM_VASSAL) //mind.remove_all_antag_datums()
+
 	// Ready!
 	SSticker.mode.make_bloodsucker(mind, 1)
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
@@ -215,8 +220,6 @@ datum/antagonist/bloodsucker/proc/attempt_turn_bloodsucker(mob/living/carbon/tar
 		vampfatherdatum.vampsMade ++ // Give credit for the Embrace.
 	if (vampfather.current)
 		to_chat(vampfather, "<span class='userdanger'>You feel a [vampfather.current.gender == MALE ? "fatherly" : "motherly"] twinge in your dead heart. [src] has risen as your Bloodsucker child!</span>")
-	message_admins("[src] has become a Bloodsucker, and was created by [vampfather.current].")
-	log_admin("[src] has become a Bloodsucker, and was created by [vampfather.current].")
 
 	// Convert all BLOOD in stomach to blood_volume.
 	for (var/datum/reagent/blood/vampblood/blood in src.reagents.reagent_list)

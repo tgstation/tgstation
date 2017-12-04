@@ -98,10 +98,14 @@
 		A = new ANTAG_DATUM_BLOODSUCKER(bloodsucker) //bloodsucker.add_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 		A.creator = creator
 		bloodsucker.add_antag_datum(A)
+		// Log
+		message_admins("[bloodsucker] has become a Bloodsucker, and was created by [creator].")
+		log_admin("[bloodsucker] has become a Bloodsucker, and was created by [creator].")
 
 	// [MASTER]
 	else
 		A = bloodsucker.add_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+
 
 	return 1
 
@@ -127,13 +131,14 @@
 		//message_admins("DEBUG2: can_make_vassal() Abort: No reagents")
 		return 0
 	// Check Overdose: Did my current volume go over the Overdose threshold?
-	var/am_od_on_blood = 0
-	for (var/datum/reagent/blood/vampblood/blood in target.reagents.reagent_list) // overdosed is tracked in reagent_list, not addiction_list.
+	var/am_addicted = 0
+	for (var/datum/reagent/blood/vampblood/blood in target.reagents.addiction_list) // overdosed is tracked in reagent_list, not addiction_list.
 		//message_admins("DEBUG3: can_make_vassal() Found Blood! [blood] [blood.overdose]")
-		if (blood.overdosed)
-			am_od_on_blood = 1
+		//if (blood.overdosed)
+		am_addicted = 1 // Blood is present in addiction? That's all we need.
+		break
 
-	if (!am_od_on_blood)
+	if (!am_addicted)
 		//message_admins("DEBUG4: can_make_vassal() Abort: No Blood")
 		return 0
 	// No Mind!
@@ -159,6 +164,9 @@
 	var/datum/antagonist/vassal/V = new ANTAG_DATUM_VASSAL(target.mind)
 	V.master = creator.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	target.mind.add_antag_datum(V)
+	// Log
+	message_admins("[target] has become a Vassal, and is enslaved to [creator].")
+	log_admin("[target] has become a Vassal, and is enslaved to [creator].")
 
 	return 1
 
@@ -184,7 +192,7 @@
 /datum/game_mode/proc/printbloodsuckerinfo(datum/mind/ply)
 	var/datum/antagonist/bloodsucker/antagdatum = ply.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	// Return title!
-	var/list/endphrase = pick("...but Eternity will remember them as", "...but the Light cowers before the one known as", "...yet Darkness bows before", "...but Mortals forever cower before", "...and know no Evil like")
+	var/list/endphrase = pick("...but Eternity will remember them as", "...but the Light cowers before the one known as", "...yet Darkness bows before", "...but Mortals forever cower before", "...but none know no Evil like")
 	return "</br>[endphrase] <span class='notice'><EM>[antagdatum.ReturnFullName(ply.current,1)]</EM></span>"//</br>"
 
 /datum/game_mode/proc/printvassalinfo(datum/mind/ply)
@@ -192,7 +200,7 @@
 	var/text = ""
 	if(antagdatum.vassals.len)
 		text = "<br><font size=2><b>[antagdatum.owner.current ? antagdatum.owner.current.p_their(TRUE) : "their"] Vassals were:</b></font>"
-		for(var/datum/mind/vassal in antagdatum.vassals)
-			text += "   " + printplayer(vassal)
+		for(var/datum/antagonist/vassal in antagdatum.vassals)
+			text += "   " + printplayer(vassal.owner)
 		text += "<br>"
 	return text
