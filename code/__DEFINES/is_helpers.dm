@@ -38,7 +38,7 @@
 #define isplatingturf(A) (istype(A, /turf/open/floor/plating))
 
 //Mobs
-#define isliving(A) (istype(A, /mob/living))
+#define isliving(A) (is_type_in_typecache(A, GLOB.typecache_living))
 
 #define isbrain(A) (istype(A, /mob/living/brain))
 
@@ -58,6 +58,9 @@
 #define isshadowperson(A) (is_species(A, /datum/species/shadow))
 #define iszombie(A) (is_species(A, /datum/species/zombie))
 #define ishumanbasic(A) (is_species(A, /datum/species/human))
+
+//why arent catpeople a subspecies
+#define iscatperson(A) (ishumanbasic(A) && ( A.dna.features["ears"] == "Cat" || A.dna.features["human_tail"] == "Cat") )
 
 //more carbon mobs
 #define ismonkey(A) (istype(A, /mob/living/carbon/monkey))
@@ -184,3 +187,5 @@ GLOBAL_LIST_INIT(glass_sheet_types, typecacheof(list(
 	/obj/item/stack/sheet/plasmarglass)))
 
 #define is_glass_sheet(O) (is_type_in_typecache(O, GLOB.glass_sheet_types))
+
+#define isblobmonster(O) (istype(O, /mob/living/simple_animal/hostile/blob))

@@ -13,7 +13,7 @@
 	container_type = OPENCONTAINER_1
 	possible_transfer_amounts = list(1, 5, 10, 15, 20, 25, 30, 50)
 	volume = 50
-	//Possible_states has the reagent id as key and a list of, in order, the icon_state, the name and the desc as values. Used in the on_reagent_change() to change names, descs and sprites.
+	//Possible_states has the reagent id as key and a list of, in order, the icon_state, the name and the desc as values. Used in the on_reagent_change(changetype) to change names, descs and sprites.
 	var/list/possible_states = list(
 	 "ketchup" = list("ketchup", "ketchup bottle", "You feel more American already."),
 	 "capsaicin" = list("hotsauce", "hotsauce bottle", "You can almost TASTE the stomach ulcers now!"),
@@ -80,7 +80,7 @@
 		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>You transfer [trans] units of the condiment to [target].</span>")
 
-/obj/item/reagent_containers/food/condiment/on_reagent_change()
+/obj/item/reagent_containers/food/condiment/on_reagent_change(changetype)
 	if(!possible_states.len)
 		return
 	if(reagents.reagent_list.len > 0)
@@ -126,7 +126,7 @@
 	list_reagents = list("sodiumchloride" = 20)
 	possible_states = list()
 
-/obj/item/reagent_containers/food/condiment/saltshaker/on_reagent_change()
+/obj/item/reagent_containers/food/condiment/saltshaker/on_reagent_change(changetype)
 	if(reagents.reagent_list.len == 0)
 		icon_state = "emptyshaker"
 	else
@@ -164,7 +164,7 @@
 	list_reagents = list("blackpepper" = 20)
 	possible_states = list()
 
-/obj/item/reagent_containers/food/condiment/peppermill/on_reagent_change()
+/obj/item/reagent_containers/food/condiment/peppermill/on_reagent_change(changetype)
 	if(reagents.reagent_list.len == 0)
 		icon_state = "emptyshaker"
 	else
@@ -255,7 +255,7 @@
 			src.reagents.trans_to(target, amount_per_transfer_from_this)
 			qdel(src)
 
-/obj/item/reagent_containers/food/condiment/pack/on_reagent_change()
+/obj/item/reagent_containers/food/condiment/pack/on_reagent_change(changetype)
 	if(reagents.reagent_list.len > 0)
 		var/main_reagent = reagents.get_master_reagent_id()
 		if(main_reagent in possible_states)

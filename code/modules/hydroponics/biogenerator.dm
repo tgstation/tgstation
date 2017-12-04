@@ -1,7 +1,7 @@
 /obj/machinery/biogenerator
 	name = "biogenerator"
 	desc = "Converts plants into biomass, which can be used to construct useful items."
-	icon = 'icons/obj/biogenerator.dmi'
+	icon = 'icons/obj/machines/biogenerator.dmi'
 	icon_state = "biogen-empty"
 	density = TRUE
 	anchored = TRUE
@@ -53,7 +53,7 @@
 	productivity = P
 	max_items = max_storage
 
-/obj/machinery/biogenerator/on_reagent_change()			//When the reagents change, change the icon as well.
+/obj/machinery/biogenerator/on_reagent_change(changetype)			//When the reagents change, change the icon as well.
 	update_icon()
 
 /obj/machinery/biogenerator/update_icon()
@@ -294,7 +294,7 @@
 
 /obj/machinery/biogenerator/proc/detach()
 	if(beaker)
-		beaker.loc = src.loc
+		beaker.forceMove(drop_location())
 		beaker = null
 		update_icon()
 

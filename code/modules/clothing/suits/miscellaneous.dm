@@ -16,7 +16,7 @@
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST
 	allowed = list (/obj/item/gun/energy/laser/bluetag)
-	resistance_flags = 0
+	resistance_flags = NONE
 
 /obj/item/clothing/suit/redtag
 	name = "red laser tag armor"
@@ -26,7 +26,7 @@
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST
 	allowed = list (/obj/item/gun/energy/laser/redtag)
-	resistance_flags = 0
+	resistance_flags = NONE
 
 /*
  * Costume
@@ -95,7 +95,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-	resistance_flags = 0
+	resistance_flags = NONE
 
 /obj/item/clothing/suit/hastur
 	name = "\improper Hastur's robe"
@@ -365,7 +365,7 @@
 	desc = "Pompadour not included."
 	icon_state = "leatherjacket"
 	item_state = "hostrench"
-	resistance_flags = 0
+	resistance_flags = NONE
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/gun/ballistic/automatic/pistol, /obj/item/gun/ballistic/revolver, /obj/item/gun/ballistic/revolver/detective, /obj/item/device/radio)
 

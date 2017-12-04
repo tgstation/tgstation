@@ -91,7 +91,7 @@
 	reqs = list(/obj/item/restraints/handcuffs/cable = 1,
 				/obj/item/stack/sheet/metal = 6)
 	time = 20//15 faster than crafting them by hand!
-	category= CAT_WEAPON
+	category= CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
 /datum/crafting_recipe/tailclub
@@ -357,7 +357,7 @@
 
 /datum/crafting_recipe/skateboard
 	name = "Skateboard"
-	result = /obj/vehicle/scooter/skateboard
+	result = /obj/vehicle/ridden/scooter/skateboard
 	time = 60
 	reqs = list(/obj/item/stack/sheet/metal = 5,
 				/obj/item/stack/rods = 10)
@@ -365,7 +365,7 @@
 
 /datum/crafting_recipe/scooter
 	name = "Scooter"
-	result = /obj/vehicle/scooter
+	result = /obj/vehicle/ridden/scooter
 	time = 65
 	reqs = list(/obj/item/stack/sheet/metal = 5,
 				/obj/item/stack/rods = 12)

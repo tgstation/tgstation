@@ -252,6 +252,12 @@
 	var/obj/screen/chronos_target/target_ui = null
 	var/obj/item/clothing/suit/space/chronos/chronosuit
 
+/obj/effect/chronos_cam/singularity_act()
+	return
+
+/obj/effect/chronos_cam/singularity_pull()
+	return
+
 /obj/effect/chronos_cam/proc/create_target_ui()
 	if(holder && holder.client && chronosuit)
 		if(target_ui)

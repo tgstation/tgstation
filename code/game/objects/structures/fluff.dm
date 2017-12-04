@@ -33,7 +33,7 @@
 /obj/structure/fluff/empty_sleeper //Empty sleepers are created by a good few ghost roles in lavaland.
 	name = "empty sleeper"
 	desc = "An open sleeper. It looks as though it would be awaiting another patient, were it not broken."
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper-open"
 
 /obj/structure/fluff/empty_sleeper/nanotrasen

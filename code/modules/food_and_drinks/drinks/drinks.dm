@@ -12,10 +12,10 @@
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	possible_transfer_amounts = list(5,10,15,20,25,30,50)
 	volume = 50
-	resistance_flags = 0
+	resistance_flags = NONE
 	var/isGlass = TRUE //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
 
-/obj/item/reagent_containers/food/drinks/on_reagent_change()
+/obj/item/reagent_containers/food/drinks/on_reagent_change(changetype)
 	if (gulp_size < 5)
 		gulp_size = 5
 	else
@@ -207,7 +207,7 @@
 	item_state = "coffee"
 	spillable = TRUE
 
-/obj/item/reagent_containers/food/drinks/mug/on_reagent_change()
+/obj/item/reagent_containers/food/drinks/mug/on_reagent_change(changetype)
 	if(reagents.total_volume)
 		icon_state = "tea"
 	else
@@ -259,7 +259,7 @@
 	spillable = TRUE
 	isGlass = FALSE
 
-/obj/item/reagent_containers/food/drinks/sillycup/on_reagent_change()
+/obj/item/reagent_containers/food/drinks/sillycup/on_reagent_change(changetype)
 	if(reagents.total_volume)
 		icon_state = "water_cup"
 	else
@@ -287,7 +287,7 @@
 	transfer_fingerprints_to(B)
 	qdel(src)
 
-/obj/item/reagent_containers/food/drinks/sillycup/smallcarton/on_reagent_change()
+/obj/item/reagent_containers/food/drinks/sillycup/smallcarton/on_reagent_change(changetype)
 	if (reagents.reagent_list.len)
 		switch(reagents.get_master_reagent_id())
 			if("orangejuice")
@@ -376,7 +376,7 @@
 	icon = 'icons/obj/lavaland/ash_flora.dmi'
 	icon_state = "mushroom_bowl"
 	w_class = WEIGHT_CLASS_SMALL
-	resistance_flags = 0
+	resistance_flags = NONE
 	isGlass = FALSE
 
 

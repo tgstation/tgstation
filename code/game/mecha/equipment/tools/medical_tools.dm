@@ -32,7 +32,7 @@
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper
 	name = "mounted sleeper"
 	desc = "Equipment for medical exosuits. A mounted sleeper that stabilizes patients and can inject reagents in the exosuit's reserves."
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	energy_drain = 20
 	range = MELEE
@@ -502,7 +502,7 @@
 		return 1
 	return
 
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/on_reagent_change()
+/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/on_reagent_change(changetype)
 	..()
 	update_equip_info()
 	return
