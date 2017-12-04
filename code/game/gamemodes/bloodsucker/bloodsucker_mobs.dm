@@ -41,13 +41,13 @@
 
 	// Am I Viewer's Vassal?
 	if (vassaldatum.master.owner == viewer.mind)
-		returnString += "<span class='warning'>This [dna.species.name] bears YOUR mark!</span>"
+		returnString += "This [dna.species.name] bears YOUR mark!"
 	// Am I someone ELSE'S Vassal?
 	else if (viewer.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
 		returnString +=	"<span class='boldwarning'>This [dna.species.name] bears the mark of [vassaldatum.master.ReturnFullName(vassaldatum.master.owner.current,1)]</span>"
 	// Are you serving the same master as I am?
 	else if (viewer.mind.has_antag_datum(ANTAG_DATUM_VASSAL) in vassaldatum.master.vassals)
-		returnString += "<span class='warning'>[viewer.p_they(TRUE)] bears the mark of your Master</span>"
+		returnString += "[viewer.p_they(TRUE)] bears the mark of your Master"
 	// You serve a different Master than I do.
 	else
 		returnString += "<span class='boldwarning'>[viewer.p_they(TRUE)] bears the mark of another Bloodsucker</span>"

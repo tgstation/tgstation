@@ -1,3 +1,6 @@
+
+/datum/objective/bloodsucker
+
 //var/datum/mind/owner = null		//Who owns the objective.
 //var/explanation_text = "Nothing"	//What that person is supposed to do.
 //var/datum/mind/target = null		//If they are focused on a particular person.
@@ -38,9 +41,16 @@
 /datum/objective/bloodsucker/coffin/proc/generate_objective()
 	update_explanation_text()
 
-/datum/objective/bloodsucker/embrace/update_explanation_text()
-	explanation_text = "Embrace [target_amount] crewmember[target_amount == 1 ? "" : "s"] into a creature of the night."
+//						EXPLANATION
+/datum/objective/bloodsucker/coffin/update_explanation_text()
+	explanation_text = "Use your blood to claim a Coffin as your secret lair. Make sure to keep it safe!"
 
+//						WIN CONDITIONS?
+/datum/objective/bloodsucker/coffin/check_completion()
+	var/datum/antagonist/bloodsucker/antagdatum = owner.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+	if (antagdatum && antagdatum.coffin)
+		return 1
+	return 0
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -57,10 +67,7 @@
 	var/list/possible_targets = return_possible_targets()
 
 	target_amount = Clamp(possible_targets.len / 8, 1, 3)
-	//dangerrating = 3 + target_amount * 3
-
 	update_explanation_text()
-
 
 //						EXPLANATION
 /datum/objective/bloodsucker/embrace/update_explanation_text()
@@ -68,7 +75,6 @@
 		explanation_text = "Embrace [target_amount] crewmember[target_amount == 1 ? "" : "s"] into a creature of the night."
 	else
 		explanation_text = "Free Objective"
-
 
 //						WIN CONDITIONS?
 /datum/objective/bloodsucker/embrace/check_completion()
@@ -99,7 +105,6 @@
 
 	update_explanation_text()
 
-
 //						EXPLANATION
 /datum/objective/bloodsucker/embracetarget/update_explanation_text()
 	if (target)
@@ -108,8 +113,6 @@
 		explanation_text = "Free Objective"
 
 //	explanation_text = "Embrace [target.name], the [!target_role_type ? target.assigned_role : target.special_role], into a creature of the night."
-
-
 
 //						WIN CONDITIONS?
 /datum/objective/bloodsucker/embracetarget/check_completion()
@@ -123,7 +126,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+/*
 /datum/objective/bloodsucker/drinkbloodtarget
 	//dangerrating = 5
 	martyr_compatible = 1
@@ -148,41 +151,11 @@
 
 //	explanation_text = "Embrace [target.name], the [!target_role_type ? target.assigned_role : target.special_role], into a creature of the night."
 
-
-
 //						WIN CONDITIONS?
 /datum/objective/bloodsucker/embracetarget/check_completion()
 	return 0
 
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-/datum/objective/bloodsucker/survive
-	//dangerrating = 3
-	martyr_compatible = 0
-
-
-//						 GENERATE!
-/datum/objective/bloodsucker/survive/proc/generate_objective()
-	update_explanation_text()
-
-//						EXPLANATION
-/datum/objective/bloodsucker/survive/update_explanation_text()
-	explanation_text = "Survive the entire shift without succumbing to Final Death."
-
-//						WIN CONDITIONS?
-/datum/objective/bloodsucker/survive/check_completion()
-	// -Must have a body.
-	if (!owner.current)
-		return 0
-	// Dead, without a head or heart? Cya
-	//message_admins("[owner] DEBUG OBJECTIVE: Survive: [owner.current.stat] / [owner.current.BloodsuckerCanUsePowers()] .")
-	return owner.current.stat != DEAD || owner.current.HaveBloodsuckerBodyparts()
-
-
+*/
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -243,8 +216,6 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
 // Vampires hate solar arrays.
 /datum/objective/bloodsucker/destroysolars
 	//dangerrating = 4
@@ -258,8 +229,6 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 
 // Steal hearts. You just really wanna have some hearts.
 /datum/objective/bloodsucker/heartthief
@@ -296,4 +265,55 @@
 			if (itemcount >= target_amount) // Got the right amount?
 				return 1
 
+	return 0
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/datum/objective/bloodsucker/survive
+	//dangerrating = 3
+	martyr_compatible = 0
+
+
+//						 GENERATE!
+/datum/objective/bloodsucker/survive/proc/generate_objective()
+	update_explanation_text()
+
+//						EXPLANATION
+/datum/objective/bloodsucker/survive/update_explanation_text()
+	explanation_text = "Survive the entire shift without succumbing to Final Death."
+
+//						WIN CONDITIONS?
+/datum/objective/bloodsucker/survive/check_completion()
+	// -Must have a body.
+	if (!owner.current || !isliving(owner.current))
+		return 0
+	// Dead, without a head or heart? Cya
+	//message_admins("[owner] DEBUG OBJECTIVE: Survive: [owner.current.stat] / [owner.current.BloodsuckerCanUsePowers()] .")
+	return owner.current.stat != DEAD || owner.current.HaveBloodsuckerBodyparts()
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/datum/objective/bloodsucker/vassal
+	//dangerrating = 4
+	martyr_compatible = 1
+
+//						 GENERATE!
+/datum/objective/bloodsucker/vassal/proc/generate_objective()
+	update_explanation_text()
+
+//						EXPLANATION
+/datum/objective/bloodsucker/vassal/update_explanation_text()
+	explanation_text = "Serve the wishes of your master, and guarantee their survival and success."
+
+//						WIN CONDITIONS?
+/datum/objective/bloodsucker/vassal/check_completion()
+	var/datum/antagonist/vassal/antagdatum = owner.has_antag_datum(ANTAG_DATUM_VASSAL)
+	if (antagdatum && antagdatum.master && !antagdatum.master.AmFinalDeath())
+		return 1
 	return 0

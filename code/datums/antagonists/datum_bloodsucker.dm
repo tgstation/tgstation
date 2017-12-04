@@ -189,32 +189,45 @@
 /datum/antagonist/bloodsucker/proc/forge_bloodsucker_objectives() // Fledgling vampires can have different objectives.
 
 			// ROUND ONE: CREWMATE OBJECTIVES //
+	// Coffin [REQUIRED]
+	// 1a) Embrace Target
+	// 1b) Embrace Total
+	// 2a) Desecrate
+	// 2b) Heart Thief
+	// Survive [REQUIRED]
 
-	/*
-	// Embrace Target Objective:		Turn [Specific Person]into a vampire
-	var/datum/objective/bloodsucker/embracetarget/embracetarget_objective = new
-	embracetarget_objective.owner = owner
-	embracetarget_objective.generate_objective()
-	// Keep or Remove Objective?
-	if (embracetarget_objective.explanation_text == "Free Objective")
-		qdel(embracetarget_objective)
-		embracetarget_objective = null
-	else
-		add_objective(embracetarget_objective)
 
-	// Embrace Quantity Objective:		Turn [X People] into vampires
-	if (!embracetarget_objective || embracetarget_objective == null)
-		var/datum/objective/bloodsucker/embrace/embrace_objective = new
-		embrace_objective.owner = owner
-		embrace_objective.generate_objective()
-		add_objective(embrace_objective)
-	*/
+	// Coffin Objective:		Create a Lair
+	var/datum/objective/bloodsucker/coffin/coffin_objective = new
+	coffin_objective.owner = owner
+	coffin_objective.generate_objective()
+	add_objective(coffin_objective)
+
+	if (prob(10))
+		if (prob(50))
+			// Embrace Target Objective:		Turn [Specific Person]into a vampire
+			var/datum/objective/bloodsucker/embracetarget/embracetarget_objective = new
+			embracetarget_objective.owner = owner
+			embracetarget_objective.generate_objective()
+			// Keep or Remove Objective?
+			if (embracetarget_objective.explanation_text == "Free Objective")
+				qdel(embracetarget_objective)
+				embracetarget_objective = null
+			else
+				add_objective(embracetarget_objective)
+		else
+			// Embrace Quantity Objective:		Turn [X People] into vampires
+			//if (!embracetarget_objective || embracetarget_objective == null)
+			var/datum/objective/bloodsucker/embrace/embrace_objective = new
+			embrace_objective.owner = owner
+			embrace_objective.generate_objective()
+			add_objective(embrace_objective)
+
 			// ROUND ONE: STEALTH OBJECTIVES //
 
 	// Desecrate Objective:		Spill your blood in a location.
-	var/datum/objective/bloodsucker/desecrate/desecrate_objective
-	if (rand(0,1))
-		desecrate_objective = new
+	if (prob(50))
+		var/datum/objective/bloodsucker/desecrate/desecrate_objective = new
 		desecrate_objective.owner = owner
 		desecrate_objective.generate_objective()
 		add_objective(desecrate_objective)
@@ -286,6 +299,9 @@ datum/antagonist/bloodsucker/proc/AssignStarterPowersAndStats()
 
 	// Give Clown a crazy-person power
 
+
+	// Clear Addictions
+	owner.current.reagents.addiction_list = list() // Start over from scratch. Lucky you! At least you're not addicted to blood anymore (if you were)
 
 	// Stats
 	if (ishuman(owner.current))
@@ -502,7 +518,7 @@ datum/antagonist/bloodsucker/proc/ClearAllPowersAndStats()
 
 /datum/antagonist/bloodsucker/proc/update_hud()
 	// No Hud? Get out.
-	if (!owner.current.hud_used)
+	if (!owner.current.hud_used || !owner.current.hud_used.blood_display)
 		return
 	// Update Counter
 	owner.current.hud_used.blood_display.update_counter(owner.current.blood_volume)
@@ -604,6 +620,7 @@ datum/antagonist/bloodsucker/proc/ClearAllPowersAndStats()
 	owner.store_memory("You became the mortal servant of [master.owner.current], a bloodsucking vampire!")
 	// And to your new Master...
 	to_chat(master.owner, "<span class='userdanger'>[owner.current] has become addicted to your immortal blood. [owner.current.p_they(TRUE)] is now your undying servant!</span>")
+	master.owner.current.playsound_local(null, 'sound/magic/mutate.ogg', 100, FALSE, pressure_affected = FALSE)
 
 /datum/antagonist/vassal/farewell()
 	owner.current.visible_message("[owner.current]'s eyes dart feverishly from side to side, and then stop. [owner.current.p_they(TRUE)] seems calm, \

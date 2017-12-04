@@ -251,9 +251,13 @@
 
 /obj/structure/closet/coffin/proc/ClaimCoffin(mob/claimant)
 	// We're a Vampire Coffin? Why didn't you say so!
+	if (resident)
+		to_chat(claimant, "This [src] cannot be claimed.")
+		return 0
 	anchored = 1					// No moving this
 	resident = claimant
 	to_chat(claimant, "<span class='danger'>You have claimed the [src] for your own.</span>")
+	return 1
 
 /obj/structure/closet/coffin/blackcoffin/ClaimCoffin(mob/claimant)
 	// Black Coffins get a lil bloody
