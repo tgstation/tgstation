@@ -111,7 +111,9 @@
 		//get message text, limit it's length.and clean/escape html
 		if(!msg)
 			msg = input(src,"Message:", "Private message to [key_name(recipient, 0, 0)]") as text|null
-
+			
+			msg = trim(msg)
+			
 			if(!msg)
 				return
 
