@@ -253,6 +253,15 @@
 		qdel(src)
 
 		user.put_in_hands(P)
+	else if(istype(I, /obj/item/storage/toolbox) && !(I.flags_1 & NODROP_1))
+		var/obj/item/twohanded/mallet/M = new /obj/item/twohanded/mallet
+		
+		remove_item_from_storage(user)
+		qdel(I)
+		dqel(src)
+		
+		user.put_in_hands(M)
+		to_chat(user, "<span class='notice'>You fasten a toolbox to the top of the rod with the cable.</span>")
 	else
 		return ..()
 
