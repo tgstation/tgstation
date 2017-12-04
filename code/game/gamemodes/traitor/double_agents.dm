@@ -5,7 +5,7 @@
 /datum/game_mode/traitor/internal_affairs
 	name = "Internal Affairs"
 	config_tag = "internal_affairs"
-	false_report_weight = 10
+	false_report_weight = 1
 	required_players = 25
 	required_enemies = 5
 	recommended_enemies = 8
