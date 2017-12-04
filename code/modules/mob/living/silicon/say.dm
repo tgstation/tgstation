@@ -57,14 +57,3 @@
 		return MODE_ROBOT
 	else
 		return .
-
-/mob/living/silicon/handle_inherent_channels(message, message_mode)
-	. = ..()
-	if(.)
-		return .
-
-	if(message_mode == MODE_BINARY)
-		if(binarycheck())
-			robot_talk(message)
-		return 1
-	return 0

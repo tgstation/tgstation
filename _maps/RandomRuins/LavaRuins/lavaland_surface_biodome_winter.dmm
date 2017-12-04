@@ -170,7 +170,7 @@
 	},
 /area/ruin/powered/snow_biodome)
 "aJ" = (
-/obj/vehicle/atv,
+/obj/vehicle/ridden/atv,
 /turf/open/floor/plating/asteroid/snow{
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},

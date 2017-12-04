@@ -8770,7 +8770,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "asy" = (
-/obj/vehicle/secway,
+/obj/vehicle/ridden/secway,
 /obj/item/key/security,
 /turf/open/floor/plasteel/red/side{
 	dir = 10
@@ -29308,7 +29308,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = -28
 	},
-/obj/vehicle/janicart,
+/obj/vehicle/ridden/janicart,
 /obj/item/key/janitor,
 /turf/open/floor/plating,
 /area/janitor)

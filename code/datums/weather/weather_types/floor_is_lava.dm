@@ -20,10 +20,11 @@
 
 	overlay_layer = ABOVE_OPEN_TURF_LAYER //Covers floors only
 	immunity_type = "lava"
+	
 
 /datum/weather/floor_is_lava/weather_act(mob/living/L)
-	for(var/obj/structure/O in L.loc)
-		if(O.density)
+	for(var/obj/structure/O in L.loc)			
+		if(O.density || (L in O.buckled_mobs && istype(O, /obj/structure/bed)))
 			return
 	if(L.loc.density)
 		return
