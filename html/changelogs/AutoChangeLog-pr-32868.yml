@@ -1,5 +1,0 @@
-author: "AnturK"
-delete-after: True
-changes: 
-  - rscadd: "You can now record and replay holopad messages using holodisks."
-  - rscadd: "Holodisks are printable in autolathes."
