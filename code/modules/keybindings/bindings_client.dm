@@ -23,6 +23,8 @@
 		if("F12") // Toggles minimal HUD
 			mob.button_pressed_F12()
 
+	if(!prefs.hotkeys)
+		winset(src, null, "input.focus=true")
 	if(holder)
 		holder.key_down(_key, src)
 	if(mob.focus)
