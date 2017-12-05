@@ -117,7 +117,7 @@
 			owner.SetKnockdown(0)
 			owner.SetUnconscious(0)
 			owner.adjustStaminaLoss(-75)
-			owner.jitter(50)
+			owner.Jitter(50)
 			owner.lying = 0
 			owner.reagents.add_reagent("ephedrine", 10)
 			owner.reagents.add_reagent("synaptizine", 10)
