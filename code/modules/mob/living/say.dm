@@ -137,7 +137,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	var/datum/saymode/SM = SSradio.saymodes[key]
 	if(key && SM)
-		if(!SM.handle_message(src, message, language) && !message_mode)
+		if(!SM.handle_message(src, message, language))
 			return
 
 
