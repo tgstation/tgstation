@@ -2332,6 +2332,8 @@
 #include "code\modules\zombie\items.dm"
 #include "code\modules\zombie\organs.dm"
 #include "haven\code\init.dm"
+#include "haven\code\game\objects\structures\crates_lockers\closets\wardrobe.dm"
+#include "haven\code\modules\clothing\under\polychromic_clothes.dm"
 #include "interface\interface.dm"
 #include "interface\menu.dm"
 #include "interface\stylesheet.dm"
