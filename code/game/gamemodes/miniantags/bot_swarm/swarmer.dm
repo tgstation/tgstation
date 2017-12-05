@@ -100,8 +100,8 @@
 /mob/living/simple_animal/hostile/swarmer/Initialize()
 	. = ..()
 	verbs -= /mob/living/verb/pulled
-	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
-	diag_hud.add_to_hud(src)
+	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
+		diag_hud.add_to_hud(src)
 
 /mob/living/simple_animal/hostile/swarmer/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]
@@ -119,13 +119,6 @@
 	..()
 	if(statpanel("Status"))
 		stat("Resources:",resources)
-
-/mob/living/simple_animal/hostile/swarmer/handle_inherent_channels(message, message_mode)
-	if(message_mode == MODE_BINARY)
-		swarmer_chat(message)
-		return ITALICS | REDUCE_RANGE
-	else
-		. = ..()
 
 /mob/living/simple_animal/hostile/swarmer/get_spans()
 	return ..() | SPAN_ROBOT

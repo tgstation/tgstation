@@ -163,7 +163,7 @@
 	death = 0;
 	desc = "Looks secure.";
 	flavour_text = "You are a bartender for the beach!";
-	icon = 'icons/obj/cryogenic2.dmi';
+	icon = 'icons/obj/machines/sleeper.dmi';
 	icon_state = "sleeper";
 	mob_name = "Jerry Thomas";
 	name = "bartenders cryosleeper";

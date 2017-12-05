@@ -33,8 +33,6 @@
 
 	sync_mind()
 
-	client.sethotkeys() //set mob specific hotkeys
-
 	update_client_colour()
 	if(client)
 		client.click_intercept = null

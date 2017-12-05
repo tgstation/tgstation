@@ -1,0 +1,8 @@
+author: "MrPerson & ninjanomnom"
+delete-after: True
+changes: 
+  - refactor: "Completely changed how keyboard input is read."
+  - rscadd: "Holding two directions at the same time will now move you diagonally. This works with the arrow keys, wasd, and the numpad."
+  - tweak: "Moving diagonally takes twice as long as moving a cardinal direction."
+  - bugfix: "You can use control to turn using wasd and the numpad instead of just the arrow keys."
+  - rscdel: "Some old non-hotkey mode behaviors, especially in relation to chatbox interaction, can't be kept with the new system. Of key note: You can't type while walking. This is due to limitations of byond and the work necessary to overcome it is better done as another overhaul allowing custom controls."

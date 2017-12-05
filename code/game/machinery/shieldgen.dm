@@ -22,7 +22,7 @@
 
 /obj/structure/emergency_shield/Move()
 	var/turf/T = loc
-	..()
+	. = ..()
 	move_update_air(T)
 
 /obj/structure/emergency_shield/emp_act(severity)

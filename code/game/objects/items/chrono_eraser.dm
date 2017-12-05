@@ -62,7 +62,7 @@
 		TED = loc
 	else //admin must have spawned it
 		TED = new(src.loc)
-		qdel(src)
+		return INITIALIZE_HINT_QDEL
 
 /obj/item/gun/energy/chrono_gun/update_icon()
 	return

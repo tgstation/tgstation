@@ -1,5 +1,5 @@
 /datum/component
-	var/enabled = TRUE
+	var/enabled = FALSE
 	var/dupe_mode = COMPONENT_DUPE_HIGHLANDER
 	var/dupe_type
 	var/list/signal_procs
@@ -133,6 +133,8 @@
 		if(!istype(proc_or_callback, /datum/callback)) //if it wasnt a callback before, it is now
 			proc_or_callback = CALLBACK(src, proc_or_callback)
 		procs[sig_type] = proc_or_callback
+	
+	enabled = TRUE
 
 /datum/component/proc/InheritComponent(datum/component/C, i_am_original)
 	return
@@ -164,36 +166,35 @@
 /datum/proc/SendSignal(sigtype, ...)
 	var/list/comps = datum_components
 	if(!comps)
-		return FALSE
+		return NONE
 	var/list/arguments = args.Copy()
 	arguments.Cut(1, 2)
 	var/target = comps[/datum/component]
 	if(!length(target))
 		var/datum/component/C = target
 		if(!C.enabled)
-			return FALSE
-		var/list/sps = C.signal_procs
-		var/datum/callback/CB = LAZYACCESS(sps, sigtype)
+			return NONE
+		var/datum/callback/CB = C.signal_procs[sigtype]
 		if(!CB)
-			return FALSE
+			return NONE
 		. = CB.InvokeAsync(arglist(arguments))
-		if(.)
+		if(. & COMPONENT_ACTIVATED)
 			ComponentActivated(C)
 			C.AfterComponentActivated()
 	else
-		. = FALSE
+		. = NONE
 		for(var/I in target)
 			var/datum/component/C = I
 			if(!C.enabled)
 				continue
-			var/list/sps = C.signal_procs
-			var/datum/callback/CB = LAZYACCESS(sps, sigtype)
+			var/datum/callback/CB = C.signal_procs[sigtype]
 			if(!CB)
 				continue
-			if(CB.InvokeAsync(arglist(arguments)))
+			var/retval = CB.InvokeAsync(arglist(arguments))
+			. |= retval
+			if(retval & COMPONENT_ACTIVATED)
 				ComponentActivated(C)
 				C.AfterComponentActivated()
-				. = TRUE
 
 /datum/proc/ComponentActivated(datum/component/C)
 	set waitfor = FALSE
