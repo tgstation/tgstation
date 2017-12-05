@@ -492,12 +492,6 @@
 			return -1
 	return canhear_range
 
-/obj/item/device/radio/proc/send_hear(freq, level)
-
-	var/range = receive_range(freq, level)
-	if(range > -1)
-		return get_hearers_in_view(canhear_range, src)
-
 
 /obj/item/device/radio/examine(mob/user)
 	..()
