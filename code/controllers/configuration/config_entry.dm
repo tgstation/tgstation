@@ -9,7 +9,7 @@
 	var/value
 	var/default	//read-only, just set value directly
 	
-	var/resident_file	//the file which this belongs to, must be set
+	var/resident_file	//the file which this was loaded from, if any
 	var/modified = FALSE	//set to TRUE if the default has been overridden by a config entry
 
 	var/protection = NONE

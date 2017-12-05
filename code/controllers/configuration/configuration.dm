@@ -22,8 +22,11 @@ GLOBAL_PROTECT(config_dir)
 	config = src
 	var/list/config_files = InitEntries()
 	LoadModes()
-	for(var/I in config_files)
-		LoadEntries(I)
+	if(!LoadEntries("config.txt"))
+		log_config("No $include directives found in config.txt! Loading legacy game_options/dbconfig/comms files...")
+		LoadEntries("game_options.txt")
+		LoadEntries("dbconfig.txt")
+		LoadEntries("comms.txt")
 	loadmaplist(CONFIG_MAPS_FILE)
 
 /datum/controller/configuration/Destroy()
@@ -57,24 +60,34 @@ GLOBAL_PROTECT(config_dir)
 			continue
 		_entries[esname] = E
 		_entries_by_type[I] = E
-		.[E.resident_file] = TRUE
 
 /datum/controller/configuration/proc/RemoveEntry(datum/config_entry/CE)
 	entries -= CE.name
 	entries_by_type -= CE.type
 
-/datum/controller/configuration/proc/LoadEntries(filename)
+/datum/controller/configuration/proc/LoadEntries(filename, list/stack = list())
+	var/filename_to_test
+	if(world.system_type == MS_WINDOWS)
+		filename_to_test = lowertext(filename)
+	else
+		filename_to_test = filename
+	if(filename_to_test in stack)
+		log_config("Config recursion detected ([english_list(stack)]), breaking!")
+		return
+	stack = stack + filename_to_test
+
 	log_config("Loading config file [filename]...")
 	var/list/lines = world.file2list("[GLOB.config_dir][filename]")
 	var/list/_entries = entries
 	for(var/L in lines)
 		if(!L)
 			continue
-
-		if(copytext(L, 1, 2) == "#")
+		
+		var/firstchar = copytext(L, 1, 2)
+		if(firstchar == "#")
 			continue
 
-		var/lockthis = copytext(L, 1, 2) == "@"
+		var/lockthis = firstchar == "@"
 		if(lockthis)
 			L = copytext(L, 2)
 
@@ -91,17 +104,22 @@ GLOBAL_PROTECT(config_dir)
 		if(!entry)
 			continue
 		
+		if(entry == "$include")
+			if(!istext(value) || !value)
+				log_config("WARNING: Invalid $include directive: [value]")
+			else
+				LoadEntries(value, stack)
+			continue
+		
 		var/datum/config_entry/E = _entries[entry]
 		if(!E)
 			log_config("Unknown setting in configuration: '[entry]'")
 			continue
-		
-		if(filename != E.resident_file)
-			log_config("Found [entry] in [filename] when it should have been in [E.resident_file]! Ignoring.")
-			continue
 
 		if(lockthis)
 			E.protection |= CONFIG_ENTRY_LOCKED
+
+		E.resident_file = filename
 
 		var/validated = E.ValidateAndSet(value)
 		if(!validated)

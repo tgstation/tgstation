@@ -3,8 +3,47 @@
 GLOBAL_VAR(security_mode)
 GLOBAL_VAR(restart_counter)
 GLOBAL_PROTECT(security_mode)
+/world
+	loop_checks = FALSE
 
 /world/New()
+	var/list/all_mobs = list()
+	for(var/I in typesof(/mob))
+		all_mobs += new I
+
+	var/start_time = REALTIMEOFDAY
+
+	for(var/J in 1 to 10000)
+		for(var/I in all_mobs)
+			if(istype(I, /mob/living))
+				pass(1)
+			else
+				pass(2)
+
+	var/istype_time = REALTIMEOFDAY - start_time
+	start_time = REALTIMEOFDAY
+
+	for(var/J in 1 to 10000)
+		for(var/I in all_mobs)
+			if(GLOB.typecache_living[I])
+				pass(1)
+			else
+				pass(2)
+
+	var/direct_tc_time = REALTIMEOFDAY - start_time
+	start_time = REALTIMEOFDAY
+
+	for(var/J in 1 to 10000)
+		for(var/I in all_mobs)
+			if(isliving(I))
+				pass(1)
+			else
+				pass(2)
+
+	var/typecache_time = REALTIMEOFDAY - start_time
+	log_world("istype: [istype_time], typecache: [direct_tc_time], is_type_in_typecache: [typecache_time]")
+	del(src)
+
 	log_world("World loaded at [time_stamp()]")
 
 	SetupExternalRSC()
