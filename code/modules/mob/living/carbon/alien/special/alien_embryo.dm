@@ -63,7 +63,7 @@
 
 
 
-/obj/item/organ/body_egg/alien_embryo/proc/AttemptGrow(gib_on_success=FALSE)
+/obj/item/organ/body_egg/alien_embryo/proc/AttemptGrow(gib_on_success=FALSE, adrenaline_rush=TRUE)
 	if(!owner || bursting)
 		return
 
@@ -106,6 +106,22 @@
 		new_xeno.visible_message("<span class='danger'>[new_xeno] bursts out of [owner] in a shower of gore!</span>", "<span class='userdanger'>You exit [owner], your previous host.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 		owner.gib(TRUE)
 	else
+		if(adrenaline_rush)
+			if(owner.buckled || handcuffed)
+				owner.uncuff()
+				unbuckle_mob(owner)
+				owner.visible_message("<span class='danger'>[owner] screams and breaks free!</span>", "<span class='userdanger'>As the larva breaks out of your chest, you panic and break free!</span>")
+			else
+				owner.visible_message("<span class='danger'>[owner] screams!</span>", "<span class='userdanger'>As the larva breaks out of your chest, you scream and panic!</span>")
+			owner.SetStun(0)
+			owner.SetKnockdown(0)
+			owner.SetUnconscious(0)
+			owner.adjustStaminaLoss(-75)
+			owner.jitter(50)
+			owner.lying = 0
+			owner.reagents.add_reagent("ephedrine", 10)
+			owner.reagents.add_reagent("synaptizine", 10)
+			owner.update_canmove()
 		new_xeno.visible_message("<span class='danger'>[new_xeno] wriggles out of [owner]!</span>", "<span class='userdanger'>You exit [owner], your previous host.</span>")
 		owner.adjustBruteLoss(40)
 		owner.cut_overlay(overlay)
