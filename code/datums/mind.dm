@@ -922,7 +922,7 @@
 			return
 
 		if (objective)
-			it(target_antag)
+			if(target_antag)
 				target_antag.objectives -= objective
 			objectives -= objective
 			target_antag.objectives.Insert(objective_pos, new_objective)

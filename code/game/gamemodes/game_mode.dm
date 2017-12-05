@@ -405,36 +405,6 @@
 	for (var/C in GLOB.admins)
 		to_chat(C, msg)
 
-//Move to new helper file
-/proc/printplayer(datum/mind/ply, fleecheck)
-	var/text = "<b>[ply.key]</b> was <b>[ply.name]</b> the <b>[ply.assigned_role]</b> and"
-	if(ply.current)
-		if(ply.current.stat == DEAD)
-			text += " <span class='boldannounce'>died</span>"
-		else
-			text += " <span class='greenannounce'>survived</span>"
-		if(fleecheck)
-			var/turf/T = get_turf(ply.current)
-			if(!T || !(T.z in GLOB.station_z_levels))
-				text += " while <span class='boldannounce'>fleeing the station</span>"
-		if(ply.current.real_name != ply.name)
-			text += " as <b>[ply.current.real_name]</b>"
-	else
-		text += " <span class='boldannounce'>had their body destroyed</span>"
-	return text
-
-//Move to new helper file
-/proc/printobjectives(datum/mind/ply)
-	var/list/objective_parts = list()
-	var/count = 1
-	for(var/datum/objective/objective in ply.objectives)
-		if(objective.check_completion())
-			objective_parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='greenannounce'>Success!</span>"
-		else
-			objective_parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='boldannounce'>Fail.</span>"
-		count++
-	return objective_parts.Join("<br>")
-
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
 /datum/game_mode/proc/age_check(client/C)
 	if(get_remaining_days(C) == 0)

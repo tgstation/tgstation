@@ -188,7 +188,7 @@
 	var/station_integrity = min(PERCENT(GLOB.start_state.score(end_state)), 100)
 
 	. += "[GLOB.TAB]Shift Duration: <B>[DisplayTimeText(world.time - SSticker.round_start_time)]</B>"
-	. += "[GLOB.TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>"
+	. += "[GLOB.TAB]Station Integrity: <B>[mode.station_was_nuked ? "<span class='redtext'>Destroyed</span>" : "[station_integrity]%"]</B>"
 	var/total_players = GLOB.joined_player_list.len
 	if(total_players)
 		.+= "[GLOB.TAB]Total Population: <B>[total_players]</B>"
@@ -206,14 +206,14 @@
 		if(M.stat != DEAD && !isbrain(M))
 			if(EMERGENCY_ESCAPED_OR_ENDGAMED)
 				if(!M.onCentCom() || !M.onSyndieBase())
-					report_parts += "<font color='blue'><b>You managed to survive, but were marooned on [station_name()]...</b></font>"
+					report_parts += "<span class='marooned'>You managed to survive, but were marooned on [station_name()]...</span>"
 				else
-					report_parts += "<font color='green'><b>You managed to survive the events on [station_name()] as [M.real_name].</b></font>"
+					report_parts += "<span class='greentext'>You managed to survive the events on [station_name()] as [M.real_name].</span>"
 			else
-				report_parts += "<font color='green'><b>You managed to survive the events on [station_name()] as [M.real_name].</b></font>"
+				report_parts += "<span class='greentext'>You managed to survive the events on [station_name()] as [M.real_name].</span>"
 
 		else
-			report_parts += "<font color='red'><b>You did not survive the events on [station_name()]...</b></font>"
+			report_parts += "<span class='redtext'>You did not survive the events on [station_name()]...</span>"
 
 	report_parts += common_report
 
@@ -269,7 +269,7 @@
 /datum/controller/subsystem/ticker/proc/medal_report()
 	. = list()
 	if(GLOB.commendations.len)
-		. += "<b><font size=3>Medal Commendations:</font></b>"
+		. += "<span class='header'>Medal Commendations:</span>"
 		for (var/com in GLOB.commendations)
 			. += com
 
@@ -331,3 +331,32 @@
 
 /datum/action/report/IsAvailable()
 	return 1
+
+
+/proc/printplayer(datum/mind/ply, fleecheck)
+	var/text = "<b>[ply.key]</b> was <b>[ply.name]</b> the <b>[ply.assigned_role]</b> and"
+	if(ply.current)
+		if(ply.current.stat == DEAD)
+			text += " <span class='redtext'>died</span>"
+		else
+			text += " <span class='greentext'>survived</span>"
+		if(fleecheck)
+			var/turf/T = get_turf(ply.current)
+			if(!T || !(T.z in GLOB.station_z_levels))
+				text += " while <span class='redtext'>fleeing the station</span>"
+		if(ply.current.real_name != ply.name)
+			text += " as <b>[ply.current.real_name]</b>"
+	else
+		text += " <span class='redtext'>had their body destroyed</span>"
+	return text
+
+/proc/printobjectives(datum/mind/ply)
+	var/list/objective_parts = list()
+	var/count = 1
+	for(var/datum/objective/objective in ply.objectives)
+		if(objective.check_completion())
+			objective_parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='greentext'>Success!</span>"
+		else
+			objective_parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+		count++
+	return objective_parts.Join("<br>")

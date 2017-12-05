@@ -117,9 +117,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 				break
 
 	if(owner.objectives.len == 0 || objectives_complete)
-		report += "<font color='green'><B>The [name] was successful!</B></font>"
+		report += "<span class='greentext big'>The [name] was successful!</span>"
 	else
-		report += "<font color='red'><B>The [name] has failed!</B></font>"
+		report += "<span class='redtext big'>The [name] has failed!</span>"
 
 	return report.Join("<br>")
 
