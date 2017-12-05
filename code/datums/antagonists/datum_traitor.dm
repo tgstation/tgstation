@@ -330,7 +330,7 @@
 	var/special_role_text = lowertext(name)
 
 	if(traitorwin)
-		result += "<span class='greentext'>The [special_role_text] was successful!</greentext>"
+		result += "<span class='greentext'>The [special_role_text] was successful!</span>"
 	else
 		result += "<span class='redtext'>The [special_role_text] has failed!</span>"
 		SEND_SOUND(owner.current, 'sound/ambience/ambifailure.ogg')

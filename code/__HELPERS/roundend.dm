@@ -324,6 +324,7 @@
 	for(var/v in GLOB.clients)
 		var/client/C = v
 		var/datum/action/report/R = new
+		C.player_details.player_actions += R
 		R.Grant(C.mob)
 
 /datum/action/report
