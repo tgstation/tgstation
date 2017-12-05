@@ -532,6 +532,12 @@
 
 /obj/item/twohanded/mallet/g/update_icon()
 	icon_state = "toolbox_mallet_g[wielded]"
+	
+/obj/item/twohanded/mallet/y
+	icon_state = "toolbox_mallet_y0"
+
+/obj/item/twohanded/mallet/y/update_icon()
+	icon_state = "toolbox_mallet_y[wielded]"
 
 /obj/item/twohanded/mallet/s
 	icon_state = "toolbox_mallet_s0"
@@ -540,14 +546,14 @@
 /obj/item/twohanded/mallet/s/update_icon()
 	icon_state = "toolbox_mallet_s[wielded]"
 
-/obj/item/twohanded/mallet/mtoolnir
+/obj/item/twohanded/mallet/y/mtoolnir
 	icon_state = "toolbox_mallet_y0"
 	name = "mtoolnir"
 	desc = "A distant relative of His Grace, perhaps. The power of the tide is with you."
 	force_wielded = 100 //nelly
 	integ = 5
 
-/obj/item/twohanded/mallet/mtoolnir/afterattack(atom/movable/AM, mob/user, proximity, mob/target)
+/obj/item/twohanded/mallet/y/mtoolnir/afterattack(atom/movable/AM, mob/user, proximity, mob/target)
 	if(!proximity)
 		return
 	if(isopenturf(AM)) //see above
@@ -560,9 +566,6 @@
 	if(!integ)
 		user.visible_message("<span class='notice'>[src] smashes into pieces!</span>")
 		qdel(src)
-
-/obj/item/twohanded/mallet/mtoolnir/update_icon()
-	icon_state = "toolbox_mallet_y[wielded]"
 
 // CHAINSAW
 /obj/item/twohanded/required/chainsaw
