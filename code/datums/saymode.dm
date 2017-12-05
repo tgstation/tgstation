@@ -109,4 +109,4 @@
 		var/mob/living/silicon/ai/AI = user
 		AI.holopad_talk(message, language)
 		return FALSE
-	return FALSE
+	return TRUE
