@@ -9,7 +9,7 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 	name = "changeling"
 	config_tag = "changeling"
 	antag_flag = ROLE_CHANGELING
-	false_report_weight = 1
+	false_report_weight = 10
 	restricted_jobs = list("AI", "Cyborg")
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	required_players = 15
