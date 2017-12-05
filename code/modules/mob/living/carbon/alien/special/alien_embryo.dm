@@ -107,7 +107,7 @@
 		owner.gib(TRUE)
 	else
 		if(adrenaline_rush)
-			if(owner.buckled || handcuffed)
+			if(owner.buckled || owner.handcuffed)
 				owner.uncuff()
 				unbuckle_mob(owner)
 				owner.visible_message("<span class='danger'>[owner] screams and breaks free!</span>", "<span class='userdanger'>As the larva breaks out of your chest, you panic and break free!</span>")
