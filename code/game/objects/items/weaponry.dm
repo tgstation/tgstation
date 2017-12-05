@@ -258,7 +258,7 @@
 		
 		remove_item_from_storage(user)
 		qdel(I)
-		dqel(src)
+		qdel(src)
 		
 		user.put_in_hands(M)
 		to_chat(user, "<span class='notice'>You fasten a toolbox to the top of the rod with the cable.</span>")
