@@ -324,16 +324,6 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
-/datum/crafting_recipe/mallet
-	name = "Red Mallet"
-	result = /obj/item/twohanded/mallet
-	reqs = list(/obj/item/restraints/handcuffs/cable = 1,
-				/obj/item/storage/toolbox = 1,
-				/obj/item/stack/rods = 1)
-	time = 40
-	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPON
-
 /datum/crafting_recipe/spooky_camera
 	name = "Camera Obscura"
 	result = /obj/item/device/camera/spooky
