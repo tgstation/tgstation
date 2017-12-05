@@ -28,14 +28,14 @@
 	desc = "An implant injected into another body, forcing the victim to obey any command by the user for around 15 to 20 mintues."
 	exclude_modes = list(/datum/game_mode/nuclear)
 	item = /obj/item/storage/box/syndie_kit/imp_mindslave
-	cost = 8
+	cost = 6
 	surplus = 20
 
 /datum/uplink_item/implants/greatermindslave
 	name = "Greater Mindslave Implant"
 	desc = "An implant injected into another body, forcing the victim to obey any command by the user, it does not expire like a regular mindslave implant."
 	item = /obj/item/storage/box/syndie_kit/imp_gmindslave
-	cost = 16
+	cost = 10
 
 /* Botany */
 /datum/uplink_item/role_restricted/lawnmower
@@ -45,12 +45,11 @@
 	cost = 14
 	item = /obj/vehicle/lawnmower/emagged
 
-/datum/uplink_item/role_restricted/echainsaw
+/datum/uplink_item/dangerous/echainsaw
 	name = "Energy Chainsaw"
 	desc = "An incredibly deadly modified chainsaw with plasma-based energy blades instead of metal and a slick black-and-red finish. While it rips apart matter with extreme efficiency, it is heavy, large, and monstrously loud."
-	restricted_roles = list("Botanist", "Chef", "Bartender")
 	item = /obj/item/twohanded/required/chainsaw/energy
-	cost = 16
+	cost = 14
 
 /* Glock */
 /datum/uplink_item/dangerous/g17
@@ -128,28 +127,28 @@
 /datum/uplink_item/dangerous/butterfly
 	name = "Energy Butterfly Knife"
 	desc = "A highly lethal and concealable knife that causes critical backstab damage when used with harm intent."
-	cost = 12//80 backstab damage and armour pierce isn't a fucking joke
+	cost = 8//80 backstab damage and armour pierce isn't a fucking joke
 	item = /obj/item/melee/transforming/butterfly/energy
 	surplus = 15
 
 /datum/uplink_item/dangerous/beenade
 	name = "Bee delivery grenade"
 	desc = "This grenade is filled with several random posionous bees. Fun for the whole family!"
-	cost = 4
+	cost = 2
 	item = /obj/item/grenade/spawnergrenade/beenade
 	surplus = 30
 
 /datum/uplink_item/dangerous/gremlin
 	name = "Gremlin delivery grenade"
 	desc = "This grenade is filled with several gremlins. Fun for RnD and engineering!"
-	cost = 4
+	cost = 2
 	item = /obj/item/grenade/spawnergrenade/gremlin
 	surplus = 30
 
 /datum/uplink_item/dangerous/cat
 	name = "Feral cat grenade"
 	desc = "This grenade is filled with 5 feral cats in stasis. Upon activation, the feral cats are awoken and unleashed unto unlucky bystanders."
-	cost = 5
+	cost = 3
 	item = /obj/item/grenade/spawnergrenade/cat
 	surplus = 30
 
@@ -188,14 +187,11 @@
 /datum/uplink_item/device_tools/jammer
 	cost = 3
 
-/datum/uplink_item/device_tools/codespeak_manual_deluxe
-	cost = 4
-
 /datum/uplink_item/device_tools/autosurgeon
 	name = "Autosurgeon"
 	desc = "A surgery device that instantly implants you with whatever implant has been inserted in it. Infinite uses. Use a screwdriver to remove an implant from it."
 	item = /obj/item/device/autosurgeon
-	cost = 4
+	cost = 1
 	surplus = 60
 
 /datum/uplink_item/implants/microbomb
@@ -235,7 +231,7 @@
 			 for a long time to execute a target so be sure to have them restrained and if you should be interrupted\
 			 then news of your failure will be broadcast to the station."
 	item = /obj/item/melee/execution_sword
-	cost = 3 //Its weaker than an energy dagger and cannot be concealed.
+	cost = 1 //Its weaker than an energy dagger and cannot be concealed.
 	surplus = 30 //Theres a good chance this will end up in surplus crates, so its a great way to add a little spice to any meme round.
 
 /datum/uplink_item/dangerous/guardian
@@ -274,4 +270,96 @@
 	name = "Gloves of the North Star"
 	desc = "These gloves let the user punch people very fast. Incompatible with weaponry or the hulk mutation."
 	item = /obj/item/clothing/gloves/fingerless/rapid
-	cost = 10
+	cost = 8
+
+/datum/uplink_item/device_tools/syndietome
+	name = "Syndicate Tome"
+	desc = "Using rare artifacts acquired at great cost, the syndicate has reverse engineered \
+			the seemingly magical books of a certain cult. Though lacking the esoteric abilities \
+			of the originals, these inferior copies are still quite useful, being able to provide \
+			both weal and woe on the battlefield, even if they do occasionally bite off a finger."
+	item = /obj/item/storage/book/bible/syndicate
+	cost = 2
+
+/datum/uplink_item/device_tools/binary
+	name = "Binary Translator Key"
+	desc = "A key that, when inserted into a radio headset, allows you to listen to and talk with silicon-based lifeforms, \
+			such as AI units and cyborgs, over their private binary channel. Caution should \
+			be taken while doing this, as unless they are allied with you, they are programmed to report such intrusions."
+	item = /obj/item/device/encryptionkey/binary
+	cost = 2
+	surplus = 75
+
+/datum/uplink_item/device_tools/codespeak_manual
+	name = "Codespeak Manual"
+	desc = "Syndicate agents can be trained to use a series of codewords to convey complex information, which makes you look like an obvious traitor to anyone listening. This manual teaches you this Codespeak. You can also hit someone else with the manual in order to teach them. One use."
+	item = /obj/item/codespeak_manual
+	cost = 0
+	limited_stock = 4
+	exclude_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/device_tools/codespeak_manual_deluxe
+	name = "Deluxe Codespeak Manual"
+	desc = "Syndicate agents can be trained to use a series of codewords to convey complex information, which makes you look like an obvious traitor to anyone listening. This manual teaches you this Codespeak. You can also hit someone else with the manual in order to teach them. This is the deluxe edition, which has unlimited uses. Now you and your club can get lynched together!"
+	cost = 3
+	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/stealthy_weapons/martialarts
+	name = "Martial Arts Scroll"
+	desc = "This scroll contains the secrets of an ancient martial arts technique. You will master unarmed combat, \
+			deflecting all ranged weapon fire, but you also refuse to use dishonorable ranged weaponry."
+	item = /obj/item/sleeping_carp_scroll
+	cost = 12
+	surplus = 0
+	exclude_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/stealthy_weapons/throwingweapons
+	name = "Box of Throwing Weapons"
+	desc = "A box of shurikens and reinforced bolas from ancient Earth martial arts. They are highly effective \
+			 throwing weapons. The bolas can knock a target down and the shurikens will embed into limbs."
+	item = /obj/item/storage/box/syndie_kit/throwing_weapons
+	cost = 2
+
+/datum/uplink_item/stealthy_weapons/dart_pistol
+	name = "Dart Pistol"
+	desc = "A miniaturized version of a normal syringe gun. It is very quiet when fired and can fit into any \
+			space a small item can."
+	item = /obj/item/gun/syringe/syndicate
+	cost = 3
+	surplus = 50
+
+/datum/uplink_item/suits/hardsuit
+	name = "Syndicate Hardsuit"
+	desc = "The feared suit of a syndicate nuclear agent. Features slightly better armoring and a built in jetpack \
+			that runs off standard atmospheric tanks. When the built in helmet is deployed your identity will be \
+			protected, even in death, as the suit cannot be removed by outside forces. Toggling the suit in and out of \
+			combat mode will allow you all the mobility of a loose fitting uniform without sacrificing armoring. \
+			Additionally the suit is collapsible, making it small enough to fit within a backpack. \
+			Nanotrasen crew who spot these suits are known to panic."
+	item = /obj/item/clothing/suit/space/hardsuit/syndi
+	cost = 7
+	exclude_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/device_tools/surgerybag
+	name = "Syndicate Surgery Duffel Bag"
+	desc = "The Syndicate surgery duffel bag is a toolkit containing all surgery tools, surgical drapes, \
+			a Syndicate brand MMI, a straitjacket, and a muzzle."
+	item = /obj/item/storage/backpack/duffelbag/syndie/surgery
+	cost = 1
+
+/datum/uplink_item/role_restricted/ancient_jumpsuit
+	name = "Ancient Jumpsuit"
+	desc = "A tattered old jumpsuit that will provide absolutely no benefit to you. It fills the wearer with a strange compulsion to blurt out 'glorf'."
+	item = /obj/item/clothing/under/color/grey/glorf
+	cost = 0
+	limited_stock = 4
+	restricted_roles = list("Assistant")
+	surplus = 0
+
+/datum/uplink_item/role_restricted/reverse_revolver
+	name = "Reverse Revolver"
+	desc = "A revolver that always fires at its user. \"Accidentally\" drop your weapon, then watch as the greedy corporate pigs blow their own brains all over the wall. \
+	The revolver itself is actually real. Only clumsy people, and clowns, can fire it normally. Comes in a box of hugs. Honk."
+	cost = 13
+	item = /obj/item/storage/box/hug/reverse_revolver
+	restricted_roles = list("Clown")
