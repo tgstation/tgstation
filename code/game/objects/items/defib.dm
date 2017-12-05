@@ -454,9 +454,9 @@
 			H.emote("scream")
 			if(isliving(H.pulledby))		//CLEAR!
 				var/mob/living/M = H.pulledby
-				M.electrocute_act(45, src)
-				M.visible_message("<span class='danger'>[M] is electrocuted by their contact with [H]!</span>")
-				M.emote("scream")
+				if(M.electrocute_act(45, src))
+					M.visible_message("<span class='danger'>[M] is electrocuted by their contact with [H]!</span>")
+					M.emote("scream")
 			if(H.can_heartattack() && !H.undergoing_cardiac_arrest())
 				if(!H.stat)
 					H.visible_message("<span class='warning'>[H] thrashes wildly, clutching at their chest!</span>",
@@ -510,9 +510,9 @@
 				total_burn	= H.getFireLoss()
 				if(isliving(H.pulledby))		//CLEAR!
 					var/mob/living/M = H.pulledby
-					M.electrocute_act(30, src)
-					M.visible_message("<span class='danger'>[M] is electrocuted by their contact with [H]!</span>")
-
+					if(M.electrocute_act(30, src))
+						M.visible_message("<span class='danger'>[M] is electrocuted by their contact with [H]!</span>")
+						M.emote("scream")
 				var/failed
 
 				if (H.suiciding || (H.disabilities & NOCLONE))
