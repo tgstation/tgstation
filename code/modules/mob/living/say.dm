@@ -72,7 +72,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 /mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE)
 	var/static/list/crit_allowed_modes = list(MODE_WHISPER = TRUE, MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
 	var/static/list/unconscious_allowed_modes = list(MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
-	var/key = get_key(message)
+	var/talk_key = get_key(message)
 
 	var/static/list/one_character_prefix = list(MODE_HEADSET = TRUE, MODE_ROBOT = TRUE, MODE_WHISPER = TRUE)
 
@@ -135,10 +135,9 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	// AIs use inherent channels for the holopad. Most inherent channels
 	// ignore the language argument however.
 
-	var/datum/saymode/SM = SSradio.saymodes[key]
-	if(key && SM)
-		if(!SM.handle_message(src, message, language) && !message_mode)
-			return
+	var/datum/saymode/SM = SSradio.saymodes[talk_key]
+	if(SM && !SM.handle_message(src, message, language) && !message_mode)
+		return
 
 
 	if(!can_speak_vocal(message))
