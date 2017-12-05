@@ -32286,10 +32286,12 @@
 /obj/machinery/light_switch{
 	pixel_x = 27
 	},
-/obj/machinery/photocopier,
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/structure/easel,
+/obj/item/canvas/twentythreeXtwentythree,
+/obj/item/canvas/twentythreeXtwentythree,
 /turf/open/floor/plasteel,
 /area/storage/art)
 "boP" = (
@@ -101271,7 +101273,7 @@ bzE
 bLk
 bML
 bue
-bMQ
+bzE
 bRj
 bSB
 bPR

@@ -11,93 +11,11 @@
 	return (!mover.density || !density || lying)
 
 
-//The byond version of these verbs wait for the next tick before acting.
-//	instant verbs however can run mid tick or even during the time between ticks.
-/client/verb/moveup()
-	set name = ".moveup"
-	set instant = 1
-	Move(get_step(mob, NORTH), NORTH)
-
-/client/verb/movedown()
-	set name = ".movedown"
-	set instant = 1
-	Move(get_step(mob, SOUTH), SOUTH)
-
-/client/verb/moveright()
-	set name = ".moveright"
-	set instant = 1
-	Move(get_step(mob, EAST), EAST)
-
-/client/verb/moveleft()
-	set name = ".moveleft"
-	set instant = 1
-	Move(get_step(mob, WEST), WEST)
-
-/client/Northeast()
-	swap_hand()
-	return
-
-
-/client/Southeast()
-	attack_self()
-	return
-
-
-/client/Southwest()
-	if(iscarbon(usr))
-		var/mob/living/carbon/C = usr
-		C.toggle_throw_mode()
-	else
-		to_chat(usr, "<span class='danger'>This mob type cannot throw items.</span>")
-	return
-
-
-/client/Northwest()
-	var/obj/item/I = usr.get_active_held_item()
-	if(!I)
-		to_chat(usr, "<span class='warning'>You have nothing to drop in your hand!</span>")
-		return
-	usr.dropItemToGround(I)
-
-//This gets called when you press the delete button.
-/client/verb/delete_key_pressed()
-	set hidden = 1
-
-	if(!isliving(usr))
-		return
-	if(!usr.pulling)
-		to_chat(usr, "<span class='notice'>You are not pulling anything.</span>")
-		return
-	usr.stop_pulling()
-
-/client/verb/swap_hand()
-	set category = "IC"
-	set name = "Swap hands"
-
-	if(mob)
-		mob.swap_hand()
-
-/client/verb/attack_self()
-	set hidden = 1
-	if(mob)
-		mob.mode()
-	return
-
-
 /client/verb/drop_item()
 	set hidden = 1
 	if(!iscyborg(mob) && mob.stat == CONSCIOUS)
 		mob.dropItemToGround(mob.get_active_held_item())
 	return
-
-
-/client/Center()
-	if(isobj(mob.loc))
-		var/obj/O = mob.loc
-		if(mob.canmove)
-			return O.relaymove(mob, 0)
-	return
-
 
 /client/proc/Move_object(direct)
 	if(mob && mob.control_object)
@@ -114,19 +32,23 @@
 #define MOVEMENT_DELAY_BUFFER_DELTA 1.25
 
 /client/Move(n, direct)
-	if(world.time < move_delay)
+	if(world.time < move_delay) //do not move anything ahead of this check please
 		return FALSE
+	else
+		next_move_dir_add = 0
+		next_move_dir_sub = 0
 	var/old_move_delay = move_delay
 	move_delay = world.time+world.tick_lag //this is here because Move() can now be called mutiple times per tick
 	if(!mob || !mob.loc)
 		return FALSE
-	var/oldloc = mob.loc
+	if(!n || !direct)
+		return FALSE
 	if(mob.notransform)
 		return FALSE	//This is sota the goto stop mobs from moving var
 	if(mob.control_object)
 		return Move_object(direct)
 	if(!isliving(mob))
-		return mob.Move(n,direct)
+		return mob.Move(n, direct)
 	if(mob.stat == DEAD)
 		mob.ghostize()
 		return FALSE
@@ -159,26 +81,32 @@
 
 	if(!mob.Process_Spacemove(direct))
 		return FALSE
-
 	//We are now going to move
-	var/delay = mob.movement_delay()
-	if(old_move_delay + (delay*MOVEMENT_DELAY_BUFFER_DELTA) + MOVEMENT_DELAY_BUFFER > world.time)
-		move_delay = old_move_delay + delay
+	var/add_delay = mob.movement_delay()
+	if(old_move_delay + (add_delay*MOVEMENT_DELAY_BUFFER_DELTA) + MOVEMENT_DELAY_BUFFER > world.time)
+		move_delay = old_move_delay
 	else
-		move_delay = delay + world.time
+		move_delay = world.time
+	var/oldloc = mob.loc
 
 	if(mob.confused)
+		var/newdir = 0
 		if(mob.confused > 40)
-			step(mob, pick(GLOB.cardinals))
+			newdir = pick(GLOB.alldirs)
 		else if(prob(mob.confused * 1.5))
-			step(mob, angle2dir(dir2angle(direct) + pick(90, -90)))
+			newdir = angle2dir(dir2angle(direct) + pick(90, -90))
 		else if(prob(mob.confused * 3))
-			step(mob, angle2dir(dir2angle(direct) + pick(45, -45)))
-		else
-			step(mob, direct)
-	else
-		. = ..()
+			newdir = angle2dir(dir2angle(direct) + pick(45, -45))
+		if(newdir)
+			direct = newdir
+			n = get_step(mob, direct)
 
+	. = ..()
+
+	if((direct & (direct - 1)) && mob.loc == n) //moved diagonally successfully
+		add_delay *= 2
+	if(mob.loc != oldloc)
+		move_delay += add_delay
 	if(.) // If mob is null here, we deserve the runtime
 		if(mob.throwing)
 			mob.throwing.finalize(FALSE)
