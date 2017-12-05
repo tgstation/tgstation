@@ -1,5 +1,6 @@
-.greentext				{color: #00FF00; font-weight: bold;}
-.redtext				{color: #FF0000; font-weight: bold;}
+.greentext				{color: green; font-weight: bold;}
+.greentext_alt			{color: #00ff00;}
+.redtext				{color: red; font-weight: bold;}
 .neutraltext			{font-weight: bold;} /* If you feel these should have some color feel free to change */
 
 .marooned				{color: rgb(109, 109, 255); font-weight: bold;}

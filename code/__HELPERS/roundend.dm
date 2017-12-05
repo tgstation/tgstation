@@ -37,19 +37,23 @@
 
 /datum/controller/subsystem/ticker/proc/gather_antag_success_rate()
 	var/list/all_teams = list()
+	
 	for(var/datum/antagonist/A in GLOB.antagonists)
+		var/list/antag_info = list()
+		antag_info["ckey"] = A.owner.key
+		antag_info["antagonist_type"] = A.type
+		antag_info["antagonist_name"] = A.name //For auto and custom roles
+		antag_info["objectives"] = list()
 		var/T = A.get_team()
 		if(T)
 			all_teams |= T
 		if(!A.owner)
 			continue
-		if(!A.objectives.len)
-			SSblackbox.record_feedback("nested tally", "antagonists", 1, list("[A.owner.key]", "[A.type]", "OBJECTIVELESS"))
-		for(var/datum/objective/O in A.objectives)
-			if(O.check_completion())
-				SSblackbox.record_feedback("nested tally", "antagonists", 1, list("[A.owner.key]", "[A.type]", "[O.type]" ,"[O.explanation_text]", "SUCCESS"))
-			else
-				SSblackbox.record_feedback("nested tally", "antagonists", 1, list("[A.owner.key]", "[A.type]", "[O.type]","[O.explanation_text]", "FAIL"))
+		if(A.objectives.len)
+			for(var/datum/objective/O in A.objectives)
+				var/result = O.check_completion() ? "SUCCESS" : "FAIL"
+				antag_info["objectives"] += list(list("objective_type"=O.type,"text"=O.explanation_text,"result"=result))
+		SSblackbox.record_feedback("associative", "antagonists", 1, antag_info)
 	
 	var/gid = 1 //To diffrentiate multiple teams of same type for now. Ideally all of them get names later
 	for(var/datum/objective_team/T in all_teams)
@@ -221,7 +225,8 @@
 	roundend_report.width = 800
 	roundend_report.height = 600
 	roundend_report.set_content(report_parts.Join("<br>"))
-	roundend_report.stylesheets = list("browserOutput.css") //replace ui styling with chat one
+	roundend_report.add_stylesheet("roundend",'html/browser/roundend.css')
+	//roundend_report.stylesheets = list("browserOutput.css") //replace ui styling with chat one
 	//TODO Move these to fresh css file so we have a standard of what goes on the report instead of current soup
 	
 	roundend_report.open(0)
