@@ -45222,10 +45222,8 @@
 /turf/open/floor/wood,
 /area/library)
 "bPU" = (
-/obj/structure/table/wood,
-/obj/item/dice/d20,
-/obj/item/dice,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/machinery/vending/games,
 /turf/open/floor/wood,
 /area/library)
 "bPV" = (
@@ -46953,25 +46951,12 @@
 	dir = 1;
 	network = list("SS13")
 	},
-/obj/item/storage/pill_bottle/dice,
 /obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/library)
 "bTz" = (
 /obj/structure/table/wood,
 /obj/machinery/light,
-/obj/item/toy/cards/deck/cas/black{
-	pixel_x = -2;
-	pixel_y = 6
-	},
-/obj/item/toy/cards/deck{
-	pixel_x = 2;
-	pixel_y = 7
-	},
-/obj/item/toy/cards/deck/cas{
-	pixel_x = -1;
-	pixel_y = 2
-	},
 /turf/open/floor/wood,
 /area/library)
 "bTA" = (
