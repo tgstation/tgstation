@@ -5,6 +5,8 @@
 	icon_state = "robot"
 	maxHealth = 100
 	health = 100
+	macro_default = "robot-default"
+	macro_hotkeys = "robot-hotkeys"
 	bubble_icon = "robot"
 	designation = "Default" //used for displaying the prefix & getting the current module of cyborg
 	has_limbs = 1
@@ -244,6 +246,17 @@
 		to_chat(src, "<span class='userdanger'>Alert: You are dead.</span>")
 		return //won't work if dead
 	robot_alerts()
+
+//for borg hotkeys, here module refers to borg inv slot, not core module
+/mob/living/silicon/robot/verb/cmd_toggle_module(module as num)
+	set name = "Toggle Module"
+	set hidden = 1
+	toggle_module(module)
+
+/mob/living/silicon/robot/verb/cmd_unequip_module()
+	set name = "Unequip Module"
+	set hidden = 1
+	uneq_active()
 
 /mob/living/silicon/robot/proc/robot_alerts()
 	var/dat = ""
