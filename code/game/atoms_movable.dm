@@ -522,6 +522,7 @@
 	. = ..()
 	. -= "Jump to"
 	.["Follow"] = "?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(src)]"
+	.["Get"] = "?_src=holder;[HrefToken()];admingetmovable=[REF(src)]"
 
 /atom/movable/proc/ex_check(ex_id)
 	if(!ex_id)
