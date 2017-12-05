@@ -19,7 +19,7 @@
 	user.gib()
 	new product(loc)
 	qdel(src)
-	return (BRUTELOSS)
+	return MANUAL_SUICIDE
 
 /obj/item/reagent_containers/food/snacks/grown/watermelon
 	seed = /obj/item/seeds/watermelon
