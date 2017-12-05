@@ -31,7 +31,7 @@
 		if(isliving(target))
 			var/mob/living/L = target
 			if(L.reagents)
-				L.reagents.add_reagent(attackInject, rand(1,25))
+				L.reagents.add_reagent(attack_inject, rand(1,25))
 	. = ..()
 
 			
