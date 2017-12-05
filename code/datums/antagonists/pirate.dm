@@ -110,19 +110,18 @@ GLOBAL_LIST_INIT(pirate_loot_cache, typecacheof(list(
 	var/list/parts = list()
 
 	parts += "<span class='header'>Space Pirates were:</span>"
-	for(var/datum/mind/M in pirates)
+	
+	var/all_dead = TRUE
+	for(var/datum/mind/M in members)
 		parts += printplayer(M)
+		if(considered_alive(M))
+			all_dead = FALSE
 
 	parts += "Loot stolen: "
-	var/datum/objective/loot/L = locate() in crew.objectives
+	var/datum/objective/loot/L = locate() in objectives
 	parts += L.loot_listing()
 	parts += "Total loot value : [L.get_loot_value()]/[L.target_value] credits"
 
-	var/all_dead = TRUE
-	for(var/datum/mind/M in crew.members)
-		if(considered_alive(M))
-			all_dead = FALSE
-			break
 	if(L.check_completion() && !all_dead)
 		parts += "<span class='greentext big'>The pirate crew was successful!</span>"
 	else
