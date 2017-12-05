@@ -33,8 +33,6 @@
 
 	sync_mind()
 
-	client.sethotkeys() //set mob specific hotkeys
-
 	//Reload alternate appearances
 	for(var/v in GLOB.active_alternate_appearances)
 		if(!v)
