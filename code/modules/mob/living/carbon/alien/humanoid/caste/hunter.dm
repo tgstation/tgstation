@@ -11,9 +11,10 @@
 	..()
 
 /mob/living/carbon/alien/humanoid/hunter/movement_delay()
-	. = -1		//hunters are sanic
-	. += ..()	//but they still need to slow down on stun
+	. += ..()	//slow down on stun
 
+/mob/living/carbon/alien/humanoid/hunter/handle_ventcrawl(atom/A, var/speed = 10)
+	..()
 
 //Hunter verbs
 
@@ -33,7 +34,6 @@
 		leap_at(A)
 	else
 		..()
-
 
 #define MAX_ALIEN_LEAP_DIST 7
 
@@ -81,12 +81,12 @@
 				sleep(2)//Runtime prevention (infinite bump() calls on hulks)
 				step_towards(src,L)
 			else
-				Knockdown(40, 1, 1)
+				Knockdown(30, 1, 1)
 
 			toggle_leap(0)
 		else if(A.density && !A.CanPass(src))
 			visible_message("<span class ='danger'>[src] smashes into [A]!</span>", "<span class ='alertalien'>[src] smashes into [A]!</span>")
-			Knockdown(40, 1, 1)
+			Knockdown(30, 1, 1)
 
 		if(leaping)
 			leaping = 0
