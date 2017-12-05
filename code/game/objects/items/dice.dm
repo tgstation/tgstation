@@ -64,11 +64,10 @@
 	desc = "A die with four sides. The nerd's caltrop."
 	icon_state = "d4"
 	sides = 4
-	var/caltrop_damage = 4
 
 /obj/item/dice/d4/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/caltrop, caltrop_damage)
+	AddComponent(/datum/component/caltrop, 4)
 
 /obj/item/dice/d6
 	name = "d6"
