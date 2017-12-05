@@ -778,7 +778,7 @@
 			if (!objective)
 				return
 			
-			for(var/datum/antagonist/A in datum_antags)
+			for(var/datum/antagonist/A in antag_datums)
 				if(objective in A.objectives)
 					target_antag = A
 					objective_pos = A.objectives.Find(objective)
@@ -800,7 +800,7 @@
 				if(1)
 					target_antag = antag_datums[1]
 				else
-					var/target = input("Which antagonist gets the objective:", "Antagonist", def_value) as null|anything in datum_antags + "(new custom antag)"
+					var/target = input("Which antagonist gets the objective:", "Antagonist", def_value) as null|anything in antag_datums + "(new custom antag)"
 					if (!target)
 						return
 					else if(target == "(new custom antag)")
@@ -940,7 +940,7 @@
 		if(!istype(objective))
 			return
 		
-		for(var/datum/antagonist/A in datum_antags)
+		for(var/datum/antagonist/A in antag_datums)
 			if(objective in A.objectives)
 				A.objectives -= objective
 				break
