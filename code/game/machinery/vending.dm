@@ -1175,10 +1175,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	resistance_flags = FIRE_PROOF
 	refill_canister = /obj/item/vending_refill/donksoft
 
-#undef STANDARD_CHARGE
-#undef CONTRABAND_CHARGE
-#undef COIN_CHARGE
-
 /obj/machinery/vending/games
 	name = "\improper Good Clean Fun"
 	desc = "Vends things that the Captain and Head of Personnel are probably not going to appreciate you fiddling with instead of your job..."
@@ -1190,3 +1186,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 		/obj/item/toy/cards/deck/cas = 2,
 		/obj/item/toy/cards/deck/cas/black = 2)
 	contraband = list(/obj/item/dice/fudge = 10)
+
+#undef STANDARD_CHARGE
+#undef CONTRABAND_CHARGE
+#undef COIN_CHARGE
