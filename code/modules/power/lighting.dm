@@ -262,14 +262,10 @@
 					burn_out()
 			else
 				use_power = ACTIVE_POWER_USE
-<<<<<<< HEAD
-				set_light(brightness)
-=======
 				set_light(brightness, 1, "#FFFFFF")
 	else if(has_emergency_power() && !turned_off())
 		use_power = IDLE_POWER_USE
 		emergency_mode = TRUE
->>>>>>> feae1796c0... Fixes lighting update recursion (#33258)
 	else
 		use_power = IDLE_POWER_USE
 		set_light(0)
