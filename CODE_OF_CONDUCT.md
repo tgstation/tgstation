@@ -9,10 +9,10 @@ In the interest of fostering an open and welcoming environment, we might from ti
 Examples of behavior that contributes to creating a positive environment include:
 
 * Writing good code
+* Not arguing with maintainers
 
 Examples of unacceptable behavior by participants include:
 
-* Making bad code
 * Doing things the maintainers don't like due to their personal bias
 
 ## Our Responsibilities
