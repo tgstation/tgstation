@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - spellcheck: "Energy values are now measured in joules. What was previously 1 unit is now 1 kJ."
