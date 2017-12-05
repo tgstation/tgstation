@@ -102,10 +102,34 @@
 	for(var/datum/mind/abductor_mind in members)
 		result += printplayer(abductor_mind)
 		result += printobjectives(abductor_mind)
-	if(abductees.len) //TODO: Make these proper antag datums instead
-		result += "<span class='header'>The abductees were:</span>"
-		for(var/datum/mind/abductee_mind in abductees)
-			result += printplayer(abductee_mind)
-			result += printobjectives(abductee_mind)
 
 	return result.Join("<br>")
+
+
+/datum/antagonist/abductee
+	name = "Abductee"
+	roundend_category = "abductees"
+
+/datum/antagonist/abductee/on_gain()
+	give_objective()
+	. = ..()
+
+/datum/antagonist/abductee/greet()
+	to_chat(owner, "<span class='warning'><b>Your mind snaps!</b></span>")
+	to_chat(owner, "<big><span class='warning'><b>You can't remember how you got here...</b></span></big>")
+	owner.announce_objectives()
+
+/datum/antagonist/abductee/proc/give_objective()
+	var/mob/living/carbon/human/H = owner.current
+	if(istype(H))
+		H.gain_trauma_type(BRAIN_TRAUMA_MILD)
+	var/objtype = (prob(75) ? /datum/objective/abductee/random : pick(subtypesof(/datum/objective/abductee/) - /datum/objective/abductee/random))
+	var/datum/objective/abductee/O = new objtype()
+	objectives += O
+	owner.objectives += objectives
+	
+/datum/antagonist/abductee/apply_innate_effects(mob/living/mob_override)
+	SSticker.mode.update_abductor_icons_added(mob_override ? mob_override.mind : owner)
+
+/datum/antagonist/abductee/remove_innate_effects(mob/living/mob_override)
+	SSticker.mode.update_abductor_icons_removed(mob_override ? mob_override.mind : owner)

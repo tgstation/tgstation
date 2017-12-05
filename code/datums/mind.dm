@@ -180,12 +180,6 @@
 	objectives, uplinks, powers etc are all handled.
 */
 
-/datum/mind/proc/remove_objectives()
-	if(objectives.len)
-		for(var/datum/objective/O in objectives)
-			objectives -= O
-			qdel(O)
-
 /datum/mind/proc/remove_changeling()
 	var/datum/antagonist/changeling/C = has_antag_datum(/datum/antagonist/changeling)
 	if(C)
@@ -216,7 +210,6 @@
 	if(src in SSticker.mode.cult)
 		SSticker.mode.remove_cultist(src, 0, 0)
 	special_role = null
-	remove_objectives()
 	remove_antag_equip()
 
 /datum/mind/proc/remove_rev()
