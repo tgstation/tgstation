@@ -498,15 +498,15 @@
 		var/count = 1
 		for(var/datum/objective/objective in objectives)
 			if(objective.check_completion())
-				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <font color='green'><b>Success!</b></font>"
+				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='greentext'>Success!</b></span>"
 			else
-				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='danger'>Fail.</span>"
+				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
 				changelingwin = 0
 			count++
 
 	if(changelingwin)
-		parts += "<font color='green'><b>The changeling was successful!</b></font>"
+		parts += "<span class='greentext'>The changeling was successful!</span>"
 	else
-		parts += "<span class='boldannounce'>The changeling has failed.</span>"
+		parts += "<span class='redtext'>The changeling has failed.</span>"
 
 	return parts.Join("<br>")

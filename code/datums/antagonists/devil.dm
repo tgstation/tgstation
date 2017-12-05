@@ -530,7 +530,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	//sintouched go here for now as a hack , TODO proper antag datum for these
 	var/list/parts = list()
 	if(SSticker.mode.sintouched.len)
-		parts += "<span class='big'><b>The sintouched were:</b></span>"
+		parts += "<span class='header'>The sintouched were:</span>"
 		var/list/sintouchedUnique = uniqueList(SSticker.mode.sintouched)
 		for(var/S in sintouchedUnique)
 			var/datum/mind/sintouched_mind = S

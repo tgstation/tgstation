@@ -66,7 +66,7 @@
 
 /datum/game_mode/wizard/special_report()
 	if(finished)
-		return "<span class='userdanger'>The wizard[(wizards.len>1)?"s":""] has been killed by the crew! The Space Wizards Federation has been taught a lesson they will not soon forget!</span>"
+		return "<span class='redtext big'>The wizard[(wizards.len>1)?"s":""] has been killed by the crew! The Space Wizards Federation has been taught a lesson they will not soon forget!</span>"
 
 //returns whether the mob is a wizard (or apprentice)
 /proc/iswizard(mob/living/M)

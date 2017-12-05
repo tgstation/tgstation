@@ -295,16 +295,16 @@
 	var/wizardwin = 1
 	for(var/datum/objective/objective in objectives)
 		if(objective.check_completion())
-			parts += "<B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+			parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'>Success!</span>"
 		else
-			parts += "<B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+			parts += "<B>Objective #[count]</B>: [objective.explanation_text] <<span class='redtext'>Fail.</span>"
 			wizardwin = 0
 		count++
 
 	if(wizardwin)
-		parts += "<font color='green'><B>The wizard was successful!</B></font>"
+		parts += "<span class='greentext'>The wizard was successful!</span>"
 	else
-		parts += "<font color='red'><B>The wizard has failed!</B></font>"
+		parts += "<span class='redtext'>The wizard has failed!</span>"
 	
 	if(owner.spell_list.len>0)
 		parts += "<B>[owner.name] used the following spells: </B>"

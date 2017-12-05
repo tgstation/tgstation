@@ -94,16 +94,16 @@
 		if(!O.check_completion())
 			won = FALSE
 	if(won)
-		result += "<span class='greenannounce'>[name] team fulfilled its mission!</span>"
+		result += "<span class='greentext big'>[name] team fulfilled its mission!</span>"
 	else
-		result += "<span class='boldannounce'>[name] team failed its mission.</span>"
+		result += "<span class='redtext big'>[name] team failed its mission.</span>"
 
-	result += "<span class='big'><b>The abductors of [name] were:</b></span>"
+	result += "<span class='header'>The abductors of [name] were:</span>"
 	for(var/datum/mind/abductor_mind in members)
 		result += printplayer(abductor_mind)
 		result += printobjectives(abductor_mind)
 	if(abductees.len) //TODO: Make these proper antag datums instead
-		result += "<span class='big'><b>The abductees were:</b></span>"
+		result += "<span class='header'>The abductees were:</span>"
 		for(var/datum/mind/abductee_mind in abductees)
 			result += printplayer(abductee_mind)
 			result += printobjectives(abductee_mind)

@@ -182,9 +182,9 @@
 //TODO What should be displayed for revs in non-rev rounds
 /datum/game_mode/revolution/special_report()
 	if(finished == 1)
-		return "<span class='redtext'>The heads of staff were killed or exiled! The revolutionaries win!</span>"
+		return "<span class='redtext big'>The heads of staff were killed or exiled! The revolutionaries win!</span>"
 	else if(finished == 2)
-		return "<span class='redtext'>The heads of staff managed to stop the revolution!</span>"
+		return "<span class='redtext big'>The heads of staff managed to stop the revolution!</span>"
 
 /datum/game_mode/revolution/generate_report()
 	return "Employee unrest has spiked in recent weeks, with several attempted mutinies on heads of staff. Some crew have been observed using flashbulb devices to blind their colleagues, \

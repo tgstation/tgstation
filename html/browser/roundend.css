@@ -1,5 +1,6 @@
-.greentext				{color: #00FF00;	font-size: 24px; font-weight: bold;}
-.redtext				{color: #FF0000;	font-size: 24px; font-weight: bold;}
+.greentext				{color: #00FF00; font-weight: bold;}
+.redtext				{color: #FF0000; font-weight: bold;}
+.neutraltext			{font-weight: bold;} /* If you feel these should have some color feel free to change */
 
 .marooned				{color: blue; font-weight: bold;}
 
@@ -7,4 +8,6 @@
 
 .big					{font-size: 24px;}
 
-.medaltext				{color: rgb(38, 94, 197);}
+.medaltext				{color: rgb(59, 148, 243);}
+
+.codephrase				{color : red;}

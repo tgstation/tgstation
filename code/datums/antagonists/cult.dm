@@ -278,23 +278,22 @@
 	var/list/parts = list()
 
 	if(check_cult_victory())
-		parts += "<span class='greentext'>The cult has succeeded! Nar-sie has snuffed out another torch in the void!</span>"
+		parts += "<span class='greentext big'>The cult has succeeded! Nar-sie has snuffed out another torch in the void!</span>"
 	else
-		SSticker.mode_result = "loss - staff stopped the cult"
-		parts += "<span class='redtext'>The staff managed to stop the cult! Dark words and heresy are no match for Nanotrasen's finest!</span>"
+		parts += "<span class='redtext big'>The staff managed to stop the cult! Dark words and heresy are no match for Nanotrasen's finest!</span>"
 
 	if(objectives.len)
 		parts += "<b>The cultists' objectives were:</b>"
 		var/count = 1
 		for(var/datum/objective/objective in objectives)
 			if(objective.check_completion())
-				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='greenannounce'>Success!</span>"
+				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='greentext'>Success!</span>"
 			else
-				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='boldannounce'>Fail.</span>"
+				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
 			count++
 	
 	if(members.len)
-		parts += "<br><b>The cultists were:</b>"
+		parts += "<span class='header'>The cultists were:</span>"
 		for(var/datum/mind/M in members)
 			parts += printplayer(M)
 	

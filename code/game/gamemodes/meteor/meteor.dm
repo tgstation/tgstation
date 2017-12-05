@@ -39,16 +39,16 @@
 			++survivors
 
 			if(player.onCentCom())
-				survivor_list += "<b><font size=2>[player.real_name] escaped to the safety of CentCom.</font></b>"
+				survivor_list += "<span class='greentext'>[player.real_name] escaped to the safety of CentCom.</span>"
 			else if(player.onSyndieBase())
-				survivor_list += "<b><font size=2>[player.real_name] escaped to the (relative) safety of Syndicate Space.</font></b>"
+				survivor_list += "<span class='greentext'>[player.real_name] escaped to the (relative) safety of Syndicate Space.</span>"
 			else
-				survivor_list += "<font size=1>[player.real_name] survived but is stranded without any hope of rescue.</font>"
+				survivor_list += "<span class='neutraltext'>[player.real_name] survived but is stranded without any hope of rescue.</span>"
 
 	if(survivors)
-		return "<span class='boldnotice'>The following survived the meteor storm</span>:[survivor_list.Join("<br>")]"
+		return "<span class='header'>The following survived the meteor storm:</span><br>[survivor_list.Join("<br>")]"
 	else
-		return "<span class='boldnotice'>Nobody survived the meteor storm!</span>"
+		return "<span class='redtext big'>Nobody survived the meteor storm!</span>"
 
 /datum/game_mode/meteor/set_round_result()
 	..()

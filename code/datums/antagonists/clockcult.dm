@@ -197,9 +197,9 @@
 	var/list/parts = list()
 	
 	if(check_clockwork_victory())
-		parts += "<span class='bold large_brass'>Ratvar's servants defended the Ark until its activation!</span>"
+		parts += "<span class='greentext big'>Ratvar's servants defended the Ark until its activation!</span>"
 	else
-		parts += "<span class='userdanger'>The Ark was destroyed! Ratvar will rust away for all eternity!</span>"
+		parts += "<span class='redtext big'>The Ark was destroyed! Ratvar will rust away for all eternity!</span>"
 	
 	parts += "<b>The servants' objective was:</b> [CLOCKCULT_OBJECTIVE]."
 	parts += "Ratvar's servants had <b>[GLOB.clockwork_caches]</b> Tinkerer's Caches."
@@ -209,7 +209,7 @@
 			parts += "<b>[i] scripture</b> was: <b>[SSticker.scripture_states[i] ? "UN":""]LOCKED</b>"
 	
 	if(members.len)
-		parts += "<b>Ratvar's servants were:</b>"
+		parts += "<span class='header'>Ratvar's servants were:</span>"
 		for(var/datum/mind/M in members)
 			parts += printplayer(M)
 	

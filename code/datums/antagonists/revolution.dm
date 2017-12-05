@@ -249,26 +249,26 @@
 						num_revs++
 		if(num_survivors)
 			result += "Command's Approval Rating: <B>[100 - round((num_revs/num_survivors)*100, 0.1)]%</B>"
-		var/text = "<br><font size=3><b>The head revolutionaries were:</b></font>"
+		var/text = "<br><span class='header'>The head revolutionaries were:</span>"
 		for(var/datum/mind/headrev in headrevs)
 			text += "<br>[printplayer(headrev, 1)]"
 		text += "<br>"
 		result += text
 
 	if(revs.len)
-		var/text = "<br><font size=3><b>The revolutionaries were:</b></font>"
+		var/text = "<br><span class='header'>The revolutionaries were:</span>"
 		for(var/datum/mind/rev in revs)
 			text += "<br>[printplayer(rev, 1)]"
 		text += "<br>"
 		result += text
 
 	if(revs.len || headrevs.len)
-		var/text = "<br><font size=3><b>The heads of staff were:</b></font>"
+		var/text = "<br><span class='header'>The heads of staff were:</span>"
 		var/list/heads = SSjob.get_all_heads()
 		for(var/datum/mind/head in heads)
 			var/target = (head in targets)
 			if(target)
-				text += "<span class='boldannounce'>Target</span>"
+				text += "<span class='redtext'>Target</span>"
 			text += "<br>[printplayer(head, 1)]"
 		text += "<br>"
 		result += text

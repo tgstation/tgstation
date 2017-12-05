@@ -312,9 +312,9 @@
 		var/count = 1
 		for(var/datum/objective/objective in objectives)
 			if(objective.check_completion())
-				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'>Success!</span>"
 			else
-				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
 				traitorwin = FALSE
 			count++
 
@@ -330,13 +330,13 @@
 	var/special_role_text = lowertext(name)
 
 	if(traitorwin)
-		result += "<font color='green'><B>The [special_role_text] was successful!</B></font>"
+		result += "<span class='greentext'>The [special_role_text] was successful!</greentext>"
 	else
-		result += "<font color='red'><B>The [special_role_text] has failed!</B></font>"
+		result += "<span class='redtext'>The [special_role_text] has failed!</span>"
 		SEND_SOUND(owner.current, 'sound/ambience/ambifailure.ogg')
 
 	return result.Join("<br>")
 
 /datum/antagonist/traitor/roundend_report_footer()
-	return "<br><b>The code phrases were:</b> <font color='red'>[GLOB.syndicate_code_phrase]</font><br>\
-		<b>The code responses were:</b> <font color='red'>[GLOB.syndicate_code_response]</font><br>"
+	return "<br><b>The code phrases were:</b> <span class='codephrase'>[GLOB.syndicate_code_phrase]</span><br>\
+		<b>The code responses were:</b> <span class='codephrase'>[GLOB.syndicate_code_response]</span><br>"
