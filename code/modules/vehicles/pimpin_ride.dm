@@ -47,7 +47,7 @@
 		floorbuffer = TRUE
 		qdel(I)
 		to_chat(user, "<span class='notice'>You upgrade [src] with the floor buffer.</span>")
-		flags_1 |= CLEAN_ON_MOVE_1
+		AddComponent(/datum/component/cleaning)
 		update_icon()
 	else
 		return ..()
@@ -70,3 +70,7 @@
 
 /obj/vehicle/ridden/janicart/upgraded
 	floorbuffer = TRUE
+
+/obj/vehicle/ridden/janicart/upgraded/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cleaning)
