@@ -166,10 +166,6 @@ All ShuttleMove procs go here
 	. = ..()
 	GLOB.cameranet.addCamera(src)
 
-/obj/machinery/telecomms/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
-	. = ..()
-	listening_level = z // Update listening Z, just in case you have telecomm relay on a shuttle
-
 /obj/machinery/mech_bay_recharge_port/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir)
 	. = ..()
 	recharging_turf = get_step(loc, dir)

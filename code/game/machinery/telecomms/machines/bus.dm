@@ -16,13 +16,11 @@
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
-	machinetype = 2
 	netspeed = 40
 	circuit = /obj/item/circuitboard/machine/telecomms/bus
 	var/change_frequency = 0
 
 /obj/machinery/telecomms/bus/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
-
 	if(is_freq_listening(signal))
 		if(change_frequency)
 			if(signal.frequency != FREQ_SYNDICATE)
@@ -30,7 +28,7 @@
 
 		if(!istype(machine_from, /obj/machinery/telecomms/processor) && machine_from != src) // Signal must be ready (stupid assuming machine), let's send it
 			// send to one linked processor unit
-			var/send_to_processor = relay_information(signal, "/obj/machinery/telecomms/processor")
+			var/send_to_processor = relay_information(signal, /obj/machinery/telecomms/processor)
 
 			if(send_to_processor)
 				return
@@ -39,7 +37,7 @@
 			src.receive_information(signal, src)
 
 		// Try sending it!
-		var/list/try_send = list("/obj/machinery/telecomms/server", "/obj/machinery/telecomms/hub", "/obj/machinery/telecomms/broadcaster", "/obj/machinery/telecomms/bus")
+		var/list/try_send = list(/obj/machinery/telecomms/server, /obj/machinery/telecomms/hub, /obj/machinery/telecomms/broadcaster, /obj/machinery/telecomms/bus)
 		var/i = 0
 		for(var/send in try_send)
 			if(i)
