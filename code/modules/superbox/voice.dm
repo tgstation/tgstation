@@ -109,10 +109,9 @@
 
 	. = 0
 
-	// receive_range should be checking the frequency and everything else
+	// can_receive should be checking the frequency and everything else
 	var/dist = get_dist(src, M)
-	var/range = receive_range(VOICE_FREQ, list(position.z))
-	if (range > -1 && dist <= range && M in get_hearers_in_view(range, src))
+	if (can_receive(VOICE_FREQ, list(position.z)) && dist <= canhear_range && M in get_hearers_in_view(canhear_range, src))
 		. |= VOICE_HEAR
 
 	// manually do all the speaking stuff, corresponds to talk_into
