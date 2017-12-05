@@ -106,6 +106,10 @@
 	name = "Fireball"
 	spell_type = /obj/effect/proc_holder/spell/aimed/fireball
 
+/datum/spellbook_entry/fist
+	name = "Fist"
+	spell_type = /obj/effect/proc_holder/spell/aimed/fist
+
 /datum/spellbook_entry/magicm
 	name = "Magic Missile"
 	spell_type = /obj/effect/proc_holder/spell/targeted/projectile/magic_missile
