@@ -1,9 +1,9 @@
 /obj/effect/mine
 	name = "dummy mine"
 	desc = "Better stay away from that thing."
-	density = 0
-	anchored = 1
-	icon = 'icons/obj/weapons.dmi'
+	density = FALSE
+	anchored = TRUE
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "uglymine"
 	var/triggered = 0
 
@@ -22,7 +22,7 @@
 /obj/effect/mine/proc/triggermine(mob/victim)
 	if(triggered)
 		return
-	visible_message("<span class='danger'>[victim] sets off \icon[src] [src]!</span>")
+	visible_message("<span class='danger'>[victim] sets off [icon2html(src, viewers(src))] [src]!</span>")
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
@@ -44,11 +44,11 @@
 
 /obj/effect/mine/stun
 	name = "stun mine"
-	var/stun_time = 8
+	var/stun_time = 80
 
-/obj/effect/mine/stun/mineEffect(mob/victim)
+/obj/effect/mine/stun/mineEffect(mob/living/victim)
 	if(isliving(victim))
-		victim.Weaken(stun_time)
+		victim.Knockdown(stun_time)
 
 /obj/effect/mine/kickmine
 	name = "kick mine"
@@ -95,7 +95,7 @@
 	desc = "pick me up"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "electricity2"
-	density = 0
+	density = FALSE
 	var/duration = 0
 
 /obj/effect/mine/pickup/New()
@@ -121,16 +121,16 @@
 	if(!victim.client || !istype(victim))
 		return
 	to_chat(victim, "<span class='reallybig redtext'>RIP AND TEAR</span>")
-	victim << 'sound/misc/e1m1.ogg'
+	SEND_SOUND(victim, sound('sound/misc/e1m1.ogg'))
 	var/old_color = victim.client.color
 	var/red_splash = list(1,0,0,0.8,0.2,0, 0.8,0,0.2,0.1,0,0)
 	var/pure_red = list(0,0,0,0,0,0,0,0,0,1,0,0)
 
 	spawn(0)
-		new /obj/effect/hallucination/delusion(victim.loc,victim,force_kind="demon",duration=duration,skip_nearby=0)
+		new /datum/hallucination/delusion(victim, TRUE, "demon",duration,0)
 
-	var/obj/item/weapon/twohanded/required/chainsaw/doomslayer/chainsaw = new(victim.loc)
-	chainsaw.flags |= NODROP
+	var/obj/item/twohanded/required/chainsaw/doomslayer/chainsaw = new(victim.loc)
+	chainsaw.flags_1 |= NODROP_1
 	victim.drop_all_held_items()
 	victim.put_in_hands(chainsaw)
 	chainsaw.attack_self(victim)
@@ -142,7 +142,7 @@
 	sleep(10)
 	animate(victim.client,color = old_color, time = duration)//, easing = SINE_EASING|EASE_OUT)
 	sleep(duration)
-	to_chat(victim, "<span class='notice'>Your bloodlust seeps back into the bog of your subconscious and you regain self control.<span>")
+	to_chat(victim, "<span class='notice'>Your bloodlust seeps back into the bog of your subconscious and you regain self control.</span>")
 	qdel(chainsaw)
 	qdel(src)
 

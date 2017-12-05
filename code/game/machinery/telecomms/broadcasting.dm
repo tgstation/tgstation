@@ -102,7 +102,7 @@
 
 	// --- This space left blank for Syndicate data ---
 
-	// --- Centcom radio, yo. ---
+	// --- CentCom radio, yo. ---
 
 	else if(data == 5)
 
@@ -142,9 +142,7 @@
 
 	if(length(receive))
 		// --- This following recording is intended for research and feedback in the use of department radio channels ---
-
-		var/blackbox_msg = "[AM] [AM.say_quote(message, spans)]"
-		SSblackbox.LogBroadcast(blackbox_msg, freq)
+		SSblackbox.LogBroadcast(freq)
 
 	sleep(50)
 	if(!QDELETED(virt)) //It could happen to YOU
@@ -153,7 +151,7 @@
 //Use this to test if an obj can communicate with a Telecommunications Network
 
 /atom/proc/test_telecomms()
-	var/datum/signal/signal = src.telecomms_process()
+	var/datum/signal/signal = telecomms_process()
 	var/turf/position = get_turf(src)
 	return (position.z in signal.data["level"] && signal.data["done"])
 
@@ -184,4 +182,3 @@
 	sleep(rand(10,25))
 
 	return signal
-

@@ -11,7 +11,7 @@
 	var/mob_type = /mob/living/simple_animal/hostile/carp
 	var/spawn_text = "emerges from"
 	status_flags = 0
-	anchored = 1
+	anchored = TRUE
 	AIStatus = AI_OFF
 	a_intent = INTENT_HARM
 	stop_automated_movement = 1
@@ -31,9 +31,8 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/spawner/Life()
-	..()
-	if(!stat)
-		spawn_mob()
+	. = ..()
+	spawn_mob()
 
 /mob/living/simple_animal/hostile/spawner/proc/spawn_mob()
 	if(spawned_mobs.len >= max_mobs)
@@ -58,7 +57,7 @@
 
 /mob/living/simple_animal/hostile/spawner/skeleton
 	name = "bone pit"
-	desc = "A pit full of bones, some still seem to be moving.."
+	desc = "A pit full of bones, and some still seem to be moving..."
 	icon_state = "hole"
 	icon_living = "hole"
 	icon = 'icons/mob/nest.dmi'

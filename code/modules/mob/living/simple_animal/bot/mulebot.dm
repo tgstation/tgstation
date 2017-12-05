@@ -12,8 +12,8 @@
 	name = "\improper MULEbot"
 	desc = "A Multiple Utility Load Effector bot."
 	icon_state = "mulebot0"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	animate_movement=1
 	health = 50
 	maxHealth = 50
@@ -31,6 +31,8 @@
 
 	suffix = ""
 
+	path_image_color = "#7F5200"
+
 	var/atom/movable/load = null
 	var/mob/living/passenger = null
 	var/turf/target				// this is turf to navigate to (location of beacon)
@@ -43,11 +45,11 @@
 	var/auto_pickup = 1 	// true if auto-pickup at beacon
 	var/report_delivery = 1 // true if bot will announce an arrival to a location.
 
-	var/obj/item/weapon/stock_parts/cell/cell
+	var/obj/item/stock_parts/cell/cell
 	var/bloodiness = 0
 
 /mob/living/simple_animal/bot/mulebot/Initialize()
-	..()
+	. = ..()
 	wires = new /datum/wires/mulebot(src)
 	var/datum/job/cargo_tech/J = new/datum/job/cargo_tech
 	access_card.access = J.get_access()
@@ -79,19 +81,17 @@
 	reached_target = 0
 
 /mob/living/simple_animal/bot/mulebot/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(istype(I, /obj/item/screwdriver))
 		..()
 		if(open)
 			on = FALSE
-	else if(istype(I,/obj/item/weapon/stock_parts/cell) && open && !cell)
-		if(!user.drop_item())
+	else if(istype(I, /obj/item/stock_parts/cell) && open && !cell)
+		if(!user.transferItemToLoc(I, src))
 			return
-		var/obj/item/weapon/stock_parts/cell/C = I
-		C.loc = src
-		cell = C
+		cell = I
 		visible_message("[user] inserts a cell into [src].",
 						"<span class='notice'>You insert the new cell into [src].</span>")
-	else if(istype(I, /obj/item/weapon/crowbar) && open && cell)
+	else if(istype(I, /obj/item/crowbar) && open && cell)
 		cell.add_fingerprint(usr)
 		cell.loc = loc
 		cell = null
@@ -114,12 +114,12 @@
 
 /mob/living/simple_animal/bot/mulebot/emag_act(mob/user)
 	if(emagged < 1)
-		emagged = 1
+		emagged = TRUE
 	if(!open)
 		locked = !locked
-		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the [src]'s controls!</span>")
+		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] [src]'s controls!</span>")
 	flick("mulebot-emagged", src)
-	playsound(loc, 'sound/effects/sparks1.ogg', 100, 0)
+	playsound(src, "sparks", 100, 0)
 
 /mob/living/simple_animal/bot/mulebot/update_icon()
 	if(open)
@@ -162,7 +162,7 @@
 			return
 		ui_interact(user)
 
-/mob/living/simple_animal/bot/mulebot/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+/mob/living/simple_animal/bot/mulebot/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -284,22 +284,22 @@
 	dat += "<b>Power level:</b> [cell ? cell.percent() : 0]%"
 
 	if(locked && !ai && !IsAdminGhost(user))
-		dat += "&nbsp;<br /><div class='notice'>Controls are locked</div><A href='byond://?src=\ref[src];op=unlock'>Unlock Controls</A>"
+		dat += "&nbsp;<br /><div class='notice'>Controls are locked</div><A href='byond://?src=[REF(src)];op=unlock'>Unlock Controls</A>"
 	else
-		dat += "&nbsp;<br /><div class='notice'>Controls are unlocked</div><A href='byond://?src=\ref[src];op=lock'>Lock Controls</A><BR><BR>"
+		dat += "&nbsp;<br /><div class='notice'>Controls are unlocked</div><A href='byond://?src=[REF(src)];op=lock'>Lock Controls</A><BR><BR>"
 
-		dat += "<A href='byond://?src=\ref[src];op=power'>Toggle Power</A><BR>"
-		dat += "<A href='byond://?src=\ref[src];op=stop'>Stop</A><BR>"
-		dat += "<A href='byond://?src=\ref[src];op=go'>Proceed</A><BR>"
-		dat += "<A href='byond://?src=\ref[src];op=home'>Return to Home</A><BR>"
-		dat += "<A href='byond://?src=\ref[src];op=destination'>Set Destination</A><BR>"
-		dat += "<A href='byond://?src=\ref[src];op=setid'>Set Bot ID</A><BR>"
-		dat += "<A href='byond://?src=\ref[src];op=sethome'>Set Home</A><BR>"
-		dat += "<A href='byond://?src=\ref[src];op=autoret'>Toggle Auto Return Home</A> ([auto_return ? "On":"Off"])<BR>"
-		dat += "<A href='byond://?src=\ref[src];op=autopick'>Toggle Auto Pickup Crate</A> ([auto_pickup ? "On":"Off"])<BR>"
-		dat += "<A href='byond://?src=\ref[src];op=report'>Toggle Delivery Reporting</A> ([report_delivery ? "On" : "Off"])<BR>"
+		dat += "<A href='byond://?src=[REF(src)];op=power'>Toggle Power</A><BR>"
+		dat += "<A href='byond://?src=[REF(src)];op=stop'>Stop</A><BR>"
+		dat += "<A href='byond://?src=[REF(src)];op=go'>Proceed</A><BR>"
+		dat += "<A href='byond://?src=[REF(src)];op=home'>Return to Home</A><BR>"
+		dat += "<A href='byond://?src=[REF(src)];op=destination'>Set Destination</A><BR>"
+		dat += "<A href='byond://?src=[REF(src)];op=setid'>Set Bot ID</A><BR>"
+		dat += "<A href='byond://?src=[REF(src)];op=sethome'>Set Home</A><BR>"
+		dat += "<A href='byond://?src=[REF(src)];op=autoret'>Toggle Auto Return Home</A> ([auto_return ? "On":"Off"])<BR>"
+		dat += "<A href='byond://?src=[REF(src)];op=autopick'>Toggle Auto Pickup Crate</A> ([auto_pickup ? "On":"Off"])<BR>"
+		dat += "<A href='byond://?src=[REF(src)];op=report'>Toggle Delivery Reporting</A> ([report_delivery ? "On" : "Off"])<BR>"
 		if(load)
-			dat += "<A href='byond://?src=\ref[src];op=unload'>Unload Now</A><BR>"
+			dat += "<A href='byond://?src=[REF(src)];op=unload'>Unload Now</A><BR>"
 		dat += "<div class='notice'>The maintenance hatch is closed.</div>"
 
 	return dat
@@ -343,7 +343,7 @@
 		return
 
 	var/obj/structure/closet/crate/CRATE
-	if(istype(AM,/obj/structure/closet/crate))
+	if(istype(AM, /obj/structure/closet/crate))
 		CRATE = AM
 	else
 		if(!wires.is_cut(WIRE_LOADCHECK))
@@ -379,12 +379,11 @@
 	return FALSE
 
 /mob/living/simple_animal/bot/mulebot/post_buckle_mob(mob/living/M)
-	if(M in buckled_mobs) //post buckling
-		M.pixel_y = initial(M.pixel_y) + 9
-		if(M.layer < layer)
-			M.layer = layer + 0.01
+	M.pixel_y = initial(M.pixel_y) + 9
+	if(M.layer < layer)
+		M.layer = layer + 0.01
 
-	else //post unbuckling
+/mob/living/simple_animal/bot/mulebot/post_unbuckle_mob(mob/living/M)
 		load = null
 		M.layer = initial(M.layer)
 		M.pixel_y = initial(M.pixel_y)
@@ -428,11 +427,10 @@
 
 /mob/living/simple_animal/bot/mulebot/handle_automated_action()
 	if(!has_power())
-		on = 0
+		on = FALSE
 		return
 	if(on)
 		var/speed = (wires.is_cut(WIRE_MOTOR1) ? 0 : 1) + (wires.is_cut(WIRE_MOTOR2) ? 0 : 2)
-		//to_chat(world, "speed: [speed]")
 		var/num_steps = 0
 		switch(speed)
 			if(0)
@@ -474,8 +472,6 @@
 					path -= next
 					return
 				if(isturf(next))
-					//to_chat(world, "at ([x],[y]) moving to ([next.x],[next.y])")
-
 					if(bloodiness)
 						var/obj/effect/decal/cleanable/blood/tracks/B = new(loc)
 						if(blood_DNA && blood_DNA.len)
@@ -495,9 +491,9 @@
 
 					var/oldloc = loc
 					var/moved = step_towards(src, next)	// attempt to move
-					if(cell) cell.use(1)
+					if(cell)
+						cell.use(1)
 					if(moved && oldloc!=loc)	// successful move
-						//to_chat(world, "Successful move.")
 						blockcount = 0
 						path -= loc
 
@@ -508,7 +504,6 @@
 
 					else		// failed to move
 
-						//to_chat(world, "Unable to move.")
 						blockcount++
 						mode = BOT_BLOCKED
 						if(blockcount == 3)
@@ -528,16 +523,13 @@
 						return
 				else
 					buzz(ANNOYED)
-					//to_chat(world, "Bad turf.")
 					mode = BOT_NAV
 					return
 			else
-				//to_chat(world, "No path.")
 				mode = BOT_NAV
 				return
 
 		if(BOT_NAV)	// calculate new path
-			//to_chat(world, "Calc new path.")
 			mode = BOT_WAIT_FOR_NAV
 			spawn(0)
 				calc_path()
@@ -596,7 +588,7 @@
 		if(pathset) //The AI called us here, so notify it of our arrival.
 			loaddir = dir //The MULE will attempt to load a crate in whatever direction the MULE is "facing".
 			if(calling_ai)
-				to_chat(calling_ai, "<span class='notice'>\icon[src] [src] wirelessly plays a chiming sound!</span>")
+				to_chat(calling_ai, "<span class='notice'>[icon2html(src, calling_ai)] [src] wirelessly plays a chiming sound!</span>")
 				playsound(calling_ai, 'sound/machines/chime.ogg',40, 0)
 				calling_ai = null
 				radio_channel = "AI Private" //Report on AI Private instead if the AI is controlling us.
@@ -632,19 +624,17 @@
 	return
 
 // called when bot bumps into anything
-/mob/living/simple_animal/bot/mulebot/Bump(atom/obs)
+/mob/living/simple_animal/bot/mulebot/Collide(atom/obs)
 	if(wires.is_cut(WIRE_AVOIDANCE))	// usually just bumps, but if avoidance disabled knock over mobs
-		var/mob/M = obs
-		if(ismob(M))
-			if(iscyborg(M))
-				visible_message("<span class='danger'>[src] bumps into [M]!</span>")
+		if(isliving(obs))
+			var/mob/living/L = obs
+			if(iscyborg(L))
+				visible_message("<span class='danger'>[src] bumps into [L]!</span>")
 			else
 				if(!paicard)
-					add_logs(src, M, "knocked down")
-					visible_message("<span class='danger'>[src] knocks over [M]!</span>")
-					M.stop_pulling()
-					M.Stun(8)
-					M.Weaken(5)
+					add_logs(src, L, "knocked down")
+					visible_message("<span class='danger'>[src] knocks over [L]!</span>")
+					L.Knockdown(160)
 	return ..()
 
 // called from mob/living/carbon/human/Crossed()
@@ -652,7 +642,7 @@
 /mob/living/simple_animal/bot/mulebot/proc/RunOver(mob/living/carbon/human/H)
 	add_logs(src, H, "run over", null, "(DAMTYPE: [uppertext(BRUTE)])")
 	H.visible_message("<span class='danger'>[src] drives over [H]!</span>", \
-					"<span class='userdanger'>[src] drives over you!<span>")
+					"<span class='userdanger'>[src] drives over you!</span>")
 	playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 
 	var/damage = rand(5,15)
@@ -708,14 +698,14 @@
 
 /mob/living/simple_animal/bot/mulebot/explode()
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
-	var/turf/Tsec = get_turf(src)
+	var/atom/Tsec = drop_location()
 
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/stack/cable_coil/cut(Tsec)
 	if(cell)
-		cell.loc = Tsec
+		cell.forceMove(Tsec)
 		cell.update_icon()
 		cell = null
 
@@ -750,4 +740,4 @@
 #undef DELIGHT
 
 /obj/machinery/bot_core/mulebot
-	req_access = list(GLOB.access_cargo)
+	req_access = list(ACCESS_CARGO)

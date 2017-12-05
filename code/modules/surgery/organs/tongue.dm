@@ -3,22 +3,24 @@
 	desc = "A fleshy muscle mostly used for lying."
 	icon_state = "tonguenormal"
 	zone = "mouth"
-	slot = "tongue"
+	slot = ORGAN_SLOT_TONGUE
 	attack_verb = list("licked", "slobbered", "slapped", "frenched", "tongued")
 	var/list/languages_possible
 	var/say_mod = null
 	var/taste_sensitivity = 15 // lower is more sensitive.
-
-/obj/item/organ/tongue/Initialize(mapload)
-	. = ..()
-	languages_possible = typecacheof(list(
+	var/static/list/languages_possible_base = typecacheof(list(
 		/datum/language/common,
 		/datum/language/draconic,
 		/datum/language/codespeak,
 		/datum/language/monkey,
 		/datum/language/narsie,
+		/datum/language/beachbum,
 		/datum/language/ratvar
 	))
+
+/obj/item/organ/tongue/Initialize(mapload)
+	. = ..()
+	languages_possible = languages_possible_base
 
 /obj/item/organ/tongue/get_spans()
 	return list()
@@ -80,14 +82,13 @@
 	//Hacks
 	var/mob/living/carbon/human/user = usr
 	var/rendered = "<span class='abductor'><b>[user.name]:</b> [message]</span>"
-	for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
-		var/obj/item/organ/tongue/T = H.getorganslot("tongue")
+	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
+		var/obj/item/organ/tongue/T = H.getorganslot(ORGAN_SLOT_TONGUE)
 		if(!T || T.type != type)
 			continue
-		else if(H.dna && H.dna.species.id == "abductor" && user.dna && user.dna.species.id == "abductor")
-			var/datum/species/abductor/Ayy = user.dna.species
-			var/datum/species/abductor/Byy = H.dna.species
-			if(Ayy.team != Byy.team)
+		if(H.dna && H.dna.species.id == "abductor" && user.dna && user.dna.species.id == "abductor")
+			var/datum/antagonist/abductor/A = user.mind.has_antag_datum(ANTAG_DATUM_ABDUCTOR)
+			if(!A || !(H.mind in A.team.members))
 				continue
 		to_chat(H, rendered)
 	for(var/mob/M in GLOB.dead_mob_list)
@@ -124,15 +125,16 @@
 	icon_state = "tonguexeno"
 	say_mod = "hisses"
 	taste_sensitivity = 10 // LIZARDS ARE ALIENS CONFIRMED
-
-/obj/item/organ/tongue/alien/Initialize(mapload)
-	. = ..()
-	languages_possible = typecacheof(list(
+	var/static/list/languages_possible_alien = typecacheof(list(
 		/datum/language/xenocommon,
 		/datum/language/common,
 		/datum/language/draconic,
 		/datum/language/ratvar,
 		/datum/language/monkey))
+
+/obj/item/organ/tongue/alien/Initialize(mapload)
+	. = ..()
+	languages_possible = languages_possible_alien
 
 /obj/item/organ/tongue/alien/TongueSpeech(var/message)
 	playsound(owner, "hiss", 25, 1, 1)

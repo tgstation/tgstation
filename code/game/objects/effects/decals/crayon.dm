@@ -5,49 +5,26 @@
 	icon_state = "rune1"
 	gender = NEUTER
 	var/do_icon_rotate = TRUE
+	var/rotation = 0
+	var/paint_colour = "#FFFFFF"
 
-/obj/effect/decal/cleanable/crayon/Initialize(mapload, main = "#FFFFFF", var/type = "rune1", var/e_name = "rune", var/rotation = 0, var/alt_icon = null)
-	..()
-	
-	name = e_name
+/obj/effect/decal/cleanable/crayon/Initialize(mapload, main, type, e_name, graf_rot, alt_icon = null)
+	. = ..()
+
+	if(e_name)
+		name = e_name
 	desc = "A [name] vandalizing the station."
-	if(type == "poseur tag")
-		type = pick(GLOB.gang_name_pool)
-
 	if(alt_icon)
 		icon = alt_icon
-	icon_state = type
-
+	if(type)
+		icon_state = type
+	if(graf_rot)
+		rotation = graf_rot
 	if(rotation && do_icon_rotate)
 		var/matrix/M = matrix()
 		M.Turn(rotation)
 		src.transform = M
+	if(main)
+		paint_colour = main
+	add_atom_colour(paint_colour, FIXED_COLOUR_PRIORITY)
 
-	add_atom_colour(main, FIXED_COLOUR_PRIORITY)
-
-
-/obj/effect/decal/cleanable/crayon/gang
-	layer = HIGH_OBJ_LAYER //Harder to hide
-	do_icon_rotate = FALSE //These are designed to always face south, so no rotation please.
-	var/datum/gang/gang
-
-/obj/effect/decal/cleanable/crayon/gang/Initialize(mapload, var/datum/gang/G, var/e_name = "gang tag", var/rotation = 0)
-	if(!type || !G)
-		qdel(src)
-
-	var/area/territory = get_area(src)
-	gang = G
-	var/newcolor = G.color_hex
-	icon_state = G.name
-	G.territory_new |= list(territory.type = territory.name)
-
-	..(mapload, newcolor, icon_state, e_name, rotation)
-
-/obj/effect/decal/cleanable/crayon/gang/Destroy()
-	var/area/territory = get_area(src)
-
-	if(gang)
-		gang.territory -= territory.type
-		gang.territory_new -= territory.type
-		gang.territory_lost |= list(territory.type = territory.name)
-	return ..()

@@ -9,7 +9,7 @@
 #define RADIATION_DURATION_MAX 30
 #define RADIATION_ACCURACY_MULTIPLIER 3			//larger is less accurate
 
-#define RADIATION_IRRADIATION_MULTIPLIER 0.2	//multiplier for how much radiation a test subject recieves
+#define RADIATION_IRRADIATION_MULTIPLIER 1		//multiplier for how much radiation a test subject recieves
 
 #define SCANNER_ACTION_SE 1
 #define SCANNER_ACTION_UI 2
@@ -21,31 +21,30 @@
 	desc = "Scan DNA."
 	icon_screen = "dna"
 	icon_keyboard = "med_key"
-	density = 1
-	circuit = /obj/item/weapon/circuitboard/computer/scan_consolenew
+	density = TRUE
+	circuit = /obj/item/circuitboard/computer/scan_consolenew
 	var/radduration = 2
 	var/radstrength = 1
 
 	var/list/buffer[NUMBER_OF_BUFFERS]
 
-	var/injectorready = 0	//Quick fix for issue 286 (screwdriver the screen twice to restore injector)	-Pete
+	var/injectorready = 0	//world timer cooldown var
 	var/current_screen = "mainmenu"
 	var/obj/machinery/dna_scannernew/connected = null
-	var/obj/item/weapon/disk/data/diskette = null
+	var/obj/item/disk/data/diskette = null
 	var/list/delayed_action = null
-	anchored = 1
-	use_power = 1
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 400
 
 	light_color = LIGHT_COLOR_BLUE
 
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I, mob/user, params)
-	if (istype(I, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
+	if (istype(I, /obj/item/disk/data)) //INSERT SOME DISKETTES
 		if (!src.diskette)
-			if(!user.drop_item())
+			if (!user.transferItemToLoc(I,src))
 				return
-			I.loc = src
 			src.diskette = I
 			to_chat(user, "<span class='notice'>You insert [I].</span>")
 			src.updateUsrDialog()
@@ -53,18 +52,13 @@
 	else
 		return ..()
 
-/obj/machinery/computer/scan_consolenew/New()
-	..()
-
-	spawn(5)
-		for(dir in list(NORTH,EAST,SOUTH,WEST))
-			connected = locate(/obj/machinery/dna_scannernew, get_step(src, dir))
-			if(!isnull(connected))
-				break
-		spawn(250)
-			injectorready = 1
-		return
-	return
+/obj/machinery/computer/scan_consolenew/Initialize()
+	. = ..()
+	for(var/direction in GLOB.cardinals)
+		connected = locate(/obj/machinery/dna_scannernew, get_step(src, direction))
+		if(!isnull(connected))
+			break
+	injectorready = world.time + INJECTOR_TIMEOUT
 
 /obj/machinery/computer/scan_consolenew/attack_hand(mob/user)
 	if(..())
@@ -72,7 +66,8 @@
 	ShowInterface(user)
 
 /obj/machinery/computer/scan_consolenew/proc/ShowInterface(mob/user, last_change)
-	if(!user) return
+	if(!user)
+		return
 	var/datum/browser/popup = new(user, "scannernew", "DNA Modifier Console", 800, 630) // Set up the popup browser window
 	if(!(in_range(src, user) || issilicon(user)))
 		popup.close()
@@ -80,13 +75,13 @@
 	popup.add_stylesheet("scannernew", 'html/browser/scannernew.css')
 
 	var/mob/living/carbon/viable_occupant
-	var/occupant_status = "<div class='line'><div class='statusLabel'>Subject Status:</div><div class='statusValue'>"
+	var/list/occupant_status = list("<div class='line'><div class='statusLabel'>Subject Status:</div><div class='statusValue'>")
 	var/scanner_status
-	var/temp_html
+	var/list/temp_html = list()
 	if(connected && connected.is_operational())
 		if(connected.occupant)	//set occupant_status message
 			viable_occupant = connected.occupant
-			if(viable_occupant.has_dna() && (!(viable_occupant.disabilities & NOCLONE) || (connected.scan_level == 3)))	//occupent is viable for dna modification
+			if(viable_occupant.has_dna() && (!(RADIMMUNE in viable_occupant.dna.species.species_traits)) && (!(viable_occupant.disabilities & NOCLONE) || (connected.scan_level == 3))) //occupant is viable for dna modification
 				occupant_status += "[viable_occupant.name] => "
 				switch(viable_occupant.stat)
 					if(CONSCIOUS)
@@ -97,7 +92,7 @@
 						occupant_status += "<span class='bad'>DEAD</span>"
 				occupant_status += "</div></div>"
 				occupant_status += "<div class='line'><div class='statusLabel'>Health:</div><div class='progressBar'><div style='width: [viable_occupant.health]%;' class='progressFill good'></div></div><div class='statusValue'>[viable_occupant.health] %</div></div>"
-				occupant_status += "<div class='line'><div class='statusLabel'>Radiation Level:</div><div class='progressBar'><div style='width: [viable_occupant.radiation]%;' class='progressFill bad'></div></div><div class='statusValue'>[viable_occupant.radiation] %</div></div>"
+				occupant_status += "<div class='line'><div class='statusLabel'>Radiation Level:</div><div class='progressBar'><div style='width: [viable_occupant.radiation/(RAD_MOB_SAFE/100)]%;' class='progressFill bad'></div></div><div class='statusValue'>[viable_occupant.radiation/(RAD_MOB_SAFE/100)] %</div></div>"
 				var/rejuvenators = viable_occupant.reagents.get_reagent_amount("potass_iodide")
 				occupant_status += "<div class='line'><div class='statusLabel'>Rejuvenators:</div><div class='progressBar'><div style='width: [round((rejuvenators / REJUVENATORS_MAX) * 100)]%;' class='progressFill highlight'></div></div><div class='statusValue'>[rejuvenators] units</div></div>"
 				occupant_status += "<div class='line'><div class='statusLabel'>Unique Enzymes :</div><div class='statusValue'><span class='highlight'>[viable_occupant.dna.unique_enzymes]</span></div></div>"
@@ -122,9 +117,9 @@
 		occupant_status += "<span class='bad'>----</span></div></div>"
 		scanner_status += "<span class='bad'>Error: No scanner detected</span>"
 
-	var/status = "<div class='statusDisplay'>"
+	var/list/status = list("<div class='statusDisplay'>")
 	status += "<div class='line'><div class='statusLabel'>Scanner:</div><div class='statusValue'>[scanner_status]</div></div>"
-	status += "[occupant_status]"
+	status += occupant_status
 
 
 	status += "<div class='line'><h3>Radiation Emitter Status</h3></div>"
@@ -148,33 +143,33 @@
 	status += "<div class='line'><div class='statusLabel'>Pulse Duration:</div><div class='statusValue'>[radduration]</div></div>"
 	status += "<div class='line'><div class='statusLabel'>&nbsp;&nbsp;\> Accuracy:</div><div class='statusValue'>[chance_to_hit]</div></div>"
 	status += "<br></div>" // Close statusDisplay div
-	var/buttons = "<a href='?src=\ref[src];'>Scan</a> "
+	var/list/buttons = list("<a href='?src=[REF(src)];'>Scan</a> ")
 	if(connected)
-		buttons += " <a href='?src=\ref[src];task=toggleopen;'>[connected.state_open ? "Close" : "Open"] Scanner</a> "
+		buttons += " <a href='?src=[REF(src)];task=toggleopen;'>[connected.state_open ? "Close" : "Open"] Scanner</a> "
 		if (connected.state_open)
 			buttons += "<span class='linkOff'>[connected.locked ? "Unlock" : "Lock"] Scanner</span> "
 		else
-			buttons += "<a href='?src=\ref[src];task=togglelock;'>[connected.locked ? "Unlock" : "Lock"] Scanner</a> "
+			buttons += "<a href='?src=[REF(src)];task=togglelock;'>[connected.locked ? "Unlock" : "Lock"] Scanner</a> "
 	else
 		buttons += "<span class='linkOff'>Open Scanner</span> <span class='linkOff'>Lock Scanner</span> "
 	if(viable_occupant)
-		buttons += "<a href='?src=\ref[src];task=rejuv'>Inject Rejuvenators</a> "
+		buttons += "<a href='?src=[REF(src)];task=rejuv'>Inject Rejuvenators</a> "
 	else
 		buttons += "<span class='linkOff'>Inject Rejuvenators</span> "
 	if(diskette)
-		buttons += "<a href='?src=\ref[src];task=ejectdisk'>Eject Disk</a> "
+		buttons += "<a href='?src=[REF(src)];task=ejectdisk'>Eject Disk</a> "
 	else
 		buttons += "<span class='linkOff'>Eject Disk</span> "
 	if(current_screen == "buffer")
-		buttons += "<a href='?src=\ref[src];task=screen;text=mainmenu;'>Radiation Emitter Menu</a> "
+		buttons += "<a href='?src=[REF(src)];task=screen;text=mainmenu;'>Radiation Emitter Menu</a> "
 	else
-		buttons += "<a href='?src=\ref[src];task=screen;text=buffer;'>Buffer Menu</a> "
+		buttons += "<a href='?src=[REF(src)];task=screen;text=buffer;'>Buffer Menu</a> "
 
 	switch(current_screen)
 		if("working")
 			temp_html += status
 			temp_html += "<h1>System Busy</h1>"
-			temp_html += "Working ... Please wait ([radduration] Seconds)"
+			temp_html += "Working ... Please wait ([DisplayTimeText(radduration*10)])"
 		if("buffer")
 			temp_html += status
 			temp_html += buttons
@@ -187,12 +182,12 @@
 					if( !buffer_slot || !buffer_slot.len || !buffer_slot["name"] || !((buffer_slot["UI"] && buffer_slot["UE"]) || buffer_slot["SE"]) )
 						temp_html += "<br>\tNo Data"
 						if(viable_occupant)
-							temp_html += "<br><a href='?src=\ref[src];task=setbuffer;num=[i];'>Save to Buffer</a> "
+							temp_html += "<br><a href='?src=[REF(src)];task=setbuffer;num=[i];'>Save to Buffer</a> "
 						else
 							temp_html += "<br><span class='linkOff'>Save to Buffer</span> "
 						temp_html += "<span class='linkOff'>Clear Buffer</span> "
 						if(diskette)
-							temp_html += "<a href='?src=\ref[src];task=loaddisk;num=[i];'>Load from Disk</a> "
+							temp_html += "<a href='?src=[REF(src)];task=loaddisk;num=[i];'>Load from Disk</a> "
 						else
 							temp_html += "<span class='linkOff'>Load from Disk</span> "
 						temp_html += "<span class='linkOff'>Save to Disk</span> "
@@ -203,18 +198,18 @@
 						var/name = buffer_slot["name"]
 						var/label = buffer_slot["label"]
 						var/blood_type = buffer_slot["blood_type"]
-						temp_html += "<br>\t<a href='?src=\ref[src];task=setbufferlabel;num=[i];'>Label</a>: [label ? label : name]"
+						temp_html += "<br>\t<a href='?src=[REF(src)];task=setbufferlabel;num=[i];'>Label</a>: [label ? label : name]"
 						temp_html += "<br>\tSubject: [name]"
 						if(ue && name && blood_type)
 							temp_html += "<br>\tBlood Type: [blood_type]"
 							temp_html += "<br>\tUE: [ue] "
 							if(viable_occupant)
-								temp_html += "<a href='?src=\ref[src];task=transferbuffer;num=[i];text=ue'>Occupant</a> "
+								temp_html += "<a href='?src=[REF(src)];task=transferbuffer;num=[i];text=ue'>Occupant</a> "
 							else
 								temp_html += "<span class='linkOff'>Occupant</span>"
-							temp_html += "<a href='?src=\ref[src];task=setdelayed;num=[i];delayaction=[SCANNER_ACTION_UE]'>Occupant:Delayed</a> "
-							if(injectorready)
-								temp_html += "<a href='?src=\ref[src];task=injector;num=[i];text=ue'>Injector</a>"
+							temp_html += "<a href='?src=[REF(src)];task=setdelayed;num=[i];delayaction=[SCANNER_ACTION_UE]'>Occupant:Delayed</a> "
+							if(injectorready < world.time)
+								temp_html += "<a href='?src=[REF(src)];task=injector;num=[i];text=ue'>Injector</a>"
 							else
 								temp_html += "<span class='linkOff'>Injector</span>"
 						else
@@ -223,12 +218,12 @@
 						if(ui)
 							temp_html += "<br>\tUI: [ui] "
 							if(viable_occupant)
-								temp_html += "<a href='?src=\ref[src];task=transferbuffer;num=[i];text=ui'>Occupant</a> "
+								temp_html += "<a href='?src=[REF(src)];task=transferbuffer;num=[i];text=ui'>Occupant</a> "
 							else
 								temp_html += "<span class='linkOff'>Occupant</span>"
-							temp_html += "<a href='?src=\ref[src];task=setdelayed;num=[i];delayaction=[SCANNER_ACTION_UI]'>Occupant:Delayed</a> "
-							if(injectorready)
-								temp_html += "<a href='?src=\ref[src];task=injector;num=[i];text=ui'>Injector</a>"
+							temp_html += "<a href='?src=[REF(src)];task=setdelayed;num=[i];delayaction=[SCANNER_ACTION_UI]'>Occupant:Delayed</a> "
+							if(injectorready < world.time)
+								temp_html += "<a href='?src=[REF(src)];task=injector;num=[i];text=ui'>Injector</a>"
 							else
 								temp_html += "<span class='linkOff'>Injector</span>"
 						else
@@ -236,38 +231,38 @@
 						if(ue && name && blood_type && ui)
 							temp_html += "<br>\tUI+UE: [ui]/[ue] "
 							if(viable_occupant)
-								temp_html += "<a href='?src=\ref[src];task=transferbuffer;num=[i];text=mixed'>Occupant</a> "
+								temp_html += "<a href='?src=[REF(src)];task=transferbuffer;num=[i];text=mixed'>Occupant</a> "
 							else
 								temp_html += "<span class='linkOff'>Occupant</span>"
-							temp_html += "<a href='?src=\ref[src];task=setdelayed;num=[i];delayaction=[SCANNER_ACTION_MIXED]'>Occupant:Delayed</a> "
-							if(injectorready)
-								temp_html += "<a href='?src=\ref[src];task=injector;num=[i];text=mixed'>UI+UE Injector</a>"
+							temp_html += "<a href='?src=[REF(src)];task=setdelayed;num=[i];delayaction=[SCANNER_ACTION_MIXED]'>Occupant:Delayed</a> "
+							if(injectorready < world.time)
+								temp_html += "<a href='?src=[REF(src)];task=injector;num=[i];text=mixed'>UI+UE Injector</a>"
 							else
 								temp_html += "<span class='linkOff'>UI+UE Injector</span>"
 						if(se)
 							temp_html += "<br>\tSE: [se] "
 							if(viable_occupant)
-								temp_html += "<a href='?src=\ref[src];task=transferbuffer;num=[i];text=se'>Occupant</a> "
+								temp_html += "<a href='?src=[REF(src)];task=transferbuffer;num=[i];text=se'>Occupant</a> "
 							else
 								temp_html += "<span class='linkOff'>Occupant</span> "
-							temp_html += "<a href='?src=\ref[src];task=setdelayed;num=[i];delayaction=[SCANNER_ACTION_SE]'>Occupant:Delayed</a> "
-							if(injectorready)
-								temp_html += "<a href='?src=\ref[src];task=injector;num=[i];text=se'>Injector</a>"
+							temp_html += "<a href='?src=[REF(src)];task=setdelayed;num=[i];delayaction=[SCANNER_ACTION_SE]'>Occupant:Delayed</a> "
+							if(injectorready < world.time )
+								temp_html += "<a href='?src=[REF(src)];task=injector;num=[i];text=se'>Injector</a>"
 							else
 								temp_html += "<span class='linkOff'>Injector</span>"
 						else
 							temp_html += "<br>\tSE: No Data"
 						if(viable_occupant)
-							temp_html += "<br><a href='?src=\ref[src];task=setbuffer;num=[i];'>Save to Buffer</a> "
+							temp_html += "<br><a href='?src=[REF(src)];task=setbuffer;num=[i];'>Save to Buffer</a> "
 						else
 							temp_html += "<br><span class='linkOff'>Save to Buffer</span> "
-						temp_html += "<a href='?src=\ref[src];task=clearbuffer;num=[i];'>Clear Buffer</a> "
+						temp_html += "<a href='?src=[REF(src)];task=clearbuffer;num=[i];'>Clear Buffer</a> "
 						if(diskette)
-							temp_html += "<a href='?src=\ref[src];task=loaddisk;num=[i];'>Load from Disk</a> "
+							temp_html += "<a href='?src=[REF(src)];task=loaddisk;num=[i];'>Load from Disk</a> "
 						else
 							temp_html += "<span class='linkOff'>Load from Disk</span> "
 						if(diskette && !diskette.read_only)
-							temp_html += "<a href='?src=\ref[src];task=savedisk;num=[i];'>Save to Disk</a> "
+							temp_html += "<a href='?src=[REF(src)];task=savedisk;num=[i];'>Save to Disk</a> "
 						else
 							temp_html += "<span class='linkOff'>Save to Disk</span> "
 		else
@@ -275,8 +270,8 @@
 			temp_html += buttons
 			temp_html += "<h1>Radiation Emitter Menu</h1>"
 
-			temp_html += "<a href='?src=\ref[src];task=setstrength;num=[radstrength-1];'>--</a> <a href='?src=\ref[src];task=setstrength;'>Output Level</a> <a href='?src=\ref[src];task=setstrength;num=[radstrength+1];'>++</a>"
-			temp_html += "<br><a href='?src=\ref[src];task=setduration;num=[radduration-1];'>--</a> <a href='?src=\ref[src];task=setduration;'>Pulse Duration</a> <a href='?src=\ref[src];task=setduration;num=[radduration+1];'>++</a>"
+			temp_html += "<a href='?src=[REF(src)];task=setstrength;num=[radstrength-1];'>--</a> <a href='?src=[REF(src)];task=setstrength;'>Output Level</a> <a href='?src=[REF(src)];task=setstrength;num=[radstrength+1];'>++</a>"
+			temp_html += "<br><a href='?src=[REF(src)];task=setduration;num=[radduration-1];'>--</a> <a href='?src=[REF(src)];task=setduration;'>Pulse Duration</a> <a href='?src=[REF(src)];task=setduration;num=[radduration+1];'>++</a>"
 
 			temp_html += "<h3>Irradiate Subject</h3>"
 			temp_html += "<div class='line'><div class='statusLabel'>Unique Identifier:</div><div class='statusValue'><div class='clearBoth'>"
@@ -286,7 +281,7 @@
 				temp_html += "<div class='dnaBlockNumber'>1</div>"
 				var/len = length(viable_occupant.dna.uni_identity)
 				for(var/i=1, i<=len, i++)
-					temp_html += "<a class='dnaBlock' href='?src=\ref[src];task=pulseui;num=[i];'>[copytext(viable_occupant.dna.uni_identity,i,i+1)]</a>"
+					temp_html += "<a class='dnaBlock' href='?src=[REF(src)];task=pulseui;num=[i];'>[copytext(viable_occupant.dna.uni_identity,i,i+1)]</a>"
 					if ((i % max_line_len) == 0)
 						temp_html += "</div><div class='clearBoth'>"
 					if((i % DNA_BLOCK_SIZE) == 0 && i < len)
@@ -300,7 +295,7 @@
 				temp_html += "<div class='dnaBlockNumber'>1</div>"
 				var/len = length(viable_occupant.dna.struc_enzymes)
 				for(var/i=1, i<=len, i++)
-					temp_html += "<a class='dnaBlock' href='?src=\ref[src];task=pulsese;num=[i];'>[copytext(viable_occupant.dna.struc_enzymes,i,i+1)]</a>"
+					temp_html += "<a class='dnaBlock' href='?src=[REF(src)];task=pulsese;num=[i];'>[copytext(viable_occupant.dna.struc_enzymes,i,i+1)]</a>"
 					if ((i % max_line_len) == 0)
 						temp_html += "</div><div class='clearBoth'>"
 					if((i % DNA_BLOCK_SIZE) == 0 && i < len)
@@ -309,7 +304,7 @@
 				temp_html += "----"
 			temp_html += "</div></div></div>"
 
-	popup.set_content(temp_html)
+	popup.set_content(temp_html.Join())
 	popup.open()
 
 
@@ -391,15 +386,15 @@
 					if("mixed")
 						apply_buffer(SCANNER_ACTION_MIXED,num)
 		if("injector")
-			if(num && injectorready)
+			if(num && injectorready < world.time)
 				num = Clamp(num, 1, NUMBER_OF_BUFFERS)
 				var/list/buffer_slot = buffer[num]
 				if(istype(buffer_slot))
-					var/obj/item/weapon/dnainjector/timed/I
+					var/obj/item/dnainjector/timed/I
 					switch(href_list["text"])
 						if("se")
 							if(buffer_slot["SE"])
-								I = new /obj/item/weapon/dnainjector/timed(loc)
+								I = new /obj/item/dnainjector/timed(loc)
 								var/powers = 0
 								for(var/datum/mutation/human/HM in GLOB.good_mutations + GLOB.bad_mutations + GLOB.not_good_mutations)
 									if(HM.check_block_string(buffer_slot["SE"]))
@@ -410,7 +405,6 @@
 											powers -= 1 //To prevent just unlocking everything to get all powers to a syringe for max tech
 									else
 										I.remove_mutations.Add(HM)
-								I.origin_tech = "biotech=2;engineering=[max(1,min(6,powers))]" //With 6 powers available this tech level will be 1-6, also safety check if new powers get added
 								var/time_coeff
 								for(var/datum/mutation/human/HM in I.add_mutations)
 									if(!time_coeff)
@@ -422,26 +416,24 @@
 									I.damage_coeff  = connected.damage_coeff
 						if("ui")
 							if(buffer_slot["UI"])
-								I = new /obj/item/weapon/dnainjector/timed(loc)
+								I = new /obj/item/dnainjector/timed(loc)
 								I.fields = list("UI"=buffer_slot["UI"])
 								if(connected)
 									I.damage_coeff = connected.damage_coeff
 						if("ue")
 							if(buffer_slot["name"] && buffer_slot["UE"] && buffer_slot["blood_type"])
-								I = new /obj/item/weapon/dnainjector/timed(loc)
+								I = new /obj/item/dnainjector/timed(loc)
 								I.fields = list("name"=buffer_slot["name"], "UE"=buffer_slot["UE"], "blood_type"=buffer_slot["blood_type"])
 								if(connected)
 									I.damage_coeff  = connected.damage_coeff
 						if("mixed")
 							if(buffer_slot["UI"] && buffer_slot["name"] && buffer_slot["UE"] && buffer_slot["blood_type"])
-								I = new /obj/item/weapon/dnainjector/timed(loc)
+								I = new /obj/item/dnainjector/timed(loc)
 								I.fields = list("UI"=buffer_slot["UI"],"name"=buffer_slot["name"], "UE"=buffer_slot["UE"], "blood_type"=buffer_slot["blood_type"])
 								if(connected)
 									I.damage_coeff = connected.damage_coeff
 					if(I)
-						injectorready = 0
-						spawn(INJECTOR_TIMEOUT)
-							injectorready = 1
+						injectorready = world.time + INJECTOR_TIMEOUT
 		if("loaddisk")
 			if(num && diskette && diskette.fields)
 				num = Clamp(num, 1, NUMBER_OF_BUFFERS)
@@ -455,7 +447,7 @@
 					diskette.fields = buffer_slot.Copy()
 		if("ejectdisk")
 			if(diskette)
-				diskette.loc = get_turf(src)
+				diskette.forceMove(drop_location())
 				diskette = null
 		if("setdelayed")
 			if(num)
@@ -466,7 +458,7 @@
 				radstrength = Wrap(radstrength, 1, RADIATION_STRENGTH_MAX+1)
 
 				var/locked_state = connected.locked
-				connected.locked = 1
+				connected.locked = TRUE
 
 				current_screen = "working"
 				ShowInterface(usr)
@@ -544,7 +536,7 @@
 	var/list/buffer_slot = buffer[buffer_num]
 	var/mob/living/carbon/viable_occupant = get_viable_occupant()
 	if(istype(buffer_slot))
-		viable_occupant.radiation += rand(10/(connected.damage_coeff ** 2),25/(connected.damage_coeff ** 2))
+		viable_occupant.radiation += rand(100/(connected.damage_coeff ** 2),250/(connected.damage_coeff ** 2))
 		//15 and 40 are just magic numbers that were here before so i didnt touch them, they are initial boundaries of damage
 		//Each laser level reduces damage by lvl^2, so no effect on 1 lvl, 4 times less damage on 2 and 9 times less damage on 3
 		//Numbers are this high because other way upgrading laser is just not worth the hassle, and i cant think of anything better to inmrove

@@ -27,7 +27,7 @@
 	var/datum/excited_group/excited_group
 	var/excited = 0
 	var/recently_active = 0
-	var/datum/gas_mixture/air
+	var/datum/gas_mixture/turf/air
 
 	var/obj/effect/hotspot/active_hotspot
 	var/atmos_cooldown  = 0
@@ -97,7 +97,23 @@
 
 /turf/open/proc/update_visuals()
 	var/list/new_overlay_types = tile_graphic()
+	var/list/atmos_overlay_types = src.atmos_overlay_types // Cache for free performance
 
+	#if DM_VERSION >= 513
+	#warning 512 is stable now for sure, remove the old code
+	#endif
+	
+	#if DM_VERSION >= 512
+	if (atmos_overlay_types)
+		for(var/overlay in atmos_overlay_types-new_overlay_types) //doesn't remove overlays that would only be added
+			vars["vis_contents"] -= overlay
+
+	if (new_overlay_types.len)
+		if (atmos_overlay_types)
+			vars["vis_contents"] += new_overlay_types - atmos_overlay_types //don't add overlays that already exist
+		else
+			vars["vis_contents"] += new_overlay_types
+	#else
 	if (atmos_overlay_types)
 		for(var/overlay in atmos_overlay_types-new_overlay_types) //doesn't remove overlays that would only be added
 			cut_overlay(overlay)
@@ -107,9 +123,10 @@
 			add_overlay(new_overlay_types - atmos_overlay_types) //don't add overlays that already exist
 		else
 			add_overlay(new_overlay_types)
+	#endif
 
 	UNSETEMPTY(new_overlay_types)
-	atmos_overlay_types = new_overlay_types
+	src.atmos_overlay_types = new_overlay_types
 
 /turf/open/proc/tile_graphic()
 	. = new /list
@@ -364,7 +381,7 @@
 /turf/open/conductivity_directions()
 	if(blocks_air)
 		return ..()
-	for(var/direction in GLOB.cardinal)
+	for(var/direction in GLOB.cardinals)
 		var/turf/T = get_step(src, direction)
 		if(!(T in atmos_adjacent_turfs) && !(atmos_supeconductivity & direction))
 			. |= direction
@@ -393,7 +410,7 @@
 
 	if(conductivity_directions)
 		//Conduct with tiles around me
-		for(var/direction in GLOB.cardinal)
+		for(var/direction in GLOB.cardinals)
 			if(conductivity_directions & direction)
 				var/turf/neighbor = get_step(src,direction)
 

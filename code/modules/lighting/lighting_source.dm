@@ -56,10 +56,11 @@
 
 	if (top_atom)
 		LAZYREMOVE(top_atom.light_sources, src)
-
+	
+	if (needs_update)
+		GLOB.lighting_update_lights -= src
+	
 	. = ..()
-	if(!force)
-		return QDEL_HINT_IWILLGC
 
 // Yes this doesn't align correctly on anything other than 4 width tabs.
 // If you want it to go switch everybody to elastic tab stops.
@@ -136,42 +137,6 @@
 	);
 
 // This is the define used to calculate falloff.
-
-/*
-/datum/light_source/proc/apply_lum()
-	var/static/update_gen = 1
-	applied = 1
-
-	// Keep track of the last applied lum values so that the lighting can be reversed
-	var/thing
-	var/datum/lighting_corner/C
-	var/corners = list()
-	LAZYINITLIST(effect_str)
-	FOR_DVIEW(var/turf/T, light_range+1, source_turf, INVISIBILITY_LIGHTING)
-		var/list/turf_corners = T.get_corners()
-
-		for (thing in turf_corners)
-			C = thing
-			if (C.update_gen == update_gen)
-				continue
-
-			C.update_gen = update_gen
-			LAZYADD(C.affecting,src)
-
-			if (!C.active)
-				effect_str[C] = 0
-				continue
-
-			APPLY_CORNER(C)
-
-		LAZYADD(T.affecting_lights, src)
-		LAZYADD(affecting_turfs, T)
-	FOR_DVIEW_END
-	update_gen++
-	applied_lum_r = lum_r
-	applied_lum_g = lum_g
-	applied_lum_b = lum_b
-*/
 
 /datum/light_source/proc/remove_lum()
 	applied = FALSE

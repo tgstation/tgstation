@@ -56,7 +56,7 @@
 	var/gender_specific //Something that can be worn by either gender, but looks different on each
 	var/color_src = MUTCOLORS	//Currently only used by mutantparts so don't worry about hair and stuff. This is the source that this accessory will get its color from. Default is MUTCOLOR, but can also be HAIR, FACEHAIR, EYECOLOR and 0 if none.
 	var/hasinner		//Decides if this sprite has an "inner" part, such as the fleshy parts on ears.
-	var/locked = 0		//Is this part locked from roundstart selection? Used for parts that apply effects
+	var/locked = FALSE		//Is this part locked from roundstart selection? Used for parts that apply effects
 	var/dimension_x = 32
 	var/dimension_y = 32
 	var/center = FALSE	//Should we center the sprite?
@@ -239,6 +239,10 @@
 /datum/sprite_accessory/hair/devillock
 	name = "Devil Lock"
 	icon_state = "hair_devilock"
+
+/datum/sprite_accessory/hair/drillhairextended
+	name = "Extended Drill Hair"
+	icon_state = "hair_drillhairextended"
 
 /datum/sprite_accessory/hair/dreadlocks
 	name = "Dreadlocks"
@@ -476,6 +480,10 @@
 	name = "Long Hair 2"
 	icon_state = "hair_long2"
 
+/datum/sprite_accessory/hair/long3
+	name = "Long Hair 3"
+	icon_state = "hair_long3"
+
 /datum/sprite_accessory/hair/pixie
 	name = "Pixie Cut"
 	icon_state = "hair_pixie"
@@ -499,6 +507,10 @@
 /datum/sprite_accessory/hair/sidecut
 	name = "Sidecut"
 	icon_state = "hair_sidecut"
+
+/datum/sprite_accessory/hair/largebun
+	name = "Large Bun"
+	icon_state = "hair_largebun"
 
 /////////////////////////////
 // Facial Hair Definitions //
@@ -1036,7 +1048,15 @@
 	icon_state = "shirt_alien"
 	gender = NEUTER
 
+/datum/sprite_accessory/undershirt/sports_bra
+	name = "Sports Bra"
+	icon_state = "sports_bra"
+	gender = NEUTER
 
+/datum/sprite_accessory/undershirt/sports_bra2
+	name = "Alt Sports Bra"
+	icon_state = "sports_bra_alt"
+	gender = NEUTER
 
 ///////////////////////
 // Socks Definitions //

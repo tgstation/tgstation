@@ -5,8 +5,10 @@
 
 /mob/living/silicon/robot/movement_delay()
 	. = ..()
-	. += speed
-	. += config.robot_delay
+	var/static/config_robot_delay
+	if(isnull(config_robot_delay))
+		config_robot_delay = CONFIG_GET(number/robot_delay)
+	. += speed + config_robot_delay
 
 /mob/living/silicon/robot/mob_negates_gravity()
 	return magpulse
@@ -17,8 +19,3 @@
 /mob/living/silicon/robot/experience_pressure_difference(pressure_difference, direction)
 	if(!magpulse)
 		return ..()
-
-/mob/living/silicon/robot/Moved()
-	. = ..()
-	if(riding_datum)
-		riding_datum.on_vehicle_move()

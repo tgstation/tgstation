@@ -11,6 +11,9 @@
 	eyeblur = 2
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
 	light_color = LIGHT_COLOR_RED
+	ricochets_max = 50	//Honk!
+	ricochet_chance = 80
+	is_reflectable = TRUE
 
 /obj/item/projectile/beam/laser
 
@@ -19,7 +22,7 @@
 	icon_state = "heavylaser"
 	damage = 40
 
-/obj/item/projectile/beam/laser/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/beam/laser/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
@@ -47,7 +50,8 @@
 	damage = 15
 	irradiate = 30
 	range = 15
-	forcedodge = 1
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF
+
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	light_color = LIGHT_COLOR_GREEN
 
@@ -69,12 +73,12 @@
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = LIGHT_COLOR_BLUE
 
-/obj/item/projectile/beam/pulse/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/beam/pulse/on_hit(atom/target, blocked = FALSE)
 	. = ..()
-	if(isturf(target) || istype(target,/obj/structure/))
-		target.ex_act(2)
+	if(isturf(target) || istype(target, /obj/structure/))
+		target.ex_act(EXPLODE_HEAVY)
 
-/obj/item/projectile/beam/pulse/shot
+/obj/item/projectile/beam/pulse/shotgun
 	damage = 40
 
 /obj/item/projectile/beam/pulse/heavy
@@ -82,7 +86,7 @@
 	icon_state = "pulse1_bl"
 	var/life = 20
 
-/obj/item/projectile/beam/pulse/heavy/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/beam/pulse/heavy/on_hit(atom/target, blocked = FALSE)
 	life -= 10
 	if(life > 0)
 		. = -1
@@ -92,8 +96,6 @@
 	name = "emitter beam"
 	icon_state = "emitter"
 	damage = 30
-	legacy = 1
-	animate_movement = SLIDE_STEPS
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	light_color = LIGHT_COLOR_GREEN
 
@@ -111,7 +113,7 @@
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = LIGHT_COLOR_BLUE
 
-/obj/item/projectile/beam/lasertag/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/beam/lasertag/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(ishuman(target))
 		var/mob/living/carbon/human/M = target

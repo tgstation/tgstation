@@ -24,9 +24,9 @@
 		computer.visible_message("<span class='notice'>\The [computer]'s screen brightly flashes and loud electrical buzzing is heard.</span>")
 		computer.enabled = 0
 		computer.update_icon()
-		var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
-		var/obj/item/weapon/computer_hardware/battery/battery_module = computer.all_components[MC_CELL]
-		var/obj/item/weapon/computer_hardware/recharger/recharger = computer.all_components[MC_CHARGE]
+		var/obj/item/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
+		var/obj/item/computer_hardware/battery/battery_module = computer.all_components[MC_CELL]
+		var/obj/item/computer_hardware/recharger/recharger = computer.all_components[MC_CHARGE]
 		qdel(hard_drive)
 		computer.take_damage(25, BRUTE, 0, 0)
 		if(battery_module && prob(25))

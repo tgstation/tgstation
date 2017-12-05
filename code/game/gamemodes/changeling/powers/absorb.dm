@@ -9,7 +9,7 @@
 	if(!..())
 		return
 
-	var/datum/changeling/changeling = user.mind.changeling
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(changeling.isabsorbing)
 		to_chat(user, "<span class='warning'>We are already absorbing!</span>")
 		return
@@ -22,12 +22,12 @@
 		return
 
 	var/mob/living/carbon/target = user.pulling
-	return changeling.can_absorb_dna(user,target)
+	return changeling.can_absorb_dna(target)
 
 
 
 /obj/effect/proc_holder/changeling/absorbDNA/sting_action(mob/user)
-	var/datum/changeling/changeling = user.mind.changeling
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	var/mob/living/carbon/human/target = user.pulling
 	changeling.isabsorbing = 1
 	for(var/i in 1 to 3)
@@ -41,18 +41,18 @@
 				to_chat(target, "<span class='userdanger'>You feel a sharp stabbing pain!</span>")
 				target.take_overall_damage(40)
 
-		SSblackbox.add_details("changeling_powers","Absorb DNA|[i]")
+		SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("Absorb DNA", "[i]"))
 		if(!do_mob(user, target, 150))
 			to_chat(user, "<span class='warning'>Our absorption of [target] has been interrupted!</span>")
 			changeling.isabsorbing = 0
 			return
 
-	SSblackbox.add_details("changeling_powers","Absorb DNA|4")
+	SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("Absorb DNA", "4"))
 	user.visible_message("<span class='danger'>[user] sucks the fluids from [target]!</span>", "<span class='notice'>We have absorbed [target].</span>")
 	to_chat(target, "<span class='userdanger'>You are absorbed by the changeling!</span>")
 
 	if(!changeling.has_dna(target.dna))
-		changeling.add_new_profile(target, user)
+		changeling.add_new_profile(target)
 
 	if(user.nutrition < NUTRITION_LEVEL_WELL_FED)
 		user.nutrition = min((user.nutrition + target.nutrition), NUTRITION_LEVEL_WELL_FED)
@@ -84,12 +84,14 @@
 			user.mind.store_memory("<B>We have no more knowledge of [target]'s speech patterns.</B>")
 			to_chat(user, "<span class='boldnotice'>We have no more knowledge of [target]'s speech patterns.</span>")
 
-		if(target.mind.changeling)//If the target was a changeling, suck out their extra juice and objective points!
-			changeling.chem_charges += min(target.mind.changeling.chem_charges, changeling.chem_storage)
-			changeling.absorbedcount += (target.mind.changeling.absorbedcount)
 
-			target.mind.changeling.stored_profiles.len = 1
-			target.mind.changeling.absorbedcount = 0
+		var/datum/antagonist/changeling/target_ling = target.mind.has_antag_datum(/datum/antagonist/changeling)
+		if(target_ling)//If the target was a changeling, suck out their extra juice and objective points!
+			changeling.chem_charges += min(target_ling.chem_charges, changeling.chem_storage)
+			changeling.absorbedcount += (target_ling.absorbedcount)
+
+			target_ling.stored_profiles.len = 1
+			target_ling.absorbedcount = 0
 
 
 	changeling.chem_charges=min(changeling.chem_charges+10, changeling.chem_storage)

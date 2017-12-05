@@ -27,8 +27,6 @@
 "i" = (
 /obj/structure/chair,
 /obj/structure/window/reinforced{
-	tag = "icon-rwindow (WEST)";
-	icon_state = "rwindow";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue/airless,
@@ -43,20 +41,16 @@
 /area/ruin/unpowered)
 "l" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 4;
-	icon_state = "propulsion";
-	tag = "icon-propulsion (WEST)"
+	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "m" = (
-/obj/item/weapon/shard,
+/obj/item/shard,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "n" = (
 /obj/structure/chair{
-	tag = "icon-chair (WEST)";
-	icon_state = "chair";
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -70,10 +64,8 @@
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/unpowered)
 "q" = (
-/obj/item/weapon/shard,
+/obj/item/shard,
 /obj/structure/chair{
-	tag = "icon-chair (WEST)";
-	icon_state = "chair";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue/airless,
@@ -83,8 +75,6 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced{
-	tag = "icon-rwindow (WEST)";
-	icon_state = "rwindow";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue/airless,

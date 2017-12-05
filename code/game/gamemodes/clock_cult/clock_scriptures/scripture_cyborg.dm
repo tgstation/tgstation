@@ -9,7 +9,7 @@
 	channel_time = 30
 	primary_component = VANGUARD_COGWHEEL
 	quickbind_desc = "Allows you to grant a Servant and yourself stun immunity, as the Vanguard scripture.<br><b>Click your slab to disable.</b>"
-	slab_icon = "vanguard"
+	slab_overlay = "vanguard"
 	ranged_type = /obj/effect/proc_holder/slab/vanguard
 	ranged_message = "<span class='inathneq_small'><i>You charge the clockwork slab with defensive strength.</i>\n\
 	<b>Left-click a fellow Servant or yourself to grant Vanguard!\n\
@@ -37,16 +37,10 @@
 	invocations = list("May heathens...", "...kneel under our force!")
 	channel_time = 30
 	primary_component = BELLIGERENT_EYE
-	quickbind_desc = "Allows you to place a Judicial Marker to stun and damage a target location.<br><b>Click your slab to disable.</b>"
-	slab_icon = "judicial"
+	quickbind_desc = "Allows you to smite an area, applying Belligerent and briefly stunning.<br><b>Click your slab to disable.</b>"
+	slab_overlay = "judicial"
 	ranged_type = /obj/effect/proc_holder/slab/judicial
 	ranged_message = "<span class='neovgre_small'><i>You charge the clockwork slab with judicial force.</i>\n\
 	<b>Left-click a target to place a Judicial Marker!\n\
 	Click your slab to cancel.</b></span>"
 	timeout_time = 50
-
-//Volt Void, but with a different quickbind desc
-/datum/clockwork_scripture/channeled/volt_void/cyborg
-	quickbind_desc = "Allows you to fire energy rays at target locations using your own power. Failing to fire causes backlash.<br><b>Maximum 4 chants.</b>"
-	tier = SCRIPTURE_PERIPHERAL
-	quickbind = FALSE

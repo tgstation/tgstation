@@ -8,35 +8,35 @@
 	reqs = list(
 		/datum/reagent/consumable/sodiumchloride = 1,
 		/datum/reagent/consumable/blackpepper = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/boiledegg = 1
+		/obj/item/reagent_containers/food/snacks/boiledegg = 1
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/friedegg
-	category = CAT_EGG
+	result = /obj/item/reagent_containers/food/snacks/friedegg
+	subcategory = CAT_EGG
 
 /datum/crafting_recipe/food/omelette
 	name = "omelette"
 	reqs = list(
-		/obj/item/weapon/reagent_containers/food/snacks/boiledegg = 2,
-		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge = 2
+		/obj/item/reagent_containers/food/snacks/boiledegg = 2,
+		/obj/item/reagent_containers/food/snacks/cheesewedge = 2
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/omelette
-	category = CAT_EGG
+	result = /obj/item/reagent_containers/food/snacks/omelette
+	subcategory = CAT_EGG
 
 /datum/crafting_recipe/food/chocolateegg
 	name = "Chocolate egg"
 	reqs = list(
-		/obj/item/weapon/reagent_containers/food/snacks/boiledegg = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar = 1
+		/obj/item/reagent_containers/food/snacks/boiledegg = 1,
+		/obj/item/reagent_containers/food/snacks/chocolatebar = 1
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/chocolateegg
-	category = CAT_EGG
+	result = /obj/item/reagent_containers/food/snacks/chocolateegg
+	subcategory = CAT_EGG
 
 /datum/crafting_recipe/food/eggsbenedict
 	name = "Eggs benedict"
 	reqs = list(
-		/obj/item/weapon/reagent_containers/food/snacks/friedegg = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/meat/steak = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/breadslice/plain = 1,
+		/obj/item/reagent_containers/food/snacks/friedegg = 1,
+		/obj/item/reagent_containers/food/snacks/meat/steak = 1,
+		/obj/item/reagent_containers/food/snacks/breadslice/plain = 1,
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/benedict
-	category = CAT_EGG
+	result = /obj/item/reagent_containers/food/snacks/benedict
+	subcategory = CAT_EGG

@@ -23,8 +23,10 @@
 		for(var/A in mutations)
 			target.dna.add_mutation(A)
 		target.disabilities |= disabilities
-		spawn(duration)
-			if(target && !QDELETED(target))
-				for(var/A in mutations)
-					target.dna.remove_mutation(A)
-				target.disabilities &= ~disabilities
+		addtimer(CALLBACK(src, .proc/remove, target), duration)
+
+/obj/effect/proc_holder/spell/targeted/genetic/proc/remove(mob/living/carbon/target)
+	if(!QDELETED(target))
+		for(var/A in mutations)
+			target.dna.remove_mutation(A)
+		target.disabilities &= ~disabilities

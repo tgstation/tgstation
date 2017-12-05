@@ -1,11 +1,9 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "b" = (
 /obj/structure/shuttle/engine/propulsion{
-	tag = "icon-propulsion (NORTH)";
-	icon_state = "propulsion";
 	dir = 1
 	},
 /turf/open/space,
@@ -19,8 +17,6 @@
 	})
 "d" = (
 /obj/structure/shuttle/engine/heater{
-	tag = "icon-heater (NORTH)";
-	icon_state = "heater";
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
@@ -28,7 +24,6 @@
 	name = "Shuttle"
 	})
 "e" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 8;
 	icon_state = "diagonalWall3"
@@ -37,7 +32,6 @@
 	name = "Shuttle"
 	})
 "f" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
@@ -46,7 +40,6 @@
 	name = "Shuttle"
 	})
 "g" = (
-/turf/open/floor/plating,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
@@ -61,7 +54,6 @@
 	name = "Shuttle"
 	})
 "i" = (
-/turf/open/floor/plating,
 /turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
@@ -93,9 +85,7 @@
 	})
 "n" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 8;
-	icon_state = "propulsion";
-	tag = "icon-propulsion (EAST)"
+	dir = 8
 	},
 /turf/open/space,
 /area/ruin/powered{
@@ -103,8 +93,6 @@
 	})
 "o" = (
 /obj/structure/shuttle/engine/heater{
-	tag = "icon-heater (WEST)";
-	icon_state = "heater";
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -119,8 +107,6 @@
 	})
 "q" = (
 /obj/structure/shuttle/engine/heater{
-	tag = "icon-heater (EAST)";
-	icon_state = "heater";
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
@@ -129,16 +115,13 @@
 	})
 "r" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 4;
-	icon_state = "propulsion";
-	tag = "icon-propulsion (WEST)"
+	dir = 4
 	},
 /turf/open/space,
 /area/ruin/powered{
 	name = "Shuttle"
 	})
 "s" = (
-/turf/open/floor/plating,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
@@ -154,7 +137,6 @@
 	name = "Shuttle"
 	})
 "u" = (
-/turf/open/floor/plating,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 8;
 	icon_state = "diagonalWall3"
@@ -176,8 +158,6 @@
 	})
 "x" = (
 /obj/structure/chair/comfy{
-	tag = "icon-comfychair (WEST)";
-	icon_state = "comfychair";
 	dir = 8
 	},
 /turf/open/floor/plasteel/darkyellow,
@@ -185,7 +165,6 @@
 	name = "Shuttle"
 	})
 "y" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
@@ -199,12 +178,11 @@
 	name = "Shuttle"
 	})
 "A" = (
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ruin/powered{
 	name = "Shuttle"
 	})
 "B" = (
-/turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
@@ -219,7 +197,7 @@
 	})
 "D" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid,
+/obj/item/storage/firstaid,
 /turf/open/floor/plasteel/darkblue,
 /area/ruin/powered{
 	name = "Shuttle"

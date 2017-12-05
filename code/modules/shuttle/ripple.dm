@@ -8,7 +8,7 @@
 	anchored = TRUE
 	density = FALSE
 	layer = RIPPLE_LAYER
-	mouse_opacity = 1
+	mouse_opacity = MOUSE_OPACITY_ICON
 	alpha = 0
 
 	duration = 3 * SHUTTLE_RIPPLE_TIME

@@ -9,7 +9,7 @@
 			return									// seems legit.
 
 	// Things you might plausibly want to follow
-	if(istype(A, /atom/movable))
+	if(ismovableatom(A))
 		ManualFollow(A)
 
 	// Otherwise jump
@@ -53,22 +53,18 @@
 	if(user.client)
 		if(IsAdminGhost(user))
 			attack_ai(user)
-		if(user.client.prefs.inquisitive_ghost)
+		else if(user.client.prefs.inquisitive_ghost)
 			user.examinate(src)
+
+/mob/living/attack_ghost(mob/dead/observer/user)
+	if(user.client && user.health_scan)
+		healthscan(user, src, 1, TRUE)
+		return
+	..()
 
 // ---------------------------------------
 // And here are some good things for free:
 // Now you can click through portals, wormholes, gateways, and teleporters while observing. -Sayu
-
-/obj/machinery/teleport/hub/attack_ghost(mob/user)
-	var/atom/l = loc
-	var/obj/machinery/computer/teleporter/com = locate(/obj/machinery/computer/teleporter, locate(l.x - 2, l.y, l.z))
-	if(com && com.locked)
-		user.forceMove(get_turf(com.locked))
-
-/obj/effect/portal/attack_ghost(mob/user)
-	if(target)
-		user.forceMove(get_turf(target))
 
 /obj/machinery/gateway/centerstation/attack_ghost(mob/user)
 	if(awaygate)
@@ -82,23 +78,10 @@
 	else
 		to_chat(user, "[src] has no destination.")
 
-/obj/item/weapon/storage/attack_ghost(mob/user)
+/obj/item/storage/attack_ghost(mob/user)
 	orient2hud(user)
 	show_to(user)
 
 /obj/machinery/teleport/hub/attack_ghost(mob/user)
 	if(power_station && power_station.engaged && power_station.teleporter_console && power_station.teleporter_console.target)
 		user.forceMove(get_turf(power_station.teleporter_console.target))
-
-// -------------------------------------------
-// This was supposed to be used by adminghosts
-// I think it is a *terrible* idea
-// but I'm leaving it here anyway
-// commented out, of course.
-/*
-/atom/proc/attack_admin(mob/user as mob)
-	if(!user || !user.client || !user.client.holder)
-		return
-	attack_hand(user)
-
-*/

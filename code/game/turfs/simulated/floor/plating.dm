@@ -4,21 +4,31 @@
  * Airless
  * Airless plating
  * Engine floor
+ * Foam plating
  */
-// note that plating and engine floor do not call their parent attackby, unlike other flooring
-// this is done in order to avoid inheriting the crowbar attackby
 
 /turf/open/floor/plating
 	name = "plating"
 	icon_state = "plating"
-	intact = 0
+	intact = FALSE
+	var/attachment_holes = TRUE
+
+/turf/open/floor/plating/examine(mob/user)
+	..()
+	if(broken || burnt)
+		to_chat(user, "<span class='notice'>It looks like the dents could be <i>welded</i> smooth.</span>")
+		return
+	if(attachment_holes)
+		to_chat(user, "<span class='notice'>There are few attachment holes for a new <i>tile</i> or reinforcement <i>rods</i>.</span>")
+	else
+		to_chat(user, "<span class='notice'>You might be able to build ontop of it with some <i>tiles</i>...</span>")
 
 /turf/open/floor/plating/Initialize()
 	if (!broken_states)
 		broken_states = list("platingdmg1", "platingdmg2", "platingdmg3")
 	if (!burnt_states)
 		burnt_states = list("panelscorched")
-	..()
+	. = ..()
 	icon_plating = icon_state
 
 /turf/open/floor/plating/update_icon()
@@ -30,7 +40,7 @@
 /turf/open/floor/plating/attackby(obj/item/C, mob/user, params)
 	if(..())
 		return
-	if(istype(C, /obj/item/stack/rods))
+	if(istype(C, /obj/item/stack/rods) && attachment_holes)
 		if(broken || burnt)
 			to_chat(user, "<span class='warning'>Repair the plating first!</span>")
 			return
@@ -43,25 +53,30 @@
 			if(do_after(user, 30, target = src))
 				if (R.get_amount() >= 2 && !istype(src, /turf/open/floor/engine))
 					ChangeTurf(/turf/open/floor/engine)
-					playsound(src, 'sound/items/Deconstruct.ogg', 80, 1)
+					playsound(src, 'sound/items/deconstruct.ogg', 80, 1)
 					R.use(2)
 					to_chat(user, "<span class='notice'>You reinforce the floor.</span>")
 				return
 	else if(istype(C, /obj/item/stack/tile))
 		if(!broken && !burnt)
+			for(var/obj/O in src)
+				if(O.level == 1) //ex. pipes laid underneath a tile
+					for(var/M in O.buckled_mobs)
+						to_chat(user, "<span class='warning'>Someone is buckled to \the [O]! Unbuckle [M] to move \him out of the way.</span>")
+						return
 			var/obj/item/stack/tile/W = C
 			if(!W.use(1))
 				return
 			var/turf/open/floor/T = ChangeTurf(W.turf_type)
-			if(istype(W,/obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
+			if(istype(W, /obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
 				var/obj/item/stack/tile/light/L = W
 				var/turf/open/floor/light/F = T
 				F.state = L.state
-			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+			playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
 		else
 			to_chat(user, "<span class='warning'>This section is too damaged to support a tile! Use a welder to fix the damage.</span>")
-	else if(istype(C, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/welder = C
+	else if(istype(C, /obj/item/weldingtool))
+		var/obj/item/weldingtool/welder = C
 		if( welder.isOn() && (broken || burnt) )
 			if(welder.remove_fuel(0,user))
 				to_chat(user, "<span class='danger'>You fix some dents on the broken plating.</span>")
@@ -69,3 +84,35 @@
 				icon_state = icon_plating
 				burnt = 0
 				broken = 0
+
+/turf/open/floor/plating/foam
+	name = "metal foam plating"
+	desc = "Thin, fragile flooring created with metal foam."
+	icon_state = "foam_plating"
+	broken_states = list("foam_plating")
+	burnt_states = list("foam_plating")
+
+/turf/open/floor/plating/foam/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/stack/tile/plasteel))
+		var/obj/item/stack/tile/plasteel/P = I
+		if(P.use(1))
+			var/obj/L = locate(/obj/structure/lattice) in src
+			if(L)
+				qdel(L)
+			to_chat(user, "<span class='notice'>You reinforce the foamed plating with tiling.</span>")
+			playsound(src, 'sound/weapons/Genhit.ogg', 50, TRUE)
+			ChangeTurf(/turf/open/floor/plating)
+	else
+		playsound(src, 'sound/weapons/tap.ogg', 100, TRUE) //The attack sound is muffled by the foam itself
+		user.changeNext_move(CLICK_CD_MELEE)
+		user.do_attack_animation(src)
+		if(prob(I.force * 20 - 25))
+			user.visible_message("<span class='danger'>[user] smashes through [src]!</span>", \
+							"<span class='danger'>You smash through [src] with [I]!</span>")
+			ChangeTurf(baseturf)
+		else
+			to_chat(user, "<span class='danger'>You hit [src], to no effect!</span>")
+
+/turf/open/floor/plating/foam/ex_act()
+	..()
+	ChangeTurf(baseturf)

@@ -12,7 +12,7 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 4)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 4)
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
@@ -24,7 +24,7 @@
 	maxHealth = 40
 	melee_damage_lower = 1
 	melee_damage_upper = 2
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	stop_automated_movement_when_pulled = 1
 	blood_volume = BLOOD_VOLUME_NORMAL
 	var/obj/item/udder/udder = null
@@ -64,7 +64,7 @@
 	src.visible_message("<span class='danger'>[src] gets an evil-looking gleam in [p_their()] eye.</span>")
 
 /mob/living/simple_animal/hostile/retaliate/goat/Move()
-	..()
+	. = ..()
 	if(!stat)
 		eat_plants()
 
@@ -84,7 +84,7 @@
 		say("Nom")
 
 /mob/living/simple_animal/hostile/retaliate/goat/attackby(obj/item/O, mob/user, params)
-	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/reagent_containers/glass))
+	if(stat == CONSCIOUS && istype(O, /obj/item/reagent_containers/glass))
 		udder.milkAnimal(O, user)
 		return 1
 	else
@@ -106,7 +106,7 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 6)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 6)
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
@@ -115,7 +115,7 @@
 	health = 50
 	maxHealth = 50
 	var/obj/item/udder/udder = null
-	gold_core_spawnable = 2
+	gold_core_spawnable = FRIENDLY_SPAWN
 	blood_volume = BLOOD_VOLUME_NORMAL
 
 /mob/living/simple_animal/cow/Initialize()
@@ -128,7 +128,7 @@
 	return ..()
 
 /mob/living/simple_animal/cow/attackby(obj/item/O, mob/user, params)
-	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/reagent_containers/glass))
+	if(stat == CONSCIOUS && istype(O, /obj/item/reagent_containers/glass))
 		udder.milkAnimal(O, user)
 		return 1
 	else
@@ -144,7 +144,7 @@
 		M.visible_message("<span class='warning'>[M] tips over [src].</span>",
 			"<span class='notice'>You tip over [src].</span>")
 		to_chat(src, "<span class='userdanger'>You are tipped over by [M]!</span>")
-		Weaken(30)
+		Knockdown(60)
 		icon_state = icon_dead
 		spawn(rand(20,50))
 			if(!stat && M)
@@ -177,10 +177,10 @@
 	speak_emote = list("cheeps")
 	emote_hear = list("cheeps.")
 	emote_see = list("pecks at the ground.","flaps its tiny wings.")
-	density = 0
+	density = FALSE
 	speak_chance = 2
 	turns_per_move = 2
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 1)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 1)
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
@@ -191,7 +191,7 @@
 	var/amount_grown = 0
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
-	gold_core_spawnable = 2
+	gold_core_spawnable = FRIENDLY_SPAWN
 
 /mob/living/simple_animal/chick/Initialize()
 	. = ..()
@@ -223,12 +223,12 @@
 	speak_emote = list("clucks","croons")
 	emote_hear = list("clucks.")
 	emote_see = list("pecks at the ground.","flaps its wings viciously.")
-	density = 0
+	density = FALSE
 	speak_chance = 2
 	turns_per_move = 3
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 2)
-	var/egg_type = /obj/item/weapon/reagent_containers/food/snacks/egg
-	var/food_type = /obj/item/weapon/reagent_containers/food/snacks/grown/wheat
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2)
+	var/egg_type = /obj/item/reagent_containers/food/snacks/egg
+	var/food_type = /obj/item/reagent_containers/food/snacks/grown/wheat
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
@@ -245,7 +245,7 @@
 	var/list/feedMessages = list("It clucks happily.","It clucks happily.")
 	var/list/layMessage = list("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")
 	var/list/validColors = list("brown","black","white")
-	gold_core_spawnable = 2
+	gold_core_spawnable = FRIENDLY_SPAWN
 	var/static/chicken_count = 0
 
 /mob/living/simple_animal/chicken/Initialize()
@@ -268,10 +268,8 @@
 		if(!stat && eggsleft < 8)
 			var/feedmsg = "[user] feeds [O] to [name]! [pick(feedMessages)]"
 			user.visible_message(feedmsg)
-			user.drop_item()
 			qdel(O)
 			eggsleft += rand(1, 4)
-			//to_chat(world, eggsleft)
 		else
 			to_chat(user, "<span class='warning'>[name] doesn't seem hungry!</span>")
 	else
@@ -291,8 +289,8 @@
 			if(chicken_count < MAX_CHICKENS && prob(25))
 				START_PROCESSING(SSobj, E)
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/var/amount_grown = 0
-/obj/item/weapon/reagent_containers/food/snacks/egg/process()
+/obj/item/reagent_containers/food/snacks/egg/var/amount_grown = 0
+/obj/item/reagent_containers/food/snacks/egg/process()
 	if(isturf(loc))
 		amount_grown += rand(1,2)
 		if(amount_grown >= 100)
@@ -317,7 +315,7 @@
 		reagents.add_reagent("milk", rand(5, 10))
 
 /obj/item/udder/proc/milkAnimal(obj/O, mob/user)
-	var/obj/item/weapon/reagent_containers/glass/G = O
+	var/obj/item/reagent_containers/glass/G = O
 	if(G.reagents.total_volume >= G.volume)
 		to_chat(user, "<span class='danger'>[O] is full.</span>")
 		return

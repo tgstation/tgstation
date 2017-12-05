@@ -8,7 +8,7 @@
 	icon_state = "alienpod1"
 
 /turf/open/floor/plating/abductor/Initialize()
-	..()
+	. = ..()
 	icon_state = "alienpod[rand(1,9)]"
 
 
@@ -38,15 +38,16 @@
 	var/smooth_icon = 'icons/turf/floors/ash.dmi'
 	desc = "The ground is covered in volcanic ash."
 	baseturf = /turf/open/floor/plating/ashplanet/wateryrock //I assume this will be a chasm eventually, once this becomes an actual surface
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
+	attachment_holes = FALSE
 
 /turf/open/floor/plating/ashplanet/Initialize()
 	if(smooth)
 		pixel_y = -4
 		pixel_x = -4
 		icon = smooth_icon
-	..()
+	. = ..()
 
 /turf/open/floor/plating/ashplanet/break_tile()
 	return
@@ -74,13 +75,14 @@
 
 /turf/open/floor/plating/ashplanet/wateryrock/Initialize()
 	icon_state = "[icon_state][rand(1, 9)]"
-	..()
+	. = ..()
 
 
 /turf/open/floor/plating/beach
 	name = "beach"
 	icon = 'icons/misc/beach.dmi'
-	flags = NONE
+	flags_1 = NONE
+	attachment_holes = FALSE
 
 /turf/open/floor/plating/beach/ex_act(severity, target)
 	contents_explosion(severity, target)
@@ -114,7 +116,7 @@
 	desc = "Like sand, but more <i>metal</i>."
 
 /turf/open/floor/plating/ironsand/Initialize()
-	..()
+	. = ..()
 	icon_state = "ironsand[rand(1,15)]"
 
 /turf/open/floor/plating/ironsand/burn_tile()
@@ -130,6 +132,7 @@
 	baseturf = /turf/open/floor/plating/ice
 	slowdown = 1
 	wet = TURF_WET_PERMAFROST
+	attachment_holes = FALSE
 
 /turf/open/floor/plating/ice/colder
 	temperature = 140
@@ -150,6 +153,7 @@
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snowplating"
 	temperature = 180
+	attachment_holes = FALSE
 
 /turf/open/floor/plating/snowed/colder
 	temperature = 140

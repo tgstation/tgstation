@@ -1,4 +1,0 @@
-author: "Steelpoint"
-delete-after: True
-changes: 
-  - rscadd: "All Pulse weapons now accurately show, by their sprites, what fire mode they are in."

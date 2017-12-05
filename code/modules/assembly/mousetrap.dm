@@ -3,7 +3,6 @@
 	desc = "A handy little spring-loaded trap for catching pesty rodents."
 	icon_state = "mousetrap"
 	materials = list(MAT_METAL=100)
-	origin_tech = "combat=1;materials=2;engineering=1"
 	attachable = 1
 	var/armed = 0
 
@@ -55,11 +54,11 @@
 			if("feet")
 				if(!H.shoes)
 					affecting = H.get_bodypart(pick("l_leg", "r_leg"))
-					H.Weaken(3)
+					H.Knockdown(60)
 			if("l_hand", "r_hand")
 				if(!H.gloves)
 					affecting = H.get_bodypart(type)
-					H.Stun(3)
+					H.Stun(60)
 		if(affecting)
 			if(affecting.receive_damage(1, 0))
 				H.update_damage_overlays()

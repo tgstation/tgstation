@@ -1,5 +1,5 @@
-#define COMMUNICATION_COOLDOWN 600
-#define COMMUNICATION_COOLDOWN_AI 600
+#define COMMUNICATION_COOLDOWN 300
+#define COMMUNICATION_COOLDOWN_AI 300
 
 SUBSYSTEM_DEF(communications)
 	name = "Communications"
@@ -25,8 +25,22 @@ SUBSYSTEM_DEF(communications)
 	else
 		priority_announce(html_decode(input), null, 'sound/misc/announce.ogg', "Captain")
 		nonsilicon_message_cooldown = world.time + COMMUNICATION_COOLDOWN
-	log_say("[key_name(user)] has made a priority announcement: [input]")
+	log_talk(user,"[key_name(user)] has made a priority announcement: [input]",LOGSAY)
 	message_admins("[key_name_admin(user)] has made a priority announcement.")
+
+/datum/controller/subsystem/communications/proc/send_message(datum/comm_message/sending,print = TRUE,unique = FALSE)
+	for(var/obj/machinery/computer/communications/C in GLOB.machines)
+		if(!(C.stat & (BROKEN|NOPOWER)) && (C.z in GLOB.station_z_levels))
+			if(unique)
+				C.add_message(sending)
+			else //We copy the message for each console, answers and deletions won't be shared
+				var/datum/comm_message/M = new(sending.title,sending.content,sending.possible_answers.Copy())
+				C.add_message(M)
+			if(print)
+				var/obj/item/paper/P = new /obj/item/paper(C.loc)
+				P.name = "paper - '[sending.title]'"
+				P.info = sending.content
+				P.update_icon()
 
 #undef COMMUNICATION_COOLDOWN
 #undef COMMUNICATION_COOLDOWN_AI

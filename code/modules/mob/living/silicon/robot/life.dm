@@ -6,6 +6,7 @@
 		return
 
 	..()
+	adjustOxyLoss(-10) //we're a robot!
 	handle_robot_hud_updates()
 	handle_robot_cell()
 

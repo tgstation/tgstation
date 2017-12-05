@@ -19,9 +19,6 @@
 /datum/gas_mixture/immutable/merge()
 	return 0 //we're immutable.
 
-/datum/gas_mixture/immutable/heat_capacity_archived()
-	return heat_capacity()
-
 /datum/gas_mixture/immutable/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
 	. = ..(sharer, 0)
 	garbage_collect()
@@ -54,7 +51,7 @@
 	initial_temperature = TCMB
 
 /datum/gas_mixture/immutable/space/heat_capacity()
-	return 7000
+	return HEAT_CAPACITY_VACUUM
 
 /datum/gas_mixture/immutable/space/remove()
 	return copy() //we're always empty, so we can just return a copy.
@@ -69,8 +66,8 @@
 
 /datum/gas_mixture/immutable/cloner/garbage_collect()
 	..()
-	add_gas("n2")
-	gases["n2"][MOLES] = MOLES_O2STANDARD + MOLES_N2STANDARD
+	ADD_GAS(/datum/gas/nitrogen, gases)
+	gases[/datum/gas/nitrogen][MOLES] = MOLES_O2STANDARD + MOLES_N2STANDARD
 
 /datum/gas_mixture/immutable/cloner/heat_capacity()
 	return (MOLES_O2STANDARD + MOLES_N2STANDARD)*20 //specific heat of nitrogen is 20

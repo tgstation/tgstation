@@ -13,8 +13,6 @@
 	icon = 'icons/turf/walls/gold_wall.dmi'
 	icon_state = "gold"
 	sheet_type = /obj/item/stack/sheet/mineral/gold
-	//var/electro = 1
-	//var/shocked = null
 	explosion_block = 0 //gold is a soft metal you dingus.
 	canSmoothWith = list(/turf/closed/wall/mineral/gold, /obj/structure/falsewall/gold)
 
@@ -24,8 +22,6 @@
 	icon = 'icons/turf/walls/silver_wall.dmi'
 	icon_state = "silver"
 	sheet_type = /obj/item/stack/sheet/mineral/silver
-	//var/electro = 0.75
-	//var/shocked = null
 	canSmoothWith = list(/turf/closed/wall/mineral/silver, /obj/structure/falsewall/silver)
 
 /turf/closed/wall/mineral/diamond
@@ -37,9 +33,6 @@
 	slicing_duration = 200   //diamond wall takes twice as much time to slice
 	explosion_block = 3
 	canSmoothWith = list(/turf/closed/wall/mineral/diamond, /obj/structure/falsewall/diamond)
-
-/turf/closed/wall/mineral/diamond/thermitemelt(mob/user)
-	return
 
 /turf/closed/wall/mineral/clown
 	name = "bananium wall"
@@ -70,7 +63,7 @@
 	if(!active)
 		if(world.time > last_event+15)
 			active = 1
-			radiation_pulse(get_turf(src), 3, 3, 4, 0)
+			radiation_pulse(src, 40)
 			for(var/turf/closed/wall/mineral/uranium/T in orange(1,src))
 				T.radiate()
 			last_event = world.time
@@ -82,11 +75,11 @@
 	radiate()
 	..()
 
-/turf/closed/wall/mineral/uranium/attackby(obj/item/weapon/W, mob/user, params)
+/turf/closed/wall/mineral/uranium/attackby(obj/item/W, mob/user, params)
 	radiate()
 	..()
 
-/turf/closed/wall/mineral/uranium/Bumped(AM as mob|obj)
+/turf/closed/wall/mineral/uranium/CollidedWith(atom/movable/AM)
 	radiate()
 	..()
 
@@ -99,7 +92,7 @@
 	thermal_conductivity = 0.04
 	canSmoothWith = list(/turf/closed/wall/mineral/plasma, /obj/structure/falsewall/plasma)
 
-/turf/closed/wall/mineral/plasma/attackby(obj/item/weapon/W, mob/user, params)
+/turf/closed/wall/mineral/plasma/attackby(obj/item/W, mob/user, params)
 	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
 		message_admins("Plasma wall ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(src)]",0,1)
 		log_game("Plasma wall ignited by [key_name(user)] in [COORD(src)]")
@@ -122,9 +115,9 @@
 		PlasmaBurn(exposed_temperature)
 
 /turf/closed/wall/mineral/plasma/bullet_act(var/obj/item/projectile/Proj)
-	if(istype(Proj,/obj/item/projectile/beam))
+	if(istype(Proj, /obj/item/projectile/beam))
 		PlasmaBurn(2500)
-	else if(istype(Proj,/obj/item/projectile/ion))
+	else if(istype(Proj, /obj/item/projectile/ion))
 		PlasmaBurn(500)
 	..()
 
@@ -170,14 +163,18 @@
 	explosion_block = 3
 	canSmoothWith = list(/turf/closed/wall/mineral/abductor, /obj/structure/falsewall/abductor)
 
+/////////////////////Titanium walls/////////////////////
+
 /turf/closed/wall/mineral/titanium //has to use this path due to how building walls works
 	name = "wall"
 	desc = "A light-weight titanium wall used in shuttles."
 	icon = 'icons/turf/walls/shuttle_wall.dmi'
 	icon_state = "map-shuttle"
+	explosion_block = 3
+	flags_1 = CAN_BE_DIRTY_1 | CHECK_RICOCHET_1
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
 	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
-	canSmoothWith = list(/turf/closed/wall/mineral/titanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock/, /turf/closed/wall/shuttle, /obj/structure/window/shuttle, /obj/structure/shuttle/engine/heater, /obj/structure/falsewall/titanium)
+	canSmoothWith = list(/turf/closed/wall/mineral/titanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/shuttle, /obj/structure/shuttle/engine/heater, /obj/structure/falsewall/titanium)
 
 /turf/closed/wall/mineral/titanium/nodiagonal
 	smooth = SMOOTH_MORE
@@ -221,21 +218,44 @@
 	icon = 'icons/turf/walls/survival_pod_walls.dmi'
 	icon_state = "smooth"
 	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
-	canSmoothWith = list(/turf/closed/wall/mineral/titanium/survival, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/shuttle/survival_pod, /obj/structure/shuttle/engine)
+	canSmoothWith = list(/turf/closed/wall/mineral/titanium/survival, /obj/machinery/door/airlock, /obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/shuttle, /obj/structure/shuttle/engine)
 
 /turf/closed/wall/mineral/titanium/survival/nodiagonal
 	smooth = SMOOTH_MORE
 
 /turf/closed/wall/mineral/titanium/survival/pod
-	canSmoothWith = list(/turf/closed/wall/mineral/titanium/survival, /obj/machinery/door/airlock, /obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/shuttle, /obj/structure/shuttle/engine)
+	canSmoothWith = list(/turf/closed/wall/mineral/titanium/survival, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/shuttle/survival_pod)
+
+/////////////////////Plastitanium walls/////////////////////
 
 /turf/closed/wall/mineral/plastitanium
 	name = "wall"
 	desc = "An evil wall of plasma and titanium."
-	icon = 'icons/turf/shuttle.dmi'
-	icon_state = "wall3"
+	icon = 'icons/turf/walls/plastitanium_wall.dmi'
+	icon_state = "map-shuttle"
+	explosion_block = 4
 	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
+	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
+	canSmoothWith = list(/turf/closed/wall/mineral/plastitanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/plastitanium, /obj/structure/shuttle/engine, /obj/structure/falsewall/plastitanium)
+
+/turf/closed/wall/mineral/plastitanium/nodiagonal
+	smooth = SMOOTH_MORE
+	icon_state = "map-shuttle_nd"
+
+/turf/closed/wall/mineral/plastitanium/nosmooth
+	icon = 'icons/turf/shuttle.dmi'
+	icon_state = "wall"
 	smooth = SMOOTH_FALSE
+
+/turf/closed/wall/mineral/plastitanium/overspace
+	icon_state = "map-overspace"
+	fixed_underlay = list("space"=1)
+
+/turf/closed/wall/mineral/plastitanium/explosive/dismantle_wall(devastated, explode)
+	var/obj/item/bombcore/large/bombcore = new(get_turf(src))
+	if(devastated || explode)
+		bombcore.detonate()
+	..()
 
 //have to copypaste this code
 /turf/closed/wall/mineral/plastitanium/interior/copyTurf(turf/T)

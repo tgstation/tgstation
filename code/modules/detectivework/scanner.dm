@@ -8,11 +8,12 @@
 	icon_state = "forensicnew"
 	w_class = WEIGHT_CLASS_SMALL
 	item_state = "electronic"
-	flags = CONDUCT | NOBLUDGEON
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	flags_1 = CONDUCT_1 | NOBLUDGEON_1
 	slot_flags = SLOT_BELT
 	var/scanning = 0
 	var/list/log = list()
-	origin_tech = "engineering=4;biotech=2;programming=5"
 	var/range = 8
 	var/view_check = TRUE
 
@@ -29,7 +30,7 @@
 
 /obj/item/device/detective_scanner/proc/PrintReport()
 	// Create our paper
-	var/obj/item/weapon/paper/P = new(get_turf(src))
+	var/obj/item/paper/P = new(get_turf(src))
 	P.name = "paper- 'Scanner Report'"
 	P.info = "<center><font size='6'><B>Scanner Report</B></font></center><HR><BR>"
 	P.info += jointext(log, "<BR>")
@@ -39,7 +40,7 @@
 	if(ismob(loc))
 		var/mob/M = loc
 		M.put_in_hands(P)
-		to_chat(M, "<span class='notice'>Report printed. Log cleared.<span>")
+		to_chat(M, "<span class='notice'>Report printed. Log cleared.</span>")
 
 	// Clear the logs
 	log = list()
@@ -166,7 +167,7 @@
 			to_chat(M, msg)
 		log += "&nbsp;&nbsp;[msg]"
 	else
-		CRASH("[src] \ref[src] is adding a log when it was never put in scanning mode!")
+		CRASH("[src] [REF(src)] is adding a log when it was never put in scanning mode!")
 
 /proc/get_timestamp()
 	return time2text(world.time + 432000, ":ss")
