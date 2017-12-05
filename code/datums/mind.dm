@@ -769,17 +769,44 @@
 		var/objective_pos
 		var/def_value
 
+
+
+		var/datum/antagonist/target_antag
+
 		if (href_list["obj_edit"])
 			objective = locate(href_list["obj_edit"])
 			if (!objective)
 				return
-			objective_pos = objectives.Find(objective)
+			
+			for(var/datum/antagonist/A in datum_antags)
+				if(objective in A.objectives)
+					target_antag = A
+					objective_pos = A.objectives.Find(objective)
+					break
+			
+			if(!target_antag) //Shouldn't happen
+				stack_trace("objective without antagonist found")
+				objective_pos = objectives.Find(objective)
 
 			//Text strings are easy to manipulate. Revised for simplicity.
 			var/temp_obj_type = "[objective.type]"//Convert path into a text string.
 			def_value = copytext(temp_obj_type, 19)//Convert last part of path into an objective keyword.
 			if(!def_value)//If it's a custom objective, it will be an empty string.
 				def_value = "custom"
+		else
+			switch(antag_datums.len)
+				if(0)
+					target_antag = add_antag_datum(/datum/antagonist/custom)
+				if(1)
+					target_antag = antag_datums[1]
+				else
+					var/target = input("Which antagonist gets the objective:", "Antagonist", def_value) as null|anything in datum_antags + "(new custom antag)"
+					if (!target)
+						return
+					else if(target == "(new custom antag)")
+						target_antag = add_antag_datum(/datum/antagonist/custom)
+					else
+						target_antag = target
 
 		var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate", "maroon", "debrain", "protect", "destroy", "prevent", "hijack", "escape", "survive", "martyr", "steal", "download", "nuclear", "capture", "absorb", "custom")
 		if (!new_obj_type)
@@ -895,11 +922,15 @@
 			return
 
 		if (objective)
+			it(target_antag)
+				target_antag.objectives -= objective
 			objectives -= objective
-			objectives.Insert(objective_pos, new_objective)
+			target_antag.objectives.Insert(objective_pos, new_objective)
 			message_admins("[key_name_admin(usr)] edited [current]'s objective to [new_objective.explanation_text]")
 			log_admin("[key_name(usr)] edited [current]'s objective to [new_objective.explanation_text]")
 		else
+			if(target_antag)
+				target_antag.objectives += new_objective
 			objectives += new_objective
 			message_admins("[key_name_admin(usr)] added a new objective for [current]: [new_objective.explanation_text]")
 			log_admin("[key_name(usr)] added a new objective for [current]: [new_objective.explanation_text]")
@@ -908,6 +939,11 @@
 		var/datum/objective/objective = locate(href_list["obj_delete"])
 		if(!istype(objective))
 			return
+		
+		for(var/datum/antagonist/A in datum_antags)
+			if(objective in A.objectives)
+				A.objectives -= objective
+				break
 		objectives -= objective
 		message_admins("[key_name_admin(usr)] removed an objective for [current]: [objective.explanation_text]")
 		log_admin("[key_name(usr)] removed an objective for [current]: [objective.explanation_text]")

@@ -156,4 +156,5 @@ GLOBAL_LIST_EMPTY(antagonists)
 			already_registered_objectives |= A.objectives
 	objectives = owner.objectives - already_registered_objectives
 		
-	
+//This one is created by admin tools for custom objectives
+/datum/antagonist/custom
