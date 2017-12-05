@@ -631,7 +631,7 @@
 				if(moving_atom.loc != oldT) //fix for multi-tile objects
 					continue
 				moving_atom.onShuttleMove(newT, oldT, movement_force, movement_direction, old_dock, src)	//atoms
-				moved_atoms += moving_atom
+				moved_atoms[moving_atom] = oldT
 		
 		if(move_mode & MOVE_TURF)
 			oldT.onShuttleMove(newT, movement_force, movement_direction)									//turfs
@@ -665,7 +665,8 @@
 	for(var/i in 1 to moved_atoms.len)
 		CHECK_TICK
 		var/atom/movable/moved_object = moved_atoms[i]
-		moved_object.afterShuttleMove(movement_force, dir, preferred_direction, movement_direction, rotation)//atoms
+		var/turf/oldT = moved_atoms[moved_object]
+		moved_object.afterShuttleMove(oldT, movement_force, dir, preferred_direction, movement_direction, rotation)//atoms
 
 	for(var/i in 1 to old_turfs.len)
 		CHECK_TICK
