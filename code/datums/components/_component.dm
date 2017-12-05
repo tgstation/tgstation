@@ -142,10 +142,6 @@
 /datum/component/proc/OnTransfer(datum/new_parent)
 	return
 
-/datum/component/proc/AfterComponentActivated()
-	set waitfor = FALSE
-	return
-
 /datum/component/proc/_GetInverseTypeList(our_type = type)
 	#if DM_VERSION >= 513
 	#warning 512 is definitely stable now, remove the old code
@@ -177,28 +173,16 @@
 		var/datum/callback/CB = C.signal_procs[sigtype]
 		if(!CB)
 			return NONE
-		. = CB.InvokeAsync(arglist(arguments))
-		if(. & COMPONENT_ACTIVATED)
-			ComponentActivated(C)
-			C.AfterComponentActivated()
-	else
-		. = NONE
-		for(var/I in target)
-			var/datum/component/C = I
-			if(!C.enabled)
-				continue
-			var/datum/callback/CB = C.signal_procs[sigtype]
-			if(!CB)
-				continue
-			var/retval = CB.InvokeAsync(arglist(arguments))
-			. |= retval
-			if(retval & COMPONENT_ACTIVATED)
-				ComponentActivated(C)
-				C.AfterComponentActivated()
-
-/datum/proc/ComponentActivated(datum/component/C)
-	set waitfor = FALSE
-	return
+		return CB.InvokeAsync(arglist(arguments))
+	. = NONE
+	for(var/I in target)
+		var/datum/component/C = I
+		if(!C.enabled)
+			continue
+		var/datum/callback/CB = C.signal_procs[sigtype]
+		if(!CB)
+			continue
+		. |= CB.InvokeAsync(arglist(arguments))
 
 /datum/proc/GetComponent(c_type)
 	var/list/dc = datum_components
