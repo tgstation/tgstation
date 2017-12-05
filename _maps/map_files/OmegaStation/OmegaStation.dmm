@@ -470,7 +470,7 @@
 	name = "Asteroid"
 	})
 "aaW" = (
-/obj/item/stack/ore/iron,
+/obj/item/ore/iron,
 /turf/open/floor/plating/asteroid,
 /area/ruin/unpowered{
 	name = "Asteroid"
@@ -948,7 +948,7 @@
 	})
 "abS" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stack/ore/glass,
+/obj/item/ore/glass,
 /turf/open/floor/plating/astplate,
 /area/ruin/unpowered{
 	name = "Asteroid"
@@ -3094,7 +3094,7 @@
 	})
 "afM" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stack/ore/iron,
+/obj/item/ore/iron,
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating/astplate,
 /area/ruin/unpowered{
@@ -3551,8 +3551,8 @@
 /area/shuttle/supply)
 "agE" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stack/ore/silver,
-/obj/item/stack/ore/iron,
+/obj/item/ore/silver,
+/obj/item/ore/iron,
 /turf/open/floor/plating/astplate,
 /area/ruin/unpowered{
 	name = "Asteroid"
@@ -5320,7 +5320,7 @@
 /area/shuttle/supply)
 "ajQ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stack/ore/iron,
+/obj/item/ore/iron,
 /turf/open/floor/plating/astplate,
 /area/ruin/unpowered{
 	name = "Asteroid"
@@ -6039,7 +6039,7 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "akW" = (
-/obj/vehicle/secway,
+/obj/vehicle/ridden/secway,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -19060,7 +19060,7 @@
 /turf/open/floor/plasteel,
 /area/janitor)
 "aJJ" = (
-/obj/vehicle/janicart,
+/obj/vehicle/ridden/janicart,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/bag/trash,
 /obj/item/key/janitor,

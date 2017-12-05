@@ -4,6 +4,11 @@
 // #define EAST 4
 // #define WEST 8
 
+#define TEXT_NORTH			"[NORTH]"
+#define TEXT_SOUTH			"[SOUTH]"
+#define TEXT_EAST			"[EAST]"
+#define TEXT_WEST			"[WEST]"
+
 //These get to go at the top, because they're special
 //You can use these defines to get the typepath of the currently running proc/verb (yes procs + verbs are objects)
 /* eg:
@@ -472,9 +477,10 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 #define SYRINGE_DRAW 0
 #define SYRINGE_INJECT 1
-#define RESEARCH_MATERIAL_RECLAMATION_ID "0"
 
 //gold slime core spawning
 #define NO_SPAWN 0
 #define HOSTILE_SPAWN 1
 #define FRIENDLY_SPAWN 2
+
+#define RIDING_OFFSET_ALL "ALL"

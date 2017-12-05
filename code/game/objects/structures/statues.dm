@@ -177,8 +177,8 @@
 	else
 		return ..()
 
-/obj/structure/statue/plasma/proc/PlasmaBurn()
-	atmos_spawn_air("plasma=400;TEMP=1000")
+/obj/structure/statue/plasma/proc/PlasmaBurn(exposed_temperature)
+	atmos_spawn_air("plasma=[oreAmount*10];TEMP=[exposed_temperature]")
 	deconstruct(FALSE)
 
 /obj/structure/statue/plasma/proc/ignite(exposed_temperature)

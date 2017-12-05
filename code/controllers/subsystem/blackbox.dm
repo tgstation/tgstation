@@ -8,7 +8,6 @@ SUBSYSTEM_DEF(blackbox)
 	var/list/feedback = list()	//list of datum/feedback_variable
 	var/triggertime = 0
 	var/sealed = FALSE	//time to stop tracking stats?
-	var/list/research_levels = list() //list of highest tech levels attained that isn't lost lost by destruction of RD computers
 	var/list/versions = list("time_dilation_current" = 2,
 							"science_techweb_unlock" = 2) //associative list of any feedback variables that have had their format changed since creation and their current version, remember to update this
 
@@ -55,8 +54,6 @@ SUBSYSTEM_DEF(blackbox)
 			record_feedback("tally", "radio_usage", MS.pda_msgs.len, "PDA")
 		if (MS.rc_msgs.len)
 			record_feedback("tally", "radio_usage", MS.rc_msgs.len, "request console")
-	if(research_levels.len)
-		SSblackbox.record_feedback("associative", "high_research_level", 1, research_levels)
 
 	if (!SSdbcore.Connect())
 		return
@@ -81,10 +78,6 @@ SUBSYSTEM_DEF(blackbox)
 		message_admins("[key_name_admin(usr)] sealed the blackbox!")
 	log_game("Blackbox sealed[IsAdminAdvancedProcCall() ? " by [key_name(usr)]" : ""].")
 	sealed = TRUE
-
-/datum/controller/subsystem/blackbox/proc/log_research(tech, level)
-	if(!(tech in research_levels) || research_levels[tech] < level)
-		research_levels[tech] = level
 
 /datum/controller/subsystem/blackbox/proc/LogBroadcast(freq)
 	if(sealed)
@@ -184,7 +177,7 @@ Versioning
 						"gun_fired" = 2)
 */
 /datum/controller/subsystem/blackbox/proc/record_feedback(key_type, key, increment, data, overwrite)
-	if(sealed || !key_type || !istext(key) || !isnum(increment || !data))
+	if(sealed || !key_type || !istext(key) || !isnum(increment) || !data)
 		return
 	var/datum/feedback_variable/FV = find_feedback_datum(key, key_type)
 	switch(key_type)
@@ -218,6 +211,8 @@ Versioning
 			FV.json["data"]["[pos]"] = list() //in 512 "pos" can be replaced with "[FV.json["data"].len+1]"
 			for(var/i in data)
 				FV.json["data"]["[pos]"]["[i]"] = "[data[i]]" //and here with "[FV.json["data"].len]"
+		else
+			CRASH("Invalid feedback key_type: [key_type]")
 
 /datum/controller/subsystem/blackbox/proc/record_feedback_recurse_list(list/L, list/key_list, increment, depth = 1)
 	if(depth == key_list.len)

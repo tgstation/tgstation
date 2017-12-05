@@ -801,7 +801,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/security/prison)
 "aci" = (
-/obj/vehicle/secway,
+/obj/vehicle/ridden/secway,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
 "acj" = (
@@ -33140,7 +33140,7 @@
 /obj/machinery/camera{
 	c_tag = "Custodial Closet"
 	},
-/obj/vehicle/janicart,
+/obj/vehicle/ridden/janicart,
 /turf/open/floor/plasteel,
 /area/janitor)
 "bDL" = (
@@ -34719,7 +34719,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "bHz" = (
-/obj/item/stack/ore/iron,
+/obj/item/ore/iron,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -35985,8 +35985,8 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "bKk" = (
-/obj/item/stack/ore/silver,
-/obj/item/stack/ore/silver,
+/obj/item/ore/silver,
+/obj/item/ore/silver,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -44164,7 +44164,6 @@
 /area/maintenance/aft)
 "cdM" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/mob/living/simple_animal/mouse,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cdN" = (

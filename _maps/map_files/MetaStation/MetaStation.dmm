@@ -8770,7 +8770,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "asy" = (
-/obj/vehicle/secway,
+/obj/vehicle/ridden/secway,
 /obj/item/key/security,
 /turf/open/floor/plasteel/red/side{
 	dir = 10
@@ -12002,7 +12002,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/mining)
 "azj" = (
-/obj/item/stack/ore/iron,
+/obj/item/ore/iron,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -13401,8 +13401,8 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "aBS" = (
-/obj/item/stack/ore/silver,
-/obj/item/stack/ore/silver,
+/obj/item/ore/silver,
+/obj/item/ore/silver,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -13481,7 +13481,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/item/stack/ore/glass,
+/obj/item/ore/glass,
 /turf/open/floor/plasteel/floorgrime,
 /area/quartermaster/warehouse)
 "aCc" = (
@@ -17795,8 +17795,8 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
-/obj/item/stack/ore/glass,
-/obj/item/stack/ore/iron,
+/obj/item/ore/glass,
+/obj/item/ore/iron,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
@@ -29308,7 +29308,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = -28
 	},
-/obj/vehicle/janicart,
+/obj/vehicle/ridden/janicart,
 /obj/item/key/janitor,
 /turf/open/floor/plating,
 /area/janitor)
@@ -32286,10 +32286,12 @@
 /obj/machinery/light_switch{
 	pixel_x = 27
 	},
-/obj/machinery/photocopier,
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/structure/easel,
+/obj/item/canvas/twentythreeXtwentythree,
+/obj/item/canvas/twentythreeXtwentythree,
 /turf/open/floor/plasteel,
 /area/storage/art)
 "boP" = (
@@ -78904,7 +78906,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/item/stack/ore/slag,
+/obj/item/ore/slag,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "diS" = (
@@ -101271,7 +101273,7 @@ bzE
 bLk
 bML
 bue
-bMQ
+bzE
 bRj
 bSB
 bPR
