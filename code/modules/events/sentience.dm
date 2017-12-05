@@ -9,6 +9,7 @@
 	role_name = "random animal"
 	var/animals = 1
 	var/one = "one"
+	fakeable = TRUE
 
 /datum/round_event/ghost_role/sentience/announce(fake)
 	var/sentience_report = ""
