@@ -13574,8 +13574,7 @@
 /turf/open/floor/wood,
 /area/library)
 "aHc" = (
-/obj/structure/table/wood,
-/obj/item/storage/pill_bottle/dice,
+/obj/machinery/vending/games,
 /turf/open/floor/wood,
 /area/library)
 "aHd" = (
@@ -97970,7 +97969,7 @@ bZQ
 caP
 cbO
 ccJ
-cdM
+bLS
 bLS
 cfp
 cge
@@ -101254,7 +101253,7 @@ aFu
 aHc
 aIw
 aJS
-cAM
+aJS
 aMJ
 aNP
 aOS
