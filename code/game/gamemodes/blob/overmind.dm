@@ -51,8 +51,6 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	if(blob_core)
 		blob_core.update_icon()
 
-	SSshuttle.registerHostileEnvironment(src)
-
 	.= ..()
 
 /mob/camera/blob/Life()
