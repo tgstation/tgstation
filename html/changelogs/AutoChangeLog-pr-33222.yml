@@ -1,0 +1,4 @@
+author: "Dax Dupont & Alek2ander"
+delete-after: True
+changes: 
+  - tweak: "Binary chat messages been made more visible."
