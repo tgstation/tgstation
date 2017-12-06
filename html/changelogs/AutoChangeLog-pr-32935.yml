@@ -1,0 +1,16 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - rscadd: "Added the Eminence role to clockcult! Players can elect themselves or ghosts as the Eminence from the eminence spire structure on Reebe."
+  - rscadd: "The Eminence is incorporeal and invisible, and directs the entire cult. Anything they say is heard over the Hierophant network, and they can issue commands by middle-clicking themselves or different turfs."
+  - rscadd: "The Eminence also has a single-use mass recall that warps all servants to the Ark chamber."
+  - rscadd: "Added traps, triggers, and brass filaments to link them. They can all be constructed from brass sheets, and do different things and trigger in different ways. Current traps include the brass skewer and steam vent, and triggers include the pressure sensor, lever, and repeater."
+  - rscadd: "The Eminence can activate trap triggers by clicking on them!"
+  - rscadd: "Servants can deconstruct traps instantly with a wrench."
+  - rscdel: "Mending Mantra has been removed."
+  - tweak: "Clockwork scriptures have been recolored and sorted based on their functions; yellow scriptures are for construction, red for offense, blue for defense, and purple for niche."
+  - balance: "Servants now spawn with a PDA and black shoes to make disguise more feasible."
+  - balance: "The Eminence can superheat up to 20 clockwork walls at a time. Superheated walls are immune to hulk and mech punches, but can still be broken conventionally."
+  - balance: "Clockwork walls are slightly faster to build before the Ark activates, taking an extra second less."
+  - bugfix: "Poly no longer continually undergoes binary fission when Ratvar is in range."
+  - code_imp: "The global records alert for servants will no longer display info that doesn't affect them since the rework."
