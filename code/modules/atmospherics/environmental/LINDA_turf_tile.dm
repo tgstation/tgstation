@@ -233,12 +233,9 @@
 
 	update_visuals()
 
-	#define REMOVE (!(our_air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION && consider_superconductivity(starting = TRUE)))
-	//am i really so obsessed with performance to use a temporary define instead of a var here?
-	//of course i fucking am hahaha ha aha ahah hhhhh
-	if ((!our_excited_group && REMOVE) || (cached_atmos_cooldown > (EXCITED_GROUP_DISMANTLE_CYCLES * 2)))
+	if((!our_excited_group && !(our_air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION && consider_superconductivity(starting = TRUE))) \
+	  || (cached_atmos_cooldown > (EXCITED_GROUP_DISMANTLE_CYCLES * 2)))
 		SSair.remove_from_active(src)
-	#undef REMOVE
 
 	atmos_cooldown = cached_atmos_cooldown
 
