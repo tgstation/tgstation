@@ -455,7 +455,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set desc = "Change your view range."
 
 	var/max_view = client.prefs.unlock_content ? GHOST_MAX_VIEW_RANGE_MEMBER : GHOST_MAX_VIEW_RANGE_DEFAULT
-	if(client.view == world.view)
+	if(client.view == GLOB.DEFAULT_VIEW)
 		var/list/views = list()
 		for(var/i in 7 to max_view)
 			views |= i
