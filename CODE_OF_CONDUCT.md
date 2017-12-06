@@ -14,7 +14,7 @@ Examples of behavior that contributes to creating a positive environment include
 Examples of unacceptable behavior by participants include:
 
 * Doing things the maintainers don't like due to their personal bias
-* Expressing support, in any shape or form, any of the following Triggers: 
+* Expressing support, in any shape or form, for any of the following Triggers: 
 	* Space indentation
 	* Pep 8
 	* Mongo DB
