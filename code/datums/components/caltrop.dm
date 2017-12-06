@@ -1,17 +1,25 @@
 /datum/component/caltrop
-	var/damage
+	var/min_damage
+	var/max_damage
+	var/probability
 	var/flags
 
 	var/cooldown = 0
 
-/datum/component/caltrop/Initialize(_damage, _flags = NONE)
-	damage = _damage
+/datum/component/caltrop/Initialize(_min_damage = 0, _max_damage = 0, _probability = 100,  _flags = NONE)
+	min_damage = _min_damage
+	max_damage = max(_min_damage, _max_damage)
+	probability = _probability
 	flags = _flags
+
 	RegisterSignal(list(COMSIG_MOVABLE_CROSSED), .proc/Crossed)
 
 /datum/component/caltrop/proc/Crossed(atom/movable/AM)
 	var/atom/A = parent
 	if(!A.has_gravity())
+		return
+
+	if(!prob(probability))
 		return
 
 	if(ishuman(AM))
@@ -37,6 +45,7 @@
 		if((H.movement_type & FLYING) || H.buckled)
 			return
 
+		var/damage = rand(min_damage, max_damage)
 		H.apply_damage(damage, BRUTE, picked_def_zone)
 
 		if(cooldown < world.time - 10) //cooldown to avoid message spam.
