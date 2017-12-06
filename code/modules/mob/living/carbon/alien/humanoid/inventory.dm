@@ -26,17 +26,17 @@
 /mob/living/carbon/alien/humanoid/attack_ui(slot_id)
 	var/obj/item/I = get_active_held_item()
 	if(!I)
-		return 0
+		return FALSE
 	switch(slot_id)
 		if(slot_l_store)
 			if(l_store)
-				return 0
+				return FALSE
 			l_store = I
 			update_inv_pockets()
 		if(slot_r_store)
 			if(r_store)
-				return 0
+				return FALSE
 			r_store = I
 			update_inv_pockets()
 	I.equipped(src, slot_id)
-	return 1
+	return TRUE
