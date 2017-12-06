@@ -37,7 +37,7 @@
 		GLOB._preloader.load(src)
 
 	var/do_initialize = SSatoms.initialized
-	if(do_initialize > INITIALIZATION_INSSATOMS)
+	if(do_initialize != INITIALIZATION_INSSATOMS)
 		args[1] = do_initialize == INITIALIZATION_INNEW_MAPLOAD
 		if(SSatoms.InitAtom(src, args))
 			//we were deleted
@@ -57,9 +57,7 @@
 //Note: the following functions don't call the base for optimization and must copypasta:
 // /turf/Initialize
 // /turf/open/space/Initialize
-// /mob/dead/new_player/Initialize
 
-//Do also note that this proc always runs in New for /mob/dead
 /atom/proc/Initialize(mapload, ...)
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
@@ -420,22 +418,6 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 
 /atom/proc/wash_cream()
 	return 1
-
-/atom/proc/get_global_map_pos()
-	if(!islist(GLOB.global_map) || isemptylist(GLOB.global_map))
-		return
-	var/cur_x = null
-	var/cur_y = null
-	var/list/y_arr = null
-	for(cur_x=1,cur_x<=GLOB.global_map.len,cur_x++)
-		y_arr = GLOB.global_map[cur_x]
-		cur_y = y_arr.Find(src.z)
-		if(cur_y)
-			break
-	if(cur_x && cur_y)
-		return list("x"=cur_x,"y"=cur_y)
-	else
-		return 0
 
 /atom/proc/isinspace()
 	if(isspaceturf(get_turf(src)))

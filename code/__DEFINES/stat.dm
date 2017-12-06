@@ -18,6 +18,8 @@
 #define HUSK		"husk"
 #define NOCLONE		"noclone"
 #define CLUMSY		"clumsy"
+#define DUMB        "dumb"
+#define MONKEYLIKE  "monkeylike" //sets IsAdvancedToolUser to FALSE
 
 // common disability sources
 #define EYE_DAMAGE "eye_damage"

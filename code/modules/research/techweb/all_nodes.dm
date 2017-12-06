@@ -18,7 +18,7 @@
 	display_name = "Biological Technology"
 	description = "What makes us tick."	//the MC, silly!
 	prereq_ids = list("base")
-	design_ids = list("mass_spectrometer", "chem_heater", "chem_master", "chem_dispenser", "sleeper", "pandemic")
+	design_ids = list("chem_heater", "chem_master", "chem_dispenser", "sleeper", "pandemic")
 	research_cost = 2500
 	export_price = 10000
 
@@ -27,7 +27,7 @@
 	display_name = "Advanced Biotechnology"
 	description = "Advanced Biotechnology"
 	prereq_ids = list("biotech")
-	design_ids = list("piercesyringe", "adv_mass_spectrometer", "plasmarefiller", "limbgrower")
+	design_ids = list("piercesyringe", "plasmarefiller", "limbgrower")
 	research_cost = 2500
 	export_price = 10000
 
@@ -779,7 +779,7 @@
 
 /datum/techweb_node/mech_lmg
 	id = "mech_lmg"
-	display_name =  "Exosuit Weapon (PBT \"Pacifier\" Mounted Taser)"
+	display_name = "Exosuit Weapon (\"Ultra AC 2\" LMG)"
 	description = "An advanced piece of mech weaponry"
 	prereq_ids = list("adv_mecha", "adv_weaponry", "ballistic_weapons")
 	design_ids = list("mech_lmg")

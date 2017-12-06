@@ -359,7 +359,7 @@
 				pocell.maxcharge *= CG.rate*1000
 			pocell.charge = pocell.maxcharge
 			pocell.name = "[G.name] battery"
-			pocell.desc = "A rechargeable plant based power cell. This one has a power rating of [DisplayPower(pocell.maxcharge)], and you should not swallow it."
+			pocell.desc = "A rechargeable plant-based power cell. This one has a rating of [DisplayEnergy(pocell.maxcharge)], and you should not swallow it."
 
 			if(G.reagents.has_reagent("plasma", 2))
 				pocell.rigged = 1

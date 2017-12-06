@@ -15,7 +15,7 @@
 /area/awaymission/snowdin/post)
 "ae" = (
 /obj/effect/decal/cleanable/oil,
-/obj/vehicle/atv,
+/obj/vehicle/ridden/atv,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -41,7 +41,7 @@
 	},
 /area/awaymission/snowdin/post)
 "ai" = (
-/obj/vehicle/atv,
+/obj/vehicle/ridden/atv,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -1842,7 +1842,7 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin)
 "eZ" = (
-/obj/vehicle/atv,
+/obj/vehicle/ridden/atv,
 /turf/open/floor/plating/asteroid/snow{
 	temperature = 140
 	},

@@ -1,5 +1,0 @@
-author: "uraniummeltdown"
-delete-after: True
-changes: 
-  - rscadd: "You can make many different types of office and comfy chairs with metal"
-  - tweak: "Stack menus use /datum/browser"

@@ -183,6 +183,7 @@
 				to_chat(H, "<span class='warning'>You feel intensely watched.</span>")
 		sleep(5)
 		to_chat(H, "<span class='warning'><b>Your mind snaps!</b></span>")
+		H.gain_trauma_type(BRAIN_TRAUMA_MILD)
 		to_chat(H, "<big><span class='warning'><b>You can't remember how you got here...</b></span></big>")
 		var/objtype = (prob(75) ? /datum/objective/abductee/random : pick(subtypesof(/datum/objective/abductee/) - /datum/objective/abductee/random))
 		var/datum/objective/abductee/O = new objtype()
