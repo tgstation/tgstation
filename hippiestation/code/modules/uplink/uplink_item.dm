@@ -169,12 +169,6 @@
 /datum/uplink_item/stealthy_tools/mulligan
 	cost = 2
 
-/datum/uplink_item/device_tools/syndietome
-	cost = 5
-
-/datum/uplink_item/device_tools/binary
-	cost = 2
-
 /datum/uplink_item/device_tools/singularity_beacon
 	cost = 8
 
@@ -273,93 +267,38 @@
 	cost = 8
 
 /datum/uplink_item/device_tools/syndietome
-	name = "Syndicate Tome"
-	desc = "Using rare artifacts acquired at great cost, the syndicate has reverse engineered \
-			the seemingly magical books of a certain cult. Though lacking the esoteric abilities \
-			of the originals, these inferior copies are still quite useful, being able to provide \
-			both weal and woe on the battlefield, even if they do occasionally bite off a finger."
-	item = /obj/item/storage/book/bible/syndicate
 	cost = 2
 
 /datum/uplink_item/device_tools/binary
-	name = "Binary Translator Key"
-	desc = "A key that, when inserted into a radio headset, allows you to listen to and talk with silicon-based lifeforms, \
-			such as AI units and cyborgs, over their private binary channel. Caution should \
-			be taken while doing this, as unless they are allied with you, they are programmed to report such intrusions."
-	item = /obj/item/device/encryptionkey/binary
 	cost = 2
-	surplus = 75
 
 /datum/uplink_item/device_tools/codespeak_manual
-	name = "Codespeak Manual"
 	desc = "Syndicate agents can be trained to use a series of codewords to convey complex information, which makes you look like an obvious traitor to anyone listening. This manual teaches you this Codespeak. You can also hit someone else with the manual in order to teach them. One use."
-	item = /obj/item/codespeak_manual
 	cost = 0
 	limited_stock = 4
-	exclude_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/device_tools/codespeak_manual_deluxe
-	name = "Deluxe Codespeak Manual"
 	desc = "Syndicate agents can be trained to use a series of codewords to convey complex information, which makes you look like an obvious traitor to anyone listening. This manual teaches you this Codespeak. You can also hit someone else with the manual in order to teach them. This is the deluxe edition, which has unlimited uses. Now you and your club can get lynched together!"
 	cost = 3
-	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_weapons/martialarts
-	name = "Martial Arts Scroll"
-	desc = "This scroll contains the secrets of an ancient martial arts technique. You will master unarmed combat, \
-			deflecting all ranged weapon fire, but you also refuse to use dishonorable ranged weaponry."
-	item = /obj/item/sleeping_carp_scroll
 	cost = 12
-	surplus = 0
-	exclude_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_weapons/throwingweapons
-	name = "Box of Throwing Weapons"
-	desc = "A box of shurikens and reinforced bolas from ancient Earth martial arts. They are highly effective \
-			 throwing weapons. The bolas can knock a target down and the shurikens will embed into limbs."
-	item = /obj/item/storage/box/syndie_kit/throwing_weapons
 	cost = 2
 
 /datum/uplink_item/stealthy_weapons/dart_pistol
-	name = "Dart Pistol"
-	desc = "A miniaturized version of a normal syringe gun. It is very quiet when fired and can fit into any \
-			space a small item can."
-	item = /obj/item/gun/syringe/syndicate
 	cost = 3
-	surplus = 50
 
 /datum/uplink_item/suits/hardsuit
-	name = "Syndicate Hardsuit"
-	desc = "The feared suit of a syndicate nuclear agent. Features slightly better armoring and a built in jetpack \
-			that runs off standard atmospheric tanks. When the built in helmet is deployed your identity will be \
-			protected, even in death, as the suit cannot be removed by outside forces. Toggling the suit in and out of \
-			combat mode will allow you all the mobility of a loose fitting uniform without sacrificing armoring. \
-			Additionally the suit is collapsible, making it small enough to fit within a backpack. \
-			Nanotrasen crew who spot these suits are known to panic."
-	item = /obj/item/clothing/suit/space/hardsuit/syndi
 	cost = 7
-	exclude_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/device_tools/surgerybag
-	name = "Syndicate Surgery Duffel Bag"
-	desc = "The Syndicate surgery duffel bag is a toolkit containing all surgery tools, surgical drapes, \
-			a Syndicate brand MMI, a straitjacket, and a muzzle."
-	item = /obj/item/storage/backpack/duffelbag/syndie/surgery
 	cost = 1
 
 /datum/uplink_item/role_restricted/ancient_jumpsuit
-	name = "Ancient Jumpsuit"
-	desc = "A tattered old jumpsuit that will provide absolutely no benefit to you. It fills the wearer with a strange compulsion to blurt out 'glorf'."
-	item = /obj/item/clothing/under/color/grey/glorf
 	cost = 0
 	limited_stock = 4
-	restricted_roles = list("Assistant")
-	surplus = 0
 
 /datum/uplink_item/role_restricted/reverse_revolver
-	name = "Reverse Revolver"
-	desc = "A revolver that always fires at its user. \"Accidentally\" drop your weapon, then watch as the greedy corporate pigs blow their own brains all over the wall. \
-	The revolver itself is actually real. Only clumsy people, and clowns, can fire it normally. Comes in a box of hugs. Honk."
 	cost = 13
-	item = /obj/item/storage/box/hug/reverse_revolver
-	restricted_roles = list("Clown")
