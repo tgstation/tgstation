@@ -277,14 +277,7 @@
 		return
 
 	// All radios make an attempt to use the subspace system first
-	for(var/obj/machinery/telecomms/receiver/R in GLOB.telecomms_list)
-		var/turf/T = get_turf(R)
-		if (T.z == position.z)
-			R.receive_signal(signal)
-	for(var/obj/machinery/telecomms/allinone/R in GLOB.telecomms_list)
-		var/turf/T = get_turf(R)
-		if (T.z == position.z)
-			R.receive_signal(signal)
+	signal.send_to_receivers()
 
 	// If the radio is subspace-only, that's all it can do
 	if (subspace_transmission)

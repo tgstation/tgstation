@@ -93,6 +93,7 @@
 	copy.source = source
 	copy.levels = levels
 	copy.frequency = frequency
+	copy.data = data.Copy()
 	return copy
 
 /datum/signal/subspace/proc/mark_done()
@@ -100,6 +101,20 @@
 	while (current)
 		current.data["done"] = TRUE
 		current = current.original
+
+/datum/signal/subspace/proc/send_to_receivers()
+	var/any = FALSE
+	for(var/obj/machinery/telecomms/receiver/R in GLOB.telecomms_list)
+		var/turf/T = get_turf(R)
+		if (T.z in levels)
+			any = TRUE
+			R.receive_signal(src)
+	for(var/obj/machinery/telecomms/allinone/R in GLOB.telecomms_list)
+		var/turf/T = get_turf(R)
+		if (T.z in levels)
+			any = TRUE
+			R.receive_signal(src)
+	return any
 
 /datum/signal/subspace/vocal/copy()
 	var/datum/signal/subspace/vocal/copy = new(source, frequency, virt, language)
