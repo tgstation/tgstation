@@ -132,4 +132,4 @@ Note: Must be placed west/left of and R&D console to function.
 		var/obj/item/I = new path(get_turf(src))
 		if(!istype(I, /obj/item/stack/sheet) && !istype(I, /obj/item/ore/bluespace_crystal))
 			I.materials = matlist.Copy()
-	SSblackbox.record_feedback("nested_tally", "item_printed", amount, list("[type]", "[path]"))
+	SSblackbox.record_feedback("nested tally", "item_printed", amount, list("[type]", "[path]"))
