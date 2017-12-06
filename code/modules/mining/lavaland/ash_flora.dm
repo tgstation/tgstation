@@ -138,7 +138,7 @@
 	regrowth_time_high = 7200
 
 /obj/structure/flora/ash/cacti/Initialize(mapload)
-	. == ..()
+	. = ..()
 	// min dmg 3, max dmg 6, prob(70)
 	AddComponent(/datum/component/caltrop, 3, 6, 70)
 
