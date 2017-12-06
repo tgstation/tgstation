@@ -102,6 +102,8 @@
 	return 0
 
 /obj/item/clothing/mask/facehugger/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
+	if(isaliendrone(thrower))
+		range = range + 2
 	if(!..())
 		return
 	if(stat == CONSCIOUS)
@@ -161,6 +163,8 @@
 			if(H.is_mouth_covered(head_only = 1))
 				H.visible_message("<span class='danger'>[src] smashes against [H]'s [H.head]!</span>", \
 									"<span class='userdanger'>[src] smashes against [H]'s [H.head]!</span>")
+				H.head.take_damage(90, BURN, "acid", 0)
+				H.head.take_damage(70, BRUTE, "melee", 0)
 				Die()
 				return FALSE
 
@@ -256,9 +260,6 @@
 
 	var/mob/living/carbon/C = M
 	if(ishuman(C) && !(slot_wear_mask in C.dna.species.no_equip))
-		var/mob/living/carbon/human/H = C
-		if(H.is_mouth_covered(head_only = 1))
-			return 0
 		return 1
 	return 0
 

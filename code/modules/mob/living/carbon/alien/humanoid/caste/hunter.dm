@@ -13,8 +13,8 @@
 /mob/living/carbon/alien/humanoid/hunter/movement_delay()
 	. += ..()	//slow down on stun
 
-/mob/living/carbon/alien/humanoid/hunter/handle_ventcrawl(atom/A, var/speed = 10)
-	..()
+/mob/living/carbon/alien/humanoid/hunter/handle_ventcrawl(atom/A, speed = 10)
+	. = ..()
 
 //Hunter verbs
 

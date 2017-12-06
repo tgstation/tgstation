@@ -38,6 +38,27 @@
 //hands
 	build_hand_slots(ui_style)
 
+//pockets
+	if(isaliendrone(mymob))
+		var/obj/screen/inventory/inv_box
+		inv_box = new /obj/screen/inventory()
+		inv_box.name = "storage1"
+		inv_box.icon = 'icons/mob/screen_alien.dmi'
+		inv_box.icon_state = "pocket"
+		inv_box.screen_loc = ui_alien_storage_l
+		inv_box.slot_id = slot_l_store
+		inv_box.layer = 19
+		static_inventory += inv_box
+
+		inv_box = new /obj/screen/inventory()
+		inv_box.name = "storage2"
+		inv_box.icon = 'icons/mob/screen_alien.dmi'
+		inv_box.icon_state = "pocket"
+		inv_box.screen_loc = ui_alien_storage_r
+		inv_box.slot_id = slot_r_store
+		inv_box.layer = 19
+		static_inventory += inv_box
+
 //begin buttons
 
 	using = new /obj/screen/swap_hand()
