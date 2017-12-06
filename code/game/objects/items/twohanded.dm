@@ -509,14 +509,10 @@
 /obj/item/twohanded/mallet/update_icon()
 	icon_state = "toolbox_mallet_r[wielded]"
 
-/obj/item/twohanded/mallet/afterattack(atom/movable/AM, mob/user, proximity)
-	if(!proximity)
-		return
-	if(isopenturf(AM)) //I think this prevents it from smashing if you click an open tile
-		return
-	if(!wielded)
-		return
-	integ--
+/obj/item/twohanded/mallet/attack(atom/movable/AM, mob/user, proximity)
+	..()
+	if(wielded)
+		integ--
 	if(!integ)
 		user.visible_message("<span class='notice'>[src] smashes into pieces!</span>")
 		qdel(src)
@@ -550,23 +546,13 @@
 	icon_state = "toolbox_mallet_y0"
 	name = "mtoolnir"
 	desc = "A distant relative of His Grace, perhaps. The power of the tide is with you."
-	force_wielded = 100 //nelly
+	force_wielded = 80 //nelly
 	integ = 5
 
-/obj/item/twohanded/mallet/y/mtoolnir/afterattack(atom/movable/AM, mob/user, proximity, mob/target)
-	if(!proximity)
-		return
-	if(isopenturf(AM)) //see above
-		return
-	if(!wielded)
-		return
-	integ--
-	target.visible_message("<span class='userdanger'>[target] smashes into pieces!</span>")
-	target.gib()
-	if(!integ)
-		user.visible_message("<span class='notice'>[src] smashes into pieces!</span>")
-		qdel(src)
-
+/obj/item/twohanded/mallet/y/mtoolnir/attack(atom/movable/AM, mob/user, mob/target)
+	..()
+	if(wielded)
+		shock(target)
 // CHAINSAW
 /obj/item/twohanded/required/chainsaw
 	name = "chainsaw"
