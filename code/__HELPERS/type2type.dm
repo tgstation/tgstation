@@ -12,7 +12,7 @@
 //Returns an integer given a hex input, supports negative values "-ff"
 //skips preceding invalid characters
 //breaks when hittin invalid characters thereafter
-/proc/hex2num(var/hex, var/start = 1)
+/proc/hex2num(hex, start = 1)
 	var/ret = 0
 	var/mult = 1
 	var/exponent = 0
