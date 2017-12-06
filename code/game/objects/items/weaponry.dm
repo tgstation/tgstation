@@ -301,7 +301,7 @@
 
 		user.put_in_hands(MS)
 
-	else if(istype(I, /obj/item/storage/toolbox) && !(I.flags_1 & NODROP_1) && !istype(B, /obj/item/storage/toolbox/brass))//safety net to catch all other types of toolboxes since red is the most common, but we don't want any brass shit
+	else if(istype(I, /obj/item/storage/toolbox) && !(I.flags_1 & NODROP_1) && !istype(I, /obj/item/storage/toolbox/brass))//safety net to catch all other types of toolboxes since red is the most common, but we don't want any brass shit
 		var/obj/item/twohanded/mallet/MR = new /obj/item/twohanded/mallet
 
 		remove_item_from_storage(user)
