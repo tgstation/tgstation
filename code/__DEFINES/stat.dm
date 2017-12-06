@@ -30,6 +30,7 @@
 #define MAGIC_DISABILITY "magic"
 #define STASIS_MUTE "stasis"
 #define GENETICS_SPELL "genetics_spell"
+#define TRAUMA_DISABILITY "trauma"
 
 // bitflags for machine stat variable
 #define BROKEN		1

@@ -42,7 +42,7 @@
 	lose_text = "<span class='notice'>You feel smart again.</span>"
 
 /datum/brain_trauma/mild/dumbness/on_gain()
-	owner.disabilities |= DUMB
+	owner.add_disability(DUMB, TRAUMA_DISABILITY)
 	..()
 
 /datum/brain_trauma/mild/dumbness/on_life()
@@ -54,7 +54,7 @@
 	..()
 
 /datum/brain_trauma/mild/dumbness/on_lose()
-	owner.disabilities &= ~DUMB
+	owner.remove_disability(DUMB, TRAUMA_DISABILITY)
 	owner.derpspeech = 0
 	..()
 
