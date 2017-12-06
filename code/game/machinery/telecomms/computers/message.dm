@@ -10,7 +10,7 @@
 	icon_screen = "comm_logs"
 	circuit = /obj/item/circuitboard/computer/message_monitor
 	//Server linked to.
-	var/obj/machinery/message_server/linkedServer = null
+	var/obj/machinery/telecomms/message_server/linkedServer = null
 	//Sparks effect - For emag
 	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
 	//Messages - Saves me time if I want to change something.
@@ -57,11 +57,15 @@
 		to_chat(user, "<span class='notice'>A no server error appears on the screen.</span>")
 
 /obj/machinery/computer/message_monitor/Initialize()
-	. = ..()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/computer/message_monitor/LateInitialize()
 	//Is the server isn't linked to a server, and there's a server available, default it to the first one in the list.
 	if(!linkedServer)
-		if(GLOB.message_servers && GLOB.message_servers.len > 0)
-			linkedServer = GLOB.message_servers[1]
+		for(var/obj/machinery/telecomms/message_server/S in GLOB.telecomms_list)
+			linkedServer = S
+			break
 
 /obj/machinery/computer/message_monitor/attack_hand(mob/living/user)
 	if(..())
@@ -268,11 +272,15 @@
 				linkedServer.active = !linkedServer.active
 		//Find a server
 		if (href_list["find"])
-			if(GLOB.message_servers && GLOB.message_servers.len > 1)
-				src.linkedServer = input(usr,"Please select a server.", "Select a server.", null) as null|anything in GLOB.message_servers
+			var/list/message_servers = list()
+			for (var/obj/machinery/telecomms/message_server/M in GLOB.telecomms_list)
+				message_servers += M
+
+			if(message_servers.len > 1)
+				linkedServer = input(usr, "Please select a server.", "Select a server.", null) as null|anything in message_servers
 				message = "<span class='alert'>NOTICE: Server selected.</span>"
-			else if(GLOB.message_servers && GLOB.message_servers.len > 0)
-				linkedServer = GLOB.message_servers[1]
+			else if(message_servers.len > 0)
+				linkedServer = message_servers[1]
 				message =  "<span class='notice'>NOTICE: Only Single Server Detected - Server selected.</span>"
 			else
 				message = noserver
@@ -452,7 +460,7 @@
 /obj/item/paper/monitorkey
 	name = "monitor decryption key"
 
-/obj/item/paper/monitorkey/Initialize(mapload, obj/machinery/message_server/server)
+/obj/item/paper/monitorkey/Initialize(mapload, obj/machinery/telecomms/message_server/server)
 	..()
 	if (server)
 		print(server)
@@ -460,13 +468,13 @@
 	else
 		return INITIALIZE_HINT_LATELOAD
 
-/obj/item/paper/monitorkey/proc/print(obj/machinery/message_server/server)
+/obj/item/paper/monitorkey/proc/print(obj/machinery/telecomms/message_server/server)
 	info = "<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is '[server.decryptkey]'.<br>Please keep this a secret and away from the clown.<br>If necessary, change the password to a more secure one."
 	info_links = info
 	add_overlay("paper_words")
 
 /obj/item/paper/monitorkey/LateInitialize()
-	for (var/obj/machinery/message_server/server in GLOB.message_servers)
+	for (var/obj/machinery/telecomms/message_server/server in GLOB.telecomms_list)
 		if (server.decryptkey)
 			print(server)
 			break
