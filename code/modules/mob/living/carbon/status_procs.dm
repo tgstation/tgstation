@@ -101,3 +101,35 @@
 	status_flags |= DISFIGURED	//makes them unknown
 	update_body()
 	return 1
+
+/mob/living/carbon/proc/get_traumas()
+	. = list()
+	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
+	if(B)
+		. = B.traumas
+
+/mob/living/carbon/proc/has_trauma_type(brain_trauma_type, consider_permanent = FALSE)
+	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
+	if(B)
+		. = B.has_trauma_type(brain_trauma_type, consider_permanent)
+
+/mob/living/carbon/proc/gain_trauma(datum/brain_trauma/trauma, permanent = FALSE, list/arguments)
+	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
+	if(B)
+		. = B.gain_trauma(trauma, permanent, arguments)
+
+/mob/living/carbon/proc/gain_trauma_type(brain_trauma_type = /datum/brain_trauma, permanent = FALSE)
+	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
+	if(B)
+		. = B.gain_trauma_type(brain_trauma_type, permanent)
+
+/mob/living/carbon/proc/cure_trauma_type(brain_trauma_type, cure_permanent = FALSE)
+	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
+	if(B)
+		. = B.cure_trauma_type(brain_trauma_type, cure_permanent)
+
+/mob/living/carbon/proc/cure_all_traumas(cure_permanent = FALSE)
+	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
+	if(B)
+		. = B.cure_all_traumas(cure_permanent)
+
