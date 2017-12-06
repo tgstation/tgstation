@@ -1,4 +1,0 @@
-author: "Revenant Defile ability"
-delete-after: True
-changes: 
-  - bugfix: "Revenant's Defile now removes salt piles"
