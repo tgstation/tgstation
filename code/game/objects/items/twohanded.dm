@@ -500,7 +500,7 @@
 	throwforce = 15
 	throw_speed = 2
 	materials = list(MAT_METAL=1650, MAT_GLASS=75)
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/weapons/smash.ogg'
 	attack_verb = list("smacked", "cracked", "attacked")
 	max_integrity = 50
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
@@ -546,6 +546,7 @@
 	icon_state = "toolbox_mallet_y0"
 	name = "mtoolnir"
 	desc = "A distant relative of His Grace, perhaps. The power of the tide is with you."
+	hitsound = 'sound/effects/explosion1.ogg'
 	force_wielded = 80 //nelly
 	integ = 5
 
