@@ -23,7 +23,8 @@
 	/obj/structure/grille,
 	/obj/structure/girder,
 	/obj/structure/rack,
-	/obj/structure/barricade) //turned into a typecache in New()
+	/obj/structure/barricade,
+	/obj/machinery/migrant_spawner) //turned into a typecache in New()
 
 	var/ranged_message = "fires" //Fluff text for ranged mobs
 	var/ranged_cooldown = 0 //What the current cooldown on ranged attacks is, generally world.time + ranged_cooldown_time

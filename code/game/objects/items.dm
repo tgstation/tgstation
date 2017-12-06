@@ -107,6 +107,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	var/datum/rpg_loot/rpg_loot = null
 
+	var/datum/reagent/smelted_material = null
+	var/starting_material = null
+
 
 	//Tooltip vars
 	var/in_inventory = FALSE//is this item equipped into an inventory slot or hand of a mob?
@@ -720,3 +723,14 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	deltimer(tip_timer)//delete any in-progress timer if the mouse is moved off the item before it finishes
 	closeToolTip(usr)
 
+/obj/item/proc/on_brew()
+	return
+
+/obj/item/proc/on_smelt()
+	return
+
+/obj/item/proc/on_bar_smelt()
+	return
+
+/obj/item/proc/post_smithing()
+	return

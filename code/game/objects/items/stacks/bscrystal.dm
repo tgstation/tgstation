@@ -9,6 +9,7 @@
 	points = 50
 	var/blink_range = 8 // The teleport range when crushed/thrown at someone.
 	refined_type = /obj/item/stack/sheet/bluespace_crystal
+	reagent_id = "bluespace"
 
 /obj/item/ore/bluespace_crystal/refined
 	name = "refined bluespace crystal"

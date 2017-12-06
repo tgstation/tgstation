@@ -1,0 +1,45 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/turf/closed/mineral/random/high_chance/volcanic,/area/mine/explored)
+"c" = (/obj/effect/baseturf_helper/lava_land/surface,/turf/closed/wall,/area/mine/explored)
+"d" = (/obj/machinery/anvil,/obj/item/smith_hammer,/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
+"e" = (/obj/machinery/smelter{layer = 4.4},/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
+"f" = (/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
+"g" = (/mob/living/simple_animal/pet/cat,/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
+"h" = (/obj/structure/table/wood,/obj/item/reagent_containers/glass/mold/bar,/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
+"i" = (/obj/structure/glowshroom/single,/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
+"j" = (/mob/living/simple_animal/pet/cat{gender = "female"},/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
+"k" = (/obj/effect/baseturf_helper/lava_land/surface,/turf/closed/wall/mineral/wood,/area/awaymission)
+"l" = (/obj/machinery/migrant_spawner,/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
+"m" = (/obj/structure/rack,/obj/item/pickaxe,/obj/item/pickaxe,/obj/item/pickaxe,/obj/item/storage/bag/ore,/obj/item/storage/bag/ore,/obj/item/storage/bag/ore,/obj/effect/baseturf_helper/lava_land/surface,/turf/open/floor/wood,/area/awaymission)
+"n" = (/obj/effect/baseturf_helper/lava_land/surface,/turf/open/floor/wood,/area/awaymission)
+"o" = (/obj/structure/table/wood,/obj/item/seeds/plump,/obj/item/seeds/plump,/obj/item/seeds/plump,/obj/item/seeds/wheat,/obj/item/seeds/wheat,/obj/item/seeds/wheat,/obj/effect/baseturf_helper/lava_land/surface,/turf/open/floor/wood,/area/awaymission)
+"p" = (/obj/effect/baseturf_helper/lava_land/surface,/turf/closed/wall,/area/awaymission)
+"q" = (/obj/structure/table/wood,/obj/item/seeds/tower,/obj/item/seeds/tower,/obj/item/seeds/tower,/obj/effect/baseturf_helper/lava_land/surface,/turf/open/floor/wood,/area/awaymission)
+"r" = (/obj/structure/mineral_door/iron,/obj/structure/fans/tiny/invisible,/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
+"s" = (/obj/structure/mineral_door/iron,/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
+"t" = (/obj/structure/rack,/obj/item/shovel,/obj/item/shovel,/obj/item/shovel,/obj/item/device/flashlight/lantern,/obj/item/device/flashlight/lantern,/obj/item/device/flashlight/lantern,/obj/effect/baseturf_helper/lava_land/surface,/turf/open/floor/wood,/area/awaymission)
+"u" = (/obj/structure/table/wood,/obj/item/cultivator,/obj/item/shovel/spade,/obj/item/hatchet,/obj/item/storage/bag/plants/portaseeder,/obj/effect/baseturf_helper/lava_land/surface,/turf/open/floor/wood,/area/awaymission)
+"v" = (/obj/effect/baseturf_helper/lava_land/surface,/mob/living/simple_animal/cow,/turf/open/floor/plating/asteroid,/area/awaymission)
+"w" = (/obj/item/reagent_containers/glass/bucket,/obj/effect/baseturf_helper/lava_land/surface,/turf/open/floor/plating/asteroid,/area/awaymission)
+"x" = (/obj/machinery/brewing_barrel,/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
+"y" = (/obj/effect/baseturf_helper/lava_land/surface,/turf/open/floor/plating/asteroid,/area/awaymission)
+"z" = (/obj/structure/sink/puddle{name = "magic puddle"},/obj/effect/baseturf_helper/lava_land/surface,/turf/open/floor/plating/asteroid,/area/awaymission)
+"A" = (/obj/item/stack/sheet/mineral/clay,/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
+"B" = (/mob/living/simple_animal/chicken,/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
+
+(1,1,1) = {"
+aabbbbbbbbbbbbaaa
+abbbcccbbbbbbbbaa
+abbcdefbfbffgbbba
+bbbhfffifffffjbba
+bbffffkkkkkkfffbb
+bbfflfkmnnokfffbb
+pppiffnnnnqkffibb
+rfsfffktnnukffbbb
+pppbffkkkkkkfbbba
+bbbvwffffxxfffbba
+bbyzyyfffffffAbba
+bbbvyyBBffibbbbba
+abbbbbbbbbbbbbbaa
+aaabbbbbbbbbaaaaa
+"}

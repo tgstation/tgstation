@@ -15,6 +15,14 @@
 	// Saves us from having to define each stupid grown's dried_type as itself.
 	// If you don't want a plant to be driable (watermelons) set this to null in the time definition.
 	resistance_flags = FLAMMABLE
+	var/booze_power = 10
+
+/obj/item/reagent_containers/food/snacks/grown/on_brew()
+	var/list/my_reagents = list()
+	for(var/datum/reagent/R in reagents.reagent_list)
+		my_reagents += R.id
+	return list("reagents" = my_reagents, "booze_power" = booze_power, "prefix" = name)
+
 
 /obj/item/reagent_containers/food/snacks/grown/Initialize(mapload, obj/item/seeds/new_seed)
 	. = ..()

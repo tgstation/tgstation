@@ -25,6 +25,7 @@
 	trash = /obj/item/grown/corncob
 	bitesize_mod = 2
 	foodtype = VEGETABLES
+	booze_power = 35
 
 /obj/item/grown/corncob
 	name = "corn cob"

@@ -21,6 +21,8 @@
 	var/obj/screen/alien_plasma_display
 	var/obj/screen/alien_queen_finder
 
+	var/obj/screen/alcohol_amount
+
 	var/obj/screen/devil/soul_counter/devilsouldisplay
 
 	var/obj/screen/nightvisionicon
@@ -111,6 +113,7 @@
 	blobpwrdisplay = null
 	alien_plasma_display = null
 	alien_queen_finder = null
+	alcohol_amount = null
 	nightvisionicon = null
 
 	if(plane_masters.len)

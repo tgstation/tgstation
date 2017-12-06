@@ -53,7 +53,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	can_suppress = FALSE
-	mag_type = /obj/item/ammo_box/magazine/internal/speargun
+	mag_type = /obj/item/ammo_box/magazine/internal/speargun/crossbow
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
 	burst_size = 1
 	fire_delay = 0

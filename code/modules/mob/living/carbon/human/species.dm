@@ -18,7 +18,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	var/sexes = 1		// whether or not the race has sexual characteristics. at the moment this is only 0 for skeletons and shadows
 
-	var/list/offset_features = list(OFFSET_UNIFORM = list(0,0), OFFSET_ID = list(0,0), OFFSET_GLOVES = list(0,0), OFFSET_GLASSES = list(0,0), OFFSET_EARS = list(0,0), OFFSET_SHOES = list(0,0), OFFSET_S_STORE = list(0,0), OFFSET_FACEMASK = list(0,0), OFFSET_HEAD = list(0,0), OFFSET_FACE = list(0,0), OFFSET_BELT = list(0,0), OFFSET_BACK = list(0,0), OFFSET_SUIT = list(0,0), OFFSET_NECK = list(0,0))
+	var/list/offset_features = list(OFFSET_UNIFORM = list(0,0), OFFSET_ID = list(0,0), OFFSET_GLOVES = list(0,0), OFFSET_GLASSES = list(0,0), OFFSET_EARS = list(0,0), OFFSET_SHOES = list(0,0), OFFSET_S_STORE = list(0,0), OFFSET_FACEMASK = list(0,0), OFFSET_HEAD = list(0,0), OFFSET_HAIR = list(0,0), OFFSET_FACE = list(0,0), OFFSET_BELT = list(0,0), OFFSET_BACK = list(0,0), OFFSET_SUIT = list(0,0), OFFSET_NECK = list(0,0))
 
 	var/hair_color	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
@@ -423,8 +423,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					hair_overlay.color = forced_colour
 				hair_overlay.alpha = hair_alpha
 				if(OFFSET_FACE in H.dna.species.offset_features)
-					hair_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FACE][1]
-					hair_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
+					hair_overlay.pixel_x += H.dna.species.offset_features[OFFSET_HAIR][1]
+					hair_overlay.pixel_y += H.dna.species.offset_features[OFFSET_HAIR][2]
 		if(hair_overlay.icon)
 			standing += hair_overlay
 
@@ -717,10 +717,26 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(slot in no_equip)
 		if(!I.species_exception || !is_type_in_list(src, I.species_exception))
 			return 0
+	if(istype(I, /obj/item/clothing))
+		var/obj/item/clothing/C = I
+		if(C.species_clothing_blacklist)
+			for(var/the_id in C.species_clothing_blacklist)
+				if(the_id == id)
+					return 0
+				else
+					continue
 
+		else if(C.species_clothing_whitelist)
+			var/whitelisted = FALSE
+			for(var/the_id in C.species_clothing_whitelist)
+				if(the_id != id)
+					continue
+				else
+					whitelisted = TRUE
+			if(!whitelisted)
+				return 0
 	var/num_arms = H.get_num_arms()
 	var/num_legs = H.get_num_legs()
-
 	switch(slot)
 		if(slot_hands)
 			if(H.get_empty_held_indexes())

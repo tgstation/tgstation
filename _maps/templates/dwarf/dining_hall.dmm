@@ -1,0 +1,19 @@
+"a" = (/turf/closed/wall,/area/awaymission)
+"b" = (/obj/structure/mineral_door/iron,/turf/open/floor/wood/airless,/area/awaymission)
+"c" = (/turf/open/floor/wood/airless,/area/awaymission)
+"d" = (/obj/structure/chair/wood,/turf/open/floor/wood/airless,/area/awaymission)
+"e" = (/obj/structure/chair/wood{tag = "icon-wooden_chair (EAST)"; icon_state = "wooden_chair"; dir = 4},/turf/open/floor/wood/airless,/area/awaymission)
+"f" = (/obj/structure/table/wood,/turf/open/floor/wood/airless,/area/awaymission)
+"g" = (/obj/structure/chair/wood{tag = "icon-wooden_chair (WEST)"; icon_state = "wooden_chair"; dir = 8},/turf/open/floor/wood/airless,/area/awaymission)
+"h" = (/obj/structure/chair/wood{tag = "icon-wooden_chair (NORTH)"; icon_state = "wooden_chair"; dir = 1},/turf/open/floor/wood/airless,/area/awaymission)
+
+(1,1,1) = {"
+aaaabbaaaa
+acccccccca
+acddddddca
+aeffffffga
+aeffffffga
+achhhhhhca
+acccccccca
+aaaaaaaaaa
+"}

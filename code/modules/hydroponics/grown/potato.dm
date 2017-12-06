@@ -26,6 +26,7 @@
 	filling_color = "#E9967A"
 	bitesize = 100
 	foodtype = VEGETABLES
+	booze_power = 65
 
 
 /obj/item/reagent_containers/food/snacks/grown/potato/wedges

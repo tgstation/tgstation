@@ -33,7 +33,8 @@
 	/obj/structure/rack,
 	/obj/structure/barricade,
 	/obj/machinery/field,
-	/obj/machinery/power/emitter)
+	/obj/machinery/power/emitter,
+	/obj/machinery/migrant_spawner)
 	var/list/crusher_loot
 	var/medal_type = MEDAL_PREFIX
 	var/score_type = BOSS_SCORE

@@ -49,6 +49,11 @@
 	/obj/item/reagent_containers/food/snacks/grown/ambrosia/deus,
 	/obj/item/reagent_containers/food/snacks/grown/wheat))
 
+
+/obj/item/grown/log/on_smelt()
+	return "ash"
+
+
 /obj/item/grown/log/attackby(obj/item/W, mob/user, params)
 	if(W.sharpness)
 		user.show_message("<span class='notice'>You make [plank_name] out of \the [src]!</span>", 1)

@@ -83,7 +83,7 @@
 	var/traitorType = 0
 
 	var/voice_saved = FALSE
-
+	var/allow_random = 1
 /// SNPC voice handling
 
 /mob/living/carbon/human/interactive/proc/loadVoice()
@@ -377,8 +377,8 @@
 	. = ..()
 
 	set_species(/datum/species/synth)
-
-	random()
+	if(allow_random)
+		random()
 
 	doSetup()
 
@@ -1616,6 +1616,19 @@
 	graytide = 1
 	. = ..()
 
+
+/mob/living/carbon/human/interactive/greytide/clown/Initialize()
+	age = rand(AGE_MIN,AGE_MAX)
+	myjob = new/datum/job/clown()
+	job = myjob.title
+	myjob.equip(src)
+	allow_random = 0
+	..()
+
+/mob/living/carbon/human/interactive/greytide/clown/death()
+	for(var/i in 1 to 3)
+		new /obj/item/ore/bananium(get_turf(src))
+	..()
 //Walk softly and carry a big stick
 /mob/living/carbon/human/interactive/robust/Initialize()
 	TRAITS |= TRAIT_FRIENDLY

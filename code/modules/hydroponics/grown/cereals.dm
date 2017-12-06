@@ -22,6 +22,7 @@
 	filling_color = "#F0E68C"
 	bitesize_mod = 2
 	foodtype = GRAIN
+	booze_power = 25
 
 // Oat
 /obj/item/seeds/wheat/oat

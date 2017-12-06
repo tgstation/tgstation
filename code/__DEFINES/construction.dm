@@ -102,6 +102,7 @@
 #define CAT_MISC	"Misc"
 #define CAT_PRIMAL  "Tribal"
 #define CAT_CLOTHING	"Clothing"
+#define CAT_SMITH  "Blacksmithing"
 #define CAT_FOOD	"Foods"
 #define CAT_BREAD	"Breads"
 #define CAT_BURGER	"Burgers"

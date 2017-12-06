@@ -61,6 +61,9 @@
 	taste_mult = 1.5
 	color = "#8228A0"
 	toxpwr = 3
+	produce_type = /obj/item/stack/sheet/mineral/plasma
+	attack_force = 10
+	pick_speed = 25
 
 /datum/reagent/toxin/plasma/on_mob_life(mob/living/M)
 	if(holder.has_reagent("epinephrine"))
@@ -69,16 +72,6 @@
 		var/mob/living/carbon/C = M
 		C.adjustPlasma(20)
 	return ..()
-
-/datum/reagent/toxin/plasma/reaction_obj(obj/O, reac_volume)
-	if((!O) || (!reac_volume))
-		return 0
-	O.atmos_spawn_air("plasma=[reac_volume];TEMP=[T20C]")
-
-/datum/reagent/toxin/plasma/reaction_turf(turf/open/T, reac_volume)
-	if(istype(T))
-		T.atmos_spawn_air("plasma=[reac_volume];TEMP=[T20C]")
-	return
 
 /datum/reagent/toxin/plasma/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with plasma is stronger than fuel!
 	if(!isliving(M))

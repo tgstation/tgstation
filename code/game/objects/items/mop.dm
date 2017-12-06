@@ -72,6 +72,16 @@
 /obj/item/mop/cyborg/janicart_insert(mob/user, obj/structure/janitorialcart/J)
 	return
 
+/obj/item/mop/broom
+	name = "broom"
+	mopcap = 10
+	icon_state = "broom"
+	item_state = "mop"
+	force = 6
+	throwforce = 8
+	throw_range = 4
+	mopspeed = 20
+
 /obj/item/mop/advanced
 	desc = "The most advanced tool in a custodian's arsenal, complete with a condenser for self-wetting! Just think of all the viscera you will clean up with this!"
 	name = "advanced mop"

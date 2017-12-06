@@ -8,7 +8,8 @@
 				CAT_MISC,
 				CAT_PRIMAL,
 				CAT_FOOD,
-				CAT_CLOTHING)
+				CAT_CLOTHING,
+				CAT_SMITH)
 	var/list/subcategories = list(
 						list(	//Weapon subcategories
 							CAT_WEAPON,
@@ -30,7 +31,8 @@
 							CAT_SANDWICH,
 							CAT_SOUP,
 							CAT_SPAGHETTI),
-                        CAT_CLOTHING) //Clothing subcategories
+                        CAT_CLOTHING, //Clothing subcategories
+						CAT_NONE)
 
 	var/datum/action/innate/crafting/button
 	var/display_craftable_only = FALSE
@@ -51,7 +53,7 @@
 
 
 
-/datum/personal_crafting/proc/check_contents(datum/crafting_recipe/R, list/contents)
+/datum/personal_crafting/proc/check_contents(datum/crafting_recipe/R, list/contents, mob/user)
 	main_loop:
 		for(var/A in R.reqs)
 			var/needed_amount = R.reqs[A]
@@ -89,7 +91,7 @@
 
 /datum/personal_crafting/proc/get_surroundings(mob/user)
 	. = list()
-	for(var/obj/item/I in get_environment(user))
+	for(var/obj/I in get_environment(user))
 		if(I.flags_2 & HOLOGRAM_2)
 			continue
 		if(istype(I, /obj/item/stack))
@@ -107,11 +109,18 @@
 	if(!R.tools.len)
 		return 1
 	var/list/possible_tools = list()
-	for(var/obj/item/I in user.contents)
+	for(var/obj/I in user.contents)
 		if(istype(I, /obj/item/storage))
-			for(var/obj/item/SI in I.contents)
+			for(var/obj/SI in I.contents)
 				possible_tools += SI.type
 		possible_tools += I.type
+	possible_tools += contents
+
+	for(var/obj/I2 in spiral_range_turfs(user,1))
+		if(istype(I2, /obj/item/storage))
+			for(var/obj/SI in I2.contents)
+				possible_tools += SI.type
+		possible_tools += I2.type
 	possible_tools += contents
 
 	main_loop:
@@ -298,7 +307,7 @@
 		var/datum/crafting_recipe/R = rec
 		if((R.category != cur_category) || (R.subcategory != cur_subcategory))
 			continue
-		if(check_contents(R, surroundings))
+		if(check_contents(R, surroundings, user))
 			can_craft += list(build_recipe_data(R))
 		else
 			cant_craft += list(build_recipe_data(R))
