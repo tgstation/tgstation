@@ -86,3 +86,9 @@
 	icon_state = "refill_donksoft"
 	charges = list(32,28,0)// of 90 standard, 75 contraband, 0 premium
 	init_charges = list(32,28,0)
+
+/obj/item/vending_refill/games
+	machine_name = "\improper Good Clean Fun"
+	icon_state = "refill_games"
+	charges = list(7, 3, 0) //of 21 standard, 9 contraband
+	init_charges = list(7, 3, 0)

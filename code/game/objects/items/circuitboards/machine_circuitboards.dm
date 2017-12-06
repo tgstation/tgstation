@@ -199,6 +199,7 @@
 							/obj/machinery/vending/snack = "Getmore Chocolate Corp",
 							/obj/machinery/vending/cola = "Robust Softdrinks",
 							/obj/machinery/vending/cigarette = "ShadyCigs Deluxe",
+							/obj/machinery/vending/games = "\improper Good Clean Fun",
 							/obj/machinery/vending/autodrobe = "AutoDrobe",
 							/obj/machinery/vending/clothing = "ClothesMate",
 							/obj/machinery/vending/medical = "NanoMed Plus",

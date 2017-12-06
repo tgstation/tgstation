@@ -1183,9 +1183,11 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	products = list(
 		/obj/item/toy/cards/deck = 5,
 		/obj/item/storage/pill_bottle/dice = 10,
-		/obj/item/toy/cards/deck/cas = 2,
-		/obj/item/toy/cards/deck/cas/black = 2)
-	contraband = list(/obj/item/dice/fudge = 10)
+		/obj/item/toy/cards/deck/cas = 3,
+		/obj/item/toy/cards/deck/cas/black = 3)
+	contraband = list(/obj/item/dice/fudge = 9)
+	refill_canister = /obj/item/vending_refill/games
+
 
 #undef STANDARD_CHARGE
 #undef CONTRABAND_CHARGE
