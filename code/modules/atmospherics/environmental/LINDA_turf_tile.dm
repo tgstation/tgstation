@@ -233,7 +233,7 @@
 
 	update_visuals()
 
-	#define REMOVE (!(our_air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION && consider_superconductivity(starting = TRUE))
+	#define REMOVE (!(our_air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION && consider_superconductivity(starting = TRUE)))
 	//am i really so obsessed with performance to use a temporary define instead of a var here?
 	//of course i fucking am hahaha ha aha ahah hhhhh
 	if ((!our_excited_group && REMOVE) || (cached_atmos_cooldown > (EXCITED_GROUP_DISMANTLE_CYCLES * 2)))
@@ -323,8 +323,9 @@
 		if (space_is_all_consuming && !space_in_group && istype(T.air, /datum/gas_mixture/immutable/space))
 			space_in_group = TRUE
 			qdel(A)
-			A = new/datum/gas_mixture/immutable/space()
+			A = new /datum/gas_mixture/immutable/space()
 			A_gases = A.gases //update the cache
+			break
 		A.merge(T.air)
 
 	for(var/id in A_gases)
