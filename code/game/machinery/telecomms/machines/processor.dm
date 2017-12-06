@@ -21,10 +21,10 @@
 	if(!is_freq_listening(signal))
 		return
 
-	if(process_mode)
-		signal.data["compression"] = 0 // uncompress subspace signal
-	else
+	if (!process_mode)
 		signal.data["compression"] = 100 // even more compressed signal
+	else if (signal.data["compression"])
+		signal.data["compression"] = 0 // uncompress subspace signal
 
 	if(istype(machine_from, /obj/machinery/telecomms/bus))
 		relay_direct_information(signal, machine_from) // send the signal back to the machine
