@@ -226,6 +226,7 @@
 		Consume(O)
 		to_chat(usr, "<span class='notice'>\The [sliver] is dusted along with \the [O]!</span>")
 		QDEL_NULL(sliver)
+		update_icon()
 
 /obj/item/hemostat/supermatter/throw_impact(atom/hit_atom) // no instakill supermatter javelins
 	if(sliver)
