@@ -43,7 +43,7 @@
 /obj/item/twohanded/required/kirbyplants/emag_act(mob/user)
 	do_sparks(8, FALSE, get_turf(src))
 	user.visible_message("<span class='warning'>Sparks burst from the plant as a jolt of electricity courses through your arm.</span>")
-	var/obj/item/new_plant = new /obj/item/kirbyplants_onehanded/random(get_turf(src))
+	var/obj/item/new_plant = new /obj/item/kirbyplants_onehanded(get_turf(src))
 	new_plant.icon_state = src.icon_state
 	qdel(src)
 
