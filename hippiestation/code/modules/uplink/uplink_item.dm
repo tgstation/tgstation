@@ -302,3 +302,6 @@
 
 /datum/uplink_item/role_restricted/reverse_revolver
 	cost = 13
+	
+/datum/uplink_item/dangerous/powerfist
+	cost = 6
