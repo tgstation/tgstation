@@ -324,10 +324,11 @@
 			space_in_group = TRUE
 			qdel(A)
 			A = new/datum/gas_mixture/immutable/space()
+			A_gases = A.gases //update the cache
 		A.merge(T.air)
 
 	for(var/id in A_gases)
-		A_gases[id][MOLES] = A_gases[id][MOLES]/turflen
+		A_gases[id][MOLES] /= turflen
 
 	for(var/t in turf_list)
 		var/turf/open/T = t
@@ -445,7 +446,7 @@
 		if((heat_capacity > 0) && (abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER))
 
 			var/heat = thermal_conductivity*delta_temperature* \
-				(heat_capacity*700000/(heat_capacity+700000)) //700000 is the heat_capacity from a space turf, hardcoded here
+				(heat_capacity*HEAT_CAPACITY_VACUUM/(heat_capacity+HEAT_CAPACITY_VACUUM))
 			temperature -= heat/heat_capacity
 
 /turf/open/proc/temperature_share_open_to_solid(turf/sharer)
