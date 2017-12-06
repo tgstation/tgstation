@@ -21,14 +21,17 @@
 	circuit = /obj/item/circuitboard/machine/telecomms/hub
 
 /obj/machinery/telecomms/hub/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
-	if(is_freq_listening(signal))
-		if(istype(machine_from, /obj/machinery/telecomms/receiver))
-			//If the signal is compressed, send it to the bus.
-			relay_information(signal, /obj/machinery/telecomms/bus, TRUE)
-		else
-			// Get a list of relays that we're linked to, then send the signal to their levels.
-			relay_information(signal, /obj/machinery/telecomms/relay, TRUE)
-			relay_information(signal, /obj/machinery/telecomms/broadcaster, TRUE) // Send it to a broadcaster.
+	if(!is_freq_listening(signal))
+		return
+
+	if(istype(machine_from, /obj/machinery/telecomms/receiver))
+		// It's probably compressed so send it to the bus.
+		relay_information(signal, /obj/machinery/telecomms/bus, TRUE)
+	else
+		// Send it to each relay so their levels get added...
+		relay_information(signal, /obj/machinery/telecomms/relay)
+		// Then broadcast that signal to
+		relay_information(signal, /obj/machinery/telecomms/broadcaster)
 
 //Preset HUB
 

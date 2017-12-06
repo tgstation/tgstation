@@ -17,21 +17,16 @@
 	circuit = /obj/item/circuitboard/machine/telecomms/receiver
 
 /obj/machinery/telecomms/receiver/receive_signal(datum/signal/subspace/signal)
-	if(!on) // has to be on to receive messages
+	if(!on || !istype(signal) || !check_receive_level(signal) || signal.transmission_method != TRANSMISSION_SUBSPACE)
 		return
-	if(!signal)
+	if(!is_freq_listening(signal))
 		return
-	if(!check_receive_level(signal))
-		return
-	if(signal.transmission_method == TRANSMISSION_SUBSPACE)
 
-		if(is_freq_listening(signal)) // detect subspace signals
-			//Remove the level and then start adding levels that it is being broadcasted in.
-			signal.levels = list()
+	signal.levels = list()
 
-			var/can_send = relay_information(signal, /obj/machinery/telecomms/hub) // ideally relay the copied information to relays
-			if(!can_send)
-				relay_information(signal, /obj/machinery/telecomms/bus) // Send it to a bus instead, if it's linked to one
+	// send the signal to the hub if possible, or a bus otherwise
+	if(!relay_information(signal, /obj/machinery/telecomms/hub))
+		relay_information(signal, /obj/machinery/telecomms/bus)
 
 /obj/machinery/telecomms/receiver/proc/check_receive_level(datum/signal/subspace/signal)
 	if (z in signal.levels)

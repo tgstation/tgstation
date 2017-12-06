@@ -18,9 +18,9 @@ GLOBAL_VAR_INIT(message_delay, 0) // To make sure restarting the recentmessages 
 	idle_power_usage = 25
 	circuit = /obj/item/circuitboard/machine/telecomms/broadcaster
 
-/obj/machinery/telecomms/broadcaster/receive_information(datum/signal/subspace/vocal/signal, obj/machinery/telecomms/machine_from)
+/obj/machinery/telecomms/broadcaster/receive_information(datum/signal/subspace/signal, obj/machinery/telecomms/machine_from)
 	// Don't broadcast rejected signals
-	if(!istype(signal))  // can't broadcast non-vocal signals
+	if(!istype(signal))
 		return
 	if(signal.data["reject"])
 		return
@@ -30,10 +30,14 @@ GLOBAL_VAR_INIT(message_delay, 0) // To make sure restarting the recentmessages 
 	// Prevents massive radio spam
 	signal.mark_done()
 	var/datum/signal/subspace/original = signal.original
-	if(original)
+	if(original && ("compression" in signal.data))
 		original.data["compression"] = signal.data["compression"]
 
-	var/signal_message = "[signal.frequency]:[signal.data["message"]]:[signal.data["realname"]]"
+	var/turf/T = get_turf(src)
+	if (T)
+		signal.levels |= T.z
+
+	var/signal_message = "[signal.frequency]:[signal.data["message"]]:[signal.data["name"]]"
 	if(signal_message in GLOB.recentmessages)
 		return
 	GLOB.recentmessages.Add(signal_message)
@@ -41,10 +45,7 @@ GLOBAL_VAR_INIT(message_delay, 0) // To make sure restarting the recentmessages 
 	if(signal.data["slow"] > 0)
 		sleep(signal.data["slow"]) // simulate the network lag if necessary
 
-	var/turf/T = get_turf(src)
-	if (T)
-		signal.levels |= T.z
-	signal.send_to_radios()
+	signal.broadcast()
 
 	if(!GLOB.message_delay)
 		GLOB.message_delay = 1

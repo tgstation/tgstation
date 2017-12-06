@@ -274,7 +274,7 @@
 		signal.data["compression"] = 0
 		signal.transmission_method = TRANSMISSION_SUPERSPACE
 		signal.levels = list(0)  // reaches all Z-levels
-		signal.send_to_radios()
+		signal.broadcast()
 		return
 
 	// All radios make an attempt to use the subspace system first
@@ -297,7 +297,7 @@
 	signal.data["compression"] = 0
 	signal.transmission_method = TRANSMISSION_RADIO
 	signal.levels = list(T.z)
-	signal.send_to_radios()
+	signal.broadcast()
 
 /obj/item/device/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
 	if(radio_freq || !broadcasting || get_dist(src, speaker) > canhear_range)
