@@ -4,7 +4,7 @@
 
 //mob/var/stat things
 #define CONSCIOUS	0
-#define SOFT_CRIT	1	
+#define SOFT_CRIT	1
 #define UNCONSCIOUS	2
 #define DEAD		3
 
@@ -18,6 +18,8 @@
 #define HUSK		64
 #define NOCLONE		128
 #define CLUMSY		256
+#define DUMB        512
+#define MONKEYLIKE  1024 //sets IsAdvancedToolUser to FALSE
 
 // bitflags for machine stat variable
 #define BROKEN		1
