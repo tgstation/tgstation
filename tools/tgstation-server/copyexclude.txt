@@ -1,9 +1,0 @@
-//This is a list of files to exclude from copying. See xcopy's documentation for /exclude for more info.
-//
-
-gitrepo\config\
-gitrepo\data\
-gitrepo\bot\
-gitrepo\.git\
-gitrepo\libmysql.dll
-

@@ -55,27 +55,17 @@
 	sheet_type = /obj/item/stack/tile/brass
 	sheet_amount = 1
 	girder_type = /obj/structure/destructible/clockwork/wall_gear
+	baseturf = /turf/open/floor/clockwork/reebe
 	var/obj/effect/clockwork/overlay/wall/realappearence
-	var/obj/structure/destructible/clockwork/cache/linkedcache
 
 /turf/closed/wall/clockwork/Initialize()
-	..()
+	. = ..()
 	new /obj/effect/temp_visual/ratvar/wall(src)
 	new /obj/effect/temp_visual/ratvar/beam(src)
 	realappearence = new /obj/effect/clockwork/overlay/wall(src)
 	realappearence.linked = src
-	change_construction_value(5)
-
-/turf/closed/wall/clockwork/examine(mob/user)
-	..()
-	if((is_servant_of_ratvar(user) || isobserver(user)) && linkedcache)
-		to_chat(user, "<span class='brass'>It is linked to a Tinkerer's Cache, generating components!</span>")
 
 /turf/closed/wall/clockwork/Destroy()
-	if(linkedcache)
-		linkedcache.linkedwall = null
-		linkedcache = null
-	change_construction_value(-5)
 	if(realappearence)
 		qdel(realappearence)
 		realappearence = null
@@ -99,14 +89,14 @@
 		devastate_wall()
 		ChangeTurf(/turf/open/floor/plating)
 	else
-		playsound(src, 'sound/items/Welder.ogg', 100, 1)
+		playsound(src, 'sound/items/welder.ogg', 100, 1)
 		var/newgirder = break_wall()
 		if(newgirder) //maybe we want a gear!
 			transfer_fingerprints_to(newgirder)
 		ChangeTurf(/turf/open/floor/clockwork)
 
 	for(var/obj/O in src) //Eject contents!
-		if(istype(O,/obj/structure/sign/poster))
+		if(istype(O, /obj/structure/sign/poster))
 			var/obj/structure/sign/poster/P = O
 			P.roll_and_drop(src)
 		else

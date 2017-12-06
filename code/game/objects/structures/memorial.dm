@@ -17,5 +17,5 @@ This memorial has been designed for him and any future coders to perish.
 	desc = "Here rests an unknown employee\nUnknown by name or rank\nWhose acts will not be forgotten"
 	icon = 'icons/obj/tomb.dmi'
 	icon_state = "memorial"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE

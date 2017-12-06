@@ -64,7 +64,7 @@
 			if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
 				adjustOxyLoss(5)
 				if(prob(15))
-					Paralyse(rand(1,3))
+					Unconscious(rand(20,60))
 					to_chat(src, "<span class='warning'>You feel extremely [word].</span>")
 			if(0 to BLOOD_VOLUME_SURVIVE)
 				death()
@@ -137,8 +137,9 @@
 		if(blood_id == C.get_blood_id())//both mobs have the same blood substance
 			if(blood_id == "blood") //normal blood
 				if(blood_data["viruses"])
-					for(var/datum/disease/D in blood_data["viruses"])
-						if((D.spread_flags & SPECIAL) || (D.spread_flags & NON_CONTAGIOUS))
+					for(var/thing in blood_data["viruses"])
+						var/datum/disease/D = thing
+						if((D.spread_flags & VIRUS_SPREAD_SPECIAL) || (D.spread_flags & VIRUS_SPREAD_NON_CONTAGIOUS))
 							continue
 						C.ForceContractDisease(D)
 				if(!(blood_data["blood_type"] in get_safe_blood(C.dna.blood_type)))
@@ -162,7 +163,8 @@
 		blood_data["donor"] = src
 		blood_data["viruses"] = list()
 
-		for(var/datum/disease/D in viruses)
+		for(var/thing in viruses)
+			var/datum/disease/D = thing
 			blood_data["viruses"] += D.Copy()
 
 		blood_data["blood_DNA"] = copytext(dna.unique_enzymes,1,0)
@@ -214,25 +216,23 @@
 	. = list()
 	if(!bloodtype)
 		return
-	switch(bloodtype)
-		if("A-")
-			return list("A-", "O-")
-		if("A+")
-			return list("A-", "A+", "O-", "O+")
-		if("B-")
-			return list("B-", "O-")
-		if("B+")
-			return list("B-", "B+", "O-", "O+")
-		if("AB-")
-			return list("A-", "B-", "O-", "AB-")
-		if("AB+")
-			return list("A-", "A+", "B-", "B+", "O-", "O+", "AB-", "AB+")
-		if("O-")
-			return list("O-")
-		if("O+")
-			return list("O-", "O+")
-		if("L")
-			return list("L")
+
+	var/static/list/bloodtypes_safe = list(
+		"A-" = list("A-", "O-"),
+		"A+" = list("A-", "A+", "O-", "O+"),
+		"B-" = list("B-", "O-"),
+		"B+" = list("B-", "B+", "O-", "O+"),
+		"AB-" = list("A-", "B-", "O-", "AB-"),
+		"AB+" = list("A-", "A+", "B-", "B+", "O-", "O+", "AB-", "AB+"),
+		"O-" = list("O-"),
+		"O+" = list("O-", "O+"),
+		"L" = list("L"),
+		"U" = list("A-", "A+", "B-", "B+", "O-", "O+", "AB-", "AB+", "L", "U")
+	)
+
+	var/safe = bloodtypes_safe[bloodtype]
+	if(safe)
+		. = safe
 
 //to add a splatter of blood or other mob liquid.
 /mob/living/proc/add_splatter_floor(turf/T, small_drip)
@@ -256,14 +256,14 @@
 				temp_blood_DNA |= drop.blood_DNA.Copy() //we transfer the dna from the drip to the splatter
 				qdel(drop)//the drip is replaced by a bigger splatter
 		else
-			drop = new(T)
+			drop = new(T, get_static_viruses())
 			drop.transfer_mob_blood_dna(src)
 			return
 
 	// Find a blood decal or create a new one.
 	var/obj/effect/decal/cleanable/blood/B = locate() in T
 	if(!B)
-		B = new /obj/effect/decal/cleanable/blood/splatter(T)
+		B = new /obj/effect/decal/cleanable/blood/splatter(T, get_static_viruses())
 	B.transfer_mob_blood_dna(src) //give blood info to the blood decal.
 	if(temp_blood_DNA)
 		B.blood_DNA |= temp_blood_DNA

@@ -47,24 +47,23 @@
 	M.disabilities = 0
 	M.set_blurriness(0)
 	M.set_blindness(0)
-	M.SetWeakened(0, 0)
-	M.SetStunned(0, 0)
-	M.SetParalysis(0, 0)
+	M.SetKnockdown(0, 0)
+	M.SetStun(0, 0)
+	M.SetUnconscious(0, 0)
 	M.silent = 0
 	M.dizziness = 0
+	M.disgust = 0
 	M.drowsyness = 0
 	M.stuttering = 0
 	M.slurring = 0
 	M.confused = 0
 	M.SetSleeping(0, 0)
 	M.jitteriness = 0
-	for(var/datum/disease/D in M.viruses)
-		if(D.severity == NONTHREAT)
+	for(var/thing in M.viruses)
+		var/datum/disease/D = thing
+		if(D.severity == VIRUS_SEVERITY_POSITIVE)
 			continue
-		D.spread_text = "Remissive"
-		D.stage--
-		if(D.stage < 1)
-			D.cure()
+		D.cure()
 	..()
 	. = 1
 
@@ -82,9 +81,9 @@
 
 /datum/reagent/medicine/synaptizine/on_mob_life(mob/living/M)
 	M.drowsyness = max(M.drowsyness-5, 0)
-	M.AdjustParalysis(-1, 0)
-	M.AdjustStunned(-1, 0)
-	M.AdjustWeakened(-1, 0)
+	M.AdjustStun(-20, 0)
+	M.AdjustKnockdown(-20, 0)
+	M.AdjustUnconscious(-20, 0)
 	if(holder.has_reagent("mindbreaker"))
 		holder.remove_reagent("mindbreaker", 5)
 	M.hallucination = max(0, M.hallucination - 10)
@@ -129,31 +128,16 @@
 	taste_description = "sludge"
 
 /datum/reagent/medicine/cryoxadone/on_mob_life(mob/living/M)
-	switch(M.bodytemperature) // Low temperatures are required to take effect.
-		if(0 to 100) // At extreme temperatures (upgraded cryo) the effect is greatly increased.
-			M.status_flags &= ~DISFIGURED
-			M.adjustCloneLoss(-1, 0)
-			M.adjustOxyLoss(-9, 0)
-			M.adjustBruteLoss(-5, 0)
-			M.adjustFireLoss(-5, 0)
-			M.adjustToxLoss(-5, 0)
-			. = 1
-		if(100 to 225) // At lower temperatures (cryo) the full effect is boosted
-			M.status_flags &= ~DISFIGURED
-			M.adjustCloneLoss(-1, 0)
-			M.adjustOxyLoss(-7, 0)
-			M.adjustBruteLoss(-3, 0)
-			M.adjustFireLoss(-3, 0)
-			M.adjustToxLoss(-3, 0)
-			. = 1
-		if(225 to T0C)
-			M.status_flags &= ~DISFIGURED
-			M.adjustCloneLoss(-1, 0)
-			M.adjustOxyLoss(-5, 0)
-			M.adjustBruteLoss(-1, 0)
-			M.adjustFireLoss(-1, 0)
-			M.adjustToxLoss(-1, 0)
-			. = 1
+	var/power = -0.00003 * (M.bodytemperature ** 2) + 3
+	if(M.bodytemperature < T0C)
+		M.adjustOxyLoss(-3 * power, 0)
+		M.adjustBruteLoss(-power, 0)
+		M.adjustFireLoss(-power, 0)
+		M.adjustToxLoss(-power, 0)
+		M.adjustCloneLoss(-power, 0)
+		M.status_flags &= ~DISFIGURED
+		. = 1
+	metabolization_rate = REAGENTS_METABOLISM * (0.00001 * (M.bodytemperature ** 2) + 0.5)
 	..()
 
 /datum/reagent/medicine/clonexadone
@@ -165,19 +149,11 @@
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/clonexadone/on_mob_life(mob/living/M)
-	switch(M.bodytemperature) // Low temperatures are required to take effect.
-		if(0 to 100) // At extreme temperatures (upgraded cryo) the effect is greatly increased.
-			M.status_flags &= ~DISFIGURED
-			M.adjustCloneLoss(-7, 0)
-			. = 1
-		if(100 to 225) // At lower temperatures (cryo) the full effect is boosted
-			M.status_flags &= ~DISFIGURED
-			M.adjustCloneLoss(-3, 0)
-			. = 1
-		if(225 to T0C)
-			M.status_flags &= ~DISFIGURED
-			M.adjustCloneLoss(-2, 0)
-			. = 1
+	if(M.bodytemperature < T0C)
+		M.adjustCloneLoss(0.00006 * (M.bodytemperature ** 2) - 6, 0)
+		M.status_flags &= ~DISFIGURED
+		. = 1
+	metabolization_rate = REAGENTS_METABOLISM * (0.000015 * (M.bodytemperature ** 2) + 0.75)
 	..()
 
 /datum/reagent/medicine/rezadone
@@ -354,7 +330,7 @@
 			var/mob/living/carbon/C = M
 			for(var/s in C.surgeries)
 				var/datum/surgery/S = s
-				S.success_multiplier = max(0.10, S.success_multiplier)
+				S.success_multiplier = max(0.1, S.success_multiplier)
 				// +10% success propability on each step, useful while operating in less-than-perfect conditions
 
 			if(show_message)
@@ -455,7 +431,7 @@
 
 /datum/reagent/medicine/potass_iodide/on_mob_life(mob/living/M)
 	if(M.radiation > 0)
-		M.radiation--
+		M.radiation -= min(M.radiation, 8)
 	..()
 
 /datum/reagent/medicine/pen_acid
@@ -467,11 +443,8 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/pen_acid/on_mob_life(mob/living/M)
-	if(M.radiation > 0)
-		M.radiation -= 4
+	M.radiation -= max(M.radiation-RAD_MOB_SAFE, 0)/50
 	M.adjustToxLoss(-2*REM, 0)
-	if(M.radiation < 0)
-		M.radiation = 0
 	for(var/datum/reagent/R in M.reagents.reagent_list)
 		if(R != src)
 			M.reagents.remove_reagent(R.id,2)
@@ -546,9 +519,9 @@
 
 /datum/reagent/medicine/ephedrine/on_mob_life(mob/living/M)
 	M.status_flags |= GOTTAGOFAST
-	M.AdjustParalysis(-1, 0)
-	M.AdjustStunned(-1, 0)
-	M.AdjustWeakened(-1, 0)
+	M.AdjustStun(-20, 0)
+	M.AdjustKnockdown(-20, 0)
+	M.AdjustUnconscious(-20, 0)
 	M.adjustStaminaLoss(-1*REM, 0)
 	..()
 	. = 1
@@ -621,33 +594,26 @@
 		if(12 to 24)
 			M.drowsyness += 1
 		if(24 to INFINITY)
-			M.Sleeping(2, 0)
+			M.Sleeping(40, 0)
 			. = 1
 	..()
 
 /datum/reagent/medicine/morphine/overdose_process(mob/living/M)
 	if(prob(33))
-		var/obj/item/I = M.get_active_held_item()
-		if(I)
-			M.drop_item()
+		M.drop_all_held_items()
 		M.Dizzy(2)
 		M.Jitter(2)
 	..()
 
 /datum/reagent/medicine/morphine/addiction_act_stage1(mob/living/M)
 	if(prob(33))
-		var/obj/item/I = M.get_active_held_item()
-		if(I)
-			M.drop_item()
-		M.Dizzy(2)
+		M.drop_all_held_items()
 		M.Jitter(2)
 	..()
 
 /datum/reagent/medicine/morphine/addiction_act_stage2(mob/living/M)
 	if(prob(33))
-		var/obj/item/I = M.get_active_held_item()
-		if(I)
-			M.drop_item()
+		M.drop_all_held_items()
 		M.adjustToxLoss(1*REM, 0)
 		. = 1
 		M.Dizzy(3)
@@ -656,9 +622,7 @@
 
 /datum/reagent/medicine/morphine/addiction_act_stage3(mob/living/M)
 	if(prob(33))
-		var/obj/item/I = M.get_active_held_item()
-		if(I)
-			M.drop_item()
+		M.drop_all_held_items()
 		M.adjustToxLoss(2*REM, 0)
 		. = 1
 		M.Dizzy(4)
@@ -667,9 +631,7 @@
 
 /datum/reagent/medicine/morphine/addiction_act_stage4(mob/living/M)
 	if(prob(33))
-		var/obj/item/I = M.get_active_held_item()
-		if(I)
-			M.drop_item()
+		M.drop_all_held_items()
 		M.adjustToxLoss(3*REM, 0)
 		. = 1
 		M.Dizzy(5)
@@ -686,6 +648,9 @@
 	taste_description = "dull toxin"
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/M)
+	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
+	if (!eyes)
+		return
 	if(M.disabilities & BLIND)
 		if(prob(20))
 			to_chat(M, "<span class='warning'>Your vision slowly returns...</span>")
@@ -697,11 +662,10 @@
 		to_chat(M, "<span class='warning'>The blackness in your peripheral vision fades.</span>")
 		M.cure_nearsighted()
 		M.blur_eyes(10)
-
 	else if(M.eye_blind || M.eye_blurry)
 		M.set_blindness(0)
 		M.set_blurriness(0)
-	else if(M.eye_damage > 0)
+	else if(eyes.eye_damage > 0)
 		M.adjust_eye_damage(-1)
 	..()
 
@@ -757,9 +721,9 @@
 	M.adjustStaminaLoss(-0.5*REM, 0)
 	. = 1
 	if(prob(20))
-		M.AdjustParalysis(-1, 0)
-		M.AdjustStunned(-1, 0)
-		M.AdjustWeakened(-1, 0)
+		M.AdjustStun(-20, 0)
+		M.AdjustKnockdown(-20, 0)
+		M.AdjustUnconscious(-20, 0)
 	..()
 
 /datum/reagent/medicine/epinephrine/overdose_process(mob/living/M)
@@ -827,7 +791,8 @@
 	M.jitteriness = 0
 	if(M.has_dna())
 		M.dna.remove_all_mutations()
-	..()
+	if(!QDELETED(M)) //We were a monkey, now a human
+		..()
 
 /datum/reagent/medicine/antihol
 	name = "Antihol"
@@ -864,9 +829,9 @@
 		M.adjustToxLoss(-1*REM, 0)
 		M.adjustBruteLoss(-1*REM, 0)
 		M.adjustFireLoss(-1*REM, 0)
-	M.AdjustParalysis(-3, 0)
-	M.AdjustStunned(-3, 0)
-	M.AdjustWeakened(-3, 0)
+	M.AdjustStun(-60, 0)
+	M.AdjustKnockdown(-60, 0)
+	M.AdjustUnconscious(-60, 0)
 	M.adjustStaminaLoss(-5*REM, 0)
 	..()
 	. = 1
@@ -888,8 +853,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/insulin/on_mob_life(mob/living/M)
-	if(M.sleeping)
-		M.AdjustSleeping(-1, 0)
+	if(M.AdjustSleeping(-20, FALSE))
 		. = 1
 	M.reagents.remove_reagent("sugar", 3)
 	..()
@@ -1102,9 +1066,9 @@
 	overdose_threshold = 30
 
 /datum/reagent/medicine/changelingAdrenaline/on_mob_life(mob/living/M as mob)
-	M.AdjustParalysis(-1, 0)
-	M.AdjustStunned(-1, 0)
-	M.AdjustWeakened(-1, 0)
+	M.AdjustUnconscious(-20, 0)
+	M.AdjustStun(-20, 0)
+	M.AdjustKnockdown(-20, 0)
 	M.adjustStaminaLoss(-1, 0)
 	. = 1
 	..()
@@ -1128,7 +1092,7 @@
 	..()
 
 /datum/reagent/medicine/corazone
-	// Heart attack code will not do as damage if corazone is present
+	// Heart attack code will not do damage if corazone is present
 	// because it's SPACE MAGIC ASPIRIN
 	name = "Corazone"
 	id = "corazone"

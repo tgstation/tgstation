@@ -18,6 +18,8 @@ SUBSYSTEM_DEF(mapping)
 	var/list/shuttle_templates = list()
 	var/list/shelter_templates = list()
 
+	var/list/areas_in_z = list()
+
 	var/loading_ruins = FALSE
 
 /datum/controller/subsystem/mapping/PreInit()
@@ -43,23 +45,24 @@ SUBSYSTEM_DEF(mapping)
 	loading_ruins = TRUE
 	var/mining_type = config.minetype
 	if (mining_type == "lavaland")
-		seedRuins(list(5), global.config.lavaland_budget, /area/lavaland/surface/outdoors, lava_ruins_templates)
+		seedRuins(list(ZLEVEL_LAVALAND), CONFIG_GET(number/lavaland_budget), /area/lavaland/surface/outdoors/unexplored, lava_ruins_templates)
 		spawn_rivers()
 
 	// deep space ruins
 	var/space_zlevels = list()
 	for(var/i in ZLEVEL_SPACEMIN to ZLEVEL_SPACEMAX)
 		switch(i)
-			if(ZLEVEL_MINING, ZLEVEL_LAVALAND, ZLEVEL_EMPTY_SPACE)
+			if(ZLEVEL_MINING, ZLEVEL_LAVALAND, ZLEVEL_EMPTY_SPACE, ZLEVEL_TRANSIT, ZLEVEL_CITYOFCOGS)
 				continue
 			else
 				space_zlevels += i
 
-	seedRuins(space_zlevels, global.config.space_budget, /area/space, space_ruins_templates)
+	seedRuins(space_zlevels, CONFIG_GET(number/space_budget), /area/space, space_ruins_templates)
 	loading_ruins = FALSE
 	repopulate_sorted_areas()
 	// Set up Z-level transistions.
 	setup_map_transitions()
+	generate_station_area_list()
 	..()
 
 /* Nuke threats, for making the blue tiles on the station go RED
@@ -113,16 +116,18 @@ SUBSYSTEM_DEF(mapping)
 /datum/controller/subsystem/mapping/proc/loadWorld()
 	//if any of these fail, something has gone horribly, HORRIBLY, wrong
 	var/list/FailedZs = list()
-    
+
 	var/start_time = REALTIMEOFDAY
-  
+
 	INIT_ANNOUNCE("Loading [config.map_name]...")
-	TryLoadZ(config.GetFullMapPath(), FailedZs, ZLEVEL_STATION)
+	TryLoadZ(config.GetFullMapPath(), FailedZs, ZLEVEL_STATION_PRIMARY)
 	INIT_ANNOUNCE("Loaded station in [(REALTIMEOFDAY - start_time)/10]s!")
-	SSblackbox.add_details("map_name", config.map_name)
+	if(SSdbcore.Connect())
+		var/datum/DBQuery/query_round_map_name = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET map_name = '[config.map_name]' WHERE id = [GLOB.round_id]")
+		query_round_map_name.Execute()
 
 	if(config.minetype != "lavaland")
-		INIT_ANNOUNCE("WARNING: A map without lavaland set as it's minetype was loaded! This is being ignored! Update the maploader code!")
+		INIT_ANNOUNCE("WARNING: A map without lavaland set as its minetype was loaded! This is being ignored! Update the maploader code!")
 
 	CreateSpace(ZLEVEL_SPACEMAX)
 
@@ -130,16 +135,30 @@ SUBSYSTEM_DEF(mapping)
 		var/msg = "RED ALERT! The following map files failed to load: [FailedZs[1]]"
 		if(FailedZs.len > 1)
 			for(var/I in 2 to FailedZs.len)
-				msg += ", [I]"
+				msg += ", [FailedZs[I]]"
 		msg += ". Yell at your server host!"
 		INIT_ANNOUNCE(msg)
 #undef INIT_ANNOUNCE
+
+GLOBAL_LIST_EMPTY(the_station_areas)
+
+/datum/controller/subsystem/mapping/proc/generate_station_area_list()
+	var/list/station_areas_blacklist = typecacheof(list(/area/space, /area/mine, /area/ruin))
+	for(var/area/A in world)
+		var/turf/picked = safepick(get_area_turfs(A.type))
+		if(picked && (picked.z in GLOB.station_z_levels))
+			if(!(A.type in GLOB.the_station_areas) && !is_type_in_typecache(A, station_areas_blacklist))
+				GLOB.the_station_areas.Add(A.type)
+
+	if(!GLOB.the_station_areas.len)
+		log_world("ERROR: Station areas list failed to generate!")
 
 /datum/controller/subsystem/mapping/proc/maprotate()
 	var/players = GLOB.clients.len
 	var/list/mapvotes = list()
 	//count votes
-	if(global.config.allow_map_voting)
+	var/amv = CONFIG_GET(flag/allow_map_voting)
+	if(amv)
 		for (var/client/c in GLOB.clients)
 			var/vote = c.prefs.preferred_map
 			if (!vote)
@@ -172,7 +191,7 @@ SUBSYSTEM_DEF(mapping)
 			mapvotes.Remove(map)
 			continue
 
-		if(global.config.allow_map_voting)
+		if(amv)
 			mapvotes[map] = mapvotes[map]*VM.voteweight
 
 	var/pickedmap = pickweight(mapvotes)
@@ -208,7 +227,7 @@ SUBSYSTEM_DEF(mapping)
 	var/list/banned = generateMapList("config/lavaruinblacklist.txt")
 	banned += generateMapList("config/spaceruinblacklist.txt")
 
-	for(var/item in subtypesof(/datum/map_template/ruin))
+	for(var/item in sortList(subtypesof(/datum/map_template/ruin), /proc/cmp_ruincost_priority))
 		var/datum/map_template/ruin/ruin_type = item
 		// screen out the abstract subtypes
 		if(!initial(ruin_type.id))

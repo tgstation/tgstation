@@ -46,7 +46,7 @@
 	else
 		adjustFireLoss(5)
 
-/mob/living/simple_animal/hostile/blob/CanPass(atom/movable/mover, turf/target, height = 0)
+/mob/living/simple_animal/hostile/blob/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover, /obj/structure/blob))
 		return 1
 	return ..()
@@ -55,13 +55,6 @@
 	for(var/obj/structure/blob/B in range(1, src))
 		return 1
 	return ..()
-
-/mob/living/simple_animal/hostile/blob/handle_inherent_channels(message, message_mode)
-	if(message_mode == MODE_BINARY)
-		blob_chat(message)
-		return 1
-	else
-		..()
 
 /mob/living/simple_animal/hostile/blob/proc/blob_chat(msg)
 	var/spanned_message = say_quote(msg, get_spans())
@@ -91,7 +84,7 @@
 	melee_damage_lower = 2
 	melee_damage_upper = 4
 	obj_damage = 20
-	environment_smash = 1
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	attacktext = "hits"
 	attack_sound = 'sound/weapons/genhit1.ogg'
 	movement_type = FLYING
@@ -100,13 +93,13 @@
 	var/death_cloud_size = 1 //size of cloud produced from a dying spore
 	var/mob/living/carbon/human/oldguy
 	var/is_zombie = 0
-	gold_core_spawnable = 1
+	gold_core_spawnable = HOSTILE_SPAWN
 
 /mob/living/simple_animal/hostile/blob/blobspore/Initialize(mapload, var/obj/structure/blob/factory/linked_node)
 	if(istype(linked_node))
 		factory = linked_node
 		factory.spores += src
-	..()
+	. = ..()
 
 /mob/living/simple_animal/hostile/blob/blobspore/Life()
 	if(!is_zombie && isturf(src.loc))
@@ -223,19 +216,37 @@
 	var/independent = FALSE
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/Initialize()
-	..()
+	. = ..()
 	if(!independent) //no pulling people deep into the blob
 		verbs -= /mob/living/verb/pulled
+	else
+		pass_flags &= ~PASSBLOB
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/Life()
 	if(..())
+		var/list/blobs_in_area = range(2, src)
 		if(independent)
 			return // strong independent blobbernaut that don't need no blob
 		var/damagesources = 0
-		if(!(locate(/obj/structure/blob) in range(2, src)))
+		if(!(locate(/obj/structure/blob) in blobs_in_area))
 			damagesources++
 		if(!factory)
 			damagesources++
+		else
+			if(locate(/obj/structure/blob/core) in blobs_in_area)
+				adjustHealth(-maxHealth*0.1)
+				var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src)) //hello yes you are being healed
+				if(overmind)
+					H.color = overmind.blob_reagent_datum.complementary_color
+				else
+					H.color = "#000000"
+			if(locate(/obj/structure/blob/node) in blobs_in_area)
+				adjustHealth(-maxHealth*0.05)
+				var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src))
+				if(overmind)
+					H.color = overmind.blob_reagent_datum.complementary_color
+				else
+					H.color = "#000000"
 		if(damagesources)
 			for(var/i in 1 to damagesources)
 				adjustHealth(maxHealth*0.025) //take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
@@ -281,4 +292,4 @@
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/independent
 	independent = TRUE
-	gold_core_spawnable = 1
+	gold_core_spawnable = HOSTILE_SPAWN

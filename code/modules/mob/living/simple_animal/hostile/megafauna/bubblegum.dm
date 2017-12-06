@@ -44,6 +44,7 @@ Difficulty: Hard
 	ranged = 1
 	pixel_x = -32
 	del_on_death = 1
+	crusher_loot = list(/obj/structure/closet/crate/necropolis/bubblegum/crusher)
 	loot = list(/obj/structure/closet/crate/necropolis/bubblegum)
 	blood_volume = BLOOD_VOLUME_MAXIMUM //BLEED FOR ME
 	var/charging = FALSE
@@ -63,9 +64,9 @@ Difficulty: Hard
 	if(. > 0 && prob(25))
 		var/obj/effect/decal/cleanable/blood/gibs/bubblegum/B = new /obj/effect/decal/cleanable/blood/gibs/bubblegum(loc)
 		if(prob(40))
-			step(B, pick(GLOB.cardinal))
+			step(B, pick(GLOB.cardinals))
 		else
-			B.setDir(pick(GLOB.cardinal))
+			B.setDir(pick(GLOB.cardinals))
 
 /obj/effect/decal/cleanable/blood/gibs/bubblegum
 	name = "thick blood"
@@ -104,11 +105,10 @@ Difficulty: Hard
 
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Initialize()
-	..()
-	for(var/mob/living/simple_animal/hostile/megafauna/bubblegum/B in GLOB.mob_list)
+	. = ..()
+	for(var/mob/living/simple_animal/hostile/megafauna/bubblegum/B in GLOB.mob_living_list)
 		if(B != src)
-			qdel(src) //There can be only one
-			return
+			return INITIALIZE_HINT_QDEL //There can be only one
 	var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell = new
 	AddSpell(bloodspell)
 	if(istype(loc, /obj/effect/dummy/slaughter))
@@ -169,12 +169,13 @@ Difficulty: Hard
 			charge(bonus_charges)
 		else
 			Goto(target, move_to_delay, minimum_distance)
+			SetRecoveryTime(MEGAFAUNA_DEFAULT_RECOVERY_TIME)
 
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/Bump(atom/A)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/Collide(atom/A)
 	if(charging)
 		if(isturf(A) || isobj(A) && A.density)
-			A.ex_act(2)
+			A.ex_act(EXPLODE_HEAVY)
 		DestroySurroundings()
 	..()
 
@@ -380,17 +381,22 @@ Difficulty: Hard
 			break
 		max_amount--
 		var/obj/effect/decal/cleanable/blood/B = H
-		new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/slaughter(B.loc)
+		new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/slaughter(B.loc)
 	return max_amount
 
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/slaughter
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/slaughter
 	name = "slaughterling"
 	desc = "Though not yet strong enough to create a true physical form, it's nonetheless determined to murder you."
-	density = 0
+	icon_state = "bloodbrood"
+	icon_living = "bloodbrood"
+	icon_aggro = "bloodbrood"
+	attacktext = "pierces"
+	color = "#C80000"
+	density = FALSE
 	faction = list("mining", "boss")
 	weather_immunities = list("lava","ash")
 
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/slaughter/CanPass(atom/movable/mover, turf/target, height = 0)
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/slaughter/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover, /mob/living/simple_animal/hostile/megafauna/bubblegum))
 		return 1
 	return 0

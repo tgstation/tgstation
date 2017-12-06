@@ -6,7 +6,7 @@
 	earliest_start = 0
 
 /datum/round_event_control/wizard/summonguns/New()
-	if(config.no_summon_guns)
+	if(CONFIG_GET(flag/no_summon_guns))
 		weight = 0
 	..()
 
@@ -21,7 +21,7 @@
 	earliest_start = 0
 
 /datum/round_event_control/wizard/summonmagic/New()
-	if(config.no_summon_magic)
+	if(CONFIG_GET(flag/no_summon_magic))
 		weight = 0
 	..()
 

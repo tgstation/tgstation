@@ -67,7 +67,7 @@
 	melee_damage_upper = 0
 	speed = -1
 	obj_damage = 0
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 
 
 /mob/living/simple_animal/hostile/illusion/escape/AttackingTarget()

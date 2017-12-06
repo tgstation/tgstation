@@ -9,6 +9,7 @@
 #define OXY			"oxy"
 #define CLONE		"clone"
 #define STAMINA 	"stamina"
+#define BRAIN		"brain"
 
 //bitflag damage defines used for suicide_act
 #define BRUTELOSS 1
@@ -16,10 +17,11 @@
 #define TOXLOSS 4
 #define OXYLOSS 8
 #define SHAME 16
+#define MANUAL_SUICIDE 32	//suicide_act will do the actual killing.
 
 #define STUN		"stun"
-#define WEAKEN		"weaken"
-#define PARALYZE	"paralize"
+#define KNOCKDOWN		"knockdown"
+#define UNCONSCIOUS	"unconscious"
 #define IRRADIATE	"irradiate"
 #define STUTTER		"stutter"
 #define SLUR 		"slur"
@@ -29,8 +31,8 @@
 
 //Bitflags defining which status effects could be or are inflicted on a mob
 #define CANSTUN		1
-#define CANWEAKEN	2
-#define CANPARALYSE	4
+#define CANKNOCKDOWN	2
+#define CANUNCONSCIOUS	4
 #define CANPUSH		8
 #define IGNORESLOWDOWN	16
 #define GOTTAGOFAST	32
@@ -42,6 +44,7 @@
 
 //Health Defines
 #define HEALTH_THRESHOLD_CRIT 0
+#define HEALTH_THRESHOLD_FULLCRIT -30
 #define HEALTH_THRESHOLD_DEAD -100
 
 //Actual combat defines
@@ -65,6 +68,9 @@
 #define GRAB_AGGRESSIVE				1
 #define GRAB_NECK					2
 #define GRAB_KILL					3
+
+//slowdown when in softcrit
+#define SOFTCRIT_ADD_SLOWDOWN 6
 
 //Attack types for checking shields/hit reactions
 #define MELEE_ATTACK 1
@@ -138,3 +144,11 @@
 #define HIS_GRACE_FALL_ASLEEP 160 //If it reaches this point, He falls asleep and resets.
 
 #define HIS_GRACE_FORCE_BONUS 4 //How much force is gained per kill.
+
+#define EXPLODE_NONE 0				//Don't even ask me why we need this.
+#define EXPLODE_DEVASTATE 1
+#define EXPLODE_HEAVY 2
+#define EXPLODE_LIGHT 3
+
+#define EMP_HEAVY 1
+#define EMP_LIGHT 2

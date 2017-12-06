@@ -9,7 +9,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 /obj/machinery/requests_console
 	name = "requests console"
 	desc = "A console intended to send requests to different departments on the station."
-	anchored = 1
+	anchored = TRUE
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "req_comp0"
 	var/department = "Unknown" //The list of all departments on the station (Determined from this variable on each unit) Set this to the same thing if you want several consoles in one department
@@ -47,7 +47,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 	var/announcementConsole = 0
 		// 0 = This console cannot be used to send department announcements
 		// 1 = This console can send department announcements
-	var/open = 0 // 1 if open
+	var/open = FALSE // 1 if open
 	var/announceAuth = 0 //Will be set to 1 when you authenticate yourself for announcements
 	var/msgVerified = "" //Will contain the name of the person who verified it
 	var/msgStamped = "" //If a message is stamped, this will contain the stamp name
@@ -57,7 +57,6 @@ GLOBAL_LIST_EMPTY(allConsoles)
 	var/obj/item/device/radio/Radio
 	var/emergency //If an emergency has been called by this device. Acts as both a cooldown and lets the responder know where it the emergency was triggered from
 	var/receive_ore_updates = FALSE //If ore redemption machines will send an update when it receives new ores.
-	obj_integrity = 300
 	max_integrity = 300
 	armor = list(melee = 70, bullet = 30, laser = 30, energy = 30, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 90)
 
@@ -89,7 +88,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			icon_state = "req_comp0"
 
 /obj/machinery/requests_console/Initialize()
-	..()
+	. = ..()
 	name = "\improper [department] requests console"
 	GLOB.allConsoles += src
 	switch(departmentType)
@@ -146,13 +145,13 @@ GLOBAL_LIST_EMPTY(allConsoles)
 					if (dpt != department)
 						dat += "<tr>"
 						dat += "<td width='55%'>[dpt]</td>"
-						dat += "<td width='45%'><A href='?src=\ref[src];write=[ckey(dpt)]'>Normal</A> <A href='?src=\ref[src];write=[ckey(dpt)];priority=2'>High</A>"
+						dat += "<td width='45%'><A href='?src=[REF(src)];write=[ckey(dpt)]'>Normal</A> <A href='?src=[REF(src)];write=[ckey(dpt)];priority=2'>High</A>"
 						if(hackState)
-							dat += "<A href='?src=\ref[src];write=[ckey(dpt)];priority=3'>EXTREME</A>"
+							dat += "<A href='?src=[REF(src)];write=[ckey(dpt)];priority=3'>EXTREME</A>"
 						dat += "</td>"
 						dat += "</tr>"
 				dat += "</table>"
-				dat += "<BR><A href='?src=\ref[src];setScreen=0'><< Back</A><BR>"
+				dat += "<BR><A href='?src=[REF(src)];setScreen=0'><< Back</A><BR>"
 
 			if(2)	//req. supplies
 				dat += "Which department do you need supplies from?<BR><BR>"
@@ -161,13 +160,13 @@ GLOBAL_LIST_EMPTY(allConsoles)
 					if (dpt != department)
 						dat += "<tr>"
 						dat += "<td width='55%'>[dpt]</td>"
-						dat += "<td width='45%'><A href='?src=\ref[src];write=[ckey(dpt)]'>Normal</A> <A href='?src=\ref[src];write=[ckey(dpt)];priority=2'>High</A>"
+						dat += "<td width='45%'><A href='?src=[REF(src)];write=[ckey(dpt)]'>Normal</A> <A href='?src=[REF(src)];write=[ckey(dpt)];priority=2'>High</A>"
 						if(hackState)
-							dat += "<A href='?src=\ref[src];write=[ckey(dpt)];priority=3'>EXTREME</A>"
+							dat += "<A href='?src=[REF(src)];write=[ckey(dpt)];priority=3'>EXTREME</A>"
 						dat += "</td>"
 						dat += "</tr>"
 				dat += "</table>"
-				dat += "<BR><A href='?src=\ref[src];setScreen=0'><< Back</A><BR>"
+				dat += "<BR><A href='?src=[REF(src)];setScreen=0'><< Back</A><BR>"
 
 			if(3)	//relay information
 				dat += "Which department would you like to send information to?<BR><BR>"
@@ -176,21 +175,21 @@ GLOBAL_LIST_EMPTY(allConsoles)
 					if (dpt != department)
 						dat += "<tr>"
 						dat += "<td width='55%'>[dpt]</td>"
-						dat += "<td width='45%'><A href='?src=\ref[src];write=[ckey(dpt)]'>Normal</A> <A href='?src=\ref[src];write=[ckey(dpt)];priority=2'>High</A>"
+						dat += "<td width='45%'><A href='?src=[REF(src)];write=[ckey(dpt)]'>Normal</A> <A href='?src=[REF(src)];write=[ckey(dpt)];priority=2'>High</A>"
 						if(hackState)
-							dat += "<A href='?src=\ref[src];write=[ckey(dpt)];priority=3'>EXTREME</A>"
+							dat += "<A href='?src=[REF(src)];write=[ckey(dpt)];priority=3'>EXTREME</A>"
 						dat += "</td>"
 						dat += "</tr>"
 				dat += "</table>"
-				dat += "<BR><A href='?src=\ref[src];setScreen=0'><< Back</A><BR>"
+				dat += "<BR><A href='?src=[REF(src)];setScreen=0'><< Back</A><BR>"
 
 			if(6)	//sent successfully
 				dat += "<span class='good'>Message sent.</span><BR><BR>"
-				dat += "<A href='?src=\ref[src];setScreen=0'>Continue</A><BR>"
+				dat += "<A href='?src=[REF(src)];setScreen=0'>Continue</A><BR>"
 
 			if(7)	//unsuccessful; not sent
 				dat += "<span class='bad'>An error occurred.</span><BR><BR>"
-				dat += "<A href='?src=\ref[src];setScreen=0'>Continue</A><BR>"
+				dat += "<A href='?src=[REF(src)];setScreen=0'>Continue</A><BR>"
 
 			if(8)	//view messages
 				for (var/obj/machinery/requests_console/Console in GLOB.allConsoles)
@@ -204,7 +203,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 				for(var/msg in messages) // This puts more recent messages at the *top*, where they belong.
 					messageComposite = "<div class='block'>[msg]</div>" + messageComposite
 				dat += messageComposite
-				dat += "<BR><A href='?src=\ref[src];setScreen=0'><< Back to Main Menu</A><BR>"
+				dat += "<BR><A href='?src=[REF(src)];setScreen=0'><< Back to Main Menu</A><BR>"
 
 			if(9)	//authentication before sending
 				dat += "<B>Message Authentication</B><BR><BR>"
@@ -212,8 +211,8 @@ GLOBAL_LIST_EMPTY(allConsoles)
 				dat += "<div class='notice'>You may authenticate your message now by scanning your ID or your stamp</div><BR>"
 				dat += "<b>Validated by:</b> [msgVerified ? msgVerified : "<i>Not Validated</i>"]<br>"
 				dat += "<b>Stamped by:</b> [msgStamped ? msgStamped : "<i>Not Stamped</i>"]<br><br>"
-				dat += "<A href='?src=\ref[src];department=[dpt]'>Send Message</A><BR>"
-				dat += "<BR><A href='?src=\ref[src];setScreen=0'><< Discard Message</A><BR>"
+				dat += "<A href='?src=[REF(src)];department=[dpt]'>Send Message</A><BR>"
+				dat += "<BR><A href='?src=[REF(src)];setScreen=0'><< Discard Message</A><BR>"
 
 			if(10)	//send announcement
 				dat += "<h3>Station-wide Announcement</h3>"
@@ -222,12 +221,12 @@ GLOBAL_LIST_EMPTY(allConsoles)
 				else
 					dat += "<div class='notice'>Swipe your card to authenticate yourself</div><BR>"
 				dat += "<b>Message: </b>[message ? message : "<i>No Message</i>"]<BR>"
-				dat += "<A href='?src=\ref[src];writeAnnouncement=1'>[message ? "Edit" : "Write"] Message</A><BR><BR>"
+				dat += "<A href='?src=[REF(src)];writeAnnouncement=1'>[message ? "Edit" : "Write"] Message</A><BR><BR>"
 				if ((announceAuth || IsAdminGhost(user)) && message)
-					dat += "<A href='?src=\ref[src];sendAnnouncement=1'>Announce Message</A><BR>"
+					dat += "<A href='?src=[REF(src)];sendAnnouncement=1'>Announce Message</A><BR>"
 				else
 					dat += "<span class='linkOff'>Announce Message</span><BR>"
-				dat += "<BR><A href='?src=\ref[src];setScreen=0'><< Back</A><BR>"
+				dat += "<BR><A href='?src=[REF(src)];setScreen=0'><< Back</A><BR>"
 
 			else	//main menu
 				screen = 0
@@ -238,25 +237,25 @@ GLOBAL_LIST_EMPTY(allConsoles)
 					dat += "<div class='notice'>There are new <b>PRIORITY</b> messages</div><BR>"
 				if (newmessagepriority == 3)
 					dat += "<div class='notice'>There are new <b>EXTREME PRIORITY</b> messages</div><BR>"
-				dat += "<A href='?src=\ref[src];setScreen=8'>View Messages</A><BR><BR>"
+				dat += "<A href='?src=[REF(src)];setScreen=8'>View Messages</A><BR><BR>"
 
-				dat += "<A href='?src=\ref[src];setScreen=1'>Request Assistance</A><BR>"
-				dat += "<A href='?src=\ref[src];setScreen=2'>Request Supplies</A><BR>"
-				dat += "<A href='?src=\ref[src];setScreen=3'>Relay Anonymous Information</A><BR><BR>"
+				dat += "<A href='?src=[REF(src)];setScreen=1'>Request Assistance</A><BR>"
+				dat += "<A href='?src=[REF(src)];setScreen=2'>Request Supplies</A><BR>"
+				dat += "<A href='?src=[REF(src)];setScreen=3'>Relay Anonymous Information</A><BR><BR>"
 
 				if(!emergency)
-					dat += "<A href='?src=\ref[src];emergency=1'>Emergency: Security</A><BR>"
-					dat += "<A href='?src=\ref[src];emergency=2'>Emergency: Engineering</A><BR>"
-					dat += "<A href='?src=\ref[src];emergency=3'>Emergency: Medical</A><BR><BR>"
+					dat += "<A href='?src=[REF(src)];emergency=1'>Emergency: Security</A><BR>"
+					dat += "<A href='?src=[REF(src)];emergency=2'>Emergency: Engineering</A><BR>"
+					dat += "<A href='?src=[REF(src)];emergency=3'>Emergency: Medical</A><BR><BR>"
 				else
 					dat += "<B><font color='red'>[emergency] has been dispatched to this location.</font></B><BR><BR>"
 
 				if(announcementConsole)
-					dat += "<A href='?src=\ref[src];setScreen=10'>Send Station-wide Announcement</A><BR><BR>"
+					dat += "<A href='?src=[REF(src)];setScreen=10'>Send Station-wide Announcement</A><BR><BR>"
 				if (silent)
-					dat += "Speaker <A href='?src=\ref[src];setSilent=0'>OFF</A>"
+					dat += "Speaker <A href='?src=[REF(src)];setSilent=0'>OFF</A>"
 				else
-					dat += "Speaker <A href='?src=\ref[src];setSilent=1'>ON</A>"
+					dat += "Speaker <A href='?src=[REF(src)];setSilent=1'>ON</A>"
 		var/datum/browser/popup = new(user, "req_console", "[department] Requests Console", 450, 440)
 		popup.set_content(dat)
 		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
@@ -305,7 +304,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			return
 		minor_announce(message, "[department] Announcement:")
 		GLOB.news_network.SubmitArticle(message, department, "Station Announcements", null)
-		log_say("[key_name(usr)] has made a station announcement: [message]")
+		log_talk(usr,"[key_name(usr)] has made a station announcement: [message]",LOGSAY)
 		message_admins("[key_name_admin(usr)] has made a station announcement.")
 		announceAuth = 0
 		message = ""
@@ -344,7 +343,8 @@ GLOBAL_LIST_EMPTY(allConsoles)
 		if (sending)
 			var/pass = 0
 			for (var/obj/machinery/message_server/MS in GLOB.machines)
-				if(!MS.active) continue
+				if(!MS.active)
+					continue
 				MS.send_rc_message(href_list["department"],department,log_msg,msgStamped,msgVerified,priority)
 				pass = 1
 
@@ -454,7 +454,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 	var/linkedsender
 	if(istype(source, /obj/machinery/requests_console))
 		var/obj/machinery/requests_console/sender = source
-		linkedsender = "<a href='?src=\ref[src];write=[ckey(sender.department)]'>[sender.department]</a>"
+		linkedsender = "<a href='?src=[REF(src)];write=[ckey(sender.department)]'>[sender.department]</a>"
 	else
 		capitalize(source)
 		linkedsender = source
@@ -487,17 +487,17 @@ GLOBAL_LIST_EMPTY(allConsoles)
 				say(title)
 			src.messages += "<b>From:</b> [linkedsender]<BR>[message]"
 
-/obj/machinery/requests_console/attackby(obj/item/weapon/O, mob/user, params)
-	if(istype(O, /obj/item/weapon/crowbar))
+/obj/machinery/requests_console/attackby(obj/item/O, mob/user, params)
+	if(istype(O, /obj/item/crowbar))
 		if(open)
 			to_chat(user, "<span class='notice'>You close the maintenance panel.</span>")
-			open = 0
+			open = FALSE
 		else
 			to_chat(user, "<span class='notice'>You open the maintenance panel.</span>")
-			open = 1
+			open = TRUE
 		update_icon()
 		return
-	if(istype(O, /obj/item/weapon/screwdriver))
+	if(istype(O, /obj/item/screwdriver))
 		if(open)
 			hackState = !hackState
 			if(hackState)
@@ -509,22 +509,22 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			to_chat(user, "<span class='warning'>You must open the maintenance panel first!</span>")
 		return
 
-	var/obj/item/weapon/card/id/ID = O.GetID()
+	var/obj/item/card/id/ID = O.GetID()
 	if(ID)
 		if(screen == 9)
 			msgVerified = "<font color='green'><b>Verified by [ID.registered_name] ([ID.assignment])</b></font>"
 			updateUsrDialog()
 		if(screen == 10)
-			if (GLOB.access_RC_announce in ID.access)
+			if (ACCESS_RC_ANNOUNCE in ID.access)
 				announceAuth = 1
 			else
 				announceAuth = 0
 				to_chat(user, "<span class='warning'>You are not authorized to send announcements!</span>")
 			updateUsrDialog()
 		return
-	if (istype(O, /obj/item/weapon/stamp))
+	if (istype(O, /obj/item/stamp))
 		if(screen == 9)
-			var/obj/item/weapon/stamp/T = O
+			var/obj/item/stamp/T = O
 			msgStamped = "<span class='boldnotice'>Stamped with the [T.name]</span>"
 			updateUsrDialog()
 		return

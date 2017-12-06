@@ -21,6 +21,7 @@
 		C.parallax_layers_cached = list()
 		C.parallax_layers_cached += new /obj/screen/parallax_layer/layer_1(null, C.view)
 		C.parallax_layers_cached += new /obj/screen/parallax_layer/layer_2(null, C.view)
+		C.parallax_layers_cached += new /obj/screen/parallax_layer/layer_3(null, C.view)
 
 	C.parallax_layers = C.parallax_layers_cached.Copy()
 
@@ -242,11 +243,11 @@
 	blend_mode = BLEND_ADD
 	plane = PLANE_SPACE_PARALLAX
 	screen_loc = "CENTER-7,CENTER-7"
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 
 /obj/screen/parallax_layer/Initialize(mapload, view)
-	..()
+	. = ..()
 	if (!view)
 		view = world.view
 	update_o(view)
@@ -254,11 +255,13 @@
 /obj/screen/parallax_layer/proc/update_o(view)
 	if (!view)
 		view = world.view
-
-	var/count = Ceiling(view/(480/world.icon_size))+1
+	
+	var/list/viewscales = getviewsize(view)
+	var/countx = Ceiling((viewscales[1]/2)/(480/world.icon_size))+1
+	var/county = Ceiling((viewscales[2]/2)/(480/world.icon_size))+1
 	var/list/new_overlays = new
-	for(var/x in -count to count)
-		for(var/y in -count to count)
+	for(var/x in -countx to countx)
+		for(var/y in -county to county)
 			if(x == 0 && y == 0)
 				continue
 			var/mutable_appearance/texture_overlay = mutable_appearance(icon, icon_state)
@@ -277,6 +280,11 @@
 	icon_state = "layer2"
 	speed = 1
 	layer = 2
+
+/obj/screen/parallax_layer/layer_3
+	icon_state = "layer3"
+	speed = 1.4
+	layer = 3
 
 #undef LOOP_NONE
 #undef LOOP_NORMAL

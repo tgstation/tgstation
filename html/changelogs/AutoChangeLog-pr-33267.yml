@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "The drone dispenser on Metastation has been moved to the
+maintenance by Robotics."

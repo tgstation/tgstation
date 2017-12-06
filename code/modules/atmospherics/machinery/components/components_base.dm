@@ -4,8 +4,8 @@ On top of that, now people can add component-speciic procs/vars if they want!
 */
 
 /obj/machinery/atmospherics/components
-	var/welded = 0 //Used on pumps and scrubbers
-	var/showpipe = 0
+	var/welded = FALSE //Used on pumps and scrubbers
+	var/showpipe = FALSE
 
 	var/list/datum/pipeline/parents
 	var/list/datum/gas_mixture/airs
@@ -23,18 +23,6 @@ On top of that, now people can add component-speciic procs/vars if they want!
 Iconnery
 */
 
-/obj/machinery/atmospherics/components/proc/icon_addintact(var/obj/machinery/atmospherics/node)
-	var/image/img = getpipeimage('icons/obj/atmospherics/components/binary_devices.dmi', "pipe_intact", get_dir(src,node), node.pipe_color)
-	underlays += img
-
-	return img.dir
-
-/obj/machinery/atmospherics/components/proc/icon_addbroken(var/connected = 0)
-	var/unconnected = (~connected) & initialize_directions
-	for(var/direction in GLOB.cardinal)
-		if(unconnected & direction)
-			underlays += getpipeimage('icons/obj/atmospherics/components/binary_devices.dmi', "pipe_exposed", direction)
-
 /obj/machinery/atmospherics/components/proc/update_icon_nopipes()
 	return
 
@@ -45,14 +33,14 @@ Iconnery
 
 	var/turf/T = loc
 	if(level == 2 || !T.intact)
-		showpipe = 1
+		showpipe = TRUE
 	else
-		showpipe = 0
+		showpipe = FALSE
 
 	if(!showpipe)
 		return //no need to update the pipes if they aren't showing
 
-	var/connected = 0
+	var/connected = 0 //Direction bitset
 
 	for(DEVICE_TYPE_LOOP) //adds intact pieces
 		if(NODE_I)

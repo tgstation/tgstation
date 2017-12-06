@@ -16,7 +16,7 @@
 	desc = "You probably shouldn't stick around to see if this is armed."
 	icon = 'icons/obj/machines/nuke.dmi'
 	icon_state = "nuclearbomb_base"
-	density = 1
+	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 	var/timer_set = 90
@@ -32,8 +32,8 @@
 	var/r_code = "ADMIN"
 	var/yes_code = FALSE
 	var/safety = TRUE
-	var/obj/item/weapon/disk/nuclear/auth = null
-	use_power = 0
+	var/obj/item/disk/nuclear/auth = null
+	use_power = NO_POWER_USE
 	var/previous_level = ""
 	var/obj/item/nuke_core/core = null
 	var/deconstruction_state = NUKESTATE_INTACT
@@ -42,8 +42,8 @@
 	var/obj/effect/countdown/nuclearbomb/countdown
 	var/static/bomb_set
 
-/obj/machinery/nuclearbomb/New()
-	..()
+/obj/machinery/nuclearbomb/Initialize()
+	. = ..()
 	countdown = new(src)
 	GLOB.nuke_list += src
 	core = new /obj/item/nuke_core(src)
@@ -79,29 +79,42 @@
 	anchored = TRUE //stops it being moved
 
 /obj/machinery/nuclearbomb/syndicate
+	use_tag = TRUE
 	//ui_style = "syndicate" // actually the nuke op bomb is a stole nt bomb
 
-/obj/machinery/nuclearbomb/syndicate/New()
-	var/obj/machinery/nuclearbomb/existing = locate("syndienuke")
+/obj/machinery/nuclearbomb/syndicate/get_cinematic_type(off_station)
+	var/datum/game_mode/nuclear/NM = SSticker.mode
+	switch(off_station)
+		if(0)
+			if(istype(NM) && !NM.nuke_team.syndies_escaped())
+				return CINEMATIC_ANNIHILATION
+			else
+				return CINEMATIC_NUKE_WIN
+		if(1)
+			return CINEMATIC_NUKE_MISS
+		if(2)
+			return CINEMATIC_NUKE_FAR
+	return CINEMATIC_NUKE_FAR
+
+/obj/machinery/nuclearbomb/syndicate/Initialize()
+	. = ..()
+	var/obj/machinery/nuclearbomb/existing = locate("syndienuke") in GLOB.nuke_list
 	if(existing)
-		qdel(src)
-		throw EXCEPTION("Attempted to spawn a syndicate nuke while one already exists at [existing.loc.x],[existing.loc.y],[existing.loc.z]")
-		return 0
+		stack_trace("Attempted to spawn a syndicate nuke while one already exists at [existing.loc.x],[existing.loc.y],[existing.loc.z]")
+		return INITIALIZE_HINT_QDEL
 	tag = "syndienuke"
-	return ..()
 
 /obj/machinery/nuclearbomb/attackby(obj/item/I, mob/user, params)
-	if (istype(I, /obj/item/weapon/disk/nuclear))
-		if(!user.drop_item())
+	if (istype(I, /obj/item/disk/nuclear))
+		if(!user.transferItemToLoc(I, src))
 			return
-		I.forceMove(src)
 		auth = I
 		add_fingerprint(user)
 		return
 
 	switch(deconstruction_state)
 		if(NUKESTATE_INTACT)
-			if(istype(I, /obj/item/weapon/screwdriver/nuke))
+			if(istype(I, /obj/item/screwdriver/nuke))
 				playsound(loc, I.usesound, 100, 1)
 				to_chat(user, "<span class='notice'>You start removing [src]'s front panel's screws...</span>")
 				if(do_after(user, 60*I.toolspeed,target=src))
@@ -109,18 +122,10 @@
 					to_chat(user, "<span class='notice'>You remove the screws from [src]'s front panel.</span>")
 					update_icon()
 				return
-		if(NUKESTATE_UNSCREWED)
-			if(istype(I, /obj/item/weapon/crowbar))
-				to_chat(user, "<span class='notice'>You start removing [src]'s front panel...</span>")
-				playsound(loc, I.usesound, 100, 1)
-				if(do_after(user,30*I.toolspeed,target=src))
-					to_chat(user, "<span class='notice'>You remove [src]'s front panel.</span>")
-					deconstruction_state = NUKESTATE_PANEL_REMOVED
-					update_icon()
-				return
+
 		if(NUKESTATE_PANEL_REMOVED)
-			if(istype(I, /obj/item/weapon/weldingtool))
-				var/obj/item/weapon/weldingtool/welder = I
+			if(istype(I, /obj/item/weldingtool))
+				var/obj/item/weldingtool/welder = I
 				playsound(loc, I.usesound, 100, 1)
 				to_chat(user, "<span class='notice'>You start cutting [src]'s inner plate...</span>")
 				if(welder.remove_fuel(1,user))
@@ -128,16 +133,6 @@
 						to_chat(user, "<span class='notice'>You cut [src]'s inner plate.</span>")
 						deconstruction_state = NUKESTATE_WELDED
 						update_icon()
-				return
-		if(NUKESTATE_WELDED)
-			if(istype(I, /obj/item/weapon/crowbar))
-				to_chat(user, "<span class='notice'>You start prying off [src]'s inner plate...</span>")
-				playsound(loc, I.usesound, 100, 1)
-				if(do_after(user,50*I.toolspeed,target=src))
-					to_chat(user, "<span class='notice'>You pry off [src]'s inner plate. You can see the core's green glow!</span>")
-					deconstruction_state = NUKESTATE_CORE_EXPOSED
-					update_icon()
-					START_PROCESSING(SSobj, core)
 				return
 		if(NUKESTATE_CORE_EXPOSED)
 			if(istype(I, /obj/item/nuke_core_container))
@@ -168,6 +163,27 @@
 					to_chat(user, "<span class='warning'>You need more metal to do that!</span>")
 				return
 	. = ..()
+
+/obj/machinery/nuclearbomb/crowbar_act(mob/user, obj/item/tool)
+	. = FALSE
+	switch(deconstruction_state)
+		if(NUKESTATE_UNSCREWED)
+			to_chat(user, "<span class='notice'>You start removing [src]'s front panel...</span>")
+			playsound(loc, tool.usesound, 100, 1)
+			if(do_after(user, 30 * tool.toolspeed, target = src))
+				to_chat(user, "<span class='notice'>You remove [src]'s front panel.</span>")
+				deconstruction_state = NUKESTATE_PANEL_REMOVED
+				update_icon()
+			return TRUE
+		if(NUKESTATE_WELDED)
+			to_chat(user, "<span class='notice'>You start prying off [src]'s inner plate...</span>")
+			playsound(loc, tool.usesound, 100, 1)
+			if(do_after(user, 50 * tool.toolspeed, target = src))
+				to_chat(user, "<span class='notice'>You pry off [src]'s inner plate. You can see the core's green glow!</span>")
+				deconstruction_state = NUKESTATE_CORE_EXPOSED
+				update_icon()
+				START_PROCESSING(SSobj, core)
+			return TRUE
 
 /obj/machinery/nuclearbomb/proc/get_nuke_state()
 	if(exploding)
@@ -296,10 +312,8 @@
 				. = TRUE
 		if("insert_disk")
 			if(!auth)
-				var/obj/item/I = usr.get_active_held_item()
-				if(istype(I, /obj/item/weapon/disk/nuclear))
-					usr.drop_item()
-					I.forceMove(src)
+				var/obj/item/I = usr.is_holding_item_of_type(/obj/item/disk/nuclear)
+				if(I && usr.transferItemToLoc(I, src))
 					auth = I
 					. = TRUE
 		if("keypad")
@@ -363,9 +377,9 @@
 	if(safety)
 		if(timing)
 			set_security_level(previous_level)
-			for(var/obj/item/weapon/pinpointer/syndicate/S in GLOB.pinpointer_list)
+			for(var/obj/item/pinpointer/nuke/syndicate/S in GLOB.pinpointer_list)
 				S.switch_mode_to(initial(S.mode))
-				S.nuke_warning = FALSE
+				S.alert = FALSE
 		timing = FALSE
 		bomb_set = TRUE
 		detonation_timer = null
@@ -382,16 +396,16 @@
 		bomb_set = TRUE
 		set_security_level("delta")
 		detonation_timer = world.time + (timer_set * 10)
-		for(var/obj/item/weapon/pinpointer/syndicate/S in GLOB.pinpointer_list)
+		for(var/obj/item/pinpointer/nuke/syndicate/S in GLOB.pinpointer_list)
 			S.switch_mode_to(TRACK_INFILTRATOR)
 		countdown.start()
 	else
 		bomb_set = FALSE
 		detonation_timer = null
 		set_security_level(previous_level)
-		for(var/obj/item/weapon/pinpointer/syndicate/S in GLOB.pinpointer_list)
+		for(var/obj/item/pinpointer/nuke/syndicate/S in GLOB.pinpointer_list)
 			S.switch_mode_to(initial(S.mode))
-			S.nuke_warning = FALSE
+			S.alert = FALSE
 		countdown.stop()
 	update_icon()
 
@@ -421,46 +435,55 @@
 	yes_code = FALSE
 	safety = TRUE
 	update_icon()
-	for(var/mob/M in GLOB.player_list)
-		M << 'sound/machines/Alarm.ogg'
+	sound_to_playing_players('sound/machines/alarm.ogg')
 	if(SSticker && SSticker.mode)
-		SSticker.mode.explosion_in_progress = 1
-	sleep(100)
+		SSticker.roundend_check_paused = TRUE
+	addtimer(CALLBACK(src, .proc/actually_explode), 100)
 
+/obj/machinery/nuclearbomb/proc/actually_explode()
 	if(!core)
-		SSticker.station_explosion_cinematic(3,"no_core",src)
-		SSticker.mode.explosion_in_progress = 0
+		Cinematic(CINEMATIC_NUKE_NO_CORE,world)
+		SSticker.roundend_check_paused = FALSE
 		return
 
-	GLOB.enter_allowed = 0
+	GLOB.enter_allowed = FALSE
 
 	var/off_station = 0
 	var/turf/bomb_location = get_turf(src)
 	var/area/A = get_area(bomb_location)
-	if(bomb_location && (bomb_location.z == ZLEVEL_STATION))
+	if(bomb_location && (bomb_location.z in GLOB.station_z_levels))
 		if(istype(A, /area/space))
-			off_station = NUKE_MISS_STATION
+			off_station = NUKE_NEAR_MISS
 		if((bomb_location.x < (128-NUKERANGE)) || (bomb_location.x > (128+NUKERANGE)) || (bomb_location.y < (128-NUKERANGE)) || (bomb_location.y > (128+NUKERANGE)))
-			off_station = NUKE_MISS_STATION
-	else if(istype(A, /area/syndicate_mothership) || (istype(A,/area/shuttle/syndicate) && bomb_location.z == ZLEVEL_CENTCOM))
+			off_station = NUKE_NEAR_MISS
+	else if((istype(A, /area/syndicate_mothership) || (istype(A, /area/shuttle/syndicate)) && bomb_location.z == ZLEVEL_CENTCOM))
 		off_station = NUKE_SYNDICATE_BASE
 	else
-		off_station = NUKE_NEAR_MISS
+		off_station = NUKE_MISS_STATION
 
-	if(istype(SSticker.mode, /datum/game_mode/nuclear))
-		var/obj/docking_port/mobile/Shuttle = SSshuttle.getShuttle("syndicate")
-		var/datum/game_mode/nuclear/NM = SSticker.mode
-		NM.syndies_didnt_escape = (Shuttle && Shuttle.z == ZLEVEL_CENTCOM) ? 0 : 1
-		NM.nuke_off_station = off_station
+	if(off_station < 2)
+		SSshuttle.registerHostileEnvironment(src)
+		SSshuttle.lockdown = TRUE
 
-	SSticker.station_explosion_cinematic(off_station,null,src)
-	if(SSticker.mode)
-		if(istype(SSticker.mode, /datum/game_mode/nuclear))
-			var/datum/game_mode/nuclear/NM = SSticker.mode
-			NM.nukes_left --
-		if(!SSticker.mode.check_finished())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
-			SSticker.Reboot("Station destroyed by Nuclear Device.", "end_error", "nuke - unhandled ending")
+	//Cinematic
+	SSticker.mode.OnNukeExplosion(off_station)
+	var/bombz = z
+	Cinematic(get_cinematic_type(off_station),world,CALLBACK(SSticker,/datum/controller/subsystem/ticker/proc/station_explosion_detonation,src))
+	INVOKE_ASYNC(GLOBAL_PROC,.proc/KillEveryoneOnZLevel,bombz)
+	SSticker.roundend_check_paused = FALSE
 
+/obj/machinery/nuclearbomb/proc/get_cinematic_type(off_station)
+	if(off_station < 2)
+		return CINEMATIC_SELFDESTRUCT
+	else
+		return CINEMATIC_SELFDESTRUCT_MISS
+
+/proc/KillEveryoneOnZLevel(z)
+	if(!z)
+		return
+	for(var/mob/M in GLOB.mob_list)
+		if(M.stat != DEAD && M.z == z)
+			M.gib()
 
 /*
 This is here to make the tiles around the station mininuke change when it's armed.
@@ -484,66 +507,60 @@ This is here to make the tiles around the station mininuke change when it's arme
 		SSmapping.remove_nuke_threat(src)
 
 //==========DAT FUKKEN DISK===============
-/obj/item/weapon/disk
+/obj/item/disk
 	icon = 'icons/obj/module.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	item_state = "card-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	icon_state = "datadisk0"
 
-/obj/item/weapon/disk/nuclear
+/obj/item/disk/nuclear
 	name = "nuclear authentication disk"
 	desc = "Better keep this safe."
 	icon_state = "nucleardisk"
-	persistence_replacement = /obj/item/weapon/disk/fakenucleardisk
-	obj_integrity = 250
+	persistence_replacement = /obj/item/disk/fakenucleardisk
 	max_integrity = 250
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 30, bio = 0, rad = 0, fire = 100, acid = 100)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
-/obj/item/weapon/disk/nuclear/New()
+/obj/item/disk/nuclear/New()
 	..()
 	GLOB.poi_list |= src
 	set_stationloving(TRUE, inform_admins=TRUE)
 
-/obj/item/weapon/disk/nuclear/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon/claymore/highlander))
-		var/obj/item/weapon/claymore/highlander/H = I
+/obj/item/disk/nuclear/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/claymore/highlander))
+		var/obj/item/claymore/highlander/H = I
 		if(H.nuke_disk)
 			to_chat(user, "<span class='notice'>Wait... what?</span>")
 			qdel(H.nuke_disk)
 			H.nuke_disk = null
 			return
 		user.visible_message("<span class='warning'>[user] captures [src]!</span>", "<span class='userdanger'>You've got the disk! Defend it with your life!</span>")
-		loc = H
+		forceMove(H)
 		H.nuke_disk = src
-		return 1
+		return TRUE
 	return ..()
 
-/obj/item/weapon/disk/nuclear/Destroy(force=FALSE)
+/obj/item/disk/nuclear/Destroy(force=FALSE)
 	// respawning is handled in /obj/Destroy()
 	if(force)
 		GLOB.poi_list -= src
 	. = ..()
 
-/obj/item/weapon/disk/nuclear/suicide_act(mob/user)
+/obj/item/disk/nuclear/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is going delta! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(user.loc, 'sound/machines/Alarm.ogg', 50, -1, 1)
-	var/end_time = world.time + 100
-	var/newcolor = "#00FF00"
-	while(world.time < end_time)
-		if(!user)
-			return
-		if(newcolor == "#FF0000")
-			newcolor = "#00FF00"
-		else
-			newcolor = "#FF0000"
-		user.add_atom_colour(newcolor, ADMIN_COLOUR_PRIORITY)
-		sleep(1)
-	user.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
-	user.visible_message("<span class='suicide'>[user] was destroyed by the nuclear blast!</span>")
-	return OXYLOSS
+	playsound(user.loc, 'sound/machines/alarm.ogg', 50, -1, 1)
+	for(var/i in 1 to 100)
+		addtimer(CALLBACK(user, /atom/proc/add_atom_colour, (i % 2)? "#00FF00" : "#FF0000", ADMIN_COLOUR_PRIORITY), i)
+	addtimer(CALLBACK(user, /atom/proc/remove_atom_colour, ADMIN_COLOUR_PRIORITY), 101)
+	addtimer(CALLBACK(user, /atom/proc/visible_message, "<span class='suicide'>[user] was destroyed by the nuclear blast!</span>"), 101)
+	addtimer(CALLBACK(user, /mob/living/proc/adjustOxyLoss, 200), 101)
+	addtimer(CALLBACK(user, /mob/proc/death, 0), 101)
+	return MANUAL_SUICIDE
 
-/obj/item/weapon/disk/fakenucleardisk
+/obj/item/disk/fakenucleardisk
 	name = "cheap plastic imitation of the nuclear authentication disk"
 	desc = "Broken dreams and a faint odor of cheese."
 	icon_state = "nucleardisk"

@@ -37,6 +37,22 @@
 #define EAVESDROP_EXTRA_RANGE 1 //how much past the specified message_range does the message get starred, whispering only
 
 // A link given to ghost alice to follow bob
-#define FOLLOW_LINK(alice, bob) "<a href=?src=\ref[alice];follow=\ref[bob]>(F)</a>"
-#define TURF_LINK(alice, turfy) "<a href=?src=\ref[alice];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(T)</a>"
-#define FOLLOW_OR_TURF_LINK(alice, bob, turfy) "<a href=?src=\ref[alice];follow=\ref[bob];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(F)</a>"
+#define FOLLOW_LINK(alice, bob) "<a href=?src=[REF(alice)];follow=[REF(bob)]>(F)</a>"
+#define TURF_LINK(alice, turfy) "<a href=?src=[REF(alice)];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(T)</a>"
+#define FOLLOW_OR_TURF_LINK(alice, bob, turfy) "<a href=?src=[REF(alice)];follow=[REF(bob)];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(F)</a>"
+
+#define LOGSAY "say"
+#define LOGWHISPER "whisper"
+#define LOGEMOTE "emote"
+#define LOGDSAY "dsay"
+#define LOGPDA "pda"
+#define LOGCHAT "chat"
+#define LOGASAY "adminsay"
+#define LOGCOMMENT "comment"
+#define LOGOOC "ooc"
+
+
+#define LINGHIVE_NONE 0
+#define LINGHIVE_OUTSIDER 1
+#define LINGHIVE_LING 2
+#define LINGHIVE_LINK 3

@@ -5,7 +5,7 @@
 
 /obj/structure/closet/l3closet/PopulateContents()
 	..()
-	new /obj/item/weapon/storage/bag/bio( src )
+	new /obj/item/storage/bag/bio( src )
 	new /obj/item/clothing/suit/bio_suit/general( src )
 	new /obj/item/clothing/head/bio_hood/general( src )
 
@@ -14,7 +14,7 @@
 	icon_state = "bio_viro"
 
 /obj/structure/closet/l3closet/virology/PopulateContents()
-	new /obj/item/weapon/storage/bag/bio( src )
+	new /obj/item/storage/bag/bio( src )
 	new /obj/item/clothing/suit/bio_suit/virology( src )
 	new /obj/item/clothing/head/bio_hood/virology( src )
 
@@ -39,7 +39,7 @@
 	icon_state = "bio_viro"
 
 /obj/structure/closet/l3closet/scientist/PopulateContents()
-	new /obj/item/weapon/storage/bag/bio( src )
+	new /obj/item/storage/bag/bio( src )
 	new /obj/item/clothing/suit/bio_suit/scientist( src )
 	new /obj/item/clothing/head/bio_hood/scientist( src )
 	

@@ -9,13 +9,13 @@
 
 /datum/ntnet_conversation/New()
 	id = ntnrc_uid++
-	if(GLOB.ntnet_global)
-		GLOB.ntnet_global.chat_channels.Add(src)
+	if(SSnetworks.station_network)
+		SSnetworks.station_network.chat_channels.Add(src)
 	..()
 
 /datum/ntnet_conversation/Destroy()
-	if(GLOB.ntnet_global)
-		GLOB.ntnet_global.chat_channels.Remove(src)
+	if(SSnetworks.station_network)
+		SSnetworks.station_network.chat_channels.Remove(src)
 	return ..()
 
 /datum/ntnet_conversation/proc/add_message(message, username)
@@ -62,7 +62,7 @@
 
 /datum/ntnet_conversation/proc/change_title(newtitle, datum/computer_file/program/chatclient/client)
 	if(operator != client)
-		return 0 // Not Authorised
+		return FALSE // Not Authorised
 
 	add_status_message("[client.username] has changed channel title from [title] to [newtitle]")
 	title = newtitle

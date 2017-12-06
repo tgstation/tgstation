@@ -72,7 +72,9 @@
 	return .
 
 //Splits the text of a file at seperator and returns them in a list.
-/world/proc/file2list(filename, seperator="\n")
+/world/proc/file2list(filename, seperator="\n", trim = TRUE)
+	if (trim)
+		return splittext(trim(file2text(filename)),seperator)
 	return splittext(file2text(filename),seperator)
 
 //Turns a direction into text
@@ -123,25 +125,27 @@
 /proc/angle2dir(degree)
 
 	degree = SimplifyDegrees(degree)
-
-	if(degree < 45)
-		return NORTH
-	if(degree < 90)
-		return NORTHEAST
-	if(degree < 135)
-		return EAST
-	if(degree < 180)
-		return SOUTHEAST
-	if(degree < 225)
-		return SOUTH
-	if(degree < 270)
-		return SOUTHWEST
-	if(degree < 315)
-		return WEST
-	return NORTH|WEST
+	switch(degree)
+		if(0 to 22.5) //north requires two angle ranges
+			return NORTH
+		if(22.5 to 67.5) //each range covers 45 degrees
+			return NORTHEAST
+		if(67.5 to 112.5)
+			return EAST
+		if(112.5 to 157.5)
+			return SOUTHEAST
+		if(157.5 to 202.5)
+			return SOUTH
+		if(202.5 to 247.5)
+			return SOUTHWEST
+		if(247.5 to 292.5)
+			return WEST
+		if(292.5 to 337.5)
+			return NORTHWEST
+		if(337.5 to 360)
+			return NORTH
 
 //returns the north-zero clockwise angle in degrees, given a direction
-
 /proc/dir2angle(D)
 	switch(D)
 		if(NORTH)
@@ -199,8 +203,8 @@
 		. += "[seperator]+PERMISSIONS"
 	if(rights & R_STEALTH)
 		. += "[seperator]+STEALTH"
-	if(rights & R_REJUVINATE)
-		. += "[seperator]+REJUVINATE"
+	if(rights & R_POLL)
+		. += "[seperator]+POLL"
 	if(rights & R_VAREDIT)
 		. += "[seperator]+VAREDIT"
 	if(rights & R_SOUNDS)
@@ -537,3 +541,59 @@
 	if(!istype(the_matrix) || the_matrix.len != 20)
 		return "#ffffffff"
 	return rgb(the_matrix[1]*255, the_matrix[6]*255, the_matrix[11]*255, the_matrix[16]*255)
+
+/proc/type2parent(child)
+	var/string_type = "[child]"
+	var/last_slash = findlasttext(string_type, "/")
+	if(last_slash == 1)
+		switch(child)
+			if(/datum)
+				return null
+			if(/obj || /mob)
+				return /atom/movable
+			if(/area || /turf)
+				return /atom
+			else
+				return /datum
+	return text2path(copytext(string_type, 1, last_slash))
+
+//returns a string the last bit of a type, without the preceeding '/'
+/proc/type2top(the_type)
+	//handle the builtins manually
+	if(!ispath(the_type))
+		return
+	switch(the_type)
+		if(/datum)
+			return "datum"
+		if(/atom)
+			return "atom"
+		if(/obj)
+			return "obj"
+		if(/mob)
+			return "mob"
+		if(/area)
+			return "area"
+		if(/turf)
+			return "turf"
+		else //regex everything else (works for /proc too)
+			return lowertext(replacetext("[the_type]", "[type2parent(the_type)]/", ""))
+
+/proc/strtohex(str)
+	if(!istext(str)||!str)
+		return
+	var/r
+	var/c
+	for(var/i = 1 to length(str))
+		c= text2ascii(str,i)
+		r+= num2hex(c)
+	return r
+
+/proc/hextostr(str)
+	if(!istext(str)||!str)
+		return
+	var/r
+	var/c
+	for(var/i = 1 to length(str)/2)
+		c= hex2num(copytext(str,i*2-1,i*2+1))
+		r+= ascii2text(c)
+	return r

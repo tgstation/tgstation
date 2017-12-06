@@ -63,9 +63,9 @@
 
 	if(isnum(.)) //Numerical values of drained handle their feedback here, Alpha values handle it themselves (Research hacking)
 		if(.)
-			to_chat(H, "<span class='notice'>Gained <B>[.]</B> energy from \the [A].</span>")
+			to_chat(H, "<span class='notice'>Gained <B>[DisplayEnergy(.)]</B> of energy from [A].</span>")
 		else
-			to_chat(H, "<span class='danger'>\The [A] has run dry of power, you must find another source!</span>")
+			to_chat(H, "<span class='danger'>\The [A] has run dry of energy, you must find another source!</span>")
 	else
 		. = 0 //as to not cancel attack_hand()
 
@@ -77,5 +77,5 @@
 
 /obj/item/clothing/gloves/space_ninja/examine(mob/user)
 	..()
-	if(flags & NODROP)
-		to_chat(user, "The energy drain mechanism is: <B>[candrain?"active":"inactive"]</B>.")
+	if(flags_1 & NODROP_1)
+		to_chat(user, "The energy drain mechanism is <B>[candrain?"active":"inactive"]</B>.")
