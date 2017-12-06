@@ -106,3 +106,4 @@
 			H.set_species(/datum/species/golem/clockwork/no_scrap)
 	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
 	G.grace_period = FALSE //no grace period if we've declared war
+	G.recalls_remaining++
