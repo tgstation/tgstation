@@ -64,8 +64,9 @@
 	
 /obj/item/kirbyplants_onehanded
 	name = "potted plant"
-	icon = 'icons/obj/flora/plants.dmi'
-	icon_state = "plant-01"
+	icon = 'icons/obj/flora/_flora.dmi'
+	icon_state = "random_plant"
+	var/list/static/states
 	desc = "An extra little bit of nature contained in a pot."
 	layer = ABOVE_MOB_LAYER
 	w_class = WEIGHT_CLASS_HUGE
@@ -85,23 +86,18 @@ obj/item/kirbyplants_onehanded/equipped(mob/living/user)
 	I.layer = ABOVE_MOB_LAYER
 	..()
 
-obj/item/kirbyplants_onehanded/dropped(mob/living/user)
+/obj/item/kirbyplants_onehanded/dropped(mob/living/user)
 	..()
 	user.remove_alt_appearance("sneaking_mission")
 	
-obj/item/kirbyplants_onehanded/random
-	icon = 'icons/obj/flora/_flora.dmi'
-	icon_state = "random_plant"
-	var/list/static/states
-	
-obj/item/kirbyplants_onehanded/random/Initialize()
+/obj/item/kirbyplants_onehanded/Initialize()
 	. = ..()
 	icon = 'icons/obj/flora/plants.dmi'
 	if(!states)
 		generate_states()
 	icon_state = pick(states)
 
-obj/item/kirbyplants_onehanded/random/proc/generate_states()
+/obj/item/kirbyplants_onehanded/proc/generate_states()
 	states = list()
 	for(var/i in 1 to 25)
 		var/number
@@ -112,7 +108,7 @@ obj/item/kirbyplants_onehanded/random/proc/generate_states()
 		states += "plant-[number]"
 	states += "applebush"
 
-obj/item/kirbyplants_onehanded/attackby(obj/item/W, mob/user, params)
+/obj/item/kirbyplants_onehanded/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/screwdriver)) //If you screwdrive it, it is attachable
 		add_fingerprint(user)
 		disable = !disable
