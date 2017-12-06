@@ -232,6 +232,10 @@
 	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
 
 /obj/item/wirerod/attackby(obj/item/I, mob/user, params)
+	if(istype)I, /obj/item/storage)
+		get_contents(I)
+			if(!NULL)
+				return
 	if(istype(I, /obj/item/shard))
 		var/obj/item/twohanded/spear/S = new /obj/item/twohanded/spear
 
