@@ -13,12 +13,11 @@
 //skips preceding invalid characters
 //breaks when hittin invalid characters thereafter
 /proc/hex2num(var/hex, var/start = 1)
-	var
-		ret = 0
-		mult = 1
-		exponent = 0
-		binexp = 0
-		len = length(hex)
+	var/ret = 0
+	var/mult = 1
+	var/exponent = 0
+	var/binexp = 0
+	var/len = length(hex)
 	for(var/i = start, i <= len, i++)
 		var/ascii = text2ascii(hex, i)
 		switch(ascii)
