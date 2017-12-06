@@ -17,9 +17,9 @@
 	if (client && screen.should_show_to(src))
 		client.screen += screen
 		if (screen.screen_loc == "CENTER-7,CENTER-7" && screen.view != client.view)
-			var/scale = (1 + 2 * client.view) / 15
+			var/list/actualview = getviewsize(client.view)
 			screen.view = client.view
-			screen.transform = matrix(scale, 0, 0, 0, scale, 0)
+			screen.transform = matrix(actualview[1]/FULLSCREEN_OVERLAY_RESOLUTION_X, 0, 0, 0, actualview[2]/FULLSCREEN_OVERLAY_RESOLUTION_Y, 0)
 
 	return screen
 
