@@ -12,7 +12,7 @@
 /obj/item/integrated_circuit/passive/power/solar_cell
 	name = "tiny photovoltaic cell"
 	desc = "It's a very tiny solar cell, generally used in calculators."
-	extended_desc = "The cell generates 1W of power per second in optimal lighting conditions.  Less light will result in less power being generated."
+	extended_desc = "The cell generates 1 W of power in optimal lighting conditions.  Less light will result in less power being generated."
 	icon_state = "solar_cell"
 	complexity = 8
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
@@ -108,7 +108,7 @@
 	push_data()
 	..()
 
-/obj/item/integrated_circuit/passive/power/chemical_cell/on_reagent_change()
+/obj/item/integrated_circuit/passive/power/chemical_cell/on_reagent_change(changetype)
 	set_pin_data(IC_OUTPUT, 1, reagents.total_volume)
 	push_data()
 

@@ -96,7 +96,7 @@
 
 /obj/machinery/door/Move()
 	var/turf/T = loc
-	..()
+	. = ..()
 	move_update_air(T)
 
 /obj/machinery/door/CanPass(atom/movable/mover, turf/target)
@@ -255,12 +255,15 @@
 		return 1
 	if(operating)
 		return
+	if(welded)
+		return
 	if(safe)
 		for(var/atom/movable/M in get_turf(src))
 			if(M.density && M != src) //something is blocking the door
 				if(autoclose)
 					addtimer(CALLBACK(src, .proc/autoclose), 60)
 				return
+
 	operating = TRUE
 
 	do_animate("closing")

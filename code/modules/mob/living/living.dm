@@ -39,7 +39,6 @@
 		ranged_ability.remove_ranged_ability(src)
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
-	QDEL_NULL(riding_datum)
 
 	for(var/mob/living/simple_animal/drone/D in GLOB.player_list)
 		for(var/image/I in staticOverlays)
@@ -943,11 +942,6 @@
 						"[C] leaps out of [src]'s way!")]</span>")
 	C.Knockdown(40)
 
-/mob/living/post_buckle_mob(mob/living/M)
-	if(riding_datum)
-		riding_datum.handle_vehicle_offsets()
-		riding_datum.handle_vehicle_layer()
-
 /mob/living/ConveyorMove()
 	if((movement_type & FLYING) && !stat)
 		return
@@ -1010,3 +1004,14 @@
 /mob/living/proc/add_abilities_to_panel()
 	for(var/obj/effect/proc_holder/A in abilities)
 		statpanel("[A.panel]",A.get_panel_text(),A)
+
+/mob/living/lingcheck()
+	if(mind)
+		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
+		if(changeling)
+			if(changeling.changeling_speak)
+				return LINGHIVE_LING
+			return LINGHIVE_OUTSIDER
+	if(mind && mind.linglink)
+		return LINGHIVE_LINK
+	return LINGHIVE_NONE

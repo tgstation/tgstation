@@ -51,6 +51,9 @@
 /obj/effect/accelerated_particle/ex_act(severity, target)
 	qdel(src)
 
+/obj/effect/accelerated_particle/singularity_pull()
+	return
+
 /obj/effect/accelerated_particle/proc/toxmob(mob/living/M)
 	M.rad_act(energy*6)
 

@@ -36,18 +36,18 @@
 /obj/structure/showcase/horrific_experiment
 	name = "horrific experiment"
 	desc = "Some sort of pod filled with blood and viscera. You swear you can see it moving..."
-	icon = 'icons/obj/cloning.dmi'
+	icon = 'icons/obj/machines/cloning.dmi'
 	icon_state = "pod_g"
 
 /obj/structure/showcase/machinery/oldpod
-	name = "damaged cyrogenic pod"
-	desc = "A damaged cyrogenic pod long since lost to time, including its former occupant..."
-	icon = 'icons/obj/cryogenic2.dmi'
+	name = "damaged cryogenic pod"
+	desc = "A damaged cryogenic pod long since lost to time, including its former occupant..."
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper-open"
 
 /obj/structure/showcase/machinery/oldpod/used
-	name = "opened cyrogenic pod"
-	desc = "Cyrogenic pod that has recently discharged its occupand. The pod appears non-functional."
+	name = "opened cryogenic pod"
+	desc = "A cryogenic pod that has recently discharged its occupant. The pod appears non-functional."
 
 /obj/structure/showcase/cyborg/old
 	name = "Cyborg Statue"
@@ -83,7 +83,7 @@
 /obj/structure/showcase/machinery/cloning_pod
 	name = "cloning pod exhibit"
 	desc = "Signs describe how cloning pods like these ensure that every Nanotrasen employee can carry out their contracts in full, even in the unlikely event of their catastrophic death. Hopefully they aren't all made of cardboard, like this one."
-	icon = 'icons/obj/cloning.dmi'
+	icon = 'icons/obj/machines/cloning.dmi'
 	icon_state = "pod_0"
 
 /obj/structure/showcase/perfect_employee
