@@ -32,7 +32,7 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	var/hide = FALSE  // Is it a hidden machine?
 
 
-/obj/machinery/telecomms/proc/relay_information(datum/signal/vocal/signal, filter, copysig, amount = 20)
+/obj/machinery/telecomms/proc/relay_information(datum/signal/subspace/signal, filter, copysig, amount = 20)
 	// relay signal to all linked machinery that are of type [filter]. If signal has been sent [amount] times, stop sending
 
 	if(!on)

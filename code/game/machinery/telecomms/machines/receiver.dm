@@ -16,7 +16,7 @@
 	idle_power_usage = 30
 	circuit = /obj/item/circuitboard/machine/telecomms/receiver
 
-/obj/machinery/telecomms/receiver/receive_signal(datum/signal/vocal/signal)
+/obj/machinery/telecomms/receiver/receive_signal(datum/signal/subspace/signal)
 	if(!on) // has to be on to receive messages
 		return
 	if(!signal)
@@ -33,7 +33,7 @@
 			if(!can_send)
 				relay_information(signal, /obj/machinery/telecomms/bus) // Send it to a bus instead, if it's linked to one
 
-/obj/machinery/telecomms/receiver/proc/check_receive_level(datum/signal/vocal/signal)
+/obj/machinery/telecomms/receiver/proc/check_receive_level(datum/signal/subspace/signal)
 	if (z in signal.levels)
 		return TRUE
 

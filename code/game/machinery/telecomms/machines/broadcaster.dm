@@ -18,19 +18,19 @@ GLOBAL_VAR_INIT(message_delay, 0) // To make sure restarting the recentmessages 
 	idle_power_usage = 25
 	circuit = /obj/item/circuitboard/machine/telecomms/broadcaster
 
-/obj/machinery/telecomms/broadcaster/receive_information(datum/signal/vocal/signal, obj/machinery/telecomms/machine_from)
+/obj/machinery/telecomms/broadcaster/receive_information(datum/signal/subspace/vocal/signal, obj/machinery/telecomms/machine_from)
 	// Don't broadcast rejected signals
+	if(!istype(signal))  // can't broadcast non-vocal signals
+		return
 	if(signal.data["reject"])
 		return
-
 	if(!signal.data["message"])
 		return
 
 	// Prevents massive radio spam
 	signal.mark_done()
-	var/datum/signal/vocal/original = signal.original
+	var/datum/signal/subspace/original = signal.original
 	if(original)
-		original.levels = signal.levels
 		original.data["compression"] = signal.data["compression"]
 
 	var/signal_message = "[signal.frequency]:[signal.data["message"]]:[signal.data["realname"]]"

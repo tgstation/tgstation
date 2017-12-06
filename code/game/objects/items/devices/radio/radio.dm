@@ -266,7 +266,7 @@
 		speaker.job = "Unknown"
 
 	// Construct the signal
-	var/datum/signal/vocal/signal = new(src, freq, speaker, language, message, spans)
+	var/datum/signal/subspace/vocal/signal = new(src, freq, speaker, language, message, spans)
 
 	// Independent radios, on the CentCom frequency, reach all independent radios
 	if (independent && freq == FREQ_CENTCOM)
@@ -294,7 +294,7 @@
 	// was never received, send a mundane broadcast (no headsets).
 	addtimer(CALLBACK(src, .proc/backup_transmission, signal), 20)
 
-/obj/item/device/radio/proc/backup_transmission(datum/signal/vocal/signal)
+/obj/item/device/radio/proc/backup_transmission(datum/signal/subspace/vocal/signal)
 	var/turf/T = get_turf(src)
 	if (signal.data["done"] && (T.z in signal.levels))
 		return

@@ -20,37 +20,36 @@
 /obj/machinery/telecomms/server/Initialize()
 	. = ..()
 
-/obj/machinery/telecomms/server/receive_information(datum/signal/vocal/signal, obj/machinery/telecomms/machine_from)
-	if(!signal.data["message"] || !is_freq_listening(signal))
+/obj/machinery/telecomms/server/receive_information(datum/signal/subspace/vocal/signal, obj/machinery/telecomms/machine_from)
+	// can't log non-vocal signals
+	if(!istype(signal) || !signal.data["message"] || !is_freq_listening(signal))
 		return
 
 	if(traffic > 0)
 		totaltraffic += traffic // add current traffic to total traffic
 
-	//Is this a test signal? Bypass logging
-	if(signal.data["type"] != 4)
-		// Delete particularly old logs
-		if (log_entries.len >= 400)
-			log_entries.Cut(1, 2)
+	// Delete particularly old logs
+	if (log_entries.len >= 400)
+		log_entries.Cut(1, 2)
 
-		var/datum/comm_log_entry/log = new
-		log.parameters["mobtype"] = signal.virt.source.type
-		log.parameters["name"] = signal.data["name"]
-		log.parameters["job"] = signal.data["job"]
-		log.parameters["message"] = signal.data["message"]
+	var/datum/comm_log_entry/log = new
+	log.parameters["mobtype"] = signal.virt.source.type
+	log.parameters["name"] = signal.data["name"]
+	log.parameters["job"] = signal.data["job"]
+	log.parameters["message"] = signal.data["message"]
 
-		// If the signal is still compressed, make the log entry gibberish
-		var/compression = signal.data["compression"]
-		if(compression > 0)
-			log.input_type = "Corrupt File"
-			log.parameters["name"] = Gibberish(signal.data["name"], compression + 50)
-			log.parameters["job"] = Gibberish(signal.data["job"], compression + 50)
-			log.parameters["message"] = Gibberish(signal.data["message"], compression + 50)
+	// If the signal is still compressed, make the log entry gibberish
+	var/compression = signal.data["compression"]
+	if(compression > 0)
+		log.input_type = "Corrupt File"
+		log.parameters["name"] = Gibberish(signal.data["name"], compression + 50)
+		log.parameters["job"] = Gibberish(signal.data["job"], compression + 50)
+		log.parameters["message"] = Gibberish(signal.data["message"], compression + 50)
 
-		// Give the log a name and store it
-		var/identifier = num2text( rand(-1000,1000) + world.time )
-		log.name = "data packet ([md5(identifier)])"
-		log_entries.Add(log)
+	// Give the log a name and store it
+	var/identifier = num2text( rand(-1000,1000) + world.time )
+	log.name = "data packet ([md5(identifier)])"
+	log_entries.Add(log)
 
 	var/can_send = relay_information(signal, /obj/machinery/telecomms/hub)
 	if(!can_send)
