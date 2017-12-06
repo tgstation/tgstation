@@ -1,4 +1,5 @@
 //Coded by Nexendia~ :)
+//re-factored by Spankmastere on 12/6/2017, long live Hippiestation, Hippie can never die.
 
 /obj/item/dragon
 	name = "Bad Dragon"
@@ -45,4 +46,3 @@
 /obj/structure/statue/dragon/shelf/alt
 	desc =  "Built to withstand your collection and your sins."
 	icon_state = "shelf2"
-
