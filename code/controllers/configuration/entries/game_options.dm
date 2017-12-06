@@ -260,11 +260,3 @@ CONFIG_DEF(number/emergency_shuttle_autocall_threshold)
 	integer = FALSE
 
 CONFIG_DEF(flag/ic_printing)
-
-CONFIG_DEF(string/default_view)
-	value = "15x15"
-
-/datum/config_entry/string/default_view/ValidateAndSet()
-	. = ..()
-	if(.)
-		GLOB.DEFAULT_VIEW = value
