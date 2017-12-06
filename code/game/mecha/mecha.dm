@@ -970,7 +970,7 @@
 		setDir(dir_in)
 
 	if(L && L.client)
-		L.client.change_view(GLOBAL.DEFAULT_VIEW)
+		L.client.change_view(GLOB.DEFAULT_VIEW)
 		zoom_mode = 0
 
 /////////////////////////

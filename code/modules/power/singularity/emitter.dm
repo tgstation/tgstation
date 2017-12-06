@@ -335,7 +335,7 @@
 		buckled_mob.pixel_x = 0
 		buckled_mob.pixel_y = 0
 		if(buckled_mob.client)
-			buckled_mob.client.change_view(GLOBAL.DEFAULT_VIEW)
+			buckled_mob.client.change_view(GLOB.DEFAULT_VIEW)
 	auto.Remove(buckled_mob)
 	. = ..()
 

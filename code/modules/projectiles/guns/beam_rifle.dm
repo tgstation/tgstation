@@ -176,7 +176,7 @@
 	zoom_animating = 0
 	animate(current_user.client, pixel_x = 0, pixel_y = 0, 0, FALSE, LINEAR_EASING, ANIMATION_END_NOW)
 	zoom_current_view_increase = 0
-	current_user.client.change_view(GLOBAL.DEFAULT_VIEW)
+	current_user.client.change_view(GLOB.DEFAULT_VIEW)
 	zooming_angle = 0
 	current_zoom_x = 0
 	current_zoom_y = 0

@@ -69,7 +69,7 @@
 		var/mob/camera/aiEye/remote/shuttle_docker/the_eye = eyeobj
 		user.client.images -= the_eye.placement_images
 		user.client.images -= the_eye.placed_images
-		user.client.change_view(GLOBAL.DEFAULT_VIEW)
+		user.client.change_view(GLOB.DEFAULT_VIEW)
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/placeLandingSpot()
 	if(!checkLandingSpot())
