@@ -1,12 +1,12 @@
+/*
+	The monitoring computer for the messaging server.
+	Lets you read PDA and request console messages.
+*/
 
-// Allows you to monitor messages that passes the server.
-
-
-
-
+// The monitor itself.
 /obj/machinery/computer/message_monitor
 	name = "message monitor console"
-	desc = "Used to Monitor the crew's messages, that are sent via PDA. Can also be used to view Request Console messages."
+	desc = "Used to monitor the crew's PDA messages, as well as request console messages."
 	icon_screen = "comm_logs"
 	circuit = /obj/item/circuitboard/computer/message_monitor
 	//Server linked to.
@@ -42,15 +42,15 @@
 /obj/machinery/computer/message_monitor/emag_act(mob/user)
 	if(emagged)
 		return
-	if(!isnull(src.linkedServer))
+	if(!isnull(linkedServer))
 		emagged = TRUE
 		screen = 2
 		spark_system.set_up(5, 0, src)
 		src.spark_system.start()
-		var/obj/item/paper/monitorkey/MK = new(loc)
+		var/obj/item/paper/monitorkey/MK = new(loc, linkedServer)
 		// Will help make emagging the console not so easy to get away with.
 		MK.info += "<br><br><font color='red'>�%@%(*$%&(�&?*(%&�/{}</font>"
-		var/time = 100 * length(src.linkedServer.decryptkey)
+		var/time = 100 * length(linkedServer.decryptkey)
 		addtimer(CALLBACK(src, .proc/UnmagConsole), time)
 		message = rebootmsg
 	else
@@ -450,20 +450,23 @@
 
 
 /obj/item/paper/monitorkey
-	//..()
 	name = "monitor decryption key"
-	var/obj/machinery/message_server/server = null
 
-/obj/item/paper/monitorkey/Initialize()
+/obj/item/paper/monitorkey/Initialize(mapload, obj/machinery/message_server/server)
 	..()
-	return INITIALIZE_HINT_LATELOAD
+	if (server)
+		print(server)
+		return INITIALIZE_HINT_NORMAL
+	else
+		return INITIALIZE_HINT_LATELOAD
+
+/obj/item/paper/monitorkey/proc/print(obj/machinery/message_server/server)
+	info = "<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is '[server.decryptkey]'.<br>Please keep this a secret and away from the clown.<br>If necessary, change the password to a more secure one."
+	info_links = info
+	add_overlay("paper_words")
 
 /obj/item/paper/monitorkey/LateInitialize()
-	if(GLOB.message_servers)
-		for(var/obj/machinery/message_server/server in GLOB.message_servers)
-			if(!isnull(server))
-				if(!isnull(server.decryptkey))
-					info = "<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is '[server.decryptkey]'.<br>Please keep this a secret and away from the clown.<br>If necessary, change the password to a more secure one."
-					info_links = info
-					add_overlay("paper_words")
-					break
+	for (var/obj/machinery/message_server/server in GLOB.message_servers)
+		if (server.decryptkey)
+			print(server)
+			break

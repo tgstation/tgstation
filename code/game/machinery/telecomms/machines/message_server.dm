@@ -1,5 +1,87 @@
+/*
+	The equivalent of the server, for PDA and request console messages.
+	Without it, PDA and request console messages cannot be transmitted.
+	PDAs require the rest of the telecomms setup, but request consoles only
+	require the message server.
+*/
+
+// A decorational representation of SSblackbox, usually placed alongside the message server.
+/obj/machinery/blackbox_recorder
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "blackbox"
+	name = "Blackbox Recorder"
+	density = TRUE
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
+	idle_power_usage = 10
+	active_power_usage = 100
+	armor = list(melee = 25, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
+
+
+// The message server itself.
 GLOBAL_LIST_INIT(message_servers, list())
 
+/obj/machinery/message_server
+	icon = 'icons/obj/machines/research.dmi'
+	icon_state = "server"
+	name = "Messaging Server"
+	desc = "A machine that attempts to gather the secret knowledge of the universe."
+	density = TRUE
+	anchored = TRUE
+	use_power = IDLE_POWER_USE
+	idle_power_usage = 10
+	active_power_usage = 100
+
+	var/list/datum/data_pda_msg/pda_msgs = list()
+	var/list/datum/data_rc_msg/rc_msgs = list()
+	var/active = TRUE
+	var/decryptkey
+
+/obj/machinery/message_server/Initialize()
+	GLOB.message_servers += src
+	if (!decryptkey)
+		decryptkey = GenerateKey()
+	send_pda_message("System Administrator", "system", "This is an automated message. The messaging system is functioning correctly.")
+	. = ..()
+
+/obj/machinery/message_server/Destroy()
+	GLOB.message_servers -= src
+	return ..()
+
+/obj/machinery/message_server/proc/GenerateKey()
+	var/newKey
+	newKey += pick("the", "if", "of", "as", "in", "a", "you", "from", "to", "an", "too", "little", "snow", "dead", "drunk", "rosebud", "duck", "al", "le")
+	newKey += pick("diamond", "beer", "mushroom", "assistant", "clown", "captain", "twinkie", "security", "nuke", "small", "big", "escape", "yellow", "gloves", "monkey", "engine", "nuclear", "ai")
+	newKey += pick("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
+	return newKey
+
+/obj/machinery/message_server/process()
+	if(active && (stat & (BROKEN|NOPOWER)))
+		active = 0
+	update_icon()
+
+/obj/machinery/message_server/proc/send_pda_message(recipient = "",sender = "",message = "",photo=null)
+	. = new/datum/data_pda_msg(recipient,sender,message,photo)
+	pda_msgs += .
+
+/obj/machinery/message_server/proc/send_rc_message(recipient = "",sender = "",message = "",stamp = "", id_auth = "", priority = 1)
+	rc_msgs += new/datum/data_rc_msg(recipient,sender,message,stamp,id_auth)
+
+/obj/machinery/message_server/attack_hand(mob/user)
+	to_chat(user, "You toggle PDA message passing from [active ? "On" : "Off"] to [active ? "Off" : "On"].")
+	active = !active
+	update_icon()
+
+/obj/machinery/message_server/update_icon()
+	if((stat & (BROKEN|NOPOWER)))
+		icon_state = "server-nopower"
+	else if (!active)
+		icon_state = "server-off"
+	else
+		icon_state = "server-on"
+
+
+// Log datums stored by the message server.
 /datum/data_pda_msg
 	var/recipient = "Unspecified" //name of the person
 	var/sender = "Unspecified" //name of the sender
@@ -7,7 +89,6 @@ GLOBAL_LIST_INIT(message_servers, list())
 	var/icon/photo //Attached photo
 
 /datum/data_pda_msg/New(var/param_rec = "",var/param_sender = "",var/param_message = "",var/param_photo=null)
-
 	if(param_rec)
 		recipient = param_rec
 	if(param_sender)
@@ -63,78 +144,3 @@ GLOBAL_LIST_INIT(message_servers, list())
 			else
 				priority = "Undetermined"
 
-/obj/machinery/message_server
-	icon = 'icons/obj/machines/research.dmi'
-	icon_state = "server"
-	name = "Messaging Server"
-	desc = "A machine that attempts to gather the secret knowledge of the universe."
-	density = TRUE
-	anchored = TRUE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 10
-	active_power_usage = 100
-
-	var/list/datum/data_pda_msg/pda_msgs = list()
-	var/list/datum/data_rc_msg/rc_msgs = list()
-	var/active = 1
-	var/decryptkey = "password"
-
-/obj/machinery/message_server/Initialize()
-	GLOB.message_servers += src
-	decryptkey = GenerateKey()
-	send_pda_message("System Administrator", "system", "This is an automated message. The messaging system is functioning correctly.")
-	. = ..()
-
-/obj/machinery/message_server/Destroy()
-	GLOB.message_servers -= src
-	return ..()
-
-/obj/machinery/message_server/proc/GenerateKey()
-	//Feel free to move to Helpers.
-	var/newKey
-	newKey += pick("the", "if", "of", "as", "in", "a", "you", "from", "to", "an", "too", "little", "snow", "dead", "drunk", "rosebud", "duck", "al", "le")
-	newKey += pick("diamond", "beer", "mushroom", "assistant", "clown", "captain", "twinkie", "security", "nuke", "small", "big", "escape", "yellow", "gloves", "monkey", "engine", "nuclear", "ai")
-	newKey += pick("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
-	return newKey
-
-/obj/machinery/message_server/process()
-	if(active && (stat & (BROKEN|NOPOWER)))
-		active = 0
-		return
-	update_icon()
-	return
-
-/obj/machinery/message_server/proc/send_pda_message(recipient = "",sender = "",message = "",photo=null)
-	. = new/datum/data_pda_msg(recipient,sender,message,photo)
-	pda_msgs += .
-
-/obj/machinery/message_server/proc/send_rc_message(recipient = "",sender = "",message = "",stamp = "", id_auth = "", priority = 1)
-	rc_msgs += new/datum/data_rc_msg(recipient,sender,message,stamp,id_auth)
-
-/obj/machinery/message_server/attack_hand(mob/user)
-	to_chat(user, "You toggle PDA message passing from [active ? "On" : "Off"] to [active ? "Off" : "On"]")
-	active = !active
-	update_icon()
-
-	return
-
-/obj/machinery/message_server/update_icon()
-	if((stat & (BROKEN|NOPOWER)))
-		icon_state = "server-nopower"
-	else if (!active)
-		icon_state = "server-off"
-	else
-		icon_state = "server-on"
-
-	return
-
-/obj/machinery/blackbox_recorder
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "blackbox"
-	name = "Blackbox Recorder"
-	density = TRUE
-	anchored = TRUE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 10
-	active_power_usage = 100
-	armor = list(melee = 25, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
