@@ -5,11 +5,11 @@
 	value = "Game Master"
 	protection = CONFIG_ENTRY_LOCKED
 
-/datum/config_entry/string/servername)	// server name (the name of the game window
+/datum/config_entry/string/servername	// server name (the name of the game window)
 
 /datum/config_entry/string/serversqlname	// short form server name used for the DB
 
-/datum/config_entry/string/stationname)	// station name (the name of the station in-game
+/datum/config_entry/string/stationname	// station name (the name of the station in-game)
 
 /datum/config_entry/number/lobby_countdown	// In between round countdown.
 	value = 120
@@ -51,7 +51,7 @@
 
 /datum/config_entry/flag/log_twitter	// log certain expliotable parrots and other such fun things in a JSON file of twitter valid phrases.
 
-/datum/config_entry/flag/log_world_topic)	// log all world.Topic( calls
+/datum/config_entry/flag/log_world_topic	// log all world.Topic() calls
 
 /datum/config_entry/flag/log_manifest	// log crew manifest to seperate file
 
@@ -61,11 +61,11 @@
 
 /datum/config_entry/flag/allow_vote_mode	// allow votes to change mode
 
-/datum/config_entry/number/vote_delay)	// minimum time between voting sessions (deciseconds, 10 minute default
+/datum/config_entry/number/vote_delay	// minimum time between voting sessions (deciseconds, 10 minute default)
 	value = 6000
 	min_val = 0
 
-/datum/config_entry/number/vote_period)	// length of voting period (deciseconds, default 1 minute
+/datum/config_entry/number/vote_period  // length of voting period (deciseconds, default 1 minute)
 	value = 600
 	min_val = 0
 
@@ -175,7 +175,7 @@
 	value = 30
 	min_val = 0
 
-/datum/config_entry/number/inactivity_period)	//time in ds until a player is considered inactive
+/datum/config_entry/number/inactivity_period	//time in ds until a player is considered inactive
 	value = 3000
 	min_val = 0
 
@@ -184,7 +184,7 @@
 	if(.)
 		value *= 10 //documented as seconds in config.txt
 
-/datum/config_entry/number/afk_period)	//time in ds until a player is considered inactive
+/datum/config_entry/number/afk_period	//time in ds until a player is considered inactive
 	value = 3000
 	min_val = 0
 
@@ -216,7 +216,7 @@
 
 /datum/config_entry/flag/show_irc_name
 
-/datum/config_entry/flag/see_own_notes)	//Can players see their own admin notes (read-only?
+/datum/config_entry/flag/see_own_notes	//Can players see their own admin notes
 
 /datum/config_entry/number/note_fresh_days
 	value = null
@@ -334,7 +334,7 @@
 	value = null
 	min_val = 0
 
-/datum/config_entry/number/error_cooldown)	// The "cooldown" time for each occurrence of a unique error
+/datum/config_entry/number/error_cooldown	// The "cooldown" time for each occurrence of a unique error
 	value = 600
 	min_val = 0
 

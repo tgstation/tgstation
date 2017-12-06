@@ -92,7 +92,7 @@
 
 /datum/config_entry/flag/allow_latejoin_antagonists	// If late-joining players can be traitor/changeling
 
-/datum/config_entry/number/midround_antag_time_check)	// How late (in minutes you want the midround antag system to stay on, setting this to 0 will disable the system
+/datum/config_entry/number/midround_antag_time_check	// How late (in minutes you want the midround antag system to stay on, setting this to 0 will disable the system)
 	value = 60
 	min_val = 0
 
