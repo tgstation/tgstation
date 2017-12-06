@@ -109,7 +109,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 45
 	glass_icon_state = "kahluaglass"
-	glass_name = "glass of RR Coffee Liquor"
+	glass_name = "glass of RR coffee liquor"
 	glass_desc = "DAMN, THIS THING LOOKS ROBUST!"
 	shot_glass_icon_state = "shotglasscream"
 
@@ -341,7 +341,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 25
 	taste_description = "burning cinnamon"
 	glass_icon_state = "goldschlagerglass"
-	glass_name = "glass of Goldschlager"
+	glass_name = "glass of goldschlager"
 	glass_desc = "100% proof that teen girls will drink anything with gold in it."
 	shot_glass_icon_state = "shotglassgold"
 
@@ -396,7 +396,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 70
 	taste_description = "cola"
 	glass_icon_state = "whiskeycolaglass"
-	glass_name = "Whiskey Cola"
+	glass_name = "whiskey cola"
 	glass_desc = "An innocent-looking mixture of cola and Whiskey. Delicious."
 
 /datum/reagent/consumable/ethanol/martini
@@ -706,7 +706,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 70
 	taste_description = "soda"
 	glass_icon_state = "whiskeysodaglass2"
-	glass_name = "Whiskey Soda"
+	glass_name = "whiskey soda"
 	glass_desc = "Ultimate refreshment."
 
 /datum/reagent/consumable/ethanol/antifreeze
@@ -785,7 +785,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 70
 	taste_description = "tart bitterness"
 	glass_icon_state = "vodkatonicglass"
-	glass_name = "Vodka and Tonic"
+	glass_name = "vodka and tonic"
 	glass_desc = "For when a gin and tonic isn't Russian enough."
 
 
@@ -797,7 +797,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 45
 	taste_description = "dry, tart lemons"
 	glass_icon_state = "ginfizzglass"
-	glass_name = "Gin Fizz"
+	glass_name = "gin fizz"
 	glass_desc = "Refreshingly lemony, deliciously dry."
 
 
@@ -870,7 +870,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 15
 	taste_description = "refreshingly cold"
 	glass_icon_state = "iced_beerglass"
-	glass_name = "Iced Beer"
+	glass_name = "iced beer"
 	glass_desc = "A beer so frosty, the air around it freezes."
 
 /datum/reagent/consumable/ethanol/iced_beer/on_mob_life(mob/living/M)
@@ -1069,7 +1069,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 35
 	taste_description = "sour lemons"
 	glass_icon_state = "whiskey_sour"
-	glass_name = "Whiskey Sour"
+	glass_name = "whiskey sour"
 	glass_desc = "Lemon juice mixed with whiskey and a dash of sugar. Surprisingly satisfying."
 
 /datum/reagent/consumable/ethanol/hcider
@@ -1081,7 +1081,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 25
 	taste_description = "apples"
 	glass_icon_state = "whiskeyglass"
-	glass_name = "Hard Cider"
+	glass_name = "hard cider"
 	glass_desc = "Tastes like autumn."
 	shot_glass_icon_state = "shotglassbrown"
 
@@ -1279,5 +1279,5 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 1
 	taste_description = "custard and alcohol"
 	glass_icon_state = "glass_yellow"
-	glass_name = "Eggnog"
+	glass_name = "eggnog"
 	glass_desc = "For enjoying the most wonderful time of the year."

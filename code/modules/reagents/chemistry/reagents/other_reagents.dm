@@ -117,7 +117,7 @@
 	taste_description = "water"
 	var/cooling_temperature = 2
 	glass_icon_state = "glass_clear"
-	glass_name = "glass of Water"
+	glass_name = "glass of water"
 	glass_desc = "The father of all refreshments."
 	shot_glass_icon_state = "shotglassclear"
 
@@ -188,7 +188,7 @@
 	description = "Water blessed by some deity."
 	color = "#E0E8EF" // rgb: 224, 232, 239
 	glass_icon_state  = "glass_clear"
-	glass_name = "glass of Holy Water"
+	glass_name = "glass of holy water"
 	glass_desc = "A glass of holy water."
 
 /datum/reagent/water/holywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)

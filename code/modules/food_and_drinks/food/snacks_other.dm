@@ -380,7 +380,7 @@
 	foodtype = VEGETABLES | FRIED | DAIRY
 
 /obj/item/reagent_containers/food/snacks/cubannachos
-	name = "cuban nachos"
+	name = "Cuban nachos"
 	desc = "That's some dangerously spicy nachos."
 	icon_state = "cubannachos"
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 3)
