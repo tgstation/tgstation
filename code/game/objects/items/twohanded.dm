@@ -4,6 +4,7 @@
  *		Fireaxe
  *		Double-Bladed Energy Swords
  *		Spears
+ *		Mallets
  *		CHAINSAWS
  *		Bone Axe and Spear
  */
@@ -484,6 +485,87 @@
 		name = "explosive lance"
 		desc = "A makeshift spear with [G] attached to it."
 	update_icon()
+
+//mallet
+/obj/item/twohanded/mallet
+	icon_state = "toolbox_mallet_r0"
+	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
+	name = "makeshift mallet"
+	desc = "A haphazardly-constructed yet still deadly weapon of ancient design. Wield for a critical hit, to your opponent and your mallet."
+	force = 14
+	w_class = WEIGHT_CLASS_HUGE
+	force_unwielded = 14
+	force_wielded = 30
+	throwforce = 15
+	throw_speed = 2
+	materials = list(MAT_METAL=1650, MAT_GLASS=75)
+	hitsound = 'sound/weapons/smash.ogg'
+	attack_verb = list("smacked", "cracked", "attacked")
+	max_integrity = 50
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
+	var/integ = 1 //different toolboxes get different amount of hits before breaking, only used for the syndicate mallet and mtoolnir
+
+/obj/item/twohanded/mallet/update_icon()
+	icon_state = "toolbox_mallet_r[wielded]"
+
+/obj/item/twohanded/mallet/attack(atom/movable/AM, mob/user, proximity)
+	..()
+	if(wielded)
+		integ--
+	if(!integ)
+		user.visible_message("<span class='notice'>[src] smashes into pieces!</span>")
+		qdel(src)
+
+/obj/item/twohanded/mallet/b
+	icon_state = "toolbox_mallet_b0"
+
+/obj/item/twohanded/mallet/b/update_icon()
+	icon_state = "toolbox_mallet_b[wielded]"
+
+/obj/item/twohanded/mallet/g
+	icon_state = "toolbox_mallet_g0"
+
+/obj/item/twohanded/mallet/g/update_icon()
+	icon_state = "toolbox_mallet_g[wielded]"
+	
+/obj/item/twohanded/mallet/y
+	icon_state = "toolbox_mallet_y0"
+
+/obj/item/twohanded/mallet/y/update_icon()
+	icon_state = "toolbox_mallet_y[wielded]"
+
+/obj/item/twohanded/mallet/s
+	icon_state = "toolbox_mallet_s0"
+	integ = 2 //extra hit, for an extremely rare mallet
+
+/obj/item/twohanded/mallet/s/update_icon()
+	icon_state = "toolbox_mallet_s[wielded]"
+
+/obj/item/twohanded/mallet/y/mtoolnir
+	icon_state = "toolbox_mallet_y0"
+	name = "mtoolnir"
+	desc = "A distant relative of His Grace, perhaps. The power of the tide is with you."
+	hitsound = 'sound/effects/explosion1.ogg'
+	force_wielded = 80 //nelly
+	integ = 5
+
+/obj/item/twohanded/mallet/y/mtoolnir/attack(atom/movable/AM, mob/user, mob/target)
+	..()
+	if(wielded)
+		shock(target)
+
+/obj/item/twohanded/mallet/y/mtoolnir/proc/shock(mob/living/target)
+	target.Stun(60)
+	var/datum/effect_system/lightning_spread/s = new /datum/effect_system/lightning_spread
+	s.set_up(5, 1, target.loc)
+	s.start()
+	target.visible_message("<span class='danger'>[target.name] was shocked by [src]!</span>", \
+		"<span class='userdanger'>You feel a powerful shock course through your body sending you flying!</span>", \
+		"<span class='italics'>You hear a heavy electrical crack!</span>")
+	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
+	target.throw_at(throw_target, 200, 4)
+	return
 
 // CHAINSAW
 /obj/item/twohanded/required/chainsaw

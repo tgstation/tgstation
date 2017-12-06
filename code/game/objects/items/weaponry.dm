@@ -232,6 +232,10 @@
 	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
 
 /obj/item/wirerod/attackby(obj/item/I, mob/user, params)
+	if(istype)I, /obj/item/storage)
+		get_contents(I)
+			if(!NULL)
+				return
 	if(istype(I, /obj/item/shard))
 		var/obj/item/twohanded/spear/S = new /obj/item/twohanded/spear
 
@@ -253,6 +257,65 @@
 		qdel(src)
 
 		user.put_in_hands(P)
+//MALLETS BELOW//
+	else if(istype(I, /obj/item/storage/toolbox/mechanical) && !(I.flags_1 & NODROP_1))
+		var/obj/item/twohanded/mallet/b/MB = new /obj/item/twohanded/mallet/b
+
+		remove_item_from_storage(user)
+
+		to_chat(user, "<span class='notice'>You fasten [I] to the top of the rod with the cable.</span>")
+
+		qdel(I)
+		qdel(src)
+
+		user.put_in_hands(MB)
+	
+	else if(istype(I, /obj/item/storage/toolbox/artistic) && !(I.flags_1 & NODROP_1))
+		var/obj/item/twohanded/mallet/g/MG = new /obj/item/twohanded/mallet/g
+
+		remove_item_from_storage(user)
+
+		to_chat(user, "<span class='notice'>You fasten [I] to the top of the rod with the cable.</span>")
+
+		qdel(I)
+		qdel(src)
+
+		user.put_in_hands(MG)
+
+	else if(istype(I, /obj/item/storage/toolbox/electrical) && !(I.flags_1 & NODROP_1))
+		var/obj/item/twohanded/mallet/y/MY = new /obj/item/twohanded/mallet/y
+
+		remove_item_from_storage(user)
+
+		to_chat(user, "<span class='notice'>You fasten [I] to the top of the rod with the cable.</span>")
+
+		qdel(I)
+		qdel(src)
+
+		user.put_in_hands(MY)
+	else if(istype(I, /obj/item/storage/toolbox/syndicate) && !(I.flags_1 & NODROP_1))
+		var/obj/item/twohanded/mallet/s/MS = new /obj/item/twohanded/mallet/s
+
+		remove_item_from_storage(user)
+
+		to_chat(user, "<span class='notice'>You fasten [I] to the top of the rod with the cable.</span>")
+
+		qdel(I)
+		qdel(src)
+
+		user.put_in_hands(MS)
+
+	else if(istype(I, /obj/item/storage/toolbox) && !(I.flags_1 & NODROP_1) && !istype(I, /obj/item/storage/toolbox/brass))//safety net to catch all other types of toolboxes since red is the most common, but we don't want any brass shit
+		var/obj/item/twohanded/mallet/MR = new /obj/item/twohanded/mallet
+
+		remove_item_from_storage(user)
+
+		to_chat(user, "<span class='notice'>You fasten [I] to the top of the rod with the cable.</span>")
+
+		qdel(I)
+		qdel(src)
+
+		user.put_in_hands(MR)
 	else
 		return ..()
 
