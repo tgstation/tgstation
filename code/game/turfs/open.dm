@@ -275,12 +275,17 @@
 		else
 			qdel(GetComponent(/datum/component/slippery))
 			return
-	var/datum/component/slippery/S = LoadComponent(/datum/component/slippery, NONE, CALLBACK(src, .proc/AfterSlip))
+	var/datum/component/slippery/S = LoadComponent(/datum/component/slippery)
 	S.intensity = intensity
 	S.lube_flags = lube_flags
 
-/turf/open/proc/AfterSlip(mob/living/L)
+/turf/open/ComponentActivated(datum/component/C)
+	..()
+	var/datum/component/slippery/S = C
+	if(!istype(S))
+		return
 	if(wet == TURF_WET_LUBE)
+		var/mob/living/L = S.slip_victim
 		L.confused = max(L.confused, 8)
 
 /turf/open/proc/MakeDry(wet_setting = TURF_WET_WATER)
