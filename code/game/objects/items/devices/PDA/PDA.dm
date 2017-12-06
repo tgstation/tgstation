@@ -609,8 +609,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 	for(var/obj/item/device/pda/P in targets)
 		if(P == src)
 			continue
-		var/obj/machinery/message_server/MS = null
-		MS = can_send(P)
+
+		var/obj/machinery/telecomms/message_server/MS = can_send(P)
 		if(MS)
 			var/datum/data_pda_msg/msg = MS.send_pda_message("[P.owner]","[owner]","[message]",photo)
 			if(msg)
@@ -672,13 +672,12 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(!P || QDELETED(P) || P.toff)
 		return null
 
-	var/obj/machinery/message_server/useMS = null
-	if(GLOB.message_servers)
-		for (var/obj/machinery/message_server/MS in GLOB.message_servers)
-		//PDAs are now dependant on the Message Server.
-			if(MS.active)
-				useMS = MS
-				break
+	var/obj/machinery/telecomms/message_server/useMS = null
+	for (var/obj/machinery/telecomms/message_server/MS in GLOB.telecomms_list)
+	//PDAs are now dependant on the Message Server.
+		if(MS.active)
+			useMS = MS
+			break
 
 	var/datum/signal/signal = src.telecomms_process()
 
