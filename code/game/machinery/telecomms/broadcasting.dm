@@ -56,9 +56,37 @@
 // Subtype of /datum/signal with additional processing information.
 /datum/signal/subspace
 	transmission_method = TRANSMISSION_SUBSPACE
+	var/server_type = /obj/machinery/telecomms/server
 	var/datum/signal/subspace/original
 	var/list/levels
 
+/datum/signal/subspace/proc/copy()
+	var/datum/signal/subspace/copy = new
+	copy.original = src
+	copy.source = source
+	copy.levels = levels
+	copy.frequency = frequency
+	copy.data = data.Copy()
+	return copy
+
+/datum/signal/subspace/proc/mark_done()
+	var/datum/signal/subspace/current = src
+	while (current)
+		current.data["done"] = TRUE
+		current = current.original
+
+/datum/signal/subspace/proc/send_to_receivers()
+	for(var/obj/machinery/telecomms/receiver/R in GLOB.telecomms_list)
+		R.receive_signal(src)
+	for(var/obj/machinery/telecomms/allinone/R in GLOB.telecomms_list)
+		R.receive_signal(src)
+
+/datum/signal/subspace/proc/broadcast()
+	set waitfor = FALSE
+
+// Vocal transmissions (i.e. using saycode).
+// Despite "subspace" in the name, these transmissions can also be RADIO
+// (intercoms and SBRs) or SUPERSPACE (CentCom).
 /datum/signal/subspace/vocal
 	var/atom/movable/virtualspeaker/virt
 	var/datum/language/language
@@ -87,35 +115,6 @@
 	var/turf/T = get_turf(source)
 	levels = list(T.z)
 
-/datum/signal/subspace/proc/copy()
-	var/datum/signal/subspace/copy = new
-	copy.original = src
-	copy.source = source
-	copy.levels = levels
-	copy.frequency = frequency
-	copy.data = data.Copy()
-	return copy
-
-/datum/signal/subspace/proc/mark_done()
-	var/datum/signal/subspace/current = src
-	while (current)
-		current.data["done"] = TRUE
-		current = current.original
-
-/datum/signal/subspace/proc/send_to_receivers()
-	var/any = FALSE
-	for(var/obj/machinery/telecomms/receiver/R in GLOB.telecomms_list)
-		var/turf/T = get_turf(R)
-		if (T.z in levels)
-			any = TRUE
-			R.receive_signal(src)
-	for(var/obj/machinery/telecomms/allinone/R in GLOB.telecomms_list)
-		var/turf/T = get_turf(R)
-		if (T.z in levels)
-			any = TRUE
-			R.receive_signal(src)
-	return any
-
 /datum/signal/subspace/vocal/copy()
 	var/datum/signal/subspace/vocal/copy = new(source, frequency, virt, language)
 	copy.original = src
@@ -123,7 +122,8 @@
 	copy.levels = levels
 	return copy
 
-/datum/signal/subspace/vocal/proc/send_to_radios()
+// This is the meat function for making radios hear vocal transmissions.
+/datum/signal/subspace/vocal/broadcast()
 	set waitfor = FALSE
 
 	// Perform final composition steps on the message.
@@ -186,7 +186,3 @@
 		SSblackbox.LogBroadcast(frequency)
 
 	QDEL_IN(virt, 50)  // Make extra sure the virtualspeaker gets qdeleted
-
-/atom/proc/telecomms_process()
-	// TODO: FIX PDAs THEY DON'T WORK YET!
-	return null

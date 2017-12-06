@@ -30,6 +30,8 @@
 	idle_power_usage = 10
 	active_power_usage = 100
 
+	autolinkers = list("hub")
+
 	var/list/datum/data_pda_msg/pda_msgs = list()
 	var/list/datum/data_rc_msg/rc_msgs = list()
 	var/active = TRUE
@@ -39,7 +41,7 @@
 	. = ..()
 	if (!decryptkey)
 		decryptkey = GenerateKey()
-	send_pda_message("System Administrator", "system", "This is an automated message. The messaging system is functioning correctly.")
+	pda_msgs += new /datum/data_pda_msg("System Administrator", "system", "This is an automated message. The messaging system is functioning correctly.")
 
 /obj/machinery/telecomms/message_server/proc/GenerateKey()
 	var/newKey
@@ -53,12 +55,17 @@
 		active = 0
 	update_icon()
 
-/obj/machinery/telecomms/message_server/proc/send_pda_message(recipient = "",sender = "",message = "",photo=null)
-	. = new/datum/data_pda_msg(recipient,sender,message,photo)
-	pda_msgs += .
+/obj/machinery/telecomms/message_server/receive_information(datum/signal/subspace/pda/signal, obj/machinery/telecomms/machine_from)
+	// can't log non-PDA signals
+	if(!istype(signal) || !signal.data["message"])
+		return
 
-/obj/machinery/telecomms/message_server/proc/send_rc_message(recipient = "",sender = "",message = "",stamp = "", id_auth = "", priority = 1)
-	rc_msgs += new/datum/data_rc_msg(recipient,sender,message,stamp,id_auth)
+	// log the signal
+	pda_msgs += new /datum/data_pda_msg(signal.format_target(), signal.data["name"], signal.data["message"], signal.data["photo"])
+
+	// pass it along to either the hub or the broadcaster
+	if(!relay_information(signal, /obj/machinery/telecomms/hub))
+		relay_information(signal, /obj/machinery/telecomms/broadcaster)
 
 /obj/machinery/telecomms/message_server/attack_hand(mob/user)
 	to_chat(user, "You toggle PDA message passing from [active ? "On" : "Off"] to [active ? "Off" : "On"].")
@@ -74,14 +81,63 @@
 		icon_state = "server-on"
 
 
+// Repath for maps
+/obj/machinery/message_server
+	parent_type = /obj/machinery/telecomms/message_server
+
+
+// PDA signal datum
+/datum/signal/subspace/pda
+	frequency = FREQ_COMMON
+	server_type = /obj/machinery/telecomms/message_server
+
+/datum/signal/subspace/pda/New(source, data)
+	src.source = source
+	src.data = data
+	var/turf/T = get_turf(source)
+	levels = list(T.z)
+
+/datum/signal/subspace/pda/copy()
+	var/datum/signal/subspace/pda/copy = new(source, data.Copy())
+	copy.original = src
+	copy.levels = levels
+	return copy
+
+/datum/signal/subspace/pda/proc/format_target()
+	if (length(data["targets"]) > 1)
+		return "Everyone"
+	return data["targets"][1]
+
+/datum/signal/subspace/pda/proc/format_message()
+	if (data["photo"])
+		return "[data["message"]] <a href='byond://?src=[REF(src)];photo=1'>(Photo)</a>"
+	return data["message"]
+
+/datum/signal/subspace/pda/broadcast()
+	for (var/obj/item/device/pda/P in GLOB.PDAs)
+		if ("[P.owner] ([P.ownjob])" in data["targets"])
+			P.receive_message(src)
+
+/datum/signal/subspace/pda/Topic(href, href_list)
+	..()
+	if (href_list["photo"])
+		var/mob/M = usr
+		M << browse_rsc(data["photo"], "pda_photo.png")
+		M << browse("<html><head><title>PDA Photo</title></head>" \
+		+ "<body style='overflow:hidden;margin:0;text-align:center'>" \
+		+ "<img src='pda_photo.png' width='192' style='-ms-interpolation-mode:nearest-neighbor' />" \
+		+ "</body></html>", "window=book;size=192x192")
+		onclose(M, "PDA Photo")
+
+
 // Log datums stored by the message server.
 /datum/data_pda_msg
-	var/recipient = "Unspecified" //name of the person
-	var/sender = "Unspecified" //name of the sender
-	var/message = "Blank" //transferred message
-	var/icon/photo //Attached photo
+	var/sender = "Unspecified"
+	var/recipient = "Unspecified"
+	var/message = "Blank"  // transferred message
+	var/icon/photo  // attached photo
 
-/datum/data_pda_msg/New(var/param_rec = "",var/param_sender = "",var/param_message = "",var/param_photo=null)
+/datum/data_pda_msg/New(param_rec, param_sender, param_message, param_photo)
 	if(param_rec)
 		recipient = param_rec
 	if(param_sender)
@@ -108,14 +164,14 @@
 		onclose(M, "PDA Photo")
 
 /datum/data_rc_msg
-	var/rec_dpt = "Unspecified" //name of the person
-	var/send_dpt = "Unspecified" //name of the sender
-	var/message = "Blank" //transferred message
+	var/rec_dpt = "Unspecified"  // receiving department
+	var/send_dpt = "Unspecified"  // sending department
+	var/message = "Blank"
 	var/stamp = "Unstamped"
 	var/id_auth = "Unauthenticated"
 	var/priority = "Normal"
 
-/datum/data_rc_msg/New(var/param_rec = "",var/param_sender = "",var/param_message = "",var/param_stamp = "",var/param_id_auth = "",var/param_priority)
+/datum/data_rc_msg/New(param_rec, param_sender, param_message, param_stamp, param_id_auth, param_priority)
 	if(param_rec)
 		rec_dpt = param_rec
 	if(param_sender)

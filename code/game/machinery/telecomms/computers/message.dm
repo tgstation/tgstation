@@ -398,7 +398,6 @@
 
 					//Send message
 					if("Send")
-
 						if(isnull(customsender) || customsender == "")
 							customsender = "UNKNOWN"
 
@@ -410,38 +409,22 @@
 							message = "<span class='notice'>NOTICE: No message entered!</span>"
 							return src.attack_hand(usr)
 
-						var/obj/item/device/pda/PDARec = null
+						var/obj/reply_to = src
 						for (var/obj/item/device/pda/P in get_viewable_pdas())
 							if(P.owner == customsender)
-								PDARec = P
-						//Sender isn't faking as someone who exists
-						if(isnull(PDARec))
-							src.linkedServer.send_pda_message("[customrecepient.owner]", "[customsender]","[custommessage]")
-							customrecepient.tnote += "<i><b>&larr; From <a href='byond://?src=[REF(customrecepient)];choice=Message;target=[REF(src)]'>[customsender]</a> ([customjob]):</b></i><br>[custommessage]<br>"
-							if (!customrecepient.silent)
-								playsound(customrecepient.loc, 'sound/machines/twobeep.ogg', 50, 1)
-								customrecepient.audible_message("[icon2html(customrecepient, viewers(customrecepient))] *[customrecepient.ttone]*", null, 3)
-								if( customrecepient.loc && ishuman(customrecepient.loc) )
-									var/mob/living/carbon/human/H = customrecepient.loc
-									to_chat(H, "[icon2html(customrecepient, viewers(H))] <b>Message from [customsender] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=[REF(src)];choice=Message;skiprefresh=1;target=[REF(src)]'>Reply</a>)")
-								log_talk(usr,"[key_name(usr)] (PDA: [customsender]) sent \"[custommessage]\" to [customrecepient.owner]",LOGPDA)
-								customrecepient.cut_overlays()
-								customrecepient.add_overlay(mutable_appearance('icons/obj/pda.dmi', "pda-r"))
-						//Sender is faking as someone who exists
-						else
-							src.linkedServer.send_pda_message("[customrecepient.owner]", "[PDARec.owner]","[custommessage]")
-							customrecepient.tnote += "<i><b>&larr; From <a href='byond://?src=[REF(customrecepient)];choice=Message;target=[REF(PDARec)]'>[PDARec.owner]</a> ([customjob]):</b></i><br>[custommessage]<br>"
-							if (!customrecepient.silent)
-								playsound(customrecepient.loc, 'sound/machines/twobeep.ogg', 50, 1)
-								customrecepient.audible_message("[icon2html(customrecepient, viewers(customrecepient))] *[customrecepient.ttone]*", null, 3)
-								if( customrecepient.loc && ishuman(customrecepient.loc) )
-									var/mob/living/carbon/human/H = customrecepient.loc
-									to_chat(H, "[icon2html(customrecepient, H)] <b>Message from [PDARec.owner] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=[REF(customrecepient)];choice=Message;skiprefresh=1;target=[REF(PDARec)]'>Reply</a>)")
-								log_talk(usr,"[key_name(usr)] (PDA: [PDARec.owner]) sent \"[custommessage]\" to [customrecepient.owner]",LOGPDA)
-								customrecepient.cut_overlays()
-								customrecepient.add_overlay(mutable_appearance('icons/obj/pda.dmi', "pda-r"))
-						//Finally..
-						ResetMessage()
+								// Sender is faking as someone who exists
+								reply_to = P
+								break
+
+						var/datum/signal/subspace/pda/signal = new(reply_to, list(
+							"name" = "[customsender]",
+							"job" = "[customjob]",
+							"message" = custommessage,
+							"targets" = list("[customrecepient.owner] ([customrecepient.ownjob])")
+						))
+						// this will log the signal and transmit it to the target
+						linkedServer.receive_information(signal, null)
+
 
 		//Request Console Logs - KEY REQUIRED
 		if(href_list["viewr"])
