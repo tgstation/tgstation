@@ -30,7 +30,7 @@
 	idle_power_usage = 10
 	active_power_usage = 100
 
-	autolinkers = list("hub")
+	autolinkers = list("common")
 
 	var/list/datum/data_pda_msg/pda_msgs = list()
 	var/list/datum/data_rc_msg/rc_msgs = list()
@@ -57,11 +57,12 @@
 
 /obj/machinery/telecomms/message_server/receive_information(datum/signal/subspace/pda/signal, obj/machinery/telecomms/machine_from)
 	// can't log non-PDA signals
-	if(!istype(signal) || !signal.data["message"])
+	if(!istype(signal) || !signal.data["message"] || !active)
 		return
 
 	// log the signal
 	pda_msgs += new /datum/data_pda_msg(signal.format_target(), signal.data["name"], signal.data["message"], signal.data["photo"])
+	signal.data -= "reject"  // only gets through if it's logged
 
 	// pass it along to either the hub or the broadcaster
 	if(!relay_information(signal, /obj/machinery/telecomms/hub))
@@ -96,6 +97,7 @@
 	src.data = data
 	var/turf/T = get_turf(source)
 	levels = list(T.z)
+	data["reject"] = TRUE  // set to FALSE if a messaging server logs it
 
 /datum/signal/subspace/pda/copy()
 	var/datum/signal/subspace/pda/copy = new(source, data.Copy())

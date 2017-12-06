@@ -511,8 +511,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 					U << browse(null, "window=pda")
 					return
 			if("Message")
-				var/obj/item/device/pda/P = locate(href_list["target"])
-				src.create_message(U, P)
+				src.create_message(U, locate(href_list["target"]))
 
 			if("MessageAll")
 				src.send_to_all(U)
@@ -604,8 +603,14 @@ GLOBAL_LIST_EMPTY(PDAs)
 	// Send the signal
 	var/list/string_targets = list()
 	for (var/obj/item/device/pda/P in targets)
-		if (P != src && P.owner && P.ownjob)
+		if (P.owner && P.ownjob)  // != src is checked by the UI
 			string_targets += "[P.owner] ([P.ownjob])"
+	for (var/obj/machinery/computer/message_monitor/M in targets)
+		// In case of "Reply" to a message from a console, this will make the
+		// message be logged successfully. If the console is impersonating
+		// someone by matching their name and job, the reply will reach the
+		// impersonated PDA.
+		string_targets += "[M.customsender] ([M.customjob])"
 	if (!string_targets.len)
 		return
 
