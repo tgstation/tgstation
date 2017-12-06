@@ -17,10 +17,12 @@
 	if (intercept)
 		freq_listening = list(FREQ_SYNDICATE)
 
-/obj/machinery/telecomms/allinone/receive_signal(datum/signal/vocal/signal)
+/obj/machinery/telecomms/allinone/receive_signal(datum/signal/subspace/vocal/signal)
 	if(!on) // has to be on to receive messages
 		return
 	if(!is_freq_listening(signal))
+		return
+	if(!istype(signal))  // can't process non-vocal signals
 		return
 
 	// Decompress the signal and mark it done

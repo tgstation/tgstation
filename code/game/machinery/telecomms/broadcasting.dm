@@ -54,14 +54,16 @@
 **/
 
 // Subtype of /datum/signal with additional processing information.
-/datum/signal/vocal
+/datum/signal/subspace
 	transmission_method = TRANSMISSION_SUBSPACE
-	var/datum/signal/vocal/original
-	var/atom/movable/virtualspeaker/virt
-	var/datum/language/language
+	var/datum/signal/subspace/original
 	var/list/levels
 
-/datum/signal/vocal/New(
+/datum/signal/subspace/vocal
+	var/atom/movable/virtualspeaker/virt
+	var/datum/language/language
+
+/datum/signal/subspace/vocal/New(
 	obj/source,  // the originating radio
 	frequency,  // the frequency the signal is taking place on
 	atom/movable/virtualspeaker/speaker,  // representation of the method's speaker
@@ -85,20 +87,28 @@
 	var/turf/T = get_turf(source)
 	levels = list(T.z)
 
-/datum/signal/vocal/proc/copy()
-	var/datum/signal/vocal/copy = new(source, frequency, virt, language)
+/datum/signal/subspace/proc/copy()
+	var/datum/signal/subspace/copy = new
 	copy.original = src
-	copy.data = data.Copy()
-	copy.levels = levels//.Copy()
+	copy.source = source
+	copy.levels = levels
+	copy.frequency = frequency
 	return copy
 
-/datum/signal/vocal/proc/mark_done()
-	var/datum/signal/vocal/current = src
+/datum/signal/subspace/proc/mark_done()
+	var/datum/signal/subspace/current = src
 	while (current)
 		current.data["done"] = TRUE
 		current = current.original
 
-/datum/signal/vocal/proc/send_to_radios()
+/datum/signal/subspace/vocal/copy()
+	var/datum/signal/subspace/vocal/copy = new(source, frequency, virt, language)
+	copy.original = src
+	copy.data = data.Copy()
+	copy.levels = levels
+	return copy
+
+/datum/signal/subspace/vocal/proc/send_to_radios()
 	set waitfor = FALSE
 
 	// Perform final composition steps on the message.

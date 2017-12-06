@@ -20,7 +20,7 @@
 	var/broadcasting = 1
 	var/receiving = 1
 
-/obj/machinery/telecomms/relay/receive_information(datum/signal/vocal/signal, obj/machinery/telecomms/machine_from)
+/obj/machinery/telecomms/relay/receive_information(datum/signal/subspace/signal, obj/machinery/telecomms/machine_from)
 	// Add our level and send it back
 	var/turf/T = get_turf(src)
 	if(can_send(signal) && T)
