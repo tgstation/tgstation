@@ -553,6 +553,19 @@
 	..()
 	if(wielded)
 		shock(target)
+
+/obj/item/twohanded/mallet/y/mtoolnir/proc/shock(mob/living/target)
+	target.Stun(60)
+	var/datum/effect_system/lightning_spread/s = new /datum/effect_system/lightning_spread
+	s.set_up(5, 1, target.loc)
+	s.start()
+	target.visible_message("<span class='danger'>[target.name] was shocked by [src]!</span>", \
+		"<span class='userdanger'>You feel a powerful shock course through your body sending you flying!</span>", \
+		"<span class='italics'>You hear a heavy electrical crack!</span>")
+	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
+	target.throw_at(throw_target, 200, 4)
+	return
+
 // CHAINSAW
 /obj/item/twohanded/required/chainsaw
 	name = "chainsaw"
