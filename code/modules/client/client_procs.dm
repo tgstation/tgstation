@@ -680,14 +680,3 @@ GLOBAL_LIST(external_rsc_urls)
 /client/proc/AnnouncePR(announcement)
 	if(prefs && prefs.chat_toggles & CHAT_PULLR)
 		to_chat(src, announcement)
-
-//TESTMERGE STUFFS FOR WIDESCREEN SUPPORT
-/client/verb/toggle_widescreen()
-	set name = "Toggle Widescreen"
-	set category = "Special Verbs"
-	set desc = "This is a verb to toggle widescreen on and off, intended mainly for testmerging."
-	
-	if(view == 7)
-		change_view("21x15")
-	else
-		change_view(7)
