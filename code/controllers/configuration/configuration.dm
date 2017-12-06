@@ -20,7 +20,7 @@ GLOBAL_PROTECT(config_dir)
 
 /datum/controller/configuration/New()
 	config = src
-	var/list/config_files = InitEntries()
+	InitEntries()
 	LoadModes()
 	if(!LoadEntries("config.txt"))
 		log_config("No $include directives found in config.txt! Loading legacy game_options/dbconfig/comms files...")
