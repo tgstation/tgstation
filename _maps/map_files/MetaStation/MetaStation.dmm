@@ -26555,7 +26555,6 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
 	},
-/obj/machinery/mineral/ore_redemption,
 /turf/open/floor/plasteel/brown{
 	dir = 8
 	},
@@ -30947,7 +30946,6 @@
 "bmh" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/mineral/ore_redemption,
-/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plasteel/dark,
 /area/quartermaster/office)
 "bmi" = (
