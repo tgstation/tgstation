@@ -455,13 +455,12 @@
 	toxpwr = 0
 
 /datum/reagent/toxin/neurotoxin2/on_mob_life(mob/living/M)
-	if(M.brainloss + M.toxloss <= 60)
-		M.adjustBrainLoss(1*REM)
+	M.adjustBrainLoss(3*REM, 150)
+	. = 1
+	if(M.toxloss <= 60)
 		M.adjustToxLoss(1*REM, 0)
-		. = 1
 	if(current_cycle >= 18)
 		M.Sleeping(40, 0)
-		. = 1
 	..()
 
 /datum/reagent/toxin/cyanide

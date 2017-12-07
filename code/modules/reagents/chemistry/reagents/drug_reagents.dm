@@ -99,7 +99,7 @@
 	. = 1
 
 /datum/reagent/drug/crank/addiction_act_stage4(mob/living/M)
-	M.adjustBrainLoss(5*REM)
+	M.adjustBrainLoss(3*REM)
 	M.adjustToxLoss(5*REM, 0)
 	M.adjustBruteLoss(5*REM, 0)
 	..()
