@@ -356,6 +356,9 @@
 			. = TRUE
 		if("threshold")
 			var/env = params["env"]
+			if(text2path(env))
+				env = text2path(env)
+
 			var/name = params["var"]
 			var/datum/tlv/tlv = TLV[env]
 			if(isnull(tlv))
@@ -739,7 +742,7 @@
 				return
 
 	return ..()
-	
+
 /obj/machinery/airalarm/AltClick(mob/user)
 	..()
 	if(!issilicon(user) && (!user.canUseTopic(src, be_close=TRUE) || !isturf(loc)))
@@ -747,7 +750,7 @@
 		return
 	else
 		togglelock(user)
-		
+
 /obj/machinery/airalarm/proc/togglelock(mob/living/user)
 	if(stat & (NOPOWER|BROKEN))
 		to_chat(user, "<span class='warning'>It does nothing!</span>")
