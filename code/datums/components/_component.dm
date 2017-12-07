@@ -14,13 +14,13 @@
 	if(!isnum(dupe_mode))
 		qdel(src)
 		CRASH("[type]: Invalid dupe_mode!")
-	if(dupe_type && !ispath(dupe_type))
+	var/dt = dupe_type
+	if(dt && !ispath(dt))
 		qdel(src)
 		CRASH("[type]: Invalid dupe_type!")
 
 	parent = P
-	var/list/arguments = args.Copy()
-	arguments.Cut(1, 2)
+	var/list/arguments = args.Copy(2)
 	if(Initialize(arglist(arguments)) == COMPONENT_INCOMPATIBLE)
 		qdel(src, TRUE, TRUE)
 		return
@@ -167,8 +167,7 @@
 	var/list/comps = datum_components
 	if(!comps)
 		return NONE
-	var/list/arguments = args.Copy()
-	arguments.Cut(1, 2)
+	var/list/arguments = args.Copy(2)
 	var/target = comps[/datum/component]
 	if(!length(target))
 		var/datum/component/C = target
