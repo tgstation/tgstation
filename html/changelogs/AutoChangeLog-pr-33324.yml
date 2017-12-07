@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - config: "The default view range can now be defined in the config. The default is 15x15, which is simplified to 7 by BYOND. For reference, Goonstation's widescreen range is 21x15. Do note that changing this value will affect the title screen. The title screen images and the title screen area on the Centcom z-level will have to be updated if the default view range is changed."
