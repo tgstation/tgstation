@@ -91,8 +91,7 @@ All ShuttleMove procs go here
 			return
 
 	loc = newT
-	if (newT.z != oldT.z && !istype(moving_dock, /obj/docking_port/mobile/supply)) // Cargo shuttles cannot carry living mobs which are, for now, the only things actually interested in Z transitions
-		onTransitZ(oldT.z, newT.z)
+
 	return TRUE
 
 // Called on atoms after everything has been moved
@@ -103,6 +102,10 @@ All ShuttleMove procs go here
 		shuttleRotate(rotation)
 
 	update_parallax_contents()
+
+	var/turf/newT = get_turf(src)
+	if (newT.z != oldT.z)
+		onTransitZ(oldT.z, newT.z)
 
 	return TRUE
 
