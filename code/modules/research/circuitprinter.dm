@@ -123,4 +123,4 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has built [path] at a circuit imprinter.")
 	var/obj/item/I = new path(get_turf(src))
 	I.materials = matlist.Copy()
-	SSblackbox.record_feedback("nested_tally", "circuit_printed", 1, list("[type]", "[path]"))
+	SSblackbox.record_feedback("nested tally", "circuit_printed", 1, list("[type]", "[path]"))
