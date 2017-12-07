@@ -652,6 +652,9 @@ GLOBAL_LIST(external_rsc_urls)
 			return FALSE
 		if ("key")
 			return FALSE
+		if("view")
+			change_view(var_value)
+			return TRUE
 	. = ..()
 
 
@@ -672,7 +675,8 @@ GLOBAL_LIST(external_rsc_urls)
 
 /client/proc/apply_clickcatcher()
 	generate_clickcatcher()
-	void.UpdateGreed(view,view)
+	var/list/actualview = getviewsize(view)
+	void.UpdateGreed(actualview[1],actualview[2])
 
 /client/proc/AnnouncePR(announcement)
 	if(prefs && prefs.chat_toggles & CHAT_PULLR)
