@@ -1175,8 +1175,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	resistance_flags = FIRE_PROOF
 	refill_canister = /obj/item/vending_refill/donksoft
 
-<<<<<<< HEAD
-=======
 /obj/machinery/vending/games
 	name = "\improper Good Clean Fun"
 	desc = "Vends things that the Captain and Head of Personnel are probably not going to appreciate you fiddling with instead of your job..."
@@ -1191,7 +1189,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	refill_canister = /obj/item/vending_refill/games
 
 
->>>>>>> 9460277... Merge pull request #33316 from ShizCalev/games-vendor
 #undef STANDARD_CHARGE
 #undef CONTRABAND_CHARGE
 #undef COIN_CHARGE
