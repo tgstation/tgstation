@@ -139,7 +139,7 @@
 		if(isnull(amount))
 			amount = 0
 
-		var/atom/temp = new typepath(null)
+		var/atom/temp = typepath
 		var/datum/data/vending_product/R = new /datum/data/vending_product()
 		R.product_name = initial(temp.name)
 		R.product_path = typepath

@@ -1510,3 +1510,10 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 			else
 				return "\[[url_encode(thing.tag)]\]"
 	return "\ref[input]"
+
+//Returns a list of all servants of Ratvar and observers.
+/proc/servants_and_ghosts()
+	. = list()
+	for(var/V in GLOB.player_list)
+		if(is_servant_of_ratvar(V) || isobserver(V))
+			. += V
