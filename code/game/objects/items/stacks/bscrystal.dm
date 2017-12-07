@@ -61,7 +61,6 @@
 	attack_verb = list("bluespace polybashed", "bluespace polybattered", "bluespace polybludgeoned", "bluespace polythrashed", "bluespace polysmashed")
 	novariants = TRUE
 	grind_results = list("bluespace" = 2)
-	var/crystal_type = /obj/item/stack/ore/bluespace_crystal/refined
 	var/crystal_type = /obj/item/ore/bluespace_crystal/refined
 
 /obj/item/stack/sheet/bluespace_crystal/attack_self(mob/user)// to prevent the construction menu from ever happening
