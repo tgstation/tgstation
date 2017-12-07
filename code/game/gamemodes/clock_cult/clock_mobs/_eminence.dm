@@ -40,7 +40,6 @@
 	to_chat(src, "<span class='brass'>As the Eminence, you lead the servants. Anything you say will be heard by the entire cult.</span>")
 	to_chat(src, "<span class='brass'>Though you can move through walls, you're also incorporeal, and largely can't interact with the world except for a few ways.</span>")
 	to_chat(src, "<span class='brass'>Additionally, unless the herald's beacon is activated, you can't understand any speech while away from Reebe.</span>")
-	SSticker.mode.eminence = mind
 	eminence_help()
 	for(var/V in actions)
 		var/datum/action/A = V
