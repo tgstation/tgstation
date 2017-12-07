@@ -15,7 +15,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 
-	var/freq = 1449		// radio frequency
+	var/freq = FREQ_MAGNETS		// radio frequency
 	var/electricity_level = 1 // intensity of the magnetic pull
 	var/magnetic_field = 1 // the range of magnetic attraction
 	var/code = 0 // frequency code, they should be different unless you have a group of magnets working together or something
@@ -33,7 +33,7 @@
 	var/turf/T = loc
 	hide(T.intact)
 	center = T
-	SSradio.add_object(src, freq, GLOB.RADIO_MAGNETS)
+	SSradio.add_object(src, freq, RADIO_MAGNETS)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/magnetic_module/LateInitialize()
@@ -198,7 +198,7 @@
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 45
-	var/frequency = 1449
+	var/frequency = FREQ_MAGNETS
 	var/code = 0
 	var/list/magnets = list()
 	var/title = "Magnetic Control Console"
@@ -224,7 +224,7 @@
 
 	if(path) // check for default path
 		filter_path() // renders rpath
-	radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_MAGNETS)
+	radio_connection = SSradio.add_object(src, frequency, RADIO_MAGNETS)
 
 /obj/machinery/magnetic_controller/Destroy()
 	SSradio.remove_object(src, frequency)
@@ -279,7 +279,7 @@
 
 		// Prepare signal beforehand, because this is a radio operation
 		var/datum/signal/signal = new
-		signal.transmission_method = 1 // radio transmission
+		signal.transmission_method = TRANSMISSION_RADIO
 		signal.source = src
 		signal.frequency = frequency
 		signal.data["code"] = code
@@ -302,7 +302,7 @@
 
 		// Broadcast the signal
 
-		radio_connection.post_signal(src, signal, filter = GLOB.RADIO_MAGNETS)
+		radio_connection.post_signal(src, signal, filter = RADIO_MAGNETS)
 
 		spawn(1)
 			updateUsrDialog() // pretty sure this increases responsiveness
@@ -346,7 +346,7 @@
 
 		// Prepare the radio signal
 		var/datum/signal/signal = new
-		signal.transmission_method = 1 // radio transmission
+		signal.transmission_method = TRANSMISSION_RADIO
 		signal.source = src
 		signal.frequency = frequency
 		signal.data["code"] = code
@@ -370,7 +370,7 @@
 
 		// Broadcast the signal
 		spawn()
-			radio_connection.post_signal(src, signal, filter = GLOB.RADIO_MAGNETS)
+			radio_connection.post_signal(src, signal, filter = RADIO_MAGNETS)
 
 		if(speed == 10)
 			sleep(1)

@@ -102,8 +102,8 @@
 
 	var/obj/item/device/radio/R = H.ears
 	if(R)
-		R.set_frequency(GLOB.SYND_FREQ)
-		R.freqlock = 1
+		R.set_frequency(FREQ_SYNDICATE)
+		R.freqlock = TRUE
 
 	var/obj/item/card/id/W = H.wear_id
 	if(W)
@@ -257,8 +257,8 @@
 	W.update_label()
 
 	var/obj/item/device/radio/headset/R = H.ears
-	R.set_frequency(GLOB.CENTCOM_FREQ)
-	R.freqlock = 1
+	R.set_frequency(FREQ_CENTCOM)
+	R.freqlock = TRUE
 
 /datum/outfit/ghost_cultist
 	name = "Cultist Ghost"
@@ -396,8 +396,8 @@
 		return
 
 	var/obj/item/device/radio/R = H.ears
-	R.set_frequency(GLOB.CENTCOM_FREQ)
-	R.freqlock = 1
+	R.set_frequency(FREQ_CENTCOM)
+	R.freqlock = TRUE
 
 	var/obj/item/implant/mindshield/L = new/obj/item/implant/mindshield(H)//Here you go Deuryn
 	L.implant(H, null, 1)

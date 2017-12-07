@@ -14,7 +14,7 @@
 	L.implant(H, null, 1)
 
 	var/obj/item/device/radio/R = H.ears
-	R.set_frequency(GLOB.CENTCOM_FREQ)
+	R.set_frequency(FREQ_CENTCOM)
 	R.freqlock = 1
 
 	var/obj/item/card/id/W = H.wear_id
