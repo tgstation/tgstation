@@ -160,7 +160,7 @@
 					process_again = 1
 				else
 					var/datum/signal/signal = new
-					signal.transmission_method = 1 //radio signal
+					signal.transmission_method = TRANSMISSION_RADIO
 					signal.data = list(
 						"tag" = airpump_tag,
 						"sigtype"="command"
@@ -209,7 +209,7 @@
 	name = "airlock console"
 	density = FALSE
 
-	frequency = 1449
+	frequency = FREQ_AIRLOCK_CONTROL
 	power_channel = ENVIRON
 
 	// Setup parameters only
