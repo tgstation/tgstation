@@ -187,6 +187,7 @@
 /datum/objective_team/clockcult
 	name = "Clockcult"
 	var/list/objective
+	var/datum/mind/eminence
 
 /datum/objective_team/clockcult/proc/check_clockwork_victory()
 	if(GLOB.clockwork_gateway_activated)
@@ -207,10 +208,11 @@
 	for(var/i in SSticker.scripture_states)
 		if(i != SCRIPTURE_DRIVER)
 			parts += "<b>[i] scripture</b> was: <b>[SSticker.scripture_states[i] ? "UN":""]LOCKED</b>"
-	
+	if(eminence)
+		parts += "<span class='header'>The Eminence was:</span> [printplayer(eminence)]"
 	if(members.len)
 		parts += "<span class='header'>Ratvar's servants were:</span>"
-		for(var/datum/mind/M in members)
+		for(var/datum/mind/M in members - eminence)
 			parts += printplayer(M)
 	
 	return parts.Join("<br>")

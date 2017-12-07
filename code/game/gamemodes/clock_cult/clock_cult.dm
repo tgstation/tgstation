@@ -88,7 +88,6 @@ Credit where due:
 ///////////////
 
 /datum/game_mode
-	var/datum/mind/eminence //The clockwork Eminence
 	var/list/servants_of_ratvar = list() //The Enlightened servants of Ratvar
 	var/clockwork_explanation = "Defend the Ark of the Clockwork Justiciar and free Ratvar." //The description of the current objective
 
