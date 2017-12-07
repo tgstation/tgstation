@@ -284,7 +284,6 @@
 	return ..()
 
 /obj/machinery/light/update_icon()
-
 	switch(status)		// set icon_states
 		if(LIGHT_OK)
 			if(emergency_mode)
@@ -293,18 +292,17 @@
 				icon_state = "[base_state][on]"
 		if(LIGHT_EMPTY)
 			icon_state = "[base_state]-empty"
-			on = FALSE
 		if(LIGHT_BURNED)
 			icon_state = "[base_state]-burned"
-			on = FALSE
 		if(LIGHT_BROKEN)
 			icon_state = "[base_state]-broken"
-			on = FALSE
 	return
 
 // update the icon_state and luminosity of the light depending on its state
 /obj/machinery/light/proc/update(trigger = 1)
-
+	switch(status)
+		if(LIGHT_BROKEN,LIGHT_BURNED,LIGHT_EMPTY)
+			on = FALSE
 	emergency_mode = FALSE
 	if(on)
 		if(!light || light.light_range != brightness)
@@ -678,7 +676,7 @@
 	force = 2
 	throwforce = 5
 	w_class = WEIGHT_CLASS_TINY
-	var/status = 0		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
+	var/status = LIGHT_OK		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/base_state
 	var/switchcount = 0	// number of times switched
 	materials = list(MAT_GLASS=100)
@@ -761,7 +759,7 @@
 
 /obj/item/light/proc/shatter()
 	if(status == LIGHT_OK || status == LIGHT_BURNED)
-		src.visible_message("<span class='danger'>[name] shatters.</span>","<span class='italics'>You hear a small glass object shatter.</span>")
+		visible_message("<span class='danger'>[name] shatters.</span>","<span class='italics'>You hear a small glass object shatter.</span>")
 		status = LIGHT_BROKEN
 		force = 5
 		playsound(src.loc, 'sound/effects/glasshit.ogg', 75, 1)
