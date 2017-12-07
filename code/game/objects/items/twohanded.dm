@@ -516,6 +516,8 @@
 	if(!integ)
 		user.visible_message("<span class='notice'>[src] smashes into pieces!</span>")
 		qdel(src)
+		var/obj/item/wirerod/W = new /obj/item/wirerod
+		user.put_in_hands(W)
 
 /obj/item/twohanded/mallet/b
 	icon_state = "toolbox_mallet_b0"
@@ -551,7 +553,7 @@
 	integ = 5
 
 /obj/item/twohanded/mallet/y/mtoolnir/attack(atom/movable/AM, mob/user, mob/target)
-	..()
+	. = ..()
 	if(wielded)
 		shock(target)
 
