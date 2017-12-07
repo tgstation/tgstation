@@ -210,14 +210,9 @@
 	spawn_flags = IC_SPAWN_RESEARCH
 
 /obj/item/integrated_circuit/output/sound/vox/Initialize()
-	sounds = GLOB.vox_sounds
 	.= ..()
-	extended_desc = list()
-	extended_desc += "The first input pin determines which sound is used. It uses the AI Vox Broadcast word list"
-	extended_desc += ". So either experiment to find words that work, or ask the AI to help in figuring them out"
-	extended_desc += ". The second pin determines the volume of sound that is played"
-	extended_desc += ", and the third determines if the frequency of the sound will vary with each activation."
-	extended_desc = jointext(extended_desc, null)
+	sounds = GLOB.vox_sounds
+	extended_desc = "The first input pin determines which sound is used. It uses the AI Vox Broadcast word list. So either experiment to find words that work, or ask the AI to help in figuring them out. The second pin determines the volume of sound that is played, and the third determines if the frequency of the sound will vary with each activation."
 
 /obj/item/integrated_circuit/output/text_to_speech
 	name = "text-to-speech circuit"
