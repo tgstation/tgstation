@@ -23,7 +23,7 @@ SUBSYSTEM_DEF(voice)
 	// Update subspace status if necessary
 	if (next_subspace_check && next_subspace_check <= world.time)
 		next_subspace_check = 0 // don't overlap checks
-		spawn update_subspace_zlevels()
+		INVOKE_ASYNC(src, .proc/update_subspace_zlevels)
 
 	// For clients in current_run, mark them as changed if needed
 	var/list/client/current_run = src.current_run
@@ -69,36 +69,19 @@ SUBSYSTEM_DEF(voice)
 		request_id++
 
 /datum/controller/subsystem/voice/proc/update_subspace_zlevels()
-	// Based on telecomms_process(), modified to not require an atom
-	// Construct the signal
-	var/datum/signal/signal = new
-	signal.transmission_method = 2 // subspace
-	signal.data = list(
-		"slow" = 0,
-		"message" = "TEST",
-		"compression" = rand(45, 50),
-		"traffic" = 0,
-		"type" = 4,
-		"reject" = 0,
-		"done" = 0,
-		"level" = ZLEVEL_STATION_PRIMARY
-	)
-	signal.frequency = GLOB.radiochannels["Common"] // Common channel
+	var/datum/signal/subspace/signal = new(list("message" = "TEST"))
+	signal.frequency = FREQ_COMMON
+	signal.server_type = /obj/machinery/telecomms/broadcaster
+	signal.levels = GLOB.station_z_levels.Copy()
+	signal.send_to_receivers()
 
-	// Send the signal to receivers and wait for them to process it
-	for (var/obj/machinery/telecomms/receiver/R in GLOB.telecomms_list)
-		R.receive_signal(signal)
-	sleep(25)
-
-	// Now extract and store the Z-level list
-	var/previous = list2params(subspace_zlevels)
+	var/previous = json_encode(SSvoice.subspace_zlevels)
 	if (!signal.data["done"])
 		subspace_zlevels = list()
 	else
-		subspace_zlevels = signal.data["level"]
-	var/current = list2params(subspace_zlevels)
+		subspace_zlevels = signal.levels.Copy()
+	var/current = json_encode(subspace_zlevels)
 	if (current != previous)
-		message_admins("Subspace z-levels have changed: ([previous]) to ([current])")
+		message_admins("Subspace z-levels have changed: [previous] to [current]")
 
-	// clients will update gradually
 	next_subspace_check = world.time + rand(50, 100)
