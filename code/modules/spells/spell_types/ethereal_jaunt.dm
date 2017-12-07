@@ -90,7 +90,7 @@
 	if(newLoc.flags_1 & NOJAUNT_1)
 		to_chat(user, "<span class='warning'>Some strange aura is blocking the way.</span>")
 		return
-	if(GLOB.blessings[newLoc])
+	for(var/obj/effect/blessing/B in newLoc)
 		to_chat(user, "<span class='warning'>Holy energies block your path!</span>")
 		return
 

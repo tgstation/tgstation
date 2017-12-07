@@ -6,20 +6,12 @@
 	color = "#ffff00"
 	anchored = TRUE
 	density = FALSE
-	layer = RIPPLE_LAYER
+	layer = ABOVE_OPEN_TURF_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	alpha = 150
 
 /obj/effect/blessing/Initialize(mapload)
-	var/turf/T = get_turf(src)
-	if(GLOB.blessings[T])
-		// already blessing in this location
-		return INITIALIZE_HINT_QDEL
-	else
-		GLOB.blessings[T] = src
-		. = ..()
-
-/obj/effect/blessing/Destroy()
-	var/turf/T = get_turf(src)
-	GLOB.blessings[T] = null
 	. = ..()
+	for(var/obj/effect/blessing/B in loc)
+		if(B != src)
+			return INITIALIZE_HINT_QDEL
