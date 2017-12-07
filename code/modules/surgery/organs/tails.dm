@@ -13,29 +13,6 @@
 	if(istype(H))
 		H.endTailWag()
 
-
-/obj/item/organ/tail/cat
-	name = "cat tail"
-	desc = "A severed cat tail. Who's wagging now?"
-	tail_type = "Cat"
-
-/obj/item/organ/tail/cat/Insert(mob/living/carbon/human/H, special = 0, drop_if_replaced = TRUE)
-	..()
-	if(istype(H))
-		if(!("tail_human" in H.dna.species.mutant_bodyparts))
-			H.dna.species.mutant_bodyparts |= "tail_human"
-			H.dna.features["tail_human"] = tail_type
-			H.update_body()
-
-/obj/item/organ/tail/cat/Remove(mob/living/carbon/human/H,  special = 0)
-	..()
-	if(istype(H))
-		H.dna.species.mutant_bodyparts -= "tail_human"
-		tail_type = H.dna.features["tail_human"]
-		color = H.hair_color
-		H.update_body()
-
-
 /obj/item/organ/tail/lizard
 	name = "lizard tail"
 	desc = "A severed lizard tail. Somewhere, no doubt, a lizard hater is very pleased with themselves."
