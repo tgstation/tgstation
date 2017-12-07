@@ -45,8 +45,6 @@ GLOBAL_PROTECT(config_dir)
 	var/list/_entries_by_type = list()
 	entries_by_type = _entries_by_type
 
-	. = list()
-
 	for(var/I in typesof(/datum/config_entry))	//typesof is faster in this case
 		var/datum/config_entry/E = I
 		if(initial(E.abstract_type) == I)
@@ -66,13 +64,9 @@ GLOBAL_PROTECT(config_dir)
 	entries_by_type -= CE.type
 
 /datum/controller/configuration/proc/LoadEntries(filename, list/stack = list())
-	var/filename_to_test
-	if(world.system_type == MS_WINDOWS)
-		filename_to_test = lowertext(filename)
-	else
-		filename_to_test = filename
+	var/filename_to_test = world.system_type == MS_WINDOWS ? lowertext(filename) : filename
 	if(filename_to_test in stack)
-		log_config("Config recursion detected ([english_list(stack)]), breaking!")
+		log_config("Warning: Config recursion detected ([english_list(stack)]), breaking!")
 		return
 	stack = stack + filename_to_test
 
@@ -105,8 +99,8 @@ GLOBAL_PROTECT(config_dir)
 			continue
 		
 		if(entry == "$include")
-			if(!istext(value) || !value)
-				log_config("WARNING: Invalid $include directive: [value]")
+			if(!value)
+				log_config("Warning: Invalid $include directive: [value]")
 			else
 				LoadEntries(value, stack)
 			continue
@@ -129,6 +123,8 @@ GLOBAL_PROTECT(config_dir)
 		
 		if(validated)
 			E.modified = TRUE
+		
+		. = TRUE
 
 /datum/controller/configuration/can_vv_get(var_name)
 	return (var_name != "entries_by_type" || !hiding_entries_by_type) && ..()

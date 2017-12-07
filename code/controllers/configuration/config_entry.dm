@@ -18,8 +18,6 @@
 	var/dupes_allowed = FALSE
 
 /datum/config_entry/New()
-	if(!resident_file)
-		CRASH("Config entry [type] has no resident_file set")
 	if(type == abstract_type)
 		CRASH("Abstract config entry [type] instatiated!")	
 	name = lowertext(type2top(type))
