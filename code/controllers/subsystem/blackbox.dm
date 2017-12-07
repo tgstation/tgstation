@@ -218,7 +218,10 @@ Versioning
 			var/pos = length(FV.json["data"]) + 1
 			FV.json["data"]["[pos]"] = list() //in 512 "pos" can be replaced with "[FV.json["data"].len+1]"
 			for(var/i in data)
-				FV.json["data"]["[pos]"]["[i]"] = "[data[i]]" //and here with "[FV.json["data"].len]"
+				if(islist(data[i]))
+					FV.json["data"]["[pos]"]["[i]"] = data[i] //and here with "[FV.json["data"].len]"
+				else
+					FV.json["data"]["[pos]"]["[i]"] = "[data[i]]" 
 		else
 			CRASH("Invalid feedback key_type: [key_type]")
 
