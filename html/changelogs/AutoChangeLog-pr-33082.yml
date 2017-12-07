@@ -1,0 +1,5 @@
+author: "Dorsisdwarf"
+delete-after: True
+changes: 
+  - tweak: "Minor fixes to some techweb nodes"
+  - balance: "Made flight suits, combat implants, and combat modules require more nodes"
