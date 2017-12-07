@@ -36,17 +36,24 @@
 	gather_antag_success_rate()
 
 /datum/controller/subsystem/ticker/proc/gather_antag_success_rate()
-	var/list/all_teams = list()
-	
+	var/team_gid = 1
+	var/list/team_ids = list()
+
 	for(var/datum/antagonist/A in GLOB.antagonists)
 		var/list/antag_info = list()
 		antag_info["ckey"] = A.owner.key
 		antag_info["antagonist_type"] = A.type
 		antag_info["antagonist_name"] = A.name //For auto and custom roles
 		antag_info["objectives"] = list()
-		var/T = A.get_team()
+		antag_info["team"] = list()
+		var/datum/objective_team/T = A.get_team()
 		if(T)
-			all_teams |= T
+			antag_info["team"]["type"] = T.type
+			antag_info["team"]["name"] = T.name
+			if(!team_ids[T])
+				team_ids[T] = team_gid++
+			antag_info["team"]["id"] = team_ids[T]
+
 		if(!A.owner)
 			continue
 		if(A.objectives.len)
@@ -54,12 +61,7 @@
 				var/result = O.check_completion() ? "SUCCESS" : "FAIL"
 				antag_info["objectives"] += list(list("objective_type"=O.type,"text"=O.explanation_text,"result"=result))
 		SSblackbox.record_feedback("associative", "antagonists", 1, antag_info)
-	
-	var/gid = 1 //To diffrentiate multiple teams of same type for now. Ideally all of them get names later
-	for(var/datum/objective_team/T in all_teams)
-		for(var/datum/mind/M in T.members)
-			SSblackbox.record_feedback("nested tally", "teams", 1, list("[T.type]", "[gid]", "[M.key]"))
-		gid++
+
 
 /datum/controller/subsystem/ticker/proc/declare_completion()
 	set waitfor = FALSE
