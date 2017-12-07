@@ -10,7 +10,7 @@ SUBSYSTEM_DEF(blackbox)
 	var/sealed = FALSE	//time to stop tracking stats?
 	var/list/versions = list("time_dilation_current" = 2,
 							"science_techweb_unlock" = 2,
-							"antagonists" = 2) //associative list of any feedback variables that have had their format changed since creation and their current version, remember to update this
+							"antagonists" = 3) //associative list of any feedback variables that have had their format changed since creation and their current version, remember to update this
 
 
 /datum/controller/subsystem/blackbox/Initialize()

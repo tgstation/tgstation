@@ -42,6 +42,7 @@
 	for(var/datum/antagonist/A in GLOB.antagonists)
 		var/list/antag_info = list()
 		antag_info["ckey"] = A.owner.key
+		antag_info["name"] = A.owner.name
 		antag_info["antagonist_type"] = A.type
 		antag_info["antagonist_name"] = A.name //For auto and custom roles
 		antag_info["objectives"] = list()

@@ -29,7 +29,8 @@
 
 /mob/camera/eminence/Login()
 	..()
-	var/datum/antagonist/clockcult/C = add_servant_of_ratvar(src, TRUE)
+	add_servant_of_ratvar(src, TRUE)
+	var/datum/antagonist/clockcult/C = mind.has_antag_datum(/datum/antagonist/clockcult,TRUE)
 	if(C && C.clock_team)
 		if(C.clock_team.eminence)
 			remove_servant_of_ratvar(src,TRUE)
