@@ -328,6 +328,7 @@
 		var/datum/action/report/R = new
 		C.player_details.player_actions += R
 		R.Grant(C.mob)
+		to_chat(C,"<a href='?src=[REF(R)];report=1'>Show roundend report again</a>")
 
 /datum/action/report
 	name = "Show roundend report"
@@ -339,6 +340,13 @@
 
 /datum/action/report/IsAvailable()
 	return 1
+
+/datum/action/report/Topic(href,href_list)
+	if(usr != owner)
+		return
+	if(href_list["report"])
+		Trigger()
+		return
 
 
 /proc/printplayer(datum/mind/ply, fleecheck)
