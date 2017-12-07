@@ -304,7 +304,6 @@
 		decal.pixel_x = x
 		decal.pixel_y = y
 
-		
 		cut_overlay(dent_decals)
 		LAZYADD(dent_decals, decal)
 		add_overlay(dent_decals)
