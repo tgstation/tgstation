@@ -34,7 +34,9 @@
 
 // No comment
 /atom/proc/attackby(obj/item/W, mob/user, params)
-	return SendSignal(COMSIG_PARENT_ATTACKBY, W, user, params)
+	if(SendSignal(COMSIG_PARENT_ATTACKBY, W, user, params) & COMPONENT_NO_AFTERATTACK)
+		return TRUE
+	return FALSE
 
 /obj/attackby(obj/item/I, mob/living/user, params)
 	return ..() || (can_be_hit && I.attack_obj(src, user))
@@ -133,6 +135,6 @@
 	var/attack_message = "[src] has been [message_verb][message_hit_area] with [I]."
 	if(user in viewers(src, null))
 		attack_message = "[user] has [message_verb] [src][message_hit_area] with [I]!"
-	visible_message("<span class='danger'>[attack_message]</span>", \
+	visible_message("<span class='danger'>[attack_message]</span>",\
 		"<span class='userdanger'>[attack_message]</span>", null, COMBAT_MESSAGE_RANGE)
 	return 1

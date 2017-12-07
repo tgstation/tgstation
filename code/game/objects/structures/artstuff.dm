@@ -30,7 +30,7 @@
 //Stick to the easel like glue
 /obj/structure/easel/Move()
 	var/turf/T = get_turf(src)
-	..()
+	. = ..()
 	if(painting && painting.loc == T) //Only move if it's near us.
 		painting.loc = get_turf(src)
 	else

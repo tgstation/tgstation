@@ -80,7 +80,7 @@
 	reqs = list(/obj/item/restraints/handcuffs/cable = 1,
 				/obj/item/stack/rods = 1,
 				/obj/item/device/assembly/igniter = 1,
-				/obj/item/stack/ore/bluespace_crystal = 1)
+				/obj/item/ore/bluespace_crystal = 1)
 	time = 40
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -357,7 +357,7 @@
 
 /datum/crafting_recipe/skateboard
 	name = "Skateboard"
-	result = /obj/vehicle/scooter/skateboard
+	result = /obj/vehicle/ridden/scooter/skateboard
 	time = 60
 	reqs = list(/obj/item/stack/sheet/metal = 5,
 				/obj/item/stack/rods = 10)
@@ -365,7 +365,7 @@
 
 /datum/crafting_recipe/scooter
 	name = "Scooter"
-	result = /obj/vehicle/scooter
+	result = /obj/vehicle/ridden/scooter
 	time = 65
 	reqs = list(/obj/item/stack/sheet/metal = 5,
 				/obj/item/stack/rods = 12)

@@ -77,7 +77,7 @@
 /area/ruin/powered/greed)
 "p" = (
 /obj/structure/table/wood/poker,
-/obj/item/stack/ore/gold,
+/obj/item/ore/gold,
 /turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "q" = (

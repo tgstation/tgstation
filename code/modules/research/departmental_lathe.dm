@@ -188,8 +188,7 @@
 
 /obj/machinery/rnd/protolathe/department/proc/ui_header()
 	var/list/l = list()
-	l += "<h2>Nanotrasen Department Lathe: [department_tag]</h2>[RDSCREEN_NOBREAK]"
-	l += "<div class='statusDisplay'><b>Connected Technology database: [host_research == SSresearch.science_tech? "Nanotrasen" : "Third Party"]"
+	l += "<div class='statusDisplay'><b>[host_research.organization] [department_tag] Department Lathe</b>"
 	l += "Security protocols: [emagged? "<font color='red'>Disabled</font>" : "<font color='green'>Enabled</font>"]"
 	l += "<A href='?src=[REF(src)];switch_screen=[DEPLATHE_SCREEN_MATERIALS]'><B>Material Amount:</B> [materials.total_amount] / [materials.max_amount]</A>"
 	l += "<A href='?src=[REF(src)];switch_screen=[DEPLATHE_SCREEN_CHEMICALS]'><B>Chemical volume:</B> [reagents.total_volume] / [reagents.maximum_volume]</A>"

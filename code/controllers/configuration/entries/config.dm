@@ -377,7 +377,7 @@ CONFIG_TWEAK(number/mc_tick_rate/ValidateAndSet(str_val))
 
 CONFIG_DEF(flag/resume_after_initializations)
 
-CONFIG_TWEAK(flag/ValidateAndSet(str_val))
+CONFIG_TWEAK(flag/resume_after_initializations/ValidateAndSet(str_val))
 	. = ..()
 	if(. && Master.current_runlevel)
 		world.sleep_offline = !value
@@ -385,3 +385,6 @@ CONFIG_TWEAK(flag/ValidateAndSet(str_val))
 CONFIG_DEF(number/rounds_until_hard_restart)
 	value = -1
 	min_val = 0
+
+CONFIG_DEF(string/default_view)
+	value = "15x15"

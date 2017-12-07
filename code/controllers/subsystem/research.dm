@@ -54,6 +54,7 @@ SUBSYSTEM_DEF(research)
 				bitcoins = single_server_income
 				break			//Just need one to work.
 	var/income_time_difference = world.time - last_income
+	science_tech.last_bitcoins = bitcoins  // Doesn't take tick drift into account
 	bitcoins *= income_time_difference / 10
 	science_tech.research_points += bitcoins
 	last_income = world.time

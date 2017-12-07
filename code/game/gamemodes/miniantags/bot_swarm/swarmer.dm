@@ -90,7 +90,7 @@
 	projectiletype = /obj/item/projectile/beam/disabler
 	ranged_cooldown_time = 20
 	projectilesound = 'sound/weapons/taser2.ogg'
-	loot = list(/obj/effect/decal/cleanable/robot_debris, /obj/item/stack/ore/bluespace_crystal)
+	loot = list(/obj/effect/decal/cleanable/robot_debris, /obj/item/ore/bluespace_crystal)
 	del_on_death = 1
 	deathmessage = "explodes with a sharp pop!"
 	light_color = LIGHT_COLOR_CYAN
@@ -119,13 +119,6 @@
 	..()
 	if(statpanel("Status"))
 		stat("Resources:",resources)
-
-/mob/living/simple_animal/hostile/swarmer/handle_inherent_channels(message, message_mode)
-	if(message_mode == MODE_BINARY)
-		swarmer_chat(message)
-		return ITALICS | REDUCE_RANGE
-	else
-		. = ..()
 
 /mob/living/simple_animal/hostile/swarmer/get_spans()
 	return ..() | SPAN_ROBOT

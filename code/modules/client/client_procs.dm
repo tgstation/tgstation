@@ -195,7 +195,6 @@ GLOBAL_LIST(external_rsc_urls)
 	prefs.last_id = computer_id			//these are gonna be used for banning
 	if(world.byond_version >= 511 && byond_version >= 511 && prefs.clientfps)
 		vars["fps"] = prefs.clientfps
-	sethotkeys(1)						//set hoykeys from preferences (from_pref = 1)
 
 	log_access("Login: [key_name(src)] from [address ? address : "localhost"]-[computer_id] || BYOND v[byond_version]")
 	var/alert_mob_dupe_login = FALSE
@@ -222,6 +221,8 @@ GLOBAL_LIST(external_rsc_urls)
 						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(C)] (no longer logged in).")
 
 	. = ..()	//calls mob.Login()
+
+	set_macros()
 
 	chatOutput.start() // Starts the chat
 
@@ -651,6 +652,9 @@ GLOBAL_LIST(external_rsc_urls)
 			return FALSE
 		if ("key")
 			return FALSE
+		if("view")
+			change_view(var_value)
+			return TRUE
 	. = ..()
 
 
@@ -671,7 +675,8 @@ GLOBAL_LIST(external_rsc_urls)
 
 /client/proc/apply_clickcatcher()
 	generate_clickcatcher()
-	void.UpdateGreed(view,view)
+	var/list/actualview = getviewsize(view)
+	void.UpdateGreed(actualview[1],actualview[2])
 
 /client/proc/AnnouncePR(announcement)
 	if(prefs && prefs.chat_toggles & CHAT_PULLR)

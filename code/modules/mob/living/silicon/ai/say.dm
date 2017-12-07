@@ -31,15 +31,6 @@
 	else
 		return ..()
 
-/mob/living/silicon/ai/handle_inherent_channels(message, message_mode, language)
-	. = ..()
-	if(.)
-		return .
-
-	if(message_mode == MODE_HOLOPAD)
-		holopad_talk(message, language)
-		return 1
-
 //For holopads only. Usable by AI.
 /mob/living/silicon/ai/proc/holopad_talk(message, language)
 

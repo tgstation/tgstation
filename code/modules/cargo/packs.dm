@@ -54,7 +54,7 @@
 	name = "Biker Gang Kit" //TUNNEL SNAKES OWN THIS TOWN
 	cost = 2000
 	contraband = TRUE
-	contains = list(/obj/vehicle/atv,
+	contains = list(/obj/vehicle/ridden/atv,
 					/obj/item/key,
 					/obj/item/clothing/suit/jacket/leather/overcoat,
 					/obj/item/clothing/gloves/color/black,
@@ -1220,6 +1220,14 @@
 					/obj/item/vending_refill/cigarette,
 					/obj/item/vending_refill/cigarette)
 	crate_name = "cigarette supply crate"
+
+/datum/supply_pack/organic/vending/games
+	name = "Games Supply Crate"
+	cost = 1000
+	contains = list(/obj/item/vending_refill/games,
+					/obj/item/vending_refill/games,
+					/obj/item/vending_refill/games)
+	crate_name = "games supply crate"
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Materials ///////////////////////////////////////

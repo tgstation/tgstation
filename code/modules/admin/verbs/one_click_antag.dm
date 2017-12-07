@@ -238,26 +238,17 @@
 		if(agentcount < 3)
 			return 0
 
-		var/nuke_code = random_nukecode()
-
-		var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in GLOB.nuke_list
-		if(nuke)
-			nuke.r_code = nuke_code
-
 		//Let's find the spawn locations
 		var/leader_chosen = FALSE
-		var/spawnpos = 1 //Decides where they'll spawn. 1=leader.
-
+		var/datum/objective_team/nuclear/nuke_team
 		for(var/mob/c in chosen)
-			if(spawnpos > GLOB.nukeop_start.len)
-				spawnpos = 1 //Ran out of spawns. Let's loop back to the first non-leader position
 			var/mob/living/carbon/human/new_character=makeBody(c)
 			if(!leader_chosen)
 				leader_chosen = TRUE
-				new_character.mind.make_Nuke(pick(GLOB.nukeop_leader_start), nuke_code, TRUE)
+				var/datum/antagonist/nukeop/N = new_character.mind.add_antag_datum(/datum/antagonist/nukeop/leader)
+				nuke_team = N.nuke_team
 			else
-				new_character.mind.make_Nuke(GLOB.nukeop_start[spawnpos], nuke_code)
-			spawnpos++
+				new_character.mind.add_antag_datum(/datum/antagonist/nukeop,nuke_team)
 		return 1
 	else
 		return 0

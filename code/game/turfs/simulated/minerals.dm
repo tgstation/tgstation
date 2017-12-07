@@ -71,9 +71,11 @@
 		return attack_hand(user)
 
 /turf/closed/mineral/proc/gets_drilled()
-	if (mineralType && (mineralAmt > 0))
-		new mineralType(src, mineralAmt)
-		SSblackbox.record_feedback("tally", "ore_mined", mineralAmt, mineralType)
+	if (mineralType && (src.mineralAmt > 0) && (src.mineralAmt < 11))
+		var/i
+		for(i in 1 to mineralAmt)
+			new mineralType(src)
+			SSblackbox.record_feedback("tally", "ore_mined", 1, mineralType)
 	for(var/obj/effect/temp_visual/mining_overlay/M in src)
 		qdel(M)
 	ChangeTurf(turf_type, FALSE, defer_change)
@@ -103,7 +105,7 @@
 	else if(iscyborg(AM))
 		var/mob/living/silicon/robot/R = AM
 		if(istype(R.module_active, /obj/item/pickaxe))
-			attackby(R.module_active,R)
+			src.attackby(R.module_active,R)
 			return
 	else
 		return
@@ -116,12 +118,12 @@
 	switch(severity)
 		if(3)
 			if (prob(75))
-				gets_drilled(null, 1)
+				src.gets_drilled(null, 1)
 		if(2)
 			if (prob(90))
-				gets_drilled(null, 1)
+				src.gets_drilled(null, 1)
 		if(1)
-			gets_drilled(null, 1)
+			src.gets_drilled(null, 1)
 	return
 
 /turf/closed/mineral/Spread(turf/T)
@@ -149,9 +151,9 @@
 		if(T && ismineralturf(T))
 			var/turf/closed/mineral/M = T
 			M.mineralAmt = rand(1, 5)
-			M.environment_type = environment_type
-			M.turf_type = turf_type
-			M.baseturf = baseturf
+			M.environment_type = src.environment_type
+			M.turf_type = src.turf_type
+			M.baseturf = src.baseturf
 			src = M
 			M.levelupdate()
 
@@ -220,7 +222,7 @@
 
 
 /turf/closed/mineral/iron
-	mineralType = /obj/item/stack/ore/iron
+	mineralType = /obj/item/ore/iron
 	spreadChance = 20
 	spread = 1
 	scan_state = "rock_Iron"
@@ -234,7 +236,7 @@
 
 
 /turf/closed/mineral/uranium
-	mineralType = /obj/item/stack/ore/uranium
+	mineralType = /obj/item/ore/uranium
 	spreadChance = 5
 	spread = 1
 	scan_state = "rock_Uranium"
@@ -248,7 +250,7 @@
 
 
 /turf/closed/mineral/diamond
-	mineralType = /obj/item/stack/ore/diamond
+	mineralType = /obj/item/ore/diamond
 	spreadChance = 0
 	spread = 1
 	scan_state = "rock_Diamond"
@@ -262,7 +264,7 @@
 
 
 /turf/closed/mineral/gold
-	mineralType = /obj/item/stack/ore/gold
+	mineralType = /obj/item/ore/gold
 	spreadChance = 5
 	spread = 1
 	scan_state = "rock_Gold"
@@ -276,7 +278,7 @@
 
 
 /turf/closed/mineral/silver
-	mineralType = /obj/item/stack/ore/silver
+	mineralType = /obj/item/ore/silver
 	spreadChance = 5
 	spread = 1
 	scan_state = "rock_Silver"
@@ -290,7 +292,7 @@
 
 
 /turf/closed/mineral/titanium
-	mineralType = /obj/item/stack/ore/titanium
+	mineralType = /obj/item/ore/titanium
 	spreadChance = 5
 	spread = 1
 	scan_state = "rock_Titanium"
@@ -304,7 +306,7 @@
 
 
 /turf/closed/mineral/plasma
-	mineralType = /obj/item/stack/ore/plasma
+	mineralType = /obj/item/ore/plasma
 	spreadChance = 8
 	spread = 1
 	scan_state = "rock_Plasma"
@@ -318,7 +320,7 @@
 
 
 /turf/closed/mineral/clown
-	mineralType = /obj/item/stack/ore/bananium
+	mineralType = /obj/item/ore/bananium
 	mineralAmt = 3
 	spreadChance = 0
 	spread = 0
@@ -326,7 +328,7 @@
 
 
 /turf/closed/mineral/bscrystal
-	mineralType = /obj/item/stack/ore/bluespace_crystal
+	mineralType = /obj/item/ore/bluespace_crystal
 	mineralAmt = 1
 	spreadChance = 0
 	spread = 0
@@ -436,7 +438,7 @@
 		stage = GIBTONITE_STABLE
 		if(det_time < 0)
 			det_time = 0
-		visible_message("<span class='notice'>The chain reaction was stopped! The gibtonite had [det_time] reactions left till the explosion!</span>")
+		visible_message("<span class='notice'>The chain reaction was stopped! The gibtonite had [src.det_time] reactions left till the explosion!</span>")
 
 /turf/closed/mineral/gibtonite/gets_drilled(mob/user, triggered_by_explosion = 0)
 	if(stage == GIBTONITE_UNSTRUCK && mineralAmt >= 1) //Gibtonite deposit is activated

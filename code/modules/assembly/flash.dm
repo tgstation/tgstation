@@ -70,15 +70,12 @@
 	return 1
 
 /obj/item/device/assembly/flash/proc/try_use_flash(mob/user = null)
-	flash_recharge(10)
-
 	if(crit_fail)
 		return 0
-
 	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
-	update_icon(1)
 	times_used++
-
+	flash_recharge(10)
+	update_icon(1)
 	if(user && !clown_check(user))
 		return 0
 
@@ -106,11 +103,9 @@
 /obj/item/device/assembly/flash/attack(mob/living/M, mob/user)
 	if(!try_use_flash(user))
 		return 0
-
 	if(iscarbon(M))
 		flash_carbon(M, user, 5, 1)
 		return 1
-
 	else if(issilicon(M))
 		var/mob/living/silicon/robot/R = M
 		add_logs(user, R, "flashed", src)

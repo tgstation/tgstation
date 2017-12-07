@@ -363,7 +363,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 				if(M.mind in SSticker.mode.cult)
 					return 2
 			if("nuclear")
-				if(M.mind in SSticker.mode.syndicates)
+				if(M.mind.has_antag_datum(/datum/antagonist/nukeop,TRUE))
 					return 2
 			if("changeling")
 				if(M.mind.has_antag_datum(/datum/antagonist/changeling,TRUE))

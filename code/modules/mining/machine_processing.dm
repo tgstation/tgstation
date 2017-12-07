@@ -83,10 +83,10 @@
 	return ..()
 
 /obj/machinery/mineral/processing_unit/HasProximity(atom/movable/AM)
-	if(istype(AM, /obj/item/stack/ore) && AM.loc == get_step(src, input_dir))
+	if(istype(AM, /obj/item/ore) && AM.loc == get_step(src, input_dir))
 		process_ore(AM)
 
-/obj/machinery/mineral/processing_unit/proc/process_ore(obj/item/stack/ore/O)
+/obj/machinery/mineral/processing_unit/proc/process_ore(obj/item/ore/O)
 	GET_COMPONENT(materials, /datum/component/material_container)
 	var/material_amount = materials.get_item_material_amount(O)
 	if(!materials.has_space(material_amount))

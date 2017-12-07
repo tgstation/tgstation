@@ -19,6 +19,7 @@
 	var/probability = 0
 	var/false_report_weight = 0 //How often will this show up incorrectly in a centcom report?
 	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
+	var/nuke_off_station = 0 //Used for tracking where the nuke hit
 	var/round_ends_with_antag_death = 0 //flags the "one verse the station" antags as such
 	var/list/datum/mind/antag_candidates = list()	// List of possible starting antags goes here
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
@@ -528,5 +529,6 @@
 
 //By default nuke just ends the round
 /datum/game_mode/proc/OnNukeExplosion(off_station)
+	nuke_off_station = off_station
 	if(off_station < 2)
 		station_was_nuked = TRUE //Will end the round on next check.
