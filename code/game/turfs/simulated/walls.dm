@@ -299,11 +299,12 @@
 	return FALSE
 
 /turf/closed/wall/proc/add_dent(denttype, x=rand(-8, 8), y=rand(-8, 8))
-	if(LAZYLEN(dent_decals) < MAX_DENT_DECALS)
-		var/mutable_appearance/decal = pick(dent_decal_list[denttype])
-		decal.pixel_x = x
-		decal.pixel_y = y
+	if(LAZYLEN(dent_decals) >= MAX_DENT_DECALS)
+		return
+	var/mutable_appearance/decal = pick(dent_decal_list[denttype])
+	decal.pixel_x = x
+	decal.pixel_y = y
 
-		cut_overlay(dent_decals)
-		LAZYADD(dent_decals, decal)
-		add_overlay(dent_decals)
+	cut_overlay(dent_decals)
+	LAZYADD(dent_decals, decal)
+	add_overlay(dent_decals)
