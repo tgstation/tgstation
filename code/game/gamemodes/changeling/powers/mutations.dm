@@ -127,7 +127,19 @@
 
 
 //fancy headers yo
-//REMNANT ARMBLADE CODE (For synthetic armblades, and perhaps some admin fuckery idk)
+/***************************************\
+|***************ARM BLADE***************|
+\***************************************/
+/obj/effect/proc_holder/changeling/weapon/arm_blade
+	name = "Arm Blade"
+	desc = "We reform one of our arms into a deadly blade."
+	helptext = "We may retract our armblade in the same manner as we form it. Cannot be used while in lesser form."
+	chemical_cost = 20
+	dna_cost = 2
+	req_human = 1
+	weapon_type = /obj/item/melee/arm_blade
+	weapon_name_simple = "blade"
+
 /obj/item/melee/arm_blade
 	name = "arm blade"
 	desc = "A grotesque blade made out of bone and flesh that cleaves through people as a hot knife through butter."
