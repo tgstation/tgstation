@@ -385,3 +385,6 @@ CONFIG_TWEAK(flag/resume_after_initializations/ValidateAndSet(str_val))
 CONFIG_DEF(number/rounds_until_hard_restart)
 	value = -1
 	min_val = 0
+
+CONFIG_DEF(string/default_view)
+	value = "15x15"
