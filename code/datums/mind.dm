@@ -794,7 +794,7 @@
 					target_antag = antag_datums[1]
 				else
 					var/target = input("Which antagonist gets the objective:", "Antagonist", def_value) as null|anything in antag_datums + "(new custom antag)"
-					if (!target)
+					if (QDELETED(target))
 						return
 					else if(target == "(new custom antag)")
 						target_antag = add_antag_datum(/datum/antagonist/custom)

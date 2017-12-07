@@ -41,7 +41,7 @@
 
 		SSticker.mode.traitors += user.mind
 		user.mind.special_role = "Avatar of the Wish Granter"
-		
+
 		var/datum/objective/hijack/hijack = new
 		hijack.owner = user.mind
 		user.mind.objectives += hijack
