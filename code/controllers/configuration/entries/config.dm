@@ -208,9 +208,9 @@ CONFIG_DEF(string/panic_server_name)
 /datum/config_entry/string/panic_server_name/ValidateAndSet(str_val)
 	return str_val != "\[Put the name here\]" && ..()
 
-CONFIG_DEF(string/panic_address)	//Reconnect a player this linked server if this server isn't accepting new players
+CONFIG_DEF(string/panic_server_address)	//Reconnect a player this linked server if this server isn't accepting new players
 
-/datum/config_entry/string/panic_address/ValidateAndSet(str_val)
+/datum/config_entry/string/panic_server_address/ValidateAndSet(str_val)
 	return str_val != "byond://address:port" && ..()
 
 CONFIG_DEF(string/invoke_youtubedl)
