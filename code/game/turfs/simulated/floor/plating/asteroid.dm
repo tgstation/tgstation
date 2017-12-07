@@ -87,6 +87,9 @@
 /turf/open/floor/plating/asteroid/basalt/Initialize()
 	. = ..()
 	set_basalt_light(src)
+	GET_COMPONENT(arch, /datum/component/archaeology)
+	ASSERT(isnull(arch.callback))
+	arch.callback = CALLBACK(src, /atom/proc/set_light, 0)
 
 /proc/set_basalt_light(turf/open/floor/B)
 	switch(B.icon_state)
@@ -94,12 +97,6 @@
 			B.set_light(2, 0.6, LIGHT_COLOR_LAVA) //more light
 		if("basalt5", "basalt9")
 			B.set_light(1.4, 0.6, LIGHT_COLOR_LAVA) //barely anything!
-
-/turf/open/floor/plating/asteroid/basalt/ComponentActivated(datum/component/C)
-	..()
-	if(istype(C, /datum/component/archaeology))
-		set_light(0)
-
 
 ///////Surface. The surface is warm, but survivable without a suit. Internals are required. The floors break to chasms, which drop you into the underground.
 

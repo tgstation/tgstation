@@ -375,7 +375,7 @@
 
 /datum/config_entry/flag/resume_after_initializations
 
-/datum/config_entry/flag/ValidateAndSet(str_val)
+/datum/config_entry/flag/resume_after_initializations/ValidateAndSet(str_val)
 	. = ..()
 	if(. && Master.current_runlevel)
 		world.sleep_offline = !value
