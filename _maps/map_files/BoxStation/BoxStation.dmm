@@ -57706,6 +57706,24 @@
 	dir = 8
 	},
 /area/medical/sleeper)
+"QoV" = (
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 2;
+	name = "2maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
+"QoW" = (
+/obj/machinery/droneDispenser,
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
+"QoX" = (
+/obj/structure/table,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
 
 (1,1,1) = {"
 aaa
@@ -98187,7 +98205,7 @@ aYV
 aYV
 bfO
 bfS
-biC
+biD
 bkd
 bfS
 cTO
@@ -98958,8 +98976,8 @@ aYV
 bez
 bfP
 bfS
-biD
-bke
+bfS
+bfS
 bfS
 cTO
 bmZ
@@ -99215,9 +99233,9 @@ bci
 beB
 bfS
 bfS
-bfS
-bfS
-bfS
+QoV
+QoW
+QoX
 cTO
 bmZ
 bon
