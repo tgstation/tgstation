@@ -60,12 +60,17 @@
 	var/datum/signal/subspace/original
 	var/list/levels
 
+/datum/signal/subspace/New(data)
+	src.data = data || list()
+
 /datum/signal/subspace/proc/copy()
 	var/datum/signal/subspace/copy = new
 	copy.original = src
 	copy.source = source
 	copy.levels = levels
 	copy.frequency = frequency
+	copy.server_type = server_type
+	copy.transmission_method = transmission_method
 	copy.data = data.Copy()
 	return copy
 
