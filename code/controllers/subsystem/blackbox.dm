@@ -39,9 +39,9 @@ SUBSYSTEM_DEF(blackbox)
 	sealed = SSblackbox.sealed
 
 //no touchie
-/datum/controller/subsystem/blackbox/can_vv_get(var_name)
+/datum/controller/subsystem/blackbox/vv_get_var(var_name)
 	if(var_name == "feedback")
-		return FALSE
+		return debug_variable(var_name, deepCopyList(feedback), 0, src)
 	return ..()
 
 /datum/controller/subsystem/blackbox/vv_edit_var(var_name, var_value)

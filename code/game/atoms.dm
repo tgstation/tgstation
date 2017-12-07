@@ -37,7 +37,7 @@
 		GLOB._preloader.load(src)
 
 	var/do_initialize = SSatoms.initialized
-	if(do_initialize > INITIALIZATION_INSSATOMS)
+	if(do_initialize != INITIALIZATION_INSSATOMS)
 		args[1] = do_initialize == INITIALIZATION_INNEW_MAPLOAD
 		if(SSatoms.InitAtom(src, args))
 			//we were deleted
@@ -57,9 +57,7 @@
 //Note: the following functions don't call the base for optimization and must copypasta:
 // /turf/Initialize
 // /turf/open/space/Initialize
-// /mob/dead/new_player/Initialize
 
-//Do also note that this proc always runs in New for /mob/dead
 /atom/proc/Initialize(mapload, ...)
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
