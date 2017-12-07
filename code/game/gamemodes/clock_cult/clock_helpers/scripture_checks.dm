@@ -43,7 +43,9 @@
 
 //changes construction value
 /proc/change_construction_value(amount)
-	GLOB.clockwork_construction_value += amount
+	if(!SSticker.current_state != GAME_STATE_PLAYING) //This is primarily so that structures added pre-roundstart don't contribute to construction value
+		return
+	GLOB.clockwork_construction_value = max(0, GLOB.clockwork_construction_value + amount)
 
 /proc/can_recite_scripture(mob/living/L, can_potentially)
 	return (is_servant_of_ratvar(L) && (can_potentially || (L.stat == CONSCIOUS && L.can_speak_vocal())) && (GLOB.ratvar_awakens || (ishuman(L) || issilicon(L))))

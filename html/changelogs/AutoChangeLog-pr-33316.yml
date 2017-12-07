@@ -1,0 +1,6 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Games vending machines can now properly be rebuilt."
+  - bugfix: "Games vending machines can now be refilled via supply crates."
+  - rscadd: "Games Supply Crates have been added to the cargo console."

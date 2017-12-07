@@ -164,10 +164,6 @@ ARCD
 	if (!ishuman(usr) && !usr.has_unlimited_silicon_privilege)
 		return ..(usr)
 
-	var/mob/living/carbon/human/H = usr
-	if(H.getBrainLoss() >= 60)
-		return
-
 	var/t1 = text("")
 
 

@@ -2,27 +2,52 @@
 // DRIVERS //
 /////////////
 
-//Hateful Manacles: Applies restraints from melee over several seconds. The restraints function like handcuffs and break on removal.
-/datum/clockwork_scripture/ranged_ability/hateful_manacles
-	descname = "Handcuffs"
-	name = "Hateful Manacles"
-	desc = "Forms replicant manacles around a target's wrists that function like handcuffs."
-	invocations = list("Shackle the heretic!", "Break them in body and spirit!")
-	channel_time = 15
-	power_cost = 25
-	whispered = TRUE
-	usage_tip = "The manacles are about as strong as zipties, and break when removed."
+
+//Stargazer: Creates a stargazer, a cheap power generator that utilizes starlight.
+/datum/clockwork_scripture/create_object/stargazer
+	descname = "Generates Power From Starlight - Important!"
+	name = "Stargazer"
+	desc = "Forms a weak structure that generates power every second while within three tiles of starlight."
+	invocations = list("Capture their inferior light for us!")
+	channel_time = 50
+	power_cost = 50
+	object_path = /obj/structure/destructible/clockwork/stargazer
+	creator_message = "<span class='brass'>You form a stargazer, which will generate power near starlight.</span>"
+	observer_message = "<span class='warning'>A large lantern-shaped machine forms!</span>"
+	usage_tip = "For obvious reasons, make sure to place this near a window or somewhere else that can see space!"
 	tier = SCRIPTURE_DRIVER
-	primary_component = BELLIGERENT_EYE
+	one_per_tile = TRUE
+	primary_component = HIEROPHANT_ANSIBLE
 	sort_priority = 1
-	ranged_type = /obj/effect/proc_holder/slab/hateful_manacles
-	slab_overlay = "hateful_manacles"
-	ranged_message = "<span class='neovgre_small'><i>You charge the clockwork slab with divine energy.</i>\n\
-	<b>Left-click a target within melee range to shackle!\n\
-	Click your slab to cancel.</b></span>"
-	timeout_time = 200
 	quickbind = TRUE
-	quickbind_desc = "Applies handcuffs to a struck target."
+	quickbind_desc = "Creates a stargazer, which generates power when near starlight."
+
+/datum/clockwork_scripture/create_object/stargazer/check_special_requirements()
+	var/area/A = get_area(invoker)
+	if(A.outdoors || A.map_name == "Space" || !A.blob_allowed)
+		to_chat(invoker, "<span class='danger'>Stargazers can't be built off-station.</span>")
+		return
+	return ..()
+
+
+//Integration Cog: Creates an integration cog that can be inserted into APCs to passively siphon power.
+/datum/clockwork_scripture/create_object/integration_cog
+	descname = "APC Power Siphoner"
+	name = "Integration Cog"
+	desc = "Fabricates an integration cog, which can be used on an open APC to replace its innards and passively siphon its power."
+	invocations = list("Take that which sustains them!")
+	channel_time = 10
+	power_cost = 10
+	whispered = TRUE
+	object_path = /obj/item/clockwork/integration_cog
+	creator_message = "<span class='brass'>You form an integration cog, which can be inserted into an open APC to passively siphon power.</span>"
+	usage_tip = "Tampering isn't visible unless the APC is opened."
+	tier = SCRIPTURE_DRIVER
+	space_allowed = TRUE
+	primary_component = HIEROPHANT_ANSIBLE
+	sort_priority = 2
+	quickbind = TRUE
+	quickbind_desc = "Creates an integration cog, which can be used to siphon power from an open APC."
 
 
 //Sigil of Transgression: Creates a sigil of transgression, which briefly stuns and applies Belligerent to the first non-servant to cross it.
@@ -39,10 +64,76 @@
 	usage_tip = "The sigil does not silence its victim, and is generally used to soften potential converts or would-be invaders."
 	tier = SCRIPTURE_DRIVER
 	one_per_tile = TRUE
-	primary_component = BELLIGERENT_EYE
-	sort_priority = 2
+	primary_component = HIEROPHANT_ANSIBLE
+	sort_priority = 3
 	quickbind = TRUE
 	quickbind_desc = "Creates a Sigil of Transgression, which will briefly stun and slow the next non-Servant to cross it."
+
+
+//Sigil of Submission: Creates a sigil of submission, which converts one heretic above it after a delay.
+/datum/clockwork_scripture/create_object/sigil_of_submission
+	descname = "Trap, Conversion"
+	name = "Sigil of Submission"
+	desc = "Places a luminous sigil that will convert any non-Servants that remain on it for 8 seconds."
+	invocations = list("Divinity, enlighten...", "...those who trespass here!")
+	channel_time = 60
+	power_cost = 125
+	whispered = TRUE
+	object_path = /obj/effect/clockwork/sigil/submission
+	creator_message = "<span class='brass'>A luminous sigil appears below you. Any non-Servants to cross it will be converted after 8 seconds if they do not move.</span>"
+	usage_tip = "This is the primary conversion method, though it will not penetrate mindshield implants."
+	tier = SCRIPTURE_DRIVER
+	one_per_tile = TRUE
+	primary_component = HIEROPHANT_ANSIBLE
+	sort_priority = 4
+	quickbind = TRUE
+	quickbind_desc = "Creates a Sigil of Submission, which will convert non-Servants that remain on it."
+
+
+//Kindle: Charges the slab with blazing energy. It can be released to stun and silence a target.
+/datum/clockwork_scripture/ranged_ability/kindle
+	descname = "Short-Range Single-Target Stun"
+	name = "Kindle"
+	desc = "Charges your slab with divine energy, allowing you to overwhelm a target with Ratvar's light."
+	invocations = list("Divinity, show them your light!")
+	whispered = TRUE
+	channel_time = 30
+	power_cost = 125
+	usage_tip = "The light can be used from up to two tiles away. Damage taken will GREATLY REDUCE the stun's duration."
+	tier = SCRIPTURE_DRIVER
+	primary_component = BELLIGERENT_EYE
+	sort_priority = 5
+	slab_overlay = "volt"
+	ranged_type = /obj/effect/proc_holder/slab/kindle
+	ranged_message = "<span class='brass'><i>You charge the clockwork slab with divine energy.</i>\n\
+	<b>Left-click a target within melee range to stun!\n\
+	Click your slab to cancel.</b></span>"
+	timeout_time = 150
+	quickbind = TRUE
+	quickbind_desc = "Stuns and mutes a target from a short range."
+
+
+//Hateful Manacles: Applies restraints from melee over several seconds. The restraints function like handcuffs and break on removal.
+/datum/clockwork_scripture/ranged_ability/hateful_manacles
+	descname = "Handcuffs"
+	name = "Hateful Manacles"
+	desc = "Forms replicant manacles around a target's wrists that function like handcuffs."
+	invocations = list("Shackle the heretic!", "Break them in body and spirit!")
+	channel_time = 15
+	power_cost = 25
+	whispered = TRUE
+	usage_tip = "The manacles are about as strong as zipties, and break when removed."
+	tier = SCRIPTURE_DRIVER
+	primary_component = BELLIGERENT_EYE
+	sort_priority = 6
+	ranged_type = /obj/effect/proc_holder/slab/hateful_manacles
+	slab_overlay = "hateful_manacles"
+	ranged_message = "<span class='neovgre_small'><i>You charge the clockwork slab with divine energy.</i>\n\
+	<b>Left-click a target within melee range to shackle!\n\
+	Click your slab to cancel.</b></span>"
+	timeout_time = 200
+	quickbind = TRUE
+	quickbind_desc = "Applies handcuffs to a struck target."
 
 
 //Vanguard: Provides twenty seconds of stun immunity. At the end of the twenty seconds, 25% of all stuns absorbed are applied to the invoker.
@@ -57,7 +148,7 @@
 	usage_tip = "You cannot reactivate Vanguard while still shielded by it."
 	tier = SCRIPTURE_DRIVER
 	primary_component = VANGUARD_COGWHEEL
-	sort_priority = 3
+	sort_priority = 7
 	quickbind = TRUE
 	quickbind_desc = "Allows you to temporarily absorb stuns. All stuns absorbed will affect you when disabled."
 
@@ -89,7 +180,7 @@
 	usage_tip = "The Compromise is very fast to invoke, and will remove holy water from the target Servant."
 	tier = SCRIPTURE_DRIVER
 	primary_component = VANGUARD_COGWHEEL
-	sort_priority = 4
+	sort_priority = 8
 	quickbind = TRUE
 	quickbind_desc = "Allows you to convert a Servant's brute, burn, and oxygen damage to half toxin damage.<br><b>Click your slab to disable.</b>"
 	slab_overlay = "compromise"
@@ -101,7 +192,7 @@
 
 //Abscond: Used to return to Reebe.
 /datum/clockwork_scripture/abscond
-	descname = "Return to Reebe"
+	descname = "Return to Reebe - Important!"
 	name = "Abscond"
 	desc = "Yanks you through space, returning you to home base."
 	invocations = list("As we bid farewell, and return to the stars...", "...we shall find our way home.")
@@ -113,7 +204,7 @@
 	usage_tip = "This can't be used while on Reebe, for obvious reasons."
 	tier = SCRIPTURE_DRIVER
 	primary_component = GEIS_CAPACITOR
-	sort_priority = 5
+	sort_priority = 9
 	quickbind = TRUE
 	quickbind_desc = "Returns you to Reebe."
 
@@ -153,52 +244,9 @@
 		animate(invoker.client, color = initial(invoker.client.color), time = 10)
 
 
-//Kindle: Charges the slab with blazing energy. It can be released to stun and silence a target.
-/datum/clockwork_scripture/ranged_ability/kindle
-	descname = "Short-Range Single-Target Stun"
-	name = "Kindle"
-	desc = "Charges your slab with divine energy, allowing you to overwhelm a target with Ratvar's light."
-	invocations = list("Divinity, show them your light!")
-	whispered = TRUE
-	channel_time = 30
-	power_cost = 125
-	usage_tip = "The light can be used from up to two tiles away. Damage taken will GREATLY REDUCE the stun's duration."
-	tier = SCRIPTURE_DRIVER
-	primary_component = GEIS_CAPACITOR
-	sort_priority = 6
-	slab_overlay = "volt"
-	ranged_type = /obj/effect/proc_holder/slab/kindle
-	ranged_message = "<span class='brass'><i>You charge the clockwork slab with divine energy.</i>\n\
-	<b>Left-click a target within melee range to stun!\n\
-	Click your slab to cancel.</b></span>"
-	timeout_time = 150
-	quickbind = TRUE
-	quickbind_desc = "Stuns and mutes a target from a short range."
-
-
-//Sigil of Submission: Creates a sigil of submission, which converts one heretic above it after a delay.
-/datum/clockwork_scripture/create_object/sigil_of_submission
-	descname = "Trap, Conversion"
-	name = "Sigil of Submission"
-	desc = "Places a luminous sigil that will convert any non-Servants that remain on it for 8 seconds."
-	invocations = list("Divinity, enlighten...", "...those who trespass here!")
-	channel_time = 60
-	power_cost = 125
-	whispered = TRUE
-	object_path = /obj/effect/clockwork/sigil/submission
-	creator_message = "<span class='brass'>A luminous sigil appears below you. Any non-Servants to cross it will be converted after 8 seconds if they do not move.</span>"
-	usage_tip = "This is the primary conversion method, though it will not penetrate mindshield implants."
-	tier = SCRIPTURE_DRIVER
-	one_per_tile = TRUE
-	primary_component = GEIS_CAPACITOR
-	sort_priority = 6
-	quickbind = TRUE
-	quickbind_desc = "Creates a Sigil of Submission, which will convert non-Servants that remain on it."
-
-
 //Replicant: Creates a new clockwork slab.
 /datum/clockwork_scripture/create_object/replicant
-	descname = "New Clockwork Slab"
+	descname = "New Clockwork Slab - Important!"
 	name = "Replicant"
 	desc = "Creates a new clockwork slab."
 	invocations = list("Metal, become greater!")
@@ -210,57 +258,10 @@
 	usage_tip = "This is inefficient as a way to produce components, as the slab produced must be held by someone with no other slabs to produce components."
 	tier = SCRIPTURE_DRIVER
 	space_allowed = TRUE
-	primary_component = REPLICANT_ALLOY
-	sort_priority = 7
+	primary_component = GEIS_CAPACITOR
+	sort_priority = 10
 	quickbind = TRUE
 	quickbind_desc = "Creates a new Clockwork Slab."
-
-
-//Stargazer: Creates a stargazer, a cheap power generator that utilizes starlight.
-/datum/clockwork_scripture/create_object/stargazer
-	descname = "Necessary Structure, Generates Power From Starlight"
-	name = "Stargazer"
-	desc = "Forms a weak structure that generates power every second while within three tiles of starlight."
-	invocations = list("Capture their inferior light for us!")
-	channel_time = 50
-	power_cost = 50
-	object_path = /obj/structure/destructible/clockwork/stargazer
-	creator_message = "<span class='brass'>You form a stargazer, which will generate power near starlight.</span>"
-	observer_message = "<span class='warning'>A large lantern-shaped machine forms!</span>"
-	usage_tip = "For obvious reasons, make sure to place this near a window or somewhere else that can see space!"
-	tier = SCRIPTURE_DRIVER
-	one_per_tile = TRUE
-	primary_component = REPLICANT_ALLOY
-	sort_priority = 8
-	quickbind = TRUE
-	quickbind_desc = "Creates a stargazer, which generates power when near starlight."
-
-/datum/clockwork_scripture/create_object/stargazer/check_special_requirements()
-	var/area/A = get_area(invoker)
-	if(A.outdoors || A.map_name == "Space" || !A.blob_allowed)
-		to_chat(invoker, "<span class='danger'>Stargazers can't be built off-station.</span>")
-		return
-	return ..()
-
-
-//Integration Cog: Creates an integration cog that can be inserted into APCs to passively siphon power.
-/datum/clockwork_scripture/create_object/integration_cog
-	descname = "APC Power Siphoner"
-	name = "Integration Cog"
-	desc = "Fabricates an integration cog, which can be used on an open APC to replace its innards and passively siphon its power."
-	invocations = list("Take that which sustains them!")
-	channel_time = 10
-	power_cost = 10
-	whispered = TRUE
-	object_path = /obj/item/clockwork/integration_cog
-	creator_message = "<span class='brass'>You form an integration cog, which can be inserted into an open APC to passively siphon power.</span>"
-	usage_tip = "Tampering isn't visible unless the APC is opened."
-	tier = SCRIPTURE_DRIVER
-	space_allowed = TRUE
-	primary_component = HIEROPHANT_ANSIBLE
-	sort_priority = 9
-	quickbind = TRUE
-	quickbind_desc = "Creates an integration cog, which can be used to siphon power from an open APC."
 
 
 //Wraith Spectacles: Creates a pair of wraith spectacles, which grant xray vision but damage vision slowly.
@@ -277,7 +278,7 @@
 	usage_tip = "\"True sight\" means that you are able to see through walls and in darkness."
 	tier = SCRIPTURE_DRIVER
 	space_allowed = TRUE
-	primary_component = HIEROPHANT_ANSIBLE
-	sort_priority = 10
+	primary_component = GEIS_CAPACITOR
+	sort_priority = 11
 	quickbind = TRUE
 	quickbind_desc = "Creates a pair of Wraith Spectacles, which grant true sight but cause gradual vision loss."
