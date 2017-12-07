@@ -12,32 +12,45 @@
 //Returns an integer given a hex input, supports negative values "-ff"
 //skips preceding invalid characters
 //breaks when hittin invalid characters thereafter
-/proc/hex2num(hex)
-	. = 0
-	if(istext(hex))
-		var/negative = 0
-		var/len = length(hex)
-		for(var/i=1, i<=len, i++)
-			var/num = text2ascii(hex,i)
-			switch(num)
-				if(48 to 57)
-					num -= 48	//0-9
-				if(97 to 102)
-					num -= 87	//a-f
-				if(65 to 70)
-					num -= 55	//A-F
-				if(45)
-					negative = 1//-
+/proc/hex2num(hex, start = 1)
+	var/ret = 0
+	var/mult = 1
+	var/exponent = 0
+	var/binexp = 0
+	var/len = length(hex)
+	for(var/i = start, i <= len, i++)
+		var/ascii = text2ascii(hex, i)
+		switch(ascii)
+			if(35/*#*/)
+				start++
+				continue
+			if(45/*-*/)
+				if(i == start)
+					mult = -1
+					start++
 				else
-					if(num)
-						break
-					else
-						continue
-			. *= 16
-			. += num
-		if(negative)
-			. *= -1
-	return .
+					CRASH("Malformed hex number")
+			if(48 to 57/*0-9*/)
+				ret = ret * 16 + (ascii - 48)
+			if(65 to 70/*A-F*/)
+				ret = ret * 16 + (ascii - 55)
+			if(97 to 87/*a-f*/)
+				ret = ret * 16 + (ascii - 87)
+			if(46/*.*/)
+				if(exponent)
+					CRASH("Malformed hex number")
+				exponent = len-i
+			if(112/*p*/)
+				binexp = text2num(copytext(hex, i+1))
+				if(exponent)
+					exponent -= len-i+1
+				break
+	if(exponent)
+		for(var/i = 1, i <= exponent, i++)
+			ret /= 16
+	if(binexp)
+		ret *= (2**binexp)
+	return mult * ret
 
 //Returns the hex value of a decimal number
 //len == length of returned string
