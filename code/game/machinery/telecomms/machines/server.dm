@@ -131,22 +131,22 @@
 
 /obj/machinery/telecomms/server/presets/science
 	id = "Science Server"
-	freq_listening = list(GLOB.SCI_FREQ)
+	freq_listening = list(FREQ_SCIENCE)
 	autolinkers = list("science")
 
 /obj/machinery/telecomms/server/presets/medical
 	id = "Medical Server"
-	freq_listening = list(GLOB.MED_FREQ)
+	freq_listening = list(FREQ_MEDICAL)
 	autolinkers = list("medical")
 
 /obj/machinery/telecomms/server/presets/supply
 	id = "Supply Server"
-	freq_listening = list(GLOB.SUPP_FREQ)
+	freq_listening = list(FREQ_SUPPLY)
 	autolinkers = list("supply")
 
 /obj/machinery/telecomms/server/presets/service
 	id = "Service Server"
-	freq_listening = list(GLOB.SERV_FREQ)
+	freq_listening = list(FREQ_SERVICE)
 	autolinkers = list("service")
 
 /obj/machinery/telecomms/server/presets/common
@@ -154,26 +154,25 @@
 	freq_listening = list()
 	autolinkers = list("common")
 
-	//Common and other radio frequencies for people to freely use
-	// 1441 to 1489
+//Common and other radio frequencies for people to freely use
 /obj/machinery/telecomms/server/presets/common/Initialize()
 	. = ..()
-	for(var/i = 1441, i < 1489, i += 2)
+	for(var/i = MIN_FREQ, i <= MAX_FREQ, i += 2)
 		freq_listening |= i
 
 /obj/machinery/telecomms/server/presets/command
 	id = "Command Server"
-	freq_listening = list(GLOB.COMM_FREQ)
+	freq_listening = list(FREQ_COMMAND)
 	autolinkers = list("command")
 
 /obj/machinery/telecomms/server/presets/engineering
 	id = "Engineering Server"
-	freq_listening = list(GLOB.ENG_FREQ)
+	freq_listening = list(FREQ_ENGINEERING)
 	autolinkers = list("engineering")
 
 /obj/machinery/telecomms/server/presets/security
 	id = "Security Server"
-	freq_listening = list(GLOB.SEC_FREQ)
+	freq_listening = list(FREQ_SECURITY)
 	autolinkers = list("security")
 
 /obj/machinery/telecomms/server/presets/common/birdstation/Initialize()

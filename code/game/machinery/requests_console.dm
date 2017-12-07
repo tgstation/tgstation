@@ -315,13 +315,13 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			var/radio_freq
 			switch(text2num(href_list["emergency"]))
 				if(1) //Security
-					radio_freq = GLOB.SEC_FREQ
+					radio_freq = FREQ_SECURITY
 					emergency = "Security"
 				if(2) //Engineering
-					radio_freq = GLOB.ENG_FREQ
+					radio_freq = FREQ_ENGINEERING
 					emergency = "Engineering"
 				if(3) //Medical
-					radio_freq = GLOB.MED_FREQ
+					radio_freq = FREQ_MEDICAL
 					emergency = "Medical"
 			if(radio_freq)
 				Radio.set_frequency(radio_freq)
@@ -352,17 +352,17 @@ GLOBAL_LIST_EMPTY(allConsoles)
 				var/radio_freq = 0
 				switch(href_list["department"])
 					if("bridge")
-						radio_freq = GLOB.COMM_FREQ
+						radio_freq = FREQ_COMMAND
 					if("medbay")
-						radio_freq = GLOB.MED_FREQ
+						radio_freq = FREQ_MEDICAL
 					if("science")
-						radio_freq = GLOB.SCI_FREQ
+						radio_freq = FREQ_SCIENCE
 					if("engineering")
-						radio_freq = GLOB.ENG_FREQ
+						radio_freq = FREQ_ENGINEERING
 					if("security")
-						radio_freq = GLOB.SEC_FREQ
+						radio_freq = FREQ_SECURITY
 					if("cargobay" || "mining")
-						radio_freq = GLOB.SUPP_FREQ
+						radio_freq = FREQ_SUPPLY
 				Radio.set_frequency(radio_freq)
 				var/authentic
 				if(msgVerified || msgStamped)
