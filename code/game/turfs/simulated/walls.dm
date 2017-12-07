@@ -1,4 +1,4 @@
-#define MAX_DENT_DECALS 5
+#define MAX_DENT_DECALS 15
 
 /turf/closed/wall
 	name = "wall"
@@ -309,3 +309,5 @@
 	cut_overlay(dent_decals)
 	LAZYADD(dent_decals, decal)
 	add_overlay(dent_decals)
+	
+#undef MAX_DENT_DECALS
