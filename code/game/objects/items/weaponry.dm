@@ -232,10 +232,11 @@
 	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
 
 /obj/item/wirerod/attackby(obj/item/I, mob/user, params)
-	if(istype)I, /obj/item/storage)
-		get_contents(I)
-			if(!NULL)
-				return
+	if(istype(I, /obj/item/storage))// if anyone adds wirerod items in the future with storage items, this stops it from deleting the contents of those
+		var/list/wirecont = I.get_contents()
+		if(var/obj/O in wirecont)
+			to_chat(user, "<span class='warning'>[I] has something in it, remove that first!</span>")
+			return
 	if(istype(I, /obj/item/shard))
 		var/obj/item/twohanded/spear/S = new /obj/item/twohanded/spear
 
