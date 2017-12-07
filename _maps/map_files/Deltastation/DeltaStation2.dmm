@@ -10106,7 +10106,7 @@
 /turf/open/floor/plasteel/neutral,
 /area/janitor)
 "avA" = (
-/obj/vehicle/janicart,
+/obj/vehicle/ridden/janicart,
 /obj/machinery/status_display{
 	pixel_y = 32
 	},
@@ -49019,7 +49019,7 @@
 /turf/open/floor/plating,
 /area/ai_monitored/security/armory)
 "bVp" = (
-/obj/vehicle/secway,
+/obj/vehicle/ridden/secway,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
