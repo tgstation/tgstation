@@ -21,7 +21,7 @@
 	cut_overlays()
 
 /obj/item/target/Move()
-	..()
+	. = ..()
 	if(pinnedLoc)
 		pinnedLoc.loc = loc
 

@@ -39,7 +39,6 @@
 		ranged_ability.remove_ranged_ability(src)
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
-	QDEL_NULL(riding_datum)
 
 	for(var/mob/living/simple_animal/drone/D in GLOB.player_list)
 		for(var/image/I in staticOverlays)
@@ -942,11 +941,6 @@
 						"[C] topples over [src]!", \
 						"[C] leaps out of [src]'s way!")]</span>")
 	C.Knockdown(40)
-
-/mob/living/post_buckle_mob(mob/living/M)
-	if(riding_datum)
-		riding_datum.handle_vehicle_offsets()
-		riding_datum.handle_vehicle_layer()
 
 /mob/living/ConveyorMove()
 	if((movement_type & FLYING) && !stat)

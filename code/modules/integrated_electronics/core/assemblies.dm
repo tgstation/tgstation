@@ -196,10 +196,6 @@
 	for(var/I in assembly_components)
 		var/obj/item/integrated_circuit/IC = I
 		IC.external_examine(user)
-		if(istype(IC, /obj/item/integrated_circuit/output/screen))
-			var/obj/item/integrated_circuit/output/screen/S
-			if(S.stuff_to_display)
-				to_chat(user, "There's a little screen labeled '[S]', which displays '[S.stuff_to_display]'.")
 	if(opened)
 		interact(user)
 

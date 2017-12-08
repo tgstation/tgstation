@@ -37,42 +37,42 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	//kinda localization -- rastaf0
 	//same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
 	// Location
-	"ê" = "right hand",
-	"ä" = "left hand",
-	"ø" = "intercom",
+	"Ãª" = "right hand",
+	"Ã¤" = "left hand",
+	"Ã¸" = "intercom",
 
 	// Department
-	"ð" = "department",
-	"ñ" = "Command",
-	"ò" = "Science",
-	"ü" = "Medical",
-	"ó" = "Engineering",
-	"û" = "Security",
-	"ã" = "Supply",
-	"ì" = "Service",
+	"Ã°" = "department",
+	"Ã±" = "Command",
+	"Ã²" = "Science",
+	"Ã¼" = "Medical",
+	"Ã³" = "Engineering",
+	"Ã»" = "Security",
+	"Ã£" = "Supply",
+	"Ã¬" = "Service",
 
 	// Faction
-	"å" = "Syndicate",
-	"í" = "CentCom",
+	"Ã¥" = "Syndicate",
+	"Ã­" = "CentCom",
 
 	// Species
-	"è" = "binary",
-	"ï" = "changeling",
-	"ô" = "alientalk",
+	"Ã¨" = "binary",
+	"Ã¯" = "changeling",
+	"Ã´" = "alientalk",
 
 	// Admin
-	"ç" = "admin",
-	"â" = "deadmin",
+	"Ã§" = "admin",
+	"Ã¢" = "deadmin",
 
 	// Misc
-	"ù" = "AI Private",
-	"÷" = "cords"
+	"Ã¹" = "AI Private",
+	"Ã·" = "cords"
 ))
 
 /mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE)
 	var/static/list/crit_allowed_modes = list(MODE_WHISPER = TRUE, MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
 	var/static/list/unconscious_allowed_modes = list(MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
-	var/key = get_key(message)
+	var/talk_key = get_key(message)
 
 	var/static/list/one_character_prefix = list(MODE_HEADSET = TRUE, MODE_ROBOT = TRUE, MODE_WHISPER = TRUE)
 
@@ -134,12 +134,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	// Detection of language needs to be before inherent channels, because
 	// AIs use inherent channels for the holopad. Most inherent channels
 	// ignore the language argument however.
-
-	var/datum/saymode/SM = SSradio.saymodes[key]
-	if(key && SM)
-		if(!SM.handle_message(src, message, language))
-			return
-
+  
+	var/datum/saymode/SM = SSradio.saymodes[talk_key]
+	if(SM && !SM.handle_message(src, message, language))
+		return
 
 	if(!can_speak_vocal(message))
 		to_chat(src, "<span class='warning'>You find yourself unable to speak!</span>")
@@ -326,7 +324,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return null
 
 /mob/living/proc/treat_message(message)
-	if(getBrainLoss() >= 60)
+	if(derpspeech)
 		message = derpspeech(message, stuttering)
 
 	if(stuttering)
@@ -373,7 +371,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		. = "[verb_whisper] in [p_their()] last breath"
 	else if(stuttering)
 		. = "stammers"
-	else if(getBrainLoss() >= 60)
+	else if(derpspeech)
 		. = "gibbers"
 	else
 		. = ..()

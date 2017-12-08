@@ -15,6 +15,7 @@
 	// 50% chance of being incremented by one
 	var/spawncount = 1
 	var/successSpawn = 0	//So we don't make a command report if nothing gets spawned.
+	fakeable = TRUE
 
 
 /datum/round_event/ghost_role/alien_infestation/setup()

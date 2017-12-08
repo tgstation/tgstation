@@ -396,3 +396,10 @@ DISABLE_HIGH_POP_MC_MODE_AMOUNT 60
 
 ## Uncomment to set the number of /world/Reboot()s before the DreamDaemon restarts itself. 0 means restart every round. Requires tgstation server tools.
 #ROUNDS_UNTIL_HARD_RESTART 10
+
+
+##Default screen resolution, in tiles.
+##	By default, this is 15x15, which gets simplified to 7 by BYOND, as it is a 1:1 screen ratio.
+##	For reference, Goonstation uses a resolution of 21x15 for it's widescreen mode.
+##	Do note that changing this value will affect the title screen. The title screen will have to be updated manually if this is changed.
+DEFAULT_VIEW 15x15

@@ -19,8 +19,8 @@
 
 
 /obj/item/radio/integrated/signal
-	var/frequency = 1457
-	var/code = 30
+	var/frequency = FREQ_SIGNALER
+	var/code = DEFAULT_SIGNALER_CODE
 	var/last_transmission
 	var/datum/radio_frequency/radio_connection
 
@@ -31,7 +31,7 @@
 
 /obj/item/radio/integrated/signal/Initialize()
 	. = ..()
-	if (src.frequency < 1200 || src.frequency > 1600)
+	if (src.frequency < MIN_FREE_FREQ || src.frequency > MAX_FREE_FREQ)
 		src.frequency = sanitize_frequency(src.frequency)
 
 	set_frequency(frequency)
@@ -39,7 +39,7 @@
 /obj/item/radio/integrated/signal/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency)
+	radio_connection = SSradio.add_object(src, frequency, RADIO_SIGNALER)
 
 /obj/item/radio/integrated/signal/proc/send_signal(message="ACTIVATE")
 
