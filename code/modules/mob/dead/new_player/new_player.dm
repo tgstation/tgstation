@@ -76,22 +76,22 @@
 /mob/dead/new_player/Stat()
 	..()
 
-	if(statpanel("Lobby"))
-		stat("Game Mode:", (SSticker.hide_mode) ? "Secret" : "[GLOB.master_mode]")
-		stat("Map:", SSmapping.config.map_name)
+	if(statpanel("Status"))
+		stat(null, "Game Mode: [SSticker.hide_mode ? "Secret" : "[GLOB.master_mode]"]")
+		stat(null, "Map: [SSmapping.config.map_name]")
 
-		if(SSticker.current_state == GAME_STATE_PREGAME)
+		if(!SSticker.HasRoundStarted())
 			var/time_remaining = SSticker.GetTimeLeft()
 			if(time_remaining > 0)
-				stat("Time To Start:", "[round(time_remaining/10)]s")
+				stat(null, "Time To Start: [round(time_remaining/10)]s")
 			else if(time_remaining == -10)
-				stat("Time To Start:", "DELAYED")
+				stat(null, "Time To Start: DELAYED")
 			else
-				stat("Time To Start:", "SOON")
+				stat(null, "Time To Start: SOON")
 
-			stat("Players:", "[SSticker.totalPlayers]")
+			stat(null, "Players: [SSticker.totalPlayers]")
 			if(client.holder)
-				stat("Players Ready:", "[SSticker.totalPlayersReady]")
+				stat(null, "Players Ready: [SSticker.totalPlayersReady]")
 
 
 /mob/dead/new_player/Topic(href, href_list[])
