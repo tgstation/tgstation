@@ -356,6 +356,9 @@
 			. = TRUE
 		if("threshold")
 			var/env = params["env"]
+			if(text2path(env))
+				env = text2path(env)
+
 			var/name = params["var"]
 			var/datum/tlv/tlv = TLV[env]
 			if(isnull(tlv))
