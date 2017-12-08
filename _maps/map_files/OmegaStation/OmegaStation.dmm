@@ -23567,6 +23567,7 @@
 /obj/structure/sign/nosmoking_2{
 	pixel_y = 32
 	},
+/obj/machinery/vending/games,
 /turf/open/floor/plasteel/dark,
 /area/library)
 "aRW" = (
@@ -23591,13 +23592,6 @@
 /area/library)
 "aRY" = (
 /obj/structure/table/wood,
-/obj/item/dice/d20{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/dice/d10{
-	pixel_x = -3
-	},
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
@@ -24087,21 +24081,12 @@
 /area/library)
 "aTf" = (
 /obj/structure/table/wood,
-/obj/item/storage/pill_bottle/dice,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
 /area/library)
 "aTg" = (
 /obj/structure/table/wood,
-/obj/item/toy/cards/deck/cas{
-	pixel_x = -5;
-	pixel_y = 5
-	},
-/obj/item/toy/cards/deck/cas/black{
-	pixel_x = 5;
-	pixel_y = 5
-	},
 /turf/open/floor/plasteel/dark,
 /area/library)
 "aTh" = (

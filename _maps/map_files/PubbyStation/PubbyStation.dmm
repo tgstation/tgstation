@@ -50615,11 +50615,6 @@
 /area/library)
 "czr" = (
 /obj/structure/table/wood/fancy,
-/obj/item/toy/cards/deck/cas/black{
-	pixel_x = -2;
-	pixel_y = 6
-	},
-/obj/item/toy/cards/deck/cas,
 /turf/open/floor/carpet,
 /area/library)
 "czs" = (
@@ -51354,6 +51349,10 @@
 /obj/machinery/rnd/protolathe/department/engineering,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"cCW" = (
+/obj/machinery/vending/games,
+/turf/open/floor/plasteel/dark,
+/area/library)
 
 (1,1,1) = {"
 aaa
@@ -67369,7 +67368,7 @@ aaa
 aiu
 aiu
 aiu
-apA
+aoK
 aqf
 ajD
 aiu
@@ -68005,13 +68004,13 @@ aaa
 aaa
 aaa
 cjp
-ckW
+cCW
 ckH
 cyZ
 ckH
 czl
 czr
-czA
+czr
 czI
 ckH
 ckH
@@ -68267,7 +68266,7 @@ ckH
 ckH
 ckH
 czl
-czs
+czr
 czB
 czI
 czV
@@ -91571,7 +91570,7 @@ bdI
 bbI
 bhr
 bbI
-biA
+aTx
 bjw
 bkB
 blS

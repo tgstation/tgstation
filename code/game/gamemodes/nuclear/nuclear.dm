@@ -117,28 +117,6 @@
 		nuke_team.roundend_display()
 	return TRUE
 
-/proc/nukelastname(mob/M) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea. Also praise Urist for copypasta ho.
-	var/randomname = pick(GLOB.last_names)
-	var/newname = copytext(sanitize(input(M,"You are the nuke operative [pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")]. Please choose a last name for your family.", "Name change",randomname)),1,MAX_NAME_LEN)
-
-	if (!newname)
-		newname = randomname
-
-	else
-		if (newname == "Unknown" || newname == "floor" || newname == "wall" || newname == "rwall" || newname == "_")
-			to_chat(M, "That name is reserved.")
-			return nukelastname(M)
-
-	return capitalize(newname)
-
-/proc/NukeNameAssign(lastname,list/syndicates)
-	for(var/datum/mind/synd_mind in syndicates)
-		var/mob/living/carbon/human/H = synd_mind.current
-		synd_mind.name = H.dna.species.random_name(H.gender,0,lastname)
-		if(lastname == "Thundercock")
-			synd_mind.name = "Chad Thundercock" //THE WHOLE FAMILY!
-		synd_mind.current.real_name = synd_mind.name
-	return
 
 /proc/is_nuclear_operative(mob/M)
 	return M && istype(M) && M.mind && M.mind.has_antag_datum(/datum/antagonist/nukeop)
