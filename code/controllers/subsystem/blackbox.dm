@@ -44,7 +44,14 @@ SUBSYSTEM_DEF(blackbox)
 	return ..()
 
 /datum/controller/subsystem/blackbox/vv_edit_var(var_name, var_value)
-	return FALSE
+	switch(var_name)
+		if("feedback")
+			return FALSE
+		if("sealed")
+			if(var_value)
+				return Seal()
+			return FALSE
+	return ..()
 
 /datum/controller/subsystem/blackbox/Shutdown()
 	sealed = FALSE
@@ -73,11 +80,12 @@ SUBSYSTEM_DEF(blackbox)
 
 /datum/controller/subsystem/blackbox/proc/Seal()
 	if(sealed)
-		return
+		return FALSE
 	if(IsAdminAdvancedProcCall())
 		message_admins("[key_name_admin(usr)] sealed the blackbox!")
 	log_game("Blackbox sealed[IsAdminAdvancedProcCall() ? " by [key_name(usr)]" : ""].")
 	sealed = TRUE
+	return TRUE
 
 /datum/controller/subsystem/blackbox/proc/LogBroadcast(freq)
 	if(sealed)
