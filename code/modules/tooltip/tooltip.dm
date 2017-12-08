@@ -73,7 +73,8 @@ Notes:
 	params = {"{ "cursor": "[params]", "screenLoc": "[thing.screen_loc]" }"}
 
 	//Send stuff to the tooltip
-	src.owner << output(list2params(list(params, src.owner.view, "[title][content]", theme, special)), "[src.control]:tooltip.update")
+	var/view_size = getviewsize(owner.view)
+	owner << output(list2params(list(params, view_size[1] , view_size[2], "[title][content]", theme, special)), "[src.control]:tooltip.update")
 
 	//If a hide() was hit while we were showing, run hide() again to avoid stuck tooltips
 	src.showing = 0
