@@ -14,9 +14,6 @@
 //breaks when hittin invalid characters thereafter
 /proc/hex2num(hex)
 	. = 0
-	if(!istext(hex))
-		return
-
 	var/place = 0
 	for(var/i in length(hex) to 1 step -1)
 		var/num = text2ascii(hex, i)
