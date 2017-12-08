@@ -2,7 +2,7 @@
 //
 // consists of light fixtures (/obj/machinery/light) and light tube/bulb items (/obj/item/light)
 
-
+#define LIGHT_EMERGENCY_POWER_USE 0.2 //How much power emergency lights will consume per tick
 // status values shared between lighting fixtures and items
 #define LIGHT_OK 0
 #define LIGHT_EMPTY 1
@@ -316,7 +316,7 @@
 			else
 				use_power = ACTIVE_POWER_USE
 				set_light(brightness, 1, "#FFFFFF")
-	else if(has_emergency_power() && !turned_off())
+	else if(has_emergency_power(LIGHT_EMERGENCY_POWER_USE) && !turned_off())
 		use_power = IDLE_POWER_USE
 		emergency_mode = TRUE
 	else
@@ -336,8 +336,8 @@
 
 /obj/machinery/light/process()
 	if(has_power() && cell)
-		cell.charge = min(cell.maxcharge, cell.charge + 0.2) //Recharge emergency power automatically while not using it
-	if(emergency_mode && !use_emergency_power(0.2))
+		cell.charge = min(cell.maxcharge, cell.charge + LIGHT_EMERGENCY_POWER_USE) //Recharge emergency power automatically while not using it
+	if(emergency_mode && !use_emergency_power(LIGHT_EMERGENCY_POWER_USE))
 		update(FALSE) //Disables emergency mode and sets the color to normal
 
 /obj/machinery/light/proc/burn_out()
@@ -509,7 +509,7 @@
 		return status == LIGHT_OK
 
 // attempts to use power from the installed emergency cell, returns true if it does and false if it doesn't
-/obj/machinery/light/proc/use_emergency_power(pwr = 0.2)
+/obj/machinery/light/proc/use_emergency_power(pwr = LIGHT_EMERGENCY_POWER_USE)
 	if(!has_emergency_power(pwr))
 		return FALSE
 	if(cell.charge > 300) //it's meant to handle 120 W, ya doofus
