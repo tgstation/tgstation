@@ -137,7 +137,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	var/datum/saymode/SM = SSradio.saymodes[talk_key]
 	if(SM && !SM.handle_message(src, message, language))
-			return
+		return
 
 	if(!can_speak_vocal(message))
 		to_chat(src, "<span class='warning'>You find yourself unable to speak!</span>")
