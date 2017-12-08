@@ -77,7 +77,7 @@
 	if(istype(M))
 		M.name = "Aussie Cant"
 		M.real_name = "Aussie Cant"
-		M.brainloss = min(M.brainloss + 60, 60)
+		M.adjustBrainLoss(60)
 	..()
 
 /datum/reagent/toxin/emote
