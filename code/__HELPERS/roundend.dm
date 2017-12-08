@@ -295,6 +295,7 @@
 		for(var/datum/antagonist/X in all_antagonists)
 			if(X.get_team() == T)
 				all_antagonists -= X
+		result += " "//newline between teams
 
 	var/currrent_category
 	var/datum/antagonist/previous_category
