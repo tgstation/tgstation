@@ -4,7 +4,7 @@
 
 /obj/item/reagent_containers/food/snacks/donut
 	name = "donut"
-	desc = "Goes great with Robust Coffee."
+	desc = "Goes great with robust coffee."
 	icon_state = "donut1"
 	bitesize = 5
 	bonus_reagents = list("sugar" = 1)

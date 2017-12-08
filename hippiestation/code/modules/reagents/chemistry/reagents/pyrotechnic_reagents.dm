@@ -37,7 +37,7 @@
 				M.losebreath += (0.2*reac_volume) //no longer instadeath rape but losebreath instead much more immulshion friendly
 				M.drowsyness += 2
 				M.confused += 6
-				M.brainloss += (0.25*reac_volume) //hypothermia isn't good for the brain
+				M.adjustBrainLoss(0.25*reac_volume) //hypothermia isn't good for the brain
 
 			else
 			 M.bodytemperature = max(M.bodytemperature - 15, TCMB)

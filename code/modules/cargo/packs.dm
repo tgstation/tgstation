@@ -1221,6 +1221,14 @@
 					/obj/item/vending_refill/cigarette)
 	crate_name = "cigarette supply crate"
 
+/datum/supply_pack/organic/vending/games
+	name = "Games Supply Crate"
+	cost = 1000
+	contains = list(/obj/item/vending_refill/games,
+					/obj/item/vending_refill/games,
+					/obj/item/vending_refill/games)
+	crate_name = "games supply crate"
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Materials ///////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
