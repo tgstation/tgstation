@@ -554,7 +554,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 	addtimer(CALLBACK(src, .proc/manual_suicide, user), 101)
 	return MANUAL_SUICIDE
 	
-/obj/item/disk/nuclear/proc/manual_suicide(mob/living/user)
+/obj/item/disk/proc/manual_suicide(mob/living/user)
 	user.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
 	user.visible_message("<span class='suicide'>[user] was destroyed by the nuclear blast!</span>")
 	user.adjustOxyLoss(200)
@@ -570,8 +570,3 @@ This is here to make the tiles around the station mininuke change when it's arme
 	playsound(src, 'sound/machines/alarm.ogg', 30, -1, 1)
 	addtimer(CALLBACK(src, .proc/manual_suicide, user), 101)
 	return MANUAL_SUICIDE
-	
-/obj/item/disk/fakenucleardisk/proc/manual_suicide(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] was destroyed by the nuclear blast!</span>")
-	user.adjustOxyLoss(200)
-	user.death(0)
