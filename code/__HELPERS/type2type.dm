@@ -14,7 +14,7 @@
 //breaks when hittin invalid characters thereafter
 /proc/hex2num(hex)
 	. = 0
-	var/place = 0
+	var/place = 1
 	for(var/i in length(hex) to 1 step -1)
 		var/num = text2ascii(hex, i)
 		switch(num)
@@ -29,7 +29,8 @@
 			else
 				CRASH("Malformed hex number")
 
-		. += num * (16 ** place++)
+		. += num * place
+		place *= 16
 
 //Returns the hex value of a decimal number
 //len == length of returned string
