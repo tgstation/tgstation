@@ -101,11 +101,12 @@ All ShuttleMove procs go here
 	if(rotation)
 		shuttleRotate(rotation)
 
-	update_parallax_contents()
+	if (src.type != /atom/movable/lighting_object)
+		var/turf/newT = get_turf(src)
+		if (newT.z != oldT.z)
+			onTransitZ(oldT.z, newT.z)
 
-	var/turf/newT = get_turf(src)
-	if (newT.z != oldT.z)
-		onTransitZ(oldT.z, newT.z)
+	update_parallax_contents()
 
 	return TRUE
 
@@ -333,9 +334,6 @@ All ShuttleMove procs go here
 /************************************Misc move procs************************************/
 
 /atom/movable/lighting_object/onShuttleMove()
-	return FALSE
-
-/atom/movable/light/onShuttleMove()
 	return FALSE
 
 /obj/docking_port/stationary/onShuttleMove(turf/newT, turf/oldT, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)

@@ -828,7 +828,7 @@
 		return pick(/area/hallway, /area/crew_quarters/locker)
 
 /mob/living/carbon/human/interactive/proc/target_filter(target)
-	var/list/filtered_targets = list(/area, /turf, /obj/machinery/door, /atom/movable/light, /obj/structure/cable, /obj/machinery/atmospherics)
+	var/list/filtered_targets = list(/area, /turf, /obj/machinery/door, /atom/movable/lighting_object, /obj/structure/cable, /obj/machinery/atmospherics)
 	var/list/L = target
 	for(var/atom/A in target) // added a bunch of "junk" that clogs up the general find procs
 		if(is_type_in_list(A,filtered_targets))

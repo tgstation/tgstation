@@ -143,9 +143,6 @@
 /atom/movable/lighting_object/onTransitZ()
 	return
 
-/atom/movable/light/onTransitZ()
-	return
-
 // Override here to prevent things accidentally moving around overlays.
 /atom/movable/lighting_object/forceMove(atom/destination, var/no_tp=FALSE, var/harderforce = FALSE)
 	if(harderforce)
