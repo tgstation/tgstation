@@ -43,10 +43,48 @@ other types of metals and chemistry for reagents).
 	var/lathe_time_factor = 1			//How many times faster than normal is this to build on the protolathe
 	var/dangerous_construction = FALSE	//notify and log for admin investigations if this is printed.
 	var/departmental_flags = NONE			//bitflags for deplathes.
+	var/list/datum/techweb_node/unlocked_by = list()
+	var/icon_cache
 
 /datum/design/Destroy()
 	CRASH("DESIGN DATUMS SHOULD NOT EVER BE DESTROYED AS THEY ARE ONLY MEANT TO BE IN A GLOBAL LIST AND REFERENCED FOR US.")
 	return ..()
+
+/datum/design/proc/icon_html(client/user)
+	if (!icon_cache)
+		// construct the icon and slap it into the resource cache
+		var/atom/item = build_path
+		if (!ispath(item, /atom))
+			// biogenerator outputs to beakers by default
+			if (build_type & BIOGENERATOR)
+				item = /obj/item/reagent_containers/glass/beaker/large
+			else
+				return  // shouldn't happen, but just in case
+
+		// circuit boards become their resulting machines or computers
+		if (ispath(item, /obj/item/circuitboard))
+			var/obj/item/circuitboard/C = item
+			var/machine = initial(C.build_path)
+			if (machine)
+				item = machine
+		var/icon_file = initial(item.icon)
+		var/icon/I = icon(icon_file, initial(item.icon_state), SOUTH)
+
+		// computers (and snowflakes) get their screen and keyboard sprites
+		if (ispath(item, /obj/machinery/computer) || ispath(item, /obj/machinery/power/solar_control))
+			var/obj/machinery/computer/C = item
+			var/screen = initial(C.icon_screen)
+			var/keyboard = initial(C.icon_keyboard)
+			if (screen)
+				I.Blend(icon(icon_file, screen, SOUTH), ICON_OVERLAY)
+			if (keyboard)
+				I.Blend(icon(icon_file, keyboard, SOUTH), ICON_OVERLAY)
+
+		// based on icon2html
+		icon_cache = "[generate_asset_name(I)].png"
+		register_asset(icon_cache, I)
+	send_asset(user, icon_cache, FALSE)
+	return "<img class='icon' src=\"[url_encode(icon_cache)]\">"
 
 ////////////////////////////////////////
 //Disks for transporting design datums//

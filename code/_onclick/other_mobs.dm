@@ -25,7 +25,9 @@
 	if(override)
 		return
 
+	SendSignal(COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A)
 	A.attack_hand(src)
+	SendSignal(COMSIG_HUMAN_MELEE_UNARMED_ATTACKBY, src)
 
 /atom/proc/attack_hand(mob/user)
 	return

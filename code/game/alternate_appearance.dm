@@ -29,10 +29,6 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	appearance_key = key
 
 /datum/atom_hud/alternate_appearance/Destroy()
-	for(var/v in hudusers)
-		remove_hud_from(v)
-	for(var/v in hudatoms)
-		remove_from_hud(v)
 	GLOB.active_alternate_appearances -= src
 	return ..()
 

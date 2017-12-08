@@ -47,6 +47,12 @@ Possible to do for anyone motivated enough:
 	var/temp = ""
 	var/list/holo_calls	//array of /datum/holocalls
 	var/datum/holocall/outgoing_call	//do not modify the datums only check and call the public procs
+	var/obj/item/disk/holodisk/disk //Record disk
+	var/replay_mode = FALSE //currently replaying a recording
+	var/record_mode = FALSE //currently recording
+	var/record_start = 0  	//recording start time
+	var/record_user			//user that inititiated the recording
+	var/obj/effect/overlay/holo_pad_hologram/replay_holo	//replay hologram
 	var/static/force_answer_call = FALSE	//Calls will be automatically answered after a couple rings, here for debugging
 	var/static/list/holopads = list()
 
@@ -64,6 +70,14 @@ Possible to do for anyone motivated enough:
 
 	for (var/I in masters)
 		clear_holo(I)
+
+	if(replay_mode)
+		replay_stop()
+	if(record_mode)
+		record_stop()
+	
+	QDEL_NULL(disk)
+
 	holopads -= src
 	return ..()
 
@@ -72,6 +86,10 @@ Possible to do for anyone motivated enough:
 		stat &= ~NOPOWER
 	else
 		stat |= NOPOWER
+		if(replay_mode)
+			replay_stop()
+		if(record_mode)
+			record_stop()
 		if(outgoing_call)
 			outgoing_call.ConnectionFailure(src)
 
@@ -101,6 +119,18 @@ Possible to do for anyone motivated enough:
 
 	if(default_deconstruction_crowbar(P))
 		return
+
+	if(istype(P,/obj/item/disk/holodisk))
+		if(disk)
+			to_chat(user,"<span class='notice'>There's already a disk inside [src]</span>")
+			return
+		if (!user.transferItemToLoc(P,src))
+			return
+		to_chat(user,"<span class='notice'>You insert [P] into [src]</span>")
+		disk = P
+		updateDialog()
+		return
+
 	return ..()
 
 /obj/machinery/holopad/AltClick(mob/living/carbon/human/user)
@@ -122,6 +152,17 @@ Possible to do for anyone motivated enough:
 	else
 		dat = "<a href='?src=[REF(src)];AIrequest=1'>Request an AI's presence.</a><br>"
 		dat += "<a href='?src=[REF(src)];Holocall=1'>Call another holopad.</a><br>"
+		if(disk)
+			if(disk.record)
+				//Replay
+				dat += "<a href='?src=[REF(src)];replay_start=1'>Replay disk recording.</a><br>"
+				//Clear
+				dat += "<a href='?src=[REF(src)];record_clear=1'>Clear disk recording.</a><br>"
+			else
+				//Record
+				dat += "<a href='?src=[REF(src)];record_start=1'>Start new recording.</a><br>"
+			//Eject
+			dat += "<a href='?src=[REF(src)];disk_eject=1'>Eject disk.</a><br>"
 
 		if(LAZYLEN(holo_calls))
 			dat += "=====================================================<br>"
@@ -145,7 +186,7 @@ Possible to do for anyone motivated enough:
 				dat += "<a href='?src=[REF(src)];disconnectcall=[REF(HC)]'>Disconnect call from [HC.user].</a><br>"
 
 
-	var/datum/browser/popup = new(user, "holopad", name, 300, 130)
+	var/datum/browser/popup = new(user, "holopad", name, 300, 150)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
@@ -215,6 +256,22 @@ Possible to do for anyone motivated enough:
 		temp = ""
 		if(outgoing_call)
 			outgoing_call.Disconnect()
+	
+	else if(href_list["disk_eject"])
+		if(disk && !replay_mode)
+			disk.forceMove(drop_location())
+			disk = null
+	
+	else if(href_list["replay_stop"])
+		replay_stop()
+	else if(href_list["replay_start"])
+		replay_start()
+	else if(href_list["record_start"])
+		record_start(usr)
+	else if(href_list["record_stop"])
+		record_stop()
+	else if(href_list["record_clear"])
+		record_clear()
 
 	updateDialog()
 
@@ -269,6 +326,7 @@ Possible to do for anyone motivated enough:
 			else
 				playsound(src, 'sound/machines/twobeep.ogg', 100)	//bring, bring!
 
+
 /obj/machinery/holopad/proc/activate_holo(mob/living/user)
 	var/mob/living/silicon/ai/AI = user
 	if(!istype(AI))
@@ -321,15 +379,24 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if(outgoing_call && speaker == outgoing_call.user)
 		outgoing_call.hologram.say(raw_message)
 
+	if(record_mode && speaker == record_user)
+		record_message(speaker,raw_message,message_language)
+
 /obj/machinery/holopad/proc/SetLightsAndPower()
 	var/total_users = masters.len + LAZYLEN(holo_calls)
 	use_power = total_users > 0 ? ACTIVE_POWER_USE : IDLE_POWER_USE
 	active_power_usage = HOLOPAD_PASSIVE_POWER_USAGE + (HOLOGRAM_POWER_USAGE * total_users)
-	if(total_users)
+	if(total_users || replay_mode)
 		set_light(2)
-		icon_state = "holopad1"
 	else
 		set_light(0)
+	update_icon()
+
+/obj/machinery/holopad/update_icon()
+	var/total_users = masters.len + LAZYLEN(holo_calls)
+	if(total_users || replay_mode)
+		icon_state = "holopad1"
+	else
 		icon_state = "holopad0"
 
 /obj/machinery/holopad/proc/set_holo(mob/living/user, var/obj/effect/overlay/holo_pad_hologram/h)
@@ -364,6 +431,128 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		if(!(eye_area in holo_area.related))
 			clear_holo(user)
 	return TRUE
+
+// RECORDED MESSAGES
+
+/obj/machinery/holopad/proc/setup_replay_holo(datum/holorecord/record)
+	var/obj/effect/overlay/holo_pad_hologram/Hologram = new(loc)//Spawn a blank effect at the location.
+	Hologram.add_overlay(record.caller_image)
+	Hologram.alpha = 170
+	Hologram.add_atom_colour("#77abff", FIXED_COLOUR_PRIORITY)
+	Hologram.dir = SOUTH //for now
+	Hologram.grant_all_languages(omnitongue=TRUE)
+	var/datum/language_holder/holder = Hologram.get_language_holder()
+	holder.selected_default_language = record.language
+	Hologram.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
+	Hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
+	Hologram.anchored = TRUE//So space wind cannot drag it.
+	Hologram.name = "[record.caller_name] (Hologram)"//If someone decides to right click.
+	Hologram.set_light(2)	//hologram lighting
+	visible_message("<span class='notice'>A holographic image of [record.caller_name] flickers to life before your eyes!</span>")
+	return Hologram
+
+/obj/machinery/holopad/proc/replay_start()
+	if(!replay_mode)
+		replay_mode = TRUE
+		replay_holo = setup_replay_holo(disk.record)
+		temp = "Replaying...<br>"
+		temp += "<A href='?src=[REF(src)];replay_stop=1'>End replay.</A>"
+		SetLightsAndPower()
+		replay_entry(1)
+	return
+
+/obj/machinery/holopad/proc/replay_stop()
+	if(replay_mode)
+		replay_mode = FALSE
+		temp = null
+		QDEL_NULL(replay_holo)
+		SetLightsAndPower()
+		updateDialog()
+
+/obj/machinery/holopad/proc/record_start(mob/living/user)
+	if(!user || !disk || disk.record)
+		return
+	disk.record = new
+	record_mode = TRUE
+	record_start = world.time
+	record_user = user
+	disk.record.caller_image = get_record_icon(user)
+	temp = "Recording...<br>"
+	temp += "<A href='?src=[REF(src)];record_stop=1'>End recording.</A>"
+
+/obj/machinery/holopad/proc/get_record_icon(mob/living/user)
+	var/olddir = user.dir
+	user.setDir(SOUTH)
+	. = getFlatIcon(user)
+	user.setDir(olddir)
+
+/obj/machinery/holopad/proc/record_message(mob/living/speaker,message,language)
+	if(!record_mode)
+		return
+	//make this command so you can have multiple languages in single record
+	if(!disk.record.caller_name && istype(speaker))
+		disk.record.caller_name = speaker.name
+	if(!disk.record.language)
+		disk.record.language = language
+	else if(language != disk.record.language)
+		disk.record.entries += list(list(HOLORECORD_LANGUAGE,language))
+
+	var/current_delay = 0
+	for(var/E in disk.record.entries)
+		var/list/entry = E
+		if(entry[1] != HOLORECORD_DELAY)
+			continue
+		current_delay += entry[2]
+
+	var/time_delta = world.time - record_start - current_delay
+	
+	if(time_delta >= 1)
+		disk.record.entries += list(list(HOLORECORD_DELAY,time_delta))
+	disk.record.entries += list(list(HOLORECORD_SAY,message))
+	if(disk.record.entries.len >= HOLORECORD_MAX_LENGTH)
+		record_stop()
+
+/obj/machinery/holopad/proc/replay_entry(entry_number)
+	if(!replay_mode)
+		return
+	if(disk.record.entries.len < entry_number)
+		replay_stop()
+		return
+	var/list/entry = disk.record.entries[entry_number]
+	var/command = entry[1]
+	switch(command)
+		if(HOLORECORD_SAY)
+			var/message = entry[2]
+			if(replay_holo)
+				replay_holo.say(message)
+		if(HOLORECORD_SOUND)
+			playsound(src,entry[2],50,1)
+		if(HOLORECORD_DELAY)
+			addtimer(CALLBACK(src,.proc/replay_entry,entry_number+1),entry[2])
+			return
+		if(HOLORECORD_LANGUAGE)
+			var/datum/language_holder/holder = replay_holo.get_language_holder()
+			holder.selected_default_language = entry[2]
+		if(HOLORECORD_PRESET)
+			var/preset_type = entry[2]
+			var/datum/preset_holoimage/H = new preset_type
+			replay_holo.cut_overlays()
+			replay_holo.add_overlay(H.build_image())
+		if(HOLORECORD_RENAME)
+			replay_holo.name = entry[2] + " (Hologram)"
+	.(entry_number+1)
+
+/obj/machinery/holopad/proc/record_stop()
+	if(record_mode)
+		record_mode = FALSE
+		temp = null
+		record_user = null
+		updateDialog()
+
+/obj/machinery/holopad/proc/record_clear()
+	if(disk && disk.record)
+		QDEL_NULL(disk.record)
+	updateDialog()
 
 /obj/effect/overlay/holo_pad_hologram
 	var/mob/living/Impersonation

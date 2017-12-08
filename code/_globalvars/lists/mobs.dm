@@ -24,6 +24,7 @@ GLOBAL_LIST_EMPTY(pai_list)
 GLOBAL_LIST_EMPTY(available_ai_shells)
 GLOBAL_LIST_INIT(simple_animals, list(list(),list(),list())) // One for each AI_* status define
 GLOBAL_LIST_EMPTY(spidermobs)				//all sentient spider mobs
+GLOBAL_LIST_EMPTY(bots_list)
 
 GLOBAL_LIST_EMPTY(language_datum_instances)
 GLOBAL_LIST_EMPTY(all_languages)

@@ -33,7 +33,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 
 /obj/machinery/rnd/circuit_imprinter/Initialize()
 	materials = AddComponent(/datum/component/material_container, list(MAT_GLASS, MAT_GOLD, MAT_DIAMOND, MAT_METAL, MAT_BLUESPACE),
-		FALSE, list(/obj/item/stack, /obj/item/ore/bluespace_crystal), CALLBACK(src, .proc/is_insertion_ready))
+		FALSE, list(/obj/item/stack, /obj/item/ore/bluespace_crystal), CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
 	materials.precise_insertion = TRUE
 	create_reagents(0)
 	return ..()
@@ -81,24 +81,6 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	linked_console.linked_imprinter = null
 	..()
 
-/obj/machinery/rnd/circuit_imprinter/ComponentActivated(datum/component/C)
-	..()
-	if(istype(C, /datum/component/material_container))
-		var/datum/component/material_container/M = C
-		if(!M.last_insert_success)
-			return
-		var/lit = M.last_inserted_type
-		var/stack_name
-		if(ispath(lit, /obj/item/ore/bluespace_crystal))
-			stack_name = "bluespace"
-			use_power(MINERAL_MATERIAL_AMOUNT / 10)
-		else
-			var/obj/item/stack/S = lit
-			stack_name = initial(S.name)
-			use_power(max(1000, (MINERAL_MATERIAL_AMOUNT * M.last_amount_inserted / 10)))
-		add_overlay("protolathe_[stack_name]")
-		addtimer(CALLBACK(src, /atom/proc/cut_overlay, "protolathe_[stack_name]"), 10)
-
 /obj/machinery/rnd/circuit_imprinter/proc/user_try_print_id(id)
 	if((!linked_console && requires_console) || !id)
 		return FALSE
@@ -141,4 +123,4 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has built [path] at a circuit imprinter.")
 	var/obj/item/I = new path(get_turf(src))
 	I.materials = matlist.Copy()
-	SSblackbox.record_feedback("nested_tally", "circuit_printed", 1, list("[type]", "[path]"))
+	SSblackbox.record_feedback("nested tally", "circuit_printed", 1, list("[type]", "[path]"))

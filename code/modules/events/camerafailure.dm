@@ -6,11 +6,9 @@
 	alertadmins = 0
 
 /datum/round_event/camera_failure
-	startWhen = 1
-	endWhen = 2
 	fakeable = FALSE
 
-/datum/round_event/camera_failure/tick()
+/datum/round_event/camera_failure/start()
 	var/iterations = 1
 	var/obj/machinery/camera/C = pick(GLOB.cameranet.cameras)
 	while(prob(round(100/iterations)))

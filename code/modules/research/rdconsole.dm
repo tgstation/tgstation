@@ -216,12 +216,9 @@ doesn't have toxins access.
 
 /obj/machinery/computer/rdconsole/proc/ui_header()
 	var/list/l = list()
-	l += "<h2>Nanotrasen Research and Development</h2>[RDSCREEN_NOBREAK]"
-	l += "<div class='statusDisplay'><b>Connected Technology database: [stored_research == SSresearch.science_tech? "Nanotrasen" : "Third Party"]"
-	l += "Available Points: [stored_research.research_points]"
+	l += "<div class='statusDisplay'><b>[stored_research.organization] Research and Development Network</b>"
+	l += "Available points: [round(stored_research.research_points)] (+[round(stored_research.last_bitcoins * 60)] / minute)"
 	l += "Security protocols: [emagged? "<font color='red'>Disabled</font>" : "<font color='green'>Enabled</font>"]"
-	l += "Design Disk: [d_disk? "<font color='green'>Loaded</font>" : "<font color='red'>Not Loaded</font>"] | \
-	 Technology Disk: [t_disk? "<font color='green'>Loaded</font>" : "<font color='red'>Not Loaded</font>"]</b>"
 	l += "<a href='?src=[REF(src)];switch_screen=[RDSCREEN_MENU]'>Main Menu</a> | <a href='?src=[REF(src)];switch_screen=[back]'>Back</a></div>[RDSCREEN_NOBREAK]"
 	return l
 
@@ -234,7 +231,7 @@ doesn't have toxins access.
 	if(t_disk)
 		l += "<hr><a href='?src=[REF(src)];switch_screen=[RDSCREEN_TECHDISK]'>Tech Disk</a>"
 	if(linked_destroy)
-		l += "<hr><a href='?src=[REF(src)];switch_screen=[RDSCREEN_DECONSTRUCT]'>Deconstructive Analyzer</a>"
+		l += "<hr><a href='?src=[REF(src)];switch_screen=[RDSCREEN_DECONSTRUCT]'>Destructive Analyzer</a>"
 	if(linked_lathe)
 		l += "<hr><a href='?src=[REF(src)];switch_screen=[RDSCREEN_PROTOLATHE]'>Protolathe</a>"
 	if(linked_imprinter)
@@ -532,56 +529,114 @@ doesn't have toxins access.
 	RDSCREEN_UI_DECONSTRUCT_CHECK
 	var/list/l = list()
 	if(!linked_destroy.loaded_item)
-		l += "<div class='statusDisplay'>No Item Loaded. Standing-by...</div>"
+		l += "<div class='statusDisplay'>No item loaded. Standing-by...</div>"
 	else
-		l += "<div class='statusDisplay'><h3>Deconstruction Menu</h3>"
-		l += "<A href='?src=[REF(src)];eject_item=1'>Eject Item</A>"
-		l += "Name: [linked_destroy.loaded_item.name]"
-		l += "Select a node to boost by deconstructing this item."
-		l += "This item is able to boost:"
-		var/list/listin = techweb_item_boost_check(linked_destroy.loaded_item)
-		for(var/node_id in listin)
-			var/datum/techweb_node/N = get_techweb_node_by_id(node_id)
-			var/worth = listin[N.id]
-			if(!stored_research.researched_nodes[N.id] && !stored_research.boosted_nodes[N.id])
-				l += "<A href='?src=[REF(src)];deconstruct=[N.id]'>[N.display_name]: [worth] points</A>"
-			else
-				l += "<span class='linkOff>[N.display_name]: [worth] points</span>"
+		l += "<div class='statusDisplay'>[RDSCREEN_NOBREAK]"
+		l += "<table><tr><td>[icon2html(linked_destroy.loaded_item, usr)]</td><td><b>[linked_destroy.loaded_item.name]</b> <A href='?src=[REF(src)];eject_item=1'>Eject</A></td></tr></table>[RDSCREEN_NOBREAK]"
+		l += "Select a node to boost by deconstructing this item. This item can boost:"
+
+		var/anything = FALSE
+		var/list/boostable_nodes = techweb_item_boost_check(linked_destroy.loaded_item)
+		for(var/id in boostable_nodes)
+			anything = TRUE
+			var/worth = boostable_nodes[id]
+			var/datum/techweb_node/N = get_techweb_node_by_id(id)
+
+			l += "<div class='statusDisplay'>[RDSCREEN_NOBREAK]"
+			if (stored_research.researched_nodes[N.id])  // already researched
+				l += "<span class='linkOff'>[N.display_name]</span>"
+				l += "This node has already been researched."
+			else if (worth == 0)  // reveal only
+				if (stored_research.hidden_nodes[N.id])
+					l += "<A href='?src=[REF(src)];deconstruct=[N.id]'>[N.display_name]</A>"
+					l += "This node will be revealed."
+				else
+					l += "<span class='linkOff'>[N.display_name]</span>"
+					l += "This node has already been revealed."
+			else  // boost by the difference
+				var/difference = min(worth, N.research_cost) - stored_research.boosted_nodes[N.id]
+				if (difference > 0)
+					l += "<A href='?src=[REF(src)];deconstruct=[N.id]'>[N.display_name]</A>"
+					l += "This node will be boosted by [difference] points."
+				else
+					l += "<span class='linkOff'>[N.display_name]</span>"
+					l += "This node has already been boosted.</span>"
+			l += "</div>[RDSCREEN_NOBREAK]"
+
+		// point deconstruction and material reclamation use the same ID to prevent accidentally missing the points
 		var/point_value = techweb_item_point_check(linked_destroy.loaded_item)
-		if(point_value && isnull(stored_research.deconstructed_items[linked_destroy.loaded_item.type]))
-			l += "<A href='?src=[REF(src)];deconstruct=[RESEARCH_MATERIAL_RECLAMATION_ID]'>Generic Point Deconstruction - [point_value] points</A>"
-		l += "<A href='?src=[REF(src)];deconstruct=[RESEARCH_MATERIAL_RECLAMATION_ID]'>Material Reclaimation Deconstruction</A>"
+		if(point_value)
+			anything = TRUE
+			l += "<div class='statusDisplay'>[RDSCREEN_NOBREAK]"
+			if (stored_research.deconstructed_items[linked_destroy.loaded_item.type])
+				l += "<span class='linkOff'>Point Deconstruction</span>"
+				l += "This item's [point_value] point\s have already been claimed."
+			else
+				l += "<A href='?src=[REF(src)];deconstruct=[RESEARCH_MATERIAL_RECLAMATION_ID]'>Point Deconstruction</A>"
+				l += "This item is worth [point_value] point\s!"
+			l += "</div>[RDSCREEN_NOBREAK]"
+
+		var/list/materials = linked_destroy.loaded_item.materials
+		if (materials.len)
+			l += "<div class='statusDisplay'><A href='?src=[REF(src)];deconstruct=[RESEARCH_MATERIAL_RECLAMATION_ID]'>Material Reclamation</A>"
+			for (var/M in materials)
+				l += "* [CallMaterialName(M)] x [materials[M]]"
+			l += "</div>[RDSCREEN_NOBREAK]"
+			anything = TRUE
+
+		if (!anything)
+			l += "Nothing!"
+
 		l += "</div>"
 	return l
 
 /obj/machinery/computer/rdconsole/proc/ui_techweb()		//Legacy code.
 	var/list/l = list()
-	var/list/avail = list()			//This could probably be optimized a bit later.
-	var/list/unavail = list()
-	var/list/res = list()
-	for(var/v in stored_research.researched_nodes)
-		res += stored_research.researched_nodes[v]
-	for(var/v in stored_research.available_nodes)
-		if(stored_research.researched_nodes[v])
-			continue
-		avail += stored_research.available_nodes[v]
-	for(var/v in stored_research.visible_nodes)
-		if(stored_research.available_nodes[v])
-			continue
-		unavail += stored_research.visible_nodes[v]
-	l += "<h2>Technology Nodes:</h2>[RDSCREEN_NOBREAK]"
-	l += "<div><h3>Available for Research:</h3>"
-	for(var/datum/techweb_node/N in avail)
-		var/not_unlocked = (stored_research.available_nodes[N.id] && !stored_research.researched_nodes[N.id])
-		var/has_points = (stored_research.research_points >= N.get_price(stored_research))
-		var/research_href = not_unlocked? (has_points? "<A href='?src=[REF(src)];research_node=[N.id]'>Research</A>" : "<span class='linkOff bad'>Not Enough Points</span>") : null
-		l += "<A href='?src=[REF(src)];view_node=[N.id];back_screen=[screen]'>[N.display_name]</A>[research_href]"
-	l += "</div><div><h3>Locked Nodes:</h3>"
-	for(var/datum/techweb_node/N in unavail)
-		l += "<A href='?src=[REF(src)];view_node=[N.id];back_screen=[screen]'>[N.display_name]</A>"
-	l += "</div><div><h3>Researched Nodes:</h3>"
-	for(var/datum/techweb_node/N in res)
-		l += "<A href='?src=[REF(src)];view_node=[N.id];back_screen=[screen]'>[N.display_name]</A>"
+	var/list/columns = list()
+	var/max_tier = 0
+	for (var/node_ in stored_research.tiers)
+		var/datum/techweb_node/node = node_
+		var/tier = stored_research.tiers[node]
+		LAZYINITLIST(columns["[tier]"])  // String hackery to make the numbers associative
+		columns["[tier]"] += ui_techweb_single_node(node, minimal=(tier != 1))
+		max_tier = max(max_tier, tier)
+
+	l += "<table><tr><th align='left'>Researched</th><th align='left'>Available</th><th align='left'>Future</th></tr><tr>[RDSCREEN_NOBREAK]"
+	for(var/tier in 0 to max_tier)
+		l += "<td valign='top'>[RDSCREEN_NOBREAK]"
+		l += columns["[tier]"]
+		l += "</td>[RDSCREEN_NOBREAK]"
+	l += "</tr></table>[RDSCREEN_NOBREAK]"
+	return l
+
+/obj/machinery/computer/rdconsole/proc/machine_icon(atom/item)
+	return icon2html(initial(item.icon), usr, initial(item.icon_state), SOUTH)
+
+/obj/machinery/computer/rdconsole/proc/ui_techweb_single_node(datum/techweb_node/node, selflink=TRUE, minimal=FALSE)
+	var/list/l = list()
+	if (stored_research.hidden_nodes[node.id])
+		return l
+	var/price = node.get_price(stored_research)
+	var/display_name = node.display_name
+	if (selflink)
+		display_name = "<A href='?src=[REF(src)];view_node=[node.id];back_screen=[screen]'>[display_name]</A>"
+	l += "<div class='statusDisplay technode'><b>[display_name]</b> [RDSCREEN_NOBREAK]"
+	if (minimal)
+		l += "<br>[node.description]"
+	else
+		if(stored_research.researched_nodes[node.id])
+			l += "<span class='linkOff'>Researched</span>"
+		else if(stored_research.available_nodes[node.id])
+			if(stored_research.research_points >= price)
+				l += "<A href='?src=[REF(src)];research_node=[node.id]'>[price]</A>"
+			else
+				l += "<span class='linkOff'>[price]</span>"  // gray - too expensive
+		else
+			l += "<span class='linkOff bad'>[price]</span>"  // red - missing prereqs
+		l += "[node.description]"
+		for(var/i in node.designs)
+			var/datum/design/D = node.designs[i]
+			l += "<span data-tooltip='[D.name]' onclick='location=\"?src=[REF(src)];view_design=[i];back_screen=[screen]\"'>[D.icon_html(usr)]</span>[RDSCREEN_NOBREAK]"
 	l += "</div>[RDSCREEN_NOBREAK]"
 	return l
 
@@ -590,64 +645,68 @@ doesn't have toxins access.
 	var/list/l = list()
 	if(stored_research.hidden_nodes[selected_node.id])
 		l += "<div><h3>ERROR: RESEARCH NODE UNKNOWN.</h3></div>"
-	l += "<div><h3>[selected_node.display_name]</h3>"
-	l += "Description: [selected_node.description]"
-	l += "Status: [stored_research.researched_nodes[selected_node.id]? "<font color='green'><b>Researched</b></font>" : "<span class='bad'>Locked</span>"]"
-	l += "Point Cost: [selected_node.get_price(stored_research)]. </div>[RDSCREEN_NOBREAK]"
-	if(stored_research.researched_nodes[selected_node.id])
-		l += "<h3><span class='linkOff'>Already Researched</span></h3>[RDSCREEN_NOBREAK]"
-	else if(stored_research.available_nodes[selected_node.id])
-		if(stored_research.research_points >= selected_node.get_price(stored_research))
-			l += "<h3><A href='?src=[REF(src)];research_node=[selected_node.id]'>Research</A></h3>[RDSCREEN_NOBREAK]"
-		else
-			l += "<h3><span class='linkOff bad'>Not Enough Points</span></h3>[RDSCREEN_NOBREAK]"
-	else if(stored_research.visible_nodes[selected_node.id])
-		l += "<h3><span class='linkOff bad'>Prerequisites not met!</span></h3>[RDSCREEN_NOBREAK]"
-	else
-		l += "<h3><span class='linkOff bad'>ERROR</span></h3>[RDSCREEN_NOBREAK]"
-	l += "<div><h3>Designs:</h3>[RDSCREEN_NOBREAK]"
-	for(var/i in selected_node.designs)
-		var/datum/design/D = selected_node.designs[i]
-		l += "<A href='?src=[REF(src)];view_design=[i]'>[D.name]</A>"
-	l += "</div><div><h3>Prerequisites:</h3>[RDSCREEN_NOBREAK]"
-	for(var/i in selected_node.prerequisites)
-		var/datum/techweb_node/prereq = selected_node.prerequisites[i]
-		var/sc = stored_research.researched_nodes[prereq.id]
-		var/begin
-		var/end
-		if(sc)
-			begin = "<font color='green'><b>"
-			end = "</font></b>"
-		else
-			begin = "<span class='bad'>"
-			end = "</span>"
-		l += "<A href='?src=[REF(src)];view_node=[i]'>[begin][prereq.display_name][end]</A>"
-	l += "</div><div><h3>Unlocks:</h3>[RDSCREEN_NOBREAK]"
-	for(var/i in selected_node.unlocks)
-		var/datum/techweb_node/unlock = selected_node.unlocks[i]
-		l += "<A href='?src=[REF(src)];view_node=[i]'>[unlock.display_name]</A>"
+		return
 
-	l += "</div>[RDSCREEN_NOBREAK]"
+	l += "<table><tr>[RDSCREEN_NOBREAK]"
+	if (length(selected_node.prerequisites))
+		l += "<th align='left'>Requires</th>[RDSCREEN_NOBREAK]"
+	l += "<th align='left'>Current Node</th>[RDSCREEN_NOBREAK]"
+	if (length(selected_node.unlocks))
+		l += "<th align='left'>Unlocks</th>[RDSCREEN_NOBREAK]"
+
+	l += "</tr><tr>[RDSCREEN_NOBREAK]"
+	if (length(selected_node.prerequisites))
+		l += "<td valign='top'>[RDSCREEN_NOBREAK]"
+		for (var/i in selected_node.prerequisites)
+			l += ui_techweb_single_node(selected_node.prerequisites[i])
+		l += "</td>[RDSCREEN_NOBREAK]"
+	l += "<td valign='top'>[RDSCREEN_NOBREAK]"
+	l += ui_techweb_single_node(selected_node, selflink=FALSE)
+	l += "</td>[RDSCREEN_NOBREAK]"
+	if (length(selected_node.unlocks))
+		l += "<td valign='top'>[RDSCREEN_NOBREAK]"
+		for (var/i in selected_node.unlocks)
+			l += ui_techweb_single_node(selected_node.unlocks[i])
+		l += "</td>[RDSCREEN_NOBREAK]"
+
+	l += "</tr></table>[RDSCREEN_NOBREAK]"
 	return l
 
 /obj/machinery/computer/rdconsole/proc/ui_techweb_designview()		//Legacy code
 	RDSCREEN_UI_SDESIGN_CHECK
 	var/list/l = list()
 	var/datum/design/D = selected_design
-	l += "<div>Name: [D.name]"
+	l += "<div><table><tr><td>[D.icon_html(usr)]</td><td><b>[D.name]</b></td></tr></table>[RDSCREEN_NOBREAK]"
 	if(D.build_type)
-		l += "Lathe Types:"
-		if(D.build_type & IMPRINTER) l += "Circuit Imprinter"
-		if(D.build_type & PROTOLATHE) l += "Protolathe"
-		if(D.build_type & AUTOLATHE) l += "Autolathe"
-		if(D.build_type & MECHFAB) l += "Exosuit Fabricator"
-		if(D.build_type & BIOGENERATOR) l += "Biogenerator"
-		if(D.build_type & LIMBGROWER) l += "Limbgrower"
-		if(D.build_type & SMELTER) l += "Smelter"
-	l += "Required Materials:"
+		var/lathes = list()
+		if(D.build_type & IMPRINTER)
+			lathes += "<span data-tooltip='Circuit Imprinter'>[machine_icon(/obj/machinery/rnd/circuit_imprinter)]</span>[RDSCREEN_NOBREAK]"
+			if (linked_imprinter && D.id in stored_research.researched_designs)
+				l += "<A href='?src=[REF(src)];search=1;type=imprint;to_search=[D.name]'>Imprint</A>"
+		if(D.build_type & PROTOLATHE)
+			lathes += "<span data-tooltip='Protolathe'>[machine_icon(/obj/machinery/rnd/protolathe)]</span>[RDSCREEN_NOBREAK]"
+			if (linked_lathe && D.id in stored_research.researched_designs)
+				l += "<A href='?src=[REF(src)];search=1;type=proto;to_search=[D.name]'>Construct</A>"
+		if(D.build_type & AUTOLATHE)
+			lathes += "<span data-tooltip='Autolathe'>[machine_icon(/obj/machinery/autolathe)]</span>[RDSCREEN_NOBREAK]"
+		if(D.build_type & MECHFAB)
+			lathes += "<span data-tooltip='Exosuit Fabricator'>[machine_icon(/obj/machinery/mecha_part_fabricator)]</span>[RDSCREEN_NOBREAK]"
+		if(D.build_type & BIOGENERATOR)
+			lathes += "<span data-tooltip='Biogenerator'>[machine_icon(/obj/machinery/biogenerator)]</span>[RDSCREEN_NOBREAK]"
+		if(D.build_type & LIMBGROWER)
+			lathes += "<span data-tooltip='Limbgrower'>[machine_icon(/obj/machinery/limbgrower)]</span>[RDSCREEN_NOBREAK]"
+		if(D.build_type & SMELTER)
+			lathes += "<span data-tooltip='Smelter'>[machine_icon(/obj/machinery/mineral/processing_unit)]</span>[RDSCREEN_NOBREAK]"
+		l += "Construction types:"
+		l += lathes
+		l += ""
+	l += "Required materials:"
 	var/all_mats = D.materials + D.reagents_list
 	for(var/M in all_mats)
 		l += "* [CallMaterialName(M)] x [all_mats[M]]"
+	l += "Unlocked by:"
+	for (var/node in D.unlocked_by)
+		l += ui_techweb_single_node(node)
 	l += "[RDSCREEN_NOBREAK]</div>"
 	return l
 
@@ -865,7 +924,8 @@ doesn't have toxins access.
 
 /obj/machinery/computer/rdconsole/interact(mob/user)
 	user.set_machine(src)
-	var/datum/browser/popup = new(user, "rndconsole", name, 460, 550)
+	var/datum/browser/popup = new(user, "rndconsole", name, 900, 600)
+	popup.add_stylesheet("techwebs", 'html/browser/techwebs.css')
 	popup.set_content(generate_ui())
 	popup.open()
 

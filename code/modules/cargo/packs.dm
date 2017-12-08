@@ -54,7 +54,7 @@
 	name = "Biker Gang Kit" //TUNNEL SNAKES OWN THIS TOWN
 	cost = 2000
 	contraband = TRUE
-	contains = list(/obj/vehicle/atv,
+	contains = list(/obj/vehicle/ridden/atv,
 					/obj/item/key,
 					/obj/item/clothing/suit/jacket/leather/overcoat,
 					/obj/item/clothing/gloves/color/black,
@@ -937,15 +937,6 @@
 	crate_type = /obj/structure/closet/crate/secure/science
 	dangerous = TRUE
 
-
-/datum/supply_pack/science/research
-	name = "Machine Prototype Crate"
-	cost = 8000
-	access = ACCESS_RESEARCH
-	contains = list(/obj/item/device/machineprototype)
-	crate_name = "machine prototype crate"
-	crate_type = /obj/structure/closet/crate/secure/science
-
 /datum/supply_pack/science/tablets
 	name = "Tablet Crate"
 	cost = 5000
@@ -1229,6 +1220,14 @@
 					/obj/item/vending_refill/cigarette,
 					/obj/item/vending_refill/cigarette)
 	crate_name = "cigarette supply crate"
+
+/datum/supply_pack/organic/vending/games
+	name = "Games Supply Crate"
+	cost = 1000
+	contains = list(/obj/item/vending_refill/games,
+					/obj/item/vending_refill/games,
+					/obj/item/vending_refill/games)
+	crate_name = "games supply crate"
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Materials ///////////////////////////////////////
@@ -1596,7 +1595,7 @@
 					/obj/item/device/instrument/trombone,
 					/obj/item/device/instrument/recorder,
 					/obj/item/device/instrument/harmonica,
-					/obj/structure/piano)
+					/obj/structure/piano/unanchored)
 	name = "Big band instrument collection"
 	cost = 5000
 	crate_name = "Big band musical instruments collection"
