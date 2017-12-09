@@ -10,13 +10,21 @@
 	gain_text = "<span class='notice'>You feel a higher power inside your mind...</span>"
 	lose_text = "<span class='warning'>The divine presence leaves your head, no longer interested.</span>"
 	var/next_speech = 0
+	var/inspiration = FALSE
+
+/datum/brain_trauma/special/godwoken/on_life()
+	..()
+	if(!inspiration && world.time > next_speech && prob(4))
+		to_chat(owner, "<span class='notice'>[pick("You feel inspired!","You feel power course through you...","You feel something within you itching to speak...")]</span>")
+		inspiration = TRUE
 
 /datum/brain_trauma/special/godwoken/on_say(message)
-	if(world.time > next_speech && prob(10))
+	if(world.time > next_speech && inspiration)
 		playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 300, 1, 5)
 		var/cooldown = voice_of_god(message, owner, list("colossus","yell"), 2)
 		cooldown *= 0.33
 		next_speech = world.time + cooldown
+		inspiration = FALSE
 		return ""
 	else
 		return message
