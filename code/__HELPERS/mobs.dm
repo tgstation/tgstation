@@ -488,3 +488,15 @@ Proc for attack log creation, because really why not
 			warning("Invalid speech logging type detected. [logtype]. Defaulting to say")
 			log_say(logmessage)
 
+/proc/antag_banned(mob/M)
+	return (jobban_isbanned(M, "Syndicate") || jobban_isbanned(M, "Softban"))
+
+/proc/is_softbanned(X)
+	. = FALSE
+	if(ismob(X))
+		var/mob/M = X
+		return jobban_isbanned(M, "Softban")
+	else if(istype(X, /client))
+		var/client/C = X
+		if("Softban" in C.jobbancache)
+			return TRUE

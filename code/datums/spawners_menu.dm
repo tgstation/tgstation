@@ -49,6 +49,9 @@
 				owner.forceMove(get_turf(MS))
 				. = TRUE
 		if("spawn")
+			if(is_softbanned(owner))
+				to_chat(owner, "<span class='warning'>You cannot do that, as you are softbanned!</span>")
+				return
 			if(MS)
 				MS.attack_ghost(owner)
 				. = TRUE

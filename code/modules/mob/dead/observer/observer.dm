@@ -616,8 +616,17 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/MouseDrop(atom/over)
 	if(!usr || !over)
 		return
-	if (isobserver(usr) && usr.client.holder && isliving(over))
-		if (usr.client.holder.cmd_ghost_drag(src,over))
+	if(isobserver(usr) && usr.client.holder && isliving(over))
+		if(is_softbanned(src))
+			if(!check_rights_for(usr.client, R_BAN))
+				return FALSE
+			switch(alert("[ckey] is softbanned, are you sure you want to put them into a mob?",,"Yes","No"))
+				if("Yes")
+					log_admin("[key_name(usr)] put a softbanned user, [ckey], into a mob, [src].")
+					message_admins("[key_name(usr)] put a softbanned user, [ckey], into a mob, [src].")
+				else
+					return FALSE
+		if(usr.client.holder.cmd_ghost_drag(src,over))
 			return
 
 	return ..()

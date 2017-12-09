@@ -1071,3 +1071,16 @@
 		return FALSE
 	mob_pickup(user)
 	return TRUE
+
+/mob/living/vv_edit_var(var_name, var_value)
+	var/client/C = GLOB.directory["[var_value]"]
+	if(var_name == "ckey" && C && is_softbanned(C))
+		if(!check_rights_for(usr.client, R_BAN))
+			return FALSE
+		switch(alert("[var_value] is softbanned, are you sure you want to put them into a mob?",,"Yes","No"))
+			if("Yes")
+				log_admin("[key_name(usr)] put a softbanned user, [var_value], into a mob, [src].")
+				message_admins("[key_name(usr)] put a softbanned user, [var_value], into a mob, [src].")
+			else
+				return FALSE
+	return ..()

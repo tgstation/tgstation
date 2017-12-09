@@ -72,7 +72,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 	if(!pick)
 		return
-	
+
 	var/addr = csa[pick]
 
 	if(alert(src, "Jump to server [pick] ([addr])?", "Server Hop", "Yes", "No") != "Yes")
