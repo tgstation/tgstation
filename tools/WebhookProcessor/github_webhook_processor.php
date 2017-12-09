@@ -461,6 +461,7 @@ function get_pr_code_friendliness($payload, $oldbalance = null){
 		'Performance' => 3,
 		'Feature' => -1,
 		'Balance/Rebalance' => -1,
+		'Brain Damage Memes => -5,
 		'PRB: Reset' => $startingPRBalance - $oldbalance,
 	);
 
