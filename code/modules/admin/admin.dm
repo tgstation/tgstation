@@ -60,6 +60,10 @@
 	body += "<A href='?_src_=holder;[HrefToken()];newban=[REF(M)]'>Ban</A> | "
 	body += "<A href='?_src_=holder;[HrefToken()];jobban2=[REF(M)]'>Jobban</A> | "
 	body += "<A href='?_src_=holder;[HrefToken()];appearanceban=[REF(M)]'>Identity Ban</A> | "
+	if(is_softbanned(M))
+		body+= "<A href='?_src_=holder;[HrefToken()];jobban3=Softban;jobban4=[REF(M)]'><font color=red><b>Softbanned!</b></font></A> | "
+	else
+		body+= "<A href='?_src_=holder;[HrefToken()];jobban3=Softban;jobban4=[REF(M)]'>Softban</A> | "
 	if(jobban_isbanned(M, "OOC"))
 		body+= "<A href='?_src_=holder;[HrefToken()];jobban3=OOC;jobban4=[REF(M)]'><font color=red>OOCBan</font></A> | "
 	else

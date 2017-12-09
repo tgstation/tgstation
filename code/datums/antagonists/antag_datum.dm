@@ -61,7 +61,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/is_banned(mob/M)
 	if(!M)
 		return FALSE
-	. = (jobban_isbanned(M,"Syndicate") || (job_rank && jobban_isbanned(M,job_rank)))
+	. = (antag_banned(M) || (job_rank && jobban_isbanned(M,job_rank)))
 
 /datum/antagonist/proc/replace_banned_player()
 	set waitfor = FALSE
