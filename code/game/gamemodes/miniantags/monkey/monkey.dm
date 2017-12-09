@@ -103,7 +103,7 @@
 
 /datum/game_mode/proc/auto_declare_completion_monkey()
 	var/list/monkey_teams = list()
-	for(var/datum/antagonist/monkey/N in GLOB.antagonists) //collect all monkey teams
+	for(var/datum/antagonist/monkey/N in get_antagonists(/datum/antagonist/monkey, TRUE)) //collect all monkey teams
 		monkey_teams |= N.monkey_team
 	for(var/datum/objective_team/nuclear/monkey_team in monkey_teams)
 		monkey_team.roundend_display()

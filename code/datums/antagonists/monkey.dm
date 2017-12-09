@@ -39,7 +39,7 @@
 
 /datum/antagonist/monkey/create_team(datum/objective_team/monkey/new_team)
 	if(!new_team)
-		for(var/datum/antagonist/monkey/N in GLOB.antagonists)
+		for(var/datum/antagonist/monkey/N in get_antagonists(/datum/antagonist/monkey, TRUE))
 			if(N.monkey_team)
 				monkey_team = N.monkey_team
 				return
