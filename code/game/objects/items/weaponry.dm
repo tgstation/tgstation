@@ -397,7 +397,7 @@
 	icon_state = "ectoplasm"
 
 /obj/item/ectoplasm/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is inhaling [src]! It looks like [user.p_theyre()] trying to visit the astral plane.</span>")
+	user.visible_message("<span class='suicide'>[user] is inhaling [src]! It looks like [user.p_theyre()] trying to visit the astral plane!</span>")
 	return (OXYLOSS)
 
 /obj/item/mounted_chainsaw
