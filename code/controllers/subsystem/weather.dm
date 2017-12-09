@@ -41,5 +41,14 @@ SUBSYSTEM_DEF(weather)
 		if(W.name == weather_name && W.target_z == Z)
 			W.telegraph()
 
+/datum/controller/subsystem/weather/proc/is_weather_affecting_area(area/A, weather_datum_type)
+	for(var/V in processing)
+		var/datum/weather/W = V
+		if(!istype(W, weather_datum_type))
+			continue
+		if(A in W.impacted_areas)
+			return TRUE
+	return FALSE
+
 /datum/controller/subsystem/weather/proc/make_z_eligible(zlevel)
 	eligible_zlevels |= zlevel
