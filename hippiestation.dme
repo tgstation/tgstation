@@ -2695,6 +2695,7 @@
 #include "hippiestation\code\modules\surgery\gender_reassignment.dm"
 #include "hippiestation\code\modules\surgery\organ_internal.dm"
 #include "hippiestation\code\modules\surgery\remove_embedded_object.dm"
+#include "hippiestation\code\modules\surgery\surgery_step.dm"
 #include "hippiestation\code\modules\surgery\tools.dm"
 #include "hippiestation\code\modules\surgery\organs\autosurgeon.dm"
 #include "hippiestation\code\modules\surgery\organs\butts.dm"
