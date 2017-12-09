@@ -2414,6 +2414,7 @@
 #include "hippiestation\code\game\objects\item.dm"
 #include "hippiestation\code\game\objects\liquid.dm"
 #include "hippiestation\code\game\objects\noose.dm"
+#include "hippiestation\code\game\objects\objs.dm"
 #include "hippiestation\code\game\objects\effects\decals\cleanable\chem.dm"
 #include "hippiestation\code\game\objects\effects\decals\cleanable\human.dm"
 #include "hippiestation\code\game\objects\effects\decals\cleanable\misc.dm"

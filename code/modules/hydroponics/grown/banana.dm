@@ -51,6 +51,7 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
+	alternate_slip_sounds = list('hippiestation/sound/misc/banana_slip.ogg')
 
 /obj/item/grown/bananapeel/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is deliberately slipping on [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
