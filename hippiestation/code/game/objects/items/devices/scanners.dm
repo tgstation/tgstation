@@ -3,10 +3,10 @@
 		return
 	if(user.stat || user.eye_blind)
 		return
-	if (!isslime(M))
+	if (!isslime(target))
 		to_chat(user, "<span class='warning'>This device can only scan slimes!</span>")
 		return
-	var/mob/living/simple_animal/slime/T = M
+	var/mob/living/simple_animal/slime/T = target
 	to_chat(user, "Slime scan results:")
 	to_chat(user, "[T.colour] [T.is_adult ? "adult" : "baby"] slime")
 	to_chat(user, "Nutrition: [T.nutrition]/[T.get_max_nutrition()]")
