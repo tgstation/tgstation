@@ -1029,7 +1029,7 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
 "acA" = (
-/obj/vehicle/secway,
+/obj/vehicle/ridden/secway,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
 "acB" = (
@@ -39184,7 +39184,7 @@
 /obj/machinery/camera{
 	c_tag = "Custodial Closet"
 	},
-/obj/vehicle/janicart,
+/obj/vehicle/ridden/janicart,
 /turf/open/floor/plasteel,
 /area/janitor)
 "bKy" = (
@@ -50479,9 +50479,8 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "ciZ" = (
-/obj/machinery/icecream_vat,
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
+/turf/closed/wall/r_wall,
+/area/maintenance/forge)
 "cja" = (
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/floorgrime,
@@ -52755,8 +52754,8 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
-/turf/closed/wall,
-/area/maintenance/port/aft)
+/turf/closed/wall/r_wall,
+/area/maintenance/forge)
 "con" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -53403,11 +53402,6 @@
 	icon_state = "1-2";
 	pixel_y = 0
 	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
@@ -53958,6 +53952,9 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 5
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
@@ -62875,6 +62872,367 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat/atmos)
+"cKb" = (
+/obj/machinery/icecream_vat,
+/turf/open/floor/wood,
+/area/maintenance/port/aft)
+"cKc" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/forge)
+"cKd" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall/r_wall,
+/area/maintenance/forge)
+"cKe" = (
+/obj/machinery/reagent_sheet,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cKf" = (
+/obj/machinery/reagent_sheet,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cKg" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cKh" = (
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cKi" = (
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cKj" = (
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cKk" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cKl" = (
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Forge Room APC";
+	pixel_y = 25
+	},
+/obj/structure/cable{
+	icon_state = "0-2";
+	pixel_y = 1;
+	d2 = 2
+	},
+/obj/item/wrench,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cKm" = (
+/obj/machinery/reagent_material_manipulator,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cKn" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall/r_wall,
+/area/maintenance/forge)
+"cKo" = (
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cKp" = (
+/obj/effect/decal/cleanable/shreds,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cKq" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cKr" = (
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cKs" = (
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cKt" = (
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cKu" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cKv" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cKw" = (
+/obj/structure/reagent_dispensers/chemical,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cKx" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall/r_wall,
+/area/maintenance/forge)
+"cKy" = (
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cKz" = (
+/obj/structure/closet/crate,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cKA" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cKB" = (
+/obj/machinery/reagent_forge,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cKC" = (
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cKD" = (
+/obj/effect/decal/cleanable/ash/large,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cKE" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cKF" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cKG" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/item/reagent_containers/glass/bucket,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cKH" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall/r_wall,
+/area/maintenance/forge)
+"cKI" = (
+/obj/machinery/door/airlock/engineering{
+	cyclelinkeddir = 4;
+	name = "Forge Room";
+	req_access_txt = "32";
+	security_level = 6
+	},
+/obj/machinery/door/firedoor/heavy,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cKJ" = (
+/turf/closed/wall,
+/area/maintenance/forge)
+"cKK" = (
+/obj/structure/sign/nosmoking_1,
+/turf/closed/wall,
+/area/maintenance/forge)
+"cKL" = (
+/obj/machinery/door/firedoor/heavy,
+/obj/effect/decal/cleanable/ash/large,
+/turf/open/floor/noslip,
+/area/maintenance/forge)
+"cKM" = (
+/obj/machinery/door/firedoor/heavy,
+/turf/open/floor/noslip,
+/area/maintenance/forge)
+"cKN" = (
+/obj/machinery/door/firedoor/heavy,
+/turf/open/floor/noslip,
+/area/maintenance/forge)
+"cKO" = (
+/obj/structure/sign/fire,
+/turf/closed/wall,
+/area/maintenance/forge)
+"cKP" = (
+/turf/closed/wall,
+/area/maintenance/forge)
+"cKQ" = (
+/obj/machinery/door/airlock/engineering{
+	cyclelinkeddir = 4;
+	name = "Forge Room";
+	req_access_txt = "32";
+	security_level = 6
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/firedoor/heavy,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cKR" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall/r_wall,
+/area/maintenance/forge)
+"cKS" = (
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cKT" = (
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cKU" = (
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cKV" = (
+/obj/item/device/flashlight/flare{
+	on = 1
+	},
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cKW" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cKX" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cKY" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cKZ" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cLa" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cLb" = (
+/obj/structure/sign/securearea,
+/turf/closed/wall/r_wall,
+/area/maintenance/forge)
+"cLc" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/firedoor/heavy,
+/obj/machinery/door/airlock/engineering{
+	cyclelinkeddir = 4;
+	name = "Forge Room";
+	req_access_txt = "32";
+	security_level = 6
+	},
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"cLd" = (
+/obj/structure/sign/electricshock,
+/turf/closed/wall/r_wall,
+/area/maintenance/forge)
+"cLe" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"cLf" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"cLg" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"cLh" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"cLi" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"cLj" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"cLk" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"cLl" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"cLm" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"cLn" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"cLo" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"cLp" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"cLq" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 
 (1,1,1) = {"
 aaa
@@ -73532,7 +73890,7 @@ aBf
 aRp
 azU
 azU
-cIM
+cIL
 aBf
 aYJ
 bai
@@ -73789,7 +74147,7 @@ aBf
 aRq
 aBi
 aUk
-cIN
+cIL
 aBf
 aYJ
 bag
@@ -73797,7 +74155,7 @@ bai
 bdE
 aYJ
 aBf
-cJa
+cIZ
 biO
 aBi
 blG
@@ -74046,7 +74404,7 @@ aBf
 aBf
 aBf
 aUj
-cIO
+cIL
 aBf
 aYK
 bag
@@ -74054,7 +74412,7 @@ bai
 bdE
 aYK
 aBf
-cJb
+cIZ
 azT
 aBf
 aBf
@@ -74303,7 +74661,7 @@ aBg
 azS
 aDz
 bdG
-cIP
+cIL
 aBf
 aYJ
 aYK
@@ -74311,7 +74669,7 @@ bbT
 aYK
 aYJ
 aBf
-cJc
+cIZ
 azU
 bkd
 azS
@@ -74817,7 +75175,7 @@ aaa
 aBf
 aSM
 cID
-cIQ
+cIL
 axm
 aBf
 aBf
@@ -74825,7 +75183,7 @@ azS
 aBf
 aBf
 axm
-cJd
+cIZ
 aBl
 bke
 aBf
@@ -75330,7 +75688,7 @@ aOl
 aDA
 aBh
 aSO
-cIF
+cIE
 azW
 aLd
 aBl
@@ -75587,7 +75945,7 @@ azU
 aPW
 azU
 azU
-cIG
+cIE
 azW
 aXf
 azU
@@ -82544,7 +82902,7 @@ bpg
 bqD
 bqD
 btP
-cJk
+cJj
 bqD
 bvg
 bqD
@@ -82801,7 +83159,7 @@ bph
 bqD
 bqD
 btP
-cJl
+cJj
 bqD
 byt
 bqD
@@ -83058,7 +83416,7 @@ bpi
 bqD
 bqD
 btP
-cJm
+cJj
 bqD
 bvg
 bqD
@@ -84124,8 +84482,8 @@ clf
 bZA
 bJm
 bJm
-cpw
-bJm
+cmn
+cLe
 bJm
 bJm
 bJm
@@ -84375,16 +84733,16 @@ bJm
 cfS
 bJm
 bJm
-bSz
+cKc
+ciZ
+ciZ
+ciZ
+ciZ
+ciZ
+ciZ
+cLf
 bJm
-bJm
-bJm
-bJm
-bSz
-cpx
-bSz
-aaa
-bJm
+bOC
 ctr
 bOC
 bJm
@@ -84633,15 +84991,15 @@ bOC
 bJm
 chN
 ciZ
+cKe
+cKo
+cKy
+cKI
+cKS
+ciZ
+cLg
 bJm
-aqK
-aqK
-aqK
-bSz
-cpx
-bSz
-aaa
-bSz
+bOC
 bQe
 cuu
 bJm
@@ -84889,16 +85247,16 @@ bJm
 bJm
 bJm
 cdD
-cdD
+ciZ
+cKf
+cKp
+cKz
+cKJ
+cKT
+ciZ
+cLh
 bJm
-aqK
-aqK
-aqL
-bSz
-cpx
-bSz
-aad
-csE
+csF
 csF
 csF
 csF
@@ -85141,20 +85499,20 @@ bOC
 caG
 bOC
 bJm
+cKb
 cdD
 cdD
 cdD
 cdD
-cdD
-bOC
+ciZ
+cKg
+cKq
+cKA
+cKK
+cKU
+ciZ
+cLi
 bJm
-aqK
-aqK
-aqK
-bSz
-cpx
-bSz
-aaa
 csF
 cts
 cuv
@@ -85403,15 +85761,15 @@ ceI
 ceI
 cgO
 cdD
-cdz
+ciZ
+cKh
+cKr
+cKB
+cKL
+cKV
+cLb
+cLj
 bJm
-aqK
-aqK
-aqK
-bSz
-cpx
-bSz
-aaa
 csF
 ctt
 cuw
@@ -85660,15 +86018,15 @@ cdD
 ceK
 cgP
 bOC
-cdz
+ciZ
+cKi
+cKs
+cKC
+cKM
+cKW
+cLc
+cLk
 bJm
-aqL
-aqL
-aqL
-bSz
-cpx
-bSz
-aad
 csF
 ctu
 cux
@@ -85917,15 +86275,15 @@ ceJ
 bOC
 cdD
 cdD
-cja
+ciZ
+cKj
+cKt
+cKD
+cKN
+cKX
+cLd
+cLl
 bJm
-aqK
-aqK
-aqK
-bSz
-cpx
-bSz
-aaa
 csF
 ctt
 cuy
@@ -86174,15 +86532,15 @@ ceK
 cdD
 cdD
 cdz
-bOC
+ciZ
+cKk
+cKu
+cKE
+cKO
+cKY
+ciZ
+cLm
 bJm
-aqK
-aqK
-aqK
-bSz
-cpx
-bSz
-aaa
 csF
 ctv
 cuz
@@ -86431,15 +86789,15 @@ cdD
 cdD
 bOC
 cdD
-cdz
+ciZ
+cKl
+cKv
+cKF
+cKP
+cKZ
+ciZ
+cLn
 bJm
-aqK
-aqL
-aqL
-bSz
-cpx
-bSz
-aad
 csF
 csF
 csF
@@ -86688,15 +87046,15 @@ ceL
 cfT
 cdD
 cdz
-cdz
-bJm
-aqK
-aqK
-aqK
-bJm
-cpx
-bJm
-aaa
+ciZ
+cKm
+cKw
+cKG
+cKQ
+cLa
+ciZ
+cLo
+cLq
 aad
 aaa
 aaa
@@ -86945,14 +87303,14 @@ bRp
 bRp
 bRp
 chO
-chO
-bRp
-bRp
-bRp
-bRp
+cKd
+cKn
+cKx
+cKH
+cKR
 com
-cpx
-bJm
+ciZ
+cLp
 bJm
 bJm
 bJm
@@ -95678,7 +96036,7 @@ bUY
 caU
 bUY
 cda
-cJr
+cJq
 bTM
 cgm
 bTM
@@ -95935,11 +96293,11 @@ bTT
 caU
 cbV
 cdb
-cJs
+cJq
 cff
 cff
 cff
-cJv
+cJu
 cjs
 ckz
 clD
@@ -97443,7 +97801,7 @@ aLW
 beV
 beV
 beV
-cJg
+cJe
 bmG
 boe
 bpK
@@ -97708,7 +98066,7 @@ bof
 bsL
 but
 bvM
-cJn
+cJh
 bzc
 bAB
 bBL
@@ -100118,7 +100476,7 @@ cCt
 cCt
 cCt
 cCt
-cJM
+cJD
 cCt
 cCt
 cCt
@@ -100375,7 +100733,7 @@ aaa
 aaa
 aad
 cGK
-cJN
+cJE
 aaa
 aaa
 aaa
@@ -100889,7 +101247,7 @@ cFY
 cFY
 cFY
 cFY
-cJP
+cJO
 cFY
 cFY
 cFY
@@ -101146,7 +101504,7 @@ cFY
 cFY
 cFY
 cGL
-cJQ
+cJO
 cFY
 cFY
 cFY
@@ -102945,7 +103303,7 @@ cGB
 cGC
 cGs
 cGt
-cJU
+cJR
 cGB
 cGs
 cFY
@@ -103202,7 +103560,7 @@ cFY
 cFY
 cFY
 cGP
-cJV
+cJO
 cFY
 cFY
 cFY
@@ -103445,7 +103803,7 @@ cFo
 cFt
 cEZ
 cEZ
-cJH
+cJF
 cEZ
 cEZ
 cEZ
@@ -103459,7 +103817,7 @@ cFY
 cFY
 cFY
 cFY
-cJW
+cJO
 cFY
 cFY
 cFY
@@ -103702,7 +104060,7 @@ cEZ
 cEZ
 cEZ
 aad
-cJI
+cJE
 aad
 aad
 cEZ
@@ -103716,7 +104074,7 @@ cFY
 cFY
 cFY
 cFY
-cJX
+cJO
 cFY
 cFY
 cFY
@@ -103973,7 +104331,7 @@ aaa
 aaa
 aad
 cGQ
-cJY
+cJE
 aaa
 aaa
 aaa
@@ -104230,7 +104588,7 @@ cCn
 cCn
 cCn
 cCn
-cJZ
+cJJ
 cCn
 cCn
 cCn
@@ -113373,7 +113731,7 @@ aYF
 bbO
 bdC
 aYF
-cIX
+cIT
 aVC
 aTT
 bjX
