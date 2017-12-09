@@ -7,7 +7,7 @@
 /datum/brain_trauma/severe/mute
 	name = "Mutism"
 	desc = "Patient is completely unable to speak."
-	scan_desc = "extensive damage to the brain's language center"
+	scan_desc = "extensive damage to the brain's speech center"
 	gain_text = "<span class='warning'>You forget how to speak!</span>"
 	lose_text = "<span class='notice'>You suddenly remember how to speak.</span>"
 
@@ -23,6 +23,27 @@
 
 /datum/brain_trauma/severe/mute/on_lose()
 	owner.disabilities &= ~MUTE
+	..()
+
+/datum/brain_trauma/severe/aphasia
+	name = "Aphasia"
+	desc = "Patient is unable to speak or understand any language."
+	scan_desc = "extensive damage to the brain's language center"
+	gain_text = "<span class='warning'>You have trouble forming words in your head...</span>"
+	lose_text = "<span class='notice'>You suddenly remember how languages work.</span>"
+	var/datum/language_holder/prev_language
+	var/datum/language_holder/mob_language
+
+/datum/brain_trauma/severe/aphasia/on_gain()
+	mob_language = owner.get_language_holder()
+	prev_language = mob_language.copy()
+	mob_language.remove_all_languages()
+	..()
+
+/datum/brain_trauma/severe/aphasia/on_lose()
+	mob_language.copy_known_languages_from(prev_language) //this will also preserve languages learned during the trauma
+	QDEL_NULL(prev_language)
+	mob_language = null
 	..()
 
 /datum/brain_trauma/severe/blindness
