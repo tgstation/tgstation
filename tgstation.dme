@@ -2289,6 +2289,7 @@
 #include "code\modules\superbox\frenzystation.dm"
 #include "code\modules\superbox\geoscape.dm"
 #include "code\modules\superbox\howl.dm"
+#include "code\modules\superbox\hullrot.dm"
 #include "code\modules\superbox\medals.dm"
 #include "code\modules\superbox\voice.dm"
 #include "code\modules\superbox\wizard_versus.dm"

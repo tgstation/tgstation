@@ -73,6 +73,7 @@ SUBSYSTEM_DEF(hullrot)
 	checked_events = TRUE
 	var/events
 	if (what)
+		message_admins("[name] output: [what] [json_encode(data)]")
 		events = debug_decode(call(dll, "hullrot_control")(json_encode(list("[what]" = data))))
 	else
 		events = debug_decode(call(dll, "hullrot_control")())
@@ -86,13 +87,19 @@ SUBSYSTEM_DEF(hullrot)
 /datum/controller/subsystem/hullrot/fire()
 	checked_events = FALSE
 
-	var/new_playing = (SSticker.current_state == GAME_STATE_PLAYING)
+	var/new_playing = SSticker.IsRoundInProgress()
 	if (new_playing != currently_playing)
 		control("Playing", new_playing)
 		currently_playing = new_playing
 
 	if (!checked_events)
 		control()
+
+// ----------------------------------------------------------------------------
+// Controls
+
+/datum/controller/subsystem/hullrot/proc/set_ptt(client/C, freq)
+	control("SetPTT", list("who" = C.ckey, "freq" = (freq && text2num(freq))))
 
 // ----------------------------------------------------------------------------
 // Admin management
