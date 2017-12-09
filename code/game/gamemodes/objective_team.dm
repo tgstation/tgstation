@@ -30,7 +30,6 @@
 
 	report += "<b>[name]:</b>"
 	report += "The [member_name]s were:"
-	for(var/datum/mind/M in members)
-		report += printplayer(M)
+	report += printplayerlist(members)
 
 	return report.Join("<br>")

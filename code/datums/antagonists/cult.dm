@@ -294,7 +294,6 @@
 	
 	if(members.len)
 		parts += "<span class='header'>The cultists were:</span>"
-		for(var/datum/mind/M in members)
-			parts += printplayer(M)
+		parts += printplayerlist(members)
 	
-	return parts.Join("<br>")
+	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"

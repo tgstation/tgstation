@@ -264,7 +264,6 @@
 
 /datum/objective_team/nuclear/roundend_report()
 	var/list/parts = list()
-
 	parts += "<span class='header'>[syndicate_name] Operatives:</span>"
 	
 	switch(get_result())
@@ -304,7 +303,6 @@
 	var/TC_uses = 0
 	for(var/I in members)
 		var/datum/mind/syndicate = I
-		text += printplayer(syndicate)
 		for(var/U in GLOB.uplinks)
 			var/datum/component/uplink/H = U
 			if(H.owner == syndicate.key)
@@ -313,6 +311,7 @@
 					purchases += H.purchase_log.generate_render(show_key = FALSE)
 				else
 					stack_trace("WARNING: Nuke Op uplink with no purchase_log Owner: [H.owner]")
+	text += printplayerlist(members)
 	text += "<br>"
 	text += "(Syndicates used [TC_uses] TC) [purchases]"
 	if(TC_uses == 0 && SSticker.mode.station_was_nuked && !operatives_dead())
@@ -320,4 +319,4 @@
 	
 	parts += text
 
-	return parts.Join("<br>")
+	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"

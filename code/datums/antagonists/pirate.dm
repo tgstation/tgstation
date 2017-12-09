@@ -113,9 +113,9 @@ GLOBAL_LIST_INIT(pirate_loot_cache, typecacheof(list(
 	
 	var/all_dead = TRUE
 	for(var/datum/mind/M in members)
-		parts += printplayer(M)
 		if(considered_alive(M))
 			all_dead = FALSE
+	parts += printplayerlist(members)
 
 	parts += "Loot stolen: "
 	var/datum/objective/loot/L = locate() in objectives

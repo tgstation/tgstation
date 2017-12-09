@@ -203,7 +203,6 @@
 		parts += "<span class='redtext big'>The Ark was destroyed! Ratvar will rust away for all eternity!</span>"
 	parts += " "
 	parts += "<b>The servants' objective was:</b> [CLOCKCULT_OBJECTIVE]."
-	parts += "Ratvar's servants had <b>[GLOB.clockwork_caches]</b> Tinkerer's Caches."
 	parts += "<b>Construction Value(CV)</b> was: <b>[GLOB.clockwork_construction_value]</b>"
 	for(var/i in SSticker.scripture_states)
 		if(i != SCRIPTURE_DRIVER)
@@ -212,7 +211,6 @@
 		parts += "<span class='header'>The Eminence was:</span> [printplayer(eminence)]"
 	if(members.len)
 		parts += "<span class='header'>Ratvar's servants were:</span>"
-		for(var/datum/mind/M in members - eminence)
-			parts += printplayer(M)
+		parts += printplayerlist(members - eminence)
 	
-	return parts.Join("<br>")
+	return "<div class='panel clockborder'>[parts.Join("<br>")]</div>"

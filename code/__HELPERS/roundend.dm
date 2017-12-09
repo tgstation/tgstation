@@ -132,43 +132,23 @@
 	var/list/parts = list()
 
 	//Gamemode specific things. Should be empty most of the time.
-	var/list/mode_special = mode.special_report()
-	if(mode_special && length(mode_special) > 0)
-		parts += mode_special
-		parts += "<hr>"
-
-	//Survivors & Integrity
-	parts += survivor_report()
-	parts += "<hr>"
-
+	parts += mode.special_report()
 	//AI laws
-	var/list/law_report = law_report()
-	if(law_report && length(law_report) > 0)
-		parts += law_report
-		parts += "<hr>"
-
+	parts += law_report()
 	//Antagonists
 	parts += antag_report()
-	parts += "<hr>"
-
 	//Medals
-	var/list/medal_report = medal_report()
-	if(medal_report && length(medal_report) > 0)
-		parts += medal_report
-		parts += "<hr>"
-
+	parts += medal_report()
 	//Station Goals
-	var/list/goal_report = goal_report()
-	if(goal_report && length(goal_report) > 0)
-		parts += goal_report
+	parts += goal_report()
 
 	listclearnulls(parts)
 
-	return parts.Join("<br>")
+	return parts.Join()
 
 
 /datum/controller/subsystem/ticker/proc/survivor_report()
-	. = list()
+	var/list/parts = list()
 	var/station_evacuated = EMERGENCY_ESCAPED_OR_ENDGAMED
 	var/num_survivors = 0
 	var/num_escapees = 0
@@ -194,45 +174,60 @@
 	end_state.count()
 	var/station_integrity = min(PERCENT(GLOB.start_state.score(end_state)), 100)
 
-	. += "[GLOB.TAB]Shift Duration: <B>[DisplayTimeText(world.time - SSticker.round_start_time)]</B>"
-	. += "[GLOB.TAB]Station Integrity: <B>[mode.station_was_nuked ? "<span class='redtext'>Destroyed</span>" : "[station_integrity]%"]</B>"
+	parts += "[GLOB.TAB]Shift Duration: <B>[DisplayTimeText(world.time - SSticker.round_start_time)]</B>"
+	parts += "[GLOB.TAB]Station Integrity: <B>[mode.station_was_nuked ? "<span class='redtext'>Destroyed</span>" : "[station_integrity]%"]</B>"
 	var/total_players = GLOB.joined_player_list.len
 	if(total_players)
-		.+= "[GLOB.TAB]Total Population: <B>[total_players]</B>"
+		parts+= "[GLOB.TAB]Total Population: <B>[total_players]</B>"
 		if(station_evacuated)
-			. += "<BR>[GLOB.TAB]Evacuation Rate: <B>[num_escapees] ([PERCENT(num_escapees/total_players)]%)</B>"
-			. += "[GLOB.TAB](on emergency shuttle): <B>[num_shuttle_escapees] ([PERCENT(num_shuttle_escapees/total_players)]%)</B>"
-		. += "[GLOB.TAB]Survival Rate: <B>[num_survivors] ([PERCENT(num_survivors/total_players)]%)</B>"
+			parts += "<BR>[GLOB.TAB]Evacuation Rate: <B>[num_escapees] ([PERCENT(num_escapees/total_players)]%)</B>"
+			parts += "[GLOB.TAB](on emergency shuttle): <B>[num_shuttle_escapees] ([PERCENT(num_shuttle_escapees/total_players)]%)</B>"
+		parts += "[GLOB.TAB]Survival Rate: <B>[num_survivors] ([PERCENT(num_survivors/total_players)]%)</B>"
+	return parts.Join("<br>")
 
 /datum/controller/subsystem/ticker/proc/show_roundend_report(client/C,common_report)
 	var/list/report_parts = list()
 	
-	//You survived header
-	var/mob/M = C.mob
-	if(M.mind && !isnewplayer(M))
-		if(M.stat != DEAD && !isbrain(M))
-			if(EMERGENCY_ESCAPED_OR_ENDGAMED)
-				if(!M.onCentCom() || !M.onSyndieBase())
-					report_parts += "<span class='marooned'>You managed to survive, but were marooned on [station_name()]...</span>"
-				else
-					report_parts += "<span class='greentext'>You managed to survive the events on [station_name()] as [M.real_name].</span>"
-			else
-				report_parts += "<span class='greentext'>You managed to survive the events on [station_name()] as [M.real_name].</span>"
-
-		else
-			report_parts += "<span class='redtext'>You did not survive the events on [station_name()]...</span>"
-
+	report_parts += personal_report(C)
 	report_parts += common_report
 
 	var/datum/browser/roundend_report = new(C, "roundend")
 	roundend_report.width = 800
 	roundend_report.height = 600
-	roundend_report.set_content(report_parts.Join("<br>"))
+	roundend_report.set_content(report_parts.Join())
+	roundend_report.stylesheets = list()
 	roundend_report.add_stylesheet("roundend",'html/browser/roundend.css')
-	//roundend_report.stylesheets = list("browserOutput.css") //replace ui styling with chat one
-	//TODO Move these to fresh css file so we have a standard of what goes on the report instead of current soup
 	
 	roundend_report.open(0)
+
+/datum/controller/subsystem/ticker/proc/personal_report(client/C)
+	var/list/parts = list()
+	var/mob/M = C.mob
+	if(M.mind && !isnewplayer(M))
+		if(M.stat != DEAD && !isbrain(M))
+			if(EMERGENCY_ESCAPED_OR_ENDGAMED)
+				if(!M.onCentCom() || !M.onSyndieBase())
+					parts += "<div class='panel stationborder'>"
+					parts += "<span class='marooned'>You managed to survive, but were marooned on [station_name()]...</span>"
+				else
+					parts += "<div class='panel greenborder'>"
+					parts += "<span class='greentext'>You managed to survive the events on [station_name()] as [M.real_name].</span>"
+			else
+				parts += "<div class='panel greenborder'>"
+				parts += "<span class='greentext'>You managed to survive the events on [station_name()] as [M.real_name].</span>"
+
+		else
+			parts += "<div class='panel redborder'>"
+			parts += "<span class='redtext'>You did not survive the events on [station_name()]...</span>"
+	parts += "<br>"
+	if(GLOB.survivor_report)
+		parts += GLOB.survivor_report
+	else
+		parts += survivor_report()
+
+	parts += "</div>"
+
+	return parts.Join()
 
 /datum/controller/subsystem/ticker/proc/display_report()
 	GLOB.common_report = build_roundend_report()
@@ -241,45 +236,53 @@
 	give_show_report_button()
 
 /datum/controller/subsystem/ticker/proc/law_report()
-	. = list()
+	var/list/parts = list()
 	//Silicon laws report
 	for (var/i in GLOB.ai_list)
 		var/mob/living/silicon/ai/aiPlayer = i
 		if(aiPlayer.mind)
-			. += "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws [aiPlayer.stat != DEAD ? "at the end of the round" : "when it was deactivated"] were:</b>"
-			. += aiPlayer.laws.get_law_list(include_zeroth=TRUE)
+			parts += "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws [aiPlayer.stat != DEAD ? "at the end of the round" : "when it was deactivated"] were:</b>"
+			parts += aiPlayer.laws.get_law_list(include_zeroth=TRUE)
 
-		. += "<b>Total law changes: [aiPlayer.law_change_counter]</b>"
+		parts += "<b>Total law changes: [aiPlayer.law_change_counter]</b>"
 
 		if (aiPlayer.connected_robots.len)
 			var/robolist = "<b>[aiPlayer.real_name]'s minions were:</b> "
 			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
 				if(robo.mind)
 					robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.mind.key]), ":" (Played by: [robo.mind.key]), "]"
-			. += "[robolist]"
+			parts += "[robolist]"
 
 	for (var/mob/living/silicon/robot/robo in GLOB.silicon_mobs)
 		if (!robo.connected_ai && robo.mind)
 			if (robo.stat != DEAD)
-				. += "<b>[robo.name] (Played by: [robo.mind.key]) survived as an AI-less borg! Its laws were:</b>"
+				parts += "<b>[robo.name] (Played by: [robo.mind.key]) survived as an AI-less borg! Its laws were:</b>"
 			else
-				. += "<b>[robo.name] (Played by: [robo.mind.key]) was unable to survive the rigors of being a cyborg without an AI. Its laws were:</b>"
+				parts += "<b>[robo.name] (Played by: [robo.mind.key]) was unable to survive the rigors of being a cyborg without an AI. Its laws were:</b>"
 
 			if(robo) //How the hell do we lose robo between here and the world messages directly above this?
-				. += robo.laws.get_law_list(include_zeroth=TRUE)
+				parts += robo.laws.get_law_list(include_zeroth=TRUE)
+	if(parts.len)
+		return "<div class='panel stationborder'>[parts.Join("<br>")]</div>"
+	else
+		return ""
 
 /datum/controller/subsystem/ticker/proc/goal_report()
-	. = list()
-	for(var/V in mode.station_goals)
-		var/datum/station_goal/G = V
-		. += G.get_result()
+	var/list/parts = list()
+	if(mode.station_goals.len)
+		for(var/V in mode.station_goals)
+			var/datum/station_goal/G = V
+			parts += G.get_result()
+		return "<div class='panel stationborder'>[parts.Join("<br>")]</div>"
 
 /datum/controller/subsystem/ticker/proc/medal_report()
-	. = list()
 	if(GLOB.commendations.len)
-		. += "<span class='header'>Medal Commendations:</span>"
+		var/list/parts = list()
+		parts += "<span class='header'>Medal Commendations:</span>"
 		for (var/com in GLOB.commendations)
-			. += com
+			parts += com
+		return "<div class='panel stationborder'>[parts.Join("<br>")]</div>"
+	return ""
 
 /datum/controller/subsystem/ticker/proc/antag_report()
 	var/list/result = list()
@@ -308,15 +311,17 @@
 		if(A.roundend_category != currrent_category)
 			if(previous_category)
 				result += previous_category.roundend_report_footer()
+				result += "</div>"
+			result += "<div class='panel redborder'>"
 			result += A.roundend_report_header()
 			currrent_category = A.roundend_category
 			previous_category = A
 		result += A.roundend_report()
-		result += " "//some space between antags
 	
 	if(all_antagonists.len)
 		var/datum/antagonist/last = all_antagonists[all_antagonists.len]
 		result += last.roundend_report_footer()
+		result += "</div>"
 
 	return result
 
@@ -367,6 +372,16 @@
 	else
 		text += " <span class='redtext'>had their body destroyed</span>"
 	return text
+
+/proc/printplayerlist(list/players,fleecheck)
+	var/list/parts = list()
+
+	parts += "<ul class='playerlist'>"
+	for(var/datum/mind/M in players)
+		parts += "<li>[printplayer(M,fleecheck)]</li>"
+	parts += "</ul>"
+	return parts.Join()
+
 
 /proc/printobjectives(datum/mind/ply)
 	var/list/objective_parts = list()
