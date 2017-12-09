@@ -1,7 +1,7 @@
 /obj/item/device/slime_scanner/afterattack(atom/target, mob/living/user, flag, params)
 	if(flag)
 		return
-if(user.stat || user.eye_blind)
+	if(user.stat || user.eye_blind)
 		return
 	if (!isslime(M))
 		to_chat(user, "<span class='warning'>This device can only scan slimes!</span>")
