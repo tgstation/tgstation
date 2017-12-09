@@ -13,7 +13,7 @@
 	var/obj/item/reagent_containers/beaker = null
 	var/obj/item/storage/pill_bottle/bottle = null
 	var/mode = 1
-	var/condi = 0
+	var/condi = FALSE
 	var/screen = "home"
 	var/analyzeVars[0]
 	var/useramount = 30 // Last used amount
@@ -22,6 +22,11 @@
 	create_reagents(100)
 	add_overlay("waitlight")
 	. = ..()
+
+/obj/machinery/chem_master/Destroy()
+	QDEL_NULL(beaker)
+	QDEL_NULL(bottle)
+	return ..()
 
 /obj/machinery/chem_master/RefreshParts()
 	reagents.maximum_volume = 0
@@ -44,10 +49,22 @@
 	if(A == beaker)
 		beaker = null
 		reagents.clear_reagents()
-		icon_state = "mixer0"
+		update_icon()
 	else if(A == bottle)
 		bottle = null
 
+/obj/machinery/chem_master/update_icon()
+	if(beaker)
+		icon_state = "mixer1"
+	else
+		icon_state = "mixer0"
+
+/obj/machinery/chem_master/proc/eject_beaker()
+	if(beaker)
+		beaker.forceMove(drop_location())
+		adjust_item_drop_location(beaker)
+		beaker = null
+		update_icon()
 
 /obj/machinery/chem_master/blob_act(obj/structure/blob/B)
 	if (prob(50))
@@ -61,15 +78,6 @@
 
 /obj/machinery/chem_master/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "mixer0_nopower", "mixer0", I))
-		if(beaker)
-			beaker.forceMove(drop_location())
-			adjust_item_drop_location(beaker)
-			beaker = null
-			reagents.clear_reagents()
-		if(bottle)
-			bottle.forceMove(drop_location())
-			adjust_item_drop_location(bottle)
-			bottle = null
 		return
 
 	else if(exchange_parts(user, I))
@@ -94,7 +102,7 @@
 		beaker = I
 		to_chat(user, "<span class='notice'>You add [I] to [src].</span>")
 		src.updateUsrDialog()
-		icon_state = "mixer1"
+		update_icon()
 
 	else if(!condi && istype(I, /obj/item/storage/pill_bottle))
 		if(bottle)
@@ -109,6 +117,13 @@
 	else
 		return ..()
 
+/obj/machinery/chem_master/on_deconstruction()
+	eject_beaker()
+	if(bottle)
+		bottle.forceMove(drop_location())
+		adjust_item_drop_location(bottle)
+		bottle = null
+	return ..()
 
 /obj/machinery/chem_master/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
@@ -154,13 +169,8 @@
 		return
 	switch(action)
 		if("eject")
-			if(beaker)
-				beaker.forceMove(drop_location())
-				adjust_item_drop_location(beaker)
-				beaker = null
-				reagents.clear_reagents()
-				icon_state = "mixer0"
-				. = TRUE
+			eject_beaker()
+			. = TRUE
 
 		if("ejectp")
 			if(bottle)
@@ -348,7 +358,7 @@
 			#if DM_VERSION >= 513
 			#warning 512 is definitely stable now, remove the old code
 			#endif
-			
+
 			#if DM_VERSION >= 512
 			. += hex2num(md5[i])
 			#else
@@ -361,4 +371,4 @@
 /obj/machinery/chem_master/condimaster
 	name = "CondiMaster 3000"
 	desc = "Used to create condiments and other cooking supplies."
-	condi = 1
+	condi = TRUE
