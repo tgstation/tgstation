@@ -317,13 +317,14 @@
 			currrent_category = A.roundend_category
 			previous_category = A
 		result += A.roundend_report()
+		result += "<br>"
 	
 	if(all_antagonists.len)
 		var/datum/antagonist/last = all_antagonists[all_antagonists.len]
 		result += last.roundend_report_footer()
 		result += "</div>"
 
-	return result
+	return result.Join()
 
 /proc/cmp_antag_category(datum/antagonist/A,datum/antagonist/B)
 	return sorttext(B.roundend_category,A.roundend_category)
