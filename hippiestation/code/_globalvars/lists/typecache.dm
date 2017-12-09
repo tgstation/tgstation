@@ -9,7 +9,6 @@ GLOBAL_LIST_INIT(no_reagent_message_typecache, typecacheof(list(
   /obj/effect/particle_effect,
   /obj/effect/decal/cleanable,
   /mob/living,
-  /obj/effect/liquid,
   /obj/item/reagent_containers/food,
   /turf/open/pool)
 ))
@@ -19,6 +18,5 @@ GLOBAL_LIST_INIT(no_reagent_statechange_typecache, typecacheof(list(
   /obj/effect/particle_effect/water,
   /obj/effect/decal/cleanable,
   /obj/effect/particle_effect/smoke/chem/smoke_machine,
-  /obj/effect/liquid,
   /mob/living)
 ))

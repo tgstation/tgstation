@@ -32,7 +32,6 @@
 	var/obj/machinery/machine = null
 	var/other_mobs = null
 	var/disabilities = 0	//Carbon
-	var/movement_type = GROUND		//Incase you have multiple types, you automatically use the most useful one. IE: Skating on ice, flippers on water, flying over chasm/space, etc.
 
 	var/atom/movable/pulling = null
 	var/grab_state = 0
@@ -44,6 +43,7 @@
 	var/stuttering = 0		//Carbon
 	var/slurring = 0		//Carbon
 	var/cultslurring = 0	//Carbon
+	var/derpspeech = 0      //Carbon
 	var/real_name = null
 	var/spacewalk = FALSE
 	var/druggy = 0			//Carbon

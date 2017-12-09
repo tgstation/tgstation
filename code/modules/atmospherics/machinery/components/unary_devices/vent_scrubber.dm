@@ -23,7 +23,7 @@
 	var/widenet = 0 //is this scrubber acting on the 3x3 area around it.
 	var/list/turf/adjacent_turfs = list()
 
-	var/frequency = 1439
+	var/frequency = FREQ_ATMOS_CONTROL
 	var/datum/radio_frequency/radio_connection
 	var/radio_filter_out
 	var/radio_filter_in
@@ -81,7 +81,7 @@
 		icon_state = "scrub_off"
 		return
 
-	if(scrubbing & SCRUBBING)	
+	if(scrubbing & SCRUBBING)
 		if(widenet)
 			icon_state = "scrub_wide"
 		else
@@ -99,7 +99,7 @@
 		return FALSE
 
 	var/datum/signal/signal = new
-	signal.transmission_method = 1 //radio signal
+	signal.transmission_method = TRANSMISSION_RADIO
 	signal.source = src
 
 	var/list/f_types = list()
@@ -130,8 +130,8 @@
 	return TRUE
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/atmosinit()
-	radio_filter_in = frequency==initial(frequency)?(GLOB.RADIO_FROM_AIRALARM):null
-	radio_filter_out = frequency==initial(frequency)?(GLOB.RADIO_TO_AIRALARM):null
+	radio_filter_in = frequency==initial(frequency)?(RADIO_FROM_AIRALARM):null
+	radio_filter_out = frequency==initial(frequency)?(RADIO_TO_AIRALARM):null
 	if(frequency)
 		set_frequency(frequency)
 	broadcast_status()

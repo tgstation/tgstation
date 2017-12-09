@@ -219,17 +219,13 @@
 	return amount
 
 /mob/living/proc/getBrainLoss()
-	return brainloss
+	. = 0
 
-/mob/living/proc/adjustBrainLoss(amount)
-	if(status_flags & GODMODE)
-		return 0
-	brainloss = Clamp((brainloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
+/mob/living/proc/adjustBrainLoss(amount, maximum = BRAIN_DAMAGE_DEATH)
+	return
 
 /mob/living/proc/setBrainLoss(amount)
-	if(status_flags & GODMODE)
-		return 0
-	brainloss = amount
+	return
 
 /mob/living/proc/getStaminaLoss()
 	return staminaloss

@@ -142,6 +142,8 @@
 
 #define iscameramob(A) (istype(A, /mob/camera))
 
+#define iseminence(A) (istype(A, /mob/camera/eminence))
+
 //Objects
 #define isobj(A) istype(A, /obj) //override the byond proc because it returns true on children of /atom/movable that aren't objs
 
@@ -187,3 +189,5 @@ GLOBAL_LIST_INIT(glass_sheet_types, typecacheof(list(
 	/obj/item/stack/sheet/plasmarglass)))
 
 #define is_glass_sheet(O) (is_type_in_typecache(O, GLOB.glass_sheet_types))
+
+#define isblobmonster(O) (istype(O, /mob/living/simple_animal/hostile/blob))

@@ -50,7 +50,7 @@
 				to_chat(target, "<span class='userdanger'>A migraine throbs behind your eyes, you hear yourself screaming - but your mouth has not opened!</span>")
 				for(var/mi in GLOB.mob_list)
 					var/mob/M = mi
-					if(M.lingcheck() == 2)
+					if(M.lingcheck() == LINGHIVE_LING)
 						to_chat(M, "<i><font color=#800080>We can sense a foreign presence in the hivemind...</font></i>")
 				target.mind.linglink = 1
 				target.say(":g AAAAARRRRGGGGGHHHHH!!")

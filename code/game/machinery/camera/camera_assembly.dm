@@ -1,7 +1,7 @@
 /obj/item/wallframe/camera
 	name = "camera assembly"
 	desc = "The basic construction for Nanotrasen-Always-Watching-You cameras."
-	icon = 'icons/obj/monitors.dmi'
+	icon = 'icons/obj/machines/camera.dmi'
 	icon_state = "cameracase"
 	materials = list(MAT_METAL=400, MAT_GLASS=250)
 	result_path = /obj/structure/camera_assembly
@@ -10,7 +10,7 @@
 /obj/structure/camera_assembly
 	name = "camera assembly"
 	desc = "The basic construction for Nanotrasen-Always-Watching-You cameras."
-	icon = 'icons/obj/monitors.dmi'
+	icon = 'icons/obj/machines/camera.dmi'
 	icon_state = "camera1"
 	max_integrity = 150
 	//	Motion, EMP-Proof, X-Ray

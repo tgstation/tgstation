@@ -622,7 +622,7 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "bA" = (
 /obj/structure/table/reinforced,
-/obj/machinery/juicer,
+/obj/machinery/reagentgrinder,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
