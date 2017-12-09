@@ -96,15 +96,17 @@ All ShuttleMove procs go here
 
 // Called on atoms after everything has been moved
 /atom/movable/proc/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+
+	var/turf/newT = get_turf(src)
+	if (newT.z != oldT.z)
+		onTransitZ(oldT.z, newT.z)
+
 	if(light)
 		update_light()
 	if(rotation)
 		shuttleRotate(rotation)
 
-	if (src.type != /atom/movable/lighting_object)
-		var/turf/newT = get_turf(src)
-		if (newT.z != oldT.z)
-			onTransitZ(oldT.z, newT.z)
+
 
 	update_parallax_contents()
 
