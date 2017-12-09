@@ -14,6 +14,13 @@
 	mutatelist = list(/obj/item/seeds/watermelon/holy)
 	reagents_add = list("water" = 0.2, "vitamin" = 0.04, "nutriment" = 0.2)
 
+/obj/item/seeds/watermelon/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is swallowing [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.gib()
+	new product(drop_location())
+	qdel(src)
+	return MANUAL_SUICIDE
+
 /obj/item/reagent_containers/food/snacks/grown/watermelon
 	seed = /obj/item/seeds/watermelon
 	name = "watermelon"
