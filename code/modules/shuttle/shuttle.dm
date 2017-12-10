@@ -84,15 +84,7 @@
 
 //returns turfs within our projected rectangle in a specific order.
 //this ensures that turfs are copied over in the same order, regardless of any rotation
-/obj/docking_port/proc/return_ordered_turfs(_x, _y, _z, _dir, area_type)
-	if(!_dir)
-		_dir = dir
-	if(!_x)
-		_x = x
-	if(!_y)
-		_y = y
-	if(!_z)
-		_z = z
+/obj/docking_port/proc/return_ordered_turfs(_x, _y, _z, _dir)
 	var/cos = 1
 	var/sin = 0
 	switch(_dir)
@@ -108,52 +100,14 @@
 
 	. = list()
 
-	var/xi
-	var/yi
-	for(var/dx=0, dx<width, ++dx)
-		for(var/dy=0, dy<height, ++dy)
-			xi = _x + (dx-dwidth)*cos - (dy-dheight)*sin
-			yi = _y + (dy-dheight)*cos + (dx-dwidth)*sin
-			var/turf/T = locate(xi, yi, _z)
-			if(area_type)
-				if(istype(get_area(T), area_type))
-					. += T
-				else
-					. += null
-			else
-				. += T
-
-/obj/docking_port/proc/return_ordered_assoc_turfs(_x, _y, _z, _dir)
-	if(!_dir)
-		_dir = dir
-	if(!_x)
-		_x = x
-	if(!_y)
-		_y = y
-	if(!_z)
-		_z = z
-	var/cos = 1
-	var/sin = 0
-	switch(_dir)
-		if(WEST)
-			cos = 0
-			sin = 1
-		if(SOUTH)
-			cos = -1
-			sin = 0
-		if(EAST)
-			cos = 0
-			sin = -1
-
-	. = list()
-
-	var/xi
-	var/yi
-	for(var/dx=0, dx<width, ++dx)
-		for(var/dy=0, dy<height, ++dy)
-			xi = _x + (dx-dwidth)*cos - (dy-dheight)*sin
-			yi = _y + (dy-dheight)*cos + (dx-dwidth)*sin
-			var/turf/T = locate(xi, yi, _z)
+	for(var/dx in 0 to width-1)
+		var/compX = dx-dwidth
+		for(var/dy in 0 to height-1)
+			var/compY = dy-dheight
+			// realX = _x + compX*cos - compY*sin
+			// realY = _y + compY*cos - compX*sin
+			// locate(realX, realY, _z)
+			var/turf/T = locate(_x + compX*cos - compY*sin, _y + compY*cos - compX*sin, _z)
 			.[T] = NONE
 
 #ifdef DOCKING_PORT_HIGHLIGHT
@@ -470,14 +424,14 @@
 		if(current_dock.area_type)
 			underlying_area_type = current_dock.area_type
 
-	var/list/old_turfs = return_ordered_turfs(x, y, z, dir, area_type)
+	var/list/old_turfs = return_ordered_turfs(x, y, z, dir)
 	var/area/underlying_area = locate(underlying_area_type) in GLOB.sortedAreas
 	if(!underlying_area)
 		underlying_area = new underlying_area_type(null)
 
 	for(var/i in 1 to old_turfs.len)
 		var/turf/oldT = old_turfs[i]
-		if(!oldT)
+		if(!oldT || !istype(oldT, area_type))
 			continue
 		var/area/old_area = oldT.loc
 		underlying_area.contents += oldT
@@ -497,14 +451,14 @@
 	ripples.Cut()
 
 /obj/docking_port/mobile/proc/ripple_area(obj/docking_port/stationary/S1)
-	var/list/L0 = return_ordered_turfs(x, y, z, dir, area_type)
+	var/list/L0 = return_ordered_turfs(x, y, z, dir)
 	var/list/L1 = return_ordered_turfs(S1.x, S1.y, S1.z, S1.dir)
 
 	var/list/ripple_turfs = list()
 
 	for(var/i in 1 to L0.len)
 		var/turf/T0 = L0[i]
-		if(!T0)
+		if(!T0 || !istype(T0, area_type))
 			continue
 		var/turf/T1 = L1[i]
 		if(!T1)
@@ -563,7 +517,7 @@
 		The bitflag contains the data for what inhabitants of that coordinate should be moved to the new location
 		The bitflags can be found in __DEFINES/shuttles.dm
 	*/
-	var/list/old_turfs = return_ordered_assoc_turfs(x, y, z, dir)
+	var/list/old_turfs = return_ordered_turfs(x, y, z, dir)
 	var/list/new_turfs = return_ordered_turfs(new_dock.x, new_dock.y, new_dock.z, new_dock.dir)
 	/**************************************************************************************************************/
 
@@ -765,9 +719,11 @@
 		shuttle_area.parallax_movedir = FALSE
 	if(assigned_transit && assigned_transit.assigned_area)
 		assigned_transit.assigned_area.parallax_movedir = FALSE
-	var/list/L0 = return_ordered_turfs(x, y, z, dir, area_type)
+	var/list/L0 = return_ordered_turfs(x, y, z, dir)
 	for (var/thing in L0)
 		var/turf/T = thing
+		if(!T || !istype(T, area_type))
+			continue
 		for (var/thing2 in T)
 			var/atom/movable/AM = thing2
 			if (length(AM.client_mobs_in_contents))
