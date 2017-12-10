@@ -5,6 +5,7 @@
 	job_rank = ROLE_SERVANT_OF_RATVAR
 	var/datum/action/innate/hierophant/hierophant_network = new()
 	var/datum/objective_team/clockcult/clock_team
+	var/make_team = TRUE //This should be only false for tutorial scarabs
 
 /datum/antagonist/clockcult/silent
 	silent = TRUE
@@ -17,7 +18,7 @@
 	return clock_team
 
 /datum/antagonist/clockcult/create_team(datum/objective_team/clockcult/new_team)
-	if(!new_team)
+	if(!new_team && make_team)
 		//TODO blah blah same as the others, allow multiple
 		for(var/datum/antagonist/clockcult/H in GLOB.antagonists)
 			if(H.clock_team)
@@ -25,7 +26,7 @@
 				return
 		clock_team = new /datum/objective_team/clockcult
 		return
-	if(!istype(new_team))
+	if(make_team && !istype(new_team))
 		stack_trace("Wrong team type passed to [type] initialization.")
 	clock_team = new_team
 

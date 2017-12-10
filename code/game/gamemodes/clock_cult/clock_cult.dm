@@ -65,13 +65,16 @@ Credit where due:
 		return TRUE
 	return FALSE
 
-/proc/add_servant_of_ratvar(mob/L, silent = FALSE)
+/proc/add_servant_of_ratvar(mob/L, silent = FALSE, create_team = TRUE)
 	if(!L || !L.mind)
 		return
 	var/update_type = ANTAG_DATUM_CLOCKCULT
 	if(silent)
 		update_type = ANTAG_DATUM_CLOCKCULT_SILENT
-	. = L.mind.add_antag_datum(update_type)
+	var/datum/antagonist/clockcult/C = new update_type(L.mind)
+	C.make_team = create_team
+	C.show_in_roundend = create_team //tutorial scarabs begone
+	. = L.mind.add_antag_datum(C)
 
 /proc/remove_servant_of_ratvar(mob/L, silent = FALSE)
 	if(!L || !L.mind)

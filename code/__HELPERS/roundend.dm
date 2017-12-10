@@ -133,10 +133,18 @@
 
 	//Gamemode specific things. Should be empty most of the time.
 	parts += mode.special_report()
+
+	CHECK_TICK
+	
 	//AI laws
 	parts += law_report()
+	
+	CHECK_TICK
+
 	//Antagonists
 	parts += antag_report()
+	
+	CHECK_TICK
 	//Medals
 	parts += medal_report()
 	//Station Goals
