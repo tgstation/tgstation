@@ -25806,7 +25806,7 @@
 /turf/open/floor/plasteel/red/side,
 /area/security/checkpoint/medical)
 "bmO" = (
-/obj/structure/closet,
+/obj/structure/closet/secure_closet/security/med,
 /turf/open/floor/plasteel/red/side{
 	dir = 10
 	},
@@ -30962,10 +30962,10 @@
 /obj/machinery/light_switch{
 	pixel_y = -25
 	},
-/obj/structure/closet,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/closet/secure_closet/security/cargo,
 /turf/open/floor/plasteel/red/side{
 	dir = 10
 	},
@@ -31066,6 +31066,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/closet/wardrobe/red,
 /turf/open/floor/plasteel/red/side,
 /area/security/checkpoint/supply)
 "byU" = (
@@ -31320,7 +31321,7 @@
 /obj/machinery/airalarm{
 	pixel_y = 25
 	},
-/obj/structure/closet,
+/obj/structure/closet/secure_closet/security/science,
 /turf/open/floor/plasteel/red/side{
 	dir = 9
 	},
@@ -31787,6 +31788,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/structure/closet/wardrobe/red,
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
@@ -38599,6 +38601,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/structure/closet/wardrobe/red,
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
@@ -41702,7 +41705,7 @@
 	departmentType = 5;
 	pixel_y = 30
 	},
-/obj/structure/closet,
+/obj/structure/closet/secure_closet/security/engine,
 /turf/open/floor/plasteel/red/side{
 	dir = 1
 	},
