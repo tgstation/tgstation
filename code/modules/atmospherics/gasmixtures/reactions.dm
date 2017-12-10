@@ -1,5 +1,3 @@
-#define NO_REACTION	0
-#define REACTING	1
 //Plasma fire properties
 #define OXYGEN_BURN_RATE_BASE				1.4
 #define PLASMA_BURN_RATE_DELTA				9
@@ -359,9 +357,6 @@
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			air.temperature = max(((air.temperature*old_heat_capacity - energy_taken)/new_heat_capacity),TCMB)
 
-
-#undef REACTING
-#undef NO_REACTION
 #undef OXYGEN_BURN_RATE_BASE
 #undef PLASMA_BURN_RATE_DELTA
 #undef PLASMA_UPPER_TEMPERATURE

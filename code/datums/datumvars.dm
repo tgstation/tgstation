@@ -104,15 +104,7 @@
 	else
 		atomsnowflake += "<b>[D]</b>"
 
-	var/formatted_type = "[type]"
-	if(length(formatted_type) > 25)
-		var/middle_point = length(formatted_type) / 2
-		var/splitpoint = findtext(formatted_type,"/",middle_point)
-		if(splitpoint)
-			formatted_type = "[copytext(formatted_type,1,splitpoint)]<br>[copytext(formatted_type,splitpoint)]"
-		else
-			formatted_type = "Type too long" //No suitable splitpoint (/) found.
-
+	var/formatted_type = replacetext("[type]", "/", "<wbr>/")
 	var/marked
 	if(holder && holder.marked_datum && holder.marked_datum == D)
 		marked = "<br><font size='1' color='red'><b>Marked Object</b></font>"
