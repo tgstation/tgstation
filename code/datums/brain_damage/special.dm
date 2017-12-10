@@ -17,6 +17,7 @@
 	if(!inspiration && world.time > next_speech && prob(4))
 		to_chat(owner, "<span class='notice'>[pick("You feel inspired!","You feel power course through you...","You feel something within you itching to speak...")]</span>")
 		inspiration = TRUE
+		addtimer(CALLBACK(src, .proc/uninspire), 150)
 
 /datum/brain_trauma/special/godwoken/on_say(message)
 	if(world.time > next_speech && inspiration)
@@ -28,6 +29,11 @@
 		return ""
 	else
 		return message
+
+/datum/brain_trauma/special/godwoken/proc/uninspire()
+	if(inspiration)
+		to_chat(owner, "<span class='notice'>The feeling passes.</span>")
+		inspiration = FALSE
 
 /datum/brain_trauma/special/bluespace_prophet
 	name = "Bluespace Prophecy"
