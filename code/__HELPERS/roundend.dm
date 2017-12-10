@@ -219,6 +219,8 @@
 		else
 			parts += "<div class='panel redborder'>"
 			parts += "<span class='redtext'>You did not survive the events on [station_name()]...</span>"
+	else
+		parts += "<div class='panel stationborder'>"
 	parts += "<br>"
 	if(GLOB.survivor_report)
 		parts += GLOB.survivor_report
