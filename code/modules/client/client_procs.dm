@@ -431,7 +431,7 @@ GLOBAL_LIST(external_rsc_urls)
 			message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
 			to_chat(src, "Sorry but the server is currently not accepting connections from never before seen players.")
 			var/list/connectiontopic_a = params2list(connectiontopic)
-			var/list/panic_addr = CONFIG_GET(string/panic_address)
+			var/list/panic_addr = CONFIG_GET(string/panic_server_address)
 			if(panic_addr && !connectiontopic_a["redirect"])
 				var/panic_name = CONFIG_GET(string/panic_server_name)
 				to_chat(src, "<span class='notice'>Sending you to [panic_name ? panic_name : panic_addr].</span>")
@@ -652,6 +652,9 @@ GLOBAL_LIST(external_rsc_urls)
 			return FALSE
 		if ("key")
 			return FALSE
+		if("view")
+			change_view(var_value)
+			return TRUE
 	. = ..()
 
 
@@ -672,7 +675,8 @@ GLOBAL_LIST(external_rsc_urls)
 
 /client/proc/apply_clickcatcher()
 	generate_clickcatcher()
-	void.UpdateGreed(view,view)
+	var/list/actualview = getviewsize(view)
+	void.UpdateGreed(actualview[1],actualview[2])
 
 /client/proc/AnnouncePR(announcement)
 	if(prefs && prefs.chat_toggles & CHAT_PULLR)

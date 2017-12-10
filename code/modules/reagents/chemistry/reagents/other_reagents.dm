@@ -117,7 +117,7 @@
 	taste_description = "water"
 	var/cooling_temperature = 2
 	glass_icon_state = "glass_clear"
-	glass_name = "glass of Water"
+	glass_name = "glass of water"
 	glass_desc = "The father of all refreshments."
 	shot_glass_icon_state = "shotglassclear"
 
@@ -188,7 +188,7 @@
 	description = "Water blessed by some deity."
 	color = "#E0E8EF" // rgb: 224, 232, 239
 	glass_icon_state  = "glass_clear"
-	glass_name = "glass of Holy Water"
+	glass_name = "glass of holy water"
 	glass_desc = "A glass of holy water."
 
 /datum/reagent/water/holywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
@@ -261,7 +261,7 @@
 		M.adjustBruteLoss(-2, 0)
 		M.adjustFireLoss(-2, 0)
 	else
-		M.adjustBrainLoss(3)
+		M.adjustBrainLoss(3, 150)
 		M.adjustToxLoss(1, 0)
 		M.adjustFireLoss(2, 0)
 		M.adjustOxyLoss(2, 0)
@@ -280,7 +280,7 @@
 	M.IgniteMob()			//Only problem with igniting people is currently the commonly availible fire suits make you immune to being on fire
 	M.adjustToxLoss(1, 0)
 	M.adjustFireLoss(1, 0)		//Hence the other damages... ain't I a bastard?
-	M.adjustBrainLoss(5)
+	M.adjustBrainLoss(5, 150)
 	holder.remove_reagent(src.id, 1)
 
 /datum/reagent/medicine/omnizine/godblood
@@ -676,7 +676,7 @@
 		step(M, pick(GLOB.cardinals))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
-	M.adjustBrainLoss(2)
+	M.adjustBrainLoss(1)
 	..()
 
 /datum/reagent/sulfur
@@ -1029,7 +1029,7 @@
 /datum/reagent/impedrezene/on_mob_life(mob/living/M)
 	M.jitteriness = max(M.jitteriness-5,0)
 	if(prob(80))
-		M.adjustBrainLoss(1*REM)
+		M.adjustBrainLoss(2*REM)
 	if(prob(50))
 		M.drowsyness = max(M.drowsyness, 3)
 	if(prob(10))

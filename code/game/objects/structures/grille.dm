@@ -26,7 +26,7 @@
 	update_icon()
 
 /obj/structure/grille/update_icon()
-	if(QDELETED(src))
+	if(QDELETED(src) || broken)
 		return
 
 	var/ratio = obj_integrity / max_integrity

@@ -4,18 +4,18 @@
 	And the base of the send_speech() proc, which is the core of saycode.
 */
 GLOBAL_LIST_INIT(freqtospan, list(
-	"1351" = "sciradio",
-	"1355" = "medradio",
-	"1357" = "engradio",
-	"1347" = "suppradio",
-	"1349" = "servradio",
-	"1359" = "secradio",
-	"1353" = "comradio",
-	"1447" = "aiprivradio",
-	"1213" = "syndradio",
-	"1337" = "centcomradio",
-	"1215" = "redteamradio",
-	"1217" = "blueteamradio"
+	"[FREQ_SCIENCE]" = "sciradio",
+	"[FREQ_MEDICAL]" = "medradio",
+	"[FREQ_ENGINEERING]" = "engradio",
+	"[FREQ_SUPPLY]" = "suppradio",
+	"[FREQ_SERVICE]" = "servradio",
+	"[FREQ_SECURITY]" = "secradio",
+	"[FREQ_COMMAND]" = "comradio",
+	"[FREQ_AI_PRIVATE]" = "aiprivradio",
+	"[FREQ_SYNDICATE]" = "syndradio",
+	"[FREQ_CENTCOM]" = "centcomradio",
+	"[FREQ_CTF_RED]" = "redteamradio",
+	"[FREQ_CTF_BLUE]" = "blueteamradio"
 	))
 
 /atom/movable/proc/say(message, datum/language/language = null)

@@ -388,23 +388,15 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		desc = "<font size=3><b>CHETR<br>NYY<br>HAGEHUGF-NAQ-UBABE<br>RATVAR.</b></font>"
 	else
 		var/servants = 0
-		var/validservants = 0
 		var/list/textlist
 		for(var/mob/living/L in GLOB.alive_mob_list)
 			if(is_servant_of_ratvar(L))
 				servants++
-				if(ishuman(L) || issilicon(L))
-					validservants++
-		if(servants > 1)
-			if(validservants > 1)
-				textlist = list("<b>[servants]</b> Servants, <b>[validservants]</b> of which count towards scripture.<br>")
-			else
-				textlist = list("<b>[servants]</b> Servants, [validservants ? "<b>[validservants]</b> of which counts":"none of which count"] towards scripture.<br>")
-		else
-			textlist = list("<b>[servants]</b> Servant, who [validservants ? "counts":"does not count"] towards scripture.<br>")
-			for(var/i in SSticker.scripture_states)
-				if(i != SCRIPTURE_DRIVER) //ignore the always-unlocked stuff
-					textlist += "[i] Scripture: <b>[SSticker.scripture_states[i] ? "UNLOCKED":"LOCKED"]</b><br>"
+		textlist = list("[SSticker.mode.eminence ? "There is an Eminence." : "<b>There is no Eminence! Get one ASAP!</b>"]<br>")
+		textlist += "There are currently <b>[servants]</b> servant[servants > 1 ? "s" : ""] of Ratvar.<br>"
+		for(var/i in SSticker.scripture_states)
+			if(i != SCRIPTURE_DRIVER) //ignore the always-unlocked stuff
+				textlist += "[i] Scripture: <b>[SSticker.scripture_states[i] ? "UNLOCKED":"LOCKED"]</b><br>"
 		var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
 		if(G)
 			var/time_info = G.get_arrival_time(FALSE)

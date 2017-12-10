@@ -223,7 +223,7 @@
 
 /obj/item/gun/ballistic/automatic/ar
 	name = "\improper NT-ARG 'Boarder'"
-	desc = "A robust assault rile used by Nanotrasen fighting forces."
+	desc = "A robust assault rifle used by Nanotrasen fighting forces."
 	icon_state = "arg"
 	item_state = "arg"
 	slot_flags = 0

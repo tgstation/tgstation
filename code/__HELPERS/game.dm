@@ -326,25 +326,6 @@
 			return M
 	return null
 
-// Will return a list of active candidates. It increases the buffer 5 times until it finds a candidate which is active within the buffer.
-
-/proc/get_candidates(be_special_type, afk_bracket = CONFIG_GET(number/inactivity_period), jobbanType)
-	var/list/candidates = list()
-	// Keep looping until we find a non-afk candidate within the time bracket (we limit the bracket to 10 minutes (6000))
-	var/afk_period = CONFIG_GET(number/afk_period)
-	while(!candidates.len && afk_bracket < afk_period)
-		for(var/mob/dead/observer/G in GLOB.player_list)
-			if(G.client != null)
-				if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
-					if(!G.client.is_afk(afk_bracket) && (be_special_type in G.client.prefs.be_special))
-						if (jobbanType)
-							if(!(jobban_isbanned(G, jobbanType) || jobban_isbanned(G, "Syndicate")))
-								candidates += G.client
-						else
-							candidates += G.client
-		afk_bracket += 600 // Add a minute to the bracket, for every attempt
-	return candidates
-
 /proc/considered_alive(datum/mind/M, enforce_human = TRUE)
 	if(M && M.current)
 		if(enforce_human)

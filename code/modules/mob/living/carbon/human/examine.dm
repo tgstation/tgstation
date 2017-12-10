@@ -7,7 +7,7 @@
 	var/t_has = p_have()
 	var/t_is = p_are()
 
-	var/msg = "<span class='info'>*---------*\nThis is <EM>[src.name]</EM>!\n"
+	var/msg = "<span class='info'>*---------*\nThis is <EM>[name]</EM>!\n"
 
 	msg += ReturnVampExamine(user) // FULPSTATION: Vamps recognize the names of other vamps.
 	msg += ReturnVassalExamine(user) // FULPSTATION: Vamps recognize the names of other vamps.
@@ -281,7 +281,7 @@
 		if(stat == UNCONSCIOUS)
 			msg += "[t_He] [t_is]n't responding to anything around [t_him] and seem[p_s()] to be asleep.\n"
 		else
-			if(getBrainLoss() >= 60)
+			if(disabilities & DUMB)
 				msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 			if(InCritical())
 				msg += "[t_He] [t_is] barely conscious.\n"

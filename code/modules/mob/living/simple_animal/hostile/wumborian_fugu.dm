@@ -2,10 +2,10 @@
 /mob/living/simple_animal/hostile/asteroid/fugu
 	name = "wumborian fugu"
 	desc = "The wumborian fugu rapidly increases its body mass in order to ward off its prey. Great care should be taken to avoid it while it's in this state as it is nearly invincible, but it cannot maintain its form forever."
-	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
-	icon_state = "Fugu"
-	icon_living = "Fugu"
-	icon_aggro = "Fugu"
+	icon = 'icons/mob/lavaland/64x64megafauna.dmi'
+	icon_state = "Fugu0"
+	icon_living = "Fugu0"
+	icon_aggro = "Fugu0"
 	icon_dead = "Fugu_dead"
 	icon_gib = "syndicate_gib"
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
@@ -16,6 +16,7 @@
 	speed = 0
 	maxHealth = 50
 	health = 50
+	pixel_x = -16
 	harm_intent_damage = 5
 	obj_damage = 0
 	melee_damage_lower = 0
@@ -30,13 +31,23 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	var/wumbo = 0
 	var/inflate_cooldown = 0
+	var/datum/action/innate/fugu/expand/E
 	loot = list(/obj/item/asteroid/fugu_gland{layer = ABOVE_MOB_LAYER})
+
+/mob/living/simple_animal/hostile/asteroid/fugu/Initialize()
+	. = ..()
+	E = new
+	E.Grant(src)
+
+/mob/living/simple_animal/hostile/asteroid/fugu/Destroy()
+	QDEL_NULL(E)
+	return ..()
 
 /mob/living/simple_animal/hostile/asteroid/fugu/Life()
 	if(!wumbo)
 		inflate_cooldown = max((inflate_cooldown - 1), 0)
 	if(target && AIStatus == AI_ON)
-		Inflate()
+		E.Activate()
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/fugu/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
@@ -46,42 +57,47 @@
 
 /mob/living/simple_animal/hostile/asteroid/fugu/Aggro()
 	..()
-	Inflate()
+	E.Activate()
 
-/mob/living/simple_animal/hostile/asteroid/fugu/verb/Inflate()
-	set name = "Inflate"
-	set category = "Fugu"
-	set desc = "Temporarily increases your size, and makes you significantly more dangerous and tough."
-	if(wumbo)
-		to_chat(src, "<span class='notice'>You're already inflated.</span>")
+/datum/action/innate/fugu
+	icon_icon = 'icons/mob/actions/actions_animal.dmi'
+
+/datum/action/innate/fugu/expand
+	name = "Inflate"
+	desc = "Temporarily increases your size, and makes you significantly more dangerous and tough! Do not bully the fugu!"
+	button_icon_state = "expand"
+
+/datum/action/innate/fugu/expand/Activate()
+	var/mob/living/simple_animal/hostile/asteroid/fugu/F = owner
+	if(F.wumbo)
+		to_chat(F, "<span class='notice'>YOU'RE ALREADY WUMBO!</span>")
 		return
-	if(inflate_cooldown)
-		to_chat(src, "<span class='notice'>We need time to gather our strength.</span>")
+	if(F.inflate_cooldown)
+		to_chat(F, "<span class='notice'>You need time to gather your strength.</span>")
 		return
-	if(buffed)
-		to_chat(src, "<span class='notice'>Something is interfering with our growth.</span>")
+	if(F.buffed)
+		to_chat(F, "<span class='notice'>Something is interfering with your growth.</span>")
 		return
-	wumbo = 1
-	icon_state = "Fugu_big"
-	obj_damage = 60
-	melee_damage_lower = 15
-	melee_damage_upper = 20
-	harm_intent_damage = 0
-	throw_message = "is absorbed by the girth of the"
-	retreat_distance = null
-	minimum_distance = 1
-	move_to_delay = 6
-	transform *= 2
-	environment_smash = ENVIRONMENT_SMASH_WALLS
-	mob_size = MOB_SIZE_LARGE
-	speed = 1
-	addtimer(CALLBACK(src, .proc/Deflate), 100)
+	F.wumbo = 1
+	F.icon_state = "Fugu1"
+	F.obj_damage = 60
+	F.melee_damage_lower = 15
+	F.melee_damage_upper = 20
+	F.harm_intent_damage = 0
+	F.throw_message = "is absorbed by the girth of the"
+	F.retreat_distance = null
+	F.minimum_distance = 1
+	F.move_to_delay = 6
+	F.environment_smash = ENVIRONMENT_SMASH_WALLS
+	F.mob_size = MOB_SIZE_LARGE
+	F.speed = 1
+	addtimer(CALLBACK(F, /mob/living/simple_animal/hostile/asteroid/fugu/proc/Deflate), 100)
 
 /mob/living/simple_animal/hostile/asteroid/fugu/proc/Deflate()
 	if(wumbo)
 		walk(src, 0)
 		wumbo = 0
-		icon_state = "Fugu"
+		icon_state = "Fugu0"
 		obj_damage = 0
 		melee_damage_lower = 0
 		melee_damage_upper = 0
@@ -90,7 +106,6 @@
 		retreat_distance = 9
 		minimum_distance = 9
 		move_to_delay = 2
-		transform /= 2
 		inflate_cooldown = 4
 		environment_smash = ENVIRONMENT_SMASH_NONE
 		mob_size = MOB_SIZE_SMALL

@@ -94,7 +94,7 @@ All ShuttleMove procs go here
 	return TRUE
 
 // Called on atoms after everything has been moved
-/atom/movable/proc/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+/atom/movable/proc/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	if(light)
 		update_light()
 	if(rotation)
@@ -150,7 +150,7 @@ All ShuttleMove procs go here
 		A.air_tight = TRUE
 		INVOKE_ASYNC(A, /obj/machinery/door/.proc/close)
 
-/obj/machinery/door/airlock/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+/obj/machinery/door/airlock/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
 	shuttledocked =  1
 	for(var/obj/machinery/door/airlock/A in range(1, src))
@@ -162,24 +162,24 @@ All ShuttleMove procs go here
 		. |= MOVE_CONTENTS
 		GLOB.cameranet.removeCamera(src)
 
-/obj/machinery/camera/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+/obj/machinery/camera/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
 	GLOB.cameranet.addCamera(src)
 
-/obj/machinery/telecomms/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+/obj/machinery/telecomms/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
 	listening_level = z // Update listening Z, just in case you have telecomm relay on a shuttle
 
-/obj/machinery/mech_bay_recharge_port/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir)
+/obj/machinery/mech_bay_recharge_port/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir)
 	. = ..()
 	recharging_turf = get_step(loc, dir)
 
-/obj/machinery/atmospherics/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+/obj/machinery/atmospherics/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
 	if(pipe_vision_img)
 		pipe_vision_img.loc = loc
 
-/obj/machinery/computer/auxillary_base/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+/obj/machinery/computer/auxillary_base/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
 	if(z == ZLEVEL_MINING) //Avoids double logging and landing on other Z-levels due to badminnery
 		SSblackbox.record_feedback("associative", "colonies_dropped", 1, list("x" = x, "y" = y, "z" = z))
@@ -189,7 +189,7 @@ All ShuttleMove procs go here
 	on = FALSE
 	update_list()
 
-/obj/machinery/gravity_generator/main/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+/obj/machinery/gravity_generator/main/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
 	if(charge_count != 0 && charging_state != POWER_UP)
 		on = TRUE
@@ -200,7 +200,7 @@ All ShuttleMove procs go here
 	if(. & MOVE_AREA)
 		. |= MOVE_CONTENTS
 
-/obj/machinery/atmospherics/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+/obj/machinery/atmospherics/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
 	var/missing_nodes = FALSE
 	for(DEVICE_TYPE_LOOP)
@@ -229,7 +229,7 @@ All ShuttleMove procs go here
 		// atmosinit() calls update_icon(), so we don't need to call it
 		update_icon()
 
-/obj/machinery/atmospherics/pipe/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+/obj/machinery/atmospherics/pipe/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
 	var/turf/T = loc
 	hide(T.intact)
@@ -239,7 +239,7 @@ All ShuttleMove procs go here
 	GLOB.navbeacons["[z]"] -= src
 	GLOB.deliverybeacons -= src
 
-/obj/machinery/navbeacon/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+/obj/machinery/navbeacon/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
 	var/turf/T = loc
 	hide(T.intact)
@@ -251,7 +251,7 @@ All ShuttleMove procs go here
 		GLOB.deliverybeacons += src
 		GLOB.deliverybeacontags += location
 
-/obj/machinery/power/terminal/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+/obj/machinery/power/terminal/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
 	var/turf/T = src.loc
 	if(level==1)
@@ -259,7 +259,7 @@ All ShuttleMove procs go here
 
 /************************************Item move procs************************************/
 
-/obj/item/storage/pod/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+/obj/item/storage/pod/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
 	unlocked = TRUE
 	// If the pod was launched, the storage will always open.
@@ -271,7 +271,7 @@ All ShuttleMove procs go here
 		return
 	. = ..()
 
-/mob/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+/mob/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	if(!move_on_shuttle)
 		return
 	. = ..()
@@ -281,7 +281,7 @@ All ShuttleMove procs go here
 			shake_force *= 0.25
 		shake_camera(src, shake_force, 1)
 
-/mob/living/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+/mob/living/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
 	if(movement_force && !buckled)
 		if(movement_force["THROW"])
@@ -309,11 +309,11 @@ All ShuttleMove procs go here
 	if(. & MOVE_AREA)
 		. |= MOVE_CONTENTS
 
-/obj/structure/disposalpipe/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+/obj/structure/disposalpipe/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
 	update()
 
-/obj/structure/cable/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+/obj/structure/cable/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
 	var/turf/T = loc
 	if(level==1)

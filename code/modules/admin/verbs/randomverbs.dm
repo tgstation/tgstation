@@ -652,10 +652,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set name = "Change View Range"
 	set desc = "switches between 1x and custom views"
 
-	if(view == world.view)
+	if(view == CONFIG_GET(string/default_view))
 		change_view(input("Select view range:", "FUCK YE", 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,128))
 	else
-		change_view(world.view)
+		change_view(CONFIG_GET(string/default_view))
 
 	log_admin("[key_name(usr)] changed their view range to [view].")
 	//message_admins("\blue [key_name_admin(usr)] changed their view range to [view].")	//why? removed by order of XSI
@@ -1222,7 +1222,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 			target.electrocution_animation(40)
 			to_chat(target, "<span class='userdanger'>The gods have punished you for your sins!</span>")
 		if(ADMIN_PUNISHMENT_BRAINDAMAGE)
-			target.adjustBrainLoss(75)
+			target.adjustBrainLoss(199, 199)
 		if(ADMIN_PUNISHMENT_GIB)
 			target.gib(FALSE)
 		if(ADMIN_PUNISHMENT_BSA)

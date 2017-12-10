@@ -26,6 +26,9 @@
 	var/fourth_sound_played = FALSE
 	var/obj/effect/clockwork/overlay/gateway_glow/glow
 	var/obj/effect/countdown/clockworkgate/countdown
+	var/last_scream = 0
+	var/recalls_remaining = 1
+	var/recalling
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/Initialize()
 	. = ..()
@@ -34,7 +37,21 @@
 		GLOB.ark_of_the_clockwork_justiciar = src
 	START_PROCESSING(SSprocessing, src)
 
-/obj/structure/destructible/clockwork/massive/celestial_gateway/proc/final_countdown(ark_time)
+/obj/structure/destructible/clockwork/massive/celestial_gateway/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+	. = ..()
+	if(.)
+		flick("clockwork_gateway_damaged", glow)
+		playsound(src, 'sound/machines/clockcult/ark_damage.ogg', 75, FALSE)
+		if(last_scream < world.time)
+			audible_message("<span class='boldwarning'>An unearthly screaming sound resonates throughout Reebe!</span>")
+			for(var/V in GLOB.player_list)
+				var/mob/M = V
+				if(M.z == z || is_servant_of_ratvar(M) || isobserver(M))
+					M.playsound_local(M, 'sound/machines/clockcult/ark_scream.ogg', 100, FALSE, pressure_affected = FALSE)
+			hierophant_message("<span class='big boldwarning'>The Ark is taking damage!</span>")
+	last_scream = world.time + ARK_SCREAM_COOLDOWN
+
+/obj/structure/destructible/clockwork/massive/celestial_gateway/proc/final_countdown(ark_time) //WE'RE LEAVING TOGETHEEEEEEEEER
 	if(!ark_time)
 		ark_time = 30 //minutes
 	initial_activation_delay = ark_time * 60
@@ -58,13 +75,17 @@
 	active = TRUE
 	priority_announce("Massive [Gibberish("bluespace", 100)] anomaly detected on all frequencies. All crew are directed to \
 	@!$, [text2ratvar("PURGE ALL UNTRUTHS")] <&. the anomalies and destroy their source to prevent further damage to corporate property. This is \
-	not a drill.[grace_period ? " Estimated time of appearance: [grace_period] seconds. Use this time to prepare." : ""]", \
+	not a drill.[grace_period ? " Estimated time of appearance: [grace_period] seconds. Use this time to prepare for an attack on [station_name()]." : ""]", \
 	"Central Command Higher Dimensional Affairs", 'sound/magic/clockwork/ark_activation.ogg')
 	set_security_level("delta")
 	for(var/V in SSticker.mode.servants_of_ratvar)
 		var/datum/mind/M = V
 		if(ishuman(M.current))
 			M.current.add_overlay(mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER))
+	for(var/V in GLOB.brass_recipes)
+		var/datum/stack_recipe/R = V
+		if(R.title == "wall gear")
+			R.time *= 2 //Building walls becomes slower when the Ark activates
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/open_portal(turf/T)
 	new/obj/effect/clockwork/city_of_cogs_rift(T)
@@ -82,6 +103,25 @@
 	sound_to_playing_players(volume = 10, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_charging.ogg', TRUE))
 	seconds_until_activation = 0
 	SSshuttle.registerHostileEnvironment(src)
+
+/obj/structure/destructible/clockwork/massive/celestial_gateway/proc/initiate_mass_recall()
+	recalling = TRUE
+	sound_to_playing_players('sound/machines/clockcult/ark_recall.ogg', 75, FALSE)
+	hierophant_message("<span class='bold large_brass'>The Eminence has initiated a mass recall! You are being transported to the Ark!</span>")
+	addtimer(CALLBACK(src, .proc/mass_recall), 100)
+
+/obj/structure/destructible/clockwork/massive/celestial_gateway/proc/mass_recall()
+	for(var/V in SSticker.mode.servants_of_ratvar)
+		var/datum/mind/M = V
+		if(!M.current.stat)
+			M.current.forceMove(get_turf(src))
+		M.current.overlay_fullscreen("flash", /obj/screen/fullscreen/flash)
+		M.current.clear_fullscreen("flash", 5)
+	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 50, FALSE)
+	recalls_remaining--
+	recalling = FALSE
+	transform = matrix() * 2
+	animate(src, transform = matrix() * 0.5, time = 30, flags = ANIMATION_END_NOW)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
@@ -117,6 +157,9 @@
 			countdown.stop()
 			visible_message("<span class='userdanger'>[src] begins to pulse uncontrollably... you might want to run!</span>")
 			sound_to_playing_players(volume = 50, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_disrupted.ogg'))
+			for(var/mob/M in GLOB.player_list)
+				if(M.z == z || is_servant_of_ratvar(M))
+					M.playsound_local(M, 'sound/machines/clockcult/ark_deathrattle.ogg', 100, FALSE, pressure_affected = FALSE)
 			make_glow()
 			glow.icon_state = "clockwork_gateway_disrupted"
 			resistance_flags |= INDESTRUCTIBLE
