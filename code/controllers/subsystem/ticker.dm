@@ -33,8 +33,8 @@ SUBSYSTEM_DEF(ticker)
 	SCRIPTURE_APPLICATION = FALSE) //list of clockcult scripture states for announcements
 
 	var/delay_end = 0						//if set true, the round will not restart on it's own
-
 	var/admin_delay_notice = ""				//a message to display to anyone who tries to restart the world after a delay
+	var/ready_for_reboot = FALSE			//all roundend preparation done with, all that's left is reboot
 
 	var/triai = 0							//Global holder for Triumvirate
 	var/tipped = 0							//Did we broadcast the tip of the day yet?
@@ -525,10 +525,17 @@ SUBSYSTEM_DEF(ticker)
 	SSblackbox.Seal()
 
 	sleep(50)
-	if(mode.station_was_nuked)
-		Reboot("Station destroyed by Nuclear Device.", "nuke")
+	ready_for_reboot = TRUE
+	standard_reboot()
+
+/datum/controller/subsystem/ticker/proc/standard_reboot()
+	if(ready_for_reboot)
+		if(mode.station_was_nuked)
+			Reboot("Station destroyed by Nuclear Device.", "nuke")
+		else
+			Reboot("Round ended.", "proper completion")
 	else
-		Reboot("Round ended.", "proper completion")
+		CRASH("Attempted standard reboot without ticker roundend completion")
 
 /datum/controller/subsystem/ticker/proc/send_tip_of_the_round()
 	var/m
