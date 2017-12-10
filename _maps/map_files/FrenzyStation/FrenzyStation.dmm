@@ -9094,9 +9094,6 @@
 /turf/open/floor/plasteel/dark,
 /area/tcommsat/server)
 "vi" = (
-/obj/item/device/radio/intercom{
-	pixel_x = 25
-	},
 /obj/machinery/atmospherics/pipe/simple,
 /obj/machinery/firealarm{
 	dir = 8;
@@ -9287,6 +9284,16 @@
 /obj/machinery/chem_dispenser/drinks/beer,
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
+"vI" = (
+/obj/structure/closet/secure_closet/brig{
+	id = "Cell 2";
+	name = "Cell 2 Locker"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/floorgrime,
+/area/security/brig)
 
 (1,1,1) = {"
 aa
@@ -45888,7 +45895,7 @@ fO
 gn
 fA
 gQ
-fO
+vI
 hj
 hC
 hC

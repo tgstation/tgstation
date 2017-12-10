@@ -1348,7 +1348,7 @@
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/delivery,
-/obj/vehicle/secway,
+/obj/vehicle/ridden/secway,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "acO" = (
@@ -18464,7 +18464,7 @@
 /area/maintenance/starboard/aft)
 "aPX" = (
 /obj/effect/turf_decal/bot,
-/obj/vehicle/janicart,
+/obj/vehicle/ridden/janicart,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -24966,7 +24966,7 @@
 /area/hallway/secondary/entry)
 "beG" = (
 /obj/machinery/door/airlock/external{
-	cyclelinkeddir = 8;
+	cyclelinkeddir = 1;
 	name = "External Docking Port"
 	},
 /obj/effect/turf_decal/stripes/line{
