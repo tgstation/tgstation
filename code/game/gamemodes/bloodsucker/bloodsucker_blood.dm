@@ -1,8 +1,8 @@
 /datum/reagent/blood/vampblood
 	taste_description = "sweetness"
 	metabolization_rate = 0.05  	// Blood is normally 5, which disappears fast.
-	overdose_threshold = 25			// Drink thrice and you're his.
-	addiction_threshold = 20		// They always come back.
+	overdose_threshold = 9999		// Can't really OD.
+	addiction_threshold = 10		// They always come back.
 	id = "vampblood"
 
 		// NOTES:
@@ -37,6 +37,9 @@
 	M.adjustToxLoss(-0.05, 0)
 	M.adjustBrainLoss(-0.025,0)
 	M.adjustStaminaLoss(-0.25,1)
+	if (ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.bleed_rate = max(bleed_rate - 0.1, 0)
 	..()
 	. = 1
 
@@ -180,7 +183,7 @@
 /obj/item/reagent_containers/blood/attack(mob/M, mob/user, def_zone)
 
 	if(user.a_intent == INTENT_HELP)
-		if (user == M)
+		if (user != M)
 			user.visible_message("<span class='userdanger'>[user] forces [M] to drink from the [src].</span>", \
 							  	"<span class='notice'>You put the [src] up to [M]'s mouth.</span>")
 			if (!do_mob(user, M, 50))

@@ -241,7 +241,7 @@
 		if(DISGUST_LEVEL_DISGUSTED to INFINITY)
 			msg += "[t_He] look[p_s()] extremely disgusted.\n"
 
-	if(blood_volume < BLOOD_VOLUME_SAFE)
+	if(blood_volume < BLOOD_VOLUME_OKAY) // FULPSTATION: More leeway for giving away blood loss. Used to be BLOOD_VOLUME_SAFE (475), BLOOD_VOLUME_OKAY is (336)
 		msg += "[t_He] [t_has] pale skin.\n"
 
 	if(bleedsuppress)

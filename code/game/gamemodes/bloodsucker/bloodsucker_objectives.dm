@@ -167,25 +167,106 @@
 /datum/objective/bloodsucker/desecrate
 	//dangerrating = 4
 	martyr_compatible = 1
-	var/target_area 				//Name of the area to desecrate.
+	var/area/target_area 				//Name of the area to desecrate.
 
 
 //						 GENERATE!
 /datum/objective/bloodsucker/desecrate/proc/generate_objective()
-	// Look up: Space_Station_13_areas.dm for all areas.
-	var/list/areas_easy = list("Chapel","Bar","Cafeteria","Locker Room","Dormitories","Theatre","Kitchen","Fitness Room","Morgue","Chemistry","Genetics Lab")
-	var/list/areas_hard = list("Detective's Office","Teleporter Room","Cargo Bay")
-	if (prob(75))
-		target_area = pick(areas_easy)
-	else
-		target_area = pick(areas_hard)
+
+	// List of BASE TYPES. Find one that qualifies in GLOB.sortedAreas.
+	var/list/area/As = list(
+		/area/library,
+		/area/chapel,
+		/area/crew_quarters,
+		/area/engine,
+		/area/medical/medbay,
+		/area/security,
+		/area/quartermaster,
+		/area/hydroponics,
+		/area/science,
+		/area/bridge
+	)
+
+	//message_admins("[owner] DEBUG OBJECTIVE: New DESECRATE objective.")
+	// Find Valids					// TODO: Turn this into a single global list
+	var/list/area/valid_areas = list()
+	for (var/area/A in GLOB.sortedAreas)
+		var/turf/T = locate(/turf) in A
+		// Is Station
+		if ((T.z in GLOB.station_z_levels)) // && locate(A.type) in As) // NOTE : Cannot do this. If an area's type is /area/library/special then it does NOT appear in As.
+			//message_admins("[owner] Checking [A] with turf [T] / [T.z]")
+			// Does this type appear in our list?
+			for (var/check_type in As)
+				if (istype(A,check_type))
+					valid_areas += A
+					break
+	// Make Selection
+	target_area = pick(valid_areas)
+	//message_admins("[owner] Found [valid_areas.len] valid areas, selected [target_area]")
+
+	/* METHOD ONE: Pick typesof()
+	while (A == null && safety < 25)
+		// Expand List
+		var/list/moreAs = typesof(pick(As)) // This picks something from As, and expands it to include all derived room types.
+		var/a_type = pick(moreAs)			// Pick one of those expanded room types.
+		var/area/check_area = locate(a_type) in GLOB.sortedAreas	// Find that room type (this station may not have one)
+		message_admins("[owner] DEBUG OBJECTIVE: Checking for [a_type], found area [check_area]...")
+		if (check_area == null)
+			continue
+		var/turf/T = locate(/turf) in check_area
+		if (T.z in GLOB.station_z_levels)
+			A = check_area
+		safety ++
+	*/
+
+	// Never found anything? Default to Bridge
+	if (target_area == null)
+		target_area = locate(/area/bridge) in GLOB.sortedAreas
+		message_admins("[owner] DEBUG OBJECTIVE: Found nothing. Defaulted to [target_area]")
+
+			// Pick Room Type
+	//var/a_type = pick(As)
+	//	// Find all Rooms that Qualify
+	//	for(var/a_type in As)
+	//		if( istype(check_area, a_type) )
+	//		for (var/obj/effect/proc_holder/spell/bloodsucker/feed/feedpower in powers)
+
+
+
+
+	//r/area/A
+	//var/safety = 0
+	//while (A == null && safety < 50)
+		//var/area/check_area = pick(GLOB.sortedAreas)
+		//message_admins("[owner] DEBUG OBJECTIVE: Checking area [check_area]...")
+		//var/turf/T = locate(/turf) in check_area
+		//if (T.z in GLOB.station_z_levels && locate(check_area.type) in As)
+		//	A = check_area
+		//message_admins("[owner] DEBUG OBJECTIVE: Trying [A], [check_area.type] / [T.z].")
+
+		//var/a_type =
+		//	for(var/a_type in As)
+		//		if( istype(check_area, a_type) )
+
+			//message_admins("[owner] DEBUG OBJECTIVE: Searching for [a_type]...")
+			//A = locate(a_type) in GLOB.sortedAreas
+			//message_admins("[owner] DEBUG OBJECTIVE: Trying [A] out of [GLOB.sortedAreas.len] possible areas.")
+
+	//	safety ++
+
 	target_amount = rand(3,5)
 	update_explanation_text()
 
+	// UPDATE: Different Maps lack certain rooms! THIS IS HOW WE SHOULD DO IT INSTEAD OF PICKING SET NAMES...
+	//
+	// 1) Pick random areas and make sure they apply to any of the /area/ datums in Space_Station_13_areas.dm
+	// 2) Sort through (area/A in GLOB.sortedAreas), or (var/area/A in world) to find areas that ACTUALLY exist in this map
+
+	// adminjump.dm    game.dm    weather.dm    space_station_13_areas.dm    areas.dm
 
 //						EXPLANATION
 /datum/objective/bloodsucker/desecrate/update_explanation_text()
-	explanation_text = "Desecrate the [target_area] with your accursed blood [target_amount] times."
+	explanation_text = "Desecrate the [target_area.name] with your accursed blood [target_amount] times."
 	// NOTE: Make sure "Expel Blood" checks the current location you're bleeding against this objective, and runs check_completion() to know if you've done enough.
 
 
@@ -197,10 +278,11 @@
 	var/datum/antagonist/bloodsucker/antagdatum = owner.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	for (var/obj/effect/decal/cleanable/blood/vampblood/B in antagdatum.desecrateBlood)
 		A = get_area(B)
-		//message_admins("[owner] DEBUG OBJECTIVE: [A] / [A.name] / [target_area].")
-		if (A.name == target_area)
+		message_admins("[owner] DEBUG OBJECTIVE: [src] [A] / [A.name] / [target_area].")
+		if (A.name == target_area.name)
 			checkamount ++
 			//return 1
+	message_admins("[owner] DEBUG OBJECTIVE: [src] Found [checkamount] of [target_amount].")
 	return checkamount >= target_amount
 
 
@@ -216,6 +298,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/*
 // Vampires hate solar arrays.
 /datum/objective/bloodsucker/destroysolars
 	//dangerrating = 4
@@ -225,7 +308,7 @@
 /datum/objective/bloodsucker/destroysolars/update_explanation_text()
 	explanation_text = "Keep all Solar Arrays out of commission for good."
 	// NOTE: Make sure "Expel Blood" checks the current location you're bleeding against this objective, and runs check_completion() to know if you've done enough.
-
+*/
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

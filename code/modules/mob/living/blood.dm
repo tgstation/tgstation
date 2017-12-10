@@ -19,7 +19,7 @@
 	if(bodytemperature >= 225 && !(disabilities & NOCLONE)) //cryosleep or husked people do not pump the blood.
 		//Blood regeneration if there is some space
 		if(blood_volume < BLOOD_VOLUME_NORMAL)
-			blood_volume += 0.1 // regenerate blood VERY slowly
+			blood_volume += 0.2 // regenerate blood VERY slowly	// FULPSTATION: Let's double it, why not?
 
 // Takes care blood loss and regeneration
 /mob/living/carbon/human/handle_blood()
