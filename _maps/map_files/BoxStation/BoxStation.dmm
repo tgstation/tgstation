@@ -760,7 +760,7 @@
 	id = "permacell3";
 	name = "cell blast door"
 	},
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	id_tag = "permabolt3";
 	name = "Cell 3"
 	},
@@ -771,7 +771,7 @@
 	id = "permacell2";
 	name = "cell blast door"
 	},
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	id_tag = "permabolt2";
 	name = "Cell 2"
 	},
@@ -786,7 +786,7 @@
 	id = "permacell1";
 	name = "cell blast door"
 	},
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	id_tag = "permabolt1";
 	name = "Cell 1"
 	},
@@ -5326,7 +5326,7 @@
 /turf/open/floor/plating,
 /area/security/courtroom)
 "amt" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Courtroom";
 	req_access_txt = "42"
 	},
@@ -5966,7 +5966,7 @@
 /area/hallway/primary/fore)
 "anU" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Courtroom"
 	},
 /turf/open/floor/plasteel/dark,
@@ -8189,7 +8189,7 @@
 /area/security/vacantoffice/b)
 "atZ" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Holodeck Door"
 	},
 /turf/open/floor/plasteel,
@@ -8390,7 +8390,7 @@
 /area/crew_quarters/dorms)
 "auy" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Holodeck Door"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -9226,7 +9226,7 @@
 /area/crew_quarters/fitness)
 "awz" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Fitness"
 	},
 /turf/open/floor/plasteel,
@@ -9784,7 +9784,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Fitness"
 	},
 /turf/open/floor/plasteel,
@@ -9843,7 +9843,7 @@
 /area/crew_quarters/fitness)
 "axZ" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Holodeck Door"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -13795,7 +13795,7 @@
 /area/ai_monitored/nuke_storage)
 "aHH" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Dormitory"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -13850,14 +13850,14 @@
 /area/ai_monitored/storage/eva)
 "aHP" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Central Access"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aHQ" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Central Access"
 	},
 /turf/open/floor/plasteel/blue/corner{
@@ -13866,7 +13866,7 @@
 /area/hallway/primary/central)
 "aHR" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Central Access"
 	},
 /turf/open/floor/plasteel/blue/side{
@@ -13887,7 +13887,7 @@
 /area/maintenance/starboard/fore)
 "aHT" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Dormitory"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -14769,7 +14769,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Primary Tool Storage"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -14777,7 +14777,7 @@
 /area/storage/primary)
 "aKa" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Primary Tool Storage"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -14875,7 +14875,7 @@
 /area/hallway/secondary/entry)
 "aKm" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Garden"
 	},
 /turf/open/floor/plasteel,
@@ -15890,7 +15890,7 @@
 /area/hallway/secondary/entry)
 "aNc" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Central Access"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -16128,7 +16128,7 @@
 /area/crew_quarters/kitchen)
 "aNN" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Hydroponics";
 	req_access_txt = "35"
 	},
@@ -16198,7 +16198,7 @@
 /turf/open/floor/wood,
 /area/library)
 "aNW" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Chapel Office";
 	req_access_txt = "22"
 	},
@@ -16460,7 +16460,7 @@
 /area/hallway/primary/port)
 "aOB" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Central Access"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -16842,7 +16842,7 @@
 /turf/closed/wall,
 /area/storage/art)
 "aPH" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Art Storage"
 	},
 /turf/open/floor/plasteel,
@@ -17342,7 +17342,7 @@
 /area/storage/tools)
 "aRf" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Auxiliary Tool Storage";
 	req_access_txt = "12"
 	},
@@ -17892,7 +17892,7 @@
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "aSI" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Kitchen";
 	req_access_txt = "28"
 	},
@@ -19120,7 +19120,7 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Library"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -19161,7 +19161,7 @@
 /area/library)
 "aWe" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Chapel"
 	},
 /turf/open/floor/carpet,
@@ -19792,7 +19792,7 @@
 /area/crew_quarters/locker)
 "aXy" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Chapel"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -19939,7 +19939,7 @@
 /area/hydroponics)
 "aXT" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Library"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -20432,7 +20432,7 @@
 /area/library)
 "aZe" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Chapel"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -21283,7 +21283,7 @@
 /area/crew_quarters/heads/captain)
 "bbx" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Diner"
 	},
 /turf/open/floor/plasteel,
@@ -21309,7 +21309,7 @@
 /area/hallway/primary/starboard)
 "bbB" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Hydroponics";
 	req_access_txt = "35"
 	},
@@ -31376,7 +31376,7 @@
 /area/quartermaster/miningdock)
 "bzG" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Central Access"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -32582,7 +32582,7 @@
 "bCu" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Central Access"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -47299,7 +47299,7 @@
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
 "cmf" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	autoclose = 0;
 	frequency = 1449;
 	heat_proof = 1;
@@ -47779,7 +47779,7 @@
 /turf/closed/wall,
 /area/construction)
 "cnC" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	autoclose = 0;
 	frequency = 1449;
 	heat_proof = 1;
@@ -51335,7 +51335,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "cwX" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Cockpit";
 	req_access_txt = "19"
 	},
@@ -51394,7 +51394,7 @@
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "cxf" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Brig";
 	req_access_txt = "2"
 	},
@@ -51638,7 +51638,7 @@
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/fore)
 "cxO" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Infirmary"
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -51957,7 +51957,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "cyz" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "cyA" = (
@@ -52184,7 +52184,7 @@
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "cza" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "czb" = (

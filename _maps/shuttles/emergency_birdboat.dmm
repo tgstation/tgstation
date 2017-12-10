@@ -141,7 +141,7 @@
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "aA" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "aB" = (
