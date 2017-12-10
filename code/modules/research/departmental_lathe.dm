@@ -4,10 +4,8 @@
 	icon_state = "protolathe"
 	container_type = OPENCONTAINER_1
 	circuit = /obj/item/circuitboard/machine/protolathe/department
-	console_link = FALSE
 	requires_console = FALSE
 
-	var/list/allowed_department_flags = DEPARTMENTAL_FLAG_ALL
 	var/list/datum/design/cached_designs
 	var/list/datum/design/matching_designs
 	var/department_tag = "Unidentified"			//used for material distribution among other things.

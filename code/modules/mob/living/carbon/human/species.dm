@@ -440,9 +440,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	var/obj/item/bodypart/head/HD = H.get_bodypart("head")
 
-	if(!(H.disabilities & HUSK))
+	if(HD && !(H.disabilities & HUSK))
 		// lipstick
-		if(H.lip_style && (LIPS in species_traits) && HD)
+		if(H.lip_style && (LIPS in species_traits))
 			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[H.lip_style]", -BODY_LAYER)
 			lip_overlay.color = H.lip_color
 			if(OFFSET_FACE in H.dna.species.offset_features)
@@ -451,13 +451,18 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			standing += lip_overlay
 
 		// eyes
-		if((EYECOLOR in species_traits) && HD)
-			var/mutable_appearance/eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes", -BODY_LAYER)
+		var/has_eyes = H.getorganslot(ORGAN_SLOT_EYES)
+		var/mutable_appearance/eye_overlay
+		if(!has_eyes)
+			eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER)
+		else
+			eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes", -BODY_LAYER)
+		if((EYECOLOR in species_traits) && has_eyes)
 			eye_overlay.color = "#" + H.eye_color
-			if(OFFSET_FACE in H.dna.species.offset_features)
-				eye_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FACE][1]
-				eye_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
-			standing += eye_overlay
+		if(OFFSET_FACE in H.dna.species.offset_features)
+			eye_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FACE][1]
+			eye_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
+		standing += eye_overlay
 
 	//Underwear, Undershirts & Socks
 	if(!(NO_UNDERWEAR in species_traits))
@@ -1192,7 +1197,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		add_logs(user, target, "punched")
 		if((target.stat != DEAD) && damage >= user.dna.species.punchstunthreshold)
 			target.visible_message("<span class='danger'>[user] has knocked  [target] down!</span>", \
-							"<span class='userdanger'>[user] has knocked [target] down!</span>")
+							"<span class='userdanger'>[user] has knocked [target] down!</span>", null, COMBAT_MESSAGE_RANGE)
 			target.apply_effect(80, KNOCKDOWN, armor_block)
 			target.forcesay(GLOB.hit_appends)
 		else if(target.lying)
@@ -1225,7 +1230,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(randn <= 60)
 			var/obj/item/I = null
 			if(target.pulling)
-				to_chat(target, "<span class='warning'>[user] has broken [target]'s grip on [target.pulling]!</span>")
+				target.visible_message("<span class='warning'>[user] has broken [target]'s grip on [target.pulling]!</span>")
 				target.stop_pulling()
 			else
 				I = target.get_active_held_item()
@@ -1329,7 +1334,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						H.visible_message("<span class='danger'>[H] has been knocked senseless!</span>", \
 										"<span class='userdanger'>[H] has been knocked senseless!</span>")
 						H.confused = max(H.confused, 20)
+						H.adjustBrainLoss(20)
 						H.adjust_blurriness(10)
+						if(prob(20))
+							H.gain_trauma(/datum/brain_trauma/mild/concussion)
 
 					if(prob(I.force + ((100 - H.health)/2)) && H != user)
 						var/datum/antagonist/rev/rev = H.mind.has_antag_datum(/datum/antagonist/rev)

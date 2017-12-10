@@ -734,6 +734,33 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	owner.playsound_local(owner, "sparks", 50, 0)
 
 
+//Disable Emergency Lights
+/datum/AI_Module/small/emergency_lights
+	module_name = "Disable Emergency Lights"
+	mod_pick_name = "disable_emergency_lights"
+	description = "Cuts emergency lights across the entire station. If power is lost to light fixtures, they will not attempt to fall back on emergency power reserves."
+	cost = 10
+	one_purchase = TRUE
+	power_type = /datum/action/innate/ai/emergency_lights
+	unlock_text = "<span class='notice'>You hook into the powernet and locate the connections between light fixtures and their fallbacks.</span>"
+	unlock_sound = "sparks"
+
+/datum/action/innate/ai/emergency_lights
+	name = "Disable Emergency Lights"
+	desc = "Disables all emergency lighting. Note that emergency lights can be restored through reboot at an APC."
+	button_icon_state = "emergency_lights"
+	uses = 1
+
+/datum/action/innate/ai/emergency_lights/Activate()
+	for(var/obj/machinery/light/L in GLOB.machines)
+		if(L.z in GLOB.station_z_levels)
+			L.no_emergency = TRUE
+			INVOKE_ASYNC(L, /obj/machinery/light/.proc/update, FALSE)
+		CHECK_TICK
+	to_chat(owner, "<span class='notice'>Emergency light connections severed.</span>")
+	owner.playsound_local(owner, 'sound/effects/light_flicker.ogg', 50, FALSE)
+
+
 //Reactivate Camera Network: Reactivates up to 30 cameras across the station.
 /datum/AI_Module/small/reactivate_cameras
 	module_name = "Reactivate Camera Network"

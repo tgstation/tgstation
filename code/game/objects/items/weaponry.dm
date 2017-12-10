@@ -397,7 +397,7 @@
 	icon_state = "ectoplasm"
 
 /obj/item/ectoplasm/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is inhaling [src]! It looks like [user.p_theyre()] trying to visit the astral plane.</span>")
+	user.visible_message("<span class='suicide'>[user] is inhaling [src]! It looks like [user.p_theyre()] trying to visit the astral plane!</span>")
 	return (OXYLOSS)
 
 /obj/item/mounted_chainsaw
@@ -472,7 +472,7 @@
 	attack_verb = list("smacked", "whacked", "slammed", "smashed")
 
 /obj/item/melee/skateboard/attack_self(mob/user)
-	new /obj/vehicle/scooter/skateboard(get_turf(user))
+	new /obj/vehicle/ridden/scooter/skateboard(get_turf(user))
 	qdel(src)
 
 /obj/item/melee/baseball_bat

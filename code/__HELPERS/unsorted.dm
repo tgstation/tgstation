@@ -356,7 +356,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	return M
 
 // Format a power value in W, kW, MW, or GW.
-/proc/DisplayPower(var/powerused)
+/proc/DisplayPower(powerused)
 	if(powerused < 1000) //Less than a kW
 		return "[powerused] W"
 	else if(powerused < 1000000) //Less than a MW
@@ -366,7 +366,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	return "[round((powerused * 0.000000001),0.0001)] GW"
 
 // Format an energy value in J, kJ, MJ, or GJ. 1W = 1J/s.
-/proc/DisplayEnergy(var/units)
+/proc/DisplayEnergy(units)
 	// APCs process every (SSmachines.wait * 0.1) seconds, and turn 1 W of
 	// excess power into GLOB.CELLRATE energy units when charging cells.
 	// With the current configuration of wait=20 and CELLRATE=0.002, this
@@ -1510,3 +1510,10 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 			else
 				return "\[[url_encode(thing.tag)]\]"
 	return "\ref[input]"
+
+//Returns a list of all servants of Ratvar and observers.
+/proc/servants_and_ghosts()
+	. = list()
+	for(var/V in GLOB.player_list)
+		if(is_servant_of_ratvar(V) || isobserver(V))
+			. += V

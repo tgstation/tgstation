@@ -112,6 +112,10 @@
 	heal_brute = 40
 	self_delay = 20
 
+/obj/item/stack/medical/bruise_pack/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is bludgeoning [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return (BRUTELOSS)
+
 /obj/item/stack/medical/gauze
 	name = "medical gauze"
 	desc = "A roll of elastic cloth that is extremely effective at stopping bleeding, but does not heal wounds."

@@ -8777,7 +8777,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "asy" = (
-/obj/vehicle/secway,
+/obj/vehicle/ridden/secway,
 /obj/item/key/security,
 /turf/open/floor/plasteel/red/side{
 	dir = 10
@@ -26562,7 +26562,6 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
 	},
-/obj/machinery/mineral/ore_redemption,
 /turf/open/floor/plasteel/brown{
 	dir = 8
 	},
@@ -29315,7 +29314,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = -28
 	},
-/obj/vehicle/janicart,
+/obj/vehicle/ridden/janicart,
 /obj/item/key/janitor,
 /turf/open/floor/plating,
 /area/janitor)
@@ -30954,7 +30953,6 @@
 "bmh" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/mineral/ore_redemption,
-/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plasteel/dark,
 /area/quartermaster/office)
 "bmi" = (
@@ -32293,10 +32291,12 @@
 /obj/machinery/light_switch{
 	pixel_x = 27
 	},
-/obj/machinery/photocopier,
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/structure/easel,
+/obj/item/canvas/twentythreeXtwentythree,
+/obj/item/canvas/twentythreeXtwentythree,
 /turf/open/floor/plasteel,
 /area/storage/art)
 "boP" = (
@@ -43950,8 +43950,9 @@
 /obj/structure/sign/kiddieplaque/perfect_drone{
 	pixel_y = 32
 	},
-/obj/machinery/droneDispenser,
-/obj/machinery/door/window/southleft,
+/obj/structure/table/wood,
+/obj/item/storage/backpack/duffelbag/drone,
+/obj/structure/window/reinforced,
 /turf/open/floor/carpet,
 /area/bridge/showroom/corporate)
 "bNc" = (
@@ -45229,10 +45230,8 @@
 /turf/open/floor/wood,
 /area/library)
 "bPU" = (
-/obj/structure/table/wood,
-/obj/item/dice/d20,
-/obj/item/dice,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/machinery/vending/games,
 /turf/open/floor/wood,
 /area/library)
 "bPV" = (
@@ -46960,25 +46959,12 @@
 	dir = 1;
 	network = list("SS13")
 	},
-/obj/item/storage/pill_bottle/dice,
 /obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/library)
 "bTz" = (
 /obj/structure/table/wood,
 /obj/machinery/light,
-/obj/item/toy/cards/deck/cas/black{
-	pixel_x = -2;
-	pixel_y = 6
-	},
-/obj/item/toy/cards/deck{
-	pixel_x = 2;
-	pixel_y = 7
-	},
-/obj/item/toy/cards/deck/cas{
-	pixel_x = -1;
-	pixel_y = 2
-	},
 /turf/open/floor/wood,
 /area/library)
 "bTA" = (
@@ -69262,8 +69248,12 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cMl" = (
-/obj/machinery/space_heater,
-/obj/effect/landmark/blobstart,
+/obj/structure/table,
+/obj/item/stack/sheet/glass/fifty{
+	pixel_x = 3;
+	pixel_y = -4
+	},
+/obj/item/stack/sheet/metal/fifty,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cMm" = (
@@ -80837,6 +80827,23 @@
 /obj/structure/closet/firecloset,
 /turf/open/floor/plating,
 /area/engine/engineering)
+"EDF" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/aft)
+"EDG" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/landmark/blobstart,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
+"EDH" = (
+/obj/machinery/droneDispenser,
+/turf/open/floor/plating,
+/area/maintenance/aft)
 
 (1,1,1) = {"
 aaa
@@ -101278,7 +101285,7 @@ bzE
 bLk
 bML
 bue
-bMQ
+bzE
 bRj
 bSB
 bPR
@@ -110316,13 +110323,13 @@ cIN
 cJM
 cCq
 cgM
+EDF
 cwc
 cNe
 cNT
 cNe
 ack
 ack
-aaf
 aaf
 aaf
 aaa
@@ -110573,11 +110580,11 @@ cFh
 cFh
 cKH
 cLz
+EDG
 cMk
 bTs
 bTs
 bTs
-aaf
 aaa
 aaa
 aaa
@@ -110831,8 +110838,8 @@ cJN
 cCq
 cgN
 cMl
+EDH
 bTs
-aaf
 aaf
 aaf
 aaf
@@ -111089,7 +111096,7 @@ cCq
 cLA
 bTs
 bTs
-aaa
+bTs
 aaf
 aaa
 aaa
@@ -111346,7 +111353,7 @@ cKI
 cQr
 cQR
 cRa
-cRe
+cSd
 cRe
 cRe
 cRe

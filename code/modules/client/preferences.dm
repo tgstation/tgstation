@@ -110,6 +110,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/exp
 	var/list/menuoptions
 
+	var/action_buttons_screen_locs = list()
+
 /datum/preferences/New(client/C)
 	parent = C
 	custom_names["human"] = random_unique_name()

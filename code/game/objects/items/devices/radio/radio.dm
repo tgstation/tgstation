@@ -5,7 +5,6 @@
 	item_state = "walkietalkie"
 	desc = "A basic handheld radio that communicates with local telecommunication networks."
 	dog_fashion = /datum/dog_fashion/back
-
 	flags_1 = CONDUCT_1 | HEAR_1
 	flags_2 = NO_EMP_WIRES_2
 	slot_flags = SLOT_BELT

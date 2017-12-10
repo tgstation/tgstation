@@ -801,7 +801,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/security/prison)
 "aci" = (
-/obj/vehicle/secway,
+/obj/vehicle/ridden/secway,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
 "acj" = (
@@ -13581,8 +13581,7 @@
 /turf/open/floor/wood,
 /area/library)
 "aHc" = (
-/obj/structure/table/wood,
-/obj/item/storage/pill_bottle/dice,
+/obj/machinery/vending/games,
 /turf/open/floor/wood,
 /area/library)
 "aHd" = (
@@ -33147,7 +33146,7 @@
 /obj/machinery/camera{
 	c_tag = "Custodial Closet"
 	},
-/obj/vehicle/janicart,
+/obj/vehicle/ridden/janicart,
 /turf/open/floor/plasteel,
 /area/janitor)
 "bDL" = (
@@ -57714,6 +57713,24 @@
 	dir = 8
 	},
 /area/medical/sleeper)
+"QoV" = (
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 2;
+	name = "2maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
+"QoW" = (
+/obj/machinery/droneDispenser,
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
+"QoX" = (
+/obj/structure/table,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
 
 (1,1,1) = {"
 aaa
@@ -97977,7 +97994,7 @@ bZQ
 caP
 cbO
 ccJ
-cdM
+bLS
 bLS
 cfp
 cge
@@ -98195,7 +98212,7 @@ aYV
 aYV
 bfO
 bfS
-biC
+biD
 bkd
 bfS
 cTO
@@ -98966,8 +98983,8 @@ aYV
 bez
 bfP
 bfS
-biD
-bke
+bfS
+bfS
 bfS
 cTO
 bmZ
@@ -99223,9 +99240,9 @@ bci
 beB
 bfS
 bfS
-bfS
-bfS
-bfS
+QoV
+QoW
+QoX
 cTO
 bmZ
 bon
@@ -101261,7 +101278,7 @@ aFu
 aHc
 aIw
 aJS
-cAM
+aJS
 aMJ
 aNP
 aOS

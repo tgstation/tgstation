@@ -30,6 +30,7 @@
 		GLOB.dead_mob_list += src
 	else
 		GLOB.alive_mob_list += src
+	set_focus(src)
 	prepare_huds()
 	for(var/v in GLOB.active_alternate_appearances)
 		if(!v)
@@ -399,6 +400,7 @@
 		pulling = null
 		grab_state = 0
 		update_pull_hud_icon()
+    
 		if(isliving(ex_pulled))
 			var/mob/living/L = ex_pulled
 			L.update_canmove()// mob gets up if it was lyng down in a chokehold
@@ -766,14 +768,14 @@
 
 //Default buckling shift visual for mobs
 /mob/post_buckle_mob(mob/living/M)
-	if(M in buckled_mobs)//post buckling
-		var/height = M.get_mob_buckling_height(src)
-		M.pixel_y = initial(M.pixel_y) + height
-		if(M.layer < layer)
-			M.layer = layer + 0.1
-	else //post unbuckling
-		M.layer = initial(M.layer)
-		M.pixel_y = initial(M.pixel_y)
+	var/height = M.get_mob_buckling_height(src)
+	M.pixel_y = initial(M.pixel_y) + height
+	if(M.layer < layer)
+		M.layer = layer + 0.1
+
+/mob/post_unbuckle_mob(mob/living/M)
+	M.layer = initial(M.layer)
+	M.pixel_y = initial(M.pixel_y)
 
 //returns the height in pixel the mob should have when buckled to another mob.
 /mob/proc/get_mob_buckling_height(mob/seat)
