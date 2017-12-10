@@ -297,7 +297,7 @@
 		if(objective.check_completion())
 			parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'>Success!</span>"
 		else
-			parts += "<B>Objective #[count]</B>: [objective.explanation_text] <<span class='redtext'>Fail.</span>"
+			parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
 			wizardwin = 0
 		count++
 
