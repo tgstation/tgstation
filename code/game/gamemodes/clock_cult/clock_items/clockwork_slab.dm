@@ -1,23 +1,31 @@
 /obj/item/clockwork/slab //Clockwork slab: The most important tool in Ratvar's arsenal. Allows scripture recital, tutorials, and generates components.
 	name = "clockwork slab"
 	desc = "A strange metal tablet. A clock in the center turns around and around."
-	clockwork_desc = "A link between you and the Celestial Derelict. It contains information, recites scripture, and is your most vital tool as a Servant."
+	clockwork_desc = "A link between you and the Celestial Derelict. It contains information, recites scripture, and is your most vital tool as a Servant.<br>\
+	It can be used to link traps and triggers by attacking them with the slab. Keep in mind that traps linked with one another will activate in tandem!"
+
 	icon_state = "dread_ipad"
 	lefthand_file = 'icons/mob/inhands/antag/clockwork_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/clockwork_righthand.dmi'
 	var/inhand_overlay //If applicable, this overlay will be applied to the slab's inhand
+
 	slot_flags = SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
+
 	var/busy //If the slab is currently being used by something
 	var/no_cost = FALSE //If the slab is admin-only and needs no components and has no scripture locks
 	var/speed_multiplier = 1 //multiples how fast this slab recites scripture
 	var/selected_scripture = SCRIPTURE_DRIVER
-	var/recollecting = FALSE //if we're looking at fancy recollection
 	var/obj/effect/proc_holder/slab/slab_ability //the slab's current bound ability, for certain scripture
+
+	var/recollecting = FALSE //if we're looking at fancy recollection
+	var/recollection_category = "Default"
+
 	var/list/quickbound = list(/datum/clockwork_scripture/abscond, \
 	/datum/clockwork_scripture/ranged_ability/kindle, /datum/clockwork_scripture/ranged_ability/hateful_manacles) //quickbound scripture, accessed by index
 	var/maximum_quickbound = 5 //how many quickbound scriptures we can have
-	var/recollection_category = "Default"
+
+	var/obj/structure/destructible/clockwork/trap/linking //If we're linking traps together, which ones we're doing
 
 /obj/item/clockwork/slab/internal //an internal motor for mobs running scripture
 	name = "scripture motor"
@@ -34,8 +42,7 @@
 		add_servant_of_ratvar(user)
 
 /obj/item/clockwork/slab/cyborg //three scriptures, plus a spear and fabricator
-	clockwork_desc = "A divine link to the Celestial Derelict, allowing for limited recital of scripture.\n\
-	Hitting a slab, a Servant with a slab, or a cache will <b>transfer</b> this slab's components into the target, the target's slab, or the global cache, respectively."
+	clockwork_desc = "A divine link to the Celestial Derelict, allowing for limited recital of scripture."
 	quickbound = list(/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/linked_vanguard, \
 	/datum/clockwork_scripture/create_object/stargazer)
 	maximum_quickbound = 6 //we usually have one or two unique scriptures, so if ratvar is up let us bind one more
@@ -46,7 +53,7 @@
 
 /obj/item/clockwork/slab/cyborg/medical //five scriptures, plus a spear
 	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/ranged_ability/sentinels_compromise, \
-	/datum/clockwork_scripture/create_object/vitality_matrix, /datum/clockwork_scripture/channeled/mending_mantra)
+	/datum/clockwork_scripture/create_object/vitality_matrix)
 
 /obj/item/clockwork/slab/cyborg/security //twoscriptures, plus a spear
 	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/ranged_ability/hateful_manacles, /datum/clockwork_scripture/ranged_ability/judicial_marker)
@@ -152,6 +159,11 @@
 		to_chat(user, "<span class='nezbere'>[src] hums fitfully in your hands, but doesn't seem to do anything...</span>")
 		return 0
 	access_display(user)
+
+/obj/item/clockwork/slab/AltClick(mob/living/user)
+	if(is_servant_of_ratvar(user) && linking)
+		linking = null
+		to_chat(user, "<span class='notice'>Object link canceled.</span>")
 
 /obj/item/clockwork/slab/proc/access_display(mob/living/user)
 	if(!is_servant_of_ratvar(user))
@@ -410,7 +422,10 @@
 				data["tier_info"] = "<font color=#B18B25><i>Unlock these optional scriptures by converting another servant or if [DisplayPower(APPLICATION_UNLOCK_THRESHOLD)] of power is reached..</i></font>"
 
 	data["selected"] = selected_scripture
-
+	data["scripturecolors"] = "<font color=#DAAA18>Scriptures in <b>yellow</b> are related to construction and building.</font><br>\
+	<font color=#6E001A>Scriptures in <b>red</b> are related to attacking and offense.</font><br>\
+	<font color=#1E8CE1>Scriptures in <b>blue</b> are related to healing and defense.</font><br>\
+	<font color=#AF0AAF>Scriptures in <b>purple</b> are niche but still important!</font>"
 	generate_all_scripture()
 
 	data["scripture"] = list()

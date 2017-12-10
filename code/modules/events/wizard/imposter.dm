@@ -6,12 +6,11 @@
 	earliest_start = 0
 
 /datum/round_event/wizard/imposter/start()
-
 	for(var/datum/mind/M in SSticker.mode.wizards)
 		if(!ishuman(M.current))
 			continue
 		var/mob/living/carbon/human/W = M.current
-		var/list/candidates = get_candidates(ROLE_WIZARD)
+		var/list/candidates = pollGhostCandidates("Would you like to be an imposter wizard?", ROLE_WIZARD)
 		if(!candidates)
 			return //Sad Trombone
 		var/client/C = pick(candidates)
@@ -28,10 +27,10 @@
 		var/datum/antagonist/wizard/master = M.has_antag_datum(/datum/antagonist/wizard)
 		if(!master.wiz_team)
 			master.create_wiz_team()
-		var/datum/antagonist/wizard/apprentice/imposter = new(I.mind)
+		var/datum/antagonist/wizard/apprentice/imposter/imposter = new(I.mind)
 		imposter.master = M
 		imposter.wiz_team = master.wiz_team
-		master.wiz_team += imposter
+		master.wiz_team.add_member(imposter)
 		I.mind.add_antag_datum(imposter)
 		//Remove if possible
 		SSticker.mode.apprentices += I.mind

@@ -1,4 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - tweak: "Stethoscopes now inform the user if the target can be defibrillated; the user will hear a \"faint, fluttery pulse.\""

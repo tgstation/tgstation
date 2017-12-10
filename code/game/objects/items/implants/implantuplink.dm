@@ -34,6 +34,7 @@
 /obj/item/implant/uplink/activate()
 	GET_COMPONENT(hidden_uplink, /datum/component/uplink)
 	if(hidden_uplink)
+		hidden_uplink.locked = FALSE
 		hidden_uplink.interact(usr)
 
 /obj/item/implanter/uplink

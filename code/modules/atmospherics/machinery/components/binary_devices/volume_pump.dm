@@ -78,7 +78,7 @@ Thus, the two variables affect pump operation are set in New():
 		return
 
 	var/datum/signal/signal = new
-	signal.transmission_method = 1 //radio signal
+	signal.transmission_method = TRANSMISSION_RADIO
 	signal.source = src
 
 	signal.data = list(

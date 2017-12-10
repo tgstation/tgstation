@@ -38,13 +38,20 @@ SUBSYSTEM_DEF(blackbox)
 	sealed = SSblackbox.sealed
 
 //no touchie
-/datum/controller/subsystem/blackbox/can_vv_get(var_name)
+/datum/controller/subsystem/blackbox/vv_get_var(var_name)
 	if(var_name == "feedback")
-		return FALSE
+		return debug_variable(var_name, deepCopyList(feedback), 0, src)
 	return ..()
 
 /datum/controller/subsystem/blackbox/vv_edit_var(var_name, var_value)
-	return FALSE
+	switch(var_name)
+		if("feedback")
+			return FALSE
+		if("sealed")
+			if(var_value)
+				return Seal()
+			return FALSE
+	return ..()
 
 /datum/controller/subsystem/blackbox/Shutdown()
 	sealed = FALSE
@@ -73,41 +80,42 @@ SUBSYSTEM_DEF(blackbox)
 
 /datum/controller/subsystem/blackbox/proc/Seal()
 	if(sealed)
-		return
+		return FALSE
 	if(IsAdminAdvancedProcCall())
 		message_admins("[key_name_admin(usr)] sealed the blackbox!")
 	log_game("Blackbox sealed[IsAdminAdvancedProcCall() ? " by [key_name(usr)]" : ""].")
 	sealed = TRUE
+	return TRUE
 
 /datum/controller/subsystem/blackbox/proc/LogBroadcast(freq)
 	if(sealed)
 		return
 	switch(freq)
-		if(1459)
+		if(FREQ_COMMON)
 			record_feedback("tally", "radio_usage", 1, "common")
-		if(GLOB.SCI_FREQ)
+		if(FREQ_SCIENCE)
 			record_feedback("tally", "radio_usage", 1, "science")
-		if(GLOB.COMM_FREQ)
+		if(FREQ_COMMAND)
 			record_feedback("tally", "radio_usage", 1, "command")
-		if(GLOB.MED_FREQ)
+		if(FREQ_MEDICAL)
 			record_feedback("tally", "radio_usage", 1, "medical")
-		if(GLOB.ENG_FREQ)
+		if(FREQ_ENGINEERING)
 			record_feedback("tally", "radio_usage", 1, "engineering")
-		if(GLOB.SEC_FREQ)
+		if(FREQ_SECURITY)
 			record_feedback("tally", "radio_usage", 1, "security")
-		if(GLOB.SYND_FREQ)
+		if(FREQ_SYNDICATE)
 			record_feedback("tally", "radio_usage", 1, "syndicate")
-		if(GLOB.SERV_FREQ)
+		if(FREQ_SERVICE)
 			record_feedback("tally", "radio_usage", 1, "service")
-		if(GLOB.SUPP_FREQ)
+		if(FREQ_SUPPLY)
 			record_feedback("tally", "radio_usage", 1, "supply")
-		if(GLOB.CENTCOM_FREQ)
+		if(FREQ_CENTCOM)
 			record_feedback("tally", "radio_usage", 1, "centcom")
-		if(GLOB.AIPRIV_FREQ)
+		if(FREQ_AI_PRIVATE)
 			record_feedback("tally", "radio_usage", 1, "ai private")
-		if(GLOB.REDTEAM_FREQ)
+		if(FREQ_CTF_RED)
 			record_feedback("tally", "radio_usage", 1, "CTF red team")
-		if(GLOB.BLUETEAM_FREQ)
+		if(FREQ_CTF_BLUE)
 			record_feedback("tally", "radio_usage", 1, "CTF blue team")
 		else
 			record_feedback("tally", "radio_usage", 1, "other")
