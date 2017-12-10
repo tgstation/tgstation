@@ -240,6 +240,9 @@ datum/antagonist/bloodsucker/proc/handle_healing_torpid() // Return TRUE if we j
 	owner.current.setOxyLoss(0)
 	owner.current.setToxLoss(0)
 
+	// Cap Fire/Brute Damage (neither can go below 2x your health, so 300)
+
+
 	// Missing Limbs
 	var/list/missing = owner.current.get_missing_limbs()
 	if (missing.len)
@@ -265,6 +268,11 @@ datum/antagonist/bloodsucker/proc/handle_healing_torpid() // Return TRUE if we j
 		ApplyVampiricSpeciesTraits()
 		return 1
 	*/
+
+	// Cure Final Disabilities
+	owner.current.cure_blind()
+	owner.current.cure_husk()
+
 
 	// Remove Embedded!
 	var/mob/living/carbon/C = owner.current

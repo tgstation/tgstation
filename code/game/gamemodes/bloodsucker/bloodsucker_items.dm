@@ -260,13 +260,16 @@
 	return 1
 
 /obj/structure/closet/coffin/blackcoffin/ClaimCoffin(mob/claimant)
+	if (!..())
+		return 0
+
 	// Black Coffins get a lil bloody
 	icon_state = "coffin_bloody"
 	icon_door = "coffin"
 	icon_door_override = TRUE // Have door use icon_door to pick out its art. This way we can swap to a bloody coffin without redundant door art.
 	update_icon()
 	resistance_flags = FIRE_PROOF	// Vamp coffins are fireproof.
-	..()
+	return 1
 
 /obj/structure/closet/coffin/Destroy()
 	if (resident)

@@ -49,8 +49,8 @@ datum/antagonist/bloodsucker/proc/attempt_turn_bloodsucker(mob/living/carbon/tar
 
 	// Vamp-specific: just skip.
 	if (target.stat != DEAD)
-		if (target.stat > 0) // Only give warning if target isn't walking and talking.
-			to_chat(owner, "<span class='danger'>[target] cannot be raised as a Bloodsucker so long as they remain alive.</span>")
+		//if (target.stat > 0) // Only give warning if target isn't walking and talking.
+		//	to_chat(owner, "<span class='danger'>[target] cannot be raised as a Bloodsucker so long as they remain alive.</span>")
 		return 0
 	if (!target.mind)
 		to_chat(owner, "<span class='danger'>[target] is not self-aware enough to be raised as a Bloodsucker!</span>")

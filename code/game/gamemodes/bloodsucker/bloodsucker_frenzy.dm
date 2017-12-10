@@ -115,18 +115,18 @@ datum/antagonist/bloodsucker/proc/start_frenzy(mob/living/target)
 	// affect user.mind
 
 	// Disable Human Disguise
-	if (poweron_humandisguise)
-		for (var/obj/effect/proc_holder/spell/bloodsucker/humandisguise/disguisepower in powers)
-			disguisepower.SetActive(FALSE)
+	//if (poweron_humandisguise)
+	//	for (var/obj/effect/proc_holder/spell/bloodsucker/humandisguise/disguisepower in powers)
+	//		disguisepower.SetActive(FALSE)
 
 	// Additional Healing Loop
 	spawn()
-		while(src && frenzy_state > 2 && owner.current.stat < DEAD)
+		while(src && frenzy_state > 2 && owner && owner.current && owner.current.stat < DEAD)
 			sleep(10)
 			if (owner.current)
-				owner.current.adjustStaminaLoss(-5, 0)
-				owner.current.AdjustStun(-5, 0)
-				owner.current.AdjustUnconscious(-5, 0)
+				owner.current.adjustStaminaLoss(-20, 0)
+				owner.current.AdjustStun(-20, 0)
+				owner.current.AdjustUnconscious(-20, 0)
 
 
 	// To Look Up:    /mob/living/carbon/proc/update_tint()   This affects the color of the world. Maybe a tint overlay?
@@ -217,7 +217,7 @@ datum/antagonist/bloodsucker/proc/start_frenzy(mob/living/target)
 				if (!feedpower.active && feedpower.attempt_cast(owner.current))
 					inactivity_period = 5
 					owner.current.SetCastDuringFrenzy(FALSE) // Disable Casting
-					continue
+					break
 				owner.current.SetCastDuringFrenzy(FALSE) // Disable Casting...again. GOD this is dirty.
 
 		// LOSE TARGET
@@ -257,7 +257,7 @@ datum/antagonist/bloodsucker/proc/start_frenzy(mob/living/target)
 			if (owner.current.Adjacent(target))
 				inactivity_period = 4
 				owner.current.a_intent = pick(INTENT_DISARM, INTENT_HARM, INTENT_HARM, INTENT_HARM)
-				if (prob(50))
+				if (!owner.current.restrained() && prob(50))
 					target.attack_hand(owner.current)
 				else
 					target.attack_vamp_bite(owner.current)

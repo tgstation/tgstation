@@ -1,5 +1,5 @@
-///mob/living/simple_animal/mouse
-//	blood_volume = 200
+/mob/living/simple_animal/mouse
+	blood_volume = 200
 
 /mob/living/carbon/human/proc/ReturnVampExamine(var/mob/viewer)
 	// So we can call from examine.dm in /human folder.

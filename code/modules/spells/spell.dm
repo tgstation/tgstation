@@ -170,7 +170,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		switch(charge_type)
 			if("recharge")
 				if(charge_counter < charge_max)
-					to_chat(user, still_recharging_msg + " <span class='notice'><span class='italics'>([charge_counter/10] seconds)</span></span>")
+					to_chat(user, still_recharging_msg + " <span class='notice'><span class='italics'>([(charge_max - charge_counter)/10] seconds)</span></span>")
 					return 0
 			if("charges")
 				if(!charge_counter)

@@ -94,7 +94,7 @@
 	owner.announce_objectives()
 	to_chat(owner, "<span class='boldannounce'>You regenerate your health slowly, you're weak to fire, and you depend on blood to survive. Allow your stolen blood to run too low, and you may find yourself at \
 	risk of Frenzy!<span>")
-	to_chat(owner, "<span class='boldannounce'>Other Bloodsuckers are not necessarily your friends, but your survival may depend on cooperation.<span>")
+	to_chat(owner, "<span class='boldannounce'>Other Bloodsuckers are not necessarily your friends, but your survival may depend on cooperation. Betray them at your own discretion and peril.<span>")
 
 	owner.current.playsound_local(null, 'sound/ambience/antag/BloodsuckerAlert.ogg', 100, FALSE, pressure_affected = FALSE)
 
@@ -285,6 +285,9 @@ datum/antagonist/bloodsucker/proc/AssignStarterPowersAndStats()
 	//BuyPower(new /obj/effect/proc_holder/spell/bloodsucker/humandisguise)
 	BuyPower(new /obj/effect/proc_holder/spell/bloodsucker/veil)
 	BuyPower(new /obj/effect/proc_holder/spell/bloodsucker/torpidsleep)
+	BuyPower(new /obj/effect/proc_holder/spell/bloodsucker/brawn)
+	BuyPower(new /obj/effect/proc_holder/spell/bloodsucker/haste)
+	BuyPower(new /obj/effect/proc_holder/spell/bloodsucker/recover)
 
 	// Language
 	owner.current.grant_language(/datum/language/vampiric)
@@ -309,9 +312,9 @@ datum/antagonist/bloodsucker/proc/AssignStarterPowersAndStats()
 		var/datum/species/S = H.dna.species
 		// Make Changes
 		S.brutemod *= 0.5
-		S.burnmod += 1
+		S.burnmod += 0.5
 		S.coldmod = 0
-		S.heatmod += 1
+		S.heatmod += 0.5
 		S.stunmod *= 0.5
 		S.punchdamagelow += 2       //lowest possible punch damage   0
 		S.punchdamagehigh += 2      //highest possible punch damage	 9
@@ -327,6 +330,7 @@ datum/antagonist/bloodsucker/proc/AssignStarterPowersAndStats()
 		S.species_traits |= VIRUSIMMUNE
 		S.species_traits |= RESISTCOLD
 		S.species_traits |= NOCRITDAMAGE // No damage from being in critical condition.
+		S.species_traits |= RESISTPRESSURE
 
 	// Disabilities
 	owner.current.disabilities = 0
@@ -530,9 +534,9 @@ datum/antagonist/bloodsucker/proc/ClearAllPowersAndStats()
 	invisibility = INVISIBILITY_ABSTRACT
 
 /obj/screen/bloodsucker/blood_counter		// NOTE: Look up /obj/screen/devil/soul_counter  in _onclick / hud / human.dm
-	icon = 'icons/mob/screen_gen.dmi'
+	icon = 'icons/Fulpstation/fulpicons.dmi'//'icons/mob/screen_gen.dmi'
 	name = "Blood Consumed"
-	icon_state = "power_display"
+	icon_state = "blood_display"//"power_display"
 	screen_loc = ui_blood_display
 
 /obj/screen/bloodsucker/blood_counter/proc/update_counter(blood)
