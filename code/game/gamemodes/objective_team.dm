@@ -13,7 +13,6 @@
 				add_member(M)
 		else
 			add_member(starting_members)
-		members += starting_members
 
 /datum/objective_team/proc/is_solo()
 	return members.len == 1

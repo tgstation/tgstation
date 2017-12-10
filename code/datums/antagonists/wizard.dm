@@ -45,10 +45,12 @@
 
 /datum/objective_team/wizard
 	name = "wizard team"
+	var/datum/antagonist/wizard/master_wizard
 
 /datum/antagonist/wizard/proc/create_wiz_team()
 	wiz_team = new(owner)
 	wiz_team.name = "[owner.current.real_name] team"
+	wiz_team.master_wizard = src
 	update_wiz_icons_added(owner.current)
 
 /datum/antagonist/wizard/proc/send_to_lair()
@@ -285,7 +287,7 @@
 	owner.objectives += new_objective
 	objectives += new_objective
 
-
+//Solo wizard report
 /datum/antagonist/wizard/roundend_report()
 	var/list/parts = list()
 
@@ -314,3 +316,15 @@
 		parts += spell_names.Join(", ")
 	
 	return parts.Join("<br>")
+
+//Wizard with apprentices report
+/datum/objective_team/wizard/roundend_report()
+	var/list/parts = list()
+
+	parts += "<span class='header'>Wizards/witches of [master_wizard.owner.name] team were:</span>"
+	parts += master_wizard.roundend_report()
+	parts += " "
+	parts += "<span class='header'>[master_wizard.owner.name] apprentices were:</span>"
+	parts += printplayerlist(members - master_wizard.owner)
+	
+	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
