@@ -1,0 +1,4 @@
+author: "Robustin"
+delete-after: True
+changes: 
+  - bugfix: "Modes not in rotation have had their \"false report\" weights for the Command Report standardized"
