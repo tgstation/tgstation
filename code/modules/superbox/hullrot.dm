@@ -2,12 +2,10 @@
 // Push-to-talk stat panel and key handling
 
 /mob/living
-	var/list/hullrot_stats = list()
+	var/list/hullrot_stats
 	var/hullrot_ptt
 	var/hullrot_ptt_freq
-	var/hullrot_local_with
-	var/hullrot_hot_freqs
-	var/hullrot_hear_freqs
+	var/hullrot_cache
 
 /mob/living/Stat()
 	..()
@@ -99,6 +97,11 @@
 	if (!can_speak && !can_hear)
 		return
 
+	var/turf/T = get_turf(src)
+	if (hullrot_cache["z"] != T.z)
+		hullrot_cache["z"] = T.z
+		SShullrot.set_z(client, T.z)
+
 	var/hearers = get_hearers_in_view(7, src)
 	if (can_speak)
 		var/list/local_with = list()
@@ -106,8 +109,8 @@
 			if (L.client && L != src)
 				local_with += L.ckey
 		var/new_local = list2params(local_with)
-		if (hullrot_local_with != new_local)
-			hullrot_local_with = new_local
+		if (hullrot_cache["local_with"] != new_local)
+			hullrot_cache["local_with"] = new_local
 			SShullrot.set_local_with(client, local_with)
 
 	var/list/hot_freqs = list()
@@ -127,15 +130,17 @@
 
 	var/new_hot = list2params(hot_freqs)
 	var/new_hear = list2params(hear_freqs)
-	if (hullrot_hot_freqs != new_hot)
-		hullrot_hot_freqs = new_hot
+	if (hullrot_cache["hot"] != new_hot)
+		hullrot_cache["hot"] = new_hot
 		SShullrot.set_hot_freqs(client, hot_freqs)
-	if (hullrot_hear_freqs != new_hear)
-		hullrot_hear_freqs = new_hear
+	if (hullrot_cache["hear"] != new_hear)
+		hullrot_cache["hear"] = new_hear
 		SShullrot.set_hear_freqs(client, hear_freqs)
 
 /mob/living/Login()
 	..()
+	hullrot_stats = list()
+	hullrot_cache = list()
 	hullrot_update()
 
 /mob/living/Move()

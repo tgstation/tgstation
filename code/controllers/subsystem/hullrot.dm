@@ -14,6 +14,8 @@ SUBSYSTEM_DEF(hullrot)
 
 	var/currently_playing = -1
 	var/checked_events = FALSE
+	var/subspace_ticker = 0
+	var/subspace_cache
 
 // ----------------------------------------------------------------------------
 // Initialization
@@ -92,8 +94,37 @@ SUBSYSTEM_DEF(hullrot)
 		control("Playing", new_playing)
 		currently_playing = new_playing
 
+	if (subspace_ticker >= 0)
+		subspace_ticker += wait
+		if (subspace_ticker >= 50 || !subspace_cache)
+			subspace_ticker = -1
+			INVOKE_ASYNC(src, .proc/subspace_update)
+
 	if (!checked_events)
 		control()
+
+/datum/controller/subsystem/hullrot/proc/subspace_update()
+	var/groups = list()
+	var/group = 1
+
+	for(var/z in 1 to world.maxz)
+		if ("[z]" in groups)
+			continue
+		var/datum/signal/subspace/signal = new(list("message" = "TEST"))
+		signal.frequency = FREQ_COMMON
+		signal.server_type = /obj/machinery/telecomms/broadcaster
+		signal.levels = list(z)
+		signal.send_to_receivers()
+		if (signal.data["done"])
+			for(var/level in signal.levels)
+				groups["[level]"] = group
+			group += 1
+
+	var/new_groups = list2params(groups)
+	if (subspace_cache != new_groups)
+		subspace_cache = new_groups
+		control("Linkage", groups)
+	subspace_ticker = 0
 
 // ----------------------------------------------------------------------------
 // Controls
@@ -110,7 +141,12 @@ SUBSYSTEM_DEF(hullrot)
 /datum/controller/subsystem/hullrot/proc/set_hot_freqs(client/C, freqlist)
 	control("SetHotFreqs", list("who" = C.ckey, "hot" = freqlist))
 
+/datum/controller/subsystem/hullrot/proc/set_z(client/C, z)
+	control("SetZ", list("who" = C.ckey, "z" = z))
+
 /datum/controller/subsystem/hullrot/proc/set_ghost(client/C)
+	if (!loaded_version)
+		return
 	control("SetGhost", C.ckey)
 
 // ----------------------------------------------------------------------------
