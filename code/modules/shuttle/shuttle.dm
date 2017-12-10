@@ -24,6 +24,7 @@
 	var/area_type
 	var/turf_type
 	var/baseturf_type
+	var/hidden = FALSE //are we invisible to shuttle navigation computers?
 
 	//these objects are indestructible
 /obj/docking_port/Destroy(force)
@@ -304,6 +305,7 @@
 	var/current_engines = 0 //current engine power
 	var/initial_engines = 0 //initial engine power
 	var/can_move_docking_ports = FALSE //if this shuttle can move docking ports other than the one it is docked at
+	var/list/hidden_turfs = list()
 
 /obj/docking_port/mobile/proc/register()
 	SSshuttle.mobile += src
@@ -539,7 +541,7 @@
 
 	// The baseturf that the gets assigned to the turf_type above
 	var/underlying_baseturf_type = /turf/open/space
-	
+
 	// The area that gets placed under where the shuttle moved from
 	var/underlying_area_type = /area/space
 
@@ -591,7 +593,7 @@
 	CHECK_TICK
 
 	/****************************************All beforeShuttleMove procs*****************************************/
-	
+
 	for(var/i in 1 to old_turfs.len)
 		CHECK_TICK
 		var/turf/oldT = old_turfs[i]
@@ -619,6 +621,17 @@
 
 		old_turfs[oldT] = move_mode
 
+	/*******************************************Hiding turfs if necessary******************************************/
+
+	var/list/new_hidden_turfs
+	if(hidden)
+		new_hidden_turfs = list()
+		for(var/i in 1 to old_turfs.len)
+			var/turf/oldT = old_turfs[i]
+			if(old_turfs[oldT] & MOVE_TURF)
+				new_hidden_turfs += new_turfs[i]
+		SSshuttle.update_hidden_docking_ports(null, new_hidden_turfs)
+
 	/*******************************************All onShuttleMove procs******************************************/
 
 	for(var/i in 1 to old_turfs.len)
@@ -632,10 +645,10 @@
 					continue
 				moving_atom.onShuttleMove(newT, oldT, movement_force, movement_direction, old_dock, src)	//atoms
 				moved_atoms[moving_atom] = oldT
-		
+
 		if(move_mode & MOVE_TURF)
 			oldT.onShuttleMove(newT, movement_force, movement_direction)									//turfs
-		
+
 		if(move_mode & MOVE_AREA)
 			var/area/shuttle_area = oldT.loc
 			shuttle_area.onShuttleMove(oldT, newT, underlying_old_area)										//areas
@@ -681,6 +694,12 @@
 		oldT.air_update_turf(TRUE)
 		newT.blocks_air = initial(newT.blocks_air)
 		newT.air_update_turf(TRUE)
+
+	/*******************************************Unhiding turfs if necessary******************************************/
+
+	if(new_hidden_turfs)
+		SSshuttle.update_hidden_docking_ports(hidden_turfs, null)
+		hidden_turfs = new_hidden_turfs
 
 	check_poddoors()
 	new_dock.last_dock_time = world.time
