@@ -234,6 +234,10 @@
 		var/area/areaobj = get_area(client.eye)
 		hud_used.set_parallax_movedir(areaobj.parallax_movedir, TRUE)
 
+/mob/Login()
+	..()
+	update_parallax_teleport()
+
 /obj/screen/parallax_layer
 	icon = 'icons/effects/parallax.dmi'
 	var/speed = 1
@@ -255,7 +259,7 @@
 /obj/screen/parallax_layer/proc/update_o(view)
 	if (!view)
 		view = world.view
-	
+
 	var/list/viewscales = getviewsize(view)
 	var/countx = Ceiling((viewscales[1]/2)/(480/world.icon_size))+1
 	var/county = Ceiling((viewscales[2]/2)/(480/world.icon_size))+1
