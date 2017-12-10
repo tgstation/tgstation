@@ -101,6 +101,18 @@ SUBSYSTEM_DEF(hullrot)
 /datum/controller/subsystem/hullrot/proc/set_ptt(client/C, freq)
 	control("SetPTT", list("who" = C.ckey, "freq" = (freq && text2num(freq))))
 
+/datum/controller/subsystem/hullrot/proc/set_local_with(client/C, keylist)
+	control("SetLocalWith", list("who" = C.ckey, "with" = keylist))
+
+/datum/controller/subsystem/hullrot/proc/set_hear_freqs(client/C, freqlist)
+	control("SetHearFreqs", list("who" = C.ckey, "hear" = freqlist))
+
+/datum/controller/subsystem/hullrot/proc/set_hot_freqs(client/C, freqlist)
+	control("SetHotFreqs", list("who" = C.ckey, "hot" = freqlist))
+
+/datum/controller/subsystem/hullrot/proc/set_ghost(client/C)
+	control("SetGhost", C.ckey)
+
 // ----------------------------------------------------------------------------
 // Admin management
 
