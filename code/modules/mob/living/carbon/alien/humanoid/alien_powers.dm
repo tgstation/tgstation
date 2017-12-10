@@ -59,6 +59,14 @@ Doesn't work on other aliens/AI.*/
 		return 0
 	return 1
 
+/obj/effect/proc_holder/alien/proc/check_vent_block(mob/living/user)
+	var/obj/machinery/atmospherics/components/unary/atmos_thing = locate() in user.loc
+	if(atmos_thing)
+		var/rusure = alert(user, "Laying eggs and shaping resin here would block access to [atmos_thing]. Do you want to continue?", "Blocking Atmospheric Component", "Yes", "No")
+		if(rusure == "No")
+			return FALSE
+	return TRUE
+
 /obj/effect/proc_holder/alien/plant
 	name = "Plant Weeds"
 	desc = "Plants some alien weeds."
@@ -256,9 +264,7 @@ Doesn't work on other aliens/AI.*/
 		to_chat(user, "<span class='danger'>There is already a resin structure there.</span>")
 		return FALSE
 
-	var/atom/movable/atmos_thing = locate(/obj/machinery/atmospherics/components/unary) in user.loc
-	if(atmos_thing)
-		to_chat(user, "<span class='danger'>A resin structure here would block access to [atmos_thing].</span>")
+	if(!check_vent_block(user))
 		return FALSE
 
 	var/choice = input("Choose what you wish to shape.","Resin building") as null|anything in structures
@@ -271,7 +277,7 @@ Doesn't work on other aliens/AI.*/
 
 	choice = structures[choice]
 	new choice(user.loc)
-	return FALSE
+	return TRUE
 
 /obj/effect/proc_holder/alien/regurgitate
 	name = "Regurgitate"

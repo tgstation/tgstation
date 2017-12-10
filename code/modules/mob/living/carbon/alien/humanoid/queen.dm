@@ -84,12 +84,10 @@
 
 /obj/effect/proc_holder/alien/lay_egg/fire(mob/living/carbon/user)
 	if(locate(/obj/structure/alien/egg) in get_turf(user))
-		to_chat(user, "There's already an egg here.")
+		to_chat(user, "<span class='alertalien'>There's already an egg here.</span>")
 		return FALSE
 
-	var/atom/movable/atmos_thing = locate(/obj/machinery/atmospherics/components/unary) in user.loc
-	if(atmos_thing)
-		to_chat(user, "<span class='danger'>An egg here would block access to [atmos_thing].</span>")
+	if(!check_vent_block(user))
 		return FALSE
 
 	user.visible_message("<span class='alertalien'>[user] has laid an egg!</span>")
