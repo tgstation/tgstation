@@ -71,7 +71,7 @@
 				var/datum/objective/escape/escape_objective = new
 				escape_objective.owner = owner
 				objectives += escape_objective
-		
+
 		if(31 to 60)
 			var/datum/objective/steal/steal_objective = new
 			steal_objective.owner = owner
@@ -103,8 +103,8 @@
 			if (!(locate(/datum/objective/hijack) in owner.objectives))
 				var/datum/objective/hijack/hijack_objective = new
 				hijack_objective.owner = owner
-				objectives += hijack_objective	
-	
+				objectives += hijack_objective
+
 	for(var/datum/objective/O in objectives)
 		owner.objectives += O
 
@@ -128,7 +128,7 @@
 	if(H.age < wiz_age)
 		H.age = wiz_age
 	H.equipOutfit(outfit_type)
-	
+
 /datum/antagonist/wizard/greet()
 	to_chat(owner, "<span class='boldannounce'>You are the Space Wizard!</span>")
 	to_chat(owner, "<B>The Space Wizards Federation has given you the following tasks:</B>")
@@ -204,11 +204,11 @@
 			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall(null))
 			H.put_in_hands(new /obj/item/gun/magic/staff/healing(H))
 			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying under [master.current.real_name], you have learned livesaving survival spells. You are able to cast charge and forcewall.")
-		if(APPRENTICE_HEALING)
+		if(APPRENTICE_ROBELESS)
 			owner.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
 			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/mind_transfer(null))
 			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying under [master.current.real_name], you have learned stealthy, robeless spells. You are able to cast knock and mindswap.")
-			
+
 /datum/antagonist/wizard/apprentice/create_objectives()
 	var/datum/objective/protect/new_objective = new /datum/objective/protect
 	new_objective.owner = owner
@@ -221,6 +221,7 @@
 /datum/antagonist/wizard/apprentice/imposter
 	name = "Wizard Imposter"
 	allow_rename = FALSE
+	move_to_lair = FALSE
 
 /datum/antagonist/wizard/apprentice/imposter/greet()
 	to_chat(owner, "<B>You are an imposter! Trick and confuse the crew to misdirect malice from your handsome original!</B>")
@@ -266,7 +267,7 @@
 
 /datum/antagonist/wizard/academy/equip_wizard()
 	. = ..()
-	
+
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt)
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile)
 	owner.AddSpell(new /obj/effect/proc_holder/spell/aimed/fireball)
@@ -274,7 +275,7 @@
 	var/mob/living/M = owner.current
 	if(!istype(M))
 		return
-	
+
 	var/obj/item/implant/exile/Implant = new/obj/item/implant/exile(M)
 	Implant.implant(M)
 

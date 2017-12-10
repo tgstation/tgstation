@@ -10,4 +10,3 @@
 	if(istype(victim))
 		for(var/datum/disease/D in diseases)
 			victim.ContactContractDisease(D, "feet")
-		return COMPONENT_ACTIVATED

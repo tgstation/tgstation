@@ -960,7 +960,7 @@
 	playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 75, TRUE)
 	var/mob/living/simple_animal/parrot/clock_hawk/H = new(loc)
 	H.setDir(dir)
-	dust()
+	qdel(src)
 
 /mob/living/simple_animal/parrot/Poly/ghost
 	name = "The Ghost of Poly"
