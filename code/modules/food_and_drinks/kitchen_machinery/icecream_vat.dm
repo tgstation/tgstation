@@ -112,7 +112,7 @@
 		else
 			to_chat(user, "<span class='notice'>[O] already has ice cream in it.</span>")
 		return 1
-	else if(O.is_open_container())
+	else if(O.is_drainable())
 		return
 	else
 		return ..()

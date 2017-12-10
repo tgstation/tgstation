@@ -30,7 +30,7 @@
 	if(!canconsume(M, user))
 		return 0
 
-	if (!is_open_container())
+	if (!is_drainable())
 		to_chat(user, "<span class='warning'>[src]'s lid hasn't been opened!</span>")
 		return 0
 
@@ -58,7 +58,7 @@
 		return
 	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
-		if (!is_open_container())
+		if (!is_refillable())
 			to_chat(user, "<span class='warning'>[target]'s tab isn't open!</span>")
 			return
 
@@ -73,7 +73,7 @@
 		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
 
-	else if(target.is_open_container()) //Something like a glass. Player probably wants to transfer TO it.
+	else if(target.is_refillable()) //Something like a glass. Player probably wants to transfer TO it.
 		if(!reagents.total_volume)
 			to_chat(user, "<span class='warning'>[src] is empty.</span>")
 			return
@@ -403,7 +403,7 @@
 
 
 /obj/item/reagent_containers/food/drinks/soda_cans/attack_self(mob/user)
-	if(!is_open_container())
+	if(!is_drainable())
 		to_chat(user, "You pull back the tab of \the [src] with a satisfying pop.") //Ahhhhhhhh
 		container_type = OPENCONTAINER
 		playsound(src, "can_open", 50, 1)

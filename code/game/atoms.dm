@@ -196,19 +196,19 @@
 
 // Convenience procs to see if a container is open for chemistry handling
 /atom/proc/is_open_container()
-	return container_type & OPENCONTAINER
+	return is_refillable() && is_drainable()
 
 /atom/proc/is_injectable(allowmobs = TRUE)
 	if(allowmobs && isliving(src))
 		var/mob/living/L = src
 		return L.can_inject()
-	return reagents ? (container_type & INJECTABLE) : FALSE
+	return reagents ? (container_type & (INJECTABLE | REFILLABLE)) : FALSE
 
 /atom/proc/is_drawable(allowmobs = TRUE)
 	if(allowmobs && isliving(src))
 		var/mob/living/L = src
 		return L.can_inject()
-	return reagents ? (container_type & DRAWABLE) : FALSE
+	return reagents ? (container_type & (DRAWABLE | DRAINABLE)) : FALSE
 
 /atom/proc/is_refillable()
 	return reagents ? (container_type & REFILLABLE) : FALSE

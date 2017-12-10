@@ -120,7 +120,7 @@
 /obj/item/weldingtool/afterattack(atom/O, mob/user, proximity)
 	if(!proximity)
 		return
-	if(!status && istype(O, /obj/item/reagent_containers) && O.is_open_container())
+	if(!status && istype(O, /obj/item/reagent_containers) && O.is_refillable())
 		reagents.trans_to(O, reagents.total_volume)
 		to_chat(user, "<span class='notice'>You empty [src]'s fuel tank into [O].</span>")
 		update_icon()

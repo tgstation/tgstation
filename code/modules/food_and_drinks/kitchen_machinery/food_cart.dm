@@ -100,7 +100,7 @@
 					stored_food[sanitize(S.name)]++
 				else
 					stored_food[sanitize(S.name)] = 1
-	else if(O.is_open_container())
+	else if(O.is_drainable())
 		return
 	else
 		. = ..()
