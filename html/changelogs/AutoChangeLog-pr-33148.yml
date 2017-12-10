@@ -1,0 +1,4 @@
+author: "Cruix"
+delete-after: True
+changes: 
+  - tweak: "The white ship navigation computer now takes 10 seconds to designate a landing spot, and users can no longer see the syndicate shuttle or its custom landing location. If the white ship landing location would intersect the syndicate shuttle or its landing location, it will fail after the 10 seconds have elapsed."
