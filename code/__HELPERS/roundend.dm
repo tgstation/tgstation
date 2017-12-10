@@ -250,7 +250,8 @@
 	GLOB.common_report = build_roundend_report()
 	for(var/client/C in GLOB.clients)
 		show_roundend_report(C,GLOB.common_report)
-	give_show_report_button()
+		give_show_report_button(C)
+		CHECK_TICK
 
 /datum/controller/subsystem/ticker/proc/law_report()
 	var/list/parts = list()
@@ -347,13 +348,11 @@
 	return sorttext(B.roundend_category,A.roundend_category)
 
 
-/datum/controller/subsystem/ticker/proc/give_show_report_button()
-	for(var/v in GLOB.clients)
-		var/client/C = v
-		var/datum/action/report/R = new
-		C.player_details.player_actions += R
-		R.Grant(C.mob)
-		to_chat(C,"<a href='?src=[REF(R)];report=1'>Show roundend report again</a>")
+/datum/controller/subsystem/ticker/proc/give_show_report_button(client/C)
+	var/datum/action/report/R = new
+	C.player_details.player_actions += R
+	R.Grant(C.mob)
+	to_chat(C,"<a href='?src=[REF(R)];report=1'>Show roundend report again</a>")
 
 /datum/action/report
 	name = "Show roundend report"
