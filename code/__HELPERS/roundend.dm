@@ -283,7 +283,7 @@
 		for(var/V in mode.station_goals)
 			var/datum/station_goal/G = V
 			parts += G.get_result()
-		return "<div class='panel stationborder'>[parts.Join("<br>")]</div>"
+		return "<div class='panel stationborder'><ul>[parts.Join()]</ul></div>"
 
 /datum/controller/subsystem/ticker/proc/medal_report()
 	if(GLOB.commendations.len)
