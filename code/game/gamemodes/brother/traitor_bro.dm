@@ -17,24 +17,24 @@
 /datum/objective_team/brother_team/roundend_report()
 	var/list/parts = list()
 
-	parts += "<font size=4><b>The blood brothers of [name] were:</b></font>"
+	parts += "<span class='header'>The blood brothers of [name] were:</span>"
 	for(var/datum/mind/M in members)
 		parts += printplayer(M)
 	var/win = TRUE
 	var/objective_count = 1
 	for(var/datum/objective/objective in objectives)
 		if(objective.check_completion())
-			parts += "<B>Objective #[objective_count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+			parts += "<B>Objective #[objective_count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</span>"
 		else
-			parts += "<B>Objective #[objective_count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+			parts += "<B>Objective #[objective_count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
 			win = FALSE
 		objective_count++
 	if(win)
-		parts += "<font color='green'><B>The blood brothers were successful!</B></font>"
+		parts += "<span class='greentext'>The blood brothers were successful!</span>"
 	else
-		parts += "<font color='red'><B>The blood brothers have failed!</B></font>"
+		parts += "<span class='redtext'>The blood brothers have failed!</span>"
 
-	return parts.Join("<br>")
+	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
 
 /datum/objective_team/brother_team/proc/add_objective(datum/objective/O, needs_target = FALSE)
 	O.team = src
