@@ -66,7 +66,7 @@
 	cost = 1
 
 /datum/uplink_item/dangerous/revolver
-	cost = 10
+	cost = 13
 	surplus = 45
 
 /datum/uplink_item/nukeoffer/blastco
@@ -122,7 +122,7 @@
 			are dirt cheap but aren't as effective as .357 rounds."
 
 /datum/uplink_item/ammo/revolver
-	cost = 2
+	cost = 3
 
 /datum/uplink_item/dangerous/butterfly
 	name = "Energy Butterfly Knife"
