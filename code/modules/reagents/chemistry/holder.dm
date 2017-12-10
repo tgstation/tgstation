@@ -60,6 +60,18 @@
 	if(my_atom && my_atom.reagents == src)
 		my_atom.reagents = null
 
+
+// Used in attack logs for reagents in pills and such
+/datum/reagents/proc/log_list()
+	var/data = list()
+	if(reagent_list && reagent_list.len) //find a reagent list if there is and check if it has entries
+		for(var/r in reagent_list) //no reagents will be left behind
+			var/datum/reagent/R = r
+			data += "[R.id] ([R.volume]u)" //Using IDs because SOME chemicals(I'm looking at you, chlorhydrate-beer) have the same names as other chemicals.
+		return english_list(data)
+	else
+		return "no reagents"
+
 /datum/reagents/proc/remove_any(amount = 1)
 	var/list/cached_reagents = reagent_list
 	var/total_transfered = 0

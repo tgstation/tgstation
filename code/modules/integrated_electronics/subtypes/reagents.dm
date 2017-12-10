@@ -156,12 +156,8 @@
 				return
 
 			//Always log attemped injections for admins
-			var/list/rinject = list()
-			for(var/datum/reagent/R in reagents.reagent_list)
-				rinject += R.name
-			var/contained = english_list(rinject)
-
-			add_logs(src, L, "attemped to inject", addition="which had [contained]") //TODO: proper logging (maybe last touched and assembled)
+			var/contained = reagents.log_list()
+			add_logs(src, L, "attemped to inject", addition="which had [contained]")
 			L.visible_message("<span class='danger'>[acting_object] is trying to inject [L]!</span>", \
 								"<span class='userdanger'>[acting_object] is trying to inject you!</span>")
 			busy = TRUE
@@ -169,6 +165,7 @@
 				var/fraction = min(transfer_amount/reagents.total_volume, 1)
 				reagents.reaction(L, INJECT, fraction)
 				reagents.trans_to(L, transfer_amount)
+				add_logs(src, L, "injected", addition="which had [contained]")
 				L.visible_message("<span class='danger'>[acting_object] injects [L] with its needle!</span>", \
 									"<span class='userdanger'>[acting_object] injects you with its needle!</span>")
 			else

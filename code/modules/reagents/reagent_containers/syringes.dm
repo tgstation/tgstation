@@ -107,11 +107,8 @@
 				update_icon()
 
 		if(SYRINGE_INJECT)
-			//Always log attemped injections for admins
-			var/list/rinject = list()
-			for(var/datum/reagent/R in reagents.reagent_list)
-				rinject += R.name
-			var/contained = english_list(rinject)
+			// Always log attemped injections for admins
+			var/contained = reagents.log_list()
 			add_logs(user, L, "attemped to inject", src, addition="which had [contained]")
 
 			if(!reagents.total_volume)
