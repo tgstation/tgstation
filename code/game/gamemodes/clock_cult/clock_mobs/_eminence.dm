@@ -29,14 +29,16 @@
 
 /mob/camera/eminence/Login()
 	..()
-	add_servant_of_ratvar(src, TRUE)
 	var/datum/antagonist/clockcult/C = mind.has_antag_datum(/datum/antagonist/clockcult,TRUE)
-	if(C && C.clock_team)
-		if(C.clock_team.eminence)
-			remove_servant_of_ratvar(src,TRUE)
-			qdel(src)
-		else
-			C.clock_team.eminence = src
+	if(!C)
+		add_servant_of_ratvar(src, TRUE)
+		C = mind.has_antag_datum(/datum/antagonist/clockcult,TRUE)
+		if(C && C.clock_team)
+			if(C.clock_team.eminence)
+				remove_servant_of_ratvar(src,TRUE)
+				qdel(src)
+			else
+				C.clock_team.eminence = src
 	to_chat(src, "<span class='bold large_brass'>You have been selected as the Eminence!</span>")
 	to_chat(src, "<span class='brass'>As the Eminence, you lead the servants. Anything you say will be heard by the entire cult.</span>")
 	to_chat(src, "<span class='brass'>Though you can move through walls, you're also incorporeal, and largely can't interact with the world except for a few ways.</span>")
