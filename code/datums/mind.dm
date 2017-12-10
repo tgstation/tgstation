@@ -293,7 +293,7 @@
 			to_chat(traitor_mob, "Unfortunately, [employer] wasn't able to get you an Uplink.")
 		. = 0
 	else
-		uplink_loc.LoadComponent(/datum/component/uplink, traitor_mob.key)
+		uplink_loc.AddComponent(/datum/component/uplink, traitor_mob.key)
 
 		if(uplink_loc == R)
 			R.traitor_frequency = sanitize_frequency(rand(MIN_FREQ, MAX_FREQ))
