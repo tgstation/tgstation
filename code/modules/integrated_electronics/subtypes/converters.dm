@@ -324,7 +324,7 @@
 /obj/item/integrated_circuit/converter/hsv2hex
 	name = "hsv to hexadecimal"
 	desc = "This circuit can convert a HSV (Hue, Saturation, and Value) color to a Hexadecimal RGB color."
-	extended_desc = "The first pin controls tint (0-359), the second pin controls how intense the tint is, and the third controls how bright the tint is."
+	extended_desc = "The first pin controls tint (0-359), the second pin controls how intense the tint is (0-255), and the third controls how bright the tint is (0 for black, 127 for normal, 255 for white)."
 	icon_state = "hsv-hex"
 	inputs = list(
 		"hue" = IC_PINTYPE_NUMBER,
@@ -350,7 +350,7 @@
 /obj/item/integrated_circuit/converter/rgb2hex
 	name = "rgb to hexadecimal"
 	desc = "This circuit can convert a RGB (Red, Green, Blue) color to a Hexadecimal RGB color."
-	extended_desc = "The first pin controls red amount, the second pin controls green amount, and the third controls blue amount."
+	extended_desc = "The first pin controls red amount, the second pin controls green amount, and the third controls blue amount. All go from 0-255."
 	icon_state = "rgb-hex"
 	inputs = list(
 		"red" = IC_PINTYPE_NUMBER,
