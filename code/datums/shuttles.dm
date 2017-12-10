@@ -80,6 +80,13 @@
 	admin_notes = "Includes a small variety of weapons. And bears. Only captain-access can release the bears. Bears won't smash the windows themselves, but they can escape if someone lets them."
 	credit_cost = 5000 // While the shuttle is rusted and poorly maintained, trained bears are costly.
 
+/datum/map_template/shuttle/emergency/train
+	suffix = "train"
+	name = "The Emergency Escape Train"
+	description = "Fuck shuttles, Trains are AWESOME. And now, with a small transaction of funds, YOU can be the next universal conductor."
+	admin_notes = "Mostly just normal box shuttle but with no medbay, but it can and will crash into most stations."
+	credit_cost = 500 //kind of a downgrade but not troll downgrade
+
 /datum/map_template/shuttle/emergency/meteor
 	suffix = "meteor"
 	name = "Asteroid With Engines Strapped To It"
