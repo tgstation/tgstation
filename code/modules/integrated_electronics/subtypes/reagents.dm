@@ -145,7 +145,7 @@
 		return
 
 	if(direction_mode == SYRINGE_INJECT)
-		if(!reagents.total_volume || !AM.is_injectable() || AM.reagents.total_volume >= AM.reagents.maximum_volume)
+		if(!reagents.total_volume || !AM.is_injectable() || AM.reagents.holder_full())
 			activate_pin(3)
 			return
 
@@ -263,8 +263,7 @@
 			activate_pin(2)
 		return
 
-	// FALSE in those procs makes mobs invalid targets.
-	if(!source.is_drawable(FALSE) || !target.is_injectable(FALSE))
+	if(!source.is_drainable() || !target.is_refillable())
 		return
 
 	source.reagents.trans_to(target, transfer_amount)
@@ -399,8 +398,7 @@
 	if(!source.reagents || !target.reagents)
 		return
 
-	// FALSE in those procs makes mobs invalid targets.
-	if(!source.is_drawable(FALSE) || !target.is_injectable(FALSE))
+	if(!source.is_drainable() || !target.is_refillable())
 		return
 
 	if(target.reagents.maximum_volume - target.reagents.total_volume <= 0)

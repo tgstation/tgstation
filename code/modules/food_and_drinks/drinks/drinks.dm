@@ -56,31 +56,16 @@
 /obj/item/reagent_containers/food/drinks/afterattack(obj/target, mob/user , proximity)
 	if(!proximity)
 		return
-	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
-		if (!is_refillable())
-			to_chat(user, "<span class='warning'>[target]'s tab isn't open!</span>")
-			return
-
-		if(!target.reagents.total_volume)
-			to_chat(user, "<span class='warning'>[target] is empty.</span>")
-			return
-
-		if(reagents.total_volume >= reagents.maximum_volume)
-			to_chat(user, "<span class='warning'>[src] is full.</span>")
-			return
-
-		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
-		to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
-
-	else if(target.is_refillable()) //Something like a glass. Player probably wants to transfer TO it.
+	if(target.is_refillable()) //Something like a glass. Player probably wants to transfer TO it.
 		if(!reagents.total_volume)
 			to_chat(user, "<span class='warning'>[src] is empty.</span>")
 			return
 
-		if(target.reagents.total_volume >= target.reagents.maximum_volume)
+		if(target.reagents.holder_full())
 			to_chat(user, "<span class='warning'>[target] is full.</span>")
 			return
+
 		var/refill = reagents.get_master_reagent_id()
 		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution to [target].</span>")
@@ -89,6 +74,24 @@
 			var/mob/living/silicon/robot/bro = user
 			bro.cell.use(30)
 			addtimer(CALLBACK(reagents, /datum/reagents.proc/add_reagent, refill, trans), 600)
+
+	else if(target.is_drainable()) //A dispenser. Transfer FROM it TO us.
+		if (!is_refillable())
+			to_chat(user, "<span class='warning'>[target]'s tab isn't open!</span>")
+			return
+
+		if(!target.reagents.total_volume)
+			to_chat(user, "<span class='warning'>[target] is empty.</span>")
+			return
+
+		if(reagents.holder_full())
+			to_chat(user, "<span class='warning'>[src] is full.</span>")
+			return
+
+		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
+		to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
+
+	else
 
 /obj/item/reagent_containers/food/drinks/attackby(obj/item/I, mob/user, params)
 	var/hotness = I.is_hot()
