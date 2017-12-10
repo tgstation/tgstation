@@ -15,7 +15,7 @@
 	var/portion = 10
 	var/selected_drink
 	var/list/stored_food = list()
-	container_type = OPENCONTAINER_1
+	container_type = OPENCONTAINER
 	var/obj/item/reagent_containers/mixer
 
 /obj/machinery/food_cart/Initialize()

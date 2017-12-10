@@ -17,7 +17,7 @@
 	extended_desc = "This smoke generator creates clouds of smoke on command.  It can also hold liquids inside, which will go \
 	into the smoke clouds when activated.  The reagents are consumed when smoke is made."
 
-	container_type = OPENCONTAINER_1
+	container_type = OPENCONTAINER
 	volume = 100
 
 	complexity = 20
@@ -66,7 +66,7 @@
 	extended_desc = "This autoinjector can push reagents into another container or someone else outside of the machine.  The target \
 	must be adjacent to the machine, and if it is a person, they cannot be wearing thick clothing. Negative given amount makes injector suck out reagents."
 
-	container_type = OPENCONTAINER_1
+	container_type = OPENCONTAINER
 	volume = 30
 
 	complexity = 20
@@ -276,7 +276,7 @@
 	icon_state = "reagent_storage"
 	extended_desc = "This is effectively an internal beaker."
 
-	container_type = OPENCONTAINER_1
+	container_type = OPENCONTAINER
 	volume = 60
 
 	complexity = 4
