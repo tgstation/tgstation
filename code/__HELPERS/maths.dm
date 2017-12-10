@@ -198,7 +198,7 @@ GLOBAL_LIST_INIT(sqrtTable, list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4,
 		var/list/screen_loc_Y = splittext(screen_loc_params[2],":")
 		var/x = (text2num(screen_loc_X[1]) * 32 + text2num(screen_loc_X[2]) - 32)
 		var/y = (text2num(screen_loc_Y[1]) * 32 + text2num(screen_loc_Y[2]) - 32)
-		var/list/screenview = getviewsize(client)
+		var/list/screenview = getviewsize(client.view)
 		var/screenviewX = screenview[1] * world.icon_size
 		var/screenviewY = screenview[2] * world.icon_size
 		var/ox = round(screenviewX/2) - client.pixel_x //"origin" x
