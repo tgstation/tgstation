@@ -1041,8 +1041,9 @@
 
 /mob/living/Login()
 	. = ..()
-	var/turf/T = get_turf(src)
-	update_z(T.z)
+	if (loc)
+		var/turf/T = get_turf(src)
+		update_z(T.z)
 
 /mob/living/Logout()
 	. = ..()
