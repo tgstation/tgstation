@@ -416,27 +416,27 @@
 	name = "Space Cola"
 	desc = "Cola. in space."
 	icon_state = "cola"
-	list_reagents = list("cola" = 30)
+	list_reagents = list("cola" = 30, "burpinate" = 5)
 	foodtype = SUGAR
 
 /obj/item/reagent_containers/food/drinks/soda_cans/tonic
 	name = "T-Borg's tonic water"
 	desc = "Quinine tastes funny, but at least it'll keep that Space Malaria away."
 	icon_state = "tonic"
-	list_reagents = list("tonic" = 50)
+	list_reagents = list("tonic" = 45, "burpinate" = 5)
 	foodtype = ALCOHOL
 
 /obj/item/reagent_containers/food/drinks/soda_cans/sodawater
 	name = "soda water"
 	desc = "A can of soda water. Why not make a scotch and soda?"
 	icon_state = "sodawater"
-	list_reagents = list("sodawater" = 50)
+	list_reagents = list("sodawater" = 45, "burpinate" = 5)
 
 /obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime
 	name = "orange soda"
 	desc = "You wanted ORANGE. It gave you Lemon Lime."
 	icon_state = "lemon-lime"
-	list_reagents = list("lemon_lime" = 30)
+	list_reagents = list("lemon_lime" = 30, "burpinate" = 5)
 	foodtype = FRUIT
 
 /obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime/Initialize()
@@ -447,48 +447,48 @@
 	name = "Space-Up!"
 	desc = "Tastes like a hull breach in your mouth."
 	icon_state = "space-up"
-	list_reagents = list("space_up" = 30)
+	list_reagents = list("space_up" = 30, "burpinate" = 5)
 	foodtype = SUGAR | JUNKFOOD
 
 /obj/item/reagent_containers/food/drinks/soda_cans/starkist
 	name = "Star-kist"
 	desc = "The taste of a star in liquid form. And, a bit of tuna...?"
 	icon_state = "starkist"
-	list_reagents = list("cola" = 15, "orangejuice" = 15)
+	list_reagents = list("cola" = 15, "orangejuice" = 15, "burpinate" = 5)
 	foodtype = SUGAR | FRUIT | JUNKFOOD
 
 /obj/item/reagent_containers/food/drinks/soda_cans/space_mountain_wind
 	name = "Space Mountain Wind"
 	desc = "Blows right through you like a space wind."
 	icon_state = "space_mountain_wind"
-	list_reagents = list("spacemountainwind" = 30)
+	list_reagents = list("spacemountainwind" = 30, "burpinate" = 5)
 	foodtype = SUGAR | JUNKFOOD
 
 /obj/item/reagent_containers/food/drinks/soda_cans/thirteenloko
 	name = "Thirteen Loko"
 	desc = "The CMO has advised crew members that consumption of Thirteen Loko may result in seizures, blindness, drunkenness, or even death. Please Drink Responsibly."
 	icon_state = "thirteen_loko"
-	list_reagents = list("thirteenloko" = 30)
+	list_reagents = list("thirteenloko" = 30, "burpinate" = 5)
 	foodtype = SUGAR | JUNKFOOD
 
 /obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb
 	name = "Dr. Gibb"
 	desc = "A delicious mixture of 42 different flavors."
 	icon_state = "dr_gibb"
-	list_reagents = list("dr_gibb" = 30)
+	list_reagents = list("dr_gibb" = 30, "burpinate" = 5)
 	foodtype = SUGAR | JUNKFOOD
 
 /obj/item/reagent_containers/food/drinks/soda_cans/pwr_game
 	name = "Pwr Game"
 	desc = "The only drink with the PWR that true gamers crave."
 	icon_state = "purple_can"
-	list_reagents = list("pwr_game" = 30)
+	list_reagents = list("pwr_game" = 30, "burpinate" = 5)
 
 /obj/item/reagent_containers/food/drinks/soda_cans/shamblers
 	name = "Shambler's juice"
 	desc = "~Shake me up some of that Shambler's Juice!~"
 	icon_state = "shamblers"
-	list_reagents = list("shamblers" = 30)
+	list_reagents = list("shamblers" = 30, "burpinate" = 5)
 	foodtype = SUGAR | JUNKFOOD
 
 /obj/item/reagent_containers/food/drinks/soda_cans/air
