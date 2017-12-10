@@ -37,7 +37,7 @@
 /obj/item/vending_refill/boozeomat
 	machine_name = "Booze-O-Mat"
 	icon_state = "refill_booze"
-	charges = list(58, 4, 0)//of 162 standard, 12 contraband
+	charges = list(58, 4, 0)//of 174 standard, 12 contraband
 	init_charges = list(58, 4, 0)
 
 /obj/item/vending_refill/coffee
