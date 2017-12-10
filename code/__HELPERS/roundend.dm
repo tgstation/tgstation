@@ -122,10 +122,17 @@
 	SSblackbox.Seal()
 
 	sleep(50)
-	if(mode.station_was_nuked)
-		Reboot("Station destroyed by Nuclear Device.", "nuke")
+	ready_for_reboot = TRUE
+	standard_reboot()
+
+/datum/controller/subsystem/ticker/proc/standard_reboot()
+	if(ready_for_reboot)
+		if(mode.station_was_nuked)
+			Reboot("Station destroyed by Nuclear Device.", "nuke")
+		else
+			Reboot("Round ended.", "proper completion")
 	else
-		Reboot("Round ended.", "proper completion")
+		CRASH("Attempted standard reboot without ticker roundend completion")
 
 //Common part of the report
 /datum/controller/subsystem/ticker/proc/build_roundend_report()
