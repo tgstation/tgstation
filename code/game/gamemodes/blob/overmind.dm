@@ -34,7 +34,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	var/manualplace_min_time = 600 //in deciseconds //a minute, to get bearings
 	var/autoplace_max_time = 3600 //six minutes, as long as should be needed
 	var/list/blobs_legit = list()
-	var/max_count = 0 //The biggest it got before death/win
+	var/max_count = 0 //The biggest it got before death
 	var/blobwincount = 400
 	var/victory_in_progress = FALSE
 
@@ -248,7 +248,6 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	if(!B)
 		mind.add_antag_datum(/datum/antagonist/blob)
 
-//TODO: if human give pop button
 /datum/antagonist/blob
 	name = "Blob"
 	roundend_category = "blobs"
