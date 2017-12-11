@@ -40,11 +40,13 @@
 	if (isliving(target))
 		return 1
 	// Target Type: Door
-	if (istype(target, /obj/machinery/door))
-		return 1
+	else if (istype(target, /obj/machinery/door))
+		if (do_mob(usr,target,20))
+			return 1
 		// Target Type: Closet
-	if (istype(target, /obj/structure/closet))
-		return 1
+	else if (istype(target, /obj/structure/closet))
+		if (do_mob(usr,target,20))
+			return 1
 
 	return 0
 	// REMEMBER: We return 1 if we want to go on to the "Cast" portion. That means targetting turf should NOT continue.
@@ -135,27 +137,19 @@
 		if (D.Adjacent(user))
 			to_chat(user, "<span class='notice'>You prepare to tear open the [D].</span>")
 			user.Stun(10)
-			if (do_mob(user,D,20))
-				user.do_attack_animation(D, ATTACK_EFFECT_SMASH)
-				playsound(get_turf(D), 'sound/effects/bang.ogg', 60, 1, -1)
-				D.open(2) // open(2) is like a crowbar or jaws of life.
+			user.do_attack_animation(D, ATTACK_EFFECT_SMASH)
+			playsound(get_turf(D), 'sound/effects/bang.ogg', 60, 1, -1)
+			D.open(2) // open(2) is like a crowbar or jaws of life.
 
 				// Target Type: Closet
 	else if (istype(target, /obj/structure/closet))
 		var/obj/structure/closet/C = target
 		to_chat(user, "<span class='notice'>You prepare to tear open the [C].</span>")
 		user.Stun(10)
-		if (do_mob(user,C,20))
-			user.do_attack_animation(C, ATTACK_EFFECT_SMASH)
-			playsound(get_turf(C), 'sound/effects/bang.ogg', 60, 1, -1)
-			C.bust_open()
+		user.do_attack_animation(C, ATTACK_EFFECT_SMASH)
+		playsound(get_turf(C), 'sound/effects/bang.ogg', 60, 1, -1)
+		C.bust_open()
 
 
 	// Done
 	cancel_spell(user)
-
-
-
-
-
-

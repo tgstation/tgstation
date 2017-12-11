@@ -393,6 +393,8 @@
 		log_admin("[key_name(usr)] [msg]")
 		message_admins("[key_name_admin(usr)] [msg]")
 		href_list["secrets"] = "check_antagonist"
+		if(SSticker.ready_for_reboot && !SSticker.delay_end) //we undelayed after standard reboot would occur
+			SSticker.standard_reboot()
 
 	else if(href_list["end_round"])
 		if(!check_rights(R_ADMIN))
