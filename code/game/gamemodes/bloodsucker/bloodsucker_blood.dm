@@ -39,7 +39,7 @@
 	M.adjustStaminaLoss(-0.25,1)
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.bleed_rate = max(bleed_rate - 0.1, 0)
+		H.bleed_rate = max(H.bleed_rate - 0.1, 0)
 	..()
 	. = 1
 
