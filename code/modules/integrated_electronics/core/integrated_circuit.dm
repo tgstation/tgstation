@@ -330,3 +330,43 @@ a creative player the means to solve many problems.  Circuits are held inside an
 		return assembly.get_object()
 	else
 		return src	// If not, the component is acting on its own.
+
+
+// Returns the location to be used for dropping items.
+// Same as the regular drop_location(), but with proc being run on assembly if there is any.
+/obj/item/integrated_circuit/drop_location()
+	// If the component is located in an assembly, let the assembly figure that one out.
+	if(assembly)
+		return assembly.drop_location()
+	else
+		return ..()	// If not, the component is acting on its own.
+
+
+// Checks if the target object is reachable. Useful for various manipulators and manipulator-like objects.
+/obj/item/integrated_circuit/proc/check_target(atom/target, exclude_contents = FALSE, exclude_components = FALSE, exclude_self = FALSE)
+	if(!target)
+		return FALSE
+
+	var/atom/movable/acting_object = get_object()
+
+	if(exclude_self && target == acting_object)
+		return FALSE
+
+	if(exclude_components && assembly)
+		if(target in assembly.assembly_components)
+			return FALSE
+
+		if(target == assembly.battery)
+			return FALSE
+
+	if(target.Adjacent(acting_object) && isturf(target.loc))
+		return TRUE
+
+	if(!exclude_contents && (target in acting_object.GetAllContents()))
+		return TRUE
+
+	if(target in acting_object.loc)
+		return TRUE
+
+	return FALSE
+

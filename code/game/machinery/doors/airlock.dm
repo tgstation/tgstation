@@ -64,7 +64,7 @@
 	var/obj/machinery/door/airlock/closeOther = null
 	var/closeOtherId = null
 	var/lockdownbyai = FALSE
-	assemblytype = /obj/structure/door_assembly/door_assembly_0
+	assemblytype = /obj/structure/door_assembly
 	var/justzap = FALSE
 	normalspeed = 1
 	var/obj/item/electronics/airlock/electronics = null
@@ -80,7 +80,7 @@
 	var/boltUp = 'sound/machines/boltsup.ogg'
 	var/boltDown = 'sound/machines/boltsdown.ogg'
 	var/noPower = 'sound/machines/doorclick.ogg'
-
+	var/previous_airlock //what airlock assembly mineral plating was applied to
 	var/airlock_material = null //material of inner filling; if its an airlock with glass, this should be set to "glass"
 	var/overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
 	var/note_overlay_file = 'icons/obj/doors/airlocks/station/overlays.dmi' //Used for papers and photos pinned to the airlock
@@ -684,7 +684,7 @@
 
 	if(ishuman(user) && prob(40) && src.density)
 		var/mob/living/carbon/human/H = user
-		if(H.getBrainLoss() >= 60 && Adjacent(user))
+		if((H.disabilities & DUMB) && Adjacent(user))
 			playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				H.visible_message("<span class='danger'>[user] headbutts the airlock.</span>", \
@@ -1030,14 +1030,6 @@
 				if(density && !open(2))
 					to_chat(user, "<span class='warning'>Despite your attempts, [src] refuses to open.</span>")
 
-/obj/machinery/door/airlock/plasma/attackby(obj/item/C, mob/user, params)
-	if(C.is_hot() > 300)//If the temperature of the object is over 300, then ignite
-		message_admins("Plasma airlock ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(src)]")
-		log_game("Plasma wall ignited by [key_name(user)] in [COORD(src)]")
-		ignite(C.is_hot())
-	else
-		return ..()
-
 /obj/machinery/door/airlock/open(forced=0)
 	if( operating || welded || locked )
 		return FALSE
@@ -1158,22 +1150,22 @@
 
 	var/list/optionlist
 	if(airlock_material == "glass")
-		optionlist = list("Public", "Public2", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance")
+		optionlist = list("Standard", "Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Science", "Virology", "Mining", "Maintenance", "External", "External Maintenance")
 	else
-		optionlist = list("Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security")
+		optionlist = list("Standard", "Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Freezer", "Science", "Virology", "Mining", "Maintenance", "External", "External Maintenance")
 
 	var/paintjob = input(user, "Please select a paintjob for this airlock.") in optionlist
 	if((!in_range(src, usr) && src.loc != usr) || !W.use(user))
 		return
 	switch(paintjob)
-		if("Public")
+		if("Standard")
 			icon = 'icons/obj/doors/airlocks/station/public.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-			assemblytype = /obj/structure/door_assembly/door_assembly_0
-		if("Public2")
+			assemblytype = /obj/structure/door_assembly
+		if("Public")
 			icon = 'icons/obj/doors/airlocks/station2/glass.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/station2/overlays.dmi'
-			assemblytype = /obj/structure/door_assembly/door_assembly_glass
+			assemblytype = /obj/structure/door_assembly/door_assembly_public
 		if("Engineering")
 			icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
@@ -1198,6 +1190,18 @@
 			icon = 'icons/obj/doors/airlocks/station/research.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
 			assemblytype = /obj/structure/door_assembly/door_assembly_research
+		if("Freezer")
+			icon = 'icons/obj/doors/airlocks/station/freezer.dmi'
+			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
+			assemblytype = /obj/structure/door_assembly/door_assembly_fre
+		if("Science")
+			icon = 'icons/obj/doors/airlocks/station/science.dmi'
+			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
+			assemblytype = /obj/structure/door_assembly/door_assembly_science
+		if("Virology")
+			icon = 'icons/obj/doors/airlocks/station/virology.dmi'
+			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
+			assemblytype = /obj/structure/door_assembly/door_assembly_viro
 		if("Mining")
 			icon = 'icons/obj/doors/airlocks/station/mining.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
@@ -1210,10 +1214,10 @@
 			icon = 'icons/obj/doors/airlocks/external/external.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
 			assemblytype = /obj/structure/door_assembly/door_assembly_ext
-		if("High Security")
-			icon = 'icons/obj/doors/airlocks/highsec/highsec.dmi'
-			overlays_file = 'icons/obj/doors/airlocks/highsec/overlays.dmi'
-			assemblytype = /obj/structure/door_assembly/door_assembly_highsecurity
+		if("External Maintenance")
+			icon = 'icons/obj/doors/airlocks/station/maintenanceexternal.dmi'
+			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
+			assemblytype = /obj/structure/door_assembly/door_assembly_extmai
 	update_icon()
 
 /obj/machinery/door/airlock/CanAStarPass(obj/item/card/id/ID)
@@ -1306,11 +1310,17 @@
 		var/obj/structure/door_assembly/A
 		if(assemblytype)
 			A = new assemblytype(src.loc)
-			A.heat_proof_finished = src.heat_proof //tracks whether there's rglass in
 		else
-			A = new /obj/structure/door_assembly/door_assembly_0(src.loc)
+			A = new /obj/structure/door_assembly(loc)
 			//If you come across a null assemblytype, it will produce the default assembly instead of disintegrating.
+		A.heat_proof_finished = src.heat_proof //tracks whether there's rglass in
+		A.anchored = TRUE
+		A.glass = src.glass
+		A.state = AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS
 		A.created_name = name
+		A.previous_assembly = previous_airlock
+		A.update_name()
+		A.update_icon()
 
 		if(!disassembled)
 			if(A)

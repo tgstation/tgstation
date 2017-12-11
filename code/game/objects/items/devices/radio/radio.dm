@@ -8,7 +8,7 @@
 	dog_fashion = /datum/dog_fashion/back
 	var/on = TRUE // 0 for off
 	var/last_transmission
-	var/frequency = 1459 //common chat
+	var/frequency = FREQ_COMMON
 	var/traitor_frequency = 0 //tune to frequency to unlock traitor supplies
 	var/canhear_range = 3 // the range which mobs can hear this radio from
 	var/list/secure_radio_connections
@@ -306,7 +306,7 @@
 
 	if(independent)
 		var/datum/signal/signal = new
-		signal.transmission_method = 2
+		signal.transmission_method = TRANSMISSION_SUBSPACE
 		signal.data = list(
 			"mob" = M, 				// store a reference to the mob
 			"mobtype" = M.type, 	// the mob's type
@@ -344,9 +344,8 @@
 	if(subspace_transmission)
 		// First, we want to generate a new radio signal
 		var/datum/signal/signal = new
-		signal.transmission_method = 2 // 2 would be a subspace transmission.
-									   // transmission_method could probably be enumerated through #define. Would be neater.
-									   // --- Finally, tag the actual signal with the appropriate values ---
+		signal.transmission_method = TRANSMISSION_SUBSPACE
+		// --- Finally, tag the actual signal with the appropriate values ---
 		signal.data = list(
 			// Identity-associated tags:
 			"mob" = M, // store a reference to the mob
@@ -397,7 +396,7 @@
 	var/filter_type = 2
 
 	var/datum/signal/signal = new
-	signal.transmission_method = 2
+	signal.transmission_method = TRANSMISSION_SUBSPACE
 
 
 	/* --- Try to send a normal subspace broadcast first */
@@ -470,10 +469,10 @@
 		var/turf/position = get_turf(src)
 		if(!position || !(position.z in level))
 			return -1
-	if(freq == GLOB.SYND_FREQ)
+	if(freq == FREQ_SYNDICATE)
 		if(!(src.syndie)) //Checks to see if it's allowed on that frequency, based on the encryption keys
 			return -1
-	if(freq == GLOB.CENTCOM_FREQ)
+	if(freq == FREQ_CENTCOM)
 		if(!independent)
 			return -1
 	if (!on)
@@ -555,7 +554,7 @@
 
 /obj/item/device/radio/borg/syndicate/Initialize()
 	. = ..()
-	set_frequency(GLOB.SYND_FREQ)
+	set_frequency(FREQ_SYNDICATE)
 
 /obj/item/device/radio/borg/attackby(obj/item/W, mob/user, params)
 

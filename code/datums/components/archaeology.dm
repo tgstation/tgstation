@@ -3,10 +3,12 @@
 	var/list/archdrops
 	var/prob2drop
 	var/dug
+	var/datum/callback/callback
 
-/datum/component/archaeology/Initialize(_prob2drop, list/_archdrops = list())
+/datum/component/archaeology/Initialize(_prob2drop, list/_archdrops = list(), datum/callback/_callback)
 	prob2drop = Clamp(_prob2drop, 0, 100)
 	archdrops = _archdrops
+	callback = _callback
 	RegisterSignal(COMSIG_PARENT_ATTACKBY,.proc/Dig)
 	RegisterSignal(COMSIG_ATOM_EX_ACT, .proc/BombDig)
 	RegisterSignal(COMSIG_ATOM_SING_PULL, .proc/SingDig)
@@ -67,6 +69,8 @@
 			if(OT.slowdown) //Things like snow slow you down until you dig them.
 				OT.slowdown = 0
 	dug = TRUE
+	if(callback)
+		callback.Invoke()
 
 /datum/component/archaeology/proc/SingDig(S, current_size)
 	switch(current_size)

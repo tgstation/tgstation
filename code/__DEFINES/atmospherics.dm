@@ -1,14 +1,5 @@
-#define FIRE_DAMAGE_MODIFIER	0.0215	//Higher values result in more external fire damage to the skin (default 0.0215)
-#define AIR_DAMAGE_MODIFIER		2.025	//More means less damage from hot air scalding lungs, less = more damage. (default 2.025)
-
-#define MOLES_CELLSTANDARD		(ONE_ATMOSPHERE*CELL_VOLUME/(T20C*R_IDEAL_GAS_EQUATION))	//moles in a 2.5 m^3 cell at 101.325 Pa and 20 degC
-#define M_CELL_WITH_RATIO		(MOLES_CELLSTANDARD * 0.005)
-#define O2STANDARD				0.21
-#define N2STANDARD				0.79
-#define MOLES_O2STANDARD		(MOLES_CELLSTANDARD*O2STANDARD)	// O2 standard value (21%)
-#define MOLES_N2STANDARD		(MOLES_CELLSTANDARD*N2STANDARD)	// N2 standard value (79%)
-
-//indices of values in gas lists. used by listmos.
+//LISTMOS
+//indices of values in gas lists.
 #define MOLES			1
 #define ARCHIVE			2
 #define GAS_META		3
@@ -19,32 +10,35 @@
 #define META_GAS_DANGER			5
 #define META_GAS_ID				6
 
-//stuff you should probably leave well alone!
 //ATMOS
-#define CELL_VOLUME							2500	//liters in a cell
-#define BREATH_VOLUME						0.5		//liters in a normal breath
-#define BREATH_PERCENTAGE					(BREATH_VOLUME/CELL_VOLUME)					//Amount of air to take a from a tile
-#define HUMAN_NEEDED_OXYGEN					(MOLES_CELLSTANDARD*BREATH_PERCENTAGE*0.16)	//Amount of air needed before pass out/suffocation commences
-#define NORMPIPERATE						30		//pipe-insulation rate divisor
-#define HEATPIPERATE						8		//heat-exch pipe insulation
-#define FLOWFRAC							0.99	//fraction of gas transfered per process
-#define TANK_MELT_TEMPERATURE				1000000
-#define TANK_LEAK_PRESSURE					(30.*ONE_ATMOSPHERE)	//Tank starts leaking
-#define TANK_RUPTURE_PRESSURE				(35.*ONE_ATMOSPHERE)	//Tank spills all contents into atmosphere
-#define TANK_FRAGMENT_PRESSURE				(40.*ONE_ATMOSPHERE)	//Boom 3x3 base explosion
-#define TANK_FRAGMENT_SCALE	    			(6.*ONE_ATMOSPHERE)	//+1 for each SCALE kPa aboe threshold
-#define MINIMUM_AIR_RATIO_TO_SUSPEND		0.1		//Ratio of air that must move to/from a tile to reset group processing
-#define MINIMUM_AIR_RATIO_TO_MOVE			0.001	//Minimum ratio of air that must move to/from a tile
-#define MINIMUM_AIR_TO_SUSPEND				(MOLES_CELLSTANDARD*MINIMUM_AIR_RATIO_TO_SUSPEND)	//Minimum amount of air that has to move before a group processing can be suspended
-#define MINIMUM_MOLES_DELTA_TO_MOVE			(MOLES_CELLSTANDARD*MINIMUM_AIR_RATIO_TO_MOVE) //Either this must be active
-#define EXCITED_GROUP_BREAKDOWN_CYCLES		4
-#define EXCITED_GROUP_DISMANTLE_CYCLES		16
-#define MINIMUM_TEMPERATURE_TO_MOVE			(T20C+100)			//or this (or both, obviously)
-#define MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND		0.012
+//stuff you should probably leave well alone!
+#define MOLES_CELLSTANDARD		(ONE_ATMOSPHERE*CELL_VOLUME/(T20C*R_IDEAL_GAS_EQUATION))	//moles in a 2.5 m^3 cell at 101.325 Pa and 20 degC
+#define M_CELL_WITH_RATIO		(MOLES_CELLSTANDARD * 0.005) //compared against for superconductivity
+#define O2STANDARD				0.21	//percentage of oxygen in a normal mixture of air
+#define N2STANDARD				0.79	//same but for nitrogen
+#define MOLES_O2STANDARD		(MOLES_CELLSTANDARD*O2STANDARD)	// O2 standard value (21%)
+#define MOLES_N2STANDARD		(MOLES_CELLSTANDARD*N2STANDARD)	// N2 standard value (79%)
+#define CELL_VOLUME				2500	//liters in a cell
+#define BREATH_VOLUME			0.5		//liters in a normal breath
+#define BREATH_PERCENTAGE		(BREATH_VOLUME/CELL_VOLUME)					//Amount of air to take a from a tile
+#define HUMAN_NEEDED_OXYGEN		(MOLES_CELLSTANDARD*BREATH_PERCENTAGE*0.16)	//Amount of air needed before pass out/suffocation commences
+
+//EXCITED GROUPS
+#define EXCITED_GROUP_BREAKDOWN_CYCLES				4		//number of FULL air controller ticks before an excited group breaks down (averages gas contents across turfs)
+#define EXCITED_GROUP_DISMANTLE_CYCLES				16		//number of FULL air controller ticks before an excited group dismantles and removes its turfs from active
+#define MINIMUM_AIR_RATIO_TO_SUSPEND				0.1		//Ratio of air that must move to/from a tile to reset group processing
+#define MINIMUM_AIR_RATIO_TO_MOVE					0.001	//Minimum ratio of air that must move to/from a tile
+#define MINIMUM_AIR_TO_SUSPEND						(MOLES_CELLSTANDARD*MINIMUM_AIR_RATIO_TO_SUSPEND)	//Minimum amount of air that has to move before a group processing can be suspended
+#define MINIMUM_MOLES_DELTA_TO_MOVE					(MOLES_CELLSTANDARD*MINIMUM_AIR_RATIO_TO_MOVE) //Either this must be active
+#define MINIMUM_TEMPERATURE_TO_MOVE					(T20C+100)			//or this (or both, obviously)
 #define MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND		4		//Minimum temperature difference before group processing is suspended
 #define MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER		0.5		//Minimum temperature difference before the gas temperatures are just set to be equal
 #define MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION		T20C+10
 #define MINIMUM_TEMPERATURE_START_SUPERCONDUCTION	T20C+200
+
+//HEAT TRANSFER COEFFICIENTS
+//Must be between 0 and 1. Values closer to 1 equalize temperature faster
+//Should not exceed 0.4 else strange heat flow occur
 #define FLOOR_HEAT_TRANSFER_COEFFICIENT		0.4
 #define WALL_HEAT_TRANSFER_COEFFICIENT		0.0
 #define DOOR_HEAT_TRANSFER_COEFFICIENT		0.0
@@ -52,20 +46,31 @@
 #define OPEN_HEAT_TRANSFER_COEFFICIENT		0.4
 #define WINDOW_HEAT_TRANSFER_COEFFICIENT	0.1		//a hack for now
 #define HEAT_CAPACITY_VACUUM				7000	//a hack to help make vacuums "cold", sacrificing realism for gameplay
-	//Must be between 0 and 1. Values closer to 1 equalize temperature faster
-	//Should not exceed 0.4 else strange heat flow occur
+
+//FIRE
 #define FIRE_MINIMUM_TEMPERATURE_TO_SPREAD	150+T0C
 #define FIRE_MINIMUM_TEMPERATURE_TO_EXIST	100+T0C
 #define FIRE_SPREAD_RADIOSITY_SCALE			0.85
 #define FIRE_GROWTH_RATE					40000	//For small fires
 #define CARBON_LIFEFORM_FIRE_RESISTANCE 	200+T0C	//Resistance to fire damage
 #define CARBON_LIFEFORM_FIRE_DAMAGE			4		//Fire damage
+#define PLASMA_MINIMUM_BURN_TEMPERATURE		100+T0C
+
+//GASES
 #define MIN_TOXIC_GAS_DAMAGE				1
 #define MAX_TOXIC_GAS_DAMAGE				10
 #define MOLES_GAS_VISIBLE					0.5		//Moles in a standard cell after which gases are visible
-#define STOP_REACTIONS 						2
-#define PLASMA_MINIMUM_BURN_TEMPERATURE		100+T0C
-#define GAS_STIM_MINIMUM					0.002
+
+//REACTIONS
+//return values for reactions (bitflags)
+#define NO_REACTION		0
+#define REACTING		1
+#define STOP_REACTIONS 	2
+
+//HUMANS
+//Hurty numbers
+#define FIRE_DAMAGE_MODIFIER	0.0215	//Higher values result in more external fire damage to the skin
+#define AIR_DAMAGE_MODIFIER		2.025	//More means less damage from hot air scalding lungs, less = more damage
 
 // Pressure limits.
 #define HAZARD_HIGH_PRESSURE				550		//This determins at what pressure the ultra-high pressure red icon is displayed. (This one is set as a constant)
@@ -107,65 +112,71 @@
 #define SHOES_MIN_TEMP_PROTECT				2.0		//For gloves
 #define SHOES_MAX_TEMP_PROTECT				1500	//For gloves
 
-
 #define PRESSURE_DAMAGE_COEFFICIENT			4		//The amount of pressure damage someone takes is equal to (pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT, with the maximum of MAX_PRESSURE_DAMAGE
 #define MAX_HIGH_PRESSURE_DAMAGE			4
 #define LOW_PRESSURE_DAMAGE					4		//The amount of damage someone takes when in a low pressure area (The pressure threshold is so low that it doesn't make sense to do any calculations, so it just applies this flat value).
 
 #define COLD_SLOWDOWN_FACTOR				20		//Humans are slowed by the difference between bodytemp and BODYTEMP_COLD_DAMAGE_LIMIT divided by this
 
-// Atmos pipe limits
+//PIPES
+//Atmos pipe limits
 #define MAX_OUTPUT_PRESSURE					4500 // (kPa) What pressure pumps and powered equipment max out at.
 #define MAX_TRANSFER_RATE					200 // (L/s) Maximum speed powered equipment can work at.
 
-//Atmos machinery pipenet stuff
-
-// used for device_type vars; used by DEVICE_TYPE_LOOP
+//used for device_type vars; used by DEVICE_TYPE_LOOP
 #define UNARY		1
 #define BINARY 		2
 #define TRINARY		3
 #define QUATERNARY	4
 
-// this is the standard for loop used by all sorts of atmos machinery procs
+//TODO: finally remove this bullshit
+//this is the standard for loop used by all sorts of atmos machinery procs
 #define DEVICE_TYPE_LOOP	var/I in 1 to device_type
 
-// defines for the various machinery lists
-// NODE_I, AIR_I, PARENT_I are used within DEVICE_TYPE_LOOP
+//defines for the various machinery lists
+//NODE_I, AIR_I, PARENT_I are used within DEVICE_TYPE_LOOP
 
-//  nodes list - all atmos machinery
+//nodes list - all atmos machinery
 #define NODE1	nodes[1]
 #define	NODE2	nodes[2]
 #define NODE3	nodes[3]
 #define NODE4	nodes[4]
 #define NODE_I	nodes[I]
 
-//  airs list - components only
+//airs list - components only
 #define AIR1	airs[1]
 #define AIR2	airs[2]
 #define AIR3	airs[3]
 #define AIR_I	airs[I]
 
-//  parents list - components only
+//parents list - components only
 #define PARENT1		parents[1]
 #define PARENT2		parents[2]
 #define PARENT3		parents[3]
 #define PARENT_I	parents[I]
 
-//Tanks
-#define TANK_MAX_RELEASE_PRESSURE (ONE_ATMOSPHERE*3)
-#define TANK_MIN_RELEASE_PRESSURE 0
-#define TANK_DEFAULT_RELEASE_PRESSURE 16
+//TANKS
+#define TANK_MELT_TEMPERATURE				1000000	//temperature in kelvins at which a tank will start to melt
+#define TANK_LEAK_PRESSURE					(30.*ONE_ATMOSPHERE)	//Tank starts leaking
+#define TANK_RUPTURE_PRESSURE				(35.*ONE_ATMOSPHERE)	//Tank spills all contents into atmosphere
+#define TANK_FRAGMENT_PRESSURE				(40.*ONE_ATMOSPHERE)	//Boom 3x3 base explosion
+#define TANK_FRAGMENT_SCALE	    			(6.*ONE_ATMOSPHERE)		//+1 for each SCALE kPa aboe threshold
+#define TANK_MAX_RELEASE_PRESSURE 			(ONE_ATMOSPHERE*3)
+#define TANK_MIN_RELEASE_PRESSURE 			0
+#define TANK_DEFAULT_RELEASE_PRESSURE 		16
 
-
+//CANATMOSPASS
 #define ATMOS_PASS_YES 1
 #define ATMOS_PASS_NO 0
 #define ATMOS_PASS_PROC -1 //ask CanAtmosPass()
 #define ATMOS_PASS_DENSITY -2 //just check density
 #define CANATMOSPASS(A, O) ( A.CanAtmosPass == ATMOS_PASS_PROC ? A.CanAtmosPass(O) : ( A.CanAtmosPass == ATMOS_PASS_DENSITY ? !A.density : A.CanAtmosPass ) )
 
+//LAVALAND
 #define LAVALAND_EQUIPMENT_EFFECT_PRESSURE 50 //what pressure you have to be under to increase the effect of equipment meant for lavaland
 #define LAVALAND_DEFAULT_ATMOS "o2=14;n2=23;TEMP=300"
 
+//MULTIPIPES
 //IF YOU EVER CHANGE THESE CHANGE SPRITES TO MATCH.
 #define PIPING_LAYER_MIN 1
 #define PIPING_LAYER_MAX 3
@@ -179,6 +190,7 @@
 #define PIPING_DEFAULT_LAYER_ONLY 4			//can only exist at PIPING_LAYER_DEFAULT
 #define PIPING_CARDINAL_AUTONORMALIZE 8		//north/south east/west doesn't matter, auto normalize on build.
 
+//HELPERS
 #define THERMAL_ENERGY(gas) (gas.temperature * gas.heat_capacity())
 
 #define ADD_GAS(gas_id, out_list)\

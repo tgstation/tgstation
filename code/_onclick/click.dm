@@ -285,7 +285,7 @@
 	if(!stat && mind && iscarbon(A) && A != src)
 		var/datum/antagonist/changeling/C = mind.has_antag_datum(/datum/antagonist/changeling)
 		if(C && C.chosen_sting)
-			C.chosen_sting.try_to_sting(src,A)	
+			C.chosen_sting.try_to_sting(src,A)
 			next_click = world.time + 5
 			return
 	swap_hand()
@@ -349,7 +349,7 @@
 	if(!stat && mind && iscarbon(A) && A != src)
 		var/datum/antagonist/changeling/C = mind.has_antag_datum(/datum/antagonist/changeling)
 		if(C && C.chosen_sting)
-			C.chosen_sting.try_to_sting(src,A)	
+			C.chosen_sting.try_to_sting(src,A)
 			next_click = world.time + 5
 			return
 	..()
@@ -433,28 +433,38 @@
 		else
 			setDir(WEST)
 
+//debug
+/obj/screen/proc/scale_to(x1,y1)
+	if(!y1)
+		y1 = x1
+	var/matrix/M = new
+	M.Scale(x1,y1)
+	transform = M
+
 /obj/screen/click_catcher
 	icon = 'icons/mob/screen_gen.dmi'
-	icon_state = "flash"
+	icon_state = "catcher"
 	plane = CLICKCATCHER_PLANE
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	screen_loc = "CENTER"
 
-/obj/screen/click_catcher/proc/UpdateGreed(view_size_x = 7, view_size_y = 7)
-	var/icon/newicon = icon('icons/mob/screen_gen.dmi', "flash")
-	if(view_size_x > 16 || view_size_y > 16)
-		newicon.Scale((16 * 2 + 1) * world.icon_size,(16 * 2 + 1) * world.icon_size)
-		icon = newicon
-		var/tx = view_size_x/16
-		var/ty = view_size_y/16
-		var/matrix/M = new
-		M.Scale(tx, ty)
-		transform = M
-		screen_loc = "CENTER-16,CENTER-16"
-	else
-		screen_loc = "CENTER-[view_size_x],CENTER-[view_size_y]"
-		newicon.Scale((view_size_x * 2 + 1) * world.icon_size,(view_size_y * 2 + 1) * world.icon_size)
-		icon = newicon
+#define MAX_SAFE_BYOND_ICON_SCALE_TILES (MAX_SAFE_BYOND_ICON_SCALE_PX / world.icon_size)
+#define MAX_SAFE_BYOND_ICON_SCALE_PX 33 * 32			//Not using world.icon_size on purpose.
+
+/obj/screen/click_catcher/proc/UpdateGreed(view_size_x = 15, view_size_y = 15)
+	var/icon/newicon = icon('icons/mob/screen_gen.dmi', "catcher")
+	var/ox = min(MAX_SAFE_BYOND_ICON_SCALE_TILES, view_size_x)
+	var/oy = min(MAX_SAFE_BYOND_ICON_SCALE_TILES, view_size_y)
+	var/px = view_size_x * world.icon_size
+	var/py = view_size_y * world.icon_size
+	var/sx = min(MAX_SAFE_BYOND_ICON_SCALE_PX, px)
+	var/sy = min(MAX_SAFE_BYOND_ICON_SCALE_PX, py)
+	newicon.Scale(sx, sy)
+	icon = newicon
+	screen_loc = "CENTER-[(ox-1)*0.5],CENTER-[(oy-1)*0.5]"
+	var/matrix/M = new
+	M.Scale(px/sx, py/sy)
+	transform = M
 
 /obj/screen/click_catcher/Click(location, control, params)
 	var/list/modifiers = params2list(params)

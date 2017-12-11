@@ -13,6 +13,28 @@
 	var/heater_coefficient = 0.1
 	var/on = FALSE
 
+/obj/machinery/chem_heater/Destroy()
+	QDEL_NULL(beaker)
+	return ..()
+
+/obj/machinery/chem_heater/handle_atom_del(atom/A)
+	. = ..()
+	if(A == beaker)
+		beaker = null
+		update_icon()
+
+/obj/machinery/chem_heater/update_icon()
+	if(beaker)
+		icon_state = "mixer1b"
+	else
+		icon_state = "mixer0b"
+
+/obj/machinery/chem_heater/proc/eject_beaker()
+	if(beaker)
+		beaker.forceMove(drop_location())
+		beaker = null
+		update_icon()
+
 /obj/machinery/chem_heater/RefreshParts()
 	heater_coefficient = 0.1
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
@@ -52,12 +74,13 @@
 			return
 		beaker = I
 		to_chat(user, "<span class='notice'>You add [I] to [src].</span>")
-		icon_state = "mixer1b"
+		update_icon()
 		return
 	return ..()
 
 /obj/machinery/chem_heater/on_deconstruction()
 	eject_beaker()
+	return ..()
 
 /obj/machinery/chem_heater/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
@@ -108,10 +131,3 @@
 			on = FALSE
 			eject_beaker()
 			. = TRUE
-
-/obj/machinery/chem_heater/proc/eject_beaker()
-	if(beaker)
-		beaker.forceMove(drop_location())
-		beaker.reagents.handle_reactions()
-		beaker = null
-		icon_state = "mixer0b"
