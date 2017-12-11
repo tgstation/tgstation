@@ -107,6 +107,26 @@
 
 	..()
 
+/datum/brain_trauma/mild/healthy
+	name = "Anosognosia"
+	desc = "Patient always feels healthy, regardless of their condition."
+	scan_desc = "self-awareness deficit"
+	gain_text = "<span class='notice'>You feel great!</span>"
+	lose_text = "<span class='warning'>You no longer feel perfectly healthy.</span>"
+
+/datum/brain_trauma/mild/healthy/on_gain()
+	owner.set_screwyhud(SCREWYHUD_HEALTHY)
+	..()
+
+/datum/brain_trauma/mild/healthy/on_life()
+	owner.set_screwyhud(SCREWYHUD_HEALTHY) //just in case of hallucinations
+	owner.adjustStaminaLoss(-5) //no pain, no fatigue
+	..()
+
+/datum/brain_trauma/mild/healthy/on_lose()
+	target.set_screwyhud(SCREWYHUD_NONE)
+	..()
+
 /datum/brain_trauma/mild/muscle_weakness
 	name = "Muscle Weakness"
 	desc = "Patient experiences occasional bouts of muscle weakness."
