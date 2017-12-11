@@ -99,7 +99,7 @@
 		var/newcardloc = P
 		P = new /obj/item/device/paicard(newcardloc)
 		P.setPersonality(src)
-	loc = P
+	forceMove(P)
 	card = P
 	sradio = new(src)
 	if(!radio)

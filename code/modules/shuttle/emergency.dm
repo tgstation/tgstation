@@ -474,7 +474,7 @@
 			turfs -= T
 			T = pick(turfs)
 		else
-			src.loc = T
+			src.forceMove(T)
 			break
 
 //Pod suits/pickaxes

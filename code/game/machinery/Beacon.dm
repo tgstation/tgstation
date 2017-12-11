@@ -16,7 +16,7 @@
 	var/turf/T = loc
 	Beacon = new /obj/item/device/radio/beacon
 	Beacon.invisibility = INVISIBILITY_MAXIMUM
-	Beacon.loc = T
+	Beacon.forceMove(T)
 
 	hide(T.intact)
 
@@ -50,5 +50,3 @@
 			Beacon.forceMove(loc)
 
 	updateicon()
-
-

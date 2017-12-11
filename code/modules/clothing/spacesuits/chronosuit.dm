@@ -274,7 +274,7 @@
 	if(holder)
 		if(user == holder)
 			if(loc == user)
-				loc = get_turf(user)
+				forceMove(get_turf(user))
 			if(user.client && user.client.eye != src)
 				src.loc = get_turf(user)
 				user.reset_perspective(src)

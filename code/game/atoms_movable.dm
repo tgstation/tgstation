@@ -200,7 +200,7 @@
 		loc.handle_atom_del(src)
 	for(var/atom/movable/AM in contents)
 		qdel(AM)
-	loc = null
+	moveToNullspace()
 	invisibility = INVISIBILITY_ABSTRACT
 	if(pulledby)
 		pulledby.stop_pulling()
@@ -268,11 +268,12 @@
 	//If no destination, move the atom into nullspace (don't do this unless you know what you're doing)
 	else
 		. = TRUE
-		var/atom/oldloc = loc
-		var/area/old_area = get_area(oldloc)
-		oldloc.Exited(src, null)
-		if(old_area)
-			old_area.Exited(src, null)
+		if (loc)
+			var/atom/oldloc = loc
+			var/area/old_area = get_area(oldloc)
+			oldloc.Exited(src, null)
+			if(old_area)
+				old_area.Exited(src, null)
 		loc = null
 
 /mob/living/forceMove(atom/destination)

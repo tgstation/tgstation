@@ -21,7 +21,7 @@
 		if(!isturf(ai.loc))
 			return
 		T = get_turf(T)
-		loc = T
+		forceMove(T)
 		if(use_static)
 			GLOB.cameranet.visibility(src)
 		if(ai.client)
