@@ -186,7 +186,6 @@
 		else
 			SSticker.mode_result = "halfwin - revheads killed - too many died"
       SSticker.news_report = REVS_LOSE_COSTLY
-	..()
 	return TRUE
 
 //TODO What should be displayed for revs in non-rev rounds
