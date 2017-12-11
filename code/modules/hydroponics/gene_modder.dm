@@ -422,8 +422,8 @@
 	var/read_only = 0 //Well, it's still a floppy disk
 	unique_rename = 1
 
-/obj/item/disk/plantgene/New()
-	..()
+/obj/item/disk/plantgene/Initialize()
+	. = ..()
 	add_overlay("datadisk_gene")
 	src.pixel_x = rand(-5, 5)
 	src.pixel_y = rand(-5, 5)

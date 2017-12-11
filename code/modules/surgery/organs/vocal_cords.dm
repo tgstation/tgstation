@@ -108,12 +108,11 @@
 	return TRUE
 
 /obj/item/organ/vocal_cords/colossus/handle_speech(message)
-	owner.say(uppertext(message), spans = spans, sanitize = FALSE)
 	playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 300, 1, 5)
 	return //voice of god speaks for us
 
 /obj/item/organ/vocal_cords/colossus/speak_with(message)
-	var/cooldown = voice_of_god(message, owner, spans, base_multiplier)
+	var/cooldown = voice_of_god(uppertext(message), owner, spans, base_multiplier)
 	next_command = world.time + (cooldown * cooldown_mod)
 
 //////////////////////////////////////
@@ -134,6 +133,8 @@
 			span_list = list("ratvar")
 		else
 			span_list = list()
+
+	user.say(message, spans = span_list, sanitize = FALSE)
 
 	message = lowertext(message)
 	var/mob/living/list/listeners = list()
@@ -567,7 +568,7 @@
 
 	message_admins("[key_name_admin(user)] has said '[log_message]' with a Voice of God, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
 	log_game("[key_name(user)] has said '[log_message]' with a Voice of God, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
-	SSblackbox.add_details("voice_of_god", log_message)
+	SSblackbox.record_feedback("tally", "voice_of_god", 1, log_message)
 
 	return cooldown
 

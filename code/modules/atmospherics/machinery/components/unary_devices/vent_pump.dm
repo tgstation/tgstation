@@ -26,7 +26,7 @@
 	// INT_BOUND: Do not pass internal_pressure_bound
 	// NO_BOUND: Do not pass either
 
-	var/frequency = 1439
+	var/frequency = FREQ_ATMOS_CONTROL
 	var/datum/radio_frequency/radio_connection
 	var/radio_filter_out
 	var/radio_filter_in
@@ -50,8 +50,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/New()
 	..()
 	if(!id_tag)
-		assign_uid()
-		id_tag = num2text(uid)
+		id_tag = assign_uid_vents()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
 	var/area/A = get_area(src)
@@ -95,7 +94,23 @@
 		return
 
 	if(!NODE1 || !on || !is_operational())
-		icon_state = "vent_off"
+		if(icon_state == "vent_welded")
+			icon_state = "vent_off"
+			return
+
+		if(pump_direction & RELEASING)
+			icon_state = "vent_out-off"
+		else // pump_direction == SIPHONING
+			icon_state = "vent_in-off"
+		return
+
+	if(icon_state == ("vent_out-off" || "vent_in-off" || "vent_off"))
+		if(pump_direction & RELEASING)
+			icon_state = "vent_out"
+			flick("vent_out-starting", src)
+		else // pump_direction == SIPHONING
+			icon_state = "vent_in"
+			flick("vent_in-starting", src)
 		return
 
 	if(pump_direction & RELEASING)
@@ -164,7 +179,7 @@
 		return
 
 	var/datum/signal/signal = new
-	signal.transmission_method = 1 // radio signal
+	signal.transmission_method = TRANSMISSION_RADIO
 	signal.source = src
 
 	signal.data = list(
@@ -191,8 +206,8 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/atmosinit()
 	//some vents work his own spesial way
-	radio_filter_in = frequency==1439?(GLOB.RADIO_FROM_AIRALARM):null
-	radio_filter_out = frequency==1439?(GLOB.RADIO_TO_AIRALARM):null
+	radio_filter_in = frequency==FREQ_ATMOS_CONTROL?(RADIO_FROM_AIRALARM):null
+	radio_filter_out = frequency==FREQ_ATMOS_CONTROL?(RADIO_TO_AIRALARM):null
 	if(frequency)
 		set_frequency(frequency)
 	broadcast_status()

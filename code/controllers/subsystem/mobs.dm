@@ -7,13 +7,15 @@ SUBSYSTEM_DEF(mobs)
 	var/list/currentrun = list()
 
 /datum/controller/subsystem/mobs/stat_entry()
-	..("P:[GLOB.mob_list.len]")
+	..("P:[GLOB.mob_living_list.len]")
 
 
 /datum/controller/subsystem/mobs/fire(resumed = 0)
 	var/seconds = wait * 0.1
 	if (!resumed)
-		src.currentrun = GLOB.mob_list.Copy()
+		src.currentrun = GLOB.mob_living_list.Copy()
+		if (GLOB.overminds.len) // blob cameras need to Life()
+			src.currentrun += GLOB.overminds
 
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
@@ -24,6 +26,6 @@ SUBSYSTEM_DEF(mobs)
 		if(M)
 			M.Life(seconds, times_fired)
 		else
-			GLOB.mob_list.Remove(M)
+			GLOB.mob_living_list.Remove(M)
 		if (MC_TICK_CHECK)
 			return

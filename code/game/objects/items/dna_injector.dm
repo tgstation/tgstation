@@ -8,7 +8,6 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
-	origin_tech = "biotech=1"
 
 	var/damage_coeff  = 1
 	var/list/fields
@@ -265,13 +264,13 @@
 	name = "\improper DNA injector (Smile)"
 	add_mutations_static = list(SMILE)
 
-/obj/item/dnainjector/unintelligablemut
-	name = "\improper DNA injector (Unintelligable)"
-	add_mutations_static = list(UNINTELLIGABLE)
+/obj/item/dnainjector/unintelligiblemut
+	name = "\improper DNA injector (Unintelligible)"
+	add_mutations_static = list(UNINTELLIGIBLE)
 
-/obj/item/dnainjector/antiunintelligable
-	name = "\improper DNA injector (Anti-Unintelligable)"
-	remove_mutations_static = list(UNINTELLIGABLE)
+/obj/item/dnainjector/antiunintelligible
+	name = "\improper DNA injector (Anti-Unintelligible)"
+	remove_mutations_static = list(UNINTELLIGIBLE)
 
 /obj/item/dnainjector/swedishmut
 	name = "\improper DNA injector (Swedish)"

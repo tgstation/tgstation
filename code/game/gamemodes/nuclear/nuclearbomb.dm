@@ -77,16 +77,16 @@
 	icon = 'icons/obj/machines/nuke_terminal.dmi'
 	icon_state = "nuclearbomb_base"
 	anchored = TRUE //stops it being moved
-	use_tag = TRUE
 
 /obj/machinery/nuclearbomb/syndicate
+	use_tag = TRUE
 	//ui_style = "syndicate" // actually the nuke op bomb is a stole nt bomb
 
 /obj/machinery/nuclearbomb/syndicate/get_cinematic_type(off_station)
 	var/datum/game_mode/nuclear/NM = SSticker.mode
 	switch(off_station)
 		if(0)
-			if(istype(NM) && NM.syndies_didnt_escape)
+			if(istype(NM) && !NM.nuke_team.syndies_escaped())
 				return CINEMATIC_ANNIHILATION
 			else
 				return CINEMATIC_NUKE_WIN
@@ -122,15 +122,7 @@
 					to_chat(user, "<span class='notice'>You remove the screws from [src]'s front panel.</span>")
 					update_icon()
 				return
-		if(NUKESTATE_UNSCREWED)
-			if(istype(I, /obj/item/crowbar))
-				to_chat(user, "<span class='notice'>You start removing [src]'s front panel...</span>")
-				playsound(loc, I.usesound, 100, 1)
-				if(do_after(user,30*I.toolspeed,target=src))
-					to_chat(user, "<span class='notice'>You remove [src]'s front panel.</span>")
-					deconstruction_state = NUKESTATE_PANEL_REMOVED
-					update_icon()
-				return
+
 		if(NUKESTATE_PANEL_REMOVED)
 			if(istype(I, /obj/item/weldingtool))
 				var/obj/item/weldingtool/welder = I
@@ -141,16 +133,6 @@
 						to_chat(user, "<span class='notice'>You cut [src]'s inner plate.</span>")
 						deconstruction_state = NUKESTATE_WELDED
 						update_icon()
-				return
-		if(NUKESTATE_WELDED)
-			if(istype(I, /obj/item/crowbar))
-				to_chat(user, "<span class='notice'>You start prying off [src]'s inner plate...</span>")
-				playsound(loc, I.usesound, 100, 1)
-				if(do_after(user,50*I.toolspeed,target=src))
-					to_chat(user, "<span class='notice'>You pry off [src]'s inner plate. You can see the core's green glow!</span>")
-					deconstruction_state = NUKESTATE_CORE_EXPOSED
-					update_icon()
-					START_PROCESSING(SSobj, core)
 				return
 		if(NUKESTATE_CORE_EXPOSED)
 			if(istype(I, /obj/item/nuke_core_container))
@@ -181,6 +163,27 @@
 					to_chat(user, "<span class='warning'>You need more metal to do that!</span>")
 				return
 	. = ..()
+
+/obj/machinery/nuclearbomb/crowbar_act(mob/user, obj/item/tool)
+	. = FALSE
+	switch(deconstruction_state)
+		if(NUKESTATE_UNSCREWED)
+			to_chat(user, "<span class='notice'>You start removing [src]'s front panel...</span>")
+			playsound(loc, tool.usesound, 100, 1)
+			if(do_after(user, 30 * tool.toolspeed, target = src))
+				to_chat(user, "<span class='notice'>You remove [src]'s front panel.</span>")
+				deconstruction_state = NUKESTATE_PANEL_REMOVED
+				update_icon()
+			return TRUE
+		if(NUKESTATE_WELDED)
+			to_chat(user, "<span class='notice'>You start prying off [src]'s inner plate...</span>")
+			playsound(loc, tool.usesound, 100, 1)
+			if(do_after(user, 50 * tool.toolspeed, target = src))
+				to_chat(user, "<span class='notice'>You pry off [src]'s inner plate. You can see the core's green glow!</span>")
+				deconstruction_state = NUKESTATE_CORE_EXPOSED
+				update_icon()
+				START_PROCESSING(SSobj, core)
+			return TRUE
 
 /obj/machinery/nuclearbomb/proc/get_nuke_state()
 	if(exploding)
@@ -548,16 +551,25 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 /obj/item/disk/nuclear/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is going delta! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(user.loc, 'sound/machines/alarm.ogg', 50, -1, 1)
+	playsound(src, 'sound/machines/alarm.ogg', 50, -1, 1)
 	for(var/i in 1 to 100)
 		addtimer(CALLBACK(user, /atom/proc/add_atom_colour, (i % 2)? "#00FF00" : "#FF0000", ADMIN_COLOUR_PRIORITY), i)
-	addtimer(CALLBACK(user, /atom/proc/remove_atom_colour, ADMIN_COLOUR_PRIORITY), 101)
-	addtimer(CALLBACK(user, /atom/proc/visible_message, "<span class='suicide'>[user] was destroyed by the nuclear blast!</span>"), 101)
-	addtimer(CALLBACK(user, /mob/living/proc/adjustOxyLoss, 200), 101)
-	addtimer(CALLBACK(user, /mob/proc/death, 0), 101)
+	addtimer(CALLBACK(src, .proc/manual_suicide, user), 101)
 	return MANUAL_SUICIDE
+	
+/obj/item/disk/proc/manual_suicide(mob/living/user)
+	user.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
+	user.visible_message("<span class='suicide'>[user] was destroyed by the nuclear blast!</span>")
+	user.adjustOxyLoss(200)
+	user.death(0)
 
 /obj/item/disk/fakenucleardisk
 	name = "cheap plastic imitation of the nuclear authentication disk"
 	desc = "Broken dreams and a faint odor of cheese."
 	icon_state = "nucleardisk"
+
+/obj/item/disk/fakenucleardisk/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is pretending to go delta! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	playsound(src, 'sound/machines/alarm.ogg', 30, -1, 1)
+	addtimer(CALLBACK(src, .proc/manual_suicide, user), 101)
+	return MANUAL_SUICIDE

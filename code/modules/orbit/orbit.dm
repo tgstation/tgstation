@@ -116,3 +116,11 @@
 	. = ..()
 	if (orbiting)
 		stop_orbit()
+
+/atom/movable/proc/transfer_observers_to(atom/movable/target)
+	if(orbiters)
+		for(var/thing in orbiters)
+			var/datum/orbit/O = thing
+			if(O.orbiter && isobserver(O.orbiter))
+				var/mob/dead/observer/D = O.orbiter
+				D.ManualFollow(target)

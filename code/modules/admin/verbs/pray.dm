@@ -43,7 +43,7 @@
 					SEND_SOUND(C, sound('sound/effects/pray.ogg'))
 	to_chat(usr, "Your prayers have been received by the gods.")
 
-	SSblackbox.add_details("admin_verb","Prayer") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Prayer") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	//log_admin("HELP: [key_name(src)]: [msg]")
 
 /proc/CentCom_announce(text , mob/Sender)

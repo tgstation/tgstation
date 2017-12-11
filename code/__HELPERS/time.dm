@@ -19,10 +19,6 @@
 		if(month == MM && day == DD)
 			return 1
 
-		// Uncomment this out when debugging!
-		//else
-			//return 1
-
 //returns timestamp in a sql and ISO 8601 friendly format
 /proc/SQLtime(timevar)
 	if(!timevar)

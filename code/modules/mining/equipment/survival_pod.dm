@@ -14,7 +14,6 @@
 	icon_state = "capsule"
 	icon = 'icons/obj/mining.dmi'
 	w_class = WEIGHT_CLASS_TINY
-	origin_tech = "engineering=3;bluespace=3"
 	var/template_id = "shelter_alpha"
 	var/datum/map_template/shelter/template
 	var/used = FALSE
@@ -71,7 +70,6 @@
 /obj/item/survivalcapsule/luxury
 	name = "luxury bluespace shelter capsule"
 	desc = "An exorbitantly expensive luxury suite stored within a pocket of bluespace."
-	origin_tech = "engineering=3;bluespace=4"
 	template_id = "shelter_beta"
 
 //Pod objects
@@ -94,38 +92,19 @@
 	name = "airlock"
 	icon = 'icons/obj/doors/airlocks/survival/survival.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/survival/survival_overlays.dmi'
-	note_overlay_file = 'icons/obj/doors/airlocks/survival/survival_overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_pod
+
+/obj/machinery/door/airlock/survival_pod/glass
 	opacity = FALSE
 	glass = TRUE
-	var/expected_dir = SOUTH //we visually turn when shuttle rotated, but need to not turn for any other reason
-
-/obj/machinery/door/airlock/survival_pod/setDir(direction)
-	direction = expected_dir
-	..()
-
-/obj/machinery/door/airlock/survival_pod/vertical
-	dir = EAST
-	expected_dir = EAST
 
 /obj/structure/door_assembly/door_assembly_pod
 	name = "pod airlock assembly"
 	icon = 'icons/obj/doors/airlocks/survival/survival.dmi'
+	base_name = "pod airlock"
 	overlays_file = 'icons/obj/doors/airlocks/survival/survival_overlays.dmi'
 	airlock_type = /obj/machinery/door/airlock/survival_pod
-	anchored = TRUE
-	state = 1
-	mineral = "glass"
-	material = "glass"
-	var/expected_dir = SOUTH
-
-/obj/structure/door_assembly/door_assembly_pod/setDir(direction)
-	direction = expected_dir
-	..()
-
-/obj/structure/door_assembly/door_assembly_pod/vertical
-	dir = EAST
-	expected_dir = EAST
+	glass_type = /obj/machinery/door/airlock/survival_pod/glass
 
 //Windoor
 /obj/machinery/door/window/survival_pod

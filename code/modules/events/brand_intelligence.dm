@@ -21,9 +21,14 @@
 									 "You don't want to buy anything? Yeah, well, I didn't want to buy your mom either.")
 
 
-/datum/round_event/brand_intelligence/announce()
-	priority_announce("Rampant brand intelligence has been detected aboard [station_name()]. Please stand by. The origin is believed to be \a [originMachine.name].", "Machine Learning Alert")
-
+/datum/round_event/brand_intelligence/announce(fake)
+	var/source = "unknown machine"
+	if(fake)
+		var/obj/machinery/vending/cola/example = /obj/machinery/vending/cola
+		source = initial(example.name)
+	else if(originMachine)
+		source = originMachine.name
+	priority_announce("Rampant brand intelligence has been detected aboard [station_name()]. Please stand by. The origin is believed to be \a [source].", "Machine Learning Alert")
 
 /datum/round_event/brand_intelligence/start()
 	for(var/obj/machinery/vending/V in GLOB.machines)

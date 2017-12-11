@@ -127,7 +127,7 @@
 	stage4	= list("<span class='danger'>Your skin feels very loose.</span>", "<span class='danger'>You can feel... something...inside you.</span>")
 	stage5	= list("<span class='danger'>Your skin feels as if it's about to burst off!</span>")
 	new_form = /mob/living/silicon/robot
-
+	infectable_hosts = list(SPECIES_ORGANIC, SPECIES_UNDEAD, SPECIES_ROBOTIC)
 
 /datum/disease/transformation/robot/stage_act()
 	..()
@@ -240,3 +240,4 @@
 	stage4	= list("<span class='danger'>You're ravenous.</span>")
 	stage5	= list("<span class='danger'>You have become a morph.</span>")
 	new_form = /mob/living/simple_animal/hostile/morph
+	infectable_hosts = list(SPECIES_ORGANIC, SPECIES_INORGANIC, SPECIES_UNDEAD) //magic!

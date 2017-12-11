@@ -75,14 +75,14 @@ Thus, the two variables affect pump operation are set in New():
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
-		radio_connection = SSradio.add_object(src, frequency, filter = GLOB.RADIO_ATMOSIA)
+		radio_connection = SSradio.add_object(src, frequency, filter = RADIO_ATMOSIA)
 
 /obj/machinery/atmospherics/components/binary/pump/proc/broadcast_status()
 	if(!radio_connection)
 		return
 
 	var/datum/signal/signal = new
-	signal.transmission_method = 1 //radio signal
+	signal.transmission_method = TRANSMISSION_RADIO
 	signal.source = src
 
 	signal.data = list(
@@ -93,7 +93,7 @@ Thus, the two variables affect pump operation are set in New():
 		"sigtype" = "status"
 	)
 
-	radio_connection.post_signal(src, signal, filter = GLOB.RADIO_ATMOSIA)
+	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
 /obj/machinery/atmospherics/components/binary/pump/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 																datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)

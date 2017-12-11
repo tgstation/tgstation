@@ -18,8 +18,8 @@
 	var/volume = 100
 
 	var/efficiency = 1
-	var/sleep_factor = 750
-	var/unconscious_factor = 1000
+	var/sleep_factor = 0.00125
+	var/unconscious_factor = 0.001
 	var/heat_capacity = 20000
 	var/conduction_coefficient = 0.3
 
@@ -78,7 +78,7 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_deconstruction()
 	if(beaker)
-		beaker.forceMove(loc)
+		beaker.forceMove(drop_location())
 		beaker = null
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_icon()
@@ -94,28 +94,24 @@
 	if(occupant)
 		var/image/occupant_overlay
 
-		if(ishuman(occupant) || islarva(occupant) || (isanimal(occupant) && !ismegafauna(occupant))) // Mobs that are smaller than cryotube
+		if(ismonkey(occupant)) // Monkey
+			occupant_overlay = image(CRYOMOBS, "monkey")
+		else if(isalienadult(occupant))
+			if(isalienroyal(occupant)) // Queen and prae
+				occupant_overlay = image(CRYOMOBS, "alienq")
+			else if(isalienhunter(occupant)) // Hunter
+				occupant_overlay = image(CRYOMOBS, "alienh")
+			else if(isaliensentinel(occupant)) // Sentinel
+				occupant_overlay = image(CRYOMOBS, "aliens")
+			else // Drone or other
+				occupant_overlay = image(CRYOMOBS, "aliend")
+
+		else if(ishuman(occupant) || islarva(occupant) || (isanimal(occupant) && !ismegafauna(occupant))) // Mobs that are smaller than cryotube
 			occupant_overlay = image(occupant.icon, occupant.icon_state)
 			occupant_overlay.copy_overlays(occupant)
 
-		else if(ismonkey(occupant)) // Monkey
-			occupant_overlay = image(CRYOMOBS, "monkey")
-			occupant_overlay.copy_overlays(occupant)
-
-		else if(!isalienadult(occupant))
+		else
 			occupant_overlay = image(CRYOMOBS, "generic")
-
-		else if(isalienroyal(occupant)) // Queen and prae
-			occupant_overlay = image(CRYOMOBS, "alienq")
-
-		else if(isalienhunter(occupant)) // Hunter
-			occupant_overlay = image(CRYOMOBS, "alienh")
-
-		else if(isaliensentinel(occupant)) // Sentinel
-			occupant_overlay = image(CRYOMOBS, "aliens")
-
-		else // Drone or other
-			occupant_overlay = image(CRYOMOBS, "aliend")
 
 		occupant_overlay.dir = SOUTH
 		occupant_overlay.pixel_y = 22
@@ -182,11 +178,11 @@
 
 	if(air1.gases.len)
 		if(mob_occupant.bodytemperature < T0C) // Sleepytime. Why? More cryo magic.
-			mob_occupant.Sleeping((mob_occupant.bodytemperature / sleep_factor) * 2000)
-			mob_occupant.Unconscious((mob_occupant.bodytemperature / unconscious_factor) * 2000)
+			mob_occupant.Sleeping((mob_occupant.bodytemperature * sleep_factor) * 2000)
+			mob_occupant.Unconscious((mob_occupant.bodytemperature * unconscious_factor) * 2000)
 		if(beaker)
 			if(reagent_transfer == 0) // Magically transfer reagents. Because cryo magic.
-				beaker.reagents.trans_to(occupant, 1, 10 * efficiency) // Transfer reagents, multiplied because cryo magic.
+				beaker.reagents.trans_to(occupant, 1, efficiency * 0.25) // Transfer reagents.
 				beaker.reagents.reaction(occupant, VAPOR)
 				air1.gases[/datum/gas/oxygen][MOLES] -= 2 / efficiency //Let's use gas for this
 			if(++reagent_transfer >= 10 * efficiency) // Throttle reagent transfer (higher efficiency will transfer the same amount but consume less from the beaker).
@@ -384,7 +380,7 @@
 			. = TRUE
 		if("ejectbeaker")
 			if(beaker)
-				beaker.forceMove(loc)
+				beaker.forceMove(drop_location())
 				if(Adjacent(usr) && !issilicon(usr))
 					usr.put_in_hands(beaker)
 				beaker = null
@@ -409,5 +405,21 @@
 	if(G.total_moles() > 10)
 		return G.temperature
 	return ..()
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/default_change_direction_wrench(mob/user, obj/item/wrench/W)
+	. = ..()
+	if(.)
+		SetInitDirections()
+		var/obj/machinery/atmospherics/node = NODE1
+		if(node)
+			node.disconnect(src)
+			NODE1 = null
+		nullifyPipenet(PARENT1)
+		atmosinit()
+		node = NODE1
+		if(node)
+			node.atmosinit()
+			node.addMember(src)
+		build_network()
 
 #undef CRYOMOBS

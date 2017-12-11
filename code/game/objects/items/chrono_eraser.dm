@@ -62,7 +62,7 @@
 		TED = loc
 	else //admin must have spawned it
 		TED = new(src.loc)
-		qdel(src)
+		return INITIALIZE_HINT_QDEL
 
 /obj/item/gun/energy/chrono_gun/update_icon()
 	return
@@ -250,6 +250,9 @@
 	return
 
 /obj/effect/chrono_field/singularity_act()
+	return
+
+/obj/effect/chrono_field/singularity_pull()
 	return
 
 /obj/effect/chrono_field/ex_act()

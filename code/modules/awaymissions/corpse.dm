@@ -4,6 +4,8 @@
 
 /obj/effect/mob_spawn
 	name = "Unknown"
+	density = TRUE
+	anchored = TRUE
 	var/mob_type = null
 	var/mob_name = ""
 	var/mob_gender = null
@@ -22,8 +24,7 @@
 	var/datum/disease/disease = null //Do they start with a pre-spawned disease?
 	var/mob_color //Change the mob's color
 	var/assignedrole
-	density = TRUE
-	anchored = TRUE
+	var/show_flavour = TRUE
 	var/banType = "lavaland"
 
 /obj/effect/mob_spawn/attack_ghost(mob/user)
@@ -61,7 +62,7 @@
 /obj/effect/mob_spawn/proc/equip(mob/M)
 	return
 
-/obj/effect/mob_spawn/proc/create(ckey, flavour = TRUE, name)
+/obj/effect/mob_spawn/proc/create(ckey, name)
 	var/mob/living/M = new mob_type(get_turf(src)) //living mobs only
 	if(!random)
 		M.real_name = mob_name ? mob_name : M.name
@@ -83,7 +84,7 @@
 
 	if(ckey)
 		M.ckey = ckey
-		if(flavour)
+		if(show_flavour)
 			to_chat(M, "[flavour_text]")
 		var/datum/mind/MM = M.mind
 		if(objectives)
@@ -206,7 +207,7 @@
 	brute_damage = 1000
 
 /obj/effect/mob_spawn/human/alive
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	death = FALSE
 	roundstart = FALSE //you could use these for alive fake humans on roundstart but this is more common scenario
@@ -245,7 +246,7 @@
 	mob_type = 	/mob/living/simple_animal/mouse
 	death = FALSE
 	roundstart = FALSE
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 
 /obj/effect/mob_spawn/cow
@@ -254,7 +255,7 @@
 	death = FALSE
 	roundstart = FALSE
 	mob_gender = FEMALE
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 
 // I'll work on making a list of corpses people request for maps, or that I think will be commonly used. Syndicate operatives for example.
@@ -289,7 +290,7 @@
 	roundstart = FALSE
 	random = TRUE
 	name = "sleeper"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	flavour_text = "You are a space doctor!"
 	assignedrole = "Space Doctor"
@@ -344,7 +345,7 @@
 	roundstart = FALSE
 	random = TRUE
 	name = "bartender sleeper"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	flavour_text = "You are a space bartender!"
 	assignedrole = "Space Bartender"
@@ -368,7 +369,7 @@
 	random = TRUE
 	mob_name = "Beach Bum"
 	name = "beach bum sleeper"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	flavour_text = "You are a beach bum!"
 	assignedrole = "Beach Bum"
@@ -446,7 +447,7 @@
 	roundstart = FALSE
 	mob_name = "Nanotrasen Commander"
 	name = "sleeper"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	flavour_text = "You are a Nanotrasen Commander!"
 
@@ -455,7 +456,7 @@
 	roundstart = FALSE
 	mob_name = "Private Security Officer"
 	name = "sleeper"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	faction = "nanotrasenprivate"
 	flavour_text = "You are a Nanotrasen Private Security Officer!"

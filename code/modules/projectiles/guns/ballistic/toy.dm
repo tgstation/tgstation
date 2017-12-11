@@ -51,7 +51,6 @@
 	icon = 'icons/obj/guns/toy.dmi'
 	force = 0
 	throwforce = 0
-	origin_tech = null
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/toy
 	clumsy_check = 0
 	needs_permit = 0

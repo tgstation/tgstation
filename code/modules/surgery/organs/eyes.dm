@@ -103,7 +103,6 @@
 	name = "thermal eyes"
 	desc = "These cybernetic eye implants will give you thermal vision. Vertical slit pupil included."
 	eye_color = "FC0"
-	origin_tech = "materials=5;programming=4;biotech=4;magnets=4;syndicate=1"
 	sight_flags = SEE_MOBS
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	flash_protect = -1
@@ -141,7 +140,6 @@
 /obj/item/organ/eyes/robotic/shield
 	name = "shielded robotic eyes"
 	desc = "These reactive micro-shields will protect you from welders and flashes without obscuring your vision."
-	origin_tech = "materials=4;biotech=3;engineering=4;plasmatech=3"
 	flash_protect = 2
 
 /obj/item/organ/eyes/robotic/shield/emp_act(severity)
@@ -152,7 +150,6 @@
 /obj/item/organ/eyes/robotic/glow
 	name = "High Luminosity Eyes"
 	desc = "Special glowing eyes, used by snowflakes who want to be special."
-	origin_tech = "materials=3;biotech=3;engineering=3;magnets=4"
 	eye_color = "000"
 	actions_types = list(/datum/action/item_action/organ_action/use, /datum/action/item_action/organ_action/toggle)
 	var/current_color_string = "#ffffff"

@@ -162,6 +162,12 @@
 	user = caster
 	INVOKE_ASYNC(src, .proc/judicialblast)
 
+/obj/effect/clockwork/judicial_marker/singularity_act()
+	return
+
+/obj/effect/clockwork/judicial_marker/singularity_pull()
+	return
+
 /obj/effect/clockwork/judicial_marker/proc/judicialblast()
 	playsound(src, 'sound/magic/magic_missile.ogg', 50, 1, 1, 1)
 	flick("judicial_marker", src)
@@ -178,7 +184,7 @@
 	sleep(13)
 	name = "judicial explosion"
 	var/targetsjudged = 0
-	playsound(src, 'sound/effects/explosionfar.ogg', 100, 1, 1, 1)
+	playsound(src, 'sound/effects/explosion_distant.ogg', 100, 1, 1, 1)
 	set_light(0)
 	for(var/mob/living/L in range(1, src))
 		if(is_servant_of_ratvar(L))

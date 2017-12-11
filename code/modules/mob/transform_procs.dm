@@ -79,6 +79,9 @@
 		O.setBrainLoss(getBrainLoss(), 0)
 		O.updatehealth()
 		O.radiation = radiation
+		for(var/T in get_traumas())
+			var/datum/brain_trauma/BT = T
+			O.gain_trauma(BT.type, BT.permanent)
 
 	//re-add implants to new mob
 	if (tr_flags & TR_KEEPIMPLANTS)
@@ -138,6 +141,8 @@
 	for(var/A in loc.vars)
 		if(loc.vars[A] == src)
 			loc.vars[A] = O
+
+	transfer_observers_to(O)
 
 	. = O
 
@@ -236,6 +241,9 @@
 		O.setBrainLoss(getBrainLoss(), 0)
 		O.updatehealth()
 		O.radiation = radiation
+		for(var/T in get_traumas())
+			var/datum/brain_trauma/BT = T
+			O.gain_trauma(BT.type, BT.permanent)
 
 	//re-add implants to new mob
 	if (tr_flags & TR_KEEPIMPLANTS)
@@ -292,6 +300,8 @@
 	O.a_intent = INTENT_HELP
 	if (tr_flags & TR_DEFAULTMSG)
 		to_chat(O, "<B>You are now a human.</B>")
+
+	transfer_observers_to(O)
 
 	. = O
 

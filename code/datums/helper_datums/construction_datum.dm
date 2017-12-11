@@ -68,6 +68,7 @@
 		var/obj/item/oldcell = locate (/obj/item/stock_parts/cell) in m
 		QDEL_NULL(oldcell)
 		m.CheckParts(holder.contents)
+		SSblackbox.record_feedback("tally", "mechas_created", 1, m.name)
 		QDEL_NULL(holder)
 
 /datum/construction/proc/set_desc(index as num)

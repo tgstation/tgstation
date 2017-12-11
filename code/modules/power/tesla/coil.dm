@@ -103,8 +103,6 @@
 	buckle_lying = FALSE
 	buckle_requires_restraints = TRUE
 
-	circuit = /obj/item/circuitboard/machine/grounding_rod
-
 /obj/machinery/power/grounding_rod/default_unfasten_wrench(mob/user, obj/item/wrench/W, time = 20)
 	. = ..()
 	if(. == SUCCESSFUL_UNFASTEN)

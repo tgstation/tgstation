@@ -527,8 +527,8 @@
 	// You're an idiot for thinking that one of the most corrosive and deadly gasses would be beneficial
 	if(S.has_reagent("fluorine", 1))
 		adjustHealth(-round(S.get_reagent_amount("fluorine") * 2))
-		adjustToxic(round(S.get_reagent_amount("flourine") * 2.5))
-		adjustWater(-round(S.get_reagent_amount("flourine") * 0.5))
+		adjustToxic(round(S.get_reagent_amount("fluorine") * 2.5))
+		adjustWater(-round(S.get_reagent_amount("fluorine") * 0.5))
 		adjustWeeds(-rand(1,4))
 
 	// You're an idiot for thinking that one of the most corrosive and deadly gasses would be beneficial

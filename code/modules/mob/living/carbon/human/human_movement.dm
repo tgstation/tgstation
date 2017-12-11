@@ -56,12 +56,7 @@
 							FP.update_icon()
 						update_inv_shoes()
 				//End bloody footprints
-
 				S.step_action()
-/mob/living/carbon/human/Moved()
-	. = ..()
-	if(buckled_mobs && buckled_mobs.len && riding_datum)
-		riding_datum.on_vehicle_move()
 
 /mob/living/carbon/human/Process_Spacemove(movement_dir = 0) //Temporary laziness thing. Will change to handles by species reee.
 	if(..())

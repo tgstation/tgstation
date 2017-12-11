@@ -33,7 +33,6 @@
 	name = "Golem Shell Construction"
 	desc = "Allows for the construction of a Golem Shell."
 	id = "golem"
-	req_tech = list("materials" = 12)
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 40000)
 	build_path = /obj/item/golem_shell
@@ -97,7 +96,7 @@
 	name = "Syndicate Bioweapon Scientist"
 	roundstart = FALSE
 	death = FALSE
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper_s"
 	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunately, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Continue your research as best you can, and try to keep a low profile. <font size=6><b>DON'T</b></font> abandon the base without good cause.</b> The base is rigged with explosives should the worst happen, do not let the base fall into enemy hands!</b>"
 	id_access_list = list(ACCESS_SYNDICATE)

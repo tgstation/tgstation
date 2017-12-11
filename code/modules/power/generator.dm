@@ -1,12 +1,3 @@
-// dummy generator object for testing
-
-/*/obj/machinery/power/generator/verb/set_amount(var/g as num)
-	set src in view(1)
-
-	gen_amount = g
-
-*/
-
 /obj/machinery/power/generator
 	name = "thermoelectric generator"
 	desc = "It's a high efficiency thermoelectric generator."

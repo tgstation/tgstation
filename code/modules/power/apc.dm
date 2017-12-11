@@ -49,6 +49,7 @@
 	max_integrity = 200
 	integrity_failure = 50
 	resistance_flags = FIRE_PROOF
+	interact_open = TRUE
 
 	var/lon_range = 1.5
 	var/area/area
@@ -88,6 +89,7 @@
 	var/auto_name = 0
 	var/failure_timer = 0
 	var/force_update = 0
+	var/emergency_lights = FALSE
 	var/update_state = -1
 	var/update_overlay = -1
 	var/icon_update_needed = FALSE
@@ -487,21 +489,7 @@
 			update_icon()
 
 	else if (W.GetID())			// trying to unlock the interface with an ID card
-		if(emagged)
-			to_chat(user, "<span class='warning'>The interface is broken!</span>")
-		else if(opened)
-			to_chat(user, "<span class='warning'>You must close the cover to swipe an ID card!</span>")
-		else if(panel_open)
-			to_chat(user, "<span class='warning'>You must close the panel!</span>")
-		else if(stat & (BROKEN|MAINT))
-			to_chat(user, "<span class='warning'>Nothing happens!</span>")
-		else
-			if(allowed(usr) && !wires.is_cut(WIRE_IDSCAN) && !malfhack)
-				locked = !locked
-				to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the APC interface.</span>")
-				update_icon()
-			else
-				to_chat(user, "<span class='warning'>Access denied.</span>")
+		togglelock(user)
 
 	else if (istype(W, /obj/item/stack/cable_coil) && opened)
 		var/turf/host_turf = get_turf(src)
@@ -672,6 +660,31 @@
 	else
 		return ..()
 
+/obj/machinery/power/apc/AltClick(mob/user)
+	..()
+	if(!issilicon(user) && (!user.canUseTopic(src, be_close=TRUE) || !isturf(loc)))
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+		return
+	else
+		togglelock(user)
+
+/obj/machinery/power/apc/proc/togglelock(mob/living/user)
+	if(emagged)
+		to_chat(user, "<span class='warning'>The interface is broken!</span>")
+	else if(opened)
+		to_chat(user, "<span class='warning'>You must close the cover to swipe an ID card!</span>")
+	else if(panel_open)
+		to_chat(user, "<span class='warning'>You must close the panel!</span>")
+	else if(stat & (BROKEN|MAINT))
+		to_chat(user, "<span class='warning'>Nothing happens!</span>")
+	else
+		if(allowed(usr) && !wires.is_cut(WIRE_IDSCAN) && !malfhack)
+			locked = !locked
+			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the APC interface.</span>")
+			update_icon()
+		else
+			to_chat(user, "<span class='warning'>Access denied.</span>")
+
 /obj/machinery/power/apc/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == "melee" && damage_amount < 15 && (!(stat & BROKEN) || malfai))
 		return 0
@@ -748,6 +761,7 @@
 		"coverLocked" = coverlocked,
 		"siliconUser" = user.has_unlimited_silicon_privilege || user.using_power_flow_console(),
 		"malfStatus" = get_malf_status(user),
+		"emergencyLights" = !emergency_lights,
 
 		"powerChannels" = list(
 			list(
@@ -887,6 +901,14 @@
 			failure_timer = 0
 			update_icon()
 			update()
+		if("emergency_lighting")
+			emergency_lights = !emergency_lights
+			for(var/area/A in area.related)
+				for(var/obj/machinery/light/L in A)
+					if(!initial(L.no_emergency)) //If there was an override set on creation, keep that override
+						L.no_emergency = emergency_lights
+						INVOKE_ASYNC(L, /obj/machinery/light/.proc/update, FALSE)
+					CHECK_TICK
 	return 1
 
 /obj/machinery/power/apc/proc/toggle_breaker()
@@ -1041,15 +1063,6 @@
 		force_update = 1
 		return
 
-	/*
-	if (equipment > 1) // off=0, off auto=1, on=2, on auto=3
-		use_power(src.equip_consumption, EQUIP)
-	if (lighting > 1) // off=0, off auto=1, on=2, on auto=3
-		use_power(src.light_consumption, LIGHT)
-	if (environ > 1) // off=0, off auto=1, on=2, on auto=3
-		use_power(src.environ_consumption, ENVIRON)
-
-	area.calc_lighting() */
 	lastused_light = area.usage(STATIC_LIGHT)
 	lastused_light += area.usage(LIGHT)
 	lastused_equip = area.usage(EQUIP)

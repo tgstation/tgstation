@@ -1,7 +1,7 @@
 /obj/machinery/dna_scannernew
 	name = "\improper DNA scanner"
 	desc = "It scans DNA structures."
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/cloning.dmi'
 	icon_state = "scanner"
 	density = TRUE
 	anchored = TRUE
@@ -84,8 +84,8 @@
 		open_machine()
 
 /obj/machinery/dna_scannernew/proc/locate_computer(type_)
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
-		var/C = locate(type_, get_step(src, dir))
+	for(var/direction in GLOB.cardinals)
+		var/C = locate(type_, get_step(src, direction))
 		if(C)
 			return C
 	return null

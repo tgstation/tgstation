@@ -1,11 +1,25 @@
 /*
 April 3rd, 2014 marks the day this machine changed the face of the kitchen on NTStation13
 God bless America.
-insert ascii eagle on american flag background here
+          ___----------___
+        _--                ----__
+       -                         ---_
+      -___    ____---_              --_
+  __---_ .-_--   _ O _-                -
+ -      -_-       ---                   -
+-   __---------___                       -
+- _----                                  -
+ -     -_                                 _
+ `      _-                                 _
+       _                           _-_  _-_ _
+      _-                   ____    -_  -   --
+      -   _-__   _    __---    -------       -
+     _- _-   -_-- -_--                        _
+     -_-                                       _
+    _-                                          _
+    -
 */
 
-// April 3rd, 2014 marks the day this machine changed the face of the kitchen on NTStation13
-// God bless America.
 /obj/machinery/deepfryer
 	name = "deep fryer"
 	desc = "Deep fried <i>everything</i>."
@@ -16,8 +30,12 @@ insert ascii eagle on american flag background here
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	container_type = OPENCONTAINER_1
-	var/obj/item/frying = null	//What's being fried RIGHT NOW?
+	var/obj/item/reagent_containers/food/snacks/deepfryholder/frying	//What's being fried RIGHT NOW?
 	var/cook_time = 0
+	var/oil_use = 0.05 //How much cooking oil is used per tick
+	var/fry_speed = 1 //How quickly we fry food
+	var/frying_fried //If the object has been fried; used for messages
+	var/frying_burnt //If the object has been burnt
 	var/static/list/deepfry_blacklisted_items = typecacheof(list(
 		/obj/item/screwdriver,
 		/obj/item/crowbar,
@@ -26,16 +44,27 @@ insert ascii eagle on american flag background here
 		/obj/item/device/multitool,
 		/obj/item/weldingtool,
 		/obj/item/reagent_containers/glass,
+		/obj/item/reagent_containers/syringe,
+		/obj/item/reagent_containers/food/condiment,
 		/obj/item/storage/part_replacer))
+	var/datum/looping_sound/deep_fryer/fry_loop
 
 /obj/machinery/deepfryer/Initialize()
 	. = ..()
 	create_reagents(50)
-	reagents.add_reagent("nutriment", 25)
+	reagents.add_reagent("cooking_oil", 25)
 	component_parts = list()
 	component_parts += new /obj/item/circuitboard/machine/deep_fryer(null)
 	component_parts += new /obj/item/stock_parts/micro_laser(null)
 	RefreshParts()
+	fry_loop = new(list(src), FALSE)
+
+/obj/machinery/deepfryer/RefreshParts()
+	var/oil_efficiency
+	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
+		oil_efficiency += M.rating
+	oil_use = initial(oil_use) - (oil_efficiency * 0.0095)
+	fry_speed = oil_efficiency
 
 /obj/machinery/deepfryer/examine()
 	..()
@@ -43,8 +72,16 @@ insert ascii eagle on american flag background here
 		to_chat(usr, "You can make out \a [frying] in the oil.")
 
 /obj/machinery/deepfryer/attackby(obj/item/I, mob/user)
-	if(!reagents.total_volume)
-		to_chat(user, "There's nothing to fry with in [src]!")
+	if(istype(I, /obj/item/reagent_containers/pill))
+		if(!reagents.total_volume)
+			to_chat(user, "<span class='warning'>There's nothing to dissolve [I] in!</span>")
+			return
+		user.visible_message("<span class='notice'>[user] drops [I] into [src].</span>", "<span class='notice'>You dissolve [I] in [src].</span>")
+		I.reagents.trans_to(src, I.reagents.total_volume)
+		qdel(I)
+		return
+	if(!reagents.has_reagent("cooking_oil"))
+		to_chat(user, "<span class='warning'>[src] has no cooking oil to fry with!</span>")
 		return
 	if(istype(I, /obj/item/reagent_containers/food/snacks/deepfryholder))
 		to_chat(user, "<span class='userdanger'>Your cooking skills are not up to the legendary Doublefry technique.</span>")
@@ -60,32 +97,43 @@ insert ascii eagle on american flag background here
 			. = ..()
 		else if(!frying && user.transferItemToLoc(I, src))
 			to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
-			frying = I
+			frying = new/obj/item/reagent_containers/food/snacks/deepfryholder(src, I)
 			icon_state = "fryer_on"
+			fry_loop.start()
 
 /obj/machinery/deepfryer/process()
 	..()
-	if(!reagents.total_volume)
+	var/datum/reagent/consumable/cooking_oil/C = reagents.has_reagent("cooking_oil")
+	if(!C)
 		return
+	reagents.chem_temp = C.fry_temperature
 	if(frying)
-		cook_time++
-		if(cook_time == 30)
+		reagents.trans_to(frying, oil_use, multiplier = fry_speed * 3) //Fried foods gain more of the reagent thanks to space magic
+		cook_time += fry_speed
+		if(cook_time >= 30 && !frying_fried)
+			frying_fried = TRUE //frying... frying... fried
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
-			visible_message("[src] dings!")
-		else if (cook_time == 60)
-			visible_message("[src] emits an acrid smell!")
+			audible_message("<span class='notice'>[src] dings!</span>")
+		else if (cook_time >= 60 && !frying_burnt)
+			frying_burnt = TRUE
+			visible_message("<span class='warning'>[src] emits an acrid smell!</span>")
 
+
+/obj/machinery/deepfryer/attack_ai(mob/user)
+	return
 
 /obj/machinery/deepfryer/attack_hand(mob/user)
 	if(frying)
 		if(frying.loc == src)
 			to_chat(user, "<span class='notice'>You eject [frying] from [src].</span>")
-			var/obj/item/reagent_containers/food/snacks/deepfryholder/S = new(get_turf(src))
-			S.fry(frying, reagents, cook_time)
+			frying.fry(cook_time)
 			icon_state = "fryer_off"
-			user.put_in_hands(S)
+			user.put_in_hands(frying)
 			frying = null
 			cook_time = 0
+			frying_fried = FALSE
+			frying_burnt = FALSE
+			fry_loop.stop()
 			return
 	else if(user.pulling && user.a_intent == "grab" && iscarbon(user.pulling) && reagents.total_volume)
 		if(user.grab_state < GRAB_AGGRESSIVE)
@@ -94,7 +142,7 @@ insert ascii eagle on american flag background here
 		var/mob/living/carbon/C = user.pulling
 		user.visible_message("<span class = 'danger'>[user] dunks [C]'s face in [src]!</span>")
 		reagents.reaction(C, TOUCH)
-		C.adjustFireLoss(reagents.total_volume)
+		C.apply_damage(min(30, reagents.total_volume), BURN, "head")
 		reagents.remove_any((reagents.total_volume/2))
 		C.Knockdown(60)
 		user.changeNext_move(CLICK_CD_MELEE)

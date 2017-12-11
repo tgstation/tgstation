@@ -22,7 +22,7 @@
 	var/busy = FALSE
 	var/prod_coeff = 1
 	var/datum/design/being_built
-	var/datum/research/files
+	var/datum/techweb/stored_research
 	var/selected_category
 	var/screen = 1
 	var/list/categories = list(
@@ -35,7 +35,7 @@
 /obj/machinery/limbgrower/Initialize()
 	. = ..()
 	create_reagents(0)
-	files = new /datum/research/limbgrower(src)
+	stored_research = new /datum/techweb/specialized/autounlocking/limbgrower
 
 /obj/machinery/limbgrower/interact(mob/user)
 	if(!is_operational())
@@ -95,7 +95,7 @@
 
 			/////////////////
 			//href protection
-			being_built = files.FindDesignByID(href_list["make"]) //check if it's a valid design
+			being_built = stored_research.isDesignResearchedID(href_list["make"]) //check if it's a valid design
 			if(!being_built)
 				return
 
@@ -180,8 +180,8 @@
 	dat += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3><br>"
 	dat += materials_printout()
 
-	for(var/v in files.known_designs)
-		var/datum/design/D = files.known_designs[v]
+	for(var/v in stored_research.researched_designs)
+		var/datum/design/D = stored_research.researched_designs[v]
 		if(!(selected_category in D.category))
 			continue
 		if(disabled || !can_build(D))
@@ -222,8 +222,8 @@
 /obj/machinery/limbgrower/emag_act(mob/user)
 	if(emagged)
 		return
-	for(var/datum/design/D in files.possible_designs)
+	for(var/datum/design/D in SSresearch.techweb_designs)
 		if((D.build_type & LIMBGROWER) && ("special" in D.category))
-			files.AddDesign2Known(D)
+			stored_research.add_design(D)
 	to_chat(user, "<span class='warning'>A warning flashes onto the screen, stating that safety overrides have been deactivated!</span>")
 	emagged = TRUE

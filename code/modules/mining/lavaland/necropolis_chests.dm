@@ -105,9 +105,9 @@
 	modkit_design = /datum/design/unique_modkit/bounty
 
 /datum/design/unique_modkit
-	category = list("Mining Designs", "Cyborg Upgrade Modules")
-	req_tech = list("materials" = 12) //can't be normally obtained
+	category = list("Mining Designs", "Cyborg Upgrade Modules") //can't be normally obtained
 	build_type = PROTOLATHE | MECHFAB
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO
 
 /datum/design/unique_modkit/offensive_turf_aoe
 	name = "Kinetic Accelerator Offensive Mining Explosion Mod"
@@ -160,7 +160,7 @@
 		user.sight |= SEE_MOBS
 		icon_state = "lantern"
 		wisp.orbit(user, 20)
-		SSblackbox.add_details("wisp_lantern","Freed")
+		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Freed")
 
 	else
 		to_chat(user, "<span class='notice'>You return the wisp to the lantern.</span>")
@@ -175,7 +175,7 @@
 		wisp.stop_orbit()
 		wisp.loc = src
 		icon_state = "lantern-blue"
-		SSblackbox.add_details("wisp_lantern","Returned")
+		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Returned")
 
 /obj/item/device/wisp_lantern/Initialize()
 	. = ..()
@@ -217,7 +217,7 @@
 	linked.teleporting = TRUE
 	var/turf/T = get_turf(src)
 	new /obj/effect/temp_visual/warp_cube(T, user, teleport_color, TRUE)
-	SSblackbox.add_details("warp_cube","[src.type]")
+	SSblackbox.record_feedback("tally", "warp_cube", 1, type)
 	new /obj/effect/temp_visual/warp_cube(get_turf(linked), user, linked.teleport_color, FALSE)
 	var/obj/effect/warp_cube/link_holder = new /obj/effect/warp_cube(T)
 	user.forceMove(link_holder) //mess around with loc so the user can't wander around
@@ -334,7 +334,7 @@
 
 /obj/item/device/immortality_talisman/attack_self(mob/user)
 	if(cooldown < world.time)
-		SSblackbox.add_details("immortality_talisman","Activated") // usage
+		SSblackbox.record_feedback("amount", "immortality_talisman_uses", 1)
 		cooldown = world.time + 600
 		user.visible_message("<span class='danger'>[user] vanishes from reality, leaving a hole in [user.p_their()] place!</span>")
 		var/obj/effect/immortality_talisman/Z = new(get_turf(src.loc))
@@ -366,7 +366,7 @@
 	return
 
 /obj/effect/immortality_talisman/singularity_pull()
-	return 0
+	return
 
 /obj/effect/immortality_talisman/Destroy(force)
 	if(!can_destroy && !force)
@@ -469,16 +469,19 @@
 
 //Boat
 
-/obj/vehicle/lavaboat
+/obj/vehicle/ridden/lavaboat
 	name = "lava boat"
 	desc = "A boat used for traversing lava."
 	icon_state = "goliath_boat"
 	icon = 'icons/obj/lavaland/dragonboat.dmi'
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
+	can_buckle = TRUE
 
-/obj/vehicle/lavaboat/buckle_mob(mob/living/M, force = 0, check_loc = 1)
+/obj/vehicle/ridden/lavaboat/Initialize()
 	. = ..()
-	riding_datum = new/datum/riding/boat
+	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
+	D.keytype = /obj/item/oar
+	D.allowed_turf_typecache = typecacheof(/turf/open/lava)
 
 /obj/item/oar
 	name = "oar"
@@ -501,7 +504,7 @@
 
 /datum/crafting_recipe/boat
 	name = "goliath hide boat"
-	result = /obj/vehicle/lavaboat
+	result = /obj/vehicle/ridden/lavaboat
 	reqs = list(/obj/item/stack/sheet/animalhide/goliath_hide = 3)
 	time = 50
 	category = CAT_PRIMAL
@@ -518,17 +521,20 @@
 /obj/item/ship_in_a_bottle/attack_self(mob/user)
 	to_chat(user, "You're not sure how they get the ships in these things, but you're pretty sure you know how to get it out.")
 	playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, 1)
-	new /obj/vehicle/lavaboat/dragon(get_turf(src))
+	new /obj/vehicle/ridden/lavaboat/dragon(get_turf(src))
 	qdel(src)
 
-/obj/vehicle/lavaboat/dragon
+/obj/vehicle/ridden/lavaboat/dragon
 	name = "mysterious boat"
 	desc = "This boat moves where you will it, without the need for an oar."
 	icon_state = "dragon_boat"
 
-/obj/vehicle/lavaboat/dragon/buckle_mob(mob/living/M, force = 0, check_loc = 1)
-	..()
-	riding_datum = new/datum/riding/boat/dragon
+/obj/vehicle/ridden/lavaboat/dragon/Initialize()
+	. = ..()
+	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
+	D.vehicle_move_delay = 1
+	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(1, 2), TEXT_SOUTH = list(1, 2), TEXT_EAST = list(1, 2), TEXT_WEST = list( 1, 2)))
+	D.keytype = null
 
 //Potion of Flight
 /obj/item/reagent_containers/glass/bottle/potion
@@ -579,17 +585,18 @@
 	var/ladder_x = T.x
 	var/ladder_y = T.y
 	to_chat(user, "<span class='notice'>You unfold the ladder. It extends much farther than you were expecting.</span>")
+	var/last_ladder = null
 	for(var/i in 1 to world.maxz)
-		if(i == ZLEVEL_CENTCOM || i == ZLEVEL_TRANSIT)
+		if(i == ZLEVEL_CENTCOM || i == ZLEVEL_TRANSIT || i == ZLEVEL_CITYOFCOGS)
 			continue
 		var/turf/T2 = locate(ladder_x, ladder_y, i)
-		new /obj/structure/ladder/unbreakable/jacob(T2)
+		last_ladder = new /obj/structure/ladder/unbreakable/jacob(T2, null, last_ladder)
 	qdel(src)
 
+// Inherit from unbreakable but don't set ID, to suppress the default Z linkage
 /obj/structure/ladder/unbreakable/jacob
 	name = "jacob's ladder"
 	desc = "An indestructible celestial ladder that violates the laws of physics."
-	auto_connect = TRUE
 
 ///Bosses
 
@@ -1287,5 +1294,3 @@
 	for(var/t in RANGE_TURFS(1, T))
 		var/obj/effect/temp_visual/hierophant/blast/B = new(t, user, friendly_fire_check)
 		B.damage = 15 //keeps monster damage boost due to lower damage
-
-

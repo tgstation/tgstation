@@ -10,6 +10,8 @@
 
 #define isatom(A) (isloc(A))
 
+#define isweakref(D) (istype(D, /datum/weakref))
+
 //Turfs
 //#define isturf(A) (istype(A, /turf)) This is actually a byond built-in. Added here for completeness sake.
 
@@ -56,6 +58,9 @@
 #define isshadowperson(A) (is_species(A, /datum/species/shadow))
 #define iszombie(A) (is_species(A, /datum/species/zombie))
 #define ishumanbasic(A) (is_species(A, /datum/species/human))
+
+//why arent catpeople a subspecies
+#define iscatperson(A) (ishumanbasic(A) && ( A.dna.features["ears"] == "Cat" || A.dna.features["human_tail"] == "Cat") )
 
 //more carbon mobs
 #define ismonkey(A) (istype(A, /mob/living/carbon/monkey))
@@ -137,6 +142,8 @@
 
 #define iscameramob(A) (istype(A, /mob/camera))
 
+#define iseminence(A) (istype(A, /mob/camera/eminence))
+
 //Objects
 #define isobj(A) istype(A, /obj) //override the byond proc because it returns true on children of /atom/movable that aren't objs
 
@@ -182,3 +189,5 @@ GLOBAL_LIST_INIT(glass_sheet_types, typecacheof(list(
 	/obj/item/stack/sheet/plasmarglass)))
 
 #define is_glass_sheet(O) (is_type_in_typecache(O, GLOB.glass_sheet_types))
+
+#define isblobmonster(O) (istype(O, /mob/living/simple_animal/hostile/blob))

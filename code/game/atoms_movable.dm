@@ -26,6 +26,7 @@
 	appearance_flags = TILE_BOUND|PIXEL_SCALE
 	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
 	var/floating = FALSE
+	var/movement_type = GROUND		//Incase you have multiple types, you automatically use the most useful one. IE: Skating on ice, flippers on water, flying over chasm/space, etc.
 
 /atom/movable/vv_edit_var(var_name, var_value)
 	var/static/list/banned_edits = list("step_x", "step_y", "step_size")
@@ -62,7 +63,7 @@
 
 /atom/movable/Move(atom/newloc, direct = 0)
 	if(!loc || !newloc)
-		return 0
+		return FALSE
 	var/atom/oldloc = loc
 
 	if(loc != newloc)
@@ -113,7 +114,7 @@
 	last_move = direct
 	setDir(direct)
 	if(. && has_buckled_mobs() && !handle_buckled_mob_movement(loc,direct)) //movement failed due to buckled mob(s)
-		. = 0
+		return FALSE
 
 //Called after a successful Move(). By this point, we've already moved
 /atom/movable/proc/Moved(atom/OldLoc, Dir, Forced = FALSE)
@@ -324,9 +325,6 @@
 	inertia_last_loc = loc
 	SSspacedrift.processing[src] = src
 	return 1
-
-/atom/movable/proc/checkpass(passflag)
-	return pass_flags&passflag
 
 /atom/movable/proc/throw_impact(atom/hit_atom, throwingdatum)
 	set waitfor = 0

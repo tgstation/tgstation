@@ -233,6 +233,8 @@
 		return 0
 
 	var/pressure = air_contents.return_pressure()
+	var/temperature = air_contents.return_pressure()
+
 	if(pressure > TANK_FRAGMENT_PRESSURE)
 		if(!istype(src.loc, /obj/item/device/transfer_valve))
 			message_admins("Explosive tank rupture! Last key to touch the tank was [src.fingerprintslast].")
@@ -252,7 +254,7 @@
 		else
 			qdel(src)
 
-	else if(pressure > TANK_RUPTURE_PRESSURE)
+	else if(pressure > TANK_RUPTURE_PRESSURE || temperature > TANK_MELT_TEMPERATURE)
 		if(integrity <= 0)
 			var/turf/T = get_turf(src)
 			if(!T)

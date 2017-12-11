@@ -289,7 +289,6 @@
 	throw_speed = 3
 	throw_range = 6
 	materials = list(MAT_METAL=12000)
-	origin_tech = "engineering=3;combat=2"
 	hitsound = 'sound/weapons/genhit.ogg'
 	attack_verb = list("stubbed", "poked")
 	resistance_flags = FIRE_PROOF
@@ -398,7 +397,7 @@
 	icon_state = "ectoplasm"
 
 /obj/item/ectoplasm/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is inhaling [src]! It looks like [user.p_theyre()] trying to visit the astral plane.</span>")
+	user.visible_message("<span class='suicide'>[user] is inhaling [src]! It looks like [user.p_theyre()] trying to visit the astral plane!</span>")
 	return (OXYLOSS)
 
 /obj/item/mounted_chainsaw
@@ -455,7 +454,6 @@
 	name = "liz o' nine tails"
 	desc = "A whip fashioned from the severed tails of lizards."
 	icon_state = "tailwhip"
-	origin_tech = "engineering=3;combat=3;biotech=3"
 	needs_permit = 0
 
 /obj/item/melee/chainofcommand/tailwhip/kitty
@@ -474,7 +472,7 @@
 	attack_verb = list("smacked", "whacked", "slammed", "smashed")
 
 /obj/item/melee/skateboard/attack_self(mob/user)
-	new /obj/vehicle/scooter/skateboard(get_turf(user))
+	new /obj/vehicle/ridden/scooter/skateboard(get_turf(user))
 	qdel(src)
 
 /obj/item/melee/baseball_bat

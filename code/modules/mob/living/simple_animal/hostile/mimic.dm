@@ -27,7 +27,7 @@
 
 	faction = list("mimic")
 	move_to_delay = 9
-	gold_core_spawnable = 1
+	gold_core_spawnable = HOSTILE_SPAWN
 	del_on_death = 1
 
 // Aggro when you try to open them. Will also pickup loot when spawns and drop it when dies.
@@ -45,7 +45,7 @@
 		for(var/obj/item/I in loc)
 			I.loc = src
 
-/mob/living/simple_animal/hostile/mimic/crate/DestroySurroundings()
+/mob/living/simple_animal/hostile/mimic/crate/DestroyPathToTarget()
 	..()
 	if(prob(90))
 		icon_state = "[initial(icon_state)]open"
@@ -101,7 +101,7 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 	var/destroy_objects = 0
 	var/knockdown_people = 0
 	var/static/mutable_appearance/googly_eyes = mutable_appearance('icons/mob/mob.dmi', "googly_eyes")
-	gold_core_spawnable = 0
+	gold_core_spawnable = NO_SPAWN
 
 /mob/living/simple_animal/hostile/mimic/copy/Initialize(mapload, obj/copy, mob/living/creator, destroy_original = 0)
 	. = ..()

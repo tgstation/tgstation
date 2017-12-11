@@ -32,7 +32,7 @@
 
 /datum/server_tools_command/ahelp
 	name = "ahelp"
-	help_text = "<ckey> <message|ticket <close|resolve|icissue|reject|reopen <ticket #>|list>>"
+	help_text = "<ckey|ticket #> <message|ticket <close|resolve|icissue|reject|reopen <ticket #>|list>>"
 	required_parameters = 2
 	admin_only = TRUE
 
@@ -40,6 +40,13 @@
 	var/list/all_params = splittext(params, " ")
 	var/target = all_params[1]
 	all_params.Cut(1, 2)
+	var/id = text2num(target)
+	if(id != null)
+		var/datum/admin_help/AH = GLOB.ahelp_tickets.TicketByID(id)
+		if(AH)
+			target = AH.initiator_ckey
+		else
+			return "Ticket #[id] not found!"
 	return IrcPm(target, all_params.Join(" "), sender)
 
 /datum/server_tools_command/namecheck

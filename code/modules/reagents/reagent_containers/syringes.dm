@@ -1,6 +1,3 @@
-#define SYRINGE_DRAW 0
-#define SYRINGE_INJECT 1
-
 /obj/item/reagent_containers/syringe
 	name = "syringe"
 	desc = "A syringe that can hold up to 15 units."
@@ -24,7 +21,7 @@
 		mode = SYRINGE_INJECT
 		update_icon()
 
-/obj/item/reagent_containers/syringe/on_reagent_change()
+/obj/item/reagent_containers/syringe/on_reagent_change(changetype)
 	update_icon()
 
 /obj/item/reagent_containers/syringe/pickup(mob/user)
@@ -210,6 +207,11 @@
 	desc = "Contains calomel."
 	list_reagents = list("calomel" = 15)
 
+/obj/item/reagent_containers/syringe/plasma
+	name = "syringe (plasma)"
+	desc = "Contains plasma."
+	list_reagents = list("plasma" = 15)
+
 /obj/item/reagent_containers/syringe/lethal
 	name = "lethal injection syringe"
 	desc = "A syringe used for lethal injections. It can hold up to 50 units."
@@ -241,13 +243,11 @@
 	desc = "An advanced syringe that can hold 60 units of chemicals."
 	amount_per_transfer_from_this = 20
 	volume = 60
-	origin_tech = "bluespace=4;materials=4;biotech=4"
 
 /obj/item/reagent_containers/syringe/noreact
 	name = "cryo syringe"
 	desc = "An advanced syringe that stops reagents inside from reacting. It can hold up to 20 units."
 	volume = 20
-	origin_tech = "materials=3;engineering=3"
 
 /obj/item/reagent_containers/syringe/noreact/Initialize()
 	. = ..()
@@ -258,4 +258,3 @@
 	desc = "A diamond-tipped syringe that pierces armor when launched at high velocity. It can hold up to 10 units."
 	volume = 10
 	proj_piercing = 1
-	origin_tech = "combat=3;materials=4;engineering=5"

@@ -45,7 +45,7 @@
 			WARNING("Wave name of [wave_name] not recognised.")
 			kill()
 
-/datum/round_event/meteor_wave/announce()
+/datum/round_event/meteor_wave/announce(fake)
 	priority_announce("Meteors have been detected on collision course with the station.", "Meteor Alert", 'sound/ai/meteors.ogg')
 
 /datum/round_event/meteor_wave/tick()

@@ -1,7 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "The captain's winter coat can now hold a flashlight."
-  - bugfix: "The captain's and security winter coats can now hold internals tanks."
-  - tweak: "All winter coats can now hold toys, lighters, and cigarettes."
-  - tweak: "The captain's hardsuit can now hold pepperspray."

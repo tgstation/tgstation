@@ -16,6 +16,7 @@
 	var/datum/atom_hud/data/human/medical/advanced/medhud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	medhud.add_to_hud(src)
 	faction += "[REF(src)]"
+	GLOB.mob_living_list += src
 
 
 /mob/living/prepare_huds()
@@ -38,7 +39,6 @@
 		ranged_ability.remove_ranged_ability(src)
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
-	QDEL_NULL(riding_datum)
 
 	for(var/mob/living/simple_animal/drone/D in GLOB.player_list)
 		for(var/image/I in staticOverlays)
@@ -47,6 +47,7 @@
 			qdel(I)
 	staticOverlays.len = 0
 	remove_from_all_data_huds()
+	GLOB.mob_living_list -= src
 
 	return ..()
 
@@ -368,7 +369,7 @@
 		fully_heal(admin_revive)
 	if(stat == DEAD && can_be_revived()) //in some cases you can't revive (e.g. no brain)
 		GLOB.dead_mob_list -= src
-		GLOB.living_mob_list += src
+		GLOB.alive_mob_list += src
 		suiciding = 0
 		stat = UNCONSCIOUS //the mob starts unconscious,
 		blind_eyes(1)
@@ -471,7 +472,6 @@
 		s_active.close(src)
 
 	if(lying && !buckled && prob(getBruteLoss()*200/maxHealth))
-
 		makeTrail(newloc, T, old_direction)
 
 /mob/living/movement_delay(ignorewalk = 0)
@@ -479,21 +479,21 @@
 	if(isopenturf(loc) && !is_flying())
 		var/turf/open/T = loc
 		. += T.slowdown
-	var/static/config_run_delay
-	var/static/config_walk_delay
+	var/static/datum/config_entry/number/run_delay/config_run_delay
+	var/static/datum/config_entry/number/walk_delay/config_walk_delay
 	if(isnull(config_run_delay))
 		config_run_delay = CONFIG_GET(number/run_delay)
 		config_walk_delay = CONFIG_GET(number/walk_delay)
 	if(ignorewalk)
-		. += config_run_delay
+		. += config_run_delay.value_cache
 	else
 		switch(m_intent)
 			if(MOVE_INTENT_RUN)
 				if(drowsyness > 0)
 					. += 6
-				. += config_run_delay
+				. += config_run_delay.value_cache
 			if(MOVE_INTENT_WALK)
-				. += config_walk_delay
+				. += config_walk_delay.value_cache
 
 /mob/living/proc/makeTrail(turf/target_turf, turf/start, direction)
 	if(!has_gravity())
@@ -942,11 +942,6 @@
 						"[C] leaps out of [src]'s way!")]</span>")
 	C.Knockdown(40)
 
-/mob/living/post_buckle_mob(mob/living/M)
-	if(riding_datum)
-		riding_datum.handle_vehicle_offsets()
-		riding_datum.handle_vehicle_layer()
-
 /mob/living/ConveyorMove()
 	if((movement_type & FLYING) && !stat)
 		return
@@ -1009,3 +1004,14 @@
 /mob/living/proc/add_abilities_to_panel()
 	for(var/obj/effect/proc_holder/A in abilities)
 		statpanel("[A.panel]",A.get_panel_text(),A)
+
+/mob/living/lingcheck()
+	if(mind)
+		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
+		if(changeling)
+			if(changeling.changeling_speak)
+				return LINGHIVE_LING
+			return LINGHIVE_OUTSIDER
+	if(mind && mind.linglink)
+		return LINGHIVE_LINK
+	return LINGHIVE_NONE

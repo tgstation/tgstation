@@ -83,10 +83,10 @@
 	var/obj/machinery/dna_scannernew/scannerf = null
 
 	// Loop through every direction
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
+	for(var/direction in GLOB.cardinals)
 
 		// Try to find a scanner in that direction
-		scannerf = locate(/obj/machinery/dna_scannernew, get_step(src, dir))
+		scannerf = locate(/obj/machinery/dna_scannernew, get_step(src, direction))
 
 		// If found and operational, return the scanner
 		if (!isnull(scannerf) && scannerf.is_operational())
@@ -98,10 +98,9 @@
 /obj/machinery/computer/cloning/proc/findcloner()
 	var/obj/machinery/clonepod/podf = null
 
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
+	for(var/direction in GLOB.cardinals)
 
-		podf = locate(/obj/machinery/clonepod, get_step(src, dir))
-
+		podf = locate(/obj/machinery/clonepod, get_step(src, direction))
 		if (!isnull(podf) && podf.is_operational())
 			AttachCloner(podf)
 

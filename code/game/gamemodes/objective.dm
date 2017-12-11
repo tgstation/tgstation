@@ -194,10 +194,8 @@
 /datum/objective/debrain/check_completion()
 	if(!target)//If it's a free objective.
 		return TRUE
-
 	if(!target.current || !isbrain(target.current))
 		return FALSE
-
 	var/atom/A = target.current
 	var/list/datum/mind/owners = get_owners()
 
@@ -508,12 +506,12 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/download
 
 /datum/objective/download/proc/gen_amount_goal()
-	target_amount = rand(10,20)
-	explanation_text = "Download [target_amount] research level\s."
+	target_amount = rand(20,40)
+	explanation_text = "Download [target_amount] research node\s."
 	return target_amount
 
 /datum/objective/download/check_completion()
-	var/list/current_tech = list()
+	var/datum/techweb/checking = new
 	var/list/datum/mind/owners = get_owners()
 	for(var/datum/mind/owner in owners)
 		if(ismob(owner.current))
@@ -522,21 +520,11 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 				var/mob/living/carbon/human/H = M
 				if(H && (H.stat != DEAD) && istype(H.wear_suit, /obj/item/clothing/suit/space/space_ninja))
 					var/obj/item/clothing/suit/space/space_ninja/S = H.wear_suit
-					for(var/datum/tech/T in S.stored_research)
-						current_tech[T.id] = T.level? T.level : 0
+					S.stored_research.copy_research_to(checking)
 			var/list/otherwise = M.GetAllContents()
 			for(var/obj/item/disk/tech_disk/TD in otherwise)
-				for(var/datum/tech/T in TD.tech_stored)
-					if(!T.id || !T.level)
-						continue
-					else if(!current_tech[T.id])
-						current_tech[T.id] = T.level
-					else if(T.level > current_tech[T.id])
-						current_tech[T.id] = T.level
-	var/total = 0
-	for(var/i in current_tech)
-		total += current_tech[i]
-	return total >= target_amount
+				TD.stored_research.copy_research_to(checking)
+	return checking.researched_nodes.len >= target
 
 /datum/objective/capture
 
@@ -787,7 +775,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/changeling_team_objective/impersonate_department/check_completion()
 	if(!department_real_names.len || !department_minds.len)
-		return 1 //Something fucked up, give them a win
+		return TRUE //Something fucked up, give them a win
 
 	var/list/check_names = department_real_names.Copy()
 
@@ -799,14 +787,14 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		if(M.current)
 			var/turf/mloc = get_turf(M.current)
 			if(mloc.onCentCom() && (M.current.stat != DEAD))
-				return 0 //A Non-ling living target got to centcom, fail
+				return FALSE //A Non-ling living target got to centcom, fail
 
 	//Check each staff member has been replaced, by cross referencing changeling minds, changeling current dna, the staff minds and their original DNA names
 	var/success = 0
 	changelings:
 		for(var/datum/mind/changeling in get_antagonists(/datum/antagonist/changeling,TRUE))
 			if(success >= department_minds.len) //We did it, stop here!
-				return 1
+				return TRUE
 			if(ishuman(changeling.current))
 				var/mob/living/carbon/human/H = changeling.current
 				var/turf/cloc = get_turf(changeling.current)
@@ -818,8 +806,8 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 							continue changelings
 
 	if(success >= department_minds.len)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 

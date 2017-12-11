@@ -22,8 +22,8 @@
 	var/multiload = 1
 	var/start_empty = 0
 
-/obj/item/ammo_box/New()
-	..()
+/obj/item/ammo_box/Initialize()
+	. = ..()
 	if(!start_empty)
 		for(var/i = 1, i <= max_ammo, i++)
 			stored_ammo += new ammo_type(src)

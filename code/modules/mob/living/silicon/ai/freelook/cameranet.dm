@@ -94,8 +94,6 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 /datum/cameranet/proc/updatePortableCamera(obj/machinery/camera/c)
 	if(c.can_use())
 		majorChunkChange(c, 1)
-	//else
-	//	majorChunkChange(c, 0)
 
 // Never access this proc directly!!!!
 // This will update the chunk and all the surrounding chunks.
@@ -149,13 +147,3 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 		statclick = new/obj/effect/statclick/debug(null, "Initializing...", src)
 
 	stat(name, statclick.update("Cameras: [GLOB.cameranet.cameras.len] | Chunks: [GLOB.cameranet.chunks.len]"))
-
-// Debug verb for VVing the chunk that the turf is in.
-/*
-/turf/verb/view_chunk()
-	set src in world
-
-	if(cameranet.chunkGenerated(x, y, z))
-		var/datum/camerachunk/chunk = cameranet.getCameraChunk(x, y, z)
-		usr.client.debug_variables(chunk)
-*/

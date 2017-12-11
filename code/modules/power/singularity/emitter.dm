@@ -152,11 +152,6 @@
 
 
 /obj/machinery/power/emitter/emp_act(severity)//Emitters are hardened but still might have issues
-//	add_load(1000)
-/*	if((severity == 1)&&prob(1)&&prob(1))
-		if(src.active)
-			src.active = 0
-			src.use_power = IDLE_POWER_USE	*/
 	return 1
 
 
@@ -340,7 +335,7 @@
 		buckled_mob.pixel_x = 0
 		buckled_mob.pixel_y = 0
 		if(buckled_mob.client)
-			buckled_mob.client.change_view(world.view)
+			buckled_mob.client.change_view(CONFIG_GET(string/default_view))
 	auto.Remove(buckled_mob)
 	. = ..()
 

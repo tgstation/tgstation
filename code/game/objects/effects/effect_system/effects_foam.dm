@@ -236,7 +236,7 @@
 
 /obj/structure/foamedmetal/Move()
 	var/turf/T = loc
-	..()
+	. = ..()
 	move_update_air(T)
 
 /obj/structure/foamedmetal/attack_paw(mob/user)
@@ -295,7 +295,7 @@
 			Item.extinguish()
 
 /obj/structure/foamedmetal/resin/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && mover.checkpass(PASSGLASS))
+	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return TRUE
 	. = ..()
 

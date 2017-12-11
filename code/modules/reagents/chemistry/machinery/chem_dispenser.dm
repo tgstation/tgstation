@@ -59,6 +59,11 @@
 	recharge()
 	dispensable_reagents = sortList(dispensable_reagents)
 
+/obj/machinery/chem_dispenser/Destroy()
+	QDEL_NULL(beaker)
+	QDEL_NULL(cell)
+	return ..()
+
 /obj/machinery/chem_dispenser/process()
 
 	if(recharged < 0)
@@ -170,7 +175,7 @@
 				. = TRUE
 		if("eject")
 			if(beaker)
-				beaker.forceMove(loc)
+				beaker.forceMove(drop_location())
 				beaker = null
 				cut_overlays()
 				. = TRUE
@@ -301,8 +306,9 @@
 
 /obj/machinery/chem_dispenser/constructable/on_deconstruction()
 	if(beaker)
-		beaker.loc = loc
+		beaker.forceMove(drop_location())
 		beaker = null
+	return ..()
 
 /obj/machinery/chem_dispenser/drinks
 	name = "soda dispenser"

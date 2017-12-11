@@ -14,7 +14,7 @@
 	var/enter_delay = 0
 
 /obj/structure/transit_tube/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && mover.checkpass(PASSGLASS))
+	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return 1
 	return !density
 

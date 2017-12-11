@@ -30,12 +30,12 @@
 		for(var/turf/open/floor/T in orange(1,xmas))
 			for(var/i=1,i<=rand(1,5),i++)
 				new /obj/item/a_gift(T)
-	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in GLOB.mob_list)
+	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in GLOB.mob_living_list)
 		Ian.place_on_head(new /obj/item/clothing/head/helmet/space/santahat(Ian))
 	for(var/obj/machinery/computer/security/telescreen/entertainment/Monitor in GLOB.machines)
 		Monitor.icon_state = "entertainment_xmas"
 
-/datum/round_event/presents/announce()
+/datum/round_event/presents/announce(fake)
 	priority_announce("Ho Ho Ho, Merry Xmas!", "Unknown Transmission")
 
 
@@ -105,7 +105,7 @@
 /datum/round_event/santa
 	var/mob/living/carbon/human/santa //who is our santa?
 
-/datum/round_event/santa/announce()
+/datum/round_event/santa/announce(fake)
 	priority_announce("Santa is coming to town!", "Unknown Transmission")
 
 /datum/round_event/santa/start()

@@ -110,6 +110,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/exp
 	var/list/menuoptions
 
+	var/action_buttons_screen_locs = list()
+
 /datum/preferences/New(client/C)
 	parent = C
 	custom_names["human"] = random_unique_name()
@@ -165,8 +167,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						S["real_name"] >> name
 						if(!name)
 							name = "Character[i]"
-						/*if(i!=1)
-							dat += " | " */
 						dat += "<a style='white-space:nowrap;' href='?_src_=prefs;preference=changeslot;num=[i];' [i == default_slot ? "class='linkOn'" : ""]>[name]</a> "
 					dat += "</center>"
 

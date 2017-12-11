@@ -77,7 +77,7 @@
 	name = "timeless prison"
 	desc = "Although this stasis pod looks medicinal, it seems as though it's meant to preserve something for a very long time."
 	mob_name = "a penitent exile"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	roundstart = FALSE
 	death = FALSE
@@ -169,7 +169,8 @@
 			return
 		log_game("[user.ckey] golem-swapped into [src]")
 		user.visible_message("<span class='notice'>A faint light leaves [user], moving to [src] and animating it!</span>","<span class='notice'>You leave your old body behind, and transfer into [src]!</span>")
-		create(ckey = user.ckey, flavour = FALSE, name = user.real_name)
+		show_flavour = FALSE
+		create(ckey = user.ckey,name = user.real_name)
 		user.death()
 		return
 	..()
@@ -259,7 +260,7 @@
 	name = "prisoner containment sleeper"
 	desc = "A sleeper designed to put its occupant into a deep coma, unbreakable until the sleeper turns off. This one's glass is cracked and you can see a pale, sleeping face staring out."
 	mob_name = "an escaped prisoner"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper_s"
 	outfit = /datum/outfit/lavalandprisoner
 	roundstart = FALSE
@@ -296,7 +297,7 @@
 	name = "staff sleeper"
 	desc = "A sleeper designed for long-term stasis between guest visits."
 	mob_name = "hotel staff member"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper_s"
 	objectives = "Cater to visiting guests with your fellow staff. Do not leave your assigned hotel and always remember: The customer is always right!"
 	death = FALSE
@@ -393,7 +394,7 @@
 	name = "Syndicate Operative"
 	roundstart = FALSE
 	death = FALSE
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper_s"
 	id_access_list = list(ACCESS_SYNDICATE)
 	outfit = /datum/outfit/syndicate_empty
@@ -461,7 +462,7 @@
 	name = "old cryogenics pod"
 	desc = "A humming cryo pod. You can barely recognise a security uniform underneath the built up ice. The machine is attempting to wake up its occupant."
 	mob_name = "a security officer"
-	icon = 'icons/obj/cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	roundstart = FALSE
 	death = FALSE
@@ -485,7 +486,7 @@
 	name = "old cryogenics pod"
 	desc = "A humming cryo pod. You can barely recognise an engineering uniform underneath the built up ice. The machine is attempting to wake up its occupant."
 	mob_name = "an engineer"
-	icon = 'icons/obj/cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	roundstart = FALSE
 	death = FALSE
@@ -509,7 +510,7 @@
 	name = "old cryogenics pod"
 	desc = "A humming cryo pod. You can barely recognise a science uniform underneath the built up ice. The machine is attempting to wake up its occupant."
 	mob_name = "a scientist"
-	icon = 'icons/obj/cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	roundstart = FALSE
 	death = FALSE
@@ -527,3 +528,44 @@
 /obj/effect/mob_spawn/human/oldsci/Destroy()
 	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
 	return ..()
+
+
+#define PIRATE_NAMES_FILE "pirates.json"
+
+/obj/effect/mob_spawn/human/pirate
+	name = "space pirate sleeper"
+	desc = "A cryo sleeper smelling faintly of rum."
+	random = TRUE
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "sleeper"
+	mob_name = "a space pirate"
+	mob_species = /datum/species/human
+	outfit = /datum/outfit/pirate/space
+	roundstart = FALSE
+	death = FALSE
+	anchored = TRUE
+	density = FALSE
+	show_flavour = FALSE //Flavour only exists for spawners menu
+	flavour_text = "<font size=3><b>Y</b></font><b>ou are a space pirate. The station refused to pay for your protection, protect the ship, siphon the credits from the station and raid it for even more loot.</b>"
+	assignedrole = "Space Pirate"
+	var/rank = "Mate"
+
+/obj/effect/mob_spawn/human/pirate/special(mob/living/new_spawn)
+	new_spawn.fully_replace_character_name(new_spawn.real_name,generate_pirate_name())
+	new_spawn.mind.add_antag_datum(/datum/antagonist/pirate)
+
+/obj/effect/mob_spawn/human/pirate/proc/generate_pirate_name()
+	var/beggings = strings(PIRATE_NAMES_FILE, "beginnings")
+	var/endings = strings(PIRATE_NAMES_FILE, "endings")
+	return "[rank] [pick(beggings)][pick(endings)]"
+
+/obj/effect/mob_spawn/human/pirate/Destroy()
+	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
+	return ..()
+
+/obj/effect/mob_spawn/human/pirate/captain
+	rank = "Captain"
+	outfit = /datum/outfit/pirate/space/captain
+
+/obj/effect/mob_spawn/human/pirate/gunner
+	rank = "Gunner"

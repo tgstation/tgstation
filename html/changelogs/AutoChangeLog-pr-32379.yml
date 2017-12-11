@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - bugfix: "Injury and crit overlays are now scaled properly for zoomed-out views."

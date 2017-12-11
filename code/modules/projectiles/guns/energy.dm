@@ -102,6 +102,16 @@
 	chambered = null //either way, released the prepared shot
 	recharge_newshot() //try to charge a new shot
 
+/obj/item/gun/energy/process_fire()
+	if(!chambered && can_shoot())
+		process_chamber()	// If the gun was drained and then recharged, load a new shot.
+	return ..()
+
+/obj/item/gun/energy/process_burst()
+	if(!chambered && can_shoot())
+		process_chamber()	// Ditto.
+	return ..()
+
 /obj/item/gun/energy/proc/select_fire(mob/living/user)
 	select++
 	if (select > ammo_type.len)

@@ -4,6 +4,7 @@
     var/list/datum_components //for /datum/components
     var/ui_screen = "home"  //for tgui
     var/use_tag = FALSE
+    var/datum/weakref/weak_reference
 
 #ifdef TESTING
     var/running_find_references
@@ -15,6 +16,8 @@
 // Return the appropriate QDEL_HINT; in most cases this is QDEL_HINT_QUEUE.
 /datum/proc/Destroy(force=FALSE, ...)
 	tag = null
+	weak_reference = null	//ensure prompt GCing of weakref.
+
 	var/list/timers = active_timers
 	active_timers = null
 	for(var/thing in timers)
@@ -22,6 +25,7 @@
 		if (timer.spent)
 			continue
 		qdel(timer)
+
 	var/list/dc = datum_components
 	if(dc)
 		var/all_components = dc[/datum/component]
@@ -33,4 +37,11 @@
 			var/datum/component/C = all_components
 			qdel(C, FALSE, TRUE)
 		dc.Cut()
+
+	var/list/focusers = src.focusers
+	if(focusers)
+		for(var/i in 1 to focusers.len)
+			var/mob/M = focusers[i]
+			M.set_focus(M)
+
 	return QDEL_HINT_QUEUE

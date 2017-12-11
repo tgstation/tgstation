@@ -25,7 +25,7 @@
 	unsuitable_atmos_damage = 10
 	robust_searching = 1
 	stat_attack = UNCONSCIOUS
-	gold_core_spawnable = 1
+	gold_core_spawnable = HOSTILE_SPAWN
 	faction = list("skeleton")
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
@@ -41,7 +41,7 @@
 	icon_dead = "eskimo_dead"
 	maxHealth = 55
 	health = 55
-	gold_core_spawnable = 0
+	gold_core_spawnable = NO_SPAWN
 	melee_damage_lower = 17
 	melee_damage_upper = 20
 	deathmessage = "collapses into a pile of bones, its gear falling to the floor!"
@@ -60,7 +60,7 @@
 	maxHealth = 150
 	health = 150
 	speed = 2
-	gold_core_spawnable = 0
+	gold_core_spawnable = NO_SPAWN
 	speak_chance = 1
 	speak = list("THE GODS WILL IT!","DEUS VULT!","REMOVE KABAB!")
 	force_threshold = 10 //trying to simulate actually having armor

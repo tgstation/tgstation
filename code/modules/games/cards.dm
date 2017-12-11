@@ -16,7 +16,7 @@
 
 	var/list/cards = list()
 
-/obj/item/deck/New()
+/obj/item/deck/Initialize()
 	. = ..()
 
 	var/cardcolor

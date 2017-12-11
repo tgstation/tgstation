@@ -1,4 +1,0 @@
-author: "More Robust Than You"
-delete-after: True
-changes: 
-  - bugfix: "New blob overminds off the station Z level are moved to the station"

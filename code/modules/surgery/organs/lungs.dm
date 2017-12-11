@@ -28,7 +28,8 @@
 	var/safe_toxins_max = 0.05
 	var/SA_para_min = 1 //Sleeping agent
 	var/SA_sleep_min = 5 //Sleeping agent
-	var/BZ_trip_balls_min = 1 //BZ gas.
+	var/BZ_trip_balls_min = 1 //BZ gas
+	var/gas_stimulation_min = 0.002 //Nitryl and Stimulum
 
 	var/oxy_breath_dam_min = MIN_TOXIC_GAS_DAMAGE
 	var/oxy_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
@@ -249,7 +250,7 @@
 		if(bz_pp > BZ_trip_balls_min)
 			H.hallucination += 20
 			if(prob(33))
-				H.adjustBrainLoss(3)
+				H.adjustBrainLoss(3, 150)
 		else if(bz_pp > 0.01)
 			H.hallucination += 5//Removed at 2 per tick so this will slowly build up
 
@@ -274,14 +275,14 @@
 		else
 			H.adjustFireLoss(nitryl_pp/4)
 		gas_breathed = breath_gases[/datum/gas/nitryl][MOLES]
-		if (gas_breathed > GAS_STIM_MINIMUM)
+		if (gas_breathed > gas_stimulation_min)
 			H.reagents.add_reagent("nitryl_gas",1)
 
 		breath_gases[/datum/gas/nitryl][MOLES]-=gas_breathed
 		gas_breathed = 0
 	// Stimulum
 		gas_breathed = breath_gases[/datum/gas/stimulum][MOLES]
-		if (gas_breathed > GAS_STIM_MINIMUM)
+		if (gas_breathed > gas_stimulation_min)
 			H.reagents.add_reagent("stimulum",1)
 		breath_gases[/datum/gas/stimulum][MOLES]-=gas_breathed
 		handle_breath_temperature(breath, H)
@@ -355,7 +356,6 @@
 	name = "cybernetic lungs"
 	desc = "A cybernetic version of the lungs found in traditional humanoid entities. It functions the same as an organic lung and is merely meant as a replacement."
 	icon_state = "lungs-c"
-	origin_tech = "biotech=4"
 
 /obj/item/organ/lungs/cybernetic/emp_act()
 	owner.losebreath = 20
@@ -365,8 +365,6 @@
 	name = "upgraded cybernetic lungs"
 	desc = "A more advanced version of the stock cybernetic lungs. They are capable of filtering out lower levels of toxins and carbon dioxide."
 	icon_state = "lungs-c-u"
-	origin_tech = "biotech=5"
-
 	safe_toxins_max = 20
 	safe_co2_max = 20
 

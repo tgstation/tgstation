@@ -21,7 +21,6 @@ ARCD
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=100000)
-	origin_tech = "engineering=4;materials=2"
 	req_access_txt = "11"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
@@ -165,10 +164,6 @@ ARCD
 	if (!ishuman(usr) && !usr.has_unlimited_silicon_privilege)
 		return ..(usr)
 
-	var/mob/living/carbon/human/H = usr
-	if(H.getBrainLoss() >= 60)
-		return
-
 	var/t1 = text("")
 
 
@@ -246,10 +241,12 @@ ARCD
 	switch(airlockcat)
 		if("Solid")
 			if(advanced_airlock_setting == 1)
-				var/airlockpaint = input(usr, "Select the paintjob of the airlock.") in list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security")
+				var/airlockpaint = input(usr, "Select the type of the airlock.") in list("Standard", "Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Freezer", "Science", "Virology", "Mining", "Maintenance", "External", "External Maintenance", "Airtight Hatch", "Maintenance Hatch")
 				switch(airlockpaint)
-					if("Default")
+					if("Standard")
 						airlock_type = /obj/machinery/door/airlock
+					if("Public")
+						airlock_type = /obj/machinery/door/airlock/public
 					if("Engineering")
 						airlock_type = /obj/machinery/door/airlock/engineering
 					if("Atmospherics")
@@ -262,14 +259,24 @@ ARCD
 						airlock_type = /obj/machinery/door/airlock/medical
 					if("Research")
 						airlock_type = /obj/machinery/door/airlock/research
+					if("Freezer")
+						airlock_type = /obj/machinery/door/airlock/freezer
+					if("Science")
+						airlock_type = /obj/machinery/door/airlock/science
+					if("Virology")
+						airlock_type = /obj/machinery/door/airlock/virology
 					if("Mining")
 						airlock_type = /obj/machinery/door/airlock/mining
 					if("Maintenance")
 						airlock_type = /obj/machinery/door/airlock/maintenance
 					if("External")
 						airlock_type = /obj/machinery/door/airlock/external
-					if("High Security")
-						airlock_type = /obj/machinery/door/airlock/highsecurity
+					if("External Maintenance")
+						airlock_type = /obj/machinery/door/airlock/maintenance/external
+					if("Airtight Hatch")
+						airlock_type = /obj/machinery/door/airlock/hatch
+					if("Maintenance Hatch")
+						airlock_type = /obj/machinery/door/airlock/maintenance_hatch
 				airlock_glass = FALSE
 			else
 				airlock_type = /obj/machinery/door/airlock
@@ -277,10 +284,12 @@ ARCD
 
 		if("Glass")
 			if(advanced_airlock_setting == 1)
-				var/airlockpaint = input(usr, "Select the paintjob of the airlock.") in list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining")
+				var/airlockpaint = input(usr, "Select the type of the airlock.") in list("Standard", "Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Science", "Virology", "Mining", "Maintenance", "External", "External Maintenance")
 				switch(airlockpaint)
-					if("Default")
+					if("Standard")
 						airlock_type = /obj/machinery/door/airlock/glass
+					if("Public")
+						airlock_type = /obj/machinery/door/airlock/public/glass
 					if("Engineering")
 						airlock_type = /obj/machinery/door/airlock/glass_engineering
 					if("Atmospherics")
@@ -293,8 +302,18 @@ ARCD
 						airlock_type = /obj/machinery/door/airlock/glass_medical
 					if("Research")
 						airlock_type = /obj/machinery/door/airlock/glass_research
+					if("Science")
+						airlock_type = /obj/machinery/door/airlock/glass_science
+					if("Virology")
+						airlock_type = /obj/machinery/door/airlock/glass_virology
 					if("Mining")
 						airlock_type = /obj/machinery/door/airlock/glass_mining
+					if("Maintenance")
+						airlock_type = /obj/machinery/door/airlock/glass_maintenance
+					if("External")
+						airlock_type = /obj/machinery/door/airlock/external/glass
+					if("External Maintenance")
+						airlock_type = /obj/machinery/door/airlock/maintenance/external/glass
 				airlock_glass = TRUE
 			else
 				airlock_type = /obj/machinery/door/airlock/glass
@@ -412,12 +431,10 @@ ARCD
 	item_state = "rcdammo"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	origin_tech = "materials=3"
 	materials = list(MAT_METAL=12000, MAT_GLASS=8000)
 	var/ammoamt = 40
 
 /obj/item/rcd_ammo/large
-	origin_tech = "materials=4"
 	materials = list(MAT_METAL=48000, MAT_GLASS=32000)
 	ammoamt = 160
 

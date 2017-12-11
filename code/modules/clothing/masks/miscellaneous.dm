@@ -87,39 +87,17 @@ obj/item/clothing/mask/frog
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	w_class = WEIGHT_CLASS_SMALL
 	var/voicechange = TRUE
-	var/last_sound = 0
-	var/delay = 15
-
-/obj/item/clothing/mask/frog/proc/play_ree()
-	if(world.time - delay > last_sound)
-		playsound (src, 'sound/effects/reee.ogg', 30, 1)
-		last_sound = world.time
-
-/obj/item/clothing/mask/frog/proc/play_huu()
-	if(world.time - delay > last_sound)
-		playsound (src, 'sound/effects/huuu.ogg', 30, 1)
-		last_sound = world.time
 
 /obj/item/clothing/mask/frog/attack_self(mob/user)
 	voicechange = !voicechange
 	to_chat(user, "<span class='notice'>You turn the voice box [voicechange ? "on" : "off"]!</span>")
-	if(voicechange)
-		play_ree()
-
-/obj/item/clothing/mask/frog/equipped(mob/user, slot) //when you put it on
-	var/mob/living/carbon/C = user
-	if((C.wear_mask == src) && (voicechange))
-		play_ree()
-	return ..()
 
 /obj/item/clothing/mask/frog/speechModification(message) //whenever you speak
 	if(voicechange)
 		if(prob(5)) //sometimes, the angry spirit finds others words to speak.
 			message = pick("HUUUUU!!","SMOOOOOKIN'!!","Hello my baby, hello my honey, hello my rag-time gal.", "Feels bad, man.", "GIT DIS GUY OFF ME!!" ,"SOMEBODY STOP ME!!", "NORMIES, GET OUT!!")
-			play_huu()
 		else
 			message = pick("Ree!!", "Reee!!","REEE!!","REEEEE!!") //but its usually just angry gibberish,
-			play_ree()
 	return message
 
 obj/item/clothing/mask/frog/cursed

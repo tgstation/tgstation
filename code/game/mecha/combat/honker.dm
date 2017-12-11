@@ -15,17 +15,6 @@
 	max_equip = 3
 	var/squeak = 0
 
-/*
-/obj/mecha/combat/honker/New()
-	..()
-
-	weapons += new /datum/mecha_weapon/honker(src)
-	weapons += new /datum/mecha_weapon/missile_rack/banana_mortar(src)
-	weapons += new /datum/mecha_weapon/missile_rack/mousetrap_mortar(src)
-	selected_weapon = weapons[1]
-	return
-*/
-
 /obj/mecha/combat/honker/get_stats_part()
 	var/integrity = obj_integrity/max_integrity*100
 	var/cell_charge = get_charge()

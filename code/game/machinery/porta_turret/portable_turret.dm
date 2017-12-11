@@ -16,7 +16,7 @@
 	use_power = IDLE_POWER_USE				//this turret uses and requires power
 	idle_power_usage = 50		//when inactive, this turret takes up constant 50 Equipment power
 	active_power_usage = 300	//when active, this turret takes up constant 300 Equipment power
-	req_access = list(ACCESS_SECURITY)
+	req_access = list(ACCESS_SEC_DOORS)
 	power_channel = EQUIP	//drains power from the EQUIPMENT channel
 
 	var/base_icon_state = "standard"
@@ -72,6 +72,8 @@
 	var/datum/effect_system/spark_spread/spark_system	//the spark system, used for generating... sparks?
 
 	var/obj/machinery/turretid/cp = null
+
+	var/wall_turret_direction //The turret will try to shoot from a turf in that direction when in a wall
 
 /obj/machinery/porta_turret/Initialize()
 	. = ..()
@@ -503,6 +505,20 @@
 	if(!istype(T) || !istype(U))
 		return
 
+	//Wall turrets will try to find adjacent empty turf to shoot from to cover full arc
+	if(T.density)
+		if(wall_turret_direction)
+			var/turf/closer = get_step(T,wall_turret_direction)
+			if(istype(closer) && !is_blocked_turf(closer) && T.Adjacent(closer))
+				T = closer
+		else
+			var/target_dir = get_dir(T,target)
+			for(var/d in list(0,-45,45))
+				var/turf/closer = get_step(T,turn(target_dir,d))
+				if(istype(closer) && !is_blocked_turf(closer) && T.Adjacent(closer))
+					T = closer
+					break
+
 	update_icon()
 	var/obj/item/projectile/A
 	//any emagged turrets drains 2x power and uses a different projectile?
@@ -517,10 +533,13 @@
 
 
 	//Shooting Code:
-	A.preparePixelProjectile(target, src)
+	A.preparePixelProjectile(target, T)
 	A.fire()
 	return A
 
+/obj/machinery/porta_turret/shuttleRotate(rotation)
+	if(wall_turret_direction)
+		wall_turret_direction = turn(wall_turret_direction,rotation)
 
 /obj/machinery/porta_turret/proc/setState(on, mode)
 	if(controllock)

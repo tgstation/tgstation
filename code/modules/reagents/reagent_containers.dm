@@ -10,7 +10,7 @@
 	var/list/list_reagents = null
 	var/spawned_disease = null
 	var/disease_amount = 20
-	var/spillable = 0
+	var/spillable = FALSE
 
 /obj/item/reagent_containers/Initialize(mapload, vol)
 	. = ..()
@@ -87,6 +87,9 @@
 	. = ..()
 	SplashReagents(target, TRUE)
 
+/obj/item/reagent_containers/proc/bartender_check(atom/target)
+	return (target.CanPass(src, get_turf(src)) && thrownby && thrownby.mind && thrownby.mind.assigned_role == "Bartender")
+
 /obj/item/reagent_containers/proc/SplashReagents(atom/target, thrown = FALSE)
 	if(!reagents || !reagents.total_volume || !spillable)
 		return
@@ -106,7 +109,7 @@
 			add_logs(thrownby, M, "splashed", R)
 		reagents.reaction(target, TOUCH)
 
-	else if((target.CanPass(src, get_turf(src))) && thrown && thrownby && thrownby.mind && thrownby.mind.assigned_role == "Bartender")
+	else if(bartender_check(target) && thrown)
 		visible_message("<span class='notice'>[src] lands onto the [target.name] without spilling a single drop.</span>")
 		return
 

@@ -112,13 +112,13 @@
 	foodtype = GRAIN | VEGETABLES
 
 
-/obj/item/reagent_containers/food/snacks/pie/plump_pie/New()
+/obj/item/reagent_containers/food/snacks/pie/plump_pie/Initialize()
+	. = ..()
 	var/fey = prob(10)
 	if(fey)
 		name = "exceptional plump pie"
 		desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump pie!"
 		bonus_reagents = list("nutriment" = 1, "omnizine" = 5, "vitamin" = 4)
-	..()
 	if(fey)
 		reagents.add_reagent("omnizine", 5)
 

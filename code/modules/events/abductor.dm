@@ -9,6 +9,7 @@
 /datum/round_event/ghost_role/abductor
 	minimum_required = 2
 	role_name = "abductor team"
+	fakeable = FALSE //Nothing to fake here
 
 /datum/round_event/ghost_role/abductor/spawn_role()
 	var/list/mob/dead/observer/candidates = get_candidates("abductor", null, ROLE_ABDUCTOR)
@@ -25,7 +26,11 @@
 	var/mob/living/carbon/human/agent = makeBody(pick_n_take(candidates))
 	var/mob/living/carbon/human/scientist = makeBody(pick_n_take(candidates))
 
-	GM.post_setup_team(GM.make_abductor_team(agent.mind, scientist.mind))
+	var/team = GM.make_abductor_team(agent.mind, scientist.mind)
+	if(!team)
+		return MAP_ERROR
+
+	GM.post_setup_team(team)
 
 	spawned_mobs += list(agent, scientist)
 	return SUCCESSFUL_SPAWN

@@ -67,6 +67,7 @@
 		O.completed = 1 //YES!
 		O.owner = new_holder.mind
 		new_holder.mind.objectives += O
+		new_holder.mind.add_antag_datum(/datum/antagonist/auto_custom)
 		new_holder.log_message("<font color='green'>Won with greentext!!!</font>", INDIVIDUAL_ATTACK_LOG)
 		color_altered_mobs -= new_holder
 		resistance_flags |= ON_FIRE
@@ -83,7 +84,8 @@
 
 	. = ..()
 	GLOB.poi_list.Remove(src)
-	for(var/mob/M in GLOB.mob_list)
+	for(var/i in GLOB.player_list)
+		var/mob/M = i
 		var/message = "<span class='warning'>A dark temptation has passed from this world"
 		if(M in color_altered_mobs)
 			message += " and you're finally able to forgive yourself"

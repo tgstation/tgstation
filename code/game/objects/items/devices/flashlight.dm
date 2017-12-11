@@ -48,7 +48,7 @@
 	add_fingerprint(user)
 	if(istype(M) && on && user.zone_selected in list("eyes", "mouth"))
 
-		if((user.disabilities & CLUMSY || user.getBrainLoss() >= 60) && prob(50))	//too dumb to use flashlight properly
+		if((user.disabilities & (CLUMSY | DUMB)) && prob(50))	//too dumb to use flashlight properly
 			return ..()	//just hit them in the head
 
 		if(!user.IsAdvancedToolUser())
@@ -348,7 +348,6 @@
 	brightness_on = 6 //luminosity when on
 
 /obj/item/device/flashlight/emp
-	origin_tech = "magnets=3;syndicate=1"
 	var/emp_max_charges = 4
 	var/emp_cur_charges = 4
 	var/charge_tick = 0
@@ -488,16 +487,14 @@
 
 /obj/item/device/flashlight/glowstick/random
 	name = "random colored glowstick"
+	icon_state = "random_glowstick"
+	color = null
 
 /obj/item/device/flashlight/glowstick/random/Initialize()
-	var/list/glowtypes = typesof(/obj/item/device/flashlight/glowstick)
-	glowtypes -= /obj/item/device/flashlight/glowstick/random
-
-	var/obj/item/device/flashlight/glowstick/glowtype = pick(glowtypes)
-
-	name = initial(glowtype.name)
-	color = initial(glowtype.color)
 	. = ..()
+	var/T = pick(typesof(/obj/item/device/flashlight/glowstick) - /obj/item/device/flashlight/glowstick/random)
+	new T(loc)
+	return INITIALIZE_HINT_QDEL
 
 /obj/item/device/flashlight/spotlight //invisible lighting source
 	name = "disco light"

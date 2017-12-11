@@ -28,7 +28,6 @@
 	var/const/STATE_TOGGLE_EMERGENCY = 10
 	var/const/STATE_PURCHASE = 11
 
-	var/status_display_freq = "1435"
 	var/stat_msg1
 	var/stat_msg2
 
@@ -115,11 +114,6 @@
 						//Only notify the admins if an actual change happened
 						log_game("[key_name(usr)] has changed the security level to [get_security_level()].")
 						message_admins("[key_name_admin(usr)] has changed the security level to [get_security_level()].")
-						switch(GLOB.security_level)
-							if(SEC_LEVEL_GREEN)
-								SSblackbox.inc("alert_comms_green",1)
-							if(SEC_LEVEL_BLUE)
-								SSblackbox.inc("alert_comms_blue",1)
 					tmp_alertlevel = 0
 				else
 					to_chat(usr, "<span class='warning'>You are not authorized to do this!</span>")
@@ -178,7 +172,7 @@
 								SSshuttle.points -= S.credit_cost
 								minor_announce("[usr.name] has purchased [S.name] for [S.credit_cost] credits." , "Shuttle Purchase")
 								message_admins("[key_name_admin(usr)] purchased [S.name].")
-								SSblackbox.add_details("shuttle_purchase", S.name)
+								SSblackbox.record_feedback("text", "shuttle_purchase", 1, "[S.name]")
 							else
 								to_chat(usr, "Something went wrong! The shuttle exchange system seems to be down.")
 						else
@@ -230,6 +224,10 @@
 			if(!currmsg || !answer || currmsg.possible_answers.len < answer)
 				state = STATE_MESSAGELIST
 			currmsg.answered = answer
+			log_game("[key_name(usr)] answered [currmsg.title] comm message. Answer : [currmsg.answered]")
+			if(currmsg)
+				currmsg.answer_callback.Invoke()
+
 			state = STATE_VIEWMESSAGE
 		if("status")
 			state = STATE_STATUSDISPLAY
@@ -359,6 +357,9 @@
 			if(!aicurrmsg || !answer || aicurrmsg.possible_answers.len < answer)
 				aistate = STATE_MESSAGELIST
 			aicurrmsg.answered = answer
+			log_game("[key_name(usr)] answered [currmsg.title] comm message. Answer : [currmsg.answered]")
+			if(aicurrmsg.answer_callback)
+				aicurrmsg.answer_callback.Invoke()
 			aistate = STATE_VIEWMESSAGE
 		if("ai-status")
 			aistate = STATE_STATUSDISPLAY
@@ -380,11 +381,6 @@
 				//Only notify the admins if an actual change happened
 				log_game("[key_name(usr)] has changed the security level to [get_security_level()].")
 				message_admins("[key_name_admin(usr)] has changed the security level to [get_security_level()].")
-				switch(GLOB.security_level)
-					if(SEC_LEVEL_GREEN)
-						SSblackbox.inc("alert_comms_green",1)
-					if(SEC_LEVEL_BLUE)
-						SSblackbox.inc("alert_comms_blue",1)
 			tmp_alertlevel = 0
 			aistate = STATE_DEFAULT
 		if("ai-changeseclevel")
@@ -696,14 +692,14 @@
 
 /obj/machinery/computer/communications/proc/post_status(command, data1, data2)
 
-	var/datum/radio_frequency/frequency = SSradio.return_frequency(1435)
+	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
 
 	if(!frequency)
 		return
 
 	var/datum/signal/status_signal = new
 	status_signal.source = src
-	status_signal.transmission_method = 1
+	status_signal.transmission_method = TRANSMISSION_RADIO
 	status_signal.data["command"] = command
 
 	switch(command)
@@ -733,3 +729,13 @@
 	var/content
 	var/list/possible_answers = list()
 	var/answered
+	var/datum/callback/answer_callback
+
+/datum/comm_message/New(new_title,new_content,new_possible_answers)
+	..()
+	if(title)
+		title = new_title
+	if(content)
+		content = new_content
+	if(new_possible_answers)
+		possible_answers = new_possible_answers

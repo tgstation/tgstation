@@ -1,4 +1,0 @@
-author: "AnturK"
-delete-after: True
-changes: 
-  - balance: "Dying in shapeshifted form reverts you to the original one. (You're still dead)"

@@ -230,11 +230,9 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 			dat += "<h3>Checked Out Books</h3><BR>"
 			for(var/datum/borrowbook/b in checkouts)
 				var/timetaken = world.time - b.getdate
-				//timetaken *= 10
 				timetaken /= 600
 				timetaken = round(timetaken)
 				var/timedue = b.duedate - world.time
-				//timedue *= 10
 				timedue /= 600
 				if(timedue <= 0)
 					timedue = "<font color=red><b>(OVERDUE)</b> [timedue]</font>"

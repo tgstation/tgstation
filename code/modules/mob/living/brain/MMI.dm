@@ -4,7 +4,6 @@
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "mmi_empty"
 	w_class = WEIGHT_CLASS_NORMAL
-	origin_tech = "biotech=2;programming=3;engineering=2"
 	var/braintype = "Cyborg"
 	var/obj/item/device/radio/radio = null //Let's give it a radio.
 	var/mob/living/brain/brainmob = null //The current occupant.
@@ -63,7 +62,7 @@
 		if(!newbrain.damaged_brain) // the brain organ hasn't been beaten to death.
 			brainmob.stat = CONSCIOUS //we manually revive the brain mob
 			GLOB.dead_mob_list -= brainmob
-			GLOB.living_mob_list += brainmob
+			GLOB.alive_mob_list += brainmob
 
 		brainmob.reset_perspective()
 		brain = newbrain
@@ -71,7 +70,7 @@
 		name = "Man-Machine Interface: [brainmob.real_name]"
 		update_icon()
 
-		SSblackbox.inc("cyborg_mmis_filled",1)
+		SSblackbox.record_feedback("amount", "mmis_filled", 1)
 
 	else if(brainmob)
 		O.attack(brainmob, user) //Oh noooeeeee
@@ -95,7 +94,7 @@
 	brainmob.stat = DEAD
 	brainmob.emp_damage = 0
 	brainmob.reset_perspective() //so the brainmob follows the brain organ instead of the mmi. And to update our vision
-	GLOB.living_mob_list -= brainmob //Get outta here
+	GLOB.alive_mob_list -= brainmob //Get outta here
 	GLOB.dead_mob_list += brainmob
 	brain.brainmob = brainmob //Set the brain to use the brainmob
 	brainmob = null //Set mmi brainmob var to null
@@ -205,7 +204,6 @@
 /obj/item/device/mmi/syndie
 	name = "Syndicate Man-Machine Interface"
 	desc = "Syndicate's own brand of MMI. It enforces laws designed to help Syndicate agents achieve their goals upon cyborgs and AIs created with it."
-	origin_tech = "biotech=4;programming=4;syndicate=2"
 	overrides_aicore_laws = TRUE
 
 /obj/item/device/mmi/syndie/Initialize()

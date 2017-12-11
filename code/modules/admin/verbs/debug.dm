@@ -13,7 +13,7 @@
 		message_admins("[key_name(src)] toggled debugging on.")
 		log_admin("[key_name(src)] toggled debugging on.")
 
-	SSblackbox.add_details("admin_verb","Toggle Debug Two") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Toggle Debug Two") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 
@@ -95,7 +95,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	. = get_callproc_returnval(returnval, procname)
 	if(.)
 		to_chat(usr, .)
-	SSblackbox.add_details("admin_verb","Advanced ProcCall") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Advanced ProcCall") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 GLOBAL_VAR(AdminProcCaller)
 GLOBAL_PROTECT(AdminProcCaller)
@@ -165,7 +165,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	var/msg = "[key_name(src)] called [A]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"]."
 	message_admins(msg)
 	admin_ticket_log(A, msg)
-	SSblackbox.add_details("admin_verb","Atom ProcCall") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Atom ProcCall") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	var/returnval = WrapAdminProcCall(A, procname, lst) // Pass the lst as an argument list to the proc
 	. = get_callproc_returnval(returnval,procname)
@@ -236,7 +236,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 			t+= "[env_gases[id][GAS_META][META_GAS_NAME]] : [env_gases[id][MOLES]]\n"
 
 	to_chat(usr, t)
-	SSblackbox.add_details("admin_verb","Air Status In Location") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Air Status In Location") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_robotize(mob/M in GLOB.mob_list)
 	set category = "Fun"
@@ -315,7 +315,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	for(var/datum/paiCandidate/candidate in SSpai.candidates)
 		if(candidate.key == choice.key)
 			SSpai.candidates.Remove(candidate)
-	SSblackbox.add_details("admin_verb","Make pAI") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Make pAI") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_alienize(mob/M in GLOB.mob_list)
 	set category = "Fun"
@@ -326,7 +326,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 		return
 	if(ishuman(M))
 		INVOKE_ASYNC(M, /mob/living/carbon/human/proc/Alienize)
-		SSblackbox.add_details("admin_verb","Make Alien") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		SSblackbox.record_feedback("tally", "admin_verb", 1, "Make Alien") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		log_admin("[key_name(usr)] made [key_name(M)] into an alien.")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] made [key_name(M)] into an alien.</span>")
 	else
@@ -341,7 +341,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 		return
 	if(ishuman(M))
 		INVOKE_ASYNC(M, /mob/living/carbon/human/proc/slimeize)
-		SSblackbox.add_details("admin_verb","Make Slime") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		SSblackbox.record_feedback("tally", "admin_verb", 1, "Make Slime") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		log_admin("[key_name(usr)] made [key_name(M)] into a slime.")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] made [key_name(M)] into a slime.</span>")
 	else
@@ -429,7 +429,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 			CHECK_TICK
 		log_admin("[key_name(src)] has deleted all ([counter]) instances of [hsbitem].")
 		message_admins("[key_name_admin(src)] has deleted all ([counter]) instances of [hsbitem].", 0)
-		SSblackbox.add_details("admin_verb","Delete All") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		SSblackbox.record_feedback("tally", "admin_verb", 1, "Delete All") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /client/proc/cmd_debug_make_powernets()
@@ -438,7 +438,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	SSmachines.makepowernets()
 	log_admin("[key_name(src)] has remade the powernet. makepowernets() called.")
 	message_admins("[key_name_admin(src)] has remade the powernets. makepowernets() called.", 0)
-	SSblackbox.add_details("admin_verb","Make Powernets") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Make Powernets") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_grantfullaccess(mob/M in GLOB.mob_list)
 	set category = "Admin"
@@ -478,7 +478,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 
 	else
 		alert("Invalid mob")
-	SSblackbox.add_details("admin_verb","Grant Full Access") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Grant Full Access") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(src)] has granted [M.key] full access.")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has granted [M.key] full access.</span>")
 
@@ -499,7 +499,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	M.ckey = src.ckey
 	if( isobserver(adminmob) )
 		qdel(adminmob)
-	SSblackbox.add_details("admin_verb","Assume Direct Control") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Assume Direct Control") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_areatest(on_station)
 	set category = "Mapping"
@@ -507,6 +507,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 
 	var/list/areas_all = list()
 	var/list/areas_with_APC = list()
+	var/list/areas_with_multiple_APCs = list()
 	var/list/areas_with_air_alarm = list()
 	var/list/areas_with_RC = list()
 	var/list/areas_with_light = list()
@@ -528,6 +529,8 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 		var/area/A = APC.area
 		if(!(A.type in areas_with_APC))
 			areas_with_APC.Add(A.type)
+		else if(A.type in areas_all)
+			areas_with_multiple_APCs.Add(A.type)
 
 	for(var/obj/machinery/airalarm/AA in GLOB.machines)
 		var/area/A = get_area(AA)
@@ -567,33 +570,48 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	var/list/areas_without_intercom = areas_all - areas_with_intercom
 	var/list/areas_without_camera = areas_all - areas_with_camera
 
-	to_chat(world, "<b>AREAS WITHOUT AN APC:</b>")
-	for(var/areatype in areas_without_APC)
-		to_chat(world, "* [areatype]")
+	if(areas_without_APC.len)
+		to_chat(world, "<b>AREAS WITHOUT AN APC:</b>")
+		for(var/areatype in areas_without_APC)
+			to_chat(world, "* [areatype]")
 
-	to_chat(world, "<b>AREAS WITHOUT AN AIR ALARM:</b>")
-	for(var/areatype in areas_without_air_alarm)
-		to_chat(world, "* [areatype]")
+	if(areas_with_multiple_APCs.len)
+		to_chat(world, "<b>AREAS WITH MULTIPLE APCS:</b>")
+		for(var/areatype in areas_with_multiple_APCs)
+			to_chat(world,"* [areatype]")
 
-	to_chat(world, "<b>AREAS WITHOUT A REQUEST CONSOLE:</b>")
-	for(var/areatype in areas_without_RC)
-		to_chat(world, "* [areatype]")
+	if(areas_without_air_alarm.len)
+		to_chat(world, "<b>AREAS WITHOUT AN AIR ALARM:</b>")
+		for(var/areatype in areas_without_air_alarm)
+			to_chat(world, "* [areatype]")
 
-	to_chat(world, "<b>AREAS WITHOUT ANY LIGHTS:</b>")
-	for(var/areatype in areas_without_light)
-		to_chat(world, "* [areatype]")
+	if(areas_without_RC.len)
+		to_chat(world, "<b>AREAS WITHOUT A REQUEST CONSOLE:</b>")
+		for(var/areatype in areas_without_RC)
+			to_chat(world, "* [areatype]")
 
-	to_chat(world, "<b>AREAS WITHOUT A LIGHT SWITCH:</b>")
-	for(var/areatype in areas_without_LS)
-		to_chat(world, "* [areatype]")
+	if(areas_without_light.len)
+		to_chat(world, "<b>AREAS WITHOUT ANY LIGHTS:</b>")
+		for(var/areatype in areas_without_light)
+			to_chat(world, "* [areatype]")
 
-	to_chat(world, "<b>AREAS WITHOUT ANY INTERCOMS:</b>")
-	for(var/areatype in areas_without_intercom)
-		to_chat(world, "* [areatype]")
+	if(areas_without_LS.len)
+		to_chat(world, "<b>AREAS WITHOUT A LIGHT SWITCH:</b>")
+		for(var/areatype in areas_without_LS)
+			to_chat(world, "* [areatype]")
 
-	to_chat(world, "<b>AREAS WITHOUT ANY CAMERAS:</b>")
-	for(var/areatype in areas_without_camera)
-		to_chat(world, "* [areatype]")
+	if(areas_without_intercom.len)
+		to_chat(world, "<b>AREAS WITHOUT ANY INTERCOMS:</b>")
+		for(var/areatype in areas_without_intercom)
+			to_chat(world, "* [areatype]")
+
+	if(areas_without_camera.len)
+		to_chat(world, "<b>AREAS WITHOUT ANY CAMERAS:</b>")
+		for(var/areatype in areas_without_camera)
+			to_chat(world, "* [areatype]")
+
+	if(!(areas_with_APC.len || areas_with_multiple_APCs.len || areas_with_air_alarm.len || areas_with_RC.len || areas_with_light.len || areas_with_LS.len || areas_with_intercom.len || areas_with_camera.len))
+		to_chat(world, "<b>No problem areas!</b>")
 
 /client/proc/cmd_admin_areatest_station()
 	set category = "Mapping"
@@ -652,7 +670,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 		if(isnull(custom))
 			return
 
-	SSblackbox.add_details("admin_verb","Select Equipment") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Select Equipment") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	for (var/obj/item/I in M.get_equipped_items())
 		qdel(I)
 	switch(dresscode)
@@ -741,7 +759,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 		if("Mobs")
 			to_chat(usr, jointext(GLOB.mob_list,","))
 		if("Living Mobs")
-			to_chat(usr, jointext(GLOB.living_mob_list,","))
+			to_chat(usr, jointext(GLOB.alive_mob_list,","))
 		if("Dead Mobs")
 			to_chat(usr, jointext(GLOB.dead_mob_list,","))
 		if("Clients")
@@ -777,6 +795,13 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	dellog += "</ol>"
 
 	usr << browse(dellog.Join(), "window=dellog")
+
+/client/proc/cmd_display_overlay_log()
+	set category = "Debug"
+	set name = "Display overlay Log"
+	set desc = "Display SSoverlays log of everything that's passed through it."
+
+	render_stats(SSoverlays.stats, src)
 
 /client/proc/cmd_display_init_log()
 	set category = "Debug"
@@ -834,7 +859,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 		return
 	SSshuttle.clear_transit = TRUE
 	message_admins("<span class='adminnotice'>[key_name_admin(src)] cleared dynamic transit space.</span>")
-	SSblackbox.add_details("admin_verb","Clear Dynamic Transit") // If...
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Clear Dynamic Transit") // If...
 	log_admin("[key_name(src)] cleared dynamic transit space.")
 
 
@@ -848,7 +873,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	GLOB.medals_enabled = !GLOB.medals_enabled
 
 	message_admins("<span class='adminnotice'>[key_name_admin(src)] [GLOB.medals_enabled ? "disabled" : "enabled"] the medal hub lockout.</span>")
-	SSblackbox.add_details("admin_verb","Toggle Medal Disable") // If...
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Toggle Medal Disable") // If...
 	log_admin("[key_name(src)] [GLOB.medals_enabled ? "disabled" : "enabled"] the medal hub lockout.")
 
 /client/proc/view_runtimes()
@@ -871,7 +896,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	SSevents.scheduled = world.time
 
 	message_admins("<span class='adminnotice'>[key_name_admin(src)] pumped a random event.</span>")
-	SSblackbox.add_details("admin_verb","Pump Random Event")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Pump Random Event")
 	log_admin("[key_name(src)] pumped a random event.")
 
 /client/proc/start_line_profiling()
@@ -882,7 +907,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	PROFILE_START
 
 	message_admins("<span class='adminnotice'>[key_name_admin(src)] started line by line profiling.</span>")
-	SSblackbox.add_details("admin_verb","Start Line Profiling")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Start Line Profiling")
 	log_admin("[key_name(src)] started line by line profiling.")
 
 /client/proc/stop_line_profiling()
@@ -893,7 +918,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	PROFILE_STOP
 
 	message_admins("<span class='adminnotice'>[key_name_admin(src)] stopped line by line profiling.</span>")
-	SSblackbox.add_details("admin_verb","stop Line Profiling")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Stop Line Profiling")
 	log_admin("[key_name(src)] stopped line by line profiling.")
 
 /client/proc/show_line_profiling()

@@ -172,7 +172,7 @@
 					if(istype(A, B))
 						continue contents_loop
 				qdel(A)
-	SSblackbox.add_details("food_made","[type]")
+	SSblackbox.record_feedback("tally", "food_made", 1, type)
 
 	if(bonus_reagents && bonus_reagents.len)
 		for(var/r_id in bonus_reagents)
@@ -266,7 +266,7 @@
 			initialize_cooked_food(S, M.efficiency)
 		else
 			initialize_cooked_food(S, 1)
-		SSblackbox.add_details("food_made","[type]")
+		SSblackbox.record_feedback("tally", "food_made", 1, type)
 	else
 		new /obj/item/reagent_containers/food/snacks/badrecipe(src)
 		if(M && M.dirty < 100)
@@ -315,10 +315,10 @@
 //	name = "Xenoburger"													//Name that displays in the UI.
 //	desc = "Smells caustic. Tastes like heresy."						//Duh
 //	icon_state = "xburger"												//Refers to an icon in food.dmi
-///obj/item/reagent_containers/food/snacks/xenoburger/New()		//Don't mess with this.
-//		..()															//Same here.
+///obj/item/reagent_containers/food/snacks/xenoburger/Initialize()		//Don't mess with this. | nO I WILL MESS WITH THIS
+//		. = ..()														//Same here.
 //		reagents.add_reagent("xenomicrobes", 10)						//This is what is in the food item. you may copy/paste
-//		reagents.add_reagent("nutriment", 2)							//	this line of code for all the contents.
+//		reagents.add_reagent("nutriment", 2)							//this line of code for all the contents.
 //		bitesize = 3													//This is the amount each bite consumes.
 
 //All foods are distributed among various categories. Use common sense.

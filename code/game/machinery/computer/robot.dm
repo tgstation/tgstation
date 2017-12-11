@@ -3,7 +3,7 @@
 
 /obj/machinery/computer/robotics
 	name = "robotics control console"
-	desc = "Used to remotely lockdown or detonate linked Cyborgs."
+	desc = "Used to remotely lockdown or detonate linked Cyborgs and Drones."
 	icon_screen = "robot"
 	icon_keyboard = "rd_key"
 	req_access = list(ACCESS_ROBOTICS)
@@ -37,7 +37,7 @@
 	user.set_machine(src)
 	var/dat
 	var/robots = 0
-	for(var/mob/living/silicon/robot/R in GLOB.mob_list)
+	for(var/mob/living/silicon/robot/R in GLOB.silicon_mobs)
 		if(!can_control(user, R))
 			continue
 		robots++
@@ -75,7 +75,7 @@
 		dat += "<BR>"
 
 	var/drones = 0
-	for(var/mob/living/simple_animal/drone/D in GLOB.mob_list)
+	for(var/mob/living/simple_animal/drone/D in GLOB.drones_list)
 		if(D.hacked)
 			continue
 		drones++

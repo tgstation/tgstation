@@ -67,7 +67,7 @@
 	return atmosblock
 
 /obj/structure/blob/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && mover.checkpass(PASSBLOB))
+	if(istype(mover) && (mover.pass_flags & PASSBLOB))
 		return 1
 	return 0
 
@@ -78,7 +78,7 @@
 	. = 0
 	if(ismovableatom(caller))
 		var/atom/movable/mover = caller
-		. = . || mover.checkpass(PASSBLOB)
+		. = . || (mover.pass_flags & PASSBLOB)
 
 /obj/structure/blob/update_icon() //Updates color based on overmind color if we have an overmind.
 	if(overmind)

@@ -136,7 +136,7 @@
 
 	if(!good_chisel_message_location(T))
 		persists = FALSE
-		qdel(src)
+		return INITIALIZE_HINT_QDEL
 
 /obj/structure/chisel_message/proc/register(mob/user, newmessage)
 	hidden_message = newmessage

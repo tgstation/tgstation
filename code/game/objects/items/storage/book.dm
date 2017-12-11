@@ -65,7 +65,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		SSreligion.bible_icon_state = B.icon_state
 		SSreligion.bible_item_state = B.item_state
 
-		SSblackbox.set_details("religion_book","[biblename]")
+		SSblackbox.record_feedback("text", "religion_book", 1, "[biblename]")
 		usr << browse(null, "window=editicon")
 
 /obj/item/storage/book/bible/proc/bless(mob/living/carbon/human/H, mob/living/user)
@@ -124,7 +124,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		else if(iscarbon(M))
 			var/mob/living/carbon/C = M
 			if(!istype(C.head, /obj/item/clothing/head/helmet))
-				C.adjustBrainLoss(10)
+				C.adjustBrainLoss(5, 60)
 				to_chat(C, "<span class='danger'>You feel dumber.</span>")
 
 		if(smack)
