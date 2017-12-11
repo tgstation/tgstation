@@ -14,11 +14,14 @@
 	var/intercept = FALSE  // If true, only works on the Syndicate frequency.
 
 /obj/machinery/telecomms/allinone/Initialize()
+	..()
 	if (intercept)
 		freq_listening = list(FREQ_SYNDICATE)
 
 /obj/machinery/telecomms/allinone/receive_signal(datum/signal/subspace/signal)
-	if(!on || !istype(signal) || !is_freq_listening(signal)) // has to be on to receive messages
+	if(!istype(signal) || signal.transmission_method != TRANSMISSION_SUBSPACE)  // receives on subspace only
+		return
+	if(!on || !(z in signal.levels) || !is_freq_listening(signal))  // has to be on to receive messages
 		return
 
 	// Decompress the signal and mark it done
