@@ -617,3 +617,6 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 
 /atom/proc/wirecutter_act(mob/user, obj/item/tool)
 	return
+
+/atom/proc/holomapAlwaysDraw()
+	return TRUE

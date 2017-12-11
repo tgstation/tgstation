@@ -346,6 +346,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //Hallway
 
+/area/hallway
+	holomap_color = HOLOMAP_AREACOLOR_HALLWAYS
+
 /area/hallway/primary/aft
 	name = "Aft Primary Hallway"
 	icon_state = "hallA"
@@ -448,6 +451,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Bridge"
 	icon_state = "bridge"
 	music = "signal"
+	holomap_color = HOLOMAP_AREACOLOR_COMMAND
+	holomap_marker = "bridge"
+	holomap_filter = HOLOMAP_FILTER_ERT
 
 /area/bridge/meeting_room
 	name = "Heads of Staff Meeting Room"
@@ -467,10 +473,16 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/heads/captain
 	name = "Captain's Office"
 	icon_state = "captain"
+	holomap_marker = "cap"
+	holomap_filter = HOLOMAP_FILTER_ERT
+	holomap_color = HOLOMAP_AREACOLOR_COMMAND
 
 /area/crew_quarters/heads/captain/private
 	name = "Captain's Quarters"
 	icon_state = "captain"
+
+/area/crew_quarters/heads
+	holomap_color = HOLOMAP_AREACOLOR_COMMAND
 
 /area/crew_quarters/heads/chief
 	name = "Chief Engineer's Office"
@@ -515,10 +527,13 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/comms
 	name = "Communications Relay"
 	icon_state = "tcomsatcham"
+	holomap_color = HOLOMAP_AREACOLOR_COMMAND
+	holomap_marker = "tcomms"
 
 /area/server
 	name = "Messaging Server Room"
 	icon_state = "server"
+	holomap_color = HOLOMAP_AREACOLOR_COMMAND
 
 //Crew
 
@@ -602,6 +617,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/bar
 	name = "Bar"
 	icon_state = "bar"
+	holomap_marker = "bar"
 
 /area/crew_quarters/bar/atrium
 	name = "Atrium"
@@ -668,12 +684,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/lawoffice
 	name = "Law Office"
 	icon_state = "law"
+	holomap_color = HOLOMAP_AREACOLOR_SECURITY
 
 
 //Engineering
 
 /area/engine
 	ambientsounds = ENGINEERING
+	holomap_color = HOLOMAP_AREACOLOR_ENGINEERING
 
 /area/engine/engine_smes
 	name = "Engineering SMES"
@@ -728,6 +746,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	blob_allowed = FALSE
 	flags_1 = NONE
 	ambientsounds = ENGINEERING
+	holomap_color = HOLOMAP_AREACOLOR_ENGINEERING
 
 /area/solar/asteroid/aft
 	name = "Aft Asteroid Solar"
@@ -855,6 +874,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "teleporter"
 	music = "signal"
 	ambientsounds = ENGINEERING
+	holomap_color = HOLOMAP_AREACOLOR_COMMAND
 
 /area/teleporter/quantum/cargo
 	name = "Cargo Quantum Pad"
@@ -877,6 +897,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "gateway"
 	music = "signal"
 	ambientsounds = ENGINEERING
+	holomap_color = HOLOMAP_AREACOLOR_COMMAND
 
 //MedBay
 
@@ -884,6 +905,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Medical"
 	icon_state = "medbay3"
 	ambientsounds = MEDICAL
+	holomap_color = HOLOMAP_AREACOLOR_MEDICAL
 
 /area/medical/abandoned
 	name = "Abandoned Medbay"
@@ -984,6 +1006,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Security"
 	icon_state = "security"
 	ambientsounds = HIGHSEC
+	holomap_color = HOLOMAP_AREACOLOR_SECURITY
 
 /area/security/main
 	name = "Security Office"
@@ -996,6 +1019,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security/courtroom
 	name = "Courtroom"
 	icon_state = "courtroom"
+	holomap_color = HOLOMAP_AREACOLOR_SECURITY
 
 /area/security/prison
 	name = "Prison Wing"
@@ -1042,6 +1066,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security/nuke_storage
 	name = "Vault"
 	icon_state = "nuke_storage"
+	holomap_color = HOLOMAP_AREACOLOR_COMMAND
 
 /area/ai_monitored/nuke_storage
 	name = "Vault"
@@ -1102,6 +1127,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/quartermaster
 	name = "Quartermasters"
 	icon_state = "quart"
+	holomap_color = HOLOMAP_AREACOLOR_CARGO
 
 ///////////WORK IN PROGRESS//////////
 
@@ -1174,6 +1200,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/science
 	name = "Science Division"
 	icon_state = "toxlab"
+	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
 
 /area/science/lab
 	name = "Research and Development"
@@ -1284,11 +1311,13 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "EVA Storage"
 	icon_state = "eva"
 	clockwork_warp_allowed = FALSE
+	holomap_color = HOLOMAP_AREACOLOR_COMMAND
 
 /area/storage/secure
 	name = "Secure Storage"
 	icon_state = "storage"
 	clockwork_warp_allowed = FALSE
+	holomap_color = HOLOMAP_AREACOLOR_COMMAND
 
 /area/storage/emergency/starboard
 	name = "Starboard Emergency Storage"
@@ -1301,6 +1330,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/storage/tech
 	name = "Technical Storage"
 	icon_state = "auxstorage"
+	holomap_color = HOLOMAP_AREACOLOR_ENGINEERING
 
 /area/storage/testroom
 	requires_power = FALSE
@@ -1366,6 +1396,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Armory"
 	icon_state = "armory"
 	ambientsounds = HIGHSEC
+	holomap_color = HOLOMAP_AREACOLOR_COMMAND
+	holomap_marker = "armory"
+	holomap_filter = HOLOMAP_FILTER_STATIONMAP_STRATEGIC
 
 /area/ai_monitored/storage/eva
 	name = "EVA Storage"
@@ -1380,6 +1413,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	//Turret_protected
 
 /area/ai_monitored/turret_protected
+	holomap_color = HOLOMAP_AREACOLOR_COMMAND
 	ambientsounds = list('sound/ambience/ambimalf.ogg', 'sound/ambience/ambitech.ogg', 'sound/ambience/ambitech2.ogg', 'sound/ambience/ambiatmos.ogg', 'sound/ambience/ambiatmos2.ogg')
 
 /area/ai_monitored/turret_protected/ai_upload
@@ -1392,6 +1426,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/ai_monitored/turret_protected/ai
 	name = "AI Chamber"
+	holomap_marker = "ai"
 	icon_state = "ai_chamber"
 
 /area/ai_monitored/turret_protected/aisat

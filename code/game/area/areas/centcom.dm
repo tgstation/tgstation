@@ -155,6 +155,8 @@
 	noteleport = TRUE
 	hidden = TRUE
 	ambientsounds = REEBE
+	holomap_color = HOLOMAP_AREACOLOR_REEBE
+	holomap_filter = HOLOMAP_FILTER_CLOCKCULT
 
 /area/reebe/city_of_cogs
 	name = "City of Cogs"

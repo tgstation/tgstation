@@ -1511,9 +1511,22 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 				return "\[[url_encode(thing.tag)]\]"
 	return "\ref[input]"
 
+
+/atom/proc/contents_in_typecache(var/list/typecache)
+	var/list/processing_list = list(contents)
+	. = list()
+	while(processing_list.len)
+		var/atom/A = processing_list[1]
+		if(is_type_in_typecache(A, typecache))
+			. += A
+		processing_list.Cut(1, 2)
+		if(LAZYLEN(A.contents))
+			processing_list += A.contents
+
 //Returns a list of all servants of Ratvar and observers.
 /proc/servants_and_ghosts()
 	. = list()
 	for(var/V in GLOB.player_list)
 		if(is_servant_of_ratvar(V) || isobserver(V))
 			. += V
+
