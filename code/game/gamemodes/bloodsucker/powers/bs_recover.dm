@@ -23,7 +23,7 @@
 	if(!..())// DEFAULT CHECKS
 		return 0
 	// No Target
-	if (user.getStaminaLoss() <= 0 && !user.IsStun() && !user.pulledby)
+	if (user.getStaminaLoss() <= 0 && !user.IsStun() && !user.IsKnockdown() && !user.pulledby)
 		to_chat(user, "<span class='warning'>You must currently be grabbed or stunned.</span>")
 		return 0
 	return 1
@@ -45,6 +45,7 @@
 		new /datum/forced_movement(C, get_ranged_target_turf(C, send_dir, 2), 0.5, FALSE)
 		user.visible_message("<span class='danger'>[user] has knocked [C] down!</span>", \
 		 			 		 "<span class='danger'>You shake off [C]'s hold over you!</span>", null, COMBAT_MESSAGE_RANGE)
+		user.pulledby = null
 	else
 		to_chat(user, "<span class='notice'>You leap to your feet, fully recovered!</span>")
 
@@ -52,6 +53,8 @@
 	user.setStaminaLoss(0, 0)
 	user.SetStun(0, 0)
 	user.SetKnockdown(0, 0)
+	user.stuttering = 0
+
 	//user.SetUnconscious(0, 0)
 	user.update_canmove()
 
