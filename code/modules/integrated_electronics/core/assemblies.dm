@@ -403,7 +403,17 @@
 
 	return acting_object.drop_location()
 
+/obj/item/device/electronic_assembly/calc
+	icon_state = "setup_small_calc"
+	desc = "It's a case, for building small electronics with. This one resembles a pocket calculator."
 
+/obj/item/device/electronic_assembly/clam
+	icon_state = "setup_small_clam"
+	desc = "It's a case, for building small electronics with. This one has a clamshell design."
+
+/obj/item/device/electronic_assembly/simple
+	icon_state = "setup_small_simple"
+	desc = "It's a case, for building small electronics with. This one has a simple design."
 
 /obj/item/device/electronic_assembly/medium
 	name = "electronic mechanism"
@@ -412,6 +422,18 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	max_components = IC_MAX_SIZE_BASE * 2
 	max_complexity = IC_COMPLEXITY_BASE * 2
+
+/obj/item/device/electronic_assembly/medium/box
+	icon_state = "setup_medium_box"
+	desc = "It's a case, for building medium-sized electronics with. This one has a boxy design."
+
+/obj/item/device/electronic_assembly/medium/clam
+	icon_state = "setup_medium_clam"
+	desc = "It's a case, for building medium-sized electronics with. This one has a clamshell design."
+
+/obj/item/device/electronic_assembly/medium/medical
+	icon_state = "setup_medium_med"
+	desc = "It's a case, for building medium-sized electronics with. This one resembles some type of medical apparatus."
 
 /obj/item/device/electronic_assembly/large
 	name = "electronic machine"
@@ -438,6 +460,18 @@
 		return
 	..()
 
+/obj/item/device/electronic_assembly/large/scope
+	icon_state = "setup_large_scope"
+	desc = "It's a case, for building large electronics with. This one resembles an oscilloscope."
+
+/obj/item/device/electronic_assembly/large/terminal
+	icon_state = "setup_large_terminal"
+	desc = "It's a case, for building large electronics with. This one resembles a computer terminal."
+
+/obj/item/device/electronic_assembly/large/arm
+	icon_state = "setup_large_arm"
+	desc = "It's a case, for building large electronics with. This one resembles a robotic arm."
+
 /obj/item/device/electronic_assembly/drone
 	name = "electronic drone"
 	icon_state = "setup_drone"
@@ -448,3 +482,7 @@
 
 /obj/item/device/electronic_assembly/drone/can_move()
 	return TRUE
+
+/obj/item/device/electronic_assembly/drone/arms
+	icon_state = "setup_drone_arms"
+	desc = "It's a case, for building mobile electronics with. This one is armed and dangerous."

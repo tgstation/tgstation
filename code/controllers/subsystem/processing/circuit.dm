@@ -45,9 +45,19 @@ PROCESSING_SUBSYSTEM_DEF(circuit)
 
 	circuit_fabricator_recipe_list["Assemblies"] = list(
 		/obj/item/device/electronic_assembly,
+		/obj/item/device/electronic_assembly/calc,
+		/obj/item/device/electronic_assembly/clam,
+		/obj/item/device/electronic_assembly/simple,
 		/obj/item/device/electronic_assembly/medium,
+		/obj/item/device/electronic_assembly/medium/box,
+		/obj/item/device/electronic_assembly/medium/clam,
+		/obj/item/device/electronic_assembly/medium/medical,
 		/obj/item/device/electronic_assembly/large,
-		/obj/item/device/electronic_assembly/drone
+		/obj/item/device/electronic_assembly/large/scope,
+		/obj/item/device/electronic_assembly/large/terminal,
+		/obj/item/device/electronic_assembly/large/arm,
+		/obj/item/device/electronic_assembly/drone,
+		/obj/item/device/electronic_assembly/drone/arms
 		///obj/item/weapon/implant/integrated_circuit
 		)
 
