@@ -247,9 +247,15 @@
 /obj/item/integrated_circuit/manipulation/plant_module/do_work()
 	..()
 	var/turf/T = get_turf(src)
-	var/obj/machinery/hydroponics/AM = get_pin_data_as_type(IC_INPUT, 1, /obj/machinery/hydroponics)
+	var/obj/machinery/hydroponics/OM = get_pin_data_as_type(IC_INPUT, 1, /obj/machinery/hydroponics)
+	var/obj/machinery/hydroponics/AM = OM
+	if(istype(OM,/obj/structure/spacevine))
+		if(get_pin_data(IC_INPUT, 2)==2)
+			qdel(OM)
+			activate_pin(2)
+			return
 	if(!istype(AM)) //Invalid input
-		return
+		return FALSE
 	var/mob/living/M = get_turf(AM)
 	if(!M.Adjacent(T))
 		return //Can't reach
@@ -276,6 +282,7 @@
 				qdel(AM.myseed)
 				AM.myseed = null
 			AM.weedlevel = 0 //Has a side effect of cleaning up those nasty weeds
+			AM.dead = 0
 			AM.update_icon()
 		else
 			activate_pin(2)

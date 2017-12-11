@@ -21,7 +21,7 @@
 	volume = 100
 
 	complexity = 20
-	cooldown_per_use = 1 SECONDS
+	cooldown_per_use = 30 SECONDS
 	inputs = list()
 	outputs = list(
 		"volume used" = IC_PINTYPE_NUMBER,
@@ -318,6 +318,84 @@
 	complexity = 16
 	spawn_flags = IC_SPAWN_RESEARCH
 
+/obj/item/integrated_circuit/reagent/storage/grinder
+	name = "reagent grinder"
+	desc = "This is reagent grinder.It accepts ref to something and refines it into reagents. Can store up to 100u."
+	icon_state = "blender"
+	extended_desc = ""
+	inputs = list(
+		"target" = IC_PINTYPE_REF,
+		)
+	outputs = list(
+		"volume used" = IC_PINTYPE_NUMBER,
+		"self reference" = IC_PINTYPE_REF
+		)
+	activators = list(
+		"grind" = IC_PINTYPE_PULSE_IN,
+		"on grind" = IC_PINTYPE_PULSE_OUT,
+		"on fail" = IC_PINTYPE_PULSE_OUT
+		)
+	volume = 100
+	power_draw_per_use = 150
+	complexity = 16
+	spawn_flags = IC_SPAWN_RESEARCH
+
+/obj/item/integrated_circuit/reagent/storage/grinder/do_work()
+	if(reagents.total_volume >= reagents.maximum_volume)
+		activate_pin(3)
+		return FALSE
+	var/obj/item/I = get_pin_data_as_type(IC_INPUT, 1, /obj/item)
+	if(istype(I))
+		if(check_target(I))
+			if(I.on_grind(src) != -1)
+				if(I.grind_results)
+					reagents.add_reagent_list(I.grind_results)
+					if(I.reagents)
+						I.reagents.trans_to(src, I.reagents.total_volume)
+					qdel(I)
+					activate_pin(2)
+					return TRUE
+	activate_pin(3)
+	return FALSE
+
+obj/item/integrated_circuit/reagent/storage/juicer
+	name = "reagent juicer"
+	desc = "This is reagent juicer.It accepts ref to something and refines it into reagents. Can store up to 100u."
+	icon_state = "blender"
+	extended_desc = ""
+	inputs = list(
+		"target" = IC_PINTYPE_REF,
+		)
+	outputs = list(
+		"volume used" = IC_PINTYPE_NUMBER,
+		"self reference" = IC_PINTYPE_REF
+		)
+	activators = list(
+		"juice" = IC_PINTYPE_PULSE_IN,
+		"on juice" = IC_PINTYPE_PULSE_OUT,
+		"on fail" = IC_PINTYPE_PULSE_OUT
+		)
+	volume = 100
+	power_draw_per_use = 150
+	complexity = 16
+	spawn_flags = IC_SPAWN_RESEARCH
+
+/obj/item/integrated_circuit/reagent/storage/juicer/do_work()
+	if(reagents.total_volume >= reagents.maximum_volume)
+		activate_pin(3)
+		return FALSE
+	var/obj/item/I = get_pin_data_as_type(IC_INPUT, 1, /obj/item)
+	if(istype(I))
+		if(check_target(I))
+			if(I.juice_results)
+				if(I.on_juice() != -1)
+					reagents.add_reagent_list(I.juice_results)
+					qdel(I)
+					activate_pin(2)
+					return TRUE
+	activate_pin(3)
+	return FALSE
+
 /obj/item/integrated_circuit/reagent/storage/scan
 	name = "reagent scanner"
 	desc = "Stores liquid inside, and away from electrical components. Can store up to 60u. On pulse this beaker will send list of contained reagents."
@@ -395,7 +473,8 @@
 	if(!source.reagents || !target.reagents)
 		return
 
-	if(!source.is_drainable() || !target.is_refillable())
+	// FALSE in those procs makes mobs invalid targets.
+	if(!source.is_drawable(FALSE) || !target.is_injectable(FALSE))
 		return
 
 	if(target.reagents.maximum_volume - target.reagents.total_volume <= 0)
@@ -410,4 +489,46 @@
 				source.reagents.trans_id_to(target, G.id, transfer_amount)
 	activate_pin(2)
 	push_data()
+	
+/obj/item/integrated_circuit/reagent/storage/heater
+	name = "chemical heater"
+	desc = "Stores liquid inside, and away from electrical components.  Can store up to 60u.  Will heat or freeze reagents \
+	to target temperature, when turned on."
+	icon_state = "heater"
+	container_type = OPENCONTAINER_1
+	complexity = 8
+	inputs = list(
+		"target temperature" = IC_PINTYPE_NUMBER,
+		"on" = IC_PINTYPE_BOOLEAN
+		)
+	inputs_default = list("1" = 300)
+	outputs = list("volume used" = IC_PINTYPE_NUMBER,"self reference" = IC_PINTYPE_REF,"temperature" = IC_PINTYPE_NUMBER)
+	spawn_flags = IC_SPAWN_RESEARCH
+	var/heater_coefficient = 0.1
 
+/obj/item/integrated_circuit/reagent/storage/heater/on_data_written()
+	if(get_pin_data(IC_INPUT, 2))
+		power_draw_idle = 30
+	else
+		power_draw_idle = 0
+
+/obj/item/integrated_circuit/reagent/storage/heater/Initialize()
+	.=..()
+	START_PROCESSING(SScircuit, src)
+
+/obj/item/integrated_circuit/reagent/storage/heater/Destroy()
+	STOP_PROCESSING(SScircuit, src)
+	return ..()
+
+/obj/item/integrated_circuit/reagent/storage/heater/process()
+	if(power_draw_idle)
+		var/target_temperature = get_pin_data(IC_INPUT, 1)
+		if(reagents.chem_temp > target_temperature)
+			reagents.chem_temp += min(-1, (target_temperature - reagents.chem_temp) * heater_coefficient)
+		if(reagents.chem_temp < target_temperature)
+			reagents.chem_temp += max(1, (target_temperature - reagents.chem_temp) * heater_coefficient)
+
+		reagents.chem_temp = round(reagents.chem_temp)
+		reagents.handle_reactions()
+		set_pin_data(IC_OUTPUT, 3, reagents.chem_temp)
+		push_data()

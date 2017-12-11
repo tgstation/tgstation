@@ -128,7 +128,7 @@
 	var/mob/living/carbon/human/H = get_pin_data_as_type(IC_INPUT, 1, /mob/living/carbon/human)
 	if(!istype(H)) //Invalid input
 		return
-	if(H in view(get_turf(H))) // Like medbot's analyzer it can be used in range..
+	if(H in view(get_turf(src))) // Like medbot's analyzer it can be used in range..
 		var/total_health = round(H.health/H.getMaxHealth(), 0.01)*100
 		var/missing_health = H.getMaxHealth() - H.health
 
@@ -142,6 +142,50 @@
 
 	push_data()
 	activate_pin(2)
+
+/obj/item/integrated_circuit/input/slime_scanner
+	name = "integrated advanced medical analyser"
+	desc = "A very small version of the medbot's medical analyser.  This allows the machine to know how healthy someone is.  \
+	This type is much more precise, allowing the machine to know much more about the target than a normal analyzer."
+	icon_state = "medscan_adv"
+	complexity = 12
+	inputs = list("\<REF\> target")
+	outputs = list(
+		"colour"		     = IC_PINTYPE_STRING,
+		"adult"	             = IC_PINTYPE_BOOLEAN,
+		"nutrition"			 = IC_PINTYPE_NUMBER,
+		"change"		     = IC_PINTYPE_NUMBER,
+		"health"		     = IC_PINTYPE_NUMBER,
+		"possible mutation"	 = IC_PINTYPE_LIST,
+		"genetic destability"= IC_PINTYPE_NUMBER,
+		"slime core amount"	 = IC_PINTYPE_NUMBER,
+		"Growth progress"	 = IC_PINTYPE_NUMBER,
+	)
+	activators = list("scan" = IC_PINTYPE_PULSE_IN, "on scanned" = IC_PINTYPE_PULSE_OUT)
+	spawn_flags = IC_SPAWN_RESEARCH
+	power_draw_per_use = 80
+
+/obj/item/integrated_circuit/input/slime_scanner/do_work()
+	var/mob/living/simple_animal/slime/T = get_pin_data_as_type(IC_INPUT, 1, /mob/living/carbon/human)
+	if(!isslime(T)) //Invalid input
+		return
+	if(T in view(get_turf(src))) // Like medbot's analyzer it can be used in range..
+
+		set_pin_data(IC_OUTPUT, 1, T.colour)
+		set_pin_data(IC_OUTPUT, 2, T.is_adult)
+		set_pin_data(IC_OUTPUT, 3, T.nutrition/T.get_max_nutrition())
+		set_pin_data(IC_OUTPUT, 4, T.powerlevel)
+		set_pin_data(IC_OUTPUT, 5, round(T.health/T.maxHealth,0.01)*100)
+		set_pin_data(IC_OUTPUT, 6, uniqueList(T.slime_mutation))
+		set_pin_data(IC_OUTPUT, 7, T.mutation_chance)
+		set_pin_data(IC_OUTPUT, 8, T.cores)
+		set_pin_data(IC_OUTPUT, 9, T.amount_grown/SLIME_EVOLUTION_THRESHOLD)
+
+
+	push_data()
+	activate_pin(2)
+
+
 
 /obj/item/integrated_circuit/input/plant_scanner
 	name = "integrated plant analyzer"
@@ -180,7 +224,7 @@
 		return
 	for(var/i=1, i<=outputs.len, i++)
 		set_pin_data(IC_OUTPUT, i, null)
-	if(H in view(get_turf(H))) // Like medbot's analyzer it can be used in range..
+	if(H in view(get_turf(src))) // Like medbot's analyzer it can be used in range..
 		if(H.myseed)
 			set_pin_data(IC_OUTPUT, 1, H.myseed.plantname)
 			set_pin_data(IC_OUTPUT, 2, H.age)
@@ -228,7 +272,7 @@
 		return
 	for(var/i=1, i<=outputs.len, i++)
 		set_pin_data(IC_OUTPUT, i, null)
-	if(H in view(get_turf(H))) // Like medbot's analyzer it can be used in range..
+	if(H in view(get_turf(src))) // Like medbot's analyzer it can be used in range..
 		if(H.myseed)
 			for(var/datum/plant_gene/reagent/G in H.myseed.genes)
 				greagents.Add(G.get_name())
