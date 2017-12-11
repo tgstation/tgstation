@@ -108,7 +108,7 @@
 			// realX = _x + compX*cos - compY*sin
 			// realY = _y + compY*cos - compX*sin
 			// locate(realX, realY, _z)
-			var/turf/T = locate(_x + compX*cos - compY*sin, _y + compY*cos - compX*sin, _z)
+			var/turf/T = locate(_x + compX*cos - compY*sin, _y + compY*cos + compX*sin, _z)
 			.[T] = NONE
 
 #ifdef DOCKING_PORT_HIGHLIGHT
