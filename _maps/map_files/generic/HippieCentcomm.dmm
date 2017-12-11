@@ -8111,7 +8111,7 @@
 	width = 18
 	},
 /obj/structure/fans/tiny,
-/turf/open/space/basic,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
 "vs" = (
 /obj/structure/sign/securearea{
@@ -60074,11 +60074,11 @@ Ic
 Ep
 Ep
 Mh
-Mj
-Ml
-Mn
-Mp
-Mr
+Mh
+Mh
+Mh
+Mh
+Mh
 Iv
 Iv
 Iv
@@ -61616,11 +61616,11 @@ If
 Gq
 Ep
 Mi
-Mk
-Mm
-Mo
-Mq
-Ms
+Mi
+Mi
+Mi
+Mi
+Mi
 Iv
 Iv
 Iv
