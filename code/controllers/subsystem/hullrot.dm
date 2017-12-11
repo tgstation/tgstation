@@ -15,7 +15,7 @@ SUBSYSTEM_DEF(hullrot)
 	var/currently_playing = -1
 	var/checked_events = FALSE
 	var/subspace_ticker = 0
-	var/subspace_cache
+	var/subspace_groups
 
 // ----------------------------------------------------------------------------
 // Initialization
@@ -72,6 +72,9 @@ SUBSYSTEM_DEF(hullrot)
 	message_admins("[name] warning: [msg]")
 
 /datum/controller/subsystem/hullrot/proc/control(what, data)
+	if (!loaded_version || !can_fire)
+		return
+
 	checked_events = TRUE
 	var/events
 	if (what)
@@ -96,7 +99,7 @@ SUBSYSTEM_DEF(hullrot)
 
 	if (subspace_ticker >= 0)
 		subspace_ticker += wait
-		if (subspace_ticker >= 50 || !subspace_cache)
+		if (subspace_ticker >= 50 || !subspace_groups)
 			subspace_ticker = -1
 			INVOKE_ASYNC(src, .proc/subspace_update)
 
@@ -120,10 +123,11 @@ SUBSYSTEM_DEF(hullrot)
 				groups["[level]"] = group
 			group += 1
 
-	var/new_groups = list2params(groups)
-	if (subspace_cache != new_groups)
-		subspace_cache = new_groups
+	if (list2params(subspace_groups) != list2params(groups))
+		subspace_groups = groups
 		control("Linkage", groups)
+		for (var/mob/living/L in GLOB.player_list)
+			L.hullrot_update()
 	subspace_ticker = 0
 
 // ----------------------------------------------------------------------------
@@ -145,8 +149,6 @@ SUBSYSTEM_DEF(hullrot)
 	control("SetZ", list("who" = C.ckey, "z" = z))
 
 /datum/controller/subsystem/hullrot/proc/set_ghost(client/C)
-	if (!loaded_version)
-		return
 	control("SetGhost", C.ckey)
 
 // ----------------------------------------------------------------------------

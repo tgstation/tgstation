@@ -13,12 +13,16 @@
 		statpanel("Radio")  // process on the regular even if it's invisible
 		var/list/keys_used = list()
 
+		var/turf/T = get_turf(src)
 		for (var/obj/item/device/radio/R in view(1))
 			if (!istype(R, /obj/item/device/radio/intercom) && !(R in src))
 				continue  // can't talk into a non-intercom you're not holding
 			if (!R.on || R.wires.is_cut(WIRE_TX) || (istype(R, /obj/item/device/radio/headset) && !R.listening))
-				stat(null, "\the [R] (OFF)")
+				stat(null, "\the [R] (off)")
 				continue  // can't talk into a disabled radio
+			if (R.subspace_transmission && !R.independent && !SShullrot.subspace_groups["[T.z]"])
+				stat(null, "\the [R] (not responding)")
+				continue  // can't talk into headsets while comms are down
 
 			stat(null, "\the [R]")
 			hullrot_stat(keys_used, R, "Tuner", R.frequency)
@@ -102,11 +106,12 @@
 		hullrot_cache["z"] = T.z
 		SShullrot.set_z(client, T.z)
 
+	var/speak_range = hullrot_ptt_freq ? 1 : 7
 	var/hearers = get_hearers_in_view(7, src)
 	if (can_speak)
 		var/list/local_with = list()
 		for(var/mob/living/L in hearers)
-			if (L.client && L != src)
+			if (L.client && L != src && get_dist(src, L) <= speak_range)
 				local_with += L.ckey
 		var/new_local = list2params(local_with)
 		if (hullrot_cache["local_with"] != new_local)
@@ -118,8 +123,10 @@
 	for(var/obj/item/device/radio/R in hearers)
 		if (get_dist(src, R) > R.canhear_range || !R.on)
 			continue
+		if (R.subspace_transmission && !R.independent && !SShullrot.subspace_groups["[T.z]"])
+			continue
 
-		if (can_speak && R.broadcasting && !R.wires.is_cut(WIRE_TX))
+		if (can_speak && R.broadcasting && !R.wires.is_cut(WIRE_TX) && get_dist(src, R) <= speak_range)
 			hot_freqs |= R.frequency
 
 		if (can_hear && R.listening && !R.wires.is_cut(WIRE_RX) && R.can_receive(R.frequency, list(R.z)))
@@ -162,6 +169,10 @@
 	for (var/mob/living/M in get_hearers_in_view(canhear_range, src))
 		if (M.client)
 			M.hullrot_update()
+
+/obj/item/device/radio/Initialize()
+	..()
+	hullrot_check_all_hearers()
 
 /obj/item/device/radio/ui_act(action, params, datum/tgui/ui)
 	. = ..()
