@@ -4,6 +4,7 @@ GLOBAL_LIST_EMPTY(blob_cores)
 GLOBAL_LIST_EMPTY(overminds)
 GLOBAL_LIST_EMPTY(blob_nodes)
 
+
 /mob/camera/blob
 	name = "Blob Overmind"
 	real_name = "Blob Overmind"
@@ -33,10 +34,12 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	var/manualplace_min_time = 600 //in deciseconds //a minute, to get bearings
 	var/autoplace_max_time = 3600 //six minutes, as long as should be needed
 	var/list/blobs_legit = list()
+	var/max_count = 0 //The biggest it got before death/win
 	var/blobwincount = 400
 	var/victory_in_progress = FALSE
 
 /mob/camera/blob/Initialize(mapload, starting_points = 60)
+	validate_location()
 	blob_points = starting_points
 	manualplace_min_time += world.time
 	autoplace_max_time += world.time
@@ -50,10 +53,17 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	color = blob_reagent_datum.complementary_color
 	if(blob_core)
 		blob_core.update_icon()
-
 	SSshuttle.registerHostileEnvironment(src)
-
 	.= ..()
+
+/mob/camera/blob/proc/validate_location()
+	var/turf/T = get_turf(src)
+	var/area/A = get_area(T)
+	if(((A && !A.blob_allowed) || !T || !(T.z in GLOB.station_z_levels)) && LAZYLEN(GLOB.blobstart))
+		T = get_turf(pick(GLOB.blobstart))
+	if(!T)
+		CRASH("No blobspawnpoints and blob spawned in nullspace.")
+	forceMove(T)
 
 /mob/camera/blob/Life()
 	if(!blob_core)
@@ -73,6 +83,9 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		max_blob_points = INFINITY
 		blob_points = INFINITY
 		addtimer(CALLBACK(src, .proc/victory), 450)
+	
+	if(!victory_in_progress && max_count < blobs_legit.len)
+		max_count = blobs_legit.len
 	..()
 
 
@@ -111,6 +124,11 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			A.layer = BELOW_MOB_LAYER
 			A.invisibility = 0
 			A.blend_mode = 0
+	var/datum/antagonist/blob/B = mind.has_antag_datum(/datum/antagonist/blob)
+	if(B)
+		var/datum/objective/blob_takeover/main_objective = locate() in B.objectives
+		if(main_objective)
+			main_objective.completed = TRUE
 	to_chat(world, "<B>[real_name] consumed the station in an unstoppable tide!</B>")
 	SSticker.news_report = BLOB_WIN
 	SSticker.force_ending = 1
@@ -134,7 +152,6 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 /mob/camera/blob/Login()
 	..()
-	sync_mind()
 	to_chat(src, "<span class='notice'>You are the overmind!</span>")
 	blob_help()
 	update_health_hud()
@@ -224,3 +241,70 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			return 0
 		loc = NewLoc
 		return 1
+
+/mob/camera/blob/mind_initialize()
+	. = ..()
+	var/datum/antagonist/blob/B = mind.has_antag_datum(/datum/antagonist/blob)
+	if(!B)
+		mind.add_antag_datum(/datum/antagonist/blob)
+
+//TODO: if human give pop button
+/datum/antagonist/blob
+	name = "Blob"
+	roundend_category = "blobs"
+	job_rank = ROLE_BLOB
+
+	var/datum/action/innate/blobpop/pop_action
+	var/starting_points_human_blob = 60
+	var/point_rate_human_blob = 2
+
+/datum/antagonist/blob/roundend_report()
+	var/basic_report = ..()
+	//Display max blobpoints for blebs that lost
+	if(isovermind(owner.current)) //embarrasing if not
+		var/mob/camera/blob/overmind = owner.current
+		if(!overmind.victory_in_progress) //if it won this doesn't really matter
+			var/point_report = "<br><b>[owner.name]</b> took over [overmind.max_count] tiles at the height of it's growth."
+			return basic_report+point_report
+	return basic_report
+
+/datum/antagonist/blob/greet()
+	if(!isovermind(owner.current))
+		to_chat(owner,"<span class='userdanger'>You feel bloated.</span>")
+
+/datum/antagonist/blob/on_gain()
+	create_objectives()
+	. = ..()
+
+/datum/antagonist/blob/proc/create_objectives()
+	var/datum/objective/blob_takeover/main = new
+	main.owner = owner
+	objectives += main
+	owner.objectives |= objectives
+
+/datum/antagonist/blob/apply_innate_effects(mob/living/mob_override)
+	if(!isovermind(owner.current))
+		if(!pop_action)
+			pop_action = new
+		pop_action.Grant(owner.current)
+
+/datum/objective/blob_takeover
+	explanation_text = "Reach critical mass!"
+
+//Non-overminds get this on blob antag assignment
+/datum/action/innate/blobpop
+	name = "Pop"
+	desc = "Unleash the blob"
+	icon_icon = 'icons/mob/blob.dmi'
+	button_icon_state = "blob"
+
+/datum/action/innate/blobpop/Activate()
+	var/mob/old_body = owner
+	var/datum/antagonist/blob/blobtag = owner.mind.has_antag_datum(/datum/antagonist/blob)
+	if(!blobtag)
+		Remove()
+		return
+	var/mob/camera/blob/B = new /mob/camera/blob(get_turf(old_body), blobtag.starting_points_human_blob)
+	owner.mind.transfer_to(B)
+	old_body.gib()
+	B.place_blob_core(blobtag.point_rate_human_blob, pop_override = TRUE)
