@@ -126,7 +126,6 @@
 /datum/special_trait/ultradense
 	name = "Ultradense"
 	desc = "Found in exceptionally dense materials, allows bullets to penetrate and adds knockback to all weapons"
-	effectiveness = 100
 
 
 /datum/special_trait/ultradense/on_apply(obj/item/I, type)
@@ -194,26 +193,24 @@
 /datum/special_trait/unstable
 	name = "Unstable"
 	desc = "Stats randomly change when applied"
-	effectiveness = 100//so it's truly random and you can't get stuck with an OP weapon for an extended period of time
-
 
 /datum/special_trait/unstable/on_hit(atom/target, mob/user, obj/item/I, type)
 	if(type && I)
 		switch(type)
 			if(FORGED_MELEE_SINGLEHANDED)
 				var/obj/item/forged/F = I
-				F.force = rand(1, 100)
+				F.force = rand(1, 80)
 				F.speed = rand(CLICK_CD_RAPID, CLICK_CD_MELEE * 5)
 				F.stabby = rand(TRANSFER_BLUNT, TRANSFER_SHARPEST)
 			if(FORGED_MELEE_TWOHANDED)
 				var/obj/item/twohanded/forged/F = I
-				F.force_wielded = rand(1, 100)
+				F.force_wielded = rand(1, 80)
 				F.force_unwielded = max(0.1, F.force_wielded / 3)
 				F.speed = rand(CLICK_CD_RAPID, CLICK_CD_MELEE * 5)
 				F.stabby = rand(TRANSFER_BLUNT, TRANSFER_SHARPEST)
 			if(FORGED_BULLET_CASING)
 				var/obj/item/projectile/bullet/forged/F = I
-				F.damage = rand(1, 100)
+				F.damage = rand(1, 80)
 				F.speed = rand(0, 5)
 				F.damage_type = pick(BRUTE, BURN, TOX, OXY, CLONE)
 
@@ -327,34 +324,16 @@
 			if(FORGED_MELEE_SINGLEHANDED)
 				if(user)
 					var/obj/item/forged/F = I
-					for(var/atom/A in view(2, user))
-						if(isliving(A))
-							F.reagent_type.reaction_mob(A, TOUCH, 2)
-						else if(isturf(A))
-							F.reagent_type.reaction_turf(A, TOUCH, 2)
-						else if(isobj(A))
-							F.reagent_type.reaction_obj(A, TOUCH, 2)
+					splash(1, F, user, TOUCH, 2)
 
 			if(FORGED_MELEE_TWOHANDED)
 				if(user)
 					var/obj/item/twohanded/forged/F = I
-					for(var/atom/A in view(2, user))
-						if(isliving(A))
-							F.reagent_type.reaction_mob(A, TOUCH, 2)
-						else if(isturf(A))
-							F.reagent_type.reaction_turf(A, TOUCH, 2)
-						else if(isobj(A))
-							F.reagent_type.reaction_obj(A, TOUCH, 2)
+					splash(1, F, user, TOUCH, 2)
 
 			if(FORGED_BULLET_CASING)
 				var/obj/item/projectile/bullet/forged/F = I
-				for(var/atom/A in view(2, F))
-					if(isliving(A))
-						F.reagent_type.reaction_mob(A, TOUCH, 2)
-					else if(isturf(A))
-						F.reagent_type.reaction_turf(A, TOUCH, 2)
-					else if(isobj(A))
-						F.reagent_type.reaction_obj(A, TOUCH, 2)
+				splash(1, F, F, TOUCH, 2)
 
 
 /datum/special_trait/explosive
@@ -368,3 +347,12 @@
 			explosion(get_turf(I), 0, 1, 2, 4)
 		else if(user)
 			explosion(user, 0, 1, 2, 4)
+
+/datum/special_trait/proc/splash(radius, obj/item/forged/source, epicenter, type, amount)
+	for(var/atom/A in view(radius, epicenter))
+		if(isliving(A))
+			source.reagent_type.reaction_mob(A, type, amount)
+		else if(isturf(A))
+			source.reagent_type.reaction_turf(A, type, amount)
+		else if(isobj(A))
+			source.reagent_type.reaction_obj(A, type, amount)

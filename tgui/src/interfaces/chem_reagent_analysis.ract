@@ -1,0 +1,78 @@
+<ui-display title='Analyser'>
+  <ui-section label='{{data.item}}'>
+    <ui-button icon='Eject' state='{{data.item ? null : "disabled"}}' action='Eject'>Eject</ui-button>
+  </ui-section>
+</ui-display>
+<ui-display title='{{data.item}} Stats and Traits'>
+<ui-section label='{{data.reagent_analyse}}'>
+  <span>Density: '{{data.density}}'</span>
+</ui-section>
+</ui-display>
+<div class="display tabular">
+  <section class="candystripe">
+      <section class="cell bold">
+        Description
+        <br />
+      </section>
+      <section class="cell bold">
+        Name
+        <br />
+      </section>
+      <section class="cell bold">
+        Effectiveness
+        <br />
+      </section>
+    </section>
+  {{#each data.traits}}
+    <section class="candystripe">
+      <section class="cell">
+        {{desc}}
+      </section>
+      <section class="cell" align='right'>
+        {{name}}
+      </section>
+      <section class="cell" align='right'>
+        {{effectiveness}}
+      </section>
+    </section>
+  {{/each}}
+  <br />
+
+  <ui-display title='{{data.reagent_synthesis}} Traits'>
+    <ui-section>
+      <ui-bar min='0' max='100' value='{{data.volume}}'>{{data.reagent_synthesis}} {{data.volume}}</ui-bar>
+      <ui-button grid action= 'Empty' state='{{data.reagent_synthesis ? null : "disabled"}}'>
+        Empty
+      </ui-button>
+    </ui-section>
+  </ui-display>
+  <section class="candystripe">
+      <section class="cell">
+        Description
+        <br />
+      </section>
+      <section class="cell bold">
+        Name
+        <br />
+      </section>
+      <section class="cell bold">
+        Effectiveness
+        <br />
+      </section>
+    </section>
+  {{#each data.traitsadd}}
+    <section class="candystripe">
+      <section class="cell">
+        {{desc}}
+      </section>
+      <section class="cell" align='right'>
+        {{name}}
+        <ui-button grid action='Add_Trait' state='{{data.item ? null : "disabled"}}' params='{ "name" : {{name}} }'>
+          Add
+        </ui-button>
+      </section>
+      <section class="cell" align='right'>
+        {{effectiveness}}
+      </section>
+    </section>
+  {{/each}}
