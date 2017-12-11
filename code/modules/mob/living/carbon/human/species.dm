@@ -1342,7 +1342,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						if(prob(20))
 							H.gain_trauma(/datum/brain_trauma/mild/concussion)
 					else
-						H.adjustBrainLoss(force / 4)
+						H.adjustBrainLoss(I.force / 4)
 
 					if(prob(I.force + ((100 - H.health)/2)) && H != user)
 						var/datum/antagonist/rev/rev = H.mind.has_antag_datum(/datum/antagonist/rev)

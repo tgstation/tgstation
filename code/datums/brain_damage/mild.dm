@@ -124,7 +124,7 @@
 	..()
 
 /datum/brain_trauma/mild/healthy/on_lose()
-	target.set_screwyhud(SCREWYHUD_NONE)
+	owner.set_screwyhud(SCREWYHUD_NONE)
 	..()
 
 /datum/brain_trauma/mild/muscle_weakness
