@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - bugfix: "The dependency by Advanced Cybernetic Implants and Experimental Flight Equipment on Integrated HUDs has been restored."
