@@ -1,7 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - bugfix: "flightsuits should no longer disappear when you take them off involuntarily"
-  - bugfix: "beam rifles actually fire striaght now"
-  - bugfix: "click catchers now actually work"
-  - bugfix: "you no longer see space in areas you normally can't see, instead of black. in reality you can still see space but it's faint enough that you can't tell so I'll say I fixed it."
