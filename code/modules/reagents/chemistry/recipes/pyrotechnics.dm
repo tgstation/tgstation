@@ -139,7 +139,6 @@
 /datum/chemical_reaction/reagent_explosion/methsplosion
 	name = "Meth explosion"
 	id = "methboom1"
-	results = list("methboom1" = 1)
 	required_temp = 380 //slightly above the meth mix time.
 	required_reagents = list("methamphetamine" = 1)
 	strengthdiv = 6
@@ -154,9 +153,9 @@
 	..()
 
 /datum/chemical_reaction/reagent_explosion/methsplosion/methboom2
+	id = "methboom2"
 	required_reagents = list("diethylamine" = 1, "iodine" = 1, "phosphorus" = 1, "hydrogen" = 1) //diethylamine is often left over from mixing the ephedrine.
-	required_temp = 300 //room temperature, chilling it even a little will prevent the explosion 
-	results = list("methboom1" = 4) // this is ugly. Sorry goof.
+	required_temp = 300 //room temperature, chilling it even a little will prevent the explosion
 
 /datum/chemical_reaction/sorium
 	name = "Sorium"

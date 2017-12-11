@@ -11,29 +11,29 @@
 
 /datum/round_event/wizard/cursed_items/start()
 	var/item_set = pick("wizardmimic", "swords", "bigfatdoobie", "boxing", "voicemodulators", "catgirls2015")
-	var/list/wearslots	= list(slot_wear_suit, slot_shoes, slot_head, slot_wear_mask, slot_gloves, slot_ears)
-	var/list/loadout = list()
+	var/list/loadout[slots_amt]
 	var/ruins_spaceworthiness
 	var/ruins_wizard_loadout
-	loadout.len = 7
 
 	switch(item_set)
 		if("wizardmimic")
-			loadout = list(/obj/item/clothing/suit/wizrobe, /obj/item/clothing/shoes/sandal/magic, /obj/item/clothing/head/wizard)
+			loadout[slot_wear_suit] = /obj/item/clothing/suit/wizrobe
+			loadout[slot_shoes] = /obj/item/clothing/shoes/sandal/magic
+			loadout[slot_head] = /obj/item/clothing/head/wizard
 			ruins_spaceworthiness = 1
 		if("swords")
-			loadout[5] = /obj/item/katana/cursed
+			loadout[slot_hands] = /obj/item/katana/cursed
 		if("bigfatdoobie")
-			loadout[4] = /obj/item/clothing/mask/cigarette/rollie/trippy
+			loadout[slot_wear_mask] = /obj/item/clothing/mask/cigarette/rollie/trippy
 			ruins_spaceworthiness = 1
 		if("boxing")
-			loadout[4] = /obj/item/clothing/mask/luchador
-			loadout[6] = /obj/item/clothing/gloves/boxing
+			loadout[slot_wear_mask] = /obj/item/clothing/mask/luchador
+			loadout[slot_gloves] = /obj/item/clothing/gloves/boxing
 			ruins_spaceworthiness = 1
 		if("voicemodulators")
-			loadout[4] = /obj/item/clothing/mask/chameleon
+			loadout[slot_wear_mask] = /obj/item/clothing/mask/chameleon
 		if("catgirls2015")
-			loadout[3] = /obj/item/clothing/head/kitty
+			loadout[slot_head] = /obj/item/clothing/head/kitty
 			ruins_spaceworthiness = 1
 			ruins_wizard_loadout = 1
 
@@ -44,14 +44,13 @@
 			continue
 		if(item_set == "catgirls2015") //Wizard code means never having to say you're sorry
 			H.gender = FEMALE
-		var/list/slots		= list(H.wear_suit, H.shoes, H.head, H.wear_mask, H.gloves, H.ears) //add new slots as needed to back
 		for(var/i in 1 to loadout.len)
 			if(loadout[i])
 				var/obj/item/J = loadout[i]
 				var/obj/item/I = new J //dumb but required because of byond throwing a fit anytime new gets too close to a list
-				H.temporarilyRemoveItemFromInventory(slots[i], TRUE)
-				H.equip_to_slot_or_del(I, wearslots[i])
-				I.flags_1 |= NODROP_1
+				H.dropItemToGround(H.get_item_by_slot(i), TRUE)
+				H.equip_to_slot_or_del(I, i)
+				I.flags_1 |= NODROP_1 | DROPDEL_1
 				I.name = "cursed " + I.name
 
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)

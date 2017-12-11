@@ -104,15 +104,7 @@
 	else
 		atomsnowflake += "<b>[D]</b>"
 
-	var/formatted_type = "[type]"
-	if(length(formatted_type) > 25)
-		var/middle_point = length(formatted_type) / 2
-		var/splitpoint = findtext(formatted_type,"/",middle_point)
-		if(splitpoint)
-			formatted_type = "[copytext(formatted_type,1,splitpoint)]<br>[copytext(formatted_type,splitpoint)]"
-		else
-			formatted_type = "Type too long" //No suitable splitpoint (/) found.
-
+	var/formatted_type = replacetext("[type]", "/", "<wbr>/")
 	var/marked
 	if(holder && holder.marked_datum && holder.marked_datum == D)
 		marked = "<br><font size='1' color='red'><b>Marked Object</b></font>"
@@ -961,6 +953,42 @@
 
 			manipulate_organs(C)
 			href_list["datumrefresh"] = href_list["editorgans"]
+
+		else if(href_list["givetrauma"])
+			if(!check_rights(0))
+				return
+
+			var/mob/living/carbon/C = locate(href_list["givetrauma"]) in GLOB.mob_list
+			if(!istype(C))
+				to_chat(usr, "This can only be done to instances of type /mob/living/carbon")
+				return
+
+			var/list/traumas = subtypesof(/datum/brain_trauma)
+			var/result = input(usr, "Choose the brain trauma to apply","Traumatize") as null|anything in traumas
+			var/permanent = alert("Do you want to make the trauma unhealable?", "Permanently Traumatize", "Yes", "No")
+			if(!usr)
+				return
+			if(QDELETED(C))
+				to_chat(usr, "Mob doesn't exist anymore")
+				return
+
+			if(result)
+				C.gain_trauma(result, permanent)
+
+			href_list["datumrefresh"] = href_list["givetrauma"]
+
+		else if(href_list["curetraumas"])
+			if(!check_rights(0))
+				return
+
+			var/mob/living/carbon/C = locate(href_list["curetraumas"]) in GLOB.mob_list
+			if(!istype(C))
+				to_chat(usr, "This can only be done to instances of type /mob/living/carbon")
+				return
+
+			C.cure_all_traumas(TRUE, TRUE)
+
+			href_list["datumrefresh"] = href_list["curetraumas"]
 
 		else if(href_list["hallucinate"])
 			if(!check_rights(0))

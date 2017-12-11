@@ -1,7 +1,5 @@
 /obj/item/projectile/bullet/magnum
-	damage = 45
-	speed = 0.8
-	armour_penetration = 30
+	damage = 60
 
 /obj/item/projectile/bullet/c38 // Detectives .38 revolver
 	knockdown = 0

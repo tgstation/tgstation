@@ -11,6 +11,7 @@
 	icon = 'hippiestation/icons/obj/tools.dmi'
 	icon_state = "cutters_nuke"
 	toolspeed = 0.5
+	random_color = FALSE
 
 /obj/item/weldingtool/syndicate
 	name = "Precision welding tool"

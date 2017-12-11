@@ -183,7 +183,7 @@
 			var/obj/item/bodypart/L = I
 
 			for(var/obj/item/J in L.embedded_objects)
-				dat += "<tr><td><a href='byond://?src=\ref[src];embedded_object=\ref[J];embedded_limb=\ref[L]'>Embedded in [L]: [J]</a><br></td></tr>"
+				dat += "<tr><td><a href='byond://?src=\ref[src];embedded_object=\ref[J];embedded_limb=\ref[L]'>Embedded in [L]: [J] [J.pinned ? "(Pinned down)" : ""]</a><br></td></tr>" // Hippie - Show what item has them pinned
 
 	dat += {"</table>
 	<A href='?src=[REF(user)];mach_close=mob[REF(src)]'>Close</A>
@@ -219,7 +219,20 @@
 					return
 				L.embedded_objects -= I
 				L.receive_damage(I.embedded_unsafe_removal_pain_multiplier*I.w_class)//It hurts to rip it out, get surgery you dingus.
-				I.forceMove(get_turf(src))
+				
+				// Hippie Start - Remove pinned item
+				if (I.pinned)
+					do_pindown(src.pinned_to, 0)
+					src.pinned_to = null
+					src.anchored = FALSE
+					update_canmove()
+					I.pinned = null
+
+				// Don't move stacks because it could merge items still pinned
+				if (!istype(I, /obj/item/stack))
+					I.forceMove(get_turf(src))
+				// Hippie End
+				
 				usr.put_in_hands(I)
 				emote("scream")
 
@@ -897,8 +910,11 @@
 	if(!is_type_in_typecache(M, can_ride_typecache))
 		M.visible_message("<span class='warning'>[M] really can't seem to mount [src]...</span>")
 		return
-	if(!riding_datum)
-		riding_datum = new /datum/riding/human(src)
+	var/datum/component/riding/human/riding_datum = LoadComponent(/datum/component/riding/human)
+	riding_datum.ride_check_rider_incapacitated = TRUE
+	riding_datum.ride_check_ridden_incapacitated = TRUE
+	riding_datum.ride_check_rider_restrained = TRUE
+	riding_datum.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 6), TEXT_SOUTH = list(0, 6), TEXT_EAST = list(-6, 4), TEXT_WEST = list( 6, 4)))
 	if(buckled_mobs && ((M in buckled_mobs) || (buckled_mobs.len >= max_buckled_mobs)) || buckled || (M.stat != CONSCIOUS))
 		return
 	visible_message("<span class='notice'>[M] starts to climb onto [src]...</span>")
@@ -914,13 +930,6 @@
 		stop_pulling()
 	else
 		visible_message("<span class='warning'>[M] fails to climb onto [src]!</span>")
-
-/mob/living/carbon/human/unbuckle_mob(mob/living/M, force=FALSE)
-	if(iscarbon(M))
-		if(riding_datum)
-			riding_datum.unequip_buckle_inhands(M)
-			riding_datum.restore_position(M)
-	. = ..(M, force)
 
 /mob/living/carbon/human/species
 	var/race = null

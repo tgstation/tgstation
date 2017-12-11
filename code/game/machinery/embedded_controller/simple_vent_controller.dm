@@ -25,7 +25,7 @@
 
 		if("vent_clear")
 			var/datum/signal/signal = new
-			signal.transmission_method = 1 //radio signal
+			signal.transmission_method = TRANSMISSION_RADIO
 			signal.data = list(
 				"tag" = airpump_tag,
 				"sigtype"="command"
@@ -45,7 +45,7 @@
 	name = "vent controller"
 	density = FALSE
 
-	frequency = 1229
+	frequency = FREQ_ATMOS_CONTROL
 	power_channel = ENVIRON
 
 	// Setup parameters only

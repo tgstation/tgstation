@@ -1,5 +1,8 @@
 language: generic
 sudo: false
+branches:
+  except:
+  - ___TGS3TempBranch
 env:
     global:
     - BYOND_MAJOR="511"

@@ -28,14 +28,14 @@
 	desc = "An implant injected into another body, forcing the victim to obey any command by the user for around 15 to 20 mintues."
 	exclude_modes = list(/datum/game_mode/nuclear)
 	item = /obj/item/storage/box/syndie_kit/imp_mindslave
-	cost = 8
+	cost = 6
 	surplus = 20
 
 /datum/uplink_item/implants/greatermindslave
 	name = "Greater Mindslave Implant"
 	desc = "An implant injected into another body, forcing the victim to obey any command by the user, it does not expire like a regular mindslave implant."
 	item = /obj/item/storage/box/syndie_kit/imp_gmindslave
-	cost = 16
+	cost = 10
 
 /* Botany */
 /datum/uplink_item/role_restricted/lawnmower
@@ -43,14 +43,13 @@
 	desc = "A lawn mower is a machine utilizing one or more revolving blades to cut a grass surface to an even height, or bodies if that's your thing"
 	restricted_roles = list("Botanist")
 	cost = 14
-	item = /obj/vehicle/lawnmower/emagged
+	item = /obj/vehicle/ridden/lawnmower/emagged
 
-/datum/uplink_item/role_restricted/echainsaw
+/datum/uplink_item/dangerous/echainsaw
 	name = "Energy Chainsaw"
 	desc = "An incredibly deadly modified chainsaw with plasma-based energy blades instead of metal and a slick black-and-red finish. While it rips apart matter with extreme efficiency, it is heavy, large, and monstrously loud."
-	restricted_roles = list("Botanist", "Chef", "Bartender")
 	item = /obj/item/twohanded/required/chainsaw/energy
-	cost = 16
+	cost = 14
 
 /* Glock */
 /datum/uplink_item/dangerous/g17
@@ -67,7 +66,7 @@
 	cost = 1
 
 /datum/uplink_item/dangerous/revolver
-	cost = 10
+	cost = 13
 	surplus = 45
 
 /datum/uplink_item/nukeoffer/blastco
@@ -123,33 +122,33 @@
 			are dirt cheap but aren't as effective as .357 rounds."
 
 /datum/uplink_item/ammo/revolver
-	cost = 2
+	cost = 3
 
 /datum/uplink_item/dangerous/butterfly
 	name = "Energy Butterfly Knife"
 	desc = "A highly lethal and concealable knife that causes critical backstab damage when used with harm intent."
-	cost = 12//80 backstab damage and armour pierce isn't a fucking joke
+	cost = 8//80 backstab damage and armour pierce isn't a fucking joke
 	item = /obj/item/melee/transforming/butterfly/energy
 	surplus = 15
 
 /datum/uplink_item/dangerous/beenade
 	name = "Bee delivery grenade"
 	desc = "This grenade is filled with several random posionous bees. Fun for the whole family!"
-	cost = 4
+	cost = 2
 	item = /obj/item/grenade/spawnergrenade/beenade
 	surplus = 30
 
 /datum/uplink_item/dangerous/gremlin
 	name = "Gremlin delivery grenade"
 	desc = "This grenade is filled with several gremlins. Fun for RnD and engineering!"
-	cost = 4
+	cost = 2
 	item = /obj/item/grenade/spawnergrenade/gremlin
 	surplus = 30
 
 /datum/uplink_item/dangerous/cat
 	name = "Feral cat grenade"
 	desc = "This grenade is filled with 5 feral cats in stasis. Upon activation, the feral cats are awoken and unleashed unto unlucky bystanders."
-	cost = 5
+	cost = 3
 	item = /obj/item/grenade/spawnergrenade/cat
 	surplus = 30
 
@@ -170,12 +169,6 @@
 /datum/uplink_item/stealthy_tools/mulligan
 	cost = 2
 
-/datum/uplink_item/device_tools/syndietome
-	cost = 5
-
-/datum/uplink_item/device_tools/binary
-	cost = 2
-
 /datum/uplink_item/device_tools/singularity_beacon
 	cost = 8
 
@@ -188,14 +181,11 @@
 /datum/uplink_item/device_tools/jammer
 	cost = 3
 
-/datum/uplink_item/device_tools/codespeak_manual_deluxe
-	cost = 4
-
 /datum/uplink_item/device_tools/autosurgeon
 	name = "Autosurgeon"
 	desc = "A surgery device that instantly implants you with whatever implant has been inserted in it. Infinite uses. Use a screwdriver to remove an implant from it."
 	item = /obj/item/device/autosurgeon
-	cost = 4
+	cost = 1
 	surplus = 60
 
 /datum/uplink_item/implants/microbomb
@@ -235,7 +225,7 @@
 			 for a long time to execute a target so be sure to have them restrained and if you should be interrupted\
 			 then news of your failure will be broadcast to the station."
 	item = /obj/item/melee/execution_sword
-	cost = 3 //Its weaker than an energy dagger and cannot be concealed.
+	cost = 1 //Its weaker than an energy dagger and cannot be concealed.
 	surplus = 30 //Theres a good chance this will end up in surplus crates, so its a great way to add a little spice to any meme round.
 
 /datum/uplink_item/dangerous/guardian
@@ -274,4 +264,44 @@
 	name = "Gloves of the North Star"
 	desc = "These gloves let the user punch people very fast. Incompatible with weaponry or the hulk mutation."
 	item = /obj/item/clothing/gloves/fingerless/rapid
-	cost = 10
+	cost = 8
+
+/datum/uplink_item/device_tools/syndietome
+	cost = 2
+
+/datum/uplink_item/device_tools/binary
+	cost = 2
+
+/datum/uplink_item/device_tools/codespeak_manual
+	desc = "Syndicate agents can be trained to use a series of codewords to convey complex information, which makes you look like an obvious traitor to anyone listening. This manual teaches you this Codespeak. You can also hit someone else with the manual in order to teach them. One use."
+	cost = 0
+	limited_stock = 4
+
+/datum/uplink_item/device_tools/codespeak_manual_deluxe
+	desc = "Syndicate agents can be trained to use a series of codewords to convey complex information, which makes you look like an obvious traitor to anyone listening. This manual teaches you this Codespeak. You can also hit someone else with the manual in order to teach them. This is the deluxe edition, which has unlimited uses. Now you and your club can get lynched together!"
+	cost = 3
+
+/datum/uplink_item/stealthy_weapons/martialarts
+	cost = 12
+
+/datum/uplink_item/stealthy_weapons/throwingweapons
+	cost = 2
+
+/datum/uplink_item/stealthy_weapons/dart_pistol
+	cost = 3
+
+/datum/uplink_item/suits/hardsuit
+	cost = 7
+
+/datum/uplink_item/device_tools/surgerybag
+	cost = 1
+
+/datum/uplink_item/role_restricted/ancient_jumpsuit
+	cost = 0
+	limited_stock = 4
+
+/datum/uplink_item/role_restricted/reverse_revolver
+	cost = 13
+	
+/datum/uplink_item/dangerous/powerfist
+	cost = 6

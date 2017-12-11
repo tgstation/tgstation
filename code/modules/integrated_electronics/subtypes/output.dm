@@ -17,7 +17,11 @@
 	stuff_to_display = null
 
 /obj/item/integrated_circuit/output/screen/any_examine(mob/user)
-	to_chat(user, "There is a little screen labeled '[name]', which displays [!isnull(stuff_to_display) ? "'[stuff_to_display]'" : "nothing"].")
+	var/shown_label = ""
+	if(displayed_name && displayed_name != name)
+		shown_label = " labeled '[displayed_name]'"
+
+	to_chat(user, "There is \a [src][shown_label], which displays [!isnull(stuff_to_display) ? "'[stuff_to_display]'" : "nothing"].")
 
 /obj/item/integrated_circuit/output/screen/do_work()
 	var/datum/integrated_io/I = inputs[1]
@@ -200,6 +204,15 @@
 		)
 	spawn_flags = IC_SPAWN_RESEARCH
 
+/obj/item/integrated_circuit/output/sound/vox
+	name = "ai vox sound circuit"
+	desc = "Takes a sound name as an input, and will play said sound when pulsed. This circuit is often found in AI announcement systems."
+	spawn_flags = IC_SPAWN_RESEARCH
+
+/obj/item/integrated_circuit/output/sound/vox/Initialize()
+	.= ..()
+	sounds = GLOB.vox_sounds
+	extended_desc = "The first input pin determines which sound is used. It uses the AI Vox Broadcast word list. So either experiment to find words that work, or ask the AI to help in figuring them out. The second pin determines the volume of sound that is played, and the third determines if the frequency of the sound will vary with each activation."
 
 /obj/item/integrated_circuit/output/text_to_speech
 	name = "text-to-speech circuit"

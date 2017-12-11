@@ -7,10 +7,10 @@
 	var/t_has = p_have()
 	var/t_is = p_are()
 
-	var/msg = "<span class='info'>*---------*\nThis is <EM>[src.name]</EM>!\n"
-	
-	var/is_ghost = isobserver(user)
-	
+	var/msg = "<span class='info'>*---------*\nThis is <EM>[name]</EM>!\n"
+
+	var/is_ghost = isobserver(user) // hippie: added this var back
+
 	var/list/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 
@@ -166,7 +166,7 @@
 		var/obj/item/bodypart/BP = X
 		missing -= BP.body_zone
 		for(var/obj/item/I in BP.embedded_objects)
-			msg += "<B>[t_He] [t_has] \a [icon2html(I, user)] [I] embedded in [t_his] [BP.name]!</B>\n"
+			msg += "<B>[t_He] [t_has] \a [icon2html(I, user)] [I] embedded in [t_his] [BP.name]! [I.pinned ? "It [t_has] pinned [t_him] down to \the [I.pinned]!" : ""]</B>\n" // Hippie - Show what embedded part has them pinned
 
 	//stores missing limbs
 	var/l_limbs_missing = 0
@@ -280,7 +280,7 @@
 		if(stat == UNCONSCIOUS)
 			msg += "[t_He] [t_is]n't responding to anything around [t_him] and seem[p_s()] to be asleep.\n"
 		else
-			if(getBrainLoss() >= 60)
+			if(disabilities & DUMB)
 				msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 			if(InCritical())
 				msg += "[t_He] [t_is] barely conscious.\n"
@@ -302,7 +302,7 @@
 			msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.\n"
 
 	if((!skipface || is_ghost) && is_thrall(src) && (in_range(user,src) || is_ghost))
-		msg += "Their features seem unnaturally tight and drawn.\n"		
+		msg += "Their features seem unnaturally tight and drawn.\n"
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user

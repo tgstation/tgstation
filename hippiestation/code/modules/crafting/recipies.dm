@@ -30,3 +30,15 @@
 	tools = list(/obj/item/wirecutters)
 	time = 50
 	category = CAT_CLOTHING
+
+/datum/crafting_recipe/crossbow_improv
+	name = "Improvised Crossbow"
+	result = /obj/item/gun/ballistic/crossbow/improv
+	reqs = list(/obj/item/stack/rods = 3,
+		        /obj/item/stack/cable_coil = 10,
+		        /obj/item/weaponcrafting/stock = 1)
+	tools = list(/obj/item/weldingtool,
+		         /obj/item/screwdriver)
+	time = 150
+	category = CAT_WEAPONRY
+	subcategory = CAT_WEAPON

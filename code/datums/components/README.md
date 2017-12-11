@@ -34,7 +34,7 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
     * Lazy associated list of type -> component/list of components.
 1. `/datum/component/var/enabled` (protected, boolean)
     * If the component is enabled. If not, it will not react to signals
-    * `TRUE` by default
+    * `FALSE` by default, set to `TRUE` when a signal is registered
 1. `/datum/component/var/dupe_mode` (protected, enum)
     * How duplicate component types are handled when added to the datum.
         * `COMPONENT_DUPE_HIGHLANDER` (default): Old component will be deleted, new component will first have `/datum/component/proc/InheritComponent(datum/component/old, FALSE)` on it
@@ -78,6 +78,7 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
 1. `/datum/proc/SendSignal(signal, ...)` (public, final)
     * Call to send a signal to the components of the target datum
     * Extra arguments are to be specified in the signal definition
+    * Returns a bitflag with signal specific information assembled from all activated components
 1. `/datum/component/New(datum/parent, ...)` (private, final)
     * Runs internal setup for the component
     * Extra arguments are passed to `Initialize()`
