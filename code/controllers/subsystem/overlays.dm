@@ -10,7 +10,6 @@ SUBSYSTEM_DEF(overlays)
 	var/list/stats
 	var/list/overlay_icon_state_caches
 	var/list/overlay_icon_cache
-	var/initialized = FALSE
 
 /datum/controller/subsystem/overlays/PreInit()
 	overlay_icon_state_caches = list()
