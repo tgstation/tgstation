@@ -65,13 +65,16 @@ Credit where due:
 		return TRUE
 	return FALSE
 
-/proc/add_servant_of_ratvar(mob/L, silent = FALSE)
+/proc/add_servant_of_ratvar(mob/L, silent = FALSE, create_team = TRUE)
 	if(!L || !L.mind)
 		return
 	var/update_type = ANTAG_DATUM_CLOCKCULT
 	if(silent)
 		update_type = ANTAG_DATUM_CLOCKCULT_SILENT
-	. = L.mind.add_antag_datum(update_type)
+	var/datum/antagonist/clockcult/C = new update_type(L.mind)
+	C.make_team = create_team
+	C.show_in_roundend = create_team //tutorial scarabs begone
+	. = L.mind.add_antag_datum(C)
 
 /proc/remove_servant_of_ratvar(mob/L, silent = FALSE)
 	if(!L || !L.mind)
@@ -88,7 +91,6 @@ Credit where due:
 ///////////////
 
 /datum/game_mode
-	var/datum/mind/eminence //The clockwork Eminence
 	var/list/servants_of_ratvar = list() //The Enlightened servants of Ratvar
 	var/clockwork_explanation = "Defend the Ark of the Clockwork Justiciar and free Ratvar." //The description of the current objective
 
@@ -110,6 +112,8 @@ Credit where due:
 	var/servants_to_serve = list()
 	var/roundstart_player_count
 	var/ark_time //In minutes, how long the Ark waits before activation; this is equal to 30 + (number of players / 5) (max 40 mins.)
+	
+	var/datum/objective_team/clockcult/main_clockcult
 
 /datum/game_mode/clockwork_cult/pre_setup()
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
@@ -190,16 +194,16 @@ Credit where due:
 	return ..()
 
 /datum/game_mode/clockwork_cult/proc/check_clockwork_victory()
+	return main_clockcult.check_clockwork_victory()
+
+/datum/game_mode/clock_cult/set_round_result()
+	..()
 	if(GLOB.clockwork_gateway_activated)
 		SSticker.news_report = CLOCK_SUMMON
-		return TRUE
+		SSticker.mode_result = "win - servants completed their objective (summon ratvar)"
 	else
 		SSticker.news_report = CULT_FAILURE
-	return FALSE
-
-/datum/game_mode/clockwork_cult/declare_completion()
-	..()
-	return //Doesn't end until the round does
+		SSticker.mode_result = "loss - servants failed their objective (summon ratvar)"
 
 /datum/game_mode/clockwork_cult/generate_report()
 	return "Bluespace monitors near your sector have detected a continuous stream of patterned fluctuations since the station was completed. It is most probable that a powerful entity \
@@ -208,30 +212,6 @@ Credit where due:
 	harm to company personnel or property.<br><br>Keep a sharp on any crew that appear to be oddly-dressed or using what appear to be magical powers, as these crew may be defectors \
 	working for this entity and utilizing highly-advanced technology to cross the great distance at will. If they should turn out to be a credible threat, the task falls on you and \
 	your crew to dispatch it in a timely manner."
-
-/datum/game_mode/proc/auto_declare_completion_clockwork_cult()
-	var/text = ""
-	if(istype(SSticker.mode, /datum/game_mode/clockwork_cult)) //Possibly hacky?
-		var/datum/game_mode/clockwork_cult/C = SSticker.mode
-		if(C.check_clockwork_victory())
-			text += "<span class='bold large_brass'>Ratvar's servants defended the Ark until its activation!</span>"
-			SSticker.mode_result = "win - servants completed their objective (summon ratvar)"
-		else
-			text += "<span class='userdanger'>The Ark was destroyed! Ratvar will rust away for all eternity!</span>"
-			SSticker.mode_result = "loss - servants failed their objective (summon ratvar)"
-		text += "<br><b>The servants' objective was:</b> [CLOCKCULT_OBJECTIVE]."
-		text += "<br>Ratvar's servants had <b>[GLOB.clockwork_caches]</b> Tinkerer's Caches."
-		text += "<br><b>Construction Value(CV)</b> was: <b>[GLOB.clockwork_construction_value]</b>"
-		for(var/i in SSticker.scripture_states)
-			if(i != SCRIPTURE_DRIVER)
-				text += "<br><b>[i] scripture</b> was: <b>[SSticker.scripture_states[i] ? "UN":""]LOCKED</b>"
-	if(SSticker.mode.eminence)
-		text += "<br><b>The Eminence was:</b> [printplayer(SSticker.mode.eminence)]"
-	if(servants_of_ratvar.len)
-		text += "<br><b>Ratvar's servants were:</b>"
-		for(var/datum/mind/M in servants_of_ratvar - SSticker.mode.eminence)
-			text += printplayer(M)
-	to_chat(world, text)
 
 /datum/game_mode/proc/update_servant_icons_added(datum/mind/M)
 	var/datum/atom_hud/antag/A = GLOB.huds[ANTAG_HUD_CLOCKWORK]
