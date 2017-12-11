@@ -1541,7 +1541,9 @@
 			return
 
 		var/atom/movable/AM = locate(href_list["admingetmovable"])
-		AM.forceMove(usr.loc)
+		if(QDELETED(AM))
+			return
+		AM.forceMove(get_turf(usr))
 
 	else if(href_list["adminplayerobservecoodjump"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))
