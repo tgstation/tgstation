@@ -158,7 +158,7 @@ SUBSYSTEM_DEF(vote)
 
 			var/admin = FALSE
 			var/ckey = ckey(initiator_key)
-			if((GLOB.admin_datums[ckey]) || (ckey in GLOB.deadmins))
+			if(GLOB.admin_datums[ckey])
 				admin = TRUE
 
 			if(next_allowed_time > world.time && !admin)

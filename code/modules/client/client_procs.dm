@@ -186,6 +186,9 @@ GLOBAL_LIST(external_rsc_urls)
 		GLOB.admins |= src
 		holder.owner = src
 
+	else if(GLOB.deadmins[ckey])
+		verbs += /client/proc/readmin
+
 	//preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum)
 	prefs = GLOB.preferences_datums[ckey]
 	if(!prefs)
@@ -426,7 +429,7 @@ GLOBAL_LIST(external_rsc_urls)
 	if(!query_client_in_db.Execute())
 		return
 	if(!query_client_in_db.NextRow())
-		if (CONFIG_GET(flag/panic_bunker) && !holder && !(ckey in GLOB.deadmins))
+		if (CONFIG_GET(flag/panic_bunker) && !holder && !GLOB.deadmins[ckey])
 			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
 			message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
 			to_chat(src, "Sorry but the server is currently not accepting connections from never before seen players.")
