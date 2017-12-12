@@ -36,7 +36,7 @@
 	else
 		..()
 
-#define MAX_ALIEN_LEAP_DIST 7
+#define MAX_ALIEN_LEAP_DIST 6
 
 /mob/living/carbon/alien/humanoid/hunter/proc/leap_at(atom/A)
 	if(!canmove || leaping)
