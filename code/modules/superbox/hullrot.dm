@@ -10,7 +10,7 @@
 
 /mob/living/Stat()
 	..()
-	if (client && SShullrot.can_fire)
+	if (client && SShullrot.can_fire && hullrot_radio_allowed())
 		statpanel("Radio")  // process on the regular even if it's invisible
 		var/list/keys_used = list()
 
@@ -86,9 +86,10 @@
 /mob/living/key_up(_key, client/user)
 	switch(_key)
 		if("V")
-			hullrot_cache["ptt_freq"] = null
-			SShullrot.set_ptt(user, null)
-			hullrot_update()
+			if (hullrot_cache["ptt_freq"] != null)
+				hullrot_cache["ptt_freq"] = null
+				SShullrot.set_ptt(user, null)
+				hullrot_update()
 		else
 			return ..()
 
