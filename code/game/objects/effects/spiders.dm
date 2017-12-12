@@ -121,7 +121,7 @@
 
 /obj/structure/spider/spiderling/Collide(atom/user)
 	if(istype(user, /obj/structure/table))
-		src.forceMove(user.loc)
+		forceMove(user.loc)
 	else
 		..()
 
