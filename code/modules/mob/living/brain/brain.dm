@@ -71,3 +71,19 @@
 		var/obj/mecha/M = MMI.mecha
 		if((src == MMI.brainmob) && istype(M))
 			return M.click_action(A,src,params)
+
+/mob/living/brain/forceMove(atom/destination)
+	if(container)
+		return container.forceMove(destination)
+	else if (istype(loc, /obj/item/organ/brain))
+		var/obj/item/organ/brain/B = loc
+		if (B.brainmob == src)
+			B.forceMove(destination)
+		else
+			CRASH("Unregistered brainmob [src] inside a brain organ [B]")
+	else if (istype(destination, /obj/item/organ/brain))
+		doMove(destination)
+	else if (istype(destination, /obj/item/device/mmi))
+		doMove(destination)
+	else
+		CRASH("Brainmob without a container [src] attempted to move to [destination].")

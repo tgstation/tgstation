@@ -276,24 +276,6 @@
 				old_area.Exited(src, null)
 		loc = null
 
-/mob/living/forceMove(atom/destination)
-	stop_pulling()
-	if(buckled)
-		buckled.unbuckle_mob(src, force = TRUE)
-	if(has_buckled_mobs())
-		unbuckle_all_mobs(force = TRUE)
-	. = ..()
-	if(.)
-		if(client)
-			reset_perspective(destination)
-		update_canmove() //if the mob was asleep inside a container and then got forceMoved out we need to make them fall.
-
-/mob/living/brain/forceMove(atom/destination)
-	if(container)
-		return container.forceMove(destination)
-	else //something went very wrong.
-		CRASH("Brainmob without container.")
-
 //Called whenever an object moves and by mobs when they attempt to move themselves through space
 //And when an object or action applies a force on src, see newtonian_move() below
 //Return 0 to have src start/keep drifting in a no-grav area and 1 to stop/not start drifting
