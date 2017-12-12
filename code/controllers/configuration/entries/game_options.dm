@@ -4,12 +4,12 @@ CONFIG_DEF(number_list/repeated_mode_adjust)
 
 CONFIG_DEF(keyed_number_list/probability)
 
-/datum/config_entry/keyed_number_list/probability/ValidateKeyName(key_name)
+/datum/config_entry/keyed_number_list/probability/ValidateListEntry(key_name)
 	return key_name in config.modes
 
 CONFIG_DEF(keyed_number_list/max_pop)
 
-/datum/config_entry/keyed_number_list/max_pop/ValidateKeyName(key_name)
+/datum/config_entry/keyed_number_list/max_pop/ValidateListEntry(key_name)
 	return key_name in config.modes
 
 CONFIG_DEF(keyed_number_list/min_pop)
