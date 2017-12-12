@@ -642,7 +642,9 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 
 	holder.disassociate()
 	qdel(holder)
-
+	if(GLOB.admin_datums.len < 2)
+		to_chat(src, "<span class='interface'>RABOTAT!!!</span>")
+		return 0
 	GLOB.deadmins += ckey
 	GLOB.admin_datums -= ckey
 	verbs += /client/proc/readmin
