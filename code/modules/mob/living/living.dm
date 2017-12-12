@@ -1039,16 +1039,6 @@
 		else
 			registered_z = null
 
-/mob/living/Login()
-	. = ..()
-	if (loc)
-		var/turf/T = get_turf(src)
-		update_z(T.z)
-
-/mob/living/Logout()
-	. = ..()
-	update_z(null)
-
 /mob/living/onTransitZ(old_z,new_z)
 	..()
 	update_z(new_z)

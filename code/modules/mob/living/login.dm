@@ -13,6 +13,10 @@
 	update_damage_hud()
 	update_health_hud()
 
+	if (loc)
+		var/turf/T = get_turf(src)
+		update_z(T.z)
+
 	//Vents
 	if(ventcrawler)
 		to_chat(src, "<span class='notice'>You can ventcrawl! Use alt+click on vents to quickly travel about the station.</span>")
