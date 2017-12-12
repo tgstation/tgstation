@@ -1600,7 +1600,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/centcomAway/courtroom)
 "fU" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Med-Sci";
 	req_access_txt = "9"
 	},

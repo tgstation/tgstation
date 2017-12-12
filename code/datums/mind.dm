@@ -180,12 +180,6 @@
 	objectives, uplinks, powers etc are all handled.
 */
 
-/datum/mind/proc/remove_objectives()
-	if(objectives.len)
-		for(var/datum/objective/O in objectives)
-			objectives -= O
-			qdel(O)
-
 /datum/mind/proc/remove_changeling()
 	var/datum/antagonist/changeling/C = has_antag_datum(/datum/antagonist/changeling)
 	if(C)
@@ -216,7 +210,6 @@
 	if(src in SSticker.mode.cult)
 		SSticker.mode.remove_cultist(src, 0, 0)
 	special_role = null
-	remove_objectives()
 	remove_antag_equip()
 
 /datum/mind/proc/remove_rev()
@@ -293,7 +286,7 @@
 			to_chat(traitor_mob, "Unfortunately, [employer] wasn't able to get you an Uplink.")
 		. = 0
 	else
-		uplink_loc.LoadComponent(/datum/component/uplink, traitor_mob.key)
+		uplink_loc.AddComponent(/datum/component/uplink, traitor_mob.key)
 
 		if(uplink_loc == R)
 			R.traitor_frequency = sanitize_frequency(rand(MIN_FREQ, MAX_FREQ))
@@ -769,17 +762,44 @@
 		var/objective_pos
 		var/def_value
 
+
+
+		var/datum/antagonist/target_antag
+
 		if (href_list["obj_edit"])
 			objective = locate(href_list["obj_edit"])
 			if (!objective)
 				return
-			objective_pos = objectives.Find(objective)
+			
+			for(var/datum/antagonist/A in antag_datums)
+				if(objective in A.objectives)
+					target_antag = A
+					objective_pos = A.objectives.Find(objective)
+					break
+			
+			if(!target_antag) //Shouldn't happen
+				stack_trace("objective without antagonist found")
+				objective_pos = objectives.Find(objective)
 
 			//Text strings are easy to manipulate. Revised for simplicity.
 			var/temp_obj_type = "[objective.type]"//Convert path into a text string.
 			def_value = copytext(temp_obj_type, 19)//Convert last part of path into an objective keyword.
 			if(!def_value)//If it's a custom objective, it will be an empty string.
 				def_value = "custom"
+		else
+			switch(antag_datums.len)
+				if(0)
+					target_antag = add_antag_datum(/datum/antagonist/custom)
+				if(1)
+					target_antag = antag_datums[1]
+				else
+					var/datum/antagonist/target = input("Which antagonist gets the objective:", "Antagonist", def_value) as null|anything in antag_datums + "(new custom antag)"
+					if (QDELETED(target))
+						return
+					else if(target == "(new custom antag)")
+						target_antag = add_antag_datum(/datum/antagonist/custom)
+					else
+						target_antag = target
 
 		var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate", "maroon", "debrain", "protect", "destroy", "prevent", "hijack", "escape", "survive", "martyr", "steal", "download", "nuclear", "capture", "absorb", "custom")
 		if (!new_obj_type)
@@ -895,11 +915,15 @@
 			return
 
 		if (objective)
+			if(target_antag)
+				target_antag.objectives -= objective
 			objectives -= objective
-			objectives.Insert(objective_pos, new_objective)
+			target_antag.objectives.Insert(objective_pos, new_objective)
 			message_admins("[key_name_admin(usr)] edited [current]'s objective to [new_objective.explanation_text]")
 			log_admin("[key_name(usr)] edited [current]'s objective to [new_objective.explanation_text]")
 		else
+			if(target_antag)
+				target_antag.objectives += new_objective
 			objectives += new_objective
 			message_admins("[key_name_admin(usr)] added a new objective for [current]: [new_objective.explanation_text]")
 			log_admin("[key_name(usr)] added a new objective for [current]: [new_objective.explanation_text]")
@@ -908,6 +932,11 @@
 		var/datum/objective/objective = locate(href_list["obj_delete"])
 		if(!istype(objective))
 			return
+		
+		for(var/datum/antagonist/A in antag_datums)
+			if(objective in A.objectives)
+				A.objectives -= objective
+				break
 		objectives -= objective
 		message_admins("[key_name_admin(usr)] removed an objective for [current]: [objective.explanation_text]")
 		log_admin("[key_name(usr)] removed an objective for [current]: [objective.explanation_text]")
@@ -990,11 +1019,13 @@
 					message_admins("[key_name_admin(usr)] has cult'ed [current].")
 					log_admin("[key_name(usr)] has cult'ed [current].")
 			if("tome")
-				if (!SSticker.mode.equip_cultist(current,1))
+				var/datum/antagonist/cult/C = has_antag_datum(/datum/antagonist/cult,TRUE)
+				if (C.equip_cultist(current,1))
 					to_chat(usr, "<span class='danger'>Spawning tome failed!</span>")
 
 			if("amulet")
-				if (!SSticker.mode.equip_cultist(current))
+				var/datum/antagonist/cult/C = has_antag_datum(/datum/antagonist/cult,TRUE)
+				if (C.equip_cultist(current))
 					to_chat(usr, "<span class='danger'>Spawning amulet failed!</span>")
 
 	else if(href_list["clockcult"])
@@ -1335,16 +1366,11 @@
 
 
 /datum/mind/proc/make_Cultist()
-	if(!(src in SSticker.mode.cult))
-		SSticker.mode.add_cultist(src,FALSE)
+	if(!has_antag_datum(/datum/antagonist/cult,TRUE))
+		SSticker.mode.add_cultist(src,FALSE,equip=TRUE)
 		special_role = "Cultist"
 		to_chat(current, "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy your world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>")
 		to_chat(current, "<font color=\"purple\"><b><i>Assist your new bretheren in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>")
-		var/datum/antagonist/cult/C
-		C.cult_memorization(src)
-	var/mob/living/carbon/human/H = current
-	if (!SSticker.mode.equip_cultist(current))
-		to_chat(H, "Spawning an amulet from your Master failed.")
 
 /datum/mind/proc/make_Rev()
 	var/datum/antagonist/rev/head/head = new(src)

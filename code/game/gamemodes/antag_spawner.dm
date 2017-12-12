@@ -247,6 +247,7 @@
 	new_objective2.owner = S.mind
 	new_objective2.explanation_text = "[objective_verb] everyone[usr ? " else while you're at it":""]."
 	S.mind.objectives += new_objective2
+	S.mind.add_antag_datum(/datum/antagonist/auto_custom)
 	to_chat(S, S.playstyle_string)
 	to_chat(S, "<B>You are currently not currently in the same plane of existence as the station. \
 	Ctrl+Click a blood pool to manifest.</B>")

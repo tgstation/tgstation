@@ -35,10 +35,10 @@
 			new/obj/item/shard(drop_location())
 		playsound(src, "shatter", 70, 1)
 	else
-		B.name = "broken carton"
 		B.force = 0
 		B.throwforce = 0
 		B.desc = "A carton with the bottom half burst open. Might give you a papercut."
+	B.name = "broken [name]"
 	transfer_fingerprints_to(B)
 
 	qdel(src)
@@ -119,7 +119,7 @@
 
 //Keeping this here for now, I'll ask if I should keep it here.
 /obj/item/broken_bottle
-	name = "Broken Bottle"
+	name = "broken bottle"
 	desc = "A bottle with a sharp broken bottom."
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "broken_bottle"
@@ -135,37 +135,37 @@
 	sharpness = IS_SHARP
 
 /obj/item/reagent_containers/food/drinks/bottle/gin
-	name = "Griffeater Gin"
+	name = "Griffeater gin"
 	desc = "A bottle of high quality gin, produced in the New London Space Station."
 	icon_state = "ginbottle"
 	list_reagents = list("gin" = 100)
 
 /obj/item/reagent_containers/food/drinks/bottle/whiskey
-	name = "Uncle Git's Special Reserve"
+	name = "Uncle Git's special reserve"
 	desc = "A premium single-malt whiskey, gently matured inside the tunnels of a nuclear shelter. TUNNEL WHISKEY RULES."
 	icon_state = "whiskeybottle"
 	list_reagents = list("whiskey" = 100)
 
 /obj/item/reagent_containers/food/drinks/bottle/vodka
-	name = "Tunguska Triple Distilled"
+	name = "Tunguska triple distilled"
 	desc = "Aah, vodka. Prime choice of drink AND fuel by Russians worldwide."
 	icon_state = "vodkabottle"
 	list_reagents = list("vodka" = 100)
 
 /obj/item/reagent_containers/food/drinks/bottle/vodka/badminka
-	name = "Badminka Vodka"
+	name = "Badminka vodka"
 	desc = "The label's written in Cyrillic. All you can make out is the name and a word that looks vaguely like 'Vodka'."
 	icon_state = "badminka"
 	list_reagents = list("vodka" = 100)
 
 /obj/item/reagent_containers/food/drinks/bottle/tequila
-	name = "Caccavo Guaranteed Quality Tequila"
+	name = "Caccavo guaranteed quality tequila"
 	desc = "Made from premium petroleum distillates, pure thalidomide and other fine quality ingredients!"
 	icon_state = "tequilabottle"
 	list_reagents = list("tequila" = 100)
 
 /obj/item/reagent_containers/food/drinks/bottle/bottleofnothing
-	name = "Bottle of Nothing"
+	name = "bottle of nothing"
 	desc = "A bottle filled with nothing."
 	icon_state = "bottleofnothing"
 	list_reagents = list("nothing" = 100)
@@ -178,13 +178,13 @@
 	list_reagents = list("patron" = 100)
 
 /obj/item/reagent_containers/food/drinks/bottle/rum
-	name = "Captain Pete's Cuban Spiced Rum"
+	name = "Captain Pete's Cuban spiced rum"
 	desc = "This isn't just rum, oh no. It's practically GRIFF in a bottle."
 	icon_state = "rumbottle"
 	list_reagents = list("rum" = 100)
 
 /obj/item/reagent_containers/food/drinks/bottle/holywater
-	name = "Flask of Holy Water"
+	name = "flask of holy water"
 	desc = "A flask of the chaplain's holy water."
 	icon_state = "holyflask"
 	list_reagents = list("holywater" = 100)
@@ -195,39 +195,39 @@
 	list_reagents = list("hell_water" = 100)
 
 /obj/item/reagent_containers/food/drinks/bottle/vermouth
-	name = "Goldeneye Vermouth"
+	name = "Goldeneye vermouth"
 	desc = "Sweet, sweet dryness~"
 	icon_state = "vermouthbottle"
 	list_reagents = list("vermouth" = 100)
 
 /obj/item/reagent_containers/food/drinks/bottle/kahlua
-	name = "Robert Robust's Coffee Liqueur"
+	name = "Robert Robust's coffee liqueur"
 	desc = "A widely known, Mexican coffee-flavoured liqueur. In production since 1936, HONK."
 	icon_state = "kahluabottle"
 	list_reagents = list("kahlua" = 100)
 	foodtype = VEGETABLES
 
 /obj/item/reagent_containers/food/drinks/bottle/goldschlager
-	name = "College Girl Goldschlager"
+	name = "College Girl goldschlager"
 	desc = "Because they are the only ones who will drink 100 proof cinnamon schnapps."
 	icon_state = "goldschlagerbottle"
 	list_reagents = list("goldschlager" = 100)
 
 /obj/item/reagent_containers/food/drinks/bottle/cognac
-	name = "Chateau De Baton Premium Cognac"
+	name = "Chateau de Baton premium cognac"
 	desc = "A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. You might as well not scream 'SHITCURITY' this time."
 	icon_state = "cognacbottle"
 	list_reagents = list("cognac" = 100)
 
 /obj/item/reagent_containers/food/drinks/bottle/wine
-	name = "Doublebeard Bearded Special Wine"
+	name = "Doublebeard's bearded special wine"
 	desc = "A faint aura of unease and asspainery surrounds the bottle."
 	icon_state = "winebottle"
 	list_reagents = list("wine" = 100)
 	foodtype = FRUIT | ALCOHOL
 
 /obj/item/reagent_containers/food/drinks/bottle/absinthe
-	name = "Extra-Strong Absinthe"
+	name = "extra-strong absinthe"
 	desc = "An strong alcoholic drink brewed and distributed by"
 	icon_state = "absinthebottle"
 	list_reagents = list("absinthe" = 100)
@@ -272,7 +272,7 @@
 
 
 /obj/item/reagent_containers/food/drinks/bottle/absinthe/premium
-	name = "Gwyn's Premium Absinthe"
+	name = "Gwyn's premium absinthe"
 	desc = "A potent alcoholic beverage, almost makes you forget the ash in your lungs."
 	icon_state = "absinthepremium"
 
@@ -280,7 +280,7 @@
 	return
 
 /obj/item/reagent_containers/food/drinks/bottle/lizardwine
-	name = "Bottle of lizard wine"
+	name = "bottle of lizard wine"
 	desc = "An alcoholic beverage from Space China, made by infusing lizard tails in ethanol. Inexplicably popular among command staff."
 	icon_state = "lizardwine"
 	list_reagents = list("lizardwine" = 100)
@@ -302,7 +302,7 @@
 //////////////////////////JUICES AND STUFF ///////////////////////
 
 /obj/item/reagent_containers/food/drinks/bottle/orangejuice
-	name = "Orange Juice"
+	name = "orange juice"
 	desc = "Full of vitamins and deliciousness!"
 	icon_state = "orangejuice"
 	item_state = "carton"
@@ -313,7 +313,7 @@
 	foodtype = FRUIT
 
 /obj/item/reagent_containers/food/drinks/bottle/cream
-	name = "Milk Cream"
+	name = "milk cream"
 	desc = "It's cream. Made from milk. What else did you think you'd find in there?"
 	icon_state = "cream"
 	item_state = "carton"
@@ -324,7 +324,7 @@
 	foodtype = DAIRY
 
 /obj/item/reagent_containers/food/drinks/bottle/tomatojuice
-	name = "Tomato Juice"
+	name = "tomato juice"
 	desc = "Well, at least it LOOKS like tomato juice. You can't tell with all that redness."
 	icon_state = "tomatojuice"
 	item_state = "carton"
@@ -335,7 +335,7 @@
 	foodtype = VEGETABLES
 
 /obj/item/reagent_containers/food/drinks/bottle/limejuice
-	name = "Lime Juice"
+	name = "lime juice"
 	desc = "Sweet-sour goodness."
 	icon_state = "limejuice"
 	item_state = "carton"

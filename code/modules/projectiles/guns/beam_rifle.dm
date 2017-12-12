@@ -176,7 +176,7 @@
 	zoom_animating = 0
 	animate(current_user.client, pixel_x = 0, pixel_y = 0, 0, FALSE, LINEAR_EASING, ANIMATION_END_NOW)
 	zoom_current_view_increase = 0
-	current_user.client.change_view(world.view)
+	current_user.client.change_view(CONFIG_GET(string/default_view))
 	zooming_angle = 0
 	current_zoom_x = 0
 	current_zoom_y = 0
@@ -355,8 +355,8 @@
 	if(lastfire > world.time + delay)
 		return
 	lastfire = world.time
+	. = ..()
 	stop_aiming()
-	return ..()
 
 /obj/item/gun/energy/beam_rifle/proc/sync_ammo()
 	for(var/obj/item/ammo_casing/energy/beam_rifle/AC in contents)

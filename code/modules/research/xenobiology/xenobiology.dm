@@ -502,14 +502,14 @@
 
 /obj/item/areaeditor/blueprints/slime
 	name = "cerulean prints"
-	desc = "A one use yet of blueprints made of jelly like organic material. Renaming an area to 'Xenobiology Lab' will extend the reach of the management console."
+	desc = "A one use yet of blueprints made of jelly like organic material. Extends the reach of the management console."
 	color = "#2956B2"
 
 /obj/item/areaeditor/blueprints/slime/edit_area()
-	var/success = ..()
+	..()
 	var/area/A = get_area(src)
-	if(success)
-		for(var/turf/T in A)
-			T.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-			T.add_atom_colour("#2956B2", FIXED_COLOUR_PRIORITY)
-		qdel(src)
+	for(var/turf/T in A)
+		T.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+		T.add_atom_colour("#2956B2", FIXED_COLOUR_PRIORITY)
+	A.xenobiology_compatible = TRUE
+	qdel(src)

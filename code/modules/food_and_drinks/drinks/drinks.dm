@@ -113,6 +113,7 @@
 	I.Blend(B.broken_outline, ICON_OVERLAY, rand(5), 1)
 	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
 	B.icon = I
+	B.name = "broken [name]"
 	if(prob(33))
 		new/obj/item/shard(drop_location())
 	playsound(src, "shatter", 70, 1)
@@ -184,7 +185,7 @@
 //	Formatting is the same as food.
 
 /obj/item/reagent_containers/food/drinks/coffee
-	name = "Robust Coffee"
+	name = "robust coffee"
 	desc = "Careful, the beverage you're about to enjoy is extremely hot."
 	icon_state = "coffee"
 	list_reagents = list("coffee" = 30)
@@ -193,7 +194,7 @@
 	isGlass = FALSE
 
 /obj/item/reagent_containers/food/drinks/ice
-	name = "Ice Cup"
+	name = "ice cup"
 	desc = "Careful, cold ice, do not chew."
 	icon_state = "coffee"
 	list_reagents = list("ice" = 30)
@@ -214,12 +215,12 @@
 		icon_state = "tea_empty"
 
 /obj/item/reagent_containers/food/drinks/mug/tea
-	name = "Duke Purple Tea"
+	name = "Duke Purple tea"
 	desc = "An insult to Duke Purple is an insult to the Space Queen! Any proper gentleman will fight you, if you sully this tea."
 	list_reagents = list("tea" = 30)
 
 /obj/item/reagent_containers/food/drinks/mug/coco
-	name = "Dutch Hot Coco"
+	name = "Dutch hot coco"
 	desc = "Made in Space South America."
 	list_reagents = list("hot_coco" = 30, "sugar" = 5)
 	foodtype = SUGAR
@@ -228,7 +229,7 @@
 
 
 /obj/item/reagent_containers/food/drinks/dry_ramen
-	name = "Cup Ramen"
+	name = "cup ramen"
 	desc = "Just add 10ml of water, self heats! A taste that reminds you of your school years."
 	icon_state = "ramen"
 	list_reagents = list("dry_ramen" = 30)
@@ -236,7 +237,7 @@
 	isGlass = FALSE
 
 /obj/item/reagent_containers/food/drinks/beer
-	name = "Space Beer"
+	name = "space beer"
 	desc = "Beer. In space."
 	icon_state = "beer"
 	list_reagents = list("beer" = 30)
@@ -280,7 +281,7 @@
 	I.Blend(B.broken_outline, ICON_OVERLAY, rand(5), 1)
 	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
 	B.icon = I
-	B.name = "broken carton"
+	B.name = "broken [name]"
 	B.force = 0
 	B.throwforce = 0
 	B.desc = "A carton with the bottom half burst open. Might give you a papercut."
@@ -418,20 +419,20 @@
 	foodtype = SUGAR
 
 /obj/item/reagent_containers/food/drinks/soda_cans/tonic
-	name = "T-Borg's Tonic Water"
+	name = "T-Borg's tonic water"
 	desc = "Quinine tastes funny, but at least it'll keep that Space Malaria away."
 	icon_state = "tonic"
 	list_reagents = list("tonic" = 50)
 	foodtype = ALCOHOL
 
 /obj/item/reagent_containers/food/drinks/soda_cans/sodawater
-	name = "Soda Water"
+	name = "soda water"
 	desc = "A can of soda water. Why not make a scotch and soda?"
 	icon_state = "sodawater"
 	list_reagents = list("sodawater" = 50)
 
 /obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime
-	name = "Orange Soda"
+	name = "orange soda"
 	desc = "You wanted ORANGE. It gave you Lemon Lime."
 	icon_state = "lemon-lime"
 	list_reagents = list("lemon_lime" = 30)
@@ -439,7 +440,7 @@
 
 /obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime/Initialize()
 	. = ..()
-	name = "Lemon-Lime Soda"
+	name = "lemon-lime soda"
 
 /obj/item/reagent_containers/food/drinks/soda_cans/space_up
 	name = "Space-Up!"
@@ -483,14 +484,14 @@
 	list_reagents = list("pwr_game" = 30)
 
 /obj/item/reagent_containers/food/drinks/soda_cans/shamblers
-	name = "Shambler's Juice"
+	name = "Shambler's juice"
 	desc = "~Shake me up some of that Shambler's Juice!~"
 	icon_state = "shamblers"
 	list_reagents = list("shamblers" = 30)
 	foodtype = SUGAR | JUNKFOOD
 
 /obj/item/reagent_containers/food/drinks/soda_cans/air
-	name = "Canned Air"
+	name = "canned air"
 	desc = "There is no air shortage. Do not drink."
 	icon_state = "air"
 	list_reagents = list("nitrogen" = 24, "oxygen" = 6)

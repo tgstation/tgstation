@@ -151,13 +151,18 @@
 		var/mob/living/mob_occupant = occupant
 		if(mob_occupant.stat != DEAD)
 			if(href_list["experiment"])
-				flash = Experiment(occupant,href_list["experiment"])
+				flash = Experiment(occupant,href_list["experiment"],usr)
 	updateUsrDialog()
 	add_fingerprint(usr)
 
-/obj/machinery/abductor/experiment/proc/Experiment(mob/occupant,type)
+/obj/machinery/abductor/experiment/proc/Experiment(mob/occupant,type,mob/user)
 	LAZYINITLIST(history)
 	var/mob/living/carbon/human/H = occupant
+
+	var/datum/antagonist/abductor/user_abductor = user.mind.has_antag_datum(/datum/antagonist/abductor)
+	if(!user_abductor)
+		return "<span class='bad'>Authorization failure. Contact mothership immidiately.</span>"
+
 	var/point_reward = 0
 	if(H in history)
 		return "<span class='bad'>Specimen already in database.</span>"
@@ -182,15 +187,8 @@
 			if(3)
 				to_chat(H, "<span class='warning'>You feel intensely watched.</span>")
 		sleep(5)
-		to_chat(H, "<span class='warning'><b>Your mind snaps!</b></span>")
-		H.gain_trauma_type(BRAIN_TRAUMA_MILD)
-		to_chat(H, "<big><span class='warning'><b>You can't remember how you got here...</b></span></big>")
-		var/objtype = (prob(75) ? /datum/objective/abductee/random : pick(subtypesof(/datum/objective/abductee/) - /datum/objective/abductee/random))
-		var/datum/objective/abductee/O = new objtype()
-		SSticker.mode.abductees += H.mind
-		H.mind.objectives += O
-		H.mind.announce_objectives()
-		SSticker.mode.update_abductor_icons_added(H.mind)
+		user_abductor.team.abductees += H.mind
+		H.mind.add_antag_datum(/datum/antagonist/abductee)
 
 		for(var/obj/item/organ/heart/gland/G in H.internal_organs)
 			G.Start()

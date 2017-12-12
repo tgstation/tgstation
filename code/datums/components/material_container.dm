@@ -58,7 +58,7 @@
 		return
 	. = COMPONENT_NO_AFTERATTACK
 	var/datum/callback/pc = precondition
-	if(pc && !pc.Invoke())
+	if(pc && !pc.Invoke(user))
 		return
 	var/material_amount = get_item_material_amount(I)
 	if(!material_amount)
@@ -70,6 +70,7 @@
 	user_insert(I, user)
 
 /datum/component/material_container/proc/user_insert(obj/item/I, mob/living/user)
+	set waitfor = FALSE
 	var/requested_amount
 	var/Itype = I.type
 	if(ispath(Itype, /obj/item/stack) && precise_insertion)
