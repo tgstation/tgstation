@@ -113,13 +113,13 @@ GLOBAL_PROTECT(config_dir)
 		if(lockthis)
 			E.protection |= CONFIG_ENTRY_LOCKED
 
-		E.resident_file = filename
-
 		var/validated = E.ValidateAndSet(value)
 		if(!validated)
 			log_config("Failed to validate setting \"[value]\" for [entry]")
 		else if(E.modified && !E.dupes_allowed)
-			log_config("Duplicate setting for [entry] ([value]) detected! Using latest.")
+			log_config("Duplicate setting for [entry] ([value], [E.resident_file]) detected! Using latest.")
+
+		E.resident_file = filename
 		
 		if(validated)
 			E.modified = TRUE
