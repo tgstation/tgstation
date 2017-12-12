@@ -1,0 +1,5 @@
+author: "Robustin"
+delete-after: True
+changes: 
+  - rscadd: "The blood cult revive rune will now replace the souls of braindead or inactive cultists/constructs when properly invoked. These \"revivals\" will not count toward the revive limit."
+  - rscadd: "The clock cult healing rune will now replace the souls of braindead or inactive cultists/constructs when left atop the rune. These \"revivals\" will not drain the rune's energy."
