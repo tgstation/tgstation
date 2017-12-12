@@ -134,11 +134,12 @@
 
 	// Local hearers
 	var/speak_range = client.keys_held["V"] ? 1 : 7
-	var/hearers = get_hearers_in_view(7, src)
+	var/audio_source = hullrot_audio_source()
+	var/hearers = get_hearers_in_view(7, audio_source)
 	if (can_speak)
 		var/list/local_with = list()
 		for(var/mob/living/L in hearers)
-			if (L.client && L != src && get_dist(src, L) <= speak_range)
+			if (L.client && L != src && get_dist(audio_source, L) <= speak_range)
 				local_with += L.ckey
 		var/new_local = list2params(local_with)
 		if (hullrot_cache["local_with"] != new_local)
@@ -161,12 +162,12 @@
 	var/list/hot_freqs = list()
 	var/list/hear_freqs = list()
 	for(var/obj/item/device/radio/R in hearers)
-		if (get_dist(src, R) > R.canhear_range || !R.on)
+		if (get_dist(audio_source, R) > R.canhear_range || !R.on)
 			continue
 		if (R.subspace_transmission && !R.independent && (!SShullrot.subspace_groups || !SShullrot.subspace_groups["[T.z]"]))
 			continue
 
-		if (can_speak && R.broadcasting && !R.wires.is_cut(WIRE_TX) && get_dist(src, R) <= speak_range)
+		if (can_speak && R.broadcasting && !R.wires.is_cut(WIRE_TX) && get_dist(audio_source, R) <= speak_range)
 			hot_freqs |= R.frequency
 
 		if (can_hear && R.listening && !R.wires.is_cut(WIRE_RX) && R.can_receive(R.frequency, list(R.z)))
@@ -183,15 +184,6 @@
 	if (hullrot_cache["hear"] != new_hear)
 		hullrot_cache["hear"] = new_hear
 		SShullrot.set_hear_freqs(client, hear_freqs)
-
-/mob/living/proc/hullrot_radio_allowed()
-	return TRUE
-
-/mob/living/silicon/ai/hullrot_radio_allowed()
-	return FALSE
-
-/mob/living/silicon/robot/hullrot_radio_allowed()
-	return mainframe == null
 
 /mob/living/proc/hullrot_reset()
 	hullrot_stats = list()
@@ -259,6 +251,30 @@
 	. = ..()
 	if(.)
 		hullrot_check_all_hearers()
+
+// ----------------------------------------------------------------------------
+// AI restriction and holopad handling
+
+/mob/living/proc/hullrot_radio_allowed()
+	return TRUE
+
+/mob/living/silicon/ai/hullrot_radio_allowed()
+	return FALSE
+
+/mob/living/silicon/robot/hullrot_radio_allowed()
+	return mainframe == null
+
+/mob/living/proc/hullrot_audio_source()
+	var/mob/camera/aiEye/remote/holo/holoEye = remote_control
+	if (istype(holoEye))
+		return holoEye.origin
+	return src
+
+/mob/living/silicon/ai/hullrot_audio_source()
+	var/obj/machinery/holopad/T = current
+	if (istype(T) && T.masters[src])
+		return T
+	return src
 
 // ----------------------------------------------------------------------------
 // Message composition

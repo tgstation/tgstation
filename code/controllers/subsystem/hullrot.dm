@@ -31,9 +31,9 @@ SUBSYSTEM_DEF(hullrot)
 		return abort("[name] [expected_major].[expected_minor] was expected, but incompatible [version["version"]] was supplied.")
 	loaded_version = version["version"]
 
-	var/list/res = debug_decode(call(dll, "hullrot_init")())
+	var/list/res = json_decode(call(dll, "hullrot_init")())
 	var/error = res["error"] || res["Fatal"] || res["Debug"]
-	if (error)
+	if (error || !res["Version"])
 		return abort("[name] failed to initialize: [error]")
 
 	for (var/mob/living/L in GLOB.player_list)
@@ -42,7 +42,7 @@ SUBSYSTEM_DEF(hullrot)
 	return ..()
 
 /datum/controller/subsystem/hullrot/proc/get_version()
-	return debug_decode(call(dll, "hullrot_dll_version")())
+	return json_decode(call(dll, "hullrot_dll_version")())
 
 // ----------------------------------------------------------------------------
 // Shutdown
@@ -54,8 +54,9 @@ SUBSYSTEM_DEF(hullrot)
 
 // because the DLL starts a thread, we have to make *extra* sure to join it
 /world/Del()
-	if (SShullrot)
+	if (SShullrot && SShullrot.loaded_version && SShullrot.can_fire)
 		SShullrot.Shutdown()
+		sleep(10)
 	..()
 
 // ----------------------------------------------------------------------------
@@ -66,10 +67,12 @@ SUBSYSTEM_DEF(hullrot)
 	to_chat(world, "<span class='boldannounce'>[msg]</span>")
 	can_fire = FALSE
 
-/datum/controller/subsystem/hullrot/proc/debug_decode(result)
-	if (result != "\[\]")
-		log_world(result)
-	return json_decode(result)
+	var/list/images = list()
+	for (var/mob/living/L in GLOB.player_list)
+		images += L.hullrot_bubble
+	for (var/mob/living/L in GLOB.player_list)
+		if (L.client)
+			L.client.images -= images
 
 /datum/controller/subsystem/hullrot/proc/warn(msg)
 	message_admins("[name] warning: [msg]")
@@ -81,12 +84,12 @@ SUBSYSTEM_DEF(hullrot)
 	checked_events = TRUE
 	var/events
 	if (what)
-		message_admins("[name] output: [what] [json_encode(data)]")
-		events = debug_decode(call(dll, "hullrot_control")(json_encode(list("[what]" = data))))
+		//message_admins("[name] output: [what] [json_encode(data)]")
+		events = json_decode(call(dll, "hullrot_control")(json_encode(list("[what]" = data))))
 	else
-		events = debug_decode(call(dll, "hullrot_control")())
+		events = json_decode(call(dll, "hullrot_control")())
 	for (var/event in events)
-		message_admins("[name]: event: [json_encode(event)]")
+		//message_admins("[name]: event: [json_encode(event)]")
 		if ((data = event["Fatal"]))
 			abort("Hullrot has crashed: [data]")
 
@@ -126,6 +129,14 @@ SUBSYSTEM_DEF(hullrot)
 				var/atom/movable/virtualspeaker/virt = new(null, speaker)
 				to_chat(speaker, speaker.hullrot_compose(virt, text2path(data["language"]), data["freq"]))
 
+		else if ((data = event["CannotSpeak"]))
+			var/client/C = GLOB.directory[data]
+			var/mob/living/speaker = C && C.mob
+			if (!istype(speaker))
+				continue
+
+			to_chat(speaker, "<span class='warning'>You find yourself unable to speak!</span>")
+
 		else if ((data = event["SpeechBubble"]))
 			var/client/C = GLOB.directory[data["who"]]
 			var/mob/living/speaker = C && C.mob
@@ -134,9 +145,10 @@ SUBSYSTEM_DEF(hullrot)
 
 			var/image/bubble = speaker.hullrot_bubble
 			if (!bubble)
-				speaker.hullrot_bubble = bubble = image('icons/mob/talk.dmi', speaker, "[speaker.bubble_icon]0", FLY_LAYER - 0.01)
+				speaker.hullrot_bubble = bubble = image('icons/mob/talk.dmi', speaker.hullrot_audio_source(), "[speaker.bubble_icon]0", FLY_LAYER - 0.01)
 			else
 				bubble.icon_state = "[speaker.bubble_icon]0"
+				bubble.loc = speaker.hullrot_audio_source()
 
 			for (var/mob/living/L in GLOB.player_list)
 				if (!L.client)
