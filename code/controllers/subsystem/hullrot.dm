@@ -104,33 +104,33 @@ SUBSYSTEM_DEF(hullrot)
 			var/mob/living/speaker = C && C.mob
 			C = GLOB.directory[data["hearer"]]
 			var/mob/living/hearer = C && C.mob
-			if (istype(speaker) && istype(hearer))
-				// Issue forth the textual notification...
-				var/atom/movable/abstract_speaker = speaker
-				if (data["freq"])
-					var/atom/movable/virtualspeaker/virt = new(null)
-					virt.source = speaker
-					virt.name = speaker.GetVoice()
-					virt.verb_say = speaker.verb_say
-					virt.verb_ask = speaker.verb_ask
-					virt.verb_exclaim = speaker.verb_exclaim
-					virt.verb_yell = speaker.verb_yell
-					abstract_speaker = virt
-				to_chat(hearer, hearer.hullrot_compose(abstract_speaker, speaker.get_default_language(), data["freq"]))
+			if (!istype(speaker) || !istype(hearer))
+				continue
+
+			// Issue forth the textual notification...
+			var/atom/movable/abstract_speaker = speaker
+			if (data["freq"])
+				abstract_speaker = new /atom/movable/virtualspeaker(null, speaker)
+			to_chat(hearer, hearer.hullrot_compose(abstract_speaker, text2path(data["language"]), data["freq"]))
 
 		else if ((data = event["HearSelf"]))
 			var/client/C = GLOB.directory[data["who"]]
-			var/mob/living/L = C && C.mob
-			if (istype(L))
-				if (!L.can_hear())
-					if (!data["freq"])
-						to_chat(L, "<span class='notice'>You can't hear yourself!</span>")
-				else if (data["freq"])
-					to_chat(L, L.hullrot_compose(L, L.get_default_language(), data["freq"]))
+			var/mob/living/speaker = C && C.mob
+			if (!istype(speaker))
+				continue
+
+			if (!speaker.can_hear())
+				if (!data["freq"])
+					to_chat(speaker, "<span class='notice'>You can't hear yourself!</span>")
+			else if (data["freq"])
+				var/atom/movable/virtualspeaker/virt = new(null, speaker)
+				to_chat(speaker, speaker.hullrot_compose(virt, text2path(data["language"]), data["freq"]))
 
 		else if ((data = event["SpeechBubble"]))
 			var/client/C = GLOB.directory[data["who"]]
 			var/mob/living/speaker = C && C.mob
+			if (!istype(speaker))
+				continue
 
 			var/image/bubble = speaker.hullrot_bubble
 			if (!bubble)
@@ -159,6 +159,10 @@ SUBSYSTEM_DEF(hullrot)
 		if (subspace_ticker >= 50 || !subspace_groups)
 			subspace_ticker = -1
 			INVOKE_ASYNC(src, .proc/subspace_update)
+
+	for (var/mob/living/L in GLOB.player_list)
+		if (L.client && (L.hullrot_needs_update || prob(5)))
+			L.hullrot_update()
 
 	if (!checked_events)
 		control()
@@ -192,6 +196,12 @@ SUBSYSTEM_DEF(hullrot)
 
 /datum/controller/subsystem/hullrot/proc/set_mob_flags(client/C, can_speak, can_hear)
 	control("SetMobFlags", list("who" = C.ckey, "speak" = can_speak, "hear" = can_hear))
+
+/datum/controller/subsystem/hullrot/proc/set_languages(client/C, languages)
+	control("SetLanguages", list("who" = C.ckey, "known" = languages))
+
+/datum/controller/subsystem/hullrot/proc/set_spoken_language(client/C, current)
+	control("SetSpokenLanguage", list("who" = C.ckey, "spoken" = current))
 
 /datum/controller/subsystem/hullrot/proc/set_ptt(client/C, freq)
 	control("SetPTT", list("who" = C.ckey, "freq" = (freq && text2num(freq))))

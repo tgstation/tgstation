@@ -6,6 +6,7 @@
 	var/hullrot_ptt
 	var/hullrot_cache
 	var/image/hullrot_bubble
+	var/hullrot_needs_update = FALSE
 
 /mob/living/Stat()
 	..()
@@ -43,7 +44,7 @@
 
 /mob/living/proc/ptt_tick()
 	var/ptt_freq
-	if (!incapacitated(ignore_grab = TRUE))
+	if (hullrot_radio_allowed() && !incapacitated(ignore_grab = TRUE))
 		var/obj/effect/statclick/radio/current = hullrot_ptt && hullrot_stats[hullrot_ptt]
 		ptt_freq = current && current.freq
 
@@ -78,6 +79,7 @@
 	switch(_key)
 		if("V")
 			ptt_tick()
+			hullrot_update()
 		else
 			return ..()
 
@@ -86,6 +88,7 @@
 		if("V")
 			hullrot_cache["ptt_freq"] = null
 			SShullrot.set_ptt(user, null)
+			hullrot_update()
 		else
 			return ..()
 
@@ -93,11 +96,13 @@
 // Location-based can-hear and can-speak checks
 
 /mob/living/proc/hullrot_update()
+	hullrot_needs_update = FALSE
 	if (!SShullrot.can_fire || !client)
 		return
 
-	var/can_speak = can_speak() && (stat == CONSCIOUS || stat == SOFT_CRIT)
-	var/can_hear = can_hear()
+	// Mob-level speaking and hearing
+	var/can_speak = (can_speak() && (stat == CONSCIOUS || stat == SOFT_CRIT)) || 0
+	var/can_hear = can_hear() || 0
 	if (hullrot_cache["can_speak"] != can_speak || hullrot_cache["can_hear"] != can_hear)
 		hullrot_cache["can_speak"] = can_speak
 		hullrot_cache["can_hear"] = can_hear
@@ -105,11 +110,28 @@
 	if (!can_speak && !can_hear)
 		return
 
+	// Languages
+	var/datum/language_holder/langs = get_language_holder()
+	var/list/language_names = list()
+	for (var/L in langs.languages)
+		language_names += "[L]"
+	var/stringified = list2params(language_names)
+	if (hullrot_cache["lang_known"] != stringified)
+		hullrot_cache["lang_known"] = stringified
+		SShullrot.set_languages(client, language_names)
+
+	var/default_name = "[get_default_language()]"
+	if (hullrot_cache["lang_speaking"] != default_name)
+		hullrot_cache["lang_speaking"] = default_name
+		SShullrot.set_spoken_language(client, default_name)
+
+	// Position
 	var/turf/T = get_turf(src)
 	if (hullrot_cache["z"] != T.z)
 		hullrot_cache["z"] = T.z
 		SShullrot.set_z(client, T.z)
 
+	// Local hearers
 	var/speak_range = client.keys_held["V"] ? 1 : 7
 	var/hearers = get_hearers_in_view(7, src)
 	if (can_speak)
@@ -119,9 +141,22 @@
 				local_with += L.ckey
 		var/new_local = list2params(local_with)
 		if (hullrot_cache["local_with"] != new_local)
+			// make sure that we propagate changes to others as well
+			var/previous = params2list(hullrot_cache["local_with"])
+			for(var/other_ckey in (previous - local_with) + (local_with - previous))
+				var/client/C = GLOB.directory[other_ckey]
+				var/mob/living/speaker = C && C.mob
+				if (istype(speaker))
+					speaker.hullrot_needs_update = TRUE
+
 			hullrot_cache["local_with"] = new_local
 			SShullrot.set_local_with(client, local_with)
 
+	// Certain mobs can speak locally but not over the radio
+	if (!hullrot_radio_allowed())
+		can_speak = FALSE
+
+	// Hot and heard radio frequencies
 	var/list/hot_freqs = list()
 	var/list/hear_freqs = list()
 	for(var/obj/item/device/radio/R in hearers)
@@ -148,6 +183,15 @@
 		hullrot_cache["hear"] = new_hear
 		SShullrot.set_hear_freqs(client, hear_freqs)
 
+/mob/living/proc/hullrot_radio_allowed()
+	return TRUE
+
+/mob/living/silicon/ai/hullrot_radio_allowed()
+	return FALSE
+
+/mob/living/silicon/robot/hullrot_radio_allowed()
+	return mainframe == null
+
 /mob/living/proc/hullrot_reset()
 	hullrot_stats = list()
 	hullrot_cache = list()
@@ -160,7 +204,7 @@
 /mob/living/Move()
 	. = ..()
 	if(. && client)
-		hullrot_update()
+		hullrot_needs_update = TRUE
 
 /obj/item/device/radio/equipped(mob/living/user, slot)
 	..()
@@ -172,24 +216,23 @@
 	if (isliving(user) && user.client)
 		user.hullrot_update()
 
-/obj/item/device/radio/proc/hullrot_check_all_hearers()
-	for (var/mob/living/M in get_hearers_in_view(canhear_range, src))
-		if (M.client)
-			M.hullrot_update()
+/obj/proc/hullrot_check_all_hearers(range = 7)
+	for (var/mob/living/M in get_hearers_in_view(range, src))
+		M.hullrot_needs_update = TRUE
 
 /obj/item/device/radio/Initialize()
 	..()
-	hullrot_check_all_hearers()
+	hullrot_check_all_hearers(canhear_range)
 
 /obj/item/device/radio/ui_act(action, params, datum/tgui/ui)
 	. = ..()
 	if (action in list("frequency", "listen", "broadcast", "channel", "subspace"))
-		hullrot_check_all_hearers()
+		hullrot_check_all_hearers(canhear_range)
 
 /obj/item/device/radio/emp_act()
 	. = ..()
-	hullrot_check_all_hearers()
-	addtimer(CALLBACK(src, .proc/hullrot_check_all_hearers), 201)  // un-EMP delay + 1
+	hullrot_check_all_hearers(canhear_range)
+	addtimer(CALLBACK(src, .proc/hullrot_check_all_hearers, canhear_range), 201)  // un-EMP delay + 1
 
 /mob/living/afterShuttleMove()
 	. = ..()
@@ -206,6 +249,16 @@
 	..()
 	SShullrot.set_ghost(client)
 
+/obj/machinery/door/open()
+	. = ..()
+	if(.)
+		hullrot_check_all_hearers()
+
+/obj/machinery/door/close()
+	. = ..()
+	if(.)
+		hullrot_check_all_hearers()
+
 // ----------------------------------------------------------------------------
 // Message composition
 
@@ -218,23 +271,18 @@
 	var/endspanpart = "</span>"
 
 	//Message
-	var/verbpart
-	var/atom/movable/AM = speaker.GetSource()
-	if(AM) //Basically means "if the speaker is virtual"
-		verbpart = AM.say_mod("", spans, message_mode)
-	else
-		verbpart = speaker.say_mod("", spans, message_mode)
+	var/datum/language/D = GLOB.language_datum_instances[message_language]
+	var/verbpart = D.get_spoken_verb()
 	if (verbpart == "says")
 		verbpart = "speaks"
 
 	var/langpart = ""
-	if(!has_language(language))
+	if(!has_language(message_language))
 		langpart = " in an unknown language"
 
 	var/messagepart = " <span class='message'>[verbpart][langpart].</span></span>"
 
 	var/languageicon = ""
-	var/datum/language/D = GLOB.language_datum_instances[message_language]
 	if(istype(D) && D.display_icon(src))
 		languageicon = "[D.get_icon()] "
 
