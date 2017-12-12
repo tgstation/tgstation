@@ -403,15 +403,21 @@
 
 	return acting_object.drop_location()
 
+/obj/item/device/electronic_assembly/default //The /default electronic_assemblys are to allow the introduction of the new naming scheme without breaking old saves.
+	name = "type-a electronic assembly"
+
 /obj/item/device/electronic_assembly/calc
+	name = "type-b electronic assembly"
 	icon_state = "setup_small_calc"
 	desc = "It's a case, for building small electronics with. This one resembles a pocket calculator."
 
 /obj/item/device/electronic_assembly/clam
+	name = "type-c electronic assembly"
 	icon_state = "setup_small_clam"
 	desc = "It's a case, for building small electronics with. This one has a clamshell design."
 
 /obj/item/device/electronic_assembly/simple
+	name = "type-d electronic assembly"
 	icon_state = "setup_small_simple"
 	desc = "It's a case, for building small electronics with. This one has a simple design."
 
@@ -423,15 +429,21 @@
 	max_components = IC_MAX_SIZE_BASE * 2
 	max_complexity = IC_COMPLEXITY_BASE * 2
 
+/obj/item/device/electronic_assembly/medium/default
+	name = "type-a electronic mechanism"
+
 /obj/item/device/electronic_assembly/medium/box
+	name = "type-b electronic mechanism"
 	icon_state = "setup_medium_box"
 	desc = "It's a case, for building medium-sized electronics with. This one has a boxy design."
 
 /obj/item/device/electronic_assembly/medium/clam
+	name = "type-c electronic mechanism"
 	icon_state = "setup_medium_clam"
 	desc = "It's a case, for building medium-sized electronics with. This one has a clamshell design."
 
 /obj/item/device/electronic_assembly/medium/medical
+	name = "type-d electronic mechanism"
 	icon_state = "setup_medium_med"
 	desc = "It's a case, for building medium-sized electronics with. This one resembles some type of medical apparatus."
 
@@ -460,15 +472,21 @@
 		return
 	..()
 
+/obj/item/device/electronic_assembly/large/default
+	name = "type-a electronic machine"
+
 /obj/item/device/electronic_assembly/large/scope
+	name = "type-b electronic machine"
 	icon_state = "setup_large_scope"
 	desc = "It's a case, for building large electronics with. This one resembles an oscilloscope."
 
 /obj/item/device/electronic_assembly/large/terminal
+	name = "type-c electronic machine"
 	icon_state = "setup_large_terminal"
 	desc = "It's a case, for building large electronics with. This one resembles a computer terminal."
 
 /obj/item/device/electronic_assembly/large/arm
+	name = "type-d electronic machine"
 	icon_state = "setup_large_arm"
 	desc = "It's a case, for building large electronics with. This one resembles a robotic arm."
 
@@ -483,6 +501,10 @@
 /obj/item/device/electronic_assembly/drone/can_move()
 	return TRUE
 
+/obj/item/device/electronic_assembly/drone/default
+	name = "type-a electronic drone"
+
 /obj/item/device/electronic_assembly/drone/arms
+	name = "type-b electronic drone"
 	icon_state = "setup_drone_arms"
 	desc = "It's a case, for building mobile electronics with. This one is armed and dangerous."
