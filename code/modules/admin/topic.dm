@@ -1537,6 +1537,15 @@
 			C.admin_ghost()
 		var/mob/dead/observer/A = C.mob
 		A.ManualFollow(AM)
+	
+	else if(href_list["admingetmovable"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/atom/movable/AM = locate(href_list["admingetmovable"])
+		if(QDELETED(AM))
+			return
+		AM.forceMove(get_turf(usr))
 
 	else if(href_list["adminplayerobservecoodjump"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))
