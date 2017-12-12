@@ -1762,10 +1762,8 @@
 /area/mine/living_quarters)
 "eR" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/door/airlock{
-	glass = 1;
-	name = "Break Room";
-	opacity = 0
+/obj/machinery/door/airlock/glass{
+	name = "Break Room"
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
