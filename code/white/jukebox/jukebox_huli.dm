@@ -60,6 +60,7 @@
 	var/datum/turntable_soundtrack/track = null
 	var/volume = 100
 	var/list/turntable_soundtracks = list()
+	var/blacklisted_areas = list("Space","Lavaland Wastes")
 	anchored = 1
 	density = 1
 
@@ -201,6 +202,13 @@
 
 /obj/machinery/party/turntable/proc/update_sound(update = 0)
 	var/area/A = get_area(src)
+	if(A.name in blacklisted_areas)
+		for(var/mob/M)
+			if(M.music)
+				M.music.status = SOUND_UPDATE//|SOUND_STREAM
+				M.music.volume = 0
+				M << M.music
+		return
 	for(var/mob/M)
 		var/inRange = (get_area(M) in A.related)
 		if(A == "Bar") 							 // kostuli kostulnie
