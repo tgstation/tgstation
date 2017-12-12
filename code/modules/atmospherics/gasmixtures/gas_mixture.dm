@@ -423,22 +423,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 					continue reaction_loop
 			//at this point, all minimum requirements for the reaction are satisfied.
 
-			/* currently no reactions have maximum requirements, so we can leave the checks commented out for a slight performance boost
-			var/list/max_reqs = reaction.max_requirements.Copy()
-			if((max_reqs["TEMP"] && temp > max_reqs["TEMP"]) \
-			|| (max_reqs["ENER"] && ener > max_reqs["ENER"]))
-				continue
-			max_reqs -= "TEMP"
-			max_reqs -= "ENER"
-
-			for(var/id in max_reqs)
-				if(cached_gases[id] && cached_gases[id][MOLES] > max_reqs[id])
-					continue reaction_loop
-			//at this point, all requirements for the reaction are satisfied. we can now react()
-			*/
-
 			. |= reaction.react(src, dump_location)
-			//to_chat(world,reaction.name)
 			if (. & STOP_REACTIONS)
 				break
 	if(.)

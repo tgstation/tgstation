@@ -1,10 +1,8 @@
-
-
 /obj/item/device/integrated_electronics/debugger
 	name = "circuit debugger"
 	desc = "This small tool allows one working with custom machinery to directly set data to a specific pin, useful for writing \
 	settings to specific circuits, or for debugging purposes.  It can also pulse activation pins."
-	icon = 'icons/obj/electronic_assemblies.dmi'
+	icon = 'icons/obj/assemblies/electronic_tools.dmi'
 	icon_state = "debugger"
 	flags_1 = CONDUCT_1 | NOBLUDGEON_1
 	w_class = WEIGHT_CLASS_SMALL
@@ -20,7 +18,7 @@
 	switch(type_to_use)
 		if("string")
 			accepting_refs = FALSE
-			new_data = stripped_input(user, "Now type in a string.","[src] string writing")
+			new_data = stripped_input(user, "Now type in a string.","[src] string writing", no_trim = TRUE)
 			if(istext(new_data) && user.IsAdvancedToolUser())
 				data_to_write = new_data
 				to_chat(user, "<span class='notice'>You set \the [src]'s memory to \"[new_data]\".</span>")

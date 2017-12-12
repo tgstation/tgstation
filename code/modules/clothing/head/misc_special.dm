@@ -18,7 +18,6 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	item_state = "welding"
 	materials = list(MAT_METAL=1750, MAT_GLASS=400)
-//	var/up = 0
 	flash_protect = 2
 	tint = 2
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 60)

@@ -378,8 +378,8 @@
 
 /obj/structure/table/optable/New()
 	..()
-	for(var/dir in GLOB.cardinals)
-		computer = locate(/obj/machinery/computer/operating, get_step(src, dir))
+	for(var/direction in GLOB.cardinals)
+		computer = locate(/obj/machinery/computer/operating, get_step(src, direction))
 		if(computer)
 			computer.table = src
 			break
@@ -411,6 +411,7 @@
 	desc = "Different from the Middle Ages version."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "rack"
+	layer = TABLE_LAYER
 	density = TRUE
 	anchored = TRUE
 	pass_flags = LETPASSTHROW //You can throw objects over this, despite it's density.

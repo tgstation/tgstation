@@ -80,12 +80,6 @@
 		set_waypoint(A)
 		return
 
-	/*
-		AI restrained() currently does nothing
-	if(restrained())
-		RestrainedClickOn(A)
-	else
-	*/
 	A.attack_ai(src)
 
 /*

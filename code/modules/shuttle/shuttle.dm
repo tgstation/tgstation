@@ -24,6 +24,7 @@
 	var/area_type
 	var/turf_type
 	var/baseturf_type
+	var/hidden = FALSE //are we invisible to shuttle navigation computers?
 
 	//these objects are indestructible
 /obj/docking_port/Destroy(force)
@@ -84,15 +85,7 @@
 
 //returns turfs within our projected rectangle in a specific order.
 //this ensures that turfs are copied over in the same order, regardless of any rotation
-/obj/docking_port/proc/return_ordered_turfs(_x, _y, _z, _dir, area_type)
-	if(!_dir)
-		_dir = dir
-	if(!_x)
-		_x = x
-	if(!_y)
-		_y = y
-	if(!_z)
-		_z = z
+/obj/docking_port/proc/return_ordered_turfs(_x, _y, _z, _dir)
 	var/cos = 1
 	var/sin = 0
 	switch(_dir)
@@ -108,52 +101,14 @@
 
 	. = list()
 
-	var/xi
-	var/yi
-	for(var/dx=0, dx<width, ++dx)
-		for(var/dy=0, dy<height, ++dy)
-			xi = _x + (dx-dwidth)*cos - (dy-dheight)*sin
-			yi = _y + (dy-dheight)*cos + (dx-dwidth)*sin
-			var/turf/T = locate(xi, yi, _z)
-			if(area_type)
-				if(istype(get_area(T), area_type))
-					. += T
-				else
-					. += null
-			else
-				. += T
-
-/obj/docking_port/proc/return_ordered_assoc_turfs(_x, _y, _z, _dir)
-	if(!_dir)
-		_dir = dir
-	if(!_x)
-		_x = x
-	if(!_y)
-		_y = y
-	if(!_z)
-		_z = z
-	var/cos = 1
-	var/sin = 0
-	switch(_dir)
-		if(WEST)
-			cos = 0
-			sin = 1
-		if(SOUTH)
-			cos = -1
-			sin = 0
-		if(EAST)
-			cos = 0
-			sin = -1
-
-	. = list()
-
-	var/xi
-	var/yi
-	for(var/dx=0, dx<width, ++dx)
-		for(var/dy=0, dy<height, ++dy)
-			xi = _x + (dx-dwidth)*cos - (dy-dheight)*sin
-			yi = _y + (dy-dheight)*cos + (dx-dwidth)*sin
-			var/turf/T = locate(xi, yi, _z)
+	for(var/dx in 0 to width-1)
+		var/compX = dx-dwidth
+		for(var/dy in 0 to height-1)
+			var/compY = dy-dheight
+			// realX = _x + compX*cos - compY*sin
+			// realY = _y + compY*cos - compX*sin
+			// locate(realX, realY, _z)
+			var/turf/T = locate(_x + compX*cos - compY*sin, _y + compY*cos + compX*sin, _z)
 			.[T] = NONE
 
 #ifdef DOCKING_PORT_HIGHLIGHT
@@ -181,6 +136,25 @@
 	var/obj/docking_port/P = get_docked()
 	if(P)
 		return P.id
+
+/obj/docking_port/proc/is_in_shuttle_bounds(atom/A)
+	var/turf/T = get_turf(A)
+	if(T.z != z)
+		return FALSE
+	var/list/bounds = return_coords()
+	var/x0 = bounds[1]
+	var/y0 = bounds[2]
+	var/x1 = bounds[3]
+	var/y1 = bounds[4]
+	if(x0 <= x1 && !IsInRange(T.x, x0, x1))
+		return FALSE
+	else if(!IsInRange(T.x, x1, x0))
+		return FALSE
+	if(y0 <= y1 && !IsInRange(T.y, y0, y1))
+		return FALSE
+	else if(!IsInRange(T.y, y1, y0))
+		return FALSE
+	return TRUE
 
 /obj/docking_port/stationary
 	name = "dock"
@@ -235,7 +209,7 @@
 /obj/docking_port/stationary/transit/Destroy(force=FALSE)
 	if(force)
 		if(get_docked())
-			to_chat("A transit dock was destroyed while something was docked to it.")
+			log_world("A transit dock was destroyed while something was docked to it.")
 		SSshuttle.transit -= src
 		if(owner)
 			owner = null
@@ -285,6 +259,7 @@
 	var/current_engines = 0 //current engine power
 	var/initial_engines = 0 //initial engine power
 	var/can_move_docking_ports = FALSE //if this shuttle can move docking ports other than the one it is docked at
+	var/list/hidden_turfs = list()
 
 /obj/docking_port/mobile/proc/register()
 	SSshuttle.mobile += src
@@ -451,14 +426,14 @@
 		if(current_dock.area_type)
 			underlying_area_type = current_dock.area_type
 
-	var/list/old_turfs = return_ordered_turfs(x, y, z, dir, area_type)
+	var/list/old_turfs = return_ordered_turfs(x, y, z, dir)
 	var/area/underlying_area = locate(underlying_area_type) in GLOB.sortedAreas
 	if(!underlying_area)
 		underlying_area = new underlying_area_type(null)
 
 	for(var/i in 1 to old_turfs.len)
 		var/turf/oldT = old_turfs[i]
-		if(!oldT)
+		if(!oldT || !istype(oldT, area_type))
 			continue
 		var/area/old_area = oldT.loc
 		underlying_area.contents += oldT
@@ -478,14 +453,14 @@
 	ripples.Cut()
 
 /obj/docking_port/mobile/proc/ripple_area(obj/docking_port/stationary/S1)
-	var/list/L0 = return_ordered_turfs(x, y, z, dir, area_type)
+	var/list/L0 = return_ordered_turfs(x, y, z, dir)
 	var/list/L1 = return_ordered_turfs(S1.x, S1.y, S1.z, S1.dir)
 
 	var/list/ripple_turfs = list()
 
 	for(var/i in 1 to L0.len)
 		var/turf/T0 = L0[i]
-		if(!T0)
+		if(!T0 || !istype(T0, area_type))
 			continue
 		var/turf/T1 = L1[i]
 		if(!T1)
@@ -520,7 +495,7 @@
 
 	// The baseturf that the gets assigned to the turf_type above
 	var/underlying_baseturf_type = /turf/open/space
-	
+
 	// The area that gets placed under where the shuttle moved from
 	var/underlying_area_type = /area/space
 
@@ -544,7 +519,7 @@
 		The bitflag contains the data for what inhabitants of that coordinate should be moved to the new location
 		The bitflags can be found in __DEFINES/shuttles.dm
 	*/
-	var/list/old_turfs = return_ordered_assoc_turfs(x, y, z, dir)
+	var/list/old_turfs = return_ordered_turfs(x, y, z, dir)
 	var/list/new_turfs = return_ordered_turfs(new_dock.x, new_dock.y, new_dock.z, new_dock.dir)
 	/**************************************************************************************************************/
 
@@ -572,7 +547,7 @@
 	CHECK_TICK
 
 	/****************************************All beforeShuttleMove procs*****************************************/
-	
+
 	for(var/i in 1 to old_turfs.len)
 		CHECK_TICK
 		var/turf/oldT = old_turfs[i]
@@ -600,6 +575,17 @@
 
 		old_turfs[oldT] = move_mode
 
+	/*******************************************Hiding turfs if necessary******************************************/
+
+	var/list/new_hidden_turfs
+	if(hidden)
+		new_hidden_turfs = list()
+		for(var/i in 1 to old_turfs.len)
+			var/turf/oldT = old_turfs[i]
+			if(old_turfs[oldT] & MOVE_TURF)
+				new_hidden_turfs += new_turfs[i]
+		SSshuttle.update_hidden_docking_ports(null, new_hidden_turfs)
+
 	/*******************************************All onShuttleMove procs******************************************/
 
 	for(var/i in 1 to old_turfs.len)
@@ -612,11 +598,11 @@
 				if(moving_atom.loc != oldT) //fix for multi-tile objects
 					continue
 				moving_atom.onShuttleMove(newT, oldT, movement_force, movement_direction, old_dock, src)	//atoms
-				moved_atoms += moving_atom
-		
+				moved_atoms[moving_atom] = oldT
+
 		if(move_mode & MOVE_TURF)
 			oldT.onShuttleMove(newT, movement_force, movement_direction)									//turfs
-		
+
 		if(move_mode & MOVE_AREA)
 			var/area/shuttle_area = oldT.loc
 			shuttle_area.onShuttleMove(oldT, newT, underlying_old_area)										//areas
@@ -646,7 +632,10 @@
 	for(var/i in 1 to moved_atoms.len)
 		CHECK_TICK
 		var/atom/movable/moved_object = moved_atoms[i]
-		moved_object.afterShuttleMove(movement_force, dir, preferred_direction, movement_direction, rotation)//atoms
+		if(QDELETED(moved_object))
+			continue
+		var/turf/oldT = moved_atoms[moved_object]
+		moved_object.afterShuttleMove(oldT, movement_force, dir, preferred_direction, movement_direction, rotation)//atoms
 
 	for(var/i in 1 to old_turfs.len)
 		CHECK_TICK
@@ -659,6 +648,12 @@
 		oldT.air_update_turf(TRUE)
 		newT.blocks_air = initial(newT.blocks_air)
 		newT.air_update_turf(TRUE)
+
+	/*******************************************Unhiding turfs if necessary******************************************/
+
+	if(new_hidden_turfs)
+		SSshuttle.update_hidden_docking_ports(hidden_turfs, null)
+		hidden_turfs = new_hidden_turfs
 
 	check_poddoors()
 	new_dock.last_dock_time = world.time
@@ -743,9 +738,11 @@
 		shuttle_area.parallax_movedir = FALSE
 	if(assigned_transit && assigned_transit.assigned_area)
 		assigned_transit.assigned_area.parallax_movedir = FALSE
-	var/list/L0 = return_ordered_turfs(x, y, z, dir, area_type)
+	var/list/L0 = return_ordered_turfs(x, y, z, dir)
 	for (var/thing in L0)
 		var/turf/T = thing
+		if(!T || !istype(T, area_type))
+			continue
 		for (var/thing2 in T)
 			var/atom/movable/AM = thing2
 			if (length(AM.client_mobs_in_contents))
@@ -854,17 +851,6 @@
 	for(var/A in areas)
 		for(var/obj/machinery/door/E in A)	//dumb, I know, but playing it on the engines doesn't do it justice
 			playsound(E, s, 100, FALSE, max(width, height) - world.view)
-
-/obj/docking_port/mobile/proc/is_in_shuttle_bounds(atom/A)
-	var/turf/T = get_turf(A)
-	if(T.z != z)
-		return FALSE
-	var/list/bounds= return_coords()
-	var/turf/T0 = locate(bounds[1],bounds[2],z)
-	var/turf/T1 = locate(bounds[3],bounds[4],z)
-	if(T in block(T0,T1))
-		return TRUE
-	return FALSE
 
 // Losing all initial engines should get you 2
 // Adding another set of engines at 0.5 time

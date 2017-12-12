@@ -31,7 +31,6 @@
 
 	// asset_cache
 	if(href_list["asset_cache_confirm_arrival"])
-		//to_chat(src, "ASSET JOB [href_list["asset_cache_confirm_arrival"]] ARRIVED.")
 		var/job = text2num(href_list["asset_cache_confirm_arrival"])
 		//because we skip the limiter, we have to make sure this is a valid arrival and not somebody tricking us
 		//	into letting append to a list without limit.
@@ -132,13 +131,6 @@
 	if(filelength > UPLOAD_LIMIT)
 		to_chat(src, "<font color='red'>Error: AllowUpload(): File Upload too large. Upload Limit: [UPLOAD_LIMIT/1024]KiB.</font>")
 		return 0
-/*	//Don't need this at the moment. But it's here if it's needed later.
-	//Helps prevent multiple files being uploaded at once. Or right after eachother.
-	var/time_to_wait = fileaccess_timer - world.time
-	if(time_to_wait > 0)
-		to_chat(src, "<font color='red'>Error: AllowUpload(): Spam prevention. Please wait [round(time_to_wait/10)] seconds.</font>")
-		return 0
-	fileaccess_timer = world.time + FTPDELAY	*/
 	return 1
 
 
@@ -203,7 +195,6 @@ GLOBAL_LIST(external_rsc_urls)
 	prefs.last_id = computer_id			//these are gonna be used for banning
 	if(world.byond_version >= 511 && byond_version >= 511 && prefs.clientfps)
 		vars["fps"] = prefs.clientfps
-	sethotkeys(1)						//set hoykeys from preferences (from_pref = 1)
 
 	log_access("Login: [key_name(src)] from [address ? address : "localhost"]-[computer_id] || BYOND v[byond_version]")
 	var/alert_mob_dupe_login = FALSE
@@ -229,7 +220,16 @@ GLOBAL_LIST(external_rsc_urls)
 						message_admins("<font color='red'><B>Notice: </B><font color='blue'>[key_name_admin(src)] has the same [matches] as [key_name_admin(C)] (no longer logged in). </font>")
 						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(C)] (no longer logged in).")
 
+	if(GLOB.player_details[ckey])
+		player_details = GLOB.player_details[ckey]
+	else
+		player_details = new
+		GLOB.player_details[ckey] = player_details
+
+
 	. = ..()	//calls mob.Login()
+
+	set_macros()
 
 	chatOutput.start() // Starts the chat
 
@@ -438,7 +438,7 @@ GLOBAL_LIST(external_rsc_urls)
 			message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
 			to_chat(src, "Sorry but the server is currently not accepting connections from never before seen players.")
 			var/list/connectiontopic_a = params2list(connectiontopic)
-			var/list/panic_addr = CONFIG_GET(string/panic_address)
+			var/list/panic_addr = CONFIG_GET(string/panic_server_address)
 			if(panic_addr && !connectiontopic_a["redirect"])
 				var/panic_name = CONFIG_GET(string/panic_server_name)
 				to_chat(src, "<span class='notice'>Sending you to [panic_name ? panic_name : panic_addr].</span>")
@@ -659,6 +659,9 @@ GLOBAL_LIST(external_rsc_urls)
 			return FALSE
 		if ("key")
 			return FALSE
+		if("view")
+			change_view(var_value)
+			return TRUE
 	. = ..()
 
 
@@ -679,7 +682,8 @@ GLOBAL_LIST(external_rsc_urls)
 
 /client/proc/apply_clickcatcher()
 	generate_clickcatcher()
-	void.UpdateGreed(view,view)
+	var/list/actualview = getviewsize(view)
+	void.UpdateGreed(actualview[1],actualview[2])
 
 /client/proc/AnnouncePR(announcement)
 	if(prefs && prefs.chat_toggles & CHAT_PULLR)

@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ab" = (
 /turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/escape)
@@ -23,8 +23,8 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "ag" = (
-/turf/open/space,
-/area/space/nearstation)
+/turf/template_noop,
+/area/template_noop)
 "ah" = (
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
@@ -119,7 +119,6 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aB" = (
-/turf/open/floor/mineral/titanium,
 /turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/escape)
 "aC" = (

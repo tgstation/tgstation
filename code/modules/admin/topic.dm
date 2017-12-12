@@ -181,12 +181,14 @@
 			log_admin("[key_name(usr)] has triggered an event. ([E.name])")
 		return
 
-	else if(href_list["dbsearchckey"] || href_list["dbsearchadmin"])
+	else if(href_list["dbsearchckey"] || href_list["dbsearchadmin"] || href_list["dbsearchip"] || href_list["dbsearchcid"])
 		var/adminckey = href_list["dbsearchadmin"]
 		var/playerckey = href_list["dbsearchckey"]
+		var/ip = href_list["dbsearchip"]
+		var/cid = href_list["dbsearchcid"]
 		var/page = href_list["dbsearchpage"]
 
-		DB_ban_panel(playerckey, adminckey, page)
+		DB_ban_panel(playerckey, adminckey, ip, cid, page)
 		return
 
 	else if(href_list["dbbanedit"])
@@ -391,6 +393,8 @@
 		log_admin("[key_name(usr)] [msg]")
 		message_admins("[key_name_admin(usr)] [msg]")
 		href_list["secrets"] = "check_antagonist"
+		if(SSticker.ready_for_reboot && !SSticker.delay_end) //we undelayed after standard reboot would occur
+			SSticker.standard_reboot()
 
 	else if(href_list["end_round"])
 		if(!check_rights(R_ADMIN))
@@ -1533,6 +1537,15 @@
 			C.admin_ghost()
 		var/mob/dead/observer/A = C.mob
 		A.ManualFollow(AM)
+	
+	else if(href_list["admingetmovable"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/atom/movable/AM = locate(href_list["admingetmovable"])
+		if(QDELETED(AM))
+			return
+		AM.forceMove(get_turf(usr))
 
 	else if(href_list["adminplayerobservecoodjump"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))

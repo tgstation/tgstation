@@ -22,9 +22,7 @@
 															"remote signaller" = 5,
 															)
 
-/mob/living/silicon/pai/verb/paiInterface()
-	set category = "pAI Commands"
-	set name = "Software Interface"
+/mob/living/silicon/pai/proc/paiInterface()
 	var/dat = ""
 	var/left_part = ""
 	var/right_part = softwareMenu()
@@ -178,7 +176,7 @@
 			if(href_list["freq"])
 
 				var/new_frequency = (sradio.frequency + text2num(href_list["freq"]))
-				if(new_frequency < 1200 || new_frequency > 1600)
+				if(new_frequency < MIN_FREE_FREQ || new_frequency > MAX_FREE_FREQ)
 					new_frequency = sanitize_frequency(new_frequency)
 				sradio.set_frequency(new_frequency)
 
@@ -588,7 +586,6 @@
 	if(!istype(machine, /obj/machinery/door))
 		dat += "Connected device's firmware does not appear to be compatible with Airlock Jack protocols.<br>"
 		return dat
-//	var/obj/machinery/airlock/door = machine
 
 	if(!hackdoor)
 		dat += "<a href='byond://?src=[REF(src)];software=doorjack;jack=1;sub=0'>Begin Airlock Jacking</a> <br>"

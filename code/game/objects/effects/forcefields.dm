@@ -7,6 +7,9 @@
 	density = TRUE
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
+/obj/effect/forcefield/singularity_pull()
+	return
+
 /obj/effect/forcefield/cult
 	desc = "An unholy shield that blocks all attacks."
 	name = "glowing wall"

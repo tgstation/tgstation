@@ -41,7 +41,6 @@
 	var/turf/T = get_turf(ui_host())
 	if(!T)
 		return
-	//var/valid_z_levels = (GetConnectedZlevels(T.z) & using_map.station_levels)
 	for(var/obj/machinery/power/supermatter_shard/S in GLOB.machines)
 		// Delaminating, not within coverage, not on a tile.
 		if(!((S.z in GLOB.station_z_levels) || S.z == ZLEVEL_MINING || S.z == T.z || !isturf(S.loc)))

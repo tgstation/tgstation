@@ -25,6 +25,7 @@
 	window_id = "automed"
 	window_name = "Automatic Medical Unit v1.1"
 	data_hud_type = DATA_HUD_MEDICAL_ADVANCED
+	path_image_color = "#DDDDFF"
 
 	var/obj/item/reagent_containers/glass/reagent_glass = null //Can be set to draw from this for reagents.
 	var/skin = null //Set to "tox", "ointment" or "o2" for the other two firstaid kits.
@@ -194,7 +195,7 @@
 		use_beaker = !use_beaker
 
 	else if(href_list["eject"] && (!isnull(reagent_glass)))
-		reagent_glass.loc = get_turf(src)
+		reagent_glass.forceMove(drop_location())
 		reagent_glass = null
 
 	else if(href_list["togglevoice"])
@@ -342,7 +343,7 @@
 	//Time to see if they need medical help!
 	if(C.stat == DEAD || (C.status_flags & FAKEDEATH))
 		return FALSE	//welp too late for them!
-	
+
 	if(!(loc == C.loc) && !(isturf(C.loc) && isturf(loc)))
 		return FALSE
 
@@ -516,7 +517,7 @@
 /mob/living/simple_animal/bot/medbot/explode()
 	on = FALSE
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
-	var/turf/Tsec = get_turf(src)
+	var/atom/Tsec = drop_location()
 
 	new /obj/item/storage/firstaid(Tsec)
 
@@ -525,7 +526,7 @@
 	new /obj/item/device/healthanalyzer(Tsec)
 
 	if(reagent_glass)
-		reagent_glass.loc = Tsec
+		reagent_glass.forceMove(Tsec)
 		reagent_glass = null
 
 	if(prob(50))

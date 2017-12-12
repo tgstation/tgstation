@@ -6,14 +6,15 @@
 	icon_state = "barman"
 	item_state = "bar_suit"
 	item_color = "barman"
-	alt_covers_chest = 1
+	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/rank/bartender/purple
 	desc = "It looks like it has lots of flair!"
 	name = "purple bartender's uniform"
 	icon_state = "purplebartender"
 	item_state = "purplebartender"
-	alt_covers_chest = 1
+	item_color = "purplebartender"
+	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/captain //Alright, technically not a 'civilian' but its better then giving a .dm file for a single define.
 	desc = "It's a blue jumpsuit with some gold markings denoting the rank of \"Captain\"."
@@ -22,7 +23,7 @@
 	item_state = "b_suit"
 	item_color = "captain"
 	sensor_mode = SENSOR_COORDS
-	random_sensor = 0
+	random_sensor = FALSE
 
 /obj/item/clothing/under/rank/cargo
 	name = "quartermaster's jumpsuit"
@@ -48,14 +49,14 @@
 	icon_state = "chaplain"
 	item_state = "bl_suit"
 	item_color = "chapblack"
-	can_adjust = 0
+	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/chef
 	name = "cook's suit"
 	desc = "A suit which is given only to the most <b>hardcore</b> cooks in space."
 	icon_state = "chef"
 	item_color = "chef"
-	alt_covers_chest = 1
+	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/rank/clown
 	name = "clown suit"
@@ -64,7 +65,7 @@
 	item_state = "clown"
 	item_color = "clown"
 	fitted = FEMALE_UNIFORM_TOP
-	can_adjust = 0
+	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/clown/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	playsound(loc, 'sound/items/bikehorn.ogg', 50, 1, -1)
@@ -76,7 +77,7 @@
 	icon_state = "hop"
 	item_state = "b_suit"
 	item_color = "hop"
-	can_adjust = 0
+	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/hydroponics
 	desc = "It's a jumpsuit designed to protect against minor plant-related hazards."
@@ -96,7 +97,7 @@
 /obj/item/clothing/under/lawyer
 	desc = "Slick threads."
 	name = "Lawyer suit"
-	can_adjust = 0
+	can_adjust = FALSE
 
 /obj/item/clothing/under/lawyer/black
 	icon_state = "lawyer_black"
@@ -124,8 +125,8 @@
 	icon_state = "bluesuit"
 	item_state = "bluesuit"
 	item_color = "bluesuit"
-	can_adjust = 1
-	alt_covers_chest = 1
+	can_adjust = TRUE
+	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/lawyer/purpsuit
 	name = "purple suit"
@@ -133,8 +134,8 @@
 	item_state = "lawyer_purp"
 	item_color = "lawyer_purp"
 	fitted = NO_FEMALE_UNIFORM
-	can_adjust = 1
-	alt_covers_chest = 1
+	can_adjust = TRUE
+	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/lawyer/blacksuit
 	name = "black suit"
@@ -142,8 +143,8 @@
 	icon_state = "blacksuit"
 	item_state = "bar_suit"
 	item_color = "blacksuit"
-	can_adjust = 1
-	alt_covers_chest = 1
+	can_adjust = TRUE
+	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/rank/curator
 	name = "sensible suit"
@@ -151,7 +152,7 @@
 	icon_state = "red_suit"
 	item_state = "red_suit"
 	item_color = "red_suit"
-	can_adjust = 0
+	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/curator/treasure_hunter
 	name = "treasure hunter uniform"
@@ -180,4 +181,4 @@
 	icon_state = "explorer"
 	item_state = "explorer"
 	item_color = "explorer"
-	can_adjust = 0
+	can_adjust = FALSE

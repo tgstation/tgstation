@@ -17,7 +17,7 @@
 	icon_state = "black"
 	item_state = "bl_suit"
 	item_color = "black"
-	resistance_flags = 0
+	resistance_flags = NONE
 
 /obj/item/clothing/under/color/black/ghost
 	flags_1 = NODROP_1|DROPDEL_1
@@ -129,4 +129,4 @@
 	icon_state = "rainbow"
 	item_state = "rainbow"
 	item_color = "rainbow"
-	can_adjust = 0
+	can_adjust = FALSE

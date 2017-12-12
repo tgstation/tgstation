@@ -179,9 +179,6 @@
 /obj/item/mecha_parts/mecha_equipment/extinguisher/get_equip_info()
 	return "[..()] \[[src.reagents.total_volume]\]"
 
-/obj/item/mecha_parts/mecha_equipment/extinguisher/on_reagent_change()
-	return
-
 /obj/item/mecha_parts/mecha_equipment/extinguisher/can_attach(obj/mecha/working/M as obj)
 	if(..())
 		if(istype(M))

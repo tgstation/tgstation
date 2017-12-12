@@ -51,14 +51,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/item_color = null //this needs deprecating, soonish
 
 	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
-	//var/heat_transfer_coefficient = 1 //0 prevents all transfers, 1 is invisible
 	var/gas_transfer_coefficient = 1 // for leaking gas from turf to mask and vice-versa (for masks right now, but at some point, i'd like to include space helmets)
 	var/permeability_coefficient = 1 // for chemicals/diseases
 	var/siemens_coefficient = 1 // for electrical admittance/conductance (electrocution checks and shit)
 	var/slowdown = 0 // How much clothing is slowing you down. Negative values speeds you up
 	var/armour_penetration = 0 //percentage of armour effectiveness to remove
 	var/list/allowed = null //suit storage stuff.
-	var/obj/item/device/uplink/hidden_uplink = null
 	var/equip_delay_self = 0 //In deciseconds, how long an item takes to equip; counts only for normal clothing slots, not pockets etc.
 	var/equip_delay_other = 20 //In deciseconds, how long an item takes to put on another person
 	var/strip_delay = 40 //In deciseconds, how long an item takes to remove from another person
@@ -198,40 +196,45 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	if(!user.research_scanner)
 		return
-	var/list/input = techweb_item_boost_check(src)
-	if(input)
-		var/list/output = list("<b><font color='purple'>Research Boost Data:</font></b>")
-		var/list/res = list("<b><font color='blue'>Already researched:</font></b>")
-		var/list/boosted = list("<b><font color='red'>Already boosted:</font></b>")
-		for(var/datum/techweb_node/N in input)
-			var/str = "<b>[N.display_name]</b>: [input[N]] points.</b>"
-			if(SSresearch.science_tech.researched_nodes[N])
-				res += str
-			else if(SSresearch.science_tech.boosted_nodes[N])
-				boosted += str
-			if(SSresearch.science_tech.visible_nodes[N])	//JOY OF DISCOVERY!
-				output += str
-		var/list/combine = output + res + boosted
-		var/strout = combine.Join("<br>")
-		to_chat(user, strout)
 
-	var/list/msg = list("<span class='notice'>*--------*<BR>Extractable materials:")
-	if(materials.len)
+	// Research prospects, including boostable nodes and point values.
+	// Deliver to a console to know whether the boosts have already been used.
+	var/list/research_msg = list("<font color='purple'>Research prospects:</font> ")
+	var/sep = ""
+	var/list/boostable_nodes = techweb_item_boost_check(src)
+	if (boostable_nodes)
+		for(var/id in boostable_nodes)
+			var/datum/techweb_node/node = SSresearch.techweb_nodes[id]
+			research_msg += sep
+			research_msg += node.display_name
+			sep = ", "
+	var/points = techweb_item_point_check(src)
+	if (points)
+		research_msg += sep
+		research_msg += "[points] points"
+		sep = ", "
+
+	if (!sep) // nothing was shown
+		research_msg += "None"
+
+	// Extractable materials. Only shows the names, not the amounts.
+	research_msg += ".<br><font color='purple'>Extractable materials:</font> "
+	if (materials.len)
+		sep = ""
 		for(var/mat in materials)
-			msg += "[CallMaterialName(mat)]" //Capitize first word, remove the "$"
+			research_msg += sep
+			research_msg += CallMaterialName(mat)
+			sep = ", "
 	else
-		msg += "<span class='danger'>No extractable materials detected.</span>"
-	msg += "*--------*"
-	to_chat(user, msg.Join("<br>"))
+		research_msg += "None"
+	research_msg += "."
+	to_chat(user, research_msg.Join())
 
 /obj/item/proc/speechModification(message)			//for message modding by mask slot.
 	return message
 
 /obj/item/interact(mob/user)
 	add_fingerprint(user)
-	if(hidden_uplink && hidden_uplink.active)
-		hidden_uplink.interact(user)
-		return 1
 	ui_interact(user)
 
 /obj/item/ui_act(action, params)

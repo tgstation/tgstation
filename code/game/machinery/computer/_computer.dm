@@ -111,15 +111,16 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(circuit) //no circuit, no computer frame
 			var/obj/structure/frame/computer/A = new /obj/structure/frame/computer(src.loc)
+			A.dir = dir
 			A.circuit = circuit
 			A.anchored = TRUE
 			if(stat & BROKEN)
 				if(user)
 					to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
 				else
-					playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
-				new /obj/item/shard(src.loc)
-				new /obj/item/shard(src.loc)
+					playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+				new /obj/item/shard(drop_location())
+				new /obj/item/shard(drop_location())
 				A.state = 3
 				A.icon_state = "3"
 			else

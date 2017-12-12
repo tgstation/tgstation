@@ -7,7 +7,7 @@
 	slot_flags = SLOT_EYES
 	strip_delay = 20
 	equip_delay_other = 25
-	resistance_flags = 0
+	resistance_flags = NONE
 	materials = list(MAT_GLASS = 250)
 	var/vision_flags = 0
 	var/darkness_view = 2//Base human is 2

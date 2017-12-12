@@ -5,7 +5,8 @@
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
-	usr.say(message)
+	if(message)
+		say(message)
 
 
 /mob/verb/whisper_verb(message as text)
@@ -79,4 +80,4 @@
 	return 0
 
 /mob/proc/lingcheck()
-	return 0
+	return LINGHIVE_NONE

@@ -100,10 +100,6 @@
 							dat += text("<td>[]</td>", R.fields["p_stat"])
 							dat += text("<td>[]</td></tr>", R.fields["m_stat"])
 					dat += "</table><hr width='75%' />"
-//					if(GLOB.data_core.general)
-//						for(var/datum/data/record/R in sortRecord(GLOB.data_core.general))
-//							dat += "<A href='?src=[REF(src)];d_rec=[R.fields["id"]]'>[R.fields["id"]]: [R.fields["name"]]<BR>"
-//							//Foreach goto(132)
 					dat += "<HR><A href='?src=[REF(src)];screen=1'>Back</A>"
 				if(3)
 					dat += "<B>Records Maintenance</B><HR>\n<A href='?src=[REF(src)];back=1'>Backup To Disk</A><BR>\n<A href='?src=[REF(src)];u_load=1'>Upload From Disk</A><BR>\n<A href='?src=[REF(src)];del_all=1'>Delete All Records</A><BR>\n<BR>\n<A href='?src=[REF(src)];screen=1'>Back</A>"

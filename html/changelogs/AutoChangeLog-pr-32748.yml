@@ -1,4 +1,0 @@
-author: "AutomaticFrenzy"
-delete-after: True
-changes: 
-  - bugfix: "cell chargers weren't animating properly"

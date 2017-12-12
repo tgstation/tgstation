@@ -109,10 +109,7 @@
 				use_power(250 * recharge_coeff)
 				using_power = 1
 			update_icon(using_power)
-		if(istype(charging, /obj/item/gun/energy))
-			var/obj/item/gun/energy/E = charging
-			E.recharge_newshot()
-			return
+
 		if(istype(charging, /obj/item/ammo_box/magazine/recharge))
 			var/obj/item/ammo_box/magazine/recharge/R = charging
 			if(R.stored_ammo.len < R.max_ammo)

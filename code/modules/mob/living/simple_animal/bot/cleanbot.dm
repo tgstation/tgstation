@@ -16,6 +16,7 @@
 	window_id = "autoclean"
 	window_name = "Automatic Station Cleaner v1.2"
 	pass_flags = PASSMOB
+	path_image_color = "#993299"
 
 	var/blood = 1
 	var/trash = 0
@@ -257,7 +258,7 @@
 /mob/living/simple_animal/bot/cleanbot/explode()
 	on = FALSE
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
-	var/turf/Tsec = get_turf(src)
+	var/atom/Tsec = drop_location()
 
 	new /obj/item/reagent_containers/glass/bucket(Tsec)
 

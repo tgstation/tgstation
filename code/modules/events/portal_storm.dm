@@ -37,7 +37,7 @@
 	var/mutable_appearance/storm
 
 /datum/round_event/portal_storm/setup()
-	storm = 	storm = mutable_appearance('icons/obj/tesla_engine/energy_ball.dmi', "energy_ball_fast", FLY_LAYER)
+	storm = mutable_appearance('icons/obj/tesla_engine/energy_ball.dmi', "energy_ball_fast", FLY_LAYER)
 	storm.color = "#00FF00"
 
 	station_areas = get_areas_in_z(ZLEVEL_STATION_PRIMARY)

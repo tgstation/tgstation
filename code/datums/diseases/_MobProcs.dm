@@ -143,14 +143,25 @@
 //Proc to use when you 100% want to infect someone, as long as they aren't immune
 /mob/proc/ForceContractDisease(datum/disease/D)
 	if(!CanContractDisease(D))
-		return 0
+		return FALSE
 	AddDisease(D)
 
 
 /mob/living/carbon/human/CanContractDisease(datum/disease/D)
-	if(dna && (VIRUSIMMUNE in dna.species.species_traits) && !D.bypasses_immunity)
-		return 0
+
+	if(dna)
+		if((VIRUSIMMUNE in dna.species.species_traits) && !D.bypasses_immunity)
+			return FALSE
+
+		var/can_infect = FALSE
+		for(var/host_type in D.infectable_hosts)
+			if(host_type in dna.species.species_traits)
+				can_infect = TRUE
+				break
+		if(!can_infect)
+			return FALSE
+
 	for(var/thing in D.required_organs)
 		if(!((locate(thing) in bodyparts) || (locate(thing) in internal_organs)))
-			return 0
+			return FALSE
 	return ..()

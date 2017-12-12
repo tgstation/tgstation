@@ -31,7 +31,7 @@
 	.["Show VV To Player"] = "?_src_=vars;[HrefToken(TRUE)];expose=[REF(src)]"
 
 
-/datum/proc/on_reagent_change()
+/datum/proc/on_reagent_change(changetype)
 	return
 
 
@@ -104,15 +104,7 @@
 	else
 		atomsnowflake += "<b>[D]</b>"
 
-	var/formatted_type = "[type]"
-	if(length(formatted_type) > 25)
-		var/middle_point = length(formatted_type) / 2
-		var/splitpoint = findtext(formatted_type,"/",middle_point)
-		if(splitpoint)
-			formatted_type = "[copytext(formatted_type,1,splitpoint)]<br>[copytext(formatted_type,splitpoint)]"
-		else
-			formatted_type = "Type too long" //No suitable splitpoint (/) found.
-
+	var/formatted_type = replacetext("[type]", "/", "<wbr>/")
 	var/marked
 	if(holder && holder.marked_datum && holder.marked_datum == D)
 		marked = "<br><font size='1' color='red'><b>Marked Object</b></font>"
@@ -418,23 +410,8 @@
 		item = "[VV_HTML_ENCODE(name)] = /icon (<span class='value'>[value]</span>)"
 		#endif
 
-/*		else if (istype(value, /image))
-		#ifdef VARSICON
-		var/rnd = rand(1, 10000)
-		var/image/I = value
-
-		src << browse_rsc(I.icon, "tmp[REF(value)][rnd].png")
-		html += "[name] = <img src=\"tmp[REF(value)][rnd].png\">"
-		#else
-		html += "[name] = /image (<span class='value'>[value]</span>)"
-		#endif
-*/
 	else if (isfile(value))
 		item = "[VV_HTML_ENCODE(name)] = <span class='value'>'[value]'</span>"
-
-	//else if (istype(value, /client))
-	//	var/client/C = value
-	//	item = "<a href='?_src_=vars;Vars=[REF(value)]'>[VV_HTML_ENCODE(name)] [REF(value)]</a> = [C] [C.type]"
 
 	else if (istype(value, /datum))
 		var/datum/D = value
@@ -763,6 +740,28 @@
 			src.give_disease(M)
 			href_list["datumrefresh"] = href_list["give_spell"]
 
+		else if(href_list["ninja"])
+			if(!check_rights(R_FUN))
+				return
+
+			var/mob/living/carbon/human/M = locate(href_list["ninja"]) in GLOB.carbon_list
+			if(!istype(M))
+				to_chat(usr, "This can only be used on instances of type /mob")
+				return
+
+			if(tgalert(usr, "Are you sure you want to make [M] into a ninja?", "Confirmation", "Yes", "No") == "No")
+				return
+
+			if(!M.mind)
+				M.mind_initialize()
+
+			var/datum/antagonist/ninja/hiyah = M.mind.has_antag_datum(/datum/antagonist/ninja)
+			if(!hiyah)
+				hiyah = add_ninja(M)
+			if(hiyah)
+				hiyah.equip_space_ninja()
+			href_list["datumrefresh"] = href_list["ninja"]
+
 		else if(href_list["gib"])
 			if(!check_rights(R_FUN))
 				return
@@ -954,6 +953,42 @@
 
 			manipulate_organs(C)
 			href_list["datumrefresh"] = href_list["editorgans"]
+
+		else if(href_list["givetrauma"])
+			if(!check_rights(0))
+				return
+
+			var/mob/living/carbon/C = locate(href_list["givetrauma"]) in GLOB.mob_list
+			if(!istype(C))
+				to_chat(usr, "This can only be done to instances of type /mob/living/carbon")
+				return
+
+			var/list/traumas = subtypesof(/datum/brain_trauma)
+			var/result = input(usr, "Choose the brain trauma to apply","Traumatize") as null|anything in traumas
+			var/permanent = alert("Do you want to make the trauma unhealable?", "Permanently Traumatize", "Yes", "No")
+			if(!usr)
+				return
+			if(QDELETED(C))
+				to_chat(usr, "Mob doesn't exist anymore")
+				return
+
+			if(result)
+				C.gain_trauma(result, permanent)
+
+			href_list["datumrefresh"] = href_list["givetrauma"]
+
+		else if(href_list["curetraumas"])
+			if(!check_rights(0))
+				return
+
+			var/mob/living/carbon/C = locate(href_list["curetraumas"]) in GLOB.mob_list
+			if(!istype(C))
+				to_chat(usr, "This can only be done to instances of type /mob/living/carbon")
+				return
+
+			C.cure_all_traumas(TRUE, TRUE)
+
+			href_list["datumrefresh"] = href_list["curetraumas"]
 
 		else if(href_list["hallucinate"])
 			if(!check_rights(0))

@@ -1,4 +1,0 @@
-author: "DaxDupont"
-delete-after: True
-changes: 
-  - bugfix: "Plant trays will now properly process fluorine and adjust toxins and water contents."

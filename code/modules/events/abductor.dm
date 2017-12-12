@@ -26,7 +26,11 @@
 	var/mob/living/carbon/human/agent = makeBody(pick_n_take(candidates))
 	var/mob/living/carbon/human/scientist = makeBody(pick_n_take(candidates))
 
-	GM.post_setup_team(GM.make_abductor_team(agent.mind, scientist.mind))
+	var/team = GM.make_abductor_team(agent.mind, scientist.mind)
+	if(!team)
+		return MAP_ERROR
+
+	GM.post_setup_team(team)
 
 	spawned_mobs += list(agent, scientist)
 	return SUCCESSFUL_SPAWN

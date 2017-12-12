@@ -73,7 +73,6 @@
 		if(src.z in GLOB.station_z_levels)
 			add_overlay("overlay_[GLOB.security_level]")
 		else
-			//var/green = SEC_LEVEL_GREEN
 			add_overlay("overlay_[SEC_LEVEL_GREEN]")
 
 		if(detecting)

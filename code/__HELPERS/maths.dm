@@ -192,15 +192,17 @@ GLOBAL_LIST_INIT(sqrtTable, list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4,
 
 /proc/mouse_angle_from_client(client/client)
 	var/list/mouse_control = params2list(client.mouseParams)
-	if(mouse_control["screen-loc"])
+	if(mouse_control["screen-loc"] && client)
 		var/list/screen_loc_params = splittext(mouse_control["screen-loc"], ",")
 		var/list/screen_loc_X = splittext(screen_loc_params[1],":")
 		var/list/screen_loc_Y = splittext(screen_loc_params[2],":")
 		var/x = (text2num(screen_loc_X[1]) * 32 + text2num(screen_loc_X[2]) - 32)
 		var/y = (text2num(screen_loc_Y[1]) * 32 + text2num(screen_loc_Y[2]) - 32)
-		var/screenview = (client.view * 2 + 1) * world.icon_size //Refer to http://www.byond.com/docs/ref/info.html#/client/var/view for mad maths
-		var/ox = round(screenview/2) - client.pixel_x //"origin" x
-		var/oy = round(screenview/2) - client.pixel_y //"origin" y
+		var/list/screenview = getviewsize(client.view)
+		var/screenviewX = screenview[1] * world.icon_size
+		var/screenviewY = screenview[2] * world.icon_size
+		var/ox = round(screenviewX/2) - client.pixel_x //"origin" x
+		var/oy = round(screenviewY/2) - client.pixel_y //"origin" y
 		var/angle = NORM_ROT(Atan2(y - oy, x - ox))
 		return angle
 
@@ -232,3 +234,24 @@ GLOBAL_LIST_INIT(sqrtTable, list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4,
 	if(round(num) != num)
 		return round(num--)
 	else return num
+
+//proc/get_overlap()
+// Returns a list where [1] is all x values and [2] is all y values that overlap between the given pair of rectangles
+/proc/get_overlap(x1, y1, x2, y2, x3, y3, x4, y4)
+	var/list/region_x1 = list()
+	var/list/region_y1 = list()
+	var/list/region_x2 = list()
+	var/list/region_y2 = list()
+
+	// These loops create loops filled with x/y values that the boundaries inhabit
+	// ex: list(5, 6, 7, 8, 9)
+	for(var/i in min(x1, x2) to max(x1, x2))
+		region_x1["[i]"] = TRUE
+	for(var/i in min(y1, y2) to max(y1, y2))
+		region_y1["[i]"] = TRUE
+	for(var/i in min(x3, x4) to max(x3, x4))
+		region_x2["[i]"] = TRUE
+	for(var/i in min(y3, y4) to max(y3, y4))
+		region_y2["[i]"] = TRUE
+
+	return list(region_x1 & region_x2, region_y1 & region_y2)

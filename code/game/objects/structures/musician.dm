@@ -328,6 +328,8 @@
 	density = TRUE
 	var/datum/song/song
 
+/obj/structure/piano/unanchored
+	anchored = FALSE
 
 /obj/structure/piano/New()
 	..()

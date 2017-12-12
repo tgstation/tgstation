@@ -17,6 +17,9 @@
 	var/id = "generic"
 	var/list/research_logs = list()								//IC logs.
 	var/max_bomb_value = 0
+	var/organization = "Third-Party"							//Organization name, used for display.
+	var/last_bitcoins = 0										//Current per-second production, used for display only.
+	var/list/tiers = list()										//Assoc list, datum = number, 1 is available, 2 is all reqs are 1, so on
 
 /datum/techweb/New()
 	for(var/i in SSresearch.techweb_nodes_starting)
@@ -28,6 +31,7 @@
 /datum/techweb/admin
 	research_points = INFINITY	//KEKKLES.
 	id = "ADMIN"
+	organization = "CentCom"
 
 /datum/techweb/admin/New()	//All unlocked.
 	. = ..()
@@ -38,6 +42,7 @@
 
 /datum/techweb/science	//Global science techweb for RND consoles.
 	id = "SCIENCE"
+	organization = "Nanotrasen"
 
 /datum/techweb/Destroy()
 	researched_nodes = null
@@ -148,14 +153,30 @@
 	recalculate_nodes(TRUE)				//Fully rebuild the tree.
 
 /datum/techweb/proc/boost_with_path(datum/techweb_node/N, itempath)
-	if(!istype(N)||!ispath(itempath))
+	if(!istype(N) || !ispath(itempath))
 		return FALSE
-	var/boost = N.boost_item_paths[itempath]
-	if(!boosted_nodes[N])
-		boosted_nodes[N] = boost
-		if(N.autounlock_by_boost)
-			hidden_nodes -= N.id
+	boosted_nodes[N] = max(boosted_nodes[N], N.boost_item_paths[itempath])
+	if(N.autounlock_by_boost)
+		hidden_nodes -= N.id
 	return TRUE
+
+/datum/techweb/proc/update_tiers(datum/techweb_node/base)
+	var/list/current = list(base)
+	while (current.len)
+		var/list/next = list()
+		for (var/node_ in current)
+			var/datum/techweb_node/node = node_
+			var/tier = 0
+			if (!researched_nodes[node.id])  // researched is tier 0
+				for (var/id in node.prereq_ids)
+					var/prereq_tier = tiers[node.prerequisites[id]]
+					tier = max(tier, prereq_tier + 1)
+
+			if (tier != tiers[node])
+				tiers[node] = tier
+				for (var/id in node.unlocks)
+					next += node.unlocks[id]
+		current = next
 
 /datum/techweb/proc/update_node_status(datum/techweb_node/node, autoupdate_consoles = TRUE)
 	var/researched = FALSE
@@ -185,6 +206,7 @@
 		else
 			if(visible)
 				visible_nodes[node.id] = node
+	update_tiers(node)
 	if(autoupdate_consoles)
 		for(var/v in consoles_accessing)
 			var/obj/machinery/computer/rdconsole/V = v

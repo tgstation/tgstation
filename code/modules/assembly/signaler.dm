@@ -9,8 +9,8 @@
 	wires = WIRE_RECEIVE | WIRE_PULSE | WIRE_RADIO_PULSE | WIRE_RADIO_RECEIVE
 	attachable = 1
 
-	var/code = 30
-	var/frequency = 1457
+	var/code = DEFAULT_SIGNALER_CODE
+	var/frequency = FREQ_SIGNALER
 	var/delay = 0
 	var/datum/radio_frequency/radio_connection
 
@@ -38,10 +38,6 @@
 /obj/item/device/assembly/signaler/interact(mob/user, flag1)
 	if(is_secured(user))
 		var/t1 = "-------"
-	//	if ((src.b_stat && !( flag1 )))
-	//		t1 = text("-------<BR>\nGreen Wire: []<BR>\nRed Wire:   []<BR>\nBlue Wire:  []<BR>\n", (src.wires & 4 ? "<A href='?src=[REF(src)];wires=4'>Cut Wire</A>" : "<A href='?src=[REF(src)];wires=4'>Mend Wire</A>"), (src.wires & 2 ? "<A href='?src=[REF(src)];wires=2'>Cut Wire</A>" : "<A href='?src=[REF(src)];wires=2'>Mend Wire</A>"), (src.wires & 1 ? "<A href='?src=[REF(src)];wires=1'>Cut Wire</A>" : "<A href='?src=[REF(src)];wires=1'>Mend Wire</A>"))
-	//	else
-	//		t1 = "-------"	Speaker: [src.listening ? "<A href='byond://?src=[REF(src)];listen=0'>Engaged</A>" : "<A href='byond://?src=[REF(src)];listen=1'>Disengaged</A>"]<BR>
 		var/dat = {"
 <TT>
 
@@ -77,7 +73,7 @@ Code:
 
 	if (href_list["freq"])
 		var/new_frequency = (frequency + text2num(href_list["freq"]))
-		if(new_frequency < 1200 || new_frequency > 1600)
+		if(new_frequency < MIN_FREE_FREQ || new_frequency > MAX_FREE_FREQ)
 			new_frequency = sanitize_frequency(new_frequency)
 		set_frequency(new_frequency)
 
@@ -122,17 +118,6 @@ Code:
 
 
 	return
-/*
-		for(var/obj/item/device/assembly/signaler/S in world)
-			if(!S)
-				continue
-			if(S == src)
-				continue
-			if((S.frequency == src.frequency) && (S.code == src.code))
-				spawn(0)
-					if(S)
-						S.pulse(0)
-		return 0*/
 
 /obj/item/device/assembly/signaler/receive_signal(datum/signal/signal)
 	if(!signal)
@@ -147,13 +132,9 @@ Code:
 
 
 /obj/item/device/assembly/signaler/proc/set_frequency(new_frequency)
-	if(!SSradio)
-		sleep(20)
-	if(!SSradio)
-		return
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_CHAT)
+	radio_connection = SSradio.add_object(src, frequency, RADIO_SIGNALER)
 	return
 
 // Embedded signaller used in grenade construction.

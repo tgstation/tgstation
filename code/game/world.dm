@@ -1,4 +1,7 @@
+#define RESTART_COUNTER_PATH "data/round_counter.txt"
+
 GLOBAL_VAR(security_mode)
+GLOBAL_VAR(restart_counter)
 GLOBAL_PROTECT(security_mode)
 
 /world/New()
@@ -29,6 +32,10 @@ GLOBAL_PROTECT(security_mode)
 	LoadBans()
 
 	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
+
+	if(fexists(RESTART_COUNTER_PATH))
+		GLOB.restart_counter = text2num(trim(file2text(RESTART_COUNTER_PATH)))
+		fdel(RESTART_COUNTER_PATH)
 
 	Master.Initialize(10, FALSE)
 
@@ -160,6 +167,27 @@ GLOBAL_PROTECT(security_mode)
 	else
 		to_chat(world, "<span class='boldannounce'>Rebooting world...</span>")
 		Master.Shutdown()	//run SS shutdowns
+
+	if(SERVER_TOOLS_PRESENT)
+		var/do_hard_reboot
+		// check the hard reboot counter
+		var/ruhr = CONFIG_GET(number/rounds_until_hard_restart)
+		switch(ruhr)
+			if(-1)
+				do_hard_reboot = FALSE
+			if(0)
+				do_hard_reboot = TRUE
+			else
+				if(GLOB.restart_counter >= ruhr)
+					do_hard_reboot = TRUE
+				else
+					text2file("[++GLOB.restart_counter]", RESTART_COUNTER_PATH)
+					do_hard_reboot = FALSE
+
+		if(do_hard_reboot)
+			log_world("World hard rebooted at [time_stamp()]")
+			SERVER_TOOLS_REBOOT_BYOND
+
 	log_world("World rebooted at [time_stamp()]")
 	..()
 

@@ -24,17 +24,23 @@ D [1]/  ||
 	var/datum/weakref/data  // This is a weakref, to reduce typecasts.  Note that oftentimes numbers and text may also occupy this.
 	var/list/linked = list()
 	var/io_type = DATA_CHANNEL
+	var/pin_type			// IC_INPUT, IC_OUTPUT, IC_ACTIVATOR - used in saving assembly wiring
 
-/datum/integrated_io/New(newloc, name1, new_data)
-	name = name1
-	if(new_data)
-		data = new_data
-	holder = newloc
+
+/datum/integrated_io/New(loc, _name, _data, _pin_type)
+	name = _name
+	if(_data)
+		data = _data
+	if(_pin_type)
+		pin_type = _pin_type
+
+	holder = loc
+
 	if(!istype(holder))
 		message_admins("ERROR: An integrated_io ([name]) spawned without a valid holder!  This is a bug.")
 
 /datum/integrated_io/Destroy()
-	disconnect()
+	disconnect_all()
 	data = null
 	holder = null
 	return ..()
@@ -96,7 +102,36 @@ D [1]/  ||
 /datum/integrated_io/activate/scramble()
 	push_data()
 
-/datum/integrated_io/proc/write_data_to_pin(var/new_data)
+/datum/integrated_io/proc/handle_wire(datum/integrated_io/linked_pin, obj/item/tool, action, mob/living/user)
+	if(istype(tool, /obj/item/device/multitool))
+		var/obj/item/device/multitool/multitool = tool
+		switch(action)
+			if("wire")
+				multitool.wire(src, user)
+				return TRUE
+			if("unwire")
+				if(linked_pin)
+					multitool.unwire(src, linked_pin, user)
+					return TRUE
+			if("data")
+				ask_for_pin_data(user)
+				return TRUE
+
+	else if(istype(tool, /obj/item/device/integrated_electronics/wirer))
+		var/obj/item/device/integrated_electronics/wirer/wirer = tool
+		if(linked_pin)
+			wirer.wire(linked_pin, user)
+		else
+			wirer.wire(src, user)
+
+	else if(istype(tool, /obj/item/device/integrated_electronics/debugger))
+		var/obj/item/device/integrated_electronics/debugger/debugger = tool
+		debugger.write_data(src, user)
+		return TRUE
+
+	return FALSE
+
+/datum/integrated_io/proc/write_data_to_pin(new_data)
 	if(isnull(new_data) || isnum(new_data) || istext(new_data) || isweakref(new_data))
 		data = new_data
 		holder.on_data_written()
@@ -125,21 +160,20 @@ D [1]/  ||
 		return "the [english_list(linked)]"
 	return "nothing"
 
-/datum/integrated_io/proc/disconnect()
-	//First we iterate over everything we are linked to.
-	if(linked && linked.len)
-		for(var/i in 1 to linked.len)
-			var/datum/integrated_io/their_io = linked[i]
-			//While doing that, we iterate them as well, and disconnect ourselves from them.
-			if(their_io.linked.len && their_io.linked)
-				for(var/j in 1 to their_io.linked.len)
-					var/datum/integrated_io/their_linked_io = their_io.linked[j]
-					if(their_linked_io == src)
-						their_io.linked.Remove(src)
-					else
-						continue
-			//Now that we're removed from them, we gotta remove them from us.
-			linked.Remove(their_io)
+
+/datum/integrated_io/proc/connect_pin(datum/integrated_io/pin)
+	pin.linked |= src
+	linked |= pin
+
+// Iterates over every linked pin and disconnects them.
+/datum/integrated_io/proc/disconnect_all()
+	for(var/pin in linked)
+		disconnect_pin(pin)
+
+/datum/integrated_io/proc/disconnect_pin(datum/integrated_io/pin)
+	pin.linked.Remove(src)
+	linked.Remove(pin)
+
 
 /datum/integrated_io/proc/ask_for_data_type(mob/user, var/default, var/list/allowed_data_types = list("string","number","null"))
 	var/type_to_use = input("Please choose a type to use.","[src] type setting") as null|anything in allowed_data_types
@@ -149,7 +183,7 @@ D [1]/  ||
 	var/new_data = null
 	switch(type_to_use)
 		if("string")
-			new_data = stripped_input(user, "Now type in a string.","[src] string writing", istext(default) ? default : null)
+			new_data = stripped_input(user, "Now type in a string.","[src] string writing", istext(default) ? default : null, no_trim = TRUE)
 			if(istext(new_data) && holder.check_interactivity(user) )
 				to_chat(user, "<span class='notice'>You input "+new_data+" into the pin.</span>")
 				return new_data

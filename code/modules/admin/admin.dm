@@ -616,24 +616,6 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
 
-/*
-/datum/admins/proc/get_sab_desc(var/target)
-	switch(target)
-		if(1)
-			return "Destroy at least 70% of the plasma canisters on the station"
-		if(2)
-			return "Destroy the AI"
-		if(3)
-			var/count = 0
-			for(var/mob/living/carbon/monkey/Monkey in world)
-				if(Monkey.z in GLOB.station_z_levels)
-					count++
-			return "Kill all [count] of the monkeys on the station"
-		if(4)
-			return "Cut power to at least 80% of the station"
-		else
-			return "Error: Invalid sabotage target: [target]"
-*/
 /datum/admins/proc/spawn_atom(object as text)
 	set category = "Debug"
 	set desc = "(atom path) Spawn an atom"
@@ -723,15 +705,17 @@
 
 /datum/admins/proc/output_all_devil_info()
 	var/devil_number = 0
-	for(var/D in SSticker.mode.devils)
+	for(var/datum/mind/D in SSticker.mode.devils)
 		devil_number++
-		to_chat(usr, "Devil #[devil_number]:<br><br>" + SSticker.mode.printdevilinfo(D))
+		var/datum/antagonist/devil/devil = D.has_antag_datum(/datum/antagonist/devil)
+		to_chat(usr, "Devil #[devil_number]:<br><br>" + devil.printdevilinfo())
 	if(!devil_number)
 		to_chat(usr, "<b>No Devils located</b>" )
 
 /datum/admins/proc/output_devil_info(mob/living/M)
 	if(is_devil(M))
-		to_chat(usr, SSticker.mode.printdevilinfo(M.mind))
+		var/datum/antagonist/devil/devil = M.mind.has_antag_datum(/datum/antagonist/devil)
+		to_chat(usr, devil.printdevilinfo())
 	else
 		to_chat(usr, "<b>[M] is not a devil.")
 

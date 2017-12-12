@@ -16,8 +16,8 @@
 	var/unique_frequency = FALSE // modified by KA modkits
 	var/overheat = FALSE
 	can_bayonet = TRUE
-	knife_x_offset = 15
-	knife_y_offset = 13
+	knife_x_offset = 20
+	knife_y_offset = 12
 
 	var/max_mod_capacity = 100
 	var/list/modkits = list()
@@ -125,7 +125,6 @@
 
 /obj/item/gun/energy/kinetic_accelerator/proc/reload()
 	cell.give(cell.maxcharge)
-	recharge_newshot(1)
 	if(!suppressed)
 		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
 	else

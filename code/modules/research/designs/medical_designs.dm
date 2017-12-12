@@ -2,26 +2,6 @@
 ////////////Medical Tools////////////////
 /////////////////////////////////////////
 
-/datum/design/mass_spectrometer
-	name = "Mass-Spectrometer"
-	desc = "A device for analyzing chemicals in the blood."
-	id = "mass_spectrometer"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
-	build_path = /obj/item/device/mass_spectrometer
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/adv_mass_spectrometer
-	name = "Advanced Mass-Spectrometer"
-	desc = "A device for analyzing chemicals in the blood and their quantities."
-	id = "adv_mass_spectrometer"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 200)
-	build_path = /obj/item/device/mass_spectrometer/adv
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
 /datum/design/mmi
 	name = "Man-Machine Interface"
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity."

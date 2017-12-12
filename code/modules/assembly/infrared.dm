@@ -83,10 +83,9 @@
 
 /obj/item/device/assembly/infra/Move()
 	var/t = dir
-	..()
+	. = ..()
 	setDir(t)
 	qdel(first)
-	return
 
 /obj/item/device/assembly/infra/holder_movement()
 	if(!holder)
@@ -138,8 +137,7 @@
 	if(usr.incapacitated())
 		return
 
-	setDir(turn(dir, 90))
-	return
+	setDir(turn(dir, -90))
 
 /obj/item/device/assembly/infra/AltClick(mob/user)
 	..()

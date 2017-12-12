@@ -14,15 +14,15 @@
 	activators = list("select" = IC_PINTYPE_PULSE_IN, "on select" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 4
-	var/number_of_inputs = 2
+	var/number_of_pins = 2
 
-/obj/item/integrated_circuit/transfer/multiplexer/New()
-	for(var/i = 1 to number_of_inputs)
+/obj/item/integrated_circuit/transfer/multiplexer/Initialize()
+	for(var/i = 1 to number_of_pins)
 		inputs["input [i]"] = IC_PINTYPE_ANY // This is just a string since pins don't get built until ..() is called.
 
-	complexity = number_of_inputs
-	..()
-	desc += " It has [number_of_inputs] input pins."
+	complexity = number_of_pins
+	. = ..()
+	desc += " It has [number_of_pins] input pins."
 	extended_desc += " This multiplexer has a range from 1 to [inputs.len - 1]."
 
 /obj/item/integrated_circuit/transfer/multiplexer/do_work()
@@ -35,20 +35,20 @@
 
 /obj/item/integrated_circuit/transfer/multiplexer/medium
 	name = "four multiplexer"
-	number_of_inputs = 4
 	icon_state = "mux4"
+	number_of_pins = 4
 
 /obj/item/integrated_circuit/transfer/multiplexer/large
 	name = "eight multiplexer"
-	number_of_inputs = 8
 	w_class = WEIGHT_CLASS_SMALL
 	icon_state = "mux8"
+	number_of_pins = 8
 
 /obj/item/integrated_circuit/transfer/multiplexer/huge
 	name = "sixteen multiplexer"
 	icon_state = "mux16"
 	w_class = WEIGHT_CLASS_SMALL
-	number_of_inputs = 16
+	number_of_pins = 16
 
 /obj/item/integrated_circuit/transfer/demultiplexer
 	name = "two demultiplexer"
@@ -62,16 +62,15 @@
 	activators = list("select" = IC_PINTYPE_PULSE_IN, "on select" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 4
-	var/number_of_outputs = 2
+	var/number_of_pins = 2
 
-/obj/item/integrated_circuit/transfer/demultiplexer/New()
-	for(var/i = 1 to number_of_outputs)
-	//	outputs += "output [i]"
+/obj/item/integrated_circuit/transfer/demultiplexer/Initialize()
+	for(var/i = 1 to number_of_pins)
 		outputs["output [i]"] = IC_PINTYPE_ANY
-	complexity = number_of_outputs
+	complexity = number_of_pins
 
-	..()
-	desc += " It has [number_of_outputs] output pins."
+	. = ..()
+	desc += " It has [number_of_pins] output pins."
 	extended_desc += " This demultiplexer has a range from 1 to [outputs.len]."
 
 /obj/item/integrated_circuit/transfer/demultiplexer/do_work()
@@ -84,19 +83,19 @@
 /obj/item/integrated_circuit/transfer/demultiplexer/medium
 	name = "four demultiplexer"
 	icon_state = "dmux4"
-	number_of_outputs = 4
+	number_of_pins = 4
 
 /obj/item/integrated_circuit/transfer/demultiplexer/large
 	name = "eight demultiplexer"
 	icon_state = "dmux8"
 	w_class = WEIGHT_CLASS_SMALL
-	number_of_outputs = 8
+	number_of_pins = 8
 
 /obj/item/integrated_circuit/transfer/demultiplexer/huge
 	name = "sixteen demultiplexer"
 	icon_state = "dmux16"
 	w_class = WEIGHT_CLASS_SMALL
-	number_of_outputs = 16
+	number_of_pins = 16
 
 /obj/item/integrated_circuit/transfer/pulsedemultiplexer
 	name = "two pulse demultiplexer"
@@ -110,37 +109,36 @@
 	activators = list("select" = IC_PINTYPE_PULSE_IN)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 4
-	var/number_of_outputs = 2
+	var/number_of_pins = 2
 
-/obj/item/integrated_circuit/transfer/pulsedemultiplexer/New()
-	for(var/i = 1 to number_of_outputs)
-	//	outputs += "output [i]"
+/obj/item/integrated_circuit/transfer/pulsedemultiplexer/Initialize()
+	for(var/i = 1 to number_of_pins)
 		activators["output [i]"] = IC_PINTYPE_PULSE_OUT
-	complexity = number_of_outputs
+	complexity = number_of_pins
 
-	..()
-	desc += " It has [number_of_outputs] output pins."
+	. = ..()
+	desc += " It has [number_of_pins] output pins."
 	extended_desc += " This pulse demultiplexer has a range from 1 to [activators.len - 1]."
 
 /obj/item/integrated_circuit/transfer/pulsedemultiplexer/do_work()
 	var/output_index = get_pin_data(IC_INPUT, 1)
 
-	if(output_index == Clamp(output_index, 1, number_of_outputs))
+	if(output_index == Clamp(output_index, 1, number_of_pins))
 		activate_pin(round(output_index + 1 ,1))
 
 /obj/item/integrated_circuit/transfer/pulsedemultiplexer/medium
 	name = "four pulse demultiplexer"
 	icon_state = "dmux4"
-	number_of_outputs = 4
+	number_of_pins = 4
 
 /obj/item/integrated_circuit/transfer/pulsedemultiplexer/large
 	name = "eight pulse demultiplexer"
 	icon_state = "dmux8"
 	w_class = WEIGHT_CLASS_SMALL
-	number_of_outputs = 8
+	number_of_pins = 8
 
 /obj/item/integrated_circuit/transfer/pulsedemultiplexer/huge
 	name = "sixteen pulse demultiplexer"
 	icon_state = "dmux16"
 	w_class = WEIGHT_CLASS_SMALL
-	number_of_outputs = 16
+	number_of_pins = 16

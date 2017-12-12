@@ -1,5 +1,4 @@
 
-
 ///////////////////////////////////////////////////////////////////////////////////
 
 /datum/reagents
@@ -429,7 +428,7 @@
 			reagent_list -= R
 			update_total()
 			if(my_atom)
-				my_atom.on_reagent_change()
+				my_atom.on_reagent_change(DEL_REAGENT)
 				check_ignoreslow(my_atom)
 				check_gofast(my_atom)
 				check_goreallyfast(my_atom)
@@ -527,7 +526,7 @@
 			R.volume += amount
 			update_total()
 			if(my_atom)
-				my_atom.on_reagent_change()
+				my_atom.on_reagent_change(ADD_REAGENT)
 			R.on_merge(data, amount)
 			if(!no_react)
 				handle_reactions()
@@ -546,7 +545,7 @@
 
 		update_total()
 		if(my_atom)
-			my_atom.on_reagent_change()
+			my_atom.on_reagent_change(ADD_REAGENT)
 		if(!no_react)
 			handle_reactions()
 		if(isliving(my_atom))
@@ -588,7 +587,7 @@
 			if(!safety)//So it does not handle reactions when it need not to
 				handle_reactions()
 			if(my_atom)
-				my_atom.on_reagent_change()
+				my_atom.on_reagent_change(REM_REAGENT)
 			return TRUE
 
 	return FALSE
@@ -733,7 +732,7 @@
 					out += "[taste_desc]"
 
 	return english_list(out, "something indescribable")
-	
+
 /datum/reagents/proc/expose_temperature(var/temperature, var/coeff=0.02)
 	var/temp_delta = (temperature - chem_temp) * coeff
 	if(temp_delta > 0)

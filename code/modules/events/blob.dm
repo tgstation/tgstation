@@ -11,6 +11,7 @@
 /datum/round_event/ghost_role/blob
 	announceWhen	= -1
 	role_name = "blob overmind"
+	fakeable = TRUE
 
 /datum/round_event/ghost_role/blob/announce(fake)
 	priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/ai/outbreak5.ogg')

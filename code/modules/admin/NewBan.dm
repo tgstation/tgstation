@@ -174,7 +174,6 @@ GLOBAL_PROTECT(Banlist)
 /datum/admins/proc/unbanpanel()
 	var/count = 0
 	var/dat
-	//var/dat = "<HR><B>Unban Player:</B> \blue(U) = Unban , (E) = Edit Ban\green (Total<HR><table border=1 rules=all frame=void cellspacing=0 cellpadding=3 >"
 	GLOB.Banlist.cd = "/base"
 	for (var/A in GLOB.Banlist.dir)
 		count++

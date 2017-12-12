@@ -64,7 +64,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 	errorx = abs(errorx)//Error should never be negative.
 	errory = abs(errory)
-	//var/errorxy = round((errorx+errory)/2)//Used for diagonal boxes.
 
 	switch(target.dir)//This can be done through equations but switch is the simpler method. And works fast to boot.
 	//Directs on what values need modifying.
@@ -342,10 +341,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 		moblist.Add(M)
 	for(var/mob/living/simple_animal/M in sortmob)
 		moblist.Add(M)
-//	for(var/mob/living/silicon/hivebot/M in world)
-//		mob_list.Add(M)
-//	for(var/mob/living/silicon/hive_mainframe/M in world)
-//		mob_list.Add(M)
 	for(var/mob/living/carbon/true_devil/M in sortmob)
 		moblist.Add(M)
 	return moblist
@@ -360,9 +355,8 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/M = E/(SPEED_OF_LIGHT_SQ)
 	return M
 
-//Takes the value of energy used/produced/ect.
-//Returns a text value of that number in W, kW, MW, or GW.
-/proc/DisplayPower(var/powerused)
+// Format a power value in W, kW, MW, or GW.
+/proc/DisplayPower(powerused)
 	if(powerused < 1000) //Less than a kW
 		return "[powerused] W"
 	else if(powerused < 1000000) //Less than a MW
@@ -370,6 +364,21 @@ Turf and target are separate in case you want to teleport some distance from a t
 	else if(powerused < 1000000000) //Less than a GW
 		return "[round((powerused * 0.000001),0.001)] MW"
 	return "[round((powerused * 0.000000001),0.0001)] GW"
+
+// Format an energy value in J, kJ, MJ, or GJ. 1W = 1J/s.
+/proc/DisplayEnergy(units)
+	// APCs process every (SSmachines.wait * 0.1) seconds, and turn 1 W of
+	// excess power into GLOB.CELLRATE energy units when charging cells.
+	// With the current configuration of wait=20 and CELLRATE=0.002, this
+	// means that one unit is 1 kJ.
+	units *= SSmachines.wait * 0.1 / GLOB.CELLRATE
+	if (units < 1000) // Less than a kJ
+		return "[round(units, 0.1)] J"
+	else if (units < 1000000) // Less than a MJ
+		return "[round(units * 0.001, 0.01)] kJ"
+	else if (units < 1000000000) // Less than a GJ
+		return "[round(units * 0.000001, 0.001)] MJ"
+	return "[round(units * 0.000000001, 0.0001)] GJ"
 
 /proc/key_name(whom, include_link = null, include_name = 1)
 	var/mob/M
@@ -1449,7 +1458,6 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	var/target_loc = target.loc
 
 	var/endtime = world.time+time
-//	var/starttime = world.time
 	. = TRUE
 	while (world.time < endtime)
 		stoplag(1)
@@ -1502,3 +1510,10 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 			else
 				return "\[[url_encode(thing.tag)]\]"
 	return "\ref[input]"
+
+//Returns a list of all servants of Ratvar and observers.
+/proc/servants_and_ghosts()
+	. = list()
+	for(var/V in GLOB.player_list)
+		if(is_servant_of_ratvar(V) || isobserver(V))
+			. += V

@@ -51,6 +51,8 @@
 		return
 	if(owner.stat != DEAD && !converts_living)
 		return
+	if(!owner.getorgan(/obj/item/organ/brain))
+		return
 	if(!iszombie(owner))
 		to_chat(owner, "<span class='cultlarge'>You can feel your heart stopping, but something isn't right... \
 		life has not abandoned your broken form. You can only feel a deep and immutable hunger that \

@@ -34,6 +34,10 @@
 		cooldown = world.time
 		flick(pulseicon, src)
 		radiation_pulse(src, 400, 2)
+		
+/obj/item/nuke_core/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is rubbing [src] against [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return (TOXLOSS)
 
 //nuke core box, for carrying the core
 /obj/item/nuke_core_container
@@ -226,6 +230,7 @@
 		Consume(O)
 		to_chat(usr, "<span class='notice'>\The [sliver] is dusted along with \the [O]!</span>")
 		QDEL_NULL(sliver)
+		update_icon()
 
 /obj/item/hemostat/supermatter/throw_impact(atom/hit_atom) // no instakill supermatter javelins
 	if(sliver)

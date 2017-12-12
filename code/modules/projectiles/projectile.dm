@@ -177,6 +177,7 @@
 		ricochets++
 		if(A.handle_ricochet(src))
 			ignore_source_check = TRUE
+			range = initial(range)
 			return FALSE
 	if(firer && !ignore_source_check)
 		if(A == firer || (A == firer.loc && ismecha(A))) //cannot shoot yourself or your mech
@@ -336,7 +337,6 @@
 	step_towards(src, locate(new_x, new_y, z))
 	pixel_x = old_pixel_x
 	pixel_y = old_pixel_y
-	//var/animation_time = ((SSprojectiles.flags & SS_TICKER? (SSprojectiles.wait * world.tick_lag) : SSprojectiles.wait) / moves)
 	animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = 1, flags = ANIMATION_END_NOW)
 	old_pixel_x = pixel_x_offset
 	old_pixel_y = pixel_y_offset
@@ -359,8 +359,9 @@
 	forceMove(get_turf(source))
 	starting = get_turf(source)
 	original = target
-	yo = targloc.y - curloc.y
-	xo = targloc.x - curloc.x
+	if(targloc || !params)
+		yo = targloc.y - curloc.y
+		xo = targloc.x - curloc.x
 
 	if(isliving(source) && params)
 		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source, params)
@@ -396,10 +397,12 @@
 		var/y = text2num(screen_loc_Y[1]) * 32 + text2num(screen_loc_Y[2]) - 32
 
 		//Calculate the "resolution" of screen based on client's view and world's icon size. This will work if the user can view more tiles than average.
-		var/screenview = (user.client.view * 2 + 1) * world.icon_size //Refer to http://www.byond.com/docs/ref/info.html#/client/var/view for mad maths
+		var/list/screenview = getviewsize(user.client.view)
+		var/screenviewX = screenview[1] * world.icon_size
+		var/screenviewY = screenview[2] * world.icon_size
 
-		var/ox = round(screenview/2) - user.client.pixel_x //"origin" x
-		var/oy = round(screenview/2) - user.client.pixel_y //"origin" y
+		var/ox = round(screenviewX/2) - user.client.pixel_x //"origin" x
+		var/oy = round(screenviewY/2) - user.client.pixel_y //"origin" y
 		angle = Atan2(y - oy, x - ox)
 	return list(angle, p_x, p_y)
 

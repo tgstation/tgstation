@@ -21,7 +21,7 @@
 		mode = SYRINGE_INJECT
 		update_icon()
 
-/obj/item/reagent_containers/syringe/on_reagent_change()
+/obj/item/reagent_containers/syringe/on_reagent_change(changetype)
 	update_icon()
 
 /obj/item/reagent_containers/syringe/pickup(mob/user)
@@ -206,6 +206,11 @@
 	name = "syringe (calomel)"
 	desc = "Contains calomel."
 	list_reagents = list("calomel" = 15)
+
+/obj/item/reagent_containers/syringe/plasma
+	name = "syringe (plasma)"
+	desc = "Contains plasma."
+	list_reagents = list("plasma" = 15)
 
 /obj/item/reagent_containers/syringe/lethal
 	name = "lethal injection syringe"

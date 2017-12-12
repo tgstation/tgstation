@@ -44,10 +44,10 @@ Credit where due:
 // PROCS //
 ///////////
 
-/proc/is_servant_of_ratvar(mob/living/M)
+/proc/is_servant_of_ratvar(mob/M)
 	return istype(M) && M.mind && M.mind.has_antag_datum(ANTAG_DATUM_CLOCKCULT)
 
-/proc/is_eligible_servant(mob/living/M)
+/proc/is_eligible_servant(mob/M)
 	if(!istype(M))
 		return FALSE
 	if(M.mind)
@@ -61,19 +61,22 @@ Credit where due:
 		return FALSE
 	if(iscultist(M) || isconstruct(M) || M.isloyal() || ispAI(M))
 		return FALSE
-	if(ishuman(M) || isbrain(M) || isguardian(M) || issilicon(M) || isclockmob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab))
+	if(ishuman(M) || isbrain(M) || isguardian(M) || issilicon(M) || isclockmob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab) || istype(M, /mob/camera/eminence))
 		return TRUE
 	return FALSE
 
-/proc/add_servant_of_ratvar(mob/living/L, silent = FALSE)
+/proc/add_servant_of_ratvar(mob/L, silent = FALSE, create_team = TRUE)
 	if(!L || !L.mind)
 		return
 	var/update_type = ANTAG_DATUM_CLOCKCULT
 	if(silent)
 		update_type = ANTAG_DATUM_CLOCKCULT_SILENT
-	. = L.mind.add_antag_datum(update_type)
+	var/datum/antagonist/clockcult/C = new update_type(L.mind)
+	C.make_team = create_team
+	C.show_in_roundend = create_team //tutorial scarabs begone
+	. = L.mind.add_antag_datum(C)
 
-/proc/remove_servant_of_ratvar(mob/living/L, silent = FALSE)
+/proc/remove_servant_of_ratvar(mob/L, silent = FALSE)
 	if(!L || !L.mind)
 		return
 	var/datum/antagonist/clockcult/clock_datum = L.mind.has_antag_datum(ANTAG_DATUM_CLOCKCULT)
@@ -109,6 +112,8 @@ Credit where due:
 	var/servants_to_serve = list()
 	var/roundstart_player_count
 	var/ark_time //In minutes, how long the Ark waits before activation; this is equal to 30 + (number of players / 5) (max 40 mins.)
+	
+	var/datum/objective_team/clockcult/main_clockcult
 
 /datum/game_mode/clockwork_cult/pre_setup()
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
@@ -176,7 +181,7 @@ Credit where due:
 		if(!S.forceMove(get_turf(L)))
 			qdel(S)
 	if(S && !QDELETED(S))
-		to_chat(L, "<span class='bold large_brass'>There is a paper in your backpack! Read it!</span>")
+		to_chat(L, "<span class='bold large_brass'>There is a paper in your backpack! It'll tell you if anything's changed, as well as what to expect.</span>")
 		to_chat(L, "<span class='alloy'>[slot] is a <b>clockwork slab</b>, a multipurpose tool used to construct machines and invoke ancient words of power. If this is your first time \
 		as a servant, you can find a concise tutorial in the Recollection category of its interface.</span>")
 		to_chat(L, "<span class='alloy italics'>If you want more information, you can find a wiki link here!</span> https://tgstation13.org/wiki/Clockwork_Cult")
@@ -189,45 +194,24 @@ Credit where due:
 	return ..()
 
 /datum/game_mode/clockwork_cult/proc/check_clockwork_victory()
+	return main_clockcult.check_clockwork_victory()
+
+/datum/game_mode/clock_cult/set_round_result()
+	..()
 	if(GLOB.clockwork_gateway_activated)
 		SSticker.news_report = CLOCK_SUMMON
-		return TRUE
+		SSticker.mode_result = "win - servants completed their objective (summon ratvar)"
 	else
 		SSticker.news_report = CULT_FAILURE
-	return FALSE
-
-/datum/game_mode/clockwork_cult/declare_completion()
-	..()
-	return //Doesn't end until the round does
+		SSticker.mode_result = "loss - servants failed their objective (summon ratvar)"
 
 /datum/game_mode/clockwork_cult/generate_report()
-	return "We have lost contact with multiple stations in your sector. They have gone dark and do not respond to all transmissions, although they appear intact and the crew's life \
-			signs remain uninterrupted. Those that have managed to send a transmission or have had some of their crew escape tell tales of a machine cult creating sapient automatons and seeking \
-			to brainwash the crew to summon their god, Ratvar. If evidence of this cult is dicovered aboard your station, extreme caution and extreme vigilance must be taken going forward, and \
-			all resources should be devoted to stopping this cult. Note that holy water seems to weaken and eventually return the minds of cultists that ingest it, and mindshield implants will \
-			prevent conversion altogether."
-
-/datum/game_mode/proc/auto_declare_completion_clockwork_cult()
-	var/text = ""
-	if(istype(SSticker.mode, /datum/game_mode/clockwork_cult)) //Possibly hacky?
-		var/datum/game_mode/clockwork_cult/C = SSticker.mode
-		if(C.check_clockwork_victory())
-			text += "<span class='bold large_brass'>Ratvar's servants defended the Ark until its activation!</span>"
-			SSticker.mode_result = "win - servants completed their objective (summon ratvar)"
-		else
-			text += "<span class='userdanger'>The Ark was destroyed! Ratvar will rust away for all eternity!</span>"
-			SSticker.mode_result = "loss - servants failed their objective (summon ratvar)"
-		text += "<br><b>The servants' objective was:</b> [CLOCKCULT_OBJECTIVE]."
-		text += "<br>Ratvar's servants had <b>[GLOB.clockwork_caches]</b> Tinkerer's Caches."
-		text += "<br><b>Construction Value(CV)</b> was: <b>[GLOB.clockwork_construction_value]</b>"
-		for(var/i in SSticker.scripture_states)
-			if(i != SCRIPTURE_DRIVER)
-				text += "<br><b>[i] scripture</b> was: <b>[SSticker.scripture_states[i] ? "UN":""]LOCKED</b>"
-	if(servants_of_ratvar.len)
-		text += "<br><b>Ratvar's servants were:</b>"
-		for(var/datum/mind/M in servants_of_ratvar)
-			text += printplayer(M)
-	to_chat(world, text)
+	return "Bluespace monitors near your sector have detected a continuous stream of patterned fluctuations since the station was completed. It is most probable that a powerful entity \
+	from a very far distance away is using to the station as a vector to cross that distance through bluespace. The theoretical power required for this would be monumental, and if \
+	the entity is hostile, it would need to rely on a single central power source - disrupting or destroying that power source would be the best way to prevent said entity from causing \
+	harm to company personnel or property.<br><br>Keep a sharp on any crew that appear to be oddly-dressed or using what appear to be magical powers, as these crew may be defectors \
+	working for this entity and utilizing highly-advanced technology to cross the great distance at will. If they should turn out to be a credible threat, the task falls on you and \
+	your crew to dispatch it in a timely manner."
 
 /datum/game_mode/proc/update_servant_icons_added(datum/mind/M)
 	var/datum/atom_hud/antag/A = GLOB.huds[ANTAG_HUD_CLOCKWORK]
@@ -245,14 +229,14 @@ Credit where due:
 /datum/outfit/servant_of_ratvar
 	name = "Servant of Ratvar"
 	uniform = /obj/item/clothing/under/chameleon/ratvar
-	shoes = /obj/item/clothing/shoes/workboots
+	shoes = /obj/item/clothing/shoes/sneakers/black
 	back = /obj/item/storage/backpack
 	ears = /obj/item/device/radio/headset
 	gloves = /obj/item/clothing/gloves/color/yellow
 	belt = /obj/item/storage/belt/utility/servant
 	backpack_contents = list(/obj/item/storage/box/engineer = 1, \
 	/obj/item/clockwork/replica_fabricator = 1, /obj/item/stack/tile/brass/fifty = 1, /obj/item/paper/servant_primer = 1)
-	id = /obj/item/card/id
+	id = /obj/item/device/pda
 	var/plasmaman //We use this to determine if we should activate internals in post_equip()
 
 /datum/outfit/servant_of_ratvar/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -264,7 +248,8 @@ Credit where due:
 		plasmaman = TRUE
 
 /datum/outfit/servant_of_ratvar/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	var/obj/item/card/id/W = H.wear_id
+	var/obj/item/card/id/W = new(H)
+	var/obj/item/device/pda/PDA = H.wear_id
 	W.assignment = "Assistant"
 	W.access += ACCESS_MAINT_TUNNELS
 	W.registered_name = H.real_name
@@ -272,8 +257,15 @@ Credit where due:
 	if(plasmaman && !visualsOnly) //If we need to breathe from the plasma tank, we should probably start doing that
 		H.internal = H.get_item_for_held_index(2)
 		H.update_internals_hud_icon(1)
+	PDA.owner = H.real_name
+	PDA.ownjob = "Assistant"
+	PDA.update_label()
+	PDA.id_check(H, W)
 	H.sec_hud_set_ID()
 
+
+//This paper serves as a quick run-down to the cult as well as a changelog to refer to.
+//Check strings/clockwork_cult_changelog.txt for the changelog, and update it when you can!
 /obj/item/paper/servant_primer
 	name = "The Ark And You: A Primer On Servitude"
 	color = "#DAAA18"
@@ -303,13 +295,18 @@ Credit where due:
 	<hr>\
 	<h2>Things that have changed:</h2>\
 	<ul>\
-	<li><b><i>Scripture no longer requires components, and instead uses power.</i></b></li>\
-	<li>Added a <b>5-minute grace period</b> for the crew to prepare for the assault when the Ark activates.</li>\
-	<li>Script and Application scriptures can now be unlocked with enough power.</li>\
-	<li><b>Added the Hateful Manacles scripture</b>, which handcuffs targets!</li>\
+	CLOCKCULTCHANGELOG\
 	</ul>\
 	<hr>\
 	<b>Good luck!</b>"
+
+/obj/item/paper/servant_primer/Initialize()
+	. = ..()
+	var/changelog = world.file2list("strings/clockwork_cult_changelog.txt")
+	var/changelog_contents = ""
+	for(var/entry in changelog)
+		changelog_contents += "<li>[entry]</li>"
+	info = replacetext(info, "CLOCKCULTCHANGELOG", changelog_contents)
 
 /obj/item/paper/servant_primer/examine(mob/user)
 	if(!is_servant_of_ratvar(user) && !isobserver(user))

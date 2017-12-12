@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/closed/indestructible/rock,
-/area/space)
+/area/space/nearstation)
 "ab" = (
 /turf/open/space,
 /area/space)
@@ -821,7 +821,7 @@
 	},
 /area/awaymission/caves/BMP_asteroid/level_two)
 "cf" = (
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/dark{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -940,7 +940,7 @@
 	},
 /area/awaymission/caves/research)
 "cx" = (
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/dark{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -2247,7 +2247,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/dark{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -2526,7 +2526,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/dark{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -2609,7 +2609,7 @@
 /area/awaymission/caves/BMP_asteroid)
 "gN" = (
 /obj/structure/holohoop,
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/dark{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -2623,7 +2623,7 @@
 /area/awaymission/caves/BMP_asteroid)
 "gP" = (
 /obj/item/toy/beach_ball/holoball,
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/dark{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -2663,7 +2663,7 @@
 /obj/structure/holohoop{
 	dir = 1
 	},
-/turf/open/floor/plasteel/black{
+/turf/open/floor/plasteel/dark{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -2680,7 +2680,7 @@
 "gW" = (
 /obj/effect/mapping_helpers/planet_z,
 /turf/closed/indestructible/rock,
-/area/space)
+/area/space/nearstation)
 
 (1,1,1) = {"
 aa
