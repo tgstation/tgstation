@@ -524,7 +524,7 @@
 			return
 
 		if(Adjacent(parrot_perch))
-			src.forceMove(parrot_perch.loc)
+			forceMove(parrot_perch.loc)
 			drop_held_item()
 			parrot_state = PARROT_PERCH
 			icon_state = icon_sit
