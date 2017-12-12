@@ -905,7 +905,7 @@
 	var/static/banned_spells = list(/obj/item/spellbook/oneuse/mimery_blockade, /obj/item/spellbook/oneuse/mimery_guns)
 	var/real_type = pick(subtypesof(/obj/item/spellbook/oneuse) - banned_spells)
 	new real_type(loc)
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 /obj/item/spellbook/oneuse/sacredflame
 	spell = /obj/effect/proc_holder/spell/targeted/sacred_flame

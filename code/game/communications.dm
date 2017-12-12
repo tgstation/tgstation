@@ -86,100 +86,41 @@ GLOBAL_LIST_EMPTY(all_radios)
 	for(var/freq in GLOB.all_radios)
 		GLOB.all_radios["[freq]"] -= radio
 
-/*
-Frequency range: 1200 to 1600
-Radiochat range: 1441 to 1489 (most devices refuse to be tune to other frequency, even during mapmaking)
-
-Radio:
-1459 - standard radio chat
-1351 - Science
-1353 - Command
-1355 - Medical
-1357 - Engineering
-1359 - Security
-1337 - death squad
-1443 - Confession Intercom
-1349 - Miners
-1347 - Cargo techs
-1447 - AI Private
-
-Devices:
-1451 - tracking implant
-1457 - RSD default
-
-On the map:
-1311 for prison shuttle console (in fact, it is not used)
-1435 for status displays
-1437 for atmospherics/fire alerts
-1439 for engine components
-1439 for air pumps, air scrubbers, atmo control
-1441 for atmospherics - supply tanks
-1443 for atmospherics - distribution loop/mixed air tank
-1445 for bot nav beacons
-1447 for mulebot, secbot and ed209 control
-1449 for airlock controls, electropack, magnets
-1451 for toxin lab access
-1453 for engineering access
-1455 for AI access
-*/
+// For information on what objects or departments use what frequencies,
+// see __DEFINES/radio.dm. Mappers may also select additional frequencies for
+// use in maps, such as in intercoms.
 
 GLOBAL_LIST_INIT(radiochannels, list(
-	"Common" = 1459,
-	"Science" = 1351,
-	"Command" = 1353,
-	"Medical" = 1355,
-	"Engineering" = 1357,
-	"Security" = 1359,
-	"CentCom" = 1337,
-	"Syndicate" = 1213,
-	"Supply" = 1347,
-	"Service" = 1349,
-	"AI Private" = 1447,
-	"Red Team" = 1215,
-	"Blue Team" = 1217
+	"Common" = FREQ_COMMON,
+	"Science" = FREQ_SCIENCE,
+	"Command" = FREQ_COMMAND,
+	"Medical" = FREQ_MEDICAL,
+	"Engineering" = FREQ_ENGINEERING,
+	"Security" = FREQ_SECURITY,
+	"CentCom" = FREQ_CENTCOM,
+	"Syndicate" = FREQ_SYNDICATE,
+	"Supply" = FREQ_SUPPLY,
+	"Service" = FREQ_SERVICE,
+	"AI Private" = FREQ_AI_PRIVATE,
+	"Red Team" = FREQ_CTF_RED,
+	"Blue Team" = FREQ_CTF_BLUE
 ))
 
 GLOBAL_LIST_INIT(reverseradiochannels, list(
-	"1459" = "Common",
-	"1351" = "Science",
-	"1353" = "Command",
-	"1355" = "Medical",
-	"1357" = "Engineering",
-	"1359" = "Security",
-	"1337" = "CentCom",
-	"1213" = "Syndicate",
-	"1347" = "Supply",
-	"1349" = "Service",
-	"1447" = "AI Private",
-	"1215" = "Red Team",
-	"1217" = "Blue Team"
+	"[FREQ_COMMON]" = "Common",
+	"[FREQ_SCIENCE]" = "Science",
+	"[FREQ_COMMAND]" = "Command",
+	"[FREQ_MEDICAL]" = "Medical",
+	"[FREQ_ENGINEERING]" = "Engineering",
+	"[FREQ_SECURITY]" = "Security",
+	"[FREQ_CENTCOM]" = "CentCom",
+	"[FREQ_SYNDICATE]" = "Syndicate",
+	"[FREQ_SUPPLY]" = "Supply",
+	"[FREQ_SERVICE]" = "Service",
+	"[FREQ_AI_PRIVATE]" = "AI Private",
+	"[FREQ_CTF_RED]" = "Red Team",
+	"[FREQ_CTF_BLUE]" = "Blue Team"
 ))
-
-//depenging helpers
-GLOBAL_VAR_CONST(SYND_FREQ, 1213) //nuke op frequency, coloured dark brown in chat window
-GLOBAL_VAR_CONST(SUPP_FREQ, 1347) //supply, coloured light brown in chat window
-GLOBAL_VAR_CONST(SERV_FREQ, 1349) //service, coloured green in chat window
-GLOBAL_VAR_CONST(SCI_FREQ, 1351) //science, coloured plum in chat window
-GLOBAL_VAR_CONST(COMM_FREQ, 1353) //command, colored gold in chat window
-GLOBAL_VAR_CONST(MED_FREQ, 1355) //medical, coloured blue in chat window
-GLOBAL_VAR_CONST(ENG_FREQ, 1357) //engineering, coloured orange in chat window
-GLOBAL_VAR_CONST(SEC_FREQ, 1359) //security, coloured red in chat window
-GLOBAL_VAR_CONST(CENTCOM_FREQ, 1337) //centcom frequency, coloured grey in chat window
-GLOBAL_VAR_CONST(AIPRIV_FREQ, 1447) //AI private, colored magenta in chat window
-GLOBAL_VAR_CONST(REDTEAM_FREQ, 1215) // red team (CTF) frequency, coloured red
-GLOBAL_VAR_CONST(BLUETEAM_FREQ, 1217) // blue team (CTF) frequency, coloured blue
-
-#define TRANSMISSION_WIRE	0
-#define TRANSMISSION_RADIO	1
-
-/* filters */
-GLOBAL_VAR_INIT(RADIO_TO_AIRALARM, "1")
-GLOBAL_VAR_INIT(RADIO_FROM_AIRALARM, "2")
-GLOBAL_VAR_INIT(RADIO_CHAT, "3") //deprecated
-GLOBAL_VAR_INIT(RADIO_ATMOSIA, "4")
-GLOBAL_VAR_INIT(RADIO_NAVBEACONS, "5")
-GLOBAL_VAR_INIT(RADIO_AIRLOCK, "6")
-GLOBAL_VAR_INIT(RADIO_MAGNETS, "9")
 
 /datum/radio_frequency
 
@@ -240,48 +181,18 @@ GLOBAL_VAR_INIT(RADIO_MAGNETS, "9")
 			devices -= devices_filter
 
 
-
-
-
-/client/proc/print_pointers()
-	set name = "Debug Signals"
-	set category = "Debug"
-
-	if(!holder)
-		return
-
-	var/datum/signal/S
-	to_chat(src, "There are [S.pointers.len] pointers:")
-	for(var/p in S.pointers)
-		to_chat(src, p)
-		S = locate(p)
-		if(istype(S))
-			to_chat(src, S.debug_print())
-
 /obj/proc/receive_signal(datum/signal/signal, receive_method, receive_param)
 	return
 
 /datum/signal
 	var/obj/source
 
-	var/transmission_method = 0
-	//0 = wire
-	//1 = radio transmission
-	//2 = subspace transmission
+	var/transmission_method = TRANSMISSION_WIRE
 
 	var/data = list()
 	var/encryption
 
 	var/frequency = 0
-	var/static/list/pointers = list()
-
-/datum/signal/New()
-	..()
-	pointers += "[REF(src)]"
-
-/datum/signal/Destroy()
-	pointers -= "[REF(src)]"
-	return ..()
 
 /datum/signal/proc/copy_from(datum/signal/model)
 	source = model.source

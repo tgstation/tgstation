@@ -23,7 +23,7 @@
 		for(var/D in devils)
 			var/datum/mind/devil = D
 			text += printplayer(devil)
-			text += printdevilinfo(devil)
+			text += printdevilinfo(devil.current)
 			text += printobjectives(devil)
 			text += "<br>"
 		text += "<br>"

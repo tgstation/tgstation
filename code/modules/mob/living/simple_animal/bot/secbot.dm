@@ -20,6 +20,7 @@
 	window_name = "Automatic Security Unit v1.6"
 	allow_pai = 0
 	data_hud_type = DATA_HUD_SECURITY_ADVANCED
+	path_image_color = "#FF0000"
 
 	var/mob/living/carbon/target
 	var/oldtarget_name

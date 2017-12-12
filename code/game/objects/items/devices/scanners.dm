@@ -2,10 +2,8 @@
 /*
 CONTAINS:
 T-RAY
-DETECTIVE SCANNER
 HEALTH ANALYZER
 GAS ANALYZER
-MASS SPECTROMETER
 
 */
 /obj/item/device/t_scanner
@@ -87,7 +85,7 @@ MASS SPECTROMETER
 /obj/item/device/healthanalyzer/attack(mob/living/M, mob/living/carbon/human/user)
 
 	// Clumsiness/brain damage check
-	if ((user.disabilities & CLUMSY || user.getBrainLoss() >= 60) && prob(50))
+	if ((user.disabilities & (CLUMSY | DUMB)) && prob(50))
 		to_chat(user, "<span class='notice'>You stupidly try to analyze the floor's vitals!</span>")
 		user.visible_message("<span class='warning'>[user] has analyzed the floor's vitals!</span>")
 		to_chat(user, "<span class='info'>Analyzing results for The floor:\n\tOverall status: <b>Healthy</b>")
@@ -147,14 +145,21 @@ MASS SPECTROMETER
 		to_chat(user, "\t<span class='alert'>Subject appears to have [M.getCloneLoss() > 30 ? "severe" : "minor"] cellular damage.</span>")
 		if(advanced)
 			to_chat(user, "\t<span class='info'>Cellular Damage Level: [M.getCloneLoss()].</span>")
-	if (M.getBrainLoss() >= 100 || !M.getorgan(/obj/item/organ/brain))
+	if (M.getBrainLoss() >= 200 || !M.getorgan(/obj/item/organ/brain))
 		to_chat(user, "\t<span class='alert'>Subject brain function is non-existent.</span>")
-	else if (M.getBrainLoss() >= 60)
-		to_chat(user, "\t<span class='alert'>Severe brain damage detected. Subject likely to have mental retardation.</span>")
-	else if (M.getBrainLoss() >= 10)
-		to_chat(user, "\t<span class='alert'>Brain damage detected. Subject may have had a concussion.</span>")
+	else if (M.getBrainLoss() >= 120)
+		to_chat(user, "\t<span class='alert'>Severe brain damage detected. Subject likely to have mental traumas.</span>")
+	else if (M.getBrainLoss() >= 45)
+		to_chat(user, "\t<span class='alert'>Brain damage detected.</span>")
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		if(LAZYLEN(C.get_traumas()))
+			var/list/trauma_text = list()
+			for(var/datum/brain_trauma/B in C.get_traumas())
+				trauma_text += B.scan_desc
+			to_chat(user, "\t<span class='alert'>Cerebral traumas detected: subjects appears to be suffering from [english_list(trauma_text)].</span>")
 	if(advanced)
-		to_chat(user, "\t<span class='info'>Brain Activity Level: [100 - M.getBrainLoss()]%.</span>")
+		to_chat(user, "\t<span class='info'>Brain Activity Level: [(200 - M.getBrainLoss())/2]%.</span>")
 	if (M.radiation)
 		to_chat(user, "\t<span class='alert'>Subject is irradiated.</span>")
 		if(advanced)
@@ -387,67 +392,6 @@ MASS SPECTROMETER
 			to_chat(user, "<span class='alert'>[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>")
 		to_chat(user, "<span class='info'>Temperature: [round(environment.temperature-T0C)] &deg;C</span>")
 
-
-/obj/item/device/mass_spectrometer
-	desc = "A hand-held mass spectrometer which identifies trace chemicals in a blood sample."
-	name = "mass-spectrometer"
-	icon_state = "spectrometer"
-	item_state = "analyzer"
-	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	w_class = WEIGHT_CLASS_SMALL
-	flags_1 = CONDUCT_1
-	slot_flags = SLOT_BELT
-	container_type = OPENCONTAINER_1
-	throwforce = 0
-	throw_speed = 3
-	throw_range = 7
-	materials = list(MAT_METAL=150, MAT_GLASS=100)
-	var/details = 0
-
-/obj/item/device/mass_spectrometer/New()
-	..()
-	create_reagents(5)
-
-/obj/item/device/mass_spectrometer/on_reagent_change(changetype)
-	if(reagents.total_volume)
-		icon_state = initial(icon_state) + "_s"
-	else
-		icon_state = initial(icon_state)
-
-/obj/item/device/mass_spectrometer/attack_self(mob/user)
-	if (user.stat || user.eye_blind)
-		return
-	if (!user.IsAdvancedToolUser())
-		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
-		return
-	if(reagents.total_volume)
-		var/list/blood_traces = list()
-		for(var/datum/reagent/R in reagents.reagent_list)
-			if(R.id != "blood")
-				reagents.clear_reagents()
-				to_chat(user, "<span class='warning'>The sample was contaminated! Please insert another sample.</span>")
-				return
-			else
-				blood_traces = params2list(R.data["trace_chem"])
-				break
-		var/dat = "<i><b>Trace Chemicals Found:</b>"
-		if(!blood_traces.len)
-			dat += "<br>None"
-		else
-			for(var/R in blood_traces)
-				dat += "<br>[GLOB.chemical_reagents_list[R]]"
-				if(details)
-					dat += " ([blood_traces[R]] units)"
-		dat += "</i>"
-		to_chat(user, dat)
-		reagents.clear_reagents()
-
-
-/obj/item/device/mass_spectrometer/adv
-	name = "advanced mass-spectrometer"
-	icon_state = "adv_spectrometer"
-	details = 1
 
 /obj/item/device/slime_scanner
 	name = "slime scanner"

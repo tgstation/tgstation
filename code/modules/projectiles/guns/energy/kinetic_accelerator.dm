@@ -16,8 +16,8 @@
 	var/unique_frequency = FALSE // modified by KA modkits
 	var/overheat = FALSE
 	can_bayonet = TRUE
-	knife_x_offset = 15
-	knife_y_offset = 13
+	knife_x_offset = 20
+	knife_y_offset = 12
 
 	var/max_mod_capacity = 100
 	var/list/modkits = list()

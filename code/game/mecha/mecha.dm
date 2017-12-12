@@ -137,8 +137,8 @@
 	log_message("[src.name] created.")
 	GLOB.mechas_list += src //global mech list
 	prepare_huds()
-	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
-	diag_hud.add_to_hud(src)
+	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
+		diag_hud.add_to_hud(src)
 	diag_hud_set_mechhealth()
 	diag_hud_set_mechcell()
 	diag_hud_set_mechstat()
@@ -970,7 +970,7 @@
 		setDir(dir_in)
 
 	if(L && L.client)
-		L.client.change_view(world.view)
+		L.client.change_view(CONFIG_GET(string/default_view))
 		zoom_mode = 0
 
 /////////////////////////

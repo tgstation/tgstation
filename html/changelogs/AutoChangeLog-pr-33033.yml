@@ -1,9 +1,0 @@
-author: "Okand37"
-delete-after: True
-changes: 
-  - rscadd: "Re-organized Delta's departmental protolathes for all departments."
-  - rscadd: "Re-organized Delta's ORM placement by connecting it to the mining office, which now has a desk for over handing materials to the outside."
-  - rscadd: "Added a second Nanomed to Deltastation's medical bay."
-  - rscadd: "Nanotrasen has decided to add proper caution signs to most docking ports on Deltastation, warning individuals to be cautious around these areas."
-  - rscadd: "Two health sensors are now placed in Deltastation's robotics area for medibots."
-  - bugfix: "Atmospheric Technicians at Deltastation can now open up their gas storage in the supermatter power area as intended."

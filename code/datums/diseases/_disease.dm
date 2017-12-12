@@ -103,8 +103,9 @@
 /datum/disease/proc/cure(add_resistance = TRUE)
 	if(affected_mob)
 		if(disease_flags & CAN_RESIST)
-			if(add_resistance && !(type in affected_mob.resistances))
-				affected_mob.resistances += type
+			var/id = GetDiseaseID()
+			if(add_resistance && !(id in affected_mob.resistances))
+				affected_mob.resistances += id
 		remove_virus()
 	qdel(src)
 
@@ -121,7 +122,7 @@
 
 
 /datum/disease/proc/GetDiseaseID()
-	return type
+	return "[type]"
 
 //don't use this proc directly. this should only ever be called by cure()
 /datum/disease/proc/remove_virus()

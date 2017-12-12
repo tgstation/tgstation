@@ -154,7 +154,8 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 
 /obj/machinery/computer/telecrystals/boss/proc/getDangerous()//This scales the TC assigned with the round population.
 	..()
-	var/danger = GLOB.joined_player_list.len - SSticker.mode.syndicates.len
+	var/list/nukeops = get_antagonists(/datum/antagonist/nukeop)
+	var/danger = GLOB.joined_player_list.len - nukeops.len
 	danger = Ceiling(danger, 10)
 	scaleTC(danger)
 

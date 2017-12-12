@@ -119,6 +119,9 @@
 			playSpecials(destturf,effectout,soundout)
 			if(ismegafauna(teleatom))
 				message_admins("[teleatom] [ADMIN_FLW(teleatom)] has teleported from [ADMIN_COORDJMP(curturf)] to [ADMIN_COORDJMP(destturf)].")
+	if(ismob(teleatom))
+		var/mob/M = teleatom
+		M.cancel_camera()
 	return 1
 
 /datum/teleport/proc/teleport()

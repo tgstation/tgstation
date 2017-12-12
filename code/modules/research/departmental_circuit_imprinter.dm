@@ -4,10 +4,8 @@
 	icon_state = "circuit_imprinter"
 	container_type = OPENCONTAINER_1
 	circuit = /obj/item/circuitboard/machine/circuit_imprinter/department
-	console_link = FALSE
 	requires_console = FALSE
 
-	var/list/allowed_department_flags = DEPARTMENTAL_FLAG_ALL
 	var/list/datum/design/cached_designs
 	var/list/datum/design/matching_designs
 	var/department_tag = "Unidentified"			//used for material distribution among other things.
@@ -145,8 +143,7 @@
 
 /obj/machinery/rnd/circuit_imprinter/department/proc/ui_header()
 	var/list/l = list()
-	l += "<h2>Nanotrasen Department Circuit Imprinter: [department_tag]</h2>[RDSCREEN_NOBREAK]"
-	l += "<div class='statusDisplay'><b>Connected Technology database: [host_research == SSresearch.science_tech? "Nanotrasen" : "Third Party"]"
+	l += "<div class='statusDisplay'><b>[host_research.organization] [department_tag] Department Circuit Imprinter</b>"
 	l += "Security protocols: [emagged? "<font color='red'>Disabled</font>" : "<font color='green'>Enabled</font>"]"
 	l += "<A href='?src=[REF(src)];switch_screen=[DEPPRINTER_SCREEN_MATERIALS]'><B>Material Amount:</B> [materials.total_amount] / [materials.max_amount]</A>"
 	l += "<A href='?src=[REF(src)];switch_screen=[DEPPRINTER_SCREEN_CHEMICALS]'><B>Chemical volume:</B> [reagents.total_volume] / [reagents.maximum_volume]</A>"

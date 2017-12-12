@@ -1,10 +1,5 @@
 //This is a simple 3 by 3 grid working off the corpse of the space torus. The donut is dead, cube has been avenged!
 
-#define Z_LEVEL_NORTH 		"1"
-#define Z_LEVEL_SOUTH 		"2"
-#define Z_LEVEL_EAST 		"4"
-#define Z_LEVEL_WEST 		"8"
-
 GLOBAL_LIST_EMPTY(z_levels_list)
 
 /datum/space_level
@@ -19,7 +14,7 @@ GLOBAL_LIST_EMPTY(z_levels_list)
 	linked = transition_type
 	if(linked == SELFLOOPING)
 		neigbours = list()
-		var/list/L = list(Z_LEVEL_NORTH,Z_LEVEL_SOUTH,Z_LEVEL_EAST,Z_LEVEL_WEST)
+		var/list/L = list(TEXT_NORTH,TEXT_SOUTH,TEXT_EAST,TEXT_WEST)
 		for(var/A in L)
 			neigbours[A] = src
 
@@ -27,18 +22,18 @@ GLOBAL_LIST_EMPTY(z_levels_list)
 	for(var/datum/point/P in L)
 		if(P.x == xi)
 			if(P.y == yi+1)
-				neigbours[Z_LEVEL_NORTH] = P.spl
-				P.spl.neigbours[Z_LEVEL_SOUTH] = src
+				neigbours[TEXT_NORTH] = P.spl
+				P.spl.neigbours[TEXT_SOUTH] = src
 			else if(P.y == yi-1)
-				neigbours[Z_LEVEL_SOUTH] = P.spl
-				P.spl.neigbours[Z_LEVEL_NORTH] = src
+				neigbours[TEXT_SOUTH] = P.spl
+				P.spl.neigbours[TEXT_NORTH] = src
 		else if(P.y == yi)
 			if(P.x == xi+1)
-				neigbours[Z_LEVEL_EAST] = P.spl
-				P.spl.neigbours[Z_LEVEL_WEST] = src
+				neigbours[TEXT_EAST] = P.spl
+				P.spl.neigbours[TEXT_WEST] = src
 			else if(P.x == xi-1)
-				neigbours[Z_LEVEL_WEST] = P.spl
-				P.spl.neigbours[Z_LEVEL_EAST] = src
+				neigbours[TEXT_WEST] = P.spl
+				P.spl.neigbours[TEXT_EAST] = src
 
 /datum/point          //this is explicitly utilitarian datum type made specially for the space map generation and are absolutely unusable for anything else
 	var/list/neigbours = list()
@@ -157,8 +152,3 @@ GLOBAL_LIST_EMPTY(z_levels_list)
 
 	for(var/A in grid)
 		GLOB.z_levels_list[A] = grid[A]
-
-#undef Z_LEVEL_NORTH
-#undef Z_LEVEL_SOUTH
-#undef Z_LEVEL_EAST
-#undef Z_LEVEL_WEST

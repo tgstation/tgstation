@@ -308,7 +308,7 @@
 			P.gender = MALE
 			P.desc = "It's the HoP's beloved corgi puppy."
 			Write_Memory(FALSE)
-			qdel(src)
+			return INITIALIZE_HINT_QDEL
 	else if(age == record_age)
 		icon_state = "old_corgi"
 		icon_living = "old_corgi"
