@@ -87,6 +87,7 @@
 		mind.assigned_role = "revenant"
 		mind.special_role = "Revenant"
 		SSticker.mode.traitors |= mind //Necessary for announcing
+		mind.add_antag_datum(/datum/antagonist/auto_custom)
 		AddSpell(new /obj/effect/proc_holder/spell/targeted/night_vision/revenant(null))
 		AddSpell(new /obj/effect/proc_holder/spell/targeted/revenant_transmit(null))
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/defile(null))

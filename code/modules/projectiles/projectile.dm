@@ -359,8 +359,9 @@
 	forceMove(get_turf(source))
 	starting = get_turf(source)
 	original = target
-	yo = targloc.y - curloc.y
-	xo = targloc.x - curloc.x
+	if(targloc || !params)
+		yo = targloc.y - curloc.y
+		xo = targloc.x - curloc.x
 
 	if(isliving(source) && params)
 		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source, params)

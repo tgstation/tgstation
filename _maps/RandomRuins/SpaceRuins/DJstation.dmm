@@ -172,7 +172,7 @@
 /turf/open/floor/plasteel/bar,
 /area/ruin/space/djstation)
 "aG" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Kitchen"
 	},
 /turf/open/floor/plasteel/cafeteria,
@@ -193,7 +193,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/djstation)
 "aJ" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Rest Room"
 	},
 /turf/open/floor/plasteel/cafeteria,

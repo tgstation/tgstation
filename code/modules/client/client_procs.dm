@@ -220,6 +220,13 @@ GLOBAL_LIST(external_rsc_urls)
 						message_admins("<font color='red'><B>Notice: </B><font color='blue'>[key_name_admin(src)] has the same [matches] as [key_name_admin(C)] (no longer logged in). </font>")
 						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(C)] (no longer logged in).")
 
+	if(GLOB.player_details[ckey])
+		player_details = GLOB.player_details[ckey]
+	else
+		player_details = new
+		GLOB.player_details[ckey] = player_details
+
+
 	. = ..()	//calls mob.Login()
 
 	set_macros()
