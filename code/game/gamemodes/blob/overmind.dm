@@ -263,7 +263,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	if(isovermind(owner.current)) //embarrasing if not
 		var/mob/camera/blob/overmind = owner.current
 		if(!overmind.victory_in_progress) //if it won this doesn't really matter
-			var/point_report = "<br><b>[owner.name]</b> took over [overmind.max_count] tiles at the height of it's growth."
+			var/point_report = "<br><b>[owner.name]</b> took over [overmind.max_count] tiles at the height of its growth."
 			return basic_report+point_report
 	return basic_report
 
