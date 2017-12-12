@@ -17,7 +17,6 @@ GLOBAL_LIST_EMPTY(uplinks)
 	var/selected_cat
 	var/owner = null
 	var/datum/game_mode/gamemode
-	var/spent_telecrystals = 0
 	var/datum/uplink_purchase_log/purchase_log
 	var/list/uplink_items
 	var/hidden_crystals = 0
@@ -89,7 +88,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 		var/refundable = initial(UI.refundable)
 		if(I.type == path && refundable && I.check_uplink_validity())
 			telecrystals += cost
-			spent_telecrystals -= cost
+			purchase_log.total_spent -= cost
 			to_chat(user, "<span class='notice'>[I] refunded.</span>")
 			qdel(I)
 			return
@@ -178,7 +177,6 @@ GLOBAL_LIST_EMPTY(uplinks)
 	if(telecrystals < U.cost || U.limited_stock == 0)
 		return
 	telecrystals -= U.cost
-	spent_telecrystals += U.cost
 
 	var/atom/A = U.spawn_item(get_turf(user), src, user)
 	if(U.purchase_log_vis && purchase_log)
