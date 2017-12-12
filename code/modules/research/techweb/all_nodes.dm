@@ -506,7 +506,7 @@
 	display_name = "Radioactive Weaponry"
 	description = "Weapons using radioactive technology."
 	prereq_ids = list("adv_engi", "adv_weaponry")
-	design_ids = list("nuclear_gun", "decloner")
+	design_ids = list("nuclear_gun")
 	research_cost = 2500
 	export_price = 10000
 
@@ -834,6 +834,35 @@
 	export_price = 20000
 	hidden = TRUE
 
+/datum/techweb_node/syndicate_basic
+	id = "syndicate_basic"
+	display_name = "Illegal Technology"
+	description = "Dangerous research used to create dangerous objects."
+	prereq_ids = list("adv_engi", "adv_weaponry", "explosive_weapons")
+	design_ids = list("decloner", "borg_syndicate_module", "suppressor", "largecrossbow")
+	research_cost = 10000
+	export_price = 10000
+	hidden = TRUE
+
+/datum/techweb_node/syndicate_basic/New()		//Crappy way of making syndicate gear decon supported until there's another way.
+	. = ..()
+	boost_item_paths = list()
+	for(var/cat in GLOB.uplink_items)
+		var/list/l = cat
+		for(var/i in l)
+			var/datum/uplink_item/UI = i
+			boost_item_paths[UI.item] = 0	//allows deconning to unlock.
+
+//HELPERS
+/proc/total_techweb_exports()
+	var/list/datum/techweb_node/processing = list()
+	for(var/i in subtypesof(/datum/techweb_node))
+		processing += new i
+	. = 0
+	for(var/i in processing)
+		var/datum/techweb_node/TN = i
+		. += TN.export_price
+
 /proc/total_techweb_points()
 	var/list/datum/techweb_node/processing = list()
 	for(var/i in subtypesof(/datum/techweb_node))
@@ -842,19 +871,3 @@
 	for(var/i in processing)
 		var/datum/techweb_node/TN = i
 		. += TN.research_cost
-
-/*
-/datum/design/borg_syndicate_module
-	name = "Cyborg Upgrade (Illegal Modules)"
-	id = "borg_syndicate_module"
-	construction_time = 120
-
-/datum/design/suppressor
-	name = "Universal Suppressor"
-	id = "suppressor"
-
-/datum/design/largecrossbow
-	name = "Energy Crossbow"
-	id = "largecrossbow"
-	build_path = /obj/item/gun/energy/kinetic_accelerator/crossbow/large
-*/
