@@ -35,7 +35,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 		return
 	stat(null, "Game Mode: [SSticker.hide_mode ? "Secret" : "[GLOB.master_mode]"]")
 
-	if(!SSticker.HasRoundStarted())
+	if(SSticker.HasRoundStarted())
 		return
 
 	var/time_remaining = SSticker.GetTimeLeft()
