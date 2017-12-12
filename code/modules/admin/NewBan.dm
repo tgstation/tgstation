@@ -1,6 +1,7 @@
 GLOBAL_VAR(CMinutes)
 GLOBAL_DATUM(Banlist, /savefile)
 GLOBAL_PROTECT(Banlist)
+GLOBAL_PROTECT(Mastercontroller)
 
 
 /proc/CheckBan(ckey, id, address)
@@ -22,7 +23,7 @@ GLOBAL_PROTECT(Banlist)
 				ClearTempbans()
 				return 0
 			else
-				.["desc"] = "\nReason: [GLOB.Banlist["reason"]]\nExpires: [GetExp(GLOB.Banlist["minutes"])]\nBy: [GLOB.Banlist["bannedby"]][appeal]"
+				.["desc"] = "\nReason: [GLOB.Banlist["reason"]]\nExpires: [GetExp(GLOB.Banlist["minute"])]\nBy: [GLOB.Banlist["bannedby"]][appeal]"
 		else
 			GLOB.Banlist.cd	= "/base/[ckey][id]"
 			.["desc"]	= "\nReason: [GLOB.Banlist["reason"]]\nExpires: <B>PERMANENT</B>\nBy: [GLOB.Banlist["bannedby"]][appeal]"
@@ -58,6 +59,7 @@ GLOBAL_PROTECT(Banlist)
 
 /proc/UpdateTime() //No idea why i made this a proc.
 	GLOB.CMinutes = (world.realtime / 10) / 60
+	ClearTempbans()
 	return 1
 
 /proc/LoadBans()
