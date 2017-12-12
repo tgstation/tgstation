@@ -404,7 +404,7 @@
 	id = "adv_cyber_implants"
 	display_name = "Advanced Cybernetic Implants"
 	description = "Upgraded and more powerful cybernetic implants."
-	prereq_ids = list("neural_programming", "cyber_implants","integrated_HUDS")
+	prereq_ids = list("neural_programming", "cyber_implants","integrated_HUDs")
 	design_ids = list("ci-toolset", "ci-surgery", "ci-reviver")
 	research_cost = 2500
 	export_price = 10000
@@ -469,7 +469,7 @@
 	display_name = "Experimental Flight Equipment"
 	description = "Highly advanced construction tools."
 	design_ids = list("flightshoes", "flightpack", "flightsuit")
-	prereq_ids = list("adv_engi","integrated_HUDS", "adv_power" , "high_efficiency")
+	prereq_ids = list("adv_engi","integrated_HUDs", "adv_power" , "high_efficiency")
 	research_cost = 5000
 	export_price = 10000
 
