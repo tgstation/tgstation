@@ -36,6 +36,9 @@ SUBSYSTEM_DEF(hullrot)
 	if (error)
 		return abort("[name] failed to initialize: [error]")
 
+	for (var/mob/living/L in GLOB.player_list)
+		L.hullrot_reset()
+
 	return ..()
 
 /datum/controller/subsystem/hullrot/proc/get_version()
@@ -86,8 +89,41 @@ SUBSYSTEM_DEF(hullrot)
 		message_admins("[name]: event: [json_encode(event)]")
 		if ((data = event["Fatal"]))
 			abort("Hullrot has crashed: [data]")
+
 		else if ((data = event["Debug"]))
 			warn(data)
+
+		else if ((data = event["Refresh"]))
+			var/client/C = GLOB.directory[data]
+			var/mob/living/L = C && C.mob
+			if (istype(L))
+				L.hullrot_reset()
+
+		else if ((data = event["Hear"]))
+			var/client/C = GLOB.directory[data["speaker"]]
+			var/mob/living/speaker = C && C.mob
+			C = GLOB.directory[data["hearer"]]
+			var/mob/living/hearer = C && C.mob
+			if (istype(speaker) && istype(hearer))
+				// Issue forth the textual notification...
+				var/atom/movable/virtualspeaker/virt = new(null)
+				virt.source = speaker
+				virt.name = speaker.GetVoice()
+				virt.verb_say = speaker.verb_say
+				virt.verb_ask = speaker.verb_ask
+				virt.verb_exclaim = speaker.verb_exclaim
+				virt.verb_yell = speaker.verb_yell
+				to_chat(hearer, hearer.compose_message(virt, speaker.get_default_language(), "Oh hi, Mark.", data["freq"]))
+
+		else if ((data = event["HearSelf"]))
+			var/client/C = GLOB.directory[data["who"]]
+			var/mob/living/L = C && C.mob
+			if (istype(L))
+				if (!L.can_hear())
+					if (!data["freq"])
+						to_chat(L, "<span class='notice'>You can't hear yourself!</span>")
+				else if (data["freq"])
+					to_chat(L, L.compose_message(L, L.get_default_language(), "I did naht.", data["freq"]))
 
 /datum/controller/subsystem/hullrot/fire()
 	checked_events = FALSE
@@ -132,6 +168,9 @@ SUBSYSTEM_DEF(hullrot)
 
 // ----------------------------------------------------------------------------
 // Controls
+
+/datum/controller/subsystem/hullrot/proc/set_mob_flags(client/C, can_speak, can_hear)
+	control("SetMobFlags", list("who" = C.ckey, "speak" = can_speak, "hear" = can_hear))
 
 /datum/controller/subsystem/hullrot/proc/set_ptt(client/C, freq)
 	control("SetPTT", list("who" = C.ckey, "freq" = (freq && text2num(freq))))

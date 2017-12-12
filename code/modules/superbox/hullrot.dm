@@ -4,7 +4,6 @@
 /mob/living
 	var/list/hullrot_stats
 	var/hullrot_ptt
-	var/hullrot_ptt_freq
 	var/hullrot_cache
 
 /mob/living/Stat()
@@ -20,7 +19,7 @@
 			if (!R.on || R.wires.is_cut(WIRE_TX) || (istype(R, /obj/item/device/radio/headset) && !R.listening))
 				stat(null, "\the [R] (off)")
 				continue  // can't talk into a disabled radio
-			if (R.subspace_transmission && !R.independent && !SShullrot.subspace_groups["[T.z]"])
+			if (R.subspace_transmission && !R.independent && (!SShullrot.subspace_groups || !SShullrot.subspace_groups["[T.z]"]))
 				stat(null, "\the [R] (not responding)")
 				continue  // can't talk into headsets while comms are down
 
@@ -37,16 +36,19 @@
 				hullrot_stats[hullrot_ptt].name = "Active - hold V to talk"
 		else
 			hullrot_ptt = null
-		if (hullrot_ptt_freq && hullrot_ptt_freq != hullrot_stats[hullrot_ptt].freq)
-			hullrot_ptt_freq = hullrot_stats[hullrot_ptt].freq
-			SShullrot.set_ptt(client, hullrot_ptt_freq)
 
-/mob/living/proc/get_ptt_frequency()
-	if (incapacitated(ignore_grab = TRUE))
-		return
+		if (client.keys_held["V"])
+			ptt_tick()
 
-	var/obj/effect/statclick/radio/current = hullrot_stats[hullrot_ptt]
-	return current && current.freq
+/mob/living/proc/ptt_tick()
+	var/ptt_freq
+	if (!incapacitated(ignore_grab = TRUE))
+		var/obj/effect/statclick/radio/current = hullrot_ptt && hullrot_stats[hullrot_ptt]
+		ptt_freq = current && current.freq
+
+	if (hullrot_cache["ptt_freq"] != ptt_freq)
+		hullrot_cache["ptt_freq"] = ptt_freq
+		SShullrot.set_ptt(client, ptt_freq)
 
 /mob/living/proc/hullrot_stat(keys_used, radio, channel, frequency)
 	var/key = "[REF(radio)]:[channel]"
@@ -69,22 +71,19 @@
 /obj/effect/statclick/radio/Click()
 	var/mob/living/M = usr
 	M.hullrot_ptt = key
-	if (M.client && M.hullrot_ptt_freq && M.hullrot_ptt_freq != freq)
-		M.hullrot_ptt_freq = freq
-		SShullrot.set_ptt(M.client, freq)
+	M.ptt_tick()
 
 /mob/living/key_down(_key, client/user)
 	switch(_key)
 		if("V")
-			hullrot_ptt_freq = get_ptt_frequency()
-			SShullrot.set_ptt(user, hullrot_ptt_freq)
+			ptt_tick()
 		else
 			return ..()
 
 /mob/living/key_up(_key, client/user)
 	switch(_key)
 		if("V")
-			hullrot_ptt_freq = null
+			hullrot_cache["ptt_freq"] = null
 			SShullrot.set_ptt(user, null)
 		else
 			return ..()
@@ -93,11 +92,15 @@
 // Location-based can-hear and can-speak checks
 
 /mob/living/proc/hullrot_update()
-	if (!SShullrot.can_fire)
+	if (!SShullrot.can_fire || !client)
 		return
 
 	var/can_speak = can_speak() && (stat == CONSCIOUS || stat == SOFT_CRIT)
 	var/can_hear = can_hear()
+	if (hullrot_cache["can_speak"] != can_speak || hullrot_cache["can_hear"] != can_hear)
+		hullrot_cache["can_speak"] = can_speak
+		hullrot_cache["can_hear"] = can_hear
+		SShullrot.set_mob_flags(client, can_speak, can_hear)
 	if (!can_speak && !can_hear)
 		return
 
@@ -106,7 +109,7 @@
 		hullrot_cache["z"] = T.z
 		SShullrot.set_z(client, T.z)
 
-	var/speak_range = hullrot_ptt_freq ? 1 : 7
+	var/speak_range = client.keys_held["V"] ? 1 : 7
 	var/hearers = get_hearers_in_view(7, src)
 	if (can_speak)
 		var/list/local_with = list()
@@ -123,7 +126,7 @@
 	for(var/obj/item/device/radio/R in hearers)
 		if (get_dist(src, R) > R.canhear_range || !R.on)
 			continue
-		if (R.subspace_transmission && !R.independent && !SShullrot.subspace_groups["[T.z]"])
+		if (R.subspace_transmission && !R.independent && (!SShullrot.subspace_groups || !SShullrot.subspace_groups["[T.z]"]))
 			continue
 
 		if (can_speak && R.broadcasting && !R.wires.is_cut(WIRE_TX) && get_dist(src, R) <= speak_range)
@@ -144,11 +147,14 @@
 		hullrot_cache["hear"] = new_hear
 		SShullrot.set_hear_freqs(client, hear_freqs)
 
-/mob/living/Login()
-	..()
+/mob/living/proc/hullrot_reset()
 	hullrot_stats = list()
 	hullrot_cache = list()
 	hullrot_update()
+
+/mob/living/Login()
+	..()
+	hullrot_reset()
 
 /mob/living/Move()
 	. = ..()
