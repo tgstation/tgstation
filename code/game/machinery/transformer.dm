@@ -98,9 +98,7 @@
 
 	use_power(5000) // Use a lot of power.
 	var/mob/living/silicon/robot/R = H.Robotize()
-
-	R.cell.maxcharge = robot_cell_charge
-	R.cell.charge = robot_cell_charge
+	R.cell = new /obj/item/stock_parts/cell/upgraded/plus(R, robot_cell_charge)
 
  	// So he can't jump out the gate right away.
 	R.SetLockdown()
