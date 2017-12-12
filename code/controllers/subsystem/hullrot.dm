@@ -106,14 +106,17 @@ SUBSYSTEM_DEF(hullrot)
 			var/mob/living/hearer = C && C.mob
 			if (istype(speaker) && istype(hearer))
 				// Issue forth the textual notification...
-				var/atom/movable/virtualspeaker/virt = new(null)
-				virt.source = speaker
-				virt.name = speaker.GetVoice()
-				virt.verb_say = speaker.verb_say
-				virt.verb_ask = speaker.verb_ask
-				virt.verb_exclaim = speaker.verb_exclaim
-				virt.verb_yell = speaker.verb_yell
-				to_chat(hearer, hearer.compose_message(virt, speaker.get_default_language(), "Oh hi, Mark.", data["freq"]))
+				var/atom/movable/abstract_speaker = speaker
+				if (data["freq"])
+					var/atom/movable/virtualspeaker/virt = new(null)
+					virt.source = speaker
+					virt.name = speaker.GetVoice()
+					virt.verb_say = speaker.verb_say
+					virt.verb_ask = speaker.verb_ask
+					virt.verb_exclaim = speaker.verb_exclaim
+					virt.verb_yell = speaker.verb_yell
+					abstract_speaker = virt
+				to_chat(hearer, hearer.hullrot_compose(abstract_speaker, speaker.get_default_language(), data["freq"]))
 
 		else if ((data = event["HearSelf"]))
 			var/client/C = GLOB.directory[data["who"]]
@@ -123,7 +126,25 @@ SUBSYSTEM_DEF(hullrot)
 					if (!data["freq"])
 						to_chat(L, "<span class='notice'>You can't hear yourself!</span>")
 				else if (data["freq"])
-					to_chat(L, L.compose_message(L, L.get_default_language(), "I did naht.", data["freq"]))
+					to_chat(L, L.hullrot_compose(L, L.get_default_language(), data["freq"]))
+
+		else if ((data = event["SpeechBubble"]))
+			var/client/C = GLOB.directory[data["who"]]
+			var/mob/living/speaker = C && C.mob
+
+			var/image/bubble = speaker.hullrot_bubble
+			if (!bubble)
+				speaker.hullrot_bubble = bubble = image('icons/mob/talk.dmi', speaker, "[speaker.bubble_icon]0", FLY_LAYER - 0.01)
+			else
+				bubble.icon_state = "[speaker.bubble_icon]0"
+
+			for (var/mob/living/L in GLOB.player_list)
+				if (!L.client)
+					continue
+				if (L.ckey in data["with"])
+					L.client.images |= bubble
+				else
+					L.client.images -= bubble
 
 /datum/controller/subsystem/hullrot/fire()
 	checked_events = FALSE

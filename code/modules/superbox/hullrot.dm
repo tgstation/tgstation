@@ -5,6 +5,7 @@
 	var/list/hullrot_stats
 	var/hullrot_ptt
 	var/hullrot_cache
+	var/image/hullrot_bubble
 
 /mob/living/Stat()
 	..()
@@ -204,3 +205,37 @@
 /mob/dead/Login()
 	..()
 	SShullrot.set_ghost(client)
+
+// ----------------------------------------------------------------------------
+// Message composition
+
+/mob/living/proc/hullrot_compose(atom/movable/speaker, datum/language/message_language, radio_freq, list/spans, message_mode)
+	// Intended to mimic compose_mesage() from saycode
+	var/spanpart1 = "<span class='[radio_freq ? get_radio_span(radio_freq) : "game say"]'>"
+	var/spanpart2 = "<span class='name'>"
+	var/freqpart = radio_freq ? "\[[get_radio_name(radio_freq)]\] " : ""
+	var/namepart = "[speaker.GetVoice()][speaker.get_alt_name()]"
+	var/endspanpart = "</span>"
+
+	//Message
+	var/verbpart
+	var/atom/movable/AM = speaker.GetSource()
+	if(AM) //Basically means "if the speaker is virtual"
+		verbpart = AM.say_mod("", spans, message_mode)
+	else
+		verbpart = speaker.say_mod("", spans, message_mode)
+	if (verbpart == "says")
+		verbpart = "speaks"
+
+	var/langpart = ""
+	if(!has_language(language))
+		langpart = " in an unknown language"
+
+	var/messagepart = " <span class='message'>[verbpart][langpart].</span></span>"
+
+	var/languageicon = ""
+	var/datum/language/D = GLOB.language_datum_instances[message_language]
+	if(istype(D) && D.display_icon(src))
+		languageicon = "[D.get_icon()] "
+
+	return "[spanpart1][spanpart2][freqpart][languageicon][compose_track_href(speaker, namepart)][namepart][compose_job(speaker, message_language, null, radio_freq)][endspanpart][messagepart]"
