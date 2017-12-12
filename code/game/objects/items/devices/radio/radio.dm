@@ -232,37 +232,7 @@
 			break
 
 	// Determine the identity information which will be attached to the signal.
-	var/atom/movable/virtualspeaker/speaker = new(null)
-	speaker.radio = src
-	speaker.source = M
-	speaker.name = M.GetVoice()
-	speaker.verb_say = M.verb_say
-	speaker.verb_ask = M.verb_ask
-	speaker.verb_exclaim = M.verb_exclaim
-	speaker.verb_yell = M.verb_yell
-
-	// The mob's job identity
-	if(ishuman(M))
-		// Humans use their job as seen on the crew manifest. This is so the AI
-		// can know their job even if they don't carry an ID.
-		var/datum/data/record/findjob = find_record("name", speaker.name, GLOB.data_core.general)
-		if(findjob)
-			speaker.job = findjob.fields["rank"]
-		else
-			speaker.job = "Unknown"
-	else if(iscarbon(M))  // Carbon nonhuman
-		speaker.job = "No ID"
-	else if(isAI(M))  // AI
-		speaker.job = "AI"
-	else if(iscyborg(M))  // Cyborg
-		var/mob/living/silicon/robot/B = M
-		speaker.job = "[B.designation] Cyborg"
-	else if(istype(M, /mob/living/silicon/pai))  // Personal AI (pAI)
-		speaker.job = "Personal AI"
-	else if(isobj(M))  // Cold, emotionless machines
-		speaker.job = "Machine"
-	else  // Unidentifiable mob
-		speaker.job = "Unknown"
+	var/atom/movable/virtualspeaker/speaker = new(null, M, src)
 
 	// Construct the signal
 	var/datum/signal/subspace/vocal/signal = new(src, freq, speaker, language, message, spans)
