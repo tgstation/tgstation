@@ -335,7 +335,7 @@
 			currrent_category = A.roundend_category
 			previous_category = A
 		result += A.roundend_report()
-		result += "<br>"
+		result += "<br><br>"
 	
 	if(all_antagonists.len)
 		var/datum/antagonist/last = all_antagonists[all_antagonists.len]

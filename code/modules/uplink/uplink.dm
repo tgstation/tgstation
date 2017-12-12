@@ -178,6 +178,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 	if(telecrystals < U.cost || U.limited_stock == 0)
 		return
 	telecrystals -= U.cost
+	spent_telecrystals += U.cost
 
 	var/atom/A = U.spawn_item(get_turf(user), src, user)
 	if(U.purchase_log_vis && purchase_log)
