@@ -447,6 +447,9 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	set category = "Admin"
 	set name = "Stealth Mode"
 	if(holder)
+		if(GLOB.admin_datums.len < 2)
+			to_chat(src, "<span class='interface'>ÂÀÌ ÑÒÅËÑ ÑÅÉ×ÀÑ ÍÅ ÏÎËÎÆÅÍ</span>")
+		return 0
 		if(holder.fakekey)
 			holder.fakekey = null
 			if(isobserver(mob))
@@ -642,8 +645,9 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 
 	holder.disassociate()
 	qdel(holder)
-	if(GLOB.admin_datums.len < 2)
-		to_chat(src, "<span class='interface'>RABOTAT!!!</span>")
+
+	if(GLOB.admin_datums.len < 3)
+		to_chat(src, "<span class='interface'>ĞÀÁÎÒÀÒÜ!!!</span>")
 		return 0
 	GLOB.deadmins += ckey
 	GLOB.admin_datums -= ckey
@@ -667,7 +671,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	GLOB.deadmins -= ckey
 	verbs -= /client/proc/readmin
 
-	to_chat(src, "<span class='interface'>You are now an admin.</span>")
+	to_chat(src, "<span class='interface'>Êğàñàâà ÷òî ğàáîòàåøü! Ìî¸ óâîæåíèå.</span>")
 	message_admins("[src] re-adminned themselves.")
 	log_admin("[src] re-adminned themselves.")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Readmin")
