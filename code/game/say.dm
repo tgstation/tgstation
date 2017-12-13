@@ -172,12 +172,13 @@ INITIALIZE_IMMEDIATE(/atom/movable/virtualspeaker)
 /atom/movable/virtualspeaker/Initialize(mapload, mob/M, radio)
 	. = ..()
 	radio = radio
-	source = M
-	name = M.GetVoice()
-	verb_say = M.verb_say
-	verb_ask = M.verb_ask
-	verb_exclaim = M.verb_exclaim
-	verb_yell = M.verb_yell
+	if (ismob(M))
+		source = M
+		name = M.GetVoice()
+		verb_say = M.verb_say
+		verb_ask = M.verb_ask
+		verb_exclaim = M.verb_exclaim
+		verb_yell = M.verb_yell
 
 	// The mob's job identity
 	if(ishuman(M))
