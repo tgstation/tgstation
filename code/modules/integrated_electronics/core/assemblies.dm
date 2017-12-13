@@ -20,6 +20,7 @@
 	var/charge_tick = FALSE
 	var/charge_delay = 4
 	var/use_cyborg_cell = TRUE
+	max_integrity = 50
 
 /obj/item/device/electronic_assembly/proc/check_interactivity(mob/user)
 	return user.canUseTopic(src,be_close = TRUE)
@@ -29,6 +30,8 @@
 	.=..()
 	START_PROCESSING(SScircuit, src)
 	materials[MAT_METAL] = round((max_complexity + max_components) / 4) * SScircuit.cost_multiplier
+	if (!armor)
+		armor = list(melee = 50, bullet = 70, laser = 70, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 0, acid = 0)
 
 
 
@@ -386,11 +389,17 @@
 		var/obj/item/integrated_circuit/IC = I
 		IC.ext_moved(oldLoc, dir)
 
+/obj/item/device/electronic_assembly/stop_pulling()
+	..()
+	for(var/I in assembly_components)
+		var/obj/item/integrated_circuit/IC = I
+		IC.stop_pulling()
+
+
 // Returns the object that is supposed to be used in attack messages, location checks, etc.
 // Override in children for special behavior.
 /obj/item/device/electronic_assembly/proc/get_object()
 	return src
-
 
 // Returns the location to be used for dropping items.
 // Same as the regular drop_location(), but with checks being run on acting_object if necessary.
@@ -403,23 +412,6 @@
 
 	return acting_object.drop_location()
 
-/obj/item/device/electronic_assembly/default //The /default electronic_assemblys are to allow the introduction of the new naming scheme without breaking old saves.
-	name = "type-a electronic assembly"
-
-/obj/item/device/electronic_assembly/calc
-	name = "type-b electronic assembly"
-	icon_state = "setup_small_calc"
-	desc = "It's a case, for building small electronics with. This one resembles a pocket calculator."
-
-/obj/item/device/electronic_assembly/clam
-	name = "type-c electronic assembly"
-	icon_state = "setup_small_clam"
-	desc = "It's a case, for building small electronics with. This one has a clamshell design."
-
-/obj/item/device/electronic_assembly/simple
-	name = "type-d electronic assembly"
-	icon_state = "setup_small_simple"
-	desc = "It's a case, for building small electronics with. This one has a simple design."
 
 /obj/item/device/electronic_assembly/medium
 	name = "electronic mechanism"

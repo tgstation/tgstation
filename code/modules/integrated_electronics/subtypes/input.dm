@@ -144,9 +144,8 @@
 	activate_pin(2)
 
 /obj/item/integrated_circuit/input/slime_scanner
-	name = "integrated advanced medical analyser"
-	desc = "A very small version of the medbot's medical analyser.  This allows the machine to know how healthy someone is.  \
-	This type is much more precise, allowing the machine to know much more about the target than a normal analyzer."
+	name = "slime_scanner"
+	desc = "A very small version of the xenobio analyser.  This allows the machine to know every needed properties of slime."
 	icon_state = "medscan_adv"
 	complexity = 12
 	inputs = list("\<REF\> target")
@@ -154,7 +153,7 @@
 		"colour"		     = IC_PINTYPE_STRING,
 		"adult"	             = IC_PINTYPE_BOOLEAN,
 		"nutrition"			 = IC_PINTYPE_NUMBER,
-		"change"		     = IC_PINTYPE_NUMBER,
+		"charge"		     = IC_PINTYPE_NUMBER,
 		"health"		     = IC_PINTYPE_NUMBER,
 		"possible mutation"	 = IC_PINTYPE_LIST,
 		"genetic destability"= IC_PINTYPE_NUMBER,
@@ -166,7 +165,7 @@
 	power_draw_per_use = 80
 
 /obj/item/integrated_circuit/input/slime_scanner/do_work()
-	var/mob/living/simple_animal/slime/T = get_pin_data_as_type(IC_INPUT, 1, /mob/living/carbon/human)
+	var/mob/living/simple_animal/slime/T = get_pin_data_as_type(IC_INPUT, 1, /mob/living/simple_animal/slime)
 	if(!isslime(T)) //Invalid input
 		return
 	if(T in view(get_turf(src))) // Like medbot's analyzer it can be used in range..
@@ -794,5 +793,40 @@
 				set_pin_data(IC_OUTPUT, 2, C.maxcharge)
 				set_pin_data(IC_OUTPUT, 3, C.percent())
 	activate_pin(2)
+	push_data()
+	return
+
+/obj/item/integrated_circuit/input/ntnetsc
+	name = "NTnet scaner"
+	desc = "This can return NTnet id of component insi given object, if there is any."
+	icon_state = "signalsc"
+	w_class = WEIGHT_CLASS_TINY
+	complexity = 2
+	inputs = list("target" = IC_PINTYPE_REF)
+	outputs = list(
+		"id" = IC_PINTYPE_STRING
+		)
+	activators = list("read" = IC_PINTYPE_PULSE_IN, "found" = IC_PINTYPE_PULSE_OUT,"not found" = IC_PINTYPE_PULSE_OUT)
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	power_draw_per_use = 1
+
+/obj/item/integrated_circuit/input/ntnetsc/do_work()
+
+	var/atom/AM = get_pin_data_as_type(IC_INPUT, 1, /atom)
+	var/list/processing_list = list(AM)
+	var/datum/component/ntnet_interface/net = null
+	set_pin_data(IC_OUTPUT, 1, null)
+	while(processing_list.len && !net)
+		var/atom/A = processing_list[1]
+		processing_list.Cut(1, 2)
+		//Byond does not allow things to be in multiple contents, or double parent-child hierarchies, so only += is needed
+		//This is also why we don't need to check against assembled as we go along
+		processing_list += A.contents
+		GET_COMPONENT_FROM(net, /datum/component/ntnet, A)
+	if(net)
+		set_pin_data(IC_OUTPUT, 1, net.hardware_id)
+		activate_pin(2)
+	else
+		activate_pin(3)
 	push_data()
 	return
