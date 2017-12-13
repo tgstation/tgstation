@@ -378,10 +378,7 @@
 	var/mob/living/silicon/robot/R = new /mob/living/silicon/robot(loc)
 
 	// cyborgs produced by Robotize get an automatic power cell
-	R.cell = new(R)
-	R.cell.maxcharge = 7500
-	R.cell.charge = 7500
-
+	R.cell = new /obj/item/stock_parts/cell/high(R, 7500)
 
 	R.gender = gender
 	R.invisibility = 0
