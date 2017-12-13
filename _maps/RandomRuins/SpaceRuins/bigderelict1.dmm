@@ -950,7 +950,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "cy" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/public/glass,
 /obj/machinery/door/poddoor{
 	id = "bigderelictcheckpoint";
 	name = "checkpoint security doors"

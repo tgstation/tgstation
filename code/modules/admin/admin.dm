@@ -705,15 +705,17 @@
 
 /datum/admins/proc/output_all_devil_info()
 	var/devil_number = 0
-	for(var/D in SSticker.mode.devils)
+	for(var/datum/mind/D in SSticker.mode.devils)
 		devil_number++
-		to_chat(usr, "Devil #[devil_number]:<br><br>" + SSticker.mode.printdevilinfo(D))
+		var/datum/antagonist/devil/devil = D.has_antag_datum(/datum/antagonist/devil)
+		to_chat(usr, "Devil #[devil_number]:<br><br>" + devil.printdevilinfo())
 	if(!devil_number)
 		to_chat(usr, "<b>No Devils located</b>" )
 
 /datum/admins/proc/output_devil_info(mob/living/M)
 	if(is_devil(M))
-		to_chat(usr, SSticker.mode.printdevilinfo(M))
+		var/datum/antagonist/devil/devil = M.mind.has_antag_datum(/datum/antagonist/devil)
+		to_chat(usr, devil.printdevilinfo())
 	else
 		to_chat(usr, "<b>[M] is not a devil.")
 

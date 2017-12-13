@@ -70,6 +70,7 @@
 	user_insert(I, user)
 
 /datum/component/material_container/proc/user_insert(obj/item/I, mob/living/user)
+	set waitfor = FALSE
 	var/requested_amount
 	var/Itype = I.type
 	if(ispath(Itype, /obj/item/stack) && precise_insertion)

@@ -109,7 +109,7 @@
 	icon_state = "blood1";
 	dir = 1
 	},
-/obj/machinery/door/airlock/survival_pod,
+/obj/machinery/door/airlock/survival_pod/glass,
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
 "u" = (

@@ -3,6 +3,7 @@
 
 /datum/antagonist/rev
 	name = "Revolutionary"
+	roundend_category = "revolutionaries" // if by some miracle revolutionaries without revolution happen
 	job_rank = ROLE_REV
 	var/hud_type = "rev"
 	var/datum/objective_team/revolution/rev_team
@@ -184,7 +185,6 @@
 
 /datum/objective_team/revolution
 	name = "Revolution"
-	var/list/objectives = list()
 	var/max_headrevs = 3
 
 /datum/objective_team/revolution/proc/update_objectives(initial = FALSE)
@@ -227,3 +227,56 @@
 				rev.promote()
 
 	addtimer(CALLBACK(src,.proc/update_heads),HEAD_UPDATE_PERIOD,TIMER_UNIQUE)
+
+
+/datum/objective_team/revolution/roundend_report()
+	if(!members.len)
+		return
+
+	var/list/result = list()
+
+	result += "<div class='panel redborder'>"
+
+	var/num_revs = 0
+	var/num_survivors = 0
+	for(var/mob/living/carbon/survivor in GLOB.alive_mob_list)
+		if(survivor.ckey)
+			num_survivors++
+			if(survivor.mind)
+				if(is_revolutionary(survivor))
+					num_revs++
+	if(num_survivors)
+		result += "Command's Approval Rating: <B>[100 - round((num_revs/num_survivors)*100, 0.1)]%</B><br>"
+
+
+	var/list/targets = list()
+	var/list/datum/mind/headrevs = get_antagonists(/datum/antagonist/rev/head)
+	var/list/datum/mind/revs = get_antagonists(/datum/antagonist/rev,TRUE)
+	if(headrevs.len)
+		var/list/headrev_part = list()
+		headrev_part += "<span class='header'>The head revolutionaries were:</span>"
+		headrev_part += printplayerlist(headrevs,TRUE)
+		result += headrev_part.Join("<br>")
+
+	if(revs.len)
+		var/list/rev_part = list()
+		rev_part += "<span class='header'>The revolutionaries were:</span>"
+		rev_part += printplayerlist(revs,TRUE)
+		result += rev_part.Join("<br>")
+
+	var/list/heads = SSjob.get_all_heads()
+	if(heads.len)
+		var/head_text = "<span class='header'>The heads of staff were:</span>"
+		head_text += "<ul class='playerlist'>"
+		for(var/datum/mind/head in heads)
+			var/target = (head in targets)
+			head_text += "<li>"
+			if(target)
+				head_text += "<span class='redtext'>Target</span>"
+			head_text += "[printplayer(head, 1)]</li>"
+		head_text += "</ul><br>"
+		result += head_text
+
+	result += "</div>"
+
+	return result.Join()

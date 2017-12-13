@@ -104,7 +104,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	sendClientData()
 
 	//do not convert to to_chat()
-	SEND_TEXT(owner, "<span class=\"userdanger\">If you can see this, update byond.</span>")
+	SEND_TEXT(owner, "<span class=\"userdanger\">Failed to load fancy chat, reverting to old chat. Certain features won't work.</span>")
 
 	pingLoop()
 

@@ -1,4 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - bugfix: "Emergency lights no longer stay on forever in some cases."

@@ -14,16 +14,6 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	var/static/superheated_walls = 0
 
-/mob/camera/eminence/Initialize()
-	if(SSticker.mode.eminence)
-		return INITIALIZE_HINT_QDEL
-	. = ..()
-
-/mob/camera/eminence/Destroy(force)
-	if(!force && mind && SSticker.mode.eminence == mind)
-		return QDEL_HINT_LETMELIVE
-	return ..()
-
 /mob/camera/eminence/CanPass(atom/movable/mover, turf/target)
 	return TRUE
 
@@ -39,12 +29,20 @@
 
 /mob/camera/eminence/Login()
 	..()
-	add_servant_of_ratvar(src, TRUE)
+	var/datum/antagonist/clockcult/C = mind.has_antag_datum(/datum/antagonist/clockcult,TRUE)
+	if(!C)
+		add_servant_of_ratvar(src, TRUE)
+		C = mind.has_antag_datum(/datum/antagonist/clockcult,TRUE)
+		if(C && C.clock_team)
+			if(C.clock_team.eminence)
+				remove_servant_of_ratvar(src,TRUE)
+				qdel(src)
+			else
+				C.clock_team.eminence = src
 	to_chat(src, "<span class='bold large_brass'>You have been selected as the Eminence!</span>")
 	to_chat(src, "<span class='brass'>As the Eminence, you lead the servants. Anything you say will be heard by the entire cult.</span>")
 	to_chat(src, "<span class='brass'>Though you can move through walls, you're also incorporeal, and largely can't interact with the world except for a few ways.</span>")
 	to_chat(src, "<span class='brass'>Additionally, unless the herald's beacon is activated, you can't understand any speech while away from Reebe.</span>")
-	SSticker.mode.eminence = mind
 	eminence_help()
 	for(var/V in actions)
 		var/datum/action/A = V
