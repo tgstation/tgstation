@@ -215,7 +215,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	if(placed)
 		var/obj/structure/blob/B = locate() in range("3x3", NewLoc)
 		if(B)
-			loc = NewLoc
+			forceMove(NewLoc)
 		else
 			return 0
 	else

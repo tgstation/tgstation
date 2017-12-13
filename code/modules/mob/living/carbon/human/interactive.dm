@@ -256,7 +256,7 @@
 				var/doTele = input("Place the SNPC in their department?") as null|anything in list("Yes","No")
 				if(doTele)
 					if(doTele == "Yes")
-						T.loc = pick(get_area_turfs(T.job2area(T.myjob)))
+						T.forceMove(pick(get_area_turfs(T.job2area(T.myjob))))
 
 /mob/living/carbon/human/interactive/proc/doSetup()
 	Path_ID = new /obj/item/card/id(src)
@@ -506,7 +506,7 @@
 	var/list/slots = list ("left pocket" = slot_l_store,"right pocket" = slot_r_store,"left hand" = slot_hands,"right hand" = slot_hands)
 	if(hands)
 		slots = list ("left hand" = slot_hands,"right hand" = slot_hands)
-	G.loc = src
+	G.forceMove(src)
 	if(G.force && G.force > best_force)
 		best_force = G.force
 	equip_in_one_of_slots(G, slots)
@@ -931,7 +931,7 @@
 /mob/living/carbon/human/interactive/proc/npcDrop(var/obj/item/A,var/blacklist = 0)
 	if(blacklist)
 		blacklistItems += A
-	A.loc = get_turf(src) // drop item works inconsistently
+	A.forceMove(drop_location()) // drop item works inconsistently
 	enforce_hands()
 	update_icons()
 
@@ -956,7 +956,7 @@
 							retal_target = traitorTarget
 						else
 							var/obj/item/I = traitorTarget
-							I.loc = get_turf(traitorTarget) // pull it outta them
+							I.forceMove(get_turf(I)) // pull it outta them
 					else
 						take_to_slot(traitorTarget)
 				if(SNPC_MARTYR)

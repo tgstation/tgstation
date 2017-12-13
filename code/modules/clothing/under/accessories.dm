@@ -39,7 +39,7 @@
 
 /obj/item/clothing/accessory/proc/detach(obj/item/clothing/under/U, user)
 	if(pockets && pockets == U.pockets)
-		pockets.loc = src
+		pockets.forceMove(src)
 		U.pockets = null
 
 	for(var/armor_type in armor)

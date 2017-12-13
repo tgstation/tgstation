@@ -222,7 +222,7 @@
 					name = "near finished windoor assembly"
 					electronics = W
 				else
-					W.loc = loc
+					W.forceMove(drop_location())
 
 			//Screwdriver to remove airlock electronics. Step 6 undone.
 			else if(istype(W, /obj/item/screwdriver))

@@ -69,7 +69,7 @@
 		if(!l_arm && !r_arm && !l_leg && !r_leg && !chest && !head)
 			if (M.use(1))
 				var/obj/item/ed209_assembly/B = new /obj/item/ed209_assembly
-				B.loc = get_turf(src)
+				B.forceMove(drop_location())
 				to_chat(user, "<span class='notice'>You arm the robot frame.</span>")
 				var/holding_this = user.get_inactive_held_item()==src
 				qdel(src)

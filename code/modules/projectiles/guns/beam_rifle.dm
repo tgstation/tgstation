@@ -520,7 +520,7 @@
 					var/obj/O = AM
 					O.take_damage((impact_structure_damage + aoe_structure_damage) * structure_bleed_coeff * get_damage_coeff(AM), BURN, "energy", FALSE)
 				pierced[AM] = TRUE
-				loc = get_turf(AM)
+				forceMove(AM.drop_location())
 				structure_pierce++
 				return TRUE
 	return FALSE

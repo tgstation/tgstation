@@ -972,7 +972,7 @@
 	else
 		to_chat(occupier, "<span class='danger'>Primary core damaged, unable to return core processes.</span>")
 		if(forced)
-			occupier.loc = src.loc
+			occupier.forceMove(drop_location())
 			occupier.death()
 			occupier.gib()
 			for(var/obj/item/pinpointer/nuke/P in GLOB.pinpointer_list)

@@ -542,7 +542,7 @@
 			else
 				user.visible_message("[user] removes the  capacitor from the [holder].", "<span class='notice'>You remove the capacitor from the [holder].</span>")
 				var/obj/item/I = locate(/obj/item/stock_parts/capacitor) in holder
-				I.loc = get_turf(holder)
+				I.forceMove(holder.drop_location())
 				holder.icon_state = "gygax12"
 		if(9)
 			if(diff==FORWARD)
@@ -1155,7 +1155,7 @@
 			else
 				user.visible_message("[user] removes the scanner module from the [holder].", "<span class='notice'>You remove the scanner module from the [holder].</span>")
 				var/obj/item/I = locate(/obj/item/stock_parts/scanning_module) in holder
-				I.loc = get_turf(holder)
+				I.forceMove(holder.drop_location())
 				holder.icon_state = "durand10"
 		if(11)
 			if(diff==FORWARD)
@@ -1173,7 +1173,7 @@
 			else
 				user.visible_message("[user] removes the super capacitor from the [holder].", "<span class='notice'>You remove the capacitor from the [holder].</span>")
 				var/obj/item/I = locate(/obj/item/stock_parts/capacitor) in holder
-				I.loc = get_turf(holder)
+				I.forceMove(holder.drop_location())
 				holder.icon_state = "durand12"
 		if(9)
 			if(diff==FORWARD)
@@ -1480,7 +1480,7 @@
 			else
 				user.visible_message("[user] removes the phasic scanner module from the [holder].", "<span class='notice'>You remove the scanner module from the [holder].</span>")
 				var/obj/item/I = locate(/obj/item/stock_parts/scanning_module) in holder
-				I.loc = get_turf(holder)
+				I.forceMove(holder.drop_location())
 				holder.icon_state = "phazon10"
 		if(15)
 			if(diff==FORWARD)
@@ -1498,7 +1498,7 @@
 			else
 				user.visible_message("[user] removes the super capacitor from the [holder].", "<span class='notice'>You remove the capacitor from the [holder].</span>")
 				var/obj/item/I = locate(/obj/item/stock_parts/capacitor) in holder
-				I.loc = get_turf(holder)
+				I.forceMove(holder.drop_location())
 				holder.icon_state = "phazon12"
 		if(13)
 			if(diff==FORWARD)

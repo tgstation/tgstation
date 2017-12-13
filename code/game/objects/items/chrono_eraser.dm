@@ -198,7 +198,7 @@
 	if(captured)
 		if(tickstokill > initial(tickstokill))
 			for(var/atom/movable/AM in contents)
-				AM.loc = loc
+				AM.forceMove(drop_location())
 			qdel(src)
 		else if(tickstokill <= 0)
 			to_chat(captured, "<span class='boldnotice'>As the last essence of your being is erased from time, you begin to re-experience your most enjoyable memory. You feel happy...</span>")
