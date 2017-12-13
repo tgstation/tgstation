@@ -1,0 +1,930 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/closed/indestructible/fakeglass{
+	color = "#008000"
+	},
+/area/wizard_versus/ready/white)
+"ab" = (
+/turf/open/space/transit,
+/area/space)
+"ac" = (
+/turf/closed/indestructible/fakeglass{
+	color = "#008000"
+	},
+/area/wizard_versus/ready/red)
+"ad" = (
+/turf/open/floor/engine/cult,
+/area/wizard_versus/ready/white)
+"ae" = (
+/turf/closed/indestructible/riveted/uranium,
+/area/wizard_versus)
+"af" = (
+/turf/closed/indestructible/fakeglass{
+	color = "#008000"
+	},
+/area/wizard_versus)
+"ag" = (
+/obj/effect/turf_decal/box/red,
+/obj/effect/mist,
+/obj/effect/wizard_clothier/marisa,
+/turf/open/floor/plasteel,
+/area/wizard_versus)
+"ah" = (
+/obj/structure/table/wood/fancy,
+/obj/item/staff/broom,
+/turf/open/floor/carpet,
+/area/wizard_versus)
+"ai" = (
+/obj/structure/table/wood/fancy,
+/turf/open/floor/carpet,
+/area/wizard_versus)
+"aj" = (
+/obj/structure/table/wood/fancy,
+/obj/item/statuebust{
+	pixel_y = 12
+	},
+/turf/open/floor/carpet,
+/area/wizard_versus)
+"ak" = (
+/obj/structure/dresser,
+/turf/open/floor/plasteel,
+/area/wizard_versus)
+"al" = (
+/obj/machinery/door/airlock{
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
+	name = "Ready Room"
+	},
+/turf/open/floor/carpet,
+/area/wizard_versus)
+"am" = (
+/turf/open/floor/carpet,
+/area/wizard_versus)
+"an" = (
+/obj/structure/chair/wood/wings{
+	icon_state = "wooden_chair_wings";
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/wizard_versus)
+"ao" = (
+/obj/structure/mirror/magic{
+	pixel_x = 28;
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel,
+/area/wizard_versus)
+"ap" = (
+/turf/open/floor/plasteel,
+/area/wizard_versus)
+"aq" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/engine/cult,
+/area/wizard_versus)
+"ar" = (
+/turf/open/floor/engine/cult,
+/area/wizard_versus)
+"as" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/engine/cult,
+/area/wizard_versus)
+"at" = (
+/obj/structure/sign/poster/contraband/random,
+/turf/closed/indestructible/riveted/uranium,
+/area/wizard_versus)
+"au" = (
+/obj/item/banner/science/mundane,
+/turf/open/floor/engine/cult,
+/area/wizard_versus)
+"av" = (
+/obj/structure/dresser,
+/turf/open/floor/plasteel/whiteblue,
+/area/wizard_versus)
+"aw" = (
+/obj/structure/mirror/magic{
+	pixel_y = 28
+	},
+/turf/open/floor/plasteel/whiteblue,
+/area/wizard_versus)
+"ax" = (
+/turf/open/floor/plasteel/whiteblue,
+/area/wizard_versus)
+"ay" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/engine/cult,
+/area/wizard_versus)
+"az" = (
+/obj/item/banner/blue,
+/turf/open/floor/engine/cult,
+/area/wizard_versus)
+"aA" = (
+/obj/item/banner/red,
+/turf/open/floor/engine/cult,
+/area/wizard_versus)
+"aB" = (
+/turf/open/floor/plasteel/whitered,
+/area/wizard_versus)
+"aC" = (
+/obj/effect/turf_decal/box,
+/obj/effect/mist,
+/obj/effect/wizard_clothier/red,
+/turf/open/floor/plasteel/whitered,
+/area/wizard_versus)
+"aD" = (
+/obj/structure/table/wood/fancy,
+/obj/item/device/camera/spooky,
+/turf/open/floor/carpet,
+/area/wizard_versus)
+"aE" = (
+/obj/structure/chair/wood/wings{
+	icon_state = "wooden_chair_wings";
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/wizard_versus)
+"aF" = (
+/obj/structure/chair/wood/wings{
+	icon_state = "wooden_chair_wings";
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/wizard_versus)
+"aG" = (
+/obj/structure/table/wood/fancy,
+/obj/item/toy/figure/wizard,
+/turf/open/floor/carpet,
+/area/wizard_versus)
+"aI" = (
+/obj/structure/destructible/cult/talisman{
+	desc = "An altar dedicated to the Wizards' Federation"
+	},
+/obj/item/kitchen/knife/ritual,
+/turf/open/floor/engine/cult,
+/area/wizard_versus)
+"aK" = (
+/obj/structure/table/wood/fancy,
+/obj/item/storage/pill_bottle/dice{
+	icon_state = "magicdicebag"
+	},
+/turf/open/floor/carpet,
+/area/wizard_versus)
+"aL" = (
+/obj/structure/table/wood/fancy,
+/obj/item/bikehorn/golden{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/turf/open/floor/carpet,
+/area/wizard_versus)
+"aM" = (
+/obj/effect/turf_decal/box,
+/obj/effect/mist,
+/obj/effect/wizard_clothier,
+/turf/open/floor/plasteel/whiteblue,
+/area/wizard_versus)
+"aN" = (
+/obj/machinery/light,
+/turf/open/floor/engine/cult,
+/area/wizard_versus)
+"aO" = (
+/obj/structure/mirror/magic{
+	pixel_y = -28
+	},
+/turf/open/floor/plasteel/whitered,
+/area/wizard_versus)
+"aP" = (
+/obj/structure/dresser,
+/turf/open/floor/plasteel/whitered,
+/area/wizard_versus)
+"aQ" = (
+/obj/item/banner/engineering/mundane,
+/turf/open/floor/engine/cult,
+/area/wizard_versus)
+"aR" = (
+/turf/open/floor/plasteel/whiteyellow,
+/area/wizard_versus)
+"aS" = (
+/obj/structure/mirror/magic{
+	pixel_x = -28;
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/whiteyellow,
+/area/wizard_versus)
+"aT" = (
+/obj/structure/chair/wood/wings,
+/turf/open/floor/carpet,
+/area/wizard_versus)
+"aU" = (
+/obj/structure/dresser,
+/turf/open/floor/plasteel/whiteyellow,
+/area/wizard_versus)
+"aV" = (
+/obj/structure/table/wood/fancy,
+/obj/item/banhammer,
+/turf/open/floor/carpet,
+/area/wizard_versus)
+"aX" = (
+/obj/structure/table/wood/fancy,
+/obj/item/staff,
+/turf/open/floor/carpet,
+/area/wizard_versus)
+"aY" = (
+/obj/effect/turf_decal/box/red,
+/obj/effect/mist,
+/obj/effect/wizard_clothier/yellow,
+/turf/open/floor/plasteel/whiteyellow,
+/area/wizard_versus)
+"aZ" = (
+/obj/structure/chair/wood/wings,
+/turf/open/floor/engine/cult,
+/area/wizard_versus/ready/white)
+"ba" = (
+/obj/item/banner/science/mundane,
+/turf/open/floor/engine/cult,
+/area/wizard_versus/ready/white)
+"bb" = (
+/obj/machinery/vending/snack,
+/turf/open/floor/engine/cult,
+/area/wizard_versus/ready/red)
+"bc" = (
+/turf/open/floor/engine/cult,
+/area/wizard_versus/ready/red)
+"bd" = (
+/obj/structure/chair/wood/wings,
+/turf/open/floor/engine/cult,
+/area/wizard_versus/ready/red)
+"be" = (
+/obj/structure/chair/wood/wings{
+	icon_state = "wooden_chair_wings";
+	dir = 4
+	},
+/turf/open/floor/engine/cult,
+/area/wizard_versus/ready/white)
+"bf" = (
+/obj/structure/table/wood/poker,
+/obj/item/toy/cards/deck,
+/turf/open/floor/carpet,
+/area/wizard_versus/ready/white)
+"bg" = (
+/obj/structure/chair/wood/wings{
+	icon_state = "wooden_chair_wings";
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/wizard_versus/ready/white)
+"bh" = (
+/turf/open/floor/carpet,
+/area/wizard_versus/ready/white)
+"bi" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/engine/cult,
+/area/wizard_versus/ready/red)
+"bj" = (
+/obj/structure/chair/wood/wings{
+	icon_state = "wooden_chair_wings";
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/wizard_versus/ready/red)
+"bk" = (
+/obj/structure/table/wood/poker,
+/obj/item/toy/cards/deck,
+/turf/open/floor/carpet,
+/area/wizard_versus/ready/red)
+"bl" = (
+/obj/structure/chair/wood/wings{
+	icon_state = "wooden_chair_wings";
+	dir = 8
+	},
+/turf/open/floor/engine/cult,
+/area/wizard_versus/ready/red)
+"bm" = (
+/obj/structure/chair/wood/wings{
+	icon_state = "wooden_chair_wings";
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/wizard_versus/ready/white)
+"bn" = (
+/turf/open/floor/carpet,
+/area/wizard_versus/ready/red)
+"bo" = (
+/obj/structure/chair/wood/wings{
+	icon_state = "wooden_chair_wings";
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/wizard_versus/ready/red)
+"bp" = (
+/obj/structure/table/survival_pod,
+/turf/open/floor/engine/cult,
+/area/wizard_versus/ready/white)
+"bq" = (
+/obj/machinery/light,
+/turf/open/floor/engine/cult,
+/area/wizard_versus/ready/white)
+"br" = (
+/obj/item/banner/red,
+/turf/open/floor/engine/cult,
+/area/wizard_versus/ready/red)
+"bs" = (
+/turf/closed/indestructible/fakeglass{
+	color = "#008000"
+	},
+/area/wizard_versus/ready/blue)
+"bt" = (
+/obj/item/banner/blue,
+/turf/open/floor/engine/cult,
+/area/wizard_versus/ready/blue)
+"bu" = (
+/turf/open/floor/carpet,
+/area/wizard_versus/ready/blue)
+"bv" = (
+/turf/open/floor/engine/cult,
+/area/wizard_versus/ready/blue)
+"bw" = (
+/obj/item/banner/engineering/mundane,
+/turf/open/floor/engine/cult,
+/area/wizard_versus/ready/yellow)
+"bx" = (
+/turf/open/floor/engine/cult,
+/area/wizard_versus/ready/yellow)
+"by" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/engine/cult,
+/area/wizard_versus/ready/yellow)
+"bz" = (
+/obj/structure/closet/cardboard,
+/turf/open/floor/engine/cult,
+/area/wizard_versus/ready/yellow)
+"bA" = (
+/turf/closed/indestructible/fakeglass{
+	color = "#008000"
+	},
+/area/wizard_versus/ready/yellow)
+"bB" = (
+/obj/structure/chair/wood/wings,
+/turf/open/floor/carpet,
+/area/wizard_versus/ready/blue)
+"bC" = (
+/turf/open/floor/carpet,
+/area/wizard_versus/ready/yellow)
+"bD" = (
+/obj/structure/chair/wood/wings,
+/turf/open/floor/carpet,
+/area/wizard_versus/ready/yellow)
+"bE" = (
+/obj/structure/chair/wood/wings{
+	icon_state = "wooden_chair_wings";
+	dir = 4
+	},
+/turf/open/floor/engine/cult,
+/area/wizard_versus/ready/blue)
+"bF" = (
+/obj/structure/table/wood/poker,
+/obj/item/toy/cards/deck,
+/turf/open/floor/carpet,
+/area/wizard_versus/ready/blue)
+"bG" = (
+/obj/structure/chair/wood/wings{
+	icon_state = "wooden_chair_wings";
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/wizard_versus/ready/blue)
+"bH" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/engine/cult,
+/area/wizard_versus/ready/blue)
+"bI" = (
+/obj/structure/chair/wood/wings{
+	icon_state = "wooden_chair_wings";
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/wizard_versus/ready/yellow)
+"bJ" = (
+/obj/structure/table/wood/poker,
+/obj/item/toy/cards/deck,
+/turf/open/floor/carpet,
+/area/wizard_versus/ready/yellow)
+"bK" = (
+/obj/structure/chair/wood/wings{
+	icon_state = "wooden_chair_wings";
+	dir = 8
+	},
+/turf/open/floor/engine/cult,
+/area/wizard_versus/ready/yellow)
+"bL" = (
+/obj/structure/chair/wood/wings{
+	icon_state = "wooden_chair_wings";
+	dir = 1
+	},
+/turf/open/floor/engine/cult,
+/area/wizard_versus/ready/blue)
+"bM" = (
+/obj/machinery/vending/magivend,
+/turf/open/floor/engine/cult,
+/area/wizard_versus/ready/blue)
+"bN" = (
+/obj/structure/chair/wood/wings{
+	icon_state = "wooden_chair_wings";
+	dir = 1
+	},
+/turf/open/floor/engine/cult,
+/area/wizard_versus/ready/yellow)
+
+(1,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(2,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(3,1,1) = {"
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+ae
+af
+af
+af
+af
+af
+ae
+bs
+bs
+bs
+bs
+bs
+ab
+ab
+"}
+(4,1,1) = {"
+ab
+ab
+aa
+ad
+be
+ad
+bp
+ae
+av
+aD
+ai
+aK
+aM
+ae
+bt
+bv
+bE
+bv
+bs
+ab
+ab
+"}
+(5,1,1) = {"
+ab
+ab
+aa
+aZ
+bf
+bm
+bq
+ae
+aw
+aE
+aE
+aE
+am
+al
+bu
+bB
+bF
+bL
+bs
+ab
+ab
+"}
+(6,1,1) = {"
+ab
+ab
+aa
+ad
+bg
+bh
+ad
+ae
+ax
+ax
+ax
+ax
+ax
+ae
+bv
+bu
+bG
+bv
+bs
+ab
+ab
+"}
+(7,1,1) = {"
+ab
+ab
+aa
+ba
+bh
+ad
+ba
+ae
+ay
+ar
+ar
+ar
+aN
+ae
+bt
+bv
+bH
+bM
+bs
+ab
+ab
+"}
+(8,1,1) = {"
+ab
+ab
+ae
+ae
+al
+ae
+ae
+at
+az
+am
+am
+am
+az
+at
+ae
+ae
+ae
+ae
+ae
+ab
+ab
+"}
+(9,1,1) = {"
+ab
+ab
+af
+ag
+am
+ap
+aq
+au
+ar
+am
+ar
+am
+ar
+aQ
+aq
+aR
+aS
+aU
+af
+ab
+ab
+"}
+(10,1,1) = {"
+ab
+ab
+af
+ah
+an
+ap
+ar
+am
+am
+am
+ar
+am
+am
+am
+ar
+aR
+aT
+aV
+af
+ab
+ab
+"}
+(11,1,1) = {"
+ab
+ab
+af
+ai
+an
+ap
+ar
+am
+ar
+ar
+aI
+ar
+ar
+am
+ar
+aR
+aT
+ai
+af
+ab
+ab
+"}
+(12,1,1) = {"
+ab
+ab
+af
+aj
+an
+ap
+ar
+am
+am
+am
+ar
+am
+am
+am
+ar
+aR
+aT
+aX
+af
+ab
+ab
+"}
+(13,1,1) = {"
+ab
+ab
+af
+ak
+ao
+ap
+as
+au
+ar
+am
+ar
+am
+ar
+aQ
+as
+aR
+am
+aY
+af
+ab
+ab
+"}
+(14,1,1) = {"
+ab
+ab
+ae
+ae
+ae
+ae
+ae
+at
+aA
+am
+am
+am
+aA
+at
+ae
+ae
+al
+ae
+ae
+ab
+ab
+"}
+(15,1,1) = {"
+ab
+ab
+ac
+bb
+bi
+bc
+br
+ae
+ay
+ar
+ar
+ar
+aN
+ae
+bw
+bx
+bC
+bw
+bA
+ab
+ab
+"}
+(16,1,1) = {"
+ab
+ab
+ac
+bc
+bj
+bn
+bc
+ae
+aB
+aB
+aB
+aB
+aB
+ae
+bx
+bC
+bI
+bx
+bA
+ab
+ab
+"}
+(17,1,1) = {"
+ab
+ab
+ac
+bd
+bk
+bo
+bn
+al
+am
+aF
+aF
+aF
+aO
+ae
+by
+bD
+bJ
+bN
+bA
+ab
+ab
+"}
+(18,1,1) = {"
+ab
+ab
+ac
+bc
+bl
+bc
+br
+ae
+aC
+aG
+ai
+aL
+aP
+ae
+bz
+bx
+bK
+bx
+bA
+ab
+ab
+"}
+(19,1,1) = {"
+ab
+ab
+ac
+ac
+ac
+ac
+ac
+ae
+af
+af
+af
+af
+af
+ae
+bA
+bA
+bA
+bA
+bA
+ab
+ab
+"}
+(20,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(21,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}

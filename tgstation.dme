@@ -2289,6 +2289,7 @@
 #include "code\modules\superbox\howl.dm"
 #include "code\modules\superbox\medals.dm"
 #include "code\modules\superbox\voice.dm"
+#include "code\modules\superbox\wizard_versus.dm"
 #include "code\modules\surgery\amputation.dm"
 #include "code\modules\surgery\brain_surgery.dm"
 #include "code\modules\surgery\cavity_implant.dm"
