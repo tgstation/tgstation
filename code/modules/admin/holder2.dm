@@ -43,7 +43,7 @@ GLOBAL_PROTECT(href_token)
 	if(R.rights & R_DEBUG) //grant profile access
 		world.SetConfig("APP/admin", ckey, "role=admin")
 	//only admins with +ADMIN start admined
-	if (force_active || (R.rights & R_ADMIN))
+	if (force_active || (R.rights & R_AUTOLOGIN))
 		activate()
 	else
 		deactivate()

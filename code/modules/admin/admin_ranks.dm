@@ -3,7 +3,7 @@ GLOBAL_PROTECT(admin_ranks)
 
 /datum/admin_rank
 	var/name = "NoRank"
-	var/rights = 0
+	var/rights = R_DEFAULT
 	var/list/adds
 	var/list/subs
 
@@ -56,11 +56,13 @@ GLOBAL_PROTECT(admin_ranks)
 		if("varedit")
 			flag = R_VAREDIT
 		if("everything","host","all")
-			flag = 65535
+			flag = ALL
 		if("sound","sounds")
 			flag = R_SOUNDS
 		if("spawn","create")
 			flag = R_SPAWN
+		if("autologin", "autoadmin")
+			flag = R_AUTOLOGIN
 		if("@","prev")
 			flag = previous_rights
 		if("rejuv","rejuvinate")
@@ -342,6 +344,7 @@ GLOBAL_PROTECT(admin_ranks)
 			if(D)	//they were previously an admin
 				D.disassociate()	//existing admin needs to be disassociated
 				D.rank = R			//set the admin_rank as our rank
+				D.associate()
 			else
 				D = new(R, adm_ckey, TRUE)	//new admin
 
