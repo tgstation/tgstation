@@ -278,3 +278,31 @@
 		return 1
 	else
 		H.alpha = round((255 * 0.80))
+
+/datum/antagonist/vampire/roundend_report()
+	var/list/result = list()
+
+	var/vampwin = TRUE
+
+	result += printplayer(owner)
+
+	var/objectives_text = ""
+	if(objectives_given.len)//If the vampire had no objectives, don't need to process this.
+		var/count = 1
+		for(var/datum/objective/objective in objectives_given)
+			if(objective.check_completion())
+				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'>Success!</span>"
+			else
+				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+				vampwin = FALSE
+			count++
+
+	result += objectives_text
+
+	if(vampwin)
+		result += "<span class='greentext'>The vampire was successful!</span>"
+	else
+		result += "<span class='redtext'>The vampire has failed!</span>"
+		SEND_SOUND(owner.current, 'sound/ambience/ambifailure.ogg')
+
+	return result.Join("<br>")

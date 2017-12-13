@@ -384,7 +384,6 @@ Hippie: Commented because we added our own reagent processing system.
 	name = "Teslium Destabilization"
 	id = "teslium_lightning"
 	required_reagents = list("teslium" = 1, "water" = 1)
-	results = list("destabilized_teslium" = 1)
 	strengthdiv = 100
 	modifier = -100
 	mix_message = "<span class='boldannounce'>The teslium starts to spark as electricity arcs away from it!</span>"

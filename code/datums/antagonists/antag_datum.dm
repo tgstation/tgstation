@@ -2,6 +2,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist
 	var/name = "Antagonist"
+	var/roundend_category = "other antagonists"				//Section of roundend report, datums with same category will be displayed together, also default header for the section
+	var/show_in_roundend = TRUE								//Set to false to hide the antagonists from roundend report
 	var/datum/mind/owner						//Mind that owns this datum
 	var/silent = FALSE							//Silent will prevent the gain/lose texts to show
 	var/can_coexist_with_others = TRUE			//Whether or not the person will be able to have more than one datum
@@ -9,6 +11,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/delete_on_mind_deletion = TRUE
 	var/job_rank
 	var/replace_banned = TRUE //Should replace jobbaned player with ghosts if granted.
+	var/list/objectives = list()
 
 /datum/antagonist/New(datum/mind/new_owner)
 	GLOB.antagonists += src
@@ -96,9 +99,62 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/get_team()
 	return
 
+//Individual roundend report
+/datum/antagonist/proc/roundend_report()
+	var/list/report = list()
+
+	if(!owner)
+		CRASH("antagonist datum without owner")
+
+	report += printplayer(owner)
+
+	var/objectives_complete = TRUE
+	if(owner.objectives.len)
+		report += printobjectives(owner)
+		for(var/datum/objective/objective in owner.objectives)
+			if(!objective.check_completion())
+				objectives_complete = FALSE
+				break
+
+	if(owner.objectives.len == 0 || objectives_complete)
+		report += "<span class='greentext big'>The [name] was successful!</span>"
+	else
+		report += "<span class='redtext big'>The [name] has failed!</span>"
+
+	return report.Join("<br>")
+
+//Displayed at the start of roundend_category section, default to roundend_category header
+/datum/antagonist/proc/roundend_report_header()
+	return 	"<span class='header'>The [roundend_category] were:</span><br>"
+
+//Displayed at the end of roundend_category section
+/datum/antagonist/proc/roundend_report_footer()
+	return
+
 //Should probably be on ticker or job ss ?
 /proc/get_antagonists(antag_type,specific = FALSE)
 	. = list()
 	for(var/datum/antagonist/A in GLOB.antagonists)
 		if(!specific && istype(A,antag_type) || specific && A.type == antag_type)
 			. += A.owner
+
+
+
+//This datum will autofill the name with special_role
+//Used as placeholder for minor antagonists, please create proper datums for these
+/datum/antagonist/auto_custom
+
+/datum/antagonist/auto_custom/on_gain()
+	..()
+	name = owner.special_role
+	//Add all objectives not already owned by other datums to this one.
+	var/list/already_registered_objectives = list()
+	for(var/datum/antagonist/A in owner.antag_datums)
+		if(A == src)
+			continue
+		else
+			already_registered_objectives |= A.objectives
+	objectives = owner.objectives - already_registered_objectives
+		
+//This one is created by admin tools for custom objectives
+/datum/antagonist/custom

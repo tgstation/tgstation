@@ -302,7 +302,7 @@
 	..()
 	if(check_defib_exists(mainunit, src) && req_defib)
 		defib = mainunit
-		loc = defib
+		forceMove(defib)
 		busy = FALSE
 		update_icon()
 

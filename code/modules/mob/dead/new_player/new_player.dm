@@ -73,26 +73,6 @@
 	popup.open(0)
 	return
 
-/mob/dead/new_player/Stat()
-	..()
-
-	if(statpanel("Lobby"))
-		stat("Game Mode:", (SSticker.hide_mode) ? "Secret" : "[GLOB.master_mode]")
-		stat("Map:", SSmapping.config.map_name)
-
-		if(SSticker.current_state == GAME_STATE_PREGAME)
-			var/time_remaining = SSticker.GetTimeLeft()
-			if(time_remaining > 0)
-				stat("Time To Start:", "[round(time_remaining/10)]s")
-			else if(time_remaining == -10)
-				stat("Time To Start:", "DELAYED")
-			else
-				stat("Time To Start:", "SOON")
-
-			stat("Players:", "[SSticker.totalPlayers]")
-			if(client.holder)
-				stat("Players Ready:", "[SSticker.totalPlayersReady]")
-
 
 /mob/dead/new_player/Topic(href, href_list[])
 	if(src != usr)
