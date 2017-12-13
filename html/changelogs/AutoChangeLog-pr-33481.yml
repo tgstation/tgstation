@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - bugfix: "Nonstandard power cells found in MULEbots, cyborgs, and elsewhere now have the correct description."
