@@ -101,7 +101,7 @@
 
 	var/turf/spawnpoint
 	var/check_counter = 0
-	var/started = FALSE
+	var/started = 0
 	var/winner
 
 /datum/game_mode/wizard_versus/pre_setup()
@@ -132,7 +132,7 @@
 	check_counter++
 	if (check_counter >= 5)
 		check_counter = 0
-		if (!started)
+		if (started == 0)
 			check_begin()
 		else if (started == 2)
 			check_win()
@@ -141,11 +141,15 @@
 
 /datum/game_mode/wizard_versus/proc/check_begin()
 	// check if everybody is in the ready rooms
+	var/numwizards = 0
 	for(var/datum/mind/wizard in wizards)
 		if (isliving(wizard.current) && wizard.current.stat != DEAD)
+			numwizards++
 			var/area/wizard_versus/ready/A = get_area(wizard.current)
 			if (!istype(A))
 				return
+	if (!numwizards)
+		return
 
 	// prepare to start
 	started = 1
@@ -155,16 +159,22 @@
 /datum/game_mode/wizard_versus/proc/really_begin()
 	// double-check that nobody has moved
 	var/list/used_teams = list()
+	var/numwizards = 0
 	for(var/datum/mind/wizard in wizards)
 		if (isliving(wizard.current) && wizard.current.stat != DEAD)
 			var/area/wizard_versus/ready/A = get_area(wizard.current)
 			if (istype(A))
+				numwizards++
 				wizard.wizard_versus_team = A.team
 				used_teams |= A.team
 			else
 				started = 0
 				to_chat(world, "<B>Someone wasn't really ready! Maybe next time.</B>")
 				return
+	if (!numwizards)
+		to_chat(world, "<B>Nobody was really ready! Maybe next time.</B>")
+		started = 0
+		return
 
 	// pick each team an area of the station to drop to
 	var/list/areas = GLOB.teleportlocs.Copy()
@@ -195,6 +205,9 @@
 	started = 2
 
 /datum/game_mode/wizard_versus/check_win()
+	if (winner || started != 2)
+		return
+
 	var/list/teams_alive = list()
 	for(var/datum/mind/wizard in wizards)
 		if (isliving(wizard.current) && wizard.current.stat != DEAD && wizard.wizard_versus_team)
