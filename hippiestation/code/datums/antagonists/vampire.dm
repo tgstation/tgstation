@@ -258,6 +258,27 @@
 				var/datum/vampire_passive/power = p
 				to_chat(owner, "<span class='notice'>[power.gain_desc]</span>")
 
+/datum/antagonist/vampire/proc/handle_vampire_cloak()
+	if(!ishuman(owner.current))
+		owner.current.alpha = 255
+		return
+	var/mob/living/carbon/human/H = owner.current
+	var/turf/T = get_turf(H)
+	var/light_available = T.get_lumcount()
+
+	if(!istype(T))
+		return 0
+
+	if(!iscloaking)
+		H.alpha = 255
+		return 0
+
+	if(light_available <= 0.25)
+		H.alpha = round((255 * 0.15))
+		return 1
+	else
+		H.alpha = round((255 * 0.80))
+
 /datum/antagonist/vampire/roundend_report()
 	var/list/result = list()
 
