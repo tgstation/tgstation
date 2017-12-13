@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - bugfix: "glass shards and bananium floors no longer make a sound when \"walked\" over by a camera or a ghost"
