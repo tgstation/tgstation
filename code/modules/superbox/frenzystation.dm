@@ -1,5 +1,7 @@
 // Code for the very-low-pop FrenzyStation map
 
+/area/space/nearstation/frenzy
+
 /obj/effect/mapping_helpers
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "syndballoon"

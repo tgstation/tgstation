@@ -684,7 +684,7 @@
 	name = "lavaland"
 	},
 /turf/open/space/basic,
-/area/space/nearstation)
+/area/space/nearstation/frenzy)
 "bI" = (
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
@@ -6511,7 +6511,7 @@
 	name = "lavaland"
 	},
 /turf/open/space/basic,
-/area/space/nearstation)
+/area/space/nearstation/frenzy)
 "px" = (
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
@@ -7305,14 +7305,14 @@
 "re" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
-/area/space/nearstation)
+/area/space/nearstation/frenzy)
 "rf" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 6
 	},
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/space/nearstation)
+/area/space/nearstation/frenzy)
 "rg" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction{
@@ -7320,7 +7320,7 @@
 	dir = 8
 	},
 /turf/open/space/basic,
-/area/space/nearstation)
+/area/space/nearstation/frenzy)
 "rh" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
@@ -7488,7 +7488,7 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/space/nearstation)
+/area/space/nearstation/frenzy)
 "rA" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -7613,7 +7613,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
-/area/space/nearstation)
+/area/space/nearstation/frenzy)
 "rQ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -7772,7 +7772,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
-/area/space/nearstation)
+/area/space/nearstation/frenzy)
 "sj" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
@@ -7780,7 +7780,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
-/area/space/nearstation)
+/area/space/nearstation/frenzy)
 "sk" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4;
@@ -7921,7 +7921,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
-/area/space/nearstation)
+/area/space/nearstation/frenzy)
 "sy" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
@@ -7929,7 +7929,7 @@
 	},
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/space/nearstation)
+/area/space/nearstation/frenzy)
 "sz" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -8106,7 +8106,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
-/area/space/nearstation)
+/area/space/nearstation/frenzy)
 "sP" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -8320,7 +8320,7 @@
 "tn" = (
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/space/nearstation)
+/area/space/nearstation/frenzy)
 "to" = (
 /obj/structure/rack{
 	dir = 1
@@ -8564,7 +8564,7 @@
 "tM" = (
 /obj/structure/shuttle/engine/heater,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/space/nearstation/frenzy)
 "tN" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
@@ -8615,11 +8615,11 @@
 /area/engine/atmos)
 "tT" = (
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/space/nearstation/frenzy)
 "tU" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/space/nearstation/frenzy)
 "tV" = (
 /obj/structure/grille,
 /turf/closed/wall/mineral/plastitanium,
@@ -8670,20 +8670,20 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/space/nearstation/frenzy)
 "ub" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/space/nearstation/frenzy)
 "uc" = (
 /obj/structure/shuttle/engine/huge,
 /turf/open/space/basic,
-/area/space/nearstation)
+/area/space/nearstation/frenzy)
 "ud" = (
 /turf/open/space/basic,
-/area/space/nearstation)
+/area/space/nearstation/frenzy)
 "ue" = (
 /obj/item/device/radio/intercom{
 	anyai = 1;
@@ -9250,7 +9250,7 @@
 	name = "lavaland"
 	},
 /turf/open/space/basic,
-/area/space/nearstation)
+/area/space/nearstation/frenzy)
 "vD" = (
 /obj/docking_port/stationary/random{
 	dir = 8;
@@ -9258,7 +9258,7 @@
 	name = "lavaland"
 	},
 /turf/open/space/basic,
-/area/space/nearstation)
+/area/space/nearstation/frenzy)
 "vE" = (
 /obj/machinery/door/airlock/external{
 	cyclelinkeddir = 4;
