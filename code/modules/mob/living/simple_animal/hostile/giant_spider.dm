@@ -88,7 +88,8 @@
 		to_chat(user, "<span class='notice'>Someone else already took this spider.</span>")
 		return TRUE
 	key = user.key
-	LAZYREMOVE(GLOB.mob_spawners[menu_name], src)
+	var/spawner = GLOB.mob_spawners[menu_name] //workaround for weird syntax bug
+	LAZYREMOVE(spawner, src)
 	return TRUE
 
 //nursemaids - these create webs and eggs
