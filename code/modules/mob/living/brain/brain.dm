@@ -12,8 +12,8 @@
 	stored_dna.initialize_dna(random_blood_type())
 	if(isturf(loc)) //not spawned in an MMI or brain organ (most likely adminspawned)
 		var/obj/item/organ/brain/OB = new(loc) //we create a new brain organ for it.
-		loc = OB
 		OB.brainmob = src
+		forceMove(OB)
 
 
 /mob/living/brain/proc/create_dna()
@@ -77,10 +77,7 @@
 		return container.forceMove(destination)
 	else if (istype(loc, /obj/item/organ/brain))
 		var/obj/item/organ/brain/B = loc
-		if (B.brainmob == src)
-			B.forceMove(destination)
-		else
-			CRASH("Unregistered brainmob [src] inside a brain organ [B]")
+		B.forceMove(destination)
 	else if (istype(destination, /obj/item/organ/brain))
 		doMove(destination)
 	else if (istype(destination, /obj/item/device/mmi))
