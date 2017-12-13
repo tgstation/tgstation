@@ -1390,7 +1390,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	if(possible_items.len)
 		var/datum/uplink_item/I = pick(possible_items)
 		U.telecrystals -= I.cost
-		U.spent_telecrystals += I.cost
+		U.purchase_log.total_spent += I.cost
 		SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(I.name)]", "[cost]"))
 		SSblackbox.record_feedback("tally", "traitor_random_uplink_items_gotten", 1, initial(I.name))
 		return new I.item(loc)

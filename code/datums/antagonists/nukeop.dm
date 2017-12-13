@@ -10,6 +10,7 @@
 
 /datum/antagonist/nukeop
 	name = "Nuclear Operative"
+	roundend_category = "syndicate operatives" //just in case
 	job_rank = ROLE_OPERATIVE
 	var/datum/objective_team/nuclear/nuke_team
 	var/always_new_team = FALSE //If not assigned a team by default ops will try to join existing ones, set this to TRUE to always create new team.
@@ -201,7 +202,6 @@
 			nuke_team.memorized_code = null
 
 /datum/objective_team/nuclear
-	var/list/objectives
 	var/syndicate_name
 	var/obj/machinery/nuclearbomb/tracked_nuke
 	var/core_objective = /datum/objective/nuclear
@@ -212,12 +212,10 @@
 	syndicate_name = syndicate_name()
 
 /datum/objective_team/nuclear/proc/update_objectives()
-	objectives = list()
 	if(core_objective)
 		var/datum/objective/O = new core_objective
 		O.team = src
 		objectives += O
-	return
 
 /datum/objective_team/nuclear/proc/disk_rescued()
 	for(var/obj/item/disk/nuclear/D in GLOB.poi_list)
@@ -264,57 +262,61 @@
 	else
 		return	//Undefined result
 
-/datum/objective_team/nuclear/proc/roundend_display()
-	to_chat(world,"<span class='roundendh'>[syndicate_name] Operatives:</span>")
+/datum/objective_team/nuclear/roundend_report()
+	var/list/parts = list()
+	parts += "<span class='header'>[syndicate_name] Operatives:</span>"
 	
 	switch(get_result())
 		if(NUKE_RESULT_FLUKE)
-			to_chat(world, "<FONT size = 3><B>Humiliating Syndicate Defeat</B></FONT>")
-			to_chat(world, "<B>The crew of [station_name()] gave [syndicate_name] operatives back their bomb! The syndicate base was destroyed!</B> Next time, don't lose the nuke!")
+			parts += "<span class='redtext big'>Humiliating Syndicate Defeat</span>"
+			parts += "<B>The crew of [station_name()] gave [syndicate_name] operatives back their bomb! The syndicate base was destroyed!</B> Next time, don't lose the nuke!"
 		if(NUKE_RESULT_NUKE_WIN)
-			to_chat(world, "<FONT size = 3><B>Syndicate Major Victory!</B></FONT>")
-			to_chat(world, "<B>[syndicate_name] operatives have destroyed [station_name()]!</B>")
+			parts += "<span class='greentext big'>Syndicate Major Victory!</span>"
+			parts += "<B>[syndicate_name] operatives have destroyed [station_name()]!</B>"
 		if(NUKE_RESULT_NOSURVIVORS)
-			to_chat(world, "<FONT size = 3><B>Total Annihilation</B></FONT>")
-			to_chat(world, "<B>[syndicate_name] operatives destroyed [station_name()] but did not leave the area in time and got caught in the explosion.</B> Next time, don't lose the disk!")
+			parts += "<span class='neutraltext big'>Total Annihilation</span>"
+			parts +=  "<B>[syndicate_name] operatives destroyed [station_name()] but did not leave the area in time and got caught in the explosion.</B> Next time, don't lose the disk!"
 		if(NUKE_RESULT_WRONG_STATION)
-			to_chat(world, "<FONT size = 3><B>Crew Minor Victory</B></FONT>")
-			to_chat(world, "<B>[syndicate_name] operatives secured the authentication disk but blew up something that wasn't [station_name()].</B> Next time, don't do that!")
+			parts += "<span class='redtext big'>Crew Minor Victory</span>"
+			parts += "<B>[syndicate_name] operatives secured the authentication disk but blew up something that wasn't [station_name()].</B> Next time, don't do that!"
 		if(NUKE_RESULT_WRONG_STATION_DEAD)
-			to_chat(world, "<FONT size = 3><B>[syndicate_name] operatives have earned Darwin Award!</B></FONT>")
-			to_chat(world, "<B>[syndicate_name] operatives blew up something that wasn't [station_name()] and got caught in the explosion.</B> Next time, don't do that!")
+			parts += "<span class='redtext big'>[syndicate_name] operatives have earned Darwin Award!</span>"
+			parts += "<B>[syndicate_name] operatives blew up something that wasn't [station_name()] and got caught in the explosion.</B> Next time, don't do that!"
 		if(NUKE_RESULT_CREW_WIN_SYNDIES_DEAD)
-			to_chat(world, "<FONT size = 3><B>Crew Major Victory!</B></FONT>")
-			to_chat(world, "<B>The Research Staff has saved the disk and killed the [syndicate_name] Operatives</B>")
+			parts += "<span class='redtext big'>Crew Major Victory!</span>"
+			parts += "<B>The Research Staff has saved the disk and killed the [syndicate_name] Operatives</B>"
 		if(NUKE_RESULT_CREW_WIN)
-			to_chat(world, "<FONT size = 3><B>Crew Major Victory</B></FONT>")
-			to_chat(world, "<B>The Research Staff has saved the disk and stopped the [syndicate_name] Operatives!</B>")
+			parts += "<span class='redtext big'>Crew Major Victory</span>"
+			parts += "<B>The Research Staff has saved the disk and stopped the [syndicate_name] Operatives!</B>"
 		if(NUKE_RESULT_DISK_LOST)
-			to_chat(world, "<FONT size = 3><B>Neutral Victory!</B></FONT>")
-			to_chat(world, "<B>The Research Staff failed to secure the authentication disk but did manage to kill most of the [syndicate_name] Operatives!</B>")
+			parts += "<span class='neutraltext big'>Neutral Victory!</span>"
+			parts += "<B>The Research Staff failed to secure the authentication disk but did manage to kill most of the [syndicate_name] Operatives!</B>"
 		if(NUKE_RESULT_DISK_STOLEN)
-			to_chat(world, "<FONT size = 3><B>Syndicate Minor Victory!</B></FONT>")
-			to_chat(world, "<B>[syndicate_name] operatives survived the assault but did not achieve the destruction of [station_name()].</B> Next time, don't lose the disk!")
+			parts += "<span class='greentext big'>Syndicate Minor Victory!</span>"
+			parts += "<B>[syndicate_name] operatives survived the assault but did not achieve the destruction of [station_name()].</B> Next time, don't lose the disk!"
 		else
-			to_chat(world, "<FONT size = 3><B>Neutral Victory</B></FONT>")
-			to_chat(world, "<B>Mission aborted!</B>")
+			parts += "<span class='neutraltext big'>Neutral Victory</span>"
+			parts += "<B>Mission aborted!</B>"
 
-	var/text = "<br><FONT size=3><B>The syndicate operatives were:</B></FONT>"
+	var/text = "<br><span class='header'>The syndicate operatives were:</span>"
 	var/purchases = ""
 	var/TC_uses = 0
 	for(var/I in members)
 		var/datum/mind/syndicate = I
-		text += SSticker.mode.printplayer(syndicate) //to be moved
 		for(var/U in GLOB.uplinks)
 			var/datum/component/uplink/H = U
 			if(H.owner == syndicate.key)
-				TC_uses += H.spent_telecrystals
+				TC_uses += H.purchase_log.total_spent
 				if(H.purchase_log)
 					purchases += H.purchase_log.generate_render(show_key = FALSE)
 				else
 					stack_trace("WARNING: Nuke Op uplink with no purchase_log Owner: [H.owner]")
+	text += printplayerlist(members)
 	text += "<br>"
 	text += "(Syndicates used [TC_uses] TC) [purchases]"
 	if(TC_uses == 0 && SSticker.mode.station_was_nuked && !operatives_dead())
 		text += "<BIG>[icon2html('icons/badass.dmi', world, "badass")]</BIG>"
-	to_chat(world, text)
+	
+	parts += text
+
+	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"

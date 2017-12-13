@@ -95,13 +95,14 @@
 	return trim(message)
 
 
-/datum/mutation/human/unintelligable
-	name = "Unintelligable"
+/datum/mutation/human/unintelligible
+	name = "Unintelligible"
 	quality = NEGATIVE
+	dna_block = NON_SCANNABLE
 	text_gain_indication = "<span class='danger'>You can't seem to form any coherent thoughts!</span>"
 	text_lose_indication = "<span class='danger'>Your mind feels more clear.</span>"
 
-/datum/mutation/human/unintelligable/say_mod(message)
+/datum/mutation/human/unintelligible/say_mod(message)
 	if(message)
 		var/prefix=copytext(message,1,2)
 		if(prefix == ";")
@@ -123,7 +124,7 @@
 				suffix = copytext(cword,length(cword)-1,length(cword)  )
 			if(length(cword))
 				rearranged += cword
-		message = "[prefix][uppertext(jointext(rearranged," "))]!!"
+		message ="[prefix][jointext(rearranged," ")]"
 	return message
 
 

@@ -83,10 +83,9 @@
 
 /obj/item/device/assembly/infra/Move()
 	var/t = dir
-	..()
+	. = ..()
 	setDir(t)
 	qdel(first)
-	return
 
 /obj/item/device/assembly/infra/holder_movement()
 	if(!holder)

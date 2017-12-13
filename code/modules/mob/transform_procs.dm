@@ -79,6 +79,9 @@
 		O.setBrainLoss(getBrainLoss(), 0)
 		O.updatehealth()
 		O.radiation = radiation
+		for(var/T in get_traumas())
+			var/datum/brain_trauma/BT = T
+			O.gain_trauma(BT.type, BT.permanent)
 
 	//re-add implants to new mob
 	if (tr_flags & TR_KEEPIMPLANTS)
@@ -238,6 +241,9 @@
 		O.setBrainLoss(getBrainLoss(), 0)
 		O.updatehealth()
 		O.radiation = radiation
+		for(var/T in get_traumas())
+			var/datum/brain_trauma/BT = T
+			O.gain_trauma(BT.type, BT.permanent)
 
 	//re-add implants to new mob
 	if (tr_flags & TR_KEEPIMPLANTS)
@@ -372,10 +378,7 @@
 	var/mob/living/silicon/robot/R = new /mob/living/silicon/robot(loc)
 
 	// cyborgs produced by Robotize get an automatic power cell
-	R.cell = new(R)
-	R.cell.maxcharge = 7500
-	R.cell.charge = 7500
-
+	R.cell = new /obj/item/stock_parts/cell/high(R, 7500)
 
 	R.gender = gender
 	R.invisibility = 0

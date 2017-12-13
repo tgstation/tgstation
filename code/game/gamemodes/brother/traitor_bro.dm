@@ -1,41 +1,3 @@
-/datum/objective_team/brother_team
-	name = "brotherhood"
-	member_name = "blood brother"
-	var/list/objectives = list()
-	var/meeting_area
-
-/datum/objective_team/brother_team/is_solo()
-	return FALSE
-
-/datum/objective_team/brother_team/proc/add_objective(datum/objective/O, needs_target = FALSE)
-	O.team = src
-	if(needs_target)
-		O.find_target()
-	O.update_explanation_text()
-	objectives += O
-
-/datum/objective_team/brother_team/proc/forge_brother_objectives()
-	objectives = list()
-	var/is_hijacker = prob(10)
-	for(var/i = 1 to max(1, CONFIG_GET(number/brother_objectives_amount) + (members.len > 2) - is_hijacker))
-		forge_single_objective()
-	if(is_hijacker)
-		if(!locate(/datum/objective/hijack) in objectives)
-			add_objective(new/datum/objective/hijack)
-	else if(!locate(/datum/objective/escape) in objectives)
-		add_objective(new/datum/objective/escape)
-
-/datum/objective_team/brother_team/proc/forge_single_objective()
-	if(prob(50))
-		if(LAZYLEN(active_ais()) && prob(100/GLOB.joined_player_list.len))
-			add_objective(new/datum/objective/destroy, TRUE)
-		else if(prob(30))
-			add_objective(new/datum/objective/maroon, TRUE)
-		else
-			add_objective(new/datum/objective/assassinate, TRUE)
-	else
-		add_objective(new/datum/objective/steal, TRUE)
-
 /datum/game_mode
 	var/list/datum/mind/brothers = list()
 	var/list/datum/objective_team/brother_team/brother_teams = list()
@@ -54,6 +16,7 @@
 	var/list/datum/objective_team/brother_team/pre_brother_teams = list()
 	var/const/team_amount = 2 //hard limit on brother teams if scaling is turned off
 	var/const/min_team_size = 2
+	traitors_required = FALSE //Only teams are possible
 
 	var/meeting_areas = list("The Bar", "Dorms", "Escape Dock", "Arrivals", "Holodeck", "Primary Tool Storage", "Recreation Area", "Chapel", "Library")
 
@@ -92,43 +55,12 @@
 		team.forge_brother_objectives()
 		for(var/datum/mind/M in team.members)
 			M.add_antag_datum(ANTAG_DATUM_BROTHER, team)
+		team.update_name()
 	brother_teams += pre_brother_teams
 	return ..()
 
 /datum/game_mode/traitor/bros/generate_report()
 	return "It's Syndicate recruiting season. Be alert for potential Syndicate infiltrators, but also watch out for disgruntled employees trying to defect. Unlike Nanotrasen, the Syndicate prides itself in teamwork and will only recruit pairs that share a brotherly trust."
-
-/datum/game_mode/proc/auto_declare_completion_brother()
-	if(!LAZYLEN(brother_teams))
-		return
-	var/text = "<br><font size=4><b>The blood brothers were:</b></font>"
-	var/teamnumber = 1
-	for(var/datum/objective_team/brother_team/team in brother_teams)
-		if(!team.members.len)
-			continue
-		text += "<br><font size=3><b>Team #[teamnumber++]</b></font>"
-		for(var/datum/mind/M in team.members)
-			text += printplayer(M)
-		var/win = TRUE
-		var/objective_count = 1
-		for(var/datum/objective/objective in team.objectives)
-			if(objective.check_completion())
-				text += "<br><B>Objective #[objective_count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
-				SSblackbox.record_feedback("nested tally", "traitor_objective", 1, list("[objective.type]", "SUCCESS"))
-			else
-				text += "<br><B>Objective #[objective_count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
-				SSblackbox.record_feedback("nested tally", "traitor_objective", 1, list("[objective.type]", "FAIL"))
-				win = FALSE
-			objective_count++
-		if(win)
-			text += "<br><font color='green'><B>The blood brothers were successful!</B></font>"
-			SSblackbox.record_feedback("tally", "brother_success", 1, "SUCCESS")
-		else
-			text += "<br><font color='red'><B>The blood brothers have failed!</B></font>"
-			SSblackbox.record_feedback("tally", "brother_success", 1, "FAIL")
-
-		text += "<br>"
-	to_chat(world, text)
 
 /datum/game_mode/proc/update_brother_icons_added(datum/mind/brother_mind)
 	var/datum/atom_hud/antag/brotherhud = GLOB.huds[ANTAG_HUD_BROTHER]

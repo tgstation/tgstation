@@ -15,7 +15,7 @@
 
 	var/open = FALSE		// true if cover is open
 	var/locked = TRUE		// true if controls are locked
-	var/freq = 1445		// radio frequency
+	var/freq = FREQ_NAV_BEACON
 	var/location = ""	// location response text
 	var/list/codes		// assoc. list of transponder codes
 	var/codes_txt = ""	// codes as set on map: "tag1;tag2" or "tag1=value;tag2=value"

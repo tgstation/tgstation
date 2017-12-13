@@ -48,10 +48,6 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 
 /************************************Structure rotate procs************************************/
 
-/obj/structure/door_assembly/door_assembly_pod/shuttleRotate(rotation, params)
-	. = ..()
-	expected_dir = angle2dir(rotation+dir2angle(dir))
-
 /obj/structure/cable/shuttleRotate(rotation, params)
 	params &= ~ROTATE_DIR
 	. = ..()
@@ -103,10 +99,6 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 //prevents shuttles attempting to rotate this since it messes up sprites
 /obj/machinery/gateway/shuttleRotate(rotation, params)
 	params = NONE
-	return ..()
-
-/obj/machinery/door/airlock/survival_pod/shuttleRotate(rotation, params)
-	expected_dir = angle2dir(rotation+dir2angle(dir))
 	return ..()
 
 //prevents shuttles attempting to rotate this since it messes up sprites

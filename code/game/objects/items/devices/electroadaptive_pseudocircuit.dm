@@ -29,7 +29,7 @@
 		to_chat(R, "<span class='warning'>You need a power cell installed for that.</span>")
 		return
 	if(!R.cell.use(circuit_cost))
-		to_chat(R, "<span class='warning'>You don't have the power for that (you need [DisplayPower(circuit_cost)].)</span>")
+		to_chat(R, "<span class='warning'>You don't have the energy for that (you need [DisplayEnergy(circuit_cost)].)</span>")
 		return
 	if(recharging)
 		to_chat(R, "<span class='warning'>[src] needs some time to recharge first.</span>")

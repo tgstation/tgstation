@@ -856,21 +856,22 @@
 	return TRUE
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/unlock_suit(mob/wearer)
-	if(suittoggled)
-		usermessage("You must retract the helmet before unlocking your suit!", "boldwarning")
-		return FALSE
-	if(pack && pack.flight)
-		usermessage("You must shut off the flight-pack before unlocking your suit!", "boldwarning")
-		return FALSE
-	if(deployedpack)
-		usermessage("Your flightpack must be fully retracted first!", "boldwarning")
-		return FALSE
-	if(deployedshoes)
-		usermessage("Your flight shoes must be fully retracted first!", "boldwarning")
-		return FALSE
-	if(wearer)
-		user.visible_message("<span class='notice'>[wearer]'s flight suit detaches from their body, becoming nothing more then a bulky metal skeleton.</span>")
-	playsound(src.loc, 'sound/items/rped.ogg', 65, 1)
+	if(user)
+		if(suittoggled)
+			usermessage("You must retract the helmet before unlocking your suit!", "boldwarning")
+			return FALSE
+		if(pack && pack.flight)
+			usermessage("You must shut off the flight-pack before unlocking your suit!", "boldwarning")
+			return FALSE
+		if(deployedpack)
+			usermessage("Your flightpack must be fully retracted first!", "boldwarning")
+			return FALSE
+		if(deployedshoes)
+			usermessage("Your flight shoes must be fully retracted first!", "boldwarning")
+			return FALSE
+		if(wearer)
+			user.visible_message("<span class='notice'>[wearer]'s flight suit detaches from their body, becoming nothing more then a bulky metal skeleton.</span>")
+	playsound(src, 'sound/items/rped.ogg', 65, 1)
 	resync()
 	strip_delay = initial(strip_delay)
 	locked = FALSE
@@ -911,7 +912,7 @@
 			user.update_inv_wear_suit()
 			user.visible_message("<span class='notice'>[user]'s [pack.name] detaches from their back and retracts into their [src]!</span>")
 	pack.forceMove(src)
-	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
+	playsound(src, 'sound/mecha/mechmove03.ogg', 50, 1)
 	deployedpack = FALSE
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/extend_flightshoes(forced = FALSE)
@@ -936,7 +937,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/retract_flightshoes(forced = FALSE)
 	shoes.flags_1 &= ~NODROP_1
-	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
+	playsound(src, 'sound/mecha/mechmove03.ogg', 50, 1)
 	if(user)
 		user.transferItemToLoc(shoes, src, TRUE)
 		user.update_inv_wear_suit()
@@ -1092,15 +1093,16 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/flightsuit/dropped(mob/living/carbon/human/wearer)
 	..()
-	for(var/hudtype in datahuds)
-		var/datum/atom_hud/H = GLOB.huds[hudtype]
-		H.remove_hud_from(wearer)
-	if(zoom)
-		toggle_zoom(wearer, TRUE)
+	if(wearer)
+		for(var/hudtype in datahuds)
+			var/datum/atom_hud/H = GLOB.huds[hudtype]
+			H.remove_hud_from(wearer)
+		if(zoom)
+			toggle_zoom(wearer, TRUE)
 
 /obj/item/clothing/head/helmet/space/hardsuit/flightsuit/proc/toggle_zoom(mob/living/user, force_off = FALSE)
 	if(zoom || force_off)
-		user.client.change_view(world.view)
+		user.client.change_view(CONFIG_GET(string/default_view))
 		to_chat(user, "<span class='boldnotice'>Disabling smart zooming image enhancement...</span>")
 		zoom = FALSE
 		return FALSE

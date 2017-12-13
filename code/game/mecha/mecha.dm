@@ -231,9 +231,7 @@
 		C.forceMove(src)
 		cell = C
 		return
-	cell = new(src)
-	cell.charge = 15000
-	cell.maxcharge = 15000
+	cell = new /obj/item/stock_parts/cell/high/plus(src)
 
 /obj/mecha/proc/add_cabin()
 	cabin_air = new
@@ -970,7 +968,7 @@
 		setDir(dir_in)
 
 	if(L && L.client)
-		L.client.change_view(world.view)
+		L.client.change_view(CONFIG_GET(string/default_view))
 		zoom_mode = 0
 
 /////////////////////////

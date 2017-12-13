@@ -87,6 +87,7 @@
 		mind.assigned_role = "revenant"
 		mind.special_role = "Revenant"
 		SSticker.mode.traitors |= mind //Necessary for announcing
+		mind.add_antag_datum(/datum/antagonist/auto_custom)
 		AddSpell(new /obj/effect/proc_holder/spell/targeted/night_vision/revenant(null))
 		AddSpell(new /obj/effect/proc_holder/spell/targeted/revenant_transmit(null))
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/defile(null))
@@ -410,6 +411,11 @@
 	revenant.key = key_of_revenant
 	revenant = null
 	qdel(src)
+
+/obj/item/ectoplasm/revenant/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is inhaling [src]! It looks like [user.p_theyre()] trying to visit the shadow realm!</span>")
+	scatter()
+	return (OXYLOSS)
 
 /obj/item/ectoplasm/revenant/Destroy()
 	if(!QDELETED(revenant))

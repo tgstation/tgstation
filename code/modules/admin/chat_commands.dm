@@ -98,3 +98,12 @@ GLOBAL_LIST(round_end_notifiees)
 	var/list/refs = results.len > 3 ? results.Copy(4) : null
 	. = "[text_res.Join("\n")][refs ? "\nRefs: [refs.Join(" ")]" : ""]"
 	
+/datum/server_tools_command/reload_admins
+	name = "reload_admins"
+	help_text = "Forces the server to reload admins."
+	admin_only = TRUE
+
+/datum/server_tools_command/reload_admins/Run(sender, params)
+	load_admins()
+	log_admin("[sender] reloaded admins via chat command.")
+	return "Admins reloaded."
