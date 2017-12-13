@@ -11,9 +11,9 @@
 	var/cooldown = 0
 	var/screen = "home"
 	var/useramount = 30 // Last used amount
-	var/volume = 300
+	var/volume = 100
 	var/setting = 3
-	var/list/possible_settings = list(3,6,9)
+	var/range_factor = 1
 
 /datum/effect_system/smoke_spread/chem/smoke_machine/set_up(datum/reagents/carry, setting = 3, efficiency = 10, loc)
 	amount = setting
@@ -41,13 +41,12 @@
 	. = ..()
 
 /obj/machinery/smoke_machine/RefreshParts()
-	efficiency = 6
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		efficiency += B.rating
+		volume = 100 * B.rating
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
-		efficiency += C.rating
+		efficiency = 9 + C.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		efficiency += M.rating
+		range_factor = M.rating
 
 /obj/machinery/smoke_machine/process()
 	..()
@@ -109,9 +108,9 @@
 			reagents.clear_reagents()
 			. = TRUE
 		if("setting")
-			var/amount = text2num(params["amount"])
-			if (locate(amount) in possible_settings)
-				setting = amount
+			var/amount = text2num(params["amount"]) / 3
+			if(amount > 0 && amount <= range_factor && IsInteger(amount))
+				setting = amount * 3
 				. = TRUE
 		if("power")
 			on = !on
