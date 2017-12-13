@@ -610,6 +610,3 @@ SUBSYSTEM_DEF(ticker)
 
 	SEND_SOUND(world, sound(round_end_sound))
 	text2file(login_music, "data/last_round_lobby_music.txt")
-
-/proc/do_thing()
-	SSticker.gather_newscaster()
