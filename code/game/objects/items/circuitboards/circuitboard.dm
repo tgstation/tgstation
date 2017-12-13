@@ -35,7 +35,7 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 		return
 
 	M.component_parts = list(src) // List of components always contains a board
-	loc = null
+	moveToNullspace()
 
 	for(var/comp_path in req_components)
 		var/comp_amt = req_components[comp_path]

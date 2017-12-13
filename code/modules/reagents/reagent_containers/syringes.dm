@@ -207,6 +207,11 @@
 	desc = "Contains calomel."
 	list_reagents = list("calomel" = 15)
 
+/obj/item/reagent_containers/syringe/plasma
+	name = "syringe (plasma)"
+	desc = "Contains plasma."
+	list_reagents = list("plasma" = 15)
+
 /obj/item/reagent_containers/syringe/lethal
 	name = "lethal injection syringe"
 	desc = "A syringe used for lethal injections. It can hold up to 50 units."

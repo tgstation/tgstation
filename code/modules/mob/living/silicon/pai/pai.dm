@@ -99,7 +99,7 @@
 		var/newcardloc = P
 		P = new /obj/item/device/paicard(newcardloc)
 		P.setPersonality(src)
-	loc = P
+	forceMove(P)
 	card = P
 	sradio = new(src)
 	if(!radio)
@@ -114,12 +114,14 @@
 
 	. = ..()
 
+	var/datum/action/innate/pai/software/SW = new
 	var/datum/action/innate/pai/shell/AS = new /datum/action/innate/pai/shell
 	var/datum/action/innate/pai/chassis/AC = new /datum/action/innate/pai/chassis
 	var/datum/action/innate/pai/rest/AR = new /datum/action/innate/pai/rest
 	var/datum/action/innate/pai/light/AL = new /datum/action/innate/pai/light
 
 	var/datum/action/language_menu/ALM = new
+	SW.Grant(src)
 	AS.Grant(src)
 	AC.Grant(src)
 	AR.Grant(src)
@@ -199,6 +201,15 @@
 	if(!ispAI(owner))
 		return 0
 	P = owner
+
+/datum/action/innate/pai/software
+	name = "Software Interface"
+	button_icon_state = "pai"
+	background_icon_state = "bg_tech"
+
+/datum/action/innate/pai/software/Trigger()
+	..()
+	P.paiInterface()
 
 /datum/action/innate/pai/shell
 	name = "Toggle Holoform"

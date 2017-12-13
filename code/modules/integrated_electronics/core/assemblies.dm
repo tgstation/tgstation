@@ -125,9 +125,8 @@
 		if(!battery)
 			to_chat(usr, "<span class='warning'>There's no power cell to remove from \the [src].</span>")
 		else
-			var/turf/T = get_turf(src)
-			battery.forceMove(T)
-			playsound(T, 'sound/items/Crowbar.ogg', 50, 1)
+			battery.forceMove(drop_location())
+			playsound(src, 'sound/items/Crowbar.ogg', 50, 1)
 			to_chat(usr, "<span class='notice'>You pull \the [battery] out of \the [src]'s power supplier.</span>")
 			battery = null
 
@@ -401,6 +400,7 @@
 // Override in children for special behavior.
 /obj/item/device/electronic_assembly/proc/get_object()
 	return src
+
 
 // Returns the location to be used for dropping items.
 // Same as the regular drop_location(), but with checks being run on acting_object if necessary.
