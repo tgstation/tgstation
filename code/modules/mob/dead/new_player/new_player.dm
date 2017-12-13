@@ -21,9 +21,9 @@
 		S.Fade(TRUE)
 
 	if(length(GLOB.newplayer_start))
-		loc = pick(GLOB.newplayer_start)
+		forceMove(pick(GLOB.newplayer_start))
 	else
-		loc = locate(1,1,1)
+		forceMove(locate(1,1,1))
 
 	ComponentInitialize()
 
@@ -262,7 +262,7 @@
 	var/obj/effect/landmark/observer_start/O = locate(/obj/effect/landmark/observer_start) in GLOB.landmarks_list
 	to_chat(src, "<span class='notice'>Now teleporting.</span>")
 	if (O)
-		observer.loc = O.loc
+		observer.forceMove(O.loc)
 	else
 		to_chat(src, "<span class='notice'>Teleporting failed. Ahelp an admin please</span>")
 		stack_trace("There's no freaking observer landmark available on this map or you're making observers before the map is initialised")

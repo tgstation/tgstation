@@ -32,7 +32,7 @@
 	var/turf/T = get_turf(src)
 	. = ..()
 	if(painting && painting.loc == T) //Only move if it's near us.
-		painting.loc = get_turf(src)
+		painting.forceMove(get_turf(src))
 	else
 		painting = null
 

@@ -500,11 +500,11 @@
 	if(!do_pierce)
 		return FALSE
 	if(pierced[target])		//we already pierced them go away
-		loc = get_turf(target)
+		forceMove(get_turf(target))
 		return TRUE
 	if(isclosedturf(target))
 		if(wall_pierce++ < wall_pierce_amount)
-			loc = target
+			forceMove(target)
 			if(prob(wall_devastate))
 				if(iswallturf(target))
 					var/turf/closed/wall/W = target

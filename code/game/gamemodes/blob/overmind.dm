@@ -222,5 +222,5 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		var/area/A = get_area(NewLoc)
 		if(isspaceturf(NewLoc) || istype(A, /area/shuttle)) //if unplaced, can't go on shuttles or space tiles
 			return 0
-		loc = NewLoc
+		forceMove(NewLoc)
 		return 1

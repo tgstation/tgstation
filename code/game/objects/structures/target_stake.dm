@@ -36,7 +36,7 @@
 
 /obj/structure/target_stake/proc/removeTarget(mob/user)
 	pinned_target.layer = OBJ_LAYER
-	pinned_target.loc = user.loc
+	pinned_target.forceMove(user.loc)
 	pinned_target.nullPinnedLoc()
 	nullPinnedTarget()
 	if(ishuman(user))

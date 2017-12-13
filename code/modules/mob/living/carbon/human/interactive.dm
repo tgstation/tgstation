@@ -219,7 +219,7 @@
 				if(prob(25))
 					var/cType = pick(list(SNPC_BRUTE,SNPC_STEALTH,SNPC_MARTYR,SNPC_PSYCHO))
 					T.makeTraitor(cType)
-				T.loc = pick(get_area_turfs(T.job2area(T.myjob)))
+				T.forceMove(pick(get_area_turfs(T.job2area(T.myjob))))
 			if(choice == "Custom")
 				var/cjob = input("Choose Job") as null|anything in SSjob.occupations
 				if(cjob)
@@ -1315,7 +1315,7 @@
 					customEmote("[src] [pick("gibbers","drools","slobbers","claps wildly","spits")], grabbing various foodstuffs from [SF] and sticking them in it's mouth!")
 					for(var/obj/item/A in SF.contents)
 						if(prob(smartness/2))
-							A.loc = src
+							A.forceMove(src)
 
 
 		if(foundCustom)
@@ -1398,7 +1398,7 @@
 				if(!Adjacent(toGrab))
 					tryWalk(toGrab)
 				else
-					toGrab.loc = src
+					toGrab.forceMove(src)
 
 		if(finishedList.len > 0)
 			var/obj/structure/table/reinforced/RT
@@ -1563,7 +1563,7 @@
 										var/obj/item/W = main_hand
 										W.attack(TARGET,src)
 							else
-								G.loc = get_turf(src) // drop item works inconsistently
+								G.forceMove(drop_location()) // drop item works inconsistently
 								enforce_hands()
 								update_icons()
 				else

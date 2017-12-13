@@ -107,13 +107,13 @@
 /obj/item/gun/ballistic/attack_self(mob/living/user)
 	var/obj/item/ammo_casing/AC = chambered //Find chambered round
 	if(magazine)
-		magazine.loc = get_turf(src.loc)
+		magazine.forceMove(drop_location())
 		user.put_in_hands(magazine)
 		magazine.update_icon()
 		magazine = null
 		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src].</span>")
 	else if(chambered)
-		AC.loc = get_turf(src)
+		AC.forceMove(drop_location())
 		AC.SpinAnimation(10, 1)
 		chambered = null
 		to_chat(user, "<span class='notice'>You unload the round from \the [src]'s chamber.</span>")
@@ -218,4 +218,3 @@
 	desc = "A foreign knock-off suppressor, it feels flimsy, cheap, and brittle. Still fits all weapons."
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "suppressor"
-

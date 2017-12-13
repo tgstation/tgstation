@@ -328,7 +328,7 @@
 			O.unwield()
 		to_chat(user, "<span class='notice'>The paddles snap back into the main unit.</span>")
 		defib.on = 0
-		loc = defib
+		forceMove(defib)
 		defib.update_icon()
 	return unwield(user)
 
