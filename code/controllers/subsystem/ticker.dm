@@ -767,3 +767,27 @@ SUBSYSTEM_DEF(ticker)
 
 	SEND_SOUND(world, sound(round_end_sound))
 	text2file(login_music, "data/last_round_lobby_music.txt")
+
+/datum/controller/subsystem/ticker/proc/gather_newscaster()
+	var/json_file = file("[GLOB.log_directory]/newscaster.json")
+	var/list/file_data = list()
+	var/pos = 1
+	for(var/datum/newscaster/feed_channel/channel in GLOB.news_network.network_channels)
+		if(!GLOB.news_network.network_channels.len)
+			break
+		file_data["[pos]"] = list("channel name" = "[channel.channel_name]", "author" = "[channel.author]", "censored" = channel.censored ? 1 : 0, "author censored" = channel.authorCensor ? 1 : 0, "messages" = list())
+		if(!channel.messages.len)
+			continue
+		for(var/datum/newscaster/feed_message/message in channel.messages)
+			file_data["[pos]"]["messages"] |= list("author" = "[message.author]", "time stamp" = "[message.time_stamp]", "censored" = message.bodyCensor ? 1 : 0, "author censored" = message.authorCensor ? 1 : 0, "photo file" = "[message.photo_file]", "photo caption" = "[message.caption]", "body" = "[message.body]", "comments" = list())
+			if(!message.comments.len)
+				continue
+			for(var/datum/newscaster/feed_comment/comment in message.comments)
+				file_data["[pos]"]["messages"]["comments"] = list("author" = "[comment.author]", "time stamp" = "[comment.time_stamp]", "body" = "[comment.body]")
+		pos++
+	if(GLOB.news_network.wanted_issue.active)
+		file_data["wanted"] = list("author" = "[GLOB.news_network.wanted_issue.scannedUser]", "criminal" = "[GLOB.news_network.wanted_issue.criminal]", "description" = "[GLOB.news_network.wanted_issue.body]", "photo file" = "[GLOB.news_network.wanted_issue.photo_file]")
+	WRITE_FILE(json_file, json_encode(file_data))
+
+/proc/do_thing()
+	SSticker.gather_newscaster()
