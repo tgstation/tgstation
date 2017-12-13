@@ -1,7 +1,6 @@
 
 	//Baseline hardsuits
 /obj/item/clothing/head/helmet/space/hardsuit
-	..()
 	var/next_warn_rad = 0
 	var/warn_rad_cooldown = 120
 
@@ -15,7 +14,6 @@
 	.=..()
 
 /obj/item/clothing/suit/space/hardsuit
-	..()
 	var/next_warn_acid = 0
 	var/warn_acid_cooldown = 100
 
