@@ -287,9 +287,9 @@
 	result += printplayer(owner)
 
 	var/objectives_text = ""
-	if(objectives.len)//If the vampire had no objectives, don't need to process this.
+	if(objectives_given.len)//If the vampire had no objectives, don't need to process this.
 		var/count = 1
-		for(var/datum/objective/objective in objectives)
+		for(var/datum/objective/objective in objectives_given)
 			if(objective.check_completion())
 				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'>Success!</span>"
 			else
