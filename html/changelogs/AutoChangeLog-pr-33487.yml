@@ -1,0 +1,4 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - bugfix: "Genetics will no longer have a random block completely disappear each round"
