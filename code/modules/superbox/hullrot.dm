@@ -133,7 +133,7 @@
 		SShullrot.set_z(client, T.z)
 
 	// Local hearers
-	var/speak_range = client.keys_held["V"] ? 1 : 7
+	var/speak_range = (client.keys_held["V"] || stat == SOFT_CRIT) ? 1 : 7
 	var/audio_source = hullrot_audio_source()
 	var/hearers = get_hearers_in_view(7, audio_source)
 	if (can_speak)
@@ -230,7 +230,7 @@
 /mob/living/afterShuttleMove()
 	. = ..()
 	if (. && client)
-		INVOKE_ASYNC(src, .proc/hullrot_update)
+		hullrot_needs_update = TRUE
 
 /mob/living/carbon/human/update_stat()
 	var/previous = stat
