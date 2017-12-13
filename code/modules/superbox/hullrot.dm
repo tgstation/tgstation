@@ -138,9 +138,15 @@
 	var/hearers = get_hearers_in_view(7, audio_source)
 	if (can_speak)
 		var/list/local_with = list()
-		for(var/mob/living/L in hearers)
+		for (var/mob/living/L in hearers)
 			if (L.client && L != src && get_dist(audio_source, L) <= speak_range)
 				local_with += L.ckey
+		for (var/obj/machinery/holopad/H in hearers)
+			if (get_dist(audio_source, H) <= speak_range)
+				for (var/mob/living/L in H.masters)
+					if (L.client && L != src)
+						local_with += L.ckey
+
 		var/new_local = list2params(local_with)
 		if (hullrot_cache["local_with"] != new_local)
 			// make sure that we propagate changes to others as well
