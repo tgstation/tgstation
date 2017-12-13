@@ -251,7 +251,7 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	else
 		return ..()
 
-/obj/item/shard/Crossed(mob/AM)
-	if(istype(AM) && has_gravity(loc))
+/obj/item/shard/Crossed(mob/living/L)
+	if(istype(L) && has_gravity(loc))
 		playsound(loc, 'sound/effects/glass_step.ogg', 50, 1)
 	. = ..()

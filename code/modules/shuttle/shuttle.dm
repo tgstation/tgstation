@@ -108,7 +108,7 @@
 			// realX = _x + compX*cos - compY*sin
 			// realY = _y + compY*cos - compX*sin
 			// locate(realX, realY, _z)
-			var/turf/T = locate(_x + compX*cos - compY*sin, _y + compY*cos - compX*sin, _z)
+			var/turf/T = locate(_x + compX*cos - compY*sin, _y + compY*cos + compX*sin, _z)
 			.[T] = NONE
 
 #ifdef DOCKING_PORT_HIGHLIGHT
@@ -562,6 +562,7 @@
 
 		var/list/old_contents = oldT.contents
 		for(var/k in 1 to old_contents.len)
+			CHECK_TICK
 			var/atom/movable/moving_atom = old_contents[k]
 			if(moving_atom.loc != oldT) //fix for multi-tile objects
 				continue
@@ -575,18 +576,21 @@
 
 		old_turfs[oldT] = move_mode
 
-	/*******************************************Hiding turfs if necessary******************************************/
+	/*******************************************Hiding turfs if necessary*******************************************/
 
 	var/list/new_hidden_turfs
 	if(hidden)
 		new_hidden_turfs = list()
 		for(var/i in 1 to old_turfs.len)
+			CHECK_TICK
 			var/turf/oldT = old_turfs[i]
 			if(old_turfs[oldT] & MOVE_TURF)
 				new_hidden_turfs += new_turfs[i]
 		SSshuttle.update_hidden_docking_ports(null, new_hidden_turfs)
 
 	/*******************************************All onShuttleMove procs******************************************/
+
+	CHECK_TICK
 
 	for(var/i in 1 to old_turfs.len)
 		var/turf/oldT = old_turfs[i]

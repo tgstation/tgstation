@@ -17,7 +17,6 @@ GLOBAL_LIST_EMPTY(uplinks)
 	var/selected_cat
 	var/owner = null
 	var/datum/game_mode/gamemode
-	var/spent_telecrystals = 0
 	var/datum/uplink_purchase_log/purchase_log
 	var/list/uplink_items
 	var/hidden_crystals = 0
@@ -89,7 +88,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 		var/refundable = initial(UI.refundable)
 		if(I.type == path && refundable && I.check_uplink_validity())
 			telecrystals += cost
-			spent_telecrystals -= cost
+			purchase_log.total_spent -= cost
 			to_chat(user, "<span class='notice'>[I] refunded.</span>")
 			qdel(I)
 			return

@@ -3,7 +3,6 @@
 		SSticker.mode.remove_thrall(src)
 	if(src in SSticker.mode.shadows)
 		SSticker.mode.remove_shadowling(src)
-	remove_objectives()
 
 /datum/mind/remove_all_antag()
 	. = ..()
