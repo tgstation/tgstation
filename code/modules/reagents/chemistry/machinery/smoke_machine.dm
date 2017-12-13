@@ -13,7 +13,7 @@
 	var/useramount = 30 // Last used amount
 	var/volume = 100
 	var/setting = 3
-	var/range_factor = 1
+	var/max_range = 3
 
 /datum/effect_system/smoke_spread/chem/smoke_machine/set_up(datum/reagents/carry, setting = 3, efficiency = 10, loc)
 	amount = setting
@@ -46,7 +46,7 @@
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		efficiency = 9 + C.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		range_factor = M.rating
+		max_range = 3 * M.rating
 
 /obj/machinery/smoke_machine/process()
 	..()
@@ -108,9 +108,9 @@
 			reagents.clear_reagents()
 			. = TRUE
 		if("setting")
-			var/amount = text2num(params["amount"]) / 3
-			if(amount > 0 && amount <= range_factor && IsInteger(amount))
-				setting = amount * 3
+			var/amount = text2num(params["amount"])
+			if(amount > 0 && amount <= max_range && amount % 3 == 0)
+				setting = amount
 				. = TRUE
 		if("power")
 			on = !on
