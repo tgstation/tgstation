@@ -141,6 +141,8 @@ h1.alert, h2.alert		{color: #000000;}
 .alertalien				{color: #00c000;	font-weight: bold;}
 .changeling				{color: #800080;	font-style: italic;}
 
+.spider					{color: #4d004d;}
+
 .interface				{color: #330033;}
 
 .sans					{font-family: "Comic Sans MS", cursive, sans-serif;}
@@ -151,6 +153,11 @@ h1.alert, h2.alert		{color: #000000;}
 .small					{font-size: 1;}
 .big					{font-size: 3;}
 .reallybig				{font-size: 4;}
+.extremelybig			{font-size: 5;}
+.small_bold				{font-weight: bold; font-size: 1;}
+.big_bold				{font-weight: bold; font-size: 3;}
+.reallybig_bold			{font-weight: bold; font-size: 4;}
+.extremelybig_bold		{font-weight: bold; font-size: 5;}
 .greentext				{color: #00FF00;	font-size: 3;}
 .redtext				{color: #FF0000;	font-size: 3;}
 .clown					{color: #FF69Bf;	font-size: 3; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: bold;}
