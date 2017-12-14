@@ -169,11 +169,11 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/obj/item/device/radio/radio
 
 INITIALIZE_IMMEDIATE(/atom/movable/virtualspeaker)
-/atom/movable/virtualspeaker/Initialize(mapload, mob/M, radio)
+/atom/movable/virtualspeaker/Initialize(mapload, atom/movable/M, radio)
 	. = ..()
 	radio = radio
-	if (ismob(M))
-		source = M
+	source = M
+	if (istype(M))
 		name = M.GetVoice()
 		verb_say = M.verb_say
 		verb_ask = M.verb_ask
