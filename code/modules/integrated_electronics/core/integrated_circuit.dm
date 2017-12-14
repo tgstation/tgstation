@@ -293,13 +293,14 @@ a creative player the means to solve many problems.  Circuits are held inside an
 
 /obj/item/integrated_circuit/proc/check_then_do_work(var/ignore_power = FALSE)
 	if(world.time < next_use) 	// All intergrated circuits have an internal cooldown, to protect from spam.
-		return
+		return FALSE
 	if(power_draw_per_use && !ignore_power)
 		if(!check_power())
 			power_fail()
-			return
+			return FALSE
 	next_use = world.time + cooldown_per_use
 	do_work()
+	return TRUE
 
 /obj/item/integrated_circuit/proc/do_work()
 	return
