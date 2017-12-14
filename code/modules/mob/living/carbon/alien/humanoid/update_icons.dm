@@ -45,6 +45,7 @@
 		pixel_y = get_standard_pixel_y_offset(lying)
 	update_inv_hands()
 	update_inv_handcuffed()
+	update_inv_pockets(0)
 
 /mob/living/carbon/alien/humanoid/regenerate_icons()
 	if(!..())
@@ -92,3 +93,11 @@
 
 	overlays_standing[HANDS_LAYER] = hands
 	apply_overlay(HANDS_LAYER)
+
+/mob/living/carbon/alien/humanoid/update_inv_pockets(update_icons = 1)
+	if(l_store)
+		l_store.screen_loc = ui_alien_storage_l
+	if(r_store)
+		r_store.screen_loc = ui_alien_storage_r
+	if(update_icons)
+		update_icons()

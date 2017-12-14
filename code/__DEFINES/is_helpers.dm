@@ -71,6 +71,8 @@
 
 #define isalienadult(A) (istype(A, /mob/living/carbon/alien/humanoid))
 
+#define isaliendrone(A) (istype(A, /mob/living/carbon/alien/humanoid/drone))
+
 #define isalienhunter(A) (istype(A, /mob/living/carbon/alien/humanoid/hunter))
 
 #define isaliensentinel(A) (istype(A, /mob/living/carbon/alien/humanoid/sentinel))
