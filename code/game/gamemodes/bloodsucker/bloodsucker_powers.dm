@@ -108,7 +108,7 @@
 		action.UpdateButtonIcon()
 		// Description (Blood Cost)
 		//if (bloodcost > 0)
-		//	action.button.desc += "\n<span class='warning'>Blood Cost:</span> [bloodcost]"
+		//	action.button.name += " \n<span class='warning'>\[Cost:</span> [bloodcost]\]"
 		//if (bloodcost_constant > 0)
 		//	action.button.desc += "<span class='warning'> (+</span>[bloodcost_constant]<span class='warning'>/sec)</span> "
 
@@ -287,7 +287,7 @@
 	// Spend Blood
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	bloodsuckerdatum.set_blood_volume(-cost)
-	message_admins("DEBUG: pay_blood_cost() for [name], cost was [cost]")
+	//message_admins("DEBUG: pay_blood_cost() for [name], cost was [cost]")
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

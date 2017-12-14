@@ -18,7 +18,7 @@
 
 	// In Disguise (Veil)?
 	if (name_override != null)
-		returnString += "<span class='suicide'> (in disguise!) </span>"
+		returnString += "<span class='suicide'> ([real_name] in disguise!) </span>"
 
 	returnString += "\n"
 	return returnString

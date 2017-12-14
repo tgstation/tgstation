@@ -124,12 +124,12 @@
 	description = "A caravan route used by passing cargo freights has been ambushed by a salvage team manned by the syndicate. \
 	The caravan managed to send off a distress message before being surrounded, their video feed cutting off as the sound of gunfire and a parrot was heard."
 
-/datum/map_template/ruin/space/originalcontent
+/*/datum/map_template/ruin/space/originalcontent 	// FULPSTATION: Removed for too many mobs.
 	id = "paperwizard"
 	suffix = "originalcontent.dmm"
 	name = "A Giant Ball of Paper in Space"
 	description = "Sightings of a giant wad of paper hurling through the depths of space have been recently reported by multiple outposts near this sector. \
-	A giant wad of paper, really? Damn prank callers."
+	A giant wad of paper, really? Damn prank callers."*/
 
 /datum/map_template/ruin/space/mech_transport
 	id = "mech-transport"
@@ -250,11 +250,11 @@
 	name = "Ordinary Space Tile"
 	description = "Absolutely nothing strange going on here please move along, plenty more space to see right this way!"
 
-/datum/map_template/ruin/space/gondoland
+/*/datum/map_template/ruin/space/gondoland		// FULPSTATION: Removed for too many mobs.
 	id = "gondolaasteroid"
 	suffix = "gondolaasteroid.dmm"
 	name = "Gondoland"
-	description = "Just an ordinary rock- wait, what's that thing?"
+	description = "Just an ordinary rock- wait, what's that thing?"*/
 
 /datum/map_template/ruin/space/whiteshipruin_box
 	id = "whiteshipruin_box"

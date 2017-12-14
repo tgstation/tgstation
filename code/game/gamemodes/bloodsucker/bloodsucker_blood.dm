@@ -33,10 +33,10 @@
 		addiction_stage = 0
 		overdosed = 0
 		return
-	M.adjustBruteLoss(-0.05, 0) // All heal values USED TO be multiplied by  * REM, the "REAGENTS_EFFECT_MULTIPLIER" found in reagents.dm. But comes up undefined here.
-	M.adjustToxLoss(-0.05, 0)
-	M.adjustBrainLoss(-0.025,0)
-	M.adjustStaminaLoss(-0.25,1)
+	M.adjustBruteLoss(-0.25, 0) // All heal values USED TO be multiplied by  * REM, the "REAGENTS_EFFECT_MULTIPLIER" found in reagents.dm. But comes up undefined here.
+	M.adjustToxLoss(-0.1, 0)
+	M.adjustBrainLoss(-0.05,0)
+	M.adjustStaminaLoss(-0.5,1)
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.bleed_rate = max(H.bleed_rate - 0.1, 0)

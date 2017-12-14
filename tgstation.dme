@@ -470,6 +470,7 @@
 #include "code\game\gamemodes\bloodsucker\bloodsucker_mobs.dm"
 #include "code\game\gamemodes\bloodsucker\bloodsucker_objectives.dm"
 #include "code\game\gamemodes\bloodsucker\bloodsucker_powers.dm"
+#include "code\game\gamemodes\bloodsucker\fulp_items.dm"
 #include "code\game\gamemodes\bloodsucker\powers\bs_brawn.dm"
 #include "code\game\gamemodes\bloodsucker\powers\bs_expelblood.dm"
 #include "code\game\gamemodes\bloodsucker\powers\bs_feed.dm"

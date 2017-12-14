@@ -192,13 +192,13 @@
 	allow_duplicates = FALSE
 	cost = 10
 
-/datum/map_template/ruin/lavaland/swarmer_boss
+/*/datum/map_template/ruin/lavaland/swarmer_boss	// FULPSTATION: Removed for too many mobs.
 	name = "Crashed Shuttle"
 	id = "swarmerboss"
 	description = "A Syndicate shuttle had an unfortunate stowaway..."
 	suffix = "lavaland_surface_swarmer_crash.dmm"
 	allow_duplicates = FALSE
-	cost = 20
+	cost = 20*/
 
 /datum/map_template/ruin/lavaland/miningripley
 	name = "Ripley"

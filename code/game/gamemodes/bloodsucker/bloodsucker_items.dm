@@ -335,7 +335,7 @@
 	result = /obj/structure/closet/coffin/blackcoffin
 	tools = list(/obj/item/weldingtool,
 				 /obj/item/screwdriver)
-	reqs = list(/obj/item/stack/sheet/leather = 4,
+	reqs = list(/obj/item/stack/sheet/cloth = 4,
 				/obj/item/stack/sheet/mineral/wood = 5,
 				/obj/item/stack/sheet/metal = 2)
 				///obj/item/stack/packageWrap = 8,

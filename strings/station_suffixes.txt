@@ -17,9 +17,9 @@ Channel
 Lab
 Star
 Complex
-Habitat
 Facility
 Zone
 Point
 Area
 System
+Sector

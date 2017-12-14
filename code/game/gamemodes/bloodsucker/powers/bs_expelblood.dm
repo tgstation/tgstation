@@ -74,6 +74,7 @@
 				  "<span class='notice'>You smear ichorous blood along the inside of the [target], marking it as yours.</span>")
 		var/obj/structure/closet/coffin/targetCoffin = target
 		if (targetCoffin.ClaimCoffin(usr))
+			pay_blood_cost()
 			bloodsuckerdatum.coffin = targetCoffin
 			playsound(usr.loc,'sound/effects/splat.ogg', rand(30,40), 1)	//return 0
 			usr.playsound_local(null, 'sound/effects/singlebeat.ogg', 30, 1) // Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
@@ -96,7 +97,7 @@
 		var/obj/effect/decal/cleanable/blood/vampblood/b = new /obj/effect/decal/cleanable/blood/vampblood(target, usr.mind, bloodcost)
 		b.MatchToCreator(usr) // Set Creator, DNA, and Diseases
 		// Subtract Blood, Play Sound.
-		bloodsuckerdatum.set_blood_volume(-bloodcost)
+		pay_blood_cost()
 		playsound(b.loc,'sound/effects/splat.ogg', rand(30,40), 1)	//return 0
 		to_chat(usr, "<span class='notice'>You desecrate the [get_area(target)].</span>")
 		cancel_spell(usr)

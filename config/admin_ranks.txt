@@ -39,7 +39,7 @@ Admin Candidate	= +@
 Trial Admin		= +@ +SPAWN +VAREDIT +BAN
 Badmin			= +@ +POSSESS +POLL +BUILDMODE +SERVER +FUN
 Game Admin		= +@ +STEALTH +SOUNDS +DEBUG
-Administrator	=	+STEALTH +ADMIN +REJUV +BAN +SPAWN +VAREDIT +DEBUG +SERVER +FUN +SPAWN
+Administrator	=	+STEALTH +ADMIN +REJUV +BAN +SPAWN +VAREDIT +DEBUG +SERVER +FUN +SPAWN +SOUND
 Game Master		= +EVERYTHING
 
 Council Member  = +EVERYTHING

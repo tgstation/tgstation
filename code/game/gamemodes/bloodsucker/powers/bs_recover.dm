@@ -42,7 +42,7 @@
 		playsound(get_turf(C), 'sound/effects/woodhit.ogg', 75, 1, -1)
 		C.Knockdown(60)
 		var/send_dir = get_dir(user, C)
-		new /datum/forced_movement(C, get_ranged_target_turf(C, send_dir, 2), 0.5, FALSE)
+		new /datum/forced_movement(C, get_ranged_target_turf(C, send_dir, 2), 1, FALSE)
 		user.visible_message("<span class='danger'>[user] has knocked [C] down!</span>", \
 		 			 		 "<span class='danger'>You shake off [C]'s hold over you!</span>", null, COMBAT_MESSAGE_RANGE)
 		user.pulledby = null

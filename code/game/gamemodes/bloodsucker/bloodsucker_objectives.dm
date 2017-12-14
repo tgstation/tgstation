@@ -193,7 +193,7 @@
 	for (var/area/A in GLOB.sortedAreas)
 		var/turf/T = locate(/turf) in A
 		// Is Station
-		if ((T.z in GLOB.station_z_levels)) // && locate(A.type) in As) // NOTE : Cannot do this. If an area's type is /area/library/special then it does NOT appear in As.
+		if (T && (T.z in GLOB.station_z_levels)) // && locate(A.type) in As) // NOTE : Cannot do this. If an area's type is /area/library/special then it does NOT appear in As.
 			//message_admins("[owner] Checking [A] with turf [T] / [T.z]")
 			// Does this type appear in our list?
 			for (var/check_type in As)
@@ -222,7 +222,7 @@
 	// Never found anything? Default to Bridge
 	if (target_area == null)
 		target_area = locate(/area/bridge) in GLOB.sortedAreas
-		message_admins("[owner] DEBUG OBJECTIVE: Found nothing. Defaulted to [target_area]")
+		//message_admins("[owner] DEBUG OBJECTIVE: Found nothing. Defaulted to [target_area]")
 
 			// Pick Room Type
 	//var/a_type = pick(As)
@@ -254,7 +254,7 @@
 
 	//	safety ++
 
-	target_amount = rand(3,5)
+	target_amount = 3//rand(3,5)
 	update_explanation_text()
 
 	// UPDATE: Different Maps lack certain rooms! THIS IS HOW WE SHOULD DO IT INSTEAD OF PICKING SET NAMES...
@@ -278,11 +278,11 @@
 	var/datum/antagonist/bloodsucker/antagdatum = owner.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	for (var/obj/effect/decal/cleanable/blood/vampblood/B in antagdatum.desecrateBlood)
 		A = get_area(B)
-		message_admins("[owner] DEBUG OBJECTIVE: [src] [A] / [A.name] / [target_area].")
+		//message_admins("[owner] DEBUG OBJECTIVE: [src] [A] / [A.name] / [target_area].")
 		if (A.name == target_area.name)
 			checkamount ++
 			//return 1
-	message_admins("[owner] DEBUG OBJECTIVE: [src] Found [checkamount] of [target_amount].")
+	//message_admins("[owner] DEBUG OBJECTIVE: [src] Found [checkamount] of [target_amount].")
 	return checkamount >= target_amount
 
 

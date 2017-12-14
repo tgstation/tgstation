@@ -4,7 +4,7 @@
 
 /obj/effect/proc_holder/spell/bloodsucker/brawn
 	name = "Terrible Brawn"
-	desc = "Target a door or container to wrench it open, or target a person to throw them violently away. Can also destroy your bonds."
+	desc = "Target a door or locker to wrench it open, or target a person to throw them violently away. Can also destroy your bonds."
 	bloodcost = 15
 	charge_max = 50
 	amToggleable = TRUE
@@ -41,11 +41,13 @@
 		return 1
 	// Target Type: Door
 	else if (istype(target, /obj/machinery/door))
-		if (do_mob(usr,target,20))
+		playsound(get_turf(usr), 'sound/machines/airlock_alien_prying.ogg', 40, 1, -1)
+		if (do_mob(usr,target,25))
 			return 1
 		// Target Type: Closet
 	else if (istype(target, /obj/structure/closet))
-		if (do_mob(usr,target,20))
+		playsound(get_turf(usr), 'sound/machines/airlock_alien_prying.ogg', 40, 1, -1)
+		if (do_mob(usr,target,25))
 			return 1
 
 	return 0
@@ -121,13 +123,13 @@
 		if (M.stat <= UNCONSCIOUS)
 			M.Unconscious(40)
 		var/send_dir = get_dir(user, M)
-		new /datum/forced_movement(M, get_ranged_target_turf(M, send_dir, 6), 0.5, FALSE)
+		new /datum/forced_movement(M, get_ranged_target_turf(M, send_dir, 6), 1, FALSE)
 
 		// Attack!
 		var/mob/living/carbon/user_C = user
-		playsound(get_turf(M), 'sound/weapons/punch4.ogg', 80, 1, -1)
+		playsound(get_turf(M), 'sound/weapons/punch4.ogg', 60, 1, -1)
 		user.do_attack_animation(M, ATTACK_EFFECT_SMASH)
-		var/damage = (user_C.dna.species.punchdamagehigh * 2) + 5
+		var/damage = (user_C.dna.species.punchdamagehigh * 1.5) + 5
 		var/obj/item/bodypart/affecting = M.get_bodypart(ran_zone(M.zone_selected))
 		M.apply_damage(damage, BRUTE, affecting)
 
@@ -138,7 +140,7 @@
 			to_chat(user, "<span class='notice'>You prepare to tear open the [D].</span>")
 			user.Stun(10)
 			user.do_attack_animation(D, ATTACK_EFFECT_SMASH)
-			playsound(get_turf(D), 'sound/effects/bang.ogg', 60, 1, -1)
+			playsound(get_turf(D), 'sound/effects/bang.ogg', 30, 1, -1)
 			D.open(2) // open(2) is like a crowbar or jaws of life.
 
 				// Target Type: Closet
@@ -147,7 +149,7 @@
 		to_chat(user, "<span class='notice'>You prepare to tear open the [C].</span>")
 		user.Stun(10)
 		user.do_attack_animation(C, ATTACK_EFFECT_SMASH)
-		playsound(get_turf(C), 'sound/effects/bang.ogg', 60, 1, -1)
+		playsound(get_turf(C), 'sound/effects/bang.ogg', 30, 1, -1)
 		C.bust_open()
 
 

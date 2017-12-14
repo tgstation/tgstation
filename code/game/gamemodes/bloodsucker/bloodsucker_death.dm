@@ -196,7 +196,7 @@ datum/antagonist/bloodsucker/proc/attempt_turn_bloodsucker(mob/living/carbon/tar
 	if (can_be_revived())
 		revive(0)
 
-	blood_volume = min(blood_volume, 50)
+	blood_volume = max(blood_volume, 50)
 
 	//revive(0)
 
