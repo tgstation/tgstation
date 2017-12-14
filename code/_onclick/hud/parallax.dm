@@ -232,7 +232,8 @@
 /mob/proc/update_parallax_teleport()	//used for arrivals shuttle
 	if(client && client.eye && hud_used && length(client.parallax_layers))
 		var/area/areaobj = get_area(client.eye)
-		hud_used.set_parallax_movedir(areaobj.parallax_movedir, TRUE)
+		if(areaobj)
+			hud_used.set_parallax_movedir(areaobj.parallax_movedir, TRUE)
 
 /mob/Login()
 	..()
