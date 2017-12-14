@@ -433,7 +433,7 @@
 
 	for(var/i in 1 to old_turfs.len)
 		var/turf/oldT = old_turfs[i]
-		if(!oldT || !istype(oldT, area_type))
+		if(!oldT || !istype(oldT.loc, area_type))
 			continue
 		var/area/old_area = oldT.loc
 		underlying_area.contents += oldT
@@ -460,7 +460,7 @@
 
 	for(var/i in 1 to L0.len)
 		var/turf/T0 = L0[i]
-		if(!T0 || !istype(T0, area_type))
+		if(!T0 || !istype(T0.loc, area_type))
 			continue
 		var/turf/T1 = L1[i]
 		if(!T1)
@@ -562,6 +562,7 @@
 
 		var/list/old_contents = oldT.contents
 		for(var/k in 1 to old_contents.len)
+			CHECK_TICK
 			var/atom/movable/moving_atom = old_contents[k]
 			if(moving_atom.loc != oldT) //fix for multi-tile objects
 				continue
@@ -575,18 +576,21 @@
 
 		old_turfs[oldT] = move_mode
 
-	/*******************************************Hiding turfs if necessary******************************************/
+	/*******************************************Hiding turfs if necessary*******************************************/
 
 	var/list/new_hidden_turfs
 	if(hidden)
 		new_hidden_turfs = list()
 		for(var/i in 1 to old_turfs.len)
+			CHECK_TICK
 			var/turf/oldT = old_turfs[i]
 			if(old_turfs[oldT] & MOVE_TURF)
 				new_hidden_turfs += new_turfs[i]
 		SSshuttle.update_hidden_docking_ports(null, new_hidden_turfs)
 
 	/*******************************************All onShuttleMove procs******************************************/
+
+	CHECK_TICK
 
 	for(var/i in 1 to old_turfs.len)
 		var/turf/oldT = old_turfs[i]
@@ -741,7 +745,7 @@
 	var/list/L0 = return_ordered_turfs(x, y, z, dir)
 	for (var/thing in L0)
 		var/turf/T = thing
-		if(!T || !istype(T, area_type))
+		if(!T || !istype(T.loc, area_type))
 			continue
 		for (var/thing2 in T)
 			var/atom/movable/AM = thing2

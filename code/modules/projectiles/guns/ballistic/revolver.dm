@@ -39,7 +39,7 @@
 		var/obj/item/ammo_casing/CB
 		CB = magazine.get_round(0)
 		if(CB)
-			CB.loc = get_turf(src.loc)
+			CB.forceMove(drop_location())
 			CB.SpinAnimation(10, 1)
 			CB.update_icon()
 			num_unloaded++
@@ -229,7 +229,7 @@
 				return
 
 		user.visible_message("<span class='danger'>*click*</span>")
-		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+		playsound(src, "gun_dry_fire", 50, 1)
 
 /obj/item/gun/ballistic/revolver/russian/proc/shoot_self(mob/living/carbon/human/user, affecting = "head")
 	user.apply_damage(300, BRUTE, affecting)
@@ -289,7 +289,7 @@
 		var/obj/item/ammo_casing/CB
 		CB = magazine.get_round(0)
 		chambered = null
-		CB.loc = get_turf(src.loc)
+		CB.forceMove(drop_location())
 		CB.update_icon()
 		num_unloaded++
 	if (num_unloaded)

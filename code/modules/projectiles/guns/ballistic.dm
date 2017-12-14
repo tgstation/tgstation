@@ -107,13 +107,13 @@
 /obj/item/gun/ballistic/attack_self(mob/living/user)
 	var/obj/item/ammo_casing/AC = chambered //Find chambered round
 	if(magazine)
-		magazine.loc = get_turf(src.loc)
+		magazine.forceMove(drop_location())
 		user.put_in_hands(magazine)
 		magazine.update_icon()
 		magazine = null
 		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src].</span>")
 	else if(chambered)
-		AC.loc = get_turf(src)
+		AC.forceMove(drop_location())
 		AC.SpinAnimation(10, 1)
 		chambered = null
 		to_chat(user, "<span class='notice'>You unload the round from \the [src]'s chamber.</span>")
@@ -162,7 +162,7 @@
 			return(OXYLOSS)
 	else
 		user.visible_message("<span class='suicide'>[user] is pretending to blow [user.p_their()] brain[user.p_s()] out with [src]! It looks like [user.p_theyre()] trying to commit suicide!</b></span>")
-		playsound(loc, 'sound/weapons/empty.ogg', 50, 1, -1)
+		playsound(src, "gun_dry_fire", 50, 1)
 		return (OXYLOSS)
 #undef BRAINS_BLOWN_THROW_SPEED
 #undef BRAINS_BLOWN_THROW_RANGE
@@ -218,4 +218,3 @@
 	desc = "A foreign knock-off suppressor, it feels flimsy, cheap, and brittle. Still fits all weapons."
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "suppressor"
-

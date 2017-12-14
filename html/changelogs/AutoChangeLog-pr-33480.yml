@@ -1,0 +1,5 @@
+author: "MrStonedOne"
+delete-after: True
+changes: 
+  - server: "Added new admin flag, AUTOLOGIN, to control if admins start with admin powers. this defaults to on, and can be removed with -AUTOLOGIN"
+  - admin: "Admins with +PERMISSION may now deadmin or readmin other admins via the permission panel."
