@@ -520,20 +520,22 @@
 		return 0
 
 	var/move_result = 0
+	var/oldloc = loc
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
 		move_result = mechsteprand()
 	else if(dir != direction && !strafe)
 		move_result = mechturn(direction)
 	else
 		move_result = mechstep(direction)
-	if(move_result)
+	if(move_result || loc != oldloc)// halfway done diagonal move still returns false
 		use_power(step_energy_drain)
 		can_move = 0
-		spawn(step_in)
-			can_move = 1
+		addtimer(CALLBACK(src,.proc/reset_can_move),step_in,TIMER_UNIQUE|TIMER_OVERRIDE)
 		return 1
 	return 0
 
+/obj/mecha/proc/reset_can_move()
+	can_move = TRUE
 
 /obj/mecha/proc/mechturn(direction)
 	setDir(direction)
