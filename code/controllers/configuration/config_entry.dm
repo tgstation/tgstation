@@ -81,12 +81,12 @@
 			if(LIST_MODE_TEXT)
 				temp = key_value
 				continue_check = temp
-		if(continue_check && ValidateKeyName(key_name))
+		if(continue_check && ValidateListEntry(key_name, temp))
 			value[key_name] = temp
 			return TRUE
 	return FALSE
 
-/datum/config_entry/proc/ValidateKeyName(key_name)
+/datum/config_entry/proc/ValidateListEntry(key_name, key_value)
 	return TRUE
 
 /datum/config_entry/string

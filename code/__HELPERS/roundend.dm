@@ -87,7 +87,7 @@
 	
 	send2irc("Server", "Round just ended.")
 	
-	if(CONFIG_GET(string/cross_server_address))
+	if(length(CONFIG_GET(keyed_string_list/cross_server)))
 		send_news_report()
 
 	CHECK_TICK
