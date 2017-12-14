@@ -50,16 +50,18 @@ other types of metals and chemistry for reagents).
 	CRASH("DESIGN DATUMS SHOULD NOT EVER BE DESTROYED AS THEY ARE ONLY MEANT TO BE IN A GLOBAL LIST AND REFERENCED FOR US.")
 	return ..()
 
-/datum/design/proc/icon_html(client/user)
-	if (!icon_cache)
+/datum/asset/simple/research_designs/register()
+	for (var/path in subtypesof(/datum/design))
+		var/datum/design/D = path
+
 		// construct the icon and slap it into the resource cache
-		var/atom/item = build_path
+		var/atom/item = initial(D.build_path)
 		if (!ispath(item, /atom))
 			// biogenerator outputs to beakers by default
-			if (build_type & BIOGENERATOR)
+			if (initial(D.build_type) & BIOGENERATOR)
 				item = /obj/item/reagent_containers/glass/beaker/large
 			else
-				return  // shouldn't happen, but just in case
+				continue  // shouldn't happen, but just in case
 
 		// circuit boards become their resulting machines or computers
 		if (ispath(item, /obj/item/circuitboard))
@@ -80,11 +82,12 @@ other types of metals and chemistry for reagents).
 			if (keyboard)
 				I.Blend(icon(icon_file, keyboard, SOUTH), ICON_OVERLAY)
 
-		// based on icon2html
-		icon_cache = "[generate_asset_name(I)].png"
-		register_asset(icon_cache, I)
-	send_asset(user, icon_cache, FALSE)
-	return "<img class='icon' src=\"[url_encode(icon_cache)]\">"
+		assets["design_[initial(D.id)].png"] = I
+	return ..()
+
+/datum/design/proc/icon_html(client/user)
+	send_asset(user, "design_[id].png", FALSE)
+	return "<img class='icon' src=\"design_[id].png\">"
 
 ////////////////////////////////////////
 //Disks for transporting design datums//
