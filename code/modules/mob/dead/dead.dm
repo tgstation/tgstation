@@ -16,7 +16,6 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 	if(length(CONFIG_GET(keyed_string_list/cross_server)))
 		verbs += /mob/dead/proc/server_hop
-	set_focus(src)
 	return INITIALIZE_HINT_NORMAL
 
 /mob/dead/dust()	//ghosts can't be vaporised.

@@ -17,7 +17,6 @@
 /datum/proc/Destroy(force=FALSE, ...)
 	tag = null
 	weak_reference = null	//ensure prompt GCing of weakref.
-
 	var/list/timers = active_timers
 	active_timers = null
 	for(var/thing in timers)
@@ -25,7 +24,6 @@
 		if (timer.spent)
 			continue
 		qdel(timer)
-
 	var/list/dc = datum_components
 	if(dc)
 		var/all_components = dc[/datum/component]
@@ -37,11 +35,4 @@
 			var/datum/component/C = all_components
 			qdel(C, FALSE, TRUE)
 		dc.Cut()
-
-	var/list/focusers = src.focusers
-	if(focusers)
-		for(var/i in 1 to focusers.len)
-			var/mob/M = focusers[i]
-			M.set_focus(M)
-
 	return QDEL_HINT_QUEUE
