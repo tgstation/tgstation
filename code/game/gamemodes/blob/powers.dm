@@ -42,7 +42,7 @@
 			return 0
 	else if(placement_override == 1)
 		var/turf/T = pick(GLOB.blobstart)
-		loc = T //got overrided? you're somewhere random, motherfucker
+		forceMove(T) //got overrided? you're somewhere random, motherfucker
 	if(placed && blob_core)
 		blob_core.forceMove(loc)
 	else
@@ -74,7 +74,7 @@
 		var/node_name = input(src, "Choose a node to jump to.", "Node Jump") in nodes
 		var/obj/structure/blob/node/chosen_node = nodes[node_name]
 		if(chosen_node)
-			loc = chosen_node.loc
+			forceMove(chosen_node.loc)
 
 /mob/camera/blob/proc/createSpecial(price, blobType, nearEquals, needsNode, turf/T)
 	if(!T)

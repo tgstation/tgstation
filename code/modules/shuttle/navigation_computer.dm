@@ -119,7 +119,7 @@
 		return
 
 	if(!my_port)
-		my_port = new /obj/docking_port/stationary()
+		my_port = new(locate(eyeobj.x - x_offset, eyeobj.y - y_offset, eyeobj.z))
 		my_port.name = shuttlePortName
 		my_port.id = shuttlePortId
 		my_port.height = shuttle_port.height
@@ -128,7 +128,6 @@
 		my_port.dwidth = shuttle_port.dwidth
 		my_port.hidden = shuttle_port.hidden
 	my_port.dir = the_eye.dir
-	my_port.loc = locate(eyeobj.x - x_offset, eyeobj.y - y_offset, eyeobj.z)
 	if(current_user.client)
 		current_user.client.images -= the_eye.placed_images
 

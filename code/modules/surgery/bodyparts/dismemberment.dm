@@ -142,11 +142,11 @@
 //when a limb is dropped, the internal organs are removed from the mob and put into the limb
 /obj/item/organ/proc/transfer_to_limb(obj/item/bodypart/LB, mob/living/carbon/C)
 	Remove(C)
-	loc = LB
+	forceMove(LB)
 
 /obj/item/organ/brain/transfer_to_limb(obj/item/bodypart/head/LB, mob/living/carbon/human/C)
 	Remove(C)	//Changeling brain concerns are now handled in Remove
-	loc = LB
+	forceMove(LB)
 	LB.brain = src
 	if(brainmob)
 		LB.brainmob = brainmob
@@ -265,7 +265,7 @@
 	attach_limb(C, special)
 
 /obj/item/bodypart/proc/attach_limb(mob/living/carbon/C, special)
-	loc = null
+	moveToNullspace()
 	owner = C
 	C.bodyparts += src
 	if(held_index)

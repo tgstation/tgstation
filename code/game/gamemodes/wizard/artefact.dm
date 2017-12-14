@@ -213,7 +213,7 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	var/mob/living/carbon/human/target = null
 	var/list/mob/living/carbon/human/possible = list()
-	var/obj/item/link = null
+	var/obj/item/linked_item = null
 	var/cooldown_time = 30 //3s
 	var/cooldown = 0
 	max_integrity = 10
@@ -237,10 +237,10 @@
 		cooldown = world.time +cooldown_time
 		return
 
-	if(!link)
+	if(!linked_item)
 		if(I.loc == user && istype(I) && I.w_class <= WEIGHT_CLASS_SMALL)
 			if (user.transferItemToLoc(I,src))
-				link = I
+				linked_item = I
 				to_chat(user, "You attach [I] to the doll.")
 				update_targets()
 
@@ -255,11 +255,11 @@
 		return
 
 	if(user.zone_selected == "chest")
-		if(link)
+		if(linked_item)
 			target = null
-			link.loc = get_turf(src)
-			to_chat(user, "<span class='notice'>You remove the [link] from the doll.</span>")
-			link = null
+			linked_item.forceMove(drop_location())
+			to_chat(user, "<span class='notice'>You remove the [linked_item] from the doll.</span>")
+			linked_item = null
 			update_targets()
 			return
 
@@ -291,10 +291,10 @@
 
 /obj/item/voodoo/proc/update_targets()
 	possible = list()
-	if(!link)
+	if(!linked_item)
 		return
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
-		if(md5(H.dna.uni_identity) in link.fingerprints)
+		if(md5(H.dna.uni_identity) in linked_item.fingerprints)
 			possible |= H
 
 /obj/item/voodoo/proc/GiveHint(mob/victim,force=0)

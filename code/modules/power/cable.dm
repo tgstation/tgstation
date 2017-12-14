@@ -427,7 +427,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	var/obj/O = P_list[1]
 	// remove the cut cable from its turf and powernet, so that it doesn't get count in propagate_network worklist
 	if(remove)
-		loc = null
+		moveToNullspace()
 	powernet.remove_cable(src) //remove the cut cable from its powernet
 
 	addtimer(CALLBACK(O, .proc/auto_propogate_cut_cable, O), 0) //so we don't rebuild the network X times when singulo/explosion destroys a line of X cables
