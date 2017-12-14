@@ -826,7 +826,7 @@
 		//Byond does not allow things to be in multiple contents, or double parent-child hierarchies, so only += is needed
 		//This is also why we don't need to check against assembled as we go along
 		processing_list += A.contents
-		GET_COMPONENT_FROM(net, /datum/component/ntnet, A)
+		net = A.GetComponent(/datum/component/ntnet_interface)
 	if(net)
 		set_pin_data(IC_OUTPUT, 1, net.hardware_id)
 		activate_pin(2)
