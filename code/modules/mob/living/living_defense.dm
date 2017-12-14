@@ -210,7 +210,7 @@
 		M.visible_message("<span class='notice'>\The [M] [M.friendly] [src]!</span>")
 		return FALSE
 	else
-		if(disabilities & PACIFISM)
+		if(M.disabilities & PACIFISM)
 			to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 			return FALSE
 
@@ -229,7 +229,7 @@
 		return FALSE
 
 	if (M.a_intent == INTENT_HARM)
-		if(disabilities & PACIFISM)
+		if(M.disabilities & PACIFISM)
 			to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 			return FALSE
 
@@ -255,7 +255,7 @@
 			return FALSE
 
 		else
-			if(disabilities & PACIFISM)
+			if(M.disabilities & PACIFISM)
 				to_chat(L, "<span class='notice'>You don't want to hurt anyone!</span>")
 				return
 
@@ -276,12 +276,11 @@
 		if ("help")
 			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
 			return FALSE
-
 		if ("grab")
 			grabbedby(M)
 			return FALSE
 		if("harm")
-			if(disabilities & PACIFISM)
+			if(M.disabilities & PACIFISM)
 				to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 				return FALSE
 			M.do_attack_animation(src)
