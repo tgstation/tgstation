@@ -1519,7 +1519,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 			. += V
 
 //src may be null, but it does need to be a typed var
-#define NAMEOF(datum, X) (list(datum.X, #X)[2])
+#define NAMEOF(datum, X) (list(datum.##X, #X)[2])
 
 #define VARSET_LIST_CALLBACK(target, var_name, var_value) CALLBACK(GLOBAL_PROC, /proc/___timervarset, target, var_name, var_value)
 //dupe code because dm can't handle deep macros
@@ -1533,4 +1533,4 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	if(IsAdminAdvancedProcCall())
 		D.vv_edit_var(var_name, var_value)	//same result generally, unless badmemes
 	else
-		D.vars[X] = Y
+		D.vars[var_name] = var_value
