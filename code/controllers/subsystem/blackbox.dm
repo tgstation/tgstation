@@ -8,10 +8,10 @@ SUBSYSTEM_DEF(blackbox)
 	var/list/feedback = list()	//list of datum/feedback_variable
 	var/triggertime = 0
 	var/sealed = FALSE	//time to stop tracking stats?
-	var/list/versions = list("time_dilation_current" = 2,
-							"science_techweb_unlock" = 2,
-							"antagonists" = 3) //associative list of any feedback variables that have had their format changed since creation and their current version, remember to update this
-
+	var/list/versions = list("antagonists" = 3,
+							"admin_secrets_fun_used" = 2,
+							"time_dilation_current" = 3,
+							"science_techweb_unlock" = 2) //associative list of any feedback variables that have had their format changed since creation and their current version, remember to update this
 
 /datum/controller/subsystem/blackbox/Initialize()
 	triggertime = world.time
