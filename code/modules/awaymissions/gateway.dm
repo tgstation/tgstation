@@ -212,7 +212,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 		return
 	if(!stationgate || QDELETED(stationgate))
 		return
-	if(istype(AM, /mob/living/carbon))
+	if(isliving(AM))
 		if(check_exile_implant(AM))
 			return
 	else
