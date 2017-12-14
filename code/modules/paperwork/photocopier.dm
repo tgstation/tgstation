@@ -247,10 +247,10 @@
 
 /obj/machinery/photocopier/proc/remove_photocopy(obj/item/O, mob/user)
 	if(!issilicon(user)) //surprised this check didn't exist before, putting stuff in AI's hand is bad
-		O.loc = user.loc
+		O.forceMove(user.loc)
 		user.put_in_hands(O)
 	else
-		O.loc = src.loc
+		O.forceMove(drop_location())
 	to_chat(user, "<span class='notice'>You take [O] out of [src].</span>")
 
 /obj/machinery/photocopier/attackby(obj/item/O, mob/user, params)
@@ -338,16 +338,16 @@
 		else
 			user.visible_message("<span class='warning'>[user] puts [target] onto the photocopier!</span>", "<span class='notice'>You put [target] onto the photocopier.</span>")
 
-		target.loc = get_turf(src)
+		target.forceMove(drop_location())
 		ass = target
 
 		if(photocopy)
-			photocopy.loc = src.loc
+			photocopy.forceMove(drop_location())
 			visible_message("<span class='warning'>[photocopy] is shoved out of the way by [ass]!</span>")
 			photocopy = null
 
 		else if(copy)
-			copy.loc = src.loc
+			copy.forceMove(drop_location())
 			visible_message("<span class='warning'>[copy] is shoved out of the way by [ass]!</span>")
 			copy = null
 	updateUsrDialog()

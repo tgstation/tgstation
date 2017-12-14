@@ -58,7 +58,6 @@
 		O.suiciding = suiciding
 	if(hellbound)
 		O.hellbound = hellbound
-	O.loc = loc
 	O.a_intent = INTENT_HARM
 
 	//keep viruses?
@@ -113,7 +112,7 @@
 	var/obj/item/bodypart/chest/torso = O.get_bodypart("chest")
 	if(cavity_object)
 		torso.cavity_item = cavity_object //cavity item is given to the new chest
-		cavity_object.loc = O
+		cavity_object.forceMove(O)
 
 	for(var/missing_zone in missing_bodyparts_zones)
 		var/obj/item/bodypart/BP = O.get_bodypart(missing_zone)
@@ -220,8 +219,6 @@
 	if(hellbound)
 		O.hellbound = hellbound
 
-	O.loc = loc
-
 	//keep viruses?
 	if (tr_flags & TR_KEEPVIRUS)
 		O.viruses = viruses
@@ -276,7 +273,7 @@
 	var/obj/item/bodypart/chest/torso = get_bodypart("chest")
 	if(cavity_object)
 		torso.cavity_item = cavity_object //cavity item is given to the new chest
-		cavity_object.loc = O
+		cavity_object.forceMove(O)
 
 	for(var/missing_zone in missing_bodyparts_zones)
 		var/obj/item/bodypart/BP = O.get_bodypart(missing_zone)
@@ -401,7 +398,6 @@
 			R.mmi.brainmob.real_name = real_name //the name of the brain inside the cyborg is the robotized human's name.
 			R.mmi.brainmob.name = real_name
 
-	R.loc = loc
 	R.job = "Cyborg"
 	R.notify_ai(NEW_BORG)
 

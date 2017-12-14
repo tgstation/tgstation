@@ -789,7 +789,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 /obj/machinery/newscaster/proc/AttachPhoto(mob/user)
 	if(photo)
 		if(!photo.sillynewscastervar)
-			photo.loc = loc
+			photo.forceMove(drop_location())
 			if(!issilicon(user))
 				user.put_in_inactive_hand(photo)
 		else
@@ -865,7 +865,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 		NEWSPAPER.wantedBody = GLOB.news_network.wanted_issue.body
 		if(GLOB.news_network.wanted_issue.img)
 			NEWSPAPER.wantedPhoto = GLOB.news_network.wanted_issue.img
-	NEWSPAPER.loc = get_turf(src)
+	NEWSPAPER.forceMove(drop_location())
 	NEWSPAPER.creationTime = GLOB.news_network.lastAction
 	paper_remaining--
 
