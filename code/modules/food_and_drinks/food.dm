@@ -14,6 +14,7 @@
 	if(!mapload)
 		pixel_x = rand(-5, 5)
 		pixel_y = rand(-5, 5)
+	AddComponent(/datum/component/dippable, TRUE, 0, 0, 0.1, DIP_TYPE_FRACTIONAL_DIPPED_MAXIMUM)
 
 /obj/item/reagent_containers/food/proc/checkLiked(var/fraction, mob/M)
 	if(last_check_time + 50 < world.time)

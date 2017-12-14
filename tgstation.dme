@@ -309,6 +309,7 @@
 #include "code\datums\components\caltrop.dm"
 #include "code\datums\components\chasm.dm"
 #include "code\datums\components\decal.dm"
+#include "code\datums\components\dippable.dm"
 #include "code\datums\components\infective.dm"
 #include "code\datums\components\jousting.dm"
 #include "code\datums\components\knockoff.dm"
