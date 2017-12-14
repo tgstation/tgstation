@@ -1027,3 +1027,18 @@
 		if(client)
 			reset_perspective(destination)
 		update_canmove() //if the mob was asleep inside a container and then got forceMoved out we need to make them fall.
+
+/mob/living/proc/update_z(new_z) // 1+ to register, null to unregister
+	if (registered_z != new_z)
+		if (registered_z)
+			SSmobs.clients_by_zlevel[registered_z] -= src
+		if (client)
+			if (new_z)
+				SSmobs.clients_by_zlevel[new_z] += src
+			registered_z = new_z
+		else
+			registered_z = null
+
+/mob/living/onTransitZ(old_z,new_z)
+	..()
+	update_z(new_z)

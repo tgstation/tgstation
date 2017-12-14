@@ -254,6 +254,12 @@
 		loc = destination
 
 		if(!same_loc)
+			var/turf/oldturf = get_turf(oldloc)
+			var/turf/destturf = get_turf(destination)
+			var/old_z = (oldturf ? oldturf.z : null)
+			var/dest_z = (destturf ? destturf.z : null)
+			if (old_z != dest_z)
+				onTransitZ(old_z, dest_z)
 			destination.Entered(src, oldloc)
 			if(destarea && old_area != destarea)
 				destarea.Entered(src, oldloc)
@@ -275,6 +281,11 @@
 			if(old_area)
 				old_area.Exited(src, null)
 		loc = null
+
+/atom/movable/proc/onTransitZ(old_z,new_z)
+	for (var/item in src) // Notify contents of Z-transition. This can be overridden IF we know the items contents do not care.
+		var/atom/movable/AM = item
+		AM.onTransitZ(old_z,new_z)
 
 //Called whenever an object moves and by mobs when they attempt to move themselves through space
 //And when an object or action applies a force on src, see newtonian_move() below
