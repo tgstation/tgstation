@@ -166,7 +166,6 @@ GLOBAL_LIST_EMPTY(allCasters)
 	if(!fexists("[GLOB.log_directory]/photos/[photo_file].png"))
 		var/icon/p = icon(photo, frame = 1)
 		fcopy(p, "[GLOB.log_directory]/photos/[photo_file].png")
-	else
 	return photo_file
 
 /obj/item/wallframe/newscaster

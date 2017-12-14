@@ -54,9 +54,7 @@
 	var/datum/job/cargo_tech/J = new/datum/job/cargo_tech
 	access_card.access = J.get_access()
 	prev_access = access_card.access
-	cell = new(src)
-	cell.charge = 2000
-	cell.maxcharge = 2000
+	cell = new /obj/item/stock_parts/cell/upgraded(src, 2000)
 
 	var/static/mulebot_count = 0
 	mulebot_count += 1
@@ -93,7 +91,7 @@
 						"<span class='notice'>You insert the new cell into [src].</span>")
 	else if(istype(I, /obj/item/crowbar) && open && cell)
 		cell.add_fingerprint(usr)
-		cell.loc = loc
+		cell.forceMove(loc)
 		cell = null
 		visible_message("[user] crowbars out the power cell from [src].",
 						"<span class='notice'>You pry the powercell out of [src].</span>")
@@ -363,7 +361,7 @@
 		if(!load_mob(AM))
 			return
 	else
-		AM.loc = src
+		AM.forceMove(src)
 
 	load = AM
 	mode = BOT_IDLE
@@ -402,7 +400,7 @@
 	unbuckle_all_mobs()
 
 	if(load)
-		load.loc = loc
+		load.forceMove(loc)
 		load.pixel_y = initial(load.pixel_y)
 		load.layer = initial(load.layer)
 		load.plane = initial(load.plane)

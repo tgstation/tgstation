@@ -107,7 +107,7 @@
 
 	send2irc("Server", "Round just ended.")
 
-	if(CONFIG_GET(string/cross_server_address))
+	if(length(CONFIG_GET(keyed_string_list/cross_server)))
 		send_news_report()
 
 	CHECK_TICK
@@ -355,7 +355,7 @@
 			currrent_category = A.roundend_category
 			previous_category = A
 		result += A.roundend_report()
-		result += "<br>"
+		result += "<br><br>"
 
 	if(all_antagonists.len)
 		var/datum/antagonist/last = all_antagonists[all_antagonists.len]

@@ -306,7 +306,7 @@
 		for(var/U in GLOB.uplinks)
 			var/datum/component/uplink/H = U
 			if(H.owner == syndicate.key)
-				TC_uses += H.spent_telecrystals
+				TC_uses += H.purchase_log.total_spent
 				if(H.purchase_log)
 					purchases += H.purchase_log.generate_render(show_key = FALSE)
 				else

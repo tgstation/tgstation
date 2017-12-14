@@ -524,7 +524,7 @@
 			else
 				user.visible_message("[user] removes the advanced scanner module from the [holder].", "<span class='notice'>You remove the scanner module from the [holder].</span>")
 				var/obj/item/I = locate(/obj/item/stock_parts/scanning_module) in holder
-				I.loc = get_turf(holder)
+				I.forceMove(get_turf(holder))
 				holder.icon_state = "gygax10"
 		if(11)
 			if(diff==FORWARD)

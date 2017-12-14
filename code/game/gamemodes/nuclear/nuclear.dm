@@ -70,6 +70,7 @@
 	..()
 
 /datum/game_mode/nuclear/set_round_result()
+	..()
 	var result = nuke_team.get_result()
 	switch(result)
 		if(NUKE_RESULT_FLUKE)
@@ -102,7 +103,6 @@
 		else
 			SSticker.mode_result = "halfwin - interrupted"
 			SSticker.news_report = OPERATIVE_SKIRMISH
-	return ..()
 
 /datum/game_mode/nuclear/generate_report()
 	return "One of Central Command's trading routes was recently disrupted by a raid carried out by the Gorlex Marauders. They seemed to only be after one ship - a highly-sensitive \

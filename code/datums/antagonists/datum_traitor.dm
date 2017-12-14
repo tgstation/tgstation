@@ -302,8 +302,8 @@
 	var/uplink_true = FALSE
 	var/purchases = ""
 	for(var/datum/component/uplink/H in GLOB.uplinks)
-		if(H && H.owner && H.owner == owner.key)
-			TC_uses += H.spent_telecrystals
+		if(H.owner && H.owner == owner.key)
+			TC_uses += H.purchase_log.total_spent
 			uplink_true = TRUE
 			purchases += H.purchase_log.generate_render(FALSE)
 
