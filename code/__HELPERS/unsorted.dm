@@ -1521,7 +1521,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 //src may be null, but it does need to be a typed var
 #define NAMEOF(src, X) (list(src.X, #X)[2])
 
-#define VARSET_CALLBACK(src, var_name, var_value) CALLBACK(GLOBAL_PROC, /proc/___timervarset, src, var_name, var_value)
+#define VARSET_CALLBACK(src, var, var_value) CALLBACK(GLOBAL_PROC, /proc/___timervarset, src, NAMEOF(src, var), var_value)
 
 /proc/___timervarset(list_or_datum, var_name, var_value)
 	if(length(list_or_datum))
