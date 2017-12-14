@@ -13,21 +13,25 @@
 	var/obj/item/clothing/head/head = /obj/item/clothing/head/wizard
 	var/obj/item/clothing/suit/suit = /obj/item/clothing/suit/wizrobe
 	var/obj/item/bedsheet/sheet = /obj/item/bedsheet/blue
+	var/freq = FREQ_CTF_BLUE
 
 /obj/effect/wizard_clothier/red
 	head = /obj/item/clothing/head/wizard/red
 	suit = /obj/item/clothing/suit/wizrobe/red
 	sheet = /obj/item/bedsheet/red
+	freq = FREQ_CTF_RED
 
 /obj/effect/wizard_clothier/yellow
 	head = /obj/item/clothing/head/wizard/yellow
 	suit = /obj/item/clothing/suit/wizrobe/yellow
 	sheet = /obj/item/bedsheet/yellow
+	freq = FREQ_ENGINEERING
 
 /obj/effect/wizard_clothier/marisa
 	head = /obj/item/clothing/head/wizard/marisa
 	suit = /obj/item/clothing/suit/wizrobe/marisa
 	sheet = /obj/item/bedsheet
+	freq = FREQ_MEDICAL
 
 /obj/effect/wizard_clothier/Crossed(AM as mob|obj)
 	if(ishuman(AM))
@@ -41,6 +45,14 @@
 		if (!H.wear_neck || istype(H.wear_neck, /obj/item/bedsheet))
 			qdel(H.wear_neck)
 			H.equip_to_slot_or_del(new sheet(H), slot_neck)
+		if (!H.ears)
+			H.equip_to_slot_or_del(new /obj/item/device/radio/headset(H), slot_ears)
+		if (istype(H.ears, /obj/item/device/radio/headset))
+			var/obj/item/device/radio/headset/R = H.ears
+			R.freqlock = TRUE
+			R.frequency = freq
+			R.subspace_transmission = FALSE
+			R.independent = TRUE
 	..()
 
 /obj/effect/wizard_clothier/singularity_act()
