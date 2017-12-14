@@ -729,6 +729,28 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 120
 
+/obj/item/integrated_circuit/input/objscaner
+	name = "scaner"
+	desc = "Scans and obtains a reference for any objects you use on assembly."
+	extended_desc = "If 'put down' pin is set to true, assembly will take scanned object from your hands to it's location.\
+	useful for interaction with grabber. Scaner works only with help intent."
+	icon_state = "recorder"
+	complexity = 4
+	inputs = list("put down" = IC_PINTYPE_BOOLEAN)
+	outputs = list("scanned" = IC_PINTYPE_REF)
+	activators = list("on scanned" = IC_PINTYPE_PULSE_OUT)
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	power_draw_per_use = 20
+
+/obj/item/integrated_circuit/input/objscaner/proc/scan(var/atom/A,var/mob/user)
+	var/pu = get_pin_data(IC_INPUT, 1)
+	if(pu)
+		user.transferItemToLoc(A,drop_location())
+	set_pin_data(IC_OUTPUT, 1, WEAKREF(A))
+	push_data()
+	activate_pin(1)
+	return TRUE
+
 /obj/item/integrated_circuit/input/internalbm
 	name = "internal battery monitor"
 	desc = "This monitors the charge level of an internal battery."
