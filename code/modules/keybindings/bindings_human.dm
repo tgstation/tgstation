@@ -26,7 +26,7 @@
 					to_chat(user, "<span class='notice'>There's nothing in your belt to take out.</span>")
 					return
 				var/obj/item/stored = equipped_belt.contents[equipped_belt.contents.len]
-				if(!stored)
+				if(!stored || stored.on_found(src))
 					return
 				stored.attack_hand(src) // take out thing from belt
 				return
@@ -56,7 +56,7 @@
 					to_chat(user, "<span class='notice'>There's nothing in your backpack to take out.</span>")
 					return
 				var/obj/item/stored = equipped_backpack.contents[equipped_backpack.contents.len]
-				if(!stored)
+				if(!stored || stored.on_found(src))
 					return
 				stored.attack_hand(src) // take out thing from backpack
 				return
