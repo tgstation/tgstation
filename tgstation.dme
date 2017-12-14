@@ -31,6 +31,7 @@
 #include "code\__DEFINES\cinematics.dm"
 #include "code\__DEFINES\cleaning.dm"
 #include "code\__DEFINES\clockcult.dm"
+#include "code\__DEFINES\colors.dm"
 #include "code\__DEFINES\combat.dm"
 #include "code\__DEFINES\components.dm"
 #include "code\__DEFINES\configuration.dm"
