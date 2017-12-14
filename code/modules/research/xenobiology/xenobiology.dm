@@ -12,6 +12,7 @@
 	throw_speed = 3
 	throw_range = 6
 	container_type = INJECTABLE_1
+	grind_results = list()
 	var/Uses = 1 // uses before it goes inert
 	var/qdel_timer = null // deletion timer, for delayed reactions
 
@@ -28,6 +29,10 @@
 /obj/item/slime_extract/Initialize()
 	. = ..()
 	create_reagents(100)
+
+/obj/item/slime_extract/on_grind()
+	if(Uses)
+		grind_results["slimejelly"] = 20
 
 /obj/item/slime_extract/grey
 	name = "grey slime extract"

@@ -33,6 +33,7 @@
 	filling_color = "#008000"
 	bitesize_mod = 3
 	foodtype = FRUIT
+	juice_results = list("watermelonjuice" = 0)
 
 // Holymelon
 /obj/item/seeds/watermelon/holy

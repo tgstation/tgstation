@@ -23,6 +23,8 @@
 	filling_color = "#FF6347"
 	bitesize_mod = 2
 	foodtype = VEGETABLES
+	grind_results = list("ketchup" = 0)
+	juice_results = list("tomatojuice" = 0)
 
 // Blood Tomato
 /obj/item/seeds/tomato/blood
@@ -44,6 +46,7 @@
 	splat_type = /obj/effect/gibspawner/generic
 	filling_color = "#FF0000"
 	foodtype = VEGETABLES | GROSS
+	grind_results = list("ketchup" = 0, "blood" = 0)
 
 
 // Blue Tomato
