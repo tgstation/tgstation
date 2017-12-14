@@ -105,15 +105,6 @@
 /datum/game_mode/monkey/generate_report()
 	return "Reports of an ancient [pick("retrovirus", "flesh eating bacteria", "disease", "magical curse blamed on viruses", "banana blight")] outbreak that turn humans into monkeys has been reported in your quadrant.  Any such infections may be treated with banana juice.  If an outbreak occurs, ensure the station is quarantined to prevent a largescale outbreak at CentCom."
 
-
-/datum/game_mode/proc/auto_declare_completion_monkey()
-	var/list/monkey_teams = list()
-	for(var/datum/antagonist/monkey/N in get_antagonists(/datum/antagonist/monkey, TRUE)) //collect all monkey teams
-		monkey_teams |= N.monkey_team
-	for(var/datum/objective_team/nuclear/monkey_team in monkey_teams)
-		monkey_team.roundend_display()
-	return TRUE
-
 /proc/add_monkey_leader(datum/mind/monkey_mind)
 	if(is_monkey_leader(monkey_mind))
 		return FALSE

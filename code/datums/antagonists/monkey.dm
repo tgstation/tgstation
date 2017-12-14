@@ -6,6 +6,7 @@
 /datum/antagonist/monkey
 	name = "Monkey"
 	job_rank = ROLE_MONKEY
+	roundend_category = "monkeys"
 	var/datum/objective_team/monkey/monkey_team
 
 /datum/antagonist/monkey/on_gain()
@@ -99,7 +100,7 @@
 	return FALSE
 
 /datum/objective_team/monkey
-	var/list/objectives
+	name = "Monkeys"
 
 /datum/objective_team/monkey/proc/update_objectives()
 	objectives = list()
@@ -145,17 +146,25 @@
 		return DISEASE_LIVED
 	return MONKEYS_DIED
 
-/datum/objective_team/monkey/proc/roundend_display()
+/datum/objective_team/monkey/roundend_report()
+	var/list/parts = list()
 	switch(get_result())
 		if(MONKEYS_ESCAPED)
-			to_chat(world, "<FONT size = 3><B>Monkey Major Victory!</B></FONT>")
-			to_chat(world, "<B>Central Command and [station_name()] were taken over by the monkeys! Ook ook!</B>")
+			parts += "<span class='greentext big'><B>Monkey Major Victory!</B></span>"
+			parts += "<span class='greentext'><B>Central Command and [station_name()] were taken over by the monkeys! Ook ook!</B></span>"
 		if(MONKEYS_LIVED)
-			to_chat(world, "<FONT size = 3><B>Monkey Minor Victory!</B></FONT>")
-			to_chat(world, "<B>[station_name()] was taken over by the monkeys! Ook ook!</B>")
+			parts += "<FONT size = 3><B>Monkey Minor Victory!</B></FONT>"
+			parts += "<span class='greentext'><B>[station_name()] was taken over by the monkeys! Ook ook!</B></span>"
 		if(DISEASE_LIVED)
-			to_chat(world, "<FONT size = 3><B>Monkey Minor Defeat!</B></FONT>")
-			to_chat(world, "<B>All the monkeys died, but the disease lives on! The future is uncertain.</B>")
+			parts += "<span class='redtext big'><B>Monkey Minor Defeat!</B></span>"
+			parts += "<span class='redtext'><B>All the monkeys died, but the disease lives on! The future is uncertain.</B></span>"
 		if(MONKEYS_DIED)
-			to_chat(world, "<FONT size = 3><B>Monkey Major Defeat!</B></FONT>")
-			to_chat(world, "<B>All the monkeys died, and Jungle Fever was wiped out!</B>")
+			parts += "<span class='redtext big'><B>Monkey Major Defeat!</B></span>"
+			parts += "<span class='redtext'><B>All the monkeys died, and Jungle Fever was wiped out!</B></span>"
+	if(LAZYLEN(SSticker.mode.ape_leaders))
+		parts += "<span class='header'>The monkey leaders were:</span>"
+		parts += printplayerlist(SSticker.mode.ape_leaders)
+	if(LAZYLEN(SSticker.mode.ape_infectees))
+		parts += "<span class='header'>The monkeys were:</span>"
+		parts += printplayerlist(SSticker.mode.ape_infectees)
+	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
