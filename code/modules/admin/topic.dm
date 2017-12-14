@@ -393,6 +393,8 @@
 		log_admin("[key_name(usr)] [msg]")
 		message_admins("[key_name_admin(usr)] [msg]")
 		href_list["secrets"] = "check_antagonist"
+		if(SSticker.ready_for_reboot && !SSticker.delay_end) //we undelayed after standard reboot would occur
+			SSticker.standard_reboot()
 
 	else if(href_list["end_round"])
 		if(!check_rights(R_ADMIN))
@@ -1299,7 +1301,7 @@
 		if(alert(usr, "Send [key_name(M)] to Prison?", "Message", "Yes", "No") != "Yes")
 			return
 
-		M.loc = pick(GLOB.prisonwarp)
+		M.forceMove(pick(GLOB.prisonwarp))
 		to_chat(M, "<span class='adminnotice'>You have been sent to Prison!</span>")
 
 		log_admin("[key_name(usr)] has sent [key_name(M)] to Prison!")
@@ -1535,6 +1537,15 @@
 			C.admin_ghost()
 		var/mob/dead/observer/A = C.mob
 		A.ManualFollow(AM)
+
+	else if(href_list["admingetmovable"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/atom/movable/AM = locate(href_list["admingetmovable"])
+		if(QDELETED(AM))
+			return
+		AM.forceMove(get_turf(usr))
 
 	else if(href_list["adminplayerobservecoodjump"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))

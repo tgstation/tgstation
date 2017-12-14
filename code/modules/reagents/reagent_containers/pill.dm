@@ -8,6 +8,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	possible_transfer_amounts = list()
 	volume = 50
+	grind_results = list()
 	var/apply_type = INGEST
 	var/apply_method = "swallow"
 	var/roundstart = 0

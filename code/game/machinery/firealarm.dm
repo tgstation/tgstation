@@ -237,7 +237,7 @@
 					user.visible_message("[user] removes the fire alarm assembly from the wall.", \
 										 "<span class='notice'>You remove the fire alarm assembly from the wall.</span>")
 					var/obj/item/wallframe/firealarm/frame = new /obj/item/wallframe/firealarm()
-					frame.loc = user.loc
+					frame.forceMove(user.drop_location())
 					playsound(src.loc, W.usesound, 50, 1)
 					qdel(src)
 					return

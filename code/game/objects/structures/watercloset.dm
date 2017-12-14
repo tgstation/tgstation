@@ -59,7 +59,7 @@
 			if(ishuman(user))
 				user.put_in_hands(I)
 			else
-				I.loc = get_turf(src)
+				I.forceMove(drop_location())
 			to_chat(user, "<span class='notice'>You find [I] in the cistern.</span>")
 			w_items -= I.w_class
 	else

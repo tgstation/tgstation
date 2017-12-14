@@ -1,0 +1,5 @@
+author: "JStheguy"
+delete-after: True
+changes: 
+  - rscadd: "Added 10 new assembly designs to the integrated circuit printer, the difference from current designs is purely aesthetics."
+  - imageadd: "Added the icons for said new assembly designs to electronic_setups.dmi, changed the current electronic mechanism and electronic machine sprites."

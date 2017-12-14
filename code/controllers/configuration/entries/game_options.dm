@@ -4,27 +4,27 @@ CONFIG_DEF(number_list/repeated_mode_adjust)
 
 CONFIG_DEF(keyed_number_list/probability)
 
-/datum/config_entry/keyed_number_list/probability/ValidateKeyName(key_name)
+/datum/config_entry/keyed_number_list/probability/ValidateListEntry(key_name)
 	return key_name in config.modes
 
 CONFIG_DEF(keyed_number_list/max_pop)
 
-/datum/config_entry/keyed_number_list/max_pop/ValidateKeyName(key_name)
+/datum/config_entry/keyed_number_list/max_pop/ValidateListEntry(key_name)
 	return key_name in config.modes
 
 CONFIG_DEF(keyed_number_list/min_pop)
 
-/datum/config_entry/keyed_number_list/min_pop/ValidateKeyName(key_name)
+/datum/config_entry/keyed_number_list/min_pop/ValidateListEntry(key_name, key_value)
 	return key_name in config.modes
 
 CONFIG_DEF(keyed_flag_list/continuous)	// which roundtypes continue if all antagonists die
 
-/datum/config_entry/keyed_flag_list/continuous/ValidateKeyName(key_name)
+/datum/config_entry/keyed_flag_list/continuous/ValidateListEntry(key_name, key_value)
 	return key_name in config.modes
 
 CONFIG_DEF(keyed_flag_list/midround_antag)	// which roundtypes use the midround antagonist system
 
-/datum/config_entry/keyed_flag_list/midround_antag/ValidateKeyName(key_name)
+/datum/config_entry/keyed_flag_list/midround_antag/ValidateListEntry(key_name, key_value)
 	return key_name in config.modes
 
 CONFIG_DEF(keyed_string_list/policy)

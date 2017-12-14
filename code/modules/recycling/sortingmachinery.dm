@@ -61,7 +61,7 @@
 		if(!user || user.stat != CONSCIOUS || user.loc != O || O.loc != src )
 			return
 		to_chat(user, "<span class='notice'>You successfully removed [O]'s wrapping !</span>")
-		O.loc = loc
+		O.forceMove(loc)
 		playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
 		qdel(src)
 	else
