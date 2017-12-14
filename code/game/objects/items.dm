@@ -137,6 +137,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		if(damtype == "brute")
 			hitsound = "swing_hit"
 
+	if(is_sharp())
+		AddComponent(/datum/component/dippable, istype(src, /obj/item/reagent_containers), w_class*15, 1, 1, DIP_TYPE_FRACTIONAL_DIP_TOTAL, TRUE, 0.5)
+
 /obj/item/Destroy()
 	flags_1 &= ~DROPDEL_1	//prevent reqdels
 	if(ismob(loc))
