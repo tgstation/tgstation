@@ -433,7 +433,7 @@
 
 	for(var/i in 1 to old_turfs.len)
 		var/turf/oldT = old_turfs[i]
-		if(!oldT || !istype(oldT, area_type))
+		if(!oldT || !istype(oldT.loc, area_type))
 			continue
 		var/area/old_area = oldT.loc
 		underlying_area.contents += oldT
@@ -460,7 +460,7 @@
 
 	for(var/i in 1 to L0.len)
 		var/turf/T0 = L0[i]
-		if(!T0 || !istype(T0, area_type))
+		if(!T0 || !istype(T0.loc, area_type))
 			continue
 		var/turf/T1 = L1[i]
 		if(!T1)
@@ -745,7 +745,7 @@
 	var/list/L0 = return_ordered_turfs(x, y, z, dir)
 	for (var/thing in L0)
 		var/turf/T = thing
-		if(!T || !istype(T, area_type))
+		if(!T || !istype(T.loc, area_type))
 			continue
 		for (var/thing2 in T)
 			var/atom/movable/AM = thing2
