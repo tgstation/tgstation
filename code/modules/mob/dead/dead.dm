@@ -28,8 +28,8 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 /mob/dead/ConveyorMove()	//lol
 	return
 
-/mob/dead/forceMove(atom/destination)	//lol
-		loc = destination
+/mob/dead/forceMove(atom/destination)
+	loc = destination
 
 /mob/dead/Stat()
 	..()
