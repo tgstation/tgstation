@@ -104,7 +104,9 @@ h1.alert, h2.alert		{color: #000000;}
 .umbra_bold				{color: #5000A0;	font-weight: bold;}
 .umbra_italics			{color: #5000A0;	font-style: italic;}
 .umbra_emphasis			{color: #5000A0;	font-weight: bold;	font-style: italic;}
-.umbra_large			{color: #5000A0;	font-size: 3;}
+.umbra_large			{color: #5000A0; font-size: 3; font-weight: bold; font-style: italic;}
+
+.deconversion_message	{color: #5000A0; font-size: 3; font-style: italic;}
 
 .brass					{color: #BE8700;}
 .heavy_brass			{color: #BE8700; font-weight: bold; font-style: italic;}
