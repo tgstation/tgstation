@@ -1517,3 +1517,18 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	for(var/V in GLOB.player_list)
 		if(is_servant_of_ratvar(V) || isobserver(V))
 			. += V
+
+//src may be null, but it does need to be a typed var
+#define NAMEOF(src, X) (list(src.X, #X)[2])
+
+#define VARSET_CALLBACK(src, var_name, var_value) CALLBACK(GLOBAL_PROC, /proc/___timervarset, src, var_name, var_value)
+
+/proc/___timervarset(list_or_datum, var_name, var_value)
+	if(length(list_or_datum))
+		list_or_datum[var_name] = var_value
+		return
+	var/datum/D = list_or_datum
+	if(IsAdminAdvancedProcCall())
+		D.vv_edit_var(var_name, var_value)	//same result generally, unless badmemes
+	else
+		D.vars[X] = Y
