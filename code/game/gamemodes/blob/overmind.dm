@@ -4,6 +4,7 @@ GLOBAL_LIST_EMPTY(blob_cores)
 GLOBAL_LIST_EMPTY(overminds)
 GLOBAL_LIST_EMPTY(blob_nodes)
 
+
 /mob/camera/blob
 	name = "Blob Overmind"
 	real_name = "Blob Overmind"
@@ -33,10 +34,12 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	var/manualplace_min_time = 600 //in deciseconds //a minute, to get bearings
 	var/autoplace_max_time = 3600 //six minutes, as long as should be needed
 	var/list/blobs_legit = list()
+	var/max_count = 0 //The biggest it got before death
 	var/blobwincount = 400
 	var/victory_in_progress = FALSE
 
 /mob/camera/blob/Initialize(mapload, starting_points = 60)
+	validate_location()
 	blob_points = starting_points
 	manualplace_min_time += world.time
 	autoplace_max_time += world.time
@@ -50,10 +53,17 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	color = blob_reagent_datum.complementary_color
 	if(blob_core)
 		blob_core.update_icon()
-
 	SSshuttle.registerHostileEnvironment(src)
-
 	.= ..()
+
+/mob/camera/blob/proc/validate_location()
+	var/turf/T = get_turf(src)
+	var/area/A = get_area(T)
+	if(((A && !A.blob_allowed) || !T || !(T.z in GLOB.station_z_levels)) && LAZYLEN(GLOB.blobstart))
+		T = get_turf(pick(GLOB.blobstart))
+	if(!T)
+		CRASH("No blobspawnpoints and blob spawned in nullspace.")
+	forceMove(T)
 
 /mob/camera/blob/Life()
 	if(!blob_core)
@@ -73,6 +83,9 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		max_blob_points = INFINITY
 		blob_points = INFINITY
 		addtimer(CALLBACK(src, .proc/victory), 450)
+	
+	if(!victory_in_progress && max_count < blobs_legit.len)
+		max_count = blobs_legit.len
 	..()
 
 
@@ -111,6 +124,11 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			A.layer = BELOW_MOB_LAYER
 			A.invisibility = 0
 			A.blend_mode = 0
+	var/datum/antagonist/blob/B = mind.has_antag_datum(/datum/antagonist/blob)
+	if(B)
+		var/datum/objective/blob_takeover/main_objective = locate() in B.objectives
+		if(main_objective)
+			main_objective.completed = TRUE
 	to_chat(world, "<B>[real_name] consumed the station in an unstoppable tide!</B>")
 	SSticker.news_report = BLOB_WIN
 	SSticker.force_ending = 1
@@ -134,7 +152,6 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 /mob/camera/blob/Login()
 	..()
-	sync_mind()
 	to_chat(src, "<span class='notice'>You are the overmind!</span>")
 	blob_help()
 	update_health_hud()
@@ -224,3 +241,9 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			return 0
 		loc = NewLoc
 		return 1
+
+/mob/camera/blob/mind_initialize()
+	. = ..()
+	var/datum/antagonist/blob/B = mind.has_antag_datum(/datum/antagonist/blob)
+	if(!B)
+		mind.add_antag_datum(/datum/antagonist/blob)

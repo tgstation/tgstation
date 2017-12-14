@@ -33,8 +33,8 @@ SUBSYSTEM_DEF(ticker)
 	SCRIPTURE_APPLICATION = FALSE) //list of clockcult scripture states for announcements
 
 	var/delay_end = 0						//if set true, the round will not restart on it's own
-
 	var/admin_delay_notice = ""				//a message to display to anyone who tries to restart the world after a delay
+	var/ready_for_reboot = FALSE			//all roundend preparation done with, all that's left is reboot
 
 	var/triai = 0							//Global holder for Triumvirate
 	var/tipped = 0							//Did we broadcast the tip of the day yet?
@@ -373,163 +373,6 @@ SUBSYSTEM_DEF(ticker)
 		var/mob/living/L = I
 		L.notransform = FALSE
 
-/datum/controller/subsystem/ticker/proc/declare_completion()
-	set waitfor = FALSE
-	var/station_evacuated = EMERGENCY_ESCAPED_OR_ENDGAMED
-	var/num_survivors = 0
-	var/num_escapees = 0
-	var/num_shuttle_escapees = 0
-
-	to_chat(world, "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>")
-	if(LAZYLEN(GLOB.round_end_notifiees))
-		send2irc("Notice", "[GLOB.round_end_notifiees.Join(", ")] the round has ended.")
-
-	for(var/client/C in GLOB.clients)
-		if(!C.credits)
-			C.RollCredits()
-		C.playtitlemusic(40)
-
-	//Player status report
-	for(var/i in GLOB.mob_list)
-		var/mob/Player = i
-		if(Player.mind && !isnewplayer(Player))
-			if(Player.stat != DEAD && !isbrain(Player))
-				num_survivors++
-				if(station_evacuated) //If the shuttle has already left the station
-					var/list/area/shuttle_areas
-					if(SSshuttle && SSshuttle.emergency)
-						shuttle_areas = SSshuttle.emergency.shuttle_areas
-					if(!Player.onCentCom() && !Player.onSyndieBase())
-						to_chat(Player, "<font color='blue'><b>You managed to survive, but were marooned on [station_name()]...</b></FONT>")
-					else
-						num_escapees++
-						to_chat(Player, "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b></FONT>")
-						if(shuttle_areas[get_area(Player)])
-							num_shuttle_escapees++
-				else
-					to_chat(Player, "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b></FONT>")
-			else
-				to_chat(Player, "<font color='red'><b>You did not survive the events on [station_name()]...</b></FONT>")
-
-		CHECK_TICK
-
-	//Round statistics report
-	var/datum/station_state/end_state = new /datum/station_state()
-	end_state.count()
-	var/station_integrity = min(PERCENT(GLOB.start_state.score(end_state)), 100)
-
-	to_chat(world, "<BR>[GLOB.TAB]Shift Duration: <B>[DisplayTimeText(world.time - SSticker.round_start_time)]</B>")
-	to_chat(world, "<BR>[GLOB.TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>")
-	if(mode.station_was_nuked)
-		SSticker.news_report = STATION_DESTROYED_NUKE
-	var/total_players = GLOB.joined_player_list.len
-	if(total_players)
-		to_chat(world, "<BR>[GLOB.TAB]Total Population: <B>[total_players]</B>")
-		if(station_evacuated)
-			to_chat(world, "<BR>[GLOB.TAB]Evacuation Rate: <B>[num_escapees] ([PERCENT(num_escapees/total_players)]%)</B>")
-			to_chat(world, "<BR>[GLOB.TAB](on emergency shuttle): <B>[num_shuttle_escapees] ([PERCENT(num_shuttle_escapees/total_players)]%)</B>")
-			news_report = STATION_EVACUATED
-			if(SSshuttle.emergency.is_hijacked())
-				news_report = SHUTTLE_HIJACK
-		to_chat(world, "<BR>[GLOB.TAB]Survival Rate: <B>[num_survivors] ([PERCENT(num_survivors/total_players)]%)</B>")
-	to_chat(world, "<BR>")
-
-	CHECK_TICK
-
-	//Silicon laws report
-	for (var/i in GLOB.ai_list)
-		var/mob/living/silicon/ai/aiPlayer = i
-		if (aiPlayer.stat != DEAD && aiPlayer.mind)
-			to_chat(world, "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws at the end of the round were:</b>")
-			aiPlayer.show_laws(1)
-		else if (aiPlayer.mind) //if the dead ai has a mind, use its key instead
-			to_chat(world, "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws when it was deactivated were:</b>")
-			aiPlayer.show_laws(1)
-
-		to_chat(world, "<b>Total law changes: [aiPlayer.law_change_counter]</b>")
-
-		if (aiPlayer.connected_robots.len)
-			var/robolist = "<b>[aiPlayer.real_name]'s minions were:</b> "
-			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
-				if(robo.mind)
-					robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.mind.key]), ":" (Played by: [robo.mind.key]), "]"
-			to_chat(world, "[robolist]")
-
-	CHECK_TICK
-
-	for (var/mob/living/silicon/robot/robo in GLOB.silicon_mobs)
-		if (!robo.connected_ai && robo.mind)
-			if (robo.stat != DEAD)
-				to_chat(world, "<b>[robo.name] (Played by: [robo.mind.key]) survived as an AI-less borg! Its laws were:</b>")
-			else
-				to_chat(world, "<b>[robo.name] (Played by: [robo.mind.key]) was unable to survive the rigors of being a cyborg without an AI. Its laws were:</b>")
-
-			if(robo) //How the hell do we lose robo between here and the world messages directly above this?
-				robo.laws.show_laws(world)
-
-	CHECK_TICK
-
-	mode.declare_completion()//To declare normal completion.
-
-	CHECK_TICK
-
-	//calls auto_declare_completion_* for all modes
-	for(var/handler in typesof(/datum/game_mode/proc))
-		if (findtext("[handler]","auto_declare_completion_"))
-			call(mode, handler)(force_ending)
-
-	CHECK_TICK
-
-	if(CONFIG_GET(string/cross_server_address))
-		send_news_report()
-
-	CHECK_TICK
-
-	//Print a list of antagonists to the server log
-	var/list/total_antagonists = list()
-	//Look into all mobs in world, dead or alive
-	for(var/datum/mind/Mind in minds)
-		var/temprole = Mind.special_role
-		if(temprole)							//if they are an antagonist of some sort.
-			if(temprole in total_antagonists)	//If the role exists already, add the name to it
-				total_antagonists[temprole] += ", [Mind.name]([Mind.key])"
-			else
-				total_antagonists.Add(temprole) //If the role doesnt exist in the list, create it and add the mob
-				total_antagonists[temprole] += ": [Mind.name]([Mind.key])"
-
-	CHECK_TICK
-
-	//Now print them all into the log!
-	log_game("Antagonists at round end were...")
-	for(var/i in total_antagonists)
-		log_game("[i]s[total_antagonists[i]].")
-
-	CHECK_TICK
-
-	mode.declare_station_goal_completion()
-
-	CHECK_TICK
-	//medals, placed far down so that people can actually see the commendations.
-	if(GLOB.commendations.len)
-		to_chat(world, "<b><font size=3>Medal Commendations:</font></b>")
-		for (var/com in GLOB.commendations)
-			to_chat(world, com)
-
-	CHECK_TICK
-
-	//Collects persistence features
-	if(mode.allow_persistence_save)
-		SSpersistence.CollectData()
-
-	//stop collecting feedback during grifftime
-	SSblackbox.Seal()
-
-	sleep(50)
-	if(mode.station_was_nuked)
-		Reboot("Station destroyed by Nuclear Device.", "nuke")
-	else
-		Reboot("Round ended.", "proper completion")
-
 /datum/controller/subsystem/ticker/proc/send_tip_of_the_round()
 	var/m
 	if(selected_tip)
@@ -754,6 +597,7 @@ SUBSYSTEM_DEF(ticker)
 	world.Reboot()
 
 /datum/controller/subsystem/ticker/Shutdown()
+	gather_newscaster() //called here so we ensure the log is created even upon admin reboot
 	if(!round_end_sound)
 		round_end_sound = pick(\
 		'sound/roundend/newroundsexy.ogg',

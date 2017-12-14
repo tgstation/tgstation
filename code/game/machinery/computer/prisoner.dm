@@ -100,7 +100,7 @@
 			else if(inserted_id)
 				switch(href_list["id"])
 					if("eject")
-						inserted_id.loc = get_turf(src)
+						inserted_id.forceMove(drop_location())
 						inserted_id.verb_pickup()
 						inserted_id = null
 					if("reset")

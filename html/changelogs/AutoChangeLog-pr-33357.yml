@@ -1,4 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - bugfix: "Grilles now no longer revert to a pre-broken icon state when you hit them after they broke."
