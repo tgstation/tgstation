@@ -13,7 +13,7 @@
 	blacklisted = TRUE
 	limbs_id = "human"
 	skinned_type = /obj/item/stack/sheet/animalhide/human
-
+	dangerous_existence = TRUE
 	var/obj/item/dullahan_relay/myhead
 
 
