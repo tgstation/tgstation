@@ -1,0 +1,7 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - rscadd: "Grinding runed metal and brass now produces iron/blood and iron/teslium, respectively."
+  - balance: "As part of some code-side improvements, the amount of reagents you get from grinding some objects might be slightly different."
+  - bugfix: "Some grinding recipes that didn't work, like dead mice and glowsticks, now do."
+  - bugfix: "All-In-One grinders now correctly grind up everything, instead of one thing at a time."
