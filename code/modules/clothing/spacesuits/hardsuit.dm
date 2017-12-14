@@ -136,7 +136,7 @@
 			return
 
 		jetpack.turn_off()
-		jetpack.loc = get_turf(src)
+		jetpack.forceMove(drop_location())
 		jetpack = null
 		to_chat(user, "<span class='notice'>You successfully remove the jetpack from [src].</span>")
 
@@ -186,7 +186,7 @@
 	icon_state = "hardsuit0-atmospherics"
 	item_state = "atmo_helm"
 	item_color = "atmospherics"
-	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 0, fire = 100, acid = 75)
+	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 25, fire = 100, acid = 75)
 	heat_protection = HEAD												//Uncomment to enable firesuit protection
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 
@@ -195,7 +195,7 @@
 	desc = "A special suit that protects against hazardous, low pressure environments. Has thermal shielding."
 	icon_state = "hardsuit-atmospherics"
 	item_state = "atmo_hardsuit"
-	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 0, fire = 100, acid = 75)
+	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 25, fire = 100, acid = 75)
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS					//Uncomment to enable firesuit protection
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine/atmos
@@ -425,7 +425,7 @@
 	item_state = "medical_helm"
 	item_color = "medical"
 	flash_protect = 0
-	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 75, fire = 75, acid = 75)
+	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 60, fire = 60, acid = 75)
 	scan_reagents = 1
 
 /obj/item/clothing/suit/space/hardsuit/medical
@@ -434,7 +434,7 @@
 	desc = "A special suit that protects against hazardous, low pressure environments. Built with lightweight materials for easier movement."
 	item_state = "medical_hardsuit"
 	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals, /obj/item/storage/firstaid, /obj/item/device/healthanalyzer, /obj/item/stack/medical)
-	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 75, fire = 75, acid = 75)
+	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 60, fire = 60, acid = 75)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/medical
 
 	//Research Director hardsuit
@@ -487,7 +487,7 @@
 	icon_state = "hardsuit0-sec"
 	item_state = "sec_helm"
 	item_color = "sec"
-	armor = list(melee = 30, bullet = 15, laser = 30,energy = 10, bomb = 10, bio = 100, rad = 50, fire = 75, acid = 75)
+	armor = list(melee = 35, bullet = 15, laser = 30,energy = 10, bomb = 10, bio = 100, rad = 50, fire = 75, acid = 75)
 
 
 /obj/item/clothing/suit/space/hardsuit/security
@@ -495,7 +495,7 @@
 	name = "security hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor."
 	item_state = "sec_hardsuit"
-	armor = list(melee = 30, bullet = 15, laser = 30, energy = 10, bomb = 10, bio = 100, rad = 50, fire = 75, acid = 75)
+	armor = list(melee = 35, bullet = 15, laser = 30, energy = 10, bomb = 10, bio = 100, rad = 50, fire = 75, acid = 75)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/security
 
 /obj/item/clothing/suit/space/hardsuit/security/Initialize()
@@ -508,7 +508,7 @@
 	desc = "A special bulky helmet designed for work in a hazardous, low pressure environment. Has an additional layer of armor."
 	icon_state = "hardsuit0-hos"
 	item_color = "hos"
-	armor = list(melee = 45, bullet = 25, laser = 30,energy = 10, bomb = 25, bio = 100, rad = 50, fire = 95, acid = 95)
+	armor = list(melee = 45, bullet = 25, laser = 30, energy = 10, bomb = 25, bio = 100, rad = 50, fire = 95, acid = 95)
 
 
 /obj/item/clothing/suit/space/hardsuit/security/hos

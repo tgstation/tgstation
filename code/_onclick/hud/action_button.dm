@@ -8,15 +8,22 @@
 	var/button_icon_state
 	var/appearance_cache
 
+	var/id
+
 /obj/screen/movable/action_button/Click(location,control,params)
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"])
+		if(locked)
+			to_chat(usr, "<span class='warning'>Action button \"[name]\" is locked, unlock it first.</span>")
+			return TRUE
 		moved = 0
 		usr.update_action_buttons() //redraw buttons that are no longer considered "moved"
 		return TRUE
 	if(modifiers["ctrl"])
 		locked = !locked
 		to_chat(usr, "<span class='notice'>Action button \"[name]\" [locked ? "" : "un"]locked.</span>")
+		if(id && usr.client) //try to (un)remember position
+			usr.client.prefs.action_buttons_screen_locs["[name]_[id]"] = locked ? moved : null
 		return TRUE
 	if(usr.next_click > world.time)
 		return
@@ -38,21 +45,30 @@
 /obj/screen/movable/action_button/hide_toggle/Click(location,control,params)
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"])
+		if(locked)
+			to_chat(usr, "<span class='warning'>Action button \"[name]\" is locked, unlock it first.</span>")
+			return TRUE
 		moved = FALSE
 		usr.update_action_buttons(TRUE)
 		return TRUE
 	if(modifiers["ctrl"])
 		locked = !locked
 		to_chat(usr, "<span class='notice'>Action button \"[name]\" [locked ? "" : "un"]locked.</span>")
+		if(id && usr.client) //try to (un)remember position
+			usr.client.prefs.action_buttons_screen_locs["[name]_[id]"] = locked ? moved : null
 		return TRUE
 	if(modifiers["alt"])
 		for(var/V in usr.actions)
 			var/datum/action/A = V
 			var/obj/screen/movable/action_button/B = A.button
 			B.moved = FALSE
+			if(B.id && usr.client)
+				usr.client.prefs.action_buttons_screen_locs["[B.name]_[B.id]"] = null
 			B.locked = usr.client.prefs.buttons_locked
 		locked = usr.client.prefs.buttons_locked
 		moved = FALSE
+		if(id && usr.client)
+			usr.client.prefs.action_buttons_screen_locs["[name]_[id]"] = null
 		usr.update_action_buttons(TRUE)
 		to_chat(usr, "<span class='notice'>Action button positions have been reset.</span>")
 		return TRUE

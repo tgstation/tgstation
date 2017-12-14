@@ -1,0 +1,5 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - soundadd: "Revamped gun dry-firing sounds."
+  - tweak: "Everyone around you will now hear when your gun goes click. You don't want to hear click when you want to hear bang!"

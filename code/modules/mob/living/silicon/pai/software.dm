@@ -22,9 +22,7 @@
 															"remote signaller" = 5,
 															)
 
-/mob/living/silicon/pai/verb/paiInterface()
-	set category = "pAI Commands"
-	set name = "Software Interface"
+/mob/living/silicon/pai/proc/paiInterface()
 	var/dat = ""
 	var/left_part = ""
 	var/right_part = softwareMenu()

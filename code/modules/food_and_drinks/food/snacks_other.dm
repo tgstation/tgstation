@@ -28,6 +28,7 @@
 	filling_color = "#FF1493"
 	tastes = list("watermelon" = 1)
 	foodtype = FRUIT
+	juice_results = list("watermelonjuice" = 5)
 
 /obj/item/reagent_containers/food/snacks/candy_corn
 	name = "candy corn"
@@ -380,7 +381,7 @@
 	foodtype = VEGETABLES | FRIED | DAIRY
 
 /obj/item/reagent_containers/food/snacks/cubannachos
-	name = "cuban nachos"
+	name = "Cuban nachos"
 	desc = "That's some dangerously spicy nachos."
 	icon_state = "cubannachos"
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 3)
