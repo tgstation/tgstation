@@ -2447,7 +2447,6 @@
 #include "hippiestation\code\game\objects\items\apc_frame.dm"
 #include "hippiestation\code\game\objects\items\butterfly_knives.dm"
 #include "hippiestation\code\game\objects\items\cigs_lighters.dm"
-#include "hippiestation\code\game\objects\items\clown_items.dm"
 #include "hippiestation\code\game\objects\items\ducttape.dm"
 #include "hippiestation\code\game\objects\items\execution_sword.dm"
 #include "hippiestation\code\game\objects\items\extinguisher.dm"
