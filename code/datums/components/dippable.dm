@@ -27,8 +27,9 @@ _attack_transfer_ratio: What fraction of the dipped item's reagents should be tr
 
 /datum/component/dippable/Initialize(capacity_already_defined = FALSE, _capacity = 0, _dip_mix_ratio = 0, _dip_transfer_rate = 0, _dip_transfer_type = DIP_TYPE_STATIC, _transfer_on_attack = FALSE, _attack_transfer_ratio = 0)
 	if(!istype(parent, /obj/item))
+		stack_trace("Attempted to put dippable component in [parent.type]!")
 		qdel(src)
-		CRASH("Attempted to put dippable component in [parent.type]!")
+		return COMPONENT_INCOMPATIBLE
 	container = parent
 	if(!capacity_already_defined)
 		if(!container.reagents)
@@ -63,39 +64,39 @@ _attack_transfer_ratio: What fraction of the dipped item's reagents should be tr
 			return 0
 
 /datum/component/dippable/proc/on_attack_object(obj/target, mob/user)
-	if(transfer_on_attack)
-		var/datum/reagents/dip = target.reagents
-		var/datum/reagents/dipped = container.reagents
-		if(istype(target, /obj/item/reagent_containers))
-			if(!target.is_open_container())
-				return
-			if(dip && !dip.total_volume)
-				to_chat(user, "<span class='warning'>[target] doesn't have anything to dip [container] in!</span>")
-				return
-			var/datum/reagents/mixture = new
-			mixture.maximum_volume = dip.maximum_volume + dipped.maximum_volume
-			dipped.trans_to(mixture, dipped.total_volume * dip_mix_ratio, no_react = TRUE)
-			dip.trans_to(mixture, get_transfer_amount(dip, dipped), no_react = TRUE)
-			var/datum/reagents/reactants = new
-			reactants.maximum_volume = mixture.maximum_volume
-			var/spillover = mixture.total_volume - mixture.trans_to(reactants, dipped.maximum_volume, no_react = TRUE)
-			reactants.reaction(container, TOUCH)
-			reactants.trans_to(dipped, dipped.maximum_volume) //This transfer is okay with having reactions occur because reagents are being transferred to their final destination.
-			qdel(reactants)
-			spillover -= mixture.trans_to(dip, mixture.total_volume) //Same with transferring the reactants to the dipped item.
-			to_chat(user, "<span class='notice'>You dip [container] in [target][spillover ? "..." : "."]</span>")
-			if(spillover)
-				to_chat(user, "<span class='warning'>...but spill some of the contents!</span>")
-				mixture.reaction(get_turf(user), TOUCH)
-				mixture.clear_reagents()
-			qdel(mixture)
+	var/datum/reagents/dip = target.reagents
+	var/datum/reagents/dipped = container.reagents
+	if(istype(target, /obj/item/reagent_containers))
+		if(!target.is_open_container())
+			return
+		if(dip && !dip.total_volume)
+			to_chat(user, "<span class='warning'>[target] doesn't have anything to dip [container] in!</span>")
+			return
+		var/datum/reagents/mixture = new
+		mixture.maximum_volume = dip.maximum_volume + dipped.maximum_volume
+		dipped.trans_to(mixture, dipped.total_volume * dip_mix_ratio, no_react = TRUE)
+		dip.trans_to(mixture, get_transfer_amount(dip, dipped), no_react = TRUE)
+		var/datum/reagents/reactants = new
+		reactants.maximum_volume = mixture.maximum_volume
+		var/spillover = mixture.total_volume - mixture.trans_to(reactants, dipped.maximum_volume, no_react = TRUE)
+		reactants.reaction(container, TOUCH)
+		reactants.trans_to(dipped, dipped.maximum_volume) //This transfer is okay with having reactions occur because reagents are being transferred to their final destination.
+		qdel(reactants)
+		spillover -= mixture.trans_to(dip, mixture.total_volume) //Same with transferring the reactants to the dipped item.
+		to_chat(user, "<span class='notice'>You dip [container] in [target][spillover ? "..." : "."]</span>")
+		if(spillover)
+			to_chat(user, "<span class='warning'>...but spill some of the contents!</span>")
+			mixture.reaction(get_turf(user), TOUCH)
+			mixture.clear_reagents()
+		qdel(mixture)
 
 /datum/component/dippable/proc/on_attack(mob/living/target, mob/living/user)
-	var/datum/reagents/dip = container.reagents
-	if(dip.total_volume)
-		var/datum/reagents/reactants = new
-		reactants.maximum_volume = dip.total_volume * attack_transfer_ratio
-		dip.trans_to(reactants, reactants.maximum_volume, no_react = TRUE)
-		reactants.reaction(target, TOUCH)
-		reactants.trans_to(target, reactants.maximum_volume)
-		qdel(reactants)
+	if(transfer_on_attack)
+		var/datum/reagents/dip = container.reagents
+		if(dip.total_volume)
+			var/datum/reagents/reactants = new
+			reactants.maximum_volume = dip.total_volume * attack_transfer_ratio
+			dip.trans_to(reactants, reactants.maximum_volume, no_react = TRUE)
+			reactants.reaction(target, TOUCH)
+			reactants.trans_to(target, reactants.maximum_volume)
+			qdel(reactants)
