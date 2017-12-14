@@ -281,6 +281,7 @@
 #include "code\datums\actions\ninja.dm"
 #include "code\datums\antagonists\abductor.dm"
 #include "code\datums\antagonists\antag_datum.dm"
+#include "code\datums\antagonists\blob.dm"
 #include "code\datums\antagonists\brother.dm"
 #include "code\datums\antagonists\changeling.dm"
 #include "code\datums\antagonists\clockcult.dm"
