@@ -12,5 +12,4 @@
 	message_admins("[key_name_admin(usr)] has toggled the Panic Bunker, it is now [new_pb ? "enabled" : "disabled"].")
 	if (new_pb && !SSdbcore.Connect())
 		message_admins("The Database is not connected! Panic bunker will not work until the connection is reestablished.")
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Panic Bunker", "[new_pb]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Panic Bunker", "[new_pb ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
