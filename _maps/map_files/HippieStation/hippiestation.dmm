@@ -36523,6 +36523,11 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/door/window/westright{
+	dir = 1;
+	name = "Security Checkpoint";
+	req_access_txt = "1"
+	},
 /turf/open/floor/plating,
 /area/ai_monitored/nuke_storage)
 "bEx" = (
