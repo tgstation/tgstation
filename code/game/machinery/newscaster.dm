@@ -162,9 +162,11 @@ GLOBAL_LIST_EMPTY(allCasters)
 		NEWSCASTER.update_icon()
 
 /datum/newscaster/feed_network/proc/save_photo(icon/photo)
-	var/photo_file = copytext(md5("[world.time][rand(1,99)]"), 1, 6)
-	var/icon/p = icon(photo, frame = 1)
-	fcopy(p, "[GLOB.log_directory]/photos/[photo_file].png")
+	var/photo_file = copytext(md5("\icon[photo]"), 1, 6)
+	if(!fexists("[GLOB.log_directory]/photos/[photo_file].png"))
+		var/icon/p = icon(photo, frame = 1)
+		fcopy(p, "[GLOB.log_directory]/photos/[photo_file].png")
+	else
 	return photo_file
 
 /obj/item/wallframe/newscaster

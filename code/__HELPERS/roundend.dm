@@ -137,7 +137,7 @@
 	//Collects persistence features
 	if(mode.allow_persistence_save)
 		SSpersistence.CollectData()
-	gather_newscaster()
+
 	//stop collecting feedback during grifftime
 	SSblackbox.Seal()
 
