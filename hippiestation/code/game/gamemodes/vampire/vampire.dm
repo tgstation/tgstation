@@ -35,9 +35,6 @@
 	var/num_modifier = 0
 	var/list/datum/mind/pre_vamps = list()
 
-/datum/game_mode/vampire/declare_completion()
-	..()
-
 /datum/game_mode/vampire/pre_setup()
 
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))

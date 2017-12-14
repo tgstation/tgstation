@@ -355,8 +355,8 @@
 	if(lastfire > world.time + delay)
 		return
 	lastfire = world.time
+	. = ..()
 	stop_aiming()
-	return ..()
 
 /obj/item/gun/energy/beam_rifle/proc/sync_ammo()
 	for(var/obj/item/ammo_casing/energy/beam_rifle/AC in contents)

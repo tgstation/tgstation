@@ -245,7 +245,7 @@ Made by Xhuis
 	return shadowling_ascended
 
 
-/datum/game_mode/shadowling/declare_completion()
+/*/datum/game_mode/shadowling/declare_completion()
 	if(check_shadow_victory()) //Doesn't end instantly - this is hacky and I don't know of a better way ~X
 		to_chat(world, "<span class='greentext'>The shadowlings have ascended and taken over the station!</span>")
 	else if(!check_shadow_victory() && check_shadow_death()) //If the shadowlings have ascended, they can not lose the round
@@ -255,7 +255,7 @@ Made by Xhuis
 	else
 		to_chat(world, "<span class='redtext'>The shadowlings have failed!</span>")
 	..()
-	return 1
+	return 1*/
 
 /datum/game_mode/shadowling/proc/check_shadow_death()
 	for(var/datum/mind/shadow_mind in shadows)

@@ -102,7 +102,7 @@
 
 	for(var/obj/item/I in embedded_objects)
 		embedded_objects -= I
-		I.loc = src
+		I.forceMove(src)
 	if(!C.has_embedded_objects())
 		C.clear_alert("embeddedobject")
 
@@ -151,7 +151,7 @@
 	if(brainmob)
 		LB.brainmob = brainmob
 		brainmob = null
-		LB.brainmob.loc = LB
+		LB.brainmob.forceMove(LB)
 		LB.brainmob.container = LB
 		LB.brainmob.stat = DEAD
 
@@ -167,7 +167,7 @@
 	..()
 	if(C && !special)
 		if(C.handcuffed)
-			C.handcuffed.loc = C.loc
+			C.handcuffed.forceMove(C.loc)
 			C.handcuffed.dropped(C)
 			C.handcuffed = null
 			C.update_handcuffed()
@@ -185,7 +185,7 @@
 	..()
 	if(C && !special)
 		if(C.handcuffed)
-			C.handcuffed.loc = C.loc
+			C.handcuffed.forceMove(C.loc)
 			C.handcuffed.dropped(C)
 			C.handcuffed = null
 			C.update_handcuffed()
@@ -201,7 +201,7 @@
 /obj/item/bodypart/r_leg/drop_limb(special)
 	if(owner && !special)
 		if(owner.legcuffed)
-			owner.legcuffed.loc = owner.loc
+			owner.legcuffed.forceMove(owner.loc)
 			owner.legcuffed.dropped(owner)
 			owner.legcuffed = null
 			owner.update_inv_legcuffed()
@@ -212,7 +212,7 @@
 /obj/item/bodypart/l_leg/drop_limb(special) //copypasta
 	if(owner && !special)
 		if(owner.legcuffed)
-			owner.legcuffed.loc = owner.loc
+			owner.legcuffed.forceMove(owner.loc)
 			owner.legcuffed.dropped(owner)
 			owner.legcuffed = null
 			owner.update_inv_legcuffed()
@@ -306,7 +306,7 @@
 	if(brain)
 		if(brainmob)
 			brainmob.container = null //Reset brainmob head var.
-			brainmob.loc = brain //Throw mob into brain.
+			brainmob.forceMove(brain) //Throw mob into brain.
 			brain.brainmob = brainmob //Set the brain to use the brainmob
 			brainmob = null //Set head brainmob var to null
 		brain.Insert(C) //Now insert the brain proper

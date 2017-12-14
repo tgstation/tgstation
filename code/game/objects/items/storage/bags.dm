@@ -199,7 +199,7 @@
 		else
 			if(S.pulledby)
 				S.pulledby.stop_pulling()
-			S.loc = src
+			S.forceMove(src)
 
 	orient2hud(usr)
 	if(usr.s_active)
