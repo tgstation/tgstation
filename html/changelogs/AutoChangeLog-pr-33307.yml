@@ -1,0 +1,4 @@
+author: "Cyberboss"
+delete-after: True
+changes: 
+  - config: "Added \"$include\" directives to config files. These are recursive. Only config.txt will be default loaded if they are specified inside it"
