@@ -195,7 +195,7 @@
 		update_stamina()
 
 /mob/living/carbon/getBrainLoss()
-	. = BRAIN_DAMAGE_DEATH
+	. = 0
 	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
 	if(B)
 		. = B.get_brain_damage()
