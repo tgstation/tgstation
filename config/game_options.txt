@@ -492,4 +492,4 @@ MICE_ROUNDSTART 10
 #EMERGENCY_SHUTTLE_AUTOCALL_THRESHOLD 0.2
 
 ## Determines if players are allowed to print integrated circuits, uncomment to allow.
-IC_PRINTING
+#IC_PRINTING
