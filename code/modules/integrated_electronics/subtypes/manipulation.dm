@@ -155,9 +155,11 @@
 			if(isnum(wanted_dir.data))
 				if(step(assembly, wanted_dir.data))
 					activate_pin(2)
+					return
 				else
 					activate_pin(3)
 					return FALSE
+	return FALSE
 
 /obj/item/integrated_circuit/manipulation/grenade
 	name = "grenade primer"
@@ -247,9 +249,15 @@
 /obj/item/integrated_circuit/manipulation/plant_module/do_work()
 	..()
 	var/turf/T = get_turf(src)
-	var/obj/machinery/hydroponics/AM = get_pin_data_as_type(IC_INPUT, 1, /obj/machinery/hydroponics)
+	var/obj/OM = get_pin_data_as_type(IC_INPUT, 1, /obj)
+	if(istype(OM,/obj/structure/spacevine))
+		if(get_pin_data(IC_INPUT, 2)==2)
+			qdel(OM)
+			activate_pin(2)
+			return
+	var/obj/machinery/hydroponics/AM = OM
 	if(!istype(AM)) //Invalid input
-		return
+		return FALSE
 	var/mob/living/M = get_turf(AM)
 	if(!M.Adjacent(T))
 		return //Can't reach
@@ -276,6 +284,7 @@
 				qdel(AM.myseed)
 				AM.myseed = null
 			AM.weedlevel = 0 //Has a side effect of cleaning up those nasty weeds
+			AM.dead = 0
 			AM.update_icon()
 		else
 			activate_pin(2)
@@ -284,7 +293,7 @@
 
 /obj/item/integrated_circuit/manipulation/grabber
 	name = "grabber"
-	desc = "A circuit with it's own inventory for small/medium items, used to grab and store things."
+	desc = "A circuit with it's own inventory for tiny/small items, used to grab and store things."
 	icon_state = "grabber"
 	extended_desc = "The circuit accepts a reference to thing to be grabbed. It can store up to 10 things. Modes: 1 for grab. 0 for eject the first thing. -1 for eject all."
 	w_class = WEIGHT_CLASS_SMALL
@@ -340,6 +349,44 @@
 	set_pin_data(IC_OUTPUT, 2, null)
 	set_pin_data(IC_OUTPUT, 3, contents.len)
 	push_data()
+
+/obj/item/integrated_circuit/manipulation/claw
+	name = "pulling claw"
+	desc = "A circuit which can pull things.."
+	icon_state = "pull_claw"
+	extended_desc = "The circuit accepts a reference to thing to be pulled. Modes: 0 for release.1 for pull. 2 for gressive grab."
+	w_class = WEIGHT_CLASS_SMALL
+	size = 3
+
+	complexity = 10
+	inputs = list("target" = IC_PINTYPE_REF,"mode" = IC_PINTYPE_INDEX)
+	outputs = list("is pulling" = IC_PINTYPE_BOOLEAN)
+	activators = list("pulse in" = IC_PINTYPE_PULSE_IN,"pulse out" = IC_PINTYPE_PULSE_OUT,"released" = IC_PINTYPE_PULSE_OUT)
+	spawn_flags = IC_SPAWN_RESEARCH
+	power_draw_per_use = 50
+
+/obj/item/integrated_circuit/manipulation/claw/do_work()
+	var/obj/acting_object = get_object()
+	var/atom/movable/AM = get_pin_data_as_type(IC_INPUT, 1, /atom/movable)
+	var/mode = get_pin_data(IC_INPUT, 2)
+	if(mode>2)
+		return
+	if(AM)
+		if(check_target(AM, exclude_contents = TRUE))
+			acting_object.start_pulling(AM,mode)
+			if(acting_object.pulling)
+				set_pin_data(IC_OUTPUT, 1, TRUE)
+			else
+				set_pin_data(IC_OUTPUT, 1, FALSE)
+	push_data()
+	activate_pin(2)
+
+/obj/item/integrated_circuit/manipulation/claw/stop_pulling()
+	..()
+	set_pin_data(IC_OUTPUT, 1, FALSE)
+	activate_pin(2)
+	push_data()
+
 
 
 /obj/item/integrated_circuit/manipulation/thrower

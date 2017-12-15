@@ -21,7 +21,7 @@
 	volume = 100
 
 	complexity = 20
-	cooldown_per_use = 1 SECONDS
+	cooldown_per_use = 30 SECONDS
 	inputs = list()
 	outputs = list(
 		"volume used" = IC_PINTYPE_NUMBER,
@@ -416,3 +416,45 @@
 	activate_pin(2)
 	push_data()
 
+/obj/item/integrated_circuit/reagent/storage/heater
+	name = "chemical heater"
+	desc = "Stores liquid inside, and away from electrical components.  Can store up to 60u.  Will heat or freeze reagents \
+	to target temperature, when turned on."
+	icon_state = "heater"
+	container_type = OPENCONTAINER_1
+	complexity = 8
+	inputs = list(
+		"target temperature" = IC_PINTYPE_NUMBER,
+		"on" = IC_PINTYPE_BOOLEAN
+		)
+	inputs_default = list("1" = 300)
+	outputs = list("volume used" = IC_PINTYPE_NUMBER,"self reference" = IC_PINTYPE_REF,"temperature" = IC_PINTYPE_NUMBER)
+	spawn_flags = IC_SPAWN_RESEARCH
+	var/heater_coefficient = 0.1
+
+/obj/item/integrated_circuit/reagent/storage/heater/on_data_written()
+	if(get_pin_data(IC_INPUT, 2))
+		power_draw_idle = 30
+	else
+		power_draw_idle = 0
+
+/obj/item/integrated_circuit/reagent/storage/heater/Initialize()
+	.=..()
+	START_PROCESSING(SScircuit, src)
+
+/obj/item/integrated_circuit/reagent/storage/heater/Destroy()
+	STOP_PROCESSING(SScircuit, src)
+	return ..()
+
+/obj/item/integrated_circuit/reagent/storage/heater/process()
+	if(power_draw_idle)
+		var/target_temperature = get_pin_data(IC_INPUT, 1)
+		if(reagents.chem_temp > target_temperature)
+			reagents.chem_temp += min(-1, (target_temperature - reagents.chem_temp) * heater_coefficient)
+		if(reagents.chem_temp < target_temperature)
+			reagents.chem_temp += max(1, (target_temperature - reagents.chem_temp) * heater_coefficient)
+
+		reagents.chem_temp = round(reagents.chem_temp)
+		reagents.handle_reactions()
+		set_pin_data(IC_OUTPUT, 3, reagents.chem_temp)
+		push_data()
