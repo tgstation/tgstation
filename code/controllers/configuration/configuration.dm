@@ -20,10 +20,13 @@ GLOBAL_PROTECT(config_dir)
 
 /datum/controller/configuration/New()
 	config = src
-	var/list/config_files = InitEntries()
+	InitEntries()
 	LoadModes()
-	for(var/I in config_files)
-		LoadEntries(I)
+	if(!LoadEntries("config.txt"))
+		log_config("No $include directives found in config.txt! Loading legacy game_options/dbconfig/comms files...")
+		LoadEntries("game_options.txt")
+		LoadEntries("dbconfig.txt")
+		LoadEntries("comms.txt")
 	loadmaplist(CONFIG_MAPS_FILE)
 
 /datum/controller/configuration/Destroy()
@@ -42,8 +45,6 @@ GLOBAL_PROTECT(config_dir)
 	var/list/_entries_by_type = list()
 	entries_by_type = _entries_by_type
 
-	. = list()
-
 	for(var/I in typesof(/datum/config_entry))	//typesof is faster in this case
 		var/datum/config_entry/E = I
 		if(initial(E.abstract_type) == I)
@@ -57,24 +58,30 @@ GLOBAL_PROTECT(config_dir)
 			continue
 		_entries[esname] = E
 		_entries_by_type[I] = E
-		.[E.resident_file] = TRUE
 
 /datum/controller/configuration/proc/RemoveEntry(datum/config_entry/CE)
 	entries -= CE.name
 	entries_by_type -= CE.type
 
-/datum/controller/configuration/proc/LoadEntries(filename)
+/datum/controller/configuration/proc/LoadEntries(filename, list/stack = list())
+	var/filename_to_test = world.system_type == MS_WINDOWS ? lowertext(filename) : filename
+	if(filename_to_test in stack)
+		log_config("Warning: Config recursion detected ([english_list(stack)]), breaking!")
+		return
+	stack = stack + filename_to_test
+
 	log_config("Loading config file [filename]...")
 	var/list/lines = world.file2list("[GLOB.config_dir][filename]")
 	var/list/_entries = entries
 	for(var/L in lines)
 		if(!L)
 			continue
-
-		if(copytext(L, 1, 2) == "#")
+		
+		var/firstchar = copytext(L, 1, 2)
+		if(firstchar == "#")
 			continue
 
-		var/lockthis = copytext(L, 1, 2) == "@"
+		var/lockthis = firstchar == "@"
 		if(lockthis)
 			L = copytext(L, 2)
 
@@ -91,13 +98,16 @@ GLOBAL_PROTECT(config_dir)
 		if(!entry)
 			continue
 		
+		if(entry == "$include")
+			if(!value)
+				log_config("Warning: Invalid $include directive: [value]")
+			else
+				LoadEntries(value, stack)
+			continue
+		
 		var/datum/config_entry/E = _entries[entry]
 		if(!E)
 			log_config("Unknown setting in configuration: '[entry]'")
-			continue
-		
-		if(filename != E.resident_file)
-			log_config("Found [entry] in [filename] when it should have been in [E.resident_file]! Ignoring.")
 			continue
 
 		if(lockthis)
@@ -107,10 +117,14 @@ GLOBAL_PROTECT(config_dir)
 		if(!validated)
 			log_config("Failed to validate setting \"[value]\" for [entry]")
 		else if(E.modified && !E.dupes_allowed)
-			log_config("Duplicate setting for [entry] ([value]) detected! Using latest.")
+			log_config("Duplicate setting for [entry] ([value], [E.resident_file]) detected! Using latest.")
+
+		E.resident_file = filename
 		
 		if(validated)
 			E.modified = TRUE
+		
+		. = TRUE
 
 /datum/controller/configuration/can_vv_get(var_name)
 	return (var_name != "entries_by_type" || !hiding_entries_by_type) && ..()

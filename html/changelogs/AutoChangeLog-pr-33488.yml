@@ -1,0 +1,5 @@
+author: "Cyberboss"
+delete-after: True
+changes: 
+  - config: "Added multi string list entry CROSS_SERVER. e.g. CROSS_SERVER Server+Name byond://server.net:1337"
+  - config: "CROSS_SERVER_ADDRESS removed"
