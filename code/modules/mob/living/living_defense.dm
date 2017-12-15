@@ -255,7 +255,7 @@
 			return FALSE
 
 		else
-			if(M.disabilities & PACIFISM)
+			if(L.disabilities & PACIFISM)
 				to_chat(L, "<span class='notice'>You don't want to hurt anyone!</span>")
 				return
 

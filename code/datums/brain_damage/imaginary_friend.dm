@@ -118,7 +118,7 @@
 /mob/camera/imaginary_friend/emote(act,m_type=1,message = null)
 	return
 
-/mob/camera/imaginary_friend/Move(NewLoc, Dir = 0)
+/mob/camera/imaginary_friend/forceMove(NewLoc, Dir = 0)
 	loc = NewLoc
 	dir = Dir
 	if(get_dist(src, owner) > 9)
