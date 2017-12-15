@@ -58,3 +58,7 @@
 
 /code/controllers/subsystem/shuttle.dm @ninjanomnom
 /code/modules/shuttle/* @ninjanomnom
+
+# ShizCalev
+
+/_maps/*
