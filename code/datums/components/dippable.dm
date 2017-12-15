@@ -90,7 +90,7 @@ _attack_transfer_ratio: What fraction of the dipped item's reagents should be tr
 	qdel(mixture)
 
 /datum/component/dippable/proc/on_attack(mob/living/target, mob/living/user)
-	if(transfer_on_attack)
+	if(transfer_on_attack && target.can_inject())
 		var/datum/reagents/dip = container.reagents
 		if(dip.total_volume)
 			var/datum/reagents/reactants = new
