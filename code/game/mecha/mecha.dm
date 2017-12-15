@@ -247,7 +247,7 @@
 	radio.name = "[src] radio"
 	radio.icon = icon
 	radio.icon_state = icon_state
-	radio.subspace_transmission = 1
+	radio.subspace_transmission = TRUE
 
 /obj/mecha/proc/can_use(mob/user)
 	if(user != occupant)
