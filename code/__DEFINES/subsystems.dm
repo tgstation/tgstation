@@ -70,6 +70,40 @@
 #define INIT_ORDER_SQUEAK -40
 #define INIT_ORDER_PERSISTENCE -100
 
+// Subsystem fire priority, from lowest to highest priority
+// If the subsystem isn't listed here it's either DEFAULT or PROCESS (if it's a processing subsystem child)
+
+#define FIRE_PRIORITY_IDLE_NPC		1
+#define FIRE_PRIORITY_SERVER_MAINT	1
+
+#define FIRE_PRIORITY_GARBAGE		4
+#define FIRE_PRIORITY_RESEARCH		4
+#define FIRE_PRIORITY_AIR			5
+#define FIRE_PRIORITY_NPC			5
+#define FIRE_PRIORITY_PROCESS		6
+#define FIRE_PRIORITY_THROWING		6
+#define FIRE_PRIORITY_FLIGHTPACKS	7
+#define FIRE_PRIORITY_SPACEDRIFT	7
+#define FIRE_PRIOTITY_SMOOTHING		8
+#define FIRE_PRIORITY_ORBIT			8
+#define FIRE_PRIORITY_OBJ			9
+#define FIRE_PRIORUTY_FIELDS		9
+#define FIRE_PRIORITY_ACID			9
+#define FIRE_PRIOTITY_BURNING		9
+#define FIRE_PRIORITY_INBOUNDS		9
+
+#define FIRE_PRIORITY_DEFAULT		10
+
+#define FIRE_PRIORITY_PARALLAX		11
+#define FIRE_PRIORITY_NETWORKS		12
+#define FIRE_PRIORITY_MOBS			13
+#define FIRE_PRIORITY_TGUI			14
+
+#define FIRE_PRIORITY_TICKER		19
+#define FIRE_PRIORITY_OVERLAYS		20
+
+#define FIRE_PRIORITY_INPUT			100 // This must always always be the max highest priority. Player input must never be lost.
+
 // SS runlevels
 
 #define RUNLEVEL_INIT 0
