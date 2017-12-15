@@ -83,7 +83,6 @@ h1.alert, h2.alert		{color: #000000;}
 .green					{color: #03ff39;}
 .shadowling				{color: #3b2769;}
 .cult					{color: #960000;}
-.cultitalic				{color: #960000;	font-style: italic;}
 .cultlarge				{color: #960000; font-weight: bold; font-size: 3;}
 .narsie					{color: #960000; font-weight: bold; font-size: 15;}
 .narsiesmall			{color: #960000; font-weight: bold; font-size: 6;}
@@ -92,7 +91,6 @@ h1.alert, h2.alert		{color: #000000;}
 .hierophant_warning		{color: #660099; font-style: italic;}
 .purple					{color: #5e2d79;}
 .holoparasite			{color: #35333a;}
-.holoparasitebold		{color: #35333a;	font-weight: bold;}
 
 .revennotice			{color: #1d2953;}
 .revenboldnotice		{color: #1d2953;	font-weight: bold;}
@@ -101,8 +99,6 @@ h1.alert, h2.alert		{color: #000000;}
 .revenwarning			{color: #760fbb;	font-style: italic;}
 .revendanger			{color: #760fbb;	font-weight: bold; font-size: 3;}
 .umbra					{color: #5000A0;}
-.umbra_bold				{color: #5000A0;	font-weight: bold;}
-.umbra_italics			{color: #5000A0;	font-style: italic;}
 .umbra_emphasis			{color: #5000A0;	font-weight: bold;	font-style: italic;}
 .umbra_large			{color: #5000A0; font-size: 3; font-weight: bold; font-style: italic;}
 
@@ -115,7 +111,6 @@ h1.alert, h2.alert		{color: #000000;}
 .ratvar					{color: #BE8700; font-size: 6; font-weight: bold; font-style: italic;}
 .alloy					{color: #42474D;}
 .heavy_alloy			{color: #42474D; font-weight: bold; font-style: italic;}
-.large_alloy			{color: #42474D; font-size: 3;}
 .nezbere_large			{color: #42474D; font-size: 3; font-weight: bold; font-style: italic;}
 .nezbere				{color: #42474D; font-weight: bold; font-style: italic;}
 .nezbere_small			{color: #42474D;}
@@ -136,7 +131,6 @@ h1.alert, h2.alert		{color: #000000;}
 .ghostalert				{color: #5c00e6;	font-style: italic; font-weight: bold;}
 
 .alien					{color: #543354;}
-.alienbold				{color: #543354;	font-weight: bold;}
 .noticealien			{color: #00c000;}
 .alertalien				{color: #00c000;	font-weight: bold;}
 .changeling				{color: #800080;	font-style: italic;}
@@ -154,10 +148,6 @@ h1.alert, h2.alert		{color: #000000;}
 .big					{font-size: 3;}
 .reallybig				{font-size: 4;}
 .extremelybig			{font-size: 5;}
-.small_bold				{font-weight: bold; font-size: 1;}
-.big_bold				{font-weight: bold; font-size: 3;}
-.reallybig_bold			{font-weight: bold; font-size: 4;}
-.extremelybig_bold		{font-weight: bold; font-size: 5;}
 .greentext				{color: #00FF00;	font-size: 3;}
 .redtext				{color: #FF0000;	font-size: 3;}
 .clown					{color: #FF69Bf;	font-size: 3; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: bold;}

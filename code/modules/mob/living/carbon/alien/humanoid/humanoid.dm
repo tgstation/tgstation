@@ -41,7 +41,7 @@
 	var/list/dat = list()
 	dat += {"
 	<HR>
-	<span class='big_bold'>[name]</span>
+	<span class='big bold'>[name]</span>
 	<HR>"}
 	for(var/i in 1 to held_items.len)
 		var/obj/item/I = get_item_for_held_index(i)
