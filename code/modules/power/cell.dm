@@ -14,6 +14,7 @@
 	var/charge = 0	// note %age conveted to actual charge in New
 	var/maxcharge = 1000
 	materials = list(MAT_METAL=700, MAT_GLASS=50)
+	grind_results = list("lithium" = 15, "iron" = 5, "silicon" = 5)
 	var/rigged = 0		// true if rigged to explode
 	var/chargerate = 100 //how much power is given every tick in a recharger
 	var/self_recharge = 0 //does it self recharge, over time, or not?
@@ -107,6 +108,7 @@
 		to_chat(user, "<span class='notice'>You inject the solution into the power cell.</span>")
 		if(S.reagents.has_reagent("plasma", 5))
 			rigged = 1
+			grind_results["plasma"] = 5
 		S.reagents.clear_reagents()
 
 
