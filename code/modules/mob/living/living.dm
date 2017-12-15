@@ -474,6 +474,9 @@
 	if(lying && !buckled && prob(getBruteLoss()*200/maxHealth))
 		makeTrail(newloc, T, old_direction)
 
+
+
+
 /mob/living/movement_delay(ignorewalk = 0)
 	. = 0
 	if(isopenturf(loc) && !is_flying())
