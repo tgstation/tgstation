@@ -5,6 +5,7 @@
 	gain_text = "<span class='notice'>You feel in good company, for some reason.</span>"
 	lose_text = "<span class='warning'>You feel lonely again.</span>"
 	var/mob/camera/imaginary_friend/friend
+	var/friend_initialized = FALSE
 
 /datum/brain_trauma/special/imaginary_friend/on_gain()
 	..()
@@ -16,10 +17,22 @@
 		friend.yank()
 	if(!friend)
 		qdel(src)
+		return
+	if(!friend.client && friend_initialized)
+		addtimer(CALLBACK(src, .proc/reroll_friend), 600)
 
 /datum/brain_trauma/special/imaginary_friend/on_lose()
 	..()
 	QDEL_NULL(friend)
+
+//If the friend goes afk, make a brand new friend. Plenty of fish in the sea of imagination.
+/datum/brain_trauma/special/imaginary_friend/proc/reroll_friend()
+	if(friend.client) //reconnected
+		return
+	friend_initialized = FALSE
+	QDEL_NULL(friend)
+	make_friend()
+	get_ghost()
 
 /datum/brain_trauma/special/imaginary_friend/proc/make_friend()
 	friend = new(get_turf(src), src)
@@ -30,6 +43,7 @@
 	if(LAZYLEN(candidates))
 		var/client/C = pick(candidates)
 		friend.key = C.key
+		friend_initialized = TRUE
 	else
 		qdel(src)
 
@@ -64,17 +78,25 @@
 	Show()
 
 /mob/camera/imaginary_friend/proc/Show()
+	if(!client) //nobody home
+		return
+
+	//Remove old image from owner and friend
 	if(owner.client)
 		owner.client.images.Remove(current_image)
-	if(client)
-		client.images.Remove(current_image)
+
+	client.images.Remove(current_image)
+
+	//Generate image from the static icon and the current dir
 	current_image = image(human_image, src, , MOB_LAYER, dir=src.dir)
 	current_image.override = TRUE
 	current_image.name = name
+
+	//Add new image to owner and friend
 	if(owner.client)
 		owner.client.images |= current_image
-	if(client)
-		client.images |= current_image
+
+	client.images |= current_image
 
 /mob/camera/imaginary_friend/Destroy()
 	if(owner.client)
@@ -84,7 +106,7 @@
 	return ..()
 
 /mob/camera/imaginary_friend/proc/yank()
-	if(!client) //don't bother the user with a braindead ghost every few steps
+	if(!client) //don't bother if the friend is braindead
 		return
 	forceMove(get_turf(owner))
 	Show()
@@ -118,14 +140,13 @@
 /mob/camera/imaginary_friend/emote(act,m_type=1,message = null)
 	return
 
-/mob/camera/imaginary_friend/forceMove(NewLoc, Dir = 0)
+/mob/camera/imaginary_friend/forceMove(atom/destination)
+	dir = get_dir(get_turf(src), destination)
 	loc = NewLoc
-	dir = Dir
 	if(get_dist(src, owner) > 9)
 		yank()
-		return TRUE
+		return
 	Show()
-	return TRUE
 
 /mob/camera/imaginary_friend/movement_delay()
 	return 2
