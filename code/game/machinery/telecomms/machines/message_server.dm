@@ -30,11 +30,12 @@
 	idle_power_usage = 10
 	active_power_usage = 100
 
+	id = "Messaging Server"
+	network = "tcommsat"
 	autolinkers = list("common")
 
 	var/list/datum/data_pda_msg/pda_msgs = list()
 	var/list/datum/data_rc_msg/rc_msgs = list()
-	var/active = TRUE
 	var/decryptkey
 
 /obj/machinery/telecomms/message_server/Initialize()
@@ -51,13 +52,13 @@
 	return newKey
 
 /obj/machinery/telecomms/message_server/process()
-	if(active && (stat & (BROKEN|NOPOWER)))
-		active = 0
+	if(toggled && (stat & (BROKEN|NOPOWER)))
+		toggled = FALSE
 	update_icon()
 
 /obj/machinery/telecomms/message_server/receive_information(datum/signal/subspace/pda/signal, obj/machinery/telecomms/machine_from)
 	// can't log non-PDA signals
-	if(!istype(signal) || !signal.data["message"] || !active)
+	if(!istype(signal) || !signal.data["message"] || !toggled)
 		return
 
 	// log the signal
@@ -68,15 +69,10 @@
 	if(!relay_information(signal, /obj/machinery/telecomms/hub))
 		relay_information(signal, /obj/machinery/telecomms/broadcaster)
 
-/obj/machinery/telecomms/message_server/attack_hand(mob/user)
-	to_chat(user, "You toggle PDA message passing from [active ? "On" : "Off"] to [active ? "Off" : "On"].")
-	active = !active
-	update_icon()
-
 /obj/machinery/telecomms/message_server/update_icon()
 	if((stat & (BROKEN|NOPOWER)))
 		icon_state = "server-nopower"
-	else if (!active)
+	else if (!toggled)
 		icon_state = "server-off"
 	else
 		icon_state = "server-on"

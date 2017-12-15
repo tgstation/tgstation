@@ -344,7 +344,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			var/pass = FALSE
 			var/datum/data_rc_msg/log = new(href_list["department"], department, log_msg, msgStamped, msgVerified, priority)
 			for (var/obj/machinery/telecomms/message_server/MS in GLOB.telecomms_list)
-				if (MS.active)
+				if (MS.toggled)
 					MS.rc_msgs += log
 					pass = TRUE
 
