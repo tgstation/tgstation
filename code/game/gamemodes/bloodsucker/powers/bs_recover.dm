@@ -6,7 +6,7 @@
 	name = "Preternatural Recovery"
 	desc = "With uncanny grace, recover from stun or fall. If grappled, you'll throw your attacker to the ground."
 	bloodcost = 10
-	charge_max = 20
+	charge_max = 30
 	amToggleable = FALSE
 	stat_allowed = CONSCIOUS
 	action_icon_state = "power_recover"				// State for that image inside icon

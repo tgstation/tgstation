@@ -7,7 +7,7 @@
 	desc = "Select a person or location to sprint there in the blink of an eye. Your target may be knocked to the floor."// While active, your running speed will also increase."
 	bloodcost = 5
 	//bloodcost_constant = 1
-	charge_max = 10
+	charge_max = 50
 	amToggleable = TRUE
 	amTargetted = TRUE
 	action_icon_state = "power_speed"				// State for that image inside icon
@@ -88,7 +88,8 @@
 		var/mob/living/newtarget = locate(/mob/living) in oview(1, user)
 		if (newtarget && newtarget != target && !newtarget.IsKnockdown())
 			playsound(get_turf(newtarget), "sound/weapons/punch[rand(1,4)].ogg", 20, 1, -1)
-			newtarget.Knockdown(20)
+			if (rand(0,2) == 0)
+				newtarget.Knockdown(10)
 
 	//Knockdown Target!
 	if (isliving(target) && target.Adjacent(user))
@@ -99,7 +100,7 @@
 		// Knockback!
 		M.visible_message("<span class='danger'>[user] has knocked [M] down!</span>", \
 						  "<span class='userdanger'>[user] has knocked [M] down!</span>", null, COMBAT_MESSAGE_RANGE)
-		M.Knockdown(rand(20,50))
+		M.Knockdown(rand(10,20))
 
 	//while (
 	user.update_canmove()

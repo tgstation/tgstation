@@ -41,3 +41,5 @@ Ss4gogeta0	=	Administrator
 #TRIAL ADMINS
 Windarkata	=	Trial Admin
 Bricksqwad	=	Trial Admin
+Ishiro	=	Trial Admin
+
