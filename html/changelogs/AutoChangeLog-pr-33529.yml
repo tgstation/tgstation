@@ -1,0 +1,5 @@
+author: "AverageJoe82"
+delete-after: True
+changes: 
+  - rscadd: "drones now have night vision"
+  - rscdel: "drones no longer have lights"
