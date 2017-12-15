@@ -337,7 +337,6 @@
 		return ..()
 
 
-
 /obj/item/device/electronic_assembly/attack_self(mob/user)
 	if(!check_interactivity(user))
 		return
