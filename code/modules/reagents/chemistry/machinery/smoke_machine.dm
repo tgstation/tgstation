@@ -11,14 +11,13 @@
 	var/cooldown = 0
 	var/screen = "home"
 	var/useramount = 30 // Last used amount
-	var/volume = 300
-	var/setting = 9
-	var/max_range = 9
+	var/setting = 3 // displayed range is 3 * setting
+	var/max_range = 3 // displayed max range is 3 * max range
 
-/datum/effect_system/smoke_spread/chem/smoke_machine/set_up(datum/reagents/carry, setting = 3, efficiency = 10, loc)
-	amount = setting
+/datum/effect_system/smoke_spread/chem/smoke_machine/set_up(datum/reagents/carry, setting=1, efficiency=10, loc)
+	amount = setting * 3
 	carry.copy_to(chemholder, 20)
-	carry.remove_any(setting * 16 / efficiency)
+	carry.remove_any(amount * 16 / efficiency)
 	location = loc
 
 /datum/effect_system/smoke_spread/chem/smoke_machine
@@ -28,10 +27,10 @@
 	opaque = FALSE
 	alpha = 100
 
-
 /obj/machinery/smoke_machine/Initialize()
 	. = ..()
-	create_reagents(volume)
+	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
+		create_reagents(100 + 200 * B.rating)
 
 /obj/machinery/smoke_machine/update_icon()
 	if((!is_operational()) || (!on) || (reagents.total_volume == 0))
@@ -42,13 +41,11 @@
 
 /obj/machinery/smoke_machine/RefreshParts()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		volume = 100 + 200 * B.rating
+		reagents.maximum_volume = 100 + 200 * B.rating
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		efficiency = 9 + C.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		max_range = 3 + 3 * M.rating // 6 9 12 15
-		if(max_range < 9)
-			max_range = 9
+		max_range = min(3, 1 + M.rating)
 
 /obj/machinery/smoke_machine/process()
 	..()
@@ -100,6 +97,7 @@
 	data["active"] = on
 	data["setting"] = setting
 	data["screen"] = screen
+	data["maxSetting"] = max_range
 	return data
 
 /obj/machinery/smoke_machine/ui_act(action, params)
@@ -111,7 +109,7 @@
 			. = TRUE
 		if("setting")
 			var/amount = text2num(params["amount"])
-			if(amount > 0 && amount <= max_range && amount % 3 == 0)
+			if(amount in 1 to max_range)
 				setting = amount
 				. = TRUE
 		if("power")
