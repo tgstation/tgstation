@@ -146,7 +146,7 @@
 		timer = rand(1,15)
 
 /mob/living/simple_animal/shade/howling_ghost/proc/EtherealMove(direction)
-	loc = get_step(src, direction)
+	forceMove(get_step(src, direction))
 	setDir(direction)
 
 /mob/living/simple_animal/shade/howling_ghost/proc/roam()
@@ -220,7 +220,7 @@
 		timer = rand(5,15)
 		playsound(M.loc, pick('sound/spookoween/scary_horn.ogg','sound/spookoween/scary_horn2.ogg', 'sound/spookoween/scary_horn3.ogg'), 300, 1)
 		spawn(12)
-			loc = M.loc
+			forceMove(M.loc)
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/MoveToTarget()
 	stalk(target)

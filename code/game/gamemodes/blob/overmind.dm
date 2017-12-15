@@ -215,12 +215,12 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	if(placed)
 		var/obj/structure/blob/B = locate() in range("3x3", NewLoc)
 		if(B)
-			loc = NewLoc
+			forceMove(NewLoc)
 		else
 			return 0
 	else
 		var/area/A = get_area(NewLoc)
 		if(isspaceturf(NewLoc) || istype(A, /area/shuttle)) //if unplaced, can't go on shuttles or space tiles
 			return 0
-		loc = NewLoc
+		forceMove(NewLoc)
 		return 1
