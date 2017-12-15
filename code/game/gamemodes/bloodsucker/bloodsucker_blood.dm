@@ -182,7 +182,7 @@
 
 /obj/item/reagent_containers/blood/attack(mob/M, mob/user, def_zone)
 
-	if(user.a_intent == INTENT_HELP)
+	if(user.a_intent == INTENT_HELP && reagents.total_volume > 0)
 		if (user != M)
 			user.visible_message("<span class='userdanger'>[user] forces [M] to drink from the [src].</span>", \
 							  	"<span class='notice'>You put the [src] up to [M]'s mouth.</span>")
