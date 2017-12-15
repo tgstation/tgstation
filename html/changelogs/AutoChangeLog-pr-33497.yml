@@ -1,4 +1,0 @@
-author: "Cruix"
-delete-after: True
-changes: 
-  - bugfix: "Shuttles now place hyperspace ripples where they are about to land again."
