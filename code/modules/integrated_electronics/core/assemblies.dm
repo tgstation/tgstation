@@ -335,25 +335,7 @@
 					S.scan(I,user)
 					return TRUE
 		return ..()
-/*
-/obj/item/device/electronic_assembly/afterattack(atom/target, mob/user, proximity)
-	for(var/obj/item/integrated_circuit/input/sensor/S in assembly_components)
-		if(!proximity)
-			if(istype(S,/obj/item/integrated_circuit/input/sensor/ranged)||(!user))
-				if(user.client)
-					if(!(target in view(user.client)))
-						continue
-				else
-					if(!(target in view(user)))
-						continue
-			else
-				continue
-		S.set_pin_data(IC_OUTPUT, 1, WEAKREF(target))
-		S.check_then_do_work()
-		S.scan(target)
 
-	visible_message("<span class='notice'> [user] waves [src] around [target].</span>")
-*/
 
 
 /obj/item/device/electronic_assembly/attack_self(mob/user)

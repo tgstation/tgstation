@@ -36,6 +36,11 @@
 	var/smoke_radius = 5
 	var/notified = FALSE
 
+/obj/item/integrated_circuit/reagent/smoke/interact(mob/user)
+	set_pin_data(IC_OUTPUT, 2, WEAKREF(src))
+	push_data()
+	..()
+
 /obj/item/integrated_circuit/reagent/smoke/on_reagent_change(changetype)
 	//reset warning only if we have reagents now
 	if(changetype == ADD_REAGENT)

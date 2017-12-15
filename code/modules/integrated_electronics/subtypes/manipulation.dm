@@ -316,7 +316,7 @@
 		var/mode = get_pin_data(IC_INPUT, 2)
 
 		if(mode == 1)
-			if(check_target(AM, exclude_contents = TRUE))
+			if(check_target(AM))
 				if((contents.len < max_items) && (!max_w_class || AM.w_class <= max_w_class))
 					AM.forceMove(src)
 		if(mode == 0)
