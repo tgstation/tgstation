@@ -245,7 +245,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 						dat += "<li><a href='byond://?src=[REF(src)];choice=54'><img src=pda_medbot.png>Bots Access</a></li>"
 					if (cartridge.access & CART_JANITOR)
 						dat += "<li><a href='byond://?src=[REF(src)];choice=49'><img src=pda_bucket.png>Custodial Locator</a></li>"
-					if (istype(cartridge.radio, /obj/item/radio/integrated/signal))
+					if (istype(cartridge.radio))
 						dat += "<li><a href='byond://?src=[REF(src)];choice=40'><img src=pda_signaler.png>Signaler System</a></li>"
 					if (cartridge.access & CART_NEWSCASTER)
 						dat += "<li><a href='byond://?src=[REF(src)];choice=53'><img src=pda_notes.png>Newscaster Access </a></li>"
@@ -543,7 +543,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 					if("2")		// Eject pAI device
 						var/turf/T = get_turf(src.loc)
 						if(T)
-							pai.loc = T
+							pai.forceMove(T)
 
 //LINK FUNCTIONS===================================
 
@@ -578,7 +578,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			M.put_in_hands(id)
 			to_chat(usr, "<span class='notice'>You remove the ID from the [name].</span>")
 		else
-			id.loc = get_turf(src)
+			id.forceMove(drop_location())
 		id = null
 		update_icon()
 

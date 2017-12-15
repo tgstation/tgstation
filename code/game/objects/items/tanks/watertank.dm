@@ -49,7 +49,7 @@
 			on = FALSE
 			to_chat(user, "<span class='warning'>You need a free hand to hold the mister!</span>")
 			return
-		noz.loc = user
+		noz.forceMove(user)
 	else
 		//Remove from their hands and put back "into" the tank
 		remove_noz()
@@ -124,14 +124,14 @@
 	if(check_tank_exists(parent_tank, src))
 		tank = parent_tank
 		reagents = tank.reagents	//This mister is really just a proxy for the tank's reagents
-		loc = tank
+		forceMove(tank)
 	return
 
 /obj/item/reagent_containers/spray/mister/dropped(mob/user)
 	..()
 	to_chat(user, "<span class='notice'>The mister snaps back onto the watertank.</span>")
 	tank.on = 0
-	loc = tank
+	forceMove(tank)
 
 /obj/item/reagent_containers/spray/mister/attack_self()
 	return
@@ -146,7 +146,7 @@
 /obj/item/reagent_containers/spray/mister/Move()
 	..()
 	if(loc != tank.loc)
-		loc = tank.loc
+		forceMove(tank.loc)
 
 /obj/item/reagent_containers/spray/mister/afterattack(obj/target, mob/user, proximity)
 	if(target.loc == loc) //Safety check so you don't fill your mister with mutagen or something and then blast yourself in the face with it
@@ -236,13 +236,13 @@
 		tank = parent_tank
 		reagents = tank.reagents
 		max_water = tank.volume
-		loc = tank
+		forceMove(tank)
 
 
 /obj/item/extinguisher/mini/nozzle/Move()
 	..()
 	if(loc != tank.loc)
-		loc = tank
+		forceMove(tank)
 	return
 
 /obj/item/extinguisher/mini/nozzle/attack_self(mob/user)
@@ -268,7 +268,7 @@
 	..()
 	to_chat(user, "<span class='notice'>The nozzle snaps back onto the tank!</span>")
 	tank.on = 0
-	loc = tank
+	forceMove(tank)
 
 /obj/item/extinguisher/mini/nozzle/afterattack(atom/target, mob/user)
 	if(nozzle_mode == EXTINGUISHER)

@@ -63,6 +63,26 @@
 				antag_info["objectives"] += list(list("objective_type"=O.type,"text"=O.explanation_text,"result"=result))
 		SSblackbox.record_feedback("associative", "antagonists", 1, antag_info)
 
+/datum/controller/subsystem/ticker/proc/gather_newscaster()
+	var/json_file = file("[GLOB.log_directory]/newscaster.json")
+	var/list/file_data = list()
+	var/pos = 1
+	for(var/datum/newscaster/feed_channel/channel in GLOB.news_network.network_channels)
+		if(!GLOB.news_network.network_channels.len)
+			break
+		file_data["[pos]"] = list("channel name" = "[channel.channel_name]", "author" = "[channel.author]", "censored" = channel.censored ? 1 : 0, "author censored" = channel.authorCensor ? 1 : 0, "messages" = list())
+		if(!channel.messages.len)
+			continue
+		for(var/datum/newscaster/feed_message/message in channel.messages)
+			file_data["[pos]"]["messages"] |= list("author" = "[message.author]", "time stamp" = "[message.time_stamp]", "censored" = message.bodyCensor ? 1 : 0, "author censored" = message.authorCensor ? 1 : 0, "photo file" = "[message.photo_file]", "photo caption" = "[message.caption]", "body" = "[message.body]", "comments" = list())
+			if(!message.comments.len)
+				continue
+			for(var/datum/newscaster/feed_comment/comment in message.comments)
+				file_data["[pos]"]["messages"]["comments"] = list("author" = "[comment.author]", "time stamp" = "[comment.time_stamp]", "body" = "[comment.body]")
+		pos++
+	if(GLOB.news_network.wanted_issue.active)
+		file_data["wanted"] = list("author" = "[GLOB.news_network.wanted_issue.scannedUser]", "criminal" = "[GLOB.news_network.wanted_issue.criminal]", "description" = "[GLOB.news_network.wanted_issue.body]", "photo file" = "[GLOB.news_network.wanted_issue.photo_file]")
+	WRITE_FILE(json_file, json_encode(file_data))
 
 /datum/controller/subsystem/ticker/proc/declare_completion()
 	set waitfor = FALSE
@@ -84,10 +104,10 @@
 
 	//Set news report and mode result
 	mode.set_round_result()
-	
+
 	send2irc("Server", "Round just ended.")
-	
-	if(CONFIG_GET(string/cross_server_address))
+
+	if(length(CONFIG_GET(keyed_string_list/cross_server)))
 		send_news_report()
 
 	CHECK_TICK
@@ -142,15 +162,15 @@
 	parts += mode.special_report()
 
 	CHECK_TICK
-	
+
 	//AI laws
 	parts += law_report()
-	
+
 	CHECK_TICK
 
 	//Antagonists
 	parts += antag_report()
-	
+
 	CHECK_TICK
 	//Medals
 	parts += medal_report()
@@ -202,7 +222,7 @@
 
 /datum/controller/subsystem/ticker/proc/show_roundend_report(client/C,common_report)
 	var/list/report_parts = list()
-	
+
 	report_parts += personal_report(C)
 	report_parts += common_report
 
@@ -212,7 +232,7 @@
 	roundend_report.set_content(report_parts.Join())
 	roundend_report.stylesheets = list()
 	roundend_report.add_stylesheet("roundend",'html/browser/roundend.css')
-	
+
 	roundend_report.open(0)
 
 /datum/controller/subsystem/ticker/proc/personal_report(client/C)
@@ -335,8 +355,8 @@
 			currrent_category = A.roundend_category
 			previous_category = A
 		result += A.roundend_report()
-		result += "<br>"
-	
+		result += "<br><br>"
+
 	if(all_antagonists.len)
 		var/datum/antagonist/last = all_antagonists[all_antagonists.len]
 		result += last.roundend_report_footer()

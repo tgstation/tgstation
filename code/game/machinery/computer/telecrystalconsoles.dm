@@ -51,7 +51,7 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 
 /obj/machinery/computer/telecrystals/uplinker/proc/ejectuplink()
 	if(uplinkholder)
-		uplinkholder.loc = get_turf(src.loc)
+		uplinkholder.forceMove(drop_location())
 		uplinkholder = null
 		update_icon()
 

@@ -8,6 +8,18 @@
 	if((movement_type & FLYING) && !floating)	//TODO: Better floating
 		float(on = TRUE)
 
+	if (client || registered_z) // This is a temporary error tracker to make sure we've caught everything
+		var/turf/T = get_turf(src)
+		if (client && registered_z != T.z)
+#ifdef TESTING
+			message_admins("[src] [ADMIN_FLW(src)] has somehow ended up in Z-level [T.z] despite being registered in Z-level [registered_z]. If you could ask them how that happened and notify coderbus, it would be appreciated.")
+#endif
+			log_game("Z-TRACKING: [src] has somehow ended up in Z-level [T.z] despite being registered in Z-level [registered_z].")
+			update_z(T.z)
+		else if (!client && registered_z)
+			log_game("Z-TRACKING: [src] of type [src.type] has a Z-registration despite not having a client.")
+			update_z(null)
+
 	if (notransform)
 		return
 	if(!loc)
