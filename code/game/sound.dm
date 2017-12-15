@@ -107,6 +107,12 @@
 	if(prefs && (prefs.toggles & SOUND_LOBBY))
 		SEND_SOUND(src, sound(SSticker.login_music, repeat = 0, wait = 0, volume = vol, channel = CHANNEL_LOBBYMUSIC)) // MAD JAMS
 
+/client/proc/playcreditsmusic(vol = 85)
+	set waitfor = FALSE
+	if(prefs && (prefs.toggles & SOUND_LOBBY))
+		SEND_SOUND(src, sound('sound/Fulpsounds/Fulp_Piano.ogg', repeat = 0, wait = 0, volume = vol, channel = CHANNEL_LOBBYMUSIC)) // FULPSTATION: Play end music! SO SAD!
+
+
 /proc/get_rand_frequency()
 	return rand(32000, 55000) //Frequency stuff only works with 45kbps oggs.
 
@@ -151,6 +157,8 @@
 				soundin = pick('sound/effects/can_open1.ogg', 'sound/effects/can_open2.ogg', 'sound/effects/can_open3.ogg')
 			if("bullet_miss")
 				soundin = pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg')
+			if("gun_dry_fire")
+				soundin = pick('sound/weapons/dry_fire_1.ogg', 'sound/weapons/dry_fire_2.ogg', 'sound/weapons/dry_fire_3.ogg', 'sound/weapons/dry_fire_4.ogg')
 			if("law")
 				soundin = pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg')
 			if("honkbot_e")

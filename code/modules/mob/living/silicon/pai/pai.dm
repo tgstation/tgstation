@@ -51,7 +51,7 @@
 	var/obj/machinery/door/hackdoor		// The airlock being hacked
 	var/hackprogress = 0				// Possible values: 0 - 100, >= 100 means the hack is complete and will be reset upon next check
 
-	var/obj/item/radio/integrated/signal/sradio // AI's signaller
+	var/obj/item/integrated_signaler/signaler // AI's signaller
 
 	var/holoform = FALSE
 	var/canholo = TRUE
@@ -99,9 +99,9 @@
 		var/newcardloc = P
 		P = new /obj/item/device/paicard(newcardloc)
 		P.setPersonality(src)
-	loc = P
+	forceMove(P)
 	card = P
-	sradio = new(src)
+	signaler = new(src)
 	if(!radio)
 		radio = new /obj/item/device/radio(src)
 

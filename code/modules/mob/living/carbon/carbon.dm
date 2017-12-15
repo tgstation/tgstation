@@ -38,7 +38,7 @@
 
 				if(prob(src.getBruteLoss() - 50))
 					for(var/atom/movable/A in stomach_contents)
-						A.loc = loc
+						A.forceMove(drop_location())
 						stomach_contents.Remove(A)
 					src.gib()
 
@@ -332,7 +332,7 @@
 		if (client)
 			client.screen -= W
 		if (W)
-			W.loc = loc
+			W.forceMove(drop_location())
 			W.dropped(src)
 			if (W)
 				W.layer = initial(W.layer)
@@ -345,7 +345,7 @@
 		if (client)
 			client.screen -= W
 		if (W)
-			W.loc = loc
+			W.forceMove(drop_location())
 			W.dropped(src)
 			if (W)
 				W.layer = initial(W.layer)
@@ -372,7 +372,7 @@
 
 	else
 		if(I == handcuffed)
-			handcuffed.loc = loc
+			handcuffed.forceMove(drop_location())
 			handcuffed.dropped(src)
 			handcuffed = null
 			if(buckled && buckled.buckle_requires_restraints)
@@ -380,7 +380,7 @@
 			update_handcuffed()
 			return
 		if(I == legcuffed)
-			legcuffed.loc = loc
+			legcuffed.forceMove(drop_location())
 			legcuffed.dropped()
 			legcuffed = null
 			update_inv_legcuffed()
@@ -786,7 +786,7 @@
 		if(prob(50))
 			organs_amt++
 			O.Remove(src)
-			O.loc = get_turf(src)
+			O.forceMove(drop_location())
 	if(organs_amt)
 		to_chat(user, "<span class='notice'>You retrieve some of [src]\'s internal organs!</span>")
 

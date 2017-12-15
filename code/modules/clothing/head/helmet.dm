@@ -283,7 +283,7 @@
 			for(var/obj/item/device/flashlight/seclite/S in src)
 				to_chat(user, "<span class='notice'>You unscrew the seclite from [src].</span>")
 				F = null
-				S.loc = get_turf(user)
+				S.forceMove(user.drop_location())
 				update_helmlight(user)
 				S.update_brightness(user)
 				update_icon()

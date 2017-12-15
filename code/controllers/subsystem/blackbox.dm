@@ -8,9 +8,10 @@ SUBSYSTEM_DEF(blackbox)
 	var/list/feedback = list()	//list of datum/feedback_variable
 	var/triggertime = 0
 	var/sealed = FALSE	//time to stop tracking stats?
-	var/list/versions = list("time_dilation_current" = 2,
+	var/list/versions = list("antagonists" = 3,
+							"admin_secrets_fun_used" = 2,
+							"time_dilation_current" = 3,
 							"science_techweb_unlock" = 2) //associative list of any feedback variables that have had their format changed since creation and their current version, remember to update this
-
 
 /datum/controller/subsystem/blackbox/Initialize()
 	triggertime = world.time
@@ -218,7 +219,10 @@ Versioning
 			var/pos = length(FV.json["data"]) + 1
 			FV.json["data"]["[pos]"] = list() //in 512 "pos" can be replaced with "[FV.json["data"].len+1]"
 			for(var/i in data)
-				FV.json["data"]["[pos]"]["[i]"] = "[data[i]]" //and here with "[FV.json["data"].len]"
+				if(islist(data[i]))
+					FV.json["data"]["[pos]"]["[i]"] = data[i] //and here with "[FV.json["data"].len]"
+				else
+					FV.json["data"]["[pos]"]["[i]"] = "[data[i]]" 
 		else
 			CRASH("Invalid feedback key_type: [key_type]")
 

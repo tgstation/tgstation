@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - code_imp: "Remote signaler and other non-telecomms radio code has been cleaned up."

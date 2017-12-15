@@ -216,7 +216,7 @@
 		if(!src.tank)
 			return
 		to_chat(user, "<span class='notice'>You detach \the [thetank] from \the [src].</span>")
-		src.tank.loc = get_turf(user)
+		src.tank.forceMove(user.drop_location())
 		user.put_in_hands(tank)
 		src.tank = null
 	if(!removing)
@@ -265,7 +265,7 @@
 /obj/item/pneumatic_cannon/pie/Initialize()
 	. = ..()
 	allowed_typecache = pie_typecache
-	
+
 /obj/item/pneumatic_cannon/pie/selfcharge
 	automatic = TRUE
 	selfcharge = TRUE

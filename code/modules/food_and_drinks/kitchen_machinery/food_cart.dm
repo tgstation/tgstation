@@ -119,7 +119,7 @@
 		else
 			for(var/obj/O in contents)
 				if(sanitize(O.name) == href_list["dispense"])
-					O.loc = src.loc
+					O.forceMove(drop_location())
 					break
 
 	if(href_list["portion"])

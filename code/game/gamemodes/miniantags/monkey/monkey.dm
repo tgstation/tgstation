@@ -105,13 +105,18 @@
 	monkey_mind.special_role = null
 
 
-/datum/game_mode/monkey/declare_completion()
+/datum/game_mode/monkey/set_round_result()
+	..()
 	if(check_monkey_victory())
 		SSticker.mode_result = "win - monkey win"
-		to_chat(world, "<span class='userdanger'>The monkeys have overthrown their captors! Eeek eeeek!!</span>")
 	else
 		SSticker.mode_result = "loss - staff stopped the monkeys"
-		to_chat(world, "<span class='userdanger'>The staff managed to contain the monkey infestation!</span>")
+
+/datum/game_mode/monkey/special_report()
+	if(check_monkey_victory())
+		return "<span class='redtext big'>The monkeys have overthrown their captors! Eeek eeeek!!</span>"
+	else
+		return "<span class='redtext big'>The staff managed to contain the monkey infestation!</span>"
 
 /datum/game_mode/monkey/generate_report()
 	return "Reports of an ancient [pick("retrovirus", "flesh eating bacteria", "disease", "magical curse blamed on viruses", "banana blight")] outbreak that turn humans into monkeys has been reported in your quadrant.  Any such infections may be treated with banana juice.  If an outbreak occurs, ensure the station is quarantined to prevent a largescale outbreak at CentCom."
