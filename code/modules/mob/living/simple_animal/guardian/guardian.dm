@@ -45,7 +45,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/range = 10 //how far from the user the spirit can be
 	var/toggle_button_type = /obj/screen/guardian/ToggleMode/Inactive //what sort of toggle button the hud uses
 	var/datum/guardianname/namedatum = new/datum/guardianname()
-	var/playstyle_string = "<span class='holoparasite'>You are a standard Guardian. You shouldn't exist!</span>"
+	var/playstyle_string = "<span class='holoparasitebold'>You are a standard Guardian. You shouldn't exist!</span>"
 	var/magic_fluff_string = "<span class='holoparasite'>You draw the Coder, symbolizing bugs and errors. This shouldn't happen! Submit a bug report!</span>"
 	var/tech_fluff_string = "<span class='holoparasite'>BOOT SEQUENCE COMPLETE. ERROR MODULE LOADED. THIS SHOULDN'T HAPPEN. Submit a bug report!</span>"
 	var/carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP SOME SORT OF HORRIFIC BUG BLAME THE CODERS CARP CARP CARP</span>"
