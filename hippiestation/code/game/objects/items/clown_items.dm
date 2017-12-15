@@ -1,4 +1,4 @@
-#define HORN_BRAIN_DAMAGE 10
+#define HORN_BRAIN_DAMAGE 5
 
 /obj/item/bikehorn/golden/retardhorn/attack()
 	flip_mobs()
@@ -17,7 +17,7 @@
 			var/mob/living/carbon/human/H = M
 			if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
 				continue
-		M.adjustBrainLoss(HORN_BRAIN_DAMAGE)
+		M.adjustBrainLoss(HORN_BRAIN_DAMAGE, 75)
 		log_admin("[key_name(user)] dealt brain damage to [key_name(M)] with the Extra annoying bike horn")
 
 #undef HORN_BRAIN_DAMAGE
