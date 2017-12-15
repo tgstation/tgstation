@@ -20,6 +20,7 @@
 	var/charge_tick = FALSE
 	var/charge_delay = 4
 	var/use_cyborg_cell = TRUE
+	max_integrity = 50
 
 /obj/item/device/electronic_assembly/proc/check_interactivity(mob/user)
 	return user.canUseTopic(src,be_close = TRUE)
@@ -29,6 +30,8 @@
 	.=..()
 	START_PROCESSING(SScircuit, src)
 	materials[MAT_METAL] = round((max_complexity + max_components) / 4) * SScircuit.cost_multiplier
+	if (!armor)
+		armor = list(melee = 50, bullet = 70, laser = 70, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 0, acid = 0)
 
 
 
@@ -326,7 +329,32 @@
 		interact(user)
 		return TRUE
 	else
+		if(user.a_intent == INTENT_HELP)
+			for(var/obj/item/integrated_circuit/input/objscaner/S in assembly_components)
+				if(S.check_then_do_work())
+					S.scan(I,user)
+					return TRUE
 		return ..()
+/*
+/obj/item/device/electronic_assembly/afterattack(atom/target, mob/user, proximity)
+	for(var/obj/item/integrated_circuit/input/sensor/S in assembly_components)
+		if(!proximity)
+			if(istype(S,/obj/item/integrated_circuit/input/sensor/ranged)||(!user))
+				if(user.client)
+					if(!(target in view(user.client)))
+						continue
+				else
+					if(!(target in view(user)))
+						continue
+			else
+				continue
+		S.set_pin_data(IC_OUTPUT, 1, WEAKREF(target))
+		S.check_then_do_work()
+		S.scan(target)
+
+	visible_message("<span class='notice'> [user] waves [src] around [target].</span>")
+*/
+
 
 /obj/item/device/electronic_assembly/attack_self(mob/user)
 	if(!check_interactivity(user))
@@ -386,6 +414,13 @@
 		var/obj/item/integrated_circuit/IC = I
 		IC.ext_moved(oldLoc, dir)
 
+/obj/item/device/electronic_assembly/stop_pulling()
+	..()
+	for(var/I in assembly_components)
+		var/obj/item/integrated_circuit/IC = I
+		IC.stop_pulling()
+
+
 // Returns the object that is supposed to be used in attack messages, location checks, etc.
 // Override in children for special behavior.
 /obj/item/device/electronic_assembly/proc/get_object()
@@ -405,6 +440,7 @@
 
 /obj/item/device/electronic_assembly/default //The /default electronic_assemblys are to allow the introduction of the new naming scheme without breaking old saves.
 	name = "type-a electronic assembly"
+
 
 /obj/item/device/electronic_assembly/calc
 	name = "type-b electronic assembly"
