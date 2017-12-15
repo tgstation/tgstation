@@ -102,7 +102,8 @@
 	dat += "</font>"
 	temp = ""
 	user << browse(dat, "window=tcommachine;size=520x500;can_resize=0")
-	onclose(user, "dormitory")
+	onclose(user, "tcommachine")
+	return TRUE
 
 // Returns a multitool from a user depending on their mobtype.
 
