@@ -64,6 +64,8 @@
 	var/zoom_out_amt = 0
 	var/datum/action/toggle_scope_zoom/azoom
 
+	var/next_empty_message
+
 /obj/item/gun/Initialize()
 	. = ..()
 	if(pin)
@@ -104,7 +106,9 @@
 	return TRUE
 
 /obj/item/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
-	to_chat(user, "<span class='danger'>*click*</span>")
+	if (world.time > next_empty_message)
+		to_chat(user, "<span class='danger'>*click*</span>")
+		next_empty_message = world.time + 20
 	playsound(src, "gun_dry_fire", 50, 1)
 
 
