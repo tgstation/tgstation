@@ -14,7 +14,7 @@
 	update_health_hud()
 
 	var/turf/T = get_turf(src)
-	if (istype(T))
+	if (isturf(T))
 		update_z(T.z)
 
 	//Vents
