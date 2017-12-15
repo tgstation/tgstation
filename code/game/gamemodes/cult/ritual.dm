@@ -1,19 +1,11 @@
 /*
 
-This file contains the arcane tome files.
+This file contains the cult dagger and rune list code
 
 */
 
 
-/obj/item/tome
-	name = "arcane tome"
-	desc = "An old, dusty tome with frayed edges and a sinister-looking cover."
-	icon_state ="tome"
-	throw_speed = 2
-	throw_range = 5
-	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/tome/Initialize()
+/obj/item/melee/cultblade/dagger/Initialize()
 	. = ..()
 	if(!LAZYLEN(GLOB.rune_types))
 		GLOB.rune_types = list()
@@ -22,7 +14,7 @@ This file contains the arcane tome files.
 			var/obj/effect/rune/R = i_can_do_loops_now_thanks_remie
 			GLOB.rune_types[initial(R.cultist_name)] = R //Uses the cultist name for displaying purposes
 
-/obj/item/tome/examine(mob/user)
+/obj/item/melee/cultblade/dagger/examine(mob/user)
 	..()
 	if(iscultist(user) || isobserver(user))
 		to_chat(user, "<span class='cult'>The scriptures of the Geometer. Allows the scribing of runes and access to the knowledge archives of the cult of Nar-Sie.</span>")
@@ -30,11 +22,7 @@ This file contains the arcane tome files.
 		to_chat(user, "<span class='cult'>Striking another cultist with it will purge holy water from them.</span>")
 		to_chat(user, "<span class='cult'>Striking a noncultist, however, will sear their flesh.</span>")
 
-/obj/item/tome/attack(mob/living/M, mob/living/user)
-	if(!istype(M))
-		return
-	if(!iscultist(user))
-		return ..()
+/obj/item/melee/cultblade/dagger/attack(mob/living/M, mob/living/user)
 	if(iscultist(M))
 		if(M.reagents && M.reagents.has_reagent("holywater")) //allows cultists to be rescued from the clutches of ordained religion
 			to_chat(user, "<span class='cult'>You remove the taint from [M].</span>" )
@@ -42,22 +30,17 @@ This file contains the arcane tome files.
 			M.reagents.del_reagent("holywater")
 			M.reagents.add_reagent("unholywater",holy2unholy)
 			add_logs(user, M, "smacked", src, " removing the holy water from them")
-		return
-	M.take_bodypart_damage(0, 15) //Used to be a random between 5 and 20
-	playsound(M, 'sound/weapons/sear.ogg', 50, 1)
-	M.visible_message("<span class='danger'>[user] strikes [M] with the arcane tome!</span>", \
-					  "<span class='userdanger'>[user] strikes you with the tome, searing your flesh!</span>")
-	flick("tome_attack", src)
-	user.do_attack_animation(M)
-	add_logs(user, M, "smacked", src)
+			return FALSE
+	. = ..()
 
-/obj/item/tome/attack_self(mob/user)
+
+/obj/item/melee/cultblade/dagger/attack_self(mob/user)
 	if(!iscultist(user))
-		to_chat(user, "<span class='warning'>[src] seems full of unintelligible shapes, scribbles, and notes. Is this some sort of joke?</span>")
+		to_chat(user, "<span class='warning'>[src] is covered in unintelligible shapes and markings.</span>")
 		return
 	open_tome(user)
 
-/obj/item/tome/proc/open_tome(mob/user)
+/obj/item/melee/cultblade/dagger/proc/open_tome(mob/user)
 	var/choice = alert(user,"You open the tome...",,"Scribe Rune","More Information","Cancel")
 	switch(choice)
 		if("More Information")
@@ -67,7 +50,7 @@ This file contains the arcane tome files.
 		if("Cancel")
 			return
 
-/obj/item/tome/proc/read_tome(mob/user)
+/obj/item/melee/cultblade/dagger/proc/read_tome(mob/user)
 	var/text = ""
 	text += "<center><font color='red' size=3><b><i>Archives of the Dark One</i></b></font></center><br><br><br>"
 	text += "A rune's name and effects can be revealed by examining the rune.<br><br>"
@@ -171,7 +154,7 @@ This file contains the arcane tome files.
 	popup.open()
 	return 1
 
-/obj/item/tome/proc/scribe_rune(mob/living/user)
+/obj/item/melee/cultblade/dagger/proc/scribe_rune(mob/living/user)
 	var/turf/Turf = get_turf(user)
 	var/chosen_keyword
 	var/obj/effect/rune/rune_to_scribe
@@ -203,7 +186,7 @@ This file contains the arcane tome files.
 	A = get_area(src)
 	if(!src || QDELETED(src) || !Adjacent(user) || user.incapacitated() || !check_rune_turf(Turf, user))
 		return
-	
+
 	//AAAAAAAAAAAAAAAH, i'm rewriting enough for now so TODO: remove this shit
 	if(ispath(rune_to_scribe, /obj/effect/rune/narsie))
 		if(!summon_objective)
@@ -257,7 +240,7 @@ This file contains the arcane tome files.
 	to_chat(user, "<span class='cult'>The [lowertext(R.cultist_name)] rune [R.cultist_desc]</span>")
 	SSblackbox.record_feedback("tally", "cult_runes_scribed", 1, R.cultist_name)
 
-/obj/item/tome/proc/check_rune_turf(turf/T, mob/user)
+/obj/item/melee/cultblade/dagger/proc/check_rune_turf(turf/T, mob/user)
 	if(isspaceturf(T))
 		to_chat(user, "<span class='warning'>You cannot scribe runes in space!</span>")
 		return FALSE

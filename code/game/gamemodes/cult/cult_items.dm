@@ -1,3 +1,27 @@
+/obj/item/tome
+	name = "arcane tome"
+	desc = "An old, dusty tome with frayed edges and a sinister-looking cover."
+	icon_state ="tome"
+	throw_speed = 2
+	throw_range = 5
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/melee/cultblade/dagger
+	name = "ritual dagger"
+	desc = "A strange dagger said to be used by sinister groups for \"preparing\" a corpse before sacrificing it to their dark gods."
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "render"
+	item_state = "cultdagger"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	inhand_x_dimension = 32
+	inhand_y_dimension = 32
+	w_class = WEIGHT_CLASS_SMALL
+	force = 15
+	throwforce = 25
+	armour_penetration = 35
+	embed_chance = 0
+
 /obj/item/melee/cultblade
 	name = "eldritch longsword"
 	desc = "A sword humming with unholy energy. It glows with a dim red light."
@@ -48,29 +72,6 @@
 			user.emote("scream")
 			user.apply_damage(30, BRUTE, pick("l_arm", "r_arm"))
 			user.dropItemToGround(src)
-
-/obj/item/melee/cultblade/dagger
-	name = "sacrificial dagger"
-	desc = "A strange dagger said to be used by sinister groups for \"preparing\" a corpse before sacrificing it to their dark gods."
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "render"
-	item_state = "knife"
-	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
-	inhand_x_dimension = 32
-	inhand_y_dimension = 32
-	w_class = WEIGHT_CLASS_SMALL
-	force = 15
-	throwforce = 25
-	embed_chance = 75
-
-/obj/item/melee/cultblade/dagger/attack(mob/living/target, mob/living/carbon/human/user)
-	..()
-	if(iscarbon(target))
-		var/mob/living/carbon/C = target
-		C.bleed(50)
-		if(is_servant_of_ratvar(C) && C.reagents)
-			C.reagents.add_reagent("heparin", 1)
 
 /obj/item/twohanded/required/cult_bastard
 	name = "bloody bastard sword"
@@ -239,10 +240,15 @@
 
 /obj/item/restraints/legcuffs/bola/cult
 	name = "nar'sien bola"
-	desc = "A strong bola, bound with dark magic. Throw it to trip and slow your victim."
+	desc = "A strong bola, bound with dark magic that allows it to pass harmlessly through Nar'sien cultists. Throw it to trip and slow your victim."
 	icon_state = "bola_cult"
-	breakouttime = 45
-	knockdown = 10
+	breakouttime = 60
+	knockdown = 20
+
+/obj/item/restraints/legcuffs/bola/cult/throw_impact(atom/hit_atom)
+	if(iscultist(hit_atom))
+		return
+	. = ..()
 
 
 /obj/item/clothing/head/culthood

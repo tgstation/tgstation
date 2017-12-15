@@ -10,7 +10,6 @@ They are drawn with an arcane tome in blood, and are distinguishable to cultists
 Fake runes can be drawn in crayon to fool people.
 Runes can either be invoked by one's self or with many different cultists. Each rune has a specific incantation that the cultists will say when invoking it.
 
-To draw a rune, use an arcane tome.
 
 */
 
@@ -211,7 +210,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		log_game("Talisman Creation rune failed - already in use")
 		return
 
-	for(var/I in subtypesof(/obj/item/paper/talisman) - /obj/item/paper/talisman/malformed - /obj/item/paper/talisman/supply - /obj/item/paper/talisman/supply/weak - /obj/item/paper/talisman/summon_tome)
+	for(var/I in subtypesof(/obj/item/paper/talisman) - /obj/item/paper/talisman/supply - /obj/item/paper/talisman/supply/weak - /obj/item/paper/talisman/summon_tome)
 		var/obj/item/paper/talisman/J = I
 		var/talisman_cult_name = initial(J.cultist_name)
 		if(talisman_cult_name)
@@ -407,8 +406,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/datum/antagonist/cult/C = first_invoker.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 	if(!C)
 		return
-	
-	
+
+
 	var/big_sac = FALSE
 	if((((ishuman(sacrificial) || iscyborg(sacrificial)) && sacrificial.stat != DEAD) || C.cult_team.is_sacrifice_target(sacrificial.mind)) && invokers.len < 3)
 		for(var/M in invokers)
@@ -565,7 +564,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		mob_to_revive.grab_ghost()
 	else if(!mob_to_revive.client || mob_to_revive.client.is_afk())
 		set waitfor = FALSE
-		var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [mob_to_revive.name], an inactive blood cultist?", "[name]", null, "Blood Cultist", 50, mob_to_revive)
+		var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [mob_to_revive.name], an inactive blood cultist?", "[name]", null, ROLE_CULTIST, 50, mob_to_revive)
 		var/mob/dead/observer/theghost = null
 		if(candidates.len)
 			theghost = pick(candidates)
@@ -762,7 +761,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			W.density = TRUE
 			W.update_state()
 			W.spread_density()
-	density_timer = addtimer(CALLBACK(src, .proc/lose_density), 900, TIMER_STOPPABLE)
+	density_timer = addtimer(CALLBACK(src, .proc/lose_density), 3000, TIMER_STOPPABLE)
 
 /obj/effect/rune/wall/proc/lose_density()
 	if(density)
@@ -844,7 +843,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	cultist_desc = "boils the blood of non-believers who can see the rune, rapidly dealing extreme amounts of damage. Requires 3 invokers."
 	invocation = "Dedo ol'btoh!"
 	icon_state = "4"
-	color = RUNE_COLOR_MEDIUMRED
+	color = RUNE_COLOR_BURNTORANGE
 	light_color = LIGHT_COLOR_LAVA
 	req_cultists = 3
 	invoke_damage = 10

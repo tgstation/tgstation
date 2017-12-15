@@ -5,6 +5,7 @@
 	roundend_category = "cultists"
 	var/datum/action/innate/cult/comm/communion = new
 	var/datum/action/innate/cult/mastervote/vote = new
+	var/datum/action/innate/cult/blood_magic/magic = new
 	job_rank = ROLE_CULTIST
 	var/ignore_implant = FALSE
 	var/give_equipment = FALSE
@@ -59,7 +60,7 @@
 	SSticker.mode.cult += owner // Only add after they've been given objectives
 	SSticker.mode.update_cult_icons_added(owner)
 	current.log_message("<font color=#960000>Has been converted to the cult of Nar'Sie!</font>", INDIVIDUAL_ATTACK_LOG)
-	
+
 	if(cult_team.blood_target && cult_team.blood_target_image && current.client)
 		current.client.images += cult_team.blood_target_image
 
@@ -111,6 +112,7 @@
 	if(!cult_team.cult_mastered)
 		vote.Grant(current)
 	communion.Grant(current)
+	magic.Grant(current)
 	current.throw_alert("bloodsense", /obj/screen/alert/bloodsense)
 
 /datum/antagonist/cult/remove_innate_effects(mob/living/mob_override)
@@ -123,6 +125,7 @@
 	current.verbs -= /mob/living/proc/cult_help
 	vote.Remove(current)
 	communion.Remove(current)
+	magic.Remove(current)
 	current.clear_alert("bloodsense")
 
 /datum/antagonist/cult/on_removal()
@@ -189,7 +192,7 @@
 	var/blood_target
 	var/image/blood_target_image
 	var/blood_target_reset_timer
-	
+
 	var/cult_vote_called = FALSE
 	var/cult_mastered = FALSE
 	var/reckoning_complete = FALSE
@@ -200,11 +203,11 @@
 	var/list/target_candidates = list()
 	var/datum/objective/sacrifice/sac_objective = new
 	sac_objective.team = src
-	
+
 	for(var/mob/living/carbon/human/player in GLOB.player_list)
 		if(player.mind && !player.mind.has_antag_datum(ANTAG_DATUM_CULT) && !is_convertable_to_cult(player) && player.stat != DEAD)
 			target_candidates += player.mind
-	
+
 	if(target_candidates.len == 0)
 		message_admins("Cult Sacrifice: Could not find unconvertable target, checking for convertable target.")
 		for(var/mob/living/carbon/human/player in GLOB.player_list)
@@ -214,7 +217,7 @@
 	if(LAZYLEN(target_candidates))
 		sac_objective.target = pick(target_candidates)
 		sac_objective.update_explanation_text()
-		
+
 		var/datum/job/sacjob = SSjob.GetJob(sac_objective.target.assigned_role)
 		var/datum/preferences/sacface = sac_objective.target.current.client.prefs
 		var/icon/reshape = get_flat_human_icon(null, sacjob, sacface)
@@ -235,7 +238,7 @@
 	summon_objective.team = src
 	objectives += summon_objective
 
-/datum/objective/sacrifice	
+/datum/objective/sacrifice
 	var/sacced = FALSE
 	var/sac_image
 
@@ -291,9 +294,9 @@
 			else
 				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
 			count++
-	
+
 	if(members.len)
 		parts += "<span class='header'>The cultists were:</span>"
 		parts += printplayerlist(members)
-	
+
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"

@@ -100,23 +100,33 @@
 	if(cooldowntime > world.time)
 		to_chat(user, "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
 		return
-	var/choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Bastard Sword")
-	var/pickedtype
+	var/choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Nar'sien Bolas")
+	if(user.mind.has_antag_datum(ANTAG_DATUM_CULT_MASTER))
+		choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Bastard Sword")
+	var/pickedtype = list()
 	switch(choice)
 		if("Shielded Robe")
-			pickedtype = /obj/item/clothing/suit/hooded/cultrobes/cult_shield
+			pickedtype += /obj/item/clothing/suit/hooded/cultrobes/cult_shield
 		if("Flagellant's Robe")
-			pickedtype = /obj/item/clothing/suit/hooded/cultrobes/berserker
+			pickedtype += /obj/item/clothing/suit/hooded/cultrobes/berserker
 		if("Bastard Sword")
 			if((world.time - SSticker.round_start_time) >= 12000)
-				pickedtype = /obj/item/twohanded/required/cult_bastard
+				pickedtype += /obj/item/twohanded/required/cult_bastard
 			else
 				cooldowntime = 12000 - (world.time - SSticker.round_start_time)
 				to_chat(user, "<span class='cultitalic'>The forge fires are not yet hot enough for this weapon, give it another [DisplayTimeText(cooldowntime)].</span>")
 				cooldowntime = 0
 				return
+		if("Nar'sien Bolas")
+			pickedtype += /obj/item/restraints/legcuffs/bola/cult
+			pickedtype += /obj/item/restraints/legcuffs/bola/cult
+			pickedtype += /obj/item/restraints/legcuffs/bola/cult
 	if(src && !QDELETED(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
+		for(var/N in pickedtype)
+			var/obj/item/D = new N(get_turf(src))
+			to_chat(user, "<span class='cultitalic'>You summon [D] from the archives!</span>")
+
 		var/obj/item/N = new pickedtype(get_turf(src))
 		to_chat(user, "<span class='cultitalic'>You work the forge as dark knowledge guides your hands, creating [N]!</span>")
 
@@ -126,7 +136,7 @@
 	name = "pylon"
 	desc = "A floating crystal that slowly heals those faithful to Nar'Sie."
 	icon_state = "pylon"
-	light_range = 5
+	light_range = 1.5
 	light_color = LIGHT_COLOR_RED
 	break_sound = 'sound/effects/glassbr2.ogg'
 	break_message = "<span class='warning'>The blood-red crystal falls to the floor and shatters!</span>"
@@ -199,7 +209,7 @@
 	name = "archives"
 	desc = "A desk covered in arcane manuscripts and tomes in unknown languages. Looking at the text makes your skin crawl."
 	icon_state = "tomealtar"
-	light_range = 1.4
+	light_range = 1
 	light_color = LIGHT_COLOR_FIRE
 	break_message = "<span class='warning'>The books and tomes of the archives burn into ash as the desk shatters!</span>"
 

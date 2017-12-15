@@ -1,3 +1,204 @@
+/datum/action/innate/cult/blood_magic
+	name = "Prepare Blood Magic"
+	button_icon_state = "carve"
+	desc = "Prepare blood magic by carving runes into your flesh. This rite is most effective with an <b>empowering rune</b>"
+	var/list/spells = list()
+	var/channeling = FALSE
+
+/datum/action/innate/cult/blood_magic/IsAvailable()
+	var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+	if(!C)
+		return FALSE
+	return ..()
+
+/datum/action/innate/cult/blood_magic/Activate()
+	var/rune = FALSE
+	var/limit = RUNELESS_MAX_BLOODCHARGE
+	for(var/obj/effect/rune/imbue/R in range(1, owner))
+		rune = TRUE
+		break
+	if(rune)
+		limit = MAX_BLOODCHARGE
+	if(spells.len >= limit)
+		if(rune)
+			to_chat(owner, "<span class='cultitalic'>Your body has reached its limit, you cannot store more than [MAX_BLOODCHARGE] spells at once. Pick a spell to nullify.</span>")
+		else
+			to_chat(owner, "<span class='cultitalic'>Your body has reached its limit, <b>you cannot store more than [RUNELESS_MAX_BLOODCHARGE] spells at once without an empowering rune</b>! Pick a spell to nullify.</span>")
+		var/nullify_spell = input(owner, "Choose a spell to remove.", "Current Spells") as null|anything in spells
+		if(nullify_spell)
+			qdel(nullify_spell)
+		return
+	var/entered_spell_name
+	var/datum/action/innate/cult/blood_spell/BS
+	var/list/possible_spells = list()
+	for(var/I in subtypesof(/datum/action/innate/cult/blood_spell))
+		var/datum/action/innate/cult/blood_spell/J = I
+		var/cult_name = initial(J.name)
+		possible_spells[cult_name] = J
+	entered_spell_name = input(owner, "Pick a blood spell to prepare...", "Spell Choices") as null|anything in possible_spells
+	BS = possible_spells[entered_spell_name]
+	if(QDELETED(src) || owner.incapacitated() || !BS)
+		return
+	to_chat(owner,"<span class='warning'>You begin to carve intricate symbols into your flesh!</span>")
+	if(!channeling)
+		channeling = TRUE
+	else
+		to_chat(owner, "<span class='cultitalic'>You are already invoking blood magic!")
+		return
+	if(do_after(owner, 80 - rune*30, target = owner))
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.bleed(20 - rune*15)
+		var/datum/action/innate/cult/blood_spell/new_spell = new BS(owner)
+		new_spell.Grant(owner)
+		spells += new_spell
+		to_chat(owner, "<span class='warning'>Your wounds glows with power, you have prepared a [BS] invocation!</span>")
+	channeling = FALSE
+
+/datum/action/innate/cult/blood_spell
+	name = "Blood Magic"
+	button_icon_state = "telerune"
+	desc = "Fear the Old Blood"
+	var/charges = 1
+	var/magic_path = "/obj/item/melee/touch_attack"
+	var/obj/item/melee/touch_attack/blood_magic/hand_magic
+
+/datum/action/innate/cult/blood_spell/Remove()
+	if(hand_magic)
+		qdel(hand_magic)
+		hand_magic = null
+	..()
+
+/datum/action/innate/cult/blood_spell/IsAvailable()
+	var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+	if(!C)
+		return FALSE
+	return ..()
+
+/datum/action/innate/cult/blood_spell/Activate()
+	if(!active)
+		hand_magic = new magic_path(owner, src)
+		if(!owner.put_in_hands(hand_magic))
+			qdel(hand_magic)
+			hand_magic = null
+			to_chat(owner, "<span class='warning'>You have no empty hand for invoking blood magic!</span>")
+			return
+		to_chat(owner, "<span class='notice'>Your old wounds glow again as you invoke the [name].</span>")
+		active = TRUE
+		return
+	if(active)
+		qdel(hand_magic)
+		hand_magic = null
+		to_chat(owner, "<span class='warning'>You snuff out the spell with your hand, saving its power for another time.</span>")
+		active = FALSE
+
+/datum/action/innate/cult/blood_spell/stun
+	name = "Stunning Curse"
+	magic_path = "/obj/item/melee/touch_attack/blood_magic/stun"
+
+/datum/action/innate/cult/blood_spell/teleport
+	name = "Rite of Teleportation"
+	magic_path = "/obj/item/melee/touch_attack/blood_magic/teleport"
+
+/obj/item/melee/touch_attack/blood_magic
+	name = "\improper magical aura"
+	icon_state = "disintegrate"
+	var/invocation = "Naise meam!"
+	var/uses = 1
+	var/health_cost = 0 //The amount of health taken from the user when invoking the spell
+	var/datum/action/innate/cult/blood_spell/source
+
+/obj/item/melee/touch_attack/blood_magic/New(loc, spell)
+	source = spell
+	uses = source.charges
+	..()
+
+/obj/item/melee/touch_attack/blood_magic/Destroy()
+	if(!uses)
+		qdel(source)
+		source = null
+	..()
+
+/obj/item/melee/touch_attack/blood_magic/afterattack(atom/target, mob/user, proximity)
+	if(!uses)
+		qdel(src)
+
+/obj/item/melee/touch_attack/blood_magic/stun
+	color = "#ff0000" // red
+	invocation = "Fuu ma'jin!"
+	health_cost = 10
+
+/obj/item/paper/talisman/stun/attack(mob/living/target, mob/living/user)
+	if(iscultist(target))
+		return
+	if(iscultist(user))
+		user.visible_message("<span class='warning'>[user] holds up their hand, which explodes in a flash of red light!</span>", \
+							 "<span class='cultitalic'>You stun [target] with the spell!</span>")
+		var/obj/item/nullrod/N = locate() in target
+		if(N)
+			target.visible_message("<span class='warning'>[target]'s holy weapon absorbs the light!</span>", \
+								   "<span class='userdanger'>Your holy weapon absorbs the blinding light!</span>")
+		else
+			target.Knockdown(180)
+			target.flash_act(1,1)
+			if(issilicon(target))
+				var/mob/living/silicon/S = target
+				S.emp_act(EMP_HEAVY)
+			else if(iscarbon(target))
+				var/mob/living/carbon/C = target
+				C.silent += 7
+				C.stuttering += 15
+				C.cultslurring += 15
+				C.Jitter(15)
+			if(is_servant_of_ratvar(target))
+				target.adjustBruteLoss(15)
+		uses--
+	..()
+
+//Rite of Teleportation
+/obj/item/melee/touch_attack/blood_magic/teleport
+	color = RUNE_COLOR_TELEPORT
+	invocation = "Sas'so c'arta forbici!"
+	health_cost = 5
+
+/obj/item/melee/touch_attack/blood_magic/teleport/attack_self(mob/living/user)
+	attack(user, user)
+
+/obj/item/melee/touch_attack/blood_magic/teleport/attack(mob/living/target, mob/living/user)
+	if(!iscultist(target))
+		to_chat(user, "<span class='warning'>You can only teleport cultists with this spell!</span>")
+		return
+	if(iscultist(user))
+		var/list/potential_runes = list()
+		var/list/teleportnames = list()
+		for(var/R in GLOB.teleport_runes)
+			var/obj/effect/rune/teleport/T = R
+			potential_runes[avoid_assoc_duplicate_keys(T.listkey, teleportnames)] = T
+
+		if(!potential_runes.len)
+			to_chat(user, "<span class='warning'>There are no valid runes to teleport to!</span>")
+			log_game("Teleport talisman failed - no other teleport runes")
+			return
+
+		if(user.z > ZLEVEL_SPACEMAX)
+			to_chat(user, "<span class='cultitalic'>You are not in the right dimension!</span>")
+			log_game("Teleport talisman failed - user in away mission")
+			return
+
+		var/input_rune_key = input(user, "Choose a rune to teleport to.", "Rune to Teleport to") as null|anything in potential_runes //we know what key they picked
+		var/obj/effect/rune/teleport/actual_selected_rune = potential_runes[input_rune_key] //what rune does that key correspond to?
+		if(!src || QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated() || !actual_selected_rune)
+			return
+		var/turf/dest = get_turf(actual_selected_rune)
+		if(is_blocked_turf(dest, TRUE))
+			to_chat(user, "<span class='warning'>The target rune is blocked. Attempting to teleport to it would be massively unwise.</span>")
+			return
+		user.visible_message("<span class='warning'>Dust flows from [user]'s hand, and [user.p_they()] disappear[user.p_s()] with a sharp crack!</span>", \
+		"<span class='cultitalic'>You speak the words of the talisman and find yourself somewhere else!</span>", "<i>You hear a sharp crack.</i>")
+		target.forceMove(dest)
+		dest.visible_message("<span class='warning'>There is a boom of outrushing air as something appears above the rune!</span>", null, "<i>You hear a boom.</i>")
+		..()
+
 /obj/item/paper/talisman
 	var/cultist_name = "talisman"
 	var/cultist_desc = "A basic talisman. It serves no purpose."
@@ -32,17 +233,51 @@
 			var/mob/living/carbon/C = user
 			C.apply_damage(health_cost, BRUTE, pick("l_arm", "r_arm"))
 
-//Malformed Talisman: If something goes wrong.
-/obj/item/paper/talisman/malformed
-	cultist_name = "malformed talisman"
-	cultist_desc = "A talisman with gibberish scrawlings. No good can come from invoking this."
-	invocation = "Ra'sha yoka!"
 
-/obj/item/paper/talisman/malformed/invoke(mob/living/user, successfuluse = 1)
-	to_chat(user, "<span class='cultitalic'>You feel a pain in your head. The Geometer is displeased.</span>")
-	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		C.apply_damage(10, BRUTE, "head")
+
+//Rite of Disorientation: Stuns and inhibit speech on a single target for quite some time
+/obj/item/paper/talisman/stun
+	cultist_name = "Talisman of Stunning"
+	cultist_desc = "A talisman that will stun and inhibit speech on a single target. To use, attack target directly."
+	color = "#ff0000" // red
+	invocation = "Fuu ma'jin!"
+	health_cost = 10
+
+/obj/item/paper/talisman/stun/invoke(mob/living/user, successfuluse = 0)
+	if(successfuluse) //if we're forced to be successful(we normally aren't) then do the normal stuff
+		return ..()
+	if(iscultist(user))
+		to_chat(user, "<span class='warning'>To use this talisman, attack the target directly.</span>")
+	else
+		to_chat(user, "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>")
+	return 0
+
+/obj/item/paper/talisman/stun/attack(mob/living/target, mob/living/user, successfuluse = 1)
+	if(iscultist(user))
+		invoke(user, 1)
+		user.visible_message("<span class='warning'>[user] holds up [src], which explodes in a flash of red light!</span>", \
+							 "<span class='cultitalic'>You stun [target] with the talisman!</span>")
+		var/obj/item/nullrod/N = locate() in target
+		if(N)
+			target.visible_message("<span class='warning'>[target]'s holy weapon absorbs the talisman's light!</span>", \
+								   "<span class='userdanger'>Your holy weapon absorbs the blinding light!</span>")
+		else
+			target.Knockdown(200)
+			target.flash_act(1,1)
+			if(issilicon(target))
+				var/mob/living/silicon/S = target
+				S.emp_act(EMP_HEAVY)
+			else if(iscarbon(target))
+				var/mob/living/carbon/C = target
+				C.silent += 5
+				C.stuttering += 15
+				C.cultslurring += 15
+				C.Jitter(15)
+			if(is_servant_of_ratvar(target))
+				target.adjustBruteLoss(15)
+		qdel(src)
+		return
+	..()
 
 //Rite of Translocation: Same as rune
 /obj/item/paper/talisman/teleport
@@ -139,52 +374,6 @@
 	user.visible_message("<span class='warning'>[user]'s hand flashes a bright blue!</span>", \
 						 "<span class='cultitalic'>You speak the words of the talisman, emitting an EMP blast.</span>")
 	empulse(src, 4, 8)
-
-
-//Rite of Disorientation: Stuns and inhibit speech on a single target for quite some time
-/obj/item/paper/talisman/stun
-	cultist_name = "Talisman of Stunning"
-	cultist_desc = "A talisman that will stun and inhibit speech on a single target. To use, attack target directly."
-	color = "#ff0000" // red
-	invocation = "Fuu ma'jin!"
-	health_cost = 10
-
-/obj/item/paper/talisman/stun/invoke(mob/living/user, successfuluse = 0)
-	if(successfuluse) //if we're forced to be successful(we normally aren't) then do the normal stuff
-		return ..()
-	if(iscultist(user))
-		to_chat(user, "<span class='warning'>To use this talisman, attack the target directly.</span>")
-	else
-		to_chat(user, "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>")
-	return 0
-
-/obj/item/paper/talisman/stun/attack(mob/living/target, mob/living/user, successfuluse = 1)
-	if(iscultist(user))
-		invoke(user, 1)
-		user.visible_message("<span class='warning'>[user] holds up [src], which explodes in a flash of red light!</span>", \
-							 "<span class='cultitalic'>You stun [target] with the talisman!</span>")
-		var/obj/item/nullrod/N = locate() in target
-		if(N)
-			target.visible_message("<span class='warning'>[target]'s holy weapon absorbs the talisman's light!</span>", \
-								   "<span class='userdanger'>Your holy weapon absorbs the blinding light!</span>")
-		else
-			target.Knockdown(200)
-			target.flash_act(1,1)
-			if(issilicon(target))
-				var/mob/living/silicon/S = target
-				S.emp_act(EMP_HEAVY)
-			else if(iscarbon(target))
-				var/mob/living/carbon/C = target
-				C.silent += 5
-				C.stuttering += 15
-				C.cultslurring += 15
-				C.Jitter(15)
-			if(is_servant_of_ratvar(target))
-				target.adjustBruteLoss(15)
-		qdel(src)
-		return
-	..()
-
 
 //Rite of Arming: Equips cultist armor on the user, where available
 /obj/item/paper/talisman/armor

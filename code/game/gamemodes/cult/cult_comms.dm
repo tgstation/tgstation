@@ -171,7 +171,7 @@
 			if(!is_blocked_turf(T, TRUE))
 				destinations += T
 		if(!LAZYLEN(destinations))
-			to_chat(owner, "<span class='warning'>You need more space to summon the cult!</span>")
+			to_chat(owner, "<span class='warning'>You need more space to summon your cult!</span>")
 			return
 		if(do_after(owner, 30, target = owner))
 			for(var/datum/mind/B in antag.cult_team.members)
@@ -276,7 +276,7 @@
 		return FALSE
 
 	var/datum/antagonist/cult/C = caller.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
-	
+
 	if(target in view(7, get_turf(ranged_ability_user)))
 		C.cult_team.blood_target = target
 		var/area/A = get_area(target)
