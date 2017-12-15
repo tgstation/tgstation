@@ -179,9 +179,9 @@
 /obj/screen/alert/status_effect/his_grace/MouseEntered(location,control,params)
 	desc = initial(desc)
 	var/datum/status_effect/his_grace/HG = attached_effect
-	desc += "<br><span class='big_bold'>Current Bloodthirst: [HG.bloodlust]</span>\
-	<br>Becomes undroppable at <span class='bold'>[HIS_GRACE_FAMISHED]</span>\
-	<br>Will consume you at <span class='bold'>[HIS_GRACE_CONSUME_OWNER]</span>"
+	desc += "<br><font size=3><b>Current Bloodthirst: [HG.bloodlust]</b></font>\
+	<br>Becomes undroppable at <b>[HIS_GRACE_FAMISHED]</b>\
+	<br>Will consume you at <b>[HIS_GRACE_CONSUME_OWNER]</b>"
 	..()
 
 /datum/status_effect/his_grace/on_apply()

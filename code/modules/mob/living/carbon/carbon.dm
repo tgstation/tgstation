@@ -185,7 +185,7 @@
 	user.set_machine(src)
 	var/dat = {"
 	<HR>
-	<span class='big_bold'>[name]</span>
+	<B><FONT size=3>[name]</FONT></B>
 	<HR>
 	<BR><B>Head:</B> <A href='?src=[REF(src)];item=[slot_head]'>				[(head && !(head.flags_1&ABSTRACT_1)) 			? head 		: "Nothing"]</A>
 	<BR><B>Mask:</B> <A href='?src=[REF(src)];item=[slot_wear_mask]'>		[(wear_mask && !(wear_mask.flags_1&ABSTRACT_1))	? wear_mask	: "Nothing"]</A>
