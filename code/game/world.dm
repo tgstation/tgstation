@@ -61,7 +61,7 @@ GLOBAL_PROTECT(security_mode)
 				var/db_minor = text2num(query_db_version.item[2])
 				if(db_major != DB_MAJOR_VERSION || db_minor != DB_MINOR_VERSION)
 					var/which = "behind"
-					if(db_major < DB_MAJOR_VERSION || db_minor < DB_MINOR_VERSION)
+					if(db_major > DB_MAJOR_VERSION || db_minor > DB_MINOR_VERSION)
 						which = "ahead of"
 					message_admins("Database schema ([db_major].[db_minor]) is [which] the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
 					log_sql("Database schema ([db_major].[db_minor]) is [which] the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
