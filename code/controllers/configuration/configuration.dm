@@ -22,7 +22,7 @@ GLOBAL_PROTECT(config_dir)
 	config = src
 	InitEntries()
 	LoadModes()
-	if(!LoadEntries("config.txt"))
+	if(LoadEntries("config.txt") <= 1)
 		log_config("No $include directives found in config.txt! Loading legacy game_options/dbconfig/comms files...")
 		LoadEntries("game_options.txt")
 		LoadEntries("dbconfig.txt")
@@ -103,6 +103,7 @@ GLOBAL_PROTECT(config_dir)
 				log_config("Warning: Invalid $include directive: [value]")
 			else
 				LoadEntries(value, stack)
+				++.
 			continue
 		
 		var/datum/config_entry/E = _entries[entry]
@@ -123,8 +124,8 @@ GLOBAL_PROTECT(config_dir)
 		
 		if(validated)
 			E.modified = TRUE
-		
-		. = TRUE
+	
+	++.
 
 /datum/controller/configuration/can_vv_get(var_name)
 	return (var_name != "entries_by_type" || !hiding_entries_by_type) && ..()
