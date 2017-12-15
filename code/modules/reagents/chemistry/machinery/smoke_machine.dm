@@ -11,9 +11,9 @@
 	var/cooldown = 0
 	var/screen = "home"
 	var/useramount = 30 // Last used amount
-	var/volume = 100
-	var/setting = 3
-	var/max_range = 3
+	var/volume = 300
+	var/setting = 9
+	var/max_range = 9
 
 /datum/effect_system/smoke_spread/chem/smoke_machine/set_up(datum/reagents/carry, setting = 3, efficiency = 10, loc)
 	amount = setting
@@ -42,11 +42,13 @@
 
 /obj/machinery/smoke_machine/RefreshParts()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		volume = 100 * B.rating
+		volume = 100 + 200 * B.rating
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		efficiency = 9 + C.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		max_range = 3 * M.rating
+		max_range = 3 + 3 * M.rating // 6 9 12 15
+		if(max_range < 9)
+			max_range = 9
 
 /obj/machinery/smoke_machine/process()
 	..()
