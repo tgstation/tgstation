@@ -34,6 +34,7 @@
 # duncathan
 
 /code/__DEFINES/atmospherics.dm @duncathan
+/code/controllers/subsystem/air.dm @duncathan
 /code/modules/atmospherics/* @duncathan
 
 # Jordie0608
