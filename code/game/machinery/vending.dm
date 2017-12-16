@@ -639,7 +639,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/reagent_containers/food/drinks/bottle/cream = 4, /obj/item/reagent_containers/food/drinks/soda_cans/tonic = 8,
 					/obj/item/reagent_containers/food/drinks/soda_cans/cola = 8, /obj/item/reagent_containers/food/drinks/soda_cans/sodawater = 15,
 					/obj/item/reagent_containers/food/drinks/drinkingglass = 30, /obj/item/reagent_containers/food/drinks/ice = 10,
-					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass = 12, /obj/item/reagent_containers/food/drinks/flask = 3)
+					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass = 12, /obj/item/reagent_containers/food/drinks/flask = 3,
+					/obj/item/reagent_containers/food/drinks/beer = 6)
 	contraband = list(/obj/item/reagent_containers/food/drinks/mug/tea = 12)
 	product_slogans = "I hope nobody asks me for a bloody cup o' tea...;Alcohol is humanity's friend. Would you abandon a friend?;Quite delighted to serve you!;Is nobody thirsty on this station?"
 	product_ads = "Drink up!;Booze is good for you!;Alcohol is humanity's best friend.;Quite delighted to serve you!;Care for a nice, cold beer?;Nothing cures you like booze!;Have a sip!;Have a drink!;Have a beer!;Beer is good for you!;Only the finest alcohol!;Best quality booze since 2053!;Award-winning wine!;Maximum alcohol!;Man loves beer.;A toast for progress!"
@@ -1188,6 +1189,9 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	contraband = list(/obj/item/dice/fudge = 9)
 	refill_canister = /obj/item/vending_refill/games
 
+
+/obj/machinery/vending/onTransitZ()
+	return
 
 #undef STANDARD_CHARGE
 #undef CONTRABAND_CHARGE

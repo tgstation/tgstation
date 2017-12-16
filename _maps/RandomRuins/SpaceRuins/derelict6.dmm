@@ -197,11 +197,11 @@
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "aF" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/plasteel/airless/bar,
 /area/ruin/unpowered)
 "aG" = (
-/obj/structure/door_assembly/door_assembly_glass{
+/obj/structure/door_assembly/door_assembly_public{
 	name = "broken airlock"
 	},
 /turf/open/floor/plasteel/airless/bar,

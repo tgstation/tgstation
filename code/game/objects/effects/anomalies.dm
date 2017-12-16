@@ -67,7 +67,7 @@
 	new /obj/effect/particle_effect/smoke/bad(loc)
 
 	for(var/atom/movable/O in src)
-		O.loc = src.loc
+		O.forceMove(drop_location())
 
 	qdel(src)
 

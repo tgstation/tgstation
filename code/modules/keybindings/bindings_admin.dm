@@ -4,7 +4,7 @@
 			user.cmd_admin_say(verbtextinput("Asay"))
 			return
 		if("F6")
-			user.admin_ghost()
+			player_panel_new()
 			return
 		if("F7")
 			user.stealth()

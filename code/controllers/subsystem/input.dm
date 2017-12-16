@@ -1,8 +1,8 @@
 SUBSYSTEM_DEF(input)
 	name = "Input"
 	wait = 1 //SS_TICKER means this runs every tick
-	flags = SS_TICKER | SS_NO_INIT | SS_KEEP_TIMING
-	priority = 151
+	flags = SS_TICKER | SS_NO_INIT
+	priority = 1000
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 
 /datum/controller/subsystem/input/fire()

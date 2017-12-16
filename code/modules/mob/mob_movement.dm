@@ -10,15 +10,6 @@
 			return TRUE
 	return (!mover.density || !density || lying)
 
-//Does mob allows other mob M to pass over it
-//If it's hostile to M and moves not worse than M AND it's non-restrained and not on help intent, it doesn't
-/mob/proc/allows_pass(mob/M)
-	return movement_type < M.movement_type || faction_check(M) && (a_intent == INTENT_HELP || restrained())
-
-//Will mob try to move trough other mob
-//so if it's non-restrained and not on help intent, it won't
-/mob/proc/wants_pass()
-	return a_intent == INTENT_HELP || restrained()
 
 /client/verb/drop_item()
 	set hidden = 1
@@ -34,7 +25,7 @@
 				return
 			mob.control_object.setDir(direct)
 		else
-			mob.control_object.loc = get_step(mob.control_object,direct)
+			mob.control_object.forceMove(get_step(mob.control_object,direct))
 	return
 
 #define MOVEMENT_DELAY_BUFFER 0.75
@@ -123,7 +114,7 @@
 	if(LAZYLEN(mob.user_movement_hooks))
 		for(var/obj/O in mob.user_movement_hooks)
 			O.intercept_user_move(direct, mob, n, oldloc)
-	
+
 	var/atom/movable/P = mob.pulling
 	if(P && !ismob(P) && P.density)
 		mob.dir = turn(mob.dir, 180)

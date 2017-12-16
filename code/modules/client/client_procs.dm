@@ -1,7 +1,7 @@
 	////////////
 	//SECURITY//
 	////////////
-#define UPLOAD_LIMIT		6291456	//Restricts client uploads to the server to 1MB //Could probably do with being lower.
+#define UPLOAD_LIMIT		1048576	//Restricts client uploads to the server to 1MB //Could probably do with being lower.
 
 #define LIMITER_SIZE	5
 #define CURRENT_SECOND	1
@@ -165,7 +165,7 @@ GLOBAL_LIST(external_rsc_urls)
 	GLOB.directory[ckey] = src
 
 	GLOB.ahelp_tickets.ClientLogin(src)
-
+	var/connecting_admin = FALSE //because de-admined admins connecting should be treated like admins.
 	//Admin Authorisation
 	var/localhost_addresses = list("127.0.0.1", "::1")
 	if(address && (address in localhost_addresses))
@@ -189,6 +189,11 @@ GLOBAL_LIST(external_rsc_urls)
 	if(holder)
 		GLOB.admins |= src
 		holder.owner = src
+		connecting_admin = TRUE
+
+	else if(GLOB.deadmins[ckey])
+		verbs += /client/proc/readmin
+		connecting_admin = TRUE
 
 	//preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum)
 	prefs = GLOB.preferences_datums[ckey]
@@ -224,6 +229,13 @@ GLOBAL_LIST(external_rsc_urls)
 						message_admins("<font color='red'><B>Notice: </B><font color='blue'>[key_name_admin(src)] has the same [matches] as [key_name_admin(C)] (no longer logged in). </font>")
 						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(C)] (no longer logged in).")
 
+	if(GLOB.player_details[ckey])
+		player_details = GLOB.player_details[ckey]
+	else
+		player_details = new
+		GLOB.player_details[ckey] = player_details
+
+
 	. = ..()	//calls mob.Login()
 
 	set_macros()
@@ -231,8 +243,8 @@ GLOBAL_LIST(external_rsc_urls)
 	chatOutput.start() // Starts the chat
 
 	if(alert_mob_dupe_login)
-		set waitfor = FALSE
-		alert(mob, "You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
+		spawn()
+			alert(mob, "You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
 
 	connection_time = world.time
 	connection_realtime = world.realtime
@@ -246,7 +258,7 @@ GLOBAL_LIST(external_rsc_urls)
 		to_chat(src, "Your version: [byond_version]")
 		to_chat(src, "Required version: [cev] or later")
 		to_chat(src, "Visit http://www.byond.com/download/ to get the latest version of byond.")
-		if (holder)
+		if (connecting_admin)
 			to_chat(src, "Because you are an admin, you are being allowed to walk past this limitation, But it is still STRONGLY suggested you upgrade")
 		else
 			qdel(src)
@@ -266,7 +278,7 @@ GLOBAL_LIST(external_rsc_urls)
 			to_chat(src, "Required version to remove this message: [cwv] or later")
 			to_chat(src, "Visit http://www.byond.com/download/ to get the latest version of byond.")
 
-	if (connection == "web" && !holder)
+	if (connection == "web" && !connecting_admin)
 		if (!CONFIG_GET(flag/allow_webclient))
 			to_chat(src, "Web client is disabled")
 			qdel(src)
@@ -420,7 +432,7 @@ GLOBAL_LIST(external_rsc_urls)
 	if (src.holder && src.holder.rank)
 		admin_rank = src.holder.rank.name
 	else
-		if (check_randomizer(connectiontopic))
+		if (!GLOB.deadmins[ckey] && check_randomizer(connectiontopic))
 			return
 	var/sql_ip = sanitizeSQL(address)
 	var/sql_computerid = sanitizeSQL(computer_id)
@@ -430,12 +442,7 @@ GLOBAL_LIST(external_rsc_urls)
 	if(!query_client_in_db.Execute())
 		return
 	if(!query_client_in_db.NextRow())
-		if(IsGuestKey(ckey))
-			log_access("Failed Login: [ckey] - Guests not allowed")
-			to_chat(src, "No guests allowed.")
-			qdel(src)
-			return
-		if (CONFIG_GET(flag/panic_bunker) && !holder && !(ckey in GLOB.deadmins))
+		if (CONFIG_GET(flag/panic_bunker) && !holder && !GLOB.deadmins[ckey])
 			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
 			message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
 			to_chat(src, "Sorry but the server is currently not accepting connections from never before seen players.")

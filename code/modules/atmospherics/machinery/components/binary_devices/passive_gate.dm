@@ -78,18 +78,13 @@ Passive gate is similar to the regular pump except:
 	if(!radio_connection)
 		return
 
-	var/datum/signal/signal = new
-	signal.transmission_method = TRANSMISSION_RADIO
-	signal.source = src
-
-	signal.data = list(
+	var/datum/signal/signal = new(list(
 		"tag" = id,
 		"device" = "AGP",
 		"power" = on,
 		"target_output" = target_pressure,
 		"sigtype" = "status"
-	)
-
+	))
 	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
 /obj/machinery/atmospherics/components/binary/passive_gate/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \

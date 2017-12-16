@@ -121,7 +121,7 @@
 			T.quick_empty()
 
 			for(var/obj/item/C in oldContents)
-				C.loc = src.loc
+				C.forceMove(drop_location())
 
 			user.visible_message("[user] empties [I] on [src].")
 			return

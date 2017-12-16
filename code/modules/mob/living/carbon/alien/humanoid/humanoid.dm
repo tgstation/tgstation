@@ -106,7 +106,7 @@
 	for(var/atom/movable/A in stomach_contents)
 		stomach_contents.Remove(A)
 		new_xeno.stomach_contents.Add(A)
-		A.loc = new_xeno
+		A.forceMove(new_xeno)
 	..()
 
 //For alien evolution/promotion/queen finder procs. Checks for an active alien of that type

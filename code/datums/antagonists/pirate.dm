@@ -1,6 +1,7 @@
 /datum/antagonist/pirate
 	name = "Space Pirate"
 	job_rank = ROLE_TRAITOR
+	roundend_category = "space pirates"
 	var/datum/objective_team/pirate/crew
 
 /datum/antagonist/pirate/greet()
@@ -36,7 +37,6 @@
 
 /datum/objective_team/pirate
 	name = "Pirate crew"
-	var/list/objectives = list()
 
 /datum/objective_team/pirate/proc/forge_objectives()
 	var/datum/objective/loot/getbooty = new()
@@ -84,11 +84,11 @@ GLOBAL_LIST_INIT(pirate_loot_cache, typecacheof(list(
 				loot_table[lootname] = count
 			else
 				loot_table[lootname] += count
-	var/text = ""
+	var/list/loot_texts = list()
 	for(var/key in loot_table)
 		var/amount = loot_table[key]
-		text += "[amount] [key][amount > 1 ? "s":""], "
-	return text
+		loot_texts += "[amount] [key][amount > 1 ? "s":""]"
+	return loot_texts.Join(", ")
 
 /datum/objective/loot/proc/get_loot_value()
 	if(!storage_area)
@@ -105,31 +105,26 @@ GLOBAL_LIST_INIT(pirate_loot_cache, typecacheof(list(
 	return ..() || get_loot_value() >= target_value
 
 
-//These need removal ASAP as everything is converted to datum antags.
-/datum/game_mode/proc/auto_declare_completion_pirates()
-	var/list/datum/mind/pirates = get_antagonists(/datum/antagonist/pirate)
-	var/datum/objective_team/pirate/crew
-	var/text = ""
-	if(pirates.len)
-		text += "<br><b>Space Pirates were:</b>"
-		for(var/datum/mind/M in pirates)
-			text += printplayer(M)
-			if(!crew)
-				var/datum/antagonist/pirate/P = M.has_antag_datum(/datum/antagonist/pirate)
-				crew = P.crew
-		if(crew)
-			text += "<br>Loot stolen: "
-			var/datum/objective/loot/L = locate() in crew.objectives
-			text += L.loot_listing()
-			text += "<br>Total loot value : [L.get_loot_value()]/[L.target_value] credits"
 
-			var/all_dead = TRUE
-			for(var/datum/mind/M in crew.members)
-				if(considered_alive(M))
-					all_dead = FALSE
-					break
-			if(L.check_completion() && !all_dead)
-				text += "<br><font color='green'><b>The pirate crew was successful!</b></font>"
-			else
-				text += "<br><span class='boldannounce'>The pirate crew has failed.</span>"
-	to_chat(world, text)
+/datum/objective_team/pirate/roundend_report()
+	var/list/parts = list()
+
+	parts += "<span class='header'>Space Pirates were:</span>"
+	
+	var/all_dead = TRUE
+	for(var/datum/mind/M in members)
+		if(considered_alive(M))
+			all_dead = FALSE
+	parts += printplayerlist(members)
+
+	parts += "Loot stolen: "
+	var/datum/objective/loot/L = locate() in objectives
+	parts += L.loot_listing()
+	parts += "Total loot value : [L.get_loot_value()]/[L.target_value] credits"
+
+	if(L.check_completion() && !all_dead)
+		parts += "<span class='greentext big'>The pirate crew was successful!</span>"
+	else
+		parts += "<span class='redtext big'>The pirate crew has failed.</span>"
+	
+	return parts.Join("<br>")

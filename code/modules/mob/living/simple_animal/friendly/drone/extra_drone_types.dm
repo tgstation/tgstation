@@ -148,12 +148,11 @@
 	qdel(access_card) //we don't have free access
 	access_card = null
 	verbs -= /mob/living/simple_animal/drone/verb/check_laws
-	verbs -= /mob/living/simple_animal/drone/verb/toggle_light
 	verbs -= /mob/living/simple_animal/drone/verb/drone_ping
 
 /mob/living/simple_animal/drone/cogscarab/Login()
 	..()
-	add_servant_of_ratvar(src, TRUE)
+	add_servant_of_ratvar(src, TRUE, GLOB.servants_active)
 	to_chat(src,"<b>You yourself are one of these servants, and will be able to utilize almost anything they can[GLOB.ratvar_awakens ? "":", <i>excluding a clockwork slab</i>"].</b>") // this can't go with flavortext because i'm assuming it requires them to be ratvar'd
 
 /mob/living/simple_animal/drone/cogscarab/binarycheck()

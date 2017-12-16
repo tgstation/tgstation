@@ -14,30 +14,23 @@
 //breaks when hittin invalid characters thereafter
 /proc/hex2num(hex)
 	. = 0
-	if(istext(hex))
-		var/negative = 0
-		var/len = length(hex)
-		for(var/i=1, i<=len, i++)
-			var/num = text2ascii(hex,i)
-			switch(num)
-				if(48 to 57)
-					num -= 48	//0-9
-				if(97 to 102)
-					num -= 87	//a-f
-				if(65 to 70)
-					num -= 55	//A-F
-				if(45)
-					negative = 1//-
-				else
-					if(num)
-						break
-					else
-						continue
-			. *= 16
-			. += num
-		if(negative)
-			. *= -1
-	return .
+	var/place = 1
+	for(var/i in length(hex) to 1 step -1)
+		var/num = text2ascii(hex, i)
+		switch(num)
+			if(48 to 57)
+				num -= 48	//0-9
+			if(97 to 102)
+				num -= 87	//a-f
+			if(65 to 70)
+				num -= 55	//A-F
+			if(45)
+				return . * -1 // -
+			else
+				CRASH("Malformed hex number")
+
+		. += num * place
+		place *= 16
 
 //Returns the hex value of a decimal number
 //len == length of returned string

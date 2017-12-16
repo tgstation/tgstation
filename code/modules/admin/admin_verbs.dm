@@ -70,9 +70,7 @@ GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
 	/client/proc/deadchat,
 	/client/proc/toggleprayers,
 	/client/proc/toggleadminhelpsound,
-	/client/proc/respawn_character,
-	/client/proc/checkAccount,
-	/client/proc/checkAllAccounts
+	/client/proc/respawn_character
 	)
 GLOBAL_PROTECT(admin_verbs_ban)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/DB_ban_panel, /client/proc/stickybanpanel))
@@ -447,9 +445,6 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	set category = "Admin"
 	set name = "Stealth Mode"
 	if(holder)
-		if(GLOB.admin_datums.len < 2)
-			to_chat(src, "<span class='interface'>ÂÀÌ ÑÒÅËÑ ÑÅÉ×ÀÑ ÍÅ ÏÎËÎÆÅÍ</span>")
-		return 0
 		if(holder.fakekey)
 			holder.fakekey = null
 			if(isobserver(mob))
@@ -642,16 +637,10 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 
 	if(has_antag_hud())
 		toggle_antag_hud()
-
-	holder.disassociate()
-	qdel(holder)
-
 	if(GLOB.admin_datums.len < 3)
-		to_chat(src, "<span class='interface'>ĞÀÁÎÒÀÒÜ!!!</span>")
+		to_chat(src, "<span class='interface'>ÃÃ€ÃÃÃ’Ã€Ã’Ãœ!!!</span>")
 		return 0
-	GLOB.deadmins += ckey
-	GLOB.admin_datums -= ckey
-	verbs += /client/proc/readmin
+	holder.deactivate()
 
 	to_chat(src, "<span class='interface'>You are now a normal player.</span>")
 	log_admin("[src] deadmined themself.")
@@ -663,15 +652,22 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	set category = "Admin"
 	set desc = "Regain your admin powers."
 
-	load_admins(ckey)
+	var/datum/admins/A = GLOB.deadmins[ckey]
 
-	if(!holder) // Something went wrong...
-		return
+	if(!A)
+		A = GLOB.admin_datums[ckey]
+		if (!A)
+			var/msg = " is trying to readmin but they have no deadmin entry"
+			message_admins("[key_name_admin(src)][msg]")
+			log_admin_private("[key_name(src)][msg]")
+			return
 
-	GLOB.deadmins -= ckey
-	verbs -= /client/proc/readmin
+	A.associate(src)
 
-	to_chat(src, "<span class='interface'>Êğàñàâà ÷òî ğàáîòàåøü! Ìî¸ óâîæåíèå.</span>")
+	if (!holder)
+		return //This can happen if an admin attempts to vv themself into somebody elses's deadmin datum by getting ref via brute force
+
+	to_chat(src, "<span class='interface'>You are now an admin.</span>")
 	message_admins("[src] re-adminned themselves.")
 	log_admin("[src] re-adminned themselves.")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Readmin")

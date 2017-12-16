@@ -132,7 +132,7 @@
 	var/obj/item/tank/internals/plasma/Z = src.loaded_tank
 	if (!Z)
 		return
-	Z.loc = get_turf(src)
+	Z.forceMove(drop_location())
 	Z.layer = initial(Z.layer)
 	Z.plane = initial(Z.plane)
 	src.loaded_tank = null

@@ -117,6 +117,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	var/trigger_guard = TRIGGER_GUARD_NONE
 
+	//Grinder vars
+	var/list/grind_results //A reagent list containing the reagents this item produces when ground up in a grinder - this can be an empty list to allow for reagent transferring only
+	var/list/juice_results //A reagent list containing blah blah... but when JUICED in a grinder!
+
 /obj/item/Initialize()
 	if (!materials)
 		materials = list()
@@ -412,7 +416,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
 	in_inventory = TRUE
-	trigger_curses(user)
 	return
 
 
@@ -584,10 +587,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			itempush = 0 //too light to push anything
 		return A.hitby(src, 0, itempush)
 
-/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, time_capped = FALSE)
+/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	thrownby = thrower
 	callback = CALLBACK(src, .proc/after_throw, callback) //replace their callback with our own
-	. = ..(target, range, speed, thrower, spin, diagonals_first, callback, time_capped)
+	. = ..(target, range, speed, thrower, spin, diagonals_first, callback)
 
 
 /obj/item/proc/after_throw(datum/callback/callback)
@@ -684,6 +687,15 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		M.dirty++
 
 /obj/item/proc/on_mob_death(mob/living/L, gibbed)
+
+/obj/item/proc/grind_requirements(obj/machinery/reagentgrinder/R) //Used to check for extra requirements for grinding an object
+	return TRUE
+
+ //Called BEFORE the object is ground up - use this to change grind results based on conditions
+ //Use "return -1" to prevent the grinding from occurring
+/obj/item/proc/on_grind()
+
+/obj/item/proc/on_juice()
 
 /obj/item/proc/set_force_string()
 	switch(force)

@@ -28,6 +28,7 @@
 	filling_color = "#FF1493"
 	tastes = list("watermelon" = 1)
 	foodtype = FRUIT
+	juice_results = list("watermelonjuice" = 5)
 
 /obj/item/reagent_containers/food/snacks/candy_corn
 	name = "candy corn"

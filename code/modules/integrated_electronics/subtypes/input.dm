@@ -483,7 +483,7 @@
 	var/datum/radio_frequency/radio_connection
 
 /obj/item/integrated_circuit/input/signaler/Initialize()
-	..()
+	. = ..()
 	spawn(40)
 		set_frequency(frequency)
 		// Set the pins so when someone sees them, they won't show as null
@@ -509,12 +509,8 @@
 	if(!radio_connection)
 		return
 
-	var/datum/signal/signal = new
-	signal.source = src
-	signal.encryption = code
-	signal.data["message"] = "ACTIVATE"
+	var/datum/signal/signal = new(list("code" = code))
 	radio_connection.post_signal(src, signal)
-
 	activate_pin(2)
 
 /obj/item/integrated_circuit/input/signaler/proc/set_frequency(new_frequency)
@@ -532,7 +528,7 @@
 		code = new_code
 	if(!signal)
 		return 0
-	if(signal.encryption != code)
+	if(signal.data["code"] != code)
 		return 0
 	if(signal.source == src) // Don't trigger ourselves.
 		return 0
