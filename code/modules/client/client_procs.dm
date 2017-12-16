@@ -669,6 +669,13 @@ GLOBAL_LIST(external_rsc_urls)
 			return TRUE
 	. = ..()
 
+/client/proc/rescale_view(change, min, max)
+	var/viewscale = getviewsize(view)
+	var/x = viewscale[1]
+	var/y = viewscale[2]
+	x = Clamp(x+change, min, max)
+	y = Clamp(y+change, min,max)
+	change_view("[x]x[y]")
 
 /client/proc/change_view(new_size)
 	if (isnull(new_size))
