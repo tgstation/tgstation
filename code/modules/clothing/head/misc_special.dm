@@ -165,20 +165,6 @@
 
 	dog_fashion = /datum/dog_fashion/head/cardborg
 
-/obj/item/clothing/head/cardborg/equipped(mob/living/user, slot)
-	..()
-	if(ishuman(user) && slot == slot_head)
-		var/mob/living/carbon/human/H = user
-		if(istype(H.wear_suit, /obj/item/clothing/suit/cardborg))
-			var/obj/item/clothing/suit/cardborg/CB = H.wear_suit
-			CB.disguise(user, src)
-
-/obj/item/clothing/head/cardborg/dropped(mob/living/user)
-	..()
-	user.remove_alt_appearance("standard_borg_disguise")
-
-
-
 /obj/item/clothing/head/wig
 	name = "wig"
 	desc = "A bunch of hair without a head attached."
