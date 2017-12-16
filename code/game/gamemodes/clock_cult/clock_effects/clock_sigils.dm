@@ -275,7 +275,6 @@
 /obj/effect/clockwork/sigil/vitality/sigil_effects(mob/living/L)
 	if((is_servant_of_ratvar(L) && L.suiciding) || sigil_active)
 		return
-	visible_message("<span class='warning'>[src] begins to glow bright blue!</span>")
 	animate(src, alpha = 255, time = 10, flags = ANIMATION_END_NOW) //we may have a previous animation going. finish it first, then do this one without delay.
 	sleep(10)
 //as long as they're still on the sigil and are either not a servant or they're a servant AND it has remaining vitality
@@ -355,5 +354,4 @@
 	if(sigil_active)
 		animation_number = initial(animation_number)
 		sigil_active = FALSE
-		visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
 	animate(src, alpha = initial(alpha), time = 10, flags = ANIMATION_END_NOW)
