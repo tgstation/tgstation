@@ -162,7 +162,7 @@
 	var/result = null
 	for(var/k in 1 to inputs.len)
 		var/I = get_pin_data(IC_INPUT, k)
-		if(!isnull(I.data))
+		if(!isnull(I))
 			result = result + I
 
 	set_pin_data(IC_OUTPUT, 1, result)
