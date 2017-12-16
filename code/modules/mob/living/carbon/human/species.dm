@@ -1206,8 +1206,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		else if(target.lying)
 			target.forcesay(GLOB.hit_appends)
 
-
-
 /datum/species/proc/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(target.check_block())
 		target.visible_message("<span class='warning'>[target] blocks [user]'s disarm attempt!</span>")
