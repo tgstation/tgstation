@@ -336,9 +336,9 @@
 		cooldown = world.time + 600
 		log_game("[user.ckey]([user]) used an emagged Cyborg Harm Alarm in ([user.x],[user.y],[user.z])")
 
-#define DISPENSE_LOLLIPOP_MODE "dispense_lollipop"
-#define THROW_LOLLIPOP_MODE "throw_lollipop"
-#define THROW_GUMBALL_MODE "throw_gumball"
+#define DISPENSE_LOLLIPOP_MODE 1
+#define THROW_LOLLIPOP_MODE 2
+#define THROW_GUMBALL_MODE 3
 
 /obj/item/borg/lollipop
 	name = "lollipop fabricator"
