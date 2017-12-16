@@ -75,7 +75,7 @@
 		C.AnnouncePR(final_composed)
 
 /datum/world_topic/ahelp_relay
-	keyword = "AHelp"
+	keyword = "Ahelp"
 	require_comms_key = TRUE
 
 /datum/world_topic/ahelp_relay/Run(list/input)
