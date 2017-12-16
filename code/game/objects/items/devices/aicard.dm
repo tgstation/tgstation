@@ -12,6 +12,10 @@
 	var/flush = FALSE
 	var/mob/living/silicon/ai/AI
 
+/obj/item/device/aicard/Initialize()
+	. = ..()
+	AddComponent(/datum/component/ai_storage)
+
 /obj/item/device/aicard/afterattack(atom/target, mob/user, proximity)
 	..()
 	if(!proximity || !target)
