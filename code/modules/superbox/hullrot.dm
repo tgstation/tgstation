@@ -35,7 +35,8 @@
 		if (keys_used.len)
 			if (!(hullrot_ptt in keys_used))
 				hullrot_ptt = keys_used[1]
-				hullrot_stats[hullrot_ptt].name = "Active - hold V to talk"
+				var/obj/S = hullrot_stats[hullrot_ptt]
+				S.name = "Active - hold V to talk"
 		else
 			hullrot_ptt = null
 
