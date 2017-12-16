@@ -15519,6 +15519,7 @@
 "aJy" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering{
+	cyclelinkeddir = 2;
 	name = "Gravity Generator";
 	req_access_txt = "11"
 	},
@@ -16539,6 +16540,7 @@
 "aLB" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering{
+	cyclelinkeddir = 1;
 	name = "Gravity Generator";
 	req_access_txt = "11"
 	},
@@ -22150,6 +22152,7 @@
 /area/engine/supermatter)
 "aYk" = (
 /obj/machinery/door/airlock/glass_engineering{
+	cyclelinkeddir = 2;
 	heat_proof = 1;
 	name = "Supermatter Chamber";
 	req_access_txt = "10"
@@ -22587,6 +22590,7 @@
 /area/engine/supermatter)
 "aZq" = (
 /obj/machinery/door/airlock/highsecurity{
+	cyclelinkeddir = 1;
 	id_tag = "smengine";
 	locked = 1;
 	name = "Supermatter Chamber";
