@@ -30,7 +30,7 @@
 	user.whisper("O bidai nabora se[pick("'","`")]sma!", language = /datum/language/common)
 	user.whisper(html_decode(message))
 	var/title = "Acolyte"
-	var/span = "cultitalic"
+	var/span = "cult italic"
 	if(user.mind && user.mind.has_antag_datum(ANTAG_DATUM_CULT_MASTER))
 		span = "cultlarge"
 		if(ishuman(user))
