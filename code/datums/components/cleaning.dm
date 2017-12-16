@@ -1,12 +1,13 @@
 /datum/component/cleaning
 
 /datum/component/cleaning/Initialize()
-	if(!ismovable(parent))
+	if(!ismovableatom(parent))
 		. = COMPONENT_INCOMPATIBLE
 		CRASH("[type] added to a [parent.type]")
 	RegisterSignal(list(COMSIG_MOVABLE_MOVED), .proc/Clean)
 
 /datum/component/cleaning/proc/Clean()
+	var/atom/movable/AM = parent
 	var/turf/tile = AM.loc
 	if(!isturf(tile))
 		return
