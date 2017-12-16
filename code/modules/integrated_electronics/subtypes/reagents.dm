@@ -406,6 +406,8 @@ obj/item/integrated_circuit/reagent/storage/juicer
 	activate_pin(3)
 	return FALSE
 
+
+
 /obj/item/integrated_circuit/reagent/storage/scan
 	name = "reagent scanner"
 	desc = "Stores liquid inside, and away from electrical components. Can store up to 60u. On pulse this beaker will send list of contained reagents."
@@ -429,7 +431,6 @@ obj/item/integrated_circuit/reagent/storage/juicer
 		cont += RE.id
 	set_pin_data(IC_OUTPUT, 3, cont)
 	push_data()
-
 
 
 /obj/item/integrated_circuit/reagent/filter
@@ -500,7 +501,7 @@ obj/item/integrated_circuit/reagent/storage/juicer
 				source.reagents.trans_id_to(target, G.id, transfer_amount)
 	activate_pin(2)
 	push_data()
-	
+
 /obj/item/integrated_circuit/reagent/storage/heater
 	name = "chemical heater"
 	desc = "Stores liquid inside, and away from electrical components.  Can store up to 60u.  Will heat or freeze reagents \
