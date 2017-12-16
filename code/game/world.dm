@@ -57,18 +57,18 @@ GLOBAL_PROTECT(security_mode)
 			var/datum/DBQuery/query_db_version = SSdbcore.NewQuery("SELECT major, minor FROM [format_table_name("schema_revision")] ORDER BY date DESC LIMIT 1")
 			query_db_version.Execute()
 			if(query_db_version.NextRow())
-				var/db_major = query_db_version.item[1]
-				var/db_minor = query_db_version.item[2]
-				if(text2num(db_major + "." + db_minor) != text2num(DB_MAJOR_VERSION + "." + DB_MINOR_VERSION))
-					var/which = "behind"
-					if(text2num(db_major + "." + db_minor) > text2num(DB_MAJOR_VERSION + "." + DB_MINOR_VERSION))
-						which = "ahead of"
-					message_admins("Database schema ([db_major].[db_minor]) is [which] the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
-					log_sql("Database schema ([db_major].[db_minor]) is [which] the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
+				var/db_major = text2num(query_db_version.item[1])
+				var/db_minor = text2num(query_db_version.item[2])
+				if(db_major != DB_MAJOR_VERSION || db_minor != DB_MINOR_VERSION)
+					message_admins("Database schema ([db_major].[db_minor]) doesn't match the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
+					log_sql("Database schema ([db_major].[db_minor]) doesn't match the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
 			else
 				message_admins("Could not get schema version from database")
+				log_sql("Could not get schema version from database")
 		else
-			log_world("Your server failed to establish a connection with the database.")
+			log_sql("Your server failed to establish a connection with the database.")
+	else
+		log_sql("Database is not enabled in configuration.")
 
 /world/proc/SetRoundID()
 	if(CONFIG_GET(flag/sql_enabled))
