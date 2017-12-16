@@ -93,19 +93,14 @@
 	if(!radio_connection)
 		return
 
-	var/datum/signal/signal = new
-	signal.transmission_method = 1 //radio signal
-	signal.source = src
-
-	signal.data = list(
+	var/datum/signal/signal = new(list(
 		"tag" = id,
 		"device" = "AO",
 		"power" = on,
 		"volume_rate" = volume_rate,
 		//"timestamp" = world.time,
 		"sigtype" = "status"
-	 )
-
+	))
 	radio_connection.post_signal(src, signal)
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmosinit()

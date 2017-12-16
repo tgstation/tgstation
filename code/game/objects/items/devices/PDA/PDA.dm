@@ -158,14 +158,12 @@ GLOBAL_LIST_EMPTY(PDAs)
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
+	. = ..()
+
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/pda)
 	assets.send(user)
 
 	user.set_machine(src)
-
-	if(hidden_uplink && hidden_uplink.active)
-		hidden_uplink.interact(user)
-		return
 
 	var/dat = "<!DOCTYPE html><html><head><title>Personal Data Assistant</title><link href=\"https://fonts.googleapis.com/css?family=Orbitron|Share+Tech+Mono|VT323\" rel=\"stylesheet\"></head><body bgcolor=\"" + background_color + "\"><style>body{" + font_mode + "}ul,ol{list-style-type: none;}a, a:link, a:visited, a:active, a:hover { color: #000000;text-decoration:none; }img {border-style:none;}a img{padding-right: 9px;}</style>"
 
@@ -247,7 +245,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 						dat += "<li><a href='byond://?src=[REF(src)];choice=54'><img src=pda_medbot.png>Bots Access</a></li>"
 					if (cartridge.access & CART_JANITOR)
 						dat += "<li><a href='byond://?src=[REF(src)];choice=49'><img src=pda_bucket.png>Custodial Locator</a></li>"
-					if (istype(cartridge.radio, /obj/item/radio/integrated/signal))
+					if (istype(cartridge.radio))
 						dat += "<li><a href='byond://?src=[REF(src)];choice=40'><img src=pda_signaler.png>Signaler System</a></li>"
 					if (cartridge.access & CART_NEWSCASTER)
 						dat += "<li><a href='byond://?src=[REF(src)];choice=53'><img src=pda_notes.png>Newscaster Access </a></li>"
@@ -499,7 +497,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if("Ringtone")
 				var/t = input(U, "Please enter new ringtone", name, ttone) as text
 				if(in_range(src, U) && loc == U && t)
+					GET_COMPONENT(hidden_uplink, /datum/component/uplink)
 					if(hidden_uplink && (trim(lowertext(t)) == trim(lowertext(lock_code))))
+						hidden_uplink.locked = FALSE
 						hidden_uplink.interact(U)
 						to_chat(U, "The PDA softly beeps.")
 						U << browse(null, "window=pda")
@@ -543,7 +543,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 					if("2")		// Eject pAI device
 						var/turf/T = get_turf(src.loc)
 						if(T)
-							pai.loc = T
+							pai.forceMove(T)
 
 //LINK FUNCTIONS===================================
 
@@ -578,7 +578,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			M.put_in_hands(id)
 			to_chat(usr, "<span class='notice'>You remove the ID from the [name].</span>")
 		else
-			id.loc = get_turf(src)
+			id.forceMove(drop_location())
 		id = null
 		update_icon()
 
@@ -825,8 +825,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 		var/obj/item/photo/P = C
 		photo = P.img
 		to_chat(user, "<span class='notice'>You scan \the [C].</span>")
-	else if(hidden_uplink && hidden_uplink.active)
-		hidden_uplink.attackby(C, user, params)
 	else
 		return ..()
 

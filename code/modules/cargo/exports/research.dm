@@ -12,8 +12,8 @@
 		if(sold_nodes[V])		//Already sold before, don't want it.
 			continue
 		var/datum/techweb_node/TWN = D.stored_research.researched_nodes[V]
-		cost += TWN
-	return ..() * cost
+		cost += TWN.export_price
+	return cost
 
 /datum/export/tech/sell_object(obj/O)
 	..()

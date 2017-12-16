@@ -13,6 +13,8 @@
 	var/damaged_brain = FALSE //whether the brain organ is damaged.
 	var/decoy_override = FALSE	//I apologize to the security players, and myself, who abused this, but this is going to go.
 
+	var/list/datum/brain_trauma/traumas = list()
+
 /obj/item/organ/brain/changeling_brain
 	vital = FALSE
 	decoy_override = TRUE
@@ -25,7 +27,7 @@
 	if(C.mind && C.mind.has_antag_datum(/datum/antagonist/changeling) && !no_id_transfer)	//congrats, you're trapped in a body you don't control
 		if(brainmob && !(C.stat == DEAD || (C.status_flags & FAKEDEATH)))
 			to_chat(brainmob, "<span class = danger>You can't feel your body! You're still just a brain!</span>")
-		loc = C
+		forceMove(C)
 		C.update_hair()
 		return
 
@@ -40,11 +42,21 @@
 
 		QDEL_NULL(brainmob)
 
+	for(var/X in traumas)
+		var/datum/brain_trauma/BT = X
+		BT.owner = owner
+		BT.on_gain()
+
 	//Update the body's icon so it doesnt appear debrained anymore
 	C.update_hair()
 
 /obj/item/organ/brain/Remove(mob/living/carbon/C, special = 0, no_id_transfer = FALSE)
 	..()
+	for(var/X in traumas)
+		var/datum/brain_trauma/BT = X
+		BT.on_lose(TRUE)
+		BT.owner = null
+
 	if((!gc_destroyed || (owner && !owner.gc_destroyed)) && !no_id_transfer)
 		transfer_identity(C)
 	C.update_hair()
@@ -133,6 +145,30 @@
 	else
 		..()
 
+/obj/item/organ/brain/proc/get_brain_damage()
+	var/brain_damage_threshold = max_integrity * BRAIN_DAMAGE_INTEGRITY_MULTIPLIER
+	var/offset_integrity = obj_integrity - (max_integrity - brain_damage_threshold)
+	. = (1 - (offset_integrity / brain_damage_threshold)) * BRAIN_DAMAGE_DEATH
+
+/obj/item/organ/brain/proc/adjust_brain_damage(amount, maximum)
+	var/adjusted_amount
+	if(amount >= 0 && maximum)
+		var/brainloss = get_brain_damage()
+		var/new_brainloss = Clamp(brainloss + amount, 0, maximum)
+		if(brainloss > new_brainloss) //brainloss is over the cap already
+			return 0
+		adjusted_amount = new_brainloss - brainloss
+	else
+		adjusted_amount = amount
+
+	adjusted_amount *= BRAIN_DAMAGE_INTEGRITY_MULTIPLIER
+	if(adjusted_amount)
+		if(adjusted_amount >= 0.1)
+			take_damage(adjusted_amount)
+		else if(adjusted_amount <= -0.1)
+			obj_integrity = min(max_integrity, obj_integrity-adjusted_amount)
+	. = adjusted_amount
+
 /obj/item/organ/brain/Destroy() //copypasted from MMIs.
 	if(brainmob)
 		qdel(brainmob)
@@ -143,3 +179,46 @@
 	name = "alien brain"
 	desc = "We barely understand the brains of terrestial animals. Who knows what we may find in the brain of such an advanced species?"
 	icon_state = "brain-x"
+
+
+////////////////////////////////////TRAUMAS////////////////////////////////////////
+
+/obj/item/organ/brain/proc/has_trauma_type(brain_trauma_type, consider_permanent = FALSE)
+	for(var/X in traumas)
+		var/datum/brain_trauma/BT = X
+		if(istype(BT, brain_trauma_type) && (consider_permanent || !BT.permanent))
+			return BT
+
+
+//Add a specific trauma
+/obj/item/organ/brain/proc/gain_trauma(datum/brain_trauma/trauma, permanent = FALSE, list/arguments)
+	var/trauma_type
+	if(ispath(trauma))
+		trauma_type = trauma
+		traumas += new trauma_type(arglist(list(src, permanent) + arguments))
+	else
+		traumas += trauma
+		trauma.permanent = permanent
+
+//Add a random trauma of a certain subtype
+/obj/item/organ/brain/proc/gain_trauma_type(brain_trauma_type = /datum/brain_trauma, permanent = FALSE)
+	var/list/datum/brain_trauma/possible_traumas = list()
+	for(var/T in subtypesof(brain_trauma_type))
+		var/datum/brain_trauma/BT = T
+		if(initial(BT.can_gain))
+			possible_traumas += BT
+
+	var/trauma_type = pick(possible_traumas)
+	traumas += new trauma_type(src, permanent)
+
+//Cure a random trauma of a certain subtype
+/obj/item/organ/brain/proc/cure_trauma_type(brain_trauma_type, cure_permanent = FALSE)
+	var/datum/brain_trauma/trauma = has_trauma_type(brain_trauma_type)
+	if(trauma && (cure_permanent || !trauma.permanent))
+		qdel(trauma)
+
+/obj/item/organ/brain/proc/cure_all_traumas(cure_permanent = FALSE)
+	for(var/X in traumas)
+		var/datum/brain_trauma/trauma = X
+		if(cure_permanent || !trauma.permanent)
+			qdel(trauma)

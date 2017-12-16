@@ -41,6 +41,8 @@
 	else //something wrong
 		name = "[initial(name)]"
 	update_icon()
+	if(user.get_item_by_slot(slot_back) == src)
+		user.update_inv_back()
 	if(show_message)
 		if(iscyborg(user))
 			to_chat(user, "<span class='notice'>You free up your module.</span>")
@@ -445,7 +447,7 @@
 		return
 	if(explosive && wielded)
 		user.say("[war_cry]")
-		explosive.loc = AM
+		explosive.forceMove(AM)
 		explosive.prime()
 		qdel(src)
 

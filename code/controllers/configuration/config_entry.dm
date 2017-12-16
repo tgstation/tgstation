@@ -9,7 +9,7 @@
 	var/value
 	var/default	//read-only, just set value directly
 	
-	var/resident_file	//the file which this belongs to, must be set
+	var/resident_file	//the file which this was loaded from, if any
 	var/modified = FALSE	//set to TRUE if the default has been overridden by a config entry
 
 	var/protection = NONE
@@ -18,8 +18,6 @@
 	var/dupes_allowed = FALSE
 
 /datum/config_entry/New()
-	if(!resident_file)
-		CRASH("Config entry [type] has no resident_file set")
 	if(type == abstract_type)
 		CRASH("Abstract config entry [type] instatiated!")	
 	name = lowertext(type2top(type))
@@ -81,12 +79,12 @@
 			if(LIST_MODE_TEXT)
 				temp = key_value
 				continue_check = temp
-		if(continue_check && ValidateKeyName(key_name))
+		if(continue_check && ValidateListEntry(key_name, temp))
 			value[key_name] = temp
 			return TRUE
 	return FALSE
 
-/datum/config_entry/proc/ValidateKeyName(key_name)
+/datum/config_entry/proc/ValidateListEntry(key_name, key_value)
 	return TRUE
 
 /datum/config_entry/string

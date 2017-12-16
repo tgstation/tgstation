@@ -25,7 +25,7 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 
-	var/obj/item/radio/integrated/radio = null
+	var/obj/item/integrated_signaler/radio = null
 
 	var/access = 0 //Bit flags for cartridge access
 
@@ -127,7 +127,7 @@
 
 /obj/item/cartridge/signal/Initialize()
 	. = ..()
-	radio = new /obj/item/radio/integrated/signal(src)
+	radio = new(src)
 
 
 
@@ -176,7 +176,7 @@
 
 /obj/item/cartridge/rd/Initialize()
 	. = ..()
-	radio = new /obj/item/radio/integrated/signal(src)
+	radio = new(src)
 
 /obj/item/cartridge/captain
 	name = "\improper Value-PAK cartridge"
@@ -188,20 +188,16 @@
 
 /obj/item/cartridge/captain/New()
 	..()
-	radio = new /obj/item/radio/integrated/signal(src)
+	radio = new(src)
 
 /obj/item/cartridge/proc/post_status(command, data1, data2)
 
-	var/datum/radio_frequency/frequency = SSradio.return_frequency(1435)
+	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
 
 	if(!frequency)
 		return
 
-	var/datum/signal/status_signal = new
-	status_signal.source = src
-	status_signal.transmission_method = 1
-	status_signal.data["command"] = command
-
+	var/datum/signal/status_signal = new(list("command" = command))
 	switch(command)
 		if("message")
 			status_signal.data["msg1"] = data1
@@ -217,7 +213,6 @@
 		return
 	switch(host_pda.mode)
 		if(40) //signaller
-			var/obj/item/radio/integrated/signal/S = radio
 			menu = "<h4><img src=pda_signaler.png> Remote Signaling System</h4>"
 
 			menu += {"
@@ -225,14 +220,14 @@
 Frequency:
 <a href='byond://?src=[REF(src)];choice=Signal Frequency;sfreq=-10'>-</a>
 <a href='byond://?src=[REF(src)];choice=Signal Frequency;sfreq=-2'>-</a>
-[format_frequency(S.frequency)]
+[format_frequency(radio.frequency)]
 <a href='byond://?src=[REF(src)];choice=Signal Frequency;sfreq=2'>+</a>
 <a href='byond://?src=[REF(src)];choice=Signal Frequency;sfreq=10'>+</a><br>
 <br>
 Code:
 <a href='byond://?src=[REF(src)];choice=Signal Code;scode=-5'>-</a>
 <a href='byond://?src=[REF(src)];choice=Signal Code;scode=-1'>-</a>
-[S.code]
+[radio.code]
 <a href='byond://?src=[REF(src)];choice=Signal Code;scode=1'>+</a>
 <a href='byond://?src=[REF(src)];choice=Signal Code;scode=5'>+</a><br>"}
 		if (41) //crew manifest
@@ -571,22 +566,17 @@ Code:
 				active1 = null
 
 		if("Send Signal")
-			spawn( 0 )
-				var/obj/item/radio/integrated/signal/S = radio
-				S.send_signal("ACTIVATE")
-				return
+			INVOKE_ASYNC(radio, /obj/item/integrated_signaler.proc/send_activation)
 
 		if("Signal Frequency")
-			var/obj/item/radio/integrated/signal/S = radio
-			var/new_frequency = sanitize_frequency(S.frequency + text2num(href_list["sfreq"]))
-			S.set_frequency(new_frequency)
+			var/new_frequency = sanitize_frequency(radio.frequency + text2num(href_list["sfreq"]))
+			radio.set_frequency(new_frequency)
 
 		if("Signal Code")
-			var/obj/item/radio/integrated/signal/S = radio
-			S.code += text2num(href_list["scode"])
-			S.code = round(S.code)
-			S.code = min(100, S.code)
-			S.code = max(1, S.code)
+			radio.code += text2num(href_list["scode"])
+			radio.code = round(radio.code)
+			radio.code = min(100, radio.code)
+			radio.code = max(1, radio.code)
 
 		if("Status")
 			switch(href_list["statdisp"])

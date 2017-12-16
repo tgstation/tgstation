@@ -23,6 +23,7 @@
 	throw_range = 7
 	materials = list(MAT_METAL=10)
 	pressure_resistance = 2
+	grind_results = list("iron" = 2, "iodine" = 1)
 	var/colour = "black"	//what colour the ink is!
 	var/traitor_unlock_degrees = 0
 	var/degrees = 0
@@ -99,18 +100,12 @@
 	if(deg && (deg > 0 && deg <= 360))
 		degrees = deg
 		to_chat(user, "<span class='notice'>You rotate the top of the pen to [degrees] degrees.</span>")
+		GET_COMPONENT(hidden_uplink, /datum/component/uplink)
 		if(hidden_uplink && degrees == traitor_unlock_degrees)
 			to_chat(user, "<span class='warning'>Your pen makes a clicking noise, before quickly rotating back to 0 degrees!</span>")
 			degrees = 0
+			hidden_uplink.locked = FALSE
 			hidden_uplink.interact(user)
-
-
-/obj/item/pen/attackby(obj/item/I, mob/user, params)
-	if(hidden_uplink)
-		return hidden_uplink.attackby(I, user, params)
-	else
-		return ..()
-
 
 /obj/item/pen/attack(mob/living/M, mob/user,stealth)
 	if(!istype(M))
@@ -181,7 +176,7 @@
 
 
 /obj/item/pen/sleepy/Initialize()
-	. = ..()	
+	. = ..()
 	create_reagents(45)
 	reagents.add_reagent("chloralhydrate2", 20)
 	reagents.add_reagent("mutetoxin", 15)

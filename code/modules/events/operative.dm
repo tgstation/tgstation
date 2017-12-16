@@ -26,32 +26,12 @@
 	var/datum/preferences/A = new
 	A.copy_to(operative)
 	operative.dna.update_dna_identity()
-
-	operative.equipOutfit(/datum/outfit/syndicate/full)
-
 	var/datum/mind/Mind = new /datum/mind(selected.key)
 	Mind.assigned_role = "Lone Operative"
 	Mind.special_role = "Lone Operative"
-	SSticker.mode.traitors |= Mind
 	Mind.active = 1
-
-	var/obj/machinery/nuclearbomb/selfdestruct/nuke = locate() in GLOB.machines
-	if(nuke)
-		var/nuke_code
-		if(!nuke.r_code || nuke.r_code == "ADMIN")
-			nuke_code = random_nukecode()
-			nuke.r_code = nuke_code
-		else
-			nuke_code = nuke.r_code
-
-		Mind.store_memory("<B>Station Self-Destruct Device Code</B>: [nuke_code]", 0, 0)
-		to_chat(Mind.current, "The nuclear authorization code is: <B>[nuke_code]</B>")
-
-		var/datum/objective/nuclear/O = new()
-		O.owner = Mind
-		Mind.objectives += O
-
 	Mind.transfer_to(operative)
+	Mind.add_antag_datum(/datum/antagonist/nukeop/lone)
 
 	message_admins("[key_name_admin(operative)] has been made into lone operative by an event.")
 	log_game("[key_name(operative)] was spawned as a lone operative by an event.")

@@ -612,7 +612,7 @@ Difficulty: Very Hard
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	ventcrawler = VENTCRAWLER_ALWAYS
 	mob_size = MOB_SIZE_TINY
-	gold_core_spawnable = TRUE
+	gold_core_spawnable = HOSTILE_SPAWN
 	verb_say = "warps"
 	verb_ask = "floats inquisitively"
 	verb_exclaim = "zaps"

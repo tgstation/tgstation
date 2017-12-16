@@ -153,7 +153,7 @@
 	access_card.access |= ACCESS_CENT_BAR
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid
-	gold_core_spawnable = 0
+	gold_core_spawnable = NO_SPAWN
 	name = "Barmaid"
 	desc = "A barmaid, a maiden found in a bar."
 	pass_flags = PASSTABLE

@@ -10,6 +10,13 @@
 	light_power = 3
 	light_color = "#6A4D2F"
 
+
+/obj/effect/clockwork/city_of_cogs_rift/singularity_act()
+	return
+
+/obj/effect/clockwork/city_of_cogs_rift/singularity_pull()
+	return
+
 /obj/effect/clockwork/city_of_cogs_rift/Initialize()
 	. = ..()
 	visible_message("<span class='warning'>The air above [loc] shimmers and pops as a [name] forms there!</span>")

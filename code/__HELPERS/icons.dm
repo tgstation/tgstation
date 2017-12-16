@@ -949,7 +949,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 	if(!GLOB.friendly_animal_types.len)
 		for(var/T in typesof(/mob/living/simple_animal))
 			var/mob/living/simple_animal/SA = T
-			if(initial(SA.gold_core_spawnable) == 2)
+			if(initial(SA.gold_core_spawnable) == FRIENDLY_SPAWN)
 				GLOB.friendly_animal_types += SA
 
 

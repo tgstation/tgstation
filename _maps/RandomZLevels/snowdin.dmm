@@ -15,7 +15,7 @@
 /area/awaymission/snowdin/post)
 "ae" = (
 /obj/effect/decal/cleanable/oil,
-/obj/vehicle/atv,
+/obj/vehicle/ridden/atv,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -41,7 +41,7 @@
 	},
 /area/awaymission/snowdin/post)
 "ai" = (
-/obj/vehicle/atv,
+/obj/vehicle/ridden/atv,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -720,7 +720,7 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin)
 "bN" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/plasteel/cafeteria{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -1493,7 +1493,7 @@
 	},
 /area/awaymission/snowdin/post)
 "dV" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	req_access_txt = "150"
 	},
 /turf/open/floor/plasteel{
@@ -1842,7 +1842,7 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin)
 "eZ" = (
-/obj/vehicle/atv,
+/obj/vehicle/ridden/atv,
 /turf/open/floor/plating/asteroid/snow{
 	temperature = 140
 	},
@@ -2453,7 +2453,7 @@
 	},
 /area/awaymission/snowdin/post)
 "gJ" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/public/glass,
 /obj/structure/barricade/wooden,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
@@ -2490,7 +2490,7 @@
 /turf/open/floor/plating/snowed/colder,
 /area/awaymission/snowdin/dungeon1)
 "gP" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/plasteel/cafeteria{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	temperature = 180
@@ -2549,7 +2549,7 @@
 	},
 /area/awaymission/snowdin/post)
 "gX" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	wet = 0
@@ -4299,7 +4299,7 @@
 	},
 /area/awaymission/snowdin/sekret)
 "lE" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/plasteel/cafeteria{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},

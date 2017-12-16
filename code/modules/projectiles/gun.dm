@@ -77,9 +77,8 @@
 	..()
 	var/obj/item/gun/G = locate(/obj/item/gun) in contents
 	if(G)
-		G.loc = loc
-		qdel(G.pin)
-		G.pin = null
+		G.forceMove(loc)
+		QDEL_NULL(G.pin)
 		visible_message("[G] can now fit a new pin, but the old one was destroyed in the process.", null, null, 3)
 		qdel(src)
 
@@ -106,7 +105,7 @@
 
 /obj/item/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	to_chat(user, "<span class='danger'>*click*</span>")
-	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+	playsound(src, "gun_dry_fire", 50, 1)
 
 
 /obj/item/gun/proc/shoot_live_shot(mob/living/user as mob|obj, pointblank = 0, mob/pbtarget = null, message = 1)
@@ -497,7 +496,7 @@
 		user.client.pixel_x = world.icon_size*_x
 		user.client.pixel_y = world.icon_size*_y
 	else
-		user.client.change_view(world.view)
+		user.client.change_view(CONFIG_GET(string/default_view))
 		user.client.pixel_x = 0
 		user.client.pixel_y = 0
 	return zoomed

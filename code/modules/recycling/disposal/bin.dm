@@ -29,7 +29,7 @@
 
 	if(make_from)
 		setDir(make_from.dir)
-		make_from.loc = null
+		make_from.moveToNullspace()
 		stored = make_from
 		pressure_charging = FALSE // newly built disposal bins start with pump off
 	else
@@ -471,7 +471,7 @@
 
 	if(isobj(AM))
 		var/obj/O = AM
-		O.loc = src
+		O.forceMove(src)
 	else if(ismob(AM))
 		var/mob/M = AM
 		if(prob(2)) // to prevent mobs being stuck in infinite loops

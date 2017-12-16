@@ -1801,7 +1801,7 @@
 	id = "permacell2";
 	name = "cell blast door"
 	},
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	id_tag = "permabolt2";
 	name = "Cell 2"
 	},
@@ -1820,7 +1820,7 @@
 	id = "permacell1";
 	name = "cell blast door"
 	},
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	id_tag = "permabolt1";
 	name = "Cell 1"
 	},
@@ -2614,7 +2614,7 @@
 /turf/open/floor/plasteel/dark,
 /area/security/armory)
 "ail" = (
-/obj/vehicle/secway,
+/obj/vehicle/ridden/secway,
 /turf/open/floor/plasteel/dark,
 /area/security/armory)
 "aim" = (
@@ -2647,7 +2647,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
 "air" = (
-/obj/vehicle/secway,
+/obj/vehicle/ridden/secway,
 /obj/item/key/security,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/showroomfloor,
@@ -3459,7 +3459,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "space-bridge access"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -3499,7 +3499,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
 "akp" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "space-bridge access"
 	},
 /obj/structure/cable{
@@ -4988,11 +4988,11 @@
 	},
 /area/security/main)
 "anP" = (
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-22"
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
+	},
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/main)
@@ -5716,7 +5716,6 @@
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "apA" = (
-/mob/living/simple_animal/mouse/gray,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -9140,7 +9139,7 @@
 /area/crew_quarters/fitness/recreation)
 "axy" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Holodeck Door"
 	},
 /turf/open/floor/plasteel,
@@ -9483,7 +9482,7 @@
 /area/crew_quarters/dorms)
 "ayt" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Recreation Room"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -9983,7 +9982,7 @@
 /area/crew_quarters/dorms)
 "azB" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Recreation Room"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -12755,7 +12754,7 @@
 /area/security/detectives_office)
 "aGb" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Central Access"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -12763,14 +12762,14 @@
 /area/hallway/primary/fore)
 "aGc" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Central Access"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "aGd" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Central Access"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -13094,7 +13093,7 @@
 /area/storage/primary)
 "aGY" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Primary Tool Storage"
 	},
 /obj/structure/cable{
@@ -13105,7 +13104,7 @@
 /area/storage/primary)
 "aGZ" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Primary Tool Storage"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -13647,7 +13646,7 @@
 /area/hallway/primary/central)
 "aIg" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Dormitory"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -14054,7 +14053,7 @@
 /area/hallway/primary/central)
 "aJf" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Dormitory"
 	},
 /obj/structure/cable{
@@ -14528,7 +14527,7 @@
 /area/hallway/primary/central)
 "aKb" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Dormitory"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -14613,7 +14612,6 @@
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "aKo" = (
-/mob/living/simple_animal/mouse/gray,
 /turf/open/floor/plating{
 	burnt = 1;
 	icon_state = "panelscorched"
@@ -14647,7 +14645,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aKv" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Cockpit";
 	req_access_txt = "19"
 	},
@@ -14741,7 +14739,7 @@
 /turf/open/floor/plating,
 /area/storage/art)
 "aKL" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Art Storage"
 	},
 /obj/structure/cable{
@@ -14760,7 +14758,7 @@
 /area/crew_quarters/cafeteria/lunchroom)
 "aKO" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Lunchroom"
 	},
 /obj/structure/cable{
@@ -14906,7 +14904,7 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "aLp" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Cargo Hold";
 	req_access_txt = "0"
 	},
@@ -14919,7 +14917,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aLr" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Brig";
 	req_access_txt = "2"
 	},
@@ -16674,7 +16672,7 @@
 /area/hallway/secondary/exit/departure_lounge)
 "aPv" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Departure Lounge"
 	},
 /turf/open/floor/plasteel,
@@ -16844,7 +16842,7 @@
 	name = "Security Post - Cargo APC";
 	pixel_x = -24
 	},
-/obj/structure/closet/wardrobe/red,
+/obj/structure/closet/secure_closet/security/cargo,
 /turf/open/floor/plasteel/red/side{
 	dir = 10
 	},
@@ -17063,7 +17061,7 @@
 /area/hallway/secondary/exit/departure_lounge)
 "aQz" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Departure Lounge"
 	},
 /obj/structure/disposalpipe/segment{
@@ -17892,7 +17890,7 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "aSp" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Infirmary"
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -18924,7 +18922,7 @@
 /area/hallway/secondary/exit/departure_lounge)
 "aUJ" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Departure Lounge"
 	},
 /obj/structure/cable{
@@ -19487,7 +19485,7 @@
 /area/hallway/secondary/exit/departure_lounge)
 "aVQ" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Departure Lounge"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -19529,7 +19527,7 @@
 /area/janitor)
 "aVV" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Hydroponics";
 	req_access_txt = "35"
 	},
@@ -21258,9 +21256,7 @@
 /area/hydroponics)
 "aZZ" = (
 /obj/machinery/smartfridge,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/turf/open/floor/plating,
 /area/crew_quarters/kitchen)
 "baa" = (
 /obj/structure/disposalpipe/segment,
@@ -21627,7 +21623,7 @@
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central)
 "baX" = (
-/obj/vehicle/janicart,
+/obj/vehicle/ridden/janicart,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -22168,7 +22164,7 @@
 /area/crew_quarters/bar)
 "bcw" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Bar"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -22450,7 +22446,7 @@
 /area/hallway/secondary/entry)
 "bdf" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Central Access"
 	},
 /turf/open/floor/plasteel,
@@ -22550,7 +22546,7 @@
 /area/crew_quarters/bar)
 "bdy" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Bar"
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -22852,7 +22848,7 @@
 /area/hydroponics)
 "bek" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	cyclelinkeddir = 4;
 	name = "Hydroponics";
 	req_access_txt = "35"
@@ -22899,7 +22895,7 @@
 /area/hallway/primary/central)
 "beo" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	cyclelinkeddir = 8;
 	name = "Kitchen";
 	req_access_txt = "28"
@@ -23216,7 +23212,7 @@
 /area/hallway/secondary/entry)
 "bfe" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Central Access"
 	},
 /obj/structure/cable{
@@ -23617,7 +23613,7 @@
 /area/crew_quarters/lounge)
 "bgb" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Lounge"
 	},
 /obj/structure/cable{
@@ -23771,7 +23767,7 @@
 /area/hallway/primary/central)
 "bgt" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Bar"
 	},
 /turf/open/floor/plasteel,
@@ -23779,7 +23775,7 @@
 "bgu" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Bar"
 	},
 /turf/open/floor/plasteel,
@@ -24726,7 +24722,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/mouse/gray,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "biB" = (
@@ -24905,14 +24900,14 @@
 "biV" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Medbay"
 	},
 /turf/open/floor/plasteel/white/side,
 /area/medical/medbay/zone3)
 "biW" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Medbay"
 	},
 /turf/open/floor/plasteel/white/side,
@@ -24920,7 +24915,7 @@
 "biX" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Medbay"
 	},
 /turf/open/floor/plasteel/white/side,
@@ -25322,18 +25317,18 @@
 "bkj" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bkk" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bkl" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bkm" = (
@@ -25675,6 +25670,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
+/obj/structure/closet/wardrobe/red,
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
@@ -26224,7 +26220,7 @@
 	dir = 4;
 	network = list("SS13")
 	},
-/obj/structure/closet/wardrobe/red,
+/obj/structure/closet/secure_closet/security/med,
 /turf/open/floor/plasteel/red/side{
 	dir = 10
 	},
@@ -27690,7 +27686,7 @@
 "bqd" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Research Division"
 	},
 /obj/effect/turf_decal/delivery,
@@ -27701,7 +27697,7 @@
 "bqe" = (
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Research Division"
 	},
 /obj/effect/turf_decal/delivery,
@@ -27709,7 +27705,7 @@
 /area/science/research/lobby)
 "bqf" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Research Division"
 	},
 /obj/effect/turf_decal/delivery,
@@ -28968,7 +28964,7 @@
 "bsH" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Medbay"
 	},
 /turf/open/floor/plasteel/whiteblue/corner{
@@ -28979,7 +28975,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Medbay"
 	},
 /turf/open/floor/plasteel/whiteblue/corner,
@@ -30673,7 +30669,7 @@
 /area/shuttle/transport)
 "bwq" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Monastery Transit"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -30681,7 +30677,7 @@
 /area/hallway/secondary/entry)
 "bwr" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Monastery Transit"
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
@@ -32698,8 +32694,8 @@
 /area/science/lab)
 "bAq" = (
 /obj/structure/table,
-/obj/item/stock_parts/console_screen,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
 /obj/item/stock_parts/capacitor,
 /obj/item/stock_parts/capacitor,
 /obj/item/stock_parts/manipulator,
@@ -34090,6 +34086,7 @@
 /area/security/checkpoint/science)
 "bDI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/closet/wardrobe/red,
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
@@ -34414,15 +34411,10 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bEv" = (
-/obj/structure/table,
-/obj/item/storage/box/beakers{
-	pixel_x = 2;
-	pixel_y = 2
-	},
-/obj/item/storage/box/syringes,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
 	},
+/obj/machinery/rnd/protolathe/department/medical,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1
 	},
@@ -34753,7 +34745,6 @@
 /turf/open/floor/plasteel/red/side,
 /area/security/checkpoint/science)
 "bEY" = (
-/obj/structure/closet/wardrobe/red,
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Science Security APC";
@@ -34763,6 +34754,7 @@
 /obj/structure/cable{
 	icon_state = "0-8"
 	},
+/obj/structure/closet/secure_closet/security/science,
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
@@ -35694,7 +35686,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Research Division"
 	},
 /obj/effect/turf_decal/delivery,
@@ -36113,6 +36105,11 @@
 /area/medical/medbay/central)
 "bIg" = (
 /obj/structure/table,
+/obj/item/storage/box/beakers{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/storage/box/syringes,
 /obj/item/storage/belt/medical{
 	pixel_y = 2
 	},
@@ -36264,7 +36261,7 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Research Division"
 	},
 /obj/structure/cable{
@@ -36397,7 +36394,7 @@
 /turf/closed/wall/r_wall,
 /area/science/mixing)
 "bIL" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	autoclose = 0;
 	frequency = 1449;
 	heat_proof = 1;
@@ -36729,7 +36726,7 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Research Division"
 	},
 /obj/effect/turf_decal/delivery,
@@ -37391,7 +37388,7 @@
 /turf/open/floor/engine/vacuum,
 /area/engine/atmos)
 "bLf" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	autoclose = 0;
 	frequency = 1449;
 	heat_proof = 1;
@@ -41882,6 +41879,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/closet/wardrobe/red,
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
@@ -42231,7 +42229,7 @@
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_x = 32
 	},
-/obj/structure/closet/wardrobe/red,
+/obj/structure/closet/secure_closet/security/engine,
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
@@ -42960,7 +42958,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/computer/rdconsole/production,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "bYL" = (
@@ -42990,7 +42987,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/rnd/circuit_imprinter,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "bYN" = (
@@ -43012,7 +43008,6 @@
 	icon_state = "map-pubby";
 	pixel_y = 32
 	},
-/obj/machinery/rnd/protolathe/department/engineering,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "bYO" = (
@@ -43241,6 +43236,7 @@
 /obj/structure/cable{
 	icon_state = "0-8"
 	},
+/obj/structure/closet/wardrobe/engineering_yellow,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "bZd" = (
@@ -43902,7 +43898,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	autoclose = 0;
 	frequency = 1449;
 	heat_proof = 1;
@@ -43925,7 +43921,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	autoclose = 0;
 	frequency = 1449;
 	heat_proof = 1;
@@ -44923,6 +44919,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plasteel/yellow/side,
 /area/engine/engineering)
 "cdS" = (
@@ -44975,6 +44972,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plasteel/yellow/side,
 /area/engine/engineering)
 "cdY" = (
@@ -45002,7 +45000,9 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ceb" = (
-/obj/structure/reagent_dispensers/watertank,
+/obj/machinery/computer/rdconsole/production{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cec" = (
@@ -46329,7 +46329,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "cin" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Shuttle Airlock"
 	},
 /turf/open/floor/plasteel/dark,
@@ -46715,7 +46715,7 @@
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "cjB" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Shuttle Airlock"
 	},
 /obj/docking_port/mobile{
@@ -47955,8 +47955,8 @@
 /area/tcommsat/server)
 "cnw" = (
 /obj/structure/table,
-/obj/item/stock_parts/console_screen,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
 /obj/item/stock_parts/micro_laser,
 /obj/item/stock_parts/micro_laser,
 /turf/open/floor/plasteel/dark/telecomms,
@@ -50618,11 +50618,6 @@
 /area/library)
 "czr" = (
 /obj/structure/table/wood/fancy,
-/obj/item/toy/cards/deck/cas/black{
-	pixel_x = -2;
-	pixel_y = 6
-	},
-/obj/item/toy/cards/deck/cas,
 /turf/open/floor/carpet,
 /area/library)
 "czs" = (
@@ -51262,7 +51257,7 @@
 /area/quartermaster/storage)
 "cCD" = (
 /obj/machinery/rnd/protolathe/department/service,
-/turf/closed/wall,
+/turf/open/floor/plating,
 /area/crew_quarters/kitchen)
 "cCE" = (
 /obj/machinery/rnd/protolathe/department/medical,
@@ -51341,6 +51336,26 @@
 	},
 /turf/open/floor/plating/airless,
 /area/maintenance/department/chapel/monastery)
+"cCS" = (
+/obj/machinery/rnd/protolathe/department/security,
+/turf/open/floor/plasteel/dark,
+/area/security/main)
+"cCT" = (
+/obj/machinery/rnd/protolathe/department/cargo,
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
+"cCU" = (
+/obj/machinery/rnd/circuit_imprinter,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
+"cCV" = (
+/obj/machinery/rnd/protolathe/department/engineering,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
+"cCW" = (
+/obj/machinery/vending/games,
+/turf/open/floor/plasteel/dark,
+/area/library)
 
 (1,1,1) = {"
 aaa
@@ -65680,19 +65695,19 @@ aaa
 aaa
 aaa
 aaa
-cgX
-cgX
-cgX
-cgX
-cgX
 aaa
 aaa
 aaa
 aaa
-cgX
-cgX
-cgX
-cgX
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -65934,24 +65949,24 @@ aaa
 aaa
 aaa
 aaa
-cgX
-cgX
-cgX
-cgX
-cfN
-cfN
-cfN
-cgX
 aaa
-cgX
-cgX
-cgX
-cgX
+aaa
+aaa
+aaa
 cfN
 cfN
-cgX
-cgX
-cgX
+cfN
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+cfN
+cfN
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -66189,18 +66204,18 @@ aaa
 aaa
 aaa
 aaa
-cgX
-cgX
-cgX
+aaa
+aaa
+aaa
 cfN
 cfN
 cfN
 cfN
 cfN
 cyM
-cgX
 aaa
-cgX
+aaa
+aaa
 cfN
 cfN
 cfN
@@ -66208,9 +66223,9 @@ cfN
 cfN
 cfN
 cfN
-cgX
-cgX
-cgX
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -66446,18 +66461,18 @@ aaa
 aaa
 aaa
 aaa
-cgX
-cfN
-cfN
-cfN
-cfN
-cfN
-cfN
-cfN
-cyK
-cgX
 aaa
-cgX
+cfN
+cfN
+cfN
+cfN
+cfN
+cfN
+cfN
+aht
+aaa
+aaa
+aaa
 cfN
 cyM
 cfN
@@ -66467,7 +66482,7 @@ cfN
 cfN
 cfN
 cfN
-cgX
+aaa
 aaa
 aaa
 aaa
@@ -66703,28 +66718,28 @@ aaa
 aaa
 aaa
 aaa
-cgX
+aaa
 cfN
 cfN
 cfN
 cyM
 cfN
 cyM
-cgX
-cyK
+aaa
+aht
 aaa
 aaa
-cgX
-cgX
-cyK
-cgX
+aaa
+aaa
+aht
+aaa
 cfN
 cfN
 cfN
 cfN
 cfN
 cfN
-cgX
+aaa
 aaa
 aaa
 aaa
@@ -66960,28 +66975,28 @@ aaa
 aaa
 aaa
 aaa
-cgX
+aaa
 cfN
 cfN
 cfN
-cyK
-cgX
-cyK
-cgX
+aht
+aaa
+aht
+aaa
 aht
 aht
 aht
 aht
 aht
 aht
-cgX
+aaa
 cfN
 cfN
 cyM
 cfN
 cfN
 cfN
-cgX
+aaa
 aaa
 aaa
 aaa
@@ -67217,11 +67232,11 @@ cfN
 cfN
 aaa
 aaa
-cgX
-cgX
-cgX
-cgX
-cyK
+aaa
+aaa
+aaa
+aaa
+aht
 aaa
 aht
 aaa
@@ -67231,14 +67246,14 @@ aaa
 aaa
 aaa
 aht
-cgX
-cgX
-cgX
-cyK
+aaa
+aaa
+aaa
+aht
 cfN
 cfN
-cgX
-cgX
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -67356,7 +67371,7 @@ aaa
 aiu
 aiu
 aiu
-apA
+aoK
 aqf
 ajD
 aiu
@@ -67491,10 +67506,10 @@ cjp
 cyU
 aht
 aht
-cyK
-cgX
-cgX
-cgX
+aht
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -67992,13 +68007,13 @@ aaa
 aaa
 aaa
 cjp
-ckW
+cCW
 ckH
 cyZ
 ckH
 czl
 czr
-czA
+czr
 czI
 ckH
 ckH
@@ -68254,7 +68269,7 @@ ckH
 ckH
 ckH
 czl
-czs
+czr
 czB
 czI
 czV
@@ -68267,9 +68282,9 @@ aaa
 aaa
 aaa
 aaa
-cgX
-cgX
-cgX
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -68523,11 +68538,11 @@ cjp
 cyU
 aaa
 aaa
-cgX
-cgX
+aaa
+aaa
 cfN
-cgX
-cgX
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -68780,11 +68795,11 @@ cAS
 cyU
 aht
 aht
-cyK
+aht
 cyM
 cfN
 cfN
-cgX
+aaa
 aaa
 aaa
 aaa
@@ -69037,12 +69052,12 @@ cAT
 cyU
 aaa
 aaa
-cgX
+aaa
 cfN
 cfN
 cfN
-cgX
-cgX
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -69293,13 +69308,13 @@ cAK
 cAU
 cyU
 aaa
-cgX
-cgX
+aaa
+aaa
 cfN
 cfN
 cfN
 cfN
-cgX
+aaa
 aaa
 aaa
 aaa
@@ -69550,13 +69565,13 @@ cAa
 cAV
 cyU
 aaa
-cgX
+aaa
 cfN
 cfN
 cfN
 cfN
 cfN
-cgX
+aaa
 aaa
 aaa
 aaa
@@ -69807,13 +69822,13 @@ cAM
 cjp
 cyU
 aaa
-cgX
+aaa
 cfN
 cfN
 cfN
 cfN
 cfN
-cgX
+aaa
 aaa
 aaa
 aaa
@@ -70064,13 +70079,13 @@ cyU
 cjp
 aht
 aht
-cyK
+aht
 cyM
 cfN
 cfN
 cfN
 cfN
-cgX
+aaa
 aaa
 aaa
 aaa
@@ -70320,14 +70335,14 @@ cjp
 cyU
 aht
 aaa
-cgX
-cgX
+aaa
+aaa
 cfN
 cfN
 cfN
 cfN
-cgX
-cgX
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -70576,8 +70591,8 @@ cyU
 aaa
 aaa
 aht
-cgX
-cgX
+aaa
+aaa
 cfN
 cfN
 cfN
@@ -70833,13 +70848,13 @@ cyU
 aht
 aht
 aht
-cyK
+aht
 cyM
 cfN
 cfN
 cfN
 cfN
-cgX
+aaa
 aaa
 aaa
 aaa
@@ -71086,17 +71101,17 @@ aaa
 aht
 aaa
 aht
-cgX
-cgX
-cgX
-cgX
-cgX
+aaa
+aaa
+aaa
+aaa
+aaa
 cfN
 cfN
-cgX
+aaa
 cfN
 cfN
-cgX
+aaa
 aaa
 aaa
 aaa
@@ -71335,25 +71350,25 @@ aaa
 aht
 aht
 aht
-cyK
-cgX
-cgX
-cyK
-cyK
-cyK
+aht
+aaa
 aaa
 aht
-cgX
+aht
+aht
+aaa
+aht
+aaa
 cfN
 cfN
-cgX
-cgX
-cgX
-cgX
-cgX
-cgX
-cgX
-cgX
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -71590,21 +71605,21 @@ aaa
 aaa
 aaa
 aht
-cgX
-cgX
-cyK
+aaa
+aaa
+aht
 cfN
 cfN
 cyM
 cfN
-cyK
-cgX
-cyK
+aht
+aaa
+aht
 cfN
 cfN
 cfN
-cgX
-cgX
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -71845,9 +71860,9 @@ cfN
 aaa
 aaa
 aaa
-cgX
-cyK
-cgX
+aaa
+aht
+aaa
 cfN
 cyM
 cfN
@@ -71861,7 +71876,7 @@ cfN
 cfN
 cfN
 cfN
-cgX
+aaa
 aaa
 aaa
 aaa
@@ -72101,8 +72116,8 @@ cfN
 aaa
 aaa
 aaa
-cgX
-cgX
+aaa
+aaa
 cyL
 cfN
 cfN
@@ -72118,7 +72133,7 @@ cfN
 cfN
 cfN
 cfN
-cgX
+aaa
 aaa
 aaa
 aaa
@@ -72358,7 +72373,7 @@ aaa
 aaa
 aaa
 aaa
-cgX
+aaa
 cfN
 cfN
 cfN
@@ -72375,7 +72390,7 @@ cfN
 cfN
 cfN
 cfN
-cgX
+aaa
 aaa
 aaa
 aaa
@@ -72615,7 +72630,7 @@ aaa
 aaa
 aaa
 aaa
-cgX
+aaa
 cfN
 cfN
 cfN
@@ -72623,8 +72638,8 @@ cfN
 cfN
 cfN
 cfN
-cgX
-cgX
+aaa
+aaa
 cfN
 cfN
 cfN
@@ -72632,7 +72647,7 @@ cfN
 cfN
 cfN
 cfN
-cgX
+aaa
 aaa
 aaa
 aaa
@@ -72872,24 +72887,24 @@ aaa
 aaa
 aaa
 aaa
-cgX
-cgX
-cgX
+aaa
+aaa
+aaa
 cfN
 cfN
 cfN
-cgX
-cgX
-cgX
-cgX
-cgX
-cgX
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 cfN
 cfN
 cfN
 cfN
-cgX
-cgX
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -73131,21 +73146,21 @@ aaa
 aaa
 aaa
 aaa
-cgX
-cgX
-cgX
-cgX
-cgX
 aaa
 aaa
 aaa
 aaa
-cgX
-cgX
-cgX
-cgX
-cgX
-cgX
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -77115,10 +77130,10 @@ air
 agP
 agP
 agP
-akS
+cCS
 alH
 ams
-alH
+akS
 anP
 agP
 apg
@@ -78213,7 +78228,7 @@ bBa
 bCj
 bsA
 bEw
-cCE
+bkh
 bkh
 bId
 bFO
@@ -79511,7 +79526,7 @@ bPB
 bQp
 cCH
 cCF
-cCQ
+cCP
 bTp
 bPB
 bUI
@@ -79790,7 +79805,7 @@ bZA
 cgs
 cgQ
 chv
-bPm
+ahi
 abI
 abI
 abI
@@ -81588,13 +81603,13 @@ cfV
 cfU
 cgv
 cgV
-cgW
-cgW
-cgX
+bBW
+bBW
+aaa
 cgV
-cgX
-cgW
-cgW
+aaa
+bBW
+bBW
 cgV
 cfV
 bTE
@@ -81844,15 +81859,15 @@ cfa
 cfa
 cfa
 cgv
-cgW
-cgW
-cgW
-cgX
-chy
-cgX
-cgW
-cgW
-cgW
+bBW
+bBW
+bBW
+aaa
+abI
+aaa
+bBW
+bBW
+bBW
 cfV
 bTE
 abI
@@ -82101,15 +82116,15 @@ cfb
 cfu
 cfa
 cgv
-cgW
-cgW
-cgX
-cgX
-chy
-cgX
-cgX
-cgW
-cgW
+bBW
+bBW
+aaa
+aaa
+abI
+aaa
+aaa
+bBW
+bBW
 cfV
 bTE
 abI
@@ -82358,15 +82373,15 @@ cfc
 cfv
 cfa
 cgv
-cgX
-cgX
-cgX
+aaa
+aaa
+aaa
 cii
 cis
 ciG
-cgX
-cgX
-cgX
+aaa
+aaa
+aaa
 cfV
 bTE
 abI
@@ -82616,13 +82631,13 @@ cfw
 cfW
 cgw
 cgV
-chy
-chy
+abI
+abI
 cij
 cit
 ciH
-chy
-chy
+abI
+abI
 cgV
 cfV
 bTE
@@ -82872,15 +82887,15 @@ cfe
 cfx
 cfa
 cgv
-cgX
-cgX
-cgX
+aaa
+aaa
+aaa
 cik
 ciu
 ciI
-cgX
-cgX
-cgX
+aaa
+aaa
+aaa
 cfV
 bTE
 aaa
@@ -83129,15 +83144,15 @@ cey
 cfy
 cfa
 cgv
-cgW
-cgW
-cgX
-cgX
-chy
-cgX
-cgX
-cgW
-cgW
+bBW
+bBW
+aaa
+aaa
+abI
+aaa
+aaa
+bBW
+bBW
 cfV
 bTE
 aaa
@@ -83386,15 +83401,15 @@ cfa
 cfa
 cfa
 cgv
-cgW
-cgW
-cgX
-cgX
-chy
-cgX
-cgX
-cgW
-cgW
+bBW
+bBW
+aaa
+aaa
+abI
+aaa
+aaa
+bBW
+bBW
 cfV
 bTE
 aaa
@@ -83644,13 +83659,13 @@ cfV
 cfU
 cgv
 cgV
-cgW
-cgX
-cgX
+bBW
+aaa
+aaa
 cgV
-cgX
-cgW
-cgW
+aaa
+bBW
+bBW
 cgV
 cfV
 bTE
@@ -85179,7 +85194,7 @@ cah
 cbq
 cam
 cam
-cea
+cav
 bXk
 bXk
 bXk
@@ -85432,10 +85447,10 @@ bXk
 bTE
 bZc
 bZJ
-cay
-cbr
 ccl
-cam
+cbr
+cCU
+cCV
 ceb
 bXk
 aaa
@@ -91548,7 +91563,7 @@ aVz
 aWz
 aVz
 aYz
-cCC
+aZo
 baC
 bbI
 bbI
@@ -91558,7 +91573,7 @@ bdI
 bbI
 bhr
 bbI
-biA
+aTx
 bjw
 bkB
 blS
@@ -92576,7 +92591,7 @@ aVB
 aWA
 aXy
 aYB
-aTm
+cCT
 baF
 bbI
 bcG

@@ -19,9 +19,11 @@
 #define COMSIG_PARENT_QDELETED "parent_qdeleted"				//before a datum's Destroy() is called: ()
 
 #define COMSIG_COMPONENT_CLEAN_ACT "clean_act"					//called on an object to clean it of cleanables. Usualy with soap: (num/strength)
+#define COMSIG_COMPONENT_NTNET_RECIEVE "ntnet_recieve"			//called on an object by its NTNET connection component on recieve. (sending_id(number), sending_netname(text), data(datum/netdata))
 
 // /atom signals
 #define COMSIG_PARENT_ATTACKBY "atom_attackby"			        //from base of atom/attackby(): (/obj/item, /mob/living, params)
+	#define COMPONENT_NO_AFTERATTACK 1								//Return this in response if you don't want afterattack to be called
 #define COMSIG_ATOM_HULK_ATTACK "hulk_attack"					//from base of atom/attack_hulk(): (/mob/living/carbon/human)
 #define COMSIG_PARENT_EXAMINE "atom_examine"                    //from base of atom/examine(): (/mob)
 #define COMSIG_ATOM_ENTERED "atom_entered"                      //from base of atom/Entered(): (/atom/movable, /atom)
@@ -52,6 +54,8 @@
 #define COMSIG_MOVABLE_CROSSED "movable_crossed"                //from base of atom/movable/Crossed(): (/atom/movable)
 #define COMSIG_MOVABLE_COLLIDE "movable_collide"				//from base of atom/movable/Collide(): (/atom)
 #define COMSIG_MOVABLE_IMPACT "movable_impact"					//from base of atom/movable/throw_impact(): (/atom, throwingdatum)
+#define COMSIG_MOVABLE_BUCKLE "buckle"								//from base of atom/movable/buckle_mob(): (mob, force)
+#define COMSIG_MOVABLE_UNBUCKLE "unbuckle"							//from base of atom/movable/unbuckle_mob(): (mob, force)
 
 // /obj/item signals
 #define COMSIG_ITEM_ATTACK "item_attack"						//from base of obj/item/attack(): (/mob/living/target, /mob/living/user)
@@ -63,4 +67,12 @@
 
 // /obj/machinery signals
 #define COMSIG_MACHINE_PROCESS "machine_process"				//from machinery subsystem fire(): ()
-#define COMSIG_MACHINE_PROCESS_ATMOS "machine_process_atmos"	//from air subsystem process_atmos_machinery(): () 
+#define COMSIG_MACHINE_PROCESS_ATMOS "machine_process_atmos"	//from air subsystem process_atmos_machinery(): ()
+
+
+// /mob/living/carbon/human signals
+#define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"			//from mob/living/carbon/human/UnarmedAttack(): (atom/target)
+#define COMSIG_HUMAN_MELEE_UNARMED_ATTACKBY "human_melee_unarmed_attackby"		//from mob/living/carbon/human/UnarmedAttack(): (mob/living/carbon/human/attacker)
+
+#define CALTROP_BYPASS_SHOES 1
+#define CALTROP_IGNORE_WALKERS 2

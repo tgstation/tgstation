@@ -109,6 +109,14 @@
 		return TRUE
 	return FALSE
 
+
+/obj/effect/clockwork/spatial_gateway/singularity_act()
+	return
+
+/obj/effect/clockwork/spatial_gateway/singularity_pull()
+	return
+
+
 /obj/effect/clockwork/spatial_gateway/CollidedWith(atom/movable/AM)
 	..()
 	if(!QDELETED(AM))

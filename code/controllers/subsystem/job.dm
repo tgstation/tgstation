@@ -381,6 +381,8 @@ SUBSYSTEM_DEF(job)
 				continue
 			S = sloc
 			break
+		if(length(GLOB.jobspawn_overrides[rank]))
+			S = pick(GLOB.jobspawn_overrides[rank])
 		if(S)
 			SendToAtom(H, S, buckle = FALSE)
 		if(!S) //if there isn't a spawnpoint send them to latejoin, if there's no latejoin go yell at your mapper
@@ -524,6 +526,10 @@ SUBSYSTEM_DEF(job)
 	M.forceMove(get_turf(A))
 
 /datum/controller/subsystem/job/proc/SendToLateJoin(mob/M, buckle = TRUE)
+	if(M.mind && M.mind.assigned_role && length(GLOB.jobspawn_overrides[M.mind.assigned_role])) //We're doing something special today.
+		SendToAtom(M,pick(GLOB.jobspawn_overrides[M.mind.assigned_role]),FALSE)
+		return
+
 	if(latejoin_trackers.len)
 		SendToAtom(M, pick(latejoin_trackers), buckle)
 	else

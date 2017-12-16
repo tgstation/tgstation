@@ -39,7 +39,7 @@
 				O.anchored = TRUE
 				if(do_after_cooldown(target))
 					cargo_holder.cargo += O
-					O.loc = chassis
+					O.forceMove(chassis)
 					O.anchored = FALSE
 					occupant_message("<span class='notice'>[target] successfully loaded.</span>")
 					log_message("Loaded [O]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.cargo.len]")
@@ -91,7 +91,7 @@
 				O.anchored = TRUE
 				if(do_after_cooldown(target))
 					cargo_holder.cargo += O
-					O.loc = chassis
+					O.forceMove(chassis)
 					O.anchored = FALSE
 					occupant_message("<span class='notice'>[target] successfully loaded.</span>")
 					log_message("Loaded [O]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.cargo.len]")
@@ -178,9 +178,6 @@
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher/get_equip_info()
 	return "[..()] \[[src.reagents.total_volume]\]"
-
-/obj/item/mecha_parts/mecha_equipment/extinguisher/on_reagent_change()
-	return
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher/can_attach(obj/mecha/working/M as obj)
 	if(..())

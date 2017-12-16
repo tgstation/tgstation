@@ -2,7 +2,7 @@
 	name = "vampire"
 	id = "vampire"
 	default_color = "FFFFFF"
-	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,NOHUNGER,NOBREATH,DRINKSBLOOD)
+	species_traits = list(SPECIES_UNDEAD,EYECOLOR,HAIR,FACEHAIR,LIPS,NOHUNGER,NOBREATH,DRINKSBLOOD)
 	mutant_bodyparts = list("tail_human", "ears", "wings")
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
 	exotic_bloodtype = "U"

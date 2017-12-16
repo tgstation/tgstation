@@ -218,15 +218,6 @@
 	desc = "This wand uses healing magics to heal and revive. The years of the cold have weakened the magic inside the wand."
 	max_charges = 5
 
-/obj/item/device/radio/uplink/old
-	name = "dusty radio"
-	desc = "A dusty looking radio."
-
-/obj/item/device/radio/uplink/old/Initialize()
-	. = ..()
-	hidden_uplink.name = "dusty radio"
-	hidden_uplink.telecrystals = 10
-
 /obj/effect/mob_spawn/human/syndicatesoldier/coldres
 	name = "Syndicate Snow Operative"
 	outfit = /datum/outfit/snowsyndie/corpse
@@ -238,7 +229,7 @@
 /obj/effect/mob_spawn/human/syndicatesoldier/coldres/alive
 	name = "sleeper"
 	mob_name = "Syndicate Snow Operative"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	roundstart = FALSE
 	death = FALSE

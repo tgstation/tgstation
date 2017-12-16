@@ -125,7 +125,7 @@
 	var/msg = "[key_name_admin(usr)] has toggled [key_name_admin(M)]'s nodamage to [(M.status_flags & GODMODE) ? "On" : "Off"]"
 	message_admins(msg)
 	admin_ticket_log(M, msg)
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Godmode", "[M.status_flags & GODMODE]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Godmode", "[M.status_flags & GODMODE ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /proc/cmd_admin_mute(whom, mute_type, automute = 0)
@@ -386,7 +386,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			A.equip_wizard()
 		if("Syndicate")
 			new_character.forceMove(pick(GLOB.nukeop_start))
-			call(/datum/game_mode/proc/equip_syndicate)(new_character)
+			var/datum/antagonist/nukeop/N = new_character.mind.has_antag_datum(/datum/antagonist/nukeop,TRUE)
+			N.equip_op()
 		if("Space Ninja")
 			var/list/ninja_spawn = list()
 			for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
@@ -651,10 +652,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set name = "Change View Range"
 	set desc = "switches between 1x and custom views"
 
-	if(view == world.view)
+	if(view == CONFIG_GET(string/default_view))
 		change_view(input("Select view range:", "FUCK YE", 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,128))
 	else
-		change_view(world.view)
+		change_view(CONFIG_GET(string/default_view))
 
 	log_admin("[key_name(usr)] changed their view range to [view].")
 	//message_admins("\blue [key_name_admin(usr)] changed their view range to [view].")	//why? removed by order of XSI
@@ -746,7 +747,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	else
 		to_chat(usr, "Random events disabled")
 		message_admins("Admin [key_name_admin(usr)] has disabled random events.")
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Random Events", "[new_are]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Random Events", "[new_are ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /client/proc/admin_change_sec_level()
@@ -979,7 +980,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	to_chat(usr, "You toggled your admin antag HUD [adding_hud ? "ON" : "OFF"].")
 	message_admins("[key_name_admin(usr)] toggled their admin antag HUD [adding_hud ? "ON" : "OFF"].")
 	log_admin("[key_name(usr)] toggled their admin antag HUD [adding_hud ? "ON" : "OFF"].")
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Antag HUD", "[adding_hud]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Antag HUD", "[adding_hud ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/has_antag_hud()
 	var/datum/atom_hud/A = GLOB.huds[ANTAG_HUD_TRAITOR]
@@ -1091,9 +1092,6 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	log_admin("[key_name(usr)] sent \"[input]\" as the Tip of the Round.")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Tip")
 
-#define ON_PURRBATION(H) (\H.getorgan(/obj/item/organ/tail/cat) || H.getorgan(/obj/item/organ/ears/cat) || \
-							H.dna.features["ears"] == "Cat" || H.dna.features["human_tail"] == "Cat")
-
 /proc/mass_purrbation()
 	for(var/M in GLOB.mob_list)
 		if(ishumanbasic(M))
@@ -1109,7 +1107,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 /proc/purrbation_toggle(mob/living/carbon/human/H, silent = FALSE)
 	if(!ishumanbasic(H))
 		return
-	if(!ON_PURRBATION(H))
+	if(!iscatperson(H))
 		purrbation_apply(H, silent)
 		. = TRUE
 	else
@@ -1119,7 +1117,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 /proc/purrbation_apply(mob/living/carbon/human/H, silent = FALSE)
 	if(!ishuman(H))
 		return
-	if(ON_PURRBATION(H))
+	if(iscatperson(H))
 		return
 
 	var/obj/item/organ/ears/cat/ears = new
@@ -1134,7 +1132,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 /proc/purrbation_remove(mob/living/carbon/human/H, silent = FALSE)
 	if(!ishuman(H))
 		return
-	if(!ON_PURRBATION(H))
+	if(!iscatperson(H))
 		return
 
 	var/obj/item/organ/ears/cat/ears = H.getorgan(/obj/item/organ/ears/cat)
@@ -1173,8 +1171,6 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	if(!silent)
 		to_chat(H, "You are no longer a cat.")
 
-#undef ON_PURRBATION
-
 /client/proc/modify_goals()
 	set category = "Debug"
 	set name = "Modify goals"
@@ -1203,7 +1199,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	if (GLOB.hub_visibility && !world.reachable)
 		message_admins("WARNING: The server will not show up on the hub because byond is detecting that a filewall is blocking incoming connections.")
 
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggled Hub Visibility", "[GLOB.hub_visibility]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggled Hub Visibility", "[GLOB.hub_visibility ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/smite(mob/living/carbon/human/target as mob)
 	set name = "Smite"
@@ -1226,7 +1222,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 			target.electrocution_animation(40)
 			to_chat(target, "<span class='userdanger'>The gods have punished you for your sins!</span>")
 		if(ADMIN_PUNISHMENT_BRAINDAMAGE)
-			target.adjustBrainLoss(75)
+			target.adjustBrainLoss(199, 199)
 		if(ADMIN_PUNISHMENT_GIB)
 			target.gib(FALSE)
 		if(ADMIN_PUNISHMENT_BSA)

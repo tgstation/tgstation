@@ -49,7 +49,7 @@
 			on = FALSE
 			to_chat(user, "<span class='warning'>You need a free hand to hold the mister!</span>")
 			return
-		noz.loc = user
+		noz.forceMove(user)
 	else
 		//Remove from their hands and put back "into" the tank
 		remove_noz()
@@ -93,6 +93,10 @@
 	else
 		return ..()
 
+/obj/item/watertank/dropped(mob/user)
+	..()
+	remove_noz()
+
 // This mister item is intended as an extension of the watertank and always attached to it.
 // Therefore, it's designed to be "locked" to the player's hands or extended back onto
 // the watertank backpack. Allowing it to be placed elsewhere or created without a parent
@@ -109,7 +113,7 @@
 	amount_per_transfer_from_this = 50
 	possible_transfer_amounts = list(25,50,100)
 	volume = 500
-	flags_1 = NODROP_1 | NOBLUDGEON_1
+	flags_1 = NOBLUDGEON_1
 	container_type = OPENCONTAINER_1
 	slot_flags = 0
 
@@ -120,14 +124,14 @@
 	if(check_tank_exists(parent_tank, src))
 		tank = parent_tank
 		reagents = tank.reagents	//This mister is really just a proxy for the tank's reagents
-		loc = tank
+		forceMove(tank)
 	return
 
 /obj/item/reagent_containers/spray/mister/dropped(mob/user)
 	..()
 	to_chat(user, "<span class='notice'>The mister snaps back onto the watertank.</span>")
 	tank.on = 0
-	loc = tank
+	forceMove(tank)
 
 /obj/item/reagent_containers/spray/mister/attack_self()
 	return
@@ -142,7 +146,7 @@
 /obj/item/reagent_containers/spray/mister/Move()
 	..()
 	if(loc != tank.loc)
-		loc = tank.loc
+		forceMove(tank.loc)
 
 /obj/item/reagent_containers/spray/mister/afterattack(obj/target, mob/user, proximity)
 	if(target.loc == loc) //Safety check so you don't fill your mister with mutagen or something and then blast yourself in the face with it
@@ -221,7 +225,6 @@
 	precision = 1
 	cooling_power = 5
 	w_class = WEIGHT_CLASS_HUGE
-	flags_1 = NODROP_1 //Necessary to ensure that the nozzle and tank never separate
 	var/obj/item/watertank/tank
 	var/nozzle_mode = 0
 	var/metal_synthesis_cooldown = 0
@@ -233,13 +236,13 @@
 		tank = parent_tank
 		reagents = tank.reagents
 		max_water = tank.volume
-		loc = tank
+		forceMove(tank)
 
 
 /obj/item/extinguisher/mini/nozzle/Move()
 	..()
 	if(loc != tank.loc)
-		loc = tank
+		forceMove(tank)
 	return
 
 /obj/item/extinguisher/mini/nozzle/attack_self(mob/user)
@@ -265,7 +268,7 @@
 	..()
 	to_chat(user, "<span class='notice'>The nozzle snaps back onto the tank!</span>")
 	tank.on = 0
-	loc = tank
+	forceMove(tank)
 
 /obj/item/extinguisher/mini/nozzle/afterattack(atom/target, mob/user)
 	if(nozzle_mode == EXTINGUISHER)

@@ -1,7 +1,7 @@
 /obj/item/device/integrated_circuit_printer
 	name = "integrated circuit printer"
 	desc = "A portable(ish) machine made to print tiny modular circuitry out of metal."
-	icon = 'icons/obj/electronic_assemblies.dmi'
+	icon = 'icons/obj/assemblies/electronic_tools.dmi'
 	icon_state = "circuit_printer"
 	w_class = WEIGHT_CLASS_BULKY
 	var/upgraded = TRUE			// When hit with an upgrade disk, will turn true, allowing it to print the higher tier circuits.
@@ -110,16 +110,13 @@
 		if(!build_type || !ispath(build_type))
 			return TRUE
 
-		var/cost = 1
+		var/cost = 400
 		if(ispath(build_type, /obj/item/device/electronic_assembly))
-			var/obj/item/device/electronic_assembly/E = build_type
-			cost = round( (initial(E.max_complexity) + initial(E.max_components) ) / 4)
+			var/obj/item/device/electronic_assembly/E = SScircuit.cached_assemblies[build_type]
+			cost = E.materials[MAT_METAL]
 		else if(ispath(build_type, /obj/item/integrated_circuit))
-			var/obj/item/integrated_circuit/IC = build_type
-			cost = initial(IC.w_class)
-
-
-		cost *= SScircuit.cost_multiplier
+			var/obj/item/integrated_circuit/IC = SScircuit.cached_components[build_type]
+			cost = IC.materials[MAT_METAL]
 
 		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 
@@ -127,7 +124,12 @@
 			to_chat(usr, "<span class='warning'>You need [cost] metal to build that!</span>")
 			return TRUE
 
-		new build_type(get_turf(loc))
+		var/obj/item/built = new build_type(drop_location())
+
+		if(istype(built, /obj/item/device/electronic_assembly))
+			var/obj/item/device/electronic_assembly/E = built
+			E.opened = TRUE
+			E.update_icon()
 
 	if(href_list["print"])
 		if(!CONFIG_GET(flag/ic_printing))
@@ -181,7 +183,7 @@
 /obj/item/disk/integrated_circuit/upgrade
 	name = "integrated circuit printer upgrade disk"
 	desc = "Install this into your integrated circuit printer to enhance it."
-	icon = 'icons/obj/electronic_assemblies.dmi'
+	icon = 'icons/obj/assemblies/electronic_tools.dmi'
 	icon_state = "upgrade_disk"
 	item_state = "card-id"
 	w_class = WEIGHT_CLASS_SMALL

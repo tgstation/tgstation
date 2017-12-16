@@ -54,7 +54,7 @@
 
 
 /obj/guardian_bomb/proc/disguise(obj/A)
-	A.loc = src
+	A.forceMove(src)
 	stored_obj = A
 	opacity = A.opacity
 	anchored = A.anchored

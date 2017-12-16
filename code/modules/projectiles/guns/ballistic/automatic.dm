@@ -19,7 +19,6 @@
 
 /obj/item/gun/ballistic/automatic/update_icon()
 	..()
-	cut_overlays()
 	if(!select)
 		add_overlay("[initial(icon_state)]semi")
 	if(select == 1)
@@ -93,6 +92,9 @@
 	fire_delay = 2
 	burst_size = 2
 	pin = /obj/item/device/firing_pin/implant/pindicate
+	can_bayonet = TRUE
+	knife_x_offset = 26
+	knife_y_offset = 12
 
 /obj/item/gun/ballistic/automatic/c20r/unrestricted
 	pin = /obj/item/device/firing_pin
@@ -120,6 +122,9 @@
 	can_suppress = FALSE
 	burst_size = 0
 	actions_types = list()
+	can_bayonet = TRUE
+	knife_x_offset = 25
+	knife_y_offset = 12
 
 /obj/item/gun/ballistic/automatic/wt550/update_icon()
 	..()
@@ -218,7 +223,7 @@
 
 /obj/item/gun/ballistic/automatic/ar
 	name = "\improper NT-ARG 'Boarder'"
-	desc = "A robust assault rile used by Nanotrasen fighting forces."
+	desc = "A robust assault rifle used by Nanotrasen fighting forces."
 	icon_state = "arg"
 	item_state = "arg"
 	slot_flags = 0
@@ -325,7 +330,7 @@
 	else if(cover_open && magazine)
 		//drop the mag
 		magazine.update_icon()
-		magazine.loc = get_turf(src.loc)
+		magazine.forceMove(drop_location())
 		user.put_in_hands(magazine)
 		magazine = null
 		update_icon()

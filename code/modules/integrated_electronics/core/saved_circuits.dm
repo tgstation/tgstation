@@ -23,6 +23,8 @@
 			// Don't waste space saving the default values
 			if(input.data == inputs_default["[index]"])
 				continue
+			if(input.data == initial(input.data))
+				continue
 
 			var/list/input_value = list(index, FALSE, input.data)
 			// Index, Type, Value
@@ -91,12 +93,10 @@
 			//var/input_type = input[2]
 			var/input_value = input[3]
 
-			var/datum/integrated_io/IO = inputs[index]
-			IO.write_data_to_pin(input_value)
-			// write_data_to_pin includes all the value sanity checks you'll ever need
+			var/datum/integrated_io/pin = inputs[index]
+			// The pins themselves validate the data.
+			pin.write_data_to_pin(input_value)
 			// TODO: support for special input types, such as internal refs and maybe typepaths
-
-
 
 
 
@@ -144,10 +144,8 @@
 // Attempts to save an assembly into a save file format.
 // Returns null if assembly is not complete enough to be saved.
 /datum/controller/subsystem/processing/circuit/proc/save_electronic_assembly(obj/item/device/electronic_assembly/assembly)
-	var/list/assembly_components = assembly.return_all_components()
-
 	// No components? Don't even try to save it.
-	if(!length(assembly_components))
+	if(!length(assembly.assembly_components))
 		return
 
 
@@ -160,7 +158,7 @@
 
 	// Block 2. Components.
 	var/list/components = list()
-	for(var/c in assembly_components)
+	for(var/c in assembly.assembly_components)
 		var/obj/item/integrated_circuit/component = c
 		components.Add(list(component.save()))
 	blocks["components"] = components
@@ -170,18 +168,18 @@
 	var/list/wires = list()
 	var/list/saved_wires = list()
 
-	for(var/c in assembly_components)
+	for(var/c in assembly.assembly_components)
 		var/obj/item/integrated_circuit/component = c
 		var/list/all_pins = component.inputs + component.outputs + component.activators
 
 		for(var/p in all_pins)
 			var/datum/integrated_io/pin = p
-			var/list/params = pin.get_pin_parameters(assembly_components)
+			var/list/params = pin.get_pin_parameters()
 			var/text_params = params.Join()
 
 			for(var/p2 in pin.linked)
 				var/datum/integrated_io/pin2 = p2
-				var/list/params2 = pin2.get_pin_parameters(assembly_components)
+				var/list/params2 = pin2.get_pin_parameters()
 				var/text_params2 = params2.Join()
 
 				// Check if we already saved an opposite version of this wire
@@ -318,23 +316,20 @@
 
 
 	// Block 2. Components.
-	var/list/assembly_components = list()
 	for(var/component_params in blocks["components"])
 		var/obj/item/integrated_circuit/component_path = all_components[component_params["type"]]
 		var/obj/item/integrated_circuit/component = new component_path(assembly)
-		component.assembly = assembly
+		assembly.add_component(component)
 		component.load(component_params)
-		assembly_components.Add(component)
 
 
 	// Block 3. Wires.
 	if(blocks["wires"])
 		for(var/w in blocks["wires"])
 			var/list/wire = w
-			var/datum/integrated_io/IO = assembly.get_pin_ref_list(wire[1], assembly_components)
-			var/datum/integrated_io/IO2 = assembly.get_pin_ref_list(wire[2], assembly_components)
-			IO.linked |= IO2
-			IO2.linked |= IO
+			var/datum/integrated_io/IO = assembly.get_pin_ref_list(wire[1])
+			var/datum/integrated_io/IO2 = assembly.get_pin_ref_list(wire[2])
+			IO.connect_pin(IO2)
 
 	assembly.forceMove(loc)
 	return assembly

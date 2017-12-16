@@ -9,8 +9,8 @@
 	gender = MALE
 	speak = list("Meow!", "Esp!", "Purr!", "HSSSSS")
 	speak_emote = list("purrs", "meows")
-	emote_hear = list("meows", "mews")
-	emote_see = list("shakes its head", "shivers")
+	emote_hear = list("meows.", "mews.")
+	emote_see = list("shakes its head.", "shivers.")
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
@@ -22,13 +22,13 @@
 	unsuitable_atmos_damage = 1
 	animal_species = /mob/living/simple_animal/pet/cat
 	childtype = list(/mob/living/simple_animal/pet/cat/kitten)
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2, /obj/item/organ/ears/cat = 1, /obj/item/organ/tail/cat = 1)
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
 	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target
-	gold_core_spawnable = 2
+	gold_core_spawnable = FRIENDLY_SPAWN
 
 /mob/living/simple_animal/pet/cat/Initialize()
 	. = ..()
@@ -79,7 +79,7 @@
 	icon_living = "cat"
 	icon_dead = "cat_dead"
 	gender = FEMALE
-	gold_core_spawnable = 0
+	gold_core_spawnable = NO_SPAWN
 	var/list/family = list()//var restored from savefile, has count of each child type
 	var/list/children = list()//Actual mob instances of children
 	var/cats_deployed = 0
@@ -152,7 +152,7 @@
 /mob/living/simple_animal/pet/cat/Proc
 	name = "Proc"
 	gender = MALE
-	gold_core_spawnable = 0
+	gold_core_spawnable = NO_SPAWN
 
 /mob/living/simple_animal/pet/cat/Life()
 	if(!stat && !buckled && !client)

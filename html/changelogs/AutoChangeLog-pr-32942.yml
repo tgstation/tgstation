@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Computers will no longer delete themselves when being built, whoops!"

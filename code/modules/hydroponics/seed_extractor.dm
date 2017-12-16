@@ -17,7 +17,7 @@
 				return
 			while(t_amount < t_max)
 				var/obj/item/seeds/t_prod = F.seed.Copy()
-				t_prod.loc = seedloc
+				t_prod.forceMove(seedloc)
 				t_amount++
 			qdel(O)
 			return 1
@@ -29,7 +29,7 @@
 				return
 			while(t_amount < t_max)
 				var/obj/item/seeds/t_prod = F.seed.Copy()
-				t_prod.loc = seedloc
+				t_prod.forceMove(seedloc)
 				t_amount++
 			qdel(O)
 		return 1
@@ -168,7 +168,7 @@
 	for (var/obj/T in contents)//Now we find the seed we need to vend
 		var/obj/item/seeds/O = T
 		if (O.plantname == href_list["name"] && O.lifespan == href_list["li"] && O.endurance == href_list["en"] && O.maturation == href_list["ma"] && O.production == href_list["pr"] && O.yield == href_list["yi"] && O.potency == href_list["pot"])
-			O.loc = src.loc
+			O.forceMove(drop_location())
 			break
 
 	src.updateUsrDialog()

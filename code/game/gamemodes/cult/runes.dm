@@ -349,7 +349,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 	color = RUNE_COLOR_DARKRED
 	var/mob/living/L = pick(myriad_targets)
 	var/is_clock = is_servant_of_ratvar(L)
-	var/is_convertable = is_convertable_to_cult(L)
+
+	var/mob/living/F = invokers[1]
+	var/datum/antagonist/cult/C = F.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+
+	var/is_convertable = is_convertable_to_cult(L,C.cult_team)
 	if(L.stat != DEAD && (is_clock || is_convertable))
 		invocation = "Mah'weyh pleggh at e'ntrath!"
 		..()
@@ -397,17 +401,27 @@ structure_check() searches for nearby cultist structures required for the invoca
 	return 1
 
 /obj/effect/rune/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers)
+	var/mob/living/first_invoker = invokers[1]
+	if(!first_invoker)
+		return FALSE
+	var/datum/antagonist/cult/C = first_invoker.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+	if(!C)
+		return
+	
+	
 	var/big_sac = FALSE
-	if((((ishuman(sacrificial) || iscyborg(sacrificial)) && sacrificial.stat != DEAD) || is_sacrifice_target(sacrificial.mind)) && invokers.len < 3)
+	if((((ishuman(sacrificial) || iscyborg(sacrificial)) && sacrificial.stat != DEAD) || C.cult_team.is_sacrifice_target(sacrificial.mind)) && invokers.len < 3)
 		for(var/M in invokers)
 			to_chat(M, "<span class='cultitalic'>[sacrificial] is too greatly linked to the world! You need three acolytes!</span>")
 		log_game("Offer rune failed - not enough acolytes and target is living or sac target")
 		return FALSE
 	if(sacrificial.mind)
 		GLOB.sacrificed += sacrificial.mind
-		if(is_sacrifice_target(sacrificial.mind))
-			GLOB.sac_complete = TRUE
-			big_sac = TRUE
+		for(var/datum/objective/sacrifice/sac_objective in C.cult_team.objectives)
+			if(sac_objective.target == sacrificial.mind)
+				sac_objective.sacced = TRUE
+				sac_objective.update_explanation_text()
+				big_sac = TRUE
 	else
 		GLOB.sacrificed += sacrificial
 
@@ -481,7 +495,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 	sleep(40)
 	if(src)
 		color = RUNE_COLOR_RED
-	SSticker.mode.eldergod = FALSE
 	new /obj/singularity/narsie/large/cult(T) //Causes Nar-Sie to spawn even if the rune has been removed
 
 /obj/effect/rune/narsie/attackby(obj/I, mob/user, params)	//Since the narsie rune takes a long time to make, add logging to removal.
@@ -497,10 +510,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 			message_admins("[key_name_admin(user)] erased a Narsie rune with a null rod")
 			..()
 
-//Rite of Resurrection: Requires the corpse of a cultist and that there have been less revives than the number of people GLOB.sacrificed
+//Rite of Resurrection: Requires a dead or inactive cultist. When reviving the dead, you can only perform one revival for every sacrifice your cult has carried out.
 /obj/effect/rune/raise_dead
-	cultist_name = "Resurrect Cultist"
-	cultist_desc = "requires the corpse of a cultist placed upon the rune. Provided there have been sufficient sacrifices, they will be revived."
+	cultist_name = "Revive Cultist"
+	cultist_desc = "requires a dead, mindless, or inactive cultist placed upon the rune. Provided there have been sufficient sacrifices, they will be given a new life."
 	invocation = "Pasnar val'keriam usinar. Savrae ines amutan. Yam'toth remium il'tarat!" //Depends on the name of the user - see below
 	icon_state = "1"
 	color = RUNE_COLOR_MEDIUMRED
@@ -521,16 +534,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return
 	rune_in_use = TRUE
 	for(var/mob/living/M in T.contents)
-		if(iscultist(M) && M.stat == DEAD)
+		if(iscultist(M) && (M.stat == DEAD || !M.client || M.client.is_afk()))
 			potential_revive_mobs |= M
 	if(!potential_revive_mobs.len)
 		to_chat(user, "<span class='cultitalic'>There are no dead cultists on the rune!</span>")
-		log_game("Raise Dead rune failed - no corpses to revive")
-		fail_invoke()
-		rune_in_use = FALSE
-		return
-	if(LAZYLEN(GLOB.sacrificed) <= revives_used)
-		to_chat(user, "<span class='warning'>You have sacrificed too few people to revive a cultist!</span>")
+		log_game("Raise Dead rune failed - no cultists to revive")
 		fail_invoke()
 		rune_in_use = FALSE
 		return
@@ -546,9 +554,25 @@ structure_check() searches for nearby cultist structures required for the invoca
 	else
 		invocation = initial(invocation)
 	..()
-	revives_used++
-	mob_to_revive.revive(1, 1) //This does remove disabilities and such, but the rune might actually see some use because of it!
-	mob_to_revive.grab_ghost()
+	if(mob_to_revive.stat == DEAD)
+		if(LAZYLEN(GLOB.sacrificed) <= revives_used)
+			to_chat(user, "<span class='warning'>Your cult must carry out another sacrifice before it can revive a cultist!</span>")
+			fail_invoke()
+			rune_in_use = FALSE
+			return
+		revives_used++
+		mob_to_revive.revive(1, 1) //This does remove disabilities and such, but the rune might actually see some use because of it!
+		mob_to_revive.grab_ghost()
+	else if(!mob_to_revive.client || mob_to_revive.client.is_afk())
+		set waitfor = FALSE
+		var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [mob_to_revive.name], an inactive blood cultist?", "[name]", null, "Blood Cultist", 50, mob_to_revive)
+		var/mob/dead/observer/theghost = null
+		if(candidates.len)
+			theghost = pick(candidates)
+			to_chat(mob_to_revive.mind, "Your physical form has been taken over by another soul due to your inactivity! Ahelp if you wish to regain your form.")
+			message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(mob_to_revive)]) to replace an AFK player.")
+			mob_to_revive.ghostize(0)
+			mob_to_revive.key = theghost.key
 	to_chat(mob_to_revive, "<span class='cultlarge'>\"PASNAR SAVRAE YAM'TOTH. Arise.\"</span>")
 	mob_to_revive.visible_message("<span class='warning'>[mob_to_revive] draws in a huge breath, red light shining from [mob_to_revive.p_their()] eyes.</span>", \
 								  "<span class='cultlarge'>You awaken suddenly from the void. You're alive!</span>")

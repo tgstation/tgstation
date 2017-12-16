@@ -1242,12 +1242,12 @@
 	name = "Hotel Guest Room 1"
 	})
 "df" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/public/glass,
 /obj/machinery/door/firedoor,
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/hotel)
 "dg" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/public/glass,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/carpet,
@@ -2228,7 +2228,7 @@
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/hotel)
 "fW" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/public/glass,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -2283,7 +2283,7 @@
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/hotel)
 "gf" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/public/glass,
 /obj/machinery/door/firedoor,
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/hotel/dock)
@@ -3023,7 +3023,7 @@
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/hotel)
 "il" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/public/glass,
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -3301,18 +3301,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel)
-"iX" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/hotel)
 "iY" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -3487,7 +3475,7 @@
 /turf/closed/wall,
 /area/ruin/space/has_grav/hotel/pool)
 "ju" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/public/glass,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -3503,7 +3491,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/pool)
 "jw" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/public/glass,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -3905,7 +3893,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/power)
 "kJ" = (
-/obj/machinery/door/airlock/glass_external,
+/obj/machinery/door/airlock/external/glass,
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -3944,7 +3932,7 @@
 /area/ruin/space/has_grav/hotel/security)
 "kP" = (
 /obj/effect/turf_decal/stripes/corner{
-	dir = 2
+	dir = 1
 	},
 /turf/open/floor/plasteel/darkyellow,
 /area/ruin/space/has_grav/hotel/security)

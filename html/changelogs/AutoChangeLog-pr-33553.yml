@@ -1,0 +1,5 @@
+author: "Robustin"
+delete-after: True
+changes: 
+  - balance: "Marauder shields now take twice as long to regenerate and only recharge one charge at a time."
+  - balance: "Marauders now have 120hp down from 150hp."

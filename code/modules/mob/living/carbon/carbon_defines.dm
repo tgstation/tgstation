@@ -49,3 +49,10 @@
 
 	var/icon_render_key = ""
 	var/static/list/limb_icon_cache = list()
+
+	//halucination vars
+	var/image/halimage
+	var/image/halbody
+	var/obj/halitem
+	var/hal_screwyhud = SCREWYHUD_NONE
+	var/next_hallucination = 0

@@ -879,7 +879,7 @@
 	},
 /area/ruin/space/has_grav/deepstorage)
 "bQ" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Hydroponics"
 	},
 /turf/open/floor/plasteel/hydrofloor{
@@ -962,7 +962,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Kitchen"
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -1488,8 +1488,6 @@
 /area/ruin/space/has_grav/deepstorage/armory)
 "db" = (
 /obj/structure/table,
-/obj/item/device/mass_spectrometer/adv,
-/obj/item/device/mass_spectrometer/adv,
 /obj/item/device/healthanalyzer,
 /obj/item/device/healthanalyzer,
 /obj/item/stack/medical/gauze,
@@ -1931,7 +1929,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Dorms"
 	},
 /turf/open/floor/plasteel/floorgrime{

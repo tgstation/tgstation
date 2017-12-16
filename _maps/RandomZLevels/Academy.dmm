@@ -1273,12 +1273,12 @@
 /turf/open/floor/plating,
 /area/awaymission/academy)
 "eA" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/public/glass,
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "eB" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "eC" = (

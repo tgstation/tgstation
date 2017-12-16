@@ -121,7 +121,7 @@
 			T.quick_empty()
 
 			for(var/obj/item/C in oldContents)
-				C.loc = src.loc
+				C.forceMove(drop_location())
 
 			user.visible_message("[user] empties [I] on [src].")
 			return
@@ -411,6 +411,7 @@
 	desc = "Different from the Middle Ages version."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "rack"
+	layer = TABLE_LAYER
 	density = TRUE
 	anchored = TRUE
 	pass_flags = LETPASSTHROW //You can throw objects over this, despite it's density.

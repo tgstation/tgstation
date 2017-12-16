@@ -43,6 +43,7 @@
 	for(var/V in actions)
 		var/datum/action/A = V
 		A.Remove(user)
+	actions.Cut()
 	if(user.client)
 		user.reset_perspective(null)
 		eyeobj.RemoveImages()
@@ -62,6 +63,7 @@
 		current_user.unset_machine()
 	if(eyeobj)
 		qdel(eyeobj)
+	QDEL_LIST(actions)
 	return ..()
 
 /obj/machinery/computer/camera_advanced/on_unset_machine(mob/M)
@@ -152,7 +154,10 @@
 		if(!isturf(eye_user.loc))
 			return
 		T = get_turf(T)
-		loc = T
+		if (T)
+			forceMove(T)
+		else
+			moveToNullspace()
 		if(use_static)
 			GLOB.cameranet.visibility(src)
 		if(visible_icon)

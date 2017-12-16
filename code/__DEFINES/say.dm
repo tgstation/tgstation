@@ -17,6 +17,7 @@
 #define MODE_HOLOPAD "holopad"
 #define MODE_CHANGELING "changeling"
 #define MODE_VOCALCORDS "cords"
+#define MODE_MONKEY "monkeyhive"
 
 //Spans. Robot speech, italics, etc. Applied in compose_message().
 #define SPAN_ROBOT "robot"
@@ -50,3 +51,9 @@
 #define LOGASAY "adminsay"
 #define LOGCOMMENT "comment"
 #define LOGOOC "ooc"
+
+
+#define LINGHIVE_NONE 0
+#define LINGHIVE_OUTSIDER 1
+#define LINGHIVE_LING 2
+#define LINGHIVE_LINK 3

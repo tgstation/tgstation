@@ -76,6 +76,12 @@
 	if(isturf(hard_target_override))
 		hard_target = hard_target_override
 
+/obj/effect/portal/singularity_pull()
+	return
+
+/obj/effect/portal/singularity_act()
+	return
+
 /obj/effect/portal/proc/link_portal(obj/effect/portal/newlink)
 	linked = newlink
 	if(atmos_link)

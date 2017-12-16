@@ -45,11 +45,6 @@
 		to_chat(M, "<span class='boldnotice'>You feel that your soul has returned to its rightful owner, Nanotrasen.</span>")
 		M.return_soul()
 	else
-		if(ishuman(M))
-			var/mob/living/carbon/human/N = M
-			if(!istype(N.head, /obj/item/clothing/head/helmet))
-				N.adjustBrainLoss(10)
-				to_chat(N, "<span class='danger'>You feel dumber.</span>")
 		M.visible_message("<span class='danger'>[user] beats [M] over the head with [src]!</span>", \
 			"<span class='userdanger'>[user] beats [M] over the head with [src]!</span>")
 	return ..()
@@ -207,7 +202,7 @@
 	if(!user.mind.hasSoul)
 		to_chat(user, "<span class='notice'>You do not possess a soul.</span>")
 		return 0
-	if(prob(user.getBrainLoss()))
+	if(user.disabilities & DUMB)
 		to_chat(user, "<span class='notice'>You quickly scrawl 'your name' on the contract.</span>")
 		signIncorrectly()
 		return 0
@@ -307,11 +302,11 @@
 			if(istype(worn, /obj/item/device/pda))
 				var/obj/item/device/pda/PDA = worn
 				PDA.id = id
-				id.loc = worn
+				id.forceMove(worn)
 			else if(istype(worn, /obj/item/storage/wallet))
 				var/obj/item/storage/wallet/W = worn
 				W.front_id = id
-				id.loc = worn
+				id.forceMove(worn)
 				worn.update_icon()
 	var/datum/round_event/ion_storm/add_law_only/ion = new()
 	ion.announceEvent = -1

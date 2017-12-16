@@ -22,6 +22,7 @@
 	filling_color = "#FFA500"
 	bitesize_mod = 2
 	foodtype = VEGETABLES
+	juice_results = list("carrotjuice" = 0)
 
 /obj/item/reagent_containers/food/snacks/grown/carrot/attackby(obj/item/I, mob/user, params)
 	if(I.is_sharp())

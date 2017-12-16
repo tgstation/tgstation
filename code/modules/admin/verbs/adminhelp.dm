@@ -214,7 +214,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(heard_by_no_admins && usr && usr.ckey != initiator_ckey)
 		heard_by_no_admins = FALSE
 		send2irc(initiator_ckey, "Ticket #[id]: Answered by [key_name(usr)]")
-	_interactions += "[gameTimestamp()]: [formatted_message]"
+	_interactions += "[time_stamp()]: [formatted_message]"
 
 //Removes the ahelp verb and returns it after 2 minutes
 /datum/admin_help/proc/TimeoutVerb()
@@ -596,15 +596,18 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 /proc/send2otherserver(source,msg,type = "Ahelp")
 	var/comms_key = CONFIG_GET(string/comms_key)
-	if(comms_key)
-		var/list/message = list()
-		message["message_sender"] = source
-		message["message"] = msg
-		message["source"] = "([CONFIG_GET(string/cross_comms_name)])"
-		message["key"] = comms_key
-		message["crossmessage"] = type
+	if(!comms_key)
+		return
+	var/list/message = list()
+	message["message_sender"] = source
+	message["message"] = msg
+	message["source"] = "([CONFIG_GET(string/cross_comms_name)])"
+	message["key"] = comms_key
+	message["crossmessage"] = type
 
-		world.Export("[CONFIG_GET(string/cross_server_address)]?[list2params(message)]")
+	var/list/servers = CONFIG_GET(keyed_string_list/cross_server)
+	for(var/I in servers)
+		world.Export("[servers[I]]?[list2params(message)]")
 
 
 /proc/ircadminwho()

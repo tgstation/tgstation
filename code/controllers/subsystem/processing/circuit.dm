@@ -6,13 +6,11 @@ PROCESSING_SUBSYSTEM_DEF(circuit)
 
 	var/cipherkey
 
-	var/list/all_exonet_connections = list()						//Address = connection datum.
-	var/list/obj/machinery/exonet_node/all_exonet_nodes = list()
-
 	var/list/all_components = list()								// Associative list of [component_name]:[component_path] pairs
 	var/list/cached_components = list()								// Associative list of [component_path]:[component] pairs
 	var/list/all_assemblies = list()								// Associative list of [assembly_name]:[assembly_path] pairs
 	var/list/cached_assemblies = list()								// Associative list of [assembly_path]:[assembly] pairs
+	var/list/all_circuits = list()									// Associative list of [circuit_name]:[circuit_path] pairs
 	var/list/circuit_fabricator_recipe_list = list()				// Associative list of [category_name]:[list_of_circuit_paths] pairs
 	var/cost_multiplier = MINERAL_MATERIAL_AMOUNT / 10 // Each circuit cost unit is 200cm3
 
@@ -46,10 +44,20 @@ PROCESSING_SUBSYSTEM_DEF(circuit)
 
 
 	circuit_fabricator_recipe_list["Assemblies"] = list(
-		/obj/item/device/electronic_assembly,
-		/obj/item/device/electronic_assembly/medium,
-		/obj/item/device/electronic_assembly/large,
-		/obj/item/device/electronic_assembly/drone
+		/obj/item/device/electronic_assembly/default,
+		/obj/item/device/electronic_assembly/calc,
+		/obj/item/device/electronic_assembly/clam,
+		/obj/item/device/electronic_assembly/simple,
+		/obj/item/device/electronic_assembly/medium/default,
+		/obj/item/device/electronic_assembly/medium/box,
+		/obj/item/device/electronic_assembly/medium/clam,
+		/obj/item/device/electronic_assembly/medium/medical,
+		/obj/item/device/electronic_assembly/large/default,
+		/obj/item/device/electronic_assembly/large/scope,
+		/obj/item/device/electronic_assembly/large/terminal,
+		/obj/item/device/electronic_assembly/large/arm,
+		/obj/item/device/electronic_assembly/drone/default,
+		/obj/item/device/electronic_assembly/drone/arms
 		///obj/item/weapon/implant/integrated_circuit
 		)
 
@@ -58,22 +66,3 @@ PROCESSING_SUBSYSTEM_DEF(circuit)
 		/obj/item/device/integrated_electronics/debugger,
 		/obj/item/device/integrated_electronics/analyzer
 		)
-
-/datum/controller/subsystem/processing/circuit/proc/get_exonet_node()
-	for(var/i in 1 to all_exonet_nodes.len)
-		var/obj/machinery/exonet_node/E = all_exonet_nodes[i]
-		if(E.is_operating())
-			return E
-
-/datum/controller/subsystem/processing/circuit/proc/get_exonet_address(addr)
-	return all_exonet_connections[addr]
-
-
-// Proc: get_atom_from_address()
-// Parameters: 1 (target_address - the desired address to find)
-// Description: Searches an address for the atom it is attached for, otherwise returns null.
-
-/datum/controller/subsystem/processing/circuit/proc/get_atom_from_address(var/target_address)
-	var/datum/exonet_protocol/exonet = SScircuit.get_exonet_address(target_address)
-	if(exonet)
-		return exonet.holder

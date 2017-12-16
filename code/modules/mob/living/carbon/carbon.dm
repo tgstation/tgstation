@@ -38,7 +38,7 @@
 
 				if(prob(src.getBruteLoss() - 50))
 					for(var/atom/movable/A in stomach_contents)
-						A.loc = loc
+						A.forceMove(drop_location())
 						stomach_contents.Remove(A)
 					src.gib()
 
@@ -112,7 +112,8 @@
 			take_bodypart_damage(10)
 			victim.Knockdown(20)
 			Knockdown(20)
-			visible_message("<span class='danger'>[src] crashes into [victim], knocking them both over!</span>", "<span class='userdanger'>You violently crash into [victim]!</span>")
+			visible_message("<span class='danger'>[src] crashes into [victim], knocking them both over!</span>",\
+				"<span class='userdanger'>You violently crash into [victim]!</span>")
 		playsound(src,'sound/weapons/punch1.ogg',50,1)
 
 
@@ -331,7 +332,7 @@
 		if (client)
 			client.screen -= W
 		if (W)
-			W.loc = loc
+			W.forceMove(drop_location())
 			W.dropped(src)
 			if (W)
 				W.layer = initial(W.layer)
@@ -344,7 +345,7 @@
 		if (client)
 			client.screen -= W
 		if (W)
-			W.loc = loc
+			W.forceMove(drop_location())
 			W.dropped(src)
 			if (W)
 				W.layer = initial(W.layer)
@@ -371,7 +372,7 @@
 
 	else
 		if(I == handcuffed)
-			handcuffed.loc = loc
+			handcuffed.forceMove(drop_location())
 			handcuffed.dropped(src)
 			handcuffed = null
 			if(buckled && buckled.buckle_requires_restraints)
@@ -379,7 +380,7 @@
 			update_handcuffed()
 			return
 		if(I == legcuffed)
-			legcuffed.loc = loc
+			legcuffed.forceMove(drop_location())
 			legcuffed.dropped()
 			legcuffed = null
 			update_inv_legcuffed()
@@ -765,6 +766,7 @@
 		update_handcuffed()
 		if(reagents)
 			reagents.addiction_list = list()
+	cure_all_traumas(TRUE, TRUE)
 	..()
 	// heal ears after healing disabilities, since ears check DEAF disability
 	// when healing.
@@ -784,7 +786,7 @@
 		if(prob(50))
 			organs_amt++
 			O.Remove(src)
-			O.loc = get_turf(src)
+			O.forceMove(drop_location())
 	if(organs_amt)
 		to_chat(user, "<span class='notice'>You retrieve some of [src]\'s internal organs!</span>")
 
@@ -849,3 +851,5 @@
 	.["Modify bodypart"] = "?_src_=vars;[HrefToken()];editbodypart=[REF(src)]"
 	.["Modify organs"] = "?_src_=vars;[HrefToken()];editorgans=[REF(src)]"
 	.["Hallucinate"] = "?_src_=vars;[HrefToken()];hallucinate=[REF(src)]"
+	.["Give brain trauma"] = "?_src_=vars;[HrefToken()];givetrauma=[REF(src)]"
+	.["Cure brain traumas"] = "?_src_=vars;[HrefToken()];curetraumas=[REF(src)]"

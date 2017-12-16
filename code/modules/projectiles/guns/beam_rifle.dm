@@ -176,7 +176,7 @@
 	zoom_animating = 0
 	animate(current_user.client, pixel_x = 0, pixel_y = 0, 0, FALSE, LINEAR_EASING, ANIMATION_END_NOW)
 	zoom_current_view_increase = 0
-	current_user.client.change_view(world.view)
+	current_user.client.change_view(CONFIG_GET(string/default_view))
 	zooming_angle = 0
 	current_zoom_x = 0
 	current_zoom_y = 0
@@ -355,8 +355,8 @@
 	if(lastfire > world.time + delay)
 		return
 	lastfire = world.time
+	. = ..()
 	stop_aiming()
-	return ..()
 
 /obj/item/gun/energy/beam_rifle/proc/sync_ammo()
 	for(var/obj/item/ammo_casing/energy/beam_rifle/AC in contents)
@@ -500,11 +500,11 @@
 	if(!do_pierce)
 		return FALSE
 	if(pierced[target])		//we already pierced them go away
-		loc = get_turf(target)
+		forceMove(get_turf(target))
 		return TRUE
 	if(isclosedturf(target))
 		if(wall_pierce++ < wall_pierce_amount)
-			loc = target
+			forceMove(target)
 			if(prob(wall_devastate))
 				if(iswallturf(target))
 					var/turf/closed/wall/W = target
@@ -520,7 +520,7 @@
 					var/obj/O = AM
 					O.take_damage((impact_structure_damage + aoe_structure_damage) * structure_bleed_coeff * get_damage_coeff(AM), BURN, "energy", FALSE)
 				pierced[AM] = TRUE
-				loc = get_turf(AM)
+				forceMove(AM.drop_location())
 				structure_pierce++
 				return TRUE
 	return FALSE
@@ -769,3 +769,9 @@
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "zoom_mode"
 	background_icon_state = "bg_tech"
+
+/obj/effect/projectile_beam/singularity_pull()
+	return
+
+/obj/effect/projectile_beam/singularity_act()
+	return

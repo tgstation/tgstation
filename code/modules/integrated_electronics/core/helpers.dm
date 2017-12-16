@@ -54,21 +54,6 @@
 			return activators[pin_number]
 	return
 
-/obj/item/integrated_circuit/proc/handle_wire(var/datum/integrated_io/pin, var/obj/item/device/integrated_electronics/tool)
-	if(istype(tool, /obj/item/device/integrated_electronics/wirer))
-		var/obj/item/device/integrated_electronics/wirer/wirer = tool
-		if(pin)
-			wirer.wire(pin, usr)
-			return TRUE
-
-	else if(istype(tool, /obj/item/device/integrated_electronics/debugger))
-		var/obj/item/device/integrated_electronics/debugger/debugger = tool
-		if(pin)
-			debugger.write_data(pin, usr)
-			return TRUE
-	return FALSE
-
-
 /datum/integrated_io/proc/get_data()
 	if(isweakref(data))
 		return data.resolve()
@@ -76,7 +61,7 @@
 
 
 // Returns a list of parameters necessary to locate a pin in the assembly: component number, pin type and pin number
-// Components list can be supplied from the outside, for use in savefiles or for extra performance if you are calling this multiple times
+// Components list can be supplied from the outside, for use in savefiles
 /datum/integrated_io/proc/get_pin_parameters(list/components)
 	if(!holder)
 		return
@@ -84,7 +69,7 @@
 	if(!components)
 		if(!holder.assembly)
 			return
-		components = holder.assembly.return_all_components()
+		components = holder.assembly.assembly_components
 
 	var/component_number = components.Find(holder)
 
@@ -105,10 +90,10 @@
 
 
 // Locates a pin in the assembly when given component number, pin type and pin number
-// Components list can be supplied from the outside, for use in savefiles or for extra performance if you are calling this multiple times
+// Components list can be supplied from the outside, for use in savefiles
 /obj/item/device/electronic_assembly/proc/get_pin_ref(component_number, pin_type, pin_number, list/components)
 	if(!components)
-		components = return_all_components()
+		components = assembly_components
 
 	if(component_number > components.len)
 		return
@@ -120,6 +105,9 @@
 // Same as get_pin_ref, but takes in a list of 3 parameters (same format as get_pin_parameters)
 // and performs extra sanity checks on parameters list and index numbers
 /obj/item/device/electronic_assembly/proc/get_pin_ref_list(list/parameters, list/components)
+	if(!components)
+		components = assembly_components
+
 	if(!islist(parameters) || parameters.len != 3)
 		return
 

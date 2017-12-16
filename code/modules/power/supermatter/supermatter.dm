@@ -258,7 +258,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 		return  //Yeah just stop.
 
 	if(power)
-		soundloop.volume = min(50, (round(power, 50)/50)+1) // 5 +1 volume per 20 power. 2500 power is max
+		soundloop.volume = min(40, (round(power/100)/50)+1) // 5 +1 volume per 20 power. 2500 power is max
 
 	//Ok, get the air from the turf
 	var/datum/gas_mixture/env = T.return_air()

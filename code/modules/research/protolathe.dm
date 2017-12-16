@@ -15,8 +15,6 @@ Note: Must be placed west/left of and R&D console to function.
 	circuit = /obj/item/circuitboard/machine/protolathe
 
 	var/efficiency_coeff
-	var/console_link = TRUE		//allow console link.
-	var/requires_console = TRUE
 	var/list/categories = list(
 								"Power Designs",
 								"Medical Designs",
@@ -36,9 +34,10 @@ Note: Must be placed west/left of and R&D console to function.
 /obj/machinery/rnd/protolathe/Initialize()
 	create_reagents(0)
 	materials = AddComponent(/datum/component/material_container,
-		list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE),
-		FALSE, list(/obj/item/stack, /obj/item/ore/bluespace_crystal), CALLBACK(src, .proc/is_insertion_ready))
+		list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE), 0,
+		FALSE, list(/obj/item/stack, /obj/item/ore/bluespace_crystal), CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
 	materials.precise_insertion = TRUE
+	RefreshParts()
 	return ..()
 
 /obj/machinery/rnd/protolathe/RefreshParts()
@@ -79,24 +78,6 @@ Note: Must be placed west/left of and R&D console to function.
 /obj/machinery/rnd/protolathe/disconnect_console()
 	linked_console.linked_lathe = null
 	..()
-
-/obj/machinery/rnd/protolathe/ComponentActivated(datum/component/C)
-	..()
-	if(istype(C, /datum/component/material_container))
-		var/datum/component/material_container/M = C
-		if(!M.last_insert_success)
-			return
-		var/lit = M.last_inserted_type
-		var/stack_name
-		if(ispath(lit, /obj/item/ore/bluespace_crystal))
-			stack_name = "bluespace"
-			use_power(MINERAL_MATERIAL_AMOUNT / 10)
-		else
-			var/obj/item/stack/S = lit
-			stack_name = initial(S.name)
-			use_power(max(1000, (MINERAL_MATERIAL_AMOUNT * M.last_amount_inserted / 10)))
-		add_overlay("protolathe_[stack_name]")
-		addtimer(CALLBACK(src, /atom/proc/cut_overlay, "protolathe_[stack_name]"), 10)
 
 /obj/machinery/rnd/protolathe/proc/user_try_print_id(id, amount)
 	if((!istype(linked_console) && requires_console) || !id)
@@ -143,13 +124,11 @@ Note: Must be placed west/left of and R&D console to function.
 	return TRUE
 
 /obj/machinery/rnd/protolathe/proc/do_print(path, amount, list/matlist, notify_admins)
-	if(notify_admins)
-		if(usr)
-			usr.investigate_log("built [amount] of [path] at a protolathe.", INVESTIGATE_RESEARCH)
-			var/turf/T = get_turf(usr)
-			message_admins("[key_name(usr)][ADMIN_JMP(T)] has built [amount] of [path] at a protolathe at [COORD(usr)]")
+	if(notify_admins && usr)
+		investigate_log("[key_name(usr)] built [amount] of [path] at a protolathe.", INVESTIGATE_RESEARCH)
+		message_admins("[ADMIN_LOOKUPFLW(usr)] has built [amount] of [path] at a protolathe")
 	for(var/i in 1 to amount)
 		var/obj/item/I = new path(get_turf(src))
 		if(!istype(I, /obj/item/stack/sheet) && !istype(I, /obj/item/ore/bluespace_crystal))
 			I.materials = matlist.Copy()
-	SSblackbox.record_feedback("nested_tally", "item_printed", amount, list("[type]", "[path]"))
+	SSblackbox.record_feedback("nested tally", "item_printed", amount, list("[type]", "[path]"))

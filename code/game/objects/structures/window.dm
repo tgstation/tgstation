@@ -283,11 +283,10 @@
 		return
 	if(!disassembled)
 		playsound(src, breaksound, 70, 1)
-		var/turf/T = loc
 		if(!(flags_1 & NODECONSTRUCT_1))
 			for(var/i in debris)
 				var/obj/item/I = i
-				I.loc = T
+				I.forceMove(drop_location())
 				transfer_fingerprints_to(I)
 	qdel(src)
 	update_nearby_icons()
@@ -358,7 +357,7 @@
 
 /obj/structure/window/Move()
 	var/turf/T = loc
-	..()
+	. = ..()
 	setDir(ini_dir)
 	move_update_air(T)
 

@@ -182,7 +182,7 @@
 	src.add_fingerprint(user)
 	if (src.bullets < 1)
 		user.show_message("<span class='warning'>*click*</span>", 2)
-		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+		playsound(src, "gun_dry_fire", 50, 1)
 		return
 	playsound(user, 'sound/weapons/gunshot.ogg', 100, 1)
 	src.bullets--
@@ -938,7 +938,7 @@
 	card_throw_speed = 3
 	card_throw_range = 7
 	card_attack_verb = list("attacked", "sliced", "diced", "slashed", "cut")
-	resistance_flags = 0
+	resistance_flags = NONE
 
 /*
  * Fake nuke

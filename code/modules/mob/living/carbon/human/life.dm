@@ -20,8 +20,6 @@
 #define COLD_GAS_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when the current breath's temperature passes the 200K point
 #define COLD_GAS_DAMAGE_LEVEL_3 3 //Amount of damage applied when the current breath's temperature passes the 120K point
 
-#define BRAIN_DAMAGE_FILE "brain_damage_lines.json"
-
 /mob/living/carbon/human/Life()
 	set invisibility = 0
 	set background = BACKGROUND_ENABLED
@@ -65,14 +63,6 @@
 	else if(eye_blurry)			//blurry eyes heal slowly
 		adjust_blurriness(-1)
 
-	if (getBrainLoss() >= 60 && stat == CONSCIOUS)
-		if(prob(3))
-			if(prob(25))
-				emote("drool")
-			else
-				say(pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage"))
-
-
 /mob/living/carbon/human/handle_mutations_and_radiation()
 	if(!dna || !dna.species.handle_mutations_and_radiation(src))
 		..()
@@ -94,19 +84,18 @@
 
 		failed_last_breath = 1
 
-		if(dna && dna.species)
-			var/datum/species/S = dna.species
+		var/datum/species/S = dna.species
 
-			if(S.breathid == "o2")
-				throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
-			else if(S.breathid == "tox")
-				throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
-			else if(S.breathid == "co2")
-				throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
-			else if(S.breathid == "n2")
-				throw_alert("not_enough_nitro", /obj/screen/alert/not_enough_nitro)
+		if(S.breathid == "o2")
+			throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
+		else if(S.breathid == "tox")
+			throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
+		else if(S.breathid == "co2")
+			throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
+		else if(S.breathid == "n2")
+			throw_alert("not_enough_nitro", /obj/screen/alert/not_enough_nitro)
 
-		return 0
+		return FALSE
 	else
 		if(istype(L, /obj/item/organ/lungs))
 			var/obj/item/organ/lungs/lun = L
@@ -233,10 +222,10 @@
 /mob/living/carbon/human/proc/get_cold_protection(temperature)
 
 	if(dna.check_mutation(COLDRES))
-		return 1 //Fully protected from the cold.
+		return TRUE //Fully protected from the cold.
 
-	if(dna && (RESISTCOLD in dna.species.species_traits))
-		return 1
+	if(RESISTCOLD in dna.species.species_traits)
+		return TRUE
 
 	temperature = max(temperature, 2.7) //There is an occasional bug where the temperature is miscalculated in ares with a small amount of gas on them, so this is necessary to ensure that that bug does not affect this calculation. Space's temperature is 2.7K and most suits that are intended to protect against any cold, protect down to 2.0K.
 	var/thermal_protection_flags = get_cold_protection_flags(temperature)
@@ -304,7 +293,7 @@
 			if(prob(I.embedded_fall_chance))
 				BP.receive_damage(I.w_class*I.embedded_fall_pain_multiplier)
 				BP.embedded_objects -= I
-				I.loc = get_turf(src)
+				I.forceMove(drop_location())
 				visible_message("<span class='danger'>[I] falls out of [name]'s [BP.name]!</span>","<span class='userdanger'>[I] falls out of your [BP.name]!</span>")
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
@@ -413,7 +402,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 				to_chat(src, "<span class='warning'>Maybe you should lie down for a bit...</span>")
 
 		if(drunkenness >= 91)
-			adjustBrainLoss(0.4)
+			adjustBrainLoss(0.4, 60)
 			if(prob(20) && !stat)
 				if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && (z in GLOB.station_z_levels)) //QoL mainly
 					to_chat(src, "<span class='warning'>You're so tired... but you can't miss that shuttle...</span>")

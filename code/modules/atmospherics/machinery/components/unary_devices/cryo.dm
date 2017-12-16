@@ -42,7 +42,7 @@
 
 	radio = new(src)
 	radio.keyslot = new radio_key
-	radio.subspace_transmission = 1
+	radio.subspace_transmission = TRUE
 	radio.canhear_range = 0
 	radio.recalculateChannels()
 
@@ -78,7 +78,7 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_deconstruction()
 	if(beaker)
-		beaker.forceMove(loc)
+		beaker.forceMove(drop_location())
 		beaker = null
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_icon()
@@ -380,7 +380,7 @@
 			. = TRUE
 		if("ejectbeaker")
 			if(beaker)
-				beaker.forceMove(loc)
+				beaker.forceMove(drop_location())
 				if(Adjacent(usr) && !issilicon(usr))
 					usr.put_in_hands(beaker)
 				beaker = null
@@ -405,5 +405,21 @@
 	if(G.total_moles() > 10)
 		return G.temperature
 	return ..()
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/default_change_direction_wrench(mob/user, obj/item/wrench/W)
+	. = ..()
+	if(.)
+		SetInitDirections()
+		var/obj/machinery/atmospherics/node = NODE1
+		if(node)
+			node.disconnect(src)
+			NODE1 = null
+		nullifyPipenet(PARENT1)
+		atmosinit()
+		node = NODE1
+		if(node)
+			node.atmosinit()
+			node.addMember(src)
+		build_network()
 
 #undef CRYOMOBS

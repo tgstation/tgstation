@@ -36,6 +36,9 @@ em						{font-style: normal;	font-weight: bold;}
 
 .say					{}
 .deadsay				{color: #5c00e6;}
+.binarysay    			{color: #20c20e; background-color: #000000; display: block;}
+.binarysay a  			{color: #00ff00;}
+.binarysay a:active, .binarysay a:visited {color: #88ff88;}
 .radio					{color: #008000;}
 .sciradio				{color: #993399;}
 .comradio				{color: #948f02;}
@@ -161,4 +164,7 @@ h1.alert, h2.alert		{color: #000000;}
 .monkey					{color: #975032;}
 .swarmer				{color: #2C75FF;}
 .resonate				{color: #298F85;}
+
+.monkeyhive				{color: #774704;}
+.monkeylead				{color: #774704;	font-size: 2;}
 </style>"}

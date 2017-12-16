@@ -38,7 +38,7 @@
 					if(directions.len)
 						gib.streak(directions)
 
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 
 

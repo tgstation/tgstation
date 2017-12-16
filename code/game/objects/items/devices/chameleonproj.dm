@@ -85,7 +85,7 @@
 
 /obj/item/device/chameleon/proc/eject_all()
 	for(var/atom/movable/A in active_dummy)
-		A.loc = active_dummy.loc
+		A.forceMove(active_dummy.loc)
 		if(ismob(A))
 			var/mob/M = A
 			M.reset_perspective(null)
@@ -101,8 +101,12 @@
 	appearance = saved_appearance
 	if(istype(M.buckled, /obj/vehicle))
 		var/obj/vehicle/V = M.buckled
-		V.riding_datum.force_dismount(M)
-	M.loc = src
+		GET_COMPONENT_FROM(VRD, /datum/component/riding, V)
+		if(VRD)
+			VRD.force_dismount(M)
+		else
+			V.unbuckle_mob(M, force = TRUE)
+	M.forceMove(src)
 	master = C
 	master.active_dummy = src
 
