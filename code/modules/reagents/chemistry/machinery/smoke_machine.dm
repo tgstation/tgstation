@@ -51,7 +51,7 @@
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		efficiency = 9 + C.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		max_range = min(3, 1 + M.rating)
+		max_range = max(3, 1 + M.rating)
 
 /obj/machinery/smoke_machine/process()
 	..()
