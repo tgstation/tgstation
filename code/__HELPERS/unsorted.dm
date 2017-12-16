@@ -1502,5 +1502,5 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 /world/proc/PushUsr(mob/M, datum/callback/CB)
 	var/temp = usr
 	usr = M
-	CB.Invoke()
+	. = CB.Invoke()
 	usr = temp
