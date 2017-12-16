@@ -29,8 +29,9 @@
 
 /obj/machinery/smoke_machine/Initialize()
 	. = ..()
+	create_reagents(100)
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		create_reagents(100 + 200 * B.rating)
+		reagents.maximum_volume += 100 * B.rating
 
 /obj/machinery/smoke_machine/update_icon()
 	if((!is_operational()) || (!on) || (reagents.total_volume == 0))
@@ -40,8 +41,13 @@
 	. = ..()
 
 /obj/machinery/smoke_machine/RefreshParts()
+	var/new_volume = 100
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		reagents.maximum_volume = 100 + 200 * B.rating
+		new_volume += 100 * B.rating
+	reagents.maximum_volume = new_volume
+	if(new_volume < reagents.total_volume)
+		reagents.reaction(loc, TOUCH) // if someone manages to downgrade it without deconstructing
+		reagents.clear_reagents()
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		efficiency = 9 + C.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
@@ -74,6 +80,11 @@
 	if(default_unfasten_wrench(user, I, 40))
 		on = FALSE
 		return
+	return ..()
+
+/obj/machinery/smoke_machine/deconstruct()
+	reagents.reaction(loc, TOUCH)
+	reagents.clear_reagents()
 	return ..()
 
 /obj/machinery/smoke_machine/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
