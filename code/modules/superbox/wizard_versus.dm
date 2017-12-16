@@ -230,19 +230,23 @@
 			teams_alive[P.mind.wizard_versus_team] += 1
 
 	if (teams_alive.len == 0)
-		winner = "<b>nobody</b>! It's a draw! Wow, how'd you pull that one off?"
+		winner = "nobody"
 	else if (teams_alive.len == 1)
-		winner = "<b>[teams_alive[1]]</b>!"
+		winner = "[teams_alive[1]]"
 	else
 		return
-	to_chat(world, "----------------<br>The winner of the wizard battle is: [winner]<br>----------------")
+	to_chat(world, "----------------<br>The winner of the wizard battle is: <b>[winner]</b>!<br>----------------")
 
 /datum/game_mode/wizard_versus/check_finished()
 	if (winner)
 		return TRUE
 
-/datum/game_mode/wizard_versus/declare_completion()
-	return TRUE
+/datum/game_mode/wizard_versus/set_round_result()
+	..()
+	if (winner == "nobody")
+		SSticker.mode_result = "loss - draw"
+	else
+		SSticker.mode_result = "win - [winner] won"
 
 /datum/antagonist/wizard/versus/create_objectives()
 	if (!(locate(/datum/objective/survive) in owner.objectives))
