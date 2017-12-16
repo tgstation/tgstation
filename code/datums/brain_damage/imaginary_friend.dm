@@ -142,7 +142,7 @@
 
 /mob/camera/imaginary_friend/forceMove(atom/destination)
 	dir = get_dir(get_turf(src), destination)
-	loc = NewLoc
+	loc = destination
 	if(get_dist(src, owner) > 9)
 		yank()
 		return
