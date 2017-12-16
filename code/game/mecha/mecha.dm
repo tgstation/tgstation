@@ -24,7 +24,7 @@
 	infra_luminosity = 15 //byond implementation is bugged.
 	force = 5
 	flags_1 = HEAR_1
-	var/can_move = 1
+	var/can_move = 0 //time of next allowed movement
 	var/mob/living/carbon/occupant = null
 	var/step_in = 10 //make a step in step_in/10 sec.
 	var/dir_in = 2//What direction will the mech face when entered/powered on? Defaults to South.
@@ -502,7 +502,7 @@
 	return domove(direction)
 
 /obj/mecha/proc/domove(direction)
-	if(!can_move)
+	if(can_move >= world.time)
 		return 0
 	if(!Process_Spacemove(direction))
 		return 0
@@ -529,13 +529,9 @@
 		move_result = mechstep(direction)
 	if(move_result || loc != oldloc)// halfway done diagonal move still returns false
 		use_power(step_energy_drain)
-		can_move = 0
-		addtimer(CALLBACK(src,.proc/reset_can_move),step_in,TIMER_UNIQUE|TIMER_OVERRIDE)
+		can_move = world.time + step_in
 		return 1
 	return 0
-
-/obj/mecha/proc/reset_can_move()
-	can_move = TRUE
 
 /obj/mecha/proc/mechturn(direction)
 	setDir(direction)
