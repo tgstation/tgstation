@@ -60,7 +60,11 @@ GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /
 	id = "plasma"
 	specific_heat = 200
 	name = "Plasma"
+	#if DM_VERSION >= 512
 	gas_overlay = "plasma"
+	#else
+	gas_overlay = "plasma_old"
+	#endif
 	moles_visible = MOLES_GAS_VISIBLE
 	dangerous = TRUE
 
@@ -83,7 +87,11 @@ GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /
 	id = "n2o"
 	specific_heat = 40
 	name = "Nitrous Oxide"
+	#if DM_VERSION >= 512
 	gas_overlay = "nitrous_oxide"
+	#else
+	gas_overlay = "nitrous_oxide_old"
+	#endif
 	moles_visible = 1
 	dangerous = TRUE
 
