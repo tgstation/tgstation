@@ -1,5 +1,0 @@
-author: "Robustin"
-delete-after: True
-changes: 
-  - bugfix: "Zombies are now properly stunned for a maximum of 2 seconds instead of 2/10ths of a second."
-  - tweak: "Zombie slowdown adjusted from -2 to -1.6."

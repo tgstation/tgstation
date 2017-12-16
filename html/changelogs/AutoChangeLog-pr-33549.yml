@@ -1,4 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - tweak: "Vitality matrices don't have visible messages when someone crosses them anymore."
